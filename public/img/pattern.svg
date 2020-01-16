@@ -1,0 +1,11 @@
+<svg id="pattern" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15 15">
+    <defs>
+    <style>.cls-1{fill:#4f4f4f;}.cls-1,.cls-2{opacity:0.63;}</style>
+    </defs>
+    <title>pattern</title>
+    <rect class="cls-1" width="1" height="0.97"/>
+    <rect class="cls-1" x="14" width="1" height="0.97"/>
+    <rect class="cls-1" x="14" y="14" width="1" height="0.97"/>
+    <rect class="cls-1" y="14" width="1" height="0.97"/>
+    <rect class="cls-2" x="7" y="7" width="1" height="0.97"/>
+</svg>
