@@ -21,6 +21,7 @@ import { Colors } from "layout/AppTheme";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import { GrandReduxState } from "reduxStore/grand-reducer";
+import { AuthInterface } from "pageComponents/Auth0";
 // media query
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
@@ -39,13 +40,15 @@ const LayoutIfBrowser: React.FC<ReactProps> = (props) => {
             <button onClick={() => {
               props.auth.login()
               props.auth.handleAuthentication()
-              console.log("logging in..2", props.auth)
+              console.log("logging in...")
+              console.log(localStorage)
             }}>
               login auth0
             </button>
             <button onClick={() => {
               console.log("logging out...", props.auth)
               props.auth.logout()
+              console.log(localStorage)
             }}>
               logout auth0
             </button>
@@ -151,7 +154,7 @@ const PageContainer: React.FC<PageContainerProps> = (props) => {
 }
 
 interface ReactProps extends WithStyles<typeof styles> {
-  auth?: any;
+  auth: AuthInterface;
 }
 interface PageContainerProps extends WithStyles<typeof styles> {
 }

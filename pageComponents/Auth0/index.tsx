@@ -11,7 +11,7 @@ export const AUTH_CONFIG = {
 };
 
 
-export default class Auth {
+export default class Auth implements AuthInterface {
 
   auth0 = new auth0.WebAuth({
     domain: AUTH_CONFIG.domain,
@@ -22,18 +22,11 @@ export default class Auth {
     scope: 'openid'
   });
 
-  constructor() {
-    this.login = this.login.bind(this);
-    this.logout = this.logout.bind(this);
-    this.handleAuthentication = this.handleAuthentication.bind(this);
-    this.isAuthenticated = this.isAuthenticated.bind(this);
-  }
-
-  login() {
+  login = () => {
     this.auth0.authorize();
   }
 
-  handleAuthentication() {
+  handleAuthentication = () => {
     console.log("handling auth.....")
     this.auth0.parseHash((err, authResult) => {
       if (authResult && authResult.accessToken && authResult.idToken) {
@@ -47,7 +40,7 @@ export default class Auth {
     });
   }
 
-  setSession(authResult) {
+  setSession = (authResult: auth0.Auth0DecodedHash) => {
     // Set the time that the access token will expire at
     let expiresAt = JSON.stringify((authResult.expiresIn * 1000) + new Date().getTime());
     localStorage.setItem('auth0:access_token', authResult.accessToken);
@@ -58,7 +51,7 @@ export default class Auth {
     Router.replace('/');
   }
 
-  logout() {
+  logout = () => {
     // Clear access token and ID token from local storage
     localStorage.removeItem('auth0:access_token');
     localStorage.removeItem('auth0:id_token');
@@ -68,10 +61,18 @@ export default class Auth {
     Router.replace('/');
   }
 
-  isAuthenticated() {
+  isAuthenticated = () => {
     // Check whether the current time is past the
     // access token's expiry time
     let expiresAt = JSON.parse(localStorage.getItem('auth0:expires_at'));
     return new Date().getTime() < expiresAt;
   }
+}
+
+export interface AuthInterface {
+  handleAuthentication(): void;
+  setSession(authResult: auth0.Auth0DecodedHash): void;
+  logout(): void;
+  login(): void;
+  isAuthenticated(): boolean;
 }
