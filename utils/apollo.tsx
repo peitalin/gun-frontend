@@ -6,6 +6,7 @@ import { ApolloLink } from 'apollo-link';
 // Switches between unfetch & node-fetch for client & server.
 import fetch from 'isomorphic-unfetch'
 import withApollo from 'next-with-apollo';
+import { setContext } from 'apollo-link-context';
 import https from "https";
 import { oc as option } from "ts-optchain";
 
@@ -43,6 +44,10 @@ const fragmentMatcher = new IntrospectionFragmentMatcher({
 });
 
 
+
+
+
+
 // SSR Apollo. Function to return a new instance of ApolloClient
 // with every request.
 // For Client side
@@ -50,6 +55,11 @@ export default withApollo(
   ({ ctx, headers, initialState }) => {
 
     // let authCookie = ctx.req.headers["set-cookie"] || [ctx.req.headers["cookie"]];
+    // get the authentication token from local storage if it exists
+    let token = undefined
+    if (process.browser) {
+      let token = localStorage.getItem('auth0:id_token');
+    }
 
     return new ApolloClient({
       link: ApolloLink.from([
@@ -73,44 +83,46 @@ export default withApollo(
           },
           headers: {
             'content-type': 'application/json',
-            cookie: option(ctx).req.headers.cookie()
+            cookie: option(ctx).req.headers.cookie(),
+            authorization: token ? `Bearer ${token}` : "",
+            ...headers,
           },
           credentials: 'include',
-        })
+        }),
       ]),
       // hydrates apollo cache with initialState created in server
       cache: new InMemoryCache({
         fragmentMatcher, // fragments
         dataIdFromObject: (object: any) => {
           switch (object.__typename) {
-            case 'UserPrivate': return object.id; // use `id` as the primary key
 
-            case 'ProductPublic': {
-              if (!option(object).chosenVariant()) {
-                const pType = "_LISTING"
-                return object.id + pType;
-              } else {
-                // const pType = "_CART_ORDER"
-                return object._id;
-              }
-            }
+            // case 'UserPrivate': return object.id; // use `id` as the primary key
 
-            case 'ProductPrivate': {
-              if (!option(object).chosenVariant()) {
-                const pType = "_LISTING"
-                return object.id + pType;
-              } else {
-                // const pType = "_CART_ORDER"
-                return object._id;
-              }
-            }
+            // case 'ProductPublic': {
+            //   if (!option(object).chosenVariant()) {
+            //     const pType = "_LISTING"
+            //     return object.id + pType;
+            //   } else {
+            //     // const pType = "_CART_ORDER"
+            //     return object._id;
+            //   }
+            // }
 
-            case 'OrderItem': return object.id; // use `id` as the primary key
+            // case 'ProductPrivate': {
+            //   if (!option(object).chosenVariant()) {
+            //     const pType = "_LISTING"
+            //     return object.id + pType;
+            //   } else {
+            //     // const pType = "_CART_ORDER"
+            //     return object._id;
+            //   }
+            // }
 
-            case 'ProductPrivate': return object.id; // use `id` as the primary key
+            // case 'OrderItem': return object.id; // use `id` as the primary key
+            // case 'ProductPrivate': return object.id; // use `id` as the primary key
 
-            case 'CartItem': return object.id; // use `id` as the primary key
-            case 'Cart': return object.id; // use `id` as the primary key
+            // case 'CartItem': return object.id; // use `id` as the primary key
+            // case 'Cart': return object.id; // use `id` as the primary key
 
             // case 'ProductVariant': return object.variantId; // use `variantId` as the priamry key
             // case 'ProductVariant': {
@@ -128,14 +140,14 @@ export default withApollo(
             // chosenVariant => null for RecommendedProducts
             // featuredVariants => null for MyDownloads/Checkout
 
-            case 'StorePublic': return object.id + "_STORE_PUBLIC";
+            // case 'StorePublic': return object.id + "_STORE_PUBLIC";
             // postfix _STORE_PUBLIC as the primary key
-            case 'StorePrivate': return object._id + "_STORE_PRIVATE";
+            // case 'StorePrivate': return object._id + "_STORE_PRIVATE";
             // postfix _STORE_PRIVATE as the primary key
 
             // default: return defaultDataIdFromObject(object);
             // this somehow breaks carts + gallery loading together
-            default: return object._id;
+            default: return object.id;
             // fallback to default for all other types
           }
         }
