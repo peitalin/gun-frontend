@@ -2,12 +2,12 @@ import auth0 from 'auth0-js';
 import Router from "next/router";
 
 export const GRAPHQL_URL = 'http://209.97.162.7/v1/graphql';
-export const authClientId = "xxxxxxxxxxxxxxxxxxxxx";
-export const authDomain = "gunmarketplace.auth0.com";
+export const authClientId = "yVGw33SMWWUtMknTvOntd3xwP6DtOACm";
+export const authDomain = "gunbrokers.au.auth0.com";
 export const AUTH_CONFIG = {
   domain: authDomain,
   clientId: authClientId,
-  callbackUrl: 'http://209.97.162.7/v1/graphql'
+  callbackUrl: 'https://0.0.0.0:2040'
 };
 
 
@@ -34,6 +34,7 @@ export default class Auth {
   }
 
   handleAuthentication() {
+    console.log("handling auth.....")
     this.auth0.parseHash((err, authResult) => {
       if (authResult && authResult.accessToken && authResult.idToken) {
         this.setSession(authResult);
@@ -54,7 +55,7 @@ export default class Auth {
     localStorage.setItem('auth0:expires_at', expiresAt);
     localStorage.setItem('auth0:id_token:sub', authResult.idTokenPayload.sub)
     // navigate to the home route
-    Router.replace('/home');
+    Router.replace('/');
   }
 
   logout() {
@@ -64,7 +65,7 @@ export default class Auth {
     localStorage.removeItem('auth0:expires_at');
     localStorage.removeItem('auth0:id_token:sub');
     // navigate to the home route
-    Router.replace('/home');
+    Router.replace('/');
   }
 
   isAuthenticated() {

@@ -31,7 +31,26 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 const LayoutIfBrowser: React.FC<ReactProps> = (props) => {
   return (
     <ErrorBounds className="async-provider">
-      <Layout classes={props.classes}>
+      <Layout classes={props.classes} auth={props.auth}>
+        {
+          option(props).auth() &&
+          <>
+            <div style={{ height: '100px', width: '10px' }}></div>
+            <button onClick={() => {
+              props.auth.login()
+              props.auth.handleAuthentication()
+              console.log("logging in..2", props.auth)
+            }}>
+              login auth0
+            </button>
+            <button onClick={() => {
+              console.log("logging out...", props.auth)
+              props.auth.logout()
+            }}>
+              logout auth0
+            </button>
+          </>
+        }
         {props.children}
       </Layout>
     </ErrorBounds>
@@ -110,7 +129,7 @@ const Layout: React.FC<ReactProps> = (props) => {
     <div>
       <Header/>
       <NavBarMain/>
-      <GetUser/>
+      {/* <GetUser/> */}
       <Modals/>
       <PageContainer classes={props.classes}>
         { renderLayout() }
@@ -132,7 +151,7 @@ const PageContainer: React.FC<PageContainerProps> = (props) => {
 }
 
 interface ReactProps extends WithStyles<typeof styles> {
-  // user: UserPrivate;
+  auth?: any;
 }
 interface PageContainerProps extends WithStyles<typeof styles> {
 }

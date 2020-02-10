@@ -123,6 +123,7 @@ class MyApp extends App<AppProps> {
     this.setState({
       auth: auth
     })
+    console.log("auth0", auth)
   }
 
   componentWillUnmount () {
@@ -144,7 +145,7 @@ class MyApp extends App<AppProps> {
           <ThemeProvider theme={AppTheme}>
             <CssBaseline />
             <GlobalStyles/>
-              <Layout>
+              <Layout auth={this.state.auth}>
                 <Component {...pageProps} key={router.route} />
               </Layout>
           </ThemeProvider>
