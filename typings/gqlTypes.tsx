@@ -9,12 +9,9 @@ export type Scalars = {
   Boolean: boolean,
   Int: number,
   Float: number,
-  /** Standard date string */
   Date: Date,
-  /** An area where a specific product category lives (eg Design, Video, Sounds) */
   ProductCategoryGroup: any,
   PageCursor: any,
-  /** Price value representing USD cents */
   Price: number,
 };
 
@@ -30,21 +27,17 @@ export type ApprovePayoutsResult = {
   payoutsAlreadyApproved?: Maybe<Array<Maybe<Payout>>>,
 };
 
-/** Mutation result that doesn't need to give anything back. */
 export type BlankMutationResponse = {
    __typename?: 'BlankMutationResponse',
-  /** Should always be true if you get this result instead of a MutationErrorSummary - mainly here to allow gql to build */
   success: Scalars['Boolean'],
 };
 
-/** Collection of products the user is in the process of buying */
 export type Cart = {
    __typename?: 'Cart',
   id: Scalars['ID'],
   userId: Scalars['ID'],
   updatedAt: Scalars['Date'],
   items: Array<CartItem>,
-  /** NOTE: Other relevant discounts are found in items -> products -> variant -> relevantDiscounts */
   relevantPromoCodes: Array<Discount>,
   subtotal: Scalars['Price'],
   automaticSavings: Scalars['Price'],
@@ -54,7 +47,6 @@ export type Cart = {
   total: Scalars['Price'],
 };
 
-/** Pairing of product and current pricing information applicable to the checkout process */
 export type CartItem = {
    __typename?: 'CartItem',
   id: Scalars['ID'],
@@ -68,17 +60,11 @@ export type CartItem = {
   quantity: Scalars['Int'],
 };
 
-/** Availability state of the item in the cart - can it be purchased right now? */
 export enum CartItemPurchasableStatus {
-  /** Yes it can be purchased right now. */
   AVAILABLE = 'AVAILABLE',
-  /** The variant is available, but not in the quantity they're trying to buy. */
   QUANTITY_TOO_HIGH = 'QUANTITY_TOO_HIGH',
-  /** The variant is currently sold out. Other variants may be available. */
   SOLD_OUT = 'SOLD_OUT',
-  /** The variant is currently unavailable for some other reason, but other variants may be available. */
   VARIANT_UNAVAILABLE = 'VARIANT_UNAVAILABLE',
-  /** The entire product is no longer available. */
   PRODUCT_UNAVAILABLE = 'PRODUCT_UNAVAILABLE'
 }
 
@@ -92,51 +78,24 @@ export type Connection = {
   pageInfo: PageInfo,
 };
 
-/** Parameters that control how to access pages within a Connection */
 export type ConnectionQuery = {
-  /** 
- * Whether or not to order the entire dataset in ascending form (as opposed to descending).
-   * Defaults to false.
- */
   sortAscending?: Maybe<Scalars['Boolean']>,
-  /** 
- * Reference to a point in the middle of the entire dataset from which to page either side of.
-   * If not provided then it defaults to the start of the entire dataset.
-   * If you need to access the other end of the dataset / navigate backwards, provide no cursor but flip sortAscending.
-   * Defaults to null.
- */
   cursor?: Maybe<Scalars['PageCursor']>,
-  /** 
- * Whether or not to select a page backwards from the provided cursor (as opposed to forwards).
-   * Either way the result set will exclude the item AT the specified cursor, because you already have it.
-   * Defaults to false.
- */
   pageBackwards?: Maybe<Scalars['Boolean']>,
-  /** 
- * Maximum number of items you want to see within a connection page.
-   * Defaults to the maximum you can ask for, which is a sensible number controlled by the server.
- */
   count?: Maybe<Scalars['Int']>,
 };
 
 export type ConnectionWithMetrics = {
-  /** COUNT(*) of a query, larger than the number of paginated results returned */
   totalCount?: Maybe<Scalars['Int']>,
-  /** SUM(x) of a query, where x is a specific column to be aggregated */
   totalAmount?: Maybe<Scalars['Int']>,
   pageInfo: PageInfo,
 };
 
 export type CreatePlatformDiscountInput = {
-  /** A human readable ID to use #TODO: regex */
   promoCode?: Maybe<Scalars['String']>,
-  /** What amount to provide as a discount. Must be smaller than 0.2. */
   valuePercentageOff: Scalars['Float'],
-  /** When the discount should be applicable from. */
   start?: Maybe<Scalars['Date']>,
-  /** When the discount should stop being applicable. */
   end?: Maybe<Scalars['Date']>,
-  /** Whether or not the discount should initially be flagged as disabled. */
   isDisabled: Scalars['Boolean'],
 };
 
@@ -159,31 +118,15 @@ export type CreateRefundMutationResponse = {
 };
 
 export type CreateStorePromoCodeInput = {
-  /** A human readable ID to use #TODO: regex */
   promoCode: Scalars['String'],
-  /** Value when the modifier is a percent-off discount. */
   valuePercentageOff?: Maybe<Scalars['Float']>,
-  /** Value when the modifier is a dollars-off discount. */
   valueDollarsOff?: Maybe<Scalars['Price']>,
-  /** 
- * Single eligible product.
-   * Provide either this or specificProductVariantId or neither to be store-wide.
- */
   specificProductId?: Maybe<Scalars['ID']>,
-  /** 
- * Single eligible product variant.
-   * Provide either this or specificProductId (for any variant) or neither to be store-wide.
- */
   specificProductVariantId?: Maybe<Scalars['ID']>,
-  /** How much do they have to be spending from this store before the discount can be active. */
   minimumPurchaseAmount?: Maybe<Scalars['Price']>,
-  /** How many items required in the cart from this store before the discount can be active. */
   minimumQuantity?: Maybe<Scalars['Int']>,
-  /** When the discount should be applicable from. */
   start?: Maybe<Scalars['Date']>,
-  /** When the discount should stop being applicable. */
   end?: Maybe<Scalars['Date']>,
-  /** Whether or not the discount should initially be flagged as disabled. */
   isDisabled: Scalars['Boolean'],
 };
 
@@ -240,42 +183,27 @@ export type CuratedListsEdge = Edge & {
 };
 
 
-/** A mechanism acting in some way against a normal price */
 export type Discount = {
    __typename?: 'Discount',
   id: Scalars['ID'],
   createdAt: Scalars['Date'],
   modifier: DiscountModifier,
   scope: DiscountScope,
-  /** Master switch for whether this discount can ever apply or is disabled - not related to a specific case of eligibility */
   isDisabled: Scalars['Boolean'],
-  /** Optional time based condition for the discount. */
   timeCondition?: Maybe<DiscountTimeCondition>,
-  /** Whether or not this discount is activated automatically, versus requiring a promo code */
   isAutomatic: Scalars['Boolean'],
-  /** When this is not an automatic discount, it can be activated using a human readable code (pending eligibility) */
   promoCode?: Maybe<Scalars['String']>,
-  /** Value when the modifier is a fixed price. */
   valueFixed?: Maybe<Scalars['Price']>,
-  /** Value when the modifier is a dollars-off discount. */
   valueDollarsOff?: Maybe<Scalars['Price']>,
-  /** Value when the modifier is a percentage off. */
   valuePercentageOff?: Maybe<Scalars['Float']>,
-  /** Group of fields that apply to a Discount only when it is product-owned */
   productScopeInfo?: Maybe<ProductScopedDiscountInfo>,
-  /** Group of fields that apply to a Discount only when it is at the store level */
   storeScopeInfo?: Maybe<StoreScopedDiscountInfo>,
-  /** Group of fields that apply to a Discount only when it is at the platform level */
   platformScopeInfo?: Maybe<PlatformScopedDiscountInfo>,
 };
 
-/** Way in which a discount affects the price */
 export enum DiscountModifier {
-  /** Makes the price become a different fixed value (if less than it started at) */
   FIXED_PRICE = 'FIXED_PRICE',
-  /** Reduces the price by a fixed amount */
   DOLLARS_OFF = 'DOLLARS_OFF',
-  /** Reduces the price by a percentage amount */
   PERCENTAGE_OFF = 'PERCENTAGE_OFF'
 }
 
@@ -291,13 +219,9 @@ export type DiscountsConnection = Connection & {
   edges: Array<DiscountsEdge>,
 };
 
-/** Level at which a discount applies in price determination and what influences eligibility */
 export enum DiscountScope {
-  /** Intrinsic to a single product without any store, platform, or cart contexts */
   PRODUCT = 'PRODUCT',
-  /** Affects one or more products depending on store-wide rules that may or may not also depend on a cart context */
   STORE = 'STORE',
-  /** Affects one or more products in a way that saves the buyer a share of the platform's proceeds */
   PLATFORM = 'PLATFORM'
 }
 
@@ -307,50 +231,35 @@ export type DiscountsEdge = Edge & {
   node: Discount,
 };
 
-/** Information about inventory limits and what to do when it runs out. */
 export type DiscountStockLimitCondition = {
    __typename?: 'DiscountStockLimitCondition',
-  /** The current stock level */
   stockLevel: StockLevel,
-  /** What to do when a supply limit runs out. */
   supplyExhaustionRule: DiscountUnavailableRule,
 };
 
 export type DiscountStockLimitConditionInput = {
-  /** Amount that can be purchased now. */
   quantityAvailable: Scalars['Int'],
-  /** What to do when a supply limit runs out. */
   supplyExhaustionRule: DiscountUnavailableRule,
 };
 
 export type DiscountTimeCondition = {
    __typename?: 'DiscountTimeCondition',
-  /** Optional start time where condition becomes valid. Starts now if not provided. */
   start?: Maybe<Scalars['Date']>,
-  /** When the condition is no longer valid. */
   end: Scalars['Date'],
-  /** What to do when a time based eligibility rule comes to an end. NOTE: This is applicable AFTER end, not before start. */
   timeExpiryRule: DiscountUnavailableRule,
 };
 
 export type DiscountTimeConditionInput = {
-  /** Optional start time where condition becomes valid. Starts now if not provided. */
   start?: Maybe<Scalars['Date']>,
-  /** When the condition is no longer valid. */
   end: Scalars['Date'],
-  /** What to do when a time based eligibility rule comes to an end. NOTE: This is applicable AFTER end, not before start. */
   timeExpiryRule: DiscountUnavailableRule,
 };
 
-/** What happens when a limited availability discount transitions from available to unavailable */
 export enum DiscountUnavailableRule {
-  /** The discount becomes disabled and the product's price changes */
   DISABLE_DISCOUNT = 'DISABLE_DISCOUNT',
-  /** Variant becomes SOLD_OUT */
   MARK_AS_SOLD_OUT = 'MARK_AS_SOLD_OUT'
 }
 
-/** A product associated with an order, which may or may not be available for downloading */
 export type Download = {
    __typename?: 'Download',
   product: Product,
@@ -376,20 +285,15 @@ export type Edge = {
 };
 
 export type EditPlatformDiscountInput = {
-  /** Identifier of the discount to edit. */
   discountId: Scalars['ID'],
-  /** Whether or not the discount master switch should be off. */
   isDisabled?: Maybe<Scalars['Boolean']>,
 };
 
 export type EditStorePromoCodeInput = {
-  /** Identifier of the discount to edit. */
   discountId: Scalars['ID'],
-  /** Whether or not the discount master switch should be off. */
   isDisabled?: Maybe<Scalars['Boolean']>,
 };
 
-/** Metadata about an image, including the size variants */
 export type Image = {
    __typename?: 'Image',
   id: Scalars['ID'],
@@ -400,7 +304,6 @@ export type Image = {
   description?: Maybe<Scalars['String']>,
 };
 
-/** Metadata about an individual image variant */
 export type ImageVariant = {
    __typename?: 'ImageVariant',
   id: Scalars['ID'],
@@ -420,400 +323,63 @@ export type LoginMutationResponse = {
 
 export type Mutation = {
    __typename?: 'Mutation',
-  /** 
- * Create a new account using an email address and password.
-   * 
-   * AccessRule – PUBLIC
- */
   signUpUsingEmail: SignUpMutationResponse,
-  /** 
- * Log in using an email address and password.
-   * 
-   * AccessRule – PUBLIC
- */
   logInUsingEmail: LoginMutationResponse,
-  /** 
- * Log out and invalidate access tokens.
-   * 
-   * AccessRule – LOGGED_IN
- */
   logOut: BlankMutationResponse,
-  /** 
- * Send a password reset email.
-   * 
-   * AccessRule – PUBLIC
- */
   sendResetPasswordEmail: SendResetPasswordResponse,
-  /** 
- * Confirm password reset after receiving email
-   * 
-   * AccessRule – PUBLIC
- */
   confirmResetPassword: ResetPasswordResponse,
-  /** 
- * Change your password.
-   * 
-   * AccessRule – LOGGED_IN
- */
   changePassword: UserMutationResponse,
-  /** 
- * Change your payout method.
-   * 
-   * AccessRule – LOGGED_IN
- */
   setPayoutMethod: UserMutationResponse,
-  /** 
- * Verify the logged-in user's email address using a code that was emailed to them.
-   * 
-   * AccessRule – LOGGED_IN
- */
   sendVerifyEmail: UserMutationResponse,
-  /** 
- * Edit user profile information.
-   * 
-   * AccessRule – LOGGED_IN
- */
   editUserProfile: UserMutationResponse,
-  /** 
- * Delete the account associated with the logged-in user.
-   * 
-   * AccessRule – LOGGED_IN
- */
   deleteAccount: BlankMutationResponse,
-  /** 
- * Delete a specific user account.
-   * 
-   * AccessRule – PLATFORM_ADMIN
- */
   adminDeleteAccount: BlankMutationResponse,
-  /** 
- * Request to upload a piece of content.
-   * 
-   * This is the first stage of uploading - registration.
-   * 
-   * How uploading works:
-   * 1. Register the upload and receive the upload ID and PUT URL.
-   * 2. Use the PUT URL received in this response to actually upload the file.
-   * 3. Then use uploadSave to make it official – your uploaded file will be validated.
-   * 
-   * AccessRule – LOGGED_IN
- */
   uploadRegister: UploadRegisterMutationResponse,
-  /** 
- * Request to save an uploaded image / make it official.
-   * 
-   * This is the last stage of uploading - saving.
-   * Your uploaded image will be validated and made available for use.
-   * 
-   * AccessRule – LOGGED_IN
- */
   uploadSaveImage: UploadSaveImageMutationResponse,
-  /** 
- * Request to save an uploaded product file / make it official.
-   * 
-   * This is the last stage of uploading - saving.
-   * Your uploaded file will be validated and made available for use.
-   * 
-   * AccessRule – LOGGED_IN
- */
   uploadSaveProductFile: UploadSaveProductFileMutationResponse,
-  /** 
- * Add a product to the wishlist.
-   * 
-   * AccessRule – LOGGED_IN
- */
   addProductToWishlist: BlankMutationResponse,
-  /** 
- * Remove a product from the wishlist.
-   * 
-   * AccessRule – LOGGED_IN
- */
   removeProductFromWishlist: BlankMutationResponse,
-  /** 
- * Add a product to the cart.
-   * 
-   * AccessRule – LOGGED_IN
-   * 
-   * TODO: No reason for this to take the cart ID, seing as it's a user operation and they only have one cart
- */
   addProductsToCart: Cart,
-  /** 
- * Remove a product from the cart.
-   * 
-   * AccessRule – LOGGED_IN
-   * 
-   * TODO: No reason for this to take the cart ID, seing as it's a user operation and they only have one cart
- */
   removeProductsFromCart: Cart,
-  /** 
- * Adjust the quantity in the cart for one of the items.
-   * 
-   * AccessRule – LOGGED_IN
-   * 
-   * TODO: No reason for this to take the cart ID, seing as it's a user operation and they only have one cart
- */
   adjustCartItemQuantity: Cart,
-  /** 
- * Add a promo code to the cart.
-   * 
-   * AccessRule – LOGGED_IN
- */
   addPromoCodeToCart: CartMutationResponse,
-  /** 
- * Remove a promo code from the cart.
-   * 
-   * AccessRule – LOGGED_IN
- */
   removePromoCodeFromCart: CartMutationResponse,
-  /** 
- * Kickoff full checkout (order creation, payment, and order confirmation) for the logged-in user's cart.
-   * 
-   * AccessRule – LOGGED_IN
- */
   checkoutCart: OrderMutationResponse,
-  /** 
- * Kickoff full checkout (order creation, payment, and order confirmation) for a set of products.
-   * 
-   * Useful for InstantBuy OR checking out when you're not logged in, because in both cases there's no cart.
-   * 
-   * AccessRule – PUBLIC
- */
   checkoutProducts: OrderMutationResponse,
-  /** 
- * Create an unconfirmed order for the contents of the logged-in user's cart with the intention to
-   * then confirm it later when frontend has organised payment.
-   * 
-   * AccessRule – LOGGED_IN
- */
   checkoutCartForFrontendPayment: OrderMutationResponse,
-  /** 
- * Create an unconfirmed order for a set of products with the intention to then confirm it later
-   * when frontend has organised payment.
-   * 
-   * Useful for InstantBuy OR checking out with frontend payment method when you're not logged in.
-   * 
-   * AccessRule – PUBLIC
- */
   checkoutProductsForFrontendPayment: OrderMutationResponse,
-  /** 
- * Provide payment details to confirm an order after frontend has handled the payment.
-   * 
-   * This is only required for payment methods that cannot be executed on the backend (eg PayPal).
-   * 
-   * AccessRule – PUBLIC
- */
   confirmOrderAfterFrontendPayment: OrderMutationResponse,
-  /** 
- * Claim ownership over an order that doesn't currently have an owner.
-   * Designed for use after the user has logged in (or signed up) after making a logged out purchase.
-   * 
-   * AccessRule – LOGGED_IN
- */
   claimUnclaimedOrderOwnership: OrderMutationResponse,
-  /** 
- * Change the owner of an order (and therefore lock/unlock the downloads).
-   * 
-   * This is intended for use by admins who are resolving "I ended up with 2 accounts can I merge them?"
-   * support queries from customers.
-   * 
-   * AccessRule – PLATFORM_ADMIN
- */
   reassignOrderOwnership: OrderMutationResponse,
-  /** 
- * Refresh the contents and pricing breakdown of the cart.
-   * This is needed for making sure products are still purchasable and promo codes are still valid.
-   * AccessRule – LOGGED_IN
- */
   refreshCart: CartMutationResponse,
-  /** 
- * Create a store profile for the logged-in user.
-   * 
-   * AccessRule – LOGGED_IN
- */
   createStore: StoreMutationResponse,
-  /** 
- * Edit the store profile for the logged-in user.
-   * 
-   * AccessRule – LOGGED_IN
- */
   editStoreProfile?: Maybe<StoreMutationResponse>,
-  /** 
- * Delete the store associated with the logged-in user.
-   * 
-   * AccessRule – LOGGED_IN
- */
   deleteStore: BlankMutationResponse,
-  /** 
- * Delete a specific store.
-   * 
-   * AccessRule – PLATFORM_ADMIN
- */
   adminDeleteStore: BlankMutationResponse,
-  /** 
- * Create a product for the logged-in user's store.
-   * 
-   * AccessRule – LOGGED_IN
- */
   createProduct: ProductMutationResponse,
-  /** 
- * Create a product for the logged-in user's store.
-   * 
-   * If a platform admin has suspended the product, changing isPublished will not be able to override that.
-   * 
-   * AccessRule – LOGGED_IN
- */
   editProduct: ProductMutationResponse,
-  /** 
- * Delete a product from the logged-in user's store.
-   * 
-   * AccessRule – OWNER
- */
   deleteProduct?: Maybe<ProductMutationResponse>,
-  /** 
- * Suspend a user account.
-   * This will have a number of side effects:
-   * - User will be logged out
-   * - User will be unable to log back in
-   * - If they are a store owner, their store will disappear
-   * 
-   * AccessRule – PLATFORM_ADMIN
- */
   suspendUser: BlankMutationResponse,
-  /** 
- * Reinstate a suspended user's account.
-   * This will reverse the number of side effects of suspension.
-   * 
-   * AccessRule – PLATFORM_ADMIN
- */
   unsuspendUser: BlankMutationResponse,
-  /** 
- * Suspend a product.
-   * This will force the product to become unavailable for purchase or downloading.
-   * 
-   * AccessRule – PLATFORM_ADMIN
- */
   suspendProduct?: Maybe<ProductMutationResponse>,
-  /** 
- * Reinstate a suspended product.
-   * This will reverse the number of side effects of suspension.
-   * 
-   * AccessRule – PLATFORM_ADMIN
- */
   unsuspendProduct?: Maybe<ProductMutationResponse>,
-  /** 
- * Suspend a store.
-   * This will force the store and its products to become hidden for everyone except the store owner.
-   * 
-   * AccessRule – PLATFORM_ADMIN
- */
   suspendStore?: Maybe<StoreMutationResponse>,
-  /** 
- * Reinstate a suspended store.
-   * This will reverse the number of side effects of suspension.
-   * 
-   * AccessRule – PLATFORM_ADMIN
- */
   unsuspendStore?: Maybe<StoreMutationResponse>,
-  /** 
- * Creates a store scoped promo code discount.
-   * 
-   * AccessRule – OWNER
- */
   createStorePromoCode: DiscountMutationResponse,
-  /** 
- * Edit a store scoped promo code discount.
-   * 
-   * AccessRule – OWNER
- */
   editStorePromoCode: DiscountMutationResponse,
-  /** 
- * Creates a platform scoped discount.
-   * 
-   * If no promoCode is provided, this will be an automatic discount (provided other variables are applicable eg time)
-   * 
-   * AccessRule – PLATFORM_ADMIN
- */
   createPlatformDiscount: DiscountMutationResponse,
-  /** 
- * Edit a platform scoped discount.
-   * 
-   * AccessRule – PLATFORM_ADMIN
- */
   editPlatformDiscount: DiscountMutationResponse,
-  /** 
- * Generate a temporary URL to download a product file.
-   * 
-   * AccessRule – LOGGED_IN (and product owning the file has been purchased...)
- */
   generateProductFileDownloadLink: ProductFileLinkMutationResponse,
-  /** 
- * Set the default payment method for a user (credit cards)
-   * 
-   * AccessRule – LOGGED_IN
- */
   setDefaultPaymentMethod: AddRemovePaymentMethodResponse,
-  /** 
- * Add a payment method to a user's profile
-   * 
-   * AccessRule – LOGGED_IN
- */
   addPaymentMethod: AddRemovePaymentMethodResponse,
-  /** 
- * Remove a payment method from a user's profile
-   * 
-   * AccessRule – LOGGED_IN
- */
   removePaymentMethod: AddRemovePaymentMethodResponse,
-  /** 
- * Create a Payout from all existing unpaid PayoutItems for the month.
-   * Adds 1 approval to payouts.
-   * 
-   * AccessRule – PLATFORM_ADMIN
- */
   createPayouts: Array<Payout>,
-  /** 
- * Approve selected Payouts, and dispatch Payouts to payout provider if
-   * there are 2 approvals.
-   * 
-   * AccessRule – PLATFORM_ADMIN
- */
   approvePayouts: ApprovePayoutsResult,
-  /** 
- * Create a new curated list.
-   * 
-   * AccessRule – PLATFORM_ADMIN
- */
   createCuratedList: CuratedListMutationResponse,
-  /** 
- * Delete a curated list.
-   * 
-   * AccessRule – PLATFORM_ADMIN
- */
   deleteCuratedList: BlankMutationResponse,
-  /** 
- * Add a product to a curated list.
-   * 
-   * It will be added at the bottom, but you can rearrange items later.
-   * 
-   * AccessRule – PLATFORM_ADMIN
- */
   addProductToCuratedList: CuratedListItemMutationResponse,
-  /** 
- * Remove an item in a curated list.
-   * 
-   * AccessRule – PLATFORM_ADMIN
- */
   removeItemFromCuratedList: CuratedListMutationResponse,
-  /** 
- * Change the location of the items in a curated list.
-   * 
-   * This works by providing the complete list of itemIds, in the order you want them to appear in the list.
-   * It is designed to work well with a Save button design, rather than a real-time drag and drop edit UX.
-   * 
-   * AccessRule – PLATFORM_ADMIN
- */
   rearrangeCuratedListItems: CuratedListMutationResponse,
-  /** AccessRule – PLATFORM_ADMIN */
   createRefund: CreateRefundMutationResponse,
 };
 
@@ -962,7 +528,8 @@ export type MutationCheckoutProductsArgs = {
   productsInfo: Array<ProductProductVariantId>,
   promoCodesToAdd?: Maybe<Array<Scalars['String']>>,
   quotedPrice: Scalars['Price'],
-  paymentProcessorData: Scalars['String']
+  paymentProcessorData: Scalars['String'],
+  anonOrderEmailAddress?: Maybe<Scalars['String']>
 };
 
 
@@ -980,7 +547,8 @@ export type MutationCheckoutProductsForFrontendPaymentArgs = {
 
 export type MutationConfirmOrderAfterFrontendPaymentArgs = {
   orderId: Scalars['ID'],
-  paymentProcessorData: Scalars['String']
+  paymentProcessorData: Scalars['String'],
+  anonOrderEmailAddress?: Maybe<Scalars['String']>
 };
 
 
@@ -1156,27 +724,19 @@ export type MutationCreateRefundArgs = {
   input: CreateRefundInput
 };
 
-/** Something that went wrong during a mutation. */
 export type MutationError = {
    __typename?: 'MutationError',
-  /** Identifier of the issue, so a client app can know how to communicate the problem to the user. */
   code: Scalars['String'],
-  /** message for a user to understand what went wrong. */
   debugMessage?: Maybe<Scalars['String']>,
-  /** Technical message for developer to use if the issue arises during development. */
   error?: Maybe<Scalars['String']>,
 };
 
-/** Collection of one or more problems that happened during a mutation. */
 export type MutationErrorSummary = {
    __typename?: 'MutationErrorSummary',
-  /** The error or errors that were encountered trying to process the request. */
   errors?: Maybe<Array<Maybe<MutationError>>>,
-  /** Indication of whether or not the problem could be overcome by retrying. */
   shouldRetry?: Maybe<Scalars['Boolean']>,
 };
 
-/** Record of payment for products aka a successful cart checkout */
 export type Order = {
    __typename?: 'Order',
   id: Scalars['ID'],
@@ -1190,7 +750,6 @@ export type Order = {
   isCartlessPurchase: Scalars['Boolean'],
 };
 
-/** Very similar to CartItem, this freezes the version of the product and the pricing that applied */
 export type OrderItem = {
    __typename?: 'OrderItem',
   id: Scalars['ID'],
@@ -1244,7 +803,6 @@ export type OrderSnapshot = {
   paymentProcessor?: Maybe<PaymentProcessor>,
 };
 
-/** Order Status for individual items. */
 export enum OrderStatus {
   CREATED = 'CREATED',
   CANCELLED = 'CANCELLED',
@@ -1269,7 +827,6 @@ export type PageBasedConnectionPageInfo = {
   totalPages?: Maybe<Scalars['Int']>,
 };
 
-/** Parameters that control how to access pages within a Connection that uses a descrete page system instead of a cursor. */
 export type PageBasedConnectionQuery = {
   sortAscending?: Maybe<Scalars['Boolean']>,
   pageNumber?: Maybe<Scalars['Int']>,
@@ -1277,9 +834,7 @@ export type PageBasedConnectionQuery = {
 };
 
 export type PageBasedConnectionWithMetrics = {
-  /** COUNT(*) of a query, larger than the number of paginated results returned */
   totalCount?: Maybe<Scalars['Int']>,
-  /** SUM(x) of a query, where x is a specific column to be aggregated */
   totalAmount?: Maybe<Scalars['Int']>,
   pageInfo: PageBasedConnectionPageInfo,
 };
@@ -1293,15 +848,11 @@ export type PageInfo = {
 };
 
 export enum PayeeType {
-  /** Store */
   STORE = 'STORE',
-  /** Affiliates */
   AFFILIATE = 'AFFILIATE',
-  /** EFC */
   PLATFORM = 'PLATFORM'
 }
 
-/** Stripe Credit Card, or Paypal Payment Method, or ? some other processor */
 export type PaymentMethod = {
    __typename?: 'PaymentMethod',
   id: Scalars['ID'],
@@ -1319,16 +870,15 @@ export type PaymentMethod = {
   details?: Maybe<Scalars['String']>,
 };
 
-/** Payment Processor Company */
 export enum PaymentProcessor {
   STRIPE = 'Stripe',
   STRIPEDOMESTIC = 'StripeDomestic',
   PAYPAL = 'Paypal',
   APPLEPAY = 'ApplePay',
-  GOOGLEPAY = 'GooglePay'
+  GOOGLEPAY = 'GooglePay',
+  NOPAYMENTFEES = 'NoPaymentFees'
 }
 
-/** Record of a payout event from the platform to the owner of a store */
 export type Payout = {
    __typename?: 'Payout',
   id: Scalars['ID'],
@@ -1340,36 +890,22 @@ export type Payout = {
   endPeriod: Scalars['Date'],
   payoutDate: Scalars['Date'],
   payoutStatus: PayoutStatus,
-  /** 
- * This should later be a payoutID -> bank account/paypal email/card
-   * sellers may have a variety of payout methods to choose from with Adyen.
- */
   payoutEmail: Scalars['String'],
   currency: Scalars['String'],
   payoutItemIds: Array<Scalars['ID']>,
   approvedByIds: Array<Scalars['ID']>,
   details?: Maybe<Scalars['String']>,
   approvedByAdmins: Array<UserWithRole>,
-  /** 
- * Payout items breakdown.
-   * PayoutId -> PayoutItems -> OrderItems
- */
   payoutItemsConnection: PayoutItemsConnection,
-  /** 
- * product sales breakdown.
-   * PayoutId -> PayoutItems -> OrderItems
- */
   productsBreakdownConnection: ProductsSoldPeriodSummaryConnection,
 };
 
 
-/** Record of a payout event from the platform to the owner of a store */
 export type PayoutPayoutItemsConnectionArgs = {
   query?: Maybe<ConnectionQuery>
 };
 
 
-/** Record of a payout event from the platform to the owner of a store */
 export type PayoutProductsBreakdownConnectionArgs = {
   query?: Maybe<ConnectionQuery>
 };
@@ -1380,11 +916,6 @@ export type PayoutEdge = Edge & {
   node: Payout,
 };
 
-/** 
- * Summary of (upcoming) sales for
- * today, last 7 days, last 30 days, all time.
- * Includes deductions from refunds
- */
 export type PayoutHistorySummaries = {
    __typename?: 'PayoutHistorySummaries',
   today: SummaryStatistics,
@@ -1403,10 +934,6 @@ export type PayoutInput = {
   endPeriod?: Maybe<Scalars['Date']>,
   payoutDate?: Maybe<Scalars['Date']>,
   payoutStatus?: Maybe<PayoutStatus>,
-  /** 
- * This should later be a payoutID -> bank account/paypal email/card
-   * sellers may have a variety of payout methods to choose from with Adyen.
- */
   payoutEmail?: Maybe<Scalars['String']>,
   currency?: Maybe<Scalars['String']>,
   payoutItemIds?: Maybe<Array<Maybe<Scalars['ID']>>>,
@@ -1434,9 +961,7 @@ export type PayoutItem = {
 
 export type PayoutItemsConnection = ConnectionWithMetrics & {
    __typename?: 'PayoutItemsConnection',
-  /** The number of transactions in the period */
   totalCount?: Maybe<Scalars['Int']>,
-  /** Sums the 'subtotal' column of the transactions table */
   totalAmount?: Maybe<Scalars['Int']>,
   pageInfo: PageInfo,
   edges: Array<PayoutItemsEdge>,
@@ -1450,9 +975,7 @@ export type PayoutItemsEdge = Edge & {
 
 export type PayoutItemsPagedConnection = PageBasedConnectionWithMetrics & {
    __typename?: 'PayoutItemsPagedConnection',
-  /** The number of payoutItems in the period */
   totalCount?: Maybe<Scalars['Int']>,
-  /** Sums the 'amount' column of the payout_items table */
   totalAmount?: Maybe<Scalars['Int']>,
   pageInfo: PageBasedConnectionPageInfo,
   edges: Array<PayoutItemsPagedEdge>,
@@ -1464,7 +987,6 @@ export type PayoutItemsPagedEdge = PageBasedConnectionEdge & {
   node: PayoutItem,
 };
 
-/** Details about how to get paid for selling products */
 export type PayoutMethod = {
    __typename?: 'PayoutMethod',
   id: Scalars['ID'],
@@ -1472,11 +994,8 @@ export type PayoutMethod = {
   createdAt: Scalars['Date'],
   updatedAt?: Maybe<Scalars['Date']>,
   payoutType?: Maybe<Scalars['String']>,
-  /** Paypal Only, or email associated with a bank account */
   payoutEmail?: Maybe<Scalars['String']>,
-  /** Paypal, Bank, or Card provider */
   payoutProcessor?: Maybe<Scalars['String']>,
-  /** ID associated with payout method from payout provider */
   payoutProcessorId?: Maybe<Scalars['String']>,
 };
 
@@ -1487,77 +1006,49 @@ export type PayoutMethodMutationResponse = {
 
 export type PayoutsConnection = ConnectionWithMetrics & {
    __typename?: 'PayoutsConnection',
-  /** The number of payouts in the period */
   totalCount?: Maybe<Scalars['Int']>,
-  /** Sums the 'amount' column of the payouts table */
   totalAmount?: Maybe<Scalars['Int']>,
   pageInfo: PageInfo,
   edges: Array<PayoutEdge>,
 };
 
 export enum PayoutStatus {
-  /** UNPAID */
   UNPAID = 'UNPAID',
-  /** Seller/Affiliate did not put down a payout method */
   MISSING_PAYOUT_METHOD = 'MISSING_PAYOUT_METHOD',
-  /** Payout retained by platform */
   RETAINED = 'RETAINED',
-  /** Payout pending another admin's approval before dispatch to payout provider */
   PENDING_APPROVAL = 'PENDING_APPROVAL',
-  /** Payout sent to payout provider and processing */
   PROCESSING = 'PROCESSING',
-  /** Payout processed and confirmed by payout provider */
   PAID = 'PAID',
-  /** Payout refunding initial state */
   REFUNDING = 'REFUNDING',
-  /** Pending refund, while waiting for payout to be approved */
   PENDING_REFUND = 'PENDING_REFUND',
-  /** Payout refunded, after payout */
   REFUNDED = 'REFUNDED'
 }
 
-/** Group of fields that apply to a Discount only when it is at the platform level */
 export type PlatformScopedDiscountInfo = {
    __typename?: 'PlatformScopedDiscountInfo',
   isApplicableToAnyProduct: Scalars['Boolean'],
 };
 
 
-/** All the information needed to break down the price of a single product */
 export type PriceDetails = {
    __typename?: 'PriceDetails',
-  /** The most expensive the item can be. */
   basePrice: Scalars['Price'],
-  /** The price being offered, which may or may not be discounted. */
   actualPrice: Scalars['Price'],
-  /** 
- * The details as to how the basePrice became the actualPrice, if they're different.
-   * If this is null, the price is not discounted.
- */
   discountBreakdown?: Maybe<PriceDetailsDiscountBreakdown>,
 };
 
 export type PriceDetailsDiscountBreakdown = {
    __typename?: 'PriceDetailsDiscountBreakdown',
-  /** Which fixed price discount is applied (if any). */
   fixedPriceDiscount?: Maybe<Discount>,
-  /** Which dollars-off discounts are applied (if any). */
   dollarsOffDiscounts: Array<Discount>,
-  /** Which percent-off price discount is applied (if any). */
   percentOffDiscount?: Maybe<Discount>,
-  /** How much of the total savings is attributed to the fixed price discount. */
   fixedPriceComponent: Scalars['Price'],
-  /** How much of the total savings is attributed to the dollars-off discounts. */
   dollarsOffComponent: Scalars['Price'],
-  /** How much of the total savings is attributed to the percent-off discount. */
   percentOffComponent: Scalars['Price'],
-  /** How much of the total savings is attributed to manual discounts. */
   promoCodeComponent: Scalars['Price'],
 };
 
-/** Something that can be bought */
 export type Product = {
-  /** Metadata */
   id: Scalars['ID'],
   createdAt: Scalars['Date'],
   updatedAt?: Maybe<Scalars['Date']>,
@@ -1566,17 +1057,11 @@ export type Product = {
   tags: Array<Scalars['String']>,
   storeId: Scalars['ID'],
   store: Store,
-  /** Whether or not the product owner has published it */
   isPublished: Scalars['Boolean'],
-  /** Whether or not a platform admin has unpublished it */
   isSuspended: Scalars['Boolean'],
-  /** Whether or not it has been deleted */
   isDeleted: Scalars['Boolean'],
-  /** Whether or not a platform admin has hidden it from automatic lists */
   isExcludedFromAutomaticLists: Scalars['Boolean'],
-  /** Chosen variant, for cartItems */
   chosenVariant?: Maybe<ProductVariant>,
-  /** Current snapshot */
   snapshotId: Scalars['ID'],
   snapshotCreatedAt: Scalars['Date'],
   name: Scalars['String'],
@@ -1589,7 +1074,6 @@ export type Product = {
   quantityLabel: QuantityLabel,
 };
 
-/** Category that a product belongs to */
 export type ProductCategory = {
    __typename?: 'ProductCategory',
   id: Scalars['ID'],
@@ -1601,62 +1085,32 @@ export type ProductCategory = {
 
 
 export type ProductCreateInput = {
-  /** ID of the category to file the product under. */
   categoryId: Scalars['ID'],
-  /** What to call the product #TODO: regex */
   name: Scalars['String'],
-  /** Short description of the product #TODO: regex */
   tagline: Scalars['String'],
-  /** A whole bunch of words to describe the product #TODO: regex */
   description: Scalars['String'],
-  /** 
- * The set of available variants.
-   * Cannot be empty.
-   * TODO: max number
- */
   currentVariants: Array<ProductVariantInput>,
-  /** Individual words (no spaces) that can help to surface the product in search results. #TODO: min & max number */
   tags: Array<Scalars['String']>,
-  /** Whether or not to put the item up for sale. */
   isPublished: Scalars['Boolean'],
-  /** Which type of variants system to use / what it means from user's perspective. */
   variantsLabel?: Maybe<VariantsLabel>,
-  /** Whether or not to allow more than 1 of this product per transaction. */
   isQuantityEnabled: Scalars['Boolean'],
-  /** Which type of quantity system to use / what it means from user's perspective. */
   quantityLabel?: Maybe<QuantityLabel>,
 };
 
 export type ProductEditInput = {
-  /** Identifier of the product to edit. */
   productId: Scalars['ID'],
-  /** ID of the category to file the product under. */
   categoryId: Scalars['ID'],
-  /** What to call the product #TODO: regex */
   name: Scalars['String'],
-  /** Short description of the product #TODO: regex */
   tagline: Scalars['String'],
-  /** A whole bunch of words to describe the product #TODO: regex */
   description: Scalars['String'],
-  /** 
- * The set of available variants.
-   * Will be sorted as per the provided order, and cannot be empty.
-   * TODO: max number
- */
   currentVariants: Array<ProductVariantEditInput>,
-  /** Individual words (no spaces) that can help to surface the product in search results. #TODO: max number */
   tags: Array<Scalars['String']>,
-  /** Whether or not to put the item up for sale. */
   isPublished: Scalars['Boolean'],
-  /** Which type of variants system to use / what it means from user's perspective. */
   variantsLabel?: Maybe<VariantsLabel>,
-  /** Whether or not to allow more than 1 of this product per transaction. */
   isQuantityEnabled: Scalars['Boolean'],
-  /** Which type of quantity system to use / what it means from user's perspective. */
   quantityLabel?: Maybe<QuantityLabel>,
 };
 
-/** Critical information about a file within a product */
 export type ProductFile = {
    __typename?: 'ProductFile',
   id: Scalars['ID'],
@@ -1666,7 +1120,6 @@ export type ProductFile = {
   sizeInBytes: Scalars['Int'],
 };
 
-/** Wrapping of temporary download link for a product file */
 export type ProductFileDownloadLink = {
    __typename?: 'ProductFileDownloadLink',
   productFileId: Scalars['ID'],
@@ -1689,7 +1142,6 @@ export type ProductMutationResponse = {
   product: Product,
 };
 
-/** An item that shows off the product (image, YouTube link, hosted videos to come) */
 export type ProductPreviewItem = {
    __typename?: 'ProductPreviewItem',
   id: Scalars['ID'],
@@ -1699,15 +1151,12 @@ export type ProductPreviewItem = {
 };
 
 export type ProductPreviewItemInput = {
-  /** ID of uploaded product image or a link to YouTube embedded video */
   imageId?: Maybe<Scalars['ID']>,
   youTubeEmbedLink?: Maybe<Scalars['String']>,
 };
 
-/** Private information about something that can be bought */
 export type ProductPrivate = Product & {
    __typename?: 'ProductPrivate',
-  /** Metadata */
   id: Scalars['ID'],
   createdAt: Scalars['Date'],
   updatedAt?: Maybe<Scalars['Date']>,
@@ -1716,17 +1165,11 @@ export type ProductPrivate = Product & {
   tags: Array<Scalars['String']>,
   storeId: Scalars['ID'],
   store: Store,
-  /** Whether or not the product owner has published it */
   isPublished: Scalars['Boolean'],
-  /** Whether or not a platform admin has unpublished it */
   isSuspended: Scalars['Boolean'],
-  /** Whether or not it has been deleted */
   isDeleted: Scalars['Boolean'],
-  /** Whether or not a platform admin has hidden it from automatic lists */
   isExcludedFromAutomaticLists: Scalars['Boolean'],
-  /** Chosen variant, for cartItems */
   chosenVariant?: Maybe<ProductVariant>,
-  /** Current snapshot */
   snapshotId: Scalars['ID'],
   snapshotCreatedAt: Scalars['Date'],
   name: Scalars['String'],
@@ -1737,12 +1180,10 @@ export type ProductPrivate = Product & {
   variantsLabel: VariantsLabel,
   isQuantityEnabled: Scalars['Boolean'],
   quantityLabel: QuantityLabel,
-  /** Connection to all the versions of the product, past and current. */
   historicalSnapshotsConnection: ProductsConnection,
 };
 
 
-/** Private information about something that can be bought */
 export type ProductPrivateHistoricalSnapshotsConnectionArgs = {
   query?: Maybe<ConnectionQuery>
 };
@@ -1753,10 +1194,8 @@ export type ProductProductVariantId = {
   quantity?: Maybe<Scalars['Int']>,
 };
 
-/** Public information about something that can be bought */
 export type ProductPublic = Product & {
    __typename?: 'ProductPublic',
-  /** Metadata */
   id: Scalars['ID'],
   createdAt: Scalars['Date'],
   updatedAt?: Maybe<Scalars['Date']>,
@@ -1765,17 +1204,11 @@ export type ProductPublic = Product & {
   tags: Array<Scalars['String']>,
   storeId: Scalars['ID'],
   store: Store,
-  /** Whether or not the product owner has published it */
   isPublished: Scalars['Boolean'],
-  /** Whether or not a platform admin has unpublished it */
   isSuspended: Scalars['Boolean'],
-  /** Whether or not it has been deleted */
   isDeleted: Scalars['Boolean'],
-  /** Whether or not a platform admin has hidden it from automatic lists */
   isExcludedFromAutomaticLists: Scalars['Boolean'],
-  /** Chosen variant, for cartItems */
   chosenVariant?: Maybe<ProductVariant>,
-  /** Current snapshot */
   snapshotId: Scalars['ID'],
   snapshotCreatedAt: Scalars['Date'],
   name: Scalars['String'],
@@ -1788,7 +1221,6 @@ export type ProductPublic = Product & {
   quantityLabel: QuantityLabel,
 };
 
-/** Record for the seller, of an item from their store that was included in a recent purchase on the platform */
 export type ProductSale = {
    __typename?: 'ProductSale',
   orderItem: OrderItem,
@@ -1809,12 +1241,9 @@ export type ProductsConnection = Connection & {
   edges: Array<ProductsEdge>,
 };
 
-/** Group of fields that apply to a Discount only when it is product-owned */
 export type ProductScopedDiscountInfo = {
    __typename?: 'ProductScopedDiscountInfo',
-  /** Single eligible variant snapshot that owns the discount */
   variantSnapshotId?: Maybe<Scalars['ID']>,
-  /** Optional stock limit condition for the discount. */
   stockLimitCondition?: Maybe<DiscountStockLimitCondition>,
 };
 
@@ -1824,7 +1253,6 @@ export type ProductsEdge = Edge & {
   node: Product,
 };
 
-/** Summary of how many sales of a specific product were made */
 export type ProductSoldPeriodSummary = {
    __typename?: 'ProductSoldPeriodSummary',
   product: Product,
@@ -1832,23 +1260,16 @@ export type ProductSoldPeriodSummary = {
   grossAmount: Scalars['Price'],
 };
 
-/** A "lite" version of a product-scoped Discount that's used for display purposes when owner is editing a product. */
 export type ProductSpecialDeal = {
    __typename?: 'ProductSpecialDeal',
-  /** The price to apply when the discount is applicable. */
   discountedPrice: Scalars['Price'],
-  /** Optional time based condition for the discount. */
   timeCondition?: Maybe<DiscountTimeCondition>,
-  /** Optional stock limit based condition for the discount. */
   stockLimitCondition?: Maybe<DiscountStockLimitCondition>,
 };
 
 export type ProductSpecialDealInput = {
-  /** The price to apply when the discount is applicable. */
   discountedPrice: Scalars['Price'],
-  /** Optional time based condition for the discount. */
   timeCondition?: Maybe<DiscountTimeConditionInput>,
-  /** Optional stock limit based condition for the discount. */
   stockLimitCondition?: Maybe<DiscountStockLimitConditionInput>,
 };
 
@@ -1865,7 +1286,6 @@ export type ProductsSoldPeriodSummaryEdge = Edge & {
   node: ProductSoldPeriodSummary,
 };
 
-/** User-facing information about the product variant */
 export type ProductVariant = {
    __typename?: 'ProductVariant',
   variantId: Scalars['ID'],
@@ -1883,336 +1303,84 @@ export type ProductVariant = {
   previewItems: Array<ProductPreviewItem>,
   fileIds: Array<Scalars['ID']>,
   files: Array<ProductFile>,
-  /** 
- * Details of a special deal that becomes a conditionally applicable Discount.
-   * NOTE: This is here for display purposes when owner edits a product.
-   * (This is the simplified parameters, full Discount object in specialDealDiscount)
- */
   specialDeal?: Maybe<ProductSpecialDeal>,
-  /** Whether or not the variant is sold out and therefore cannot be purchased. */
   isSoldOut: Scalars['Boolean'],
-  /** The amount available as a base (without special deal). */
   baseStockLevel?: Maybe<StockLevel>,
-  /** The amount currently available (after considering special deal). */
   currentStockLevel?: Maybe<StockLevel>,
-  /** Collection of discounts that may or may not be applicable to the price. */
   relevantDiscounts?: Maybe<Array<Maybe<Discount>>>,
-  /** Special deal discount that may be applicable to the price if present. */
   specialDealDiscount?: Maybe<Discount>,
-  /** Optional "always-on" fixed price Discount that replaces the base price. */
   permanentDiscountedPriceDiscount?: Maybe<Discount>,
 };
 
 export type ProductVariantEditInput = {
-  /** When the variant already existed, provide the ID, otherwise provide null because it's new */
   variantId?: Maybe<Scalars['ID']>,
-  /** What to call the product variant #TODO: regex */
   variantName: Scalars['String'],
-  /** A whole bunch of words to describe the product variant #TODO: regex */
   variantDescription: Scalars['String'],
-  /** Whether the variant is the default variant */
   isDefault: Scalars['Boolean'],
-  /** Price (now) for the product variant */
   price: Scalars['Price'],
-  /** Price (was) for the product variant */
   priceWas?: Maybe<Scalars['Price']>,
-  /** Details of a special deal that becomes a conditionally applicable Discount. */
   specialDeal?: Maybe<ProductSpecialDealInput>,
-  /** 
- * Set of product preview items.
-   * Will be sorted as per the provided order, and cannot be empty.
-   * #TODO: max number
- */
   previewItems: Array<ProductPreviewItemInput>,
-  /** 
- * IDs of uploaded files that constitute the product.
-   * Cannot be empty.
- */
   fileIds: Array<Scalars['ID']>,
-  /** Amount that can be purchased now (main stock level, irrelevant of specialDeal). */
   quantityAvailable?: Maybe<Scalars['Int']>,
 };
 
 export type ProductVariantInput = {
-  /** What to call the product variant #TODO: regex */
   variantName: Scalars['String'],
-  /** A whole bunch of words to describe the product variant #TODO: regex */
   variantDescription: Scalars['String'],
-  /** Whether the variant is the default variant */
   isDefault: Scalars['Boolean'],
-  /** Price (now) for the product variant */
   price: Scalars['Price'],
-  /** Price (was) for the product variant */
   priceWas?: Maybe<Scalars['Price']>,
-  /** Details of a special deal that becomes a conditionally applicable Discount. */
   specialDeal?: Maybe<ProductSpecialDealInput>,
-  /** 
- * Set of product preview items.
-   * Will be sorted as per the provided order, and cannot be empty.
-   * #TODO: max number
- */
   previewItems: Array<ProductPreviewItemInput>,
-  /** 
- * IDs of uploaded files that constitute the product.
-   * Cannot be empty.
- */
   fileIds: Array<Scalars['ID']>,
-  /** Amount that can be purchased now (main stock level, irrelevant of specialDeal). */
   quantityAvailable?: Maybe<Scalars['Int']>,
 };
 
 export enum QuantityLabel {
-  /** Default */
   QUANTITY = 'QUANTITY',
-  /** Seats, in relation to license variants */
   SEATS = 'SEATS'
 }
 
 export type Query = {
    __typename?: 'Query',
-  /** 
- * Get the user who is currently logged in.
-   * 
-   * AccessRule – LOGGED_IN
- */
   loggedInUser: UserPrivate,
-  /** 
- * Lookup public information about a user.
-   * If the requested user is also the logged-in user, UserPrivate fields will be available.
-   * 
-   * AccessRule – PUBLIC
- */
   user?: Maybe<User>,
-  /** 
- * Query the list of products that are recommended for the logged-in user.
-   * If nobody is logged in, a general list of recommendations is still returned.
-   * 
-   * AccessRule – PUBLIC
- */
   productsRecommendedConnection: ProductsConnection,
-  /** 
- * Query the list of products that have time limited deals and are ending soon.
-   * 
-   * AccessRule – PUBLIC
- */
   productsDealsEndingSoonConnection: ProductsConnection,
-  /** 
- * Query the list of products that have limited stock availability and are running low.
-   * 
-   * AccessRule – PUBLIC
- */
   productsLimitedReleasesConnection: ProductsConnection,
-  /** 
- * Perform universal search.
-   * 
-   * AccessRule – PUBLIC
- */
   search: SearchResultsConnection,
-  /** 
- * Retrieve all of the products on the platform that can be purchased.
-   * 
-   * AccessRule – PUBLIC
- */
   productsAllConnection: ProductsConnection,
-  /** 
- * Retrieve all of the products for sale within a specific category.
-   * 
-   * AccessRule – PUBLIC
- */
   productsByCategoryConnection?: Maybe<ProductsConnection>,
-  /** 
- * Get a product by its ID.
-   * 
-   * AccessRule – PUBLIC
- */
   product?: Maybe<Product>,
-  /** 
- * Get a store by its ID.
-   * 
-   * AccessRule – PUBLIC
- */
   store?: Maybe<Store>,
-  /** 
- * Get the full list of product categories.
-   * TODO: The maximum expected number of categories is X
-   * 
-   * AccessRule – PUBLIC
- */
   categories: Array<ProductCategory>,
-  /** 
- * Get a category by its ID.
-   * 
-   * AccessRule – PUBLIC
- */
   category?: Maybe<ProductCategory>,
-  /** 
- * Get the full list of platform scoped discounts that may or may not currently be applicable.
-   * 
-   * AccessRule – PLATFORM_ADMIN
- */
   platformDiscounts: DiscountsConnection,
-  /** 
- * Get the full list of store scoped discounts that may or may not currently be applicable.
-   * 
-   * AccessRule – PLATFORM_ADMIN
- */
   storeDiscounts: DiscountsConnection,
-  /** 
- * Query the complete list of products, on or off sale.
-   * 
-   * AccessRule – PLATFORM_ADMIN
- */
   productsAdminConnection: ProductsConnection,
-  /** 
- * Query the complete list of stores.
-   * 
-   * AccessRule – PLATFORM_ADMIN
- */
   storesAdminConnection: StoresConnection,
-  /** 
- * List credit card payment methods the user has saved
-   * 
-   * AccessRule – OWNER
- */
   listPaymentMethods?: Maybe<Array<PaymentMethod>>,
-  /** 
- * Get a credit card payment method's details from Stripe
-   * 
-   * AccessRule – OWNER
- */
   getPaymentMethod?: Maybe<PaymentMethod>,
-  /** 
- * Get transaction details of an order from efc-payment service
-   * 
-   * AccessRule – LOGGED_IN
- */
   getTransaction?: Maybe<Transaction>,
-  /** 
- * Get details about any order in the system.
-   * 
-   * AccessRule – PLATFORM_ADMIN
- */
   getOrderAsAdmin?: Maybe<Order>,
-  /** 
- * Get details of one of your orders.
-   * 
-   * AccessRule – OWNER
- */
   getOrder?: Maybe<Order>,
-  /** 
- * Get details of items within one of your orders.
-   * 
-   * AccessRule – OWNER
- */
   getOrderItem?: Maybe<OrderItem>,
-  /** 
- * List payoutItems between startDate and endDate.
-   * 
-   * AccessRule – PLATFORM_ADMIN
- */
   getPayoutItemsInPeriodAdmin: PayoutItemsConnection,
-  /** 
- * List payoutItems between startDate and endDate.
-   * Paged connection.
-   * 
-   * AccessRule – PLATFORM_ADMIN
- */
   getPayoutItemsInPeriodAdminPaged: PayoutItemsPagedConnection,
-  /** 
- * List all payouts in the period between startDate and endDate.
-   * 
-   * AccessRule – PLATFORM_ADMIN
- */
   getPayoutsInPeriodAdmin: PayoutsConnection,
-  /** 
- * List all payouts for a store/payee
-   * 
-   * AccessRule – OWNER
- */
   getPayouts: PayoutsConnection,
-  /** 
- * List a specific payouts for a store/payee
-   * 
-   * AccessRule – OWNER
- */
   getPayoutById: Payout,
-  /** 
- * List transactions between startDate and endDate.
-   * 
-   * AccessRule – PLATFORM_ADMIN
- */
   getTransactionsInPeriodAdmin: TransactionsConnection,
-  /** 
- * Get recent transactions, a helper function for Admin dashboard
-   * to test refunds
-   * 
-   * AccessRule – PLATFORM_ADMIN
- */
   getRecentTransactions: Array<Transaction>,
-  /** 
- * List sales summaries for stores in the period between startDate and endDate.
-   * ONLY RETURNS stores which actually made a sale in the period.
-   * 
-   * AccessRule – PLATFORM_ADMIN
- */
   getStoreSalesInPeriodAdmin: StoreSalesInPeriodConnection,
-  /** 
- * Query the list of orders that are currently unclaimed.
-   * Can be useful when trying to locate orders where a user had trouble accessing their downloads because
-   * they made the order while logged out and something funky happened while attempting to claim.
-   * 
-   * AccessRule – PLATFORM_ADMIN
- */
   unclaimedOrdersConnection: OrdersConnection,
-  /** 
- * Retrieve an unclaimed order using its ID.
-   * Useful for retrieving the details of an order to claim.
-   * 
-   * AccessRule – PUBLIC
- */
   unclaimedOrder?: Maybe<Order>,
-  /** 
- * Collection of products the user has saved for maybe purchasing later.
-   * 
-   * AccessRule – LOGGED_IN
- */
   wishlistItemsConnection: WishlistItemsConnection,
-  /** 
- * Collection of curated lists.
-   * 
-   * AccessRule – PLATFORM_ADMIN
- */
   listOfCuratedListsConnection: CuratedListsConnection,
-  /** 
- * Get a curated list by its ID.
-   * 
-   * AccessRule – PUBLIC
- */
   curatedList?: Maybe<CuratedList>,
-  /** 
- * Collection of items that make up a curated list.
-   * 
-   * AccessRule – PUBLIC
- */
   curatedListItemsConnection?: Maybe<CuratedListItemsConnection>,
-  /** 
- * Collection of items that make up a curated list.
-   * 
-   * This is the admin connection, which will show items that may otherwise be hidden due to published status etc.
-   * 
-   * AccessRule – PLATFORM_ADMIN
- */
   curatedListItemsAdminConnection?: Maybe<CuratedListItemsConnection>,
-  /** 
- * See if a string matches a promo code discount related to a bunch of products.
-   * 
-   * This is for use when logged out, because there isn't an actual cart yet so we need something
-   * other than addPromoCodeToCart. If the string doesn't match anything you get no discount back.
-   * 
-   * If there are multiple matches then you're given the discount that gives the lowest price in a cart context.
-   * 
-   * AccessRule – PUBLIC
- */
   tryPromoCode?: Maybe<Discount>,
 };
 
@@ -2461,7 +1629,6 @@ export type SalesBreakdown = {
   actualPrice: Scalars['Int'],
 };
 
-/** An item in a search result (this can accomodate multiple types of items in a search result) */
 export type SearchResultItem = ProductPublic | ProductPrivate;
 
 export type SearchResultsConnection = PageBasedConnection & {
@@ -2510,18 +1677,13 @@ export type SignUpMutationResponse = {
   stripeCustomerCreationResponse?: Maybe<StripeCustomerCreationResponse>,
 };
 
-/** Current stock level information, influencing whether an item is purchasable */
 export type StockLevel = {
    __typename?: 'StockLevel',
-  /** Amount that can be purchased now */
   quantityAvailable: Scalars['Int'],
-  /** When the quantity was last restocked */
   restockedAt?: Maybe<Scalars['Date']>,
-  /** How much was allocated when it was last restocked */
   quantityRestocked?: Maybe<Scalars['Int']>,
 };
 
-/** Information about a store */
 export type Store = {
   id: Scalars['ID'],
   createdAt: Scalars['Date'],
@@ -2534,39 +1696,24 @@ export type Store = {
   cover?: Maybe<Image>,
   bio?: Maybe<Scalars['String']>,
   website?: Maybe<Scalars['String']>,
-  /** Whether or not a platform admin has hidden it */
   isSuspended: Scalars['Boolean'],
-  /** Whether or not it has been deleted */
   isDeleted: Scalars['Boolean'],
   productsForSaleConnection: ProductsConnection,
 };
 
 
-/** Information about a store */
 export type StoreProductsForSaleConnectionArgs = {
   query?: Maybe<ConnectionQuery>
 };
 
-/** Collection of analytical information */
 export type StoreAnalytics = {
    __typename?: 'StoreAnalytics',
-  /** ID of the store owning the analytics */
   storeId: Scalars['ID'],
-  /** 
- * The total sum of revenues from sold products,
-   * and counts of sold items in periods:
-   * - today
-   * - last 7 days
-   * - last 30 days
-   * - all time
- */
   payoutHistorySummaries: PayoutHistorySummaries,
-  /** List of sold items */
   salesHistoryConnection: StoreSalesHistoryConnection,
 };
 
 
-/** Collection of analytical information */
 export type StoreAnalyticsSalesHistoryConnectionArgs = {
   query?: Maybe<ConnectionQuery>
 };
@@ -2576,7 +1723,6 @@ export type StoreMutationResponse = {
   store: StorePrivate,
 };
 
-/** Private store info */
 export type StorePrivate = Store & {
    __typename?: 'StorePrivate',
   id: Scalars['ID'],
@@ -2590,18 +1736,10 @@ export type StorePrivate = Store & {
   cover?: Maybe<Image>,
   bio?: Maybe<Scalars['String']>,
   website?: Maybe<Scalars['String']>,
-  /** Whether or not a platform admin has hidden it */
   isSuspended: Scalars['Boolean'],
-  /** Whether or not it has been deleted */
   isDeleted: Scalars['Boolean'],
   productsForSaleConnection: ProductsConnection,
-  /** 
- * Store admin's view of published products.
-   * NOTE: This will include products that have actually been suspended and
-   * therefore don't appear in `productsForSaleConnection`.
- */
   dashboardPublishedProductsConnection: ProductsConnection,
-  /** Store admin's view of currently unpublished products. */
   dashboardUnpublishedProductsConnection?: Maybe<ProductsConnection>,
   promoCodeDiscounts: DiscountsConnection,
   analytics: StoreAnalytics,
@@ -2609,30 +1747,25 @@ export type StorePrivate = Store & {
 };
 
 
-/** Private store info */
 export type StorePrivateProductsForSaleConnectionArgs = {
   query?: Maybe<ConnectionQuery>
 };
 
 
-/** Private store info */
 export type StorePrivateDashboardPublishedProductsConnectionArgs = {
   query?: Maybe<ConnectionQuery>
 };
 
 
-/** Private store info */
 export type StorePrivateDashboardUnpublishedProductsConnectionArgs = {
   query?: Maybe<ConnectionQuery>
 };
 
 
-/** Private store info */
 export type StorePrivatePromoCodeDiscountsArgs = {
   query?: Maybe<ConnectionQuery>
 };
 
-/** Public store info */
 export type StorePublic = Store & {
    __typename?: 'StorePublic',
   id: Scalars['ID'],
@@ -2646,16 +1779,13 @@ export type StorePublic = Store & {
   cover?: Maybe<Image>,
   bio?: Maybe<Scalars['String']>,
   website?: Maybe<Scalars['String']>,
-  /** Whether or not a platform admin has hidden it */
   isSuspended: Scalars['Boolean'],
-  /** Whether or not it has been deleted */
   isDeleted: Scalars['Boolean'],
   productsForSaleConnection: ProductsConnection,
   user: UserPublic,
 };
 
 
-/** Public store info */
 export type StorePublicProductsForSaleConnectionArgs = {
   query?: Maybe<ConnectionQuery>
 };
@@ -2696,21 +1826,12 @@ export type StoresConnection = Connection & {
   edges: Array<StoresEdge>,
 };
 
-/** Group of fields that apply to a Discount only when it is at the store level */
 export type StoreScopedDiscountInfo = {
    __typename?: 'StoreScopedDiscountInfo',
-  /** ID of the store the discount relates to */
   storeId: Scalars['ID'],
-  /** ID of specific product the discount relates to (any variant of this product). */
   productId?: Maybe<Scalars['ID']>,
-  /** 
- * ID of specific variant the discount relates to.
-   * This value is present instead of productId.
- */
   variantId?: Maybe<Scalars['ID']>,
-  /** How much do they have to be spending from this store before the discount can be active */
   minimumSpend?: Maybe<Scalars['Price']>,
-  /** How many items required in the cart from this store before the discount can be active */
   minimumQuantity?: Maybe<Scalars['Int']>,
 };
 
@@ -2727,7 +1848,6 @@ export type StripeCustomerCreationResponse = {
   endpoint?: Maybe<Scalars['String']>,
 };
 
-/** This is a condensed version of the Stripe Customer creation response */
 export type StripeCustomerProfile = {
    __typename?: 'StripeCustomerProfile',
   id?: Maybe<Scalars['String']>,
@@ -2768,9 +1888,7 @@ export type Transaction = {
 
 export type TransactionsConnection = Connection & {
    __typename?: 'TransactionsConnection',
-  /** The number of transactions in the period */
   totalCount?: Maybe<Scalars['Int']>,
-  /** Sums the 'amount' column of the payout_items table */
   totalAmount?: Maybe<Scalars['Int']>,
   pageInfo: PageInfo,
   edges: Array<TransactionsEdge>,
@@ -2798,13 +1916,11 @@ export type UploadSaveProductFileMutationResponse = {
   fileId: Scalars['ID'],
 };
 
-/** A category of file upload – each one has a different purpose. */
 export enum UploadType {
   IMAGE = 'IMAGE',
   PRODUCT_FILE = 'PRODUCT_FILE'
 }
 
-/** Information about a person on the platform */
 export type User = {
   id: Scalars['ID'],
   createdAt: Scalars['Date'],
@@ -2818,7 +1934,6 @@ export type UserMutationResponse = {
   user: UserPrivate,
 };
 
-/** Private user info */
 export type UserPrivate = User & {
    __typename?: 'UserPrivate',
   id: Scalars['ID'],
@@ -2851,30 +1966,25 @@ export type UserPrivate = User & {
 };
 
 
-/** Private user info */
 export type UserPrivateOrderHistoryConnectionArgs = {
   query?: Maybe<ConnectionQuery>
 };
 
 
-/** Private user info */
 export type UserPrivateDownloadsConnectionArgs = {
   query?: Maybe<ConnectionQuery>
 };
 
 
-/** Private user info */
 export type UserPrivatePayoutHistoryConnectionArgs = {
   query?: Maybe<ConnectionQuery>
 };
 
 
-/** Private user info */
 export type UserPrivateWishlistItemsConnectionArgs = {
   query?: Maybe<ConnectionQuery>
 };
 
-/** Public user info */
 export type UserPublic = User & {
    __typename?: 'UserPublic',
   id: Scalars['ID'],
@@ -2895,13 +2005,10 @@ export type UserWithRole = User & {
 };
 
 export enum VariantsLabel {
-  /** Default */
   VARIANT = 'VARIANT',
-  /** License type variants */
   LICENSE = 'LICENSE'
 }
 
-/** An individual item in a wishlist */
 export type WishlistItem = {
    __typename?: 'WishlistItem',
   ownerUserId: Scalars['ID'],

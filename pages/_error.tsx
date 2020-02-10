@@ -18,12 +18,6 @@ import { useRouter } from "next/router";
 // import ProductPageRecommendations from "pageComponents/Products/ProductPageRecommendations";
 // Next
 import dynamic from "next/dynamic";
-const YouMayAlsoLikeCarousel = dynamic(
-  () => import("components/Carousels/YouMayAlsoLikeCarousel"), {
-    loading: () => <Loading/>,
-    ssr: false,
-  }
-);
 import Hidden from "@material-ui/core/Hidden";
 
 
@@ -72,19 +66,6 @@ const ErrorPage = (props: ReactProps) => {
           </Button>
         </div>
       </div>
-      <Divider style={{ width: '90%', margin: "1rem" }}/>
-      {/* <Hidden mdUp>
-        <div className={classes.pageRecommendationsBox}>
-          <ProductPageRecommendations/>
-        </div>
-      </Hidden> */}
-      <Hidden smDown>
-        <YouMayAlsoLikeCarousel
-          // initialProducts={initialProductsLimitedRelease}
-          title={"You may also like"}
-          maxWidthCarousel={2000}
-        />
-      </Hidden>
     </div>
   );
 }

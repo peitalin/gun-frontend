@@ -27,18 +27,15 @@ import { GET_USER } from "queries/user-queries";
 // css
 import "../public/App.css";
 // import "react-datepicker/dist/react-datepicker.css";
-
 // offline service worker
 import { register, unregister } from 'next-offline/runtime'
-
-
 // Typings
 import { UserPrivate, ProductCategory } from 'typings/gqlTypes';
 import { serverApolloClient } from "utils/apollo";
-
 // Payment Clients
 import { StripeClient } from "layout/Checkout/typings.stripe";
 import { PaypalClient } from "layout/Checkout/typings.paypal";
+import Auth from "pageComponents/Auth0";
 
 
 declare global {
@@ -59,6 +56,10 @@ interface Context extends NextPageContext {
   store: Store<GrandReduxState>;
 }
 
+
+
+
+
 class MyApp extends App<AppProps> {
 
   static async getInitialProps(initialProps) {
@@ -67,10 +68,7 @@ class MyApp extends App<AppProps> {
     const { ctx }: { ctx: Context } = initialProps;
 
     // console.log('MyApp req headers:\n', option(ctx).req.headers.cookie());
-    const cookie = option(ctx).req.headers.cookie();
-    const dispatch = ctx.store.dispatch;
-
-    let userResponse = { data: undefined };
+    // const cookie = option(ctx).req.headers.cookie();
 
     // if (cookie && /efc-auth/.exec(cookie)) {
     //   try {
@@ -105,7 +103,15 @@ class MyApp extends App<AppProps> {
 
   state = {
     dataProvider: null,
+    auth: null,
   }
+
+  handleAuthentication = ({location}) => {
+    if (/access_token|id_token|error/.test(location.hash)) {
+      this.state.auth.handleAuthentication();
+    }
+  }
+
 
   componentDidMount() {
     // Remove the server-side injected CSS.
@@ -113,13 +119,13 @@ class MyApp extends App<AppProps> {
     if (jssStyles) {
       jssStyles.parentNode.removeChild(jssStyles);
     }
-    // register service worker
-    register()
+    const auth = new Auth();
+    this.setState({
+      auth: auth
+    })
   }
 
   componentWillUnmount () {
-    // unregister service worker
-    unregister()
   }
 
   render() {

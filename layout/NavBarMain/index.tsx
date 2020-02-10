@@ -18,7 +18,7 @@ const NavBar: React.FC<ReactProps> = (props) => {
         mobileMenuOpen={mobileMenuOpen}
         setMobileMenuOpen={setMobileMenuOpen}
       />
-      <CategoryBar/>
+      {/* <CategoryBar/> */}
       {
         mobileMenuOpen &&
         <MenuDither
