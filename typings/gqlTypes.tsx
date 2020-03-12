@@ -20,6 +20,12 @@ export type AddRemovePaymentMethodResponse = {
   user: UserPrivate,
 };
 
+export type AdminInsight = {
+   __typename?: 'AdminInsight',
+  name: Scalars['String'],
+  value: Scalars['String'],
+};
+
 export type ApprovePayoutsResult = {
    __typename?: 'ApprovePayoutsResult',
   approvedPayouts?: Maybe<Array<Maybe<Payout>>>,
@@ -349,20 +355,26 @@ export type Mutation = {
   checkoutCartForFrontendPayment: OrderMutationResponse,
   checkoutProductsForFrontendPayment: OrderMutationResponse,
   confirmOrderAfterFrontendPayment: OrderMutationResponse,
+  adminManuallyConfirmOrderAfterFrontendPayment: OrderMutationResponse,
   claimUnclaimedOrderOwnership: OrderMutationResponse,
   reassignOrderOwnership: OrderMutationResponse,
   refreshCart: CartMutationResponse,
   createStore: StoreMutationResponse,
   editStoreProfile?: Maybe<StoreMutationResponse>,
-  deleteStore: BlankMutationResponse,
-  adminDeleteStore: BlankMutationResponse,
+  deleteStore: StoreMutationResponse,
+  adminDeleteStore: StoreMutationResponse,
   createProduct: ProductMutationResponse,
   editProduct: ProductMutationResponse,
   deleteProduct?: Maybe<ProductMutationResponse>,
+  adminDeleteProduct?: Maybe<ProductMutationResponse>,
   suspendUser: BlankMutationResponse,
   unsuspendUser: BlankMutationResponse,
   suspendProduct?: Maybe<ProductMutationResponse>,
   unsuspendProduct?: Maybe<ProductMutationResponse>,
+  excludeProductFromAutomaticLists?: Maybe<ProductMutationResponse>,
+  includeProductInAutomaticLists?: Maybe<ProductMutationResponse>,
+  excludeProductFromSearch?: Maybe<ProductMutationResponse>,
+  includeProductInSearch?: Maybe<ProductMutationResponse>,
   suspendStore?: Maybe<StoreMutationResponse>,
   unsuspendStore?: Maybe<StoreMutationResponse>,
   createStorePromoCode: DiscountMutationResponse,
@@ -370,6 +382,7 @@ export type Mutation = {
   createPlatformDiscount: DiscountMutationResponse,
   editPlatformDiscount: DiscountMutationResponse,
   generateProductFileDownloadLink: ProductFileLinkMutationResponse,
+  adminGenerateProductFileDownloadLink: ProductFileLinkMutationResponse,
   setDefaultPaymentMethod: AddRemovePaymentMethodResponse,
   addPaymentMethod: AddRemovePaymentMethodResponse,
   removePaymentMethod: AddRemovePaymentMethodResponse,
@@ -381,6 +394,8 @@ export type Mutation = {
   removeItemFromCuratedList: CuratedListMutationResponse,
   rearrangeCuratedListItems: CuratedListMutationResponse,
   createRefund: CreateRefundMutationResponse,
+  reserveStoreLinkSlug?: Maybe<PrimaryLinkSlugs>,
+  removeStoreLinkSlug: BlankMutationResponse,
 };
 
 
@@ -411,7 +426,6 @@ export type MutationConfirmResetPasswordArgs = {
   email: Scalars['String'],
   expiresAt: Scalars['Date'],
   resetId: Scalars['String'],
-  url?: Maybe<Scalars['String']>,
   newPassword?: Maybe<Scalars['String']>
 };
 
@@ -552,6 +566,14 @@ export type MutationConfirmOrderAfterFrontendPaymentArgs = {
 };
 
 
+export type MutationAdminManuallyConfirmOrderAfterFrontendPaymentArgs = {
+  orderId: Scalars['ID'],
+  cartIdToEmpty?: Maybe<Scalars['ID']>,
+  paymentProcessorData: Scalars['String'],
+  anonOrderEmailAddress?: Maybe<Scalars['String']>
+};
+
+
 export type MutationClaimUnclaimedOrderOwnershipArgs = {
   orderId: Scalars['ID']
 };
@@ -606,6 +628,11 @@ export type MutationDeleteProductArgs = {
 };
 
 
+export type MutationAdminDeleteProductArgs = {
+  productId: Scalars['ID']
+};
+
+
 export type MutationSuspendUserArgs = {
   userId: Scalars['ID']
 };
@@ -622,6 +649,26 @@ export type MutationSuspendProductArgs = {
 
 
 export type MutationUnsuspendProductArgs = {
+  productId: Scalars['ID']
+};
+
+
+export type MutationExcludeProductFromAutomaticListsArgs = {
+  productId: Scalars['ID']
+};
+
+
+export type MutationIncludeProductInAutomaticListsArgs = {
+  productId: Scalars['ID']
+};
+
+
+export type MutationExcludeProductFromSearchArgs = {
+  productId: Scalars['ID']
+};
+
+
+export type MutationIncludeProductInSearchArgs = {
   productId: Scalars['ID']
 };
 
@@ -659,6 +706,11 @@ export type MutationEditPlatformDiscountArgs = {
 export type MutationGenerateProductFileDownloadLinkArgs = {
   id: Scalars['ID'],
   orderItemId: Scalars['ID']
+};
+
+
+export type MutationAdminGenerateProductFileDownloadLinkArgs = {
+  id: Scalars['ID']
 };
 
 
@@ -716,12 +768,17 @@ export type MutationRemoveItemFromCuratedListArgs = {
 
 export type MutationRearrangeCuratedListItemsArgs = {
   listId: Scalars['ID'],
-  itemIdsInOrder: Array<Maybe<Scalars['ID']>>
+  itemIdsInOrder: Array<Scalars['ID']>
 };
 
 
 export type MutationCreateRefundArgs = {
   input: CreateRefundInput
+};
+
+
+export type MutationReserveStoreLinkSlugArgs = {
+  slug: Scalars['String']
 };
 
 export type MutationError = {
@@ -896,13 +953,8 @@ export type Payout = {
   approvedByIds: Array<Scalars['ID']>,
   details?: Maybe<Scalars['String']>,
   approvedByAdmins: Array<UserWithRole>,
-  payoutItemsConnection: PayoutItemsConnection,
+  payoutItems?: Maybe<Array<Maybe<PayoutItem>>>,
   productsBreakdownConnection: ProductsSoldPeriodSummaryConnection,
-};
-
-
-export type PayoutPayoutItemsConnectionArgs = {
-  query?: Maybe<ConnectionQuery>
 };
 
 
@@ -921,6 +973,8 @@ export type PayoutHistorySummaries = {
   today: SummaryStatistics,
   last7Days: SummaryStatistics,
   last30Days: SummaryStatistics,
+  lastPeriod: SummaryStatistics,
+  currentPeriod: SummaryStatistics,
   allTime: SummaryStatistics,
 };
 
@@ -1048,6 +1102,13 @@ export type PriceDetailsDiscountBreakdown = {
   promoCodeComponent: Scalars['Price'],
 };
 
+export type PrimaryLinkSlugs = {
+   __typename?: 'PrimaryLinkSlugs',
+  ownerId: Scalars['ID'],
+  auto: Scalars['String'],
+  manual?: Maybe<Scalars['String']>,
+};
+
 export type Product = {
   id: Scalars['ID'],
   createdAt: Scalars['Date'],
@@ -1061,7 +1122,9 @@ export type Product = {
   isSuspended: Scalars['Boolean'],
   isDeleted: Scalars['Boolean'],
   isExcludedFromAutomaticLists: Scalars['Boolean'],
+  isExcludedFromSearch: Scalars['Boolean'],
   chosenVariant?: Maybe<ProductVariant>,
+  linkSlugs?: Maybe<PrimaryLinkSlugs>,
   snapshotId: Scalars['ID'],
   snapshotCreatedAt: Scalars['Date'],
   name: Scalars['String'],
@@ -1169,7 +1232,9 @@ export type ProductPrivate = Product & {
   isSuspended: Scalars['Boolean'],
   isDeleted: Scalars['Boolean'],
   isExcludedFromAutomaticLists: Scalars['Boolean'],
+  isExcludedFromSearch: Scalars['Boolean'],
   chosenVariant?: Maybe<ProductVariant>,
+  linkSlugs?: Maybe<PrimaryLinkSlugs>,
   snapshotId: Scalars['ID'],
   snapshotCreatedAt: Scalars['Date'],
   name: Scalars['String'],
@@ -1208,7 +1273,9 @@ export type ProductPublic = Product & {
   isSuspended: Scalars['Boolean'],
   isDeleted: Scalars['Boolean'],
   isExcludedFromAutomaticLists: Scalars['Boolean'],
+  isExcludedFromSearch: Scalars['Boolean'],
   chosenVariant?: Maybe<ProductVariant>,
+  linkSlugs?: Maybe<PrimaryLinkSlugs>,
   snapshotId: Scalars['ID'],
   snapshotCreatedAt: Scalars['Date'],
   name: Scalars['String'],
@@ -1226,6 +1293,7 @@ export type ProductSale = {
   orderItem: OrderItem,
   user?: Maybe<UserPublic>,
   userId?: Maybe<Scalars['ID']>,
+  payoutItems?: Maybe<Array<Maybe<PayoutItem>>>,
 };
 
 export type ProductSalesEdge = Edge & {
@@ -1366,6 +1434,7 @@ export type Query = {
   getOrderAsAdmin?: Maybe<Order>,
   getOrder?: Maybe<Order>,
   getOrderItem?: Maybe<OrderItem>,
+  getProductSale?: Maybe<ProductSale>,
   getPayoutItemsInPeriodAdmin: PayoutItemsConnection,
   getPayoutItemsInPeriodAdminPaged: PayoutItemsPagedConnection,
   getPayoutsInPeriodAdmin: PayoutsConnection,
@@ -1382,6 +1451,9 @@ export type Query = {
   curatedListItemsConnection?: Maybe<CuratedListItemsConnection>,
   curatedListItemsAdminConnection?: Maybe<CuratedListItemsConnection>,
   tryPromoCode?: Maybe<Discount>,
+  basicInsights: Array<AdminInsight>,
+  lookupProductLinkSlug?: Maybe<PrimaryLinkSlugs>,
+  lookupStoreLinkSlug?: Maybe<PrimaryLinkSlugs>,
 };
 
 
@@ -1392,7 +1464,8 @@ export type QueryUserArgs = {
 
 export type QueryProductsRecommendedConnectionArgs = {
   query?: Maybe<ConnectionQuery>,
-  excludeProduct?: Maybe<Scalars['ID']>
+  excludeProduct?: Maybe<Scalars['ID']>,
+  promoteSeller?: Maybe<Scalars['ID']>
 };
 
 
@@ -1489,6 +1562,11 @@ export type QueryGetOrderItemArgs = {
 };
 
 
+export type QueryGetProductSaleArgs = {
+  orderItemId: Scalars['ID']
+};
+
+
 export type QueryGetPayoutItemsInPeriodAdminArgs = {
   month?: Maybe<Scalars['Int']>,
   year?: Maybe<Scalars['Int']>,
@@ -1527,7 +1605,7 @@ export type QueryGetPayoutByIdArgs = {
 export type QueryGetTransactionsInPeriodAdminArgs = {
   month?: Maybe<Scalars['Int']>,
   year?: Maybe<Scalars['Int']>,
-  query: ConnectionQuery
+  query?: Maybe<ConnectionQuery>
 };
 
 
@@ -1585,6 +1663,16 @@ export type QueryTryPromoCodeArgs = {
   cartProductsInfo: Array<ProductProductVariantId>
 };
 
+
+export type QueryLookupProductLinkSlugArgs = {
+  slug: Scalars['String']
+};
+
+
+export type QueryLookupStoreLinkSlugArgs = {
+  slug: Scalars['String']
+};
+
 export type Refund = {
    __typename?: 'Refund',
   id: Scalars['ID'],
@@ -1613,7 +1701,6 @@ export type ResetPasswordResponse = {
   email?: Maybe<Scalars['String']>,
   expiresAt?: Maybe<Scalars['Date']>,
   resetId?: Maybe<Scalars['String']>,
-  url?: Maybe<Scalars['String']>,
 };
 
 export enum Role {
@@ -1699,6 +1786,7 @@ export type Store = {
   isSuspended: Scalars['Boolean'],
   isDeleted: Scalars['Boolean'],
   productsForSaleConnection: ProductsConnection,
+  linkSlugs?: Maybe<PrimaryLinkSlugs>,
 };
 
 
@@ -1739,6 +1827,7 @@ export type StorePrivate = Store & {
   isSuspended: Scalars['Boolean'],
   isDeleted: Scalars['Boolean'],
   productsForSaleConnection: ProductsConnection,
+  linkSlugs?: Maybe<PrimaryLinkSlugs>,
   dashboardPublishedProductsConnection: ProductsConnection,
   dashboardUnpublishedProductsConnection?: Maybe<ProductsConnection>,
   promoCodeDiscounts: DiscountsConnection,
@@ -1783,6 +1872,7 @@ export type StorePublic = Store & {
   isDeleted: Scalars['Boolean'],
   productsForSaleConnection: ProductsConnection,
   user: UserPublic,
+  linkSlugs?: Maybe<PrimaryLinkSlugs>,
 };
 
 

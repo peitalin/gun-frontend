@@ -35,7 +35,8 @@ import { serverApolloClient } from "utils/apollo";
 // Payment Clients
 import { StripeClient } from "layout/Checkout/typings.stripe";
 import { PaypalClient } from "layout/Checkout/typings.paypal";
-import Auth from "pageComponents/Auth0";
+import { Auth0Provider } from "layout/Auth0";
+import Router from "next/router";
 
 
 declare global {
@@ -43,7 +44,6 @@ declare global {
     App: any
     paypal: PaypalClient
     Stripe: StripeClient | any;
-    AdyenCheckout: any;
   }
 }
 
@@ -56,6 +56,15 @@ interface Context extends NextPageContext {
   store: Store<GrandReduxState>;
 }
 
+// A function that routes the user to the right place
+// after login
+const onRedirectCallback = appState => {
+  Router.push(
+    appState && appState.targetUrl
+      ? appState.targetUrl
+      : window.location.pathname
+  );
+};
 
 
 
@@ -103,15 +112,7 @@ class MyApp extends App<AppProps> {
 
   state = {
     dataProvider: null,
-    auth: null,
   }
-
-  handleAuthentication = ({location}) => {
-    if (/access_token|id_token|error/.test(location.hash)) {
-      this.state.auth.handleAuthentication();
-    }
-  }
-
 
   componentDidMount() {
     // Remove the server-side injected CSS.
@@ -119,11 +120,6 @@ class MyApp extends App<AppProps> {
     if (jssStyles) {
       jssStyles.parentNode.removeChild(jssStyles);
     }
-    const auth = new Auth();
-    this.setState({
-      auth: auth
-    })
-    console.log("auth0", auth)
   }
 
   componentWillUnmount () {
@@ -145,9 +141,20 @@ class MyApp extends App<AppProps> {
           <ThemeProvider theme={AppTheme}>
             <CssBaseline />
             <GlobalStyles/>
-              <Layout auth={this.state.auth}>
+            <Auth0Provider
+              domain={"gunbrokers.au.auth0.com"}
+              client_id={"yVGw33SMWWUtMknTvOntd3xwP6DtOACm"}
+              redirect_uri={
+                process.browser
+                  ? window.location.origin
+                  : null
+              }
+              onRedirectCallback={onRedirectCallback}
+            >
+              <Layout>
                 <Component {...pageProps} key={router.route} />
               </Layout>
+            </Auth0Provider>
           </ThemeProvider>
         </ApolloProvider>
       </Provider>

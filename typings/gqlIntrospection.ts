@@ -117,9 +117,6 @@
             "name": "PayoutEdge"
           },
           {
-            "name": "PayoutItemsEdge"
-          },
-          {
             "name": "ProductsSoldPeriodSummaryEdge"
           },
           {
@@ -127,6 +124,9 @@
           },
           {
             "name": "StoresEdge"
+          },
+          {
+            "name": "PayoutItemsEdge"
           },
           {
             "name": "TransactionsEdge"
