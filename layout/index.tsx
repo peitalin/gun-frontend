@@ -21,39 +21,17 @@ import { Colors } from "layout/AppTheme";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import { GrandReduxState } from "reduxStore/grand-reducer";
-import { AuthInterface } from "pageComponents/Auth0";
+// import { AuthInterface } from "layout/Auth0";
+
 // media query
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 
-
-
 const LayoutIfBrowser: React.FC<ReactProps> = (props) => {
   return (
     <ErrorBounds className="async-provider">
-      <Layout classes={props.classes} auth={props.auth}>
-        {
-          option(props).auth() &&
-          <>
-            <div style={{ height: '100px', width: '10px' }}></div>
-            <button onClick={() => {
-              props.auth.login()
-              props.auth.handleAuthentication()
-              console.log("logging in...")
-              console.log(localStorage)
-            }}>
-              login auth0
-            </button>
-            <button onClick={() => {
-              console.log("logging out...", props.auth)
-              props.auth.logout()
-              console.log(localStorage)
-            }}>
-              logout auth0
-            </button>
-          </>
-        }
+      <Layout classes={props.classes}>
         {props.children}
       </Layout>
     </ErrorBounds>
@@ -154,10 +132,10 @@ const PageContainer: React.FC<PageContainerProps> = (props) => {
 }
 
 interface ReactProps extends WithStyles<typeof styles> {
-  auth: AuthInterface;
 }
 interface PageContainerProps extends WithStyles<typeof styles> {
 }
+
 
 const styles = (theme: Theme) => createStyles({
   root: {
