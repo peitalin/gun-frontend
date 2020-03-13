@@ -114,11 +114,12 @@ const MainBar = (props: ReactProps) => {
         />
       </Hidden>
 
-      {!isAuthenticated && (
-        <button onClick={() => loginWithRedirect({})}>Log in</button>
-      )}
+      {
+        !isAuthenticated
+        ? <button onClick={() => loginWithRedirect({})}>Log in</button>
+        : <button onClick={() => logout()}>Log out</button>
+      }
 
-      {isAuthenticated && <button onClick={() => logout()}>Log out</button>}
     </nav>
   );
 };
