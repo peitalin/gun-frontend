@@ -350,8 +350,10 @@ export type Mutation = {
   adjustCartItemQuantity: Cart,
   addPromoCodeToCart: CartMutationResponse,
   removePromoCodeFromCart: CartMutationResponse,
-  checkoutCart: OrderMutationResponse,
-  checkoutProducts: OrderMutationResponse,
+  checkoutCart: OrderCreateMutationResponse,
+  checkoutConfirmCart: OrderMutationResponse,
+  checkoutProducts: OrderCreateMutationResponse,
+  checkoutConfirmProducts: OrderMutationResponse,
   checkoutCartForFrontendPayment: OrderMutationResponse,
   checkoutProductsForFrontendPayment: OrderMutationResponse,
   confirmOrderAfterFrontendPayment: OrderMutationResponse,
@@ -538,10 +540,22 @@ export type MutationCheckoutCartArgs = {
 };
 
 
+export type MutationCheckoutConfirmCartArgs = {
+  unconfirmedOrderId: Scalars['ID'],
+  paymentProcessorData: Scalars['String']
+};
+
+
 export type MutationCheckoutProductsArgs = {
   productsInfo: Array<ProductProductVariantId>,
   promoCodesToAdd?: Maybe<Array<Scalars['String']>>,
   quotedPrice: Scalars['Price'],
+  paymentProcessorData: Scalars['String']
+};
+
+
+export type MutationCheckoutConfirmProductsArgs = {
+  unconfirmedOrderId: Scalars['ID'],
   paymentProcessorData: Scalars['String'],
   anonOrderEmailAddress?: Maybe<Scalars['String']>
 };
@@ -581,7 +595,7 @@ export type MutationClaimUnclaimedOrderOwnershipArgs = {
 
 export type MutationReassignOrderOwnershipArgs = {
   orderId: Scalars['ID'],
-  userId: Scalars['ID']
+  userIdOrEmail: Scalars['String']
 };
 
 
@@ -802,9 +816,17 @@ export type Order = {
   createdAt: Scalars['Date'],
   updatedAt?: Maybe<Scalars['Date']>,
   userId?: Maybe<Scalars['ID']>,
+  user?: Maybe<User>,
   attachedPromoCodes: Array<Discount>,
   isLoggedOutPurchase: Scalars['Boolean'],
   isCartlessPurchase: Scalars['Boolean'],
+  isMobilePurchase: Scalars['Boolean'],
+};
+
+export type OrderCreateMutationResponse = {
+   __typename?: 'OrderCreateMutationResponse',
+  unconfirmedOrder: Order,
+  paymentProcessorResponse: Scalars['String'],
 };
 
 export type OrderItem = {
@@ -1414,6 +1436,7 @@ export type Query = {
    __typename?: 'Query',
   loggedInUser: UserPrivate,
   user?: Maybe<User>,
+  userByEmailOrId?: Maybe<User>,
   productsRecommendedConnection: ProductsConnection,
   productsDealsEndingSoonConnection: ProductsConnection,
   productsLimitedReleasesConnection: ProductsConnection,
@@ -1462,10 +1485,14 @@ export type QueryUserArgs = {
 };
 
 
+export type QueryUserByEmailOrIdArgs = {
+  userIdOrEmail: Scalars['String']
+};
+
+
 export type QueryProductsRecommendedConnectionArgs = {
   query?: Maybe<ConnectionQuery>,
-  excludeProduct?: Maybe<Scalars['ID']>,
-  promoteSeller?: Maybe<Scalars['ID']>
+  currentlyViewingProductId?: Maybe<Scalars['ID']>
 };
 
 
@@ -2426,17 +2453,6 @@ export type UserPrivateFragment = { __typename?: 'UserPrivate', id: string, isSu
           & ProductFragment_ProductPrivate_
         ) } }> } };
 
-export type CheckoutCartMutationVariables = {
-  quotedPrice: Scalars['Price'],
-  paymentProcessorData: Scalars['String']
-};
-
-
-export type CheckoutCartMutation = { __typename?: 'Mutation', checkoutCart: { __typename?: 'OrderMutationResponse', order: (
-      { __typename?: 'Order' }
-      & OrderFragment
-    ) } };
-
 export type CheckoutProductsMutationVariables = {
   productsInfo: Array<ProductProductVariantId>,
   promoCodesToAdd?: Maybe<Array<Scalars['String']>>,
@@ -2445,7 +2461,7 @@ export type CheckoutProductsMutationVariables = {
 };
 
 
-export type CheckoutProductsMutation = { __typename?: 'Mutation', checkoutProducts: { __typename?: 'OrderMutationResponse', order: (
+export type CheckoutProductsMutation = { __typename?: 'Mutation', checkoutProducts: { __typename?: 'OrderCreateMutationResponse', unconfirmedOrder: (
       { __typename?: 'Order' }
       & OrderFragment
     ) } };
@@ -3687,47 +3703,11 @@ export function useGetDownloadsLazyQuery(baseOptions?: ApolloReactHooks.LazyQuer
 export type GetDownloadsQueryHookResult = ReturnType<typeof useGetDownloadsQuery>;
 export type GetDownloadsLazyQueryHookResult = ReturnType<typeof useGetDownloadsLazyQuery>;
 export type GetDownloadsQueryResult = ApolloReactCommon.QueryResult<GetDownloadsQuery, GetDownloadsQueryVariables>;
-export const CheckoutCartDocument = gql`
-    mutation checkoutCart($quotedPrice: Price!, $paymentProcessorData: String!) {
-  checkoutCart(quotedPrice: $quotedPrice, paymentProcessorData: $paymentProcessorData) {
-    ... on OrderMutationResponse {
-      order {
-        ...OrderFragment
-      }
-    }
-  }
-}
-    ${OrderFragmentFragmentDoc}`;
-
-/**
- * __useCheckoutCartMutation__
- *
- * To run a mutation, you first call `useCheckoutCartMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useCheckoutCartMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [checkoutCartMutation, { data, loading, error }] = useCheckoutCartMutation({
- *   variables: {
- *      quotedPrice: // value for 'quotedPrice'
- *      paymentProcessorData: // value for 'paymentProcessorData'
- *   },
- * });
- */
-export function useCheckoutCartMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<CheckoutCartMutation, CheckoutCartMutationVariables>) {
-        return ApolloReactHooks.useMutation<CheckoutCartMutation, CheckoutCartMutationVariables>(CheckoutCartDocument, baseOptions);
-      }
-export type CheckoutCartMutationHookResult = ReturnType<typeof useCheckoutCartMutation>;
-export type CheckoutCartMutationResult = ApolloReactCommon.MutationResult<CheckoutCartMutation>;
-export type CheckoutCartMutationOptions = ApolloReactCommon.BaseMutationOptions<CheckoutCartMutation, CheckoutCartMutationVariables>;
 export const CheckoutProductsDocument = gql`
     mutation checkoutProducts($productsInfo: [ProductProductVariantId!]!, $promoCodesToAdd: [String!], $quotedPrice: Price!, $paymentProcessorData: String!) {
   checkoutProducts(productsInfo: $productsInfo, promoCodesToAdd: $promoCodesToAdd, quotedPrice: $quotedPrice, paymentProcessorData: $paymentProcessorData) {
-    ... on OrderMutationResponse {
-      order {
+    ... on OrderCreateMutationResponse {
+      unconfirmedOrder {
         ...OrderFragment
       }
     }

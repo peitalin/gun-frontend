@@ -1,0 +1,79 @@
+
+
+mutation {
+  insert_products(objects:[
+    {
+      id: "prod_1",
+      current_snapshot_id: "prod_snapshot_1",
+      store_id: "store_1",
+    },
+    {
+      id: "prod_2",
+      current_snapshot_id: "prod_snapshot_2",
+      store_id: "store_2",
+    },
+  ]) {
+    affected_rows
+  }
+}
+
+mutation {
+  insert_product_snapshots(objects:[
+    {
+      id: "prod_snapshot_1",
+      product_id: "prod_1",
+      product_variant_snapshot_ids: "{prod_variant_snapshot_1_1}",
+      name: "gun1",
+      tagline: "some gun1",
+      description: "some gun1 description",
+      location: "some gun1 location",
+      dealer: "some gun1 dealer"
+    },
+    {
+      id: "prod_snapshot_2",
+      product_id: "prod_2",
+      product_variant_snapshot_ids: "{prod_variant_snapshot_2_2}",
+      name: "gun2",
+      tagline: "some gun2",
+      description: "some gun2 description",
+      location: "some gun2 location",
+      dealer: "some gun2 dealer"
+    },
+  ]) {
+    affected_rows
+  }
+}
+
+
+mutation {
+  insert_product_variants(objects:[
+    {
+      variant_snapshot_id: "prod_variant_snapshot_1_1",
+      variant_id: "prod_variant_1",
+      snapshot_id: "prod_snapshot_1",
+      product_id: "prod_1",
+      store_id: "store_1",
+      variant_name: "gun1 variant1",
+      variant_description: "gun1 variant1 description",
+      position: 0,
+      is_default: true,
+      base_price: 1500,
+      preview_item_ids: "{preview_item_1}"
+    },
+    {
+      variant_snapshot_id: "prod_variant_snapshot_2_2",
+      variant_id: "prod_variant_2",
+      snapshot_id: "prod_snapshot_2",
+      product_id: "prod_2",
+      store_id: "store_2",
+      variant_name: "gun1 variant1",
+      variant_description: "gun1 variant1 description",
+      position: 0,
+      is_default: true,
+      base_price: 1500,
+      preview_item_ids: "{preview_item_2}"
+    },
+  ]) {
+    affected_rows
+  }
+}

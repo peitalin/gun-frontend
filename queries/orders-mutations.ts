@@ -2,21 +2,6 @@ import gql from "graphql-tag";
 import { OrderFragment } from "./fragments";
 import { Order } from "typings/gqlTypes";
 
-export const CHECKOUT_CART = gql`
-  mutation checkoutCart($quotedPrice: Price!, $paymentProcessorData: String!) {
-    checkoutCart(
-      quotedPrice: $quotedPrice
-      paymentProcessorData: $paymentProcessorData
-    ) {
-      ... on OrderMutationResponse {
-        order {
-          ...OrderFragment
-        }
-      }
-    }
-  }
-  ${OrderFragment}
-`;
 
 export interface CheckoutCartResponse {
   data?: {
@@ -39,8 +24,8 @@ export const CHECKOUT_PRODUCTS = gql`
       quotedPrice: $quotedPrice
       paymentProcessorData: $paymentProcessorData
     ) {
-      ... on OrderMutationResponse {
-        order {
+      ... on OrderCreateMutationResponse {
+        unconfirmedOrder {
           ...OrderFragment
         }
       }
