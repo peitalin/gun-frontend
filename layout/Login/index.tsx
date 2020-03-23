@@ -1,475 +1,66 @@
 import React from "react";
-import { withStyles, WithStyles, Theme, createStyles } from "@material-ui/core/styles";
-import { oc as option } from "ts-optchain";
-// Redux
-import { connect } from "react-redux"
-import { GrandReduxState } from 'reduxStore/grand-reducer';
-import { ReduxStateLogin } from 'reduxStore/login-reducer';
-import { ReduxStateCart } from 'reduxStore/cart-reducer';
-import { Actions } from 'reduxStore/actions';
-// Graphql
-import { CREATE_USER } from "queries/user-mutations";
-import { LOGIN, GET_USER, SEND_RESET_PASSWORD_EMAIL } from "queries/user-queries";
-import { UserPrivate, CartItem, Cart } from "typings/gqlTypes";
-import { SendPasswordResetResponse } from "typings";
-
-import LoginPageModal from "./LoginPageModal";
-import LoginPageCompact from "./LoginPageCompact";
-import LoginPageRedirect from "./LoginPageRedirect";
-
-import SnackBarA from "components/Snackbars/SnackbarA";
-import { useApolloClient } from "@apollo/react-hooks";
-import { logout } from "queries/requests";
-import {
-  setLoginExpiration,
-  runOnLoginExpiration,
-  checkThenSetLoggedInStatus
-} from "./utils";
-import { toProductProductVariantId } from "utils/conversions";
-import { useRouter } from "next/router";
-import { useDispatch } from "react-redux";
-// make snackbars appear above modal dither
-import Portal from '@material-ui/core/Portal';
+import Button from '@material-ui/core/Button';
+import { Colors } from "layout/AppTheme";
+// styles
+import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
+import { useAuth0 } from "layout/Auth0";
 
 
-/////////////////////////////////////////
-//////// Login Modal Component //////////
-/////////////////////////////////////////
 
-
-const Login: React.FC<ReactProps & ReduxProps> = (props) => {
-
-  const [state, setState] = React.useState({
-    openModal: false,
-    loading: false,
-    showError: false,
-    dataExists: false,
-    error: { message: "" },
-    status: "",
-    tabIndex: props.initialTabIndex || 0,
-  })
-
-  const apolloClient = useApolloClient();
-  const router = useRouter();
-  const dispatch = useDispatch();
-
-  React.useEffect(() => {
-    // componentDidMount
-    checkThenSetLoggedInStatus(() => {
-      props.updateLoginState({ loggedIn: true })
-    });
-    runOnLoginExpiration(() => {
-      props.updateLoginState({ loggedIn: false })
-      logout(apolloClient, '/', dispatch)
-    })
-  }, [])
-
-
-  const handleToggleModal = () => {
-    if (state.openModal) {
-      setState(s => ({ ...s, tabIndex: props.initialTabIndex || 0 }))
-    }
-    setState(s => ({ ...s, openModal: !state.openModal }))
-  }
-
-  const setTabIndex = (value: number) => setState(s => ({ ...s, tabIndex: value }));
-
-  const userNotFound = (errMessage: string) => {
-    return /[Nn]ot\s*[Ff]ound/.exec(errMessage.toLowerCase())
-  }
-
-  const isLoginInputOk = ({ email, password }) => {
-    if (!email) {
-      setState(s => ({ ...s, status: "Email is missing!" }))
-      return false
-    } else if (!password) {
-      setState(s => ({ ...s, status: "Password is missing!" }))
-      return false
-    } else {
-      if (validateEmail(email)) {
-        return true
-      } else {
-        setState(s => ({ ...s, status: "Invalid email!" }))
-        return false
-      }
-    }
-  }
-
-  const updateLoginState = (user, loading, errors) => {
-    // Update login UI state
-    props.updateLoginState({
-      user: user,
-      loading,
-      loggedIn: true,
-      error: errors,
-    });
-    // Set loginExpiration token and countdown timer
-    setLoginExpiration(24);
-    // Popup Snackbar
-    setState(s => ({ ...s, dataExists: true, loading: false }));
-    // Close modal after a delay
-    setTimeout(() => {
-      setState(s => ({ ...s, openModal: false, tabIndex: 0 }))
-    }, 900);
-  }
-
-  const handleGraphQLResponse = ({ data, loading, errors }: Aprops) => {
-    if (errors !== undefined) {
-      handleGqlError(errors)
-    }
-    if (!data) {
-      console.log("No data")
-    }
-
-    if (data && data.logInUsingEmail || data && data.signUpUsingEmail) {
-      // optional chaining
-      let user = option(data.logInUsingEmail).user()
-              || option(data.signUpUsingEmail).user();
-      // Update apollo cache
-      apolloClient.cache.writeQuery({
-        query: GET_USER,
-        data: {
-          user: {
-            ...user,
-            cart: {
-              ...user.cart,
-            }
-          }
-        }
-      });
-      // if login/signup succeeded, and there is a redirect...
-      if (props.redirectOnComplete) {
-        if (
-          props.redirectOnComplete === 'none' ||
-          props.redirectOnComplete === ''
-        ) {
-        } else {
-          router.push(props.redirectOnComplete);
-        }
-      }
-      if (props.callbackOnComplete) {
-        props.callbackOnComplete()
-      }
-      // Update redux cart state
-      props.updateCartState(user.cart)
-      updateLoginState(user, loading, errors)
-    }
-
-  }
-
-  const handleGqlError = (errors) => {
-    setState(s => ({
-      ...s,
-      showError: true,
-      error: errors[0], // Apollo error/errors API mismatch
-      loading: false,
-    }));
-    // make sure "errorPolicy == all" for GraphQL requests
-    if (userNotFound(errors[0].message)) {
-      setTimeout(() => setState(s => ({ ...s, tabIndex: 1 })), 300);
-      // switch to register new user
-    }
-  }
-
-  const dispatchLogin = async({ email, password }: { email: string; password: string}) => {
-
-    if (!isLoginInputOk({ email, password })) {
-      return null
-    } else {
-      setState(s => ({ ...s, loading: true }));
-    }
-
-    let { data, loading, errors }: Aprops = await apolloClient.query({
-      query: LOGIN,
-      variables: {
-        email: email.trim(),
-        password: password,
-        productProductVariantIds: props.reduxCart
-          .cart.items.map(item => toProductProductVariantId(item))
-      },
-      fetchPolicy: "no-cache", // always do a network request, no caches
-      errorPolicy: "all", // propagate errors from backend to Snackbar
-    });
-
-    handleGraphQLResponse({ data, loading, errors });
-  }
-
-
-  const dispatchCreateUser = async({ email, password, firstName, lastName }) => {
-
-    if (!isLoginInputOk({ email, password })) {
-      return null
-    }
-    setState(s => ({ ...s, loading: true }));
-    let { reduxCart } = props;
-
-    let { data, errors } = await apolloClient.mutate({
-      mutation: CREATE_USER,
-      variables: {
-        email: email,
-        password: password,
-        firstName: firstName,
-        lastName: lastName,
-        productProductVariantIds: reduxCart.cart.items
-          .map(item => toProductProductVariantId(item))
-      },
-      update: (cache, { data: { createUser } }) => {
-        cache.writeQuery({
-          query: LOGIN,
-          data: { user: createUser },
-        });
-      },
-      errorPolicy: "all", // propagate errors from backend to Snackbar
-    });
-    let loading = true
-    handleGraphQLResponse({ data, loading, errors });
-  }
-
-
-  const dispatchResetPassword = async({ email }: { email: string }) => {
-    if (!email) {
-      setState(s => ({ ...s, status: "Email is missing!" }))
-      return null
-    } else {
-      setState(s => ({ ...s, loading: true }));
-    }
-
-    let { data, loading, errors }: Aprops = await apolloClient.query({
-      query: SEND_RESET_PASSWORD_EMAIL,
-      variables: {
-        email: email.trim(),
-      },
-      fetchPolicy: "no-cache", // always do a network request, no caches
-      errorPolicy: "all", // propagate errors from backend to Snackbar
-    });
-
-    if (!loading) {
-      setState(s => ({ ...s, loading: loading }));
-    }
-
-    if (errors !== undefined) {
-      handleGqlError(errors)
-    }
-
-    if (data.sendResetPasswordEmail) {
-      console.log(data.sendResetPasswordEmail)
-      setState(s => ({
-        ...s,
-        status: `Password reset email sent to ${data.sendResetPasswordEmail.emailSentTo}`
-      }))
-      // Close modal after a delay
-      setTimeout(() => {
-        setState(s => ({
-          ...s,
-          loading: false,
-          // openModal: false,
-          tabIndex: 3 // check email page
-        }))
-      }, 900);
-    }
-  }
+const Login: React.FC<ReactProps> = (props) => {
 
   const {
-    classes,
-    titleLogin = "Login",
-    titleSignup = "Create an account",
+    classes
   } = props;
 
-  return (
-    <>
-      {
-        props.compact
-        ? <LoginPageCompact
-            loggedIn={props.reduxLogin.loggedIn}
-            tabIndex={state.tabIndex}
-            setTabIndex={setTabIndex}
-            title={titleLogin}
-            dispatchLogin={dispatchLogin}
-            dispatchCreateUser={dispatchCreateUser}
-            dispatchResetPassword={dispatchResetPassword}
-          />
-        : props.redirectOnComplete
-          ? <LoginPageRedirect
-              loggedIn={props.reduxLogin.loggedIn}
-              tabIndex={state.tabIndex}
-              setTabIndex={setTabIndex}
-              titleLogin={titleLogin}
-              titleSignup={titleSignup}
-              dispatchLogin={dispatchLogin}
-              dispatchCreateUser={dispatchCreateUser}
-              dispatchResetPassword={dispatchResetPassword}
-            />
-          : <LoginPageModal
-              title={titleLogin}
-              loggedIn={props.reduxLogin.loggedIn}
-              tabIndex={state.tabIndex}
-              setTabIndex={setTabIndex}
-              dispatchLogin={dispatchLogin}
-              dispatchCreateUser={dispatchCreateUser}
-              openModal={state.openModal}
-              dispatchResetPassword={dispatchResetPassword}
-              handleToggleModal={handleToggleModal}
-              buttonProps={props.buttonProps}
-            />
-      }
+  const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
 
-      <div className={classes.modal}>
-        <Portal>
-          <SnackBarA
-            open={state.loading}
-            closeSnackbar={() => setState(s => ({ ...s, loading: false }))}
-            message={"Checking user login..."}
-            variant={"info"}
-          />
-          <SnackBarA
-            open={state.showError}
-            closeSnackbar={() => {
-              setState(s => ({ ...s, showError: false }));
-              // wait for Snackbar to move off-screen, before resetting error
-              setTimeout(() => setState(s => ({ ...s, error: undefined })), 300);
-            }}
-            message={state.error ? state.error.message : ""}
-            variant={"error"}
-          />
-          <SnackBarA
-            open={props.reduxLogin.loggedIn && state.dataExists}
-            closeSnackbar={() => setState(s => ({ ...s, dataExists: false }))}
-            message={"Successful login!"}
-            variant={"success"}
-          />
-          <SnackBarA
-            open={state.status.length > 0}
-            closeSnackbar={() => setState(s => ({ ...s, status: "" }))}
-            message={state.status}
-            variant={"info"}
-          />
-        </Portal>
-      </div>
-    </>
-  );
-};
-
-const validateEmail = (value) => {
-  if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)) {
-    // error = 'Invalid email address';
-    return false
+  if (isAuthenticated) {
+    return (
+      <Button
+        variant="text"
+        color="secondary"
+        className={classes.loginButton}
+        onClick={() => {
+          logout()
+          props.callbackOnComplete()
+        }}
+        {...props.buttonProps}
+      >
+        { props.logoutTitle ? props.logoutTitle : "Logout" }
+      </Button>
+    )
+  } else {
+    return (
+      <Button
+        variant="text"
+        color="secondary"
+        className={classes.loginButton}
+        onClick={() => {
+          loginWithRedirect({})
+          props.callbackOnComplete()
+        }}
+        {...props.buttonProps}
+      >
+        { props.loginTitle ? props.loginTitle : "Login" }
+      </Button>
+    )
   }
-  return true;
 }
 
 
-
-interface ReduxProps {
-  data?: { user: UserPrivate };
-  reduxLogin: ReduxStateLogin;
-  reduxCart: ReduxStateCart;
-  updateLoginState(payload: ReduxStateLogin): void;
-  updateCartState(payload: Cart): void;
-}
 interface ReactProps extends WithStyles<typeof styles> {
-  buttonVariant?: string;
-  compact?: boolean;
-  redirectOnComplete?: string;
+  loginTitle?: string;
+  logoutTitle?: string;
   buttonProps?: any;
-  titleLogin?: string;
-  titleSignup?: string;
-  initialTabIndex?: number;
-  callbackOnComplete?(): any;
+  callbackOnComplete?(): void;
 }
-interface Aprops {
-  data?: {
-    logInUsingEmail?: { user: UserPrivate };
-    signUpUsingEmail?: { user: UserPrivate };
-    sendResetPasswordEmail?: SendPasswordResetResponse;
-  };
-  loading?: boolean;
-  errors?: any;
-}
-
-const mapStateToProps = ( state: GrandReduxState ) => {
-  return {
-    reduxLogin: state.reduxLogin,
-    reduxCart: state.reduxCart,
-  }
-}
-
-const mapDispatchToProps = ( dispatch ) => {
-  return {
-    updateLoginState: (payload: ReduxStateLogin) => dispatch(
-      Actions.reduxLogin.UPDATE_LOGIN_STATE(payload)
-    ),
-    updateCartState: (payload: Cart) => dispatch(
-      Actions.reduxCart.UPDATE_CART(payload)
-    ),
-  }
-}
-
 
 
 const styles = (theme: Theme) => createStyles({
-  dialogPaperFull: {
-    width: "calc(100% - 0.5rem)",
-  },
-  dialogPaper: {
-    margin: '1rem',
-  },
-  modal: {
-    position: "fixed",
-    zIndex: 5000,
-    bottom: "20px",
-    right: "20px",
-  },
-  outerContainer: {
-    maxWidth: '400px',
-    padding: '2%',
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'center',
-  },
-  preHeader: {
-    marginTop: "1rem",
-    marginBottom: '1rem',
-  },
-  link: {
-    color: "#2484FF",
-    cursor: 'pointer',
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-  },
-  avatarSignin: {
-    margin: theme.spacing(1),
-    color: '#fff',
-    backgroundColor: theme.palette.primary.main,
-  },
-  avatarSignup: {
-    margin: theme.spacing(1),
-    color: '#fff',
-    backgroundColor: theme.palette.primary.main,
-  },
-  checkBox: {
-    fontSize: "0.8rem",
-  },
-  form: {
-    width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(1),
-  },
-  submit: {
-    marginTop: theme.spacing(1),
-  },
-  secureCheckout: {
-    color: "#bbbbbb",
-  },
-  secureCheckoutIcon: {
-    color: "#bbbbbb",
-    height: '0.8rem',
-    width: '0.8rem',
-    marginRight: "0.1rem",
+  loginButton: {
   },
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(withStyles(styles)( Login ))
+
+export default withStyles(styles)( Login );
