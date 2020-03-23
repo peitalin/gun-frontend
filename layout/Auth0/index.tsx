@@ -27,9 +27,9 @@ export const Auth0Provider = ({
   ...initOptions
 }) => {
 
-  const [isAuthenticated, setIsAuthenticated] = useState();
-  const [user, setUser] = useState();
-  const [auth0Client, setAuth0] = useState();
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [user, setUser] = useState(undefined);
+  const [auth0Client, setAuth0] = useState(undefined);
   const [loading, setLoading] = useState(true);
   const [popupOpen, setPopupOpen] = useState(false);
 
@@ -64,16 +64,18 @@ export const Auth0Provider = ({
 
   const loginWithPopup = async (params = {}) => {
     setPopupOpen(true);
-    try {
-      await auth0Client.loginWithPopup(params);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setPopupOpen(false);
+    if (auth0Client) {
+      try {
+        await auth0Client.loginWithPopup(params);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setPopupOpen(false);
+      }
+      const user = await auth0Client.getUser();
+      setUser(user);
+      setIsAuthenticated(true);
     }
-    const user = await auth0Client.getUser();
-    setUser(user);
-    setIsAuthenticated(true);
   };
 
 
