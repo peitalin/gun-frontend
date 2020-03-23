@@ -121,7 +121,7 @@ const DesktopMainBarLg = (props: DesktopMainBarProps) => {
             </Button>
           : <div className={classes.myDownloadsLogin}>
               <Login
-                titleLogin={"Wishlist"}
+                loginTitle={"Wishlist"}
                 buttonProps={{ color: "primary" }}
               />
             </div>
@@ -139,13 +139,13 @@ const DesktopMainBarLg = (props: DesktopMainBarProps) => {
                 <span className={
                   endRoute === 'my-downloads' ? classes.selectedRouteText : null
                 }>
-                    Downloads
+                    Orders
                 </span>
               </div>
             </Button>
           : <div className={classes.myDownloadsLogin}>
               <Login
-                titleLogin={"Downloads"}
+                loginTitle={"Orders"}
                 buttonProps={{ color: "primary" }}
               />
             </div>

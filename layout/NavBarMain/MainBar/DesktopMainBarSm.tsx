@@ -120,7 +120,7 @@ const DesktopMainBarSm = (props: ReactProps & DesktopMainBarProps) => {
             </Button>
           : <div className={classes.myDownloadsLogin}>
               <Login
-                titleLogin={"Downloads"}
+                loginTitle={"Downloads"}
                 buttonProps={{ color: "primary" }}
               />
             </div>

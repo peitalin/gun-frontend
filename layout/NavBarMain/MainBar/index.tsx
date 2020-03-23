@@ -36,7 +36,6 @@ import DesktopMainBarMd from "./DesktopMainBarMd";
 import DesktopMainBarSm from "./DesktopMainBarSm";
 import MobileMainBarXs from "./MobileMainBarXs";
 
-import { useAuth0 } from "layout/Auth0";
 
 
 
@@ -62,7 +61,6 @@ const MainBar = (props: ReactProps) => {
   }));
 
   const endRoute = router.pathname.split('/').pop();
-  const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
 
   const navBarProps = {
     classes,
@@ -113,12 +111,6 @@ const MainBar = (props: ReactProps) => {
           {...navBarProps}
         />
       </Hidden>
-
-      {
-        !isAuthenticated
-        ? <button onClick={() => loginWithRedirect({})}>Log in</button>
-        : <button onClick={() => logout()}>Log out</button>
-      }
 
     </nav>
   );
