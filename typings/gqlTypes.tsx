@@ -327,6 +327,13 @@ export type LoginMutationResponse = {
   setCookie?: Maybe<Scalars['String']>,
 };
 
+export type MostRecentDownloadRecord = {
+   __typename?: 'MostRecentDownloadRecord',
+  fileId: Scalars['ID'],
+  fileName?: Maybe<Scalars['String']>,
+  downloadedAt?: Maybe<Scalars['Date']>,
+};
+
 export type Mutation = {
    __typename?: 'Mutation',
   signUpUsingEmail: SignUpMutationResponse,
@@ -844,6 +851,7 @@ export type OrderItem = {
   product: Product,
   orderStatus: OrderStatus,
   quantity?: Maybe<Scalars['Int']>,
+  mostRecentDownloadRecords: Array<MostRecentDownloadRecord>,
 };
 
 export type OrderMutationResponse = {
