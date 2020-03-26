@@ -61,13 +61,22 @@ mutation {
       position: 0,
       image_id: "image_1",
       youtube_embed_link: null,
+      variant_snapshot_id: "pvs_prod_snapshot_1_prod_variant_1",
     },
     {
       id: "preview_item_2",
       position: 1,
       image_id: "image_2",
       youtube_embed_link: null,
-    }
+      variant_snapshot_id: "pvs_prod_snapshot_1_prod_variant_1",
+    },
+    {
+      id: "preview_item_3",
+      position: 0,
+      image_id: "image_1",
+      youtube_embed_link: null,
+      variant_snapshot_id: "pvs_prod_snapshot_1_prod_variant_2",
+    },
   ]) {
     affected_rows
   }
@@ -84,7 +93,6 @@ mutation {
       position: 0,
       is_default: true,
       base_price: 1500,
-      preview_item_ids: "{preview_item_1, preview_item_2}"
     },
     {
       variant_snapshot_id: "pvs_prod_snapshot_1_prod_variant_2",
@@ -95,9 +103,8 @@ mutation {
       variant_name: "0.308 Caliber",
       variant_description: "gun1 variant2 0.308 caliber",
       position: 0,
-      is_default: true,
+      is_default: false,
       base_price: 1800,
-      preview_item_ids: "{preview_item_1, preview_item2}"
     },
   ]) {
     affected_rows
@@ -114,7 +121,7 @@ mutation {
       model: "H001M",
       ammo_type: "Rimfire",
       action_type: "Lever",
-      bore_diamter: "0.224",
+      bore_diameter: "0.224",
       serial_number: "M222956H",
       location: "some gun1 location",
       dealer: "some gun1 dealer"
@@ -150,6 +157,58 @@ query {
       current_variants {
         variant_id
         variant_name
+      }
+    }
+  }
+}
+
+query {
+  products {
+    id
+    store_id
+    is_deleted
+    is_published
+    is_suspended
+    is_excluded_from_search
+    is_excluded_from_recommendations
+    category_id
+    created_at
+    updated_at
+    current_snapshot {
+      id
+      created_at
+      product_id
+      title
+      description
+      condition
+      make
+      model
+      ammo_type
+      action_type
+      bore_diameter
+      serial_number
+      location
+      dealer
+      current_variants {
+        variant_snapshot_id
+        variant_id
+        variant_name
+        variant_description
+        position
+        is_default
+        base_price
+        preview_items {
+          id
+          image_id
+          position
+          youtube_embed_link
+          variant_snapshot_id
+        }
+        preview_items_aggregate {
+          aggregate {
+            count
+          }
+        }
       }
     }
   }
