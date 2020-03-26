@@ -79,12 +79,12 @@ mutation {
       snapshot_id: "prod_snapshot_1",
       product_id: "prod_1",
       store_id: "store_1",
-      variant_name: "gun1 variant1",
-      variant_description: "gun1 variant1 description",
+      variant_name: "0.22WMR Caliber",
+      variant_description: "gun1 variant1 0.22 caliber",
       position: 0,
       is_default: true,
       base_price: 1500,
-      preview_item_ids: "{preview_item_1}"
+      preview_item_ids: "{preview_item_1, preview_item_2}"
     },
     {
       variant_snapshot_id: "pvs_prod_snapshot_1_prod_variant_2",
@@ -92,12 +92,12 @@ mutation {
       snapshot_id: "prod_snapshot_1",
       product_id: "prod_1",
       store_id: "store_1",
-      variant_name: "gun1 variant2",
-      variant_description: "gun1 variant2 description",
+      variant_name: "0.308 Caliber",
+      variant_description: "gun1 variant2 0.308 caliber",
       position: 0,
       is_default: true,
-      base_price: 1600,
-      preview_item_ids: "{preview_item_2}"
+      base_price: 1800,
+      preview_item_ids: "{preview_item_1, preview_item2}"
     },
   ]) {
     affected_rows
@@ -107,9 +107,15 @@ mutation {
     {
       id: "prod_snapshot_1",
       product_id: "prod_1",
-      name: "gun1",
-      tagline: "some gun1",
+      title: "gun1",
       description: "some gun1 description",
+      condition: "very good",
+      make: "Henry",
+      model: "H001M",
+      ammo_type: "Rimfire",
+      action_type: "Lever",
+      bore_diamter: "0.224",
+      serial_number: "M222956H",
       location: "some gun1 location",
       dealer: "some gun1 dealer"
     },
@@ -122,6 +128,7 @@ mutation {
       id: "prod_1",
       current_snapshot_id: "prod_snapshot_1",
       store_id: "store_1",
+      category_id: "category_1",
     },
   ]) {
     affected_rows
