@@ -86,6 +86,18 @@ const MainBar = (props: ReactProps) => {
     console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
   }
 
+  React.useEffect(() => {
+    gapi.signin2.render('g-signin2', {
+      'scope': 'https://www.googleapis.com/auth/plus.login',
+      'width': 200,
+      'height': 50,
+      'longtitle': true,
+      'theme': 'dark',
+      'onsuccess': onSignIn2
+    });
+  }, [])
+
+
   return (
     <nav className={clsx(
       classes.baseBar,
