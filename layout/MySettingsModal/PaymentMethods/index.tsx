@@ -16,8 +16,7 @@ import { styles } from "./styles";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 // Stripe
-import { CardElement, injectStripe } from 'react-stripe-elements';
-import { StripeClient } from "typings/typings-stripe";
+import {useStripe, useElements, CardElement} from '@stripe/react-stripe-js';
 // Components
 import Loading from "components/Loading";
 import ErrorDisplay, { GraphQLErrors } from "components/Error";
@@ -33,6 +32,8 @@ const PaymentMethods = (props: ReactProps) => {
   const { classes } = props;
   const aClient = useApolloClient();
   const dispatch = useDispatch();
+  const stripe = useStripe();
+
   const actions = Actions.reduxLogin;
   const [isLoading, setIsLoading] = React.useState(false);
 
@@ -133,7 +134,7 @@ const PaymentMethods = (props: ReactProps) => {
         </div>
         <AddCard
           user={props.user}
-          stripe={props.stripe}
+          stripe={stripe}
           isLoading={isLoading}
           setIsLoading={setIsLoading}
           refetchPaymentMethods={refetchUserPaymentMethods}
@@ -150,11 +151,10 @@ const PaymentMethods = (props: ReactProps) => {
 
 interface ReactProps extends WithStyles<typeof styles> {
   user: UserPrivate
-  stripe?: StripeClient & stripe.Stripe; // provided by AsyncStripeProvider
 }
 interface QueryData {
   user: UserPrivate;
 }
 
-export default withStyles(styles)(injectStripe( PaymentMethods ));
+export default withStyles(styles)( PaymentMethods );
 

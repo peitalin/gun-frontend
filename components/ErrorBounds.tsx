@@ -55,7 +55,7 @@ class ErrorBounds extends React.Component<ReduxProps & ReactProps, any> {
               color="primary"
               // onClick={() => Sentry.showReportDialog({ eventId: this.state.eventId })}
             >
-              {`A wild error appeared! Please report!`}
+              {`An error occurred`}
             </Button>
           </div>
           <Typography className={classes.errHeading}>
@@ -125,7 +125,7 @@ const styles = (theme: Theme) => createStyles({
     margin: 20,
     padding: 20,
     boxShadow: "1px 2px 3px 0px rgba(76,76,76,0.4)",
-    borderRadius: "6px",
+    borderRadius: "4px",
     border: "1px solid #eaeaea",
     transition: "all 100ms",
     "&:hover": {

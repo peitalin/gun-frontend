@@ -5,54 +5,78 @@ import { oc as option } from "ts-optchain";
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
 // Material UI
 import Typography from "@material-ui/core/Typography";
+import Button from "@material-ui/core/Button";
 // Components
 import Loading from "components/Loading";
-import ErrorDisplay, { JsonTree, GraphQLErrors } from "components/Error";
+import ErrorDisplay, { GraphQLErrors } from "components/Error";
 import ErrorBounds from "components/ErrorBounds";
-import TextInput from "components/Fields/TextInput";
-import ChangePasswordButton from "./ChangePasswordButton";
+import SnackBarA from "components/Snackbars/SnackbarA";
 // Typings
 import { HtmlEvent } from "typings";
+// Validation
+import { Formik, FormikProps } from 'formik';
+import { validationSchemas } from "utils/validation";
+import ChangePasswordFields from "./ChangePasswordFields";
+// Graphql Queries
+import { useMutation } from "@apollo/react-hooks";
+import { CHANGE_PASSWORD } from "queries/user-mutations";
+import { UserPrivate } from "typings/gqlTypes";
+
+
 
 
 
 const ChangePasswordForm = (props: ReactProps) => {
 
   const { classes } = props;
+
+  const [displayErr, setDisplayErr] = React.useState(true);
+  const [displaySuccess, setDisplaySuccess] = React.useState(true);
   const [showPasswordChanger, setShowPasswordChanger] = React.useState(false);
+
   // passwords
   const [currentPassword, setCurrentPassword] = React.useState("");
   const [newPassword, setNewPassword] = React.useState("");
   const [newPasswordAgain, setNewPasswordAgain] = React.useState("");
 
-  const handleSetCurrentPassword = (e: HtmlEvent) => {
-    let pass = e.target.value;
-    setCurrentPassword(pass);
-  };
+  const [changePassword, { loading, error, data}] =
+  useMutation<MutationData, MutationVar>(
+    CHANGE_PASSWORD, {
+      variables: {
+        currentPassword: "",
+        newPassword: ""
+      },
+      onCompleted: () => {
+        setTimeout(() => {
+          togglePasswordChange()
+        }, 800)
+      }
+    },
+  );
 
-  const handleSetNewPassword = (e: HtmlEvent) => {
-    let pass = e.target.value;
-    setNewPassword(pass);
-  };
-
-  const handleSetNewPasswordAgain = (e: HtmlEvent) => {
-    let pass = e.target.value;
-    setNewPasswordAgain(pass);
-  };
 
   const togglePasswordChange = () => {
     setShowPasswordChanger(show => !show)
-    setCurrentPassword("")
-    setNewPassword("")
-    setNewPasswordAgain("")
   }
 
-  const resetPasswordChange = () => {
-    setShowPasswordChanger(false)
-    setCurrentPassword("")
-    setNewPassword("")
-    setNewPasswordAgain("")
-  }
+  const resetPassword = () => {
+    setCurrentPassword("");
+    setNewPassword("");
+    setNewPasswordAgain("");
+  };
+
+  // re-use snackbars for multiple reset retries
+  React.useEffect(() => {
+    if (error) {
+      setDisplayErr(true)
+    }
+    if (data) {
+      setDisplaySuccess(true)
+    }
+
+    return () => {}
+  }, [data, error])
+
 
   return (
     <ErrorBounds className={classes.root}>
@@ -61,7 +85,9 @@ const ChangePasswordForm = (props: ReactProps) => {
           Password
         </Typography>
         <a className={classes.link}
-          onClick={togglePasswordChange}
+          onClick={() => {
+            togglePasswordChange()
+          }}
         >
           {
             !showPasswordChanger
@@ -80,69 +106,103 @@ const ChangePasswordForm = (props: ReactProps) => {
           }
         </a>
       </div>
-      <div>
-        <div className={clsx(
-          classes.formContainer,
-          showPasswordChanger
-            ? classes.displaySomePasswordForm
-            : classes.displayNone,
-        )}>
-          <Typography variant="body1" className={classes.passwordTitle}>
-            For security, please enter your current password.
-          </Typography>
-          <form autoComplete="off">
-            <TextInput
-              required
-              type="password"
-              placeholder={"Enter your current password"}
-              className={classes.textField}
-              value={currentPassword}
-              onChange={handleSetCurrentPassword}
-              inputProps={{ style: { width: '100%' }}}
-            />
-          </form>
-          <Typography variant="body1" className={classes.passwordTitle}>
-            Enter your new password
-          </Typography>
-          <form autoComplete="off">
-            <TextInput
-              required
-              type="password"
-              placeholder={"New password"}
-              className={classes.textField}
-              value={newPassword}
-              onChange={handleSetNewPassword}
-              inputProps={{ style: { width: '100%' }}}
-            />
-          </form>
-          <Typography variant="body1" className={classes.passwordTitle}>
-            Enter your new password again to confirm
-          </Typography>
-          <form autoComplete="off">
-            <TextInput
-              required
-              type="password"
-              placeholder={"New password again"}
-              className={classes.textField}
-              value={newPasswordAgain}
-              onChange={handleSetNewPasswordAgain}
-              inputProps={{ style: { width: '100%' }}}
-            />
-          </form>
-          <ChangePasswordButton
-            disabled={newPassword !== newPasswordAgain || newPassword.length < 6}
-            currentPassword={currentPassword}
-            newPassword={newPassword}
-            resetPasswordChange={resetPasswordChange}
-          />
-        </div>
-      </div>
+      <Formik
+        // 1. feed product data to edit into formik state.
+        initialValues={{
+          currentPassword: "",
+          newPassword: "",
+          newPasswordAgain: "",
+        }}
+        validationSchema={validationSchemas.PasswordReset}
+        onSubmit={(values, { setSubmitting }) => {
+          // console.log('formik values...: ', values);
+          // Dispatch Apollo Mutation after validation
+          changePassword({
+            variables: {
+              currentPassword: values.currentPassword,
+              newPassword: values.newPassword,
+            }
+          });
+          setTimeout(() => {
+            resetPassword()
+          }, 800)
+        }}
+      >
+        {(fprops) => {
+
+          const {
+            values,
+            touched,
+            errors,
+            dirty,
+            isSubmitting,
+            handleChange,
+            handleBlur,
+            handleSubmit,
+            handleReset,
+            validateField,
+            validateForm,
+          } = fprops;
+
+
+          return (
+              <div className={clsx(
+                classes.formContainer,
+                showPasswordChanger
+                  ? classes.displaySomePasswordForm
+                  : classes.displayNone,
+              )}>
+
+                <form onSubmit={ handleSubmit }>
+
+                  <ChangePasswordFields
+                    currentPassword={currentPassword}
+                    newPassword={newPassword}
+                    newPasswordAgain={newPasswordAgain}
+                    setCurrentPassword={ setCurrentPassword }
+                    setNewPassword={ setNewPassword }
+                    setNewPasswordAgain={ setNewPasswordAgain }
+                    {...fprops}
+                  />
+                  <SnackBarA
+                    open={data !== undefined && displaySuccess}
+                    closeSnackbar={() => setDisplaySuccess(false)}
+                    message={`Successfully updated your password.`}
+                    variant={"success"}
+                    autoHideDuration={3000}
+                  />
+                  <SnackBarA
+                    open={error !== undefined && displayErr}
+                    closeSnackbar={() => setDisplayErr(false)}
+                    message={`Incorrect password!`}
+                    variant={"error"}
+                    autoHideDuration={3000}
+                  />
+                </form>
+              </div>
+          )
+        }}
+      </Formik>
     </ErrorBounds>
   );
 }
 
 interface ReactProps extends WithStyles<typeof styles> {
 }
+interface Aprops {
+  data?: { changePassword: { user: UserPrivate }},
+  loading?: boolean,
+  error?: GraphQLErrors,
+}
+
+interface MutationData {
+  changePassword: { user: UserPrivate };
+}
+interface MutationVar {
+  currentPassword: string;
+  newPassword: string;
+}
+
 
 const styles = (theme: Theme) => createStyles({
   root: {

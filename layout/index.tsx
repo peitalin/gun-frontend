@@ -6,55 +6,26 @@ import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/s
 // Components
 import NavBarMain from "./NavBarMain";
 import { NavBarHeight } from "layout/NavBarMain/styles";
+import Loading from "components/Loading";
 import Footer from "./Footer";
 import GetUser from "./GetUser";
 import Modals from "./Modals";
 // Typings
 import { UserPrivate } from "typings/gqlTypes";
 // Stripe
-import StripeAsyncProvider from "components/StripeAsyncProvider";
+import StripeProvider from "layout/StripeProvider";
 import ErrorBounds from "components/ErrorBounds";
 import { Colors } from "layout/AppTheme";
-// import SideRoutesMenu from "pageComponents/SellerProfileDashboard/SideRoutesMenu";
-// import SellerDashboardMenu from "pageComponents/SellerProfileDashboard/SellerDashboardMenu";
 // Router
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import { GrandReduxState } from "reduxStore/grand-reducer";
-// import { AuthInterface } from "layout/Auth0";
-
 // media query
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 
-const LayoutIfBrowser: React.FC<ReactProps> = (props) => {
-  return (
-    <ErrorBounds className="async-provider">
-      <Layout classes={props.classes}>
-        {props.children}
-      </Layout>
-    </ErrorBounds>
-  )
-  // if (process.browser) {
-  //   return (
-  //     <StripeAsyncProvider>
-  //       <Layout classes={props.classes}>
-  //         {props.children}
-  //       </Layout>
-  //     </StripeAsyncProvider>
-  //   )
-  // } else {
-  //   // wrap in an extra <div> to match <div> in StripeAsyncProvider above
-  //   return (
-  //     <ErrorBounds className="async-provider">
-  //       <Layout classes={props.classes}>
-  //         {props.children}
-  //       </Layout>
-  //     </ErrorBounds>
-  //   )
-  // }
-}
+
 
 
 const Layout: React.FC<ReactProps> = (props) => {
@@ -68,55 +39,19 @@ const Layout: React.FC<ReactProps> = (props) => {
     s => s.reduxLogin.user
   );
 
-  const renderLayout = () => {
-
-    if (!router.pathname.includes('/seller')) {
-      // return normal layout
-      return <>{props.children}</>
-    }
-
-    if (router.pathname.includes('/seller') && option(user).store()) {
-      if (!lgDown) {
-        // desktop size
-        return (
-          <ErrorBounds className={classes.flexJustify}>
-            <div className={clsx(classes.pageContainer, "fadeIn")}>
-              {/* <SideRoutesMenu storePrivate={user.store} /> */}
-              {props.children}
-            </div>
-          </ErrorBounds>
-        )
-      } else {
-        // mobile size
-        return (
-          <ErrorBounds className={clsx(
-            "fadeIn",
-            classes.pageContainer,
-          )}>
-            <div className={classes.rootMobile}>
-              {/* <SellerDashboardMenu storePrivate={user.store} /> */}
-              {props.children}
-            </div>
-          </ErrorBounds>
-        )
-      }
-    } else {
-      // return normal layout
-      return <>{props.children}</>
-    }
-  }
-
   return (
-    <div>
+    <StripeProvider>
       <Header/>
       <NavBarMain/>
-      {/* <GetUser/> */}
+      <GetUser/>
       <Modals/>
       <PageContainer classes={props.classes}>
-        { renderLayout() }
+      <>{props.children}</>
       </PageContainer>
-      <Footer/>
-    </div>
+      <Footer>
+        {/* <BreadcrumbRoutes dark/> */}
+      </Footer>
+    </StripeProvider>
   )
 };
 
@@ -132,10 +67,10 @@ const PageContainer: React.FC<PageContainerProps> = (props) => {
 }
 
 interface ReactProps extends WithStyles<typeof styles> {
+  // user: UserPrivate;
 }
 interface PageContainerProps extends WithStyles<typeof styles> {
 }
-
 
 const styles = (theme: Theme) => createStyles({
   root: {
@@ -184,6 +119,6 @@ const styles = (theme: Theme) => createStyles({
   },
 });
 
-export default withStyles(styles)( LayoutIfBrowser );
+export default withStyles(styles)( Layout );
 
 

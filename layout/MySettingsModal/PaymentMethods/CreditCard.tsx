@@ -21,7 +21,7 @@ const CreditCard = (props: ReactProps) => {
 
   const {
     classes,
-    showExpiry = true,
+    showExpiry = false,
   } = props;
   const {
     setDefaultPaymentMethod,

@@ -4,6 +4,17 @@ import {
   fileIdRegex,
   productVariantIdRegex,
   productIdRegex,
+  maxPrice,
+  minPrice,
+  maxLengthProductDescription,
+  minLengthStoreName,
+  maxLengthStoreName,
+  minLengthProductTagline,
+  maxLengthProductTagline,
+  minLengthPassword,
+  minLengthUsername,
+  minLengthProductName,
+  maxLengthProductName,
 } from "./limitsAndRules";
 
 
@@ -14,27 +25,31 @@ export const validationSchemas = {
   ProductCreate:
     Yup.object().shape({
       name: Yup.string()
-        // .matches(isEmailRegex, "Must be a valid email")
-        .min(3, 'Name should be longer than 2 chars')
+        .min(minLengthProductName, `Name must be longer than ${minLengthProductName} chars`)
+        .max(maxLengthProductName, `Name can't be longer than ${maxLengthProductName} chars`)
         .required('Product needs a name'),
       tagline: Yup.string()
+        .min(minLengthProductTagline)
+        .max(maxLengthProductTagline)
         .required('Needs a tagline'),
       description: Yup.string()
         .required('Needs a description')
+        .max(maxLengthProductDescription)
         .test("description", "Needs a description", function(value) {
           return value !== '<p></p>'
         }),
       categoryId: Yup.string()
         .required("Pick a category"),
       tags: Yup.array().of(Yup.string())
-        .required("Needs at least 1 tag")
-        .min(1, "Needs at least 1 tag"),
+        .nullable(),
       currentVariants: Yup.array().of(Yup.object({
           price: Yup.number().nullable()
-            .min(100, "Minimum price: $1")
+            .min(minPrice, "Minimum price: $1")
+            .max(maxPrice, "Max price: $10,000")
             .required('Add a price'),
           priceWas: Yup.number().nullable()
-            .min(100, "Minimum priceWas: $1")
+            .min(minPrice, "Minimum price: $1")
+            .max(maxPrice, "Max price: $10,000")
             .test("priceWas", "Must exceed price (now)", function(value) {
               // console.log(">>>>>>>>>>>>", value, this)
               // this.path: the string path of the current validation
@@ -78,28 +93,32 @@ export const validationSchemas = {
   ProductEdit:
     Yup.object().shape({
       name: Yup.string()
-        // .matches(isEmailRegex, "Must be a valid email")
-        .min(3, 'Name should be longer than 2 chars')
+        .min(minLengthProductName, `Name must be longer than ${minLengthProductName} chars`)
+        .max(maxLengthProductName, `Name can't be longer than ${maxLengthProductName} chars`)
         .required('Product needs a name'),
       tagline: Yup.string()
+        .min(minLengthProductTagline)
+        .max(maxLengthProductTagline)
         .required('Needs a tagline'),
       description: Yup.string()
         .required('Needs a description')
+        .max(maxLengthProductDescription)
         .test("description", "Needs a description", function(value) {
           return value !== '<p></p>'
         }),
       categoryId: Yup.string()
         .required("Pick a category"),
       tags: Yup.array().of(Yup.string())
-        .required("Needs at least 1 tag")
-        .min(1, "Needs at least 1 tag"),
+        .nullable(),
       currentVariants: Yup.array().of(
           Yup.object({
             price: Yup.number().nullable(true)
-              .min(100, "Minimum price: $1")
+              .min(minPrice, "Minimum price: $1")
+              .max(maxPrice, "Max price: $10,000")
               .required('Add a price'),
             priceWas: Yup.number().nullable(true)
-              .min(100, "Minimum price: $1")
+              .min(minPrice, "Minimum price: $1")
+              .max(maxPrice, "Max price: $10,000")
               .test("priceWas", "Must exceed price (now)", function(value) {
                 // this.path: the string path of the current validation
                 // this.schema: the resolved schema object that the test is running against.
@@ -133,7 +152,7 @@ export const validationSchemas = {
               )
               .min(1, "Must have at least 1 file attached"),
             variantId: Yup.string()
-              .required('missing a variantId'),
+              .nullable(), // null -> creates a variantId on the backend
           })
         ),
       isPublished: Yup.boolean()
@@ -146,8 +165,6 @@ export const validationSchemas = {
   // Create Store Promo Code
   CreateStorePromoCode:
     Yup.object().shape({
-      storeId: Yup.string()
-        .required('StoreId is not present'),
       promoCode: Yup.string()
         .min(3, 'Promo Code should be longer than 2 chars')
         .required('Promo Code needs a name'),
@@ -179,13 +196,30 @@ export const validationSchemas = {
       name: Yup.string()
         .nullable()
         .required('Name required!')
-        .min(3, "Must be more than 3 letters!"),
+        .max(maxLengthStoreName)
+        .min(minLengthStoreName, "Must be more than 3 letters!"),
       bio: Yup.string().nullable(),
       website: Yup.string().nullable(),
       profileId: Yup.string()
         .required('A profile pic is needed!'),
       coverId: Yup.string().nullable(),
       payoutEmail: Yup.string()
+        .email("Not a valid email")
+        .required('A payout email is needed!'),
+    }),
+
+  // Edit Store
+  EditStore:
+    Yup.object().shape({
+      name: Yup.string()
+        .required("Can't be empty")
+        .min(3, "Must be more than 3 letters!"),
+      bio: Yup.string().nullable(),
+      website: Yup.string().nullable(),
+      profileId: Yup.string().nullable(),
+      coverId: Yup.string().nullable(),
+      payoutEmail: Yup.string()
+        .email("Not a valid email")
         .required('A payout email is needed!'),
     }),
 
@@ -196,8 +230,100 @@ export const validationSchemas = {
         .email("Not a valid email")
         .required('An email is needed'),
       password: Yup.string()
-        .min(8, 'Must be longer than 8 characters')
+        .min(minLengthPassword, `Must be more than ${minLengthPassword} letters!`)
         .required('password is needed'),
+    }),
+
+  // Edit UserEmail form
+  EditUserEmail:
+    Yup.object().shape({
+      firstName: Yup.string()
+        .nullable(),
+      lastName: Yup.string()
+        .nullable(),
+      email: Yup.string()
+        .email("Not a valid email")
+        .nullable(),
+    }),
+
+  // Password Reset
+  PasswordReset:
+    Yup.object().shape({
+      currentPassword: Yup.string()
+        .required('Current password required!')
+        .min(minLengthPassword, `Must be more than ${minLengthPassword} letters!`),
+      newPassword: Yup.string()
+        .required('Enter a new password')
+        .min(minLengthPassword, `Must be more than ${minLengthPassword} letters!`)
+        .test("newPassword", "Can't be your old password", function(value) {
+          // console.log(">>>>>>>>>>>>", value, this)
+          // this.path: the string path of the current validation
+          // this.schema: the resolved schema object that the test is running against.
+          // this.options: the options object that validate() or isValid() was called with
+          // this.parent: in the case of nested schema, this is the value of the parent object
+          // this.createError(Object: { path: String, message: String }):
+          return this.parent.currentPassword !== value
+        }),
+      newPasswordAgain: Yup.string()
+        .required('please confirm your new password')
+        .min(minLengthPassword, `Must be more than ${minLengthPassword} letters!`)
+        .test("newPasswordAgain", "Must be the same password", function(value) {
+          // console.log(">>>>>>>>>>>>", value, this)
+          // this.path: the string path of the current validation
+          // this.schema: the resolved schema object that the test is running against.
+          // this.options: the options object that validate() or isValid() was called with
+          // this.parent: in the case of nested schema, this is the value of the parent object
+          // this.createError(Object: { path: String, message: String }):
+          return this.parent.newPassword === value
+        }),
+    }),
+
+  // Password Reset Emailer
+  PasswordResetEmail:
+    Yup.object().shape({
+      newPassword: Yup.string()
+        .required('Enter a new password')
+        .min(minLengthPassword, `Must be more than ${minLengthPassword} letters!`)
+        .test("newPassword", "Can't be your old password", function(value) {
+          // console.log(">>>>>>>>>>>>", value, this)
+          // this.path: the string path of the current validation
+          // this.schema: the resolved schema object that the test is running against.
+          // this.options: the options object that validate() or isValid() was called with
+          // this.parent: in the case of nested schema, this is the value of the parent object
+          // this.createError(Object: { path: String, message: String }):
+          return this.parent.currentPassword !== value
+        }),
+      newPasswordAgain: Yup.string()
+        .required('please confirm your new password')
+        .min(minLengthPassword, `Must be more than ${minLengthPassword} letters!`)
+        .test("newPasswordAgain", "Must be the same password", function(value) {
+          // console.log(">>>>>>>>>>>>", value, this)
+          // this.path: the string path of the current validation
+          // this.schema: the resolved schema object that the test is running against.
+          // this.options: the options object that validate() or isValid() was called with
+          // this.parent: in the case of nested schema, this is the value of the parent object
+          // this.createError(Object: { path: String, message: String }):
+          return this.parent.newPassword === value
+        }),
+    }),
+
+  // Signup
+  Signup:
+    Yup.object().shape({
+      email: Yup.string()
+        .email("Not a valid email")
+        .required('An email is needed!'),
+      password: Yup.string()
+        .required('Password required!')
+        .min(minLengthPassword, `Must be more than ${minLengthPassword} letters!`),
+    }),
+
+  // Change Payout  email
+  ChangePayoutEmail:
+    Yup.object().shape({
+      newPayoutEmail: Yup.string()
+        .email("Not a valid email")
+        .required('Cannot leave email blank'),
     }),
 
   // Refunds
@@ -244,16 +370,6 @@ export const validationSchemas = {
       paymentProcessor: Yup.string()
         .required('paymentProcessor required'),
         // Stripe || Paypal
-    }),
-
-  PasswordReset:
-    Yup.object().shape({
-      password: Yup.string()
-        .min(6, 'password must be longer than 6 chars')
-        .required('password required'),
-      passwordAgain: Yup.string()
-        .min(6, 'password must be longer than 6 chars')
-        .required('password required'),
     }),
 
 

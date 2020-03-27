@@ -2,13 +2,12 @@ import React from 'react';
 // Styles
 import { withStyles, createStyles, WithStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
+import { Colors } from "layout/AppTheme";
 // Snackbar components
 import SnackbarContent from '@material-ui/core/SnackbarContent';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 // Colors
-import green from '@material-ui/core/colors/green';
-import red from '@material-ui/core/colors/red';
 import variantIcon from "./variantIcon";
 
 
@@ -88,17 +87,29 @@ const styles = theme => createStyles({
     padding: theme.spacing(1/2),
   },
   success: {
-    backgroundColor: green[300],
+    backgroundColor: Colors.charcoal,
   },
   error: {
-    backgroundColor: theme.palette.error.dark,
+    backgroundColor: Colors.charcoal,
   },
   info: {
-    backgroundColor: theme.palette.primary.dark,
+    backgroundColor: Colors.charcoal,
   },
   warning: {
-    backgroundColor: red[300],
+    backgroundColor: Colors.charcoal,
   },
+  // success: {
+  //   backgroundColor: Colors.green,
+  // },
+  // error: {
+  //   backgroundColor: Colors.red,
+  // },
+  // info: {
+  //   backgroundColor: Colors.blue,
+  // },
+  // warning: {
+  //   backgroundColor: Colors.yellow,
+  // },
   icon: {
     fontSize: 20,
   },

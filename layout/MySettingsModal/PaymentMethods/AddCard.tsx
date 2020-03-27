@@ -17,8 +17,13 @@ import Button from "@material-ui/core/Button";
 import TextInput from "components/Fields/TextInput";
 import ErrorBounds from "components/ErrorBounds";
 // Stripe
-import { CardElement } from 'react-stripe-elements';
-import { StripeClient } from "typings/typings-stripe";
+import {
+  CardElement,
+  Elements,
+  useStripe,
+  useElements,
+} from '@stripe/react-stripe-js';
+import { Stripe } from "@stripe/stripe-js";
 
 
 
@@ -26,6 +31,8 @@ const AddCard = (props: ReactProps) => {
 
   const { classes } = props;
   const aClient = useApolloClient();
+  const stripe = useStripe();
+  const elements = useElements();
 
   const [nameOnCard, setNameOnCard] = React.useState("");
   const [showAddVisaForm, setShowAddVisaForm] = React.useState(false);
@@ -39,7 +46,9 @@ const AddCard = (props: ReactProps) => {
     props.setIsLoading(true)
     // Within the context of `Elements`, this call to createPaymentMethod
     // knows from which Element to create the PaymentMethod,
-    let { paymentMethod } = await props.stripe.createPaymentMethod('card', {
+    let { paymentMethod } = await props.stripe.createPaymentMethod({
+      type: "card",
+      card: elements.getElement(CardElement),
       // card: Stripe Elements tokenises card details
       billing_details: {
         email: props.user.email,
@@ -47,7 +56,7 @@ const AddCard = (props: ReactProps) => {
       }
     });
     console.log('Stripe createPaymentMethod:', paymentMethod);
-    
+
     const response = await aClient.mutate({
       mutation: ADD_PAYMENT_METHOD,
       variables: {
@@ -115,7 +124,11 @@ const AddCard = (props: ReactProps) => {
             option(props).user()
             && process.browser
             ? <form className={classes.creditCardInputContainer}>
-                <CardElement/>
+                <CardElement
+                  options={{
+                    hidePostalCode: true,
+                  }}
+                />
               </form>
             : <Typography variant="subtitle1">
                 No PaymentMethod data. Network error
@@ -131,7 +144,7 @@ const AddCard = (props: ReactProps) => {
               let customerId = option(props).user.stripeCustomerId();
               if (customerId) {
                 addCreditCard(customerId)
-              }              
+              }
             }}
           >
             Save
@@ -146,7 +159,7 @@ const AddCard = (props: ReactProps) => {
 
 interface ReactProps extends WithStyles<typeof styles> {
   user: UserPrivate
-  stripe?: StripeClient & stripe.Stripe; // provided by AsyncStripeProvider
+  stripe?: Stripe; // provided by AsyncStripeProvider
   isLoading: boolean;
   setIsLoading(a: boolean): void;
   refetchPaymentMethods(): void;

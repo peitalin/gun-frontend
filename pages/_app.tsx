@@ -27,14 +27,10 @@ import { GET_USER } from "queries/user-queries";
 // css
 import "../public/App.css";
 // import "react-datepicker/dist/react-datepicker.css";
-// offline service worker
-import { register, unregister } from 'next-offline/runtime'
 // Typings
 import { UserPrivate, ProductCategory } from 'typings/gqlTypes';
 import { serverApolloClient } from "utils/apollo";
 // Payment Clients
-import { StripeClient } from "layout/Checkout/typings.stripe";
-import { PaypalClient } from "layout/Checkout/typings.paypal";
 import { Auth0Provider } from "layout/Auth0";
 import Router from "next/router";
 
@@ -42,8 +38,6 @@ import Router from "next/router";
 declare global {
   interface Window {
     App: any
-    paypal: PaypalClient
-    Stripe: StripeClient | any;
   }
 }
 

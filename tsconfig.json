@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
-    "allowJs": true,
+    "sourceMap": true,
+    "allowJs": false,
     "skipLibCheck": true,
     "strict": false,
     "forceConsistentCasingInFileNames": false,
@@ -15,7 +16,6 @@
     "lib": ["es2018", "dom", "dom.iterable", "esnext"],
     "baseUrl": ".",
     "paths": {
-        // "~/*": ["*"],
         "components/*": ["components/*"],
         "layout/*": ["layout/*"],
         "pages/*": ["pages/*"],
@@ -23,13 +23,11 @@
         "queries/*": ["queries/*"],
         "typings/*": ["typings/*"],
         "utils/*": ["utils/*"]
-    },
-    "plugins": [
-        { "transform": "ts-optchain/transform" },
-    ]
+    }
   },
   "exclude": [
-    "node_modules"
+    "node_modules",
+    ".next"
   ],
   "include": [
     "next-env.d.ts",

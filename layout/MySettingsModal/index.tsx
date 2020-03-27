@@ -13,6 +13,8 @@ import MySettingsPage from "./MySettingsPage";
 /// CSS
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
+// // Analytics
+// import { useAnalytics, analyticsEvent } from "utils/analytics";
 
 
 
@@ -33,6 +35,12 @@ const MySettingsModal: React.FC<ReactProps> = (props) => {
   const goBack = () => {
     dispatch(Actions.reduxModals.TOGGLE_MY_SETTINGS_MODAL(false))
   }
+
+  React.useEffect(() => {
+    if (mySettingsModalOpen) {
+      // analyticsEvent("View.Settings")
+    }
+  }, [mySettingsModalOpen])
 
   const theme = useTheme();
   const mdUp = useMediaQuery(theme.breakpoints.up("md"))

@@ -18,10 +18,11 @@ import Loading from "components/Loading";
 import ErrorDisplay from "components/Error";
 import ErrorBounds from "components/ErrorBounds";
 import TextInput from "components/Fields/TextInput";
-import UpdateMySettingsButton from "./UpdateMySettingsButton";
+
 import PaymentMethods from "./PaymentMethods";
 import ChangePasswordForm from "./ChangePasswordForm";
 import ChangePayoutMethod from "./ChangePayoutMethod";
+import ChangeUserEmailForm from "./ChangeUserEmailForm";
 import AdvancedSettings from "./AdvancedSettings";
 // Typings
 import { HtmlEvent, EditUserProfileInput } from "typings";
@@ -38,50 +39,13 @@ const MySettings = (props: ReactProps & ReduxProps) => {
     classes,
     asModal = true,
   } = props;
-  // fields
-  const [firstName, setFirstName] = React.useState("");
-  const [lastName, setLastName] = React.useState("");
-  const [email, setEmail] = React.useState("");
-
-  const handleSetFirstName = (e: HtmlEvent) => {
-    let name = e.target.value;
-    setFirstName(name);
-  };
-
-  const handleSetLastName = (e: HtmlEvent) => {
-    let lname = e.target.value;
-    setLastName(lname);
-  };
-
-  const handleSetEmail = (e: HtmlEvent) => {
-    let email: string = e.target.value;
-    setEmail(email)
-  };
-
-  const prepareUserEditInput = (): EditUserProfileInput => {
-    let userEditInput = {} as EditUserProfileInput;
-    if (firstName) {
-      userEditInput = { ...userEditInput, firstName }
-    }
-    if (lastName) {
-      userEditInput = { ...userEditInput, lastName }
-    }
-    if (email) {
-      userEditInput = { ...userEditInput, email }
-    }
-    return userEditInput
-  }
-
-  const resetProfileEditForm = () => {
-    setFirstName("")
-    setLastName("")
-    setEmail("")
-  }
 
   const { loading, data, error } = useQuery<QueryData>(
     GET_USER, {
     variables: {},
-    onError: (e) => console.log(),
+    onError: (e) => {
+      console.log(e)
+    },
     errorPolicy: "all",
   });
 
@@ -115,54 +79,9 @@ const MySettings = (props: ReactProps & ReduxProps) => {
         </div>
 
         <div className={classes.section}>
-          <Typography variant="body1" className={classes.profileTitle}>
-            Name
-          </Typography>
-          <form autoComplete="off">
-            <TextInput
-              placeholder={user.firstName}
-              className={classes.textField}
-              value={firstName}
-              onChange={handleSetFirstName}
-              inputProps={{ style: { width: '100%' }}}
-            />
-          </form>
-
-          <Typography variant="body1" className={classes.profileTitle}>
-            Lastname
-          </Typography>
-          <form autoComplete="off">
-            <TextInput
-              placeholder={user.lastName}
-              className={classes.textField}
-              value={lastName}
-              onChange={handleSetLastName}
-              inputProps={{ style: { width: '100%' }}}
-            />
-          </form>
-
-          <Typography variant="body1" className={classes.profileTitle}>
-            Email
-          </Typography>
-          <form autoComplete="off">
-            <TextInput
-              // required
-              // disabled={true}
-              placeholder={user.email}
-              className={classes.textField}
-              value={email}
-              onChange={handleSetEmail}
-              inputProps={{ style: { width: '100%' }}}
-            />
-          </form>
-
-          <div className={classes.buttonContainer}>
-            <UpdateMySettingsButton
-              disabled={firstName==="" && lastName==="" && email===""}
-              resetProfileEditForm={resetProfileEditForm}
-              userProfile={prepareUserEditInput()}
-            />
-          </div>
+          <ChangeUserEmailForm
+            goBack={props.goBack}
+          />
         </div>
 
         <div className={classes.section}>
@@ -176,22 +95,13 @@ const MySettings = (props: ReactProps & ReduxProps) => {
           </div >
         }
 
-        <ErrorBounds className={classes.section}>
+        <div className={classes.section}>
           <PaymentMethods user={user}/>
-        </ErrorBounds>
-
-
-        <div className={classes.sectionLast}>
-          <AdvancedSettings/>
         </div>
 
-        {/* <div className={classes.endDivSpacer}></div>
-        <div
-          className={classes.endDiv}
-          onClick={() => props.goBack()}
-        >
-          Close
-        </div> */}
+        <div className={classes.sectionLast}>
+          <AdvancedSettings user={user}/>
+        </div>
 
       </ErrorBounds>
     );
@@ -258,13 +168,6 @@ const styles = (theme: Theme) => createStyles({
   flexItem: {
     flexGrow: 1,
     flexBasis: '30%',
-  },
-  buttonContainer: {
-    display: 'flex',
-    justifyContent: 'flex-end',
-    flexWrap: 'wrap',
-    flexDirection: 'row',
-    marginTop: '0.5rem',
   },
   textField: {
     marginBottom: '0.5rem',

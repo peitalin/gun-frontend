@@ -1,5 +1,6 @@
 /// Limits that users may or may not bump into:
-
+export const minLengthUsername = 2;
+export const minLengthPassword = 6;
 export const minPrice = 100;
 export const promoCodeMaxLength = 20;
 export const promoCodeMinLength = 3;
@@ -16,7 +17,7 @@ export const maxCountVariants = 2;
 export const minCountFiles = 1;
 export const maxCountFiles = 20;
 export const minCountPreviews = 1;
-export const maxCountPreviews = 10;
+export const maxCountPreviews = 8;
 export const minCountTags = 0;
 export const maxCountTags = 10;
 export const minLengthTag = 1;
@@ -35,6 +36,7 @@ export const minSpecialDealDiscountPercent = 0.1;
 export const maxSizePerFile = 5000 * 1000 * 1000; // 5000 MB
 export const maxImageFileSize = 20 * 1000 * 1000; // 20 MB
 export const maxPaymentMethods = 10;
+export const maxPreviewImages = 10;
 
 /// Unlikely limits (just here to keep the system bounded):
 
@@ -53,15 +55,15 @@ export const userIdPrefix = "user_";
 export const cartIdPrefix = "cart_";
 export const cartItemIdPrefix = "citem_";
 export const discountIdPrefix = "discount_";
-export const orderIdPrefix = "order_";
+export const orderIdPrefix = "o";
 export const orderItemIdPrefix = "oitem_";
 export const orderSnapshotIdPrefix = "osnapshot_";
-export const productIdPrefix = "prod_";
+export const productIdPrefix = "p";
 export const productSnapshotIdPrefix = "prodsnapshot_";
 export const productVariantIdPrefix = "prodvariant_";
 export const productVariantSnapshotIdPrefix = "prodvariantsnapshot_";
 export const previewItemIdPrefix = "preview_item_";
-export const storeIdPrefix = "store_";
+export const storeIdPrefix = "s";
 export const transactionIdPrefix = "txn_";
 export const refundIdPrefix = "ref_";
 export const productCategoryIdPrefix = "pcategory_";

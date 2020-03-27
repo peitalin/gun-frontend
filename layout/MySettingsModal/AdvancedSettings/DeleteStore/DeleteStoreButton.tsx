@@ -4,38 +4,51 @@ import { oc as option } from "ts-optchain";
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
 // Graphql Queries
 import { useMutation } from "@apollo/react-hooks";
-import { CHANGE_PASSWORD } from "queries/user-mutations";
+import { DELETE_STORE, DELETE_ACCOUNT } from "queries/deletions-mutations";
 import { UserPrivate } from "typings/gqlTypes";
 // Material UI
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 // Utility Components
 import Loading from "components/Loading";
-import ErrorDisplay, { JsonTree, GraphQLErrors } from "components/Error";
+import ErrorDisplay, { GraphQLErrors } from "components/Error";
 import ErrorBounds from "components/ErrorBounds";
 import SnackBarA from "components/Snackbars/SnackbarA";
+import ConfirmDeleteModal from "components/ConfirmDeleteModal";
 
 
 
-const ChangePasswordButton = (props: ReactProps) => {
+const DeleteAccountButton = (props: ReactProps) => {
 
   const [displayErr, setDisplayErr] = React.useState(true);
   const [displaySuccess, setDisplaySuccess] = React.useState(true);
+  const [openDeleteModal, setOpenDeleteModal] = React.useState(false)
 
-  const [changePassword, { loading, error, data}] =
+  const [deleteStore, {loading, data, error}] =
   useMutation<MutationData, MutationVar>(
-    CHANGE_PASSWORD, {
+    DELETE_STORE, {
       variables: {
-        currentPassword: props.currentPassword,
-        newPassword: props.newPassword
+        password: props.password,
       }
     }
   );
 
+  const handleDelete = () => {
+    deleteStore();
+    setTimeout(() => {
+      props.resetPassword()
+    }, 800)
+  }
+
   if (loading) {
-    return <Loading inline loading={loading} delay={"400ms"} />;
+    return <Loading inline loading={true} delay={"400ms"} />;
   } else if (error) {
-    return <ErrorDisplay title={"ChangePasswordButton"} error={error}/>;
+    return (
+      <ErrorDisplay
+        title={"Delete Store"}
+        error={error}
+      />
+    );
   } else {
     return (
       <ErrorBounds className={props.classes.buttonContainer}>
@@ -43,19 +56,22 @@ const ChangePasswordButton = (props: ReactProps) => {
           variant={"contained"}
           color={"secondary"}
           disabled={props.disabled}
-          onClick={() => {
-            changePassword();
-            setTimeout(() => {
-              props.resetPasswordChange()
-            }, 800)
-          }}
+          onClick={() => setOpenDeleteModal(true)}
         >
-          Update Password
+          Delete Store
         </Button>
+
+        <ConfirmDeleteModal
+          title={"Do you wish to delete your Store? This is irreversible"}
+          showModal={openDeleteModal}
+          setShowModal={() => setOpenDeleteModal(s => !s)}
+          onConfirmFunction={handleDelete}
+        />
+
         <SnackBarA
           open={data !== undefined && displaySuccess}
           closeSnackbar={() => setDisplaySuccess(false)}
-          message={`Successfully updated your password.`}
+          message={`Successfully deleted your store.`}
           variant={"success"}
           autoHideDuration={3000}
         />
@@ -72,24 +88,18 @@ const ChangePasswordButton = (props: ReactProps) => {
 };
 
 interface ReactProps extends WithStyles<typeof styles> {
-  currentPassword: string;
-  newPassword: string;
+  password: string;
   disabled: boolean;
-  resetPasswordChange(): void;
-}
-interface Aprops {
-  data?: { changePassword: { user: UserPrivate }},
-  loading?: boolean,
-  error?: GraphQLErrors,
+  resetPassword(): void;
 }
 
 interface MutationData {
-  changePassword: { user: UserPrivate };
+  deleteStore: { __typename: string };
 }
 interface MutationVar {
-  currentPassword: string;
-  newPassword: string;
+  password: string;
 }
+
 
 const styles = (theme: Theme) => createStyles({
   buttonContainer: {
@@ -99,6 +109,6 @@ const styles = (theme: Theme) => createStyles({
   },
 })
 
-export default withStyles(styles)( ChangePasswordButton );
+export default withStyles(styles)( DeleteAccountButton );
 
 

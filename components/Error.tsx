@@ -4,7 +4,8 @@ import * as React from "react";
 import { oc as option } from "ts-optchain";
 
 import { withStyles, createStyles, Theme } from "@material-ui/core/styles";
-import JSONTree from "react-json-tree";
+// import JSONTree from "react-json-tree";
+
 // Material UI
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
@@ -57,7 +58,7 @@ class ErrorDisplay extends React.Component<ReactProps, any> {
                 <div className={props.classes.errLine}>
                   {"column: " + err.locations[0].column}
                 </div>
-                <JsonTree data={err}/>
+                {/* <JsonTree data={err}/> */}
               </div>
             ))
           }
@@ -69,10 +70,10 @@ class ErrorDisplay extends React.Component<ReactProps, any> {
               </Typography>
             : <div>
                 <Typography color={"primary"} variant="h6" gutterBottom>
-                  Unexpected Error: Not a GraphQL Error.
+                  Please check your internet connection.
                 </Typography>
                 <div className={props.classes.errMessage}>
-                  <JsonTree data={props}/>
+                  {/* <JsonTree data={props}/> */}
                 </div>
               </div>
           }
@@ -91,40 +92,40 @@ class ErrorDisplay extends React.Component<ReactProps, any> {
 }
 
 
-export const JsonTree = ({ data }) => (
-  <div style={{
-    fontFamily: '"Segoe UI","Helvetica Neue",Arial,sans-serif',
-    margin: "1rem",
-    padding: "0.5rem 1rem",
-    backgroundColor: "#FFFFFB",
-    border: '2px solid #213F5E',
-  }}>
-    <JSONTree
-      data={data}
-      theme={ themeJsonTree }
-      invert={false}
-    />
-  </div>
-)
-const themeJsonTree = {
-  scheme: 'embers',
-  base00: '#16130F',
-  base01: '#2C2620',
-  base02: '#433B32',
-  base03: '#5A5047',
-  base04: '#8A8075',
-  base05: '#A39A90',
-  base06: '#BEB6AE',
-  base07: '#DBD6D1',
-  base08: '#826D57',
-  base09: '#828257',
-  base0A: '#6D8257',
-  base0B: '#57826D',
-  base0C: '#576D82',
-  base0D: '#6D5782',
-  base0E: '#82576D',
-  base0F: '#825757'
-};
+// export const JsonTree = ({ data }) => (
+//   <div style={{
+//     fontFamily: '"Segoe UI","Helvetica Neue",Arial,sans-serif',
+//     margin: "1rem",
+//     padding: "0.5rem 1rem",
+//     backgroundColor: "#FFFFFB",
+//     border: '2px solid #213F5E',
+//   }}>
+//     <JSONTree
+//       data={data}
+//       theme={ themeJsonTree }
+//       invert={false}
+//     />
+//   </div>
+// )
+// const themeJsonTree = {
+//   scheme: 'embers',
+//   base00: '#16130F',
+//   base01: '#2C2620',
+//   base02: '#433B32',
+//   base03: '#5A5047',
+//   base04: '#8A8075',
+//   base05: '#A39A90',
+//   base06: '#BEB6AE',
+//   base07: '#DBD6D1',
+//   base08: '#826D57',
+//   base09: '#828257',
+//   base0A: '#6D8257',
+//   base0B: '#57826D',
+//   base0C: '#576D82',
+//   base0D: '#6D5782',
+//   base0E: '#82576D',
+//   base0F: '#825757'
+// };
 
 
 interface ReduxProps {
@@ -141,9 +142,13 @@ export interface GraphQLErrors {
   message?: string;
   networkError?: any;
 }
-interface ErrorMessage {
+export interface ErrorMessage {
   message?: string;
   locations?: Array<ErrorLocation>;
+}
+export interface ErrorMessageRust {
+  message?: string;
+  file?: string;
 }
 interface ErrorLocation {
   line?: number;
