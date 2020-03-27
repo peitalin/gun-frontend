@@ -26,14 +26,19 @@ const Header: React.FC<{}> = (props) => (
 
     <script src="https://apis.google.com/js/platform.js" async defer></script>
 
-    <meta name="google-signin-client_id"
-      content="628767016907-erlk30rm4sjusf8c31a0l430133vjopn.apps.googleusercontent.com"
-    />
     {/* <meta name="google-signin-client_id"
-      content="628767016907-47cao4mcraguc9fe0keh37bimgo12dbg.apps.googleusercontent.com"
+      content="628767016907-erlk30rm4sjusf8c31a0l430133vjopn.apps.googleusercontent.com"
     /> */}
 
 
+    {/* https://gun-frontend.now.sh/ */}
+    <meta name="google-signin-client_id"
+      content="628767016907-iffrk4ukbmalmka718oj40o92ufbdqac.apps.googleusercontent.com"
+    />
+
+    {/* <meta name="google-signin-client_id"
+      content="628767016907-47cao4mcraguc9fe0keh37bimgo12dbg.apps.googleusercontent.com"
+    /> */}
 
     {
       !process.browser &&
