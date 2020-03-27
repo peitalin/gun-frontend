@@ -87,17 +87,19 @@ const MainBar = (props: ReactProps) => {
   }
 
   React.useEffect(() => {
-    if (process.browser && window.gapi) {
-      window.gapi.signin2.render('g-signin2', {
-        'scope': 'https://www.googleapis.com/auth/plus.login',
-        'width': 200,
-        'height': 50,
-        'longtitle': true,
-        'theme': 'dark',
-        'onsuccess': onSignIn2
-      });
+    if (process.browser) {
+      if (window && window.gapi) {
+        window.gapi.signin2.render('g-signin2', {
+          'scope': 'https://www.googleapis.com/auth/plus.login',
+          'width': 200,
+          'height': 50,
+          'longtitle': true,
+          'theme': 'dark',
+          'onsuccess': onSignIn2
+        });
+      }
     }
-  }, [window.gapi])
+  }, [])
 
 
   return (
