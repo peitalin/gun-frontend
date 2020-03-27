@@ -43,10 +43,10 @@ const Footer: React.FC<ReactProps> = (props) => {
               classes.wide
             )}>
               <Typography variant="subtitle1" className={classes.title}>
-                FileCity
+                GunMarketplace
               </Typography>
               <Typography variant="body2" className={classes.subtitle}>
-                Buy and sell all things digital.
+                Buy and sell all firearms.
               </Typography>
             </div>
 
