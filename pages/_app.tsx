@@ -37,7 +37,8 @@ import Router from "next/router";
 
 declare global {
   interface Window {
-    App: any
+    App: any;
+    gapi: any;
   }
 }
 

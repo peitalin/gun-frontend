@@ -26,19 +26,12 @@ const Header: React.FC<{}> = (props) => (
 
     <script src="https://apis.google.com/js/platform.js" async defer></script>
 
-    {/* <meta name="google-signin-client_id"
-      content="628767016907-erlk30rm4sjusf8c31a0l430133vjopn.apps.googleusercontent.com"
-    /> */}
 
-
-    {/* https://gun-frontend.now.sh/ */}
+    {/* https://gunmarketplace.com.au */}
     <meta name="google-signin-client_id"
-      content="628767016907-iffrk4ukbmalmka718oj40o92ufbdqac.apps.googleusercontent.com"
+      content="628767016907-66h6rtfiae0jt8uojc87hf6ns1npj3uj.apps.googleusercontent.com"
     />
 
-    {/* <meta name="google-signin-client_id"
-      content="628767016907-47cao4mcraguc9fe0keh37bimgo12dbg.apps.googleusercontent.com"
-    /> */}
 
     {
       !process.browser &&
