@@ -10,21 +10,24 @@ import { setContext } from 'apollo-link-context';
 import https from "https";
 import { oc as option } from "ts-optchain";
 
-// ENV variables
-import getConfig from 'next/config'
-const {
-  // Available both client and server side
-  publicRuntimeConfig: {
-    GATEWAY_GRAPHQL_URL,
-    SERVER_GATEWAY_GRAPHQL_URL,
-    NODE_ENV
-  },
-  // Only available server side
-  serverRuntimeConfig: {
-    IN_DOCKER,
-  },
-} = getConfig()
+// // ENV variables
+// import getConfig from 'next/config'
+// const {
+//   // Available both client and server side
+//   publicRuntimeConfig: {
+//     GATEWAY_GRAPHQL_URL,
+//     SERVER_GATEWAY_GRAPHQL_URL,
+//     NODE_ENV
+//   },
+//   // Only available server side
+//   serverRuntimeConfig: {
+//     IN_DOCKER,
+//   },
+// } = getConfig()
 
+let GATEWAY_GRAPHQL_URL = "https://api.fileworks.net/graphql"
+let SERVER_GATEWAY_GRAPHQL_URL = "https://api.fileworks.net/graphql"
+let NODE_ENV = "develop"
 
 const URI = GATEWAY_GRAPHQL_URL;
 const SERVER_URI = SERVER_GATEWAY_GRAPHQL_URL;

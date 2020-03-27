@@ -31,21 +31,23 @@ import clsx from "clsx";
 // Components
 import StoreProfile from "./StoreProfile";
 import { useRouter } from "next/router";
-// ENV variables
-import getConfig from 'next/config'
-const {
-  // Available both client and server side
-  publicRuntimeConfig: {
-    GATEWAY_GRAPHQL_URL,
-    SERVER_GATEWAY_GRAPHQL_URL,
-    NODE_ENV
-  },
-  // Only available server side
-  serverRuntimeConfig: {
-    IN_DOCKER,
-  },
-} = getConfig()
 
+// // ENV variables
+// import getConfig from 'next/config'
+// const {
+//   // Available both client and server side
+//   publicRuntimeConfig: {
+//     GATEWAY_GRAPHQL_URL,
+//     SERVER_GATEWAY_GRAPHQL_URL,
+//     NODE_ENV
+//   },
+//   // Only available server side
+//   serverRuntimeConfig: {
+//     IN_DOCKER,
+//   },
+// } = getConfig()
+
+const NODE_ENV = "develop"
 
 
 
