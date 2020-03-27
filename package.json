@@ -24,6 +24,7 @@
     "@stripe/react-stripe-js": "^1.1.0",
     "@stripe/stripe-js": "^1.2.0",
     "@types/auth0-js": "^9.12.3",
+    "@types/gapi.auth2": "0.0.51",
     "@types/stripe-v3": "^3.1.14",
     "@zeit/next-css": "^1.0.1",
     "apollo-cache-inmemory": "^1.6.3",

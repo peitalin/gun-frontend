@@ -24,9 +24,8 @@ const Header: React.FC<{}> = (props) => (
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Barlow"/>
 
+
     <script src="https://apis.google.com/js/platform.js" async defer></script>
-
-
     {/* https://gunmarketplace.com.au */}
     <meta name="google-signin-client_id"
       content="628767016907-66h6rtfiae0jt8uojc87hf6ns1npj3uj.apps.googleusercontent.com"

@@ -128,8 +128,7 @@ const MainBar = (props: ReactProps) => {
       </Hidden>
 
       <div className="g-signin2"
-        // data-onsuccess="onSignIn"
-        data-onsuccess={onSignIn2}
+        data-onsuccess="onSignIn"
       />
       <a href="#" onClick={signOut}>Sign out</a>
       <a href="#" onClick={onSignIn2}>On Sign In</a>
