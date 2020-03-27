@@ -32,6 +32,10 @@ const Header: React.FC<{}> = (props) => (
       content="628767016907-66h6rtfiae0jt8uojc87hf6ns1npj3uj.apps.googleusercontent.com"
     />
 
+    {
+      process.browser &&
+      <script dangerouslySetInnerHTML={{ __html: getGoogleLoginScript() }}/>
+    }
 
     {
       !process.browser &&
@@ -40,6 +44,27 @@ const Header: React.FC<{}> = (props) => (
   </Head>
 )
 
+export const getGoogleLoginScript = (): string => {
+  return `
+    function onSuccess(googleUser) {
+      console.log('Logged in as: ' + googleUser.getBasicProfile().getName());
+    }
+    function onFailure(error) {
+      console.log(error);
+    }
+    function renderButton() {
+      gapi.signin2.render('my-signin2', {
+        'scope': 'profile email',
+        'width': 240,
+        'height': 50,
+        'longtitle': true,
+        'theme': 'dark',
+        'onsuccess': onSuccess,
+        'onfailure': onFailure
+      });
+    }
+  `;
+};
 
 export default Header;
 
