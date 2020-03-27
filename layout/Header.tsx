@@ -24,6 +24,17 @@ const Header: React.FC<{}> = (props) => (
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Barlow"/>
 
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+
+    <meta name="google-signin-client_id"
+      content="628767016907-erlk30rm4sjusf8c31a0l430133vjopn.apps.googleusercontent.com"
+    />
+    {/* <meta name="google-signin-client_id"
+      content="628767016907-47cao4mcraguc9fe0keh37bimgo12dbg.apps.googleusercontent.com"
+    /> */}
+
+
+
     {
       !process.browser &&
       <script id="stripe-js" src="https://js.stripe.com/v3/" async></script>

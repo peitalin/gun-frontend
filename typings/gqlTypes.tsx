@@ -350,6 +350,8 @@ export type Mutation = {
   uploadRegister: UploadRegisterMutationResponse,
   uploadSaveImage: UploadSaveImageMutationResponse,
   uploadSaveProductFile: UploadSaveProductFileMutationResponse,
+  followStore: BlankMutationResponse,
+  unfollowStore: BlankMutationResponse,
   addProductToWishlist: BlankMutationResponse,
   removeProductFromWishlist: BlankMutationResponse,
   addProductsToCart: Cart,
@@ -397,6 +399,7 @@ export type Mutation = {
   removePaymentMethod: AddRemovePaymentMethodResponse,
   createPayouts: Array<Payout>,
   approvePayouts: ApprovePayoutsResult,
+  createPayoutSplit: PayoutSplit,
   createCuratedList: CuratedListMutationResponse,
   deleteCuratedList: BlankMutationResponse,
   addProductToCuratedList: CuratedListItemMutationResponse,
@@ -497,6 +500,16 @@ export type MutationUploadSaveProductFileArgs = {
   uploadId: Scalars['ID'],
   fileName: Scalars['String'],
   ownerIds?: Maybe<Array<Maybe<Scalars['String']>>>
+};
+
+
+export type MutationFollowStoreArgs = {
+  storeId: Scalars['ID']
+};
+
+
+export type MutationUnfollowStoreArgs = {
+  storeId: Scalars['ID']
 };
 
 
@@ -764,6 +777,15 @@ export type MutationApprovePayoutsArgs = {
 };
 
 
+export type MutationCreatePayoutSplitArgs = {
+  storeOrUserId: Scalars['String'],
+  dealType: PayoutDealType,
+  rate: Scalars['Float'],
+  expiresAt?: Maybe<Scalars['Date']>,
+  referrerId?: Maybe<Scalars['String']>
+};
+
+
 export type MutationCreateCuratedListArgs = {
   name: Scalars['String']
 };
@@ -992,6 +1014,13 @@ export type PayoutProductsBreakdownConnectionArgs = {
   query?: Maybe<ConnectionQuery>
 };
 
+export enum PayoutDealType {
+  SELLER = 'SELLER',
+  SELLER_AFFILIATE = 'SELLER_AFFILIATE',
+  REFERRED_SELLER = 'REFERRED_SELLER',
+  BUYER_AFFILIATE = 'BUYER_AFFILIATE'
+}
+
 export type PayoutEdge = Edge & {
    __typename?: 'PayoutEdge',
   cursor: Scalars['PageCursor'],
@@ -1094,6 +1123,17 @@ export type PayoutsConnection = ConnectionWithMetrics & {
   totalAmount?: Maybe<Scalars['Int']>,
   pageInfo: PageInfo,
   edges: Array<PayoutEdge>,
+};
+
+export type PayoutSplit = {
+   __typename?: 'PayoutSplit',
+  id: Scalars['ID'],
+  storeOrUserId: Scalars['ID'],
+  createdAt: Scalars['Date'],
+  dealType: PayoutDealType,
+  expiresAt?: Maybe<Scalars['Date']>,
+  rate: Scalars['Float'],
+  referrerId?: Maybe<Scalars['ID']>,
 };
 
 export enum PayoutStatus {
@@ -1471,6 +1511,7 @@ export type Query = {
   getPayoutsInPeriodAdmin: PayoutsConnection,
   getPayouts: PayoutsConnection,
   getPayoutById: Payout,
+  getPayoutSplitByStoreId: PayoutSplit,
   getTransactionsInPeriodAdmin: TransactionsConnection,
   getRecentTransactions: Array<Transaction>,
   getStoreSalesInPeriodAdmin: StoreSalesInPeriodConnection,
@@ -1634,6 +1675,11 @@ export type QueryGetPayoutsArgs = {
 
 export type QueryGetPayoutByIdArgs = {
   payoutId: Scalars['ID']
+};
+
+
+export type QueryGetPayoutSplitByStoreIdArgs = {
+  storeOrUserId: Scalars['ID']
 };
 
 
@@ -1868,6 +1914,7 @@ export type StorePrivate = Store & {
   promoCodeDiscounts: DiscountsConnection,
   analytics: StoreAnalytics,
   user: UserPrivate,
+  payoutSplit?: Maybe<PayoutSplit>,
 };
 
 
@@ -2088,6 +2135,8 @@ export type UserPrivate = User & {
   payoutMethod?: Maybe<PayoutMethod>,
   payoutHistoryConnection: PayoutsConnection,
   wishlistItemsConnection: WishlistItemsConnection,
+  followingStoresIds: Array<Scalars['ID']>,
+  followingStores: Array<StorePublic>,
 };
 
 

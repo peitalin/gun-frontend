@@ -75,6 +75,7 @@ const MainBar = (props: ReactProps) => {
     <nav className={clsx(
       classes.baseBar,
     )}>
+      <div className="g-signin2" data-onsuccess="onSignIn"></div>
 
       {/* MOBILE */}
       <Hidden smUp implementation="css">
