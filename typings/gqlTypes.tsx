@@ -2312,6 +2312,33 @@ export type GetProductFileDownloadLinkMutationVariables = {
 
 export type GetProductFileDownloadLinkMutation = { __typename?: 'Mutation', generateProductFileDownloadLink: { __typename?: 'ProductFileLinkMutationResponse', downloadLink: { __typename?: 'ProductFileDownloadLink', productFileId: string, expiresAt: any, url: string } } };
 
+export type DeleteAccountMutationVariables = {
+  password: Scalars['String']
+};
+
+
+export type DeleteAccountMutation = { __typename?: 'Mutation', deleteAccount: { __typename: 'BlankMutationResponse' } };
+
+export type DeleteStoreMutationVariables = {
+  password: Scalars['String']
+};
+
+
+export type DeleteStoreMutation = { __typename?: 'Mutation', deleteStore: { __typename: 'StoreMutationResponse' } };
+
+export type DeleteProductMutationVariables = {
+  productId: Scalars['ID']
+};
+
+
+export type DeleteProductMutation = { __typename?: 'Mutation', deleteProduct: Maybe<{ __typename?: 'ProductMutationResponse', product: (
+      { __typename?: 'ProductPublic' }
+      & ProductFragment_ProductPublic_
+    ) | (
+      { __typename?: 'ProductPrivate' }
+      & ProductFragment_ProductPrivate_
+    ) }> };
+
 export type GetDownloadsQueryVariables = {
   query?: Maybe<ConnectionQuery>
 };
@@ -3685,6 +3712,101 @@ export function useGetProductFileDownloadLinkMutation(baseOptions?: ApolloReactH
 export type GetProductFileDownloadLinkMutationHookResult = ReturnType<typeof useGetProductFileDownloadLinkMutation>;
 export type GetProductFileDownloadLinkMutationResult = ApolloReactCommon.MutationResult<GetProductFileDownloadLinkMutation>;
 export type GetProductFileDownloadLinkMutationOptions = ApolloReactCommon.BaseMutationOptions<GetProductFileDownloadLinkMutation, GetProductFileDownloadLinkMutationVariables>;
+export const DeleteAccountDocument = gql`
+    mutation deleteAccount($password: String!) {
+  deleteAccount(password: $password) {
+    __typename
+  }
+}
+    `;
+
+/**
+ * __useDeleteAccountMutation__
+ *
+ * To run a mutation, you first call `useDeleteAccountMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteAccountMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteAccountMutation, { data, loading, error }] = useDeleteAccountMutation({
+ *   variables: {
+ *      password: // value for 'password'
+ *   },
+ * });
+ */
+export function useDeleteAccountMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<DeleteAccountMutation, DeleteAccountMutationVariables>) {
+        return ApolloReactHooks.useMutation<DeleteAccountMutation, DeleteAccountMutationVariables>(DeleteAccountDocument, baseOptions);
+      }
+export type DeleteAccountMutationHookResult = ReturnType<typeof useDeleteAccountMutation>;
+export type DeleteAccountMutationResult = ApolloReactCommon.MutationResult<DeleteAccountMutation>;
+export type DeleteAccountMutationOptions = ApolloReactCommon.BaseMutationOptions<DeleteAccountMutation, DeleteAccountMutationVariables>;
+export const DeleteStoreDocument = gql`
+    mutation deleteStore($password: String!) {
+  deleteStore(password: $password) {
+    __typename
+  }
+}
+    `;
+
+/**
+ * __useDeleteStoreMutation__
+ *
+ * To run a mutation, you first call `useDeleteStoreMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteStoreMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteStoreMutation, { data, loading, error }] = useDeleteStoreMutation({
+ *   variables: {
+ *      password: // value for 'password'
+ *   },
+ * });
+ */
+export function useDeleteStoreMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<DeleteStoreMutation, DeleteStoreMutationVariables>) {
+        return ApolloReactHooks.useMutation<DeleteStoreMutation, DeleteStoreMutationVariables>(DeleteStoreDocument, baseOptions);
+      }
+export type DeleteStoreMutationHookResult = ReturnType<typeof useDeleteStoreMutation>;
+export type DeleteStoreMutationResult = ApolloReactCommon.MutationResult<DeleteStoreMutation>;
+export type DeleteStoreMutationOptions = ApolloReactCommon.BaseMutationOptions<DeleteStoreMutation, DeleteStoreMutationVariables>;
+export const DeleteProductDocument = gql`
+    mutation deleteProduct($productId: ID!) {
+  deleteProduct(productId: $productId) {
+    product {
+      ...ProductFragment
+    }
+  }
+}
+    ${ProductFragmentFragmentDoc}`;
+
+/**
+ * __useDeleteProductMutation__
+ *
+ * To run a mutation, you first call `useDeleteProductMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteProductMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteProductMutation, { data, loading, error }] = useDeleteProductMutation({
+ *   variables: {
+ *      productId: // value for 'productId'
+ *   },
+ * });
+ */
+export function useDeleteProductMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<DeleteProductMutation, DeleteProductMutationVariables>) {
+        return ApolloReactHooks.useMutation<DeleteProductMutation, DeleteProductMutationVariables>(DeleteProductDocument, baseOptions);
+      }
+export type DeleteProductMutationHookResult = ReturnType<typeof useDeleteProductMutation>;
+export type DeleteProductMutationResult = ApolloReactCommon.MutationResult<DeleteProductMutation>;
+export type DeleteProductMutationOptions = ApolloReactCommon.BaseMutationOptions<DeleteProductMutation, DeleteProductMutationVariables>;
 export const GetDownloadsDocument = gql`
     query getDownloads($query: ConnectionQuery) {
   user {
