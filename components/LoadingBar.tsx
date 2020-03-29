@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import clsx from 'clsx';
 import { withStyles, WithStyles, createStyles, Theme, fade } from '@material-ui/core/styles';
 

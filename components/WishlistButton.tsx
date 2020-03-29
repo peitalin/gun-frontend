@@ -4,8 +4,10 @@ import { oc as option } from "ts-optchain";
 import clsx from 'clsx';
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 import { Colors } from "layout/AppTheme";
-// typingsj
-import { UserPrivate } from "typings/gqlTypes";
+// typings
+// import { UserPrivate } from "typings/gqlTypes";
+type UserPrivate = any;
+
 // MUI
 import FavouriteBorder from "@material-ui/icons/FavoriteBorder"
 import IconButton from "@material-ui/core/IconButton";

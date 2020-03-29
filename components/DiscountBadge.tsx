@@ -4,7 +4,8 @@ import { oc as option } from "ts-optchain";
 import { createStyles, Theme, withStyles, WithStyles } from "@material-ui/core/styles";
 import { Colors } from "layout/AppTheme";
 import Typography from "@material-ui/core/Typography";
-import { PriceDetails } from "typings/gqlTypes";
+// import { PriceDetails } from "typings/gqlTypes";
+type PriceDetails = any;
 import { asCurrency as c } from "utils/prices";
 
 

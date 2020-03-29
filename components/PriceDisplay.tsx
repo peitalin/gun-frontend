@@ -7,7 +7,9 @@ import { Colors } from "layout/AppTheme";
 import Typography from "@material-ui/core/Typography";
 import Button from '@material-ui/core/Button';
 // Utils Components
-import { Price, PriceDetails } from "typings/gqlTypes";
+// import { Price, PriceDetails } from "typings/gqlTypes";
+type Price = number;
+type PriceDetails = any;
 import CountdownBadge from "./CountdownBadge";
 // money
 import currency from "currency.js";

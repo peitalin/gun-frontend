@@ -3,7 +3,10 @@ import { oc as option } from "ts-optchain";
 import clsx from "clsx";
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 // Typings
-import { ProductPreviewItem, Product, ProductVariant } from "typings/gqlTypes";
+// import { ProductPreviewItem, Product, ProductVariant } from "typings/gqlTypes";
+type ProductPreviewItem = any;
+type Product = any;
+type ProductVariant = any;
 // Material UI
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
