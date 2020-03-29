@@ -4,7 +4,10 @@ import { oc as option } from "ts-optchain";
 import { useQuery, useApolloClient } from "@apollo/react-hooks";
 import { GET_USER } from "queries/user-queries";
 import { GET_USER_PAYMENT_METHODS } from "queries/payment_methods-queries";
-import { UserPrivate, ID, PaymentMethod } from "typings/gqlTypes";
+// import { UserPrivate, ID, PaymentMethod } from "typings/gqlTypes";
+type UserPrivate = any;
+type PaymentMethod = any;
+type ID = any;
 // Redux
 import { useDispatch } from "react-redux";
 import { GrandReduxState } from "reduxStore/grand-reducer";

@@ -20,8 +20,8 @@ import ChangePasswordFields from "./ChangePasswordFields";
 // Graphql Queries
 import { useMutation } from "@apollo/react-hooks";
 import { CHANGE_PASSWORD } from "queries/user-mutations";
-import { UserPrivate } from "typings/gqlTypes";
-
+// import { UserPrivate } from "typings/gqlTypes";
+type UserPrivate = any;
 
 
 

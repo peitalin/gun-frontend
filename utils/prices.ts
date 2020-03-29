@@ -1,6 +1,8 @@
 import { SubtotalDisplay } from "typings";
 import currency from "currency.js";
-import { PriceDetails, Discount } from "typings/gqlTypes";
+// import { PriceDetails, Discount } from "typings/gqlTypes";
+type PriceDetails = any;
+type Discount = any;
 
 
 export const asCurrency = (s) => currency(s/100, { formatWithSymbol: true }).format()

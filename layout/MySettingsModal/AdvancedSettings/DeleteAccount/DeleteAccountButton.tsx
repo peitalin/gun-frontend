@@ -5,7 +5,9 @@ import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/s
 // Graphql Queries
 import { useMutation, useApolloClient } from "@apollo/react-hooks";
 import { DELETE_STORE, DELETE_ACCOUNT } from "queries/deletions-mutations";
-import { UserPrivate } from "typings/gqlTypes";
+// import { UserPrivate } from "typings/gqlTypes";
+type UserPrivate = any;
+
 // Material UI
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";

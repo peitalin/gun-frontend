@@ -28,7 +28,8 @@ import { GET_USER } from "queries/user-queries";
 import "../public/App.css";
 // import "react-datepicker/dist/react-datepicker.css";
 // Typings
-import { UserPrivate, ProductCategory } from 'typings/gqlTypes';
+// import { UserPrivate } from 'typings/gqlTypes';
+type UserPrivate = any;
 import { serverApolloClient } from "utils/apollo";
 // Payment Clients
 import { Auth0Provider } from "layout/Auth0";

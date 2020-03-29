@@ -1,4 +1,4 @@
-import { Transaction } from "typings/gqlTypes";
+type Transaction = any;
 
 
 export interface PaypalClient {

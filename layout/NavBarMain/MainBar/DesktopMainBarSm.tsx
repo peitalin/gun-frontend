@@ -3,7 +3,6 @@ import { oc as option } from "ts-optchain";
 // Redux
 import { GrandReduxState } from 'reduxStore/grand-reducer';
 import { Actions } from 'reduxStore/actions';
-import { Cart } from "typings/gqlTypes";
 // Styles
 import clsx from 'clsx';
 import { withStyles, WithStyles } from "@material-ui/core/styles";
@@ -173,7 +172,6 @@ interface MobileMainBarProps extends DesktopMainBarProps {
 }
 
 interface ReduxProps {
-  cart: Cart;
   loggedIn: boolean;
   cartCount: number;
   subtotal: number;

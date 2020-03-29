@@ -21,7 +21,7 @@ const FrontPage: NextPage<ReactProps> = (props) => {
       <h1>
         gunmarket place
       </h1>
-      <ProductGallery/>
+      {/* <ProductGallery/> */}
     </div>
   )
 }

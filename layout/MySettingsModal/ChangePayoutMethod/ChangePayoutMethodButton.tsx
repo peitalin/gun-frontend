@@ -6,7 +6,9 @@ import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/s
 import { useMutation, useApolloClient } from "@apollo/react-hooks";
 import { GET_USER } from "queries/user-queries";
 import { UPDATE_USER, SET_PAYOUT_METHOD } from "queries/user-mutations";
-import { UserPrivate, ID } from "typings/gqlTypes";
+// import { UserPrivate, ID } from "typings/gqlTypes";
+type UserPrivate = any;
+type ID = any;
 // Material UI
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";

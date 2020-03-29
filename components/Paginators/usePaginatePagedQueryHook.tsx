@@ -4,7 +4,8 @@ import {oc as option} from "ts-optchain";
 // GraphQL
 import { useQuery } from "@apollo/react-hooks";
 // typings
-import { PageBasedConnection, ConnectionQuery, PageCursor } from "typings/gqlTypes";
+// import { PageBasedConnection, ConnectionQuery, PageCursor } from "typings/gqlTypes";
+type PageCursor = any;
 import { GenericPageBasedConnection, GenericConnection } from "typings";
 import { WatchQueryFetchPolicy } from "apollo-client";
 

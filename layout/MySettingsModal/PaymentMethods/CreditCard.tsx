@@ -11,8 +11,9 @@ import IconButton from "@material-ui/core/IconButton";
 import VisaIcon from "components/Icons/Visa";
 import ConfirmRemoveCardModalButton from "./ConfirmRemoveCardModalButton";
 // Typings
-import { PaymentMethod } from "typings/gqlTypes";
-import { ID } from "typings/gqlTypes";
+// import { PaymentMethod, ID } from "typings/gqlTypes";
+type PaymentMethod = any;
+type ID = any;
 import { Colors } from "layout/AppTheme";
 
 

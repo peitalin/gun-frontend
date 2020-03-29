@@ -4,7 +4,9 @@ import { oc as option } from "ts-optchain";
 import { useDispatch, useSelector } from 'react-redux';
 import { GrandReduxState } from 'reduxStore/grand-reducer';
 import { Actions } from 'reduxStore/actions';
-import { UserPrivate } from "typings/gqlTypes";
+// import { UserPrivate } from "typings/gqlTypes";
+type UserPrivate = any;
+
 // Router
 import { goToModalConnect } from "utils/modals";
 // Styles

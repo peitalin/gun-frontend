@@ -2,7 +2,9 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { oc as option } from "ts-optchain";
 // Graphql
-import { Store, StorePrivate, UserPrivate, ID } from "typings/gqlTypes";
+// import { Store, StorePrivate, UserPrivate, ID } from "typings/gqlTypes";
+type StorePrivate = any;
+
 // Styles
 import { withStyles, WithStyles, Theme, createStyles } from "@material-ui/core/styles";
 import { Colors } from "layout/AppTheme";
@@ -42,10 +44,16 @@ const StorePage: React.FC<ReactProps> = (props) => {
         />
         <div className={classes.flexCol}>
           <Typography variant="caption" className={classes.profileText}>
-            {option(store).name()}
+            {
+              store && store.name &&
+              store.name
+            }
           </Typography>
           <Typography variant="caption" className={classes.profileText}>
-            {option(store).website()}
+            {
+              store && store.website &&
+              store.website
+            }
           </Typography>
         </div>
       </div>

@@ -2,7 +2,6 @@ import React from "react";
 // Components
 import NewsBar from "./NewsBar";
 import MainBar from "./MainBar";
-import CategoryBar from "./CategoryBar";
 import { NewsBarHeight, MainBarHeight, NavBarHeight } from "layout/NavBarMain/styles";
 
 

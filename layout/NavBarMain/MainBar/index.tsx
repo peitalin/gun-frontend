@@ -3,7 +3,6 @@ import { oc as option } from "ts-optchain";
 // Redux
 import { GrandReduxState } from 'reduxStore/grand-reducer';
 import { Actions } from 'reduxStore/actions';
-import { Cart } from "typings/gqlTypes";
 // Styles
 import clsx from 'clsx';
 import { withStyles, WithStyles } from "@material-ui/core/styles";
@@ -52,7 +51,6 @@ const MainBar = (props: ReactProps) => {
   const color = "#242424";
 
   const {
-    cart,
     cartCount,
     subtotal,
     loggedIn,
@@ -60,7 +58,6 @@ const MainBar = (props: ReactProps) => {
     // cart: state.reduxCart.cart,
     // cartCount: state.reduxCart.cart.items.length,
     // subtotal: state.reduxCart.cart.subtotal,
-    cart: undefined,
     cartCount: 0,
     subtotal: 0,
     loggedIn: state.reduxLogin.loggedIn,
@@ -190,7 +187,6 @@ interface MobileMainBarProps extends ReactProps {
 }
 
 interface ReduxProps {
-  cart?: Cart;
   loggedIn: boolean;
   cartCount: number;
   subtotal: number;

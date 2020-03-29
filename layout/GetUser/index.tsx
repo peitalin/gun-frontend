@@ -12,9 +12,10 @@ import { GET_USER } from "queries/user-queries";
 import { useApolloClient } from "@apollo/react-hooks";
 import { ApolloClient } from "apollo-client";
 // Typings
-import { UserPrivate } from 'typings/gqlTypes';
+// import { UserPrivate } from 'typings/gqlTypes';
 
 
+type UserPrivate = any;
 
 
 const GetUser = (props: ReactProps) => {
@@ -22,28 +23,28 @@ const GetUser = (props: ReactProps) => {
   const dispatch = useDispatch();
   const client = useApolloClient();
 
-  React.useEffect(() => {
-    if (process.browser) {
+  // React.useEffect(() => {
+  //   if (process.browser) {
 
-      client.query({ query: GET_USER })
-      .then(({ loading, data, errors }) => {
-        if (option(data).user.cart() && option(data).user.store()) {
-          dispatch(reduxBatchUpdate.userCartStoreId(data))
-        } else if (option(data).user.cart()) {
-          dispatch(reduxBatchUpdate.userCart(data))
-        } else if (option(data).user.store()) {
-          dispatch(reduxBatchUpdate.userStoreId(data))
-        } else if (option(data).user()) {
-          dispatch(Actions.reduxLogin.SET_USER(data.user))
-        } else {
-        }
-      })
-      .catch(e => {
-        // swallow error message: not loggedIn, and no user_id provided
-      })
+  //     client.query({ query: GET_USER })
+  //     .then(({ loading, data, errors }) => {
+  //       if (option(data).user.cart() && option(data).user.store()) {
+  //         dispatch(reduxBatchUpdate.userCartStoreId(data))
+  //       } else if (option(data).user.cart()) {
+  //         dispatch(reduxBatchUpdate.userCart(data))
+  //       } else if (option(data).user.store()) {
+  //         dispatch(reduxBatchUpdate.userStoreId(data))
+  //       } else if (option(data).user()) {
+  //         dispatch(Actions.reduxLogin.SET_USER(data.user))
+  //       } else {
+  //       }
+  //     })
+  //     .catch(e => {
+  //       // swallow error message: not loggedIn, and no user_id provided
+  //     })
 
-    }
-  }, [])
+  //   }
+  // }, [])
 
   return <div className="get-user"></div>;
 };
@@ -52,7 +53,7 @@ interface ReactProps {
   user?: UserPrivate;
 }
 interface QueryData {
-  user: UserPrivate;
+  user?: UserPrivate;
 }
 
 //////////////// REDUX THUNK CREATORS /////////////////////

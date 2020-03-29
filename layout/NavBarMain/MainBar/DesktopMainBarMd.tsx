@@ -1,5 +1,4 @@
 import React from "react";
-import { Cart } from "typings/gqlTypes";
 // Styles
 import clsx from 'clsx';
 import { withStyles, WithStyles } from "@material-ui/core/styles";
@@ -174,7 +173,6 @@ interface MobileMainBarProps extends DesktopMainBarProps {
 }
 
 interface ReduxProps {
-  cart: Cart;
   loggedIn: boolean;
   cartCount: number;
   subtotal: number;

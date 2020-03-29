@@ -7,7 +7,8 @@ import ErrorBounds from "components/ErrorBounds";
 import Loading from "components/Loading";
 import Button from "@material-ui/core/Button";
 // Typings
-import { Connection } from "typings/gqlTypes";
+// import { Connection } from "typings/gqlTypes";
+type Connection = any;
 import { WatchQueryFetchPolicy } from "apollo-client";
 // Paginator hooks
 import usePaginateQueryHook from "components/Paginators/usePaginateQueryHook";

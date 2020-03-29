@@ -4,7 +4,8 @@ import clsx from "clsx";
 // Graphql Queries
 import { useQuery } from "@apollo/react-hooks";
 import { GET_USER } from "queries/user-queries";
-import { UserPrivate } from "typings/gqlTypes";
+// import { UserPrivate } from "typings/gqlTypes";
+type UserPrivate = any;
 // Styles
 import { withStyles, WithStyles, createStyles, Theme, fade } from "@material-ui/core/styles";
 import { Colors } from "layout/AppTheme";

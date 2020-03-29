@@ -1,16 +1,18 @@
-import {
-  ID,
-  Order,
-  Edge,
-  Connection,
-  PageBasedConnectionEdge,
-  PageBasedConnection,
-  PaymentMethod,
-  PayoutMethod,
-  ProductVariantInput,
-  VariantsLabel,
-  QuantityLabel
-} from "./gqlTypes";
+
+
+type ID = any;
+type Order = any;
+type Edge = any;
+type Connection = any;
+type PageBasedConnectionEdge = any;
+type PageBasedConnection = any;
+
+type PaymentMethod = any;
+type PayoutMethod = any;
+type ProductVariantInput = any;
+type VariantsLabel = any;
+type QuantityLabel = any;
+
 
 export interface SendgridStatus {
   message: string;
@@ -115,6 +117,7 @@ export interface GenericEdge<T> extends Edge {
 
 export interface GenericConnection<T> extends Connection {
   edges?: GenericEdge<T>[];
+  pageInfo?: any;
 }
 
 export interface GenericPageBasedEdge<T> extends PageBasedConnectionEdge {

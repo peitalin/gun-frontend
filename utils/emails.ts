@@ -1,5 +1,8 @@
 import fetch from 'isomorphic-unfetch'
-import { Order, ID } from "typings/gqlTypes";
+// import { Order, ID } from "typings/gqlTypes";
+type Order = any;
+type ID = any;
+
 import { v4 as uuidv4 } from "uuid";
 
 

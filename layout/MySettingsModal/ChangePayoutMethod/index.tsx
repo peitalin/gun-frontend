@@ -21,7 +21,8 @@ import ButtonLoading from "components/ButtonLoading";
 import SnackBarA from "components/Snackbars/SnackbarA";
 import SnackbarsSuccessErrors from "components/Snackbars/SnackbarsSuccessErrors";
 // Typings
-import { UserPrivate } from "typings/gqlTypes";
+// import { UserPrivate } from "typings/gqlTypes";
+type UserPrivate = any;
 import { HtmlEvent } from "typings";
 // Validation
 import { Formik, FormikProps } from 'formik';

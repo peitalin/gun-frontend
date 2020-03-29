@@ -14,7 +14,8 @@ import DeleteStore from "./DeleteStore";
 import DeleteAccount from "./DeleteAccount";
 // Typings
 import { HtmlEvent } from "typings";
-import { UserPrivate } from "typings/gqlTypes";
+// import { UserPrivate } from "typings/gqlTypes";
+type UserPrivate = any;
 
 
 
