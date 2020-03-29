@@ -22,6 +22,7 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 // GraphQL
 import { useQuery, useApolloClient } from "@apollo/react-hooks";
 import { GET_PRODUCTS } from "queries/gun-queries";
+import JSONTree from 'react-json-tree'
 
 
 
@@ -51,7 +52,16 @@ const ProductGallery: React.FC<ReactProps> = (props) => {
         <div className={clsx(classes.productColumn60, 'fadeInFast')}>
           {
             data && data.products &&
-            <div> {JSON.stringify(data.products)} </div>
+            <div style={{
+              width: '90vw',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+              <h1>Gun Products from backend</h1>
+              <JSONTree data={data.products} />
+            </div>
           }
         </div>
       </div>
