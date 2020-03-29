@@ -11,7 +11,7 @@ import Footer from "./Footer";
 import GetUser from "./GetUser";
 import Modals from "./Modals";
 // Typings
-import { UserPrivate } from "typings/gqlTypes";
+// import { UserPrivate } from "typings/gqlTypes";
 // Stripe
 import StripeProvider from "layout/StripeProvider";
 import ErrorBounds from "components/ErrorBounds";
@@ -34,10 +34,6 @@ const Layout: React.FC<ReactProps> = (props) => {
   const router = useRouter();
   const theme = useTheme();
   const lgDown = useMediaQuery(theme.breakpoints.down('lg'));
-
-  const user = useSelector<GrandReduxState, UserPrivate>(
-    s => s.reduxLogin.user
-  );
 
   return (
     <StripeProvider>

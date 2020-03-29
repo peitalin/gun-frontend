@@ -36,7 +36,7 @@
     "apollo-link-http": "^1.5.16",
     "auth0-js": "^9.12.2",
     "cacheable-response": "^2.0.7",
-    "clsx": "^1.0.4",
+    "clsx": "^1.1.0",
     "currency.js": "^1.2.2",
     "dayjs": "^1.8.16",
     "formik": "^1.5.8",

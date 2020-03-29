@@ -1,7 +1,10 @@
 
 import { ReduxStateLogin } from "./login-reducer";
 import { ActionType } from "./actions";
-import { UserPrivate, StorePrivate } from "typings/gqlTypes";
+// import { UserPrivate, StorePrivate } from "typings/gqlTypes";
+
+type UserPrivate = any;
+type StorePrivate = any;
 
 export const reduxLoginActions = {
 
