@@ -17,7 +17,7 @@ const Logo = (props: LogoProps) => {
   return (
     <div className={classes.logoContainer}>
       <div className={classes.logo}>
-        <h2>gunmarketplace.com.au</h2>
+        <h2>GM</h2>
       </div>
       <Typography variant="caption"
         style={{ color: colour }}
