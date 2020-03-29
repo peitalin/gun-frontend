@@ -16,6 +16,7 @@ import YouTubeIcon from "components/Icons/YouTube";
 // import { ProductPreviewItem, ProductCategory, PriceDetails } from "typings/gqlTypes";
 type ProductPreviewItem = any;
 type Product = any;
+type PriceDetails = any;
 type ProductCategory = any;
 
 import { genSrcSet } from "utils/files";
