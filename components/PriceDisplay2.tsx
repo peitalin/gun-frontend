@@ -12,7 +12,6 @@ import Button from '@material-ui/core/Button';
 type Price = number;
 type PriceDetails = any;
 import CountdownBadge from "./CountdownBadge";
-import CountdownBadge from "./CountdownBadge";
 // money
 import currency from "currency.js";
 
