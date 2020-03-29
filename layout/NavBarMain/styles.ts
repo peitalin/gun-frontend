@@ -43,7 +43,7 @@ export const styles = (theme: Theme) => createStyles({
     position: 'relative',
   },
   baseBarInner: {
-    width: '100vw',
+    width: '80vw',
     display: "flex",
     position: "relative",
     justifyContent: 'center',
