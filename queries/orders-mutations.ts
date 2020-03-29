@@ -1,6 +1,7 @@
 import gql from "graphql-tag";
 import { OrderFragment } from "./fragments";
-import { Order } from "typings/gqlTypes";
+// import { Order } from "typings/gqlTypes";
+type Order = any;
 
 
 export interface CheckoutCartResponse {

@@ -5,7 +5,9 @@ import { oc as option } from "ts-optchain";
 import { useApolloClient, useMutation } from "@apollo/react-hooks";
 import { GET_USER } from "queries/user-queries";
 import { ADD_PAYMENT_METHOD } from "queries/payment_methods-mutations";
-import { UserPrivate, ID } from "typings/gqlTypes";
+// import { UserPrivate, ID } from "typings/gqlTypes";
+type UserPrivate = any;
+type ID = any;
 // Styles
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
 import { styles } from "./styles";
