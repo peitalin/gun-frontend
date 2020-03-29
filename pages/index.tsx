@@ -1,8 +1,6 @@
 import React from "react";
 // styles
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
-// Typings
-import { Connection, Product, ProductsConnection } from "typings/gqlTypes";
 // Utils Components
 import ErrorBounds from 'components/ErrorBounds';
 import Loading from "components/Loading";
@@ -12,6 +10,7 @@ import ApolloClient from "apollo-client";
 import dynamic from "next/dynamic";
 // GraphQL
 import { serverApolloClient } from "utils/apollo";
+import ProductGallery from "pageComponents/ProductGallery";
 
 
 
@@ -22,6 +21,7 @@ const FrontPage: NextPage<ReactProps> = (props) => {
       <h1>
         gunmarket place
       </h1>
+      <ProductGallery/>
     </div>
   )
 }
