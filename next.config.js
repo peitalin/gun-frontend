@@ -1,61 +1,87 @@
 const {resolve} = require('path');
 const path = require('path');
 const fs = require('fs');
+// CSS
 const withCSS = require('@zeit/next-css')
+const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+
+
+// environment
+const dev = process.env.NODE_ENV !== 'production'
 const nextRuntimeDotenv = require('next-runtime-dotenv')
 require("dotenv").config();
+// offline first
+const withOffline = require('next-offline')
 
 const withConfig = nextRuntimeDotenv({
   // path: '.env',
   public: [
     'GATEWAY_GRAPHQL_URL',
-    'NODE_ENV',
-    'EFC_ENV',
-    'REACT_APP_FRENZY_URL',
     'SERVER_GATEWAY_GRAPHQL_URL',
+    'NODE_ENV',
+    'STRIPE_PUBLIC_KEY',
+    'PAYPAL_CLIENT_ID',
+    'FEATURED_LIST_ID'
   ],
   server: [
+    'IN_DOCKER',
   ]
 })
 
-module.exports = withConfig(
+
+module.exports =
+  withConfig(
+  withOffline(
   withCSS({
 
-  webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
-    // Note: we provide webpack above so you should not `require` it
-    // Perform customizations to webpack config
-    // Important: return the modified config
+    webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
+      // Note: we provide webpack above so you should not `require` it
+      // Perform customizations to webpack config
+      // Important: return the modified config
 
-    // config.resolve.alias['~'] = path.join(__dirname)
-    config.resolve.alias['components'] = path.join(__dirname, 'components')
-    config.resolve.alias['pageComponents'] = path.join(__dirname, 'pageComponents')
-    config.resolve.alias['pages'] = path.join(__dirname, 'pages')
-    config.resolve.alias['layout'] = path.join(__dirname, 'layout')
-    config.resolve.alias['reduxStore'] = path.join(__dirname, 'reduxStore')
-    config.resolve.alias['queries'] = path.join(__dirname, 'queries')
-    config.resolve.alias['typings'] = path.join(__dirname, 'typings')
-    config.resolve.alias['utils'] = path.join(__dirname, 'utils')
+      config.resolve.alias['components'] = path.join(__dirname, 'components')
+      config.resolve.alias['pageComponents'] = path.join(__dirname, 'pageComponents')
+      config.resolve.alias['pages'] = path.join(__dirname, 'pages')
+      config.resolve.alias['layout'] = path.join(__dirname, 'layout')
+      config.resolve.alias['reduxStore'] = path.join(__dirname, 'reduxStore')
+      config.resolve.alias['queries'] = path.join(__dirname, 'queries')
+      config.resolve.alias['typings'] = path.join(__dirname, 'typings')
+      config.resolve.alias['utils'] = path.join(__dirname, 'utils')
 
-    // config.plugins.push(
-    //   new require('webpack').IgnorePlugin(/faker/)
-    // )
-    // https://arunoda.me/blog/ssr-and-server-only-modules
+      // WORKBOX docs
+      // https://developers.google.com/web/tools/workbox/guides/generate-service-worker/webpack#adding_runtime_caching
 
-    return config
-  },
+      config.plugins.push(
+        // optimize CSS
+        new OptimizeCssAssetsPlugin({
+          assetNameRegExp: /\.optimize\.css$/g,
+          cssProcessor: require('cssnano'),
+          cssProcessorPluginOptions: {
+            preset: ['default', { discardComments: { removeAll: true } }],
+          },
+          canPrint: true
+        })
+      )
+      // https://able.bio/drenther/building-a-progressive-web-app-with-nextjs-part-ii--98ojk46#web-app-manifest
 
-  webpackDevMiddleware: config => {
-    // Perform customizations to webpack dev middleware config
-    // Important: return the modified config
-    return config
-  },
+      return config
+    },
 
-  // disbable x-powered-by next header on requests
-  poweredByHeader: false,
+    webpackDevMiddleware: config => {
+      // Perform customizations to webpack dev middleware config
+      // Important: return the modified config
+      return config
+    },
 
-  env: {
-    // (this is dynamically defined through process.env + nextRuntimeDotenv above)
-  }
+    // disbable x-powered-by next header on requests
+    poweredByHeader: false,
 
-})
-)
+    // next-offline options
+    // dontAutoRegisterSw: true,
+    // generateInDevMode: true,
+
+    env: {
+      // (this is dynamically defined through process.env + nextRuntimeDotenv above)
+    }
+
+  })))

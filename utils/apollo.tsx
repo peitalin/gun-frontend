@@ -25,8 +25,8 @@ import { oc as option } from "ts-optchain";
 //   },
 // } = getConfig()
 
-let GATEWAY_GRAPHQL_URL = "https://api.fileworks.net/graphql"
-let SERVER_GATEWAY_GRAPHQL_URL = "https://api.fileworks.net/graphql"
+let GATEWAY_GRAPHQL_URL = "https://api.gunmarketplace.com.au/v1/graphql"
+let SERVER_GATEWAY_GRAPHQL_URL = "https://api.gunmarketplace.com.au/v1/graphql"
 let NODE_ENV = "develop"
 
 const URI = GATEWAY_GRAPHQL_URL;
