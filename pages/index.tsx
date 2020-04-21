@@ -11,6 +11,12 @@ import dynamic from "next/dynamic";
 // GraphQL
 import { serverApolloClient } from "utils/apollo";
 import ProductGallery from "pageComponents/ProductGallery";
+// Material UI
+import Card from "@material-ui/core/Card";
+import CardActionArea from "@material-ui/core/CardActionArea";
+import CardActions from "@material-ui/core/CardActions";
+import CardContent from "@material-ui/core/CardContent";
+import CardMedia from "@material-ui/core/CardMedia";
 
 
 
@@ -22,6 +28,38 @@ const FrontPage: NextPage<ReactProps> = (props) => {
         gunmarket place
       </h1>
       <ProductGallery/>
+
+      <div style={{
+        display: 'flex',
+        flexDirection: "row",
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: '100%',
+        height: '100%',
+      }}>
+        <div style={{
+          maxWidth: '400px',
+        }}>
+          <Card
+            elevation={0} // remove box-shadow
+          >
+            <CardActionArea
+              // classes={{
+              //   root: chooseCardMediaStyle()
+              // }}
+            >
+              <CardMedia
+                component="img"
+                // className={!loading ? 'shimmer' : null}
+                // classes={{
+                //   media: chooseCardMediaStyle()
+                // }}
+                src={"https://storage.googleapis.com/gunmarket-images-dev/o_1aj0lfq1b1r397ojmqbp6j17phf.jpg"}
+              />
+            </CardActionArea>
+          </Card>
+        </div>
+      </div>
     </div>
   )
 }

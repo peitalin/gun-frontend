@@ -9,6 +9,7 @@ export type Scalars = {
   Float: number;
   timestamptz: any;
   uuid: any;
+  json: any;
 };
 
 export type Boolean_Comparison_Exp = {
@@ -22,6 +23,122 @@ export type Boolean_Comparison_Exp = {
   _neq?: Maybe<Scalars['Boolean']>;
   _nin?: Maybe<Array<Scalars['Boolean']>>;
 };
+
+export type Image_Owners = {
+   __typename?: 'image_owners';
+  image_id: Scalars['String'];
+  owner_id: Scalars['String'];
+};
+
+export type Image_Owners_Aggregate = {
+   __typename?: 'image_owners_aggregate';
+  aggregate?: Maybe<Image_Owners_Aggregate_Fields>;
+  nodes: Array<Image_Owners>;
+};
+
+export type Image_Owners_Aggregate_Fields = {
+   __typename?: 'image_owners_aggregate_fields';
+  count?: Maybe<Scalars['Int']>;
+  max?: Maybe<Image_Owners_Max_Fields>;
+  min?: Maybe<Image_Owners_Min_Fields>;
+};
+
+
+export type Image_Owners_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<Image_Owners_Select_Column>>;
+  distinct?: Maybe<Scalars['Boolean']>;
+};
+
+export type Image_Owners_Aggregate_Order_By = {
+  count?: Maybe<Order_By>;
+  max?: Maybe<Image_Owners_Max_Order_By>;
+  min?: Maybe<Image_Owners_Min_Order_By>;
+};
+
+export type Image_Owners_Arr_Rel_Insert_Input = {
+  data: Array<Image_Owners_Insert_Input>;
+  on_conflict?: Maybe<Image_Owners_On_Conflict>;
+};
+
+export type Image_Owners_Bool_Exp = {
+  _and?: Maybe<Array<Maybe<Image_Owners_Bool_Exp>>>;
+  _not?: Maybe<Image_Owners_Bool_Exp>;
+  _or?: Maybe<Array<Maybe<Image_Owners_Bool_Exp>>>;
+  image_id?: Maybe<String_Comparison_Exp>;
+  owner_id?: Maybe<String_Comparison_Exp>;
+};
+
+export enum Image_Owners_Constraint {
+  ImageOwnersPkey = 'image_owners_pkey'
+}
+
+export type Image_Owners_Insert_Input = {
+  image_id?: Maybe<Scalars['String']>;
+  owner_id?: Maybe<Scalars['String']>;
+};
+
+export type Image_Owners_Max_Fields = {
+   __typename?: 'image_owners_max_fields';
+  image_id?: Maybe<Scalars['String']>;
+  owner_id?: Maybe<Scalars['String']>;
+};
+
+export type Image_Owners_Max_Order_By = {
+  image_id?: Maybe<Order_By>;
+  owner_id?: Maybe<Order_By>;
+};
+
+export type Image_Owners_Min_Fields = {
+   __typename?: 'image_owners_min_fields';
+  image_id?: Maybe<Scalars['String']>;
+  owner_id?: Maybe<Scalars['String']>;
+};
+
+export type Image_Owners_Min_Order_By = {
+  image_id?: Maybe<Order_By>;
+  owner_id?: Maybe<Order_By>;
+};
+
+export type Image_Owners_Mutation_Response = {
+   __typename?: 'image_owners_mutation_response';
+  affected_rows: Scalars['Int'];
+  returning: Array<Image_Owners>;
+};
+
+export type Image_Owners_Obj_Rel_Insert_Input = {
+  data: Image_Owners_Insert_Input;
+  on_conflict?: Maybe<Image_Owners_On_Conflict>;
+};
+
+export type Image_Owners_On_Conflict = {
+  constraint: Image_Owners_Constraint;
+  update_columns: Array<Image_Owners_Update_Column>;
+  where?: Maybe<Image_Owners_Bool_Exp>;
+};
+
+export type Image_Owners_Order_By = {
+  image_id?: Maybe<Order_By>;
+  owner_id?: Maybe<Order_By>;
+};
+
+export type Image_Owners_Pk_Columns_Input = {
+  image_id: Scalars['String'];
+};
+
+export enum Image_Owners_Select_Column {
+  ImageId = 'image_id',
+  OwnerId = 'owner_id'
+}
+
+export type Image_Owners_Set_Input = {
+  image_id?: Maybe<Scalars['String']>;
+  owner_id?: Maybe<Scalars['String']>;
+};
+
+export enum Image_Owners_Update_Column {
+  ImageId = 'image_id',
+  OwnerId = 'owner_id'
+}
 
 export type Image_Parents = {
    __typename?: 'image_parents';
@@ -205,6 +322,7 @@ export type Image_Variants = {
   mime_type: Scalars['String'];
   parent_id: Scalars['String'];
   size_in_bytes: Scalars['Int'];
+  url?: Maybe<Scalars['String']>;
   variant_id: Scalars['String'];
   width_in_pixels: Scalars['Int'];
 };
@@ -276,6 +394,7 @@ export type Image_Variants_Bool_Exp = {
   mime_type?: Maybe<String_Comparison_Exp>;
   parent_id?: Maybe<String_Comparison_Exp>;
   size_in_bytes?: Maybe<Int_Comparison_Exp>;
+  url?: Maybe<String_Comparison_Exp>;
   variant_id?: Maybe<String_Comparison_Exp>;
   width_in_pixels?: Maybe<Int_Comparison_Exp>;
 };
@@ -295,6 +414,7 @@ export type Image_Variants_Insert_Input = {
   mime_type?: Maybe<Scalars['String']>;
   parent_id?: Maybe<Scalars['String']>;
   size_in_bytes?: Maybe<Scalars['Int']>;
+  url?: Maybe<Scalars['String']>;
   variant_id?: Maybe<Scalars['String']>;
   width_in_pixels?: Maybe<Scalars['Int']>;
 };
@@ -305,6 +425,7 @@ export type Image_Variants_Max_Fields = {
   mime_type?: Maybe<Scalars['String']>;
   parent_id?: Maybe<Scalars['String']>;
   size_in_bytes?: Maybe<Scalars['Int']>;
+  url?: Maybe<Scalars['String']>;
   variant_id?: Maybe<Scalars['String']>;
   width_in_pixels?: Maybe<Scalars['Int']>;
 };
@@ -314,6 +435,7 @@ export type Image_Variants_Max_Order_By = {
   mime_type?: Maybe<Order_By>;
   parent_id?: Maybe<Order_By>;
   size_in_bytes?: Maybe<Order_By>;
+  url?: Maybe<Order_By>;
   variant_id?: Maybe<Order_By>;
   width_in_pixels?: Maybe<Order_By>;
 };
@@ -324,6 +446,7 @@ export type Image_Variants_Min_Fields = {
   mime_type?: Maybe<Scalars['String']>;
   parent_id?: Maybe<Scalars['String']>;
   size_in_bytes?: Maybe<Scalars['Int']>;
+  url?: Maybe<Scalars['String']>;
   variant_id?: Maybe<Scalars['String']>;
   width_in_pixels?: Maybe<Scalars['Int']>;
 };
@@ -333,6 +456,7 @@ export type Image_Variants_Min_Order_By = {
   mime_type?: Maybe<Order_By>;
   parent_id?: Maybe<Order_By>;
   size_in_bytes?: Maybe<Order_By>;
+  url?: Maybe<Order_By>;
   variant_id?: Maybe<Order_By>;
   width_in_pixels?: Maybe<Order_By>;
 };
@@ -359,6 +483,7 @@ export type Image_Variants_Order_By = {
   mime_type?: Maybe<Order_By>;
   parent_id?: Maybe<Order_By>;
   size_in_bytes?: Maybe<Order_By>;
+  url?: Maybe<Order_By>;
   variant_id?: Maybe<Order_By>;
   width_in_pixels?: Maybe<Order_By>;
 };
@@ -372,6 +497,7 @@ export enum Image_Variants_Select_Column {
   MimeType = 'mime_type',
   ParentId = 'parent_id',
   SizeInBytes = 'size_in_bytes',
+  Url = 'url',
   VariantId = 'variant_id',
   WidthInPixels = 'width_in_pixels'
 }
@@ -381,6 +507,7 @@ export type Image_Variants_Set_Input = {
   mime_type?: Maybe<Scalars['String']>;
   parent_id?: Maybe<Scalars['String']>;
   size_in_bytes?: Maybe<Scalars['Int']>;
+  url?: Maybe<Scalars['String']>;
   variant_id?: Maybe<Scalars['String']>;
   width_in_pixels?: Maybe<Scalars['Int']>;
 };
@@ -442,6 +569,7 @@ export enum Image_Variants_Update_Column {
   MimeType = 'mime_type',
   ParentId = 'parent_id',
   SizeInBytes = 'size_in_bytes',
+  Url = 'url',
   VariantId = 'variant_id',
   WidthInPixels = 'width_in_pixels'
 }
@@ -485,6 +613,11 @@ export type Image_Variants_Variance_Order_By = {
   width_in_pixels?: Maybe<Order_By>;
 };
 
+export type ImageUrl = {
+   __typename?: 'ImageUrl';
+  url: Scalars['String'];
+};
+
 export type Int_Comparison_Exp = {
   _eq?: Maybe<Scalars['Int']>;
   _gt?: Maybe<Scalars['Int']>;
@@ -497,13 +630,32 @@ export type Int_Comparison_Exp = {
   _nin?: Maybe<Array<Scalars['Int']>>;
 };
 
+
+export type Json_Comparison_Exp = {
+  _eq?: Maybe<Scalars['json']>;
+  _gt?: Maybe<Scalars['json']>;
+  _gte?: Maybe<Scalars['json']>;
+  _in?: Maybe<Array<Scalars['json']>>;
+  _is_null?: Maybe<Scalars['Boolean']>;
+  _lt?: Maybe<Scalars['json']>;
+  _lte?: Maybe<Scalars['json']>;
+  _neq?: Maybe<Scalars['json']>;
+  _nin?: Maybe<Array<Scalars['json']>>;
+};
+
 export type Mutation_Root = {
    __typename?: 'mutation_root';
+  delete_image_owners?: Maybe<Image_Owners_Mutation_Response>;
+  delete_image_owners_by_pk?: Maybe<Image_Owners>;
   delete_image_parents?: Maybe<Image_Parents_Mutation_Response>;
   delete_image_parents_by_pk?: Maybe<Image_Parents>;
   delete_image_variants?: Maybe<Image_Variants_Mutation_Response>;
   delete_image_variants_by_pk?: Maybe<Image_Variants>;
   delete_online_users?: Maybe<Online_Users_Mutation_Response>;
+  delete_product_file_owners?: Maybe<Product_File_Owners_Mutation_Response>;
+  delete_product_file_owners_by_pk?: Maybe<Product_File_Owners>;
+  delete_product_files?: Maybe<Product_Files_Mutation_Response>;
+  delete_product_files_by_pk?: Maybe<Product_Files>;
   delete_product_preview_items?: Maybe<Product_Preview_Items_Mutation_Response>;
   delete_product_preview_items_by_pk?: Maybe<Product_Preview_Items>;
   delete_product_snapshots?: Maybe<Product_Snapshots_Mutation_Response>;
@@ -516,12 +668,18 @@ export type Mutation_Root = {
   delete_profile_by_pk?: Maybe<Profile>;
   delete_users?: Maybe<Users_Mutation_Response>;
   delete_users_by_pk?: Maybe<Users>;
+  insert_image_owners?: Maybe<Image_Owners_Mutation_Response>;
+  insert_image_owners_one?: Maybe<Image_Owners>;
   insert_image_parents?: Maybe<Image_Parents_Mutation_Response>;
   insert_image_parents_one?: Maybe<Image_Parents>;
   insert_image_variants?: Maybe<Image_Variants_Mutation_Response>;
   insert_image_variants_one?: Maybe<Image_Variants>;
   insert_online_users?: Maybe<Online_Users_Mutation_Response>;
   insert_online_users_one?: Maybe<Online_Users>;
+  insert_product_file_owners?: Maybe<Product_File_Owners_Mutation_Response>;
+  insert_product_file_owners_one?: Maybe<Product_File_Owners>;
+  insert_product_files?: Maybe<Product_Files_Mutation_Response>;
+  insert_product_files_one?: Maybe<Product_Files>;
   insert_product_preview_items?: Maybe<Product_Preview_Items_Mutation_Response>;
   insert_product_preview_items_one?: Maybe<Product_Preview_Items>;
   insert_product_snapshots?: Maybe<Product_Snapshots_Mutation_Response>;
@@ -534,11 +692,17 @@ export type Mutation_Root = {
   insert_profile_one?: Maybe<Profile>;
   insert_users?: Maybe<Users_Mutation_Response>;
   insert_users_one?: Maybe<Users>;
+  update_image_owners?: Maybe<Image_Owners_Mutation_Response>;
+  update_image_owners_by_pk?: Maybe<Image_Owners>;
   update_image_parents?: Maybe<Image_Parents_Mutation_Response>;
   update_image_parents_by_pk?: Maybe<Image_Parents>;
   update_image_variants?: Maybe<Image_Variants_Mutation_Response>;
   update_image_variants_by_pk?: Maybe<Image_Variants>;
   update_online_users?: Maybe<Online_Users_Mutation_Response>;
+  update_product_file_owners?: Maybe<Product_File_Owners_Mutation_Response>;
+  update_product_file_owners_by_pk?: Maybe<Product_File_Owners>;
+  update_product_files?: Maybe<Product_Files_Mutation_Response>;
+  update_product_files_by_pk?: Maybe<Product_Files>;
   update_product_preview_items?: Maybe<Product_Preview_Items_Mutation_Response>;
   update_product_preview_items_by_pk?: Maybe<Product_Preview_Items>;
   update_product_snapshots?: Maybe<Product_Snapshots_Mutation_Response>;
@@ -551,6 +715,17 @@ export type Mutation_Root = {
   update_profile_by_pk?: Maybe<Profile>;
   update_users?: Maybe<Users_Mutation_Response>;
   update_users_by_pk?: Maybe<Users>;
+  url?: Maybe<ImageUrl>;
+};
+
+
+export type Mutation_RootDelete_Image_OwnersArgs = {
+  where: Image_Owners_Bool_Exp;
+};
+
+
+export type Mutation_RootDelete_Image_Owners_By_PkArgs = {
+  image_id: Scalars['String'];
 };
 
 
@@ -576,6 +751,26 @@ export type Mutation_RootDelete_Image_Variants_By_PkArgs = {
 
 export type Mutation_RootDelete_Online_UsersArgs = {
   where: Online_Users_Bool_Exp;
+};
+
+
+export type Mutation_RootDelete_Product_File_OwnersArgs = {
+  where: Product_File_Owners_Bool_Exp;
+};
+
+
+export type Mutation_RootDelete_Product_File_Owners_By_PkArgs = {
+  product_file_id: Scalars['String'];
+};
+
+
+export type Mutation_RootDelete_Product_FilesArgs = {
+  where: Product_Files_Bool_Exp;
+};
+
+
+export type Mutation_RootDelete_Product_Files_By_PkArgs = {
+  product_file_id: Scalars['String'];
 };
 
 
@@ -639,6 +834,18 @@ export type Mutation_RootDelete_Users_By_PkArgs = {
 };
 
 
+export type Mutation_RootInsert_Image_OwnersArgs = {
+  objects: Array<Image_Owners_Insert_Input>;
+  on_conflict?: Maybe<Image_Owners_On_Conflict>;
+};
+
+
+export type Mutation_RootInsert_Image_Owners_OneArgs = {
+  object: Image_Owners_Insert_Input;
+  on_conflict?: Maybe<Image_Owners_On_Conflict>;
+};
+
+
 export type Mutation_RootInsert_Image_ParentsArgs = {
   objects: Array<Image_Parents_Insert_Input>;
   on_conflict?: Maybe<Image_Parents_On_Conflict>;
@@ -670,6 +877,30 @@ export type Mutation_RootInsert_Online_UsersArgs = {
 
 export type Mutation_RootInsert_Online_Users_OneArgs = {
   object: Online_Users_Insert_Input;
+};
+
+
+export type Mutation_RootInsert_Product_File_OwnersArgs = {
+  objects: Array<Product_File_Owners_Insert_Input>;
+  on_conflict?: Maybe<Product_File_Owners_On_Conflict>;
+};
+
+
+export type Mutation_RootInsert_Product_File_Owners_OneArgs = {
+  object: Product_File_Owners_Insert_Input;
+  on_conflict?: Maybe<Product_File_Owners_On_Conflict>;
+};
+
+
+export type Mutation_RootInsert_Product_FilesArgs = {
+  objects: Array<Product_Files_Insert_Input>;
+  on_conflict?: Maybe<Product_Files_On_Conflict>;
+};
+
+
+export type Mutation_RootInsert_Product_Files_OneArgs = {
+  object: Product_Files_Insert_Input;
+  on_conflict?: Maybe<Product_Files_On_Conflict>;
 };
 
 
@@ -745,6 +976,18 @@ export type Mutation_RootInsert_Users_OneArgs = {
 };
 
 
+export type Mutation_RootUpdate_Image_OwnersArgs = {
+  _set?: Maybe<Image_Owners_Set_Input>;
+  where: Image_Owners_Bool_Exp;
+};
+
+
+export type Mutation_RootUpdate_Image_Owners_By_PkArgs = {
+  _set?: Maybe<Image_Owners_Set_Input>;
+  pk_columns: Image_Owners_Pk_Columns_Input;
+};
+
+
 export type Mutation_RootUpdate_Image_ParentsArgs = {
   _set?: Maybe<Image_Parents_Set_Input>;
   where: Image_Parents_Bool_Exp;
@@ -774,6 +1017,32 @@ export type Mutation_RootUpdate_Image_Variants_By_PkArgs = {
 export type Mutation_RootUpdate_Online_UsersArgs = {
   _set?: Maybe<Online_Users_Set_Input>;
   where: Online_Users_Bool_Exp;
+};
+
+
+export type Mutation_RootUpdate_Product_File_OwnersArgs = {
+  _set?: Maybe<Product_File_Owners_Set_Input>;
+  where: Product_File_Owners_Bool_Exp;
+};
+
+
+export type Mutation_RootUpdate_Product_File_Owners_By_PkArgs = {
+  _set?: Maybe<Product_File_Owners_Set_Input>;
+  pk_columns: Product_File_Owners_Pk_Columns_Input;
+};
+
+
+export type Mutation_RootUpdate_Product_FilesArgs = {
+  _inc?: Maybe<Product_Files_Inc_Input>;
+  _set?: Maybe<Product_Files_Set_Input>;
+  where: Product_Files_Bool_Exp;
+};
+
+
+export type Mutation_RootUpdate_Product_Files_By_PkArgs = {
+  _inc?: Maybe<Product_Files_Inc_Input>;
+  _set?: Maybe<Product_Files_Set_Input>;
+  pk_columns: Product_Files_Pk_Columns_Input;
 };
 
 
@@ -850,6 +1119,11 @@ export type Mutation_RootUpdate_UsersArgs = {
 export type Mutation_RootUpdate_Users_By_PkArgs = {
   _set?: Maybe<Users_Set_Input>;
   pk_columns: Users_Pk_Columns_Input;
+};
+
+
+export type Mutation_RootUrlArgs = {
+  image_id?: Maybe<Scalars['String']>;
 };
 
 export type Online_Users = {
@@ -956,9 +1230,367 @@ export enum Order_By {
   DescNullsLast = 'desc_nulls_last'
 }
 
+export type Product_File_Owners = {
+   __typename?: 'product_file_owners';
+  owner_id: Scalars['String'];
+  product_file_id: Scalars['String'];
+};
+
+export type Product_File_Owners_Aggregate = {
+   __typename?: 'product_file_owners_aggregate';
+  aggregate?: Maybe<Product_File_Owners_Aggregate_Fields>;
+  nodes: Array<Product_File_Owners>;
+};
+
+export type Product_File_Owners_Aggregate_Fields = {
+   __typename?: 'product_file_owners_aggregate_fields';
+  count?: Maybe<Scalars['Int']>;
+  max?: Maybe<Product_File_Owners_Max_Fields>;
+  min?: Maybe<Product_File_Owners_Min_Fields>;
+};
+
+
+export type Product_File_Owners_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<Product_File_Owners_Select_Column>>;
+  distinct?: Maybe<Scalars['Boolean']>;
+};
+
+export type Product_File_Owners_Aggregate_Order_By = {
+  count?: Maybe<Order_By>;
+  max?: Maybe<Product_File_Owners_Max_Order_By>;
+  min?: Maybe<Product_File_Owners_Min_Order_By>;
+};
+
+export type Product_File_Owners_Arr_Rel_Insert_Input = {
+  data: Array<Product_File_Owners_Insert_Input>;
+  on_conflict?: Maybe<Product_File_Owners_On_Conflict>;
+};
+
+export type Product_File_Owners_Bool_Exp = {
+  _and?: Maybe<Array<Maybe<Product_File_Owners_Bool_Exp>>>;
+  _not?: Maybe<Product_File_Owners_Bool_Exp>;
+  _or?: Maybe<Array<Maybe<Product_File_Owners_Bool_Exp>>>;
+  owner_id?: Maybe<String_Comparison_Exp>;
+  product_file_id?: Maybe<String_Comparison_Exp>;
+};
+
+export enum Product_File_Owners_Constraint {
+  ProductFileOwnersPkey = 'product_file_owners_pkey'
+}
+
+export type Product_File_Owners_Insert_Input = {
+  owner_id?: Maybe<Scalars['String']>;
+  product_file_id?: Maybe<Scalars['String']>;
+};
+
+export type Product_File_Owners_Max_Fields = {
+   __typename?: 'product_file_owners_max_fields';
+  owner_id?: Maybe<Scalars['String']>;
+  product_file_id?: Maybe<Scalars['String']>;
+};
+
+export type Product_File_Owners_Max_Order_By = {
+  owner_id?: Maybe<Order_By>;
+  product_file_id?: Maybe<Order_By>;
+};
+
+export type Product_File_Owners_Min_Fields = {
+   __typename?: 'product_file_owners_min_fields';
+  owner_id?: Maybe<Scalars['String']>;
+  product_file_id?: Maybe<Scalars['String']>;
+};
+
+export type Product_File_Owners_Min_Order_By = {
+  owner_id?: Maybe<Order_By>;
+  product_file_id?: Maybe<Order_By>;
+};
+
+export type Product_File_Owners_Mutation_Response = {
+   __typename?: 'product_file_owners_mutation_response';
+  affected_rows: Scalars['Int'];
+  returning: Array<Product_File_Owners>;
+};
+
+export type Product_File_Owners_Obj_Rel_Insert_Input = {
+  data: Product_File_Owners_Insert_Input;
+  on_conflict?: Maybe<Product_File_Owners_On_Conflict>;
+};
+
+export type Product_File_Owners_On_Conflict = {
+  constraint: Product_File_Owners_Constraint;
+  update_columns: Array<Product_File_Owners_Update_Column>;
+  where?: Maybe<Product_File_Owners_Bool_Exp>;
+};
+
+export type Product_File_Owners_Order_By = {
+  owner_id?: Maybe<Order_By>;
+  product_file_id?: Maybe<Order_By>;
+};
+
+export type Product_File_Owners_Pk_Columns_Input = {
+  product_file_id: Scalars['String'];
+};
+
+export enum Product_File_Owners_Select_Column {
+  OwnerId = 'owner_id',
+  ProductFileId = 'product_file_id'
+}
+
+export type Product_File_Owners_Set_Input = {
+  owner_id?: Maybe<Scalars['String']>;
+  product_file_id?: Maybe<Scalars['String']>;
+};
+
+export enum Product_File_Owners_Update_Column {
+  OwnerId = 'owner_id',
+  ProductFileId = 'product_file_id'
+}
+
+export type Product_Files = {
+   __typename?: 'product_files';
+  created_at?: Maybe<Scalars['timestamptz']>;
+  file_name?: Maybe<Scalars['String']>;
+  mime_type?: Maybe<Scalars['String']>;
+  product_file_id: Scalars['String'];
+  size_in_bytes?: Maybe<Scalars['Int']>;
+};
+
+export type Product_Files_Aggregate = {
+   __typename?: 'product_files_aggregate';
+  aggregate?: Maybe<Product_Files_Aggregate_Fields>;
+  nodes: Array<Product_Files>;
+};
+
+export type Product_Files_Aggregate_Fields = {
+   __typename?: 'product_files_aggregate_fields';
+  avg?: Maybe<Product_Files_Avg_Fields>;
+  count?: Maybe<Scalars['Int']>;
+  max?: Maybe<Product_Files_Max_Fields>;
+  min?: Maybe<Product_Files_Min_Fields>;
+  stddev?: Maybe<Product_Files_Stddev_Fields>;
+  stddev_pop?: Maybe<Product_Files_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<Product_Files_Stddev_Samp_Fields>;
+  sum?: Maybe<Product_Files_Sum_Fields>;
+  var_pop?: Maybe<Product_Files_Var_Pop_Fields>;
+  var_samp?: Maybe<Product_Files_Var_Samp_Fields>;
+  variance?: Maybe<Product_Files_Variance_Fields>;
+};
+
+
+export type Product_Files_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<Product_Files_Select_Column>>;
+  distinct?: Maybe<Scalars['Boolean']>;
+};
+
+export type Product_Files_Aggregate_Order_By = {
+  avg?: Maybe<Product_Files_Avg_Order_By>;
+  count?: Maybe<Order_By>;
+  max?: Maybe<Product_Files_Max_Order_By>;
+  min?: Maybe<Product_Files_Min_Order_By>;
+  stddev?: Maybe<Product_Files_Stddev_Order_By>;
+  stddev_pop?: Maybe<Product_Files_Stddev_Pop_Order_By>;
+  stddev_samp?: Maybe<Product_Files_Stddev_Samp_Order_By>;
+  sum?: Maybe<Product_Files_Sum_Order_By>;
+  var_pop?: Maybe<Product_Files_Var_Pop_Order_By>;
+  var_samp?: Maybe<Product_Files_Var_Samp_Order_By>;
+  variance?: Maybe<Product_Files_Variance_Order_By>;
+};
+
+export type Product_Files_Arr_Rel_Insert_Input = {
+  data: Array<Product_Files_Insert_Input>;
+  on_conflict?: Maybe<Product_Files_On_Conflict>;
+};
+
+export type Product_Files_Avg_Fields = {
+   __typename?: 'product_files_avg_fields';
+  size_in_bytes?: Maybe<Scalars['Float']>;
+};
+
+export type Product_Files_Avg_Order_By = {
+  size_in_bytes?: Maybe<Order_By>;
+};
+
+export type Product_Files_Bool_Exp = {
+  _and?: Maybe<Array<Maybe<Product_Files_Bool_Exp>>>;
+  _not?: Maybe<Product_Files_Bool_Exp>;
+  _or?: Maybe<Array<Maybe<Product_Files_Bool_Exp>>>;
+  created_at?: Maybe<Timestamptz_Comparison_Exp>;
+  file_name?: Maybe<String_Comparison_Exp>;
+  mime_type?: Maybe<String_Comparison_Exp>;
+  product_file_id?: Maybe<String_Comparison_Exp>;
+  size_in_bytes?: Maybe<Int_Comparison_Exp>;
+};
+
+export enum Product_Files_Constraint {
+  ProductFilesPkey = 'product_files_pkey'
+}
+
+export type Product_Files_Inc_Input = {
+  size_in_bytes?: Maybe<Scalars['Int']>;
+};
+
+export type Product_Files_Insert_Input = {
+  created_at?: Maybe<Scalars['timestamptz']>;
+  file_name?: Maybe<Scalars['String']>;
+  mime_type?: Maybe<Scalars['String']>;
+  product_file_id?: Maybe<Scalars['String']>;
+  size_in_bytes?: Maybe<Scalars['Int']>;
+};
+
+export type Product_Files_Max_Fields = {
+   __typename?: 'product_files_max_fields';
+  created_at?: Maybe<Scalars['timestamptz']>;
+  file_name?: Maybe<Scalars['String']>;
+  mime_type?: Maybe<Scalars['String']>;
+  product_file_id?: Maybe<Scalars['String']>;
+  size_in_bytes?: Maybe<Scalars['Int']>;
+};
+
+export type Product_Files_Max_Order_By = {
+  created_at?: Maybe<Order_By>;
+  file_name?: Maybe<Order_By>;
+  mime_type?: Maybe<Order_By>;
+  product_file_id?: Maybe<Order_By>;
+  size_in_bytes?: Maybe<Order_By>;
+};
+
+export type Product_Files_Min_Fields = {
+   __typename?: 'product_files_min_fields';
+  created_at?: Maybe<Scalars['timestamptz']>;
+  file_name?: Maybe<Scalars['String']>;
+  mime_type?: Maybe<Scalars['String']>;
+  product_file_id?: Maybe<Scalars['String']>;
+  size_in_bytes?: Maybe<Scalars['Int']>;
+};
+
+export type Product_Files_Min_Order_By = {
+  created_at?: Maybe<Order_By>;
+  file_name?: Maybe<Order_By>;
+  mime_type?: Maybe<Order_By>;
+  product_file_id?: Maybe<Order_By>;
+  size_in_bytes?: Maybe<Order_By>;
+};
+
+export type Product_Files_Mutation_Response = {
+   __typename?: 'product_files_mutation_response';
+  affected_rows: Scalars['Int'];
+  returning: Array<Product_Files>;
+};
+
+export type Product_Files_Obj_Rel_Insert_Input = {
+  data: Product_Files_Insert_Input;
+  on_conflict?: Maybe<Product_Files_On_Conflict>;
+};
+
+export type Product_Files_On_Conflict = {
+  constraint: Product_Files_Constraint;
+  update_columns: Array<Product_Files_Update_Column>;
+  where?: Maybe<Product_Files_Bool_Exp>;
+};
+
+export type Product_Files_Order_By = {
+  created_at?: Maybe<Order_By>;
+  file_name?: Maybe<Order_By>;
+  mime_type?: Maybe<Order_By>;
+  product_file_id?: Maybe<Order_By>;
+  size_in_bytes?: Maybe<Order_By>;
+};
+
+export type Product_Files_Pk_Columns_Input = {
+  product_file_id: Scalars['String'];
+};
+
+export enum Product_Files_Select_Column {
+  CreatedAt = 'created_at',
+  FileName = 'file_name',
+  MimeType = 'mime_type',
+  ProductFileId = 'product_file_id',
+  SizeInBytes = 'size_in_bytes'
+}
+
+export type Product_Files_Set_Input = {
+  created_at?: Maybe<Scalars['timestamptz']>;
+  file_name?: Maybe<Scalars['String']>;
+  mime_type?: Maybe<Scalars['String']>;
+  product_file_id?: Maybe<Scalars['String']>;
+  size_in_bytes?: Maybe<Scalars['Int']>;
+};
+
+export type Product_Files_Stddev_Fields = {
+   __typename?: 'product_files_stddev_fields';
+  size_in_bytes?: Maybe<Scalars['Float']>;
+};
+
+export type Product_Files_Stddev_Order_By = {
+  size_in_bytes?: Maybe<Order_By>;
+};
+
+export type Product_Files_Stddev_Pop_Fields = {
+   __typename?: 'product_files_stddev_pop_fields';
+  size_in_bytes?: Maybe<Scalars['Float']>;
+};
+
+export type Product_Files_Stddev_Pop_Order_By = {
+  size_in_bytes?: Maybe<Order_By>;
+};
+
+export type Product_Files_Stddev_Samp_Fields = {
+   __typename?: 'product_files_stddev_samp_fields';
+  size_in_bytes?: Maybe<Scalars['Float']>;
+};
+
+export type Product_Files_Stddev_Samp_Order_By = {
+  size_in_bytes?: Maybe<Order_By>;
+};
+
+export type Product_Files_Sum_Fields = {
+   __typename?: 'product_files_sum_fields';
+  size_in_bytes?: Maybe<Scalars['Int']>;
+};
+
+export type Product_Files_Sum_Order_By = {
+  size_in_bytes?: Maybe<Order_By>;
+};
+
+export enum Product_Files_Update_Column {
+  CreatedAt = 'created_at',
+  FileName = 'file_name',
+  MimeType = 'mime_type',
+  ProductFileId = 'product_file_id',
+  SizeInBytes = 'size_in_bytes'
+}
+
+export type Product_Files_Var_Pop_Fields = {
+   __typename?: 'product_files_var_pop_fields';
+  size_in_bytes?: Maybe<Scalars['Float']>;
+};
+
+export type Product_Files_Var_Pop_Order_By = {
+  size_in_bytes?: Maybe<Order_By>;
+};
+
+export type Product_Files_Var_Samp_Fields = {
+   __typename?: 'product_files_var_samp_fields';
+  size_in_bytes?: Maybe<Scalars['Float']>;
+};
+
+export type Product_Files_Var_Samp_Order_By = {
+  size_in_bytes?: Maybe<Order_By>;
+};
+
+export type Product_Files_Variance_Fields = {
+   __typename?: 'product_files_variance_fields';
+  size_in_bytes?: Maybe<Scalars['Float']>;
+};
+
+export type Product_Files_Variance_Order_By = {
+  size_in_bytes?: Maybe<Order_By>;
+};
+
 export type Product_Preview_Items = {
    __typename?: 'product_preview_items';
   id: Scalars['String'];
+  image?: Maybe<Image_Parents>;
   image_id?: Maybe<Scalars['String']>;
   position: Scalars['Int'];
   variant_snapshot_id?: Maybe<Scalars['String']>;
@@ -1025,6 +1657,7 @@ export type Product_Preview_Items_Bool_Exp = {
   _not?: Maybe<Product_Preview_Items_Bool_Exp>;
   _or?: Maybe<Array<Maybe<Product_Preview_Items_Bool_Exp>>>;
   id?: Maybe<String_Comparison_Exp>;
+  image?: Maybe<Image_Parents_Bool_Exp>;
   image_id?: Maybe<String_Comparison_Exp>;
   position?: Maybe<Int_Comparison_Exp>;
   variant_snapshot_id?: Maybe<String_Comparison_Exp>;
@@ -1041,6 +1674,7 @@ export type Product_Preview_Items_Inc_Input = {
 
 export type Product_Preview_Items_Insert_Input = {
   id?: Maybe<Scalars['String']>;
+  image?: Maybe<Image_Parents_Obj_Rel_Insert_Input>;
   image_id?: Maybe<Scalars['String']>;
   position?: Maybe<Scalars['Int']>;
   variant_snapshot_id?: Maybe<Scalars['String']>;
@@ -1100,6 +1734,7 @@ export type Product_Preview_Items_On_Conflict = {
 
 export type Product_Preview_Items_Order_By = {
   id?: Maybe<Order_By>;
+  image?: Maybe<Image_Parents_Order_By>;
   image_id?: Maybe<Order_By>;
   position?: Maybe<Order_By>;
   variant_snapshot_id?: Maybe<Order_By>;
@@ -2152,6 +2787,9 @@ export enum Profile_Update_Column {
 
 export type Query_Root = {
    __typename?: 'query_root';
+  image_owners: Array<Image_Owners>;
+  image_owners_aggregate: Image_Owners_Aggregate;
+  image_owners_by_pk?: Maybe<Image_Owners>;
   image_parents: Array<Image_Parents>;
   image_parents_aggregate: Image_Parents_Aggregate;
   image_parents_by_pk?: Maybe<Image_Parents>;
@@ -2160,6 +2798,12 @@ export type Query_Root = {
   image_variants_by_pk?: Maybe<Image_Variants>;
   online_users: Array<Online_Users>;
   online_users_aggregate: Online_Users_Aggregate;
+  product_file_owners: Array<Product_File_Owners>;
+  product_file_owners_aggregate: Product_File_Owners_Aggregate;
+  product_file_owners_by_pk?: Maybe<Product_File_Owners>;
+  product_files: Array<Product_Files>;
+  product_files_aggregate: Product_Files_Aggregate;
+  product_files_by_pk?: Maybe<Product_Files>;
   product_preview_items: Array<Product_Preview_Items>;
   product_preview_items_aggregate: Product_Preview_Items_Aggregate;
   product_preview_items_by_pk?: Maybe<Product_Preview_Items>;
@@ -2178,6 +2822,29 @@ export type Query_Root = {
   users: Array<Users>;
   users_aggregate: Users_Aggregate;
   users_by_pk?: Maybe<Users>;
+};
+
+
+export type Query_RootImage_OwnersArgs = {
+  distinct_on?: Maybe<Array<Image_Owners_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Image_Owners_Order_By>>;
+  where?: Maybe<Image_Owners_Bool_Exp>;
+};
+
+
+export type Query_RootImage_Owners_AggregateArgs = {
+  distinct_on?: Maybe<Array<Image_Owners_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Image_Owners_Order_By>>;
+  where?: Maybe<Image_Owners_Bool_Exp>;
+};
+
+
+export type Query_RootImage_Owners_By_PkArgs = {
+  image_id: Scalars['String'];
 };
 
 
@@ -2242,6 +2909,52 @@ export type Query_RootOnline_Users_AggregateArgs = {
   offset?: Maybe<Scalars['Int']>;
   order_by?: Maybe<Array<Online_Users_Order_By>>;
   where?: Maybe<Online_Users_Bool_Exp>;
+};
+
+
+export type Query_RootProduct_File_OwnersArgs = {
+  distinct_on?: Maybe<Array<Product_File_Owners_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Product_File_Owners_Order_By>>;
+  where?: Maybe<Product_File_Owners_Bool_Exp>;
+};
+
+
+export type Query_RootProduct_File_Owners_AggregateArgs = {
+  distinct_on?: Maybe<Array<Product_File_Owners_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Product_File_Owners_Order_By>>;
+  where?: Maybe<Product_File_Owners_Bool_Exp>;
+};
+
+
+export type Query_RootProduct_File_Owners_By_PkArgs = {
+  product_file_id: Scalars['String'];
+};
+
+
+export type Query_RootProduct_FilesArgs = {
+  distinct_on?: Maybe<Array<Product_Files_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Product_Files_Order_By>>;
+  where?: Maybe<Product_Files_Bool_Exp>;
+};
+
+
+export type Query_RootProduct_Files_AggregateArgs = {
+  distinct_on?: Maybe<Array<Product_Files_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Product_Files_Order_By>>;
+  where?: Maybe<Product_Files_Bool_Exp>;
+};
+
+
+export type Query_RootProduct_Files_By_PkArgs = {
+  product_file_id: Scalars['String'];
 };
 
 
@@ -2402,6 +3115,9 @@ export type String_Comparison_Exp = {
 
 export type Subscription_Root = {
    __typename?: 'subscription_root';
+  image_owners: Array<Image_Owners>;
+  image_owners_aggregate: Image_Owners_Aggregate;
+  image_owners_by_pk?: Maybe<Image_Owners>;
   image_parents: Array<Image_Parents>;
   image_parents_aggregate: Image_Parents_Aggregate;
   image_parents_by_pk?: Maybe<Image_Parents>;
@@ -2410,6 +3126,12 @@ export type Subscription_Root = {
   image_variants_by_pk?: Maybe<Image_Variants>;
   online_users: Array<Online_Users>;
   online_users_aggregate: Online_Users_Aggregate;
+  product_file_owners: Array<Product_File_Owners>;
+  product_file_owners_aggregate: Product_File_Owners_Aggregate;
+  product_file_owners_by_pk?: Maybe<Product_File_Owners>;
+  product_files: Array<Product_Files>;
+  product_files_aggregate: Product_Files_Aggregate;
+  product_files_by_pk?: Maybe<Product_Files>;
   product_preview_items: Array<Product_Preview_Items>;
   product_preview_items_aggregate: Product_Preview_Items_Aggregate;
   product_preview_items_by_pk?: Maybe<Product_Preview_Items>;
@@ -2428,6 +3150,29 @@ export type Subscription_Root = {
   users: Array<Users>;
   users_aggregate: Users_Aggregate;
   users_by_pk?: Maybe<Users>;
+};
+
+
+export type Subscription_RootImage_OwnersArgs = {
+  distinct_on?: Maybe<Array<Image_Owners_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Image_Owners_Order_By>>;
+  where?: Maybe<Image_Owners_Bool_Exp>;
+};
+
+
+export type Subscription_RootImage_Owners_AggregateArgs = {
+  distinct_on?: Maybe<Array<Image_Owners_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Image_Owners_Order_By>>;
+  where?: Maybe<Image_Owners_Bool_Exp>;
+};
+
+
+export type Subscription_RootImage_Owners_By_PkArgs = {
+  image_id: Scalars['String'];
 };
 
 
@@ -2492,6 +3237,52 @@ export type Subscription_RootOnline_Users_AggregateArgs = {
   offset?: Maybe<Scalars['Int']>;
   order_by?: Maybe<Array<Online_Users_Order_By>>;
   where?: Maybe<Online_Users_Bool_Exp>;
+};
+
+
+export type Subscription_RootProduct_File_OwnersArgs = {
+  distinct_on?: Maybe<Array<Product_File_Owners_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Product_File_Owners_Order_By>>;
+  where?: Maybe<Product_File_Owners_Bool_Exp>;
+};
+
+
+export type Subscription_RootProduct_File_Owners_AggregateArgs = {
+  distinct_on?: Maybe<Array<Product_File_Owners_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Product_File_Owners_Order_By>>;
+  where?: Maybe<Product_File_Owners_Bool_Exp>;
+};
+
+
+export type Subscription_RootProduct_File_Owners_By_PkArgs = {
+  product_file_id: Scalars['String'];
+};
+
+
+export type Subscription_RootProduct_FilesArgs = {
+  distinct_on?: Maybe<Array<Product_Files_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Product_Files_Order_By>>;
+  where?: Maybe<Product_Files_Bool_Exp>;
+};
+
+
+export type Subscription_RootProduct_Files_AggregateArgs = {
+  distinct_on?: Maybe<Array<Product_Files_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Product_Files_Order_By>>;
+  where?: Maybe<Product_Files_Bool_Exp>;
+};
+
+
+export type Subscription_RootProduct_Files_By_PkArgs = {
+  product_file_id: Scalars['String'];
 };
 
 
@@ -2647,10 +3438,26 @@ export type Timestamptz_Comparison_Exp = {
 
 export type Users = {
    __typename?: 'users';
-  created_at: Scalars['timestamptz'];
+  cart_id?: Maybe<Scalars['String']>;
+  created_at?: Maybe<Scalars['timestamptz']>;
+  default_payment_method_id?: Maybe<Scalars['String']>;
+  email: Scalars['String'];
+  email_verified?: Maybe<Scalars['Boolean']>;
+  first_name?: Maybe<Scalars['String']>;
   id: Scalars['String'];
+  is_deleted: Scalars['Boolean'];
+  is_suspended: Scalars['Boolean'];
+  last_name?: Maybe<Scalars['String']>;
   last_seen?: Maybe<Scalars['timestamptz']>;
-  name: Scalars['String'];
+  password_hash: Scalars['String'];
+  payout_method_id?: Maybe<Scalars['String']>;
+  payout_split_id?: Maybe<Scalars['String']>;
+  seller_referred_by_id?: Maybe<Scalars['String']>;
+  store_id?: Maybe<Scalars['String']>;
+  stripe_customer_id?: Maybe<Scalars['String']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+  user_role?: Maybe<Scalars['String']>;
+  username?: Maybe<Scalars['String']>;
 };
 
 export type Users_Aggregate = {
@@ -2687,10 +3494,26 @@ export type Users_Bool_Exp = {
   _and?: Maybe<Array<Maybe<Users_Bool_Exp>>>;
   _not?: Maybe<Users_Bool_Exp>;
   _or?: Maybe<Array<Maybe<Users_Bool_Exp>>>;
+  cart_id?: Maybe<String_Comparison_Exp>;
   created_at?: Maybe<Timestamptz_Comparison_Exp>;
+  default_payment_method_id?: Maybe<String_Comparison_Exp>;
+  email?: Maybe<String_Comparison_Exp>;
+  email_verified?: Maybe<Boolean_Comparison_Exp>;
+  first_name?: Maybe<String_Comparison_Exp>;
   id?: Maybe<String_Comparison_Exp>;
+  is_deleted?: Maybe<Boolean_Comparison_Exp>;
+  is_suspended?: Maybe<Boolean_Comparison_Exp>;
+  last_name?: Maybe<String_Comparison_Exp>;
   last_seen?: Maybe<Timestamptz_Comparison_Exp>;
-  name?: Maybe<String_Comparison_Exp>;
+  password_hash?: Maybe<String_Comparison_Exp>;
+  payout_method_id?: Maybe<String_Comparison_Exp>;
+  payout_split_id?: Maybe<String_Comparison_Exp>;
+  seller_referred_by_id?: Maybe<String_Comparison_Exp>;
+  store_id?: Maybe<String_Comparison_Exp>;
+  stripe_customer_id?: Maybe<String_Comparison_Exp>;
+  updated_at?: Maybe<Timestamptz_Comparison_Exp>;
+  user_role?: Maybe<String_Comparison_Exp>;
+  username?: Maybe<String_Comparison_Exp>;
 };
 
 export enum Users_Constraint {
@@ -2698,40 +3521,108 @@ export enum Users_Constraint {
 }
 
 export type Users_Insert_Input = {
+  cart_id?: Maybe<Scalars['String']>;
   created_at?: Maybe<Scalars['timestamptz']>;
+  default_payment_method_id?: Maybe<Scalars['String']>;
+  email?: Maybe<Scalars['String']>;
+  email_verified?: Maybe<Scalars['Boolean']>;
+  first_name?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
+  is_deleted?: Maybe<Scalars['Boolean']>;
+  is_suspended?: Maybe<Scalars['Boolean']>;
+  last_name?: Maybe<Scalars['String']>;
   last_seen?: Maybe<Scalars['timestamptz']>;
-  name?: Maybe<Scalars['String']>;
+  password_hash?: Maybe<Scalars['String']>;
+  payout_method_id?: Maybe<Scalars['String']>;
+  payout_split_id?: Maybe<Scalars['String']>;
+  seller_referred_by_id?: Maybe<Scalars['String']>;
+  store_id?: Maybe<Scalars['String']>;
+  stripe_customer_id?: Maybe<Scalars['String']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+  user_role?: Maybe<Scalars['String']>;
+  username?: Maybe<Scalars['String']>;
 };
 
 export type Users_Max_Fields = {
    __typename?: 'users_max_fields';
+  cart_id?: Maybe<Scalars['String']>;
   created_at?: Maybe<Scalars['timestamptz']>;
+  default_payment_method_id?: Maybe<Scalars['String']>;
+  email?: Maybe<Scalars['String']>;
+  first_name?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
+  last_name?: Maybe<Scalars['String']>;
   last_seen?: Maybe<Scalars['timestamptz']>;
-  name?: Maybe<Scalars['String']>;
+  password_hash?: Maybe<Scalars['String']>;
+  payout_method_id?: Maybe<Scalars['String']>;
+  payout_split_id?: Maybe<Scalars['String']>;
+  seller_referred_by_id?: Maybe<Scalars['String']>;
+  store_id?: Maybe<Scalars['String']>;
+  stripe_customer_id?: Maybe<Scalars['String']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+  user_role?: Maybe<Scalars['String']>;
+  username?: Maybe<Scalars['String']>;
 };
 
 export type Users_Max_Order_By = {
+  cart_id?: Maybe<Order_By>;
   created_at?: Maybe<Order_By>;
+  default_payment_method_id?: Maybe<Order_By>;
+  email?: Maybe<Order_By>;
+  first_name?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
+  last_name?: Maybe<Order_By>;
   last_seen?: Maybe<Order_By>;
-  name?: Maybe<Order_By>;
+  password_hash?: Maybe<Order_By>;
+  payout_method_id?: Maybe<Order_By>;
+  payout_split_id?: Maybe<Order_By>;
+  seller_referred_by_id?: Maybe<Order_By>;
+  store_id?: Maybe<Order_By>;
+  stripe_customer_id?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
+  user_role?: Maybe<Order_By>;
+  username?: Maybe<Order_By>;
 };
 
 export type Users_Min_Fields = {
    __typename?: 'users_min_fields';
+  cart_id?: Maybe<Scalars['String']>;
   created_at?: Maybe<Scalars['timestamptz']>;
+  default_payment_method_id?: Maybe<Scalars['String']>;
+  email?: Maybe<Scalars['String']>;
+  first_name?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
+  last_name?: Maybe<Scalars['String']>;
   last_seen?: Maybe<Scalars['timestamptz']>;
-  name?: Maybe<Scalars['String']>;
+  password_hash?: Maybe<Scalars['String']>;
+  payout_method_id?: Maybe<Scalars['String']>;
+  payout_split_id?: Maybe<Scalars['String']>;
+  seller_referred_by_id?: Maybe<Scalars['String']>;
+  store_id?: Maybe<Scalars['String']>;
+  stripe_customer_id?: Maybe<Scalars['String']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+  user_role?: Maybe<Scalars['String']>;
+  username?: Maybe<Scalars['String']>;
 };
 
 export type Users_Min_Order_By = {
+  cart_id?: Maybe<Order_By>;
   created_at?: Maybe<Order_By>;
+  default_payment_method_id?: Maybe<Order_By>;
+  email?: Maybe<Order_By>;
+  first_name?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
+  last_name?: Maybe<Order_By>;
   last_seen?: Maybe<Order_By>;
-  name?: Maybe<Order_By>;
+  password_hash?: Maybe<Order_By>;
+  payout_method_id?: Maybe<Order_By>;
+  payout_split_id?: Maybe<Order_By>;
+  seller_referred_by_id?: Maybe<Order_By>;
+  store_id?: Maybe<Order_By>;
+  stripe_customer_id?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
+  user_role?: Maybe<Order_By>;
+  username?: Maybe<Order_By>;
 };
 
 export type Users_Mutation_Response = {
@@ -2752,10 +3643,26 @@ export type Users_On_Conflict = {
 };
 
 export type Users_Order_By = {
+  cart_id?: Maybe<Order_By>;
   created_at?: Maybe<Order_By>;
+  default_payment_method_id?: Maybe<Order_By>;
+  email?: Maybe<Order_By>;
+  email_verified?: Maybe<Order_By>;
+  first_name?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
+  is_deleted?: Maybe<Order_By>;
+  is_suspended?: Maybe<Order_By>;
+  last_name?: Maybe<Order_By>;
   last_seen?: Maybe<Order_By>;
-  name?: Maybe<Order_By>;
+  password_hash?: Maybe<Order_By>;
+  payout_method_id?: Maybe<Order_By>;
+  payout_split_id?: Maybe<Order_By>;
+  seller_referred_by_id?: Maybe<Order_By>;
+  store_id?: Maybe<Order_By>;
+  stripe_customer_id?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
+  user_role?: Maybe<Order_By>;
+  username?: Maybe<Order_By>;
 };
 
 export type Users_Pk_Columns_Input = {
@@ -2763,24 +3670,72 @@ export type Users_Pk_Columns_Input = {
 };
 
 export enum Users_Select_Column {
+  CartId = 'cart_id',
   CreatedAt = 'created_at',
+  DefaultPaymentMethodId = 'default_payment_method_id',
+  Email = 'email',
+  EmailVerified = 'email_verified',
+  FirstName = 'first_name',
   Id = 'id',
+  IsDeleted = 'is_deleted',
+  IsSuspended = 'is_suspended',
+  LastName = 'last_name',
   LastSeen = 'last_seen',
-  Name = 'name'
+  PasswordHash = 'password_hash',
+  PayoutMethodId = 'payout_method_id',
+  PayoutSplitId = 'payout_split_id',
+  SellerReferredById = 'seller_referred_by_id',
+  StoreId = 'store_id',
+  StripeCustomerId = 'stripe_customer_id',
+  UpdatedAt = 'updated_at',
+  UserRole = 'user_role',
+  Username = 'username'
 }
 
 export type Users_Set_Input = {
+  cart_id?: Maybe<Scalars['String']>;
   created_at?: Maybe<Scalars['timestamptz']>;
+  default_payment_method_id?: Maybe<Scalars['String']>;
+  email?: Maybe<Scalars['String']>;
+  email_verified?: Maybe<Scalars['Boolean']>;
+  first_name?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
+  is_deleted?: Maybe<Scalars['Boolean']>;
+  is_suspended?: Maybe<Scalars['Boolean']>;
+  last_name?: Maybe<Scalars['String']>;
   last_seen?: Maybe<Scalars['timestamptz']>;
-  name?: Maybe<Scalars['String']>;
+  password_hash?: Maybe<Scalars['String']>;
+  payout_method_id?: Maybe<Scalars['String']>;
+  payout_split_id?: Maybe<Scalars['String']>;
+  seller_referred_by_id?: Maybe<Scalars['String']>;
+  store_id?: Maybe<Scalars['String']>;
+  stripe_customer_id?: Maybe<Scalars['String']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+  user_role?: Maybe<Scalars['String']>;
+  username?: Maybe<Scalars['String']>;
 };
 
 export enum Users_Update_Column {
+  CartId = 'cart_id',
   CreatedAt = 'created_at',
+  DefaultPaymentMethodId = 'default_payment_method_id',
+  Email = 'email',
+  EmailVerified = 'email_verified',
+  FirstName = 'first_name',
   Id = 'id',
+  IsDeleted = 'is_deleted',
+  IsSuspended = 'is_suspended',
+  LastName = 'last_name',
   LastSeen = 'last_seen',
-  Name = 'name'
+  PasswordHash = 'password_hash',
+  PayoutMethodId = 'payout_method_id',
+  PayoutSplitId = 'payout_split_id',
+  SellerReferredById = 'seller_referred_by_id',
+  StoreId = 'store_id',
+  StripeCustomerId = 'stripe_customer_id',
+  UpdatedAt = 'updated_at',
+  UserRole = 'user_role',
+  Username = 'username'
 }
 
 

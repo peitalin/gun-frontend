@@ -126,7 +126,7 @@ const MobileMenuExpander = (props: MobileMenuExpanderProps) => {
               ? <div>User but no store</div>
               : <div className={classes.flexRowLogin}>
                   <Login
-                    loginTitle={"Create Account"}
+                    titleLogin={"Create Account"}
                     buttonProps={{
                       classes: { root: classes.buttonCreateAccount }
                     }}
@@ -135,7 +135,7 @@ const MobileMenuExpander = (props: MobileMenuExpanderProps) => {
                     }}
                   />
                   <Login
-                    loginTitle={"Login"}
+                    titleLogin={"Login"}
                     buttonProps={{
                       classes: { root: classes.buttonLogin }
                     }}

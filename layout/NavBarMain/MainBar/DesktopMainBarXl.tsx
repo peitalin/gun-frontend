@@ -112,7 +112,7 @@ const DesktopMainBarXl = (props: DesktopMainBarProps) => {
           </Button>
         : <div className={classes.myDownloadsLogin}>
             <Login
-              loginTitle={"Wishlist"}
+              titleLogin={"Wishlist"}
               buttonProps={{ color: "primary" }}
             />
           </div>
@@ -136,7 +136,7 @@ const DesktopMainBarXl = (props: DesktopMainBarProps) => {
           </Button>
         : <div className={classes.myDownloadsLogin}>
             <Login
-              loginTitle={"Downloads"}
+              titleLogin={"Downloads"}
               buttonProps={{ color: "primary" }}
             />
           </div>

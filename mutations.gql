@@ -162,8 +162,10 @@ query {
   }
 }
 
+
 query {
   products {
+    __typename
     id
     store_id
     is_deleted
@@ -203,6 +205,29 @@ query {
           position
           youtube_embed_link
           variant_snapshot_id
+          image {
+            image_id
+            description
+            created_at
+            original {
+              parent_id
+              variant_id
+              mime_type
+              width_in_pixels
+              height_in_pixels
+              size_in_bytes
+              url
+            }
+            variants {
+              parent_id
+              variant_id
+              mime_type
+              width_in_pixels
+              height_in_pixels
+              size_in_bytes
+              url
+            }
+          }
         }
         preview_items_aggregate {
           aggregate {

@@ -117,7 +117,7 @@ const DesktopMainBarMd = (props: ReactProps & DesktopMainBarProps) => {
             </Button>
           : <div className={classes.myDownloadsLogin}>
               <Login
-                loginTitle={"Downloads"}
+                titleLogin={"Downloads"}
                 buttonProps={{ color: "primary" }}
               />
             </div>
