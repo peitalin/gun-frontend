@@ -7,9 +7,36 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  ProductCategoryGroup: any;
+  Date: any;
+  PageCursor: any;
+  Price: any;
   timestamptz: any;
   uuid: any;
   json: any;
+};
+
+export type AddRemovePaymentMethodResponse = {
+   __typename?: 'AddRemovePaymentMethodResponse';
+  user: UserPrivate;
+};
+
+export type AdminInsight = {
+   __typename?: 'AdminInsight';
+  name: Scalars['String'];
+  value: Scalars['String'];
+};
+
+export type ApprovePayoutsResult = {
+   __typename?: 'ApprovePayoutsResult';
+  approvedPayouts?: Maybe<Array<Maybe<Payout>>>;
+  payoutsAlreadyApproved?: Maybe<Array<Maybe<Payout>>>;
+  payoutsAlreadyApprovedIds?: Maybe<Array<Maybe<Scalars['ID']>>>;
+};
+
+export type BlankMutationResponse = {
+   __typename?: 'BlankMutationResponse';
+  success: Scalars['Boolean'];
 };
 
 export type Boolean_Comparison_Exp = {
@@ -22,6 +49,278 @@ export type Boolean_Comparison_Exp = {
   _lte?: Maybe<Scalars['Boolean']>;
   _neq?: Maybe<Scalars['Boolean']>;
   _nin?: Maybe<Array<Scalars['Boolean']>>;
+};
+
+export type Cart = {
+   __typename?: 'Cart';
+  automaticSavings: Scalars['Price'];
+  id: Scalars['ID'];
+  items: Array<CartItem>;
+  paymentProcessingFee: Scalars['Price'];
+  promoCodeSavings: Scalars['Price'];
+  relevantPromoCodes: Array<Discount>;
+  subtotal: Scalars['Price'];
+  taxes: Scalars['Price'];
+  total: Scalars['Price'];
+  updatedAt: Scalars['Date'];
+  userId: Scalars['ID'];
+};
+
+export type CartItem = {
+   __typename?: 'CartItem';
+  cartId: Scalars['ID'];
+  createdAt: Scalars['Date'];
+  id: Scalars['ID'];
+  priceDetails: PriceDetails;
+  product: Product;
+  purchasableStatus: CartItemPurchasableStatus;
+  quantity: Scalars['Int'];
+  storeId: Scalars['ID'];
+  userId: Scalars['ID'];
+};
+
+export enum CartItemPurchasableStatus {
+  Available = 'AVAILABLE',
+  ProductUnavailable = 'PRODUCT_UNAVAILABLE',
+  QuantityTooHigh = 'QUANTITY_TOO_HIGH',
+  SoldOut = 'SOLD_OUT',
+  VariantUnavailable = 'VARIANT_UNAVAILABLE'
+}
+
+export type CartMutationResponse = {
+   __typename?: 'CartMutationResponse';
+  cart: Cart;
+};
+
+export type Connection = {
+  pageInfo: PageInfo;
+  totalCount?: Maybe<Scalars['Int']>;
+};
+
+export type ConnectionQuery = {
+  count?: Maybe<Scalars['Int']>;
+  cursor?: Maybe<Scalars['PageCursor']>;
+  pageBackwards?: Maybe<Scalars['Boolean']>;
+  sortAscending?: Maybe<Scalars['Boolean']>;
+};
+
+export type ConnectionWithMetrics = {
+  pageInfo: PageInfo;
+  totalAmount?: Maybe<Scalars['Int']>;
+  totalCount?: Maybe<Scalars['Int']>;
+};
+
+export type CreatePlatformDiscountInput = {
+  end?: Maybe<Scalars['Date']>;
+  isDisabled: Scalars['Boolean'];
+  promoCode?: Maybe<Scalars['String']>;
+  start?: Maybe<Scalars['Date']>;
+  valuePercentageOff: Scalars['Float'];
+};
+
+export type CreateRefundInput = {
+  chargeId: Scalars['ID'];
+  orderId: Scalars['ID'];
+  paymentIntentId?: Maybe<Scalars['ID']>;
+  paymentProcessingFee?: Maybe<Scalars['Int']>;
+  paymentProcessor?: Maybe<PaymentProcessor>;
+  paypalInvoiceNumber?: Maybe<Scalars['ID']>;
+  reason?: Maybe<Scalars['String']>;
+  reasonDetail?: Maybe<Scalars['String']>;
+  refundOrderItems: Array<Maybe<RefundOrderItem>>;
+  taxes?: Maybe<Scalars['Int']>;
+};
+
+export type CreateRefundMutationResponse = {
+   __typename?: 'CreateRefundMutationResponse';
+  transaction: Transaction;
+};
+
+export type CreateStorePromoCodeInput = {
+  end?: Maybe<Scalars['Date']>;
+  isDisabled: Scalars['Boolean'];
+  minimumPurchaseAmount?: Maybe<Scalars['Price']>;
+  minimumQuantity?: Maybe<Scalars['Int']>;
+  promoCode: Scalars['String'];
+  specificProductId?: Maybe<Scalars['ID']>;
+  specificProductVariantId?: Maybe<Scalars['ID']>;
+  start?: Maybe<Scalars['Date']>;
+  valueDollarsOff?: Maybe<Scalars['Price']>;
+  valuePercentageOff?: Maybe<Scalars['Float']>;
+};
+
+export type CuratedList = {
+   __typename?: 'CuratedList';
+  createdAt: Scalars['Date'];
+  id: Scalars['ID'];
+  name: Scalars['String'];
+  updatedAt?: Maybe<Scalars['Date']>;
+};
+
+export type CuratedListItem = {
+   __typename?: 'CuratedListItem';
+  addedAt: Scalars['Date'];
+  id: Scalars['ID'];
+  listId: Scalars['ID'];
+  product: Product;
+};
+
+export type CuratedListItemMutationResponse = {
+   __typename?: 'CuratedListItemMutationResponse';
+  item: CuratedListItem;
+};
+
+export type CuratedListItemsConnection = Connection & {
+   __typename?: 'CuratedListItemsConnection';
+  edges: Array<CuratedListItemsEdge>;
+  pageInfo: PageInfo;
+  totalCount?: Maybe<Scalars['Int']>;
+};
+
+export type CuratedListItemsEdge = Edge & {
+   __typename?: 'CuratedListItemsEdge';
+  cursor: Scalars['PageCursor'];
+  node: CuratedListItem;
+};
+
+export type CuratedListMutationResponse = {
+   __typename?: 'CuratedListMutationResponse';
+  list: CuratedList;
+};
+
+export type CuratedListsConnection = Connection & {
+   __typename?: 'CuratedListsConnection';
+  edges: Array<CuratedListsEdge>;
+  pageInfo: PageInfo;
+  totalCount?: Maybe<Scalars['Int']>;
+};
+
+export type CuratedListsEdge = Edge & {
+   __typename?: 'CuratedListsEdge';
+  cursor: Scalars['PageCursor'];
+  node: CuratedList;
+};
+
+
+export type Discount = {
+   __typename?: 'Discount';
+  createdAt: Scalars['Date'];
+  id: Scalars['ID'];
+  isAutomatic: Scalars['Boolean'];
+  isDisabled: Scalars['Boolean'];
+  modifier: DiscountModifier;
+  platformScopeInfo?: Maybe<PlatformScopedDiscountInfo>;
+  productScopeInfo?: Maybe<ProductScopedDiscountInfo>;
+  promoCode?: Maybe<Scalars['String']>;
+  scope: DiscountScope;
+  storeScopeInfo?: Maybe<StoreScopedDiscountInfo>;
+  timeCondition?: Maybe<DiscountTimeCondition>;
+  valueDollarsOff?: Maybe<Scalars['Price']>;
+  valueFixed?: Maybe<Scalars['Price']>;
+  valuePercentageOff?: Maybe<Scalars['Float']>;
+};
+
+export enum DiscountModifier {
+  DollarsOff = 'DOLLARS_OFF',
+  FixedPrice = 'FIXED_PRICE',
+  PercentageOff = 'PERCENTAGE_OFF'
+}
+
+export type DiscountMutationResponse = {
+   __typename?: 'DiscountMutationResponse';
+  discount: Discount;
+};
+
+export type DiscountsConnection = Connection & {
+   __typename?: 'DiscountsConnection';
+  edges: Array<DiscountsEdge>;
+  pageInfo: PageInfo;
+  totalCount?: Maybe<Scalars['Int']>;
+};
+
+export enum DiscountScope {
+  Platform = 'PLATFORM',
+  Product = 'PRODUCT',
+  Store = 'STORE'
+}
+
+export type DiscountsEdge = Edge & {
+   __typename?: 'DiscountsEdge';
+  cursor: Scalars['PageCursor'];
+  node: Discount;
+};
+
+export type DiscountStockLimitCondition = {
+   __typename?: 'DiscountStockLimitCondition';
+  stockLevel: StockLevel;
+  supplyExhaustionRule: DiscountUnavailableRule;
+};
+
+export type DiscountStockLimitConditionInput = {
+  quantityAvailable: Scalars['Int'];
+  supplyExhaustionRule: DiscountUnavailableRule;
+};
+
+export type DiscountTimeCondition = {
+   __typename?: 'DiscountTimeCondition';
+  end: Scalars['Date'];
+  start?: Maybe<Scalars['Date']>;
+  timeExpiryRule: DiscountUnavailableRule;
+};
+
+export type DiscountTimeConditionInput = {
+  end: Scalars['Date'];
+  start?: Maybe<Scalars['Date']>;
+  timeExpiryRule: DiscountUnavailableRule;
+};
+
+export enum DiscountUnavailableRule {
+  DisableDiscount = 'DISABLE_DISCOUNT',
+  MarkAsSoldOut = 'MARK_AS_SOLD_OUT'
+}
+
+export type Download = {
+   __typename?: 'Download';
+  order: Order;
+  orderId: Scalars['ID'];
+  product: Product;
+};
+
+export type DownloadsConnection = Connection & {
+   __typename?: 'DownloadsConnection';
+  edges: Array<DownloadsEdge>;
+  pageInfo: PageInfo;
+  totalCount?: Maybe<Scalars['Int']>;
+};
+
+export type DownloadsEdge = Edge & {
+   __typename?: 'DownloadsEdge';
+  cursor: Scalars['PageCursor'];
+  node: Download;
+};
+
+export type Edge = {
+  cursor: Scalars['PageCursor'];
+};
+
+export type EditPlatformDiscountInput = {
+  discountId: Scalars['ID'];
+  isDisabled?: Maybe<Scalars['Boolean']>;
+};
+
+export type EditStorePromoCodeInput = {
+  discountId: Scalars['ID'];
+  isDisabled?: Maybe<Scalars['Boolean']>;
+};
+
+export type Image = {
+   __typename?: 'Image';
+  createdAt: Scalars['Date'];
+  description?: Maybe<Scalars['String']>;
+  id: Scalars['ID'];
+  original: ImageVariant;
+  tags?: Maybe<Array<Scalars['String']>>;
+  variants: Array<ImageVariant>;
 };
 
 export type Image_Owners = {
@@ -618,6 +917,16 @@ export type ImageUrl = {
   url: Scalars['String'];
 };
 
+export type ImageVariant = {
+   __typename?: 'ImageVariant';
+  heightInPixels: Scalars['Int'];
+  id: Scalars['ID'];
+  mimeType: Scalars['String'];
+  sizeInBytes: Scalars['Int'];
+  url: Scalars['String'];
+  widthInPixels: Scalars['Int'];
+};
+
 export type Int_Comparison_Exp = {
   _eq?: Maybe<Scalars['Int']>;
   _gt?: Maybe<Scalars['Int']>;
@@ -643,8 +952,544 @@ export type Json_Comparison_Exp = {
   _nin?: Maybe<Array<Scalars['json']>>;
 };
 
+export type LoginMutationResponse = {
+   __typename?: 'LoginMutationResponse';
+  jwt?: Maybe<Scalars['String']>;
+  setCookie?: Maybe<Scalars['String']>;
+  user: UserPrivate;
+};
+
+export type MostRecentDownloadRecord = {
+   __typename?: 'MostRecentDownloadRecord';
+  downloadedAt?: Maybe<Scalars['Date']>;
+  fileId: Scalars['ID'];
+  fileName?: Maybe<Scalars['String']>;
+};
+
+export type Mutation = {
+   __typename?: 'Mutation';
+  addPaymentMethod: AddRemovePaymentMethodResponse;
+  addProductToCuratedList: CuratedListItemMutationResponse;
+  addProductToWishlist: BlankMutationResponse;
+  addProductsToCart: Cart;
+  addPromoCodeToCart: CartMutationResponse;
+  adjustCartItemQuantity: Cart;
+  adminDeleteAccount: BlankMutationResponse;
+  adminDeleteProduct?: Maybe<ProductMutationResponse>;
+  adminDeleteStore: StoreMutationResponse;
+  adminGenerateProductFileDownloadLink: ProductFileLinkMutationResponse;
+  adminManuallyConfirmOrderAfterFrontendPayment: OrderMutationResponse;
+  approvePayouts: ApprovePayoutsResult;
+  changePassword: UserMutationResponse;
+  checkoutCart: OrderCreateMutationResponse;
+  checkoutCartForFrontendPayment: OrderMutationResponse;
+  checkoutConfirmCart: OrderMutationResponse;
+  checkoutConfirmProducts: OrderMutationResponse;
+  checkoutProducts: OrderCreateMutationResponse;
+  checkoutProductsForFrontendPayment: OrderMutationResponse;
+  claimUnclaimedOrderOwnership: OrderMutationResponse;
+  confirmOrderAfterFrontendPayment: OrderMutationResponse;
+  confirmResetPassword: ResetPasswordResponse;
+  createCuratedList: CuratedListMutationResponse;
+  createPayoutSplit: PayoutSplit;
+  createPayouts: Array<Payout>;
+  createPlatformDiscount: DiscountMutationResponse;
+  createProduct: ProductMutationResponse;
+  createRefund: CreateRefundMutationResponse;
+  createStore: StoreMutationResponse;
+  createStorePromoCode: DiscountMutationResponse;
+  deleteAccount: BlankMutationResponse;
+  deleteCuratedList: BlankMutationResponse;
+  deleteProduct?: Maybe<ProductMutationResponse>;
+  deleteStore: StoreMutationResponse;
+  editPlatformDiscount: DiscountMutationResponse;
+  editProduct: ProductMutationResponse;
+  editStoreProfile?: Maybe<StoreMutationResponse>;
+  editStorePromoCode: DiscountMutationResponse;
+  editUserProfile: UserMutationResponse;
+  excludeProductFromAutomaticLists?: Maybe<ProductMutationResponse>;
+  excludeProductFromSearch?: Maybe<ProductMutationResponse>;
+  followStore: BlankMutationResponse;
+  generateProductFileDownloadLink: ProductFileLinkMutationResponse;
+  includeProductInAutomaticLists?: Maybe<ProductMutationResponse>;
+  includeProductInSearch?: Maybe<ProductMutationResponse>;
+  logInUsingEmail: LoginMutationResponse;
+  logOut: BlankMutationResponse;
+  rearrangeCuratedListItems: CuratedListMutationResponse;
+  reassignOrderOwnership: OrderMutationResponse;
+  refreshCart: CartMutationResponse;
+  removeItemFromCuratedList: CuratedListMutationResponse;
+  removePaymentMethod: AddRemovePaymentMethodResponse;
+  removeProductFromWishlist: BlankMutationResponse;
+  removeProductsFromCart: Cart;
+  removePromoCodeFromCart: CartMutationResponse;
+  removeStoreLinkSlug: BlankMutationResponse;
+  reserveStoreLinkSlug?: Maybe<PrimaryLinkSlugs>;
+  sendResetPasswordEmail: SendResetPasswordResponse;
+  sendVerifyEmail: UserMutationResponse;
+  setDefaultPaymentMethod: AddRemovePaymentMethodResponse;
+  setPayoutMethod: UserMutationResponse;
+  signUpUsingEmail: SignUpMutationResponse;
+  suspendProduct?: Maybe<ProductMutationResponse>;
+  suspendStore?: Maybe<StoreMutationResponse>;
+  suspendUser: BlankMutationResponse;
+  unfollowStore: BlankMutationResponse;
+  unsuspendProduct?: Maybe<ProductMutationResponse>;
+  unsuspendStore?: Maybe<StoreMutationResponse>;
+  unsuspendUser: BlankMutationResponse;
+  uploadRegister: UploadRegisterMutationResponse;
+  uploadSaveImage: UploadSaveImageMutationResponse;
+  uploadSaveProductFile: UploadSaveProductFileMutationResponse;
+};
+
+
+export type MutationAddPaymentMethodArgs = {
+  customerId: Scalars['ID'];
+  paymentMethodId: Scalars['ID'];
+};
+
+
+export type MutationAddProductToCuratedListArgs = {
+  listId: Scalars['ID'];
+  productId: Scalars['ID'];
+  variantId?: Maybe<Scalars['ID']>;
+};
+
+
+export type MutationAddProductToWishlistArgs = {
+  productId: Scalars['ID'];
+  variantId: Scalars['ID'];
+};
+
+
+export type MutationAddProductsToCartArgs = {
+  cartId: Scalars['ID'];
+  productProductVariantIds: Array<ProductProductVariantId>;
+};
+
+
+export type MutationAddPromoCodeToCartArgs = {
+  code: Scalars['String'];
+};
+
+
+export type MutationAdjustCartItemQuantityArgs = {
+  cartId: Scalars['ID'];
+  itemId: Scalars['ID'];
+  quantity?: Maybe<Scalars['Int']>;
+};
+
+
+export type MutationAdminDeleteAccountArgs = {
+  userId: Scalars['ID'];
+};
+
+
+export type MutationAdminDeleteProductArgs = {
+  productId: Scalars['ID'];
+};
+
+
+export type MutationAdminDeleteStoreArgs = {
+  storeId: Scalars['ID'];
+};
+
+
+export type MutationAdminGenerateProductFileDownloadLinkArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type MutationAdminManuallyConfirmOrderAfterFrontendPaymentArgs = {
+  anonOrderEmailAddress?: Maybe<Scalars['String']>;
+  cartIdToEmpty?: Maybe<Scalars['ID']>;
+  orderId: Scalars['ID'];
+  paymentProcessorData: Scalars['String'];
+};
+
+
+export type MutationApprovePayoutsArgs = {
+  payoutIds: Array<Scalars['String']>;
+};
+
+
+export type MutationChangePasswordArgs = {
+  currentPassword: Scalars['String'];
+  newPassword: Scalars['String'];
+};
+
+
+export type MutationCheckoutCartArgs = {
+  paymentProcessorData: Scalars['String'];
+  quotedPrice: Scalars['Price'];
+};
+
+
+export type MutationCheckoutCartForFrontendPaymentArgs = {
+  quotedPrice: Scalars['Price'];
+};
+
+
+export type MutationCheckoutConfirmCartArgs = {
+  paymentProcessorData: Scalars['String'];
+  unconfirmedOrderId: Scalars['ID'];
+};
+
+
+export type MutationCheckoutConfirmProductsArgs = {
+  anonOrderEmailAddress?: Maybe<Scalars['String']>;
+  paymentProcessorData: Scalars['String'];
+  unconfirmedOrderId: Scalars['ID'];
+};
+
+
+export type MutationCheckoutProductsArgs = {
+  paymentProcessorData: Scalars['String'];
+  productsInfo: Array<ProductProductVariantId>;
+  promoCodesToAdd?: Maybe<Array<Scalars['String']>>;
+  quotedPrice: Scalars['Price'];
+};
+
+
+export type MutationCheckoutProductsForFrontendPaymentArgs = {
+  productsInfo: Array<ProductProductVariantId>;
+  promoCodesToAdd?: Maybe<Array<Scalars['String']>>;
+  quotedPrice: Scalars['Price'];
+};
+
+
+export type MutationClaimUnclaimedOrderOwnershipArgs = {
+  orderId: Scalars['ID'];
+};
+
+
+export type MutationConfirmOrderAfterFrontendPaymentArgs = {
+  anonOrderEmailAddress?: Maybe<Scalars['String']>;
+  orderId: Scalars['ID'];
+  paymentProcessorData: Scalars['String'];
+};
+
+
+export type MutationConfirmResetPasswordArgs = {
+  email: Scalars['String'];
+  expiresAt: Scalars['Date'];
+  newPassword?: Maybe<Scalars['String']>;
+  resetId: Scalars['String'];
+};
+
+
+export type MutationCreateCuratedListArgs = {
+  name: Scalars['String'];
+};
+
+
+export type MutationCreatePayoutSplitArgs = {
+  dealType: PayoutDealType;
+  expiresAt?: Maybe<Scalars['Date']>;
+  rate: Scalars['Float'];
+  referrerId?: Maybe<Scalars['String']>;
+  storeOrUserId: Scalars['String'];
+};
+
+
+export type MutationCreatePayoutsArgs = {
+  month: Scalars['Int'];
+  year: Scalars['Int'];
+};
+
+
+export type MutationCreatePlatformDiscountArgs = {
+  input: CreatePlatformDiscountInput;
+};
+
+
+export type MutationCreateProductArgs = {
+  productCreateInput?: Maybe<ProductCreateInput>;
+};
+
+
+export type MutationCreateRefundArgs = {
+  input: CreateRefundInput;
+};
+
+
+export type MutationCreateStoreArgs = {
+  bio?: Maybe<Scalars['String']>;
+  coverId?: Maybe<Scalars['ID']>;
+  name: Scalars['String'];
+  profileId?: Maybe<Scalars['ID']>;
+  website?: Maybe<Scalars['String']>;
+};
+
+
+export type MutationCreateStorePromoCodeArgs = {
+  input: CreateStorePromoCodeInput;
+};
+
+
+export type MutationDeleteAccountArgs = {
+  password: Scalars['String'];
+};
+
+
+export type MutationDeleteCuratedListArgs = {
+  listId: Scalars['ID'];
+};
+
+
+export type MutationDeleteProductArgs = {
+  productId: Scalars['ID'];
+};
+
+
+export type MutationDeleteStoreArgs = {
+  password: Scalars['String'];
+};
+
+
+export type MutationEditPlatformDiscountArgs = {
+  input: EditPlatformDiscountInput;
+};
+
+
+export type MutationEditProductArgs = {
+  productEditInput?: Maybe<ProductEditInput>;
+};
+
+
+export type MutationEditStoreProfileArgs = {
+  bio?: Maybe<Scalars['String']>;
+  coverId?: Maybe<Scalars['ID']>;
+  name?: Maybe<Scalars['String']>;
+  profileId?: Maybe<Scalars['ID']>;
+  website?: Maybe<Scalars['String']>;
+};
+
+
+export type MutationEditStorePromoCodeArgs = {
+  input: EditStorePromoCodeInput;
+};
+
+
+export type MutationEditUserProfileArgs = {
+  email?: Maybe<Scalars['String']>;
+  firstName?: Maybe<Scalars['String']>;
+  lastName?: Maybe<Scalars['String']>;
+  payoutMethod?: Maybe<Scalars['String']>;
+  username?: Maybe<Scalars['String']>;
+};
+
+
+export type MutationExcludeProductFromAutomaticListsArgs = {
+  productId: Scalars['ID'];
+};
+
+
+export type MutationExcludeProductFromSearchArgs = {
+  productId: Scalars['ID'];
+};
+
+
+export type MutationFollowStoreArgs = {
+  storeId: Scalars['ID'];
+};
+
+
+export type MutationGenerateProductFileDownloadLinkArgs = {
+  id: Scalars['ID'];
+  orderItemId: Scalars['ID'];
+};
+
+
+export type MutationIncludeProductInAutomaticListsArgs = {
+  productId: Scalars['ID'];
+};
+
+
+export type MutationIncludeProductInSearchArgs = {
+  productId: Scalars['ID'];
+};
+
+
+export type MutationLogInUsingEmailArgs = {
+  email: Scalars['String'];
+  password: Scalars['String'];
+  productProductVariantIds?: Maybe<Array<Maybe<ProductProductVariantId>>>;
+};
+
+
+export type MutationRearrangeCuratedListItemsArgs = {
+  itemIdsInOrder: Array<Scalars['ID']>;
+  listId: Scalars['ID'];
+};
+
+
+export type MutationReassignOrderOwnershipArgs = {
+  orderId: Scalars['ID'];
+  userIdOrEmail: Scalars['String'];
+};
+
+
+export type MutationRemoveItemFromCuratedListArgs = {
+  itemId: Scalars['ID'];
+  listId: Scalars['ID'];
+};
+
+
+export type MutationRemovePaymentMethodArgs = {
+  customerId: Scalars['ID'];
+  paymentMethodId: Scalars['ID'];
+};
+
+
+export type MutationRemoveProductFromWishlistArgs = {
+  productId: Scalars['ID'];
+  variantId: Scalars['ID'];
+};
+
+
+export type MutationRemoveProductsFromCartArgs = {
+  cartId: Scalars['ID'];
+  productProductVariantIds: Array<ProductProductVariantId>;
+};
+
+
+export type MutationRemovePromoCodeFromCartArgs = {
+  discountId: Scalars['ID'];
+};
+
+
+export type MutationReserveStoreLinkSlugArgs = {
+  slug: Scalars['String'];
+};
+
+
+export type MutationSendResetPasswordEmailArgs = {
+  email: Scalars['String'];
+};
+
+
+export type MutationSendVerifyEmailArgs = {
+  ref: Scalars['String'];
+};
+
+
+export type MutationSetDefaultPaymentMethodArgs = {
+  customerId: Scalars['ID'];
+  paymentMethodId: Scalars['ID'];
+};
+
+
+export type MutationSetPayoutMethodArgs = {
+  payoutEmail?: Maybe<Scalars['String']>;
+  payoutProcessor?: Maybe<Scalars['String']>;
+  payoutProcessorId?: Maybe<Scalars['String']>;
+  payoutType?: Maybe<Scalars['String']>;
+};
+
+
+export type MutationSignUpUsingEmailArgs = {
+  email: Scalars['String'];
+  firstName?: Maybe<Scalars['String']>;
+  lastName?: Maybe<Scalars['String']>;
+  password: Scalars['String'];
+  productProductVariantIds?: Maybe<Array<Maybe<ProductProductVariantId>>>;
+  username?: Maybe<Scalars['String']>;
+};
+
+
+export type MutationSuspendProductArgs = {
+  productId: Scalars['ID'];
+};
+
+
+export type MutationSuspendStoreArgs = {
+  storeId: Scalars['ID'];
+};
+
+
+export type MutationSuspendUserArgs = {
+  userId: Scalars['ID'];
+};
+
+
+export type MutationUnfollowStoreArgs = {
+  storeId: Scalars['ID'];
+};
+
+
+export type MutationUnsuspendProductArgs = {
+  productId: Scalars['ID'];
+};
+
+
+export type MutationUnsuspendStoreArgs = {
+  storeId: Scalars['ID'];
+};
+
+
+export type MutationUnsuspendUserArgs = {
+  userId: Scalars['ID'];
+};
+
+
+export type MutationUploadRegisterArgs = {
+  fileSize: Scalars['Int'];
+  mimeType: Scalars['String'];
+  uploadType: UploadType;
+};
+
+
+export type MutationUploadSaveImageArgs = {
+  description?: Maybe<Scalars['String']>;
+  ownerIds?: Maybe<Array<Maybe<Scalars['String']>>>;
+  tags?: Maybe<Array<Maybe<Scalars['String']>>>;
+  uploadId: Scalars['ID'];
+};
+
+
+export type MutationUploadSaveProductFileArgs = {
+  fileName: Scalars['String'];
+  ownerIds?: Maybe<Array<Maybe<Scalars['String']>>>;
+  uploadId: Scalars['ID'];
+};
+
 export type Mutation_Root = {
    __typename?: 'mutation_root';
+  addPaymentMethod: AddRemovePaymentMethodResponse;
+  addProductToCuratedList: CuratedListItemMutationResponse;
+  addProductToWishlist: BlankMutationResponse;
+  addProductsToCart: Cart;
+  addPromoCodeToCart: CartMutationResponse;
+  adjustCartItemQuantity: Cart;
+  adminDeleteAccount: BlankMutationResponse;
+  adminDeleteProduct?: Maybe<ProductMutationResponse>;
+  adminDeleteStore: StoreMutationResponse;
+  adminGenerateProductFileDownloadLink: ProductFileLinkMutationResponse;
+  adminManuallyConfirmOrderAfterFrontendPayment: OrderMutationResponse;
+  approvePayouts: ApprovePayoutsResult;
+  changePassword: UserMutationResponse;
+  checkoutCart: OrderCreateMutationResponse;
+  checkoutCartForFrontendPayment: OrderMutationResponse;
+  checkoutConfirmCart: OrderMutationResponse;
+  checkoutConfirmProducts: OrderMutationResponse;
+  checkoutProducts: OrderCreateMutationResponse;
+  checkoutProductsForFrontendPayment: OrderMutationResponse;
+  claimUnclaimedOrderOwnership: OrderMutationResponse;
+  confirmOrderAfterFrontendPayment: OrderMutationResponse;
+  confirmResetPassword: ResetPasswordResponse;
+  createCuratedList: CuratedListMutationResponse;
+  createPayoutSplit: PayoutSplit;
+  createPayouts: Array<Payout>;
+  createPlatformDiscount: DiscountMutationResponse;
+  createProduct: ProductMutationResponse;
+  createRefund: CreateRefundMutationResponse;
+  createStore: StoreMutationResponse;
+  createStorePromoCode: DiscountMutationResponse;
+  deleteAccount: BlankMutationResponse;
+  deleteCuratedList: BlankMutationResponse;
+  deleteProduct?: Maybe<ProductMutationResponse>;
+  deleteStore: StoreMutationResponse;
   delete_image_owners?: Maybe<Image_Owners_Mutation_Response>;
   delete_image_owners_by_pk?: Maybe<Image_Owners>;
   delete_image_parents?: Maybe<Image_Parents_Mutation_Response>;
@@ -668,6 +1513,17 @@ export type Mutation_Root = {
   delete_profile_by_pk?: Maybe<Profile>;
   delete_users?: Maybe<Users_Mutation_Response>;
   delete_users_by_pk?: Maybe<Users>;
+  editPlatformDiscount: DiscountMutationResponse;
+  editProduct: ProductMutationResponse;
+  editStoreProfile?: Maybe<StoreMutationResponse>;
+  editStorePromoCode: DiscountMutationResponse;
+  editUserProfile: UserMutationResponse;
+  excludeProductFromAutomaticLists?: Maybe<ProductMutationResponse>;
+  excludeProductFromSearch?: Maybe<ProductMutationResponse>;
+  followStore: BlankMutationResponse;
+  generateProductFileDownloadLink: ProductFileLinkMutationResponse;
+  includeProductInAutomaticLists?: Maybe<ProductMutationResponse>;
+  includeProductInSearch?: Maybe<ProductMutationResponse>;
   insert_image_owners?: Maybe<Image_Owners_Mutation_Response>;
   insert_image_owners_one?: Maybe<Image_Owners>;
   insert_image_parents?: Maybe<Image_Parents_Mutation_Response>;
@@ -692,6 +1548,30 @@ export type Mutation_Root = {
   insert_profile_one?: Maybe<Profile>;
   insert_users?: Maybe<Users_Mutation_Response>;
   insert_users_one?: Maybe<Users>;
+  logInUsingEmail: LoginMutationResponse;
+  logOut: BlankMutationResponse;
+  rearrangeCuratedListItems: CuratedListMutationResponse;
+  reassignOrderOwnership: OrderMutationResponse;
+  refreshCart: CartMutationResponse;
+  removeItemFromCuratedList: CuratedListMutationResponse;
+  removePaymentMethod: AddRemovePaymentMethodResponse;
+  removeProductFromWishlist: BlankMutationResponse;
+  removeProductsFromCart: Cart;
+  removePromoCodeFromCart: CartMutationResponse;
+  removeStoreLinkSlug: BlankMutationResponse;
+  reserveStoreLinkSlug?: Maybe<PrimaryLinkSlugs>;
+  sendResetPasswordEmail: SendResetPasswordResponse;
+  sendVerifyEmail: UserMutationResponse;
+  setDefaultPaymentMethod: AddRemovePaymentMethodResponse;
+  setPayoutMethod: UserMutationResponse;
+  signUpUsingEmail: SignUpMutationResponse;
+  suspendProduct?: Maybe<ProductMutationResponse>;
+  suspendStore?: Maybe<StoreMutationResponse>;
+  suspendUser: BlankMutationResponse;
+  unfollowStore: BlankMutationResponse;
+  unsuspendProduct?: Maybe<ProductMutationResponse>;
+  unsuspendStore?: Maybe<StoreMutationResponse>;
+  unsuspendUser: BlankMutationResponse;
   update_image_owners?: Maybe<Image_Owners_Mutation_Response>;
   update_image_owners_by_pk?: Maybe<Image_Owners>;
   update_image_parents?: Maybe<Image_Parents_Mutation_Response>;
@@ -715,7 +1595,214 @@ export type Mutation_Root = {
   update_profile_by_pk?: Maybe<Profile>;
   update_users?: Maybe<Users_Mutation_Response>;
   update_users_by_pk?: Maybe<Users>;
+  uploadRegister: UploadRegisterMutationResponse;
+  uploadSaveImage: UploadSaveImageMutationResponse;
+  uploadSaveProductFile: UploadSaveProductFileMutationResponse;
   url?: Maybe<ImageUrl>;
+};
+
+
+export type Mutation_RootAddPaymentMethodArgs = {
+  customerId: Scalars['ID'];
+  paymentMethodId: Scalars['ID'];
+};
+
+
+export type Mutation_RootAddProductToCuratedListArgs = {
+  listId: Scalars['ID'];
+  productId: Scalars['ID'];
+  variantId?: Maybe<Scalars['ID']>;
+};
+
+
+export type Mutation_RootAddProductToWishlistArgs = {
+  productId: Scalars['ID'];
+  variantId: Scalars['ID'];
+};
+
+
+export type Mutation_RootAddProductsToCartArgs = {
+  cartId: Scalars['ID'];
+  productProductVariantIds: Array<ProductProductVariantId>;
+};
+
+
+export type Mutation_RootAddPromoCodeToCartArgs = {
+  code: Scalars['String'];
+};
+
+
+export type Mutation_RootAdjustCartItemQuantityArgs = {
+  cartId: Scalars['ID'];
+  itemId: Scalars['ID'];
+  quantity?: Maybe<Scalars['Int']>;
+};
+
+
+export type Mutation_RootAdminDeleteAccountArgs = {
+  userId: Scalars['ID'];
+};
+
+
+export type Mutation_RootAdminDeleteProductArgs = {
+  productId: Scalars['ID'];
+};
+
+
+export type Mutation_RootAdminDeleteStoreArgs = {
+  storeId: Scalars['ID'];
+};
+
+
+export type Mutation_RootAdminGenerateProductFileDownloadLinkArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type Mutation_RootAdminManuallyConfirmOrderAfterFrontendPaymentArgs = {
+  anonOrderEmailAddress?: Maybe<Scalars['String']>;
+  cartIdToEmpty?: Maybe<Scalars['ID']>;
+  orderId: Scalars['ID'];
+  paymentProcessorData: Scalars['String'];
+};
+
+
+export type Mutation_RootApprovePayoutsArgs = {
+  payoutIds: Array<Scalars['String']>;
+};
+
+
+export type Mutation_RootChangePasswordArgs = {
+  currentPassword: Scalars['String'];
+  newPassword: Scalars['String'];
+};
+
+
+export type Mutation_RootCheckoutCartArgs = {
+  paymentProcessorData: Scalars['String'];
+  quotedPrice: Scalars['Price'];
+};
+
+
+export type Mutation_RootCheckoutCartForFrontendPaymentArgs = {
+  quotedPrice: Scalars['Price'];
+};
+
+
+export type Mutation_RootCheckoutConfirmCartArgs = {
+  paymentProcessorData: Scalars['String'];
+  unconfirmedOrderId: Scalars['ID'];
+};
+
+
+export type Mutation_RootCheckoutConfirmProductsArgs = {
+  anonOrderEmailAddress?: Maybe<Scalars['String']>;
+  paymentProcessorData: Scalars['String'];
+  unconfirmedOrderId: Scalars['ID'];
+};
+
+
+export type Mutation_RootCheckoutProductsArgs = {
+  paymentProcessorData: Scalars['String'];
+  productsInfo: Array<ProductProductVariantId>;
+  promoCodesToAdd?: Maybe<Array<Scalars['String']>>;
+  quotedPrice: Scalars['Price'];
+};
+
+
+export type Mutation_RootCheckoutProductsForFrontendPaymentArgs = {
+  productsInfo: Array<ProductProductVariantId>;
+  promoCodesToAdd?: Maybe<Array<Scalars['String']>>;
+  quotedPrice: Scalars['Price'];
+};
+
+
+export type Mutation_RootClaimUnclaimedOrderOwnershipArgs = {
+  orderId: Scalars['ID'];
+};
+
+
+export type Mutation_RootConfirmOrderAfterFrontendPaymentArgs = {
+  anonOrderEmailAddress?: Maybe<Scalars['String']>;
+  orderId: Scalars['ID'];
+  paymentProcessorData: Scalars['String'];
+};
+
+
+export type Mutation_RootConfirmResetPasswordArgs = {
+  email: Scalars['String'];
+  expiresAt: Scalars['Date'];
+  newPassword?: Maybe<Scalars['String']>;
+  resetId: Scalars['String'];
+};
+
+
+export type Mutation_RootCreateCuratedListArgs = {
+  name: Scalars['String'];
+};
+
+
+export type Mutation_RootCreatePayoutSplitArgs = {
+  dealType: PayoutDealType;
+  expiresAt?: Maybe<Scalars['Date']>;
+  rate: Scalars['Float'];
+  referrerId?: Maybe<Scalars['String']>;
+  storeOrUserId: Scalars['String'];
+};
+
+
+export type Mutation_RootCreatePayoutsArgs = {
+  month: Scalars['Int'];
+  year: Scalars['Int'];
+};
+
+
+export type Mutation_RootCreatePlatformDiscountArgs = {
+  input: CreatePlatformDiscountInput;
+};
+
+
+export type Mutation_RootCreateProductArgs = {
+  productCreateInput?: Maybe<ProductCreateInput>;
+};
+
+
+export type Mutation_RootCreateRefundArgs = {
+  input: CreateRefundInput;
+};
+
+
+export type Mutation_RootCreateStoreArgs = {
+  bio?: Maybe<Scalars['String']>;
+  coverId?: Maybe<Scalars['ID']>;
+  name: Scalars['String'];
+  profileId?: Maybe<Scalars['ID']>;
+  website?: Maybe<Scalars['String']>;
+};
+
+
+export type Mutation_RootCreateStorePromoCodeArgs = {
+  input: CreateStorePromoCodeInput;
+};
+
+
+export type Mutation_RootDeleteAccountArgs = {
+  password: Scalars['String'];
+};
+
+
+export type Mutation_RootDeleteCuratedListArgs = {
+  listId: Scalars['ID'];
+};
+
+
+export type Mutation_RootDeleteProductArgs = {
+  productId: Scalars['ID'];
+};
+
+
+export type Mutation_RootDeleteStoreArgs = {
+  password: Scalars['String'];
 };
 
 
@@ -831,6 +1918,70 @@ export type Mutation_RootDelete_UsersArgs = {
 
 export type Mutation_RootDelete_Users_By_PkArgs = {
   id: Scalars['String'];
+};
+
+
+export type Mutation_RootEditPlatformDiscountArgs = {
+  input: EditPlatformDiscountInput;
+};
+
+
+export type Mutation_RootEditProductArgs = {
+  productEditInput?: Maybe<ProductEditInput>;
+};
+
+
+export type Mutation_RootEditStoreProfileArgs = {
+  bio?: Maybe<Scalars['String']>;
+  coverId?: Maybe<Scalars['ID']>;
+  name?: Maybe<Scalars['String']>;
+  profileId?: Maybe<Scalars['ID']>;
+  website?: Maybe<Scalars['String']>;
+};
+
+
+export type Mutation_RootEditStorePromoCodeArgs = {
+  input: EditStorePromoCodeInput;
+};
+
+
+export type Mutation_RootEditUserProfileArgs = {
+  email?: Maybe<Scalars['String']>;
+  firstName?: Maybe<Scalars['String']>;
+  lastName?: Maybe<Scalars['String']>;
+  payoutMethod?: Maybe<Scalars['String']>;
+  username?: Maybe<Scalars['String']>;
+};
+
+
+export type Mutation_RootExcludeProductFromAutomaticListsArgs = {
+  productId: Scalars['ID'];
+};
+
+
+export type Mutation_RootExcludeProductFromSearchArgs = {
+  productId: Scalars['ID'];
+};
+
+
+export type Mutation_RootFollowStoreArgs = {
+  storeId: Scalars['ID'];
+};
+
+
+export type Mutation_RootGenerateProductFileDownloadLinkArgs = {
+  id: Scalars['ID'];
+  orderItemId: Scalars['ID'];
+};
+
+
+export type Mutation_RootIncludeProductInAutomaticListsArgs = {
+  productId: Scalars['ID'];
+};
+
+
+export type Mutation_RootIncludeProductInSearchArgs = {
+  productId: Scalars['ID'];
 };
 
 
@@ -973,6 +2124,128 @@ export type Mutation_RootInsert_UsersArgs = {
 export type Mutation_RootInsert_Users_OneArgs = {
   object: Users_Insert_Input;
   on_conflict?: Maybe<Users_On_Conflict>;
+};
+
+
+export type Mutation_RootLogInUsingEmailArgs = {
+  email: Scalars['String'];
+  password: Scalars['String'];
+  productProductVariantIds?: Maybe<Array<Maybe<ProductProductVariantId>>>;
+};
+
+
+export type Mutation_RootRearrangeCuratedListItemsArgs = {
+  itemIdsInOrder: Array<Scalars['ID']>;
+  listId: Scalars['ID'];
+};
+
+
+export type Mutation_RootReassignOrderOwnershipArgs = {
+  orderId: Scalars['ID'];
+  userIdOrEmail: Scalars['String'];
+};
+
+
+export type Mutation_RootRemoveItemFromCuratedListArgs = {
+  itemId: Scalars['ID'];
+  listId: Scalars['ID'];
+};
+
+
+export type Mutation_RootRemovePaymentMethodArgs = {
+  customerId: Scalars['ID'];
+  paymentMethodId: Scalars['ID'];
+};
+
+
+export type Mutation_RootRemoveProductFromWishlistArgs = {
+  productId: Scalars['ID'];
+  variantId: Scalars['ID'];
+};
+
+
+export type Mutation_RootRemoveProductsFromCartArgs = {
+  cartId: Scalars['ID'];
+  productProductVariantIds: Array<ProductProductVariantId>;
+};
+
+
+export type Mutation_RootRemovePromoCodeFromCartArgs = {
+  discountId: Scalars['ID'];
+};
+
+
+export type Mutation_RootReserveStoreLinkSlugArgs = {
+  slug: Scalars['String'];
+};
+
+
+export type Mutation_RootSendResetPasswordEmailArgs = {
+  email: Scalars['String'];
+};
+
+
+export type Mutation_RootSendVerifyEmailArgs = {
+  ref: Scalars['String'];
+};
+
+
+export type Mutation_RootSetDefaultPaymentMethodArgs = {
+  customerId: Scalars['ID'];
+  paymentMethodId: Scalars['ID'];
+};
+
+
+export type Mutation_RootSetPayoutMethodArgs = {
+  payoutEmail?: Maybe<Scalars['String']>;
+  payoutProcessor?: Maybe<Scalars['String']>;
+  payoutProcessorId?: Maybe<Scalars['String']>;
+  payoutType?: Maybe<Scalars['String']>;
+};
+
+
+export type Mutation_RootSignUpUsingEmailArgs = {
+  email: Scalars['String'];
+  firstName?: Maybe<Scalars['String']>;
+  lastName?: Maybe<Scalars['String']>;
+  password: Scalars['String'];
+  productProductVariantIds?: Maybe<Array<Maybe<ProductProductVariantId>>>;
+  username?: Maybe<Scalars['String']>;
+};
+
+
+export type Mutation_RootSuspendProductArgs = {
+  productId: Scalars['ID'];
+};
+
+
+export type Mutation_RootSuspendStoreArgs = {
+  storeId: Scalars['ID'];
+};
+
+
+export type Mutation_RootSuspendUserArgs = {
+  userId: Scalars['ID'];
+};
+
+
+export type Mutation_RootUnfollowStoreArgs = {
+  storeId: Scalars['ID'];
+};
+
+
+export type Mutation_RootUnsuspendProductArgs = {
+  productId: Scalars['ID'];
+};
+
+
+export type Mutation_RootUnsuspendStoreArgs = {
+  storeId: Scalars['ID'];
+};
+
+
+export type Mutation_RootUnsuspendUserArgs = {
+  userId: Scalars['ID'];
 };
 
 
@@ -1122,8 +2395,43 @@ export type Mutation_RootUpdate_Users_By_PkArgs = {
 };
 
 
+export type Mutation_RootUploadRegisterArgs = {
+  fileSize: Scalars['Int'];
+  mimeType: Scalars['String'];
+  uploadType: UploadType;
+};
+
+
+export type Mutation_RootUploadSaveImageArgs = {
+  description?: Maybe<Scalars['String']>;
+  ownerIds?: Maybe<Array<Maybe<Scalars['String']>>>;
+  tags?: Maybe<Array<Maybe<Scalars['String']>>>;
+  uploadId: Scalars['ID'];
+};
+
+
+export type Mutation_RootUploadSaveProductFileArgs = {
+  fileName: Scalars['String'];
+  ownerIds?: Maybe<Array<Maybe<Scalars['String']>>>;
+  uploadId: Scalars['ID'];
+};
+
+
 export type Mutation_RootUrlArgs = {
   image_id?: Maybe<Scalars['String']>;
+};
+
+export type MutationError = {
+   __typename?: 'MutationError';
+  code: Scalars['String'];
+  debugMessage?: Maybe<Scalars['String']>;
+  error?: Maybe<Scalars['String']>;
+};
+
+export type MutationErrorSummary = {
+   __typename?: 'MutationErrorSummary';
+  errors?: Maybe<Array<Maybe<MutationError>>>;
+  shouldRetry?: Maybe<Scalars['Boolean']>;
 };
 
 export type Online_Users = {
@@ -1221,6 +2529,21 @@ export type Online_Users_Set_Input = {
   last_seen?: Maybe<Scalars['timestamptz']>;
 };
 
+export type Order = {
+   __typename?: 'Order';
+  attachedPromoCodes: Array<Discount>;
+  createdAt: Scalars['Date'];
+  currentSnapshot: OrderSnapshot;
+  id: Scalars['ID'];
+  isCartlessPurchase: Scalars['Boolean'];
+  isLoggedOutPurchase: Scalars['Boolean'];
+  isMobilePurchase: Scalars['Boolean'];
+  items: Array<OrderItem>;
+  updatedAt?: Maybe<Scalars['Date']>;
+  user?: Maybe<User>;
+  userId?: Maybe<Scalars['ID']>;
+};
+
 export enum Order_By {
   Asc = 'asc',
   AscNullsFirst = 'asc_nulls_first',
@@ -1229,6 +2552,361 @@ export enum Order_By {
   DescNullsFirst = 'desc_nulls_first',
   DescNullsLast = 'desc_nulls_last'
 }
+
+export type OrderCreateMutationResponse = {
+   __typename?: 'OrderCreateMutationResponse';
+  paymentProcessorResponse: Scalars['String'];
+  unconfirmedOrder: Order;
+};
+
+export type OrderItem = {
+   __typename?: 'OrderItem';
+  createdAt: Scalars['Date'];
+  id: Scalars['ID'];
+  mostRecentDownloadRecords: Array<MostRecentDownloadRecord>;
+  orderId: Scalars['ID'];
+  orderStatus: OrderStatus;
+  priceDetails: PriceDetails;
+  product: Product;
+  productId: Scalars['ID'];
+  productSnapshotId: Scalars['ID'];
+  quantity?: Maybe<Scalars['Int']>;
+  updatedAt?: Maybe<Scalars['Date']>;
+  userId?: Maybe<Scalars['ID']>;
+  variantId: Scalars['ID'];
+  variantSnapshotId: Scalars['ID'];
+};
+
+export type OrderMutationResponse = {
+   __typename?: 'OrderMutationResponse';
+  order: Order;
+};
+
+export type OrdersConnection = Connection & {
+   __typename?: 'OrdersConnection';
+  edges: Array<OrdersEdge>;
+  pageInfo: PageInfo;
+  totalCount?: Maybe<Scalars['Int']>;
+};
+
+export type OrdersEdge = Edge & {
+   __typename?: 'OrdersEdge';
+  cursor: Scalars['PageCursor'];
+  node: Order;
+};
+
+export type OrderSnapshot = {
+   __typename?: 'OrderSnapshot';
+  automaticSavings: Scalars['Price'];
+  createdAt: Scalars['Date'];
+  currency?: Maybe<Scalars['String']>;
+  id: Scalars['ID'];
+  orderId: Scalars['ID'];
+  orderStatus: OrderStatus;
+  paymentProcessingFee: Scalars['Price'];
+  paymentProcessor?: Maybe<PaymentProcessor>;
+  promoCodeSavings: Scalars['Price'];
+  subtotal: Scalars['Price'];
+  taxes: Scalars['Price'];
+  total: Scalars['Price'];
+  transaction?: Maybe<Transaction>;
+  transactionId?: Maybe<Scalars['ID']>;
+};
+
+export enum OrderStatus {
+  Cancelled = 'CANCELLED',
+  Confirmed = 'CONFIRMED',
+  Created = 'CREATED',
+  PartiallyRefunded = 'PARTIALLY_REFUNDED',
+  Refunded = 'REFUNDED'
+}
+
+export type PageBasedConnection = {
+  pageInfo: PageBasedConnectionPageInfo;
+  totalCount?: Maybe<Scalars['Int']>;
+};
+
+export type PageBasedConnectionEdge = {
+  pageNumber: Scalars['Int'];
+};
+
+export type PageBasedConnectionPageInfo = {
+   __typename?: 'PageBasedConnectionPageInfo';
+  isLastPage: Scalars['Boolean'];
+  pageNumber: Scalars['Int'];
+  totalPages?: Maybe<Scalars['Int']>;
+};
+
+export type PageBasedConnectionQuery = {
+  count?: Maybe<Scalars['Int']>;
+  pageNumber?: Maybe<Scalars['Int']>;
+  sortAscending?: Maybe<Scalars['Boolean']>;
+};
+
+export type PageBasedConnectionWithMetrics = {
+  pageInfo: PageBasedConnectionPageInfo;
+  totalAmount?: Maybe<Scalars['Int']>;
+  totalCount?: Maybe<Scalars['Int']>;
+};
+
+
+export type PageInfo = {
+   __typename?: 'PageInfo';
+  endCursor?: Maybe<Scalars['PageCursor']>;
+  isLastPage: Scalars['Boolean'];
+  totalPages?: Maybe<Scalars['Int']>;
+};
+
+export enum PayeeType {
+  Affiliate = 'AFFILIATE',
+  Platform = 'PLATFORM',
+  Store = 'STORE'
+}
+
+export type PaymentMethod = {
+   __typename?: 'PaymentMethod';
+  createdAt: Scalars['Date'];
+  customerId?: Maybe<Scalars['ID']>;
+  details?: Maybe<Scalars['String']>;
+  email?: Maybe<Scalars['String']>;
+  expMonth?: Maybe<Scalars['String']>;
+  expYear?: Maybe<Scalars['String']>;
+  id: Scalars['ID'];
+  last4?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  paymentMethodTypes?: Maybe<Array<Maybe<Scalars['String']>>>;
+  paymentProcessor?: Maybe<PaymentProcessor>;
+  updatedAt?: Maybe<Scalars['Date']>;
+  userId: Scalars['ID'];
+};
+
+export enum PaymentProcessor {
+  ApplePay = 'ApplePay',
+  GooglePay = 'GooglePay',
+  NoPaymentFees = 'NoPaymentFees',
+  Paypal = 'Paypal',
+  Stripe = 'Stripe',
+  StripeDomestic = 'StripeDomestic'
+}
+
+export type Payout = {
+   __typename?: 'Payout';
+  amount: Scalars['Price'];
+  approvedByAdmins: Array<UserWithRole>;
+  approvedByIds: Array<Scalars['ID']>;
+  createdAt: Scalars['Date'];
+  currency: Scalars['String'];
+  details?: Maybe<Scalars['String']>;
+  endPeriod: Scalars['Date'];
+  id: Scalars['ID'];
+  payeeId: Scalars['ID'];
+  payeeType: PayeeType;
+  payoutDate: Scalars['Date'];
+  payoutEmail: Scalars['String'];
+  payoutItemIds: Array<Scalars['ID']>;
+  payoutItems?: Maybe<Array<Maybe<PayoutItem>>>;
+  payoutStatus: PayoutStatus;
+  productsBreakdownConnection: ProductsSoldPeriodSummaryConnection;
+  startPeriod: Scalars['Date'];
+};
+
+
+export type PayoutProductsBreakdownConnectionArgs = {
+  query?: Maybe<ConnectionQuery>;
+};
+
+export enum PayoutDealType {
+  BuyerAffiliate = 'BUYER_AFFILIATE',
+  ReferredSeller = 'REFERRED_SELLER',
+  Seller = 'SELLER',
+  SellerAffiliate = 'SELLER_AFFILIATE'
+}
+
+export type PayoutEdge = Edge & {
+   __typename?: 'PayoutEdge';
+  cursor: Scalars['PageCursor'];
+  node: Payout;
+};
+
+export type PayoutHistorySummaries = {
+   __typename?: 'PayoutHistorySummaries';
+  allTime: SummaryStatistics;
+  currentPeriod: SummaryStatistics;
+  last30Days: SummaryStatistics;
+  last7Days: SummaryStatistics;
+  lastPeriod: SummaryStatistics;
+  today: SummaryStatistics;
+};
+
+export type PayoutInput = {
+  approvedByIds?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  createdAt?: Maybe<Scalars['Date']>;
+  currency?: Maybe<Scalars['String']>;
+  details?: Maybe<Scalars['String']>;
+  endPeriod?: Maybe<Scalars['Date']>;
+  id?: Maybe<Scalars['ID']>;
+  payoutDate?: Maybe<Scalars['Date']>;
+  payoutEmail?: Maybe<Scalars['String']>;
+  payoutItemIds?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  payoutStatus?: Maybe<PayoutStatus>;
+  platformFee?: Maybe<Scalars['Price']>;
+  sellerPayment?: Maybe<Scalars['Price']>;
+  startPeriod?: Maybe<Scalars['Date']>;
+  storeId?: Maybe<Scalars['ID']>;
+};
+
+export type PayoutItem = {
+   __typename?: 'PayoutItem';
+  amount: Scalars['Price'];
+  createdAt: Scalars['Date'];
+  currency?: Maybe<Scalars['String']>;
+  id: Scalars['ID'];
+  orderItem?: Maybe<OrderItem>;
+  orderItemId: Scalars['ID'];
+  payeeId: Scalars['ID'];
+  payeeType: PayeeType;
+  paymentProcessingFee: Scalars['Price'];
+  payoutId?: Maybe<Scalars['ID']>;
+  payoutStatus: PayoutStatus;
+  store?: Maybe<StorePrivate>;
+  transaction?: Maybe<Transaction>;
+  txnId: Scalars['ID'];
+};
+
+export type PayoutItemsConnection = ConnectionWithMetrics & {
+   __typename?: 'PayoutItemsConnection';
+  edges: Array<PayoutItemsEdge>;
+  pageInfo: PageInfo;
+  totalAmount?: Maybe<Scalars['Int']>;
+  totalCount?: Maybe<Scalars['Int']>;
+};
+
+export type PayoutItemsEdge = Edge & {
+   __typename?: 'PayoutItemsEdge';
+  cursor: Scalars['PageCursor'];
+  node: PayoutItem;
+};
+
+export type PayoutItemsPagedConnection = PageBasedConnectionWithMetrics & {
+   __typename?: 'PayoutItemsPagedConnection';
+  edges: Array<PayoutItemsPagedEdge>;
+  pageInfo: PageBasedConnectionPageInfo;
+  totalAmount?: Maybe<Scalars['Int']>;
+  totalCount?: Maybe<Scalars['Int']>;
+};
+
+export type PayoutItemsPagedEdge = PageBasedConnectionEdge & {
+   __typename?: 'PayoutItemsPagedEdge';
+  node: PayoutItem;
+  pageNumber: Scalars['Int'];
+};
+
+export type PayoutMethod = {
+   __typename?: 'PayoutMethod';
+  createdAt: Scalars['Date'];
+  id: Scalars['ID'];
+  payoutEmail?: Maybe<Scalars['String']>;
+  payoutProcessor?: Maybe<Scalars['String']>;
+  payoutProcessorId?: Maybe<Scalars['String']>;
+  payoutType?: Maybe<Scalars['String']>;
+  updatedAt?: Maybe<Scalars['Date']>;
+  userId: Scalars['ID'];
+};
+
+export type PayoutMethodMutationResponse = {
+   __typename?: 'PayoutMethodMutationResponse';
+  payoutMethod: PayoutMethod;
+};
+
+export type PayoutsConnection = ConnectionWithMetrics & {
+   __typename?: 'PayoutsConnection';
+  edges: Array<PayoutEdge>;
+  pageInfo: PageInfo;
+  totalAmount?: Maybe<Scalars['Int']>;
+  totalCount?: Maybe<Scalars['Int']>;
+};
+
+export type PayoutSplit = {
+   __typename?: 'PayoutSplit';
+  createdAt: Scalars['Date'];
+  dealType: PayoutDealType;
+  expiresAt?: Maybe<Scalars['Date']>;
+  id: Scalars['ID'];
+  rate: Scalars['Float'];
+  referrerId?: Maybe<Scalars['ID']>;
+  storeOrUserId: Scalars['ID'];
+};
+
+export enum PayoutStatus {
+  MissingPayoutMethod = 'MISSING_PAYOUT_METHOD',
+  Paid = 'PAID',
+  PendingApproval = 'PENDING_APPROVAL',
+  PendingRefund = 'PENDING_REFUND',
+  Processing = 'PROCESSING',
+  Refunded = 'REFUNDED',
+  Refunding = 'REFUNDING',
+  Retained = 'RETAINED',
+  Unpaid = 'UNPAID'
+}
+
+export type PlatformScopedDiscountInfo = {
+   __typename?: 'PlatformScopedDiscountInfo';
+  isApplicableToAnyProduct: Scalars['Boolean'];
+};
+
+
+export type PriceDetails = {
+   __typename?: 'PriceDetails';
+  actualPrice: Scalars['Price'];
+  basePrice: Scalars['Price'];
+  discountBreakdown?: Maybe<PriceDetailsDiscountBreakdown>;
+};
+
+export type PriceDetailsDiscountBreakdown = {
+   __typename?: 'PriceDetailsDiscountBreakdown';
+  dollarsOffComponent: Scalars['Price'];
+  dollarsOffDiscounts: Array<Discount>;
+  fixedPriceComponent: Scalars['Price'];
+  fixedPriceDiscount?: Maybe<Discount>;
+  percentOffComponent: Scalars['Price'];
+  percentOffDiscount?: Maybe<Discount>;
+  promoCodeComponent: Scalars['Price'];
+};
+
+export type PrimaryLinkSlugs = {
+   __typename?: 'PrimaryLinkSlugs';
+  auto: Scalars['String'];
+  manual?: Maybe<Scalars['String']>;
+  ownerId: Scalars['ID'];
+};
+
+export type Product = {
+  category: ProductCategory;
+  categoryId: Scalars['ID'];
+  chosenVariant?: Maybe<ProductVariant>;
+  createdAt: Scalars['Date'];
+  currentVariants: Array<ProductVariant>;
+  description: Scalars['String'];
+  featuredVariant?: Maybe<ProductVariant>;
+  id: Scalars['ID'];
+  isDeleted: Scalars['Boolean'];
+  isExcludedFromAutomaticLists: Scalars['Boolean'];
+  isExcludedFromSearch: Scalars['Boolean'];
+  isPublished: Scalars['Boolean'];
+  isQuantityEnabled: Scalars['Boolean'];
+  isSuspended: Scalars['Boolean'];
+  linkSlugs?: Maybe<PrimaryLinkSlugs>;
+  name: Scalars['String'];
+  quantityLabel: QuantityLabel;
+  snapshotCreatedAt: Scalars['Date'];
+  snapshotId: Scalars['ID'];
+  store: Store;
+  storeId: Scalars['ID'];
+  tagline: Scalars['String'];
+  tags: Array<Scalars['String']>;
+  updatedAt?: Maybe<Scalars['Date']>;
+  variantsLabel: VariantsLabel;
+};
 
 export type Product_File_Owners = {
    __typename?: 'product_file_owners';
@@ -2470,6 +4148,157 @@ export type Product_Variants_Variance_Order_By = {
   position?: Maybe<Order_By>;
 };
 
+export type ProductCategory = {
+   __typename?: 'ProductCategory';
+  categoryGroup?: Maybe<Scalars['ProductCategoryGroup']>;
+  createdAt: Scalars['Date'];
+  id: Scalars['ID'];
+  name: Scalars['String'];
+  updatedAt?: Maybe<Scalars['Date']>;
+};
+
+
+export type ProductCreateInput = {
+  categoryId: Scalars['ID'];
+  currentVariants: Array<ProductVariantInput>;
+  description: Scalars['String'];
+  isPublished: Scalars['Boolean'];
+  isQuantityEnabled: Scalars['Boolean'];
+  name: Scalars['String'];
+  quantityLabel?: Maybe<QuantityLabel>;
+  tagline: Scalars['String'];
+  tags: Array<Scalars['String']>;
+  variantsLabel?: Maybe<VariantsLabel>;
+};
+
+export type ProductEditInput = {
+  categoryId: Scalars['ID'];
+  currentVariants: Array<ProductVariantEditInput>;
+  description: Scalars['String'];
+  isPublished: Scalars['Boolean'];
+  isQuantityEnabled: Scalars['Boolean'];
+  name: Scalars['String'];
+  productId: Scalars['ID'];
+  quantityLabel?: Maybe<QuantityLabel>;
+  tagline: Scalars['String'];
+  tags: Array<Scalars['String']>;
+  variantsLabel?: Maybe<VariantsLabel>;
+};
+
+export type ProductFile = {
+   __typename?: 'ProductFile';
+  createdAt: Scalars['Date'];
+  fileName?: Maybe<Scalars['String']>;
+  id: Scalars['ID'];
+  mimeType: Scalars['String'];
+  sizeInBytes: Scalars['Int'];
+};
+
+export type ProductFileDownloadLink = {
+   __typename?: 'ProductFileDownloadLink';
+  expiresAt: Scalars['Date'];
+  productFileId: Scalars['ID'];
+  url: Scalars['String'];
+};
+
+export type ProductFileLinkMutationResponse = {
+   __typename?: 'ProductFileLinkMutationResponse';
+  downloadLink: ProductFileDownloadLink;
+};
+
+export type ProductFileLinksMutationResponse = {
+   __typename?: 'ProductFileLinksMutationResponse';
+  downloadLinks: Array<ProductFileDownloadLink>;
+};
+
+export type ProductMutationResponse = {
+   __typename?: 'ProductMutationResponse';
+  product: Product;
+};
+
+export type ProductPreviewItem = {
+   __typename?: 'ProductPreviewItem';
+  id: Scalars['ID'];
+  image?: Maybe<Image>;
+  imageId?: Maybe<Scalars['ID']>;
+  youTubeEmbedLink?: Maybe<Scalars['String']>;
+};
+
+export type ProductPreviewItemInput = {
+  imageId?: Maybe<Scalars['ID']>;
+  youTubeEmbedLink?: Maybe<Scalars['String']>;
+};
+
+export type ProductPrivate = Product & {
+   __typename?: 'ProductPrivate';
+  category: ProductCategory;
+  categoryId: Scalars['ID'];
+  chosenVariant?: Maybe<ProductVariant>;
+  createdAt: Scalars['Date'];
+  currentVariants: Array<ProductVariant>;
+  description: Scalars['String'];
+  featuredVariant?: Maybe<ProductVariant>;
+  historicalSnapshotsConnection: ProductsConnection;
+  id: Scalars['ID'];
+  isDeleted: Scalars['Boolean'];
+  isExcludedFromAutomaticLists: Scalars['Boolean'];
+  isExcludedFromSearch: Scalars['Boolean'];
+  isPublished: Scalars['Boolean'];
+  isQuantityEnabled: Scalars['Boolean'];
+  isSuspended: Scalars['Boolean'];
+  linkSlugs?: Maybe<PrimaryLinkSlugs>;
+  name: Scalars['String'];
+  quantityLabel: QuantityLabel;
+  snapshotCreatedAt: Scalars['Date'];
+  snapshotId: Scalars['ID'];
+  store: Store;
+  storeId: Scalars['ID'];
+  tagline: Scalars['String'];
+  tags: Array<Scalars['String']>;
+  updatedAt?: Maybe<Scalars['Date']>;
+  variantsLabel: VariantsLabel;
+};
+
+
+export type ProductPrivateHistoricalSnapshotsConnectionArgs = {
+  query?: Maybe<ConnectionQuery>;
+};
+
+export type ProductProductVariantId = {
+  productId: Scalars['ID'];
+  quantity?: Maybe<Scalars['Int']>;
+  variantId: Scalars['ID'];
+};
+
+export type ProductPublic = Product & {
+   __typename?: 'ProductPublic';
+  category: ProductCategory;
+  categoryId: Scalars['ID'];
+  chosenVariant?: Maybe<ProductVariant>;
+  createdAt: Scalars['Date'];
+  currentVariants: Array<ProductVariant>;
+  description: Scalars['String'];
+  featuredVariant?: Maybe<ProductVariant>;
+  id: Scalars['ID'];
+  isDeleted: Scalars['Boolean'];
+  isExcludedFromAutomaticLists: Scalars['Boolean'];
+  isExcludedFromSearch: Scalars['Boolean'];
+  isPublished: Scalars['Boolean'];
+  isQuantityEnabled: Scalars['Boolean'];
+  isSuspended: Scalars['Boolean'];
+  linkSlugs?: Maybe<PrimaryLinkSlugs>;
+  name: Scalars['String'];
+  quantityLabel: QuantityLabel;
+  snapshotCreatedAt: Scalars['Date'];
+  snapshotId: Scalars['ID'];
+  store: Store;
+  storeId: Scalars['ID'];
+  tagline: Scalars['String'];
+  tags: Array<Scalars['String']>;
+  updatedAt?: Maybe<Scalars['Date']>;
+  variantsLabel: VariantsLabel;
+};
+
 export type Products = {
    __typename?: 'products';
   category_id: Scalars['String'];
@@ -2669,6 +4498,123 @@ export enum Products_Update_Column {
   UpdatedAt = 'updated_at'
 }
 
+export type ProductSale = {
+   __typename?: 'ProductSale';
+  orderItem: OrderItem;
+  payoutItems?: Maybe<Array<Maybe<PayoutItem>>>;
+  user?: Maybe<UserPublic>;
+  userId?: Maybe<Scalars['ID']>;
+};
+
+export type ProductSalesEdge = Edge & {
+   __typename?: 'ProductSalesEdge';
+  cursor: Scalars['PageCursor'];
+  node: ProductSale;
+};
+
+export type ProductsConnection = Connection & {
+   __typename?: 'ProductsConnection';
+  edges: Array<ProductsEdge>;
+  pageInfo: PageInfo;
+  totalCount?: Maybe<Scalars['Int']>;
+};
+
+export type ProductScopedDiscountInfo = {
+   __typename?: 'ProductScopedDiscountInfo';
+  stockLimitCondition?: Maybe<DiscountStockLimitCondition>;
+  variantSnapshotId?: Maybe<Scalars['ID']>;
+};
+
+export type ProductsEdge = Edge & {
+   __typename?: 'ProductsEdge';
+  cursor: Scalars['PageCursor'];
+  node: Product;
+};
+
+export type ProductSoldPeriodSummary = {
+   __typename?: 'ProductSoldPeriodSummary';
+  grossAmount: Scalars['Price'];
+  numberOfSalesMade: Scalars['Int'];
+  product: Product;
+};
+
+export type ProductSpecialDeal = {
+   __typename?: 'ProductSpecialDeal';
+  discountedPrice: Scalars['Price'];
+  stockLimitCondition?: Maybe<DiscountStockLimitCondition>;
+  timeCondition?: Maybe<DiscountTimeCondition>;
+};
+
+export type ProductSpecialDealInput = {
+  discountedPrice: Scalars['Price'];
+  stockLimitCondition?: Maybe<DiscountStockLimitConditionInput>;
+  timeCondition?: Maybe<DiscountTimeConditionInput>;
+};
+
+export type ProductsSoldPeriodSummaryConnection = Connection & {
+   __typename?: 'ProductsSoldPeriodSummaryConnection';
+  edges: Array<ProductsSoldPeriodSummaryEdge>;
+  pageInfo: PageInfo;
+  totalCount?: Maybe<Scalars['Int']>;
+};
+
+export type ProductsSoldPeriodSummaryEdge = Edge & {
+   __typename?: 'ProductsSoldPeriodSummaryEdge';
+  cursor: Scalars['PageCursor'];
+  node: ProductSoldPeriodSummary;
+};
+
+export type ProductVariant = {
+   __typename?: 'ProductVariant';
+  baseStockLevel?: Maybe<StockLevel>;
+  createdAt: Scalars['Date'];
+  currentStockLevel?: Maybe<StockLevel>;
+  fileIds: Array<Scalars['ID']>;
+  files: Array<ProductFile>;
+  isDefault: Scalars['Boolean'];
+  isSoldOut: Scalars['Boolean'];
+  permanentDiscountedPriceDiscount?: Maybe<Discount>;
+  previewItems: Array<ProductPreviewItem>;
+  price: Scalars['Price'];
+  priceDetails: PriceDetails;
+  priceWas?: Maybe<Scalars['Price']>;
+  productId: Scalars['ID'];
+  productSnapshotId: Scalars['ID'];
+  relevantDiscounts?: Maybe<Array<Maybe<Discount>>>;
+  specialDeal?: Maybe<ProductSpecialDeal>;
+  specialDealDiscount?: Maybe<Discount>;
+  storeId: Scalars['ID'];
+  variantDescription?: Maybe<Scalars['String']>;
+  variantId: Scalars['ID'];
+  variantName: Scalars['String'];
+  variantSnapshotId: Scalars['ID'];
+};
+
+export type ProductVariantEditInput = {
+  fileIds: Array<Scalars['ID']>;
+  isDefault: Scalars['Boolean'];
+  previewItems: Array<ProductPreviewItemInput>;
+  price: Scalars['Price'];
+  priceWas?: Maybe<Scalars['Price']>;
+  quantityAvailable?: Maybe<Scalars['Int']>;
+  specialDeal?: Maybe<ProductSpecialDealInput>;
+  variantDescription: Scalars['String'];
+  variantId?: Maybe<Scalars['ID']>;
+  variantName: Scalars['String'];
+};
+
+export type ProductVariantInput = {
+  fileIds: Array<Scalars['ID']>;
+  isDefault: Scalars['Boolean'];
+  previewItems: Array<ProductPreviewItemInput>;
+  price: Scalars['Price'];
+  priceWas?: Maybe<Scalars['Price']>;
+  quantityAvailable?: Maybe<Scalars['Int']>;
+  specialDeal?: Maybe<ProductSpecialDealInput>;
+  variantDescription: Scalars['String'];
+  variantName: Scalars['String'];
+};
+
 export type Profile = {
    __typename?: 'profile';
   id: Scalars['uuid'];
@@ -2785,8 +4731,336 @@ export enum Profile_Update_Column {
   Name = 'name'
 }
 
+export enum QuantityLabel {
+  Quantity = 'QUANTITY',
+  Seats = 'SEATS'
+}
+
+export type Query = {
+   __typename?: 'Query';
+  basicInsights: Array<AdminInsight>;
+  categories: Array<ProductCategory>;
+  category?: Maybe<ProductCategory>;
+  curatedList?: Maybe<CuratedList>;
+  curatedListItemsAdminConnection?: Maybe<CuratedListItemsConnection>;
+  curatedListItemsConnection?: Maybe<CuratedListItemsConnection>;
+  getOrder?: Maybe<Order>;
+  getOrderAsAdmin?: Maybe<Order>;
+  getOrderItem?: Maybe<OrderItem>;
+  getPaymentMethod?: Maybe<PaymentMethod>;
+  getPayoutById: Payout;
+  getPayoutItemsInPeriodAdmin: PayoutItemsConnection;
+  getPayoutItemsInPeriodAdminPaged: PayoutItemsPagedConnection;
+  getPayoutSplitByStoreId: PayoutSplit;
+  getPayouts: PayoutsConnection;
+  getPayoutsInPeriodAdmin: PayoutsConnection;
+  getProductByProductIdOrSlug?: Maybe<Product>;
+  getProductFromLinkSlug?: Maybe<Product>;
+  getProductSale?: Maybe<ProductSale>;
+  getRecentTransactions: Array<Transaction>;
+  getStoreByStoreIdOrSlug?: Maybe<Store>;
+  getStoreFromLinkSlug?: Maybe<Store>;
+  getStoreSalesInPeriodAdmin: StoreSalesInPeriodConnection;
+  getTransaction?: Maybe<Transaction>;
+  getTransactionsInPeriodAdmin: TransactionsConnection;
+  listOfCuratedListsConnection: CuratedListsConnection;
+  listPaymentMethods?: Maybe<Array<PaymentMethod>>;
+  loggedInUser: UserPrivate;
+  lookupProductLinkSlug?: Maybe<PrimaryLinkSlugs>;
+  lookupStoreLinkSlug?: Maybe<PrimaryLinkSlugs>;
+  platformDiscounts: DiscountsConnection;
+  product?: Maybe<Product>;
+  productsAdminConnection: ProductsConnection;
+  productsAllConnection: ProductsConnection;
+  productsByCategoryConnection?: Maybe<ProductsConnection>;
+  productsDealsEndingSoonConnection: ProductsConnection;
+  productsLimitedReleasesConnection: ProductsConnection;
+  productsRecommendedConnection: ProductsConnection;
+  search: SearchResultsConnection;
+  store?: Maybe<Store>;
+  storeDiscounts: DiscountsConnection;
+  storesAdminConnection: StoresConnection;
+  tryPromoCode?: Maybe<Discount>;
+  unclaimedOrder?: Maybe<Order>;
+  unclaimedOrdersConnection: OrdersConnection;
+  user?: Maybe<User>;
+  userByEmailOrId?: Maybe<User>;
+  wishlistItemsConnection: WishlistItemsConnection;
+};
+
+
+export type QueryCategoryArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type QueryCuratedListArgs = {
+  listId: Scalars['ID'];
+};
+
+
+export type QueryCuratedListItemsAdminConnectionArgs = {
+  listId: Scalars['ID'];
+  query?: Maybe<ConnectionQuery>;
+};
+
+
+export type QueryCuratedListItemsConnectionArgs = {
+  listId: Scalars['ID'];
+  query?: Maybe<ConnectionQuery>;
+};
+
+
+export type QueryGetOrderArgs = {
+  orderId: Scalars['ID'];
+};
+
+
+export type QueryGetOrderAsAdminArgs = {
+  orderId: Scalars['ID'];
+};
+
+
+export type QueryGetOrderItemArgs = {
+  orderItemId: Scalars['ID'];
+};
+
+
+export type QueryGetPaymentMethodArgs = {
+  paymentMethodId: Scalars['ID'];
+};
+
+
+export type QueryGetPayoutByIdArgs = {
+  payoutId: Scalars['ID'];
+};
+
+
+export type QueryGetPayoutItemsInPeriodAdminArgs = {
+  month?: Maybe<Scalars['Int']>;
+  payoutStatus?: Maybe<PayoutStatus>;
+  query: ConnectionQuery;
+  year?: Maybe<Scalars['Int']>;
+};
+
+
+export type QueryGetPayoutItemsInPeriodAdminPagedArgs = {
+  month?: Maybe<Scalars['Int']>;
+  payoutStatus?: Maybe<PayoutStatus>;
+  query: PageBasedConnectionQuery;
+  year?: Maybe<Scalars['Int']>;
+};
+
+
+export type QueryGetPayoutSplitByStoreIdArgs = {
+  storeOrUserId: Scalars['ID'];
+};
+
+
+export type QueryGetPayoutsArgs = {
+  query: ConnectionQuery;
+  storeId: Scalars['ID'];
+};
+
+
+export type QueryGetPayoutsInPeriodAdminArgs = {
+  month: Scalars['Int'];
+  payoutStatus?: Maybe<PayoutStatus>;
+  query: ConnectionQuery;
+  year: Scalars['Int'];
+};
+
+
+export type QueryGetProductByProductIdOrSlugArgs = {
+  productIdOrSlug: Scalars['String'];
+};
+
+
+export type QueryGetProductFromLinkSlugArgs = {
+  slug: Scalars['String'];
+};
+
+
+export type QueryGetProductSaleArgs = {
+  orderItemId: Scalars['ID'];
+};
+
+
+export type QueryGetRecentTransactionsArgs = {
+  count: Scalars['Int'];
+};
+
+
+export type QueryGetStoreByStoreIdOrSlugArgs = {
+  storeIdOrSlug: Scalars['String'];
+};
+
+
+export type QueryGetStoreFromLinkSlugArgs = {
+  slug: Scalars['String'];
+};
+
+
+export type QueryGetStoreSalesInPeriodAdminArgs = {
+  endDate: Scalars['Date'];
+  query?: Maybe<ConnectionQuery>;
+  startDate: Scalars['Date'];
+};
+
+
+export type QueryGetTransactionArgs = {
+  transactionId: Scalars['ID'];
+};
+
+
+export type QueryGetTransactionsInPeriodAdminArgs = {
+  month?: Maybe<Scalars['Int']>;
+  query?: Maybe<ConnectionQuery>;
+  year?: Maybe<Scalars['Int']>;
+};
+
+
+export type QueryListOfCuratedListsConnectionArgs = {
+  query?: Maybe<ConnectionQuery>;
+};
+
+
+export type QueryListPaymentMethodsArgs = {
+  customerId: Scalars['ID'];
+};
+
+
+export type QueryLookupProductLinkSlugArgs = {
+  slug: Scalars['String'];
+};
+
+
+export type QueryLookupStoreLinkSlugArgs = {
+  slug: Scalars['String'];
+};
+
+
+export type QueryPlatformDiscountsArgs = {
+  query?: Maybe<ConnectionQuery>;
+};
+
+
+export type QueryProductArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type QueryProductsAdminConnectionArgs = {
+  query?: Maybe<ConnectionQuery>;
+};
+
+
+export type QueryProductsAllConnectionArgs = {
+  query?: Maybe<ConnectionQuery>;
+};
+
+
+export type QueryProductsByCategoryConnectionArgs = {
+  categoryId?: Maybe<Scalars['ID']>;
+  categoryName?: Maybe<Scalars['String']>;
+  query?: Maybe<ConnectionQuery>;
+};
+
+
+export type QueryProductsDealsEndingSoonConnectionArgs = {
+  query?: Maybe<ConnectionQuery>;
+};
+
+
+export type QueryProductsLimitedReleasesConnectionArgs = {
+  query?: Maybe<ConnectionQuery>;
+};
+
+
+export type QueryProductsRecommendedConnectionArgs = {
+  currentlyViewingProductId?: Maybe<Scalars['ID']>;
+  query?: Maybe<ConnectionQuery>;
+};
+
+
+export type QuerySearchArgs = {
+  query?: Maybe<PageBasedConnectionQuery>;
+  searchTerm: Scalars['String'];
+};
+
+
+export type QueryStoreArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type QueryStoreDiscountsArgs = {
+  query?: Maybe<ConnectionQuery>;
+};
+
+
+export type QueryStoresAdminConnectionArgs = {
+  query?: Maybe<ConnectionQuery>;
+};
+
+
+export type QueryTryPromoCodeArgs = {
+  cartProductsInfo: Array<ProductProductVariantId>;
+  code: Scalars['String'];
+};
+
+
+export type QueryUnclaimedOrderArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type QueryUnclaimedOrdersConnectionArgs = {
+  query?: Maybe<ConnectionQuery>;
+};
+
+
+export type QueryUserArgs = {
+  id?: Maybe<Scalars['ID']>;
+};
+
+
+export type QueryUserByEmailOrIdArgs = {
+  userIdOrEmail: Scalars['String'];
+};
+
+
+export type QueryWishlistItemsConnectionArgs = {
+  query?: Maybe<ConnectionQuery>;
+};
+
 export type Query_Root = {
    __typename?: 'query_root';
+  basicInsights: Array<AdminInsight>;
+  categories: Array<ProductCategory>;
+  category?: Maybe<ProductCategory>;
+  curatedList?: Maybe<CuratedList>;
+  curatedListItemsAdminConnection?: Maybe<CuratedListItemsConnection>;
+  curatedListItemsConnection?: Maybe<CuratedListItemsConnection>;
+  getOrder?: Maybe<Order>;
+  getOrderAsAdmin?: Maybe<Order>;
+  getOrderItem?: Maybe<OrderItem>;
+  getPaymentMethod?: Maybe<PaymentMethod>;
+  getPayoutById: Payout;
+  getPayoutItemsInPeriodAdmin: PayoutItemsConnection;
+  getPayoutItemsInPeriodAdminPaged: PayoutItemsPagedConnection;
+  getPayoutSplitByStoreId: PayoutSplit;
+  getPayouts: PayoutsConnection;
+  getPayoutsInPeriodAdmin: PayoutsConnection;
+  getProductByProductIdOrSlug?: Maybe<Product>;
+  getProductFromLinkSlug?: Maybe<Product>;
+  getProductSale?: Maybe<ProductSale>;
+  getRecentTransactions: Array<Transaction>;
+  getStoreByStoreIdOrSlug?: Maybe<Store>;
+  getStoreFromLinkSlug?: Maybe<Store>;
+  getStoreSalesInPeriodAdmin: StoreSalesInPeriodConnection;
+  getTransaction?: Maybe<Transaction>;
+  getTransactionsInPeriodAdmin: TransactionsConnection;
   image_owners: Array<Image_Owners>;
   image_owners_aggregate: Image_Owners_Aggregate;
   image_owners_by_pk?: Maybe<Image_Owners>;
@@ -2796,8 +5070,15 @@ export type Query_Root = {
   image_variants: Array<Image_Variants>;
   image_variants_aggregate: Image_Variants_Aggregate;
   image_variants_by_pk?: Maybe<Image_Variants>;
+  listOfCuratedListsConnection: CuratedListsConnection;
+  listPaymentMethods?: Maybe<Array<PaymentMethod>>;
+  loggedInUser: UserPrivate;
+  lookupProductLinkSlug?: Maybe<PrimaryLinkSlugs>;
+  lookupStoreLinkSlug?: Maybe<PrimaryLinkSlugs>;
   online_users: Array<Online_Users>;
   online_users_aggregate: Online_Users_Aggregate;
+  platformDiscounts: DiscountsConnection;
+  product?: Maybe<Product>;
   product_file_owners: Array<Product_File_Owners>;
   product_file_owners_aggregate: Product_File_Owners_Aggregate;
   product_file_owners_by_pk?: Maybe<Product_File_Owners>;
@@ -2814,14 +5095,161 @@ export type Query_Root = {
   product_variants_aggregate: Product_Variants_Aggregate;
   product_variants_by_pk?: Maybe<Product_Variants>;
   products: Array<Products>;
+  productsAdminConnection: ProductsConnection;
+  productsAllConnection: ProductsConnection;
+  productsByCategoryConnection?: Maybe<ProductsConnection>;
+  productsDealsEndingSoonConnection: ProductsConnection;
+  productsLimitedReleasesConnection: ProductsConnection;
+  productsRecommendedConnection: ProductsConnection;
   products_aggregate: Products_Aggregate;
   products_by_pk?: Maybe<Products>;
   profile: Array<Profile>;
   profile_aggregate: Profile_Aggregate;
   profile_by_pk?: Maybe<Profile>;
+  search: SearchResultsConnection;
+  store?: Maybe<Store>;
+  storeDiscounts: DiscountsConnection;
+  storesAdminConnection: StoresConnection;
+  tryPromoCode?: Maybe<Discount>;
+  unclaimedOrder?: Maybe<Order>;
+  unclaimedOrdersConnection: OrdersConnection;
+  user?: Maybe<User>;
+  userByEmailOrId?: Maybe<User>;
   users: Array<Users>;
   users_aggregate: Users_Aggregate;
   users_by_pk?: Maybe<Users>;
+  wishlistItemsConnection: WishlistItemsConnection;
+};
+
+
+export type Query_RootCategoryArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type Query_RootCuratedListArgs = {
+  listId: Scalars['ID'];
+};
+
+
+export type Query_RootCuratedListItemsAdminConnectionArgs = {
+  listId: Scalars['ID'];
+  query?: Maybe<ConnectionQuery>;
+};
+
+
+export type Query_RootCuratedListItemsConnectionArgs = {
+  listId: Scalars['ID'];
+  query?: Maybe<ConnectionQuery>;
+};
+
+
+export type Query_RootGetOrderArgs = {
+  orderId: Scalars['ID'];
+};
+
+
+export type Query_RootGetOrderAsAdminArgs = {
+  orderId: Scalars['ID'];
+};
+
+
+export type Query_RootGetOrderItemArgs = {
+  orderItemId: Scalars['ID'];
+};
+
+
+export type Query_RootGetPaymentMethodArgs = {
+  paymentMethodId: Scalars['ID'];
+};
+
+
+export type Query_RootGetPayoutByIdArgs = {
+  payoutId: Scalars['ID'];
+};
+
+
+export type Query_RootGetPayoutItemsInPeriodAdminArgs = {
+  month?: Maybe<Scalars['Int']>;
+  payoutStatus?: Maybe<PayoutStatus>;
+  query: ConnectionQuery;
+  year?: Maybe<Scalars['Int']>;
+};
+
+
+export type Query_RootGetPayoutItemsInPeriodAdminPagedArgs = {
+  month?: Maybe<Scalars['Int']>;
+  payoutStatus?: Maybe<PayoutStatus>;
+  query: PageBasedConnectionQuery;
+  year?: Maybe<Scalars['Int']>;
+};
+
+
+export type Query_RootGetPayoutSplitByStoreIdArgs = {
+  storeOrUserId: Scalars['ID'];
+};
+
+
+export type Query_RootGetPayoutsArgs = {
+  query: ConnectionQuery;
+  storeId: Scalars['ID'];
+};
+
+
+export type Query_RootGetPayoutsInPeriodAdminArgs = {
+  month: Scalars['Int'];
+  payoutStatus?: Maybe<PayoutStatus>;
+  query: ConnectionQuery;
+  year: Scalars['Int'];
+};
+
+
+export type Query_RootGetProductByProductIdOrSlugArgs = {
+  productIdOrSlug: Scalars['String'];
+};
+
+
+export type Query_RootGetProductFromLinkSlugArgs = {
+  slug: Scalars['String'];
+};
+
+
+export type Query_RootGetProductSaleArgs = {
+  orderItemId: Scalars['ID'];
+};
+
+
+export type Query_RootGetRecentTransactionsArgs = {
+  count: Scalars['Int'];
+};
+
+
+export type Query_RootGetStoreByStoreIdOrSlugArgs = {
+  storeIdOrSlug: Scalars['String'];
+};
+
+
+export type Query_RootGetStoreFromLinkSlugArgs = {
+  slug: Scalars['String'];
+};
+
+
+export type Query_RootGetStoreSalesInPeriodAdminArgs = {
+  endDate: Scalars['Date'];
+  query?: Maybe<ConnectionQuery>;
+  startDate: Scalars['Date'];
+};
+
+
+export type Query_RootGetTransactionArgs = {
+  transactionId: Scalars['ID'];
+};
+
+
+export type Query_RootGetTransactionsInPeriodAdminArgs = {
+  month?: Maybe<Scalars['Int']>;
+  query?: Maybe<ConnectionQuery>;
+  year?: Maybe<Scalars['Int']>;
 };
 
 
@@ -2894,6 +5322,26 @@ export type Query_RootImage_Variants_By_PkArgs = {
 };
 
 
+export type Query_RootListOfCuratedListsConnectionArgs = {
+  query?: Maybe<ConnectionQuery>;
+};
+
+
+export type Query_RootListPaymentMethodsArgs = {
+  customerId: Scalars['ID'];
+};
+
+
+export type Query_RootLookupProductLinkSlugArgs = {
+  slug: Scalars['String'];
+};
+
+
+export type Query_RootLookupStoreLinkSlugArgs = {
+  slug: Scalars['String'];
+};
+
+
 export type Query_RootOnline_UsersArgs = {
   distinct_on?: Maybe<Array<Online_Users_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -2909,6 +5357,16 @@ export type Query_RootOnline_Users_AggregateArgs = {
   offset?: Maybe<Scalars['Int']>;
   order_by?: Maybe<Array<Online_Users_Order_By>>;
   where?: Maybe<Online_Users_Bool_Exp>;
+};
+
+
+export type Query_RootPlatformDiscountsArgs = {
+  query?: Maybe<ConnectionQuery>;
+};
+
+
+export type Query_RootProductArgs = {
+  id: Scalars['ID'];
 };
 
 
@@ -3036,6 +5494,39 @@ export type Query_RootProductsArgs = {
 };
 
 
+export type Query_RootProductsAdminConnectionArgs = {
+  query?: Maybe<ConnectionQuery>;
+};
+
+
+export type Query_RootProductsAllConnectionArgs = {
+  query?: Maybe<ConnectionQuery>;
+};
+
+
+export type Query_RootProductsByCategoryConnectionArgs = {
+  categoryId?: Maybe<Scalars['ID']>;
+  categoryName?: Maybe<Scalars['String']>;
+  query?: Maybe<ConnectionQuery>;
+};
+
+
+export type Query_RootProductsDealsEndingSoonConnectionArgs = {
+  query?: Maybe<ConnectionQuery>;
+};
+
+
+export type Query_RootProductsLimitedReleasesConnectionArgs = {
+  query?: Maybe<ConnectionQuery>;
+};
+
+
+export type Query_RootProductsRecommendedConnectionArgs = {
+  currentlyViewingProductId?: Maybe<Scalars['ID']>;
+  query?: Maybe<ConnectionQuery>;
+};
+
+
 export type Query_RootProducts_AggregateArgs = {
   distinct_on?: Maybe<Array<Products_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -3073,6 +5564,53 @@ export type Query_RootProfile_By_PkArgs = {
 };
 
 
+export type Query_RootSearchArgs = {
+  query?: Maybe<PageBasedConnectionQuery>;
+  searchTerm: Scalars['String'];
+};
+
+
+export type Query_RootStoreArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type Query_RootStoreDiscountsArgs = {
+  query?: Maybe<ConnectionQuery>;
+};
+
+
+export type Query_RootStoresAdminConnectionArgs = {
+  query?: Maybe<ConnectionQuery>;
+};
+
+
+export type Query_RootTryPromoCodeArgs = {
+  cartProductsInfo: Array<ProductProductVariantId>;
+  code: Scalars['String'];
+};
+
+
+export type Query_RootUnclaimedOrderArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type Query_RootUnclaimedOrdersConnectionArgs = {
+  query?: Maybe<ConnectionQuery>;
+};
+
+
+export type Query_RootUserArgs = {
+  id?: Maybe<Scalars['ID']>;
+};
+
+
+export type Query_RootUserByEmailOrIdArgs = {
+  userIdOrEmail: Scalars['String'];
+};
+
+
 export type Query_RootUsersArgs = {
   distinct_on?: Maybe<Array<Users_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -3095,6 +5633,270 @@ export type Query_RootUsers_By_PkArgs = {
   id: Scalars['String'];
 };
 
+
+export type Query_RootWishlistItemsConnectionArgs = {
+  query?: Maybe<ConnectionQuery>;
+};
+
+export type Refund = {
+   __typename?: 'Refund';
+  createdAt: Scalars['ID'];
+  id: Scalars['ID'];
+  orderId: Scalars['ID'];
+  orderItemIds: Array<Scalars['ID']>;
+  reason: Scalars['String'];
+  reasonDetails?: Maybe<Scalars['String']>;
+  transactionId: Scalars['ID'];
+};
+
+export type RefundOrderItem = {
+  disableItem?: Maybe<Scalars['Boolean']>;
+  orderItemId?: Maybe<Scalars['ID']>;
+  refundPayoutItems?: Maybe<Array<Maybe<RefundPayoutItem>>>;
+};
+
+export type RefundPayoutItem = {
+  amount?: Maybe<Scalars['Int']>;
+  payeeId?: Maybe<Scalars['ID']>;
+  payeeType?: Maybe<PayeeType>;
+};
+
+export type ResetPasswordResponse = {
+   __typename?: 'ResetPasswordResponse';
+  email?: Maybe<Scalars['String']>;
+  expiresAt?: Maybe<Scalars['Date']>;
+  resetId?: Maybe<Scalars['String']>;
+};
+
+export enum Role {
+  Anon = 'ANON',
+  PlatformAdmin = 'PLATFORM_ADMIN',
+  System = 'SYSTEM',
+  User = 'USER'
+}
+
+export type SalesBreakdown = {
+   __typename?: 'SalesBreakdown';
+  actualPrice: Scalars['Int'];
+  id: Scalars['ID'];
+};
+
+export type SearchResultItem = ProductPrivate | ProductPublic;
+
+export type SearchResultsConnection = PageBasedConnection & {
+   __typename?: 'SearchResultsConnection';
+  edges: Array<SearchResultsEdge>;
+  pageInfo: PageBasedConnectionPageInfo;
+  totalCount?: Maybe<Scalars['Int']>;
+};
+
+export type SearchResultsEdge = PageBasedConnectionEdge & {
+   __typename?: 'SearchResultsEdge';
+  node: SearchResultItem;
+  pageNumber: Scalars['Int'];
+};
+
+export type SendgridResponse = {
+   __typename?: 'SendgridResponse';
+  status?: Maybe<SendgridStatus>;
+  verified?: Maybe<SendgridVerified>;
+};
+
+export type SendgridStatus = {
+   __typename?: 'SendgridStatus';
+  message?: Maybe<Scalars['String']>;
+};
+
+export type SendgridVerified = {
+   __typename?: 'SendgridVerified';
+  email?: Maybe<Scalars['String']>;
+  expiresAt?: Maybe<Scalars['Date']>;
+  id?: Maybe<Scalars['String']>;
+  username?: Maybe<Scalars['String']>;
+};
+
+export type SendResetPasswordResponse = {
+   __typename?: 'SendResetPasswordResponse';
+  emailSentTo?: Maybe<Scalars['String']>;
+  resetId?: Maybe<Scalars['String']>;
+  status?: Maybe<SendgridStatus>;
+};
+
+export type SignUpMutationResponse = {
+   __typename?: 'SignUpMutationResponse';
+  sendgridResponse?: Maybe<SendgridResponse>;
+  stripeCustomerCreationResponse?: Maybe<StripeCustomerCreationResponse>;
+  user: UserPrivate;
+};
+
+export type StockLevel = {
+   __typename?: 'StockLevel';
+  quantityAvailable: Scalars['Int'];
+  quantityRestocked?: Maybe<Scalars['Int']>;
+  restockedAt?: Maybe<Scalars['Date']>;
+};
+
+export type Store = {
+  bio?: Maybe<Scalars['String']>;
+  cover?: Maybe<Image>;
+  coverId?: Maybe<Scalars['ID']>;
+  createdAt: Scalars['Date'];
+  id: Scalars['ID'];
+  isDeleted: Scalars['Boolean'];
+  isSuspended: Scalars['Boolean'];
+  linkSlugs?: Maybe<PrimaryLinkSlugs>;
+  name: Scalars['String'];
+  productsForSaleConnection: ProductsConnection;
+  profile?: Maybe<Image>;
+  profileId?: Maybe<Scalars['ID']>;
+  updatedAt?: Maybe<Scalars['Date']>;
+  userId: Scalars['ID'];
+  website?: Maybe<Scalars['String']>;
+};
+
+
+export type StoreProductsForSaleConnectionArgs = {
+  query?: Maybe<ConnectionQuery>;
+};
+
+export type StoreAnalytics = {
+   __typename?: 'StoreAnalytics';
+  payoutHistorySummaries: PayoutHistorySummaries;
+  salesHistoryConnection: StoreSalesHistoryConnection;
+  storeId: Scalars['ID'];
+};
+
+
+export type StoreAnalyticsSalesHistoryConnectionArgs = {
+  query?: Maybe<ConnectionQuery>;
+};
+
+export type StoreMutationResponse = {
+   __typename?: 'StoreMutationResponse';
+  store: StorePrivate;
+};
+
+export type StorePrivate = Store & {
+   __typename?: 'StorePrivate';
+  analytics: StoreAnalytics;
+  bio?: Maybe<Scalars['String']>;
+  cover?: Maybe<Image>;
+  coverId?: Maybe<Scalars['ID']>;
+  createdAt: Scalars['Date'];
+  dashboardPublishedProductsConnection: ProductsConnection;
+  dashboardUnpublishedProductsConnection?: Maybe<ProductsConnection>;
+  id: Scalars['ID'];
+  isDeleted: Scalars['Boolean'];
+  isSuspended: Scalars['Boolean'];
+  linkSlugs?: Maybe<PrimaryLinkSlugs>;
+  name: Scalars['String'];
+  payoutSplit?: Maybe<PayoutSplit>;
+  productsForSaleConnection: ProductsConnection;
+  profile?: Maybe<Image>;
+  profileId?: Maybe<Scalars['ID']>;
+  promoCodeDiscounts: DiscountsConnection;
+  updatedAt?: Maybe<Scalars['Date']>;
+  user: UserPrivate;
+  userId: Scalars['ID'];
+  website?: Maybe<Scalars['String']>;
+};
+
+
+export type StorePrivateDashboardPublishedProductsConnectionArgs = {
+  query?: Maybe<ConnectionQuery>;
+};
+
+
+export type StorePrivateDashboardUnpublishedProductsConnectionArgs = {
+  query?: Maybe<ConnectionQuery>;
+};
+
+
+export type StorePrivateProductsForSaleConnectionArgs = {
+  query?: Maybe<ConnectionQuery>;
+};
+
+
+export type StorePrivatePromoCodeDiscountsArgs = {
+  query?: Maybe<ConnectionQuery>;
+};
+
+export type StorePublic = Store & {
+   __typename?: 'StorePublic';
+  bio?: Maybe<Scalars['String']>;
+  cover?: Maybe<Image>;
+  coverId?: Maybe<Scalars['ID']>;
+  createdAt: Scalars['Date'];
+  id: Scalars['ID'];
+  isDeleted: Scalars['Boolean'];
+  isSuspended: Scalars['Boolean'];
+  linkSlugs?: Maybe<PrimaryLinkSlugs>;
+  name: Scalars['String'];
+  productsForSaleConnection: ProductsConnection;
+  profile?: Maybe<Image>;
+  profileId?: Maybe<Scalars['ID']>;
+  updatedAt?: Maybe<Scalars['Date']>;
+  user: UserPublic;
+  userId: Scalars['ID'];
+  website?: Maybe<Scalars['String']>;
+};
+
+
+export type StorePublicProductsForSaleConnectionArgs = {
+  query?: Maybe<ConnectionQuery>;
+};
+
+export type StoreSales = {
+   __typename?: 'StoreSales';
+  itemCount: Scalars['Int'];
+  salesBreakdown: Array<SalesBreakdown>;
+  salesItems: Array<OrderItem>;
+  storeId: Scalars['ID'];
+  totalSalesRevenue: Scalars['Int'];
+};
+
+export type StoreSalesEdge = Edge & {
+   __typename?: 'StoreSalesEdge';
+  cursor: Scalars['PageCursor'];
+  node: StoreSales;
+};
+
+export type StoreSalesHistoryConnection = Connection & {
+   __typename?: 'StoreSalesHistoryConnection';
+  edges: Array<ProductSalesEdge>;
+  pageInfo: PageInfo;
+  totalCount?: Maybe<Scalars['Int']>;
+};
+
+export type StoreSalesInPeriodConnection = Connection & {
+   __typename?: 'StoreSalesInPeriodConnection';
+  edges: Array<StoreSalesEdge>;
+  pageInfo: PageInfo;
+  totalCount?: Maybe<Scalars['Int']>;
+};
+
+export type StoresConnection = Connection & {
+   __typename?: 'StoresConnection';
+  edges: Array<StoresEdge>;
+  pageInfo: PageInfo;
+  totalCount?: Maybe<Scalars['Int']>;
+};
+
+export type StoreScopedDiscountInfo = {
+   __typename?: 'StoreScopedDiscountInfo';
+  minimumQuantity?: Maybe<Scalars['Int']>;
+  minimumSpend?: Maybe<Scalars['Price']>;
+  productId?: Maybe<Scalars['ID']>;
+  storeId: Scalars['ID'];
+  variantId?: Maybe<Scalars['ID']>;
+};
+
+export type StoresEdge = Edge & {
+   __typename?: 'StoresEdge';
+  cursor: Scalars['PageCursor'];
+  node: Store;
+};
+
 export type String_Comparison_Exp = {
   _eq?: Maybe<Scalars['String']>;
   _gt?: Maybe<Scalars['String']>;
@@ -3111,6 +5913,25 @@ export type String_Comparison_Exp = {
   _nlike?: Maybe<Scalars['String']>;
   _nsimilar?: Maybe<Scalars['String']>;
   _similar?: Maybe<Scalars['String']>;
+};
+
+export type StripeCustomerCreationResponse = {
+   __typename?: 'StripeCustomerCreationResponse';
+  endpoint?: Maybe<Scalars['String']>;
+  response?: Maybe<StripeCustomerProfile>;
+  status?: Maybe<Scalars['String']>;
+};
+
+export type StripeCustomerProfile = {
+   __typename?: 'StripeCustomerProfile';
+  balance?: Maybe<Scalars['Int']>;
+  created?: Maybe<Scalars['Date']>;
+  currency?: Maybe<Scalars['String']>;
+  defaultSource?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars['String']>;
+  email?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
 };
 
 export type Subscription_Root = {
@@ -3423,6 +6244,12 @@ export type Subscription_RootUsers_By_PkArgs = {
   id: Scalars['String'];
 };
 
+export type SummaryStatistics = {
+   __typename?: 'SummaryStatistics';
+  amountSum: Scalars['Int'];
+  count: Scalars['Int'];
+};
+
 
 export type Timestamptz_Comparison_Exp = {
   _eq?: Maybe<Scalars['timestamptz']>;
@@ -3434,6 +6261,102 @@ export type Timestamptz_Comparison_Exp = {
   _lte?: Maybe<Scalars['timestamptz']>;
   _neq?: Maybe<Scalars['timestamptz']>;
   _nin?: Maybe<Array<Scalars['timestamptz']>>;
+};
+
+export type Transaction = {
+   __typename?: 'Transaction';
+  chargeId: Scalars['ID'];
+  createdAt: Scalars['Date'];
+  currency?: Maybe<Scalars['String']>;
+  customerId?: Maybe<Scalars['ID']>;
+  details?: Maybe<Scalars['String']>;
+  id: Scalars['ID'];
+  orderId: Scalars['ID'];
+  paymentIntentId?: Maybe<Scalars['ID']>;
+  paymentMethod?: Maybe<PaymentMethod>;
+  paymentMethodId: Scalars['ID'];
+  paymentProcessingFee: Scalars['Price'];
+  paymentProcessor: PaymentProcessor;
+  refund?: Maybe<Refund>;
+  refundId?: Maybe<Scalars['ID']>;
+  subtotal: Scalars['Price'];
+  taxes: Scalars['Price'];
+};
+
+export type TransactionsConnection = Connection & {
+   __typename?: 'TransactionsConnection';
+  edges: Array<TransactionsEdge>;
+  pageInfo: PageInfo;
+  totalAmount?: Maybe<Scalars['Int']>;
+  totalCount?: Maybe<Scalars['Int']>;
+};
+
+export type TransactionsEdge = Edge & {
+   __typename?: 'TransactionsEdge';
+  cursor: Scalars['PageCursor'];
+  node: Transaction;
+};
+
+export type UploadRegisterMutationResponse = {
+   __typename?: 'UploadRegisterMutationResponse';
+  putUrl: Scalars['String'];
+  uploadId: Scalars['ID'];
+};
+
+export type UploadSaveImageMutationResponse = {
+   __typename?: 'UploadSaveImageMutationResponse';
+  image: Image;
+};
+
+export type UploadSaveProductFileMutationResponse = {
+   __typename?: 'UploadSaveProductFileMutationResponse';
+  fileId: Scalars['ID'];
+};
+
+export enum UploadType {
+  Image = 'IMAGE',
+  ProductFile = 'PRODUCT_FILE'
+}
+
+export type User = {
+  createdAt: Scalars['Date'];
+  email: Scalars['String'];
+  firstName?: Maybe<Scalars['String']>;
+  id: Scalars['ID'];
+  lastName?: Maybe<Scalars['String']>;
+};
+
+export type UserMutationResponse = {
+   __typename?: 'UserMutationResponse';
+  user: UserPrivate;
+};
+
+export type UserPrivate = User & {
+   __typename?: 'UserPrivate';
+  cartId: Scalars['ID'];
+  createdAt: Scalars['Date'];
+  defaultPaymentMethodId?: Maybe<Scalars['ID']>;
+  email: Scalars['String'];
+  emailVerified?: Maybe<Scalars['Boolean']>;
+  firstName?: Maybe<Scalars['String']>;
+  id: Scalars['ID'];
+  lastName?: Maybe<Scalars['String']>;
+  paymentMethodIds: Array<Scalars['ID']>;
+  payoutMethodId?: Maybe<Scalars['ID']>;
+  storeId?: Maybe<Scalars['ID']>;
+  stripeCustomerId: Scalars['String'];
+  updatedAt?: Maybe<Scalars['Date']>;
+  userRole: Role;
+  username?: Maybe<Scalars['String']>;
+};
+
+export type UserPublic = User & {
+   __typename?: 'UserPublic';
+  createdAt: Scalars['Date'];
+  email: Scalars['String'];
+  firstName?: Maybe<Scalars['String']>;
+  id: Scalars['ID'];
+  lastName?: Maybe<Scalars['String']>;
 };
 
 export type Users = {
@@ -3738,6 +6661,16 @@ export enum Users_Update_Column {
   Username = 'username'
 }
 
+export type UserWithRole = User & {
+   __typename?: 'UserWithRole';
+  createdAt: Scalars['Date'];
+  email: Scalars['String'];
+  firstName?: Maybe<Scalars['String']>;
+  id: Scalars['ID'];
+  lastName?: Maybe<Scalars['String']>;
+  userRole: Role;
+};
+
 
 export type Uuid_Comparison_Exp = {
   _eq?: Maybe<Scalars['uuid']>;
@@ -3749,6 +6682,31 @@ export type Uuid_Comparison_Exp = {
   _lte?: Maybe<Scalars['uuid']>;
   _neq?: Maybe<Scalars['uuid']>;
   _nin?: Maybe<Array<Scalars['uuid']>>;
+};
+
+export enum VariantsLabel {
+  License = 'LICENSE',
+  Variant = 'VARIANT'
+}
+
+export type WishlistItem = {
+   __typename?: 'WishlistItem';
+  addedAt: Scalars['Date'];
+  ownerUserId: Scalars['ID'];
+  product: Product;
+};
+
+export type WishlistItemsConnection = Connection & {
+   __typename?: 'WishlistItemsConnection';
+  edges: Array<WishlistItemsEdge>;
+  pageInfo: PageInfo;
+  totalCount?: Maybe<Scalars['Int']>;
+};
+
+export type WishlistItemsEdge = Edge & {
+   __typename?: 'WishlistItemsEdge';
+  cursor: Scalars['PageCursor'];
+  node: WishlistItem;
 };
 
 export type Unnamed_1_MutationVariables = {};

@@ -54,7 +54,6 @@ export interface StripeCustomerProfile {
   preferredLocales?: string[];
   shipping?: any;
   sources?: any;
-  subscriptions?: any;
   taxExempt?: string;
   taxIds?: any;
   taxInfo?: any;
