@@ -9,7 +9,6 @@ export const CREATE_USER = gql`
     $firstName: String
     $lastName: String
     $productProductVariantIds: [ProductProductVariantId]
-    $subscribedNewsletters: [String]
   ) {
     signUpUsingEmail(
       email: $email
@@ -18,7 +17,6 @@ export const CREATE_USER = gql`
       firstName: $firstName
       lastName: $lastName
       productProductVariantIds: $productProductVariantIds
-      subscribedNewsletters: $subscribedNewsletters
     ) {
       user {
         ...UserPrivateFragment
@@ -61,7 +59,6 @@ export const UPDATE_USER = gql`
     $email: String
     $firstName: String
     $lastName: String
-    $subscribedNewsletterIds: [ID]
     $payoutMethod: String
   ) {
     editUserProfile(
@@ -69,7 +66,6 @@ export const UPDATE_USER = gql`
       email: $email
       firstName: $firstName
       lastName: $lastName
-      subscribedNewsletterIds: $subscribedNewsletterIds
       payoutMethod: $payoutMethod
     ) {
       user {

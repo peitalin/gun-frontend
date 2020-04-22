@@ -458,7 +458,6 @@ export const UserPrivateFragment = gql`
     email
     stripeCustomerId
     paypalCustomerId
-    subscribedNewsletters
     emailVerified
     userRole
     # store {

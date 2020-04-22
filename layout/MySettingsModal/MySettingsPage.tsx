@@ -89,7 +89,7 @@ const MySettings = (props: ReactProps & ReduxProps) => {
           <ChangePasswordForm/>
         </div>
 
-        {
+        {/* {
           option(user).store() &&
           <div className={classes.section}>
             <ChangePayoutMethod/>
@@ -98,7 +98,7 @@ const MySettings = (props: ReactProps & ReduxProps) => {
 
         <div className={classes.section}>
           <PaymentMethods user={user}/>
-        </div>
+        </div> */}
 
         <div className={classes.sectionLast}>
           <AdvancedSettings user={user}/>

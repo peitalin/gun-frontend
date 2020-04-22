@@ -6,15 +6,15 @@ import { oc as option } from "ts-optchain";
 // import GiftDownloadModal from "components/GiftDownloadModal";
 // import ShareLinkModal from "components/ShareLinkModal";
 // import ContactUsModal from "components/ContactUsModal";
-// import MySettingsModal from "layout/MySettingsModal";
+import MySettingsModal from "layout/MySettingsModal";
 
 
 const Modals: React.FC<any> = (props) => {
   return (
     <>
+      <MySettingsModal/>
       {/* <CheckoutModal/>
-      <GiftDownloadModal/>
-      <MySettingsModal/> */}
+      <GiftDownloadModal/> */}
       {/* <ShareLinkModal/>
       <ContactUsModal/> */}
     </>
