@@ -165,7 +165,7 @@ const MainBar = (props: ReactProps) => {
         onFailure={responseGoogle}
         cookiePolicy={'single_host_origin'}
       />
-      <a href="#" onClick={signOut}>Sign out</a>
+      <a href="#" onClick={signOut}>Google Sign out</a>
 
     </nav>
   );
