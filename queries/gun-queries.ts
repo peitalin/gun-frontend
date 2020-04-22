@@ -4,50 +4,50 @@ export const GET_PRODUCTS = gql`
 query {
   products {
     id
-    store_id
-    is_deleted
-    is_published
-    is_suspended
-    is_excluded_from_search
-    is_excluded_from_recommendations
-    category_id
-    created_at
-    updated_at
-    current_snapshot {
+    storeId
+    isDeleted
+    isPublished
+    isSuspended
+    isExcludedFromSearch
+    isExcludedFromRecommendations
+    categoryId
+    createdAt
+    updatedAt
+    currentSnapshot {
       id
-      created_at
-      product_id
+      createdAt
+      productId
       title
       description
       condition
       make
       model
-      ammo_type
-      action_type
-      bore_diameter
-      serial_number
+      ammoType
+      actionType
+      boreDiameter
+      serialNumber
       location
       dealer
-      current_variants {
-        variant_snapshot_id
-        variant_id
-        variant_name
-        variant_description
+      currentVariants {
+        variantSnapshotId
+        variantId
+        variantName
+        variantDescription
         position
-        is_default
-        base_price
-        preview_items {
+        isDefault
+        basePrice
+        previewItems {
           id
-          image_id
+          imageId
           position
-          youtube_embed_link
-          variant_snapshot_id
+          youtubeEmbedLink
+          variantSnapshotId
         }
-        preview_items_aggregate {
-          aggregate {
-            count
-          }
-        }
+        # preview_items_aggregate {
+        #   aggregate {
+        #     count
+        #   }
+        # }
       }
     }
   }

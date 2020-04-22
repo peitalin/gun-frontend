@@ -452,14 +452,13 @@ export const PaymentMethodFragment = gql`
 export const UserPrivateFragment = gql`
   fragment UserPrivateFragment on UserPrivate {
     id
-    isSuspended
     firstName
     lastName
     email
     stripeCustomerId
-    paypalCustomerId
     emailVerified
     userRole
+    # isSuspended
     # store {
     #   ...StorePrivateFragment
     # }
@@ -484,26 +483,26 @@ export const UserPrivateFragment = gql`
     #     ...PaymentMethodFragment
     #   }
     # }
-    payoutMethod {
-      id
-      payoutType
-      payoutEmail
-      payoutProcessor
-      payoutProcessorId
-    }
-    wishlistItemsConnection(query: {}) {
-      edges {
-        node {
-          addedAt
-          product {
-            ...ProductFragment
-          }
-        }
-      }
-    }
+    # payoutMethod {
+    #   id
+    #   payoutType
+    #   payoutEmail
+    #   payoutProcessor
+    #   payoutProcessorId
+    # }
+    # wishlistItemsConnection(query: {}) {
+    #   edges {
+    #     node {
+    #       addedAt
+    #       product {
+    #         ...ProductFragment
+    #       }
+    #     }
+    #   }
+    # }
   }
-  ${ProductFragment}
 `;
+  // # ${ProductFragment}
 // ${StorePrivateFragment}
 // ${CartFragment}
 // ${OrderFragment}
