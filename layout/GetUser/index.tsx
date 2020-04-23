@@ -23,28 +23,28 @@ const GetUser = (props: ReactProps) => {
   const dispatch = useDispatch();
   const client = useApolloClient();
 
-  // React.useEffect(() => {
-  //   if (process.browser) {
+  React.useEffect(() => {
+    if (process.browser) {
 
-  //     client.query({ query: GET_USER })
-  //     .then(({ loading, data, errors }) => {
-  //       if (option(data).user.cart() && option(data).user.store()) {
-  //         dispatch(reduxBatchUpdate.userCartStoreId(data))
-  //       } else if (option(data).user.cart()) {
-  //         dispatch(reduxBatchUpdate.userCart(data))
-  //       } else if (option(data).user.store()) {
-  //         dispatch(reduxBatchUpdate.userStoreId(data))
-  //       } else if (option(data).user()) {
-  //         dispatch(Actions.reduxLogin.SET_USER(data.user))
-  //       } else {
-  //       }
-  //     })
-  //     .catch(e => {
-  //       // swallow error message: not loggedIn, and no user_id provided
-  //     })
+      client.query({ query: GET_USER })
+      .then(({ loading, data, errors }) => {
+        if (option(data).user.cart() && option(data).user.store()) {
+          dispatch(reduxBatchUpdate.userCartStoreId(data))
+        } else if (option(data).user.cart()) {
+          dispatch(reduxBatchUpdate.userCart(data))
+        } else if (option(data).user.store()) {
+          dispatch(reduxBatchUpdate.userStoreId(data))
+        } else if (option(data).user()) {
+          dispatch(Actions.reduxLogin.SET_USER(data.user))
+        } else {
+        }
+      })
+      .catch(e => {
+        // swallow error message: not loggedIn, and no user_id provided
+      })
 
-  //   }
-  // }, [])
+    }
+  }, [])
 
   return <div className="get-user"></div>;
 };

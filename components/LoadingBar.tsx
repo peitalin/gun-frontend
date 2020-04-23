@@ -1,6 +1,11 @@
-import React from "react";
+import * as React from "react";
 import clsx from 'clsx';
+import Fade from '@material-ui/core/Fade';
 import { withStyles, WithStyles, createStyles, Theme, fade } from '@material-ui/core/styles';
+
+
+// NOTE: This LoadingBar has position: 'absolute'
+// So it needs to be placed within a <div> that has position: 'relative' CSS style
 
 
 export interface PrecompiledCss {
@@ -39,61 +44,7 @@ export function heightWidthDefaults(
   }
 }
 
-const cssUnit: { [unit: string]: boolean } = {
-  cm: true,
-  mm: true,
-  in: true,
-  px: true,
-  pt: true,
-  pc: true,
-  em: true,
-  ex: true,
-  ch: true,
-  rem: true,
-  vw: true,
-  vh: true,
-  vmin: true,
-  vmax: true,
-  "%": true
-};
 
-
-export function parseLengthAndUnit(size: number | string): LengthObject {
-  if (typeof size === "number") {
-    return {
-      value: size,
-      unit: "px"
-    };
-  }
-  let value: number;
-  let valueString: string = size.match(/^[0-9.]*/)!.toString();
-  if (valueString.includes(".")) {
-    value = parseFloat(valueString);
-  } else {
-    value = parseInt(valueString, 10);
-  }
-
-  let unit: string = size.match(/[^0-9]*$/)!.toString();
-
-  if (cssUnit[unit]) {
-    return {
-      value,
-      unit
-    };
-  }
-  console.warn(`React Spinners: ${size} is not a valid css value. Defaulting to ${value}px.`);
-
-  return {
-    value,
-    unit: "px"
-  };
-}
-
-export function cssValue(value: number | string): string {
-  let lengthWithunit: LengthObject = parseLengthAndUnit(value!);
-
-  return `${lengthWithunit.value}${lengthWithunit.unit}`;
-}
 
 enum BasicColors {
   maroon = "#800000",
@@ -159,7 +110,7 @@ const short = `
 
 
 
-const Loading: React.FC<ReactProps> = (props) => {
+const LoadingBar: React.FC<ReactProps> = (props) => {
 
   React.useEffect(() => {
     if (props.inline && props.fixed) {
@@ -184,14 +135,18 @@ const Loading: React.FC<ReactProps> = (props) => {
     }
   }
 
-  const { classes, loading, delay } = props;
+  const {
+    classes,
+    delay,
+    loading = true,
+  } = props;
   const color = props.color || "#242424";
 
   const style = (i: number): React.CSSProperties => {
     const { height } = props;
     return {
       'position': 'absolute',
-      'height': `${cssValue(height!)}`,
+      'height': height,
       'overflow': `hidden`,
       'backgroundColor': `${color}`,
       'backgroundClip': 'padding-box',
@@ -209,10 +164,10 @@ const Loading: React.FC<ReactProps> = (props) => {
 
     return {
       'position': 'relative',
-      'width': `${cssValue(width!)}`,
-      'height': `${cssValue(height!)}`,
+      'width': width,
+      'height': height,
       'overflow': 'hidden',
-      'backgroundColor': `${fade(color, 0.2)}`,
+      // 'backgroundColor': `${fade(color, 0.2)}`,
       'backgroundClip': 'paddingBox',
     };
   };
@@ -224,10 +179,23 @@ const Loading: React.FC<ReactProps> = (props) => {
     return (
       <div className={selectLoaderStyle(props)}>
         <div className={classes.loadingHeight}>
-          <div style={wrapper()}>
-            <div style={style(1)} className={"barloaderLong"}/>
-            <div style={style(2)} className={"barloaderShort"}/>
-          </div>
+          {
+            delay
+            ? <Fade
+                in={loading}
+                style={{ transitionDelay: loading ? delay : '0ms' }}
+                unmountOnExit
+              >
+                <div style={wrapper()}>
+                  {/* <div style={style(1)} className={"barloaderLong"}/> */}
+                  <div style={style(2)} className={"barloaderShort"}/>
+                </div>
+              </Fade>
+            : <div style={wrapper()}>
+                {/* <div style={style(1)} className={"barloaderLong"}/> */}
+                <div style={style(2)} className={"barloaderShort"}/>
+              </div>
+          }
         </div>
       </div>
     );
@@ -274,10 +242,13 @@ const styles = (theme: Theme) => createStyles({
   rootAbsoluteTop: {
     position: 'absolute',
     top: 0,
+    left: 0,
+    width: '100%',
   },
   rootAbsoluteBottom: {
     position: 'absolute',
     bottom: 0,
+    width: '100%',
   },
   loadingHeight: {
     height: 4,
@@ -291,4 +262,4 @@ const styles = (theme: Theme) => createStyles({
   },
 });
 
-export default withStyles(styles)(Loading);
+export default withStyles(styles)(LoadingBar);

@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import { createStyles, Theme, withStyles, WithStyles } from "@material-ui/core/styles";
 import { Colors } from "layout/AppTheme";
 

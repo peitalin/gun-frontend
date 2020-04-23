@@ -1,9 +1,9 @@
-
 import React from 'react';
 import {
   withStyles, WithStyles, createStyles, Theme
 } from '@material-ui/core/styles';
 import { Colors } from "layout/AppTheme";
+import clsx from "clsx";
 
 import Fade from '@material-ui/core/Fade';
 import Button from '@material-ui/core/Button';
@@ -33,7 +33,11 @@ const Loading: React.FC<ReactProps> = (props) => {
     }
   }
 
-  const { classes, loading, delay } = props;
+  const {
+    classes,
+    delay,
+    loading = true,
+  } = props;
   const color = props.color || Colors.magenta;
 
   if (!loading) {
@@ -41,14 +45,21 @@ const Loading: React.FC<ReactProps> = (props) => {
   } else {
     return (
       <div className={selectLoaderStyle(props)}>
-        <div className={classes.loadingHeight}>
-          <Fade
-            in={loading}
-            style={{ transitionDelay: loading ? delay : '0ms' }}
-            unmountOnExit
-          >
-            <CircularProgress style={{ color: color }}/>
-          </Fade>
+        <div className={clsx(
+          classes.loadingHeight,
+          classes.loadingWidth
+        )}>
+          {
+            delay
+            ? <Fade
+                in={loading}
+                style={{ transitionDelay: loading ? delay : '0ms' }}
+                unmountOnExit
+              >
+                <CircularProgress style={{ color: color }}/>
+              </Fade>
+            : <CircularProgress style={{ color: color }}/>
+          }
         </div>
       </div>
     );
@@ -96,7 +107,10 @@ const styles = (theme: Theme) => createStyles({
     bottom: `calc(${theme.spacing(8)}px)`,
   },
   loadingHeight: {
-    height: 44,
+    height: 40,
+  },
+  loadingWidth: {
+    width: 40,
   },
   placeholder: {
     position: 'fixed',

@@ -1,6 +1,6 @@
 import * as React from 'react';
-const YouTube = ({ size, disableBackground }: YouTubeIconProps) => (
-<svg width={`${size || 40}px`} height={`${size || 40}px`} viewBox="0 0 40 40" fill="none">
+const YouTube = ({ height, width, disableBackground }: YouTubeIconProps) => (
+<svg width={`${width || 40}px`} height={`${height || 40}px`} viewBox="0 0 40 40" fill="none">
   {
     !disableBackground &&
     <circle cx="20" cy="20" r="20" fill="rgba(25,25,25,0.8)" stroke="white"/>
@@ -11,7 +11,8 @@ const YouTube = ({ size, disableBackground }: YouTubeIconProps) => (
 </svg>
 )
 interface YouTubeIconProps {
-  size?: any;
+  height?: any;
+  width?: any;
   disableBackground?: boolean;
 }
 export default YouTube;

@@ -1,6 +1,7 @@
 import React from "react";
 import clsx from "clsx";
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
+import { Colors } from "layout/AppTheme";
 
 
 
@@ -17,7 +18,8 @@ const Banner: React.FC<ReactProps> = (props) => {
   return (
     <div className={classes.bannerContainer}
       style={{
-        height: props.height ? props.height : null
+        height: props.height ? props.height : bannerHeight,
+        ...props.bannerContainerStyles,
       }}
     >
       <BackgroundImage
@@ -25,6 +27,7 @@ const Banner: React.FC<ReactProps> = (props) => {
         // imgLoaded={imgLoaded > 0}
         // setImgLoaded={() => setImgLoaded(s => s + 1)}
         src={props.src}
+        height={props.height ? props.height : bannerHeight}
       />
       {
         props.dither &&
@@ -34,11 +37,14 @@ const Banner: React.FC<ReactProps> = (props) => {
           ditherDark={props.ditherDark}
           ditherStyle={{
             ...props.ditherStyle,
-            height: props.height ? props.height : null
+            height: props.height ? props.height : bannerHeight
           }}
         />
       }
-      <div className={props.classes.bannerTitlebox}
+      <div className={clsx(
+        props.classes.bannerTitlebox,
+        props.classes.maxWidth
+      )}
         style={{
           ...props.titleStyle,
           color: props.color ? props.color : "#282828"
@@ -51,17 +57,29 @@ const Banner: React.FC<ReactProps> = (props) => {
 }
 
 const BackgroundImage = (
-  { classes, src, imgLoaded, setImgLoaded }: BackgroundImageProps
+  { classes, src, imgLoaded, setImgLoaded, height }: BackgroundImageProps
 ) => {
-  return (
-    <img
-      className={clsx(
-        classes.bannerBackground,
-      )}
-      // onLoad={() => setImgLoaded(s => s + 1)}
-      src={src}
-    />
-  )
+  if (src) {
+    return (
+      <img
+        className={classes.bannerBackground}
+        style={{
+          height: height ? height : bannerHeight
+        }}
+        // onLoad={() => setImgLoaded(s => s + 1)}
+        src={src}
+      />
+    )
+  } else {
+    return (
+      <div
+        className={classes.bannerBackground}
+        style={{
+          height: height ? height : bannerHeight
+        }}
+      />
+    )
+  }
 }
 
 const Dither = ({ classes, imgLoaded, ditherDark, ditherStyle }: DitherProps) => {
@@ -95,6 +113,7 @@ interface BackgroundImageProps extends WithStyles<typeof styles> {
   src?: string;
   imgLoaded?: boolean;
   setImgLoaded?(fn: (s: number) => number): void;
+  height?: string | number;
 }
 interface DitherProps extends WithStyles<typeof styles> {
   imgLoaded?: boolean;
@@ -109,21 +128,27 @@ interface ReactProps extends WithStyles<typeof styles> {
   dither?: boolean;
   ditherDark?: boolean;
   height?: number;
+  bannerContainerStyles?: any;
 }
 
 const bannerHeight = 280;
+
 const styles = (theme: Theme) => createStyles({
   bannerContainer: {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    height: bannerHeight,
+    // height: bannerHeight,
     position: 'relative',
     overflow: 'hidden',
     // boxShadow: "0px 2px 5px -3px rgba(0,0,0,0.60)",
-    backgroundColor: '#fefefe',
-    backgroundImage: `url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 20.5V18H0v-2h20v-2H0v-2h20v-2H0V8h20V6H0V4h20V2H0V0h22v20h2V0h2v20h2V0h2v20h2V0h2v20h2V0h2v20h2v2H20v-1.5zM0 20h2v20H0V20zm4 0h2v20H4V20zm4 0h2v20H8V20zm4 0h2v20h-2V20zm4 0h2v20h-2V20zm4 4h20v2H20v-2zm0 4h20v2H20v-2zm0 4h20v2H20v-2zm0 4h20v2H20v-2z' fill='%23e4e4e4' fill-opacity='0.3' fill-rule='evenodd'/%3E%3C/svg%3E")`,
+    backgroundColor: Colors.black,
+    // backgroundImage: `url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 20.5V18H0v-2h20v-2H0v-2h20v-2H0V8h20V6H0V4h20V2H0V0h22v20h2V0h2v20h2V0h2v20h2V0h2v20h2V0h2v20h2v2H20v-1.5zM0 20h2v20H0V20zm4 0h2v20H4V20zm4 0h2v20H8V20zm4 0h2v20h-2V20zm4 0h2v20h-2V20zm4 4h20v2H20v-2zm0 4h20v2H20v-2zm0 4h20v2H20v-2zm0 4h20v2H20v-2z' fill='%23e4e4e4' fill-opacity='0.3' fill-rule='evenodd'/%3E%3C/svg%3E")`,
+  },
+  maxWidth: {
+    maxWidth: 'calc(1160px + 2rem)', // 2rem offset for paddingwhen screen
+    // size is less than 1160px (so banner heading has a left margin)
   },
   bannerTitlebox: {
     position: 'absolute',
@@ -138,20 +163,20 @@ const styles = (theme: Theme) => createStyles({
   bannerBackground: {
     position: 'absolute',
     // image to always fill screen
-    minWidth: 1080,
-    width: '100%',
+    minWidth: 1160,
+    // width: '100%',
     // filter: 'grayscale(1)',
   },
   dither: {
     position: 'absolute',
     width: '100%',
-    height: bannerHeight,
+    // height: bannerHeight,
     background: 'rgba(0,0,0,0.5)',
   },
   ditherLinearGradient: {
     position: 'absolute',
     width: '100%',
-		height: bannerHeight,
+		// height: bannerHeight,
     bottom: 0,
     // background: 'linear-gradient(0deg, rgba(0,0,0,0.6), rgba(0,0,0,0))',
   },

@@ -7,9 +7,7 @@ import { Colors } from "layout/AppTheme";
 import Typography from "@material-ui/core/Typography";
 import Button from '@material-ui/core/Button';
 // Utils Components
-// import { Price, PriceDetails } from "typings/gqlTypes";
-type Price = number;
-type PriceDetails = any;
+import { Price, PriceDetails } from "typings/gqlTypes";
 import CountdownBadge from "./CountdownBadge";
 // money
 import currency from "currency.js";
@@ -58,6 +56,7 @@ const PriceDisplay6 = (props: ReactProps) => {
             </Typography>
             {
               !hidePriceWas &&
+              (basePrice > actualPrice) &&
               <Typography className={classes.priceWas} variant="body2">
                 {priceWas.format()}
               </Typography>
@@ -66,6 +65,8 @@ const PriceDisplay6 = (props: ReactProps) => {
           <div className={clsx(classes.innerContainerSpread, classes.flexWrap)}>
             {
               expiresAt &&
+              expiresAt.getSeconds &&
+              expiresAt.getSeconds() > 0 &&
               <div className={classes.dealEndsContainer}>
                 <Typography className={classes.finalCountDown} variant="body2">
                   Deal ends in
@@ -79,6 +80,8 @@ const PriceDisplay6 = (props: ReactProps) => {
             {
               props.quantityAvailable &&
               expiresAt &&
+              expiresAt.getSeconds &&
+              expiresAt.getSeconds() > 0 &&
               <div className={classes.innerContainerSpreadEnd}>
                 <Typography className={classes.quantityText} variant="body1">
                   {` – `}
@@ -157,7 +160,7 @@ const styles = (theme: Theme) => createStyles({
     marginRight: '0.25rem',
   },
   time: {
-    color: fade(Colors.secondaryBright, 0.8),
+    color: fade(Colors.green, 0.8),
     fontSize: "0.8rem",
     lineHeight: '1rem',
     fontWeight: 600,

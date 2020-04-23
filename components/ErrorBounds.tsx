@@ -103,15 +103,15 @@ const styles = (theme: Theme) => createStyles({
     paddingTop: theme.spacing(2),
     color: red[800],
     fontWeight: 'bold',
-    fontFamily: '"Segoe UI","Helvetica Neue",Arial,sans-serif',
+    fontFamily: '"Helvetica Neue",Arial,sans-serif',
   },
   errLine: {
     color: grey[700],
-    fontFamily: '"Segoe UI","Helvetica Neue",Arial,sans-serif',
+    fontFamily: '"Helvetica Neue",Arial,sans-serif',
   },
   errHeading: {
     color: red[700],
-    fontFamily: '"Segoe UI","Helvetica Neue",Arial,sans-serif',
+    fontFamily: '"Helvetica Neue",Arial,sans-serif',
   },
   errInnerContainer: {
     marginBottom: 20,

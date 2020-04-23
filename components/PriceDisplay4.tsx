@@ -8,9 +8,7 @@ import { Colors } from "layout/AppTheme";
 import Typography from "@material-ui/core/Typography";
 import Button from '@material-ui/core/Button';
 // Utils Components
-// import { Price, PriceDetails } from "typings/gqlTypes";
-type Price = number;
-type PriceDetails = any;
+import { Price, PriceDetails } from "typings/gqlTypes";
 import CountdownBadge from "./CountdownBadge";
 // money
 import currency from "currency.js";
@@ -59,6 +57,7 @@ const PriceDisplay4 = (props: ReactProps) => {
             </Typography>
             {
               !hidePriceWas &&
+              (basePrice > actualPrice) &&
               <Typography className={classes.priceWas} variant="body1">
                 {priceWas.format()}
               </Typography>
@@ -75,6 +74,7 @@ const PriceDisplay4 = (props: ReactProps) => {
         </div>
         {
           !hideSavings &&
+          (basePrice > actualPrice) &&
           <div className={classes.innerContainerSpread}>
             <Typography className={classes.priceSavings} variant="body1">
               {
@@ -85,9 +85,24 @@ const PriceDisplay4 = (props: ReactProps) => {
             </Typography>
           </div>
         }
-        {
-          expiresAt &&
-          <div className={classes.innerContainerSpreadCountdown}>
+        {/* <div className={clsx(classes.innerContainerSpread, classes.height18)}>
+          {
+            !hideSavings &&
+            (basePrice > actualPrice) &&
+            <Typography className={classes.priceSavings} variant="body1">
+              {
+                props.pastTense
+                ? `You saved ${savings.format()}`
+                : `You save ${savings.format()}${remainingText}`
+              }
+            </Typography>
+          }
+        </div> */}
+        <div className={classes.innerContainerSpreadCountdown}>
+          {
+            expiresAt &&
+            expiresAt.getSeconds &&
+            expiresAt.getSeconds() > 0 &&
             <div className={classes.countDownTag}>
               <Typography className={classes.finalCountDown} variant="body1">
                 Sale ends in &nbsp;
@@ -98,8 +113,8 @@ const PriceDisplay4 = (props: ReactProps) => {
                 style={props.countDownStyle}
               />
             </div>
-          </div>
-        }
+          }
+        </div>
       </>
     </div>
   )
@@ -160,11 +175,15 @@ const styles = (theme: Theme) => createStyles({
     fontWeight: 600,
     color: Colors.secondary,
   },
+  height18: {
+    height: 18,
+  },
   price: {
     marginRight: '0.5rem',
-    fontSize: "0.7rem",
-    fontWeight: 600,
+    fontSize: "0.875rem",
+    fontWeight: 500,
     color: Colors.green,
+    // color: Colors.charcoal,
   },
   priceWas: {
     textDecoration: "line-through",
@@ -183,7 +202,7 @@ const styles = (theme: Theme) => createStyles({
     fontWeight: 600,
   },
   time: {
-    color: Colors.secondaryBright,
+    color: Colors.green,
     // color: Colors.backgroundColor,
     fontSize: "0.65rem",
     fontWeight: 600,

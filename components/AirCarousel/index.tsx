@@ -27,6 +27,7 @@ const AirCarousel: React.FC<ReactProps> = (props) => {
     totalNumberOfItems = 0,
     leftDither = false,
     rightDither = false,
+    scrollItemsPerClick = 4,
   } = props;
 
 
@@ -80,7 +81,7 @@ const AirCarousel: React.FC<ReactProps> = (props) => {
           <>
             <AirButtonLeft
               onClick={() => {
-                let newCursor = cursor - option(airItems)[0].clientWidth(0);
+                let newCursor = (cursor - option(airItems)[0].clientWidth(0) * scrollItemsPerClick);
                 smScroll((newCursor < 0) ? 0 : newCursor)
                 setCursor((newCursor <= 0) ? 0 : newCursor)
                 setShowLeftButton((newCursor <= 0) ? false : true)
@@ -94,7 +95,7 @@ const AirCarousel: React.FC<ReactProps> = (props) => {
             />
             <AirButtonRight
               onClick={() => {
-                let newCursor = cursor + option(airItems)[0].clientWidth(0);
+                let newCursor = (cursor + option(airItems)[0].clientWidth(0)) * scrollItemsPerClick;
                 smScroll((newCursor > maxCursor) ? maxCursor : newCursor)
                 setCursor((newCursor > maxCursor) ? maxCursor : newCursor)
                 setShowLeftButton((newCursor <= 0) ? false : true)
@@ -191,6 +192,7 @@ interface ReactProps {
   handleClickRight?(): void;
   rightDither?: boolean;
   leftDither?: boolean;
+  scrollItemsPerClick?: number;
 }
 
 // export default React.memo(

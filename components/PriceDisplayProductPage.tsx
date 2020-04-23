@@ -8,9 +8,7 @@ import { Colors } from "layout/AppTheme";
 import Typography from "@material-ui/core/Typography";
 import Button from '@material-ui/core/Button';
 // Utils Components
-// import { Price, PriceDetails } from "typings/gqlTypes";
-type Price = number;
-type PriceDetails = any;
+import { Price, PriceDetails } from "typings/gqlTypes";
 import CountdownBadge from "./CountdownBadge";
 // money
 import currency from "currency.js";
@@ -18,7 +16,7 @@ import { findSoonestDiscountExpiry } from "utils/prices";
 
 
 
-const PriceDisplay5 = (props: ReactProps) => {
+const PriceDisplayProductPage = (props: ReactProps) => {
 
   const {
     classes,
@@ -63,6 +61,7 @@ const PriceDisplay5 = (props: ReactProps) => {
             {
               basePrice &&
               !hidePriceWas &&
+              (basePrice > actualPrice) &&
               <Typography className={classes.priceWas} variant="body1">
                 {priceWas.format()}
               </Typography>
@@ -70,6 +69,7 @@ const PriceDisplay5 = (props: ReactProps) => {
             {
               basePrice &&
               !hideSavings &&
+              (basePrice > actualPrice) &&
               <Typography className={classes.priceSavings} variant="body1">
                 {
                   props.pastTense
@@ -82,6 +82,8 @@ const PriceDisplay5 = (props: ReactProps) => {
         </div>
         {
           expiresAt &&
+          expiresAt.getSeconds &&
+          expiresAt.getSeconds() > 0 &&
           <div className={classes.innerContainerSpreadCountdown}>
             <div className={classes.countDownTag}>
               <Typography className={classes.finalCountDown} variant="body1">
@@ -95,7 +97,7 @@ const PriceDisplay5 = (props: ReactProps) => {
             </div>
           </div>
         }
-        {
+        {/* {
           props.quantityAvailable &&
           <div className={classes.innerContainerSpreadCountdown}>
               <div className={classes.innerContainerSpreadEnd}>
@@ -104,7 +106,7 @@ const PriceDisplay5 = (props: ReactProps) => {
                 </Typography>
               </div>
           </div>
-        }
+        } */}
       </>
     </div>
   )
@@ -124,12 +126,13 @@ const styles = (theme: Theme) => createStyles({
   priceOuterContainer: {
     bottom: '0.25rem',
     width: '100%',
+    minWidth: 290,
   },
   priceInnerContainer: {
     display: 'flex',
     flexDirection: "row",
     justifyContent: 'flex-start',
-    alignItems: 'flex-end',
+    alignItems: 'center',
   },
   innerContainerSpread: {
     display: 'flex',
@@ -161,23 +164,23 @@ const styles = (theme: Theme) => createStyles({
   },
   price: {
     marginRight: '0.5rem',
-    fontSize: "0.9rem",
+    fontSize: "1.5rem",
     fontWeight: 600,
     color: Colors.green
   },
   priceWas: {
     textDecoration: "line-through",
-    fontSize: "0.7rem",
-    color: fade("#7C858E", 0.5), // grey
-    fontWeight: 600,
+    fontSize: "0.875rem",
+    color: fade(Colors.darkGrey, 0.5), // grey
+    fontWeight: 500,
     // color: fade(Colors.secondaryBright, 0.5),
   },
   priceSavings: {
     marginLeft: '0.5rem',
     marginRight: '0.5rem',
     color: Colors.green,
-    fontSize: "0.8rem",
-    fontWeight: 600,
+    fontSize: "0.875rem",
+    fontWeight: 500,
   },
   finalCountDown: {
     color: Colors.charcoal,
@@ -198,9 +201,9 @@ const styles = (theme: Theme) => createStyles({
   },
   quantityText: {
     fontWeight: 600,
-    color: Colors.charcoal,
+    color: Colors.grey,
     fontSize: "0.8rem",
   },
 });
 
-export default withStyles(styles)( PriceDisplay5 );
+export default withStyles(styles)( PriceDisplayProductPage );

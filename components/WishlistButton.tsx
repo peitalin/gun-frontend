@@ -4,36 +4,35 @@ import { oc as option } from "ts-optchain";
 import clsx from 'clsx';
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 import { Colors } from "layout/AppTheme";
-// typings
-// import { UserPrivate } from "typings/gqlTypes";
-type UserPrivate = any;
-
-// MUI
-import FavouriteBorder from "@material-ui/icons/FavoriteBorder"
-import IconButton from "@material-ui/core/IconButton";
 // Graphql
+import { UserPrivate } from "typings/gqlTypes";
 import { useMutation } from "@apollo/react-hooks";
 import { ADD_PRODUCT_TO_WISHLIST, REMOVE_PRODUCT_FROM_WISHLIST } from "queries/wishlist-mutations";
+// material-ui
+import Button from "@material-ui/core/Button";
 // redux
 import { useDispatch, useSelector } from "react-redux";
-// import { WishlistItemId } from "reduxStore/wishlist-reducer";
+import { WishlistItemId } from "reduxStore/wishlist-reducer";
 import { Actions } from "reduxStore/actions";
 import { GrandReduxState } from "reduxStore/grand-reducer";
 // snackbar
 import SnackBarA from "components/Snackbars/SnackbarA";
 import Portal from "@material-ui/core/Portal";
+// Analytics
+import { useAnalytics, analyticsEvent } from "utils/analytics";
 
 
 
-const WishlistButton: React.FC<ReactProps> = (props) => {
+
+
+const WishlistButtonBig: React.FC<ReactProps> = (props) => {
 
   const dispatch = useDispatch();
   const [showSnackbar, setShowSnackbar] = React.useState(false)
 
   const { wishlistItemIds, user } = useSelector<GrandReduxState, ReduxState>(
     s => ({
-      // wishlistItemIds: s.reduxWishlist.wishlistIds,
-      wishlistItemIds: [],
+      wishlistItemIds: s.reduxWishlist.wishlistIds,
       user: s.reduxLogin.user
     })
   );
@@ -77,47 +76,75 @@ const WishlistButton: React.FC<ReactProps> = (props) => {
   })
 
   const added = isInWishlist()
-
-  return (
-    <IconButton
-      onClick={(e) => {
-        // prevent click-through to underlying product card
-        e.stopPropagation();
-        // let user know they are not logged in and item won't be saved
-        if (!option(user).id()) {
-          setShowSnackbar(true)
-        }
-
-        if (added) {
-          // dispatch(Actions.reduxWishlist.REMOVE_WISHLIST_ITEM(wishlistItemId))
-          removeProductFromWishlist()
-        } else {
-          // dispatch(Actions.reduxWishlist.ADD_WISHLIST_ITEM(wishlistItemId))
-          addProductToWishlist()
-        }
-      }}
-      className={classes.wishlistRoot}
-      style={
-        props.style
-          ? props.style
-          : { top: 'calc(50% - 14px)' }
-      }
-      size="small"
-    >
-      <FavouriteBorder classes={{
-        root: added ? classes.favoriteRootAdded : classes.favoriteRoot,
-      }}/>
-      <Portal>
-        <SnackBarA
-          open={!option(user).id() && showSnackbar}
-          closeSnackbar={() => setShowSnackbar(false)}
-          message={"Login to remember this item"}
-          variant={"info"}
-          autoHideDuration={3000}
-        />
-      </Portal>
-    </IconButton>
-  )
+  if (added) {
+    return (
+      <>
+        <Button
+          classes={{
+            root: classes.removeButton
+          }}
+          variant="outlined"
+          color="secondary"
+          onClick={() => {
+            // let user know they are not logged in and item won't be saved
+            if (!option(user).id()) {
+              setShowSnackbar(true)
+            } else {
+              dispatch(Actions.reduxWishlist.REMOVE_WISHLIST_ITEM(wishlistItemId))
+              removeProductFromWishlist()
+            }
+          }}
+        >
+          Remove from Wishlist
+        </Button>
+        <Portal>
+          <SnackBarA
+            open={!option(user).id() && showSnackbar}
+            closeSnackbar={() => setShowSnackbar(false)}
+            message={"Login to remember this item"}
+            variant={"info"}
+            autoHideDuration={3000}
+          />
+        </Portal>
+      </>
+    )
+  } else {
+    return (
+      <>
+        <Button
+          classes={{
+            root: classes.removeButton
+          }}
+          variant="outlined"
+          color="primary"
+          onClick={() => {
+            // let user know they are not logged in and item won't be saved
+            if (!option(user).id()) {
+              setShowSnackbar(true)
+            } else {
+              dispatch(Actions.reduxWishlist.ADD_WISHLIST_ITEM(wishlistItemId))
+              analyticsEvent("Wishlist.Product.Add", {
+                productId: wishlistItemId.productId,
+                variantId: wishlistItemId.variantId,
+              })
+              addProductToWishlist()
+            }
+          }}
+        >
+          Add to Wishlist
+        </Button>
+        <Portal>
+          <SnackBarA
+            open={!option(user).id() && showSnackbar}
+            closeSnackbar={() => setShowSnackbar(false)}
+            message={"Login to remember this item"}
+            variant={"info"}
+            autoHideDuration={3000}
+          />
+        </Portal>
+      </>
+    )
+  }
 }
 
 
@@ -128,8 +155,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   refetch?(): void; // apollo refetch wishlist
 }
 interface ReduxState {
-  // wishlistItemIds: WishlistItemId[];
-  wishlistItemIds: any[];
+  wishlistItemIds: WishlistItemId[];
   user: UserPrivate;
 }
 
@@ -141,30 +167,39 @@ interface MutationVar1 {
 
 
 const styles = (theme: Theme) => createStyles({
-  wishlistRoot: {
-    position: 'absolute',
-    zIndex: 1,
-    right: '1rem',
-    background: '#f2f2f2',
-    border: '1px solid #eaeaea',
+  removeButton: {
+    height: 40,
+    maxHeight: 40,
+    minWidth: '150px',
+    marginTop: '0.5rem',
+    marginRight: '0.5rem',
+    // backgroundColor: "#EDF0F2",
+    color: Colors.secondary,
+    border: `1px solid ${Colors.secondary}`,
     "&:hover": {
-      background: '#e4e4e4',
-      border: '1px solid #e4e4e4',
-    }
-  },
-  favoriteRoot: {
-    width: '1.25rem',
-    height: '1.25rem',
-  },
-  favoriteRootAdded: {
-    width: '1.25rem',
-    height: '1.25rem',
-    fill: theme.palette.secondary.main,
-    "&:hover": {
-      fill: theme.palette.secondary.light,
+      border: `1px solid ${Colors.secondaryBright}`,
     },
+    maxWidth: 300,
+    flexGrow: 0.5,
+    width: '100%',
+  },
+  addButton: {
+    height: 40,
+    maxHeight: 40,
+    minWidth: '150px',
+    marginTop: '0.5rem',
+    marginRight: '0.5rem',
+    // backgroundColor: "#EDF0F2",
+    color: Colors.black,
+    border: `1px solid ${Colors.black}`,
+    "&:hover": {
+      border: `1px solid ${Colors.charcoal}`,
+    },
+    maxWidth: 300,
+    flexGrow: 0.5,
+    width: '100%',
   },
 });
 
 
-export default withStyles(styles)( WishlistButton );
+export default withStyles(styles)( WishlistButtonBig );

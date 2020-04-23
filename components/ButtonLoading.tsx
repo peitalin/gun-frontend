@@ -24,7 +24,17 @@ const ButtonLoading: React.FC<ReactProps & ButtonProps> = (props) => {
 
   if (replaceTextWhenLoading) {
     return (
-      <Button {...ButtonProps}>
+      <Button
+        // default props
+        variant="contained"
+        style={{
+          width: "100%",
+          height: "40px",
+          fontWeight: 500,
+        }}
+        // override default props
+        {...ButtonProps}
+      >
       {
         loading
         ? <span className={"fadeIn"}
@@ -56,7 +66,17 @@ const ButtonLoading: React.FC<ReactProps & ButtonProps> = (props) => {
     )
   } else {
     return (
-      <Button {...ButtonProps}>
+      <Button
+        // default props
+        variant="contained"
+        style={{
+          width: "100%",
+          height: "40px",
+          fontWeight: 500,
+        }}
+        // override default props
+        {...ButtonProps}
+      >
       {
         loading
         ? <span className={"fadeIn"}

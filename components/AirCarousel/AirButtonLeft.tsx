@@ -13,6 +13,7 @@ const AirButtonLeft: React.FC<ReactProps> = (props) => {
         display: "block",
         transform: "translateY(-50%)",
         zIndex: 1501,
+        ...props.style
       }}
     >
       <button type="button"
@@ -61,6 +62,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   onClick?(...args: any): void;
   carouselCursor?: number;
   showButton?: boolean;
+  style?: any;
 }
 
 const styles = (theme: Theme) => createStyles({

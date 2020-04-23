@@ -11,7 +11,7 @@ const Copyright = () => {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
-      gunmarketplace.com.au
+      Electric Files Co.
       {new Date().getFullYear()}
       {'.'}
     </Typography>

@@ -1,0 +1,49 @@
+overwrite: true
+
+schema:
+  - https://api.gunmarketplace.com.au/v1/graphql:
+      headers:
+        Authorization: "Bearer  + process.env.AUTH_TOKEN"
+        x-hasura-admin-secret: "hescomingrightforus"
+
+documents:
+  # - ./**/*.graphql
+  # - ./queries/*.ts
+  - ./queries/gun-queries.ts
+  - ./queries/gun-mutations.ts
+
+generates:
+  ./typings/gqlIntrospection.ts:
+    plugins:
+      - fragment-matcher:
+        apolloClientVersion: 2
+  ./typings/gqlTypes.tsx:
+    plugins:
+      - typescript:
+          scalars:
+            Date: Date
+            Price: number
+          namingConvention:
+            enumValues: change-case#upperCase
+      - add:
+          placement: "append"
+          content: "export type ID = Scalars[\"ID\"]"
+      - add:
+          placement: "append"
+          content: "export type Price = Scalars[\"Price\"]"
+      - add:
+          placement: "append"
+          content: "export type PageCursor = Scalars[\"PageCursor\"]"
+      - add:
+          placement: "append"
+          content: "export type ProductCategoryGroup = Scalars[\"ProductCategoryGroup\"]"
+      - typescript-operations:
+          preResolveTypes: true
+          dedupeOperationSuffix: true
+      - typescript-react-apollo:
+          reactApolloVersion: 2
+          withHooks: true
+          withHOC: false
+          withComponent: false
+          withMutationFn: false
+

@@ -12,7 +12,7 @@ const AirItemWide: React.FC<ReactProps> = (props) => {
 
   let itemSize = (1 / (props.showNumItems || 3) * 100).toFixed(2);
   const {
-    removeBottomPadding = false,
+    removePaddingBottom = false,
   } = props;
 
   return (
@@ -26,13 +26,16 @@ const AirItemWide: React.FC<ReactProps> = (props) => {
         flex: `0 0 ${itemSize}%`,
       }}
     >
-      <div className={props.classes.airCardOuter}
+      <div className={clsx(
+          props.classes.airCardOuter,
+          props.removeMarginBottom ? null : props.classes.marginBottom4,
+        )}
         style={props.style}
       >
         <div className={props.classes.airCardMid}
           style={{
             backgroundImage: props.disableBackground ? "none" : null,
-            paddingTop: removeBottomPadding ? "62.5%" : null
+            paddingTop: removePaddingBottom ? "62.5%" : null
           }}
         >
           <div className={props.classes.airCardInner}>
@@ -127,7 +130,8 @@ interface ReactProps extends WithStyles<typeof styles> {
   disableBackground?: boolean;
   style?: any;
   materialStyle?: boolean;
-  removeBottomPadding?: boolean;
+  removePaddingBottom?: boolean;
+  removeMarginBottom?: boolean;
 }
 
 const styles = (theme: Theme) => createStyles({
@@ -149,7 +153,6 @@ const styles = (theme: Theme) => createStyles({
   airCardOuter: {
     width: "100%",
     marginRight: "6px",
-    marginBottom: "4px",
   },
   airCardMid: {
     contain: "strict",
@@ -216,6 +219,9 @@ const styles = (theme: Theme) => createStyles({
   cardMediaWide: {
     width: "100%",
     objectFit: "cover",
+  },
+  marginBottom4: {
+    marginBottom: "4px",
   },
 });
 

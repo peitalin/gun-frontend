@@ -7,9 +7,7 @@ import { Colors } from "layout/AppTheme";
 import Typography from "@material-ui/core/Typography";
 import Button from '@material-ui/core/Button';
 // Utils Components
-// import { Price, PriceDetails } from "typings/gqlTypes";
-type Price = number;
-type PriceDetails = any;
+import { Price, PriceDetails } from "typings/gqlTypes";
 import CountdownBadge from "./CountdownBadge";
 // money
 import currency from "currency.js";
@@ -58,6 +56,7 @@ const PriceDisplay = (props: ReactProps) => {
             </Typography>
             {
               !hidePriceWas &&
+              (basePrice > actualPrice) &&
               <Typography className={classes.priceWas} variant="body2">
                 {priceWas.format()}
               </Typography>
@@ -65,14 +64,17 @@ const PriceDisplay = (props: ReactProps) => {
           </div>
           {
             expiresAt &&
+            expiresAt.getSeconds &&
+            expiresAt.getSeconds() > 0 &&
             <Typography className={classes.finalCountDown} variant="body2">
               Sale ends in
             </Typography>
           }
         </div>
         <div className={classes.innerContainerSpread}>
-          {
+          {/* {
             !hideSavings &&
+            (basePrice > actualPrice) &&
             <Typography className={classes.priceSavings} variant="body2">
               {
                 props.pastTense
@@ -80,9 +82,11 @@ const PriceDisplay = (props: ReactProps) => {
                 : `You save ${savings.format()}${remainingText}`
               }
             </Typography>
-          }
+          } */}
           {
             expiresAt &&
+            expiresAt.getSeconds &&
+            expiresAt.getSeconds() > 0 &&
             <CountdownBadge
               className={classes.time}
               endDate={expiresAt}
@@ -139,7 +143,7 @@ const styles = (theme: Theme) => createStyles({
     fontSize: "0.8rem",
   },
   finalCountDown: {
-    color: fade(Colors.secondaryBright, 0.8),
+    color: fade(Colors.green, 0.8),
     fontSize: "0.8rem",
     fontWeight: 600,
     lineHeight: '1rem',

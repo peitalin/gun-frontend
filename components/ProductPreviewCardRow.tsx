@@ -1,12 +1,10 @@
 import React from "react";
 import { oc as option } from "ts-optchain";
 import clsx from "clsx";
+import { Colors } from "layout/AppTheme";
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 // Typings
-// import { ProductPreviewItem, Product, ProductVariant } from "typings/gqlTypes";
-type ProductPreviewItem = any;
-type Product = any;
-type ProductVariant = any;
+import { ProductPreviewItem, Product, ProductVariant } from "typings/gqlTypes";
 // Material UI
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
@@ -88,30 +86,28 @@ const ProductPreviewCardRow = (props: ReactProps) => {
               src={getYouTubeVimeoImagePreview(previewItem.youTubeEmbedLink)}
               title={props.title}
             />
-          : <CardMedia
-              component="img"
+          : <div
               className={clsx(
                 classes.imagePreview,
                 // previewLoaded ? classes.imagePreview : classes.imagePreviewPlaceholder,
                 // previewLoaded ? "fadeIn" : "hidden",
               )}
-              classes={{
-                media: classes.cardMedia
-              }}
+              // classes={{
+              //   media: classes.cardMedia
+              // }}
               style={{
                 ...props.style,
                 height: props.height ? props.height : CARD_HEIGHT,
                 width: props.width ? props.width : CARD_WIDTH,
               }}
-              // onLoad={() => setPreviewLoaded(s => s + 1)}
-              src={"blank"}
-              title={""}
             />
       }
       </CardActionArea>
     </Card>
   );
 }
+
+const borderRadius = 4;
 
 interface ReactProps extends WithStyles<typeof styles> {
   previewItem: ProductPreviewItem;
@@ -147,18 +143,18 @@ const styles = (theme: Theme) => createStyles({
     width: '150px',
   },
   imagePreview: {
-    borderRadius: "2px 0px 0px 2px",
+    borderRadius: `${borderRadius}px`,
     height: CARD_HEIGHT,
     width: CARD_WIDTH,
   },
   card: {
-    borderRadius: "2px 0px 0px 2px",
+    borderRadius: `${borderRadius}px`,
     boxShadow: 'none',
     height: CARD_HEIGHT,
     width: CARD_WIDTH,
   },
   cardActionArea: {
-    // background: "#f8f8f8",
+    background: Colors.lightestGrey,
     display: "flex",
     flexDirection: "row",
     height: '100%',

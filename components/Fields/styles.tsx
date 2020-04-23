@@ -19,18 +19,18 @@ export const styles = (theme: Theme) => createStyles({
     width: '100%'
   },
   paddingBottom: {
-    paddingBottom: '1.25rem',
+    paddingBottom: '1rem',
   },
   optionValues: {
     flexBasis: '100%',
     marginRight: '0rem',
-    fontFamily: '"Segoe UI","Helvetica Neue",Arial,sans-serif',
+    fontFamily: '"Helvetica Neue",Arial,sans-serif',
     marginTop: '0.5rem',
     fontSize: '0.9rem',
     fontWeight: 400,
   },
   creatableSelect: {
-    paddingBottom: '1.25rem',
+    paddingBottom: '1rem',
   },
   selectMultiline: {
     padding: 0,
@@ -40,7 +40,7 @@ export const styles = (theme: Theme) => createStyles({
     backgroundColor: theme.palette.common.white,
     border: `1px solid ${Colors.grey}`,
     borderRadius: BorderRadius,
-    fontSize: '0.9rem',
+    fontSize: "0.875rem",
     fontWeight: 400,
     width: '100%',
     padding: '0.58em',
@@ -54,7 +54,8 @@ export const styles = (theme: Theme) => createStyles({
     '&:focus': {
       boxShadow: `${fade('#50B5F5', 0.2)} 0 0 0 2px`,
       borderColor: Colors.blue,
-      color: Colors.blue,
+      // color: Colors.blue,
+      color: Colors.charcoal,
     },
     // '&:invalid': {
     //   boxShadow: `${fade(theme.palette.error.light, 0.2)} 0 0 0 1px`,
@@ -92,14 +93,15 @@ export const styles = (theme: Theme) => createStyles({
   errorMessage: {
     position: 'absolute',
     bottom: 0,
-    right: 0,
+    right: '0.25rem',
+    height: '1rem',
     fontSize: '0.8rem',
     fontFamily: fontFam,
     color: `${fade(theme.palette.error.light, 0.6)}`,
-    transition: theme.transitions.create('color', {
-      easing: theme.transitions.easing.easeIn,
-      duration: "200ms",
-    }),
+    // transition: theme.transitions.create('color', {
+    //   easing: theme.transitions.easing.easeIn,
+    //   duration: "100ms",
+    // }),
   },
   errorMessageUntouched: {
     position: 'absolute',
@@ -110,15 +112,23 @@ export const styles = (theme: Theme) => createStyles({
     color: `${fade(Colors.grey, 0.7)}`,
     transition: theme.transitions.create('color', {
       easing: theme.transitions.easing.easeIn,
-      duration: "200ms",
+      duration: "100ms",
     }),
   },
   errorMessageFocused: {
     color: `${fade(Colors.purple, 0.9)}`,
     transition: theme.transitions.create('color', {
       easing: theme.transitions.easing.easeIn,
-      duration: "200ms",
+      duration: "100ms",
     }),
+  },
+  errorMessageBlank: {
+    position: 'absolute',
+    bottom: 0,
+    right: '0.25rem',
+    fontSize: '0.8rem',
+    fontFamily: fontFam,
+    opacity: 0,
   },
   count: {
     display: "flex",
@@ -127,10 +137,21 @@ export const styles = (theme: Theme) => createStyles({
   },
   countText: {
     fontSize: "0.8rem",
-    fontFamily: '"Segoe UI","Helvetica Neue",Arial,sans-serif',
+    fontFamily: '"Helvetica Neue",Arial,sans-serif',
     opacity: 0.25,
     position: 'absolute',
-    left: 0,
+    right: '0.25rem',
+    bottom: '1rem',
+  },
+  keywordsCountText: {
+    fontSize: "0.8rem",
+    fontFamily: '"Helvetica Neue",Arial,sans-serif',
+    opacity: 0.25,
+  },
+  keywordsCountAbsolute: {
+    position: 'absolute',
+    right: '0.25rem',
     bottom: 0,
+    // bottom: '-1.125rem',
   },
 })

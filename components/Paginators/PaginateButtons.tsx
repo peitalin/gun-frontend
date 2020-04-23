@@ -1,5 +1,5 @@
 
-import * as React from "react";
+import React from "react";
 import {oc as option} from "ts-optchain";
 // Utils Components
 import ErrorDisplay from "components/Error";
@@ -7,8 +7,7 @@ import ErrorBounds from "components/ErrorBounds";
 import Loading from "components/Loading";
 import Button from "@material-ui/core/Button";
 // Typings
-// import { Connection } from "typings/gqlTypes";
-type Connection = any;
+import { Connection } from "typings/gqlTypes";
 import { WatchQueryFetchPolicy } from "apollo-client";
 // Paginator hooks
 import usePaginateQueryHook from "components/Paginators/usePaginateQueryHook";
@@ -94,7 +93,6 @@ export const PaginateButtons: React.FC<PaginateButtonsProps> = (props) => {
     connectionQuery,
   } = props;
 
-  console.log("connectionQuery", connectionQuery)
 
   const [cursors, setCursors] = React.useState([
     { page: 1, cursor: undefined } // undefined => starting cursor
@@ -105,7 +103,7 @@ export const PaginateButtons: React.FC<PaginateButtonsProps> = (props) => {
     : cursors
 
   return (
-    <main className={"paginate-buttons-root"}>
+    <main className={"paginate-buttons-root"} style={{ width: '100%' }}>
       {props.children}
       <div style={{
         flexGrow: 1,

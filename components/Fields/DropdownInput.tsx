@@ -13,12 +13,14 @@ import { styles } from "components/Fields/styles";
 
 const DropdownInput = (props: ReactProps) => {
 
-  const ref = React.useRef();
-  // const focused = useFocus(ref);
+  const ref = React.useRef(null);
+  const focused = useFocus(ref);
+
   const {
     // Formik
     errorMessage,
     touched = false,
+    disableInitialValidationMessage = false,
     // CreatableSelect
     creatable = false,
     isMulti = false,
@@ -26,6 +28,7 @@ const DropdownInput = (props: ReactProps) => {
     classes,
     onChange,
     options,
+    delimiter,
     placeholder = "Select an option",
     ...rest
   } = props;
@@ -35,6 +38,7 @@ const DropdownInput = (props: ReactProps) => {
   // // Redux State, for UI updates
   // // Keep separate from Redux updates, which have different data structure
   const [state, setState] = React.useState(props.stateShape)
+
 
   return (
     <div className={clsx(
@@ -68,10 +72,11 @@ const DropdownInput = (props: ReactProps) => {
               borderRadius: 4,
               colors: {
                 ...theme.colors,
-                primary25: Colors.lightPurple,
+                primary25: Colors.lightGrey,
                 primary: Colors.blue,
               },
             })}
+            delimiter={delimiter ? delimiter : ','}
             styles={{
               placeholder: styles => ({
                 ...styles,
@@ -103,10 +108,10 @@ const DropdownInput = (props: ReactProps) => {
             }}
             theme={theme => ({
               ...theme,
-              borderRadius: 2,
+              borderRadius: 4,
               colors: {
                 ...theme.colors,
-                primary25: Colors.lightPurple,
+                primary25: Colors.lightGrey,
                 primary: Colors.blue,
               },
             })}
@@ -121,11 +126,19 @@ const DropdownInput = (props: ReactProps) => {
             inputRef={ref}
           />
       }
+
       <div className={clsx(
-        touched ? classes.errorMessage : classes.errorMessageUntouched,
+        touched
+          ? classes.errorMessage
+          : disableInitialValidationMessage
+            ? classes.errorMessageBlank
+            : classes.errorMessageUntouched,
+        focused ? classes.errorMessageFocused : null,
       )}>
         <span className={"fadeIn"}>{props.errorMessage}</span>
       </div>
+
+
       {
         limit &&
         <div className={classes.count}>
@@ -167,6 +180,8 @@ interface ReactProps extends WithStyles<typeof styles> {
   limit?: { count: number, max: number };
   options: SelectOption[];
   placeholder: string;
+  delimiter?: string;
+  disableInitialValidationMessage?: boolean;
   [key: string]: any;
 }
 export interface SelectOption {

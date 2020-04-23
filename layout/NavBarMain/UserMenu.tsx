@@ -30,6 +30,7 @@ import Link from "next/link";
 import Hidden from "@material-ui/core/Hidden";
 import { useRouter } from "next/router";
 import { useApolloClient } from "@apollo/react-hooks";
+import { logout } from "queries/requests";
 
 
 
@@ -170,6 +171,7 @@ export const UserMenu: React.FC<ReactProps> = (props) => {
 
           <MenuItem onClick={() => {
             handleCloseMenu()
+            logout(apolloClient, '/', dispatch)
           }}>
             <a className={classes.menuLink}>
               <QAIcon className={classes.menuIcon}/>

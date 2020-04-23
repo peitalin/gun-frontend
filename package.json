@@ -6,7 +6,7 @@
     "generate-local-certs": "sh ./configs/generate_local_ssl_certs.sh",
     "dev:old": "next dev",
     "dev": "npm run generate-gql-types; node server.js",
-    "generate-gql-types": "graphql-codegen --config codegen.js",
+    "generate-gql-types": "graphql-codegen --config codegen.yml",
     "build": "next build",
     "export": "next export",
     "start": "NODE_ENV=production node server.js",

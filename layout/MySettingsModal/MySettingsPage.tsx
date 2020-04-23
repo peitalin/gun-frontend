@@ -100,9 +100,9 @@ const MySettings = (props: ReactProps & ReduxProps) => {
           <PaymentMethods user={user}/>
         </div> */}
 
-        <div className={classes.sectionLast}>
+        {/* <div className={classes.sectionLast}>
           <AdvancedSettings user={user}/>
-        </div>
+        </div> */}
 
       </ErrorBounds>
     );

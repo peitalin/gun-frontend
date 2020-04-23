@@ -5,9 +5,8 @@ import {oc as option} from "ts-optchain";
 import { useQuery } from "@apollo/react-hooks";
 import { WatchQueryFetchPolicy } from "apollo-client";
 // typings
-// import { Connection, ConnectionQuery, PageCursor } from "typings/gqlTypes";
-// import { GenericConnection, GenericPageBasedConnection } from "typings";
-type PageCursor = any;
+import { Connection, ConnectionQuery, PageCursor } from "typings/gqlTypes";
+import { GenericConnection, GenericPageBasedConnection } from "typings";
 
 
 
@@ -72,6 +71,8 @@ const usePaginateQuery = <QueryData, QueryVar, NodeType>(
     fetchPolicy: props.fetchPolicy || 'network-only', // don't use cache
     ssr: props.ssr || false,
   });
+  // console.log('error', error)
+  // console.log('data', data)
 
   const [connection, connectionName] = props.connectionSelector(data);
 

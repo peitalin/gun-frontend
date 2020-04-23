@@ -4,8 +4,7 @@ import {oc as option} from "ts-optchain";
 // GraphQL
 import { useQuery } from "@apollo/react-hooks";
 // typings
-// import { PageBasedConnection, ConnectionQuery, PageCursor } from "typings/gqlTypes";
-type PageCursor = any;
+import { PageBasedConnection, ConnectionQuery, PageCursor } from "typings/gqlTypes";
 import { GenericPageBasedConnection, GenericConnection } from "typings";
 import { WatchQueryFetchPolicy } from "apollo-client";
 
@@ -107,6 +106,8 @@ export interface usePaginateQueryProps<QueryData, NodeType> {
   ssr?: boolean;
   fetchPolicy?: WatchQueryFetchPolicy;
   sortAscending?: boolean;
+  refetchQueries?(result?: any): void;
+  awaitRefetchQueries?: boolean;
 }
 
 export interface ConnectionPage {

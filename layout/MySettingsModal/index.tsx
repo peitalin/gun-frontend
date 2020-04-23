@@ -88,10 +88,12 @@ const styles = (theme: Theme) => createStyles({
   },
   modalPaperScrollPaperSm: {
     maxHeight: "calc(100% - rem)",
+    height: '100%',
     // overflowY: 'none',
   },
   modalPaperScrollPaper: {
     // maxHeight: "calc(100% - 0px)",
+    height: '100%',
     width: '100%',
     maxWidth: '540px',
   },

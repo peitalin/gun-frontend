@@ -4,8 +4,7 @@ import { oc as option } from "ts-optchain";
 import { createStyles, Theme, withStyles, WithStyles } from "@material-ui/core/styles";
 import { Colors } from "layout/AppTheme";
 import Typography from "@material-ui/core/Typography";
-// import { PriceDetails } from "typings/gqlTypes";
-type PriceDetails = any;
+import { PriceDetails } from "typings/gqlTypes";
 import { asCurrency as c } from "utils/prices";
 
 
@@ -16,6 +15,12 @@ const DiscountBadge: React.FC<ReactProps> = (props) => {
 
   const savingsPercent = Math.round((basePrice - actualPrice)/basePrice * 100)
 
+  if (savingsPercent < 1) {
+    return (
+      <div className={clsx(classes.root, 'hidden')}>
+      </div>
+    )
+  }
 
   return (
     <div className={clsx(classes.root, classes.discountTag)}>

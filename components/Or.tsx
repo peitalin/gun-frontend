@@ -42,11 +42,8 @@ const styles = (theme: Theme) => createStyles({
   dividerText: {
     margin: '0rem 0.5rem',
     color: Colors.darkGrey,
-    fontWeight: 600,
-    fontSize: '0.9rem',
-    fontStyle: "italic",
-    // fontFamily: '"Segoe UI","Helvetica Neue",Arial,sans-serif',
-    // fontFamily: 'times new roman',
+    fontWeight: 400,
+    fontSize: '0.875rem',
   },
 })
 

@@ -8,9 +8,7 @@ import { Colors } from "layout/AppTheme";
 import Typography from "@material-ui/core/Typography";
 import Button from '@material-ui/core/Button';
 // Utils Components
-// import { Price, PriceDetails } from "typings/gqlTypes";
-type Price = number;
-type PriceDetails = any;
+import { Price, PriceDetails } from "typings/gqlTypes";
 import CountdownBadge from "./CountdownBadge";
 // money
 import currency from "currency.js";
@@ -60,6 +58,7 @@ const PriceDisplay3 = (props: ReactProps) => {
             </Typography>
             {
               !hidePriceWas &&
+              (basePrice > actualPrice) &&
               <Typography className={classes.priceWas} variant="body1">
                 {priceWas.format()}
               </Typography>
@@ -74,9 +73,10 @@ const PriceDisplay3 = (props: ReactProps) => {
             </div>
           }
         </div>
-        {
-          !hideSavings &&
-          <div className={classes.innerContainerSpread}>
+        {/* <div className={clsx(classes.innerContainerSpread, classes.height18)}>
+          {
+            !hideSavings &&
+            (basePrice > actualPrice) &&
             <Typography className={classes.priceSavings} variant="body1">
               {
                 props.pastTense
@@ -84,11 +84,13 @@ const PriceDisplay3 = (props: ReactProps) => {
                 : `You save ${savings.format()}${remainingText}`
               }
             </Typography>
-          </div>
-        }
-        {
-          expiresAt &&
-          <div className={classes.innerContainerSpreadCountdown}>
+          }
+        </div> */}
+        <div className={classes.innerContainerSpreadCountdown}>
+          {
+            expiresAt &&
+            expiresAt.getSeconds &&
+            expiresAt.getSeconds() > 0 &&
             <div className={classes.countDownTag}>
               <Typography className={classes.finalCountDown} variant="body1">
                 Sale ends in &nbsp;
@@ -99,8 +101,8 @@ const PriceDisplay3 = (props: ReactProps) => {
                 style={props.countDownStyle}
               />
             </div>
-          </div>
-        }
+          }
+        </div>
       </>
     </div>
   )
@@ -144,9 +146,10 @@ const styles = (theme: Theme) => createStyles({
   countDownTag: {
     display: 'flex',
     // backgroundColor: Colors.lightestGrey,
-    // backgroundColor: Colors.charcoal,
-    // padding: '0.2rem 0.5rem',
+    backgroundColor: fade(Colors.green, 0.2),
+    padding: '0.2rem 0.5rem',
     borderRadius: '2px',
+    marginTop: '0.5rem',
     // border: `1px solid ${Colors.charcoal}`,
     // border: `1px solid ${Colors.lightestGrey}`,
   },
@@ -156,17 +159,20 @@ const styles = (theme: Theme) => createStyles({
     justifyContent: 'flex-end',
     alignItems: 'flex-end',
   },
+  height18: {
+    height: 18,
+  },
   price: {
     marginRight: '0.5rem',
-    fontSize: "0.9rem",
+    fontSize: "0.875rem",
     fontWeight: 600,
-    color: Colors.secondaryBright, // red
+    color: Colors.green,
+    // color: Colors.charcoal,
   },
   priceWas: {
     textDecoration: "line-through",
-    fontSize: "0.8rem",
-    color: fade("#7C858E", 0.5), // grey
-    // color: fade(Colors.secondaryBright, 0.5),
+    fontSize: "0.75rem",
+    color: Colors.darkGrey, // grey
   },
   priceSavings: {
     marginRight: '0.5rem',
@@ -174,21 +180,19 @@ const styles = (theme: Theme) => createStyles({
     fontSize: "0.75rem",
   },
   finalCountDown: {
-    color: Colors.grey,
+    color: Colors.green,
     fontSize: "0.75rem",
     fontWeight: 600,
   },
   time: {
-    color: Colors.secondaryBright,
-    // color: Colors.backgroundColor,
+    color: Colors.green,
     fontSize: "0.75rem",
     fontWeight: 600,
   },
   quantityText: {
-    color: Colors.grey,
+    color: Colors.darkGrey,
     fontSize: "0.75rem",
     fontWeight: 600,
-    marginRight: "1rem",
   },
 });
 

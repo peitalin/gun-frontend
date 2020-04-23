@@ -6,6 +6,7 @@ import Button from '@material-ui/core/Button';
 import { Colors, BorderRadius, fontFam } from "layout/AppTheme";
 import { useFocus } from "utils/hooks";
 import { styles } from "components/Fields/styles";
+import ValidationErrorMsg from "./ValidationErrorMsg";
 
 
 
@@ -13,9 +14,12 @@ const TextInput = (props: ReactProps) => {
 
   const ref = React.useRef();
   const focused = useFocus(ref);
+
   const {
     errorMessage,
     touched = false,
+    disabled = false,
+    disableInitialValidationMessage = false,
     classes,
     ...rest
   } = props;
@@ -27,7 +31,6 @@ const TextInput = (props: ReactProps) => {
     return (
       <div className={clsx(
         classes.root,
-        classes.paddingBottom,
         classes.width100
       )}>
         <InputBase
@@ -40,30 +43,36 @@ const TextInput = (props: ReactProps) => {
             multiline: classes.selectMultiline,
           }}
           style={{
-            borderRadius: `${BorderRadius}px 0px 0px ${BorderRadius}px`,
+            // borderRadius: `${BorderRadius}px 0px 0px ${BorderRadius}px`,
+            borderRadius: BorderRadius,
             width: '100%'
           }}
           inputRef={ref}
+          error={!!props.errorMessage}
+          disabled={disabled}
           {...rest}
         />
         <Button
           style={{
             background: "#ced4da",
-            borderRadius: "0px 4px 4px 0px",
+            // borderRadius: "0px 4px 4px 0px",
+            borderRadius: BorderRadius,
             color: "#fafafa",
-            padding: '0.43rem',
+            padding: '0.335rem',
             fontSize: "18px",
             width: props.buttonWidth ? props.buttonWidth : "4rem",
           }}
           onClick={props.onSubmit}
           {...props.submitButtonProps}
-        > + </Button>
-        <div className={clsx(
-          touched ? classes.errorMessage : classes.errorMessageUntouched,
-          focused ? classes.errorMessageFocused : null,
-        )}>
-          <span className={"fadeIn"}>{props.errorMessage}</span>
-        </div>
+        > Add </Button>
+
+        <ValidationErrorMsg
+          touched={touched}
+          focused={focused}
+          errorMessage={props.errorMessage}
+          disableInitialValidationMessage={disableInitialValidationMessage}
+        />
+
         {
           props.limit &&
           <div className={classes.count}>
@@ -87,16 +96,21 @@ const TextInput = (props: ReactProps) => {
             ),
             multiline: classes.selectMultiline,
           }}
+          disabled={disabled}
           inputRef={ref}
+          error={!!props.errorMessage}
           style={{ borderRadius: BorderRadius, width: '100%' }}
           {...rest}
         />
-        <div className={clsx(
-          touched ? classes.errorMessage : classes.errorMessageUntouched,
-          focused ? classes.errorMessageFocused : null,
-        )}>
-          <span className={"fadeIn"}>{props.errorMessage}</span>
-        </div>
+
+        <ValidationErrorMsg
+          touched={touched}
+          focused={focused}
+          errorMessage={props.errorMessage}
+          disableInitialValidationMessage={disableInitialValidationMessage}
+        />
+
+
         {
           props.limit &&
           <div className={classes.count}>
@@ -137,6 +151,8 @@ interface ReactProps extends WithStyles<typeof styles> {
   onSubmit?(args: any): void;
   errorMessage?: string;
   touched?: boolean; // sets error colors as grey if not-touched, red if so
+  disabled?: boolean;
+  disableInitialValidationMessage?: boolean;
   limit?: { count: number, max: number };
   buttonWidth?: any;
   [key: string]: any;

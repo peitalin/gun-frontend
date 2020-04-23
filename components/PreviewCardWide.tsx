@@ -13,12 +13,7 @@ import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
 import YouTubeIcon from "components/Icons/YouTube";
 // Typings
-// import { ProductPreviewItem, ProductCategory, PriceDetails } from "typings/gqlTypes";
-type ProductPreviewItem = any;
-type Product = any;
-type PriceDetails = any;
-type ProductCategory = any;
-
+import { ProductPreviewItem, ProductCategory, Image, PriceDetails } from "typings/gqlTypes";
 import { genSrcSet } from "utils/files";
 import { getYouTubeVimeoImagePreview } from "utils/strings";
 import PriceDisplay2 from "components/PriceDisplay2";
@@ -49,9 +44,9 @@ const PreviewCardWide = (props: ReactProps) => {
   const cardHeightBottomHalf = cardHeight * (1 - props.topHalfFraction || 0.5);
 
 
-  const title = option(props).title('').length > 48
-    ? props.title.slice(0, 48) + '...'
-    : option(props).title()
+  const title = option(props).title('').length > 50
+    ? props.title.slice(0, 50) + '...'
+    : option(props).title("")
 
   return (
     <div className={clsx(classes.rootContainer)}>
@@ -69,7 +64,7 @@ const PreviewCardWide = (props: ReactProps) => {
       >
         <CardActionArea>
           {
-            option(image).original.id()
+            option(image).original.url()
             ? <CardMedia
                 title={props.title}
                 component="img"
@@ -118,12 +113,12 @@ const PreviewCardWide = (props: ReactProps) => {
           <Typography
             className={clsx(
               classes.category,
-              !option(props).category.categoryGroup() ? "pulse" : null
+              !option(props).category.name() ? "pulse" : null
             )}
             variant="body1"
             component="div"
           >
-            {option(props).category.categoryGroup("Loading...")}
+            {option(props).category.name()}
           </Typography>
           <Typography
             className={clsx(
@@ -133,7 +128,7 @@ const PreviewCardWide = (props: ReactProps) => {
             variant="body1"
             component="div"
           >
-            {option(title)(".... ".repeat(2))}
+            {title}
           </Typography>
           <div className={clsx(
             classes.priceAbsoluteBottom,
@@ -147,7 +142,7 @@ const PreviewCardWide = (props: ReactProps) => {
                   quantityAvailable={props.quantityAvailable}
                   isSoldOut={props.isSoldOut}
                 />
-              : <span style={{ color: Colors.grey }}>.... .... ....</span>
+              : <span style={{ color: Colors.grey }}></span>
             }
           </div>
         </div>
@@ -187,20 +182,21 @@ const styles = (theme: Theme) => createStyles({
   card: {
     borderRadius: `${cardCornerRadius}px ${cardCornerRadius}px 0px 0px`,
     width: "100%",
+    backgroundColor: Colors.lightestGrey,
     // backgroundImage: `url("data:image/svg+xml,%3Csvg width='10' height='10' viewBox='0 0 10 10' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23${patternColor}' fill-opacity='0.4' fill-rule='evenodd'%3E%3Ccircle cx='2' cy='2' r='2'/%3E%3Ccircle cx='13' cy='13' r='2'/%3E%3C/g%3E%3C/svg%3E")`,
-    backgroundImage: `url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 20.5V18H0v-2h20v-2H0v-2h20v-2H0V8h20V6H0V4h20V2H0V0h22v20h2V0h2v20h2V0h2v20h2V0h2v20h2V0h2v20h2v2H20v-1.5zM0 20h2v20H0V20zm4 0h2v20H4V20zm4 0h2v20H8V20zm4 0h2v20h-2V20zm4 0h2v20h-2V20zm4 4h20v2H20v-2zm0 4h20v2H20v-2zm0 4h20v2H20v-2zm0 4h20v2H20v-2z' fill='%23${patternColor}' fill-opacity='0.3' fill-rule='evenodd'/%3E%3C/svg%3E")`,
-    borderBottom: "1px solid #f2f2f2",
-    transition: theme.transitions.create('border', {
-      easing: theme.transitions.easing.easeIn,
-      duration: "100ms",
-    }),
-    "&:hover": {
-      borderBottom: `1px solid ${Colors.lightGrey}`,
-      transition: theme.transitions.create('border', {
-        easing: theme.transitions.easing.easeIn,
-        duration: "100ms",
-      }),
-    }
+    // backgroundImage: `url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 20.5V18H0v-2h20v-2H0v-2h20v-2H0V8h20V6H0V4h20V2H0V0h22v20h2V0h2v20h2V0h2v20h2V0h2v20h2V0h2v20h2v2H20v-1.5zM0 20h2v20H0V20zm4 0h2v20H4V20zm4 0h2v20H8V20zm4 0h2v20h-2V20zm4 0h2v20h-2V20zm4 4h20v2H20v-2zm0 4h20v2H20v-2zm0 4h20v2H20v-2zm0 4h20v2H20v-2z' fill='%23${patternColor}' fill-opacity='0.3' fill-rule='evenodd'/%3E%3C/svg%3E")`,
+    // borderBottom: "1px solid #f2f2f2",
+    // transition: theme.transitions.create('border', {
+    //   easing: theme.transitions.easing.easeIn,
+    //   duration: "100ms",
+    // }),
+    // "&:hover": {
+    //   borderBottom: `1px solid ${Colors.lightGrey}`,
+    //   transition: theme.transitions.create('border', {
+    //     easing: theme.transitions.easing.easeIn,
+    //     duration: "100ms",
+    //   }),
+    // }
   },
   cardRoot: {
     boxShadow: 'none',
@@ -222,8 +218,8 @@ const styles = (theme: Theme) => createStyles({
   category: {
     textTransform: "uppercase",
     fontWeight: 600,
-    fontSize: '.7rem',
-    color: "#888",
+    fontSize: '0.875rem',
+    color: Colors.darkGrey,
     marginBottom: '0.4rem',
     lineHeight: '1rem',
   },
@@ -231,7 +227,8 @@ const styles = (theme: Theme) => createStyles({
     fontWeight: 600,
     color: "#444",
     marginBottom: '0.4rem',
-    lineHeight: '1rem',
+    lineHeight: '1.25rem',
+    fontSize: '1.125rem'
   },
   tagline: {
     fontSize: '.8rem',

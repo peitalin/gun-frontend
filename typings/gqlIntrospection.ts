@@ -15,16 +15,97 @@
     "types": [
       {
         "kind": "INTERFACE",
-        "name": "User",
+        "name": "Connection",
         "possibleTypes": [
           {
-            "name": "UserPrivate"
+            "name": "CuratedListItemsConnection"
           },
           {
-            "name": "UserPublic"
+            "name": "ProductsConnection"
           },
           {
-            "name": "UserWithRole"
+            "name": "StoreSalesHistoryConnection"
+          },
+          {
+            "name": "DiscountsConnection"
+          },
+          {
+            "name": "DownloadsConnection"
+          },
+          {
+            "name": "FollowingStoresConnection"
+          },
+          {
+            "name": "OrdersConnection"
+          },
+          {
+            "name": "WishlistItemsConnection"
+          },
+          {
+            "name": "ProductsSoldPeriodSummaryConnection"
+          },
+          {
+            "name": "StoreSalesInPeriodConnection"
+          },
+          {
+            "name": "TransactionsConnection"
+          },
+          {
+            "name": "CuratedListsConnection"
+          },
+          {
+            "name": "StoresConnection"
+          }
+        ]
+      },
+      {
+        "kind": "INTERFACE",
+        "name": "Edge",
+        "possibleTypes": [
+          {
+            "name": "CuratedListItemsEdge"
+          },
+          {
+            "name": "ProductsEdge"
+          },
+          {
+            "name": "ProductSalesEdge"
+          },
+          {
+            "name": "DiscountsEdge"
+          },
+          {
+            "name": "DownloadsEdge"
+          },
+          {
+            "name": "FollowingStoresEdge"
+          },
+          {
+            "name": "OrdersEdge"
+          },
+          {
+            "name": "PayoutEdge"
+          },
+          {
+            "name": "WishlistItemsEdge"
+          },
+          {
+            "name": "ProductsSoldPeriodSummaryEdge"
+          },
+          {
+            "name": "PayoutItemsEdge"
+          },
+          {
+            "name": "StoreSalesEdge"
+          },
+          {
+            "name": "TransactionsEdge"
+          },
+          {
+            "name": "CuratedListsEdge"
+          },
+          {
+            "name": "StoresEdge"
           }
         ]
       },
@@ -33,10 +114,10 @@
         "name": "Product",
         "possibleTypes": [
           {
-            "name": "ProductPublic"
+            "name": "ProductPrivate"
           },
           {
-            "name": "ProductPrivate"
+            "name": "ProductPublic"
           }
         ]
       },
@@ -54,91 +135,16 @@
       },
       {
         "kind": "INTERFACE",
-        "name": "Connection",
+        "name": "User",
         "possibleTypes": [
           {
-            "name": "ProductsConnection"
+            "name": "UserWithRole"
           },
           {
-            "name": "OrdersConnection"
+            "name": "UserPublic"
           },
           {
-            "name": "DownloadsConnection"
-          },
-          {
-            "name": "DiscountsConnection"
-          },
-          {
-            "name": "StoreSalesHistoryConnection"
-          },
-          {
-            "name": "ProductsSoldPeriodSummaryConnection"
-          },
-          {
-            "name": "WishlistItemsConnection"
-          },
-          {
-            "name": "StoresConnection"
-          },
-          {
-            "name": "TransactionsConnection"
-          },
-          {
-            "name": "StoreSalesInPeriodConnection"
-          },
-          {
-            "name": "CuratedListsConnection"
-          },
-          {
-            "name": "CuratedListItemsConnection"
-          }
-        ]
-      },
-      {
-        "kind": "INTERFACE",
-        "name": "Edge",
-        "possibleTypes": [
-          {
-            "name": "ProductsEdge"
-          },
-          {
-            "name": "OrdersEdge"
-          },
-          {
-            "name": "DownloadsEdge"
-          },
-          {
-            "name": "DiscountsEdge"
-          },
-          {
-            "name": "ProductSalesEdge"
-          },
-          {
-            "name": "PayoutEdge"
-          },
-          {
-            "name": "ProductsSoldPeriodSummaryEdge"
-          },
-          {
-            "name": "WishlistItemsEdge"
-          },
-          {
-            "name": "StoresEdge"
-          },
-          {
-            "name": "PayoutItemsEdge"
-          },
-          {
-            "name": "TransactionsEdge"
-          },
-          {
-            "name": "StoreSalesEdge"
-          },
-          {
-            "name": "CuratedListsEdge"
-          },
-          {
-            "name": "CuratedListItemsEdge"
+            "name": "UserPrivate"
           }
         ]
       },
@@ -156,10 +162,10 @@
       },
       {
         "kind": "INTERFACE",
-        "name": "PageBasedConnection",
+        "name": "PageBasedConnectionWithMetrics",
         "possibleTypes": [
           {
-            "name": "SearchResultsConnection"
+            "name": "PayoutItemsPagedConnection"
           }
         ]
       },
@@ -168,10 +174,19 @@
         "name": "PageBasedConnectionEdge",
         "possibleTypes": [
           {
-            "name": "SearchResultsEdge"
+            "name": "PayoutItemsPagedEdge"
           },
           {
-            "name": "PayoutItemsPagedEdge"
+            "name": "SearchResultsEdge"
+          }
+        ]
+      },
+      {
+        "kind": "INTERFACE",
+        "name": "PageBasedConnection",
+        "possibleTypes": [
+          {
+            "name": "SearchResultsConnection"
           }
         ]
       },
@@ -180,19 +195,10 @@
         "name": "SearchResultItem",
         "possibleTypes": [
           {
-            "name": "ProductPublic"
+            "name": "ProductPrivate"
           },
           {
-            "name": "ProductPrivate"
-          }
-        ]
-      },
-      {
-        "kind": "INTERFACE",
-        "name": "PageBasedConnectionWithMetrics",
-        "possibleTypes": [
-          {
-            "name": "PayoutItemsPagedConnection"
+            "name": "ProductPublic"
           }
         ]
       }

@@ -5,12 +5,12 @@ mutation {
 
   insert_image_parents(objects:[
     {
-      image_id: "image_1",
-      original_variant_id: "image_1",
+      imageId: "image_1",
+      originalVariantId: "image_1",
     },
     {
-      image_id: "image_2",
-      original_variant_id: "image_2",
+      imageId: "image_2",
+      originalVariantId: "image_2",
     },
   ]) {
     affected_rows
@@ -18,36 +18,36 @@ mutation {
 
   insert_image_variants(objects:[
     {
-      variant_id: "image_1",
-      parent_id: "image_1",
-      mime_type: "image/jpeg",
-      width_in_pixels: 1200,
-      height_in_pixels: 720,
-      size_in_bytes: 100
+      variantId: "image_1",
+      parentId: "image_1",
+      mimeType: "image/jpeg",
+      widthInPixels: 1200,
+      heightInPixels: 720,
+      sizeInBytes: 100
     },
     {
-      variant_id: "image_1_600",
-      parent_id: "image_1",
-      mime_type: "image/jpeg",
-      width_in_pixels: 600,
-      height_in_pixels: 480,
-      size_in_bytes: 100
+      variantId: "image_1_600",
+      parentId: "image_1",
+      mimeType: "image/jpeg",
+      widthInPixels: 600,
+      heightInPixels: 480,
+      sizeInBytes: 100
     },
     {
-      variant_id: "image_2",
-      parent_id: "image_2",
-      mime_type: "image/jpeg",
-      width_in_pixels: 1200,
-      height_in_pixels: 720,
-      size_in_bytes: 100
+      variantId: "image_2",
+      parentId: "image_2",
+      mimeType: "image/jpeg",
+      widthInPixels: 1200,
+      heightInPixels: 720,
+      sizeInBytes: 100
     },
     {
-      variant_id: "image_2_600",
-      parent_id: "image_2",
-      mime_type: "image/jpeg",
-      width_in_pixels: 600,
-      height_in_pixels: 480,
-      size_in_bytes: 100
+      variantId: "image_2_600",
+      parentId: "image_2",
+      mimeType: "image/jpeg",
+      widthInPixels: 600,
+      heightInPixels: 480,
+      sizeInBytes: 100
     }
   ]) {
     affected_rows
@@ -57,23 +57,23 @@ mutation {
     {
       id: "preview_item_1",
       position: 0,
-      image_id: "image_1",
-      youtube_embed_link: null,
-      variant_snapshot_id: "pvs_prod_snapshot_1_prod_variant_1",
+      imageId: "image_1",
+      youtubeEmbedLink: null,
+      variantSnapshotId: "pvs_prod_snapshot_1_prod_variant_1",
     },
     {
       id: "preview_item_2",
       position: 1,
-      image_id: "image_2",
-      youtube_embed_link: null,
-      variant_snapshot_id: "pvs_prod_snapshot_1_prod_variant_1",
+      imageId: "image_2",
+      youtubeEmbedLink: null,
+      variantSnapshotId: "pvs_prod_snapshot_1_prod_variant_1",
     },
     {
       id: "preview_item_3",
       position: 0,
-      image_id: "image_1",
-      youtube_embed_link: null,
-      variant_snapshot_id: "pvs_prod_snapshot_1_prod_variant_2",
+      imageId: "image_1",
+      youtubeEmbedLink: null,
+      variantSnapshotId: "pvs_prod_snapshot_1_prod_variant_2",
     },
   ]) {
     affected_rows
@@ -81,28 +81,28 @@ mutation {
 
   insert_product_variants(objects:[
     {
-      variant_snapshot_id: "pvs_prod_snapshot_1_prod_variant_1",
-      variant_id: "prod_variant_1",
-      snapshot_id: "prod_snapshot_1",
-      product_id: "prod_1",
-      store_id: "store_1",
-      variant_name: "0.22WMR Caliber",
-      variant_description: "gun1 variant1 0.22 caliber",
+      variantSnapshotId: "pvs_prod_snapshot_1_prod_variant_1",
+      variantId: "prod_variant_1",
+      snapshotId: "prod_snapshot_1",
+      productId: "prod_1",
+      storeId: "store_1",
+      variantName: "0.22WMR Caliber",
+      variantDescription: "gun1 variant1 0.22 caliber",
       position: 0,
-      is_default: true,
-      base_price: 1500,
+      isDefault: true,
+      basePrice: 1500,
     },
     {
-      variant_snapshot_id: "pvs_prod_snapshot_1_prod_variant_2",
-      variant_id: "prod_variant_2",
-      snapshot_id: "prod_snapshot_1",
-      product_id: "prod_1",
-      store_id: "store_1",
-      variant_name: "0.308 Caliber",
-      variant_description: "gun1 variant2 0.308 caliber",
+      variantSnapshotId: "pvs_prod_snapshot_1_prod_variant_2",
+      variantId: "prod_variant_2",
+      snapshotId: "prod_snapshot_1",
+      productId: "prod_1",
+      storeId: "store_1",
+      variantName: "0.308 Caliber",
+      variantDescription: "gun1 variant2 0.308 caliber",
       position: 0,
-      is_default: false,
-      base_price: 1800,
+      isDefault: false,
+      basePrice: 1800,
     },
   ]) {
     affected_rows
@@ -111,16 +111,16 @@ mutation {
   insert_product_snapshots(objects:[
     {
       id: "prod_snapshot_1",
-      product_id: "prod_1",
+      productId: "prod_1",
       title: "gun1",
       description: "some gun1 description",
       condition: "very good",
       make: "Henry",
       model: "H001M",
-      ammo_type: "Rimfire",
-      action_type: "Lever",
-      bore_diameter: "0.224",
-      serial_number: "M222956H",
+      ammoType: "Rimfire",
+      actionType: "Lever",
+      boreDiameter: "0.224",
+      serialNumber: "M222956H",
       location: "some gun1 location",
       dealer: "some gun1 dealer"
     },
@@ -131,13 +131,12 @@ mutation {
   insert_products(objects:[
     {
       id: "prod_1",
-      current_snapshot_id: "prod_snapshot_1",
-      store_id: "store_1",
-      category_id: "category_1",
+      currentSnapshotId: "prod_snapshot_1",
+      storeId: "store_1",
+      categoryId: "category_1",
     },
   ]) {
     affected_rows
   }
 }
-
 `;
