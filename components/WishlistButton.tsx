@@ -121,10 +121,6 @@ const WishlistButtonBig: React.FC<ReactProps> = (props) => {
               setShowSnackbar(true)
             } else {
               dispatch(Actions.reduxWishlist.ADD_WISHLIST_ITEM(wishlistItemId))
-              analyticsEvent("Wishlist.Product.Add", {
-                productId: wishlistItemId.productId,
-                variantId: wishlistItemId.variantId,
-              })
               addProductToWishlist()
             }
           }}

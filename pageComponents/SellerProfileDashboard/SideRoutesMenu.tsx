@@ -22,7 +22,6 @@ import TextInput from "components/Fields/TextInput";
 import CloudUpload from "@material-ui/icons/CloudUpload";
 import { useRouter } from "next/router";
 import Router from 'next/router'
-import { getStoreIdOrSlug } from "utils/links";
 
 
 
@@ -85,8 +84,8 @@ const SideMenu: React.FC<ReactProps> = (props) => {
             </li>
             <li>
               <Link
-                href="/s/[storeIdOrSlug]"
-                as={`/s/${getStoreIdOrSlug(storePrivate)}`}
+                href="/s/[storeId]"
+                as={`/s/${storePrivate.id}`}
                 scroll={false}
               >
                 <a className={clsx(classes.flexCol, classes.viewStoreLink)}>

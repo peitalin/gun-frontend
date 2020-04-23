@@ -35,9 +35,6 @@ const SalesHistory = (props: ReactProps) => {
   const smDown = useMediaQuery(theme.breakpoints.down('sm'));
   const xsDown = useMediaQuery(theme.breakpoints.down('xs'));
 
-  useAnalytics("View.Dashboard.Orders");
-  useAnalytics("View.Dashboard.Sales");
-
   console.log('allSales', allSales)
 
   return (

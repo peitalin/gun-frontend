@@ -90,10 +90,6 @@ const WishlistIcon: React.FC<ReactProps> = (props) => {
             dispatch(Actions.reduxWishlist.REMOVE_WISHLIST_ITEM(wishlistItemId))
             removeProductFromWishlist()
           } else {
-            analyticsEvent("Wishlist.Product.Add", {
-              productId: wishlistItemId.productId,
-              variantId: wishlistItemId.variantId,
-            })
             dispatch(Actions.reduxWishlist.ADD_WISHLIST_ITEM(wishlistItemId))
             addProductToWishlist()
           }
