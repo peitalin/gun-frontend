@@ -40,7 +40,7 @@ const SignInCompact = (props: ReactProps) => {
     <ErrorBounds className={classes.outerContainer}>
 
       <Typography className={classes.title} variant="h5">
-        Login to your Relay Account
+        Login to your Gun Marketplace Account
       </Typography>
 
       <div className={classes.form}>

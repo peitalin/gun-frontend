@@ -232,10 +232,10 @@ const EditStoreFields: React.FC<ReactProps & FormikProps<FormikFields>> = (props
             }
             <Divider/>
             <Typography variant="body1" className={classes.subtitle4}>
-              By signing up, you agree to comply with Relay’s Terms of Service
+              By signing up, you agree to comply with Gun Marketplace’s Terms of Service
               and Seller Agreement.
               <a className={classes.link}
-                href={'https://help.relaydownloads.com/hc/en-us/articles/360038530771-Terms-of-Service'}
+                href={'https://help.Gun Marketplacedownloads.com/hc/en-us/articles/360038530771-Terms-of-Service'}
                 target="_blank"
                 style={{ marginLeft: '0.25rem' }}
               >

@@ -112,8 +112,8 @@ const Footer: React.FC<ReactProps> = (props) => {
               <Typography variant="body2" className={classes.link}>
                 <a
                   className={classes.link}
-                  href="https://www.relaydownloads.com" target="_blank">
-                  Copyright © 2019 Relay. All rights reserved.
+                  href="https://www.gunmarketplace.com.au" target="_blank">
+                  Copyright © 2019 Gun Marketplace. All rights reserved.
                 </a>
               </Typography>
               {/* <SocialIcons classes={classes}/> */}

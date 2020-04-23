@@ -254,7 +254,7 @@ const CreateStoreFields: React.FC<ReactProps & FormikProps<FormikFields>> = (pro
             <input
               className={classes.storeNameCopy}
               type="text"
-              value={`relaydownloads.com/s/${props.storeId}`}
+              value={`Gun Marketplacedownloads.com/s/${props.storeId}`}
               onChange={() => {}}
               id="copyText"
             />
@@ -309,10 +309,10 @@ const CreateStoreFields: React.FC<ReactProps & FormikProps<FormikFields>> = (pro
             } */}
             <Divider/>
             <Typography variant="body1" className={classes.subtitle4}>
-              By signing up, you agree to comply with Relay’s Terms of Service
+              By signing up, you agree to comply with Gun Marketplace’s Terms of Service
               and Seller Agreement.
               <a className={classes.link}
-                href={'https://help.relaydownloads.com/hc/en-us/articles/360038530771-Terms-of-Service'}
+                href={'https://help.Gun Marketplacedownloads.com/hc/en-us/articles/360038530771-Terms-of-Service'}
                 style={{ marginLeft: '0.25rem' }}
               >
                   Learn more

@@ -20,7 +20,7 @@ const SellingTipsMobile: React.FC<ReactProps> = (props) => {
 
         {props.children}
 
-        <TipExpander title={"Why sell on Relay"}>
+        <TipExpander title={"Why sell on Gun Marketplace"}>
           <Tip bulletType={'tick'}>
             List unlimited digital products, for free
           </Tip>
@@ -76,7 +76,7 @@ const SellingTipsMobile: React.FC<ReactProps> = (props) => {
           <div className={classes.flexCol}>
             <div className={classes.flexRow}>
               <Typography className={classes.smallText}>
-                On Relay, you can sell any type of digital asset you
+                On Gun Marketplace, you can sell any type of digital asset you
                 think would be valuable to others. Here are some examples:
               </Typography>
             </div>

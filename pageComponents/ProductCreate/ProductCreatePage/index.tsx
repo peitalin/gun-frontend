@@ -491,7 +491,7 @@ const ProductCreateButtonWrapper: React.FC<ReactProps> = (props) => {
   return (
     <div className={classes.policyBox}>
       <Typography color={"primary"} variant="caption" className={classes.policy}>
-        By posting, you confirm that this listing complies with Relay's
+        By posting, you confirm that this listing complies with Gun Marketplace's
         terms of service and applicable laws.
       </Typography>
       <Divider/>

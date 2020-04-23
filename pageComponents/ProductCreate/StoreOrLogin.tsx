@@ -56,7 +56,7 @@ const StoreOrLogin = (props: StoreOrLoginProps) => {
       return (
         <div className={clsx(classes.errorMessage, classes.storeLogin2)}>
           <Typography variant="h4" className={classes.loginTitle}>
-            Create Relay Seller Profile to upload a product
+            Create Gun Marketplace Seller Profile to upload a product
           </Typography>
           <div className={classes.createStoreButtonContainer}>
             <AddSellerProfileModalButton
@@ -75,7 +75,7 @@ const StoreOrLogin = (props: StoreOrLoginProps) => {
           {
             !props.disableSubtitle &&
             <Typography variant="h4" className={classes.loginTitle}>
-              Sign into your Relay account to upload a product
+              Sign into your Gun Marketplace account to upload a product
             </Typography>
           }
           {

@@ -49,13 +49,13 @@ const BannerProductCreateMobile: NextPage<ReactProps> = (props) => {
         </div>
         <div className={classes.mainTitleContainerMobile}>
           <Typography variant={"h4"} className={classes.mainTitleMobile}>
-            Sell Unlimited Digital Products on Relay
+            Buy and Sell Used Guns on Gun Marketplace
           </Typography>
         </div>
         <Typography variant={"body2"} className={classes.subline1Mobile}>
           No listing fees. No subscription fees. No maintenance time.
-          Just upload your digital products, set your own prices, and
-          get paid passive income – automatically, every month.
+          Just upload your products, set your own prices, and
+          select a licensed gun dealer to handle transfers.
         </Typography>
       </Banner>
     </Hidden>

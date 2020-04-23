@@ -20,7 +20,7 @@ const SellingTips: React.FC<ReactProps> = (props) => {
 
         {props.children}
 
-        <TipExpander title={"Why sell on Relay"}>
+        <TipExpander title={"Why sell on Gun Marketplace"}>
           <Tip bulletType={'tick'}>
             List unlimited digital products, for free
           </Tip>
@@ -75,7 +75,7 @@ const SellingTips: React.FC<ReactProps> = (props) => {
           <div className={classes.flexCol}>
             <div className={classes.flexRow}>
               <Typography className={classes.smallText}>
-                On Relay, you can sell any type of digital asset you
+                On Gun Marketplace, you can sell any type of digital asset you
                 think would be valuable to others. Here are some examples:
               </Typography>
             </div>
@@ -117,7 +117,7 @@ const SellingTips: React.FC<ReactProps> = (props) => {
 
         <div className={clsx(classes.sellingTips, classes.smallText)}>
           Need help? Read the
-          <a href="https://help.relaydownloads.com/hc/en-us"
+          <a href="https://help.Gun Marketplacedownloads.com/hc/en-us"
             className={classes.helpLink}
           >
               FAQ

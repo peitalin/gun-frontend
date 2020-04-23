@@ -72,7 +72,7 @@ const SelectTags = (props: ReactProps & FormikProps<FormikFields>) => {
 
         </FormGroup>
         <Typography className={classes.tagsTip}>
-          Tags will help people find your product on Relay.
+          Tags will help people find your product on Gun Marketplace.
           Tags are not public. Separate with commas.
         </Typography>
       </div>

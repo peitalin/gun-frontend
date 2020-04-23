@@ -44,7 +44,7 @@ const EmptyProductsList = (props: ReactProps) => {
       </div>
       {/* <div className={clsx(classes.questionBox, classes.flexCol)}>
         <Typography variant="h5" className={classes.question}>
-          Have a digital product you want to sell on the Relay marketplace?
+          Have a digital product you want to sell on the Gun Marketplace?
         </Typography>
       </div> */}
     </ErrorBounds>

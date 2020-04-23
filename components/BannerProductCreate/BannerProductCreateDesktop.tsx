@@ -46,7 +46,7 @@ const BannerProductCreateDesktop: NextPage<ReactProps> = (props) => {
         </div>
         <div className={classes.mainTitleContainer}>
           <Typography variant={"h2"} className={classes.mainTitle}>
-            Sell Unlimited Digital Products on Relay
+            Sell used guns on Gun Marketplace
           </Typography>
         </div>
         <Typography variant={"body2"} className={classes.subline1}>

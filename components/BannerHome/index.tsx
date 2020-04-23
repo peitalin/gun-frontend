@@ -7,8 +7,6 @@ import { Colors } from "layout/AppTheme";
 // components
 import Banner from "components/Banner";
 import Typography from "@material-ui/core/Typography";
-import RandomTitle from "pageComponents/ProductGallery/RandomTitle";
-import Divider from "components/Divider";
 import Button from '@material-ui/core/Button';
 // Router
 import { useRouter } from 'next/router';
@@ -137,7 +135,7 @@ const BannerHome: NextPage<ReactProps> = (props) => {
                         root: classes.buttonRoot
                       }}
                     >
-                      Sell On Relay
+                      Sell On Gun Marketplace
                     </Button>
                   </a>
                 </Link>
@@ -238,7 +236,7 @@ const BannerHome: NextPage<ReactProps> = (props) => {
                         label: classes.buttonFontSizeDesktop,
                       }}
                     >
-                      Sell on Relay
+                      Sell on Gun Marketplace
                     </Button>
                   </a>
                 </Link>
