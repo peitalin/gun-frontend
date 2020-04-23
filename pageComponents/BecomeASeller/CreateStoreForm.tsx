@@ -44,8 +44,6 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
 // store deleted
 import { isStoreDeleted, storeCreateRedirectCondition } from "utils/store";
-// Analytics
-import { useAnalytics, analyticsEvent } from "utils/analytics";
 
 
 
@@ -125,8 +123,6 @@ const CreateStoreForm: React.FC<ReactProps> = (props) => {
     }
   })
 
-  useAnalytics("View.Store.Create");
-
   return (
     <Formik
       // 1. feed product data to edit into formik state.
@@ -161,7 +157,6 @@ const CreateStoreForm: React.FC<ReactProps> = (props) => {
             }
           }).then(res2 => {
             console.log('payoutMethod response', res2)
-            analyticsEvent("Store.Created")
             // router.push("/seller?created=store")
           })
         })

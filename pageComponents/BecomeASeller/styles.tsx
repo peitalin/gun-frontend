@@ -58,7 +58,7 @@ export const styles = (theme: Theme) => createStyles({
     fontSize: "0.7rem",
     fontWeight: 500,
     marginBottom: '0.5rem',
-    color: Colors.darkGrey55,
+    color: Colors.darkGrey,
     marginTop: "0.5rem",
   },
   formGroup: {

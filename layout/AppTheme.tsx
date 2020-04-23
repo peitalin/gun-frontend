@@ -9,7 +9,6 @@ import TouchRipple from '@material-ui/core/ButtonBase/TouchRipple';
 // pale red
 const secondary = "#CB464D"
 
-
 export const Colors = {
   backgroundColor: "#f4f4f4",
   foregroundColor: "#fefefe",
@@ -27,29 +26,33 @@ export const Colors = {
   lightGrey: "#e8e8e8",
   mediumGrey: "#ccc",
   lightMediumGrey: "#bbb",
+  ghostGrey: "#bbb",
   grey: "#aaa",
   darkerGrey: "#888",
-  darkGrey76: "#767676",
-  darkGrey: "#666",
+  darkGrey55: "#555555",
+  darkGrey: "#767676",
   charcoal: "#484848",
   lighterBlack: "#333333",
-  black: "#252525",
-  darkBlack: "#191919",
+  black: "#111111",
   darkestRed: '#6A1617',
   darkerRed: '#7A1F27',
   darkRed: '#87212B',
   deepRed: "#922435",
-  red: "#CB464D",
+  red: "#D83748",
   lightRed: "#DC848A",
-  green: "#65BF93",
+  green: "#57BC7A",
+  // green:'#6CBAA3',
   lightGreen: '#ABEABE',
-  blue: "#2484FF",
+  greenCool: "#419677",
+  greenCoolLight:'#6CBAA3',
+  blue: "#1DA1F3",
   lightBlue: '#479FF4',
   lightYellow: '#FADD8F',
   paleYellow: "#FCE8A6",
   yellow: '#EDC376',
-  pink: "#DC848A",
+  pink: "#DC848B",
 };
+
 
 
 export const BorderRadius = 4;
