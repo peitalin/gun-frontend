@@ -53,10 +53,10 @@ const BannerProductCreateDesktop: NextPage<ReactProps> = (props) => {
           No listing fees. No subscription fees. No maintenance time.
         </Typography>
         <Typography variant={"body2"} className={classes.subline1}>
-          Just upload your digital products, set your own prices, and
+          Just upload your products, set your own prices, and
         </Typography>
         <Typography variant={"body2"} className={classes.subline1}>
-          get paid passive income – automatically, every month.
+          choose a gun dealer for transfers
         </Typography>
       </Banner>
     </Hidden>
