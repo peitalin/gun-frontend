@@ -43,7 +43,7 @@ const DesktopMainBarLg = (props: DesktopMainBarProps) => {
   const [hide, setHide] = React.useState(false)
 
   const goToProductCreate = () => {
-    router.push('/create-product')
+    router.push('/sell')
   }
 
   const goToMyWishlist = () => {
@@ -82,7 +82,7 @@ const DesktopMainBarLg = (props: DesktopMainBarProps) => {
         <Button
           className={clsx(
             classes.navbarButton,
-            endRoute === 'create-product' ? classes.navbarButtonSelected : null,
+            endRoute === 'sell' ? classes.navbarButtonSelected : null,
           )}
           variant="text"
           color="primary"
@@ -91,10 +91,10 @@ const DesktopMainBarLg = (props: DesktopMainBarProps) => {
           <div className={classes.flexItem}>
             <CloudUploadIcon className={clsx(
               classes.iconsCloud,
-              endRoute === 'create-product' ? classes.iconsSelected : null
+              endRoute === 'sell' ? classes.iconsSelected : null
             )}/>
             <span className={
-              endRoute === 'create-product' ? classes.selectedRouteText : null
+              endRoute === 'sell' ? classes.selectedRouteText : null
             }>
               Sell
             </span>

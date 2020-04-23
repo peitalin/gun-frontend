@@ -64,14 +64,14 @@ const MobileMainBar = (props: MobileMainBarProps) => {
         <Button
           className={clsx(
             classes.navbarButtonMobile,
-            endRoute === 'create-product' ? classes.navbarButtonSelected : null,
+            endRoute === 'sell' ? classes.navbarButtonSelected : null,
           )}
           variant="text"
           color="primary"
-          onClick={() => router.push('/create-product')}
+          onClick={() => router.push('/sell')}
         >
           <span className={
-            endRoute === 'create-product' ? classes.selectedRouteText : null
+            endRoute === 'sell' ? classes.selectedRouteText : null
           }>
             Sell
           </span>

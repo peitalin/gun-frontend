@@ -1,0 +1,118 @@
+import React from "react";
+import clsx from "clsx";
+// Redux
+import { useDispatch, useSelector } from "react-redux";
+import { GrandReduxState } from "reduxStore/grand-reducer";
+import { Actions } from "reduxStore/actions";
+import { ReduxStateStoreCreate } from "reduxStore/store_create-reducer";
+import { UserPrivate } from "typings/gqlTypes";
+// Styles
+import { withStyles, WithStyles } from "@material-ui/core/styles";
+import { styles } from "./styles";
+// Material UI
+import Typography from "@material-ui/core/Typography";
+import Paper from "@material-ui/core/Paper";
+import LinkMui from '@material-ui/core/Link';
+import Avatar from "@material-ui/core/Avatar";
+import Button from "@material-ui/core/Button";
+// Icons
+import IconButton from "@material-ui/core/IconButton";
+import ClearIcon from "@material-ui/icons/Clear";
+import LinkIcon from "@material-ui/icons/Link";
+// Errors
+import ErrorBounds from 'components/ErrorBounds';
+// Modals
+import { goToModalConnect } from "utils/modals";
+import { useRouter } from "next/router";
+import { logout } from "queries/requests";
+import { useApolloClient } from "@apollo/react-hooks";
+
+
+
+
+const UserButNoStore: React.FC<ReactProps> = (props) => {
+
+  const { classes } = props;
+
+  const dispatch = useDispatch();
+  const store = useSelector<GrandReduxState, ReduxStateStoreCreate>(
+    s => s.reduxStoreCreate
+  );
+  const user = useSelector<GrandReduxState, UserPrivate>(
+    s => s.reduxLogin.user
+  );
+  const handle = store.name.replace(" ", "-").toLowerCase();
+
+  const router = useRouter();
+  const apolloClient = useApolloClient();
+
+  return (
+    <ErrorBounds className={classes.formRoot}>
+      <div className={classes.maxWidth720}>
+        <div className={classes.paperMargin}>
+
+          {
+            props.asModal &&
+            <IconButton
+              className={classes.closeButton}
+              onClick={() =>
+                dispatch(Actions.reduxModals.TOGGLE_STORE_CREATE_MODAL(false))
+              }
+            >
+              <ClearIcon/>
+            </IconButton>
+          }
+
+          {
+            !props.disableTitle &&
+            <div className={classes.flexColMargin}>
+              <Typography color={"primary"} variant="h3">
+                Create a Seller Profile
+              </Typography>
+            </div>
+          }
+
+          <div className={clsx(classes.flexColMargin, classes.padding1)}>
+            <Button
+              variant={"contained"}
+              color={"secondary"}
+              onClick={() => router.push("/create-seller-profile")}
+              className={props.classes.button}
+            >
+              <Typography variant="body1" className={classes.buttonText}>
+                Create Seller Profile
+              </Typography>
+            </Button>
+          </div>
+
+          <div className={clsx(classes.flexColMargin, classes.padding2)}>
+            <div className={classes.flexRow}>
+              <Typography variant="body1" className={classes.loggedInText}>
+                You're logged in as
+              </Typography>
+              <Typography variant="body1" className={classes.loggedInEmail}>
+                {user.email}
+              </Typography>
+              <div
+                className={clsx(classes.link, classes.logout)}
+                onClick={() => logout(apolloClient, router.pathname, dispatch)}
+              >
+                logout
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </ErrorBounds>
+  )
+}
+
+
+interface ReactProps extends WithStyles<typeof styles> {
+  asModal?: boolean;
+  disableTitle?: boolean;
+}
+
+export default withStyles(styles)( UserButNoStore );
+

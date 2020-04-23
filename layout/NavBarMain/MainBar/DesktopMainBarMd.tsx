@@ -42,7 +42,7 @@ const DesktopMainBarMd = (props: ReactProps & DesktopMainBarProps) => {
   const [hide, setHide] = React.useState(false)
 
   const goToProductCreate = () => {
-    router.push('/create-product')
+    router.push('/sell')
   }
 
   const goToMyWishlist = () => {
@@ -84,7 +84,7 @@ const DesktopMainBarMd = (props: ReactProps & DesktopMainBarProps) => {
         <Button
           className={clsx(
             classes.navbarButton,
-            endRoute === 'create-product' ? classes.navbarButtonSelected : null,
+            endRoute === 'sell' ? classes.navbarButtonSelected : null,
           )}
           variant="text"
           color="primary"
@@ -92,7 +92,7 @@ const DesktopMainBarMd = (props: ReactProps & DesktopMainBarProps) => {
         >
           <div className={classes.flexItem}>
             <span className={
-              endRoute === 'create-product' ? classes.selectedRouteText : null
+              endRoute === 'sell' ? classes.selectedRouteText : null
             }>
               Sell
             </span>

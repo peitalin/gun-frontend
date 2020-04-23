@@ -380,7 +380,7 @@ const MobileMenuBottom = (props: MobileMenuExpanderProps) => {
           variant="text"
           color="primary"
           onClick={() => {
-            router.push("/create-product")
+            router.push("/sell")
             props.closeMobileMenu()
           }}
         >

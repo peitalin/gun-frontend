@@ -1,4 +1,6 @@
 import gql from 'graphql-tag';
+import * as ApolloReactCommon from '@apollo/react-common';
+import * as ApolloReactHooks from '@apollo/react-hooks';
 export type Maybe<T> = T | null;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
@@ -6611,6 +6613,218 @@ export type WishlistItemsEdge = Edge & {
 
 
 
+export type RegisterUploadMutationVariables = {
+  uploadType: UploadType;
+  mimeType: Scalars['String'];
+  fileSize: Scalars['Int'];
+};
+
+
+export type RegisterUploadMutation = { __typename?: 'mutation_root', uploadRegister: { __typename?: 'UploadRegisterMutationResponse', uploadId: string, putUrl: string } };
+
+export type SaveImageUploadMutationVariables = {
+  uploadId: Scalars['ID'];
+  description?: Maybe<Scalars['String']>;
+  tags?: Maybe<Array<Maybe<Scalars['String']>>>;
+  ownerIds?: Maybe<Array<Maybe<Scalars['String']>>>;
+};
+
+
+export type SaveImageUploadMutation = { __typename?: 'mutation_root', uploadSaveImage: { __typename?: 'UploadSaveImageMutationResponse', image: (
+      { __typename?: 'Image' }
+      & ImageFragment
+    ) } };
+
+export type SaveProductFileUploadMutationVariables = {
+  uploadId: Scalars['ID'];
+  fileName: Scalars['String'];
+  ownerIds?: Maybe<Array<Maybe<Scalars['String']>>>;
+};
+
+
+export type SaveProductFileUploadMutation = { __typename?: 'mutation_root', uploadSaveProductFile: { __typename?: 'UploadSaveProductFileMutationResponse', fileId: string } };
+
+export type GetProductFileDownloadLinkMutationVariables = {
+  id: Scalars['ID'];
+  orderItemId: Scalars['ID'];
+};
+
+
+export type GetProductFileDownloadLinkMutation = { __typename?: 'mutation_root', generateProductFileDownloadLink: { __typename?: 'ProductFileLinkMutationResponse', downloadLink: { __typename?: 'ProductFileDownloadLink', productFileId: string, expiresAt: any, url: string } } };
+
+export type StockLevelFragment = { __typename?: 'StockLevel', quantityAvailable: number, restockedAt?: Maybe<any>, quantityRestocked?: Maybe<number> };
+
+export type StockLimitConditionFragment = { __typename?: 'DiscountStockLimitCondition', supplyExhaustionRule: DiscountUnavailableRule, stockLevel: (
+    { __typename?: 'StockLevel' }
+    & StockLevelFragment
+  ) };
+
+export type TimeConditionFragment = { __typename?: 'DiscountTimeCondition', start?: Maybe<any>, end: any, timeExpiryRule: DiscountUnavailableRule };
+
+export type DiscountFragment = { __typename?: 'Discount', id: string, createdAt: any, scope: DiscountScope, modifier: DiscountModifier, isAutomatic: boolean, promoCode?: Maybe<string>, valueFixed?: Maybe<any>, valueDollarsOff?: Maybe<any>, valuePercentageOff?: Maybe<number>, isDisabled: boolean, timeCondition?: Maybe<(
+    { __typename?: 'DiscountTimeCondition' }
+    & TimeConditionFragment
+  )>, productScopeInfo?: Maybe<{ __typename?: 'ProductScopedDiscountInfo', variantSnapshotId?: Maybe<string>, stockLimitCondition?: Maybe<(
+      { __typename?: 'DiscountStockLimitCondition' }
+      & StockLimitConditionFragment
+    )> }>, storeScopeInfo?: Maybe<{ __typename?: 'StoreScopedDiscountInfo', storeId: string, productId?: Maybe<string>, variantId?: Maybe<string>, minimumSpend?: Maybe<any>, minimumQuantity?: Maybe<number> }>, platformScopeInfo?: Maybe<{ __typename?: 'PlatformScopedDiscountInfo', isApplicableToAnyProduct: boolean }> };
+
+export type PriceDetailsFragment = { __typename?: 'PriceDetails', basePrice: any, actualPrice: any, discountBreakdown?: Maybe<{ __typename?: 'PriceDetailsDiscountBreakdown', fixedPriceComponent: any, dollarsOffComponent: any, percentOffComponent: any, promoCodeComponent: any, fixedPriceDiscount?: Maybe<(
+      { __typename?: 'Discount' }
+      & DiscountFragment
+    )>, dollarsOffDiscounts: Array<(
+      { __typename?: 'Discount' }
+      & DiscountFragment
+    )>, percentOffDiscount?: Maybe<(
+      { __typename?: 'Discount' }
+      & DiscountFragment
+    )> }> };
+
+export type ImageFragment = { __typename?: 'Image', id: string, createdAt: any, tags?: Maybe<Array<string>>, description?: Maybe<string>, original: { __typename?: 'ImageVariant', id: string, url: string, mimeType: string, heightInPixels: number, widthInPixels: number, sizeInBytes: number }, variants: Array<{ __typename?: 'ImageVariant', id: string, mimeType: string, sizeInBytes: number, widthInPixels: number, heightInPixels: number, url: string }> };
+
+export type ProductVariantFragment = { __typename?: 'ProductVariant', variantId: string, variantSnapshotId: string, createdAt: any, variantName: string, variantDescription?: Maybe<string>, isDefault: boolean, price: any, priceWas?: Maybe<any>, isSoldOut: boolean, priceDetails: (
+    { __typename?: 'PriceDetails' }
+    & PriceDetailsFragment
+  ), relevantDiscounts?: Maybe<Array<Maybe<(
+    { __typename?: 'Discount' }
+    & DiscountFragment
+  )>>>, files: Array<{ __typename?: 'ProductFile', id: string, fileName?: Maybe<string>, createdAt: any, mimeType: string, sizeInBytes: number }>, previewItems: Array<{ __typename?: 'ProductPreviewItem', id: string, youTubeEmbedLink?: Maybe<string>, image?: Maybe<(
+      { __typename?: 'Image' }
+      & ImageFragment
+    )> }>, baseStockLevel?: Maybe<(
+    { __typename?: 'StockLevel' }
+    & StockLevelFragment
+  )>, currentStockLevel?: Maybe<(
+    { __typename?: 'StockLevel' }
+    & StockLevelFragment
+  )>, specialDeal?: Maybe<{ __typename?: 'ProductSpecialDeal', discountedPrice: any, timeCondition?: Maybe<(
+      { __typename?: 'DiscountTimeCondition' }
+      & TimeConditionFragment
+    )>, stockLimitCondition?: Maybe<(
+      { __typename?: 'DiscountStockLimitCondition' }
+      & StockLimitConditionFragment
+    )> }> };
+
+type ProductFragment_ProductPrivate_ = { __typename?: 'ProductPrivate', id: string, createdAt: any, updatedAt?: Maybe<any>, tags: Array<string>, isPublished: boolean, isSuspended: boolean, isDeleted: boolean, isExcludedFromAutomaticLists: boolean, name: string, tagline: string, description: string, variantsLabel: VariantsLabel, isQuantityEnabled: boolean, quantityLabel: QuantityLabel, currentVariants: Array<(
+    { __typename?: 'ProductVariant' }
+    & ProductVariantFragment
+  )>, featuredVariant?: Maybe<(
+    { __typename?: 'ProductVariant' }
+    & ProductVariantFragment
+  )>, chosenVariant?: Maybe<(
+    { __typename?: 'ProductVariant' }
+    & ProductVariantFragment
+  )>, store: { __typename?: 'StorePrivate', id: string, name: string } | { __typename?: 'StorePublic', id: string, name: string }, category: { __typename?: 'ProductCategory', id: string, name: string, categoryGroup?: Maybe<any> } };
+
+type ProductFragment_ProductPublic_ = { __typename?: 'ProductPublic', id: string, createdAt: any, updatedAt?: Maybe<any>, tags: Array<string>, isPublished: boolean, isSuspended: boolean, isDeleted: boolean, isExcludedFromAutomaticLists: boolean, name: string, tagline: string, description: string, variantsLabel: VariantsLabel, isQuantityEnabled: boolean, quantityLabel: QuantityLabel, currentVariants: Array<(
+    { __typename?: 'ProductVariant' }
+    & ProductVariantFragment
+  )>, featuredVariant?: Maybe<(
+    { __typename?: 'ProductVariant' }
+    & ProductVariantFragment
+  )>, chosenVariant?: Maybe<(
+    { __typename?: 'ProductVariant' }
+    & ProductVariantFragment
+  )>, store: { __typename?: 'StorePrivate', id: string, name: string } | { __typename?: 'StorePublic', id: string, name: string }, category: { __typename?: 'ProductCategory', id: string, name: string, categoryGroup?: Maybe<any> } };
+
+export type ProductFragment = ProductFragment_ProductPrivate_ | ProductFragment_ProductPublic_;
+
+export type CartFragment = { __typename?: 'Cart', id: string, userId: string, updatedAt: any, subtotal: any, automaticSavings: any, promoCodeSavings: any, taxes: any, paymentProcessingFee: any, total: any, items: Array<{ __typename?: 'CartItem', id: string, createdAt: any, cartId: string, storeId: string, purchasableStatus: CartItemPurchasableStatus, quantity: number, priceDetails: (
+      { __typename?: 'PriceDetails' }
+      & PriceDetailsFragment
+    ), product: (
+      { __typename?: 'ProductPrivate' }
+      & ProductFragment_ProductPrivate_
+    ) | (
+      { __typename?: 'ProductPublic' }
+      & ProductFragment_ProductPublic_
+    ) }>, relevantPromoCodes: Array<(
+    { __typename?: 'Discount' }
+    & DiscountFragment
+  )> };
+
+export type OrderFragment = { __typename?: 'Order', id: string, createdAt: any, updatedAt?: Maybe<any>, userId?: Maybe<string>, items: Array<{ __typename?: 'OrderItem', id: string, orderId: string, orderStatus: OrderStatus, createdAt: any, updatedAt?: Maybe<any>, quantity?: Maybe<number>, priceDetails: (
+      { __typename?: 'PriceDetails' }
+      & PriceDetailsFragment
+    ), product: { __typename?: 'ProductPrivate', id: string, name: string, tagline: string, store: { __typename?: 'StorePrivate', id: string, name: string, website?: Maybe<string> } | { __typename?: 'StorePublic', id: string, name: string, website?: Maybe<string> }, chosenVariant?: Maybe<(
+        { __typename?: 'ProductVariant' }
+        & ProductVariantFragment
+      )> } | { __typename?: 'ProductPublic', id: string, name: string, tagline: string, store: { __typename?: 'StorePrivate', id: string, name: string, website?: Maybe<string> } | { __typename?: 'StorePublic', id: string, name: string, website?: Maybe<string> }, chosenVariant?: Maybe<(
+        { __typename?: 'ProductVariant' }
+        & ProductVariantFragment
+      )> } }>, currentSnapshot: { __typename?: 'OrderSnapshot', id: string, orderStatus: OrderStatus, subtotal: any, automaticSavings: any, promoCodeSavings: any, paymentProcessingFee: any, taxes: any, total: any, paymentProcessor?: Maybe<PaymentProcessor>, transaction?: Maybe<{ __typename?: 'Transaction', id: string, createdAt: any, subtotal: any, paymentProcessingFee: any, taxes: any, paymentProcessor: PaymentProcessor, customerId?: Maybe<string>, currency?: Maybe<string>, paymentMethodId: string, paymentIntentId?: Maybe<string>, chargeId: string }> }, attachedPromoCodes: Array<(
+    { __typename?: 'Discount' }
+    & DiscountFragment
+  )> };
+
+export type ProductSalesFragment = { __typename?: 'ProductSale', orderItem: { __typename?: 'OrderItem', id: string, orderId: string, orderStatus: OrderStatus, createdAt: any, product: { __typename?: 'ProductPrivate', id: string, name: string, tagline: string, chosenVariant?: Maybe<{ __typename?: 'ProductVariant', variantId: string, variantSnapshotId: string, variantName: string, variantDescription?: Maybe<string> }> } | { __typename?: 'ProductPublic', id: string, name: string, tagline: string, chosenVariant?: Maybe<{ __typename?: 'ProductVariant', variantId: string, variantSnapshotId: string, variantName: string, variantDescription?: Maybe<string> }> }, priceDetails: (
+      { __typename?: 'PriceDetails' }
+      & PriceDetailsFragment
+    ) }, user?: Maybe<{ __typename?: 'UserPublic', firstName?: Maybe<string>, lastName?: Maybe<string>, email: string }> };
+
+type StorePublicFragment_StorePrivate_ = { __typename?: 'StorePrivate', id: string, createdAt: any, updatedAt?: Maybe<any>, name: string, bio?: Maybe<string>, website?: Maybe<string>, cover?: Maybe<(
+    { __typename?: 'Image' }
+    & ImageFragment
+  )>, profile?: Maybe<(
+    { __typename?: 'Image' }
+    & ImageFragment
+  )>, productsForSaleConnection: { __typename?: 'ProductsConnection', totalCount?: Maybe<number>, edges: Array<{ __typename?: 'ProductsEdge', node: (
+        { __typename?: 'ProductPrivate' }
+        & ProductFragment_ProductPrivate_
+      ) | (
+        { __typename?: 'ProductPublic' }
+        & ProductFragment_ProductPublic_
+      ) }>, pageInfo: { __typename?: 'PageInfo', isLastPage: boolean, endCursor?: Maybe<any> } } };
+
+type StorePublicFragment_StorePublic_ = { __typename?: 'StorePublic', id: string, createdAt: any, updatedAt?: Maybe<any>, name: string, bio?: Maybe<string>, website?: Maybe<string>, cover?: Maybe<(
+    { __typename?: 'Image' }
+    & ImageFragment
+  )>, profile?: Maybe<(
+    { __typename?: 'Image' }
+    & ImageFragment
+  )>, productsForSaleConnection: { __typename?: 'ProductsConnection', totalCount?: Maybe<number>, edges: Array<{ __typename?: 'ProductsEdge', node: (
+        { __typename?: 'ProductPrivate' }
+        & ProductFragment_ProductPrivate_
+      ) | (
+        { __typename?: 'ProductPublic' }
+        & ProductFragment_ProductPublic_
+      ) }>, pageInfo: { __typename?: 'PageInfo', isLastPage: boolean, endCursor?: Maybe<any> } } };
+
+export type StorePublicFragment = StorePublicFragment_StorePrivate_ | StorePublicFragment_StorePublic_;
+
+export type StorePrivateFragment = { __typename?: 'StorePrivate', id: string, name: string, createdAt: any, updatedAt?: Maybe<any>, website?: Maybe<string>, bio?: Maybe<string>, cover?: Maybe<(
+    { __typename?: 'Image' }
+    & ImageFragment
+  )>, profile?: Maybe<(
+    { __typename?: 'Image' }
+    & ImageFragment
+  )>, dashboardPublishedProductsConnection: { __typename?: 'ProductsConnection', totalCount?: Maybe<number>, edges: Array<{ __typename?: 'ProductsEdge', node: (
+        { __typename?: 'ProductPrivate' }
+        & ProductFragment_ProductPrivate_
+      ) | (
+        { __typename?: 'ProductPublic' }
+        & ProductFragment_ProductPublic_
+      ) }>, pageInfo: { __typename?: 'PageInfo', isLastPage: boolean, endCursor?: Maybe<any> } }, dashboardUnpublishedProductsConnection?: Maybe<{ __typename?: 'ProductsConnection', totalCount?: Maybe<number>, edges: Array<{ __typename?: 'ProductsEdge', node: (
+        { __typename?: 'ProductPrivate' }
+        & ProductFragment_ProductPrivate_
+      ) | (
+        { __typename?: 'ProductPublic' }
+        & ProductFragment_ProductPublic_
+      ) }>, pageInfo: { __typename?: 'PageInfo', isLastPage: boolean, endCursor?: Maybe<any> } }>, productsForSaleConnection: { __typename?: 'ProductsConnection', totalCount?: Maybe<number>, edges: Array<{ __typename?: 'ProductsEdge', node: (
+        { __typename?: 'ProductPrivate' }
+        & ProductFragment_ProductPrivate_
+      ) | (
+        { __typename?: 'ProductPublic' }
+        & ProductFragment_ProductPublic_
+      ) }>, pageInfo: { __typename?: 'PageInfo', isLastPage: boolean, endCursor?: Maybe<any> } }, promoCodeDiscounts: { __typename?: 'DiscountsConnection', edges: Array<{ __typename?: 'DiscountsEdge', node: (
+        { __typename?: 'Discount' }
+        & DiscountFragment
+      ) }> } };
+
+export type PaymentMethodFragment = { __typename?: 'PaymentMethod', id: string, userId: string, createdAt: any, updatedAt?: Maybe<any>, customerId?: Maybe<string>, paymentProcessor?: Maybe<PaymentProcessor>, paymentMethodTypes?: Maybe<Array<Maybe<string>>>, last4?: Maybe<string>, expMonth?: Maybe<string>, expYear?: Maybe<string>, email?: Maybe<string>, name?: Maybe<string>, details?: Maybe<string> };
+
+export type UserPrivateFragment = { __typename?: 'UserPrivate', id: string, firstName?: Maybe<string>, lastName?: Maybe<string>, email: string, stripeCustomerId: string, emailVerified?: Maybe<boolean>, userRole: Role };
+
 export type Unnamed_1_MutationVariables = {};
 
 
@@ -6621,7 +6835,584 @@ export type Unnamed_2_QueryVariables = {};
 
 export type Unnamed_2_Query = { __typename?: 'query_root', products: Array<{ __typename?: 'products', id: string, storeId: string, isDeleted: boolean, isPublished: boolean, isSuspended: boolean, isExcludedFromSearch: boolean, isExcludedFromRecommendations: boolean, categoryId: string, createdAt: any, updatedAt: any, currentSnapshot: { __typename?: 'product_snapshots', id: string, createdAt: any, productId: string, title: string, description: string, condition: string, make: string, model: string, ammoType?: Maybe<string>, actionType: string, boreDiameter?: Maybe<string>, serialNumber: string, location: string, dealer: string, currentVariants: Array<{ __typename?: 'product_variants', variantSnapshotId: string, variantId: string, variantName: string, variantDescription: string, position: number, isDefault: boolean, basePrice: number, previewItems: Array<{ __typename?: 'product_preview_items', id: string, imageId?: Maybe<string>, position: number, youtubeEmbedLink?: Maybe<string>, variantSnapshotId?: Maybe<string> }> }> } }> };
 
+export const TimeConditionFragmentFragmentDoc = gql`
+    fragment TimeConditionFragment on DiscountTimeCondition {
+  start
+  end
+  timeExpiryRule
+}
+    `;
+export const StockLevelFragmentFragmentDoc = gql`
+    fragment StockLevelFragment on StockLevel {
+  quantityAvailable
+  restockedAt
+  quantityRestocked
+}
+    `;
+export const StockLimitConditionFragmentFragmentDoc = gql`
+    fragment StockLimitConditionFragment on DiscountStockLimitCondition {
+  stockLevel {
+    ...StockLevelFragment
+  }
+  supplyExhaustionRule
+}
+    ${StockLevelFragmentFragmentDoc}`;
+export const DiscountFragmentFragmentDoc = gql`
+    fragment DiscountFragment on Discount {
+  id
+  createdAt
+  scope
+  modifier
+  isAutomatic
+  promoCode
+  valueFixed
+  valueDollarsOff
+  valuePercentageOff
+  isDisabled
+  timeCondition {
+    ...TimeConditionFragment
+  }
+  productScopeInfo {
+    variantSnapshotId
+    stockLimitCondition {
+      ...StockLimitConditionFragment
+    }
+  }
+  storeScopeInfo {
+    storeId
+    productId
+    variantId
+    minimumSpend
+    minimumQuantity
+  }
+  platformScopeInfo {
+    isApplicableToAnyProduct
+  }
+}
+    ${TimeConditionFragmentFragmentDoc}
+${StockLimitConditionFragmentFragmentDoc}`;
+export const PriceDetailsFragmentFragmentDoc = gql`
+    fragment PriceDetailsFragment on PriceDetails {
+  basePrice
+  actualPrice
+  discountBreakdown {
+    fixedPriceDiscount {
+      ...DiscountFragment
+    }
+    dollarsOffDiscounts {
+      ...DiscountFragment
+    }
+    percentOffDiscount {
+      ...DiscountFragment
+    }
+    fixedPriceComponent
+    dollarsOffComponent
+    percentOffComponent
+    promoCodeComponent
+  }
+}
+    ${DiscountFragmentFragmentDoc}`;
+export const ImageFragmentFragmentDoc = gql`
+    fragment ImageFragment on Image {
+  id
+  original {
+    id
+    url
+    mimeType
+    heightInPixels
+    widthInPixels
+    sizeInBytes
+    url
+  }
+  variants {
+    id
+    mimeType
+    sizeInBytes
+    widthInPixels
+    heightInPixels
+    url
+  }
+  createdAt
+  tags
+  description
+}
+    `;
+export const ProductVariantFragmentFragmentDoc = gql`
+    fragment ProductVariantFragment on ProductVariant {
+  variantId
+  variantSnapshotId
+  createdAt
+  variantName
+  variantDescription
+  isDefault
+  price
+  priceWas
+  priceDetails {
+    ...PriceDetailsFragment
+  }
+  relevantDiscounts {
+    ...DiscountFragment
+  }
+  files {
+    id
+    fileName
+    createdAt
+    mimeType
+    sizeInBytes
+  }
+  previewItems {
+    id
+    image {
+      ...ImageFragment
+    }
+    youTubeEmbedLink
+  }
+  isSoldOut
+  baseStockLevel {
+    ...StockLevelFragment
+  }
+  currentStockLevel {
+    ...StockLevelFragment
+  }
+  specialDeal {
+    discountedPrice
+    timeCondition {
+      ...TimeConditionFragment
+    }
+    stockLimitCondition {
+      ...StockLimitConditionFragment
+    }
+  }
+}
+    ${PriceDetailsFragmentFragmentDoc}
+${DiscountFragmentFragmentDoc}
+${ImageFragmentFragmentDoc}
+${StockLevelFragmentFragmentDoc}
+${TimeConditionFragmentFragmentDoc}
+${StockLimitConditionFragmentFragmentDoc}`;
+export const ProductFragmentFragmentDoc = gql`
+    fragment ProductFragment on Product {
+  id
+  createdAt
+  updatedAt
+  tags
+  isPublished
+  isSuspended
+  isDeleted
+  isExcludedFromAutomaticLists
+  name
+  tagline
+  description
+  currentVariants {
+    ...ProductVariantFragment
+  }
+  featuredVariant {
+    ...ProductVariantFragment
+  }
+  chosenVariant {
+    ...ProductVariantFragment
+  }
+  store {
+    id
+    name
+  }
+  category {
+    id
+    name
+    categoryGroup
+  }
+  variantsLabel
+  isQuantityEnabled
+  quantityLabel
+}
+    ${ProductVariantFragmentFragmentDoc}`;
+export const CartFragmentFragmentDoc = gql`
+    fragment CartFragment on Cart {
+  id
+  userId
+  updatedAt
+  items {
+    id
+    createdAt
+    cartId
+    storeId
+    priceDetails {
+      ...PriceDetailsFragment
+    }
+    product {
+      ...ProductFragment
+    }
+    purchasableStatus
+    quantity
+  }
+  relevantPromoCodes {
+    ...DiscountFragment
+  }
+  subtotal
+  automaticSavings
+  promoCodeSavings
+  taxes
+  paymentProcessingFee
+  total
+}
+    ${PriceDetailsFragmentFragmentDoc}
+${ProductFragmentFragmentDoc}
+${DiscountFragmentFragmentDoc}`;
+export const OrderFragmentFragmentDoc = gql`
+    fragment OrderFragment on Order {
+  id
+  createdAt
+  updatedAt
+  userId
+  items {
+    id
+    orderId
+    orderStatus
+    createdAt
+    updatedAt
+    priceDetails {
+      ...PriceDetailsFragment
+    }
+    product {
+      id
+      name
+      tagline
+      store {
+        id
+        name
+        website
+      }
+      chosenVariant {
+        ...ProductVariantFragment
+      }
+    }
+    quantity
+  }
+  currentSnapshot {
+    transaction {
+      id
+      createdAt
+      subtotal
+      paymentProcessingFee
+      taxes
+      paymentProcessor
+      customerId
+      currency
+      paymentMethodId
+      paymentIntentId
+      chargeId
+    }
+    id
+    orderStatus
+    subtotal
+    automaticSavings
+    promoCodeSavings
+    paymentProcessingFee
+    taxes
+    total
+    paymentProcessor
+  }
+  attachedPromoCodes {
+    ...DiscountFragment
+  }
+}
+    ${PriceDetailsFragmentFragmentDoc}
+${ProductVariantFragmentFragmentDoc}
+${DiscountFragmentFragmentDoc}`;
+export const ProductSalesFragmentFragmentDoc = gql`
+    fragment ProductSalesFragment on ProductSale {
+  orderItem {
+    id
+    orderId
+    product {
+      id
+      name
+      tagline
+      chosenVariant {
+        variantId
+        variantSnapshotId
+        variantName
+        variantDescription
+      }
+    }
+    orderStatus
+    createdAt
+    priceDetails {
+      ...PriceDetailsFragment
+    }
+  }
+  user {
+    firstName
+    lastName
+    email
+  }
+}
+    ${PriceDetailsFragmentFragmentDoc}`;
+export const StorePublicFragmentFragmentDoc = gql`
+    fragment StorePublicFragment on Store {
+  id
+  createdAt
+  updatedAt
+  name
+  bio
+  website
+  cover {
+    ...ImageFragment
+  }
+  profile {
+    ...ImageFragment
+  }
+  productsForSaleConnection {
+    edges {
+      node {
+        ...ProductFragment
+      }
+    }
+    totalCount
+    pageInfo {
+      isLastPage
+      endCursor
+    }
+  }
+}
+    ${ImageFragmentFragmentDoc}
+${ProductFragmentFragmentDoc}`;
+export const StorePrivateFragmentFragmentDoc = gql`
+    fragment StorePrivateFragment on StorePrivate {
+  id
+  name
+  createdAt
+  updatedAt
+  website
+  bio
+  cover {
+    ...ImageFragment
+  }
+  profile {
+    ...ImageFragment
+  }
+  dashboardPublishedProductsConnection {
+    edges {
+      node {
+        ...ProductFragment
+      }
+    }
+    totalCount
+    pageInfo {
+      isLastPage
+      endCursor
+    }
+  }
+  dashboardUnpublishedProductsConnection {
+    edges {
+      node {
+        ...ProductFragment
+      }
+    }
+    totalCount
+    pageInfo {
+      isLastPage
+      endCursor
+    }
+  }
+  productsForSaleConnection {
+    edges {
+      node {
+        ...ProductFragment
+      }
+    }
+    totalCount
+    pageInfo {
+      isLastPage
+      endCursor
+    }
+  }
+  promoCodeDiscounts(query: {count: 20}) {
+    edges {
+      node {
+        ...DiscountFragment
+      }
+    }
+  }
+}
+    ${ImageFragmentFragmentDoc}
+${ProductFragmentFragmentDoc}
+${DiscountFragmentFragmentDoc}`;
+export const PaymentMethodFragmentFragmentDoc = gql`
+    fragment PaymentMethodFragment on PaymentMethod {
+  id
+  userId
+  createdAt
+  updatedAt
+  customerId
+  paymentProcessor
+  paymentMethodTypes
+  last4
+  expMonth
+  expYear
+  email
+  name
+  details
+}
+    `;
+export const UserPrivateFragmentFragmentDoc = gql`
+    fragment UserPrivateFragment on UserPrivate {
+  id
+  firstName
+  lastName
+  email
+  stripeCustomerId
+  emailVerified
+  userRole
+}
+    `;
+export const RegisterUploadDocument = gql`
+    mutation registerUpload($uploadType: UploadType!, $mimeType: String!, $fileSize: Int!) {
+  uploadRegister(uploadType: $uploadType, mimeType: $mimeType, fileSize: $fileSize) {
+    ... on UploadRegisterMutationResponse {
+      uploadId
+      putUrl
+    }
+  }
+}
+    `;
 
+/**
+ * __useRegisterUploadMutation__
+ *
+ * To run a mutation, you first call `useRegisterUploadMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useRegisterUploadMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [registerUploadMutation, { data, loading, error }] = useRegisterUploadMutation({
+ *   variables: {
+ *      uploadType: // value for 'uploadType'
+ *      mimeType: // value for 'mimeType'
+ *      fileSize: // value for 'fileSize'
+ *   },
+ * });
+ */
+export function useRegisterUploadMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<RegisterUploadMutation, RegisterUploadMutationVariables>) {
+        return ApolloReactHooks.useMutation<RegisterUploadMutation, RegisterUploadMutationVariables>(RegisterUploadDocument, baseOptions);
+      }
+export type RegisterUploadMutationHookResult = ReturnType<typeof useRegisterUploadMutation>;
+export type RegisterUploadMutationResult = ApolloReactCommon.MutationResult<RegisterUploadMutation>;
+export type RegisterUploadMutationOptions = ApolloReactCommon.BaseMutationOptions<RegisterUploadMutation, RegisterUploadMutationVariables>;
+export const SaveImageUploadDocument = gql`
+    mutation saveImageUpload($uploadId: ID!, $description: String, $tags: [String], $ownerIds: [String]) {
+  uploadSaveImage(uploadId: $uploadId, description: $description, tags: $tags, ownerIds: $ownerIds) {
+    ... on UploadSaveImageMutationResponse {
+      image {
+        ...ImageFragment
+      }
+    }
+  }
+}
+    ${ImageFragmentFragmentDoc}`;
+
+/**
+ * __useSaveImageUploadMutation__
+ *
+ * To run a mutation, you first call `useSaveImageUploadMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSaveImageUploadMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [saveImageUploadMutation, { data, loading, error }] = useSaveImageUploadMutation({
+ *   variables: {
+ *      uploadId: // value for 'uploadId'
+ *      description: // value for 'description'
+ *      tags: // value for 'tags'
+ *      ownerIds: // value for 'ownerIds'
+ *   },
+ * });
+ */
+export function useSaveImageUploadMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<SaveImageUploadMutation, SaveImageUploadMutationVariables>) {
+        return ApolloReactHooks.useMutation<SaveImageUploadMutation, SaveImageUploadMutationVariables>(SaveImageUploadDocument, baseOptions);
+      }
+export type SaveImageUploadMutationHookResult = ReturnType<typeof useSaveImageUploadMutation>;
+export type SaveImageUploadMutationResult = ApolloReactCommon.MutationResult<SaveImageUploadMutation>;
+export type SaveImageUploadMutationOptions = ApolloReactCommon.BaseMutationOptions<SaveImageUploadMutation, SaveImageUploadMutationVariables>;
+export const SaveProductFileUploadDocument = gql`
+    mutation saveProductFileUpload($uploadId: ID!, $fileName: String!, $ownerIds: [String]) {
+  uploadSaveProductFile(uploadId: $uploadId, fileName: $fileName, ownerIds: $ownerIds) {
+    ... on UploadSaveProductFileMutationResponse {
+      fileId
+    }
+  }
+}
+    `;
+
+/**
+ * __useSaveProductFileUploadMutation__
+ *
+ * To run a mutation, you first call `useSaveProductFileUploadMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSaveProductFileUploadMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [saveProductFileUploadMutation, { data, loading, error }] = useSaveProductFileUploadMutation({
+ *   variables: {
+ *      uploadId: // value for 'uploadId'
+ *      fileName: // value for 'fileName'
+ *      ownerIds: // value for 'ownerIds'
+ *   },
+ * });
+ */
+export function useSaveProductFileUploadMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<SaveProductFileUploadMutation, SaveProductFileUploadMutationVariables>) {
+        return ApolloReactHooks.useMutation<SaveProductFileUploadMutation, SaveProductFileUploadMutationVariables>(SaveProductFileUploadDocument, baseOptions);
+      }
+export type SaveProductFileUploadMutationHookResult = ReturnType<typeof useSaveProductFileUploadMutation>;
+export type SaveProductFileUploadMutationResult = ApolloReactCommon.MutationResult<SaveProductFileUploadMutation>;
+export type SaveProductFileUploadMutationOptions = ApolloReactCommon.BaseMutationOptions<SaveProductFileUploadMutation, SaveProductFileUploadMutationVariables>;
+export const GetProductFileDownloadLinkDocument = gql`
+    mutation getProductFileDownloadLink($id: ID!, $orderItemId: ID!) {
+  generateProductFileDownloadLink(id: $id, orderItemId: $orderItemId) {
+    ... on ProductFileLinkMutationResponse {
+      downloadLink {
+        productFileId
+        expiresAt
+        url
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetProductFileDownloadLinkMutation__
+ *
+ * To run a mutation, you first call `useGetProductFileDownloadLinkMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useGetProductFileDownloadLinkMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [getProductFileDownloadLinkMutation, { data, loading, error }] = useGetProductFileDownloadLinkMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      orderItemId: // value for 'orderItemId'
+ *   },
+ * });
+ */
+export function useGetProductFileDownloadLinkMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<GetProductFileDownloadLinkMutation, GetProductFileDownloadLinkMutationVariables>) {
+        return ApolloReactHooks.useMutation<GetProductFileDownloadLinkMutation, GetProductFileDownloadLinkMutationVariables>(GetProductFileDownloadLinkDocument, baseOptions);
+      }
+export type GetProductFileDownloadLinkMutationHookResult = ReturnType<typeof useGetProductFileDownloadLinkMutation>;
+export type GetProductFileDownloadLinkMutationResult = ApolloReactCommon.MutationResult<GetProductFileDownloadLinkMutation>;
+export type GetProductFileDownloadLinkMutationOptions = ApolloReactCommon.BaseMutationOptions<GetProductFileDownloadLinkMutation, GetProductFileDownloadLinkMutationVariables>;
 export type ID = Scalars["ID"]
 export type Price = Scalars["Price"]
 export type PageCursor = Scalars["PageCursor"]

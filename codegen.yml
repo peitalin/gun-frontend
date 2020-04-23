@@ -9,6 +9,8 @@ schema:
 documents:
   # - ./**/*.graphql
   # - ./queries/*.ts
+  - ./queries/fragments.ts
+  - ./queries/content-mutations.ts
   - ./queries/gun-queries.ts
   - ./queries/gun-mutations.ts
 

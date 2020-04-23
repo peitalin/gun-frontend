@@ -95,6 +95,7 @@ export const ImageFragment = gql`
       heightInPixels
       widthInPixels
       sizeInBytes
+      url
     }
     variants {
       id
@@ -102,6 +103,7 @@ export const ImageFragment = gql`
       sizeInBytes
       widthInPixels
       heightInPixels
+      url
     }
     createdAt
     tags

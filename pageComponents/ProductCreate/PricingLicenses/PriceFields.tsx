@@ -1,0 +1,306 @@
+import React from "react";
+import { oc as option } from "ts-optchain";
+import { useState, useEffect } from "react";
+// Redux
+import { useDispatch, useSelector } from "react-redux";
+import { GrandReduxState } from "reduxStore/grand-reducer";
+import { Actions } from "reduxStore/actions";
+import { ReduxStateProductCreate } from "reduxStore/product_create-reducer";
+// Styles
+import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
+import clsx from "clsx";
+import { Colors } from "layout/AppTheme";
+// Material UI
+import Typography from "@material-ui/core/Typography";
+import Checkbox from '@material-ui/core/Checkbox';
+import FormGroup from '@material-ui/core/FormGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+// Components
+import ErrorBounds from 'components/ErrorBounds';
+import PriceDisplayProductPage from "components/PriceDisplayProductPage";
+// Typings
+import { PriceDetails } from "typings/gqlTypes";
+import TextInput from "components/Fields/TextInput";
+import { asCurrency as c } from "utils/prices";
+/// Debounce
+import { useDebouncedCallback } from 'use-debounce';
+import DiscountBuilder from "../DiscountBuilder";
+// Validation
+import { Formik, Form, FormikProps, ErrorMessage } from 'formik';
+import { ReducerName } from "typings/dropzone";
+import CurrencyInput from "components/Fields/CurrencyInput";
+// import CurrencyInput from 'react-currency-masked-input'
+import { Rifm } from 'rifm';
+import { formatCurrency, parseNumber} from "utils/currencyInput";
+
+
+
+
+const PriceFields = (props: ReactProps & FormikProps<FormikFields>) => {
+
+  const { classes, position, reducerName, ...fprops } = props;
+  // Formik props
+  const {
+    values,
+    touched,
+    errors,
+    dirty,
+    isSubmitting,
+    handleChange,
+    handleBlur,
+    handleSubmit,
+    handleReset,
+  } = fprops;
+  const { currentVariants } = values;
+
+  const [displayDiscountBuilder, setDisplayDiscountBuilder] = useState(false);
+  const toggleDiscountBuilder = () => {
+    setDisplayDiscountBuilder(!displayDiscountBuilder)
+  }
+
+  // Redux
+  const dispatch = useDispatch();
+  const actions = Actions[reducerName];
+
+  // Debounce Formik State changes to limit lag
+  const [updatePrice] = useDebouncedCallback((e: any) => {
+    let cents = Math.round(parseFloat(e)) // round: 200.9999 => 201
+    let index = position || 0;
+    if (cents) {
+      dispatch(actions.UPDATE_PRICE({ price: cents, position: index }))
+      fprops.setFieldValue(`currentVariants[${position}].price`, cents)
+    } else {
+      dispatch(actions.UPDATE_PRICE({ price: undefined, position: index }))
+      fprops.setFieldValue(`currentVariants[${position}].price`, undefined)
+    }
+  }, 16);
+
+  const [updatePriceWas] = useDebouncedCallback((e: any) => {
+    let cents = parseInt(e)
+    let index = position || 0;
+    if (cents) {
+      dispatch(actions.UPDATE_PRICE_WAS({ priceWas: cents, position: index }))
+      fprops.setFieldValue(`currentVariants[${position}].priceWas`, cents)
+    } else {
+      dispatch(actions.UPDATE_PRICE_WAS({ priceWas: undefined, position: index }))
+      fprops.setFieldValue(`currentVariants[${position}].priceWas`, undefined)
+    }
+  }, 16);
+
+
+  // RIFM - masking currency values
+  const [variablePrice, setVariablePrice] = React.useState(
+    c(option(currentVariants)[position].price()) || ''
+  );
+  const [variablePriceWas, setVariablePriceWas] = React.useState(
+    c(option(currentVariants)[position].priceWas()) || ''
+  );
+
+  return (
+    <ErrorBounds className={classes.root}>
+      <div className={classes.flexRow}>
+        <Rifm
+          // $ need to be in regexp to prevent cursor jumping on backspace
+          accept={/[\d.$]/g}
+          format={formatCurrency}
+          value={variablePrice}
+          onChange={value => {
+            // values before currency mask
+            // multiple by 100 as formik/graphql takes cents, not dollars
+            let dollars = parseNumber(value)
+            setVariablePrice(dollars)
+            updatePrice(dollars * 100)
+            // multiple by 100 as formik/graphql takes cents, not dollars
+          }}
+        >
+          {({ value, onChange }) => (
+            <div className={clsx(classes.flexCol50, classes.marginRight)}>
+              <div className={classes.priceFlexRow}>
+                <Typography
+                  className={classes.priceLabel}
+                  variant="subtitle2"
+                >
+                  Now (USD)
+                </Typography>
+                {/* <Typography className={classes.priceValue} variant="subtitle2">
+                  {
+                    value
+                      ? value
+                      : "$0.00"
+                  }
+                </Typography> */}
+              </div>
+              <div className={classes.container}>
+                <CurrencyInput
+                  name={`currentVariants[${position}].price`}
+                  type="tel"
+                  placeholder="$0.00"
+                  className={classes.textField}
+                  // use "" to render empty input in textinput, not 0 or undefined.
+                  value={value || ""}
+                  onChange={(e) => {
+                    e.persist()
+                    onChange(e)
+                  }}
+                  onBlur={handleBlur}
+                  inputProps={{ style: { width: '100%' }}}
+                  errorMessage={
+                    option(errors).currentVariants[position].price()
+                    ? errors.currentVariants[position].price
+                    : null
+                  }
+                  touched={option(touched).currentVariants[position].price()}
+                />
+              </div>
+            </div>
+          )}
+        </Rifm>
+
+        <Rifm
+          // $ need to be in regexp to prevent cursor jumping on backspace
+          accept={/[\d.$]/g}
+          format={formatCurrency}
+          value={variablePriceWas}
+          onChange={value => {
+            // values before currency mask
+            let dollars = parseNumber(value)
+            setVariablePriceWas(dollars)
+            updatePriceWas(dollars * 100)
+            // multiple by 100 as formik/graphql takes cents, not dollars
+          }}
+        >
+          {({ value, onChange }) => (
+            <div className={classes.flexCol50}>
+              <div className={classes.priceFlexRow}>
+                <Typography
+                  className={classes.priceLabel}
+                  variant="subtitle2"
+                >
+                  Was (USD)
+                </Typography>
+                <Typography className={classes.priceOptional} variant="subtitle2">
+                  - Optional
+                </Typography>
+              </div>
+              <div className={classes.container}>
+                <TextInput
+                  name={`currentVariants[${position}].priceWas`}
+                  type="tel"
+                  placeholder="0.00"
+                  className={classes.textField}
+                  value={value || ""}
+                  onChange={(e) => {
+                    e.persist()
+                    onChange(e)
+                  }}
+                  onBlur={handleBlur}
+                  inputProps={{ style: { width: '100%' }}}
+                  errorMessage={
+                    option(errors).currentVariants[position].priceWas()
+                    ? errors.currentVariants[position].priceWas
+                    : null
+                  }
+                  touched={option(touched).currentVariants[position].priceWas()}
+                />
+              </div>
+            </div>
+          )}
+        </Rifm>
+      </div>
+      <div className={classes.container}>
+        Price will be displayed as:
+      </div>
+      <div className={classes.container}>
+        <PriceDisplayProductPage
+          hideSavings={
+            option(currentVariants)[position].priceWas(0)
+            <= option(currentVariants)[position].price(0)
+          }
+          priceDetails={{
+            basePrice: option(currentVariants)[position].priceWas(),
+            actualPrice: option(currentVariants)[position].price(0),
+            discountBreakdown: null,
+          } as PriceDetails}
+        />
+      </div>
+    </ErrorBounds>
+  )
+}
+
+interface ReactProps extends WithStyles<typeof styles> {
+  position: number;
+  reducerName: ReducerName;
+}
+interface FormikFields {
+  currentVariants: {
+    price: number;
+    priceWas?: number;
+  }[];
+}
+
+export const styles = (theme: Theme) => createStyles({
+  root: {
+    paddingTop: '0.5rem',
+    width: '100%',
+  },
+  flexRow: {
+    display: 'flex',
+    justifyContent: 'flex-start',
+    flexWrap: 'wrap',
+    flexDirection: 'row',
+  },
+  flexCol: {
+    display: 'flex',
+    justifyContent: 'center',
+    flexDirection: 'column',
+  },
+  flexCol50: {
+    flexBasis: '40%',
+    flexGrow: 1,
+  },
+  marginRight: {
+    marginRight: '0.5rem',
+  },
+  flexItem: {
+    flexGrow: 1,
+    flexBasis: '20%',
+  },
+  title: {
+    marginBottom: '1rem',
+  },
+  container: {
+    marginBottom: "0.5rem",
+  },
+  priceFlexRow: {
+    display: 'flex',
+    justifyContent: 'flex-start',
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  priceLabel: {
+    marginRight: '0.5rem',
+    marginBottom: '0.5rem',
+    fontSize: '0.9rem',
+  },
+  priceValue: {
+    color: Colors.lightBlue,
+    textAlign: 'end',
+    marginBottom: '0.5rem',
+    fontSize: '0.9rem',
+  },
+  priceOptional: {
+    color: Colors.mediumGrey,
+    textAlign: 'end',
+    marginBottom: '0.5rem',
+    fontSize: '0.9rem',
+  },
+  textField: {
+    width: "100%",
+    marginBottom: '1rem',
+    "&:focus-within": {
+      color: Colors.blue,
+    },
+  },
+})
+
+export default withStyles(styles)( PriceFields );
