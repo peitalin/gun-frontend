@@ -18,8 +18,6 @@ import { showDate, showTime } from "utils/dates";
 import Router from "next/router";
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
-// Analytics
-import { useAnalytics } from "utils/analytics";
 
 
 

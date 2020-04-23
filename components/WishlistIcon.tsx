@@ -21,8 +21,6 @@ import { GrandReduxState } from "reduxStore/grand-reducer";
 // snackbar
 import SnackBarA from "components/Snackbars/SnackbarA";
 import Portal from "@material-ui/core/Portal";
-// Analytics
-import { useAnalytics, analyticsEvent } from "utils/analytics";
 
 
 

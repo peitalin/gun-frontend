@@ -23,9 +23,6 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
 import { shuffle } from "utils/misc";
 import { QueryWishlistHookArgs } from "pageComponents/Wishlist";
-// Analytics
-import { useAnalytics, analyticsEvent } from "utils/analytics";
-import { getProductIdOrSlug } from "utils/links";
 
 
 

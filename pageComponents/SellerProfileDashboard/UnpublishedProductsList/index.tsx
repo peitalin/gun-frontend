@@ -27,8 +27,6 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 // pagination
 import PaginateButtons from "components/Paginators/PaginateButtons";
 import { GET_UNPUBLISHED_PRODUCTS_CONNECTION } from "queries/store-queries";
-// Analytics
-import { useAnalytics } from "utils/analytics";
 
 
 

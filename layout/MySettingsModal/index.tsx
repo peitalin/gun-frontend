@@ -13,8 +13,6 @@ import MySettingsPage from "./MySettingsPage";
 /// CSS
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
-// // Analytics
-// import { useAnalytics, analyticsEvent } from "utils/analytics";
 
 
 

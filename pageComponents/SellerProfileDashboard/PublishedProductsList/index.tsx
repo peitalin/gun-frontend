@@ -29,8 +29,6 @@ import EmptyProductList from "pageComponents/SellerProfileDashboard/PublishedPro
 import PaginateButtons from "components/Paginators/PaginateButtons";
 import { useQuery } from "@apollo/react-hooks";
 import { GET_PUBLISHED_PRODUCTS_CONNECTION } from "queries/store-queries";
-// Analytics
-import { useAnalytics } from "utils/analytics";
 
 
 
