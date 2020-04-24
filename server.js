@@ -52,7 +52,6 @@ const aClient = new apolloClient.ApolloClient({
       },
       headers: {
         "content-type": "application/json"
-        // cookie: option(ctx).req.headers.cookie()
       },
       // Don't add all req headers, will request itself instead of gateway.
       // https://github.com/apollographql/apollo-client/issues/4193
