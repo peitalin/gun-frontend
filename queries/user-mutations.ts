@@ -99,8 +99,8 @@ export const CHANGE_PASSWORD = gql`
   }
 `;
 
-// """e.g. Paypal, Bank, Card"""
-// payoutType: String
+// """e.g. PAYPAL, BANK,  capitalized"""
+// payoutType: PayoutType
 
 // """Paypal only, or email associated with a bank account"""
 // payoutEmail: String
@@ -112,7 +112,7 @@ export const CHANGE_PASSWORD = gql`
 // payoutProcessorId: string;
 export const SET_PAYOUT_METHOD = gql`
   mutation setPayoutMethod(
-    $payoutType: String
+    $payoutType: PayoutType
     $payoutEmail: String
     $payoutProcessor: String
     $payoutProcessorId: String

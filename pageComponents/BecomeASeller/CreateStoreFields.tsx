@@ -7,10 +7,8 @@ import { styles } from "./styles";
 import clsx from "clsx";
 import { Colors } from "layout/AppTheme";
 // Redux
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { GrandReduxState } from "reduxStore/grand-reducer";
-import { Actions } from "reduxStore/actions";
-import { ReduxStateStoreCreate } from "reduxStore/store_create-reducer";
 /// Debounce
 import { useDebouncedCallback } from 'use-debounce';
 // Material UI
@@ -51,10 +49,6 @@ const CreateStoreFields: React.FC<ReactProps & FormikProps<FormikFields>> = (pro
     handleReset,
   } = fprops;
 
-  // Redux dispatchers
-  const dispatch = useDispatch();
-  const router = useRouter();
-  const actions = Actions.reduxStoreCreate;
   const userId = useSelector<GrandReduxState, string>(
     s => s.reduxLogin.user.id
   )
@@ -71,15 +65,12 @@ const CreateStoreFields: React.FC<ReactProps & FormikProps<FormikFields>> = (pro
 
   // Debounce Redux State changes to limit lag
   const [debounceUpdateName] = useDebouncedCallback((name: string) => {
-    // dispatch(actions.UPDATE_NAME(name))
     fprops.setFieldValue('name', name)
   }, 100);
   const [debounceUpdateBio] = useDebouncedCallback((bio: string) => {
-    // dispatch(actions.UPDATE_BIO(bio))
     fprops.setFieldValue('bio', bio)
   }, 100);
   const [debounceUpdateWebsite] = useDebouncedCallback((website: string) => {
-    // dispatch(actions.UPDATE_WEBSITE(website))
     fprops.setFieldValue('website', website)
   }, 100);
   const [debounceUpdatePayoutEmail] = useDebouncedCallback((email: string) => {
@@ -254,7 +245,7 @@ const CreateStoreFields: React.FC<ReactProps & FormikProps<FormikFields>> = (pro
             <input
               className={classes.storeNameCopy}
               type="text"
-              value={`Gun Marketplacedownloads.com/s/${props.storeId}`}
+              value={`gunmarketplace.com/s/${props.storeId}`}
               onChange={() => {}}
               id="copyText"
             />
@@ -309,10 +300,10 @@ const CreateStoreFields: React.FC<ReactProps & FormikProps<FormikFields>> = (pro
             } */}
             <Divider/>
             <Typography variant="body1" className={classes.subtitle4}>
-              By signing up, you agree to comply with Gun Marketplace’s Terms of Service
+              By signing up, you agree to comply with Gunmarketplace’s Terms of Service
               and Seller Agreement.
               <a className={classes.link}
-                href={'https://help.Gun Marketplacedownloads.com/hc/en-us/articles/360038530771-Terms-of-Service'}
+                href={'https://help.gunmarketplace.com/hc/en-us/articles/360038530771-Terms-of-Service'}
                 style={{ marginLeft: '0.25rem' }}
               >
                   Learn more

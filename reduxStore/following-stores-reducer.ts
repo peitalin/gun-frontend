@@ -17,7 +17,7 @@ export const reduxReducerFollowingStores = (
   action: ActionType
 ): ReduxStateFollowingStores => {
 
-  console.log("ReduxFollowingStore payload: ", action.payload)
+  // console.log("ReduxFollowingStore payload: ", action.payload)
 
   switch ( action.type ) {
 

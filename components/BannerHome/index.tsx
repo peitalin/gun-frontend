@@ -33,7 +33,7 @@ const BannerHome: NextPage<ReactProps> = (props) => {
   const { classes } = props;
   const router = useRouter();
 
-  const bannerImageUrl = "/img/banner9.jpg"
+  const bannerImageUrl = "/img/banner4.jpg"
   const bannerDitherMobile = 'linear-gradient(0deg, rgba(25,25,25,0.2) 50%, rgba(25,25,25,0) 90%)'
   const bannerDither = 'linear-gradient(30deg, rgba(25,25,25,0.2) 10%, rgba(25,25,25,0) 80%)'
 

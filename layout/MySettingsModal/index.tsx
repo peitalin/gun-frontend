@@ -31,14 +31,10 @@ const MySettingsModal: React.FC<ReactProps> = (props) => {
   );
 
   const goBack = () => {
+    // unload Stripe card component first, then shut the modal
+    dispatch(Actions.reduxStripe.SHOW_PRODUCT_PAGE_STRIPE_COMPONENT())
     dispatch(Actions.reduxModals.TOGGLE_MY_SETTINGS_MODAL(false))
   }
-
-  React.useEffect(() => {
-    if (mySettingsModalOpen) {
-      // analyticsEvent("View.Settings")
-    }
-  }, [mySettingsModalOpen])
 
   const theme = useTheme();
   const mdUp = useMediaQuery(theme.breakpoints.up("md"))
@@ -86,12 +82,11 @@ const styles = (theme: Theme) => createStyles({
   },
   modalPaperScrollPaperSm: {
     maxHeight: "calc(100% - rem)",
-    height: '100%',
-    // overflowY: 'none',
+    overflowY: 'hidden',
+
   },
   modalPaperScrollPaper: {
     // maxHeight: "calc(100% - 0px)",
-    height: '100%',
     width: '100%',
     maxWidth: '540px',
   },

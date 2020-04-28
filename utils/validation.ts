@@ -193,6 +193,10 @@ export const validationSchemas = {
   // Create Store
   CreateStore:
     Yup.object().shape({
+      userId: Yup.string()
+        .required('A userId is needed!'),
+      storeId: Yup.string()
+        .required('A storeId is needed!'),
       name: Yup.string()
         .nullable()
         .required('Name required!')

@@ -32,7 +32,7 @@ const BannerProductCreateDesktop: NextPage<ReactProps> = (props) => {
         titleStyle={{
           color: "#181818",
           alignItems: 'center',
-          marginLeft: '1.5rem',
+          // marginLeft: '1.5rem',
         }}
         height={250}
         ditherStyle={{

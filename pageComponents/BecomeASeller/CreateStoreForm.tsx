@@ -6,7 +6,6 @@ import clsx from "clsx";
 import { useDispatch, useSelector } from "react-redux";
 import { GrandReduxState } from "reduxStore/grand-reducer";
 import { Actions } from "reduxStore/actions";
-import { ReduxStateStoreCreate } from "reduxStore/store_create-reducer";
 // Styles
 import { withStyles, WithStyles } from "@material-ui/core/styles";
 import { styles } from './styles';
@@ -16,7 +15,7 @@ import { useMutation } from "@apollo/react-hooks";
 import { CREATE_STORE } from "queries/store-mutations";
 import { GET_USER } from "queries/user-queries";
 // Typings
-import { StorePrivate, UserPrivate } from "typings/gqlTypes";
+import { StorePrivate, UserPrivate, PayoutType } from "typings/gqlTypes";
 import { CreateStoreInput, HtmlEvent } from "typings"
 // Components
 import Loading from "components/Loading";
@@ -37,14 +36,14 @@ import ClearIcon from "@material-ui/icons/Clear";
 import Login from "layout/Login";
 // Graphql Queries
 import { UPDATE_USER, SET_PAYOUT_METHOD } from "queries/user-mutations";
-import { PayoutType } from "typings"
 import { useRouter } from "next/router";
 // media query
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
 // store deleted
 import { isStoreDeleted, storeCreateRedirectCondition } from "utils/store";
-
+// uuidv4
+import { v4 as uuidv4 } from "uuid"
 
 
 const CreateStoreForm: React.FC<ReactProps> = (props) => {
@@ -59,17 +58,13 @@ const CreateStoreForm: React.FC<ReactProps> = (props) => {
     displaySuccess: true,
   })
 
-  const storeCreateInput = useSelector<GrandReduxState, CreateStoreInput>(
-    state => state.reduxStoreCreate
-  );
   const userRedux = useSelector<GrandReduxState, UserPrivate>(
     s => s.reduxLogin.user
   )
 
   const [storeCreate, { data, loading, error }] =
-  useMutation<MutationData, ReduxStateStoreCreate>(
+  useMutation<MutationData, CreateStoreInput>(
     CREATE_STORE, {
-    variables: storeCreateInput,
     onError: (e) => console.log(e),
     update: (cache, { data }: { data: MutationData }) => {
       const { createStore: { store } } = data;
@@ -127,11 +122,13 @@ const CreateStoreForm: React.FC<ReactProps> = (props) => {
     <Formik
       // 1. feed product data to edit into formik state.
       initialValues={{
-        name: storeCreateInput.name,
-        bio: storeCreateInput.bio,
-        website: storeCreateInput.website,
-        coverId: storeCreateInput.coverId,
-        profileId: storeCreateInput.profileId,
+        userId: userRedux.id,
+        storeId: `store_${uuidv4()}`, // generate new storeId
+        name: "",
+        bio: "",
+        website: "",
+        coverId: "",
+        profileId: "",
         payoutEmail: "",
       }}
       validationSchema={validationSchemas.CreateStore}
@@ -140,6 +137,8 @@ const CreateStoreForm: React.FC<ReactProps> = (props) => {
         // Dispatch Apollo Mutation after validation
         storeCreate({
           variables: {
+            storeId: values.storeId,
+            userId: values.userId,
             name: values.name,
             bio: values.bio,
             website: values.website,
@@ -325,7 +324,7 @@ interface MutationData2 {
   setPayoutMethod: { user: UserPrivate };
 }
 interface MutationVars2 {
-  payoutType: string;
+  payoutType: PayoutType;
   payoutEmail: string;
   payoutProcessor: string;
   payoutProcessorId: string;

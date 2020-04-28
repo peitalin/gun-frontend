@@ -16,7 +16,7 @@ import { useMutation } from "@apollo/react-hooks";
 import { EDIT_STORE } from "queries/store-mutations";
 import { GET_USER } from "queries/user-queries";
 // Typings
-import { StorePrivate, UserPrivate } from "typings/gqlTypes";
+import { StorePrivate, UserPrivate, PayoutType } from "typings/gqlTypes";
 import { EditStoreInput, HtmlEvent } from "typings"
 // Components
 import Loading from "components/Loading";
@@ -35,7 +35,6 @@ import IconButton from "@material-ui/core/IconButton";
 import ClearIcon from "@material-ui/icons/Clear";
 // Graphql Queries
 import { UPDATE_USER, SET_PAYOUT_METHOD } from "queries/user-mutations";
-import { PayoutType } from "typings"
 import { useRouter } from "next/router";
 // media query
 import useMediaQuery from '@material-ui/core/useMediaQuery';
@@ -58,6 +57,8 @@ const EditStoreForm: React.FC<ReactProps> = (props) => {
   })
 
   const storeEditInput = {
+    userId: option(userRedux).id(),
+    storeId: option(userRedux).store.id(),
     name: option(storePrivate).name(),
     bio: option(storePrivate).bio(),
     website: option(storePrivate).website(),
@@ -70,7 +71,6 @@ const EditStoreForm: React.FC<ReactProps> = (props) => {
   const [storeEdit, { data, loading, error }] =
   useMutation<MutationData, EditStoreInput>(
     EDIT_STORE, {
-    variables: storeEditInput,
     onError: (err) => console.log(err),
     update: (cache, { data }: { data: MutationData }) => {
       const { editStoreProfile: { store } } = data;
@@ -129,6 +129,8 @@ const EditStoreForm: React.FC<ReactProps> = (props) => {
     <Formik
       // 1. feed product data to edit into formik state.
       initialValues={{
+        userId: storeEditInput.userId,
+        storeId: storeEditInput.storeId,
         name: storeEditInput.name,
         bio: storeEditInput.bio,
         website: storeEditInput.website,
@@ -145,6 +147,8 @@ const EditStoreForm: React.FC<ReactProps> = (props) => {
 
           let pm1 = storeEdit({
             variables: {
+              userId: values.userId,
+              storeId: values.storeId,
               name: values.name,
               bio: values.bio,
               website: values.website,
@@ -178,6 +182,8 @@ const EditStoreForm: React.FC<ReactProps> = (props) => {
           // just edit store, no payoutMethod changes
           storeEdit({
             variables: {
+              userId: values.userId,
+              storeId: values.storeId,
               name: values.name,
               bio: values.bio,
               website: values.website,
@@ -269,7 +275,7 @@ const EditStoreFormWrapper: React.FC<FormWrapperProps> = (props) => {
         }>
           <div className={classes.flexColMargin}>
             <Typography color={"primary"} variant="h3">
-              Edit Your Gun Marketplace Seller Profile
+              Edit Your Store
             </Typography>
             <br/>
           </div>
@@ -331,7 +337,7 @@ interface MutationData2 {
   setPayoutMethod: { user: UserPrivate };
 }
 interface MutationVars2 {
-  payoutType: string;
+  payoutType: PayoutType;
   payoutEmail: string;
   payoutProcessor: string;
   payoutProcessorId: string;

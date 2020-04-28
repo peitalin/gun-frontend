@@ -159,6 +159,7 @@ const styles = (theme: Theme) => createStyles({
     width: '100%',
     height: '100%',
     color: "#444444",
+    background: "rgba(22,22,22,0.7)",
   },
   bannerBackground: {
     position: 'absolute',

@@ -4,8 +4,7 @@ import clsx from "clsx";
 // Graphql Queries
 import { useQuery } from "@apollo/react-hooks";
 import { GET_USER } from "queries/user-queries";
-// import { UserPrivate } from "typings/gqlTypes";
-type UserPrivate = any;
+import { UserPrivate } from "typings/gqlTypes";
 // Styles
 import { withStyles, WithStyles, createStyles, Theme, fade } from "@material-ui/core/styles";
 import { Colors } from "layout/AppTheme";
@@ -19,6 +18,10 @@ import Loading from "components/Loading";
 import ErrorDisplay from "components/Error";
 import ErrorBounds from "components/ErrorBounds";
 import TextInput from "components/Fields/TextInput";
+// Redux
+import { useDispatch, useSelector } from "react-redux";
+import { GrandReduxState } from "reduxStore/grand-reducer";
+import { Actions } from "reduxStore/actions";
 
 import PaymentMethods from "./PaymentMethods";
 import ChangePasswordForm from "./ChangePasswordForm";
@@ -40,6 +43,10 @@ const MySettings = (props: ReactProps & ReduxProps) => {
     classes,
     asModal = true,
   } = props;
+
+  const showMySettingsStripeComponent = useSelector<GrandReduxState, boolean>(
+    state => state.reduxStripe.showMySettingsStripeComponent
+  );
 
   const { loading, data, error } = useQuery<QueryData>(
     GET_USER, {
@@ -89,7 +96,7 @@ const MySettings = (props: ReactProps & ReduxProps) => {
           <ChangePasswordForm/>
         </div>
 
-        {/* {
+        {
           option(user).store() &&
           <div className={classes.section}>
             <ChangePayoutMethod/>
@@ -97,12 +104,16 @@ const MySettings = (props: ReactProps & ReduxProps) => {
         }
 
         <div className={classes.section}>
-          <PaymentMethods user={user}/>
-        </div> */}
+          {
+            // Show only 1 Stripe Card instance at a time
+            showMySettingsStripeComponent &&
+            <PaymentMethods user={user}/>
+          }
+        </div>
 
-        {/* <div className={classes.sectionLast}>
+        <div className={classes.sectionLast}>
           <AdvancedSettings user={user}/>
-        </div> */}
+        </div>
 
       </ErrorBounds>
     );
@@ -127,6 +138,8 @@ const styles = (theme: Theme) => createStyles({
     padding: "2rem",
     maxWidth: "720px",
     position: "relative",
+    overflowY: "hidden",
+    height: "100%",
   },
   rootPage: {
     padding: "0rem",

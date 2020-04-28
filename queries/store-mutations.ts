@@ -1,41 +1,80 @@
 import gql from "graphql-tag";
-import { ImageFragment, StorePrivateFragment } from "./fragments";
+import { ImageFragmentStore, StorePrivateFragment } from "./fragments";
 
 export const CREATE_STORE = gql`
-  mutation createStore(
+  mutation (
+    $userId: String!
+    $storeId: String!
     $name: String!
-    $profileId: ID!
-    $coverId: ID
+    $profileId: String!
+    $coverId: String!
     $bio: String
     $website: String
   ) {
-    createStore(
-      name: $name
-      profileId: $profileId
-      coverId: $coverId
-      bio: $bio
-      website: $website
-    ) {
-      store {
-        ... on StorePrivate {
-          ...StorePrivateFragment
-        }
+    insert_stores_one(object: {
+      id: $storeId,
+      userId: $userId,
+      name: $name,
+      profileId: $profileId,
+      coverId: $coverId,
+      bio: $bio,
+      website: $website,
+    }) {
+      id
+      bio
+      website
+      name
+      userId
+      user {
+        id
       }
+      cover {
+        ...ImageFragmentStore
+      }
+      profile {
+        imageId
+        original {
+          parentId
+          variantId
+          widthInPixels
+          heightInPixels
+          sizeInBytes
+          url
+        }
+        variants {
+          parentId
+          variantId
+          mimeType
+          widthInPixels
+          heightInPixels
+          url
+        }
+        createdAt
+        tags
+        description
+      }
+
     }
   }
-  ${ImageFragment}
-  ${StorePrivateFragment}
+  ${ImageFragmentStore}
 `;
+
+
+
 
 export const EDIT_STORE = gql`
   mutation editStoreProfile(
+    $userId: String!
+    $storeId: String!
     $name: String
-    $profileId: ID
-    $coverId: ID
+    $profileId: String
+    $coverId: String
     $website: String
     $bio: String
   ) {
     editStoreProfile(
+      userId: $userId,
+      storeId: $storeId,
       name: $name
       profileId: $profileId
       coverId: $coverId
@@ -47,6 +86,6 @@ export const EDIT_STORE = gql`
       }
     }
   }
-  ${ImageFragment}
+  ${ImageFragmentStore}
   ${StorePrivateFragment}
 `;

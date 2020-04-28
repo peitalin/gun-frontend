@@ -21,8 +21,7 @@ import ButtonLoading from "components/ButtonLoading";
 import SnackBarA from "components/Snackbars/SnackbarA";
 import SnackbarsSuccessErrors from "components/Snackbars/SnackbarsSuccessErrors";
 // Typings
-// import { UserPrivate } from "typings/gqlTypes";
-type UserPrivate = any;
+import { UserPrivate, PayoutType } from "typings/gqlTypes";
 import { HtmlEvent } from "typings";
 // Validation
 import { Formik, FormikProps } from 'formik';
@@ -59,7 +58,10 @@ const ChangePayoutMethod = (props: ReactProps & ReduxProps) => {
     update: (cache, { data: { setPayoutMethod }}: { data: MutationData }) => {
 
       setShowPayoutEmailChanger(false)
-      dispatch(Actions.reduxLogin.SET_USER({ ...props.user, ...setPayoutMethod.user}))
+      dispatch(Actions.reduxLogin.SET_USER({
+        ...props.user,
+        payoutMethod: setPayoutMethod.user.payoutMethod,
+      }))
 
       cache.writeQuery({
         query: GET_USER,
@@ -86,7 +88,7 @@ const ChangePayoutMethod = (props: ReactProps & ReduxProps) => {
         console.log("formik values:", values)
         setPayoutMethod({
           variables: {
-            payoutType: "PAYPAL",
+            payoutType: PayoutType.PAYPAL,
             payoutEmail: values.newPayoutEmail,
             payoutProcessor: "PAYPAL",
             payoutProcessorId: "NA"
@@ -228,7 +230,7 @@ interface MutationData {
   setPayoutMethod: { user: UserPrivate };
 }
 interface MutationVars {
-  payoutType: string;
+  payoutType: PayoutType;
   payoutEmail: string;
   payoutProcessor: string;
   payoutProcessorId: string;

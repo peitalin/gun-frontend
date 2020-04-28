@@ -111,6 +111,31 @@ export const ImageFragment = gql`
   }
 `;
 
+export const ImageFragmentStore = gql`
+  fragment ImageFragmentStore on image_parents {
+    imageId
+    original {
+      parentId
+      variantId
+      mimeType
+      widthInPixels
+      heightInPixels
+      url
+    }
+    variants {
+      parentId
+      variantId
+      mimeType
+      widthInPixels
+      heightInPixels
+      url
+    }
+    createdAt
+    tags
+    description
+  }
+`;
+
 export const ProductVariantFragment = gql`
   fragment ProductVariantFragment on ProductVariant {
     variantId

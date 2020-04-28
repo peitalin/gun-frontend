@@ -4,7 +4,6 @@ import clsx from "clsx";
 import { useDispatch, useSelector } from "react-redux";
 import { GrandReduxState } from "reduxStore/grand-reducer";
 import { Actions } from "reduxStore/actions";
-import { ReduxStateStoreCreate } from "reduxStore/store_create-reducer";
 import { UserPrivate } from "typings/gqlTypes";
 // Styles
 import { withStyles, WithStyles } from "@material-ui/core/styles";
@@ -36,13 +35,9 @@ const AccountCreated: React.FC<ReactProps> = (props) => {
   const { classes } = props;
 
   const dispatch = useDispatch();
-  const store = useSelector<GrandReduxState, ReduxStateStoreCreate>(
-    s => s.reduxStoreCreate
-  );
   const user = useSelector<GrandReduxState, UserPrivate>(
     s => s.reduxLogin.user
   );
-  const handle = store.name.replace(" ", "-").toLowerCase();
 
   const router = useRouter();
   const apolloClient = useApolloClient();

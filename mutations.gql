@@ -238,3 +238,42 @@ query {
     }
   }
 }
+
+
+
+mutation {
+  insert_stores(objects: {
+    userId: "user_30aef7e8-352c-4702-a5b1-cd3661058186",
+    storeId: "test",
+    profileImageId: "o_1bv94ramrqt91d6h49i10aq1cj2a.JPG",
+    coverImageId:"o_1d1pl142kbm3e1h1lua4bh1fgma.JPG"
+    createdAt: "2020-04-04T12:12:12z",
+    storeName: "storeName"
+  }) {
+    returning {
+      bio
+      storeName
+      userId
+      cover {
+        imageId
+        original {
+          parentId
+          variantId
+          mimeType
+          widthInPixels
+          heightInPixels
+        }
+      }
+      profile {
+        imageId
+        original {
+          parentId
+          variantId
+          widthInPixels
+          heightInPixels
+          sizeInBytes
+        }
+      }
+    }
+  }
+}

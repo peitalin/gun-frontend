@@ -131,6 +131,8 @@ export interface GenericPageBasedConnection<T> extends PageBasedConnection {
 }
 
 export interface CreateStoreInput {
+  userId: ID;
+  storeId: ID;
   name: string;
   profileId: ID;
   coverId: ID | undefined;
@@ -139,6 +141,8 @@ export interface CreateStoreInput {
 }
 
 export interface EditStoreInput {
+  userId: ID;
+  storeId: ID;
   name: string | undefined;
   profileId: ID | undefined;
   coverId: ID | null | undefined;
