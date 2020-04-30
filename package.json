@@ -17,7 +17,6 @@
   },
   "dependencies": {
     "@apollo/react-hooks": "^3.1.3",
-    "@auth0/auth0-spa-js": "^1.6.4",
     "@graphql-codegen/introspection": "^1.13.1",
     "@graphql-codegen/typescript": "^1.13.1",
     "@material-ui/core": "^4.5.2",
@@ -25,7 +24,6 @@
     "@next/bundle-analyzer": "^9.3.2",
     "@stripe/react-stripe-js": "^1.1.0",
     "@stripe/stripe-js": "^1.2.0",
-    "@types/auth0-js": "^9.12.3",
     "@types/gapi.auth2": "0.0.51",
     "@types/stripe-v3": "^3.1.14",
     "@zeit/next-css": "^1.0.1",
@@ -34,7 +32,6 @@
     "apollo-link": "^1.2.13",
     "apollo-link-error": "^1.1.12",
     "apollo-link-http": "^1.5.16",
-    "auth0-js": "^9.12.2",
     "cacheable-response": "^2.0.7",
     "clsx": "^1.1.0",
     "currency.js": "^1.2.2",

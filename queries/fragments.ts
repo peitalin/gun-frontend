@@ -149,9 +149,6 @@ export const ProductVariantFragment = gql`
     priceDetails {
       ...PriceDetailsFragment
     }
-    relevantDiscounts {
-      ...DiscountFragment
-    }
     files {
       id
       fileName
@@ -167,25 +164,9 @@ export const ProductVariantFragment = gql`
       youTubeEmbedLink
     }
     isSoldOut
-    baseStockLevel {
-      ...StockLevelFragment
-    }
-    currentStockLevel {
-      ...StockLevelFragment
-    }
-    specialDeal {
-      discountedPrice
-      timeCondition {
-        ...TimeConditionFragment
-      }
-      stockLimitCondition {
-        ...StockLimitConditionFragment
-      }
-    }
   }
   ${ImageFragment}
   ${PriceDetailsFragment}
-  ${DiscountFragment}
 `;
 
 export const ProductFragment = gql`
@@ -198,9 +179,11 @@ export const ProductFragment = gql`
     isSuspended
     isDeleted
     isExcludedFromAutomaticLists
-    name
-    tagline
-    description
+    currentSnapshot {
+      name
+      title
+      description
+    }
     currentVariants {
       ...ProductVariantFragment
     }
@@ -219,9 +202,6 @@ export const ProductFragment = gql`
       name
       categoryGroup
     }
-    variantsLabel
-    isQuantityEnabled
-    quantityLabel
   }
   ${ProductVariantFragment}
 `;
@@ -400,54 +380,61 @@ export const StorePrivateFragment = gql`
     profile {
       ...ImageFragment
     }
-    dashboardPublishedProductsConnection {
-      edges {
-        node {
-          ...ProductFragment
-        }
-      }
-      totalCount
-      pageInfo {
-        isLastPage
-        endCursor
-      }
-    }
-    dashboardUnpublishedProductsConnection {
-      edges {
-        node {
-          ...ProductFragment
-        }
-      }
-      totalCount
-      pageInfo {
-        isLastPage
-        endCursor
-      }
-    }
     productsForSaleConnection {
-      edges {
-        node {
-          ...ProductFragment
-        }
-      }
-      totalCount
-      pageInfo {
-        isLastPage
-        endCursor
+      id
+      currentSnapshot {
+        id
+        serialNumber
+        title
       }
     }
-    promoCodeDiscounts(query: { count: 20 }) {
-      edges {
-        node {
-          ...DiscountFragment
-        }
-      }
-    }
+    # dashboardPublishedProductsConnection {
+    #   edges {
+    #     node {
+    #       ...ProductFragment
+    #     }
+    #   }
+    #   totalCount
+    #   pageInfo {
+    #     isLastPage
+    #     endCursor
+    #   }
+    # }
+    # dashboardUnpublishedProductsConnection {
+    #   edges {
+    #     node {
+    #       ...ProductFragment
+    #     }
+    #   }
+    #   totalCount
+    #   pageInfo {
+    #     isLastPage
+    #     endCursor
+    #   }
+    # }
+    # productsForSaleConnection {
+    #   edges {
+    #     node {
+    #       ...ProductFragment
+    #     }
+    #   }
+    #   totalCount
+    #   pageInfo {
+    #     isLastPage
+    #     endCursor
+    #   }
+    # }
+    # promoCodeDiscounts(query: { count: 20 }) {
+    #   edges {
+    #     node {
+    #       ...DiscountFragment
+    #     }
+    #   }
+    # }
   }
   ${ImageFragment}
-  ${ProductFragment}
-  ${DiscountFragment}
 `;
+  // ${DiscountFragment}
 
 export const PaymentMethodFragment = gql`
   fragment PaymentMethodFragment on PaymentMethod {
@@ -485,10 +472,10 @@ export const UserPrivateFragment = gql`
     stripeCustomerId
     emailVerified
     userRole
-    # isSuspended
-    # store {
-    #   ...StorePrivateFragment
-    # }
+    isSuspended
+    store {
+      ...StorePrivateFragment
+    }
     # cart {
     #   ...CartFragment
     # }
@@ -510,13 +497,13 @@ export const UserPrivateFragment = gql`
     #     ...PaymentMethodFragment
     #   }
     # }
-    # payoutMethod {
-    #   id
-    #   payoutType
-    #   payoutEmail
-    #   payoutProcessor
-    #   payoutProcessorId
-    # }
+    payoutMethod {
+      id
+      payoutType
+      payoutEmail
+      payoutProcessor
+      payoutProcessorId
+    }
     # wishlistItemsConnection(query: {}) {
     #   edges {
     #     node {
@@ -528,9 +515,9 @@ export const UserPrivateFragment = gql`
     #   }
     # }
   }
+  ${StorePrivateFragment}
 `;
   // # ${ProductFragment}
-// ${StorePrivateFragment}
 // ${CartFragment}
 // ${OrderFragment}
 // ${PaymentMethodFragment}

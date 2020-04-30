@@ -18,7 +18,6 @@ import LoginPageRedirect from "./LoginPageRedirect";
 
 import SnackBarA from "components/Snackbars/SnackbarA";
 import { useApolloClient } from "@apollo/react-hooks";
-import { logout } from "queries/requests";
 import {
   setLoginExpiration,
   runOnLoginExpiration,
@@ -50,17 +49,6 @@ const Login: React.FC<ReactProps & ReduxProps> = (props) => {
   const apolloClient = useApolloClient();
   const router = useRouter();
   const dispatch = useDispatch();
-
-  React.useEffect(() => {
-    // componentDidMount
-    checkThenSetLoggedInStatus(() => {
-      props.updateLoginState({ loggedIn: true })
-    });
-    runOnLoginExpiration(() => {
-      props.updateLoginState({ loggedIn: false })
-      logout(apolloClient, '/', dispatch)
-    })
-  }, [])
 
 
   const handleToggleModal = () => {
@@ -202,9 +190,6 @@ const Login: React.FC<ReactProps & ReduxProps> = (props) => {
       variables: {
         email: email.trim(),
         password: password,
-        productProductVariantIds: []
-        // productProductVariantIds: props.reduxCart
-        //   .cart.items.map(item => toProductProductVariantId(item))
       },
       fetchPolicy: "no-cache", // always do a network request, no caches
       errorPolicy: "all", // propagate errors from backend to Snackbar
@@ -228,9 +213,6 @@ const Login: React.FC<ReactProps & ReduxProps> = (props) => {
         password: password,
         firstName: firstName,
         lastName: lastName,
-        productProductVariantIds: [],
-        // productProductVariantIds: reduxCart.cart.items
-        //   .map(item => toProductProductVariantId(item))
       },
       update: (cache, { data: { createUser } }) => {
         cache.writeQuery({

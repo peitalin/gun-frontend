@@ -353,10 +353,6 @@ const ProductCreatePage = (props: ReactProps) => {
                       errors={errors}
                       disabled={isFormikDisabled(errors) || state.loading}
                     />
-                    {/* <div onClick={() => {
-                      console.log("error", error)
-                      console.log("values", values)
-                    }}>test</div> */}
                     <Loading fixed loading={state.loading}/>
                   </ProductCreateButtonWrapper>
 

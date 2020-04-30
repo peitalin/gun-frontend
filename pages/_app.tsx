@@ -32,7 +32,6 @@ import "../public/App.css";
 type UserPrivate = any;
 import { serverApolloClient } from "utils/apollo";
 // Payment Clients
-import { Auth0Provider } from "layout/Auth0";
 import Router from "next/router";
 
 
@@ -137,20 +136,9 @@ class MyApp extends App<AppProps> {
           <ThemeProvider theme={AppTheme}>
             <CssBaseline />
             <GlobalStyles/>
-            <Auth0Provider
-              domain={"gunbrokers.au.auth0.com"}
-              client_id={"yVGw33SMWWUtMknTvOntd3xwP6DtOACm"}
-              redirect_uri={
-                process.browser
-                  ? window.location.origin
-                  : null
-              }
-              onRedirectCallback={onRedirectCallback}
-            >
-              <Layout>
-                <Component {...pageProps} key={router.route} />
-              </Layout>
-            </Auth0Provider>
+            <Layout>
+              <Component {...pageProps} key={router.route} />
+            </Layout>
           </ThemeProvider>
         </ApolloProvider>
       </Provider>

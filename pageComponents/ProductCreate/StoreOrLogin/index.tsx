@@ -22,14 +22,12 @@ import {
 } from "typings/gqlTypes";
 // router
 import { useRouter } from "next/router";
-import { logout } from "queries/requests";
 import { useApolloClient } from "@apollo/react-hooks";
 // store deleted
 import { isStoreDeleted, storeCreateRedirectCondition } from "utils/store";
 // Redux
 import { GrandReduxState } from "reduxStore/grand-reducer";
 import { Actions } from "reduxStore/actions";
-
 
 
 

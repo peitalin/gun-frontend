@@ -8,7 +8,6 @@ export const CREATE_USER = gql`
     $username: String
     $firstName: String
     $lastName: String
-    $productProductVariantIds: [ProductProductVariantId]
   ) {
     signUpUsingEmail(
       email: $email
@@ -16,7 +15,6 @@ export const CREATE_USER = gql`
       username: $username
       firstName: $firstName
       lastName: $lastName
-      productProductVariantIds: $productProductVariantIds
     ) {
       user {
         ...UserPrivateFragment

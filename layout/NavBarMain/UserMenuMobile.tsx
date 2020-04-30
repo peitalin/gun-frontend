@@ -21,7 +21,6 @@ import Divider from "components/Divider";
 import Typography from "@material-ui/core/Typography";
 // Icons
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
-// import { logout } from "queries/requests";
 // import UserButNoStore from "pageComponents/BecomeASeller/UserButNoStore";
 // Router
 import Link from "next/link";

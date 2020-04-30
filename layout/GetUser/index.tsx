@@ -12,10 +12,8 @@ import { GET_USER } from "queries/user-queries";
 import { useApolloClient } from "@apollo/react-hooks";
 import { ApolloClient } from "apollo-client";
 // Typings
-// import { UserPrivate } from 'typings/gqlTypes';
+import { UserPrivate } from 'typings/gqlTypes';
 
-
-type UserPrivate = any;
 
 
 const GetUser = (props: ReactProps) => {
@@ -62,7 +60,7 @@ const reduxBatchUpdate = {
     batch(() => {
       dispatch(Actions.reduxLogin.SET_USER(data.user));
       // dispatch(Actions.reduxCart.UPDATE_CART(data.user.cart));
-      // dispatch(Actions.reduxProductCreate.UPDATE_STORE_ID(data.user.store.id));
+      dispatch(Actions.reduxProductCreate.UPDATE_STORE_ID(data.user.store.id));
       // dispatch(Actions.reduxWishlist.SET_WISHLIST(
       //   option(data).user.wishlistItemsConnection()
       // ));
@@ -77,7 +75,7 @@ const reduxBatchUpdate = {
   userStoreId: (data: QueryData) => (dispatch: Dispatch, state) => {
     batch(() => {
       dispatch(Actions.reduxLogin.SET_USER(data.user));
-      // dispatch(Actions.reduxProductCreate.UPDATE_STORE_ID(data.user.store.id));
+      dispatch(Actions.reduxProductCreate.UPDATE_STORE_ID(data.user.store.id));
     })
   },
 }

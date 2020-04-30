@@ -23,6 +23,14 @@ import LockIcon from "@material-ui/icons/Lock";
 import ClearIcon from "@material-ui/icons/Clear";
 import IconButton from "@material-ui/core/IconButton";
 
+import GoogleLogin from 'react-google-login';
+import {
+  useGoogleLogin,
+  useGoogleLogout,
+} from 'react-google-login'
+import GoogleLoginButton from "components/Icons/GoogleLoginButton";
+
+
 
 const SignIn = (props: ReactProps) => {
 
@@ -47,6 +55,42 @@ const SignIn = (props: ReactProps) => {
     props.setTabIndex(2)
   }
 
+
+  const GoogleSignOut = () => {
+    var auth2 = window.gapi.auth2.getAuthInstance();
+    auth2.signOut().then(function () {
+      console.log('User signed out.');
+    });
+  }
+
+  const onSignInGoogle = (googleUser) => {
+    var profile = googleUser.getBasicProfile();
+    console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+    console.log('Name: ' + profile.getName());
+    console.log('Image URL: ' + profile.getImageUrl());
+    console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+  }
+
+  const responseGoogle = (response) => {
+    console.log(response);
+  }
+
+
+  // React.useEffect(() => {
+  //   if (process.browser) {
+  //     if (window && window.gapi) {
+  //       window.gapi.signin2.render('g-signin2', {
+  //         'scope': 'https://www.googleapis.com/auth/plus.login',
+  //         'width': 200,
+  //         'height': 50,
+  //         'longtitle': true,
+  //         'theme': 'dark',
+  //         'onsuccess': onSignIn2
+  //       });
+  //     }
+  //   }
+  // }, [])
+
   return (
     <ErrorBounds className={classes.outerContainer}>
       <div className={classes.paper}>
@@ -66,6 +110,25 @@ const SignIn = (props: ReactProps) => {
             : "Login"
           }
         </Typography>
+
+        {/* <a href="#" onClick={onSignIn2}>On Sign In</a> */}
+
+        <GoogleLogin
+          clientId="628767016907-66h6rtfiae0jt8uojc87hf6ns1npj3uj.apps.googleusercontent.com"
+          buttonText="Login with Google"
+          onSuccess={onSignInGoogle}
+          onFailure={responseGoogle}
+          cookiePolicy={'single_host_origin'}
+          // cannot style css, must override render
+          render={renderProps => (
+            <GoogleLoginButton
+              title={"Login with Google"}
+              style={{ width: 200 }}
+            />
+          )}
+        />
+        <a href="#" onClick={GoogleSignOut}>Google Sign out</a>
+
 
         <form className={classes.form}>
           <FormControl margin="normal" required fullWidth>

@@ -5,12 +5,10 @@ export const LOGIN = gql`
   mutation logInUsingEmail(
     $email: String!
     $password: String!
-    $productProductVariantIds: [ProductProductVariantId]
   ) {
     logInUsingEmail(
       email: $email
       password: $password
-      productProductVariantIds: $productProductVariantIds
     ) {
       jwt
       user {

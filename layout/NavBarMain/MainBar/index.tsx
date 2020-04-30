@@ -35,13 +35,6 @@ import DesktopMainBarMd from "./DesktopMainBarMd";
 import DesktopMainBarSm from "./DesktopMainBarSm";
 import MobileMainBarXs from "./MobileMainBarXs";
 
-import GoogleLogin from 'react-google-login';
-
-import {
-  useGoogleLogin,
-  useGoogleLogout,
-} from 'react-google-login'
-
 
 
 const MainBar = (props: ReactProps) => {
@@ -73,42 +66,6 @@ const MainBar = (props: ReactProps) => {
     color,
     subtotal,
   };
-
-
-  const signOut = () => {
-    var auth2 = window.gapi.auth2.getAuthInstance();
-    auth2.signOut().then(function () {
-      console.log('User signed out.');
-    });
-  }
-
-  const onSignIn2 = (googleUser) => {
-    var profile = googleUser.getBasicProfile();
-    console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-    console.log('Name: ' + profile.getName());
-    console.log('Image URL: ' + profile.getImageUrl());
-    console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
-  }
-
-  const responseGoogle = (response) => {
-    console.log(response);
-  }
-
-
-  // React.useEffect(() => {
-  //   if (process.browser) {
-  //     if (window && window.gapi) {
-  //       window.gapi.signin2.render('g-signin2', {
-  //         'scope': 'https://www.googleapis.com/auth/plus.login',
-  //         'width': 200,
-  //         'height': 50,
-  //         'longtitle': true,
-  //         'theme': 'dark',
-  //         'onsuccess': onSignIn2
-  //       });
-  //     }
-  //   }
-  // }, [])
 
 
   return (
@@ -151,21 +108,6 @@ const MainBar = (props: ReactProps) => {
           {...navBarProps}
         />
       </Hidden>
-
-      {/* <div className="g-signin2"
-        data-onsuccess="onSignIn"
-        // data-onsuccess={onSignIn2}
-      />
-      <a href="#" onClick={onSignIn2}>On Sign In</a> */}
-
-      <GoogleLogin
-        clientId="628767016907-66h6rtfiae0jt8uojc87hf6ns1npj3uj.apps.googleusercontent.com"
-        buttonText="Login"
-        onSuccess={responseGoogle}
-        onFailure={responseGoogle}
-        cookiePolicy={'single_host_origin'}
-      />
-      <a href="#" onClick={signOut}>Google Sign out</a>
 
     </nav>
   );

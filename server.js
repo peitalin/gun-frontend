@@ -22,16 +22,17 @@ const http = require("http");
 const https = require("https");
 //// Http2 not well supported on express.js
 // const { createServer, createSecureServer } = require('http2');
-const apolloClient = require("apollo-client");
-const apolloLink = require("apollo-link");
-const apolloLinkHttp = require("apollo-link-http");
+const { ApolloClient } = require("apollo-client");
+const { ApolloLink } = require("apollo-link");
+const { InMemoryCache } = require("apollo-cache-inmemory");
+const { HttpLink } = require("apollo-link-http");
 const apolloLinkError = require("apollo-link-error");
-const apolloCache = require("apollo-cache-inmemory");
+
 const fetch = require("isomorphic-unfetch");
 const gql = require("graphql-tag");
 
-const aClient = new apolloClient.ApolloClient({
-  link: apolloLink.ApolloLink.from([
+const aClient = new ApolloClient({
+  link: ApolloLink.from([
     apolloLinkError.onError(({ graphQLErrors, networkError }) => {
       if (graphQLErrors)
         graphQLErrors.forEach(({ message, locations, path }) =>
@@ -44,7 +45,7 @@ const aClient = new apolloClient.ApolloClient({
         );
       if (networkError) console.log(`[Network error]: ${networkError}`);
     }),
-    new apolloLinkHttp.HttpLink({
+    new HttpLink({
       uri: process.env.SERVER_GATEWAY_GRAPHQL_URL,
       fetch: fetch,
       fetchOptions: {
@@ -59,11 +60,12 @@ const aClient = new apolloClient.ApolloClient({
     })
   ]),
   // hydrates apollo cache with initialState created in server
-  cache: new apolloCache.InMemoryCache({
+  cache: new InMemoryCache({
     // fragmentMatcher, // fragments
   }),
   ssrMode: false
 });
+
 
 // SSR Cache
 const cacheManager = cacheableResponse({
@@ -86,6 +88,7 @@ const cacheManager = cacheableResponse({
     res.send(data);
   }
 });
+
 
 app.prepare().then(() => {
   const expressServer = express();

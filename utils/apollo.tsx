@@ -11,22 +11,26 @@ import https from "https";
 import { oc as option } from "ts-optchain";
 
 // // ENV variables
-// import getConfig from 'next/config'
-// const {
-//   // Available both client and server side
-//   publicRuntimeConfig: {
-//     GATEWAY_GRAPHQL_URL,
-//     SERVER_GATEWAY_GRAPHQL_URL,
-//     NODE_ENV
-//   },
-//   // Only available server side
-//   serverRuntimeConfig: {
-//     IN_DOCKER,
-//   },
-// } = getConfig()
+import getConfig from 'next/config'
+const {
+  // Available both client and server side
+  publicRuntimeConfig: {
+    // GATEWAY_GRAPHQL_URL,
+    // SERVER_GATEWAY_GRAPHQL_URL,
+    // NODE_ENV
+  },
+  // Only available server side
+  serverRuntimeConfig: {
+  },
+} = getConfig()
 
-let GATEWAY_GRAPHQL_URL = "https://api.gunmarketplace.com.au/v1/graphql"
-let SERVER_GATEWAY_GRAPHQL_URL = "https://api.gunmarketplace.com.au/v1/graphql"
+// let GATEWAY_GRAPHQL_URL = "https://api.gunmarketplace.com.au/v1/graphql"
+// let SERVER_GATEWAY_GRAPHQL_URL = "https://api.gunmarketplace.com.au/v1/graphql"
+
+let GATEWAY_GRAPHQL_URL = "https://0.0.0.0:443/v1/graphql"
+let SERVER_GATEWAY_GRAPHQL_URL = "https://0.0.0.0:443/v1/graphql"
+
+
 let NODE_ENV = "develop"
 
 const URI = GATEWAY_GRAPHQL_URL;
@@ -60,9 +64,6 @@ export default withApollo(
     // let authCookie = ctx.req.headers["set-cookie"] || [ctx.req.headers["cookie"]];
     // get the authentication token from local storage if it exists
     let token = undefined
-    if (process.browser) {
-      let token = localStorage.getItem('auth0:id_token');
-    }
 
     return new ApolloClient({
       link: ApolloLink.from([

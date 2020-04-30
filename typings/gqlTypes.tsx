@@ -14,6 +14,7 @@ export type Scalars = {
   PageCursor: any;
   Price: number;
   timestamptz: any;
+  timestamp: any;
   json: any;
   uuid: any;
 };
@@ -6485,14 +6486,14 @@ export type Stores = {
   bio?: Maybe<Scalars['String']>;
   cover?: Maybe<Image_Parents>;
   coverId?: Maybe<Scalars['String']>;
-  createdAt: Scalars['timestamptz'];
+  createdAt: Scalars['timestamp'];
   id: Scalars['String'];
   isDeleted: Scalars['Boolean'];
   isSuspended: Scalars['Boolean'];
   name: Scalars['String'];
   profile?: Maybe<Image_Parents>;
   profileId?: Maybe<Scalars['String']>;
-  updatedAt?: Maybe<Scalars['timestamptz']>;
+  updatedAt?: Maybe<Scalars['timestamp']>;
   user: Users;
   userId: Scalars['String'];
   website?: Maybe<Scalars['String']>;
@@ -6535,14 +6536,14 @@ export type Stores_Bool_Exp = {
   bio?: Maybe<String_Comparison_Exp>;
   cover?: Maybe<Image_Parents_Bool_Exp>;
   coverId?: Maybe<String_Comparison_Exp>;
-  createdAt?: Maybe<Timestamptz_Comparison_Exp>;
+  createdAt?: Maybe<Timestamp_Comparison_Exp>;
   id?: Maybe<String_Comparison_Exp>;
   isDeleted?: Maybe<Boolean_Comparison_Exp>;
   isSuspended?: Maybe<Boolean_Comparison_Exp>;
   name?: Maybe<String_Comparison_Exp>;
   profile?: Maybe<Image_Parents_Bool_Exp>;
   profileId?: Maybe<String_Comparison_Exp>;
-  updatedAt?: Maybe<Timestamptz_Comparison_Exp>;
+  updatedAt?: Maybe<Timestamp_Comparison_Exp>;
   user?: Maybe<Users_Bool_Exp>;
   userId?: Maybe<String_Comparison_Exp>;
   website?: Maybe<String_Comparison_Exp>;
@@ -6558,14 +6559,14 @@ export type Stores_Insert_Input = {
   bio?: Maybe<Scalars['String']>;
   cover?: Maybe<Image_Parents_Obj_Rel_Insert_Input>;
   coverId?: Maybe<Scalars['String']>;
-  createdAt?: Maybe<Scalars['timestamptz']>;
+  createdAt?: Maybe<Scalars['timestamp']>;
   id?: Maybe<Scalars['String']>;
   isDeleted?: Maybe<Scalars['Boolean']>;
   isSuspended?: Maybe<Scalars['Boolean']>;
   name?: Maybe<Scalars['String']>;
   profile?: Maybe<Image_Parents_Obj_Rel_Insert_Input>;
   profileId?: Maybe<Scalars['String']>;
-  updatedAt?: Maybe<Scalars['timestamptz']>;
+  updatedAt?: Maybe<Scalars['timestamp']>;
   user?: Maybe<Users_Obj_Rel_Insert_Input>;
   userId?: Maybe<Scalars['String']>;
   website?: Maybe<Scalars['String']>;
@@ -6575,11 +6576,11 @@ export type Stores_Max_Fields = {
    __typename?: 'stores_max_fields';
   bio?: Maybe<Scalars['String']>;
   coverId?: Maybe<Scalars['String']>;
-  createdAt?: Maybe<Scalars['timestamptz']>;
+  createdAt?: Maybe<Scalars['timestamp']>;
   id?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   profileId?: Maybe<Scalars['String']>;
-  updatedAt?: Maybe<Scalars['timestamptz']>;
+  updatedAt?: Maybe<Scalars['timestamp']>;
   userId?: Maybe<Scalars['String']>;
   website?: Maybe<Scalars['String']>;
 };
@@ -6600,11 +6601,11 @@ export type Stores_Min_Fields = {
    __typename?: 'stores_min_fields';
   bio?: Maybe<Scalars['String']>;
   coverId?: Maybe<Scalars['String']>;
-  createdAt?: Maybe<Scalars['timestamptz']>;
+  createdAt?: Maybe<Scalars['timestamp']>;
   id?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   profileId?: Maybe<Scalars['String']>;
-  updatedAt?: Maybe<Scalars['timestamptz']>;
+  updatedAt?: Maybe<Scalars['timestamp']>;
   userId?: Maybe<Scalars['String']>;
   website?: Maybe<Scalars['String']>;
 };
@@ -6676,13 +6677,13 @@ export enum Stores_Select_Column {
 export type Stores_Set_Input = {
   bio?: Maybe<Scalars['String']>;
   coverId?: Maybe<Scalars['String']>;
-  createdAt?: Maybe<Scalars['timestamptz']>;
+  createdAt?: Maybe<Scalars['timestamp']>;
   id?: Maybe<Scalars['String']>;
   isDeleted?: Maybe<Scalars['Boolean']>;
   isSuspended?: Maybe<Scalars['Boolean']>;
   name?: Maybe<Scalars['String']>;
   profileId?: Maybe<Scalars['String']>;
-  updatedAt?: Maybe<Scalars['timestamptz']>;
+  updatedAt?: Maybe<Scalars['timestamp']>;
   userId?: Maybe<Scalars['String']>;
   website?: Maybe<Scalars['String']>;
 };
@@ -7158,6 +7159,19 @@ export type SummaryStatistics = {
 };
 
 
+export type Timestamp_Comparison_Exp = {
+  _eq?: Maybe<Scalars['timestamp']>;
+  _gt?: Maybe<Scalars['timestamp']>;
+  _gte?: Maybe<Scalars['timestamp']>;
+  _in?: Maybe<Array<Scalars['timestamp']>>;
+  _is_null?: Maybe<Scalars['Boolean']>;
+  _lt?: Maybe<Scalars['timestamp']>;
+  _lte?: Maybe<Scalars['timestamp']>;
+  _neq?: Maybe<Scalars['timestamp']>;
+  _nin?: Maybe<Array<Scalars['timestamp']>>;
+};
+
+
 export type Timestamptz_Comparison_Exp = {
   _eq?: Maybe<Scalars['timestamptz']>;
   _gt?: Maybe<Scalars['timestamptz']>;
@@ -7316,6 +7330,7 @@ export type Users = {
   lastName?: Maybe<Scalars['String']>;
   lastSeen?: Maybe<Scalars['timestamptz']>;
   passwordHash: Scalars['String'];
+  payoutMethod?: Maybe<Payout_Methods>;
   payoutMethodId?: Maybe<Scalars['String']>;
   payoutSplitId?: Maybe<Scalars['String']>;
   sellerReferredById?: Maybe<Scalars['String']>;
@@ -7392,6 +7407,7 @@ export type Users_Bool_Exp = {
   lastName?: Maybe<String_Comparison_Exp>;
   lastSeen?: Maybe<Timestamptz_Comparison_Exp>;
   passwordHash?: Maybe<String_Comparison_Exp>;
+  payoutMethod?: Maybe<Payout_Methods_Bool_Exp>;
   payoutMethodId?: Maybe<String_Comparison_Exp>;
   payoutSplitId?: Maybe<String_Comparison_Exp>;
   sellerReferredById?: Maybe<String_Comparison_Exp>;
@@ -7421,6 +7437,7 @@ export type Users_Insert_Input = {
   lastName?: Maybe<Scalars['String']>;
   lastSeen?: Maybe<Scalars['timestamptz']>;
   passwordHash?: Maybe<Scalars['String']>;
+  payoutMethod?: Maybe<Payout_Methods_Obj_Rel_Insert_Input>;
   payoutMethodId?: Maybe<Scalars['String']>;
   payoutSplitId?: Maybe<Scalars['String']>;
   sellerReferredById?: Maybe<Scalars['String']>;
@@ -7544,6 +7561,7 @@ export type Users_Order_By = {
   lastName?: Maybe<Order_By>;
   lastSeen?: Maybe<Order_By>;
   passwordHash?: Maybe<Order_By>;
+  payoutMethod?: Maybe<Payout_Methods_Order_By>;
   payoutMethodId?: Maybe<Order_By>;
   payoutSplitId?: Maybe<Order_By>;
   sellerReferredById?: Maybe<Order_By>;
@@ -7880,7 +7898,10 @@ export type StorePrivateFragment = { __typename?: 'StorePrivate', id: string, na
 
 export type PaymentMethodFragment = { __typename?: 'PaymentMethod', id: string, userId: string, createdAt: any, updatedAt?: Maybe<any>, customerId?: Maybe<string>, paymentProcessor?: Maybe<PaymentProcessor>, paymentMethodTypes?: Maybe<Array<Maybe<string>>>, last4?: Maybe<string>, expMonth?: Maybe<string>, expYear?: Maybe<string>, email?: Maybe<string>, name?: Maybe<string>, details?: Maybe<string> };
 
-export type UserPrivateFragment = { __typename?: 'UserPrivate', id: string, firstName?: Maybe<string>, lastName?: Maybe<string>, email: string, stripeCustomerId: string, emailVerified?: Maybe<boolean>, userRole: Role };
+export type UserPrivateFragment = { __typename?: 'UserPrivate', id: string, firstName?: Maybe<string>, lastName?: Maybe<string>, email: string, stripeCustomerId: string, emailVerified?: Maybe<boolean>, userRole: Role, isSuspended: boolean, store?: Maybe<(
+    { __typename?: 'StorePrivate' }
+    & StorePrivateFragment
+  )>, payoutMethod?: Maybe<{ __typename?: 'PayoutMethod', id: string, payoutType?: Maybe<string>, payoutEmail?: Maybe<string>, payoutProcessor?: Maybe<string>, payoutProcessorId?: Maybe<string> }> };
 
 export type Unnamed_1_MutationVariables = {};
 
@@ -8258,6 +8279,23 @@ export const StorePublicFragmentFragmentDoc = gql`
 }
     ${ImageFragmentFragmentDoc}
 ${ProductFragmentFragmentDoc}`;
+export const PaymentMethodFragmentFragmentDoc = gql`
+    fragment PaymentMethodFragment on PaymentMethod {
+  id
+  userId
+  createdAt
+  updatedAt
+  customerId
+  paymentProcessor
+  paymentMethodTypes
+  last4
+  expMonth
+  expYear
+  email
+  name
+  details
+}
+    `;
 export const StorePrivateFragmentFragmentDoc = gql`
     fragment StorePrivateFragment on StorePrivate {
   id
@@ -8319,23 +8357,6 @@ export const StorePrivateFragmentFragmentDoc = gql`
     ${ImageFragmentFragmentDoc}
 ${ProductFragmentFragmentDoc}
 ${DiscountFragmentFragmentDoc}`;
-export const PaymentMethodFragmentFragmentDoc = gql`
-    fragment PaymentMethodFragment on PaymentMethod {
-  id
-  userId
-  createdAt
-  updatedAt
-  customerId
-  paymentProcessor
-  paymentMethodTypes
-  last4
-  expMonth
-  expYear
-  email
-  name
-  details
-}
-    `;
 export const UserPrivateFragmentFragmentDoc = gql`
     fragment UserPrivateFragment on UserPrivate {
   id
@@ -8345,8 +8366,19 @@ export const UserPrivateFragmentFragmentDoc = gql`
   stripeCustomerId
   emailVerified
   userRole
+  isSuspended
+  store {
+    ...StorePrivateFragment
+  }
+  payoutMethod {
+    id
+    payoutType
+    payoutEmail
+    payoutProcessor
+    payoutProcessorId
+  }
 }
-    `;
+    ${StorePrivateFragmentFragmentDoc}`;
 export const RegisterUploadDocument = gql`
     mutation registerUpload($uploadType: UploadType!, $mimeType: String!, $fileSize: Int!) {
   uploadRegister(uploadType: $uploadType, mimeType: $mimeType, fileSize: $fileSize) {

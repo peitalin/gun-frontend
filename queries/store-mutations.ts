@@ -11,6 +11,14 @@ export const CREATE_STORE = gql`
     $bio: String
     $website: String
   ) {
+
+    update_users(
+      where: {id: {_eq: $userId }},
+      _set: {storeId: $storeId }
+    ) {
+      affected_rows
+    }
+
     insert_stores_one(object: {
       id: $storeId,
       userId: $userId,
