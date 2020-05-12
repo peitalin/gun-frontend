@@ -9,36 +9,43 @@ import {
   VariantsLabel,
   QuantityLabel,
   ProductPreviewItemInput,
+  ProductVariantEditInput,
 } from "typings/gqlTypes";
 import {
   DzuFilePreview,
   DzuPreviewOrder,
   DzuPreviewItem
 } from "typings/dropzone";
-
+import { ProductEditInputFrontEnd } from "typings";
 
 
 ///// state reducer //////////
 export interface ReduxStateProductEdit {
-  productEditInput: ProductEditInput;
-  // fileIds and previewItems are replicated across all variants,
+  productEditInput: ProductEditInputFrontEnd;
+  // previewItems are replicated across all variants,
   // until we decide to allow these fields to vary between variants
   previewItems: DzuPreviewItem[],
   // for tracking/persisting previews
-  dzuFiles: DzuFilePreview[],
   dzuPreviewOrder: DzuPreviewOrder[],
 }
 
 
 const initialProductEditState: ReduxStateProductEdit = {
   productEditInput: {
-    name: "",
-    tagline: "",
-    tags: [],
-    description: "<h5>Every unhappy family is unhappy in its own way</h5>",
-    categoryId: "",
     productId: "",
-    isPublished: true,
+    categoryId: "",
+    tags: [],
+    title: "",
+    description: "",
+    condition: "",
+    make: "",
+    model: "",
+    ammoType: "",
+    actionType: "",
+    boreDiameter: "",
+    serialNumber: "",
+    location: "",
+    dealer: "",
     currentVariants: [
       {
         variantId: "variant_id",
@@ -47,30 +54,16 @@ const initialProductEditState: ReduxStateProductEdit = {
         priceWas: 0,
         price: 0,
         isDefault: true,
-        fileIds: [],
         previewItems: [],
-        specialDeal: null,
-        // specialDeal: {
-        //   discountedPrice: 0,
-        //   timeCondition: {
-        //     start: new Date(),
-        //     end: new Date,
-        //     timeExpiryRule: DiscountUnavailableRule.DISABLE_DISCOUNT,
-        //   },
-        //   stockLimitCondition: {
-        //     quantityAvailable: 10;
-        //     supplyExhaustionRule: DiscountUnavailableRule.MARK_AS_SOLD_OUT;
-        //   },
-        // },
         quantityAvailable: null
       }
     ],
+    isPublished: false,
     variantsLabel: VariantsLabel.LICENSE,
     isQuantityEnabled: false,
     quantityLabel: QuantityLabel.SEATS
   },
   previewItems: [],
-  dzuFiles: [],
   dzuPreviewOrder: [],
 }
 
@@ -94,22 +87,12 @@ export const reduxReducerProductEdit = (
       }
     }
 
-    case A.UPDATE_NAME().type: {
+    case A.UPDATE_TITLE().type: {
       return {
         ...state,
         productEditInput: {
           ...state.productEditInput,
-          name: action.payload
-        }
-      }
-    }
-
-    case A.UPDATE_TAGLINE().type: {
-      return {
-        ...state,
-        productEditInput: {
-          ...state.productEditInput,
-          tagline: action.payload
+          title: action.payload
         }
       }
     }
@@ -174,9 +157,7 @@ export const reduxReducerProductEdit = (
                 variantDescription: "",
                 variantName: "",
                 isDefault: false,
-                fileIds: state.productEditInput.currentVariants[0].fileIds,
                 previewItems: previewItems,
-                specialDeal: null,
                 quantityAvailable: null,
                 ...v,
               }
@@ -546,81 +527,6 @@ export const reduxReducerProductEdit = (
       return {
         ...state,
         dzuPreviewOrder: []
-      }
-    }
-
-    case A.SET_DZU_FILES().type: {
-
-      let newDzuFiles: DzuFilePreview[] = action.payload;
-
-      return {
-        ...state,
-        productEditInput: {
-          ...state.productEditInput,
-          currentVariants: state.productEditInput.currentVariants.map(variant => {
-            return {
-              ...variant,
-              fileIds: newDzuFiles.map(f => f.fileId)
-            }
-          })
-        },
-        dzuFiles: newDzuFiles
-      }
-    }
-
-    case A.ADD_DZU_FILES().type: {
-
-      let newDzuFiles: DzuFilePreview[] = [...state.dzuFiles, ...action.payload];
-
-      return {
-        ...state,
-        productEditInput: {
-          ...state.productEditInput,
-          currentVariants: state.productEditInput.currentVariants.map(variant => {
-            return {
-              ...variant,
-              fileIds: newDzuFiles.map(f => f.fileId)
-            }
-          })
-        },
-        dzuFiles: newDzuFiles
-      }
-    }
-
-    case A.REMOVE_DZU_FILES().type: {
-      // payload is a DropZone Uploader meta.id to remove, e.g.:
-      // id: "1568296960550-0"
-      let removeIds: ID[] = action.payload;
-      let newDzuFiles = state.dzuFiles.filter(f => !removeIds.includes(f.id))
-
-      return {
-        ...state,
-        productEditInput: {
-          ...state.productEditInput,
-          currentVariants: state.productEditInput.currentVariants.map(variant => {
-            return {
-              ...variant,
-              fileIds: newDzuFiles.map(f => f.fileId)
-            }
-          })
-        },
-        dzuFiles: newDzuFiles
-      }
-    }
-
-    case A.RESET_DZU_FILES().type: {
-      return {
-        ...state,
-        productEditInput: {
-          ...state.productEditInput,
-          currentVariants: state.productEditInput.currentVariants.map(variant => {
-            return {
-              ...variant,
-              fileIds: []
-            }
-          })
-        },
-        dzuFiles: []
       }
     }
 

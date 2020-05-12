@@ -28,13 +28,8 @@ export const reduxProductCreateActions = {
     payload: payload
   }),
 
-  UPDATE_NAME: (payload?: string): ActionType<string> => ({
-    type: "PRODUCT_CREATE_UPDATE_NAME",
-    payload: payload
-  }),
-
-  UPDATE_TAGLINE: (payload?: string): ActionType<string> => ({
-    type: "PRODUCT_CREATE_UPDATE_TAGLINE",
+  UPDATE_TITLE: (payload?: string): ActionType<string> => ({
+    type: "PRODUCT_CREATE_UPDATE_TITLE",
     payload: payload
   }),
 
@@ -180,21 +175,6 @@ export const reduxProductCreateActions = {
 
   RESET_DZU_PREVIEW_ORDER: (payload?: null): ActionType<null> => ({
     type: "PRODUCT_CREATE_RESET_DZU_PREVIEW_ORDER",
-    payload: payload
-  }),
-
-  ADD_DZU_FILES: (payload?: DzuFilePreview[]): ActionType<DzuFilePreview[]> => ({
-    type: "PRODUCT_CREATE_ADD_DZU_FILES",
-    payload: payload
-  }),
-
-  REMOVE_DZU_FILES: (payload?: ID[]): ActionType<ID[]> => ({
-    type: "PRODUCT_CREATE_REMOVE_DZU_FILES",
-    payload: payload
-  }),
-
-  RESET_DZU_FILES: (payload?: null): ActionType<null> => ({
-    type: "PRODUCT_CREATE_RESET_DZU_FILES",
     payload: payload
   }),
 
