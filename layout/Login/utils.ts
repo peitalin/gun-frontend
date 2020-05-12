@@ -1,3 +1,79 @@
+// import { CartItem } from "typings/gqlTypes";
+import { oc as option } from "ts-optchain";
+
+type SetState = (value: React.SetStateAction<{
+    openModal: boolean;
+    loading: boolean;
+    showError: boolean;
+    dataExists: boolean;
+    error: {
+        message: string;
+    };
+    status: string;
+    tabIndex: number;
+}>) => void;
+
+export const isLoginInputOk = (setState: SetState) => (
+  { email, password }
+) => {
+  if (!email) {
+    setState(s => ({ ...s, status: "Email is missing!" }))
+    return false
+  } else if (!password) {
+    setState(s => ({ ...s, status: "Password is missing!" }))
+    return false
+  } else {
+    if (validateEmail(email)) {
+      return true
+    } else {
+      setState(s => ({ ...s, status: "Invalid email!" }))
+      return false
+    }
+  }
+}
+
+export const isSignUpInputOk = (setState: SetState) => (
+  { email, password, firstName, lastName }
+) => {
+  if (!email) {
+    setState(s => ({ ...s, status: "Email is missing!" }))
+    return false
+  } else if (!password) {
+    setState(s => ({ ...s, status: "Password is missing!" }))
+    return false
+  } else if (!firstName) {
+    setState(s => ({ ...s, status: "Name is missing!" }))
+    return false
+  } else if (!lastName) {
+    setState(s => ({ ...s, status: "Last name is missing!" }))
+    return false
+  } else {
+    if (validateEmail(email)) {
+      return true
+    } else {
+      setState(s => ({ ...s, status: "Invalid email!" }))
+      return false
+    }
+  }
+}
+
+export const validateEmail = (value) => {
+  if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)) {
+    // error = 'Invalid email address';
+    return false
+  }
+  return true;
+}
+
+export const translateErrorMsg = (msg: string) => {
+  if (msg.includes('Authentication is required')) {
+    return "Incorrect password"
+  }
+  if (msg.includes('NotFound')) {
+    return "That email is not a user"
+  }
+  return `An unexpected login error occurred: ${msg}`
+}
 
 
 export const setLoginExpiration = (hoursFromNow: number) => {
