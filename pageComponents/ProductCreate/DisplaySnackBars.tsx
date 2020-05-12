@@ -14,11 +14,11 @@ const DisplaySnackBars = ({
   return (
     <>
       {
-        option(data).createProduct.product.name() &&
+        option(data).createProduct.product.currentSnapshot.name() &&
         <SnackBarA
           open={data !== undefined && state.showSuccess}
           closeSnackbar={() => setState(s => ({ ...s, showSuccess: false}))}
-          message={`Successfully created listing: ${data.createProduct.product.name}`}
+          message={`Successfully created listing: ${data.createProduct.product.currentSnapshot.name}`}
           variant={"success"}
           autoHideDuration={5000}
         />

@@ -42,6 +42,27 @@ import { reduxToFormikCurrentVariants } from "../ProductCreatePage";
 
 const PreviewItemUploaderGrid = (props: ReactProps & FormikProps<FormikFields>) => {
 
+  //// Props and State ////
+
+  const {
+    classes,
+    productInput,
+    reducerName,
+    storeId,
+    productId,
+    ...fprops
+  } = props;
+
+  const aClient = useApolloClient();
+  const actions = Actions[props.reducerName];
+  const dispatch = useDispatch();
+
+  const ref = React.useRef(null);
+  const focused = useFocus(ref);
+
+  const [googleUploads, setGoogleUploads] = React.useState<GoogleUpload[]>([]);
+  const [loading, setLoading] = React.useState(false);
+
   //// Functions ////
 
   const getUploadParams = async({ file, meta }: IFileWithMeta): Promise<IUploadParams> => {
@@ -80,7 +101,6 @@ const PreviewItemUploaderGrid = (props: ReactProps & FormikProps<FormikFields>) 
   const handleChangeStatus = (fileWithMeta: IFileWithMeta, status: string) => {
     //// called every time a file's `status` changes
     let { meta, file, xhr } = fileWithMeta;
-    // console.info("status:", status, meta, file)
 
     if (status === "getting_upload_params") {
       setLoading(true)
@@ -130,58 +150,41 @@ const PreviewItemUploaderGrid = (props: ReactProps & FormikProps<FormikFields>) 
         ownerIds.push(props.productId);
       }
       const description = null;
-      const tags = [];
-
-      google_storage_save_image_to_db(googleUpload.googleUploadId, description, tags, ownerIds, aClient)
-        .then(image => {
-          // console.log("save_to_db response:", image.id)
-          let newPreview: DzuPreviewItem = {
-            id: meta.id,
-            name: meta.name,
-            previewUrl: meta.previewUrl,
-            fileId: image.id,
-            percent: meta.percent,
-            size: meta.size,
-            status: meta.status,
-            duration: meta.duration,
-            fileWithMeta: fileWithMeta,
-            youTubeVimeoEmbedLink: "", // image, not youtube link
-          }
-          // console.log("updating: ", newPreview.id)
-          dispatch(actions.UPDATE_PREVIEW_ITEM( newPreview ))
-          props.validateForm()
-        })
-        .catch(err => {
-          console.log("err response:", err)
-          dispatch(actions.REMOVE_PREVIEW_ITEMS([ meta.id ]))
-          props.validateForm()
-        })
-        .finally(() => {
-          setLoading(false)
-        })
+      const tags = "";
+      google_storage_save_image_to_db(
+        googleUpload.googleUploadId,
+        description,
+        tags,
+        ownerIds,
+        aClient
+      ).then(image => {
+        console.log("save_to_db response:", image.id)
+        let newPreview: DzuPreviewItem = {
+          id: meta.id,
+          name: meta.name,
+          previewUrl: meta.previewUrl,
+          fileId: image.id,
+          percent: meta.percent,
+          size: meta.size,
+          status: meta.status,
+          duration: meta.duration,
+          fileWithMeta: fileWithMeta,
+          youTubeVimeoEmbedLink: "", // image, not youtube link
+        }
+        // console.log("updating: ", newPreview.id)
+        dispatch(actions.UPDATE_PREVIEW_ITEM( newPreview ))
+        props.validateForm()
+      })
+      .catch(err => {
+        console.log("err response:", err)
+        dispatch(actions.REMOVE_PREVIEW_ITEMS([ meta.id ]))
+        props.validateForm()
+      })
+      .finally(() => {
+        setLoading(false)
+      })
     }
   }
-
-  //// Props and State ////
-
-  const {
-    classes,
-    productInput,
-    reducerName,
-    storeId,
-    productId,
-    ...fprops
-  } = props;
-
-  const aClient = useApolloClient();
-  const actions = Actions[props.reducerName];
-  const dispatch = useDispatch();
-
-  const ref = React.useRef(null);
-  const focused = useFocus(ref);
-
-  const [googleUploads, setGoogleUploads] = React.useState<GoogleUpload[]>([]);
-  const [loading, setLoading] = React.useState(false);
 
   //// Effects ////
 
@@ -193,7 +196,6 @@ const PreviewItemUploaderGrid = (props: ReactProps & FormikProps<FormikFields>) 
         productInput,
         props.dzuPreviewItems,
         props.dzuPreviewOrder,
-        props.dzuFiles,
       )
     );
     props.validateForm()
@@ -203,7 +205,7 @@ const PreviewItemUploaderGrid = (props: ReactProps & FormikProps<FormikFields>) 
     }, 0)
 
     return () => {}
-  }, [props.dzuPreviewItems, props.dzuPreviewOrder, props.dzuFiles])
+  }, [props.dzuPreviewItems, props.dzuPreviewOrder])
 
 
   return (
@@ -285,7 +287,6 @@ interface ReactProps extends WithStyles<typeof styles> {
   productId?: ID;
   dzuPreviewItems: DzuPreviewItem[];
   dzuPreviewOrder: DzuPreviewOrder[],
-  dzuFiles: DzuFilePreview[],
 }
 interface FormikFields {
   currentVariants: {

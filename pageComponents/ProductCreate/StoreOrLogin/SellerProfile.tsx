@@ -104,6 +104,7 @@ const styles = (theme: Theme) => createStyles({
     height: 60,
     width: 60,
     margin: theme.spacing(1),
+    border: `1px solid ${Colors.charcoal}`,
   },
   avatarButton: {
     padding: theme.spacing(1),

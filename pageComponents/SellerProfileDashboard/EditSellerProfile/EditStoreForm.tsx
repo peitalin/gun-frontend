@@ -56,17 +56,6 @@ const EditStoreForm: React.FC<ReactProps> = (props) => {
     displaySuccess: true,
   })
 
-  const storeEditInput = {
-    userId: option(userRedux).id(),
-    storeId: option(userRedux).store.id(),
-    name: option(storePrivate).name(),
-    bio: option(storePrivate).bio(),
-    website: option(storePrivate).website(),
-    coverId: option(storePrivate).coverId(),
-    profileId: option(storePrivate).profileId(),
-    payoutEmail: option(userRedux).payoutMethod.payoutEmail(),
-  }
-
 
   const [storeEdit, { data, loading, error }] =
   useMutation<MutationData, EditStoreInput>(
@@ -129,14 +118,14 @@ const EditStoreForm: React.FC<ReactProps> = (props) => {
     <Formik
       // 1. feed product data to edit into formik state.
       initialValues={{
-        userId: storeEditInput.userId,
-        storeId: storeEditInput.storeId,
-        name: storeEditInput.name,
-        bio: storeEditInput.bio,
-        website: storeEditInput.website,
-        coverId: storeEditInput.coverId,
-        profileId: storeEditInput.profileId,
-        payoutEmail: userRedux.payoutMethod.payoutEmail,
+        userId: option(userRedux).id(),
+        storeId: option(userRedux).store.id(),
+        name: option(storePrivate).name(),
+        bio: option(storePrivate).bio(),
+        website: option(storePrivate).website(),
+        coverId: option(storePrivate).coverId(),
+        profileId: option(storePrivate).profileId(),
+        payoutEmail: option(userRedux).payoutMethod.payoutEmail(),
       }}
       validationSchema={validationSchemas.EditStore}
       onSubmit={(values, { setSubmitting }) => {

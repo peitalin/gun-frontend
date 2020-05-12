@@ -6,7 +6,8 @@ import { Colors } from "layout/AppTheme";
 import { styles } from '../commonStyles';
 import clsx from "clsx";
 // Typings
-import { Product, Connection, ProductCreateInput } from "typings/gqlTypes";
+import { Product, Connection } from "typings/gqlTypes";
+import { ProductCreateInputFrontEnd } from "typings";
 // Material UI
 import Button from "@material-ui/core/Button";
 import ButtonLoading from "components/ButtonLoading";
@@ -66,7 +67,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   postInstantly: boolean;
   disabled: boolean;
   loading?: boolean;
-  errors: FormikErrors<ProductCreateInput>
+  errors: FormikErrors<ProductCreateInputFrontEnd>
   type?: string;
   width?: number | string;
   // onClick(e: React.FormEvent<HTMLFormElement>): void;

@@ -106,12 +106,6 @@ const Description = (props: ReactProps & FormikProps<FormikFields>) => {
         //   // must set timeout of 150ms otherwise swallows event
         //   // disable, makes it require 2 clicks to click off the input
         //   // meaning, file upload requires 2 clicks to open menu
-        //   // setTimeout(() => {
-        //   //   fprops.setFieldTouched('tagline', true)
-        //   // }, 200)
-        //   // setTimeout(() => {
-        //   //   fprops.setFieldTouched('tagline', true)
-        //   // }, 300)
         // }}
         inputProps={{ style: { width: '100%' }}}
         errorMessage={props.errors.description}

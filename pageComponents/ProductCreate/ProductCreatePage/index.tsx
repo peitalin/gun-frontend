@@ -48,12 +48,15 @@ const PreviewItemUploaderSSR = dynamic(() => import("../PreviewItemUploaderGrid"
 // Typings
 import {
   ID,
-  ProductCreateInput,
   Product,
   UserPrivate,
   VariantsLabel,
   QuantityLabel
 } from "typings/gqlTypes";
+import {
+  ProductCreateInputFrontEnd,
+  ProductCreateEditCommonInput,
+} from "typings"
 import {
   ReducerName,
   DzuPreviewOrder,
@@ -112,7 +115,6 @@ const ProductCreatePage = (props: ReactProps) => {
     reduxProductCreate,
     dzuPreviewOrder,
     dzuPreviewItems,
-    dzuFiles,
     user,
     storeId
   } = useSelector<GrandReduxState, ReduxState>(state => {
@@ -120,8 +122,6 @@ const ProductCreatePage = (props: ReactProps) => {
       reduxProductCreate: state[reducerName],
       dzuPreviewOrder: option(state[reducerName]).dzuPreviewOrder(),
       dzuPreviewItems: option(state[reducerName]).previewItems(),
-      // fileIds: state.reduxProductCreate.fileIds,
-      dzuFiles: option(state[reducerName]).dzuFiles(),
       user: state.reduxLogin.user,
       storeId: option(state).reduxLogin.user.store.id(),
     }
@@ -145,7 +145,8 @@ const ProductCreatePage = (props: ReactProps) => {
       // reset redux form
       setTimeout(() => {
         // console.log(values)
-        router.push("/seller?created=product")
+        // router.push("/seller?created=product")
+        router.push("/")
         // scroll to top
         window.scrollTo(0, 0);
         dispatch(actions.RESET_PRODUCT_CREATE())
@@ -167,7 +168,6 @@ const ProductCreatePage = (props: ReactProps) => {
       option(user).store.isDeleted())  // or deleted store
 
 
-
   return (
     <Formik
       initialValues={productCreateInput}
@@ -181,11 +181,19 @@ const ProductCreatePage = (props: ReactProps) => {
         productCreate({
           variables: {
             productCreateInput: {
-              name: values.name,
-              tagline: values.tagline,
+              title: values.title,
               description: htmlDescription,
+              condition: values.condition,
+              make: values.make,
+              model: values.model,
+              ammoType: values.ammoType,
+              actionType: values.actionType,
+              boreDiameter: values.boreDiameter,
+              serialNumber: values.serialNumber,
+              location: values.location,
+              dealer: values.dealer,
               categoryId: values.categoryId,
-              tags: values.tags,
+              tags: (values.tags as string[]).join(','),
               isPublished: values.isPublished,
               currentVariants: values.currentVariants,
               variantsLabel: VariantsLabel.LICENSE,
@@ -236,6 +244,13 @@ const ProductCreatePage = (props: ReactProps) => {
                   resetForm={fprops.resetForm}
                 />
 
+                <a onClick={() => {
+                  console.log("fprops.values", fprops.values)
+                  console.log("fprops.errors", fprops.errors)
+                }}>
+                  print formik!
+                </a>
+
                 <div className={
                   disableForm ? classes.disableForm : null
                 }>
@@ -272,7 +287,6 @@ const ProductCreatePage = (props: ReactProps) => {
                     storeId={storeId}
                     dzuPreviewItems={dzuPreviewItems}
                     dzuPreviewOrder={dzuPreviewOrder}
-                    dzuFiles={dzuFiles}
                     {...fprops}
                   />
 
@@ -296,7 +310,6 @@ const ProductCreatePage = (props: ReactProps) => {
                             productCreateInput,
                             dzuPreviewItems,
                             dzuPreviewOrder,
-                            dzuFiles,
                           )
                         );
                         setTimeout(() => {
@@ -329,7 +342,6 @@ const ProductCreatePage = (props: ReactProps) => {
                             productCreateInput,
                             dzuPreviewItems,
                             dzuPreviewOrder,
-                            dzuFiles,
                           )
                         );
                         setTimeout(() => {
@@ -342,7 +354,6 @@ const ProductCreatePage = (props: ReactProps) => {
                         }, 0)
 
                         console.log('order: ', dzuPreviewOrder);
-                        console.log('fileIds: ', dzuFiles);
                         console.log('previewItems: ', reduxProductCreate.previewItems);
                         console.log('values.currentVariants: ', values.currentVariants);
                         console.log('errors', errors);
@@ -398,48 +409,15 @@ const ProductCreatePage = (props: ReactProps) => {
 
 
 
-const filterFormikErrors = (errors: FormikErrors<ProductCreateInput>) => {
-
-  let currentVariantErrs = option(errors).currentVariants([]).map(variant => {
-    let {
-      previewItems,
-      ...currentVariantsRest
-    } = variant;
-    return currentVariantsRest
-  })
-  // ignore previewItems validation error in formik initially,
-  // since it is stored in Redux and then synced to formik when
-  // user clicks ProductCreate button.
-  // But ProductCreate button is disabled if error.length > 1 until
-  // we convert Redux previewItems to Formik previewItems
-  // so ignore formik errors for previewItems initially
-
-  let { currentVariants, ...errorsRest } = errors
-
-  if (Object.keys(currentVariantErrs[0] || {}).length > 0) {
-    return {
-      ...errorsRest,
-      currentVariants: currentVariantErrs
-    }
-  } else {
-    // omit errors.currentVariants
-    return {
-      ...errorsRest,
-    }
-  }
-
-}
-
 const isFormikDisabled = (
-  errors: FormikErrors<ProductCreateInput>,
+  errors: FormikErrors<ProductCreateInputFrontEnd>,
 ) => {
-  // let formikErrors = Object.keys(filterFormikErrors(errors))
   let formikErrors = Object.keys(errors)
   return formikErrors.length > 0
 }
 
 const printValidationErrors = (
-  errors: FormikErrors<ProductCreateInput>
+  errors: FormikErrors<ProductCreateInputFrontEnd>
 ): string[] => {
   // watch out for nested objects which may not be strings
   // if using Object.values()
@@ -448,10 +426,9 @@ const printValidationErrors = (
 }
 
 export const reduxToFormikCurrentVariants = (
-  productCreateInput: ProductCreateInput,
+  productCreateInput: ProductCreateEditCommonInput,
   dzuPreviewItems: DzuPreviewItem[],
   dzuPreviewOrder: DzuPreviewOrder[],
-  dzuFiles: DzuFilePreview[],
 ) => {
 
   // pulls preview items from redux into each current variant in formik
@@ -474,7 +451,6 @@ export const reduxToFormikCurrentVariants = (
     return {
       ...v,
       previewItems: previewItems,
-      fileIds: dzuFiles.map(f => f.fileId)
     }
   })
 }
@@ -509,7 +485,6 @@ interface ReduxState {
   reduxProductCreate: ReduxStateProductCreate;
   dzuPreviewOrder: DzuPreviewOrder[];
   dzuPreviewItems: DzuPreviewItem[];
-  dzuFiles: DzuFilePreview[];
   storeId: ID;
   user: UserPrivate;
 }
@@ -518,7 +493,7 @@ export interface MutationData {
   createProduct: { product: Product }
 }
 interface MutationVar {
-  productCreateInput: ProductCreateInput
+  productCreateInput: ProductCreateInputFrontEnd
 }
 
 export default withStyles(styles)( ProductCreatePage );

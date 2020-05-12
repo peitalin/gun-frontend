@@ -106,7 +106,7 @@ const SalesHistory = (props: ReactProps) => {
                 >
                   <div className={classes.flexItemWide}>
                     <Typography variant="body2" className={classes.salesItemName}>
-                      {sale.orderItem.product.name}
+                      {sale.orderItem.product.currentSnapshot.name}
                     </Typography>
                     {
                       (option(sale).orderItem.product.chosenVariant.variantName() !== "Regular License") &&

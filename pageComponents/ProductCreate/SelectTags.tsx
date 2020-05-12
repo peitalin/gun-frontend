@@ -58,7 +58,7 @@ const SelectTags = (props: ReactProps & FormikProps<FormikFields>) => {
             // disabled={loading}
             // loading={loading}
             initialTags={
-              fprops.values.tags.map(t => createOption(t))
+              (fprops.values.tags as string[]).map(t => createOption(t))
             }
             setTags={setTags}
             disableInitialValidationMessage={true}
@@ -89,8 +89,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   reducerName: ReducerName
 }
 interface FormikFields {
-  categoryId: string;
-  tags: string[];
+  tags: string[] | string;
 }
 
 export default withStyles(styles)( SelectTags );

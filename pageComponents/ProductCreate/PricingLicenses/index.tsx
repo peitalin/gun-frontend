@@ -56,21 +56,15 @@ const PricingLicenses = (props: ReactProps & FormikProps<FormikFields>) => {
     let newVariant = (reducerName === ReducerName.reduxProductCreate)
       ? {
           ...initialVariant,
-          fileIds: currentVariants[0].fileIds,
           previewItems: currentVariants[0].previewItems,
-          specialDeal: currentVariants[0].specialDeal,
           quantityAvailable: currentVariants[0].quantityAvailable,
-          // variantId: `prodvariant_${uuidv4()}`,
-          // variantId: null, // pass null to create a new variantId on backend
         }
       : {
           ...initialVariant,
-          fileIds: currentVariants[0].fileIds,
           previewItems: currentVariants[0].previewItems,
-          specialDeal: currentVariants[0].specialDeal,
           quantityAvailable: currentVariants[0].quantityAvailable,
-          // variantId: `prodvariant_${uuidv4()}`,
-          variantId: null, // pass null to create a new variantId on backend
+          variantId: null,
+          // ProductEdit? pass variantId to backend or null?
         };
 
     dispatch(actions.addVariant([ newVariant ]))

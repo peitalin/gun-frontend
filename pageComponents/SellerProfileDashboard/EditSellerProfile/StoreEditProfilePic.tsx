@@ -74,7 +74,7 @@ const StoreEditProfilePic = (props: ReactProps & FormikProps<FormikFields>) => {
       // Owner is going to be the store, but may also be the product if it already exists
       const ownerIds = [props.storeId];
       const description = null;
-      const tags = [];
+      const tags = "";
       google_storage_save_image_to_db(
         uploadId,
         description,

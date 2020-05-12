@@ -80,7 +80,7 @@ const ProductSaleDetails = (props: ReactProps) => {
               style={{ justifyContent: "flex-start" }}
             >
               <Typography variant="body1" className={classes.value}>
-                {orderItem.product.name}
+                {orderItem.product.currentSnapshot.name}
               </Typography>
               {
                 (orderItem.product.chosenVariant.variantName !== "Regular License") &&
