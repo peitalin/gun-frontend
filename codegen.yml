@@ -1,9 +1,10 @@
 overwrite: true
 
 schema:
-  - https://api.gunmarketplace.com.au/v1/graphql:
+  # - https://api.gunmarketplace.com.au/v1/graphql:
+  # - http://0.0.0.0:4000/graphql:
+  - http://0.0.0.0:8080/v1/graphql:
       headers:
-        Authorization: "Bearer  + process.env.AUTH_TOKEN"
         x-hasura-admin-secret: "hescomingrightforus"
 
 documents:
@@ -13,6 +14,10 @@ documents:
   - ./queries/content-mutations.ts
   - ./queries/gun-queries.ts
   - ./queries/gun-mutations.ts
+  - ./queries/store-queries.ts
+  # - ./queries/store-mutations.ts
+  # - ./queries/user-queries.ts
+  # - ./queries/user-mutations.ts
 
 generates:
   ./typings/gqlIntrospection.ts:

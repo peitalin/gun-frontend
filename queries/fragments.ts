@@ -1,89 +1,5 @@
 import gql from "graphql-tag";
 
-export const StockLevelFragment = gql`
-  fragment StockLevelFragment on StockLevel {
-    quantityAvailable
-    restockedAt
-    quantityRestocked
-  }
-`;
-
-export const StockLimitConditionFragment = gql`
-  fragment StockLimitConditionFragment on DiscountStockLimitCondition {
-    stockLevel {
-      ...StockLevelFragment
-    }
-    supplyExhaustionRule
-  }
-  ${StockLevelFragment}
-`;
-
-export const TimeConditionFragment = gql`
-  fragment TimeConditionFragment on DiscountTimeCondition {
-    start
-    end
-    timeExpiryRule
-  }
-`;
-
-export const DiscountFragment = gql`
-  fragment DiscountFragment on Discount {
-    id
-    createdAt
-    scope
-    modifier
-    isAutomatic
-    promoCode
-    valueFixed
-    valueDollarsOff
-    valuePercentageOff
-    isDisabled
-    timeCondition {
-      ...TimeConditionFragment
-    }
-    productScopeInfo {
-      variantSnapshotId
-      stockLimitCondition {
-        ...StockLimitConditionFragment
-      }
-    }
-    storeScopeInfo {
-      storeId
-      productId
-      variantId
-      minimumSpend
-      minimumQuantity
-    }
-    platformScopeInfo {
-      isApplicableToAnyProduct
-    }
-  }
-  ${StockLimitConditionFragment}
-  ${TimeConditionFragment}
-`;
-
-export const PriceDetailsFragment = gql`
-  fragment PriceDetailsFragment on PriceDetails {
-    basePrice
-    actualPrice
-    discountBreakdown {
-      fixedPriceDiscount {
-        ...DiscountFragment
-      }
-      dollarsOffDiscounts {
-        ...DiscountFragment
-      }
-      percentOffDiscount {
-        ...DiscountFragment
-      }
-      fixedPriceComponent
-      dollarsOffComponent
-      percentOffComponent
-      promoCodeComponent
-    }
-  }
-  ${DiscountFragment}
-`;
 
 export const ImageFragment = gql`
   fragment ImageFragment on Image {
@@ -111,51 +27,20 @@ export const ImageFragment = gql`
   }
 `;
 
-export const ImageFragmentStore = gql`
-  fragment ImageFragmentStore on image_parents {
-    imageId
-    original {
-      parentId
-      variantId
-      mimeType
-      widthInPixels
-      heightInPixels
-      url
-    }
-    variants {
-      parentId
-      variantId
-      mimeType
-      widthInPixels
-      heightInPixels
-      url
-    }
-    createdAt
-    tags
-    description
-  }
-`;
 
 export const ProductVariantFragment = gql`
   fragment ProductVariantFragment on ProductVariant {
-    variantId
     variantSnapshotId
+    variantId
+    snapshotId
+    productId
+    storeId
     createdAt
     variantName
     variantDescription
+    position
     isDefault
-    price
-    priceWas
-    priceDetails {
-      ...PriceDetailsFragment
-    }
-    files {
-      id
-      fileName
-      createdAt
-      mimeType
-      sizeInBytes
-    }
+    basePrice
     previewItems {
       id
       image {
@@ -166,7 +51,6 @@ export const ProductVariantFragment = gql`
     isSoldOut
   }
   ${ImageFragment}
-  ${PriceDetailsFragment}
 `;
 
 export const ProductFragment = gql`
@@ -178,7 +62,7 @@ export const ProductFragment = gql`
     isPublished
     isSuspended
     isDeleted
-    isExcludedFromAutomaticLists
+    isExcludedFromRecommendations
     currentSnapshot {
       name
       title
@@ -206,133 +90,100 @@ export const ProductFragment = gql`
   ${ProductVariantFragment}
 `;
 
-export const CartFragment = gql`
-  fragment CartFragment on Cart {
-    id
-    userId
-    updatedAt
-    items {
-      id
-      createdAt
-      cartId
-      storeId
-      priceDetails {
-        ...PriceDetailsFragment
-      }
-      product {
-        ...ProductFragment
-      }
-      purchasableStatus
-      quantity
-    }
-    relevantPromoCodes {
-      ...DiscountFragment
-    }
-    subtotal
-    automaticSavings
-    promoCodeSavings
-    taxes
-    paymentProcessingFee
-    total
-  }
-  ${ProductFragment}
-  ${DiscountFragment}
-  ${PriceDetailsFragment}
-`;
 
-export const OrderFragment = gql`
-  fragment OrderFragment on Order {
-    id
-    createdAt
-    updatedAt
-    userId
-    items {
-      id
-      orderId
-      orderStatus
-      createdAt
-      updatedAt
-      priceDetails {
-        ...PriceDetailsFragment
-      }
-      product {
-        id
-        name
-        tagline
-        store {
-          id
-          name
-          website
-        }
-        chosenVariant {
-          ...ProductVariantFragment
-        }
-      }
-      quantity
-    }
-    currentSnapshot {
-      transaction {
-        id
-        createdAt
-        subtotal
-        paymentProcessingFee
-        taxes
-        paymentProcessor
-        customerId
-        currency
-        paymentMethodId
-        paymentIntentId
-        chargeId
-      }
-      id
-      orderStatus
-      subtotal
-      automaticSavings
-      promoCodeSavings
-      paymentProcessingFee
-      taxes
-      total
-      paymentProcessor
-    }
-    attachedPromoCodes {
-      ...DiscountFragment
-    }
-  }
-  ${PriceDetailsFragment}
-  ${ProductVariantFragment}
-  ${DiscountFragment}
-`;
+// export const OrderFragment = gql`
+//   fragment OrderFragment on Order {
+//     id
+//     createdAt
+//     updatedAt
+//     userId
+//     items {
+//       id
+//       orderId
+//       orderStatus
+//       createdAt
+//       updatedAt
+//       priceDetails {
+//         ...PriceDetailsFragment
+//       }
+//       product {
+//         id
+//         name
+//         tagline
+//         store {
+//           id
+//           name
+//           website
+//         }
+//         chosenVariant {
+//           ...ProductVariantFragment
+//         }
+//       }
+//       quantity
+//     }
+//     currentSnapshot {
+//       transaction {
+//         id
+//         createdAt
+//         subtotal
+//         paymentProcessingFee
+//         taxes
+//         paymentProcessor
+//         customerId
+//         currency
+//         paymentMethodId
+//         paymentIntentId
+//         chargeId
+//       }
+//       id
+//       orderStatus
+//       subtotal
+//       automaticSavings
+//       promoCodeSavings
+//       paymentProcessingFee
+//       taxes
+//       total
+//       paymentProcessor
+//     }
+//     attachedPromoCodes {
+//       ...DiscountFragment
+//     }
+//   }
+//   ${PriceDetailsFragment}
+//   ${ProductVariantFragment}
+//   ${DiscountFragment}
+// `;
 
-export const ProductSalesFragment = gql`
-  fragment ProductSalesFragment on ProductSale {
-    orderItem {
-      id
-      orderId
-      product {
-        id
-        name
-        tagline
-        chosenVariant {
-          variantId
-          variantSnapshotId
-          variantName
-          variantDescription
-        }
-      }
-      orderStatus
-      createdAt
-      priceDetails {
-        ...PriceDetailsFragment
-      }
-    }
-    user {
-      firstName
-      lastName
-      email
-    }
-  }
-  ${PriceDetailsFragment}
-`;
+// export const ProductSalesFragment = gql`
+//   fragment ProductSalesFragment on ProductSale {
+//     orderItem {
+//       id
+//       orderId
+//       product {
+//         id
+//         name
+//         tagline
+//         chosenVariant {
+//           variantId
+//           variantSnapshotId
+//           variantName
+//           variantDescription
+//         }
+//       }
+//       orderStatus
+//       createdAt
+//       priceDetails {
+//         ...PriceDetailsFragment
+//       }
+//     }
+//     user {
+//       firstName
+//       lastName
+//       email
+//     }
+//   }
+//   ${PriceDetailsFragment}
+// `;
 
 export const StorePublicFragment = gql`
   fragment StorePublicFragment on Store {
@@ -349,22 +200,29 @@ export const StorePublicFragment = gql`
       ...ImageFragment
     }
     productsForSaleConnection {
-      edges {
-        node {
-          ...ProductFragment
-        }
-      }
-      totalCount
-      pageInfo {
-        isLastPage
-        endCursor
+      id
+      currentSnapshot {
+        id
+        serialNumber
+        title
       }
     }
+    # productsForSaleConnection {
+    #   edges {
+    #     node {
+    #       ...ProductFragment
+    #     }
+    #   }
+    #   totalCount
+    #   pageInfo {
+    #     isLastPage
+    #     endCursor
+    #   }
+    # }
   }
   ${ImageFragment}
-  ${ProductFragment}
-  ${DiscountFragment}
 `;
+  // ${ProductFragment}
 
 export const StorePrivateFragment = gql`
   fragment StorePrivateFragment on StorePrivate {

@@ -2,7 +2,6 @@ import gql from "graphql-tag";
 import {
   ImageFragment,
   ProductFragment,
-  ProductSalesFragment,
   StorePublicFragment,
   StorePrivateFragment,
 } from "./fragments";

@@ -2,7 +2,7 @@ import gql from "graphql-tag";
 import {
   ImageFragment,
   ProductFragment,
-  StorePublicFragment
+  // StorePublicFragment
 } from "./fragments";
 
 export const GET_RECOMMENDED_PRODUCTS = gql`
@@ -47,17 +47,17 @@ export const GET_ALL_PRODUCTS = gql`
 `;
 
 export const GET_PRODUCT = gql`
-  query getProduct($productId: ID!) {
+  query getProduct($productId: String!) {
     product(id: $productId) {
       ...ProductFragment
-      store {
-        ...StorePublicFragment
-      }
+      # store {
+      #   ...StorePublicFragment
+      # }
     }
   }
   ${ProductFragment}
-  ${StorePublicFragment}
 `;
+  // ${StorePublicFragment}
 
 export const GET_DEALS_ENDING_SOON_PRODUCTS = gql`
   query productsDealsEndingSoonConnection($query: ConnectionQuery) {
@@ -101,7 +101,7 @@ export const GET_LIMITED_RELEASE_PRODUCTS = gql`
 
 export const GET_PRODUCTS_BY_CATEGORY = gql`
   query productsByCategoryConnection(
-    $categoryId: ID
+    $categoryId: String
     $categoryName: String
     $query: ConnectionQuery
   ) {

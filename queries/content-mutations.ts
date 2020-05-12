@@ -27,9 +27,9 @@ export const REGISTER_UPLOAD = gql`
 
 export const SAVE_IMAGE_UPLOAD = gql`
   mutation saveImageUpload(
-    $uploadId: ID!
+    $uploadId: String!
     $description: String
-    $tags: [String]
+    $tags: String
     $ownerIds: [String]
   ) {
     uploadSaveImage(
@@ -50,7 +50,7 @@ export const SAVE_IMAGE_UPLOAD = gql`
 
 export const SAVE_PRODUCT_FILE_UPLOAD = gql`
   mutation saveProductFileUpload(
-    $uploadId: ID!
+    $uploadId: String!
     $fileName: String!
     $ownerIds: [String]
   ) {
@@ -67,7 +67,7 @@ export const SAVE_PRODUCT_FILE_UPLOAD = gql`
 `;
 
 export const GET_PRODUCT_FILE_DOWNLOAD_LINK = gql`
-  mutation getProductFileDownloadLink($id: ID!, $orderItemId: ID!) {
+  mutation getProductFileDownloadLink($id: String!, $orderItemId: String!) {
     generateProductFileDownloadLink(id: $id, orderItemId: $orderItemId) {
       ... on ProductFileLinkMutationResponse {
         downloadLink {

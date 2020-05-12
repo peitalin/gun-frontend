@@ -54,7 +54,7 @@ const FrontPage: NextPage<ReactProps> = (props) => {
                 // classes={{
                 //   media: chooseCardMediaStyle()
                 // }}
-                src={"https://storage.googleapis.com/gunmarket-images-dev/o_1bgcr4h9q1emhbqo3pj1cj4163mb.jpg"}
+                src={"https://storage.googleapis.com/gunmarket-images-dev/o_1bgcr4h9rg01d2h1o021i1m1gjuc.JPG"}
               />
             </CardActionArea>
           </Card>

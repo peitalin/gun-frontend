@@ -38,12 +38,13 @@ import Router from "next/router";
 import { EDIT_STORE } from "./store-mutations";
 
 
-
-export const logout = async(
+export const logout = (
   aClient: ApolloClient<object>,
-  route?: string,
-  dispatch?: Dispatch<any>
-  ): Promise<BlankMutationResponse> => {
+  dispatch: Dispatch<any>
+) =>
+async(route?: string): Promise<BlankMutationResponse> => {
+
+  dispatch(Actions.reduxLogin.CLEAR_USER())
 
   const { errors, data } = await aClient.mutate({
     mutation: LOGOUT,
@@ -54,6 +55,7 @@ export const logout = async(
       (route.includes('/download') && !route.includes('/my-downloads')) ||
       route.includes('/categories') ||
       route.includes('/stores') ||
+      route.includes('/s') ||
       route.includes('/become-a-seller') ||
       route.includes('/password-reset') ||
       route.includes('/contact-us') ||
@@ -64,26 +66,24 @@ export const logout = async(
       (route.includes('/sell') && !route.includes('/seller')) ||
       route === '/'
     ) {
+      console.log("hard refreshing")
       window.location.reload()
     } else {
-      console.log("redirecting to /")
-      Router.push('/')
+      console.log("redirecting to / and hard refreshing")
+      window.location.replace("/")
       // back to public product gallery page
     }
   } else {
-    console.log("redirecting to /")
-    Router.push('/')
+    console.log("redirecting to / and hard refreshing")
+    window.location.replace("/")
     // back to public product gallery page
   }
 
   localStorage.removeItem("efc-login-valid-until");
 
-  if (dispatch) {
-    dispatch(Actions.reduxLogin.CLEAR_USER())
-  }
-
   return data
 }
+
 
 
 
@@ -145,10 +145,11 @@ export const google_storage_save_file_to_db = async(
 export const google_storage_save_image_to_db = async(
   uploadId: string,
   description: string | null,
-  tags: string[],
+  tags: string,
   ownerIds: string[],
   aClient: ApolloClient<object>
 ): Promise<Image> => {
+  console.log("........")
   const response = await aClient.mutate<SaveImageUploadMutation, SaveImageUploadMutationVariables>({
     mutation: SAVE_IMAGE_UPLOAD,
     variables: {
@@ -158,6 +159,7 @@ export const google_storage_save_image_to_db = async(
       ownerIds: ownerIds
     }
   });
+  console.log("response ........", response)
   const result = response.data.uploadSaveImage;
   return result.image
 }
