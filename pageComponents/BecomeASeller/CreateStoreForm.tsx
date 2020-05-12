@@ -156,6 +156,7 @@ const CreateStoreForm: React.FC<ReactProps> = (props) => {
             }
           }).then(res2 => {
             console.log('payoutMethod response', res2)
+
             // router.push("/seller?created=store")
           })
         })

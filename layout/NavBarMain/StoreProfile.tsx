@@ -60,7 +60,7 @@ const StorePage: React.FC<ReactProps> = (props) => {
       <div className={classes.flexRow}>
         <div
           className={clsx(classes.link, classes.logout)}
-          onClick={() => logout(apolloClient, router.pathname, dispatch)}
+          onClick={() => logout(apolloClient, dispatch)(router.pathname)}
         >
           logout
         </div>

@@ -18,6 +18,7 @@ import ErrorBounds from "components/ErrorBounds";
 import SnackBarA from "components/Snackbars/SnackbarA";
 import { logout } from "queries/requests";
 import ConfirmDeleteModal from "components/ConfirmDeleteModal";
+import { useDispatch } from "react-redux";
 
 
 const DeleteAccountButton = (props: ReactProps) => {
@@ -25,6 +26,7 @@ const DeleteAccountButton = (props: ReactProps) => {
   const [displayErr, setDisplayErr] = React.useState(true);
   const [displaySuccess, setDisplaySuccess] = React.useState(true);
   const [openDeleteModal, setOpenDeleteModal] = React.useState(false)
+  const dispatch = useDispatch();
 
   const [deleteAccount, {loading, data, error}] =
   useMutation<MutationData, MutationVar>(
@@ -33,7 +35,7 @@ const DeleteAccountButton = (props: ReactProps) => {
         password: props.password,
       },
       onCompleted: () => {
-        logout(apolloClient)
+        logout(apolloClient, dispatch)("/")
       },
       onError: (e) => {
         // console.log(e)
