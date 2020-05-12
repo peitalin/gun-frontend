@@ -21,9 +21,6 @@
             "name": "CuratedListItemsConnection"
           },
           {
-            "name": "ProductsConnection"
-          },
-          {
             "name": "StoreSalesHistoryConnection"
           },
           {
@@ -54,6 +51,9 @@
             "name": "CuratedListsConnection"
           },
           {
+            "name": "ProductsConnection"
+          },
+          {
             "name": "StoresConnection"
           }
         ]
@@ -64,9 +64,6 @@
         "possibleTypes": [
           {
             "name": "CuratedListItemsEdge"
-          },
-          {
-            "name": "ProductsEdge"
           },
           {
             "name": "ProductSalesEdge"
@@ -103,6 +100,9 @@
           },
           {
             "name": "CuratedListsEdge"
+          },
+          {
+            "name": "ProductsEdge"
           },
           {
             "name": "StoresEdge"

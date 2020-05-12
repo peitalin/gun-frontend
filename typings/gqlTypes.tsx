@@ -9,12 +9,12 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  timestamp: any;
   ProductCategoryGroup: any;
   Date: Date;
   PageCursor: any;
   Price: number;
   timestamptz: any;
-  timestamp: any;
   json: any;
   uuid: any;
 };
@@ -94,6 +94,155 @@ export type CartMutationResponse = {
    __typename?: 'CartMutationResponse';
   cart: Cart;
 };
+
+export type Categories = {
+   __typename?: 'categories';
+  categoryGroup: Scalars['String'];
+  createdAt: Scalars['timestamp'];
+  id: Scalars['String'];
+  name: Scalars['String'];
+  updatedAt?: Maybe<Scalars['timestamp']>;
+};
+
+export type Categories_Aggregate = {
+   __typename?: 'categories_aggregate';
+  aggregate?: Maybe<Categories_Aggregate_Fields>;
+  nodes: Array<Categories>;
+};
+
+export type Categories_Aggregate_Fields = {
+   __typename?: 'categories_aggregate_fields';
+  count?: Maybe<Scalars['Int']>;
+  max?: Maybe<Categories_Max_Fields>;
+  min?: Maybe<Categories_Min_Fields>;
+};
+
+
+export type Categories_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<Categories_Select_Column>>;
+  distinct?: Maybe<Scalars['Boolean']>;
+};
+
+export type Categories_Aggregate_Order_By = {
+  count?: Maybe<Order_By>;
+  max?: Maybe<Categories_Max_Order_By>;
+  min?: Maybe<Categories_Min_Order_By>;
+};
+
+export type Categories_Arr_Rel_Insert_Input = {
+  data: Array<Categories_Insert_Input>;
+  on_conflict?: Maybe<Categories_On_Conflict>;
+};
+
+export type Categories_Bool_Exp = {
+  _and?: Maybe<Array<Maybe<Categories_Bool_Exp>>>;
+  _not?: Maybe<Categories_Bool_Exp>;
+  _or?: Maybe<Array<Maybe<Categories_Bool_Exp>>>;
+  categoryGroup?: Maybe<String_Comparison_Exp>;
+  createdAt?: Maybe<Timestamp_Comparison_Exp>;
+  id?: Maybe<String_Comparison_Exp>;
+  name?: Maybe<String_Comparison_Exp>;
+  updatedAt?: Maybe<Timestamp_Comparison_Exp>;
+};
+
+export enum Categories_Constraint {
+  CATEGORIES_PKEY = 'categories_pkey'
+}
+
+export type Categories_Insert_Input = {
+  categoryGroup?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['timestamp']>;
+  id?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  updatedAt?: Maybe<Scalars['timestamp']>;
+};
+
+export type Categories_Max_Fields = {
+   __typename?: 'categories_max_fields';
+  categoryGroup?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['timestamp']>;
+  id?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  updatedAt?: Maybe<Scalars['timestamp']>;
+};
+
+export type Categories_Max_Order_By = {
+  categoryGroup?: Maybe<Order_By>;
+  createdAt?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  name?: Maybe<Order_By>;
+  updatedAt?: Maybe<Order_By>;
+};
+
+export type Categories_Min_Fields = {
+   __typename?: 'categories_min_fields';
+  categoryGroup?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['timestamp']>;
+  id?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  updatedAt?: Maybe<Scalars['timestamp']>;
+};
+
+export type Categories_Min_Order_By = {
+  categoryGroup?: Maybe<Order_By>;
+  createdAt?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  name?: Maybe<Order_By>;
+  updatedAt?: Maybe<Order_By>;
+};
+
+export type Categories_Mutation_Response = {
+   __typename?: 'categories_mutation_response';
+  affected_rows: Scalars['Int'];
+  returning: Array<Categories>;
+};
+
+export type Categories_Obj_Rel_Insert_Input = {
+  data: Categories_Insert_Input;
+  on_conflict?: Maybe<Categories_On_Conflict>;
+};
+
+export type Categories_On_Conflict = {
+  constraint: Categories_Constraint;
+  update_columns: Array<Categories_Update_Column>;
+  where?: Maybe<Categories_Bool_Exp>;
+};
+
+export type Categories_Order_By = {
+  categoryGroup?: Maybe<Order_By>;
+  createdAt?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  name?: Maybe<Order_By>;
+  updatedAt?: Maybe<Order_By>;
+};
+
+export type Categories_Pk_Columns_Input = {
+  id: Scalars['String'];
+};
+
+export enum Categories_Select_Column {
+  CATEGORYGROUP = 'categoryGroup',
+  CREATEDAT = 'createdAt',
+  ID = 'id',
+  NAME = 'name',
+  UPDATEDAT = 'updatedAt'
+}
+
+export type Categories_Set_Input = {
+  categoryGroup?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['timestamp']>;
+  id?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  updatedAt?: Maybe<Scalars['timestamp']>;
+};
+
+export enum Categories_Update_Column {
+  CATEGORYGROUP = 'categoryGroup',
+  CREATEDAT = 'createdAt',
+  ID = 'id',
+  NAME = 'name',
+  UPDATEDAT = 'updatedAt'
+}
 
 export type Connection = {
   pageInfo: PageInfo;
@@ -342,7 +491,7 @@ export type Image = {
   description?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
   original: ImageVariant;
-  tags?: Maybe<Array<Scalars['String']>>;
+  tags?: Maybe<Scalars['String']>;
   variants: Array<ImageVariant>;
 };
 
@@ -467,7 +616,7 @@ export type Image_Parents = {
    __typename?: 'image_parents';
   createdAt: Scalars['timestamptz'];
   description?: Maybe<Scalars['String']>;
-  imageId: Scalars['String'];
+  id: Scalars['String'];
   original?: Maybe<Image_Variants>;
   originalVariantId: Scalars['String'];
   tags?: Maybe<Scalars['String']>;
@@ -529,7 +678,7 @@ export type Image_Parents_Bool_Exp = {
   _or?: Maybe<Array<Maybe<Image_Parents_Bool_Exp>>>;
   createdAt?: Maybe<Timestamptz_Comparison_Exp>;
   description?: Maybe<String_Comparison_Exp>;
-  imageId?: Maybe<String_Comparison_Exp>;
+  id?: Maybe<String_Comparison_Exp>;
   original?: Maybe<Image_Variants_Bool_Exp>;
   originalVariantId?: Maybe<String_Comparison_Exp>;
   tags?: Maybe<String_Comparison_Exp>;
@@ -544,7 +693,7 @@ export enum Image_Parents_Constraint {
 export type Image_Parents_Insert_Input = {
   createdAt?: Maybe<Scalars['timestamptz']>;
   description?: Maybe<Scalars['String']>;
-  imageId?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
   original?: Maybe<Image_Variants_Obj_Rel_Insert_Input>;
   originalVariantId?: Maybe<Scalars['String']>;
   tags?: Maybe<Scalars['String']>;
@@ -555,7 +704,7 @@ export type Image_Parents_Max_Fields = {
    __typename?: 'image_parents_max_fields';
   createdAt?: Maybe<Scalars['timestamptz']>;
   description?: Maybe<Scalars['String']>;
-  imageId?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
   originalVariantId?: Maybe<Scalars['String']>;
   tags?: Maybe<Scalars['String']>;
 };
@@ -563,7 +712,7 @@ export type Image_Parents_Max_Fields = {
 export type Image_Parents_Max_Order_By = {
   createdAt?: Maybe<Order_By>;
   description?: Maybe<Order_By>;
-  imageId?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
   originalVariantId?: Maybe<Order_By>;
   tags?: Maybe<Order_By>;
 };
@@ -572,7 +721,7 @@ export type Image_Parents_Min_Fields = {
    __typename?: 'image_parents_min_fields';
   createdAt?: Maybe<Scalars['timestamptz']>;
   description?: Maybe<Scalars['String']>;
-  imageId?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
   originalVariantId?: Maybe<Scalars['String']>;
   tags?: Maybe<Scalars['String']>;
 };
@@ -580,7 +729,7 @@ export type Image_Parents_Min_Fields = {
 export type Image_Parents_Min_Order_By = {
   createdAt?: Maybe<Order_By>;
   description?: Maybe<Order_By>;
-  imageId?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
   originalVariantId?: Maybe<Order_By>;
   tags?: Maybe<Order_By>;
 };
@@ -605,7 +754,7 @@ export type Image_Parents_On_Conflict = {
 export type Image_Parents_Order_By = {
   createdAt?: Maybe<Order_By>;
   description?: Maybe<Order_By>;
-  imageId?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
   original?: Maybe<Image_Variants_Order_By>;
   originalVariantId?: Maybe<Order_By>;
   tags?: Maybe<Order_By>;
@@ -613,13 +762,13 @@ export type Image_Parents_Order_By = {
 };
 
 export type Image_Parents_Pk_Columns_Input = {
-  imageId: Scalars['String'];
+  id: Scalars['String'];
 };
 
 export enum Image_Parents_Select_Column {
   CREATEDAT = 'createdAt',
   DESCRIPTION = 'description',
-  IMAGEID = 'imageId',
+  ID = 'id',
   ORIGINALVARIANTID = 'originalVariantId',
   TAGS = 'tags'
 }
@@ -627,7 +776,7 @@ export enum Image_Parents_Select_Column {
 export type Image_Parents_Set_Input = {
   createdAt?: Maybe<Scalars['timestamptz']>;
   description?: Maybe<Scalars['String']>;
-  imageId?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
   originalVariantId?: Maybe<Scalars['String']>;
   tags?: Maybe<Scalars['String']>;
 };
@@ -635,7 +784,7 @@ export type Image_Parents_Set_Input = {
 export enum Image_Parents_Update_Column {
   CREATEDAT = 'createdAt',
   DESCRIPTION = 'description',
-  IMAGEID = 'imageId',
+  ID = 'id',
   ORIGINALVARIANTID = 'originalVariantId',
   TAGS = 'tags'
 }
@@ -643,11 +792,11 @@ export enum Image_Parents_Update_Column {
 export type Image_Variants = {
    __typename?: 'image_variants';
   heightInPixels: Scalars['Int'];
+  id: Scalars['String'];
   mimeType: Scalars['String'];
   parentId: Scalars['String'];
   sizeInBytes: Scalars['Int'];
   url?: Maybe<Scalars['String']>;
-  variantId: Scalars['String'];
   widthInPixels: Scalars['Int'];
 };
 
@@ -715,11 +864,11 @@ export type Image_Variants_Bool_Exp = {
   _not?: Maybe<Image_Variants_Bool_Exp>;
   _or?: Maybe<Array<Maybe<Image_Variants_Bool_Exp>>>;
   heightInPixels?: Maybe<Int_Comparison_Exp>;
+  id?: Maybe<String_Comparison_Exp>;
   mimeType?: Maybe<String_Comparison_Exp>;
   parentId?: Maybe<String_Comparison_Exp>;
   sizeInBytes?: Maybe<Int_Comparison_Exp>;
   url?: Maybe<String_Comparison_Exp>;
-  variantId?: Maybe<String_Comparison_Exp>;
   widthInPixels?: Maybe<Int_Comparison_Exp>;
 };
 
@@ -736,53 +885,53 @@ export type Image_Variants_Inc_Input = {
 
 export type Image_Variants_Insert_Input = {
   heightInPixels?: Maybe<Scalars['Int']>;
+  id?: Maybe<Scalars['String']>;
   mimeType?: Maybe<Scalars['String']>;
   parentId?: Maybe<Scalars['String']>;
   sizeInBytes?: Maybe<Scalars['Int']>;
   url?: Maybe<Scalars['String']>;
-  variantId?: Maybe<Scalars['String']>;
   widthInPixels?: Maybe<Scalars['Int']>;
 };
 
 export type Image_Variants_Max_Fields = {
    __typename?: 'image_variants_max_fields';
   heightInPixels?: Maybe<Scalars['Int']>;
+  id?: Maybe<Scalars['String']>;
   mimeType?: Maybe<Scalars['String']>;
   parentId?: Maybe<Scalars['String']>;
   sizeInBytes?: Maybe<Scalars['Int']>;
   url?: Maybe<Scalars['String']>;
-  variantId?: Maybe<Scalars['String']>;
   widthInPixels?: Maybe<Scalars['Int']>;
 };
 
 export type Image_Variants_Max_Order_By = {
   heightInPixels?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
   mimeType?: Maybe<Order_By>;
   parentId?: Maybe<Order_By>;
   sizeInBytes?: Maybe<Order_By>;
   url?: Maybe<Order_By>;
-  variantId?: Maybe<Order_By>;
   widthInPixels?: Maybe<Order_By>;
 };
 
 export type Image_Variants_Min_Fields = {
    __typename?: 'image_variants_min_fields';
   heightInPixels?: Maybe<Scalars['Int']>;
+  id?: Maybe<Scalars['String']>;
   mimeType?: Maybe<Scalars['String']>;
   parentId?: Maybe<Scalars['String']>;
   sizeInBytes?: Maybe<Scalars['Int']>;
   url?: Maybe<Scalars['String']>;
-  variantId?: Maybe<Scalars['String']>;
   widthInPixels?: Maybe<Scalars['Int']>;
 };
 
 export type Image_Variants_Min_Order_By = {
   heightInPixels?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
   mimeType?: Maybe<Order_By>;
   parentId?: Maybe<Order_By>;
   sizeInBytes?: Maybe<Order_By>;
   url?: Maybe<Order_By>;
-  variantId?: Maybe<Order_By>;
   widthInPixels?: Maybe<Order_By>;
 };
 
@@ -805,35 +954,35 @@ export type Image_Variants_On_Conflict = {
 
 export type Image_Variants_Order_By = {
   heightInPixels?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
   mimeType?: Maybe<Order_By>;
   parentId?: Maybe<Order_By>;
   sizeInBytes?: Maybe<Order_By>;
   url?: Maybe<Order_By>;
-  variantId?: Maybe<Order_By>;
   widthInPixels?: Maybe<Order_By>;
 };
 
 export type Image_Variants_Pk_Columns_Input = {
-  variantId: Scalars['String'];
+  id: Scalars['String'];
 };
 
 export enum Image_Variants_Select_Column {
   HEIGHTINPIXELS = 'heightInPixels',
+  ID = 'id',
   MIMETYPE = 'mimeType',
   PARENTID = 'parentId',
   SIZEINBYTES = 'sizeInBytes',
   URL = 'url',
-  VARIANTID = 'variantId',
   WIDTHINPIXELS = 'widthInPixels'
 }
 
 export type Image_Variants_Set_Input = {
   heightInPixels?: Maybe<Scalars['Int']>;
+  id?: Maybe<Scalars['String']>;
   mimeType?: Maybe<Scalars['String']>;
   parentId?: Maybe<Scalars['String']>;
   sizeInBytes?: Maybe<Scalars['Int']>;
   url?: Maybe<Scalars['String']>;
-  variantId?: Maybe<Scalars['String']>;
   widthInPixels?: Maybe<Scalars['Int']>;
 };
 
@@ -891,11 +1040,11 @@ export type Image_Variants_Sum_Order_By = {
 
 export enum Image_Variants_Update_Column {
   HEIGHTINPIXELS = 'heightInPixels',
+  ID = 'id',
   MIMETYPE = 'mimeType',
   PARENTID = 'parentId',
   SIZEINBYTES = 'sizeInBytes',
   URL = 'url',
-  VARIANTID = 'variantId',
   WIDTHINPIXELS = 'widthInPixels'
 }
 
@@ -945,12 +1094,12 @@ export type ImageUrl = {
 
 export type ImageVariant = {
    __typename?: 'ImageVariant';
-  heightInPixels: Scalars['Int'];
+  heightInPixels?: Maybe<Scalars['Int']>;
   id: Scalars['ID'];
-  mimeType: Scalars['String'];
-  sizeInBytes: Scalars['Int'];
+  mimeType?: Maybe<Scalars['String']>;
+  sizeInBytes?: Maybe<Scalars['Int']>;
   url: Scalars['String'];
-  widthInPixels: Scalars['Int'];
+  widthInPixels?: Maybe<Scalars['Int']>;
 };
 
 export type Int_Comparison_Exp = {
@@ -983,6 +1132,226 @@ export type LoginMutationResponse = {
   jwt?: Maybe<Scalars['String']>;
   setCookie?: Maybe<Scalars['String']>;
   user: UserPrivate;
+};
+
+export type Migrations = {
+   __typename?: 'migrations';
+  datetime?: Maybe<Scalars['timestamptz']>;
+  id: Scalars['Int'];
+  name?: Maybe<Scalars['String']>;
+};
+
+export type Migrations_Aggregate = {
+   __typename?: 'migrations_aggregate';
+  aggregate?: Maybe<Migrations_Aggregate_Fields>;
+  nodes: Array<Migrations>;
+};
+
+export type Migrations_Aggregate_Fields = {
+   __typename?: 'migrations_aggregate_fields';
+  avg?: Maybe<Migrations_Avg_Fields>;
+  count?: Maybe<Scalars['Int']>;
+  max?: Maybe<Migrations_Max_Fields>;
+  min?: Maybe<Migrations_Min_Fields>;
+  stddev?: Maybe<Migrations_Stddev_Fields>;
+  stddev_pop?: Maybe<Migrations_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<Migrations_Stddev_Samp_Fields>;
+  sum?: Maybe<Migrations_Sum_Fields>;
+  var_pop?: Maybe<Migrations_Var_Pop_Fields>;
+  var_samp?: Maybe<Migrations_Var_Samp_Fields>;
+  variance?: Maybe<Migrations_Variance_Fields>;
+};
+
+
+export type Migrations_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<Migrations_Select_Column>>;
+  distinct?: Maybe<Scalars['Boolean']>;
+};
+
+export type Migrations_Aggregate_Order_By = {
+  avg?: Maybe<Migrations_Avg_Order_By>;
+  count?: Maybe<Order_By>;
+  max?: Maybe<Migrations_Max_Order_By>;
+  min?: Maybe<Migrations_Min_Order_By>;
+  stddev?: Maybe<Migrations_Stddev_Order_By>;
+  stddev_pop?: Maybe<Migrations_Stddev_Pop_Order_By>;
+  stddev_samp?: Maybe<Migrations_Stddev_Samp_Order_By>;
+  sum?: Maybe<Migrations_Sum_Order_By>;
+  var_pop?: Maybe<Migrations_Var_Pop_Order_By>;
+  var_samp?: Maybe<Migrations_Var_Samp_Order_By>;
+  variance?: Maybe<Migrations_Variance_Order_By>;
+};
+
+export type Migrations_Arr_Rel_Insert_Input = {
+  data: Array<Migrations_Insert_Input>;
+  on_conflict?: Maybe<Migrations_On_Conflict>;
+};
+
+export type Migrations_Avg_Fields = {
+   __typename?: 'migrations_avg_fields';
+  id?: Maybe<Scalars['Float']>;
+};
+
+export type Migrations_Avg_Order_By = {
+  id?: Maybe<Order_By>;
+};
+
+export type Migrations_Bool_Exp = {
+  _and?: Maybe<Array<Maybe<Migrations_Bool_Exp>>>;
+  _not?: Maybe<Migrations_Bool_Exp>;
+  _or?: Maybe<Array<Maybe<Migrations_Bool_Exp>>>;
+  datetime?: Maybe<Timestamptz_Comparison_Exp>;
+  id?: Maybe<Int_Comparison_Exp>;
+  name?: Maybe<String_Comparison_Exp>;
+};
+
+export enum Migrations_Constraint {
+  MIGRATIONS_ID_NAME_IDX = 'migrations_id_name_idx',
+  MIGRATIONS_PKEY = 'migrations_pkey'
+}
+
+export type Migrations_Inc_Input = {
+  id?: Maybe<Scalars['Int']>;
+};
+
+export type Migrations_Insert_Input = {
+  datetime?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['Int']>;
+  name?: Maybe<Scalars['String']>;
+};
+
+export type Migrations_Max_Fields = {
+   __typename?: 'migrations_max_fields';
+  datetime?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['Int']>;
+  name?: Maybe<Scalars['String']>;
+};
+
+export type Migrations_Max_Order_By = {
+  datetime?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  name?: Maybe<Order_By>;
+};
+
+export type Migrations_Min_Fields = {
+   __typename?: 'migrations_min_fields';
+  datetime?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['Int']>;
+  name?: Maybe<Scalars['String']>;
+};
+
+export type Migrations_Min_Order_By = {
+  datetime?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  name?: Maybe<Order_By>;
+};
+
+export type Migrations_Mutation_Response = {
+   __typename?: 'migrations_mutation_response';
+  affected_rows: Scalars['Int'];
+  returning: Array<Migrations>;
+};
+
+export type Migrations_Obj_Rel_Insert_Input = {
+  data: Migrations_Insert_Input;
+  on_conflict?: Maybe<Migrations_On_Conflict>;
+};
+
+export type Migrations_On_Conflict = {
+  constraint: Migrations_Constraint;
+  update_columns: Array<Migrations_Update_Column>;
+  where?: Maybe<Migrations_Bool_Exp>;
+};
+
+export type Migrations_Order_By = {
+  datetime?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  name?: Maybe<Order_By>;
+};
+
+export type Migrations_Pk_Columns_Input = {
+  id: Scalars['Int'];
+};
+
+export enum Migrations_Select_Column {
+  DATETIME = 'datetime',
+  ID = 'id',
+  NAME = 'name'
+}
+
+export type Migrations_Set_Input = {
+  datetime?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['Int']>;
+  name?: Maybe<Scalars['String']>;
+};
+
+export type Migrations_Stddev_Fields = {
+   __typename?: 'migrations_stddev_fields';
+  id?: Maybe<Scalars['Float']>;
+};
+
+export type Migrations_Stddev_Order_By = {
+  id?: Maybe<Order_By>;
+};
+
+export type Migrations_Stddev_Pop_Fields = {
+   __typename?: 'migrations_stddev_pop_fields';
+  id?: Maybe<Scalars['Float']>;
+};
+
+export type Migrations_Stddev_Pop_Order_By = {
+  id?: Maybe<Order_By>;
+};
+
+export type Migrations_Stddev_Samp_Fields = {
+   __typename?: 'migrations_stddev_samp_fields';
+  id?: Maybe<Scalars['Float']>;
+};
+
+export type Migrations_Stddev_Samp_Order_By = {
+  id?: Maybe<Order_By>;
+};
+
+export type Migrations_Sum_Fields = {
+   __typename?: 'migrations_sum_fields';
+  id?: Maybe<Scalars['Int']>;
+};
+
+export type Migrations_Sum_Order_By = {
+  id?: Maybe<Order_By>;
+};
+
+export enum Migrations_Update_Column {
+  DATETIME = 'datetime',
+  ID = 'id',
+  NAME = 'name'
+}
+
+export type Migrations_Var_Pop_Fields = {
+   __typename?: 'migrations_var_pop_fields';
+  id?: Maybe<Scalars['Float']>;
+};
+
+export type Migrations_Var_Pop_Order_By = {
+  id?: Maybe<Order_By>;
+};
+
+export type Migrations_Var_Samp_Fields = {
+   __typename?: 'migrations_var_samp_fields';
+  id?: Maybe<Scalars['Float']>;
+};
+
+export type Migrations_Var_Samp_Order_By = {
+  id?: Maybe<Order_By>;
+};
+
+export type Migrations_Variance_Fields = {
+   __typename?: 'migrations_variance_fields';
+  id?: Maybe<Scalars['Float']>;
+};
+
+export type Migrations_Variance_Order_By = {
+  id?: Maybe<Order_By>;
 };
 
 export type MostRecentDownloadRecord = {
@@ -1074,26 +1443,26 @@ export type Mutation = {
 
 
 export type MutationAddPaymentMethodArgs = {
-  customerId: Scalars['ID'];
-  paymentMethodId: Scalars['ID'];
+  customerId: Scalars['String'];
+  paymentMethodId: Scalars['String'];
 };
 
 
 export type MutationAddProductToCuratedListArgs = {
-  listId: Scalars['ID'];
-  productId: Scalars['ID'];
-  variantId?: Maybe<Scalars['ID']>;
+  listId: Scalars['String'];
+  productId: Scalars['String'];
+  variantId?: Maybe<Scalars['String']>;
 };
 
 
 export type MutationAddProductToWishlistArgs = {
-  productId: Scalars['ID'];
-  variantId: Scalars['ID'];
+  productId: Scalars['String'];
+  variantId: Scalars['String'];
 };
 
 
 export type MutationAddProductsToCartArgs = {
-  cartId: Scalars['ID'];
+  cartId: Scalars['String'];
   productProductVariantIds: Array<ProductProductVariantId>;
 };
 
@@ -1104,46 +1473,46 @@ export type MutationAddPromoCodeToCartArgs = {
 
 
 export type MutationAdjustCartItemQuantityArgs = {
-  cartId: Scalars['ID'];
-  itemId: Scalars['ID'];
+  cartId: Scalars['String'];
+  itemId: Scalars['String'];
   quantity?: Maybe<Scalars['Int']>;
 };
 
 
 export type MutationAdminCreateAffiliateForUserArgs = {
-  userId: Scalars['ID'];
+  userId: Scalars['String'];
 };
 
 
 export type MutationAdminDeleteAccountArgs = {
-  userId: Scalars['ID'];
+  userId: Scalars['String'];
 };
 
 
 export type MutationAdminDeleteAffiliateForUserArgs = {
-  userId: Scalars['ID'];
+  userId: Scalars['String'];
 };
 
 
 export type MutationAdminDeleteProductArgs = {
-  productId: Scalars['ID'];
+  productId: Scalars['String'];
 };
 
 
 export type MutationAdminDeleteStoreArgs = {
-  storeId: Scalars['ID'];
+  storeId: Scalars['String'];
 };
 
 
 export type MutationAdminGenerateProductFileDownloadLinkArgs = {
-  id: Scalars['ID'];
+  id: Scalars['String'];
 };
 
 
 export type MutationAdminManuallyConfirmOrderAfterFrontendPaymentArgs = {
   anonOrderEmailAddress?: Maybe<Scalars['String']>;
-  cartIdToEmpty?: Maybe<Scalars['ID']>;
-  orderId: Scalars['ID'];
+  cartIdToEmpty?: Maybe<Scalars['String']>;
+  orderId: Scalars['String'];
   paymentProcessorData: Scalars['String'];
 };
 
@@ -1172,14 +1541,14 @@ export type MutationCheckoutCartForFrontendPaymentArgs = {
 
 export type MutationCheckoutConfirmCartArgs = {
   paymentProcessorData: Scalars['String'];
-  unconfirmedOrderId: Scalars['ID'];
+  unconfirmedOrderId: Scalars['String'];
 };
 
 
 export type MutationCheckoutConfirmProductsArgs = {
   anonOrderEmailAddress?: Maybe<Scalars['String']>;
   paymentProcessorData: Scalars['String'];
-  unconfirmedOrderId: Scalars['ID'];
+  unconfirmedOrderId: Scalars['String'];
 };
 
 
@@ -1199,13 +1568,13 @@ export type MutationCheckoutProductsForFrontendPaymentArgs = {
 
 
 export type MutationClaimUnclaimedOrderOwnershipArgs = {
-  orderId: Scalars['ID'];
+  orderId: Scalars['String'];
 };
 
 
 export type MutationConfirmOrderAfterFrontendPaymentArgs = {
   anonOrderEmailAddress?: Maybe<Scalars['String']>;
-  orderId: Scalars['ID'];
+  orderId: Scalars['String'];
   paymentProcessorData: Scalars['String'];
 };
 
@@ -1255,9 +1624,9 @@ export type MutationCreateRefundArgs = {
 
 export type MutationCreateStoreArgs = {
   bio?: Maybe<Scalars['String']>;
-  coverId?: Maybe<Scalars['ID']>;
+  coverId?: Maybe<Scalars['String']>;
   name: Scalars['String'];
-  profileId?: Maybe<Scalars['ID']>;
+  profileId?: Maybe<Scalars['String']>;
   website?: Maybe<Scalars['String']>;
 };
 
@@ -1273,12 +1642,12 @@ export type MutationDeleteAccountArgs = {
 
 
 export type MutationDeleteCuratedListArgs = {
-  listId: Scalars['ID'];
+  listId: Scalars['String'];
 };
 
 
 export type MutationDeleteProductArgs = {
-  productId: Scalars['ID'];
+  productId: Scalars['String'];
 };
 
 
@@ -1299,9 +1668,11 @@ export type MutationEditProductArgs = {
 
 export type MutationEditStoreProfileArgs = {
   bio?: Maybe<Scalars['String']>;
-  coverId?: Maybe<Scalars['ID']>;
+  coverId?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
-  profileId?: Maybe<Scalars['ID']>;
+  profileId?: Maybe<Scalars['String']>;
+  storeId: Scalars['String'];
+  userId: Scalars['String'];
   website?: Maybe<Scalars['String']>;
 };
 
@@ -1321,88 +1692,87 @@ export type MutationEditUserProfileArgs = {
 
 
 export type MutationExcludeProductFromAutomaticListsArgs = {
-  productId: Scalars['ID'];
+  productId: Scalars['String'];
 };
 
 
 export type MutationExcludeProductFromSearchArgs = {
-  productId: Scalars['ID'];
+  productId: Scalars['String'];
 };
 
 
 export type MutationFollowStoreArgs = {
   query?: Maybe<ConnectionQuery>;
-  storeId: Scalars['ID'];
+  storeId: Scalars['String'];
 };
 
 
 export type MutationGenerateProductFileDownloadLinkArgs = {
-  id: Scalars['ID'];
-  orderItemId: Scalars['ID'];
+  id: Scalars['String'];
+  orderItemId: Scalars['String'];
 };
 
 
 export type MutationIncludeProductInAutomaticListsArgs = {
-  productId: Scalars['ID'];
+  productId: Scalars['String'];
 };
 
 
 export type MutationIncludeProductInSearchArgs = {
-  productId: Scalars['ID'];
+  productId: Scalars['String'];
 };
 
 
 export type MutationLogInUsingEmailArgs = {
   email: Scalars['String'];
   password: Scalars['String'];
-  productProductVariantIds?: Maybe<Array<Maybe<ProductProductVariantId>>>;
 };
 
 
 export type MutationRearrangeCuratedListItemsArgs = {
   itemIdsInOrder: Array<Scalars['ID']>;
-  listId: Scalars['ID'];
+  listId: Scalars['String'];
 };
 
 
 export type MutationReassignOrderOwnershipArgs = {
-  orderId: Scalars['ID'];
+  orderId: Scalars['String'];
   userIdOrEmail: Scalars['String'];
 };
 
 
 export type MutationRecordAffiliateLinkClickArgs = {
-  affiliateId: Scalars['ID'];
+  affiliateId: Scalars['String'];
   path: Scalars['String'];
 };
 
 
 export type MutationRemoveItemFromCuratedListArgs = {
-  itemId: Scalars['ID'];
-  listId: Scalars['ID'];
+  itemId: Scalars['String'];
+  listId: Scalars['String'];
 };
 
 
 export type MutationRemovePaymentMethodArgs = {
-  customerId: Scalars['ID'];
-  paymentMethodId: Scalars['ID'];
+  customerId: Scalars['String'];
+  paymentMethodId: Scalars['String'];
 };
 
 
 export type MutationRemoveProductFromWishlistArgs = {
-  productId: Scalars['ID'];
-  variantId: Scalars['ID'];
+  productId: Scalars['String'];
+  variantId: Scalars['String'];
 };
 
 
 export type MutationRemoveProductsFromCartArgs = {
-  cartId: Scalars['ID'];
+  cartId: Scalars['String'];
   productProductVariantIds: Array<ProductProductVariantId>;
 };
 
 
 export type MutationRemovePromoCodeFromCartArgs = {
-  discountId: Scalars['ID'];
+  discountId: Scalars['String'];
 };
 
 
@@ -1422,8 +1792,8 @@ export type MutationSendVerifyEmailArgs = {
 
 
 export type MutationSetDefaultPaymentMethodArgs = {
-  customerId: Scalars['ID'];
-  paymentMethodId: Scalars['ID'];
+  customerId: Scalars['String'];
+  paymentMethodId: Scalars['String'];
 };
 
 
@@ -1440,44 +1810,43 @@ export type MutationSignUpUsingEmailArgs = {
   firstName?: Maybe<Scalars['String']>;
   lastName?: Maybe<Scalars['String']>;
   password: Scalars['String'];
-  productProductVariantIds?: Maybe<Array<Maybe<ProductProductVariantId>>>;
   username?: Maybe<Scalars['String']>;
 };
 
 
 export type MutationSuspendProductArgs = {
-  productId: Scalars['ID'];
+  productId: Scalars['String'];
 };
 
 
 export type MutationSuspendStoreArgs = {
-  storeId: Scalars['ID'];
+  storeId: Scalars['String'];
 };
 
 
 export type MutationSuspendUserArgs = {
-  userId: Scalars['ID'];
+  userId: Scalars['String'];
 };
 
 
 export type MutationUnfollowStoreArgs = {
   query?: Maybe<ConnectionQuery>;
-  storeId: Scalars['ID'];
+  storeId: Scalars['String'];
 };
 
 
 export type MutationUnsuspendProductArgs = {
-  productId: Scalars['ID'];
+  productId: Scalars['String'];
 };
 
 
 export type MutationUnsuspendStoreArgs = {
-  storeId: Scalars['ID'];
+  storeId: Scalars['String'];
 };
 
 
 export type MutationUnsuspendUserArgs = {
-  userId: Scalars['ID'];
+  userId: Scalars['String'];
 };
 
 
@@ -1491,21 +1860,21 @@ export type MutationUploadRegisterArgs = {
 export type MutationUploadSaveImageArgs = {
   description?: Maybe<Scalars['String']>;
   ownerIds?: Maybe<Array<Maybe<Scalars['String']>>>;
-  tags?: Maybe<Array<Maybe<Scalars['String']>>>;
-  uploadId: Scalars['ID'];
+  tags?: Maybe<Scalars['String']>;
+  uploadId: Scalars['String'];
 };
 
 
 export type MutationUploadSaveProductFileArgs = {
   fileName: Scalars['String'];
   ownerIds?: Maybe<Array<Maybe<Scalars['String']>>>;
-  uploadId: Scalars['ID'];
+  uploadId: Scalars['String'];
 };
 
 
 export type MutationVisitStoreArgs = {
   query?: Maybe<ConnectionQuery>;
-  storeId: Scalars['ID'];
+  storeId: Scalars['String'];
 };
 
 export type Mutation_Root = {
@@ -1546,12 +1915,16 @@ export type Mutation_Root = {
   deleteCuratedList: BlankMutationResponse;
   deleteProduct?: Maybe<ProductMutationResponse>;
   deleteStore: StoreMutationResponse;
+  delete_categories?: Maybe<Categories_Mutation_Response>;
+  delete_categories_by_pk?: Maybe<Categories>;
   delete_image_owners?: Maybe<Image_Owners_Mutation_Response>;
   delete_image_owners_by_pk?: Maybe<Image_Owners>;
   delete_image_parents?: Maybe<Image_Parents_Mutation_Response>;
   delete_image_parents_by_pk?: Maybe<Image_Parents>;
   delete_image_variants?: Maybe<Image_Variants_Mutation_Response>;
   delete_image_variants_by_pk?: Maybe<Image_Variants>;
+  delete_migrations?: Maybe<Migrations_Mutation_Response>;
+  delete_migrations_by_pk?: Maybe<Migrations>;
   delete_online_users?: Maybe<Online_Users_Mutation_Response>;
   delete_payment_methods?: Maybe<Payment_Methods_Mutation_Response>;
   delete_payment_methods_by_pk?: Maybe<Payment_Methods>;
@@ -1584,12 +1957,16 @@ export type Mutation_Root = {
   generateProductFileDownloadLink: ProductFileLinkMutationResponse;
   includeProductInAutomaticLists?: Maybe<ProductMutationResponse>;
   includeProductInSearch?: Maybe<ProductMutationResponse>;
+  insert_categories?: Maybe<Categories_Mutation_Response>;
+  insert_categories_one?: Maybe<Categories>;
   insert_image_owners?: Maybe<Image_Owners_Mutation_Response>;
   insert_image_owners_one?: Maybe<Image_Owners>;
   insert_image_parents?: Maybe<Image_Parents_Mutation_Response>;
   insert_image_parents_one?: Maybe<Image_Parents>;
   insert_image_variants?: Maybe<Image_Variants_Mutation_Response>;
   insert_image_variants_one?: Maybe<Image_Variants>;
+  insert_migrations?: Maybe<Migrations_Mutation_Response>;
+  insert_migrations_one?: Maybe<Migrations>;
   insert_online_users?: Maybe<Online_Users_Mutation_Response>;
   insert_online_users_one?: Maybe<Online_Users>;
   insert_payment_methods?: Maybe<Payment_Methods_Mutation_Response>;
@@ -1637,12 +2014,16 @@ export type Mutation_Root = {
   unsuspendProduct?: Maybe<ProductMutationResponse>;
   unsuspendStore?: Maybe<StoreMutationResponse>;
   unsuspendUser: BlankMutationResponse;
+  update_categories?: Maybe<Categories_Mutation_Response>;
+  update_categories_by_pk?: Maybe<Categories>;
   update_image_owners?: Maybe<Image_Owners_Mutation_Response>;
   update_image_owners_by_pk?: Maybe<Image_Owners>;
   update_image_parents?: Maybe<Image_Parents_Mutation_Response>;
   update_image_parents_by_pk?: Maybe<Image_Parents>;
   update_image_variants?: Maybe<Image_Variants_Mutation_Response>;
   update_image_variants_by_pk?: Maybe<Image_Variants>;
+  update_migrations?: Maybe<Migrations_Mutation_Response>;
+  update_migrations_by_pk?: Maybe<Migrations>;
   update_online_users?: Maybe<Online_Users_Mutation_Response>;
   update_payment_methods?: Maybe<Payment_Methods_Mutation_Response>;
   update_payment_methods_by_pk?: Maybe<Payment_Methods>;
@@ -1673,26 +2054,26 @@ export type Mutation_Root = {
 
 
 export type Mutation_RootAddPaymentMethodArgs = {
-  customerId: Scalars['ID'];
-  paymentMethodId: Scalars['ID'];
+  customerId: Scalars['String'];
+  paymentMethodId: Scalars['String'];
 };
 
 
 export type Mutation_RootAddProductToCuratedListArgs = {
-  listId: Scalars['ID'];
-  productId: Scalars['ID'];
-  variantId?: Maybe<Scalars['ID']>;
+  listId: Scalars['String'];
+  productId: Scalars['String'];
+  variantId?: Maybe<Scalars['String']>;
 };
 
 
 export type Mutation_RootAddProductToWishlistArgs = {
-  productId: Scalars['ID'];
-  variantId: Scalars['ID'];
+  productId: Scalars['String'];
+  variantId: Scalars['String'];
 };
 
 
 export type Mutation_RootAddProductsToCartArgs = {
-  cartId: Scalars['ID'];
+  cartId: Scalars['String'];
   productProductVariantIds: Array<ProductProductVariantId>;
 };
 
@@ -1703,46 +2084,46 @@ export type Mutation_RootAddPromoCodeToCartArgs = {
 
 
 export type Mutation_RootAdjustCartItemQuantityArgs = {
-  cartId: Scalars['ID'];
-  itemId: Scalars['ID'];
+  cartId: Scalars['String'];
+  itemId: Scalars['String'];
   quantity?: Maybe<Scalars['Int']>;
 };
 
 
 export type Mutation_RootAdminCreateAffiliateForUserArgs = {
-  userId: Scalars['ID'];
+  userId: Scalars['String'];
 };
 
 
 export type Mutation_RootAdminDeleteAccountArgs = {
-  userId: Scalars['ID'];
+  userId: Scalars['String'];
 };
 
 
 export type Mutation_RootAdminDeleteAffiliateForUserArgs = {
-  userId: Scalars['ID'];
+  userId: Scalars['String'];
 };
 
 
 export type Mutation_RootAdminDeleteProductArgs = {
-  productId: Scalars['ID'];
+  productId: Scalars['String'];
 };
 
 
 export type Mutation_RootAdminDeleteStoreArgs = {
-  storeId: Scalars['ID'];
+  storeId: Scalars['String'];
 };
 
 
 export type Mutation_RootAdminGenerateProductFileDownloadLinkArgs = {
-  id: Scalars['ID'];
+  id: Scalars['String'];
 };
 
 
 export type Mutation_RootAdminManuallyConfirmOrderAfterFrontendPaymentArgs = {
   anonOrderEmailAddress?: Maybe<Scalars['String']>;
-  cartIdToEmpty?: Maybe<Scalars['ID']>;
-  orderId: Scalars['ID'];
+  cartIdToEmpty?: Maybe<Scalars['String']>;
+  orderId: Scalars['String'];
   paymentProcessorData: Scalars['String'];
 };
 
@@ -1771,14 +2152,14 @@ export type Mutation_RootCheckoutCartForFrontendPaymentArgs = {
 
 export type Mutation_RootCheckoutConfirmCartArgs = {
   paymentProcessorData: Scalars['String'];
-  unconfirmedOrderId: Scalars['ID'];
+  unconfirmedOrderId: Scalars['String'];
 };
 
 
 export type Mutation_RootCheckoutConfirmProductsArgs = {
   anonOrderEmailAddress?: Maybe<Scalars['String']>;
   paymentProcessorData: Scalars['String'];
-  unconfirmedOrderId: Scalars['ID'];
+  unconfirmedOrderId: Scalars['String'];
 };
 
 
@@ -1798,13 +2179,13 @@ export type Mutation_RootCheckoutProductsForFrontendPaymentArgs = {
 
 
 export type Mutation_RootClaimUnclaimedOrderOwnershipArgs = {
-  orderId: Scalars['ID'];
+  orderId: Scalars['String'];
 };
 
 
 export type Mutation_RootConfirmOrderAfterFrontendPaymentArgs = {
   anonOrderEmailAddress?: Maybe<Scalars['String']>;
-  orderId: Scalars['ID'];
+  orderId: Scalars['String'];
   paymentProcessorData: Scalars['String'];
 };
 
@@ -1854,9 +2235,9 @@ export type Mutation_RootCreateRefundArgs = {
 
 export type Mutation_RootCreateStoreArgs = {
   bio?: Maybe<Scalars['String']>;
-  coverId?: Maybe<Scalars['ID']>;
+  coverId?: Maybe<Scalars['String']>;
   name: Scalars['String'];
-  profileId?: Maybe<Scalars['ID']>;
+  profileId?: Maybe<Scalars['String']>;
   website?: Maybe<Scalars['String']>;
 };
 
@@ -1872,17 +2253,27 @@ export type Mutation_RootDeleteAccountArgs = {
 
 
 export type Mutation_RootDeleteCuratedListArgs = {
-  listId: Scalars['ID'];
+  listId: Scalars['String'];
 };
 
 
 export type Mutation_RootDeleteProductArgs = {
-  productId: Scalars['ID'];
+  productId: Scalars['String'];
 };
 
 
 export type Mutation_RootDeleteStoreArgs = {
   password: Scalars['String'];
+};
+
+
+export type Mutation_RootDelete_CategoriesArgs = {
+  where: Categories_Bool_Exp;
+};
+
+
+export type Mutation_RootDelete_Categories_By_PkArgs = {
+  id: Scalars['String'];
 };
 
 
@@ -1902,7 +2293,7 @@ export type Mutation_RootDelete_Image_ParentsArgs = {
 
 
 export type Mutation_RootDelete_Image_Parents_By_PkArgs = {
-  imageId: Scalars['String'];
+  id: Scalars['String'];
 };
 
 
@@ -1912,7 +2303,17 @@ export type Mutation_RootDelete_Image_VariantsArgs = {
 
 
 export type Mutation_RootDelete_Image_Variants_By_PkArgs = {
-  variantId: Scalars['String'];
+  id: Scalars['String'];
+};
+
+
+export type Mutation_RootDelete_MigrationsArgs = {
+  where: Migrations_Bool_Exp;
+};
+
+
+export type Mutation_RootDelete_Migrations_By_PkArgs = {
+  id: Scalars['Int'];
 };
 
 
@@ -2033,9 +2434,11 @@ export type Mutation_RootEditProductArgs = {
 
 export type Mutation_RootEditStoreProfileArgs = {
   bio?: Maybe<Scalars['String']>;
-  coverId?: Maybe<Scalars['ID']>;
+  coverId?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
-  profileId?: Maybe<Scalars['ID']>;
+  profileId?: Maybe<Scalars['String']>;
+  storeId: Scalars['String'];
+  userId: Scalars['String'];
   website?: Maybe<Scalars['String']>;
 };
 
@@ -2055,34 +2458,46 @@ export type Mutation_RootEditUserProfileArgs = {
 
 
 export type Mutation_RootExcludeProductFromAutomaticListsArgs = {
-  productId: Scalars['ID'];
+  productId: Scalars['String'];
 };
 
 
 export type Mutation_RootExcludeProductFromSearchArgs = {
-  productId: Scalars['ID'];
+  productId: Scalars['String'];
 };
 
 
 export type Mutation_RootFollowStoreArgs = {
   query?: Maybe<ConnectionQuery>;
-  storeId: Scalars['ID'];
+  storeId: Scalars['String'];
 };
 
 
 export type Mutation_RootGenerateProductFileDownloadLinkArgs = {
-  id: Scalars['ID'];
-  orderItemId: Scalars['ID'];
+  id: Scalars['String'];
+  orderItemId: Scalars['String'];
 };
 
 
 export type Mutation_RootIncludeProductInAutomaticListsArgs = {
-  productId: Scalars['ID'];
+  productId: Scalars['String'];
 };
 
 
 export type Mutation_RootIncludeProductInSearchArgs = {
-  productId: Scalars['ID'];
+  productId: Scalars['String'];
+};
+
+
+export type Mutation_RootInsert_CategoriesArgs = {
+  objects: Array<Categories_Insert_Input>;
+  on_conflict?: Maybe<Categories_On_Conflict>;
+};
+
+
+export type Mutation_RootInsert_Categories_OneArgs = {
+  object: Categories_Insert_Input;
+  on_conflict?: Maybe<Categories_On_Conflict>;
 };
 
 
@@ -2119,6 +2534,18 @@ export type Mutation_RootInsert_Image_VariantsArgs = {
 export type Mutation_RootInsert_Image_Variants_OneArgs = {
   object: Image_Variants_Insert_Input;
   on_conflict?: Maybe<Image_Variants_On_Conflict>;
+};
+
+
+export type Mutation_RootInsert_MigrationsArgs = {
+  objects: Array<Migrations_Insert_Input>;
+  on_conflict?: Maybe<Migrations_On_Conflict>;
+};
+
+
+export type Mutation_RootInsert_Migrations_OneArgs = {
+  object: Migrations_Insert_Input;
+  on_conflict?: Maybe<Migrations_On_Conflict>;
 };
 
 
@@ -2255,54 +2682,53 @@ export type Mutation_RootInsert_Users_OneArgs = {
 export type Mutation_RootLogInUsingEmailArgs = {
   email: Scalars['String'];
   password: Scalars['String'];
-  productProductVariantIds?: Maybe<Array<Maybe<ProductProductVariantId>>>;
 };
 
 
 export type Mutation_RootRearrangeCuratedListItemsArgs = {
   itemIdsInOrder: Array<Scalars['ID']>;
-  listId: Scalars['ID'];
+  listId: Scalars['String'];
 };
 
 
 export type Mutation_RootReassignOrderOwnershipArgs = {
-  orderId: Scalars['ID'];
+  orderId: Scalars['String'];
   userIdOrEmail: Scalars['String'];
 };
 
 
 export type Mutation_RootRecordAffiliateLinkClickArgs = {
-  affiliateId: Scalars['ID'];
+  affiliateId: Scalars['String'];
   path: Scalars['String'];
 };
 
 
 export type Mutation_RootRemoveItemFromCuratedListArgs = {
-  itemId: Scalars['ID'];
-  listId: Scalars['ID'];
+  itemId: Scalars['String'];
+  listId: Scalars['String'];
 };
 
 
 export type Mutation_RootRemovePaymentMethodArgs = {
-  customerId: Scalars['ID'];
-  paymentMethodId: Scalars['ID'];
+  customerId: Scalars['String'];
+  paymentMethodId: Scalars['String'];
 };
 
 
 export type Mutation_RootRemoveProductFromWishlistArgs = {
-  productId: Scalars['ID'];
-  variantId: Scalars['ID'];
+  productId: Scalars['String'];
+  variantId: Scalars['String'];
 };
 
 
 export type Mutation_RootRemoveProductsFromCartArgs = {
-  cartId: Scalars['ID'];
+  cartId: Scalars['String'];
   productProductVariantIds: Array<ProductProductVariantId>;
 };
 
 
 export type Mutation_RootRemovePromoCodeFromCartArgs = {
-  discountId: Scalars['ID'];
+  discountId: Scalars['String'];
 };
 
 
@@ -2322,8 +2748,8 @@ export type Mutation_RootSendVerifyEmailArgs = {
 
 
 export type Mutation_RootSetDefaultPaymentMethodArgs = {
-  customerId: Scalars['ID'];
-  paymentMethodId: Scalars['ID'];
+  customerId: Scalars['String'];
+  paymentMethodId: Scalars['String'];
 };
 
 
@@ -2340,44 +2766,55 @@ export type Mutation_RootSignUpUsingEmailArgs = {
   firstName?: Maybe<Scalars['String']>;
   lastName?: Maybe<Scalars['String']>;
   password: Scalars['String'];
-  productProductVariantIds?: Maybe<Array<Maybe<ProductProductVariantId>>>;
   username?: Maybe<Scalars['String']>;
 };
 
 
 export type Mutation_RootSuspendProductArgs = {
-  productId: Scalars['ID'];
+  productId: Scalars['String'];
 };
 
 
 export type Mutation_RootSuspendStoreArgs = {
-  storeId: Scalars['ID'];
+  storeId: Scalars['String'];
 };
 
 
 export type Mutation_RootSuspendUserArgs = {
-  userId: Scalars['ID'];
+  userId: Scalars['String'];
 };
 
 
 export type Mutation_RootUnfollowStoreArgs = {
   query?: Maybe<ConnectionQuery>;
-  storeId: Scalars['ID'];
+  storeId: Scalars['String'];
 };
 
 
 export type Mutation_RootUnsuspendProductArgs = {
-  productId: Scalars['ID'];
+  productId: Scalars['String'];
 };
 
 
 export type Mutation_RootUnsuspendStoreArgs = {
-  storeId: Scalars['ID'];
+  storeId: Scalars['String'];
 };
 
 
 export type Mutation_RootUnsuspendUserArgs = {
-  userId: Scalars['ID'];
+  userId: Scalars['String'];
+};
+
+
+export type Mutation_RootUpdate_CategoriesArgs = {
+  _set?: Maybe<Categories_Set_Input>;
+  where: Categories_Bool_Exp;
+};
+
+
+export type Mutation_RootUpdate_Categories_By_PkArgs = {
+  _set?: Maybe<Categories_Set_Input>;
+  pk_columns: Categories_Pk_Columns_Input;
 };
 
 
@@ -2416,6 +2853,20 @@ export type Mutation_RootUpdate_Image_Variants_By_PkArgs = {
   _inc?: Maybe<Image_Variants_Inc_Input>;
   _set?: Maybe<Image_Variants_Set_Input>;
   pk_columns: Image_Variants_Pk_Columns_Input;
+};
+
+
+export type Mutation_RootUpdate_MigrationsArgs = {
+  _inc?: Maybe<Migrations_Inc_Input>;
+  _set?: Maybe<Migrations_Set_Input>;
+  where: Migrations_Bool_Exp;
+};
+
+
+export type Mutation_RootUpdate_Migrations_By_PkArgs = {
+  _inc?: Maybe<Migrations_Inc_Input>;
+  _set?: Maybe<Migrations_Set_Input>;
+  pk_columns: Migrations_Pk_Columns_Input;
 };
 
 
@@ -2563,15 +3014,15 @@ export type Mutation_RootUploadRegisterArgs = {
 export type Mutation_RootUploadSaveImageArgs = {
   description?: Maybe<Scalars['String']>;
   ownerIds?: Maybe<Array<Maybe<Scalars['String']>>>;
-  tags?: Maybe<Array<Maybe<Scalars['String']>>>;
-  uploadId: Scalars['ID'];
+  tags?: Maybe<Scalars['String']>;
+  uploadId: Scalars['String'];
 };
 
 
 export type Mutation_RootUploadSaveProductFileArgs = {
   fileName: Scalars['String'];
   ownerIds?: Maybe<Array<Maybe<Scalars['String']>>>;
-  uploadId: Scalars['ID'];
+  uploadId: Scalars['String'];
 };
 
 
@@ -2582,7 +3033,7 @@ export type Mutation_RootUrlArgs = {
 
 export type Mutation_RootVisitStoreArgs = {
   query?: Maybe<ConnectionQuery>;
-  storeId: Scalars['ID'];
+  storeId: Scalars['String'];
 };
 
 export type MutationError = {
@@ -3582,27 +4033,20 @@ export type Product = {
   categoryId: Scalars['ID'];
   chosenVariant?: Maybe<ProductVariant>;
   createdAt: Scalars['Date'];
+  currentSnapshot: ProductSnapshot;
   currentVariants: Array<ProductVariant>;
-  description: Scalars['String'];
   featuredVariant?: Maybe<ProductVariant>;
   id: Scalars['ID'];
   isDeleted: Scalars['Boolean'];
   isExcludedFromAutomaticLists: Scalars['Boolean'];
   isExcludedFromSearch: Scalars['Boolean'];
   isPublished: Scalars['Boolean'];
-  isQuantityEnabled: Scalars['Boolean'];
   isSuspended: Scalars['Boolean'];
   linkSlugs?: Maybe<PrimaryLinkSlugs>;
-  name: Scalars['String'];
-  quantityLabel: QuantityLabel;
-  snapshotCreatedAt: Scalars['Date'];
-  snapshotId: Scalars['ID'];
   store: Store;
   storeId: Scalars['ID'];
-  tagline: Scalars['String'];
-  tags: Array<Scalars['String']>;
+  tags?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['Date']>;
-  variantsLabel: VariantsLabel;
 };
 
 export type Product_File_Owners = {
@@ -4858,29 +5302,47 @@ export type ProductCategory = {
 
 
 export type ProductCreateInput = {
+  actionType?: Maybe<Scalars['String']>;
+  ammoType?: Maybe<Scalars['String']>;
+  boreDiameter?: Maybe<Scalars['String']>;
   categoryId: Scalars['ID'];
+  condition: Scalars['String'];
   currentVariants: Array<ProductVariantInput>;
+  dealer: Scalars['String'];
   description: Scalars['String'];
   isPublished: Scalars['Boolean'];
   isQuantityEnabled: Scalars['Boolean'];
+  location: Scalars['String'];
+  make?: Maybe<Scalars['String']>;
+  model?: Maybe<Scalars['String']>;
   name: Scalars['String'];
   quantityLabel?: Maybe<QuantityLabel>;
-  tagline: Scalars['String'];
-  tags: Array<Scalars['String']>;
+  serialNumber: Scalars['String'];
+  tags?: Maybe<Scalars['String']>;
+  title: Scalars['String'];
   variantsLabel?: Maybe<VariantsLabel>;
 };
 
 export type ProductEditInput = {
+  actionType?: Maybe<Scalars['String']>;
+  ammoType?: Maybe<Scalars['String']>;
+  boreDiameter?: Maybe<Scalars['String']>;
   categoryId: Scalars['ID'];
+  condition: Scalars['String'];
   currentVariants: Array<ProductVariantEditInput>;
+  dealer: Scalars['String'];
   description: Scalars['String'];
   isPublished: Scalars['Boolean'];
   isQuantityEnabled: Scalars['Boolean'];
+  location: Scalars['String'];
+  make?: Maybe<Scalars['String']>;
+  model?: Maybe<Scalars['String']>;
   name: Scalars['String'];
   productId: Scalars['ID'];
   quantityLabel?: Maybe<QuantityLabel>;
-  tagline: Scalars['String'];
-  tags: Array<Scalars['String']>;
+  serialNumber: Scalars['String'];
+  tags?: Maybe<Scalars['String']>;
+  title: Scalars['String'];
   variantsLabel?: Maybe<VariantsLabel>;
 };
 
@@ -4934,8 +5396,8 @@ export type ProductPrivate = Product & {
   categoryId: Scalars['ID'];
   chosenVariant?: Maybe<ProductVariant>;
   createdAt: Scalars['Date'];
+  currentSnapshot: ProductSnapshot;
   currentVariants: Array<ProductVariant>;
-  description: Scalars['String'];
   featuredVariant?: Maybe<ProductVariant>;
   historicalSnapshotsConnection: ProductsConnection;
   id: Scalars['ID'];
@@ -4943,19 +5405,13 @@ export type ProductPrivate = Product & {
   isExcludedFromAutomaticLists: Scalars['Boolean'];
   isExcludedFromSearch: Scalars['Boolean'];
   isPublished: Scalars['Boolean'];
-  isQuantityEnabled: Scalars['Boolean'];
   isSuspended: Scalars['Boolean'];
   linkSlugs?: Maybe<PrimaryLinkSlugs>;
-  name: Scalars['String'];
-  quantityLabel: QuantityLabel;
-  snapshotCreatedAt: Scalars['Date'];
   snapshotId: Scalars['ID'];
   store: Store;
   storeId: Scalars['ID'];
-  tagline: Scalars['String'];
-  tags: Array<Scalars['String']>;
+  tags?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['Date']>;
-  variantsLabel: VariantsLabel;
 };
 
 
@@ -4975,27 +5431,20 @@ export type ProductPublic = Product & {
   categoryId: Scalars['ID'];
   chosenVariant?: Maybe<ProductVariant>;
   createdAt: Scalars['Date'];
+  currentSnapshot: ProductSnapshot;
   currentVariants: Array<ProductVariant>;
-  description: Scalars['String'];
   featuredVariant?: Maybe<ProductVariant>;
   id: Scalars['ID'];
   isDeleted: Scalars['Boolean'];
   isExcludedFromAutomaticLists: Scalars['Boolean'];
   isExcludedFromSearch: Scalars['Boolean'];
   isPublished: Scalars['Boolean'];
-  isQuantityEnabled: Scalars['Boolean'];
   isSuspended: Scalars['Boolean'];
   linkSlugs?: Maybe<PrimaryLinkSlugs>;
-  name: Scalars['String'];
-  quantityLabel: QuantityLabel;
-  snapshotCreatedAt: Scalars['Date'];
-  snapshotId: Scalars['ID'];
   store: Store;
   storeId: Scalars['ID'];
-  tagline: Scalars['String'];
-  tags: Array<Scalars['String']>;
+  tags?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['Date']>;
-  variantsLabel: VariantsLabel;
 };
 
 export type Products = {
@@ -5230,6 +5679,25 @@ export type ProductsEdge = Edge & {
   node: Product;
 };
 
+export type ProductSnapshot = {
+   __typename?: 'ProductSnapshot';
+  actionType: Scalars['String'];
+  ammoType?: Maybe<Scalars['String']>;
+  boreDiameter?: Maybe<Scalars['String']>;
+  condition: Scalars['String'];
+  createdAt: Scalars['Date'];
+  dealer: Scalars['String'];
+  description: Scalars['String'];
+  id: Scalars['ID'];
+  location: Scalars['String'];
+  make: Scalars['String'];
+  model: Scalars['String'];
+  name: Scalars['String'];
+  productId: Scalars['String'];
+  serialNumber: Scalars['String'];
+  title: Scalars['String'];
+};
+
 export type ProductSoldPeriodSummary = {
    __typename?: 'ProductSoldPeriodSummary';
   grossAmount: Scalars['Price'];
@@ -5268,20 +5736,14 @@ export type ProductVariant = {
   baseStockLevel?: Maybe<StockLevel>;
   createdAt: Scalars['Date'];
   currentStockLevel?: Maybe<StockLevel>;
-  fileIds: Array<Scalars['ID']>;
-  files: Array<ProductFile>;
   isDefault: Scalars['Boolean'];
   isSoldOut: Scalars['Boolean'];
-  permanentDiscountedPriceDiscount?: Maybe<Discount>;
   previewItems: Array<ProductPreviewItem>;
   price: Scalars['Price'];
   priceDetails: PriceDetails;
   priceWas?: Maybe<Scalars['Price']>;
   productId: Scalars['ID'];
   productSnapshotId: Scalars['ID'];
-  relevantDiscounts?: Maybe<Array<Maybe<Discount>>>;
-  specialDeal?: Maybe<ProductSpecialDeal>;
-  specialDealDiscount?: Maybe<Discount>;
   storeId: Scalars['ID'];
   variantDescription?: Maybe<Scalars['String']>;
   variantId: Scalars['ID'];
@@ -5290,7 +5752,6 @@ export type ProductVariant = {
 };
 
 export type ProductVariantEditInput = {
-  fileIds: Array<Scalars['ID']>;
   isDefault: Scalars['Boolean'];
   previewItems: Array<ProductPreviewItemInput>;
   price: Scalars['Price'];
@@ -5303,13 +5764,11 @@ export type ProductVariantEditInput = {
 };
 
 export type ProductVariantInput = {
-  fileIds: Array<Scalars['ID']>;
   isDefault: Scalars['Boolean'];
   previewItems: Array<ProductPreviewItemInput>;
   price: Scalars['Price'];
   priceWas?: Maybe<Scalars['Price']>;
   quantityAvailable?: Maybe<Scalars['Int']>;
-  specialDeal?: Maybe<ProductSpecialDealInput>;
   variantDescription: Scalars['String'];
   variantName: Scalars['String'];
 };
@@ -5322,7 +5781,6 @@ export enum QuantityLabel {
 export type Query = {
    __typename?: 'Query';
   basicInsights: Array<AdminInsight>;
-  categories: Array<ProductCategory>;
   category?: Maybe<ProductCategory>;
   curatedList?: Maybe<CuratedList>;
   curatedListItemsAdminConnection?: Maybe<CuratedListItemsConnection>;
@@ -5373,49 +5831,49 @@ export type Query = {
 
 
 export type QueryCategoryArgs = {
-  id: Scalars['ID'];
+  id: Scalars['String'];
 };
 
 
 export type QueryCuratedListArgs = {
-  listId: Scalars['ID'];
+  listId: Scalars['String'];
 };
 
 
 export type QueryCuratedListItemsAdminConnectionArgs = {
-  listId: Scalars['ID'];
+  listId: Scalars['String'];
   query?: Maybe<ConnectionQuery>;
 };
 
 
 export type QueryCuratedListItemsConnectionArgs = {
-  listId: Scalars['ID'];
+  listId: Scalars['String'];
   query?: Maybe<ConnectionQuery>;
 };
 
 
 export type QueryGetOrderArgs = {
-  orderId: Scalars['ID'];
+  orderId: Scalars['String'];
 };
 
 
 export type QueryGetOrderAsAdminArgs = {
-  orderId: Scalars['ID'];
+  orderId: Scalars['String'];
 };
 
 
 export type QueryGetOrderItemArgs = {
-  orderItemId: Scalars['ID'];
+  orderItemId: Scalars['String'];
 };
 
 
 export type QueryGetPaymentMethodArgs = {
-  paymentMethodId: Scalars['ID'];
+  paymentMethodId: Scalars['String'];
 };
 
 
 export type QueryGetPayoutByIdArgs = {
-  payoutId: Scalars['ID'];
+  payoutId: Scalars['String'];
 };
 
 
@@ -5436,13 +5894,13 @@ export type QueryGetPayoutItemsInPeriodAdminPagedArgs = {
 
 
 export type QueryGetPayoutSplitByStoreIdArgs = {
-  storeOrUserId: Scalars['ID'];
+  storeOrUserId: Scalars['String'];
 };
 
 
 export type QueryGetPayoutsArgs = {
   query: ConnectionQuery;
-  storeId: Scalars['ID'];
+  storeId: Scalars['String'];
 };
 
 
@@ -5465,7 +5923,7 @@ export type QueryGetProductFromLinkSlugArgs = {
 
 
 export type QueryGetProductSaleArgs = {
-  orderItemId: Scalars['ID'];
+  orderItemId: Scalars['String'];
 };
 
 
@@ -5492,7 +5950,7 @@ export type QueryGetStoreSalesInPeriodAdminArgs = {
 
 
 export type QueryGetTransactionArgs = {
-  transactionId: Scalars['ID'];
+  transactionId: Scalars['String'];
 };
 
 
@@ -5509,7 +5967,7 @@ export type QueryListOfCuratedListsConnectionArgs = {
 
 
 export type QueryListPaymentMethodsArgs = {
-  customerId: Scalars['ID'];
+  customerId: Scalars['String'];
 };
 
 
@@ -5529,7 +5987,7 @@ export type QueryPlatformDiscountsArgs = {
 
 
 export type QueryProductArgs = {
-  id: Scalars['ID'];
+  id: Scalars['String'];
 };
 
 
@@ -5544,7 +6002,7 @@ export type QueryProductsAllConnectionArgs = {
 
 
 export type QueryProductsByCategoryConnectionArgs = {
-  categoryId?: Maybe<Scalars['ID']>;
+  categoryId?: Maybe<Scalars['String']>;
   categoryName?: Maybe<Scalars['String']>;
   query?: Maybe<ConnectionQuery>;
 };
@@ -5561,7 +6019,7 @@ export type QueryProductsLimitedReleasesConnectionArgs = {
 
 
 export type QueryProductsRecommendedConnectionArgs = {
-  currentlyViewingProductIdOrSlug?: Maybe<Scalars['ID']>;
+  currentlyViewingProductIdOrSlug?: Maybe<Scalars['String']>;
   query?: Maybe<ConnectionQuery>;
 };
 
@@ -5573,7 +6031,7 @@ export type QuerySearchArgs = {
 
 
 export type QueryStoreArgs = {
-  id: Scalars['ID'];
+  id: Scalars['String'];
 };
 
 
@@ -5594,7 +6052,7 @@ export type QueryTryPromoCodeArgs = {
 
 
 export type QueryUnclaimedOrderArgs = {
-  id: Scalars['ID'];
+  id: Scalars['String'];
 };
 
 
@@ -5604,7 +6062,7 @@ export type QueryUnclaimedOrdersConnectionArgs = {
 
 
 export type QueryUserArgs = {
-  id?: Maybe<Scalars['ID']>;
+  id?: Maybe<Scalars['String']>;
 };
 
 
@@ -5620,7 +6078,9 @@ export type QueryWishlistItemsConnectionArgs = {
 export type Query_Root = {
    __typename?: 'query_root';
   basicInsights: Array<AdminInsight>;
-  categories: Array<ProductCategory>;
+  categories: Array<Categories>;
+  categories_aggregate: Categories_Aggregate;
+  categories_by_pk?: Maybe<Categories>;
   category?: Maybe<ProductCategory>;
   curatedList?: Maybe<CuratedList>;
   curatedListItemsAdminConnection?: Maybe<CuratedListItemsConnection>;
@@ -5658,6 +6118,9 @@ export type Query_Root = {
   loggedInUser: UserPrivate;
   lookupProductLinkSlug?: Maybe<PrimaryLinkSlugs>;
   lookupStoreLinkSlug?: Maybe<PrimaryLinkSlugs>;
+  migrations: Array<Migrations>;
+  migrations_aggregate: Migrations_Aggregate;
+  migrations_by_pk?: Maybe<Migrations>;
   online_users: Array<Online_Users>;
   online_users_aggregate: Online_Users_Aggregate;
   payment_methods: Array<Payment_Methods>;
@@ -5711,50 +6174,73 @@ export type Query_Root = {
 };
 
 
+export type Query_RootCategoriesArgs = {
+  distinct_on?: Maybe<Array<Categories_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Categories_Order_By>>;
+  where?: Maybe<Categories_Bool_Exp>;
+};
+
+
+export type Query_RootCategories_AggregateArgs = {
+  distinct_on?: Maybe<Array<Categories_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Categories_Order_By>>;
+  where?: Maybe<Categories_Bool_Exp>;
+};
+
+
+export type Query_RootCategories_By_PkArgs = {
+  id: Scalars['String'];
+};
+
+
 export type Query_RootCategoryArgs = {
-  id: Scalars['ID'];
+  id: Scalars['String'];
 };
 
 
 export type Query_RootCuratedListArgs = {
-  listId: Scalars['ID'];
+  listId: Scalars['String'];
 };
 
 
 export type Query_RootCuratedListItemsAdminConnectionArgs = {
-  listId: Scalars['ID'];
+  listId: Scalars['String'];
   query?: Maybe<ConnectionQuery>;
 };
 
 
 export type Query_RootCuratedListItemsConnectionArgs = {
-  listId: Scalars['ID'];
+  listId: Scalars['String'];
   query?: Maybe<ConnectionQuery>;
 };
 
 
 export type Query_RootGetOrderArgs = {
-  orderId: Scalars['ID'];
+  orderId: Scalars['String'];
 };
 
 
 export type Query_RootGetOrderAsAdminArgs = {
-  orderId: Scalars['ID'];
+  orderId: Scalars['String'];
 };
 
 
 export type Query_RootGetOrderItemArgs = {
-  orderItemId: Scalars['ID'];
+  orderItemId: Scalars['String'];
 };
 
 
 export type Query_RootGetPaymentMethodArgs = {
-  paymentMethodId: Scalars['ID'];
+  paymentMethodId: Scalars['String'];
 };
 
 
 export type Query_RootGetPayoutByIdArgs = {
-  payoutId: Scalars['ID'];
+  payoutId: Scalars['String'];
 };
 
 
@@ -5775,13 +6261,13 @@ export type Query_RootGetPayoutItemsInPeriodAdminPagedArgs = {
 
 
 export type Query_RootGetPayoutSplitByStoreIdArgs = {
-  storeOrUserId: Scalars['ID'];
+  storeOrUserId: Scalars['String'];
 };
 
 
 export type Query_RootGetPayoutsArgs = {
   query: ConnectionQuery;
-  storeId: Scalars['ID'];
+  storeId: Scalars['String'];
 };
 
 
@@ -5804,7 +6290,7 @@ export type Query_RootGetProductFromLinkSlugArgs = {
 
 
 export type Query_RootGetProductSaleArgs = {
-  orderItemId: Scalars['ID'];
+  orderItemId: Scalars['String'];
 };
 
 
@@ -5831,7 +6317,7 @@ export type Query_RootGetStoreSalesInPeriodAdminArgs = {
 
 
 export type Query_RootGetTransactionArgs = {
-  transactionId: Scalars['ID'];
+  transactionId: Scalars['String'];
 };
 
 
@@ -5884,7 +6370,7 @@ export type Query_RootImage_Parents_AggregateArgs = {
 
 
 export type Query_RootImage_Parents_By_PkArgs = {
-  imageId: Scalars['String'];
+  id: Scalars['String'];
 };
 
 
@@ -5907,7 +6393,7 @@ export type Query_RootImage_Variants_AggregateArgs = {
 
 
 export type Query_RootImage_Variants_By_PkArgs = {
-  variantId: Scalars['String'];
+  id: Scalars['String'];
 };
 
 
@@ -5917,7 +6403,7 @@ export type Query_RootListOfCuratedListsConnectionArgs = {
 
 
 export type Query_RootListPaymentMethodsArgs = {
-  customerId: Scalars['ID'];
+  customerId: Scalars['String'];
 };
 
 
@@ -5928,6 +6414,29 @@ export type Query_RootLookupProductLinkSlugArgs = {
 
 export type Query_RootLookupStoreLinkSlugArgs = {
   slug: Scalars['String'];
+};
+
+
+export type Query_RootMigrationsArgs = {
+  distinct_on?: Maybe<Array<Migrations_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Migrations_Order_By>>;
+  where?: Maybe<Migrations_Bool_Exp>;
+};
+
+
+export type Query_RootMigrations_AggregateArgs = {
+  distinct_on?: Maybe<Array<Migrations_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Migrations_Order_By>>;
+  where?: Maybe<Migrations_Bool_Exp>;
+};
+
+
+export type Query_RootMigrations_By_PkArgs = {
+  id: Scalars['Int'];
 };
 
 
@@ -6001,7 +6510,7 @@ export type Query_RootPlatformDiscountsArgs = {
 
 
 export type Query_RootProductArgs = {
-  id: Scalars['ID'];
+  id: Scalars['String'];
 };
 
 
@@ -6140,7 +6649,7 @@ export type Query_RootProductsAllConnectionArgs = {
 
 
 export type Query_RootProductsByCategoryConnectionArgs = {
-  categoryId?: Maybe<Scalars['ID']>;
+  categoryId?: Maybe<Scalars['String']>;
   categoryName?: Maybe<Scalars['String']>;
   query?: Maybe<ConnectionQuery>;
 };
@@ -6157,7 +6666,7 @@ export type Query_RootProductsLimitedReleasesConnectionArgs = {
 
 
 export type Query_RootProductsRecommendedConnectionArgs = {
-  currentlyViewingProductIdOrSlug?: Maybe<Scalars['ID']>;
+  currentlyViewingProductIdOrSlug?: Maybe<Scalars['String']>;
   query?: Maybe<ConnectionQuery>;
 };
 
@@ -6183,7 +6692,7 @@ export type Query_RootSearchArgs = {
 
 
 export type Query_RootStoreArgs = {
-  id: Scalars['ID'];
+  id: Scalars['String'];
 };
 
 
@@ -6227,7 +6736,7 @@ export type Query_RootTryPromoCodeArgs = {
 
 
 export type Query_RootUnclaimedOrderArgs = {
-  id: Scalars['ID'];
+  id: Scalars['String'];
 };
 
 
@@ -6237,7 +6746,7 @@ export type Query_RootUnclaimedOrdersConnectionArgs = {
 
 
 export type Query_RootUserArgs = {
-  id?: Maybe<Scalars['ID']>;
+  id?: Maybe<Scalars['String']>;
 };
 
 
@@ -6381,17 +6890,12 @@ export type Store = {
   isSuspended: Scalars['Boolean'];
   linkSlugs?: Maybe<PrimaryLinkSlugs>;
   name: Scalars['String'];
-  productsForSaleConnection: ProductsConnection;
+  productsForSaleConnection: Array<Maybe<Product>>;
   profile?: Maybe<Image>;
   profileId?: Maybe<Scalars['ID']>;
   updatedAt?: Maybe<Scalars['Date']>;
   userId: Scalars['ID'];
   website?: Maybe<Scalars['String']>;
-};
-
-
-export type StoreProductsForSaleConnectionArgs = {
-  query?: Maybe<ConnectionQuery>;
 };
 
 export type StoreAnalytics = {
@@ -6418,15 +6922,15 @@ export type StorePrivate = Store & {
   cover?: Maybe<Image>;
   coverId?: Maybe<Scalars['ID']>;
   createdAt: Scalars['Date'];
-  dashboardPublishedProductsConnection: ProductsConnection;
-  dashboardUnpublishedProductsConnection?: Maybe<ProductsConnection>;
+  dashboardPublishedProductsConnection: Array<Maybe<Product>>;
+  dashboardUnpublishedProductsConnection: Array<Maybe<Product>>;
   id: Scalars['ID'];
   isDeleted: Scalars['Boolean'];
   isSuspended: Scalars['Boolean'];
   linkSlugs?: Maybe<PrimaryLinkSlugs>;
   name: Scalars['String'];
   payoutSplit?: Maybe<PayoutSplit>;
-  productsForSaleConnection: ProductsConnection;
+  productsForSaleConnection: Array<Maybe<Product>>;
   profile?: Maybe<Image>;
   profileId?: Maybe<Scalars['ID']>;
   promoCodeDiscounts: DiscountsConnection;
@@ -6434,21 +6938,6 @@ export type StorePrivate = Store & {
   user: UserPrivate;
   userId: Scalars['ID'];
   website?: Maybe<Scalars['String']>;
-};
-
-
-export type StorePrivateDashboardPublishedProductsConnectionArgs = {
-  query?: Maybe<ConnectionQuery>;
-};
-
-
-export type StorePrivateDashboardUnpublishedProductsConnectionArgs = {
-  query?: Maybe<ConnectionQuery>;
-};
-
-
-export type StorePrivateProductsForSaleConnectionArgs = {
-  query?: Maybe<ConnectionQuery>;
 };
 
 
@@ -6467,18 +6956,13 @@ export type StorePublic = Store & {
   isSuspended: Scalars['Boolean'];
   linkSlugs?: Maybe<PrimaryLinkSlugs>;
   name: Scalars['String'];
-  productsForSaleConnection: ProductsConnection;
+  productsForSaleConnection: Array<Maybe<Product>>;
   profile?: Maybe<Image>;
   profileId?: Maybe<Scalars['ID']>;
   updatedAt?: Maybe<Scalars['Date']>;
   user: UserPublic;
   userId: Scalars['ID'];
   website?: Maybe<Scalars['String']>;
-};
-
-
-export type StorePublicProductsForSaleConnectionArgs = {
-  query?: Maybe<ConnectionQuery>;
 };
 
 export type Stores = {
@@ -6491,12 +6975,32 @@ export type Stores = {
   isDeleted: Scalars['Boolean'];
   isSuspended: Scalars['Boolean'];
   name: Scalars['String'];
+  products: Array<Products>;
+  products_aggregate: Products_Aggregate;
   profile?: Maybe<Image_Parents>;
   profileId?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['timestamp']>;
   user: Users;
   userId: Scalars['String'];
   website?: Maybe<Scalars['String']>;
+};
+
+
+export type StoresProductsArgs = {
+  distinct_on?: Maybe<Array<Products_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Products_Order_By>>;
+  where?: Maybe<Products_Bool_Exp>;
+};
+
+
+export type StoresProducts_AggregateArgs = {
+  distinct_on?: Maybe<Array<Products_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Products_Order_By>>;
+  where?: Maybe<Products_Bool_Exp>;
 };
 
 export type Stores_Aggregate = {
@@ -6541,6 +7045,7 @@ export type Stores_Bool_Exp = {
   isDeleted?: Maybe<Boolean_Comparison_Exp>;
   isSuspended?: Maybe<Boolean_Comparison_Exp>;
   name?: Maybe<String_Comparison_Exp>;
+  products?: Maybe<Products_Bool_Exp>;
   profile?: Maybe<Image_Parents_Bool_Exp>;
   profileId?: Maybe<String_Comparison_Exp>;
   updatedAt?: Maybe<Timestamp_Comparison_Exp>;
@@ -6564,6 +7069,7 @@ export type Stores_Insert_Input = {
   isDeleted?: Maybe<Scalars['Boolean']>;
   isSuspended?: Maybe<Scalars['Boolean']>;
   name?: Maybe<Scalars['String']>;
+  products?: Maybe<Products_Arr_Rel_Insert_Input>;
   profile?: Maybe<Image_Parents_Obj_Rel_Insert_Input>;
   profileId?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['timestamp']>;
@@ -6648,6 +7154,7 @@ export type Stores_Order_By = {
   isDeleted?: Maybe<Order_By>;
   isSuspended?: Maybe<Order_By>;
   name?: Maybe<Order_By>;
+  products_aggregate?: Maybe<Products_Aggregate_Order_By>;
   profile?: Maybe<Image_Parents_Order_By>;
   profileId?: Maybe<Order_By>;
   updatedAt?: Maybe<Order_By>;
@@ -6792,6 +7299,9 @@ export type StripeCustomerProfile = {
 
 export type Subscription_Root = {
    __typename?: 'subscription_root';
+  categories: Array<Categories>;
+  categories_aggregate: Categories_Aggregate;
+  categories_by_pk?: Maybe<Categories>;
   image_owners: Array<Image_Owners>;
   image_owners_aggregate: Image_Owners_Aggregate;
   image_owners_by_pk?: Maybe<Image_Owners>;
@@ -6801,6 +7311,9 @@ export type Subscription_Root = {
   image_variants: Array<Image_Variants>;
   image_variants_aggregate: Image_Variants_Aggregate;
   image_variants_by_pk?: Maybe<Image_Variants>;
+  migrations: Array<Migrations>;
+  migrations_aggregate: Migrations_Aggregate;
+  migrations_by_pk?: Maybe<Migrations>;
   online_users: Array<Online_Users>;
   online_users_aggregate: Online_Users_Aggregate;
   payment_methods: Array<Payment_Methods>;
@@ -6833,6 +7346,29 @@ export type Subscription_Root = {
   users: Array<Users>;
   users_aggregate: Users_Aggregate;
   users_by_pk?: Maybe<Users>;
+};
+
+
+export type Subscription_RootCategoriesArgs = {
+  distinct_on?: Maybe<Array<Categories_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Categories_Order_By>>;
+  where?: Maybe<Categories_Bool_Exp>;
+};
+
+
+export type Subscription_RootCategories_AggregateArgs = {
+  distinct_on?: Maybe<Array<Categories_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Categories_Order_By>>;
+  where?: Maybe<Categories_Bool_Exp>;
+};
+
+
+export type Subscription_RootCategories_By_PkArgs = {
+  id: Scalars['String'];
 };
 
 
@@ -6878,7 +7414,7 @@ export type Subscription_RootImage_Parents_AggregateArgs = {
 
 
 export type Subscription_RootImage_Parents_By_PkArgs = {
-  imageId: Scalars['String'];
+  id: Scalars['String'];
 };
 
 
@@ -6901,7 +7437,30 @@ export type Subscription_RootImage_Variants_AggregateArgs = {
 
 
 export type Subscription_RootImage_Variants_By_PkArgs = {
-  variantId: Scalars['String'];
+  id: Scalars['String'];
+};
+
+
+export type Subscription_RootMigrationsArgs = {
+  distinct_on?: Maybe<Array<Migrations_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Migrations_Order_By>>;
+  where?: Maybe<Migrations_Bool_Exp>;
+};
+
+
+export type Subscription_RootMigrations_AggregateArgs = {
+  distinct_on?: Maybe<Array<Migrations_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Migrations_Order_By>>;
+  where?: Maybe<Migrations_Bool_Exp>;
+};
+
+
+export type Subscription_RootMigrations_By_PkArgs = {
+  id: Scalars['Int'];
 };
 
 
@@ -7335,6 +7894,7 @@ export type Users = {
   payoutSplitId?: Maybe<Scalars['String']>;
   sellerReferredById?: Maybe<Scalars['String']>;
   store: Array<Stores>;
+  storeById?: Maybe<Stores>;
   storeId?: Maybe<Scalars['String']>;
   store_aggregate: Stores_Aggregate;
   stripeCustomerId?: Maybe<Scalars['String']>;
@@ -7412,6 +7972,7 @@ export type Users_Bool_Exp = {
   payoutSplitId?: Maybe<String_Comparison_Exp>;
   sellerReferredById?: Maybe<String_Comparison_Exp>;
   store?: Maybe<Stores_Bool_Exp>;
+  storeById?: Maybe<Stores_Bool_Exp>;
   storeId?: Maybe<String_Comparison_Exp>;
   stripeCustomerId?: Maybe<String_Comparison_Exp>;
   updatedAt?: Maybe<Timestamptz_Comparison_Exp>;
@@ -7442,6 +8003,7 @@ export type Users_Insert_Input = {
   payoutSplitId?: Maybe<Scalars['String']>;
   sellerReferredById?: Maybe<Scalars['String']>;
   store?: Maybe<Stores_Arr_Rel_Insert_Input>;
+  storeById?: Maybe<Stores_Obj_Rel_Insert_Input>;
   storeId?: Maybe<Scalars['String']>;
   stripeCustomerId?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['timestamptz']>;
@@ -7565,6 +8127,7 @@ export type Users_Order_By = {
   payoutMethodId?: Maybe<Order_By>;
   payoutSplitId?: Maybe<Order_By>;
   sellerReferredById?: Maybe<Order_By>;
+  storeById?: Maybe<Stores_Order_By>;
   storeId?: Maybe<Order_By>;
   store_aggregate?: Maybe<Stores_Aggregate_Order_By>;
   stripeCustomerId?: Maybe<Order_By>;
@@ -7696,9 +8259,9 @@ export type RegisterUploadMutationVariables = {
 export type RegisterUploadMutation = { __typename?: 'mutation_root', uploadRegister: { __typename?: 'UploadRegisterMutationResponse', uploadId: string, putUrl: string } };
 
 export type SaveImageUploadMutationVariables = {
-  uploadId: Scalars['ID'];
+  uploadId: Scalars['String'];
   description?: Maybe<Scalars['String']>;
-  tags?: Maybe<Array<Maybe<Scalars['String']>>>;
+  tags?: Maybe<Scalars['String']>;
   ownerIds?: Maybe<Array<Maybe<Scalars['String']>>>;
 };
 
@@ -7709,7 +8272,7 @@ export type SaveImageUploadMutation = { __typename?: 'mutation_root', uploadSave
     ) } };
 
 export type SaveProductFileUploadMutationVariables = {
-  uploadId: Scalars['ID'];
+  uploadId: Scalars['String'];
   fileName: Scalars['String'];
   ownerIds?: Maybe<Array<Maybe<Scalars['String']>>>;
 };
@@ -7718,69 +8281,21 @@ export type SaveProductFileUploadMutationVariables = {
 export type SaveProductFileUploadMutation = { __typename?: 'mutation_root', uploadSaveProductFile: { __typename?: 'UploadSaveProductFileMutationResponse', fileId: string } };
 
 export type GetProductFileDownloadLinkMutationVariables = {
-  id: Scalars['ID'];
-  orderItemId: Scalars['ID'];
+  id: Scalars['String'];
+  orderItemId: Scalars['String'];
 };
 
 
 export type GetProductFileDownloadLinkMutation = { __typename?: 'mutation_root', generateProductFileDownloadLink: { __typename?: 'ProductFileLinkMutationResponse', downloadLink: { __typename?: 'ProductFileDownloadLink', productFileId: string, expiresAt: any, url: string } } };
 
-export type StockLevelFragment = { __typename?: 'StockLevel', quantityAvailable: number, restockedAt?: Maybe<any>, quantityRestocked?: Maybe<number> };
+export type ImageFragment = { __typename?: 'Image', id: string, createdAt: any, tags?: Maybe<string>, description?: Maybe<string>, original: { __typename?: 'ImageVariant', id: string, url: string, mimeType?: Maybe<string>, heightInPixels?: Maybe<number>, widthInPixels?: Maybe<number>, sizeInBytes?: Maybe<number> }, variants: Array<{ __typename?: 'ImageVariant', id: string, mimeType?: Maybe<string>, sizeInBytes?: Maybe<number>, widthInPixels?: Maybe<number>, heightInPixels?: Maybe<number>, url: string }> };
 
-export type StockLimitConditionFragment = { __typename?: 'DiscountStockLimitCondition', supplyExhaustionRule: DiscountUnavailableRule, stockLevel: (
-    { __typename?: 'StockLevel' }
-    & StockLevelFragment
-  ) };
-
-export type TimeConditionFragment = { __typename?: 'DiscountTimeCondition', start?: Maybe<any>, end: any, timeExpiryRule: DiscountUnavailableRule };
-
-export type DiscountFragment = { __typename?: 'Discount', id: string, createdAt: any, scope: DiscountScope, modifier: DiscountModifier, isAutomatic: boolean, promoCode?: Maybe<string>, valueFixed?: Maybe<any>, valueDollarsOff?: Maybe<any>, valuePercentageOff?: Maybe<number>, isDisabled: boolean, timeCondition?: Maybe<(
-    { __typename?: 'DiscountTimeCondition' }
-    & TimeConditionFragment
-  )>, productScopeInfo?: Maybe<{ __typename?: 'ProductScopedDiscountInfo', variantSnapshotId?: Maybe<string>, stockLimitCondition?: Maybe<(
-      { __typename?: 'DiscountStockLimitCondition' }
-      & StockLimitConditionFragment
-    )> }>, storeScopeInfo?: Maybe<{ __typename?: 'StoreScopedDiscountInfo', storeId: string, productId?: Maybe<string>, variantId?: Maybe<string>, minimumSpend?: Maybe<any>, minimumQuantity?: Maybe<number> }>, platformScopeInfo?: Maybe<{ __typename?: 'PlatformScopedDiscountInfo', isApplicableToAnyProduct: boolean }> };
-
-export type PriceDetailsFragment = { __typename?: 'PriceDetails', basePrice: any, actualPrice: any, discountBreakdown?: Maybe<{ __typename?: 'PriceDetailsDiscountBreakdown', fixedPriceComponent: any, dollarsOffComponent: any, percentOffComponent: any, promoCodeComponent: any, fixedPriceDiscount?: Maybe<(
-      { __typename?: 'Discount' }
-      & DiscountFragment
-    )>, dollarsOffDiscounts: Array<(
-      { __typename?: 'Discount' }
-      & DiscountFragment
-    )>, percentOffDiscount?: Maybe<(
-      { __typename?: 'Discount' }
-      & DiscountFragment
-    )> }> };
-
-export type ImageFragment = { __typename?: 'Image', id: string, createdAt: any, tags?: Maybe<Array<string>>, description?: Maybe<string>, original: { __typename?: 'ImageVariant', id: string, url: string, mimeType: string, heightInPixels: number, widthInPixels: number, sizeInBytes: number }, variants: Array<{ __typename?: 'ImageVariant', id: string, mimeType: string, sizeInBytes: number, widthInPixels: number, heightInPixels: number, url: string }> };
-
-export type ImageFragmentStoreFragment = { __typename?: 'image_parents', imageId: string, createdAt: any, tags?: Maybe<string>, description?: Maybe<string>, original?: Maybe<{ __typename?: 'image_variants', parentId: string, variantId: string, mimeType: string, widthInPixels: number, heightInPixels: number, url?: Maybe<string> }>, variants: Array<{ __typename?: 'image_variants', parentId: string, variantId: string, mimeType: string, widthInPixels: number, heightInPixels: number, url?: Maybe<string> }> };
-
-export type ProductVariantFragment = { __typename?: 'ProductVariant', variantId: string, variantSnapshotId: string, createdAt: any, variantName: string, variantDescription?: Maybe<string>, isDefault: boolean, price: any, priceWas?: Maybe<any>, isSoldOut: boolean, priceDetails: (
-    { __typename?: 'PriceDetails' }
-    & PriceDetailsFragment
-  ), relevantDiscounts?: Maybe<Array<Maybe<(
-    { __typename?: 'Discount' }
-    & DiscountFragment
-  )>>>, files: Array<{ __typename?: 'ProductFile', id: string, fileName?: Maybe<string>, createdAt: any, mimeType: string, sizeInBytes: number }>, previewItems: Array<{ __typename?: 'ProductPreviewItem', id: string, youTubeEmbedLink?: Maybe<string>, image?: Maybe<(
+export type ProductVariantFragment = { __typename?: 'ProductVariant', variantId: string, variantSnapshotId: string, createdAt: any, variantName: string, variantDescription?: Maybe<string>, isDefault: boolean, price: any, priceWas?: Maybe<any>, isSoldOut: boolean, previewItems: Array<{ __typename?: 'ProductPreviewItem', id: string, youTubeEmbedLink?: Maybe<string>, image?: Maybe<(
       { __typename?: 'Image' }
       & ImageFragment
-    )> }>, baseStockLevel?: Maybe<(
-    { __typename?: 'StockLevel' }
-    & StockLevelFragment
-  )>, currentStockLevel?: Maybe<(
-    { __typename?: 'StockLevel' }
-    & StockLevelFragment
-  )>, specialDeal?: Maybe<{ __typename?: 'ProductSpecialDeal', discountedPrice: any, timeCondition?: Maybe<(
-      { __typename?: 'DiscountTimeCondition' }
-      & TimeConditionFragment
-    )>, stockLimitCondition?: Maybe<(
-      { __typename?: 'DiscountStockLimitCondition' }
-      & StockLimitConditionFragment
     )> }> };
 
-type ProductFragment_ProductPrivate_ = { __typename?: 'ProductPrivate', id: string, createdAt: any, updatedAt?: Maybe<any>, tags: Array<string>, isPublished: boolean, isSuspended: boolean, isDeleted: boolean, isExcludedFromAutomaticLists: boolean, name: string, tagline: string, description: string, variantsLabel: VariantsLabel, isQuantityEnabled: boolean, quantityLabel: QuantityLabel, currentVariants: Array<(
+type ProductFragment_ProductPrivate_ = { __typename?: 'ProductPrivate', id: string, createdAt: any, updatedAt?: Maybe<any>, tags?: Maybe<string>, isPublished: boolean, isSuspended: boolean, isDeleted: boolean, isExcludedFromAutomaticLists: boolean, currentSnapshot: { __typename?: 'ProductSnapshot', name: string, title: string, description: string }, currentVariants: Array<(
     { __typename?: 'ProductVariant' }
     & ProductVariantFragment
   )>, featuredVariant?: Maybe<(
@@ -7791,7 +8306,7 @@ type ProductFragment_ProductPrivate_ = { __typename?: 'ProductPrivate', id: stri
     & ProductVariantFragment
   )>, store: { __typename?: 'StorePrivate', id: string, name: string } | { __typename?: 'StorePublic', id: string, name: string }, category: { __typename?: 'ProductCategory', id: string, name: string, categoryGroup?: Maybe<any> } };
 
-type ProductFragment_ProductPublic_ = { __typename?: 'ProductPublic', id: string, createdAt: any, updatedAt?: Maybe<any>, tags: Array<string>, isPublished: boolean, isSuspended: boolean, isDeleted: boolean, isExcludedFromAutomaticLists: boolean, name: string, tagline: string, description: string, variantsLabel: VariantsLabel, isQuantityEnabled: boolean, quantityLabel: QuantityLabel, currentVariants: Array<(
+type ProductFragment_ProductPublic_ = { __typename?: 'ProductPublic', id: string, createdAt: any, updatedAt?: Maybe<any>, tags?: Maybe<string>, isPublished: boolean, isSuspended: boolean, isDeleted: boolean, isExcludedFromAutomaticLists: boolean, currentSnapshot: { __typename?: 'ProductSnapshot', name: string, title: string, description: string }, currentVariants: Array<(
     { __typename?: 'ProductVariant' }
     & ProductVariantFragment
   )>, featuredVariant?: Maybe<(
@@ -7804,52 +8319,13 @@ type ProductFragment_ProductPublic_ = { __typename?: 'ProductPublic', id: string
 
 export type ProductFragment = ProductFragment_ProductPrivate_ | ProductFragment_ProductPublic_;
 
-export type CartFragment = { __typename?: 'Cart', id: string, userId: string, updatedAt: any, subtotal: any, automaticSavings: any, promoCodeSavings: any, taxes: any, paymentProcessingFee: any, total: any, items: Array<{ __typename?: 'CartItem', id: string, createdAt: any, cartId: string, storeId: string, purchasableStatus: CartItemPurchasableStatus, quantity: number, priceDetails: (
-      { __typename?: 'PriceDetails' }
-      & PriceDetailsFragment
-    ), product: (
-      { __typename?: 'ProductPrivate' }
-      & ProductFragment_ProductPrivate_
-    ) | (
-      { __typename?: 'ProductPublic' }
-      & ProductFragment_ProductPublic_
-    ) }>, relevantPromoCodes: Array<(
-    { __typename?: 'Discount' }
-    & DiscountFragment
-  )> };
-
-export type OrderFragment = { __typename?: 'Order', id: string, createdAt: any, updatedAt?: Maybe<any>, userId?: Maybe<string>, items: Array<{ __typename?: 'OrderItem', id: string, orderId: string, orderStatus: OrderStatus, createdAt: any, updatedAt?: Maybe<any>, quantity?: Maybe<number>, priceDetails: (
-      { __typename?: 'PriceDetails' }
-      & PriceDetailsFragment
-    ), product: { __typename?: 'ProductPrivate', id: string, name: string, tagline: string, store: { __typename?: 'StorePrivate', id: string, name: string, website?: Maybe<string> } | { __typename?: 'StorePublic', id: string, name: string, website?: Maybe<string> }, chosenVariant?: Maybe<(
-        { __typename?: 'ProductVariant' }
-        & ProductVariantFragment
-      )> } | { __typename?: 'ProductPublic', id: string, name: string, tagline: string, store: { __typename?: 'StorePrivate', id: string, name: string, website?: Maybe<string> } | { __typename?: 'StorePublic', id: string, name: string, website?: Maybe<string> }, chosenVariant?: Maybe<(
-        { __typename?: 'ProductVariant' }
-        & ProductVariantFragment
-      )> } }>, currentSnapshot: { __typename?: 'OrderSnapshot', id: string, orderStatus: OrderStatus, subtotal: any, automaticSavings: any, promoCodeSavings: any, paymentProcessingFee: any, taxes: any, total: any, paymentProcessor?: Maybe<PaymentProcessor>, transaction?: Maybe<{ __typename?: 'Transaction', id: string, createdAt: any, subtotal: any, paymentProcessingFee: any, taxes: any, paymentProcessor: PaymentProcessor, customerId?: Maybe<string>, currency?: Maybe<string>, paymentMethodId: string, paymentIntentId?: Maybe<string>, chargeId: string }> }, attachedPromoCodes: Array<(
-    { __typename?: 'Discount' }
-    & DiscountFragment
-  )> };
-
-export type ProductSalesFragment = { __typename?: 'ProductSale', orderItem: { __typename?: 'OrderItem', id: string, orderId: string, orderStatus: OrderStatus, createdAt: any, product: { __typename?: 'ProductPrivate', id: string, name: string, tagline: string, chosenVariant?: Maybe<{ __typename?: 'ProductVariant', variantId: string, variantSnapshotId: string, variantName: string, variantDescription?: Maybe<string> }> } | { __typename?: 'ProductPublic', id: string, name: string, tagline: string, chosenVariant?: Maybe<{ __typename?: 'ProductVariant', variantId: string, variantSnapshotId: string, variantName: string, variantDescription?: Maybe<string> }> }, priceDetails: (
-      { __typename?: 'PriceDetails' }
-      & PriceDetailsFragment
-    ) }, user?: Maybe<{ __typename?: 'UserPublic', firstName?: Maybe<string>, lastName?: Maybe<string>, email: string }> };
-
 type StorePublicFragment_StorePrivate_ = { __typename?: 'StorePrivate', id: string, createdAt: any, updatedAt?: Maybe<any>, name: string, bio?: Maybe<string>, website?: Maybe<string>, cover?: Maybe<(
     { __typename?: 'Image' }
     & ImageFragment
   )>, profile?: Maybe<(
     { __typename?: 'Image' }
     & ImageFragment
-  )>, productsForSaleConnection: { __typename?: 'ProductsConnection', totalCount?: Maybe<number>, edges: Array<{ __typename?: 'ProductsEdge', node: (
-        { __typename?: 'ProductPrivate' }
-        & ProductFragment_ProductPrivate_
-      ) | (
-        { __typename?: 'ProductPublic' }
-        & ProductFragment_ProductPublic_
-      ) }>, pageInfo: { __typename?: 'PageInfo', isLastPage: boolean, endCursor?: Maybe<any> } } };
+  )>, productsForSaleConnection: Array<Maybe<{ __typename?: 'ProductPrivate', id: string, currentSnapshot: { __typename?: 'ProductSnapshot', id: string, serialNumber: string, title: string } } | { __typename?: 'ProductPublic', id: string, currentSnapshot: { __typename?: 'ProductSnapshot', id: string, serialNumber: string, title: string } }>> };
 
 type StorePublicFragment_StorePublic_ = { __typename?: 'StorePublic', id: string, createdAt: any, updatedAt?: Maybe<any>, name: string, bio?: Maybe<string>, website?: Maybe<string>, cover?: Maybe<(
     { __typename?: 'Image' }
@@ -7857,13 +8333,7 @@ type StorePublicFragment_StorePublic_ = { __typename?: 'StorePublic', id: string
   )>, profile?: Maybe<(
     { __typename?: 'Image' }
     & ImageFragment
-  )>, productsForSaleConnection: { __typename?: 'ProductsConnection', totalCount?: Maybe<number>, edges: Array<{ __typename?: 'ProductsEdge', node: (
-        { __typename?: 'ProductPrivate' }
-        & ProductFragment_ProductPrivate_
-      ) | (
-        { __typename?: 'ProductPublic' }
-        & ProductFragment_ProductPublic_
-      ) }>, pageInfo: { __typename?: 'PageInfo', isLastPage: boolean, endCursor?: Maybe<any> } } };
+  )>, productsForSaleConnection: Array<Maybe<{ __typename?: 'ProductPrivate', id: string, currentSnapshot: { __typename?: 'ProductSnapshot', id: string, serialNumber: string, title: string } } | { __typename?: 'ProductPublic', id: string, currentSnapshot: { __typename?: 'ProductSnapshot', id: string, serialNumber: string, title: string } }>> };
 
 export type StorePublicFragment = StorePublicFragment_StorePrivate_ | StorePublicFragment_StorePublic_;
 
@@ -7873,28 +8343,7 @@ export type StorePrivateFragment = { __typename?: 'StorePrivate', id: string, na
   )>, profile?: Maybe<(
     { __typename?: 'Image' }
     & ImageFragment
-  )>, dashboardPublishedProductsConnection: { __typename?: 'ProductsConnection', totalCount?: Maybe<number>, edges: Array<{ __typename?: 'ProductsEdge', node: (
-        { __typename?: 'ProductPrivate' }
-        & ProductFragment_ProductPrivate_
-      ) | (
-        { __typename?: 'ProductPublic' }
-        & ProductFragment_ProductPublic_
-      ) }>, pageInfo: { __typename?: 'PageInfo', isLastPage: boolean, endCursor?: Maybe<any> } }, dashboardUnpublishedProductsConnection?: Maybe<{ __typename?: 'ProductsConnection', totalCount?: Maybe<number>, edges: Array<{ __typename?: 'ProductsEdge', node: (
-        { __typename?: 'ProductPrivate' }
-        & ProductFragment_ProductPrivate_
-      ) | (
-        { __typename?: 'ProductPublic' }
-        & ProductFragment_ProductPublic_
-      ) }>, pageInfo: { __typename?: 'PageInfo', isLastPage: boolean, endCursor?: Maybe<any> } }>, productsForSaleConnection: { __typename?: 'ProductsConnection', totalCount?: Maybe<number>, edges: Array<{ __typename?: 'ProductsEdge', node: (
-        { __typename?: 'ProductPrivate' }
-        & ProductFragment_ProductPrivate_
-      ) | (
-        { __typename?: 'ProductPublic' }
-        & ProductFragment_ProductPublic_
-      ) }>, pageInfo: { __typename?: 'PageInfo', isLastPage: boolean, endCursor?: Maybe<any> } }, promoCodeDiscounts: { __typename?: 'DiscountsConnection', edges: Array<{ __typename?: 'DiscountsEdge', node: (
-        { __typename?: 'Discount' }
-        & DiscountFragment
-      ) }> } };
+  )>, productsForSaleConnection: Array<Maybe<{ __typename?: 'ProductPrivate', id: string, currentSnapshot: { __typename?: 'ProductSnapshot', id: string, serialNumber: string, title: string } } | { __typename?: 'ProductPublic', id: string, currentSnapshot: { __typename?: 'ProductSnapshot', id: string, serialNumber: string, title: string } }>> };
 
 export type PaymentMethodFragment = { __typename?: 'PaymentMethod', id: string, userId: string, createdAt: any, updatedAt?: Maybe<any>, customerId?: Maybe<string>, paymentProcessor?: Maybe<PaymentProcessor>, paymentMethodTypes?: Maybe<Array<Maybe<string>>>, last4?: Maybe<string>, expMonth?: Maybe<string>, expYear?: Maybe<string>, email?: Maybe<string>, name?: Maybe<string>, details?: Maybe<string> };
 
@@ -7903,7 +8352,14 @@ export type UserPrivateFragment = { __typename?: 'UserPrivate', id: string, firs
     & StorePrivateFragment
   )>, payoutMethod?: Maybe<{ __typename?: 'PayoutMethod', id: string, payoutType?: Maybe<string>, payoutEmail?: Maybe<string>, payoutProcessor?: Maybe<string>, payoutProcessorId?: Maybe<string> }> };
 
-export type Unnamed_1_MutationVariables = {};
+export type Unnamed_1_MutationVariables = {
+  image_parents_input: Array<Image_Parents_Insert_Input>;
+  image_variants_input: Array<Image_Variants_Insert_Input>;
+  product_preview_items_input: Array<Product_Preview_Items_Insert_Input>;
+  product_variants_input: Array<Product_Variants_Insert_Input>;
+  product_snapshots_input: Array<Product_Snapshots_Insert_Input>;
+  products_input: Array<Products_Insert_Input>;
+};
 
 
 export type Unnamed_1_Mutation = { __typename?: 'mutation_root', insert_image_parents?: Maybe<{ __typename?: 'image_parents_mutation_response', affected_rows: number }>, insert_image_variants?: Maybe<{ __typename?: 'image_variants_mutation_response', affected_rows: number }>, insert_product_preview_items?: Maybe<{ __typename?: 'product_preview_items_mutation_response', affected_rows: number }>, insert_product_variants?: Maybe<{ __typename?: 'product_variants_mutation_response', affected_rows: number }>, insert_product_snapshots?: Maybe<{ __typename?: 'product_snapshots_mutation_response', affected_rows: number }>, insert_products?: Maybe<{ __typename?: 'products_mutation_response', affected_rows: number }> };
@@ -7913,107 +8369,30 @@ export type Unnamed_2_QueryVariables = {};
 
 export type Unnamed_2_Query = { __typename?: 'query_root', products: Array<{ __typename?: 'products', id: string, storeId: string, isDeleted: boolean, isPublished: boolean, isSuspended: boolean, isExcludedFromSearch: boolean, isExcludedFromRecommendations: boolean, categoryId: string, createdAt: any, updatedAt: any, currentSnapshot: { __typename?: 'product_snapshots', id: string, createdAt: any, productId: string, title: string, description: string, condition: string, make: string, model: string, ammoType?: Maybe<string>, actionType: string, boreDiameter?: Maybe<string>, serialNumber: string, location: string, dealer: string, currentVariants: Array<{ __typename?: 'product_variants', variantSnapshotId: string, variantId: string, variantName: string, variantDescription: string, position: number, isDefault: boolean, basePrice: number, previewItems: Array<{ __typename?: 'product_preview_items', id: string, imageId?: Maybe<string>, position: number, youtubeEmbedLink?: Maybe<string>, variantSnapshotId?: Maybe<string> }> }> } }> };
 
-export const ImageFragmentStoreFragmentDoc = gql`
-    fragment ImageFragmentStore on image_parents {
-  imageId
-  original {
-    parentId
-    variantId
-    mimeType
-    widthInPixels
-    heightInPixels
-    url
-  }
-  variants {
-    parentId
-    variantId
-    mimeType
-    widthInPixels
-    heightInPixels
-    url
-  }
-  createdAt
-  tags
-  description
-}
-    `;
-export const TimeConditionFragmentFragmentDoc = gql`
-    fragment TimeConditionFragment on DiscountTimeCondition {
-  start
-  end
-  timeExpiryRule
-}
-    `;
-export const StockLevelFragmentFragmentDoc = gql`
-    fragment StockLevelFragment on StockLevel {
-  quantityAvailable
-  restockedAt
-  quantityRestocked
-}
-    `;
-export const StockLimitConditionFragmentFragmentDoc = gql`
-    fragment StockLimitConditionFragment on DiscountStockLimitCondition {
-  stockLevel {
-    ...StockLevelFragment
-  }
-  supplyExhaustionRule
-}
-    ${StockLevelFragmentFragmentDoc}`;
-export const DiscountFragmentFragmentDoc = gql`
-    fragment DiscountFragment on Discount {
-  id
-  createdAt
-  scope
-  modifier
-  isAutomatic
-  promoCode
-  valueFixed
-  valueDollarsOff
-  valuePercentageOff
-  isDisabled
-  timeCondition {
-    ...TimeConditionFragment
-  }
-  productScopeInfo {
-    variantSnapshotId
-    stockLimitCondition {
-      ...StockLimitConditionFragment
-    }
-  }
-  storeScopeInfo {
-    storeId
-    productId
-    variantId
-    minimumSpend
-    minimumQuantity
-  }
-  platformScopeInfo {
-    isApplicableToAnyProduct
-  }
-}
-    ${TimeConditionFragmentFragmentDoc}
-${StockLimitConditionFragmentFragmentDoc}`;
-export const PriceDetailsFragmentFragmentDoc = gql`
-    fragment PriceDetailsFragment on PriceDetails {
-  basePrice
-  actualPrice
-  discountBreakdown {
-    fixedPriceDiscount {
-      ...DiscountFragment
-    }
-    dollarsOffDiscounts {
-      ...DiscountFragment
-    }
-    percentOffDiscount {
-      ...DiscountFragment
-    }
-    fixedPriceComponent
-    dollarsOffComponent
-    percentOffComponent
-    promoCodeComponent
-  }
-}
-    ${DiscountFragmentFragmentDoc}`;
+export type GetStorePublicQueryVariables = {
+  storeId: Scalars['String'];
+};
+
+
+export type GetStorePublicQuery = { __typename?: 'query_root', store?: Maybe<(
+    { __typename?: 'StorePrivate' }
+    & StorePublicFragment_StorePrivate_
+  ) | (
+    { __typename?: 'StorePublic' }
+    & StorePublicFragment_StorePublic_
+  )> };
+
+export type GetStorePrivateQueryVariables = {};
+
+
+export type GetStorePrivateQuery = { __typename?: 'query_root', user?: Maybe<{ __typename?: 'UserWithRole', id: string } | { __typename?: 'UserPublic', id: string } | { __typename?: 'UserPrivate', id: string, store?: Maybe<{ __typename?: 'StorePrivate', id: string, name: string, createdAt: any, updatedAt?: Maybe<any>, website?: Maybe<string>, bio?: Maybe<string>, cover?: Maybe<(
+        { __typename?: 'Image' }
+        & ImageFragment
+      )>, profile?: Maybe<(
+        { __typename?: 'Image' }
+        & ImageFragment
+      )> }> }> };
+
 export const ImageFragmentFragmentDoc = gql`
     fragment ImageFragment on Image {
   id
@@ -8049,19 +8428,6 @@ export const ProductVariantFragmentFragmentDoc = gql`
   isDefault
   price
   priceWas
-  priceDetails {
-    ...PriceDetailsFragment
-  }
-  relevantDiscounts {
-    ...DiscountFragment
-  }
-  files {
-    id
-    fileName
-    createdAt
-    mimeType
-    sizeInBytes
-  }
   previewItems {
     id
     image {
@@ -8070,28 +8436,8 @@ export const ProductVariantFragmentFragmentDoc = gql`
     youTubeEmbedLink
   }
   isSoldOut
-  baseStockLevel {
-    ...StockLevelFragment
-  }
-  currentStockLevel {
-    ...StockLevelFragment
-  }
-  specialDeal {
-    discountedPrice
-    timeCondition {
-      ...TimeConditionFragment
-    }
-    stockLimitCondition {
-      ...StockLimitConditionFragment
-    }
-  }
 }
-    ${PriceDetailsFragmentFragmentDoc}
-${DiscountFragmentFragmentDoc}
-${ImageFragmentFragmentDoc}
-${StockLevelFragmentFragmentDoc}
-${TimeConditionFragmentFragmentDoc}
-${StockLimitConditionFragmentFragmentDoc}`;
+    ${ImageFragmentFragmentDoc}`;
 export const ProductFragmentFragmentDoc = gql`
     fragment ProductFragment on Product {
   id
@@ -8102,9 +8448,11 @@ export const ProductFragmentFragmentDoc = gql`
   isSuspended
   isDeleted
   isExcludedFromAutomaticLists
-  name
-  tagline
-  description
+  currentSnapshot {
+    name
+    title
+    description
+  }
   currentVariants {
     ...ProductVariantFragment
   }
@@ -8123,133 +8471,8 @@ export const ProductFragmentFragmentDoc = gql`
     name
     categoryGroup
   }
-  variantsLabel
-  isQuantityEnabled
-  quantityLabel
 }
     ${ProductVariantFragmentFragmentDoc}`;
-export const CartFragmentFragmentDoc = gql`
-    fragment CartFragment on Cart {
-  id
-  userId
-  updatedAt
-  items {
-    id
-    createdAt
-    cartId
-    storeId
-    priceDetails {
-      ...PriceDetailsFragment
-    }
-    product {
-      ...ProductFragment
-    }
-    purchasableStatus
-    quantity
-  }
-  relevantPromoCodes {
-    ...DiscountFragment
-  }
-  subtotal
-  automaticSavings
-  promoCodeSavings
-  taxes
-  paymentProcessingFee
-  total
-}
-    ${PriceDetailsFragmentFragmentDoc}
-${ProductFragmentFragmentDoc}
-${DiscountFragmentFragmentDoc}`;
-export const OrderFragmentFragmentDoc = gql`
-    fragment OrderFragment on Order {
-  id
-  createdAt
-  updatedAt
-  userId
-  items {
-    id
-    orderId
-    orderStatus
-    createdAt
-    updatedAt
-    priceDetails {
-      ...PriceDetailsFragment
-    }
-    product {
-      id
-      name
-      tagline
-      store {
-        id
-        name
-        website
-      }
-      chosenVariant {
-        ...ProductVariantFragment
-      }
-    }
-    quantity
-  }
-  currentSnapshot {
-    transaction {
-      id
-      createdAt
-      subtotal
-      paymentProcessingFee
-      taxes
-      paymentProcessor
-      customerId
-      currency
-      paymentMethodId
-      paymentIntentId
-      chargeId
-    }
-    id
-    orderStatus
-    subtotal
-    automaticSavings
-    promoCodeSavings
-    paymentProcessingFee
-    taxes
-    total
-    paymentProcessor
-  }
-  attachedPromoCodes {
-    ...DiscountFragment
-  }
-}
-    ${PriceDetailsFragmentFragmentDoc}
-${ProductVariantFragmentFragmentDoc}
-${DiscountFragmentFragmentDoc}`;
-export const ProductSalesFragmentFragmentDoc = gql`
-    fragment ProductSalesFragment on ProductSale {
-  orderItem {
-    id
-    orderId
-    product {
-      id
-      name
-      tagline
-      chosenVariant {
-        variantId
-        variantSnapshotId
-        variantName
-        variantDescription
-      }
-    }
-    orderStatus
-    createdAt
-    priceDetails {
-      ...PriceDetailsFragment
-    }
-  }
-  user {
-    firstName
-    lastName
-    email
-  }
-}
-    ${PriceDetailsFragmentFragmentDoc}`;
 export const StorePublicFragmentFragmentDoc = gql`
     fragment StorePublicFragment on Store {
   id
@@ -8265,20 +8488,15 @@ export const StorePublicFragmentFragmentDoc = gql`
     ...ImageFragment
   }
   productsForSaleConnection {
-    edges {
-      node {
-        ...ProductFragment
-      }
-    }
-    totalCount
-    pageInfo {
-      isLastPage
-      endCursor
+    id
+    currentSnapshot {
+      id
+      serialNumber
+      title
     }
   }
 }
-    ${ImageFragmentFragmentDoc}
-${ProductFragmentFragmentDoc}`;
+    ${ImageFragmentFragmentDoc}`;
 export const PaymentMethodFragmentFragmentDoc = gql`
     fragment PaymentMethodFragment on PaymentMethod {
   id
@@ -8310,53 +8528,16 @@ export const StorePrivateFragmentFragmentDoc = gql`
   profile {
     ...ImageFragment
   }
-  dashboardPublishedProductsConnection {
-    edges {
-      node {
-        ...ProductFragment
-      }
-    }
-    totalCount
-    pageInfo {
-      isLastPage
-      endCursor
-    }
-  }
-  dashboardUnpublishedProductsConnection {
-    edges {
-      node {
-        ...ProductFragment
-      }
-    }
-    totalCount
-    pageInfo {
-      isLastPage
-      endCursor
-    }
-  }
   productsForSaleConnection {
-    edges {
-      node {
-        ...ProductFragment
-      }
-    }
-    totalCount
-    pageInfo {
-      isLastPage
-      endCursor
-    }
-  }
-  promoCodeDiscounts(query: {count: 20}) {
-    edges {
-      node {
-        ...DiscountFragment
-      }
+    id
+    currentSnapshot {
+      id
+      serialNumber
+      title
     }
   }
 }
-    ${ImageFragmentFragmentDoc}
-${ProductFragmentFragmentDoc}
-${DiscountFragmentFragmentDoc}`;
+    ${ImageFragmentFragmentDoc}`;
 export const UserPrivateFragmentFragmentDoc = gql`
     fragment UserPrivateFragment on UserPrivate {
   id
@@ -8416,7 +8597,7 @@ export type RegisterUploadMutationHookResult = ReturnType<typeof useRegisterUplo
 export type RegisterUploadMutationResult = ApolloReactCommon.MutationResult<RegisterUploadMutation>;
 export type RegisterUploadMutationOptions = ApolloReactCommon.BaseMutationOptions<RegisterUploadMutation, RegisterUploadMutationVariables>;
 export const SaveImageUploadDocument = gql`
-    mutation saveImageUpload($uploadId: ID!, $description: String, $tags: [String], $ownerIds: [String]) {
+    mutation saveImageUpload($uploadId: String!, $description: String, $tags: String, $ownerIds: [String]) {
   uploadSaveImage(uploadId: $uploadId, description: $description, tags: $tags, ownerIds: $ownerIds) {
     ... on UploadSaveImageMutationResponse {
       image {
@@ -8454,7 +8635,7 @@ export type SaveImageUploadMutationHookResult = ReturnType<typeof useSaveImageUp
 export type SaveImageUploadMutationResult = ApolloReactCommon.MutationResult<SaveImageUploadMutation>;
 export type SaveImageUploadMutationOptions = ApolloReactCommon.BaseMutationOptions<SaveImageUploadMutation, SaveImageUploadMutationVariables>;
 export const SaveProductFileUploadDocument = gql`
-    mutation saveProductFileUpload($uploadId: ID!, $fileName: String!, $ownerIds: [String]) {
+    mutation saveProductFileUpload($uploadId: String!, $fileName: String!, $ownerIds: [String]) {
   uploadSaveProductFile(uploadId: $uploadId, fileName: $fileName, ownerIds: $ownerIds) {
     ... on UploadSaveProductFileMutationResponse {
       fileId
@@ -8489,7 +8670,7 @@ export type SaveProductFileUploadMutationHookResult = ReturnType<typeof useSaveP
 export type SaveProductFileUploadMutationResult = ApolloReactCommon.MutationResult<SaveProductFileUploadMutation>;
 export type SaveProductFileUploadMutationOptions = ApolloReactCommon.BaseMutationOptions<SaveProductFileUploadMutation, SaveProductFileUploadMutationVariables>;
 export const GetProductFileDownloadLinkDocument = gql`
-    mutation getProductFileDownloadLink($id: ID!, $orderItemId: ID!) {
+    mutation getProductFileDownloadLink($id: String!, $orderItemId: String!) {
   generateProductFileDownloadLink(id: $id, orderItemId: $orderItemId) {
     ... on ProductFileLinkMutationResponse {
       downloadLink {
@@ -8526,6 +8707,87 @@ export function useGetProductFileDownloadLinkMutation(baseOptions?: ApolloReactH
 export type GetProductFileDownloadLinkMutationHookResult = ReturnType<typeof useGetProductFileDownloadLinkMutation>;
 export type GetProductFileDownloadLinkMutationResult = ApolloReactCommon.MutationResult<GetProductFileDownloadLinkMutation>;
 export type GetProductFileDownloadLinkMutationOptions = ApolloReactCommon.BaseMutationOptions<GetProductFileDownloadLinkMutation, GetProductFileDownloadLinkMutationVariables>;
+export const GetStorePublicDocument = gql`
+    query getStorePublic($storeId: String!) {
+  store(id: $storeId) {
+    ...StorePublicFragment
+  }
+}
+    ${StorePublicFragmentFragmentDoc}`;
+
+/**
+ * __useGetStorePublicQuery__
+ *
+ * To run a query within a React component, call `useGetStorePublicQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetStorePublicQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetStorePublicQuery({
+ *   variables: {
+ *      storeId: // value for 'storeId'
+ *   },
+ * });
+ */
+export function useGetStorePublicQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<GetStorePublicQuery, GetStorePublicQueryVariables>) {
+        return ApolloReactHooks.useQuery<GetStorePublicQuery, GetStorePublicQueryVariables>(GetStorePublicDocument, baseOptions);
+      }
+export function useGetStorePublicLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetStorePublicQuery, GetStorePublicQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<GetStorePublicQuery, GetStorePublicQueryVariables>(GetStorePublicDocument, baseOptions);
+        }
+export type GetStorePublicQueryHookResult = ReturnType<typeof useGetStorePublicQuery>;
+export type GetStorePublicLazyQueryHookResult = ReturnType<typeof useGetStorePublicLazyQuery>;
+export type GetStorePublicQueryResult = ApolloReactCommon.QueryResult<GetStorePublicQuery, GetStorePublicQueryVariables>;
+export const GetStorePrivateDocument = gql`
+    query getStorePrivate {
+  user {
+    id
+    ... on UserPrivate {
+      store {
+        id
+        name
+        createdAt
+        updatedAt
+        website
+        bio
+        cover {
+          ...ImageFragment
+        }
+        profile {
+          ...ImageFragment
+        }
+      }
+    }
+  }
+}
+    ${ImageFragmentFragmentDoc}`;
+
+/**
+ * __useGetStorePrivateQuery__
+ *
+ * To run a query within a React component, call `useGetStorePrivateQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetStorePrivateQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetStorePrivateQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetStorePrivateQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<GetStorePrivateQuery, GetStorePrivateQueryVariables>) {
+        return ApolloReactHooks.useQuery<GetStorePrivateQuery, GetStorePrivateQueryVariables>(GetStorePrivateDocument, baseOptions);
+      }
+export function useGetStorePrivateLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetStorePrivateQuery, GetStorePrivateQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<GetStorePrivateQuery, GetStorePrivateQueryVariables>(GetStorePrivateDocument, baseOptions);
+        }
+export type GetStorePrivateQueryHookResult = ReturnType<typeof useGetStorePrivateQuery>;
+export type GetStorePrivateLazyQueryHookResult = ReturnType<typeof useGetStorePrivateLazyQuery>;
+export type GetStorePrivateQueryResult = ApolloReactCommon.QueryResult<GetStorePrivateQuery, GetStorePrivateQueryVariables>;
 export type ID = Scalars["ID"]
 export type Price = Scalars["Price"]
 export type PageCursor = Scalars["PageCursor"]

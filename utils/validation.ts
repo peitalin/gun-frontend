@@ -15,6 +15,8 @@ import {
   minLengthUsername,
   minLengthProductName,
   maxLengthProductName,
+  minLengthTitle,
+  maxLengthTitle,
 } from "./limitsAndRules";
 
 
@@ -24,20 +26,50 @@ export const validationSchemas = {
   // Product Create Form
   ProductCreate:
     Yup.object().shape({
-      name: Yup.string()
-        .min(minLengthProductName, `Name must be longer than ${minLengthProductName} chars`)
-        .max(maxLengthProductName, `Name can't be longer than ${maxLengthProductName} chars`)
-        .required('Product needs a name'),
-      tagline: Yup.string()
-        .min(minLengthProductTagline)
-        .max(maxLengthProductTagline)
-        .required('Needs a tagline'),
+      title: Yup.string()
+        .min(minLengthProductName, `Title must be longer than ${minLengthTitle} chars`)
+        .max(maxLengthProductName, `title can't be longer than ${maxLengthTitle} chars`)
+        .required('Title is requried'),
       description: Yup.string()
         .required('Needs a description')
         .max(maxLengthProductDescription)
         .test("description", "Needs a description", function(value) {
           return value !== '<p></p>'
         }),
+      condition: Yup.string()
+        .min(0)
+        .max(100)
+        .required('Needs a condition'),
+      make: Yup.string()
+        .min(0)
+        .max(100)
+        .required('Needs a make'),
+      model: Yup.string()
+        .min(0)
+        .max(100)
+        .required('Needs a model'),
+      ammoType: Yup.string()
+        .min(0)
+        .max(100),
+      actionType: Yup.string()
+        .min(0)
+        .max(100)
+        .required('Needs a actionType'),
+      boreDiameter: Yup.string()
+        .min(0)
+        .max(100),
+      serialNumber: Yup.string()
+        .min(0)
+        .max(100)
+        .required('Needs a serialNumber'),
+      location: Yup.string()
+        .min(0)
+        .max(100)
+        .required('Needs a location'),
+      dealer: Yup.string()
+        .min(0)
+        .max(100)
+        .required('Needs a dealer'),
       categoryId: Yup.string()
         .required("Pick a category"),
       tags: Yup.array().of(Yup.string())
@@ -69,10 +101,6 @@ export const validationSchemas = {
             .required('Add a description'),
           isDefault: Yup.boolean()
             .required("set default variant"),
-          fileIds: Yup.array().of(
-              Yup.string().matches(fileIdRegex)
-            )
-            .min(1, "Must have at least 1 file attached"),
           previewItems: Yup.array().of(
               Yup.object({
                 id: Yup.string().nullable(),
@@ -137,10 +165,6 @@ export const validationSchemas = {
               .required('Add a description'),
             isDefault: Yup.boolean()
               .required("set default variant"),
-            fileIds: Yup.array().of(
-                Yup.string().matches(fileIdRegex)
-              )
-              .min(1, "Must have at least 1 file attached"),
             previewItems: Yup.array().of(
                 Yup.object({
                   id: Yup.string().nullable(),

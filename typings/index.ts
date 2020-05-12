@@ -1,4 +1,10 @@
 
+import {
+  ProductVariantInput,
+  ProductVariantEditInput,
+  VariantsLabel,
+  QuantityLabel,
+} from "typings/gqlTypes";
 
 type ID = any;
 type Order = any;
@@ -9,9 +15,6 @@ type PageBasedConnection = any;
 
 type PaymentMethod = any;
 type PayoutMethod = any;
-type ProductVariantInput = any;
-type VariantsLabel = any;
-type QuantityLabel = any;
 
 
 export interface SendgridStatus {
@@ -175,13 +178,31 @@ export interface EditUserProfileInput {
 
 export interface ProductCreateEditCommonInput {
   categoryId: string;
-  tags: string[];
-  name: string;
-  tagline: string | null;
+  tags: string[] | string;
+  title: string;
   description: string;
-  currentVariants: ProductVariantInput[];
+  condition: string;
+  make: string;
+  model: string;
+  ammoType?: string;
+  actionType: string;
+  boreDiameter?: string;
+  serialNumber: string;
+  location: string;
+  dealer: string;
   isPublished: boolean;
   variantsLabel?: VariantsLabel;
   isQuantityEnabled: boolean;
   quantityLabel?: QuantityLabel;
+  productId?: ID;
+  currentVariants: ProductVariantInput[] | ProductVariantEditInput[];
 }
+
+export interface ProductCreateInputFrontEnd extends ProductCreateEditCommonInput {
+  currentVariants: ProductVariantInput[];
+};
+
+
+export interface ProductEditInputFrontEnd extends ProductCreateEditCommonInput  {
+  currentVariants: ProductVariantEditInput[];
+};
