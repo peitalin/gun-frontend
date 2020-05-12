@@ -1,5 +1,36 @@
 import gql from "graphql-tag";
-import { ImageFragmentStore, StorePrivateFragment } from "./fragments";
+import { ImageFragment, StorePrivateFragment } from "./fragments";
+
+
+export const HasuraStoreFragment = gql`
+  fragment HasuraStoreFragment on stores {
+    id
+    name
+    createdAt
+    updatedAt
+    website
+    bio
+    userId
+    user {
+      id
+    }
+    cover {
+      ...ImageFragment
+    }
+    profile {
+      ...ImageFragment
+    }
+    productsForSaleConnection {
+      id
+      currentSnapshot {
+        id
+        serialNumber
+        title
+      }
+    }
+  }
+  ${ImageFragment}
+`;
 
 export const CREATE_STORE = gql`
   mutation (
@@ -28,72 +59,27 @@ export const CREATE_STORE = gql`
       bio: $bio,
       website: $website,
     }) {
-      id
-      bio
-      website
-      name
-      userId
-      user {
-        id
-      }
-      cover {
-        ...ImageFragmentStore
-      }
-      profile {
-        imageId
-        original {
-          parentId
-          variantId
-          widthInPixels
-          heightInPixels
-          sizeInBytes
-          url
-        }
-        variants {
-          parentId
-          variantId
-          mimeType
-          widthInPixels
-          heightInPixels
-          url
-        }
-        createdAt
-        tags
-        description
-      }
-
+      ...HasuraStoreFragment
     }
   }
-  ${ImageFragmentStore}
+  ${HasuraStoreFragment}
 `;
 
 
 
 
 export const EDIT_STORE = gql`
-  mutation editStoreProfile(
-    $userId: String!
-    $storeId: String!
-    $name: String
-    $profileId: String
-    $coverId: String
-    $website: String
-    $bio: String
+mutation($storeId: String) {
+  update_stores(
+    where: { id: {_eq: $storeId}},
+    _set: {
+      bio: "h2i"
+    }
   ) {
-    editStoreProfile(
-      userId: $userId,
-      storeId: $storeId,
-      name: $name
-      profileId: $profileId
-      coverId: $coverId
-      website: $website
-      bio: $bio
-    ) {
-      store {
-        ...StorePrivateFragment
-      }
+    returning {
+      ...HasuraStoreFragment
     }
   }
-  ${ImageFragmentStore}
-  ${StorePrivateFragment}
+}
+${HasuraStoreFragment}
 `;
