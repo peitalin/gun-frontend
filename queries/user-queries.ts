@@ -2,20 +2,20 @@ import gql from "graphql-tag";
 import { UserPrivateFragment } from "./fragments";
 
 export const LOGIN = gql`
-  mutation logInUsingEmail(
-    $email: String!
-    $password: String!
+mutation logInUsingEmail(
+  $email: String!
+  $password: String!
+) {
+  logInUsingEmail(
+    email: $email
+    password: $password
   ) {
-    logInUsingEmail(
-      email: $email
-      password: $password
-    ) {
-      jwt
-      user {
-        ...UserPrivateFragment
-      }
+    jwt
+    user {
+      ...UserPrivateFragment
     }
   }
+}
   ${UserPrivateFragment}
 `;
 

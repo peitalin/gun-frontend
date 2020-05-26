@@ -1,5 +1,30 @@
 import gql from "graphql-tag";
 
+export const HasuraImageFragment = gql`
+  fragment HasuraImageFragment on image_parents {
+    id
+    original {
+      id
+      url
+      mimeType
+      heightInPixels
+      widthInPixels
+      sizeInBytes
+      url
+    }
+    variants {
+      id
+      mimeType
+      sizeInBytes
+      widthInPixels
+      heightInPixels
+      url
+    }
+    createdAt
+    tags
+    description
+  }
+`;
 
 export const ImageFragment = gql`
   fragment ImageFragment on Image {
@@ -38,9 +63,10 @@ export const ProductVariantFragment = gql`
     createdAt
     variantName
     variantDescription
-    position
     isDefault
-    basePrice
+    position
+    price
+    priceWas
     previewItems {
       id
       image {

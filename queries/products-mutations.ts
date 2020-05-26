@@ -13,11 +13,11 @@ export const CREATE_PRODUCT = gql`
           isExcludedFromRecommendations
           isExcludedFromSearch
           tags
-          # category {
-          #   id
-          #   name
-          #   categoryGroup
-          # }
+          category {
+            id
+            name
+            categoryGroup
+          }
           currentSnapshot {
             id
             createdAt
@@ -66,11 +66,11 @@ export const EDIT_PRODUCT = gql`
         isExcludedFromRecommendations
         isExcludedFromSearch
         tags
-        category {
-          id
-          name
-          categoryGroup
-        }
+        # category {
+        #   id
+        #   name
+        #   categoryGroup
+        # }
         currentSnapshot {
           title
           description

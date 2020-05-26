@@ -1,4 +1,5 @@
 import gql from "graphql-tag";
+import { HasuraImageFragment } from "queries/fragments";
 
 export const GET_PRODUCTS = gql`
 query {
@@ -35,13 +36,17 @@ query {
         variantDescription
         position
         isDefault
-        basePrice
+        price
+        priceWas
         previewItems {
           id
           imageId
           position
           youtubeEmbedLink
           variantSnapshotId
+          image {
+            ...HasuraImageFragment
+          }
         }
         # preview_items_aggregate {
         #   aggregate {
@@ -52,5 +57,6 @@ query {
     }
   }
 }
+${HasuraImageFragment}
 `;
 

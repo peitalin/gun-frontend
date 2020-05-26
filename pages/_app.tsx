@@ -12,6 +12,8 @@ import Layout from "layout";
 import { ThemeProvider } from '@material-ui/core/styles'
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { AppTheme } from 'layout/AppTheme';
+import { withStyles, WithStyles } from '@material-ui/core/styles';
+import { notifyStyles } from "layout/AppTheme";
 // styles
 import GlobalStyles from "layout/globalStyles";
 // Next
@@ -27,6 +29,8 @@ import { GET_USER } from "queries/user-queries";
 // css
 import "../public/App.css";
 // import "react-datepicker/dist/react-datepicker.css";
+import { SnackbarProvider, ProviderContext } from 'notistack';
+import IconButtonCancel from "components/IconButtonCancel";
 // Typings
 // import { UserPrivate } from 'typings/gqlTypes';
 type UserPrivate = any;
@@ -41,25 +45,6 @@ declare global {
     gapi: any;
   }
 }
-
-interface AppProps {
-  apollo: ApolloClient<any>;
-  store: Store<GrandReduxState>;
-}
-interface Context extends NextPageContext {
-  apolloClient: ApolloClient<any>
-  store: Store<GrandReduxState>;
-}
-
-// A function that routes the user to the right place
-// after login
-const onRedirectCallback = appState => {
-  Router.push(
-    appState && appState.targetUrl
-      ? appState.targetUrl
-      : window.location.pathname
-  );
-};
 
 
 
@@ -128,18 +113,45 @@ class MyApp extends App<AppProps> {
       store,
       apollo,
       router,
+      classes, // from notifyStyles
     } = this.props;
+
+    // add action to all snackbars
+    const notistackRef = React.createRef();
+    const onClickDismiss = key => () => {
+        (notistackRef.current as ProviderContext).closeSnackbar(key);
+    }
 
     return (
       <Provider store={store}>
         <ApolloProvider client={apollo}>
-          <ThemeProvider theme={AppTheme}>
-            <CssBaseline />
-            <GlobalStyles/>
-            <Layout>
-              <Component {...pageProps} key={router.route} />
-            </Layout>
-          </ThemeProvider>
+          <SnackbarProvider
+            ref={notistackRef}
+            autoHideDuration={4000}
+            preventDuplicate
+            classes={{
+              variantSuccess: classes.variantSuccess,
+              variantError: classes.variantError,
+              variantInfo: classes.variantInfo,
+              variantWarning: classes.variantWarning,
+            }}
+            action={(key) => (
+              <IconButtonCancel
+                onClick={onClickDismiss(key)}
+                dark={false}
+              />
+            )}
+            dense
+            maxSnack={4}
+          >
+            <ThemeProvider theme={AppTheme}>
+              <CssBaseline />
+              <GlobalStyles/>
+              <Layout>
+                <Component {...pageProps} key={router.route} />
+              </Layout>
+            </ThemeProvider>
+          </SnackbarProvider>
         </ApolloProvider>
       </Provider>
     );
@@ -150,7 +162,18 @@ class MyApp extends App<AppProps> {
 interface QueryData {
   user: UserPrivate;
 }
+interface AppProps extends WithStyles<typeof notifyStyles> {
+  apollo: ApolloClient<any>;
+  store: Store<GrandReduxState>;
+}
+interface Context extends NextPageContext {
+  apolloClient: ApolloClient<any>
+  store: Store<GrandReduxState>;
+}
 
-export default withRedux(makeStore)(
-  withApollo(MyApp)
+export default
+withStyles(notifyStyles)(
+  withRedux(makeStore)(
+    withApollo(MyApp)
+  )
 );
