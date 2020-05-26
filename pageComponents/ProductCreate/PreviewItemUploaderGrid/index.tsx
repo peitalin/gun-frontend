@@ -101,6 +101,7 @@ const PreviewItemUploaderGrid = (props: ReactProps & FormikProps<FormikFields>) 
   const handleChangeStatus = (fileWithMeta: IFileWithMeta, status: string) => {
     //// called every time a file's `status` changes
     let { meta, file, xhr } = fileWithMeta;
+    console.log("status:::::", status)
 
     if (status === "getting_upload_params") {
       setLoading(true)
@@ -128,18 +129,30 @@ const PreviewItemUploaderGrid = (props: ReactProps & FormikProps<FormikFields>) 
       dispatch(actions.ADD_DZU_PREVIEW_ORDER([ previewOrder ]))
     }
 
-    // if (status === "error_upload_params") {
-    //   console.info("error_upload_params:", status, meta, file)
-    // }
-    // if (status === "exception_upload") {
-    //   console.info("exception_upload:", status, meta, file)
-    // }
-    // if (status === "error_upload") {
-    //   console.info("error_upload:", status, meta, file)
-    // }
-    // if (status === "rejected_max_files") {
-    //   console.info("rejected_max_files:", status, meta, file)
-    // }
+    if (status === "error_upload_params") {
+      setLoading(false)
+      console.info("error_upload_params:", status, meta, file)
+    }
+    if (status === "exception_upload") {
+      setLoading(false)
+      console.info("exception_upload:", status, meta, file)
+    }
+    if (status === "error_upload") {
+      setLoading(false)
+      console.info("error_upload:", status, meta, file)
+    }
+    if (status === "rejected_max_files") {
+      setLoading(false)
+      console.info("rejected_max_files:", status, meta, file)
+    }
+    if (status === "aborted") {
+      setLoading(false)
+      console.info("aborted:", status, meta, file)
+    }
+    if (status === "removed") {
+      setLoading(false)
+      console.info("removed:", status, meta, file)
+    }
 
     if (status === "done") {
       let googleUpload = googleUploads.find(g => g.metaId === meta.id);

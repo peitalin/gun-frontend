@@ -60,6 +60,9 @@ const ImageUploadProgress = (props: ReactProps & ReduxProps) => {
   const handleRemoveWithRedux = () => {
     // remove DZU preview (redux) and previewItems in currentVariants
     console.log("removing preview item...", props.dzuPreview)
+    if (fileWithMeta && fileWithMeta.cancel) {
+      fileWithMeta.cancel()
+    }
     handleRemove(props.dzuPreview.id)
     dispatch(actions.REMOVE_PREVIEW_ITEMS([props.dzuPreview.id]))
     dispatch(actions.REMOVE_DZU_PREVIEW_ORDER([props.dzuPreview.id]))
@@ -90,28 +93,24 @@ const ImageUploadProgress = (props: ReactProps & ReduxProps) => {
 
   // console.log('percent3:', percent)
 
-
   if (status === 'error_file_size' || status === 'error_validation') {
     return (
       <div>
-        <span className="dzu-previewFileNameError">{name}</span>
-        {/* {status === 'error_file_size' && <span>{size < minSizeBytes ? 'File too small' : 'File too big'}</span>} */}
-        {/* {
-          canRemove &&
-          <IconButton
-            onClick={handleRemove}
-            className={classes.previewIconButton}
-            classes={{
-              root: classes.iconButton
-            }}
-            size="small"
-          >
-            <ClearIcon/>
-          </IconButton>
-        } */}
+        <span className="dzu-previewFileNameError">Error</span>
+        <IconButton
+          onClick={handleRemoveWithRedux}
+          className={classes.previewIconButton}
+          classes={{
+            root: classes.iconButton
+          }}
+          size="small"
+        >
+          <ClearIcon classes={{ root: classes.svgIcon }}/>
+        </IconButton>
       </div>
     )
   }
+
 
   return (
     <>
@@ -133,16 +132,16 @@ const ImageUploadProgress = (props: ReactProps & ReduxProps) => {
       }
       {
         status === 'uploading' &&
-        // canCancel &&
+        // canRemove &&
         <IconButton
-          onClick={handleCancel}
+          onClick={handleRemoveWithRedux}
           className={classes.previewIconButton}
           classes={{
             root: classes.iconButton
           }}
           size="small"
         >
-          <PauseIcon classes={{ root: classes.svgIcon }}/>
+          <ClearIcon classes={{ root: classes.svgIcon }}/>
         </IconButton>
       }
 
