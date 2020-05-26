@@ -13,6 +13,7 @@ import { Actions } from "reduxStore/actions";
 import { Products } from "typings/gqlTypes";
 // Components
 import dynamic from "next/dynamic";
+import NewReleaseProducts from "pageComponents/ProductGallery/NewReleaseProducts";
 // import ProductCreatePage from "./ProductCreatePage";
 import Loading from "components/Loading";
 // Router
@@ -40,8 +41,7 @@ const ProductGallery: React.FC<ReactProps> = (props) => {
 
   const { loading, error, data } = useQuery<QueryData, QueryVar>(
     GET_PRODUCTS, {
-    variables: {
-    },
+    variables: { },
     ssr: true,
   })
 
@@ -61,6 +61,21 @@ const ProductGallery: React.FC<ReactProps> = (props) => {
             }}>
               <h1>Gun Products from backend</h1>
               <JSONTree data={data.products} />
+              <div className={classes.maxWidth}>
+                <NewReleaseProducts
+                  initialProducts={
+                    undefined
+                    // {
+                    //   edges: data.products.map(p => {
+                    //     return {
+                    //       node: p
+                    //     }
+                    //   })
+                    // }
+                  }
+                  count={24}
+                />
+              </div>
             </div>
           }
         </div>
@@ -99,7 +114,6 @@ const styles = (theme: Theme) => createStyles({
     display: 'flex',
     flexDirection: 'row',
     flexWrap: 'wrap',
-    maxWidth: 1000,
   },
   productColumn60: {
     flexBasis: '60%',
@@ -110,6 +124,9 @@ const styles = (theme: Theme) => createStyles({
     flexBasis: '40%',
     flexGrow: 1,
     minWidth: 280,
+  },
+  maxWidth: {
+    maxWidth: '1160px', // 4 products per row
   },
 });
 
