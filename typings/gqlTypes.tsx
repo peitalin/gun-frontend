@@ -1127,6 +1127,12 @@ export type Json_Comparison_Exp = {
   _nin?: Maybe<Array<Scalars['json']>>;
 };
 
+export type Login2Response = {
+   __typename?: 'Login2Response';
+  email?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+};
+
 export type LoginMutationResponse = {
    __typename?: 'LoginMutationResponse';
   jwt?: Maybe<Scalars['String']>;
@@ -1372,7 +1378,7 @@ export type Mutation = {
   adminCreateAffiliateForUser: BlankMutationResponse;
   adminDeleteAccount: BlankMutationResponse;
   adminDeleteAffiliateForUser: BlankMutationResponse;
-  adminDeleteProduct?: Maybe<ProductMutationResponse>;
+  adminDeleteProduct?: Maybe<ProductsMutationResponse>;
   adminDeleteStore: StoreMutationResponse;
   adminGenerateProductFileDownloadLink: ProductFileLinkMutationResponse;
   adminManuallyConfirmOrderAfterFrontendPayment: OrderMutationResponse;
@@ -1393,27 +1399,24 @@ export type Mutation = {
   createPlatformDiscount: DiscountMutationResponse;
   createProduct: ProductMutationResponse;
   createRefund: CreateRefundMutationResponse;
-  createStore: StoreMutationResponse;
+  createStore?: Maybe<StoreMutationResponse>;
   createStorePromoCode: DiscountMutationResponse;
   deleteAccount: BlankMutationResponse;
   deleteCuratedList: BlankMutationResponse;
-  deleteProduct?: Maybe<ProductMutationResponse>;
+  deleteProduct?: Maybe<ProductsMutationResponse>;
   deleteStore: StoreMutationResponse;
   editPlatformDiscount: DiscountMutationResponse;
   editProduct: ProductMutationResponse;
   editStoreProfile?: Maybe<StoreMutationResponse>;
   editStorePromoCode: DiscountMutationResponse;
   editUserProfile: UserMutationResponse;
-  excludeProductFromAutomaticLists?: Maybe<ProductMutationResponse>;
   excludeProductFromSearch?: Maybe<ProductMutationResponse>;
   followStore: FollowingStoresConnection;
   generateProductFileDownloadLink: ProductFileLinkMutationResponse;
-  includeProductInAutomaticLists?: Maybe<ProductMutationResponse>;
   includeProductInSearch?: Maybe<ProductMutationResponse>;
   logInUsingEmail: LoginMutationResponse;
   logOut: BlankMutationResponse;
   rearrangeCuratedListItems: CuratedListMutationResponse;
-  reassignOrderOwnership: OrderMutationResponse;
   recordAffiliateLinkClick: BlankMutationResponse;
   refreshCart: CartMutationResponse;
   removeItemFromCuratedList: CuratedListMutationResponse;
@@ -1625,7 +1628,7 @@ export type MutationCreateRefundArgs = {
 export type MutationCreateStoreArgs = {
   bio?: Maybe<Scalars['String']>;
   coverId?: Maybe<Scalars['String']>;
-  name: Scalars['String'];
+  name?: Maybe<Scalars['String']>;
   profileId?: Maybe<Scalars['String']>;
   website?: Maybe<Scalars['String']>;
 };
@@ -1671,8 +1674,6 @@ export type MutationEditStoreProfileArgs = {
   coverId?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   profileId?: Maybe<Scalars['String']>;
-  storeId: Scalars['String'];
-  userId: Scalars['String'];
   website?: Maybe<Scalars['String']>;
 };
 
@@ -1688,11 +1689,6 @@ export type MutationEditUserProfileArgs = {
   lastName?: Maybe<Scalars['String']>;
   payoutMethod?: Maybe<Scalars['String']>;
   username?: Maybe<Scalars['String']>;
-};
-
-
-export type MutationExcludeProductFromAutomaticListsArgs = {
-  productId: Scalars['String'];
 };
 
 
@@ -1713,11 +1709,6 @@ export type MutationGenerateProductFileDownloadLinkArgs = {
 };
 
 
-export type MutationIncludeProductInAutomaticListsArgs = {
-  productId: Scalars['String'];
-};
-
-
 export type MutationIncludeProductInSearchArgs = {
   productId: Scalars['String'];
 };
@@ -1732,12 +1723,6 @@ export type MutationLogInUsingEmailArgs = {
 export type MutationRearrangeCuratedListItemsArgs = {
   itemIdsInOrder: Array<Scalars['ID']>;
   listId: Scalars['String'];
-};
-
-
-export type MutationReassignOrderOwnershipArgs = {
-  orderId: Scalars['String'];
-  userIdOrEmail: Scalars['String'];
 };
 
 
@@ -1888,7 +1873,7 @@ export type Mutation_Root = {
   adminCreateAffiliateForUser: BlankMutationResponse;
   adminDeleteAccount: BlankMutationResponse;
   adminDeleteAffiliateForUser: BlankMutationResponse;
-  adminDeleteProduct?: Maybe<ProductMutationResponse>;
+  adminDeleteProduct?: Maybe<ProductsMutationResponse>;
   adminDeleteStore: StoreMutationResponse;
   adminGenerateProductFileDownloadLink: ProductFileLinkMutationResponse;
   adminManuallyConfirmOrderAfterFrontendPayment: OrderMutationResponse;
@@ -1909,11 +1894,11 @@ export type Mutation_Root = {
   createPlatformDiscount: DiscountMutationResponse;
   createProduct: ProductMutationResponse;
   createRefund: CreateRefundMutationResponse;
-  createStore: StoreMutationResponse;
+  createStore?: Maybe<StoreMutationResponse>;
   createStorePromoCode: DiscountMutationResponse;
   deleteAccount: BlankMutationResponse;
   deleteCuratedList: BlankMutationResponse;
-  deleteProduct?: Maybe<ProductMutationResponse>;
+  deleteProduct?: Maybe<ProductsMutationResponse>;
   deleteStore: StoreMutationResponse;
   delete_categories?: Maybe<Categories_Mutation_Response>;
   delete_categories_by_pk?: Maybe<Categories>;
@@ -1951,11 +1936,9 @@ export type Mutation_Root = {
   editStoreProfile?: Maybe<StoreMutationResponse>;
   editStorePromoCode: DiscountMutationResponse;
   editUserProfile: UserMutationResponse;
-  excludeProductFromAutomaticLists?: Maybe<ProductMutationResponse>;
   excludeProductFromSearch?: Maybe<ProductMutationResponse>;
   followStore: FollowingStoresConnection;
   generateProductFileDownloadLink: ProductFileLinkMutationResponse;
-  includeProductInAutomaticLists?: Maybe<ProductMutationResponse>;
   includeProductInSearch?: Maybe<ProductMutationResponse>;
   insert_categories?: Maybe<Categories_Mutation_Response>;
   insert_categories_one?: Maybe<Categories>;
@@ -1991,8 +1974,8 @@ export type Mutation_Root = {
   insert_users_one?: Maybe<Users>;
   logInUsingEmail: LoginMutationResponse;
   logOut: BlankMutationResponse;
+  login2?: Maybe<Login2Response>;
   rearrangeCuratedListItems: CuratedListMutationResponse;
-  reassignOrderOwnership: OrderMutationResponse;
   recordAffiliateLinkClick: BlankMutationResponse;
   refreshCart: CartMutationResponse;
   removeItemFromCuratedList: CuratedListMutationResponse;
@@ -2236,7 +2219,7 @@ export type Mutation_RootCreateRefundArgs = {
 export type Mutation_RootCreateStoreArgs = {
   bio?: Maybe<Scalars['String']>;
   coverId?: Maybe<Scalars['String']>;
-  name: Scalars['String'];
+  name?: Maybe<Scalars['String']>;
   profileId?: Maybe<Scalars['String']>;
   website?: Maybe<Scalars['String']>;
 };
@@ -2437,8 +2420,6 @@ export type Mutation_RootEditStoreProfileArgs = {
   coverId?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   profileId?: Maybe<Scalars['String']>;
-  storeId: Scalars['String'];
-  userId: Scalars['String'];
   website?: Maybe<Scalars['String']>;
 };
 
@@ -2457,11 +2438,6 @@ export type Mutation_RootEditUserProfileArgs = {
 };
 
 
-export type Mutation_RootExcludeProductFromAutomaticListsArgs = {
-  productId: Scalars['String'];
-};
-
-
 export type Mutation_RootExcludeProductFromSearchArgs = {
   productId: Scalars['String'];
 };
@@ -2476,11 +2452,6 @@ export type Mutation_RootFollowStoreArgs = {
 export type Mutation_RootGenerateProductFileDownloadLinkArgs = {
   id: Scalars['String'];
   orderItemId: Scalars['String'];
-};
-
-
-export type Mutation_RootIncludeProductInAutomaticListsArgs = {
-  productId: Scalars['String'];
 };
 
 
@@ -2685,15 +2656,15 @@ export type Mutation_RootLogInUsingEmailArgs = {
 };
 
 
-export type Mutation_RootRearrangeCuratedListItemsArgs = {
-  itemIdsInOrder: Array<Scalars['ID']>;
-  listId: Scalars['String'];
+export type Mutation_RootLogin2Args = {
+  email: Scalars['String'];
+  password?: Maybe<Scalars['String']>;
 };
 
 
-export type Mutation_RootReassignOrderOwnershipArgs = {
-  orderId: Scalars['String'];
-  userIdOrEmail: Scalars['String'];
+export type Mutation_RootRearrangeCuratedListItemsArgs = {
+  itemIdsInOrder: Array<Scalars['ID']>;
+  listId: Scalars['String'];
 };
 
 
@@ -4038,7 +4009,7 @@ export type Product = {
   featuredVariant?: Maybe<ProductVariant>;
   id: Scalars['ID'];
   isDeleted: Scalars['Boolean'];
-  isExcludedFromAutomaticLists: Scalars['Boolean'];
+  isExcludedFromRecommendations: Scalars['Boolean'];
   isExcludedFromSearch: Scalars['Boolean'];
   isPublished: Scalars['Boolean'];
   isSuspended: Scalars['Boolean'];
@@ -4949,12 +4920,13 @@ export enum Product_Snapshots_Update_Column {
 
 export type Product_Variants = {
    __typename?: 'product_variants';
-  basePrice: Scalars['Int'];
   createdAt: Scalars['timestamptz'];
   isDefault: Scalars['Boolean'];
   position: Scalars['Int'];
   previewItems: Array<Product_Preview_Items>;
   previewItems_aggregate: Product_Preview_Items_Aggregate;
+  price: Scalars['Int'];
+  priceWas?: Maybe<Scalars['Int']>;
   productId: Scalars['String'];
   snapshotId: Scalars['String'];
   storeId: Scalars['String'];
@@ -5030,24 +5002,27 @@ export type Product_Variants_Arr_Rel_Insert_Input = {
 
 export type Product_Variants_Avg_Fields = {
    __typename?: 'product_variants_avg_fields';
-  basePrice?: Maybe<Scalars['Float']>;
   position?: Maybe<Scalars['Float']>;
+  price?: Maybe<Scalars['Float']>;
+  priceWas?: Maybe<Scalars['Float']>;
 };
 
 export type Product_Variants_Avg_Order_By = {
-  basePrice?: Maybe<Order_By>;
   position?: Maybe<Order_By>;
+  price?: Maybe<Order_By>;
+  priceWas?: Maybe<Order_By>;
 };
 
 export type Product_Variants_Bool_Exp = {
   _and?: Maybe<Array<Maybe<Product_Variants_Bool_Exp>>>;
   _not?: Maybe<Product_Variants_Bool_Exp>;
   _or?: Maybe<Array<Maybe<Product_Variants_Bool_Exp>>>;
-  basePrice?: Maybe<Int_Comparison_Exp>;
   createdAt?: Maybe<Timestamptz_Comparison_Exp>;
   isDefault?: Maybe<Boolean_Comparison_Exp>;
   position?: Maybe<Int_Comparison_Exp>;
   previewItems?: Maybe<Product_Preview_Items_Bool_Exp>;
+  price?: Maybe<Int_Comparison_Exp>;
+  priceWas?: Maybe<Int_Comparison_Exp>;
   productId?: Maybe<String_Comparison_Exp>;
   snapshotId?: Maybe<String_Comparison_Exp>;
   storeId?: Maybe<String_Comparison_Exp>;
@@ -5063,16 +5038,18 @@ export enum Product_Variants_Constraint {
 }
 
 export type Product_Variants_Inc_Input = {
-  basePrice?: Maybe<Scalars['Int']>;
   position?: Maybe<Scalars['Int']>;
+  price?: Maybe<Scalars['Int']>;
+  priceWas?: Maybe<Scalars['Int']>;
 };
 
 export type Product_Variants_Insert_Input = {
-  basePrice?: Maybe<Scalars['Int']>;
   createdAt?: Maybe<Scalars['timestamptz']>;
   isDefault?: Maybe<Scalars['Boolean']>;
   position?: Maybe<Scalars['Int']>;
   previewItems?: Maybe<Product_Preview_Items_Arr_Rel_Insert_Input>;
+  price?: Maybe<Scalars['Int']>;
+  priceWas?: Maybe<Scalars['Int']>;
   productId?: Maybe<Scalars['String']>;
   snapshotId?: Maybe<Scalars['String']>;
   storeId?: Maybe<Scalars['String']>;
@@ -5084,9 +5061,10 @@ export type Product_Variants_Insert_Input = {
 
 export type Product_Variants_Max_Fields = {
    __typename?: 'product_variants_max_fields';
-  basePrice?: Maybe<Scalars['Int']>;
   createdAt?: Maybe<Scalars['timestamptz']>;
   position?: Maybe<Scalars['Int']>;
+  price?: Maybe<Scalars['Int']>;
+  priceWas?: Maybe<Scalars['Int']>;
   productId?: Maybe<Scalars['String']>;
   snapshotId?: Maybe<Scalars['String']>;
   storeId?: Maybe<Scalars['String']>;
@@ -5097,9 +5075,10 @@ export type Product_Variants_Max_Fields = {
 };
 
 export type Product_Variants_Max_Order_By = {
-  basePrice?: Maybe<Order_By>;
   createdAt?: Maybe<Order_By>;
   position?: Maybe<Order_By>;
+  price?: Maybe<Order_By>;
+  priceWas?: Maybe<Order_By>;
   productId?: Maybe<Order_By>;
   snapshotId?: Maybe<Order_By>;
   storeId?: Maybe<Order_By>;
@@ -5111,9 +5090,10 @@ export type Product_Variants_Max_Order_By = {
 
 export type Product_Variants_Min_Fields = {
    __typename?: 'product_variants_min_fields';
-  basePrice?: Maybe<Scalars['Int']>;
   createdAt?: Maybe<Scalars['timestamptz']>;
   position?: Maybe<Scalars['Int']>;
+  price?: Maybe<Scalars['Int']>;
+  priceWas?: Maybe<Scalars['Int']>;
   productId?: Maybe<Scalars['String']>;
   snapshotId?: Maybe<Scalars['String']>;
   storeId?: Maybe<Scalars['String']>;
@@ -5124,9 +5104,10 @@ export type Product_Variants_Min_Fields = {
 };
 
 export type Product_Variants_Min_Order_By = {
-  basePrice?: Maybe<Order_By>;
   createdAt?: Maybe<Order_By>;
   position?: Maybe<Order_By>;
+  price?: Maybe<Order_By>;
+  priceWas?: Maybe<Order_By>;
   productId?: Maybe<Order_By>;
   snapshotId?: Maybe<Order_By>;
   storeId?: Maybe<Order_By>;
@@ -5154,11 +5135,12 @@ export type Product_Variants_On_Conflict = {
 };
 
 export type Product_Variants_Order_By = {
-  basePrice?: Maybe<Order_By>;
   createdAt?: Maybe<Order_By>;
   isDefault?: Maybe<Order_By>;
   position?: Maybe<Order_By>;
   previewItems_aggregate?: Maybe<Product_Preview_Items_Aggregate_Order_By>;
+  price?: Maybe<Order_By>;
+  priceWas?: Maybe<Order_By>;
   productId?: Maybe<Order_By>;
   snapshotId?: Maybe<Order_By>;
   storeId?: Maybe<Order_By>;
@@ -5173,10 +5155,11 @@ export type Product_Variants_Pk_Columns_Input = {
 };
 
 export enum Product_Variants_Select_Column {
-  BASEPRICE = 'basePrice',
   CREATEDAT = 'createdAt',
   ISDEFAULT = 'isDefault',
   POSITION = 'position',
+  PRICE = 'price',
+  PRICEWAS = 'priceWas',
   PRODUCTID = 'productId',
   SNAPSHOTID = 'snapshotId',
   STOREID = 'storeId',
@@ -5187,10 +5170,11 @@ export enum Product_Variants_Select_Column {
 }
 
 export type Product_Variants_Set_Input = {
-  basePrice?: Maybe<Scalars['Int']>;
   createdAt?: Maybe<Scalars['timestamptz']>;
   isDefault?: Maybe<Scalars['Boolean']>;
   position?: Maybe<Scalars['Int']>;
+  price?: Maybe<Scalars['Int']>;
+  priceWas?: Maybe<Scalars['Int']>;
   productId?: Maybe<Scalars['String']>;
   snapshotId?: Maybe<Scalars['String']>;
   storeId?: Maybe<Scalars['String']>;
@@ -5202,53 +5186,62 @@ export type Product_Variants_Set_Input = {
 
 export type Product_Variants_Stddev_Fields = {
    __typename?: 'product_variants_stddev_fields';
-  basePrice?: Maybe<Scalars['Float']>;
   position?: Maybe<Scalars['Float']>;
+  price?: Maybe<Scalars['Float']>;
+  priceWas?: Maybe<Scalars['Float']>;
 };
 
 export type Product_Variants_Stddev_Order_By = {
-  basePrice?: Maybe<Order_By>;
   position?: Maybe<Order_By>;
+  price?: Maybe<Order_By>;
+  priceWas?: Maybe<Order_By>;
 };
 
 export type Product_Variants_Stddev_Pop_Fields = {
    __typename?: 'product_variants_stddev_pop_fields';
-  basePrice?: Maybe<Scalars['Float']>;
   position?: Maybe<Scalars['Float']>;
+  price?: Maybe<Scalars['Float']>;
+  priceWas?: Maybe<Scalars['Float']>;
 };
 
 export type Product_Variants_Stddev_Pop_Order_By = {
-  basePrice?: Maybe<Order_By>;
   position?: Maybe<Order_By>;
+  price?: Maybe<Order_By>;
+  priceWas?: Maybe<Order_By>;
 };
 
 export type Product_Variants_Stddev_Samp_Fields = {
    __typename?: 'product_variants_stddev_samp_fields';
-  basePrice?: Maybe<Scalars['Float']>;
   position?: Maybe<Scalars['Float']>;
+  price?: Maybe<Scalars['Float']>;
+  priceWas?: Maybe<Scalars['Float']>;
 };
 
 export type Product_Variants_Stddev_Samp_Order_By = {
-  basePrice?: Maybe<Order_By>;
   position?: Maybe<Order_By>;
+  price?: Maybe<Order_By>;
+  priceWas?: Maybe<Order_By>;
 };
 
 export type Product_Variants_Sum_Fields = {
    __typename?: 'product_variants_sum_fields';
-  basePrice?: Maybe<Scalars['Int']>;
   position?: Maybe<Scalars['Int']>;
+  price?: Maybe<Scalars['Int']>;
+  priceWas?: Maybe<Scalars['Int']>;
 };
 
 export type Product_Variants_Sum_Order_By = {
-  basePrice?: Maybe<Order_By>;
   position?: Maybe<Order_By>;
+  price?: Maybe<Order_By>;
+  priceWas?: Maybe<Order_By>;
 };
 
 export enum Product_Variants_Update_Column {
-  BASEPRICE = 'basePrice',
   CREATEDAT = 'createdAt',
   ISDEFAULT = 'isDefault',
   POSITION = 'position',
+  PRICE = 'price',
+  PRICEWAS = 'priceWas',
   PRODUCTID = 'productId',
   SNAPSHOTID = 'snapshotId',
   STOREID = 'storeId',
@@ -5260,35 +5253,41 @@ export enum Product_Variants_Update_Column {
 
 export type Product_Variants_Var_Pop_Fields = {
    __typename?: 'product_variants_var_pop_fields';
-  basePrice?: Maybe<Scalars['Float']>;
   position?: Maybe<Scalars['Float']>;
+  price?: Maybe<Scalars['Float']>;
+  priceWas?: Maybe<Scalars['Float']>;
 };
 
 export type Product_Variants_Var_Pop_Order_By = {
-  basePrice?: Maybe<Order_By>;
   position?: Maybe<Order_By>;
+  price?: Maybe<Order_By>;
+  priceWas?: Maybe<Order_By>;
 };
 
 export type Product_Variants_Var_Samp_Fields = {
    __typename?: 'product_variants_var_samp_fields';
-  basePrice?: Maybe<Scalars['Float']>;
   position?: Maybe<Scalars['Float']>;
+  price?: Maybe<Scalars['Float']>;
+  priceWas?: Maybe<Scalars['Float']>;
 };
 
 export type Product_Variants_Var_Samp_Order_By = {
-  basePrice?: Maybe<Order_By>;
   position?: Maybe<Order_By>;
+  price?: Maybe<Order_By>;
+  priceWas?: Maybe<Order_By>;
 };
 
 export type Product_Variants_Variance_Fields = {
    __typename?: 'product_variants_variance_fields';
-  basePrice?: Maybe<Scalars['Float']>;
   position?: Maybe<Scalars['Float']>;
+  price?: Maybe<Scalars['Float']>;
+  priceWas?: Maybe<Scalars['Float']>;
 };
 
 export type Product_Variants_Variance_Order_By = {
-  basePrice?: Maybe<Order_By>;
   position?: Maybe<Order_By>;
+  price?: Maybe<Order_By>;
+  priceWas?: Maybe<Order_By>;
 };
 
 export type ProductCategory = {
@@ -5315,7 +5314,6 @@ export type ProductCreateInput = {
   location: Scalars['String'];
   make?: Maybe<Scalars['String']>;
   model?: Maybe<Scalars['String']>;
-  name: Scalars['String'];
   quantityLabel?: Maybe<QuantityLabel>;
   serialNumber: Scalars['String'];
   tags?: Maybe<Scalars['String']>;
@@ -5337,7 +5335,6 @@ export type ProductEditInput = {
   location: Scalars['String'];
   make?: Maybe<Scalars['String']>;
   model?: Maybe<Scalars['String']>;
-  name: Scalars['String'];
   productId: Scalars['ID'];
   quantityLabel?: Maybe<QuantityLabel>;
   serialNumber: Scalars['String'];
@@ -5402,7 +5399,7 @@ export type ProductPrivate = Product & {
   historicalSnapshotsConnection: ProductsConnection;
   id: Scalars['ID'];
   isDeleted: Scalars['Boolean'];
-  isExcludedFromAutomaticLists: Scalars['Boolean'];
+  isExcludedFromRecommendations: Scalars['Boolean'];
   isExcludedFromSearch: Scalars['Boolean'];
   isPublished: Scalars['Boolean'];
   isSuspended: Scalars['Boolean'];
@@ -5436,7 +5433,7 @@ export type ProductPublic = Product & {
   featuredVariant?: Maybe<ProductVariant>;
   id: Scalars['ID'];
   isDeleted: Scalars['Boolean'];
-  isExcludedFromAutomaticLists: Scalars['Boolean'];
+  isExcludedFromRecommendations: Scalars['Boolean'];
   isExcludedFromSearch: Scalars['Boolean'];
   isPublished: Scalars['Boolean'];
   isSuspended: Scalars['Boolean'];
@@ -5449,6 +5446,7 @@ export type ProductPublic = Product & {
 
 export type Products = {
    __typename?: 'products';
+  category?: Maybe<Categories>;
   categoryId: Scalars['String'];
   createdAt: Scalars['timestamptz'];
   currentSnapshot: Product_Snapshots;
@@ -5459,8 +5457,28 @@ export type Products = {
   isExcludedFromSearch: Scalars['Boolean'];
   isPublished: Scalars['Boolean'];
   isSuspended: Scalars['Boolean'];
+  product_variants: Array<Product_Variants>;
+  product_variants_aggregate: Product_Variants_Aggregate;
   storeId: Scalars['String'];
   updatedAt: Scalars['timestamptz'];
+};
+
+
+export type ProductsProduct_VariantsArgs = {
+  distinct_on?: Maybe<Array<Product_Variants_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Product_Variants_Order_By>>;
+  where?: Maybe<Product_Variants_Bool_Exp>;
+};
+
+
+export type ProductsProduct_Variants_AggregateArgs = {
+  distinct_on?: Maybe<Array<Product_Variants_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Product_Variants_Order_By>>;
+  where?: Maybe<Product_Variants_Bool_Exp>;
 };
 
 export type Products_Aggregate = {
@@ -5497,6 +5515,7 @@ export type Products_Bool_Exp = {
   _and?: Maybe<Array<Maybe<Products_Bool_Exp>>>;
   _not?: Maybe<Products_Bool_Exp>;
   _or?: Maybe<Array<Maybe<Products_Bool_Exp>>>;
+  category?: Maybe<Categories_Bool_Exp>;
   categoryId?: Maybe<String_Comparison_Exp>;
   createdAt?: Maybe<Timestamptz_Comparison_Exp>;
   currentSnapshot?: Maybe<Product_Snapshots_Bool_Exp>;
@@ -5507,6 +5526,7 @@ export type Products_Bool_Exp = {
   isExcludedFromSearch?: Maybe<Boolean_Comparison_Exp>;
   isPublished?: Maybe<Boolean_Comparison_Exp>;
   isSuspended?: Maybe<Boolean_Comparison_Exp>;
+  product_variants?: Maybe<Product_Variants_Bool_Exp>;
   storeId?: Maybe<String_Comparison_Exp>;
   updatedAt?: Maybe<Timestamptz_Comparison_Exp>;
 };
@@ -5516,6 +5536,7 @@ export enum Products_Constraint {
 }
 
 export type Products_Insert_Input = {
+  category?: Maybe<Categories_Obj_Rel_Insert_Input>;
   categoryId?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['timestamptz']>;
   currentSnapshot?: Maybe<Product_Snapshots_Obj_Rel_Insert_Input>;
@@ -5526,6 +5547,7 @@ export type Products_Insert_Input = {
   isExcludedFromSearch?: Maybe<Scalars['Boolean']>;
   isPublished?: Maybe<Scalars['Boolean']>;
   isSuspended?: Maybe<Scalars['Boolean']>;
+  product_variants?: Maybe<Product_Variants_Arr_Rel_Insert_Input>;
   storeId?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['timestamptz']>;
 };
@@ -5586,6 +5608,7 @@ export type Products_On_Conflict = {
 };
 
 export type Products_Order_By = {
+  category?: Maybe<Categories_Order_By>;
   categoryId?: Maybe<Order_By>;
   createdAt?: Maybe<Order_By>;
   currentSnapshot?: Maybe<Product_Snapshots_Order_By>;
@@ -5596,6 +5619,7 @@ export type Products_Order_By = {
   isExcludedFromSearch?: Maybe<Order_By>;
   isPublished?: Maybe<Order_By>;
   isSuspended?: Maybe<Order_By>;
+  product_variants_aggregate?: Maybe<Product_Variants_Aggregate_Order_By>;
   storeId?: Maybe<Order_By>;
   updatedAt?: Maybe<Order_By>;
 };
@@ -5679,6 +5703,11 @@ export type ProductsEdge = Edge & {
   node: Product;
 };
 
+export type ProductsMutationResponse = {
+   __typename?: 'ProductsMutationResponse';
+  products: Array<Product>;
+};
+
 export type ProductSnapshot = {
    __typename?: 'ProductSnapshot';
   actionType: Scalars['String'];
@@ -5738,12 +5767,13 @@ export type ProductVariant = {
   currentStockLevel?: Maybe<StockLevel>;
   isDefault: Scalars['Boolean'];
   isSoldOut: Scalars['Boolean'];
+  position: Scalars['Int'];
   previewItems: Array<ProductPreviewItem>;
   price: Scalars['Price'];
   priceDetails: PriceDetails;
   priceWas?: Maybe<Scalars['Price']>;
   productId: Scalars['ID'];
-  productSnapshotId: Scalars['ID'];
+  snapshotId: Scalars['ID'];
   storeId: Scalars['ID'];
   variantDescription?: Maybe<Scalars['String']>;
   variantId: Scalars['ID'];
@@ -5780,7 +5810,6 @@ export enum QuantityLabel {
 
 export type Query = {
    __typename?: 'Query';
-  basicInsights: Array<AdminInsight>;
   category?: Maybe<ProductCategory>;
   curatedList?: Maybe<CuratedList>;
   curatedListItemsAdminConnection?: Maybe<CuratedListItemsConnection>;
@@ -5822,8 +5851,6 @@ export type Query = {
   storeDiscounts: DiscountsConnection;
   storesAdminConnection: StoresConnection;
   tryPromoCode?: Maybe<Discount>;
-  unclaimedOrder?: Maybe<Order>;
-  unclaimedOrdersConnection: OrdersConnection;
   user?: Maybe<User>;
   userByEmailOrId?: Maybe<User>;
   wishlistItemsConnection: WishlistItemsConnection;
@@ -6051,16 +6078,6 @@ export type QueryTryPromoCodeArgs = {
 };
 
 
-export type QueryUnclaimedOrderArgs = {
-  id: Scalars['String'];
-};
-
-
-export type QueryUnclaimedOrdersConnectionArgs = {
-  query?: Maybe<ConnectionQuery>;
-};
-
-
 export type QueryUserArgs = {
   id?: Maybe<Scalars['String']>;
 };
@@ -6077,7 +6094,6 @@ export type QueryWishlistItemsConnectionArgs = {
 
 export type Query_Root = {
    __typename?: 'query_root';
-  basicInsights: Array<AdminInsight>;
   categories: Array<Categories>;
   categories_aggregate: Categories_Aggregate;
   categories_by_pk?: Maybe<Categories>;
@@ -6163,8 +6179,6 @@ export type Query_Root = {
   stores_aggregate: Stores_Aggregate;
   stores_by_pk?: Maybe<Stores>;
   tryPromoCode?: Maybe<Discount>;
-  unclaimedOrder?: Maybe<Order>;
-  unclaimedOrdersConnection: OrdersConnection;
   user?: Maybe<User>;
   userByEmailOrId?: Maybe<User>;
   users: Array<Users>;
@@ -6732,16 +6746,6 @@ export type Query_RootStores_By_PkArgs = {
 export type Query_RootTryPromoCodeArgs = {
   cartProductsInfo: Array<ProductProductVariantId>;
   code: Scalars['String'];
-};
-
-
-export type Query_RootUnclaimedOrderArgs = {
-  id: Scalars['String'];
-};
-
-
-export type Query_RootUnclaimedOrdersConnectionArgs = {
-  query?: Maybe<ConnectionQuery>;
 };
 
 
@@ -8288,14 +8292,16 @@ export type GetProductFileDownloadLinkMutationVariables = {
 
 export type GetProductFileDownloadLinkMutation = { __typename?: 'mutation_root', generateProductFileDownloadLink: { __typename?: 'ProductFileLinkMutationResponse', downloadLink: { __typename?: 'ProductFileDownloadLink', productFileId: string, expiresAt: any, url: string } } };
 
+export type HasuraImageFragment = { __typename?: 'image_parents', id: string, createdAt: any, tags?: Maybe<string>, description?: Maybe<string>, original?: Maybe<{ __typename?: 'image_variants', id: string, url?: Maybe<string>, mimeType: string, heightInPixels: number, widthInPixels: number, sizeInBytes: number }>, variants: Array<{ __typename?: 'image_variants', id: string, mimeType: string, sizeInBytes: number, widthInPixels: number, heightInPixels: number, url?: Maybe<string> }> };
+
 export type ImageFragment = { __typename?: 'Image', id: string, createdAt: any, tags?: Maybe<string>, description?: Maybe<string>, original: { __typename?: 'ImageVariant', id: string, url: string, mimeType?: Maybe<string>, heightInPixels?: Maybe<number>, widthInPixels?: Maybe<number>, sizeInBytes?: Maybe<number> }, variants: Array<{ __typename?: 'ImageVariant', id: string, mimeType?: Maybe<string>, sizeInBytes?: Maybe<number>, widthInPixels?: Maybe<number>, heightInPixels?: Maybe<number>, url: string }> };
 
-export type ProductVariantFragment = { __typename?: 'ProductVariant', variantId: string, variantSnapshotId: string, createdAt: any, variantName: string, variantDescription?: Maybe<string>, isDefault: boolean, price: any, priceWas?: Maybe<any>, isSoldOut: boolean, previewItems: Array<{ __typename?: 'ProductPreviewItem', id: string, youTubeEmbedLink?: Maybe<string>, image?: Maybe<(
+export type ProductVariantFragment = { __typename?: 'ProductVariant', variantSnapshotId: string, variantId: string, snapshotId: string, productId: string, storeId: string, createdAt: any, variantName: string, variantDescription?: Maybe<string>, isDefault: boolean, position: number, price: any, priceWas?: Maybe<any>, isSoldOut: boolean, previewItems: Array<{ __typename?: 'ProductPreviewItem', id: string, youTubeEmbedLink?: Maybe<string>, image?: Maybe<(
       { __typename?: 'Image' }
       & ImageFragment
     )> }> };
 
-type ProductFragment_ProductPrivate_ = { __typename?: 'ProductPrivate', id: string, createdAt: any, updatedAt?: Maybe<any>, tags?: Maybe<string>, isPublished: boolean, isSuspended: boolean, isDeleted: boolean, isExcludedFromAutomaticLists: boolean, currentSnapshot: { __typename?: 'ProductSnapshot', name: string, title: string, description: string }, currentVariants: Array<(
+type ProductFragment_ProductPrivate_ = { __typename?: 'ProductPrivate', id: string, createdAt: any, updatedAt?: Maybe<any>, tags?: Maybe<string>, isPublished: boolean, isSuspended: boolean, isDeleted: boolean, isExcludedFromRecommendations: boolean, currentSnapshot: { __typename?: 'ProductSnapshot', name: string, title: string, description: string }, currentVariants: Array<(
     { __typename?: 'ProductVariant' }
     & ProductVariantFragment
   )>, featuredVariant?: Maybe<(
@@ -8306,7 +8312,7 @@ type ProductFragment_ProductPrivate_ = { __typename?: 'ProductPrivate', id: stri
     & ProductVariantFragment
   )>, store: { __typename?: 'StorePrivate', id: string, name: string } | { __typename?: 'StorePublic', id: string, name: string }, category: { __typename?: 'ProductCategory', id: string, name: string, categoryGroup?: Maybe<any> } };
 
-type ProductFragment_ProductPublic_ = { __typename?: 'ProductPublic', id: string, createdAt: any, updatedAt?: Maybe<any>, tags?: Maybe<string>, isPublished: boolean, isSuspended: boolean, isDeleted: boolean, isExcludedFromAutomaticLists: boolean, currentSnapshot: { __typename?: 'ProductSnapshot', name: string, title: string, description: string }, currentVariants: Array<(
+type ProductFragment_ProductPublic_ = { __typename?: 'ProductPublic', id: string, createdAt: any, updatedAt?: Maybe<any>, tags?: Maybe<string>, isPublished: boolean, isSuspended: boolean, isDeleted: boolean, isExcludedFromRecommendations: boolean, currentSnapshot: { __typename?: 'ProductSnapshot', name: string, title: string, description: string }, currentVariants: Array<(
     { __typename?: 'ProductVariant' }
     & ProductVariantFragment
   )>, featuredVariant?: Maybe<(
@@ -8367,32 +8373,61 @@ export type Unnamed_1_Mutation = { __typename?: 'mutation_root', insert_image_pa
 export type Unnamed_2_QueryVariables = {};
 
 
-export type Unnamed_2_Query = { __typename?: 'query_root', products: Array<{ __typename?: 'products', id: string, storeId: string, isDeleted: boolean, isPublished: boolean, isSuspended: boolean, isExcludedFromSearch: boolean, isExcludedFromRecommendations: boolean, categoryId: string, createdAt: any, updatedAt: any, currentSnapshot: { __typename?: 'product_snapshots', id: string, createdAt: any, productId: string, title: string, description: string, condition: string, make: string, model: string, ammoType?: Maybe<string>, actionType: string, boreDiameter?: Maybe<string>, serialNumber: string, location: string, dealer: string, currentVariants: Array<{ __typename?: 'product_variants', variantSnapshotId: string, variantId: string, variantName: string, variantDescription: string, position: number, isDefault: boolean, basePrice: number, previewItems: Array<{ __typename?: 'product_preview_items', id: string, imageId?: Maybe<string>, position: number, youtubeEmbedLink?: Maybe<string>, variantSnapshotId?: Maybe<string> }> }> } }> };
+export type Unnamed_2_Query = { __typename?: 'query_root', products: Array<{ __typename?: 'products', id: string, storeId: string, isDeleted: boolean, isPublished: boolean, isSuspended: boolean, isExcludedFromSearch: boolean, isExcludedFromRecommendations: boolean, categoryId: string, createdAt: any, updatedAt: any, currentSnapshot: { __typename?: 'product_snapshots', id: string, createdAt: any, productId: string, title: string, description: string, condition: string, make: string, model: string, ammoType?: Maybe<string>, actionType: string, boreDiameter?: Maybe<string>, serialNumber: string, location: string, dealer: string, currentVariants: Array<{ __typename?: 'product_variants', variantSnapshotId: string, variantId: string, variantName: string, variantDescription: string, position: number, isDefault: boolean, price: number, priceWas?: Maybe<number>, previewItems: Array<{ __typename?: 'product_preview_items', id: string, imageId?: Maybe<string>, position: number, youtubeEmbedLink?: Maybe<string>, variantSnapshotId?: Maybe<string> }> }> } }> };
 
-export type GetStorePublicQueryVariables = {
-  storeId: Scalars['String'];
+export type CreateStoreMutationVariables = {
+  name: Scalars['String'];
+  profileId: Scalars['String'];
+  coverId: Scalars['String'];
+  bio?: Maybe<Scalars['String']>;
+  website?: Maybe<Scalars['String']>;
 };
 
 
-export type GetStorePublicQuery = { __typename?: 'query_root', store?: Maybe<(
-    { __typename?: 'StorePrivate' }
-    & StorePublicFragment_StorePrivate_
-  ) | (
-    { __typename?: 'StorePublic' }
-    & StorePublicFragment_StorePublic_
-  )> };
+export type CreateStoreMutation = { __typename?: 'mutation_root', createStore?: Maybe<{ __typename?: 'StoreMutationResponse', store: (
+      { __typename?: 'StorePrivate' }
+      & StorePrivateFragment
+    ) }> };
 
-export type GetStorePrivateQueryVariables = {};
+export type EditStoreProfileMutationVariables = {
+  name?: Maybe<Scalars['String']>;
+  profileId?: Maybe<Scalars['String']>;
+  coverId?: Maybe<Scalars['String']>;
+  website?: Maybe<Scalars['String']>;
+  bio?: Maybe<Scalars['String']>;
+};
 
 
-export type GetStorePrivateQuery = { __typename?: 'query_root', user?: Maybe<{ __typename?: 'UserWithRole', id: string } | { __typename?: 'UserPublic', id: string } | { __typename?: 'UserPrivate', id: string, store?: Maybe<{ __typename?: 'StorePrivate', id: string, name: string, createdAt: any, updatedAt?: Maybe<any>, website?: Maybe<string>, bio?: Maybe<string>, cover?: Maybe<(
-        { __typename?: 'Image' }
-        & ImageFragment
-      )>, profile?: Maybe<(
-        { __typename?: 'Image' }
-        & ImageFragment
-      )> }> }> };
+export type EditStoreProfileMutation = { __typename?: 'mutation_root', editStoreProfile?: Maybe<{ __typename?: 'StoreMutationResponse', store: (
+      { __typename?: 'StorePrivate' }
+      & StorePrivateFragment
+    ) }> };
 
+export const HasuraImageFragmentFragmentDoc = gql`
+    fragment HasuraImageFragment on image_parents {
+  id
+  original {
+    id
+    url
+    mimeType
+    heightInPixels
+    widthInPixels
+    sizeInBytes
+    url
+  }
+  variants {
+    id
+    mimeType
+    sizeInBytes
+    widthInPixels
+    heightInPixels
+    url
+  }
+  createdAt
+  tags
+  description
+}
+    `;
 export const ImageFragmentFragmentDoc = gql`
     fragment ImageFragment on Image {
   id
@@ -8420,12 +8455,16 @@ export const ImageFragmentFragmentDoc = gql`
     `;
 export const ProductVariantFragmentFragmentDoc = gql`
     fragment ProductVariantFragment on ProductVariant {
-  variantId
   variantSnapshotId
+  variantId
+  snapshotId
+  productId
+  storeId
   createdAt
   variantName
   variantDescription
   isDefault
+  position
   price
   priceWas
   previewItems {
@@ -8447,7 +8486,7 @@ export const ProductFragmentFragmentDoc = gql`
   isPublished
   isSuspended
   isDeleted
-  isExcludedFromAutomaticLists
+  isExcludedFromRecommendations
   currentSnapshot {
     name
     title
@@ -8707,87 +8746,84 @@ export function useGetProductFileDownloadLinkMutation(baseOptions?: ApolloReactH
 export type GetProductFileDownloadLinkMutationHookResult = ReturnType<typeof useGetProductFileDownloadLinkMutation>;
 export type GetProductFileDownloadLinkMutationResult = ApolloReactCommon.MutationResult<GetProductFileDownloadLinkMutation>;
 export type GetProductFileDownloadLinkMutationOptions = ApolloReactCommon.BaseMutationOptions<GetProductFileDownloadLinkMutation, GetProductFileDownloadLinkMutationVariables>;
-export const GetStorePublicDocument = gql`
-    query getStorePublic($storeId: String!) {
-  store(id: $storeId) {
-    ...StorePublicFragment
-  }
-}
-    ${StorePublicFragmentFragmentDoc}`;
-
-/**
- * __useGetStorePublicQuery__
- *
- * To run a query within a React component, call `useGetStorePublicQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetStorePublicQuery` returns an object from Apollo Client that contains loading, error, and data properties 
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useGetStorePublicQuery({
- *   variables: {
- *      storeId: // value for 'storeId'
- *   },
- * });
- */
-export function useGetStorePublicQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<GetStorePublicQuery, GetStorePublicQueryVariables>) {
-        return ApolloReactHooks.useQuery<GetStorePublicQuery, GetStorePublicQueryVariables>(GetStorePublicDocument, baseOptions);
-      }
-export function useGetStorePublicLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetStorePublicQuery, GetStorePublicQueryVariables>) {
-          return ApolloReactHooks.useLazyQuery<GetStorePublicQuery, GetStorePublicQueryVariables>(GetStorePublicDocument, baseOptions);
-        }
-export type GetStorePublicQueryHookResult = ReturnType<typeof useGetStorePublicQuery>;
-export type GetStorePublicLazyQueryHookResult = ReturnType<typeof useGetStorePublicLazyQuery>;
-export type GetStorePublicQueryResult = ApolloReactCommon.QueryResult<GetStorePublicQuery, GetStorePublicQueryVariables>;
-export const GetStorePrivateDocument = gql`
-    query getStorePrivate {
-  user {
-    id
-    ... on UserPrivate {
-      store {
-        id
-        name
-        createdAt
-        updatedAt
-        website
-        bio
-        cover {
-          ...ImageFragment
-        }
-        profile {
-          ...ImageFragment
-        }
+export const CreateStoreDocument = gql`
+    mutation createStore($name: String!, $profileId: String!, $coverId: String!, $bio: String, $website: String) {
+  createStore(name: $name, profileId: $profileId, coverId: $coverId, bio: $bio, website: $website) {
+    store {
+      ... on StorePrivate {
+        ...StorePrivateFragment
       }
     }
   }
 }
-    ${ImageFragmentFragmentDoc}`;
+    ${StorePrivateFragmentFragmentDoc}`;
 
 /**
- * __useGetStorePrivateQuery__
+ * __useCreateStoreMutation__
  *
- * To run a query within a React component, call `useGetStorePrivateQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetStorePrivateQuery` returns an object from Apollo Client that contains loading, error, and data properties 
- * you can use to render your UI.
+ * To run a mutation, you first call `useCreateStoreMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateStoreMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
  *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
  *
  * @example
- * const { data, loading, error } = useGetStorePrivateQuery({
+ * const [createStoreMutation, { data, loading, error }] = useCreateStoreMutation({
  *   variables: {
+ *      name: // value for 'name'
+ *      profileId: // value for 'profileId'
+ *      coverId: // value for 'coverId'
+ *      bio: // value for 'bio'
+ *      website: // value for 'website'
  *   },
  * });
  */
-export function useGetStorePrivateQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<GetStorePrivateQuery, GetStorePrivateQueryVariables>) {
-        return ApolloReactHooks.useQuery<GetStorePrivateQuery, GetStorePrivateQueryVariables>(GetStorePrivateDocument, baseOptions);
+export function useCreateStoreMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<CreateStoreMutation, CreateStoreMutationVariables>) {
+        return ApolloReactHooks.useMutation<CreateStoreMutation, CreateStoreMutationVariables>(CreateStoreDocument, baseOptions);
       }
-export function useGetStorePrivateLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetStorePrivateQuery, GetStorePrivateQueryVariables>) {
-          return ApolloReactHooks.useLazyQuery<GetStorePrivateQuery, GetStorePrivateQueryVariables>(GetStorePrivateDocument, baseOptions);
-        }
-export type GetStorePrivateQueryHookResult = ReturnType<typeof useGetStorePrivateQuery>;
-export type GetStorePrivateLazyQueryHookResult = ReturnType<typeof useGetStorePrivateLazyQuery>;
-export type GetStorePrivateQueryResult = ApolloReactCommon.QueryResult<GetStorePrivateQuery, GetStorePrivateQueryVariables>;
+export type CreateStoreMutationHookResult = ReturnType<typeof useCreateStoreMutation>;
+export type CreateStoreMutationResult = ApolloReactCommon.MutationResult<CreateStoreMutation>;
+export type CreateStoreMutationOptions = ApolloReactCommon.BaseMutationOptions<CreateStoreMutation, CreateStoreMutationVariables>;
+export const EditStoreProfileDocument = gql`
+    mutation editStoreProfile($name: String, $profileId: String, $coverId: String, $website: String, $bio: String) {
+  editStoreProfile(name: $name, profileId: $profileId, coverId: $coverId, website: $website, bio: $bio) {
+    store {
+      ... on StorePrivate {
+        ...StorePrivateFragment
+      }
+    }
+  }
+}
+    ${StorePrivateFragmentFragmentDoc}`;
+
+/**
+ * __useEditStoreProfileMutation__
+ *
+ * To run a mutation, you first call `useEditStoreProfileMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useEditStoreProfileMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [editStoreProfileMutation, { data, loading, error }] = useEditStoreProfileMutation({
+ *   variables: {
+ *      name: // value for 'name'
+ *      profileId: // value for 'profileId'
+ *      coverId: // value for 'coverId'
+ *      website: // value for 'website'
+ *      bio: // value for 'bio'
+ *   },
+ * });
+ */
+export function useEditStoreProfileMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<EditStoreProfileMutation, EditStoreProfileMutationVariables>) {
+        return ApolloReactHooks.useMutation<EditStoreProfileMutation, EditStoreProfileMutationVariables>(EditStoreProfileDocument, baseOptions);
+      }
+export type EditStoreProfileMutationHookResult = ReturnType<typeof useEditStoreProfileMutation>;
+export type EditStoreProfileMutationResult = ApolloReactCommon.MutationResult<EditStoreProfileMutation>;
+export type EditStoreProfileMutationOptions = ApolloReactCommon.BaseMutationOptions<EditStoreProfileMutation, EditStoreProfileMutationVariables>;
 export type ID = Scalars["ID"]
 export type Price = Scalars["Price"]
 export type PageCursor = Scalars["PageCursor"]

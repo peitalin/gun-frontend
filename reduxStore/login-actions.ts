@@ -27,24 +27,4 @@ export const reduxLoginActions = {
       type: "UPDATE_LOGIN_STATE",
       payload: payload
     }),
-
-    UPDATE_LOGIN_STATUS: (payload?: ReduxStateLogin): ActionType<any> => ({
-      type: "UPDATE_LOGIN_STATUS",
-      payload: payload
-    }),
-
-    UPDATE_LOGIN_LOADING: (payload?: ReduxStateLogin): ActionType<any> => ({
-      type: "UPDATE_LOGIN_LOADING",
-      payload: payload
-    }),
-
-    UPDATE_LOGIN_ERROR: (payload?: ReduxStateLogin): ActionType<any> => ({
-      type: "UPDATE_LOGIN_ERROR",
-      payload: payload
-    }),
-
-    UPDATE_LOGIN_EMAIL: (payload?: ReduxStateLogin): ActionType<any> => ({
-      type: "UPDATE_LOGIN_EMAIL",
-      payload: payload
-    }),
   }

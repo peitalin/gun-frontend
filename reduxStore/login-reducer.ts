@@ -8,21 +8,13 @@ type StorePrivate = any;
 ////// login state reducer //////////
 export interface ReduxStateLogin {
   user?: UserPrivate
-  status?: undefined | string;
-  loading?: boolean;
   loggedIn?: boolean;
-  error?: any;
-  email?: string;
 }
 
 
 const initialLoginState: ReduxStateLogin = {
   user: undefined,
-  status: "",
-  loading: false,
   loggedIn: false,
-  error: undefined,
-  email: "",
 }
 
 export const reduxReducerLogin = (
@@ -57,22 +49,6 @@ export const reduxReducerLogin = (
 
     case A.UPDATE_LOGIN_STATE().type: {
       return { ...state, ...action.payload }
-    }
-
-    case A.UPDATE_LOGIN_STATUS().type: {
-      return { ...state, status: action.payload }
-    }
-
-    case A.UPDATE_LOGIN_LOADING().type: {
-      return { ...state, loading: action.payload }
-    }
-
-    case A.UPDATE_LOGIN_ERROR().type: {
-      return { ...state, error: action.payload }
-    }
-
-    case A.UPDATE_LOGIN_EMAIL().type: {
-      return { ...state, email: action.payload }
     }
 
     default: {
