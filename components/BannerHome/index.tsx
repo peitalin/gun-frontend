@@ -33,9 +33,9 @@ const BannerHome: NextPage<ReactProps> = (props) => {
   const { classes } = props;
   const router = useRouter();
 
-  const bannerImageUrl = "/img/banner4.jpg"
-  const bannerDitherMobile = 'linear-gradient(0deg, rgba(25,25,25,0.2) 50%, rgba(25,25,25,0) 90%)'
-  const bannerDither = 'linear-gradient(30deg, rgba(25,25,25,0.2) 10%, rgba(25,25,25,0) 80%)'
+  const bannerImageUrl = "/img/banner5.jpg"
+  const bannerDitherMobile = 'linear-gradient(0deg, rgba(25,25,25,0.7) 50%, rgba(25,25,25,0.1) 90%)'
+  const bannerDither = 'linear-gradient(30deg, rgba(25,25,25,0.7) 10%, rgba(25,25,25,0.1) 80%)'
 
   const user = useSelector<GrandReduxState, UserPrivate>(
     s => s.reduxLogin.user
@@ -70,14 +70,14 @@ const BannerHome: NextPage<ReactProps> = (props) => {
           <div className={classes.mainTitleContainer}>
             <RelayDownloadIcon className={classes.downloadIconXs}/>
             <Typography variant={"h2"} className={classes.mainTitleXs}>
-              Instant Downloads
+              Gun Marketplace
             </Typography>
           </div>
           <Typography variant={"body2"} className={classes.subline1Xs}>
-            Download any digital product, from $1.
+            List and exchange guns
           </Typography>
           <Typography variant={"body2"} className={classes.subline1Xs}>
-            Support independent creators directly.
+            Support independent gun owners directly.
           </Typography>
 
           <div className={classes.buttonsContainer}>
@@ -135,7 +135,7 @@ const BannerHome: NextPage<ReactProps> = (props) => {
                         root: classes.buttonRoot
                       }}
                     >
-                      Sell On Gun Marketplace
+                      Sell
                     </Button>
                   </a>
                 </Link>
@@ -165,15 +165,15 @@ const BannerHome: NextPage<ReactProps> = (props) => {
           <div className={classes.mainTitleContainer}>
             <RelayDownloadIcon className={classes.downloadIcon}/>
             <Typography variant={"h1"} className={classes.mainTitle}>
-              Instant Downloads
+              Gun Marketplace
             </Typography>
           </div>
 
           <Typography variant={"subtitle2"} className={classes.subline1}>
-            Download any digital product, from $1.
+            List and exchange guns
           </Typography>
           <Typography variant={"subtitle2"} className={classes.subline1}>
-            Support independent creators directly.
+            Support independent gun owners directly.
           </Typography>
 
           <div style={{ position: 'relative' }}>
@@ -236,7 +236,7 @@ const BannerHome: NextPage<ReactProps> = (props) => {
                         label: classes.buttonFontSizeDesktop,
                       }}
                     >
-                      Sell on Gun Marketplace
+                      Sell
                     </Button>
                   </a>
                 </Link>

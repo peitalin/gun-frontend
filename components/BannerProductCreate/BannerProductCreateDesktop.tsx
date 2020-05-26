@@ -38,8 +38,8 @@ const BannerProductCreateDesktop: NextPage<ReactProps> = (props) => {
         ditherStyle={{
           background: bannerDither
         }}
-        // dither={true}
-        dither={false}
+        dither={true}
+        // dither={false}
       >
         <div className={classes.mainTitleContainer}>
           <CloudUpload className={classes.downloadIcon}/>

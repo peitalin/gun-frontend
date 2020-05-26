@@ -21,8 +21,8 @@ import BannerProductCreateMobile from "./BannerProductCreateMobile";
 const BannerProductCreate: NextPage<ReactProps> = (props) => {
 
   const bannerImageUrl = "/img/banner10.jpg"
-  const bannerDitherMobile = 'linear-gradient(0deg, rgba(25,25,25,0.9) 50%, rgba(25,25,25,0) 90%)'
-  const bannerDither = 'linear-gradient(30deg, rgba(25,25,25,0.9) 10%, rgba(25,25,25,0) 80%)'
+  const bannerDitherMobile = 'linear-gradient(0deg, rgba(25,25,25,0.5) 10%, rgba(25,25,25,0.5) 90%)'
+  const bannerDither = 'linear-gradient(30deg, rgba(25,25,25,0.5) 10%, rgba(25,25,25,0.5) 90%)'
 
   return (
     <>
