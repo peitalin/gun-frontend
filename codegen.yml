@@ -14,8 +14,8 @@ documents:
   - ./queries/content-mutations.ts
   - ./queries/gun-queries.ts
   - ./queries/gun-mutations.ts
-  - ./queries/store-queries.ts
-  # - ./queries/store-mutations.ts
+  # - ./queries/store-queries.ts
+  - ./queries/store-mutations.ts
   # - ./queries/user-queries.ts
   # - ./queries/user-mutations.ts
 
