@@ -1,12 +1,13 @@
 import React from 'react';
 import { withStyles, WithStyles } from "@material-ui/core/styles";
+import { Colors } from "layout/AppTheme";
 
-import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import TextInput from 'components/Fields/TextInput';
 // Typings
 import styles from './commonStylesCompact';
 import ErrorBounds from "components/ErrorBounds";
+import ButtonLoading from "components/ButtonLoading";
 
 
 
@@ -124,16 +125,20 @@ const SignUp: React.FC<ReactProps> = (props) => {
         }}
         inputProps={{ style: { width: '100%' }}}
       />
-      <Button
+      <ButtonLoading
         type="submit"
-        fullWidth
         variant="contained"
         color="secondary"
         className={classes.submit}
         onClick={(event) => handleClick(event)}
+        loadingIconColor={Colors.blue}
+        replaceTextWhenLoading={true}
+        loading={props.buttonLoading}
+        disabled={props.buttonLoading}
+        fullWidth
       >
         Create Account
-      </Button>
+      </ButtonLoading>
     </div>
 
     <div className={classes.preHeader}>
@@ -151,10 +156,16 @@ const SignUp: React.FC<ReactProps> = (props) => {
 
 interface ReactProps extends WithStyles<typeof styles> {
   setTabIndex(tabIndex: number): void;
-  dispatchCreateUser?(payload: any): void;
+  dispatchCreateUser(payload: {
+    email: string,
+    password: string,
+    firstName?: string,
+    lastName?: string
+  }): void;
   email?: string;
   requiresFirstName?: boolean;
   requiresLastName?: boolean;
+  buttonLoading?: boolean;
 }
 
 export default withStyles(styles)(SignUp);

@@ -1,6 +1,7 @@
 import React from 'react';
 import { withStyles, WithStyles } from '@material-ui/core/styles';
 import { ReduxStateLogin } from 'reduxStore/login-reducer';
+import clsx from "clsx";
 
 import styles from './commonStylesCompact';
 import SignUp from './SignUpCompact';
@@ -21,21 +22,25 @@ const LoginPageCompact: React.FC<ReactProps> = (props) => {
       return <SignIn
                 dispatchLogin={props.dispatchLogin}
                 setTabIndex={setTabIndex}
+                buttonLoading={props.buttonLoading}
               />
     } else if (tabIndex === 1) {
       return <SignUp
                 dispatchCreateUser={props.dispatchCreateUser}
                 setTabIndex={setTabIndex}
+                buttonLoading={props.buttonLoading}
               />
     } else if (tabIndex === 2) {
       return <ResetPassword
                 dispatchResetPassword={props.dispatchResetPassword}
                 setTabIndex={setTabIndex}
+                buttonLoading={props.buttonLoading}
               />
     } else {
       return <SignIn
                 dispatchLogin={props.dispatchLogin}
                 setTabIndex={setTabIndex}
+                buttonLoading={props.buttonLoading}
               />
     }
   }
@@ -43,7 +48,7 @@ const LoginPageCompact: React.FC<ReactProps> = (props) => {
   const { classes } = props;
 
   return (
-    <ErrorBounds className={classes.loginRoot}>
+    <ErrorBounds className={clsx(classes.loginRoot, props.className)}>
       <div className={classes.outerContainer}>
         <div className={classes.loginButton}>
           { renderLoginTab() }
@@ -57,9 +62,16 @@ interface ReactProps extends WithStyles<typeof styles> {
   tabIndex: number;
   loggedIn: boolean;
   title?: string;
+  className?: any;
+  buttonLoading?: boolean;
   setTabIndex(tabIndex: number): void;
   dispatchLogin?(payload: { email: string, password: string }): void;
-  dispatchCreateUser?(payload: ReduxStateLogin): void;
+  dispatchCreateUser(payload: {
+    email: string,
+    password: string,
+    firstName?: string,
+    lastName?: string
+  }): void;
   dispatchResetPassword(payload: { email: string }): void;
 }
 

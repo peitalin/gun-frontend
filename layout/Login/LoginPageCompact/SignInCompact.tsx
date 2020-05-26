@@ -1,14 +1,17 @@
 import React from 'react';
 import { withStyles, WithStyles } from "@material-ui/core/styles";
+import { Colors } from "layout/AppTheme";
 
-import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+// Typings
+import { Cart } from "typings/gqlTypes";
 // Components
 import styles from './commonStylesCompact';
 import ErrorBounds from "components/ErrorBounds";
 import TextInput from "components/Fields/TextInput";
 // Router
 import LockIcon from "@material-ui/icons/Lock";
+import ButtonLoading from "components/ButtonLoading";
 
 
 const SignInCompact = (props: ReactProps) => {
@@ -40,7 +43,7 @@ const SignInCompact = (props: ReactProps) => {
     <ErrorBounds className={classes.outerContainer}>
 
       <Typography className={classes.title} variant="h5">
-        Login to your Gun Marketplace Account
+        Login to your Relay Account
       </Typography>
 
       <div className={classes.form}>
@@ -78,15 +81,19 @@ const SignInCompact = (props: ReactProps) => {
               Forgot Password?
             </a>
           </Typography>
-          <Button
+          <ButtonLoading
             type="submit"
             variant="contained"
             color="secondary"
             className={classes.submit}
             onClick={(event) => handleClick(event)}
+            loadingIconColor={Colors.blue}
+            replaceTextWhenLoading={true}
+            loading={props.buttonLoading}
+            disabled={props.buttonLoading}
           >
             Login
-          </Button>
+          </ButtonLoading>
         </div>
       </div>
 
@@ -106,6 +113,7 @@ const SignInCompact = (props: ReactProps) => {
 interface ReactProps extends WithStyles<typeof styles> {
   setTabIndex(tabIndex: number): void;
   dispatchLogin?(payload: any): void;
+  buttonLoading?: boolean;
 }
 
 export default withStyles(styles)(SignInCompact);

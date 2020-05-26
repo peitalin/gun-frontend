@@ -1,5 +1,6 @@
 
 import { createMuiTheme, fade } from '@material-ui/core/styles';
+import { createStyles, Theme } from '@material-ui/core/styles';
 import TouchRipple from '@material-ui/core/ButtonBase/TouchRipple';
 
 
@@ -7,7 +8,8 @@ import TouchRipple from '@material-ui/core/ButtonBase/TouchRipple';
 // const secondary = "#EB466D"
 
 // pale red
-const secondary = "#CB464D"
+const secondary = "#DB3748"
+
 
 export const Colors = {
   backgroundColor: "#f4f4f4",
@@ -34,6 +36,7 @@ export const Colors = {
   charcoal: "#484848",
   lighterBlack: "#333333",
   black: "#111111",
+  pitchBlack: "#000000",
   darkestRed: '#6A1617',
   darkerRed: '#7A1F27',
   darkRed: '#87212B',
@@ -53,17 +56,46 @@ export const Colors = {
   pink: "#DC848B",
 };
 
+export const breakpoints: Breakpoints = {
+  xs: 0,
+  sm: 416, // sm: 376,
+  md: 480,
+  lg: 720,
+  xl: 900,
+}
 
+export interface Breakpoints {
+  xs: number;
+  sm: number;
+  md: number;
+  lg: number;
+  xl: number;
+};
 
 export const BorderRadius = 4;
 
 export const fontFam = [
-  'Proxima Nova',
-  'proxima-nova',
   '"Helvetica Neue"',
   'Arial',
   'sans-serif',
 ].join(',')
+
+
+export const notifyStyles = (theme: Theme) => createStyles({
+  variantSuccess: {
+    backgroundColor: Colors.blue,
+  },
+  variantError: {
+    backgroundColor: Colors.red,
+  },
+  variantInfo: {
+    backgroundColor: Colors.lighterBlack,
+  },
+  variantWarning: {
+    backgroundColor: Colors.magenta,
+  },
+});
+
 
 export const AppTheme = createMuiTheme({
   palette: {
@@ -84,13 +116,7 @@ export const AppTheme = createMuiTheme({
     fontFamily: fontFam,
   },
   breakpoints: {
-    values: {
-      xs: 0,
-      sm: 376,
-      md: 480,
-      lg: 720,
-      xl: 900,
-    }
+    values: breakpoints
   },
   overrides: {
     // a: {
@@ -100,20 +126,21 @@ export const AppTheme = createMuiTheme({
       // Name of the rule
       root: {
         minWidth: '40px',
+        textTransform: 'none',
       },
       text: {
-        fontSize: '0.8rem',
+        fontSize: '0.9rem',
         fontWeight: 600,
         // Some CSS
         // background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
-        // borderRadius: 3,
+        // borderRadius: 4,
         // border: 0,
       },
       label: {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        fontSize: '0.8rem',
+        fontSize: '0.9rem',
         fontWeight: 600,
       },
       containedPrimary: {
@@ -229,26 +256,26 @@ export const AppTheme = createMuiTheme({
         color: Colors.charcoal,
       },
       body1: {
-        fontSize: "0.9rem",
-        fontWeight: 500,
+        fontSize: "1rem",
+        fontWeight: 400,
         lineHeight: 1.25,
         color: Colors.charcoal,
       },
       body2: {
-        fontSize: "0.8rem",
-        fontWeight: 500,
+        fontSize: "0.875rem",
+        fontWeight: 400,
         lineHeight: 1.25,
         color: Colors.charcoal,
       },
       subtitle1: {
         fontSize: "1.125rem",
-        fontWeight: 600,
+        fontWeight: 500,
         lineHeight: 1,
         color: Colors.charcoal,
       },
       subtitle2: {
         fontSize: "1rem",
-        fontWeight: 600,
+        fontWeight: 400,
         lineHeight: 0.9,
         color: Colors.charcoal,
       },

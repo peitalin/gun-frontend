@@ -1,7 +1,7 @@
 import React from 'react';
 import { withStyles, WithStyles } from "@material-ui/core/styles";
+import { Colors } from "layout/AppTheme";
 
-import Button from '@material-ui/core/Button';
 import FormControl from '@material-ui/core/FormControl';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -12,6 +12,7 @@ import ErrorBounds from "components/ErrorBounds";
 // Clear
 import ClearIcon from "@material-ui/icons/Clear";
 import IconButton from "@material-ui/core/IconButton";
+import ButtonLoading from "components/ButtonLoading";
 
 
 
@@ -55,18 +56,22 @@ const ResetPassword = (props: ReactProps) => {
               onChange={(e) => setEmail(e.target.value)}
             />
           </FormControl>
-          <Button
-            fullWidth
+          <ButtonLoading
+            type="submit"
             variant="contained"
             color="secondary"
             className={classes.submit}
             onClick={(e) => props.dispatchResetPassword({ email })}
+            fullWidth
+            loadingIconColor={Colors.blue}
+            replaceTextWhenLoading={true}
+            loading={props.buttonLoading}
+            disabled={props.buttonLoading}
           >
             Send Reset Link
-          </Button>
+          </ButtonLoading>
         </form>
 
-        <br/>
         <div className={classes.preHeader}>
           <Typography variant="body1">
             <a onClick={toLogin} className={classes.link}>
@@ -84,6 +89,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   setTabIndex(tabIndex: number): void;
   dispatchResetPassword(payload: { email: string }): void;
   handleToggleModal?(): void;
+  buttonLoading?: boolean;
 }
 
 export default withStyles(styles)( ResetPassword );

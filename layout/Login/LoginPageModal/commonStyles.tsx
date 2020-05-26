@@ -116,6 +116,9 @@ const styles = (theme: Theme) => createStyles({
     right: '1.5rem',
     top: '1.5rem',
   },
+  dontHaveAccount: {
+    marginTop: '0.5rem',
+  },
 });
 
 export default styles;

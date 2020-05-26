@@ -1,9 +1,8 @@
-import * as React from 'react';
+import React from 'react';
 import { withStyles, WithStyles } from "@material-ui/core/styles";
 import { oc as option } from "ts-optchain";
+import { Colors } from "layout/AppTheme";
 
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
 import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
@@ -13,6 +12,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 // Typings
+import { Cart } from "typings/gqlTypes";
 // Components
 import styles from './commonStyles';
 import ErrorBounds from "components/ErrorBounds";
@@ -22,14 +22,7 @@ import LockIcon from "@material-ui/icons/Lock";
 // Clear
 import ClearIcon from "@material-ui/icons/Clear";
 import IconButton from "@material-ui/core/IconButton";
-
-import GoogleLogin from 'react-google-login';
-import {
-  useGoogleLogin,
-  useGoogleLogout,
-} from 'react-google-login'
-import GoogleLoginButton from "components/Icons/GoogleLoginButton";
-
+import ButtonLoading from "components/ButtonLoading";
 
 
 const SignIn = (props: ReactProps) => {
@@ -55,42 +48,6 @@ const SignIn = (props: ReactProps) => {
     props.setTabIndex(2)
   }
 
-
-  const GoogleSignOut = () => {
-    var auth2 = window.gapi.auth2.getAuthInstance();
-    auth2.signOut().then(function () {
-      console.log('User signed out.');
-    });
-  }
-
-  const onSignInGoogle = (googleUser) => {
-    var profile = googleUser.getBasicProfile();
-    console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-    console.log('Name: ' + profile.getName());
-    console.log('Image URL: ' + profile.getImageUrl());
-    console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
-  }
-
-  const responseGoogle = (response) => {
-    console.log(response);
-  }
-
-
-  // React.useEffect(() => {
-  //   if (process.browser) {
-  //     if (window && window.gapi) {
-  //       window.gapi.signin2.render('g-signin2', {
-  //         'scope': 'https://www.googleapis.com/auth/plus.login',
-  //         'width': 200,
-  //         'height': 50,
-  //         'longtitle': true,
-  //         'theme': 'dark',
-  //         'onsuccess': onSignIn2
-  //       });
-  //     }
-  //   }
-  // }, [])
-
   return (
     <ErrorBounds className={classes.outerContainer}>
       <div className={classes.paper}>
@@ -111,25 +68,6 @@ const SignIn = (props: ReactProps) => {
           }
         </Typography>
 
-        {/* <a href="#" onClick={onSignIn2}>On Sign In</a> */}
-
-        <GoogleLogin
-          clientId="628767016907-66h6rtfiae0jt8uojc87hf6ns1npj3uj.apps.googleusercontent.com"
-          buttonText="Login with Google"
-          onSuccess={onSignInGoogle}
-          onFailure={responseGoogle}
-          cookiePolicy={'single_host_origin'}
-          // cannot style css, must override render
-          render={renderProps => (
-            <GoogleLoginButton
-              title={"Login with Google"}
-              style={{ width: 200 }}
-            />
-          )}
-        />
-        <a href="#" onClick={GoogleSignOut}>Google Sign out</a>
-
-
         <form className={classes.form}>
           <FormControl margin="normal" required fullWidth>
             <InputLabel htmlFor="sign-in-email">Email Address</InputLabel>
@@ -138,9 +76,7 @@ const SignIn = (props: ReactProps) => {
               name="sign-in-email"
               autoComplete="email"
               onChange={(e) => {
-                if (option(e).target.value()) {
-                  setEmail(e.target.value)
-                }
+                setEmail(e.target.value)
               }}
             />
           </FormControl>
@@ -155,22 +91,41 @@ const SignIn = (props: ReactProps) => {
               autoComplete="password"
               type="password"
               onChange={(e) => {
-                if (option(e).target.value()) {
-                  setPassword(e.target.value)
-                }
+                setPassword(e.target.value)
               }}
             />
           </FormControl>
-          <Button
+          {/* <FormControlLabel
+            control={
+              <Checkbox
+                checked={rememberMe}
+                color="primary"
+                onChange={() => setRememberMe(rememberMe => !rememberMe)}
+                value=""
+                inputProps={{
+                  'aria-label': 'primary checkbox',
+                }}
+              />
+            }
+            classes={{
+              label: classes.checkBox
+            }}
+            label="Remember me for a week"
+          /> */}
+          <ButtonLoading
             type="submit"
             fullWidth
             variant="contained"
             color="secondary"
             className={classes.submit}
             onClick={(event) => handleClick(event)}
+            loadingIconColor={Colors.blue}
+            replaceTextWhenLoading={true}
+            loading={props.buttonLoading}
+            disabled={props.buttonLoading}
           >
             Login
-          </Button>
+          </ButtonLoading>
         </form>
 
         <div className={classes.preHeader}>
@@ -183,8 +138,8 @@ const SignIn = (props: ReactProps) => {
 
         <Or/>
 
-        <Typography variant="body1">
-          {"Don't have an account? "}
+        <Typography className={classes.dontHaveAccount} variant="body1">
+          Don't have an account?
           <a onClick={toSignup} className={classes.link}>
             Sign up
           </a>
@@ -200,6 +155,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   dispatchLogin?(payload: { email: string, password: string }): void;
   handleToggleModal?(): void;
   title?: string;
+  buttonLoading?: boolean;
 }
 
 export default withStyles(styles)(SignIn);

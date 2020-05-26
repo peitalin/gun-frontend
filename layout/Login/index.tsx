@@ -9,14 +9,13 @@ import { Actions } from 'reduxStore/actions';
 // Graphql
 import { CREATE_USER } from "queries/user-mutations";
 import { LOGIN, GET_USER, SEND_RESET_PASSWORD_EMAIL } from "queries/user-queries";
-import { UserPrivate } from "typings/gqlTypes";
+import { UserPrivate, CartItem, Cart } from "typings/gqlTypes";
 import { SendPasswordResetResponse } from "typings";
 
 import LoginPageModal from "./LoginPageModal";
 import LoginPageCompact from "./LoginPageCompact";
 import LoginPageRedirect from "./LoginPageRedirect";
 
-import SnackBarA from "components/Snackbars/SnackbarA";
 import { useApolloClient } from "@apollo/react-hooks";
 import { logout } from "queries/requests";
 import {
@@ -32,6 +31,8 @@ import {
   isLoginInputOk,
   isSignUpInputOk
 } from "./utils";
+import { reduxBatchUpdate } from "layout/GetUser";
+import { useSnackbar, ProviderContext } from "notistack";
 
 
 /////////////////////////////////////////
@@ -43,11 +44,7 @@ const Login: React.FC<ReactProps> = (props) => {
 
   const [state, setState] = React.useState({
     openModal: false,
-    loading: false,
-    showError: false,
-    dataExists: false,
-    error: { message: "" },
-    status: "",
+    buttonLoading: false,
     tabIndex: props.initialTabIndex || 0,
   })
   const setTabIndex = (value: number) => setState(s => ({ ...s, tabIndex: value }));
@@ -65,8 +62,12 @@ const Login: React.FC<ReactProps> = (props) => {
     }
   })
 
+  const snackbar = useSnackbar();
+
+
   const handleToggleModal = () => {
     if (state.openModal) {
+      // reset tabIndex
       setState(s => ({ ...s, tabIndex: props.initialTabIndex || 0 }))
     }
     setState(s => ({ ...s, openModal: !state.openModal }))
@@ -85,6 +86,7 @@ const Login: React.FC<ReactProps> = (props) => {
     if (!data) {
       console.log("No data")
     }
+    setState(s => ({ ...s, buttonLoading: false }))
 
     if (data && data.logInUsingEmail || data && data.signUpUsingEmail) {
       // optional chaining
@@ -94,6 +96,8 @@ const Login: React.FC<ReactProps> = (props) => {
       // if login/signup succeeded, and there is a redirect...
       handleRedirect()
       handleCallback()
+      // Update redux user and cart state
+      dispatch(reduxBatchUpdate.userCart({ user: user }))
       handleUpdateLoginState(user, loading, errors)
     }
   }
@@ -107,33 +111,31 @@ const Login: React.FC<ReactProps> = (props) => {
   const handleRedirect = () => {
     if (
       props.redirectOnComplete &&
-      !(props.redirectOnComplete === 'none' || props.redirectOnComplete === '')
+      !(props.redirectOnComplete === 'none')
     ) {
+      console.log("redirecting...")
       router.push(props.redirectOnComplete);
     }
   }
 
   const handleGqlError = (errors) => {
-    setState(s => ({
-      ...s,
-      showError: true,
-      loading: false,
-      error: errors[0].message.includes('duplicate')
-        ? { message: "Email has already been taken" }
-        : errors[0], // Apollo error/errors API mismatch
-    }));
+    snackbar.enqueueSnackbar(
+      translateErrorMsg(JSON.stringify(errors[0].message)),
+      { variant: "error" }
+    )
   }
 
   const handleUpdateLoginState = (user: UserPrivate, loading: boolean, errors: any) => {
     // Update login UI state
     dispatch(Actions.reduxLogin.UPDATE_LOGIN_STATE({
       user: user,
-      loading,
       loggedIn: true,
-      error: errors,
     }))
     // Popup Snackbar
-    setState(s => ({ ...s, dataExists: true, loading: false }));
+    snackbar.enqueueSnackbar(`Welcome ${user.firstName}`, {
+      variant: "success",
+      autoHideDuration: 2000,
+    })
     // Close modal after a delay
     setTimeout(() => {
       setState(s => ({ ...s, openModal: false, tabIndex: 0 }))
@@ -153,10 +155,14 @@ const Login: React.FC<ReactProps> = (props) => {
   /////////////////////////////////////////////////
   const dispatchLogin = async({ email, password }) => {
 
-    if (!isLoginInputOk(setState)({ email, password })) {
+    if (!isLoginInputOk(snackbar)({ email, password })) {
       return null
     } else {
-      setState(s => ({ ...s, loading: true }));
+      setState(s => ({ ...s, buttonLoading: true }))
+      snackbar.enqueueSnackbar("Logging you in...", {
+        variant: "info",
+        autoHideDuration: 2000,
+      })
     }
 
     let { data, loading, errors }: Aprops = await apolloClient.query({
@@ -177,10 +183,15 @@ const Login: React.FC<ReactProps> = (props) => {
   /////////////////////////////////////////////////
   const dispatchCreateUser = async({ email, password, firstName, lastName }) => {
 
-    if (!isSignUpInputOk(setState)({ email, password, firstName, lastName })) {
+    if (!isSignUpInputOk(snackbar)({ email, password, firstName, lastName })) {
       return null
+    } else {
+      setState(s => ({ ...s, buttonLoading: true }))
+      snackbar.enqueueSnackbar("Creating an account...", {
+        variant: "info",
+        autoHideDuration: 2000,
+      })
     }
-    setState(s => ({ ...s, loading: true }));
 
     let { data, errors } = await apolloClient.mutate({
       mutation: CREATE_USER,
@@ -191,15 +202,11 @@ const Login: React.FC<ReactProps> = (props) => {
         lastName: lastName,
       },
       update: (cache, { data: { createUser } }) => {
-        cache.writeQuery({
-          query: LOGIN,
-          data: { user: createUser },
-        });
       },
       errorPolicy: "all", // propagate errors from backend to Snackbar
     });
-    let loading = true
-    handleGraphQLResponse({ data, loading, errors });
+
+    handleGraphQLResponse({ data, loading: state.buttonLoading, errors });
   }
 
   /////////////////////////////////////////////////
@@ -207,10 +214,10 @@ const Login: React.FC<ReactProps> = (props) => {
   /////////////////////////////////////////////////
   const dispatchResetPassword = async({ email }: { email: string }) => {
     if (!email) {
-      setState(s => ({ ...s, status: "Email is missing!" }))
+      snackbar.enqueueSnackbar("Email is missing!", { variant: "error" })
       return null
     } else {
-      setState(s => ({ ...s, loading: true }));
+      setState(s => ({ ...s, buttonLoading: true }))
     }
 
     let { data, loading, errors }: Aprops = await apolloClient.query({
@@ -222,30 +229,27 @@ const Login: React.FC<ReactProps> = (props) => {
       errorPolicy: "all", // propagate errors from backend to Snackbar
     });
 
-    if (!loading) {
-      setState(s => ({ ...s, loading: loading }));
-    }
-
     if (errors !== undefined) {
+      console.log("errors: ", errors)
       handleGqlError(errors)
     }
 
     if (option(data).sendResetPasswordEmail()) {
       console.log(data.sendResetPasswordEmail)
-      setState(s => ({
-        ...s,
-        status: `Password reset email sent to ${email}`
-      }))
-      // Close modal after a delay
+      snackbar.enqueueSnackbar(`Sent to: ${email}`, {
+        variant: "success",
+        autoHideDuration: 5000,
+      })
+
       setTimeout(() => {
         setState(s => ({
           ...s,
-          loading: false,
-          // openModal: false,
           tabIndex: 3 // check email page
         }))
       }, 900);
     }
+
+    setState(s => ({ ...s, buttonLoading: false }))
   }
 
   /////////////////////////////////////////////////
@@ -263,6 +267,9 @@ const Login: React.FC<ReactProps> = (props) => {
   //// Effects
   /////////////////////////////////////////////////
 
+  /// Not currently used, user-service does not have an expiry on
+  /// efc-auth session-cookie. But if it did, this hook will auto-logout
+  /// on expiry
   React.useEffect(() => {
     // componentDidMount
     checkThenSetLoggedInStatus(() => {
@@ -279,6 +286,8 @@ const Login: React.FC<ReactProps> = (props) => {
       {
         props.compact
         ? <LoginPageCompact
+            className={props.className}
+            buttonLoading={state.buttonLoading}
             loggedIn={reduxLogin.loggedIn}
             tabIndex={state.tabIndex}
             setTabIndex={setTabIndex}
@@ -289,6 +298,8 @@ const Login: React.FC<ReactProps> = (props) => {
           />
         : props.checkoutClaimPage
           ? <LoginPageRedirect
+              className={props.className}
+              buttonLoading={state.buttonLoading}
               loggedIn={reduxLogin.loggedIn}
               tabIndex={state.tabIndex}
               setTabIndex={setTabIndex}
@@ -299,6 +310,8 @@ const Login: React.FC<ReactProps> = (props) => {
               dispatchResetPassword={dispatchResetPassword}
             />
           : <LoginPageModal
+              className={props.className}
+              buttonLoading={state.buttonLoading}
               buttonText={buttonText}
               loggedIn={reduxLogin.loggedIn}
               tabIndex={state.tabIndex}
@@ -311,45 +324,9 @@ const Login: React.FC<ReactProps> = (props) => {
               dispatchResetPassword={dispatchResetPassword}
               handleToggleModal={handleToggleModal}
               buttonProps={props.buttonProps}
+              numUnclaimedOrders={props.numUnclaimedOrders}
             />
       }
-
-      <div className={classes.modal}>
-        <Portal>
-          <SnackBarA
-            open={state.loading}
-            closeSnackbar={() => setState(s => ({ ...s, loading: false }))}
-            message={"Checking user login..."}
-            variant={"info"}
-          />
-          <SnackBarA
-            open={state.showError}
-            closeSnackbar={() => {
-              setState(s => ({ ...s, showError: false }));
-              // wait for Snackbar to move off-screen, before resetting error
-              setTimeout(() => setState(s => ({ ...s, error: undefined })), 300);
-            }}
-            message={
-              state.error
-              ? translateErrorMsg(state.error.message)
-              : "An unexpected login error occurred."
-            }
-            variant={"error"}
-          />
-          <SnackBarA
-            open={reduxLogin.loggedIn && state.dataExists}
-            closeSnackbar={() => setState(s => ({ ...s, dataExists: false }))}
-            message={"Successful login!"}
-            variant={"success"}
-          />
-          <SnackBarA
-            open={state.status.length > 0}
-            closeSnackbar={() => setState(s => ({ ...s, status: "" }))}
-            message={state.status}
-            variant={"info"}
-          />
-        </Portal>
-      </div>
     </>
   );
 };
@@ -367,6 +344,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   titleSignup?: string;
   initialTabIndex?: number;
   numUnclaimedOrders?: number;
+  className?: any;
   callbackOnComplete?(): any;
 }
 interface Aprops {

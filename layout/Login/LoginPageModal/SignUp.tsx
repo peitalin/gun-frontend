@@ -1,9 +1,8 @@
-import * as React from 'react';
+import React from 'react';
 import { withStyles, WithStyles } from "@material-ui/core/styles";
 import { oc as option } from "ts-optchain";
+import { Colors } from "layout/AppTheme";
 
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
 import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
@@ -13,12 +12,14 @@ import PersonAdd from '@material-ui/icons/PersonAdd';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 // Typings
+import { Cart } from "typings/gqlTypes";
 import styles from './commonStyles';
 import ErrorBounds from "components/ErrorBounds";
 import LockIcon from "@material-ui/icons/Lock";
 // Clear
 import ClearIcon from "@material-ui/icons/Clear";
 import IconButton from "@material-ui/core/IconButton";
+import ButtonLoading from "components/ButtonLoading";
 //
 import Link from "next/link";
 
@@ -135,17 +136,20 @@ const SignUp: React.FC<ReactProps> = (props) => {
               }}
             />
           </FormControl>
-          <Button
+          <ButtonLoading
             type="submit"
             fullWidth
             variant="contained"
             color="secondary"
             className={classes.submit}
             onClick={(event) => handleClick(event)}
+            loadingIconColor={Colors.blue}
+            replaceTextWhenLoading={true}
+            loading={props.buttonLoading}
+            disabled={props.buttonLoading}
           >
             Create Account
-          </Button>
-
+          </ButtonLoading>
           {/* <Typography variant="caption" className={classes.termsText}>
             By signing up, I agree to the
             <a className={classes.link}
@@ -178,10 +182,16 @@ const SignUp: React.FC<ReactProps> = (props) => {
 
 interface ReactProps extends WithStyles<typeof styles> {
   setTabIndex(tabIndex: number): void;
-  dispatchCreateUser?(payload: any): void;
+  dispatchCreateUser(payload: {
+    email: string,
+    password: string,
+    firstName?: string,
+    lastName?: string
+  }): void;
   email?: string;
   handleToggleModal?(): void;
   title?: string;
+  buttonLoading?: boolean;
 }
 
 export default withStyles(styles)(SignUp);

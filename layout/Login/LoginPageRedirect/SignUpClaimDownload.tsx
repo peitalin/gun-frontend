@@ -1,13 +1,14 @@
 import React from 'react';
 import { withStyles, WithStyles } from "@material-ui/core/styles";
+import { Colors } from "layout/AppTheme";
 
-import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import TextInput from 'components/Fields/TextInput';
 // Typings
 import styles from './commonStylesClaimDownload';
 import ErrorBounds from "components/ErrorBounds";
 import Or from "components/Or";
+import ButtonLoading from "components/ButtonLoading";
 
 
 
@@ -55,7 +56,7 @@ const SignUp: React.FC<ReactProps> = (props) => {
       {
         props.title
         ? props.title
-        : "Create a Gun Marketplace account to save your files"
+        : "Create a Relay account to save your files"
       }
     </Typography>
 
@@ -131,16 +132,20 @@ const SignUp: React.FC<ReactProps> = (props) => {
         }}
         inputProps={{ style: { width: '100%' }}}
       />
-      <Button
+      <ButtonLoading
         type="submit"
-        fullWidth
         variant="contained"
         color="secondary"
         className={classes.submit}
         onClick={(event) => handleClick(event)}
+        loadingIconColor={Colors.blue}
+        replaceTextWhenLoading={true}
+        loading={props.buttonLoading}
+        disabled={props.buttonLoading}
+        fullWidth
       >
         Create Account
-      </Button>
+      </ButtonLoading>
       {/* <Typography variant="caption" className={classes.termsText}>
         By signing up, I agree to the Terms of Service and Privacy Policy.
       </Typography> */}
@@ -163,11 +168,17 @@ const SignUp: React.FC<ReactProps> = (props) => {
 
 interface ReactProps extends WithStyles<typeof styles> {
   setTabIndex(tabIndex: number): void;
-  dispatchCreateUser?(payload: any): void;
+  dispatchCreateUser(payload: {
+    email: string,
+    password: string,
+    firstName?: string,
+    lastName?: string
+  }): void;
   email?: string;
   title?: string;
   requiresFirstName?: boolean;
   requiresLastName?: boolean;
+  buttonLoading?: boolean;
 }
 
 export default withStyles(styles)(SignUp);

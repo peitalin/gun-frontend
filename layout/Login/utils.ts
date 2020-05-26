@@ -1,5 +1,6 @@
-// import { CartItem } from "typings/gqlTypes";
+import { CartItem } from "typings/gqlTypes";
 import { oc as option } from "ts-optchain";
+import { ProviderContext } from "notistack";
 
 type SetState = (value: React.SetStateAction<{
     openModal: boolean;
@@ -13,45 +14,47 @@ type SetState = (value: React.SetStateAction<{
     tabIndex: number;
 }>) => void;
 
-export const isLoginInputOk = (setState: SetState) => (
-  { email, password }
-) => {
+// ProviderContext is the type from snackbar = useSnackbar() hook
+export const isLoginInputOk =
+(snackbar: ProviderContext) =>
+({ email, password }) => {
   if (!email) {
-    setState(s => ({ ...s, status: "Email is missing!" }))
+    snackbar.enqueueSnackbar("Email is missing!", { variant: "error" })
     return false
   } else if (!password) {
-    setState(s => ({ ...s, status: "Password is missing!" }))
+    snackbar.enqueueSnackbar("Password is missing!", { variant: "error" })
     return false
   } else {
     if (validateEmail(email)) {
       return true
     } else {
-      setState(s => ({ ...s, status: "Invalid email!" }))
+      snackbar.enqueueSnackbar("Invalid email!", { variant: "error" })
       return false
     }
   }
 }
 
-export const isSignUpInputOk = (setState: SetState) => (
-  { email, password, firstName, lastName }
-) => {
+export const isSignUpInputOk =
+(snackbar: ProviderContext) =>
+({ email, password, firstName, lastName }) => {
+
   if (!email) {
-    setState(s => ({ ...s, status: "Email is missing!" }))
+    snackbar.enqueueSnackbar("Email is missing!", { variant: "error" })
     return false
   } else if (!password) {
-    setState(s => ({ ...s, status: "Password is missing!" }))
+    snackbar.enqueueSnackbar("Password is missing!", { variant: "error" })
     return false
   } else if (!firstName) {
-    setState(s => ({ ...s, status: "Name is missing!" }))
+    snackbar.enqueueSnackbar("Name is missing!", { variant: "error" })
     return false
   } else if (!lastName) {
-    setState(s => ({ ...s, status: "Last name is missing!" }))
+    snackbar.enqueueSnackbar("Last name is missing!", { variant: "error" })
     return false
   } else {
     if (validateEmail(email)) {
       return true
     } else {
-      setState(s => ({ ...s, status: "Invalid email!" }))
+      snackbar.enqueueSnackbar("Invalid email!", { variant: "error" })
       return false
     }
   }
@@ -71,6 +74,9 @@ export const translateErrorMsg = (msg: string) => {
   }
   if (msg.includes('NotFound')) {
     return "That email is not a user"
+  }
+  if (msg.includes('duplicate')) {
+    return "Email has already been taken"
   }
   return `An unexpected login error occurred: ${msg}`
 }
@@ -115,3 +121,14 @@ export const runOnLoginExpiration = (fn: (...args: any) => any): void => {
     }, countDown)
   }
 };
+
+export const cartItemsNotInProfile = (
+  cartItemsA: CartItem[],
+  cartItemsB: CartItem[]
+): CartItem[] => {
+  let newCartItemsNotInProfile = cartItemsA
+    .filter(a => !cartItemsB.map(b => b.id).includes(a.id));
+  // items added when logged out
+  return newCartItemsNotInProfile
+}
+

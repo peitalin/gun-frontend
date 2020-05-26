@@ -1,6 +1,7 @@
 import React from 'react';
 import { withStyles, WithStyles } from '@material-ui/core/styles';
 import { ReduxStateLogin } from 'reduxStore/login-reducer';
+import clsx from "clsx";
 
 import styles from './commonStylesClaimDownload';
 import SignUp from './SignUpClaimDownload';
@@ -21,23 +22,27 @@ const LoginPageRedirect: React.FC<ReactProps> = (props) => {
                 dispatchLogin={props.dispatchLogin}
                 setTabIndex={setTabIndex}
                 title={props.titleLogin}
+                buttonLoading={props.buttonLoading}
               />
     } else if (tabIndex === 1) {
       return <SignUp
                 dispatchCreateUser={props.dispatchCreateUser}
                 setTabIndex={setTabIndex}
                 title={props.titleSignup}
+                buttonLoading={props.buttonLoading}
               />
     } else if (tabIndex === 2) {
       return <ResetPassword
                 dispatchResetPassword={props.dispatchResetPassword}
                 setTabIndex={setTabIndex}
+                buttonLoading={props.buttonLoading}
               />
     } else {
       return <SignIn
                 dispatchLogin={props.dispatchLogin}
                 setTabIndex={setTabIndex}
                 title={props.titleLogin}
+                buttonLoading={props.buttonLoading}
               />
     }
   }
@@ -45,7 +50,7 @@ const LoginPageRedirect: React.FC<ReactProps> = (props) => {
   const { classes } = props;
 
   return (
-    <ErrorBounds className={classes.loginRoot}>
+    <ErrorBounds className={clsx(classes.loginRoot, props.className)}>
       <div className={classes.outerContainer}>
         <div className={classes.loginButton}>
           { renderLoginTab() }
@@ -60,9 +65,16 @@ interface ReactProps extends WithStyles<typeof styles> {
   loggedIn: boolean;
   titleLogin?: string;
   titleSignup?: string;
+  className?: any;
+  buttonLoading?: boolean;
   setTabIndex(tabIndex: number): void;
   dispatchLogin?(payload: { email: string, password: string }): void;
-  dispatchCreateUser?(payload: ReduxStateLogin): void;
+  dispatchCreateUser(payload: {
+    email: string,
+    password: string,
+    firstName?: string,
+    lastName?: string
+  }): void;
   dispatchResetPassword(payload: { email: string }): void;
 }
 
