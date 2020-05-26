@@ -24,42 +24,7 @@ const FrontPage: NextPage<ReactProps> = (props) => {
 
   return (
     <div>
-      <h1>
-        gunmarket place
-      </h1>
       <ProductGallery/>
-
-      <div style={{
-        display: 'flex',
-        flexDirection: "row",
-        justifyContent: 'center',
-        alignItems: 'center',
-        width: '100%',
-        height: '100%',
-      }}>
-        <div style={{
-          maxWidth: '400px',
-        }}>
-          <Card
-            elevation={0} // remove box-shadow
-          >
-            <CardActionArea
-              // classes={{
-              //   root: chooseCardMediaStyle()
-              // }}
-            >
-              <CardMedia
-                component="img"
-                // className={!loading ? 'shimmer' : null}
-                // classes={{
-                //   media: chooseCardMediaStyle()
-                // }}
-                src={"https://storage.googleapis.com/gunmarket-images-dev/o_1bgcr4h9rg01d2h1o021i1m1gjuc.JPG"}
-              />
-            </CardActionArea>
-          </Card>
-        </div>
-      </div>
     </div>
   )
 }

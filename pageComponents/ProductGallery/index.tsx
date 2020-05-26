@@ -16,6 +16,9 @@ import dynamic from "next/dynamic";
 import NewReleaseProducts from "pageComponents/ProductGallery/NewReleaseProducts";
 // import ProductCreatePage from "./ProductCreatePage";
 import Loading from "components/Loading";
+import CookiesBanner from "components/CookiesBanner";
+import CovidBanner from "components/CovidBanner";
+import BannerHome from "components/BannerHome";
 // Router
 import { Colors } from "layout/AppTheme";
 import { useTheme } from "@material-ui/core/styles";
@@ -48,19 +51,18 @@ const ProductGallery: React.FC<ReactProps> = (props) => {
 
   return (
     <div className={classes.outerContainer}>
+      <BannerHome />
+      <CovidBanner />
       <div className={classes.flexRowInner}>
         <div className={clsx(classes.productColumn60, 'fadeInFast')}>
           {
             data && data.products &&
             <div style={{
-              width: '90vw',
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'center',
               alignItems: 'center',
             }}>
-              <h1>Gun Products from backend</h1>
-              <JSONTree data={data.products} />
               <div className={classes.maxWidth}>
                 <NewReleaseProducts
                   initialProducts={
@@ -107,6 +109,7 @@ const styles = (theme: Theme) => createStyles({
   outerContainer: {
     width: '100%',
     display: 'flex',
+    flexDirection: "column",
     justifyContent: 'center',
     backgroundColor: Colors.darkWhite,
   },

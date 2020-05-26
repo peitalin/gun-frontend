@@ -226,7 +226,6 @@ const ProductCreatePage = (props: ReactProps) => {
           validateForm,
         } = fprops;
 
-
         return (
           <>
             {/* SELLING TIPS COLUMN */}
