@@ -16,7 +16,7 @@ import YouTubeIcon from "components/Icons/YouTube";
 import { ProductPreviewItem, ProductCategory, Image, PriceDetails } from "typings/gqlTypes";
 import { genSrcSet } from "utils/files";
 import { getYouTubeVimeoImagePreview } from "utils/strings";
-import PriceDisplay2 from "components/PriceDisplay2";
+import PriceDisplayMain from "components/PriceDisplayMain";
 import DiscountBadge from "components/DiscountBadge";
 
 
@@ -50,10 +50,6 @@ const PreviewCardWide = (props: ReactProps) => {
 
   return (
     <div className={clsx(classes.rootContainer)}>
-      {
-        props.priceDetails &&
-        <DiscountBadge priceDetails={props.priceDetails}/>
-      }
       <Card className={classes.card}
         classes={{
           root: classes.cardRoot
@@ -132,12 +128,13 @@ const PreviewCardWide = (props: ReactProps) => {
           </Typography>
           <div className={clsx(
             classes.priceAbsoluteBottom,
-            !option(props).priceDetails() ? "pulse" : null
+            !option(props).price() ? "pulse" : null
           )}>
             {
-              option(props).priceDetails()
-              ? <PriceDisplay2
-                  priceDetails={props.priceDetails}
+              option(props).price()
+              ? <PriceDisplayMain
+                  price={props.price}
+                  priceWas={props.priceWas}
                   hideSavings={true}
                   quantityAvailable={props.quantityAvailable}
                   isSoldOut={props.isSoldOut}
@@ -159,7 +156,8 @@ interface ReactProps extends WithStyles<typeof styles> {
   title: string;
   tagline: string;
   category: ProductCategory;
-  priceDetails: PriceDetails;
+  price: number;
+  priceWas: number;
   quantityAvailable?: number;
   isSoldOut?: boolean;
   topHalfFraction?: number;

@@ -40,11 +40,12 @@ const AirCarousel: React.FC<ReactProps> = (props) => {
   }, [props.id])
 
   const airItems = process.browser
-    ? document.querySelectorAll('.air-carousel>li')
+    ? document.querySelectorAll(`.${props.id} > li`)
     : [];
 
   // number of airItems above 3, multiple by width of each item
-  const maxCursor = (airItems.length - 3) * option(airItems)[0].clientWidth(0);
+  // const maxCursor = (airItems.length - 3) * option(airItems)[0].clientWidth(0);
+  const maxCursor = (airItems.length - 1) * option(airItems)[0].clientWidth(0);
 
   React.useEffect(() => {
     setShowRightButton(true)
@@ -73,11 +74,12 @@ const AirCarousel: React.FC<ReactProps> = (props) => {
           position: "relative",
           zIndex: 0,
           width: "100%",
+          overflow: 'hidden', // tuck buttons inside frame
         }}
       >
         {
           !disableButtons &&
-          (React.Children.count(props.children) > 0) &&
+          (React.Children.count(props.children) > 1) &&
           <>
             <AirButtonLeft
               onClick={() => {
@@ -90,8 +92,9 @@ const AirCarousel: React.FC<ReactProps> = (props) => {
                   props.handleClickLeft()
                 }
               }}
-              carouselCursor={cursor}
-              showButton={showLeftButton || disableSmartButtons}
+              // showButton={showLeftButton || disableSmartButtons}
+              showButton={true}
+              onMouseOver={props.onMouseOver}
             />
             <AirButtonRight
               onClick={() => {
@@ -104,8 +107,9 @@ const AirCarousel: React.FC<ReactProps> = (props) => {
                   props.handleClickRight()
                 }
               }}
-              carouselCursor={cursor}
-              showButton={showRightButton || disableSmartButtons}
+              // showButton={showRightButton || disableSmartButtons}
+              showButton={true}
+              onMouseOver={props.onMouseOver}
             />
           </>
         }
@@ -124,7 +128,7 @@ const AirCarousel: React.FC<ReactProps> = (props) => {
             leftDither &&
             <AirLeftDither/>
           }
-          <ul id={props.id} className="air-carousel" style={{
+          <ul id={props.id} className={`${props.id}`} style={{
             marginLeft: 0,
             marginRight: 0,
             marginBottom: 0,
@@ -193,6 +197,7 @@ interface ReactProps {
   rightDither?: boolean;
   leftDither?: boolean;
   scrollItemsPerClick?: number;
+  onMouseOver?(a: any): void;
 }
 
 // export default React.memo(

@@ -7,7 +7,7 @@ const AirButtonRight: React.FC<ReactProps> = (props) => {
   return (
     <div className="air-carousel-button-right"
       style={{
-        right: "-16px",
+        right: "-14px",
         position: "absolute",
         top: "50%",
         display: "block",
@@ -15,6 +15,7 @@ const AirButtonRight: React.FC<ReactProps> = (props) => {
         zIndex: 1501,
         ...props.style
       }}
+      onMouseOver={props.onMouseOver}
     >
       <button type="button"
         id="air-carousel-button-right"
@@ -30,7 +31,7 @@ const AirButtonRight: React.FC<ReactProps> = (props) => {
             position: "absolute",
             top: "50%",
             right: "50%",
-            transform: "translate(50%, -50%)",
+            transform: "translate(44%, -50%)",
             fontSize: "16px",
           }}
         >
@@ -60,7 +61,7 @@ const AirButtonRight: React.FC<ReactProps> = (props) => {
 interface ReactProps extends WithStyles<typeof styles> {
   title?: string;
   onClick?(...args: any): void;
-  carouselCursor?: number;
+  onMouseOver?(a: any): void;
   showButton?: boolean;
   style?: any;
 }

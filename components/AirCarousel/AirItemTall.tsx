@@ -14,6 +14,7 @@ const AirItemTall: React.FC<ReactProps> = (props) => {
 
   const {
     removePaddingBottom = false,
+    materialStyle = false,
   } = props;
 
   return (
@@ -22,10 +23,20 @@ const AirItemTall: React.FC<ReactProps> = (props) => {
         props.classes.airItemList,
         props.disableSnap ? props.classes.disableSnap : null,
       )}
-      style={{
-        maxWidth: `${itemSize}%`,
-        flex: `0 0 ${itemSize}%`,
-      }}
+      style={
+        props.borderGutter
+        ? {
+            maxWidth: `${itemSize}%`,
+            flex: `0 0 ${itemSize}%`,
+            borderColor: "transparent",
+            borderStyle: "solid",
+            borderWidth: `0px ${props.borderGutter}`, // Gutter between cards
+          }
+        : {
+            maxWidth: `${itemSize}%`,
+            flex: `0 0 ${itemSize}%`,
+          }
+      }
     >
       <div className={clsx(
           props.classes.airCardOuter,
@@ -42,7 +53,7 @@ const AirItemTall: React.FC<ReactProps> = (props) => {
           <div className={props.classes.airCardInner}>
             <div className={props.classes.airPreviewOuter}>
               {
-                props.materialStyle
+                materialStyle
                 ? <Card className={props.classes.cardOuter}>
                     <CardActionArea
                       classes={{ root: props.classes.cardActionArea }}
@@ -134,15 +145,16 @@ interface ReactProps extends WithStyles<typeof styles> {
   materialStyle?: boolean;
   removePaddingBottom?: boolean;
   removeMarginBottom?: boolean;
+  borderGutter?: string;
 }
 
 const styles = (theme: Theme) => createStyles({
   airItemList: {
     scrollSnapAlign: "start",
     scrollSnapStop: "always", // snap
-    borderStyle: "solid",
-    borderColor: "transparent",
-    borderWidth: "0px 0.25rem",
+    // borderStyle: "solid",
+    // borderColor: "transparent",
+    // borderWidth: "0px 0.25rem",
     maxWidth: "25%",
     flex: "0 0 25%",
     zIndex: 1500,
