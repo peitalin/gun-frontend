@@ -36,6 +36,7 @@ import IconButtonCancel from "components/IconButtonCancel";
 type UserPrivate = any;
 import { serverApolloClient } from "utils/apollo";
 // Payment Clients
+import { PaypalClient } from "typings/typings-paypal";
 import Router from "next/router";
 
 
@@ -43,6 +44,8 @@ declare global {
   interface Window {
     App: any;
     gapi: any;
+    paypal: PaypalClient
+    analytics: any;
   }
 }
 

@@ -26,18 +26,17 @@ const PriceDisplay4 = (props: ReactProps) => {
   } = props;
 
   const {
-    actualPrice,
-    basePrice,
-  } = props.priceDetails;
+    priceWas,
+    price,
+  } = props;
 
-  const price = currency(actualPrice/100, { formatWithSymbol: true })
-  const priceWas = currency(basePrice/100, { formatWithSymbol: true })
-  const savings = (actualPrice >= basePrice)
+  const priceDisplay = currency(price/100, { formatWithSymbol: true })
+  const priceWasDisplay = currency(priceWas/100, { formatWithSymbol: true })
+
+  const savings = (price >= priceWas)
     ?  currency(0, { formatWithSymbol: true })
-    :  currency((actualPrice - basePrice)/100, { formatWithSymbol: true })
+    :  currency((price - priceWas)/100, { formatWithSymbol: true })
 
-  const expiresAt = findSoonestDiscountExpiry(props.priceDetails);
-  const remainingText = props.quantityAvailable ? ` - ${props.quantityAvailable} left` : ""
 
   if (isSoldOut) {
     return (
@@ -53,13 +52,13 @@ const PriceDisplay4 = (props: ReactProps) => {
         <div className={classes.innerContainerSpread}>
           <div className={classes.priceInnerContainer}>
             <Typography className={classes.price} variant="body1">
-              {price.format()}
+              {priceDisplay.format()}
             </Typography>
             {
               !hidePriceWas &&
-              (basePrice > actualPrice) &&
+              (price > priceWas) &&
               <Typography className={classes.priceWas} variant="body1">
-                {priceWas.format()}
+                {priceWasDisplay.format()}
               </Typography>
             }
           </div>
@@ -74,13 +73,13 @@ const PriceDisplay4 = (props: ReactProps) => {
         </div>
         {
           !hideSavings &&
-          (basePrice > actualPrice) &&
+          (price > priceWas) &&
           <div className={classes.innerContainerSpread}>
             <Typography className={classes.priceSavings} variant="body1">
               {
                 props.pastTense
                 ? `You saved ${savings.format()}`
-                : `You save ${savings.format()}${remainingText}`
+                : `You save ${savings.format()}`
               }
             </Typography>
           </div>
@@ -98,23 +97,6 @@ const PriceDisplay4 = (props: ReactProps) => {
             </Typography>
           }
         </div> */}
-        <div className={classes.innerContainerSpreadCountdown}>
-          {
-            expiresAt &&
-            expiresAt.getSeconds &&
-            expiresAt.getSeconds() > 0 &&
-            <div className={classes.countDownTag}>
-              <Typography className={classes.finalCountDown} variant="body1">
-                Sale ends in &nbsp;
-              </Typography>
-              <CountdownBadge
-                className={classes.time}
-                endDate={expiresAt}
-                style={props.countDownStyle}
-              />
-            </div>
-          }
-        </div>
       </>
     </div>
   )
@@ -126,7 +108,8 @@ interface ReactProps extends WithStyles<typeof styles> {
   hidePriceWas?: boolean;
   quantityAvailable?: number | null;
   isSoldOut?: boolean;
-  priceDetails: PriceDetails;
+  price: number;
+  priceWas?: number;
   countDownStyle?: any;
 }
 

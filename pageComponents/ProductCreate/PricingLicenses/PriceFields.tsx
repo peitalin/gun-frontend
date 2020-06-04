@@ -216,11 +216,8 @@ const PriceFields = (props: ReactProps & FormikProps<FormikFields>) => {
             option(currentVariants)[position].priceWas(0)
             <= option(currentVariants)[position].price(0)
           }
-          priceDetails={{
-            basePrice: option(currentVariants)[position].priceWas(),
-            actualPrice: option(currentVariants)[position].price(0),
-            discountBreakdown: null,
-          } as PriceDetails}
+          price={option(currentVariants)[position].price()}
+          priceWas={option(currentVariants)[position].priceWas()}
         />
       </div>
     </ErrorBounds>

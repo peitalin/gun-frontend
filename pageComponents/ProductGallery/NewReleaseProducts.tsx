@@ -11,11 +11,8 @@ import Typography from "@material-ui/core/Typography";
 import PreviewCardResponsive from "pageComponents/ProductGallery/PreviewCardResponsiveCarousel";
 import PreviewCardLoading from "./PreviewCardLoading";
 import LoadingCards from "./LoadingCards";
-// Graphql
-// GraphQL Typings
-import { Connection, Product, ConnectionQuery, ProductsConnection } from "typings/gqlTypes";
-// Typings
-import { Products } from "typings/gqlTypes";
+// Graphql Typings
+import { ProductsConnection } from "typings/gqlTypes";
 // useMediaQuery
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
@@ -55,6 +52,10 @@ const NewReleaseProducts = (props: ReactProps) => {
   const { loading, error, data } = useQuery<QueryData, QueryVar>(
     GET_PRODUCTS, {
     variables: {
+      query: {
+        limit: 10,
+        offset: 0,
+      }
     },
     ssr: true,
   })
@@ -65,7 +66,6 @@ const NewReleaseProducts = (props: ReactProps) => {
     tagline: "",
   }
 
-  const products = option(data).products();
 
   const theme = useTheme();
   // jumboXL preview card on sm screen size only, remove right margin
@@ -73,12 +73,15 @@ const NewReleaseProducts = (props: ReactProps) => {
   const smDown = useMediaQuery(theme.breakpoints.only("sm"))
   const xsDown = useMediaQuery(theme.breakpoints.only("xs"))
 
+
+  let products = option(data).productsAllConnection()
+
   return (
     <main className={classes.root}>
 
       <div className={classes.flexRow}>
         {
-          (option(products).length(0) > 0) &&
+          (option(products).edges([]).length > 0) &&
           <Typography variant="h3"
             className={clsx(classes.title, classes.maxWidth)}
             gutterBottom
@@ -93,8 +96,8 @@ const NewReleaseProducts = (props: ReactProps) => {
         smDown ? classes.paddingRight : null,
       )}>
         {
-          (option(products).length(0) > 0)
-          ? products.map((product, i) =>
+          (option(products).edges([]).length > 0)
+          ? products.edges.map(({ node: product }, i) =>
               <div key={product.id}
                 className={
                   xsDown
@@ -136,7 +139,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   title?: string;
 }
 interface QueryData {
-  products: Products[];
+  productsAllConnection: ProductsConnection;
 }
 interface QueryVar {
 }

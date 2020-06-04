@@ -35,7 +35,7 @@ import {
 
 
 
-const CarouselItemWrapper: React.FC<CarouselItemWrapperProps> = (props) => {
+const AspectCarouselItemLink: React.FC<CarouselItemWrapperProps> = (props) => {
 
   const {
     i,
@@ -56,9 +56,7 @@ const CarouselItemWrapper: React.FC<CarouselItemWrapperProps> = (props) => {
     >
       <Card
         className={classes.card}
-        classes={{
-          root: classes.cardRoot
-        }}
+        classes={{ root: classes.cardRoot }}
         onMouseOver={() => {
           if (setLoadCarouselPics) {
             setLoadCarouselPics(s => {
@@ -68,7 +66,6 @@ const CarouselItemWrapper: React.FC<CarouselItemWrapperProps> = (props) => {
         }}
       >
         <Link
-          key={i}
           href={"/p/[productId]"}
           as={`/p/${productId}`}
         >
@@ -78,11 +75,7 @@ const CarouselItemWrapper: React.FC<CarouselItemWrapperProps> = (props) => {
                 firstImage: i === 0 || i === 1, // load first 2 images
                 productIndex: productIndex
               }) &&
-              <CardActionArea
-                classes={{
-                  root: classes.cardActionArea
-                }}
-              >
+              <CardActionArea classes={{ root: classes.cardActionArea }}>
                 {props.children}
               </CardActionArea>
             }
@@ -107,4 +100,4 @@ interface CarouselItemWrapperProps extends WithStyles<typeof styles> {
 
 
 
-export default withStyles(styles)( CarouselItemWrapper );
+export default withStyles(styles)( AspectCarouselItemLink );

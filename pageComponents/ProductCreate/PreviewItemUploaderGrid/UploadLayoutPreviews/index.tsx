@@ -7,8 +7,12 @@ import { GrandReduxState } from "reduxStore/grand-reducer";
 import { Actions } from "reduxStore/actions";
 // Styles
 import { Colors } from "layout/AppTheme";
-import { ILayoutProps, IPreviewProps } from "react-dropzone-uploader";
-import "react-dropzone-uploader/dist/styles.css";
+import {
+  ILayoutProps,
+  IPreviewProps,
+} from "components/ReactDropzoneUploader/Dropzone";
+import "components/ReactDropzoneUploader/styles.css";
+
 import { withStyles, WithStyles } from "@material-ui/core/styles";
 import { styles } from '../styles';
 // Material UI
@@ -24,17 +28,19 @@ import ImagePreview from "./ImagePreview";
 // Youtube component
 import AddYouTubeVimeoLink from "./AddYouTubeVimeoLink";
 import { reorderPreviews } from "./sorter";
+// media query
+import { useTheme } from "@material-ui/core/styles";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 
 
 
 
 
-
-const UploadLayout: React.FC<ILayoutProps & ReactProps> = (props) => {
+const UploadLayoutPreviews: React.FC<ILayoutProps & ReactProps> = (props) => {
 
   const {
-    input,
+    UploadInput,
     previews,
     submitButton,
     dropzoneProps,
@@ -45,6 +51,16 @@ const UploadLayout: React.FC<ILayoutProps & ReactProps> = (props) => {
 
   const actions = Actions[reducerName];
   const dispatch = useDispatch();
+
+  const theme = useTheme();
+
+  const min800 = useMediaQuery('(min-width:800px)'); //
+  const min666 = useMediaQuery('(min-width:666px)'); //
+  const xs = useMediaQuery(theme.breakpoints.only("xs"));
+  const sm = useMediaQuery(theme.breakpoints.only("sm"));
+  const md = useMediaQuery(theme.breakpoints.only("md"));
+  const lg = useMediaQuery(theme.breakpoints.only("lg"));
+  const xl = useMediaQuery(theme.breakpoints.only("xl"));
 
   const {
     dzuPreviewItems,
@@ -73,17 +89,43 @@ const UploadLayout: React.FC<ILayoutProps & ReactProps> = (props) => {
     dispatch(actions.REMOVE_PREVIEW_ITEMS([ previewId ]));
   }
 
+  const getNumItemsInGrid = () => {
+    // because Uploader form is responsive, it will
+    // expand and contract, sometime we can fit 4-5 items per row,
+    // othertimes we can only fit 3
+    if (min666 && !min800) {
+      return 3
+    }
+    if (xs) {
+      return 3
+    } else if (sm) {
+      return 4
+    } else if (md) {
+      return 5
+    } else if (lg) {
+      return 4
+    } else {
+      // xl
+      return 5
+    }
+  }
+
   // console.log("percent", option(previews[0] as ReactElement).props.meta.percent())
   // console.log('dzuPreviewItems', dzuPreviewItems)
   // console.log('dzuPreviewOrder', dzuPreviewOrder)
 
   return (
     <>
-      <div {...dropzoneProps}>
-        {option(files)([]).length < maxFiles && input}
-        {/* <Typography variant="body2" style={{ margin: "0.25rem", color: "#aaa" }}>
-          Add a YouTubeVimeo link:
-        </Typography> */}
+
+      {/* Imported direct via /components/ReactDropzone/Dropzone.tsx */}
+      {/* <div {...dropzoneProps}>
+        {
+          files.length < maxFiles &&
+          UploadInput &&
+          <UploadInput
+            // Imported direct via /components/ReactDropzone/Dropzone.tsx
+          />
+        }
 
         <Typography variant="body2" style={{
           fontSize: "0.8rem",
@@ -104,12 +146,12 @@ const UploadLayout: React.FC<ILayoutProps & ReactProps> = (props) => {
         <AddYouTubeVimeoLink
           reducerName={reducerName}
         />
-      </div>
+      </div> */}
 
       <div className={"upload-grid-container"} style={{
         display: 'flex',
         flexDirection: 'row',
-        justifyContent: 'flex-start',
+        justifyContent: 'center',
       }}>
         <Grid
           // items={this.state.items}
@@ -118,6 +160,7 @@ const UploadLayout: React.FC<ILayoutProps & ReactProps> = (props) => {
           onSortStart={onSortStart}
           distance={1} // needed for onClick to work
           axis="xy"
+          numColumns={getNumItemsInGrid()}
         >
           {
             !!dzuPreviewItems.length &&
@@ -177,7 +220,7 @@ interface ReduxState {
   dzuPreviewOrder: DzuPreviewOrder[];
 }
 
-export default UploadLayout;
+export default UploadLayoutPreviews;
 
 // export default React.memo(
 //   (props: ILayoutProps & ReactProps) => <UploadLayout {...props}/>,

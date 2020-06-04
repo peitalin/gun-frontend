@@ -12,7 +12,7 @@ const next = require("next");
 const app = next({ dev });
 const handle = app.getRequestHandler();
 // local only
-const port = parseInt(process.env.PORT, 10) || 6660;
+const port = parseInt(process.env.PORT, 10) || 9000;
 
 // Server
 const express = require("express");
@@ -22,50 +22,8 @@ const http = require("http");
 const https = require("https");
 //// Http2 not well supported on express.js
 // const { createServer, createSecureServer } = require('http2');
-const { ApolloClient } = require("apollo-client");
-const { ApolloLink } = require("apollo-link");
-const { InMemoryCache } = require("apollo-cache-inmemory");
-const { HttpLink } = require("apollo-link-http");
-const apolloLinkError = require("apollo-link-error");
-
-const fetch = require("isomorphic-unfetch");
 const gql = require("graphql-tag");
-
-const aClient = new ApolloClient({
-  link: ApolloLink.from([
-    apolloLinkError.onError(({ graphQLErrors, networkError }) => {
-      if (graphQLErrors)
-        graphQLErrors.forEach(({ message, locations, path }) =>
-          console.log(
-            `[GraphQL error]: Message:
-            ${message},
-            Location: ${locations},
-            Path: ${path}`
-          )
-        );
-      if (networkError) console.log(`[Network error]: ${networkError}`);
-    }),
-    new HttpLink({
-      uri: process.env.SERVER_GATEWAY_GRAPHQL_URL,
-      fetch: fetch,
-      fetchOptions: {
-        agent: new https.Agent({ rejectUnauthorized: false })
-      },
-      headers: {
-        "content-type": "application/json"
-      },
-      // Don't add all req headers, will request itself instead of gateway.
-      // https://github.com/apollographql/apollo-client/issues/4193
-      credentials: "include"
-    })
-  ]),
-  // hydrates apollo cache with initialState created in server
-  cache: new InMemoryCache({
-    // fragmentMatcher, // fragments
-  }),
-  ssrMode: false
-});
-
+const serverApolloClient = require("./serverApollo");
 
 // SSR Cache
 const cacheManager = cacheableResponse({
@@ -76,19 +34,18 @@ const cacheManager = cacheableResponse({
 
     try {
       return {
-        data: await app.renderToHTML(req, res, req.path, query)
+        data: await app.renderToHTML(req, res, req.path, query),
       };
     } catch (e) {
       return {
-        data: "error: " + e
+        data: "error: " + e,
       };
     }
   },
   send: ({ data, res }) => {
     res.send(data);
-  }
+  },
 });
-
 
 app.prepare().then(() => {
   const expressServer = express();
@@ -98,8 +55,12 @@ app.prepare().then(() => {
   if (dev) {
     // enable local HTTPS for secure cookies,
     try {
-      keyFile = fs.readFileSync('./configs/certs/localhost-key.pem')
-      certFile = fs.readFileSync('./configs/certs/localhost-cert.pem')
+      keyFile = fs.readFileSync(
+        "../efc-configs/keys/local/mkcert/localhost.privkey.pem"
+      );
+      certFile = fs.readFileSync(
+        "../efc-configs/keys/local/mkcert/localhost.fullchain.pem"
+      );
       server = https.createServer(
         { key: keyFile, cert: certFile },
         expressServer
@@ -122,10 +83,11 @@ app.prepare().then(() => {
   setupUncachedHandlers(expressServer);
 
   // Some requests require dynamic lookup and redirection
-  setupDynamicLinks(expressServer);
+  // setupDynamicLinks(expressServer);
 
   // Serve cached responses
-  expressServer.get("*", (req, res) => {
+  expressServer.get("*", async (req, res) => {
+    // await processAffiliateClickIfApplicable(req, res);
     if (req.query.noCache) {
       res.setHeader("X-Cache-Status", "DISABLED");
       requestHandler(req, res);
@@ -135,7 +97,7 @@ app.prepare().then(() => {
   });
 
   // Start server
-  server.listen(port, err => {
+  server.listen(port, (err) => {
     if (err) throw err;
     console.log(
       `SSR front-end app ready on ${
@@ -145,7 +107,7 @@ app.prepare().then(() => {
   });
 });
 
-const setupUncachedHandlers = expressServer => {
+const setupUncachedHandlers = (expressServer) => {
   // Serving next data directly without the cache
   expressServer.get("/_next/*", (req, res) => {
     requestHandler(req, res);
@@ -175,74 +137,141 @@ const setupUncachedHandlers = expressServer => {
   });
 };
 
-const setupDynamicLinks = expressServer => {
-  // Serve Mitch Lally
-  expressServer.get("/s/mitchlally", (req, res) => {
-    res.redirect("/stores/store_59b0ac0f-069d-4fd6-848f-66454642b866");
-  });
-  expressServer.get("/p/*", async (req, res) => {
-    const slug = req.url.substring(req.url.lastIndexOf("/") + 1);
-    console.log("slug: ", slug)
-    const lookup = await aClient.query({
-      query: gql`{
-          lookupProductLinkSlug(slug: "${slug}") {
-            ownerId
-            auto
-            manual
-          }
-        }
-      `,
-      fetchPolicy: "network-only" // don't use cache
-    });
-    console.log("lookup: ", lookup)
-    const latestSlugs = lookup.data && lookup.data.lookupProductLinkSlug;
+// const setupDynamicLinks = (expressServer) => {
+//   // Serve Mitch Lally
+//   expressServer.get("/s/mitchlally", async (req, res) => {
+//     await processAffiliateClickIfApplicable(req, res);
+//     res.redirect("/s/store_59b0ac0f-069d-4fd6-848f-66454642b866");
+//   });
 
-    // Handle the requested URL (don't redirect) if the slug is current, or not found at all
-    if (
-      !latestSlugs ||
-      slug === latestSlugs.manual ||
-      slug === latestSlugs.auto
-    ) {
-      const parsedUrl = parse(req.url, true);
-      handle(req, res, parsedUrl);
-    }
+//   // Serve Products
+//   expressServer.get("/p/*", async (req, res) => {
+//     await processAffiliateClickIfApplicable(req, res);
+//     const parsedUrl = parse(req.url, true);
+//     const pathname = parsedUrl.pathname;
+//     const productIdOrSlug = pathname.substring(pathname.lastIndexOf("/") + 1);
+//     console.log("incoming url: ", req.url);
+//     console.log("incoming productIdOrSlug: ", productIdOrSlug);
+//     const lookup = await serverApolloClient.query({
+//       query: gql`{
+//           lookupProductLinkSlug(slug: "${productIdOrSlug}") {
+//             ownerId
+//             auto
+//             manual
+//           }
+//         }
+//       `,
+//       fetchPolicy: "network-only", // don't use cache
+//     });
+//     const latestSlugs = lookup.data && lookup.data.lookupProductLinkSlug;
+//     console.log("latestSlugs: ", latestSlugs);
+//     console.log("\n");
 
-    // Otherwise redirect to a newer link, favoring the manually reserved link
-    else {
-      res.redirect(`/p/${latestSlugs.manual || latestSlugs.auto}`);
-    }
-  });
-  expressServer.get("/s/*", async (req, res) => {
-    const slug = req.url.substring(req.url.lastIndexOf("/") + 1);
-    const lookup = await aClient.query({
-      query: gql`{
-          lookupStoreLinkSlug(slug: "${slug}") {
-            ownerId
-            auto
-            manual
-          }
-        }
-      `,
-      fetchPolicy: "network-only" // don't use cache
-    });
-    const latestSlugs = lookup.data && lookup.data.lookupStoreLinkSlug;
+//     if (!latestSlugs) {
+//       // if no slug, it's just a normal productID.
+//       let newQuery = {
+//         productId: productIdOrSlug, // productId
+//         slug: "",
+//       };
+//       handle(req, res, {
+//         ...parsedUrl,
+//         query: newQuery,
+//       });
+//     } else if (
+//       productIdOrSlug === latestSlugs.manual ||
+//       productIdOrSlug === latestSlugs.auto
+//     ) {
+//       // if slug exists, and is most current, embed new ProductID (ownerId)
+//       // and send to getInitialProps
+//       console.log("handling parsedUrl with slugs....");
+//       const parsedUrl = parse(req.url, true);
+//       let newQuery = {
+//         productId: latestSlugs.ownerId,
+//         slug: latestSlugs.manual || latestSlugs.auto,
+//       };
+//       console.log("remap query: ", newQuery);
+//       handle(req, res, {
+//         ...parsedUrl,
+//         query: newQuery,
+//       });
+//     } else {
+//       // Otherwise redirect to a newer slug-link, favoring the manually reserved link
+//       let newSlug = latestSlugs.manual || latestSlugs.auto;
+//       res.redirect(`/p/${newSlug}`);
+//     }
+//   });
 
-    // Handle the requested URL (don't redirect) if the slug is current, or not found at all
-    if (
-      !latestSlugs ||
-      slug === latestSlugs.manual ||
-      slug === latestSlugs.auto
-    ) {
-      const parsedUrl = parse(req.url, true);
-      handle(req, res, parsedUrl);
-    }
+//   // Serve Stores
+//   expressServer.get("/s/*", async (req, res) => {
+//     await processAffiliateClickIfApplicable(req, res);
+//     const parsedUrl = parse(req.url, true);
+//     const pathname = parsedUrl.pathname;
+//     const storeIdOrSlug = pathname.substring(pathname.lastIndexOf("/") + 1);
+//     console.log("incoming url: ", req.url);
+//     console.log("incoming storeIdOrSlug: ", storeIdOrSlug);
+//     const lookup = await serverApolloClient.query({
+//       query: gql`{
+//           lookupStoreLinkSlug(slug: "${storeIdOrSlug}") {
+//             ownerId
+//             auto
+//             manual
+//           }
+//         }
+//       `,
+//       fetchPolicy: "network-only", // don't use cache
+//     });
+//     const latestSlugs = lookup.data && lookup.data.lookupStoreLinkSlug;
 
-    // Otherwise redirect to a newer link, favoring the manually reserved link
-    else {
-      res.redirect(`/s/${latestSlugs.manual || latestSlugs.auto}`);
-    }
-  });
-};
+//     if (!latestSlugs) {
+//       // if no slug, it's just a normal storeId.
+//       let newQuery = {
+//         storeId: storeIdOrSlug, // storeId
+//         slug: "",
+//       };
+//       handle(req, res, {
+//         ...parsedUrl,
+//         query: newQuery,
+//       });
+//     } else if (
+//       storeIdOrSlug === latestSlugs.manual ||
+//       storeIdOrSlug === latestSlugs.auto
+//     ) {
+//       // if slug exists, and is most current, embed new StoreId (ownerId)
+//       // and send to getInitialProps
+//       console.log("handling parsedUrl with slugs....");
+//       const parsedUrl = parse(req.url, true);
+//       let newQuery = {
+//         productId: latestSlugs.ownerId,
+//         slug: latestSlugs.manual || latestSlugs.auto,
+//       };
+//       console.log("remap query: ", newQuery);
+//       handle(req, res, {
+//         ...parsedUrl,
+//         query: newQuery,
+//       });
+//     } else {
+//       // Otherwise redirect to a newer slug-link, favoring the manually reserved link
+//       let newSlug = latestSlugs.manual || latestSlugs.auto;
+//       res.redirect(`/s/${newSlug}`);
+//     }
+//   });
+
+//   // Handle old links by redirecting
+//   expressServer.get("/download/:productId", async (req, res) => {
+//     await processAffiliateClickIfApplicable(req, res);
+//     const parsedUrl = parse(req.url, true);
+//     const pathname = parsedUrl.pathname;
+//     const productId = pathname.substring(pathname.lastIndexOf("/") + 1);
+//     res.redirect(`/p/${productId}`);
+//   });
+//   expressServer.get("/stores/:storeId", async (req, res) => {
+//     await processAffiliateClickIfApplicable(req, res);
+//     const parsedUrl = parse(req.url, true);
+//     const pathname = parsedUrl.pathname;
+//     const storeId = pathname.substring(pathname.lastIndexOf("/") + 1);
+//     res.redirect(`/s/${storeId}`);
+//   });
+// };
 
 const requestHandler = (req, res) => {
   // Be sure to pass `true` as the second argument to `url.parse`.
@@ -263,17 +292,34 @@ const requestHandler = (req, res) => {
     const filePath = path.join(__dirname, pathname);
     // console.log("public!", filePath)
     app.serveStatic(req, res, filePath);
-  } else if (pathname === "/download/:productId") {
-    app.render(req, res, "/download", req.params);
-  } else if (pathname === "/stores/:storeId") {
-    app.render(req, res, "/stores", req.params);
-  } else if (pathname === "/checkout/success-login/:orderId") {
-    app.render(req, res, "/checkout/success-login", req.params);
-  } else if (pathname === "/checkout/success-create-account/:orderId") {
-    app.render(req, res, "/checkout/success-create-account", req.params);
-  } else if (pathname === "/categories/:categoryIdOrName") {
-    app.render(req, res, "/categories", req.params);
   } else {
     handle(req, res, parsedUrl);
+  }
+};
+
+const processAffiliateClickIfApplicable = async (req, res) => {
+  const parsedUrl = parse(req.url, true);
+  const { pathname, query } = parsedUrl;
+
+  // We're looking for "ref" as a query string parameter
+  if (query.ref) {
+    const affiliateId = query.ref;
+
+    // Tell the gateway about the click, and expect a set-cookie header in response if valid
+    // We just want to pass it on to browser so it hangs around for future requests
+    try {
+      const clickRecordResult = await serverApolloClient.mutate({
+        mutation: gql`mutation recordAffiliateLinkClick {
+        recordAffiliateLinkClick(affiliateId: "${affiliateId}", path: "${pathname}") {
+          success
+        }
+      }
+      `,
+      });
+      const setCookieHeader = clickRecordResult.context.setCookie;
+      res.set("set-cookie", setCookieHeader);
+    } catch (error) {
+      // (ignore)
+    }
   }
 };

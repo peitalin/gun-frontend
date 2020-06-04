@@ -43,6 +43,7 @@ const LoadingCards = (props: ReactProps) => {
 
 interface ReactProps extends WithStyles<typeof styles> {
   count?: number;
+  alignCenter?: boolean;
 }
 
 /////////// Styles //////////////

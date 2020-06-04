@@ -1,7 +1,6 @@
 
 import React from "react";
 import { Colors } from "layout/AppTheme";
-import "react-dropzone-uploader/dist/styles.css";
 import { DzuPreviewOrder, DzuPreviewItem } from "typings/dropzone";
 // Components
 import ImageUploadProgress from "./ImageUploadProgress";

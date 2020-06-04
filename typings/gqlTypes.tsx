@@ -54,6 +54,18 @@ export type Boolean_Comparison_Exp = {
   _nin?: Maybe<Array<Scalars['Boolean']>>;
 };
 
+export type BooleanComparisonExp = {
+  _eq?: Maybe<Scalars['Boolean']>;
+  _gt?: Maybe<Scalars['Boolean']>;
+  _gte?: Maybe<Scalars['Boolean']>;
+  _in?: Maybe<Array<Scalars['Boolean']>>;
+  _is_null?: Maybe<Scalars['Boolean']>;
+  _lt?: Maybe<Scalars['Boolean']>;
+  _lte?: Maybe<Scalars['Boolean']>;
+  _neq?: Maybe<Scalars['Boolean']>;
+  _nin?: Maybe<Array<Scalars['Boolean']>>;
+};
+
 export type Cart = {
    __typename?: 'Cart';
   automaticSavings: Scalars['Price'];
@@ -244,9 +256,24 @@ export enum Categories_Update_Column {
   UPDATEDAT = 'updatedAt'
 }
 
+export type CategoriesOrderBy = {
+  categoryGroup?: Maybe<OrderBy>;
+  createdAt?: Maybe<OrderBy>;
+  id?: Maybe<OrderBy>;
+  name?: Maybe<OrderBy>;
+  updatedAt?: Maybe<OrderBy>;
+};
+
 export type Connection = {
   pageInfo: PageInfo;
   totalCount?: Maybe<Scalars['Int']>;
+};
+
+export type ConnectionOffsetQuery = {
+  limit: Scalars['Int'];
+  offset?: Maybe<Scalars['Int']>;
+  orderBy?: Maybe<ProductsOrderBy>;
+  where?: Maybe<ProductsBoolExp>;
 };
 
 export type ConnectionQuery = {
@@ -485,6 +512,12 @@ export type FollowingStoresEdge = Edge & {
   node: FollowedStore;
 };
 
+export type HasuraPageInfo = {
+   __typename?: 'HasuraPageInfo';
+  isLastPage: Scalars['Boolean'];
+  totalPages?: Maybe<Scalars['Int']>;
+};
+
 export type Image = {
    __typename?: 'Image';
   createdAt: Scalars['Date'];
@@ -540,7 +573,6 @@ export type Image_Owners_Bool_Exp = {
 };
 
 export enum Image_Owners_Constraint {
-  IMAGE_OWNERS_IMAGE_ID_KEY = 'image_owners_image_id_key',
   IMAGE_OWNERS_PKEY = 'image_owners_pkey'
 }
 
@@ -616,7 +648,7 @@ export type Image_Parents = {
    __typename?: 'image_parents';
   createdAt: Scalars['timestamptz'];
   description?: Maybe<Scalars['String']>;
-  id: Scalars['String'];
+  imageId: Scalars['String'];
   original?: Maybe<Image_Variants>;
   originalVariantId: Scalars['String'];
   tags?: Maybe<Scalars['String']>;
@@ -678,7 +710,7 @@ export type Image_Parents_Bool_Exp = {
   _or?: Maybe<Array<Maybe<Image_Parents_Bool_Exp>>>;
   createdAt?: Maybe<Timestamptz_Comparison_Exp>;
   description?: Maybe<String_Comparison_Exp>;
-  id?: Maybe<String_Comparison_Exp>;
+  imageId?: Maybe<String_Comparison_Exp>;
   original?: Maybe<Image_Variants_Bool_Exp>;
   originalVariantId?: Maybe<String_Comparison_Exp>;
   tags?: Maybe<String_Comparison_Exp>;
@@ -686,14 +718,13 @@ export type Image_Parents_Bool_Exp = {
 };
 
 export enum Image_Parents_Constraint {
-  IMAGE_PARENTS_IMAGE_ID_KEY = 'image_parents_image_id_key',
   IMAGE_PARENTS_PKEY = 'image_parents_pkey'
 }
 
 export type Image_Parents_Insert_Input = {
   createdAt?: Maybe<Scalars['timestamptz']>;
   description?: Maybe<Scalars['String']>;
-  id?: Maybe<Scalars['String']>;
+  imageId?: Maybe<Scalars['String']>;
   original?: Maybe<Image_Variants_Obj_Rel_Insert_Input>;
   originalVariantId?: Maybe<Scalars['String']>;
   tags?: Maybe<Scalars['String']>;
@@ -704,7 +735,7 @@ export type Image_Parents_Max_Fields = {
    __typename?: 'image_parents_max_fields';
   createdAt?: Maybe<Scalars['timestamptz']>;
   description?: Maybe<Scalars['String']>;
-  id?: Maybe<Scalars['String']>;
+  imageId?: Maybe<Scalars['String']>;
   originalVariantId?: Maybe<Scalars['String']>;
   tags?: Maybe<Scalars['String']>;
 };
@@ -712,7 +743,7 @@ export type Image_Parents_Max_Fields = {
 export type Image_Parents_Max_Order_By = {
   createdAt?: Maybe<Order_By>;
   description?: Maybe<Order_By>;
-  id?: Maybe<Order_By>;
+  imageId?: Maybe<Order_By>;
   originalVariantId?: Maybe<Order_By>;
   tags?: Maybe<Order_By>;
 };
@@ -721,7 +752,7 @@ export type Image_Parents_Min_Fields = {
    __typename?: 'image_parents_min_fields';
   createdAt?: Maybe<Scalars['timestamptz']>;
   description?: Maybe<Scalars['String']>;
-  id?: Maybe<Scalars['String']>;
+  imageId?: Maybe<Scalars['String']>;
   originalVariantId?: Maybe<Scalars['String']>;
   tags?: Maybe<Scalars['String']>;
 };
@@ -729,7 +760,7 @@ export type Image_Parents_Min_Fields = {
 export type Image_Parents_Min_Order_By = {
   createdAt?: Maybe<Order_By>;
   description?: Maybe<Order_By>;
-  id?: Maybe<Order_By>;
+  imageId?: Maybe<Order_By>;
   originalVariantId?: Maybe<Order_By>;
   tags?: Maybe<Order_By>;
 };
@@ -754,7 +785,7 @@ export type Image_Parents_On_Conflict = {
 export type Image_Parents_Order_By = {
   createdAt?: Maybe<Order_By>;
   description?: Maybe<Order_By>;
-  id?: Maybe<Order_By>;
+  imageId?: Maybe<Order_By>;
   original?: Maybe<Image_Variants_Order_By>;
   originalVariantId?: Maybe<Order_By>;
   tags?: Maybe<Order_By>;
@@ -762,13 +793,13 @@ export type Image_Parents_Order_By = {
 };
 
 export type Image_Parents_Pk_Columns_Input = {
-  id: Scalars['String'];
+  imageId: Scalars['String'];
 };
 
 export enum Image_Parents_Select_Column {
   CREATEDAT = 'createdAt',
   DESCRIPTION = 'description',
-  ID = 'id',
+  IMAGEID = 'imageId',
   ORIGINALVARIANTID = 'originalVariantId',
   TAGS = 'tags'
 }
@@ -776,7 +807,7 @@ export enum Image_Parents_Select_Column {
 export type Image_Parents_Set_Input = {
   createdAt?: Maybe<Scalars['timestamptz']>;
   description?: Maybe<Scalars['String']>;
-  id?: Maybe<Scalars['String']>;
+  imageId?: Maybe<Scalars['String']>;
   originalVariantId?: Maybe<Scalars['String']>;
   tags?: Maybe<Scalars['String']>;
 };
@@ -784,7 +815,7 @@ export type Image_Parents_Set_Input = {
 export enum Image_Parents_Update_Column {
   CREATEDAT = 'createdAt',
   DESCRIPTION = 'description',
-  ID = 'id',
+  IMAGEID = 'imageId',
   ORIGINALVARIANTID = 'originalVariantId',
   TAGS = 'tags'
 }
@@ -873,8 +904,7 @@ export type Image_Variants_Bool_Exp = {
 };
 
 export enum Image_Variants_Constraint {
-  IMAGE_VARIANTS_PKEY = 'image_variants_pkey',
-  IMAGE_VARIANTS_VARIANT_ID_KEY = 'image_variants_variant_id_key'
+  IMAGE_VARIANTS_PKEY = 'image_variants_pkey'
 }
 
 export type Image_Variants_Inc_Input = {
@@ -1098,7 +1128,7 @@ export type ImageVariant = {
   id: Scalars['ID'];
   mimeType?: Maybe<Scalars['String']>;
   sizeInBytes?: Maybe<Scalars['Int']>;
-  url: Scalars['String'];
+  url?: Maybe<Scalars['String']>;
   widthInPixels?: Maybe<Scalars['Int']>;
 };
 
@@ -1212,7 +1242,6 @@ export type Migrations_Bool_Exp = {
 };
 
 export enum Migrations_Constraint {
-  MIGRATIONS_ID_NAME_IDX = 'migrations_id_name_idx',
   MIGRATIONS_PKEY = 'migrations_pkey'
 }
 
@@ -2276,7 +2305,7 @@ export type Mutation_RootDelete_Image_ParentsArgs = {
 
 
 export type Mutation_RootDelete_Image_Parents_By_PkArgs = {
-  id: Scalars['String'];
+  imageId: Scalars['String'];
 };
 
 
@@ -3131,6 +3160,15 @@ export type Order = {
 };
 
 export enum Order_By {
+  ASC = 'asc',
+  ASC_NULLS_FIRST = 'asc_nulls_first',
+  ASC_NULLS_LAST = 'asc_nulls_last',
+  DESC = 'desc',
+  DESC_NULLS_FIRST = 'desc_nulls_first',
+  DESC_NULLS_LAST = 'desc_nulls_last'
+}
+
+export enum OrderBy {
   ASC = 'asc',
   ASC_NULLS_FIRST = 'asc_nulls_first',
   ASC_NULLS_LAST = 'asc_nulls_last',
@@ -4000,12 +4038,17 @@ export type PrimaryLinkSlugs = {
 };
 
 export type Product = {
-  category: ProductCategory;
+  actionType: Scalars['String'];
+  ammoType?: Maybe<Scalars['String']>;
+  boreDiameter?: Maybe<Scalars['String']>;
+  category?: Maybe<ProductCategory>;
   categoryId: Scalars['ID'];
   chosenVariant?: Maybe<ProductVariant>;
+  condition: Scalars['String'];
   createdAt: Scalars['Date'];
-  currentSnapshot: ProductSnapshot;
   currentVariants: Array<ProductVariant>;
+  dealer: Scalars['String'];
+  description: Scalars['String'];
   featuredVariant?: Maybe<ProductVariant>;
   id: Scalars['ID'];
   isDeleted: Scalars['Boolean'];
@@ -4013,10 +4056,16 @@ export type Product = {
   isExcludedFromSearch: Scalars['Boolean'];
   isPublished: Scalars['Boolean'];
   isSuspended: Scalars['Boolean'];
-  linkSlugs?: Maybe<PrimaryLinkSlugs>;
-  store: Store;
+  location: Scalars['String'];
+  make: Scalars['String'];
+  model: Scalars['String'];
+  productId: Scalars['String'];
+  serialNumber: Scalars['String'];
+  snapshotId: Scalars['ID'];
+  store?: Maybe<Store>;
   storeId: Scalars['ID'];
   tags?: Maybe<Scalars['String']>;
+  title: Scalars['String'];
   updatedAt?: Maybe<Scalars['Date']>;
 };
 
@@ -4065,8 +4114,7 @@ export type Product_File_Owners_Bool_Exp = {
 };
 
 export enum Product_File_Owners_Constraint {
-  PRODUCT_FILE_OWNERS_PKEY = 'product_file_owners_pkey',
-  PRODUCT_FILE_OWNERS_PRODUCT_FILE_ID_KEY = 'product_file_owners_product_file_id_key'
+  PRODUCT_FILE_OWNERS_PKEY = 'product_file_owners_pkey'
 }
 
 export type Product_File_Owners_Insert_Input = {
@@ -4213,8 +4261,7 @@ export type Product_Files_Bool_Exp = {
 };
 
 export enum Product_Files_Constraint {
-  PRODUCT_FILES_PKEY = 'product_files_pkey',
-  PRODUCT_FILES_PRODUCT_FILE_ID_KEY = 'product_files_product_file_id_key'
+  PRODUCT_FILES_PKEY = 'product_files_pkey'
 }
 
 export type Product_Files_Inc_Input = {
@@ -4386,7 +4433,7 @@ export type Product_Preview_Items = {
   imageId?: Maybe<Scalars['String']>;
   position: Scalars['Int'];
   variantSnapshotId?: Maybe<Scalars['String']>;
-  youtubeEmbedLink?: Maybe<Scalars['String']>;
+  youTubeEmbedLink?: Maybe<Scalars['String']>;
 };
 
 export type Product_Preview_Items_Aggregate = {
@@ -4453,7 +4500,7 @@ export type Product_Preview_Items_Bool_Exp = {
   imageId?: Maybe<String_Comparison_Exp>;
   position?: Maybe<Int_Comparison_Exp>;
   variantSnapshotId?: Maybe<String_Comparison_Exp>;
-  youtubeEmbedLink?: Maybe<String_Comparison_Exp>;
+  youTubeEmbedLink?: Maybe<String_Comparison_Exp>;
 };
 
 export enum Product_Preview_Items_Constraint {
@@ -4470,7 +4517,7 @@ export type Product_Preview_Items_Insert_Input = {
   imageId?: Maybe<Scalars['String']>;
   position?: Maybe<Scalars['Int']>;
   variantSnapshotId?: Maybe<Scalars['String']>;
-  youtubeEmbedLink?: Maybe<Scalars['String']>;
+  youTubeEmbedLink?: Maybe<Scalars['String']>;
 };
 
 export type Product_Preview_Items_Max_Fields = {
@@ -4479,7 +4526,7 @@ export type Product_Preview_Items_Max_Fields = {
   imageId?: Maybe<Scalars['String']>;
   position?: Maybe<Scalars['Int']>;
   variantSnapshotId?: Maybe<Scalars['String']>;
-  youtubeEmbedLink?: Maybe<Scalars['String']>;
+  youTubeEmbedLink?: Maybe<Scalars['String']>;
 };
 
 export type Product_Preview_Items_Max_Order_By = {
@@ -4487,7 +4534,7 @@ export type Product_Preview_Items_Max_Order_By = {
   imageId?: Maybe<Order_By>;
   position?: Maybe<Order_By>;
   variantSnapshotId?: Maybe<Order_By>;
-  youtubeEmbedLink?: Maybe<Order_By>;
+  youTubeEmbedLink?: Maybe<Order_By>;
 };
 
 export type Product_Preview_Items_Min_Fields = {
@@ -4496,7 +4543,7 @@ export type Product_Preview_Items_Min_Fields = {
   imageId?: Maybe<Scalars['String']>;
   position?: Maybe<Scalars['Int']>;
   variantSnapshotId?: Maybe<Scalars['String']>;
-  youtubeEmbedLink?: Maybe<Scalars['String']>;
+  youTubeEmbedLink?: Maybe<Scalars['String']>;
 };
 
 export type Product_Preview_Items_Min_Order_By = {
@@ -4504,7 +4551,7 @@ export type Product_Preview_Items_Min_Order_By = {
   imageId?: Maybe<Order_By>;
   position?: Maybe<Order_By>;
   variantSnapshotId?: Maybe<Order_By>;
-  youtubeEmbedLink?: Maybe<Order_By>;
+  youTubeEmbedLink?: Maybe<Order_By>;
 };
 
 export type Product_Preview_Items_Mutation_Response = {
@@ -4530,7 +4577,7 @@ export type Product_Preview_Items_Order_By = {
   imageId?: Maybe<Order_By>;
   position?: Maybe<Order_By>;
   variantSnapshotId?: Maybe<Order_By>;
-  youtubeEmbedLink?: Maybe<Order_By>;
+  youTubeEmbedLink?: Maybe<Order_By>;
 };
 
 export type Product_Preview_Items_Pk_Columns_Input = {
@@ -4542,7 +4589,7 @@ export enum Product_Preview_Items_Select_Column {
   IMAGEID = 'imageId',
   POSITION = 'position',
   VARIANTSNAPSHOTID = 'variantSnapshotId',
-  YOUTUBEEMBEDLINK = 'youtubeEmbedLink'
+  YOUTUBEEMBEDLINK = 'youTubeEmbedLink'
 }
 
 export type Product_Preview_Items_Set_Input = {
@@ -4550,7 +4597,7 @@ export type Product_Preview_Items_Set_Input = {
   imageId?: Maybe<Scalars['String']>;
   position?: Maybe<Scalars['Int']>;
   variantSnapshotId?: Maybe<Scalars['String']>;
-  youtubeEmbedLink?: Maybe<Scalars['String']>;
+  youTubeEmbedLink?: Maybe<Scalars['String']>;
 };
 
 export type Product_Preview_Items_Stddev_Fields = {
@@ -4594,7 +4641,7 @@ export enum Product_Preview_Items_Update_Column {
   IMAGEID = 'imageId',
   POSITION = 'position',
   VARIANTSNAPSHOTID = 'variantSnapshotId',
-  YOUTUBEEMBEDLINK = 'youtubeEmbedLink'
+  YOUTUBEEMBEDLINK = 'youTubeEmbedLink'
 }
 
 export type Product_Preview_Items_Var_Pop_Fields = {
@@ -4922,6 +4969,7 @@ export type Product_Variants = {
    __typename?: 'product_variants';
   createdAt: Scalars['timestamptz'];
   isDefault: Scalars['Boolean'];
+  isSoldOut: Scalars['Boolean'];
   position: Scalars['Int'];
   previewItems: Array<Product_Preview_Items>;
   previewItems_aggregate: Product_Preview_Items_Aggregate;
@@ -5019,6 +5067,7 @@ export type Product_Variants_Bool_Exp = {
   _or?: Maybe<Array<Maybe<Product_Variants_Bool_Exp>>>;
   createdAt?: Maybe<Timestamptz_Comparison_Exp>;
   isDefault?: Maybe<Boolean_Comparison_Exp>;
+  isSoldOut?: Maybe<Boolean_Comparison_Exp>;
   position?: Maybe<Int_Comparison_Exp>;
   previewItems?: Maybe<Product_Preview_Items_Bool_Exp>;
   price?: Maybe<Int_Comparison_Exp>;
@@ -5033,8 +5082,7 @@ export type Product_Variants_Bool_Exp = {
 };
 
 export enum Product_Variants_Constraint {
-  PRODUCT_VARIANTS_PKEY = 'product_variants_pkey',
-  PRODUCT_VARIANTS_VARIANT_SNAPSHOT_ID_KEY = 'product_variants_variant_snapshot_id_key'
+  PRODUCT_VARIANTS_PKEY = 'product_variants_pkey'
 }
 
 export type Product_Variants_Inc_Input = {
@@ -5046,6 +5094,7 @@ export type Product_Variants_Inc_Input = {
 export type Product_Variants_Insert_Input = {
   createdAt?: Maybe<Scalars['timestamptz']>;
   isDefault?: Maybe<Scalars['Boolean']>;
+  isSoldOut?: Maybe<Scalars['Boolean']>;
   position?: Maybe<Scalars['Int']>;
   previewItems?: Maybe<Product_Preview_Items_Arr_Rel_Insert_Input>;
   price?: Maybe<Scalars['Int']>;
@@ -5137,6 +5186,7 @@ export type Product_Variants_On_Conflict = {
 export type Product_Variants_Order_By = {
   createdAt?: Maybe<Order_By>;
   isDefault?: Maybe<Order_By>;
+  isSoldOut?: Maybe<Order_By>;
   position?: Maybe<Order_By>;
   previewItems_aggregate?: Maybe<Product_Preview_Items_Aggregate_Order_By>;
   price?: Maybe<Order_By>;
@@ -5157,6 +5207,7 @@ export type Product_Variants_Pk_Columns_Input = {
 export enum Product_Variants_Select_Column {
   CREATEDAT = 'createdAt',
   ISDEFAULT = 'isDefault',
+  ISSOLDOUT = 'isSoldOut',
   POSITION = 'position',
   PRICE = 'price',
   PRICEWAS = 'priceWas',
@@ -5172,6 +5223,7 @@ export enum Product_Variants_Select_Column {
 export type Product_Variants_Set_Input = {
   createdAt?: Maybe<Scalars['timestamptz']>;
   isDefault?: Maybe<Scalars['Boolean']>;
+  isSoldOut?: Maybe<Scalars['Boolean']>;
   position?: Maybe<Scalars['Int']>;
   price?: Maybe<Scalars['Int']>;
   priceWas?: Maybe<Scalars['Int']>;
@@ -5239,6 +5291,7 @@ export type Product_Variants_Sum_Order_By = {
 export enum Product_Variants_Update_Column {
   CREATEDAT = 'createdAt',
   ISDEFAULT = 'isDefault',
+  ISSOLDOUT = 'isSoldOut',
   POSITION = 'position',
   PRICE = 'price',
   PRICEWAS = 'priceWas',
@@ -5389,12 +5442,17 @@ export type ProductPreviewItemInput = {
 
 export type ProductPrivate = Product & {
    __typename?: 'ProductPrivate';
-  category: ProductCategory;
+  actionType: Scalars['String'];
+  ammoType?: Maybe<Scalars['String']>;
+  boreDiameter?: Maybe<Scalars['String']>;
+  category?: Maybe<ProductCategory>;
   categoryId: Scalars['ID'];
   chosenVariant?: Maybe<ProductVariant>;
+  condition: Scalars['String'];
   createdAt: Scalars['Date'];
-  currentSnapshot: ProductSnapshot;
   currentVariants: Array<ProductVariant>;
+  dealer: Scalars['String'];
+  description: Scalars['String'];
   featuredVariant?: Maybe<ProductVariant>;
   historicalSnapshotsConnection: ProductsConnection;
   id: Scalars['ID'];
@@ -5404,10 +5462,16 @@ export type ProductPrivate = Product & {
   isPublished: Scalars['Boolean'];
   isSuspended: Scalars['Boolean'];
   linkSlugs?: Maybe<PrimaryLinkSlugs>;
+  location: Scalars['String'];
+  make: Scalars['String'];
+  model: Scalars['String'];
+  productId: Scalars['String'];
+  serialNumber: Scalars['String'];
   snapshotId: Scalars['ID'];
-  store: Store;
+  store?: Maybe<Store>;
   storeId: Scalars['ID'];
   tags?: Maybe<Scalars['String']>;
+  title: Scalars['String'];
   updatedAt?: Maybe<Scalars['Date']>;
 };
 
@@ -5424,12 +5488,17 @@ export type ProductProductVariantId = {
 
 export type ProductPublic = Product & {
    __typename?: 'ProductPublic';
-  category: ProductCategory;
+  actionType: Scalars['String'];
+  ammoType?: Maybe<Scalars['String']>;
+  boreDiameter?: Maybe<Scalars['String']>;
+  category?: Maybe<ProductCategory>;
   categoryId: Scalars['ID'];
   chosenVariant?: Maybe<ProductVariant>;
+  condition: Scalars['String'];
   createdAt: Scalars['Date'];
-  currentSnapshot: ProductSnapshot;
   currentVariants: Array<ProductVariant>;
+  dealer: Scalars['String'];
+  description: Scalars['String'];
   featuredVariant?: Maybe<ProductVariant>;
   id: Scalars['ID'];
   isDeleted: Scalars['Boolean'];
@@ -5438,9 +5507,16 @@ export type ProductPublic = Product & {
   isPublished: Scalars['Boolean'];
   isSuspended: Scalars['Boolean'];
   linkSlugs?: Maybe<PrimaryLinkSlugs>;
-  store: Store;
+  location: Scalars['String'];
+  make: Scalars['String'];
+  model: Scalars['String'];
+  productId: Scalars['String'];
+  serialNumber: Scalars['String'];
+  snapshotId: Scalars['ID'];
+  store?: Maybe<Store>;
   storeId: Scalars['ID'];
   tags?: Maybe<Scalars['String']>;
+  title: Scalars['String'];
   updatedAt?: Maybe<Scalars['Date']>;
 };
 
@@ -5684,6 +5760,23 @@ export type ProductSalesEdge = Edge & {
   node: ProductSale;
 };
 
+export type ProductsBoolExp = {
+  _and?: Maybe<Array<Maybe<ProductsBoolExp>>>;
+  _not?: Maybe<ProductsBoolExp>;
+  _or?: Maybe<Array<Maybe<ProductsBoolExp>>>;
+  categoryId?: Maybe<StringComparisonExp>;
+  createdAt?: Maybe<TimestamptzComparisonExp>;
+  currentSnapshotId?: Maybe<StringComparisonExp>;
+  id?: Maybe<StringComparisonExp>;
+  isDeleted?: Maybe<BooleanComparisonExp>;
+  isExcludedFromRecommendations?: Maybe<BooleanComparisonExp>;
+  isExcludedFromSearch?: Maybe<BooleanComparisonExp>;
+  isPublished?: Maybe<BooleanComparisonExp>;
+  isSuspended?: Maybe<BooleanComparisonExp>;
+  storeId?: Maybe<StringComparisonExp>;
+  updatedAt?: Maybe<TimestamptzComparisonExp>;
+};
+
 export type ProductsConnection = Connection & {
    __typename?: 'ProductsConnection';
   edges: Array<ProductsEdge>;
@@ -5697,9 +5790,8 @@ export type ProductScopedDiscountInfo = {
   variantSnapshotId?: Maybe<Scalars['ID']>;
 };
 
-export type ProductsEdge = Edge & {
+export type ProductsEdge = {
    __typename?: 'ProductsEdge';
-  cursor: Scalars['PageCursor'];
   node: Product;
 };
 
@@ -5708,30 +5800,19 @@ export type ProductsMutationResponse = {
   products: Array<Product>;
 };
 
-export type ProductSnapshot = {
-   __typename?: 'ProductSnapshot';
-  actionType: Scalars['String'];
-  ammoType?: Maybe<Scalars['String']>;
-  boreDiameter?: Maybe<Scalars['String']>;
-  condition: Scalars['String'];
-  createdAt: Scalars['Date'];
-  dealer: Scalars['String'];
-  description: Scalars['String'];
-  id: Scalars['ID'];
-  location: Scalars['String'];
-  make: Scalars['String'];
-  model: Scalars['String'];
-  name: Scalars['String'];
-  productId: Scalars['String'];
-  serialNumber: Scalars['String'];
-  title: Scalars['String'];
-};
-
 export type ProductSoldPeriodSummary = {
    __typename?: 'ProductSoldPeriodSummary';
   grossAmount: Scalars['Price'];
   numberOfSalesMade: Scalars['Int'];
   product: Product;
+};
+
+export type ProductsOrderBy = {
+  category?: Maybe<CategoriesOrderBy>;
+  categoryId?: Maybe<OrderBy>;
+  createdAt?: Maybe<OrderBy>;
+  currentSnapshotId?: Maybe<OrderBy>;
+  id?: Maybe<OrderBy>;
 };
 
 export type ProductSpecialDeal = {
@@ -5762,15 +5843,12 @@ export type ProductsSoldPeriodSummaryEdge = Edge & {
 
 export type ProductVariant = {
    __typename?: 'ProductVariant';
-  baseStockLevel?: Maybe<StockLevel>;
   createdAt: Scalars['Date'];
-  currentStockLevel?: Maybe<StockLevel>;
   isDefault: Scalars['Boolean'];
   isSoldOut: Scalars['Boolean'];
   position: Scalars['Int'];
   previewItems: Array<ProductPreviewItem>;
   price: Scalars['Price'];
-  priceDetails: PriceDetails;
   priceWas?: Maybe<Scalars['Price']>;
   productId: Scalars['ID'];
   snapshotId: Scalars['ID'];
@@ -5824,11 +5902,11 @@ export type Query = {
   getPayoutSplitByStoreId: PayoutSplit;
   getPayouts: PayoutsConnection;
   getPayoutsInPeriodAdmin: PayoutsConnection;
-  getProductByProductIdOrSlug?: Maybe<Product>;
+  getProductById?: Maybe<Product>;
   getProductFromLinkSlug?: Maybe<Product>;
   getProductSale?: Maybe<ProductSale>;
   getRecentTransactions: Array<Transaction>;
-  getStoreByStoreIdOrSlug?: Maybe<Store>;
+  getStoreById?: Maybe<Store>;
   getStoreFromLinkSlug?: Maybe<Store>;
   getStoreSalesInPeriodAdmin: StoreSalesInPeriodConnection;
   getTransaction?: Maybe<Transaction>;
@@ -5843,8 +5921,6 @@ export type Query = {
   productsAdminConnection: ProductsConnection;
   productsAllConnection: ProductsConnection;
   productsByCategoryConnection?: Maybe<ProductsConnection>;
-  productsDealsEndingSoonConnection: ProductsConnection;
-  productsLimitedReleasesConnection: ProductsConnection;
   productsRecommendedConnection: ProductsConnection;
   search: SearchResultsConnection;
   store?: Maybe<Store>;
@@ -5939,8 +6015,8 @@ export type QueryGetPayoutsInPeriodAdminArgs = {
 };
 
 
-export type QueryGetProductByProductIdOrSlugArgs = {
-  productIdOrSlug: Scalars['String'];
+export type QueryGetProductByIdArgs = {
+  productId: Scalars['String'];
 };
 
 
@@ -5959,8 +6035,8 @@ export type QueryGetRecentTransactionsArgs = {
 };
 
 
-export type QueryGetStoreByStoreIdOrSlugArgs = {
-  storeIdOrSlug: Scalars['String'];
+export type QueryGetStoreByIdArgs = {
+  storeId: Scalars['String'];
 };
 
 
@@ -6024,23 +6100,13 @@ export type QueryProductsAdminConnectionArgs = {
 
 
 export type QueryProductsAllConnectionArgs = {
-  query?: Maybe<ConnectionQuery>;
+  query?: Maybe<ConnectionOffsetQuery>;
 };
 
 
 export type QueryProductsByCategoryConnectionArgs = {
   categoryId?: Maybe<Scalars['String']>;
   categoryName?: Maybe<Scalars['String']>;
-  query?: Maybe<ConnectionQuery>;
-};
-
-
-export type QueryProductsDealsEndingSoonConnectionArgs = {
-  query?: Maybe<ConnectionQuery>;
-};
-
-
-export type QueryProductsLimitedReleasesConnectionArgs = {
   query?: Maybe<ConnectionQuery>;
 };
 
@@ -6111,11 +6177,11 @@ export type Query_Root = {
   getPayoutSplitByStoreId: PayoutSplit;
   getPayouts: PayoutsConnection;
   getPayoutsInPeriodAdmin: PayoutsConnection;
-  getProductByProductIdOrSlug?: Maybe<Product>;
+  getProductById?: Maybe<Product>;
   getProductFromLinkSlug?: Maybe<Product>;
   getProductSale?: Maybe<ProductSale>;
   getRecentTransactions: Array<Transaction>;
-  getStoreByStoreIdOrSlug?: Maybe<Store>;
+  getStoreById?: Maybe<Store>;
   getStoreFromLinkSlug?: Maybe<Store>;
   getStoreSalesInPeriodAdmin: StoreSalesInPeriodConnection;
   getTransaction?: Maybe<Transaction>;
@@ -6166,8 +6232,6 @@ export type Query_Root = {
   productsAdminConnection: ProductsConnection;
   productsAllConnection: ProductsConnection;
   productsByCategoryConnection?: Maybe<ProductsConnection>;
-  productsDealsEndingSoonConnection: ProductsConnection;
-  productsLimitedReleasesConnection: ProductsConnection;
   productsRecommendedConnection: ProductsConnection;
   products_aggregate: Products_Aggregate;
   products_by_pk?: Maybe<Products>;
@@ -6293,8 +6357,8 @@ export type Query_RootGetPayoutsInPeriodAdminArgs = {
 };
 
 
-export type Query_RootGetProductByProductIdOrSlugArgs = {
-  productIdOrSlug: Scalars['String'];
+export type Query_RootGetProductByIdArgs = {
+  productId: Scalars['String'];
 };
 
 
@@ -6313,8 +6377,8 @@ export type Query_RootGetRecentTransactionsArgs = {
 };
 
 
-export type Query_RootGetStoreByStoreIdOrSlugArgs = {
-  storeIdOrSlug: Scalars['String'];
+export type Query_RootGetStoreByIdArgs = {
+  storeId: Scalars['String'];
 };
 
 
@@ -6384,7 +6448,7 @@ export type Query_RootImage_Parents_AggregateArgs = {
 
 
 export type Query_RootImage_Parents_By_PkArgs = {
-  id: Scalars['String'];
+  imageId: Scalars['String'];
 };
 
 
@@ -6658,23 +6722,13 @@ export type Query_RootProductsAdminConnectionArgs = {
 
 
 export type Query_RootProductsAllConnectionArgs = {
-  query?: Maybe<ConnectionQuery>;
+  query?: Maybe<ConnectionOffsetQuery>;
 };
 
 
 export type Query_RootProductsByCategoryConnectionArgs = {
   categoryId?: Maybe<Scalars['String']>;
   categoryName?: Maybe<Scalars['String']>;
-  query?: Maybe<ConnectionQuery>;
-};
-
-
-export type Query_RootProductsDealsEndingSoonConnectionArgs = {
-  query?: Maybe<ConnectionQuery>;
-};
-
-
-export type Query_RootProductsLimitedReleasesConnectionArgs = {
   query?: Maybe<ConnectionQuery>;
 };
 
@@ -7059,9 +7113,7 @@ export type Stores_Bool_Exp = {
 };
 
 export enum Stores_Constraint {
-  STORES_PKEY = 'stores_pkey',
-  STORES_STORE_ID_KEY = 'stores_store_id_key',
-  STORES_USER_ID_KEY = 'stores_user_id_key'
+  STORES_PKEY = 'stores_pkey'
 }
 
 export type Stores_Insert_Input = {
@@ -7282,6 +7334,24 @@ export type String_Comparison_Exp = {
   _similar?: Maybe<Scalars['String']>;
 };
 
+export type StringComparisonExp = {
+  _eq?: Maybe<Scalars['String']>;
+  _gt?: Maybe<Scalars['String']>;
+  _gte?: Maybe<Scalars['String']>;
+  _ilike?: Maybe<Scalars['String']>;
+  _in?: Maybe<Array<Scalars['String']>>;
+  _is_null?: Maybe<Scalars['Boolean']>;
+  _like?: Maybe<Scalars['String']>;
+  _lt?: Maybe<Scalars['String']>;
+  _lte?: Maybe<Scalars['String']>;
+  _neq?: Maybe<Scalars['String']>;
+  _nilike?: Maybe<Scalars['String']>;
+  _nin?: Maybe<Array<Scalars['String']>>;
+  _nlike?: Maybe<Scalars['String']>;
+  _nsimilar?: Maybe<Scalars['String']>;
+  _similar?: Maybe<Scalars['String']>;
+};
+
 export type StripeCustomerCreationResponse = {
    __typename?: 'StripeCustomerCreationResponse';
   endpoint?: Maybe<Scalars['String']>;
@@ -7418,7 +7488,7 @@ export type Subscription_RootImage_Parents_AggregateArgs = {
 
 
 export type Subscription_RootImage_Parents_By_PkArgs = {
-  id: Scalars['String'];
+  imageId: Scalars['String'];
 };
 
 
@@ -7747,6 +7817,18 @@ export type Timestamptz_Comparison_Exp = {
   _nin?: Maybe<Array<Scalars['timestamptz']>>;
 };
 
+export type TimestamptzComparisonExp = {
+  _eq?: Maybe<Scalars['timestamptz']>;
+  _gt?: Maybe<Scalars['timestamptz']>;
+  _gte?: Maybe<Scalars['timestamptz']>;
+  _in?: Maybe<Array<Scalars['timestamptz']>>;
+  _is_null?: Maybe<Scalars['Boolean']>;
+  _lt?: Maybe<Scalars['timestamptz']>;
+  _lte?: Maybe<Scalars['timestamptz']>;
+  _neq?: Maybe<Scalars['timestamptz']>;
+  _nin?: Maybe<Array<Scalars['timestamptz']>>;
+};
+
 export type Transaction = {
    __typename?: 'Transaction';
   chargeId: Scalars['ID'];
@@ -7985,7 +8067,6 @@ export type Users_Bool_Exp = {
 };
 
 export enum Users_Constraint {
-  USERS_EMAIL_KEY = 'users_email_key',
   USERS_PKEY = 'users_pkey'
 }
 
@@ -8292,16 +8373,14 @@ export type GetProductFileDownloadLinkMutationVariables = {
 
 export type GetProductFileDownloadLinkMutation = { __typename?: 'mutation_root', generateProductFileDownloadLink: { __typename?: 'ProductFileLinkMutationResponse', downloadLink: { __typename?: 'ProductFileDownloadLink', productFileId: string, expiresAt: any, url: string } } };
 
-export type HasuraImageFragment = { __typename?: 'image_parents', id: string, createdAt: any, tags?: Maybe<string>, description?: Maybe<string>, original?: Maybe<{ __typename?: 'image_variants', id: string, url?: Maybe<string>, mimeType: string, heightInPixels: number, widthInPixels: number, sizeInBytes: number }>, variants: Array<{ __typename?: 'image_variants', id: string, mimeType: string, sizeInBytes: number, widthInPixels: number, heightInPixels: number, url?: Maybe<string> }> };
-
-export type ImageFragment = { __typename?: 'Image', id: string, createdAt: any, tags?: Maybe<string>, description?: Maybe<string>, original: { __typename?: 'ImageVariant', id: string, url: string, mimeType?: Maybe<string>, heightInPixels?: Maybe<number>, widthInPixels?: Maybe<number>, sizeInBytes?: Maybe<number> }, variants: Array<{ __typename?: 'ImageVariant', id: string, mimeType?: Maybe<string>, sizeInBytes?: Maybe<number>, widthInPixels?: Maybe<number>, heightInPixels?: Maybe<number>, url: string }> };
+export type ImageFragment = { __typename?: 'Image', id: string, createdAt: any, tags?: Maybe<string>, description?: Maybe<string>, original: { __typename?: 'ImageVariant', id: string, url?: Maybe<string>, mimeType?: Maybe<string>, heightInPixels?: Maybe<number>, widthInPixels?: Maybe<number>, sizeInBytes?: Maybe<number> }, variants: Array<{ __typename?: 'ImageVariant', id: string, mimeType?: Maybe<string>, sizeInBytes?: Maybe<number>, widthInPixels?: Maybe<number>, heightInPixels?: Maybe<number>, url?: Maybe<string> }> };
 
 export type ProductVariantFragment = { __typename?: 'ProductVariant', variantSnapshotId: string, variantId: string, snapshotId: string, productId: string, storeId: string, createdAt: any, variantName: string, variantDescription?: Maybe<string>, isDefault: boolean, position: number, price: any, priceWas?: Maybe<any>, isSoldOut: boolean, previewItems: Array<{ __typename?: 'ProductPreviewItem', id: string, youTubeEmbedLink?: Maybe<string>, image?: Maybe<(
       { __typename?: 'Image' }
       & ImageFragment
     )> }> };
 
-type ProductFragment_ProductPrivate_ = { __typename?: 'ProductPrivate', id: string, createdAt: any, updatedAt?: Maybe<any>, tags?: Maybe<string>, isPublished: boolean, isSuspended: boolean, isDeleted: boolean, isExcludedFromRecommendations: boolean, currentSnapshot: { __typename?: 'ProductSnapshot', name: string, title: string, description: string }, currentVariants: Array<(
+type ProductFragment_ProductPrivate_ = { __typename?: 'ProductPrivate', id: string, createdAt: any, updatedAt?: Maybe<any>, tags?: Maybe<string>, isPublished: boolean, isSuspended: boolean, isDeleted: boolean, isExcludedFromRecommendations: boolean, title: string, description: string, condition: string, make: string, model: string, ammoType?: Maybe<string>, actionType: string, boreDiameter?: Maybe<string>, serialNumber: string, location: string, dealer: string, currentVariants: Array<(
     { __typename?: 'ProductVariant' }
     & ProductVariantFragment
   )>, featuredVariant?: Maybe<(
@@ -8310,9 +8389,9 @@ type ProductFragment_ProductPrivate_ = { __typename?: 'ProductPrivate', id: stri
   )>, chosenVariant?: Maybe<(
     { __typename?: 'ProductVariant' }
     & ProductVariantFragment
-  )>, store: { __typename?: 'StorePrivate', id: string, name: string } | { __typename?: 'StorePublic', id: string, name: string }, category: { __typename?: 'ProductCategory', id: string, name: string, categoryGroup?: Maybe<any> } };
+  )>, store?: Maybe<{ __typename?: 'StorePrivate', id: string, name: string } | { __typename?: 'StorePublic', id: string, name: string }>, category?: Maybe<{ __typename?: 'ProductCategory', id: string, name: string, categoryGroup?: Maybe<any> }> };
 
-type ProductFragment_ProductPublic_ = { __typename?: 'ProductPublic', id: string, createdAt: any, updatedAt?: Maybe<any>, tags?: Maybe<string>, isPublished: boolean, isSuspended: boolean, isDeleted: boolean, isExcludedFromRecommendations: boolean, currentSnapshot: { __typename?: 'ProductSnapshot', name: string, title: string, description: string }, currentVariants: Array<(
+type ProductFragment_ProductPublic_ = { __typename?: 'ProductPublic', id: string, createdAt: any, updatedAt?: Maybe<any>, tags?: Maybe<string>, isPublished: boolean, isSuspended: boolean, isDeleted: boolean, isExcludedFromRecommendations: boolean, title: string, description: string, condition: string, make: string, model: string, ammoType?: Maybe<string>, actionType: string, boreDiameter?: Maybe<string>, serialNumber: string, location: string, dealer: string, currentVariants: Array<(
     { __typename?: 'ProductVariant' }
     & ProductVariantFragment
   )>, featuredVariant?: Maybe<(
@@ -8321,7 +8400,7 @@ type ProductFragment_ProductPublic_ = { __typename?: 'ProductPublic', id: string
   )>, chosenVariant?: Maybe<(
     { __typename?: 'ProductVariant' }
     & ProductVariantFragment
-  )>, store: { __typename?: 'StorePrivate', id: string, name: string } | { __typename?: 'StorePublic', id: string, name: string }, category: { __typename?: 'ProductCategory', id: string, name: string, categoryGroup?: Maybe<any> } };
+  )>, store?: Maybe<{ __typename?: 'StorePrivate', id: string, name: string } | { __typename?: 'StorePublic', id: string, name: string }>, category?: Maybe<{ __typename?: 'ProductCategory', id: string, name: string, categoryGroup?: Maybe<any> }> };
 
 export type ProductFragment = ProductFragment_ProductPrivate_ | ProductFragment_ProductPublic_;
 
@@ -8331,7 +8410,7 @@ type StorePublicFragment_StorePrivate_ = { __typename?: 'StorePrivate', id: stri
   )>, profile?: Maybe<(
     { __typename?: 'Image' }
     & ImageFragment
-  )>, productsForSaleConnection: Array<Maybe<{ __typename?: 'ProductPrivate', id: string, currentSnapshot: { __typename?: 'ProductSnapshot', id: string, serialNumber: string, title: string } } | { __typename?: 'ProductPublic', id: string, currentSnapshot: { __typename?: 'ProductSnapshot', id: string, serialNumber: string, title: string } }>> };
+  )>, productsForSaleConnection: Array<Maybe<{ __typename?: 'ProductPrivate', id: string, serialNumber: string, title: string } | { __typename?: 'ProductPublic', id: string, serialNumber: string, title: string }>> };
 
 type StorePublicFragment_StorePublic_ = { __typename?: 'StorePublic', id: string, createdAt: any, updatedAt?: Maybe<any>, name: string, bio?: Maybe<string>, website?: Maybe<string>, cover?: Maybe<(
     { __typename?: 'Image' }
@@ -8339,7 +8418,7 @@ type StorePublicFragment_StorePublic_ = { __typename?: 'StorePublic', id: string
   )>, profile?: Maybe<(
     { __typename?: 'Image' }
     & ImageFragment
-  )>, productsForSaleConnection: Array<Maybe<{ __typename?: 'ProductPrivate', id: string, currentSnapshot: { __typename?: 'ProductSnapshot', id: string, serialNumber: string, title: string } } | { __typename?: 'ProductPublic', id: string, currentSnapshot: { __typename?: 'ProductSnapshot', id: string, serialNumber: string, title: string } }>> };
+  )>, productsForSaleConnection: Array<Maybe<{ __typename?: 'ProductPrivate', id: string, serialNumber: string, title: string } | { __typename?: 'ProductPublic', id: string, serialNumber: string, title: string }>> };
 
 export type StorePublicFragment = StorePublicFragment_StorePrivate_ | StorePublicFragment_StorePublic_;
 
@@ -8349,7 +8428,7 @@ export type StorePrivateFragment = { __typename?: 'StorePrivate', id: string, na
   )>, profile?: Maybe<(
     { __typename?: 'Image' }
     & ImageFragment
-  )>, productsForSaleConnection: Array<Maybe<{ __typename?: 'ProductPrivate', id: string, currentSnapshot: { __typename?: 'ProductSnapshot', id: string, serialNumber: string, title: string } } | { __typename?: 'ProductPublic', id: string, currentSnapshot: { __typename?: 'ProductSnapshot', id: string, serialNumber: string, title: string } }>> };
+  )>, productsForSaleConnection: Array<Maybe<{ __typename?: 'ProductPrivate', id: string, serialNumber: string, title: string } | { __typename?: 'ProductPublic', id: string, serialNumber: string, title: string }>> };
 
 export type PaymentMethodFragment = { __typename?: 'PaymentMethod', id: string, userId: string, createdAt: any, updatedAt?: Maybe<any>, customerId?: Maybe<string>, paymentProcessor?: Maybe<PaymentProcessor>, paymentMethodTypes?: Maybe<Array<Maybe<string>>>, last4?: Maybe<string>, expMonth?: Maybe<string>, expYear?: Maybe<string>, email?: Maybe<string>, name?: Maybe<string>, details?: Maybe<string> };
 
@@ -8370,10 +8449,18 @@ export type Unnamed_1_MutationVariables = {
 
 export type Unnamed_1_Mutation = { __typename?: 'mutation_root', insert_image_parents?: Maybe<{ __typename?: 'image_parents_mutation_response', affected_rows: number }>, insert_image_variants?: Maybe<{ __typename?: 'image_variants_mutation_response', affected_rows: number }>, insert_product_preview_items?: Maybe<{ __typename?: 'product_preview_items_mutation_response', affected_rows: number }>, insert_product_variants?: Maybe<{ __typename?: 'product_variants_mutation_response', affected_rows: number }>, insert_product_snapshots?: Maybe<{ __typename?: 'product_snapshots_mutation_response', affected_rows: number }>, insert_products?: Maybe<{ __typename?: 'products_mutation_response', affected_rows: number }> };
 
-export type Unnamed_2_QueryVariables = {};
+export type ProductsAllConnectionQueryVariables = {
+  query?: Maybe<ConnectionOffsetQuery>;
+};
 
 
-export type Unnamed_2_Query = { __typename?: 'query_root', products: Array<{ __typename?: 'products', id: string, storeId: string, isDeleted: boolean, isPublished: boolean, isSuspended: boolean, isExcludedFromSearch: boolean, isExcludedFromRecommendations: boolean, categoryId: string, createdAt: any, updatedAt: any, currentSnapshot: { __typename?: 'product_snapshots', id: string, createdAt: any, productId: string, title: string, description: string, condition: string, make: string, model: string, ammoType?: Maybe<string>, actionType: string, boreDiameter?: Maybe<string>, serialNumber: string, location: string, dealer: string, currentVariants: Array<{ __typename?: 'product_variants', variantSnapshotId: string, variantId: string, variantName: string, variantDescription: string, position: number, isDefault: boolean, price: number, priceWas?: Maybe<number>, previewItems: Array<{ __typename?: 'product_preview_items', id: string, imageId?: Maybe<string>, position: number, youtubeEmbedLink?: Maybe<string>, variantSnapshotId?: Maybe<string> }> }> } }> };
+export type ProductsAllConnectionQuery = { __typename?: 'query_root', productsAllConnection: { __typename?: 'ProductsConnection', totalCount?: Maybe<number>, pageInfo: { __typename?: 'PageInfo', isLastPage: boolean, endCursor?: Maybe<any> }, edges: Array<{ __typename?: 'ProductsEdge', node: (
+        { __typename?: 'ProductPrivate' }
+        & ProductFragment_ProductPrivate_
+      ) | (
+        { __typename?: 'ProductPublic' }
+        & ProductFragment_ProductPublic_
+      ) }> } };
 
 export type CreateStoreMutationVariables = {
   name: Scalars['String'];
@@ -8403,31 +8490,6 @@ export type EditStoreProfileMutation = { __typename?: 'mutation_root', editStore
       & StorePrivateFragment
     ) }> };
 
-export const HasuraImageFragmentFragmentDoc = gql`
-    fragment HasuraImageFragment on image_parents {
-  id
-  original {
-    id
-    url
-    mimeType
-    heightInPixels
-    widthInPixels
-    sizeInBytes
-    url
-  }
-  variants {
-    id
-    mimeType
-    sizeInBytes
-    widthInPixels
-    heightInPixels
-    url
-  }
-  createdAt
-  tags
-  description
-}
-    `;
 export const ImageFragmentFragmentDoc = gql`
     fragment ImageFragment on Image {
   id
@@ -8487,11 +8549,17 @@ export const ProductFragmentFragmentDoc = gql`
   isSuspended
   isDeleted
   isExcludedFromRecommendations
-  currentSnapshot {
-    name
-    title
-    description
-  }
+  title
+  description
+  condition
+  make
+  model
+  ammoType
+  actionType
+  boreDiameter
+  serialNumber
+  location
+  dealer
   currentVariants {
     ...ProductVariantFragment
   }
@@ -8528,11 +8596,8 @@ export const StorePublicFragmentFragmentDoc = gql`
   }
   productsForSaleConnection {
     id
-    currentSnapshot {
-      id
-      serialNumber
-      title
-    }
+    serialNumber
+    title
   }
 }
     ${ImageFragmentFragmentDoc}`;
@@ -8569,11 +8634,8 @@ export const StorePrivateFragmentFragmentDoc = gql`
   }
   productsForSaleConnection {
     id
-    currentSnapshot {
-      id
-      serialNumber
-      title
-    }
+    serialNumber
+    title
   }
 }
     ${ImageFragmentFragmentDoc}`;
@@ -8746,6 +8808,48 @@ export function useGetProductFileDownloadLinkMutation(baseOptions?: ApolloReactH
 export type GetProductFileDownloadLinkMutationHookResult = ReturnType<typeof useGetProductFileDownloadLinkMutation>;
 export type GetProductFileDownloadLinkMutationResult = ApolloReactCommon.MutationResult<GetProductFileDownloadLinkMutation>;
 export type GetProductFileDownloadLinkMutationOptions = ApolloReactCommon.BaseMutationOptions<GetProductFileDownloadLinkMutation, GetProductFileDownloadLinkMutationVariables>;
+export const ProductsAllConnectionDocument = gql`
+    query productsAllConnection($query: ConnectionOffsetQuery) {
+  productsAllConnection(query: $query) {
+    totalCount
+    pageInfo {
+      isLastPage
+      endCursor
+    }
+    edges {
+      node {
+        ...ProductFragment
+      }
+    }
+  }
+}
+    ${ProductFragmentFragmentDoc}`;
+
+/**
+ * __useProductsAllConnectionQuery__
+ *
+ * To run a query within a React component, call `useProductsAllConnectionQuery` and pass it any options that fit your needs.
+ * When your component renders, `useProductsAllConnectionQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useProductsAllConnectionQuery({
+ *   variables: {
+ *      query: // value for 'query'
+ *   },
+ * });
+ */
+export function useProductsAllConnectionQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<ProductsAllConnectionQuery, ProductsAllConnectionQueryVariables>) {
+        return ApolloReactHooks.useQuery<ProductsAllConnectionQuery, ProductsAllConnectionQueryVariables>(ProductsAllConnectionDocument, baseOptions);
+      }
+export function useProductsAllConnectionLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<ProductsAllConnectionQuery, ProductsAllConnectionQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<ProductsAllConnectionQuery, ProductsAllConnectionQueryVariables>(ProductsAllConnectionDocument, baseOptions);
+        }
+export type ProductsAllConnectionQueryHookResult = ReturnType<typeof useProductsAllConnectionQuery>;
+export type ProductsAllConnectionLazyQueryHookResult = ReturnType<typeof useProductsAllConnectionLazyQuery>;
+export type ProductsAllConnectionQueryResult = ApolloReactCommon.QueryResult<ProductsAllConnectionQuery, ProductsAllConnectionQueryVariables>;
 export const CreateStoreDocument = gql`
     mutation createStore($name: String!, $profileId: String!, $coverId: String!, $bio: String, $website: String) {
   createStore(name: $name, profileId: $profileId, coverId: $coverId, bio: $bio, website: $website) {

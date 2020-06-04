@@ -19,8 +19,9 @@ import { StorePrivate, UserPrivate, PayoutType } from "typings/gqlTypes";
 import { CreateStoreInput, HtmlEvent } from "typings"
 // Components
 import Loading from "components/Loading";
-import SnackBarA from "components/Snackbars/SnackbarA";
 import CreateStoreFields from "./CreateStoreFields";
+// Snackbar
+import { useSnackbar, ProviderContext } from "notistack";
 // Material UI
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
@@ -42,6 +43,7 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
 // store deleted
 import { isStoreDeleted, storeCreateRedirectCondition } from "utils/store";
+import { ApolloRefetch } from "layout/GetUser";
 // uuidv4
 import { v4 as uuidv4 } from "uuid"
 
@@ -52,71 +54,71 @@ const CreateStoreForm: React.FC<ReactProps> = (props) => {
 
   const dispatch = useDispatch();
   const router = useRouter();
+  const snackbar = useSnackbar();
 
-  const [state, setState] = React.useState({
-    displayErr: true,
-    displaySuccess: true,
+  const {
+    userRedux,
+    userRefetch,
+  } = useSelector<GrandReduxState, ReduxState>(s => {
+    return {
+      userRedux: s.reduxLogin.user,
+      userRefetch: s.reduxRefetch.refetchUser,
+    }
   })
-
-  const userRedux = useSelector<GrandReduxState, UserPrivate>(
-    s => s.reduxLogin.user
-  )
 
   const [storeCreate, { data, loading, error }] =
   useMutation<MutationData, CreateStoreInput>(
     CREATE_STORE, {
     onError: (e) => console.log(e),
     update: (cache, { data }: { data: MutationData }) => {
-      const { createStore: { store } } = data;
-
-      try {
-        dispatch(Actions.reduxLogin.SET_USER({ ...userRedux, store }))
-        cache.writeQuery({
-          query: GET_USER,
-          data: {
-            user: {
-              ...userRedux,
-              store: store
-            }
-          }
-        });
-      } catch (error) {
-        console.log("Query `GET_USER` doesn't exist in cache, no update needed");
-      }
     },
+    onCompleted: async (dataCreateStore: MutationData) => {
+      // const { createStore: { store } } = dataCreateStore;
+      // console.log("createStore.store", store)
+      // dispatch(Actions.reduxLogin.SET_USER_STORE(store))
+    }
   })
 
   const [setPayoutMethod, mutationResponse] =
   useMutation<MutationData2, MutationVars2>(
     SET_PAYOUT_METHOD, {
-    update: (cache, { data: { setPayoutMethod: { user } } }) => {
-
-      // props.resetPayoutMethodEmail();
-      // update redux user, this is the one that triggers UI update
-      dispatch(Actions.reduxLogin.SET_USER({
-        ...userRedux,
-        ...user
-      }))
-
-      try {
-        // update cache as well for GET_USER query
-        cache.writeQuery({
-          query: GET_USER,
-          data: {
-            user: { ...userRedux, ...user }
-          },
-        });
-      } catch (error) {
-        console.log(error)
-      }
-    },
     variables: {
       payoutType: PayoutType.PAYPAL,
       payoutEmail: "",
       payoutProcessor: "Paypal",
       payoutProcessorId: "id"
+    },
+    update: (cache, { data: { setPayoutMethod: { user } } }) => {
+    },
+    onCompleted: ({ setPayoutMethod: { user }}) => {
+      // props.resetPayoutMethodEmail();
+      // WARN: SET_USER may be batched with the SET_USER redux call above
+      // dispatch(Actions.reduxLogin.SET_USER({
+      //   ...userRedux,
+      //   ...user
+      // }))
     }
   })
+
+  React.useEffect(() => {
+    if (data) {
+      snackbar.enqueueSnackbar(
+        `Successfully created store:
+          ${option(data).createStore.store.name("Your store")}`,
+        { variant: "success" }
+      )
+    }
+  }, [data])
+
+  React.useEffect(() => {
+    if (error) {
+      snackbar.enqueueSnackbar(
+        `Oh oh: ${JSON.stringify(error)}`,
+        { variant: "error" }
+      )
+    }
+  }, [error])
+
 
   return (
     <Formik
@@ -145,7 +147,9 @@ const CreateStoreForm: React.FC<ReactProps> = (props) => {
             coverId: values.coverId,
             profileId: values.profileId,
           }
-        }).then(res => {
+        }).then(({ data: { createStore: { store }}}) => {
+          console.log('storeCreated: ', store)
+          dispatch(Actions.reduxLogin.SET_USER_STORE(store))
           // set payoutMethod after creating a store
           setPayoutMethod({
             variables: {
@@ -154,9 +158,10 @@ const CreateStoreForm: React.FC<ReactProps> = (props) => {
               payoutProcessor: "Paypal",
               payoutProcessorId: "id"
             }
-          }).then(res2 => {
-            console.log('payoutMethod response', res2)
-
+          }).then(async({ data: { setPayoutMethod }}) => {
+            console.log('payoutMethod response', setPayoutMethod)
+            dispatch(Actions.reduxLogin.SET_USER(setPayoutMethod.user))
+            props.closeModal()
             // router.push("/seller?created=store")
           })
         })
@@ -202,7 +207,10 @@ const CreateStoreForm: React.FC<ReactProps> = (props) => {
         if (!option(userRedux).id()) {
           return (
             <div className={classes.loginContainer}>
-              <Login redirectOnComplete={"none"}/>
+              <Login
+                redirectOnComplete={"none"}
+                asFormLayout={true}
+              />
             </div>
           )
         }
@@ -210,29 +218,22 @@ const CreateStoreForm: React.FC<ReactProps> = (props) => {
         return (
           <CreateStoreFormWrapper
             classes={classes}
-            onSubmit={handleSubmit}
+            onSubmit={(e) => {
+              e.preventDefault()
+              handleSubmit(e)
+              e.stopPropagation()
+              // NOTE: Formik onSubmit will propagate to other forms on the page
+              // for modals, this means clicking "create store" on this modal
+              // will attempt a form submission on the "create product" page
+              // below, triggering the "touched" fields unwittingly.
+              // e.stropPropagation prevents that
+            }}
             asModal={props.asModal}
             loading={loading}
           >
             <CreateStoreFields
               title={props.title}
               {...fprops}
-            />
-            <SnackBarA
-              open={data !== undefined && state.displaySuccess}
-              closeSnackbar={() => setState(s => ({ ...s, displaySuccess: false }))}
-              message={`Successfully created store:
-                ${option(data).createStore.store.name("Your store")}`
-              }
-              variant={"success"}
-              autoHideDuration={3000}
-            />
-            <SnackBarA
-              open={error !== undefined && state.displayErr}
-              closeSnackbar={() => setState(s => ({ ...s, displayErr: false }))}
-              message={`Oh oh: ${JSON.stringify(error)}`}
-              variant={"error"}
-              autoHideDuration={3000}
             />
             { loading && <Loading fixed loading={loading} delay={"200ms"}/>}
           </CreateStoreFormWrapper>
@@ -318,6 +319,10 @@ interface FormWrapperProps extends WithStyles<typeof styles> {
   loading?: boolean;
 }
 
+interface ReduxState {
+  userRedux: UserPrivate;
+  userRefetch: ApolloRefetch;
+}
 interface MutationData {
   createStore: { store: StorePrivate };
 }
@@ -335,6 +340,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   data?: any;
   asModal?: boolean;
   title?: string;
+  closeModal?(): void;
 }
 
 

@@ -3,6 +3,7 @@ import React from "react";
 import {oc as option} from "ts-optchain";
 // GraphQL
 import { useQuery } from "@apollo/react-hooks";
+import { DocumentNode } from "graphql";
 // typings
 import { PageBasedConnection, ConnectionQuery, PageCursor } from "typings/gqlTypes";
 import { GenericPageBasedConnection, GenericConnection } from "typings";
@@ -92,7 +93,7 @@ const usePaginatePagedQuery = () =>
 
 
 export interface usePaginateQueryProps<QueryData, NodeType> {
-  query: string;
+  query: DocumentNode;
   variables: any;
   connectionSelector(data: QueryData): [
     // GenericConnection<NodeType> | GenericPageBasedConnection<NodeType>,

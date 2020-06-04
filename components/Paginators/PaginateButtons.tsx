@@ -12,6 +12,7 @@ import { WatchQueryFetchPolicy } from "apollo-client";
 // Paginator hooks
 import usePaginateQueryHook from "components/Paginators/usePaginateQueryHook";
 import { GenericConnection } from "typings";
+import { DocumentNode } from "graphql";
 
 
 
@@ -191,7 +192,7 @@ export const PaginateButtons: React.FC<PaginateButtonsProps> = (props) => {
 
 
 interface PaginateButtonsWithQueryProps<QueryData, NodeType> {
-  query: string;
+  query: DocumentNode;
   variables: any;
   sortAscending: boolean;
   connectionSelector(data: QueryData): [GenericConnection<NodeType>, string];

@@ -37,7 +37,7 @@ const GetUser = (props: ReactProps) => {
     GET_USER, {
     variables: {},
     onCompleted: (data: QueryData) => {
-      getUserOnCompleted(dispatch)(data, refetch)
+      setUserOnCompleted(dispatch)(data, refetch)
     },
     onError: (error: ApolloError) => {
       // swallow error message: not loggedIn, and no user_id provided
@@ -61,44 +61,41 @@ interface QueryData {
   user: UserPrivate;
 }
 
-export const getUserOnCompleted =
+export type ApolloRefetch = (variables?: Record<string, any>) => Promise<ApolloQueryResult<QueryData>>
+
+export const refetchUser =
+(apolloClient: ApolloClient<any>) =>
+async (variables?: any): Promise<ApolloQueryResult<QueryData>> => {
+  return await apolloClient.query<QueryData>({
+    query: GET_USER,
+    variables: variables ? variables : {}
+  })
+}
+
+export const setUserOnCompleted =
 (dispatch: Dispatch<any>) =>
 (
   data: QueryData,
-  refetch?: (variables?: Record<string, any>) => Promise<ApolloQueryResult<QueryData>>
+  refetch?: ApolloRefetch
 ) => {
 
   // update Redux user state on initial page load
-  if (option(data).user.cart() && option(data).user.store()) {
-    // console.log("1: userCartStore")
-    dispatch(reduxBatchUpdate.userCartStoreId(data))
-  } else if (option(data).user.cart()) {
-    // console.log("2: userCart")
-    dispatch(reduxBatchUpdate.userCart(data))
-  } else if (option(data).user.store()) {
-    // console.log("3: userStore")
-    dispatch(reduxBatchUpdate.userStoreId(data))
-  } else if (option(data).user()) {
-    // console.log("4: user")
-    dispatch(Actions.reduxLogin.SET_USER(data.user))
+  if (option(data).user.id() && refetch) {
+    // set User profile, and userRefetch in REDUX
+    dispatch(reduxBatchUpdate.userCart(data, refetch))
   } else {
-  }
-
-  // Tell analytics this user is logged in
-  if (refetch) {
-    console.log(refetch)
-    dispatch(Actions.reduxRefetch.SET_REFETCH_USER(refetch))
+    // set User profile, and userRefetch in REDUX
+    dispatch(Actions.reduxLogin.SET_USER(data.user))
   }
 }
-
 
 //////////////// REDUX THUNK CREATORS /////////////////////
 export const reduxBatchUpdate = {
-  userCartStoreId: (data: QueryData) => (dispatch: Dispatch) => {
+  userCart: (data: QueryData, refetch?: ApolloRefetch) => (dispatch: Dispatch) => {
     batch(() => {
+      // set User Profile in REDUX
       dispatch(Actions.reduxLogin.SET_USER(data.user));
-      // dispatch(Actions.reduxCart.UPDATE_CART(data.user.cart));
-      dispatch(Actions.reduxProductCreate.UPDATE_STORE_ID(data.user.store.id));
+
       dispatch(Actions.reduxWishlist.SET_WISHLIST(
         option(data).user.wishlistItemsConnection()
       ));
@@ -106,28 +103,15 @@ export const reduxBatchUpdate = {
         option(data).user.followingStores.edges([])
           .map(({ node }) => node.store.id)
       ));
-    })
-  },
-  userCart: (data: QueryData) => (dispatch: Dispatch) => {
-    batch(() => {
-      dispatch(Actions.reduxLogin.SET_USER(data.user));
-      // dispatch(Actions.reduxCart.UPDATE_CART(data.user.cart));
-      dispatch(Actions.reduxWishlist.SET_WISHLIST(
-        option(data).user.wishlistItemsConnection()
-      ));
-      dispatch(Actions.reduxFollowingStores.SET_FOLLOWING_STORES(
-        option(data).user.followingStores.edges([])
-          .map(({ node }) => node.store.id)
-      ));
-    })
-  },
-  userStoreId: (data: QueryData) => (dispatch: Dispatch, state) => {
-    batch(() => {
-      dispatch(Actions.reduxLogin.SET_USER(data.user));
-      dispatch(Actions.reduxProductCreate.UPDATE_STORE_ID(data.user.store.id));
+
+      // set userRefetch in REDUX
+      dispatch(Actions.reduxRefetch.SET_REFETCH_USER(
+        refetch
+      ))
     })
   },
 }
+
 
 //////////////////////////
 ////////// SSR ///////////

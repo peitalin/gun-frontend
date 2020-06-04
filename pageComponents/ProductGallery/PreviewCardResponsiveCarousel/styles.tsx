@@ -29,6 +29,7 @@ export const styles = (theme: Theme) => createStyles({
     display: 'flex',
     flexDirection: 'column',
     flexWrap: 'wrap',
+    width: '100%',
     // boxShadow: '0 2px 4px 0 rgba(0,0,0,.2)',
     // "&:hover":{
       // boxShadow: '0 2px 4px 0 rgba(0,0,0,0.2)',

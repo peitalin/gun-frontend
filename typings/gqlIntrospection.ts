@@ -102,9 +102,6 @@
             "name": "CuratedListsEdge"
           },
           {
-            "name": "ProductsEdge"
-          },
-          {
             "name": "StoresEdge"
           }
         ]

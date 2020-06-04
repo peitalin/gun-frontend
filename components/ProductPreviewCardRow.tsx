@@ -4,7 +4,7 @@ import clsx from "clsx";
 import { Colors } from "layout/AppTheme";
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 // Typings
-import { Product_Preview_Items, Product, ProductVariant } from "typings/gqlTypes";
+import { ProductPreviewItem, Product, ProductVariant } from "typings/gqlTypes";
 // Material UI
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
@@ -66,7 +66,7 @@ const ProductPreviewCardRow = (props: ReactProps) => {
             // empty 1px image. use background-image: url(image.jpg) instead
             // to prevent image re-render flashs
           />
-        : option(previewItem).youtubeEmbedLink()
+        : option(previewItem).youTubeEmbedLink()
           ? <CardMedia
               component="img"
               className={clsx(
@@ -83,7 +83,7 @@ const ProductPreviewCardRow = (props: ReactProps) => {
                 width: props.width ? props.width : CARD_WIDTH,
               }}
               // onLoad={() => setPreviewLoaded(s => s + 1)}
-              src={getYouTubeVimeoImagePreview(previewItem.youtubeEmbedLink)}
+              src={getYouTubeVimeoImagePreview(previewItem.youTubeEmbedLink)}
               title={props.title}
             />
           : <div
@@ -110,7 +110,7 @@ const ProductPreviewCardRow = (props: ReactProps) => {
 const borderRadius = 4;
 
 interface ReactProps extends WithStyles<typeof styles> {
-  previewItem: Product_Preview_Items;
+  previewItem: ProductPreviewItem;
   className?: any;
   title?: string;
   style?: any;

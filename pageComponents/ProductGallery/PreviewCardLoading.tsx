@@ -51,7 +51,7 @@ const PreviewCardLoading = (props: ReactProps) => {
     jumboXl = false,
   } = props;
   const image =  option(previewItem).image();
-  const youTubeVimeoEmbedLink =  option(previewItem).youtubeEmbedLink();
+  const youTubeVimeoEmbedLink =  option(previewItem).youTubeEmbedLink();
 
   React.useEffect(() => {
     setYouTubeVimeoPreview(getYouTubeVimeoImagePreview(youTubeVimeoEmbedLink))
@@ -181,7 +181,11 @@ const PreviewCardResponsive: React.FC<PreviewCardResponsiveProps> = (props) => {
     <>
       {/* xs */}
       <Hidden only={["sm", "md", "lg", "xl"]}>
-        <ProductRow product={product} />
+        <ProductRow
+          product={product as any}
+          // Products is not Product type
+          // make sure you get Products from gateway, not directly fron Hasura
+        />
       </Hidden>
       {/* sm */}
       <Hidden only={["xs", "md", "lg", "xl"]}>

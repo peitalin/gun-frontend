@@ -25,10 +25,8 @@ const PriceDisplayProductPage = (props: ReactProps) => {
     isSoldOut = false,
   } = props;
 
-  const {
-    actualPrice,
-    basePrice,
-  } = props.priceDetails;
+  const actualPrice = props.price;
+  const basePrice = props.priceWas;
 
   const price = currency(actualPrice/100, { formatWithSymbol: true })
   const priceWas = currency(basePrice/100, { formatWithSymbol: true })
@@ -38,7 +36,7 @@ const PriceDisplayProductPage = (props: ReactProps) => {
 
   const savingsPercent = Math.round((basePrice - actualPrice)/basePrice * 100);
 
-  const expiresAt = findSoonestDiscountExpiry(props.priceDetails);
+  // const expiresAt = findSoonestDiscountExpiry(props.priceDetails);
   const remainingText = props.quantityAvailable ? ` - ${props.quantityAvailable} left` : ""
 
 
@@ -80,7 +78,7 @@ const PriceDisplayProductPage = (props: ReactProps) => {
             }
           </div>
         </div>
-        {
+        {/* {
           expiresAt &&
           expiresAt.getSeconds &&
           expiresAt.getSeconds() > 0 &&
@@ -96,7 +94,7 @@ const PriceDisplayProductPage = (props: ReactProps) => {
               />
             </div>
           </div>
-        }
+        } */}
         {/* {
           props.quantityAvailable &&
           <div className={classes.innerContainerSpreadCountdown}>
@@ -118,7 +116,8 @@ interface ReactProps extends WithStyles<typeof styles> {
   hidePriceWas?: boolean;
   quantityAvailable?: number | null;
   isSoldOut?: boolean;
-  priceDetails: PriceDetails;
+  price: number;
+  priceWas: number;
   countDownStyle?: any;
 }
 

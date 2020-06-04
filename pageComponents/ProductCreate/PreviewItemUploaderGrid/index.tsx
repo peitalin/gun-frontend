@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import { oc as option } from "ts-optchain";
 // Redux
 import { useDispatch, useSelector } from "react-redux";
@@ -10,8 +10,10 @@ import { Colors } from "layout/AppTheme";
 // Material UI
 import Typography from "@material-ui/core/Typography";
 // Media uploader
-import Dropzone, { IFileWithMeta, IUploadParams } from "react-dropzone-uploader";
-import "react-dropzone-uploader/dist/styles.css";
+import { IFileWithMeta, IUploadParams } from "components/ReactDropzoneUploader/Dropzone";
+import Dropzone from "components/ReactDropzoneUploader/Dropzone";
+import "components/ReactDropzoneUploader/styles.css";
+
 import {
   google_storage_register,
   google_storage_save_image_to_db,
@@ -26,8 +28,7 @@ import { DzuPreviewOrder, DzuPreviewItem } from "typings/dropzone";
 import Loading from "components/Loading";
 import LoadingBar from "components/LoadingBar";
 // DZU components
-import UploadLayout from "./UploadLayout";
-import UploadInput from "./UploadInput";
+import UploadLayoutPreviews from "./UploadLayoutPreviews";
 // Components
 import { Formik, Form, FormikProps, ErrorMessage, FormikErrors } from 'formik';
 import ErrorBounds from 'components/ErrorBounds';
@@ -41,27 +42,6 @@ import { reduxToFormikCurrentVariants } from "../ProductCreatePage";
 
 
 const PreviewItemUploaderGrid = (props: ReactProps & FormikProps<FormikFields>) => {
-
-  //// Props and State ////
-
-  const {
-    classes,
-    productInput,
-    reducerName,
-    storeId,
-    productId,
-    ...fprops
-  } = props;
-
-  const aClient = useApolloClient();
-  const actions = Actions[props.reducerName];
-  const dispatch = useDispatch();
-
-  const ref = React.useRef(null);
-  const focused = useFocus(ref);
-
-  const [googleUploads, setGoogleUploads] = React.useState<GoogleUpload[]>([]);
-  const [loading, setLoading] = React.useState(false);
 
   //// Functions ////
 
@@ -101,7 +81,7 @@ const PreviewItemUploaderGrid = (props: ReactProps & FormikProps<FormikFields>) 
   const handleChangeStatus = (fileWithMeta: IFileWithMeta, status: string) => {
     //// called every time a file's `status` changes
     let { meta, file, xhr } = fileWithMeta;
-    console.log("status:::::", status)
+    // console.info("status:", status, meta, file)
 
     if (status === "getting_upload_params") {
       setLoading(true)
@@ -164,40 +144,57 @@ const PreviewItemUploaderGrid = (props: ReactProps & FormikProps<FormikFields>) 
       }
       const description = null;
       const tags = "";
-      google_storage_save_image_to_db(
-        googleUpload.googleUploadId,
-        description,
-        tags,
-        ownerIds,
-        aClient
-      ).then(image => {
-        console.log("save_to_db response:", image.id)
-        let newPreview: DzuPreviewItem = {
-          id: meta.id,
-          name: meta.name,
-          previewUrl: meta.previewUrl,
-          fileId: image.id,
-          percent: meta.percent,
-          size: meta.size,
-          status: meta.status,
-          duration: meta.duration,
-          fileWithMeta: fileWithMeta,
-          youTubeVimeoEmbedLink: "", // image, not youtube link
-        }
-        // console.log("updating: ", newPreview.id)
-        dispatch(actions.UPDATE_PREVIEW_ITEM( newPreview ))
-        props.validateForm()
-      })
-      .catch(err => {
-        console.log("err response:", err)
-        dispatch(actions.REMOVE_PREVIEW_ITEMS([ meta.id ]))
-        props.validateForm()
-      })
-      .finally(() => {
-        setLoading(false)
-      })
+
+      google_storage_save_image_to_db(googleUpload.googleUploadId, description, tags, ownerIds, aClient)
+        .then(image => {
+          // console.log("save_to_db response:", image.id)
+          let newPreview: DzuPreviewItem = {
+            id: meta.id,
+            name: meta.name,
+            previewUrl: meta.previewUrl,
+            fileId: image.id,
+            percent: meta.percent,
+            size: meta.size,
+            status: meta.status,
+            duration: meta.duration,
+            fileWithMeta: fileWithMeta,
+            youTubeVimeoEmbedLink: "", // image, not youtube link
+          }
+          // console.log("updating: ", newPreview.id)
+          dispatch(actions.UPDATE_PREVIEW_ITEM( newPreview ))
+          props.validateForm()
+        })
+        .catch(err => {
+          console.log("err response:", err)
+          dispatch(actions.REMOVE_PREVIEW_ITEMS([ meta.id ]))
+          props.validateForm()
+        })
+        .finally(() => {
+          setLoading(false)
+        })
     }
   }
+
+  //// Props and State ////
+
+  const {
+    classes,
+    productInput,
+    reducerName,
+    storeId,
+    productId,
+    ...fprops
+  } = props;
+
+  const aClient = useApolloClient();
+  const actions = Actions[props.reducerName];
+  const dispatch = useDispatch();
+
+  const ref = React.useRef(null);
+  const focused = useFocus(ref);
+
+  const [googleUploads, setGoogleUploads] = React.useState<GoogleUpload[]>([]);
+  const [loading, setLoading] = React.useState(false);
 
   //// Effects ////
 
@@ -235,25 +232,25 @@ const PreviewItemUploaderGrid = (props: ReactProps & FormikProps<FormikFields>) 
       </div>
 
       <Dropzone
+        uploaderType="image-uploader"
         getUploadParams={getUploadParams}
         onChangeStatus={handleChangeStatus}
         multiple={false}
         canCancel={false}
         canRestart={false}
         LayoutComponent={React.memo((layProps) =>
-          <UploadLayout
+          <UploadLayoutPreviews
             reducerName={props.reducerName}
             {...layProps}
           />
         )}
-        InputComponent={(props) =>
-          <UploadInput
-            setTouched={() => {
-              fprops.setFieldTouched('currentVariants[0].previewItems', true)
-            }}
-            {...props}
-          />
-        }
+        setTouched={() => {
+          fprops.setFieldTouched('currentVariants[0].previewItems', true)
+        }}
+        reducerName={props.reducerName}
+        // InputComponent={UploadInput as any}
+        // imported directly to workaround handleBlur bug.
+        // See comments in /components/ReactDropzone/Dropzone.tsx
         accept={"image/*"}
         maxFiles={maxPreviewImages}
         inputContent={(files, extra) => (extra.reject ? 'Image files only' : 'Drag Images')}

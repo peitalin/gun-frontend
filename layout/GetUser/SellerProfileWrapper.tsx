@@ -67,7 +67,7 @@ export const GetUserWrapper = (props) => {
 export const SellerProfileWrapper = (props) => {
 
   const dispatch = useDispatch();
-  const user = useSelector<GrandReduxState, UserPrivate>(
+  const userRedux = useSelector<GrandReduxState, UserPrivate>(
     s => s.reduxLogin.user
   )
 
@@ -80,40 +80,53 @@ export const SellerProfileWrapper = (props) => {
     onCompleted: (data) => {
       if (refetch) {
         // console.log('saving refetchStore: ', refetch)
-        // dispatch(Actions.reduxRefetch.SET_REFETCH_STORE(refetch))
+        dispatch(Actions.reduxRefetch.SET_REFETCH_STORE(refetch))
         // merge StorePrivate (dashboard stuff)
-        dispatch(Actions.reduxLogin.SET_USER({
-          ...user,
-          store: {
-            ...user.store,
-            ...data.user.store
-          }
-        }))
+        console.log('saving GET_STORE_PRIVATE: ', data.user)
+        if (option(data).user.store.id()) {
+          dispatch(Actions.reduxLogin.SET_USER_STORE(data.user.store))
+        }
       }
     },
+    fetchPolicy: "network-only",
     errorPolicy: "all",
   });
+
+  const getUserDataFromGqlOrRedux = (): QueryData => {
+    if (option(data).user.store.id()) {
+      return data
+    }
+    if (option(userRedux).store.id()) {
+      return { user: userRedux }
+    } else {
+      return data
+    }
+  }
+
+  let data2 = getUserDataFromGqlOrRedux()
 
   if (loading) {
     // return <Loading fixed loading={loading} delay={"200ms"} />;
     return <LoadingBarSSR/>;
   }
-  if (!option(data).user.id() && process.browser) {
+  if (!option(data2).user.id() && process.browser) {
     // user who is not logged in will error, causing a redirect
+    let redirectCondition = !option(data2).user.id() && process.browser;
+    // console.log("redirectCondition: ", redirectCondition)
     return (
       <Redirect
         message={"Login required. Redirecting to login..."}
-        redirectCondition={!!error}
+        redirectCondition={redirectCondition}
         redirectDelay={1000}
         redirectRoute={"/login"}
       />
     )
   }
-  if (storeCreateRedirectCondition(option(data).user.store()) && process.browser) {
+  if (storeCreateRedirectCondition(option(data2).user.store()) && process.browser) {
     return (
       <Redirect
         message={"Store required. Redirecting to create a store..."}
-        redirectCondition={!option(data).user.store.id()}
+        redirectCondition={!option(data2).user.store.id()}
         redirectDelay={1000}
         redirectRoute={"/create-seller-profile"}
       />
@@ -124,7 +137,7 @@ export const SellerProfileWrapper = (props) => {
       loading,
       error,
       refetch,
-      data,
+      data: data2,
     }
 
     return (

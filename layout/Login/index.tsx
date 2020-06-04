@@ -33,7 +33,7 @@ import {
 } from "./utils";
 import { reduxBatchUpdate } from "layout/GetUser";
 import { useSnackbar, ProviderContext } from "notistack";
-
+import { ApolloRefetch, refetchUser } from "layout/GetUser";
 
 /////////////////////////////////////////
 //////// Login Modal Component //////////
@@ -79,7 +79,7 @@ const Login: React.FC<ReactProps> = (props) => {
   /////////////////////////////////////////////////
   /////////////////////////////////////////////////
 
-  const handleGraphQLResponse = ({ data, loading, errors }: Aprops) => {
+  const handleGraphQLResponse = ({ data, loading, errors, refetch }: Aprops) => {
     if (errors !== undefined) {
       handleGqlError(errors)
     }
@@ -96,8 +96,9 @@ const Login: React.FC<ReactProps> = (props) => {
       // if login/signup succeeded, and there is a redirect...
       handleRedirect()
       handleCallback()
-      // Update redux user and cart state
-      dispatch(reduxBatchUpdate.userCart({ user: user }))
+      // Update redux user and cart state and refetch
+      // console.log("saving user and userRefetch to redux: ", refetch)
+      dispatch(reduxBatchUpdate.userCart({ user: user }, refetch))
       handleUpdateLoginState(user, loading, errors)
     }
   }
@@ -165,7 +166,7 @@ const Login: React.FC<ReactProps> = (props) => {
       })
     }
 
-    let { data, loading, errors }: Aprops = await apolloClient.query({
+    let { data, loading, errors, refetch }: Aprops = await apolloClient.query({
       query: LOGIN,
       variables: {
         email: email.trim(),
@@ -175,7 +176,7 @@ const Login: React.FC<ReactProps> = (props) => {
       errorPolicy: "all", // propagate errors from backend to Snackbar
     });
 
-    handleGraphQLResponse({ data, loading, errors });
+    handleGraphQLResponse({ data, loading, errors, refetch });
   }
 
   /////////////////////////////////////////////////
@@ -206,7 +207,14 @@ const Login: React.FC<ReactProps> = (props) => {
       errorPolicy: "all", // propagate errors from backend to Snackbar
     });
 
-    handleGraphQLResponse({ data, loading: state.buttonLoading, errors });
+    const refetch = refetchUser(apolloClient);
+
+    handleGraphQLResponse({
+      data,
+      loading: state.buttonLoading,
+      errors,
+      refetch: refetch,
+    });
   }
 
   /////////////////////////////////////////////////
@@ -296,7 +304,7 @@ const Login: React.FC<ReactProps> = (props) => {
             dispatchCreateUser={dispatchCreateUser}
             dispatchResetPassword={dispatchResetPassword}
           />
-        : props.checkoutClaimPage
+        : props.asFormLayout
           ? <LoginPageRedirect
               className={props.className}
               buttonLoading={state.buttonLoading}
@@ -337,7 +345,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   buttonVariant?: string;
   compact?: boolean;
   redirectOnComplete?: string;
-  checkoutClaimPage?: boolean;
+  asFormLayout?: boolean;
   buttonProps?: any;
   buttonText?: string;
   titleLogin?: string;
@@ -355,6 +363,10 @@ interface Aprops {
   };
   loading?: boolean;
   errors?: any;
+  refetch?: ApolloRefetch;
+}
+interface QueryData {
+  user: UserPrivate; errors?: any;
 }
 
 

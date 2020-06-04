@@ -7,7 +7,7 @@ import { Colors } from "layout/AppTheme";
 import { useDispatch, useSelector } from "react-redux";
 import { Actions } from "reduxStore/actions";
 // Typings
-import { Products } from "typings/gqlTypes";
+import { Product } from "typings/gqlTypes";
 // Utils
 import ErrorBounds from "components/ErrorBounds";
 // Material UI
@@ -28,9 +28,9 @@ const ProductRow = (props: ReactProps) => {
 
   const { classes, product } = props;
 
-  const featuredVariant = option(product).currentSnapshot.currentVariants[0]();
-  const previewItem = option(product).currentSnapshot.currentVariants[0].previewItems[0]();
-  const previewItems = option(product).currentSnapshot.currentVariants[0].previewItems([]);
+  const featuredVariant = option(product).currentVariants[0]();
+  const previewItem = option(product).currentVariants[0].previewItems[0]();
+  const previewItems = option(product).currentVariants[0].previewItems([]);
 
   // const priceDetails = option(featuredVariant).priceDetails();
   const priceDetails = {};
@@ -86,7 +86,7 @@ const ProductRow = (props: ReactProps) => {
                 variant="body1"
                 component="div"
               >
-                {trimTitle(option(product).currentSnapshot.title(""), 48)}
+                {trimTitle(option(product).title(""), 48)}
               </Typography>
 
               <div className={clsx(
@@ -114,7 +114,7 @@ const ProductRow = (props: ReactProps) => {
 }
 
 interface ReactProps extends WithStyles<typeof styles> {
-  product: Products;
+  product: Product;
 }
 
 const styles = (theme: Theme) => createStyles({

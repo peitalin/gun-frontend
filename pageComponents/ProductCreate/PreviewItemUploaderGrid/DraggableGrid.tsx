@@ -20,16 +20,18 @@ export const GridItem = SortableElement((props) => {
 
 
 export const Grid = SortableContainer((props) => {
+
   const {
     numColumns = 3,
     children
   } = props;
+
   return (
     <div style={{
       display: 'grid',
       gridTemplateColumns: `repeat(${numColumns}, 1fr)`,
       gridGap: '12px',
-      maxWidth: 'calc(5 * 88px)',
+      // maxWidth: 'calc(5 * 88px)',
     }}>
       {
         children &&

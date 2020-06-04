@@ -10,7 +10,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { GrandReduxState } from "reduxStore/grand-reducer";
 import { Actions } from "reduxStore/actions";
 // Typings
-import { Products } from "typings/gqlTypes";
+import { ProductsConnection, ConnectionOffsetQuery } from "typings/gqlTypes";
 // Components
 import dynamic from "next/dynamic";
 import NewReleaseProducts from "pageComponents/ProductGallery/NewReleaseProducts";
@@ -42,11 +42,6 @@ const ProductGallery: React.FC<ReactProps> = (props) => {
   // const mdDown = useMediaQuery(theme.breakpoints.down('md'));
   // const smDown = useMediaQuery(theme.breakpoints.down('sm'));
 
-  const { loading, error, data } = useQuery<QueryData, QueryVar>(
-    GET_PRODUCTS, {
-    variables: { },
-    ssr: true,
-  })
 
 
   return (
@@ -55,31 +50,19 @@ const ProductGallery: React.FC<ReactProps> = (props) => {
       <CovidBanner />
       <div className={classes.flexRowInner}>
         <div className={clsx(classes.productColumn60, 'fadeInFast')}>
-          {
-            data && data.products &&
-            <div style={{
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
-              <div className={classes.maxWidth}>
-                <NewReleaseProducts
-                  initialProducts={
-                    undefined
-                    // {
-                    //   edges: data.products.map(p => {
-                    //     return {
-                    //       node: p
-                    //     }
-                    //   })
-                    // }
-                  }
-                  count={24}
-                />
-              </div>
+          <div style={{
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+            <div className={classes.maxWidth}>
+              <NewReleaseProducts
+                initialProducts={undefined}
+                count={24}
+              />
             </div>
-          }
+          </div>
         </div>
       </div>
     </div>
@@ -89,9 +72,10 @@ const ProductGallery: React.FC<ReactProps> = (props) => {
 interface ReactProps extends WithStyles<typeof styles> {
 }
 interface QueryData {
-  products: Products;
+  productsAllConnection: ProductsConnection;
 }
 interface QueryVar {
+  query: ConnectionOffsetQuery
 }
 
 

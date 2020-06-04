@@ -1,5 +1,5 @@
 
-import * as React from "react";
+import React from "react";
 import { oc as option } from "ts-optchain";
 import clsx from "clsx";
 // Redux
@@ -9,12 +9,15 @@ import { Actions } from "reduxStore/actions";
 import { ReducerName } from "typings/dropzone";
 // Media uploader
 import {
-  formatBytes,
-  formatDuration,
   Preview,
   IPreviewProps,
-} from "react-dropzone-uploader";
-import "react-dropzone-uploader/dist/styles.css";
+} from "components/ReactDropzoneUploader/Dropzone";
+import {
+  formatBytes,
+  formatDuration,
+} from "components/ReactDropzoneUploader/utils";
+import "components/ReactDropzoneUploader/styles.css";
+
 // Typings
 import { DzuPreviewItem } from "typings/dropzone";
 // Carousel
@@ -93,6 +96,7 @@ const ImageUploadProgress = (props: ReactProps & ReduxProps) => {
 
   // console.log('percent3:', percent)
 
+
   if (status === 'error_file_size' || status === 'error_validation') {
     return (
       <div>
@@ -110,7 +114,6 @@ const ImageUploadProgress = (props: ReactProps & ReduxProps) => {
       </div>
     )
   }
-
 
   return (
     <>

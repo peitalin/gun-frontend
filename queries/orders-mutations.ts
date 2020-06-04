@@ -1,5 +1,5 @@
 import gql from "graphql-tag";
-import { OrderFragment } from "./fragments";
+// import { OrderFragment } from "./fragments";
 // import { Order } from "typings/gqlTypes";
 type Order = any;
 
@@ -27,13 +27,14 @@ export const CHECKOUT_PRODUCTS = gql`
     ) {
       ... on OrderCreateMutationResponse {
         unconfirmedOrder {
-          ...OrderFragment
+          id
+          # ...OrderFragment
         }
       }
     }
   }
-  ${OrderFragment}
 `;
+  // # ${OrderFragment}
 
 export interface CheckoutProductsResponse {
   data?: {
@@ -48,13 +49,13 @@ export const CHECKOUT_CART_FOR_FRONTEND_PAYMENT = gql`
     checkoutCartForFrontendPayment(quotedPrice: $quotedPrice) {
       ... on OrderMutationResponse {
         order {
-          ...OrderFragment
+          id
         }
       }
     }
   }
-  ${OrderFragment}
 `;
+  // ${OrderFragment}
 
 export interface CheckoutCartForFrontendPaymentResponse {
   data?: {
@@ -77,13 +78,14 @@ export const CHECKOUT_PRODUCTS_FOR_FRONTEND_PAYMENT = gql`
     ) {
       ... on OrderMutationResponse {
         order {
-          ...OrderFragment
+          id
+          # ...OrderFragment
         }
       }
     }
   }
-  ${OrderFragment}
 `;
+  // ${OrderFragment}
 
 export interface CheckoutProductsForFrontendPaymentResponse {
   data: {
@@ -104,13 +106,14 @@ export const CONFIRM_ORDER_AFTER_FRONTEND_PAYMENT = gql`
     ) {
       ... on OrderMutationResponse {
         order {
-          ...OrderFragment
+          id
+          # ...OrderFragment
         }
       }
     }
   }
-  ${OrderFragment}
 `;
+  // ${OrderFragment}
 
 export interface ConfirmOrderAfterFrontendPaymentResponse {
   data?: {

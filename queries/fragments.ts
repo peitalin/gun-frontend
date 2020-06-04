@@ -1,30 +1,5 @@
 import gql from "graphql-tag";
 
-export const HasuraImageFragment = gql`
-  fragment HasuraImageFragment on image_parents {
-    id
-    original {
-      id
-      url
-      mimeType
-      heightInPixels
-      widthInPixels
-      sizeInBytes
-      url
-    }
-    variants {
-      id
-      mimeType
-      sizeInBytes
-      widthInPixels
-      heightInPixels
-      url
-    }
-    createdAt
-    tags
-    description
-  }
-`;
 
 export const ImageFragment = gql`
   fragment ImageFragment on Image {
@@ -89,11 +64,19 @@ export const ProductFragment = gql`
     isSuspended
     isDeleted
     isExcludedFromRecommendations
-    currentSnapshot {
-      name
-      title
-      description
-    }
+
+    title
+    description
+    condition
+    make
+    model
+    ammoType
+    actionType
+    boreDiameter
+    serialNumber
+    location
+    dealer
+
     currentVariants {
       ...ProductVariantFragment
     }
@@ -227,11 +210,8 @@ export const StorePublicFragment = gql`
     }
     productsForSaleConnection {
       id
-      currentSnapshot {
-        id
-        serialNumber
-        title
-      }
+      serialNumber
+      title
     }
     # productsForSaleConnection {
     #   edges {
@@ -266,11 +246,8 @@ export const StorePrivateFragment = gql`
     }
     productsForSaleConnection {
       id
-      currentSnapshot {
-        id
-        serialNumber
-        title
-      }
+      serialNumber
+      title
     }
     # dashboardPublishedProductsConnection {
     #   edges {

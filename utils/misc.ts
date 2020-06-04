@@ -11,3 +11,20 @@ export const filterUnique = <T>(someArray: T[], idProvider: (item: T) => string)
   }
   return toReturn;
 }
+
+// Fisher-Yates algorithm Shuffles array in place.
+export const shuffle = (arr) => {
+
+  let j;
+  let x;
+  let i;
+
+  for (i = arr.length - 1; i > 0; i--) {
+      j = Math.floor(Math.random() * (i + 1));
+      x = arr[i];
+      arr[i] = arr[j];
+      arr[j] = x;
+  }
+
+  return arr;
+}

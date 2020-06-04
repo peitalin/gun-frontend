@@ -60,6 +60,8 @@ export const styles = (theme: Theme) => createStyles({
     borderRadius: '0px 0px 3px 3px', // looks like 4px
     // progresss bars look like 4px using 3px
     overflow: 'hidden',
+    display: 'flex',
+    alignItems: 'center',
   },
   progressUnfilled: {
     backgroundImage: "linear-gradient(90deg, #eee 0%, #eee 100%)"

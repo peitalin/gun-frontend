@@ -70,6 +70,7 @@ const AdvancedSettings = (props: ReactProps) => {
 
 interface ReactProps extends WithStyles<typeof styles> {
   user: UserPrivate
+  goBack?(): void;
 }
 
 const styles = (theme: Theme) => createStyles({

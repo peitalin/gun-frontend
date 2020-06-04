@@ -33,6 +33,8 @@ import { HtmlEvent, EditUserProfileInput } from "typings";
 // // Next
 // import dynamic from 'next/dynamic'
 // const DynamicPaymentMethods = dynamic(() => import('./PaymentMethods'))
+import { refetchUser } from "layout/GetUser";
+import { useApolloClient } from "@apollo/react-hooks";
 
 
 
@@ -44,82 +46,75 @@ const MySettings = (props: ReactProps & ReduxProps) => {
     asModal = true,
   } = props;
 
+  const apolloClient = useApolloClient();
+
   const showMySettingsStripeComponent = useSelector<GrandReduxState, boolean>(
     state => state.reduxStripe.showMySettingsStripeComponent
   );
 
-  const { loading, data, error } = useQuery<QueryData>(
-    GET_USER, {
-    variables: {},
-    onError: (e) => {
-      console.log(e)
-    },
-    errorPolicy: "all",
-  });
+  const user = useSelector<GrandReduxState, UserPrivate>(
+    state => state.reduxLogin.user
+  );
+  console.log("userRedux MySettings: ", user);
 
-  if (loading) {
-    return <Loading loading={loading} delay={"400ms"} />;
-  }
-  if (error) {
-    return <ErrorDisplay title={"User Settings"} error={error}/>;
-  }
-  if (!option(data).user.id()) {
-    return <ErrorDisplay title={"User Settings"}/>;
-  } else {
-    let { user } = data;
-    return (
-      <ErrorBounds className={clsx(
-        asModal ? classes.root : classes.rootPage
-      )}>
-        <div className={props.classes.titleRow}>
-          <Typography variant="h2">
-            My Settings
-          </Typography>
-          <IconButton onClick={() => props.goBack()}>
-            <ClearIcon/>
-          </IconButton>
-        </div>
+  React.useEffect(() => {
+    refetchUser(apolloClient)
+  }, [])
 
-        <div className={props.classes.titleRow2}>
-          <Typography variant="h3">
-            Edit Profile
-          </Typography>
-        </div>
+  return (
+    <ErrorBounds className={clsx(
+      asModal ? classes.root : classes.rootPage
+    )}>
+      <div className={props.classes.titleRow}>
+        <Typography variant="h2">
+          My Settings
+        </Typography>
+        <IconButton onClick={() => props.goBack()}>
+          <ClearIcon/>
+        </IconButton>
+      </div>
 
+      <div className={props.classes.titleRow2}>
+        <Typography variant="h3">
+          Edit Profile
+        </Typography>
+      </div>
+
+      <div className={classes.section}>
+        <ChangeUserEmailForm
+          goBack={props.goBack}
+        />
+      </div>
+
+      <div className={classes.section}>
+        <ChangePasswordForm/>
+      </div>
+
+      {
+        option(user).store() &&
         <div className={classes.section}>
-          <ChangeUserEmailForm
-            goBack={props.goBack}
-          />
-        </div>
+          <ChangePayoutMethod/>
+        </div >
+      }
 
-        <div className={classes.section}>
-          <ChangePasswordForm/>
-        </div>
+      <div className={classes.section}>
+      {
+        // Show only 1 Stripe Card instance at a time
+        showMySettingsStripeComponent &&
+        <PaymentMethods user={user}/>
+      }
+      </div>
 
-        {
-          option(user).store() &&
-          <div className={classes.section}>
-            <ChangePayoutMethod/>
-          </div >
-        }
+      <div className={classes.sectionLast}>
+        <AdvancedSettings
+          user={user}
+          goBack={props.goBack}
+        />
+      </div>
 
-        <div className={classes.section}>
-          {
-            // Show only 1 Stripe Card instance at a time
-            showMySettingsStripeComponent &&
-            <PaymentMethods user={user}/>
-          }
-        </div>
-
-        <div className={classes.sectionLast}>
-          <AdvancedSettings user={user}/>
-        </div>
-
-      </ErrorBounds>
-    );
-  }
+    </ErrorBounds>
+  );
 }
-
 
 interface ReactProps extends WithStyles<typeof styles> {
   goBack(): void;

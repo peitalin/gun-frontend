@@ -2,7 +2,7 @@ import React from "react";
 import clsx from "clsx";
 import { oc as option } from "ts-optchain";
 // Typings
-import { Categories, Products, Product_Preview_Items } from "typings/gqlTypes";
+import { Categories, Product } from "typings/gqlTypes";
 // Responsiveness
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
@@ -16,9 +16,9 @@ import PreviewCardRC from "./PreviewCardRC";
 const PreviewCardResponsive: React.FC<PreviewCardResponsiveProps> = (props) => {
 
   const { product, refetch } = props;
-  const featuredVariant = option(product).currentSnapshot.currentVariants[0]();
-  const previewItem = option(product).currentSnapshot.currentVariants[0].previewItems[0]();
-  const previewItems = option(product).currentSnapshot.currentVariants[0].previewItems([]);
+  const featuredVariant = option(product).featuredVariant();
+  const previewItem = option(product).featuredVariant.previewItems[0]();
+  const previewItems = option(product).featuredVariant.previewItems([]);
   const original = option(previewItem).image.original();
 
   const theme = useTheme();
@@ -28,7 +28,11 @@ const PreviewCardResponsive: React.FC<PreviewCardResponsiveProps> = (props) => {
     <>
       {/* xs */}
       <Hidden only={["sm", "md", "lg", "xl"]}>
-        <ProductRow product={product} />
+        <ProductRow
+          product={product as any}
+          // Products is not Product type
+          // make sure you get Products from gateway, not directly fron Hasura
+        />
       </Hidden>
       {/* sm */}
       <Hidden only={["xs", "md", "lg", "xl"]}>
@@ -41,8 +45,8 @@ const PreviewCardResponsive: React.FC<PreviewCardResponsiveProps> = (props) => {
             previewItem={previewItem}
             previewItems={previewItems}
             product={product}
-            title={option(product).currentSnapshot.title()}
-            tagline={option(product).currentSnapshot.model()}
+            title={option(product).title()}
+            tagline={option(product).model()}
             category={option(product).category()}
             price={option(featuredVariant).price()}
             priceWas={option(featuredVariant).priceWas()}
@@ -72,8 +76,8 @@ const PreviewCardResponsive: React.FC<PreviewCardResponsiveProps> = (props) => {
           previewItem={previewItem}
           previewItems={previewItems}
           product={product}
-          title={option(product).currentSnapshot.title()}
-          tagline={option(product).currentSnapshot.model()}
+          title={option(product).title()}
+          tagline={option(product).model()}
           category={option(product).category()}
           price={option(featuredVariant).price()}
           priceWas={option(featuredVariant).priceWas()}
@@ -102,8 +106,8 @@ const PreviewCardResponsive: React.FC<PreviewCardResponsiveProps> = (props) => {
           previewItem={previewItem}
           previewItems={previewItems}
           product={product}
-          title={option(product).currentSnapshot.title()}
-          tagline={option(product).currentSnapshot.model()}
+          title={option(product).title()}
+          tagline={option(product).model()}
           category={option(product).category()}
           price={option(featuredVariant).price()}
           priceWas={option(featuredVariant).priceWas()}
@@ -131,8 +135,8 @@ const PreviewCardResponsive: React.FC<PreviewCardResponsiveProps> = (props) => {
           previewItem={previewItem}
           previewItems={previewItems}
           product={product}
-          title={option(product).currentSnapshot.title()}
-          tagline={option(product).currentSnapshot.model()}
+          title={option(product).title()}
+          tagline={option(product).model()}
           category={option(product).category()}
           price={option(featuredVariant).price()}
           priceWas={option(featuredVariant).priceWas()}
@@ -161,7 +165,7 @@ const PreviewCardResponsive: React.FC<PreviewCardResponsiveProps> = (props) => {
 
 
 interface PreviewCardResponsiveProps {
-  product: Products;
+  product: Product;
   showWishListButton?: boolean;
   viewWidth?: number;
   listName?: string;

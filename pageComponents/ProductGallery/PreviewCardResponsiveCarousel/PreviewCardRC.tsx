@@ -13,7 +13,7 @@ import Link from "next/link";
 import WishlistIcon from "components/WishlistIcon";
 import DiscountBadge from "components/DiscountBadge";
 // Typings
-import { Categories, Products, Product_Preview_Items } from "typings/gqlTypes";
+import { ProductCategory, Product, ProductPreviewItem } from "typings/gqlTypes";
 import { genSrcSet, genImgBreakpoints } from "utils/images";
 import { getYouTubeVimeoImagePreview } from "utils/strings";
 import PriceDisplayMain from "components/PriceDisplayMain";
@@ -28,7 +28,7 @@ import AirCarousel from "components/AirCarousel";
 import { useScrollXPosition, useCalcNumItemsFromWindowWidth } from "utils/hooks";
 import AspectRatioConstraint from "components/AspectRatioConstraint";
 import PreviewImageEmpty from "./PreviewImageEmpty";
-import CarouselItemWrapper from "./CarouselItemWrapper";
+import AspectCarouselItemLink from "./AspectCarouselItemLink";
 import {
   CARD_MAX_WIDTH,
   CARD_MAX_WIDTH_XL,
@@ -87,6 +87,8 @@ const PreviewCardRC = (props: ReactProps) => {
 
   const carouselId = `air-paginator-${product.id}-${listName}`
 
+  console.log("product:", product)
+
   return (
     <div className={clsx(classes.rootContainer)}
       style={
@@ -99,7 +101,7 @@ const PreviewCardRC = (props: ReactProps) => {
         id={carouselId}
         // handleClickLeft={getPrevPage}
         // handleClickRight={getNextPage}
-        disableButtons={false}
+        disableButtons={previewItems.length < 2}
         // scrollSnapType={"none"}
         rightDither={false}
         scrollItemsPerClick={1}
@@ -114,16 +116,16 @@ const PreviewCardRC = (props: ReactProps) => {
       >
         {
           (previewItems.length === 0) &&
-          <CarouselItemWrapper
+          <AspectCarouselItemLink
             i={0}
             classes={classes}
             shouldLoadImage={shouldLoadImage}
             setLoadCarouselPics={props.setLoadCarouselPics}
             productIndex={props.productIndex}
-            productId={props.productId}
+            productId={props.product.id}
           >
             <PreviewImageEmpty/>
-          </CarouselItemWrapper>
+          </AspectCarouselItemLink>
         }
         {
           (previewItems.length > 0) &&
@@ -132,17 +134,17 @@ const PreviewCardRC = (props: ReactProps) => {
             const image =  option(previewItem).image();
             let img600 = option(image).variants([]).filter(v => v.widthInPixels === 600)[0];
             let youTubeVimeoPreview = getYouTubeVimeoImagePreview(
-              option(previewItem).youtubeEmbedLink()
+              option(previewItem).youTubeEmbedLink()
             );
 
             return (
-              <CarouselItemWrapper key={i}
+              <AspectCarouselItemLink key={i}
                 i={i}
                 classes={classes}
                 shouldLoadImage={shouldLoadImage}
                 setLoadCarouselPics={props.setLoadCarouselPics}
                 productIndex={props.productIndex}
-                productId={props.productId}
+                productId={props.product.id}
               >
               {
                 (img600 && img600.url || image)
@@ -193,7 +195,7 @@ const PreviewCardRC = (props: ReactProps) => {
                     />
                   : <PreviewImageEmpty/>
               }
-              </CarouselItemWrapper>
+              </AspectCarouselItemLink>
             )
           })
         }
@@ -204,7 +206,7 @@ const PreviewCardRC = (props: ReactProps) => {
           showWishListButton &&
           <WishlistIcon
             productId={option(props).product.id()}
-            variantId={option(props).product.currentSnapshot.featuredVariant.variantId()}
+            variantId={option(props).product.featuredVariant.variantId()}
             refetch={refetch}
             style={{
               top: '-0.8rem',
@@ -267,20 +269,19 @@ const PreviewCardRC = (props: ReactProps) => {
 }
 
 interface ReactProps extends WithStyles<typeof styles> {
-  previewItem: Product_Preview_Items;
-  previewItems?: Product_Preview_Items[];
-  product: Products;
+  previewItem: ProductPreviewItem;
+  previewItems?: ProductPreviewItem[];
+  product: Product;
   fit?: boolean; // object-fit the image
   title: string;
   tagline: string;
-  category: Categories;
+  category: ProductCategory;
   price: number;
   priceWas?: number;
   quantityAvailable?: number | null;
   isSoldOut?: boolean;
   viewWidth?: number | string;
   viewWidthOffset?: number | string;
-  productId?: string;
   productVariantId?: string;
   showWishListButton?: boolean;
   jumboXl?: boolean;

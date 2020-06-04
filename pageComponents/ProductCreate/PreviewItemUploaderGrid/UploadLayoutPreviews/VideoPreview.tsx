@@ -18,7 +18,7 @@ import IconButton from "@material-ui/core/IconButton";
 import YouTubeIcon from "components/Icons/YouTube";
 import { DzuPreviewOrder, DzuPreviewItem } from "typings/dropzone";
 // helpers
-import { genSrcSet } from "utils/files";
+import { genSrcSet, genImgBreakpoints } from "utils/images";
 import { getYouTubeVimeoImagePreview } from "utils/strings";
 
 
