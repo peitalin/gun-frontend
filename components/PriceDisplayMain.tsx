@@ -8,11 +8,10 @@ import { Colors } from "layout/AppTheme";
 import Typography from "@material-ui/core/Typography";
 import Button from '@material-ui/core/Button';
 // Utils Components
-import { Price, PriceDetails } from "typings/gqlTypes";
+import { Price } from "typings/gqlTypes";
 import CountdownBadge from "./CountdownBadge";
 // money
 import currency from "currency.js";
-import { findSoonestDiscountExpiry } from "utils/prices";
 
 
 
@@ -127,7 +126,7 @@ const styles = (theme: Theme) => createStyles({
     marginRight: '0.5rem',
     fontSize: "1.25rem",
     fontWeight: 500,
-    color: Colors.green,
+    color: Colors.blue,
     lineHeight: 1.2, // needed to aligned price, priceWas, quantity
     // color: Colors.charcoal,
   },
@@ -142,8 +141,8 @@ const styles = (theme: Theme) => createStyles({
     fontSize: "0.875rem",
   },
   finalCountDown: {
-    // color: Colors.grey,
-    color: Colors.green,
+    color: Colors.grey,
+    // color: Colors.green,
     fontSize: "0.875rem",
     fontWeight: 500,
   },

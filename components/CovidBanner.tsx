@@ -36,7 +36,7 @@ const CovidBanner = (props) => {
   const theme = useTheme();
   const smDown = useMediaQuery(theme.breakpoints.down("sm"))
 
-  const colorBg = Colors.magenta
+  const colorBg = Colors.lightBlue
 
   if (!showCovidBanner) {
     return <div></div>

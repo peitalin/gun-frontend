@@ -4,16 +4,15 @@ import { oc as option } from "ts-optchain";
 import { createStyles, Theme, withStyles, WithStyles } from "@material-ui/core/styles";
 import { Colors } from "layout/AppTheme";
 import Typography from "@material-ui/core/Typography";
-import { PriceDetails } from "typings/gqlTypes";
 import { asCurrency as c } from "utils/prices";
 
 
 const DiscountBadge: React.FC<ReactProps> = (props) => {
 
-  const { classes, priceDetails } = props;
-  const { actualPrice, basePrice } = priceDetails;
+  const { classes } = props;
+  const { price, priceWas } = props;
 
-  const savingsPercent = Math.round((basePrice - actualPrice)/basePrice * 100)
+  const savingsPercent = Math.round((priceWas - price)/priceWas * 100)
 
   if (savingsPercent < 1) {
     return (
@@ -32,7 +31,8 @@ const DiscountBadge: React.FC<ReactProps> = (props) => {
 }
 
 interface ReactProps extends WithStyles<typeof styles> {
-  priceDetails: PriceDetails;
+  price: number;
+  priceWas: number;
 }
 
 const styles = (theme: Theme) => createStyles({

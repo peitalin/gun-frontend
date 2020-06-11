@@ -8,11 +8,10 @@ import { Colors } from "layout/AppTheme";
 import Typography from "@material-ui/core/Typography";
 import Button from '@material-ui/core/Button';
 // Utils Components
-import { Price, PriceDetails } from "typings/gqlTypes";
+import { Price } from "typings/gqlTypes";
 import CountdownBadge from "./CountdownBadge";
 // money
 import currency from "currency.js";
-import { findSoonestDiscountExpiry } from "utils/prices";
 
 
 
@@ -36,7 +35,6 @@ const PriceDisplayProductPage = (props: ReactProps) => {
 
   const savingsPercent = Math.round((basePrice - actualPrice)/basePrice * 100);
 
-  // const expiresAt = findSoonestDiscountExpiry(props.priceDetails);
   const remainingText = props.quantityAvailable ? ` - ${props.quantityAvailable} left` : ""
 
 

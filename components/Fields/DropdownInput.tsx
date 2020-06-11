@@ -45,6 +45,7 @@ const DropdownInput = (props: ReactProps) => {
       classes.root,
       classes.width100,
       classes.creatableSelect,
+      props.className && props.className,
     )}>
       {
         props.creatable

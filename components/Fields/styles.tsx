@@ -25,12 +25,10 @@ export const styles = (theme: Theme) => createStyles({
     flexBasis: '100%',
     marginRight: '0rem',
     fontFamily: '"Helvetica Neue",Arial,sans-serif',
-    marginTop: '0.5rem',
     fontSize: '0.9rem',
     fontWeight: 400,
   },
   creatableSelect: {
-    paddingBottom: '1rem',
   },
   selectMultiline: {
     padding: 0,

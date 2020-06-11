@@ -13,11 +13,10 @@ import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
 import YouTubeIcon from "components/Icons/YouTube";
 // Typings
-import { ProductPreviewItem, ProductCategory, Image, PriceDetails } from "typings/gqlTypes";
+import { ProductPreviewItem, ProductCategory } from "typings/gqlTypes";
 import { genSrcSet } from "utils/files";
 import { getYouTubeVimeoImagePreview } from "utils/strings";
 import PriceDisplayMain from "components/PriceDisplayMain";
-import DiscountBadge from "components/DiscountBadge";
 
 
 

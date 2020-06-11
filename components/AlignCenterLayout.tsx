@@ -6,7 +6,7 @@ import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/s
 import Hidden from "components/HiddenFix";
 // Recommendations
 import Loading from "components/Loading";
-import LoadingCards from "pageComponents/ProductGallery/LoadingCards";
+import LoadingCards from "pageComponents/FrontPage/LoadingCards";
 import Typography from "@material-ui/core/Typography";
 import ProductPageRecommendations from "pageComponents/P/ProductPageRecommendations";
 // Next

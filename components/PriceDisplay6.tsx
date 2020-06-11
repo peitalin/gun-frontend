@@ -7,11 +7,10 @@ import { Colors } from "layout/AppTheme";
 import Typography from "@material-ui/core/Typography";
 import Button from '@material-ui/core/Button';
 // Utils Components
-import { Price, PriceDetails } from "typings/gqlTypes";
+import { Price } from "typings/gqlTypes";
 import CountdownBadge from "./CountdownBadge";
 // money
 import currency from "currency.js";
-import { findSoonestDiscountExpiry } from "utils/prices";
 
 
 
@@ -25,18 +24,17 @@ const PriceDisplay6 = (props: ReactProps) => {
   } = props;
 
   const {
-    actualPrice,
-    basePrice,
-  } = props.priceDetails;
+    priceWas,
+    price,
+  } = props;
 
-  const price = currency(actualPrice/100, { formatWithSymbol: true })
-  const priceWas = currency(basePrice/100, { formatWithSymbol: true })
-  const savings = (actualPrice >= basePrice)
+  const priceDisplay = currency(price/100, { formatWithSymbol: true })
+  const priceWasDisplay = currency(priceWas/100, { formatWithSymbol: true })
+
+  const savings = (price >= priceWas)
     ?  currency(0, { formatWithSymbol: true })
-    :  currency((actualPrice - basePrice)/100, { formatWithSymbol: true })
+    :  currency((price - priceWas)/100, { formatWithSymbol: true })
 
-  const expiresAt = findSoonestDiscountExpiry(props.priceDetails);
-  const remainingText = props.quantityAvailable ? ` - ${props.quantityAvailable} left` : ""
 
   if (isSoldOut) {
     return (
@@ -51,19 +49,19 @@ const PriceDisplay6 = (props: ReactProps) => {
       <>
         <div className={clsx(classes.innerContainerSpread, classes.flexWrap)}>
           <div className={classes.priceInnerContainer}>
-            <Typography className={classes.price} variant="body2">
-              {price.format()}
+            <Typography className={classes.price} variant="body1">
+              {priceDisplay.format()}
             </Typography>
             {
               !hidePriceWas &&
-              (basePrice > actualPrice) &&
-              <Typography className={classes.priceWas} variant="body2">
-                {priceWas.format()}
+              (price > priceWas) &&
+              <Typography className={classes.priceWas} variant="body1">
+                {priceWasDisplay.format()}
               </Typography>
             }
           </div>
           <div className={clsx(classes.innerContainerSpread, classes.flexWrap)}>
-            {
+            {/* {
               expiresAt &&
               expiresAt.getSeconds &&
               expiresAt.getSeconds() > 0 &&
@@ -76,8 +74,8 @@ const PriceDisplay6 = (props: ReactProps) => {
                   endDate={expiresAt}
                 />
               </div>
-            }
-            {
+            } */}
+            {/* {
               props.quantityAvailable &&
               expiresAt &&
               expiresAt.getSeconds &&
@@ -95,7 +93,7 @@ const PriceDisplay6 = (props: ReactProps) => {
                   {`${props.quantityAvailable} available`}
                 </Typography>
               </div>
-            }
+            } */}
           </div>
         </div>
       </>
@@ -110,7 +108,8 @@ interface ReactProps extends WithStyles<typeof styles> {
   hidePriceWas?: boolean;
   quantityAvailable?: number | null;
   isSoldOut?: boolean;
-  priceDetails: PriceDetails;
+  price: number;
+  priceWas?: number;
 }
 
 const styles = (theme: Theme) => createStyles({
