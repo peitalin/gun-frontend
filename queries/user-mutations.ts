@@ -140,3 +140,23 @@ export const LOGOUT = gql`
     }
   }
 `;
+
+export const CONFIRM_RESET_PASSWORD = gql`
+  mutation confirmResetPassword(
+    $email: String!
+    $expiresAt: Date!
+    $resetId: String!
+    $newPassword: String!
+  ) {
+    confirmResetPassword(
+      email: $email
+      expiresAt: $expiresAt
+      resetId: $resetId
+      newPassword: $newPassword
+    ) {
+      email
+      resetId
+      expiresAt
+    }
+  }
+`;

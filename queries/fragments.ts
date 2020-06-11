@@ -112,9 +112,6 @@ export const ProductFragment = gql`
 //       orderStatus
 //       createdAt
 //       updatedAt
-//       priceDetails {
-//         ...PriceDetailsFragment
-//       }
 //       product {
 //         id
 //         name
@@ -154,13 +151,8 @@ export const ProductFragment = gql`
 //       total
 //       paymentProcessor
 //     }
-//     attachedPromoCodes {
-//       ...DiscountFragment
-//     }
 //   }
-//   ${PriceDetailsFragment}
 //   ${ProductVariantFragment}
-//   ${DiscountFragment}
 // `;
 
 // export const ProductSalesFragment = gql`
@@ -208,11 +200,6 @@ export const StorePublicFragment = gql`
     profile {
       ...ImageFragment
     }
-    productsForSaleConnection {
-      id
-      serialNumber
-      title
-    }
     # productsForSaleConnection {
     #   edges {
     #     node {
@@ -243,11 +230,6 @@ export const StorePrivateFragment = gql`
     }
     profile {
       ...ImageFragment
-    }
-    productsForSaleConnection {
-      id
-      serialNumber
-      title
     }
     # dashboardPublishedProductsConnection {
     #   edges {
@@ -285,17 +267,9 @@ export const StorePrivateFragment = gql`
     #     endCursor
     #   }
     # }
-    # promoCodeDiscounts(query: { count: 20 }) {
-    #   edges {
-    #     node {
-    #       ...DiscountFragment
-    #     }
-    #   }
-    # }
   }
   ${ImageFragment}
 `;
-  // ${DiscountFragment}
 
 export const PaymentMethodFragment = gql`
   fragment PaymentMethodFragment on PaymentMethod {

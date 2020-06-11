@@ -4,9 +4,15 @@ import { ProductFragment } from "queries/fragments";
 
 
 
-export const GET_PRODUCTS = gql`
-  query productsAllConnection($query: ConnectionOffsetQuery) {
-    productsAllConnection(query: $query) {
+export const GET_ALL_PRODUCTS = gql`
+  query productsAllConnection(
+    $searchTerm: String!
+    $query: ConnectionOffsetQuery
+  ) {
+    productsAllConnection(
+      searchTerm: $searchTerm,
+      query: $query
+    ) {
       totalCount
       pageInfo {
         isLastPage

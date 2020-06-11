@@ -11,6 +11,18 @@ export const GET_STORE_PUBLIC = gql`
   query getStorePublic($storeId: String!) {
     store(id: $storeId) {
       ...StorePublicFragment
+      productsForSaleConnection(query: {
+        limit: 10,
+        offset: 0,
+      }) {
+        edges {
+          node {
+            id
+            serialNumber
+            title
+          }
+        }
+      }
     }
   }
   ${StorePublicFragment}
@@ -46,6 +58,18 @@ export const GET_STORE_PRIVATE = gql`
           profile {
             ...ImageFragment
           }
+          productsForSaleConnection(query: {
+            limit: 10,
+            offset: 0,
+          }) {
+            edges {
+              node {
+                id
+                serialNumber
+                title
+              }
+            }
+          }
         }
       }
     }
@@ -75,19 +99,6 @@ export const GET_STORE_PRIVATE = gql`
 //         node {
 //           id
 //           name
-//           ... on StorePrivate {
-//             promoCodeDiscounts(query: { count: 5 }) {
-//               edges {
-//                 node {
-//                   id
-//                   createdAt
-//                   modifier
-//                   valuePercentageOff
-//                   promoCode
-//                 }
-//               }
-//             }
-//           }
 //         }
 //       }
 //     }
@@ -152,33 +163,3 @@ export const GET_STORE_PRIVATE = gql`
 // `;
 
 
-
-// export const GET_PROMO_CODES_CONNECTION = gql`
-// query getPromoCodesConnection($query: ConnectionQuery) {
-//   user {
-//     id
-//     ... on UserPrivate {
-//       store {
-//         id
-//         promoCodeDiscounts(query: $query) {
-//           edges {
-//             cursor
-//             node {
-//               id
-//               createdAt
-//               modifier
-//               valuePercentageOff
-//               promoCode
-//             }
-//           }
-//           totalCount
-//           pageInfo {
-//             isLastPage
-//             endCursor
-//           }
-//         }
-//       }
-//     }
-//   }
-// }
-// `;

@@ -17,7 +17,6 @@ import {
   Product,
   ProductEditInput,
   Image,
-  Discount,
   BlankMutationResponse
 } from "typings/gqlTypes";
 import { Actions } from "reduxStore/actions";
@@ -230,32 +229,4 @@ interface MutationDataPublishProduct {
 interface MutationVarPublishProduct {
   productEditInput: ProductEditInput
 }
-
-
-// export const editStorePromoCode = async(
-//   discountId: string,
-//   isDisabled: boolean,
-//   aClient: ApolloClient<object>,
-// ) => {
-//   const response = await aClient.mutate<MutationDataEditStorePromoCode, MutationVarEditStorePromoCode>({
-//     mutation: EDIT_STORE_PROMO_CODE,
-//     variables: {
-//       input: {
-//         discountId: discountId,
-//         isDisabled: isDisabled,
-//       }
-//     }
-//   });
-//   return response
-// }
-
-// interface MutationDataEditStorePromoCode {
-//   editStorePromoCode: { discount: Discount }
-// }
-// interface MutationVarEditStorePromoCode {
-//   input: {
-//     discountId: string;
-//     isDisabled: boolean;
-//   }
-// }
 
