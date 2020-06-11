@@ -21,7 +21,7 @@ import PriceDisplayMain from "components/PriceDisplayMain";
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import Hidden from "@material-ui/core/Hidden";
-import ProductRow from "pageComponents/ProductGallery/FeaturedProductsMobile/ProductRow";
+import ProductRow from "pageComponents/FrontPage/FeaturedProductsMobile/ProductRow";
 // Carousel
 import AirItemWide from "components/AirCarousel/AirItemWide";
 import AirCarousel from "components/AirCarousel";
@@ -35,7 +35,7 @@ import {
   CARD_MIN_WIDTH,
   styles,
 } from "./styles";
-
+import { showDateAndTime } from "utils/dates";
 
 
 /// NOTE:
@@ -87,7 +87,6 @@ const PreviewCardRC = (props: ReactProps) => {
 
   const carouselId = `air-paginator-${product.id}-${listName}`
 
-  console.log("product:", product)
 
   return (
     <div className={clsx(classes.rootContainer)}
@@ -153,7 +152,7 @@ const PreviewCardRC = (props: ReactProps) => {
                     component="img"
                     className={clsx(
                       fit ? classes.cardMediaFit : classes.cardMedia,
-                      (previewLoaded > 0) ? "fadeInFast" : 'hidden',
+                      // (previewLoaded > 0) ? "fadeInFast" : 'hidden',
                     )}
                     onLoad={() => {
                       setTimeout(() => {
@@ -183,7 +182,7 @@ const PreviewCardRC = (props: ReactProps) => {
                       component="img"
                       className={clsx(
                         fit ? classes.cardMediaFit : classes.cardMedia,
-                      (previewLoaded > 0) ? "fadeInFast" : 'hidden',
+                      // (previewLoaded > 0) ? "fadeInFast" : 'hidden',
                       )}
                       onLoad={() => {
                         setTimeout(() => {
@@ -235,6 +234,7 @@ const PreviewCardRC = (props: ReactProps) => {
               >
                 {option(props).category.name()}
               </Typography>
+
               <Typography
                 className={clsx(
                   classes.title,
@@ -245,6 +245,19 @@ const PreviewCardRC = (props: ReactProps) => {
               >
                 {option(title)(".... ".repeat(2))}
               </Typography>
+
+              <Typography
+                className={classes.createdAt}
+                variant="caption"
+                component="div"
+              >
+                {
+                  option(product).createdAt()
+                    ? showDateAndTime(product.createdAt)
+                    : undefined
+                }
+              </Typography>
+
               <div className={clsx(
                 classes.priceAbsoluteBottom,
                 !option(props).price() ? "pulse" : null

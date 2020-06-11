@@ -21,7 +21,7 @@ import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 // GraphQL
 import { useQuery, useApolloClient } from "@apollo/react-hooks";
-import { GET_PRODUCTS } from "queries/gun-queries";
+import { GET_ALL_PRODUCTS } from "queries/gun-queries";
 
 
 
@@ -38,8 +38,9 @@ const ProductGallery: React.FC<ReactProps> = (props) => {
   // const smDown = useMediaQuery(theme.breakpoints.down('sm'));
 
   const { loading, error, data } = useQuery<QueryData, QueryVar>(
-    GET_PRODUCTS, {
+    GET_ALL_PRODUCTS, {
     variables: {
+      limit: 3,
     },
     ssr: true,
   })

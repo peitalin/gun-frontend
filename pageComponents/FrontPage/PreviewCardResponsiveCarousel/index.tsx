@@ -7,7 +7,7 @@ import { Categories, Product } from "typings/gqlTypes";
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import Hidden from "@material-ui/core/Hidden";
-import ProductRow from "pageComponents/ProductGallery/FeaturedProductsMobile/ProductRow";
+import ProductRow from "pageComponents/FrontPage/FeaturedProductsMobile/ProductRow";
 import PreviewCardRC from "./PreviewCardRC";
 
 

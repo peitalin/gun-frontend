@@ -10,21 +10,15 @@ import ApolloClient from "apollo-client";
 import dynamic from "next/dynamic";
 // GraphQL
 import { serverApolloClient } from "utils/apollo";
-import ProductGallery from "pageComponents/ProductGallery";
-// Material UI
-import Card from "@material-ui/core/Card";
-import CardActionArea from "@material-ui/core/CardActionArea";
-import CardActions from "@material-ui/core/CardActions";
-import CardContent from "@material-ui/core/CardContent";
-import CardMedia from "@material-ui/core/CardMedia";
+import FrontPage from "pageComponents/FrontPage";
 
 
 
-const FrontPage: NextPage<ReactProps> = (props) => {
+const HomePage: NextPage<ReactProps> = (props) => {
 
   return (
     <div>
-      <ProductGallery/>
+      <FrontPage/>
     </div>
   )
 }
@@ -43,7 +37,7 @@ interface Context extends NextPageContext {
   apolloClient: ApolloClient<any>;
 }
 
-FrontPage.getInitialProps = async (ctx: Context) => {
+HomePage.getInitialProps = async (ctx: Context) => {
 
   // Will trigger this getInitialProps when requesting route /pages/ProductGallery
   // otherwise initialProps may be fed via /pages/index.tsx's getInitialProps
@@ -76,7 +70,7 @@ FrontPage.getInitialProps = async (ctx: Context) => {
 }
 
 
-export default withStyles(styles)( FrontPage );
+export default withStyles(styles)( HomePage );
 
 
 

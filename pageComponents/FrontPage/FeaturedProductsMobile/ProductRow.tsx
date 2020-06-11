@@ -32,8 +32,8 @@ const ProductRow = (props: ReactProps) => {
   const previewItem = option(product).currentVariants[0].previewItems[0]();
   const previewItems = option(product).currentVariants[0].previewItems([]);
 
-  // const priceDetails = option(featuredVariant).priceDetails();
-  const priceDetails = {};
+  const price = option(featuredVariant).price();
+  const priceWas = option(featuredVariant).priceWas();
   const quantityAvailable = 0;
   const isSoldOut = false;
 
@@ -91,12 +91,13 @@ const ProductRow = (props: ReactProps) => {
 
               <div className={clsx(
                 classes.priceAbsoluteBottom,
-                !priceDetails ? "pulse" : null
+                // !priceDetails ? "pulse" : null
               )}>
                 {
-                  (priceDetails)
+                  (price)
                   ? <PriceDisplay3
-                      priceDetails={priceDetails as any}
+                      price={price}
+                      priceWas={priceWas}
                       hideSavings={true}
                       quantityAvailable={0}
                       isSoldOut={isSoldOut}

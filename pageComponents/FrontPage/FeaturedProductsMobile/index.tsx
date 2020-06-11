@@ -15,8 +15,8 @@ import WishlistIcon from "components/WishlistIcon";
 // Graphq
 import {
   GET_RECOMMENDED_PRODUCTS,
-  GET_DEALS_ENDING_SOON_PRODUCTS,
-  GET_LIMITED_RELEASE_PRODUCTS,
+  // GET_DEALS_ENDING_SOON_PRODUCTS,
+  // GET_LIMITED_RELEASE_PRODUCTS,
   GET_PRODUCTS_BY_CATEGORY,
 } from "queries/products-queries";
 // import { GET_CURATED_LIST } from "queries/curated-lists";
@@ -41,7 +41,6 @@ import { useSelector } from "react-redux";
 import { GrandReduxState } from "reduxStore/grand-reducer";
 import { WishlistItemId } from "reduxStore/wishlist-reducer";
 // helper
-import { findSoonestDiscountExpiry } from "utils/prices";
 import { useCalcNumItemsFromWindowWidth } from "utils/hooks";
 // Wishlist
 // import { QueryWishlistHookArgs } from "pageComponents/Wishlist";
@@ -151,7 +150,7 @@ const FeaturedProductsMobile = (props: ReactProps) => {
                   category={option(product).category()}
                   price={option(featuredVariant).price()}
                   priceWas={option(featuredVariant).priceWas()}
-                  quantityAvailable={option(featuredVariant).currentStockLevel.quantityAvailable()}
+                  // quantityAvailable={option(featuredVariant).currentStockLevel.quantityAvailable()}
                   isSoldOut={option(featuredVariant).isSoldOut()}
                   fit={original ? (original.heightInPixels > original.widthInPixels) : false}
                   topHalfFraction={props.topHalfFraction}

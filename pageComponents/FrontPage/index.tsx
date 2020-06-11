@@ -13,7 +13,7 @@ import { Actions } from "reduxStore/actions";
 import { ProductsConnection, ConnectionOffsetQuery } from "typings/gqlTypes";
 // Components
 import dynamic from "next/dynamic";
-import NewReleaseProducts from "pageComponents/ProductGallery/NewReleaseProducts";
+import NewReleaseProducts from "pageComponents/FrontPage/NewReleaseProducts";
 // import ProductCreatePage from "./ProductCreatePage";
 import Loading from "components/Loading";
 import CookiesBanner from "components/CookiesBanner";
@@ -25,13 +25,11 @@ import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 // GraphQL
 import { useQuery, useApolloClient } from "@apollo/react-hooks";
-import { GET_PRODUCTS } from "queries/gun-queries";
-import JSONTree from 'react-json-tree'
 
 
 
 
-const ProductGallery: React.FC<ReactProps> = (props) => {
+const FrontPage: React.FC<ReactProps> = (props) => {
 
   const { classes, children } = props;
 
@@ -49,7 +47,7 @@ const ProductGallery: React.FC<ReactProps> = (props) => {
       <BannerHome />
       <CovidBanner />
       <div className={classes.flexRowInner}>
-        <div className={clsx(classes.productColumn60, 'fadeInFast')}>
+        <div className={clsx(classes.productColumn60)}>
           <div style={{
             display: 'flex',
             flexDirection: 'column',
@@ -118,4 +116,4 @@ const styles = (theme: Theme) => createStyles({
 });
 
 
-export default withStyles(styles)( ProductGallery );
+export default withStyles(styles)( FrontPage );

@@ -19,7 +19,7 @@ import { getYouTubeVimeoImagePreview } from "utils/strings";
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import Hidden from "@material-ui/core/Hidden";
-import ProductRow from "pageComponents/ProductGallery/FeaturedProductsMobile/ProductRow";
+import ProductRow from "pageComponents/FrontPage/FeaturedProductsMobile/ProductRow";
 // Loading
 import LoadingBar from "components/LoadingBar";
 import { styles } from "./PreviewCardResponsiveCarousel/styles";

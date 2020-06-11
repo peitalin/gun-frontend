@@ -12,16 +12,6 @@ import Typography from "@material-ui/core/Typography";
 import Link from "next/link";
 import WishlistIcon from "components/WishlistIcon";
 import DiscountBadge from "components/DiscountBadge";
-// Typings
-import { ProductPreviewItem, ProductCategory, Product, PriceDetails, ID } from "typings/gqlTypes";
-import { genSrcSet, genImgBreakpoints } from "utils/images";
-import { getYouTubeVimeoImagePreview } from "utils/strings";
-import PriceDisplayMain from "components/PriceDisplayMain";
-// Responsiveness
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
-import Hidden from "@material-ui/core/Hidden";
-import ProductRow from "pageComponents/ProductGallery/FeaturedProductsMobile/ProductRow";
 // Carousel
 import AirItemWide from "components/AirCarousel/AirItemWide";
 import AirCarousel from "components/AirCarousel";
