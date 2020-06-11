@@ -120,7 +120,8 @@ const DesktopMainBarLg = (props: DesktopMainBarProps) => {
             </Button>
           : <div className={classes.myDownloadsLogin}>
               <Login
-                titleLogin={"Wishlist"}
+                buttonText={"Wishlist"}
+                titleLogin={"Login to continue"}
                 buttonProps={{ color: "primary" }}
               />
             </div>
@@ -144,7 +145,8 @@ const DesktopMainBarLg = (props: DesktopMainBarProps) => {
             </Button>
           : <div className={classes.myDownloadsLogin}>
               <Login
-                titleLogin={"Orders"}
+                buttonText={"Orders"}
+                titleLogin={"Login to continue"}
                 buttonProps={{ color: "primary" }}
               />
             </div>

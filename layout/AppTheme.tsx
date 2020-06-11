@@ -8,8 +8,13 @@ import TouchRipple from '@material-ui/core/ButtonBase/TouchRipple';
 // const secondary = "#EB466D"
 
 // pale red
-const secondary = "#DB3748"
+// const secondary = "#DB3748"
 
+// blue
+const secondary = "#2484FF"
+
+// green
+// const secondary = "#65BF93"
 
 export const Colors = {
   backgroundColor: "#f4f4f4",

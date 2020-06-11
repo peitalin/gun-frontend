@@ -111,13 +111,14 @@ const DesktopMainBarMd = (props: ReactProps & DesktopMainBarProps) => {
                 <span className={
                   endRoute === 'my-downloads' ? classes.selectedRouteText : null
                 }>
-                    Downloads
+                    Orders
                 </span>
               </div>
             </Button>
           : <div className={classes.myDownloadsLogin}>
               <Login
-                titleLogin={"Downloads"}
+                buttonText={"Orders"}
+                titleLogin={"Login to continue"}
                 buttonProps={{ color: "primary" }}
               />
             </div>

@@ -112,7 +112,8 @@ const DesktopMainBarXl = (props: DesktopMainBarProps) => {
           </Button>
         : <div className={classes.myDownloadsLogin}>
             <Login
-              titleLogin={"Wishlist"}
+              buttonText={"Wishlist"}
+              titleLogin={"Login to continue"}
               buttonProps={{ color: "primary" }}
             />
           </div>
@@ -130,13 +131,14 @@ const DesktopMainBarXl = (props: DesktopMainBarProps) => {
               <span className={
                 endRoute === 'my-downloads' ? classes.selectedRouteText : null
               }>
-                  Downloads
+                Orders
               </span>
             </div>
           </Button>
         : <div className={classes.myDownloadsLogin}>
             <Login
-              titleLogin={"Downloads"}
+              buttonText={"Orders"}
+              titleLogin={"Login to continue"}
               buttonProps={{ color: "primary" }}
             />
           </div>
