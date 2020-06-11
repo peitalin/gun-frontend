@@ -19,12 +19,10 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import ErrorBounds from 'components/ErrorBounds';
 import PriceDisplayProductPage from "components/PriceDisplayProductPage";
 // Typings
-import { PriceDetails } from "typings/gqlTypes";
 import TextInput from "components/Fields/TextInput";
 import { asCurrency as c } from "utils/prices";
 /// Debounce
 import { useDebouncedCallback } from 'use-debounce';
-import DiscountBuilder from "../DiscountBuilder";
 // Validation
 import { Formik, Form, FormikProps, ErrorMessage } from 'formik';
 import { ReducerName } from "typings/dropzone";
@@ -52,11 +50,6 @@ const PriceFields = (props: ReactProps & FormikProps<FormikFields>) => {
     handleReset,
   } = fprops;
   const { currentVariants } = values;
-
-  const [displayDiscountBuilder, setDisplayDiscountBuilder] = useState(false);
-  const toggleDiscountBuilder = () => {
-    setDisplayDiscountBuilder(!displayDiscountBuilder)
-  }
 
   // Redux
   const dispatch = useDispatch();
