@@ -34,7 +34,6 @@ export const maxItemsPerOrder = 30;
 export const maxPromoCodesPerOrder = 1;
 export const maxCountCuratedListItems = 30;
 export const maxStockQuantity = 100;
-export const minSpecialDealDiscountPercent = 0.1;
 export const maxSizePerFile = 5000 * 1000 * 1000; // 5000 MB
 export const maxImageFileSize = 20 * 1000 * 1000; // 20 MB
 export const maxPaymentMethods = 10;

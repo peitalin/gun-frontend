@@ -312,7 +312,7 @@ const VisaPurchaseProduct = (props: ReactProps) => {
 
           {
             option(props).user.email() &&
-            (option(props).user.paymentMethods().length > 0) &&
+            (option(props).user.paymentMethods.length() > 0) &&
             <div className={clsx(
               classes.flexRowCenter,
               !showSavePaymentMethod && classes.marginTop,

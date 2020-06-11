@@ -6,7 +6,7 @@ import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/
 import { Colors } from "layout/AppTheme";
 // Typings
 import {
-  Product, ID, ProductVariant, UserPrivate, ProductPreviewItem, PriceDetails
+  Product, ID, ProductVariant, UserPrivate, ProductPreviewItem
 } from "typings/gqlTypes";
 import { SelectedVariantProps } from "../ProductId";
 // Redux

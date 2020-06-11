@@ -1,8 +1,5 @@
 import { SubtotalDisplay } from "typings";
 import currency from "currency.js";
-// import { PriceDetails, Discount } from "typings/gqlTypes";
-type PriceDetails = any;
-type Discount = any;
 
 
 export const asCurrency = (s) => currency(s/100, { formatWithSymbol: true }).format()
@@ -44,41 +41,5 @@ export const splitPlatformFee = (subtotal: number) => {
 }
 
 
-export const findSoonestDiscountExpiry = (
-  priceDetails: PriceDetails
-): Date | null => {
-  // Collect all the expiries of discounts if they're there and have time conditions
-  if (!priceDetails || !priceDetails.discountBreakdown) {
-    return null;
-  }
-
-  let expiries: Date[] = [
-    discountExpiry(priceDetails.discountBreakdown.fixedPriceDiscount),
-    discountExpiry(priceDetails.discountBreakdown.percentOffDiscount),
-    ...priceDetails.discountBreakdown.dollarsOffDiscounts.map(d => discountExpiry(d))
-  ].filter(x => x)
-
-  if (expiries.length === 0) {
-    return null;
-  }
-  // Return the one that's soonest
-  return expiries.reduce((currentSoonest, thisDate) => {
-    return currentSoonest < thisDate ? currentSoonest : thisDate;
-  }, expiries[0]);
-};
-
-const discountExpiry = (discount: Discount | null): Date | null => {
-  if (!discount) {
-    return null;
-  }
-  if (discount.timeCondition) {
-    const now = new Date();
-    const start = discount.timeCondition.start;
-    if (!start || start < now) {
-      return discount.timeCondition.end;
-    }
-  }
-  return null;
-};
 
 

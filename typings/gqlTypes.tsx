@@ -73,7 +73,6 @@ export type Cart = {
   items: Array<CartItem>;
   paymentProcessingFee: Scalars['Price'];
   promoCodeSavings: Scalars['Price'];
-  relevantPromoCodes: Array<Discount>;
   subtotal: Scalars['Price'];
   taxes: Scalars['Price'];
   total: Scalars['Price'];
@@ -86,7 +85,6 @@ export type CartItem = {
   cartId: Scalars['ID'];
   createdAt: Scalars['Date'];
   id: Scalars['ID'];
-  priceDetails: PriceDetails;
   product: Product;
   purchasableStatus: CartItemPurchasableStatus;
   quantity: Scalars['Int'];
@@ -256,6 +254,17 @@ export enum Categories_Update_Column {
   UPDATEDAT = 'updatedAt'
 }
 
+export type CategoriesBoolExp = {
+  _and?: Maybe<Array<Maybe<CategoriesBoolExp>>>;
+  _not?: Maybe<CategoriesBoolExp>;
+  _or?: Maybe<Array<Maybe<CategoriesBoolExp>>>;
+  categoryGroup?: Maybe<StringComparisonExp>;
+  createdAt?: Maybe<TimestampComparisonExp>;
+  id?: Maybe<StringComparisonExp>;
+  name?: Maybe<StringComparisonExp>;
+  updatedAt?: Maybe<TimestampComparisonExp>;
+};
+
 export type CategoriesOrderBy = {
   categoryGroup?: Maybe<OrderBy>;
   createdAt?: Maybe<OrderBy>;
@@ -289,14 +298,6 @@ export type ConnectionWithMetrics = {
   totalCount?: Maybe<Scalars['Int']>;
 };
 
-export type CreatePlatformDiscountInput = {
-  end?: Maybe<Scalars['Date']>;
-  isDisabled: Scalars['Boolean'];
-  promoCode?: Maybe<Scalars['String']>;
-  start?: Maybe<Scalars['Date']>;
-  valuePercentageOff: Scalars['Float'];
-};
-
 export type CreateRefundInput = {
   chargeId: Scalars['ID'];
   orderId: Scalars['ID'];
@@ -313,19 +314,6 @@ export type CreateRefundInput = {
 export type CreateRefundMutationResponse = {
    __typename?: 'CreateRefundMutationResponse';
   transaction: Transaction;
-};
-
-export type CreateStorePromoCodeInput = {
-  end?: Maybe<Scalars['Date']>;
-  isDisabled: Scalars['Boolean'];
-  minimumPurchaseAmount?: Maybe<Scalars['Price']>;
-  minimumQuantity?: Maybe<Scalars['Int']>;
-  promoCode: Scalars['String'];
-  specificProductId?: Maybe<Scalars['ID']>;
-  specificProductVariantId?: Maybe<Scalars['ID']>;
-  start?: Maybe<Scalars['Date']>;
-  valueDollarsOff?: Maybe<Scalars['Price']>;
-  valuePercentageOff?: Maybe<Scalars['Float']>;
 };
 
 export type CuratedList = {
@@ -381,83 +369,6 @@ export type CuratedListsEdge = Edge & {
 };
 
 
-export type Discount = {
-   __typename?: 'Discount';
-  createdAt: Scalars['Date'];
-  id: Scalars['ID'];
-  isAutomatic: Scalars['Boolean'];
-  isDisabled: Scalars['Boolean'];
-  modifier: DiscountModifier;
-  platformScopeInfo?: Maybe<PlatformScopedDiscountInfo>;
-  productScopeInfo?: Maybe<ProductScopedDiscountInfo>;
-  promoCode?: Maybe<Scalars['String']>;
-  scope: DiscountScope;
-  storeScopeInfo?: Maybe<StoreScopedDiscountInfo>;
-  timeCondition?: Maybe<DiscountTimeCondition>;
-  valueDollarsOff?: Maybe<Scalars['Price']>;
-  valueFixed?: Maybe<Scalars['Price']>;
-  valuePercentageOff?: Maybe<Scalars['Float']>;
-};
-
-export enum DiscountModifier {
-  DOLLARS_OFF = 'DOLLARS_OFF',
-  FIXED_PRICE = 'FIXED_PRICE',
-  PERCENTAGE_OFF = 'PERCENTAGE_OFF'
-}
-
-export type DiscountMutationResponse = {
-   __typename?: 'DiscountMutationResponse';
-  discount: Discount;
-};
-
-export type DiscountsConnection = Connection & {
-   __typename?: 'DiscountsConnection';
-  edges: Array<DiscountsEdge>;
-  pageInfo: PageInfo;
-  totalCount?: Maybe<Scalars['Int']>;
-};
-
-export enum DiscountScope {
-  PLATFORM = 'PLATFORM',
-  PRODUCT = 'PRODUCT',
-  STORE = 'STORE'
-}
-
-export type DiscountsEdge = Edge & {
-   __typename?: 'DiscountsEdge';
-  cursor: Scalars['PageCursor'];
-  node: Discount;
-};
-
-export type DiscountStockLimitCondition = {
-   __typename?: 'DiscountStockLimitCondition';
-  stockLevel: StockLevel;
-  supplyExhaustionRule: DiscountUnavailableRule;
-};
-
-export type DiscountStockLimitConditionInput = {
-  quantityAvailable: Scalars['Int'];
-  supplyExhaustionRule: DiscountUnavailableRule;
-};
-
-export type DiscountTimeCondition = {
-   __typename?: 'DiscountTimeCondition';
-  end: Scalars['Date'];
-  start?: Maybe<Scalars['Date']>;
-  timeExpiryRule: DiscountUnavailableRule;
-};
-
-export type DiscountTimeConditionInput = {
-  end: Scalars['Date'];
-  start?: Maybe<Scalars['Date']>;
-  timeExpiryRule: DiscountUnavailableRule;
-};
-
-export enum DiscountUnavailableRule {
-  DISABLE_DISCOUNT = 'DISABLE_DISCOUNT',
-  MARK_AS_SOLD_OUT = 'MARK_AS_SOLD_OUT'
-}
-
 export type Download = {
    __typename?: 'Download';
   order: Order;
@@ -480,16 +391,6 @@ export type DownloadsEdge = Edge & {
 
 export type Edge = {
   cursor: Scalars['PageCursor'];
-};
-
-export type EditPlatformDiscountInput = {
-  discountId: Scalars['ID'];
-  isDisabled?: Maybe<Scalars['Boolean']>;
-};
-
-export type EditStorePromoCodeInput = {
-  discountId: Scalars['ID'];
-  isDisabled?: Maybe<Scalars['Boolean']>;
 };
 
 export type FollowedStore = {
@@ -1425,19 +1326,15 @@ export type Mutation = {
   createCuratedList: CuratedListMutationResponse;
   createPayoutSplit: PayoutSplit;
   createPayouts: Array<Payout>;
-  createPlatformDiscount: DiscountMutationResponse;
   createProduct: ProductMutationResponse;
   createRefund: CreateRefundMutationResponse;
   createStore?: Maybe<StoreMutationResponse>;
-  createStorePromoCode: DiscountMutationResponse;
   deleteAccount: BlankMutationResponse;
   deleteCuratedList: BlankMutationResponse;
   deleteProduct?: Maybe<ProductsMutationResponse>;
   deleteStore: StoreMutationResponse;
-  editPlatformDiscount: DiscountMutationResponse;
   editProduct: ProductMutationResponse;
   editStoreProfile?: Maybe<StoreMutationResponse>;
-  editStorePromoCode: DiscountMutationResponse;
   editUserProfile: UserMutationResponse;
   excludeProductFromSearch?: Maybe<ProductMutationResponse>;
   followStore: FollowingStoresConnection;
@@ -1639,11 +1536,6 @@ export type MutationCreatePayoutsArgs = {
 };
 
 
-export type MutationCreatePlatformDiscountArgs = {
-  input: CreatePlatformDiscountInput;
-};
-
-
 export type MutationCreateProductArgs = {
   productCreateInput?: Maybe<ProductCreateInput>;
 };
@@ -1660,11 +1552,6 @@ export type MutationCreateStoreArgs = {
   name?: Maybe<Scalars['String']>;
   profileId?: Maybe<Scalars['String']>;
   website?: Maybe<Scalars['String']>;
-};
-
-
-export type MutationCreateStorePromoCodeArgs = {
-  input: CreateStorePromoCodeInput;
 };
 
 
@@ -1688,11 +1575,6 @@ export type MutationDeleteStoreArgs = {
 };
 
 
-export type MutationEditPlatformDiscountArgs = {
-  input: EditPlatformDiscountInput;
-};
-
-
 export type MutationEditProductArgs = {
   productEditInput?: Maybe<ProductEditInput>;
 };
@@ -1704,11 +1586,6 @@ export type MutationEditStoreProfileArgs = {
   name?: Maybe<Scalars['String']>;
   profileId?: Maybe<Scalars['String']>;
   website?: Maybe<Scalars['String']>;
-};
-
-
-export type MutationEditStorePromoCodeArgs = {
-  input: EditStorePromoCodeInput;
 };
 
 
@@ -1920,11 +1797,9 @@ export type Mutation_Root = {
   createCuratedList: CuratedListMutationResponse;
   createPayoutSplit: PayoutSplit;
   createPayouts: Array<Payout>;
-  createPlatformDiscount: DiscountMutationResponse;
   createProduct: ProductMutationResponse;
   createRefund: CreateRefundMutationResponse;
   createStore?: Maybe<StoreMutationResponse>;
-  createStorePromoCode: DiscountMutationResponse;
   deleteAccount: BlankMutationResponse;
   deleteCuratedList: BlankMutationResponse;
   deleteProduct?: Maybe<ProductsMutationResponse>;
@@ -1960,10 +1835,8 @@ export type Mutation_Root = {
   delete_stores_by_pk?: Maybe<Stores>;
   delete_users?: Maybe<Users_Mutation_Response>;
   delete_users_by_pk?: Maybe<Users>;
-  editPlatformDiscount: DiscountMutationResponse;
   editProduct: ProductMutationResponse;
   editStoreProfile?: Maybe<StoreMutationResponse>;
-  editStorePromoCode: DiscountMutationResponse;
   editUserProfile: UserMutationResponse;
   excludeProductFromSearch?: Maybe<ProductMutationResponse>;
   followStore: FollowingStoresConnection;
@@ -2230,11 +2103,6 @@ export type Mutation_RootCreatePayoutsArgs = {
 };
 
 
-export type Mutation_RootCreatePlatformDiscountArgs = {
-  input: CreatePlatformDiscountInput;
-};
-
-
 export type Mutation_RootCreateProductArgs = {
   productCreateInput?: Maybe<ProductCreateInput>;
 };
@@ -2251,11 +2119,6 @@ export type Mutation_RootCreateStoreArgs = {
   name?: Maybe<Scalars['String']>;
   profileId?: Maybe<Scalars['String']>;
   website?: Maybe<Scalars['String']>;
-};
-
-
-export type Mutation_RootCreateStorePromoCodeArgs = {
-  input: CreateStorePromoCodeInput;
 };
 
 
@@ -2434,11 +2297,6 @@ export type Mutation_RootDelete_Users_By_PkArgs = {
 };
 
 
-export type Mutation_RootEditPlatformDiscountArgs = {
-  input: EditPlatformDiscountInput;
-};
-
-
 export type Mutation_RootEditProductArgs = {
   productEditInput?: Maybe<ProductEditInput>;
 };
@@ -2450,11 +2308,6 @@ export type Mutation_RootEditStoreProfileArgs = {
   name?: Maybe<Scalars['String']>;
   profileId?: Maybe<Scalars['String']>;
   website?: Maybe<Scalars['String']>;
-};
-
-
-export type Mutation_RootEditStorePromoCodeArgs = {
-  input: EditStorePromoCodeInput;
 };
 
 
@@ -3146,7 +2999,6 @@ export type Online_Users_Set_Input = {
 
 export type Order = {
    __typename?: 'Order';
-  attachedPromoCodes: Array<Discount>;
   createdAt: Scalars['Date'];
   currentSnapshot: OrderSnapshot;
   id: Scalars['ID'];
@@ -3190,7 +3042,6 @@ export type OrderItem = {
   mostRecentDownloadRecords: Array<MostRecentDownloadRecord>;
   orderId: Scalars['ID'];
   orderStatus: OrderStatus;
-  priceDetails: PriceDetails;
   product: Product;
   productId: Scalars['ID'];
   productSnapshotId: Scalars['ID'];
@@ -4006,29 +3857,6 @@ export enum PayoutType {
   PAYPAL = 'PAYPAL'
 }
 
-export type PlatformScopedDiscountInfo = {
-   __typename?: 'PlatformScopedDiscountInfo';
-  isApplicableToAnyProduct: Scalars['Boolean'];
-};
-
-
-export type PriceDetails = {
-   __typename?: 'PriceDetails';
-  actualPrice: Scalars['Price'];
-  basePrice: Scalars['Price'];
-  discountBreakdown?: Maybe<PriceDetailsDiscountBreakdown>;
-};
-
-export type PriceDetailsDiscountBreakdown = {
-   __typename?: 'PriceDetailsDiscountBreakdown';
-  dollarsOffComponent: Scalars['Price'];
-  dollarsOffDiscounts: Array<Discount>;
-  fixedPriceComponent: Scalars['Price'];
-  fixedPriceDiscount?: Maybe<Discount>;
-  percentOffComponent: Scalars['Price'];
-  percentOffDiscount?: Maybe<Discount>;
-  promoCodeComponent: Scalars['Price'];
-};
 
 export type PrimaryLinkSlugs = {
    __typename?: 'PrimaryLinkSlugs';
@@ -5461,7 +5289,6 @@ export type ProductPrivate = Product & {
   isExcludedFromSearch: Scalars['Boolean'];
   isPublished: Scalars['Boolean'];
   isSuspended: Scalars['Boolean'];
-  linkSlugs?: Maybe<PrimaryLinkSlugs>;
   location: Scalars['String'];
   make: Scalars['String'];
   model: Scalars['String'];
@@ -5506,7 +5333,6 @@ export type ProductPublic = Product & {
   isExcludedFromSearch: Scalars['Boolean'];
   isPublished: Scalars['Boolean'];
   isSuspended: Scalars['Boolean'];
-  linkSlugs?: Maybe<PrimaryLinkSlugs>;
   location: Scalars['String'];
   make: Scalars['String'];
   model: Scalars['String'];
@@ -5764,6 +5590,7 @@ export type ProductsBoolExp = {
   _and?: Maybe<Array<Maybe<ProductsBoolExp>>>;
   _not?: Maybe<ProductsBoolExp>;
   _or?: Maybe<Array<Maybe<ProductsBoolExp>>>;
+  category?: Maybe<CategoriesBoolExp>;
   categoryId?: Maybe<StringComparisonExp>;
   createdAt?: Maybe<TimestamptzComparisonExp>;
   currentSnapshotId?: Maybe<StringComparisonExp>;
@@ -5782,12 +5609,6 @@ export type ProductsConnection = Connection & {
   edges: Array<ProductsEdge>;
   pageInfo: PageInfo;
   totalCount?: Maybe<Scalars['Int']>;
-};
-
-export type ProductScopedDiscountInfo = {
-   __typename?: 'ProductScopedDiscountInfo';
-  stockLimitCondition?: Maybe<DiscountStockLimitCondition>;
-  variantSnapshotId?: Maybe<Scalars['ID']>;
 };
 
 export type ProductsEdge = {
@@ -5813,19 +5634,6 @@ export type ProductsOrderBy = {
   createdAt?: Maybe<OrderBy>;
   currentSnapshotId?: Maybe<OrderBy>;
   id?: Maybe<OrderBy>;
-};
-
-export type ProductSpecialDeal = {
-   __typename?: 'ProductSpecialDeal';
-  discountedPrice: Scalars['Price'];
-  stockLimitCondition?: Maybe<DiscountStockLimitCondition>;
-  timeCondition?: Maybe<DiscountTimeCondition>;
-};
-
-export type ProductSpecialDealInput = {
-  discountedPrice: Scalars['Price'];
-  stockLimitCondition?: Maybe<DiscountStockLimitConditionInput>;
-  timeCondition?: Maybe<DiscountTimeConditionInput>;
 };
 
 export type ProductsSoldPeriodSummaryConnection = Connection & {
@@ -5865,7 +5673,6 @@ export type ProductVariantEditInput = {
   price: Scalars['Price'];
   priceWas?: Maybe<Scalars['Price']>;
   quantityAvailable?: Maybe<Scalars['Int']>;
-  specialDeal?: Maybe<ProductSpecialDealInput>;
   variantDescription: Scalars['String'];
   variantId?: Maybe<Scalars['ID']>;
   variantName: Scalars['String'];
@@ -5916,7 +5723,6 @@ export type Query = {
   loggedInUser: UserPrivate;
   lookupProductLinkSlug?: Maybe<PrimaryLinkSlugs>;
   lookupStoreLinkSlug?: Maybe<PrimaryLinkSlugs>;
-  platformDiscounts: DiscountsConnection;
   product?: Maybe<Product>;
   productsAdminConnection: ProductsConnection;
   productsAllConnection: ProductsConnection;
@@ -5924,9 +5730,7 @@ export type Query = {
   productsRecommendedConnection: ProductsConnection;
   search: SearchResultsConnection;
   store?: Maybe<Store>;
-  storeDiscounts: DiscountsConnection;
   storesAdminConnection: StoresConnection;
-  tryPromoCode?: Maybe<Discount>;
   user?: Maybe<User>;
   userByEmailOrId?: Maybe<User>;
   wishlistItemsConnection: WishlistItemsConnection;
@@ -6084,11 +5888,6 @@ export type QueryLookupStoreLinkSlugArgs = {
 };
 
 
-export type QueryPlatformDiscountsArgs = {
-  query?: Maybe<ConnectionQuery>;
-};
-
-
 export type QueryProductArgs = {
   id: Scalars['String'];
 };
@@ -6107,7 +5906,7 @@ export type QueryProductsAllConnectionArgs = {
 export type QueryProductsByCategoryConnectionArgs = {
   categoryId?: Maybe<Scalars['String']>;
   categoryName?: Maybe<Scalars['String']>;
-  query?: Maybe<ConnectionQuery>;
+  query?: Maybe<ConnectionOffsetQuery>;
 };
 
 
@@ -6128,19 +5927,8 @@ export type QueryStoreArgs = {
 };
 
 
-export type QueryStoreDiscountsArgs = {
-  query?: Maybe<ConnectionQuery>;
-};
-
-
 export type QueryStoresAdminConnectionArgs = {
   query?: Maybe<ConnectionQuery>;
-};
-
-
-export type QueryTryPromoCodeArgs = {
-  cartProductsInfo: Array<ProductProductVariantId>;
-  code: Scalars['String'];
 };
 
 
@@ -6211,7 +5999,6 @@ export type Query_Root = {
   payout_methods: Array<Payout_Methods>;
   payout_methods_aggregate: Payout_Methods_Aggregate;
   payout_methods_by_pk?: Maybe<Payout_Methods>;
-  platformDiscounts: DiscountsConnection;
   product?: Maybe<Product>;
   product_file_owners: Array<Product_File_Owners>;
   product_file_owners_aggregate: Product_File_Owners_Aggregate;
@@ -6237,12 +6024,10 @@ export type Query_Root = {
   products_by_pk?: Maybe<Products>;
   search: SearchResultsConnection;
   store?: Maybe<Store>;
-  storeDiscounts: DiscountsConnection;
   stores: Array<Stores>;
   storesAdminConnection: StoresConnection;
   stores_aggregate: Stores_Aggregate;
   stores_by_pk?: Maybe<Stores>;
-  tryPromoCode?: Maybe<Discount>;
   user?: Maybe<User>;
   userByEmailOrId?: Maybe<User>;
   users: Array<Users>;
@@ -6582,11 +6367,6 @@ export type Query_RootPayout_Methods_By_PkArgs = {
 };
 
 
-export type Query_RootPlatformDiscountsArgs = {
-  query?: Maybe<ConnectionQuery>;
-};
-
-
 export type Query_RootProductArgs = {
   id: Scalars['String'];
 };
@@ -6729,7 +6509,7 @@ export type Query_RootProductsAllConnectionArgs = {
 export type Query_RootProductsByCategoryConnectionArgs = {
   categoryId?: Maybe<Scalars['String']>;
   categoryName?: Maybe<Scalars['String']>;
-  query?: Maybe<ConnectionQuery>;
+  query?: Maybe<ConnectionOffsetQuery>;
 };
 
 
@@ -6764,11 +6544,6 @@ export type Query_RootStoreArgs = {
 };
 
 
-export type Query_RootStoreDiscountsArgs = {
-  query?: Maybe<ConnectionQuery>;
-};
-
-
 export type Query_RootStoresArgs = {
   distinct_on?: Maybe<Array<Stores_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -6794,12 +6569,6 @@ export type Query_RootStores_AggregateArgs = {
 
 export type Query_RootStores_By_PkArgs = {
   id: Scalars['String'];
-};
-
-
-export type Query_RootTryPromoCodeArgs = {
-  cartProductsInfo: Array<ProductProductVariantId>;
-  code: Scalars['String'];
 };
 
 
@@ -6946,7 +6715,6 @@ export type Store = {
   id: Scalars['ID'];
   isDeleted: Scalars['Boolean'];
   isSuspended: Scalars['Boolean'];
-  linkSlugs?: Maybe<PrimaryLinkSlugs>;
   name: Scalars['String'];
   productsForSaleConnection: Array<Maybe<Product>>;
   profile?: Maybe<Image>;
@@ -6985,22 +6753,15 @@ export type StorePrivate = Store & {
   id: Scalars['ID'];
   isDeleted: Scalars['Boolean'];
   isSuspended: Scalars['Boolean'];
-  linkSlugs?: Maybe<PrimaryLinkSlugs>;
   name: Scalars['String'];
   payoutSplit?: Maybe<PayoutSplit>;
   productsForSaleConnection: Array<Maybe<Product>>;
   profile?: Maybe<Image>;
   profileId?: Maybe<Scalars['ID']>;
-  promoCodeDiscounts: DiscountsConnection;
   updatedAt?: Maybe<Scalars['Date']>;
   user: UserPrivate;
   userId: Scalars['ID'];
   website?: Maybe<Scalars['String']>;
-};
-
-
-export type StorePrivatePromoCodeDiscountsArgs = {
-  query?: Maybe<ConnectionQuery>;
 };
 
 export type StorePublic = Store & {
@@ -7012,7 +6773,6 @@ export type StorePublic = Store & {
   id: Scalars['ID'];
   isDeleted: Scalars['Boolean'];
   isSuspended: Scalars['Boolean'];
-  linkSlugs?: Maybe<PrimaryLinkSlugs>;
   name: Scalars['String'];
   productsForSaleConnection: Array<Maybe<Product>>;
   profile?: Maybe<Image>;
@@ -7299,15 +7059,6 @@ export type StoresConnection = Connection & {
   edges: Array<StoresEdge>;
   pageInfo: PageInfo;
   totalCount?: Maybe<Scalars['Int']>;
-};
-
-export type StoreScopedDiscountInfo = {
-   __typename?: 'StoreScopedDiscountInfo';
-  minimumQuantity?: Maybe<Scalars['Int']>;
-  minimumSpend?: Maybe<Scalars['Price']>;
-  productId?: Maybe<Scalars['ID']>;
-  storeId: Scalars['ID'];
-  variantId?: Maybe<Scalars['ID']>;
 };
 
 export type StoresEdge = Edge & {
@@ -7793,6 +7544,18 @@ export type SummaryStatistics = {
 
 
 export type Timestamp_Comparison_Exp = {
+  _eq?: Maybe<Scalars['timestamp']>;
+  _gt?: Maybe<Scalars['timestamp']>;
+  _gte?: Maybe<Scalars['timestamp']>;
+  _in?: Maybe<Array<Scalars['timestamp']>>;
+  _is_null?: Maybe<Scalars['Boolean']>;
+  _lt?: Maybe<Scalars['timestamp']>;
+  _lte?: Maybe<Scalars['timestamp']>;
+  _neq?: Maybe<Scalars['timestamp']>;
+  _nin?: Maybe<Array<Scalars['timestamp']>>;
+};
+
+export type TimestampComparisonExp = {
   _eq?: Maybe<Scalars['timestamp']>;
   _gt?: Maybe<Scalars['timestamp']>;
   _gte?: Maybe<Scalars['timestamp']>;

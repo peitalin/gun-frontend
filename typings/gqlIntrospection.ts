@@ -24,9 +24,6 @@
             "name": "StoreSalesHistoryConnection"
           },
           {
-            "name": "DiscountsConnection"
-          },
-          {
             "name": "DownloadsConnection"
           },
           {
@@ -67,9 +64,6 @@
           },
           {
             "name": "ProductSalesEdge"
-          },
-          {
-            "name": "DiscountsEdge"
           },
           {
             "name": "DownloadsEdge"
