@@ -3,7 +3,8 @@ import React from "react";
 import Typography from "@material-ui/core/Typography";
 import LoadingBar from "components/LoadingBar";
 // Media uploader
-import { IInputProps } from "react-dropzone-uploader";
+import { IInputProps } from "components/DropzoneUploader/Dropzone";
+
 import { createStyles, Theme, WithStyles, withStyles, fade } from "@material-ui/core/styles";
 import { fontFam, Colors } from "layout/AppTheme";
 
@@ -38,12 +39,28 @@ const UploadInput = (props: IInputProps & ReactProps) => {
     >
       <Typography variant="body2" className={classes.button}
       >
-        {text}
+        <span className={
+          props.errorMessage
+            ? classes.redText
+            : classes.normalText
+        }>
+          {text}
+        </span>
         <span className={
           props.errorMessage
             ? classes.redText
             : classes.hideText
         }>*</span>
+        {
+          props.loading &&
+          <LoadingBar
+            absoluteTop
+            color={Colors.magenta}
+            height={4}
+            width={'100vw'}
+            loading={true}
+          />
+        }
       </Typography>
       <input
         style={{
@@ -62,16 +79,6 @@ const UploadInput = (props: IInputProps & ReactProps) => {
           }
         }}
       />
-      {
-        props.loading &&
-        <LoadingBar
-          absoluteTop
-          color={Colors.magenta}
-          height={4}
-          width={'100vw'}
-          loading={true}
-        />
-      }
     </label>
   )
 }
@@ -84,6 +91,7 @@ interface ReactProps extends WithStyles<typeof styles> {
 
 export const styles = (theme: Theme) => createStyles({
   button: {
+    position: 'relative',
     border: `1px solid ${Colors.grey}`,
     borderRadius: '4px',
     padding: '0.5rem 1rem',
@@ -95,11 +103,16 @@ export const styles = (theme: Theme) => createStyles({
   },
   redText: {
     color: Colors.lightRed,
+    fontWeight: 700,
     opacity: 1
   },
   hideText: {
     color: Colors.lightRed,
+    fontWeight: 700,
     opacity: 0
+  },
+  normalText: {
+    fontWeight: 700,
   },
 })
 

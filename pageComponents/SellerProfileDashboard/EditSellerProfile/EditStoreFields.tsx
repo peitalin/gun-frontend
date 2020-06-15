@@ -6,6 +6,8 @@ import clsx from "clsx";
 import { useDispatch, useSelector } from "react-redux";
 import { GrandReduxState } from "reduxStore/grand-reducer";
 import { Actions } from "reduxStore/actions";
+/// Debounce
+import { useDebouncedCallback } from 'use-debounce';
 // Styles
 import { withStyles, WithStyles, Theme, createStyles } from "@material-ui/core/styles";
 // import { styles } from "./styles";
@@ -232,10 +234,10 @@ const EditStoreFields: React.FC<ReactProps & FormikProps<FormikFields>> = (props
             }
             <Divider/>
             <Typography variant="body1" className={classes.subtitle4}>
-              By signing up, you agree to comply with Gunmarketplace’s Terms of Service
+              By signing up, you agree to comply with Relay’s Terms of Service
               and Seller Agreement.
               <a className={classes.link}
-                href={'https://help.gunmarketplace.com/hc/en-us/articles/360038530771-Terms-of-Service'}
+                href={'https://help.relaydownloads.com/hc/en-us/articles/360038530771-Terms-of-Service'}
                 target="_blank"
                 style={{ marginLeft: '0.25rem' }}
               >

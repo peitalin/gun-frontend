@@ -3,8 +3,7 @@ import { ReactElement } from "react";
 import { oc as option } from "ts-optchain";
 import { Colors } from "layout/AppTheme";
 // Styles
-import { ILayoutProps, IPreviewProps } from "react-dropzone-uploader";
-import "react-dropzone-uploader/dist/styles.css";
+import { ILayoutProps } from "components/DropzoneUploader/Dropzone";
 import { withStyles, WithStyles } from "@material-ui/core/styles";
 import { styles } from './styles';
 import TextInput from "components/Fields/TextInput";
@@ -15,7 +14,7 @@ import TextInput from "components/Fields/TextInput";
 const UploadLayout: React.FC<ILayoutProps & ReactProps> = (props) => {
 
   const {
-    input,
+    UploadInput,
     previews,
     submitButton,
     dropzoneProps,
@@ -26,7 +25,10 @@ const UploadLayout: React.FC<ILayoutProps & ReactProps> = (props) => {
   return (
     <div className={props.classes.uploadButtonContainer}>
       <div {...dropzoneProps}>
-        {option(files)([]).length < maxFiles && input}
+        {
+          option(files)([]).length < maxFiles &&
+          <UploadInput {...props}/>
+        }
       </div>
       <a className={props.classes.link}
         onClick={props.removeProfilePicPreview}

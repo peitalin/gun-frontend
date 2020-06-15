@@ -20,6 +20,8 @@ import { useTheme } from '@material-ui/core/styles';
 import { connect, useDispatch, useSelector } from "react-redux";
 import { GrandReduxState } from "reduxStore/grand-reducer";
 import { Actions } from "reduxStore/actions";
+// Analytics
+import { analyticsEvent } from "utils/analytics";
 
 
 
@@ -50,6 +52,22 @@ const EditSellerProfile = (props: ReactProps) => {
     dispatch(Actions.reduxModals.TOGGLE_SELLER_PROFILE_EDIT_MODAL(true))
   }
 
+
+  // Desktop uses modal, analytics needs to watch for modal opens
+  React.useEffect(() => {
+    if (asModal) {
+      if (sellerProfileEditModalOpen) {
+        analyticsEvent("View.Store.Edit")
+      }
+    }
+  }, [sellerProfileEditModalOpen])
+
+  // Mobile uses checkout page, not modal. Increment view on page load
+  React.useEffect(() => {
+    if (!asModal) {
+      analyticsEvent("View.Store.Edit")
+    }
+  }, [])
 
 
   if (!asModal) {

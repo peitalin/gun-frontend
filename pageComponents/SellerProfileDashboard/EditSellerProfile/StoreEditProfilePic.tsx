@@ -8,7 +8,12 @@ import { Colors } from "layout/AppTheme";
 // Utils
 import { ID, StorePrivate, UploadType, Image } from "typings/gqlTypes";
 // Media uploader
-import Dropzone, { IFileWithMeta, IUploadParams } from "react-dropzone-uploader";
+import {
+  IFileWithMeta,
+  IUploadParams,
+} from "components/DropzoneUploader/Dropzone";
+import Dropzone from "components/DropzoneUploader/Dropzone";
+
 import {
   google_storage_register, google_storage_save_image_to_db,
 } from "queries/requests";

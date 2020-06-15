@@ -290,6 +290,7 @@ export const styles = (theme: Theme) => createStyles({
   },
   redText: {
     color: Colors.lightRed,
+    maxHeight: '1rem',
   },
   addItemButtonLi: {
     marginBottom: '1rem',
