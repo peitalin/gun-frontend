@@ -66,10 +66,7 @@ const AirCarousel: React.FC<ReactProps> = (props) => {
   return (
     <ErrorBounds fragment>
       <div
-        className={clsx(
-          "air-carousel-outer",
-          "fadeInFast",
-        )}
+        className={"air-carousel-outer"}
         style={{
           position: "relative",
           zIndex: 0,

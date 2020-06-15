@@ -19,7 +19,6 @@ import {
 import { ReducerName } from "typings/dropzone";
 
 import UploadInputImageDirect from "../../pageComponents/ProductCreate/PreviewItemUploaderGrid/UploadInput";
-import LayoutImageDirect from "../../pageComponents/ProductCreate/PreviewItemUploaderGrid/UploadLayoutPreviews";
 
 
 export type StatusValue =
@@ -198,10 +197,15 @@ export interface ISubmitButtonProps extends ICommonProps {
 type ReactComponent<Props> = (props: Props) => React.ReactNode | React.Component<Props>
 
 export interface IDropzoneProps {
-  uploaderType: "file-uploader" | "image-uploader" | "classic-uploader";
+  uploaderType:
+    "file-uploader"
+    | "image-uploader"
+    | "image-uploader-before-after"
+    | "classic-uploader";
   setTouched?(): void; // formik
   reducerName?: ReducerName; // Redux
-
+  percentages?: {id: string, percent: number}[];
+  setPercentages?(percentages: {id: string, percent: number }[]): void;
 
   onChangeStatus?(
     file: IFileWithMeta,
@@ -300,6 +304,7 @@ class Dropzone extends React.Component<IDropzoneProps, { active: boolean; dragge
   componentWillUnmount() {
     this.mounted = false
     for (const fileWithMeta of this.files) {
+      // console.warn("WARN: component unmounting")
       this.handleCancel(fileWithMeta)
     }
   }
@@ -378,6 +383,7 @@ class Dropzone extends React.Component<IDropzoneProps, { active: boolean; dragge
 
   handleCancel = (fileWithMeta: IFileWithMeta) => {
     if (fileWithMeta.meta.status !== 'uploading') return
+    // console.warn("WARN: abort")
     fileWithMeta.meta.status = 'aborted'
     if (fileWithMeta.xhr) fileWithMeta.xhr.abort()
     this.handleChangeStatus(fileWithMeta)
@@ -570,7 +576,29 @@ class Dropzone extends React.Component<IDropzoneProps, { active: boolean; dragge
 
     // update progress (can be used to show progress indicator)
     xhr.upload.addEventListener('progress', e => {
-      fileWithMeta.meta.percent = (e.loaded * 100.0) / e.total || 100
+      let percent = (e.loaded * 100.0) / e.total || 100
+      fileWithMeta.meta.percent = percent
+
+      let fileIndex = this.props.percentages.findIndex(p => p.id === fileWithMeta.meta.id)
+
+      if (fileIndex >= 0) {
+        this.props.setPercentages([
+          ...this.props.percentages.slice(0, fileIndex),
+          {
+            id: fileWithMeta.meta.id,
+            percent: percent
+          },
+          ...this.props.percentages.slice(fileIndex + 1),
+        ])
+      } else {
+        this.props.setPercentages([
+          ...this.props.percentages,
+          {
+            id: fileWithMeta.meta.id,
+            percent: percent
+          },
+        ])
+      }
       this.forceUpdate()
     })
 
@@ -731,16 +759,81 @@ class Dropzone extends React.Component<IDropzoneProps, { active: boolean; dragge
 
 
 
-    // workaround for File Uploader in Product Uploade page.
-    // There is a nasty bug when this uploader is used in
-    // connection with Formik.handlerBlur that swallows onClick events,
-    // meaning you need to double click to upload
-    //
-    // Importing the components and then rendering OUTSIDE of the Layout component
-    // seems to circumvent this bug. There is a event propagation bug with Layout
-    // because it is doing component injection and not propogating events properly
-    // to child components.
+
     if (this.props.uploaderType === 'image-uploader') {
+      return (
+        <>
+          <div
+            ref={this.dropzone}
+            className={className}
+            style={ style as React.CSSProperties}
+            onDragEnter={ this.handleDragEnter}
+            onDragOver={ this.handleDragOver}
+            onDragLeave={ this.handleDragLeave}
+            onDrop={ dropzoneDisabled ? this.handleDropDisabled : this.handleDrop}
+          >
+            {/*
+            //@ts-ignore */}
+            <UploadInputImageDirect
+              className={inputClassName}
+              labelClassName={inputLabelClassName}
+              labelWithFilesClassName={inputLabelWithFilesClassName}
+              style={inputStyle as React.CSSProperties}
+              labelStyle={inputLabelStyle as React.CSSProperties}
+              labelWithFilesStyle={inputLabelWithFilesStyle as React.CSSProperties}
+              getFilesFromEvent={this.getFilesFromEvent() as IInputProps['getFilesFromEvent']}
+              accept={accept}
+              multiple={multiple}
+              disabled={dropzoneDisabled || files.length < maxFiles}
+              content={resolveValue(inputContent, files, extra)}
+              withFilesContent={resolveValue(inputWithFilesContent, files, extra)}
+              onFiles={this.handleFiles} // see: https://stackoverflow.com/questions/39484895
+              files={files}
+              extra={extra}
+              onChange={this.handleOnChange}
+              setTouched={this.props.setTouched} // formik
+              reducerName={this.props.reducerName}
+            />
+          </div>
+
+          {/*
+          //@ts-ignore */}
+          <Layout
+            // Layout only provides previews and dragging previews.
+            // keep UploadInput outside of Layout because Layout swallows click
+            // events after Formik handeBlur.
+            // Layout it not propagating onClick/onChange events properly.
+            // Do you need to double click the button. Even if you can click it,
+            // if onChange doesnt work files will not be selected to upload
+            // This separation of UploadInput and Layout is a workaround for this issue.
+            UploadInput={null}
+            previews={previews}
+            submitButton={submitButton}
+            dropzoneProps={{
+              ref: this.dropzone,
+              className,
+              style: style as React.CSSProperties,
+              onDragEnter: this.handleDragEnter,
+              onDragOver: this.handleDragOver,
+              onDragLeave: this.handleDragLeave,
+              onDrop: dropzoneDisabled ? this.handleDropDisabled : this.handleDrop,
+            }}
+            files={files}
+            extra={
+              {
+                ...extra,
+                onFiles: this.handleFiles,
+                onCancelFile: this.handleCancel,
+                onRemoveFile: this.handleRemove,
+                onRestartFile: this.handleRestart,
+              } as IExtraLayout
+            }
+          />
+        </>
+      )
+    }
+
+    if (this.props.uploaderType === 'image-uploader-before-after') {
       return (
         <>
           <div
@@ -872,6 +965,9 @@ class Dropzone extends React.Component<IDropzoneProps, { active: boolean; dragge
 Dropzone.defaultProps = {
   uploaderType: "classic-uploader",
   setTouched: undefined,
+  percentages: [],
+  setPercentages: () => console.log("setPercentages loading..."),
+
   accept: '*',
   multiple: true,
   minSizeBytes: 0,
