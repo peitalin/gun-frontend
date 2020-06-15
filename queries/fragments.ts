@@ -225,6 +225,8 @@ export const StorePrivateFragment = gql`
     updatedAt
     website
     bio
+    coverId
+    profileId
     cover {
       ...ImageFragment
     }

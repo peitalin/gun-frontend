@@ -21,6 +21,9 @@
             "name": "CuratedListItemsConnection"
           },
           {
+            "name": "ProductsConnection"
+          },
+          {
             "name": "StoreSalesHistoryConnection"
           },
           {
@@ -46,9 +49,6 @@
           },
           {
             "name": "CuratedListsConnection"
-          },
-          {
-            "name": "ProductsConnection"
           },
           {
             "name": "StoresConnection"

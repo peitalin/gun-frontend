@@ -3,7 +3,7 @@ import {
   ID,
   ProductPreviewItemInput,
 } from "typings/gqlTypes";
-import { IFileWithMeta } from "react-dropzone-uploader";
+import { IFileWithMeta } from "components/DropzoneUploader/Dropzone";
 
 export interface GoogleUpload {
   metaId: string;

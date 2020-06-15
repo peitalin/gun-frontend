@@ -239,7 +239,7 @@ export const validationSchemas = {
   // Edit Store
   EditStore:
     Yup.object().shape({
-      name: Yup.string()
+      name: Yup.string().nullable()
         .required("Can't be empty")
         .min(3, "Must be more than 3 letters!"),
       bio: Yup.string().nullable(),

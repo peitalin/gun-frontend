@@ -9,6 +9,7 @@ import withApollo from 'next-with-apollo';
 import { setContext } from 'apollo-link-context';
 import https from "https";
 import { oc as option } from "ts-optchain";
+import { Product } from "typings/gqlTypes";
 
 // // ENV variables
 import getConfig from 'next/config'
@@ -101,53 +102,68 @@ export default withApollo(
         dataIdFromObject: (object: any) => {
           switch (object.__typename) {
 
-            // case 'UserPrivate': return object.id; // use `id` as the primary key
+            case 'UserPrivate': return object._id; // use `id` as the primary key
+            // don't cache user objects
 
-            // case 'ProductPublic': {
-            //   if (!option(object).chosenVariant()) {
-            //     const pType = "_LISTING"
-            //     return object.id + pType;
-            //   } else {
-            //     // const pType = "_CART_ORDER"
-            //     return object._id;
-            //   }
-            // }
+            case 'UserWithRole': {
+              return object._id; // don't use `id` as the primary key
+            }
 
-            // case 'ProductPrivate': {
-            //   if (!option(object).chosenVariant()) {
-            //     const pType = "_LISTING"
-            //     return object.id + pType;
-            //   } else {
-            //     // const pType = "_CART_ORDER"
-            //     return object._id;
-            //   }
-            // }
+            case 'ProductPublic': {
+              // distinguish by whether
+              // it has a chosenVariant (bought item vs product listing)
+              // and by variantId
+              if (!option(object).chosenVariant()) {
+
+                let objId = object.id + "_LISTING_"
+                // a featured variant
+                if (option(object as Product).featuredVariant.variantId()) {
+                  return objId + option(object as Product).featuredVariant.variantId("");
+                } else {
+                  return objId;
+                }
+
+              } else {
+                // const pType = "_CART_ORDER"
+                return object._id;
+              }
+            }
+
+            case 'ProductPrivate': {
+              if (!option(object).chosenVariant()) {
+                let objId = object.id + "_LISTING_"
+                // a featured variant
+                if (option(object as Product).featuredVariant.variantId()) {
+                  return objId + option(object as Product).featuredVariant.variantId("");
+                } else {
+                  return objId;
+                }
+              } else {
+                // const pType = "_CART_ORDER"
+                return object._id;
+              }
+            }
 
             // case 'OrderItem': return object.id; // use `id` as the primary key
-            // case 'ProductPrivate': return object.id; // use `id` as the primary key
+
 
             // case 'CartItem': return object.id; // use `id` as the primary key
             // case 'Cart': return object.id; // use `id` as the primary key
 
             // case 'ProductVariant': return object.variantId; // use `variantId` as the priamry key
-            // case 'ProductVariant': {
-            //   if (option(object).files()) {
-            //     const pType = "_DOWNLOAD"
-            //     return object.variantId + pType;
-            //   } else {
-            //     return object.variantId;
-            //   }
-            // }
             // case 'ProductVariant': return object._id; // disable variantId cache key
-            // MyDownloads/Checkout will request a ProductVariant with different shape than
-            // RecommendedProducts. The cache will reset to MyDownload's version,
-            // RecommendedProducts won't render.
-            // chosenVariant => null for RecommendedProducts
-            // featuredVariants => null for MyDownloads/Checkout
+            case 'ProductVariant': {
+              if (option(object).files()) {
+                const pType = "_DOWNLOAD"
+                return object.variantId + pType;
+              } else {
+                return object.variantId;
+              }
+            }
 
-            // case 'StorePublic': return object.id + "_STORE_PUBLIC";
+            case 'StorePublic': return object.id + "_STORE_PUBLIC";
             // postfix _STORE_PUBLIC as the primary key
-            // case 'StorePrivate': return object._id + "_STORE_PRIVATE";
+            case 'StorePrivate': return object._id + "_STORE_PRIVATE";
             // postfix _STORE_PRIVATE as the primary key
 
             // default: return defaultDataIdFromObject(object);

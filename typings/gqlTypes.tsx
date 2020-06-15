@@ -12,11 +12,9 @@ export type Scalars = {
   timestamp: any;
   ProductCategoryGroup: any;
   Date: Date;
+  timestamptz: any;
   PageCursor: any;
   Price: number;
-  timestamptz: any;
-  json: any;
-  uuid: any;
 };
 
 export type AddRemovePaymentMethodResponse = {
@@ -272,6 +270,520 @@ export type CategoriesOrderBy = {
   name?: Maybe<OrderBy>;
   updatedAt?: Maybe<OrderBy>;
 };
+
+export type Chat = {
+   __typename?: 'chat';
+  createdAt: Scalars['timestamp'];
+  id: Scalars['String'];
+  messages: Array<Chat_Messages>;
+  messages_aggregate: Chat_Messages_Aggregate;
+  name?: Maybe<Scalars['String']>;
+  owner: Users;
+  ownerId: Scalars['String'];
+  status?: Maybe<Scalars['String']>;
+  users: Array<Chat_Users>;
+  users_aggregate: Chat_Users_Aggregate;
+};
+
+
+export type ChatMessagesArgs = {
+  distinct_on?: Maybe<Array<Chat_Messages_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Chat_Messages_Order_By>>;
+  where?: Maybe<Chat_Messages_Bool_Exp>;
+};
+
+
+export type ChatMessages_AggregateArgs = {
+  distinct_on?: Maybe<Array<Chat_Messages_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Chat_Messages_Order_By>>;
+  where?: Maybe<Chat_Messages_Bool_Exp>;
+};
+
+
+export type ChatUsersArgs = {
+  distinct_on?: Maybe<Array<Chat_Users_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Chat_Users_Order_By>>;
+  where?: Maybe<Chat_Users_Bool_Exp>;
+};
+
+
+export type ChatUsers_AggregateArgs = {
+  distinct_on?: Maybe<Array<Chat_Users_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Chat_Users_Order_By>>;
+  where?: Maybe<Chat_Users_Bool_Exp>;
+};
+
+export type Chat_Aggregate = {
+   __typename?: 'chat_aggregate';
+  aggregate?: Maybe<Chat_Aggregate_Fields>;
+  nodes: Array<Chat>;
+};
+
+export type Chat_Aggregate_Fields = {
+   __typename?: 'chat_aggregate_fields';
+  count?: Maybe<Scalars['Int']>;
+  max?: Maybe<Chat_Max_Fields>;
+  min?: Maybe<Chat_Min_Fields>;
+};
+
+
+export type Chat_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<Chat_Select_Column>>;
+  distinct?: Maybe<Scalars['Boolean']>;
+};
+
+export type Chat_Aggregate_Order_By = {
+  count?: Maybe<Order_By>;
+  max?: Maybe<Chat_Max_Order_By>;
+  min?: Maybe<Chat_Min_Order_By>;
+};
+
+export type Chat_Arr_Rel_Insert_Input = {
+  data: Array<Chat_Insert_Input>;
+  on_conflict?: Maybe<Chat_On_Conflict>;
+};
+
+export type Chat_Bool_Exp = {
+  _and?: Maybe<Array<Maybe<Chat_Bool_Exp>>>;
+  _not?: Maybe<Chat_Bool_Exp>;
+  _or?: Maybe<Array<Maybe<Chat_Bool_Exp>>>;
+  createdAt?: Maybe<Timestamp_Comparison_Exp>;
+  id?: Maybe<String_Comparison_Exp>;
+  messages?: Maybe<Chat_Messages_Bool_Exp>;
+  name?: Maybe<String_Comparison_Exp>;
+  owner?: Maybe<Users_Bool_Exp>;
+  ownerId?: Maybe<String_Comparison_Exp>;
+  status?: Maybe<String_Comparison_Exp>;
+  users?: Maybe<Chat_Users_Bool_Exp>;
+};
+
+export enum Chat_Constraint {
+  CHAT_PKEY = 'chat_pkey'
+}
+
+export type Chat_Insert_Input = {
+  createdAt?: Maybe<Scalars['timestamp']>;
+  id?: Maybe<Scalars['String']>;
+  messages?: Maybe<Chat_Messages_Arr_Rel_Insert_Input>;
+  name?: Maybe<Scalars['String']>;
+  owner?: Maybe<Users_Obj_Rel_Insert_Input>;
+  ownerId?: Maybe<Scalars['String']>;
+  status?: Maybe<Scalars['String']>;
+  users?: Maybe<Chat_Users_Arr_Rel_Insert_Input>;
+};
+
+export type Chat_Max_Fields = {
+   __typename?: 'chat_max_fields';
+  createdAt?: Maybe<Scalars['timestamp']>;
+  id?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  ownerId?: Maybe<Scalars['String']>;
+  status?: Maybe<Scalars['String']>;
+};
+
+export type Chat_Max_Order_By = {
+  createdAt?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  name?: Maybe<Order_By>;
+  ownerId?: Maybe<Order_By>;
+  status?: Maybe<Order_By>;
+};
+
+export type Chat_Messages = {
+   __typename?: 'chat_messages';
+  chatId: Scalars['String'];
+  content?: Maybe<Scalars['String']>;
+  createdAt: Scalars['timestamp'];
+  editedAt?: Maybe<Scalars['timestamp']>;
+  id: Scalars['String'];
+  previewItem?: Maybe<Product_Preview_Items>;
+  previewItemId?: Maybe<Scalars['String']>;
+  read_at?: Maybe<Scalars['timestamp']>;
+  sender: Users;
+  senderId: Scalars['String'];
+};
+
+export type Chat_Messages_Aggregate = {
+   __typename?: 'chat_messages_aggregate';
+  aggregate?: Maybe<Chat_Messages_Aggregate_Fields>;
+  nodes: Array<Chat_Messages>;
+};
+
+export type Chat_Messages_Aggregate_Fields = {
+   __typename?: 'chat_messages_aggregate_fields';
+  count?: Maybe<Scalars['Int']>;
+  max?: Maybe<Chat_Messages_Max_Fields>;
+  min?: Maybe<Chat_Messages_Min_Fields>;
+};
+
+
+export type Chat_Messages_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<Chat_Messages_Select_Column>>;
+  distinct?: Maybe<Scalars['Boolean']>;
+};
+
+export type Chat_Messages_Aggregate_Order_By = {
+  count?: Maybe<Order_By>;
+  max?: Maybe<Chat_Messages_Max_Order_By>;
+  min?: Maybe<Chat_Messages_Min_Order_By>;
+};
+
+export type Chat_Messages_Arr_Rel_Insert_Input = {
+  data: Array<Chat_Messages_Insert_Input>;
+  on_conflict?: Maybe<Chat_Messages_On_Conflict>;
+};
+
+export type Chat_Messages_Bool_Exp = {
+  _and?: Maybe<Array<Maybe<Chat_Messages_Bool_Exp>>>;
+  _not?: Maybe<Chat_Messages_Bool_Exp>;
+  _or?: Maybe<Array<Maybe<Chat_Messages_Bool_Exp>>>;
+  chatId?: Maybe<String_Comparison_Exp>;
+  content?: Maybe<String_Comparison_Exp>;
+  createdAt?: Maybe<Timestamp_Comparison_Exp>;
+  editedAt?: Maybe<Timestamp_Comparison_Exp>;
+  id?: Maybe<String_Comparison_Exp>;
+  previewItem?: Maybe<Product_Preview_Items_Bool_Exp>;
+  previewItemId?: Maybe<String_Comparison_Exp>;
+  read_at?: Maybe<Timestamp_Comparison_Exp>;
+  sender?: Maybe<Users_Bool_Exp>;
+  senderId?: Maybe<String_Comparison_Exp>;
+};
+
+export enum Chat_Messages_Constraint {
+  CHAT_MESSAGES_PKEY = 'chat_messages_pkey'
+}
+
+export type Chat_Messages_Insert_Input = {
+  chatId?: Maybe<Scalars['String']>;
+  content?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['timestamp']>;
+  editedAt?: Maybe<Scalars['timestamp']>;
+  id?: Maybe<Scalars['String']>;
+  previewItem?: Maybe<Product_Preview_Items_Obj_Rel_Insert_Input>;
+  previewItemId?: Maybe<Scalars['String']>;
+  read_at?: Maybe<Scalars['timestamp']>;
+  sender?: Maybe<Users_Obj_Rel_Insert_Input>;
+  senderId?: Maybe<Scalars['String']>;
+};
+
+export type Chat_Messages_Max_Fields = {
+   __typename?: 'chat_messages_max_fields';
+  chatId?: Maybe<Scalars['String']>;
+  content?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['timestamp']>;
+  editedAt?: Maybe<Scalars['timestamp']>;
+  id?: Maybe<Scalars['String']>;
+  previewItemId?: Maybe<Scalars['String']>;
+  read_at?: Maybe<Scalars['timestamp']>;
+  senderId?: Maybe<Scalars['String']>;
+};
+
+export type Chat_Messages_Max_Order_By = {
+  chatId?: Maybe<Order_By>;
+  content?: Maybe<Order_By>;
+  createdAt?: Maybe<Order_By>;
+  editedAt?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  previewItemId?: Maybe<Order_By>;
+  read_at?: Maybe<Order_By>;
+  senderId?: Maybe<Order_By>;
+};
+
+export type Chat_Messages_Min_Fields = {
+   __typename?: 'chat_messages_min_fields';
+  chatId?: Maybe<Scalars['String']>;
+  content?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['timestamp']>;
+  editedAt?: Maybe<Scalars['timestamp']>;
+  id?: Maybe<Scalars['String']>;
+  previewItemId?: Maybe<Scalars['String']>;
+  read_at?: Maybe<Scalars['timestamp']>;
+  senderId?: Maybe<Scalars['String']>;
+};
+
+export type Chat_Messages_Min_Order_By = {
+  chatId?: Maybe<Order_By>;
+  content?: Maybe<Order_By>;
+  createdAt?: Maybe<Order_By>;
+  editedAt?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  previewItemId?: Maybe<Order_By>;
+  read_at?: Maybe<Order_By>;
+  senderId?: Maybe<Order_By>;
+};
+
+export type Chat_Messages_Mutation_Response = {
+   __typename?: 'chat_messages_mutation_response';
+  affected_rows: Scalars['Int'];
+  returning: Array<Chat_Messages>;
+};
+
+export type Chat_Messages_Obj_Rel_Insert_Input = {
+  data: Chat_Messages_Insert_Input;
+  on_conflict?: Maybe<Chat_Messages_On_Conflict>;
+};
+
+export type Chat_Messages_On_Conflict = {
+  constraint: Chat_Messages_Constraint;
+  update_columns: Array<Chat_Messages_Update_Column>;
+  where?: Maybe<Chat_Messages_Bool_Exp>;
+};
+
+export type Chat_Messages_Order_By = {
+  chatId?: Maybe<Order_By>;
+  content?: Maybe<Order_By>;
+  createdAt?: Maybe<Order_By>;
+  editedAt?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  previewItem?: Maybe<Product_Preview_Items_Order_By>;
+  previewItemId?: Maybe<Order_By>;
+  read_at?: Maybe<Order_By>;
+  sender?: Maybe<Users_Order_By>;
+  senderId?: Maybe<Order_By>;
+};
+
+export type Chat_Messages_Pk_Columns_Input = {
+  id: Scalars['String'];
+};
+
+export enum Chat_Messages_Select_Column {
+  CHATID = 'chatId',
+  CONTENT = 'content',
+  CREATEDAT = 'createdAt',
+  EDITEDAT = 'editedAt',
+  ID = 'id',
+  PREVIEWITEMID = 'previewItemId',
+  READ_AT = 'read_at',
+  SENDERID = 'senderId'
+}
+
+export type Chat_Messages_Set_Input = {
+  chatId?: Maybe<Scalars['String']>;
+  content?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['timestamp']>;
+  editedAt?: Maybe<Scalars['timestamp']>;
+  id?: Maybe<Scalars['String']>;
+  previewItemId?: Maybe<Scalars['String']>;
+  read_at?: Maybe<Scalars['timestamp']>;
+  senderId?: Maybe<Scalars['String']>;
+};
+
+export enum Chat_Messages_Update_Column {
+  CHATID = 'chatId',
+  CONTENT = 'content',
+  CREATEDAT = 'createdAt',
+  EDITEDAT = 'editedAt',
+  ID = 'id',
+  PREVIEWITEMID = 'previewItemId',
+  READ_AT = 'read_at',
+  SENDERID = 'senderId'
+}
+
+export type Chat_Min_Fields = {
+   __typename?: 'chat_min_fields';
+  createdAt?: Maybe<Scalars['timestamp']>;
+  id?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  ownerId?: Maybe<Scalars['String']>;
+  status?: Maybe<Scalars['String']>;
+};
+
+export type Chat_Min_Order_By = {
+  createdAt?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  name?: Maybe<Order_By>;
+  ownerId?: Maybe<Order_By>;
+  status?: Maybe<Order_By>;
+};
+
+export type Chat_Mutation_Response = {
+   __typename?: 'chat_mutation_response';
+  affected_rows: Scalars['Int'];
+  returning: Array<Chat>;
+};
+
+export type Chat_Obj_Rel_Insert_Input = {
+  data: Chat_Insert_Input;
+  on_conflict?: Maybe<Chat_On_Conflict>;
+};
+
+export type Chat_On_Conflict = {
+  constraint: Chat_Constraint;
+  update_columns: Array<Chat_Update_Column>;
+  where?: Maybe<Chat_Bool_Exp>;
+};
+
+export type Chat_Order_By = {
+  createdAt?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  messages_aggregate?: Maybe<Chat_Messages_Aggregate_Order_By>;
+  name?: Maybe<Order_By>;
+  owner?: Maybe<Users_Order_By>;
+  ownerId?: Maybe<Order_By>;
+  status?: Maybe<Order_By>;
+  users_aggregate?: Maybe<Chat_Users_Aggregate_Order_By>;
+};
+
+export type Chat_Pk_Columns_Input = {
+  id: Scalars['String'];
+};
+
+export enum Chat_Select_Column {
+  CREATEDAT = 'createdAt',
+  ID = 'id',
+  NAME = 'name',
+  OWNERID = 'ownerId',
+  STATUS = 'status'
+}
+
+export type Chat_Set_Input = {
+  createdAt?: Maybe<Scalars['timestamp']>;
+  id?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  ownerId?: Maybe<Scalars['String']>;
+  status?: Maybe<Scalars['String']>;
+};
+
+export enum Chat_Update_Column {
+  CREATEDAT = 'createdAt',
+  ID = 'id',
+  NAME = 'name',
+  OWNERID = 'ownerId',
+  STATUS = 'status'
+}
+
+export type Chat_Users = {
+   __typename?: 'chat_users';
+  chat?: Maybe<Chat>;
+  chatId: Scalars['String'];
+  user: Users;
+  userId: Scalars['String'];
+};
+
+export type Chat_Users_Aggregate = {
+   __typename?: 'chat_users_aggregate';
+  aggregate?: Maybe<Chat_Users_Aggregate_Fields>;
+  nodes: Array<Chat_Users>;
+};
+
+export type Chat_Users_Aggregate_Fields = {
+   __typename?: 'chat_users_aggregate_fields';
+  count?: Maybe<Scalars['Int']>;
+  max?: Maybe<Chat_Users_Max_Fields>;
+  min?: Maybe<Chat_Users_Min_Fields>;
+};
+
+
+export type Chat_Users_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<Chat_Users_Select_Column>>;
+  distinct?: Maybe<Scalars['Boolean']>;
+};
+
+export type Chat_Users_Aggregate_Order_By = {
+  count?: Maybe<Order_By>;
+  max?: Maybe<Chat_Users_Max_Order_By>;
+  min?: Maybe<Chat_Users_Min_Order_By>;
+};
+
+export type Chat_Users_Arr_Rel_Insert_Input = {
+  data: Array<Chat_Users_Insert_Input>;
+  on_conflict?: Maybe<Chat_Users_On_Conflict>;
+};
+
+export type Chat_Users_Bool_Exp = {
+  _and?: Maybe<Array<Maybe<Chat_Users_Bool_Exp>>>;
+  _not?: Maybe<Chat_Users_Bool_Exp>;
+  _or?: Maybe<Array<Maybe<Chat_Users_Bool_Exp>>>;
+  chat?: Maybe<Chat_Bool_Exp>;
+  chatId?: Maybe<String_Comparison_Exp>;
+  user?: Maybe<Users_Bool_Exp>;
+  userId?: Maybe<String_Comparison_Exp>;
+};
+
+export enum Chat_Users_Constraint {
+  CHAT_USERS_PKEY = 'chat_users_pkey'
+}
+
+export type Chat_Users_Insert_Input = {
+  chat?: Maybe<Chat_Obj_Rel_Insert_Input>;
+  chatId?: Maybe<Scalars['String']>;
+  user?: Maybe<Users_Obj_Rel_Insert_Input>;
+  userId?: Maybe<Scalars['String']>;
+};
+
+export type Chat_Users_Max_Fields = {
+   __typename?: 'chat_users_max_fields';
+  chatId?: Maybe<Scalars['String']>;
+  userId?: Maybe<Scalars['String']>;
+};
+
+export type Chat_Users_Max_Order_By = {
+  chatId?: Maybe<Order_By>;
+  userId?: Maybe<Order_By>;
+};
+
+export type Chat_Users_Min_Fields = {
+   __typename?: 'chat_users_min_fields';
+  chatId?: Maybe<Scalars['String']>;
+  userId?: Maybe<Scalars['String']>;
+};
+
+export type Chat_Users_Min_Order_By = {
+  chatId?: Maybe<Order_By>;
+  userId?: Maybe<Order_By>;
+};
+
+export type Chat_Users_Mutation_Response = {
+   __typename?: 'chat_users_mutation_response';
+  affected_rows: Scalars['Int'];
+  returning: Array<Chat_Users>;
+};
+
+export type Chat_Users_Obj_Rel_Insert_Input = {
+  data: Chat_Users_Insert_Input;
+  on_conflict?: Maybe<Chat_Users_On_Conflict>;
+};
+
+export type Chat_Users_On_Conflict = {
+  constraint: Chat_Users_Constraint;
+  update_columns: Array<Chat_Users_Update_Column>;
+  where?: Maybe<Chat_Users_Bool_Exp>;
+};
+
+export type Chat_Users_Order_By = {
+  chat?: Maybe<Chat_Order_By>;
+  chatId?: Maybe<Order_By>;
+  user?: Maybe<Users_Order_By>;
+  userId?: Maybe<Order_By>;
+};
+
+export type Chat_Users_Pk_Columns_Input = {
+  chatId: Scalars['String'];
+  userId: Scalars['String'];
+};
+
+export enum Chat_Users_Select_Column {
+  CHATID = 'chatId',
+  USERID = 'userId'
+}
+
+export type Chat_Users_Set_Input = {
+  chatId?: Maybe<Scalars['String']>;
+  userId?: Maybe<Scalars['String']>;
+};
+
+export enum Chat_Users_Update_Column {
+  CHATID = 'chatId',
+  USERID = 'userId'
+}
 
 export type Connection = {
   pageInfo: PageInfo;
@@ -1045,19 +1557,6 @@ export type Int_Comparison_Exp = {
   _nin?: Maybe<Array<Scalars['Int']>>;
 };
 
-
-export type Json_Comparison_Exp = {
-  _eq?: Maybe<Scalars['json']>;
-  _gt?: Maybe<Scalars['json']>;
-  _gte?: Maybe<Scalars['json']>;
-  _in?: Maybe<Array<Scalars['json']>>;
-  _is_null?: Maybe<Scalars['Boolean']>;
-  _lt?: Maybe<Scalars['json']>;
-  _lte?: Maybe<Scalars['json']>;
-  _neq?: Maybe<Scalars['json']>;
-  _nin?: Maybe<Array<Scalars['json']>>;
-};
-
 export type Login2Response = {
    __typename?: 'Login2Response';
   email?: Maybe<Scalars['String']>;
@@ -1806,6 +2305,12 @@ export type Mutation_Root = {
   deleteStore: StoreMutationResponse;
   delete_categories?: Maybe<Categories_Mutation_Response>;
   delete_categories_by_pk?: Maybe<Categories>;
+  delete_chat?: Maybe<Chat_Mutation_Response>;
+  delete_chat_by_pk?: Maybe<Chat>;
+  delete_chat_messages?: Maybe<Chat_Messages_Mutation_Response>;
+  delete_chat_messages_by_pk?: Maybe<Chat_Messages>;
+  delete_chat_users?: Maybe<Chat_Users_Mutation_Response>;
+  delete_chat_users_by_pk?: Maybe<Chat_Users>;
   delete_image_owners?: Maybe<Image_Owners_Mutation_Response>;
   delete_image_owners_by_pk?: Maybe<Image_Owners>;
   delete_image_parents?: Maybe<Image_Parents_Mutation_Response>;
@@ -1814,7 +2319,6 @@ export type Mutation_Root = {
   delete_image_variants_by_pk?: Maybe<Image_Variants>;
   delete_migrations?: Maybe<Migrations_Mutation_Response>;
   delete_migrations_by_pk?: Maybe<Migrations>;
-  delete_online_users?: Maybe<Online_Users_Mutation_Response>;
   delete_payment_methods?: Maybe<Payment_Methods_Mutation_Response>;
   delete_payment_methods_by_pk?: Maybe<Payment_Methods>;
   delete_payout_methods?: Maybe<Payout_Methods_Mutation_Response>;
@@ -1833,6 +2337,8 @@ export type Mutation_Root = {
   delete_products_by_pk?: Maybe<Products>;
   delete_stores?: Maybe<Stores_Mutation_Response>;
   delete_stores_by_pk?: Maybe<Stores>;
+  delete_user_licenses?: Maybe<User_Licenses_Mutation_Response>;
+  delete_user_licenses_by_pk?: Maybe<User_Licenses>;
   delete_users?: Maybe<Users_Mutation_Response>;
   delete_users_by_pk?: Maybe<Users>;
   editProduct: ProductMutationResponse;
@@ -1844,6 +2350,12 @@ export type Mutation_Root = {
   includeProductInSearch?: Maybe<ProductMutationResponse>;
   insert_categories?: Maybe<Categories_Mutation_Response>;
   insert_categories_one?: Maybe<Categories>;
+  insert_chat?: Maybe<Chat_Mutation_Response>;
+  insert_chat_messages?: Maybe<Chat_Messages_Mutation_Response>;
+  insert_chat_messages_one?: Maybe<Chat_Messages>;
+  insert_chat_one?: Maybe<Chat>;
+  insert_chat_users?: Maybe<Chat_Users_Mutation_Response>;
+  insert_chat_users_one?: Maybe<Chat_Users>;
   insert_image_owners?: Maybe<Image_Owners_Mutation_Response>;
   insert_image_owners_one?: Maybe<Image_Owners>;
   insert_image_parents?: Maybe<Image_Parents_Mutation_Response>;
@@ -1852,8 +2364,6 @@ export type Mutation_Root = {
   insert_image_variants_one?: Maybe<Image_Variants>;
   insert_migrations?: Maybe<Migrations_Mutation_Response>;
   insert_migrations_one?: Maybe<Migrations>;
-  insert_online_users?: Maybe<Online_Users_Mutation_Response>;
-  insert_online_users_one?: Maybe<Online_Users>;
   insert_payment_methods?: Maybe<Payment_Methods_Mutation_Response>;
   insert_payment_methods_one?: Maybe<Payment_Methods>;
   insert_payout_methods?: Maybe<Payout_Methods_Mutation_Response>;
@@ -1872,11 +2382,12 @@ export type Mutation_Root = {
   insert_products_one?: Maybe<Products>;
   insert_stores?: Maybe<Stores_Mutation_Response>;
   insert_stores_one?: Maybe<Stores>;
+  insert_user_licenses?: Maybe<User_Licenses_Mutation_Response>;
+  insert_user_licenses_one?: Maybe<User_Licenses>;
   insert_users?: Maybe<Users_Mutation_Response>;
   insert_users_one?: Maybe<Users>;
   logInUsingEmail: LoginMutationResponse;
   logOut: BlankMutationResponse;
-  login2?: Maybe<Login2Response>;
   rearrangeCuratedListItems: CuratedListMutationResponse;
   recordAffiliateLinkClick: BlankMutationResponse;
   refreshCart: CartMutationResponse;
@@ -1901,6 +2412,12 @@ export type Mutation_Root = {
   unsuspendUser: BlankMutationResponse;
   update_categories?: Maybe<Categories_Mutation_Response>;
   update_categories_by_pk?: Maybe<Categories>;
+  update_chat?: Maybe<Chat_Mutation_Response>;
+  update_chat_by_pk?: Maybe<Chat>;
+  update_chat_messages?: Maybe<Chat_Messages_Mutation_Response>;
+  update_chat_messages_by_pk?: Maybe<Chat_Messages>;
+  update_chat_users?: Maybe<Chat_Users_Mutation_Response>;
+  update_chat_users_by_pk?: Maybe<Chat_Users>;
   update_image_owners?: Maybe<Image_Owners_Mutation_Response>;
   update_image_owners_by_pk?: Maybe<Image_Owners>;
   update_image_parents?: Maybe<Image_Parents_Mutation_Response>;
@@ -1909,7 +2426,6 @@ export type Mutation_Root = {
   update_image_variants_by_pk?: Maybe<Image_Variants>;
   update_migrations?: Maybe<Migrations_Mutation_Response>;
   update_migrations_by_pk?: Maybe<Migrations>;
-  update_online_users?: Maybe<Online_Users_Mutation_Response>;
   update_payment_methods?: Maybe<Payment_Methods_Mutation_Response>;
   update_payment_methods_by_pk?: Maybe<Payment_Methods>;
   update_payout_methods?: Maybe<Payout_Methods_Mutation_Response>;
@@ -1928,12 +2444,13 @@ export type Mutation_Root = {
   update_products_by_pk?: Maybe<Products>;
   update_stores?: Maybe<Stores_Mutation_Response>;
   update_stores_by_pk?: Maybe<Stores>;
+  update_user_licenses?: Maybe<User_Licenses_Mutation_Response>;
+  update_user_licenses_by_pk?: Maybe<User_Licenses>;
   update_users?: Maybe<Users_Mutation_Response>;
   update_users_by_pk?: Maybe<Users>;
   uploadRegister: UploadRegisterMutationResponse;
   uploadSaveImage: UploadSaveImageMutationResponse;
   uploadSaveProductFile: UploadSaveProductFileMutationResponse;
-  url?: Maybe<ImageUrl>;
   visitStore: FollowingStoresConnection;
 };
 
@@ -2152,6 +2669,37 @@ export type Mutation_RootDelete_Categories_By_PkArgs = {
 };
 
 
+export type Mutation_RootDelete_ChatArgs = {
+  where: Chat_Bool_Exp;
+};
+
+
+export type Mutation_RootDelete_Chat_By_PkArgs = {
+  id: Scalars['String'];
+};
+
+
+export type Mutation_RootDelete_Chat_MessagesArgs = {
+  where: Chat_Messages_Bool_Exp;
+};
+
+
+export type Mutation_RootDelete_Chat_Messages_By_PkArgs = {
+  id: Scalars['String'];
+};
+
+
+export type Mutation_RootDelete_Chat_UsersArgs = {
+  where: Chat_Users_Bool_Exp;
+};
+
+
+export type Mutation_RootDelete_Chat_Users_By_PkArgs = {
+  chatId: Scalars['String'];
+  userId: Scalars['String'];
+};
+
+
 export type Mutation_RootDelete_Image_OwnersArgs = {
   where: Image_Owners_Bool_Exp;
 };
@@ -2189,11 +2737,6 @@ export type Mutation_RootDelete_MigrationsArgs = {
 
 export type Mutation_RootDelete_Migrations_By_PkArgs = {
   id: Scalars['Int'];
-};
-
-
-export type Mutation_RootDelete_Online_UsersArgs = {
-  where: Online_Users_Bool_Exp;
 };
 
 
@@ -2287,6 +2830,16 @@ export type Mutation_RootDelete_Stores_By_PkArgs = {
 };
 
 
+export type Mutation_RootDelete_User_LicensesArgs = {
+  where: User_Licenses_Bool_Exp;
+};
+
+
+export type Mutation_RootDelete_User_Licenses_By_PkArgs = {
+  id: Scalars['String'];
+};
+
+
 export type Mutation_RootDelete_UsersArgs = {
   where: Users_Bool_Exp;
 };
@@ -2354,6 +2907,42 @@ export type Mutation_RootInsert_Categories_OneArgs = {
 };
 
 
+export type Mutation_RootInsert_ChatArgs = {
+  objects: Array<Chat_Insert_Input>;
+  on_conflict?: Maybe<Chat_On_Conflict>;
+};
+
+
+export type Mutation_RootInsert_Chat_MessagesArgs = {
+  objects: Array<Chat_Messages_Insert_Input>;
+  on_conflict?: Maybe<Chat_Messages_On_Conflict>;
+};
+
+
+export type Mutation_RootInsert_Chat_Messages_OneArgs = {
+  object: Chat_Messages_Insert_Input;
+  on_conflict?: Maybe<Chat_Messages_On_Conflict>;
+};
+
+
+export type Mutation_RootInsert_Chat_OneArgs = {
+  object: Chat_Insert_Input;
+  on_conflict?: Maybe<Chat_On_Conflict>;
+};
+
+
+export type Mutation_RootInsert_Chat_UsersArgs = {
+  objects: Array<Chat_Users_Insert_Input>;
+  on_conflict?: Maybe<Chat_Users_On_Conflict>;
+};
+
+
+export type Mutation_RootInsert_Chat_Users_OneArgs = {
+  object: Chat_Users_Insert_Input;
+  on_conflict?: Maybe<Chat_Users_On_Conflict>;
+};
+
+
 export type Mutation_RootInsert_Image_OwnersArgs = {
   objects: Array<Image_Owners_Insert_Input>;
   on_conflict?: Maybe<Image_Owners_On_Conflict>;
@@ -2399,16 +2988,6 @@ export type Mutation_RootInsert_MigrationsArgs = {
 export type Mutation_RootInsert_Migrations_OneArgs = {
   object: Migrations_Insert_Input;
   on_conflict?: Maybe<Migrations_On_Conflict>;
-};
-
-
-export type Mutation_RootInsert_Online_UsersArgs = {
-  objects: Array<Online_Users_Insert_Input>;
-};
-
-
-export type Mutation_RootInsert_Online_Users_OneArgs = {
-  object: Online_Users_Insert_Input;
 };
 
 
@@ -2520,6 +3099,18 @@ export type Mutation_RootInsert_Stores_OneArgs = {
 };
 
 
+export type Mutation_RootInsert_User_LicensesArgs = {
+  objects: Array<User_Licenses_Insert_Input>;
+  on_conflict?: Maybe<User_Licenses_On_Conflict>;
+};
+
+
+export type Mutation_RootInsert_User_Licenses_OneArgs = {
+  object: User_Licenses_Insert_Input;
+  on_conflict?: Maybe<User_Licenses_On_Conflict>;
+};
+
+
 export type Mutation_RootInsert_UsersArgs = {
   objects: Array<Users_Insert_Input>;
   on_conflict?: Maybe<Users_On_Conflict>;
@@ -2535,12 +3126,6 @@ export type Mutation_RootInsert_Users_OneArgs = {
 export type Mutation_RootLogInUsingEmailArgs = {
   email: Scalars['String'];
   password: Scalars['String'];
-};
-
-
-export type Mutation_RootLogin2Args = {
-  email: Scalars['String'];
-  password?: Maybe<Scalars['String']>;
 };
 
 
@@ -2671,6 +3256,42 @@ export type Mutation_RootUpdate_Categories_By_PkArgs = {
 };
 
 
+export type Mutation_RootUpdate_ChatArgs = {
+  _set?: Maybe<Chat_Set_Input>;
+  where: Chat_Bool_Exp;
+};
+
+
+export type Mutation_RootUpdate_Chat_By_PkArgs = {
+  _set?: Maybe<Chat_Set_Input>;
+  pk_columns: Chat_Pk_Columns_Input;
+};
+
+
+export type Mutation_RootUpdate_Chat_MessagesArgs = {
+  _set?: Maybe<Chat_Messages_Set_Input>;
+  where: Chat_Messages_Bool_Exp;
+};
+
+
+export type Mutation_RootUpdate_Chat_Messages_By_PkArgs = {
+  _set?: Maybe<Chat_Messages_Set_Input>;
+  pk_columns: Chat_Messages_Pk_Columns_Input;
+};
+
+
+export type Mutation_RootUpdate_Chat_UsersArgs = {
+  _set?: Maybe<Chat_Users_Set_Input>;
+  where: Chat_Users_Bool_Exp;
+};
+
+
+export type Mutation_RootUpdate_Chat_Users_By_PkArgs = {
+  _set?: Maybe<Chat_Users_Set_Input>;
+  pk_columns: Chat_Users_Pk_Columns_Input;
+};
+
+
 export type Mutation_RootUpdate_Image_OwnersArgs = {
   _set?: Maybe<Image_Owners_Set_Input>;
   where: Image_Owners_Bool_Exp;
@@ -2720,12 +3341,6 @@ export type Mutation_RootUpdate_Migrations_By_PkArgs = {
   _inc?: Maybe<Migrations_Inc_Input>;
   _set?: Maybe<Migrations_Set_Input>;
   pk_columns: Migrations_Pk_Columns_Input;
-};
-
-
-export type Mutation_RootUpdate_Online_UsersArgs = {
-  _set?: Maybe<Online_Users_Set_Input>;
-  where: Online_Users_Bool_Exp;
 };
 
 
@@ -2845,6 +3460,18 @@ export type Mutation_RootUpdate_Stores_By_PkArgs = {
 };
 
 
+export type Mutation_RootUpdate_User_LicensesArgs = {
+  _set?: Maybe<User_Licenses_Set_Input>;
+  where: User_Licenses_Bool_Exp;
+};
+
+
+export type Mutation_RootUpdate_User_Licenses_By_PkArgs = {
+  _set?: Maybe<User_Licenses_Set_Input>;
+  pk_columns: User_Licenses_Pk_Columns_Input;
+};
+
+
 export type Mutation_RootUpdate_UsersArgs = {
   _set?: Maybe<Users_Set_Input>;
   where: Users_Bool_Exp;
@@ -2879,11 +3506,6 @@ export type Mutation_RootUploadSaveProductFileArgs = {
 };
 
 
-export type Mutation_RootUrlArgs = {
-  image_id?: Maybe<Scalars['String']>;
-};
-
-
 export type Mutation_RootVisitStoreArgs = {
   query?: Maybe<ConnectionQuery>;
   storeId: Scalars['String'];
@@ -2900,101 +3522,6 @@ export type MutationErrorSummary = {
    __typename?: 'MutationErrorSummary';
   errors?: Maybe<Array<Maybe<MutationError>>>;
   shouldRetry?: Maybe<Scalars['Boolean']>;
-};
-
-export type Online_Users = {
-   __typename?: 'online_users';
-  id?: Maybe<Scalars['String']>;
-  lastSeen?: Maybe<Scalars['timestamptz']>;
-};
-
-export type Online_Users_Aggregate = {
-   __typename?: 'online_users_aggregate';
-  aggregate?: Maybe<Online_Users_Aggregate_Fields>;
-  nodes: Array<Online_Users>;
-};
-
-export type Online_Users_Aggregate_Fields = {
-   __typename?: 'online_users_aggregate_fields';
-  count?: Maybe<Scalars['Int']>;
-  max?: Maybe<Online_Users_Max_Fields>;
-  min?: Maybe<Online_Users_Min_Fields>;
-};
-
-
-export type Online_Users_Aggregate_FieldsCountArgs = {
-  columns?: Maybe<Array<Online_Users_Select_Column>>;
-  distinct?: Maybe<Scalars['Boolean']>;
-};
-
-export type Online_Users_Aggregate_Order_By = {
-  count?: Maybe<Order_By>;
-  max?: Maybe<Online_Users_Max_Order_By>;
-  min?: Maybe<Online_Users_Min_Order_By>;
-};
-
-export type Online_Users_Arr_Rel_Insert_Input = {
-  data: Array<Online_Users_Insert_Input>;
-};
-
-export type Online_Users_Bool_Exp = {
-  _and?: Maybe<Array<Maybe<Online_Users_Bool_Exp>>>;
-  _not?: Maybe<Online_Users_Bool_Exp>;
-  _or?: Maybe<Array<Maybe<Online_Users_Bool_Exp>>>;
-  id?: Maybe<String_Comparison_Exp>;
-  lastSeen?: Maybe<Timestamptz_Comparison_Exp>;
-};
-
-export type Online_Users_Insert_Input = {
-  id?: Maybe<Scalars['String']>;
-  lastSeen?: Maybe<Scalars['timestamptz']>;
-};
-
-export type Online_Users_Max_Fields = {
-   __typename?: 'online_users_max_fields';
-  id?: Maybe<Scalars['String']>;
-  lastSeen?: Maybe<Scalars['timestamptz']>;
-};
-
-export type Online_Users_Max_Order_By = {
-  id?: Maybe<Order_By>;
-  lastSeen?: Maybe<Order_By>;
-};
-
-export type Online_Users_Min_Fields = {
-   __typename?: 'online_users_min_fields';
-  id?: Maybe<Scalars['String']>;
-  lastSeen?: Maybe<Scalars['timestamptz']>;
-};
-
-export type Online_Users_Min_Order_By = {
-  id?: Maybe<Order_By>;
-  lastSeen?: Maybe<Order_By>;
-};
-
-export type Online_Users_Mutation_Response = {
-   __typename?: 'online_users_mutation_response';
-  affected_rows: Scalars['Int'];
-  returning: Array<Online_Users>;
-};
-
-export type Online_Users_Obj_Rel_Insert_Input = {
-  data: Online_Users_Insert_Input;
-};
-
-export type Online_Users_Order_By = {
-  id?: Maybe<Order_By>;
-  lastSeen?: Maybe<Order_By>;
-};
-
-export enum Online_Users_Select_Column {
-  ID = 'id',
-  LASTSEEN = 'lastSeen'
-}
-
-export type Online_Users_Set_Input = {
-  id?: Maybe<Scalars['String']>;
-  lastSeen?: Maybe<Scalars['timestamptz']>;
 };
 
 export type Order = {
@@ -5361,6 +5888,7 @@ export type Products = {
   isSuspended: Scalars['Boolean'];
   product_variants: Array<Product_Variants>;
   product_variants_aggregate: Product_Variants_Aggregate;
+  store?: Maybe<Stores>;
   storeId: Scalars['String'];
   updatedAt: Scalars['timestamptz'];
 };
@@ -5429,6 +5957,7 @@ export type Products_Bool_Exp = {
   isPublished?: Maybe<Boolean_Comparison_Exp>;
   isSuspended?: Maybe<Boolean_Comparison_Exp>;
   product_variants?: Maybe<Product_Variants_Bool_Exp>;
+  store?: Maybe<Stores_Bool_Exp>;
   storeId?: Maybe<String_Comparison_Exp>;
   updatedAt?: Maybe<Timestamptz_Comparison_Exp>;
 };
@@ -5450,6 +5979,7 @@ export type Products_Insert_Input = {
   isPublished?: Maybe<Scalars['Boolean']>;
   isSuspended?: Maybe<Scalars['Boolean']>;
   product_variants?: Maybe<Product_Variants_Arr_Rel_Insert_Input>;
+  store?: Maybe<Stores_Obj_Rel_Insert_Input>;
   storeId?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['timestamptz']>;
 };
@@ -5522,6 +6052,7 @@ export type Products_Order_By = {
   isPublished?: Maybe<Order_By>;
   isSuspended?: Maybe<Order_By>;
   product_variants_aggregate?: Maybe<Product_Variants_Aggregate_Order_By>;
+  store?: Maybe<Stores_Order_By>;
   storeId?: Maybe<Order_By>;
   updatedAt?: Maybe<Order_By>;
 };
@@ -5629,11 +6160,8 @@ export type ProductSoldPeriodSummary = {
 };
 
 export type ProductsOrderBy = {
-  category?: Maybe<CategoriesOrderBy>;
-  categoryId?: Maybe<OrderBy>;
   createdAt?: Maybe<OrderBy>;
-  currentSnapshotId?: Maybe<OrderBy>;
-  id?: Maybe<OrderBy>;
+  price?: Maybe<OrderBy>;
 };
 
 export type ProductsSoldPeriodSummaryConnection = Connection & {
@@ -5900,6 +6428,7 @@ export type QueryProductsAdminConnectionArgs = {
 
 export type QueryProductsAllConnectionArgs = {
   query?: Maybe<ConnectionOffsetQuery>;
+  searchTerm?: Maybe<Scalars['String']>;
 };
 
 
@@ -5952,6 +6481,15 @@ export type Query_Root = {
   categories_aggregate: Categories_Aggregate;
   categories_by_pk?: Maybe<Categories>;
   category?: Maybe<ProductCategory>;
+  chat: Array<Chat>;
+  chat_aggregate: Chat_Aggregate;
+  chat_by_pk?: Maybe<Chat>;
+  chat_messages: Array<Chat_Messages>;
+  chat_messages_aggregate: Chat_Messages_Aggregate;
+  chat_messages_by_pk?: Maybe<Chat_Messages>;
+  chat_users: Array<Chat_Users>;
+  chat_users_aggregate: Chat_Users_Aggregate;
+  chat_users_by_pk?: Maybe<Chat_Users>;
   curatedList?: Maybe<CuratedList>;
   curatedListItemsAdminConnection?: Maybe<CuratedListItemsConnection>;
   curatedListItemsConnection?: Maybe<CuratedListItemsConnection>;
@@ -5991,8 +6529,6 @@ export type Query_Root = {
   migrations: Array<Migrations>;
   migrations_aggregate: Migrations_Aggregate;
   migrations_by_pk?: Maybe<Migrations>;
-  online_users: Array<Online_Users>;
-  online_users_aggregate: Online_Users_Aggregate;
   payment_methods: Array<Payment_Methods>;
   payment_methods_aggregate: Payment_Methods_Aggregate;
   payment_methods_by_pk?: Maybe<Payment_Methods>;
@@ -6030,9 +6566,16 @@ export type Query_Root = {
   stores_by_pk?: Maybe<Stores>;
   user?: Maybe<User>;
   userByEmailOrId?: Maybe<User>;
+  user_licenses: Array<User_Licenses>;
+  user_licenses_aggregate: User_Licenses_Aggregate;
+  user_licenses_by_pk?: Maybe<User_Licenses>;
   users: Array<Users>;
   users_aggregate: Users_Aggregate;
   users_by_pk?: Maybe<Users>;
+  users_online: Array<Users_Online>;
+  users_online_aggregate: Users_Online_Aggregate;
+  users_typing: Array<Users_Typing>;
+  users_typing_aggregate: Users_Typing_Aggregate;
   wishlistItemsConnection: WishlistItemsConnection;
 };
 
@@ -6062,6 +6605,76 @@ export type Query_RootCategories_By_PkArgs = {
 
 export type Query_RootCategoryArgs = {
   id: Scalars['String'];
+};
+
+
+export type Query_RootChatArgs = {
+  distinct_on?: Maybe<Array<Chat_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Chat_Order_By>>;
+  where?: Maybe<Chat_Bool_Exp>;
+};
+
+
+export type Query_RootChat_AggregateArgs = {
+  distinct_on?: Maybe<Array<Chat_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Chat_Order_By>>;
+  where?: Maybe<Chat_Bool_Exp>;
+};
+
+
+export type Query_RootChat_By_PkArgs = {
+  id: Scalars['String'];
+};
+
+
+export type Query_RootChat_MessagesArgs = {
+  distinct_on?: Maybe<Array<Chat_Messages_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Chat_Messages_Order_By>>;
+  where?: Maybe<Chat_Messages_Bool_Exp>;
+};
+
+
+export type Query_RootChat_Messages_AggregateArgs = {
+  distinct_on?: Maybe<Array<Chat_Messages_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Chat_Messages_Order_By>>;
+  where?: Maybe<Chat_Messages_Bool_Exp>;
+};
+
+
+export type Query_RootChat_Messages_By_PkArgs = {
+  id: Scalars['String'];
+};
+
+
+export type Query_RootChat_UsersArgs = {
+  distinct_on?: Maybe<Array<Chat_Users_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Chat_Users_Order_By>>;
+  where?: Maybe<Chat_Users_Bool_Exp>;
+};
+
+
+export type Query_RootChat_Users_AggregateArgs = {
+  distinct_on?: Maybe<Array<Chat_Users_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Chat_Users_Order_By>>;
+  where?: Maybe<Chat_Users_Bool_Exp>;
+};
+
+
+export type Query_RootChat_Users_By_PkArgs = {
+  chatId: Scalars['String'];
+  userId: Scalars['String'];
 };
 
 
@@ -6303,24 +6916,6 @@ export type Query_RootMigrations_By_PkArgs = {
 };
 
 
-export type Query_RootOnline_UsersArgs = {
-  distinct_on?: Maybe<Array<Online_Users_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Online_Users_Order_By>>;
-  where?: Maybe<Online_Users_Bool_Exp>;
-};
-
-
-export type Query_RootOnline_Users_AggregateArgs = {
-  distinct_on?: Maybe<Array<Online_Users_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Online_Users_Order_By>>;
-  where?: Maybe<Online_Users_Bool_Exp>;
-};
-
-
 export type Query_RootPayment_MethodsArgs = {
   distinct_on?: Maybe<Array<Payment_Methods_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -6503,6 +7098,7 @@ export type Query_RootProductsAdminConnectionArgs = {
 
 export type Query_RootProductsAllConnectionArgs = {
   query?: Maybe<ConnectionOffsetQuery>;
+  searchTerm?: Maybe<Scalars['String']>;
 };
 
 
@@ -6582,6 +7178,29 @@ export type Query_RootUserByEmailOrIdArgs = {
 };
 
 
+export type Query_RootUser_LicensesArgs = {
+  distinct_on?: Maybe<Array<User_Licenses_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<User_Licenses_Order_By>>;
+  where?: Maybe<User_Licenses_Bool_Exp>;
+};
+
+
+export type Query_RootUser_Licenses_AggregateArgs = {
+  distinct_on?: Maybe<Array<User_Licenses_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<User_Licenses_Order_By>>;
+  where?: Maybe<User_Licenses_Bool_Exp>;
+};
+
+
+export type Query_RootUser_Licenses_By_PkArgs = {
+  id: Scalars['String'];
+};
+
+
 export type Query_RootUsersArgs = {
   distinct_on?: Maybe<Array<Users_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -6602,6 +7221,42 @@ export type Query_RootUsers_AggregateArgs = {
 
 export type Query_RootUsers_By_PkArgs = {
   id: Scalars['String'];
+};
+
+
+export type Query_RootUsers_OnlineArgs = {
+  distinct_on?: Maybe<Array<Users_Online_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Users_Online_Order_By>>;
+  where?: Maybe<Users_Online_Bool_Exp>;
+};
+
+
+export type Query_RootUsers_Online_AggregateArgs = {
+  distinct_on?: Maybe<Array<Users_Online_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Users_Online_Order_By>>;
+  where?: Maybe<Users_Online_Bool_Exp>;
+};
+
+
+export type Query_RootUsers_TypingArgs = {
+  distinct_on?: Maybe<Array<Users_Typing_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Users_Typing_Order_By>>;
+  where?: Maybe<Users_Typing_Bool_Exp>;
+};
+
+
+export type Query_RootUsers_Typing_AggregateArgs = {
+  distinct_on?: Maybe<Array<Users_Typing_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Users_Typing_Order_By>>;
+  where?: Maybe<Users_Typing_Bool_Exp>;
 };
 
 
@@ -6716,12 +7371,17 @@ export type Store = {
   isDeleted: Scalars['Boolean'];
   isSuspended: Scalars['Boolean'];
   name: Scalars['String'];
-  productsForSaleConnection: Array<Maybe<Product>>;
+  productsForSaleConnection: ProductsConnection;
   profile?: Maybe<Image>;
   profileId?: Maybe<Scalars['ID']>;
   updatedAt?: Maybe<Scalars['Date']>;
   userId: Scalars['ID'];
   website?: Maybe<Scalars['String']>;
+};
+
+
+export type StoreProductsForSaleConnectionArgs = {
+  query?: Maybe<ConnectionOffsetQuery>;
 };
 
 export type StoreAnalytics = {
@@ -6743,7 +7403,7 @@ export type StoreMutationResponse = {
 
 export type StorePrivate = Store & {
    __typename?: 'StorePrivate';
-  analytics: StoreAnalytics;
+  analytics?: Maybe<StoreAnalytics>;
   bio?: Maybe<Scalars['String']>;
   cover?: Maybe<Image>;
   coverId?: Maybe<Scalars['ID']>;
@@ -6755,13 +7415,18 @@ export type StorePrivate = Store & {
   isSuspended: Scalars['Boolean'];
   name: Scalars['String'];
   payoutSplit?: Maybe<PayoutSplit>;
-  productsForSaleConnection: Array<Maybe<Product>>;
+  productsForSaleConnection: ProductsConnection;
   profile?: Maybe<Image>;
   profileId?: Maybe<Scalars['ID']>;
   updatedAt?: Maybe<Scalars['Date']>;
-  user: UserPrivate;
+  user?: Maybe<UserPrivate>;
   userId: Scalars['ID'];
   website?: Maybe<Scalars['String']>;
+};
+
+
+export type StorePrivateProductsForSaleConnectionArgs = {
+  query?: Maybe<ConnectionOffsetQuery>;
 };
 
 export type StorePublic = Store & {
@@ -6774,13 +7439,18 @@ export type StorePublic = Store & {
   isDeleted: Scalars['Boolean'];
   isSuspended: Scalars['Boolean'];
   name: Scalars['String'];
-  productsForSaleConnection: Array<Maybe<Product>>;
+  productsForSaleConnection: ProductsConnection;
   profile?: Maybe<Image>;
   profileId?: Maybe<Scalars['ID']>;
   updatedAt?: Maybe<Scalars['Date']>;
   user: UserPublic;
   userId: Scalars['ID'];
   website?: Maybe<Scalars['String']>;
+};
+
+
+export type StorePublicProductsForSaleConnectionArgs = {
+  query?: Maybe<ConnectionOffsetQuery>;
 };
 
 export type Stores = {
@@ -7127,6 +7797,15 @@ export type Subscription_Root = {
   categories: Array<Categories>;
   categories_aggregate: Categories_Aggregate;
   categories_by_pk?: Maybe<Categories>;
+  chat: Array<Chat>;
+  chat_aggregate: Chat_Aggregate;
+  chat_by_pk?: Maybe<Chat>;
+  chat_messages: Array<Chat_Messages>;
+  chat_messages_aggregate: Chat_Messages_Aggregate;
+  chat_messages_by_pk?: Maybe<Chat_Messages>;
+  chat_users: Array<Chat_Users>;
+  chat_users_aggregate: Chat_Users_Aggregate;
+  chat_users_by_pk?: Maybe<Chat_Users>;
   image_owners: Array<Image_Owners>;
   image_owners_aggregate: Image_Owners_Aggregate;
   image_owners_by_pk?: Maybe<Image_Owners>;
@@ -7139,8 +7818,6 @@ export type Subscription_Root = {
   migrations: Array<Migrations>;
   migrations_aggregate: Migrations_Aggregate;
   migrations_by_pk?: Maybe<Migrations>;
-  online_users: Array<Online_Users>;
-  online_users_aggregate: Online_Users_Aggregate;
   payment_methods: Array<Payment_Methods>;
   payment_methods_aggregate: Payment_Methods_Aggregate;
   payment_methods_by_pk?: Maybe<Payment_Methods>;
@@ -7168,9 +7845,16 @@ export type Subscription_Root = {
   stores: Array<Stores>;
   stores_aggregate: Stores_Aggregate;
   stores_by_pk?: Maybe<Stores>;
+  user_licenses: Array<User_Licenses>;
+  user_licenses_aggregate: User_Licenses_Aggregate;
+  user_licenses_by_pk?: Maybe<User_Licenses>;
   users: Array<Users>;
   users_aggregate: Users_Aggregate;
   users_by_pk?: Maybe<Users>;
+  users_online: Array<Users_Online>;
+  users_online_aggregate: Users_Online_Aggregate;
+  users_typing: Array<Users_Typing>;
+  users_typing_aggregate: Users_Typing_Aggregate;
 };
 
 
@@ -7194,6 +7878,76 @@ export type Subscription_RootCategories_AggregateArgs = {
 
 export type Subscription_RootCategories_By_PkArgs = {
   id: Scalars['String'];
+};
+
+
+export type Subscription_RootChatArgs = {
+  distinct_on?: Maybe<Array<Chat_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Chat_Order_By>>;
+  where?: Maybe<Chat_Bool_Exp>;
+};
+
+
+export type Subscription_RootChat_AggregateArgs = {
+  distinct_on?: Maybe<Array<Chat_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Chat_Order_By>>;
+  where?: Maybe<Chat_Bool_Exp>;
+};
+
+
+export type Subscription_RootChat_By_PkArgs = {
+  id: Scalars['String'];
+};
+
+
+export type Subscription_RootChat_MessagesArgs = {
+  distinct_on?: Maybe<Array<Chat_Messages_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Chat_Messages_Order_By>>;
+  where?: Maybe<Chat_Messages_Bool_Exp>;
+};
+
+
+export type Subscription_RootChat_Messages_AggregateArgs = {
+  distinct_on?: Maybe<Array<Chat_Messages_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Chat_Messages_Order_By>>;
+  where?: Maybe<Chat_Messages_Bool_Exp>;
+};
+
+
+export type Subscription_RootChat_Messages_By_PkArgs = {
+  id: Scalars['String'];
+};
+
+
+export type Subscription_RootChat_UsersArgs = {
+  distinct_on?: Maybe<Array<Chat_Users_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Chat_Users_Order_By>>;
+  where?: Maybe<Chat_Users_Bool_Exp>;
+};
+
+
+export type Subscription_RootChat_Users_AggregateArgs = {
+  distinct_on?: Maybe<Array<Chat_Users_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Chat_Users_Order_By>>;
+  where?: Maybe<Chat_Users_Bool_Exp>;
+};
+
+
+export type Subscription_RootChat_Users_By_PkArgs = {
+  chatId: Scalars['String'];
+  userId: Scalars['String'];
 };
 
 
@@ -7286,24 +8040,6 @@ export type Subscription_RootMigrations_AggregateArgs = {
 
 export type Subscription_RootMigrations_By_PkArgs = {
   id: Scalars['Int'];
-};
-
-
-export type Subscription_RootOnline_UsersArgs = {
-  distinct_on?: Maybe<Array<Online_Users_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Online_Users_Order_By>>;
-  where?: Maybe<Online_Users_Bool_Exp>;
-};
-
-
-export type Subscription_RootOnline_Users_AggregateArgs = {
-  distinct_on?: Maybe<Array<Online_Users_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Online_Users_Order_By>>;
-  where?: Maybe<Online_Users_Bool_Exp>;
 };
 
 
@@ -7514,6 +8250,29 @@ export type Subscription_RootStores_By_PkArgs = {
 };
 
 
+export type Subscription_RootUser_LicensesArgs = {
+  distinct_on?: Maybe<Array<User_Licenses_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<User_Licenses_Order_By>>;
+  where?: Maybe<User_Licenses_Bool_Exp>;
+};
+
+
+export type Subscription_RootUser_Licenses_AggregateArgs = {
+  distinct_on?: Maybe<Array<User_Licenses_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<User_Licenses_Order_By>>;
+  where?: Maybe<User_Licenses_Bool_Exp>;
+};
+
+
+export type Subscription_RootUser_Licenses_By_PkArgs = {
+  id: Scalars['String'];
+};
+
+
 export type Subscription_RootUsersArgs = {
   distinct_on?: Maybe<Array<Users_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -7534,6 +8293,42 @@ export type Subscription_RootUsers_AggregateArgs = {
 
 export type Subscription_RootUsers_By_PkArgs = {
   id: Scalars['String'];
+};
+
+
+export type Subscription_RootUsers_OnlineArgs = {
+  distinct_on?: Maybe<Array<Users_Online_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Users_Online_Order_By>>;
+  where?: Maybe<Users_Online_Bool_Exp>;
+};
+
+
+export type Subscription_RootUsers_Online_AggregateArgs = {
+  distinct_on?: Maybe<Array<Users_Online_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Users_Online_Order_By>>;
+  where?: Maybe<Users_Online_Bool_Exp>;
+};
+
+
+export type Subscription_RootUsers_TypingArgs = {
+  distinct_on?: Maybe<Array<Users_Typing_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Users_Typing_Order_By>>;
+  where?: Maybe<Users_Typing_Bool_Exp>;
+};
+
+
+export type Subscription_RootUsers_Typing_AggregateArgs = {
+  distinct_on?: Maybe<Array<Users_Typing_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Users_Typing_Order_By>>;
+  where?: Maybe<Users_Typing_Bool_Exp>;
 };
 
 export type SummaryStatistics = {
@@ -7656,6 +8451,162 @@ export type User = {
   lastName?: Maybe<Scalars['String']>;
 };
 
+export type User_Licenses = {
+   __typename?: 'user_licenses';
+  expiry: Scalars['timestamp'];
+  id: Scalars['String'];
+  licenseCategory: Scalars['String'];
+  licenseNumber: Scalars['String'];
+  state?: Maybe<Scalars['String']>;
+  verified: Scalars['Boolean'];
+};
+
+export type User_Licenses_Aggregate = {
+   __typename?: 'user_licenses_aggregate';
+  aggregate?: Maybe<User_Licenses_Aggregate_Fields>;
+  nodes: Array<User_Licenses>;
+};
+
+export type User_Licenses_Aggregate_Fields = {
+   __typename?: 'user_licenses_aggregate_fields';
+  count?: Maybe<Scalars['Int']>;
+  max?: Maybe<User_Licenses_Max_Fields>;
+  min?: Maybe<User_Licenses_Min_Fields>;
+};
+
+
+export type User_Licenses_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<User_Licenses_Select_Column>>;
+  distinct?: Maybe<Scalars['Boolean']>;
+};
+
+export type User_Licenses_Aggregate_Order_By = {
+  count?: Maybe<Order_By>;
+  max?: Maybe<User_Licenses_Max_Order_By>;
+  min?: Maybe<User_Licenses_Min_Order_By>;
+};
+
+export type User_Licenses_Arr_Rel_Insert_Input = {
+  data: Array<User_Licenses_Insert_Input>;
+  on_conflict?: Maybe<User_Licenses_On_Conflict>;
+};
+
+export type User_Licenses_Bool_Exp = {
+  _and?: Maybe<Array<Maybe<User_Licenses_Bool_Exp>>>;
+  _not?: Maybe<User_Licenses_Bool_Exp>;
+  _or?: Maybe<Array<Maybe<User_Licenses_Bool_Exp>>>;
+  expiry?: Maybe<Timestamp_Comparison_Exp>;
+  id?: Maybe<String_Comparison_Exp>;
+  licenseCategory?: Maybe<String_Comparison_Exp>;
+  licenseNumber?: Maybe<String_Comparison_Exp>;
+  state?: Maybe<String_Comparison_Exp>;
+  verified?: Maybe<Boolean_Comparison_Exp>;
+};
+
+export enum User_Licenses_Constraint {
+  USER_LICENSES_PKEY = 'user_licenses_pkey'
+}
+
+export type User_Licenses_Insert_Input = {
+  expiry?: Maybe<Scalars['timestamp']>;
+  id?: Maybe<Scalars['String']>;
+  licenseCategory?: Maybe<Scalars['String']>;
+  licenseNumber?: Maybe<Scalars['String']>;
+  state?: Maybe<Scalars['String']>;
+  verified?: Maybe<Scalars['Boolean']>;
+};
+
+export type User_Licenses_Max_Fields = {
+   __typename?: 'user_licenses_max_fields';
+  expiry?: Maybe<Scalars['timestamp']>;
+  id?: Maybe<Scalars['String']>;
+  licenseCategory?: Maybe<Scalars['String']>;
+  licenseNumber?: Maybe<Scalars['String']>;
+  state?: Maybe<Scalars['String']>;
+};
+
+export type User_Licenses_Max_Order_By = {
+  expiry?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  licenseCategory?: Maybe<Order_By>;
+  licenseNumber?: Maybe<Order_By>;
+  state?: Maybe<Order_By>;
+};
+
+export type User_Licenses_Min_Fields = {
+   __typename?: 'user_licenses_min_fields';
+  expiry?: Maybe<Scalars['timestamp']>;
+  id?: Maybe<Scalars['String']>;
+  licenseCategory?: Maybe<Scalars['String']>;
+  licenseNumber?: Maybe<Scalars['String']>;
+  state?: Maybe<Scalars['String']>;
+};
+
+export type User_Licenses_Min_Order_By = {
+  expiry?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  licenseCategory?: Maybe<Order_By>;
+  licenseNumber?: Maybe<Order_By>;
+  state?: Maybe<Order_By>;
+};
+
+export type User_Licenses_Mutation_Response = {
+   __typename?: 'user_licenses_mutation_response';
+  affected_rows: Scalars['Int'];
+  returning: Array<User_Licenses>;
+};
+
+export type User_Licenses_Obj_Rel_Insert_Input = {
+  data: User_Licenses_Insert_Input;
+  on_conflict?: Maybe<User_Licenses_On_Conflict>;
+};
+
+export type User_Licenses_On_Conflict = {
+  constraint: User_Licenses_Constraint;
+  update_columns: Array<User_Licenses_Update_Column>;
+  where?: Maybe<User_Licenses_Bool_Exp>;
+};
+
+export type User_Licenses_Order_By = {
+  expiry?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  licenseCategory?: Maybe<Order_By>;
+  licenseNumber?: Maybe<Order_By>;
+  state?: Maybe<Order_By>;
+  verified?: Maybe<Order_By>;
+};
+
+export type User_Licenses_Pk_Columns_Input = {
+  id: Scalars['String'];
+};
+
+export enum User_Licenses_Select_Column {
+  EXPIRY = 'expiry',
+  ID = 'id',
+  LICENSECATEGORY = 'licenseCategory',
+  LICENSENUMBER = 'licenseNumber',
+  STATE = 'state',
+  VERIFIED = 'verified'
+}
+
+export type User_Licenses_Set_Input = {
+  expiry?: Maybe<Scalars['timestamp']>;
+  id?: Maybe<Scalars['String']>;
+  licenseCategory?: Maybe<Scalars['String']>;
+  licenseNumber?: Maybe<Scalars['String']>;
+  state?: Maybe<Scalars['String']>;
+  verified?: Maybe<Scalars['Boolean']>;
+};
+
+export enum User_Licenses_Update_Column {
+  EXPIRY = 'expiry',
+  ID = 'id',
+  LICENSECATEGORY = 'licenseCategory',
+  LICENSENUMBER = 'licenseNumber',
+  STATE = 'state',
+  VERIFIED = 'verified'
+}
+
 export type UserMutationResponse = {
    __typename?: 'UserMutationResponse';
   user: UserPrivate;
@@ -7727,6 +8678,8 @@ export type UserPublic = User & {
 export type Users = {
    __typename?: 'users';
   cartId?: Maybe<Scalars['String']>;
+  conversations: Array<Chat_Users>;
+  conversations_aggregate: Chat_Users_Aggregate;
   createdAt?: Maybe<Scalars['timestamptz']>;
   defaultPaymentMethodId?: Maybe<Scalars['String']>;
   email: Scalars['String'];
@@ -7737,15 +8690,17 @@ export type Users = {
   isSuspended: Scalars['Boolean'];
   lastName?: Maybe<Scalars['String']>;
   lastSeen?: Maybe<Scalars['timestamptz']>;
+  lastTyped?: Maybe<Scalars['timestamptz']>;
+  license?: Maybe<User_Licenses>;
+  licenseId?: Maybe<Scalars['String']>;
   passwordHash: Scalars['String'];
   payoutMethod?: Maybe<Payout_Methods>;
   payoutMethodId?: Maybe<Scalars['String']>;
   payoutSplitId?: Maybe<Scalars['String']>;
   sellerReferredById?: Maybe<Scalars['String']>;
-  store: Array<Stores>;
+  store?: Maybe<Stores>;
   storeById?: Maybe<Stores>;
   storeId?: Maybe<Scalars['String']>;
-  store_aggregate: Stores_Aggregate;
   stripeCustomerId?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['timestamptz']>;
   userRole?: Maybe<Scalars['String']>;
@@ -7753,21 +8708,21 @@ export type Users = {
 };
 
 
-export type UsersStoreArgs = {
-  distinct_on?: Maybe<Array<Stores_Select_Column>>;
+export type UsersConversationsArgs = {
+  distinct_on?: Maybe<Array<Chat_Users_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
   offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Stores_Order_By>>;
-  where?: Maybe<Stores_Bool_Exp>;
+  order_by?: Maybe<Array<Chat_Users_Order_By>>;
+  where?: Maybe<Chat_Users_Bool_Exp>;
 };
 
 
-export type UsersStore_AggregateArgs = {
-  distinct_on?: Maybe<Array<Stores_Select_Column>>;
+export type UsersConversations_AggregateArgs = {
+  distinct_on?: Maybe<Array<Chat_Users_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
   offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Stores_Order_By>>;
-  where?: Maybe<Stores_Bool_Exp>;
+  order_by?: Maybe<Array<Chat_Users_Order_By>>;
+  where?: Maybe<Chat_Users_Bool_Exp>;
 };
 
 export type Users_Aggregate = {
@@ -7805,6 +8760,7 @@ export type Users_Bool_Exp = {
   _not?: Maybe<Users_Bool_Exp>;
   _or?: Maybe<Array<Maybe<Users_Bool_Exp>>>;
   cartId?: Maybe<String_Comparison_Exp>;
+  conversations?: Maybe<Chat_Users_Bool_Exp>;
   createdAt?: Maybe<Timestamptz_Comparison_Exp>;
   defaultPaymentMethodId?: Maybe<String_Comparison_Exp>;
   email?: Maybe<String_Comparison_Exp>;
@@ -7815,6 +8771,9 @@ export type Users_Bool_Exp = {
   isSuspended?: Maybe<Boolean_Comparison_Exp>;
   lastName?: Maybe<String_Comparison_Exp>;
   lastSeen?: Maybe<Timestamptz_Comparison_Exp>;
+  lastTyped?: Maybe<Timestamptz_Comparison_Exp>;
+  license?: Maybe<User_Licenses_Bool_Exp>;
+  licenseId?: Maybe<String_Comparison_Exp>;
   passwordHash?: Maybe<String_Comparison_Exp>;
   payoutMethod?: Maybe<Payout_Methods_Bool_Exp>;
   payoutMethodId?: Maybe<String_Comparison_Exp>;
@@ -7835,6 +8794,7 @@ export enum Users_Constraint {
 
 export type Users_Insert_Input = {
   cartId?: Maybe<Scalars['String']>;
+  conversations?: Maybe<Chat_Users_Arr_Rel_Insert_Input>;
   createdAt?: Maybe<Scalars['timestamptz']>;
   defaultPaymentMethodId?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
@@ -7845,12 +8805,15 @@ export type Users_Insert_Input = {
   isSuspended?: Maybe<Scalars['Boolean']>;
   lastName?: Maybe<Scalars['String']>;
   lastSeen?: Maybe<Scalars['timestamptz']>;
+  lastTyped?: Maybe<Scalars['timestamptz']>;
+  license?: Maybe<User_Licenses_Obj_Rel_Insert_Input>;
+  licenseId?: Maybe<Scalars['String']>;
   passwordHash?: Maybe<Scalars['String']>;
   payoutMethod?: Maybe<Payout_Methods_Obj_Rel_Insert_Input>;
   payoutMethodId?: Maybe<Scalars['String']>;
   payoutSplitId?: Maybe<Scalars['String']>;
   sellerReferredById?: Maybe<Scalars['String']>;
-  store?: Maybe<Stores_Arr_Rel_Insert_Input>;
+  store?: Maybe<Stores_Obj_Rel_Insert_Input>;
   storeById?: Maybe<Stores_Obj_Rel_Insert_Input>;
   storeId?: Maybe<Scalars['String']>;
   stripeCustomerId?: Maybe<Scalars['String']>;
@@ -7869,6 +8832,8 @@ export type Users_Max_Fields = {
   id?: Maybe<Scalars['String']>;
   lastName?: Maybe<Scalars['String']>;
   lastSeen?: Maybe<Scalars['timestamptz']>;
+  lastTyped?: Maybe<Scalars['timestamptz']>;
+  licenseId?: Maybe<Scalars['String']>;
   passwordHash?: Maybe<Scalars['String']>;
   payoutMethodId?: Maybe<Scalars['String']>;
   payoutSplitId?: Maybe<Scalars['String']>;
@@ -7889,6 +8854,8 @@ export type Users_Max_Order_By = {
   id?: Maybe<Order_By>;
   lastName?: Maybe<Order_By>;
   lastSeen?: Maybe<Order_By>;
+  lastTyped?: Maybe<Order_By>;
+  licenseId?: Maybe<Order_By>;
   passwordHash?: Maybe<Order_By>;
   payoutMethodId?: Maybe<Order_By>;
   payoutSplitId?: Maybe<Order_By>;
@@ -7910,6 +8877,8 @@ export type Users_Min_Fields = {
   id?: Maybe<Scalars['String']>;
   lastName?: Maybe<Scalars['String']>;
   lastSeen?: Maybe<Scalars['timestamptz']>;
+  lastTyped?: Maybe<Scalars['timestamptz']>;
+  licenseId?: Maybe<Scalars['String']>;
   passwordHash?: Maybe<Scalars['String']>;
   payoutMethodId?: Maybe<Scalars['String']>;
   payoutSplitId?: Maybe<Scalars['String']>;
@@ -7930,6 +8899,8 @@ export type Users_Min_Order_By = {
   id?: Maybe<Order_By>;
   lastName?: Maybe<Order_By>;
   lastSeen?: Maybe<Order_By>;
+  lastTyped?: Maybe<Order_By>;
+  licenseId?: Maybe<Order_By>;
   passwordHash?: Maybe<Order_By>;
   payoutMethodId?: Maybe<Order_By>;
   payoutSplitId?: Maybe<Order_By>;
@@ -7958,8 +8929,100 @@ export type Users_On_Conflict = {
   where?: Maybe<Users_Bool_Exp>;
 };
 
+export type Users_Online = {
+   __typename?: 'users_online';
+  id?: Maybe<Scalars['String']>;
+  lastSeen?: Maybe<Scalars['timestamptz']>;
+  lastTyped?: Maybe<Scalars['timestamptz']>;
+  licenseNumber?: Maybe<Scalars['String']>;
+  verified?: Maybe<Scalars['Boolean']>;
+};
+
+export type Users_Online_Aggregate = {
+   __typename?: 'users_online_aggregate';
+  aggregate?: Maybe<Users_Online_Aggregate_Fields>;
+  nodes: Array<Users_Online>;
+};
+
+export type Users_Online_Aggregate_Fields = {
+   __typename?: 'users_online_aggregate_fields';
+  count?: Maybe<Scalars['Int']>;
+  max?: Maybe<Users_Online_Max_Fields>;
+  min?: Maybe<Users_Online_Min_Fields>;
+};
+
+
+export type Users_Online_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<Users_Online_Select_Column>>;
+  distinct?: Maybe<Scalars['Boolean']>;
+};
+
+export type Users_Online_Aggregate_Order_By = {
+  count?: Maybe<Order_By>;
+  max?: Maybe<Users_Online_Max_Order_By>;
+  min?: Maybe<Users_Online_Min_Order_By>;
+};
+
+export type Users_Online_Bool_Exp = {
+  _and?: Maybe<Array<Maybe<Users_Online_Bool_Exp>>>;
+  _not?: Maybe<Users_Online_Bool_Exp>;
+  _or?: Maybe<Array<Maybe<Users_Online_Bool_Exp>>>;
+  id?: Maybe<String_Comparison_Exp>;
+  lastSeen?: Maybe<Timestamptz_Comparison_Exp>;
+  lastTyped?: Maybe<Timestamptz_Comparison_Exp>;
+  licenseNumber?: Maybe<String_Comparison_Exp>;
+  verified?: Maybe<Boolean_Comparison_Exp>;
+};
+
+export type Users_Online_Max_Fields = {
+   __typename?: 'users_online_max_fields';
+  id?: Maybe<Scalars['String']>;
+  lastSeen?: Maybe<Scalars['timestamptz']>;
+  lastTyped?: Maybe<Scalars['timestamptz']>;
+  licenseNumber?: Maybe<Scalars['String']>;
+};
+
+export type Users_Online_Max_Order_By = {
+  id?: Maybe<Order_By>;
+  lastSeen?: Maybe<Order_By>;
+  lastTyped?: Maybe<Order_By>;
+  licenseNumber?: Maybe<Order_By>;
+};
+
+export type Users_Online_Min_Fields = {
+   __typename?: 'users_online_min_fields';
+  id?: Maybe<Scalars['String']>;
+  lastSeen?: Maybe<Scalars['timestamptz']>;
+  lastTyped?: Maybe<Scalars['timestamptz']>;
+  licenseNumber?: Maybe<Scalars['String']>;
+};
+
+export type Users_Online_Min_Order_By = {
+  id?: Maybe<Order_By>;
+  lastSeen?: Maybe<Order_By>;
+  lastTyped?: Maybe<Order_By>;
+  licenseNumber?: Maybe<Order_By>;
+};
+
+export type Users_Online_Order_By = {
+  id?: Maybe<Order_By>;
+  lastSeen?: Maybe<Order_By>;
+  lastTyped?: Maybe<Order_By>;
+  licenseNumber?: Maybe<Order_By>;
+  verified?: Maybe<Order_By>;
+};
+
+export enum Users_Online_Select_Column {
+  ID = 'id',
+  LASTSEEN = 'lastSeen',
+  LASTTYPED = 'lastTyped',
+  LICENSENUMBER = 'licenseNumber',
+  VERIFIED = 'verified'
+}
+
 export type Users_Order_By = {
   cartId?: Maybe<Order_By>;
+  conversations_aggregate?: Maybe<Chat_Users_Aggregate_Order_By>;
   createdAt?: Maybe<Order_By>;
   defaultPaymentMethodId?: Maybe<Order_By>;
   email?: Maybe<Order_By>;
@@ -7970,14 +9033,17 @@ export type Users_Order_By = {
   isSuspended?: Maybe<Order_By>;
   lastName?: Maybe<Order_By>;
   lastSeen?: Maybe<Order_By>;
+  lastTyped?: Maybe<Order_By>;
+  license?: Maybe<User_Licenses_Order_By>;
+  licenseId?: Maybe<Order_By>;
   passwordHash?: Maybe<Order_By>;
   payoutMethod?: Maybe<Payout_Methods_Order_By>;
   payoutMethodId?: Maybe<Order_By>;
   payoutSplitId?: Maybe<Order_By>;
   sellerReferredById?: Maybe<Order_By>;
+  store?: Maybe<Stores_Order_By>;
   storeById?: Maybe<Stores_Order_By>;
   storeId?: Maybe<Order_By>;
-  store_aggregate?: Maybe<Stores_Aggregate_Order_By>;
   stripeCustomerId?: Maybe<Order_By>;
   updatedAt?: Maybe<Order_By>;
   userRole?: Maybe<Order_By>;
@@ -8000,6 +9066,8 @@ export enum Users_Select_Column {
   ISSUSPENDED = 'isSuspended',
   LASTNAME = 'lastName',
   LASTSEEN = 'lastSeen',
+  LASTTYPED = 'lastTyped',
+  LICENSEID = 'licenseId',
   PASSWORDHASH = 'passwordHash',
   PAYOUTMETHODID = 'payoutMethodId',
   PAYOUTSPLITID = 'payoutSplitId',
@@ -8023,6 +9091,8 @@ export type Users_Set_Input = {
   isSuspended?: Maybe<Scalars['Boolean']>;
   lastName?: Maybe<Scalars['String']>;
   lastSeen?: Maybe<Scalars['timestamptz']>;
+  lastTyped?: Maybe<Scalars['timestamptz']>;
+  licenseId?: Maybe<Scalars['String']>;
   passwordHash?: Maybe<Scalars['String']>;
   payoutMethodId?: Maybe<Scalars['String']>;
   payoutSplitId?: Maybe<Scalars['String']>;
@@ -8033,6 +9103,105 @@ export type Users_Set_Input = {
   userRole?: Maybe<Scalars['String']>;
   username?: Maybe<Scalars['String']>;
 };
+
+export type Users_Typing = {
+   __typename?: 'users_typing';
+  id?: Maybe<Scalars['String']>;
+  lastSeen?: Maybe<Scalars['timestamptz']>;
+  lastTyped?: Maybe<Scalars['timestamptz']>;
+  licenseNumber?: Maybe<Scalars['String']>;
+  username?: Maybe<Scalars['String']>;
+  verified?: Maybe<Scalars['Boolean']>;
+};
+
+export type Users_Typing_Aggregate = {
+   __typename?: 'users_typing_aggregate';
+  aggregate?: Maybe<Users_Typing_Aggregate_Fields>;
+  nodes: Array<Users_Typing>;
+};
+
+export type Users_Typing_Aggregate_Fields = {
+   __typename?: 'users_typing_aggregate_fields';
+  count?: Maybe<Scalars['Int']>;
+  max?: Maybe<Users_Typing_Max_Fields>;
+  min?: Maybe<Users_Typing_Min_Fields>;
+};
+
+
+export type Users_Typing_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<Users_Typing_Select_Column>>;
+  distinct?: Maybe<Scalars['Boolean']>;
+};
+
+export type Users_Typing_Aggregate_Order_By = {
+  count?: Maybe<Order_By>;
+  max?: Maybe<Users_Typing_Max_Order_By>;
+  min?: Maybe<Users_Typing_Min_Order_By>;
+};
+
+export type Users_Typing_Bool_Exp = {
+  _and?: Maybe<Array<Maybe<Users_Typing_Bool_Exp>>>;
+  _not?: Maybe<Users_Typing_Bool_Exp>;
+  _or?: Maybe<Array<Maybe<Users_Typing_Bool_Exp>>>;
+  id?: Maybe<String_Comparison_Exp>;
+  lastSeen?: Maybe<Timestamptz_Comparison_Exp>;
+  lastTyped?: Maybe<Timestamptz_Comparison_Exp>;
+  licenseNumber?: Maybe<String_Comparison_Exp>;
+  username?: Maybe<String_Comparison_Exp>;
+  verified?: Maybe<Boolean_Comparison_Exp>;
+};
+
+export type Users_Typing_Max_Fields = {
+   __typename?: 'users_typing_max_fields';
+  id?: Maybe<Scalars['String']>;
+  lastSeen?: Maybe<Scalars['timestamptz']>;
+  lastTyped?: Maybe<Scalars['timestamptz']>;
+  licenseNumber?: Maybe<Scalars['String']>;
+  username?: Maybe<Scalars['String']>;
+};
+
+export type Users_Typing_Max_Order_By = {
+  id?: Maybe<Order_By>;
+  lastSeen?: Maybe<Order_By>;
+  lastTyped?: Maybe<Order_By>;
+  licenseNumber?: Maybe<Order_By>;
+  username?: Maybe<Order_By>;
+};
+
+export type Users_Typing_Min_Fields = {
+   __typename?: 'users_typing_min_fields';
+  id?: Maybe<Scalars['String']>;
+  lastSeen?: Maybe<Scalars['timestamptz']>;
+  lastTyped?: Maybe<Scalars['timestamptz']>;
+  licenseNumber?: Maybe<Scalars['String']>;
+  username?: Maybe<Scalars['String']>;
+};
+
+export type Users_Typing_Min_Order_By = {
+  id?: Maybe<Order_By>;
+  lastSeen?: Maybe<Order_By>;
+  lastTyped?: Maybe<Order_By>;
+  licenseNumber?: Maybe<Order_By>;
+  username?: Maybe<Order_By>;
+};
+
+export type Users_Typing_Order_By = {
+  id?: Maybe<Order_By>;
+  lastSeen?: Maybe<Order_By>;
+  lastTyped?: Maybe<Order_By>;
+  licenseNumber?: Maybe<Order_By>;
+  username?: Maybe<Order_By>;
+  verified?: Maybe<Order_By>;
+};
+
+export enum Users_Typing_Select_Column {
+  ID = 'id',
+  LASTSEEN = 'lastSeen',
+  LASTTYPED = 'lastTyped',
+  LICENSENUMBER = 'licenseNumber',
+  USERNAME = 'username',
+  VERIFIED = 'verified'
+}
 
 export enum Users_Update_Column {
   CARTID = 'cartId',
@@ -8046,6 +9215,8 @@ export enum Users_Update_Column {
   ISSUSPENDED = 'isSuspended',
   LASTNAME = 'lastName',
   LASTSEEN = 'lastSeen',
+  LASTTYPED = 'lastTyped',
+  LICENSEID = 'licenseId',
   PASSWORDHASH = 'passwordHash',
   PAYOUTMETHODID = 'payoutMethodId',
   PAYOUTSPLITID = 'payoutSplitId',
@@ -8066,7 +9237,6 @@ export type UserWithRole = User & {
   lastName?: Maybe<Scalars['String']>;
   userRole: Role;
 };
-
 
 export enum VariantsLabel {
   LICENSE = 'LICENSE',
@@ -8173,7 +9343,7 @@ type StorePublicFragment_StorePrivate_ = { __typename?: 'StorePrivate', id: stri
   )>, profile?: Maybe<(
     { __typename?: 'Image' }
     & ImageFragment
-  )>, productsForSaleConnection: Array<Maybe<{ __typename?: 'ProductPrivate', id: string, serialNumber: string, title: string } | { __typename?: 'ProductPublic', id: string, serialNumber: string, title: string }>> };
+  )> };
 
 type StorePublicFragment_StorePublic_ = { __typename?: 'StorePublic', id: string, createdAt: any, updatedAt?: Maybe<any>, name: string, bio?: Maybe<string>, website?: Maybe<string>, cover?: Maybe<(
     { __typename?: 'Image' }
@@ -8181,17 +9351,17 @@ type StorePublicFragment_StorePublic_ = { __typename?: 'StorePublic', id: string
   )>, profile?: Maybe<(
     { __typename?: 'Image' }
     & ImageFragment
-  )>, productsForSaleConnection: Array<Maybe<{ __typename?: 'ProductPrivate', id: string, serialNumber: string, title: string } | { __typename?: 'ProductPublic', id: string, serialNumber: string, title: string }>> };
+  )> };
 
 export type StorePublicFragment = StorePublicFragment_StorePrivate_ | StorePublicFragment_StorePublic_;
 
-export type StorePrivateFragment = { __typename?: 'StorePrivate', id: string, name: string, createdAt: any, updatedAt?: Maybe<any>, website?: Maybe<string>, bio?: Maybe<string>, cover?: Maybe<(
+export type StorePrivateFragment = { __typename?: 'StorePrivate', id: string, name: string, createdAt: any, updatedAt?: Maybe<any>, website?: Maybe<string>, bio?: Maybe<string>, coverId?: Maybe<string>, profileId?: Maybe<string>, cover?: Maybe<(
     { __typename?: 'Image' }
     & ImageFragment
   )>, profile?: Maybe<(
     { __typename?: 'Image' }
     & ImageFragment
-  )>, productsForSaleConnection: Array<Maybe<{ __typename?: 'ProductPrivate', id: string, serialNumber: string, title: string } | { __typename?: 'ProductPublic', id: string, serialNumber: string, title: string }>> };
+  )> };
 
 export type PaymentMethodFragment = { __typename?: 'PaymentMethod', id: string, userId: string, createdAt: any, updatedAt?: Maybe<any>, customerId?: Maybe<string>, paymentProcessor?: Maybe<PaymentProcessor>, paymentMethodTypes?: Maybe<Array<Maybe<string>>>, last4?: Maybe<string>, expMonth?: Maybe<string>, expYear?: Maybe<string>, email?: Maybe<string>, name?: Maybe<string>, details?: Maybe<string> };
 
@@ -8213,6 +9383,7 @@ export type Unnamed_1_MutationVariables = {
 export type Unnamed_1_Mutation = { __typename?: 'mutation_root', insert_image_parents?: Maybe<{ __typename?: 'image_parents_mutation_response', affected_rows: number }>, insert_image_variants?: Maybe<{ __typename?: 'image_variants_mutation_response', affected_rows: number }>, insert_product_preview_items?: Maybe<{ __typename?: 'product_preview_items_mutation_response', affected_rows: number }>, insert_product_variants?: Maybe<{ __typename?: 'product_variants_mutation_response', affected_rows: number }>, insert_product_snapshots?: Maybe<{ __typename?: 'product_snapshots_mutation_response', affected_rows: number }>, insert_products?: Maybe<{ __typename?: 'products_mutation_response', affected_rows: number }> };
 
 export type ProductsAllConnectionQueryVariables = {
+  searchTerm: Scalars['String'];
   query?: Maybe<ConnectionOffsetQuery>;
 };
 
@@ -8357,11 +9528,6 @@ export const StorePublicFragmentFragmentDoc = gql`
   profile {
     ...ImageFragment
   }
-  productsForSaleConnection {
-    id
-    serialNumber
-    title
-  }
 }
     ${ImageFragmentFragmentDoc}`;
 export const PaymentMethodFragmentFragmentDoc = gql`
@@ -8389,16 +9555,13 @@ export const StorePrivateFragmentFragmentDoc = gql`
   updatedAt
   website
   bio
+  coverId
+  profileId
   cover {
     ...ImageFragment
   }
   profile {
     ...ImageFragment
-  }
-  productsForSaleConnection {
-    id
-    serialNumber
-    title
   }
 }
     ${ImageFragmentFragmentDoc}`;
@@ -8572,8 +9735,8 @@ export type GetProductFileDownloadLinkMutationHookResult = ReturnType<typeof use
 export type GetProductFileDownloadLinkMutationResult = ApolloReactCommon.MutationResult<GetProductFileDownloadLinkMutation>;
 export type GetProductFileDownloadLinkMutationOptions = ApolloReactCommon.BaseMutationOptions<GetProductFileDownloadLinkMutation, GetProductFileDownloadLinkMutationVariables>;
 export const ProductsAllConnectionDocument = gql`
-    query productsAllConnection($query: ConnectionOffsetQuery) {
-  productsAllConnection(query: $query) {
+    query productsAllConnection($searchTerm: String!, $query: ConnectionOffsetQuery) {
+  productsAllConnection(searchTerm: $searchTerm, query: $query) {
     totalCount
     pageInfo {
       isLastPage
@@ -8600,6 +9763,7 @@ export const ProductsAllConnectionDocument = gql`
  * @example
  * const { data, loading, error } = useProductsAllConnectionQuery({
  *   variables: {
+ *      searchTerm: // value for 'searchTerm'
  *      query: // value for 'query'
  *   },
  * });
