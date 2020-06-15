@@ -258,6 +258,16 @@ const PreviewCardRC = (props: ReactProps) => {
                 }
               </Typography>
 
+              <Typography
+                className={classes.createdAt}
+                variant="caption"
+                component="div"
+              >
+                {
+                  option(product).store.name()
+                }
+              </Typography>
+
               <div className={clsx(
                 classes.priceAbsoluteBottom,
                 !option(props).price() ? "pulse" : null

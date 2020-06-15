@@ -146,7 +146,9 @@ const NewReleaseProducts = (props: ReactProps) => {
                 }
                 onChange={(e) => {
                   setSearchTermUi(e.target.value);
-                  debounceUpdateSearchTerm(searchTermUi)
+                  setTimeout(() => {
+                    debounceUpdateSearchTerm(searchTermUi)
+                  }, 0)
                 }}
                 // onKeyPress={event => {
                 //   if (event.key === "Enter") {
@@ -165,7 +167,10 @@ const NewReleaseProducts = (props: ReactProps) => {
               // { label: "Design Templates", value: "category_123123"}
             }
             onChange={({ label, value }: SelectOption) =>
-              setOrderBy({ label, value })
+              setTimeout(() => {
+                setOrderBy({ label, value })
+              }, 0)
+              // let UI update first for menu to close
             }
             options={orderByOptions}
             placeholder={"Select a category"}

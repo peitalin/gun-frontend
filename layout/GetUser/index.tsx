@@ -94,6 +94,7 @@ export const reduxBatchUpdate = {
   userCart: (data: QueryData, refetch?: ApolloRefetch) => (dispatch: Dispatch) => {
     batch(() => {
       // set User Profile in REDUX
+      console.log("setting user.store in redux: ", data.user.store)
       dispatch(Actions.reduxLogin.SET_USER(data.user));
 
       dispatch(Actions.reduxWishlist.SET_WISHLIST(
