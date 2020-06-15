@@ -3,7 +3,7 @@ import React from "react";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 // Media uploader
-import { IInputProps } from "components/ReactDropzoneUploader/Dropzone";
+import { IInputProps } from "components/DropzoneUploader/Dropzone";
 // icon
 import UploadIcon from "components/Icons/UploadIcon";
 import { Colors } from "layout/AppTheme";

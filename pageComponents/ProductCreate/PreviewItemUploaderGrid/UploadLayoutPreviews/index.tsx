@@ -10,8 +10,8 @@ import { Colors } from "layout/AppTheme";
 import {
   ILayoutProps,
   IPreviewProps,
-} from "components/ReactDropzoneUploader/Dropzone";
-import "components/ReactDropzoneUploader/styles.css";
+} from "components/DropzoneUploader/Dropzone";
+import "components/DropzoneUploader/styles.css";
 
 import { withStyles, WithStyles } from "@material-ui/core/styles";
 import { styles } from '../styles';

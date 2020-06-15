@@ -10,9 +10,9 @@ import { Colors } from "layout/AppTheme";
 // Material UI
 import Typography from "@material-ui/core/Typography";
 // Media uploader
-import { IFileWithMeta, IUploadParams } from "components/ReactDropzoneUploader/Dropzone";
-import Dropzone from "components/ReactDropzoneUploader/Dropzone";
-import "components/ReactDropzoneUploader/styles.css";
+import { IFileWithMeta, IUploadParams } from "components/DropzoneUploader/Dropzone";
+import Dropzone from "components/DropzoneUploader/Dropzone";
+import "components/DropzoneUploader/styles.css";
 
 import {
   google_storage_register,

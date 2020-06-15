@@ -11,12 +11,12 @@ import { ReducerName } from "typings/dropzone";
 import {
   Preview,
   IPreviewProps,
-} from "components/ReactDropzoneUploader/Dropzone";
+} from "components/DropzoneUploader/Dropzone";
 import {
   formatBytes,
   formatDuration,
-} from "components/ReactDropzoneUploader/utils";
-import "components/ReactDropzoneUploader/styles.css";
+} from "components/DropzoneUploader/utils";
+import "components/DropzoneUploader/styles.css";
 
 // Typings
 import { DzuPreviewItem } from "typings/dropzone";
