@@ -75,9 +75,7 @@ import { useRouter } from "next/router";
 // CSS
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
-import {
-  serializeHtml,
-} from 'pageComponents/ProductCreate/TextEditor/helpers';
+import { serializeHtml } from 'components/TextEditor/helpers';
 // Analytics
 
 

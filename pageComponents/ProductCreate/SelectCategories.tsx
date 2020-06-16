@@ -49,7 +49,7 @@ const SelectCategories = (props: ReactProps & FormikProps<FormikFields>) => {
     data
   } = useQuery<QueryData, null>(GET_PRODUCT_CATEGORIES)
 
-  const categorySuggestions = createCategorySuggestions(option(data).categories([]));
+  const categorySuggestions = createCategorySuggestions(option(data).getProductCategories([]));
 
   return (
     <ErrorBounds className={classes.positionRelative}>
@@ -73,7 +73,7 @@ const SelectCategories = (props: ReactProps & FormikProps<FormikFields>) => {
                 }
                 onMenuOpen={() => fprops.setFieldTouched("categoryId", true)}
                 options={
-                  createCategorySuggestions(option(data).categories([]))
+                  createCategorySuggestions(option(data).getProductCategories([]))
                 }
                 placeholder={"Select a category"}
                 className={classes.optionValues}
@@ -105,14 +105,8 @@ export interface SelectOption {
 interface ReactProps extends WithStyles<typeof styles> {
   reducerName: ReducerName
 }
-interface ReactState {
-  category: SelectOption;
-}
-interface ReduxState {
-  categoryId: string;
-}
 interface QueryData {
-  categories: ProductCategory[]
+  getProductCategories: ProductCategory[]
 }
 interface FormikFields {
   categoryId: string;

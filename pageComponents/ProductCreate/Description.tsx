@@ -17,7 +17,8 @@ import TextInput from "components/Fields/TextInput";
 import { Formik, Form, FormikProps, ErrorMessage } from 'formik';
 // SSR dynamic import
 import dynamic from 'next/dynamic'
-const TextEditorSSR = dynamic(() => import('./TextEditor'), {
+import TextEditorPlaceholder from 'components/TextEditor/TextEditorPlaceholder';
+const TextEditorSSR = dynamic(() => import('../../components/TextEditor'), {
   loading: () => <TextEditorPlaceholder/>,
   ssr: false
 })
@@ -77,14 +78,16 @@ const Description = (props: ReactProps & FormikProps<FormikFields>) => {
 
       <TextEditorSSR
         errorMessage={errors.description}
-        touched={touched.description}
         onChange={(value) => {
           setDescription(value)
         }}
         limit={{
           max: maxLengthProductDescription, // 2000 chars
         }}
-        {...fprops}
+        errors={fprops.errors}
+        values={fprops.values}
+        touched={fprops.touched}
+        setFieldTouched={fprops.setFieldTouched}
       />
 
       {/* <TextInput
@@ -125,18 +128,6 @@ interface ReactProps extends WithStyles<typeof styles> {
 }
 interface FormikFields {
   description: string;
-}
-
-const TextEditorPlaceholder = () => {
-  return (
-    <div style={{
-      height: '165px',
-      width: '100%',
-      marginBottom: 'calc(1rem + 18px)',
-      border: `1px solid ${Colors.lightGrey}`,
-    }}>
-    </div>
-  )
 }
 
 
