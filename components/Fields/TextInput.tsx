@@ -50,6 +50,8 @@ const TextInput = (props: ReactProps) => {
           inputRef={ref}
           error={!!props.errorMessage}
           disabled={disabled}
+          rows={props.rows ? props.rows : 1}
+          multiline={!!props.rows}
           {...rest}
         />
         <Button
@@ -100,6 +102,8 @@ const TextInput = (props: ReactProps) => {
           inputRef={ref}
           error={!!props.errorMessage}
           style={{ borderRadius: BorderRadius, width: '100%' }}
+          rows={props.rows ? props.rows : 1}
+          multiline={!!props.rows}
           {...rest}
         />
 
@@ -109,7 +113,6 @@ const TextInput = (props: ReactProps) => {
           errorMessage={props.errorMessage}
           disableInitialValidationMessage={disableInitialValidationMessage}
         />
-
 
         {
           props.limit &&
@@ -155,6 +158,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   disableInitialValidationMessage?: boolean;
   limit?: { count: number, max: number };
   buttonWidth?: any;
+  rows?: number;
   [key: string]: any;
 }
 

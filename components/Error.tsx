@@ -53,10 +53,10 @@ class ErrorDisplay extends React.Component<ReactProps, any> {
               <div key={err.message}>
                 <div className={props.classes.errMessage}>{ err.message }</div>
                 <div className={props.classes.errLine}>
-                  {"line: " + err.locations[0].line}
+                  {"line: " + option(err).locations[0].line()}
                 </div>
                 <div className={props.classes.errLine}>
-                  {"column: " + err.locations[0].column}
+                  {"column: " + option(err).locations[0].column()}
                 </div>
                 {/* <JsonTree data={err}/> */}
               </div>
