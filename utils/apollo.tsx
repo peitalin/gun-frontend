@@ -2,7 +2,9 @@ import { ApolloClient } from 'apollo-client';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { HttpLink } from 'apollo-link-http';
 import { onError } from 'apollo-link-error';
-import { ApolloLink } from 'apollo-link';
+import { ApolloLink, split } from 'apollo-link';
+import { WebSocketLink } from 'apollo-link-ws';
+import { getMainDefinition } from 'apollo-utilities';
 // Switches between unfetch & node-fetch for client & server.
 import fetch from 'isomorphic-unfetch'
 import withApollo from 'next-with-apollo';
@@ -29,6 +31,8 @@ const {
 // let SERVER_GATEWAY_GRAPHQL_URL = "https://api.gunmarketplace.com.au/v1/graphql"
 
 let GATEWAY_GRAPHQL_URL = "https://0.0.0.0:443/v1/graphql"
+let GATEWAY_GRAPHQL_WS_URL = "wss://0.0.0.0:443/v1/graphql"
+// let GATEWAY_GRAPHQL_WS_URL = "ws://0.0.0.0:7070/v1/graphql"
 let SERVER_GATEWAY_GRAPHQL_URL = "https://0.0.0.0:443/v1/graphql"
 
 
@@ -39,6 +43,7 @@ const SERVER_URI = SERVER_GATEWAY_GRAPHQL_URL;
 
 if (NODE_ENV === "develop") {
   console.log("Graphql URI: ", URI)
+  console.log("Graphql Websocket URI: ", GATEWAY_GRAPHQL_WS_URL)
   console.log("Graphql SERVER_URI: ", SERVER_URI)
   console.log("NODE_ENV: ", NODE_ENV)
 }
@@ -47,10 +52,69 @@ if (NODE_ENV === "develop") {
 // Fragments Schema
 import { IntrospectionFragmentMatcher } from 'apollo-cache-inmemory';
 import introspectionQueryResultData from 'typings/gqlIntrospection';
+import { NextPageContext } from 'next';
 const fragmentMatcher = new IntrospectionFragmentMatcher({
   introspectionQueryResultData
 });
 
+
+
+const onErrorHandler = onError(({ graphQLErrors, networkError }) => {
+  if (graphQLErrors) {
+    graphQLErrors.forEach(({ message, locations, path }) =>
+      console.log(
+        `[GraphQL error]: Message:
+        ${message},
+        Location: ${locations},
+        Path: ${path}`,
+      ),
+    );
+  }
+  if (networkError) {
+    console.log(`[Network error]: ${JSON.stringify(networkError)}`);
+  }
+})
+
+const splitQueryOrSubscriptions = ({
+  httpLink,
+  browser,
+  ctx,
+  token,
+}: { httpLink: HttpLink, browser: boolean, ctx: NextPageContext, token: any }) => {
+  if (browser) {
+    // splits requests based on operation type:
+    // - subscriptions => websockets
+    // - queries/mutations => http
+    // https://www.apollographql.com/docs/react/data/subscriptions/
+
+    // client-side only, errors if you instantiate wsLink on the server.
+    // https://github.com/apollographql/subscriptions-transport-ws/issues/333#issuecomment-359261024
+    const wsLink = new WebSocketLink({
+      uri: GATEWAY_GRAPHQL_WS_URL,
+      options: {
+        reconnect: true,
+        connectionParams: () => ({
+          headers: {
+            "x-hasura-admin-secret": "hescomingrightforus",
+            "content-type": "application/json",
+            cookie: option(ctx).req.headers.cookie(),
+          },
+        }),
+      }
+    })
+
+    return split(({ query }) => {
+      const definition = getMainDefinition(query);
+      return (
+        definition.kind === 'OperationDefinition' &&
+        definition.operation === 'subscription'
+      );
+    }, wsLink, httpLink)
+  } else {
+    // if server-side (ssr), return normal httpLink
+    return httpLink
+  }
+}
 
 
 
@@ -68,34 +132,30 @@ export default withApollo(
 
     return new ApolloClient({
       link: ApolloLink.from([
-        onError(({ graphQLErrors, networkError }) => {
-          if (graphQLErrors)
-            graphQLErrors.forEach(({ message, locations, path }) =>
-              console.log(
-                `[GraphQL error]: Message:
-                ${message},
-                Location: ${locations},
-                Path: ${path}`,
-              ),
-            );
-          if (networkError) console.log(`[Network error]: ${networkError}`);
-        }),
-        new HttpLink({
-          uri: URI,
-          fetch: fetch,
-          fetchOptions: {
-            agent: new https.Agent({ rejectUnauthorized: false })
-          },
-          headers: {
-            'content-type': 'application/json',
-            "x-hasura-admin-secret": "hescomingrightforus",
-            cookie: option(ctx).req.headers.cookie(),
-            authorization: token ? `Bearer ${token}` : "",
-            ...headers,
-          },
-          credentials: 'include',
-        }),
+        onErrorHandler,
+        splitQueryOrSubscriptions({
+          browser: !!process.browser,
+          ctx: ctx,
+          token: token,
+          httpLink:
+            new HttpLink({
+              uri: URI,
+              fetch: fetch,
+              fetchOptions: {
+                agent: new https.Agent({ rejectUnauthorized: false })
+              },
+              headers: {
+                'content-type': 'application/json',
+                // "x-hasura-admin-secret": "hescomingrightforus",
+                cookie: option(ctx).req.headers.cookie(),
+                // authorization: token ? `Bearer ${token}` : "",
+                ...headers,
+              },
+              credentials: 'include',
+            }),
+        })
       ]),
+
       // hydrates apollo cache with initialState created in server
       cache: new InMemoryCache({
         fragmentMatcher, // fragments
@@ -199,18 +259,7 @@ export const serverApolloClient = (ctx) => {
 
   return new ApolloClient({
     link: ApolloLink.from([
-      onError(({ graphQLErrors, networkError }) => {
-        if (graphQLErrors)
-          graphQLErrors.forEach(({ message, locations, path }) =>
-            console.log(
-              `[GraphQL error]: Message:
-              ${message},
-              Location: ${locations},
-              Path: ${path}`,
-            ),
-          );
-        if (networkError) console.log(`[Network error]: ${networkError}`);
-      }),
+      onErrorHandler,
       new HttpLink({
         uri: SERVER_URI,
         fetch: fetch,
