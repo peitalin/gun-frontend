@@ -161,7 +161,9 @@ const CreateStoreForm: React.FC<ReactProps> = (props) => {
           }).then(async({ data: { setPayoutMethod }}) => {
             console.log('payoutMethod response', setPayoutMethod)
             dispatch(Actions.reduxLogin.SET_USER(setPayoutMethod.user))
-            props.closeModal()
+            if (props.closeModal) {
+              props.closeModal()
+            }
             // router.push("/seller?created=store")
           })
         })

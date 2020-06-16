@@ -11,6 +11,7 @@ import dynamic from "next/dynamic";
 // GraphQL
 import { serverApolloClient } from "utils/apollo";
 import FrontPage from "pageComponents/FrontPage";
+import Chat from "pageComponents/Chat";
 
 
 
@@ -18,6 +19,7 @@ const HomePage: NextPage<ReactProps> = (props) => {
 
   return (
     <div>
+      <Chat/>
       <FrontPage/>
     </div>
   )

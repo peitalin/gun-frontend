@@ -1061,7 +1061,7 @@ export type Image_Parents = {
    __typename?: 'image_parents';
   createdAt: Scalars['timestamptz'];
   description?: Maybe<Scalars['String']>;
-  imageId: Scalars['String'];
+  id: Scalars['String'];
   original?: Maybe<Image_Variants>;
   originalVariantId: Scalars['String'];
   tags?: Maybe<Scalars['String']>;
@@ -1123,7 +1123,7 @@ export type Image_Parents_Bool_Exp = {
   _or?: Maybe<Array<Maybe<Image_Parents_Bool_Exp>>>;
   createdAt?: Maybe<Timestamptz_Comparison_Exp>;
   description?: Maybe<String_Comparison_Exp>;
-  imageId?: Maybe<String_Comparison_Exp>;
+  id?: Maybe<String_Comparison_Exp>;
   original?: Maybe<Image_Variants_Bool_Exp>;
   originalVariantId?: Maybe<String_Comparison_Exp>;
   tags?: Maybe<String_Comparison_Exp>;
@@ -1137,7 +1137,7 @@ export enum Image_Parents_Constraint {
 export type Image_Parents_Insert_Input = {
   createdAt?: Maybe<Scalars['timestamptz']>;
   description?: Maybe<Scalars['String']>;
-  imageId?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
   original?: Maybe<Image_Variants_Obj_Rel_Insert_Input>;
   originalVariantId?: Maybe<Scalars['String']>;
   tags?: Maybe<Scalars['String']>;
@@ -1148,7 +1148,7 @@ export type Image_Parents_Max_Fields = {
    __typename?: 'image_parents_max_fields';
   createdAt?: Maybe<Scalars['timestamptz']>;
   description?: Maybe<Scalars['String']>;
-  imageId?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
   originalVariantId?: Maybe<Scalars['String']>;
   tags?: Maybe<Scalars['String']>;
 };
@@ -1156,7 +1156,7 @@ export type Image_Parents_Max_Fields = {
 export type Image_Parents_Max_Order_By = {
   createdAt?: Maybe<Order_By>;
   description?: Maybe<Order_By>;
-  imageId?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
   originalVariantId?: Maybe<Order_By>;
   tags?: Maybe<Order_By>;
 };
@@ -1165,7 +1165,7 @@ export type Image_Parents_Min_Fields = {
    __typename?: 'image_parents_min_fields';
   createdAt?: Maybe<Scalars['timestamptz']>;
   description?: Maybe<Scalars['String']>;
-  imageId?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
   originalVariantId?: Maybe<Scalars['String']>;
   tags?: Maybe<Scalars['String']>;
 };
@@ -1173,7 +1173,7 @@ export type Image_Parents_Min_Fields = {
 export type Image_Parents_Min_Order_By = {
   createdAt?: Maybe<Order_By>;
   description?: Maybe<Order_By>;
-  imageId?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
   originalVariantId?: Maybe<Order_By>;
   tags?: Maybe<Order_By>;
 };
@@ -1198,7 +1198,7 @@ export type Image_Parents_On_Conflict = {
 export type Image_Parents_Order_By = {
   createdAt?: Maybe<Order_By>;
   description?: Maybe<Order_By>;
-  imageId?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
   original?: Maybe<Image_Variants_Order_By>;
   originalVariantId?: Maybe<Order_By>;
   tags?: Maybe<Order_By>;
@@ -1206,13 +1206,13 @@ export type Image_Parents_Order_By = {
 };
 
 export type Image_Parents_Pk_Columns_Input = {
-  imageId: Scalars['String'];
+  id: Scalars['String'];
 };
 
 export enum Image_Parents_Select_Column {
   CREATEDAT = 'createdAt',
   DESCRIPTION = 'description',
-  IMAGEID = 'imageId',
+  ID = 'id',
   ORIGINALVARIANTID = 'originalVariantId',
   TAGS = 'tags'
 }
@@ -1220,7 +1220,7 @@ export enum Image_Parents_Select_Column {
 export type Image_Parents_Set_Input = {
   createdAt?: Maybe<Scalars['timestamptz']>;
   description?: Maybe<Scalars['String']>;
-  imageId?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
   originalVariantId?: Maybe<Scalars['String']>;
   tags?: Maybe<Scalars['String']>;
 };
@@ -1228,7 +1228,7 @@ export type Image_Parents_Set_Input = {
 export enum Image_Parents_Update_Column {
   CREATEDAT = 'createdAt',
   DESCRIPTION = 'description',
-  IMAGEID = 'imageId',
+  ID = 'id',
   ORIGINALVARIANTID = 'originalVariantId',
   TAGS = 'tags'
 }
@@ -2716,7 +2716,7 @@ export type Mutation_RootDelete_Image_ParentsArgs = {
 
 
 export type Mutation_RootDelete_Image_Parents_By_PkArgs = {
-  imageId: Scalars['String'];
+  id: Scalars['String'];
 };
 
 
@@ -4013,7 +4013,7 @@ export type Payment_Methods_Variance_Order_By = {
 
 export type PaymentMethod = {
    __typename?: 'PaymentMethod';
-  createdAt: Scalars['Date'];
+  createdAt?: Maybe<Scalars['Date']>;
   customerId?: Maybe<Scalars['ID']>;
   details?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
@@ -4025,7 +4025,7 @@ export type PaymentMethod = {
   paymentMethodTypes?: Maybe<Array<Maybe<Scalars['String']>>>;
   paymentProcessor?: Maybe<PaymentProcessor>;
   updatedAt?: Maybe<Scalars['Date']>;
-  userId: Scalars['ID'];
+  userId?: Maybe<Scalars['ID']>;
 };
 
 export enum PaymentProcessor {
@@ -4333,14 +4333,14 @@ export type PayoutItemsPagedEdge = PageBasedConnectionEdge & {
 
 export type PayoutMethod = {
    __typename?: 'PayoutMethod';
-  createdAt: Scalars['Date'];
+  createdAt?: Maybe<Scalars['Date']>;
   id: Scalars['ID'];
   payoutEmail?: Maybe<Scalars['String']>;
   payoutProcessor?: Maybe<Scalars['String']>;
   payoutProcessorId?: Maybe<Scalars['String']>;
   payoutType?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['Date']>;
-  userId: Scalars['ID'];
+  userId?: Maybe<Scalars['ID']>;
 };
 
 export type PayoutMethodMutationResponse = {
@@ -6238,6 +6238,7 @@ export type Query = {
   getPayouts: PayoutsConnection;
   getPayoutsInPeriodAdmin: PayoutsConnection;
   getProductById?: Maybe<Product>;
+  getProductCategories: Array<ProductCategory>;
   getProductFromLinkSlug?: Maybe<Product>;
   getProductSale?: Maybe<ProductSale>;
   getRecentTransactions: Array<Transaction>;
@@ -6504,6 +6505,7 @@ export type Query_Root = {
   getPayouts: PayoutsConnection;
   getPayoutsInPeriodAdmin: PayoutsConnection;
   getProductById?: Maybe<Product>;
+  getProductCategories: Array<ProductCategory>;
   getProductFromLinkSlug?: Maybe<Product>;
   getProductSale?: Maybe<ProductSale>;
   getRecentTransactions: Array<Transaction>;
@@ -6846,7 +6848,7 @@ export type Query_RootImage_Parents_AggregateArgs = {
 
 
 export type Query_RootImage_Parents_By_PkArgs = {
-  imageId: Scalars['String'];
+  id: Scalars['String'];
 };
 
 
@@ -7543,7 +7545,8 @@ export type Stores_Bool_Exp = {
 };
 
 export enum Stores_Constraint {
-  STORES_PKEY = 'stores_pkey'
+  STORES_PKEY = 'stores_pkey',
+  STORES_USER_ID_KEY = 'stores_user_id_key'
 }
 
 export type Stores_Insert_Input = {
@@ -7993,7 +7996,7 @@ export type Subscription_RootImage_Parents_AggregateArgs = {
 
 
 export type Subscription_RootImage_Parents_By_PkArgs = {
-  imageId: Scalars['String'];
+  id: Scalars['String'];
 };
 
 
@@ -8444,7 +8447,7 @@ export enum UploadType {
 }
 
 export type User = {
-  createdAt: Scalars['Date'];
+  createdAt?: Maybe<Scalars['Date']>;
   email: Scalars['String'];
   firstName?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
@@ -8614,31 +8617,31 @@ export type UserMutationResponse = {
 
 export type UserPrivate = User & {
    __typename?: 'UserPrivate';
-  cart: Cart;
-  cartId: Scalars['ID'];
-  createdAt: Scalars['Date'];
+  cart?: Maybe<Cart>;
+  cartId?: Maybe<Scalars['ID']>;
+  createdAt?: Maybe<Scalars['Date']>;
   defaultPaymentMethod?: Maybe<PaymentMethod>;
   defaultPaymentMethodId?: Maybe<Scalars['ID']>;
-  downloadsConnection: DownloadsConnection;
+  downloadsConnection?: Maybe<DownloadsConnection>;
   email: Scalars['String'];
   emailVerified?: Maybe<Scalars['Boolean']>;
   firstName?: Maybe<Scalars['String']>;
-  followingStores: FollowingStoresConnection;
+  followingStores?: Maybe<FollowingStoresConnection>;
   id: Scalars['ID'];
   isSuspended: Scalars['Boolean'];
   lastName?: Maybe<Scalars['String']>;
-  orderHistoryConnection: OrdersConnection;
-  paymentMethods: Array<PaymentMethod>;
-  payoutHistoryConnection: PayoutsConnection;
+  orderHistoryConnection?: Maybe<OrdersConnection>;
+  paymentMethods?: Maybe<Array<Maybe<PaymentMethod>>>;
+  payoutHistoryConnection?: Maybe<PayoutsConnection>;
   payoutMethod?: Maybe<PayoutMethod>;
   payoutMethodId?: Maybe<Scalars['ID']>;
   store?: Maybe<StorePrivate>;
   storeId?: Maybe<Scalars['ID']>;
-  stripeCustomerId: Scalars['String'];
+  stripeCustomerId?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['Date']>;
   userRole: Role;
   username?: Maybe<Scalars['String']>;
-  wishlistItemsConnection: WishlistItemsConnection;
+  wishlistItemsConnection?: Maybe<WishlistItemsConnection>;
 };
 
 
@@ -8668,7 +8671,7 @@ export type UserPrivateWishlistItemsConnectionArgs = {
 
 export type UserPublic = User & {
    __typename?: 'UserPublic';
-  createdAt: Scalars['Date'];
+  createdAt?: Maybe<Scalars['Date']>;
   email: Scalars['String'];
   firstName?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
@@ -8931,11 +8934,14 @@ export type Users_On_Conflict = {
 
 export type Users_Online = {
    __typename?: 'users_online';
+  email?: Maybe<Scalars['String']>;
+  firstName?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
+  lastName?: Maybe<Scalars['String']>;
   lastSeen?: Maybe<Scalars['timestamptz']>;
-  lastTyped?: Maybe<Scalars['timestamptz']>;
+  lastType?: Maybe<Scalars['timestamptz']>;
+  licenseId?: Maybe<Scalars['String']>;
   licenseNumber?: Maybe<Scalars['String']>;
-  verified?: Maybe<Scalars['Boolean']>;
 };
 
 export type Users_Online_Aggregate = {
@@ -8967,57 +8973,82 @@ export type Users_Online_Bool_Exp = {
   _and?: Maybe<Array<Maybe<Users_Online_Bool_Exp>>>;
   _not?: Maybe<Users_Online_Bool_Exp>;
   _or?: Maybe<Array<Maybe<Users_Online_Bool_Exp>>>;
+  email?: Maybe<String_Comparison_Exp>;
+  firstName?: Maybe<String_Comparison_Exp>;
   id?: Maybe<String_Comparison_Exp>;
+  lastName?: Maybe<String_Comparison_Exp>;
   lastSeen?: Maybe<Timestamptz_Comparison_Exp>;
-  lastTyped?: Maybe<Timestamptz_Comparison_Exp>;
+  lastType?: Maybe<Timestamptz_Comparison_Exp>;
+  licenseId?: Maybe<String_Comparison_Exp>;
   licenseNumber?: Maybe<String_Comparison_Exp>;
-  verified?: Maybe<Boolean_Comparison_Exp>;
 };
 
 export type Users_Online_Max_Fields = {
    __typename?: 'users_online_max_fields';
+  email?: Maybe<Scalars['String']>;
+  firstName?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
+  lastName?: Maybe<Scalars['String']>;
   lastSeen?: Maybe<Scalars['timestamptz']>;
-  lastTyped?: Maybe<Scalars['timestamptz']>;
+  lastType?: Maybe<Scalars['timestamptz']>;
+  licenseId?: Maybe<Scalars['String']>;
   licenseNumber?: Maybe<Scalars['String']>;
 };
 
 export type Users_Online_Max_Order_By = {
+  email?: Maybe<Order_By>;
+  firstName?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
+  lastName?: Maybe<Order_By>;
   lastSeen?: Maybe<Order_By>;
-  lastTyped?: Maybe<Order_By>;
+  lastType?: Maybe<Order_By>;
+  licenseId?: Maybe<Order_By>;
   licenseNumber?: Maybe<Order_By>;
 };
 
 export type Users_Online_Min_Fields = {
    __typename?: 'users_online_min_fields';
+  email?: Maybe<Scalars['String']>;
+  firstName?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
+  lastName?: Maybe<Scalars['String']>;
   lastSeen?: Maybe<Scalars['timestamptz']>;
-  lastTyped?: Maybe<Scalars['timestamptz']>;
+  lastType?: Maybe<Scalars['timestamptz']>;
+  licenseId?: Maybe<Scalars['String']>;
   licenseNumber?: Maybe<Scalars['String']>;
 };
 
 export type Users_Online_Min_Order_By = {
+  email?: Maybe<Order_By>;
+  firstName?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
+  lastName?: Maybe<Order_By>;
   lastSeen?: Maybe<Order_By>;
-  lastTyped?: Maybe<Order_By>;
+  lastType?: Maybe<Order_By>;
+  licenseId?: Maybe<Order_By>;
   licenseNumber?: Maybe<Order_By>;
 };
 
 export type Users_Online_Order_By = {
+  email?: Maybe<Order_By>;
+  firstName?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
+  lastName?: Maybe<Order_By>;
   lastSeen?: Maybe<Order_By>;
-  lastTyped?: Maybe<Order_By>;
+  lastType?: Maybe<Order_By>;
+  licenseId?: Maybe<Order_By>;
   licenseNumber?: Maybe<Order_By>;
-  verified?: Maybe<Order_By>;
 };
 
 export enum Users_Online_Select_Column {
+  EMAIL = 'email',
+  FIRSTNAME = 'firstName',
   ID = 'id',
+  LASTNAME = 'lastName',
   LASTSEEN = 'lastSeen',
-  LASTTYPED = 'lastTyped',
-  LICENSENUMBER = 'licenseNumber',
-  VERIFIED = 'verified'
+  LASTTYPE = 'lastType',
+  LICENSEID = 'licenseId',
+  LICENSENUMBER = 'licenseNumber'
 }
 
 export type Users_Order_By = {
@@ -9106,11 +9137,13 @@ export type Users_Set_Input = {
 
 export type Users_Typing = {
    __typename?: 'users_typing';
+  email?: Maybe<Scalars['String']>;
+  firstName?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
+  lastName?: Maybe<Scalars['String']>;
   lastSeen?: Maybe<Scalars['timestamptz']>;
   lastTyped?: Maybe<Scalars['timestamptz']>;
   licenseNumber?: Maybe<Scalars['String']>;
-  username?: Maybe<Scalars['String']>;
   verified?: Maybe<Scalars['Boolean']>;
 };
 
@@ -9143,63 +9176,77 @@ export type Users_Typing_Bool_Exp = {
   _and?: Maybe<Array<Maybe<Users_Typing_Bool_Exp>>>;
   _not?: Maybe<Users_Typing_Bool_Exp>;
   _or?: Maybe<Array<Maybe<Users_Typing_Bool_Exp>>>;
+  email?: Maybe<String_Comparison_Exp>;
+  firstName?: Maybe<String_Comparison_Exp>;
   id?: Maybe<String_Comparison_Exp>;
+  lastName?: Maybe<String_Comparison_Exp>;
   lastSeen?: Maybe<Timestamptz_Comparison_Exp>;
   lastTyped?: Maybe<Timestamptz_Comparison_Exp>;
   licenseNumber?: Maybe<String_Comparison_Exp>;
-  username?: Maybe<String_Comparison_Exp>;
   verified?: Maybe<Boolean_Comparison_Exp>;
 };
 
 export type Users_Typing_Max_Fields = {
    __typename?: 'users_typing_max_fields';
+  email?: Maybe<Scalars['String']>;
+  firstName?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
+  lastName?: Maybe<Scalars['String']>;
   lastSeen?: Maybe<Scalars['timestamptz']>;
   lastTyped?: Maybe<Scalars['timestamptz']>;
   licenseNumber?: Maybe<Scalars['String']>;
-  username?: Maybe<Scalars['String']>;
 };
 
 export type Users_Typing_Max_Order_By = {
+  email?: Maybe<Order_By>;
+  firstName?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
+  lastName?: Maybe<Order_By>;
   lastSeen?: Maybe<Order_By>;
   lastTyped?: Maybe<Order_By>;
   licenseNumber?: Maybe<Order_By>;
-  username?: Maybe<Order_By>;
 };
 
 export type Users_Typing_Min_Fields = {
    __typename?: 'users_typing_min_fields';
+  email?: Maybe<Scalars['String']>;
+  firstName?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
+  lastName?: Maybe<Scalars['String']>;
   lastSeen?: Maybe<Scalars['timestamptz']>;
   lastTyped?: Maybe<Scalars['timestamptz']>;
   licenseNumber?: Maybe<Scalars['String']>;
-  username?: Maybe<Scalars['String']>;
 };
 
 export type Users_Typing_Min_Order_By = {
+  email?: Maybe<Order_By>;
+  firstName?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
+  lastName?: Maybe<Order_By>;
   lastSeen?: Maybe<Order_By>;
   lastTyped?: Maybe<Order_By>;
   licenseNumber?: Maybe<Order_By>;
-  username?: Maybe<Order_By>;
 };
 
 export type Users_Typing_Order_By = {
+  email?: Maybe<Order_By>;
+  firstName?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
+  lastName?: Maybe<Order_By>;
   lastSeen?: Maybe<Order_By>;
   lastTyped?: Maybe<Order_By>;
   licenseNumber?: Maybe<Order_By>;
-  username?: Maybe<Order_By>;
   verified?: Maybe<Order_By>;
 };
 
 export enum Users_Typing_Select_Column {
+  EMAIL = 'email',
+  FIRSTNAME = 'firstName',
   ID = 'id',
+  LASTNAME = 'lastName',
   LASTSEEN = 'lastSeen',
   LASTTYPED = 'lastTyped',
   LICENSENUMBER = 'licenseNumber',
-  USERNAME = 'username',
   VERIFIED = 'verified'
 }
 
@@ -9230,7 +9277,7 @@ export enum Users_Update_Column {
 
 export type UserWithRole = User & {
    __typename?: 'UserWithRole';
-  createdAt: Scalars['Date'];
+  createdAt?: Maybe<Scalars['Date']>;
   email: Scalars['String'];
   firstName?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
@@ -9363,9 +9410,9 @@ export type StorePrivateFragment = { __typename?: 'StorePrivate', id: string, na
     & ImageFragment
   )> };
 
-export type PaymentMethodFragment = { __typename?: 'PaymentMethod', id: string, userId: string, createdAt: any, updatedAt?: Maybe<any>, customerId?: Maybe<string>, paymentProcessor?: Maybe<PaymentProcessor>, paymentMethodTypes?: Maybe<Array<Maybe<string>>>, last4?: Maybe<string>, expMonth?: Maybe<string>, expYear?: Maybe<string>, email?: Maybe<string>, name?: Maybe<string>, details?: Maybe<string> };
+export type PaymentMethodFragment = { __typename?: 'PaymentMethod', id: string, userId?: Maybe<string>, createdAt?: Maybe<any>, updatedAt?: Maybe<any>, customerId?: Maybe<string>, paymentProcessor?: Maybe<PaymentProcessor>, paymentMethodTypes?: Maybe<Array<Maybe<string>>>, last4?: Maybe<string>, expMonth?: Maybe<string>, expYear?: Maybe<string>, email?: Maybe<string>, name?: Maybe<string>, details?: Maybe<string> };
 
-export type UserPrivateFragment = { __typename?: 'UserPrivate', id: string, firstName?: Maybe<string>, lastName?: Maybe<string>, email: string, stripeCustomerId: string, emailVerified?: Maybe<boolean>, userRole: Role, isSuspended: boolean, store?: Maybe<(
+export type UserPrivateFragment = { __typename?: 'UserPrivate', id: string, firstName?: Maybe<string>, lastName?: Maybe<string>, email: string, stripeCustomerId?: Maybe<string>, emailVerified?: Maybe<boolean>, userRole: Role, isSuspended: boolean, store?: Maybe<(
     { __typename?: 'StorePrivate' }
     & StorePrivateFragment
   )>, payoutMethod?: Maybe<{ __typename?: 'PayoutMethod', id: string, payoutType?: Maybe<string>, payoutEmail?: Maybe<string>, payoutProcessor?: Maybe<string>, payoutProcessorId?: Maybe<string> }> };
