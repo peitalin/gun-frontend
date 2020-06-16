@@ -32,6 +32,7 @@
     "apollo-link": "^1.2.13",
     "apollo-link-error": "^1.1.12",
     "apollo-link-http": "^1.5.16",
+    "apollo-link-ws": "^1.0.20",
     "cacheable-response": "^2.0.7",
     "clipboard-copy": "^3.1.0",
     "clsx": "^1.1.0",
@@ -70,6 +71,7 @@
     "slate-history": "^0.57.1",
     "slate-hyperscript": "^0.57.1",
     "slate-react": "^0.57.1",
+    "subscriptions-transport-ws": "^0.9.16",
     "ts-optchain": "^0.1.8",
     "use-debounce": "^3.4.1",
     "yup": "^0.27.0"
