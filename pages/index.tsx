@@ -1,4 +1,5 @@
 import React from "react";
+import { oc as option } from "ts-optchain";
 // styles
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
 // Utils Components
@@ -11,15 +12,25 @@ import dynamic from "next/dynamic";
 // GraphQL
 import { serverApolloClient } from "utils/apollo";
 import FrontPage from "pageComponents/FrontPage";
-import Chat from "pageComponents/Chat";
+// Redux
+import { useSelector } from 'react-redux';
+import { GrandReduxState } from 'reduxStore/grand-reducer';
+import { UserPrivate } from "typings/gqlTypes";
+import gql from 'graphql-tag'
+import { useApolloClient } from "@apollo/react-hooks";
 
 
 
 const HomePage: NextPage<ReactProps> = (props) => {
 
+  const apolloClient = useApolloClient()
+  const user = useSelector<GrandReduxState, UserPrivate>(
+    state => state.reduxLogin.user
+  );
+  const userId = option(user).id()
+
   return (
     <div>
-      <Chat/>
       <FrontPage/>
     </div>
   )

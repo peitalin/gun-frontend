@@ -12,7 +12,7 @@ import PreviewCardResponsive from "pageComponents/FrontPage/PreviewCardResponsiv
 import PreviewCardLoading from "./PreviewCardLoading";
 import LoadingCards from "./LoadingCards";
 // Graphql Typings
-import { ProductsConnection, OrderBy } from "typings/gqlTypes";
+import { ProductsConnection, OrderBy, ConnectionOffsetQuery } from "typings/gqlTypes";
 // useMediaQuery
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
@@ -231,6 +231,8 @@ interface QueryData {
   productsAllConnection: ProductsConnection;
 }
 interface QueryVar {
+  searchTerm?: string;
+  query?: ConnectionOffsetQuery;
 }
 interface SelectOption {
   label: string;

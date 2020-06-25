@@ -237,7 +237,7 @@ const Products: React.FC<ReactProps> = (props) => {
         </FlexBasis66>
         <FlexBasis33>
           <>
-            recommedations
+            recommendations
           {/* <ProductPageRecommendations
             index={index}
             setIndex={setIndex}

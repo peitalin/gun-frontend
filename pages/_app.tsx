@@ -14,8 +14,6 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import { AppTheme } from 'layout/AppTheme';
 import { withStyles, WithStyles } from '@material-ui/core/styles';
 import { notifyStyles } from "layout/AppTheme";
-// styles
-import GlobalStyles from "layout/globalStyles";
 // Next
 import App from "next/app";
 // Redux
@@ -149,7 +147,6 @@ class MyApp extends App<AppProps> {
           >
             <ThemeProvider theme={AppTheme}>
               <CssBaseline />
-              <GlobalStyles/>
               <Layout>
                 <Component {...pageProps} key={router.route} />
               </Layout>
