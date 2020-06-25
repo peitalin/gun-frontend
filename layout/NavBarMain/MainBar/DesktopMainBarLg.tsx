@@ -19,6 +19,8 @@ import SearchIcon from '@material-ui/icons/Search';
 // Modals
 import { goToModalConnect } from "utils/modals";
 import { useDispatch, useSelector } from "react-redux";
+// Chat
+import OpenChatButton from "pageComponents/ChatCenter/OpenChatButton";
 // Router
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -127,7 +129,7 @@ const DesktopMainBarLg = (props: DesktopMainBarProps) => {
             </div>
           }
 
-        {
+        {/* {
           loggedIn
           ? <Button
               className={classes.navbarButton}
@@ -150,7 +152,19 @@ const DesktopMainBarLg = (props: DesktopMainBarProps) => {
                 buttonProps={{ color: "primary" }}
               />
             </div>
-          }
+          } */}
+
+        {
+          loggedIn
+          ? <OpenChatButton/>
+          : <div className={classes.myDownloadsLogin}>
+              <Login
+                buttonText={"Orders"}
+                titleLogin={"Login to continue"}
+                buttonProps={{ color: "primary" }}
+              />
+            </div>
+        }
 
         <Button
           className={classes.navbarButton}

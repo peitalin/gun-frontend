@@ -7,12 +7,15 @@ import { oc as option } from "ts-optchain";
 // import ShareLinkModal from "components/ShareLinkModal";
 // import ContactUsModal from "components/ContactUsModal";
 import MySettingsModal from "layout/MySettingsModal";
+// Chat
+import ChatCenterModal from "pageComponents/ChatCenter";
 
 
 const Modals: React.FC<any> = (props) => {
   return (
     <>
       <MySettingsModal/>
+      <ChatCenterModal asModal/>
       {/* <CheckoutModal/>
       <GiftDownloadModal/> */}
       {/* <ShareLinkModal/>

@@ -59,7 +59,42 @@ export const Colors = {
   paleYellow: "#FCE8A6",
   yellow: '#EDC376',
   pink: "#DC848B",
+  // gradient
+  gradientPurple1: '#fbc2eb',
+  gradientPurple2: '#a18cd1',
+  gradientGrey1: '#fdfdfd',
+  gradientGrey2: '#ebedee',
+  gradientFlamingo1: '#f093fb',
+  gradientFlamingo2: '#f5576c',
 };
+
+
+export const Gradients = {
+  gradientPurple:  {
+    background: `linear-gradient(120deg, ${Colors.gradientPurple1} 0%, ${Colors.gradientPurple2} 70%)`,
+    color1: Colors.gradientPurple1,
+    color2: Colors.gradientPurple2,
+  },
+  gradientGrey:  {
+    background: `linear-gradient(120deg, ${Colors.gradientGrey1} 25%, ${Colors.gradientGrey2} 50%, ${Colors.gradientGrey1} 75%)`,
+    color1: Colors.gradientGrey1,
+    color2: Colors.gradientGrey2,
+  },
+  gradientFlamingo:  {
+    background: `linear-gradient(120deg, ${Colors.gradientFlamingo1} 0%, ${Colors.gradientFlamingo2} 100%)`,
+    color1: Colors.gradientFlamingo1,
+    color2: Colors.gradientFlamingo2,
+  },
+}
+
+export const BoxShadows = {
+  shadow1: {
+    boxShadow: '0 1px 1px rgba(0,0,0,0.1),0 2px 4px rgba(0,0,0,0.3),0 0 0 1px rgba(0,0,0,0.02)',
+  },
+  shadow2: {
+    boxShadow: '0 3px 1px rgba(0,0,0,0.1),0 4px 8px rgba(0,0,0,0.3),0 0 0 1px rgba(0,0,0,0.02)',
+  },
+}
 
 export const breakpoints: Breakpoints = {
   xs: 0,

@@ -4,38 +4,30 @@ import Head from 'next/head';
 
 const Header: React.FC<{}> = (props) => (
   <Head>
-    <title>gunmarketplace.com.au</title>
+    <title>Gunmarketplace.com.au</title>
     <link rel='icon' href='/favicon.ico' />
     <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+
     <link rel="icon"
-        href="https://storage.googleapis.com/electric-files/static/favicon.ico/favicon.ico"/>
+        href="/public/favicons/favicon.ico"/>
     <link rel="apple-touch-icon" sizes="180x180"
-        href="https://storage.googleapis.com/electric-files/static/favicon.ico/apple-touch-icon.png"/>
+        href="/public/favicons/apple-touch-icon.png"/>
     <link rel="icon" type="image/png" sizes="32x32"
-        href="https://storage.googleapis.com/electric-files/static/favicon.ico/favicon-32x32.png"/>
+        href="/public/favicons/favicon-32x32.png"/>
     <link rel="icon" type="image/png" sizes="16x16"
-        href="https://storage.googleapis.com/electric-files/static/favicon.ico/favicon-16x16.png"/>
-    <link rel="mask-icon"
-        href="https://storage.googleapis.com/electric-files/static/favicon.ico/safari-pinned-tab.svg" color="#5bbad5"/>
-    <link rel="manifest,"
-        href="https://storage.googleapis.com/electric-files/static/manifest.json"/>
-    {/* <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css?family=Playfair+Display"/> */}
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css?family=Barlow"/>
+        href="/public/favicon.ico/favicon-16x16.png"/>
 
 
-    {/* <script src="https://apis.google.com/js/platform.js" async defer></script> */}
-    {/* https://gunmarketplace.com.au */}
+    {/* Manifest.json defined and generated in next.config.js */}
+    <link rel="manifest" href="/public/manifest.json"/>
+    {/* <link rel="manifest" href="/manifest.json"/> */}
 
-    {/* <meta name="google-signin-client_id"
-      content="628767016907-66h6rtfiae0jt8uojc87hf6ns1npj3uj.apps.googleusercontent.com"
-    />
+    {/* load server-side and client side
+      needsto be loaded server-side to when Paypal button attempts to render, the
+      script tag is already present
+    */}
 
-    {
-      process.browser &&
-      <script dangerouslySetInnerHTML={{ __html: getGoogleLoginScript() }}/>
-    } */}
+    {/* <script id="paypal-js" src={`https://www.paypal.com/sdk/js?client-id=${PAYPAL_CLIENT_ID}`} async></script> */}
 
     {
       !process.browser &&

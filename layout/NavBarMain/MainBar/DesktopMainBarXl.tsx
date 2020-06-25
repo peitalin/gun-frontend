@@ -22,6 +22,8 @@ import { useDispatch, useSelector } from "react-redux";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { asCurrency as c } from "utils/prices";
+// Chat
+import OpenChatButton from "pageComponents/ChatCenter/OpenChatButton";
 
 
 
@@ -117,24 +119,11 @@ const DesktopMainBarXl = (props: DesktopMainBarProps) => {
               buttonProps={{ color: "primary" }}
             />
           </div>
-        }
+      }
 
       {
         loggedIn
-        ? <Button
-            className={classes.navbarButton}
-            variant={"text"}
-            color="primary"
-            onClick={goToMyDownloads}
-          >
-            <div>
-              <span className={
-                endRoute === 'my-downloads' ? classes.selectedRouteText : null
-              }>
-                Orders
-              </span>
-            </div>
-          </Button>
+        ? <OpenChatButton/>
         : <div className={classes.myDownloadsLogin}>
             <Login
               buttonText={"Orders"}
@@ -142,7 +131,7 @@ const DesktopMainBarXl = (props: DesktopMainBarProps) => {
               buttonProps={{ color: "primary" }}
             />
           </div>
-        }
+      }
 
       <Button
         className={classes.navbarButton}
