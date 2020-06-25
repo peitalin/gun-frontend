@@ -11,6 +11,7 @@ import { ReduxStateWishlist } from './wishlist-reducer';
 import { ReduxStateFollowingStores } from './following-stores-reducer';
 import { ReduxStateRefetch } from './refetch-reducer';
 import { ReduxStateStripe } from './stripe-reducer';
+import { ReduxStateConversation } from './conversation-reducer';
 // Reducers
 import { reduxReducerLogin } from "./login-reducer";
 import { reduxReducerModals } from "./modals-reducer";
@@ -20,7 +21,10 @@ import { reduxReducerWishlist } from "./wishlist-reducer";
 import { reduxReducerFollowingStores } from "./following-stores-reducer";
 import { reduxReducerRefetch } from "./refetch-reducer";
 import { reduxReducerStripe } from "./stripe-reducer";
+import { reduxReducerConversation } from "./conversation-reducer";
 
+import { Actions } from "./actions";
+export { Actions }
 
 
 export const makeStore = (initialState, options) => {
@@ -34,6 +38,7 @@ export const makeStore = (initialState, options) => {
         reduxFollowingStores: reduxReducerFollowingStores,
         reduxRefetch: reduxReducerRefetch,
         reduxStripe: reduxReducerStripe,
+        reduxConversation: reduxReducerConversation,
       }),
       initialState,
       applyMiddleware(thunk),
@@ -50,5 +55,6 @@ export interface GrandReduxState {
   reduxFollowingStores: ReduxStateFollowingStores;
   reduxRefetch: ReduxStateRefetch;
   reduxStripe: ReduxStateStripe;
+  reduxConversation: ReduxStateConversation;
 }
 
