@@ -3,15 +3,21 @@ import React from 'react';
 import clsx from "clsx";
 import { oc as option } from "ts-optchain";
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
+import { Colors } from "layout/AppTheme";
 
 import { useQuery, useSubscription } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 // typings
-import { Chat, Chat_Messages } from "typings/gqlTypes";
+import { Chat, Chat_Messages, Chat_Users } from "typings/gqlTypes";
 import Button from "@material-ui/core/Button";
 // components
 import Banner from './Banner';
 import MessageList from './MessageList';
+import { smoothScrollPolyfill } from "components/AirCarousel/carouselUtils";
+import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
+import IconButton from "@material-ui/core/IconButton";
+import throttle from "lodash.throttle";
+
 
 // https://github.com/hasura/graphql-engine/blob/master/community/sample-apps/realtime-chat/src/components/RenderMessages.js
 
@@ -59,13 +65,14 @@ const FETCH_MESSAGES = gql`
 `;
 
 
-export const Conversation: React.FC<ReactProps> = (props) => {
+export const CurrentConversation: React.FC<ReactProps> = (props) => {
 
   const {
     classes,
     userId,
     userName,
-    chatDivId = 'chat123'
+    chatDivId,
+    currentConversation,
   } = props;
 
   const [state, setState] = React.useState({
@@ -128,29 +135,12 @@ export const Conversation: React.FC<ReactProps> = (props) => {
     setState(s => ({ ...s, messages, newMessages: [] }));
   }
 
-  // custom refetch to be passed to parent for refetching on event occurance
-  const refetch2 = async() => {
-    if (!state.loading) {
-      const resp = await state.refetch(getLastReceivedVars());
-      if (resp.data) {
-        if (!isViewScrollable()) {
-          addOldMessages(resp.data.message);
-        } else {
-          if (state.bottom) {
-            addOldMessages(resp.data.message);
-          } else {
-            addNewMessages(resp.data.message);
-          }
-        }
-      }
-    }
-  }
-
   // scroll to bottom
   const scrollToBottom = () => {
-    let lastMsgElem = document.getElementById('lastMessage');
-    if (lastMsgElem) {
-      lastMsgElem.scrollIntoView({
+    let scrollableElem = document.getElementById(chatDivId);
+    if (scrollableElem) {
+      scrollableElem.scrollTo({
+        top: scrollableElem.scrollHeight,
         behavior: "smooth",
         block: "nearest",
         inline: "start"
@@ -158,24 +148,38 @@ export const Conversation: React.FC<ReactProps> = (props) => {
     }
   }
 
+
   // scroll to the new message
   const scrollToNewMessage = () => {
     document.getElementById('newMessage')
-      .scrollIntoView({ behavior: "instant" } as any);
+      .scrollIntoView({ behavior: "smooth" } as any);
   }
 
   // scroll handler
   const handleScroll = (e) => {
-    const windowHeight = "innerHeight" in window ? window.innerHeight : document.documentElement.offsetHeight;
-    const body = document.getElementById(chatDivId);
-    const html = document.documentElement;
-    const docHeight = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight,  html.scrollHeight, html.offsetHeight);
-    const windowBottom = windowHeight + window.pageYOffset;
-    if (windowBottom >= docHeight) {
-      setState(s => ({ ...s, bottom: true }))
-    } else {
-      if (state.bottom) {
-        setState(s => ({ ...s, bottom: false }))
+    const scrollableElem = document.getElementById(chatDivId);
+    const s = scrollableElem;
+    // scrollHeight: total height of scrollable area, including unseen area
+    // clientHeight: height of viewable box
+    // scrollTop: how far down you've scrolled in that element
+    // console.log(`scrollHeight: ${option(s).scrollHeight()} - ${chatDivId}`)
+    // console.log("scrollclientHeight", s.clientHeight)
+    // console.log("scrollTop", s.scrollTop)
+    if (s && s.scrollHeight) {
+      const yPos = s.clientHeight + s.scrollTop
+      // Leeway for hitting bottom when scrolling down and up
+      if (props.isBottom) {
+        if (yPos === s.scrollHeight) {
+          props.setIsBottom(true)
+        } else {
+          props.setIsBottom(false)
+        }
+      } else {
+        if (yPos + 60 >= s.scrollHeight) {
+          props.setIsBottom(true)
+        } else {
+          props.setIsBottom(false)
+        }
       }
     }
   }
@@ -234,69 +238,70 @@ export const Conversation: React.FC<ReactProps> = (props) => {
     // set mutation callback to update messages in state after mutation
     props.setMutationCallback(mutationCallback);
     // add scroll listener on mount
-    window.addEventListener("scroll", handleScroll);
+
+    let scrollableElem = document.getElementById(chatDivId);
+    if (scrollableElem) {
+      scrollableElem.addEventListener("scroll", handleScroll);
+    }
 
     // remove scroll listener on unmount
-    () => window.removeEventListener("scroll", handleScroll);
-  }, [])
+    () => {
+      let scrollableElem = document.getElementById(chatDivId);
+      if (scrollableElem) {
+        scrollableElem.removeEventListener("scroll", handleScroll);
+      }
+    }
+  }, [chatDivId])
 
 
   React.useEffect(() => {
     if (option(data).chatMessages([]).length > 0) {
       setState(s => ({ ...s, numMessagesBefore: data.chatMessages.length }))
       scrollToBottom();
+      props.setIsBottom(true)
     }
+  }, [ chatDivId ])
+
+  React.useEffect(() => {
+    renderMessages()
   }, [ data, loading ])
 
 
+  // console.log("currentConversation: ", currentConversation)
+  // console.log("currentConversation.length: ",
+  //   option(currentConversation).chat.messages.length())
+
+
   return (
-    <div id={chatDivId} className={classes.chatBox}>
-      { renderMessages() }
-      {
-        // show "unread messages" banner if not at bottom
-        // (!bottom && newMessages.length > 0 && isViewScrollable()) ?
-        true
-        ? <Banner
-            scrollToNewMessage={scrollToNewMessage}
-            numOfNewMessages={newMessages.length}
-          />
-        : null
-      }
-
-      <Button
-       onClick={scrollToBottom}
-      >
-        Scroll To bottom
-      </Button>
-
-
+    <div id={chatDivId} className={classes.chatBoxScrollable}>
       {
         // Show old/new message separation
-        data && data.chatMessages &&
+        // data && data.chatMessages &&
+        option(currentConversation).chat.messages([]).length > 0 &&
         <>
-          <div
-            id="newMessage"
-            className={clsx(
-              classes.oldNewSeparator,
-            )}
-          >
-            {
-              newMessages.length !== 0 ?
-              "New messages" :
-              null
-            }
+          <div id="newMessage" className={classes.oldNewSeparator}>
+          {
+            // show "unread messages" banner if not at bottom
+            // (!bottom && newMessages.length > 0 && isViewScrollable()) ?
+            true
+            ? <Banner
+                scrollToNewMessage={scrollToNewMessage}
+                numOfNewMessages={newMessages.length}
+              />
+            : null
+          }
           </div>
 
           { /* render new messages */}
           <MessageList
-            messages={data.chatMessages}
+            // messages={data.chatMessages}
+            messages={option(currentConversation).chat.messages([])}
             isNew={true}
             userName={userName}
             userId={userId}
           />
           { /* Bottom div to scroll to */}
-          <div
-            style={{ "height": 0 }}
+          <div style={{ "height": 0 }}
             id="newMessage" // anchor to scroll back to
           >
           </div>
@@ -310,10 +315,13 @@ export const Conversation: React.FC<ReactProps> = (props) => {
 interface ReactProps extends WithStyles<typeof styles> {
   userId: string;
   userName?: string;
-  chatDivId?: string;
+  chatDivId: string;
   setRefetch?(refetch: any): void;
   refetch?(): any;
   setMutationCallback?(a?: any): any;
+  isBottom: boolean;
+  setIsBottom(a?: boolean): void;
+  currentConversation?: Chat_Users
 }
 
 interface QueryData {
@@ -333,10 +341,12 @@ const styles = (theme: Theme) => createStyles({
   wd75: {
     width: '75%',
   },
-  chatBox: {
+  chatBoxScrollable: {
     width: '100%',
     height: '50vh',
     overflow: 'scroll',
+    position: 'relative',
+    border: '1px solid #eee',
   },
   chatWrapper: {
     display: 'flex',
@@ -344,4 +354,4 @@ const styles = (theme: Theme) => createStyles({
 })
 
 
-export default withStyles(styles)( Conversation );
+export default withStyles(styles)( CurrentConversation );

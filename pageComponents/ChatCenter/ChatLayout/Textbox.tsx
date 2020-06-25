@@ -2,6 +2,7 @@ import React from 'react';
 // Styles
 import clsx from "clsx";
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
+import { Colors } from "layout/AppTheme";
 
 import { useMutation, useApolloClient } from "@apollo/react-hooks";
 import gql from 'graphql-tag';
@@ -10,7 +11,6 @@ import { v4 as uuidv4 } from "uuid"
 import { Chat_Messages_Mutation_Response } from "typings/gqlTypes";
 import Button from "@material-ui/core/Button";
 
-import TextInput from "components/Fields/TextInput";
 import dynamic from "next/dynamic";
 import TextEditorPlaceholder from 'components/TextEditor/TextEditorPlaceholder';
 const TextEditorSSR = dynamic(() => import('components/TextEditor'), {
@@ -22,33 +22,33 @@ import { serializeHtml, initialValue, EMPTY_STATE } from 'components/TextEditor/
 
 
 const INSERT_MESSAGE = gql`
-mutation sendChatMessage(
-  $msgId: String!
-  $chatId: String!
-  $senderId: String!
-  $content: String!
-  $previewItemId: String
-) {
-  insert_chat_messages(objects: [{
-    id: $msgId,
-    chatId: $chatId,
-    content: $content,
-    senderId: $senderId,
-    previewItemId: $previewItemId
-  }]) {
-    affected_rows
-    returning {
-      id
-      sender {
+  mutation sendChatMessage(
+    $msgId: String!
+    $chatId: String!
+    $senderId: String!
+    $content: String!
+    $previewItemId: String
+  ) {
+    insert_chat_messages(objects: [{
+      id: $msgId,
+      chatId: $chatId,
+      content: $content,
+      senderId: $senderId,
+      previewItemId: $previewItemId
+    }]) {
+      affected_rows
+      returning {
         id
-        firstName
-        lastName
-        email
+        sender {
+          id
+          firstName
+          lastName
+          email
+        }
+        content
       }
-      content
     }
   }
-}
 `;
 
 const EMIT_TYPING_EVENT = gql`
@@ -113,11 +113,12 @@ export const Textbox: React.FC<ReactProps> = (props) => {
     if (!htmlDescription || htmlDescription === EMPTY_STATE) {
       return;
     }
+    console.log("chatId: ", props.chatId)
 
     insertMessage({
       variables: {
         msgId: `msg_${uuidv4()}`,
-        chatId: "chat_123123",
+        chatId: props.chatId,
         senderId: props.userId,
         content: htmlDescription,
         // content: state.text,
@@ -153,35 +154,43 @@ export const Textbox: React.FC<ReactProps> = (props) => {
   return (
     <div>
       <form onSubmit={sendMessage}>
-        <div className="textboxWrapper">
+        <div className={classes.textboxWrapper}>
           <TypingIndicator userId={props.userId} />
-          <TextEditorSSR
-            // errorMessage={errors.description}
-            // touched={touched.description}
-            onChange={(value) => {
-              handleTyping(value)
-              setDescription(value)
-            }}
-            resetSlate={resetSlate}
-            // limit={{
-            //   max: maxLengthProductDescription, // 2000 chars
-            // }}
-          />
-          <Button
-            variant={"outlined"}
-            className={clsx(classes.sendButton, classes.typoButton)}
-            onClick={sendMessage}
-          >
-            Send
-          </Button>
+          <div className={classes.textEditorWrapper}>
+            <TextEditorSSR
+              // errorMessage={errors.description}
+              // touched={touched.description}
+              onChange={(value) => {
+                handleTyping(value)
+                setDescription(value)
+              }}
+              resetSlate={resetSlate}
+              // limit={{
+              //   max: maxLengthProductDescription, // 2000 chars
+              // }}
+              editorStyle={{
+                border: 'unset',
+                // borderTop: '2px solid rgba(170, 170, 170, 0.4)',
+                borderTop: '2px solid #fff',
+                borderRadius: '0px',
+              }}
+            />
+            <Button
+              variant={"outlined"}
+              className={clsx(classes.sendButton)}
+              onClick={sendMessage}
+            >
+              Send
+            </Button>
 
-          <Button
-            variant={"outlined"}
-            className={clsx(classes.sendButton, classes.typoButton)}
-            onClick={dispatchResetSlate}
-          >
-            Reset slate.js
-          </Button>
+            <Button
+              variant={"outlined"}
+              className={clsx(classes.typoButton)}
+              onClick={dispatchResetSlate}
+            >
+              Reset slate.js
+            </Button>
+          </div>
         </div>
       </form>
     </div>
@@ -194,6 +203,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   scrollToNewMessage?(): void;
   numOfNewMessages?: number;
   mutationCallback?(a: any): void;
+  chatId: string;
 }
 interface MutData {
   insert_chat_messages: Chat_Messages_Mutation_Response
@@ -208,10 +218,23 @@ interface MutVars {
 
 const styles = (theme: Theme) => createStyles({
   sendButton: {
+    position: 'absolute',
+    bottom: 4,
+    right: 4,
   },
   typoButton: {
+    position: 'absolute',
+    bottom: 4,
+    right: '5rem',
   },
   textBox: {
+  },
+  textboxWrapper: {
+    position: 'relative',
+  },
+  textEditorWrapper: {
+    background: Colors.white,
+    height: '100%',
   },
   typoTextbox: {
     // fontSize: '16px',

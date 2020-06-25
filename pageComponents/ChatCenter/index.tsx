@@ -2,7 +2,7 @@
 import React from 'react';
 import { oc as option } from "ts-optchain";
 // Styles
-import { Colors } from "layout/AppTheme";
+import { Colors, BoxShadows } from "layout/AppTheme";
 import clsx from "clsx";
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
 // graphql
@@ -12,38 +12,21 @@ import { useApolloClient } from "@apollo/react-hooks";
 // typings
 import { Chat, Chat_Messages } from "typings/gqlTypes";
 // components
-import { Typography } from '@material-ui/core';
+import Typography from '@material-ui/core/Typography';
 import ChatLayout from './ChatLayout';
 // Redux
-import { useSelector } from 'react-redux';
-import { GrandReduxState } from 'reduxStore/grand-reducer';
+import { useSelector, useDispatch } from 'react-redux';
+import { GrandReduxState, Actions } from 'reduxStore/grand-reducer';
 import { UserPrivate } from "typings/gqlTypes";
 // css
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
+// Material UI
+import Dialog from "@material-ui/core/Dialog";
+import Button from "@material-ui/core/Button";
 
 
 
-const SUBSCRIBE_TO_NEW_MESSAGES = gql`
-subscription MessageAdded {
-  chatMessages: chat_messages(
-    order_by: { id: desc },
-    limit: 10
-  ) {
-    id
-    chatId
-    sender {
-      id
-      firstName
-      lastName
-    }
-    content
-    previewItem {
-      id
-    }
-  }
-}
-`;
 
 const EMIT_ONLINE_EVENT = gql`
   mutation ($senderId:String!){
@@ -62,8 +45,12 @@ const EMIT_ONLINE_EVENT = gql`
 
 const ChatMain: React.FC<ReactProps> = (props) => {
 
+  const {
+    classes,
+    asModal = false,
+  } = props
+
   const [state, setState] = React.useState({
-    userName: undefined,
     refetch: null,
   })
 
@@ -72,13 +59,28 @@ const ChatMain: React.FC<ReactProps> = (props) => {
     state => state.reduxLogin.user
   );
   const userId = option(user).id()
-  const userName = option(user).firstName("") + " " + option(user).lastName("");
 
-  const { classes } = props;
 
   const setRefetch = (refetch: () => {}) => {
     setState(s => ({ ...s, refetch: refetch }))
   }
+
+  const dispatch = useDispatch();
+
+  const chatCenterOpen = useSelector<GrandReduxState, boolean>(
+    state => state.reduxModals.chatCenterOpen
+  );
+
+  const theme = useTheme();
+  const lgDown = useMediaQuery(theme.breakpoints.down('lg'));
+  const mdDown = useMediaQuery(theme.breakpoints.down('md'));
+  const smDown = useMediaQuery(theme.breakpoints.down('sm'));
+
+
+  const closeModal = () => {
+    dispatch(Actions.reduxModals.TOGGLE_CHAT_CENTER_MODAL(false))
+  }
+
 
   React.useEffect(() => {
     // Emit and event saying the user is online every 3 seconds
@@ -98,30 +100,65 @@ const ChatMain: React.FC<ReactProps> = (props) => {
   }, [])
 
 
-  const { data, loading } = useSubscription<QueryData, QueryVar>(
-    SUBSCRIBE_TO_NEW_MESSAGES, {
-      variables: {
-      }
-    }
-  );
-
-  return (
-    <div className={classes.root}>
-      <div className={clsx(classes.chatContainer, classes.flexRow)}>
-        {
-          loading && "loading..."
-        }
-        <ChatLayout
-          userId={userId}
-          refetch={state.refetch}
-          setRefetch={setRefetch}
-        />
+  if (!asModal) {
+    return (
+      <div className={classes.root}>
+        <div className={clsx(classes.chatContainer, classes.flexRow)}>
+          {
+            userId &&
+            <ChatLayout
+              user={user}
+              refetch={state.refetch}
+              setRefetch={setRefetch}
+            />
+          }
+        </div>
       </div>
-    </div>
-  )
+    )
+  } else {
+    return (
+      <>
+        <Dialog
+          open={chatCenterOpen}
+          onClose={closeModal}
+          fullScreen={false}
+          fullWidth={true}
+          // fullWidth={false}
+          maxWidth="xl"
+          BackdropProps={{
+            classes: {
+              root: classes.modalBackdrop,
+            }
+          }}
+          PaperProps={{
+            classes: {
+              root: smDown
+                ? classes.fullMaxHeight
+                : classes.modalPaperScrollPaper
+            }
+          }}
+          scroll={"body"}
+        >
+          <div className={classes.root}>
+            <div className={clsx(classes.chatContainer, classes.flexRow)}>
+              {
+                userId &&
+                <ChatLayout
+                  user={user}
+                  refetch={state.refetch}
+                  setRefetch={setRefetch}
+                />
+              }
+            </div>
+          </div>
+        </Dialog>
+      </>
+    )
+  }
 };
 
 interface ReactProps extends WithStyles<typeof styles> {
+  asModal?: boolean
 }
 interface QueryData {
   chatMessages: Chat_Messages;
@@ -137,12 +174,10 @@ const styles = (theme: Theme) => createStyles({
     display: 'flex',
     flexDirection: "column",
     justifyContent: 'center',
-    padding: '2rem',
   },
   chatContainer: {
-    borderRadius: '6px',
-    // border: `1px solid ${Colors.darkerGrey}`,
     overflow: "hidden",
+    boxShadow: BoxShadows.shadow1.boxShadow,
   },
   flexRow: {
     display: 'flex',
@@ -161,6 +196,17 @@ const styles = (theme: Theme) => createStyles({
   },
   maxWidth: {
     maxWidth: '1160px', // 4 products per row
+  },
+  // modal classes
+  modalBackdrop: {
+    backgroundColor: "rgba(47, 57, 65, .85)",
+  },
+  modalPaperScrollPaper: {
+    // maxHeight: "calc(100% - 32px)",
+  },
+  fullMaxHeight: {
+    maxHeight: "100%",
+    width: '100%',
   },
 });
 

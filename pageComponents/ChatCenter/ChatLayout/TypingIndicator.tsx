@@ -80,6 +80,10 @@ const styles = (theme: Theme) => createStyles({
     textAlign: 'left',
     paddingBottom: '10px',
     paddingLeft: '1%',
+    background: "transparent",
+    position: 'absolute',
+    top: '-1rem',
+    width: '100%',
   },
 })
 

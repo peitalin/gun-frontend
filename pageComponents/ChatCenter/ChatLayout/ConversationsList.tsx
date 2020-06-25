@@ -6,7 +6,7 @@ import clsx from "clsx";
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
 
 import { useSubscription } from '@apollo/react-hooks';
-import { Users_Online } from "typings/gqlTypes";
+import { Users_Online, Chat_Users } from "typings/gqlTypes";
 // import moment from 'moment';
 import dayjs from 'dayjs'
 import gql from 'graphql-tag';
@@ -33,7 +33,7 @@ const FETCH_ONLINE_USERS_SUBSCRIPTION = gql`
 `;
 
 
-const OnlineUsers: React.FC<ReactProps> = (props) => {
+const ConversationsList: React.FC<ReactProps> = (props) => {
 
   const [state, setState] = React.useState({
     time: new Date(),
@@ -58,18 +58,9 @@ const OnlineUsers: React.FC<ReactProps> = (props) => {
     }
   );
 
-  return (
-    <div className={
-      xsDown
-        ? classes.onlineUsersRootMobile
-        : classes.onlineUsersRoot
-    }>
-      <p className={
-          xsDown
-            ? classes.mobileUserListHeading
-            : classes.userListHeading
-        }
-      >
+  const renderOnlineUsers = () => {
+    return (
+      <p className={ classes.userListHeading }>
         {
           error
           ? "Error loading online users"
@@ -78,6 +69,20 @@ const OnlineUsers: React.FC<ReactProps> = (props) => {
             : `Online Users ${option(data).users_online([]).length}`
         }
       </p>
+    )
+  }
+
+
+  return (
+    <div className={classes.onlineUsersRoot}>
+      <p className={
+          xsDown
+            ? classes.mobileUserListHeading
+            : classes.userListHeading
+        }
+      >
+        { "Current Offers" }
+      </p>
       {
         <ul className={
           xsDown
@@ -85,20 +90,39 @@ const OnlineUsers: React.FC<ReactProps> = (props) => {
             : classes.userList
         }>
           {
-            option(data).users_online([]).map((u) => {
+            // option(data).users_online([]).map((u) => {
               // <Link href="/my-downloads">
               //   <a className={classes.menuLink}>
               //   </a>
               // </Link>
+            option(props).conversations([]).map(c => {
+
+              const chat = option(c).chat()
+              const chatId = option(c).chat.id()
+              const product = option(c).chat.product()
+              const owner = option(c).chat.owner()
+
               return (
-                <MenuItem key={u.id}
+                <MenuItem key={chatId}
                   className={classes.onlineUserItem}
-                  onClick={() => {}}
+                  onClick={() => {
+                    // set chatId to this conversation
+                    // switch chats over in Conversation component
+                    // console.log("setting currentConversation: ", c.chat.id)
+                    props.setCurrentConversationId(c.chat.id)
+                  }}
                 >
-                  <PermIdentityIcon className={classes.menuIcon}/>
+                  <PermIdentityIcon className={
+                    (chatId === props.chatDivId)
+                      ? classes.menuIconHighlighted
+                      : classes.menuIcon
+                  }/>
                   <span className={classes.menuText}>
-                    {`${u.firstName} ${u.lastName}`}
+                    {`${owner.firstName} - ${product.currentSnapshot.title}`}
                   </span>
+                  {/* <span className={classes.menuText}>
+                    {`${chat.name} - ${product.currentSnapshot.title}`}
+                  </span> */}
                 </MenuItem>
               )
             })
@@ -113,10 +137,16 @@ const OnlineUsers: React.FC<ReactProps> = (props) => {
 interface ReactProps extends WithStyles<typeof styles> {
   userId: string;
   userName?: string;
+  chatDivId: string;
+  conversations?: Chat_Users[]
+  setCurrentConversationId(c: string): void;
 }
 interface QueryData {
   users_online: Users_Online[]
 }
+
+let headingColor = Colors.charcoal;
+let listItemColor = Colors.charcoal;
 
 const styles = (theme: Theme) => createStyles({
   onlineUsersRoot: {
@@ -133,20 +163,21 @@ const styles = (theme: Theme) => createStyles({
   },
   userListLi: {
     borderBottom: '1px solid #444',
-    color: '#fff',
+    color: headingColor,
   },
   userListHeading: {
     fontWeight: 600,
     padding: '15px 10px',
     marginTop: 0,
     marginBottom: 0,
-    backgroundColor: '#222',
-    color: '#fff',
+    backgroundColor: Colors.blue,
+    color: headingColor,
+    borderBottom: `4px solid ${Colors.white}`,
   },
   mobileUserListHeading: {
     fontSize: '14px',
     backgroundColor: '#222',
-    color: '#fff',
+    color: headingColor,
     fontWeight: 600,
     marginBottom: 0,
     padding: '5px',
@@ -171,12 +202,17 @@ const styles = (theme: Theme) => createStyles({
   menuLink: {
   },
   menuIcon: {
-    color: Colors.lightGrey
+    color: listItemColor,
+  },
+  menuIconHighlighted: {
+    color: Colors.blue,
   },
   menuText: {
-    color: Colors.lightGrey
+    color: listItemColor,
+    fontSize: '0.9rem',
+    margin: '0.25rem',
   },
 })
 
 
-export default withStyles(styles)( OnlineUsers );
+export default withStyles(styles)( ConversationsList );

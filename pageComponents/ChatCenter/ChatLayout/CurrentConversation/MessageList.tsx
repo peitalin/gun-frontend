@@ -26,11 +26,12 @@ export const MessageList: React.FC<ReactProps> = (props) => {
       : classes.messageWrapperNew
     }>
       {
+        (option(props).messages([]).length > 0) &&
         props.messages.map((message, i) => {
-          console.log("=> message: ", message)
-          const isMe = message.sender.id === userId
+          // console.log("=> message: ", message)
+          const isMe = option(message).sender.id() === userId
           return (
-            <MessageItem key={message.id}
+            <MessageItem key={option(message).id()}
               classes={classes}
               isMe={isMe}
               message={message}
@@ -105,23 +106,21 @@ interface MessageItemProps extends WithStyles<typeof styles> {
 
 const styles = (theme: Theme) => createStyles({
   messageWrapperNew: {
-    paddingBottom: '75px',
   },
   // your messages styles
   yourMessage: {
     fontSize: "16px",
     backgroundColor: Colors.white,
-    paddingLeft: '5px',
     margin: '1rem',
     borderRadius: '4px',
     width: '75%',
-    padding: '5px',
+    padding: '0.5rem',
   },
   messageTime: {
     textAlign: 'right',
     paddingRight: '5px',
     fontSize: '12px',
-    color: '#01999b',
+    color: Colors.darkGrey,
   },
   messageText: {
   },
@@ -135,19 +134,18 @@ const styles = (theme: Theme) => createStyles({
   myMessage: {
     fontSize: "16px",
     backgroundColor: "#E1F7CB",
-    paddingRight: '5px',
     margin: '1rem',
     borderRadius: '4px',
     width: '75%',
-    padding: '5px',
     // stick to right side
     marginLeft: 'calc(25% - 1rem)',
+    padding: '0.5rem',
   },
   myMessageTime: {
     textAlign: 'right',
     paddingRight: '5px',
     fontSize: '12px',
-    color: '#01999b',
+    color: Colors.greenCool,
   },
   myMessageText: {
   },
