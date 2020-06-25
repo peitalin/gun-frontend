@@ -1,13 +1,80 @@
+/* Global CSS */
+
+html {
+  scrollbar-width: none; /* Firefox */
+}
 
 body {
+  background-color: #fefefe;
+  overflow-x: hidden; /* Firefox */
   margin: 0px;
   padding: 0px;
+  width: 100vw; /* Firefox */
+}
+
+a {
+  text-decoration: none;
+}
+
+p {
+  margin: 0px;
+  min-height: 1rem;
+  font-weight: 400;
+  line-height: 1.5rem;
+}
+
+ol {
+  margin: 0px;
+  font-weight: 400;
+  line-height: 1.5rem;
+}
+
+li {
+  margin: 0px;
+  font-weight: 400;
+  line-height: 1.5rem;
+}
+
+ul {
+  margin: 0px;
+  font-weight: 400;
+  line-height: 1.5rem;
 }
 
 /* // Hide all scrollbars on app */
-::-webkit-scrollbar {
+/* ::-webkit-scrollbar {
   display: none;
+} */
+
+/* Hide ugly ass Safari input text-shadow */
+input[type=text] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
 }
+
+/* Hide ugly ass chrome autofill yellow background */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active  {
+  -webkit-box-shadow: 0 0 0 30px white inset !important;
+}
+
+input[type=text],
+input[type=email],
+input[type=password],
+textarea {
+  -webkit-appearance: none;
+}
+
+ /* Hide all scrollbars */
+::-webkit-scrollbar {
+    width: 0px;
+    background: transparent; /* make scrollbar transparent */
+    display: none;
+}
+
 
 .flex-container-col {
   display: flex;
@@ -31,16 +98,10 @@ body {
 
 .app {
   font-family: helvetica, arial, sans-serif;
-  padding: 2em;
-}
-
-a {
-  text-decoration: none;
 }
 
 
 /* //// MUI ////// */
-
 
 /* remove youtube ratings*/
 .ytrp_wrapper {
@@ -49,27 +110,17 @@ a {
   display: none;
 }
 
+/* remove shading on top of expansion panels */
+.MuiExpansionPanel-root:before {
+  background-color: rgba(0, 0, 0, 0);
+}
 
-/* // Override Dropdown menu's placeholder text color
-// Make it lighter grey */
+/* Override Dropdown menus placeholder text color
+ Make it lighter grey */
 .css-1hwfws3 .css-151xaom-placeholder {
   color: hsl(0, 0, 75%);
   font-weight: 300;
 }
-
-/* // React-rte: rich text editor button borders */
-.EditorToolbar__root___3_Aqz {
-  opacity: 0.66;
-}
-.IconButton__root___3tqZW .Button__root___1gz0c {
-  border: 1px solid #cccccc;
-}
-/* // React-rte Text Editor Input Area */
-.public-DraftEditor-content {
-  min-height: 6rem;
-  font-family: Roboto, Helvetica;
-}
-
 /* // React Dropzone Uploader style overrides */
 .dzu-dropzone .dottedContainer {
   border: 3px dashed #ddd;
@@ -85,7 +136,6 @@ a {
   opacity: 1;
   transition: opacity 200ms;
 }
-
 /* // Paypal button */
 #goofBox:hover + #goofProofButton {
   background-color: rgba(226, 16, 63, 0.08),
@@ -155,6 +205,19 @@ a {
   animation: slideFromTop 0.2s ease-in-out;
   -webkit-animation-delay: 0.02s;
   animation-delay: 0.02s;
+}
+
+.barloaderLong {
+  -webkit-animation: barloaderLong 2.1s cubic-bezier(0.65, 0.815, 0.735, 0.395) infinite;
+  animation: barloaderLong 2.1s cubic-bezier(0.65, 0.815, 0.735, 0.395) infinite;
+  -webkit-animation-delay: 1.15s;
+  animation-delay: 1.15s;
+}
+.barloaderShort {
+  -webkit-animation: barloaderShort 2.1s cubic-bezier(0.165, 0.84, 0.44, 1) infinite;
+  animation: barloaderShort 2.1s cubic-bezier(0.165, 0.84, 0.44, 1) infinite;
+  -webkit-animation-delay: 0.2s;
+  animation-delay: 0.2s;
 }
 
 .staggerFadeIn *:nth-child(1) {
@@ -229,6 +292,50 @@ a {
   }
 }
 
+@keyframes barloaderLong {
+  0% {
+    left: -35%;
+    right: 100%
+  }
+  60% {
+    left: 100%;
+    right: -90%
+  }
+  100% {
+    left: 100%;
+    right: -90%
+  }
+}
+
+@keyframes barloaderShort {
+  0% {
+    left: -200%;
+    right: 100%
+  }
+  60% {
+    left: 107%;
+    right: -8%
+  }
+  100% {
+    left: 107%;
+    right: -8%
+  }
+}
+
+.shimmer {
+  background-color: #f3f3f3;
+  background: linear-gradient(to right,#f3f3f3 5%,#eee 30%,#f3f3f3 45%);
+  animation: shimmer 2s linear 0s infinite normal forwards;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -100vw 0;
+  }
+  100% {
+    background-position: 100vw 0;
+  }
+}
 
 @keyframes pulse {
   0% {
