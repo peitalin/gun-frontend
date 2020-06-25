@@ -2,7 +2,7 @@
 const easingOutQuint = (x, t, b, c, d) =>
   c * ((t = t / d - 1) * t * t * t * t + 1) + b
 
-const smoothScrollPolyfill = (node, key, target) => {
+export const smoothScrollPolyfill = (node, key, target) => {
   const startTime = Date.now()
   const offset = node[key]
   const gap = target - offset

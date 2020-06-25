@@ -154,7 +154,7 @@ const LoadingBar: React.FC<ReactProps> = (props) => {
       'borderRadius': '2px',
       'willChange': 'left, right',
       'animationFillMode': 'forwards',
-      // animation keyframes defined in globalStyles.tsx:
+      // animation keyframes defined in App.css:
       // barloaderLong and barloaderShort
     }
   }

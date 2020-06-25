@@ -135,12 +135,16 @@ const TextEditor = (props: ReactProps) => {
   return (
     <div className={classes.root}>
       <div className={clsx(
-        classes.editorContainer,
-        focused ? classes.focusedBorder : null,
-        (option(fprops).touched.description() && !focused && errorMessage)
-          ? classes.errorBorder
-          : null,
-      )}>
+          classes.editorContainer,
+          focused ? classes.focusedBorder : null,
+          (option(fprops).touched.description() && !focused && errorMessage)
+            ? classes.errorBorder
+            : null,
+        )}
+        style={{
+          ...props.editorStyle
+        }}
+      >
         <Slate
           editor={editor}
           value={value}
@@ -161,7 +165,7 @@ const TextEditor = (props: ReactProps) => {
             className={classes.editor}
             renderElement={renderElement}
             renderLeaf={renderLeaf}
-            placeholder="A full description of your product"
+            placeholder={props.placeholder || "Type a message"}
             spellCheck
             // autoFocus
             onKeyDown={event => {
@@ -214,6 +218,10 @@ interface ReactProps extends WithStyles<typeof styles> {
   values?: FormikFields
   setFieldTouched?(...a: any): any
   resetSlate?: boolean;
+  editorStyle?: {
+    [key:string]: any
+  };
+  placeholder?: string;
 }
 interface FormikFields {
   description: string;
@@ -222,10 +230,10 @@ interface FormikFields {
 export const styles = (theme: Theme) => createStyles({
   root: {
     position: 'relative',
-    marginBottom: '1rem',
   },
   editorContainer: {
-    maxWidth: 'calc(100vw - 4rem)', // constrain width for mobile
+    height: '100%',
+    width: '100%',
     position: 'relative',
     border: '1px solid rgba(170, 170, 170, 0.4)',
     borderRadius: BorderRadius,
@@ -235,8 +243,8 @@ export const styles = (theme: Theme) => createStyles({
     }),
   },
   focusedBorder: {
-    boxShadow: `${fade('#50B5F5', 0.2)} 0 0 0 2px`,
-    borderColor: Colors.blue,
+    // boxShadow: `${fade('#50B5F5', 0.2)} 0 0 0 2px`,
+    border: `2px solid ${fade(Colors.blue, 0.2)}`,
     color: Colors.charcoal,
     transition: theme.transitions.create(['border-color', 'box-shadow'], {
       easing: theme.transitions.easing.easeIn,

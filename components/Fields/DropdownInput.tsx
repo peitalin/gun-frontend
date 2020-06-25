@@ -8,7 +8,7 @@ import CreatableSelect from "react-select/creatable";
 import { Colors, fontFam } from "layout/AppTheme";
 import { useFocus } from "utils/hooks";
 import { styles } from "components/Fields/styles";
-
+import ValidationErrorMsg from "./ValidationErrorMsg";
 
 
 const DropdownInput = (props: ReactProps) => {
@@ -128,17 +128,12 @@ const DropdownInput = (props: ReactProps) => {
           />
       }
 
-      <div className={clsx(
-        touched
-          ? classes.errorMessage
-          : disableInitialValidationMessage
-            ? classes.errorMessageBlank
-            : classes.errorMessageUntouched,
-        focused ? classes.errorMessageFocused : null,
-      )}>
-        <span className={"fadeIn"}>{props.errorMessage}</span>
-      </div>
-
+      <ValidationErrorMsg
+        touched={touched}
+        focused={focused}
+        errorMessage={props.errorMessage}
+        disableInitialValidationMessage={disableInitialValidationMessage}
+      />
 
       {
         limit &&
