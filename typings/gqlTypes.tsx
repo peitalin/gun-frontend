@@ -280,6 +280,8 @@ export type Chat = {
   name?: Maybe<Scalars['String']>;
   owner: Users;
   ownerId: Scalars['String'];
+  product?: Maybe<Products>;
+  productId?: Maybe<Scalars['String']>;
   status?: Maybe<Scalars['String']>;
   users: Array<Chat_Users>;
   users_aggregate: Chat_Users_Aggregate;
@@ -361,6 +363,8 @@ export type Chat_Bool_Exp = {
   name?: Maybe<String_Comparison_Exp>;
   owner?: Maybe<Users_Bool_Exp>;
   ownerId?: Maybe<String_Comparison_Exp>;
+  product?: Maybe<Products_Bool_Exp>;
+  productId?: Maybe<String_Comparison_Exp>;
   status?: Maybe<String_Comparison_Exp>;
   users?: Maybe<Chat_Users_Bool_Exp>;
 };
@@ -376,6 +380,8 @@ export type Chat_Insert_Input = {
   name?: Maybe<Scalars['String']>;
   owner?: Maybe<Users_Obj_Rel_Insert_Input>;
   ownerId?: Maybe<Scalars['String']>;
+  product?: Maybe<Products_Obj_Rel_Insert_Input>;
+  productId?: Maybe<Scalars['String']>;
   status?: Maybe<Scalars['String']>;
   users?: Maybe<Chat_Users_Arr_Rel_Insert_Input>;
 };
@@ -386,6 +392,7 @@ export type Chat_Max_Fields = {
   id?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   ownerId?: Maybe<Scalars['String']>;
+  productId?: Maybe<Scalars['String']>;
   status?: Maybe<Scalars['String']>;
 };
 
@@ -394,6 +401,7 @@ export type Chat_Max_Order_By = {
   id?: Maybe<Order_By>;
   name?: Maybe<Order_By>;
   ownerId?: Maybe<Order_By>;
+  productId?: Maybe<Order_By>;
   status?: Maybe<Order_By>;
 };
 
@@ -593,6 +601,7 @@ export type Chat_Min_Fields = {
   id?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   ownerId?: Maybe<Scalars['String']>;
+  productId?: Maybe<Scalars['String']>;
   status?: Maybe<Scalars['String']>;
 };
 
@@ -601,6 +610,7 @@ export type Chat_Min_Order_By = {
   id?: Maybe<Order_By>;
   name?: Maybe<Order_By>;
   ownerId?: Maybe<Order_By>;
+  productId?: Maybe<Order_By>;
   status?: Maybe<Order_By>;
 };
 
@@ -628,6 +638,8 @@ export type Chat_Order_By = {
   name?: Maybe<Order_By>;
   owner?: Maybe<Users_Order_By>;
   ownerId?: Maybe<Order_By>;
+  product?: Maybe<Products_Order_By>;
+  productId?: Maybe<Order_By>;
   status?: Maybe<Order_By>;
   users_aggregate?: Maybe<Chat_Users_Aggregate_Order_By>;
 };
@@ -641,6 +653,7 @@ export enum Chat_Select_Column {
   ID = 'id',
   NAME = 'name',
   OWNERID = 'ownerId',
+  PRODUCTID = 'productId',
   STATUS = 'status'
 }
 
@@ -649,6 +662,7 @@ export type Chat_Set_Input = {
   id?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   ownerId?: Maybe<Scalars['String']>;
+  productId?: Maybe<Scalars['String']>;
   status?: Maybe<Scalars['String']>;
 };
 
@@ -657,6 +671,7 @@ export enum Chat_Update_Column {
   ID = 'id',
   NAME = 'name',
   OWNERID = 'ownerId',
+  PRODUCTID = 'productId',
   STATUS = 'status'
 }
 
