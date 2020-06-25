@@ -6,6 +6,7 @@ import { ApolloLink, split } from 'apollo-link';
 import { WebSocketLink } from 'apollo-link-ws';
 import { getMainDefinition } from 'apollo-utilities';
 // Switches between unfetch & node-fetch for client & server.
+import { DocumentNode } from "graphql";
 import fetch from 'isomorphic-unfetch'
 import withApollo from 'next-with-apollo';
 import { setContext } from 'apollo-link-context';
@@ -77,43 +78,48 @@ const onErrorHandler = onError(({ graphQLErrors, networkError }) => {
 
 const splitQueryOrSubscriptions = ({
   httpLink,
-  browser,
+  useWebsockets,
   ctx,
-  token,
-}: { httpLink: HttpLink, browser: boolean, ctx: NextPageContext, token: any }) => {
-  if (browser) {
-    // splits requests based on operation type:
-    // - subscriptions => websockets
-    // - queries/mutations => http
-    // https://www.apollographql.com/docs/react/data/subscriptions/
+}: { httpLink: HttpLink, useWebsockets: boolean, ctx: NextPageContext }) => {
 
-    // client-side only, errors if you instantiate wsLink on the server.
-    // https://github.com/apollographql/subscriptions-transport-ws/issues/333#issuecomment-359261024
-    const wsLink = new WebSocketLink({
-      uri: GATEWAY_GRAPHQL_WS_URL,
-      options: {
-        reconnect: true,
-        connectionParams: () => ({
-          headers: {
-            "x-hasura-admin-secret": "hescomingrightforus",
-            "content-type": "application/json",
-            cookie: option(ctx).req.headers.cookie(),
-          },
-        }),
-      }
-    })
-
-    return split(({ query }) => {
-      const definition = getMainDefinition(query);
-      return (
-        definition.kind === 'OperationDefinition' &&
-        definition.operation === 'subscription'
-      );
-    }, wsLink, httpLink)
-  } else {
+  if (!useWebsockets) {
     // if server-side (ssr), return normal httpLink
     return httpLink
   }
+  // splits requests based on operation type:
+  // - subscriptions => websockets
+  // - queries/mutations => http
+  // https://www.apollographql.com/docs/react/data/subscriptions/
+
+  // client-side only, errors if you instantiate wsLink on the server.
+  // https://github.com/apollographql/subscriptions-transport-ws/issues/333#issuecomment-359261024
+  const wsLink = new WebSocketLink({
+    uri: GATEWAY_GRAPHQL_WS_URL,
+    options: {
+      reconnect: true,
+      connectionParams: () => ({
+        headers: {
+          // "x-hasura-admin-secret": "",
+          "content-type": "application/json",
+          cookie: option(ctx).req.headers.cookie(),
+        },
+      }),
+    }
+  })
+
+  const isSubscriptionQuery = ({ query }: { query: DocumentNode }) => {
+    const definition = getMainDefinition(query);
+    return (
+      definition.kind === 'OperationDefinition' &&
+      definition.operation === 'subscription'
+    );
+  }
+
+  return split(
+    isSubscriptionQuery, // if subscription query, divert to wsLink
+    wsLink,
+    httpLink
+  )
 }
 
 
@@ -134,9 +140,8 @@ export default withApollo(
       link: ApolloLink.from([
         onErrorHandler,
         splitQueryOrSubscriptions({
-          browser: !!process.browser,
+          useWebsockets: !!process.browser,
           ctx: ctx,
-          token: token,
           httpLink:
             new HttpLink({
               uri: URI,
