@@ -9,7 +9,7 @@ import { Elements } from '@stripe/react-stripe-js';
 //   }
 // } = getConfig()
 
-const STRIPE_PUBLIC_KEY = ''
+const STRIPE_PUBLIC_KEY = 'pk_test_VUGcNnF1Pp6O0Qm0tvRGzpTu00qV7mtvY5'
 
 const stripePromise = loadStripe(STRIPE_PUBLIC_KEY);
 

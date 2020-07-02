@@ -22,11 +22,12 @@ const ButtonLoading: React.FC<ReactProps & ButtonProps> = (props) => {
     ...ButtonProps
   } = props;
 
+  console.log("button props: ", ButtonProps)
   if (replaceTextWhenLoading) {
     return (
       <Button
         // default props
-        variant="contained"
+        variant={props.variant ? props.variant : "contained"}
         style={{
           width: "100%",
           height: "40px",
@@ -68,7 +69,7 @@ const ButtonLoading: React.FC<ReactProps & ButtonProps> = (props) => {
     return (
       <Button
         // default props
-        variant="contained"
+        variant={props.variant ? props.variant : "contained"}
         style={{
           width: "100%",
           height: "40px",
@@ -115,6 +116,7 @@ interface ReactProps {
   replaceTextWhenLoading?: boolean;
   loadingIconSize?: number;
   loadingIconColor?: string;
+  variant?: "outlined" | "text" | "contained";
   [key: string]: any;
 }
 

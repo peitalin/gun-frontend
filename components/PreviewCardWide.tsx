@@ -99,12 +99,7 @@ const PreviewCardWide = (props: ReactProps) => {
                 />
           }
         </CardActionArea>
-        <div
-          className={classes.descriptionContainer}
-          style={{
-            height: cardHeightBottomHalf,
-          }}
-        >
+        <div className={classes.descriptionContainer}>
           <Typography
             className={clsx(
               classes.category,
@@ -156,7 +151,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   tagline: string;
   category: ProductCategory;
   price: number;
-  priceWas: number;
+  priceWas?: number;
   quantityAvailable?: number;
   isSoldOut?: boolean;
   topHalfFraction?: number;
