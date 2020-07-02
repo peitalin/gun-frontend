@@ -64,12 +64,12 @@ const ProductDetails = (props: ReactProps) => {
 
   const existingChatsProductIds = option(data).conversations([]).map(c => {
     return {
-      chatId: c.chat.id,
-      productId: c.chat.product.id
+      chatId: option(c).chat.id(),
+      productId: option(c).chat.product.id()
     }
   })
   const alreadyChattingAboutProduct = existingChatsProductIds.find(
-    z => z.productId === props.product.id
+    z => z.productId === option(props).product.id()
   )
   // console.log("existing productIds", existingChatsProductIds)
   // console.log("alreadyChatting about product?", alreadyChattingAboutProduct)
@@ -88,7 +88,7 @@ const ProductDetails = (props: ReactProps) => {
         />
       }
       {
-        (user.id && !alreadyChattingAboutProduct) &&
+        (option(user).id() && !alreadyChattingAboutProduct) &&
         <CreateChatButton
           title={"Message Seller"}
           buyerUserId={user.id}
@@ -103,7 +103,7 @@ const ProductDetails = (props: ReactProps) => {
       }
       {
         (
-          user.id &&
+          option(user).id() &&
           alreadyChattingAboutProduct &&
           alreadyChattingAboutProduct.productId &&
           alreadyChattingAboutProduct.chatId

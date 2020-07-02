@@ -124,7 +124,6 @@ const ChatMain: React.FC<ReactProps> = (props) => {
           fullScreen={false}
           fullWidth={true}
           // fullWidth={false}
-          maxWidth="xl"
           BackdropProps={{
             classes: {
               root: classes.modalBackdrop,

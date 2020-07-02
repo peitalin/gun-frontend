@@ -14,7 +14,9 @@ import gql from 'graphql-tag';
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 // MUI
+import Typography from '@material-ui/core/Typography';
 import MenuItem from '@material-ui/core/MenuItem';
+import Divider from '@material-ui/core/Divider';
 import PermIdentityIcon from '@material-ui/icons/PermIdentity';
 
 
@@ -33,7 +35,7 @@ const FETCH_ONLINE_USERS_SUBSCRIPTION = gql`
 `;
 
 
-const ConversationsList: React.FC<ReactProps> = (props) => {
+const ConversationsListPanel: React.FC<ReactProps> = (props) => {
 
   const [state, setState] = React.useState({
     time: new Date(),
@@ -72,6 +74,15 @@ const ConversationsList: React.FC<ReactProps> = (props) => {
     )
   }
 
+  const archivedConvos = option(props).conversations([])
+    .filter(c => c.chat.status === "ARCHIVED")
+
+  const activeConvos = option(props).conversations([])
+    .filter(c => c.chat.status === "ACTIVE")
+
+  const completedConvos = option(props).conversations([])
+    .filter(c => c.chat.status === "COMPLETED")
+
 
   return (
     <div className={classes.onlineUsersRoot}>
@@ -83,52 +94,95 @@ const ConversationsList: React.FC<ReactProps> = (props) => {
       >
         { "Current Offers" }
       </p>
-      {
-        <ul className={
-          xsDown
-            ? classes.mobileUserList
-            : classes.userList
-        }>
-          {
-            // option(data).users_online([]).map((u) => {
-              // <Link href="/my-downloads">
-              //   <a className={classes.menuLink}>
-              //   </a>
-              // </Link>
-            option(props).conversations([]).map(c => {
+      <ul className={
+        xsDown
+          ? classes.mobileUserList
+          : classes.userList
+      }>
+        <Typography>
+          Current Offers
+        </Typography>
+        <Divider/>
+        {
+          (activeConvos.length > 0) &&
+          activeConvos.map(c => {
 
-              const chat = option(c).chat()
-              const chatId = option(c).chat.id()
-              const product = option(c).chat.product()
-              const owner = option(c).chat.owner()
+            const chat = option(c).chat()
+            const chatId = option(c).chat.id()
+            const product = option(c).chat.product()
+            const owner = option(c).chat.owner()
 
-              return (
-                <MenuItem key={chatId}
-                  className={classes.onlineUserItem}
-                  onClick={() => {
-                    // set chatId to this conversation
-                    // switch chats over in Conversation component
-                    // console.log("setting currentConversation: ", c.chat.id)
-                    props.setCurrentConversationId(c.chat.id)
-                  }}
-                >
-                  <PermIdentityIcon className={
-                    (chatId === props.chatDivId)
-                      ? classes.menuIconHighlighted
-                      : classes.menuIcon
-                  }/>
-                  <span className={classes.menuText}>
-                    {`${owner.firstName} - ${product.currentSnapshot.title}`}
-                  </span>
-                  {/* <span className={classes.menuText}>
-                    {`${chat.name} - ${product.currentSnapshot.title}`}
-                  </span> */}
-                </MenuItem>
-              )
-            })
-          }
+            return (
+              <MenuItem key={chatId}
+                className={classes.onlineUserItem}
+                onClick={() => {
+                  // set chatId to this conversation
+                  // switch chats over in Conversation component
+                  // console.log("setting currentConversation: ", c.chat.id)
+                  props.setCurrentConversationId(c.chat.id)
+                }}
+              >
+                <PermIdentityIcon className={
+                  (chatId === props.chatDivId)
+                    ? classes.menuIconHighlighted
+                    : classes.menuIcon
+                }/>
+                <span className={classes.menuText}>
+                  {`${owner.firstName} - ${product.currentSnapshot.title}`}
+                </span>
+                {/* <span className={classes.menuText}>
+                  {`${chat.name} - ${product.currentSnapshot.title}`}
+                </span> */}
+              </MenuItem>
+            )
+          })
+        }
         </ul>
-      }
+
+      <ul className={
+        xsDown
+          ? classes.mobileUserList
+          : classes.userList
+      }>
+        <Typography>
+          Archived Offers
+        </Typography>
+        <Divider/>
+        {
+          (archivedConvos.length > 0) &&
+          archivedConvos.map(c => {
+
+            const chat = option(c).chat()
+            const chatId = option(c).chat.id()
+            const product = option(c).chat.product()
+            const owner = option(c).chat.owner()
+
+            return (
+              <MenuItem key={chatId}
+                className={classes.onlineUserItem}
+                onClick={() => {
+                  // set chatId to this conversation
+                  // switch chats over in Conversation component
+                  // console.log("setting currentConversation: ", c.chat.id)
+                  props.setCurrentConversationId(c.chat.id)
+                }}
+              >
+                <PermIdentityIcon className={
+                  (chatId === props.chatDivId)
+                    ? classes.menuIconHighlighted
+                    : classes.menuIcon
+                }/>
+                <span className={classes.menuText}>
+                  {`${owner.firstName} - ${product.currentSnapshot.title}`}
+                </span>
+                {/* <span className={classes.menuText}>
+                  {`${chat.name} - ${product.currentSnapshot.title}`}
+                </span> */}
+              </MenuItem>
+            )
+          })
+        }
+      </ul>
     </div>
   );
 };
@@ -160,6 +214,7 @@ const styles = (theme: Theme) => createStyles({
     marginTop: 0,
     marginBottom: 0,
     padding: 0,
+    minHeight: '8rem',
   },
   userListLi: {
     borderBottom: '1px solid #444',
@@ -215,4 +270,4 @@ const styles = (theme: Theme) => createStyles({
 })
 
 
-export default withStyles(styles)( ConversationsList );
+export default withStyles(styles)( ConversationsListPanel );

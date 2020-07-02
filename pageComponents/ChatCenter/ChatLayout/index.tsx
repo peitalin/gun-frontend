@@ -3,7 +3,8 @@ import { oc as option } from "ts-optchain";
 // components
 import CurrentConversation from './CurrentConversation';
 import Textbox from './Textbox'
-import ConversationsList from './ConversationsList';
+import ConversationsListPanel from './ConversationsListPanel';
+import ProductPanel from './ProductPanel';
 import { UserPrivate } from "typings/gqlTypes";
 // Styles
 import { Colors, BoxShadows } from "layout/AppTheme";
@@ -83,13 +84,13 @@ export const ChatLayout: React.FC<ReactProps> = (props) => {
     }
   }, [data, loading])
 
-  console.log("currentConversationId: ", currentConversationId)
-  console.log("currentConversation: ", currentConversation)
+  // console.log("currentConversationId: ", currentConversationId)
+  // console.log("currentConversation: ", currentConversation)
 
   return (
     <div className={classes.chatLayout}>
       <div className={clsx(classes.col25, classes.wd25)}>
-        <ConversationsList
+        <ConversationsListPanel
           userId={userId}
           userName={userName}
           chatDivId={chatDivId}
@@ -120,6 +121,11 @@ export const ChatLayout: React.FC<ReactProps> = (props) => {
           chatId={chatDivId}
         />
       </div>
+      <div className={clsx(classes.col25, classes.wd25)}>
+        <ProductPanel
+          currentConversation={currentConversation}
+        />
+      </div>
     </div>
   );
 }
@@ -144,6 +150,7 @@ const styles = (theme: Theme) => createStyles({
   },
   wd25: {
     width: '25%',
+    minWidth: 280,
   },
   col75: {
     display: 'flex',
