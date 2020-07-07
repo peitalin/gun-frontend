@@ -1,11 +1,9 @@
 const https = require("https");
-const apolloClient = require("apollo-client");
-const apolloLink = require("apollo-link");
-const apolloLinkHttp = require("apollo-link-http");
-const apolloLinkError = require("apollo-link-error");
-const apolloCache = require("apollo-cache-inmemory");
-const fetch = require("isomorphic-unfetch");
-const gql = require("graphql-tag");
+const apolloClient = require("@apollo/client");
+const apolloLink = require("@apollo/client");
+const apolloLinkHttp = require("@apollo/client");
+const apolloLinkError = require("@apollo/link-error");
+const apolloCache = require("@apollo/client");
 
 // This afterware simply exposes set-cookie headers to the context of a query response
 const setCookieAfterware = new apolloLink.ApolloLink((operation, forward) => {
@@ -42,7 +40,7 @@ const serverApolloClient = new apolloClient.ApolloClient({
     }),
     setCookieAfterware,
     new apolloLinkHttp.HttpLink({
-      uri: process.env.SERVER_GATEWAY_GRAPHQL_URL,
+      uri: process.env.SERVER_GATEWAY_GRAPHQL_URL || "http://0.0.0.0:8080/v1/graphql",
       fetch: fetch,
       fetchOptions: {
         agent: new https.Agent({ rejectUnauthorized: false }),
