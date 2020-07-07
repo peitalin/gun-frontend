@@ -18,7 +18,7 @@ import { Formik, FormikProps } from 'formik';
 import { validationSchemas } from "utils/validation";
 import ChangePasswordFields from "./ChangePasswordFields";
 // Graphql Queries
-import { useMutation } from "@apollo/react-hooks";
+import { useMutation } from "@apollo/client";
 import { CHANGE_PASSWORD } from "queries/user-mutations";
 // import { UserPrivate } from "typings/gqlTypes";
 type UserPrivate = any;

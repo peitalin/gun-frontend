@@ -16,7 +16,7 @@ import LoginPageModal from "./LoginPageModal";
 import LoginPageCompact from "./LoginPageCompact";
 import LoginPageRedirect from "./LoginPageRedirect";
 
-import { useApolloClient } from "@apollo/react-hooks";
+import { useApolloClient } from "@apollo/client";
 import { logout } from "queries/requests";
 import {
   runOnLoginExpiration,

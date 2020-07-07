@@ -2,7 +2,7 @@ import React from "react";
 import { oc as option } from "ts-optchain";
 import clsx from "clsx";
 // Graphql Queries
-import { useQuery } from "@apollo/react-hooks";
+import { useQuery } from "@apollo/client";
 import { GET_USER } from "queries/user-queries";
 import { UserPrivate } from "typings/gqlTypes";
 // Styles
@@ -34,7 +34,7 @@ import { HtmlEvent, EditUserProfileInput } from "typings";
 // import dynamic from 'next/dynamic'
 // const DynamicPaymentMethods = dynamic(() => import('./PaymentMethods'))
 import { refetchUser } from "layout/GetUser";
-import { useApolloClient } from "@apollo/react-hooks";
+import { useApolloClient } from "@apollo/client";
 
 
 

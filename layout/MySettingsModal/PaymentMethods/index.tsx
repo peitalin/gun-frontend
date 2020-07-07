@@ -1,7 +1,7 @@
 import * as React from "react";
 import { oc as option } from "ts-optchain";
 // Graphql Queries
-import { useQuery, useApolloClient } from "@apollo/react-hooks";
+import { useQuery, useApolloClient } from "@apollo/client";
 import { GET_USER } from "queries/user-queries";
 import { GET_USER_PAYMENT_METHODS } from "queries/payment_methods-queries";
 // import { UserPrivate, ID, PaymentMethod } from "typings/gqlTypes";

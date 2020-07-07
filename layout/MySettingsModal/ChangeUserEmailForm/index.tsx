@@ -21,7 +21,7 @@ import { Formik, FormikProps } from 'formik';
 import { validationSchemas } from "utils/validation";
 import ChangeUserEmailFields from "./ChangeUserEmailFields";
 // Graphql Queries
-import { useMutation } from "@apollo/react-hooks";
+import { useMutation } from "@apollo/client";
 import { GET_USER } from "queries/user-queries";
 import { UPDATE_USER } from "queries/user-mutations";
 

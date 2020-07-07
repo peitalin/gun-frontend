@@ -7,10 +7,10 @@ import { GrandReduxState } from "reduxStore/grand-reducer";
 import { Dispatch, Store } from "redux";
 import { batch, useDispatch, useSelector } from "react-redux";
 // Graphql
-import { useQuery } from "@apollo/react-hooks";
+import { useQuery } from "@apollo/client";
 import { GET_USER } from "queries/user-queries";
-import { useApolloClient } from "@apollo/react-hooks";
-import { ApolloClient, ApolloError, ApolloQueryResult } from "apollo-client";
+import { useApolloClient } from "@apollo/client";
+import { ApolloClient, ApolloError, ApolloQueryResult } from "@apollo/client";
 // Typings
 import { UserPrivate } from 'typings/gqlTypes';
 import Loading from "components/Loading";
@@ -58,7 +58,7 @@ interface ReactProps {
   user?: UserPrivate;
 }
 interface QueryData {
-  user: UserPrivate;
+  user?: UserPrivate;
 }
 
 export type ApolloRefetch = (variables?: Record<string, any>) => Promise<ApolloQueryResult<QueryData>>
@@ -129,7 +129,7 @@ GetUser.getInitialProps = async (ctx: Context) => {
   console.log('GetUser req headers:\n', option(ctx).req.headers.cookie());
 
   const cookie = option(ctx).req.headers.cookie();
-  let userResponse = { data: undefined };
+  let userResponse: { data?: { user?: UserPrivate } } = { data: undefined };
   const dispatch = ctx.store.dispatch;
 
   if (cookie && /efc-auth=/.exec(cookie)) {

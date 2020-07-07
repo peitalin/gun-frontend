@@ -18,7 +18,7 @@ import Avatar from '@material-ui/core/Avatar';
 import { logout } from "queries/requests";
 import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
-import { useApolloClient } from "@apollo/react-hooks";
+import { useApolloClient } from "@apollo/client";
 
 
 

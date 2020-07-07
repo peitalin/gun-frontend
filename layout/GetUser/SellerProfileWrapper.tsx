@@ -7,11 +7,11 @@ import { GrandReduxState } from "reduxStore/grand-reducer";
 import { Dispatch, Store } from "redux";
 import { batch, useDispatch, useSelector } from "react-redux";
 // Graphql
-import { useQuery } from "@apollo/react-hooks";
+import { useQuery } from "@apollo/client";
 import { GET_USER } from "queries/user-queries";
 import { GET_STORE_PRIVATE } from "queries/store-queries";
-import { useApolloClient } from "@apollo/react-hooks";
-import { ApolloClient } from "apollo-client";
+import { useApolloClient } from "@apollo/client";
+import { ApolloClient } from "@apollo/client";
 // Typings
 import { UserPrivate } from 'typings/gqlTypes';
 import Loading from "components/Loading";

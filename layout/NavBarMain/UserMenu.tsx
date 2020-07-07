@@ -29,7 +29,7 @@ import QAIcon from "@material-ui/icons/QuestionAnswer";
 import Link from "next/link";
 import Hidden from "@material-ui/core/Hidden";
 import { useRouter } from "next/router";
-import { useApolloClient } from "@apollo/react-hooks";
+import { useApolloClient } from "@apollo/client";
 import { logout } from "queries/requests";
 
 

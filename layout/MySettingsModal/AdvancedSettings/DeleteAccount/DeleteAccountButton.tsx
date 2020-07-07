@@ -3,7 +3,7 @@ import { oc as option } from "ts-optchain";
 // Styles
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
 // Graphql Queries
-import { useMutation, useApolloClient } from "@apollo/react-hooks";
+import { useMutation, useApolloClient } from "@apollo/client";
 import { DELETE_STORE, DELETE_ACCOUNT } from "queries/deletions-mutations";
 // import { UserPrivate } from "typings/gqlTypes";
 type UserPrivate = any;
