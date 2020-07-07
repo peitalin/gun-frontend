@@ -15,7 +15,7 @@ import { Dispatch } from "redux";
 import { GrandReduxState } from "reduxStore/grand-reducer";
 import { Actions } from "reduxStore/actions";
 // useApolloClient
-import { useApolloClient } from "@apollo/react-hooks";
+import { useApolloClient } from "@apollo/client";
 // Components
 import ProductHeading from "./ProductHeading";
 import ProductPricing from "./ProductPricing";

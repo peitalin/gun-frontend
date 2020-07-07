@@ -20,7 +20,7 @@ import { Colors } from "layout/AppTheme";
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 // GraphQL
-import { useQuery, useApolloClient } from "@apollo/react-hooks";
+import { useQuery, useApolloClient } from "@apollo/client";
 import { GET_ALL_PRODUCTS } from "queries/gun-queries";
 
 

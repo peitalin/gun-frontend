@@ -44,7 +44,7 @@ const PreviewImageFeatured: React.FC<ReactProps> = (props) => {
     if (option(image).original.url() && imgLoaded === 0) {
       setTimeout(() => {
         setImgLoaded(1)
-      }, 400)
+      }, 0)
     }
     return () => {}
   }, [])

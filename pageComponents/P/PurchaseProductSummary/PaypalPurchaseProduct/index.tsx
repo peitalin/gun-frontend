@@ -20,7 +20,7 @@ import {
 } from 'typings/gqlTypes';
 import { PaypalOnApproveData, PaypalResponse } from "typings/typings-paypal";
 import { centsToDollarSelector } from "utils/selectors";
-import { useApolloClient } from "@apollo/react-hooks";
+import { useApolloClient } from "@apollo/client";
 // Instant buy without being logged in
 import {
   CHECKOUT_PRODUCTS_FOR_FRONTEND_PAYMENT,

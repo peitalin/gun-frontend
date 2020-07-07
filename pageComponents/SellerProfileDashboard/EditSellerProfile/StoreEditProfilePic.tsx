@@ -22,7 +22,7 @@ import {
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 // Components
-import { useApolloClient } from "@apollo/react-hooks";
+import { useApolloClient } from "@apollo/client";
 // DZU components
 import UploadLayout from "./UploadLayout";
 import UploadInput from "./UploadInput";

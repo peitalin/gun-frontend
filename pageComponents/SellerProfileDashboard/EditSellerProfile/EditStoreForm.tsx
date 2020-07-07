@@ -12,7 +12,7 @@ import { Actions } from "reduxStore/actions";
 import { withStyles, WithStyles } from "@material-ui/core/styles";
 import { styles } from './styles';
 // Graphql
-import { useMutation } from "@apollo/react-hooks";
+import { useMutation } from "@apollo/client";
 import { EDIT_STORE } from "queries/store-mutations";
 import { GET_USER } from "queries/user-queries";
 // Typings

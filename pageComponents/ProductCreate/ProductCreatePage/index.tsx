@@ -64,7 +64,7 @@ import {
   DzuFilePreview
 } from "typings/dropzone";
 // Graphql
-import { useMutation, useApolloClient } from "@apollo/react-hooks";
+import { useMutation, useApolloClient } from "@apollo/client";
 import { CREATE_PRODUCT } from "queries/products-mutations";
 import { GET_RECOMMENDED_PRODUCTS } from "queries/products-queries";
 // Validation

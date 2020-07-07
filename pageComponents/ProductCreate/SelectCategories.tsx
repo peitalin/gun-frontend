@@ -7,7 +7,7 @@ import { Actions } from "reduxStore/actions";
 import { GrandReduxState } from "reduxStore/grand-reducer";
 // Graphql
 import { GET_PRODUCT_CATEGORIES } from "queries/categories-queries";
-import { useQuery } from '@apollo/react-hooks';
+import { useQuery } from '@apollo/client';
 // Typings
 import { ProductCategory } from "typings/gqlTypes";
 import { ReducerName } from "typings/dropzone";

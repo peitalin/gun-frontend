@@ -13,7 +13,7 @@ import Dropzone from "components/DropzoneUploader/Dropzone";
 import {
   google_storage_register, google_storage_save_image_to_db,
 } from "queries/requests";
-import { useApolloClient } from "@apollo/react-hooks";
+import { useApolloClient } from "@apollo/client";
 
 // Material UI
 import Avatar from "@material-ui/core/Avatar";

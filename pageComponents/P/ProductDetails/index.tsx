@@ -17,8 +17,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { GrandReduxState } from "reduxStore/grand-reducer";
 import { Actions } from "reduxStore/actions";
 // gql
-import { GET_USER_CONVERSATIONS } from "queries/chat-subscriptions";
-import { useSubscription } from '@apollo/react-hooks';
+import { SUBSCRIBE_USER_CONVERSATIONS } from "queries/chat-subscriptions";
+import { useSubscription } from '@apollo/client';
 
 // import ProductDescription from "./ProductDescription";
 import dynamic from "next/dynamic";
@@ -48,7 +48,7 @@ const ProductDetails = (props: ReactProps) => {
 
 
   const { data, loading, error } = useSubscription<QueryData, QueryVar>(
-    GET_USER_CONVERSATIONS, {
+    SUBSCRIBE_USER_CONVERSATIONS, {
       variables: {
         userId: option(user).id()
       }
@@ -64,8 +64,8 @@ const ProductDetails = (props: ReactProps) => {
 
   const existingChatsProductIds = option(data).conversations([]).map(c => {
     return {
-      chatId: option(c).chat.id(),
-      productId: option(c).chat.product.id()
+      chatRoomId: option(c).chatRoom.id(),
+      productId: option(c).chatRoom.product.id()
     }
   })
   const alreadyChattingAboutProduct = existingChatsProductIds.find(
@@ -106,12 +106,12 @@ const ProductDetails = (props: ReactProps) => {
           option(user).id() &&
           alreadyChattingAboutProduct &&
           alreadyChattingAboutProduct.productId &&
-          alreadyChattingAboutProduct.chatId
+          alreadyChattingAboutProduct.chatRoomId
         ) &&
         <OpenChatButton
           title={"Continue Offer"}
           productId={alreadyChattingAboutProduct.productId}
-          chatId={alreadyChattingAboutProduct.chatId}
+          chatRoomId={alreadyChattingAboutProduct.chatRoomId}
         />
       }
     </div>

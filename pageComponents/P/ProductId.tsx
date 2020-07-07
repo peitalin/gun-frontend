@@ -4,7 +4,7 @@ import clsx from "clsx";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 // GraphQL
-import { useQuery, useApolloClient } from "@apollo/react-hooks";
+import { useQuery, useApolloClient } from "@apollo/client";
 // Typings
 import { Product, ID, ProductVariant } from "typings/gqlTypes";
 import {

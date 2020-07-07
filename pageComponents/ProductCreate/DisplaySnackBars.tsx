@@ -1,6 +1,6 @@
 import * as React from "react";
 import { oc as option } from "ts-optchain";
-import { ApolloError } from "apollo-client";
+import { ApolloError } from "@apollo/client";
 import { MutationData } from "./ProductCreatePage";
 import SnackBarA from "components/Snackbars/SnackbarA";
 

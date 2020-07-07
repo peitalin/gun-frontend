@@ -22,7 +22,7 @@ import {
 } from "typings/gqlTypes";
 // router
 import { useRouter } from "next/router";
-import { useApolloClient } from "@apollo/react-hooks";
+import { useApolloClient } from "@apollo/client";
 // store deleted
 import { isStoreDeleted, storeCreateRedirectCondition } from "utils/store";
 // Redux

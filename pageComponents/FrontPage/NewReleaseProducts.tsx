@@ -17,7 +17,7 @@ import { ProductsConnection, OrderBy, ConnectionOffsetQuery } from "typings/gqlT
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 // GraphQL
-import { useQuery, useApolloClient } from "@apollo/react-hooks";
+import { useQuery, useApolloClient } from "@apollo/client";
 import { GET_ALL_PRODUCTS } from "queries/gun-queries";
 // Select Component
 import DropdownInput from "components/Fields/DropdownInput";
@@ -64,24 +64,6 @@ const NewReleaseProducts = (props: ReactProps) => {
   const sm = useMediaQuery(theme.breakpoints.only("sm"))
   const smDown = useMediaQuery(theme.breakpoints.only("sm"))
   const xsDown = useMediaQuery(theme.breakpoints.only("xs"))
-
-  // const {
-  //   loading,
-  //   error,
-  //   data,
-  //   getNextPage,
-  //   getPrevPage,
-  // } = usePaginateQueryHook<QueryData, QueryVar, Product>({
-  //   query: GET_ALL_PRODUCTS,
-  //   variables: {},
-  //   connectionSelector: (data: QueryData) => [
-  //     option(data).productsAllConnection(),
-  //     'productsAllConnection'
-  //   ],
-  //   sortAscending: false,
-  //   count: count,
-  //   ssr: true,
-  // });
 
   const { loading, error, data } = useQuery<QueryData, QueryVar>(
     GET_ALL_PRODUCTS, {

@@ -32,7 +32,7 @@ import UploadLayoutPreviews from "./UploadLayoutPreviews";
 // Components
 import { Formik, Form, FormikProps, ErrorMessage, FormikErrors } from 'formik';
 import ErrorBounds from 'components/ErrorBounds';
-import { useApolloClient } from "@apollo/react-hooks";
+import { useApolloClient } from "@apollo/client";
 // validation
 import { maxPreviewImages } from "utils/limitsAndRules";
 import ValidationErrorMsg from "components/Fields/ValidationErrorMsg";

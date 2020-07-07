@@ -11,7 +11,7 @@ import { withStyles, WithStyles } from "@material-ui/core/styles";
 import { styles } from './styles';
 import { Colors } from "layout/AppTheme";
 // Graphql
-import { useMutation } from "@apollo/react-hooks";
+import { useMutation } from "@apollo/client";
 import { CREATE_STORE } from "queries/store-mutations";
 import { GET_USER } from "queries/user-queries";
 // Typings

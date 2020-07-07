@@ -24,7 +24,7 @@ import ErrorBounds from 'components/ErrorBounds';
 import { goToModalConnect } from "utils/modals";
 import { useRouter } from "next/router";
 import { logout } from "queries/requests";
-import { useApolloClient } from "@apollo/react-hooks";
+import { useApolloClient } from "@apollo/client";
 
 
 

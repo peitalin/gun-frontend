@@ -44,7 +44,7 @@ import SelectCreditCardDropdown from "./SelectCreditCardDropdown";
 import SnackbarsSuccessErrors from "components/Snackbars/SnackbarsSuccessErrors";
 // Graphql
 import { GET_USER_PAYMENT_METHODS } from "queries/payment_methods-queries";
-import { useApolloClient } from '@apollo/react-hooks';
+import { useApolloClient } from '@apollo/client';
 import {
   // CHECKOUT_CART,
   CHECKOUT_PRODUCTS,
