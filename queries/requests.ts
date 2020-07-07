@@ -23,7 +23,7 @@ import { Actions } from "reduxStore/actions";
 import { Dispatch } from "redux";
 // ENV variables
 import getConfig from 'next/config'
-import ApolloClient from "apollo-client";
+import { ApolloClient } from "@apollo/client";
 import {
   REGISTER_UPLOAD,
   SAVE_PRODUCT_FILE_UPLOAD,
