@@ -48,9 +48,10 @@ generates:
           preResolveTypes: true
           dedupeOperationSuffix: true
       - typescript-react-apollo:
-          reactApolloVersion: 2
+          reactApolloVersion: 3
           withHooks: true
           withHOC: false
           withComponent: false
           withMutationFn: false
+
 
