@@ -4,7 +4,7 @@ import { oc as option } from "ts-optchain";
 // Styles
 import clsx from "clsx";
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
-import { Chat, Chat_Messages } from "typings/gqlTypes";
+import { Chat_Rooms, Chat_Messages } from "typings/gqlTypes";
 
 import dayjs from "dayjs";
 import { showDateAndTime } from "utils/dates";

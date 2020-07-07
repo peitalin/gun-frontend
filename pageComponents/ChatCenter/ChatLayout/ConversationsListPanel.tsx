@@ -5,7 +5,7 @@ import { Colors } from "layout/AppTheme";
 import clsx from "clsx";
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
 
-import { useSubscription } from '@apollo/react-hooks';
+import { useSubscription } from '@apollo/client';
 import { Users_Online, Chat_Users } from "typings/gqlTypes";
 // import moment from 'moment';
 import dayjs from 'dayjs'
@@ -75,13 +75,13 @@ const ConversationsListPanel: React.FC<ReactProps> = (props) => {
   }
 
   const archivedConvos = option(props).conversations([])
-    .filter(c => c.chat.status === "ARCHIVED")
+    .filter(c => c.chatRoom.status === "ARCHIVED")
 
   const activeConvos = option(props).conversations([])
-    .filter(c => c.chat.status === "ACTIVE")
+    .filter(c => c.chatRoom.status === "ACTIVE")
 
   const completedConvos = option(props).conversations([])
-    .filter(c => c.chat.status === "COMPLETED")
+    .filter(c => c.chatRoom.status === "COMPLETED")
 
 
   return (
@@ -107,23 +107,23 @@ const ConversationsListPanel: React.FC<ReactProps> = (props) => {
           (activeConvos.length > 0) &&
           activeConvos.map(c => {
 
-            const chat = option(c).chat()
-            const chatId = option(c).chat.id()
-            const product = option(c).chat.product()
-            const owner = option(c).chat.owner()
+            const chatRoom = option(c).chatRoom()
+            const chatRoomId = option(c).chatRoom.id()
+            const product = option(c).chatRoom.product()
+            const owner = option(c).chatRoom.owner()
 
             return (
-              <MenuItem key={chatId}
+              <MenuItem key={chatRoomId}
                 className={classes.onlineUserItem}
                 onClick={() => {
-                  // set chatId to this conversation
+                  // set chatRoomId to this conversation
                   // switch chats over in Conversation component
                   // console.log("setting currentConversation: ", c.chat.id)
-                  props.setCurrentConversationId(c.chat.id)
+                  props.setCurrentConversationId(c.chatRoom.id)
                 }}
               >
                 <PermIdentityIcon className={
-                  (chatId === props.chatDivId)
+                  (chatRoomId === props.chatDivId)
                     ? classes.menuIconHighlighted
                     : classes.menuIcon
                 }/>
@@ -131,7 +131,7 @@ const ConversationsListPanel: React.FC<ReactProps> = (props) => {
                   {`${owner.firstName} - ${product.currentSnapshot.title}`}
                 </span>
                 {/* <span className={classes.menuText}>
-                  {`${chat.name} - ${product.currentSnapshot.title}`}
+                  {`${chatRoom.name} - ${product.currentSnapshot.title}`}
                 </span> */}
               </MenuItem>
             )
@@ -152,23 +152,23 @@ const ConversationsListPanel: React.FC<ReactProps> = (props) => {
           (archivedConvos.length > 0) &&
           archivedConvos.map(c => {
 
-            const chat = option(c).chat()
-            const chatId = option(c).chat.id()
-            const product = option(c).chat.product()
-            const owner = option(c).chat.owner()
+            const chatRoom = option(c).chatRoom()
+            const chatRoomId = option(c).chatRoom.id()
+            const product = option(c).chatRoom.product()
+            const owner = option(c).chatRoom.owner()
 
             return (
-              <MenuItem key={chatId}
+              <MenuItem key={chatRoomId}
                 className={classes.onlineUserItem}
                 onClick={() => {
-                  // set chatId to this conversation
+                  // set chatRoomId to this conversation
                   // switch chats over in Conversation component
-                  // console.log("setting currentConversation: ", c.chat.id)
-                  props.setCurrentConversationId(c.chat.id)
+                  // console.log("setting currentConversation: ", c.chatRoom.id)
+                  props.setCurrentConversationId(c.chatRoom.id)
                 }}
               >
                 <PermIdentityIcon className={
-                  (chatId === props.chatDivId)
+                  (chatRoomId === props.chatDivId)
                     ? classes.menuIconHighlighted
                     : classes.menuIcon
                 }/>

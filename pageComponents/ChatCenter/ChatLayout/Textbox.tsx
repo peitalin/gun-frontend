@@ -4,7 +4,7 @@ import clsx from "clsx";
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
 import { Colors } from "layout/AppTheme";
 
-import { useMutation, useApolloClient } from "@apollo/react-hooks";
+import { useMutation, useApolloClient } from "@apollo/client";
 import gql from 'graphql-tag';
 import TypingIndicator from './TypingIndicator';
 import { v4 as uuidv4 } from "uuid"
@@ -24,14 +24,14 @@ import { serializeHtml, initialValue, EMPTY_STATE } from 'components/TextEditor/
 const INSERT_MESSAGE = gql`
   mutation sendChatMessage(
     $msgId: String!
-    $chatId: String!
+    $chatRoomId: String!
     $senderId: String!
     $content: String!
     $previewItemId: String
   ) {
     insert_chat_messages(objects: [{
       id: $msgId,
-      chatId: $chatId,
+      chatRoomId: $chatRoomId,
       content: $content,
       senderId: $senderId,
       previewItemId: $previewItemId
@@ -113,12 +113,12 @@ export const Textbox: React.FC<ReactProps> = (props) => {
     if (!htmlDescription || htmlDescription === EMPTY_STATE) {
       return;
     }
-    console.log("chatId: ", props.chatId)
+    console.log("chatRoomId: ", props.chatRoomId)
 
     insertMessage({
       variables: {
         msgId: `msg_${uuidv4()}`,
-        chatId: props.chatId,
+        chatRoomId: props.chatRoomId,
         senderId: props.userId,
         content: htmlDescription,
         // content: state.text,
@@ -203,14 +203,14 @@ interface ReactProps extends WithStyles<typeof styles> {
   scrollToNewMessage?(): void;
   numOfNewMessages?: number;
   mutationCallback?(a: any): void;
-  chatId: string;
+  chatRoomId: string;
 }
 interface MutData {
   insert_chat_messages: Chat_Messages_Mutation_Response
 }
 interface MutVars {
   msgId: string
-  chatId: string
+  chatRoomId: string
   senderId: string
   content: string
   previewItemId?: string

@@ -5,7 +5,7 @@ import { oc as option } from "ts-optchain";
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 
-import { useSubscription } from '@apollo/react-hooks';
+import { useSubscription } from '@apollo/client';
 import { Users_Typing } from "typings/gqlTypes";
 import gql from 'graphql-tag';
 

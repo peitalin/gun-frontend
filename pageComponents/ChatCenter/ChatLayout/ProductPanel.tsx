@@ -5,9 +5,9 @@ import { Colors } from "layout/AppTheme";
 import clsx from "clsx";
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
 
-import { useMutation } from '@apollo/react-hooks';
+import { useMutation } from '@apollo/client';
 import { UPDATE_CHAT_STATUS } from "queries/chat-subscriptions";
-import { Chat, Chat_Users, ProductPreviewItem } from "typings/gqlTypes";
+import { Chat_Rooms, Chat_Users, ProductPreviewItem } from "typings/gqlTypes";
 // import moment from 'moment';
 import dayjs from 'dayjs'
 import gql from 'graphql-tag';
@@ -39,16 +39,16 @@ const ProductPanel: React.FC<ReactProps> = (props) => {
     currentConversation,
   } = props;
 
-  const getNextChatStatus = (chat: Chat): string => {
-    if (option(chat).status() === "ARCHIVED") {
+  const getNextChatStatus = (chatRoom: Chat_Rooms): string => {
+    if (option(chatRoom).status() === "ARCHIVED") {
       return "ACTIVE"
     } else {
       return "ARCHIVED"
     }
   }
 
-  const getNextChatStatusAction = (chat: Chat): string => {
-    if (option(chat).status() === "ARCHIVED") {
+  const getNextChatStatusAction = (chatRoom: Chat_Rooms): string => {
+    if (option(chatRoom).status() === "ARCHIVED") {
       return "Activate Offer"
     } else {
       return "Archive Offer"
@@ -58,9 +58,9 @@ const ProductPanel: React.FC<ReactProps> = (props) => {
   const theme = useTheme();
   const xsDown = useMediaQuery(theme.breakpoints.down('xs'));
 
-  const chat = option(currentConversation).chat()
-  const chatId = option(chat).id()
-  const product = option(chat).product()
+  const chatRoom = option(currentConversation).chatRoom()
+  const chatRoomId = option(chatRoom).id()
+  const product = option(chatRoom).product()
   const featuredVariant = option(product).product_variants([]).find(v => v.isDefault)
   const previewItem = option(featuredVariant).previewItems([])[0]
 
@@ -72,8 +72,8 @@ const ProductPanel: React.FC<ReactProps> = (props) => {
   ] = useMutation<QueryData, QueryVar>(
     UPDATE_CHAT_STATUS, {
       variables: {
-        chatId: chatId,
-        chatStatus: getNextChatStatus(option(currentConversation).chat()),
+        chatRoomId: chatRoomId,
+        chatStatus: getNextChatStatus(option(currentConversation).chatRoom()),
       }
     }
   );
@@ -82,8 +82,8 @@ const ProductPanel: React.FC<ReactProps> = (props) => {
   console.log("product:::::", product)
   console.log("previewItem:::::", previewItem)
 
-  const buyer = option(chat).owner();
-  const _seller = option(currentConversation).chat.users([])
+  const buyer = option(chatRoom).owner();
+  const _seller = option(currentConversation).chatRoom.users([])
     .find(u => u.userId !== buyer.id)
 
   const seller = option(_seller).user();
@@ -134,7 +134,7 @@ const ProductPanel: React.FC<ReactProps> = (props) => {
                   updateChatStatus()
                 }}
               >
-                {getNextChatStatusAction(currentConversation.chat)}
+                {getNextChatStatusAction(currentConversation.chatRoom)}
               </ButtonLoading>
               <ButtonLoading
                 replaceTextWhenLoading={true}
@@ -186,11 +186,11 @@ interface ReactProps extends WithStyles<typeof styles> {
 }
 interface QueryData {
   update_chat: {
-    returning: Chat
+    returning: Chat_Rooms
   };
 }
 interface QueryVar {
-  chatId: string
+  chatRoomId: string
   chatStatus: string
 }
 

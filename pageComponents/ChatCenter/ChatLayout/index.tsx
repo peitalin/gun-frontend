@@ -11,15 +11,15 @@ import { Colors, BoxShadows } from "layout/AppTheme";
 import clsx from "clsx";
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
 // typings
-import { Chat, Chat_Messages, Users, Chat_Users } from "typings/gqlTypes";
+import { Chat_Rooms, Chat_Messages, Users, Chat_Users } from "typings/gqlTypes";
 // css
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import ScrollDownButton from "./ScrollDownButton";
 // graphql
-import { useSubscription } from '@apollo/react-hooks';
+import { useSubscription } from '@apollo/client';
 import gql from 'graphql-tag'
-import { GET_USER_CONVERSATIONS } from "queries/chat-subscriptions";
+import { SUBSCRIBE_USER_CONVERSATIONS } from "queries/chat-subscriptions";
 // Redux
 import { useSelector, useDispatch } from 'react-redux';
 import { GrandReduxState, Actions } from 'reduxStore/grand-reducer';
@@ -58,7 +58,7 @@ export const ChatLayout: React.FC<ReactProps> = (props) => {
   ] = React.useState<string>(initialConversationId)
 
   const { data, loading, error } = useSubscription<QueryData, QueryVar>(
-    GET_USER_CONVERSATIONS, {
+    SUBSCRIBE_USER_CONVERSATIONS, {
       variables: {
         userId: option(user).id()
       }
@@ -66,7 +66,7 @@ export const ChatLayout: React.FC<ReactProps> = (props) => {
   );
 
   const currentConversation = option(data).conversations([])
-    .find(c => option(c).chat.id() === currentConversationId)
+    .find(c => option(c).chatRoom.id() === currentConversationId)
 
   const chatDivId = currentConversationId
   const userId = option(user).id()
@@ -76,7 +76,7 @@ export const ChatLayout: React.FC<ReactProps> = (props) => {
     // set initial conversation on mount + data response
     if (option(data).conversations([]).length > 0) {
       if (!currentConversationId || !initialConversationId) {
-        setCurrentConversationId(option(data).conversations[0].chat.id())
+        setCurrentConversationId(option(data).conversations[0].chatRoom.id())
       } else {
         setCurrentConversationId(currentConversationId)
       }
@@ -118,7 +118,7 @@ export const ChatLayout: React.FC<ReactProps> = (props) => {
           userName={userName}
           mutationCallback={mutationCallback}
           userId={userId}
-          chatId={chatDivId}
+          chatRoomId={chatDivId}
         />
       </div>
       <div className={clsx(classes.col25, classes.wd25)}>

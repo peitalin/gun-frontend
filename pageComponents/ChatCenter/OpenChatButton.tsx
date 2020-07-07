@@ -6,7 +6,7 @@ import { Colors, BoxShadows } from "layout/AppTheme";
 import clsx from "clsx";
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
 // typings
-import { Chat, Chat_Messages } from "typings/gqlTypes";
+import { Chat_Rooms, Chat_Messages } from "typings/gqlTypes";
 // components
 import Typography from '@material-ui/core/Typography';
 import ChatLayout from './ChatLayout';
@@ -37,7 +37,7 @@ const OpenChatButton: React.FC<ReactProps> = (props) => {
   }
 
   const openModal = () => {
-    dispatch(Actions.reduxConversation.SET_CURRENT_CONVERSATION_ID(props.chatId))
+    dispatch(Actions.reduxConversation.SET_CURRENT_CONVERSATION_ID(props.chatRoomId))
     setTimeout(() => {
       dispatch(Actions.reduxModals.TOGGLE_CHAT_CENTER_MODAL(true))
     }, 0)
@@ -58,7 +58,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   asModal?: boolean
   title?: string
   productId: string
-  chatId: string
+  chatRoomId: string
 }
 
 

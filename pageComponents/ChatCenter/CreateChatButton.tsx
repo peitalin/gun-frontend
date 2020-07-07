@@ -6,10 +6,10 @@ import clsx from "clsx";
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
 // graphql
 import gql from 'graphql-tag'
-import { useMutation, useQuery } from '@apollo/react-hooks';
-import { useApolloClient } from "@apollo/react-hooks";
+import { useMutation, useQuery } from '@apollo/client';
+import { useApolloClient } from "@apollo/client";
 // typings
-import { Chat, Chat_Messages } from "typings/gqlTypes";
+import { Chat_Rooms, Chat_Messages } from "typings/gqlTypes";
 // components
 import ButtonLoading from "components/ButtonLoading";
 // css
@@ -28,14 +28,14 @@ import { UserPrivate } from "typings/gqlTypes";
 const CREATE_NEW_CHAT = gql`
   # create chat room between buyer and seller
   mutation createNewChat(
-    $chatId: String!
+    $chatRoomId: String!
     $sellerUserId: String!
     $buyerUserId: String!
     $name: String
     $productId: String!
   ) {
-    insert_chat(objects: [{
-      id: $chatId,
+    insert_chat_rooms(objects: [{
+      id: $chatRoomId,
       ownerId: $buyerUserId,
       name: $name,
       productId: $productId,
@@ -76,7 +76,7 @@ const CreateChatButton: React.FC<ReactProps> = (props) => {
   const [createChat, { data, loading }] = useMutation(
     CREATE_NEW_CHAT, {
       variables: {
-        chatId: `chat_${uuidv4()}`,
+        chatRoomId: `chat_${uuidv4()}`,
         sellerUserId: props.sellerUserId,
         buyerUserId: props.buyerUserId,
         productId: props.productId,

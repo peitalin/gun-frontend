@@ -6,11 +6,11 @@ import { Colors, BoxShadows } from "layout/AppTheme";
 import clsx from "clsx";
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
 // graphql
-import { useSubscription } from '@apollo/react-hooks';
+import { useSubscription } from '@apollo/client';
 import gql from 'graphql-tag'
-import { useApolloClient } from "@apollo/react-hooks";
+import { useApolloClient } from "@apollo/client";
 // typings
-import { Chat, Chat_Messages } from "typings/gqlTypes";
+import { Chat_Rooms, Chat_Messages } from "typings/gqlTypes";
 // components
 import Typography from '@material-ui/core/Typography';
 import ChatLayout from './ChatLayout';

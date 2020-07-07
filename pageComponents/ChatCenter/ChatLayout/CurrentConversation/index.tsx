@@ -5,10 +5,10 @@ import { oc as option } from "ts-optchain";
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
 import { Colors } from "layout/AppTheme";
 
-import { useQuery, useSubscription } from '@apollo/react-hooks';
+import { useQuery, useSubscription } from '@apollo/client';
 import gql from 'graphql-tag';
 // typings
-import { Chat, Chat_Messages, Chat_Users } from "typings/gqlTypes";
+import { Chat_Rooms, Chat_Messages, Chat_Users } from "typings/gqlTypes";
 import Button from "@material-ui/core/Button";
 // components
 import Banner from './Banner';
@@ -49,7 +49,7 @@ const FETCH_MESSAGES = gql`
       limit: 10
     ) {
       id
-      chatId
+      chatRoomId
       createdAt
       sender {
         id
@@ -277,7 +277,7 @@ export const CurrentConversation: React.FC<ReactProps> = (props) => {
       {
         // Show old/new message separation
         // data && data.chatMessages &&
-        option(currentConversation).chat.messages([]).length > 0 &&
+        option(currentConversation).chatRoom.messages([]).length > 0 &&
         <>
           <div id="newMessage" className={classes.oldNewSeparator}>
           {
@@ -295,7 +295,7 @@ export const CurrentConversation: React.FC<ReactProps> = (props) => {
           { /* render new messages */}
           <MessageList
             // messages={data.chatMessages}
-            messages={option(currentConversation).chat.messages([])}
+            messages={option(currentConversation).chatRoom.messages([])}
             isNew={true}
             userName={userName}
             userId={userId}
