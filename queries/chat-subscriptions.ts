@@ -67,7 +67,7 @@ export const ProductFragment = gql`
 export const MessageFragment = gql`
   fragment MessageFragment on chat_messages {
     id
-    chatId
+    chatRoomId
     createdAt
     sender {
       id
@@ -82,8 +82,8 @@ export const MessageFragment = gql`
   ${PreviewItemFragment}
 `;
 
-export const ChatFragment = gql`
-  fragment ChatFragment on chat {
+export const ChatRoomFragment = gql`
+  fragment ChatRoomFragment on chat_rooms {
     id
     name
     status
@@ -104,7 +104,7 @@ export const ChatFragment = gql`
     }
     messages(
       order_by: { createdAt: asc }
-      limit: 10
+      limit: 40
     ) {
       ...MessageFragment
     }
@@ -115,34 +115,34 @@ export const ChatFragment = gql`
 
 
 
-export const GET_USER_CONVERSATIONS = gql`
+export const SUBSCRIBE_USER_CONVERSATIONS = gql`
   subscription($userId: String!) {
     conversations: chat_users (
-      order_by: {chat: {createdAt: desc}}
+      order_by: {chatRoom: {createdAt: desc}}
       where:{userId:{_eq: $userId}}
     ) {
-      chat {
-        ...ChatFragment
+      chatRoom {
+        ...ChatRoomFragment
       }
     }
   }
-  ${ChatFragment}
+  ${ChatRoomFragment}
 `;
 
 
 export const UPDATE_CHAT_STATUS = gql`
   mutation(
-    $chatId: String
+    $chatRoomId: String
     $chatStatus: String
   ) {
-    update_chat(
-      where:{id: {_eq: $chatId }},
+    update_chat_rooms(
+      where:{id: {_eq: $chatRoomId }},
       _set: { status: $chatStatus }
     ) {
       returning {
-        ...ChatFragment
+        ...ChatRoomFragment
       }
     }
   }
-  ${ChatFragment}
+  ${ChatRoomFragment}
 `
