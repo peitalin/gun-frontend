@@ -8,7 +8,7 @@ import Loading from "components/Loading";
 import Button from "@material-ui/core/Button";
 // Typings
 import { Connection } from "typings/gqlTypes";
-import { WatchQueryFetchPolicy } from "apollo-client";
+import { WatchQueryFetchPolicy } from "@apollo/client";
 // Paginator hooks
 import usePaginateQueryHook from "components/Paginators/usePaginateQueryHook";
 import { GenericConnection } from "typings";

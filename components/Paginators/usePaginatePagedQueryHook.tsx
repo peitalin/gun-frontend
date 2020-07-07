@@ -2,12 +2,12 @@
 import React from "react";
 import {oc as option} from "ts-optchain";
 // GraphQL
-import { useQuery } from "@apollo/react-hooks";
+import { useQuery } from "@apollo/client";
 import { DocumentNode } from "graphql";
 // typings
 import { PageBasedConnection, ConnectionQuery, PageCursor } from "typings/gqlTypes";
 import { GenericPageBasedConnection, GenericConnection } from "typings";
-import { WatchQueryFetchPolicy } from "apollo-client";
+import { WatchQueryFetchPolicy } from "@apollo/client";
 
 
 

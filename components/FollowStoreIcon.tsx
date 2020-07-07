@@ -11,7 +11,7 @@ import FavouriteBorder from "@material-ui/icons/FavoriteBorder"
 import Favourite from "@material-ui/icons/Favorite"
 import IconButton from "@material-ui/core/IconButton";
 // Graphql
-import { useMutation } from "@apollo/react-hooks";
+import { useMutation } from "@apollo/client";
 import { FOLLOW_STORE, UNFOLLOW_STORE } from "queries/following-stores-mutations";
 // redux
 import { useDispatch, useSelector } from "react-redux";

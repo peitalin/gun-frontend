@@ -6,7 +6,7 @@ import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/s
 import { Colors } from "layout/AppTheme";
 // Graphql
 import { UserPrivate } from "typings/gqlTypes";
-import { useMutation } from "@apollo/react-hooks";
+import { useMutation } from "@apollo/client";
 import { ADD_PRODUCT_TO_WISHLIST, REMOVE_PRODUCT_FROM_WISHLIST } from "queries/wishlist-mutations";
 // material-ui
 import Button from "@material-ui/core/Button";

@@ -22,7 +22,6 @@ const ButtonLoading: React.FC<ReactProps & ButtonProps> = (props) => {
     ...ButtonProps
   } = props;
 
-  console.log("button props: ", ButtonProps)
   if (replaceTextWhenLoading) {
     return (
       <Button

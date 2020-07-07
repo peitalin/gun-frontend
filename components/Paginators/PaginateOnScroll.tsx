@@ -9,10 +9,11 @@ import Button from "@material-ui/core/Button";
 // Typings
 import { Connection, ID } from "typings/gqlTypes";
 import { GenericConnection } from "typings";
-import { WatchQueryFetchPolicy } from "apollo-client";
+import { WatchQueryFetchPolicy } from "@apollo/client";
 // Paginator hooks
 import usePaginateQueryHook from "components/Paginators/usePaginateQueryHook";
 import { useScrollYPosition } from "utils/hooks";
+import { DocumentNode } from "graphql";
 // throttle
 const throttle = require('lodash.throttle');
 
@@ -105,7 +106,7 @@ const PaginateOnScroll = <QueryData, QueryVar, NodeType extends { id: ID }>(
 
 
 interface PaginateScrollProps<QueryData, NodeType> {
-  query: string;
+  query: DocumentNode;
   variables: any;
   connectionSelector(data: QueryData): [GenericConnection<NodeType>, string];
   count?: number;

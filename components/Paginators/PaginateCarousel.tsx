@@ -9,13 +9,13 @@ import Button from "@material-ui/core/Button";
 // Typings
 import { Connection, ID } from "typings/gqlTypes";
 import { GenericConnection } from "typings";
-import { WatchQueryFetchPolicy } from "apollo-client";
+import { WatchQueryFetchPolicy } from "@apollo/client";
 // Paginator hooks
 import usePaginateQueryHook from "components/Paginators/usePaginateQueryHook";
 import AirCarousel from "components/AirCarousel";
 import { useScrollXPosition } from "utils/hooks";
 import Typography from "@material-ui/core/Typography";
-
+import { DocumentNode } from "graphql";
 
 
 const PaginateCarousel = <QueryData, QueryVar, NodeType extends { id: ID }>(
@@ -143,7 +143,7 @@ const PaginateCarousel = <QueryData, QueryVar, NodeType extends { id: ID }>(
 
 
 interface PaginateCarouselProps<QueryData, NodeType> {
-  query: string;
+  query: DocumentNode;
   variables: any;
   count?: number;
   id: string;
