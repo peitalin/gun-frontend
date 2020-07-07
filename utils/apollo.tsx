@@ -1,31 +1,32 @@
-import { ApolloClient } from 'apollo-client';
-import { InMemoryCache } from 'apollo-cache-inmemory';
-import { HttpLink } from 'apollo-link-http';
-import { onError } from 'apollo-link-error';
-import { ApolloLink, split } from 'apollo-link';
-import { WebSocketLink } from 'apollo-link-ws';
-import { getMainDefinition } from 'apollo-utilities';
+import {
+  ApolloClient,
+  InMemoryCache,
+  HttpLink,
+  ApolloLink,
+  split,
+} from '@apollo/client';
+import { onError } from '@apollo/link-error';
+import { WebSocketLink } from '@apollo/link-ws';
+import { getMainDefinition } from '@apollo/client/utilities';
+
 // Switches between unfetch & node-fetch for client & server.
-import { DocumentNode } from "graphql";
 import fetch from 'isomorphic-unfetch'
 import withApollo from 'next-with-apollo';
-import { setContext } from 'apollo-link-context';
+import { DocumentNode } from "graphql"
 import https from "https";
 import { oc as option } from "ts-optchain";
-import { Product } from "typings/gqlTypes";
-
-// // ENV variables
+// ENV variables
 import getConfig from 'next/config'
 const {
   // Available both client and server side
   publicRuntimeConfig: {
     // GATEWAY_GRAPHQL_URL,
+    // GATEWAY_GRAPHQL_WS_URL,
     // SERVER_GATEWAY_GRAPHQL_URL,
     // NODE_ENV
   },
   // Only available server side
-  serverRuntimeConfig: {
-  },
+  serverRuntimeConfig: { IN_DOCKER },
 } = getConfig()
 
 // let GATEWAY_GRAPHQL_URL = "https://api.gunmarketplace.com.au/v1/graphql"
@@ -49,14 +50,7 @@ if (NODE_ENV === "develop") {
   console.log("NODE_ENV: ", NODE_ENV)
 }
 
-
-// Fragments Schema
-import { IntrospectionFragmentMatcher } from 'apollo-cache-inmemory';
-import introspectionQueryResultData from 'typings/gqlIntrospection';
 import { NextPageContext } from 'next';
-const fragmentMatcher = new IntrospectionFragmentMatcher({
-  introspectionQueryResultData
-});
 
 
 
@@ -125,7 +119,6 @@ const splitQueryOrSubscriptions = ({
 
 
 
-
 // SSR Apollo. Function to return a new instance of ApolloClient
 // with every request.
 // For Client side
@@ -161,92 +154,16 @@ export default withApollo(
         })
       ]),
 
-      // hydrates apollo cache with initialState created in server
-      cache: new InMemoryCache({
-        fragmentMatcher, // fragments
-        dataIdFromObject: (object: any) => {
-          switch (object.__typename) {
-
-            case 'UserPrivate': return object._id; // use `id` as the primary key
-            // don't cache user objects
-
-            case 'UserWithRole': {
-              return object._id; // don't use `id` as the primary key
-            }
-
-            case 'ProductPublic': {
-              // distinguish by whether
-              // it has a chosenVariant (bought item vs product listing)
-              // and by variantId
-              if (!option(object).chosenVariant()) {
-
-                let objId = object.id + "_LISTING_"
-                // a featured variant
-                if (option(object as Product).featuredVariant.variantId()) {
-                  return objId + option(object as Product).featuredVariant.variantId("");
-                } else {
-                  return objId;
-                }
-
-              } else {
-                // const pType = "_CART_ORDER"
-                return object._id;
-              }
-            }
-
-            case 'ProductPrivate': {
-              if (!option(object).chosenVariant()) {
-                let objId = object.id + "_LISTING_"
-                // a featured variant
-                if (option(object as Product).featuredVariant.variantId()) {
-                  return objId + option(object as Product).featuredVariant.variantId("");
-                } else {
-                  return objId;
-                }
-              } else {
-                // const pType = "_CART_ORDER"
-                return object._id;
-              }
-            }
-
-            // case 'OrderItem': return object.id; // use `id` as the primary key
-
-
-            // case 'CartItem': return object.id; // use `id` as the primary key
-            // case 'Cart': return object.id; // use `id` as the primary key
-
-            // case 'ProductVariant': return object.variantId; // use `variantId` as the priamry key
-            // case 'ProductVariant': return object._id; // disable variantId cache key
-            case 'ProductVariant': {
-              if (option(object).files()) {
-                const pType = "_DOWNLOAD"
-                return object.variantId + pType;
-              } else {
-                return object.variantId;
-              }
-            }
-
-            case 'StorePublic': return object.id + "_STORE_PUBLIC";
-            // postfix _STORE_PUBLIC as the primary key
-            case 'StorePrivate': return object._id + "_STORE_PRIVATE";
-            // postfix _STORE_PRIVATE as the primary key
-
-            // default: return defaultDataIdFromObject(object);
-            // this somehow breaks carts + gallery loading together
-            default: return object.id;
-            // fallback to default for all other types
-          }
-        }
-      }).restore(initialState || {}),
       ssrMode: true,
+
+      cache: new InMemoryCache(cacheOptions),
+
+      getDataFromTree: 'ssr'
+      // Should the apollo store be hydrated before the first render?,
+      // allowed values are always, never or ssr (don't hydrate on client side navigation)
+      // Don't use always:
+      // https://github.com/mui-org/material-ui/issues/15798
     })
-  },
-  {
-    getDataFromTree: 'ssr'
-    // Should the apollo store be hydrated before the first render?,
-    // allowed values are always, never or ssr (don't hydrate on client side navigation)
-    // Don't use always:
-    // https://github.com/mui-org/material-ui/issues/15798
   }
 )
 
@@ -281,10 +198,53 @@ export const serverApolloClient = (ctx) => {
         credentials: 'include',
       })
     ]),
-    // hydrates apollo cache with initialState created in server
-    cache: new InMemoryCache({
-      fragmentMatcher, // fragments
-    }),
+
     ssrMode: true,
+
+    cache: new InMemoryCache(cacheOptions),
+
   })
+}
+
+const cacheOptions = {
+  addTypename: true,
+  possibleTypes: {
+    User: ["UserPrivate", "UserPublic", "UserWithRole"],
+    Product: ["ProductPublic", "ProductPrivate"],
+    Store: ["StorePublic", "StorePrivate"],
+  },
+  typePolicies: {
+    Product: {
+      // Interpretation: Products objects are normalized, but they're all
+      // the same logical object, because their identity does not depend on
+      // any of their fields (other than __typename).
+      keyFields: ["id"],
+    },
+    // merging cache objects:
+    // https://github.com/apollographql/apollo-client/issues/6370
+    User: {
+      keyFields: ["id"],
+      fields: {
+        store: {
+          merge: (existing, incoming, opts) =>
+            opts.mergeObjects(existing, incoming),
+        },
+      }
+    },
+    Store: {
+      keyFields: ["id"],
+      fields: {
+        dashboardPublishedProductsConnection: {
+          merge: (existing, incoming, opts) => {
+            return opts.mergeObjects(existing, incoming)
+          }
+        },
+        dashboardUnpublishedProductsConnection: {
+          merge: (existing, incoming, opts) => {
+            return opts.mergeObjects(existing, incoming)
+          }
+        },
+      },
+    },
+  }
 }
