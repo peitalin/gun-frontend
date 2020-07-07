@@ -19,8 +19,8 @@ import App from "next/app";
 // Redux
 import withRedux from "next-redux-wrapper";
 // Apollo Graphql
-import { ApolloProvider } from '@apollo/react-hooks';
-import { ApolloClient } from 'apollo-client';
+import { ApolloProvider } from '@apollo/client';
+import { ApolloClient } from '@apollo/client';
 import withApollo from 'utils/apollo';
 // queries
 import { GET_USER } from "queries/user-queries";

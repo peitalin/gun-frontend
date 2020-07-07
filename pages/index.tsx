@@ -7,7 +7,6 @@ import ErrorBounds from 'components/ErrorBounds';
 import Loading from "components/Loading";
 // SSR
 import { NextPage, NextPageContext } from 'next';
-import ApolloClient from "apollo-client";
 import dynamic from "next/dynamic";
 // GraphQL
 import { serverApolloClient } from "utils/apollo";
@@ -17,7 +16,7 @@ import { useSelector } from 'react-redux';
 import { GrandReduxState } from 'reduxStore/grand-reducer';
 import { UserPrivate } from "typings/gqlTypes";
 import gql from 'graphql-tag'
-import { useApolloClient } from "@apollo/react-hooks";
+import { useApolloClient, ApolloClient } from "@apollo/client";
 
 
 

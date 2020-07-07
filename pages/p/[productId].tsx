@@ -4,8 +4,8 @@ import { Product, ID } from "typings/gqlTypes";
 import { GET_PRODUCT } from "queries/products-queries";
 // SSR
 import { NextPage, NextPageContext } from 'next';
-import ApolloClient from "apollo-client";
 import { serverApolloClient } from "utils/apollo";
+import { ApolloClient } from "@apollo/client";
 // Components
 import Loading from "components/Loading";
 // Meta headers

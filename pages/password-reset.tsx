@@ -18,13 +18,13 @@ import { validationSchemas } from "utils/validation";
 import { useRouter } from "next/router";
 // SSR
 import { NextPage, NextPageContext } from 'next';
-import ApolloClient from "apollo-client";
 
 import Portal from '@material-ui/core/Portal';
 import { CONFIRM_RESET_PASSWORD } from "queries/user-mutations";
-import { useMutation } from "@apollo/react-hooks";
+import { useMutation } from "@apollo/client";
 // Meta headers
 import MetaHeadersPage from "layout/MetaHeadersPage";
+import { useApolloClient, ApolloClient } from "@apollo/client";
 
 
 
