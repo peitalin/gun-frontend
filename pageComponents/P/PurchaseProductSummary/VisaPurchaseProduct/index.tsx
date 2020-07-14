@@ -171,10 +171,10 @@ const VisaPurchaseProduct = (props: ReactProps) => {
   const [selectedPaymentMethod, setSelectedPaymentMethod] = React.useState(
     defaultPaymentMethod
   );
-  const [useNewCard, setUseNewCard] = React.useState(!defaultPaymentMethod);
+  const [useNewCard, setUseNewCard] = React.useState(true);
 
   React.useEffect(() => {
-    fetchUserPaymentMethods()
+    // fetchUserPaymentMethods()
     setTimeout(() => {
       setShowStripeElement(true)
     }, 0)

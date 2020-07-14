@@ -32,75 +32,20 @@ import { useRouter } from "next/router";
 // checkout
 import { Stripe } from "@stripe/stripe-js";
 import { asCurrency as c } from "utils/prices";
+
+import { VisaButtonLoading, PaypalButtonLoading } from "./PaymentButtonLoadingSSR";
+import AppleGooglePayPurchaseProduct from "./AppleGooglePayPurchaseProduct";
 import dynamic from "next/dynamic";
 const PaypalPurchaseProduct = dynamic(() => import("./PaypalPurchaseProduct"), {
-  loading: () => {
-    return (
-      <ButtonLoading
-        replaceTextWhenLoading={true}
-        loading={true}
-        disabled={true}
-        loadingIconColor={Colors.lightestGrey}
-        style={{
-          width: "100%",
-          height: "40px",
-          fontWeight: 500,
-          marginBottom: '0.35rem', // paypal button annoying extra space
-          backgroundColor: Colors.lightYellow
-        }}
-      />
-    )
-  },
+  loading: () => <PaypalButtonLoading/>,
   ssr: false,
 });
-import AppleGooglePayPurchaseProduct from "./AppleGooglePayPurchaseProduct";
-const VisaPurchaseProduct = dynamic(() => import("./VisaPurchaseProduct"), {
-  loading: (props) => {
-    return (
-      <div style={{ marginTop: '0.25rem' }}>
-        <ButtonLoading
-          replaceTextWhenLoading={true}
-          loading={true}
-          disabled={true}
-          loadingIconColor={Colors.lightestGrey}
-          style={{
-            width: "100%",
-            height: "38px",
-            fontWeight: 500,
-            backgroundColor: Colors.foregroundColor,
-            border: `1px solid ${Colors.lightGrey}`,
-          }}
-        />
-        <div style={{ height: '0.5rem' }}></div>
-        <ButtonLoading
-          replaceTextWhenLoading={true}
-          loading={true}
-          disabled={true}
-          loadingIconColor={Colors.lightestGrey}
-          style={{
-            width: "100%",
-            height: "38px",
-            fontWeight: 500,
-            backgroundColor: Colors.foregroundColor,
-            border: `1px solid ${Colors.lightGrey}`,
-          }}
-        />
-        <div style={{ height: '0.5rem' }}></div>
-        <ButtonLoading
-          replaceTextWhenLoading={true}
-          loading={true}
-          disabled={true}
-          loadingIconColor={Colors.lightestGrey}
-          style={{
-            width: "100%",
-            height: "40px",
-            fontWeight: 500,
-            backgroundColor: Colors.secondaryBright
-          }}
-        />
-      </div>
-    )
-  },
+const StripePurchaseProduct = dynamic(() => import("./VisaPurchaseProduct"), {
+  loading: (props) => <VisaButtonLoading/>,
+  ssr: false,
+});
+const WestpacPurchaseProduct = dynamic(() => import("./WestpacPurchaseProduct"), {
+  loading: (props) => <VisaButtonLoading/>,
   ssr: false,
 });
 // import { handleOrderPostPurchase } from "layout/Checkout/CheckoutPage/CommonPurchase";
@@ -239,20 +184,27 @@ const PurchaseProductSummary: React.FC<ReactProps> = (props) => {
                 />
               }
             </div>
-            <div className={classes.maxWidth}>
+
+            <div className={clsx(
+              classes.maxWidth,
+              classes.visaContainer,
+            )}>
               {
-                showPaypal &&
-                <PaypalPurchaseProduct
-                  disableButton={false}
-                  // className={"fadeInFast"}
+                showVisaPay &&
+                <StripePurchaseProduct
+                  // disable on mobile
+                  user={user}
+                  // className={"fadeIn"}
                   productsInfo={[{
-                    productId: props.product.id,
+                    productId: option(props).product.id(),
                     variantId: chosenVariant.variantId,
                     quantity: quantity,
                   }]}
                   quotedPrice={chosenVariant.price}
-                  user={user}
+                  title={`Reserve for ${c(chosenVariant.price)} USD`}
+                  showIcon={true}
                   display={true}
+                  buttonHeight={xsDown ? '40px' : '40px'}
                   handleOrderPostPurchase={
                     () => {}
                     // handleOrderPostPurchase(
@@ -264,6 +216,7 @@ const PurchaseProductSummary: React.FC<ReactProps> = (props) => {
                   }
                 />
               }
+
             </div>
 
 
@@ -277,7 +230,7 @@ const PurchaseProductSummary: React.FC<ReactProps> = (props) => {
               }
               {
                 showVisaPay &&
-                <VisaPurchaseProduct
+                <WestpacPurchaseProduct
                   // disable on mobile
                   user={user}
                   // className={"fadeIn"}
@@ -445,6 +398,14 @@ const styles = (theme: Theme) => createStyles({
   },
   paddingBottom: {
     paddingBottom: '0.5rem',
+  },
+  creditCardContainer: {
+    margin: "0px",
+    height: 38,
+    // border: `2px solid ${Colors.charcoal}`,
+    border: `1px solid rgba(170, 170, 170, 0.4)`,
+    padding: "0.5rem",
+    borderRadius: '4px',
   },
 });
 
