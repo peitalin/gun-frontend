@@ -158,11 +158,6 @@ export default withApollo(
 
       cache: new InMemoryCache(cacheOptions),
 
-      getDataFromTree: 'ssr'
-      // Should the apollo store be hydrated before the first render?,
-      // allowed values are always, never or ssr (don't hydrate on client side navigation)
-      // Don't use always:
-      // https://github.com/mui-org/material-ui/issues/15798
     })
   }
 )

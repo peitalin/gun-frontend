@@ -35,6 +35,7 @@ type UserPrivate = any;
 import { serverApolloClient } from "utils/apollo";
 // Payment Clients
 import { PaypalClient } from "typings/typings-paypal";
+import { WestpacQuickstreamClient } from "typings/typings-westpac";
 import Router from "next/router";
 
 
@@ -44,6 +45,7 @@ declare global {
     gapi: any;
     paypal: PaypalClient
     analytics: any;
+    QuickstreamAPI: WestpacQuickstreamClient;
   }
 }
 
