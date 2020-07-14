@@ -45,7 +45,6 @@ const Layout: React.FC<ReactProps> = (props) => {
       <>{props.children}</>
       </PageContainer>
       <Footer>
-        {/* <BreadcrumbRoutes dark/> */}
       </Footer>
     </StripeProvider>
   )

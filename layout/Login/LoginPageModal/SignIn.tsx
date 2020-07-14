@@ -74,6 +74,7 @@ const SignIn = (props: ReactProps) => {
             <Input
               autoFocus
               name="sign-in-email"
+              type={"email"}
               autoComplete="email"
               onChange={(e) => {
                 setEmail(e.target.value)

@@ -115,6 +115,7 @@ const SignUp: React.FC<ReactProps> = (props) => {
             <Input
               name="sign-up-email"
               autoComplete="email"
+              type={"email"}
               value={state.email}
               onChange={(e) => {
                 e.persist(); // for persisting synthetic events
