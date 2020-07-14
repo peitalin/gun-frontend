@@ -186,6 +186,14 @@ textarea {
   animation-delay: 0s;
 }
 
+
+.grow {
+  -webkit-animation: grow 0.2s cubic-bezier(0.2, 0, 0.3, 1) both;
+  animation: grow 0.2s cubic-bezier(0.2, 0, 0.3, 1) both;
+  -webkit-animation-delay: 0s;
+  animation-delay: 0s;
+}
+
 .pulse {
   -webkit-animation: pulse 2s infinite;
   animation: pulse 2s infinite;
@@ -273,6 +281,15 @@ textarea {
   };
   to {
     opacity: 0
+  }
+}
+
+@keyframes grow {
+  from {
+    transform: scale(0.66)
+  };
+  to {
+    transform: scale(1)
   }
 }
 
