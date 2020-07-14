@@ -160,8 +160,9 @@ const KeywordDropdownInput = (props: ReactProps) => {
         }}
         className={classes.optionValues}
         classes={{
-          input: clsx(
-            classes.input,
+          input: classes.input,
+          root: clsx(
+            classes.textFieldContainer,
             errorInputColor === "red" ? classes.errorInput : null,
             errorInputColor === "grey" ? classes.errorInputUntouched : null,
           ),

@@ -15,6 +15,22 @@ export const styles = (theme: Theme) => createStyles({
     alignItems: "center",
     position: 'relative',
   },
+  textFieldContainer: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    position: 'relative',
+    backgroundColor: theme.palette.common.white,
+    border: `1px solid ${Colors.grey}`,
+    borderRadius: BorderRadius,
+    padding: '0.58em',
+  },
+  textFieldContainerFocused: {
+    boxShadow: `${fade('#50B5F5', 0.2)} 0 0 0 2px`,
+    borderColor: Colors.blue,
+    color: Colors.charcoal,
+  },
   width100: {
     width: '100%'
   },
@@ -34,31 +50,34 @@ export const styles = (theme: Theme) => createStyles({
     padding: 0,
   },
   input: {
+    border: 'none',
+    padding: '0rem',
+    background: 'none',
     position: 'relative',
-    backgroundColor: theme.palette.common.white,
-    border: `1px solid ${Colors.grey}`,
-    borderRadius: BorderRadius,
+    // backgroundColor: theme.palette.common.white,
+    // border: `1px solid ${Colors.grey}`,
+    // borderRadius: BorderRadius,
+    // padding: '0.58em',
     fontSize: "0.875rem",
-    fontWeight: 400,
+    fontWeight: 500,
+    fontFamily: fontFam,
     width: '100%',
-    padding: '0.58em',
-    color: "#222",
+    height: '100%',
+    color: Colors.charcoal,
     transition: theme.transitions.create(['border-color', 'box-shadow'], {
       easing: theme.transitions.easing.easeIn,
       duration: "200ms",
     }),
-    // Use the system font instead of the default Roboto font.
-    fontFamily: fontFam,
-    '&:focus': {
-      boxShadow: `${fade('#50B5F5', 0.2)} 0 0 0 2px`,
-      borderColor: Colors.blue,
-      // color: Colors.blue,
-      color: Colors.charcoal,
-    },
     // '&:invalid': {
     //   boxShadow: `${fade(theme.palette.error.light, 0.2)} 0 0 0 1px`,
     //   borderColor: theme.palette.error.main,
     // },
+  },
+  creditCardInput: {
+    minWidth: 150,
+  },
+  invalidInput: {
+    color: Colors.red,
   },
   emptyInput: {
     border: `1px solid ${Colors.lightPurple}`,
@@ -151,5 +170,29 @@ export const styles = (theme: Theme) => createStyles({
     right: '0.25rem',
     bottom: 0,
     // bottom: '-1.125rem',
+  },
+  monthInput: {
+    border: 'none',
+    color: Colors.charcoal,
+    fontSize: '0.75rem',
+    fontWeight: 600,
+    '&:focus': {
+      border: 'none',
+      outline: 'none',
+    }
+  },
+  yearInputHidden: {
+    border: 'none',
+    display: "none",
+  },
+  cvcInput: {
+    border: 'none',
+    color: Colors.charcoal,
+    fontSize: '0.75rem',
+    fontWeight: 600,
+    '&:focus': {
+      border: 'none',
+      outline: 'none',
+    }
   },
 })

@@ -10,6 +10,7 @@ import ValidationErrorMsg from "./ValidationErrorMsg";
 
 
 
+
 const TextInput = (props: ReactProps) => {
 
   const ref = React.useRef();
@@ -29,14 +30,14 @@ const TextInput = (props: ReactProps) => {
   // for YouTube Link, any input with a submit button next to it.
   if (props.onSubmit) {
     return (
-      <div className={clsx(
-        classes.root,
-        classes.width100
-      )}>
+      <div className={clsx(classes.root, classes.width100)}>
         <InputBase
+          type="input"
           classes={{
-            input: clsx(
-              classes.input,
+            input: classes.input,
+            root: clsx(
+              classes.textFieldContainer,
+              focused && classes.textFieldContainerFocused,
               errorInputColor === "red" ? classes.errorInput : null,
               errorInputColor === "grey" ? classes.errorInputUntouched : null,
             ),
@@ -91,8 +92,10 @@ const TextInput = (props: ReactProps) => {
       <div className={clsx(classes.root, classes.width100)}>
         <InputBase
           classes={{
-            input: clsx(
-              classes.input,
+            input: classes.input,
+            root: clsx(
+              classes.textFieldContainer,
+              focused && classes.textFieldContainerFocused,
               errorInputColor === "red" ? classes.errorInput : null,
               errorInputColor === "grey" ? classes.errorInputUntouched : null,
             ),
@@ -159,6 +162,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   limit?: { count: number, max: number };
   buttonWidth?: any;
   rows?: number;
+  isCreditCardField?: boolean;
   [key: string]: any;
 }
 
