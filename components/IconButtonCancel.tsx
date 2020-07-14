@@ -68,8 +68,8 @@ const styles = (theme: Theme) => createStyles({
     width: '1.5rem',
   },
   clearButtonRight: {
-    position: "absolute",
-    right: "1rem",
+    // position: "absolute",
+    // right: "1rem",
     padding: '6px',
   },
   clearButtonLeft: {
