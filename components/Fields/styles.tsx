@@ -25,11 +25,19 @@ export const styles = (theme: Theme) => createStyles({
     border: `1px solid ${Colors.grey}`,
     borderRadius: BorderRadius,
     padding: '0.58em',
+    transition: theme.transitions.create(['border-color', 'box-shadow', 'color'], {
+      easing: theme.transitions.easing.easeIn,
+      duration: "200ms",
+    }),
   },
   textFieldContainerFocused: {
     boxShadow: `${fade('#50B5F5', 0.2)} 0 0 0 2px`,
     borderColor: Colors.blue,
     color: Colors.charcoal,
+    transition: theme.transitions.create(['border-color', 'box-shadow', 'color'], {
+      easing: theme.transitions.easing.easeIn,
+      duration: "200ms",
+    }),
   },
   width100: {
     width: '100%'
