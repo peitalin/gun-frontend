@@ -84,7 +84,7 @@ const TextInputCreditCard = (props: ReactProps) => {
   React.useEffect(() => {
     if (!(props.iconType === undefined && state.iconType === undefined)) {
       if (!(props.iconType === 'error' && state.iconType === 'error')) {
-
+        // no animation when cards are the same
         setState(s => ({
           ...s,
           iconType: props.iconType,
@@ -93,7 +93,6 @@ const TextInputCreditCard = (props: ReactProps) => {
         setTimeout(() => {
           setState(s => ({ ...s, showAdornment: true }))
         }, 16)
-
       }
     }
   }, [props.iconType, focused, cardFilled])
@@ -116,6 +115,12 @@ const TextInputCreditCard = (props: ReactProps) => {
         if (refExpiry && refExpiry.current) {
           (refExpiry as any).current.focus()
         }
+      }
+    }
+
+    if (props.value && props.value.length > 0) {
+      if (props.forceShowCardError === true) {
+        props.setForceShowCardError(false)
       }
     }
   }, [props.value])
@@ -141,6 +146,7 @@ const TextInputCreditCard = (props: ReactProps) => {
       <InputBase
         classes={{
           input: (!props.isCardValid && props.value.length === cardMaxDigits)
+            || (!props.isCardValid && !focused && props.value.length > 0)
             ? clsx(classes.input, classes.creditCardInput, classes.invalidInput)
             : clsx(classes.input, classes.creditCardInput),
           // 3x 4 digits, plus space
@@ -164,7 +170,9 @@ const TextInputCreditCard = (props: ReactProps) => {
                 ? "error"
                 : (!props.isCardValid && props.value.length === 16 + 3)
                   ? "error"
-                  : state.iconType
+                  : (props.forceShowCardError)
+                    ? "error"
+                    : state.iconType
               }
             />
           </InputAdornment>
@@ -340,8 +348,11 @@ interface ReactProps extends WithStyles<typeof styles> {
   rows?: number;
   isCreditCardField?: boolean;
   isCardValid?: boolean;
-  iconType?: "visa" | "mastercard" | "error" | undefined;
+  // iconType?: string | "visa" | "mastercard" | "error" | undefined;
+  iconType?: string | undefined;
   value: string;
+  forceShowCardError?: boolean;
+  setForceShowCardError?(a: boolean): void;
   [key: string]: any;
 }
 

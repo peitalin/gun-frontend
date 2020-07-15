@@ -10,7 +10,7 @@ const StripeCardIcon = (props) => {
         <svg className={props.className} focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 21"
           style={{ height: props.height || '1rem', ...props.style }}
         >
-          <g fill={Colors.red} fill-rule="evenodd">
+          <g fill={Colors.magenta} fill-rule="evenodd">
             <g className="Icon-fill">
               <g transform="translate(0 2)">
                 <path d="M21.68 0H2c-.92 0-2 1.06-2 2v15c0 .94 1.08 2 2 2h25c.92 0 2-1.06 2-2V9.47a5.98 5.98 0 0 1-3 1.45V11c0 .66-.36 1-1 1H3c-.64 0-1-.34-1-1v-1c0-.66.36-1 1-1h17.53a5.98 5.98 0 0 1 1.15-9z" opacity=".2">
@@ -55,7 +55,7 @@ const StripeCardIcon = (props) => {
       <svg className={props.className} focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 21"
         style={{ height: props.height || '1rem', ...props.style }}
       >
-        <g fill={Colors.red} fill-rule="evenodd">
+        <g fill={Colors.magenta} fill-rule="evenodd">
           <g id="error" className="Icon-fill">
             <g id="card" transform="translate(0 2)">
               <path id="shape" d="M21.68 0A6 6 0 1 0 29 9.47v7.15A2.4 2.4 0 0 1 26.58 19H2.42A2.4 2.4 0 0 1 0 16.62V2.38A2.4 2.4 0 0 1 2.42 0h19.26zM10 5.83c0-.46-.35-.83-.78-.83H3.78c-.43 0-.78.37-.78.83v3.34c0 .46.35.83.78.83h5.44c.43 0 .78-.37.78-.83V5.83z" opacity=".2">

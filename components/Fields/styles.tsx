@@ -64,7 +64,7 @@ export const styles = (theme: Theme) => createStyles({
     width: '100%',
     height: '100%',
     color: Colors.charcoal,
-    transition: theme.transitions.create(['border-color', 'box-shadow'], {
+    transition: theme.transitions.create(['border-color', 'box-shadow', 'color'], {
       easing: theme.transitions.easing.easeIn,
       duration: "200ms",
     }),
@@ -78,6 +78,10 @@ export const styles = (theme: Theme) => createStyles({
   },
   invalidInput: {
     color: Colors.red,
+    transition: theme.transitions.create(['color'], {
+      easing: theme.transitions.easing.easeIn,
+      duration: "200ms",
+    }),
   },
   emptyInput: {
     border: `1px solid ${Colors.lightPurple}`,
@@ -173,12 +177,15 @@ export const styles = (theme: Theme) => createStyles({
   },
   monthInput: {
     border: 'none',
-    color: Colors.charcoal,
     fontSize: '0.75rem',
     fontWeight: 600,
     '&:focus': {
       border: 'none',
       outline: 'none',
+      color: Colors.charcoal,
+    },
+    '&::placeholder': {
+      color: Colors.lightMediumGrey,
     }
   },
   yearInputHidden: {
@@ -187,12 +194,15 @@ export const styles = (theme: Theme) => createStyles({
   },
   cvcInput: {
     border: 'none',
-    color: Colors.charcoal,
     fontSize: '0.75rem',
     fontWeight: 600,
     '&:focus': {
       border: 'none',
       outline: 'none',
+      color: Colors.charcoal,
+    },
+    '&::placeholder': {
+      color: Colors.lightMediumGrey,
     }
   },
 })
