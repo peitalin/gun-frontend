@@ -283,6 +283,9 @@ export const styles = (theme: Theme) => createStyles({
       color: Colors.lightBlue,
     },
   },
+  descriptionRoot: {
+    marginBottom: '2rem',
+  },
 })
 
 

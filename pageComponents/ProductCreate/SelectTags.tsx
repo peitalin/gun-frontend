@@ -47,7 +47,7 @@ const SelectTags = (props: ReactProps & FormikProps<FormikFields>) => {
   return (
     <ErrorBounds className={classes.positionRelative}>
       <div className={classes.formContainer}>
-        <Typography variant="subtitle1">
+        <Typography variant="subtitle1" gutterBottom>
           Tags <span className={classes.optionalText}>- optional</span>
         </Typography>
         <FormGroup row

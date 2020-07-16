@@ -71,7 +71,7 @@ const Description = (props: ReactProps & FormikProps<FormikFields>) => {
 
 
   return (
-    <ErrorBounds>
+    <ErrorBounds className={classes.descriptionRoot}>
       <Typography color={"primary"} variant="subtitle1" gutterBottom>
         Description
       </Typography>
@@ -92,36 +92,6 @@ const Description = (props: ReactProps & FormikProps<FormikFields>) => {
           maxWidth: 'calc(100vw - 4rem)', // constrain width for mobile
         }}
       />
-
-      {/* <TextInput
-        name="description"
-        placeholder="Tell customers more about your product"
-        className={classes.textField}
-        value={description}
-        multiline
-        rows="6"
-        onChange={(e) => {
-          if (e.target.value.length <= maxLengthProductDescription) {
-            updateDescription(e.target.value)
-          }
-        }}
-        //// BUG: onBlur swallows events. Means you have to upload files twice
-        //// if you want to click on the uploader right after clicking on this input
-        /////
-        // onBlur={(e) => {
-        //   // must set timeout of 150ms otherwise swallows event
-        //   // disable, makes it require 2 clicks to click off the input
-        //   // meaning, file upload requires 2 clicks to open menu
-        // }}
-        inputProps={{ style: { width: '100%' }}}
-        errorMessage={props.errors.description}
-        touched={!!touched.description}
-        disableInitialValidationMessage={true}
-        limit={{
-          max: maxLengthProductDescription,
-          count: description.length
-        }}
-      /> */}
     </ErrorBounds>
   )
 }

@@ -90,12 +90,16 @@ const SelectCategories = (props: ReactProps & FormikProps<FormikFields>) => {
 
 
 const createCategorySuggestions = (categories: ProductCategory[]) => {
-  return categories.sort().map(category => {
-    return {
-      label: `${category.name}`,
-      value: category.id,
-    }
-  })
+  if (categories && categories.length > 0) {
+    return categories.slice().sort().map(category => {
+      return {
+        label: `${category.name}`,
+        value: category.id,
+      }
+    })
+  } else {
+    return []
+  }
 }
 
 export interface SelectOption {
