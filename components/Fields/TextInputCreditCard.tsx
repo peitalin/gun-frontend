@@ -34,6 +34,11 @@ const TextInputCreditCard = (props: ReactProps) => {
     disabled = false,
     disableInitialValidationMessage = false,
     classes,
+    forceShowCardError,
+    setForceShowCardError,
+    iconType,
+    isCardValid,
+    isCreditCardField,
     ...rest
   } = props;
 
@@ -53,13 +58,20 @@ const TextInputCreditCard = (props: ReactProps) => {
     if (!dateString) {
       return ""
     }
-    if (dateString.includes("/")) {
-      let dd = dateString.replace(/\s/g, '');
-      let [month, year] = dd.split('/')
-      return `${month.slice(0,2)}/${year.slice(0,2)}`
-    } else if (dateString.length > 2) {
+    console.log('expiry', expiry)
+    if (dateString.slice(-1) === "/") {
       let dd = dateString.replace(/\s/g, '');
       let month = dd.slice(0,2)
+      return month
+    } else if (dateString.includes("/")) {
+      let dd = dateString.replace(/\s/g, '');
+      let [month, year] = dd.split('/')
+      month = month > 12 ? 12 : month
+      return `${month.slice(0,2)}/${year.slice(0,2)}`
+    } else if (dateString.length > 1) {
+      let dd = dateString.replace(/\s/g, '');
+      let month = dd.slice(0,2)
+      month = month > 12 ? 12 : month
       let year = dd.slice(2,4)
       return `${month}/${year}`
     } else {
@@ -82,12 +94,12 @@ const TextInputCreditCard = (props: ReactProps) => {
 
   // mount/unmount icon for animation
   React.useEffect(() => {
-    if (!(props.iconType === undefined && state.iconType === undefined)) {
-      if (!(props.iconType === 'error' && state.iconType === 'error')) {
+    if (!(iconType === undefined && state.iconType === undefined)) {
+      if (!(iconType === 'error' && state.iconType === 'error')) {
         // no animation when cards are the same
         setState(s => ({
           ...s,
-          iconType: props.iconType,
+          iconType: iconType,
           showAdornment: false,
         }))
         setTimeout(() => {
@@ -95,7 +107,7 @@ const TextInputCreditCard = (props: ReactProps) => {
         }, 16)
       }
     }
-  }, [props.iconType, focused, cardFilled])
+  }, [iconType, focused, cardFilled])
 
   React.useEffect(() => {
     setState(s => ({ ...s, showAdornment: false }))
@@ -110,7 +122,7 @@ const TextInputCreditCard = (props: ReactProps) => {
     } else {
       setCardFilled(false)
     }
-    if (props.isCardValid && props.value.length === cardMaxDigits) {
+    if (isCardValid && props.value.length === cardMaxDigits) {
       if (!expiryFilled) {
         if (refExpiry && refExpiry.current) {
           (refExpiry as any).current.focus()
@@ -119,8 +131,8 @@ const TextInputCreditCard = (props: ReactProps) => {
     }
 
     if (props.value && props.value.length > 0) {
-      if (props.forceShowCardError === true) {
-        props.setForceShowCardError(false)
+      if (forceShowCardError === true) {
+        setForceShowCardError(false)
       }
     }
   }, [props.value])
@@ -145,8 +157,8 @@ const TextInputCreditCard = (props: ReactProps) => {
     <div className={clsx(classes.root, classes.width100)}>
       <InputBase
         classes={{
-          input: (!props.isCardValid && props.value.length === cardMaxDigits)
-            || (!props.isCardValid && !focused && props.value.length > 0)
+          input: (!isCardValid && props.value.length === cardMaxDigits)
+            || (!isCardValid && !focused && props.value.length > 0)
             ? clsx(classes.input, classes.creditCardInput, classes.invalidInput)
             : clsx(classes.input, classes.creditCardInput),
           // 3x 4 digits, plus space
@@ -159,16 +171,16 @@ const TextInputCreditCard = (props: ReactProps) => {
           multiline: classes.selectMultiline,
         }}
         startAdornment={
-          props.isCreditCardField &&
+          isCreditCardField &&
           <InputAdornment position="start">
             <StripeCardIcon
               className={ state.showAdornment ? clsx("fadeInFast", "grow") : "hidden"}
               height={"1rem"}
               fieldType={focusedCvc ? "cvc" : "card"}
               iconType={
-                (!focused && !props.isCardValid && props.value.length > 0)
+                (!focused && !isCardValid && props.value.length > 0)
                 ? "error"
-                : (!props.isCardValid && props.value.length === 16 + 3)
+                : (!isCardValid && props.value.length === 16 + 3)
                   ? "error"
                   : (props.forceShowCardError)
                     ? "error"
@@ -229,6 +241,7 @@ const TextInputCreditCard = (props: ReactProps) => {
                       type="text"
                       value={monthActual || undefined}
                       data-quickstream-api="expiryDateMonth"
+                      onChange={(e) => {}}
                       style={{}}
                     />
                     <input
@@ -237,6 +250,7 @@ const TextInputCreditCard = (props: ReactProps) => {
                       type="text"
                       value={yearActual || undefined}
                       data-quickstream-api="expiryDateYear"
+                      onChange={(e) => {}}
                       style={{}}
                     />
                   </>
@@ -272,7 +286,8 @@ const TextInputCreditCard = (props: ReactProps) => {
                             if (refExpiry && refExpiry.current) {
                               let current = (refExpiry as any).current;
                               current.focus()
-                              current.setSelectionRange(props.value.length, props.value.length)
+                              current.setSelectionRange(5, 5)
+                              // MM/YY -> 5th position
                             }
                           }
                         }
@@ -288,7 +303,7 @@ const TextInputCreditCard = (props: ReactProps) => {
         onKeyPress={(e) => {
           // when card length === 16, and you've backspaces back to the
           // credit card field from the month field
-          if (props.isCardValid && props.value.length === cardMaxDigits) {
+          if (isCardValid && props.value.length === cardMaxDigits) {
             if (!expiryFilled) {
               if (refExpiry && refExpiry.current) {
                 (refExpiry as any).current.focus()
