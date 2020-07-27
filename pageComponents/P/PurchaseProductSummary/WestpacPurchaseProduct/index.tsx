@@ -151,6 +151,7 @@ const WestpacPurchaseProduct = (props: ReactProps) => {
   const [buyerName, setBuyerName] = React.useState("");
   const [creditCardNumber, setCreditCardNumber] = React.useState();
   const [cardValid, setCardValid] = React.useState(undefined);
+  const [forceShowCardError, setForceShowCardError] = React.useState(false)
 
   React.useEffect(() => {
     if (window.QuickstreamAPI) {
@@ -194,14 +195,14 @@ const WestpacPurchaseProduct = (props: ReactProps) => {
 
                 setLoading(true)
                 e.preventDefault()
-                console.log("onSubmit::::")
 
                 let ccForm = document.getElementById(westpacCreditCardId)
-                console.log("#westpac-cc-form: ", ccForm)
+                // console.log("#westpac-cc-form: ", ccForm)
 
                 window.QuickstreamAPI.creditCards
                   .validateCardNumber(ccForm, (errors, data) => {
-                    console.log("validateCardNumber: ", data.isValid); // Example output: false
+                    // console.log("validateCardNumber errors: ", errors); // Example output: false
+                    // console.log("validateCardNumber data: ", data); // Example output: false
                   })
 
                 window.QuickstreamAPI.creditCards
@@ -213,9 +214,13 @@ const WestpacPurchaseProduct = (props: ReactProps) => {
                       errorMsgs.forEach(msg => {
                         snackbar.enqueueSnackbar(msg, { variant: "error" })
                       })
+                      setForceShowCardError(true)
+                      setTimeout(() => {
+                        setForceShowCardError(false)
+                      }, 9000)
                     } else {
                       console.log("getToken data: ", data); // Example output: false
-                      alert(`getToken: ${JSON.stringify(data.singleUseToken)}`)
+                      snackbar.enqueueSnackbar(`Success token: ${data.token}`, { variant: "success" })
                     }
                     setLoading(false)
                     return data
@@ -225,7 +230,7 @@ const WestpacPurchaseProduct = (props: ReactProps) => {
             >
 
               <TextInput
-                placeholder={"Enter name"}
+                placeholder={"Enter name on card"}
                 className={classes.inputField}
                 value={buyerName}
                 onChange={(e) => setBuyerName(e.target.value)}
@@ -257,7 +262,7 @@ const WestpacPurchaseProduct = (props: ReactProps) => {
 
                   window.QuickstreamAPI.creditCards
                     .validateCardNumber(ccForm, (errors, data) => {
-                      console.log("validateCardNumber: ", data); // Example output: false
+                      // console.log("validateCardNumber: ", data); // Example output: false
                       if (data) {
                         setCardValid(data.isValid)
                       }
@@ -283,10 +288,12 @@ const WestpacPurchaseProduct = (props: ReactProps) => {
                       inputProps={{
                         style: { width: '100%' },
                         "data-quickstream-api": "cardNumber",
-                        "autoComplate": "cc-number",
+                        "autoComplete": "cc-number",
                         "inputMode": "numeric",
                         "autoCorrect": "off",
                       }}
+                      forceShowCardError={forceShowCardError}
+                      setForceShowCardError={setForceShowCardError}
                     />
                   )
                 }}

@@ -50,7 +50,7 @@ const SelectCreditCard: React.FC<ReactProps> = (props) => {
           "&:hover": {
             background: Colors.foregroundColor,
           },
-          "&:focused": {
+          "&:focus": {
             background: Colors.foregroundColor,
           },
         }),
@@ -84,7 +84,7 @@ const SelectCreditCard: React.FC<ReactProps> = (props) => {
           "&:hover": {
             cursor: "pointer",
           },
-          "&:focused": {
+          "&:focus": {
           },
         })
       }}

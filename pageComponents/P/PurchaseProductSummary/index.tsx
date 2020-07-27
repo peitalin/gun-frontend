@@ -191,45 +191,6 @@ const PurchaseProductSummary: React.FC<ReactProps> = (props) => {
             )}>
               {
                 showVisaPay &&
-                <StripePurchaseProduct
-                  // disable on mobile
-                  user={user}
-                  // className={"fadeIn"}
-                  productsInfo={[{
-                    productId: option(props).product.id(),
-                    variantId: chosenVariant.variantId,
-                    quantity: quantity,
-                  }]}
-                  quotedPrice={chosenVariant.price}
-                  title={`Reserve for ${c(chosenVariant.price)} USD`}
-                  showIcon={true}
-                  display={true}
-                  buttonHeight={xsDown ? '40px' : '40px'}
-                  handleOrderPostPurchase={
-                    () => {}
-                    // handleOrderPostPurchase(
-                    //   aClient,
-                    //   dispatch,
-                    //   router,
-                    //   !!loggedInAsEmail,
-                    // )
-                  }
-                />
-              }
-
-            </div>
-
-
-            <div className={clsx(
-              classes.maxWidth,
-              classes.visaContainer,
-            )}>
-              {
-                showVisaPay &&
-                <Or/>
-              }
-              {
-                showVisaPay &&
                 <WestpacPurchaseProduct
                   // disable on mobile
                   user={user}

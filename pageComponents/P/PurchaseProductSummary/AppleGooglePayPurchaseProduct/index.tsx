@@ -10,7 +10,6 @@ import { GrandReduxState } from "reduxStore/grand-reducer";
 import { Actions } from "reduxStore/actions";
 // Grpahql
 import { useApolloClient } from "@apollo/client";
-import { GET_DOWNLOADS } from "queries/downloads-queries";
 // Error
 import ErrorBounds from 'components/ErrorBounds';
 import SnackbarsSuccessErrors from "components/Snackbars/SnackbarsSuccessErrors";
