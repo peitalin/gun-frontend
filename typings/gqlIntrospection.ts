@@ -27,13 +27,10 @@
             "name": "StoreSalesHistoryConnection"
           },
           {
-            "name": "DownloadsConnection"
+            "name": "OrdersConnection"
           },
           {
             "name": "FollowingStoresConnection"
-          },
-          {
-            "name": "OrdersConnection"
           },
           {
             "name": "WishlistItemsConnection"
@@ -52,6 +49,9 @@
           },
           {
             "name": "StoresConnection"
+          },
+          {
+            "name": "DownloadsConnection"
           }
         ]
       },
@@ -66,13 +66,7 @@
             "name": "ProductSalesEdge"
           },
           {
-            "name": "DownloadsEdge"
-          },
-          {
             "name": "FollowingStoresEdge"
-          },
-          {
-            "name": "OrdersEdge"
           },
           {
             "name": "PayoutEdge"
@@ -97,6 +91,9 @@
           },
           {
             "name": "StoresEdge"
+          },
+          {
+            "name": "DownloadsEdge"
           }
         ]
       },

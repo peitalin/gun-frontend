@@ -18,9 +18,7 @@ import AirCarousel from "components/AirCarousel";
 import { useScrollXPosition, useCalcNumItemsFromWindowWidth } from "utils/hooks";
 import AspectRatioConstraint from "components/AspectRatioConstraint";
 import PreviewImageEmpty from "./PreviewImageEmpty";
-import {
-  styles,
-} from "./styles";
+import { styles } from "./styles";
 
 
 
