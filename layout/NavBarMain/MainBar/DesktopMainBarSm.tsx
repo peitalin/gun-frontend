@@ -65,7 +65,7 @@ const DesktopMainBarSm = (props: ReactProps & DesktopMainBarProps) => {
       <div style={{ flexGrow: 1 }}></div>
 
       <Link href="/">
-        <a className={classes.logo}>
+        <a className={classes.buttonLink}>
           <Logo color={color} disableLogo={true}/>
         </a>
       </Link>

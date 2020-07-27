@@ -61,7 +61,7 @@ const DesktopMainBarMd = (props: ReactProps & DesktopMainBarProps) => {
       <div style={{ flexBasis: '1rem', minWidth: '0.5rem' }}></div>
 
       <Link href="/">
-        <a className={classes.logo}>
+        <a className={classes.buttonLink}>
           <Logo color={color}/>
         </a>
       </Link>

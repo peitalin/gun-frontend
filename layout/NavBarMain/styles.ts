@@ -103,8 +103,8 @@ export const styles = (theme: Theme) => createStyles({
   badge: {
     color: "#fefefe",
   },
-  logo: {
-    // marginLeft: "1rem",
+  buttonLink: {
+    marginRight: "1rem",
   },
   menuButton: {
   },

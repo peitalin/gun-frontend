@@ -63,7 +63,7 @@ const DesktopMainBarLg = (props: DesktopMainBarProps) => {
 
       <div style={{ margin: '0rem 1rem' }}>
         <Link href="/">
-          <a className={classes.logo}>
+          <a className={classes.buttonLink}>
             <Logo color={color}/>
           </a>
         </Link>
@@ -91,10 +91,6 @@ const DesktopMainBarLg = (props: DesktopMainBarProps) => {
           onClick={() => goToProductCreate()}
         >
           <div className={classes.flexItem}>
-            <CloudUploadIcon className={clsx(
-              classes.iconsCloud,
-              endRoute === 'sell' ? classes.iconsSelected : null
-            )}/>
             <span className={
               endRoute === 'sell' ? classes.selectedRouteText : null
             }>

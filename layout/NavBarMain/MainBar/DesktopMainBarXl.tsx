@@ -46,8 +46,8 @@ const DesktopMainBarXl = (props: DesktopMainBarProps) => {
     router.push('/sell')
   }
 
-  const goToMyWishlist = () => {
-    router.push('/my-list')
+  const goToMyOrders = () => {
+    router.push('/my-orders')
   }
 
   const goToMyDownloads = () => {
@@ -61,7 +61,7 @@ const DesktopMainBarXl = (props: DesktopMainBarProps) => {
 
       <div style={{ margin: '0rem 1rem' }}>
         <Link href="/">
-          <a className={classes.logo}>
+          <a className={classes.buttonLink}>
             <Logo color={color}/>
           </a>
         </Link>
@@ -83,10 +83,6 @@ const DesktopMainBarXl = (props: DesktopMainBarProps) => {
         onClick={() => goToProductCreate()}
       >
         <div className={classes.flexItem}>
-          <CloudUploadIcon className={clsx(
-            classes.iconsCloud,
-            endRoute === 'sell' ? classes.iconsSelected : null
-          )}/>
           <span className={
             endRoute === 'sell' ? classes.selectedRouteText : null
           }>
@@ -98,23 +94,26 @@ const DesktopMainBarXl = (props: DesktopMainBarProps) => {
 
       {
         loggedIn
-        ? <Button
-            className={classes.navbarButton}
-            variant={"text"}
-            color="primary"
-            onClick={goToMyWishlist}
-          >
-            <div>
-              <span className={
-                endRoute === 'my-list' ? classes.selectedRouteText : null
-              }>
-                Wishlist
-              </span>
-            </div>
-          </Button>
+        ? <Link href="/my-orders">
+            <a className={classes.buttonLink}>
+              <Button
+                  className={classes.navbarButton}
+                  variant={"text"}
+                  color="primary"
+                >
+                  <div>
+                    <span className={
+                      endRoute === 'my-orders' ? classes.selectedRouteText : null
+                    }>
+                      Orders
+                    </span>
+                  </div>
+                </Button>
+            </a>
+          </Link>
         : <div className={classes.myDownloadsLogin}>
             <Login
-              buttonText={"Wishlist"}
+              buttonText={"Orders"}
               titleLogin={"Login to continue"}
               buttonProps={{ color: "primary" }}
             />
@@ -123,10 +122,10 @@ const DesktopMainBarXl = (props: DesktopMainBarProps) => {
 
       {
         loggedIn
-        ? <OpenChatButton/>
+        ? <OpenChatButton title={"Offers"}/>
         : <div className={classes.myDownloadsLogin}>
             <Login
-              buttonText={"Orders"}
+              buttonText={"Offers"}
               titleLogin={"Login to continue"}
               buttonProps={{ color: "primary" }}
             />
