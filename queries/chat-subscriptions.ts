@@ -35,7 +35,9 @@ export const PreviewItemFragment = gql`
 export const ProductFragment = gql`
   fragment ProductFragment on products {
     id
+    currentSnapshotId
     currentSnapshot {
+      id
       title
       createdAt
       actionType
@@ -56,6 +58,7 @@ export const ProductFragment = gql`
       isDefault
       variantId
       snapshotId
+      variantSnapshotId
       variantName
       variantDescription
     }
@@ -77,6 +80,19 @@ export const MessageFragment = gql`
     content
     previewItem {
       ...PreviewItemFragment
+    }
+    bid {
+      id
+      productId
+      productSnapshotId
+      variantId
+      variantSnapshotId
+      offerPrice
+      acceptedPrice
+      orderId
+      bidStatus
+      createdAt
+      updatedAt
     }
   }
   ${PreviewItemFragment}
