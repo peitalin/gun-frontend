@@ -1,0 +1,414 @@
+import React from "react";
+import {oc as option} from "ts-optchain";
+import clsx from "clsx";
+// Styles
+import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
+import { Colors } from "layout/AppTheme";
+
+// redux
+import { GrandReduxState } from "reduxStore/grand-reducer";
+import { Actions } from "reduxStore/actions";
+import { useSelector, useDispatch } from "react-redux";
+// Typings
+import {
+  GET_BUYER_ORDERS_CONNECTION,
+  GET_SELLER_ORDERS_CONNECTION,
+} from "queries/downloads-queries";
+// graphl
+import { useMutation, useQuery } from "@apollo/client";
+
+// Utils Components
+import ErrorBounds from "components/ErrorBounds";
+import Tick from "components/Icons/Tick";
+// MUI
+import Typography from "@material-ui/core/Typography";
+import Button from "@material-ui/core/Button";
+// Subcomponents
+import ToolTips from "pageComponents/MyOrders/ToolTips";
+import DownloadCard from "pageComponents/MyOrders/DownloadCard";
+import PurchaseSuccessBanner from "pageComponents/MyOrders/PurchaseSuccessBanner";
+import { Download, UserPrivate, OrderStatus, OrdersConnection, Order } from "typings/gqlTypes";
+// Icons
+import ClearIcon from "@material-ui/icons/Clear";
+import IconButton from "@material-ui/core/IconButton";
+// CSS
+import { useTheme } from "@material-ui/core/styles";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
+// Utils Component
+import ErrorDisplay from "components/Error";
+import PaginateButtons from "components/Paginators/PaginateButtons";
+export const MY_DOWNLOADS_PAGINATION_COUNT = 10;
+import AlignCenterLayout from "components/AlignCenterLayout";
+import DescriptionLoading from "pageComponents/FrontPage/PreviewCardResponsiveCarousel/DescriptionLoading";
+// Analytics
+import { useRouter } from "next/router";
+import { buildResolveInfo } from "graphql/execution/execute";
+
+
+
+
+const MyOrders: React.FC<ReactProps> = (props) => {
+
+  const { classes } = props;
+  const router = useRouter();
+
+  const theme = useTheme();
+  const xsDown = useMediaQuery(theme.breakpoints.down("xs"));
+
+  const buyerOrdersResponse = useQuery<QueryData, QueryVar>(
+    GET_BUYER_ORDERS_CONNECTION, {
+      variables: {
+        query: {
+          limit: 10,
+          offset: 0,
+        }
+      }
+    }
+  );
+
+  const sellerOrdersResponse = useQuery<QueryData2, QueryVar2>(
+    GET_SELLER_ORDERS_CONNECTION, {
+      variables: {
+        query: {
+          limit: 10,
+          offset: 0,
+        }
+      }
+    }
+  );
+
+  console.log("buyer data::::: ", buyerOrdersResponse)
+  console.log("seller data::::: ", sellerOrdersResponse)
+
+  const buyerOrdersConnection = option(buyerOrdersResponse)
+    .data.user.buyerOrdersConnection() || props.initialBuyerOrders;
+
+  const sellerOrdersConnection = option(sellerOrdersResponse)
+    .data.user.sellerOrdersConnection() || props.initialSellerOrders;
+
+  // React.useEffect(() => {
+  //   if (refetch) {
+  //     setTimeout(() => { refetch() }, 0)
+  //   }
+  // }, [data])
+
+
+  if (buyerOrdersResponse.loading || sellerOrdersResponse.loading) {
+    return (
+      <OrdersLayout {...props}>
+        {
+          [1,2,3,4,5].map(x => {
+            return (
+            <DescriptionLoading
+              key={x}
+              rowFormat
+              height={xsDown ? 112 : 245}
+              mobilePicHeight={xsDown ? 60 : 80}
+              mobilePicWidth={xsDown ? 96 : 128}
+              style={{
+                marginTop: '0rem',
+                marginRight: '1rem',
+              }}
+            />
+            )
+          })
+        }
+      </OrdersLayout>
+    )
+  } else if (
+    !option(buyerOrdersConnection).edges[0]() &&
+    !option(sellerOrdersConnection).edges[0]()
+  ) {
+    return (
+      <OrdersLayout {...props}>
+        <div className={classes.emptyItems}>
+          <Typography variant="body1" className={classes.emptyItemsTitle}>
+            Your saved orders will appear here
+            after you make your first deposit.
+          </Typography>
+          <Button
+          variant="outlined"
+          color="primary"
+          onClick={() => {
+            router.push(`/categories`)
+          }}
+          >
+            Browse Categories
+          </Button>
+        </div>
+      </OrdersLayout>
+    )
+  } else if (buyerOrdersResponse.error) {
+    return (
+      <ErrorDisplay title={"Orders couldn't load."}
+        error={buyerOrdersResponse.error}
+      />
+    )
+  } else if (sellerOrdersResponse.error) {
+    return (
+      <ErrorDisplay title={"Orders couldn't load."}
+        error={sellerOrdersResponse.error}
+      />
+    )
+  } else {
+    return (
+      <OrdersLayout {...props}>
+        {
+          (option(buyerOrdersConnection).edges([]).length > 0) &&
+          <div className={classes.buyerOrdersContainer}>
+            <Typography variant="h5">
+              Your Purchases
+            </Typography>
+            <>
+              {
+                buyerOrdersConnection.edges.map(({ node: order }, i) => {
+                  /// fix this, return download.orderItem, not download.product
+                  // console.log('download: ', download)
+                  // const isRefunded = option(orderItem).orderStatus() === OrderStatus.REFUNDED;
+
+                  return (
+                    <div>
+                      {order.id}
+                    </div>
+                    // <DownloadCard
+                    //   key={option(download).product.id() + i}
+                    //   product={download.product}
+                    //   order={download.order}
+                    //   orderItemId={orderItem.id}
+                    //   isRefunded={isRefunded}
+                    // />
+                  )
+                })
+              }
+            </>
+          </div>
+        }
+        <div className={classes.divider}/>
+        {
+          (option(sellerOrdersConnection).edges([]).length > 0) &&
+          <div className={classes.sellerOrdersContainer}>
+            <Typography variant="h5">
+              Your Sales
+            </Typography>
+            <>
+              {
+                sellerOrdersConnection.edges.map(({ node: order }, i) => {
+                  /// fix this, return download.orderItem, not download.product
+                  // console.log('download: ', download)
+                  // const isRefunded = option(orderItem).orderStatus() === OrderStatus.REFUNDED;
+
+                  return (
+                    <div>
+                      {order.id}
+                    </div>
+                    // <DownloadCard
+                    //   key={option(download).product.id() + i}
+                    //   product={download.product}
+                    //   order={download.order}
+                    //   orderItemId={orderItem.id}
+                    //   isRefunded={isRefunded}
+                    // />
+                  )
+                })
+              }
+            </>
+          </div>
+        }
+      </OrdersLayout>
+    )
+  }
+}
+
+
+const OrdersLayout: React.FC<ReactProps> = (props) => {
+
+  const {
+    classes,
+  } = props;
+
+  const dispatch = useDispatch();
+  const theme = useTheme();
+  const smDown = useMediaQuery(theme.breakpoints.down("sm"))
+
+  return (
+    <ErrorBounds className={clsx("fadeInFast")}>
+      {/* {
+        claimOrders &&
+        claimOrders.length > 0 &&
+        <PurchaseSuccessBanner />
+      } */}
+      <AlignCenterLayout
+        maxWidth={960}
+        className={classes.marginTop2}
+        withRecommendations
+      >
+
+        <div className={clsx(classes.flexRowOuter, classes.padding1)}>
+          <Typography className={classes.title} variant="h3">
+            My Orders
+          </Typography>
+        </div>
+        <div className={clsx(classes.flexRowOuter, classes.padding1)}>
+          <div className={classes.productColumn60}>
+            {props.children}
+          </div>
+          <div className={classes.productColumn20}>
+            <ToolTips/>
+          </div>
+        </div>
+
+      </AlignCenterLayout>
+    </ErrorBounds>
+  )
+}
+
+
+interface ReactProps {
+  initialBuyerOrders?: OrdersConnection;
+  initialSellerOrders?: OrdersConnection;
+}
+interface PaginateProps {
+  data: QueryData;
+  error: any;
+  loading: boolean;
+  refetch: any;
+}
+interface QueryData {
+  user: UserPrivate
+}
+interface QueryVar {
+}
+interface QueryData2 {
+  user: UserPrivate
+}
+interface QueryVar2 {
+}
+
+interface MutationData {
+  order: Order;
+}
+interface MutationVar {
+}
+
+
+interface ReactProps extends WithStyles<typeof styles> {
+  initialOrders: OrdersConnection;
+}
+
+const styles = (theme: Theme) => createStyles({
+  flexRowOuter: {
+    display: 'flex',
+    justifyContent: 'center',
+    maxWidth: 960,
+    flexWrap: "wrap",
+  },
+  productColumn60: {
+    flexBasis: '60%',
+    flexGrow: 1,
+    minWidth: 330,
+    marginBottom: '1rem',
+  },
+  productColumn20: {
+    flexBasis: '20%',
+    flexGrow: 1,
+    minWidth: 280,
+    maxWidth: 400,
+  },
+  title: {
+    marginBottom: '2rem',
+    marginTop: '2rem',
+  },
+  toolTip1: {
+    padding: '1.5rem 2rem',
+    marginLeft: '1rem',
+    marginBottom: '1rem',
+    border: '1px solid #eaeaea',
+    borderRadius: '4px',
+    backgroundColor: '#FCFCFE'
+  },
+  toolTip2: {
+    padding: '1.5rem 2rem',
+    marginLeft: '1rem',
+    marginBottom: '1rem',
+    border: '1px solid #eaeaea',
+    borderRadius: '2px',
+    backgroundColor: '#FCFCFE'
+  },
+  pageRecommendationsContainer: {
+    width: "100%",
+    display: 'flex',
+    justifyContent: 'center',
+  },
+  pageRecommendations: {
+    marginTop: '1rem',
+    padding: '1rem',
+  },
+  purchaseSuccessText: {
+    color: Colors.cream,
+    display: 'flex',
+    justifyContent: 'center',
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  marginTop2: {
+    marginTop: '2rem',
+  },
+  padding2: {
+    padding: '2rem',
+  },
+  padding1: {
+    padding: '1rem',
+  },
+  padding05: {
+    padding: '0.5rem',
+  },
+  purchaseSuccessBackground: {
+    width: '100%',
+    background: Colors.green,
+    position: 'relative',
+    display: 'flex',
+    justifyContent: 'center',
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  tick: {
+    marginRight: '0.5rem',
+  },
+  clearButton: {
+    position: "absolute",
+    right: "1rem",
+  },
+  emptyItems: {
+    minHeight: 300,
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: '2rem',
+    border: `1px solid ${Colors.lightGrey}`,
+    borderRadius: '4px',
+    width: '100%',
+    padding: '3rem',
+  },
+  emptyItemsTitle: {
+    marginBottom: '1rem',
+  },
+  divider: {
+    width: '100%',
+    borderBottom: `1px solid ${Colors.slateGrey}`,
+  },
+  buyerOrdersContainer: {
+    marginTop: "1rem",
+  },
+  sellerOrdersContainer: {
+    marginTop: "1rem",
+    marginBottom: "1rem",
+  },
+});
+
+
+export default withStyles(styles)(MyOrders);
+
+
+
