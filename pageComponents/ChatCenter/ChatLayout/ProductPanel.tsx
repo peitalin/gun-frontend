@@ -78,9 +78,9 @@ const ProductPanel: React.FC<ReactProps> = (props) => {
     }
   );
 
-  console.log("currentConversation: ", currentConversation)
-  console.log("product:::::", product)
-  console.log("previewItem:::::", previewItem)
+  // console.log("currentConversation: ", currentConversation)
+  // console.log("product:::::", product)
+  // console.log("previewItem:::::", previewItem)
 
   const buyer = option(chatRoom).owner();
   const _seller = option(currentConversation).chatRoom.users([])

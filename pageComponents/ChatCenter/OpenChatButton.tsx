@@ -49,7 +49,7 @@ const OpenChatButton: React.FC<ReactProps> = (props) => {
       color="secondary"
       onClick={() => openModal()}
     >
-      { props.title ? props.title : "Orders" }
+      { props.title ? props.title : "Offers" }
     </Button>
   )
 };
@@ -57,8 +57,7 @@ const OpenChatButton: React.FC<ReactProps> = (props) => {
 interface ReactProps extends WithStyles<typeof styles> {
   asModal?: boolean
   title?: string
-  productId: string
-  chatRoomId: string
+  chatRoomId?: string
 }
 
 

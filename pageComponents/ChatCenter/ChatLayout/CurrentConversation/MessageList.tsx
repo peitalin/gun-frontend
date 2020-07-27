@@ -4,10 +4,32 @@ import { oc as option } from "ts-optchain";
 // Styles
 import clsx from "clsx";
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
-import { Chat_Rooms, Chat_Messages } from "typings/gqlTypes";
+import { Chat_Rooms, Chat_Messages, Bids } from "typings/gqlTypes";
 
 import dayjs from "dayjs";
 import { showDateAndTime } from "utils/dates";
+import ButtonLoading from "components/ButtonLoading";
+import { gql } from "@apollo/client";
+import { useMutation, useApolloClient } from "@apollo/client";
+
+
+
+
+const UPDATE_BID_MESSAGE = gql`
+  mutation updateBids(
+    $bidId: String!
+    $bidStatus: String!
+  ) {
+    update_bids(
+      where: {id: {_eq: $bidId}},
+      _set: {bidStatus: $bidStatus}
+    ) {
+      affected_rows
+    }
+  }
+`;
+
+
 
 
 export const MessageList: React.FC<ReactProps> = (props) => {
@@ -18,6 +40,7 @@ export const MessageList: React.FC<ReactProps> = (props) => {
     userName,
     isNew,
   } = props;
+
 
   return (
     <div className={
@@ -52,6 +75,28 @@ const MessageItem = (props: MessageItemProps) => {
 
   const { classes, isMe } = props;
   const m = props.message;
+  const bid = m.bid;
+
+  const [updateBidMessage, { data, loading }] = useMutation<MutData, MutVars>(
+    UPDATE_BID_MESSAGE, {
+      // variables: { }, // add later in sendMessage()
+      onCompleted: (data) => {
+        console.log(data)
+      },
+    }
+  )
+
+  const isBidDisabled = (b: Bids) => {
+    if (b && b.bidStatus) {
+      return b.bidStatus === "WITHDRAWN"
+          || b.bidStatus === "DECLINED"
+          || b.bidStatus === "ACCEPTED"
+    } else {
+      return undefined
+    }
+  }
+
+  let bidDisabled = isBidDisabled(bid)
 
   if (isMe) {
     return (
@@ -70,6 +115,36 @@ const MessageItem = (props: MessageItemProps) => {
             __html: String(option(m).content(""))
           }}/>
         </div>
+        {
+          m.bid &&
+          m.bid.id &&
+          <div className={classes.messageText}>
+            {`Offer: ${m.bid.offerPrice}`}
+            <ButtonLoading
+              onClick={() => {
+                updateBidMessage({
+                  variables: {
+                    bidId: bid.id,
+                    bidStatus: "WITHDRAWN",
+                  }
+                })
+              }}
+              loadingIconColor={Colors.blue}
+              replaceTextWhenLoading={true}
+              // loading={loading}
+              disabled={bidDisabled}
+              variant="outlined"
+              color="primary"
+              className={classes.bidMsgButton}
+            >
+              {
+                bidDisabled
+                ? `Offer ${bid.bidStatus}`
+                : "Cancel offer"
+              }
+            </ButtonLoading>
+          </div>
+        }
       </div>
     )
   } else {
@@ -88,6 +163,59 @@ const MessageItem = (props: MessageItemProps) => {
             __html: String(option(m).content(""))
           }}/>
         </div>
+        {
+          m.bid &&
+          m.bid.id &&
+          <div className={classes.messageText}>
+            {`Offer: ${m.bid.offerPrice}`}
+            <ButtonLoading
+              onClick={() => {
+                updateBidMessage({
+                  variables: {
+                    bidId: bid.id,
+                    bidStatus: "ACCEPTED",
+                  }
+                })
+              }}
+              loadingIconColor={Colors.blue}
+              replaceTextWhenLoading={true}
+              // loading={loading}
+              disabled={bidDisabled}
+              variant="outlined"
+              color="primary"
+              className={classes.bidMsgButton}
+            >
+              {
+                bidDisabled
+                ? `Offer ${bid.bidStatus}`
+                : "Accept"
+              }
+            </ButtonLoading>
+            {
+              m.bid.id &&
+              !bidDisabled &&
+              <ButtonLoading
+                onClick={() => {
+                  updateBidMessage({
+                    variables: {
+                      bidId: bid.id,
+                      bidStatus: "DECLINED",
+                    }
+                  })
+                }}
+                loadingIconColor={Colors.blue}
+                replaceTextWhenLoading={true}
+                // loading={loading}
+                disabled={bidDisabled}
+                variant="outlined"
+                color="secondary"
+                className={classes.bidMsgButton}
+              >
+                { "Decline" }
+              </ButtonLoading>
+            }
+          </div>
+        }
       </div>
     )
   }
@@ -102,6 +230,16 @@ interface ReactProps extends WithStyles<typeof styles> {
 interface MessageItemProps extends WithStyles<typeof styles> {
   isMe?: boolean;
   message: Chat_Messages;
+}
+
+interface MutData {
+  update_bids: {
+    affected_rows: number
+  }
+}
+interface MutVars {
+  bidId: string
+  bidStatus: string
 }
 
 const styles = (theme: Theme) => createStyles({
@@ -154,6 +292,13 @@ const styles = (theme: Theme) => createStyles({
   },
   myMessageName: {
     color: Colors.greenCool,
+  },
+  bidMsgButton: {
+    height: 35,
+    backgroundColor: Colors.lightGrey,
+    "&:hover": {
+      backgroundColor: Colors.slateGrey,
+    },
   },
 })
 

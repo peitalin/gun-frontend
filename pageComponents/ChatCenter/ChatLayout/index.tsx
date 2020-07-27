@@ -75,8 +75,12 @@ export const ChatLayout: React.FC<ReactProps> = (props) => {
   React.useEffect(() => {
     // set initial conversation on mount + data response
     if (option(data).conversations([]).length > 0) {
-      if (!currentConversationId || !initialConversationId) {
-        setCurrentConversationId(option(data).conversations[0].chatRoom.id())
+      if (!currentConversationId) {
+        console.log("resetting current chatRoom id")
+        let currentConvo = option(data).conversations([])
+          .find(c => c.chatRoom.status === "ACTIVE")
+        let currentConvoId = option(currentConvo).chatRoom.id()
+        setCurrentConversationId(currentConvoId)
       } else {
         setCurrentConversationId(currentConversationId)
       }
@@ -119,6 +123,7 @@ export const ChatLayout: React.FC<ReactProps> = (props) => {
           mutationCallback={mutationCallback}
           userId={userId}
           chatRoomId={chatDivId}
+          product={option(currentConversation).chatRoom.product()}
         />
       </div>
       <div className={clsx(classes.col25, classes.wd25)}>

@@ -8,8 +8,9 @@ import { useMutation, useApolloClient } from "@apollo/client";
 import gql from 'graphql-tag';
 import TypingIndicator from './TypingIndicator';
 import { v4 as uuidv4 } from "uuid"
-import { Chat_Messages_Mutation_Response } from "typings/gqlTypes";
+import { Chat_Messages_Mutation_Response, Products } from "typings/gqlTypes";
 import Button from "@material-ui/core/Button";
+import TextInput from "components/Fields/TextInput";
 
 import dynamic from "next/dynamic";
 import TextEditorPlaceholder from 'components/TextEditor/TextEditorPlaceholder';
@@ -18,6 +19,10 @@ const TextEditorSSR = dynamic(() => import('components/TextEditor'), {
   ssr: false
 })
 import { serializeHtml, initialValue, EMPTY_STATE } from 'components/TextEditor/helpers';
+import { customAlphabet } from 'nanoid'
+const ID_ALPHABET = "123456789bcdfghjklmnpqrstvwxyz";
+const ID_LENGTH = 8;
+const nanoid = customAlphabet(ID_ALPHABET, ID_LENGTH)
 
 
 
@@ -51,6 +56,61 @@ const INSERT_MESSAGE = gql`
   }
 `;
 
+const INSERT_BID_MESSAGE = gql`
+  mutation sendBidMessage(
+    $msgId: String!
+    $chatRoomId: String!
+    $senderId: String!
+    $content: String!
+    $bidId: String!
+    $productId: String!
+    $productSnapshotId: String!
+    $variantId: String!
+    $variantSnapshotId: String!
+    $offerPrice: Int!
+    $bidStatus: String!
+  ) {
+    insert_chat_messages(objects: [{
+      id: $msgId,
+      chatRoomId: $chatRoomId,
+      content: $content,
+      senderId: $senderId,
+      bidId: $bidId,
+    }]) {
+      affected_rows
+    }
+
+    insert_bids(objects: [{
+      id: $bidId,
+      productId: $productId,
+      productSnapshotId: $productSnapshotId,
+      variantId: $variantId,
+      variantSnapshotId: $variantSnapshotId,
+      offerPrice: $offerPrice,
+      bidStatus: $bidStatus
+    }]) {
+      affected_rows
+    }
+  }
+`;
+
+
+const UPDATE_BID_MESSAGE = gql`
+  mutation updateBid(
+    $bidStatus: String!
+  ) {
+
+    update_bids(objects: [{
+      id: $bidId,
+      offerPrice: $offerPrice,
+      bidStatus: $bidStatus
+    }]) {
+      affected_rows
+    }
+  }
+`;
+
+
 const EMIT_TYPING_EVENT = gql`
   mutation update_users ($senderId: String!) {
     update_users (
@@ -67,25 +127,23 @@ const EMIT_TYPING_EVENT = gql`
 
 export const Textbox: React.FC<ReactProps> = (props) => {
 
-  const [state, setState] = React.useState({
-    text: "",
-  })
-
   const [description, setDescription] = React.useState(initialValue)
   const [resetSlate, setResetSlate] = React.useState(false)
+  const [showBidMenu, setShowBidMenu] = React.useState(false)
+  const [offerPrice, setOfferPrice] = React.useState(undefined)
 
-  const { classes } = props;
+  const { product, classes } = props;
   const apolloClient = useApolloClient();
 
-  const handleTyping = (text) => {
-    const textLength = text.length;
-    if (text === EMPTY_STATE)
+  // const handleTyping = (text) => {
+  //   const textLength = text.length;
+  //   if (text === EMPTY_STATE)
 
-    if ((textLength !== 0 && textLength % 5 === 0) || textLength === 1) {
-      emitTypingEvent();
-    }
-    setState(s => ({ ...s, text }));
-  }
+  //   if ((textLength !== 0 && textLength % 5 === 0) || textLength === 1) {
+  //     emitTypingEvent();
+  //   }
+  //   setState(s => ({ ...s, text }));
+  // }
 
   const dispatchResetSlate = () => {
     setResetSlate(true)
@@ -130,22 +188,52 @@ export const Textbox: React.FC<ReactProps> = (props) => {
     });
   }
 
-  const [insertMessage, { data, loading }] = useMutation<MutData, MutVars>(
+
+  const sendBidMessage = (e) => {
+    e.preventDefault();
+    // serialize Slate rich-text object as html
+    let htmlDescription = serializeHtml(description)
+    if (!htmlDescription || htmlDescription === EMPTY_STATE) {
+      return;
+    }
+    console.log("chatRoomId: ", props.chatRoomId)
+    let variables = {
+      msgId: `msg_${nanoid()}`,
+      chatRoomId: props.chatRoomId,
+      senderId: props.userId,
+      content: htmlDescription,
+      // content: state.text,
+      bidId: `bid_${nanoid()}`,
+      productId: props.product.id,
+      productSnapshotId: props.product.currentSnapshotId,
+      variantId: props.product.product_variants[0].variantId,
+      variantSnapshotId: props.product.product_variants[0].variantSnapshotId,
+      offerPrice: offerPrice,
+      bidStatus: "CREATED",
+    }
+    console.log("viarables: ", variables)
+
+    insertBidMessage({
+      variables: variables
+    }).then(res => {
+      setDescription(initialValue)
+      dispatchResetSlate()
+    });
+  }
+
+
+  const [insertMessage, msgMutationResponse] = useMutation<MutData, MutVars>(
     INSERT_MESSAGE, {
       // variables: { }, // add later in sendMessage()
-      onCompleted: ({ insert_chat_messages }) => {
-        if (typeof props.mutationCallback === 'function') {
-          console.log('mutationCallback is NOT function: ', props.mutationCallback)
-        } else {
-          console.log('mutationCallback is function')
-          // props.mutationCallback({
-          //   id: insert_chat_messages.returning[0].id,
-          //   createdAt: insert_chat_messages.returning[0].createdAt,
-          //   firstName: insert_chat_messages.returning[0].sender.firstName,
-          //   content: insert_chat_messages.returning[0].content,
-          // });
-        }
-      }
+    }
+  )
+
+  const [insertBidMessage, bidMutationResponse] = useMutation<MutData, MutVarsBid>(
+    INSERT_BID_MESSAGE, {
+      // variables: { }, // add later in sendMessage()
+      onCompleted: (data) => {
+        console.log(data)
+      },
     }
   )
 
@@ -157,11 +245,21 @@ export const Textbox: React.FC<ReactProps> = (props) => {
         <div className={classes.textboxWrapper}>
           <TypingIndicator userId={props.userId} />
           <div className={classes.textEditorWrapper}>
+
+            <TextInput
+              placeholder={"Enter a bid"}
+              className={classes.inputField}
+              value={offerPrice}
+              onChange={(e) => setOfferPrice(e.target.value)}
+              inputProps={{
+                style: { width: '100%' },
+              }}
+            />
+
             <TextEditorSSR
               // errorMessage={errors.description}
               // touched={touched.description}
               onChange={(value) => {
-                handleTyping(value)
                 setDescription(value)
               }}
               resetSlate={resetSlate}
@@ -175,12 +273,24 @@ export const Textbox: React.FC<ReactProps> = (props) => {
                 borderRadius: '0px',
               }}
             />
+
             <Button
               variant={"outlined"}
               className={clsx(classes.sendButton)}
               onClick={sendMessage}
             >
               Send
+            </Button>
+
+            <Button
+              variant={"outlined"}
+              className={clsx(classes.sendBidButton)}
+              onClick={sendBidMessage}
+              // onClick={() => {
+              //   setShowBidMenu(s => !s)
+              // }}
+            >
+              Create Bid
             </Button>
 
             <Button
@@ -204,6 +314,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   numOfNewMessages?: number;
   mutationCallback?(a: any): void;
   chatRoomId: string;
+  product: Products;
 }
 interface MutData {
   insert_chat_messages: Chat_Messages_Mutation_Response
@@ -215,12 +326,31 @@ interface MutVars {
   content: string
   previewItemId?: string
 }
+interface MutVarsBid {
+  msgId: string
+  chatRoomId: string
+  senderId: string
+  content: string
+  // previewItemId?: string
+  bidId: string
+  productId: string
+  productSnapshotId: string
+  variantId: string
+  variantSnapshotId: string
+  offerPrice: number
+  bidStatus: string
+}
 
 const styles = (theme: Theme) => createStyles({
   sendButton: {
     position: 'absolute',
     bottom: 4,
     right: 4,
+  },
+  sendBidButton: {
+    position: 'absolute',
+    bottom: 4,
+    left: '0rem',
   },
   typoButton: {
     position: 'absolute',
@@ -248,6 +378,11 @@ const styles = (theme: Theme) => createStyles({
     // paddingLeft: '10px',
     // display: 'inline-block',
     // backgroundColor: '#f6f6f7',
+  },
+  inputField: {
+    flexGrow: 1,
+    minWidth: 100,
+    marginBottom: '0.5rem',
   },
 })
 
