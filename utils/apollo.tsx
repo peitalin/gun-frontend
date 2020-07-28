@@ -205,16 +205,107 @@ const cacheOptions = {
   addTypename: true,
   possibleTypes: {
     User: ["UserPrivate", "UserPublic", "UserWithRole"],
-    Product: ["ProductPublic", "ProductPrivate"],
+    Product: ["ProductPublic", "ProductPrivate", "ProductDownload"],
     Store: ["StorePublic", "StorePrivate"],
   },
   typePolicies: {
-    Product: {
-      // Interpretation: Products objects are normalized, but they're all
-      // the same logical object, because their identity does not depend on
-      // any of their fields (other than __typename).
+
+    ProductPrivate: {
       keyFields: ["id"],
+      fields: {
+        chosenVariant: {
+          merge: (existing, incoming, opts) => {
+            // return opts.mergeObjects(existing, incoming)
+            return incoming
+          }
+        },
+        featuredVariant: {
+          merge: (existing, incoming, opts) => {
+            // return opts.mergeObjects(existing, incoming)
+            return incoming
+          }
+        },
+        currentVariants: {
+          merge: (existing, incoming, opts) => {
+            // do not merge variants
+            return incoming
+          }
+        },
+        relevantDiscounts: {
+          merge: (existing, incoming, opts) => {
+            // do not merge discounts
+            // they refer to bought/unbought products
+            // and thus should not be merged
+            return incoming
+          }
+        },
+      },
     },
+
+    ProductDownload: {
+      keyFields: ["id"],
+      fields: {
+        chosenVariant: {
+          merge: (existing, incoming, opts) => {
+            // return opts.mergeObjects(existing, incoming)
+            return incoming
+          }
+        },
+        featuredVariant: {
+          merge: (existing, incoming, opts) => {
+            // return opts.mergeObjects(existing, incoming)
+            return incoming
+          }
+        },
+        currentVariants: {
+          merge: (existing, incoming, opts) => {
+            // do not merge variants
+            return incoming
+          }
+        },
+        relevantDiscounts: {
+          merge: (existing, incoming, opts) => {
+            // do not merge discounts
+            // they refer to bought/unbought products
+            // and thus should not be merged
+            return incoming
+          }
+        },
+      },
+    },
+
+    ProductPublic: {
+      keyFields: ["id"],
+      fields: {
+        chosenVariant: {
+          merge: (existing, incoming, opts) => {
+            // return opts.mergeObjects(existing, incoming)
+            return incoming
+          }
+        },
+        featuredVariant: {
+          merge: (existing, incoming, opts) => {
+            // return opts.mergeObjects(existing, incoming)
+            return incoming
+          }
+        },
+        currentVariants: {
+          merge: (existing, incoming, opts) => {
+            // do not merge variants
+            return incoming
+          }
+        },
+        relevantDiscounts: {
+          merge: (existing, incoming, opts) => {
+            // do not merge discounts
+            // they refer to bought/unbought products
+            // and thus should not be merged
+            return incoming
+          }
+        },
+      },
+    },
+
     // merging cache objects:
     // https://github.com/apollographql/apollo-client/issues/6370
     User: {

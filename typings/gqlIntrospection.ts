@@ -24,10 +24,10 @@
             "name": "ProductsConnection"
           },
           {
-            "name": "StoreSalesHistoryConnection"
+            "name": "OrdersConnection"
           },
           {
-            "name": "OrdersConnection"
+            "name": "StoreSalesHistoryConnection"
           },
           {
             "name": "FollowingStoresConnection"
@@ -106,6 +106,9 @@
           },
           {
             "name": "ProductPublic"
+          },
+          {
+            "name": "ProductDownload"
           }
         ]
       },

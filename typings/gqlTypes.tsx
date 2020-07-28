@@ -41,6 +41,21 @@ export type ApprovePayoutsResult = {
   payoutsAlreadyApprovedIds?: Maybe<Array<Maybe<Scalars['ID']>>>;
 };
 
+export type Bid = {
+   __typename?: 'Bid';
+  acceptedPrice?: Maybe<Scalars['Int']>;
+  bidStatus?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['Date']>;
+  id?: Maybe<Scalars['ID']>;
+  offerPrice?: Maybe<Scalars['Int']>;
+  orderId?: Maybe<Scalars['ID']>;
+  productId?: Maybe<Scalars['ID']>;
+  productSnapshotId?: Maybe<Scalars['ID']>;
+  updatedAt?: Maybe<Scalars['Date']>;
+  variantId?: Maybe<Scalars['ID']>;
+  variantSnapshotId?: Maybe<Scalars['ID']>;
+};
+
 /** columns and relationships of "bids" */
 export type Bids = {
    __typename?: 'bids';
@@ -5546,7 +5561,7 @@ export type MutationErrorSummary = {
 /** Record of payment for products aka a successful cart checkout */
 export type Order = {
    __typename?: 'Order';
-  /** bid: Bid */
+  bid?: Maybe<Bid>;
   bidId?: Maybe<Scalars['ID']>;
   buyer?: Maybe<User>;
   buyerId?: Maybe<Scalars['ID']>;
@@ -6376,9 +6391,15 @@ export type OrdersOrderBy = {
 
 /** Order Status for individual items. */
 export enum OrderStatus {
-  CONFIRMED = 'CONFIRMED',
+  /** step 3, admin checks and approves uploaded form10 */
+  ADMIN_APPROVED = 'ADMIN_APPROVED',
+  /** step 4, payout completed, westpac transaction ID inputted */
+  COMPLETE = 'COMPLETE',
+  CONFIRMED_PAYMENT_FORM_10_REQUIRED = 'CONFIRMED_PAYMENT_FORM_10_REQUIRED',
   CREATED = 'CREATED',
   FAILED = 'FAILED',
+  /** step 2, seller delivers product */
+  FORM_10_SUBMITTED = 'FORM_10_SUBMITTED',
   REFUNDED = 'REFUNDED'
 }
 
@@ -7228,6 +7249,8 @@ export type PayoutItemsPagedConnection = PageBasedConnectionWithMetrics & {
   totalAmount?: Maybe<Scalars['Int']>;
   /** The number of payoutItems in the period */
   totalCount?: Maybe<Scalars['Int']>;
+  /** The amount of payment processing fees paid by sellers in the period */
+  totalFees?: Maybe<Scalars['Int']>;
 };
 
 export type PayoutItemsPagedEdge = PageBasedConnectionEdge & {
@@ -8939,6 +8962,54 @@ export type ProductCreateInput = {
   variantsLabel?: Maybe<VariantsLabel>;
 };
 
+export type ProductDownload = Product & {
+   __typename?: 'ProductDownload';
+  actionType: Scalars['String'];
+  ammoType?: Maybe<Scalars['String']>;
+  boreDiameter?: Maybe<Scalars['String']>;
+  category?: Maybe<ProductCategory>;
+  categoryId: Scalars['ID'];
+  /** Chosen variant, for cartItems */
+  chosenVariant?: Maybe<ProductVariant>;
+  condition: Scalars['String'];
+  createdAt: Scalars['Date'];
+  currentVariants: Array<ProductVariant>;
+  dealer: Scalars['String'];
+  description: Scalars['String'];
+  featuredVariant?: Maybe<ProductVariant>;
+  /** Connection to all the versions of the product, past and current. */
+  historicalSnapshotsConnection: ProductsConnection;
+  id: Scalars['ID'];
+  /** Whether or not it has been deleted */
+  isDeleted: Scalars['Boolean'];
+  /** Whether or not a platform admin has hidden it from automatic lists */
+  isExcludedFromRecommendations: Scalars['Boolean'];
+  /** Whether or not a platform admin has hidden it from search results */
+  isExcludedFromSearch: Scalars['Boolean'];
+  /** Whether or not the product owner has published it */
+  isPublished: Scalars['Boolean'];
+  /** Whether or not a platform admin has unpublished it */
+  isSuspended: Scalars['Boolean'];
+  location: Scalars['String'];
+  make: Scalars['String'];
+  model: Scalars['String'];
+  productId: Scalars['String'];
+  serialNumber: Scalars['String'];
+  /** Current snapshot */
+  snapshotId: Scalars['ID'];
+  store?: Maybe<Store>;
+  storeId: Scalars['ID'];
+  tags?: Maybe<Scalars['String']>;
+  title: Scalars['String'];
+  /** Metadata */
+  updatedAt?: Maybe<Scalars['Date']>;
+};
+
+
+export type ProductDownloadHistoricalSnapshotsConnectionArgs = {
+  query?: Maybe<ConnectionQuery>;
+};
+
 export type ProductEditInput = {
   actionType?: Maybe<Scalars['String']>;
   ammoType?: Maybe<Scalars['String']>;
@@ -9600,6 +9671,12 @@ export type Query = {
    */
   getOrderAsAdmin?: Maybe<Order>;
   /**
+   * List orders between startDate and endDate.
+   * 
+   * AccessRule – PLATFORM_ADMIN
+   */
+  getOrdersPendingApprovalConnectionAdmin: OrdersConnection;
+  /**
    * Get a credit card payment method's details from Stripe
    * 
    * AccessRule – OWNER
@@ -9835,6 +9912,11 @@ export type QueryGetOrderArgs = {
 
 export type QueryGetOrderAsAdminArgs = {
   orderId: Scalars['String'];
+};
+
+
+export type QueryGetOrdersPendingApprovalConnectionAdminArgs = {
+  query: ConnectionOffsetQueryOrders;
 };
 
 
@@ -10082,6 +10164,12 @@ export type Query_Root = {
    * AccessRule – PLATFORM_ADMIN
    */
   getOrderAsAdmin?: Maybe<Order>;
+  /**
+   * List orders between startDate and endDate.
+   * 
+   * AccessRule – PLATFORM_ADMIN
+   */
+  getOrdersPendingApprovalConnectionAdmin: OrdersConnection;
   /**
    * Get a credit card payment method's details from Stripe
    * 
@@ -10565,6 +10653,12 @@ export type Query_RootGetOrderArgs = {
 /** query root */
 export type Query_RootGetOrderAsAdminArgs = {
   orderId: Scalars['String'];
+};
+
+
+/** query root */
+export type Query_RootGetOrdersPendingApprovalConnectionAdminArgs = {
+  query: ConnectionOffsetQueryOrders;
 };
 
 
@@ -12717,6 +12811,8 @@ export type TransactionsConnection = Connection & {
   totalAmount?: Maybe<Scalars['Int']>;
   /** The number of transactions in the period */
   totalCount?: Maybe<Scalars['Int']>;
+  /** The amount of payment processing fees paid by sellers in the period */
+  totalFees?: Maybe<Scalars['Int']>;
 };
 
 export type TransactionsEdge = Edge & {
@@ -13825,7 +13921,7 @@ export type GetProductFileDownloadLinkMutationVariables = Exact<{
 
 export type GetProductFileDownloadLinkMutation = { __typename?: 'mutation_root', generateProductFileDownloadLink: { __typename?: 'ProductFileLinkMutationResponse', downloadLink: { __typename?: 'ProductFileDownloadLink', productFileId: string, expiresAt: any, url: string } } };
 
-export type ImageFragment = { __typename?: 'Image', id: string, createdAt: any, tags?: Maybe<string>, description?: Maybe<string>, original: { __typename?: 'ImageVariant', id: string, url?: Maybe<string>, mimeType?: Maybe<string>, heightInPixels?: Maybe<number>, widthInPixels?: Maybe<number>, sizeInBytes?: Maybe<number> }, variants: Array<{ __typename?: 'ImageVariant', id: string, mimeType?: Maybe<string>, sizeInBytes?: Maybe<number>, widthInPixels?: Maybe<number>, heightInPixels?: Maybe<number>, url?: Maybe<string> }> };
+export type ImageFragment = { __typename?: 'Image', id: string, createdAt: any, tags?: Maybe<string>, description?: Maybe<string>, original: { __typename?: 'ImageVariant', id: string, mimeType?: Maybe<string>, heightInPixels?: Maybe<number>, widthInPixels?: Maybe<number>, sizeInBytes?: Maybe<number>, url?: Maybe<string> }, variants: Array<{ __typename?: 'ImageVariant', id: string, mimeType?: Maybe<string>, sizeInBytes?: Maybe<number>, widthInPixels?: Maybe<number>, heightInPixels?: Maybe<number>, url?: Maybe<string> }> };
 
 export type ProductVariantFragment = { __typename?: 'ProductVariant', variantSnapshotId: string, variantId: string, snapshotId: string, productId: string, storeId: string, createdAt: any, variantName: string, variantDescription?: Maybe<string>, isDefault: boolean, position: number, price: any, priceWas?: Maybe<any>, isSoldOut: boolean, previewItems: Array<{ __typename?: 'ProductPreviewItem', id: string, youTubeEmbedLink?: Maybe<string>, image?: Maybe<(
       { __typename?: 'Image' }
@@ -13854,7 +13950,18 @@ type ProductFragment_ProductPublic_ = { __typename?: 'ProductPublic', id: string
     & ProductVariantFragment
   )>, store?: Maybe<{ __typename?: 'StorePrivate', id: string, name: string } | { __typename?: 'StorePublic', id: string, name: string }>, category?: Maybe<{ __typename?: 'ProductCategory', id: string, name: string, categoryGroup?: Maybe<any> }> };
 
-export type ProductFragment = ProductFragment_ProductPrivate_ | ProductFragment_ProductPublic_;
+type ProductFragment_ProductDownload_ = { __typename?: 'ProductDownload', id: string, createdAt: any, updatedAt?: Maybe<any>, tags?: Maybe<string>, isPublished: boolean, isSuspended: boolean, isDeleted: boolean, isExcludedFromRecommendations: boolean, title: string, description: string, condition: string, make: string, model: string, ammoType?: Maybe<string>, actionType: string, boreDiameter?: Maybe<string>, serialNumber: string, location: string, dealer: string, currentVariants: Array<(
+    { __typename?: 'ProductVariant' }
+    & ProductVariantFragment
+  )>, featuredVariant?: Maybe<(
+    { __typename?: 'ProductVariant' }
+    & ProductVariantFragment
+  )>, chosenVariant?: Maybe<(
+    { __typename?: 'ProductVariant' }
+    & ProductVariantFragment
+  )>, store?: Maybe<{ __typename?: 'StorePrivate', id: string, name: string } | { __typename?: 'StorePublic', id: string, name: string }>, category?: Maybe<{ __typename?: 'ProductCategory', id: string, name: string, categoryGroup?: Maybe<any> }> };
+
+export type ProductFragment = ProductFragment_ProductPrivate_ | ProductFragment_ProductPublic_ | ProductFragment_ProductDownload_;
 
 type StorePublicFragment_StorePrivate_ = { __typename?: 'StorePrivate', id: string, createdAt: any, updatedAt?: Maybe<any>, name: string, bio?: Maybe<string>, website?: Maybe<string>, cover?: Maybe<(
     { __typename?: 'Image' }
@@ -13913,6 +14020,9 @@ export type ProductsAllConnectionQuery = { __typename?: 'query_root', productsAl
       ) | (
         { __typename?: 'ProductPublic' }
         & ProductFragment_ProductPublic_
+      ) | (
+        { __typename?: 'ProductDownload' }
+        & ProductFragment_ProductDownload_
       ) }> } };
 
 export type CreateStoreMutationVariables = Exact<{
@@ -13948,7 +14058,6 @@ export const ImageFragmentFragmentDoc = gql`
   id
   original {
     id
-    url
     mimeType
     heightInPixels
     widthInPixels
