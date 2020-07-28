@@ -149,12 +149,6 @@ export const styles = (theme: Theme) => createStyles({
     },
     marginTop: '0.5rem',
   },
-  uploadButtonContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-    marginLeft: '0rem',
-    marginBottom: '1rem',
-  },
   bioLength: {
     fontFamily: '"Segoe UI","Helvetica Neue",Arial,sans-serif',
     fontSize: '0.8rem',
