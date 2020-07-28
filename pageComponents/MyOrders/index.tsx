@@ -13,7 +13,7 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   GET_BUYER_ORDERS_CONNECTION,
   GET_SELLER_ORDERS_CONNECTION,
-} from "queries/downloads-queries";
+} from "queries/orders-queries";
 // graphl
 import { useMutation, useQuery } from "@apollo/client";
 
@@ -25,7 +25,7 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 // Subcomponents
 import ToolTips from "pageComponents/MyOrders/ToolTips";
-import DownloadCard from "pageComponents/MyOrders/DownloadCard";
+import OrderRow from "pageComponents/MyOrders/OrderRow";
 import PurchaseSuccessBanner from "pageComponents/MyOrders/PurchaseSuccessBanner";
 import { Download, UserPrivate, OrderStatus, OrdersConnection, Order } from "typings/gqlTypes";
 // Icons
@@ -42,7 +42,6 @@ import AlignCenterLayout from "components/AlignCenterLayout";
 import DescriptionLoading from "pageComponents/FrontPage/PreviewCardResponsiveCarousel/DescriptionLoading";
 // Analytics
 import { useRouter } from "next/router";
-import { buildResolveInfo } from "graphql/execution/execute";
 
 
 
@@ -62,7 +61,8 @@ const MyOrders: React.FC<ReactProps> = (props) => {
           limit: 10,
           offset: 0,
         }
-      }
+      },
+      fetchPolicy: "network-only",
     }
   );
 
@@ -73,24 +73,19 @@ const MyOrders: React.FC<ReactProps> = (props) => {
           limit: 10,
           offset: 0,
         }
-      }
+      },
+      fetchPolicy: "network-only",
     }
   );
 
-  console.log("buyer data::::: ", buyerOrdersResponse)
-  console.log("seller data::::: ", sellerOrdersResponse)
+  // console.log("buyer data::::: ", buyerOrdersResponse)
+  // console.log("seller data::::: ", sellerOrdersResponse)
 
   const buyerOrdersConnection = option(buyerOrdersResponse)
     .data.user.buyerOrdersConnection() || props.initialBuyerOrders;
 
   const sellerOrdersConnection = option(sellerOrdersResponse)
     .data.user.sellerOrdersConnection() || props.initialSellerOrders;
-
-  // React.useEffect(() => {
-  //   if (refetch) {
-  //     setTimeout(() => { refetch() }, 0)
-  //   }
-  // }, [data])
 
 
   if (buyerOrdersResponse.loading || sellerOrdersResponse.loading) {
@@ -156,7 +151,7 @@ const MyOrders: React.FC<ReactProps> = (props) => {
         {
           (option(buyerOrdersConnection).edges([]).length > 0) &&
           <div className={classes.buyerOrdersContainer}>
-            <Typography variant="h5">
+            <Typography variant="h4" className={classes.heading}>
               Your Purchases
             </Typography>
             <>
@@ -167,16 +162,11 @@ const MyOrders: React.FC<ReactProps> = (props) => {
                   // const isRefunded = option(orderItem).orderStatus() === OrderStatus.REFUNDED;
 
                   return (
-                    <div>
-                      {order.id}
-                    </div>
-                    // <DownloadCard
-                    //   key={option(download).product.id() + i}
-                    //   product={download.product}
-                    //   order={download.order}
-                    //   orderItemId={orderItem.id}
-                    //   isRefunded={isRefunded}
-                    // />
+                    <OrderRow
+                      key={i}
+                      product={order.product}
+                      order={order}
+                    />
                   )
                 })
               }
@@ -187,8 +177,8 @@ const MyOrders: React.FC<ReactProps> = (props) => {
         {
           (option(sellerOrdersConnection).edges([]).length > 0) &&
           <div className={classes.sellerOrdersContainer}>
-            <Typography variant="h5">
-              Your Sales
+            <Typography variant="h4" className={classes.heading}>
+              Selling Orders
             </Typography>
             <>
               {
@@ -198,16 +188,11 @@ const MyOrders: React.FC<ReactProps> = (props) => {
                   // const isRefunded = option(orderItem).orderStatus() === OrderStatus.REFUNDED;
 
                   return (
-                    <div>
-                      {order.id}
-                    </div>
-                    // <DownloadCard
-                    //   key={option(download).product.id() + i}
-                    //   product={download.product}
-                    //   order={download.order}
-                    //   orderItemId={orderItem.id}
-                    //   isRefunded={isRefunded}
-                    // />
+                    <OrderRow
+                      key={i}
+                      product={order.product}
+                      order={order}
+                    />
                   )
                 })
               }
@@ -263,16 +248,6 @@ const OrdersLayout: React.FC<ReactProps> = (props) => {
 }
 
 
-interface ReactProps {
-  initialBuyerOrders?: OrdersConnection;
-  initialSellerOrders?: OrdersConnection;
-}
-interface PaginateProps {
-  data: QueryData;
-  error: any;
-  loading: boolean;
-  refetch: any;
-}
 interface QueryData {
   user: UserPrivate
 }
@@ -284,15 +259,16 @@ interface QueryData2 {
 interface QueryVar2 {
 }
 
-interface MutationData {
-  order: Order;
-}
-interface MutationVar {
-}
+// interface MutationData {
+//   order: Order;
+// }
+// interface MutationVar {
+// }
 
 
 interface ReactProps extends WithStyles<typeof styles> {
-  initialOrders: OrdersConnection;
+  initialBuyerOrders?: OrdersConnection;
+  initialSellerOrders?: OrdersConnection;
 }
 
 const styles = (theme: Theme) => createStyles({
@@ -317,6 +293,10 @@ const styles = (theme: Theme) => createStyles({
   title: {
     marginBottom: '2rem',
     marginTop: '2rem',
+  },
+  heading: {
+    marginBottom: '1rem',
+    marginTop: '1rem',
   },
   toolTip1: {
     padding: '1.5rem 2rem',

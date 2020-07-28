@@ -10,23 +10,23 @@ import Button from '@material-ui/core/Button';
 // Utils Components
 import ErrorBounds from "components/ErrorBounds";
 import { centsToDollarSelector } from "utils/selectors";
-import { Product, OrderItem } from "typings/gqlTypes";
+import { Product } from "typings/gqlTypes";
 import PriceDisplayMain from "components/PriceDisplayMain";
 
 
 
-const OrderItemPreview: React.FC<ReactProps> = (props) => {
+const OrderProductPreview: React.FC<ReactProps> = (props) => {
 
   // state
   const [imgLoaded, setImgLoaded] = React.useState(false);
   // props
-  const { classes, item } = props;
-  const { title } = item.product;
-  const { previewItems } = option(item).product.chosenVariant();
-  let previewItem = option(previewItems)[0]();
-  let price = option(item).product.chosenVariant.price();
+  const { classes, product } = props;
+  const { title } = product;
+  const previewItem = option(product).chosenVariant.previewItems([])[0];
+  let price = option(product).chosenVariant.price();
 
   // const priceDetails = option(item).priceDetails();
+  // console.log('product', product)
 
   return (
     <ErrorBounds>
@@ -37,13 +37,9 @@ const OrderItemPreview: React.FC<ReactProps> = (props) => {
               {
                 previewItem &&
                 <img
-                  className={clsx(
-                    classes.imagePreview,
-                  )}
+                  className={classes.imagePreview}
                   onLoad={() => setImgLoaded(true)}
-                  src={
-                    option(previewItem).image.original.url()
-                  }
+                  src={option(previewItem).image.original.url()}
                   alt={option(previewItem).id()}
                 />
               }
@@ -52,7 +48,7 @@ const OrderItemPreview: React.FC<ReactProps> = (props) => {
 
           <div className={classes.flexItem70}>
             <Typography variant="body1" className={classes.name}>
-              <span>{name}</span>
+              <span>{title}</span>
             </Typography>
             <PriceDisplayMain
               pastTense={true}
@@ -71,7 +67,7 @@ const OrderItemPreview: React.FC<ReactProps> = (props) => {
 
 
 interface ReactProps extends WithStyles<typeof styles> {
-  item: OrderItem ;
+  product: Product;
 }
 
 const styles = (theme: Theme) => createStyles({
@@ -134,4 +130,4 @@ const styles = (theme: Theme) => createStyles({
   },
 });
 
-export default withStyles(styles)( OrderItemPreview );
+export default withStyles(styles)( OrderProductPreview );

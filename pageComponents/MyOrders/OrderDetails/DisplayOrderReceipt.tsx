@@ -23,35 +23,23 @@ const DisplayOrderReceipt: React.FC<ReactProps> = (props) => {
 
   const { classes, order } = props;
 
-  const fees = c(order.currentSnapshot.paymentProcessingFee);
-  const taxes = c(order.currentSnapshot.taxes);
-  const subtotal = c(order.currentSnapshot.subtotal);
+  // const fees = c(order.currentSnapshot.paymentProcessingFee);
+  // const taxes = c(order.currentSnapshot.taxes);
+  // const subtotal = c(order.currentSnapshot.subtotal);
   const total = c(order.currentSnapshot.total);
-  const promoCodeSavingsDisplay = c(order.currentSnapshot.promoCodeSavings);
-  const youSaveDisplay = c(order.currentSnapshot.automaticSavings);
+  // const promoCodeSavingsDisplay = c(order.currentSnapshot.promoCodeSavings);
+  // const youSaveDisplay = c(order.currentSnapshot.automaticSavings);
 
   // Get a modified cart subtotal so that it reflects the subtotal BEFORE discounts (cart is AFTER)
-  const subtotalBeforeDiscounts =
-    order.currentSnapshot.subtotal +
-    order.currentSnapshot.automaticSavings +
-    order.currentSnapshot.promoCodeSavings;
+  // const subtotalBeforeDiscounts =
+  //   order.currentSnapshot.subtotal +
+  //   order.currentSnapshot.automaticSavings +
+  //   order.currentSnapshot.promoCodeSavings;
 
 
+  // const paymentMethod = option(order).currentSnapshot.transaction.paymentMethod();
+  // const paymentMethodId = option(order).currentSnapshot.transaction.paymentMethodId();
 
-  const [paymentProcessor, setPaymentProcessor] = React.useState("");
-
-  React.useEffect(() => {
-    const processor = option(order).currentSnapshot.transaction.paymentProcessor();
-    if (processor && processor.toLocaleLowerCase() === "stripe") {
-      setPaymentProcessor("stripe")
-    } else if (processor && processor.toLocaleLowerCase() === "paypal") {
-      setPaymentProcessor("paypal")
-    } else {
-    }
-  }, [option(order).currentSnapshot.transaction.paymentProcessor()])
-
-  const paymentMethod = option(order).currentSnapshot.transaction.paymentMethod();
-  const paymentMethodId = option(order).currentSnapshot.transaction.paymentMethodId();
   // console.log("order", order)
 
   return (
@@ -67,48 +55,12 @@ const DisplayOrderReceipt: React.FC<ReactProps> = (props) => {
         <div className={classes.flexRow}>
           <div className={classes.flexItem1}>
             <Typography variant="body2" className={classes.lineItemText}>
-              Subtotal
+              Total
             </Typography>
           </div>
           <div className={classes.flexItem2}>
             <Typography variant="body2" className={classes.priceDisplay}>
-              {subtotal}
-            </Typography>
-          </div>
-        </div>
-
-        <div className={classes.flexRow}>
-          <div className={classes.flexItem1}>
-            <Typography variant="body2" className={classes.lineItemText}>
-              You save
-            </Typography>
-          </div>
-          <div className={classes.flexItem2}>
-            <Typography variant="body2" className={classes.priceDisplay}>
-              {youSaveDisplay}
-            </Typography>
-          </div>
-        </div>
-
-        <div className={classes.flexRow}>
-          <div className={classes.flexItem1}>
-            <Typography variant="body2"
-              className={clsx(classes.lineItemText, classes.promotionText)}
-            >
-              Promotion
-            </Typography>
-          </div>
-          <div className={classes.flexItem2}>
-            <Typography variant="body2"
-              className={clsx(classes.priceDisplay, classes.promotionText)}
-            >
-              <LocalOfferIcon style={{
-                height: '0.9rem',
-                width: '0.9rem',
-                marginRight: '0.25rem',
-                transform: "rotate(90deg)",
-              }}/>
-              {`-${promoCodeSavingsDisplay}`}
+              {total}
             </Typography>
           </div>
         </div>
@@ -120,9 +72,9 @@ const DisplayOrderReceipt: React.FC<ReactProps> = (props) => {
             </Typography>
           </div>
           <div className={classes.flexItem2}>
-            <Typography variant="body2" className={classes.priceDisplay}>
+            {/* <Typography variant="body2" className={classes.priceDisplay}>
               {fees}
-            </Typography>
+            </Typography> */}
           </div>
         </div>
 
@@ -133,9 +85,9 @@ const DisplayOrderReceipt: React.FC<ReactProps> = (props) => {
             </Typography>
           </div>
           <div className={classes.flexItem2}>
-            <Typography variant="body2" className={classes.priceDisplay}>
+            {/* <Typography variant="body2" className={classes.priceDisplay}>
               {taxes}
-            </Typography>
+            </Typography> */}
           </div>
         </div>
 
@@ -194,7 +146,7 @@ const DisplayOrderReceipt: React.FC<ReactProps> = (props) => {
             </Typography>
           </div>
           <div className={classes.flexItem1}>
-            {
+            {/* {
               paymentProcessor.toLowerCase() === "stripe" &&
               <>
                 <Typography variant="subtitle2" className={classes.subHeading}>
@@ -204,8 +156,8 @@ const DisplayOrderReceipt: React.FC<ReactProps> = (props) => {
                   {option(paymentMethod).last4()}
                 </Typography>
               </>
-            }
-            {
+            } */}
+            {/* {
               paymentProcessor.toLowerCase() === "paypal" &&
               <>
                 <Typography variant="subtitle2" className={classes.subHeading}>
@@ -215,7 +167,7 @@ const DisplayOrderReceipt: React.FC<ReactProps> = (props) => {
                   {paymentMethodId}
                 </Typography>
               </>
-            }
+            } */}
           </div>
         </div>
       </div>

@@ -11,20 +11,12 @@ import ErrorBounds from "components/ErrorBounds";
 import { useWindowWidth } from "utils/hooks";
 // Components
 import OrderDetailsPage from "./OrderDetailsPage";
-// Analytics
-import { analyticsEvent } from "utils/analytics";
 
 
 const OrderDetailsModal: React.FC<ReactProps> = (props) => {
 
   const windowWidth = useWindowWidth();
   const { classes } = props;
-
-  React.useEffect(() => {
-    if (props.displayModal) {
-      analyticsEvent("View.OrderDetails");
-    }
-  }, [props.displayModal])
 
   return (
     <ErrorBounds>

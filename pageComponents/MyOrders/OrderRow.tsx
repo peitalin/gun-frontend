@@ -5,10 +5,6 @@ import { oc as option } from "ts-optchain";
 import clsx from "clsx";
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 import { Colors } from "layout/AppTheme";
-// Redux
-import { connect } from "react-redux";
-import { GrandReduxState } from "reduxStore/grand-reducer";
-import { Actions } from "reduxStore/actions";
 // Typings
 import { Product, Order, OrderItem, ID  } from "typings/gqlTypes";
 // Material UI
@@ -19,22 +15,24 @@ import ErrorBounds from "components/ErrorBounds";
 import ProductPreviewCardRow from "components/ProductPreviewCardRow";
 import OrderDetails from "./OrderDetails";
 // File requests
-import DownloadItem from "./DownloadItem";
 import Link from "next/link";
 // mediaQuery
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
+import Form10Upload from "./Form10Upload";
 // import { getStoreIdOrSlug } from "utils/links";
 
 
 
-const DownloadCard: React.FC<DownloadCardProps> = (props) => {
+const OrderRow: React.FC<ReactProps> = (props) => {
 
   const [showOrderDetails, setShowOrderDetails] = useState(false);
-  const { classes, product, order, orderItemId } = props;
+  const { classes, product, order } = props;
 
   const theme = useTheme();
   const smDown = useMediaQuery(theme.breakpoints.down("sm"))
+
+  console.log("porduct: ",product)
 
   return (
     <div className={clsx(classes.flexRowWithBorder, "fadeIn")}>
@@ -44,10 +42,7 @@ const DownloadCard: React.FC<DownloadCardProps> = (props) => {
           classes.flexRow,
           (!order && !product) ? "pulse" : null,
         )}>
-          <div className={clsx(
-            classes.flexCol,
-            props.isRefunded ? classes.refundedGrayscale : null,
-          )}>
+          <div className={classes.flexCol}>
             {
               smDown
               ? <ProductPreviewCardRow
@@ -64,14 +59,14 @@ const DownloadCard: React.FC<DownloadCardProps> = (props) => {
           </div>
 
           <div className={clsx(
-            classes.flexCol,
+            classes.flexRow,
             classes.width100,
             classes.marginLeft,
           )}>
             <div className={clsx(
               classes.flexCol,
-              'fadeIn',
-              props.isRefunded ? classes.refundedGrayscale : null,
+              classes.orderInfoContainer,
+              'fadeIn'
             )}>
               <Typography className={classes.name} variant="body2">
                 {option(product).title("")}
@@ -96,21 +91,29 @@ const DownloadCard: React.FC<DownloadCardProps> = (props) => {
               </Link>
             </div>
 
-            <div className={classes.flexRowFlexEnd}>
-              <Button
-                className={classes.orderDetailsButton}
-                variant={"outlined"}
-                color={"primary"}
-                disabled={!order}
-                onClick={() => setShowOrderDetails(true)}
-              >
-                <Typography
-                  className={classes.orderDetailsButtonText}
-                  variant={"body2"}
+            <div className={clsx(classes.flexCol, 'fadeIn')}>
+              <div className={classes.flexRowFlexEnd}>
+                <Form10Upload
+                  order={order}
+                />
+              </div>
+
+              <div className={classes.flexRowFlexEnd}>
+                <Button
+                  className={classes.orderDetailsButton}
+                  variant={"outlined"}
+                  color={"primary"}
+                  disabled={!order}
+                  onClick={() => setShowOrderDetails(true)}
                 >
-                  Order Details
-                </Typography>
-              </Button>
+                  <Typography
+                    className={classes.orderDetailsButtonText}
+                    variant={"body2"}
+                  >
+                    Order Details
+                  </Typography>
+                </Button>
+              </div>
             </div>
 
           </div>
@@ -149,28 +152,9 @@ const DownloadCard: React.FC<DownloadCardProps> = (props) => {
   )
 }
 
-type DownloadCardProps = ReactProps & ReduxProps;
-
 interface ReactProps extends WithStyles<typeof styles> {
   order: Order;
-  orderItemId: ID;
   product: Product;
-  isRefunded: boolean;
-}
-interface ReduxProps {
-  toggleGiftDownloadModal(payload: boolean): void;
-}
-
-//////////////// REDUX /////////////////////
-const mapStateToProps = ( state: GrandReduxState ) => {
-  return {}
-}
-const mapDispatchToProps = ( dispatch ) => {
-  return {
-    toggleGiftDownloadModal: (payload: boolean) => dispatch(
-      Actions.reduxModals.TOGGLE_GIFT_DOWNLOAD_MODAL(payload)
-    ),
-  }
 }
 
 const styles = (theme: Theme) => createStyles({
@@ -217,6 +201,10 @@ const styles = (theme: Theme) => createStyles({
   marginLeft: {
     marginLeft: "1rem",
   },
+  orderInfoContainer: {
+    flexGrow: 1,
+    justifyContent: 'flex-start',
+  },
   name: {
     fontWeight: 600,
     fontSize: '1rem',
@@ -256,18 +244,18 @@ const styles = (theme: Theme) => createStyles({
     borderRadius: "4px",
   },
   orderDetailsButton: {
-    marginRight: '0.75rem',
-    height: '35px',
-    minWidth: '120px',
-    border: '1px solid #dadada',
+    height: '38px',
+    minWidth: '150px',
+    border: `1px solid ${Colors.grey}`,
+    marginTop: '0.5rem',
     "&:hover": {
       border: '1px solid #aaaaaa',
     }
   },
   orderDetailsButtonText: {
-    fontSize: '0.7rem',
+    fontSize: '0.875rem',
     color: Colors.darkGrey,
-    fontWeight: 600,
+    fontWeight: 500,
   },
   refundedGrayBlur: {
     filter: 'grayscale(1) blur(0.75px)',
@@ -278,7 +266,4 @@ const styles = (theme: Theme) => createStyles({
 });
 
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(withStyles(styles)( DownloadCard ));
+export default withStyles(styles)( OrderRow );

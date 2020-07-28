@@ -14,15 +14,16 @@ import IconButton from "@material-ui/core/IconButton";
 import { Order } from "typings/gqlTypes";
 // Components
 import DisplayOrderReceipt from "./DisplayOrderReceipt";
-import OrderItemsList from "./OrderItemsList";
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
+import OrderProductPreview from "./OrderProductPreview";
+import { OrderItem } from "typings/gqlTypes";
 
 
 
 const OrderDetailsPage: React.FC<ReactProps> = (props) => {
 
-  const { classes } = props;
+  const { classes, order } = props;
   const theme = useTheme();
   const xsDown = useMediaQuery(theme.breakpoints.down('xs'))
 
@@ -60,10 +61,7 @@ const OrderDetailsPage: React.FC<ReactProps> = (props) => {
         </div>
         <div className={classes.flexCol440}>
           <div className={classes.orderItemsContainer}>
-          {
-            option(props).order.items[0].id() &&
-            <OrderItemsList items={props.order.items}/>
-          }
+            <OrderProductPreview product={order.product}/>
           </div>
         </div>
       </div>
