@@ -103,7 +103,7 @@ export const UserMenu: React.FC<ReactProps> = (props) => {
         >
 
           <MenuItem onClick={handleCloseMenu}>
-            <Link href="/my-downloads">
+            <Link href="/my-orders">
               <a className={classes.menuLink}>
                 <DownloadIcon className={classes.menuIcon}/>
                 <span className={classes.menuText}> My Downloads </span>

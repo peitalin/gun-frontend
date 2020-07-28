@@ -258,7 +258,7 @@ const MobileMenuRoutes = (props: MobileMenuExpanderProps) => {
       {
         loggedIn &&
         <div className={classes.mobileMenuFlexitem}>
-          <Link href="/my-downloads">
+          <Link href="/my-orders">
             <a className={classes.menuLink}>
               <MenuItem
                 className={clsx(

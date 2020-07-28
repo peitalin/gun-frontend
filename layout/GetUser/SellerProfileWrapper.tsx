@@ -63,6 +63,55 @@ export const GetUserWrapper = (props) => {
   }
 }
 
+export const AdminProfileWrapper = (props) => {
+
+  const { loading, data, error, refetch } = useQuery<QueryData>(
+    GET_USER, {
+    variables: {},
+    onError: (e) => {
+      console.log(e)
+    },
+    errorPolicy: "all",
+  });
+
+  if (loading) {
+    return <Loading fixed loading={loading} delay={"200ms"} />;
+  }
+  if (error && !option(data).user.id()) {
+    return (
+      <Redirect
+        message={"Login required. Redirecting to login..."}
+        redirectCondition={!option(data).user.id()}
+        redirectDelay={1000}
+        redirectRoute={"/login"}
+      />
+    )
+  } else if (option(data).user.userRole() === "PLATFORM_ADMIN") {
+    return (
+      <>
+        {
+          props.children({
+            loading,
+            error,
+            refetch,
+            data,
+          })
+        }
+      </>
+    )
+  } else {
+    return (
+      <Redirect
+        message={"Admin login required. Redirecting ..."}
+        redirectCondition={option(data).user.userRole() !== "PLATFORM_ADMIN"}
+        redirectDelay={2000}
+        redirectRoute={"/login"}
+      />
+    )
+  }
+}
+
+
 
 export const SellerProfileWrapper = (props) => {
 

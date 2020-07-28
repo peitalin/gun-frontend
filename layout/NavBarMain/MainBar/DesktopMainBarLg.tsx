@@ -53,7 +53,7 @@ const DesktopMainBarLg = (props: DesktopMainBarProps) => {
   }
 
   const goToMyDownloads = () => {
-    router.push('/my-downloads')
+    router.push('/my-orders')
   }
 
   return (
@@ -135,7 +135,7 @@ const DesktopMainBarLg = (props: DesktopMainBarProps) => {
             >
               <div>
                 <span className={
-                  endRoute === 'my-downloads' ? classes.selectedRouteText : null
+                  endRoute === 'my-orders' ? classes.selectedRouteText : null
                 }>
                     Orders
                 </span>

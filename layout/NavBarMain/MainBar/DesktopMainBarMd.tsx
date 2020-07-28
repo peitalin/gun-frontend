@@ -52,7 +52,7 @@ const DesktopMainBarMd = (props: ReactProps & DesktopMainBarProps) => {
   }
 
   const goToMyDownloads = () => {
-    router.push('/my-downloads')
+    router.push('/my-orders')
   }
 
   return (
