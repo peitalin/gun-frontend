@@ -6,7 +6,7 @@ import clsx from "clsx";
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 import { Colors } from "layout/AppTheme";
 // Utils
-import { ID, Order, UploadType, Order_Snapshots } from "typings/gqlTypes";
+import { ID, Order, UploadType, Order_Snapshots, OrderStatus } from "typings/gqlTypes";
 // Media uploader
 import { IFileWithMeta, IUploadParams } from "components/DropzoneUploader/Dropzone";
 import Dropzone from "components/DropzoneUploader/Dropzone";
@@ -15,6 +15,8 @@ import {
 } from "queries/requests";
 import { useApolloClient } from "@apollo/client";
 
+// Snackbar
+import { useSnackbar, ProviderContext } from "notistack";
 // Material UI
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
@@ -50,6 +52,7 @@ const Form10Upload = (props: ReactProps) => {
   } = props;
 
   const [loading, setLoading] = React.useState(false);
+  const snackbar = useSnackbar();
 
   // upload
   const [uploadId, setUploadID] = useState("")
@@ -102,15 +105,30 @@ const Form10Upload = (props: ReactProps) => {
         console.log('imageId...', image.id)
         setLoading(false)
         /// update order with form 10 here
-        await addForm10({
-          variables: {
-            orderId: order.id,
-            currentSnapshotId: `order_snapshot_${nanoid()}`,
-            total: order.currentSnapshot.total,
-            form10ImageId: image.id,
-          },
-          refetchQueries: refetchQueriesList,
-        })
+        let orderStatus = props.order.currentSnapshot.orderStatus;
+        if (
+          orderStatus === OrderStatus.CONFIRMED_PAYMENT_FORM_10_REQUIRED
+          || orderStatus === OrderStatus.FORM_10_SUBMITTED
+        ) {
+          await addForm10({
+            variables: {
+              orderId: order.id,
+              currentSnapshotId: `order_snapshot_${nanoid()}`,
+              form10ImageId: image.id,
+            },
+            refetchQueries: refetchQueriesList,
+          })
+        } else {
+          if (
+            orderStatus === OrderStatus.ADMIN_APPROVED
+            || orderStatus === OrderStatus.COMPLETE
+          ) {
+            snackbar.enqueueSnackbar(
+              `Form-10 already approved by admin`,
+              { variant: "success" }
+            )
+          }
+        }
         console.log("save_to_db response:", image.id)
       })
       .catch(err => {
@@ -145,7 +163,6 @@ const Form10Upload = (props: ReactProps) => {
       variables: {
         orderId: order.id,
         currentSnapshotId: `order_snapshot_${nanoid()}`,
-        total: order.currentSnapshot.total,
         form10ImageId: undefined // required
       },
       refetchQueries: refetchQueriesList,
@@ -157,7 +174,6 @@ const Form10Upload = (props: ReactProps) => {
       variables: {
         orderId: order.id,
         currentSnapshotId: `order_snapshot_${nanoid()}`,
-        total: order.currentSnapshot.total,
       },
       refetchQueries: refetchQueriesList,
     }
@@ -191,7 +207,6 @@ const Form10Upload = (props: ReactProps) => {
               variables: {
                 orderId: order.id,
                 currentSnapshotId: `order_snapshot_${nanoid()}`,
-                total: order.currentSnapshot.total,
               },
               refetchQueries: refetchQueriesList,
             })
@@ -267,7 +282,6 @@ interface MutDataAdd {
 interface MutVarAdd {
   orderId: string
   currentSnapshotId: string
-  total: number
   form10ImageId: string
 }
 
@@ -279,7 +293,6 @@ interface MutDataRemove {
 interface MutVarRemove {
   orderId: string
   currentSnapshotId: string
-  total: number
 }
 
 
