@@ -32,7 +32,6 @@ const MySettingsModal: React.FC<ReactProps> = (props) => {
 
   const goBack = () => {
     // unload Stripe card component first, then shut the modal
-    dispatch(Actions.reduxStripe.SHOW_PRODUCT_PAGE_STRIPE_COMPONENT())
     dispatch(Actions.reduxModals.TOGGLE_MY_SETTINGS_MODAL(false))
   }
 

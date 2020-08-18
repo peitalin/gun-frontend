@@ -18,8 +18,6 @@ import { styles } from "./styles";
 // Material UI
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
-// Stripe
-import {useStripe, useElements, CardElement} from '@stripe/react-stripe-js';
 // Components
 import Loading from "components/Loading";
 import ErrorDisplay, { GraphQLErrors } from "components/Error";
@@ -35,36 +33,35 @@ const PaymentMethods = (props: ReactProps) => {
   const { classes } = props;
   const aClient = useApolloClient();
   const dispatch = useDispatch();
-  const stripe = useStripe();
 
   const actions = Actions.reduxLogin;
   const [isLoading, setIsLoading] = React.useState(false);
 
 
   const removeCreditCard = async(payment_method_id: string) => {
-    setIsLoading(true)
-    await aClient.mutate({
-      mutation: REMOVE_PAYMENT_METHOD,
-      variables: {
-        paymentMethodId: payment_method_id,
-        customerId: props.user.stripeCustomerId
-      }
-    });
-    refetchUserPaymentMethods()
-    setIsLoading(false)
+    // setIsLoading(true)
+    // await aClient.mutate({
+    //   mutation: REMOVE_PAYMENT_METHOD,
+    //   variables: {
+    //     paymentMethodId: payment_method_id,
+    //     customerId: props.user.stripeCustomerId
+    //   }
+    // });
+    // refetchUserPaymentMethods()
+    // setIsLoading(false)
   }
 
   const setDefaultPaymentMethod = async(payment_method_id: ID) => {
-    setIsLoading(true)
-    await aClient.mutate({
-      mutation: SET_DEFAULT_PAYMENT_METHOD,
-      variables: {
-        paymentMethodId: payment_method_id,
-        customerId: props.user.stripeCustomerId
-      }
-    });
-    refetchUserPaymentMethods()
-    setIsLoading(false)
+    // setIsLoading(true)
+    // await aClient.mutate({
+    //   mutation: SET_DEFAULT_PAYMENT_METHOD,
+    //   variables: {
+    //     paymentMethodId: payment_method_id,
+    //     customerId: props.user.stripeCustomerId
+    //   }
+    // });
+    // refetchUserPaymentMethods()
+    // setIsLoading(false)
   }
 
   const refetchUserPaymentMethods = async() => {
@@ -137,7 +134,6 @@ const PaymentMethods = (props: ReactProps) => {
         </div>
         <AddCard
           user={props.user}
-          stripe={stripe}
           isLoading={isLoading}
           setIsLoading={setIsLoading}
           refetchPaymentMethods={refetchUserPaymentMethods}

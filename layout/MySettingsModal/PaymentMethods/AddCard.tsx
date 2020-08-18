@@ -18,14 +18,6 @@ import Button from "@material-ui/core/Button";
 // Components
 import TextInput from "components/Fields/TextInput";
 import ErrorBounds from "components/ErrorBounds";
-// Stripe
-import {
-  CardElement,
-  Elements,
-  useStripe,
-  useElements,
-} from '@stripe/react-stripe-js';
-import { Stripe } from "@stripe/stripe-js";
 
 
 
@@ -33,8 +25,6 @@ const AddCard = (props: ReactProps) => {
 
   const { classes } = props;
   const aClient = useApolloClient();
-  const stripe = useStripe();
-  const elements = useElements();
 
   const [nameOnCard, setNameOnCard] = React.useState("");
   const [showAddVisaForm, setShowAddVisaForm] = React.useState(false);
@@ -45,31 +35,30 @@ const AddCard = (props: ReactProps) => {
   }
 
   const addCreditCard = async(stripeCustomerId: string) => {
-    props.setIsLoading(true)
+    // props.setIsLoading(true)
     // Within the context of `Elements`, this call to createPaymentMethod
     // knows from which Element to create the PaymentMethod,
-    let { paymentMethod } = await props.stripe.createPaymentMethod({
-      type: "card",
-      card: elements.getElement(CardElement),
-      // card: Stripe Elements tokenises card details
-      billing_details: {
-        email: props.user.email,
-        name: nameOnCard,
-      }
-    });
-    console.log('Stripe createPaymentMethod:', paymentMethod);
-
-    const response = await aClient.mutate({
-      mutation: ADD_PAYMENT_METHOD,
-      variables: {
-        paymentMethodId: paymentMethod.id,
-        customerId: stripeCustomerId
-      }
-    })
-    props.refetchPaymentMethods()
-    resetCardForm()
-    props.setIsLoading(false)
-    console.log('Saved payment methods:', response.data);
+    // let { paymentMethod } = await props.stripe.createPaymentMethod({
+    //   type: "card",
+    //   // card: elements.getElement(CardElement),
+    //   // card: Stripe Elements tokenises card details
+    //   billing_details: {
+    //     email: props.user.email,
+    //     name: nameOnCard,
+    //   }
+    // });
+    // console.log('Stripe createPaymentMethod:', paymentMethod);
+    // const response = await aClient.mutate({
+    //   mutation: ADD_PAYMENT_METHOD,
+    //   variables: {
+    //     paymentMethodId: paymentMethod.id,
+    //     customerId: stripeCustomerId
+    //   }
+    // })
+    // props.refetchPaymentMethods()
+    // resetCardForm()
+    // props.setIsLoading(false)
+    // console.log('Saved payment methods:', response.data);
   }
 
   return (
@@ -122,7 +111,7 @@ const AddCard = (props: ReactProps) => {
           </form>
         </div>
         <div className={classes.container}>
-          {
+          {/* {
             option(props).user()
             && process.browser
             ? <form className={classes.creditCardInputContainer}>
@@ -135,7 +124,7 @@ const AddCard = (props: ReactProps) => {
             : <Typography variant="subtitle1">
                 No PaymentMethod data. Network error
               </Typography>
-          }
+          } */}
         </div>
         <div className={classes.buttonContainer}>
           <Button
@@ -161,7 +150,7 @@ const AddCard = (props: ReactProps) => {
 
 interface ReactProps extends WithStyles<typeof styles> {
   user: UserPrivate
-  stripe?: Stripe; // provided by AsyncStripeProvider
+  // stripe?: Stripe; // provided by AsyncStripeProvider
   isLoading: boolean;
   setIsLoading(a: boolean): void;
   refetchPaymentMethods(): void;

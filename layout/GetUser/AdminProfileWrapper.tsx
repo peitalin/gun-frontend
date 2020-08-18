@@ -27,10 +27,13 @@ import { isStoreDeleted, storeCreateRedirectCondition } from "utils/store";
 
 
 
-const AdminProfileWrapper = (props) => {
+const AdminProfileWrapper = (
+  props: ReactProps & { children?: any }
+) => {
 
   const {
-    disableAdminBorder = false
+    disableAdminBorder = false,
+    disablePadding = false,
   } = props;
 
   const { loading, data, error, refetch } = useQuery<QueryData>(
@@ -97,12 +100,16 @@ const AdminProfileWrapper = (props) => {
 }
 
 
-
 export interface AdminProfileProps {
   loading: boolean;
   error: any;
   refetch(): void;
   data: QueryData;
+}
+
+export interface ReactProps extends WithStyles<typeof styles> {
+  disableAdminBorder?: boolean
+  disablePadding?: boolean
 }
 
 interface QueryData {
