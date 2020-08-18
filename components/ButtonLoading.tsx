@@ -37,7 +37,7 @@ const ButtonLoading: React.FC<ReactProps & ButtonProps> = (props) => {
       >
       {
         loading
-        ? <span className={"fadeIn"}
+        ? <span className={"fadeInFast"}
             style={{
               display: 'flex',
               justifyContent: 'center',
@@ -52,7 +52,7 @@ const ButtonLoading: React.FC<ReactProps & ButtonProps> = (props) => {
               size={loadingIconSize}
             />
           </span>
-        : <span className={"fadeIn"}
+        : <span className={"fadeInFast"}
             style={{
               display: 'flex',
               justifyContent: 'center',
@@ -79,7 +79,7 @@ const ButtonLoading: React.FC<ReactProps & ButtonProps> = (props) => {
       >
       {
         loading
-        ? <span className={"fadeIn"}
+        ? <span className={"fadeInFast"}
             style={{
               display: 'flex',
               justifyContent: 'center',
@@ -95,7 +95,7 @@ const ButtonLoading: React.FC<ReactProps & ButtonProps> = (props) => {
               size={loadingIconSize}
             />
           </span>
-        : <span className={"fadeIn"}
+        : <span className={"fadeInFast"}
             style={{
               display: 'flex',
               justifyContent: 'center',
