@@ -6,7 +6,6 @@ export const ImageFragment = gql`
     id
     original {
       id
-      url
       mimeType
       heightInPixels
       widthInPixels
