@@ -30,20 +30,10 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
 import { useRouter } from "next/router";
 // checkout
-import { Stripe } from "@stripe/stripe-js";
 import { asCurrency as c } from "utils/prices";
 
 import { VisaButtonLoading, PaypalButtonLoading } from "./PaymentButtonLoadingSSR";
-import AppleGooglePayPurchaseProduct from "./AppleGooglePayPurchaseProduct";
 import dynamic from "next/dynamic";
-const PaypalPurchaseProduct = dynamic(() => import("./PaypalPurchaseProduct"), {
-  loading: () => <PaypalButtonLoading/>,
-  ssr: false,
-});
-const StripePurchaseProduct = dynamic(() => import("./VisaPurchaseProduct"), {
-  loading: (props) => <VisaButtonLoading/>,
-  ssr: false,
-});
 const WestpacPurchaseProduct = dynamic(() => import("./WestpacPurchaseProduct"), {
   loading: (props) => <VisaButtonLoading/>,
   ssr: false,
@@ -155,36 +145,6 @@ const PurchaseProductSummary: React.FC<ReactProps> = (props) => {
             : classes.buttonContainer
           }>
 
-            <div className={classes.maxWidth}>
-              {
-                showApplePay &&
-                <AppleGooglePayPurchaseProduct
-                  buttonId={'product-page-apple-pay-1'}
-                  disableButton={false}
-                  stripe={props.stripe}
-                  user={user}
-                  // className={"fadeIn"}
-                  productsInfo={[{
-                    productId: props.product.id,
-                    variantId: chosenVariant.variantId,
-                    quantity: quantity,
-                  }]}
-                  quotedPrice={chosenVariant.price}
-                  display={true}
-                  buttonHeight={xsDown ? '40px' : '40px'}
-                  handleOrderPostPurchase={
-                    () => {}
-                    // handleOrderPostPurchase(
-                    //   aClient,
-                    //   dispatch,
-                    //   router,
-                    //   !!loggedInAsEmail,
-                    // )
-                  }
-                />
-              }
-            </div>
-
             <div className={clsx(
               classes.maxWidth,
               classes.visaContainer,
@@ -231,7 +191,6 @@ const PurchaseProductSummary: React.FC<ReactProps> = (props) => {
 interface ReactProps extends WithStyles<typeof styles> {
   product: Product;
   selectedOption: SelectedVariantProps;
-  stripe: Stripe;
   quantity?: number;
   // ProductLicense
   increaseQuantity(): void;
@@ -250,7 +209,6 @@ interface ReactProps extends WithStyles<typeof styles> {
   ): void;
 }
 
-const buttonBackgroundColor = '#f6f6f6';
 
 
 const styles = (theme: Theme) => createStyles({

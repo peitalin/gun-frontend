@@ -32,15 +32,7 @@ import Hidden from "components/HiddenFix";
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
 import { lgUpMediaQuery, col2MinWidth } from "./common";
-// Payments Stripe
-import { Stripe, loadStripe } from "@stripe/stripe-js";
 // import { basePriceDetailsFactory } from "reduxStore/pricing/priceCalculator";
-import {
-  CardElement,
-  Elements,
-  useStripe,
-  useElements,
-} from '@stripe/react-stripe-js';
 // // Analytics
 // import { useAnalytics } from "utils/analytics";
 // Meta headers
@@ -66,9 +58,6 @@ const Products: React.FC<ReactProps> = (props) => {
   const theme = useTheme();
   const xsDown = useMediaQuery(theme.breakpoints.down('xs'));
   const lgUp = useMediaQuery(lgUpMediaQuery);
-  // stripe
-  const stripe = useStripe();
-  const elements = useElements();
 
   // index for the featuredPreview Carousel
   const [index, setIndex] = React.useState(0);
@@ -212,7 +201,6 @@ const Products: React.FC<ReactProps> = (props) => {
         <FlexBasis33>
           <PurchaseProductSummary
             product={product}
-            stripe={stripe}
             selectedOption={selectedOption}
             quantity={quantity}
             // productLicense props
