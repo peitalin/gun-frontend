@@ -30,7 +30,7 @@ const Stores = (props: ReactProps) => {
           : `Download digital products by ${option(store).name()} on Relay.`
         }
       />
-      { store.name }
+      { option(store).name() }
       {/* <StoreId initialStore={props.initialStore}/> */}
     </>
   )

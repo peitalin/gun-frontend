@@ -10,7 +10,7 @@ import { Download, UserPrivate, Connection, OrdersConnection } from "typings/gql
 import {
   GET_BUYER_ORDERS_CONNECTION,
   GET_SELLER_ORDERS_CONNECTION,
-} from "queries/downloads-queries";
+} from "queries/orders-queries";
 import MyOrders from "pageComponents/MyOrders";
 // Meta headers
 import MetaHeadersPage from "layout/MetaHeadersPage";
