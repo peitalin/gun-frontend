@@ -16,7 +16,7 @@ import {
   GetProductFileDownloadLinkMutationVariables,
   Product,
   ProductEditInput,
-  Image,
+  Image_Parents,
   BlankMutationResponse
 } from "typings/gqlTypes";
 import { Actions } from "reduxStore/actions";
@@ -147,8 +147,7 @@ export const google_storage_save_image_to_db = async(
   tags: string,
   ownerIds: string[],
   aClient: ApolloClient<object>
-): Promise<Image> => {
-  console.log("........")
+): Promise<Image_Parents> => {
   const response = await aClient.mutate<SaveImageUploadMutation, SaveImageUploadMutationVariables>({
     mutation: SAVE_IMAGE_UPLOAD,
     variables: {
@@ -160,7 +159,7 @@ export const google_storage_save_image_to_db = async(
   });
   console.log("response ........", response)
   const result = response.data.uploadSaveImage;
-  return result.image
+  return result.image as any
 }
 
 export const google_storage_get_file_link = async(

@@ -2,7 +2,7 @@ import gql from "graphql-tag";
 
 
 export const ImageFragment = gql`
-  fragment ImageFragment on Image {
+  fragment ImageFragment on image_parents {
     id
     original {
       id
@@ -28,7 +28,7 @@ export const ImageFragment = gql`
 
 
 export const ProductVariantFragment = gql`
-  fragment ProductVariantFragment on ProductVariant {
+  fragment ProductVariantFragment on product_variants {
     variantSnapshotId
     variantId
     snapshotId
@@ -56,7 +56,6 @@ export const ProductVariantFragment = gql`
 export const ProductFragment = gql`
   fragment ProductFragment on Product {
     id
-    createdAt
     updatedAt
     tags
     isPublished
@@ -64,17 +63,20 @@ export const ProductFragment = gql`
     isDeleted
     isExcludedFromRecommendations
 
-    title
-    description
-    condition
-    make
-    model
-    ammoType
-    actionType
-    boreDiameter
-    serialNumber
-    location
-    dealer
+    currentSnapshot {
+      title
+      createdAt
+      description
+      condition
+      make
+      model
+      ammoType
+      actionType
+      boreDiameter
+      serialNumber
+      location
+      dealer
+    }
 
     currentVariants {
       ...ProductVariantFragment
@@ -273,7 +275,7 @@ export const StorePrivateFragment = gql`
 `;
 
 export const PaymentMethodFragment = gql`
-  fragment PaymentMethodFragment on PaymentMethod {
+  fragment PaymentMethodFragment on payment_methods {
     id
     userId
     createdAt

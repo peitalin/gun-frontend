@@ -102,10 +102,10 @@ export const ProductsFragment = gql`
     currentSnapshot {
       ...ProductSnapshotsFragment
     }
-    product_variants {
+    productVariants {
       ...ProductVariantsFragment
     }
-    # product_variants(
+    # productVariants(
     #   where: {productId: {_in: $productIds }}
     # ) {
     #   ...ProductVariantsFragment
@@ -113,7 +113,7 @@ export const ProductsFragment = gql`
   }
   ${ProductDetailsFragment}
   ${ProductSnapshotsFragment}
-${ProductVariantsFragment}
+  ${ProductVariantsFragment}
 `;
 
 

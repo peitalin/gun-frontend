@@ -49,7 +49,7 @@ export const ProductFragment = gql`
       id
       name
     }
-    product_variants {
+    productVariants {
       price
       previewItems {
         ...PreviewItemFragment
