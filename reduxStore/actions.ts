@@ -5,7 +5,6 @@ import { reduxProductEditActions } from "./product_edit-actions";
 import { reduxWishlistActions } from "./wishlist-actions";
 import { reduxFollowingStoresActions } from "./following-stores-actions";
 import { reduxRefetchActions } from "./refetch-actions";
-import { reduxStripeActions } from "./stripe-actions";
 import { reduxConversationActions } from "./conversation-actions";
 
 // Action type
@@ -20,7 +19,6 @@ export const Actions = {
   reduxWishlist: reduxWishlistActions,
   reduxFollowingStores: reduxFollowingStoresActions,
   reduxRefetch: reduxRefetchActions,
-  reduxStripe: reduxStripeActions,
   reduxConversation: reduxConversationActions,
 };
 

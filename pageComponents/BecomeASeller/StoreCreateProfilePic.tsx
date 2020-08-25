@@ -6,7 +6,7 @@ import clsx from "clsx";
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 import { Colors } from "layout/AppTheme";
 // Utils
-import { ID, StorePrivate, UploadType, Image } from "typings/gqlTypes";
+import { ID, StorePrivate, UploadType, Image_Parents } from "typings/gqlTypes";
 // Media uploader
 import { IFileWithMeta, IUploadParams } from "components/DropzoneUploader/Dropzone";
 import Dropzone from "components/DropzoneUploader/Dropzone";
@@ -175,7 +175,7 @@ const StoreCreateProfilePic = (props: ReactProps & FormikProps<FormikFields>) =>
 
 interface ReactProps extends WithStyles<typeof styles> {
   userId: string;
-  profileImage: Image;
+  profileImage: Image_Parents;
   setProfileImage(image: any): void;
   errorMessage?: any;
 }

@@ -45,8 +45,8 @@ const PreviewCardResponsive: React.FC<PreviewCardResponsiveProps> = (props) => {
             previewItem={previewItem}
             previewItems={previewItems}
             product={product}
-            title={option(product).title()}
-            tagline={option(product).model()}
+            title={option(product).currentSnapshot.title()}
+            tagline={option(product).currentSnapshot.model()}
             category={option(product).category()}
             price={option(featuredVariant).price()}
             priceWas={option(featuredVariant).priceWas()}
@@ -76,8 +76,8 @@ const PreviewCardResponsive: React.FC<PreviewCardResponsiveProps> = (props) => {
           previewItem={previewItem}
           previewItems={previewItems}
           product={product}
-          title={option(product).title()}
-          tagline={option(product).model()}
+          title={option(product).currentSnapshot.title()}
+          tagline={option(product).currentSnapshot.model()}
           category={option(product).category()}
           price={option(featuredVariant).price()}
           priceWas={option(featuredVariant).priceWas()}
@@ -106,8 +106,8 @@ const PreviewCardResponsive: React.FC<PreviewCardResponsiveProps> = (props) => {
           previewItem={previewItem}
           previewItems={previewItems}
           product={product}
-          title={option(product).title()}
-          tagline={option(product).model()}
+          title={option(product).currentSnapshot.title()}
+          tagline={option(product).currentSnapshot.model()}
           category={option(product).category()}
           price={option(featuredVariant).price()}
           priceWas={option(featuredVariant).priceWas()}
@@ -135,8 +135,8 @@ const PreviewCardResponsive: React.FC<PreviewCardResponsiveProps> = (props) => {
           previewItem={previewItem}
           previewItems={previewItems}
           product={product}
-          title={option(product).title()}
-          tagline={option(product).model()}
+          title={option(product).currentSnapshot.title()}
+          tagline={option(product).currentSnapshot.model()}
           category={option(product).category()}
           price={option(featuredVariant).price()}
           priceWas={option(featuredVariant).priceWas()}

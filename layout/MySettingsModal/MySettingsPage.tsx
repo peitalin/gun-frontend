@@ -48,10 +48,6 @@ const MySettings = (props: ReactProps & ReduxProps) => {
 
   const apolloClient = useApolloClient();
 
-  const showMySettingsStripeComponent = useSelector<GrandReduxState, boolean>(
-    state => state.reduxStripe.showMySettingsStripeComponent
-  );
-
   const user = useSelector<GrandReduxState, UserPrivate>(
     state => state.reduxLogin.user
   );
@@ -98,11 +94,7 @@ const MySettings = (props: ReactProps & ReduxProps) => {
       }
 
       <div className={classes.section}>
-      {
-        // Show only 1 Stripe Card instance at a time
-        showMySettingsStripeComponent &&
-        <PaymentMethods user={user}/>
-      }
+        payment methods
       </div>
 
       <div className={classes.sectionLast}>

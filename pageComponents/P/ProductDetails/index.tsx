@@ -49,7 +49,7 @@ const ProductDetails = (props: ReactProps) => {
         <SellerProfile store={props.product.store}/>
       }
       {
-        option(props).product.description() &&
+        option(props).product.currentSnapshot.description() &&
         <ProductDescription
           product={props.product}
         />

@@ -58,6 +58,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   asModal?: boolean
   title?: string
   chatRoomId?: string
+  productId?: string
 }
 
 

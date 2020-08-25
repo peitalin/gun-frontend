@@ -10,7 +10,7 @@ import {
   fade
 } from "@material-ui/core/styles";
 import { BorderRadius, Colors } from "layout/AppTheme";
-import { Order, OrderStatus } from "typings/gqlTypes";
+import { Orders, OrderStatus } from "typings/gqlTypes";
 // Material UI
 import Typography from "@material-ui/core/Typography";
 import Row from "./Row";
@@ -60,7 +60,7 @@ const OrderSummary = (props: ReactProps) => {
   }
 };
 
-const orderStatusHumanFriendly = (order: Order): string => {
+const orderStatusHumanFriendly = (order: Orders): string => {
   switch (order.currentSnapshot.orderStatus) {
     case OrderStatus.CREATED:
       return "Unfinished";
@@ -77,7 +77,7 @@ const orderStatusHumanFriendly = (order: Order): string => {
 };
 
 interface ReactProps extends WithStyles<typeof styles> {
-  order: Order;
+  order: Orders;
 }
 
 const styles = (theme: Theme) =>

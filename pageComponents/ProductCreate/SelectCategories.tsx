@@ -9,7 +9,7 @@ import { GrandReduxState } from "reduxStore/grand-reducer";
 import { GET_PRODUCT_CATEGORIES } from "queries/categories-queries";
 import { useQuery } from '@apollo/client';
 // Typings
-import { ProductCategory } from "typings/gqlTypes";
+import { Categories } from "typings/gqlTypes";
 import { ReducerName } from "typings/dropzone";
 // Styles
 import { withStyles, WithStyles } from "@material-ui/core/styles";
@@ -89,7 +89,7 @@ const SelectCategories = (props: ReactProps & FormikProps<FormikFields>) => {
 }
 
 
-const createCategorySuggestions = (categories: ProductCategory[]) => {
+const createCategorySuggestions = (categories: Categories[]) => {
   if (categories && categories.length > 0) {
     return categories.slice().sort().map(category => {
       return {
@@ -110,7 +110,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   reducerName: ReducerName
 }
 interface QueryData {
-  getProductCategories: ProductCategory[]
+  getProductCategories: Categories[]
 }
 interface FormikFields {
   categoryId: string;

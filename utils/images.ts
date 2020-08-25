@@ -1,4 +1,4 @@
-import { ID, Image } from "typings/gqlTypes";
+import { ID, Image_Parents } from "typings/gqlTypes";
 import { Breakpoints } from "layout/AppTheme";
 
 export const concatChunksToUInt8Array = (chunks, receivedLength): Uint8Array => {
@@ -15,7 +15,7 @@ export const concatChunksToUInt8Array = (chunks, receivedLength): Uint8Array => 
 
 
 // https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images
-export const genSrcSet = (image: Image) => {
+export const genSrcSet = (image: Image_Parents) => {
   return image.variants.map(v => {
     return `${v.url} ${v.widthInPixels}w`
   }).join(",")

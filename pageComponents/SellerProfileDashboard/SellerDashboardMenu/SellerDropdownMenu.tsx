@@ -1,6 +1,6 @@
 import React from "react";
 import { oc as option } from "ts-optchain";
-import { ProductCategory, Product } from "typings/gqlTypes";
+import { Product } from "typings/gqlTypes";
 // Styles
 import clsx from "clsx";
 import { withStyles, WithStyles } from "@material-ui/core/styles";

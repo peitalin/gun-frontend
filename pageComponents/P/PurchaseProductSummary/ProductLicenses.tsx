@@ -4,7 +4,7 @@ import { oc as option } from "ts-optchain";
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 import { Colors } from "layout/AppTheme";
 // Typings
-import { ProductVariant } from "typings/gqlTypes";
+import { Product_Variants } from "typings/gqlTypes";
 // Selector component
 import Select from 'react-select';
 // Material UI
@@ -101,14 +101,14 @@ interface ReactProps extends WithStyles<typeof styles> {
   isQuantityEnabled?: boolean;
   selectedOption: {
     label: string;
-    value: ProductVariant;
+    value: Product_Variants;
   };
   variantOptions: {
     label: string;
-    value: ProductVariant;
+    value: Product_Variants;
   }[];
   handleChangeVariantOption(
-    selectedOption: { label: string, value: ProductVariant }
+    selectedOption: { label: string, value: Product_Variants }
   ): void;
 }
 

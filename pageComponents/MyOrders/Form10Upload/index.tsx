@@ -6,7 +6,7 @@ import clsx from "clsx";
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 import { Colors } from "layout/AppTheme";
 // Utils
-import { ID, Order, UploadType, Order_Snapshots, OrderStatus } from "typings/gqlTypes";
+import { ID, Orders, UploadType, Order_Snapshots, OrderStatus } from "typings/gqlTypes";
 // Media uploader
 import { IFileWithMeta, IUploadParams } from "components/DropzoneUploader/Dropzone";
 import Dropzone from "components/DropzoneUploader/Dropzone";
@@ -270,13 +270,13 @@ const Form10Upload = (props: ReactProps) => {
 
 
 interface ReactProps extends WithStyles<typeof styles> {
-  order: Order;
+  order: Orders;
   errorMessage?: string;
 }
 
 // add form10
 interface MutDataAdd {
-  update_orders: { returning: Order[] },
+  update_orders: { returning: Orders[] },
   insert_order_snapshots_one: Order_Snapshots
 }
 interface MutVarAdd {
@@ -287,7 +287,7 @@ interface MutVarAdd {
 
 // remove form10
 interface MutDataRemove {
-  update_orders: { returning: Order[] },
+  update_orders: { returning: Orders[] },
   insert_order_snapshots_one: Order_Snapshots
 }
 interface MutVarRemove {

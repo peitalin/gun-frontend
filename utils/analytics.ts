@@ -38,7 +38,6 @@ export const analyticsUser = (user: UserPrivate) => {
       signupDate: user.createdAt,
       storeId: user.storeId || undefined,
       storeCreationDate: (user.store && user.store.createdAt) || undefined,
-      cartCount: user.cart.items.length
     };
     window.analytics.identify(user.id, parameters);
     console.log("Recorded analytics identity:", {

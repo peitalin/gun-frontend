@@ -13,9 +13,8 @@ import { Colors } from "layout/AppTheme";
 import {
   UserPrivate,
   ID,
-  Order,
-  OrderItem,
-  Transaction,
+  Orders,
+  Transactions,
 } from "typings/gqlTypes";
 // import { RefundReason, MakeRefundParams } from "typings";
 // Material UI
@@ -58,8 +57,8 @@ const RefundOrders: React.FC<ReactOrdersFormProps> = (props) => {
   const [loading, setLoading] = React.useState(false);
 
   const [orderId, setOrderId] = React.useState(undefined);
-  const [order, setOrder] = React.useState<Order>(undefined);
-  const [recentTx, setRecentTx] = React.useState<Transaction[]>([]);
+  const [order, setOrder] = React.useState<Orders>(undefined);
+  const [recentTx, setRecentTx] = React.useState<Transactions[]>([]);
   const [
     recentPaypalToken,
     setRecentPaypalToken
@@ -215,7 +214,7 @@ const RefundOrders: React.FC<ReactOrdersFormProps> = (props) => {
 
           // order details
           // const tx = option(order).currentSnapshot.transaction();
-          const total = option(order).currentSnapshot.total(0);
+          const total = option(order).total(0);
           const subtotal = 0
           // const subtotal = option(tx).subtotal(0);
 
@@ -406,7 +405,7 @@ const DisplayRecentOrderIds = (props: DisplayRecentOrderIdProps) => {
         </Typography>
         {
           recentTx
-          .filter((tx: Transaction) => !tx.id.startsWith('re'))
+          .filter((tx: Transactions) => !tx.id.startsWith('re'))
           .map(tx => {
             return (
               <div
@@ -438,7 +437,7 @@ interface ReactOrdersFormProps extends WithStyles<typeof styles> {
   onClickDebugPrint(): void;
 }
 interface DisplayRecentOrderIdProps extends WithStyles<typeof styles> {
-  recentTx: Transaction[];
+  recentTx: Transactions[];
   setOrderId(id: ID): void;
 }
 interface SectionProps extends ReactProps {
@@ -448,13 +447,13 @@ interface SectionProps extends ReactProps {
 interface ReactProps extends WithStyles<typeof styles> {
 }
 interface QueryData {
-  getOrderAsAdmin: Order;
+  getOrderAsAdmin: Orders;
 }
 interface QueryVar {
   orderId: ID;
 }
 interface QueryData2 {
-  getRecentTransactions: Transaction[];
+  getRecentTransactions: Transactions[];
 }
 interface QueryVar2 {
   count: number;

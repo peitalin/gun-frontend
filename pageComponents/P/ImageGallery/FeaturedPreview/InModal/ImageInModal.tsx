@@ -4,7 +4,7 @@ import { oc as option } from "ts-optchain";
 import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
 import { Colors } from "layout/AppTheme";
 // Typings
-import { ProductPreviewItem } from "typings/gqlTypes";
+import { Product_Preview_Items } from "typings/gqlTypes";
 import { genSrcSet, genImgBreakpoints } from "utils/images";
 import Loading from "components/Loading";
 import LoadingBar from "components/LoadingBar";
@@ -90,7 +90,7 @@ const ImageInModal: React.FC<ReactProps> = (props) => {
 }
 
 interface ReactProps extends WithStyles<typeof styles> {
-  previewItem?: ProductPreviewItem;
+  previewItem?: Product_Preview_Items;
   onClick?(a: any): void;
   showLoadingBar?: boolean;
 }

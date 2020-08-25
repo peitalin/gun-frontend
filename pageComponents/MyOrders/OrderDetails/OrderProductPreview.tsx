@@ -10,7 +10,7 @@ import Button from '@material-ui/core/Button';
 // Utils Components
 import ErrorBounds from "components/ErrorBounds";
 import { centsToDollarSelector } from "utils/selectors";
-import { Product } from "typings/gqlTypes";
+import { Products } from "typings/gqlTypes";
 import PriceDisplayMain from "components/PriceDisplayMain";
 
 
@@ -21,9 +21,13 @@ const OrderProductPreview: React.FC<ReactProps> = (props) => {
   const [imgLoaded, setImgLoaded] = React.useState(false);
   // props
   const { classes, product } = props;
-  const { title } = product;
-  const previewItem = option(product).chosenVariant.previewItems([])[0];
-  let price = option(product).chosenVariant.price();
+  const { title } = product.currentSnapshot;
+
+  // const previewItem = option(product).chosenVariant.previewItems([])[0];
+  // const previewItem = option(product).productVariants[0].previewItems([])[0];
+  const previewItem = option(product).productVariants[0].previewItems([])[0];
+
+  // let price = option(product).chosenVariant.price();
 
   // const priceDetails = option(item).priceDetails();
   // console.log('product', product)
@@ -50,12 +54,12 @@ const OrderProductPreview: React.FC<ReactProps> = (props) => {
             <Typography variant="body1" className={classes.name}>
               <span>{title}</span>
             </Typography>
-            <PriceDisplayMain
+            {/* <PriceDisplayMain
               pastTense={true}
               price={price}
               quantityAvailable={null}
               isSoldOut={false}
-            />
+            /> */}
           </div>
 
         </div>
@@ -67,7 +71,7 @@ const OrderProductPreview: React.FC<ReactProps> = (props) => {
 
 
 interface ReactProps extends WithStyles<typeof styles> {
-  product: Product;
+  product: Products;
 }
 
 const styles = (theme: Theme) => createStyles({

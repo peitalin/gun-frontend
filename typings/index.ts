@@ -2,8 +2,6 @@
 import {
   ProductVariantInput,
   ProductVariantEditInput,
-  VariantsLabel,
-  QuantityLabel,
 } from "typings/gqlTypes";
 
 type ID = any;
@@ -191,9 +189,7 @@ export interface ProductCreateEditCommonInput {
   location: string;
   dealer: string;
   isPublished: boolean;
-  variantsLabel?: VariantsLabel;
   isQuantityEnabled: boolean;
-  quantityLabel?: QuantityLabel;
   productId?: ID;
   currentVariants: ProductVariantInput[] | ProductVariantEditInput[];
 }

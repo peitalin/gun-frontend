@@ -86,7 +86,7 @@ const ProductRow = (props: ReactProps) => {
                 variant="body1"
                 component="div"
               >
-                {trimTitle(option(product).title(""), 48)}
+                {trimTitle(option(product).currentSnapshot.title(""), 48)}
               </Typography>
 
               <div className={clsx(

@@ -5,7 +5,7 @@ import clsx from "clsx";
 import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
 import { Colors } from "layout/AppTheme";
 // Typings
-import { OrderItem, ProductSale, PayeeType } from "typings/gqlTypes";
+import { ProductSale, PayeeType } from "typings/gqlTypes";
 // Utils Components
 import ErrorBounds from "components/ErrorBounds";
 import Loading from "components/Loading";
@@ -33,7 +33,7 @@ const ProductSaleDetails = (props: ReactProps) => {
   const xsDown = useMediaQuery(theme.breakpoints.down('xs'));
 
   const { productSale } = props;
-  const { orderItem } = productSale;
+  const { order } = productSale;
 
   let storePayoutItem = option(productSale).payoutItems([])
                           .filter(p => p.payeeType === PayeeType.STORE)
@@ -51,11 +51,11 @@ const ProductSaleDetails = (props: ReactProps) => {
         Sales Details
       </Typography>
       {
-        option(orderItem).product() &&
+        option(order).id() &&
         <div className={classes.flexCol}>
           <Row classes={classes}
             label={"Date"}
-            value={showDateAndTime(orderItem.createdAt)}
+            value={showDateAndTime(order.createdAt)}
           />
           <Row classes={classes}
             label={"Total Earnings"}
@@ -63,11 +63,11 @@ const ProductSaleDetails = (props: ReactProps) => {
           />
           <Row classes={classes}
             label={"Status"}
-            value={orderItem.orderStatus}
+            value={order.currentSnapshot.orderStatus}
           />
           <Row classes={classes}
             label={"Order ID"}
-            value={orderItem.orderId}
+            value={order.id}
           />
 
           <div className={clsx(classes.flexRow, classes.row)}>
@@ -80,20 +80,11 @@ const ProductSaleDetails = (props: ReactProps) => {
               style={{ justifyContent: "flex-start" }}
             >
               <Typography variant="body1" className={classes.value}>
-                {orderItem.product.currentSnapshot.name}
+                {order.product.currentSnapshot.title}
               </Typography>
-              {
-                (orderItem.product.chosenVariant.variantName !== "Regular License") &&
-                <Typography variant="body1" className={classes.value}>
-                  {orderItem.product.chosenVariant.variantName}
-                </Typography>
-              }
             </div>
           </div>
-          <Row classes={classes}
-            label={"Quantity"}
-            value={orderItem.quantity}
-          />
+
         </div>
       }
     </ErrorBounds>

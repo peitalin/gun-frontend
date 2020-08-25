@@ -5,7 +5,7 @@ import clsx from "clsx";
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 import { Colors } from "layout/AppTheme";
 // Typings
-import { ID, Transaction  } from "typings/gqlTypes";
+import { ID, Transactions } from "typings/gqlTypes";
 // import { MakeRefundParams, RefundReason } from "typings";
 // Material UI
 import Typography from "@material-ui/core/Typography";
@@ -122,7 +122,7 @@ const RefundTaxesFees = (props: ReactProps & FormikProps<FormikFields>) => {
 
 
 interface ReactProps extends WithStyles<typeof styles> {
-  tx: Transaction;
+  tx: Transactions;
   disableRefundPaymentProcessingFee: boolean;
   disableRefundTaxes: boolean;
 }

@@ -3,8 +3,6 @@ import { withStyles, WithStyles } from "@material-ui/core/styles";
 import { Colors } from "layout/AppTheme";
 
 import Typography from '@material-ui/core/Typography';
-// Typings
-import { Cart } from "typings/gqlTypes";
 // Components
 import styles from './commonStylesCompact';
 import ErrorBounds from "components/ErrorBounds";

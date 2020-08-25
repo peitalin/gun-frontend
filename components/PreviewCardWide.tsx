@@ -13,7 +13,7 @@ import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
 import YouTubeIcon from "components/Icons/YouTube";
 // Typings
-import { ProductPreviewItem, ProductCategory } from "typings/gqlTypes";
+import { Product_Preview_Items, Categories } from "typings/gqlTypes";
 import { genSrcSet } from "utils/files";
 import { getYouTubeVimeoImagePreview } from "utils/strings";
 import PriceDisplayMain from "components/PriceDisplayMain";
@@ -145,11 +145,11 @@ const PreviewCardWide = (props: ReactProps) => {
 
 
 interface ReactProps extends WithStyles<typeof styles> {
-  previewItem: ProductPreviewItem;
+  previewItem: Product_Preview_Items;
   fit?: boolean; // object-fit the image
   title: string;
   tagline: string;
-  category: ProductCategory;
+  category: Categories;
   price: number;
   priceWas?: number;
   quantityAvailable?: number;

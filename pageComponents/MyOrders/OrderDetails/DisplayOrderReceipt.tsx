@@ -9,7 +9,7 @@ import ErrorBounds from "components/ErrorBounds";
 // MUI
 import Typography from "@material-ui/core/Typography";
 // Components
-import { Order, PaymentMethod } from "typings/gqlTypes";
+import { Orders, PaymentMethod } from "typings/gqlTypes";
 // Icons
 import LockIcon from "@material-ui/icons/Lock";
 import LocalOfferIcon from "@material-ui/icons/LocalOffer";
@@ -23,12 +23,10 @@ const DisplayOrderReceipt: React.FC<ReactProps> = (props) => {
 
   const { classes, order } = props;
 
-  // const fees = c(order.currentSnapshot.paymentProcessingFee);
-  // const taxes = c(order.currentSnapshot.taxes);
-  // const subtotal = c(order.currentSnapshot.subtotal);
-  const total = c(order.currentSnapshot.total);
-  // const promoCodeSavingsDisplay = c(order.currentSnapshot.promoCodeSavings);
-  // const youSaveDisplay = c(order.currentSnapshot.automaticSavings);
+  // const fees = c(order.paymentProcessingFee);
+  // const taxes = c(order.taxes);
+  // const subtotal = c(order.subtotal);
+  const total = c(order.total);
 
   // Get a modified cart subtotal so that it reflects the subtotal BEFORE discounts (cart is AFTER)
   // const subtotalBeforeDiscounts =
@@ -178,7 +176,7 @@ const DisplayOrderReceipt: React.FC<ReactProps> = (props) => {
 
 
 interface ReactProps extends WithStyles<typeof styles> {
-  order: Order;
+  order: Orders;
   isVisa?: boolean;
 }
 

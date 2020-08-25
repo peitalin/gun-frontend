@@ -12,7 +12,7 @@ import PreviewCardResponsive from "pageComponents/FrontPage/PreviewCardResponsiv
 import PreviewCardLoading from "./PreviewCardLoading";
 import LoadingCards from "./LoadingCards";
 // Graphql Typings
-import { ProductsConnection, OrderBy, ConnectionOffsetQuery } from "typings/gqlTypes";
+import { ProductsConnection, Order_By, ConnectionOffsetQuery } from "typings/gqlTypes";
 // useMediaQuery
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
@@ -40,10 +40,10 @@ const NewReleaseProducts = (props: ReactProps) => {
   } = props;
 
   const orderByOptions = [
-    { label: "Newest", value: { createdAt: OrderBy.DESC }},
-    { label: "Oldest", value: { createdAt: OrderBy.ASC }},
-    { label: "Highest Price", value: { price: OrderBy.DESC }},
-    { label: "Lowest Price", value: { price: OrderBy.ASC }},
+    { label: "Newest", value: { createdAt: Order_By.DESC }},
+    { label: "Oldest", value: { createdAt: Order_By.ASC }},
+    { label: "Highest Price", value: { price: Order_By.DESC }},
+    { label: "Lowest Price", value: { price: Order_By.ASC }},
   ];
 
   const [loadCarouselPics, setLoadCarouselPics] = React.useState({});

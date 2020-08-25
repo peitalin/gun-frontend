@@ -82,7 +82,7 @@ export const setUserOnCompleted =
   // update Redux user state on initial page load
   if (option(data).user.id() && refetch) {
     // set User profile, and userRefetch in REDUX
-    dispatch(reduxBatchUpdate.userCart(data, refetch))
+    dispatch(reduxBatchUpdate.userStore(data, refetch))
   } else {
     // set User profile, and userRefetch in REDUX
     dispatch(Actions.reduxLogin.SET_USER(data.user))
@@ -91,7 +91,7 @@ export const setUserOnCompleted =
 
 //////////////// REDUX THUNK CREATORS /////////////////////
 export const reduxBatchUpdate = {
-  userCart: (data: QueryData, refetch?: ApolloRefetch) => (dispatch: Dispatch) => {
+  userStore: (data: QueryData, refetch?: ApolloRefetch) => (dispatch: Dispatch) => {
     batch(() => {
       // set User Profile in REDUX
       console.log("setting user.store in redux: ", data.user.store)
@@ -140,9 +140,6 @@ GetUser.getInitialProps = async (ctx: Context) => {
       });
 
       console.log("initial GetUser response:", userResponse)
-      if (option(userResponse).data.user.cart()) {
-        // dispatch(Actions.reduxCart.UPDATE_CART(userResponse.data.user.cart));
-      }
       if (option(userResponse).data.user.store()) {
         dispatch(Actions.reduxProductCreate.UPDATE_STORE_ID(userResponse.data.user.store.id));
       }

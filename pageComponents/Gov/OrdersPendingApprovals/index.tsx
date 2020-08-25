@@ -21,7 +21,7 @@ import {
   StoreSales,
   Payout,
   ID,
-  Transaction,
+  Transactions,
   User,
 } from "typings/gqlTypes";
 // Graphql

@@ -77,12 +77,12 @@ const ProductRecommendationRow = (props: ReactProps) => {
           <Typography
             className={clsx(
               classes.title,
-              !option(product).title() ? "pulse" : null
+              !option(product).currentSnapshot.title() ? "pulse" : null
             )}
             variant="body1"
             component="div"
           >
-            {trimTitle(option(product).title(), 48)}
+            {trimTitle(option(product).currentSnapshot.title(), 48)}
           </Typography>
 
           <div className={clsx(

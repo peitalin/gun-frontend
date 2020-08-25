@@ -1,4 +1,3 @@
-import { CartItem } from "typings/gqlTypes";
 import { oc as option } from "ts-optchain";
 import { ProviderContext } from "notistack";
 
@@ -121,14 +120,3 @@ export const runOnLoginExpiration = (fn: (...args: any) => any): void => {
     }, countDown)
   }
 };
-
-export const cartItemsNotInProfile = (
-  cartItemsA: CartItem[],
-  cartItemsB: CartItem[]
-): CartItem[] => {
-  let newCartItemsNotInProfile = cartItemsA
-    .filter(a => !cartItemsB.map(b => b.id).includes(a.id));
-  // items added when logged out
-  return newCartItemsNotInProfile
-}
-

@@ -6,7 +6,7 @@ import clsx from "clsx";
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 import { Colors } from "layout/AppTheme";
 // Typings
-import { Product, Order, OrderItem, ID  } from "typings/gqlTypes";
+import { Product, Orders, Products, ID  } from "typings/gqlTypes";
 // Material UI
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
@@ -27,12 +27,14 @@ import Form10Upload from "./Form10Upload";
 const OrderRow: React.FC<ReactProps> = (props) => {
 
   const [showOrderDetails, setShowOrderDetails] = useState(false);
-  const { classes, product, order } = props;
+  const { classes, order } = props;
+  const { product } = order;
 
   const theme = useTheme();
   const smDown = useMediaQuery(theme.breakpoints.down("sm"))
 
   console.log("porduct: ",product)
+  const previewItem = option(product).productVariants[0].previewItems[0](null);
 
   return (
     <div className={clsx(classes.flexRowWithBorder, "fadeIn")}>
@@ -46,12 +48,12 @@ const OrderRow: React.FC<ReactProps> = (props) => {
             {
               smDown
               ? <ProductPreviewCardRow
-                  previewItem={option(product).chosenVariant.previewItems[0](null)}
+                  previewItem={previewItem}
                   height={55}
                   width={88}
                 />
               : <ProductPreviewCardRow
-                  previewItem={option(product).chosenVariant.previewItems[0](null)}
+                  previewItem={previewItem}
                   height={80}
                   width={128}
                 />
@@ -69,15 +71,10 @@ const OrderRow: React.FC<ReactProps> = (props) => {
               'fadeIn'
             )}>
               <Typography className={classes.name} variant="body2">
-                {option(product).title("")}
+                {option(product).currentSnapshot.title("")}
               </Typography>
               <Typography className={classes.tagline} variant="body2">
-                {option(product).model("")}
-              </Typography>
-              <Typography className={classes.variant} variant="body2">
-                {
-                  `${option(product).chosenVariant.variantName("")}`
-                }
+                {option(product).currentSnapshot.model("")}
               </Typography>
               <Link
                 href="/s/[storeId]"
@@ -153,8 +150,7 @@ const OrderRow: React.FC<ReactProps> = (props) => {
 }
 
 interface ReactProps extends WithStyles<typeof styles> {
-  order: Order;
-  product: Product;
+  order: Orders;
 }
 
 const styles = (theme: Theme) => createStyles({

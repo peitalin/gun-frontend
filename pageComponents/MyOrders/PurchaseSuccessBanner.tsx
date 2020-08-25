@@ -15,7 +15,7 @@ import Tick from "components/Icons/Tick";
 // MUI
 import Typography from "@material-ui/core/Typography";
 // Subcomponents
-import { DownloadsConnection, Order } from "typings/gqlTypes";
+import { Orders } from "typings/gqlTypes";
 // Icons
 import ClearIcon from "@material-ui/icons/Clear";
 import IconButton from "@material-ui/core/IconButton";
@@ -107,7 +107,6 @@ const PurchaseSuccessBanner = (props) => {
 
 
 interface ReactProps extends WithStyles<typeof styles> {
-  initialDownloads: DownloadsConnection;
 }
 
 const styles = (theme: Theme) => createStyles({

@@ -6,7 +6,7 @@ import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/s
 // GraphQL
 import { useQuery, useApolloClient } from "@apollo/client";
 // Typings
-import { Product, ID, ProductVariant } from "typings/gqlTypes";
+import { Product, ID, Product_Variants } from "typings/gqlTypes";
 import {
   GET_PRODUCT,
 } from "queries/products-queries";
@@ -86,7 +86,6 @@ const Products: React.FC<ReactProps> = (props) => {
         productId: undefined,
         variantId: undefined,
         snapshotId: undefined,
-        productSnapshotId: undefined,
         variantSnapshotId: undefined,
         position: 0,
         storeId: undefined,
@@ -98,7 +97,7 @@ const Products: React.FC<ReactProps> = (props) => {
         previewItems: [],
         isDefault: false,
         isSoldOut: false,
-      } as ProductVariant,
+      } as any,
     }
   );
 
@@ -108,7 +107,7 @@ const Products: React.FC<ReactProps> = (props) => {
 
 
   const handleChangeVariantOption = (
-    selectedOption: { label: string, value: ProductVariant }
+    selectedOption: { label: string, value: Product_Variants }
   ) => {
     setSelectedOption(selectedOption)
   };
@@ -253,7 +252,7 @@ interface QueryVar {
 }
 export interface SelectedVariantProps {
   label: string;
-  value: ProductVariant;
+  value: Product_Variants;
 }
 
 

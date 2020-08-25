@@ -2,10 +2,11 @@ overwrite: true
 
 schema:
   # - https://api.gunmarketplace.com.au/v1/graphql:
-  # - http://0.0.0.0:4000/graphql:
-  - http://0.0.0.0:8080/v1/graphql:
-      headers:
-        x-hasura-admin-secret: "hescomingrightforus"
+  # - https://0.0.0.0/gateway/graphql
+  - http://0.0.0.0:4000/graphql
+  # - http://0.0.0.0:8080/v1/graphql:
+  #     headers:
+  #       x-hasura-admin-secret: "hescomingrightforus"
 
 documents:
   # - ./**/*.graphql
@@ -20,10 +21,10 @@ documents:
   # - ./queries/user-mutations.ts
 
 generates:
-  ./typings/gqlIntrospection.ts:
-    plugins:
-      - fragment-matcher:
-        apolloClientVersion: 2
+  # ./typings/gqlIntrospection.ts:
+  #   plugins:
+  #     - fragment-matcher:
+  #       apolloClientVersion: 2
   ./typings/gqlTypes.tsx:
     plugins:
       - typescript:
@@ -43,13 +44,13 @@ generates:
           content: "export type PageCursor = Scalars[\"PageCursor\"]"
       - add:
           placement: "append"
-          content: "export type ProductCategoryGroup = Scalars[\"ProductCategoryGroup\"]"
+          content: "export type Exact<T extends { [key: string]: any }> = { [K in keyof T]: T[K] }"
       - typescript-operations:
           preResolveTypes: true
           dedupeOperationSuffix: true
       - typescript-react-apollo:
           reactApolloVersion: 3
-          withHooks: true
+          withHooks: false
           withHOC: false
           withComponent: false
           withMutationFn: false

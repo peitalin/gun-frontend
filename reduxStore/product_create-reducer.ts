@@ -8,8 +8,6 @@ import {
   ProductPreviewItem,
   ProductCreateInput,
   ProductVariantInput,
-  VariantsLabel,
-  QuantityLabel,
 } from "typings/gqlTypes";
 import {
   DzuFilePreview,
@@ -54,13 +52,11 @@ export const initialProductCreateState: ReduxStateProductCreate = {
         priceWas: undefined,
         price: undefined,
         previewItems: [],
-        quantityAvailable: null
+        quantityAvailable: null,
       }
     ],
     isPublished: false,
-    variantsLabel: VariantsLabel.LICENSE,
     isQuantityEnabled: false,
-    quantityLabel: QuantityLabel.SEATS
   },
   previewItems: [],
   dzuPreviewOrder: [],

@@ -38,7 +38,7 @@ const MySettingsModal: React.FC<ReactProps> = (props) => {
   const theme = useTheme();
   const mdUp = useMediaQuery(theme.breakpoints.up("md"))
 
-  if (!asModal && process.browser && option(window).Stripe()) {
+  if (!asModal && process.browser) {
     return <MySettingsPage goBack={goBack} asModal={asModal}/>
   } else {
     return (

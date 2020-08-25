@@ -27,7 +27,7 @@ import Button from "@material-ui/core/Button";
 import ToolTips from "pageComponents/MyOrders/ToolTips";
 import OrderRow from "pageComponents/MyOrders/OrderRow";
 import PurchaseSuccessBanner from "pageComponents/MyOrders/PurchaseSuccessBanner";
-import { Download, UserPrivate, OrderStatus, OrdersConnection, Order } from "typings/gqlTypes";
+import { UserPrivate, OrderStatus, OrdersConnection, Orders } from "typings/gqlTypes";
 // Icons
 import ClearIcon from "@material-ui/icons/Clear";
 import IconButton from "@material-ui/core/IconButton";
@@ -164,7 +164,6 @@ const MyOrders: React.FC<ReactProps> = (props) => {
                   return (
                     <OrderRow
                       key={i}
-                      product={order.product}
                       order={order}
                     />
                   )
@@ -190,7 +189,6 @@ const MyOrders: React.FC<ReactProps> = (props) => {
                   return (
                     <OrderRow
                       key={i}
-                      product={order.product}
                       order={order}
                     />
                   )

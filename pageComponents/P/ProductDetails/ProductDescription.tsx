@@ -32,7 +32,7 @@ const ProductDescription = (props: ReactProps) => {
         )}
       >
         <span dangerouslySetInnerHTML={{
-          __html: String(option(props).product.description(""))
+          __html: String(option(props).product.currentSnapshot.description(""))
         }}/>
       </Typography>
       {/* {

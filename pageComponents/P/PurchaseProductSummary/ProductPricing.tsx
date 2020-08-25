@@ -5,7 +5,7 @@ import { oc as option } from "ts-optchain";
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 // Utils Components
 import ErrorBounds from "components/ErrorBounds";
-import { Product, ProductVariant } from "typings/gqlTypes";
+import { Product, Product_Variants } from "typings/gqlTypes";
 import PriceDisplayProductPage from "components/PriceDisplayProductPage";
 import Typography from "@material-ui/core/Typography";
 
@@ -39,7 +39,7 @@ const ProductPricing = (props: ReactProps) => {
 
 
 interface ReactProps extends WithStyles<typeof styles> {
-  chosenVariant: ProductVariant;
+  chosenVariant: Product_Variants;
 }
 
 const styles = (theme: Theme) => createStyles({

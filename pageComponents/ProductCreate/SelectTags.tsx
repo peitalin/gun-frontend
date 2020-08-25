@@ -9,7 +9,7 @@ import { GrandReduxState } from "reduxStore/grand-reducer";
 import { GET_PRODUCT_CATEGORIES } from "queries/categories-queries";
 import { useQuery } from '@apollo/client';
 // Typings
-import { ProductCategory } from "typings/gqlTypes";
+import { Categories } from "typings/gqlTypes";
 import { ReducerName } from "typings/dropzone";
 // Styles
 import { withStyles, WithStyles } from "@material-ui/core/styles";

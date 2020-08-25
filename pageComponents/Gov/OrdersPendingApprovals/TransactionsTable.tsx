@@ -12,7 +12,7 @@ import { Colors } from "layout/AppTheme";
 import Typography from "@material-ui/core/Typography";
 
 import {
-  Transaction,
+  Transactions,
   TransactionsConnection,
 } from "typings/gqlTypes";
 import {
@@ -73,7 +73,7 @@ const TransactionsTable: NextPage<ReactProps> = (props) => {
     getNextPage,
     getPrevPage,
     connectionQuery,
-  } = usePaginateQueryHook<QueryData, QueryVar, Transaction>({
+  } = usePaginateQueryHook<QueryData, QueryVar, Transactions>({
     query: GET_TRANSACTIONS_IN_PERIOD_ADMIN,
     sortAscending: false,
     variables: {

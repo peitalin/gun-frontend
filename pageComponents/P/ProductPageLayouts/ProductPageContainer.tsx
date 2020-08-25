@@ -29,13 +29,13 @@ const ProductPageContainer: React.FC<ProductContainerProps> = (props) => {
     )}>
 
       <MetaHeadersPage
-        title={`${option(product).title()} - ${option(product).store.name()} | Gun Marketplace Australia`}
+        title={`${option(product).currentSnapshot.title()} - ${option(product).store.name()} | Gun Marketplace Australia`}
         description={
-          option(product).title()
-            ? `${option(product).title()} — ${option(product).description()}`
-            : `${option(product).description()}`
+          option(product).currentSnapshot.title()
+            ? `${option(product).currentSnapshot.title()} — ${option(product).currentSnapshot.description()}`
+            : `${option(product).currentSnapshot.description()}`
         }
-        keyword={option(product).title()}
+        keyword={option(product).currentSnapshot.title()}
       />
 
       <div className={clsx(classes.flexCol, classes.alignItemsCenter)}>

@@ -9,7 +9,7 @@ import { Actions } from 'reduxStore/actions';
 // Graphql
 import { CREATE_USER } from "queries/user-mutations";
 import { LOGIN, GET_USER, SEND_RESET_PASSWORD_EMAIL } from "queries/user-queries";
-import { UserPrivate, CartItem, Cart } from "typings/gqlTypes";
+import { UserPrivate } from "typings/gqlTypes";
 import { SendPasswordResetResponse } from "typings";
 
 import LoginPageModal from "./LoginPageModal";
@@ -98,7 +98,7 @@ const Login: React.FC<ReactProps> = (props) => {
       handleCallback()
       // Update redux user and cart state and refetch
       // console.log("saving user and userRefetch to redux: ", refetch)
-      dispatch(reduxBatchUpdate.userCart({ user: user }, refetch))
+      dispatch(reduxBatchUpdate.userStore({ user: user }, refetch))
       handleUpdateLoginState(user, loading, errors)
     }
   }

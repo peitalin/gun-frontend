@@ -29,7 +29,7 @@ const SalesHistory = (props: ReactProps) => {
 
   const { salesHistoryConnection } = props;
   const allSales = salesHistoryConnection.edges
-    .filter(({ node }) => node.orderItem.orderStatus === OrderStatus.CONFIRMED)
+    .filter(({ node }) => node.order.currentSnapshot.orderStatus === OrderStatus.COMPLETE)
 
   const theme = useTheme();
   const smDown = useMediaQuery(theme.breakpoints.down('sm'));
@@ -95,25 +95,19 @@ const SalesHistory = (props: ReactProps) => {
                 : c(0)
 
               return (
-                <MenuItem key={sale.orderItem.id}
+                <MenuItem key={sale.order.id}
                   className={clsx(classes.flexRow, classes.salesItem)}
                   onClick={() => {
                     Router.push(
-                      "/seller/sales/[orderItemId]",
-                      `/seller/sales/${sale.orderItem.id}`,
+                      "/seller/sales/[orderId]",
+                      `/seller/sales/${sale.order.id}`,
                     )
                   }}
                 >
                   <div className={classes.flexItemWide}>
                     <Typography variant="body2" className={classes.salesItemName}>
-                      {sale.orderItem.product.currentSnapshot.name}
+                      {sale.order.product.currentSnapshot.title}
                     </Typography>
-                    {
-                      (option(sale).orderItem.product.chosenVariant.variantName() !== "Regular License") &&
-                      <Typography variant="body2" className={classes.salesItemVariant}>
-                        {option(sale).orderItem.product.chosenVariant.variantName()}
-                      </Typography>
-                    }
                   </div>
                   {/* {
                     !smDown &&
@@ -125,10 +119,10 @@ const SalesHistory = (props: ReactProps) => {
                   } */}
                   <div className={clsx(classes.flexItem, classes.justifyCenter)}>
                     <Typography variant="body2" className={classes.dateText1}>
-                      {showDate(sale.orderItem.createdAt)}
+                      {showDate(sale.order.createdAt)}
                     </Typography>
                     <Typography variant="body2" className={classes.dateText2}>
-                      {showTime(sale.orderItem.createdAt)}
+                      {showTime(sale.order.createdAt)}
                     </Typography>
                   </div>
                   <div className={classes.flexItemSlim}>

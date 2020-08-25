@@ -5,7 +5,7 @@ import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/s
 import { styles } from "./styles";
 import { Colors } from "layout/AppTheme";
 // Typings
-import { ProductPreviewItem } from "typings/gqlTypes";
+import { Product_Preview_Items } from "typings/gqlTypes";
 // Material UI
 import AspectRatioConstraint from "components/AspectRatioConstraint";
 import PreviewImageFeatured from "./PreviewImageFeatured";
@@ -43,7 +43,7 @@ const FeaturedImagePlaceholder = (props: ReactProps) => {
 }
 
 interface ReactProps extends WithStyles<typeof styles> {
-  previewItem?: ProductPreviewItem;
+  previewItem?: Product_Preview_Items;
   onClick?(a: any): void;
 }
 

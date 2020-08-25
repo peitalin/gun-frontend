@@ -6,7 +6,7 @@ import clsx from "clsx";
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 import { Colors } from "layout/AppTheme";
 // Utils
-import { ID, StorePrivate, UploadType, Image } from "typings/gqlTypes";
+import { ID, StorePrivate, UploadType, Image_Parents } from "typings/gqlTypes";
 // Media uploader
 import {
   IFileWithMeta,
@@ -167,7 +167,7 @@ const StoreEditProfilePic = (props: ReactProps & FormikProps<FormikFields>) => {
 
 interface ReactProps extends WithStyles<typeof styles> {
   storeId: string;
-  profileImage: Image;
+  profileImage: Image_Parents;
   setProfileImage(image: any): void;
   errorMessage?: any;
 }

@@ -7,7 +7,7 @@ import { GrandReduxState } from "reduxStore/grand-reducer";
 // Material UI
 import Dialog from "@material-ui/core/Dialog";
 // utils
-import { UserPrivate, Order } from "typings/gqlTypes";
+import { UserPrivate, Orders } from "typings/gqlTypes";
 import ErrorBounds from "components/ErrorBounds";
 // Components
 import OrderDetailsPage from "./OrderDetailsPage";
@@ -47,7 +47,7 @@ type OrderDetailsProps = ReactProps & ReduxProps;
 interface ReactProps extends WithStyles<typeof styles> {
   displayModal: boolean;
   closeModal(): void;
-  order: Order;
+  order: Orders;
 }
 interface ReduxProps {
 }

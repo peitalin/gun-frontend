@@ -1,4 +1,4 @@
-import { CartItem, Cart, ProductCategory } from "typings/gqlTypes";
+import { Categories } from "typings/gqlTypes";
 import { createSelector } from "reselect";
 import { GrandReduxState } from "reduxStore/grand-reducer";
 import { centsToDollars } from "./prices";
@@ -18,33 +18,16 @@ export const centsToDollarSelector = createSelector(
   totalCents => centsToDollars(totalCents)
 );
 
-export const subtotalSelector = createSelector(
-  (cartItems: CartItem[]): CartItem[] => cartItems,
-  (cartItems: CartItem[]): number => {
-    return cartItems.reduce((subtotal, item) => {
-      return subtotal + option(item).product.chosenVariant.price(0)
-    }, 0);
-  }
-)
-
-export const numCartItemsSelector = createSelector(
-  (cartItems: CartItem[]): CartItem[] => cartItems,
-  (cartItems: CartItem[]): number => {
-    return cartItems.length
-  }
-)
-
-
 interface SplitCategories {
-  design: ProductCategory[],
-  video: ProductCategory[],
-  sounds: ProductCategory[],
-  musicGenres: ProductCategory[],
+  design: Categories[],
+  video: Categories[],
+  sounds: Categories[],
+  musicGenres: Categories[],
 }
 
 export const categorySelectors = createSelector(
-  (categories: ProductCategory[]): ProductCategory[] => categories,
-  (categories: ProductCategory[]): SplitCategories => {
+  (categories: Categories[]): Categories[] => categories,
+  (categories: Categories[]): SplitCategories => {
     return {
       design: categories.filter(c => c.categoryGroup === "Design"),
       video: categories.filter(c => c.categoryGroup === "Video"),

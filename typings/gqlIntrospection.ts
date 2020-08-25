@@ -15,85 +15,16 @@
     "types": [
       {
         "kind": "INTERFACE",
-        "name": "Connection",
+        "name": "User",
         "possibleTypes": [
           {
-            "name": "CuratedListItemsConnection"
+            "name": "UserPrivate"
           },
           {
-            "name": "ProductsConnection"
+            "name": "UserPublic"
           },
           {
-            "name": "OrdersConnection"
-          },
-          {
-            "name": "StoreSalesHistoryConnection"
-          },
-          {
-            "name": "FollowingStoresConnection"
-          },
-          {
-            "name": "WishlistItemsConnection"
-          },
-          {
-            "name": "ProductsSoldPeriodSummaryConnection"
-          },
-          {
-            "name": "StoreSalesInPeriodConnection"
-          },
-          {
-            "name": "TransactionsConnection"
-          },
-          {
-            "name": "CuratedListsConnection"
-          },
-          {
-            "name": "StoresConnection"
-          },
-          {
-            "name": "DownloadsConnection"
-          }
-        ]
-      },
-      {
-        "kind": "INTERFACE",
-        "name": "Edge",
-        "possibleTypes": [
-          {
-            "name": "CuratedListItemsEdge"
-          },
-          {
-            "name": "ProductSalesEdge"
-          },
-          {
-            "name": "FollowingStoresEdge"
-          },
-          {
-            "name": "PayoutEdge"
-          },
-          {
-            "name": "WishlistItemsEdge"
-          },
-          {
-            "name": "ProductsSoldPeriodSummaryEdge"
-          },
-          {
-            "name": "PayoutItemsEdge"
-          },
-          {
-            "name": "StoreSalesEdge"
-          },
-          {
-            "name": "TransactionsEdge"
-          },
-          {
-            "name": "CuratedListsEdge"
-          },
-          {
-            "name": "StoresEdge"
-          },
-          {
-            "name": "DownloadsEdge"
+            "name": "UserWithRole"
           }
         ]
       },
@@ -102,10 +33,10 @@
         "name": "Product",
         "possibleTypes": [
           {
-            "name": "ProductPrivate"
+            "name": "ProductPublic"
           },
           {
-            "name": "ProductPublic"
+            "name": "ProductPrivate"
           },
           {
             "name": "ProductDownload"
@@ -126,16 +57,85 @@
       },
       {
         "kind": "INTERFACE",
-        "name": "User",
+        "name": "Connection",
         "possibleTypes": [
           {
-            "name": "UserWithRole"
+            "name": "ProductsConnection"
           },
           {
-            "name": "UserPublic"
+            "name": "OrdersConnection"
           },
           {
-            "name": "UserPrivate"
+            "name": "StoreSalesHistoryConnection"
+          },
+          {
+            "name": "ProductsSoldPeriodSummaryConnection"
+          },
+          {
+            "name": "WishlistItemsConnection"
+          },
+          {
+            "name": "FollowingStoresConnection"
+          },
+          {
+            "name": "StoresConnection"
+          },
+          {
+            "name": "TransactionsConnection"
+          },
+          {
+            "name": "StoreSalesInPeriodConnection"
+          },
+          {
+            "name": "CuratedListsConnection"
+          },
+          {
+            "name": "CuratedListItemsConnection"
+          },
+          {
+            "name": "DownloadsConnection"
+          }
+        ]
+      },
+      {
+        "kind": "INTERFACE",
+        "name": "Edge",
+        "possibleTypes": [
+          {
+            "name": "ProductSalesEdge"
+          },
+          {
+            "name": "PayoutEdge"
+          },
+          {
+            "name": "ProductsSoldPeriodSummaryEdge"
+          },
+          {
+            "name": "WishlistItemsEdge"
+          },
+          {
+            "name": "FollowingStoresEdge"
+          },
+          {
+            "name": "StoresEdge"
+          },
+          {
+            "name": "PayoutItemsEdge"
+          },
+          {
+            "name": "TransactionsEdge"
+          },
+          {
+            "name": "StoreSalesEdge"
+          },
+          {
+            "name": "CuratedListsEdge"
+          },
+          {
+            "name": "CuratedListItemsEdge"
+          },
+          {
+            "name": "DownloadsEdge"
           }
         ]
       },
@@ -173,23 +173,23 @@
         ]
       },
       {
+        "kind": "UNION",
+        "name": "SearchResultItem",
+        "possibleTypes": [
+          {
+            "name": "ProductPublic"
+          },
+          {
+            "name": "ProductPrivate"
+          }
+        ]
+      },
+      {
         "kind": "INTERFACE",
         "name": "PageBasedConnection",
         "possibleTypes": [
           {
             "name": "SearchResultsConnection"
-          }
-        ]
-      },
-      {
-        "kind": "UNION",
-        "name": "SearchResultItem",
-        "possibleTypes": [
-          {
-            "name": "ProductPrivate"
-          },
-          {
-            "name": "ProductPublic"
           }
         ]
       }

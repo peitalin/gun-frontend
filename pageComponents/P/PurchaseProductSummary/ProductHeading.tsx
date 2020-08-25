@@ -1,7 +1,7 @@
 import * as React from "react";
 import { oc as option } from "ts-optchain";
 // GraphQL
-import { Product, ProductVariant } from "typings/gqlTypes";
+import { Product, Product_Variants } from "typings/gqlTypes";
 // Material UI
 import Typography from "@material-ui/core/Typography";
 // Utils Components
@@ -21,11 +21,11 @@ const ProductHeading = (props: ReactProps) => {
     <ErrorBounds className={classes.headingRoot}>
       <div className={classes.greyBorder}>
         <Typography variant="subtitle1" className={classes.productTitle}>
-          {option(product).title()}
+          {option(product).currentSnapshot.title()}
         </Typography>
       </div>
       <Typography variant="body1" className={classes.tagline}>
-        {option(product).model()}
+        {option(product).currentSnapshot.model()}
       </Typography>
     </ErrorBounds>
   )
@@ -34,7 +34,7 @@ const ProductHeading = (props: ReactProps) => {
 
 interface ReactProps extends WithStyles<typeof styles> {
   product: Product;
-  chosenVariant: ProductVariant;
+  chosenVariant: Product_Variants;
 }
 
 const styles = (theme: Theme) => createStyles({

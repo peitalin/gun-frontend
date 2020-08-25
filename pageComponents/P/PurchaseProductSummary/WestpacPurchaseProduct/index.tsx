@@ -17,9 +17,9 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import RelayDownloadIcon2 from "components/Icons/RelayDownloadIcon2";
 import Loading from 'components/Loading';
 import {
-  Cart, CartItem, UserPrivate, ID,
-  Transaction,
-  Order, OrderStatus,
+  UserPrivate, ID,
+  Orders,
+  OrderStatus,
   ProductProductVariantId, PaymentMethod as EFCPaymentMethod,
 } from 'typings/gqlTypes';
 import { CheckoutProductsResponse, CheckoutCartResponse } from "typings";
@@ -35,11 +35,6 @@ import SnackbarsSuccessErrors from "components/Snackbars/SnackbarsSuccessErrors"
 // Graphql
 import { GET_USER_PAYMENT_METHODS } from "queries/payment_methods-queries";
 import { useApolloClient } from '@apollo/client';
-import {
-  // CHECKOUT_CART,
-  CHECKOUT_PRODUCTS,
-} from 'queries/orders-mutations';
-// import { stripePurchaseCartless } from "pageComponents/P/CommonPurchase";
 // Snackbar
 import { useSnackbar, ProviderContext } from "notistack";
 
@@ -345,7 +340,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   buttonHeight?: any;
   title?: string;
   showIcon?: boolean;
-  handleOrderPostPurchase(order: Order): void;
+  handleOrderPostPurchase(order: Orders): void;
   quotedPrice: number; // in cents
   productsInfo: ProductProductVariantId[];
 }

@@ -4,7 +4,7 @@ import clsx from "clsx";
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 // Typings
 import {
-  Order, OrderStatus,
+  Orders, OrderStatus,
   PayeeType,
   ID, PaymentProcessor,
   PayoutStatus,
@@ -36,7 +36,6 @@ const c = (s) => currency(s/100, { formatWithSymbol: true }).format()
 import { FormikProps } from 'formik';
 import { splitPlatformFee } from "utils/prices";
 
-const storePercentage = 0.15;
 
 
 
@@ -54,7 +53,7 @@ const OrderCard = (props: ReactProps & FormikProps<FormikFields>) => {
 
 
   // item price
-  const actualPriceStr = c(option(order).currentSnapshot.total(0))
+  const actualPriceStr = c(option(order).total(0))
   // const {
   //   sellerPayment,
   //   platformFee,
@@ -146,9 +145,9 @@ const OrderCard = (props: ReactProps & FormikProps<FormikFields>) => {
 
         <div className={classes.flexCol}>
         {
-          option(product).chosenVariant.previewItems[0]() &&
+          option(product).currentSnapshot.currentVariants[0].previewItems[0]() &&
           <ProductPreviewCardRow
-            previewItem={product.chosenVariant.previewItems[0]}
+            previewItem={product.currentSnapshot.currentVariants[0].previewItems[0]}
           />
         }
         </div>
@@ -160,17 +159,17 @@ const OrderCard = (props: ReactProps & FormikProps<FormikFields>) => {
                 Title:
               </Typography>
               <Typography className={classes.name} variant="subtitle1">
-                {product.title}
+                {product.currentSnapshot.title}
               </Typography>
             </div>
-            <div className={classes.flexRow}>
+            {/* <div className={classes.flexRow}>
               <Typography className={classes.fieldName} variant="subtitle1">
                 Variant:
               </Typography>
               <Typography className={classes.name} variant="body1">
                 {product.chosenVariant.variantName}
               </Typography>
-            </div>
+            </div> */}
             <div className={classes.flexRow}>
               <Typography className={classes.fieldName} variant="subtitle1">
                 StoreId:
@@ -240,7 +239,7 @@ const OrderCard = (props: ReactProps & FormikProps<FormikFields>) => {
 
 
 interface ReactProps extends WithStyles<typeof styles> {
-  order: Order;
+  order: Orders;
   total: number;
   subtotal: number;
 }

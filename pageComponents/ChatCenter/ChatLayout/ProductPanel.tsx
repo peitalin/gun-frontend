@@ -61,7 +61,7 @@ const ProductPanel: React.FC<ReactProps> = (props) => {
   const chatRoom = option(currentConversation).chatRoom()
   const chatRoomId = option(chatRoom).id()
   const product = option(chatRoom).product()
-  const featuredVariant = option(product).product_variants([]).find(v => v.isDefault)
+  const featuredVariant = option(product).productVariants([]).find(v => v.isDefault)
   const previewItem = option(featuredVariant).previewItems([])[0]
 
   const priceDisplay = currency(option(featuredVariant).price(1)/100, { formatWithSymbol: true })
@@ -108,7 +108,7 @@ const ProductPanel: React.FC<ReactProps> = (props) => {
               // fit?: boolean; // object-fit the image
               // title: string;
               // tagline: string;
-              // category: ProductCategory;
+              // category: Categories;
               // price: number;
               // priceWas: number;
               // quantityAvailable?: number;

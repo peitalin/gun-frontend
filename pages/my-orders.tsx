@@ -5,7 +5,7 @@ import { NextPage, NextPageContext } from 'next';
 import { ApolloClient } from "@apollo/client";
 import { serverApolloClient } from "utils/apollo";
 
-import { Download, UserPrivate, Connection, OrdersConnection } from "typings/gqlTypes";
+import { UserPrivate, Connection, OrdersConnection } from "typings/gqlTypes";
 // Typings
 import {
   GET_BUYER_ORDERS_CONNECTION,

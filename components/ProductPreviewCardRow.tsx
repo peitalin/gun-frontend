@@ -4,7 +4,7 @@ import clsx from "clsx";
 import { Colors } from "layout/AppTheme";
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 // Typings
-import { ProductPreviewItem, Product, ProductVariant } from "typings/gqlTypes";
+import { Product_Preview_Items, Product, Product_Variants } from "typings/gqlTypes";
 // Material UI
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
@@ -110,7 +110,7 @@ const ProductPreviewCardRow = (props: ReactProps) => {
 const borderRadius = 4;
 
 interface ReactProps extends WithStyles<typeof styles> {
-  previewItem: ProductPreviewItem;
+  previewItem: Product_Preview_Items;
   className?: any;
   title?: string;
   style?: any;

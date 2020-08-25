@@ -16,9 +16,8 @@ import {
   PayoutItemsPagedConnection,
   UserPrivate,
   OrdersConnection,
-  Order,
-  User,
   Orders,
+  User,
   OrderStatus,
 } from "typings/gqlTypes";
 import {

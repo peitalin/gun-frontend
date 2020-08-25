@@ -6,7 +6,7 @@ import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/
 import { BorderRadius, Colors } from "layout/AppTheme";
 // Typings
 import {
-  Order,
+  Orders,
   ID,
   PaymentProcessor,
   PayeeType,
@@ -250,7 +250,7 @@ const OrderSubtitleRow = ({
 
 
 interface ReactProps extends WithStyles<typeof styles> {
-  order: Order
+  order: Orders
 }
 interface FormikFields {
   orderId: ID;

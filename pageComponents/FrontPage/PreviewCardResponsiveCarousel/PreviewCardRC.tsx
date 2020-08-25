@@ -13,7 +13,7 @@ import Link from "next/link";
 import WishlistIcon from "components/WishlistIcon";
 import DiscountBadge from "components/DiscountBadge";
 // Typings
-import { ProductCategory, Product, ProductPreviewItem } from "typings/gqlTypes";
+import { Categories, Product, Product_Preview_Items } from "typings/gqlTypes";
 import { genSrcSet, genImgBreakpoints } from "utils/images";
 import { getYouTubeVimeoImagePreview } from "utils/strings";
 import PriceDisplayMain from "components/PriceDisplayMain";
@@ -252,8 +252,8 @@ const PreviewCardRC = (props: ReactProps) => {
                 component="div"
               >
                 {
-                  option(product).createdAt()
-                    ? showDateAndTime(product.createdAt)
+                  option(product).currentSnapshot.createdAt()
+                    ? showDateAndTime(product.currentSnapshot.createdAt)
                     : undefined
                 }
               </Typography>
@@ -292,13 +292,13 @@ const PreviewCardRC = (props: ReactProps) => {
 }
 
 interface ReactProps extends WithStyles<typeof styles> {
-  previewItem: ProductPreviewItem;
-  previewItems?: ProductPreviewItem[];
+  previewItem: Product_Preview_Items;
+  previewItems?: Product_Preview_Items[];
   product: Product;
   fit?: boolean; // object-fit the image
   title: string;
   tagline: string;
-  category: ProductCategory;
+  category: Categories;
   price: number;
   priceWas?: number;
   quantityAvailable?: number | null;

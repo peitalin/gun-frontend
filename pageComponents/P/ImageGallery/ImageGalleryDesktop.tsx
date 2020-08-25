@@ -7,8 +7,7 @@ import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/s
 // Typings
 import {
   Product,
-  ProductVariant,
-  ProductPreviewItem,
+  Product_Preview_Items,
 } from "typings/gqlTypes";
 import {
   SelectedVariantProps
@@ -46,7 +45,7 @@ const ImageGalleryDesktop: React.FC<ReactProps> = (props) => {
   const [openedModals, setOpenedModals] = useState([]);
 
   useEffect(() => {
-    let pitem: ProductPreviewItem = option(props).product.featuredVariant.previewItems[0]();
+    let pitem = option(props).product.featuredVariant.previewItems[0]();
     if (pitem) {
       setFeaturedPreviewItem(pitem)
     }
@@ -61,7 +60,7 @@ const ImageGalleryDesktop: React.FC<ReactProps> = (props) => {
     setOpenedModals(openedModals => openedModals.filter(x => x !== id))
   }
 
-  const handleImageClick = (previewItem: ProductPreviewItem) => {
+  const handleImageClick = (previewItem: Product_Preview_Items) => {
     setFeaturedPreviewItem(previewItem)
   }
 
@@ -95,7 +94,7 @@ const ImageGalleryDesktop: React.FC<ReactProps> = (props) => {
         || option(featuredPreviewItem).youTubeEmbedLink()) &&
         <div>
           <WishlistIcon
-            productId={option(product).id()}
+            Product_Variants={option(product).id()}
             variantId={option(product).featuredVariant.variantId()}
             // refetch={wishlistConnectionResponse.refetch}
             style={{

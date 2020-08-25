@@ -6,7 +6,7 @@ import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/
 import { Colors } from "layout/AppTheme";
 // Typings
 import {
-  Product, ID, ProductVariant, UserPrivate, ProductPreviewItem
+  Product, ID, Product_Variants, UserPrivate, ProductPreviewItem
 } from "typings/gqlTypes";
 import { SelectedVariantProps } from "../ProductId";
 // Redux
@@ -198,14 +198,14 @@ interface ReactProps extends WithStyles<typeof styles> {
   isQuantityEnabled?: boolean;
   // selectedOption: {
   //   label: string;
-  //   value: ProductVariant;
+  //   value: Product_Variants;
   // };
   variantOptions: {
     label: string;
-    value: ProductVariant;
+    value: Product_Variants;
   }[];
   handleChangeVariantOption(
-    selectedOption: { label: string, value: ProductVariant }
+    selectedOption: { label: string, value: Product_Variants }
   ): void;
 }
 

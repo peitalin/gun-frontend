@@ -19,7 +19,7 @@ import Button from "@material-ui/core/Button";
 // router
 import { useRouter } from "next/router";
 // Typings
-import { StorePrivate, UserPrivate, Image } from "typings/gqlTypes";
+import { StorePrivate, UserPrivate, Image_Parents } from "typings/gqlTypes";
 import { HtmlEvent, CreateStoreInput } from "typings";
 // Validation
 import { FormikProps } from 'formik';
@@ -102,7 +102,7 @@ const CreateStoreFields: React.FC<ReactProps & FormikProps<FormikFields>> = (pro
     debounceUpdatePayoutEmail(email);
   };
 
-  const handleUpdateProfile = (image: Image) => {
+  const handleUpdateProfile = (image: Image_Parents) => {
     setProfileImage(image);
     fprops.setFieldValue('profileId', image.id)
   };

@@ -4,7 +4,6 @@ import {
   Products,
   User,
   OrderStatus,
-  Image,
 } from "typings/gqlTypes";
 import { oc as option } from "ts-optchain";
 

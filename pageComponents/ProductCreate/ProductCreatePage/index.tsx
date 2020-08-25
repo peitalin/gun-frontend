@@ -50,8 +50,6 @@ import {
   ID,
   Product,
   UserPrivate,
-  VariantsLabel,
-  QuantityLabel
 } from "typings/gqlTypes";
 import {
   ProductCreateInputFrontEnd,
@@ -194,9 +192,7 @@ const ProductCreatePage = (props: ReactProps) => {
               tags: (values.tags as string[]).join(','),
               isPublished: values.isPublished,
               currentVariants: values.currentVariants,
-              variantsLabel: VariantsLabel.LICENSE,
               isQuantityEnabled: false,
-              quantityLabel: QuantityLabel.SEATS
             }
           },
         }).then(res => {

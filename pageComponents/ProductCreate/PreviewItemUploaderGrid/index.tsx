@@ -20,7 +20,7 @@ import {
 } from "queries/requests";
 // Typings
 import {
-  ProductPreviewItemInput, Image, ID, UploadType
+  ProductPreviewItemInput, ID, UploadType
 } from "typings/gqlTypes";
 import { ProductCreateEditCommonInput } from "typings";
 import { ReducerName, DzuFilePreview } from "typings/dropzone";

@@ -15,7 +15,7 @@ import Tick from "components/Icons/Tick";
 // MUI
 import Typography from "@material-ui/core/Typography";
 // Subcomponents
-import { DownloadsConnection, UserPrivate } from "typings/gqlTypes";
+import { UserPrivate } from "typings/gqlTypes";
 import IconButtonCancel from "components/IconButtonCancel";
 // CSS
 import { useTheme } from "@material-ui/core/styles";
@@ -94,7 +94,6 @@ const CookiesBanner = (props) => {
 
 
 interface ReactProps extends WithStyles<typeof styles> {
-  initialDownloads: DownloadsConnection;
   covid?: boolean;
 }
 

@@ -4,7 +4,7 @@ import clsx from "clsx";
 import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
 import { Colors } from "layout/AppTheme";
 // Typings
-import { ProductFile, Order, ID, OrderItem } from "typings/gqlTypes";
+import { ProductFile, Orders, ID } from "typings/gqlTypes";
 // Material UI
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";

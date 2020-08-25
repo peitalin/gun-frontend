@@ -11,7 +11,7 @@ import Typography from "@material-ui/core/Typography";
 // Icons
 import ClearIcon from "@material-ui/icons/Clear";
 import IconButton from "@material-ui/core/IconButton";
-import { Order } from "typings/gqlTypes";
+import { Orders } from "typings/gqlTypes";
 import currency from 'currency.js';
 // Components
 import Row from "../../Row";
@@ -58,7 +58,7 @@ const OrderDetailsPage: FunctionComponent<ReactProps> = (props) => {
             />
             <Row
               fieldName={"OrderItem Price:"}
-              fieldValue={c(order.currentSnapshot.total)}
+              fieldValue={c(order.total)}
             />
           </div>
           <div className={classNames(classes.flexCol, classes.section)}>
@@ -71,16 +71,16 @@ const OrderDetailsPage: FunctionComponent<ReactProps> = (props) => {
             />
             <Row
               fieldName={"Product Name:"}
-              fieldValue={order.product.title}
+              fieldValue={order.product.currentSnapshot.title}
             />
-            <Row
+            {/* <Row
               fieldName={"Product Variant ID:"}
               fieldValue={order.product.chosenVariant.variantId}
             />
             <Row
               fieldName={"Product Variant Name:"}
               fieldValue={order.product.chosenVariant.variantName}
-            />
+            /> */}
           </div>
           <div className={classNames(classes.flexCol, classes.section)}>
             <Typography color={"primary"} variant={"h6"} gutterBottom>
@@ -109,7 +109,7 @@ const OrderDetailsPage: FunctionComponent<ReactProps> = (props) => {
 
 
 interface ReactProps extends WithStyles<typeof styles> {
-  order: Order;
+  order: Orders;
   closeModal(): void;
 }
 

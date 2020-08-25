@@ -4,7 +4,7 @@ import { oc as option } from "ts-optchain";
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 import { Colors } from "layout/AppTheme";
 // Typings
-import { ProductPreviewItem } from "typings/gqlTypes";
+import { Product_Preview_Items } from "typings/gqlTypes";
 // Material UI
 // media query
 import useMediaQuery from '@material-ui/core/useMediaQuery';
@@ -56,7 +56,7 @@ const FeaturedVideoMobile = (props: ReactProps) => {
 }
 
 interface ReactProps extends WithStyles<typeof styles> {
-  previewItem?: ProductPreviewItem;
+  previewItem?: Product_Preview_Items;
   openedModals?: string[];
   openModal?(id: string): void;
   closeModal?(id: string): void;

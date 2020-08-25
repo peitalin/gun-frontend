@@ -6,7 +6,6 @@ import clsx from "clsx";
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 
-import { Cart } from "typings/gqlTypes";
 import styles from './commonStyles';
 import SignUp from './SignUp';
 import SignIn from './SignIn';

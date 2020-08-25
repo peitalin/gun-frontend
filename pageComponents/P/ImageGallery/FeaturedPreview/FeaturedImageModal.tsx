@@ -5,7 +5,7 @@ import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/s
 import { styles } from "./styles";
 import { Colors } from "layout/AppTheme";
 // Typings
-import { ProductPreviewItem, Product } from "typings/gqlTypes";
+import { Product_Preview_Items, Product } from "typings/gqlTypes";
 // Image Modal
 import Dialog from "@material-ui/core/Dialog";
 //// Components
@@ -155,7 +155,7 @@ const FeaturedImageModal = (props: ReactProps) => {
 }
 
 interface ReactProps extends WithStyles<typeof styles> {
-  previewItem?: ProductPreviewItem;
+  previewItem?: Product_Preview_Items;
   openedModals?: string[];
   openModal?(id: string): void;
   closeModal?(id: string): void;

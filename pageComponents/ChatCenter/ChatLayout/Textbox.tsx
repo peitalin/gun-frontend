@@ -206,8 +206,8 @@ export const Textbox: React.FC<ReactProps> = (props) => {
       bidId: `bid_${nanoid()}`,
       productId: props.product.id,
       productSnapshotId: props.product.currentSnapshotId,
-      variantId: props.product.product_variants[0].variantId,
-      variantSnapshotId: props.product.product_variants[0].variantSnapshotId,
+      variantId: props.product.productVariants[0].variantId,
+      variantSnapshotId: props.product.productVariants[0].variantSnapshotId,
       offerPrice: offerPrice,
       bidStatus: "CREATED",
     }

@@ -11,13 +11,12 @@ import Typography from "@material-ui/core/Typography";
 // Icons
 import ClearIcon from "@material-ui/icons/Clear";
 import IconButton from "@material-ui/core/IconButton";
-import { Order } from "typings/gqlTypes";
+import { Orders } from "typings/gqlTypes";
 // Components
 import DisplayOrderReceipt from "./DisplayOrderReceipt";
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import OrderProductPreview from "./OrderProductPreview";
-import { OrderItem } from "typings/gqlTypes";
 
 
 
@@ -72,7 +71,7 @@ const OrderDetailsPage: React.FC<ReactProps> = (props) => {
 
 
 interface ReactProps extends WithStyles<typeof styles> {
-  order: Order;
+  order: Orders;
   closeModal?(): void;
   disableTitle?: boolean;
 }

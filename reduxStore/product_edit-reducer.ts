@@ -6,8 +6,6 @@ import { EditVariantInput } from "./product_create-actions";
 import {
   ID,
   ProductEditInput,
-  VariantsLabel,
-  QuantityLabel,
   ProductPreviewItemInput,
   ProductVariantEditInput,
 } from "typings/gqlTypes";
@@ -59,9 +57,7 @@ const initialProductEditState: ReduxStateProductEdit = {
       }
     ],
     isPublished: false,
-    variantsLabel: VariantsLabel.LICENSE,
     isQuantityEnabled: false,
-    quantityLabel: QuantityLabel.SEATS
   },
   previewItems: [],
   dzuPreviewOrder: [],

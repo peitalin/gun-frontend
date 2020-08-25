@@ -145,8 +145,8 @@ const FeaturedProductsMobile = (props: ReactProps) => {
               <a className={classes.flexRowLink}>
                 <PreviewCardWide
                   previewItem={previewItem}
-                  title={option(product).title()}
-                  tagline={option(product).model()}
+                  title={option(product).currentSnapshot.title()}
+                  tagline={option(product).currentSnapshot.model()}
                   category={option(product).category()}
                   price={option(featuredVariant).price()}
                   priceWas={option(featuredVariant).priceWas()}

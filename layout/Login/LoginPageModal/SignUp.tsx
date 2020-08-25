@@ -11,8 +11,6 @@ import InputLabel from '@material-ui/core/InputLabel';
 import PersonAdd from '@material-ui/icons/PersonAdd';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-// Typings
-import { Cart } from "typings/gqlTypes";
 import styles from './commonStyles';
 import ErrorBounds from "components/ErrorBounds";
 import LockIcon from "@material-ui/icons/Lock";

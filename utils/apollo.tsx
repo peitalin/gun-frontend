@@ -32,10 +32,11 @@ const {
 // let GATEWAY_GRAPHQL_URL = "https://api.gunmarketplace.com.au/v1/graphql"
 // let SERVER_GATEWAY_GRAPHQL_URL = "https://api.gunmarketplace.com.au/v1/graphql"
 
-let GATEWAY_GRAPHQL_URL = "https://0.0.0.0:443/v1/graphql"
+// let GATEWAY_GRAPHQL_URL = "https://0.0.0.0:443/v1/graphql"
+let GATEWAY_GRAPHQL_URL = "https://0.0.0.0/gateway/graphql"
 let GATEWAY_GRAPHQL_WS_URL = "wss://0.0.0.0:443/v1/graphql"
 // let GATEWAY_GRAPHQL_WS_URL = "ws://0.0.0.0:7070/v1/graphql"
-let SERVER_GATEWAY_GRAPHQL_URL = "https://0.0.0.0:443/v1/graphql"
+let SERVER_GATEWAY_GRAPHQL_URL = "https://0.0.0.0/gateway/graphql"
 
 
 let NODE_ENV = "develop"
