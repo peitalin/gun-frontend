@@ -1,12 +1,4 @@
 import gql from "graphql-tag";
-import {
-  Image_Parents_Insert_Input,
-  Image_Variants_Insert_Input,
-  Product_Preview_Items_Insert_Input,
-  Product_Variants_Insert_Input,
-  Product_Snapshots_Insert_Input,
-  Products_Insert_Input,
-} from "typings/gqlTypes";
 
 
 export const CREATE_PRODUCT_GUN = gql`

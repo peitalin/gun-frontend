@@ -87,6 +87,7 @@ const MyOrders: React.FC<ReactProps> = (props) => {
   const sellerOrdersConnection = option(sellerOrdersResponse)
     .data.user.sellerOrdersConnection() || props.initialSellerOrders;
 
+    console.log("ASDDDDDDDDDWFTTFT: ", sellerOrdersConnection)
 
   if (buyerOrdersResponse.loading || sellerOrdersResponse.loading) {
     return (

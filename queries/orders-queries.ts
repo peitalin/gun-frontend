@@ -1,97 +1,10 @@
 import gql from "graphql-tag";
 import {
   ProductFragment,
-  // OrderFragment,
   PaymentMethodFragment,
   ImageFragment,
+  OrdersFragment,
 } from "./fragments";
-import {
-  OrdersFragment as HasuraOrdersFragment,
-} from "./Hasura/fragments";
-
-export const OrderFragment = gql`
-  fragment OrderFragment on Order {
-    id
-    createdAt
-    updatedAt
-    bidId
-    bid {
-      id
-      bidStatus
-      createdAt
-      updatedAt
-      acceptedPrice
-      offerPrice
-    }
-    total
-    currency
-    buyerId
-    buyer {
-      id
-      email
-    }
-    sellerId
-    seller {
-      id
-      email
-    }
-    currentSnapshot {
-      id
-      orderStatus
-      createdAt
-      form10Image {
-        ...ImageFragment
-      }
-    }
-    orderSnapshots {
-      id
-      orderStatus
-      createdAt
-      adminApprover {
-        id
-        email
-      }
-      dealerApprover {
-        id
-        email
-      }
-      form10Image {
-        ...ImageFragment
-      }
-    }
-    productId
-    product {
-      ...ProductFragment
-    }
-    # order {
-    #   ...OrderFragment
-    #   currentSnapshot {
-    #     transaction {
-    #       id
-    #       createdAt
-    #       subtotal
-    #       paymentProcessingFee
-    #       taxes
-    #       paymentProcessor
-    #       customerId
-    #       currency
-    #       paymentMethodId
-    #       paymentMethod {
-    #         ... on PaymentMethod {
-    #           ...PaymentMethodFragment
-    #         }
-    #       }
-    #       paymentIntentId
-    #       chargeId
-    #     }
-    #   }
-    # }
-  }
-  ${ProductFragment}
-  ${ImageFragment}
-`;
-  // ${PaymentMethodFragment}
-  // ${OrderFragment}
 
 
 export const GET_BUYER_ORDERS_CONNECTION = gql`
@@ -107,14 +20,14 @@ export const GET_BUYER_ORDERS_CONNECTION = gql`
           }
           edges {
             node {
-              ...OrderFragment
+              ...OrdersFragment
             }
           }
         }
       }
     }
   }
-  ${OrderFragment}
+  ${OrdersFragment}
 `;
 
 
@@ -130,12 +43,12 @@ export const GET_ALL_ORDERS_CONNECTION2 = gql`
       }
       edges {
         node {
-          ...OrderFragment
+          ...OrdersFragment
         }
       }
     }
   }
-  ${OrderFragment}
+  ${OrdersFragment}
 `;
 
 export const GET_ORDERS_CREATED_CONNECTION = gql`
@@ -162,9 +75,9 @@ export const GET_ORDERS_CREATED_CONNECTION = gql`
       ...OrdersFragment
     }
   }
-  ${HasuraOrdersFragment}
+  ${OrdersFragment}
 `;
-// note whereOrderSnapshots query variable used in HasuraOrdersFragment
+// note whereOrderSnapshots query variable used in OrdersFragment
 
 
 export const GET_ORDERS_PENDING_APPROVAL_CONNECTION = gql`
@@ -184,7 +97,7 @@ export const GET_ORDERS_PENDING_APPROVAL_CONNECTION = gql`
       ...OrdersFragment
     }
   }
-  ${HasuraOrdersFragment}
+  ${OrdersFragment}
 `;
 
 
@@ -205,7 +118,7 @@ export const GET_ORDERS_ADMIN_APPROVED_CONNECTION = gql`
       ...OrdersFragment
     }
   }
-  ${HasuraOrdersFragment}
+  ${OrdersFragment}
 `;
 
 
@@ -222,24 +135,24 @@ export const GET_SELLER_ORDERS_CONNECTION = gql`
           }
           edges {
             node {
-              ...OrderFragment
+              ...OrdersFragment
             }
           }
         }
       }
     }
   }
-  ${OrderFragment}
+  ${OrdersFragment}
 `;
 
 
 export const GET_ORDER_AS_ADMIN = gql`
   query getOrderAsAdmin($orderId: ID!) {
     getOrderAsAdmin(orderId: $orderId) {
-      ...OrderFragment
+      ...OrdersFragment
     }
   }
-  ${OrderFragment}
+  ${OrdersFragment}
 `;
 
 export const GET_RECENT_TRANSACTIONS = gql`

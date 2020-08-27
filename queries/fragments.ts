@@ -27,6 +27,260 @@ export const ImageFragment = gql`
 `;
 
 
+export const ProductDetailsFragment = gql`
+  fragment ProductDetailsFragment on products {
+    id
+    createdAt
+    updatedAt
+    currentSnapshotId
+    categoryId
+    isPublished
+    isSuspended
+    isDeleted
+    isExcludedFromSearch
+    isExcludedFromRecommendations
+    storeId
+  }
+`;
+
+export const ProductSnapshotsFragment = gql`
+  fragment ProductSnapshotsFragment on product_snapshots {
+    id
+    createdAt
+    productId
+    title
+    description
+    condition
+    make
+    model
+    ammoType
+    actionType
+    boreDiameter
+    serialNumber
+    location
+    dealer
+  }
+`;
+
+export const ProductVariantsFragment = gql`
+  fragment ProductVariantsFragment on product_variants {
+    variantSnapshotId
+    variantId
+    snapshotId
+    productId
+    storeId
+    createdAt
+    variantName
+    variantDescription
+    isDefault
+    isSoldOut
+    position
+    price
+    priceWas
+    previewItems {
+      id
+      imageId
+      position
+      youTubeEmbedLink
+      variantSnapshotId
+      image {
+        ...ImageFragment
+      }
+    }
+  }
+  ${ImageFragment}
+`;
+
+
+export const ProductsFragment = gql`
+  fragment ProductsFragment on products {
+    ...ProductDetailsFragment
+    currentSnapshotId
+    currentSnapshot {
+      ...ProductSnapshotsFragment
+    }
+    productVariants {
+      ...ProductVariantsFragment
+    }
+    # productVariants(
+    #   where: {productId: {_in: $productIds }}
+    # ) {
+    #   ...ProductVariantsFragment
+    # }
+  }
+  ${ProductDetailsFragment}
+  ${ProductSnapshotsFragment}
+  ${ProductVariantsFragment}
+`;
+
+
+export const StoresFragment = gql`
+  fragment StoresFragment on stores {
+    id
+    createdAt
+    name
+    bio
+    website
+    user {
+      id
+    }
+    coverId
+    profileId
+    cover {
+      ...ImageFragment
+    }
+    profile {
+      ...ImageFragment
+    }
+
+    productsForSaleConnection: products(
+      where: {
+        isPublished: {_eq: true },
+        isDeleted: {_eq: false },
+        isSuspended: {_eq: false}
+      }
+    ) {
+      ...ProductsFragment
+    }
+
+    dashboardPublishedProductsConnection: products(
+      where: {
+        isPublished: {_eq: true }
+      }
+    ) {
+      ...ProductsFragment
+    }
+
+    dashboardUnpublishedProductsConnection: products(
+      where: {
+        isPublished: {_eq: false }
+      }
+    ) {
+      ...ProductsFragment
+    }
+  }
+  ${ImageFragment}
+  ${ProductsFragment}
+`;
+
+
+export const UsersFragment = gql`
+  fragment UsersFragment on users {
+    store {
+      ...StoresFragment
+    }
+    id
+    email
+    username
+    userRole
+    createdAt
+    updatedAt
+    firstName
+    lastName
+    emailVerified
+    storeId
+    stripeCustomerId
+    sellerReferredById
+    payoutMethod {
+      id
+      payeeId
+      payoutType
+      payoutEmail
+      payoutProcessor
+      payoutProcessorId
+      createdAt
+      updatedAt
+    }
+    payoutMethodId
+    payoutSplitId
+    isDeleted
+    isSuspended
+    lastSeen
+  }
+  ${StoresFragment}
+`;
+
+
+export const OrdersFragment = gql`
+  fragment OrdersFragment on orders {
+    id
+    createdAt
+    updatedAt
+    bidId
+    bid {
+      id
+      bidStatus
+      createdAt
+      updatedAt
+      acceptedPrice
+      offerPrice
+    }
+    total
+    currency
+    buyerId
+    buyer {
+      id
+      firstName
+      lastName
+      email
+    }
+    sellerId
+    seller {
+      id
+      firstName
+      lastName
+      email
+    }
+    currentSnapshot {
+      id
+      orderStatus
+      createdAt
+      adminApprover {
+        id
+        firstName
+        lastName
+        email
+      }
+      dealerApprover {
+        id
+        firstName
+        lastName
+        email
+      }
+      form10Image {
+        ...ImageFragment
+      }
+    }
+    orderSnapshots {
+      id
+      orderStatus
+      createdAt
+      adminApprover {
+        id
+        firstName
+        lastName
+        email
+      }
+      dealerApprover {
+        id
+        firstName
+        lastName
+        email
+      }
+      form10Image {
+        ...ImageFragment
+      }
+    }
+    productId
+    product {
+      ...ProductsFragment
+    }
+  }
+  ${ProductsFragment}
+  ${ImageFragment}
+`;
+
+
 export const ProductVariantFragment = gql`
   fragment ProductVariantFragment on product_variants {
     variantSnapshotId
@@ -100,92 +354,6 @@ export const ProductFragment = gql`
   ${ProductVariantFragment}
 `;
 
-
-// export const OrderFragment = gql`
-//   fragment OrderFragment on Order {
-//     id
-//     createdAt
-//     updatedAt
-//     userId
-//     items {
-//       id
-//       orderId
-//       orderStatus
-//       createdAt
-//       updatedAt
-//       product {
-//         id
-//         name
-//         tagline
-//         store {
-//           id
-//           name
-//           website
-//         }
-//         chosenVariant {
-//           ...ProductVariantFragment
-//         }
-//       }
-//       quantity
-//     }
-//     currentSnapshot {
-//       transaction {
-//         id
-//         createdAt
-//         subtotal
-//         paymentProcessingFee
-//         taxes
-//         paymentProcessor
-//         customerId
-//         currency
-//         paymentMethodId
-//         paymentIntentId
-//         chargeId
-//       }
-//       id
-//       orderStatus
-//       subtotal
-//       automaticSavings
-//       promoCodeSavings
-//       paymentProcessingFee
-//       taxes
-//       total
-//       paymentProcessor
-//     }
-//   }
-//   ${ProductVariantFragment}
-// `;
-
-// export const ProductSalesFragment = gql`
-//   fragment ProductSalesFragment on ProductSale {
-//     orderItem {
-//       id
-//       orderId
-//       product {
-//         id
-//         name
-//         tagline
-//         chosenVariant {
-//           variantId
-//           variantSnapshotId
-//           variantName
-//           variantDescription
-//         }
-//       }
-//       orderStatus
-//       createdAt
-//       priceDetails {
-//         ...PriceDetailsFragment
-//       }
-//     }
-//     user {
-//       firstName
-//       lastName
-//       email
-//     }
-//   }
-//   ${PriceDetailsFragment}
-// `;
 
 export const StorePublicFragment = gql`
   fragment StorePublicFragment on Store {
@@ -314,9 +482,6 @@ export const UserPrivateFragment = gql`
     store {
       ...StorePrivateFragment
     }
-    # cart {
-    #   ...CartFragment
-    # }
     # orderHistoryConnection {
     #   totalCount
     #   edges {
@@ -356,6 +521,5 @@ export const UserPrivateFragment = gql`
   ${StorePrivateFragment}
 `;
   // # ${ProductFragment}
-// ${CartFragment}
 // ${OrderFragment}
 // ${PaymentMethodFragment}

@@ -106,29 +106,43 @@ const Form10Upload = (props: ReactProps) => {
         setLoading(false)
         /// update order with form 10 here
         let orderStatus = props.order.currentSnapshot.orderStatus;
-        if (
-          orderStatus === OrderStatus.CONFIRMED_PAYMENT_FORM_10_REQUIRED
-          || orderStatus === OrderStatus.FORM_10_SUBMITTED
-        ) {
-          await addForm10({
-            variables: {
-              orderId: order.id,
-              currentSnapshotId: `order_snapshot_${nanoid()}`,
-              form10ImageId: image.id,
-            },
-            refetchQueries: refetchQueriesList,
-          })
-        } else {
-          if (
-            orderStatus === OrderStatus.ADMIN_APPROVED
-            || orderStatus === OrderStatus.COMPLETE
-          ) {
-            snackbar.enqueueSnackbar(
-              `Form-10 already approved by admin`,
-              { variant: "success" }
-            )
-          }
-        }
+
+        await addForm10({
+          variables: {
+            orderId: order.id,
+            form10ImageId: image.id,
+          },
+          refetchQueries: refetchQueriesList,
+        })
+
+        // if (
+        //   orderStatus === OrderStatus.CONFIRMED_PAYMENT_FORM_10_REQUIRED
+        //   || orderStatus === OrderStatus.FORM_10_SUBMITTED
+        // ) {
+        //   await addForm10({
+        //     variables: {
+        //       orderId: order.id,
+        //       form10ImageId: image.id,
+        //     },
+        //     refetchQueries: refetchQueriesList,
+        //   })
+        // } else {
+        //   if (
+        //     orderStatus === OrderStatus.ADMIN_APPROVED
+        //     || orderStatus === OrderStatus.COMPLETE
+        //   ) {
+        //     snackbar.enqueueSnackbar(
+        //       `Form-10 already approved by admin`,
+        //       { variant: "success" }
+        //     )
+        //   } else {
+
+        //     snackbar.enqueueSnackbar(
+        //       `OrderStatus: ${orderStatus}`,
+        //       { variant: "error" }
+        //     )
+        //   }
+        // }
         console.log("save_to_db response:", image.id)
       })
       .catch(err => {
@@ -162,7 +176,6 @@ const Form10Upload = (props: ReactProps) => {
     ADD_FORM_10, {
       variables: {
         orderId: order.id,
-        currentSnapshotId: `order_snapshot_${nanoid()}`,
         form10ImageId: undefined // required
       },
       refetchQueries: refetchQueriesList,
@@ -173,7 +186,6 @@ const Form10Upload = (props: ReactProps) => {
     REMOVE_FORM_10, {
       variables: {
         orderId: order.id,
-        currentSnapshotId: `order_snapshot_${nanoid()}`,
       },
       refetchQueries: refetchQueriesList,
     }
@@ -203,10 +215,11 @@ const Form10Upload = (props: ReactProps) => {
         </Avatar>
         <a className={props.classes.link}
           onClick={async () => {
+            let currentSnapshotId = `order_snapshot_${nanoid()}`;
+            console.log("order_snapshot_id: ", currentSnapshotId)
             await removeForm10({
               variables: {
                 orderId: order.id,
-                currentSnapshotId: `order_snapshot_${nanoid()}`,
               },
               refetchQueries: refetchQueriesList,
             })
@@ -281,7 +294,6 @@ interface MutDataAdd {
 }
 interface MutVarAdd {
   orderId: string
-  currentSnapshotId: string
   form10ImageId: string
 }
 
@@ -292,7 +304,6 @@ interface MutDataRemove {
 }
 interface MutVarRemove {
   orderId: string
-  currentSnapshotId: string
 }
 
 

@@ -2801,12 +2801,6 @@ export type Mutation = {
    */
   setPayoutMethod: UserMutationResponse;
   /**
-   * Verify the logged-in user's email address using a code that was emailed to them.
-   * 
-   * AccessRule – LOGGED_IN
-   */
-  sendVerifyEmail: UserMutationResponse;
-  /**
    * Edit user profile information.
    * 
    * AccessRule – LOGGED_IN
@@ -3001,12 +2995,6 @@ export type Mutation = {
    */
   generateProductFileDownloadLink: ProductFileLinkMutationResponse;
   /**
-   * Generate a temporary URL to download a product file if you're an admin.
-   * 
-   * AccessRule – PLATFORM_ADMIN
-   */
-  adminGenerateProductFileDownloadLink: ProductFileLinkMutationResponse;
-  /**
    * Set the default payment method for a user (credit cards)
    * 
    * AccessRule – LOGGED_IN
@@ -3082,48 +3070,20 @@ export type Mutation = {
   /** AccessRule – PLATFORM_ADMIN */
   createRefund: CreateRefundMutationResponse;
   /**
-   * Attempt to reserve a store link slug for your store.
-   * 
-   * You can only have one of these at a time, so changing it will release any old one for other stores to use.
-   * The slug you provide should be validated to be url-friendly otherwise it may fail server side validation.
-   * 
    * AccessRule – LOGGED_IN
+   * For a seller to upload form 10 after disposing gun
    */
-  reserveStoreLinkSlug?: Maybe<PrimaryLinkSlugs>;
+  addForm10: OrderMutationResponse;
   /**
-   * Remove any reserved link stub currently in use for your store.
-   * 
    * AccessRule – LOGGED_IN
+   * For a seller to remove a file which they accidentally uploaded as form 10
    */
-  removeStoreLinkSlug: BlankMutationResponse;
+  removeForm10: OrderMutationResponse;
   /**
-   * Record that an affiliate link was clicked, and receive a cookie to keep track of the referral.
-   * 
-   * AccessRule – PUBLIC
+   * AccessRule – ADMIN
+   * For admins to approve a form10
    */
-  recordAffiliateLinkClick: BlankMutationResponse;
-  /**
-   * Create an affiliate identity for a user.
-   * 
-   * NOTE: This normally happens automatically for new users, so this is really just here to help create
-   *       them for legacy users.
-   * 
-   * This will fail if the user already has one (no-op).
-   * 
-   * AccessRule – PLATFORM_ADMIN
-   */
-  adminCreateAffiliateForUser: BlankMutationResponse;
-  /**
-   * Delete an affiliate identity owned by a user.
-   * Pending payouts from the affiliate should still be available behind the scenes, but the user dashboard will clear.
-   * 
-   * WARNING: This will prevent new clicks and conversions for the affiliateID/ref.
-   * 
-   * This should be reserved for extraordinary situations, such as wanting to remove an undesirable affiliateId (eg ass1234).
-   * 
-   * AccessRule – PLATFORM_ADMIN
-   */
-  adminDeleteAffiliateForUser: BlankMutationResponse;
+  approveForm10: OrderMutationResponse;
 };
 
 
@@ -4040,11 +4000,6 @@ export type MutationSetPayoutMethodArgs = {
 };
 
 
-export type MutationSendVerifyEmailArgs = {
-  ref: Scalars['String'];
-};
-
-
 export type MutationEditUserProfileArgs = {
   email?: Maybe<Scalars['String']>;
   username?: Maybe<Scalars['String']>;
@@ -4210,11 +4165,6 @@ export type MutationGenerateProductFileDownloadLinkArgs = {
 };
 
 
-export type MutationAdminGenerateProductFileDownloadLinkArgs = {
-  id: Scalars['String'];
-};
-
-
 export type MutationSetDefaultPaymentMethodArgs = {
   paymentMethodId: Scalars['String'];
   customerId: Scalars['String'];
@@ -4287,24 +4237,20 @@ export type MutationCreateRefundArgs = {
 };
 
 
-export type MutationReserveStoreLinkSlugArgs = {
-  slug: Scalars['String'];
+export type MutationAddForm10Args = {
+  orderId: Scalars['String'];
+  form10ImageId: Scalars['String'];
 };
 
 
-export type MutationRecordAffiliateLinkClickArgs = {
-  affiliateId: Scalars['String'];
-  path: Scalars['String'];
+export type MutationRemoveForm10Args = {
+  orderId: Scalars['String'];
 };
 
 
-export type MutationAdminCreateAffiliateForUserArgs = {
-  userId: Scalars['String'];
-};
-
-
-export type MutationAdminDeleteAffiliateForUserArgs = {
-  userId: Scalars['String'];
+export type MutationApproveForm10Args = {
+  orderId: Scalars['String'];
+  adminApproverId: Scalars['String'];
 };
 
 /** Something that went wrong during a mutation. */
@@ -12835,6 +12781,59 @@ export type GetProductFileDownloadLinkMutation = { __typename?: 'Mutation', gene
 
 export type ImageFragment = { __typename?: 'image_parents', id: string, createdAt: any, tags?: Maybe<string>, description?: Maybe<string>, original?: Maybe<{ __typename?: 'image_variants', id: string, mimeType: string, heightInPixels: number, widthInPixels: number, sizeInBytes: number, url?: Maybe<string> }>, variants: Array<{ __typename?: 'image_variants', id: string, mimeType: string, sizeInBytes: number, widthInPixels: number, heightInPixels: number, url?: Maybe<string> }> };
 
+export type ProductDetailsFragment = { __typename?: 'products', id: string, createdAt: any, updatedAt: any, currentSnapshotId: string, categoryId: string, isPublished: boolean, isSuspended: boolean, isDeleted: boolean, isExcludedFromSearch: boolean, isExcludedFromRecommendations: boolean, storeId: string };
+
+export type ProductSnapshotsFragment = { __typename?: 'product_snapshots', id: string, createdAt: any, productId: string, title: string, description: string, condition: string, make: string, model: string, ammoType?: Maybe<string>, actionType: string, boreDiameter?: Maybe<string>, serialNumber: string, location: string, dealer: string };
+
+export type ProductVariantsFragment = { __typename?: 'product_variants', variantSnapshotId: string, variantId: string, snapshotId: string, productId: string, storeId: string, createdAt: any, variantName: string, variantDescription: string, isDefault: boolean, isSoldOut: boolean, position: number, price: number, priceWas?: Maybe<number>, previewItems: Array<{ __typename?: 'product_preview_items', id: string, imageId?: Maybe<string>, position: number, youTubeEmbedLink?: Maybe<string>, variantSnapshotId?: Maybe<string>, image?: Maybe<(
+      { __typename?: 'image_parents' }
+      & ImageFragment
+    )> }> };
+
+export type ProductsFragment = (
+  { __typename?: 'products', currentSnapshotId: string, currentSnapshot: (
+    { __typename?: 'product_snapshots' }
+    & ProductSnapshotsFragment
+  ), productVariants: Array<(
+    { __typename?: 'product_variants' }
+    & ProductVariantsFragment
+  )> }
+  & ProductDetailsFragment
+);
+
+export type StoresFragment = { __typename?: 'stores', id: string, createdAt: any, name: string, bio?: Maybe<string>, website?: Maybe<string>, coverId?: Maybe<string>, profileId?: Maybe<string>, user: { __typename?: 'users', id: string }, cover?: Maybe<(
+    { __typename?: 'image_parents' }
+    & ImageFragment
+  )>, profile?: Maybe<(
+    { __typename?: 'image_parents' }
+    & ImageFragment
+  )>, productsForSaleConnection: Array<(
+    { __typename?: 'products' }
+    & ProductsFragment
+  )>, dashboardPublishedProductsConnection: Array<(
+    { __typename?: 'products' }
+    & ProductsFragment
+  )>, dashboardUnpublishedProductsConnection: Array<(
+    { __typename?: 'products' }
+    & ProductsFragment
+  )> };
+
+export type UsersFragment = { __typename?: 'users', id: string, email: string, username?: Maybe<string>, userRole?: Maybe<string>, createdAt?: Maybe<any>, updatedAt?: Maybe<any>, firstName?: Maybe<string>, lastName?: Maybe<string>, emailVerified?: Maybe<boolean>, storeId?: Maybe<string>, stripeCustomerId?: Maybe<string>, sellerReferredById?: Maybe<string>, payoutMethodId?: Maybe<string>, payoutSplitId?: Maybe<string>, isDeleted: boolean, isSuspended: boolean, lastSeen?: Maybe<any>, store?: Maybe<(
+    { __typename?: 'stores' }
+    & StoresFragment
+  )>, payoutMethod?: Maybe<{ __typename?: 'payout_methods', id: string, payeeId: string, payoutType?: Maybe<string>, payoutEmail?: Maybe<string>, payoutProcessor?: Maybe<string>, payoutProcessorId?: Maybe<string>, createdAt: any, updatedAt?: Maybe<any> }> };
+
+export type OrdersFragment = { __typename?: 'orders', id: string, createdAt: any, updatedAt: any, bidId: string, total: number, currency: string, buyerId: string, sellerId: string, productId: string, bid?: Maybe<{ __typename?: 'bids', id: string, bidStatus: string, createdAt?: Maybe<any>, updatedAt?: Maybe<any>, acceptedPrice?: Maybe<number>, offerPrice: number }>, buyer?: Maybe<{ __typename?: 'users', id: string, firstName?: Maybe<string>, lastName?: Maybe<string>, email: string }>, seller?: Maybe<{ __typename?: 'users', id: string, firstName?: Maybe<string>, lastName?: Maybe<string>, email: string }>, currentSnapshot?: Maybe<{ __typename?: 'order_snapshots', id: string, orderStatus: string, createdAt: any, adminApprover?: Maybe<{ __typename?: 'users', id: string, firstName?: Maybe<string>, lastName?: Maybe<string>, email: string }>, dealerApprover?: Maybe<{ __typename?: 'users', id: string, firstName?: Maybe<string>, lastName?: Maybe<string>, email: string }>, form10Image?: Maybe<(
+      { __typename?: 'image_parents' }
+      & ImageFragment
+    )> }>, orderSnapshots: Array<{ __typename?: 'order_snapshots', id: string, orderStatus: string, createdAt: any, adminApprover?: Maybe<{ __typename?: 'users', id: string, firstName?: Maybe<string>, lastName?: Maybe<string>, email: string }>, dealerApprover?: Maybe<{ __typename?: 'users', id: string, firstName?: Maybe<string>, lastName?: Maybe<string>, email: string }>, form10Image?: Maybe<(
+      { __typename?: 'image_parents' }
+      & ImageFragment
+    )> }>, product: (
+    { __typename?: 'products' }
+    & ProductsFragment
+  ) };
+
 export type ProductVariantFragment = { __typename?: 'product_variants', variantSnapshotId: string, variantId: string, snapshotId: string, productId: string, storeId: string, createdAt: any, variantName: string, variantDescription: string, isDefault: boolean, position: number, price: number, priceWas?: Maybe<number>, isSoldOut: boolean, previewItems: Array<{ __typename?: 'product_preview_items', id: string, youTubeEmbedLink?: Maybe<string>, image?: Maybe<(
       { __typename?: 'image_parents' }
       & ImageFragment
@@ -12989,6 +12988,221 @@ export const ImageFragmentFragmentDoc = gql`
   description
 }
     `;
+export const ProductDetailsFragmentFragmentDoc = gql`
+    fragment ProductDetailsFragment on products {
+  id
+  createdAt
+  updatedAt
+  currentSnapshotId
+  categoryId
+  isPublished
+  isSuspended
+  isDeleted
+  isExcludedFromSearch
+  isExcludedFromRecommendations
+  storeId
+}
+    `;
+export const ProductSnapshotsFragmentFragmentDoc = gql`
+    fragment ProductSnapshotsFragment on product_snapshots {
+  id
+  createdAt
+  productId
+  title
+  description
+  condition
+  make
+  model
+  ammoType
+  actionType
+  boreDiameter
+  serialNumber
+  location
+  dealer
+}
+    `;
+export const ProductVariantsFragmentFragmentDoc = gql`
+    fragment ProductVariantsFragment on product_variants {
+  variantSnapshotId
+  variantId
+  snapshotId
+  productId
+  storeId
+  createdAt
+  variantName
+  variantDescription
+  isDefault
+  isSoldOut
+  position
+  price
+  priceWas
+  previewItems {
+    id
+    imageId
+    position
+    youTubeEmbedLink
+    variantSnapshotId
+    image {
+      ...ImageFragment
+    }
+  }
+}
+    ${ImageFragmentFragmentDoc}`;
+export const ProductsFragmentFragmentDoc = gql`
+    fragment ProductsFragment on products {
+  ...ProductDetailsFragment
+  currentSnapshotId
+  currentSnapshot {
+    ...ProductSnapshotsFragment
+  }
+  productVariants {
+    ...ProductVariantsFragment
+  }
+}
+    ${ProductDetailsFragmentFragmentDoc}
+${ProductSnapshotsFragmentFragmentDoc}
+${ProductVariantsFragmentFragmentDoc}`;
+export const StoresFragmentFragmentDoc = gql`
+    fragment StoresFragment on stores {
+  id
+  createdAt
+  name
+  bio
+  website
+  user {
+    id
+  }
+  coverId
+  profileId
+  cover {
+    ...ImageFragment
+  }
+  profile {
+    ...ImageFragment
+  }
+  productsForSaleConnection: products(where: {isPublished: {_eq: true}, isDeleted: {_eq: false}, isSuspended: {_eq: false}}) {
+    ...ProductsFragment
+  }
+  dashboardPublishedProductsConnection: products(where: {isPublished: {_eq: true}}) {
+    ...ProductsFragment
+  }
+  dashboardUnpublishedProductsConnection: products(where: {isPublished: {_eq: false}}) {
+    ...ProductsFragment
+  }
+}
+    ${ImageFragmentFragmentDoc}
+${ProductsFragmentFragmentDoc}`;
+export const UsersFragmentFragmentDoc = gql`
+    fragment UsersFragment on users {
+  store {
+    ...StoresFragment
+  }
+  id
+  email
+  username
+  userRole
+  createdAt
+  updatedAt
+  firstName
+  lastName
+  emailVerified
+  storeId
+  stripeCustomerId
+  sellerReferredById
+  payoutMethod {
+    id
+    payeeId
+    payoutType
+    payoutEmail
+    payoutProcessor
+    payoutProcessorId
+    createdAt
+    updatedAt
+  }
+  payoutMethodId
+  payoutSplitId
+  isDeleted
+  isSuspended
+  lastSeen
+}
+    ${StoresFragmentFragmentDoc}`;
+export const OrdersFragmentFragmentDoc = gql`
+    fragment OrdersFragment on orders {
+  id
+  createdAt
+  updatedAt
+  bidId
+  bid {
+    id
+    bidStatus
+    createdAt
+    updatedAt
+    acceptedPrice
+    offerPrice
+  }
+  total
+  currency
+  buyerId
+  buyer {
+    id
+    firstName
+    lastName
+    email
+  }
+  sellerId
+  seller {
+    id
+    firstName
+    lastName
+    email
+  }
+  currentSnapshot {
+    id
+    orderStatus
+    createdAt
+    adminApprover {
+      id
+      firstName
+      lastName
+      email
+    }
+    dealerApprover {
+      id
+      firstName
+      lastName
+      email
+    }
+    form10Image {
+      ...ImageFragment
+    }
+  }
+  orderSnapshots {
+    id
+    orderStatus
+    createdAt
+    adminApprover {
+      id
+      firstName
+      lastName
+      email
+    }
+    dealerApprover {
+      id
+      firstName
+      lastName
+      email
+    }
+    form10Image {
+      ...ImageFragment
+    }
+  }
+  productId
+  product {
+    ...ProductsFragment
+  }
+}
+    ${ImageFragmentFragmentDoc}
+${ProductsFragmentFragmentDoc}`;
 export const ProductVariantFragmentFragmentDoc = gql`
     fragment ProductVariantFragment on product_variants {
   variantSnapshotId

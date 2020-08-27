@@ -152,8 +152,6 @@ const RowExpander = (props: RowExpanderProps) => {
                   approveForm10({
                     variables: {
                       orderId: row.id, // row.id => order.id
-                      currentSnapshotId: `order_snapshot_${nanoid()}`,
-                      form10ImageId: form10Exists ? form10.id : undefined,
                       adminApproverId: admin.id, // row.id => order.id
                     }
                   })
@@ -234,8 +232,6 @@ interface MutData {
 }
 interface MutVar {
   orderId: string; // row.id => order.id
-  currentSnapshotId: string;
-  form10ImageId: string;
   adminApproverId: string;
 }
 
