@@ -4,8 +4,7 @@ import { oc as option } from "ts-optchain";
 import { useDispatch, useSelector } from 'react-redux';
 import { GrandReduxState } from 'reduxStore/grand-reducer';
 import { Actions } from 'reduxStore/actions';
-// import { UserPrivate } from "typings/gqlTypes";
-type UserPrivate = any;
+import { UserPrivate, Role } from "typings/gqlTypes";
 
 // Router
 import { goToModalConnect } from "utils/modals";
@@ -20,10 +19,12 @@ import Divider from "@material-ui/core/Divider";
 // Icons
 import ContactSupportIcon from "@material-ui/icons/ContactSupport";
 import PermIdentityIcon from "@material-ui/icons/PermIdentity";
-import StoreIcon from "@material-ui/icons/Store";
+import StorefrontIcon from "@material-ui/icons/Storefront";
+import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import DownloadIcon from "@material-ui/icons/SaveAlt";
 import MonetizationOnIcon from "@material-ui/icons/MonetizationOn";
 import CardGiftcard from "@material-ui/icons/CardGiftcard";
+import LibraryBooks from "@material-ui/icons/LibraryBooks";
 import QAIcon from "@material-ui/icons/QuestionAnswer";
 // Router
 import Link from "next/link";
@@ -102,34 +103,48 @@ export const UserMenu: React.FC<ReactProps> = (props) => {
           onClose={handleCloseMenu}
         >
 
+
+          {
+            user.userRole === Role.PLATFORM_ADMIN &&
+            <MenuItem onClick={handleCloseMenu}>
+              <Link href="/gov/approvals">
+                <a className={classes.menuLink}>
+                  <LibraryBooks className={classes.menuIcon}/>
+                  <span className={classes.menuText}> Governance Dashboard</span>
+                </a>
+              </Link>
+            </MenuItem>
+          }
+
           <MenuItem onClick={handleCloseMenu}>
             <Link href="/my-orders">
               <a className={classes.menuLink}>
-                <DownloadIcon className={classes.menuIcon}/>
-                <span className={classes.menuText}> My Downloads </span>
+                <ShoppingCartIcon className={classes.menuIcon}/>
+                <span className={classes.menuText}> My Orders </span>
               </a>
             </Link>
           </MenuItem>
 
-          <MenuItem onClick={handleCloseMenu}>
+          {/* <MenuItem onClick={handleCloseMenu}>
             <Link href="/my-list">
               <a className={classes.menuLink}>
                 <CardGiftcard className={classes.menuIcon}/>
                 <span className={classes.menuText}> Wishlist </span>
               </a>
             </Link>
-          </MenuItem>
+          </MenuItem> */}
+
 
           <MenuItem onClick={handleCloseMenu}>
             {
               option(user).store.id()
-              ? <Link href="/seller">
+              ? <Link href="/admin">
                   <a className={classes.menuLink}>
-                    <StoreIcon className={classes.menuIcon}/>
+                    <StorefrontIcon className={classes.menuIcon}/>
                     <span className={classes.menuText}> Seller Dashboard </span>
                   </a>
                 </Link>
-              : <Link href="/become-a-seller">
+              : <Link href="/create-store">
                   <a className={classes.menuLink}>
                     <MonetizationOnIcon className={classes.menuIcon}/>
                     <span className={classes.menuText}> Become a Seller </span>

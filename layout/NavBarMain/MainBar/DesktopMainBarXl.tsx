@@ -86,7 +86,7 @@ const DesktopMainBarXl = (props: DesktopMainBarProps) => {
           <span className={
             endRoute === 'sell' ? classes.selectedRouteText : null
           }>
-            Sell
+            Upload Listing
           </span>
         </div>
       </Button>
@@ -115,24 +115,36 @@ const DesktopMainBarXl = (props: DesktopMainBarProps) => {
             <Login
               buttonText={"Orders"}
               titleLogin={"Login to continue"}
-              buttonProps={{ color: "primary" }}
+              buttonProps={{
+                color: "primary",
+              }}
             />
           </div>
       }
 
       {
         loggedIn
-        ? <OpenChatButton title={"Offers"}/>
+        ? <OpenChatButton
+            title={"Offers"}
+            buttonProps={{
+              color: "primary",
+              classes: {
+                root: classes.marginRight,
+              },
+            }}
+          />
         : <div className={classes.myDownloadsLogin}>
             <Login
               buttonText={"Offers"}
               titleLogin={"Login to continue"}
-              buttonProps={{ color: "primary" }}
+              buttonProps={{
+                color: "primary",
+              }}
             />
           </div>
       }
 
-      <Button
+      {/* <Button
         className={classes.navbarButton}
         variant="text"
         color="primary"
@@ -148,7 +160,7 @@ const DesktopMainBarXl = (props: DesktopMainBarProps) => {
         <span className={classes.cartText}>
           {c(subtotal)}
         </span>
-      </Button>
+      </Button> */}
 
       <div className={classes.navbarButton}>
         <UserMenu loggedIn={loggedIn} />

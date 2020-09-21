@@ -152,17 +152,27 @@ const DesktopMainBarLg = (props: DesktopMainBarProps) => {
 
         {
           loggedIn
-          ? <OpenChatButton/>
+          ? <OpenChatButton
+              title={"Offers"}
+              buttonProps={{
+                color: "primary",
+                classes: {
+                  root: classes.marginRight,
+                },
+              }}
+            />
           : <div className={classes.myDownloadsLogin}>
               <Login
-                buttonText={"Orders"}
+                buttonText={"Offers"}
                 titleLogin={"Login to continue"}
-                buttonProps={{ color: "primary" }}
+                buttonProps={{
+                  color: "primary",
+                }}
               />
             </div>
         }
 
-        <Button
+        {/* <Button
           className={classes.navbarButton}
           variant="text"
           color="primary"
@@ -178,7 +188,7 @@ const DesktopMainBarLg = (props: DesktopMainBarProps) => {
           <span className={classes.cartText}>
             {c(subtotal)}
           </span>
-        </Button>
+        </Button> */}
 
         <div className={classes.navbarButton}>
           <UserMenu loggedIn={loggedIn} />

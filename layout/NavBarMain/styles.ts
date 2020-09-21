@@ -72,7 +72,7 @@ export const styles = (theme: Theme) => createStyles({
     zIndex: 5001,
   },
   navbarButton: {
-    marginRight: "1%",
+    marginRight: "0.5rem",
     minWidth: '50px',
   },
   navbarButtonSelected: {
@@ -89,6 +89,12 @@ export const styles = (theme: Theme) => createStyles({
   cartText: {
     marginLeft: '0.5rem',
   },
+  marginLeft: {
+    marginLeft: '0.5rem',
+  },
+  marginRight: {
+    marginRight: '0.5rem',
+  },
   icons: {
     fill: theme.palette.primary.main,
   },
@@ -104,7 +110,7 @@ export const styles = (theme: Theme) => createStyles({
     color: "#fefefe",
   },
   buttonLink: {
-    marginRight: "1rem",
+    marginRight: "0.5rem",
   },
   menuButton: {
   },
