@@ -20,9 +20,10 @@ import {
   UserPrivate, ID,
   Orders,
   OrderStatus,
-  ProductProductVariantId, PaymentMethod as EFCPaymentMethod,
+  Product,
+  PaymentMethod as EFCPaymentMethod,
 } from 'typings/gqlTypes';
-import { CheckoutProductsResponse, CheckoutCartResponse } from "typings";
+import { OrderMutationResponse } from "typings/gqlTypes";
 // Redux
 import { useDispatch, useSelector } from "react-redux";
 import { GrandReduxState } from "reduxStore/grand-reducer";
@@ -37,81 +38,66 @@ import { GET_USER_PAYMENT_METHODS } from "queries/payment_methods-queries";
 import { useApolloClient } from '@apollo/client';
 // Snackbar
 import { useSnackbar, ProviderContext } from "notistack";
+import { WestpacError } from "typings/typings-westpac";
 
 // text mask for credit card
 import { Rifm } from 'rifm';
 
+import {
+  CREATE_ORDER,
+  CONFIRM_ORDER,
+} from "queries/orders-mutations";
 
 
 const WestpacPurchaseProduct = (props: ReactProps) => {
 
   const snackbar = useSnackbar();
 
-  const createNewPaymentMethod = async(): Promise<any> => {
-    // Within the context of `Elements`, this call to createPaymentMethod
-    // knows from which Element to create the PaymentMethod,
-    // See our createPaymentMethod documentation for more:
-    // https://stripe.com/docs/stripe-js/reference#stripe-create-payment-method
-    // let billing_details = undefined;
-    // if (props.user) {
-    //   billing_details = {
-    //     email: props.user.email,
-    //   }
-    // } else {
-    //   billing_details = {
-    //     email: buyerName,
-    //   }
-    // }
-    // let { paymentMethod, error } = await stripe.createPaymentMethod({
-    //   type: 'card',
-    //   card: elements.getElement(CardElement),
-    //   billing_details: billing_details
-    // })
 
-    // if (error) {
-    //   console.error('createNewPaymentMethod error:', error)
-    // }
-    // return paymentMethod
-    await setTimeout(() => {})
-    return
+  const createOrderFirst = async() => {
+
+    // setLoading(true)
+    const variant = featuredVariant;
+    if (!option(props).user.id()) {
+      snackbar.enqueueSnackbar(`Login to purchase.`, { variant: "info" })
+      setLoading(false)
+      return
+    }
+
+    const response = await aClient.mutate<MutData1, MutVar1>({
+      mutation: CREATE_ORDER,
+      variables: {
+        productId: product.id,
+        productSnapshotId: product.currentSnapshot.id,
+        variantId: variant.variantId,
+        variantSnapshotId: variant.variantSnapshotId,
+        total: variant.price,
+        buyerId: props.user.id,
+        sellerId: product.store.id,
+        bidId: undefined,
+      }
+    });
+    console.log("createOrder response: ", response.data.createOrder)
+    return response.data.createOrder
   }
 
-  const checkoutInstantly = async() => {
+  const confirmOrderSecond = async(
+    orderId: string,
+    singleUseTokenId: string,
+  ) => {
 
-    setLoading(true)
-    // analyticsEvent("BuyNowButton.Pressed")
-
-    // const { order, stripeConfirmResponse } = await stripePurchaseCartless(
-    //   apolloClient,
-    //   stripe,
-    //   elements,
-    // )({
-    //   paymentMethodId: selectedPaymentMethodId,
-    //   useNewCard: useNewCard,
-    //   savePaymentMethod: savePaymentMethod && useNewCard,
-    //   productsInfo: props.productsInfo,
-    //   quotedPrice: props.quotedPrice,
-    //   stripeCustomerId: option(props).user.stripeCustomerId(),
-    //   buyerName: buyerName,
-    // });
-
-    // setLoading(false)
-
+    const response = await aClient.mutate<MutData1, MutVar2>({
+      mutation: CONFIRM_ORDER,
+      variables: {
+        orderId: orderId,
+        singleUseTokenId: singleUseTokenId,
+      }
+    });
+    console.log("confirmOrder response: ", response);
     // if (order.id && order.currentSnapshot.orderStatus === OrderStatus.CONFIRMED) {
     //   setData("Your order was confirmed!") // trigger success snackbar
     //   console.log('Success! order response:', order)
     //   props.handleOrderPostPurchase(order)
-
-    //   analyticsEvent("Order.Processed", {
-    //     itemCount: option(order).items.length(0),
-    //     totalPrice: props.quotedPrice,
-    //     paymentType: selectedPaymentMethodId, // paymentId lets us lookup specifically which
-    //     // kind of payment method used.
-    //     // Stripe paymentMethodIds will begin with it's own prefix, as will Paypal
-    //     isLoggedOut: order.isLoggedOutPurchase,
-    //     instantBuy: !order.isLoggedOutPurchase && order.isCartlessPurchase,
-    //     saveCard: savePaymentMethod && useNewCard,
-    //   })
     // } else {
     //   if (option(stripeConfirmResponse).error.message()) {
     //     setError(`${stripeConfirmResponse.error.message}`)
@@ -120,23 +106,41 @@ const WestpacPurchaseProduct = (props: ReactProps) => {
     //   }
     //   // trigger error snackbar
     // }
-    await setTimeout(() => {})
-    return
+    return response
   }
 
+  const handleWestpacError = (errors: WestpacError[]) => {
+    let errorMsgs = errors
+      .map(e => `${e.fieldName}: ${e.messages[0]}`)
 
-  // const fetchUserPaymentMethods = async() => {
-  //   let { data, loading, errors } = await apolloClient.query({
-  //     query: GET_USER_PAYMENT_METHODS,
-  //   });
-  //   // redux
-  //   dispatch(Actions.reduxLogin.SET_USER({
-  //     ...props.user,
-  //     ...data.user,
-  //   }))
-  // }
+    errorMsgs.forEach(msg => {
+      snackbar.enqueueSnackbar(msg, { variant: "error" })
+    })
+    setForceShowCardError(true)
+    setTimeout(() => {
+      setForceShowCardError(false)
+    }, 9000)
+  }
+
+  const formatCreditCard = ccString => {
+    if (!ccString) {
+      return ""
+    }
+    let cc = ccString.replace(/\s/g, '');
+    let cc1 = cc.slice(0,4)
+    let cc2 = cc.slice(4,8)
+    let cc3 = cc.slice(8,12)
+    let cc4 = cc.slice(12,16)
+    let ccFinal = [cc1, cc2, cc3, cc4].filter(cc => !!cc).join(" ")
+    return ccFinal
+  }
 
   const { classes, display, disableButton } = props;
+
+  const product = props.product;
+  const featuredVariant = props.product.featuredVariant;
+
+  const aClient = useApolloClient();
 
   const [loading, setLoading] = React.useState(false);
   const [data, setData] = React.useState(undefined);
@@ -157,20 +161,9 @@ const WestpacPurchaseProduct = (props: ReactProps) => {
   }, [window.QuickstreamAPI])
 
 
-  const formatCreditCard = ccString => {
-    if (!ccString) {
-      return ""
-    }
-    let cc = ccString.replace(/\s/g, '');
-    let cc1 = cc.slice(0,4)
-    let cc2 = cc.slice(4,8)
-    let cc3 = cc.slice(8,12)
-    let cc4 = cc.slice(12,16)
-    let ccFinal = [cc1, cc2, cc3, cc4].filter(cc => !!cc).join(" ")
-    return ccFinal
-  }
-
   let westpacCreditCardId = "westpac-cc-form"
+  // console.log("product: ", product)
+  // console.log("user: ", props.user)
 
   if (display === false) {
     return <></>
@@ -184,15 +177,10 @@ const WestpacPurchaseProduct = (props: ReactProps) => {
             <form
               className={classes.flexRowCenter}
               id={westpacCreditCardId}
-              // method="POST"
-              // action="/MakePayment"
-              onSubmit={(e) => {
+              onSubmit={async (e) => {
 
-                setLoading(true)
                 e.preventDefault()
-
                 let ccForm = document.getElementById(westpacCreditCardId)
-                // console.log("#westpac-cc-form: ", ccForm)
 
                 window.QuickstreamAPI.creditCards
                   .validateCardNumber(ccForm, (errors, data) => {
@@ -200,26 +188,34 @@ const WestpacPurchaseProduct = (props: ReactProps) => {
                     // console.log("validateCardNumber data: ", data); // Example output: false
                   })
 
-                window.QuickstreamAPI.creditCards
-                  .getToken(ccForm, "C00221", (errors, data) => {
-                    if (errors && errors.length > 0) {
-                      let errorMsgs = errors
-                        .map(e => `${e.fieldName}: ${e.messages[0]}`)
+                // 1. Create an order first with the backend
+                let orderResponse = await createOrderFirst();
+                let order = option(orderResponse).order();
+                console.log("ORDER_MUTATION response: ", orderResponse)
+                console.log("ORDER response: ", order)
 
-                      errorMsgs.forEach(msg => {
-                        snackbar.enqueueSnackbar(msg, { variant: "error" })
-                      })
-                      setForceShowCardError(true)
-                      setTimeout(() => {
-                        setForceShowCardError(false)
-                      }, 9000)
+                if (option(order).id()) {
+                  // 2. get token from Westpac quickstream
+                  window.QuickstreamAPI.creditCards
+                  .getToken(ccForm, "C00221", async (errors, data) => {
+                    console.log("westpac token: ", data)
+                    if (errors && errors.length > 0) {
+                      // 3a. handle error if error
+                      handleWestpacError(errors)
                     } else {
-                      console.log("getToken data: ", data); // Example output: false
-                      snackbar.enqueueSnackbar(`Success token: ${data.token}`, { variant: "success" })
+                      // 3b. use token to make a payment, and confirm the order
+                      let singleUseTokenId = data.token;
+                      snackbar.enqueueSnackbar(`Success token: ${singleUseTokenId}`, { variant: "success" })
+                      let res = await confirmOrderSecond(order.id, singleUseTokenId)
+                      // 4. once payment is finalized, and order is finalized
+                      // proceed with screen transitions, etc
+                      console.log("order res: ", res)
                     }
                     setLoading(false)
                     return data
                   })
+                }
+
 
               }}
             >
@@ -332,6 +328,8 @@ const WestpacPurchaseProduct = (props: ReactProps) => {
   }
 };
 
+
+
 interface ReactProps extends WithStyles<typeof styles> {
   display: boolean;
   disableButton?: boolean;
@@ -342,7 +340,25 @@ interface ReactProps extends WithStyles<typeof styles> {
   showIcon?: boolean;
   handleOrderPostPurchase(order: Orders): void;
   quotedPrice: number; // in cents
-  productsInfo: ProductProductVariantId[];
+  product: Product;
+}
+
+interface MutData1 {
+  createOrder: OrderMutationResponse;
+}
+interface MutVar1 {
+  productId: string
+  productSnapshotId: string
+  variantId: string
+  variantSnapshotId: string
+  total: number
+  buyerId: string
+  sellerId: string
+  bidId: string
+}
+interface MutVar2 {
+  orderId: string
+  singleUseTokenId: string
 }
 
 /////////////// Styles /////////////

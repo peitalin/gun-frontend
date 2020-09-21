@@ -205,7 +205,6 @@ const Products: React.FC<ReactProps> = (props) => {
             // productLicense props
             increaseQuantity={increaseQuantity}
             decreaseQuantity={decreaseQuantity}
-            isQuantityEnabled={false} // Seats
             variantOptions={variantOptions}
             handleChangeVariantOption={handleChangeVariantOption}
           />

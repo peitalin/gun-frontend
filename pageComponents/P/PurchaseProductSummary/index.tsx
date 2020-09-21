@@ -81,16 +81,6 @@ const PurchaseProductSummary: React.FC<ReactProps> = (props) => {
     option(props).product.id() &&
     !xsDown
 
-  const showApplePay =
-    option(chosenVariant).variantId() &&
-    option(props).product.id() &&
-    xsDown  // only enable ApplePay on mobile sizes
-
-  const showPaypal =
-    option(chosenVariant).variantId() &&
-    option(props).product.id()
-
-  const showLicenses = true
 
   return (
     <div className={classes.purchaseCheckoutSummaryRoot}>
@@ -105,7 +95,6 @@ const PurchaseProductSummary: React.FC<ReactProps> = (props) => {
                   increaseQuantity={increaseQuantity}
                   decreaseQuantity={decreaseQuantity}
                   quantity={quantity}
-                  isQuantityEnabled={false} // Seats
                   selectedOption={selectedOption}
                   variantOptions={variantOptions}
                   handleChangeVariantOption={handleChangeVariantOption}
@@ -129,12 +118,6 @@ const PurchaseProductSummary: React.FC<ReactProps> = (props) => {
           }
         </div>
 
-        <div className={
-          showLicenses
-            ? classes.expanderShort
-            : classes.expanderTall
-        }/>
-
         <div className={clsx(
           classes.flexCol33,
           mdDown ? classes.center : classes.alignItemsCenter,
@@ -155,11 +138,7 @@ const PurchaseProductSummary: React.FC<ReactProps> = (props) => {
                   // disable on mobile
                   user={user}
                   // className={"fadeIn"}
-                  productsInfo={[{
-                    productId: option(props).product.id(),
-                    variantId: chosenVariant.variantId,
-                    quantity: quantity,
-                  }]}
+                  product={option(props).product()}
                   quotedPrice={chosenVariant.price}
                   title={`Reserve for ${c(chosenVariant.price)} USD`}
                   showIcon={true}
@@ -195,7 +174,6 @@ interface ReactProps extends WithStyles<typeof styles> {
   // ProductLicense
   increaseQuantity(): void;
   decreaseQuantity(): void;
-  isQuantityEnabled?: boolean;
   // selectedOption: {
   //   label: string;
   //   value: Product_Variants;

@@ -25,7 +25,6 @@ const ProductLicenses = (props: ReactProps) => {
     variantOptions,
     decreaseQuantity,
     increaseQuantity,
-    isQuantityEnabled = false,
     quantity,
   } = props;
 
@@ -34,11 +33,8 @@ const ProductLicenses = (props: ReactProps) => {
   return (
     <div className={classes.licenseContainer}>
       {
-        ((variantOptions.length > 1) || isQuantityEnabled) &&
+        (variantOptions.length > 1) &&
         <>
-          {/* <Typography variant="subtitle2" className={classes.subtitle1}>
-            License
-          </Typography> */}
           <div className={classes.variantSelector}>
             {
               (variantOptions.length > 1) &&
@@ -63,27 +59,6 @@ const ProductLicenses = (props: ReactProps) => {
                 />
               </div>
             }
-            {
-              isQuantityEnabled && // seats
-              <div className={classes.quantityMenu}>
-                <Button
-                  className={classes.seatsButton}
-                  onClick={() => decreaseQuantity()}
-                  variant="text"
-                >
-                  –
-                </Button>
-                <div className={classes.seatsNumber}>{`${quantity} seats`}</div>
-                <Button
-                  className={classes.seatsButton}
-                  onClick={() => increaseQuantity()}
-                  variant="text"
-                >
-                  +
-                </Button>
-              </div>
-            }
-            {/* <div style={{ flexGrow: 1 }}></div> */}
           </div>
         </>
       }
@@ -98,7 +73,6 @@ interface ReactProps extends WithStyles<typeof styles> {
   increaseQuantity(): void;
   decreaseQuantity(): void;
   quantity: number;
-  isQuantityEnabled?: boolean;
   selectedOption: {
     label: string;
     value: Product_Variants;
