@@ -342,7 +342,6 @@ const Login: React.FC<ReactProps> = (props) => {
 
 
 interface ReactProps extends WithStyles<typeof styles> {
-  buttonVariant?: string;
   compact?: boolean;
   redirectOnComplete?: string;
   asFormLayout?: boolean;

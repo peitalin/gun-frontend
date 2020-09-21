@@ -113,7 +113,7 @@ const Footer: React.FC<ReactProps> = (props) => {
                 <a
                   className={classes.link}
                   href="https://www.gunmarketplace.com.au" target="_blank">
-                  Copyright © 2019 Gun Marketplace. All rights reserved.
+                  Copyright © 2020 Gun Marketplace. All rights reserved.
                 </a>
               </Typography>
               {/* <SocialIcons classes={classes}/> */}

@@ -44,7 +44,6 @@ const PaymentMethods = (props: ReactProps) => {
     //   mutation: REMOVE_PAYMENT_METHOD,
     //   variables: {
     //     paymentMethodId: payment_method_id,
-    //     customerId: props.user.stripeCustomerId
     //   }
     // });
     // refetchUserPaymentMethods()
@@ -57,7 +56,6 @@ const PaymentMethods = (props: ReactProps) => {
     //   mutation: SET_DEFAULT_PAYMENT_METHOD,
     //   variables: {
     //     paymentMethodId: payment_method_id,
-    //     customerId: props.user.stripeCustomerId
     //   }
     // });
     // refetchUserPaymentMethods()
@@ -108,8 +106,6 @@ const PaymentMethods = (props: ReactProps) => {
       </ErrorBounds>
     )
   } else {
-    // props.user.stripeCustomerId &&
-    // syncUserPaymentMethods(data);
     let defaultPaymentMethodId = option(data).user.defaultPaymentMethod.id();
     return (
       <ErrorBounds className={classes.root}>

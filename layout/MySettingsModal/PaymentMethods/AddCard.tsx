@@ -34,25 +34,17 @@ const AddCard = (props: ReactProps) => {
     setShowAddVisaForm(false)
   }
 
-  const addCreditCard = async(stripeCustomerId: string) => {
+  const addCreditCard = async() => {
     // props.setIsLoading(true)
     // Within the context of `Elements`, this call to createPaymentMethod
     // knows from which Element to create the PaymentMethod,
-    // let { paymentMethod } = await props.stripe.createPaymentMethod({
-    //   type: "card",
-    //   // card: elements.getElement(CardElement),
-    //   // card: Stripe Elements tokenises card details
-    //   billing_details: {
-    //     email: props.user.email,
-    //     name: nameOnCard,
-    //   }
-    // });
-    // console.log('Stripe createPaymentMethod:', paymentMethod);
+    //
+    // createPaymentMethods()......
+    //
     // const response = await aClient.mutate({
     //   mutation: ADD_PAYMENT_METHOD,
     //   variables: {
     //     paymentMethodId: paymentMethod.id,
-    //     customerId: stripeCustomerId
     //   }
     // })
     // props.refetchPaymentMethods()
@@ -132,10 +124,7 @@ const AddCard = (props: ReactProps) => {
             variant={"outlined"}
             color={"primary"}
             onClick={async() => {
-              let customerId = option(props).user.stripeCustomerId();
-              if (customerId) {
-                addCreditCard(customerId)
-              }
+              addCreditCard()
             }}
           >
             Save
@@ -150,7 +139,6 @@ const AddCard = (props: ReactProps) => {
 
 interface ReactProps extends WithStyles<typeof styles> {
   user: UserPrivate
-  // stripe?: Stripe; // provided by AsyncStripeProvider
   isLoading: boolean;
   setIsLoading(a: boolean): void;
   refetchPaymentMethods(): void;

@@ -23,6 +23,10 @@ export const Colors = {
   cream: "#fafafa",
   darkWhite: "#F7F7F7",
   slateGrey: "#EDF0F2",
+  slateGreyDark: "#E2E8ED",
+  slateGreyDarker: "#D0D5DF",
+  slateGreyDarkest: "#4A6476",
+  slateGreyBlack: "#253848",
   secondary: secondary,
   secondaryBright: fade(secondary, 0.9),
   magenta: "#EB466D",
@@ -33,6 +37,7 @@ export const Colors = {
   lightGrey: "#e8e8e8",
   mediumGrey: "#ccc",
   lightMediumGrey: "#bbb",
+  mediumLightGrey: "#dadbdd", // Description Input grey, Fiverr grey lines
   ghostGrey: "#bbb",
   grey: "#aaa",
   darkerGrey: "#888",
@@ -93,6 +98,9 @@ export const BoxShadows = {
   },
   shadow2: {
     boxShadow: '0 3px 1px rgba(0,0,0,0.1),0 4px 8px rgba(0,0,0,0.3),0 0 0 1px rgba(0,0,0,0.02)',
+  },
+  shadowLight: {
+    boxShadow: '0 1px 1px rgba(0,0,0,0.05),0 2px 4px rgba(0,0,0,0.15),0 0 0 1px rgba(0,0,0,0.02)',
   },
 }
 

@@ -27,12 +27,6 @@ const Header: React.FC<{}> = (props) => (
       script tag is already present
     */}
 
-    {/* <script id="paypal-js" src={`https://www.paypal.com/sdk/js?client-id=${PAYPAL_CLIENT_ID}`} async></script> */}
-
-    {
-      !process.browser &&
-      <script id="stripe-js" src="https://js.stripe.com/v3/" async></script>
-    }
     {
       process.browser &&
       // <script type="text/javascript" src="https://api.quickstream.westpac.com.au/rest/v1/quickstream-api-1.0.min.js"></script>
