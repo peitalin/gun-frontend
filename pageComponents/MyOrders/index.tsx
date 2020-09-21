@@ -3,7 +3,7 @@ import {oc as option} from "ts-optchain";
 import clsx from "clsx";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
-import { Colors } from "layout/AppTheme";
+import { Colors, BoxShadows } from "layout/AppTheme";
 
 // redux
 import { GrandReduxState } from "reduxStore/grand-reducer";
@@ -25,7 +25,8 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 // Subcomponents
 import ToolTips from "pageComponents/MyOrders/ToolTips";
-import OrderRow from "pageComponents/MyOrders/OrderRow";
+import OrderRowSellers from "pageComponents/MyOrders/OrderRowSellers";
+import OrderRowBuyers from "pageComponents/MyOrders/OrderRowBuyers";
 import PurchaseSuccessBanner from "pageComponents/MyOrders/PurchaseSuccessBanner";
 import { UserPrivate, OrderStatus, OrdersConnection, Orders } from "typings/gqlTypes";
 // Icons
@@ -87,8 +88,6 @@ const MyOrders: React.FC<ReactProps> = (props) => {
   const sellerOrdersConnection = option(sellerOrdersResponse)
     .data.user.sellerOrdersConnection() || props.initialSellerOrders;
 
-    console.log("ASDDDDDDDDDWFTTFT: ", sellerOrdersConnection)
-
   if (buyerOrdersResponse.loading || sellerOrdersResponse.loading) {
     return (
       <OrdersLayout {...props}>
@@ -149,55 +148,39 @@ const MyOrders: React.FC<ReactProps> = (props) => {
   } else {
     return (
       <OrdersLayout {...props}>
-        {
-          (option(buyerOrdersConnection).edges([]).length > 0) &&
-          <div className={classes.buyerOrdersContainer}>
-            <Typography variant="h4" className={classes.heading}>
-              Your Purchases
-            </Typography>
-            <>
-              {
-                buyerOrdersConnection.edges.map(({ node: order }, i) => {
-                  /// fix this, return download.orderItem, not download.product
-                  // console.log('download: ', download)
-                  // const isRefunded = option(orderItem).orderStatus() === OrderStatus.REFUNDED;
-
-                  return (
-                    <OrderRow
-                      key={i}
-                      order={order}
-                    />
-                  )
-                })
-              }
-            </>
-          </div>
-        }
+        <OrdersSection
+          classes={props.classes}
+          title={"Your Purchases"}
+        >
+          {
+            (option(buyerOrdersConnection).edges([]).length > 0) &&
+            buyerOrdersConnection.edges.map(({ node: order }, i) => {
+              return (
+                <OrderRowBuyers
+                  key={i}
+                  order={order}
+                />
+              )
+            })
+          }
+        </OrdersSection>
         <div className={classes.divider}/>
-        {
-          (option(sellerOrdersConnection).edges([]).length > 0) &&
-          <div className={classes.sellerOrdersContainer}>
-            <Typography variant="h4" className={classes.heading}>
-              Selling Orders
-            </Typography>
-            <>
-              {
-                sellerOrdersConnection.edges.map(({ node: order }, i) => {
-                  /// fix this, return download.orderItem, not download.product
-                  // console.log('download: ', download)
-                  // const isRefunded = option(orderItem).orderStatus() === OrderStatus.REFUNDED;
-
-                  return (
-                    <OrderRow
-                      key={i}
-                      order={order}
-                    />
-                  )
-                })
-              }
-            </>
-          </div>
-        }
+        <OrdersSection
+          classes={props.classes}
+          title={"Your Sales"}
+        >
+          {
+            (option(sellerOrdersConnection).edges([]).length > 0) &&
+            sellerOrdersConnection.edges.map(({ node: order }, i) => {
+              return (
+                <OrderRowSellers
+                  key={i}
+                  order={order}
+                />
+              )
+            })
+          }
+        </OrdersSection>
       </OrdersLayout>
     )
   }
@@ -215,7 +198,7 @@ const OrdersLayout: React.FC<ReactProps> = (props) => {
   const smDown = useMediaQuery(theme.breakpoints.down("sm"))
 
   return (
-    <ErrorBounds className={clsx("fadeInFast")}>
+    <ErrorBounds className={"fadeInFast"}>
       {/* {
         claimOrders &&
         claimOrders.length > 0 &&
@@ -223,16 +206,15 @@ const OrdersLayout: React.FC<ReactProps> = (props) => {
       } */}
       <AlignCenterLayout
         maxWidth={960}
-        className={classes.marginTop2}
+        className={clsx(classes.marginTop2)}
         withRecommendations
       >
-
-        <div className={clsx(classes.flexRowOuter, classes.padding1)}>
+        <div className={clsx(classes.flexRowOuter)}>
           <Typography className={classes.title} variant="h3">
             My Orders
           </Typography>
         </div>
-        <div className={clsx(classes.flexRowOuter, classes.padding1)}>
+        <div className={clsx(classes.flexRowOuter)}>
           <div className={classes.productColumn60}>
             {props.children}
           </div>
@@ -240,12 +222,31 @@ const OrdersLayout: React.FC<ReactProps> = (props) => {
             <ToolTips/>
           </div>
         </div>
-
       </AlignCenterLayout>
     </ErrorBounds>
   )
 }
 
+
+const OrdersSection: React.FC<ReactProps> = (props) => {
+
+  const {
+    classes,
+    title = "Your Purchases"
+  } = props;
+
+  const theme = useTheme();
+  const smDown = useMediaQuery(theme.breakpoints.down("sm"))
+
+  return (
+    <div className={classes.ordersSectionContainer}>
+      <Typography variant="h4" className={classes.heading}>
+        {title}
+      </Typography>
+      {props.children}
+    </div>
+  )
+}
 
 interface QueryData {
   user: UserPrivate
@@ -268,6 +269,7 @@ interface QueryVar2 {
 interface ReactProps extends WithStyles<typeof styles> {
   initialBuyerOrders?: OrdersConnection;
   initialSellerOrders?: OrdersConnection;
+  title?: string;
 }
 
 const styles = (theme: Theme) => createStyles({
@@ -377,12 +379,8 @@ const styles = (theme: Theme) => createStyles({
     width: '100%',
     borderBottom: `1px solid ${Colors.slateGrey}`,
   },
-  buyerOrdersContainer: {
+  ordersSectionContainer: {
     marginTop: "1rem",
-  },
-  sellerOrdersContainer: {
-    marginTop: "1rem",
-    marginBottom: "1rem",
   },
 });
 

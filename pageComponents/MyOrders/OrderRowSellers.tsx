@@ -4,7 +4,7 @@ import { oc as option } from "ts-optchain";
 // styles
 import clsx from "clsx";
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
-import { Colors } from "layout/AppTheme";
+import { Colors, BoxShadows, BorderRadius } from "layout/AppTheme";
 // Typings
 import { Product, Orders, Products, ID  } from "typings/gqlTypes";
 // Material UI
@@ -13,20 +13,20 @@ import Typography from "@material-ui/core/Typography";
 // Components
 import ErrorBounds from "components/ErrorBounds";
 import ProductPreviewCardRow from "components/ProductPreviewCardRow";
-import OrderDetails from "./OrderDetails";
+import OrderDetailsModal from "./OrderDetailsModal";
 // File requests
 import Link from "next/link";
 // mediaQuery
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import Form10Upload from "./Form10Upload";
+import OrderStatus from "./OrderStatus";
 // import { getStoreIdOrSlug } from "utils/links";
 
 
 
-const OrderRow: React.FC<ReactProps> = (props) => {
+const OrderRowSellers: React.FC<ReactProps> = (props) => {
 
-  const [showOrderDetails, setShowOrderDetails] = useState(false);
   const { classes, order } = props;
   const { product } = order;
 
@@ -37,45 +37,42 @@ const OrderRow: React.FC<ReactProps> = (props) => {
   const previewItem = option(product).productVariants[0].previewItems[0](null);
 
   return (
-    <div className={clsx(classes.flexRowWithBorder, "fadeIn")}>
-      <ErrorBounds className={classes.root}>
+    <ErrorBounds className={clsx(
+      classes.root,
+      classes.flexRowWithBorder,
+    )}>
+
+      <div className={clsx(
+        classes.flexRow,
+        (!order && !product) ? "pulse" : null,
+      )}>
+        <div className={classes.flexCol}>
+          <ProductPreviewCardRow
+            previewItem={previewItem}
+            height={55}
+            width={88}
+          />
+        </div>
 
         <div className={clsx(
           classes.flexRow,
-          (!order && !product) ? "pulse" : null,
+          classes.width100,
+          classes.marginLeft,
         )}>
-          <div className={classes.flexCol}>
-            {
-              smDown
-              ? <ProductPreviewCardRow
-                  previewItem={previewItem}
-                  height={55}
-                  width={88}
-                />
-              : <ProductPreviewCardRow
-                  previewItem={previewItem}
-                  height={80}
-                  width={128}
-                />
-            }
-          </div>
-
           <div className={clsx(
-            classes.flexRow,
-            classes.width100,
-            classes.marginLeft,
+            classes.flexCol,
+            classes.orderInfoContainer,
+            'fadeIn'
           )}>
-            <div className={clsx(
-              classes.flexCol,
-              classes.orderInfoContainer,
-              'fadeIn'
-            )}>
-              <Typography className={classes.name} variant="body2">
-                {option(product).currentSnapshot.title("")}
-              </Typography>
-              <Typography className={classes.tagline} variant="body2">
-                {option(product).currentSnapshot.model("")}
-              </Typography>
+            <Typography className={classes.name} variant="body2">
+              {option(product).currentSnapshot.title("")}
+            </Typography>
+            <Typography className={classes.tagline} variant="body2">
+              {option(product).currentSnapshot.model("")}
+            </Typography>
+
+            {
+              option(product).store.id() &&
               <Link
                 href="/s/[storeId]"
                 as={`/s/${option(product).store.id()}`}
@@ -86,66 +83,27 @@ const OrderRow: React.FC<ReactProps> = (props) => {
                   </Typography>
                 </a>
               </Link>
-            </div>
-
-            <div className={clsx(classes.flexCol, 'fadeIn')}>
-              <div className={classes.flexRowFlexEnd}>
-                <Form10Upload
-                  order={order}
-                />
-              </div>
-
-              <div className={classes.flexRowFlexEnd}>
-                <Button
-                  className={classes.orderDetailsButton}
-                  variant={"outlined"}
-                  color={"primary"}
-                  disabled={!order}
-                  onClick={() => setShowOrderDetails(true)}
-                >
-                  <Typography
-                    className={classes.orderDetailsButtonText}
-                    variant={"body2"}
-                  >
-                    Order Details
-                  </Typography>
-                </Button>
-              </div>
-            </div>
-
+            }
+            <OrderStatus order={order} />
           </div>
+
+          <div className={clsx(classes.flexCol, 'fadeIn')}>
+            <div className={classes.flexRowFlexEnd}>
+              <Form10Upload
+                order={order}
+              />
+            </div>
+
+            <div className={classes.flexRowFlexEnd}>
+              <OrderDetailsModal
+                order={order}
+              />
+            </div>
+          </div>
+
         </div>
-        <OrderDetails
-          order={order}
-          displayModal={showOrderDetails}
-          closeModal={() => setShowOrderDetails(false)}
-        />
-      </ErrorBounds>
-
-      {/* <div className={clsx(
-        classes.fileCol,
-        option(product).chosenVariant.files([]).length && classes.downloadsBorder,
-        props.isRefunded ? classes.refundedGrayscale : null,
-      )}>
-      {
-        option(product).chosenVariant.files() &&
-        !props.isRefunded &&
-        product.chosenVariant.files.map(file => {
-          return (
-            <DownloadItem
-              key={file.id}
-              file={file}
-              orderItemId={orderItemId}
-              productId={product.id}
-              variantId={option(product).chosenVariant.variantId()}
-              isRefunded={props.isRefunded}
-            />
-          )
-        })
-      }
-      </div> */}
-
-    </div>
+      </div>
+    </ErrorBounds>
   )
 }
 
@@ -158,6 +116,14 @@ const styles = (theme: Theme) => createStyles({
     display: 'flex',
     flexDirection: 'row',
     flexGrow: 1,
+    padding: '1rem',
+    borderRadius: BorderRadius,
+    backgroundColor: Colors.foregroundColor,
+    border: `1px solid ${Colors.lightGrey}`,
+    // boxShadow: BoxShadows.shadowLight.boxShadow,
+    // "&:hover": {
+    //   boxShadow: BoxShadows.shadowLight.boxShadow,
+    // },
   },
   width100: {
     width: '100%',
@@ -184,7 +150,7 @@ const styles = (theme: Theme) => createStyles({
     display: 'flex',
     flexDirection: 'row',
     flexWrap: 'wrap',
-    marginBottom: '2rem',
+    marginBottom: '0.5rem',
     marginRight: '0rem',
     paddingBottom: '1rem',
     // borderBottom: `1px solid ${Colors.lightGrey}`,
@@ -262,4 +228,4 @@ const styles = (theme: Theme) => createStyles({
 });
 
 
-export default withStyles(styles)( OrderRow );
+export default withStyles(styles)( OrderRowSellers );

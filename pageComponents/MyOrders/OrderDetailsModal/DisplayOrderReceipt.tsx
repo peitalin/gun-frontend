@@ -25,7 +25,6 @@ const DisplayOrderReceipt: React.FC<ReactProps> = (props) => {
 
   // const fees = c(order.paymentProcessingFee);
   // const taxes = c(order.taxes);
-  // const subtotal = c(order.subtotal);
   const total = c(order.total);
 
   // Get a modified cart subtotal so that it reflects the subtotal BEFORE discounts (cart is AFTER)
@@ -34,11 +33,10 @@ const DisplayOrderReceipt: React.FC<ReactProps> = (props) => {
   //   order.currentSnapshot.automaticSavings +
   //   order.currentSnapshot.promoCodeSavings;
 
-
   // const paymentMethod = option(order).currentSnapshot.transaction.paymentMethod();
   // const paymentMethodId = option(order).currentSnapshot.transaction.paymentMethodId();
 
-  // console.log("order", order)
+  console.log("order", order)
 
   return (
     <ErrorBounds>
@@ -66,7 +64,7 @@ const DisplayOrderReceipt: React.FC<ReactProps> = (props) => {
         <div className={classes.flexRow}>
           <div className={classes.flexItem1}>
             <Typography variant="body2" className={classes.lineItemText}>
-              Processing fee
+              Processing fee (GST)
             </Typography>
           </div>
           <div className={classes.flexItem2}>
@@ -110,66 +108,18 @@ const DisplayOrderReceipt: React.FC<ReactProps> = (props) => {
 
 
         <div className={classes.flexCol}>
-          <div className={clsx(
-              props.isVisa ? classes.childrenBoxGrow : classes.childrenBox
-            )}
+          <div className={clsx(classes.childrenBox)}
           >
             {props.children}
           </div>
           <div className={classes.flexRowCenter}>
             <LockIcon className={classes.secureCheckoutIcon}/>
             <Typography variant="caption" className={classes.secureCheckout}>
-              Processed via secure checkout
+              Processed with secure checkout
             </Typography>
           </div>
         </div>
       </div>
-
-      <div className={classes.root}>
-        <div className={classes.flexRow}>
-          <div className={classes.flexItem1}>
-            <Typography variant="subtitle2" className={classes.subHeading}>
-              Order Date:
-            </Typography>
-            <Typography variant="body1">
-              {new Date(order.createdAt).toDateString()}
-            </Typography>
-          </div>
-          <div className={classes.flexItem1}>
-            <Typography variant="subtitle2" className={classes.subHeading}>
-              Order ID:
-            </Typography>
-            <Typography variant="body1">
-              {order.id}
-            </Typography>
-          </div>
-          <div className={classes.flexItem1}>
-            {/* {
-              paymentProcessor.toLowerCase() === "stripe" &&
-              <>
-                <Typography variant="subtitle2" className={classes.subHeading}>
-                  Credit card (last 4):
-                </Typography>
-                <Typography variant="body1">
-                  {option(paymentMethod).last4()}
-                </Typography>
-              </>
-            } */}
-            {/* {
-              paymentProcessor.toLowerCase() === "paypal" &&
-              <>
-                <Typography variant="subtitle2" className={classes.subHeading}>
-                  Paypal Customer ID:
-                </Typography>
-                <Typography variant="body1">
-                  {paymentMethodId}
-                </Typography>
-              </>
-            } */}
-          </div>
-        </div>
-      </div>
-
     </ErrorBounds>
   );
 }
@@ -177,7 +127,6 @@ const DisplayOrderReceipt: React.FC<ReactProps> = (props) => {
 
 interface ReactProps extends WithStyles<typeof styles> {
   order: Orders;
-  isVisa?: boolean;
 }
 
 const styles = (theme: Theme) => createStyles({

@@ -43,6 +43,7 @@ export const styles = (theme: Theme) => createStyles({
     display: 'flex',
     flexDirection: 'column',
     marginLeft: '0rem',
+    marginTop: '0.5rem',
   },
 })
 

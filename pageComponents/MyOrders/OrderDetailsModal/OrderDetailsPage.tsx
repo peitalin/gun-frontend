@@ -14,6 +14,8 @@ import IconButton from "@material-ui/core/IconButton";
 import { Orders } from "typings/gqlTypes";
 // Components
 import DisplayOrderReceipt from "./DisplayOrderReceipt";
+import DisplayOrderId from "./DisplayOrderId";
+import OrderStatusStepper from "./OrderStatusStepper";
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import OrderProductPreview from "./OrderProductPreview";
@@ -37,17 +39,13 @@ const OrderDetailsPage: React.FC<ReactProps> = (props) => {
 
       {
         !props.disableTitle &&
-        <div className={clsx(
-          classes.flexRow,
-          classes.orderTitle,
-          classes.spaceBetween
-        )}>
-          <Typography color={"primary"} variant={'h4'}>
-            Order Details
-          </Typography>
+        <div className={classes.closeIconButtonContainer}>
           {
             props.closeModal &&
-            <IconButton onClick={props.closeModal}>
+            <IconButton
+              className={classes.closeIcon}
+              onClick={props.closeModal}
+            >
               <ClearIcon/>
             </IconButton>
           }
@@ -62,8 +60,15 @@ const OrderDetailsPage: React.FC<ReactProps> = (props) => {
           <div className={classes.orderItemsContainer}>
             <OrderProductPreview product={order.product}/>
           </div>
+          <div className={classes.orderItemsContainer}>
+            <DisplayOrderId order={props.order} />
+          </div>
         </div>
       </div>
+
+      <OrderStatusStepper
+        order={props.order}
+      />
 
     </ErrorBounds>
   );
@@ -115,11 +120,19 @@ const styles = (theme: Theme) => createStyles({
     marginBottom: "0.5rem",
     backgroundColor: '#FCFCFE',
   },
-  orderTitle: {
-    marginBottom: '2rem',
+  closeIcon: {
+    background: Colors.lightestGrey,
+    "&:hover": {
+      background: Colors.lightGrey,
+    },
   },
-  spaceBetween: {
-    justifyContent: 'space-between',
+  closeIconButtonContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    position: 'absolute',
+    right: '1rem',
+    top: '1rem',
   },
 });
 
