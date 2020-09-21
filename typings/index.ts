@@ -189,7 +189,6 @@ export interface ProductCreateEditCommonInput {
   location: string;
   dealer: string;
   isPublished: boolean;
-  isQuantityEnabled: boolean;
   productId?: ID;
   currentVariants: ProductVariantInput[] | ProductVariantEditInput[];
 }

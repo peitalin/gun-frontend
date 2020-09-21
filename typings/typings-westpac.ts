@@ -115,7 +115,7 @@ interface LinkResponse {
   requestMethod: "GET" | "POST" | "PUT" | "PATCH" | "DELETE"
 }
 
-interface WestpacError {
+export interface WestpacError {
   fieldName: string
   messages: string[]
 }

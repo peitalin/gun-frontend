@@ -1347,19 +1347,6 @@ export type ConnectionWithMetrics = {
   pageInfo: PageInfo;
 };
 
-export type CreateRefundInput = {
-  orderId: Scalars['ID'];
-  refundOrderItems: Array<Maybe<RefundOrderItem>>;
-  chargeId: Scalars['ID'];
-  taxes?: Maybe<Scalars['Int']>;
-  paymentProcessingFee?: Maybe<Scalars['Int']>;
-  reason?: Maybe<Scalars['String']>;
-  reasonDetail?: Maybe<Scalars['String']>;
-  paymentIntentId?: Maybe<Scalars['ID']>;
-  paypalInvoiceNumber?: Maybe<Scalars['ID']>;
-  paymentProcessor?: Maybe<PaymentProcessor>;
-};
-
 export type CreateRefundMutationResponse = {
    __typename?: 'CreateRefundMutationResponse';
   transaction: Transactions;
@@ -1421,6 +1408,13 @@ export type CuratedListsEdge = Edge & {
 export type Edge = {
   cursor: Scalars['PageCursor'];
 };
+
+export enum FacetAttributes {
+  _CATEGORYNAMEFACET = '_categoryNameFacet',
+  _CATEGORYGROUPFACET = '_categoryGroupFacet',
+  _STOREIDFACET = '_storeIdFacet',
+  _ISPUBLISHEDFACET = '_isPublishedFacet'
+}
 
 export type FollowedStore = {
    __typename?: 'FollowedStore';
@@ -2188,6 +2182,11 @@ export type LoginMutationResponse = {
   user: UserPrivate;
   jwt?: Maybe<Scalars['String']>;
   setCookie?: Maybe<Scalars['String']>;
+};
+
+export type MarkPayoutsAsPaidMutationResponse = {
+   __typename?: 'MarkPayoutsAsPaidMutationResponse';
+  orders: Array<Maybe<Orders>>;
 };
 
 /** columns and relationships of "migrations" */
@@ -3013,20 +3012,6 @@ export type Mutation = {
    */
   removePaymentMethod: AddRemovePaymentMethodResponse;
   /**
-   * Create a Payout from all existing unpaid PayoutItems for the month.
-   * Adds 1 approval to payouts.
-   * 
-   * AccessRule – PLATFORM_ADMIN
-   */
-  createPayouts: Array<Payout>;
-  /**
-   * Approve selected Payouts, and dispatch Payouts to payout provider if
-   * there are 2 approvals.
-   * 
-   * AccessRule – PLATFORM_ADMIN
-   */
-  approvePayouts: ApprovePayoutsResult;
-  /**
    * Create a PayoutSplit for a seller
    * 
    * AccessRule – PLATFORM_ADMIN
@@ -3068,7 +3053,18 @@ export type Mutation = {
    */
   rearrangeCuratedListItems: CuratedListMutationResponse;
   /** AccessRule – PLATFORM_ADMIN */
-  createRefund: CreateRefundMutationResponse;
+  refundOrder: OrderMutationResponse;
+  /**
+   * AccessRule – LOGGED_IN
+   * For a buyer to create an order
+   */
+  createOrder: OrderMutationResponse;
+  /**
+   * AccessRule – LOGGED_IN
+   * For a buyer to make payment and confirm an order.
+   * using a Westpac token + Westpac customer Id
+   */
+  confirmOrder: OrderMutationResponse;
   /**
    * AccessRule – LOGGED_IN
    * For a seller to upload form 10 after disposing gun
@@ -3084,6 +3080,12 @@ export type Mutation = {
    * For admins to approve a form10
    */
   approveForm10: OrderMutationResponse;
+  /**
+   * AccessRule – LOGGED_IN
+   * For Admins to confirm and attach Westpac Payout IDs to orders
+   * After funds have been transferred to sellers
+   */
+  markPayoutsAsPaid: MarkPayoutsAsPaidMutationResponse;
 };
 
 
@@ -4183,17 +4185,6 @@ export type MutationRemovePaymentMethodArgs = {
 };
 
 
-export type MutationCreatePayoutsArgs = {
-  month: Scalars['Int'];
-  year: Scalars['Int'];
-};
-
-
-export type MutationApprovePayoutsArgs = {
-  payoutIds: Array<Scalars['String']>;
-};
-
-
 export type MutationCreatePayoutSplitArgs = {
   storeOrUserId: Scalars['String'];
   dealType: PayoutDealType;
@@ -4232,8 +4223,28 @@ export type MutationRearrangeCuratedListItemsArgs = {
 };
 
 
-export type MutationCreateRefundArgs = {
-  input: CreateRefundInput;
+export type MutationRefundOrderArgs = {
+  orderId?: Maybe<Scalars['String']>;
+  reason?: Maybe<Scalars['String']>;
+  reasonDetails?: Maybe<Scalars['String']>;
+};
+
+
+export type MutationCreateOrderArgs = {
+  productId: Scalars['String'];
+  productSnapshotId: Scalars['String'];
+  variantId: Scalars['String'];
+  variantSnapshotId: Scalars['String'];
+  total: Scalars['Int'];
+  buyerId: Scalars['String'];
+  sellerId: Scalars['String'];
+  bidId?: Maybe<Scalars['String']>;
+};
+
+
+export type MutationConfirmOrderArgs = {
+  orderId: Scalars['String'];
+  singleUseTokenId: Scalars['String'];
 };
 
 
@@ -4251,6 +4262,12 @@ export type MutationRemoveForm10Args = {
 export type MutationApproveForm10Args = {
   orderId: Scalars['String'];
   adminApproverId: Scalars['String'];
+};
+
+
+export type MutationMarkPayoutsAsPaidArgs = {
+  orderIds: Array<Scalars['String']>;
+  payoutId: Scalars['String'];
 };
 
 /** Something that went wrong during a mutation. */
@@ -4305,6 +4322,8 @@ export type Order_Snapshots = {
   id: Scalars['String'];
   orderId: Scalars['String'];
   orderStatus: Scalars['String'];
+  /** An object relationship */
+  refund?: Maybe<Refunds>;
   refundId?: Maybe<Scalars['String']>;
 };
 
@@ -4358,6 +4377,7 @@ export type Order_Snapshots_Bool_Exp = {
   id?: Maybe<String_Comparison_Exp>;
   orderId?: Maybe<String_Comparison_Exp>;
   orderStatus?: Maybe<String_Comparison_Exp>;
+  refund?: Maybe<Refunds_Bool_Exp>;
   refundId?: Maybe<String_Comparison_Exp>;
 };
 
@@ -4379,6 +4399,7 @@ export type Order_Snapshots_Insert_Input = {
   id?: Maybe<Scalars['String']>;
   orderId?: Maybe<Scalars['String']>;
   orderStatus?: Maybe<Scalars['String']>;
+  refund?: Maybe<Refunds_Obj_Rel_Insert_Input>;
   refundId?: Maybe<Scalars['String']>;
 };
 
@@ -4466,6 +4487,7 @@ export type Order_Snapshots_Order_By = {
   id?: Maybe<Order_By>;
   orderId?: Maybe<Order_By>;
   orderStatus?: Maybe<Order_By>;
+  refund?: Maybe<Refunds_Order_By>;
   refundId?: Maybe<Order_By>;
 };
 
@@ -4542,7 +4564,7 @@ export type Orders = {
    __typename?: 'orders';
   /** An object relationship */
   bid?: Maybe<Bids>;
-  bidId: Scalars['String'];
+  bidId?: Maybe<Scalars['String']>;
   /** An object relationship */
   buyer?: Maybe<Users>;
   buyerId: Scalars['String'];
@@ -4556,12 +4578,16 @@ export type Orders = {
   orderSnapshots: Array<Order_Snapshots>;
   /** An aggregated array relationship */
   orderSnapshots_aggregate: Order_Snapshots_Aggregate;
+  /** An array relationship */
+  payoutItems: Array<Payout_Items>;
+  /** An aggregated array relationship */
+  payoutItems_aggregate: Payout_Items_Aggregate;
   /** An object relationship */
   product: Products;
   productId: Scalars['String'];
   productSnapshotId: Scalars['String'];
   /** An object relationship */
-  seller?: Maybe<Users>;
+  seller?: Maybe<Stores>;
   sellerId: Scalars['String'];
   total: Scalars['Int'];
   updatedAt: Scalars['timestamp'];
@@ -4587,6 +4613,26 @@ export type OrdersOrderSnapshots_AggregateArgs = {
   offset?: Maybe<Scalars['Int']>;
   order_by?: Maybe<Array<Order_Snapshots_Order_By>>;
   where?: Maybe<Order_Snapshots_Bool_Exp>;
+};
+
+
+/** columns and relationships of "orders" */
+export type OrdersPayoutItemsArgs = {
+  distinct_on?: Maybe<Array<Payout_Items_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Payout_Items_Order_By>>;
+  where?: Maybe<Payout_Items_Bool_Exp>;
+};
+
+
+/** columns and relationships of "orders" */
+export type OrdersPayoutItems_AggregateArgs = {
+  distinct_on?: Maybe<Array<Payout_Items_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Payout_Items_Order_By>>;
+  where?: Maybe<Payout_Items_Bool_Exp>;
 };
 
 /** aggregated selection of "orders" */
@@ -4666,10 +4712,11 @@ export type Orders_Bool_Exp = {
   currentSnapshotId?: Maybe<String_Comparison_Exp>;
   id?: Maybe<String_Comparison_Exp>;
   orderSnapshots?: Maybe<Order_Snapshots_Bool_Exp>;
+  payoutItems?: Maybe<Payout_Items_Bool_Exp>;
   product?: Maybe<Products_Bool_Exp>;
   productId?: Maybe<String_Comparison_Exp>;
   productSnapshotId?: Maybe<String_Comparison_Exp>;
-  seller?: Maybe<Users_Bool_Exp>;
+  seller?: Maybe<Stores_Bool_Exp>;
   sellerId?: Maybe<String_Comparison_Exp>;
   total?: Maybe<Int_Comparison_Exp>;
   updatedAt?: Maybe<Timestamp_Comparison_Exp>;
@@ -4679,6 +4726,8 @@ export type Orders_Bool_Exp = {
 
 /** unique or primary key constraints on table "orders" */
 export enum Orders_Constraint {
+  /** unique or primary key constraint */
+  ORDERS_BID_ID_KEY = 'orders_bid_id_key',
   /** unique or primary key constraint */
   ORDERS_PKEY = 'orders_pkey'
 }
@@ -4700,10 +4749,11 @@ export type Orders_Insert_Input = {
   currentSnapshotId?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
   orderSnapshots?: Maybe<Order_Snapshots_Arr_Rel_Insert_Input>;
+  payoutItems?: Maybe<Payout_Items_Arr_Rel_Insert_Input>;
   product?: Maybe<Products_Obj_Rel_Insert_Input>;
   productId?: Maybe<Scalars['String']>;
   productSnapshotId?: Maybe<Scalars['String']>;
-  seller?: Maybe<Users_Obj_Rel_Insert_Input>;
+  seller?: Maybe<Stores_Obj_Rel_Insert_Input>;
   sellerId?: Maybe<Scalars['String']>;
   total?: Maybe<Scalars['Int']>;
   updatedAt?: Maybe<Scalars['timestamp']>;
@@ -4815,10 +4865,11 @@ export type Orders_Order_By = {
   currentSnapshotId?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   orderSnapshots_aggregate?: Maybe<Order_Snapshots_Aggregate_Order_By>;
+  payoutItems_aggregate?: Maybe<Payout_Items_Aggregate_Order_By>;
   product?: Maybe<Products_Order_By>;
   productId?: Maybe<Order_By>;
   productSnapshotId?: Maybe<Order_By>;
-  seller?: Maybe<Users_Order_By>;
+  seller?: Maybe<Stores_Order_By>;
   sellerId?: Maybe<Order_By>;
   total?: Maybe<Order_By>;
   updatedAt?: Maybe<Order_By>;
@@ -5551,8 +5602,9 @@ export type Payout_Items = {
   payeeId: Scalars['String'];
   payeeType: Scalars['String'];
   paymentProcessingFee: Scalars['Int'];
-  payoutId: Scalars['String'];
+  payoutId?: Maybe<Scalars['String']>;
   payoutStatus: Scalars['String'];
+  taxes: Scalars['Int'];
   txnId: Scalars['String'];
 };
 
@@ -5612,12 +5664,14 @@ export type Payout_Items_Avg_Fields = {
    __typename?: 'payout_items_avg_fields';
   amount?: Maybe<Scalars['Float']>;
   paymentProcessingFee?: Maybe<Scalars['Float']>;
+  taxes?: Maybe<Scalars['Float']>;
 };
 
 /** order by avg() on columns of table "payout_items" */
 export type Payout_Items_Avg_Order_By = {
   amount?: Maybe<Order_By>;
   paymentProcessingFee?: Maybe<Order_By>;
+  taxes?: Maybe<Order_By>;
 };
 
 /** Boolean expression to filter rows from the table "payout_items". All fields are combined with a logical 'AND'. */
@@ -5635,6 +5689,7 @@ export type Payout_Items_Bool_Exp = {
   paymentProcessingFee?: Maybe<Int_Comparison_Exp>;
   payoutId?: Maybe<String_Comparison_Exp>;
   payoutStatus?: Maybe<String_Comparison_Exp>;
+  taxes?: Maybe<Int_Comparison_Exp>;
   txnId?: Maybe<String_Comparison_Exp>;
 };
 
@@ -5648,6 +5703,7 @@ export enum Payout_Items_Constraint {
 export type Payout_Items_Inc_Input = {
   amount?: Maybe<Scalars['Int']>;
   paymentProcessingFee?: Maybe<Scalars['Int']>;
+  taxes?: Maybe<Scalars['Int']>;
 };
 
 /** input type for inserting data into table "payout_items" */
@@ -5662,6 +5718,7 @@ export type Payout_Items_Insert_Input = {
   paymentProcessingFee?: Maybe<Scalars['Int']>;
   payoutId?: Maybe<Scalars['String']>;
   payoutStatus?: Maybe<Scalars['String']>;
+  taxes?: Maybe<Scalars['Int']>;
   txnId?: Maybe<Scalars['String']>;
 };
 
@@ -5678,6 +5735,7 @@ export type Payout_Items_Max_Fields = {
   paymentProcessingFee?: Maybe<Scalars['Int']>;
   payoutId?: Maybe<Scalars['String']>;
   payoutStatus?: Maybe<Scalars['String']>;
+  taxes?: Maybe<Scalars['Int']>;
   txnId?: Maybe<Scalars['String']>;
 };
 
@@ -5693,6 +5751,7 @@ export type Payout_Items_Max_Order_By = {
   paymentProcessingFee?: Maybe<Order_By>;
   payoutId?: Maybe<Order_By>;
   payoutStatus?: Maybe<Order_By>;
+  taxes?: Maybe<Order_By>;
   txnId?: Maybe<Order_By>;
 };
 
@@ -5709,6 +5768,7 @@ export type Payout_Items_Min_Fields = {
   paymentProcessingFee?: Maybe<Scalars['Int']>;
   payoutId?: Maybe<Scalars['String']>;
   payoutStatus?: Maybe<Scalars['String']>;
+  taxes?: Maybe<Scalars['Int']>;
   txnId?: Maybe<Scalars['String']>;
 };
 
@@ -5724,6 +5784,7 @@ export type Payout_Items_Min_Order_By = {
   paymentProcessingFee?: Maybe<Order_By>;
   payoutId?: Maybe<Order_By>;
   payoutStatus?: Maybe<Order_By>;
+  taxes?: Maybe<Order_By>;
   txnId?: Maybe<Order_By>;
 };
 
@@ -5761,6 +5822,7 @@ export type Payout_Items_Order_By = {
   paymentProcessingFee?: Maybe<Order_By>;
   payoutId?: Maybe<Order_By>;
   payoutStatus?: Maybe<Order_By>;
+  taxes?: Maybe<Order_By>;
   txnId?: Maybe<Order_By>;
 };
 
@@ -5792,6 +5854,8 @@ export enum Payout_Items_Select_Column {
   /** column name */
   PAYOUTSTATUS = 'payoutStatus',
   /** column name */
+  TAXES = 'taxes',
+  /** column name */
   TXNID = 'txnId'
 }
 
@@ -5807,6 +5871,7 @@ export type Payout_Items_Set_Input = {
   paymentProcessingFee?: Maybe<Scalars['Int']>;
   payoutId?: Maybe<Scalars['String']>;
   payoutStatus?: Maybe<Scalars['String']>;
+  taxes?: Maybe<Scalars['Int']>;
   txnId?: Maybe<Scalars['String']>;
 };
 
@@ -5815,12 +5880,14 @@ export type Payout_Items_Stddev_Fields = {
    __typename?: 'payout_items_stddev_fields';
   amount?: Maybe<Scalars['Float']>;
   paymentProcessingFee?: Maybe<Scalars['Float']>;
+  taxes?: Maybe<Scalars['Float']>;
 };
 
 /** order by stddev() on columns of table "payout_items" */
 export type Payout_Items_Stddev_Order_By = {
   amount?: Maybe<Order_By>;
   paymentProcessingFee?: Maybe<Order_By>;
+  taxes?: Maybe<Order_By>;
 };
 
 /** aggregate stddev_pop on columns */
@@ -5828,12 +5895,14 @@ export type Payout_Items_Stddev_Pop_Fields = {
    __typename?: 'payout_items_stddev_pop_fields';
   amount?: Maybe<Scalars['Float']>;
   paymentProcessingFee?: Maybe<Scalars['Float']>;
+  taxes?: Maybe<Scalars['Float']>;
 };
 
 /** order by stddev_pop() on columns of table "payout_items" */
 export type Payout_Items_Stddev_Pop_Order_By = {
   amount?: Maybe<Order_By>;
   paymentProcessingFee?: Maybe<Order_By>;
+  taxes?: Maybe<Order_By>;
 };
 
 /** aggregate stddev_samp on columns */
@@ -5841,12 +5910,14 @@ export type Payout_Items_Stddev_Samp_Fields = {
    __typename?: 'payout_items_stddev_samp_fields';
   amount?: Maybe<Scalars['Float']>;
   paymentProcessingFee?: Maybe<Scalars['Float']>;
+  taxes?: Maybe<Scalars['Float']>;
 };
 
 /** order by stddev_samp() on columns of table "payout_items" */
 export type Payout_Items_Stddev_Samp_Order_By = {
   amount?: Maybe<Order_By>;
   paymentProcessingFee?: Maybe<Order_By>;
+  taxes?: Maybe<Order_By>;
 };
 
 /** aggregate sum on columns */
@@ -5854,12 +5925,14 @@ export type Payout_Items_Sum_Fields = {
    __typename?: 'payout_items_sum_fields';
   amount?: Maybe<Scalars['Int']>;
   paymentProcessingFee?: Maybe<Scalars['Int']>;
+  taxes?: Maybe<Scalars['Int']>;
 };
 
 /** order by sum() on columns of table "payout_items" */
 export type Payout_Items_Sum_Order_By = {
   amount?: Maybe<Order_By>;
   paymentProcessingFee?: Maybe<Order_By>;
+  taxes?: Maybe<Order_By>;
 };
 
 /** update columns of table "payout_items" */
@@ -5885,6 +5958,8 @@ export enum Payout_Items_Update_Column {
   /** column name */
   PAYOUTSTATUS = 'payoutStatus',
   /** column name */
+  TAXES = 'taxes',
+  /** column name */
   TXNID = 'txnId'
 }
 
@@ -5893,12 +5968,14 @@ export type Payout_Items_Var_Pop_Fields = {
    __typename?: 'payout_items_var_pop_fields';
   amount?: Maybe<Scalars['Float']>;
   paymentProcessingFee?: Maybe<Scalars['Float']>;
+  taxes?: Maybe<Scalars['Float']>;
 };
 
 /** order by var_pop() on columns of table "payout_items" */
 export type Payout_Items_Var_Pop_Order_By = {
   amount?: Maybe<Order_By>;
   paymentProcessingFee?: Maybe<Order_By>;
+  taxes?: Maybe<Order_By>;
 };
 
 /** aggregate var_samp on columns */
@@ -5906,12 +5983,14 @@ export type Payout_Items_Var_Samp_Fields = {
    __typename?: 'payout_items_var_samp_fields';
   amount?: Maybe<Scalars['Float']>;
   paymentProcessingFee?: Maybe<Scalars['Float']>;
+  taxes?: Maybe<Scalars['Float']>;
 };
 
 /** order by var_samp() on columns of table "payout_items" */
 export type Payout_Items_Var_Samp_Order_By = {
   amount?: Maybe<Order_By>;
   paymentProcessingFee?: Maybe<Order_By>;
+  taxes?: Maybe<Order_By>;
 };
 
 /** aggregate variance on columns */
@@ -5919,12 +5998,14 @@ export type Payout_Items_Variance_Fields = {
    __typename?: 'payout_items_variance_fields';
   amount?: Maybe<Scalars['Float']>;
   paymentProcessingFee?: Maybe<Scalars['Float']>;
+  taxes?: Maybe<Scalars['Float']>;
 };
 
 /** order by variance() on columns of table "payout_items" */
 export type Payout_Items_Variance_Order_By = {
   amount?: Maybe<Order_By>;
   paymentProcessingFee?: Maybe<Order_By>;
+  taxes?: Maybe<Order_By>;
 };
 
 /** columns and relationships of "payout_methods" */
@@ -6339,6 +6420,7 @@ export type PrimaryLinkSlugs = {
 export type Product = {
   /** Metadata */
   id: Scalars['ID'];
+  createdAt?: Maybe<Scalars['Date']>;
   updatedAt?: Maybe<Scalars['Date']>;
   categoryId: Scalars['ID'];
   category?: Maybe<Categories>;
@@ -6355,6 +6437,8 @@ export type Product = {
   isExcludedFromRecommendations: Scalars['Boolean'];
   /** Whether or not a platform admin has hidden it from search results */
   isExcludedFromSearch: Scalars['Boolean'];
+  /** Whether or not it has been sold */
+  isSoldOut: Scalars['Boolean'];
   /** Chosen variant, for cartItems */
   chosenVariant?: Maybe<Product_Variants>;
   featuredVariant?: Maybe<Product_Variants>;
@@ -7453,6 +7537,7 @@ export enum Product_Snapshots_Update_Column {
 export type Product_Variants = {
    __typename?: 'product_variants';
   createdAt: Scalars['timestamptz'];
+  currency?: Maybe<Scalars['String']>;
   isDefault: Scalars['Boolean'];
   isSoldOut: Scalars['Boolean'];
   position: Scalars['Int'];
@@ -7563,6 +7648,7 @@ export type Product_Variants_Bool_Exp = {
   _not?: Maybe<Product_Variants_Bool_Exp>;
   _or?: Maybe<Array<Maybe<Product_Variants_Bool_Exp>>>;
   createdAt?: Maybe<Timestamptz_Comparison_Exp>;
+  currency?: Maybe<String_Comparison_Exp>;
   isDefault?: Maybe<Boolean_Comparison_Exp>;
   isSoldOut?: Maybe<Boolean_Comparison_Exp>;
   position?: Maybe<Int_Comparison_Exp>;
@@ -7594,6 +7680,7 @@ export type Product_Variants_Inc_Input = {
 /** input type for inserting data into table "product_variants" */
 export type Product_Variants_Insert_Input = {
   createdAt?: Maybe<Scalars['timestamptz']>;
+  currency?: Maybe<Scalars['String']>;
   isDefault?: Maybe<Scalars['Boolean']>;
   isSoldOut?: Maybe<Scalars['Boolean']>;
   position?: Maybe<Scalars['Int']>;
@@ -7613,6 +7700,7 @@ export type Product_Variants_Insert_Input = {
 export type Product_Variants_Max_Fields = {
    __typename?: 'product_variants_max_fields';
   createdAt?: Maybe<Scalars['timestamptz']>;
+  currency?: Maybe<Scalars['String']>;
   position?: Maybe<Scalars['Int']>;
   price?: Maybe<Scalars['Int']>;
   priceWas?: Maybe<Scalars['Int']>;
@@ -7628,6 +7716,7 @@ export type Product_Variants_Max_Fields = {
 /** order by max() on columns of table "product_variants" */
 export type Product_Variants_Max_Order_By = {
   createdAt?: Maybe<Order_By>;
+  currency?: Maybe<Order_By>;
   position?: Maybe<Order_By>;
   price?: Maybe<Order_By>;
   priceWas?: Maybe<Order_By>;
@@ -7644,6 +7733,7 @@ export type Product_Variants_Max_Order_By = {
 export type Product_Variants_Min_Fields = {
    __typename?: 'product_variants_min_fields';
   createdAt?: Maybe<Scalars['timestamptz']>;
+  currency?: Maybe<Scalars['String']>;
   position?: Maybe<Scalars['Int']>;
   price?: Maybe<Scalars['Int']>;
   priceWas?: Maybe<Scalars['Int']>;
@@ -7659,6 +7749,7 @@ export type Product_Variants_Min_Fields = {
 /** order by min() on columns of table "product_variants" */
 export type Product_Variants_Min_Order_By = {
   createdAt?: Maybe<Order_By>;
+  currency?: Maybe<Order_By>;
   position?: Maybe<Order_By>;
   price?: Maybe<Order_By>;
   priceWas?: Maybe<Order_By>;
@@ -7696,6 +7787,7 @@ export type Product_Variants_On_Conflict = {
 /** ordering options when selecting data from "product_variants" */
 export type Product_Variants_Order_By = {
   createdAt?: Maybe<Order_By>;
+  currency?: Maybe<Order_By>;
   isDefault?: Maybe<Order_By>;
   isSoldOut?: Maybe<Order_By>;
   position?: Maybe<Order_By>;
@@ -7720,6 +7812,8 @@ export type Product_Variants_Pk_Columns_Input = {
 export enum Product_Variants_Select_Column {
   /** column name */
   CREATEDAT = 'createdAt',
+  /** column name */
+  CURRENCY = 'currency',
   /** column name */
   ISDEFAULT = 'isDefault',
   /** column name */
@@ -7749,6 +7843,7 @@ export enum Product_Variants_Select_Column {
 /** input type for updating data in table "product_variants" */
 export type Product_Variants_Set_Input = {
   createdAt?: Maybe<Scalars['timestamptz']>;
+  currency?: Maybe<Scalars['String']>;
   isDefault?: Maybe<Scalars['Boolean']>;
   isSoldOut?: Maybe<Scalars['Boolean']>;
   position?: Maybe<Scalars['Int']>;
@@ -7827,6 +7922,8 @@ export type Product_Variants_Sum_Order_By = {
 export enum Product_Variants_Update_Column {
   /** column name */
   CREATEDAT = 'createdAt',
+  /** column name */
+  CURRENCY = 'currency',
   /** column name */
   ISDEFAULT = 'isDefault',
   /** column name */
@@ -7930,6 +8027,7 @@ export type ProductDownload = Product & {
    __typename?: 'ProductDownload';
   /** Metadata */
   id: Scalars['ID'];
+  createdAt?: Maybe<Scalars['Date']>;
   updatedAt?: Maybe<Scalars['Date']>;
   categoryId: Scalars['ID'];
   category?: Maybe<Categories>;
@@ -7946,6 +8044,8 @@ export type ProductDownload = Product & {
   isExcludedFromRecommendations: Scalars['Boolean'];
   /** Whether or not a platform admin has hidden it from search results */
   isExcludedFromSearch: Scalars['Boolean'];
+  /** Whether or not it has been sold */
+  isSoldOut: Scalars['Boolean'];
   /** Chosen variant, for cartItems */
   chosenVariant?: Maybe<Product_Variants>;
   currentVariants: Array<Product_Variants>;
@@ -8043,6 +8143,7 @@ export type ProductPrivate = Product & {
    __typename?: 'ProductPrivate';
   /** Metadata */
   id: Scalars['ID'];
+  createdAt?: Maybe<Scalars['Date']>;
   updatedAt?: Maybe<Scalars['Date']>;
   categoryId: Scalars['ID'];
   category?: Maybe<Categories>;
@@ -8059,6 +8160,8 @@ export type ProductPrivate = Product & {
   isExcludedFromRecommendations: Scalars['Boolean'];
   /** Whether or not a platform admin has hidden it from search results */
   isExcludedFromSearch: Scalars['Boolean'];
+  /** Whether or not it has been sold */
+  isSoldOut: Scalars['Boolean'];
   /** Chosen variant, for cartItems */
   chosenVariant?: Maybe<Product_Variants>;
   currentVariants: Array<Product_Variants>;
@@ -8085,6 +8188,7 @@ export type ProductPublic = Product & {
    __typename?: 'ProductPublic';
   /** Metadata */
   id: Scalars['ID'];
+  createdAt?: Maybe<Scalars['Date']>;
   updatedAt?: Maybe<Scalars['Date']>;
   categoryId: Scalars['ID'];
   category?: Maybe<Categories>;
@@ -8101,6 +8205,8 @@ export type ProductPublic = Product & {
   isExcludedFromRecommendations: Scalars['Boolean'];
   /** Whether or not a platform admin has hidden it from search results */
   isExcludedFromSearch: Scalars['Boolean'];
+  /** Whether or not it has been sold */
+  isSoldOut: Scalars['Boolean'];
   /** Chosen variant, for cartItems */
   chosenVariant?: Maybe<Product_Variants>;
   featuredVariant?: Maybe<Product_Variants>;
@@ -8123,6 +8229,7 @@ export type Products = {
   isExcludedFromRecommendations: Scalars['Boolean'];
   isExcludedFromSearch: Scalars['Boolean'];
   isPublished: Scalars['Boolean'];
+  isSoldOut: Scalars['Boolean'];
   isSuspended: Scalars['Boolean'];
   /** An array relationship */
   productVariants: Array<Product_Variants>;
@@ -8204,6 +8311,7 @@ export type Products_Bool_Exp = {
   isExcludedFromRecommendations?: Maybe<Boolean_Comparison_Exp>;
   isExcludedFromSearch?: Maybe<Boolean_Comparison_Exp>;
   isPublished?: Maybe<Boolean_Comparison_Exp>;
+  isSoldOut?: Maybe<Boolean_Comparison_Exp>;
   isSuspended?: Maybe<Boolean_Comparison_Exp>;
   productVariants?: Maybe<Product_Variants_Bool_Exp>;
   store?: Maybe<Stores_Bool_Exp>;
@@ -8229,6 +8337,7 @@ export type Products_Insert_Input = {
   isExcludedFromRecommendations?: Maybe<Scalars['Boolean']>;
   isExcludedFromSearch?: Maybe<Scalars['Boolean']>;
   isPublished?: Maybe<Scalars['Boolean']>;
+  isSoldOut?: Maybe<Scalars['Boolean']>;
   isSuspended?: Maybe<Scalars['Boolean']>;
   productVariants?: Maybe<Product_Variants_Arr_Rel_Insert_Input>;
   store?: Maybe<Stores_Obj_Rel_Insert_Input>;
@@ -8312,6 +8421,7 @@ export type Products_Order_By = {
   isExcludedFromRecommendations?: Maybe<Order_By>;
   isExcludedFromSearch?: Maybe<Order_By>;
   isPublished?: Maybe<Order_By>;
+  isSoldOut?: Maybe<Order_By>;
   isSuspended?: Maybe<Order_By>;
   productVariants_aggregate?: Maybe<Product_Variants_Aggregate_Order_By>;
   store?: Maybe<Stores_Order_By>;
@@ -8343,6 +8453,8 @@ export enum Products_Select_Column {
   /** column name */
   ISPUBLISHED = 'isPublished',
   /** column name */
+  ISSOLDOUT = 'isSoldOut',
+  /** column name */
   ISSUSPENDED = 'isSuspended',
   /** column name */
   STOREID = 'storeId',
@@ -8360,6 +8472,7 @@ export type Products_Set_Input = {
   isExcludedFromRecommendations?: Maybe<Scalars['Boolean']>;
   isExcludedFromSearch?: Maybe<Scalars['Boolean']>;
   isPublished?: Maybe<Scalars['Boolean']>;
+  isSoldOut?: Maybe<Scalars['Boolean']>;
   isSuspended?: Maybe<Scalars['Boolean']>;
   storeId?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['timestamptz']>;
@@ -8383,6 +8496,8 @@ export enum Products_Update_Column {
   ISEXCLUDEDFROMSEARCH = 'isExcludedFromSearch',
   /** column name */
   ISPUBLISHED = 'isPublished',
+  /** column name */
+  ISSOLDOUT = 'isSoldOut',
   /** column name */
   ISSUSPENDED = 'isSuspended',
   /** column name */
@@ -9665,12 +9780,6 @@ export type QueryGetStoreByIdArgs = {
   storeId: Scalars['String'];
 };
 
-export type RefundOrderItem = {
-  orderItemId?: Maybe<Scalars['ID']>;
-  disableItem?: Maybe<Scalars['Boolean']>;
-  refundPayoutItems?: Maybe<Array<Maybe<RefundPayoutItem>>>;
-};
-
 export type RefundPayoutItem = {
   payeeId?: Maybe<Scalars['ID']>;
   payeeType?: Maybe<PayeeType>;
@@ -9685,6 +9794,7 @@ export type Refunds = {
   orderId: Scalars['String'];
   reason: Scalars['String'];
   reasonDetails: Scalars['String'];
+  receiptNumber: Scalars['String'];
   transactionId: Scalars['String'];
 };
 
@@ -9733,6 +9843,7 @@ export type Refunds_Bool_Exp = {
   orderId?: Maybe<String_Comparison_Exp>;
   reason?: Maybe<String_Comparison_Exp>;
   reasonDetails?: Maybe<String_Comparison_Exp>;
+  receiptNumber?: Maybe<String_Comparison_Exp>;
   transactionId?: Maybe<String_Comparison_Exp>;
 };
 
@@ -9749,6 +9860,7 @@ export type Refunds_Insert_Input = {
   orderId?: Maybe<Scalars['String']>;
   reason?: Maybe<Scalars['String']>;
   reasonDetails?: Maybe<Scalars['String']>;
+  receiptNumber?: Maybe<Scalars['String']>;
   transactionId?: Maybe<Scalars['String']>;
 };
 
@@ -9760,6 +9872,7 @@ export type Refunds_Max_Fields = {
   orderId?: Maybe<Scalars['String']>;
   reason?: Maybe<Scalars['String']>;
   reasonDetails?: Maybe<Scalars['String']>;
+  receiptNumber?: Maybe<Scalars['String']>;
   transactionId?: Maybe<Scalars['String']>;
 };
 
@@ -9770,6 +9883,7 @@ export type Refunds_Max_Order_By = {
   orderId?: Maybe<Order_By>;
   reason?: Maybe<Order_By>;
   reasonDetails?: Maybe<Order_By>;
+  receiptNumber?: Maybe<Order_By>;
   transactionId?: Maybe<Order_By>;
 };
 
@@ -9781,6 +9895,7 @@ export type Refunds_Min_Fields = {
   orderId?: Maybe<Scalars['String']>;
   reason?: Maybe<Scalars['String']>;
   reasonDetails?: Maybe<Scalars['String']>;
+  receiptNumber?: Maybe<Scalars['String']>;
   transactionId?: Maybe<Scalars['String']>;
 };
 
@@ -9791,6 +9906,7 @@ export type Refunds_Min_Order_By = {
   orderId?: Maybe<Order_By>;
   reason?: Maybe<Order_By>;
   reasonDetails?: Maybe<Order_By>;
+  receiptNumber?: Maybe<Order_By>;
   transactionId?: Maybe<Order_By>;
 };
 
@@ -9823,6 +9939,7 @@ export type Refunds_Order_By = {
   orderId?: Maybe<Order_By>;
   reason?: Maybe<Order_By>;
   reasonDetails?: Maybe<Order_By>;
+  receiptNumber?: Maybe<Order_By>;
   transactionId?: Maybe<Order_By>;
 };
 
@@ -9844,6 +9961,8 @@ export enum Refunds_Select_Column {
   /** column name */
   REASONDETAILS = 'reasonDetails',
   /** column name */
+  RECEIPTNUMBER = 'receiptNumber',
+  /** column name */
   TRANSACTIONID = 'transactionId'
 }
 
@@ -9854,6 +9973,7 @@ export type Refunds_Set_Input = {
   orderId?: Maybe<Scalars['String']>;
   reason?: Maybe<Scalars['String']>;
   reasonDetails?: Maybe<Scalars['String']>;
+  receiptNumber?: Maybe<Scalars['String']>;
   transactionId?: Maybe<Scalars['String']>;
 };
 
@@ -9869,6 +9989,8 @@ export enum Refunds_Update_Column {
   REASON = 'reason',
   /** column name */
   REASONDETAILS = 'reasonDetails',
+  /** column name */
+  RECEIPTNUMBER = 'receiptNumber',
   /** column name */
   TRANSACTIONID = 'transactionId'
 }
@@ -11206,7 +11328,6 @@ export type Timestamptz_Comparison_Exp = {
 /** columns and relationships of "transactions" */
 export type Transactions = {
    __typename?: 'transactions';
-  chargeId?: Maybe<Scalars['String']>;
   createdAt: Scalars['timestamp'];
   currency?: Maybe<Scalars['String']>;
   customerId?: Maybe<Scalars['String']>;
@@ -11217,15 +11338,14 @@ export type Transactions = {
   orderId?: Maybe<Scalars['String']>;
   paymentIntentId?: Maybe<Scalars['String']>;
   paymentMethodId?: Maybe<Scalars['String']>;
-  paymentProcessingFee: Scalars['Int'];
   paymentProcessor?: Maybe<Scalars['String']>;
   /** An array relationship */
   payoutItems: Array<Payout_Items>;
   /** An aggregated array relationship */
   payoutItems_aggregate: Payout_Items_Aggregate;
+  receiptNumber: Scalars['String'];
   refundId?: Maybe<Scalars['String']>;
-  subtotal: Scalars['Int'];
-  taxes: Scalars['Int'];
+  total: Scalars['Int'];
 };
 
 
@@ -11302,16 +11422,12 @@ export type Transactions_Arr_Rel_Insert_Input = {
 /** aggregate avg on columns */
 export type Transactions_Avg_Fields = {
    __typename?: 'transactions_avg_fields';
-  paymentProcessingFee?: Maybe<Scalars['Float']>;
-  subtotal?: Maybe<Scalars['Float']>;
-  taxes?: Maybe<Scalars['Float']>;
+  total?: Maybe<Scalars['Float']>;
 };
 
 /** order by avg() on columns of table "transactions" */
 export type Transactions_Avg_Order_By = {
-  paymentProcessingFee?: Maybe<Order_By>;
-  subtotal?: Maybe<Order_By>;
-  taxes?: Maybe<Order_By>;
+  total?: Maybe<Order_By>;
 };
 
 /** Boolean expression to filter rows from the table "transactions". All fields are combined with a logical 'AND'. */
@@ -11319,7 +11435,6 @@ export type Transactions_Bool_Exp = {
   _and?: Maybe<Array<Maybe<Transactions_Bool_Exp>>>;
   _not?: Maybe<Transactions_Bool_Exp>;
   _or?: Maybe<Array<Maybe<Transactions_Bool_Exp>>>;
-  chargeId?: Maybe<String_Comparison_Exp>;
   createdAt?: Maybe<Timestamp_Comparison_Exp>;
   currency?: Maybe<String_Comparison_Exp>;
   customerId?: Maybe<String_Comparison_Exp>;
@@ -11329,12 +11444,11 @@ export type Transactions_Bool_Exp = {
   orderId?: Maybe<String_Comparison_Exp>;
   paymentIntentId?: Maybe<String_Comparison_Exp>;
   paymentMethodId?: Maybe<String_Comparison_Exp>;
-  paymentProcessingFee?: Maybe<Int_Comparison_Exp>;
   paymentProcessor?: Maybe<String_Comparison_Exp>;
   payoutItems?: Maybe<Payout_Items_Bool_Exp>;
+  receiptNumber?: Maybe<String_Comparison_Exp>;
   refundId?: Maybe<String_Comparison_Exp>;
-  subtotal?: Maybe<Int_Comparison_Exp>;
-  taxes?: Maybe<Int_Comparison_Exp>;
+  total?: Maybe<Int_Comparison_Exp>;
 };
 
 /** unique or primary key constraints on table "transactions" */
@@ -11345,14 +11459,11 @@ export enum Transactions_Constraint {
 
 /** input type for incrementing integer column in table "transactions" */
 export type Transactions_Inc_Input = {
-  paymentProcessingFee?: Maybe<Scalars['Int']>;
-  subtotal?: Maybe<Scalars['Int']>;
-  taxes?: Maybe<Scalars['Int']>;
+  total?: Maybe<Scalars['Int']>;
 };
 
 /** input type for inserting data into table "transactions" */
 export type Transactions_Insert_Input = {
-  chargeId?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['timestamp']>;
   currency?: Maybe<Scalars['String']>;
   customerId?: Maybe<Scalars['String']>;
@@ -11362,18 +11473,16 @@ export type Transactions_Insert_Input = {
   orderId?: Maybe<Scalars['String']>;
   paymentIntentId?: Maybe<Scalars['String']>;
   paymentMethodId?: Maybe<Scalars['String']>;
-  paymentProcessingFee?: Maybe<Scalars['Int']>;
   paymentProcessor?: Maybe<Scalars['String']>;
   payoutItems?: Maybe<Payout_Items_Arr_Rel_Insert_Input>;
+  receiptNumber?: Maybe<Scalars['String']>;
   refundId?: Maybe<Scalars['String']>;
-  subtotal?: Maybe<Scalars['Int']>;
-  taxes?: Maybe<Scalars['Int']>;
+  total?: Maybe<Scalars['Int']>;
 };
 
 /** aggregate max on columns */
 export type Transactions_Max_Fields = {
    __typename?: 'transactions_max_fields';
-  chargeId?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['timestamp']>;
   currency?: Maybe<Scalars['String']>;
   customerId?: Maybe<Scalars['String']>;
@@ -11382,16 +11491,14 @@ export type Transactions_Max_Fields = {
   orderId?: Maybe<Scalars['String']>;
   paymentIntentId?: Maybe<Scalars['String']>;
   paymentMethodId?: Maybe<Scalars['String']>;
-  paymentProcessingFee?: Maybe<Scalars['Int']>;
   paymentProcessor?: Maybe<Scalars['String']>;
+  receiptNumber?: Maybe<Scalars['String']>;
   refundId?: Maybe<Scalars['String']>;
-  subtotal?: Maybe<Scalars['Int']>;
-  taxes?: Maybe<Scalars['Int']>;
+  total?: Maybe<Scalars['Int']>;
 };
 
 /** order by max() on columns of table "transactions" */
 export type Transactions_Max_Order_By = {
-  chargeId?: Maybe<Order_By>;
   createdAt?: Maybe<Order_By>;
   currency?: Maybe<Order_By>;
   customerId?: Maybe<Order_By>;
@@ -11400,17 +11507,15 @@ export type Transactions_Max_Order_By = {
   orderId?: Maybe<Order_By>;
   paymentIntentId?: Maybe<Order_By>;
   paymentMethodId?: Maybe<Order_By>;
-  paymentProcessingFee?: Maybe<Order_By>;
   paymentProcessor?: Maybe<Order_By>;
+  receiptNumber?: Maybe<Order_By>;
   refundId?: Maybe<Order_By>;
-  subtotal?: Maybe<Order_By>;
-  taxes?: Maybe<Order_By>;
+  total?: Maybe<Order_By>;
 };
 
 /** aggregate min on columns */
 export type Transactions_Min_Fields = {
    __typename?: 'transactions_min_fields';
-  chargeId?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['timestamp']>;
   currency?: Maybe<Scalars['String']>;
   customerId?: Maybe<Scalars['String']>;
@@ -11419,16 +11524,14 @@ export type Transactions_Min_Fields = {
   orderId?: Maybe<Scalars['String']>;
   paymentIntentId?: Maybe<Scalars['String']>;
   paymentMethodId?: Maybe<Scalars['String']>;
-  paymentProcessingFee?: Maybe<Scalars['Int']>;
   paymentProcessor?: Maybe<Scalars['String']>;
+  receiptNumber?: Maybe<Scalars['String']>;
   refundId?: Maybe<Scalars['String']>;
-  subtotal?: Maybe<Scalars['Int']>;
-  taxes?: Maybe<Scalars['Int']>;
+  total?: Maybe<Scalars['Int']>;
 };
 
 /** order by min() on columns of table "transactions" */
 export type Transactions_Min_Order_By = {
-  chargeId?: Maybe<Order_By>;
   createdAt?: Maybe<Order_By>;
   currency?: Maybe<Order_By>;
   customerId?: Maybe<Order_By>;
@@ -11437,11 +11540,10 @@ export type Transactions_Min_Order_By = {
   orderId?: Maybe<Order_By>;
   paymentIntentId?: Maybe<Order_By>;
   paymentMethodId?: Maybe<Order_By>;
-  paymentProcessingFee?: Maybe<Order_By>;
   paymentProcessor?: Maybe<Order_By>;
+  receiptNumber?: Maybe<Order_By>;
   refundId?: Maybe<Order_By>;
-  subtotal?: Maybe<Order_By>;
-  taxes?: Maybe<Order_By>;
+  total?: Maybe<Order_By>;
 };
 
 /** response of any mutation on the table "transactions" */
@@ -11468,7 +11570,6 @@ export type Transactions_On_Conflict = {
 
 /** ordering options when selecting data from "transactions" */
 export type Transactions_Order_By = {
-  chargeId?: Maybe<Order_By>;
   createdAt?: Maybe<Order_By>;
   currency?: Maybe<Order_By>;
   customerId?: Maybe<Order_By>;
@@ -11478,12 +11579,11 @@ export type Transactions_Order_By = {
   orderId?: Maybe<Order_By>;
   paymentIntentId?: Maybe<Order_By>;
   paymentMethodId?: Maybe<Order_By>;
-  paymentProcessingFee?: Maybe<Order_By>;
   paymentProcessor?: Maybe<Order_By>;
   payoutItems_aggregate?: Maybe<Payout_Items_Aggregate_Order_By>;
+  receiptNumber?: Maybe<Order_By>;
   refundId?: Maybe<Order_By>;
-  subtotal?: Maybe<Order_By>;
-  taxes?: Maybe<Order_By>;
+  total?: Maybe<Order_By>;
 };
 
 /** primary key columns input for table: "transactions" */
@@ -11494,8 +11594,6 @@ export type Transactions_Pk_Columns_Input = {
 /** select columns of table "transactions" */
 export enum Transactions_Select_Column {
   /** column name */
-  CHARGEID = 'chargeId',
-  /** column name */
   CREATEDAT = 'createdAt',
   /** column name */
   CURRENCY = 'currency',
@@ -11512,20 +11610,17 @@ export enum Transactions_Select_Column {
   /** column name */
   PAYMENTMETHODID = 'paymentMethodId',
   /** column name */
-  PAYMENTPROCESSINGFEE = 'paymentProcessingFee',
-  /** column name */
   PAYMENTPROCESSOR = 'paymentProcessor',
+  /** column name */
+  RECEIPTNUMBER = 'receiptNumber',
   /** column name */
   REFUNDID = 'refundId',
   /** column name */
-  SUBTOTAL = 'subtotal',
-  /** column name */
-  TAXES = 'taxes'
+  TOTAL = 'total'
 }
 
 /** input type for updating data in table "transactions" */
 export type Transactions_Set_Input = {
-  chargeId?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['timestamp']>;
   currency?: Maybe<Scalars['String']>;
   customerId?: Maybe<Scalars['String']>;
@@ -11534,77 +11629,58 @@ export type Transactions_Set_Input = {
   orderId?: Maybe<Scalars['String']>;
   paymentIntentId?: Maybe<Scalars['String']>;
   paymentMethodId?: Maybe<Scalars['String']>;
-  paymentProcessingFee?: Maybe<Scalars['Int']>;
   paymentProcessor?: Maybe<Scalars['String']>;
+  receiptNumber?: Maybe<Scalars['String']>;
   refundId?: Maybe<Scalars['String']>;
-  subtotal?: Maybe<Scalars['Int']>;
-  taxes?: Maybe<Scalars['Int']>;
+  total?: Maybe<Scalars['Int']>;
 };
 
 /** aggregate stddev on columns */
 export type Transactions_Stddev_Fields = {
    __typename?: 'transactions_stddev_fields';
-  paymentProcessingFee?: Maybe<Scalars['Float']>;
-  subtotal?: Maybe<Scalars['Float']>;
-  taxes?: Maybe<Scalars['Float']>;
+  total?: Maybe<Scalars['Float']>;
 };
 
 /** order by stddev() on columns of table "transactions" */
 export type Transactions_Stddev_Order_By = {
-  paymentProcessingFee?: Maybe<Order_By>;
-  subtotal?: Maybe<Order_By>;
-  taxes?: Maybe<Order_By>;
+  total?: Maybe<Order_By>;
 };
 
 /** aggregate stddev_pop on columns */
 export type Transactions_Stddev_Pop_Fields = {
    __typename?: 'transactions_stddev_pop_fields';
-  paymentProcessingFee?: Maybe<Scalars['Float']>;
-  subtotal?: Maybe<Scalars['Float']>;
-  taxes?: Maybe<Scalars['Float']>;
+  total?: Maybe<Scalars['Float']>;
 };
 
 /** order by stddev_pop() on columns of table "transactions" */
 export type Transactions_Stddev_Pop_Order_By = {
-  paymentProcessingFee?: Maybe<Order_By>;
-  subtotal?: Maybe<Order_By>;
-  taxes?: Maybe<Order_By>;
+  total?: Maybe<Order_By>;
 };
 
 /** aggregate stddev_samp on columns */
 export type Transactions_Stddev_Samp_Fields = {
    __typename?: 'transactions_stddev_samp_fields';
-  paymentProcessingFee?: Maybe<Scalars['Float']>;
-  subtotal?: Maybe<Scalars['Float']>;
-  taxes?: Maybe<Scalars['Float']>;
+  total?: Maybe<Scalars['Float']>;
 };
 
 /** order by stddev_samp() on columns of table "transactions" */
 export type Transactions_Stddev_Samp_Order_By = {
-  paymentProcessingFee?: Maybe<Order_By>;
-  subtotal?: Maybe<Order_By>;
-  taxes?: Maybe<Order_By>;
+  total?: Maybe<Order_By>;
 };
 
 /** aggregate sum on columns */
 export type Transactions_Sum_Fields = {
    __typename?: 'transactions_sum_fields';
-  paymentProcessingFee?: Maybe<Scalars['Int']>;
-  subtotal?: Maybe<Scalars['Int']>;
-  taxes?: Maybe<Scalars['Int']>;
+  total?: Maybe<Scalars['Int']>;
 };
 
 /** order by sum() on columns of table "transactions" */
 export type Transactions_Sum_Order_By = {
-  paymentProcessingFee?: Maybe<Order_By>;
-  subtotal?: Maybe<Order_By>;
-  taxes?: Maybe<Order_By>;
+  total?: Maybe<Order_By>;
 };
 
 /** update columns of table "transactions" */
 export enum Transactions_Update_Column {
-  /** column name */
-  CHARGEID = 'chargeId',
   /** column name */
   CREATEDAT = 'createdAt',
   /** column name */
@@ -11622,60 +11698,46 @@ export enum Transactions_Update_Column {
   /** column name */
   PAYMENTMETHODID = 'paymentMethodId',
   /** column name */
-  PAYMENTPROCESSINGFEE = 'paymentProcessingFee',
-  /** column name */
   PAYMENTPROCESSOR = 'paymentProcessor',
+  /** column name */
+  RECEIPTNUMBER = 'receiptNumber',
   /** column name */
   REFUNDID = 'refundId',
   /** column name */
-  SUBTOTAL = 'subtotal',
-  /** column name */
-  TAXES = 'taxes'
+  TOTAL = 'total'
 }
 
 /** aggregate var_pop on columns */
 export type Transactions_Var_Pop_Fields = {
    __typename?: 'transactions_var_pop_fields';
-  paymentProcessingFee?: Maybe<Scalars['Float']>;
-  subtotal?: Maybe<Scalars['Float']>;
-  taxes?: Maybe<Scalars['Float']>;
+  total?: Maybe<Scalars['Float']>;
 };
 
 /** order by var_pop() on columns of table "transactions" */
 export type Transactions_Var_Pop_Order_By = {
-  paymentProcessingFee?: Maybe<Order_By>;
-  subtotal?: Maybe<Order_By>;
-  taxes?: Maybe<Order_By>;
+  total?: Maybe<Order_By>;
 };
 
 /** aggregate var_samp on columns */
 export type Transactions_Var_Samp_Fields = {
    __typename?: 'transactions_var_samp_fields';
-  paymentProcessingFee?: Maybe<Scalars['Float']>;
-  subtotal?: Maybe<Scalars['Float']>;
-  taxes?: Maybe<Scalars['Float']>;
+  total?: Maybe<Scalars['Float']>;
 };
 
 /** order by var_samp() on columns of table "transactions" */
 export type Transactions_Var_Samp_Order_By = {
-  paymentProcessingFee?: Maybe<Order_By>;
-  subtotal?: Maybe<Order_By>;
-  taxes?: Maybe<Order_By>;
+  total?: Maybe<Order_By>;
 };
 
 /** aggregate variance on columns */
 export type Transactions_Variance_Fields = {
    __typename?: 'transactions_variance_fields';
-  paymentProcessingFee?: Maybe<Scalars['Float']>;
-  subtotal?: Maybe<Scalars['Float']>;
-  taxes?: Maybe<Scalars['Float']>;
+  total?: Maybe<Scalars['Float']>;
 };
 
 /** order by variance() on columns of table "transactions" */
 export type Transactions_Variance_Order_By = {
-  paymentProcessingFee?: Maybe<Order_By>;
-  subtotal?: Maybe<Order_By>;
-  taxes?: Maybe<Order_By>;
+  total?: Maybe<Order_By>;
 };
 
 export type TransactionsConnection = Connection & {
@@ -12823,23 +12885,23 @@ export type UsersFragment = { __typename?: 'users', id: string, email: string, u
     & StoresFragment
   )>, payoutMethod?: Maybe<{ __typename?: 'payout_methods', id: string, payeeId: string, payoutType?: Maybe<string>, payoutEmail?: Maybe<string>, payoutProcessor?: Maybe<string>, payoutProcessorId?: Maybe<string>, createdAt: any, updatedAt?: Maybe<any> }> };
 
-export type OrdersFragment = { __typename?: 'orders', id: string, createdAt: any, updatedAt: any, bidId: string, total: number, currency: string, buyerId: string, sellerId: string, productId: string, bid?: Maybe<{ __typename?: 'bids', id: string, bidStatus: string, createdAt?: Maybe<any>, updatedAt?: Maybe<any>, acceptedPrice?: Maybe<number>, offerPrice: number }>, buyer?: Maybe<{ __typename?: 'users', id: string, firstName?: Maybe<string>, lastName?: Maybe<string>, email: string }>, seller?: Maybe<{ __typename?: 'users', id: string, firstName?: Maybe<string>, lastName?: Maybe<string>, email: string }>, currentSnapshot?: Maybe<{ __typename?: 'order_snapshots', id: string, orderStatus: string, createdAt: any, adminApprover?: Maybe<{ __typename?: 'users', id: string, firstName?: Maybe<string>, lastName?: Maybe<string>, email: string }>, dealerApprover?: Maybe<{ __typename?: 'users', id: string, firstName?: Maybe<string>, lastName?: Maybe<string>, email: string }>, form10Image?: Maybe<(
+export type OrdersFragment = { __typename?: 'orders', id: string, createdAt: any, updatedAt: any, bidId?: Maybe<string>, total: number, currency: string, buyerId: string, sellerId: string, productId: string, bid?: Maybe<{ __typename?: 'bids', id: string, bidStatus: string, createdAt?: Maybe<any>, updatedAt?: Maybe<any>, acceptedPrice?: Maybe<number>, offerPrice: number }>, buyer?: Maybe<{ __typename?: 'users', id: string, firstName?: Maybe<string>, lastName?: Maybe<string>, email: string }>, seller?: Maybe<{ __typename?: 'stores', id: string, name: string, website?: Maybe<string>, createdAt: any, updatedAt?: Maybe<any>, user: { __typename?: 'users', id: string, firstName?: Maybe<string>, lastName?: Maybe<string>, email: string } }>, currentSnapshot?: Maybe<{ __typename?: 'order_snapshots', id: string, orderStatus: string, createdAt: any, adminApproverId?: Maybe<string>, dealerApproverId?: Maybe<string>, adminApprover?: Maybe<{ __typename?: 'users', id: string, firstName?: Maybe<string>, lastName?: Maybe<string>, email: string }>, dealerApprover?: Maybe<{ __typename?: 'users', id: string, firstName?: Maybe<string>, lastName?: Maybe<string>, email: string }>, form10Image?: Maybe<(
       { __typename?: 'image_parents' }
       & ImageFragment
-    )> }>, orderSnapshots: Array<{ __typename?: 'order_snapshots', id: string, orderStatus: string, createdAt: any, adminApprover?: Maybe<{ __typename?: 'users', id: string, firstName?: Maybe<string>, lastName?: Maybe<string>, email: string }>, dealerApprover?: Maybe<{ __typename?: 'users', id: string, firstName?: Maybe<string>, lastName?: Maybe<string>, email: string }>, form10Image?: Maybe<(
+    )> }>, orderSnapshots: Array<{ __typename?: 'order_snapshots', id: string, orderStatus: string, createdAt: any, adminApproverId?: Maybe<string>, dealerApproverId?: Maybe<string>, adminApprover?: Maybe<{ __typename?: 'users', id: string, firstName?: Maybe<string>, lastName?: Maybe<string>, email: string }>, dealerApprover?: Maybe<{ __typename?: 'users', id: string, firstName?: Maybe<string>, lastName?: Maybe<string>, email: string }>, form10Image?: Maybe<(
       { __typename?: 'image_parents' }
       & ImageFragment
     )> }>, product: (
     { __typename?: 'products' }
     & ProductsFragment
-  ) };
+  ), payoutItems: Array<{ __typename?: 'payout_items', id: string, payeeId: string, payeeType: string, amount: number, paymentProcessingFee: number, createdAt: any, payoutStatus: string, currency: string, orderId: string, txnId: string, payoutId?: Maybe<string>, taxes: number }> };
 
 export type ProductVariantFragment = { __typename?: 'product_variants', variantSnapshotId: string, variantId: string, snapshotId: string, productId: string, storeId: string, createdAt: any, variantName: string, variantDescription: string, isDefault: boolean, position: number, price: number, priceWas?: Maybe<number>, isSoldOut: boolean, previewItems: Array<{ __typename?: 'product_preview_items', id: string, youTubeEmbedLink?: Maybe<string>, image?: Maybe<(
       { __typename?: 'image_parents' }
       & ImageFragment
     )> }> };
 
-type ProductFragment_ProductPublic_ = { __typename?: 'ProductPublic', id: string, updatedAt?: Maybe<any>, tags?: Maybe<string>, isPublished: boolean, isSuspended: boolean, isDeleted: boolean, isExcludedFromRecommendations: boolean, currentSnapshot: { __typename?: 'product_snapshots', title: string, createdAt: any, description: string, condition: string, make: string, model: string, ammoType?: Maybe<string>, actionType: string, boreDiameter?: Maybe<string>, serialNumber: string, location: string, dealer: string }, currentVariants: Array<(
+type ProductFragment_ProductPublic_ = { __typename?: 'ProductPublic', id: string, updatedAt?: Maybe<any>, tags?: Maybe<string>, isPublished: boolean, isSuspended: boolean, isDeleted: boolean, isExcludedFromRecommendations: boolean, storeId: string, isSoldOut: boolean, currentSnapshot: { __typename?: 'product_snapshots', id: string, title: string, createdAt: any, description: string, condition: string, make: string, model: string, ammoType?: Maybe<string>, actionType: string, boreDiameter?: Maybe<string>, serialNumber: string, location: string, dealer: string }, currentVariants: Array<(
     { __typename?: 'product_variants' }
     & ProductVariantFragment
   )>, featuredVariant?: Maybe<(
@@ -12850,7 +12912,7 @@ type ProductFragment_ProductPublic_ = { __typename?: 'ProductPublic', id: string
     & ProductVariantFragment
   )>, store?: Maybe<{ __typename?: 'StorePrivate', id: string, name: string } | { __typename?: 'StorePublic', id: string, name: string }>, category?: Maybe<{ __typename?: 'categories', id: string, name: string, categoryGroup: string }> };
 
-type ProductFragment_ProductPrivate_ = { __typename?: 'ProductPrivate', id: string, updatedAt?: Maybe<any>, tags?: Maybe<string>, isPublished: boolean, isSuspended: boolean, isDeleted: boolean, isExcludedFromRecommendations: boolean, currentSnapshot: { __typename?: 'product_snapshots', title: string, createdAt: any, description: string, condition: string, make: string, model: string, ammoType?: Maybe<string>, actionType: string, boreDiameter?: Maybe<string>, serialNumber: string, location: string, dealer: string }, currentVariants: Array<(
+type ProductFragment_ProductPrivate_ = { __typename?: 'ProductPrivate', id: string, updatedAt?: Maybe<any>, tags?: Maybe<string>, isPublished: boolean, isSuspended: boolean, isDeleted: boolean, isExcludedFromRecommendations: boolean, storeId: string, isSoldOut: boolean, currentSnapshot: { __typename?: 'product_snapshots', id: string, title: string, createdAt: any, description: string, condition: string, make: string, model: string, ammoType?: Maybe<string>, actionType: string, boreDiameter?: Maybe<string>, serialNumber: string, location: string, dealer: string }, currentVariants: Array<(
     { __typename?: 'product_variants' }
     & ProductVariantFragment
   )>, featuredVariant?: Maybe<(
@@ -12861,7 +12923,7 @@ type ProductFragment_ProductPrivate_ = { __typename?: 'ProductPrivate', id: stri
     & ProductVariantFragment
   )>, store?: Maybe<{ __typename?: 'StorePrivate', id: string, name: string } | { __typename?: 'StorePublic', id: string, name: string }>, category?: Maybe<{ __typename?: 'categories', id: string, name: string, categoryGroup: string }> };
 
-type ProductFragment_ProductDownload_ = { __typename?: 'ProductDownload', id: string, updatedAt?: Maybe<any>, tags?: Maybe<string>, isPublished: boolean, isSuspended: boolean, isDeleted: boolean, isExcludedFromRecommendations: boolean, currentSnapshot: { __typename?: 'product_snapshots', title: string, createdAt: any, description: string, condition: string, make: string, model: string, ammoType?: Maybe<string>, actionType: string, boreDiameter?: Maybe<string>, serialNumber: string, location: string, dealer: string }, currentVariants: Array<(
+type ProductFragment_ProductDownload_ = { __typename?: 'ProductDownload', id: string, updatedAt?: Maybe<any>, tags?: Maybe<string>, isPublished: boolean, isSuspended: boolean, isDeleted: boolean, isExcludedFromRecommendations: boolean, storeId: string, isSoldOut: boolean, currentSnapshot: { __typename?: 'product_snapshots', id: string, title: string, createdAt: any, description: string, condition: string, make: string, model: string, ammoType?: Maybe<string>, actionType: string, boreDiameter?: Maybe<string>, serialNumber: string, location: string, dealer: string }, currentVariants: Array<(
     { __typename?: 'product_variants' }
     & ProductVariantFragment
   )>, featuredVariant?: Maybe<(
@@ -13152,20 +13214,29 @@ export const OrdersFragmentFragmentDoc = gql`
   sellerId
   seller {
     id
-    firstName
-    lastName
-    email
+    name
+    website
+    createdAt
+    updatedAt
+    user {
+      id
+      firstName
+      lastName
+      email
+    }
   }
   currentSnapshot {
     id
     orderStatus
     createdAt
+    adminApproverId
     adminApprover {
       id
       firstName
       lastName
       email
     }
+    dealerApproverId
     dealerApprover {
       id
       firstName
@@ -13180,12 +13251,14 @@ export const OrdersFragmentFragmentDoc = gql`
     id
     orderStatus
     createdAt
+    adminApproverId
     adminApprover {
       id
       firstName
       lastName
       email
     }
+    dealerApproverId
     dealerApprover {
       id
       firstName
@@ -13199,6 +13272,20 @@ export const OrdersFragmentFragmentDoc = gql`
   productId
   product {
     ...ProductsFragment
+  }
+  payoutItems {
+    id
+    payeeId
+    payeeType
+    amount
+    paymentProcessingFee
+    createdAt
+    payoutStatus
+    currency
+    orderId
+    txnId
+    payoutId
+    taxes
   }
 }
     ${ImageFragmentFragmentDoc}
@@ -13236,7 +13323,10 @@ export const ProductFragmentFragmentDoc = gql`
   isSuspended
   isDeleted
   isExcludedFromRecommendations
+  storeId
+  isSoldOut
   currentSnapshot {
+    id
     title
     createdAt
     description
