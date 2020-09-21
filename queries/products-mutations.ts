@@ -13,6 +13,7 @@ export const CREATE_PRODUCT = gql`
           isExcludedFromRecommendations
           isExcludedFromSearch
           tags
+          updatedAt
           category {
             id
             name
@@ -46,8 +47,6 @@ export const CREATE_PRODUCT = gql`
               }
             }
           }
-          createdAt
-          updatedAt
         }
       }
     }

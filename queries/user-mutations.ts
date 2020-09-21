@@ -19,30 +19,7 @@ export const CREATE_USER = gql`
       user {
         ...UserPrivateFragment
       }
-      sendgridResponse {
-        verified {
-          email
-          username
-          expiresAt
-          id
-        }
-        status {
-          message
-        }
-      }
-      stripeCustomerCreationResponse {
-        endpoint
-        status
-        response {
-          id
-          email
-          currency
-          created
-          balance
-          description
-          defaultSource
-        }
-      }
+
     }
   }
   ${UserPrivateFragment}

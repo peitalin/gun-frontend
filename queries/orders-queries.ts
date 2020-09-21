@@ -7,29 +7,6 @@ import {
 } from "./fragments";
 
 
-export const GET_BUYER_ORDERS_CONNECTION = gql`
-  query ($query: ConnectionOffsetQueryOrders) {
-    user {
-      id
-      ... on UserPrivate {
-        buyerOrdersConnection(query: $query) {
-          totalCount
-          pageInfo {
-            isLastPage
-            endCursor
-          }
-          edges {
-            node {
-              ...OrdersFragment
-            }
-          }
-        }
-      }
-    }
-  }
-  ${OrdersFragment}
-`;
-
 
 export const GET_ALL_ORDERS_CONNECTION2 = gql`
   query getOrdersPendingApprovalConnectionAdmin(
@@ -145,6 +122,30 @@ export const GET_SELLER_ORDERS_CONNECTION = gql`
   ${OrdersFragment}
 `;
 
+
+
+export const GET_BUYER_ORDERS_CONNECTION = gql`
+  query ($query: ConnectionOffsetQueryOrders) {
+    user {
+      id
+      ... on UserPrivate {
+        buyerOrdersConnection(query: $query) {
+          totalCount
+          pageInfo {
+            isLastPage
+            endCursor
+          }
+          edges {
+            node {
+              ...OrdersFragment
+            }
+          }
+        }
+      }
+    }
+  }
+  ${OrdersFragment}
+`;
 
 export const GET_ORDER_AS_ADMIN = gql`
   query getOrderAsAdmin($orderId: ID!) {

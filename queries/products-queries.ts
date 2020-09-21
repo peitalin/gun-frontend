@@ -2,7 +2,7 @@ import gql from "graphql-tag";
 import {
   ImageFragment,
   ProductFragment,
-  // StorePublicFragment
+  StorePublicFragment
 } from "./fragments";
 
 export const GET_RECOMMENDED_PRODUCTS = gql`
@@ -50,14 +50,14 @@ export const GET_PRODUCT = gql`
   query getProductById($productId: String!) {
     getProductById(productId: $productId) {
       ...ProductFragment
-      # store {
-      #   ...StorePublicFragment
-      # }
+      store {
+        ...StorePublicFragment
+      }
     }
   }
   ${ProductFragment}
+  ${StorePublicFragment}
 `;
-  // ${StorePublicFragment}
 
 
 export const GET_PRODUCTS_BY_CATEGORY = gql`

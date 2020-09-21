@@ -3,6 +3,52 @@ import {
   OrdersFragment,
 } from "./fragments";
 
+export const CREATE_ORDER = gql`
+  mutation createOrder(
+    $productId: String!
+    $productSnapshotId: String!
+    $variantId: String!
+    $variantSnapshotId: String!
+    $total: Int!
+    $buyerId: String!
+    $sellerId: String!
+    $bidId: String
+  ) {
+    createOrder(
+      productId: $productId
+      productSnapshotId: $productSnapshotId
+      variantId: $variantId
+      variantSnapshotId: $variantSnapshotId
+      total: $total
+      buyerId: $buyerId
+      sellerId: $sellerId
+      bidId: $bidId
+    ) {
+      order {
+        ...OrdersFragment
+      }
+    }
+  }
+  ${OrdersFragment}
+`;
+
+export const CONFIRM_ORDER = gql`
+  mutation confirmOrder(
+    $orderId: String!
+    $singleUseTokenId: String!
+  ) {
+    confirmOrder(
+      orderId: $orderId
+      singleUseTokenId: $singleUseTokenId
+    ) {
+      order {
+        ...OrdersFragment
+      }
+    }
+  }
+  ${OrdersFragment}
+`;
+
 
 export const ADD_FORM_10 = gql`
   mutation addForm10(
@@ -57,12 +103,19 @@ export const APPROVE_FORM_10 = gql`
 
 
 
-
-
-
-
-
-
-
-
-
+export const MARK_PAYOUT_AS_PAID = gql`
+  mutation marktPayoutsAsPaid(
+    $orderIds: [String!]!
+    $payoutId: String!
+  ) {
+    markPayoutsAsPaid(
+      orderIds: $orderIds
+      payoutId: $payoutId
+    ) {
+      orders {
+        ...OrdersFragment
+      }
+    }
+  }
+  ${OrdersFragment}
+`;

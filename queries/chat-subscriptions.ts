@@ -146,19 +146,31 @@ export const SUBSCRIBE_USER_CONVERSATIONS = gql`
 `;
 
 
-export const UPDATE_CHAT_STATUS = gql`
-  mutation(
-    $chatRoomId: String
-    $chatStatus: String
-  ) {
-    update_chat_rooms(
-      where:{id: {_eq: $chatRoomId }},
-      _set: { status: $chatStatus }
-    ) {
-      returning {
-        ...ChatRoomFragment
-      }
+export const GET_USER_TYPING = gql`
+  subscription ($selfId: String) {
+    users_typing (
+      where: { id: { _neq: $selfId } },
+      limit: 2
+      order_by: {lastTyped:desc}
+    ){
+      lastTyped
+      id
+      firstName
+      lastName
+      email
     }
   }
-  ${ChatRoomFragment}
-`
+`;
+
+export const FETCH_ONLINE_USERS_SUBSCRIPTION = gql`
+  subscription {
+    users_online (
+      order_by: {lastSeen:asc}
+    ) {
+      id
+      firstName
+      lastName
+      email
+    }
+  }
+`;

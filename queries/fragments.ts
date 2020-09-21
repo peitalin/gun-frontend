@@ -179,7 +179,6 @@ export const UsersFragment = gql`
     lastName
     emailVerified
     storeId
-    stripeCustomerId
     sellerReferredById
     payoutMethod {
       id
@@ -227,20 +226,29 @@ export const OrdersFragment = gql`
     sellerId
     seller {
       id
-      firstName
-      lastName
-      email
+      name
+      website
+      createdAt
+      updatedAt
+      user {
+        id
+        firstName
+        lastName
+        email
+      }
     }
     currentSnapshot {
       id
       orderStatus
       createdAt
+      adminApproverId
       adminApprover {
         id
         firstName
         lastName
         email
       }
+      dealerApproverId
       dealerApprover {
         id
         firstName
@@ -255,12 +263,14 @@ export const OrdersFragment = gql`
       id
       orderStatus
       createdAt
+      adminApproverId
       adminApprover {
         id
         firstName
         lastName
         email
       }
+      dealerApproverId
       dealerApprover {
         id
         firstName
@@ -274,6 +284,20 @@ export const OrdersFragment = gql`
     productId
     product {
       ...ProductsFragment
+    }
+    payoutItems {
+      id
+      payeeId
+      payeeType
+      amount
+      paymentProcessingFee
+      createdAt
+      payoutStatus
+      currency
+      orderId
+      txnId
+      payoutId
+      taxes
     }
   }
   ${ProductsFragment}
@@ -316,8 +340,11 @@ export const ProductFragment = gql`
     isSuspended
     isDeleted
     isExcludedFromRecommendations
+    storeId
+    isSoldOut
 
     currentSnapshot {
+      id
       title
       createdAt
       description
@@ -475,7 +502,6 @@ export const UserPrivateFragment = gql`
     firstName
     lastName
     email
-    stripeCustomerId
     emailVerified
     userRole
     isSuspended
