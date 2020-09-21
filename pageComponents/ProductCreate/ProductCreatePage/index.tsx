@@ -192,7 +192,6 @@ const ProductCreatePage = (props: ReactProps) => {
               tags: (values.tags as string[]).join(','),
               isPublished: values.isPublished,
               currentVariants: values.currentVariants,
-              isQuantityEnabled: false,
             }
           },
         }).then(res => {

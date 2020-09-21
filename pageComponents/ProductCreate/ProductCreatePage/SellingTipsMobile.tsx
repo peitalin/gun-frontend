@@ -164,7 +164,7 @@ const styles = (theme: Theme) => createStyles({
     paddingRight: '0rem',
   },
   sellingTips: {
-    padding: '1.5rem 1rem 1rem 1rem',
+    padding: '1rem 1rem 1rem 1rem',
     marginLeft: '0rem',
     marginBottom: '1rem',
     border: '1px solid #eaeaea',

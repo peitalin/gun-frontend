@@ -95,8 +95,9 @@ const AddYouTubeVimeoLink: React.FC<AddYouTubeVimeoProps> = (props) => {
         },
         style: {
           width: '100%',
-          borderRadius: "4px 0 0 4px",
+          borderRadius: "4px 0px 0px 4px",
           borderRight: 'none',
+          padding: '0.55rem',
         }
       }}
       onSubmit={() => {

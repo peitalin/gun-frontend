@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import { oc as option } from "ts-optchain";
 import clsx from "clsx";
 // Redux
@@ -17,29 +17,43 @@ import { styles } from './commonStyles';
 // Material UI
 import Typography from "@material-ui/core/Typography";
 import FormGroup from '@material-ui/core/FormGroup';
+import Button from '@material-ui/core/Button';
 // Select Component
 import DropdownInput from "components/Fields/DropdownInput";
+import { sortCategoriesByName } from "layout/NavBarMain/CategoryBar/categoryHooks";
 // Util components
 import Loading from "components/Loading";
 import ErrorDisplay from "components/Error";
 import ErrorBounds from 'components/ErrorBounds';
+import ValidationErrorMsg from "components/Fields/ValidationErrorMsg";
 import { Formik, Form, FormikProps, ErrorMessage } from 'formik';
+// MUI expander
+import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 
 
 const SelectCategories = (props: ReactProps & FormikProps<FormikFields>) => {
 
-  const { classes, reducerName, ...fprops } = props;
+  const {
+    classes,
+    reducerName,
+    defaultExpanded = false,
+    ...fprops
+  } = props;
+
   const dispatch = useDispatch();
   const actions = Actions[reducerName];
+  const [openExpander, setOpenExpander] = React.useState(defaultExpanded);
 
   const setCategoryId = (newCat: SelectOption) => {
     // // Redux
     // dispatch(actions.UPDATE_CATEGORY_ID(newCat.value))
     // Formik
     fprops.setFieldValue("categoryId", newCat.value)
-    fprops.setFieldTouched("categoryId", true)
-    props.validateForm()
+    // props.validateForm()
   }
 
   // Apollo Graphql
@@ -49,7 +63,13 @@ const SelectCategories = (props: ReactProps & FormikProps<FormikFields>) => {
     data
   } = useQuery<QueryData, null>(GET_PRODUCT_CATEGORIES)
 
-  const categorySuggestions = createCategorySuggestions(option(data).getProductCategories([]));
+
+  const categories = option(data).getProductCategories([])
+      .filter(c => !!c && !!c.name)
+      .sort(sortCategoriesByName)
+
+  const chosenCategory = categories.find(c => c.id === fprops.values.categoryId)
+  // const categorySuggestions = createCategorySuggestions(categories);
 
   return (
     <ErrorBounds className={classes.positionRelative}>
@@ -57,31 +77,109 @@ const SelectCategories = (props: ReactProps & FormikProps<FormikFields>) => {
         <Typography color={"primary"} variant="subtitle1">
           Category
         </Typography>
-        <FormGroup className={classes.formGroup} row>
-          <Loading inline loading={loading} delay={"400ms"} />
-          {
-            error
-            ? <ErrorDisplay title={"SelectCategories"} error={error}/>
-            : <DropdownInput
-                stateShape={
-                  categorySuggestions.find(s =>
-                    s.value === option(fprops).values.categoryId())
-                  // { label: "Design Templates", value: "category_123123"}
+        <FormGroup row
+          className={clsx(classes.formGroup, classes.marginTop05)}
+        >
+
+          <ExpansionPanel
+            defaultExpanded={defaultExpanded}
+            classes={{
+              root: classes.expansionPanelRoot,
+              expanded: classes.expansionPanelExpanded,
+            }}
+            expanded={openExpander}
+            onChange={(event, expanded) => {
+              setOpenExpander(s => !s)
+              if (!fprops.touched.categoryId) {
+                fprops.setFieldTouched("categoryId", true)
+              }
+            }}
+            elevation={0} // remove box-shadow
+            TransitionProps={{
+              timeout: {
+                appear: 200,
+                enter: 200,
+                exit: 200,
+              }
+            }}
+          >
+            <ExpansionPanelSummary
+              expandIcon={<ExpandMoreIcon />}
+              classes={{
+                root: classes.expanderRoot,
+                expanded: classes.expanderExpanded,
+                content: classes.expanderContent,
+                expandIcon: classes.expandIcon,
+              }}
+            >
+              <Typography className={
+                  !option(chosenCategory).name()
+                    ? classes.selectedCategoryEmpty
+                    : openExpander
+                      ? classes.selectedCategoryOpen
+                      : classes.selectedCategoryClosed
                 }
-                onChange={({ label, value }: SelectOption) =>
-                  setCategoryId({ label, value })
+                color={"primary"}
+                variant="body1"
+              >
+                {
+                  option(chosenCategory).name()
+                    ? chosenCategory.name
+                    : "Select a category"
                 }
-                onMenuOpen={() => fprops.setFieldTouched("categoryId", true)}
-                options={
-                  createCategorySuggestions(option(data).getProductCategories([]))
+              </Typography>
+            </ExpansionPanelSummary>
+            <ExpansionPanelDetails>
+              <div style={{
+                display: 'flex',
+                flexDirection: 'column',
+                padding: '0px',
+                width: '100%'
+              }}>
+                {
+                  error
+                  ? <ErrorDisplay title={"SelectCategories"} error={error}/>
+                  : <div className={classes.categoryButtonsContainer}>
+                      {
+                        categories.map((category, i) => {
+                          return (
+                            <Button
+                              key={category.name + `${i}`}
+                              classes={{
+                                root: clsx(
+                                  classes.buttonRoot,
+                                  (category.id === fprops.values.categoryId)
+                                    ? classes.buttonSelected
+                                    : null,
+                                )
+                              }}
+                              variant="outlined"
+                              onClick={() => {
+                                fprops.setFieldTouched("categoryId", true)
+                                setCategoryId({
+                                  label: category.name,
+                                  value: category.id,
+                                })
+                                setOpenExpander(s => !s)
+                              }}
+                            >
+                              {category.name}
+                            </Button>
+                          )
+                        })
+                      }
+                    </div>
                 }
-                placeholder={"Select a category"}
-                className={classes.optionValues}
-                errorMessage={fprops.errors.categoryId}
-                touched={fprops.touched.categoryId}
-                disableInitialValidationMessage={true}
-              />
-          }
+              </div>
+            </ExpansionPanelDetails>
+          </ExpansionPanel>
+
+          <ValidationErrorMsg
+            touched={fprops.touched.categoryId}
+            focused={false}
+            errorMessage={fprops.errors.categoryId}
+            disableInitialValidationMessage={true}
+          />
         </FormGroup>
       </div>
     </ErrorBounds>
@@ -90,16 +188,12 @@ const SelectCategories = (props: ReactProps & FormikProps<FormikFields>) => {
 
 
 const createCategorySuggestions = (categories: Categories[]) => {
-  if (categories && categories.length > 0) {
-    return categories.slice().sort().map(category => {
-      return {
-        label: `${category.name}`,
-        value: category.id,
-      }
-    })
-  } else {
-    return []
-  }
+  return categories.sort().map(category => {
+    return {
+      label: `${category.name}`,
+      value: category.id,
+    }
+  })
 }
 
 export interface SelectOption {
@@ -108,6 +202,7 @@ export interface SelectOption {
 }
 interface ReactProps extends WithStyles<typeof styles> {
   reducerName: ReducerName
+  defaultExpanded?: boolean
 }
 interface QueryData {
   getProductCategories: Categories[]

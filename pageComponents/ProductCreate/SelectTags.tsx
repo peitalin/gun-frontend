@@ -45,9 +45,9 @@ const SelectTags = (props: ReactProps & FormikProps<FormikFields>) => {
   }
 
   return (
-    <ErrorBounds className={classes.positionRelative}>
+    <ErrorBounds className={clsx(classes.selectTagsRoot, classes.positionRelative)}>
       <div className={classes.formContainer}>
-        <Typography variant="subtitle1" gutterBottom>
+        <Typography variant="subtitle1" className={classes.tagsTitle}>
           Tags <span className={classes.optionalText}>- optional</span>
         </Typography>
         <FormGroup row
@@ -58,7 +58,7 @@ const SelectTags = (props: ReactProps & FormikProps<FormikFields>) => {
             // disabled={loading}
             // loading={loading}
             initialTags={
-              (fprops.values.tags as string[]).map(t => createOption(t))
+              fprops.values.tags.map(t => createOption(t))
             }
             setTags={setTags}
             disableInitialValidationMessage={true}
@@ -72,7 +72,7 @@ const SelectTags = (props: ReactProps & FormikProps<FormikFields>) => {
 
         </FormGroup>
         <Typography className={classes.tagsTip}>
-          Tags will help people find your product on Gun Marketplace.
+          Tags will help people find your product on Relay.
           Tags are not public. Separate with commas.
         </Typography>
       </div>
@@ -89,7 +89,8 @@ interface ReactProps extends WithStyles<typeof styles> {
   reducerName: ReducerName
 }
 interface FormikFields {
-  tags: string[] | string;
+  categoryId: string;
+  tags: string[];
 }
 
 export default withStyles(styles)( SelectTags );

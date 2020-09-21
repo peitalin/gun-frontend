@@ -1,6 +1,5 @@
 import { createStyles, Theme, fade } from "@material-ui/core/styles";
-import { fontFam, Colors } from "layout/AppTheme";
-
+import { fontFam, Colors, BorderRadius, BoxShadows } from "layout/AppTheme";
 
 export const styles = (theme: Theme) => createStyles({
   root: {
@@ -286,18 +285,109 @@ export const styles = (theme: Theme) => createStyles({
   descriptionRoot: {
     marginBottom: '2rem',
   },
+
+  // Categories
+  categoryButtonsContainer: {
+    display: "flex",
+    flexDirection: "row",
+    flexWrap: "wrap",
+  },
+  buttonRoot: {
+    margin: '0.1rem',
+    color: Colors.darkerGrey,
+    border: `1px solid ${Colors.mediumLightGrey}`,
+    borderRadius: '2rem',
+    flexGrow: 1,
+  },
+  buttonSelected: {
+    background: Colors.secondary,
+    color: Colors.cream,
+    borderRadius: '2rem',
+    "&:hover": {
+      background: fade(Colors.secondary, 0.8),
+      color: Colors.cream,
+    },
+  },
+  marginTop05: {
+    marginTop: '0.5rem',
+  },
+  expansionPanelRoot: {
+    width: '100%',
+    padding: '0rem',
+    marginLeft: '0rem',
+    border: `1px solid ${Colors.mediumLightGrey}`,
+    // overrides .MuiExpansionPanel-rounded:first-child
+    // border radius
+    borderRadius: `${BorderRadius}px !important`,
+    backgroundColor: Colors.foregroundColor,
+    transition: theme.transitions.create('border', {
+      duration: "1200ms",
+    }),
+  },
+  expansionPanelExpanded: {
+    border: `1px solid ${Colors.white}`,
+    transition: theme.transitions.create('border', {
+      duration: "0ms",
+    }),
+  },
+  expanderRoot: {
+  },
+  expandIcon: {
+    marginRight: '-6px', // prevent icon shifting when expanding
+  },
+  expanderExpanded: {
+    margin: 0,
+    minHeight: '1rem',
+    marginRight: '-3px', // prevent icon shifting when expanding
+  },
+  expanderContent: {
+    minHeight: '1rem',
+    margin: 0,
+  },
+  selectedCategoryClosed: {
+    color: Colors.charcoal,
+    fontSize: '1rem',
+    transition: theme.transitions.create('color', {
+      duration: "2000ms",
+    }),
+  },
+  selectedCategoryOpen: {
+    color: Colors.secondary,
+    fontSize: '1rem',
+    transition: theme.transitions.create('color', {
+      duration: "200ms",
+    }),
+  },
+  selectedCategoryEmpty: {
+    color: Colors.grey,
+    fontSize: '1rem',
+  },
+  uploaderSwitcherTitle: {
+    width: '100%',
+    display: "flex",
+    flexDirection: 'row',
+    justifyContent: "flex-end",
+    alignItems: "center",
+  },
+  titleDim: {
+    color: Colors.darkGrey,
+  },
+  stickyProductPreviewContainer: {
+    position: 'sticky',
+    top: '1rem',
+    marginTop: '1rem',
+    marginBottom: '1rem',
+    // from SellingTips to product card preview
+    // display: 'flex',
+    // flexDirection: 'row',
+    // justifyContent: 'center',
+  },
+  selectTagsRoot: {
+    marginTop: '2rem',
+    // marginBottom: '1rem',
+  },
+  tagsTitle: {
+    marginBottom: '0.5rem',
+  },
 })
-
-
-
-
-
-
-
-
-
-
-
-
-
 
