@@ -10,7 +10,6 @@ import ValidationErrorMsg from "./ValidationErrorMsg";
 
 
 
-
 const TextInput = (props: ReactProps) => {
 
   const ref = React.useRef();
@@ -30,14 +29,14 @@ const TextInput = (props: ReactProps) => {
   // for YouTube Link, any input with a submit button next to it.
   if (props.onSubmit) {
     return (
-      <div className={clsx(classes.root, classes.width100)}>
+      <div className={clsx(
+        classes.root,
+        classes.width100
+      )}>
         <InputBase
-          type="input"
           classes={{
-            input: classes.input,
-            root: clsx(
-              classes.textFieldContainer,
-              focused && classes.textFieldContainerFocused,
+            input: clsx(
+              classes.input,
               errorInputColor === "red" ? classes.errorInput : null,
               errorInputColor === "grey" ? classes.errorInputUntouched : null,
             ),
@@ -46,13 +45,12 @@ const TextInput = (props: ReactProps) => {
           style={{
             // borderRadius: `${BorderRadius}px 0px 0px ${BorderRadius}px`,
             borderRadius: BorderRadius,
-            width: '100%'
+            width: '100%',
+            height: '0.55rem',
           }}
           inputRef={ref}
           error={!!props.errorMessage}
           disabled={disabled}
-          rows={props.rows ? props.rows : 1}
-          multiline={!!props.rows}
           {...rest}
         />
         <Button
@@ -92,10 +90,8 @@ const TextInput = (props: ReactProps) => {
       <div className={clsx(classes.root, classes.width100)}>
         <InputBase
           classes={{
-            input: classes.input,
-            root: clsx(
-              classes.textFieldContainer,
-              focused && classes.textFieldContainerFocused,
+            input: clsx(
+              classes.input,
               errorInputColor === "red" ? classes.errorInput : null,
               errorInputColor === "grey" ? classes.errorInputUntouched : null,
             ),
@@ -104,9 +100,11 @@ const TextInput = (props: ReactProps) => {
           disabled={disabled}
           inputRef={ref}
           error={!!props.errorMessage}
-          style={{ borderRadius: BorderRadius, width: '100%' }}
-          rows={props.rows ? props.rows : 1}
-          multiline={!!props.rows}
+          style={{
+            // borderRadius: `${BorderRadius}px 0px 0px ${BorderRadius}px`,
+            borderRadius: BorderRadius,
+            width: '100%',
+          }}
           {...rest}
         />
 
@@ -116,6 +114,7 @@ const TextInput = (props: ReactProps) => {
           errorMessage={props.errorMessage}
           disableInitialValidationMessage={disableInitialValidationMessage}
         />
+
 
         {
           props.limit &&
@@ -161,8 +160,6 @@ interface ReactProps extends WithStyles<typeof styles> {
   disableInitialValidationMessage?: boolean;
   limit?: { count: number, max: number };
   buttonWidth?: any;
-  rows?: number;
-  isCreditCardField?: boolean;
   [key: string]: any;
 }
 

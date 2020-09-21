@@ -27,7 +27,7 @@ const ValidationErrorMsg = (props: ReactProps) => {
       )}
       style={style}
     >
-      <span>{errorMessage}</span>
+      <span className={classes.errorMessageText}>{errorMessage}</span>
     </div>
   )
 }

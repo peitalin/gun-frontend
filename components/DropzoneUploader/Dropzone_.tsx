@@ -182,8 +182,6 @@ export interface IInputProps extends ICommonProps {
   onFiles: (files: File[]) => void
   onChange?(e: any): void
   reducerName?: ReducerName;
-  maxFiles?: number;
-  numFiles?: number; // counts how many files in redux
 }
 
 export interface ISubmitButtonProps extends ICommonProps {
@@ -229,7 +227,6 @@ export interface IDropzoneProps {
   minSizeBytes: number
   maxSizeBytes: number
   maxFiles: number
-  numFiles?: number
 
   validate?(file: IFileWithMeta): any // usually a string, but can be anything
 
@@ -427,7 +424,7 @@ class Dropzone extends React.Component<IDropzoneProps, { active: boolean; dragge
 
   handleFile = async (file: File, id: string) => {
     const { name, size, type, lastModified } = file
-    const { minSizeBytes, maxSizeBytes, maxFiles, numFiles, accept, getUploadParams, autoUpload, validate } = this.props
+    const { minSizeBytes, maxSizeBytes, maxFiles, accept, getUploadParams, autoUpload, validate } = this.props
 
     const uploadedDate = new Date().toISOString()
     const lastModifiedDate = lastModified && new Date(lastModified).toISOString()
@@ -443,10 +440,7 @@ class Dropzone extends React.Component<IDropzoneProps, { active: boolean; dragge
       this.handleChangeStatus(fileWithMeta)
       return
     }
-    if (
-      this.files.length >= maxFiles ||
-      numFiles >= maxFiles
-    ) {
+    if (this.files.length >= maxFiles) {
       fileWithMeta.meta.status = 'rejected_max_files'
       this.handleChangeStatus(fileWithMeta)
       return
@@ -647,7 +641,6 @@ class Dropzone extends React.Component<IDropzoneProps, { active: boolean; dragge
       accept,
       multiple,
       maxFiles,
-      numFiles,
       minSizeBytes,
       maxSizeBytes,
       onSubmit,
@@ -672,7 +665,7 @@ class Dropzone extends React.Component<IDropzoneProps, { active: boolean; dragge
     const { active, dragged } = this.state
 
     const reject = dragged.some(file => file.type !== 'application/x-moz-file' && !accepts(file as File, accept))
-    const extra = { active, reject, dragged, accept, multiple, minSizeBytes, maxSizeBytes, maxFiles, numFiles } as IExtra
+    const extra = { active, reject, dragged, accept, multiple, minSizeBytes, maxSizeBytes, maxFiles } as IExtra
     const files = [...this.files]
     const dropzoneDisabled = resolveValue(disabled, files, extra)
 
@@ -766,15 +759,7 @@ class Dropzone extends React.Component<IDropzoneProps, { active: boolean; dragge
 
 
 
-    // workaround for File Uploader in Product Uploade page.
-    // There is a nasty bug when this uploader is used in
-    // connection with Formik.handlerBlur that swallows onClick events,
-    // meaning you need to double click to upload
-    //
-    // Importing the components and then rendering OUTSIDE of the Layout component
-    // seems to circumvent this bug. There is a event propagation bug with Layout
-    // because it is doing component injection and not propogating events properly
-    // to child components.
+
     if (this.props.uploaderType === 'image-uploader') {
       return (
         <>
@@ -804,8 +789,6 @@ class Dropzone extends React.Component<IDropzoneProps, { active: boolean; dragge
               withFilesContent={resolveValue(inputWithFilesContent, files, extra)}
               onFiles={this.handleFiles} // see: https://stackoverflow.com/questions/39484895
               files={files}
-              maxFiles={maxFiles}
-              numFiles={numFiles}
               extra={extra}
               onChange={this.handleOnChange}
               setTouched={this.props.setTouched} // formik
@@ -879,8 +862,6 @@ class Dropzone extends React.Component<IDropzoneProps, { active: boolean; dragge
               withFilesContent={resolveValue(inputWithFilesContent, files, extra)}
               onFiles={this.handleFiles} // see: https://stackoverflow.com/questions/39484895
               files={files}
-              maxFiles={maxFiles}
-              numFiles={numFiles}
               extra={extra}
               onChange={this.handleOnChange}
               setTouched={this.props.setTouched} // formik
@@ -947,8 +928,6 @@ class Dropzone extends React.Component<IDropzoneProps, { active: boolean; dragge
                   withFilesContent={resolveValue(inputWithFilesContent, files, extra)}
                   onFiles={this.handleFiles} // see: https://stackoverflow.com/questions/39484895
                   files={files}
-                  maxFiles={maxFiles}
-                  numFiles={numFiles}
                   extra={extra}
                 />
               )
@@ -994,7 +973,6 @@ Dropzone.defaultProps = {
   minSizeBytes: 0,
   maxSizeBytes: Number.MAX_SAFE_INTEGER,
   maxFiles: Number.MAX_SAFE_INTEGER,
-  numFiles: undefined,
   autoUpload: true,
   disabled: false,
   canCancel: true,

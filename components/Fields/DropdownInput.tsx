@@ -5,10 +5,11 @@ import { withStyles, WithStyles, fade } from "@material-ui/core/styles";
 import Select from "react-select";
 import CreatableSelect from "react-select/creatable";
 
-import { Colors, fontFam } from "layout/AppTheme";
+import { Colors, Gradients, fontFam, BorderRadius } from "layout/AppTheme";
 import { useFocus } from "utils/hooks";
 import { styles } from "components/Fields/styles";
 import ValidationErrorMsg from "./ValidationErrorMsg";
+
 
 
 const DropdownInput = (props: ReactProps) => {
@@ -24,6 +25,7 @@ const DropdownInput = (props: ReactProps) => {
     // CreatableSelect
     creatable = false,
     isMulti = false,
+    isSearchable = true,
     limit,
     classes,
     onChange,
@@ -43,13 +45,13 @@ const DropdownInput = (props: ReactProps) => {
   return (
     <div className={clsx(
       classes.root,
-      classes.width100,
       classes.creatableSelect,
       props.className && props.className,
     )}>
       {
         props.creatable
         ? <CreatableSelect
+            // inputId={props.inputId}
             value={state}
             onMenuOpen={props.onMenuOpen}
             onChange={(e) => {
@@ -59,37 +61,58 @@ const DropdownInput = (props: ReactProps) => {
             options={options}
             placeholder={placeholder}
             isMulti={isMulti}
+            isSearchable={isSearchable}
             className={classes.optionValues}
             classes={{
-              input: classes.input,
-              root: clsx(
-                classes.textFieldContainer,
+              input: clsx(
+                classes.input,
                 errorInputColor === "red" ? classes.errorInput : null,
                 errorInputColor === "grey" ? classes.errorInputUntouched : null,
               ),
               multiline: classes.selectMultiline,
             }}
-            theme={theme => ({
-              ...theme,
-              borderRadius: 4,
-              colors: {
-                ...theme.colors,
-                primary25: Colors.lightGrey,
-                primary: Colors.blue,
-              },
-            })}
+            theme={
+              props.theme
+              ? props.theme
+              : theme => ({
+                  ...theme,
+                  borderRadius: BorderRadius,
+                  colors: {
+                    ...theme.colors,
+                    primary25: Colors.lightGrey,
+                    primary: Colors.charcoal,
+                  },
+                })
+            }
             delimiter={delimiter ? delimiter : ','}
-            styles={{
-              placeholder: styles => ({
-                ...styles,
-                fontWeight: 400,
-                fontFamily: fontFam,
-                color: Colors.grey,
-              }),
-            }}
+            styles={
+              props.styles
+              ? props.styles
+              : {
+                input: styles => ({
+                  color: props.hideCursor ? 'transparent' : Colors.black
+                }),
+                placeholder: styles => ({
+                  ...styles,
+                  fontWeight: 400,
+                  fontFamily: fontFam,
+                  color: Colors.darkGrey55,
+                }),
+                menu: styles => ({
+                  ...styles,
+                  zIndex: 10,
+                  marginTop: '2px',
+                  cursor: "pointer",
+                  "&:hover": {
+                    cursor: "pointer",
+                  },
+              })
+              }
+            }
             inputRef={ref}
           />
         : <Select
+            // inputId={props.inputId}
             value={state}
             onMenuOpen={props.onMenuOpen}
             onChange={(e) => {
@@ -99,33 +122,53 @@ const DropdownInput = (props: ReactProps) => {
             options={options}
             placeholder={placeholder}
             isMulti={isMulti}
+            isSearchable={isSearchable}
             className={classes.optionValues}
             classes={{
-              input: classes.input,
-              root: clsx(
-                classes.textFieldContainer,
+              input: clsx(
+                classes.input,
                 errorInputColor === "red" ? classes.errorInput : null,
                 errorInputColor === "grey" ? classes.errorInputUntouched : null,
               ),
               multiline: classes.selectMultiline,
             }}
-            theme={theme => ({
-              ...theme,
-              borderRadius: 4,
-              colors: {
-                ...theme.colors,
-                primary25: Colors.lightGrey,
-                primary: Colors.blue,
-              },
-            })}
-            styles={{
-              placeholder: styles => ({
-                ...styles,
-                fontWeight: 400,
-                fontFamily: fontFam,
-                color: Colors.grey,
-              }),
-            }}
+            theme={
+              props.theme
+              ? props.theme
+              : theme => ({
+                  ...theme,
+                  borderRadius: BorderRadius,
+                  colors: {
+                    ...theme.colors,
+                    primary25: Colors.lightGrey,
+                    primary: Colors.darkGrey55,
+                  },
+                })
+            }
+            styles={
+              props.styles
+              ? props.styles
+              : {
+                input: styles => ({
+                  color: props.hideCursor ? 'transparent' : Colors.black
+                }),
+                placeholder: styles => ({
+                  ...styles,
+                  fontWeight: 400,
+                  fontFamily: fontFam,
+                  color: Colors.grey,
+                }),
+                menu: styles => ({
+                  ...styles,
+                  zIndex: 10,
+                  marginTop: '2px',
+                  cursor: "pointer",
+                  "&:hover": {
+                    cursor: "pointer",
+                  },
+                })
+              }
+            }
             inputRef={ref}
           />
       }
@@ -180,6 +223,12 @@ interface ReactProps extends WithStyles<typeof styles> {
   placeholder: string;
   delimiter?: string;
   disableInitialValidationMessage?: boolean;
+  inputId?: string;
+  className?: any;
+  isSearchable?: boolean;
+  hideCursor?: boolean;
+  styles?: any;
+  theme?: any;
   [key: string]: any;
 }
 export interface SelectOption {

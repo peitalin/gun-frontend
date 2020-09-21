@@ -32,9 +32,8 @@ const CurrencyInput = (props: ReactProps) => {
     <div className={clsx(classes.root, classes.width100)}>
       <InputBase
         classes={{
-          input: classes.input,
-          root: clsx(
-            classes.textFieldContainer,
+          input: clsx(
+            classes.input,
             errorInputColor === "red" ? classes.errorInput : null,
             errorInputColor === "grey" ? classes.errorInputUntouched : null,
           ),

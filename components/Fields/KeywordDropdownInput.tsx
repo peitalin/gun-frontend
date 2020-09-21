@@ -3,15 +3,17 @@ import CreatableSelect from "react-select/creatable";
 // styles
 import clsx from "clsx";
 import { styles } from "components/Fields/styles";
-import { Colors, fontFam } from "layout/AppTheme";
+import { Colors, fontFam, BorderRadius } from "layout/AppTheme";
 import { withStyles, WithStyles } from "@material-ui/core/styles";
 // focus
 import { useFocus } from "utils/hooks";
 import ValidationErrorMsg from "./ValidationErrorMsg";
-import SnackBarA from "components/Snackbars/SnackbarA";
 /// Debounce
 const throttle = require('lodash.throttle');
 const debounce = require('lodash.debounce');
+// Snackbar
+import { useSnackbar, ProviderContext } from "notistack";
+
 
 
 
@@ -19,6 +21,7 @@ const KeywordDropdownInput = (props: ReactProps) => {
 
   const ref = React.useRef();
   const focused = useFocus(ref);
+  const snackbar = useSnackbar();
 
   const {
     errorMessage,
@@ -34,7 +37,6 @@ const KeywordDropdownInput = (props: ReactProps) => {
     options: props.initialTags || [],
     value: props.initialTags || [],
   })
-  const [displayErr, setDisplayErr] = React.useState("")
 
   const onKeyDown = (e) => {
     e.persist()
@@ -43,33 +45,21 @@ const KeywordDropdownInput = (props: ReactProps) => {
       || e.keyCode === 13 // or enter
       || e.keyCode === 32 // or space
     ) {
-
+      // catch comma, enter, space and break up word into tag
       e.preventDefault();
       if (state.inputValue !== "") {
-        handleCreate(state.inputValue);
+        handleCreate([state.inputValue]);
       }
-
-    } else if (
-      ((e.keyCode < 91) && (e.keyCode > 47))  // a-z 0-9
-      || (e.keyCode > 95 && e.keyCode < 106)  // numpad numbers
-      || e.keyCode === 189 // dash
-    ) {
-
-      setState(s => ({ ...s, inputValue: state.inputValue + e.key }));
-
-    } else if (e.keyCode === 8) {
-
-      // backspace
-      setState(s => ({ ...s, inputValue: state.inputValue.slice(0,-1) }));
-
     } else {
       // ignore other keyCodes
     }
+    // console.log(e.key, e.keyCode);
     // console.log(state.inputValue, e.key, state.inputValue + e.key);
   };
 
+
   const handleChange = (newValue: any, actionMeta: any) => {
-    // console.log('new value', newValue)
+    // console.log('handleChange:', newValue)
     // on deletion of keyword tag
     if (newValue && newValue.map) {
       setState(s => ({
@@ -88,41 +78,65 @@ const KeywordDropdownInput = (props: ReactProps) => {
     }
   };
 
-  const handleCreate = (inputValue: any) => {
-
-    if (props.limit.count >= props.limit.max) {
-      console.log("tag limit reached!: ", props.limit)
-      return
-    }
+  const handleCreate = (inputValue: string[]) => {
 
     const { options, value } = state;
-    const newOption = createOption(inputValue);
+    let newOptions = Array.from(new Set(inputValue))
+        .map(v => createOption(v))
+        .filter(newOption => {
+          if (
+            options &&
+            options.some &&
+            options.some(o => o.label === newOption.label)
+          ) {
+            snackbar.enqueueSnackbar(
+              `Tag '${newOption.label}' already exists`,
+              { variant: "error" }
+            )
+            return false
+          } else {
+            return true
+          }
+        })
 
-    if (
-      options &&
-      options.some &&
-      options.some(o => o.label === newOption.label)
-    ) {
-      setDisplayErr(`Tag '${newOption.label}' already exists`)
+    if (newOptions.length < 1) {
       return
     }
+
+    // console.log("tag limit: ", props.limit)
+    if (props.limit.count + newOptions.length >= props.limit.max) {
+      // incoming tags breach max tag limit, show warning to user
+      // as we will truncate tags that exceed the limit
+      snackbar.enqueueSnackbar(
+        `Tag limit of ${props.limit.max} reached!`,
+        { variant: "error" }
+      )
+    }
+    if (props.limit.count >= props.limit.max) {
+      // existing tag count is already at limit, return early.
+      return
+    }
+
+    let limMax = props.limit.max || 10;
 
     if (typeof value === "object" && (value && !!value.map)) {
       setState({
         inputValue: "",
-        options: [...options, newOption],
-        value: [...value, newOption]
+        options: [...options, ...newOptions].slice(0, limMax),
+        value: [...value, ...newOptions].slice(0, limMax),
       });
-      props.setTags([ ...options, newOption ])
+      props.setTags([ ...options, ...newOptions ].slice(0, limMax))
     } else {
       setState({
         inputValue: "",
-        options: [newOption],
-        value: [newOption]
+        options: [...newOptions].slice(0, limMax),
+        value: [...newOptions].slice(0, limMax),
       });
-      props.setTags([ newOption ])
+      props.setTags([ newOptions ].slice(0, limMax))
     }
   };
+
+  /////////////////////////////
 
   const {
     options,
@@ -150,7 +164,16 @@ const KeywordDropdownInput = (props: ReactProps) => {
         inputValue={state.inputValue}
         onKeyDown={throttle(onKeyDown, 32)}
         onChange={throttle(handleChange, 32)}
-        onCreateOption={throttle(handleCreate, 32)}
+        onInputChange={throttle((inputValue) => {
+          // logic for splitting on comma, and finding matching options
+          if (inputValue && inputValue.includes(",")) {
+            let inputValues = inputValue.split(',')
+            handleCreate(inputValues)
+          } else if (inputValue !== undefined) {
+            // inputValue === "" after select+all delete
+            setState(s => ({ ...s, inputValue: inputValue }));
+          }
+        }, 32)}
         options={options}
         value={value}
         components={{
@@ -160,9 +183,8 @@ const KeywordDropdownInput = (props: ReactProps) => {
         }}
         className={classes.optionValues}
         classes={{
-          input: classes.input,
-          root: clsx(
-            classes.textFieldContainer,
+          input: clsx(
+            classes.input,
             errorInputColor === "red" ? classes.errorInput : null,
             errorInputColor === "grey" ? classes.errorInputUntouched : null,
           ),
@@ -170,7 +192,7 @@ const KeywordDropdownInput = (props: ReactProps) => {
         }}
         theme={theme => ({
           ...theme,
-          borderRadius: 4,
+          borderRadius: BorderRadius,
           colors: {
             ...theme.colors,
             primary25: Colors.lightPurple,
@@ -198,14 +220,6 @@ const KeywordDropdownInput = (props: ReactProps) => {
         focused={focused}
         errorMessage={errorMessage}
         disableInitialValidationMessage={disableInitialValidationMessage}
-      />
-
-      <SnackBarA
-        open={!!displayErr}
-        closeSnackbar={() => setDisplayErr("")}
-        message={displayErr}
-        variant={"info"}
-        autoHideDuration={4000}
       />
 
       {

@@ -20,10 +20,10 @@ const Logo = (props: LogoProps) => {
       <svg width="200px" height="60px" viewBox="0 0 200 60">
         <g id="Page-1" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd" fontFamily="Helvetica" fontSize="36px" fontWeight="normal">
           <text id="marketplace" fill="#4A90E2">
-            <tspan x="-2" y="50">marketplace</tspan>
+            <tspan x="-2" y="50">Marketplace</tspan>
           </text>
           <text id="gun" fill="#191919">
-            <tspan x="-1" y="20">gun</tspan>
+            <tspan x="-1" y="20">Gun</tspan>
           </text>
         </g>
       </svg>
@@ -58,8 +58,9 @@ const styles = (theme: Theme) => createStyles({
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
-    height: 32,
+    height: 60,
     width: 80,
+    marginTop: '1.5rem',
   },
   logoText: {
     fontWeight: 300

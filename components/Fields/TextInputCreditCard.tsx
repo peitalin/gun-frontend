@@ -159,12 +159,12 @@ const TextInputCreditCard = (props: ReactProps) => {
         classes={{
           input: (!isCardValid && props.value.length === cardMaxDigits)
             || (!isCardValid && !focused && props.value.length > 0)
-            ? clsx(classes.input, classes.creditCardInput, classes.invalidInput)
-            : clsx(classes.input, classes.creditCardInput),
+            ? clsx(classes.inputCC, classes.creditCardInput, classes.invalidInput)
+            : clsx(classes.inputCC, classes.creditCardInput),
           // 3x 4 digits, plus space
           root: clsx(
-            classes.textFieldContainer,
-            focused && classes.textFieldContainerFocused,
+            classes.textFieldContainerCC,
+            focused && classes.textFieldContainerCCFocused,
             errorInputColor === "red" ? classes.errorInput : null,
             errorInputColor === "grey" ? classes.errorInputUntouched : null,
           ),
