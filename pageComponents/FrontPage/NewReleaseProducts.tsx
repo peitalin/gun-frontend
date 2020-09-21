@@ -11,6 +11,7 @@ import Typography from "@material-ui/core/Typography";
 import PreviewCardResponsive from "pageComponents/FrontPage/PreviewCardResponsiveCarousel";
 import PreviewCardLoading from "./PreviewCardLoading";
 import LoadingCards from "./LoadingCards";
+import Loading from "components/Loading";
 // Graphql Typings
 import { ProductsConnection, Order_By, ConnectionOffsetQuery } from "typings/gqlTypes";
 // useMediaQuery
@@ -20,7 +21,12 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useQuery, useApolloClient } from "@apollo/client";
 import { GET_ALL_PRODUCTS } from "queries/gun-queries";
 // Select Component
-import DropdownInput from "components/Fields/DropdownInput";
+// import DropdownInput from "components/Fields/DropdownInput";
+import dynamic from "next/dynamic";
+const DropdownInput = dynamic(() => import("components/Fields/DropdownInput"), {
+  loading: (props) => <Loading/>,
+  ssr: false,
+});
 // MUI
 import SearchIcon from '@material-ui/icons/Search';
 import ClearIcon from '@material-ui/icons/Clear';
@@ -101,63 +107,63 @@ const NewReleaseProducts = (props: ReactProps) => {
       </div>
 
       <div className={clsx(classes.flexRowFlexEnd, classes.maxWidth100vw)}>
-          <Typography variant="subtitle1"
-            className={classes.subtitle}
-            gutterBottom
-          >
-            Search:
-          </Typography>
-          <div className={clsx(classes.searchbar)}>
-              <InputBase
-                value={searchTermUi}
-                placeholder="Search for products…"
-                inputRef={inputRefEl}
-                classes={{
-                  root: classes.inputRoot,
-                  input: classes.inputInput,
-                }}
-                onBlur={
-                  () => setTimeout(() => {
-                    // setExpand(false)
-                    // setSearchTerm("");
-                    // props.setHideMenuItems(false)
-                    // props.setMobileMenuOpen(s => false)
-                  }, 100)
-                  // 100ms animation before unmount
-                  // delay to dispatch search before setExpand(false)
-                }
-                onChange={(e) => {
-                  setSearchTermUi(e.target.value);
-                  setTimeout(() => {
-                    debounceUpdateSearchTerm(searchTermUi)
-                  }, 0)
-                }}
-                // onKeyPress={event => {
-                //   if (event.key === "Enter") {
-                //     // router.push(`/search?q=${encodeURIComponent(value)}`)
-                //     // setSearchTermUi("");
-                //     debounceUpdateSearchTerm(searchTermUi)
-                //   }
-                // }}
-              />
-          </div>
-          <DropdownInput
-            className={classes.orderByDropdown}
-            stateShape={
-              orderByOptions[0]
-              // initial stateShape
-              // { label: "Design Templates", value: "category_123123"}
-            }
-            onChange={({ label, value }: SelectOption) =>
-              setTimeout(() => {
-                setOrderBy({ label, value })
-              }, 0)
-              // let UI update first for menu to close
-            }
-            options={orderByOptions}
-            placeholder={"Select a category"}
-            // className={classes.optionValues}
-          />
+        <Typography variant="subtitle1"
+          className={classes.subtitle}
+          gutterBottom
+        >
+          Search:
+        </Typography>
+        <div className={clsx(classes.searchbar)}>
+            <InputBase
+              value={searchTermUi}
+              placeholder="Search for products…"
+              inputRef={inputRefEl}
+              classes={{
+                root: classes.inputRoot,
+                input: classes.inputInput,
+              }}
+              onBlur={
+                () => setTimeout(() => {
+                  // setExpand(false)
+                  // setSearchTerm("");
+                  // props.setHideMenuItems(false)
+                  // props.setMobileMenuOpen(s => false)
+                }, 100)
+                // 100ms animation before unmount
+                // delay to dispatch search before setExpand(false)
+              }
+              onChange={(e) => {
+                setSearchTermUi(e.target.value);
+                setTimeout(() => {
+                  debounceUpdateSearchTerm(searchTermUi)
+                }, 0)
+              }}
+              // onKeyPress={event => {
+              //   if (event.key === "Enter") {
+              //     // router.push(`/search?q=${encodeURIComponent(value)}`)
+              //     // setSearchTermUi("");
+              //     debounceUpdateSearchTerm(searchTermUi)
+              //   }
+              // }}
+            />
+        </div>
+        <DropdownInput
+          className={classes.orderByDropdown}
+          stateShape={
+            orderByOptions[0]
+            // initial stateShape
+            // { label: "Design Templates", value: "category_123123"}
+          }
+          onChange={({ label, value }: SelectOption) =>
+            setTimeout(() => {
+              setOrderBy({ label, value })
+            }, 0)
+            // let UI update first for menu to close
+          }
+          options={orderByOptions}
+          placeholder={"Select a category"}
+          // className={classes.optionValues}
+        />
       </div>
 
 
@@ -167,33 +173,36 @@ const NewReleaseProducts = (props: ReactProps) => {
         smDown ? classes.paddingRight : null,
       )}>
         {
-          (option(products).edges([]).length > 0)
-          ? products.edges.map(({ node: product }, i) =>
-              <div key={product.id}
-                className={
-                  xsDown
-                  ? classes.productImageXs
-                  : sm
-                    ? classes.productImageSm
-                    : classes.productImage
-                }
-              >
-                <div className={clsx(
-                  smDown ? classes.flexItemMobile : classes.flexItem,
-                  classes.flexItemHover,
-                )}>
-                  <PreviewCardResponsive
-                    product={product}
-                    refetch={undefined}
-                    listName={"new-release-list"}
-                    loadCarouselPics={loadCarouselPics}
-                    setLoadCarouselPics={setLoadCarouselPics}
-                    productIndex={i}
-                  />
+          (option(products).edges([]).length === 0)
+          ? <LoadingCards count={8} />
+          : products.edges.map(({ node: product }, i) => {
+              // console.log("p: ",product)
+              return (
+                <div key={product.id}
+                  className={
+                    xsDown
+                    ? classes.productImageXs
+                    : sm
+                      ? classes.productImageSm
+                      : classes.productImage
+                  }
+                >
+                  <div className={clsx(
+                    smDown ? classes.flexItemMobile : classes.flexItem,
+                    classes.flexItemHover,
+                  )}>
+                    <PreviewCardResponsive
+                      product={product}
+                      refetch={undefined}
+                      listName={"new-release-list"}
+                      loadCarouselPics={loadCarouselPics}
+                      setLoadCarouselPics={setLoadCarouselPics}
+                      productIndex={i}
+                    />
+                  </div>
                 </div>
-              </div>
-            )
-          : <LoadingCards count={8} />
+              )
+          })
         }
       </div>
     </main>
