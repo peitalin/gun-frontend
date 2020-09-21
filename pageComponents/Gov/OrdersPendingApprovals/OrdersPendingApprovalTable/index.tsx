@@ -55,21 +55,29 @@ const OrdersPendingApprovalTable: NextPage<ReactProps> = (props) => {
   const asTime = (d: Date) => dayjs(d).format("YYYY-MM-DD HH:mm:ss")
   const [count, setCount] = React.useState(10);
 
-  const [ordersC_Limit, setOrdersC_Limit] = React.useState(10);
-  const [ordersC_Offset, setOrdersC_Offset] = React.useState(0);
+  const [itemsPerPage, setItemsPerPage] = React.useState(10);
 
-  const [ordersPA_Limit, setOrdersPA_Limit] = React.useState(10);
-  const [ordersPA_Offset, setOrdersPA_Offset] = React.useState(0);
+  const [ordersC, setOrdersC] = React.useState({
+    limit: itemsPerPage,
+    offset: 0,
+  });
 
-  const [ordersAA_Limit, setOrdersAA_Limit] = React.useState(10);
-  const [ordersAA_Offset, setOrdersAA_Offset] = React.useState(0);
+  const [ordersPA, setOrdersPA] = React.useState({
+    limit: itemsPerPage,
+    offset: 0,
+  });
+
+  const [ordersAA, setOrdersAA] = React.useState({
+    limit: itemsPerPage,
+    offset: 0,
+  });
 
 
   const _ordersCreated = useQuery<QueryData, QueryVar>(
     GET_ORDERS_CREATED_CONNECTION , {
       variables: {
-        limit: ordersC_Limit,
-        offset: ordersC_Offset,
+        limit: ordersC.limit,
+        offset: ordersC.offset,
       },
       fetchPolicy: "network-only",
     }
@@ -78,8 +86,8 @@ const OrdersPendingApprovalTable: NextPage<ReactProps> = (props) => {
   const _ordersPendingApproval = useQuery<QueryData, QueryVar>(
     GET_ORDERS_PENDING_APPROVAL_CONNECTION , {
       variables: {
-        limit: ordersPA_Limit,
-        offset: ordersPA_Offset,
+        limit: ordersPA.limit,
+        offset: ordersPA.offset,
       },
       fetchPolicy: "network-only",
     }
@@ -88,8 +96,8 @@ const OrdersPendingApprovalTable: NextPage<ReactProps> = (props) => {
   const _ordersAdminApproved = useQuery<QueryData, QueryVar>(
     GET_ORDERS_ADMIN_APPROVED_CONNECTION , {
       variables: {
-        limit: ordersAA_Limit,
-        offset: ordersAA_Offset,
+        limit: ordersAA.limit,
+        offset: ordersAA.offset,
       },
       fetchPolicy: "network-only",
     }
@@ -99,46 +107,27 @@ const OrdersPendingApprovalTable: NextPage<ReactProps> = (props) => {
     {
       query: GET_ORDERS_CREATED_CONNECTION,
       variables: {
-        limit: ordersC_Limit,
-        offset: ordersC_Offset,
+        limit: ordersC.limit,
+        offset: ordersC.offset,
       },
     },
     {
       query: GET_ORDERS_PENDING_APPROVAL_CONNECTION,
       variables: {
-        limit: ordersPA_Limit,
-        offset: ordersPA_Offset,
+        limit: ordersPA.limit,
+        offset: ordersPA.offset,
       },
     },
     {
       query: GET_ORDERS_ADMIN_APPROVED_CONNECTION ,
       variables: {
-        limit: ordersAA_Limit,
-        offset: ordersAA_Offset,
+        limit: ordersAA.limit,
+        offset: ordersAA.offset,
       },
     },
 
   ]
 
-  // const initialConnectionState: PayoutItemsPagedConnection = {
-  //   edges: [],
-  //   pageInfo: {
-  //     isLastPage: false,
-  //     pageNumber: 1,
-  //     totalPages: 1,
-  //   },
-  //   totalCount: 0,
-  //   totalAmount: 0,
-  // };
-
-  // // accumulate connection results as you scroll down.
-  // const [
-  //   accumConnection,
-  //   setAccumConnection
-  // ] = React.useState(initialConnectionState);
-
-  // const connection = option(data).getOrdersPendingApprovalConnectionAdmin();
-  // const orders = option(connection).edges([]);
 
   const ordersCreated = option(_ordersCreated).data.orders([])
     .filter(o => o.orderSnapshots.length)
@@ -152,48 +141,6 @@ const OrdersPendingApprovalTable: NextPage<ReactProps> = (props) => {
 
   console.log("refetch queries params", refetchQueriesParams)
 
-  // React.useEffect(() => {
-  //   if (option(connection).edges()) {
-
-  //     let updatedEdges = [
-  //       ...accumConnection.edges,
-  //       ...connection.edges.filter(e =>
-  //         !accumConnection.edges.find(s => s.node.id === e.node.id)
-  //       )
-  //     ];
-
-  //     setAccumConnection(s => {
-  //       return {
-  //         ...connection,
-  //         edges: updatedEdges
-  //       }
-  //     })
-  //   }
-  // }, [option(connection).edges()])
-
-  // // reset accumulated results if month or year changes
-  // React.useEffect(() => {
-  //   if (option(connection).edges()) {
-
-  //     let newEdges = [
-  //       ...connection.edges.filter(e =>
-  //         !accumConnection.edges.find(s => s.node.id === e.node.id)
-  //       )
-  //     ];
-
-  //     setAccumConnection(s => {
-  //       return {
-  //         ...connection,
-  //         edges: newEdges
-  //       }
-  //     })
-  //   }
-  // }, [month, year])
-
-  // // tunnel refetch up for other tabsl to refetch payout items
-  // React.useEffect(() => {
-  //   props.setRefetchPayoutItems(refetch)
-  // }, [refetch])
 
   if (_ordersAdminApproved.loading || _ordersPendingApproval.loading) {
     return (
@@ -208,7 +155,7 @@ const OrdersPendingApprovalTable: NextPage<ReactProps> = (props) => {
   } else if (_ordersPendingApproval && _ordersAdminApproved) {
     return (
       <main className={classes.root}>
-        <Typography color={"primary"} variant="h4" gutterBottom>
+        <Typography variant="h4" className={classes.subtitle1}>
           Created Orders
         </Typography>
         <DataTableOrdersPending
@@ -216,21 +163,28 @@ const OrdersPendingApprovalTable: NextPage<ReactProps> = (props) => {
           rows={ordersCreated as any[]}
           getNextPage={() => {
             // getPage(connectionQuery.page.pageNumber + 1)
+            setOrdersC(s => ({
+              limit: s.limit,
+              offset: s.offset + itemsPerPage,
+            }))
           }}
           getPrevPage={() => {
-            // getPage(connectionQuery.page.pageNumber - 1)
+            setOrdersC(s => ({
+              limit: s.limit,
+              offset: s.offset - itemsPerPage,
+            }))
           }}
           // getPage={(pageNumber: number) => getPage(pageNumber)}
           setCount={setCount}
           totalCount={0}
         />
 
-        <Typography color={"primary"} variant="h4" gutterBottom>
+        <Typography variant="h4" className={classes.subtitle1}>
           Orders Pending Approval
         </Typography>
         <DataTableOrdersPending
           admin={props.admin}
-          rows={ordersPendingApproval as any[]}
+          rows={ordersPendingApproval}
           getNextPage={() => {
             // getPage(connectionQuery.page.pageNumber + 1)
           }}
@@ -242,12 +196,12 @@ const OrdersPendingApprovalTable: NextPage<ReactProps> = (props) => {
           totalCount={0}
           refetchQueriesParams={refetchQueriesParams}
         />
-        <Typography color={"primary"} variant="h4" gutterBottom>
+        <Typography variant="h4" className={classes.subtitle1}>
           Admin Approved Orders
         </Typography>
         <DataTableOrdersPending
           admin={props.admin}
-          rows={ordersAdminApproved as any[]}
+          rows={ordersAdminApproved}
           getNextPage={() => {
             // getPage(connectionQuery.page.pageNumber + 1)
           }}
@@ -334,6 +288,11 @@ const styles = (theme: Theme) => createStyles({
   },
   createPayoutsButton: {
     height: 40,
+  },
+  subtitle1: {
+    color: Colors.black,
+    marginTop: '2rem',
+    marginBottom: '0.5rem',
   },
 });
 

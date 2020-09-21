@@ -81,19 +81,21 @@ const DataTableOrdersPending = (
               </TableHead>
               <TableBody>
                 {
-                  rows
-                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((order, index) => {
+                  rows.map((order, index) => {
+
+                    console.log("order: ", order.payoutItems)
 
                     const row2 = createData({
                       id: order.id,
                       total: order.total,
                       createdAt: order.createdAt,
-                      seller: order.seller,
+                      seller: order.seller as any,
                       buyer: order.buyer,
                       currentOrderSnapshot: order.currentSnapshot,
                       orderSnapshots: order.orderSnapshots,
                       product: order.product,
+                      payoutId: order?.payoutItems?.[0]?.payoutId,
+                      payoutStatus: order?.payoutItems?.[0]?.payoutStatus,
                     })
 
                     return (

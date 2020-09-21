@@ -3,6 +3,7 @@ import {
   Orders,
   Products,
   User,
+  StorePublic,
   OrderStatus,
 } from "typings/gqlTypes";
 import { oc as option } from "ts-optchain";
@@ -17,22 +18,26 @@ export const createData = ({
   orderSnapshots,
   product,
   currentOrderSnapshot,
+  payoutId,
+  payoutStatus,
 }: {
   id: string,
   createdAt: Date,
   total: number,
-  seller: User,
+  seller: StorePublic,
   buyer: User,
   currentOrderSnapshot: Order_Snapshots,
   orderSnapshots?: Order_Snapshots[]
   product?: Products,
+  payoutId?: string,
+  payoutStatus?: string,
 }) => {
 
   return {
     id: id,
     createdAt: createdAt,
     total: total,
-    orderStatus: currentOrderSnapshot.orderStatus,
+    orderStatus: option(currentOrderSnapshot).orderStatus(),
     form10: option(currentOrderSnapshot).form10Image(),
     seller: seller,
     product: product,
@@ -54,17 +59,19 @@ export const createData = ({
           orderStatus: option(o).orderStatus(),
           form10Image: option(o).form10Image(),
         }
-      })
+      }),
+    payoutId: payoutId,
+    payoutStatus: payoutStatus,
   };
 }
 
 const getUserWhoActionedOrderStatus = (
   orderSnapshot: Order_Snapshots,
   buyer: User,
-  seller: User,
+  seller: StorePublic,
 ): User => {
 
-  let orderStatus = orderSnapshot.orderStatus;
+  let orderStatus = option(orderSnapshot).orderStatus();
 
   switch (orderStatus) {
     case OrderStatus.CREATED:  {
@@ -77,7 +84,7 @@ const getUserWhoActionedOrderStatus = (
       return buyer
     }
     case OrderStatus.FORM_10_SUBMITTED:  {
-      return seller
+      return option(seller).user()
     }
     case OrderStatus.ADMIN_APPROVED:  {
       return orderSnapshot.adminApprover
