@@ -56,7 +56,6 @@ export const initialProductCreateState: ReduxStateProductCreate = {
       }
     ],
     isPublished: false,
-    isQuantityEnabled: false,
   },
   previewItems: [],
   dzuPreviewOrder: [],

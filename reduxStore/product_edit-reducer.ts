@@ -57,7 +57,6 @@ const initialProductEditState: ReduxStateProductEdit = {
       }
     ],
     isPublished: false,
-    isQuantityEnabled: false,
   },
   previewItems: [],
   dzuPreviewOrder: [],
