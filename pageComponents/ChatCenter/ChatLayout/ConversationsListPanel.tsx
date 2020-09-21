@@ -18,21 +18,10 @@ import Typography from '@material-ui/core/Typography';
 import MenuItem from '@material-ui/core/MenuItem';
 import Divider from '@material-ui/core/Divider';
 import PermIdentityIcon from '@material-ui/icons/PermIdentity';
+import { FETCH_ONLINE_USERS_SUBSCRIPTION } from "queries/chat-subscriptions";
 
 
 
-const FETCH_ONLINE_USERS_SUBSCRIPTION = gql`
-  subscription {
-    users_online (
-      order_by: {lastSeen:asc}
-    ) {
-      id
-      firstName
-      lastName
-      email
-    }
-  }
-`;
 
 
 const ConversationsListPanel: React.FC<ReactProps> = (props) => {

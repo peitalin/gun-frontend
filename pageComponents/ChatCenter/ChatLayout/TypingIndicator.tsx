@@ -8,23 +8,7 @@ import Typography from "@material-ui/core/Typography";
 import { useSubscription } from '@apollo/client';
 import { Users_Typing } from "typings/gqlTypes";
 import gql from 'graphql-tag';
-
-
-const GET_USER_TYPING = gql`
-  subscription ($selfId: String) {
-    users_typing (
-      where: { id: { _neq: $selfId } },
-      limit: 2
-      order_by: {lastTyped:desc}
-    ){
-      lastTyped
-      id
-      firstName
-      lastName
-      email
-    }
-  }
-`;
+import { GET_USER_TYPING } from "queries/chat-subscriptions";
 
 
 const  TypingIndicator: React.FC<ReactProps> = (props) => {

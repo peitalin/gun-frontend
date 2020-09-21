@@ -11,23 +11,10 @@ import { showDateAndTime } from "utils/dates";
 import ButtonLoading from "components/ButtonLoading";
 import { gql } from "@apollo/client";
 import { useMutation, useApolloClient } from "@apollo/client";
+import { UPDATE_BID_MESSAGE } from "queries/chat-mutations";
 
 
 
-
-const UPDATE_BID_MESSAGE = gql`
-  mutation updateBids(
-    $bidId: String!
-    $bidStatus: String!
-  ) {
-    update_bids(
-      where: {id: {_eq: $bidId}},
-      _set: {bidStatus: $bidStatus}
-    ) {
-      affected_rows
-    }
-  }
-`;
 
 
 

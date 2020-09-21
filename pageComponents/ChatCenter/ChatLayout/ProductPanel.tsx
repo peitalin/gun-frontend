@@ -6,7 +6,7 @@ import clsx from "clsx";
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
 
 import { useMutation } from '@apollo/client';
-import { UPDATE_CHAT_STATUS } from "queries/chat-subscriptions";
+import { UPDATE_CHAT_STATUS } from "queries/chat-mutations";
 import { Chat_Rooms, Chat_Users, ProductPreviewItem } from "typings/gqlTypes";
 // import moment from 'moment';
 import dayjs from 'dayjs'

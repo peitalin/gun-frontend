@@ -24,106 +24,14 @@ const ID_ALPHABET = "123456789bcdfghjklmnpqrstvwxyz";
 const ID_LENGTH = 8;
 const nanoid = customAlphabet(ID_ALPHABET, ID_LENGTH)
 
+import {
+  INSERT_BID_MESSAGE,
+  INSERT_MESSAGE,
+  EMIT_TYPING_EVENT,
+} from "queries/chat-mutations";
 
 
-const INSERT_MESSAGE = gql`
-  mutation sendChatMessage(
-    $msgId: String!
-    $chatRoomId: String!
-    $senderId: String!
-    $content: String!
-    $previewItemId: String
-  ) {
-    insert_chat_messages(objects: [{
-      id: $msgId,
-      chatRoomId: $chatRoomId,
-      content: $content,
-      senderId: $senderId,
-      previewItemId: $previewItemId
-    }]) {
-      affected_rows
-      returning {
-        id
-        sender {
-          id
-          firstName
-          lastName
-          email
-        }
-        content
-      }
-    }
-  }
-`;
 
-const INSERT_BID_MESSAGE = gql`
-  mutation sendBidMessage(
-    $msgId: String!
-    $chatRoomId: String!
-    $senderId: String!
-    $content: String!
-    $bidId: String!
-    $productId: String!
-    $productSnapshotId: String!
-    $variantId: String!
-    $variantSnapshotId: String!
-    $offerPrice: Int!
-    $bidStatus: String!
-  ) {
-    insert_chat_messages(objects: [{
-      id: $msgId,
-      chatRoomId: $chatRoomId,
-      content: $content,
-      senderId: $senderId,
-      bidId: $bidId,
-    }]) {
-      affected_rows
-    }
-
-    insert_bids(objects: [{
-      id: $bidId,
-      productId: $productId,
-      productSnapshotId: $productSnapshotId,
-      variantId: $variantId,
-      variantSnapshotId: $variantSnapshotId,
-      offerPrice: $offerPrice,
-      bidStatus: $bidStatus
-    }]) {
-      affected_rows
-    }
-  }
-`;
-
-
-const UPDATE_BID_MESSAGE = gql`
-  mutation updateBid(
-    $bidStatus: String!
-  ) {
-
-    update_bids(objects: [{
-      id: $bidId,
-      offerPrice: $offerPrice,
-      bidStatus: $bidStatus
-    }]) {
-      affected_rows
-    }
-  }
-`;
-
-
-const EMIT_TYPING_EVENT = gql`
-  mutation update_users ($senderId: String!) {
-    update_users (
-      _set: { lastTyped: "now()" }
-      where: { id: { _eq: $senderId } }
-    ) {
-      affected_rows
-      returning {
-        id
-      }
-    }
-  }
-`;
 
 export const Textbox: React.FC<ReactProps> = (props) => {
 
