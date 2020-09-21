@@ -29,7 +29,7 @@ export const validationSchemas = {
       title: Yup.string()
         .min(minLengthProductName, `Title must be longer than ${minLengthTitle} chars`)
         .max(maxLengthProductName, `title can't be longer than ${maxLengthTitle} chars`)
-        .required('Title is requried'),
+        .required('Title is required'),
       description: Yup.string()
         .required('Needs a description')
         .max(maxLengthProductDescription)
