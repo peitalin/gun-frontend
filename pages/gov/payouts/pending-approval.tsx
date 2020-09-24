@@ -2,19 +2,10 @@ import React from "react";
 import { oc as option } from "ts-optchain";
 // styles
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
-// Utils Components
-import ErrorBounds from 'components/ErrorBounds';
-import Loading from "components/Loading";
 // SSR
 import { NextPage, NextPageContext } from 'next';
 // GraphQL
 import { serverApolloClient } from "utils/apollo";
-import ChatCenter from "pageComponents/ChatCenter";
-// Redux
-import { useSelector } from 'react-redux';
-import { GrandReduxState } from 'reduxStore/grand-reducer';
-import { UserPrivate } from "typings/gqlTypes";
-import gql from 'graphql-tag'
 import { useApolloClient, ApolloClient } from "@apollo/client";
 import LoadingBarSSR from "components/LoadingBarSSR";
 // SSR disable
@@ -24,23 +15,22 @@ const AdminProfileWrapper = dynamic(() => import("layout/GetUser/AdminProfileWra
   loading: () => <LoadingBarSSR/>,
   ssr: false,
 })
+import PayoutsPendingApprovals from "pageComponents/Gov/PayoutsPendingApprovals";
 
 
 
-const GovPayoutsPage: NextPage<ReactProps> = (props) => {
-
-  const apolloClient = useApolloClient()
-  const user = useSelector<GrandReduxState, UserPrivate>(
-    state => state.reduxLogin.user
-  );
-  const userId = option(user).id()
-
+const PendingApprovalsPage: NextPage<ReactProps> = (props) => {
   return (
-    <AdminProfileWrapper>
+    <AdminProfileWrapper
+      disablePadding
+      disableAdminBorder
+    >
       {({ data, loading, error }: AdminProfileProps) => {
         return (
-          <div>
-            Payout history Page
+          <div className={props.classes.GovApprovalsRoot}>
+            <PayoutsPendingApprovals
+              admin={data.user}
+            />
           </div>
         )
       }}
@@ -50,7 +40,9 @@ const GovPayoutsPage: NextPage<ReactProps> = (props) => {
 
 
 const styles = (theme: Theme) => createStyles({
-  root: {},
+  GovApprovalsRoot: {
+    marginTop: '2rem',
+  },
 })
 
 ///////////////// TYPINGS ///////////////////
@@ -62,7 +54,7 @@ interface Context extends NextPageContext {
   apolloClient: ApolloClient<any>;
 }
 
-GovPayoutsPage.getInitialProps = async (ctx: Context) => {
+PendingApprovalsPage.getInitialProps = async (ctx: Context) => {
 
   // Will trigger this getInitialProps when requesting route /pages/ProductGallery
   // otherwise initialProps may be fed via /pages/index.tsx's getInitialProps
@@ -95,7 +87,7 @@ GovPayoutsPage.getInitialProps = async (ctx: Context) => {
 }
 
 
-export default withStyles(styles)( GovPayoutsPage );
+export default withStyles(styles)( PendingApprovalsPage );
 
 
 
