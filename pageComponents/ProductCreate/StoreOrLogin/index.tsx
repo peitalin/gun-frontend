@@ -13,7 +13,7 @@ import Button from "@material-ui/core/Button";
 import Login from "layout/Login";
 import SellerProfile from "./SellerProfile";
 import Divider from "components/Divider";
-import AddSellerProfileModalButton from "pageComponents/BecomeASeller/AddSellerProfileModalButton";
+import AddSellerProfileModalButton from "pageComponents/StoreCreation/AddSellerProfileModalButton";
 // Redux
 import { useDispatch, useSelector } from "react-redux";
 // Typings
