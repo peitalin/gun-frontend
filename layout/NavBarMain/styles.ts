@@ -307,7 +307,7 @@ export const styles = (theme: Theme) => createStyles({
 
   // News Bar
   newsBar: {
-    backgroundColor: Colors.black,
+    backgroundColor: Colors.blueDarkNavy,
     height: '1.5rem',
     zIndex: 5,
   },

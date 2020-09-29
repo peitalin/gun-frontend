@@ -107,7 +107,7 @@ export const UserMenu: React.FC<ReactProps> = (props) => {
           {
             user.userRole === Role.PLATFORM_ADMIN &&
             <MenuItem onClick={handleCloseMenu}>
-              <Link href="/gov/approvals">
+              <Link href="/gov/payouts/pending-approval">
                 <a className={classes.menuLink}>
                   <LibraryBooks className={classes.menuIcon}/>
                   <span className={classes.menuText}> Governance Dashboard</span>

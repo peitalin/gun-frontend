@@ -157,13 +157,13 @@ const styles = (theme: Theme) => createStyles({
     maxWidth: '100%',
   },
   flexJustify: {
-    position: 'relative',
     display: 'flex',
     flexDirection: "row",
     justifyContent: "center",
     backgroundColor: Colors.backgroundColor,
   },
   sellerPageContainer: {
+    position: 'relative',
     minHeight: `calc(100vh - ${NavBarHeight}px)`,
     maxWidth: 1200,
     width: '100%',
@@ -178,6 +178,7 @@ const styles = (theme: Theme) => createStyles({
     flexWrap: 'wrap',
   },
   govPageContainer: {
+    position: 'relative',
     minHeight: `calc(100vh - ${NavBarHeight}px)`,
     maxWidth: 1200,
     width: '100%',

@@ -3,67 +3,71 @@ import { createMuiTheme, fade } from '@material-ui/core/styles';
 import { createStyles, Theme } from '@material-ui/core/styles';
 import TouchRipple from '@material-ui/core/ButtonBase/TouchRipple';
 
-
-/// bright red
-// const secondary = "#EB466D"
-
-// pale red
-// const secondary = "#DB3748"
-
-// blue
+// Ultramarine blue
 const secondary = "#2484FF"
 
-// green
-// const secondary = "#65BF93"
-
 export const Colors = {
-  backgroundColor: "#f4f4f4",
-  foregroundColor: "#fefefe",
-  white: "#fefefe",
-  cream: "#fafafa",
-  darkWhite: "#F7F7F7",
+  secondary: secondary,
+  secondaryBright: fade(secondary, 0.9),
+  primary: "#191919",
+  // steel blue grey
   slateGrey: "#EDF0F2",
   slateGreyDark: "#E2E8ED",
   slateGreyDarker: "#D0D5DF",
   slateGreyDarkest: "#4A6476",
   slateGreyBlack: "#253848",
-  secondary: secondary,
-  secondaryBright: fade(secondary, 0.9),
-  magenta: "#EB466D",
-  purple: "#9991DB",
-  lightPurple: "#B8B3E9",
-  primary: "#191919",
+  // greyscale
+  backgroundColor: "#f4f4f4",
+  foregroundColor: "#fefefe",
+  white: "#fefefe",
+  cream: "#fafafa",
+  darkWhite: "#F7F7F7",
   lightestGrey: "#f4f4f4",
+  lighterGrey: "#eeeeee",
   lightGrey: "#e8e8e8",
-  mediumGrey: "#ccc",
-  lightMediumGrey: "#bbb",
   mediumLightGrey: "#dadbdd", // Description Input grey, Fiverr grey lines
+  mediumGrey: "#ccc",
   ghostGrey: "#bbb",
+  dropDownGrey: "rgba(152,152,152,0.1)",
+  dropDownGreyHover: "rgba(152,152,152,0.15)",
   grey: "#aaa",
   darkerGrey: "#888",
   darkGrey55: "#555555",
   darkGrey: "#767676",
   charcoal: "#484848",
   lighterBlack: "#333333",
+  mediumBlack: "#252525",
+  black1A: "#1A1A1A",
   black: "#111111",
   pitchBlack: "#000000",
+  // purples
+  magenta: "#EB466D",
+  purple: "#9991DB",
+  lightPurple: "#B8B3E9",
+  // red
   darkestRed: '#6A1617',
   darkerRed: '#7A1F27',
   darkRed: '#87212B',
   deepRed: "#922435",
   red: "#D83748",
   lightRed: "#DC848A",
+  pink: "#DC848B",
+  // green
   green: "#57BC7A",
-  // green:'#6CBAA3',
   lightGreen: '#ABEABE',
   greenCool: "#419677",
   greenCoolLight:'#6CBAA3',
+  // blue
   blue: "#1DA1F3",
   lightBlue: '#479FF4',
+  blueLightNavy: "#6087A1",
+  blueMinNavy: "#265371",
+  blueDarkNavy: "#10334C",
+  blueDarkerNavy: "#232830",
+  // yellow
   lightYellow: '#FADD8F',
   paleYellow: "#FCE8A6",
   yellow: '#EDC376',
-  pink: "#DC848B",
   // gradient
   gradientPurple1: '#fbc2eb',
   gradientPurple2: '#a18cd1',
@@ -72,7 +76,6 @@ export const Colors = {
   gradientFlamingo1: '#f093fb',
   gradientFlamingo2: '#f5576c',
 };
-
 
 export const Gradients = {
   gradientPurple:  {
@@ -85,10 +88,25 @@ export const Gradients = {
     color1: Colors.gradientGrey1,
     color2: Colors.gradientGrey2,
   },
+  gradientGrey2:  {
+    background: `linear-gradient(120deg, ${Colors.gradientGrey1} 25%, ${Colors.gradientGrey2} 100%)`,
+    color1: Colors.gradientGrey1,
+    color2: Colors.gradientGrey2,
+  },
   gradientFlamingo:  {
     background: `linear-gradient(120deg, ${Colors.gradientFlamingo1} 0%, ${Colors.gradientFlamingo2} 100%)`,
     color1: Colors.gradientFlamingo1,
     color2: Colors.gradientFlamingo2,
+  },
+  gradientBlack:  {
+    background: `linear-gradient(120deg, ${Colors.lighterBlack} 0%, ${Colors.black} 100%)`,
+    color1: Colors.lighterBlack,
+    color2: Colors.black,
+  },
+  gradientDarkerGrey:  {
+    background: `linear-gradient(120deg, ${Colors.lightGrey} 0%, ${Colors.grey} 100%)`,
+    color1: Colors.lightGrey,
+    color2: Colors.grey,
   },
 }
 
@@ -97,10 +115,16 @@ export const BoxShadows = {
     boxShadow: '0 1px 1px rgba(0,0,0,0.1),0 2px 4px rgba(0,0,0,0.3),0 0 0 1px rgba(0,0,0,0.02)',
   },
   shadow2: {
-    boxShadow: '0 3px 1px rgba(0,0,0,0.1),0 4px 8px rgba(0,0,0,0.3),0 0 0 1px rgba(0,0,0,0.02)',
+    boxShadow: '0 3px 1px rgba(0,0,0,0.1),0 4px 8px rgba(0,0,0,0.2),0 0 0 1px rgba(0,0,0,0.02)',
   },
-  shadowLight: {
-    boxShadow: '0 1px 1px rgba(0,0,0,0.05),0 2px 4px rgba(0,0,0,0.15),0 0 0 1px rgba(0,0,0,0.02)',
+  shadow3: {
+    boxShadow: '0 1px 1px rgba(0,0,0,0.1),0 4px 4px rgba(0,0,0,0.1),0 0 0 1px rgba(0,0,0,0.02)',
+  },
+  shadow4: {
+    boxShadow: "0px 2px 10px 4px rgba(0,0,0,0.1)"
+  },
+  shadowStart: {
+    boxShadow: '0 6px 8px 4px rgba(0,0,0,0.1),0 4px 8px rgba(0,0,0,0.2),0 0 0 1px rgba(0,0,0,0.02)',
   },
 }
 
@@ -119,6 +143,7 @@ export interface Breakpoints {
   lg: number;
   xl: number;
 };
+
 
 export const BorderRadius = 4;
 

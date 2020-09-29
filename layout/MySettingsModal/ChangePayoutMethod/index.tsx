@@ -21,7 +21,7 @@ import ButtonLoading from "components/ButtonLoading";
 import SnackBarA from "components/Snackbars/SnackbarA";
 import SnackbarsSuccessErrors from "components/Snackbars/SnackbarsSuccessErrors";
 // Typings
-import { UserPrivate, PayoutType } from "typings/gqlTypes";
+import { UserPrivate } from "typings/gqlTypes";
 import { HtmlEvent } from "typings";
 // Validation
 import { Formik, FormikProps } from 'formik';
@@ -80,18 +80,20 @@ const ChangePayoutMethod = (props: ReactProps & ReduxProps) => {
     <Formik
       // 1. feed product data to edit into formik state.
       initialValues={{
-        newPayoutEmail: "",
+        newBsb: "",
+        newAccountNumber: "",
+        newAccountName: "",
       }}
-      validationSchema={validationSchemas.ChangePayoutEmail}
+      validationSchema={validationSchemas.ChangePayoutMethod}
       onSubmit={(values, { setSubmitting, resetForm }) => {
         // Dispatch Apollo Mutation after validation
         console.log("formik values:", values)
         setPayoutMethod({
           variables: {
-            payoutType: PayoutType.PAYPAL,
-            payoutEmail: values.newPayoutEmail,
-            payoutProcessor: "PAYPAL",
-            payoutProcessorId: "NA"
+            payoutType: "BANK",
+            bsb: values.newBsb,
+            accountNumber: values.newAccountNumber,
+            accountName: values.newAccountName,
           }
         }).then(r => {
           resetForm()
@@ -146,10 +148,16 @@ const ChangePayoutMethod = (props: ReactProps & ReduxProps) => {
             <div>
               <Typography variant="body1" className={classes.currentEmail}>
                 <span className={classes.boldTitle}>
-                  Current Paypal Email:
+                  Current Bank details:
                 </span>
                 <span className={classes.paypalEmail}>
-                  {option(props).user.payoutMethod.payoutEmail()}
+                  {option(props).user.payoutMethod.bsb()}
+                </span>
+                <span className={classes.paypalEmail}>
+                  {option(props).user.payoutMethod.accountNumber()}
+                </span>
+                <span className={classes.paypalEmail}>
+                  {option(props).user.payoutMethod.accountName()}
                 </span>
               </Typography>
               <div className={clsx(
@@ -159,21 +167,49 @@ const ChangePayoutMethod = (props: ReactProps & ReduxProps) => {
                   : classes.displayNone,
               )}>
                 <Typography variant="body1" className={classes.boldTitle}>
-                  Enter your new Paypal email for payouts:
+                  Enter a new Bank BSB number for payouts:
                 </Typography>
 
                 <TextInput
                   required
-                  placeholder={"Enter a Paypal email"}
+                  placeholder={"Enter a Bank BSB number"}
                   className={classes.textField}
-                  value={values.newPayoutEmail}
+                  value={values.newBsb}
                   onChange={(e) => {
                     console.log("e.target.value", e.target.value)
-                    fprops.setFieldValue("newPayoutEmail", e.target.value)
+                    fprops.setFieldValue("newBsb", e.target.value)
                   }}
                   inputProps={{ style: { width: '100%' }}}
-                  errorMessage={errors.newPayoutEmail}
-                  touched={touched.newPayoutEmail}
+                  errorMessage={errors.newBsb}
+                  touched={touched.newBsb}
+                />
+
+                <TextInput
+                  required
+                  placeholder={"Enter a Bank Account number"}
+                  className={classes.textField}
+                  value={values.newAccountNumber}
+                  onChange={(e) => {
+                    console.log("e.target.value", e.target.value)
+                    fprops.setFieldValue("newAccountNumber", e.target.value)
+                  }}
+                  inputProps={{ style: { width: '100%' }}}
+                  errorMessage={errors.newAccountNumber}
+                  touched={touched.newAccountNumber}
+                />
+
+                <TextInput
+                  required
+                  placeholder={"Enter a Account name"}
+                  className={classes.textField}
+                  value={values.newAccountName}
+                  onChange={(e) => {
+                    console.log("e.target.value", e.target.value)
+                    fprops.setFieldValue("newAccountName", e.target.value)
+                  }}
+                  inputProps={{ style: { width: '100%' }}}
+                  errorMessage={errors.newAccountName}
+                  touched={touched.newAccountName}
                 />
 
                 <ButtonLoading
@@ -230,10 +266,10 @@ interface MutationData {
   setPayoutMethod: { user: UserPrivate };
 }
 interface MutationVars {
-  payoutType: PayoutType;
-  payoutEmail: string;
-  payoutProcessor: string;
-  payoutProcessorId: string;
+  payoutType: string;
+  bsb: string;
+  accountNumber: string;
+  accountName: string;
 }
 
 
