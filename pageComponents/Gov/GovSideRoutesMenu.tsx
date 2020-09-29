@@ -58,6 +58,22 @@ const GovSideRoutesMenu: React.FC<ReactProps> = (props) => {
         </li>
 
         <li>
+          <Link href={"/gov/random-products"} scroll={false}>
+            <a>
+              <div className={
+                isSelectedRoute("random-products")
+                  ? classes.routeListItemSelected
+                  : classes.routeListItem
+              }>
+                <Typography variant="subtitle1" className={classes.routeListItemText}>
+                  Random Products
+                </Typography>
+              </div>
+            </a>
+          </Link>
+        </li>
+
+        <li>
           <Link href={"/gov/orders"} scroll={false}>
             <a>
               <div className={
@@ -72,31 +88,53 @@ const GovSideRoutesMenu: React.FC<ReactProps> = (props) => {
             </a>
           </Link>
         </li>
+
         <li>
-          <Link href={"/gov/approvals"} scroll={false}>
+          <Typography variant="subtitle1" className={classes.routeListItemTitle}>
+            Payouts
+          </Typography>
+        </li>
+
+        <li>
+          <Link href={"/gov/payouts/pending-approval"} scroll={false}>
             <a>
               <div className={
-                isSelectedRoute("/approvals")
+                isSelectedRoute("/pending-approval")
                   ? classes.routeListItemSelected
                   : classes.routeListItem
               }>
                 <Typography variant="subtitle1" className={classes.routeListItemText}>
-                  Payout Approvals
+                  Pending Approval
                 </Typography>
               </div>
             </a>
           </Link>
         </li>
         <li>
-          <Link href={"/gov/payouts"} scroll={false}>
+          <Link href={"/gov/payouts/approved"} scroll={false}>
             <a>
               <div className={
-                isSelectedRoute("payouts")
+                isSelectedRoute("approved")
                   ? classes.routeListItemSelected
                   : classes.routeListItem
               }>
                 <Typography variant="subtitle1" className={classes.routeListItemText}>
-                  Payouts
+                  Approved
+                </Typography>
+              </div>
+            </a>
+          </Link>
+        </li>
+        <li>
+          <Link href={"/gov/payouts/complete"} scroll={false}>
+            <a>
+              <div className={
+                isSelectedRoute("complete")
+                  ? classes.routeListItemSelected
+                  : classes.routeListItem
+              }>
+                <Typography variant="subtitle1" className={classes.routeListItemText}>
+                  Complete
                 </Typography>
               </div>
             </a>
@@ -171,6 +209,12 @@ const styles = (theme: Theme) => createStyles({
         duration: "100ms",
       }),
     }
+  },
+  routeListItemTitle: {
+    textAlign: "start",
+    fontSize: '1.15rem',
+    marginTop: "1rem",
+    marginBottom: "1rem",
   },
   routeListItemText: {
     textAlign: "start",
