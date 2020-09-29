@@ -25,22 +25,38 @@ import { HtmlEvent } from "typings"
 const ChangePayoutMethod = (props: ReactProps & ReduxProps) => {
 
   const { classes } = props;
-  const [showPayoutEmailChanger, setShowPayoutEmailChanger] = React.useState(false);
-  const [newPayoutEmail, setNewPayoutEmail] = React.useState("");
+  const [showPayoutMethodChanger, setShowPayoutMethodChanger] = React.useState(false);
+  const [newBsb, setNewBsb] = React.useState("");
+  const [newAccountNumber, setNewAccountNumber] = React.useState("");
+  const [newAccountName, setNewAccountName] = React.useState("");
 
-  const handleSetNewPayoutEmail = (e: HtmlEvent) => {
-    let email = e.target.value;
-    setNewPayoutEmail(email);
+  const handleSetNewBsb = (e: HtmlEvent) => {
+    let bsb = e.target.value;
+    setNewBsb(bsb);
   };
 
-  const togglePayoutEmailChanger = () => {
-    setShowPayoutEmailChanger(show => !show)
-    setNewPayoutEmail("")
+  const handleSetNewAccountNumber = (e: HtmlEvent) => {
+    let accNum = e.target.value;
+    setNewBsb(accNum);
+  };
+
+  const handleSetNewAccountName = (e: HtmlEvent) => {
+    let accName = e.target.value;
+    setNewBsb(accName);
+  };
+
+  const togglePayoutMethodChanger = () => {
+    setShowPayoutMethodChanger(s => !s)
+    setNewBsb("")
+    setNewAccountNumber("")
+    setNewAccountName("")
   }
 
-  const resetPayoutEmailChanger = () => {
-    setShowPayoutEmailChanger(false)
-    setNewPayoutEmail("")
+  const resetPayoutMethodChanger = () => {
+    setShowPayoutMethodChanger(false)
+    setNewBsb("")
+    setNewAccountNumber("")
+    setNewAccountName("")
   }
 
   if (props.compact) {
@@ -52,21 +68,33 @@ const ChangePayoutMethod = (props: ReactProps & ReduxProps) => {
               <Paypal/>
             </div>
             {
-              option(props).user.payoutMethod() &&
+              option(props).user.payoutMethod.bsb() &&
               <Typography variant="body1" className={classes.email}>
-                {option(props).user.payoutMethod.payoutEmail("NA")}
+                {option(props).user.payoutMethod.bsb("NA")}
+              </Typography>
+            }
+            {
+              option(props).user.payoutMethod.accountNumber() &&
+              <Typography variant="body1" className={classes.email}>
+                {option(props).user.payoutMethod.accountNumber("NA")}
+              </Typography>
+            }
+            {
+              option(props).user.payoutMethod.accountName() &&
+              <Typography variant="body1" className={classes.email}>
+                {option(props).user.payoutMethod.accountName("NA")}
               </Typography>
             }
           </div>
           <a className={classes.link}
-            onClick={togglePayoutEmailChanger}>
+            onClick={togglePayoutMethodChanger}>
             <Typography
               className={classes.showPayoutChanger}
               variant="body1"
             >
               {
-                !showPayoutEmailChanger
-                ? "Change payout email"
+                !showPayoutMethodChanger
+                ? "Change payout bank account"
                 : "Cancel"
               }
             </Typography>
@@ -75,25 +103,43 @@ const ChangePayoutMethod = (props: ReactProps & ReduxProps) => {
 
         <div>
           {
-            showPayoutEmailChanger &&
+            showPayoutMethodChanger &&
             <div>
               <Typography variant="subtitle1" className={classes.payoutTitle}>
-                Enter your new Paypal email for payouts
+                Enter a new bank BSB number for payouts
               </Typography>
               <form autoComplete="off">
                 <TextInput
                   required
-                  placeholder={option(props).user.payoutMethod.payoutEmail("arthur@gotham.com")}
+                  placeholder={option(props).user.payoutMethod.bsb("123-456")}
                   className={classes.textField}
-                  value={newPayoutEmail}
-                  onChange={handleSetNewPayoutEmail}
+                  value={newBsb}
+                  onChange={handleSetNewBsb}
+                  inputProps={{ style: { width: '100%' }}}
+                />
+                <TextInput
+                  required
+                  placeholder={option(props).user.payoutMethod.accountNumber("98-456-1122")}
+                  className={classes.textField}
+                  value={newAccountNumber}
+                  onChange={handleSetNewAccountNumber}
+                  inputProps={{ style: { width: '100%' }}}
+                />
+                <TextInput
+                  required
+                  placeholder={option(props).user.payoutMethod.accountName("Abel Smith")}
+                  className={classes.textField}
+                  value={newAccountName}
+                  onChange={handleSetNewAccountName}
                   inputProps={{ style: { width: '100%' }}}
                 />
               </form>
               <ChangePayoutMethodButton
                 user={props.user}
-                newPayoutMethodEmail={newPayoutEmail}
-                resetPayoutMethodEmail={resetPayoutEmailChanger}
+                newBsb={newBsb}
+                newAccountNumber={newAccountNumber}
+                newAccountName={newAccountName}
+                resetPayoutMethod={resetPayoutMethodChanger}
               />
             </div>
           }
@@ -109,7 +155,7 @@ const ChangePayoutMethod = (props: ReactProps & ReduxProps) => {
         color={"primary"}
         variant="body1"
       >
-        Current Paypal Email
+        Current Bank Account
       </Typography>
 
       <div className={clsx(classes.flexRow, classes.flexWrap)}>
@@ -118,21 +164,33 @@ const ChangePayoutMethod = (props: ReactProps & ReduxProps) => {
             <Paypal/>
           </div>
           {
-            option(props).user.payoutMethod() &&
+            option(props).user.payoutMethod.bsb() &&
             <Typography variant="body1" className={classes.email}>
-              {option(props).user.payoutMethod.payoutEmail("NA")}
+              {option(props).user.payoutMethod.bsb("NA")}
+            </Typography>
+          }
+          {
+            option(props).user.payoutMethod.accountNumber() &&
+            <Typography variant="body1" className={classes.email}>
+              {option(props).user.payoutMethod.accountNumber("NA")}
+            </Typography>
+          }
+          {
+            option(props).user.payoutMethod.accountName() &&
+            <Typography variant="body1" className={classes.email}>
+              {option(props).user.payoutMethod.accountName("NA")}
             </Typography>
           }
         </div>
         <a className={classes.link}
-          onClick={togglePayoutEmailChanger}>
+          onClick={togglePayoutMethodChanger}>
           <Typography
             className={classes.showPayoutChanger}
             variant="body1"
           >
             {
-              !showPayoutEmailChanger
-              ? "Change payout email"
+              !showPayoutMethodChanger
+              ? "Change payout bank account"
               : "Cancel"
             }
           </Typography>
@@ -141,25 +199,43 @@ const ChangePayoutMethod = (props: ReactProps & ReduxProps) => {
 
       <div>
         {
-          showPayoutEmailChanger &&
+          showPayoutMethodChanger &&
           <div>
             <Typography variant="subtitle1" className={classes.payoutTitle}>
-              Enter your new Paypal email for payouts
+              Enter your new bank account for payouts
             </Typography>
             <form autoComplete="off">
               <TextInput
                 required
-                placeholder={option(props).user.payoutMethod.payoutEmail("arthur@gotham.com")}
+                placeholder={option(props).user.payoutMethod.bsb("123-456")}
                 className={classes.textField}
-                value={newPayoutEmail}
-                onChange={handleSetNewPayoutEmail}
+                value={newBsb}
+                onChange={handleSetNewBsb}
+                inputProps={{ style: { width: '100%' }}}
+              />
+              <TextInput
+                required
+                placeholder={option(props).user.payoutMethod.accountNumber("98-456-1122")}
+                className={classes.textField}
+                value={newAccountNumber}
+                onChange={handleSetNewAccountNumber}
+                inputProps={{ style: { width: '100%' }}}
+              />
+              <TextInput
+                required
+                placeholder={option(props).user.payoutMethod.accountName("Abel Smith")}
+                className={classes.textField}
+                value={newAccountName}
+                onChange={handleSetNewAccountName}
                 inputProps={{ style: { width: '100%' }}}
               />
             </form>
             <ChangePayoutMethodButton
               user={props.user}
-              newPayoutMethodEmail={newPayoutEmail}
-              resetPayoutMethodEmail={resetPayoutEmailChanger}
+              newBsb={newBsb}
+              newAccountNumber={newAccountNumber}
+              newAccountName={newAccountName}
+              resetPayoutMethod={resetPayoutMethodChanger}
             />
           </div>
         }

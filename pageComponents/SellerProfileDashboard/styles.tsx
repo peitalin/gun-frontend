@@ -33,13 +33,13 @@ export const styles = (theme: Theme) => createStyles({
   },
   contentContainer: {
     flexBasis: '65%',
-    maxWidth: '800px',
+    maxWidth: '1024px',
     flexGrow: 1,
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'flex-start',
     marginBottom: '1rem',
-    marginTop: '3rem',
+    marginTop: '1rem',
   },
   margin1: {
     margin: '1rem',

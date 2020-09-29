@@ -93,9 +93,25 @@ const EditStoreFields: React.FC<ReactProps & FormikProps<FormikFields>> = (props
     }
   };
 
-  const handleSetNewPayoutEmail = (e: HtmlEvent) => {
-    let email = e.target.value;
-    fprops.setFieldValue('payoutEmail', email)
+  const handleSetNewBsb = (e: HtmlEvent) => {
+    let bsb = e.target.value;
+    if (bsb.length > 9) {
+      return
+    }
+    fprops.setFieldValue('bsb', bsb)
+  };
+
+  const handleSetNewAccountNumber = (e: HtmlEvent) => {
+    let accNum = e.target.value;
+    if (accNum.length > 9) {
+      return
+    }
+    fprops.setFieldValue('accountNumber', accNum)
+  };
+
+  const handleSetNewAccountName = (e: HtmlEvent) => {
+    let accName = e.target.value;
+    fprops.setFieldValue('accountName', accName)
   };
 
   const handleUpdateProfile = (image: Image_Parents) => {
@@ -206,31 +222,74 @@ const EditStoreFields: React.FC<ReactProps & FormikProps<FormikFields>> = (props
           </div>
           <div className={clsx(classes.formContainer, "fadeInFast")}>
             <TextInput
-              placeholder={"Enter your Paypal email"}
+              placeholder={"Enter your BSB number"}
               className={classes.textField}
-              value={values.payoutEmail}
-              onChange={handleSetNewPayoutEmail}
+              value={values.bsb}
+              onChange={handleSetNewBsb}
               inputProps={{ style: { width: '100%' }}}
-              errorMessage={errors.payoutEmail}
-              touched={touched.payoutEmail}
+              errorMessage={errors.bsb}
+              touched={touched.bsb}
+            />
+            <TextInput
+              placeholder={"Enter your bank account number"}
+              className={classes.textField}
+              value={values.accountNumber}
+              onChange={handleSetNewAccountNumber}
+              inputProps={{ style: { width: '100%' }}}
+              errorMessage={errors.accountNumber}
+              touched={touched.accountNumber}
+            />
+            <TextInput
+              placeholder={"Enter your account name"}
+              className={classes.textField}
+              value={values.accountName}
+              onChange={handleSetNewAccountName}
+              inputProps={{ style: { width: '100%' }}}
+              errorMessage={errors.accountName}
+              touched={touched.accountName}
             />
             <Typography variant="body1" className={classes.subtitle3}>
-              We will send your monthly earnings automatically to this PayPal account
-              on the 15th of each month.
-              You can change this in settings anytime.
+              We will send your monthly earnings automatically to this Bank account
+              after your order has been settled and approved, typically wihtin 5 days.
             </Typography>
             {
-              errors.payoutEmail
-              && <div style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  marginBottom: "0.5rem",
-                }}>
-                  <Typography variant="subtitle1" className={classes.subtitle1}>
-                    <span className={classes.redText}>{errors.payoutEmail}</span>
-                  </Typography>
-                </div>
+              errors.bsb &&
+              <div style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                marginBottom: "0.5rem",
+              }}>
+                <Typography variant="subtitle1" className={classes.subtitle1}>
+                  <span className={classes.redText}>{errors.bsb}</span>
+                </Typography>
+              </div>
+            }
+            {
+              errors.accountNumber &&
+              <div style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                marginBottom: "0.5rem",
+              }}>
+                <Typography variant="subtitle1" className={classes.subtitle1}>
+                  <span className={classes.redText}>{errors.accountNumber}</span>
+                </Typography>
+              </div>
+            }
+            {
+              errors.accountName &&
+              <div style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                marginBottom: "0.5rem",
+              }}>
+                <Typography variant="subtitle1" className={classes.subtitle1}>
+                  <span className={classes.redText}>{errors.accountName}</span>
+                </Typography>
+              </div>
             }
             <Divider/>
             <Typography variant="body1" className={classes.subtitle4}>
@@ -260,7 +319,10 @@ interface FormikFields {
   website: string;
   coverId?: string;
   profileId?: string;
-  payoutEmail?: string;
+  // payout methods
+  bsb: string;
+  accountNumber: string;
+  accountName: string;
 }
 
 interface ReactProps extends WithStyles<typeof styles> {

@@ -104,7 +104,8 @@ export const styles = (theme: Theme) => createStyles({
   redText: {
     color: Colors.lightRed,
     fontWeight: 700,
-    opacity: 1
+    opacity: 1,
+    height: '16px',
   },
   hideText: {
     color: Colors.lightRed,

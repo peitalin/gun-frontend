@@ -6,7 +6,7 @@ import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/s
 import { useMutation, useApolloClient } from "@apollo/client";
 import { GET_USER } from "queries/user-queries";
 import { UPDATE_USER, SET_PAYOUT_METHOD } from "queries/user-mutations";
-import { UserPrivate, ID, PayoutType } from "typings/gqlTypes";
+import { UserPrivate, ID } from "typings/gqlTypes";
 // Material UI
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
@@ -26,7 +26,11 @@ const ChangePayoutMethodButton = (props: ReactProps) => {
 
   let [displayErr, setDisplayErr] = React.useState(true);
   let [displaySuccess, setDisplaySuccess] = React.useState(true);
-  let { newPayoutMethodEmail } = props;
+  let {
+    newBsb,
+    newAccountNumber,
+    newAccountName,
+  } = props;
   const aClient = useApolloClient();
   const dispatch = useDispatch();
 
@@ -35,7 +39,7 @@ const ChangePayoutMethodButton = (props: ReactProps) => {
     SET_PAYOUT_METHOD, {
     update: (cache, { data: { setPayoutMethod: { user } } }) => {
 
-      props.resetPayoutMethodEmail();
+      props.resetPayoutMethod();
       // update redux user, this is the one that triggers UI update
       dispatch(Actions.reduxLogin.SET_USER({
         ...props.user,
@@ -55,10 +59,10 @@ const ChangePayoutMethodButton = (props: ReactProps) => {
       }
     },
     variables: {
-      payoutType: PayoutType.PAYPAL,
-      payoutEmail: newPayoutMethodEmail,
-      payoutProcessor: "Paypal",
-      payoutProcessorId: "id"
+      payoutType: "BANK",
+      bsb: newBsb,
+      accountNumber: newAccountNumber,
+      accountName: newAccountName,
     }
   })
 
@@ -98,18 +102,20 @@ const ChangePayoutMethodButton = (props: ReactProps) => {
 
 
 interface ReactProps extends WithStyles<typeof styles> {
-  newPayoutMethodEmail: string;
-  resetPayoutMethodEmail(): void;
+  newBsb: string;
+  newAccountNumber: string;
+  newAccountName: string;
+  resetPayoutMethod(): void;
   user: UserPrivate;
 }
 interface MutationData {
   setPayoutMethod: { user: UserPrivate };
 }
 interface MutationVars {
-  payoutType: PayoutType;
-  payoutEmail: string;
-  payoutProcessor: string;
-  payoutProcessorId: string;
+  payoutType: string;
+  bsb: string;
+  accountNumber: string;
+  accountName: string;
 }
 
 

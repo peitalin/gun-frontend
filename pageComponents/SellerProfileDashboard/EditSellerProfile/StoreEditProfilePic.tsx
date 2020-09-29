@@ -177,7 +177,10 @@ interface FormikFields {
   website: string;
   coverId?: string;
   profileId?: string;
-  payoutEmail?: string;
+  // payout methods
+  bsb: string;
+  accountNumber: string;
+  accountName: string;
 }
 
 

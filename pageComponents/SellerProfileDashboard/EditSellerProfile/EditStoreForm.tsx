@@ -16,7 +16,7 @@ import { useMutation } from "@apollo/client";
 import { EDIT_STORE } from "queries/store-mutations";
 import { GET_USER } from "queries/user-queries";
 // Typings
-import { StorePrivate, UserPrivate, PayoutType } from "typings/gqlTypes";
+import { StorePrivate, UserPrivate } from "typings/gqlTypes";
 import { EditStoreInput, HtmlEvent } from "typings"
 // Components
 import Loading from "components/Loading";
@@ -82,10 +82,10 @@ const EditStoreForm: React.FC<ReactProps> = (props) => {
   useMutation<MutationData2, MutationVars2>(
     SET_PAYOUT_METHOD, {
     variables: {
-      payoutType: PayoutType.PAYPAL,
-      payoutEmail: "",
-      payoutProcessor: "Paypal",
-      payoutProcessorId: "id"
+      payoutType: "BANK",
+      bsb: "",
+      accountNumber: "",
+      accountName: ""
     },
     update: (cache, { data: { setPayoutMethod: { user } } }) => {
       // props.resetPayoutMethodEmail();
@@ -121,7 +121,10 @@ const EditStoreForm: React.FC<ReactProps> = (props) => {
         website: option(storePrivate).website(),
         coverId: option(storePrivate).coverId(),
         profileId: option(storePrivate).profileId(),
-        payoutEmail: option(userRedux).payoutMethod.payoutEmail(),
+        // payout method
+        bsb: option(userRedux).payoutMethod.bsb(),
+        accountNumber: option(userRedux).payoutMethod.accountNumber(),
+        accountName: option(userRedux).payoutMethod.accountName(),
       }}
       validationSchema={validationSchemas.EditStore}
       onSubmit={(values, { setSubmitting }) => {
@@ -129,8 +132,8 @@ const EditStoreForm: React.FC<ReactProps> = (props) => {
         console.log("my storeId", userRedux.store.id)
         // Dispatch Apollo Mutation after validation
         if (
-          values.payoutEmail &&
-          values.payoutEmail !== userRedux.payoutMethod.payoutEmail
+          values.bsb &&
+          values.bsb !== userRedux.payoutMethod.bsb
         ) {
 
           let pm1 = storeEdit({
@@ -149,10 +152,10 @@ const EditStoreForm: React.FC<ReactProps> = (props) => {
 
           let pm2 = setPayoutMethod({
             variables: {
-              payoutType: PayoutType.PAYPAL,
-              payoutEmail: values.payoutEmail,
-              payoutProcessor: "Paypal",
-              payoutProcessorId: "id"
+              payoutType: "PAYPAL",
+              bsb: values.bsb,
+              accountNumber: values.accountNumber,
+              accountName: values.accountName,
             }
           }).then(res2 => {
             // set payoutMethod after creating a store
@@ -309,10 +312,10 @@ interface MutationData2 {
   setPayoutMethod: { user: UserPrivate };
 }
 interface MutationVars2 {
-  payoutType: PayoutType;
-  payoutEmail: string;
-  payoutProcessor: string;
-  payoutProcessorId: string;
+  payoutType: string;
+  bsb: string;
+  accountNumber: string;
+  accountName: string;
 }
 
 interface ReactProps extends WithStyles<typeof styles> {
