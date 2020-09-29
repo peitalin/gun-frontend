@@ -89,12 +89,12 @@ interface ReactProps extends WithStyles<typeof styles> {
 
 const buttonBackgroundColor = '#f6f6f6';
 
-const selectStyles = {
+export const selectStyles = ({ width }: { width?: any }) => ({
   container: base => ({
     ...base,
     flex: 1,
     border: 'none',
-    width: '140px',
+    width: width || '175px',
     cursor: "pointer",
     "&:hover": {
       cursor: "pointer",
@@ -102,23 +102,28 @@ const selectStyles = {
   }),
   control: styles => ({
     ...styles,
-    backgroundColor: 'white',
     // border: '1px solid #eaeaea',
     border: 'none',
+    boxShadow: 'none',
+    // background: buttonBackgroundColor,
+    backgroundColor: Colors.dropDownGrey,
+    '&:hover': {
+      border: 'none',
+      cursor: "pointer",
+      backgroundColor: Colors.dropDownGreyHover,
+    },
     "&:focus": {
       border: 'none',
     },
-    "&:hover": {
-      border: 'none',
-      cursor: "pointer",
-    },
-    boxShadow: 'none',
-    background: buttonBackgroundColor,
     borderRadius: '4px',
     fontFamily: '"Helvetica Neue",Arial,sans-serif',
-    fontSize: '0.8rem',
+    fontSize: '0.9rem',
+    color: Colors.darkGrey,
     // fontSize: '1rem',
     width: '100%',
+  }),
+  singleValue: (styles, { data, isDisabled, isFocused, isSelected }) => ({
+    color: Colors.darkGrey,
   }),
   indicatorSeparator: styles => ({
     display:'none'
@@ -126,6 +131,11 @@ const selectStyles = {
   option: (styles, { data, isDisabled, isFocused, isSelected }) => {
     return {
       ...styles,
+      backgroundColor: isSelected
+        ? Colors.charcoal
+        : isFocused
+          ? Colors.lightGrey
+          : Colors.dropDownGrey,
       fontFamily: '"Helvetica Neue",Arial,sans-serif',
       fontSize: '1rem',
       cursor: isDisabled ? 'not-allowed' : 'pointer',
@@ -143,7 +153,7 @@ const selectStyles = {
       cursor: "pointer",
     },
   })
-};
+});
 
 const styles = (theme: Theme) => createStyles({
   subtitle1: {
