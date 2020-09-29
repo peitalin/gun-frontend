@@ -19,7 +19,7 @@ const LoadingBarSSR = (props) => {
     <div style={{ position: 'relative' }}>
       <LoadingBar
         absoluteTop
-        color={Colors.magenta}
+        color={Colors.secondary}
         height={4}
         width={'100vw'}
         loading={true}
