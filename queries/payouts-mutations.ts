@@ -15,8 +15,7 @@ export const CREATE_PAYOUTS = gql`
           id
           orderId
           taxes
-          subtotal
-          paymentProcessingFee
+          total
         }
       }
       # payoutItemsConnection(query: $query) {
@@ -38,8 +37,7 @@ export const CREATE_PAYOUTS = gql`
       #         id
       #         orderId
       #         taxes
-      #         subtotal
-      #         paymentProcessingFee
+      #         total
       #       }
       #     }
       #   }

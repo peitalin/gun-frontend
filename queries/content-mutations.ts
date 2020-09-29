@@ -48,34 +48,3 @@ export const SAVE_IMAGE_UPLOAD = gql`
   ${ImageFragment}
 `;
 
-export const SAVE_PRODUCT_FILE_UPLOAD = gql`
-  mutation saveProductFileUpload(
-    $uploadId: String!
-    $fileName: String!
-    $ownerIds: [String]
-  ) {
-    uploadSaveProductFile(
-      uploadId: $uploadId
-      fileName: $fileName
-      ownerIds: $ownerIds
-    ) {
-      ... on UploadSaveProductFileMutationResponse {
-        fileId
-      }
-    }
-  }
-`;
-
-export const GET_PRODUCT_FILE_DOWNLOAD_LINK = gql`
-  mutation getProductFileDownloadLink($id: String!, $orderItemId: String!) {
-    generateProductFileDownloadLink(id: $id, orderItemId: $orderItemId) {
-      ... on ProductFileLinkMutationResponse {
-        downloadLink {
-          productFileId
-          expiresAt
-          url
-        }
-      }
-    }
-  }
-`;

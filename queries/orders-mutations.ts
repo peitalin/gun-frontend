@@ -101,6 +101,24 @@ export const APPROVE_FORM_10 = gql`
 `;
 
 
+export const UNAPPROVE_FORM_10 = gql`
+  mutation unapproveForm10(
+    $orderId: String!
+    $adminApproverId: String!
+  ) {
+    unapproveForm10(
+      orderId: $orderId
+      adminApproverId: $adminApproverId
+    ) {
+      order {
+        ...OrdersFragment
+      }
+    }
+  }
+  ${OrdersFragment}
+`;
+
+
 
 
 export const MARK_PAYOUT_AS_PAID = gql`

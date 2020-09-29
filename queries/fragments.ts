@@ -182,13 +182,13 @@ export const UsersFragment = gql`
     sellerReferredById
     payoutMethod {
       id
-      payeeId
-      payoutType
-      payoutEmail
-      payoutProcessor
-      payoutProcessorId
+      storeId
       createdAt
       updatedAt
+      payoutType
+      bsb
+      accountNumber
+      accountName
     }
     payoutMethodId
     payoutSplitId
@@ -235,6 +235,15 @@ export const OrdersFragment = gql`
         firstName
         lastName
         email
+        payoutMethod {
+          id
+          createdAt
+          updatedAt
+          payoutType
+          bsb
+          accountNumber
+          accountName
+        }
       }
     }
     currentSnapshot {
@@ -287,7 +296,7 @@ export const OrdersFragment = gql`
     }
     payoutItems {
       id
-      payeeId
+      storeId
       payeeType
       amount
       paymentProcessingFee
@@ -484,15 +493,6 @@ export const PaymentMethodFragment = gql`
     email
     name
     details
-    # address {
-    #   line1
-    #   line2
-    #   city
-    #   state
-    #   postalCode
-    #   country
-    #   town
-    # }
   }
 `;
 
@@ -529,9 +529,9 @@ export const UserPrivateFragment = gql`
     payoutMethod {
       id
       payoutType
-      payoutEmail
-      payoutProcessor
-      payoutProcessorId
+      bsb
+      accountNumber
+      accountName
     }
     # wishlistItemsConnection(query: {}) {
     #   edges {

@@ -29,27 +29,14 @@ export const GET_ALL_ORDERS_CONNECTION2 = gql`
 `;
 
 export const GET_ORDERS_CREATED_CONNECTION = gql`
-  query(
-    $limit: Int!
-    $offset: Int!
-    $orderBy: [orders_order_by!]
-  ) {
-    orders(
-      where: {
-        currentSnapshot: {
-          _or: [
-            {orderStatus: {_eq: "CONFIRMED_PAYMENT_FORM_10_REQUIRED"}},
-            {orderStatus: {_eq: "CREATED"}},
-            {orderStatus: {_eq: "FAILED"}},
-            {orderStatus: {_eq: "REFUNDED"}}
-          ]
+  query($query: ConnectionOffsetQueryOrders!) {
+    getOrdersCreatedConnectionAdmin(query: $query) {
+      edges {
+        node {
+          ...OrdersFragment
         }
-      },
-      limit: $limit
-      offset: $offset
-      order_by: $orderBy
-    ) {
-      ...OrdersFragment
+      }
+      totalCount
     }
   }
   ${OrdersFragment}
@@ -58,20 +45,14 @@ export const GET_ORDERS_CREATED_CONNECTION = gql`
 
 
 export const GET_ORDERS_PENDING_APPROVAL_CONNECTION = gql`
-  query(
-    $limit: Int!
-    $offset: Int!
-    $orderBy: [orders_order_by!]
-  ) {
-    orders(
-      where: { currentSnapshot: { orderStatus: {
-        _eq: "FORM_10_SUBMITTED"
-      } } }
-      limit: $limit
-      offset: $offset
-      order_by: $orderBy
-    ) {
-      ...OrdersFragment
+  query($query: ConnectionOffsetQueryOrders!) {
+    getOrdersPendingApprovalConnectionAdmin(query: $query) {
+      edges {
+        node {
+          ...OrdersFragment
+        }
+      }
+      totalCount
     }
   }
   ${OrdersFragment}
@@ -79,20 +60,29 @@ export const GET_ORDERS_PENDING_APPROVAL_CONNECTION = gql`
 
 
 export const GET_ORDERS_ADMIN_APPROVED_CONNECTION = gql`
-  query(
-    $limit: Int!
-    $offset: Int!
-    $orderBy: [orders_order_by!]
-  ) {
-    orders(
-      where: { currentSnapshot: { orderStatus: {
-        _eq: "ADMIN_APPROVED"
-      } } }
-      limit: $limit
-      offset: $offset
-      order_by: $orderBy
-    ) {
-      ...OrdersFragment
+  query($query: ConnectionOffsetQueryOrders!) {
+    getOrdersAdminApprovedConnection(query: $query) {
+      edges {
+        node {
+          ...OrdersFragment
+        }
+      }
+      totalCount
+    }
+  }
+  ${OrdersFragment}
+`;
+
+
+export const GET_ORDERS_PAYOUTS_COMPLETE_CONNECTION = gql`
+  query($query: ConnectionOffsetQueryOrders!) {
+    getOrdersPayoutCompleteConnection(query: $query) {
+      edges {
+        node {
+          ...OrdersFragment
+        }
+      }
+      totalCount
     }
   }
   ${OrdersFragment}
@@ -148,7 +138,7 @@ export const GET_BUYER_ORDERS_CONNECTION = gql`
 `;
 
 export const GET_ORDER_AS_ADMIN = gql`
-  query getOrderAsAdmin($orderId: ID!) {
+  query getOrderAsAdmin($orderId: String!) {
     getOrderAsAdmin(orderId: $orderId) {
       ...OrdersFragment
     }
@@ -161,10 +151,8 @@ export const GET_RECENT_TRANSACTIONS = gql`
     getRecentTransactions(count: $count) {
       id
       orderId
-      chargeId
       createdAt
-      subtotal
-      paymentProcessingFee
+      total
       currency
       # paymentMethod {
       #   id

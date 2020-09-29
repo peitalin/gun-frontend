@@ -74,29 +74,18 @@ export const CHANGE_PASSWORD = gql`
   }
 `;
 
-// """e.g. PAYPAL, BANK,  capitalized"""
-// payoutType: PayoutType
-
-// """Paypal only, or email associated with a bank account"""
-// payoutEmail: String
-
-// """Name of payout provider: Paypal, Westpac, etc"""
-// payoutProcessor: string;
-
-// """ID associated with payout method from payout provider"""
-// payoutProcessorId: string;
 export const SET_PAYOUT_METHOD = gql`
   mutation setPayoutMethod(
-    $payoutType: PayoutType
-    $payoutEmail: String
-    $payoutProcessor: String
-    $payoutProcessorId: String
+    $payoutType: String
+    $bsb: String
+    $accountNumber: String
+    $accountName: String
   ) {
     setPayoutMethod(
       payoutType: $payoutType
-      payoutEmail: $payoutEmail
-      payoutProcessor: $payoutProcessor
-      payoutProcessorId: $payoutProcessorId
+      bsb: $bsb
+      accountNumber: $accountNumber
+      accountName: $accountName
     ) {
       ... on UserMutationResponse {
         user {

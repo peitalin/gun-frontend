@@ -6,7 +6,7 @@ export const PayoutItemFragment2 = gql`
 fragment PayoutItemFragment2 on PayoutItem {
   id
   txnId
-  payeeId
+  storeId
   payeeType
   amount
   paymentProcessingFee
@@ -57,11 +57,11 @@ query getPayoutsInPeriodAdmin(
       node {
         id
         createdAt
-        payeeId
+        storeId
         payeeType
         amount
         payoutDate
-        payoutEmail
+        # payoutEmail
         payoutStatus
         startPeriod
         endPeriod

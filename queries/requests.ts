@@ -8,12 +8,8 @@ import {
   UploadType,
   RegisterUploadMutation,
   UploadRegisterMutationResponse,
-  SaveProductFileUploadMutation,
-  SaveProductFileUploadMutationVariables,
   SaveImageUploadMutation,
   SaveImageUploadMutationVariables,
-  GetProductFileDownloadLinkMutation,
-  GetProductFileDownloadLinkMutationVariables,
   Product,
   ProductEditInput,
   Image_Parents,
@@ -26,9 +22,7 @@ import getConfig from 'next/config'
 import { ApolloClient } from "@apollo/client";
 import {
   REGISTER_UPLOAD,
-  SAVE_PRODUCT_FILE_UPLOAD,
   SAVE_IMAGE_UPLOAD,
-  GET_PRODUCT_FILE_DOWNLOAD_LINK
 } from "./content-mutations";
 import { EDIT_PRODUCT } from "./products-mutations";
 // import { EDIT_STORE_PROMO_CODE } from "./discounts-mutations";
@@ -117,29 +111,6 @@ interface GSRegisterResponse {
   uploadUrl: string;
 }
 
-// 3 (image)
-export const google_storage_save_file_to_db = async(
-  uploadId: string,
-  fileName: string,
-  ownerIds: string[],
-  aClient: ApolloClient<object>
-): Promise<ID> => {
-  const response = await aClient.mutate<SaveProductFileUploadMutation, SaveProductFileUploadMutationVariables>({
-    mutation: SAVE_PRODUCT_FILE_UPLOAD,
-    variables: {
-      uploadId: uploadId,
-      fileName: fileName,
-      ownerIds: ownerIds
-    }
-  });
-  const result = response.data.uploadSaveProductFile;
-  if (result.__typename === 'UploadSaveProductFileMutationResponse') {
-    return result.fileId
-  } else {
-    throw new Error("GSSave Error");
-  }
-}
-
 // 3 (file)
 export const google_storage_save_image_to_db = async(
   uploadId: string,
@@ -160,32 +131,6 @@ export const google_storage_save_image_to_db = async(
   console.log("response ........", response)
   const result = response.data.uploadSaveImage;
   return result.image as any
-}
-
-export const google_storage_get_file_link = async(
-  fileId: ID,
-  orderItemId: ID,
-  aClient: ApolloClient<object>
-): Promise<GSFileLink> => {
-  const response = await aClient.mutate<GetProductFileDownloadLinkMutation, GetProductFileDownloadLinkMutationVariables>({
-    mutation: GET_PRODUCT_FILE_DOWNLOAD_LINK,
-    variables: {
-      id: fileId,
-      orderItemId: orderItemId
-    }
-  });
-  const result = response.data.generateProductFileDownloadLink;
-  if (result.__typename === 'ProductFileLinkMutationResponse') {
-    return result.downloadLink;
-  } else {
-    throw new Error("GSGenerateLink Error");
-  }
-}
-
-export interface GSFileLink {
-  expiresAt: number;
-  productFileId: ID;
-  url: string;
 }
 
 

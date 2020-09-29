@@ -32,9 +32,7 @@ export const TransactionFragment = gql`
   fragment TransactionFragment on Transaction {
     id
     orderId
-    subtotal
-    taxes
-    paymentProcessingFee
+    total
     currency
     customerId
     createdAt
@@ -47,7 +45,6 @@ export const TransactionFragment = gql`
     paymentProcessor
     paymentMethodId
     paymentIntentId
-    chargeId
     details
     order {
       id
@@ -68,7 +65,7 @@ export const TransactionFragment = gql`
 export const PayoutItemFragment = gql`
   fragment PayoutItemFragment on PayoutItem {
     id
-    payeeId
+    storeId
     payeeType
     amount
     paymentProcessingFee
@@ -80,11 +77,12 @@ export const PayoutItemFragment = gql`
       user {
         payoutMethod {
           id
-          payoutType
-          payoutEmail
-          payoutProcessor
           updatedAt
           createdAt
+          payoutType
+          bsb
+          accountNumber
+          accountName
         }
       }
     }
@@ -104,14 +102,14 @@ export const PayoutItemFragment = gql`
 export const PayoutFragment = gql`
   fragment PayoutFragment on Payout {
     id
-    payeeId
+    storeId
     payeeType
     payoutDate
     createdAt
     startPeriod
     endPeriod
     payoutStatus
-    payoutEmail
+    # payoutEmail
     approvedByAdmins {
       id
       firstName

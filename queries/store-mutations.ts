@@ -6,8 +6,8 @@ import { StorePrivateFragment } from "./fragments";
 export const CREATE_STORE = gql`
   mutation createStore(
     $name: String!
-    $profileId: String!
-    $coverId: String!
+    $profileId: String
+    $coverId: String
     $bio: String
     $website: String
   ) {
