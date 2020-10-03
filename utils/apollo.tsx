@@ -4,6 +4,7 @@ import {
   HttpLink,
   ApolloLink,
   split,
+  DefaultOptions,
 } from '@apollo/client';
 import { onError } from '@apollo/link-error';
 import { WebSocketLink } from '@apollo/link-ws';
@@ -199,6 +200,8 @@ export const serverApolloClient = (ctx) => {
 
     cache: new InMemoryCache(cacheOptions),
 
+    defaultOptions: defaultOptions,
+
   })
 }
 
@@ -333,5 +336,39 @@ const cacheOptions = {
         },
       },
     },
+
+    orders: {
+      keyFields: ["id"],
+    },
+    order_snapshots: {
+      keyFields: ["id"],
+    },
   }
 }
+
+const defaultOptions: DefaultOptions = {
+  watchQuery: {
+    fetchPolicy: 'no-cache',
+    errorPolicy: 'ignore',
+  },
+  query: {
+    fetchPolicy: 'no-cache',
+    errorPolicy: 'all',
+  },
+}
+
+let _authCookie: string | undefined = undefined;
+
+export const constructCookie = (): string => {
+  let cookie = "";
+  if (_authCookie) {
+    cookie = `efc-auth=${_authCookie}`;
+  }
+  console.log("cookie going out:",cookie)
+  return cookie;
+};
+
+
+export const storeToken = (token: string): void => {
+  _authCookie = token;
+};

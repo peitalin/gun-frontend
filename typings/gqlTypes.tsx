@@ -15,6 +15,10 @@ export type Scalars = {
   PageCursor: any;
   /** Price value representing USD cents */
   Price: number;
+  /** The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf). */
+  JSON: any;
+  /** The `JSONObject` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf). */
+  JSONObject: any;
 };
 
 export type AddRemovePaymentMethodResponse = {
@@ -1347,6 +1351,15 @@ export type ConnectionWithMetrics = {
   pageInfo: PageInfo;
 };
 
+export type CreateProductsConfig = {
+  count?: Maybe<Scalars['Int']>;
+  sellerLogin?: Maybe<LoginDetails>;
+  alwaysPublish?: Maybe<Scalars['Boolean']>;
+  alwaysFewestPreviews?: Maybe<Scalars['Boolean']>;
+  alwaysGreatestPreviews?: Maybe<Scalars['Boolean']>;
+  alwaysDiscounted?: Maybe<Scalars['Boolean']>;
+};
+
 export type CreateRefundMutationResponse = {
    __typename?: 'CreateRefundMutationResponse';
   transaction: Transactions;
@@ -1415,6 +1428,15 @@ export enum FacetAttributes {
   _STOREIDFACET = '_storeIdFacet',
   _ISPUBLISHEDFACET = '_isPublishedFacet'
 }
+
+export type FacetsDistributionObject = {
+   __typename?: 'FacetsDistributionObject';
+  /** make a JSON type, keys are arbitrary category names */
+  categoryNames?: Maybe<Scalars['JSON']>;
+  isPublished?: Maybe<Scalars['JSON']>;
+  /** categoryGroups: JSON */
+  stores?: Maybe<Scalars['JSON']>;
+};
 
 export type FollowedStore = {
    __typename?: 'FollowedStore';
@@ -2171,10 +2193,17 @@ export type Int_Comparison_Exp = {
   _nin?: Maybe<Array<Scalars['Int']>>;
 };
 
+
+
 export type Login2Response = {
    __typename?: 'Login2Response';
   email?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
+};
+
+export type LoginDetails = {
+  email: Scalars['String'];
+  password: Scalars['String'];
 };
 
 export type LoginMutationResponse = {
@@ -2840,15 +2869,6 @@ export type Mutation = {
    */
   uploadSaveImage: UploadSaveImageMutationResponse;
   /**
-   * Request to save an uploaded product file / make it official.
-   * 
-   * This is the last stage of uploading - saving.
-   * Your uploaded file will be validated and made available for use.
-   * 
-   * AccessRule – LOGGED_IN
-   */
-  uploadSaveProductFile: UploadSaveProductFileMutationResponse;
-  /**
    * Follow a store.
    * 
    * AccessRule – LOGGED_IN
@@ -2988,12 +3008,6 @@ export type Mutation = {
    */
   unsuspendStore?: Maybe<StoreMutationResponse>;
   /**
-   * Generate a temporary URL to download a product file.
-   * 
-   * AccessRule – LOGGED_IN (and product owning the file has been purchased...)
-   */
-  generateProductFileDownloadLink: ProductFileLinkMutationResponse;
-  /**
    * Set the default payment method for a user (credit cards)
    * 
    * AccessRule – LOGGED_IN
@@ -3081,11 +3095,18 @@ export type Mutation = {
    */
   approveForm10: OrderMutationResponse;
   /**
+   * AccessRule – ADMIN
+   * For admins to revert approval of a form10
+   */
+  unapproveForm10: OrderMutationResponse;
+  /**
    * AccessRule – LOGGED_IN
    * For Admins to confirm and attach Westpac Payout IDs to orders
    * After funds have been transferred to sellers
    */
   markPayoutsAsPaid: MarkPayoutsAsPaidMutationResponse;
+  createMockPreviewItems: Product_Preview_Items_Mutation_Response;
+  generateRandomProducts: Array<Maybe<ProductPrivate>>;
 };
 
 
@@ -3995,10 +4016,10 @@ export type MutationChangePasswordArgs = {
 
 
 export type MutationSetPayoutMethodArgs = {
-  payoutType?: Maybe<PayoutType>;
-  payoutEmail?: Maybe<Scalars['String']>;
-  payoutProcessor?: Maybe<Scalars['String']>;
-  payoutProcessorId?: Maybe<Scalars['String']>;
+  payoutType?: Maybe<Scalars['String']>;
+  bsb?: Maybe<Scalars['String']>;
+  accountNumber?: Maybe<Scalars['String']>;
+  accountName?: Maybe<Scalars['String']>;
 };
 
 
@@ -4032,13 +4053,6 @@ export type MutationUploadSaveImageArgs = {
   uploadId: Scalars['String'];
   description?: Maybe<Scalars['String']>;
   tags?: Maybe<Scalars['String']>;
-  ownerIds?: Maybe<Array<Maybe<Scalars['String']>>>;
-};
-
-
-export type MutationUploadSaveProductFileArgs = {
-  uploadId: Scalars['String'];
-  fileName: Scalars['String'];
   ownerIds?: Maybe<Array<Maybe<Scalars['String']>>>;
 };
 
@@ -4161,12 +4175,6 @@ export type MutationUnsuspendStoreArgs = {
 };
 
 
-export type MutationGenerateProductFileDownloadLinkArgs = {
-  id: Scalars['String'];
-  orderItemId: Scalars['String'];
-};
-
-
 export type MutationSetDefaultPaymentMethodArgs = {
   paymentMethodId: Scalars['String'];
   customerId: Scalars['String'];
@@ -4265,9 +4273,27 @@ export type MutationApproveForm10Args = {
 };
 
 
+export type MutationUnapproveForm10Args = {
+  orderId: Scalars['String'];
+  adminApproverId: Scalars['String'];
+};
+
+
 export type MutationMarkPayoutsAsPaidArgs = {
   orderIds: Array<Scalars['String']>;
   payoutId: Scalars['String'];
+};
+
+
+export type MutationCreateMockPreviewItemsArgs = {
+  productPreviewItemInputs: Array<ProductPreviewItemInput>;
+  variantId: Scalars['ID'];
+  snapshotId: Scalars['ID'];
+};
+
+
+export type MutationGenerateRandomProductsArgs = {
+  config?: Maybe<CreateProductsConfig>;
 };
 
 /** Something that went wrong during a mutation. */
@@ -5523,24 +5549,6 @@ export type Payment_Methods_Variance_Order_By = {
   expYear?: Maybe<Order_By>;
 };
 
-/** Stripe Credit Card, or Paypal Payment Method, or ? some other processor */
-export type PaymentMethod = {
-   __typename?: 'PaymentMethod';
-  id: Scalars['ID'];
-  userId?: Maybe<Scalars['ID']>;
-  createdAt?: Maybe<Scalars['Date']>;
-  updatedAt?: Maybe<Scalars['Date']>;
-  customerId?: Maybe<Scalars['ID']>;
-  paymentProcessor?: Maybe<PaymentProcessor>;
-  paymentMethodTypes?: Maybe<Array<Maybe<Scalars['String']>>>;
-  last4?: Maybe<Scalars['String']>;
-  expMonth?: Maybe<Scalars['String']>;
-  expYear?: Maybe<Scalars['String']>;
-  email?: Maybe<Scalars['String']>;
-  name?: Maybe<Scalars['String']>;
-  details?: Maybe<Scalars['String']>;
-};
-
 /** Payment Processor Company */
 export enum PaymentProcessor {
   STRIPE = 'Stripe',
@@ -5556,7 +5564,7 @@ export type Payout = {
    __typename?: 'Payout';
   id: Scalars['ID'];
   createdAt: Scalars['Date'];
-  payeeId: Scalars['ID'];
+  storeId: Scalars['ID'];
   payeeType: PayeeType;
   amount: Scalars['Price'];
   startPeriod: Scalars['Date'];
@@ -5599,11 +5607,11 @@ export type Payout_Items = {
   currency: Scalars['String'];
   id: Scalars['String'];
   orderId: Scalars['String'];
-  payeeId: Scalars['String'];
   payeeType: Scalars['String'];
   paymentProcessingFee: Scalars['Int'];
   payoutId?: Maybe<Scalars['String']>;
   payoutStatus: Scalars['String'];
+  storeId: Scalars['String'];
   taxes: Scalars['Int'];
   txnId: Scalars['String'];
 };
@@ -5684,11 +5692,11 @@ export type Payout_Items_Bool_Exp = {
   currency?: Maybe<String_Comparison_Exp>;
   id?: Maybe<String_Comparison_Exp>;
   orderId?: Maybe<String_Comparison_Exp>;
-  payeeId?: Maybe<String_Comparison_Exp>;
   payeeType?: Maybe<String_Comparison_Exp>;
   paymentProcessingFee?: Maybe<Int_Comparison_Exp>;
   payoutId?: Maybe<String_Comparison_Exp>;
   payoutStatus?: Maybe<String_Comparison_Exp>;
+  storeId?: Maybe<String_Comparison_Exp>;
   taxes?: Maybe<Int_Comparison_Exp>;
   txnId?: Maybe<String_Comparison_Exp>;
 };
@@ -5713,11 +5721,11 @@ export type Payout_Items_Insert_Input = {
   currency?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
   orderId?: Maybe<Scalars['String']>;
-  payeeId?: Maybe<Scalars['String']>;
   payeeType?: Maybe<Scalars['String']>;
   paymentProcessingFee?: Maybe<Scalars['Int']>;
   payoutId?: Maybe<Scalars['String']>;
   payoutStatus?: Maybe<Scalars['String']>;
+  storeId?: Maybe<Scalars['String']>;
   taxes?: Maybe<Scalars['Int']>;
   txnId?: Maybe<Scalars['String']>;
 };
@@ -5730,11 +5738,11 @@ export type Payout_Items_Max_Fields = {
   currency?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
   orderId?: Maybe<Scalars['String']>;
-  payeeId?: Maybe<Scalars['String']>;
   payeeType?: Maybe<Scalars['String']>;
   paymentProcessingFee?: Maybe<Scalars['Int']>;
   payoutId?: Maybe<Scalars['String']>;
   payoutStatus?: Maybe<Scalars['String']>;
+  storeId?: Maybe<Scalars['String']>;
   taxes?: Maybe<Scalars['Int']>;
   txnId?: Maybe<Scalars['String']>;
 };
@@ -5746,11 +5754,11 @@ export type Payout_Items_Max_Order_By = {
   currency?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   orderId?: Maybe<Order_By>;
-  payeeId?: Maybe<Order_By>;
   payeeType?: Maybe<Order_By>;
   paymentProcessingFee?: Maybe<Order_By>;
   payoutId?: Maybe<Order_By>;
   payoutStatus?: Maybe<Order_By>;
+  storeId?: Maybe<Order_By>;
   taxes?: Maybe<Order_By>;
   txnId?: Maybe<Order_By>;
 };
@@ -5763,11 +5771,11 @@ export type Payout_Items_Min_Fields = {
   currency?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
   orderId?: Maybe<Scalars['String']>;
-  payeeId?: Maybe<Scalars['String']>;
   payeeType?: Maybe<Scalars['String']>;
   paymentProcessingFee?: Maybe<Scalars['Int']>;
   payoutId?: Maybe<Scalars['String']>;
   payoutStatus?: Maybe<Scalars['String']>;
+  storeId?: Maybe<Scalars['String']>;
   taxes?: Maybe<Scalars['Int']>;
   txnId?: Maybe<Scalars['String']>;
 };
@@ -5779,11 +5787,11 @@ export type Payout_Items_Min_Order_By = {
   currency?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   orderId?: Maybe<Order_By>;
-  payeeId?: Maybe<Order_By>;
   payeeType?: Maybe<Order_By>;
   paymentProcessingFee?: Maybe<Order_By>;
   payoutId?: Maybe<Order_By>;
   payoutStatus?: Maybe<Order_By>;
+  storeId?: Maybe<Order_By>;
   taxes?: Maybe<Order_By>;
   txnId?: Maybe<Order_By>;
 };
@@ -5817,11 +5825,11 @@ export type Payout_Items_Order_By = {
   currency?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   orderId?: Maybe<Order_By>;
-  payeeId?: Maybe<Order_By>;
   payeeType?: Maybe<Order_By>;
   paymentProcessingFee?: Maybe<Order_By>;
   payoutId?: Maybe<Order_By>;
   payoutStatus?: Maybe<Order_By>;
+  storeId?: Maybe<Order_By>;
   taxes?: Maybe<Order_By>;
   txnId?: Maybe<Order_By>;
 };
@@ -5844,8 +5852,6 @@ export enum Payout_Items_Select_Column {
   /** column name */
   ORDERID = 'orderId',
   /** column name */
-  PAYEEID = 'payeeId',
-  /** column name */
   PAYEETYPE = 'payeeType',
   /** column name */
   PAYMENTPROCESSINGFEE = 'paymentProcessingFee',
@@ -5853,6 +5859,8 @@ export enum Payout_Items_Select_Column {
   PAYOUTID = 'payoutId',
   /** column name */
   PAYOUTSTATUS = 'payoutStatus',
+  /** column name */
+  STOREID = 'storeId',
   /** column name */
   TAXES = 'taxes',
   /** column name */
@@ -5866,11 +5874,11 @@ export type Payout_Items_Set_Input = {
   currency?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
   orderId?: Maybe<Scalars['String']>;
-  payeeId?: Maybe<Scalars['String']>;
   payeeType?: Maybe<Scalars['String']>;
   paymentProcessingFee?: Maybe<Scalars['Int']>;
   payoutId?: Maybe<Scalars['String']>;
   payoutStatus?: Maybe<Scalars['String']>;
+  storeId?: Maybe<Scalars['String']>;
   taxes?: Maybe<Scalars['Int']>;
   txnId?: Maybe<Scalars['String']>;
 };
@@ -5948,8 +5956,6 @@ export enum Payout_Items_Update_Column {
   /** column name */
   ORDERID = 'orderId',
   /** column name */
-  PAYEEID = 'payeeId',
-  /** column name */
   PAYEETYPE = 'payeeType',
   /** column name */
   PAYMENTPROCESSINGFEE = 'paymentProcessingFee',
@@ -5957,6 +5963,8 @@ export enum Payout_Items_Update_Column {
   PAYOUTID = 'payoutId',
   /** column name */
   PAYOUTSTATUS = 'payoutStatus',
+  /** column name */
+  STOREID = 'storeId',
   /** column name */
   TAXES = 'taxes',
   /** column name */
@@ -6011,13 +6019,13 @@ export type Payout_Items_Variance_Order_By = {
 /** columns and relationships of "payout_methods" */
 export type Payout_Methods = {
    __typename?: 'payout_methods';
+  accountName?: Maybe<Scalars['String']>;
+  accountNumber?: Maybe<Scalars['String']>;
+  bsb?: Maybe<Scalars['String']>;
   createdAt: Scalars['timestamptz'];
   id: Scalars['String'];
-  payeeId: Scalars['String'];
-  payoutEmail?: Maybe<Scalars['String']>;
-  payoutProcessor?: Maybe<Scalars['String']>;
-  payoutProcessorId?: Maybe<Scalars['String']>;
   payoutType?: Maybe<Scalars['String']>;
+  storeId: Scalars['String'];
   updatedAt?: Maybe<Scalars['timestamptz']>;
 };
 
@@ -6061,13 +6069,13 @@ export type Payout_Methods_Bool_Exp = {
   _and?: Maybe<Array<Maybe<Payout_Methods_Bool_Exp>>>;
   _not?: Maybe<Payout_Methods_Bool_Exp>;
   _or?: Maybe<Array<Maybe<Payout_Methods_Bool_Exp>>>;
+  accountName?: Maybe<String_Comparison_Exp>;
+  accountNumber?: Maybe<String_Comparison_Exp>;
+  bsb?: Maybe<String_Comparison_Exp>;
   createdAt?: Maybe<Timestamptz_Comparison_Exp>;
   id?: Maybe<String_Comparison_Exp>;
-  payeeId?: Maybe<String_Comparison_Exp>;
-  payoutEmail?: Maybe<String_Comparison_Exp>;
-  payoutProcessor?: Maybe<String_Comparison_Exp>;
-  payoutProcessorId?: Maybe<String_Comparison_Exp>;
   payoutType?: Maybe<String_Comparison_Exp>;
+  storeId?: Maybe<String_Comparison_Exp>;
   updatedAt?: Maybe<Timestamptz_Comparison_Exp>;
 };
 
@@ -6079,63 +6087,63 @@ export enum Payout_Methods_Constraint {
 
 /** input type for inserting data into table "payout_methods" */
 export type Payout_Methods_Insert_Input = {
+  accountName?: Maybe<Scalars['String']>;
+  accountNumber?: Maybe<Scalars['String']>;
+  bsb?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['timestamptz']>;
   id?: Maybe<Scalars['String']>;
-  payeeId?: Maybe<Scalars['String']>;
-  payoutEmail?: Maybe<Scalars['String']>;
-  payoutProcessor?: Maybe<Scalars['String']>;
-  payoutProcessorId?: Maybe<Scalars['String']>;
   payoutType?: Maybe<Scalars['String']>;
+  storeId?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['timestamptz']>;
 };
 
 /** aggregate max on columns */
 export type Payout_Methods_Max_Fields = {
    __typename?: 'payout_methods_max_fields';
+  accountName?: Maybe<Scalars['String']>;
+  accountNumber?: Maybe<Scalars['String']>;
+  bsb?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['timestamptz']>;
   id?: Maybe<Scalars['String']>;
-  payeeId?: Maybe<Scalars['String']>;
-  payoutEmail?: Maybe<Scalars['String']>;
-  payoutProcessor?: Maybe<Scalars['String']>;
-  payoutProcessorId?: Maybe<Scalars['String']>;
   payoutType?: Maybe<Scalars['String']>;
+  storeId?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['timestamptz']>;
 };
 
 /** order by max() on columns of table "payout_methods" */
 export type Payout_Methods_Max_Order_By = {
+  accountName?: Maybe<Order_By>;
+  accountNumber?: Maybe<Order_By>;
+  bsb?: Maybe<Order_By>;
   createdAt?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
-  payeeId?: Maybe<Order_By>;
-  payoutEmail?: Maybe<Order_By>;
-  payoutProcessor?: Maybe<Order_By>;
-  payoutProcessorId?: Maybe<Order_By>;
   payoutType?: Maybe<Order_By>;
+  storeId?: Maybe<Order_By>;
   updatedAt?: Maybe<Order_By>;
 };
 
 /** aggregate min on columns */
 export type Payout_Methods_Min_Fields = {
    __typename?: 'payout_methods_min_fields';
+  accountName?: Maybe<Scalars['String']>;
+  accountNumber?: Maybe<Scalars['String']>;
+  bsb?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['timestamptz']>;
   id?: Maybe<Scalars['String']>;
-  payeeId?: Maybe<Scalars['String']>;
-  payoutEmail?: Maybe<Scalars['String']>;
-  payoutProcessor?: Maybe<Scalars['String']>;
-  payoutProcessorId?: Maybe<Scalars['String']>;
   payoutType?: Maybe<Scalars['String']>;
+  storeId?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['timestamptz']>;
 };
 
 /** order by min() on columns of table "payout_methods" */
 export type Payout_Methods_Min_Order_By = {
+  accountName?: Maybe<Order_By>;
+  accountNumber?: Maybe<Order_By>;
+  bsb?: Maybe<Order_By>;
   createdAt?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
-  payeeId?: Maybe<Order_By>;
-  payoutEmail?: Maybe<Order_By>;
-  payoutProcessor?: Maybe<Order_By>;
-  payoutProcessorId?: Maybe<Order_By>;
   payoutType?: Maybe<Order_By>;
+  storeId?: Maybe<Order_By>;
   updatedAt?: Maybe<Order_By>;
 };
 
@@ -6163,13 +6171,13 @@ export type Payout_Methods_On_Conflict = {
 
 /** ordering options when selecting data from "payout_methods" */
 export type Payout_Methods_Order_By = {
+  accountName?: Maybe<Order_By>;
+  accountNumber?: Maybe<Order_By>;
+  bsb?: Maybe<Order_By>;
   createdAt?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
-  payeeId?: Maybe<Order_By>;
-  payoutEmail?: Maybe<Order_By>;
-  payoutProcessor?: Maybe<Order_By>;
-  payoutProcessorId?: Maybe<Order_By>;
   payoutType?: Maybe<Order_By>;
+  storeId?: Maybe<Order_By>;
   updatedAt?: Maybe<Order_By>;
 };
 
@@ -6181,51 +6189,51 @@ export type Payout_Methods_Pk_Columns_Input = {
 /** select columns of table "payout_methods" */
 export enum Payout_Methods_Select_Column {
   /** column name */
+  ACCOUNTNAME = 'accountName',
+  /** column name */
+  ACCOUNTNUMBER = 'accountNumber',
+  /** column name */
+  BSB = 'bsb',
+  /** column name */
   CREATEDAT = 'createdAt',
   /** column name */
   ID = 'id',
   /** column name */
-  PAYEEID = 'payeeId',
-  /** column name */
-  PAYOUTEMAIL = 'payoutEmail',
-  /** column name */
-  PAYOUTPROCESSOR = 'payoutProcessor',
-  /** column name */
-  PAYOUTPROCESSORID = 'payoutProcessorId',
-  /** column name */
   PAYOUTTYPE = 'payoutType',
+  /** column name */
+  STOREID = 'storeId',
   /** column name */
   UPDATEDAT = 'updatedAt'
 }
 
 /** input type for updating data in table "payout_methods" */
 export type Payout_Methods_Set_Input = {
+  accountName?: Maybe<Scalars['String']>;
+  accountNumber?: Maybe<Scalars['String']>;
+  bsb?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['timestamptz']>;
   id?: Maybe<Scalars['String']>;
-  payeeId?: Maybe<Scalars['String']>;
-  payoutEmail?: Maybe<Scalars['String']>;
-  payoutProcessor?: Maybe<Scalars['String']>;
-  payoutProcessorId?: Maybe<Scalars['String']>;
   payoutType?: Maybe<Scalars['String']>;
+  storeId?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['timestamptz']>;
 };
 
 /** update columns of table "payout_methods" */
 export enum Payout_Methods_Update_Column {
   /** column name */
+  ACCOUNTNAME = 'accountName',
+  /** column name */
+  ACCOUNTNUMBER = 'accountNumber',
+  /** column name */
+  BSB = 'bsb',
+  /** column name */
   CREATEDAT = 'createdAt',
   /** column name */
   ID = 'id',
   /** column name */
-  PAYEEID = 'payeeId',
-  /** column name */
-  PAYOUTEMAIL = 'payoutEmail',
-  /** column name */
-  PAYOUTPROCESSOR = 'payoutProcessor',
-  /** column name */
-  PAYOUTPROCESSORID = 'payoutProcessorId',
-  /** column name */
   PAYOUTTYPE = 'payoutType',
+  /** column name */
+  STOREID = 'storeId',
   /** column name */
   UPDATEDAT = 'updatedAt'
 }
@@ -6286,7 +6294,7 @@ export type PayoutInput = {
 export type PayoutItem = {
    __typename?: 'PayoutItem';
   id: Scalars['ID'];
-  payeeId: Scalars['ID'];
+  storeId: Scalars['ID'];
   payeeType: PayeeType;
   store?: Maybe<StorePrivate>;
   amount: Scalars['Price'];
@@ -6335,25 +6343,9 @@ export type PayoutItemsPagedEdge = PageBasedConnectionEdge & {
   node: PayoutItem;
 };
 
-/** Details about how to get paid for selling products */
-export type PayoutMethod = {
-   __typename?: 'PayoutMethod';
-  id: Scalars['ID'];
-  userId?: Maybe<Scalars['ID']>;
-  createdAt?: Maybe<Scalars['Date']>;
-  updatedAt?: Maybe<Scalars['Date']>;
-  payoutType?: Maybe<Scalars['String']>;
-  /** Paypal Only, or email associated with a bank account */
-  payoutEmail?: Maybe<Scalars['String']>;
-  /** Paypal, Bank, or Card provider */
-  payoutProcessor?: Maybe<Scalars['String']>;
-  /** ID associated with payout method from payout provider */
-  payoutProcessorId?: Maybe<Scalars['String']>;
-};
-
 export type PayoutMethodMutationResponse = {
    __typename?: 'PayoutMethodMutationResponse';
-  payoutMethod: PayoutMethod;
+  payoutMethod: Payout_Methods;
 };
 
 export type PayoutsConnection = ConnectionWithMetrics & {
@@ -6397,11 +6389,6 @@ export enum PayoutStatus {
   PENDING_REFUND = 'PENDING_REFUND',
   /** Payout refunded, after payout */
   REFUNDED = 'REFUNDED'
-}
-
-export enum PayoutType {
-  PAYPAL = 'PAYPAL',
-  BANK = 'BANK'
 }
 
 
@@ -8843,13 +8830,13 @@ export type Query = {
    * 
    * AccessRule – OWNER
    */
-  listPaymentMethods?: Maybe<Array<PaymentMethod>>;
+  listPaymentMethods?: Maybe<Array<Payment_Methods>>;
   /**
    * Get a credit card payment method's details from Stripe
    * 
    * AccessRule – OWNER
    */
-  getPaymentMethod?: Maybe<PaymentMethod>;
+  getPaymentMethod?: Maybe<Payment_Methods>;
   /**
    * Get transaction details of an order from efc-payment service
    * 
@@ -8881,11 +8868,29 @@ export type Query = {
    */
   getPayoutItemsInPeriodAdmin: PayoutItemsConnection;
   /**
-   * List orders between startDate and endDate.
+   * List orders that are pending seller Form10 upload
+   * 
+   * AccessRule – PLATFORM_ADMIN
+   */
+  getOrdersCreatedConnectionAdmin: OrdersConnection;
+  /**
+   * List orders that are pending admin approval, after seller uploads form10
    * 
    * AccessRule – PLATFORM_ADMIN
    */
   getOrdersPendingApprovalConnectionAdmin: OrdersConnection;
+  /**
+   * List orders that have been approved by admin, and are ready to be paid
+   * 
+   * AccessRule – PLATFORM_ADMIN
+   */
+  getOrdersAdminApprovedConnection: OrdersConnection;
+  /**
+   * Orders which have completed payouts
+   * 
+   * AccessRule – PLATFORM_ADMIN
+   */
+  getOrdersPayoutCompleteConnection: OrdersConnection;
   /**
    * List payoutItems between startDate and endDate.
    * Paged connection.
@@ -9688,7 +9693,22 @@ export type QueryGetPayoutItemsInPeriodAdminArgs = {
 };
 
 
+export type QueryGetOrdersCreatedConnectionAdminArgs = {
+  query: ConnectionOffsetQueryOrders;
+};
+
+
 export type QueryGetOrdersPendingApprovalConnectionAdminArgs = {
+  query: ConnectionOffsetQueryOrders;
+};
+
+
+export type QueryGetOrdersAdminApprovedConnectionArgs = {
+  query: ConnectionOffsetQueryOrders;
+};
+
+
+export type QueryGetOrdersPayoutCompleteConnectionArgs = {
   query: ConnectionOffsetQueryOrders;
 };
 
@@ -9781,7 +9801,7 @@ export type QueryGetStoreByIdArgs = {
 };
 
 export type RefundPayoutItem = {
-  payeeId?: Maybe<Scalars['ID']>;
+  storeId?: Maybe<Scalars['ID']>;
   payeeType?: Maybe<PayeeType>;
   amount?: Maybe<Scalars['Int']>;
 };
@@ -12001,14 +12021,14 @@ export type UserPrivate = User & {
   userRole: Role;
   buyerOrdersConnection?: Maybe<OrdersConnection>;
   sellerOrdersConnection?: Maybe<OrdersConnection>;
-  paymentMethods?: Maybe<Array<Maybe<PaymentMethod>>>;
+  paymentMethods?: Maybe<Array<Maybe<Payment_Methods>>>;
   defaultPaymentMethodId?: Maybe<Scalars['ID']>;
-  defaultPaymentMethod?: Maybe<PaymentMethod>;
+  defaultPaymentMethod?: Maybe<Payment_Methods>;
   isSuspended: Scalars['Boolean'];
   storeId?: Maybe<Scalars['ID']>;
   store?: Maybe<StorePrivate>;
   payoutMethodId?: Maybe<Scalars['ID']>;
-  payoutMethod?: Maybe<PayoutMethod>;
+  payoutMethod?: Maybe<Payout_Methods>;
   payoutHistoryConnection?: Maybe<PayoutsConnection>;
   wishlistItemsConnection?: Maybe<WishlistItemsConnection>;
   followingStores?: Maybe<FollowingStoresConnection>;
@@ -12824,23 +12844,6 @@ export type SaveImageUploadMutation = { __typename?: 'Mutation', uploadSaveImage
       & ImageFragment
     ) } };
 
-export type SaveProductFileUploadMutationVariables = Exact<{
-  uploadId: Scalars['String'];
-  fileName: Scalars['String'];
-  ownerIds?: Maybe<Array<Maybe<Scalars['String']>>>;
-}>;
-
-
-export type SaveProductFileUploadMutation = { __typename?: 'Mutation', uploadSaveProductFile: { __typename?: 'UploadSaveProductFileMutationResponse', fileId: string } };
-
-export type GetProductFileDownloadLinkMutationVariables = Exact<{
-  id: Scalars['String'];
-  orderItemId: Scalars['String'];
-}>;
-
-
-export type GetProductFileDownloadLinkMutation = { __typename?: 'Mutation', generateProductFileDownloadLink: { __typename?: 'ProductFileLinkMutationResponse', downloadLink: { __typename?: 'ProductFileDownloadLink', productFileId: string, expiresAt: any, url: string } } };
-
 export type ImageFragment = { __typename?: 'image_parents', id: string, createdAt: any, tags?: Maybe<string>, description?: Maybe<string>, original?: Maybe<{ __typename?: 'image_variants', id: string, mimeType: string, heightInPixels: number, widthInPixels: number, sizeInBytes: number, url?: Maybe<string> }>, variants: Array<{ __typename?: 'image_variants', id: string, mimeType: string, sizeInBytes: number, widthInPixels: number, heightInPixels: number, url?: Maybe<string> }> };
 
 export type ProductDetailsFragment = { __typename?: 'products', id: string, createdAt: any, updatedAt: any, currentSnapshotId: string, categoryId: string, isPublished: boolean, isSuspended: boolean, isDeleted: boolean, isExcludedFromSearch: boolean, isExcludedFromRecommendations: boolean, storeId: string };
@@ -12880,12 +12883,12 @@ export type StoresFragment = { __typename?: 'stores', id: string, createdAt: any
     & ProductsFragment
   )> };
 
-export type UsersFragment = { __typename?: 'users', id: string, email: string, username?: Maybe<string>, userRole?: Maybe<string>, createdAt?: Maybe<any>, updatedAt?: Maybe<any>, firstName?: Maybe<string>, lastName?: Maybe<string>, emailVerified?: Maybe<boolean>, storeId?: Maybe<string>, stripeCustomerId?: Maybe<string>, sellerReferredById?: Maybe<string>, payoutMethodId?: Maybe<string>, payoutSplitId?: Maybe<string>, isDeleted: boolean, isSuspended: boolean, lastSeen?: Maybe<any>, store?: Maybe<(
+export type UsersFragment = { __typename?: 'users', id: string, email: string, username?: Maybe<string>, userRole?: Maybe<string>, createdAt?: Maybe<any>, updatedAt?: Maybe<any>, firstName?: Maybe<string>, lastName?: Maybe<string>, emailVerified?: Maybe<boolean>, storeId?: Maybe<string>, sellerReferredById?: Maybe<string>, payoutMethodId?: Maybe<string>, payoutSplitId?: Maybe<string>, isDeleted: boolean, isSuspended: boolean, lastSeen?: Maybe<any>, store?: Maybe<(
     { __typename?: 'stores' }
     & StoresFragment
-  )>, payoutMethod?: Maybe<{ __typename?: 'payout_methods', id: string, payeeId: string, payoutType?: Maybe<string>, payoutEmail?: Maybe<string>, payoutProcessor?: Maybe<string>, payoutProcessorId?: Maybe<string>, createdAt: any, updatedAt?: Maybe<any> }> };
+  )>, payoutMethod?: Maybe<{ __typename?: 'payout_methods', id: string, storeId: string, createdAt: any, updatedAt?: Maybe<any>, payoutType?: Maybe<string>, bsb?: Maybe<string>, accountNumber?: Maybe<string>, accountName?: Maybe<string> }> };
 
-export type OrdersFragment = { __typename?: 'orders', id: string, createdAt: any, updatedAt: any, bidId?: Maybe<string>, total: number, currency: string, buyerId: string, sellerId: string, productId: string, bid?: Maybe<{ __typename?: 'bids', id: string, bidStatus: string, createdAt?: Maybe<any>, updatedAt?: Maybe<any>, acceptedPrice?: Maybe<number>, offerPrice: number }>, buyer?: Maybe<{ __typename?: 'users', id: string, firstName?: Maybe<string>, lastName?: Maybe<string>, email: string }>, seller?: Maybe<{ __typename?: 'stores', id: string, name: string, website?: Maybe<string>, createdAt: any, updatedAt?: Maybe<any>, user: { __typename?: 'users', id: string, firstName?: Maybe<string>, lastName?: Maybe<string>, email: string } }>, currentSnapshot?: Maybe<{ __typename?: 'order_snapshots', id: string, orderStatus: string, createdAt: any, adminApproverId?: Maybe<string>, dealerApproverId?: Maybe<string>, adminApprover?: Maybe<{ __typename?: 'users', id: string, firstName?: Maybe<string>, lastName?: Maybe<string>, email: string }>, dealerApprover?: Maybe<{ __typename?: 'users', id: string, firstName?: Maybe<string>, lastName?: Maybe<string>, email: string }>, form10Image?: Maybe<(
+export type OrdersFragment = { __typename?: 'orders', id: string, createdAt: any, updatedAt: any, bidId?: Maybe<string>, total: number, currency: string, buyerId: string, sellerId: string, productId: string, bid?: Maybe<{ __typename?: 'bids', id: string, bidStatus: string, createdAt?: Maybe<any>, updatedAt?: Maybe<any>, acceptedPrice?: Maybe<number>, offerPrice: number }>, buyer?: Maybe<{ __typename?: 'users', id: string, firstName?: Maybe<string>, lastName?: Maybe<string>, email: string }>, seller?: Maybe<{ __typename?: 'stores', id: string, name: string, website?: Maybe<string>, createdAt: any, updatedAt?: Maybe<any>, user: { __typename?: 'users', id: string, firstName?: Maybe<string>, lastName?: Maybe<string>, email: string, payoutMethod?: Maybe<{ __typename?: 'payout_methods', id: string, createdAt: any, updatedAt?: Maybe<any>, payoutType?: Maybe<string>, bsb?: Maybe<string>, accountNumber?: Maybe<string>, accountName?: Maybe<string> }> } }>, currentSnapshot?: Maybe<{ __typename?: 'order_snapshots', id: string, orderStatus: string, createdAt: any, adminApproverId?: Maybe<string>, dealerApproverId?: Maybe<string>, adminApprover?: Maybe<{ __typename?: 'users', id: string, firstName?: Maybe<string>, lastName?: Maybe<string>, email: string }>, dealerApprover?: Maybe<{ __typename?: 'users', id: string, firstName?: Maybe<string>, lastName?: Maybe<string>, email: string }>, form10Image?: Maybe<(
       { __typename?: 'image_parents' }
       & ImageFragment
     )> }>, orderSnapshots: Array<{ __typename?: 'order_snapshots', id: string, orderStatus: string, createdAt: any, adminApproverId?: Maybe<string>, dealerApproverId?: Maybe<string>, adminApprover?: Maybe<{ __typename?: 'users', id: string, firstName?: Maybe<string>, lastName?: Maybe<string>, email: string }>, dealerApprover?: Maybe<{ __typename?: 'users', id: string, firstName?: Maybe<string>, lastName?: Maybe<string>, email: string }>, form10Image?: Maybe<(
@@ -12894,14 +12897,14 @@ export type OrdersFragment = { __typename?: 'orders', id: string, createdAt: any
     )> }>, product: (
     { __typename?: 'products' }
     & ProductsFragment
-  ), payoutItems: Array<{ __typename?: 'payout_items', id: string, payeeId: string, payeeType: string, amount: number, paymentProcessingFee: number, createdAt: any, payoutStatus: string, currency: string, orderId: string, txnId: string, payoutId?: Maybe<string>, taxes: number }> };
+  ), payoutItems: Array<{ __typename?: 'payout_items', id: string, storeId: string, payeeType: string, amount: number, paymentProcessingFee: number, createdAt: any, payoutStatus: string, currency: string, orderId: string, txnId: string, payoutId?: Maybe<string>, taxes: number }> };
 
 export type ProductVariantFragment = { __typename?: 'product_variants', variantSnapshotId: string, variantId: string, snapshotId: string, productId: string, storeId: string, createdAt: any, variantName: string, variantDescription: string, isDefault: boolean, position: number, price: number, priceWas?: Maybe<number>, isSoldOut: boolean, previewItems: Array<{ __typename?: 'product_preview_items', id: string, youTubeEmbedLink?: Maybe<string>, image?: Maybe<(
       { __typename?: 'image_parents' }
       & ImageFragment
     )> }> };
 
-type ProductFragment_ProductPublic_ = { __typename?: 'ProductPublic', id: string, updatedAt?: Maybe<any>, tags?: Maybe<string>, isPublished: boolean, isSuspended: boolean, isDeleted: boolean, isExcludedFromRecommendations: boolean, storeId: string, isSoldOut: boolean, currentSnapshot: { __typename?: 'product_snapshots', id: string, title: string, createdAt: any, description: string, condition: string, make: string, model: string, ammoType?: Maybe<string>, actionType: string, boreDiameter?: Maybe<string>, serialNumber: string, location: string, dealer: string }, currentVariants: Array<(
+type ProductFragment_ProductPrivate_ = { __typename?: 'ProductPrivate', id: string, updatedAt?: Maybe<any>, tags?: Maybe<string>, isPublished: boolean, isSuspended: boolean, isDeleted: boolean, isExcludedFromRecommendations: boolean, storeId: string, isSoldOut: boolean, currentSnapshot: { __typename?: 'product_snapshots', id: string, title: string, createdAt: any, description: string, condition: string, make: string, model: string, ammoType?: Maybe<string>, actionType: string, boreDiameter?: Maybe<string>, serialNumber: string, location: string, dealer: string }, currentVariants: Array<(
     { __typename?: 'product_variants' }
     & ProductVariantFragment
   )>, featuredVariant?: Maybe<(
@@ -12912,7 +12915,7 @@ type ProductFragment_ProductPublic_ = { __typename?: 'ProductPublic', id: string
     & ProductVariantFragment
   )>, store?: Maybe<{ __typename?: 'StorePrivate', id: string, name: string } | { __typename?: 'StorePublic', id: string, name: string }>, category?: Maybe<{ __typename?: 'categories', id: string, name: string, categoryGroup: string }> };
 
-type ProductFragment_ProductPrivate_ = { __typename?: 'ProductPrivate', id: string, updatedAt?: Maybe<any>, tags?: Maybe<string>, isPublished: boolean, isSuspended: boolean, isDeleted: boolean, isExcludedFromRecommendations: boolean, storeId: string, isSoldOut: boolean, currentSnapshot: { __typename?: 'product_snapshots', id: string, title: string, createdAt: any, description: string, condition: string, make: string, model: string, ammoType?: Maybe<string>, actionType: string, boreDiameter?: Maybe<string>, serialNumber: string, location: string, dealer: string }, currentVariants: Array<(
+type ProductFragment_ProductPublic_ = { __typename?: 'ProductPublic', id: string, updatedAt?: Maybe<any>, tags?: Maybe<string>, isPublished: boolean, isSuspended: boolean, isDeleted: boolean, isExcludedFromRecommendations: boolean, storeId: string, isSoldOut: boolean, currentSnapshot: { __typename?: 'product_snapshots', id: string, title: string, createdAt: any, description: string, condition: string, make: string, model: string, ammoType?: Maybe<string>, actionType: string, boreDiameter?: Maybe<string>, serialNumber: string, location: string, dealer: string }, currentVariants: Array<(
     { __typename?: 'product_variants' }
     & ProductVariantFragment
   )>, featuredVariant?: Maybe<(
@@ -12934,7 +12937,7 @@ type ProductFragment_ProductDownload_ = { __typename?: 'ProductDownload', id: st
     & ProductVariantFragment
   )>, store?: Maybe<{ __typename?: 'StorePrivate', id: string, name: string } | { __typename?: 'StorePublic', id: string, name: string }>, category?: Maybe<{ __typename?: 'categories', id: string, name: string, categoryGroup: string }> };
 
-export type ProductFragment = ProductFragment_ProductPublic_ | ProductFragment_ProductPrivate_ | ProductFragment_ProductDownload_;
+export type ProductFragment = ProductFragment_ProductPrivate_ | ProductFragment_ProductPublic_ | ProductFragment_ProductDownload_;
 
 type StorePublicFragment_StorePrivate_ = { __typename?: 'StorePrivate', id: string, createdAt: any, updatedAt?: Maybe<any>, name: string, bio?: Maybe<string>, website?: Maybe<string>, cover?: Maybe<(
     { __typename?: 'image_parents' }
@@ -12964,10 +12967,10 @@ export type StorePrivateFragment = { __typename?: 'StorePrivate', id: string, na
 
 export type PaymentMethodFragment = { __typename?: 'payment_methods', id: string, userId: string, createdAt: any, updatedAt?: Maybe<any>, customerId?: Maybe<string>, paymentProcessor?: Maybe<string>, paymentMethodTypes?: Maybe<string>, last4?: Maybe<string>, expMonth?: Maybe<number>, expYear?: Maybe<number>, email?: Maybe<string>, name?: Maybe<string>, details?: Maybe<string> };
 
-export type UserPrivateFragment = { __typename?: 'UserPrivate', id: string, firstName?: Maybe<string>, lastName?: Maybe<string>, email: string, stripeCustomerId?: Maybe<string>, emailVerified?: Maybe<boolean>, userRole: Role, isSuspended: boolean, store?: Maybe<(
+export type UserPrivateFragment = { __typename?: 'UserPrivate', id: string, firstName?: Maybe<string>, lastName?: Maybe<string>, email: string, emailVerified?: Maybe<boolean>, userRole: Role, isSuspended: boolean, store?: Maybe<(
     { __typename?: 'StorePrivate' }
     & StorePrivateFragment
-  )>, payoutMethod?: Maybe<{ __typename?: 'PayoutMethod', id: string, payoutType?: Maybe<string>, payoutEmail?: Maybe<string>, payoutProcessor?: Maybe<string>, payoutProcessorId?: Maybe<string> }> };
+  )>, payoutMethod?: Maybe<{ __typename?: 'payout_methods', id: string, payoutType?: Maybe<string>, bsb?: Maybe<string>, accountNumber?: Maybe<string>, accountName?: Maybe<string> }> };
 
 export type Unnamed_1_MutationVariables = Exact<{
   image_parents_input: Array<Image_Parents_Insert_Input>;
@@ -12988,11 +12991,11 @@ export type ProductsAllConnectionQueryVariables = Exact<{
 
 
 export type ProductsAllConnectionQuery = { __typename?: 'Query', productsAllConnection: { __typename?: 'ProductsConnection', totalCount?: Maybe<number>, pageInfo: { __typename?: 'PageInfo', isLastPage: boolean, endCursor?: Maybe<any> }, edges: Array<{ __typename?: 'ProductsEdge', node: (
-        { __typename?: 'ProductPublic' }
-        & ProductFragment_ProductPublic_
-      ) | (
         { __typename?: 'ProductPrivate' }
         & ProductFragment_ProductPrivate_
+      ) | (
+        { __typename?: 'ProductPublic' }
+        & ProductFragment_ProductPublic_
       ) | (
         { __typename?: 'ProductDownload' }
         & ProductFragment_ProductDownload_
@@ -13000,8 +13003,8 @@ export type ProductsAllConnectionQuery = { __typename?: 'Query', productsAllConn
 
 export type CreateStoreMutationVariables = Exact<{
   name: Scalars['String'];
-  profileId: Scalars['String'];
-  coverId: Scalars['String'];
+  profileId?: Maybe<Scalars['String']>;
+  coverId?: Maybe<Scalars['String']>;
   bio?: Maybe<Scalars['String']>;
   website?: Maybe<Scalars['String']>;
 }>;
@@ -13169,17 +13172,16 @@ export const UsersFragmentFragmentDoc = gql`
   lastName
   emailVerified
   storeId
-  stripeCustomerId
   sellerReferredById
   payoutMethod {
     id
-    payeeId
-    payoutType
-    payoutEmail
-    payoutProcessor
-    payoutProcessorId
+    storeId
     createdAt
     updatedAt
+    payoutType
+    bsb
+    accountNumber
+    accountName
   }
   payoutMethodId
   payoutSplitId
@@ -13223,6 +13225,15 @@ export const OrdersFragmentFragmentDoc = gql`
       firstName
       lastName
       email
+      payoutMethod {
+        id
+        createdAt
+        updatedAt
+        payoutType
+        bsb
+        accountNumber
+        accountName
+      }
     }
   }
   currentSnapshot {
@@ -13275,7 +13286,7 @@ export const OrdersFragmentFragmentDoc = gql`
   }
   payoutItems {
     id
-    payeeId
+    storeId
     payeeType
     amount
     paymentProcessingFee
@@ -13417,7 +13428,6 @@ export const UserPrivateFragmentFragmentDoc = gql`
   firstName
   lastName
   email
-  stripeCustomerId
   emailVerified
   userRole
   isSuspended
@@ -13427,9 +13437,9 @@ export const UserPrivateFragmentFragmentDoc = gql`
   payoutMethod {
     id
     payoutType
-    payoutEmail
-    payoutProcessor
-    payoutProcessorId
+    bsb
+    accountNumber
+    accountName
   }
 }
     ${StorePrivateFragmentFragmentDoc}`;
@@ -13458,32 +13468,6 @@ export const SaveImageUploadDocument = gql`
     ${ImageFragmentFragmentDoc}`;
 export type SaveImageUploadMutationResult = ApolloReactCommon.MutationResult<SaveImageUploadMutation>;
 export type SaveImageUploadMutationOptions = ApolloReactCommon.BaseMutationOptions<SaveImageUploadMutation, SaveImageUploadMutationVariables>;
-export const SaveProductFileUploadDocument = gql`
-    mutation saveProductFileUpload($uploadId: String!, $fileName: String!, $ownerIds: [String]) {
-  uploadSaveProductFile(uploadId: $uploadId, fileName: $fileName, ownerIds: $ownerIds) {
-    ... on UploadSaveProductFileMutationResponse {
-      fileId
-    }
-  }
-}
-    `;
-export type SaveProductFileUploadMutationResult = ApolloReactCommon.MutationResult<SaveProductFileUploadMutation>;
-export type SaveProductFileUploadMutationOptions = ApolloReactCommon.BaseMutationOptions<SaveProductFileUploadMutation, SaveProductFileUploadMutationVariables>;
-export const GetProductFileDownloadLinkDocument = gql`
-    mutation getProductFileDownloadLink($id: String!, $orderItemId: String!) {
-  generateProductFileDownloadLink(id: $id, orderItemId: $orderItemId) {
-    ... on ProductFileLinkMutationResponse {
-      downloadLink {
-        productFileId
-        expiresAt
-        url
-      }
-    }
-  }
-}
-    `;
-export type GetProductFileDownloadLinkMutationResult = ApolloReactCommon.MutationResult<GetProductFileDownloadLinkMutation>;
-export type GetProductFileDownloadLinkMutationOptions = ApolloReactCommon.BaseMutationOptions<GetProductFileDownloadLinkMutation, GetProductFileDownloadLinkMutationVariables>;
 export const ProductsAllConnectionDocument = gql`
     query productsAllConnection($searchTerm: String!, $query: ConnectionOffsetQuery) {
   productsAllConnection(searchTerm: $searchTerm, query: $query) {
@@ -13502,7 +13486,7 @@ export const ProductsAllConnectionDocument = gql`
     ${ProductFragmentFragmentDoc}`;
 export type ProductsAllConnectionQueryResult = ApolloReactCommon.QueryResult<ProductsAllConnectionQuery, ProductsAllConnectionQueryVariables>;
 export const CreateStoreDocument = gql`
-    mutation createStore($name: String!, $profileId: String!, $coverId: String!, $bio: String, $website: String) {
+    mutation createStore($name: String!, $profileId: String, $coverId: String, $bio: String, $website: String) {
   createStore(name: $name, profileId: $profileId, coverId: $coverId, bio: $bio, website: $website) {
     store {
       ... on StorePrivate {

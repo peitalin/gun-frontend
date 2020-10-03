@@ -231,9 +231,16 @@ export const validationSchemas = {
       profileId: Yup.string()
         .required('A profile pic is needed!'),
       coverId: Yup.string().nullable(),
-      payoutEmail: Yup.string()
-        .email("Not a valid email")
-        .required('A payout email is needed!'),
+      bsb: Yup.string()
+        .min(6, "Must 6 digits!")
+        .max(6, "Must 6 digits!")
+        .required('BSB number required.'),
+      accountNumber: Yup.string()
+        .min(8, "Must be 8-9 digits!")
+        .max(9, "Must be 8-9 digits!")
+        .required('bank account number required.'),
+      accountName: Yup.string()
+        .required('bank account name required.'),
     }),
 
   // Edit Store
@@ -246,9 +253,16 @@ export const validationSchemas = {
       website: Yup.string().nullable(),
       profileId: Yup.string().nullable(),
       coverId: Yup.string().nullable(),
-      payoutEmail: Yup.string()
-        .email("Not a valid email")
-        .required('A payout email is needed!'),
+      bsb: Yup.string()
+        .min(6, "Must 6 digits!")
+        .max(6, "Must 6 digits!")
+        .required('A BSB number required.'),
+      accountNumber: Yup.string()
+        .min(8, "Must be 8-9 digits!")
+        .max(9, "Must be 8-9 digits!")
+        .required('bank account number required.'),
+      accountName: Yup.string()
+        .required('bank account name required.'),
     }),
 
   // Sign Up
@@ -347,11 +361,18 @@ export const validationSchemas = {
     }),
 
   // Change Payout  email
-  ChangePayoutEmail:
+  ChangePayoutMethod:
     Yup.object().shape({
-      newPayoutEmail: Yup.string()
-        .email("Not a valid email")
-        .required('Cannot leave email blank'),
+      newBsb: Yup.string()
+        .required('A BSB number required.'),
+      newAccountNumber: Yup.string()
+        .min(6, "Must 6 digits!")
+        .max(6, "Must 6 digits!")
+        .required('bank account number required.'),
+      newAccountName: Yup.string()
+        .min(8, "Must be 8-9 digits!")
+        .max(9, "Must be 8-9 digits!")
+        .required('bank account name required.'),
     }),
 
   // Refunds
@@ -367,8 +388,8 @@ export const validationSchemas = {
               .required('missing disableItem'),
             refundPayoutItems: Yup.array().of(
               Yup.object({
-                payeeId: Yup.string()
-                  .required('missing a payeeId (storeId or affiliateId)'),
+                storeId: Yup.string()
+                  .required('missing a storeId'),
                 payeeType: Yup.string()
                   .required('missing a PayeeType (STORE or AFFILIATE)'),
                 amount: Yup.number()
@@ -415,6 +436,53 @@ export const validationSchemas = {
         .required('Subject is needed'),
       message: Yup.string()
         .required('A message is needed'),
+    }),
+
+
+  // Create Random User
+  RandomUser:
+    Yup.object().shape({
+      orderId: Yup.string()
+        .required('orderId required'),
+      refundOrderItems: Yup.array().of(
+          Yup.object({
+            orderItemId: Yup.string()
+              .required('missing an orderItemId'),
+            disableItem: Yup.boolean()
+              .required('missing disableItem'),
+            refundPayoutItems: Yup.array().of(
+              Yup.object({
+                storeId: Yup.string()
+                  .required('missing a storeId'),
+                payeeType: Yup.string()
+                  .required('missing a PayeeType (STORE or AFFILIATE)'),
+                amount: Yup.number()
+                  .required('Add an amount'),
+              })
+            )
+          })
+      ),
+      chargeId: Yup.string()
+        .required('chargeId required'),
+      paymentIntentId: Yup.string() // Stripe Only
+        .nullable(true)
+        .test("paymentIntentId", "Must exist for Stripe transactions", function(value) {
+          if (this.parent.paymentProcessor === "Stripe") {
+            return !!value
+          } else {
+            // if Paypal, return true (passes validation check)
+            return true
+          }
+        }),
+      paypalInvoiceNumber: Yup.string()
+        .nullable(true), // Paypal Only
+      taxes: Yup.number()
+        .required('taxes required'),
+      paymentProcessingFee: Yup.number()
+        .required('paymentProcessingFee required'),
+      paymentProcessor: Yup.string()
+        .required('paymentProcessor required'),
+        // Stripe || Paypal
     }),
 
 }

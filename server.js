@@ -292,6 +292,10 @@ const requestHandler = (req, res) => {
     const filePath = path.join(__dirname, pathname);
     // console.log("public!", filePath)
     app.serveStatic(req, res, filePath);
+  } else if (pathname.startsWith("/data")) {
+    const filePath = path.join(__dirname, pathname);
+    console.log("data!", filePath)
+    app.serveStatic(req, res, filePath);
   } else {
     handle(req, res, parsedUrl);
   }
