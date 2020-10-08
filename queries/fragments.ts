@@ -40,6 +40,16 @@ export const ProductDetailsFragment = gql`
     isExcludedFromSearch
     isExcludedFromRecommendations
     storeId
+    store {
+      id
+      createdAt
+      name
+      website
+      user {
+        id
+        email
+      }
+    }
   }
 `;
 

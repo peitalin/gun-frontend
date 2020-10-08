@@ -1352,7 +1352,7 @@ export type ConnectionWithMetrics = {
 };
 
 export type CreateProductsConfig = {
-  count?: Maybe<Scalars['Int']>;
+  count: Scalars['Int'];
   sellerLogin?: Maybe<LoginDetails>;
   alwaysPublish?: Maybe<Scalars['Boolean']>;
   alwaysFewestPreviews?: Maybe<Scalars['Boolean']>;
