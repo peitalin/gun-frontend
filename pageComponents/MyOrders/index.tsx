@@ -28,7 +28,14 @@ import ToolTips from "pageComponents/MyOrders/ToolTips";
 import OrderRowSellers from "pageComponents/MyOrders/OrderRowSellers";
 import OrderRowBuyers from "pageComponents/MyOrders/OrderRowBuyers";
 import PurchaseSuccessBanner from "pageComponents/MyOrders/PurchaseSuccessBanner";
-import { UserPrivate, OrderStatus, OrdersConnection, Orders } from "typings/gqlTypes";
+import {
+  UserPrivate,
+  OrderStatus,
+  OrdersConnection,
+  Orders,
+  Order_By,
+  Orders_Order_By,
+} from "typings/gqlTypes";
 // Icons
 import ClearIcon from "@material-ui/icons/Clear";
 import IconButton from "@material-ui/core/IconButton";
@@ -59,8 +66,9 @@ const MyOrders: React.FC<ReactProps> = (props) => {
     GET_BUYER_ORDERS_CONNECTION, {
       variables: {
         query: {
-          limit: 10,
+          limit: 30,
           offset: 0,
+          orderBy: { createdAt: Order_By.DESC }
         }
       },
       fetchPolicy: "network-only",
@@ -73,6 +81,7 @@ const MyOrders: React.FC<ReactProps> = (props) => {
         query: {
           limit: 10,
           offset: 0,
+          orderBy: { createdAt: Order_By.DESC }
         }
       },
       fetchPolicy: "network-only",
