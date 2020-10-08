@@ -9,6 +9,9 @@ import AirButtonLeft from "./AirButtonLeft";
 import AirButtonRight from "./AirButtonRight";
 import PositionIndicator from "./PositionIndicator";
 import { useScrollXPosition } from "utils/hooks";
+// Responsiveness
+import { useTheme } from "@material-ui/core/styles";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 
 
@@ -19,6 +22,7 @@ const AirCarousel: React.FC<ReactProps> = (props) => {
   const [showRightButton, setShowRightButton] = React.useState(false);
   // dom elements
   const [airCarousel, setAirCarousel] = React.useState(undefined);
+  const [showButtons, setShowButtons] = React.useState(false);
 
   const {
     disableButtons = false,
@@ -30,6 +34,9 @@ const AirCarousel: React.FC<ReactProps> = (props) => {
     scrollItemsPerClick = 4,
   } = props;
 
+  const theme = useTheme();
+  const smDown = useMediaQuery(theme.breakpoints.down("sm"))
+  const xsDown = useMediaQuery(theme.breakpoints.down("xs"))
 
   React.useEffect(() => {
     if (process.browser) {
@@ -43,9 +50,10 @@ const AirCarousel: React.FC<ReactProps> = (props) => {
     ? document.querySelectorAll(`.${props.id} > li`)
     : [];
 
-  // number of airItems above 3, multiple by width of each item
+  // number of airItems above 3, multiply by width of each item
   // const maxCursor = (airItems.length - 3) * option(airItems)[0].clientWidth(0);
-  const maxCursor = (airItems.length - 1) * option(airItems)[0].clientWidth(0);
+  let cardWidth = option(airItems)[0].clientWidth(0);
+  const maxCursor = (airItems.length - 1) * cardWidth;
 
   React.useEffect(() => {
     setShowRightButton(true)
@@ -66,12 +74,23 @@ const AirCarousel: React.FC<ReactProps> = (props) => {
   return (
     <ErrorBounds fragment>
       <div
-        className={"air-carousel-outer"}
+        className={clsx(
+          "air-carousel-outer",
+          // "fadeInFast",
+        )}
+        // disable on mobile, otheriwse need to double tap for link navigation
+        onMouseOver={
+          !smDown ? () => setShowButtons(true) : null
+        }
+        onMouseLeave={
+          !smDown ? () => setShowButtons(false) : null
+        }
         style={{
           position: "relative",
           zIndex: 0,
           width: "100%",
           overflow: 'hidden', // tuck buttons inside frame
+          ...props.style,
         }}
       >
         {
@@ -79,10 +98,12 @@ const AirCarousel: React.FC<ReactProps> = (props) => {
           (React.Children.count(props.children) > 1) &&
           <>
             <AirButtonLeft
+              className={showButtons ? "fadeInFast" : "hidden"}
               onClick={() => {
                 let newCursor = (cursor - option(airItems)[0].clientWidth(0) * scrollItemsPerClick);
                 smScroll((newCursor < 0) ? 0 : newCursor)
                 setCursor((newCursor <= 0) ? 0 : newCursor)
+
                 setShowLeftButton((newCursor <= 0) ? false : true)
                 setShowRightButton((newCursor >= maxCursor) ? false : true)
                 if(props.handleClickLeft) {
@@ -92,12 +113,15 @@ const AirCarousel: React.FC<ReactProps> = (props) => {
               // showButton={showLeftButton || disableSmartButtons}
               showButton={true}
               onMouseOver={props.onMouseOver}
+              style={props.buttonLeftStyle}
             />
             <AirButtonRight
+              className={showButtons ? "fadeInFast" : "hidden"}
               onClick={() => {
                 let newCursor = (cursor + option(airItems)[0].clientWidth(0)) * scrollItemsPerClick;
                 smScroll((newCursor > maxCursor) ? maxCursor : newCursor)
                 setCursor((newCursor > maxCursor) ? maxCursor : newCursor)
+
                 setShowLeftButton((newCursor <= 0) ? false : true)
                 setShowRightButton((newCursor >= maxCursor) ? false : true)
                 if(props.handleClickRight) {
@@ -107,6 +131,7 @@ const AirCarousel: React.FC<ReactProps> = (props) => {
               // showButton={showRightButton || disableSmartButtons}
               showButton={true}
               onMouseOver={props.onMouseOver}
+              style={props.buttonRightStyle}
             />
           </>
         }
@@ -136,6 +161,7 @@ const AirCarousel: React.FC<ReactProps> = (props) => {
             minWidth: '100%',
             scrollSnapType: props.scrollSnapType || 'x mandatory',
             listStyle: 'none',
+            scrollbarWidth: 'none' // remove scrollbars on firefox
           }}>
             {props.children}
           </ul>
@@ -189,12 +215,22 @@ interface ReactProps {
   showPositionIndicator?: boolean;
   totalNumberOfItems?: number;
   scrollSnapType?: string;
+  // https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-snap-type
+    // "x mandatory" |
+    // "y mandatory" |
+    // "both mandatory" |
+    // "x proximity" |
+    // "y proximity" |
+    // "both proximity" |
   handleClickLeft?(): void;
   handleClickRight?(): void;
   rightDither?: boolean;
   leftDither?: boolean;
   scrollItemsPerClick?: number;
   onMouseOver?(a: any): void;
+  buttonLeftStyle?: any;
+  buttonRightStyle?: any;
+  style?: any;
 }
 
 // export default React.memo(

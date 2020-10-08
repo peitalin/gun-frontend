@@ -91,6 +91,6 @@
     "@zeit/next-css": "^1.0.1",
     "cacheable-response": "^2.0.7",
     "graphql": "^14.6.0",
-    "typescript": "3.6.4"
+    "typescript": "^4.0.3"
   }
 }

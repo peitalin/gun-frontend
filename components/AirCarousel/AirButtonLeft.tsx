@@ -5,7 +5,7 @@ import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/s
 
 const AirButtonLeft: React.FC<ReactProps> = (props) => {
   return (
-    <div className="air-carousel-button-left"
+    <div className={clsx("air-carousel-button-left", props.className)}
       style={{
         left: "-14px",
         position: "absolute",
@@ -64,6 +64,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   onMouseOver?(a: any): void;
   showButton?: boolean;
   style?: any;
+  className?: any;
 }
 
 const styles = (theme: Theme) => createStyles({

@@ -252,7 +252,7 @@ export const styles = (theme: Theme) => createStyles({
       color: Colors.charcoal,
     },
     '&::placeholder': {
-      color: Colors.lightMediumGrey,
+      color: Colors.mediumLightGrey,
     }
   },
   yearInputHidden: {
@@ -269,7 +269,7 @@ export const styles = (theme: Theme) => createStyles({
       color: Colors.charcoal,
     },
     '&::placeholder': {
-      color: Colors.lightMediumGrey,
+      color: Colors.mediumLightGrey,
     }
   },
 })

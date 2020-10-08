@@ -26,7 +26,6 @@ import { styles } from "./PreviewCardResponsiveCarousel/styles";
 import PreviewImageEmpty from "./PreviewCardResponsiveCarousel/PreviewImageEmpty";
 import {
   CARD_MAX_WIDTH_XL,
-  CARD_MAX_WIDTH,
 } from "./PreviewCardResponsiveCarousel/styles";
 
 

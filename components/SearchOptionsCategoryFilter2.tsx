@@ -9,7 +9,7 @@ import Button from "@material-ui/core/Button";
 import ClearIcon from '@material-ui/icons/Clear';
 // GraphQL Typings
 import {
-  ProductCategory,
+  Categories
 } from "typings/gqlTypes";
 // MUI expander
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
@@ -31,7 +31,7 @@ const SearchOptionsCategoryFilterDropdown: React.FC<ReactProps> = (props) => {
     defaultExpanded = false,
   } = props;
 
-  const sortAlphabetically = (c1: ProductCategory, c2: ProductCategory): number => {
+  const sortAlphabetically = (c1: Categories, c2: Categories): number => {
     let c1name = option(c1).name() ? c1.name.toLowerCase() : ""
     let c2name = option(c2).name() ? c2.name.toLowerCase() : ""
     return (c1name > c2name) ? 1 : -1
@@ -178,7 +178,7 @@ const CategoryButton: React.FC<CategoryButtonProps> = (props) => {
 interface CategoryButtonProps extends WithStyles<typeof styles> {
   onClick(): void;
   highlightButton: boolean;
-  category: ProductCategory;
+  category: Categories;
 }
 
 
@@ -190,7 +190,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   // Category Facets
   setCategoryFacets?(args: { categoryName?: string, clearFacets?: boolean }): void;
   facets?: string[];
-  currentCategories: ProductCategory[];
+  currentCategories: Categories[];
   maxWidth?: any;
 }
 

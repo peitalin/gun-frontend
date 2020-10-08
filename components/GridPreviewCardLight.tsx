@@ -13,26 +13,23 @@ import Link from "next/link";
 import WishlistIcon from "components/WishlistIcon";
 import DiscountBadge from "components/DiscountBadge";
 // Typings
-import { ProductPreviewItem, ProductCategory, Product, PriceDetails, ID } from "typings/gqlTypes";
+import { ProductPreviewItem, Product, ID } from "typings/gqlTypes";
 import { genSrcSet, genImgBreakpoints } from "utils/images";
 import { getYouTubeVimeoImagePreview } from "utils/strings";
 import PriceDisplayMain from "components/PriceDisplayMain";
+import LinkLoading from "pageComponents/FrontPage/PreviewCardResponsiveCarousel/LinkLoading";
 // Responsiveness
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import Hidden from "@material-ui/core/Hidden";
 import ProductRow from "pageComponents/FrontPage/FeaturedProductsMobile/ProductRow";
 import DescriptionLoading from "pageComponents/FrontPage/PreviewCardResponsiveCarousel/DescriptionLoading";
-// links
-import { getProductIdOrSlug } from "utils/links";
 // Carousel
-import AirItemWide from "components/AirCarousel/AirItemWide";
 import AirCarousel from "components/AirCarousel";
 import { useScrollXPosition, useCalcNumItemsFromWindowWidth } from "utils/hooks";
 import AspectRatioConstraint from "components/AspectRatioConstraint";
 import PreviewImageEmpty from "pageComponents/FrontPage/PreviewCardResponsiveCarousel/PreviewImageEmpty";
 import AspectCarouselItemLink from "pageComponents/FrontPage/PreviewCardResponsiveCarousel/AspectCarouselItemLink";
-import LinkLoading from "pageComponents/FrontPage/PreviewCardResponsiveCarousel/LinkLoading";
 import {
   CARD_MAX_WIDTH_XL,
   DESCRIPTION_HEIGHT,
@@ -65,19 +62,8 @@ const GridPreviewCardLight = (props: ReactProps) => {
   // e.g. 4 cards = 1rem each +1 rem for padding-left,
   // with when divided over 4 cards = 1/4 rem
 
-  const shouldLoadImage = ({
-    firstImage,
-    productIndex
-  }: { firstImage: boolean, productIndex: number}) => {
-    // load secondary preview item images after onmousehover event.
-    // if hovered over product card
-    if (props.loadCarouselPics && productIndex) {
-      return firstImage || props.loadCarouselPics[productIndex]
-    } else {
-      // no loadCarouselPics logic, load all images up front
-      return true
-    }
-  }
+  let price = product.featuredVariant.price
+  let priceWas = product.featuredVariant.priceWas
 
   const productId = option(product).id();
   const productVariantId = option(product).featuredVariant.variantId()
@@ -91,18 +77,12 @@ const GridPreviewCardLight = (props: ReactProps) => {
 
   const numPreviews = previewItems.length;
 
-  const title = option(product).name('').length > 50
-    ? product.name.slice(0, 52) + '...'
-    : option(product).name()
+  const title = option(product).currentSnapshot.title('').length > 50
+    ? product.currentSnapshot.title.slice(0, 52) + '...'
+    : option(product).currentSnapshot.title()
 
   const category = option(product).category();
-  const priceDetails = option(product).featuredVariant.priceDetails();
   const isSoldOut = option(product).featuredVariant.isSoldOut();
-
-  const quantityAvailable= option(product)
-    .featuredVariant
-    .currentStockLevel
-    .quantityAvailable();
 
   const getCardMaxWidth = (cardsPerRow: number) => {
     // minus 16px (1rem) for left-padding on carousel
@@ -159,12 +139,8 @@ const GridPreviewCardLight = (props: ReactProps) => {
   // console.log("carouselId: ", carouselId)
 
   const showDiscountBadge = () => {
-    if (
-      priceDetails &&
-      priceDetails.basePrice !== undefined &&
-      priceDetails.actualPrice !== undefined
-    ) {
-      return priceDetails.actualPrice < priceDetails.basePrice
+    if (price !== undefined && priceWas !== undefined) {
+      return price < priceWas
     } else {
       return false
     }
@@ -181,7 +157,10 @@ const GridPreviewCardLight = (props: ReactProps) => {
     >
       {
         showDiscountBadge() &&
-        <DiscountBadge priceDetails={priceDetails}/>
+        <DiscountBadge
+          price={price}
+          priceWas={priceWas}
+        />
       }
       <AirCarousel
         id={carouselId}
@@ -254,7 +233,7 @@ const GridPreviewCardLight = (props: ReactProps) => {
         }
         <LinkLoading
           href={"/p/[productIdOrSlug]"}
-          as={`/p/${getProductIdOrSlug(props.product)}`}
+          as={`/p/${props.product.id}`}
           disable={!option(props).product.storeId()}
         >
           {
@@ -281,14 +260,12 @@ const GridPreviewCardLight = (props: ReactProps) => {
                   { title ? title : "" }
                 </Typography>
                 <div className={classes.priceAbsoluteBottom}>
-                  {
-                    priceDetails &&
-                    <PriceDisplayMain
-                      priceDetails={priceDetails}
-                      quantityAvailable={quantityAvailable}
-                      isSoldOut={isSoldOut}
-                    />
-                  }
+                  <PriceDisplayMain
+                    price={price}
+                    priceWas={priceWas}
+                    quantityAvailable={1}
+                    isSoldOut={isSoldOut}
+                  />
                 </div>
               </div>
           }

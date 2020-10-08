@@ -13,7 +13,6 @@ import Button from "@material-ui/core/Button";
 // components
 import Banner from './Banner';
 import MessageList from './MessageList';
-import { smoothScrollPolyfill } from "components/AirCarousel/carouselUtils";
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import IconButton from "@material-ui/core/IconButton";
 import throttle from "lodash.throttle";

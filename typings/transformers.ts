@@ -151,8 +151,7 @@ export const convertHasuraUser = (u: Users): UserPrivate => {
     userRole: convertHasuraUserRole(u.userRole),
     payoutMethod: {
       ...u.payoutMethod,
-      userId: u.id,
-      __typename: "PayoutMethod",
+      // __typename: "PayoutMethod",
     },
     __typename: 'UserPrivate',
   }

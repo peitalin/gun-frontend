@@ -9,7 +9,7 @@ import ErrorBounds from "components/ErrorBounds";
 // MUI
 import Typography from "@material-ui/core/Typography";
 // Components
-import { Orders, PaymentMethod } from "typings/gqlTypes";
+import { Orders } from "typings/gqlTypes";
 // Icons
 import LockIcon from "@material-ui/icons/Lock";
 import LocalOfferIcon from "@material-ui/icons/LocalOffer";

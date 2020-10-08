@@ -28,25 +28,25 @@ const RefundTaxesFees = (props: ReactProps & FormikProps<FormikFields>) => {
   const [refundTaxes, setRefundTaxes] = React.useState(false);
   const [refundPaymentProcessingFee, setRefundPaymentProcessingFee] = React.useState(false);
 
-  const handleRefundTaxes = () => {
-    if (refundTaxes === false) {
-      setRefundTaxes(true)
-      fprops.setFieldValue("taxes", tx.taxes)
-    } else {
-      setRefundTaxes(false)
-      fprops.setFieldValue("taxes", 0)
-    }
-  }
+  // const handleRefundTaxes = () => {
+  //   if (refundTaxes === false) {
+  //     setRefundTaxes(true)
+  //     fprops.setFieldValue("taxes", tx.taxes)
+  //   } else {
+  //     setRefundTaxes(false)
+  //     fprops.setFieldValue("taxes", 0)
+  //   }
+  // }
 
-  const handleRefundPaymentProcessingFee = () => {
-    if (refundPaymentProcessingFee === false) {
-      setRefundPaymentProcessingFee(true)
-      fprops.setFieldValue("paymentProcessingFee", tx.paymentProcessingFee)
-    } else {
-      setRefundPaymentProcessingFee(false)
-      fprops.setFieldValue("paymentProcessingFee", 0)
-    }
-  }
+  // const handleRefundPaymentProcessingFee = () => {
+  //   if (refundPaymentProcessingFee === false) {
+  //     setRefundPaymentProcessingFee(true)
+  //     fprops.setFieldValue("paymentProcessingFee", tx.paymentProcessingFee)
+  //   } else {
+  //     setRefundPaymentProcessingFee(false)
+  //     fprops.setFieldValue("paymentProcessingFee", 0)
+  //   }
+  // }
 
   // Formik props
   const {
@@ -68,52 +68,6 @@ const RefundTaxesFees = (props: ReactProps & FormikProps<FormikFields>) => {
   return (
     <div className={clsx(classes.root, classes.flexRow)}>
       <div className={classes.flexContainer}>
-        <FormGroup row className={classes.flexRow}>
-          <FormControlLabel
-            control={
-              <Checkbox
-                disabled={props.disableRefundPaymentProcessingFee}
-                checked={refundPaymentProcessingFee}
-                onChange={handleRefundPaymentProcessingFee}
-                value="Special"
-                color="primary"
-              />
-            }
-            label={
-              <div>
-                {
-                  props.disableRefundPaymentProcessingFee
-                  ? `Refunded ${tx.paymentProcessor} Payment Processing Fees: `
-                  : `Refund ${tx.paymentProcessor} Payment Processing Fee: `
-                }
-                <span className={classes.actualPrice}>{c(tx.paymentProcessingFee)}</span>
-              </div>
-            }
-          />
-        </FormGroup>
-        <FormGroup row className={clsx(classes.flexRow, classes.marginBottom1)}>
-          <FormControlLabel
-            control={
-              <Checkbox
-                disabled={props.disableRefundTaxes}
-                checked={refundTaxes}
-                onChange={handleRefundTaxes}
-                value="Special"
-                color="primary"
-              />
-            }
-            label={
-              <div>
-                {
-                  props.disableRefundTaxes
-                  ? "Refunded taxes: "
-                  : "Refund taxes: "
-                }
-                <span className={classes.actualPrice}>{c(tx.taxes)}</span>
-              </div>
-            }
-          />
-        </FormGroup>
       </div>
     </div>
   )

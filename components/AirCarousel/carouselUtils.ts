@@ -2,7 +2,7 @@
 const easingOutQuint = (x, t, b, c, d) =>
   c * ((t = t / d - 1) * t * t * t * t + 1) + b
 
-export const smoothScrollPolyfill = (node, key, target) => {
+const smoothScrollPolyfill = (node, key, target) => {
   const startTime = Date.now()
   const offset = node[key]
   const gap = target - offset
@@ -60,7 +60,8 @@ const hasNativeSmoothScroll = () => {
 }
 
 export const smoothScroll = (node: Element) => (by: number) => {
-  if (hasNativeSmoothScroll()) {
+  let hasScroll = hasNativeSmoothScroll()
+  if (hasScroll) {
     return node.scrollTo({
       "left": by,
       behavior: 'smooth'

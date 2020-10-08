@@ -4,86 +4,108 @@ import { oc as option } from "ts-optchain";
 
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
 import { Colors } from "layout/AppTheme";
+// Typings
+import { Product } from "typings/gqlTypes";
 // Material UI
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
-import CardMedia from "@material-ui/core/CardMedia";
-import Typography from "@material-ui/core/Typography";
 import Link from "next/link";
-import WishlistIcon from "components/WishlistIcon";
-import DiscountBadge from "components/DiscountBadge";
 // Carousel
 import AirItemWide from "components/AirCarousel/AirItemWide";
-import AirCarousel from "components/AirCarousel";
-import { useScrollXPosition, useCalcNumItemsFromWindowWidth } from "utils/hooks";
 import AspectRatioConstraint from "components/AspectRatioConstraint";
-import PreviewImageEmpty from "./PreviewImageEmpty";
-import { styles } from "./styles";
+import LinkLoading from "./LinkLoading";
+import {
+  styles,
+} from "./styles";
 
 
 
 
-const AspectCarouselItemLink: React.FC<CarouselItemWrapperProps> = (props) => {
+const AspectCarouselItemLink: React.FC<CarouselItemLinkProps> = (props) => {
 
   const {
     i,
     classes,
     shouldLoadImage,
-    setLoadCarouselPics,
     productIndex,
-    productId,
+    product,
   } = props;
 
-  return (
-    <AirItemWide
-      showNumItems={1}
-      title={""}
-      disableDither={true}
-      removePaddingBottom={true}
-      removeMarginBottom={true}
-    >
-      <Card
-        className={classes.card}
-        classes={{ root: classes.cardRoot }}
-        onMouseOver={() => {
-          if (setLoadCarouselPics) {
-            setLoadCarouselPics(s => {
-              return { ...s, [productIndex]: true }
-            })
-          }
-        }}
+  // Note: AirItemWide also constrains dimensions to 16:10,
+  // hence the "aspect" name,
+
+  if (shouldLoadImage && props.onMouseOver) {
+    return (
+      <AirItemWide
+        showNumItems={1}
+        title={undefined}
+        disableDither={true}
+        removePaddingBottom={true}
+        removeMarginBottom={true}
       >
-        <Link
-          href={"/p/[productId]"}
-          as={`/p/${productId}`}
+        <Card
+          className={classes.card}
+          classes={{ root: classes.cardRoot }}
+          onMouseOver={props.onMouseOver}
         >
-          <a className={classes.flexRow100Width}>
+          <LinkLoading
+            href={"/p/[productIdOrSlug]"}
+            as={`/p/${product.id}`}
+            disable={!option(product).storeId()}
+          >
             {
               shouldLoadImage({
-                firstImage: i === 0 || i === 1, // load first 2 images
+                // firstImage: i === 0 || i === 1, // load first 2 images
+                firstImage: i === 0, // load first image
                 productIndex: productIndex
               }) &&
               <CardActionArea classes={{ root: classes.cardActionArea }}>
                 {props.children}
               </CardActionArea>
             }
-          </a>
-        </Link>
-      </Card>
-    </AirItemWide>
-  )
+          </LinkLoading>
+        </Card>
+      </AirItemWide>
+    )
+  } else {
+    return (
+      <AirItemWide
+        showNumItems={1}
+        title={undefined}
+        disableDither={true}
+        removePaddingBottom={true}
+        removeMarginBottom={true}
+      >
+        <Card
+          className={classes.card}
+          classes={{ root: classes.cardRoot }}
+          onMouseOver={props.onMouseOver}
+        >
+          <LinkLoading
+            href={"/p/[productIdOrSlug]"}
+            as={`/p/${product.id}`}
+            disable={!option(product).storeId()}
+          >
+            <CardActionArea classes={{ root: classes.cardActionArea }}>
+              {props.children}
+            </CardActionArea>
+          </LinkLoading>
+        </Card>
+      </AirItemWide>
+    )
+  }
 }
 
 
-interface CarouselItemWrapperProps extends WithStyles<typeof styles> {
-  i: number;
-  shouldLoadImage({ firstImage, productIndex }: {
+interface CarouselItemLinkProps extends WithStyles<typeof styles> {
+  product: Product;
+  i?: number;
+  shouldLoadImage?({ firstImage, productIndex }: {
     firstImage: boolean;
     productIndex: number
   }): boolean;
-  setLoadCarouselPics(a: React.Dispatch<React.SetStateAction<any>>): void;
-  productIndex: number;
-  productId: string;
+  productIndex?: number;
+  onMouseOver?(): void;
 }
 
 

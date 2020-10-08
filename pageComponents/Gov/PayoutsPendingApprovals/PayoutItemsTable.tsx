@@ -173,7 +173,7 @@ const PayoutItemsTable: NextPage<ReactProps> = (props) => {
                 c(node.paymentProcessingFee),
                 node.payoutStatus,
                 node.payeeType,
-                option(node).store.user.payoutMethod.payoutEmail("NA"),
+                option(node).store.user.payoutMethod.bsb(""),
               )
             })
           }

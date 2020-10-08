@@ -23,16 +23,13 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 import Hidden from "@material-ui/core/Hidden";
 import ProductRow from "pageComponents/FrontPage/FeaturedProductsMobile/ProductRow";
 // Carousel
-import AirItemWide from "components/AirCarousel/AirItemWide";
 import AirCarousel from "components/AirCarousel";
 import { useScrollXPosition, useCalcNumItemsFromWindowWidth } from "utils/hooks";
 import AspectRatioConstraint from "components/AspectRatioConstraint";
 import PreviewImageEmpty from "./PreviewImageEmpty";
 import AspectCarouselItemLink from "./AspectCarouselItemLink";
 import {
-  CARD_MAX_WIDTH,
   CARD_MAX_WIDTH_XL,
-  CARD_MIN_WIDTH,
   styles,
 } from "./styles";
 import { showDateAndTime } from "utils/dates";
@@ -119,9 +116,9 @@ const PreviewCardRC = (props: ReactProps) => {
             i={0}
             classes={classes}
             shouldLoadImage={shouldLoadImage}
-            setLoadCarouselPics={props.setLoadCarouselPics}
+            // setLoadCarouselPics={props.setLoadCarouselPics}
             productIndex={props.productIndex}
-            productId={props.product.id}
+            product={props.product}
           >
             <PreviewImageEmpty/>
           </AspectCarouselItemLink>
@@ -141,9 +138,9 @@ const PreviewCardRC = (props: ReactProps) => {
                 i={i}
                 classes={classes}
                 shouldLoadImage={shouldLoadImage}
-                setLoadCarouselPics={props.setLoadCarouselPics}
+                // setLoadCarouselPics={props.setLoadCarouselPics}
                 productIndex={props.productIndex}
-                productId={props.product.id}
+                product={props.product}
               >
               {
                 (img600 && img600.url || image)

@@ -21,7 +21,6 @@ import {
   Orders,
   OrderStatus,
   Product,
-  PaymentMethod as EFCPaymentMethod,
 } from 'typings/gqlTypes';
 import { OrderMutationResponse } from "typings/gqlTypes";
 // Redux
