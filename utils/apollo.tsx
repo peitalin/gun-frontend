@@ -18,26 +18,28 @@ import https from "https";
 import { oc as option } from "ts-optchain";
 
 
+/////////// Environment Variables in .env
+
 // let GATEWAY_GRAPHQL_URL = "https://api.gunmarketplace.com.au/v1/graphql"
 // let SERVER_GATEWAY_GRAPHQL_URL = "https://api.gunmarketplace.com.au/v1/graphql"
+// let GATEWAY_GRAPHQL_WS_URL = "ws://api.gunmarketplace.com.au/v1/graphql"
 
-// let GATEWAY_GRAPHQL_URL = "https://0.0.0.0:443/v1/graphql"
-let GATEWAY_GRAPHQL_URL = "https://0.0.0.0/gateway/graphql"
-let GATEWAY_GRAPHQL_WS_URL = "wss://0.0.0.0:443/v1/graphql"
-// let GATEWAY_GRAPHQL_WS_URL = "ws://0.0.0.0:7070/v1/graphql"
-let SERVER_GATEWAY_GRAPHQL_URL = "https://0.0.0.0/gateway/graphql"
+// // let GATEWAY_GRAPHQL_URL = "https://0.0.0.0:443/v1/graphql"
+// let GATEWAY_GRAPHQL_URL = "https://0.0.0.0/gateway/graphql"
+// let GATEWAY_GRAPHQL_WS_URL = "wss://0.0.0.0:443/v1/graphql"
+// // let GATEWAY_GRAPHQL_WS_URL = "ws://0.0.0.0:7070/v1/graphql"
+// let SERVER_GATEWAY_GRAPHQL_URL = "https://0.0.0.0/gateway/graphql"
 
 
-let NODE_ENV = "develop"
+const URI = process.env.GATEWAY_GRAPHQL_URL;
+const SERVER_URI = process.env.SERVER_GATEWAY_GRAPHQL_URL;
+const WS_URI = process.env.GATEWAY_GRAPHQL_WS_URL
 
-const URI = GATEWAY_GRAPHQL_URL;
-const SERVER_URI = SERVER_GATEWAY_GRAPHQL_URL;
-
-if (NODE_ENV === "develop") {
+if (process.env.NODE_ENV === "development") {
   console.log("Graphql URI: ", URI)
-  console.log("Graphql Websocket URI: ", GATEWAY_GRAPHQL_WS_URL)
+  console.log("Graphql Websocket URI: ", WS_URI)
   console.log("Graphql SERVER_URI: ", SERVER_URI)
-  console.log("NODE_ENV: ", NODE_ENV)
+  console.log("NODE_ENV: ", process.env.NODE_ENV)
 }
 
 import { NextPageContext } from 'next';
@@ -78,7 +80,7 @@ const splitQueryOrSubscriptions = ({
   // client-side only, errors if you instantiate wsLink on the server.
   // https://github.com/apollographql/subscriptions-transport-ws/issues/333#issuecomment-359261024
   const wsLink = new WebSocketLink({
-    uri: GATEWAY_GRAPHQL_WS_URL,
+    uri: WS_URI,
     options: {
       reconnect: true,
       connectionParams: () => ({
