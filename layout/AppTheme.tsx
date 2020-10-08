@@ -1,7 +1,7 @@
 
 import { createMuiTheme, fade } from '@material-ui/core/styles';
 import { createStyles, Theme } from '@material-ui/core/styles';
-import TouchRipple from '@material-ui/core/ButtonBase/TouchRipple';
+
 
 // Ultramarine blue
 const secondary = "#2484FF"
@@ -126,6 +126,9 @@ export const BoxShadows = {
   shadowStart: {
     boxShadow: '0 6px 8px 4px rgba(0,0,0,0.1),0 4px 8px rgba(0,0,0,0.2),0 0 0 1px rgba(0,0,0,0.02)',
   },
+  shadowInset: {
+    boxShadow: 'inset 3.53813px 3.53813px 7.07626px rgba(70,77,85,.4), inset -2.35875px -2.35875px 7.07626px #15171a',
+  }
 }
 
 export const breakpoints: Breakpoints = {
