@@ -16,19 +16,7 @@ import withApollo from 'next-with-apollo';
 import { DocumentNode } from "graphql"
 import https from "https";
 import { oc as option } from "ts-optchain";
-// ENV variables
-import getConfig from 'next/config'
-const {
-  // Available both client and server side
-  publicRuntimeConfig: {
-    // GATEWAY_GRAPHQL_URL,
-    // GATEWAY_GRAPHQL_WS_URL,
-    // SERVER_GATEWAY_GRAPHQL_URL,
-    // NODE_ENV
-  },
-  // Only available server side
-  serverRuntimeConfig: { IN_DOCKER },
-} = getConfig()
+
 
 // let GATEWAY_GRAPHQL_URL = "https://api.gunmarketplace.com.au/v1/graphql"
 // let SERVER_GATEWAY_GRAPHQL_URL = "https://api.gunmarketplace.com.au/v1/graphql"

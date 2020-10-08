@@ -45,11 +45,6 @@ import { useCalcNumItemsFromWindowWidth } from "utils/hooks";
 // Wishlist
 // import { QueryWishlistHookArgs } from "pageComponents/Wishlist";
 import Divider from "components/Divider";
-
-import getConfig from "next/config";
-const {
-  publicRuntimeConfig: { FEATURED_LIST_ID }
-} = getConfig();
 // import { getProductIdOrSlug } from "utils/links";
 
 // const FEATURED_LIST_ID = 'prodlist_1bea860c-7b8b-476d-a417-82728287dc9d'
