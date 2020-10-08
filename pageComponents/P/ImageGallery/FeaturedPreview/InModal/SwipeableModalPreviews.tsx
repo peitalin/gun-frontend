@@ -16,7 +16,7 @@ import ImageInModal from "./ImageInModal";
 import VideoInModal from "./VideoInModal";
 import FeaturedVideo from "../FeaturedVideo";
 
-import SwipeableViews from 'react-swipeable-views';
+import SwipeableViews from 'components/Swiper/SwipeableViews';
 import { bindKeyboard } from 'react-swipeable-views-utils';
 const BindKeyboardSwipeableViews = bindKeyboard(SwipeableViews);
 //

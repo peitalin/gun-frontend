@@ -24,7 +24,7 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
 import { lgUpMediaQuery } from "../../common";
 
-import SwipeableViews from 'react-swipeable-views';
+import SwipeableViews from 'components/Swiper/SwipeableViews';
 import { bindKeyboard } from 'react-swipeable-views-utils';
 const BindKeyboardSwipeableViews = bindKeyboard(SwipeableViews);
 
