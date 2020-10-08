@@ -44,42 +44,42 @@ const styles = (theme: Theme) => createStyles({
 interface ReactProps extends WithStyles<typeof styles> {
 }
 
-////////// SSR ///////////
-interface Context extends NextPageContext {
-  apolloClient: ApolloClient<any>;
-}
+// ////////// SSR ///////////
+// interface Context extends NextPageContext {
+//   apolloClient: ApolloClient<any>;
+// }
 
-HomePage.getInitialProps = async (ctx: Context) => {
+// HomePage.getInitialProps = async (ctx: Context) => {
 
-  // Will trigger this getInitialProps when requesting route /pages/ProductGallery
-  // otherwise initialProps may be fed via /pages/index.tsx's getInitialProps
-  const aClient = serverApolloClient(ctx);
-  const emptyConnection = { pageInfo: {}, edges: [] };
+//   // Will trigger this getInitialProps when requesting route /pages/ProductGallery
+//   // otherwise initialProps may be fed via /pages/index.tsx's getInitialProps
+//   const aClient = serverApolloClient(ctx);
+//   const emptyConnection = { pageInfo: {}, edges: [] };
 
-  try {
+//   try {
 
-    // const req3 = aClient.query({
-    //   query: GET_LIMITED_RELEASE_PRODUCTS,
-    //   variables: {
-    //     query: {
-    //       count: 5,
-    //       cursor: null,
-    //       pageBackwards: false,
-    //       sortAscending: false,
-    //     }
-    //   }
-    // });
+//     // const req3 = aClient.query({
+//     //   query: GET_LIMITED_RELEASE_PRODUCTS,
+//     //   variables: {
+//     //     query: {
+//     //       count: 5,
+//     //       cursor: null,
+//     //       pageBackwards: false,
+//     //       sortAscending: false,
+//     //     }
+//     //   }
+//     // });
 
-    return {
-      classes: undefined,
-    } as any;
+//     return {
+//       classes: undefined,
+//     } as any;
 
-  } catch(e) {
-    return {
-      classes: undefined,
-    };
-  }
-}
+//   } catch(e) {
+//     return {
+//       classes: undefined,
+//     };
+//   }
+// }
 
 
 export default withStyles(styles)( HomePage );

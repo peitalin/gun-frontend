@@ -12,7 +12,7 @@ const next = require("next");
 const app = next({ dev });
 const handle = app.getRequestHandler();
 // local only
-const port = parseInt(process.env.PORT, 10) || 9000;
+const port = process.env.PORT || 9000;
 
 // Server
 const express = require("express");
