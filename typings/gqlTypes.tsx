@@ -1353,7 +1353,7 @@ export type ConnectionWithMetrics = {
 
 export type CreateProductsConfig = {
   count: Scalars['Int'];
-  sellerLogin?: Maybe<LoginDetails>;
+  /** sellerLogin: LoginDetails */
   alwaysPublish?: Maybe<Scalars['Boolean']>;
   alwaysFewestPreviews?: Maybe<Scalars['Boolean']>;
   alwaysGreatestPreviews?: Maybe<Scalars['Boolean']>;
@@ -12846,7 +12846,7 @@ export type SaveImageUploadMutation = { __typename?: 'Mutation', uploadSaveImage
 
 export type ImageFragment = { __typename?: 'image_parents', id: string, createdAt: any, tags?: Maybe<string>, description?: Maybe<string>, original?: Maybe<{ __typename?: 'image_variants', id: string, mimeType: string, heightInPixels: number, widthInPixels: number, sizeInBytes: number, url?: Maybe<string> }>, variants: Array<{ __typename?: 'image_variants', id: string, mimeType: string, sizeInBytes: number, widthInPixels: number, heightInPixels: number, url?: Maybe<string> }> };
 
-export type ProductDetailsFragment = { __typename?: 'products', id: string, createdAt: any, updatedAt: any, currentSnapshotId: string, categoryId: string, isPublished: boolean, isSuspended: boolean, isDeleted: boolean, isExcludedFromSearch: boolean, isExcludedFromRecommendations: boolean, storeId: string };
+export type ProductDetailsFragment = { __typename?: 'products', id: string, createdAt: any, updatedAt: any, currentSnapshotId: string, categoryId: string, isPublished: boolean, isSuspended: boolean, isDeleted: boolean, isExcludedFromSearch: boolean, isExcludedFromRecommendations: boolean, storeId: string, store?: Maybe<{ __typename?: 'stores', id: string, createdAt: any, name: string, website?: Maybe<string>, user: { __typename?: 'users', id: string, email: string } }> };
 
 export type ProductSnapshotsFragment = { __typename?: 'product_snapshots', id: string, createdAt: any, productId: string, title: string, description: string, condition: string, make: string, model: string, ammoType?: Maybe<string>, actionType: string, boreDiameter?: Maybe<string>, serialNumber: string, location: string, dealer: string };
 
@@ -13066,6 +13066,16 @@ export const ProductDetailsFragmentFragmentDoc = gql`
   isExcludedFromSearch
   isExcludedFromRecommendations
   storeId
+  store {
+    id
+    createdAt
+    name
+    website
+    user {
+      id
+      email
+    }
+  }
 }
     `;
 export const ProductSnapshotsFragmentFragmentDoc = gql`

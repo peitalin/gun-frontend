@@ -18,6 +18,7 @@ const withConfig = nextRuntimeDotenv({
   public: [
     'GATEWAY_GRAPHQL_URL',
     'SERVER_GATEWAY_GRAPHQL_URL',
+    'GATEWAY_GRAPHQL_WS_URL',
     'NODE_ENV',
     'STRIPE_PUBLIC_KEY',
     'PAYPAL_CLIENT_ID',
