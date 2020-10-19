@@ -5,7 +5,7 @@ import {
   createStyles, makeStyles, createMuiTheme,
   Theme,
 } from "@material-ui/core/styles";
-import { Colors, BorderRadius, fontFam } from "layout/AppTheme";
+import { Colors, BorderRadius, fontFam, Gradients } from "layout/AppTheme";
 
 
 export const styles = (theme: Theme) => createStyles({
@@ -36,7 +36,8 @@ export const styles = (theme: Theme) => createStyles({
   },
   input: {
     position: 'relative',
-    backgroundColor: theme.palette.common.white,
+    // backgroundColor: theme.palette.common.white,
+    background: Colors.uniswapLightNavy,
     border: `1px solid ${Colors.mediumLightGrey}`,
     borderRadius: BorderRadius,
     fontSize: "16px",
@@ -144,7 +145,8 @@ export const styles = (theme: Theme) => createStyles({
     justifyContent: "center",
     alignItems: "center",
     position: 'relative',
-    backgroundColor: theme.palette.common.white,
+    // backgroundColor: theme.palette.common.white,
+    background: Colors.uniswapLightNavy,
     border: `1px solid ${Colors.grey}`,
     borderRadius: BorderRadius,
     padding: '0.58em',
@@ -216,7 +218,8 @@ export const styles = (theme: Theme) => createStyles({
     justifyContent: "center",
     alignItems: "center",
     position: 'relative',
-    backgroundColor: theme.palette.common.white,
+    // backgroundColor: theme.palette.common.white,
+    background: Colors.uniswapLightNavy,
     border: `1px solid ${Colors.mediumLightGrey}`,
     borderRadius: BorderRadius,
     padding: '0.25rem 0.5rem',

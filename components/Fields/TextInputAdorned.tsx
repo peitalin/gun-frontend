@@ -16,7 +16,7 @@ import InputBase from "@material-ui/core/InputBase";
 
 
 
-const TextInput2 = (props: ReactProps) => {
+const TextInputAdorned = (props: ReactProps) => {
 
   const ref = React.useRef();
   const focused = useFocus(ref);
@@ -268,7 +268,7 @@ export const styles = (theme: Theme) => createStyles({
 })
 
 
-export default withStyles(styles)( TextInput2 );
+export default withStyles(styles)( TextInputAdorned );
 
 
 

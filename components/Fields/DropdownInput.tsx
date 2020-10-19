@@ -140,8 +140,9 @@ const DropdownInput = (props: ReactProps) => {
                   borderRadius: BorderRadius,
                   colors: {
                     ...theme.colors,
-                    primary25: Colors.lightGrey,
-                    primary: Colors.darkGrey55,
+                    color: Colors.uniswapLightestGrey,
+                    primary25: Colors.uniswapLightNavy,
+                    primary: Colors.uniswapLighterGrey,
                   },
                 })
             }
@@ -158,6 +159,9 @@ const DropdownInput = (props: ReactProps) => {
                   fontFamily: fontFam,
                   color: Colors.grey,
                 }),
+                singleValue: styles => ({
+                  color: Colors.uniswapLighterGrey,
+                }),
                 menu: styles => ({
                   ...styles,
                   zIndex: 10,
@@ -166,7 +170,25 @@ const DropdownInput = (props: ReactProps) => {
                   "&:hover": {
                     cursor: "pointer",
                   },
-                })
+                  background: Colors.uniswapDarkNavy,
+                  color: Colors.uniswapLighterGrey,
+                }),
+                control: (base, state) => ({
+                  ...base,
+                  background: Colors.uniswapLightNavy,
+                  // // match with the menu
+                  // borderRadius: state.isFocused ? "3px 3px 0 0" : 3,
+                  // // Overwrittes the different states of border
+                  border: `0px solid ${Colors.uniswapLighterGrey}`,
+                  // // borderColor: state.isFocused ? Colors.gradientUniswapBlue1 : "unset",
+                  // // Removes weird border around container
+                  // boxShadow: state.isFocused ? null : null,
+                  // "&:hover": {
+                  //   // Overwrittes the different states of border
+                  //   // borderColor: state.isFocused ? "red" : "blue"
+                  //   borderColors: Colors.gradientUniswapFluro1,
+                  // }
+                }),
               }
             }
             inputRef={ref}
