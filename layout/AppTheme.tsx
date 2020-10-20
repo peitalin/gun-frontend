@@ -75,6 +75,23 @@ export const Colors = {
   gradientGrey2: '#ebedee',
   gradientFlamingo1: '#f093fb',
   gradientFlamingo2: '#f5576c',
+  // uniswap
+  uniswapLightestGrey: '#B4B5BB',
+  uniswapLighterGrey: '#6D7283',
+  uniswapGrey: '#41444E',
+  uniswapLightNavy: '#3A3F4A',
+  uniswapNavy: '#2E3443',
+  uniswapMediumNavy: '#2D2F36',
+  uniswapDarkNavy: "#222429",
+  uniswapRoyalNavy: "#212F46",
+  gradientUniswapDark1: "#2E3545",
+  gradientUniswapDark2: "#2D2F36",
+  gradientUniswapFluro1: "#DC3078",
+  gradientUniswapFluro2: "#5B4DBA",
+  gradientUniswapPurple: "#8E4995",
+  gradientUniswapBlue1: "#3773DE",
+  gradientUniswapGreen: "#57BC7A",
+  gradientUniswapBlueGreen: '#568DB3',
 };
 
 export const Gradients = {
@@ -107,6 +124,41 @@ export const Gradients = {
     background: `linear-gradient(120deg, ${Colors.lightGrey} 0%, ${Colors.grey} 100%)`,
     color1: Colors.lightGrey,
     color2: Colors.grey,
+  },
+  gradientUniswapDark:  {
+    background: `linear-gradient(140deg, ${Colors.gradientUniswapDark1} 20%, ${Colors.gradientUniswapDark2} 80%)`,
+    color1: Colors.gradientUniswapDark1,
+    color2: Colors.gradientUniswapDark2,
+  },
+  gradientUniswapFluro:  {
+    background: `linear-gradient(120deg, ${Colors.gradientUniswapFluro1} 20%, ${Colors.gradientUniswapFluro2} 80%)`,
+    color1: Colors.gradientUniswapFluro1,
+    color2: Colors.gradientUniswapFluro2,
+  },
+  gradientUniswapFluro2:  {
+    background: `linear-gradient(120deg, ${Colors.gradientUniswapFluro1} 20%, ${Colors.gradientUniswapPurple} 50%, ${Colors.gradientUniswapFluro1} 80%)`,
+    color1: Colors.gradientUniswapFluro1,
+    color2: Colors.gradientUniswapFluro2,
+  },
+  gradientUniswapBlue:  {
+    background: `linear-gradient(140deg, ${Colors.gradientUniswapBlue1} 20%, ${Colors.gradientUniswapFluro2} 80%)`,
+    color1: Colors.gradientUniswapBlue1,
+    color2: Colors.gradientUniswapFluro2,
+  },
+  gradientUniswapBlue2:  {
+    background: `linear-gradient(120deg, ${Colors.gradientUniswapBlue1} 20%, ${Colors.gradientUniswapFluro2} 50%, ${Colors.gradientUniswapBlue1} 80%)`,
+    color1: Colors.gradientUniswapBlue1,
+    color2: Colors.gradientUniswapFluro2,
+  },
+  gradientUniswapBlueGreen:  {
+    background: `linear-gradient(140deg, ${Colors.gradientUniswapBlue1} 20%, ${Colors.gradientUniswapGreen} 80%)`,
+    color1: Colors.gradientUniswapBlue1,
+    color2: Colors.gradientUniswapGreen,
+  },
+  gradientUniswapBlueGreen2:  {
+    background: `linear-gradient(120deg, ${Colors.gradientUniswapGreen} 30%, ${Colors.gradientUniswapBlueGreen} 50%, ${Colors.gradientUniswapGreen} 70%)`,
+    color1: Colors.gradientUniswapBlueGreen,
+    color2: Colors.gradientUniswapGreen,
   },
 }
 
@@ -148,7 +200,7 @@ export interface Breakpoints {
 };
 
 
-export const BorderRadius = 4;
+export const BorderRadius = 8;
 
 export const fontFam = [
   '"Helvetica Neue"',
@@ -198,11 +250,23 @@ export const AppTheme = createMuiTheme({
     // a: {
     //   textDecoration: "none"
     // },
+    MuiMenuItem: {
+      root: {
+        color: Colors.uniswapLighterGrey,
+        "&:hover": {
+          backgroundColor: `rgba(72, 72, 72, 0.24)`,
+        },
+      }
+    },
     MuiButton: {
       // Name of the rule
       root: {
         minWidth: '40px',
         textTransform: 'none',
+        color: Colors.uniswapLighterGrey,
+        "&:hover": {
+          backgroundColor: `rgba(72, 72, 72, 0.24)`,
+        },
       },
       text: {
         fontSize: '0.9rem',
@@ -219,10 +283,16 @@ export const AppTheme = createMuiTheme({
         fontSize: '0.9rem',
         fontWeight: 600,
       },
+      textPrimary: {
+        color: Colors.uniswapLighterGrey,
+        "&:hover": {
+          backgroundColor: `rgba(72, 72, 72, 0.24)`,
+        },
+      },
       containedPrimary: {
         "&:hover": {
           color: "#fafafa",
-          backgroundColor: "#484848",
+          backgroundColor: "#383838",
         }
       },
       containedSecondary: {
@@ -299,66 +369,67 @@ export const AppTheme = createMuiTheme({
         fontSize: "2rem",
         fontWeight: 700,
         lineHeight: 1.5,
-        color: Colors.charcoal,
+        color: Colors.uniswapLightestGrey,
       },
       h2: {
         fontSize: "1.5rem",
         fontWeight: 700,
         lineHeight: 1.5,
-        color: Colors.charcoal,
+        color: Colors.uniswapLightestGrey,
       },
       h3: {
         fontSize: "1.25rem",
         fontWeight: 600,
         lineHeight: 1.25,
-        color: Colors.charcoal,
+        color: Colors.uniswapLightestGrey,
       },
       h4: {
         fontSize: "1.125rem",
         fontWeight: 600,
         lineHeight: 1.25,
-        color: Colors.charcoal,
+        color: Colors.uniswapLightestGrey,
       },
       h5: {
         fontSize: "1rem",
         fontWeight: 600,
         lineHeight: 1.25,
-        color: Colors.charcoal,
+        color: Colors.uniswapLightestGrey,
       },
       h6: {
         fontSize: "0.875rem",
         fontWeight: 700,
         lineHeight: 1.25,
-        color: Colors.charcoal,
+        color: Colors.uniswapLightestGrey,
       },
       body1: {
         fontSize: "1rem",
         fontWeight: 400,
         lineHeight: 1.25,
-        color: Colors.charcoal,
+        color: Colors.uniswapLightestGrey,
       },
       body2: {
         fontSize: "0.875rem",
         fontWeight: 400,
         lineHeight: 1.25,
-        color: Colors.charcoal,
+        color: Colors.uniswapLightestGrey,
       },
       subtitle1: {
         fontSize: "1.125rem",
         fontWeight: 500,
         lineHeight: 1,
-        color: Colors.charcoal,
+        color: Colors.uniswapLightestGrey,
       },
       subtitle2: {
         fontSize: "1rem",
         fontWeight: 400,
         lineHeight: 0.9,
-        color: Colors.charcoal,
+        color: Colors.uniswapLightestGrey,
       },
       caption: {
         fontSize: "0.7rem",
         fontWeight: 500,
         lineHeight: 0.9,
+        color: Colors.uniswapLightestGrey,
       },
     }
   },

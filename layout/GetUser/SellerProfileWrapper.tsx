@@ -20,7 +20,7 @@ import ErrorDisplay from "components/Error";
 import SnackbarsSuccessErrors from "components/Snackbars/SnackbarsSuccessErrors";
 import Redirect from "pageComponents/Redirect";
 // store deleted
-import { isStoreDeleted, storeCreateRedirectCondition } from "utils/store";
+import { isStoreDeleted, storeDoesNotExist } from "utils/store";
 
 
 
@@ -171,7 +171,7 @@ export const SellerProfileWrapper = (props) => {
       />
     )
   }
-  if (storeCreateRedirectCondition(option(data2).user.store()) && process.browser) {
+  if (storeDoesNotExist(option(data2).user.store()) && process.browser) {
     return (
       <Redirect
         message={"Store required. Redirecting to create a store..."}

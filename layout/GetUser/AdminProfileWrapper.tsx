@@ -23,7 +23,7 @@ import ErrorDisplay from "components/Error";
 import SnackbarsSuccessErrors from "components/Snackbars/SnackbarsSuccessErrors";
 import Redirect from "pageComponents/Redirect";
 // store deleted
-import { isStoreDeleted, storeCreateRedirectCondition } from "utils/store";
+import { isStoreDeleted, storeDoesNotExist } from "utils/store";
 
 
 

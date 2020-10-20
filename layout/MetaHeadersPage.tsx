@@ -1,5 +1,8 @@
 import React from 'react';
 import Head from 'next/head';
+// ENV variables
+import getConfig from 'next/config'
+const { publicRuntimeConfig: { EFC_ENV } } = getConfig()
 
 
 const HeaderPage: React.FC<HeaderPageProps> = (props) => (
@@ -19,8 +22,12 @@ const HeaderPage: React.FC<HeaderPageProps> = (props) => (
       />
     }
     {
-      props.robots &&
-      <meta name="robots" content={props.robots}/>
+      // skip indexing on fileworks.net
+      // but allow relay.shop to index
+      EFC_ENV === "development"
+        ? <meta name="robots" content={"noindex"}/>
+        : <meta name="robots" content={props.robots || "all"}/>
+        // https://moz.com/learn/seo/robots-meta-directives
     }
     {
       props.ogType &&
@@ -35,8 +42,15 @@ const HeaderPage: React.FC<HeaderPageProps> = (props) => (
       <meta property="og:description" content={props.ogDescription} />
     }
     {
-      props.ogImage &&
-      <meta property="og:image" content={props.ogImage} />
+      props.ogImage
+      ? <meta property="og:image" content={props.ogImage} />
+      : <meta property="og:image"
+          content={
+            EFC_ENV === "development"
+            ? "https://image-content.fileworks.net/og-img-relay-default.png"
+            : "https://image-content.relaydownloads.com/og-img-relay-default.png"
+          }
+        />
     }
     {
       props.ogUrl &&
@@ -46,6 +60,8 @@ const HeaderPage: React.FC<HeaderPageProps> = (props) => (
       props.ogSiteName &&
       <meta property="og:site_name" content={props.ogSiteName} />
     }
+
+    <meta property="fb:app_id" content={"240857820473181"} />
   </Head>
 )
 

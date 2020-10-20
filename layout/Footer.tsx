@@ -21,7 +21,7 @@ import { goToModalConnect } from "utils/modals";
 import { useDispatch, useSelector } from "react-redux";
 import { GrandReduxState } from 'reduxStore/grand-reducer';
 import Link from "next/link";
-import { Colors } from "layout/AppTheme";
+import { Colors, Gradients } from "layout/AppTheme";
 
 
 
@@ -161,9 +161,10 @@ const styles = (theme: Theme) => createStyles({
     flexDirection: 'column',
     justifyContent: 'space-between',
     borderRadius: '0px',
-    backgroundColor: "#252525",
+    borderTop: `1px solid ${Colors.uniswapLightNavy}`,
+    background: Gradients.gradientUniswapDark.background,
     paddingTop: "15vh",
-    color: "#cccccc",
+    color: Colors.uniswapLightestGrey,
   },
   title: {
     color: Colors.cream,

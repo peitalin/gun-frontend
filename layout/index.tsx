@@ -13,7 +13,7 @@ import Modals from "./Modals";
 // Typings
 import { UserPrivate } from "typings/gqlTypes";
 import ErrorBounds from "components/ErrorBounds";
-import { Colors } from "layout/AppTheme";
+import { Colors, Gradients } from "layout/AppTheme";
 //
 import SideRoutesMenu from "pageComponents/SellerProfileDashboard/SideRoutesMenu";
 import SellerDashboardMenu from "pageComponents/SellerProfileDashboard/SellerDashboardMenu";
@@ -149,12 +149,14 @@ const styles = (theme: Theme) => createStyles({
     width: "100%",
     minWidth: '320px',
     minHeight: `calc(100vh - 140px)`,
+    background: Gradients.gradientUniswapDark.background,
     // offset 140px for navbar
   },
   pageInnerContainer: {
     minHeight: `calc(100vh - ${NavBarHeight}px)`,
     // offset for navbar
     maxWidth: '100%',
+    background: Gradients.gradientUniswapDark.background,
   },
   flexJustify: {
     display: 'flex',
