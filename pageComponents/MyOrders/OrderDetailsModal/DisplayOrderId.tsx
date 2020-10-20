@@ -44,6 +44,14 @@ const DisplayOrderId: React.FC<ReactProps> = (props) => {
               {order.id}
             </Typography>
           </div>
+          <div className={classes.flexItem1}>
+            <Typography variant="subtitle2" className={classes.subHeading}>
+              Seller/Store
+            </Typography>
+            <Typography variant="body1">
+              {order?.product?.store?.user?.email ?? "NA"}
+            </Typography>
+          </div>
         </div>
       </div>
 
