@@ -11,6 +11,8 @@ import InputLabel from '@material-ui/core/InputLabel';
 import PersonAdd from '@material-ui/icons/PersonAdd';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
+// Typings
+import { Cart } from "typings/gqlTypes";
 import styles from './commonStyles';
 import ErrorBounds from "components/ErrorBounds";
 import LockIcon from "@material-ui/icons/Lock";
@@ -27,7 +29,7 @@ import Link from "next/link";
 const SignUp: React.FC<ReactProps> = (props) => {
 
   const [state, setState] = React.useState({
-    email: "",
+    email: props.initialEmail,
     password: "",
     firstName: "",
     lastName: "",
@@ -112,8 +114,8 @@ const SignUp: React.FC<ReactProps> = (props) => {
             <InputLabel htmlFor="sign-up-email">Email Address</InputLabel>
             <Input
               name="sign-up-email"
-              autoComplete="email"
               type={"email"}
+              autoComplete="email"
               value={state.email}
               onChange={(e) => {
                 e.persist(); // for persisting synthetic events
@@ -152,13 +154,13 @@ const SignUp: React.FC<ReactProps> = (props) => {
           {/* <Typography variant="caption" className={classes.termsText}>
             By signing up, I agree to the
             <a className={classes.link}
-              href={"https://help.relaydownloads.com/hc/en-us/articles/360038530771-Terms-of-Service"}
+              href={"https://help.relay.shop/hc/en-us/articles/360038530771-Terms-of-Service"}
             >
               Terms of Service
             </a>
             and
             <a className={classes.link}
-              href={"https://help.relaydownloads.com/hc/en-us/articles/360038152632-Privacy-Policy"}
+              href={"https://help.relay.shop/hc/en-us/articles/360038152632-Privacy-Policy"}
             >
               Privacy Policy.
             </a>
@@ -191,6 +193,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   handleToggleModal?(): void;
   title?: string;
   buttonLoading?: boolean;
+  initialEmail?: string;
 }
 
 export default withStyles(styles)(SignUp);

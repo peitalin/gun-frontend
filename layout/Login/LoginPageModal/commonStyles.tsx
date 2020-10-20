@@ -1,5 +1,7 @@
-import { withStyles, createStyles, Theme } from "@material-ui/core/styles";
-import { Colors } from "layout/AppTheme";
+import { withStyles, createStyles, Theme, fade } from "@material-ui/core/styles";
+import { BorderRadius, Colors } from "layout/AppTheme";
+
+const emailInputMaxWidth = 350;
 
 
 const styles = (theme: Theme) => createStyles({
@@ -118,6 +120,50 @@ const styles = (theme: Theme) => createStyles({
   },
   dontHaveAccount: {
     marginTop: '0.5rem',
+  },
+  // for mobile menu, unlogged in user
+  mobileMenuFlexitem: {
+    flexGrow: 1,
+    flexBasis: '40%',
+    width: '100%',
+    borderRadius: BorderRadius,
+  },
+  mobileMenuItemRoot: {
+    minHeight: '0rem',
+    padding: "0.5rem 1.25rem",
+  },
+  textInputRoot: {
+    backgroundColor: Colors.white,
+    borderRadius: '4px',
+    // marginLeft: '0.5rem',
+    // marginRight: '0.5rem',
+    marginBottom: '0.5rem',
+    width: '100%',
+    maxWidth: emailInputMaxWidth,
+    // height: 40,
+  },
+  textInputInput: {
+    backgroundColor: Colors.white,
+    // height: 40,
+    padding: '0.72rem',
+    borderRadius: '4px',
+    fontSize: '1rem',
+    minWidth: 220,
+  },
+  textFocused: {
+    outline: 'none',
+  },
+  maxWidthEmailPrefillButton: {
+    maxWidth: emailInputMaxWidth,
+  },
+  maxWidthEmailPrefillButtonSm: {
+    maxWidth: emailInputMaxWidth,
+  },
+  emailPrefillFlexCol: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
 

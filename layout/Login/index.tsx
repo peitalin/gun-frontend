@@ -333,6 +333,8 @@ const Login: React.FC<ReactProps> = (props) => {
               handleToggleModal={handleToggleModal}
               buttonProps={props.buttonProps}
               numUnclaimedOrders={props.numUnclaimedOrders}
+              buttonType={props.buttonType}
+              menuItemTextClassName={props.menuItemTextClassName}
             />
       }
     </>
@@ -353,6 +355,9 @@ interface ReactProps extends WithStyles<typeof styles> {
   numUnclaimedOrders?: number;
   className?: any;
   callbackOnComplete?(): any;
+  // menu Item version
+  buttonType?: "menuItem" | "textField" | "default";
+  menuItemTextClassName?: any;
 }
 interface Aprops {
   data?: {

@@ -1,9 +1,11 @@
 import React from 'react';
-import { withStyles, WithStyles } from '@material-ui/core/styles';
-import { ReduxStateLogin } from 'reduxStore/login-reducer';
+import { oc as option } from "ts-optchain";
+import { withStyles, WithStyles, fade } from '@material-ui/core/styles';
+import { Colors } from 'layout/AppTheme';
 import clsx from "clsx";
 
 import Button from '@material-ui/core/Button';
+import TextField from "@material-ui/core/TextField";
 import Dialog from '@material-ui/core/Dialog';
 
 import styles from './commonStyles';
@@ -14,9 +16,13 @@ import CheckEmail from './CheckEmail';
 import ErrorBounds from "components/ErrorBounds";
 import Hidden from "components/HiddenFix"
 import Badge from '@material-ui/core/Badge';
+import MenuItem from '@material-ui/core/MenuItem';
+import Typography from "@material-ui/core/Typography";
 // media query
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
+// analytics
+import { analyticsEvent } from "utils/analytics";
 
 
 const LoginPageModal: React.FC<ReactProps> = (props) => {
@@ -27,10 +33,13 @@ const LoginPageModal: React.FC<ReactProps> = (props) => {
     classes,
     className,
     buttonText = 'Login',
+    buttonType = 'default',
   } = props;
 
   const theme = useTheme();
   const smDown = useMediaQuery(theme.breakpoints.down('sm'));
+  const [prefillEmail, setPrefillEmail] = React.useState(undefined);
+
 
   const renderLoginTab = () => {
 
@@ -41,6 +50,7 @@ const LoginPageModal: React.FC<ReactProps> = (props) => {
                 handleToggleModal={props.handleToggleModal}
                 title={props.titleLogin}
                 buttonLoading={props.buttonLoading}
+                initialEmail={prefillEmail}
               />
     } else if (tabIndex === 1) {
       return <SignUp
@@ -49,6 +59,7 @@ const LoginPageModal: React.FC<ReactProps> = (props) => {
                 handleToggleModal={props.handleToggleModal}
                 title={props.titleSignup}
                 buttonLoading={props.buttonLoading}
+                initialEmail={prefillEmail}
               />
     } else if (tabIndex === 2) {
       return <ResetPassword
@@ -64,13 +75,137 @@ const LoginPageModal: React.FC<ReactProps> = (props) => {
               />
     } else {
       return <SignIn
-                dispatchLogin={props.dispatchLogin}
-                setTabIndex={setTabIndex}
-                handleToggleModal={props.handleToggleModal}
-                title={props.titleLogin}
-                buttonLoading={props.buttonLoading}
-              />
+              dispatchLogin={props.dispatchLogin}
+              setTabIndex={setTabIndex}
+              handleToggleModal={props.handleToggleModal}
+              title={props.titleLogin}
+              buttonLoading={props.buttonLoading}
+              initialEmail={prefillEmail}
+            />
     }
+  }
+
+  React.useEffect(() => {
+    if (props.openModal) {
+      if (tabIndex === 0) {
+        analyticsEvent("View.Login")
+      }
+      if (tabIndex === 1) {
+        analyticsEvent("View.CreateAccount")
+      }
+      if (tabIndex === 2) {
+        analyticsEvent("View.PasswordReset")
+      }
+    }
+  }, [props.openModal, tabIndex])
+
+  React.useEffect(() => {
+    if (props.numUnclaimedOrders) {
+      if (tabIndex === 0) {
+        analyticsEvent("View.OrderClaim.Signup")
+      } else {
+        analyticsEvent("View.OrderClaim.Login")
+      }
+    }
+  }, [])
+
+
+  const renderButton = () => {
+    if (!buttonType || buttonType === 'default') {
+      return (
+        <Button
+          variant="text"
+          color="secondary"
+          className={classes.loginButton}
+          onClick={props.handleToggleModal}
+          {...props.buttonProps}
+        >
+          {
+            props.numUnclaimedOrders
+            ? <Badge
+                badgeContent={props.numUnclaimedOrders}
+                color="secondary"
+              >
+                { buttonText }
+              </Badge>
+            : <span>
+                { buttonText }
+              </span>
+          }
+        </Button>
+      )
+    }
+    if (buttonType === "menuItem") {
+      return (
+        <MenuItem
+          className={clsx(
+            classes.mobileMenuFlexitem,
+            classes.mobileMenuItemRoot
+          )}
+          onClick={() => {
+            props.handleToggleModal()
+          }}
+        >
+          {
+            props.numUnclaimedOrders
+            ? <Badge
+                badgeContent={props.numUnclaimedOrders}
+                color="secondary"
+              >
+                <Typography className={props.menuItemTextClassName}>
+                  { buttonText }
+                </Typography>
+              </Badge>
+            : <Typography className={props.menuItemTextClassName}>
+                { buttonText }
+              </Typography>
+          }
+        </MenuItem>
+      )
+    }
+    if (buttonType === "textField") {
+      return (
+        <div className={classes.emailPrefillFlexCol}>
+          <TextField
+            variant="outlined"
+            value={prefillEmail}
+            onChange={(e) => setPrefillEmail(e.target.value)}
+            placeholder={"Enter your email address"}
+            classes={{
+              root: classes.textInputRoot,
+            }}
+            inputProps={{
+              className: classes.textInputInput,
+              focused: classes.textFocused,
+            }}
+          />
+          <Button
+            variant="text"
+            color="secondary"
+            className={clsx(
+              classes.loginButton,
+              classes.maxWidthEmailPrefillButton
+            )}
+            onClick={props.handleToggleModal}
+            {...props.buttonProps}
+          >
+            {
+              props.numUnclaimedOrders
+              ? <Badge
+                  badgeContent={props.numUnclaimedOrders}
+                  color="secondary"
+                >
+                  { buttonText }
+                </Badge>
+              : <span>
+                  { buttonText }
+                </span>
+            }
+          </Button>
+        </div>
+      )
+    }
+
   }
 
   return (
@@ -96,30 +231,35 @@ const LoginPageModal: React.FC<ReactProps> = (props) => {
             </div>
           </div>
         </Dialog>
-        <Button
-          variant="text"
-          color="secondary"
-          className={classes.loginButton}
-          onClick={props.handleToggleModal}
-          {...props.buttonProps}
-        >
-          {
-            props.numUnclaimedOrders
-            ? <Badge
-                badgeContent={props.numUnclaimedOrders}
-                color="secondary"
-              >
-                { buttonText }
-              </Badge>
-            : <span>
-                { buttonText }
-              </span>
-          }
-        </Button>
+
+        { renderButton() }
+
       </div>
     </ErrorBounds>
   )
 }
+
+const StyledButton = withStyles({
+  root: {
+    background: Colors.secondary,
+    borderRadius: 4,
+    height: 44,
+    width: '100%',
+    maxWidth: 330,
+    paddingLeft: '1rem',
+    paddingRight: '1rem',
+    cursor: "pointer",
+    "&:hover": {
+      background: fade(Colors.secondary, 0.9),
+    },
+    padding: 0,
+  },
+  label: {
+    textTransform: "capitalize",
+    color: "#fff",
+  },
+})(Button);
+
 
 interface ReactProps extends WithStyles<typeof styles> {
   buttonText?: string;
@@ -132,6 +272,8 @@ interface ReactProps extends WithStyles<typeof styles> {
   numUnclaimedOrders?: number;
   className?: any;
   buttonLoading?: boolean;
+  buttonType?: "menuItem" | "textField" | "default";
+  menuItemTextClassName?: any;
   handleToggleModal(): void;
   setTabIndex(tabIndex: number): void;
   dispatchLogin(payload: { email: string, password: string }): void;
