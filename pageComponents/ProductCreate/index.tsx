@@ -119,7 +119,7 @@ const styles = (theme: Theme) => createStyles({
     width: '100%',
     display: 'flex',
     justifyContent: 'center',
-    backgroundColor: Colors.darkWhite,
+    // backgroundColor: Colors.darkWhite,
   },
   flexRowInner: {
     display: 'flex',

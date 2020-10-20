@@ -152,7 +152,7 @@ const EditStoreForm: React.FC<ReactProps> = (props) => {
 
           let pm2 = setPayoutMethod({
             variables: {
-              payoutType: "PAYPAL",
+              payoutType: "BANK",
               bsb: values.bsb,
               accountNumber: values.accountNumber,
               accountName: values.accountName,

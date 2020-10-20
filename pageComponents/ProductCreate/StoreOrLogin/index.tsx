@@ -24,7 +24,7 @@ import {
 import { useRouter } from "next/router";
 import { useApolloClient } from "@apollo/client";
 // store deleted
-import { isStoreDeleted, storeCreateRedirectCondition } from "utils/store";
+import { isStoreDeleted, storeDoesNotExist } from "utils/store";
 // Redux
 import { GrandReduxState } from "reduxStore/grand-reducer";
 import { Actions } from "reduxStore/actions";
@@ -42,7 +42,7 @@ const StoreOrLogin = (props: StoreOrLoginProps) => {
     signup: false,
   });
 
-  const storeExists = !storeCreateRedirectCondition(option(user).store())
+  const storeExists = !storeDoesNotExist(option(user).store())
   const dispatch = useDispatch();
 
 

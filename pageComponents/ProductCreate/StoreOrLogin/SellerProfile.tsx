@@ -17,7 +17,7 @@ import EditSellerProfile from "pageComponents/SellerProfileDashboard/EditSellerP
 
 
 
-const StorePage: React.FC<StoreProps> = (props) => {
+const SellerProfile: React.FC<StoreProps> = (props) => {
 
   const { userStore: store, classes } = props;
   // imgloaded
@@ -104,7 +104,7 @@ const styles = (theme: Theme) => createStyles({
     height: 60,
     width: 60,
     margin: theme.spacing(1),
-    border: `1px solid ${Colors.charcoal}`,
+    border: `2px solid ${Colors.uniswapMediumNavy}`,
   },
   avatarButton: {
     padding: theme.spacing(1),
@@ -126,4 +126,4 @@ const styles = (theme: Theme) => createStyles({
   },
 });
 
-export default withStyles(styles)( StorePage );
+export default withStyles(styles)( SellerProfile );

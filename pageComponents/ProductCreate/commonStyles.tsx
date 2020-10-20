@@ -70,14 +70,14 @@ export const styles = (theme: Theme) => createStyles({
     paddingRight: '2rem',
   },
   formOuterContainer: {
-    background: Colors.foregroundColor,
-    border: `1px solid ${Colors.lightGrey}`,
+    background: Colors.uniswapDarkNavy,
+    border: `1px solid ${Colors.uniswapLightNavy}`,
     borderRadius: '4px',
     padding: '2rem',
     position: 'relative', // needed for coverGrey, position: absolute
   },
   formOuterContainerSm: {
-    background: Colors.foregroundColor,
+    background: Colors.uniswapDarkNavy,
     borderRadius: '4px',
     padding: '1rem',
     position: 'relative', // needed for coverGrey, position: absolute
