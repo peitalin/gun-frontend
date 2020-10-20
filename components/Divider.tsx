@@ -31,7 +31,7 @@ const styles = (theme: Theme) => createStyles({
   },
   dividerLine: {
     flexGrow: 1,
-    borderBottom: `1px solid ${Colors.lightGrey}`,
+    borderBottom: `1px solid ${Colors.uniswapLightNavy}`,
     height: '1px',
     width: '100%'
   },

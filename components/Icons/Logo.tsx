@@ -2,6 +2,7 @@ import React from "react";
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 import DownloadIcon from "./DownloadIcon";
 import Typography from "@material-ui/core/Typography";
+import { Colors } from 'layout/AppTheme';
 
 
 
@@ -17,28 +18,17 @@ const Logo = (props: LogoProps) => {
   return (
     <div className={classes.logoContainer}>
       <div className={classes.logo}>
-      <svg width="200px" height="60px" viewBox="0 0 200 60">
+      <svg width="200px" height={logoHeight} viewBox={`0 0 200 ${logoHeight}`}>
         <g id="Page-1" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd" fontFamily="Helvetica" fontSize="36px" fontWeight="normal">
-          <text id="marketplace" fill="#4A90E2">
+          <text id="marketplace" fill={Colors.gradientUniswapBlue1}>
             <tspan x="-2" y="50">Marketplace</tspan>
           </text>
-          <text id="gun" fill="#191919">
-            <tspan x="-1" y="20">Gun</tspan>
+          <text id="gun" fill={Colors.uniswapLightestGrey}>
+            <tspan x="-1" y="15">Gun</tspan>
           </text>
         </g>
       </svg>
       </div>
-      <Typography variant="caption"
-        style={{ color: colour }}
-        className={classes.tagline}
-      >
-      {
-        !hideTitle &&
-        <span>Download anything,
-          <span className={classes.highlight}>instantly.</span>
-        </span>
-      }
-      </Typography>
     </div>
   )
 }
@@ -49,18 +39,20 @@ interface LogoProps extends WithStyles<typeof styles> {
   disableLogo?: boolean;
 }
 
+const logoHeight = 40;
+
 const styles = (theme: Theme) => createStyles({
   logoContainer: {
     display: "flex",
+    height: logoHeight,
     flexDirection: "column",
   },
   logo: {
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
-    height: 60,
+    height: logoHeight,
     width: 80,
-    marginTop: '1.5rem',
   },
   logoText: {
     fontWeight: 300

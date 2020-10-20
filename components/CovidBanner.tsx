@@ -3,7 +3,7 @@ import {oc as option} from "ts-optchain";
 import clsx from "clsx";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
-import { Colors } from "layout/AppTheme";
+import { Colors, Gradients } from "layout/AppTheme";
 
 // redux
 import { GrandReduxState } from "reduxStore/grand-reducer";
@@ -36,7 +36,7 @@ const CovidBanner = (props) => {
   const theme = useTheme();
   const smDown = useMediaQuery(theme.breakpoints.down("sm"))
 
-  const colorBg = Colors.lightBlue
+  const colorBg = Gradients.gradientUniswapFluro.color1
 
   if (!showCovidBanner) {
     return <div></div>
@@ -50,7 +50,7 @@ const CovidBanner = (props) => {
         !showCovidBanner && classes.hideBanner
       )}
       style={{
-        background: colorBg,
+        background: Gradients.gradientUniswapFluro.background,
         position: "relative",
         zIndex: 1,
       }}

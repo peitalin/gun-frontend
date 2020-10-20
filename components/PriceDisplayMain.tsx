@@ -3,7 +3,7 @@ import clsx from "clsx";
 import { oc as option } from "ts-optchain";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
-import { Colors } from "layout/AppTheme";
+import { Colors, Gradients } from "layout/AppTheme";
 // Material UI
 import Typography from "@material-ui/core/Typography";
 import Button from '@material-ui/core/Button';
@@ -126,9 +126,12 @@ const styles = (theme: Theme) => createStyles({
     marginRight: '0.5rem',
     fontSize: "1.25rem",
     fontWeight: 500,
-    color: Colors.blue,
     lineHeight: 1.2, // needed to aligned price, priceWas, quantity
-    // color: Colors.charcoal,
+    color: Colors.gradientUniswapBlue1,
+    // color: Gradients.gradientUniswapFluro.color1,
+    // background: Gradients.gradientUniswapFluro.background,
+    // webkitBackgroundClip: 'text',
+    // webkitTextFillColor: 'transparent',
   },
   priceWas: {
     textDecoration: "line-through",

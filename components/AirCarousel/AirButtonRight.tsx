@@ -1,6 +1,7 @@
 import React from "react";
 import clsx from "clsx";
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
+import { Colors, Gradients } from "layout/AppTheme";
 
 
 const AirButtonRight: React.FC<ReactProps> = (props) => {
@@ -44,7 +45,8 @@ const AirButtonRight: React.FC<ReactProps> = (props) => {
               height: "10px",
               width: "10px",
               display: "block",
-              fill: "currentcolor"
+              // fill: "currentcolor"
+              fill: Colors.uniswapLighterGrey,
             }}
           >
             <path d="m4.29 1.71a1 1 0 1 1 1.42-1.41l8 8a1 1 0 0 1 0 1.41l-8 8a1 1 0 1 1 -1.42-1.41l7.29-7.29z"
@@ -82,7 +84,7 @@ const styles = (theme: Theme) => createStyles({
     borderWidth: "2px",
     borderStyle: "solid",
     borderColor: "transparent",
-    background: "rgb(255, 255, 255)",
+    background: Colors.uniswapDarkNavy,
     transition: theme.transitions.create('opacity', {
       easing: theme.transitions.easing.easeIn,
       duration: "200ms",
@@ -95,6 +97,7 @@ const styles = (theme: Theme) => createStyles({
     "&:focus": {
       outline: "none",
       border: "2px solid #e1e1e1",
+      // border: `2px solid ${Colors.uniswapLighterGrey}`,
       borderRadius: "50%",
     }
   },

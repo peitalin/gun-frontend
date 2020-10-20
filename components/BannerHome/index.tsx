@@ -3,7 +3,7 @@ import clsx from "clsx";
 import { oc as option } from "ts-optchain";
 // styles
 import { withStyles, WithStyles, createStyles, Theme, fade } from "@material-ui/core/styles";
-import { Colors } from "layout/AppTheme";
+import { Colors, Gradients } from "layout/AppTheme";
 // components
 import Banner from "components/Banner";
 import Typography from "@material-ui/core/Typography";
@@ -68,7 +68,7 @@ const BannerHome: NextPage<ReactProps> = (props) => {
           dither={true}
         >
           <div className={classes.mainTitleContainer}>
-            <RelayDownloadIcon className={classes.downloadIconXs}/>
+            {/* <RelayDownloadIcon className={classes.downloadIconXs}/> */}
             <Typography variant={"h2"} className={classes.mainTitleXs}>
               Gun Marketplace
             </Typography>
@@ -163,7 +163,7 @@ const BannerHome: NextPage<ReactProps> = (props) => {
           dither={true}
         >
           <div className={classes.mainTitleContainer}>
-            <RelayDownloadIcon className={classes.downloadIcon}/>
+            {/* <RelayDownloadIcon className={classes.downloadIcon}/> */}
             <Typography variant={"h1"} className={classes.mainTitle}>
               Gun Marketplace
             </Typography>
@@ -358,44 +358,57 @@ const styles = (theme: Theme) => createStyles({
     opacity: 0,
   },
   buttonBecomeASeller: {
-    backgroundColor: Colors.foregroundColor,
-    color: Colors.charcoal,
-    width: '100%',
-    border: `1px solid ${Colors.charcoal}`,
-    transition: theme.transitions.create(['color', 'backgroundColor', 'border'], {
-      easing: theme.transitions.easing.easeIn,
-      duration: '100ms',
-    }),
+    marginRight: '0.5rem',
+    backgroundImage: Gradients.gradientUniswapFluro.background,
+    border: `1px solid ${Colors.gradientUniswapFluro2}`,
+    color: Colors.cream,
+    minWidth: '150px',
     "&:hover": {
-      color: Colors.secondaryBright,
-      border: `1px solid ${Colors.secondaryBright}`,
-      backgroundColor: Colors.foregroundColor,
-      transition: theme.transitions.create(['color', 'backgroundColor', 'border'], {
-        easing: theme.transitions.easing.easeIn,
-        duration: '100ms',
-      })
-    },
+      backgroundImage: Gradients.gradientUniswapFluro2.background,
+      border: `1px solid ${Colors.gradientUniswapFluro1}`,
+      transition: theme.transitions.create(['color', 'border', 'background'], {
+        easing: theme.transitions.easing.easeInOut,
+        duration: "200ms",
+      }),
+      backgroundPosition: '75px',
+    }
   },
   buttonBrowseCategories: {
-    backgroundColor: fade(Colors.darkGrey55, 0.8),
+    backgroundImage: Gradients.gradientUniswapBlueGreen.background,
+    border: `1px solid ${Colors.gradientUniswapBlue1}`,
+    fontSize: '0.7rem',
     color: Colors.cream,
-    width: '100%',
-    marginRight: '0.5rem',
-    border: `1px solid ${fade(Colors.darkGrey55, 0.8)}`,
-    transition: theme.transitions.create(['color', 'backgroundColor', 'border'], {
-      easing: theme.transitions.easing.easeIn,
-      duration: '100ms',
-    }),
+    minWidth: "150px",
     "&:hover": {
-      backgroundColor: Colors.lightGrey,
-      color: Colors.charcoal,
-      // border: `1px solid ${Colors.lightGrey}`,
-      transition: theme.transitions.create(['color', 'backgroundColor', 'border'], {
-        easing: theme.transitions.easing.easeIn,
-        duration: '100ms',
-      })
-    },
+      backgroundImage: Gradients.gradientUniswapBlueGreen2.background,
+      border: `1px solid ${Colors.gradientUniswapGreen}`,
+      transition: theme.transitions.create(['color', 'border', 'background'], {
+        easing: theme.transitions.easing.easeInOut,
+        duration: "200ms",
+      }),
+      backgroundPosition: '-75px',
+    }
   },
+  // buttonBrowseCategories: {
+  //   backgroundColor: fade(Colors.darkGrey55, 0.8),
+  //   color: Colors.cream,
+  //   width: '100%',
+  //   marginRight: '0.5rem',
+  //   border: `1px solid ${fade(Colors.darkGrey55, 0.8)}`,
+  //   transition: theme.transitions.create(['color', 'backgroundColor', 'border'], {
+  //     easing: theme.transitions.easing.easeIn,
+  //     duration: '100ms',
+  //   }),
+  //   "&:hover": {
+  //     backgroundColor: Colors.lightGrey,
+  //     color: Colors.charcoal,
+  //     // border: `1px solid ${Colors.lightGrey}`,
+  //     transition: theme.transitions.create(['color', 'backgroundColor', 'border'], {
+  //       easing: theme.transitions.easing.easeIn,
+  //       duration: '100ms',
+  //     })
+  //   },
+  // },
   minWidth160: {
     minWidth: 160,
   },

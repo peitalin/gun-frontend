@@ -15,7 +15,7 @@ import currency from "currency.js";
 
 
 
-const PriceDisplay3 = (props: ReactProps) => {
+const PriceDisplayMainMobile = (props: ReactProps) => {
 
   const {
     classes,
@@ -62,14 +62,14 @@ const PriceDisplay3 = (props: ReactProps) => {
               </Typography>
             }
           </div>
-          {
+          {/* {
             props.quantityAvailable &&
             <div className={classes.innerContainerSpreadEnd}>
               <Typography className={classes.quantityText} variant="body1">
                 {`${props.quantityAvailable} available`}
               </Typography>
             </div>
-          }
+          } */}
         </div>
         {/* <div className={clsx(classes.innerContainerSpread, classes.height18)}>
           {
@@ -165,8 +165,8 @@ const styles = (theme: Theme) => createStyles({
     marginRight: '0.5rem',
     fontSize: "0.875rem",
     fontWeight: 600,
-    color: Colors.green,
-    // color: Colors.charcoal,
+    // color: Colors.green,
+    color: Colors.blue,
   },
   priceWas: {
     textDecoration: "line-through",
@@ -195,4 +195,4 @@ const styles = (theme: Theme) => createStyles({
   },
 });
 
-export default withStyles(styles)( PriceDisplay3 );
+export default withStyles(styles)( PriceDisplayMainMobile );

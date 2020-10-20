@@ -1,7 +1,7 @@
 import React from "react";
 import { oc as option } from "ts-optchain";
 import clsx from "clsx";
-import { Colors } from "layout/AppTheme";
+import { Colors, BorderRadius } from "layout/AppTheme";
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 // Typings
 import { Product_Preview_Items, Product, Product_Variants } from "typings/gqlTypes";
@@ -107,7 +107,6 @@ const ProductPreviewCardRow = (props: ReactProps) => {
   );
 }
 
-const borderRadius = 4;
 
 interface ReactProps extends WithStyles<typeof styles> {
   previewItem: Product_Preview_Items;
@@ -143,18 +142,17 @@ const styles = (theme: Theme) => createStyles({
     width: '150px',
   },
   imagePreview: {
-    borderRadius: `${borderRadius}px`,
     height: CARD_HEIGHT,
     width: CARD_WIDTH,
   },
   card: {
-    borderRadius: `${borderRadius}px`,
+    borderRadius: `${BorderRadius}px ${BorderRadius}px ${BorderRadius}px ${BorderRadius}px `,
     boxShadow: 'none',
     height: CARD_HEIGHT,
     width: CARD_WIDTH,
   },
   cardActionArea: {
-    background: Colors.lightestGrey,
+    // background: Colors.lightestGrey,
     display: "flex",
     flexDirection: "row",
     height: '100%',
