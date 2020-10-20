@@ -2,7 +2,7 @@ import React from "react";
 import { oc as option } from "ts-optchain";
 import clsx from "clsx";
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
-import { Colors } from "layout/AppTheme";
+import { BorderRadius, BoxShadows, Colors } from "layout/AppTheme";
 // Redux
 import { useDispatch, useSelector } from "react-redux";
 import { Actions } from "reduxStore/actions";
@@ -13,7 +13,7 @@ import ErrorBounds from "components/ErrorBounds";
 // Material UI
 import ProductPreviewCardRow from "components/ProductPreviewCardRow";
 import Typography from "@material-ui/core/Typography";
-import PriceDisplay3 from "components/PriceDisplay3";
+import PriceDisplayMainMobile from "components/PriceDisplayMainMobile";
 // Modals
 import { goToModalConnect } from "utils/modals";
 // helpers
@@ -45,7 +45,7 @@ const ProductRow = (props: ReactProps) => {
   return (
     <ErrorBounds className={clsx(
       classes.root,
-      classes.flexRowWithBorder,
+      classes.flexRow2,
     )}>
       <Link
         key={product.id}
@@ -65,7 +65,7 @@ const ProductRow = (props: ReactProps) => {
           }
           </div>
 
-          <div className={classes.flexCol}>
+          <div className={classes.flexColDescription}>
             <div className={clsx(classes.flexCol)}>
 
               <Typography
@@ -95,7 +95,7 @@ const ProductRow = (props: ReactProps) => {
               )}>
                 {
                   (price)
-                  ? <PriceDisplay3
+                  ? <PriceDisplayMainMobile
                       price={price}
                       priceWas={priceWas}
                       hideSavings={true}
@@ -120,13 +120,29 @@ interface ReactProps extends WithStyles<typeof styles> {
 
 const styles = (theme: Theme) => createStyles({
   root: {
+    position: "relative",
     display: 'flex',
     flexDirection: 'row',
+    background: Colors.uniswapDarkNavy,
+    borderRadius: BorderRadius,
+    // padding: '0.25rem 0.25rem',
+    padding: '0rem',
+    boxShadow: BoxShadows.shadow1.boxShadow,
+    "&:hover": {
+      boxShadow: BoxShadows.shadow2.boxShadow,
+    },
   },
   flexCol: {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
+  },
+  flexColDescription: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    marginTop: "0.5rem",
+    marginBottom: "0.5rem",
   },
   flexRowOuter: {
     display: 'flex',
@@ -147,17 +163,12 @@ const styles = (theme: Theme) => createStyles({
     justifyContent: 'flex-start',
     width: '100%',
   },
-  flexRowWithBorder: {
+  flexRow2: {
     display: 'flex',
     flexDirection: 'row',
     flexWrap: 'wrap',
     marginRight: '0rem',
-    marginBottom: '1rem',
-    paddingBottom: '1rem',
-    paddingTop: 0,
-    borderBottom: `1px solid ${Colors.lightGrey}`,
     "&:hover": {
-      borderBottom: `1px solid ${Colors.lightGrey}`,
       transition: theme.transitions.create('border', {
         easing: theme.transitions.easing.easeIn,
       })
@@ -169,16 +180,16 @@ const styles = (theme: Theme) => createStyles({
   category: {
     textTransform: "uppercase",
     fontWeight: 600,
-    marginBottom: '0.4rem',
+    marginBottom: '0.25rem',
     lineHeight: '1rem',
-    color: Colors.darkGrey,
+    color: Colors.uniswapLighterGrey,
     fontSize: '0.75rem',
   },
   title: {
     fontWeight: 600,
-    marginBottom: '0.4rem',
+    marginBottom: '0.25rem',
     lineHeight: '1rem',
-    fontSize: '0.875',
+    fontSize: '0.875rem',
   },
   name: {
     fontWeight: 600,
@@ -190,13 +201,13 @@ const styles = (theme: Theme) => createStyles({
   },
   priceAbsoluteBottom: {
     // position: "relative",
-    // position: "absolute",
-    bottom: '0.5rem',
-    width: 'calc(100%)',
+    position: "absolute",
+    bottom: '0.25rem',
+    right: '0rem',
   },
   previewCard: {
     marginRight: '0.5rem',
-    borderRadius: '4px',
+    borderRadius: `${BorderRadius}px ${BorderRadius}px ${BorderRadius}px ${BorderRadius}px `,
   },
 });
 

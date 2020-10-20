@@ -20,7 +20,7 @@ import CookiesBanner from "components/CookiesBanner";
 import CovidBanner from "components/CovidBanner";
 import BannerHome from "components/BannerHome";
 // Router
-import { Colors } from "layout/AppTheme";
+import { Colors, Gradients } from "layout/AppTheme";
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 // GraphQL
@@ -45,7 +45,7 @@ const FrontPage: React.FC<ReactProps> = (props) => {
   return (
     <div className={classes.outerContainer}>
       <BannerHome />
-      <CovidBanner />
+      {/* <CovidBanner /> */}
       <div className={classes.flexRowInner}>
         <div className={clsx(classes.productColumn60)}>
           <div style={{
@@ -93,7 +93,8 @@ const styles = (theme: Theme) => createStyles({
     display: 'flex',
     flexDirection: "column",
     justifyContent: 'center',
-    backgroundColor: Colors.darkWhite,
+    background: Gradients.gradientUniswapDark.background,
+    // background: Colors.uniswapDarkNavy,
   },
   flexRowInner: {
     display: 'flex',

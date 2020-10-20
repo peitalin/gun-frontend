@@ -2,7 +2,7 @@ import React from "react";
 import { oc as option } from "ts-optchain";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
-import { Colors } from "layout/AppTheme";
+import { Colors, Gradients, BorderRadius } from "layout/AppTheme";
 import clsx from "clsx";
 import Link from "next/link";
 // Material UI
@@ -68,8 +68,8 @@ const NewReleaseProducts = (props: ReactProps) => {
   const theme = useTheme();
   // jumboXL preview card on sm screen size only, remove right margin
   const sm = useMediaQuery(theme.breakpoints.only("sm"))
-  const smDown = useMediaQuery(theme.breakpoints.only("sm"))
-  const xsDown = useMediaQuery(theme.breakpoints.only("xs"))
+  const smDown = useMediaQuery(theme.breakpoints.down("sm"))
+  const xsDown = useMediaQuery(theme.breakpoints.down("xs"))
 
   const { loading, error, data } = useQuery<QueryData, QueryVar>(
     GET_ALL_PRODUCTS, {
@@ -107,45 +107,39 @@ const NewReleaseProducts = (props: ReactProps) => {
       </div>
 
       <div className={clsx(classes.flexRowFlexEnd, classes.maxWidth100vw)}>
-        <Typography variant="subtitle1"
-          className={classes.subtitle}
-          gutterBottom
-        >
-          Search:
-        </Typography>
         <div className={clsx(classes.searchbar)}>
-            <InputBase
-              value={searchTermUi}
-              placeholder="Search for products…"
-              inputRef={inputRefEl}
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput,
-              }}
-              onBlur={
-                () => setTimeout(() => {
-                  // setExpand(false)
-                  // setSearchTerm("");
-                  // props.setHideMenuItems(false)
-                  // props.setMobileMenuOpen(s => false)
-                }, 100)
-                // 100ms animation before unmount
-                // delay to dispatch search before setExpand(false)
-              }
-              onChange={(e) => {
-                setSearchTermUi(e.target.value);
-                setTimeout(() => {
-                  debounceUpdateSearchTerm(searchTermUi)
-                }, 0)
-              }}
-              // onKeyPress={event => {
-              //   if (event.key === "Enter") {
-              //     // router.push(`/search?q=${encodeURIComponent(value)}`)
-              //     // setSearchTermUi("");
-              //     debounceUpdateSearchTerm(searchTermUi)
-              //   }
-              // }}
-            />
+          <InputBase
+            value={searchTermUi}
+            placeholder="Search for products…"
+            inputRef={inputRefEl}
+            classes={{
+              root: classes.inputRoot,
+              input: classes.inputInput,
+            }}
+            onBlur={
+              () => setTimeout(() => {
+                // setExpand(false)
+                // setSearchTerm("");
+                // props.setHideMenuItems(false)
+                // props.setMobileMenuOpen(s => false)
+              }, 100)
+              // 100ms animation before unmount
+              // delay to dispatch search before setExpand(false)
+            }
+            onChange={(e) => {
+              setSearchTermUi(e.target.value);
+              setTimeout(() => {
+                debounceUpdateSearchTerm(searchTermUi)
+              }, 0)
+            }}
+            // onKeyPress={event => {
+            //   if (event.key === "Enter") {
+            //     // router.push(`/search?q=${encodeURIComponent(value)}`)
+            //     // setSearchTermUi("");
+            //     debounceUpdateSearchTerm(searchTermUi)
+            //   }
+            // }}
+          />
         </div>
         <DropdownInput
           className={classes.orderByDropdown}
@@ -171,6 +165,9 @@ const NewReleaseProducts = (props: ReactProps) => {
         classes.carouselContainer,
         classes.maxWidth100vw,
         smDown ? classes.paddingRight : null,
+        xsDown
+          ? classes.carouselContainerPaddingLeftXs
+          : classes.carouselContainerPaddingLeft,
       )}>
         {
           (option(products).edges([]).length === 0)
@@ -181,14 +178,14 @@ const NewReleaseProducts = (props: ReactProps) => {
                 <div key={product.id}
                   className={
                     xsDown
-                    ? classes.productImageXs
+                    ? classes.productCardXs
                     : sm
-                      ? classes.productImageSm
-                      : classes.productImage
+                      ? classes.productCardSm
+                      : classes.productCard
                   }
                 >
                   <div className={clsx(
-                    smDown ? classes.flexItemMobile : classes.flexItem,
+                    sm ? classes.flexItemMobile : classes.flexItem,
                     classes.flexItemHover,
                   )}>
                     <PreviewCardResponsive
@@ -248,31 +245,39 @@ const styles = (theme: Theme) => createStyles({
     alignItems: 'flex-start',
     // justifyContent: 'center',
     justifyContent: 'flex-start',
+  },
+  carouselContainerPaddingLeft: {
     paddingLeft: '1rem', // balances 1rem margin-right on flexItems
   },
-  paddingRight: {
-    paddingRight: '1rem',
+  carouselContainerPaddingLeftXs: {
+    paddingLeft: '0.5rem', // balances 1rem margin-right on flexItems
   },
-  productImage: {
+  paddingRight: {
+    paddingRight: '0.5rem',
+  },
+  productCard: {
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
     marginRight: '1rem',
+    marginBottom: '1rem',
   },
-  productImageSm: {
+  productCardSm: {
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
     marginRight: '0rem',
+    marginBottom: '1rem',
   },
-  productImageXs: {
+  productCardXs: {
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
     width: '100%',
-    paddingRight: '1rem',
+    marginBottom: '0.5rem',
   },
   title: {
+    color: Colors.uniswapLighterGrey,
     marginTop: "1rem",
     marginBottom: "0.5rem",
     marginLeft: '1rem',
@@ -298,7 +303,7 @@ const styles = (theme: Theme) => createStyles({
     display: 'flex',
     justifyContent: 'flex-end',
     alignItems: 'center',
-    marginBottom: '1rem',
+    marginBottom: '0.5rem',
     flexWrap: 'wrap',
     flexDirection: 'row',
     width: '100%',
@@ -350,10 +355,11 @@ const styles = (theme: Theme) => createStyles({
     maxWidth: 250,
     marginRight: '1rem',
     // marginLeft: '1rem',
+    marginBottom: '0.5rem',
   },
   // searchbar
   subtitle: {
-    color: Colors.grey,
+    color: Colors.uniswapLighterGrey,
     marginRight: '0.5rem',
     fontSize: '1rem',
   },
@@ -363,13 +369,12 @@ const styles = (theme: Theme) => createStyles({
     borderRadius: theme.shape.borderRadius,
     marginLeft: 0,
     marginRight: '1rem',
+    marginBottom: '0.5rem',
   },
   inputRoot: {
-    color: 'inherit',
-    fontSize: '0.9rem',
-    background: Colors.white,
-    border: `1px solid ${Colors.mediumGrey}`,
-    borderRadius: '4px',
+    color: Colors.uniswapLightestGrey,
+    background: Colors.uniswapLightNavy,
+    borderRadius: BorderRadius,
     height: '38px',
     padding: '0.5rem',
     minWidth: '200px',

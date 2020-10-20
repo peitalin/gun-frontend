@@ -243,7 +243,7 @@ const PreviewCardRC = (props: ReactProps) => {
                 {option(title)(".... ".repeat(2))}
               </Typography>
 
-              <Typography
+              {/* <Typography
                 className={classes.createdAt}
                 variant="caption"
                 component="div"
@@ -253,7 +253,7 @@ const PreviewCardRC = (props: ReactProps) => {
                     ? showDateAndTime(product.currentSnapshot.createdAt)
                     : undefined
                 }
-              </Typography>
+              </Typography> */}
 
               <Typography
                 className={classes.createdAt}
