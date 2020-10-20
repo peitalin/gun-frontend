@@ -23,7 +23,7 @@ import MetaHeadersPage from "layout/MetaHeadersPage";
 
 
 
-const Sell: React.FC<ProductCreateProps> = (props) => {
+const SellPageSSR: React.FC<ProductCreateProps> = (props) => {
 
   const { classes, asModal, children } = props;
 
@@ -74,7 +74,6 @@ const styles = (theme: Theme) => createStyles({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
-    backgroundColor: Colors.darkWhite,
   },
   flexRow: {
     display: 'flex',
@@ -104,4 +103,4 @@ const styles = (theme: Theme) => createStyles({
 });
 
 
-export default withStyles(styles)( Sell );
+export default withStyles(styles)( SellPageSSR );

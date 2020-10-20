@@ -49,32 +49,32 @@ interface Context extends NextPageContext {
   apolloClient: ApolloClient<object>;
 }
 
-MyOrdersPage.getInitialProps = async (ctx: Context) => {
+// MyOrdersPage.getInitialProps = async (ctx: Context) => {
 
-  try {
-    // const { data } = await ctx.apolloClient.query<QueryData, QueryVar>({
-    const bResponse = await serverApolloClient(ctx).query<QueryData, QueryVar>({
-      query: GET_BUYER_ORDERS_CONNECTION,
-    })
-    const sResponse = await serverApolloClient(ctx).query<QueryData, QueryVar>({
-      query: GET_SELLER_ORDERS_CONNECTION,
-    })
+//   try {
+//     // const { data } = await ctx.apolloClient.query<QueryData, QueryVar>({
+//     const bResponse = await serverApolloClient(ctx).query<QueryData, QueryVar>({
+//       query: GET_BUYER_ORDERS_CONNECTION,
+//     })
+//     const sResponse = await serverApolloClient(ctx).query<QueryData, QueryVar>({
+//       query: GET_SELLER_ORDERS_CONNECTION,
+//     })
 
-    console.log('getInitialProps initialBuyingOrders: ', bResponse);
-    // return props
-    return {
-      initialSellerOrders: option(sResponse).data.user.sellerOrdersConnection(),
-      initialBuyerOrders: option(bResponse).data.user.buyerOrdersConnection(),
-      classes: undefined,
-    };
-  } catch(e) {
-    return {
-      initialSellerOrders: undefined,
-      initialBuyerOrders: undefined,
-      classes: undefined,
-    };
-  }
-}
+//     console.log('getInitialProps initialBuyingOrders: ', bResponse);
+//     // return props
+//     return {
+//       initialSellerOrders: option(sResponse).data.user.sellerOrdersConnection(),
+//       initialBuyerOrders: option(bResponse).data.user.buyerOrdersConnection(),
+//       classes: undefined,
+//     };
+//   } catch(e) {
+//     return {
+//       initialSellerOrders: undefined,
+//       initialBuyerOrders: undefined,
+//       classes: undefined,
+//     };
+//   }
+// }
 
 
 export default MyOrdersPage;
