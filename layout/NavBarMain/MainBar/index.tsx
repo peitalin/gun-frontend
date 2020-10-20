@@ -7,6 +7,7 @@ import { Actions } from 'reduxStore/actions';
 import clsx from 'clsx';
 import { withStyles, WithStyles } from "@material-ui/core/styles";
 import { styles } from "../styles";
+import { Colors } from "layout/AppTheme";
 // Components
 import Login from "layout/Login";
 import Logo from "components/Icons/Logo";
@@ -14,7 +15,6 @@ import Badge from '@material-ui/core/Badge';
 import Searchbar from "layout/NavBarMain/Searchbar";
 // MUI
 import UserMenu from "layout/NavBarMain/UserMenu";
-import UserMenuMobile from "layout/NavBarMain/UserMenuMobile";
 import Button from "@material-ui/core/Button";
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
@@ -41,7 +41,7 @@ const MainBar = (props: ReactProps) => {
 
   const { classes } = props;
   const router = useRouter()
-  const color = "#242424";
+  const color = Colors.uniswapLighterGrey;
 
   const {
     cartCount,

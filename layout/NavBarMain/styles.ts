@@ -1,5 +1,5 @@
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
-import { Colors } from "layout/AppTheme";
+import { Colors, Gradients, BoxShadows } from "layout/AppTheme";
 
 
 /////////////// STYLES /////////////////////
@@ -7,8 +7,8 @@ export const MainBarHeight = 55;
 export const NewsBarHeight = 25;
 export const CategoryBarHeight = 44;
 export const CategoryBarHeightMobile = 30;
-export const NavBarHeight = MainBarHeight + NewsBarHeight + CategoryBarHeight;
-// export const NavBarHeight = MainBarHeight + NewsBarHeight;
+// export const NavBarHeight = MainBarHeight + NewsBarHeight + CategoryBarHeight;
+export const NavBarHeight = MainBarHeight + NewsBarHeight;
 
 
 // const categoryBarColor = Colors.deepRed
@@ -31,16 +31,16 @@ const categoryLinkColorHover2 = Colors.secondaryBright
 export const styles = (theme: Theme) => createStyles({
   baseBar: {
     zIndex: 5,
-    backgroundColor: "#fefefe",
-    // boxShadow: `0px 2px 4px -1px rgba(0,0,0,0.2),
-    //   0px 1px 1px 0px rgba(0,0,0,0.12)`,
-    borderBottom: '1px solid #eaeaea',
+    // backgroundColor: "#fefefe",
+    background: Gradients.gradientUniswapDark.background,
+    borderBottom: Colors.uniswapNavy,
     height: `${MainBarHeight - 1}px`, // 1px for borderBottom
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
     position: 'relative',
+    boxShadow: BoxShadows.shadow1.boxShadow,
   },
   baseBarInner: {
     width: '100vw',
@@ -53,6 +53,11 @@ export const styles = (theme: Theme) => createStyles({
   // Main Bar
   mainBarInner: {
     display: "flex",
+    justifyContent: 'center',
+    alignItems: "center",
+  },
+  mainBarInnerHide: {
+    display: "none",
     justifyContent: 'center',
     alignItems: "center",
   },
@@ -83,6 +88,13 @@ export const styles = (theme: Theme) => createStyles({
     // backgroundClip: 'text',
     // textFillColor: 'transparent',
   },
+  buttonText: {
+    fontWeight: 600,
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    width: '100%',
+  },
   selectedRouteText: {
     color: Colors.secondaryBright,
   },
@@ -96,11 +108,10 @@ export const styles = (theme: Theme) => createStyles({
     marginRight: '0.5rem',
   },
   icons: {
-    fill: theme.palette.primary.main,
+    fill: Colors.uniswapLighterGrey,
   },
   iconsCloud: {
-    fill: theme.palette.primary.main,
-    // fill: Colors.foreground,
+    fill: Colors.uniswapLighterGrey,
     marginRight: '0.25rem',
   },
   iconsSelected: {
@@ -111,6 +122,10 @@ export const styles = (theme: Theme) => createStyles({
   },
   buttonLink: {
     marginRight: "0.5rem",
+  },
+  buttonLinkLogo: {
+    marginLeft: "1rem",
+    marginRight: "1rem",
   },
   menuButton: {
   },
@@ -125,7 +140,8 @@ export const styles = (theme: Theme) => createStyles({
   // Category Bar
   categoryBar: {
     height: `${CategoryBarHeight - 1}px`, // 1px for borderBottom
-    background: categoryBarColor,
+    // background: categoryBarColor,
+    background: Gradients.gradientUniswapDark.background,
     border: '0px solid',
     // boxShadow: "1px 1px 1px 1px rgba(22,22,22,0.2)"
     boxShadow: "0px 1px 2px 0px rgba(40,40,40,0.3)",
@@ -254,7 +270,8 @@ export const styles = (theme: Theme) => createStyles({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center',
-    background: '#fefefe',
+    // background: categoryBarColor,
+    background: Gradients.gradientUniswapDark.background,
     position: 'absolute',
     transform: 'translateY(-200%)',
     opacity: 0,
@@ -307,7 +324,9 @@ export const styles = (theme: Theme) => createStyles({
 
   // News Bar
   newsBar: {
-    backgroundColor: Colors.blueDarkNavy,
+    // background: Gradients.gradientUniswapDark.background,
+    // background: Gradients.gradientUniswapFluro.background,
+    background: Gradients.gradientUniswapFluro.background,
     height: '1.5rem',
     zIndex: 5,
   },
@@ -346,6 +365,7 @@ export const styles = (theme: Theme) => createStyles({
   },
   navbarButtonMobile: {
     marginRight: "1%",
+    minWidth: 50,
   },
   baseBarInnerMobile: {
     zIndex: 3,
@@ -359,7 +379,7 @@ export const styles = (theme: Theme) => createStyles({
     alignItems: "center",
   },
   logoMobile: {
-    margin: '0rem 2rem',
+    margin: '0rem 1rem',
     textTransform: "capitalize",
     fontWeight: 500,
     // transform: 'scale(0.9)',

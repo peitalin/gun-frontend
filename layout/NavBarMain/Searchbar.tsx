@@ -6,6 +6,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import InputBase from '@material-ui/core/InputBase';
 import { useWindowWidth } from "utils/hooks";
 import { useRouter } from "next/router";
+import { Colors, BorderRadius } from "layout/AppTheme";
 
 
 const Searchbar = (props: SearchbarProps) => {
@@ -19,7 +20,7 @@ const Searchbar = (props: SearchbarProps) => {
       <div className={classes.flex}>
         <div className={classes.searchbar}>
           <div className={classes.searchIcon}>
-            <SearchIcon style={{ fill: color || "#242424" }}/>
+            <SearchIcon style={{ fill: color || Colors.uniswapLighterGrey }}/>
           </div>
           <InputBase
             value={value}
@@ -67,8 +68,8 @@ let styles = (theme: Theme) => createStyles({
   searchbar: {
     flexGrow: 1,
     position: 'relative',
-    border: "1px solid #eaeaea",
-    borderRadius: theme.shape.borderRadius,
+    // border: `1px solid ${Colors.uniswapDarkNavy}`,
+    borderRadius: BorderRadius,
     backgroundColor: "rgba(152,152,152,0.1)",
     '&:hover': {
       backgroundColor: "rgba(152,152,152,0.15)",
@@ -95,6 +96,7 @@ let styles = (theme: Theme) => createStyles({
     fontSize: '0.9rem',
   },
   inputInput: {
+    color: Colors.uniswapLightestGrey,
     paddingTop: theme.spacing(1),
     paddingRight: theme.spacing(1),
     paddingBottom: theme.spacing(1),

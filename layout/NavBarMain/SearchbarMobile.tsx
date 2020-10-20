@@ -8,6 +8,7 @@ import ClearIcon from '@material-ui/icons/Clear';
 import InputBase from '@material-ui/core/InputBase';
 import Button from "@material-ui/core/Button";
 import { useRouter } from "next/router";
+import { Colors } from "layout/AppTheme";
 
 
 
@@ -58,7 +59,7 @@ const Searchbar = (props: SearchbarProps) => {
           </Button>
           <InputBase
             value={value}
-            placeholder="Search for digital products…"
+            placeholder="Search for products…"
             inputRef={inputRefEl}
             classes={{
               root: expand ? classes.inputRootExpand : classes.inputRoot,
@@ -132,7 +133,7 @@ let styles = (theme: Theme) => createStyles({
     },
   },
   searchIconOuter: {
-    fill: theme.palette.primary.main,
+    fill: Colors.uniswapLighterGrey,
   },
   searchIconInner: {
     width: theme.spacing(6),
@@ -144,12 +145,12 @@ let styles = (theme: Theme) => createStyles({
     justifyContent: 'center',
   },
   inputRoot: {
-    color: 'inherit',
+    color: Colors.uniswapLightestGrey,
     width: '0',
     fontSize: '0.9rem',
   },
   inputRootExpand: {
-    color: 'inherit',
+    color: Colors.uniswapLightestGrey,
     width: 'calc(100% - 3rem)',
     fontSize: '0.9rem',
   },

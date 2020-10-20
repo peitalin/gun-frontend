@@ -14,7 +14,6 @@ import Badge from '@material-ui/core/Badge';
 import SearchbarMobile from "layout/NavBarMain/SearchbarMobile";
 // MUI
 import UserMenu from "layout/NavBarMain/UserMenu";
-import UserMenuMobile from "layout/NavBarMain/UserMenuMobile";
 import Button from "@material-ui/core/Button";
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';

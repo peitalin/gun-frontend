@@ -10,6 +10,7 @@ import { UserPrivate, Role } from "typings/gqlTypes";
 import { goToModalConnect } from "utils/modals";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
+import { Colors } from "layout/AppTheme";
 // MUI
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
@@ -106,7 +107,8 @@ export const UserMenu: React.FC<ReactProps> = (props) => {
 
           {
             user.userRole === Role.PLATFORM_ADMIN &&
-            <MenuItem onClick={handleCloseMenu}>
+            <MenuItem className={classes.menuItem} onClick={handleCloseMenu}>
+              {/* <Link href="/gov/random-products"> */}
               <Link href="/gov/payouts/pending-approval">
                 <a className={classes.menuLink}>
                   <LibraryBooks className={classes.menuIcon}/>
@@ -116,7 +118,19 @@ export const UserMenu: React.FC<ReactProps> = (props) => {
             </MenuItem>
           }
 
-          <MenuItem onClick={handleCloseMenu}>
+          <Divider/>
+
+
+          <MenuItem className={classes.menuItem} onClick={handleCloseMenu}>
+            <Link href="/admin">
+              <a className={classes.menuLink}>
+                <LibraryBooks className={classes.menuIcon}/>
+                <span className={classes.menuText}>Seller Dashboard</span>
+              </a>
+            </Link>
+          </MenuItem>
+
+          <MenuItem className={classes.menuItem} onClick={handleCloseMenu}>
             <Link href="/my-orders">
               <a className={classes.menuLink}>
                 <ShoppingCartIcon className={classes.menuIcon}/>
@@ -125,17 +139,17 @@ export const UserMenu: React.FC<ReactProps> = (props) => {
             </Link>
           </MenuItem>
 
-          {/* <MenuItem onClick={handleCloseMenu}>
+          {/* <MenuItem  className={classes.menuItem} onClick={handleCloseMenu}>
             <Link href="/my-list">
               <a className={classes.menuLink}>
                 <CardGiftcard className={classes.menuIcon}/>
                 <span className={classes.menuText}> Wishlist </span>
               </a>
             </Link>
-          </MenuItem> */}
+          </MenuItem  className={classes.menuItem}> */}
 
 
-          <MenuItem onClick={handleCloseMenu}>
+          <MenuItem className={classes.menuItem} onClick={handleCloseMenu}>
             {
               option(user).store.id()
               ? <Link href="/admin">
@@ -153,7 +167,7 @@ export const UserMenu: React.FC<ReactProps> = (props) => {
             }
           </MenuItem>
 
-          <MenuItem onClick={() => {
+          <MenuItem className={classes.menuItem} onClick={() => {
             handleCloseMenu();
             goToModal.mySettings()
           }}>
@@ -165,7 +179,7 @@ export const UserMenu: React.FC<ReactProps> = (props) => {
 
           <Divider/>
 
-          <MenuItem onClick={handleCloseMenu}>
+          <MenuItem className={classes.menuItem} onClick={handleCloseMenu}>
             <Link href="/faq">
               <a className={classes.menuLink}>
                 <QAIcon className={classes.menuIcon}/>
@@ -174,7 +188,7 @@ export const UserMenu: React.FC<ReactProps> = (props) => {
             </Link>
           </MenuItem>
 
-          <MenuItem onClick={() => {
+          <MenuItem className={classes.menuItem} onClick={() => {
             handleCloseMenu();
             goToModal.contactUs()
           }}>
@@ -184,7 +198,7 @@ export const UserMenu: React.FC<ReactProps> = (props) => {
             </a>
           </MenuItem>
 
-          <MenuItem onClick={() => {
+          <MenuItem className={classes.menuItem} onClick={() => {
             handleCloseMenu()
             logout(apolloClient, dispatch)('/')
           }}>
@@ -207,7 +221,7 @@ interface ReactProps extends WithStyles<typeof styles> {
 }
 
 /////////////// STYLES /////////////////////
-const menuTextColor = "#484848";
+const menuTextColor = Colors.lightGrey;
 
 const styles = (theme: Theme) => createStyles({
   iconText: {
@@ -218,7 +232,8 @@ const styles = (theme: Theme) => createStyles({
     top: "3rem",
     right: 0,
     width: theme.spacing(32),
-    borderRadius: 0,
+    borderRadius: 16,
+    backgroundColor: Colors.uniswapDarkNavy,
   },
   z5001: {
     zIndex: 5001,
@@ -226,6 +241,12 @@ const styles = (theme: Theme) => createStyles({
   menuText: {
     color: menuTextColor,
     fontSize: '0.9rem',
+  },
+  menuItem: {
+    "&:hover": {
+      backgroundColor: Colors.uniswapNavy,
+      color: Colors.cream,
+    },
   },
   menuIcon: {
     marginRight: "0.5rem",

@@ -46,26 +46,16 @@ const DesktopMainBarXl = (props: DesktopMainBarProps) => {
     router.push('/sell')
   }
 
-  const goToMyOrders = () => {
-    router.push('/my-orders')
-  }
-
-  const goToMyDownloads = () => {
-    router.push('/my-orders')
-  }
-
   return (
     <div className={classes.baseBarInner}>
 
       <div style={{ flexBasis: '0.5rem' }}></div>
 
-      <div style={{ margin: '0rem 1rem' }}>
-        <Link href="/">
-          <a className={classes.buttonLink}>
-            <Logo color={color}/>
-          </a>
-        </Link>
-      </div>
+      <Link href="/">
+        <a className={classes.buttonLinkLogo}>
+          <Logo color={color}/>
+        </a>
+      </Link>
 
       <div style={{ marginRight: '1rem' }}>
         <Searchbar color={color}/>

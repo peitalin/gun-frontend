@@ -61,13 +61,11 @@ const DesktopMainBarLg = (props: DesktopMainBarProps) => {
 
       <div style={{ flexBasis: '0.5rem' }}></div>
 
-      <div style={{ margin: '0rem 1rem' }}>
-        <Link href="/">
-          <a className={classes.buttonLink}>
-            <Logo color={color}/>
-          </a>
-        </Link>
-      </div>
+      <Link href="/">
+        <a className={classes.buttonLinkLogo}>
+          <Logo color={color}/>
+        </a>
+      </Link>
 
       <div style={{ marginRight: '1rem' }} className={
         !hide ? "fadeIn" : null

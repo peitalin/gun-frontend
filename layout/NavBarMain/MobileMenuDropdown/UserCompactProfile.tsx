@@ -2,9 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { oc as option } from "ts-optchain";
 // Graphql
-// import { Store, StorePrivate, UserPrivate, ID } from "typings/gqlTypes";
-type StorePrivate = any;
-
+import { UserPrivate, StorePrivate, ID } from "typings/gqlTypes";
 // Styles
 import { withStyles, WithStyles, Theme, createStyles } from "@material-ui/core/styles";
 import { Colors } from "layout/AppTheme";
@@ -22,47 +20,43 @@ import { useApolloClient } from "@apollo/client";
 
 
 
-const StoreProfile: React.FC<ReactProps> = (props) => {
+const UserCompactProfile: React.FC<ReactProps> = (props) => {
 
-  const { userStore: store, classes } = props;
+  const {
+    classes,
+    user,
+  } = props;
   // imgloaded
-  const [avatarImgLoaded, setAvatarImgLoaded] = useState(false);
   const router = useRouter();
   const dispatch = useDispatch();
   const apolloClient = useApolloClient();
 
   return (
     <ErrorBounds className={clsx(classes.container)}>
-      <div className={classes.flexRow}>
-        <Avatar
-          className={clsx(
-            classes.avatar,
-            avatarImgLoaded ? "fadeInFast" : "hidden",
-          )}
-          src={option(store).profile.original.url()}
-          onLoad={() => setAvatarImgLoaded(true)}
-        />
+      <div className={clsx(classes.flexRow, classes.userMargin)}>
         <div className={classes.flexCol}>
-          <Typography variant="caption" className={classes.profileText}>
+          <Typography variant="body1" className={classes.profileTitle}>
             {
-              store && store.name &&
-              store.name
+              (option(user).firstName() && option(user).lastName())
+                ? `${user.firstName} ${user.lastName}`
+                : option(user).firstName()
+                  ? user.firstName
+                  : "Your Profile"
             }
           </Typography>
-          <Typography variant="caption" className={classes.profileText}>
-            {
-              store && store.website &&
-              store.website
-            }
+          <Typography variant="caption" className={classes.profileEmail}>
+            {option(user).email()}
           </Typography>
         </div>
       </div>
       <div className={classes.flexRow}>
         <div
-          className={clsx(classes.link, classes.logout)}
-          onClick={() => logout(apolloClient, dispatch)(router.pathname)}
+          className={clsx(classes.logout)}
+          onClick={() => {
+            logout(apolloClient, dispatch)(router.pathname)
+          }}
         >
-          logout
+          Log Out
         </div>
       </div>
     </ErrorBounds>
@@ -71,7 +65,7 @@ const StoreProfile: React.FC<ReactProps> = (props) => {
 
 
 interface ReactProps extends WithStyles<typeof styles> {
-  userStore: StorePrivate;
+  user: UserPrivate;
 }
 
 
@@ -95,27 +89,35 @@ const styles = (theme: Theme) => createStyles({
     flexDirection: 'row',
   },
   avatar: {
-    height: 44,
-    width: 44,
+    height: 40,
+    width: 40,
     marginRight: '0.5rem',
-    border: `2px solid ${Colors.uniswapLighterGrey}`,
+    border: `1px solid ${Colors.charcoal}`,
   },
-  link: {
-    color: Colors.blue,
-    cursor: 'pointer',
-    "&:hover": {
-      color: Colors.magenta,
-    },
-  },
-  profileText: {
+  profileTitle: {
     fontWeight: 600,
+    marginBottom: '0.25rem',
+    color: Colors.uniswapLightestGrey,
+  },
+  profileEmail: {
+    fontWeight: 400,
+    fontSize: '0.7rem',
     color: Colors.uniswapLighterGrey,
   },
   logout: {
     fontSize: '0.9rem',
     marginRight: '1rem',
-    fontWeight: 600,
+    fontWeight: 500,
+    color: Colors.uniswapLightNavy,
+    cursor: 'pointer',
+    "&:hover": {
+      color: Colors.blue,
+    },
+  },
+  userMargin: {
+    marginLeft: '0.5rem',
+    marginBottom: '0.5rem',
   },
 });
 
-export default withStyles(styles)( StoreProfile );
+export default withStyles(styles)( UserCompactProfile );

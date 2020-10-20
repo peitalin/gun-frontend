@@ -1,5 +1,4 @@
 import React from "react";
-import { oc as option } from "ts-optchain";
 // Redux
 import { GrandReduxState } from 'reduxStore/grand-reducer';
 import { Actions } from 'reduxStore/actions';
@@ -21,9 +20,6 @@ import { useDispatch, useSelector } from "react-redux";
 // Router
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { navbarRoutes } from "./navbarRoutes";
-// Analytics
-import { useAnalytics, analyticsEvent } from "utils/analytics";
 
 
 
@@ -47,8 +43,8 @@ const MobileMainBar = (props: MobileMainBarProps) => {
     <div className={classes.baseBarInnerMobile}>
 
       <div className={clsx(
-        "fadeIn",
-        hide ? classes.mainBarInnerHide : classes.mainBarInner,
+        classes.mainBarInner,
+        hide ? "displayNone" : "fadeIn"
       )}>
         <div className={classes.navbarButtonMobile}>
           <MobileMenuDropdown
@@ -61,48 +57,32 @@ const MobileMainBar = (props: MobileMainBarProps) => {
 
 
       <div className={clsx(
-        "fadeIn",
-        hide ? classes.mainBarInnerHide : classes.mainBarInner,
+        classes.mainBarInner,
+        hide ? "displayNone" : "fadeIn"
       )}>
         <Button
           className={clsx(
             classes.navbarButtonMobile,
-            endRoute === 'start' ? classes.navbarButtonSelected : null,
+            endRoute === 'sell' ? classes.navbarButtonSelected : null,
           )}
           variant="text"
           color="primary"
-          onClick={() => {
-            router.push(navbarRoutes.start)
-            analyticsEvent("Nav.Upload.Pressed")
-            props.setMobileMenuOpen(s => false)
-          }}
+          onClick={() => router.push('/sell')}
         >
-          <span className={clsx(
-            classes.buttonText,
-            endRoute === 'start' ? classes.selectedRouteText : null
-          )}>
+          <span className={
+            endRoute === 'sell' ? classes.selectedRouteText : null
+          }>
             Sell
           </span>
         </Button>
-      </div>
 
-
-      {
-        !hide &&
         <Link href="/">
-          <a className={clsx(
-              classes.logoMobile,
-              !hide && "fadeIn"
-            )}
-            onClick={() => {
-              props.setMobileMenuOpen(s => false)
-              analyticsEvent("Nav.Logo.Pressed")
-            }}
-          >
+          <a className={classes.logoMobile}>
             <Logo color={color}/>
           </a>
         </Link>
-      }
+      </div>
+
 
       <div style={{ marginLeft: '0.5rem' }} className={
         !hide ? "fadeIn" : null
@@ -116,17 +96,15 @@ const MobileMainBar = (props: MobileMainBarProps) => {
       </div>
 
       <div className={clsx(
-        "fadeIn",
-        hide ? classes.mainBarInnerHide : classes.mainBarInner,
+        classes.mainBarInner,
+        hide ? "displayNone" : "fadeIn"
       )}>
         <Button
           className={classes.navbarButtonMobile}
           variant="text"
           color="primary"
           onClick={() => {
-            router.push(navbarRoutes.checkout)
-            props.setMobileMenuOpen(s => false)
-            analyticsEvent("Nav.Cart.Pressed")
+            router.push("/checkout")
           }}
         >
           <Badge
@@ -153,7 +131,12 @@ interface MobileMainBarProps extends ReactProps {
   loggedIn: boolean;
   color: string;
   subtotal: number;
-  numUnclaimedOrders?: number;
+}
+
+interface ReduxProps {
+  loggedIn: boolean;
+  cartCount: number;
+  subtotal: number;
 }
 
 
