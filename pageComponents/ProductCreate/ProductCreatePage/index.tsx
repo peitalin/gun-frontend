@@ -73,7 +73,7 @@ import { useRouter } from "next/router";
 // CSS
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
-import { serializeHtml } from 'components/TextEditor/helpers';
+import { serializeHtml } from 'components/TextEditor/helpersSerializers';
 // Analytics
 
 
@@ -236,13 +236,6 @@ const ProductCreatePage = (props: ReactProps) => {
                   resetForm={fprops.resetForm}
                 />
 
-                <a onClick={() => {
-                  console.log("fprops.values", fprops.values)
-                  console.log("fprops.errors", fprops.errors)
-                }}>
-                  print formik!
-                </a>
-
                 <div className={
                   disableForm ? classes.disableForm : null
                 }>
@@ -359,6 +352,13 @@ const ProductCreatePage = (props: ReactProps) => {
                     <Loading fixed loading={state.loading}/>
                   </ProductCreateButtonWrapper>
 
+
+                {/* <a onClick={() => {
+                  console.log("fprops.values", fprops.values)
+                  console.log("fprops.errors", fprops.errors)
+                }}>
+                  print formik!
+                </a> */}
                 {/* <a onClick={() => fprops.resetForm()}>
                   reset form
                 </a> */}
