@@ -15,7 +15,7 @@ import {
   isBlockActive,
   toggleBlock,
   toggleMark,
-} from "./helpers";
+} from "./helpersEditorToggles";
 
 
 

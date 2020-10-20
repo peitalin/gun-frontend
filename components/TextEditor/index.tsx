@@ -38,20 +38,23 @@ import {
   MarkButton,
 } from './components'
 import {
-  toggleBlock,
-  toggleMark,
-  Element,
-  Leaf,
   serializeText,
   serializeHtml,
-  serializeHtmlNode,
-  HOTKEYS,
-  ELEMENT_TAGS,
-  TEXT_TAGS,
+} from "./helpersSerializers";
+import {
   deserialize,
-  withHtml,
+  withHtmlDeserializer,
+} from "./helpersDeserializers";
+import {
   initialValue,
-} from "./helpers";
+  Element,
+  Leaf,
+} from "./helpersElements";
+import {
+  toggleBlock,
+  toggleMark,
+  HOTKEYS,
+} from "./helpersEditorToggles";
 
 
 
@@ -76,7 +79,7 @@ const TextEditor = (props: ReactProps) => {
   const renderElement = useCallback(props => <Element {...props} />, [])
   const renderLeaf = useCallback(props => <Leaf {...props} />, [])
   const editor = useMemo(
-    () => withHtml(withReact(withHistory(createEditor()))),
+    () => withHtmlDeserializer(withReact(withHistory(createEditor()))),
     []
   )
 
@@ -134,7 +137,8 @@ const TextEditor = (props: ReactProps) => {
 
   return (
     <div className={classes.root}>
-      <div className={clsx(
+      <div
+        className={clsx(
           classes.editorContainer,
           focused ? classes.focusedBorder : null,
           (option(fprops).touched.description() && !focused && errorMessage)
@@ -165,7 +169,7 @@ const TextEditor = (props: ReactProps) => {
             className={classes.editor}
             renderElement={renderElement}
             renderLeaf={renderLeaf}
-            placeholder={props.placeholder || "Type a message"}
+            placeholder="A full description of your product"
             spellCheck
             // autoFocus
             onKeyDown={event => {
@@ -221,7 +225,6 @@ interface ReactProps extends WithStyles<typeof styles> {
   editorStyle?: {
     [key:string]: any
   };
-  placeholder?: string;
 }
 interface FormikFields {
   description: string;
@@ -230,6 +233,8 @@ interface FormikFields {
 export const styles = (theme: Theme) => createStyles({
   root: {
     position: 'relative',
+    marginBottom: '1rem',
+    backgroundColor: Colors.white,
   },
   editorContainer: {
     height: '100%',
@@ -243,8 +248,9 @@ export const styles = (theme: Theme) => createStyles({
     }),
   },
   focusedBorder: {
-    // boxShadow: `${fade('#50B5F5', 0.2)} 0 0 0 2px`,
-    border: `2px solid ${fade(Colors.blue, 0.2)}`,
+    // border is a boxShadow
+    boxShadow: `${fade('#50B5F5', 0.2)} 0 0 0 2px`,
+    borderColor: Colors.blue,
     color: Colors.charcoal,
     transition: theme.transitions.create(['border-color', 'box-shadow'], {
       easing: theme.transitions.easing.easeIn,
@@ -256,7 +262,7 @@ export const styles = (theme: Theme) => createStyles({
   },
   editor: {
     margin: '1rem',
-    minHeight: '5rem',
+    minHeight: '16rem',
     "> * + *": {
       marginTop: '1rem',
     },
