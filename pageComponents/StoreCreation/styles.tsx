@@ -203,7 +203,7 @@ export const styles = (theme: Theme) => createStyles({
     color: Colors.blue,
     cursor: 'pointer',
     "&:hover": {
-      color: Colors.lightBlue,
+      color: Colors.magenta,
     },
   },
   closeButton: {

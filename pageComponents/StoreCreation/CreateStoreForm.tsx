@@ -42,7 +42,7 @@ import { useRouter } from "next/router";
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
 // store deleted
-import { isStoreDeleted, storeCreateRedirectCondition } from "utils/store";
+import { isStoreDeleted, storeDoesNotExist } from "utils/store";
 import { ApolloRefetch } from "layout/GetUser";
 // uuidv4
 import { v4 as uuidv4 } from "uuid"
@@ -125,7 +125,7 @@ const CreateStoreForm: React.FC<ReactProps> = (props) => {
     <Formik
       // 1. feed product data to edit into formik state.
       initialValues={{
-        userId: userRedux.id,
+        userId: userRedux?.id,
         storeId: `store_${uuidv4()}`, // generate new storeId
         name: "",
         bio: "",
@@ -191,7 +191,7 @@ const CreateStoreForm: React.FC<ReactProps> = (props) => {
         } = fprops;
 
 
-        if (!storeCreateRedirectCondition(option(userRedux).store())) {
+        if (!storeDoesNotExist(option(userRedux).store())) {
           // if store does not exist, or is deleted
           return (
             <div className={classes.loginContainer}>
