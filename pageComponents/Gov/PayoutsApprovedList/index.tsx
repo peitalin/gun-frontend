@@ -51,7 +51,7 @@ import {
 // Grid Components
 import GridPaginatorGeneric from "components/GridPaginatorGeneric";
 
-import TextInput from 'components/Fields/TextInput2';
+import TextInput from 'components/Fields/TextInputAdorned';
 // csv
 import CsvDownloader from 'react-csv-downloader';
 import dayjs from 'dayjs';

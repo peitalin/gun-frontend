@@ -16,7 +16,7 @@ import Dialog from "@material-ui/core/Dialog";
 import Button from "@material-ui/core/Button";
 import CardMedia from "@material-ui/core/CardMedia";
 import ButtonLoading from "components/ButtonLoading";
-import TextInput from "components/Fields/TextInput2"
+import TextInput from "components/Fields/TextInputAdorned"
 
 import Collapse from '@material-ui/core/Collapse';
 import TableHead from '@material-ui/core/TableHead';
