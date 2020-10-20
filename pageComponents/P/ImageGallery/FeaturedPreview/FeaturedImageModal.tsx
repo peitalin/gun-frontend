@@ -64,49 +64,46 @@ const FeaturedImageModal = (props: ReactProps) => {
         classes.featuredImageRoot,
         xsDown ? classes.featuredImageRootXSDown : null
       )}>
-        {
-          isMobile
-          ? <ThumbnailImage
-              previewItem={previewItem}
-              onClick={() => openModal(imageId)}
-              showLoadingBar={false}
-            />
-          : <BindKeyboardSwipeableViews
-              enableMouseEvents={false}
-              index={props.index}
-              onChangeIndex={(indexNew, indexLatest) => {
-                if (!isMobile && props.setIndex) {
-                  props.setIndex(indexNew)
-                }
-              }}
-              containerStyle={{ height: '100%' }}
-              style={{ height: '100%' }}
-            >
-              {
-                previewItems.map(( previewItem, i ) => {
-                  if (!!previewItem.youTubeEmbedLink) {
-                    return (
-                      <FeaturedVideo key={i} previewItem={previewItem} />
-                    )
-                  } else {
-                    return (
-                      <PreviewImageFeatured
-                        key={i}
-                        previewItem={previewItem}
-                        onClick={() => {
-                          openModal(imageId)
-                        }}
-                        showLoadingBar={false}
-                      />
-                    )
-                  }
-                })
+        <BindKeyboardSwipeableViews
+          enableMouseEvents={false}
+          index={props.index}
+          onChangeIndex={(indexNew, indexLatest) => {
+            if (!isMobile && props.setIndex) {
+              props.setIndex(indexNew)
+            }
+          }}
+          containerStyle={{ height: '100%' }}
+          style={{ height: '100%' }}
+        >
+          {
+            previewItems.map(( previewItem, i ) => {
+              if (!!previewItem.youTubeEmbedLink) {
+                return (
+                  <FeaturedVideo key={i} previewItem={previewItem} />
+                )
+              } else {
+                return (
+                  <ThumbnailImage
+                    previewItem={previewItem}
+                    showLoadingBar={false}
+                  />
+                )
+                // return (
+                //   <PreviewImageFeatured
+                //     key={i}
+                //     previewItem={previewItem}
+                //     onClick={() => {
+                //       openModal(imageId)
+                //     }}
+                //     showLoadingBar={false}
+                //   />
+                // )
               }
-            </BindKeyboardSwipeableViews>
-        }
+            })
+          }
+        </BindKeyboardSwipeableViews>
 
-
-        <Dialog
+        {/* <Dialog
           open={option(openedModals)([]).includes(imageId)}
           onClose={() => closeModal(imageId)}
           // full height
@@ -147,7 +144,7 @@ const FeaturedImageModal = (props: ReactProps) => {
             }
             </div>
           </div>
-        </Dialog>
+        </Dialog> */}
 
       </div>
     </AspectRatioConstraint>

@@ -25,21 +25,14 @@ const ThumbnailImage: React.FC<ReactProps> = (props) => {
   const {
     classes,
     previewItem,
-    carouselSize = false,
     showLoadingBar = false,
   } = props;
   const image = option(previewItem).image();
-
-  // const portraitMode = option(image).original.heightInPixels()
-  //                     > option(image).original.widthInPixels()
 
   const theme = useTheme();
   const xsDown = useMediaQuery(theme.breakpoints.down("xs"));
 
   let loading = (!imgLoaded || !previewItem);
-  // console.log("previewItem", previewItem)
-  // console.log("imgLoaded", imgLoaded)
-  // console.log("loading", loading)
 
   React.useEffect(() => {
     // React BUG: all event fired before hydration are lost.
@@ -54,34 +47,13 @@ const ThumbnailImage: React.FC<ReactProps> = (props) => {
     <Card className={classes.card}>
       <CardActionArea
         onClick={props.onClick}
-        // classes={{
-        //   root: !portraitMode
-        //     ? classes.cardActionAreaWide
-        //     : classes.cardActionAreaTall
-        // }}
-        classes={{
-          root: classes.cardActionAreaWide
-        }}
+        classes={{ root: classes.cardActionAreaWide }}
       >
         {
           option(image).original.url() &&
           <CardMedia
             component="img"
-            // className={loading ? 'shimmer' : null}
-            // classes={{
-            //   media: !portraitMode
-            //     ? classes.cardMediaWide
-            //     : (xsDown && portraitMode)
-            //       ? clsx(classes.cardMediaTall, classes.cardImg)
-            //       : classes.cardMediaTall,
-            // }}
-            classes={{
-              media: classes.cardMediaWide
-              // media: carouselSize
-              //     ? classes.cardMediaWide80
-              //     : classes.cardMediaWide
-
-            }}
+            classes={{ media: classes.cardMediaWide }}
             onLoad={() => setImgLoaded(s => s + 1)}
             src={option(image).original.url()}
             srcSet={
@@ -117,12 +89,9 @@ const ThumbnailImage: React.FC<ReactProps> = (props) => {
 interface ReactProps extends WithStyles<typeof styles> {
   previewItem?: Product_Preview_Items;
   onClick?(a: any): void;
-  carouselSize?: boolean;
   showLoadingBar?: boolean;
 }
 
-// const patternColor = fade(Colors.black, 0.9);
-// const backgroundColor = Colors.black;
 
 const styles = (theme: Theme) => createStyles({
   card: {

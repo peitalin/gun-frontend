@@ -128,34 +128,43 @@ const PurchaseProductSummary: React.FC<ReactProps> = (props) => {
             : classes.buttonContainer
           }>
 
-            <div className={clsx(
-              classes.maxWidth,
-              classes.visaContainer,
-            )}>
-              {
-                showVisaPay &&
-                <WestpacPurchaseProduct
-                  // disable on mobile
-                  user={user}
-                  // className={"fadeIn"}
-                  product={option(props).product()}
-                  quotedPrice={chosenVariant.price}
-                  title={`Reserve for ${c(chosenVariant.price)} USD`}
-                  showIcon={true}
-                  display={true}
-                  buttonHeight={xsDown ? '40px' : '40px'}
-                  handleOrderPostPurchase={
-                    () => {}
-                    // handleOrderPostPurchase(
-                    //   aClient,
-                    //   dispatch,
-                    //   router,
-                    //   !!loggedInAsEmail,
-                    // )
+            {
+              props.product?.isSoldOut
+              ? <div className={clsx(
+                  classes.maxWidth,
+                  classes.visaContainer,
+                )}>
+                  Sold Out
+                </div>
+              : <div className={clsx(
+                  classes.maxWidth,
+                  classes.visaContainer,
+                )}>
+                  {
+                    showVisaPay &&
+                    <WestpacPurchaseProduct
+                      // disable on mobile
+                      user={user}
+                      // className={"fadeIn"}
+                      product={props.product}
+                      quotedPrice={chosenVariant.price}
+                      title={`Reserve for ${c(chosenVariant.price)} USD`}
+                      showIcon={true}
+                      display={true}
+                      buttonHeight={xsDown ? '40px' : '40px'}
+                      handleOrderPostPurchase={
+                        () => {}
+                        // handleOrderPostPurchase(
+                        //   aClient,
+                        //   dispatch,
+                        //   router,
+                        //   !!loggedInAsEmail,
+                        // )
+                      }
+                    />
                   }
-                />
-              }
-            </div>
+                </div>
+            }
 
 
           </div>

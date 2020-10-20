@@ -76,6 +76,7 @@ const Products: React.FC<ReactProps> = (props) => {
     ssr: true,
   })
   const product = option(data).getProductById() || props.initialProduct;
+  console.log("product:::::::", product)
 
   ////////// VARIANTS
   const [quantity, setQuantity] = React.useState(1);
