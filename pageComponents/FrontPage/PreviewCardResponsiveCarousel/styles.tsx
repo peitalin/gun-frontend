@@ -4,7 +4,7 @@ import { Colors, BorderRadius, Gradients, BoxShadows } from "layout/AppTheme";
 
 export const CARD_MAX_WIDTH_XL = 556;
 // Replace hash with html-encoded %23
-export const backgroundColor = Colors.cream;
+export const backgroundColor = Colors.uniswapLightNavy;
 export const DESCRIPTION_HEIGHT = 112;
 // height: "136px", // ensure all cards descriptions are same height
 
@@ -39,7 +39,6 @@ export const styles = (theme: Theme) => createStyles({
   cardRoot: {
     boxShadow: 'none',
     height: '100%',
-    // backgroundColor: backgroundColor,
   },
   cardMedia: {
     objectFit: "cover",

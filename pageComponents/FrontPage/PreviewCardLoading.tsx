@@ -14,7 +14,7 @@ import WishlistIcon from "components/WishlistIcon";
 // Typings
 import { Categories, Products, Product_Preview_Items } from "typings/gqlTypes";
 import { genSrcSet, genImgBreakpoints } from "utils/images";
-import { getYouTubeVimeoImagePreview } from "utils/strings";
+import { getYouTubeVimeoImagePreview } from "utils/links";
 // Responsiveness
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";

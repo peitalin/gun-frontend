@@ -15,7 +15,7 @@ import DiscountBadge from "components/DiscountBadge";
 // Typings
 import { Categories, Product, Product_Preview_Items } from "typings/gqlTypes";
 import { genSrcSet, genImgBreakpoints } from "utils/images";
-import { getYouTubeVimeoImagePreview } from "utils/strings";
+import { getYouTubeVimeoImagePreview } from "utils/links";
 import PriceDisplayMain from "components/PriceDisplayMain";
 // Responsiveness
 import { useTheme } from "@material-ui/core/styles";
@@ -159,11 +159,11 @@ const PreviewCardRC = (props: ReactProps) => {
                     src={option(img600).url() || option(image).original.url()}
                     srcSet={genSrcSet(image)}
                     sizes={genImgBreakpoints({
-                      xs: 200,
-                      sm: 200,
-                      md: 200,
-                      lg: 200,
-                      xl: 200,
+                      xs: 400,
+                      sm: 400,
+                      md: 400,
+                      lg: 400,
+                      xl: 400,
                     })}
                     // sizes={`
                     //   (max-width: 416px) 200px,
