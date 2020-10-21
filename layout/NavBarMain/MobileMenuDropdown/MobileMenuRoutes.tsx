@@ -23,12 +23,6 @@ import Link from "next/link";
 import { goToModalConnect } from "utils/modals";
 // Analytics
 import { useAnalytics, analyticsEvent } from "utils/analytics";
-// ENV variables
-import getConfig from 'next/config'
-const {
-  // Available both client and server side
-  publicRuntimeConfig: { GUN_ENV },
-} = getConfig()
 
 
 
@@ -36,16 +30,14 @@ const MobileMenuRoutes = (props: ReactProps) => {
 
   const { classes } = props;
   const dispatch = useDispatch();
-  const {
-    loggedIn,
-    user
-  } = useSelector<GrandReduxState, MobileMenuReduxProps>(s => {
+  const { user } = useSelector<GrandReduxState, MobileMenuReduxProps>(s => {
     return {
-      loggedIn: s.reduxLogin.loggedIn,
       user: s.reduxLogin.user,
     }
   });
+
   const goToModal = goToModalConnect(dispatch);
+  let loggedIn = !!user?.id;
 
   const dividerStyle = {
     width: '95%',
@@ -307,7 +299,6 @@ interface ReactProps extends WithStyles<typeof styles> {
 }
 
 interface MobileMenuReduxProps {
-  loggedIn: boolean;
   user: UserPrivate;
 }
 

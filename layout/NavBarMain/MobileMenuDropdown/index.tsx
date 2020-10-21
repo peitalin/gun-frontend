@@ -23,12 +23,6 @@ import Typography from "@material-ui/core/Typography";
 // Components
 import MobileMenuUserProfile from "./MobileMenuUserProfile";
 import MobileMenuRoutes from "./MobileMenuRoutes";
-// ENV variables
-import getConfig from 'next/config'
-const {
-  // Available both client and server side
-  publicRuntimeConfig: { GUN_ENV },
-} = getConfig()
 
 
 

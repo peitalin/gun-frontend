@@ -17,12 +17,6 @@ import Typography from "@material-ui/core/Typography";
 // Components
 import Login from "layout/Login"
 import UserCompactProfile from "./UserCompactProfile";
-// ENV variables
-import getConfig from 'next/config'
-const {
-  // Available both client and server side
-  publicRuntimeConfig: { EFC_ENV },
-} = getConfig()
 
 
 
