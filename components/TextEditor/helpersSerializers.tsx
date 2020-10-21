@@ -19,6 +19,7 @@ import { jsx } from 'slate-hyperscript'
 ///////////////////////////////////////
 ///////////////////////////////////////
 
+export const EMPTY_ELEM = "<p></p>"
 
 export const serializeText = nodes => {
   return nodes.map(n => Node.string(n)).join('\n')

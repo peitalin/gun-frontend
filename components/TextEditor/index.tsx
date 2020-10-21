@@ -234,13 +234,12 @@ export const styles = (theme: Theme) => createStyles({
   root: {
     position: 'relative',
     marginBottom: '1rem',
-    backgroundColor: Colors.white,
   },
   editorContainer: {
     height: '100%',
     width: '100%',
     position: 'relative',
-    border: '1px solid rgba(170, 170, 170, 0.4)',
+    border: `1px solid ${Colors.uniswapLightNavy}`,
     borderRadius: BorderRadius,
     transition: theme.transitions.create(['border-color', 'box-shadow'], {
       easing: theme.transitions.easing.easeIn,
@@ -268,6 +267,7 @@ export const styles = (theme: Theme) => createStyles({
     },
     fontFamily: fontFam,
     fontSize: '1rem',
+    color: Colors.uniswapLightestGrey,
   },
   blockQuote: {
     borderLeft: '2px solid #ddd',
@@ -319,14 +319,15 @@ export const styles = (theme: Theme) => createStyles({
     display: "flex",
     flexDirection: "column",
     justifyContent: "flex-end",
+    color: Colors.uniswapLightestGrey,
   },
   countText: {
     fontSize: "0.8rem",
     fontFamily: '"Helvetica Neue",Arial,sans-serif',
-    opacity: 0.25,
     position: 'absolute',
     right: '0.25rem',
-    bottom: '-1.125rem',
+    bottom: '-1.4rem',
+    color: Colors.uniswapLighterGrey,
   },
 })
 
