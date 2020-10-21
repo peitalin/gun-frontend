@@ -31,7 +31,7 @@ const HomeSection2 = ({ classes }: ReactProps) => {
           Upload a product, get a link, and start selling instantly.
         </Typography>
         <Typography className={classes.text3}>
-          Plus, you'll get featured on the Relay marketplace.
+          Plus, you'll get featured on the GM marketplace.
         </Typography>
         <Link href={"/sell"}>
           <a>

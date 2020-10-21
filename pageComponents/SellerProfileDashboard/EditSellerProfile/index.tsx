@@ -2,7 +2,7 @@ import React from "react";
 import clsx from "clsx";
 import { oc as option } from "ts-optchain";
 // Styles
-import { Colors } from "layout/AppTheme";
+import { Colors, BorderRadius } from "layout/AppTheme";
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 // Typings
 import { StorePrivate, UserPrivate } from "typings/gqlTypes";
@@ -172,7 +172,8 @@ const styles = (theme: Theme) => createStyles({
     cursor: 'pointer',
     height: 40,
     position: "relative",
-    border: `1px solid ${Colors.grey}`,
+    border: `1px solid ${Colors.uniswapLightNavy}`,
+    borderRadius: BorderRadius,
     "&:hover": {
       border: `1px solid ${Colors.blue}`,
       color: Colors.blue,

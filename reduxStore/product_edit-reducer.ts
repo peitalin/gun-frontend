@@ -22,7 +22,7 @@ export interface ReduxStateProductEdit {
   productEditInput: ProductEditInputFrontEnd;
   // previewItems are replicated across all variants,
   // until we decide to allow these fields to vary between variants
-  previewItems: DzuPreviewItem[],
+  dzuPreviewItems: DzuPreviewItem[],
   // for tracking/persisting previews
   dzuPreviewOrder: DzuPreviewOrder[],
 }
@@ -58,7 +58,7 @@ const initialProductEditState: ReduxStateProductEdit = {
     ],
     isPublished: false,
   },
-  previewItems: [],
+  dzuPreviewItems: [],
   dzuPreviewOrder: [],
 }
 
@@ -137,7 +137,7 @@ export const reduxReducerProductEdit = (
     case A.ADD_VARIANTS().type: {
 
       let newVariants: EditVariantInput[] = action.payload
-      let { previewItems } = state;
+      let { dzuPreviewItems } = state;
 
       return {
         ...state,
@@ -152,7 +152,7 @@ export const reduxReducerProductEdit = (
                 variantDescription: "",
                 variantName: "",
                 isDefault: false,
-                previewItems: previewItems,
+                previewItems: dzuPreviewItems,
                 quantityAvailable: null,
                 ...v,
               }
@@ -306,7 +306,7 @@ export const reduxReducerProductEdit = (
             }
           })
         },
-        previewItems: previewItemInputs,
+        dzuPreviewItems: previewItemInputs,
         dzuPreviewOrder: previewItemInputs
           .map((p, i) => ({ id: p.id, index: i }))
       }
@@ -318,7 +318,7 @@ export const reduxReducerProductEdit = (
 
       let inputPreviewItems: DzuPreviewItem[] = action.payload;
       let newPreviewItems = [
-        ...state.previewItems,
+        ...state.dzuPreviewItems,
         ...inputPreviewItems,
       ]
 
@@ -340,7 +340,7 @@ export const reduxReducerProductEdit = (
             }
           })
         },
-        previewItems: newPreviewItems
+        dzuPreviewItems: newPreviewItems
       }
     }
 
@@ -348,12 +348,12 @@ export const reduxReducerProductEdit = (
 
       let newPreviewItem: DzuPreviewItem = action.payload;
 
-      let updateIndex = state.previewItems.findIndex(p => p.id === newPreviewItem.id);
+      let updateIndex = state.dzuPreviewItems.findIndex(p => p.id === newPreviewItem.id);
 
       let newPreviewItems = [
-        ...state.previewItems.slice(0, updateIndex),
+        ...state.dzuPreviewItems.slice(0, updateIndex),
         newPreviewItem,
-        ...state.previewItems.slice(updateIndex + 1),
+        ...state.dzuPreviewItems.slice(updateIndex + 1),
       ]
 
       if (updateIndex >= 0) {
@@ -376,7 +376,7 @@ export const reduxReducerProductEdit = (
             })
             // update every variant to match
           },
-          previewItems: newPreviewItems
+          dzuPreviewItems: newPreviewItems
         }
       } else {
         console.debug("previewItem not found in redux: ", newPreviewItem.id)
@@ -388,7 +388,7 @@ export const reduxReducerProductEdit = (
 
       // payload is a imageId to remove
       let ids: ID[] = action.payload;
-      let newPreviewItems = state.previewItems
+      let newPreviewItems = state.dzuPreviewItems
           .filter(item => !ids.some(id => id === item.id))
 
         console.log('removeing', ids)
@@ -412,7 +412,7 @@ export const reduxReducerProductEdit = (
             })
             // update every variant to match
         },
-        previewItems: newPreviewItems
+        dzuPreviewItems: newPreviewItems
       }
     }
 
@@ -441,7 +441,7 @@ export const reduxReducerProductEdit = (
             }
           })
         },
-        previewItems: previewItemsReordered
+        dzuPreviewItems: previewItemsReordered
       }
     }
 

@@ -24,7 +24,7 @@ export interface ReduxStateProductCreate {
   productCreateInput: ProductCreateInputFrontEnd;
   // previewItems are replicated across all variants,
   // until we decide to allow these fields to vary between variants
-  previewItems: DzuPreviewItem[],
+  dzuPreviewItems: DzuPreviewItem[],
   // for tracking/persisting previews
   dzuPreviewOrder: DzuPreviewOrder[],
 }
@@ -35,15 +35,15 @@ export const initialProductCreateState: ReduxStateProductCreate = {
     tags: [],
     title: "",
     description: "",
-    condition: "good",
-    make: "make",
-    model: "model",
-    ammoType: "ammoType",
-    actionType: "actionType",
-    boreDiameter: "boreDiameter",
-    serialNumber: "serialNumber",
-    location: "location",
-    dealer: "dealer",
+    condition: "",
+    make: "",
+    model: "",
+    ammoType: "",
+    actionType: "",
+    boreDiameter: "",
+    serialNumber: "",
+    location: "",
+    dealer: "",
     currentVariants: [
       {
         variantName: "Regular License",
@@ -57,7 +57,7 @@ export const initialProductCreateState: ReduxStateProductCreate = {
     ],
     isPublished: false,
   },
-  previewItems: [],
+  dzuPreviewItems: [],
   dzuPreviewOrder: [],
 }
 
@@ -328,7 +328,7 @@ export const reduxReducerProductCreate = (
             }
           })
         },
-        previewItems: previewItemInputs
+        dzuPreviewItems: previewItemInputs
       }
     }
 
@@ -336,7 +336,7 @@ export const reduxReducerProductCreate = (
 
       let inputPreviewItems: DzuPreviewItem[] = action.payload;
       let newPreviewItems = [
-        ...state.previewItems,
+        ...state.dzuPreviewItems,
         ...inputPreviewItems,
       ]
 
@@ -359,7 +359,7 @@ export const reduxReducerProductCreate = (
           })
           // update every variant to match
         },
-        previewItems: newPreviewItems
+        dzuPreviewItems: newPreviewItems
       }
     }
 
@@ -368,12 +368,12 @@ export const reduxReducerProductCreate = (
 
       let newPreviewItem: DzuPreviewItem = action.payload;
 
-      let updateIndex = state.previewItems.findIndex(p => p.id === newPreviewItem.id);
+      let updateIndex = state.dzuPreviewItems.findIndex(p => p.id === newPreviewItem.id);
 
       let newPreviewItems = [
-        ...state.previewItems.slice(0, updateIndex),
+        ...state.dzuPreviewItems.slice(0, updateIndex),
         newPreviewItem,
-        ...state.previewItems.slice(updateIndex + 1),
+        ...state.dzuPreviewItems.slice(updateIndex + 1),
       ]
 
       if (updateIndex >= 0) {
@@ -396,7 +396,7 @@ export const reduxReducerProductCreate = (
             })
             // update every variant to match
           },
-          previewItems: newPreviewItems
+          dzuPreviewItems: newPreviewItems
         }
       } else {
         console.debug("previewItem not found in redux: ", newPreviewItem.id)
@@ -407,7 +407,7 @@ export const reduxReducerProductCreate = (
     case A.REMOVE_PREVIEW_ITEMS().type: {
       // payload is a imageId to remove
       let ids: ID[] = action.payload;
-      let newPreviewItems = state.previewItems
+      let newPreviewItems = state.dzuPreviewItems
           .filter(item => !ids.some(id => id === item.id))
 
       return {
@@ -429,7 +429,7 @@ export const reduxReducerProductCreate = (
             })
             // update every variant to match
         },
-        previewItems: newPreviewItems
+        dzuPreviewItems: newPreviewItems
       }
     }
 
@@ -458,7 +458,7 @@ export const reduxReducerProductCreate = (
             }
           })
         },
-        previewItems: previewItemsReordered
+        dzuPreviewItems: previewItemsReordered
       }
     }
 

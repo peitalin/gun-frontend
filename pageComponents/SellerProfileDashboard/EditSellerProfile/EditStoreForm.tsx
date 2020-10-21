@@ -250,7 +250,7 @@ const EditStoreFormWrapper: React.FC<FormWrapperProps> = (props) => {
         }>
           <div className={classes.flexColMargin}>
             <Typography color={"primary"} variant="h3">
-              Edit Your Relay Seller Profile
+              Edit Your GM Seller Profile
             </Typography>
             <br/>
           </div>
