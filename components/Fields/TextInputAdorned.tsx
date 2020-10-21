@@ -143,19 +143,23 @@ export const styles = (theme: Theme) => createStyles({
     fontSize: "0.9rem",
     fontWeight: 400,
     fontFamily: fontFam,
-    color: Colors.black,
+    color: Colors.uniswapLighterGrey,
+    transition: theme.transitions.create(['color'], {
+      easing: theme.transitions.easing.easeIn,
+      duration: "200ms",
+    }),
   },
   input: {
     fontSize: "0.9rem",
     fontWeight: 400,
     fontFamily: fontFam,
-    color: Colors.charcoal,
+    color: Colors.uniswapLightestGrey,
     padding: '0.5rem 0rem',
   },
   inputBorder: {
     position: 'relative',
-    backgroundColor: theme.palette.common.white,
-    border: `1px solid ${Colors.mediumLightGrey}`,
+    backgroundColor: Colors.uniswapMediumNavy,
+    border: `1px solid ${Colors.uniswapLightNavy}`,
     borderRadius: BorderRadius,
     width: '100%',
     padding: '0rem 0.5rem', // -> 36px in total height
@@ -203,7 +207,7 @@ export const styles = (theme: Theme) => createStyles({
   // ".errorInput:focus"
   errorMessage: {
     position: 'absolute',
-    bottom: 0,
+    bottom: '0.25rem',
     right: '0.25rem',
     height: '1rem',
     fontSize: '0.8rem',

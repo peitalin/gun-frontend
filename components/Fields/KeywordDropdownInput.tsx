@@ -3,7 +3,7 @@ import CreatableSelect from "react-select/creatable";
 // styles
 import clsx from "clsx";
 import { styles } from "components/Fields/styles";
-import { Colors, fontFam, BorderRadius } from "layout/AppTheme";
+import { Colors, fontFam, BorderRadius, Gradients } from "layout/AppTheme";
 import { withStyles, WithStyles } from "@material-ui/core/styles";
 // focus
 import { useFocus } from "utils/hooks";
@@ -205,13 +205,38 @@ const KeywordDropdownInput = (props: ReactProps) => {
             ...styles,
             fontWeight: 400,
             fontFamily: fontFam,
-            color: Colors.grey,
+            color: Colors.uniswapMediumGrey,
             cursor: 'text',
           }),
-          // multiValueRemove: styles => ({
-          //   ...styles,
-          //   display: 'none'
-          // })
+          control: (base, state) => ({
+            ...base,
+            background: Colors.uniswapMediumNavy,
+            // // match with the menu
+            // borderRadius: state.isFocused ? "3px 3px 0 0" : 3,
+            // // Overwrittes the different states of border
+            color: Colors.uniswapLighterGrey,
+            border: `1px solid ${Colors.uniswapLightNavy}`,
+            // // borderColor: state.isFocused ? Colors.gradientUniswapBlue1 : "unset",
+            // // Removes weird border around container
+            // boxShadow: state.isFocused ? null : null,
+            // "&:hover": {
+            //   // Overwrittes the different states of border
+            //   // borderColor: state.isFocused ? "red" : "blue"
+            //   borderColors: Colors.gradientUniswapFluro1,
+            // }
+          }),
+          multiline: styles => ({
+            ...styles,
+            // display: 'none'
+            background: Gradients.gradientUniswapFluro.background,
+            color: Colors.cream,
+          }),
+          multiValueRemove: styles => ({
+            ...styles,
+            // display: 'none'
+            background: Gradients.gradientUniswapFluro.background,
+            color: Colors.cream,
+          }),
         }}
       />
 

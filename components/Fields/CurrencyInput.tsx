@@ -38,6 +38,7 @@ const CurrencyInput = (props: ReactProps) => {
             errorInputColor === "grey" ? classes.errorInputUntouched : null,
           ),
           multiline: classes.selectMultiline,
+          adornedStart: classes.adornedStart,
         }}
         inputRef={ref}
         style={{ borderRadius: BorderRadius, width: '100%' }}
@@ -66,23 +67,6 @@ const CurrencyInput = (props: ReactProps) => {
 }
 
 
-
-
-const renderInput = ({ value, onChange }) => (
-  // type=number is not allowed
-  <input
-    type="tel"
-    style={{
-      textAlign: 'right',
-      width: '100%',
-      height: 32,
-      fontSize: 'inherit',
-      boxSizing: 'border-box',
-    }}
-    value={value}
-    onChange={onChange}
-  />
-);
 
 
 

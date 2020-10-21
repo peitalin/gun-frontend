@@ -7,6 +7,7 @@ import {
 } from "@material-ui/core/styles";
 import { Colors, BorderRadius, fontFam, Gradients } from "layout/AppTheme";
 
+const textColor = Colors.uniswapLightestGrey
 
 export const styles = (theme: Theme) => createStyles({
   root: {
@@ -37,14 +38,14 @@ export const styles = (theme: Theme) => createStyles({
   input: {
     position: 'relative',
     // backgroundColor: theme.palette.common.white,
-    background: Colors.uniswapLightNavy,
-    border: `1px solid ${Colors.mediumLightGrey}`,
+    background: Colors.uniswapMediumNavy,
+    border: `1px solid ${Colors.uniswapLightNavy}`,
     borderRadius: BorderRadius,
     fontSize: "16px",
     fontWeight: 400,
     width: '100%',
     padding: '0.75rem 0.5rem',
-    color: Colors.charcoal,
+    color: textColor,
     transition: theme.transitions.create(['border-color', 'box-shadow'], {
       easing: theme.transitions.easing.easeIn,
       duration: "200ms",
@@ -54,8 +55,7 @@ export const styles = (theme: Theme) => createStyles({
     '&:focus': {
       boxShadow: `${fade('#50B5F5', 0.2)} 0 0 0 2px`,
       borderColor: Colors.blue,
-      // color: Colors.blue,
-      color: Colors.charcoal,
+      color: Colors.blue,
     },
     // '&:invalid': {
     //   boxShadow: `${fade(theme.palette.error.light, 0.2)} 0 0 0 1px`,
@@ -63,13 +63,13 @@ export const styles = (theme: Theme) => createStyles({
     // },
   },
   emptyInput: {
-    border: `1px solid ${Colors.mediumLightGrey}`,
+    // border: `1px solid ${Colors.uniswapLightNavy}`,
     '&:focus': {
       boxShadow: `${fade(Colors.lightGrey, 0.2)} 0 0 0 2px`,
     },
   },
   errorInputUntouched: {
-    border: `1px solid ${Colors.mediumLightGrey}`,
+    // border: `1px solid ${Colors.uniswapLightNavy}`,
     '&:focus': {
       boxShadow: `${fade(Colors.grey, 0.2)} 0 0 0 2px`,
     },
@@ -146,7 +146,7 @@ export const styles = (theme: Theme) => createStyles({
     alignItems: "center",
     position: 'relative',
     // backgroundColor: theme.palette.common.white,
-    background: Colors.uniswapLightNavy,
+    background: Colors.uniswapMediumNavy,
     border: `1px solid ${Colors.grey}`,
     borderRadius: BorderRadius,
     padding: '0.58em',
@@ -158,7 +158,7 @@ export const styles = (theme: Theme) => createStyles({
   textFieldContainerFocused: {
     boxShadow: `${fade('#50B5F5', 0.2)} 0 0 0 2px`,
     borderColor: Colors.blue,
-    color: Colors.charcoal,
+    color: textColor,
     transition: theme.transitions.create(['border-color', 'box-shadow', 'color'], {
       easing: theme.transitions.easing.easeIn,
       duration: "200ms",
@@ -168,6 +168,7 @@ export const styles = (theme: Theme) => createStyles({
     display: "flex",
     flexDirection: "column",
     justifyContent: "flex-end",
+    color: Colors.uniswapLightestGrey,
   },
   countText: {
     fontSize: "0.8rem",
@@ -176,16 +177,19 @@ export const styles = (theme: Theme) => createStyles({
     position: 'absolute',
     right: '0.5rem',
     bottom: '1.25rem',
+    color: Colors.uniswapLightestGrey,
   },
   keywordsCountText: {
     fontSize: "0.8rem",
     fontFamily: '"Helvetica Neue",Arial,sans-serif',
     opacity: 0.25,
+    color: Colors.uniswapLightestGrey,
   },
   keywordsCountAbsolute: {
     position: 'absolute',
     right: '0.5rem',
     bottom: '0.25rem',
+    color: Colors.uniswapLightestGrey,
     // bottom: '-1.125rem',
   },
 
@@ -196,7 +200,7 @@ export const styles = (theme: Theme) => createStyles({
     fontSize: "16px",
     fontWeight: 400,
     width: '100%',
-    color: Colors.charcoal,
+    color: textColor,
     transition: theme.transitions.create(['border-color', 'box-shadow'], {
       easing: theme.transitions.easing.easeIn,
       duration: "200ms",
@@ -205,7 +209,7 @@ export const styles = (theme: Theme) => createStyles({
     fontFamily: fontFam,
     '&:focus': {
       // boxShadow: `${fade('#50B5F5', 0.2)} 0 0 0 2px`,
-      color: Colors.charcoal,
+      color: Colors.blue,
     },
     // '&:invalid': {
     //   boxShadow: `${fade(theme.palette.error.light, 0.2)} 0 0 0 1px`,
@@ -219,8 +223,8 @@ export const styles = (theme: Theme) => createStyles({
     alignItems: "center",
     position: 'relative',
     // backgroundColor: theme.palette.common.white,
-    background: Colors.uniswapLightNavy,
-    border: `1px solid ${Colors.mediumLightGrey}`,
+    background: Colors.uniswapMediumNavy,
+    border: `1px solid ${Colors.uniswapLightNavy}`,
     borderRadius: BorderRadius,
     padding: '0.25rem 0.5rem',
     transition: theme.transitions.create(['border-color', 'box-shadow', 'color'], {
@@ -229,7 +233,7 @@ export const styles = (theme: Theme) => createStyles({
     }),
   },
   textFieldContainerCCFocused: {
-    color: Colors.charcoal,
+    color: textColor,
     transition: theme.transitions.create(['border-color', 'box-shadow', 'color'], {
       easing: theme.transitions.easing.easeIn,
       duration: "200ms",
@@ -255,7 +259,7 @@ export const styles = (theme: Theme) => createStyles({
       color: Colors.charcoal,
     },
     '&::placeholder': {
-      color: Colors.mediumLightGrey,
+      color: Colors.uniswapLightNavy,
     }
   },
   yearInputHidden: {
@@ -272,8 +276,14 @@ export const styles = (theme: Theme) => createStyles({
       color: Colors.charcoal,
     },
     '&::placeholder': {
-      color: Colors.mediumLightGrey,
+      color: Colors.uniswapLightNavy,
     }
+  },
+  adornedStart: {
+    fontSize: "0.9rem",
+    fontWeight: 400,
+    fontFamily: fontFam,
+    color: Colors.black,
   },
 })
 

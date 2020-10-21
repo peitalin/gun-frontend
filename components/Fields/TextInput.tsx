@@ -14,6 +14,7 @@ const TextInput = (props: ReactProps) => {
 
   const ref = React.useRef();
   const focused = useFocus(ref);
+  const [mouseOver, setMouseOver] = React.useState(false)
 
   const {
     errorMessage,
@@ -55,14 +56,25 @@ const TextInput = (props: ReactProps) => {
         />
         <Button
           style={{
-            background: "#ced4da",
-            // borderRadius: "0px 4px 4px 0px",
+            // borderRadius: `0px ${BorderRadius}px ${BorderRadius}px 0px`,
             borderRadius: BorderRadius,
-            color: "#fafafa",
+            marginLeft: '0.25rem',
+            backgroundColor:
+              mouseOver
+                ? Colors.gradientUniswapBlue1
+                : Colors.uniswapLightNavy,
+            color: Colors.uniswapLightestGrey,
             padding: '0.335rem',
             fontSize: "18px",
+            height: '38px',
             width: props.buttonWidth ? props.buttonWidth : "4rem",
+            // "&:hover": {
+            //   backgroundColor: Colors.gradientUniswapBlue1,
+            //   color: Colors.uniswapLightestGrey,
+            // }
           }}
+          onMouseOver={() => setMouseOver(true)}
+          onMouseLeave={() => setMouseOver(false)}
           onClick={props.onSubmit}
           {...props.submitButtonProps}
         > Add </Button>
@@ -101,7 +113,6 @@ const TextInput = (props: ReactProps) => {
           inputRef={ref}
           error={!!props.errorMessage}
           style={{
-            // borderRadius: `${BorderRadius}px 0px 0px ${BorderRadius}px`,
             borderRadius: BorderRadius,
             width: '100%',
           }}
