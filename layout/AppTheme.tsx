@@ -79,6 +79,7 @@ export const Colors = {
   uniswapLightestGrey: '#B4B5BB',
   uniswapLighterGrey: '#6D7283',
   uniswapGrey: '#41444E',
+  uniswapMediumGrey: '#65666D',
   uniswapLightNavy: '#3A3F4A',
   uniswapNavy: '#2E3443',
   uniswapMediumNavy: '#2D2F36',
@@ -201,6 +202,7 @@ export interface Breakpoints {
 
 
 export const BorderRadius = 8;
+export const BorderRadius2x = 16;
 
 export const fontFam = [
   '"Helvetica Neue"',
@@ -228,8 +230,7 @@ export const notifyStyles = (theme: Theme) => createStyles({
 export const AppTheme = createMuiTheme({
   palette: {
     primary: {
-      // main: '#191919'
-      main: Colors.charcoal,
+      main: Colors.uniswapLightestGrey,
     },
     secondary: {
       // main: '#EB365D'
@@ -322,6 +323,7 @@ export const AppTheme = createMuiTheme({
       root: {
         height: '1.25rem',
         width: '1.25rem',
+        fill: Colors.uniswapLighterGrey,
       }
     },
     MuiBadge: {
@@ -363,6 +365,11 @@ export const AppTheme = createMuiTheme({
         backgroundColor: '#00ff00'
       },
       // https://material-ui.com/api/touch-ripple/#css
+    },
+    MuiSwitch: {
+      thumb: {
+        backgroundColor: Colors.uniswapLightNavy,
+      }
     },
     MuiTypography: {
       h1: {
