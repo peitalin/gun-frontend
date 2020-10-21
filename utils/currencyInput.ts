@@ -46,4 +46,4 @@ const formatFloatingPointNumber = (value, maxDigits) => {
 };
 
 
-export const formatCurrency = string => '$' + formatFloatingPointNumber(string, 2);
+export const formatCurrency = string => formatFloatingPointNumber(string, 2);
