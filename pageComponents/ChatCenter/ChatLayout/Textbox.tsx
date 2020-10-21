@@ -18,7 +18,8 @@ const TextEditorSSR = dynamic(() => import('components/TextEditor'), {
   loading: () => <TextEditorPlaceholder/>,
   ssr: false
 })
-import { serializeHtml, initialValue, EMPTY_STATE } from 'components/TextEditor/helpers';
+import { serializeHtml, EMPTY_ELEM } from 'components/TextEditor/helpersSerializers';
+import { initialValue } from 'components/TextEditor/helpersElements';
 import { customAlphabet } from 'nanoid'
 const ID_ALPHABET = "123456789bcdfghjklmnpqrstvwxyz";
 const ID_LENGTH = 8;
@@ -45,7 +46,7 @@ export const Textbox: React.FC<ReactProps> = (props) => {
 
   // const handleTyping = (text) => {
   //   const textLength = text.length;
-  //   if (text === EMPTY_STATE)
+  //   if (text === EMPTY_ELEM)
 
   //   if ((textLength !== 0 && textLength % 5 === 0) || textLength === 1) {
   //     emitTypingEvent();
@@ -76,7 +77,7 @@ export const Textbox: React.FC<ReactProps> = (props) => {
     e.preventDefault();
     // serialize Slate rich-text object as html
     let htmlDescription = serializeHtml(description)
-    if (!htmlDescription || htmlDescription === EMPTY_STATE) {
+    if (!htmlDescription || htmlDescription === EMPTY_ELEM) {
       return;
     }
     console.log("chatRoomId: ", props.chatRoomId)
@@ -101,7 +102,7 @@ export const Textbox: React.FC<ReactProps> = (props) => {
     e.preventDefault();
     // serialize Slate rich-text object as html
     let htmlDescription = serializeHtml(description)
-    if (!htmlDescription || htmlDescription === EMPTY_STATE) {
+    if (!htmlDescription || htmlDescription === EMPTY_ELEM) {
       return;
     }
     console.log("chatRoomId: ", props.chatRoomId)
