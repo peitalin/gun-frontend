@@ -67,7 +67,7 @@ const UploadLayoutPreviews: React.FC<ILayoutProps & ReactProps> = (props) => {
     dzuPreviewOrder,
   } = useSelector<GrandReduxState, ReduxState>(state => {
     return {
-      dzuPreviewItems: option(state)[reducerName].previewItems([]),
+      dzuPreviewItems: option(state)[reducerName].dzuPreviewItems([]),
       dzuPreviewOrder: option(state)[reducerName].dzuPreviewOrder([]),
     }
   })

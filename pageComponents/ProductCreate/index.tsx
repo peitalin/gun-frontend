@@ -16,7 +16,6 @@ import dynamic from "next/dynamic";
 // import ProductCreatePage from "./ProductCreatePage";
 import Loading from "components/Loading";
 import ProductCreatePage from "./ProductCreatePage";
-import SellingTips from "./ProductCreatePage/SellingTips";
 // Router
 import { Colors } from "layout/AppTheme";
 import { useTheme } from "@material-ui/core/styles";
@@ -57,12 +56,6 @@ const ProductCreate: React.FC<ReactProps> = (props) => {
               closeModal={closeModal}
             />
           </div>
-          {
-            !mdDown &&
-            <div className={clsx(classes.productColumn40, 'fadeIn')}>
-              <SellingTips/>
-            </div>
-          }
         </div>
       </div>
     )

@@ -6,8 +6,7 @@ import { Colors } from "layout/AppTheme";
 import { styles } from '../commonStyles';
 import clsx from "clsx";
 // Typings
-import { Product, Connection } from "typings/gqlTypes";
-import { ProductCreateInputFrontEnd } from "typings";
+import { Product, Connection, ProductCreateInput } from "typings/gqlTypes";
 // Material UI
 import ButtonLoading from "components/ButtonLoading";
 import Typography from "@material-ui/core/Typography";
@@ -48,15 +47,8 @@ const ProductCreateButton = (props: ReactProps) => {
         onClick={props.onClick}
         className={props.classes.button}
       >
-        { postInstantly ? 'Post Instantly' : 'Save Draft' }
+        { postInstantly ? 'Publish Now' : 'Save Draft' }
       </ButtonLoading>
-        {/* <Typography variant="caption" className={props.classes.formIncomplete}>
-        {
-          (Object.keys(errors).length > 0)
-            ? <span> Form is incomplete </span>
-            : <span style={{ opacity: 0 }}></span>
-        }
-        </Typography> */}
     </ErrorBounds>
   )
 };
@@ -66,7 +58,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   postInstantly: boolean;
   disabled: boolean;
   loading?: boolean;
-  errors: FormikErrors<ProductCreateInputFrontEnd>
+  errors: FormikErrors<ProductCreateInput>
   type?: string;
   width?: number | string;
   // onClick(e: React.FormEvent<HTMLFormElement>): void;

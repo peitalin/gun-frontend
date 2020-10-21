@@ -6,7 +6,7 @@ import { Actions } from "reduxStore/actions";
 // Styles
 import { withStyles, WithStyles, fade } from "@material-ui/core/styles";
 import { styles } from './styles';
-import { Colors } from "layout/AppTheme";
+import { Colors, BorderRadius, BorderRadius2x } from "layout/AppTheme";
 // Material UI
 import Typography from "@material-ui/core/Typography";
 // Media uploader
@@ -219,15 +219,15 @@ const PreviewItemUploaderGrid = (props: ReactProps & FormikProps<FormikFields>) 
 
 
   return (
-    <ErrorBounds className={classes.fileUploadRoot}>
+    <ErrorBounds className={classes.uploaderRoot}>
       <div className={classes.previewTitleBox}>
-        <Typography variant="subtitle1" style={{ marginBottom: '0.25rem' }}>
+        <Typography variant="subtitle1">
           Product Images
         </Typography>
         <div className={classes.previewItemSubtitle}>
-          Recommended size: 16:10 landscape images.
-          Add up to 10 images, GIFs, or videos.
-          The first image will be the featured product image on the marketplace.
+          Recommended size: 16:10 landscape images. Add up to 10 images.
+          <br/>
+          The first image will used as the thumbnail image.
         </div>
       </div>
 
@@ -260,13 +260,14 @@ const PreviewItemUploaderGrid = (props: ReactProps & FormikProps<FormikFields>) 
             backgroundColor: '#DAA'
           },
           dropzone: {
-            border: "2px dashed rgb(221, 221, 221)",
+            border: `2px dashed ${Colors.uniswapLighterGrey}`,
+            borderRadius: BorderRadius,
+            // borderRadius: BorderRadius2x,
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",
-            marginBottom: '0.5rem',
             padding: "1rem",
-            backgroundColor: "#fefefe",
+            backgroundColor: Colors.uniswapMediumNavy,
           },
           dropzoneActive: {
             border: "2px dashed #2484FF",

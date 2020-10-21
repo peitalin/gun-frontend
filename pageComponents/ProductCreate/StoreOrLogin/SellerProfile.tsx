@@ -19,7 +19,11 @@ import EditSellerProfile from "pageComponents/SellerProfileDashboard/EditSellerP
 
 const SellerProfile: React.FC<StoreProps> = (props) => {
 
-  const { userStore: store, classes } = props;
+  const {
+    userStore: store,
+    avatarBorderStyle,
+    classes
+  } = props;
   // imgloaded
   const [avatarImgLoaded, setAvatarImgLoaded] = useState(false);
 
@@ -30,21 +34,24 @@ const SellerProfile: React.FC<StoreProps> = (props) => {
       </Typography>
       <div className={classes.flexContainer}>
         <div className={classes.flexRow}>
-          <Avatar
-            className={clsx(
-              classes.avatar,
-              // avatarImgLoaded ? "fadeInFast" : "hidden",
-            )}
-            src={option(store).profile.original.url()}
-            onLoad={() => setAvatarImgLoaded(true)}
-          />
+          <div className={classes.avatarBorder} style={{ ...avatarBorderStyle }}>
+            <Avatar
+              className={clsx(
+                classes.avatar,
+                // avatarImgLoaded ? "fadeInFast" : "hidden",
+              )}
+              src={option(store).profile.original.url()}
+              onLoad={() => setAvatarImgLoaded(true)}
+            />
+          </div>
           <div className={classes.flexCol}>
             <Typography variant="body1" className={classes.name}>
               {store.name}
             </Typography>
-            {/* <Typography variant="body1" className={classes.website}>
-              {store.website}
-            </Typography> */}
+            <Typography variant="body1" className={classes.website}>
+              {/* {store.website ?? "www.gunmarketplace.com.au"} */}
+              {"www.gunmarketplace.com.au"}
+            </Typography>
           </div>
         </div>
 
@@ -60,11 +67,13 @@ type StoreProps = ReactProps;
 
 interface ReactProps extends WithStyles<typeof styles> {
   userStore: StorePrivate;
+  avatarBorderStyle?: any;
 }
 
 
 const styles = (theme: Theme) => createStyles({
   container: {
+    marginTop: "1rem",
     marginBottom: "1rem",
     width: '95%',
   },
@@ -98,13 +107,18 @@ const styles = (theme: Theme) => createStyles({
     paddingRight: '1rem',
   },
   title: {
-    marginBottom: '0.5rem',
+    marginBottom: '1rem',
   },
   avatar: {
     height: 60,
     width: 60,
     margin: theme.spacing(1),
-    border: `2px solid ${Colors.uniswapMediumNavy}`,
+    border: `4px solid ${Colors.uniswapLightNavy}`,
+  },
+  avatarBorder: {
+    borderRadius: '50%',
+    background: Colors.grey,
+    marginBottom: '0.5rem',
   },
   avatarButton: {
     padding: theme.spacing(1),
@@ -118,10 +132,13 @@ const styles = (theme: Theme) => createStyles({
     color: Colors.blue,
   },
   name: {
+    marginLeft: '0.5rem',
     fontWeight: 600,
+    color: Colors.uniswapLightestGrey,
   },
   website: {
-    color: Colors.grey,
+    marginLeft: '0.5rem',
+    color: Colors.uniswapLighterGrey,
     fontSize: '0.8rem',
   },
 });

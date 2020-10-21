@@ -2,11 +2,9 @@ import { createStyles, Theme, fade } from "@material-ui/core/styles";
 import { fontFam, Colors } from "layout/AppTheme";
 
 export const styles = (theme: Theme) => createStyles({
-  fileUploadRoot: {
-    marginBottom: '2rem',
+  uploaderRoot: {
     width: '100%',
     position: 'relative',
-    paddingBottom: '0.5rem',
   },
   errorMessage: {
     position: 'absolute',
@@ -93,8 +91,9 @@ export const styles = (theme: Theme) => createStyles({
     width: "50%",
   },
   previewItemSubtitle: {
-    marginBottom: "0.25rem",
-    color: Colors.grey,
+    marginBottom: "0.5rem",
+    marginTop: "0.5rem",
+    color: Colors.uniswapLighterGrey,
     fontSize: '0.7rem',
     fontWeight: 400,
     lineHeight: '0.9rem',

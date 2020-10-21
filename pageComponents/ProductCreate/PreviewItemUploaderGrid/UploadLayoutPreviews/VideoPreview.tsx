@@ -19,7 +19,7 @@ import YouTubeIcon from "components/Icons/YouTube";
 import { DzuPreviewOrder, DzuPreviewItem } from "typings/dropzone";
 // helpers
 import { genSrcSet, genImgBreakpoints } from "utils/images";
-import { getYouTubeVimeoImagePreview } from "utils/strings";
+import { getYouTubeVimeoImagePreview } from "utils/links";
 
 
 // VIMEO

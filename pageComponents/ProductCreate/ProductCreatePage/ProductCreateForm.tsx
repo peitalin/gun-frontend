@@ -8,24 +8,6 @@ import { styles } from '../commonStyles';
 // Icons
 import ClearIcon from "@material-ui/icons/Clear";
 import IconButton from "@material-ui/core/IconButton";
-// Subcomponents
-import SellingTipsMobile from "./SellingTipsMobile";
-
-// SSR Subcomponents
-import dynamic from 'next/dynamic'
-import UploadInputPlaceholder from "../SSR/UploadInputPlaceholder";
-
-// Typings
-import {
-  ID,
-  ProductCreateInput,
-  Product,
-  UserPrivate,
-} from "typings/gqlTypes";
-import {
-  DzuPreviewOrder,
-  DzuFilePreview
-} from "typings/dropzone";
 // CSS
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
@@ -48,7 +30,19 @@ const ProductCreateForm: React.FC<ProductCreateFormProps> = (props) => {
   const smDown = useMediaQuery(theme.breakpoints.down('sm'));
 
   return (
-    <div className={clsx(classes.root)}>
+    <div
+      className={clsx(
+        classes.root,
+        "prevent-accidental-drag-drop-product-create-form"
+      )}
+      onDragOver={(e) => {
+        e.preventDefault()
+      }}
+      onDrop={(e) => {
+        console.log("ahh! you missed the dropzone")
+        e.preventDefault()
+      }}
+    >
       <div className={classes.maxWidth}>
         <div className={
           smDown ? classes.pageMarginSm : classes.pageMargin
@@ -69,11 +63,6 @@ const ProductCreateForm: React.FC<ProductCreateFormProps> = (props) => {
             </div>
           }
 
-          {
-            smDown &&
-            <SellingTipsMobile/>
-          }
-
           <form
             onSubmit={onSubmit}
             id={'on-submit-form'}
@@ -82,16 +71,22 @@ const ProductCreateForm: React.FC<ProductCreateFormProps> = (props) => {
             )}
           >
             {
-              disableForm &&
-              <div className={classes.coverGrey}/>
+              disableForm
+              ? <>
+                  <div className={classes.coverGrey}/>
+                  <div className={disableForm ? classes.disableForm : null}>
+                    {children}
+                  </div>
+                </>
+              : <>{children}</>
             }
-            {children}
           </form>
         </div>
       </div>
     </div>
   )
 }
+
 
 
 interface ProductCreateFormProps extends WithStyles<typeof styles> {

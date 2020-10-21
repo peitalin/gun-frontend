@@ -174,12 +174,14 @@ const SelectCategories = (props: ReactProps & FormikProps<FormikFields>) => {
             </ExpansionPanelDetails>
           </ExpansionPanel>
 
-          <ValidationErrorMsg
-            touched={fprops.touched.categoryId}
-            focused={false}
-            errorMessage={fprops.errors.categoryId}
-            disableInitialValidationMessage={true}
-          />
+          <div className={classes.categoryContainer}>
+            <ValidationErrorMsg
+              touched={fprops.touched.categoryId}
+              focused={false}
+              errorMessage={fprops.errors.categoryId}
+              disableInitialValidationMessage={true}
+            />
+          </div>
         </FormGroup>
       </div>
     </ErrorBounds>

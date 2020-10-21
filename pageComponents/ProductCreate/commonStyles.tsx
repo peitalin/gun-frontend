@@ -1,22 +1,29 @@
 import { createStyles, Theme, fade } from "@material-ui/core/styles";
-import { fontFam, Colors, BorderRadius, BoxShadows } from "layout/AppTheme";
+import {
+  fontFam,
+  Colors,
+  BorderRadius,
+  BorderRadius2x,
+  BoxShadows,
+  Gradients
+} from "layout/AppTheme";
+
 
 export const styles = (theme: Theme) => createStyles({
   root: {
     flexGrow: 1,
-    height: '100%',
     minHeight: 'calc(100vh - 32px)',
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center',
   },
-  productColumn55: {
-    flexBasis: '55%',
+  productColumn60: {
+    flexBasis: '65%',
     flexGrow: 1,
-    minWidth: 360,
+    minWidth: 370,
   },
-  productColumn35: {
-    flexBasis: '35%',
+  productColumn40: {
+    flexBasis: '30%',
     flexGrow: 1,
     minWidth: 300,
     maxWidth: 400,
@@ -30,7 +37,7 @@ export const styles = (theme: Theme) => createStyles({
     width: '100%',
     zIndex: 1,
     backgroundColor: "#222",
-    borderRadius: '4px',
+    borderRadius: BorderRadius,
   },
   disableForm: {
     opacity: 0.5
@@ -47,17 +54,16 @@ export const styles = (theme: Theme) => createStyles({
   pageMargin: {
     margin: '0rem',
     paddingTop: '1rem',
-    paddingBottom: '2rem',
+    paddingBottom: '1rem',
     paddingLeft: '1rem',
     paddingRight: '1rem',
   },
   pageMarginSm: {
-    background: Colors.foregroundColor,
     margin: '0rem',
-    paddingTop: '0.5rem',
+    paddingTop: '0rem',
     paddingBottom: '2rem',
-    paddingLeft: '0.5rem',
-    paddingRight: '0.5rem',
+    paddingLeft: '0rem',
+    paddingRight: '0rem',
   },
   marginSm: {
     marginLeft: '1rem',
@@ -70,17 +76,32 @@ export const styles = (theme: Theme) => createStyles({
     paddingRight: '2rem',
   },
   formOuterContainer: {
-    background: Colors.uniswapDarkNavy,
-    border: `1px solid ${Colors.uniswapLightNavy}`,
-    borderRadius: '4px',
-    padding: '2rem',
+    // background: "transparent",
+    // border: `1px solid ${Colors.lightGrey}`,
+    borderRadius: BorderRadius2x,
+    // padding: '2rem',
     position: 'relative', // needed for coverGrey, position: absolute
   },
   formOuterContainerSm: {
-    background: Colors.uniswapDarkNavy,
-    borderRadius: '4px',
-    padding: '1rem',
+    // background: "transparent",
+    borderRadius: BorderRadius2x,
+    padding: '1rem 0rem 1rem 0rem',
     position: 'relative', // needed for coverGrey, position: absolute
+  },
+  sectionBorder: {
+    // border: `1px solid ${Colors.mediumLightGrey}`,
+    borderRadius: BorderRadius2x,
+    padding: '2rem',
+    marginBottom: '1rem',
+    background: Colors.uniswapDarkNavy,
+    boxShadow: BoxShadows.shadow4.boxShadow,
+  },
+  sectionBorderSm: {
+    borderRadius: '0px',
+    padding: '1rem',
+    marginBottom: '0rem',
+    background: Colors.uniswapDarkNavy,
+    boxShadow: BoxShadows.shadow4.boxShadow,
   },
   padding1: {
     padding: '1rem',
@@ -115,16 +136,24 @@ export const styles = (theme: Theme) => createStyles({
   spaceBetween: {
     justifyContent: 'space-between',
   },
+  marginBottom1: {
+    marginBottom: "1rem",
+  },
   button: {
     margin: 0,
   },
   formContainer: {
     position: 'relative',
-    marginBottom: "0.5rem",
-    paddingBottom: '1rem',
   },
   container: {
     marginBottom: "0.5rem",
+  },
+  selecTagsRoot: {
+    marginTop: '2rem',
+    // marginBottom: '1rem',
+  },
+  tagsTitle: {
+    marginBottom: '0.5rem',
   },
   formGroup: {
     display: 'flex',
@@ -221,7 +250,7 @@ export const styles = (theme: Theme) => createStyles({
     flexDirection: "row",
     justifyContent: "space-between",
     flexWrap: "wrap",
-    width: '100%',
+    width: 'calc(100% - 2rem)',
   },
   flexButtonItem: {
     marginBottom: '1rem',
@@ -247,12 +276,14 @@ export const styles = (theme: Theme) => createStyles({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
+    marginTop: '2rem',
     width: '100%',
   },
   policy: {
     width: 'calc(100% - 2rem)',
     fontWeight: 400,
-    marginBottom: '2rem',
+    marginBottom: '1rem',
+    color: Colors.grey,
     lineHeight: '1rem',
   },
   createProductButtonContainer: {
@@ -269,7 +300,7 @@ export const styles = (theme: Theme) => createStyles({
     fontSize: '0.9rem',
   },
   tagsTip: {
-    color: Colors.grey,
+    color: Colors.uniswapLighterGrey,
     marginTop: '0.25rem',
     fontSize: '0.7rem',
     fontWeight: 400,
@@ -282,10 +313,6 @@ export const styles = (theme: Theme) => createStyles({
       color: Colors.lightBlue,
     },
   },
-  descriptionRoot: {
-    marginBottom: '2rem',
-  },
-
   // Categories
   categoryButtonsContainer: {
     display: "flex",
@@ -294,19 +321,32 @@ export const styles = (theme: Theme) => createStyles({
   },
   buttonRoot: {
     margin: '0.1rem',
-    color: Colors.darkerGrey,
-    border: `1px solid ${Colors.mediumLightGrey}`,
+    color: Colors.uniswapLightestGrey,
+    border: `1px solid ${Colors.uniswapLighterGrey}`,
     borderRadius: '2rem',
     flexGrow: 1,
+    "&:hover": {
+      border: `1px solid ${Colors.gradientUniswapBlue1}`,
+      transition: theme.transitions.create(['color', 'border', 'background'], {
+        easing: theme.transitions.easing.easeInOut,
+        duration: "200ms",
+      }),
+    }
   },
   buttonSelected: {
-    background: Colors.secondary,
+    backgroundImage: Gradients.gradientUniswapBlue.background,
+    border: `1px solid ${Colors.gradientUniswapBlue1}`,
+    fontSize: '0.7rem',
     color: Colors.cream,
-    borderRadius: '2rem',
     "&:hover": {
-      background: fade(Colors.secondary, 0.8),
-      color: Colors.cream,
-    },
+      backgroundImage: Gradients.gradientUniswapBlue2.background,
+      border: `1px solid ${Colors.gradientUniswapFluro2}`,
+      transition: theme.transitions.create(['color', 'border', 'background'], {
+        easing: theme.transitions.easing.easeInOut,
+        duration: "200ms",
+      }),
+      backgroundPosition: '-75px',
+    }
   },
   marginTop05: {
     marginTop: '0.5rem',
@@ -315,20 +355,27 @@ export const styles = (theme: Theme) => createStyles({
     width: '100%',
     padding: '0rem',
     marginLeft: '0rem',
-    border: `1px solid ${Colors.mediumLightGrey}`,
+    marginBottom: '0.5rem',
+    // border: `1px solid ${Colors.lightGrey}`,
+    border: `1px solid ${Colors.uniswapLightNavy}`,
     // overrides .MuiExpansionPanel-rounded:first-child
     // border radius
     borderRadius: `${BorderRadius}px !important`,
-    backgroundColor: Colors.foregroundColor,
+    backgroundColor: Colors.uniswapMediumNavy,
     transition: theme.transitions.create('border', {
       duration: "1200ms",
     }),
   },
   expansionPanelExpanded: {
-    border: `1px solid ${Colors.white}`,
+    border: `1px solid ${Colors.blue}`,
     transition: theme.transitions.create('border', {
       duration: "0ms",
     }),
+    '&:focus': {
+      boxShadow: `${fade(Colors.blue, 0.2)} 0 0 0 2px`,
+      borderColor: Colors.blue,
+      color: Colors.blue,
+    },
   },
   expanderRoot: {
   },
@@ -345,7 +392,7 @@ export const styles = (theme: Theme) => createStyles({
     margin: 0,
   },
   selectedCategoryClosed: {
-    color: Colors.charcoal,
+    color: Colors.uniswapMediumGrey, // to match uniswapLightestGrey with placeholder dim
     fontSize: '1rem',
     transition: theme.transitions.create('color', {
       duration: "2000ms",
@@ -359,7 +406,9 @@ export const styles = (theme: Theme) => createStyles({
     }),
   },
   selectedCategoryEmpty: {
-    color: Colors.grey,
+    // color: Colors.uniswapLighterGrey,
+    color: Colors.uniswapMediumGrey, // to match uniswapLightestGrey with placeholder dim
+    // in TextInputa.input class
     fontSize: '1rem',
   },
   uploaderSwitcherTitle: {
@@ -377,17 +426,67 @@ export const styles = (theme: Theme) => createStyles({
     top: '1rem',
     marginTop: '1rem',
     marginBottom: '1rem',
+    cursor: "pointer",
     // from SellingTips to product card preview
     // display: 'flex',
     // flexDirection: 'row',
     // justifyContent: 'center',
   },
-  selectTagsRoot: {
-    marginTop: '2rem',
-    // marginBottom: '1rem',
+  // Product Preview Page Modal
+  modalBackdrop: {
+    backgroundColor: "rgba(47, 57, 65, .85)",
   },
-  tagsTitle: {
-    marginBottom: '0.5rem',
+  modalPaperScrollPaper: {
+    maxHeight: "calc(100% - 4rem)",
+    width: '100%',
+    margin: 0,
+  },
+  fullMaxHeight: {
+    maxHeight: "100%",
+    width: '100%',
+  },
+  iconButton: {
+    background: Colors.darkGrey,
+    "&:hover": {
+      background: Colors.blue,
+    },
+    color: Colors.lightGrey,
+    padding: 2, // determines button size
+  },
+  previewIconButton: {
+    position: "fixed",
+    right: '1rem',
+    top: '1rem',
+    zIndex: 1502,
+  },
+  svgIcon: {
+    fill: "#eaeaea",
+    width: '2rem',
+    height: '2rem',
+    "&:hover": {
+      fill: "#fafafa",
+    },
+  },
+  descriptionRoot: {
+    marginBottom: '2rem',
+  },
+  categoryContainer: {
+    position: 'relative',
+    width: '100%',
+    marginTop: '0.5rem',
   },
 })
+
+
+
+
+
+
+
+
+
+
+
+
+
 

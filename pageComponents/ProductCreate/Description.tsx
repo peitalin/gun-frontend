@@ -90,6 +90,7 @@ const Description = (props: ReactProps & FormikProps<FormikFields>) => {
         setFieldTouched={fprops.setFieldTouched}
         editorStyle={{
           maxWidth: 'calc(100vw - 4rem)', // constrain width for mobile
+          background: Colors.uniswapMediumNavy,
         }}
       />
     </ErrorBounds>

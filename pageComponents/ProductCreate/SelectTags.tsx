@@ -45,7 +45,7 @@ const SelectTags = (props: ReactProps & FormikProps<FormikFields>) => {
   }
 
   return (
-    <ErrorBounds className={clsx(classes.selectTagsRoot, classes.positionRelative)}>
+    <ErrorBounds className={clsx(classes.positionRelative)}>
       <div className={classes.formContainer}>
         <Typography variant="subtitle1" className={classes.tagsTitle}>
           Tags <span className={classes.optionalText}>- optional</span>
@@ -72,7 +72,7 @@ const SelectTags = (props: ReactProps & FormikProps<FormikFields>) => {
 
         </FormGroup>
         <Typography className={classes.tagsTip}>
-          Tags will help people find your product on Relay.
+          Tags will help people find your product in search.
           Tags are not public. Separate with commas.
         </Typography>
       </div>

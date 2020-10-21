@@ -43,7 +43,7 @@ const UploadInput = (props: IInputProps & ReactProps) => {
             }
           }}
           onClick={(e) => {
-            console.log("input butt clicked")
+            console.log("input button clicked")
           }}
         >
           <Typography variant="body1"
@@ -78,14 +78,14 @@ const UploadInput = (props: IInputProps & ReactProps) => {
         />
       </label>
 
-      <Typography variant="body2"
+      {/* <Typography variant="body2"
         className={props.classes.youTubeInput}
       >
         Add a YouTube link
         <span className={props.classes.youTubeSpan}>
           - optional
         </span>
-      </Typography>
+      </Typography> */}
       <AddYouTubeVimeoLink
         reducerName={props.reducerName}
       />
@@ -129,7 +129,7 @@ export const styles = (theme: Theme) => createStyles({
     fontSize: '0.9rem',
   },
   subtitle: {
-    color: Colors.grey,
+    color: Colors.uniswapLightestGrey,
     fontSize: '0.8rem',
   },
   youTubeInput: {
@@ -137,11 +137,12 @@ export const styles = (theme: Theme) => createStyles({
     fontWeight: 500,
     marginTop: '1rem',
     marginBottom: '0.25rem',
-    color: Colors.darkGrey,
+    marginLeft: '0.5rem',
+    color: Colors.uniswapMediumGrey,
     width: '100%',
   },
   youTubeSpan: {
-    color: Colors.mediumGrey,
+    color: Colors.uniswapMediumGrey,
     marginLeft: '0.25rem',
   },
 })

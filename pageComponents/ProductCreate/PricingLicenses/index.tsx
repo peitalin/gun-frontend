@@ -99,7 +99,7 @@ const PricingLicenses = (props: ReactProps & FormikProps<FormikFields>) => {
         >
           Price
         </Typography>
-        <div className={classes.switchContainer}>
+        {/* <div className={classes.switchContainer}>
           <Typography variant="subtitle2">
             Add Licenses
           </Typography>
@@ -110,7 +110,7 @@ const PricingLicenses = (props: ReactProps & FormikProps<FormikFields>) => {
             color="secondary"
             inputProps={{ 'aria-label': 'secondary checkbox' }}
           />
-        </div>
+        </div> */}
       </div>
       {
         currentVariants.map((variant, position) => {
@@ -203,7 +203,6 @@ const complainIfMissingReduxActions = (reducerName: string) => {
 
 export const styles = (theme: Theme) => createStyles({
   root: {
-    marginBottom: '1rem',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'flex-start',

@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { GrandReduxState } from "reduxStore/grand-reducer";
 import { Actions } from "reduxStore/actions";
 // Styles
-import { Colors } from "layout/AppTheme";
+import { Colors, BorderRadius } from "layout/AppTheme";
 import { withStyles, WithStyles } from "@material-ui/core/styles";
 import { styles } from '../styles';
 // Typings
@@ -14,9 +14,6 @@ import { ProductPreviewItemInput, ProductPreviewItem } from "typings/gqlTypes";
 import { ReducerName } from "typings/dropzone";
 // Components
 import TextInput from "components/Fields/TextInput";
-// Carousel
-import AirCarousel from "components/AirCarousel";
-import AirItemWide from "components/AirCarousel/AirItemWide";
 // Draggable
 import { SortableContainer, SortableElement } from 'react-sortable-hoc';
 
@@ -36,7 +33,7 @@ const AddYouTubeVimeoLink: React.FC<AddYouTubeVimeoProps> = (props) => {
     youTubeVimeoLinks,
   } = useSelector<GrandReduxState, ReduxState>(state => {
     return {
-      youTubeVimeoLinks: option(state)[reducerName].previewItems([])
+      youTubeVimeoLinks: option(state)[reducerName].dzuPreviewItems([])
         .filter(p => !!p.youTubeVimeoEmbedLink),
     }
   })
@@ -86,7 +83,7 @@ const AddYouTubeVimeoLink: React.FC<AddYouTubeVimeoProps> = (props) => {
 
   return (
     <TextInput
-      placeholder={"Paste your YouTube link"}
+      placeholder={"Add a YouTube link - optional"}
       value={youTubeVimeoLink}
       onChange={(e) => setYouTubeVimeoLink(e.target.value)}
       inputProps={{
@@ -95,8 +92,8 @@ const AddYouTubeVimeoLink: React.FC<AddYouTubeVimeoProps> = (props) => {
         },
         style: {
           width: '100%',
-          borderRadius: "4px 0px 0px 4px",
-          borderRight: 'none',
+          borderRadius: BorderRadius,
+          // borderRight: 'none',
           padding: '0.55rem',
         }
       }}
