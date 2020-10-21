@@ -6,7 +6,7 @@ import { styles } from "./styles";
 import { Colors } from "layout/AppTheme";
 // Typings
 import { Product_Preview_Items } from "typings/gqlTypes";
-import { generateYouTubeVimeoEmbedLink } from "utils/strings";
+import { generateYouTubeVimeoEmbedLink } from "utils/links";
 // Components
 import AspectRatioConstraint from "components/AspectRatioConstraint";
 // media query

@@ -12,7 +12,7 @@ import IconButton from "@material-ui/core/IconButton";
 import YouTubeIcon from "components/Icons/YouTube";
 // helpers
 import { genSrcSet, genImgBreakpoints } from "utils/images";
-import { getYouTubeVimeoImagePreview } from "utils/strings";
+import { getYouTubeVimeoImagePreview } from "utils/links";
 
 
 // VIMEO
