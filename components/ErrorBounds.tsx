@@ -1,5 +1,6 @@
 import React from "react";
 import clsx from "clsx";
+import { Colors, BorderRadius } from "layout/AppTheme";
 
 import {
   withStyles, WithStyles, createStyles, Theme
@@ -125,12 +126,13 @@ const styles = (theme: Theme) => createStyles({
     margin: 20,
     padding: 20,
     boxShadow: "1px 2px 3px 0px rgba(76,76,76,0.4)",
-    borderRadius: "4px",
-    border: "1px solid #eaeaea",
+    borderRadius: BorderRadius,
+    border: `1px solid ${Colors.red}`,
+    backgroundColor: Colors.uniswapMediumNavy,
     transition: "all 100ms",
     "&:hover": {
       transition: "all 100ms",
-      boxShadow: "2px 3px 4px 0px rgba(76,76,76,0.6)",
+      boxShadow: "2px 3px 3px 0px rgba(76,76,76,0.6)",
     },
   }
 });
