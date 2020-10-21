@@ -12,7 +12,7 @@ import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
 // helpers
 import { genSrcSet } from "utils/files";
-import { getYouTubeVimeoImagePreview } from "utils/strings";
+import { getYouTubeVimeoImagePreview } from "utils/links";
 
 
 

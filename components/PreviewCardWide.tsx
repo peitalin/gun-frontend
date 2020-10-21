@@ -15,7 +15,7 @@ import YouTubeIcon from "components/Icons/YouTube";
 // Typings
 import { Product_Preview_Items, Categories } from "typings/gqlTypes";
 import { genSrcSet } from "utils/files";
-import { getYouTubeVimeoImagePreview } from "utils/strings";
+import { getYouTubeVimeoImagePreview } from "utils/links";
 import PriceDisplayMain from "components/PriceDisplayMain";
 
 

@@ -15,7 +15,7 @@ import DiscountBadge from "components/DiscountBadge";
 // Typings
 import { ProductPreviewItem, Product, ID } from "typings/gqlTypes";
 import { genSrcSet, genImgBreakpoints } from "utils/images";
-import { getYouTubeVimeoImagePreview } from "utils/strings";
+import { getYouTubeVimeoImagePreview } from "utils/links";
 import PriceDisplayMain from "components/PriceDisplayMain";
 import LinkLoading from "pageComponents/FrontPage/PreviewCardResponsiveCarousel/LinkLoading";
 // Responsiveness
