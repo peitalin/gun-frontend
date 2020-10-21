@@ -56,7 +56,7 @@ const SignUp: React.FC<ReactProps> = (props) => {
       {
         props.title
         ? props.title
-        : "Create a Relay account to save your files"
+        : "Create a GM account to save your files"
       }
     </Typography>
 
