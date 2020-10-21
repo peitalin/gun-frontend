@@ -50,8 +50,7 @@ import {
 } from "utils/hooksFacetSearch";
 // Grid Components
 import GridPaginatorGeneric from "components/GridPaginatorGeneric";
-
-import TextInput from 'components/Fields/TextInputAdorned';
+import TextInputAdorned from 'components/Fields/TextInputAdorned';
 // csv
 import CsvDownloader from 'react-csv-downloader';
 import dayjs from 'dayjs';
@@ -301,7 +300,7 @@ const PayoutsApprovedList = (props: ReactProps) => {
         </div>
         <div className={classes.flexColRightBottom}>
           <div className={classes.addPayoutIdBox}>
-            <TextInput
+            <TextInputAdorned
               placeholder={"Enter Westpac payout ID"}
               value={payoutId}
               onChange={(e) => setPayoutId(e.target.value)}
