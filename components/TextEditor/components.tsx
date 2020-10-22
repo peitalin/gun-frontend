@@ -16,6 +16,11 @@ import {
   toggleBlock,
   toggleMark,
 } from "./helpersEditorToggles";
+import {
+  isLinkActive,
+  insertLink,
+  toggleLink,
+} from "./helpersLinks";
 
 
 
@@ -32,7 +37,7 @@ export const styles = (theme: Theme) => createStyles({
     cursor: 'pointer',
     "&:hover": {
       color: Colors.secondary,
-      backgroundColor: Colors.uniswapNavy,
+      backgroundColor: Colors.lightGrey,
     },
     padding: '0.5rem',
   },
@@ -51,7 +56,7 @@ export const styles = (theme: Theme) => createStyles({
   toolbar: {
     position: 'relative',
     padding: '0rem 0.5rem',
-    borderBottom: `1px solid ${Colors.uniswapLightNavy}`,
+    borderBottom: '2px solid #eee',
     marginBottom: '1rem',
   },
 })
@@ -69,8 +74,8 @@ export const Button = withStyles(styles)(
         )}
         style={{
           color: reversed
-            ? active ? Colors.uniswapLightNavy : Colors.cream
-            : active ? Colors.gradientUniswapBlue1 : Colors.uniswapLighterGrey
+            ? active ? 'white' : '#aaa'
+            : active ? 'black' : '#ccc'
         }}
       />
     )
@@ -158,3 +163,17 @@ export const ImageElement = ({ attributes, children, element }) => {
 }
 
 
+export const LinkButton = ({ icon }) => {
+  const editor = useSlate()
+  return (
+    <Button
+      active={isLinkActive(editor)}
+      onMouseDown={event => {
+        event.preventDefault()
+        toggleLink(editor)
+      }}
+    >
+      <Icon icon={icon}/>
+    </Button>
+  )
+}

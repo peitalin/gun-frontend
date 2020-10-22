@@ -23,7 +23,11 @@ export const Element = props => {
 
   // disable attributes
   // e.g. no color text, etc
-  let attributes = {}
+  let attributes = {
+    whiteSpace: "pre-wrap",
+  }
+
+  console.log("Element: ", element)
 
   switch (element.type) {
     case 'block-quote':

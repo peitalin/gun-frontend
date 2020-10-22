@@ -19,14 +19,15 @@ import { jsx } from 'slate-hyperscript'
 ///////////////////////////////////////
 ///////////////////////////////////////
 
-export const EMPTY_ELEM = "<p></p>"
 
 export const serializeText = nodes => {
   return nodes.map(n => Node.string(n)).join('\n')
 }
 
 export const serializeHtml = nodes => {
-  return nodes.map(n => serializeHtmlNode(n)).join('\n')
+  // DO NOT JOIN with \n
+  // Fucks up spacing inside the editor textarea
+  return nodes.map(n => serializeHtmlNode(n)).join('')
 }
 
 export const serializeHtmlNode = element => {
@@ -35,7 +36,6 @@ export const serializeHtmlNode = element => {
 
   if (Text.isText(element)) {
 
-    // let text = element.text.replace(/\n/g, w => '<br>')
     let text = element.text
 
     if (element.bold && element.italics) {
@@ -51,8 +51,14 @@ export const serializeHtmlNode = element => {
 
   const children = element.children.map(n => serializeHtmlNode(n)).join('')
 
+  // white-space: pre-wrap within tags will ensure things like
+  // double spacing is preserved
+  // min-height: 1.5rem so that each empty <p> tag is consistent with line heights
+  let lineHeight = "1.5rem";
+  let pTag = `<p style="white-space: pre-wrap; min-height: ${lineHeight}">${children}</p>`;
+
   if (element && !element.type) {
-    return "<p></p>"
+    return pTag
   } else {
     switch (element.type) {
       case 'block-quote':
@@ -86,12 +92,13 @@ export const serializeHtmlNode = element => {
         return "<br/>"
       case 'break':
         return "<br/>"
+      // Default Paragraphs
       case 'p':
-        return `<p>${children}</p>`
+        return pTag
       case 'paragraph':
-        return `<p>${children}</p>`
+        return pTag
       default:
-        return `<p>${children}</p>`
+        return pTag
     }
   }
 }

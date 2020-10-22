@@ -5,10 +5,10 @@ import { jsx } from 'slate-hyperscript'
 
 ///////////////////////////////////////
 ///////////////////////////////////////
-// CONVERTS FROM HTML DOM-ELEMENTS TO Slate objects
+// CONVERTS FROM HTML DOM-ELEMENTS in CLIPBOARD to Slate objects
 //
-// For when you want go from HTML-DOM elements to editor.
-// INPUT: HTML-DOM elements
+// For when you want go from HTML-DOM elements you copy and pasted to editor.
+// INPUT: HTML-DOM elements copy and pasted from websites
 // OUTPUT: Slate Objects which the editor manipulates
 ///////////////////////////////////////
 ///////////////////////////////////////
@@ -69,6 +69,7 @@ export const deserialize = (el) => {
     return null;
   } else if (nodeName === "BR") {
     // return "\n";
+    // remove \n, replace with <p> tags for newlines
     return "";
   }
 
@@ -128,7 +129,8 @@ export const deserialize = (el) => {
 
 
 
-/// ACtual Deserializer used in the Slate Editor
+/// Actual HTML Deserializer used in the Slate Editor for copy and paste
+/// deserializing
 
 export const withHtmlDeserializer = editor => {
   const { insertData, isInline, isVoid } = editor
@@ -143,26 +145,11 @@ export const withHtmlDeserializer = editor => {
 
   editor.insertData = data => {
     const html = data.getData('text/html')
-    const text = data.getData('text/plain')
 
     if (html) {
       const parsed = new DOMParser().parseFromString(html, 'text/html')
       const fragment = deserialize(parsed.body)
       Transforms.insertFragment(editor, fragment)
-      return
-    } else if (text) {
-
-      let textNodes = text.split('\n').map(t => {
-        return {
-          type: 'paragraph',
-          children: [{
-            text: t
-          }]
-        }
-      })
-
-      Transforms.insertFragment(editor, textNodes)
-
       return
     }
 

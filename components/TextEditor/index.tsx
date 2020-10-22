@@ -16,7 +16,7 @@ import { useDebouncedCallback } from 'use-debounce';
 // Slate
 import isHotkey from 'is-hotkey'
 import { Editable, withReact, useSlate, Slate } from 'slate-react'
-import { Editor, Transforms, createEditor } from 'slate'
+import { Node, Transforms, createEditor } from 'slate'
 import { withHistory } from 'slate-history'
 
 // Icons
@@ -29,6 +29,7 @@ import { ic_title } from 'react-icons-kit/md/ic_title';
 import { ic_format_quote } from 'react-icons-kit/md/ic_format_quote';
 import { ic_format_list_bulleted } from 'react-icons-kit/md/ic_format_list_bulleted';
 import { ic_format_list_numbered } from 'react-icons-kit/md/ic_format_list_numbered';
+import { ic_link } from 'react-icons-kit/md/ic_link'
 
 // editor components
 import {
@@ -36,6 +37,7 @@ import {
   Toolbar,
   BlockButton,
   MarkButton,
+  LinkButton,
 } from './components'
 import {
   serializeText,
@@ -45,6 +47,7 @@ import {
   deserialize,
   withHtmlDeserializer,
 } from "./helpersDeserializers";
+import { withLinks } from "./helpersLinks";
 import {
   initialValue,
   Element,
@@ -65,7 +68,7 @@ const TextEditor = (props: ReactProps) => {
 
   // State /////////////////
 
-  const [value, setValue] = useState(
+  const [value, setValue] = useState<Node[]>(
     // description should be in slate.js object model format
     // 1. parse string to HTML DOM with DOMParser()
     // 2. deserialize HtmlDOM with Slate.js deserializer function.
@@ -79,7 +82,7 @@ const TextEditor = (props: ReactProps) => {
   const renderElement = useCallback(props => <Element {...props} />, [])
   const renderLeaf = useCallback(props => <Leaf {...props} />, [])
   const editor = useMemo(
-    () => withHtmlDeserializer(withReact(withHistory(createEditor()))),
+    () => withHtmlDeserializer(withLinks(withReact(withHistory(createEditor())))),
     []
   )
 
@@ -164,6 +167,7 @@ const TextEditor = (props: ReactProps) => {
             {/* <BlockButton format="block-quote" icon={ic_format_quote} /> */}
             <BlockButton format="numbered-list" icon={ic_format_list_numbered} />
             <BlockButton format="bulleted-list" icon={ic_format_list_bulleted} />
+            <LinkButton icon={ic_link}/>
           </Toolbar>
           <Editable
             className={classes.editor}
@@ -234,12 +238,13 @@ export const styles = (theme: Theme) => createStyles({
   root: {
     position: 'relative',
     marginBottom: '1rem',
+    backgroundColor: Colors.white,
   },
   editorContainer: {
     height: '100%',
     width: '100%',
     position: 'relative',
-    border: `1px solid ${Colors.uniswapLightNavy}`,
+    border: '1px solid rgba(170, 170, 170, 0.4)',
     borderRadius: BorderRadius,
     transition: theme.transitions.create(['border-color', 'box-shadow'], {
       easing: theme.transitions.easing.easeIn,
@@ -267,7 +272,6 @@ export const styles = (theme: Theme) => createStyles({
     },
     fontFamily: fontFam,
     fontSize: '1rem',
-    color: Colors.uniswapLightestGrey,
   },
   blockQuote: {
     borderLeft: '2px solid #ddd',
@@ -319,15 +323,14 @@ export const styles = (theme: Theme) => createStyles({
     display: "flex",
     flexDirection: "column",
     justifyContent: "flex-end",
-    color: Colors.uniswapLightestGrey,
   },
   countText: {
     fontSize: "0.8rem",
     fontFamily: '"Helvetica Neue",Arial,sans-serif',
+    opacity: 0.25,
     position: 'absolute',
     right: '0.25rem',
-    bottom: '-1.4rem',
-    color: Colors.uniswapLighterGrey,
+    bottom: '-1.125rem',
   },
 })
 
