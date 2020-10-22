@@ -147,7 +147,7 @@ class MyApp extends App<AppProps> {
             dense
             maxSnack={4}
           >
-            <ThemeProvider theme={AppTheme}>
+            <ThemeProvider theme={AppTheme({ darkMode: true })}>
               <CssBaseline />
               <Layout>
                 <Component {...pageProps} key={router.route} />

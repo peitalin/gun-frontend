@@ -227,8 +227,11 @@ export const notifyStyles = (theme: Theme) => createStyles({
 });
 
 
-export const AppTheme = createMuiTheme({
+export const AppTheme = ({ darkMode }: { darkMode: boolean }) => createMuiTheme({
   palette: {
+
+    type: darkMode ? 'dark' : 'light',
+
     primary: {
       main: Colors.uniswapLightestGrey,
     },
