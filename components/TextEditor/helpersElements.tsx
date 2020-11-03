@@ -24,7 +24,7 @@ export const Element = props => {
   // disable attributes
   // e.g. no color text, etc
   let attributes = {
-    whiteSpace: "pre-wrap",
+    whitespace: "pre-wrap",
   }
 
   console.log("Element: ", element)

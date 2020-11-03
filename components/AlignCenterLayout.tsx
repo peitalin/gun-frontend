@@ -80,8 +80,9 @@ const styles = (theme: Theme) => createStyles({
   root: {
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: "center",
+    justifyContent: "flex-start",
     alignItems: "center",
+    width: "100%",
   },
   alignCenterChild: {
     width: '100%',

@@ -45,7 +45,6 @@ const BannerProductCreateMobile: NextPage<ReactProps> = (props) => {
         dither={true}
       >
         <div className={classes.mainTitleContainerMobile}>
-          <CloudUpload className={classes.downloadIcon}/>
         </div>
         <div className={classes.mainTitleContainerMobile}>
           <Typography variant={"h4"} className={classes.mainTitleMobile}>

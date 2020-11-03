@@ -1,7 +1,6 @@
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
-import { Colors } from "layout/AppTheme";
+import { Colors, fontFam, Gradients } from "layout/AppTheme";
 
-const fontFam = 'Helvetica Neue';
 
 export const styles = (theme: Theme) => createStyles({
   root: {
@@ -12,6 +11,12 @@ export const styles = (theme: Theme) => createStyles({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
+    // color ext
+    backgroundImage: Gradients.gradientUniswapBlueGreen.background,
+    // backgroundImage: Gradients.gradientRainbow.background,
+    backgroundColor: 'initial',
+    '-webkit-text-fill-color': 'transparent',
+    '-webkit-background-clip': 'text',
   },
   mainTitleContainerMobile: {
     display: 'flex',

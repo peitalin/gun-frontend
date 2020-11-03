@@ -238,13 +238,13 @@ export const styles = (theme: Theme) => createStyles({
   root: {
     position: 'relative',
     marginBottom: '1rem',
-    backgroundColor: Colors.white,
   },
   editorContainer: {
     height: '100%',
     width: '100%',
     position: 'relative',
-    border: '1px solid rgba(170, 170, 170, 0.4)',
+    border: `1px solid ${Colors.uniswapGrey}`,
+    color: Colors.uniswapLightestGrey,
     borderRadius: BorderRadius,
     transition: theme.transitions.create(['border-color', 'box-shadow'], {
       easing: theme.transitions.easing.easeIn,
@@ -255,7 +255,6 @@ export const styles = (theme: Theme) => createStyles({
     // border is a boxShadow
     boxShadow: `${fade('#50B5F5', 0.2)} 0 0 0 2px`,
     borderColor: Colors.blue,
-    color: Colors.charcoal,
     transition: theme.transitions.create(['border-color', 'box-shadow'], {
       easing: theme.transitions.easing.easeIn,
       duration: "200ms",
@@ -278,7 +277,7 @@ export const styles = (theme: Theme) => createStyles({
     marginLeft: 0,
     marginRight: 0,
     paddingLeft: '10px',
-    color: '#aaa',
+    color: Colors.uniswapLighterGrey,
     fontStyle: 'italic',
   },
   errorMessage: {

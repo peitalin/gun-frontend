@@ -5,8 +5,7 @@ import {oc as option} from "ts-optchain";
 import { useQuery } from "@apollo/client";
 import { DocumentNode } from "graphql";
 // typings
-import { PageBasedConnection, ConnectionQuery, PageCursor } from "typings/gqlTypes";
-import { GenericPageBasedConnection, GenericConnection } from "typings";
+import { PageCursor } from "typings/gqlTypes";
 import { WatchQueryFetchPolicy } from "@apollo/client";
 
 
@@ -96,7 +95,6 @@ export interface usePaginateQueryProps<QueryData, NodeType> {
   query: DocumentNode;
   variables: any;
   connectionSelector(data: QueryData): [
-    // GenericConnection<NodeType> | GenericPageBasedConnection<NodeType>,
     any,
     string
   ];

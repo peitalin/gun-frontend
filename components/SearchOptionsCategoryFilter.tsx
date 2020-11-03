@@ -12,9 +12,9 @@ import {
   Categories,
 } from "typings/gqlTypes";
 // MUI expander
-import ExpansionPanel from '@material-ui/core/ExpansionPanel';
-import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
-import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import Accordion from '@material-ui/core/Accordion';
+import AccordionSummary from '@material-ui/core/AccordionSummary';
+import AccordionDetails from '@material-ui/core/AccordionDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 // Dropdown Select Component
 import { selectStyles } from "pageComponents/P/PurchaseProductSummary/ProductLicenses";
@@ -107,7 +107,7 @@ const SearchOptionsCategoryFilter: React.FC<ReactProps> = (props) => {
     )
   } else {
     return (
-      <ExpansionPanel
+      <Accordion
         defaultExpanded={defaultExpanded}
         style={{
           maxWidth: props.maxWidth
@@ -130,7 +130,7 @@ const SearchOptionsCategoryFilter: React.FC<ReactProps> = (props) => {
           }
         }}
       >
-        <ExpansionPanelSummary
+        <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           classes={{
             root: classes.expanderRoot,
@@ -140,8 +140,8 @@ const SearchOptionsCategoryFilter: React.FC<ReactProps> = (props) => {
           }}
         >
           Filter by categories
-        </ExpansionPanelSummary>
-        <ExpansionPanelDetails>
+        </AccordionSummary>
+        <AccordionDetails>
           <div className={classes.facetSection}>
             {
               option(currentCategories)([])
@@ -176,8 +176,8 @@ const SearchOptionsCategoryFilter: React.FC<ReactProps> = (props) => {
               </Button>
             }
           </div>
-        </ExpansionPanelDetails>
-      </ExpansionPanel>
+        </AccordionDetails>
+      </Accordion>
     )
   }
 }

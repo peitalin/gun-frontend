@@ -151,7 +151,7 @@ const DropdownInput = (props: ReactProps) => {
               ? props.styles
               : {
                 input: styles => ({
-                  color: props.hideCursor ? 'transparent' : Colors.black
+                  color: props.hideCursor ? 'transparent' : Colors.uniswapLightestGrey
                 }),
                 placeholder: styles => ({
                   ...styles,
@@ -161,6 +161,16 @@ const DropdownInput = (props: ReactProps) => {
                 }),
                 singleValue: styles => ({
                   color: Colors.uniswapLighterGrey,
+
+                }),
+                indicatorSeparator: styles => ({
+                  ...styles,
+                  backgroundColor: Colors.uniswapLighterGrey,
+                }),
+                indicatorsContainer: styles => ({
+                  ...styles,
+                  color: Colors.uniswapLighterGrey,
+                  cursor: "pointer",
                 }),
                 menu: styles => ({
                   ...styles,

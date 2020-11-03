@@ -208,6 +208,10 @@ const KeywordDropdownInput = (props: ReactProps) => {
             color: Colors.uniswapMediumGrey,
             cursor: 'text',
           }),
+          input: styles => ({
+            ...styles,
+            color: Colors.uniswapLightestGrey,
+          }),
           control: (base, state) => ({
             ...base,
             background: Colors.uniswapMediumNavy,
@@ -225,16 +229,41 @@ const KeywordDropdownInput = (props: ReactProps) => {
             //   borderColors: Colors.gradientUniswapFluro1,
             // }
           }),
+          indicatorSeparator: styles => ({
+            ...styles,
+            backgroundColor: Colors.uniswapLighterGrey,
+          }),
+          indicatorContainer: styles => ({
+            ...styles,
+            color: Colors.uniswapLighterGrey,
+            cursor: "pointer",
+          }),
           multiline: styles => ({
             ...styles,
             // display: 'none'
-            background: Gradients.gradientUniswapFluro.background,
+            color: Colors.cream,
+          }),
+          multiValue: styles => ({
+            ...styles,
+            // display: 'none'
+            background: Colors.uniswapLighterGrey,
+            color: Colors.cream,
+          }),
+          multiValueLabel: styles => ({
+            ...styles,
+            // display: 'none'
+            background: Colors.uniswapLighterGrey,
             color: Colors.cream,
           }),
           multiValueRemove: styles => ({
             ...styles,
             // display: 'none'
-            background: Gradients.gradientUniswapFluro.background,
+            background: Colors.uniswapLighterGrey,
+            cursor: "pointer",
+            "&:hover": {
+              background: Colors.red,
+              color: Colors.cream,
+            },
             color: Colors.cream,
           }),
         }}

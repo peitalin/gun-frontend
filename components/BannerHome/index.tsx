@@ -14,7 +14,6 @@ import { useRouter } from 'next/router';
 import { NextPage, NextPageContext } from 'next';
 import Login from "layout/Login";
 import Hidden from '@material-ui/core/Hidden';
-import RelayDownloadIcon from "components/Icons/RelayDownloadIcon";
 // CSS
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
@@ -68,7 +67,6 @@ const BannerHome: NextPage<ReactProps> = (props) => {
           dither={true}
         >
           <div className={classes.mainTitleContainer}>
-            {/* <RelayDownloadIcon className={classes.downloadIconXs}/> */}
             <Typography variant={"h2"} className={classes.mainTitleXs}>
               Gun Marketplace
             </Typography>
@@ -163,7 +161,6 @@ const BannerHome: NextPage<ReactProps> = (props) => {
           dither={true}
         >
           <div className={classes.mainTitleContainer}>
-            {/* <RelayDownloadIcon className={classes.downloadIcon}/> */}
             <Typography variant={"h1"} className={classes.mainTitle}>
               Gun Marketplace
             </Typography>

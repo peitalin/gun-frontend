@@ -14,7 +14,6 @@ import { jsx } from 'slate-hyperscript'
 ///////////////////////////////////////
 
 
-
 export const ELEMENT_TAGS = {
   A: el => ({ type: 'link', url: el.getAttribute('href') }),
   BLOCKQUOTE: () => ({ type: 'quote' }),

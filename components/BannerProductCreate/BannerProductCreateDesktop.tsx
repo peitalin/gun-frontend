@@ -42,7 +42,6 @@ const BannerProductCreateDesktop: NextPage<ReactProps> = (props) => {
         // dither={false}
       >
         <div className={classes.mainTitleContainer}>
-          <CloudUpload className={classes.downloadIcon}/>
         </div>
         <div className={classes.mainTitleContainer}>
           <Typography variant={"h2"} className={classes.mainTitle}>
