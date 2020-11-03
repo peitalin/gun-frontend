@@ -176,7 +176,8 @@ const styles = (theme: Theme) => createStyles({
   },
   formContainer: {
     padding: "0",
-    marginTop: '0.5rem',
+    marginTop: '1rem',
+    marginBottom: '1rem',
   },
   textField: {
     marginBottom: '1rem',

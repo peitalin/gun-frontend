@@ -1,7 +1,7 @@
 import * as React from "react";
-import { oc as option } from "ts-optchain";
 // Styles
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
+import { Colors, BorderRadius2x, Gradients, BorderRadius } from "layout/AppTheme";
 // Material UI
 import Dialog from "@material-ui/core/Dialog";
 // Redux
@@ -82,12 +82,14 @@ const styles = (theme: Theme) => createStyles({
   modalPaperScrollPaperSm: {
     maxHeight: "calc(100% - rem)",
     overflowY: 'hidden',
-
+    borderRadius: BorderRadius2x,
   },
   modalPaperScrollPaper: {
     // maxHeight: "calc(100% - 0px)",
     width: '100%',
     maxWidth: '540px',
+    background: Colors.uniswapDarkNavy,
+    borderRadius: BorderRadius2x,
   },
 });
 

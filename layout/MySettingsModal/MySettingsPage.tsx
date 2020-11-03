@@ -2,22 +2,16 @@ import React from "react";
 import { oc as option } from "ts-optchain";
 import clsx from "clsx";
 // Graphql Queries
-import { useQuery } from "@apollo/client";
-import { GET_USER } from "queries/user-queries";
 import { UserPrivate } from "typings/gqlTypes";
 // Styles
 import { withStyles, WithStyles, createStyles, Theme, fade } from "@material-ui/core/styles";
-import { Colors } from "layout/AppTheme";
+import { Colors, BorderRadius, Gradients } from "layout/AppTheme";
 // Material UI
 import Typography from "@material-ui/core/Typography";
 import ClearIcon from "@material-ui/icons/Clear";
 import IconButton from "@material-ui/core/IconButton";
 // Components
-import Divider from "components/Divider";
-import Loading from "components/Loading";
-import ErrorDisplay from "components/Error";
 import ErrorBounds from "components/ErrorBounds";
-import TextInput from "components/Fields/TextInput";
 // Redux
 import { useDispatch, useSelector } from "react-redux";
 import { GrandReduxState } from "reduxStore/grand-reducer";
@@ -28,8 +22,6 @@ import ChangePasswordForm from "./ChangePasswordForm";
 import ChangePayoutMethod from "./ChangePayoutMethod";
 import ChangeUserEmailForm from "./ChangeUserEmailForm";
 import AdvancedSettings from "./AdvancedSettings";
-// Typings
-import { HtmlEvent, EditUserProfileInput } from "typings";
 // // Next
 // import dynamic from 'next/dynamic'
 // const DynamicPaymentMethods = dynamic(() => import('./PaymentMethods'))
@@ -63,17 +55,11 @@ const MySettings = (props: ReactProps & ReduxProps) => {
     )}>
       <div className={props.classes.titleRow}>
         <Typography variant="h2">
-          My Settings
+          My Profile Settings
         </Typography>
         <IconButton onClick={() => props.goBack()}>
           <ClearIcon/>
         </IconButton>
-      </div>
-
-      <div className={props.classes.titleRow2}>
-        <Typography variant="h3">
-          Edit Profile
-        </Typography>
       </div>
 
       <div className={classes.section}>
@@ -92,10 +78,6 @@ const MySettings = (props: ReactProps & ReduxProps) => {
           <ChangePayoutMethod/>
         </div >
       }
-
-      <div className={classes.section}>
-        payment methods
-      </div>
 
       <div className={classes.sectionLast}>
         <AdvancedSettings
@@ -147,7 +129,7 @@ const styles = (theme: Theme) => createStyles({
   section: {
     paddingBottom: '0.5rem',
     marginBottom: '2rem',
-    borderBottom: '1px solid #f0f0f0',
+    borderBottom: `1px solid ${Colors.uniswapMediumNavy}`,
   },
   sectionLast: {
     paddingBottom: '0.5rem',

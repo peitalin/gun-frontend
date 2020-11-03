@@ -162,6 +162,7 @@ const ChangePasswordForm = (props: ReactProps) => {
                     setCurrentPassword={ setCurrentPassword }
                     setNewPassword={ setNewPassword }
                     setNewPasswordAgain={ setNewPasswordAgain }
+                    loading={loading}
                     {...fprops}
                   />
                   <SnackBarA
@@ -214,7 +215,8 @@ const styles = (theme: Theme) => createStyles({
   },
   formContainer: {
     padding: "0",
-    marginTop: '0.5rem',
+    marginTop: '1rem',
+    marginBottom: '0.5rem',
   },
   textField: {
     marginBottom: '1rem',

@@ -2,6 +2,7 @@ import React from "react";
 import { oc as option } from "ts-optchain";
 // Styles
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
+import { Colors } from "layout/AppTheme";
 // Graphql Queries
 import { useMutation, useApolloClient } from "@apollo/client";
 import { GET_USER } from "queries/user-queries";
@@ -9,6 +10,7 @@ import { UPDATE_USER, SET_PAYOUT_METHOD } from "queries/user-mutations";
 import { UserPrivate, ID } from "typings/gqlTypes";
 // Material UI
 import Button from "@material-ui/core/Button";
+import ButtonLoading from "components/ButtonLoading";
 import Typography from "@material-ui/core/Typography";
 // Utility Components
 import Loading from "components/Loading";
@@ -73,13 +75,22 @@ const ChangePayoutMethodButton = (props: ReactProps) => {
   } else {
     return (
       <ErrorBounds>
-        <Button
+        <ButtonLoading
+          type="submit"
           variant={"outlined"}
           color={"primary"}
           onClick={() => setPayoutMethod()}
+          replaceTextWhenLoading={true}
+          loading={loading}
+          disabled={loading}
+          loadingIconColor={Colors.blue}
+          // style={{
+          //   height: '40px',
+          //   width: '100%',
+          // }}
         >
           Save changes
-        </Button>
+        </ButtonLoading>
         <SnackBarA
           open={data !== undefined && displaySuccess}
           closeSnackbar={() => setDisplaySuccess(false)}

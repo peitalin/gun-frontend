@@ -11,6 +11,7 @@ import Typography from "@material-ui/core/Typography";
 import TextInput from "components/Fields/TextInput";
 import Divider from "components/Divider";
 import Button from "@material-ui/core/Button";
+import ButtonLoading from "components/ButtonLoading";
 import ErrorBounds from "components/ErrorBounds";
 // router
 import { useRouter } from "next/router";
@@ -127,14 +128,17 @@ const ChangePasswordFields: React.FC<ReactProps & FormikProps<FormikFields>> = (
       </div>
 
       <ErrorBounds className={classes.buttonContainer}>
-        <Button
+        <ButtonLoading
           type="submit" // this sets off Form submit
           variant={"contained"}
           color={"secondary"}
+          replaceTextWhenLoading={true}
+          loading={props.loading}
+          loadingIconColor={Colors.cream}
           disabled={Object.keys(errors).length > 0}
         >
           Update Password
-        </Button>
+        </ButtonLoading>
       </ErrorBounds>
     </div>
   )
@@ -153,6 +157,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   setCurrentPassword(a: any): void;
   setNewPassword(a: any): void;
   setNewPasswordAgain(a: any): void;
+  loading?: boolean;
 }
 
 const styles = (theme: Theme) => createStyles({
@@ -176,6 +181,7 @@ const styles = (theme: Theme) => createStyles({
     width: '100%',
   },
   buttonContainer: {
+    marginTop: '0.5rem',
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'flex-end',

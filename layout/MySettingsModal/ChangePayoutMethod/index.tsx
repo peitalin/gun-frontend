@@ -34,16 +34,7 @@ import { validationSchemas } from "utils/validation";
 const ChangePayoutMethod = (props: ReactProps & ReduxProps) => {
 
   const { classes } = props;
-  const [showPayoutEmailChanger, setShowPayoutEmailChanger] = React.useState(false);
-
-
-  // const togglePayoutEmailChanger = () => {
-  //   setShowPayoutEmailChanger(show => !show)
-  // }
-
-  // const resetPayoutEmailChanger = () => {
-  //   setShowPayoutEmailChanger(false)
-  // }
+  const [showPayoutBankChanger, setShowPayoutBankChanger] = React.useState(false);
 
   let [displayErr, setDisplayErr] = React.useState(true);
   let [displaySuccess, setDisplaySuccess] = React.useState(true);
@@ -57,7 +48,7 @@ const ChangePayoutMethod = (props: ReactProps & ReduxProps) => {
 
     update: (cache, { data: { setPayoutMethod }}: { data: MutationData }) => {
 
-      setShowPayoutEmailChanger(false)
+      setShowPayoutBankChanger(false)
       dispatch(Actions.reduxLogin.SET_USER({
         ...props.user,
         payoutMethod: setPayoutMethod.user.payoutMethod,
@@ -76,13 +67,14 @@ const ChangePayoutMethod = (props: ReactProps & ReduxProps) => {
     // variables: {}, // set later using formik values
   })
 
+
   return (
     <Formik
       // 1. feed product data to edit into formik state.
       initialValues={{
-        newBsb: "",
-        newAccountNumber: "",
-        newAccountName: "",
+        newBsb: props.user?.payoutMethod?.bsb,
+        newAccountNumber: props.user?.payoutMethod?.accountNumber,
+        newAccountName: props.user?.payoutMethod?.accountName,
       }}
       validationSchema={validationSchemas.ChangePayoutMethod}
       onSubmit={(values, { setSubmitting, resetForm }) => {
@@ -117,6 +109,15 @@ const ChangePayoutMethod = (props: ReactProps & ReduxProps) => {
           validateForm,
         } = fprops;
 
+        let bsb1 = props.user?.payoutMethod?.bsb.slice(0,3)
+        let bsb2 = props.user?.payoutMethod?.bsb.slice(3)
+
+        let accountNumber1 = props.user?.payoutMethod?.accountNumber.slice(0,2)
+        let accountNumber2 = props.user?.payoutMethod?.accountNumber.slice(2,5)
+        let accountNumber3 = props.user?.payoutMethod?.accountNumber.slice(5)
+
+        let accountName = props.user?.payoutMethod?.accountName
+
         return (
           <form className={classes.root}
             onSubmit={handleSubmit}
@@ -126,9 +127,9 @@ const ChangePayoutMethod = (props: ReactProps & ReduxProps) => {
                 Payout Method
               </Typography>
               <a className={classes.link}
-                onClick={() => setShowPayoutEmailChanger(show => !show)}
+                onClick={() => setShowPayoutBankChanger(show => !show)}
               >
-                { !showPayoutEmailChanger
+                { !showPayoutBankChanger
                   ? <Typography
                       className={clsx('fadeIn', classes.showPayoutChanger)}
                       variant="subtitle2"
@@ -145,24 +146,53 @@ const ChangePayoutMethod = (props: ReactProps & ReduxProps) => {
               </a>
             </div>
 
-            <div>
-              <Typography variant="body1" className={classes.currentEmail}>
-                <span className={classes.boldTitle}>
-                  Current Bank details:
-                </span>
-                <span className={classes.paypalEmail}>
-                  {option(props).user.payoutMethod.bsb()}
-                </span>
-                <span className={classes.paypalEmail}>
-                  {option(props).user.payoutMethod.accountNumber()}
-                </span>
-                <span className={classes.paypalEmail}>
-                  {option(props).user.payoutMethod.accountName()}
-                </span>
-              </Typography>
+            <div className={classes.currentBankDetails}>
+
+              <Typography variant="body1" className={classes.title}>
+                Current Bank details:
+              </Typography >
+
+              <div className={classes.bankDetailsContainer}>
+                <div className={classes.bankDetailsCol1}>
+                  <Typography variant="body1" className={classes.subtitle}>
+                    <span className={classes.bankDetailsHeading}>
+                      BSB Number:
+                    </span>
+                  </Typography>
+                  <Typography variant="body1" className={classes.subtitle}>
+                    <span className={classes.bankDetailsHeading}>
+                      Account Number:
+                    </span>
+                  </Typography>
+                  <Typography variant="body1" className={classes.subtitle}>
+                    <span className={classes.bankDetailsHeading}>
+                      Account Name:
+                    </span>
+                  </Typography>
+                </div>
+                <div className={classes.bankDetailsCol2}>
+                  <Typography variant="body1" className={classes.subtitle}>
+                    <span className={classes.bankDetailsInfoText}>
+                      {`${bsb1}-${bsb2}`}
+                    </span>
+                  </Typography>
+                  <Typography variant="body1" className={classes.subtitle}>
+                    <span className={classes.bankDetailsInfoText}>
+                      {`${accountNumber1}-${accountNumber2}-${accountNumber3}`}
+                    </span>
+                  </Typography>
+                  <Typography variant="body1" className={classes.subtitle}>
+                    <span className={classes.bankDetailsInfoText}>
+                      {accountName}
+                    </span>
+                  </Typography>
+                </div>
+              </div>
+
+
               <div className={clsx(
                 classes.formContainer,
-                showPayoutEmailChanger
+                showPayoutBankChanger
                   ? classes.displaySomePayoutMenu
                   : classes.displayNone,
               )}>
@@ -214,8 +244,9 @@ const ChangePayoutMethod = (props: ReactProps & ReduxProps) => {
 
                 <ButtonLoading
                   type="submit"
-                  variant={"outlined"}
-                  color={"primary"}
+                  className={classes.saveButton}
+                  variant={"contained"}
+                  color={"secondary"}
                   onClick={() => {
                     console.log('formik errors:', errors)
                   }}
@@ -225,7 +256,7 @@ const ChangePayoutMethod = (props: ReactProps & ReduxProps) => {
                   loadingIconColor={Colors.blue}
                   style={{
                     height: '40px',
-                    width: '150px',
+                    width: '100%',
                   }}
                 >
                   Save changes
@@ -300,6 +331,23 @@ const styles = (theme: Theme) => createStyles({
     flexDirection: "row",
     justifyContent: 'space-between',
   },
+  bankDetailsCol1: {
+    display: 'flex',
+    flexDirection: "column",
+    justifyContent: 'space-between',
+    width: 150,
+  },
+  bankDetailsCol2: {
+    flexGrow: 1,
+    display: 'flex',
+    flexDirection: "column",
+    justifyContent: 'space-between',
+  },
+  bankDetailsContainer: {
+    display: 'flex',
+    flexDirection: "row",
+    justifyContent: 'space-between',
+  },
   formContainer: {
     padding: "0rem",
   },
@@ -322,14 +370,24 @@ const styles = (theme: Theme) => createStyles({
     marginRight: '0.5rem',
     marginBottom: '0.5rem',
   },
-  paypalEmail: {
-    color: Colors.secondaryBright,
+  bankDetailsHeading: {
+    color: Colors.uniswapLightestGrey,
+    minWidth: 100,
   },
-  currentEmail: {
+  bankDetailsInfoText: {
+    color: Colors.uniswapLighterGrey,
+  },
+  currentBankDetails: {
+    marginTop: '1rem',
+  },
+  subtitle: {
     margin: '0.5rem 0rem',
   },
+  title: {
+    margin: '2rem 0rem',
+  },
   displaySomePayoutMenu: {
-    height: 130, // card form is 130px high.
+    height: 280, // card form is 280px high.
     // must define set height for height animation
     opacity: 1,
     transition: theme.transitions.create(['height', 'opacity'], {
@@ -345,6 +403,9 @@ const styles = (theme: Theme) => createStyles({
       easing: theme.transitions.easing.easeIn,
       duration: 100,
     })
+  },
+  saveButton: {
+    height: 40,
   },
 });
 
