@@ -1,7 +1,6 @@
 
 import { ActionType } from "./actions";
 import { ID, FollowedStore } from "typings/gqlTypes";
-import { GenericConnection } from "typings";
 
 
 

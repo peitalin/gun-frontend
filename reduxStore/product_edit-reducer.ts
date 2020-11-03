@@ -40,10 +40,11 @@ const initialProductEditState: ReduxStateProductEdit = {
     model: "",
     ammoType: "",
     actionType: "",
-    boreDiameter: "",
+    caliber: "",
     serialNumber: "",
     location: "",
-    dealer: "",
+    dealerId: "",
+    dealer: undefined,
     currentVariants: [
       {
         variantId: "variant_id",

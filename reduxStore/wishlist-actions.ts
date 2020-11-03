@@ -5,7 +5,7 @@ import {
   WishlistItem, ID, Connection,
   WishlistItemsConnection,
 } from "typings/gqlTypes";
-import { GenericConnection, GenericPageBasedConnection } from "typings";
+import { GenericConnection } from "typings";
 import { WishlistItemId } from "./wishlist-reducer";
 
 

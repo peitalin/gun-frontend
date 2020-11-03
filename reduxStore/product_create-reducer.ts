@@ -40,10 +40,11 @@ export const initialProductCreateState: ReduxStateProductCreate = {
     model: "",
     ammoType: "",
     actionType: "",
-    boreDiameter: "",
+    caliber: "",
     serialNumber: "",
     location: "",
-    dealer: "",
+    dealerId: "",
+    dealer: undefined,
     currentVariants: [
       {
         variantName: "Regular License",
