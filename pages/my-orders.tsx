@@ -22,7 +22,7 @@ const MyOrdersPage: NextPage<ReactProps> = (props) => {
   return (
     <>
       <MetaHeadersPage
-        title="My Downloads - Relay Downloads"
+        title="My Downloads"
       />
       <MyOrders
         initialBuyerOrders={props.initialBuyerOrders}

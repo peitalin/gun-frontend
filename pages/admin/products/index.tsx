@@ -32,7 +32,7 @@ const PublishedProductsPage = (props: ReactProps) => {
   return (
     <>
       <MetaHeadersPage
-        title="Products - Seller Dashboard - Relay.shop"
+        title="Products - Seller Dashboard"
         robots="noindex"
       />
       <SellerProfileWrapper>

@@ -81,7 +81,7 @@ const ProductEditPage = (props: ReactProps) => {
   return (
     <>
       <MetaHeadersPage
-        title="Edit Product - Seller Dashboard - Relay.shop"
+        title="Edit Product - Seller Dashboard"
         robots="noindex"
       />
       <SellerProfileWrapper>

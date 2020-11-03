@@ -2,9 +2,6 @@ import React from "react";
 import { oc as option } from "ts-optchain";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
-// import { styles } from "pageComponents/Stores/styles";
-// GraphQL
-// import { GET_STORE_PUBLIC_BY_ID_OR_SLUG } from "queries/store-queries";
 // Typings
 import { Store, ID, ConnectionOffsetQuery } from "typings/gqlTypes";
 // import StoreId from "pageComponents/Stores/StoreId";
@@ -23,11 +20,11 @@ const Stores = (props: ReactProps) => {
   return (
     <>
       <MetaHeadersPage
-        title={`${option(store).name()} - Download Digital Products - Relay Downloads`}
+        title={`${option(store).name()} - Download Digital Products - GM Downloads`}
         description={
           option(store).bio()
-          ? `${option(store).bio()} — Download digital products by ${option(store).name()} on Relay.`
-          : `Download digital products by ${option(store).name()} on Relay.`
+          ? `${option(store).bio()} — Download digital products by ${option(store).name()} on GM.`
+          : `Download digital products by ${option(store).name()} on GM.`
         }
       />
       { option(store).name() }

@@ -128,32 +128,32 @@ class MyApp extends App<AppProps> {
     return (
       <Provider store={store}>
         <ApolloProvider client={apollo}>
-          <SnackbarProvider
-            ref={notistackRef}
-            autoHideDuration={4000}
-            preventDuplicate
-            classes={{
-              variantSuccess: classes.variantSuccess,
-              variantError: classes.variantError,
-              variantInfo: classes.variantInfo,
-              variantWarning: classes.variantWarning,
-            }}
-            action={(key) => (
-              <IconButtonCancel
-                onClick={onClickDismiss(key)}
-                dark={false}
-              />
-            )}
-            dense
-            maxSnack={4}
-          >
-            <ThemeProvider theme={AppTheme({ darkMode: true })}>
+          <ThemeProvider theme={AppTheme}>
+            <SnackbarProvider
+              ref={notistackRef}
+              autoHideDuration={4000}
+              preventDuplicate
+              classes={{
+                variantSuccess: classes.variantSuccess,
+                variantError: classes.variantError,
+                variantInfo: classes.variantInfo,
+                variantWarning: classes.variantWarning,
+              }}
+              action={(key) => (
+                <IconButtonCancel
+                  onClick={onClickDismiss(key)}
+                  dark={false}
+                />
+              )}
+              dense
+              maxSnack={4}
+            >
               <CssBaseline />
               <Layout>
                 <Component {...pageProps} key={router.route} />
               </Layout>
-            </ThemeProvider>
-          </SnackbarProvider>
+            </SnackbarProvider>
+          </ThemeProvider>
         </ApolloProvider>
       </Provider>
     );

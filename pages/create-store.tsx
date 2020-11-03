@@ -34,28 +34,26 @@ const CreateStorePageSSR = (props: ReactProps) => {
   return (
     <ErrorBounds className={"fadeIn"}>
       <MetaHeadersPage
-        title="Create a Digital Product Store For Free - Relay.shop"
-        ogTitle="Create a Digital Product Store For Free - Relay.shop"
+        title="Add seller details"
+        ogTitle="Add seller details"
         description={`
-          Earn passive income with Relay.shop. Create a free store,
-          upload your files, get a link, and earn money — with no subscription fees.
-          Sign up for free.
+          Start selling your registered firearms with Gunmarketplace.
+          Create a free account and upload your product.
         `}
         ogDescription={`
-          Earn passive income with Relay.shop. Create a free store,
-          upload your files, get a link, and earn money — with no subscription fees.
-          Sign up for free.
+          Start selling your registered firearms with Gunmarketplace.
+          Create a free account and upload your product.
         `}
-        ogImage={
-          EFC_ENV === "development"
-          ? "https://image-content.fileworks.net/og-img-relay-start.png"
-          : "https://image-content.relaydownloads.com/og-img-relay-start.png"
-        }
-        ogUrl={
-          EFC_ENV === "development"
-          ? "https://fileworks.net/create-store"
-          : "https://relaydownloads.com/create-store"
-        }
+        // ogImage={
+        //   EFC_ENV === "development"
+        //   ? "https://image-content.fileworks.net/og-img-relay-start.png"
+        //   : "https://image-content.relaydownloads.com/og-img-relay-start.png"
+        // }
+        // ogUrl={
+        //   EFC_ENV === "development"
+        //   ? "https://fileworks.net/create-store"
+        //   : "https://relaydownloads.com/create-store"
+        // }
       />
       <div className={classes.flexCol}>
         <CreateStoreForm />

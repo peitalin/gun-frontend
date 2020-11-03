@@ -12,7 +12,7 @@ import { Actions } from "reduxStore/actions";
 // Typings
 import { ID, ProductCreateInput, Product, Connection } from "typings/gqlTypes";
 // Components
-import ProductCreatePage from "pageComponents/ProductCreate/ProductCreatePage";
+import ProductCreatePage from "pageComponents/ProductCreate";
 import BannerProductCreate from "components/BannerProductCreate";
 // Router
 import { useWindowWidth } from "utils/hooks";
@@ -25,23 +25,17 @@ import MetaHeadersPage from "layout/MetaHeadersPage";
 
 const SellPageSSR: React.FC<ProductCreateProps> = (props) => {
 
-  const { classes, asModal, children } = props;
-
-  const dispatch = useDispatch();
-  const windowWidth = useWindowWidth();
-
-  const closeModal = () => {
-    dispatch(Actions.reduxProductCreate.RESET_PRODUCT_CREATE())
-    dispatch(Actions.reduxModals.TOGGLE_PRODUCT_CREATE_MODAL(false))
-  }
-
   return (
     <>
       <MetaHeadersPage
         title="Sell Used Guns - List for Free | Gun Marketplace"
         description="List and sell guns online"
       />
-      <div className={classes.outerContainer}>
+      {/* <BannerProductCreate/> */}
+      <ProductCreatePage
+        asModal={false}
+      />
+      {/* <div className={classes.outerContainer}>
         <div className={classes.bannerOuter}>
           <BannerProductCreate/>
         </div>
@@ -53,7 +47,7 @@ const SellPageSSR: React.FC<ProductCreateProps> = (props) => {
             />
           </div>
         </div>
-      </div>
+      </div> */}
     </>
   )
 }
@@ -61,7 +55,6 @@ const SellPageSSR: React.FC<ProductCreateProps> = (props) => {
 type ProductCreateProps = ReactProps;
 
 interface ReactProps extends WithStyles<typeof styles> {
-  asModal: boolean;
 }
 
 const styles = (theme: Theme) => createStyles({

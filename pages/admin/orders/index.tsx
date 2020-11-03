@@ -5,10 +5,9 @@ import { withStyles, WithStyles } from "@material-ui/core/styles";
 import { styles } from "pageComponents/SellerProfileDashboard/styles";
 import clsx from "clsx";
 // Components
-import Loading from "components/Loading";
 import LoadingBarSSR from "components/LoadingBarSSR";
-import Typography from "@material-ui/core/Typography";
-import OrderSalesHistory from "pageComponents/SellerProfileDashboard/OrderSalesHistory";
+import MyOrders from "pageComponents/MyOrders";
+
 // next
 // SSR disable
 import dynamic from "next/dynamic";
@@ -21,8 +20,7 @@ const SellerProfileWrapper = dynamic(() => import("layout/GetUser/SellerProfileW
 import MetaHeadersPage from "layout/MetaHeadersPage";
 
 
-
-const MyOrderSalesHistoryPage = (props: ReactProps) => {
+const MyOrdersHistoryAdminPage = (props: ReactProps) => {
   // state
   const {
     classes
@@ -31,14 +29,17 @@ const MyOrderSalesHistoryPage = (props: ReactProps) => {
   return (
     <>
       <MetaHeadersPage
-        title="Orders - Seller Dashboard - Relay.shop"
+        title="Orders - Seller Dashboard"
         robots="noindex"
       />
       <SellerProfileWrapper>
       {({ data, loading, error }: SellerProfileProps) => {
         return (
           <div className={classes.contentContainer}>
-            <OrderSalesHistory />
+            <MyOrders
+              initialBuyerOrders={data.user.buyerOrdersConnection}
+              initialSellerOrders={data.user.sellerOrdersConnection}
+            />
           </div>
         )
       }}
@@ -50,7 +51,6 @@ const MyOrderSalesHistoryPage = (props: ReactProps) => {
 interface ReactProps extends WithStyles<typeof styles> {
 }
 
-
-export default withStyles(styles)( MyOrderSalesHistoryPage );
+export default withStyles(styles)( MyOrdersHistoryAdminPage );
 
 
