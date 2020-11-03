@@ -6,7 +6,7 @@ import LoadingBar from "components/LoadingBar";
 import { IInputProps } from "components/DropzoneUploader/Dropzone";
 
 import { createStyles, Theme, WithStyles, withStyles, fade } from "@material-ui/core/styles";
-import { fontFam, Colors } from "layout/AppTheme";
+import { BorderRadius, Colors } from "layout/AppTheme";
 
 
 
@@ -28,13 +28,12 @@ const UploadInput = (props: IInputProps & ReactProps) => {
       className={"dzu-upload-input"}
       // className={"fadeIn"}
       style={{
-        color: "#222",
         cursor: "pointer",
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
-        borderRadius: 4,
+        borderRadius: BorderRadius,
       }}
     >
       <Typography variant="body2" className={classes.button}
@@ -92,10 +91,10 @@ interface ReactProps extends WithStyles<typeof styles> {
 export const styles = (theme: Theme) => createStyles({
   button: {
     position: 'relative',
-    border: `1px solid ${Colors.grey}`,
+    border: `1px solid ${Colors.gradientUniswapBlue1}`,
     borderRadius: '4px',
     padding: '0.5rem 1rem',
-    color: Colors.charcoal,
+    color: Colors.gradientUniswapBlue1,
     "&:hover": {
       border: `1px solid ${Colors.blue}`,
       color: Colors.blue,

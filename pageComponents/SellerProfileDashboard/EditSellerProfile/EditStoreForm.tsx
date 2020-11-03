@@ -97,7 +97,7 @@ const EditStoreForm: React.FC<ReactProps> = (props) => {
     },
     onCompleted: (data) => {
       snackbar.enqueueSnackbar(
-        `Successfully updated payout method.`,
+        `Successfully updated payout details.`,
         { variant: "success" }
       )
     },
@@ -245,12 +245,10 @@ const EditStoreFormWrapper: React.FC<FormWrapperProps> = (props) => {
   return (
     <div className={clsx(classes.formRoot)}>
       <div className={classes.maxWidth720}>
-        <div className={
-          smUp ? classes.paperMarginMd : classes.paperMargin
-        }>
+        <div className={classes.paperMargin}>
           <div className={classes.flexColMargin}>
             <Typography color={"primary"} variant="h3">
-              Edit Your GM Seller Profile
+              Edit Your Store
             </Typography>
             <br/>
           </div>
@@ -285,7 +283,7 @@ const EditStoreFormWrapper: React.FC<FormWrapperProps> = (props) => {
                   disabled={loading}
                   loadingIconColor={Colors.blue}
                 >
-                  Edit Seller Profile
+                  Save Changes
                 </ButtonLoading>
               </div>
             </div>

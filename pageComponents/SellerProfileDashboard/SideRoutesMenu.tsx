@@ -4,7 +4,7 @@ import {oc as option} from "ts-optchain";
 import clsx from "clsx";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
-import { Colors } from "layout/AppTheme";
+import { Colors, Gradients, BorderRadius } from "layout/AppTheme";
 // Router
 import Link from "next/link";
 // Redux
@@ -20,6 +20,8 @@ import Button from "@material-ui/core/Button";
 import Divider from "@material-ui/core/Divider";
 import TextInput from "components/Fields/TextInput";
 import CloudUpload from "@material-ui/icons/CloudUpload";
+import Tooltip from '@material-ui/core/Tooltip';
+
 import { useRouter } from "next/router";
 import Router from 'next/router'
 
@@ -50,80 +52,58 @@ const SideMenu: React.FC<ReactProps> = (props) => {
     <div className={classes.routeMenu}>
       <div className={classes.routeProfile}>
         <div className={classes.storeProfile}>
-          <Avatar className={classes.avatar}>
-            <img
-              src={option(profile).original.url()}
-              onLoad={() => setAvatarImgLoaded(true)}
-              className={clsx(
-                classes.avatarImg,
-                avatarImgLoaded ? "fadeIn" : null,
-              )}
-            />
-          </Avatar>
 
-          <Typography className={classes.subtitle} variant="h6">
-            {storePrivate && storePrivate.name}
-          </Typography>
+          <div className={classes.avatarBorder}>
+            <Avatar className={classes.avatar}>
+              <img
+                src={option(profile).original.url()}
+                onLoad={() => setAvatarImgLoaded(true)}
+                className={clsx(
+                  classes.avatarImg,
+                  avatarImgLoaded ? "fadeIn" : null,
+                )}
+              />
+            </Avatar>
+          </div>
 
-          <ul className={classes.routeMenuList}>
-            <li>
-              <Button
-                variant="outlined"
-                color="primary"
-                className={classes.viewSellerProfileButton}
-                onClick={() => {
-                  Router.push(
-                    "/seller/edit-seller-profile",
-                    undefined,
-                    { scroll: false }
-                  )
-                }}
-              >
-                Edit Seller Profile
-              </Button>
-            </li>
-            <li>
-              <Link
-                href="/s/[storeId]"
-                as={`/s/${storePrivate.id}`}
-                scroll={false}
-              >
-                <a className={clsx(classes.flexCol, classes.viewStoreLink)}>
-                  <Typography variant="body1" className={classes.viewMyStoreText}>
-                    View My Store
-                  </Typography>
-                </a>
-              </Link>
-            </li>
-            <li>
-              <Button
-                variant="contained"
-                color="secondary"
-                className={classes.addItemButton}
-                onClick={() => {
-                  Router.push(
-                    "/sell",
-                    undefined,
-                    { scroll: false }
-                  )
-                }}
-              >
-                <Typography variant="body2" className={classes.addItemButtonText}>
-                  <CloudUpload style={{ marginRight: '0.5rem' }}/>
-                  Upload Product
+          <Link
+            href="/s/[storeId]"
+            as={`/s/${storePrivate.id}`}
+            scroll={false}
+          >
+            <a className={clsx(classes.flexCol, classes.viewStoreLink)}>
+              <Tooltip title="View my store" placement={"left"}>
+                <Typography className={classes.subtitle} variant="h6">
+                  {storePrivate && storePrivate.name}
                 </Typography>
-              </Button>
-            </li>
-          </ul>
+              </Tooltip>
+            </a>
+          </Link>
+
         </div>
       </div>
 
       <ul className={classes.routeMenuList}>
         <li>
-          <Link href={"/seller"} scroll={false}>
+          <Link href={"/admin/edit-store"} scroll={false}>
             <a>
               <div className={
-                isSelectedRoute("/seller")
+                isSelectedRoute("/admin/edit-store")
+                  ? classes.routeListItemSelected
+                  : classes.routeListItem
+              }>
+                <Typography variant="subtitle1" className={classes.routeListItemText}>
+                  Edit Store
+                </Typography>
+              </div>
+            </a>
+          </Link>
+        </li>
+        <li>
+          <Link href={"/admin/products"} scroll={false}>
+            <a>
+              <div className={
+                isSelectedRoute("/admin/products")
                   ? classes.routeListItemSelected
                   : classes.routeListItem
               }>
@@ -135,87 +115,19 @@ const SideMenu: React.FC<ReactProps> = (props) => {
           </Link>
         </li>
         <li>
-          <Link href={"/seller/unpublished-products"} scroll={false}>
+          <Link href={"/admin/orders"} scroll={false}>
             <a>
               <div className={
-                isSelectedRoute("unpublished-products")
+                isSelectedRoute("/admin/orders")
                   ? classes.routeListItemSelected
                   : classes.routeListItem
               }>
                 <Typography variant="subtitle1" className={classes.routeListItemText}>
-                  My Unpublished Products
+                  My Orders
                 </Typography>
               </div>
             </a>
           </Link>
-        </li>
-        <li>
-          <Link href={"/seller/sales"} scroll={false}>
-            <a>
-              <div className={
-                isSelectedRoute("sales")
-                  ? classes.routeListItemSelected
-                  : classes.routeListItem
-              }>
-                <Typography variant="subtitle1" className={classes.routeListItemText}>
-                  My Sales
-                </Typography>
-              </div>
-            </a>
-          </Link>
-        </li>
-        <li>
-          <Link href={"/seller/payouts"} scroll={false}>
-            <a>
-              <div className={
-                isSelectedRoute("payouts")
-                  ? classes.routeListItemSelected
-                  : classes.routeListItem
-              }>
-                <Typography variant="subtitle1" className={classes.routeListItemText}>
-                  My Payouts
-                </Typography>
-              </div>
-            </a>
-          </Link>
-        </li>
-        <li>
-          <Link href={"/seller/promo-codes"} scroll={false}>
-            <a>
-              <div className={
-                isSelectedRoute("promo-codes")
-                  ? classes.routeListItemSelected
-                  : classes.routeListItem
-              }>
-                <Typography variant="subtitle1" className={classes.routeListItemText}>
-                  Manage Promo Codes
-                </Typography>
-              </div>
-            </a>
-          </Link>
-        </li>
-
-
-        <li>
-          <Typography variant="body1" className={classes.storeLink}>
-            Store Link
-          </Typography>
-          <div className={classes.storeNameCopyContainer}>
-            <input
-              className={classes.storeNameCopy}
-              type="text"
-              value={`relaydownloads.com/s/${storePrivate.id}`}
-              onChange={() => {}}
-              id="copyText"
-            />
-            <Button
-              variant="outlined"
-              className={classes.storeNameCopyButton}
-              onClick={copyText}
-            >
-              Copy
-            </Button>
-          </div>
         </li>
 
       </ul>
@@ -234,6 +146,9 @@ const styles = (theme: Theme) => createStyles({
     maxWidth: 250,
   },
   subtitle: {
+    "&:hover": {
+      color: Colors.secondary,
+    }
   },
   routeMenu: {
     display: 'flex',
@@ -256,14 +171,12 @@ const styles = (theme: Theme) => createStyles({
   routeListItem: {
     padding: "0.6rem 1rem",
     margin: "0.25rem 0rem",
-    borderRadius: `4px`,
     color: Colors.darkGrey,
     fontSize: '0.9rem',
     fontWeight: 500,
-    background: fade(Colors.foregroundColor, 0),
-    border: '1px solid rgba(0,0,0,0)',
+    borderRight: '4px solid rgba(0,0,0,0)',
     "&:hover": {
-      background: fade(Colors.lightGrey, 0.5),
+      background: fade(Colors.lightGrey, 0.05),
       transition: theme.transitions.create(['background', 'border-right'], {
         easing: theme.transitions.easing.easeIn,
         duration: "100ms",
@@ -273,14 +186,12 @@ const styles = (theme: Theme) => createStyles({
   routeListItemSelected: {
     padding: "0.6rem 1rem",
     margin: "0.25rem 0rem",
-    borderRadius: `4px`,
-    color: Colors.darkGrey,
+    color: Colors.gradientUniswapFluro1,
     fontSize: '0.9rem',
     fontWeight: 500,
-    border: `1px solid ${Colors.mediumGrey}`,
-    background: Colors.foregroundColor,
+    borderRight: `4px solid ${Colors.gradientUniswapFluro1}`,
     "&:hover": {
-      background: fade(Colors.lightGrey, 0.5),
+      background: fade(Colors.lightGrey, 0.05),
       transition: theme.transitions.create(['background', 'border-right'], {
         easing: theme.transitions.easing.easeIn,
         duration: "100ms",
@@ -314,23 +225,32 @@ const styles = (theme: Theme) => createStyles({
     maxWidth: 300,
   },
   // avatar outline circle
+  avatarBorder: {
+    marginBottom: "0.5rem",
+    height: '106px',
+    width: '106px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: '100%',
+    // background: Gradients.gradientPurple.background,
+    // background: Gradients.gradientUniswapFluro.background,
+    background: Gradients.gradientUniswapFluro.background,
+  },
   avatar: {
     width: 100,
     height: 100,
-    // border: `3px solid ${Colors.foregroundColor}`,
-    boxShadow: "0px 0px 1px 1px rgba(0,0,0,0.5)",
     marginTop: '1rem',
     marginBottom: '1rem',
-    color: Colors.charcoal,
-    backgroundColor: "#fafafa",
-    // backgroundImage: `url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 20.5V18H0v-2h20v-2H0v-2h20v-2H0V8h20V6H0V4h20V2H0V0hv20h2V0h2v20h2V0h2v20h2V0h2v20h2V0h2v20h2v2H20v-1.5zM0 20h2v20H0V20zm4 0h2v20H4V20zm4 0h2v20H8V20zm4 0h2v20h-2V20zm4 0h2v20h-2V20zm4 4h20v2H20v-2zm0 4h20v2H20v-2zm0 4h20v2H20v-2zm0 4h20v2H20v-2z' fill='%23ddd' fill-opacity='0.3' fill-rule='evenodd'/%3E%3C/svg%3E")`,
+    border: `4px solid ${Colors.uniswapNavy}`,
+    background: Colors.uniswapNavy,
   },
   // avatar image
   avatarImg: {
     // make a little bigger to fit avatar
-    objectFit: 'cover',
-    height: "105%",
-    width: "105%",
+    // objectFit: 'cover',
+    height: "104%",
+    width: "104%",
     transition: theme.transitions.create('filter', {
       easing: theme.transitions.easing.easeIn,
       duration: "200ms",

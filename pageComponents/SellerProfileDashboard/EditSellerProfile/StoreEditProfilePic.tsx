@@ -1,10 +1,9 @@
 import React from "react";
-import { useState } from "react";
 import {oc as option} from "ts-optchain";
 import clsx from "clsx";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
-import { Colors } from "layout/AppTheme";
+import { Colors, Gradients } from "layout/AppTheme";
 // Utils
 import { ID, StorePrivate, UploadType, Image_Parents } from "typings/gqlTypes";
 // Media uploader
@@ -40,9 +39,9 @@ const StoreEditProfilePic = (props: ReactProps & FormikProps<FormikFields>) => {
   } = props;
 
   // upload
-  const [uploadId, setUploadID] = useState("")
+  const [uploadId, setUploadID] = React.useState("")
   // imgloaded
-  const [profilePicPreview, setProfilePicPreview] = useState(
+  const [profilePicPreview, setProfilePicPreview] = React.useState(
     option(props).profileImage.original.url()
   );
   const aClient = useApolloClient();
@@ -103,21 +102,24 @@ const StoreEditProfilePic = (props: ReactProps & FormikProps<FormikFields>) => {
   return (
     <div className={classes.flexCol}>
       <div className={classes.root}>
-        <Avatar className={clsx(
-          classes.avatar,
-          classes.avatarEdit,
-        )}>
-          {
-            profilePicPreview
-            ? <img src={profilePicPreview}
-                className={classes.avatarImg}
-              />
-            : <img className={classes.avatarPlaceholder}
-                style={{ }}
-                src={"/img/avatar-placeholder.png"}
-              />
-          }
-        </Avatar>
+
+        <div className={classes.avatarBorder}>
+          <Avatar className={clsx(
+            classes.avatar,
+            classes.avatarEdit,
+          )}>
+            {
+              profilePicPreview
+              ? <img src={profilePicPreview}
+                  className={classes.avatarImg}
+                />
+              : <img className={classes.avatarPlaceholder}
+                  style={{ }}
+                  src={"/img/avatar-placeholder.png"}
+                />
+            }
+          </Avatar>
+        </div>
 
         <Dropzone
           getUploadParams={getUploadParams}
@@ -146,11 +148,12 @@ const StoreEditProfilePic = (props: ReactProps & FormikProps<FormikFields>) => {
               backgroundColor: '#DAA'
             },
             dropzone: {
-              border: "1px solid rgba(0,0,0,0)",
+              color: Colors.uniswapLightestGrey,
+              border: "0px none rgba(0,0,0,0)", // disable default border
               display: "flex",
               flexDirection: "column",
               justifyContent: "center",
-              backgroundColor: "#fefefe",
+              backgroundColor: Colors.uniswapNavy,
               minHeight: 'unset',
             },
             dropzoneActive: {
@@ -193,9 +196,7 @@ const styles = (theme: Theme) => createStyles({
     alignItems: "center",
     flexDirection: "column",
     justifyContent: "center",
-    borderRadius: '4px',
     width: '100%',
-    backgroundColor: Colors.foregroundColor,
   },
   innerRoot: {
     display: 'flex',
@@ -214,20 +215,18 @@ const styles = (theme: Theme) => createStyles({
   },
   // avatar outline circle
   avatar: {
-    width: 90,
-    height: 90,
-    border: "1px solid #fafafa",
-    boxShadow: "0px 0px 1px 1px rgba(0,0,0,0.5)",
+    width: 92,
+    height: 92,
+    border: `5px solid ${Colors.uniswapNavy}`,
     marginTop: '1rem',
     marginBottom: '0.5rem',
-    background: Colors.lightGrey,
+    background: Colors.uniswapNavy,
   },
   avatarEdit: {
     transition: theme.transitions.create('transform, border', {
       easing: theme.transitions.easing.easeIn,
       duration: "100ms",
     }),
-    border: "1px solid #222",
     marginBottom: "1rem",
     // "&:hover": {
     //   border: "1px solid #24A4FF",
@@ -247,6 +246,17 @@ const styles = (theme: Theme) => createStyles({
     marginBottom: '1rem',
   },
   // avatar image
+  avatarBorder: {
+    marginBottom: "1rem",
+    height: '102px',
+    width: '102px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: '100%',
+    // background: Gradients.gradientPurple.background,
+    background: Gradients.gradientUniswapFluro.background,
+  },
   avatarImg: {
     // make a little bigger to fit avatar
     objectFit: 'cover',

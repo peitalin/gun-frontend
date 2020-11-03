@@ -61,10 +61,10 @@ const styles = (theme: Theme) => createStyles({
     marginBottom: '1rem',
   },
   link: {
-    color: Colors.blue,
+    color: Colors.gradientUniswapBlue1,
     "&:hover": {
       cursor: "pointer",
-      color: Colors.lightBlue,
+      color: Colors.blue,
     },
     marginTop: '0.5rem',
   },

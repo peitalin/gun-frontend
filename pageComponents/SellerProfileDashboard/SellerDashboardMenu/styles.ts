@@ -1,5 +1,5 @@
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
-import { Colors } from "layout/AppTheme";
+import { Colors, BoxShadows, BorderRadius, BorderRadius2x, Gradients } from "layout/AppTheme";
 import {
   MainBarHeight,
   NewsBarHeight,
@@ -21,8 +21,8 @@ const dashboardLinkColorHover = Colors.secondaryBright
 const dashboardLinkColor2 = Colors.darkGrey
 const dashboardLinkColorHover2 = Colors.secondaryBright
 
-const dashboardMenuHeight = 50 * 7
-// 7 items, 50px each
+const dashboardMenuHeight = 50 * 4
+// 4 items, 50px each
 
 
 export const styles = (theme: Theme) => createStyles({
@@ -46,15 +46,25 @@ export const styles = (theme: Theme) => createStyles({
     justifyContent: 'center',
     alignItems: "center",
   },
+  mobileMenuRoutesRoot: {
+    display: 'flex',
+    flexDirection: 'column',
+    flexWrap: 'wrap',
+    alignItems: "center",
+    padding: '0.5rem 0.5rem',
+    paddingTop: '0.75rem',
+    width: '100%',
+  },
 
   // Category Bar
   dashboardBar: {
     height: '3rem',
-    background: dashboardBarColor,
+    background: Gradients.gradientUniswapDark.background,
     border: '0px solid',
     position: 'absolute',
     // boxShadow: "1px 1px 1px 1px rgba(22,22,22,0.2)"
-    boxShadow: "0px 1px 2px 0px rgba(40,40,40,0.3)",
+    boxShadow: BoxShadows.shadow1.boxShadow,
+    top: "0",
   },
   dashboardBarMobile: {
     height: 30,
@@ -94,7 +104,7 @@ export const styles = (theme: Theme) => createStyles({
     whiteSpace: 'nowrap',
   },
   dashboardSelectedLink: {
-    color: Colors.charcoal,
+    color: Colors.uniswapLightestGrey,
     fontSize: '1rem',
     fontWeight: 600,
     "&:hover": {
@@ -111,13 +121,11 @@ export const styles = (theme: Theme) => createStyles({
   },
   dashboardMenu: {
     top: '3rem',
-    height: '100px',
-    width: "100%",
+    width: '100%',
     zIndex: 3,
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center',
-    background: '#fefefe',
     position: 'absolute',
     transform: `translateY(-${dashboardMenuHeight}px)`,
     opacity: 0,
@@ -134,13 +142,13 @@ export const styles = (theme: Theme) => createStyles({
   },
   expandMenu: {
     zIndex: 3,
+    height: `calc(${dashboardMenuHeight}px + 1rem)`,
     transform: 'translateY(0%)',
     opacity: 1,
     transition: theme.transitions.create(['transform','opacity'], {
       easing: theme.transitions.easing.easeInOut,
       duration: "100ms",
     }),
-    height: dashboardMenuHeight,
   },
   dashboardMenuDither: {
     height: '100vh',
@@ -155,17 +163,23 @@ export const styles = (theme: Theme) => createStyles({
     flexDirection: 'row',
     justifyContent: 'space-between',
     width: '100%',
+    height: '100%',
+    borderRadius: BorderRadius,
+    background: Colors.uniswapDarkNavy,
   },
   dashboardInnerContainer: {
-    flexDirection: 'column',
-    flexWrap: 'wrap',
     width: '100%',
+    borderRadius: BorderRadius,
+    padding: '0.5rem',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
   },
   menuItem: {
     width: '100%',
     height: 50,
     cursor: 'pointer',
-    borderBottom: `1px solid ${Colors.lightGrey}`,
+    borderBottom: `1px solid ${Colors.uniswapNavy}`,
   },
 
   link: {
@@ -205,5 +219,30 @@ export const styles = (theme: Theme) => createStyles({
   },
   buttonCreateProduct: {
     marginLeft: "1rem",
+  },
+  mobileMenuFlexitem: {
+    flexGrow: 1,
+    flexBasis: '40%',
+    width: '100%',
+    borderRadius: BorderRadius,
+    height: '2.75rem', //button height
+  },
+  mobileMenuItemRoot: {
+    minHeight: '0rem',
+    padding: "0.5rem 1.25rem",
+  },
+  mobileMenuItemText: {
+    fontWeight: 500,
+  },
+  mobileMenuItemTextEmph: {
+    fontWeight: 500,
+    color: Colors.gradientUniswapBlue1,
+  },
+  mobileMenuItemTextEmph2: {
+    fontWeight: 500,
+    color: Colors.gradientUniswapGreen,
+  },
+  menuLink: {
+    color: Colors.charcoal,
   },
 });

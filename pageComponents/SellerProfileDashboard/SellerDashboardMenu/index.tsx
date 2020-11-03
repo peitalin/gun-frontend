@@ -21,9 +21,7 @@ const SellerDashboardMenu: React.FC<ReactProps> = (props) => {
   const { classes } = props;
 
   return (
-    <>
-      <SellerDropdownMenu />
-    </>
+    <SellerDropdownMenu />
   );
 };
 

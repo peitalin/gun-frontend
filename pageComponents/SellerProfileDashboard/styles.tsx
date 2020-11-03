@@ -39,7 +39,6 @@ export const styles = (theme: Theme) => createStyles({
     flexDirection: 'column',
     justifyContent: 'flex-start',
     marginBottom: '1rem',
-    marginTop: '1rem',
   },
   margin1: {
     margin: '1rem',

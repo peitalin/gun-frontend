@@ -16,11 +16,9 @@ import Button from "@material-ui/core/Button";
 
 const routeMappings = {
   '': "Home",
-  'published-products': "My Products",
-  'unpublished-products': "My Unpublished Products",
-  'sales': "My Sales",
-  'payouts': "Payouts",
-  'promo-codes': "Promo Codes",
+  'edit-store': "Edit Store",
+  'products': "Products",
+  'orders': "Orders",
 }
 
 
@@ -36,8 +34,8 @@ const SellerDashboardRoutes: React.FC<ReactProps> = (props) => {
     const lastPath = router.pathname.split("/").pop()
     const secondLastPath = router.pathname.split("/").slice(-2,-1)[0]
 
-    if (lastPath === "seller" || lastPath === "") {
-      return "My Products"
+    if (lastPath === "admin" || lastPath === "") {
+      return "Home"
     } else {
       // if p123123 id in route, take 2nd last part of route
       if (lastPath.startsWith('p') || lastPath.startsWith('[productId]')) {
@@ -98,44 +96,54 @@ const MenuExpanded = (
         props.expandMenu ? classes.expandMenu : null,
         classes.dashboardMenu
       )}>
-        <div className={classes.dashboardOuterContainer}>
-          <div className={classes.dashboardInnerContainer}>
-            {
-              Object.keys(routeMappings).map(k => {
-                return (
-                  <Link key={k}
-                    href={
-                      k.length
-                        ? `/seller/${k}`
-                        : '/seller'
-                    }
-                  >
-                    <a className={classes.dashboardLink}>
-                      <MenuItem
-                        className={classes.menuItem}
-                        onClick={props.hideExpandMenu}
-                      >
-                        <Typography className={classes.dashboardLinkText}>
-                          {routeMappings[k]}
-                        </Typography>
-                      </MenuItem>
-                    </a>
-                  </Link>
-                )
-              })
-            }
-            <div className={classes.buttonCreateProductContainer}>
-              <Button
-                variant="contained"
-                color="secondary"
-                className={classes.buttonCreateProduct}
-                onClick={() => {
-                  router.push("/create-product")
-                }}
-              >
-                Upload Product
-              </Button>
+        <div className={classes.mobileMenuRoutesRoot}>
+          <div className={classes.dashboardOuterContainer}>
+            <div className={classes.dashboardInnerContainer}>
+              {
+                Object.keys(routeMappings).map(k => {
+                  return (
+                    // <Link key={k}
+                    //   href={k.length ? `/admin/${k}` : '/admin'}
+                    // >
+                    //   <a className={classes.dashboardLink}>
+                    //     <MenuItem
+                    //       // className={classes.menuItem}
+                    //       className={clsx(
+                    //         classes.mobileMenuFlexitem,
+                    //         classes.mobileMenuItemRoot
+                    //       )}
+                    //       onClick={props.hideExpandMenu}
+                    //     >
+                    //       <Typography className={classes.dashboardLinkText}>
+                    //         {routeMappings[k]}
+                    //       </Typography>
+                    //     </MenuItem>
+                    //   </a>
+                    // </Link>
+                    <div key={k} className={classes.mobileMenuFlexitem}>
+                      <Link href={k.length ? `/admin/${k}` : '/admin'}>
+                        <a className={classes.menuLink}
+                          // onClick={() => analyticsEvent("Nav.Wishlist.Pressed")}
+                        >
+                          <MenuItem
+                            className={clsx(
+                              classes.mobileMenuFlexitem,
+                              classes.mobileMenuItemRoot
+                            )}
+                            onClick={props.hideExpandMenu}
+                          >
+                            <Typography className={classes.mobileMenuItemText}>
+                              {routeMappings[k]}
+                            </Typography>
+                          </MenuItem>
+                        </a>
+                      </Link>
+                    </div>
+                  )
+                })
+              }
             </div>
+
           </div>
         </div>
       </div>

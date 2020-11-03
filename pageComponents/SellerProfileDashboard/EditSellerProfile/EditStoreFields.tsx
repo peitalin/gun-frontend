@@ -223,7 +223,7 @@ const EditStoreFields: React.FC<ReactProps & FormikProps<FormikFields>> = (props
           <div className={clsx(classes.formContainer, "fadeInFast")}>
             <TextInput
               placeholder={"Enter your BSB number"}
-              className={classes.textField}
+              className={clsx(classes.textField, classes.marginBottomHalf)}
               value={values.bsb}
               onChange={handleSetNewBsb}
               inputProps={{ style: { width: '100%' }}}
@@ -232,7 +232,7 @@ const EditStoreFields: React.FC<ReactProps & FormikProps<FormikFields>> = (props
             />
             <TextInput
               placeholder={"Enter your bank account number"}
-              className={classes.textField}
+              className={clsx(classes.textField, classes.marginBottomHalf)}
               value={values.accountNumber}
               onChange={handleSetNewAccountNumber}
               inputProps={{ style: { width: '100%' }}}
@@ -241,7 +241,7 @@ const EditStoreFields: React.FC<ReactProps & FormikProps<FormikFields>> = (props
             />
             <TextInput
               placeholder={"Enter your account name"}
-              className={classes.textField}
+              className={clsx(classes.textField, classes.marginBottomHalf)}
               value={values.accountName}
               onChange={handleSetNewAccountName}
               inputProps={{ style: { width: '100%' }}}

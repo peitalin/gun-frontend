@@ -2,7 +2,7 @@ import React from "react";
 import clsx from "clsx";
 import { oc as option } from "ts-optchain";
 // Styles
-import { Colors, BorderRadius } from "layout/AppTheme";
+import { Colors, BorderRadius, BorderRadius2x, BoxShadows } from "layout/AppTheme";
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 // Typings
 import { StorePrivate, UserPrivate } from "typings/gqlTypes";
@@ -13,6 +13,7 @@ import Dialog from "@material-ui/core/Dialog";
 // Utils Components
 import ErrorBounds from "components/ErrorBounds";
 import EditStoreForm from "./EditStoreForm";
+import ResponsivePadding from "../ResponsivePadding";
 // media query
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
@@ -53,36 +54,24 @@ const EditSellerProfile = (props: ReactProps) => {
   }
 
 
-  // Desktop uses modal, analytics needs to watch for modal opens
-  React.useEffect(() => {
-    if (asModal) {
-      if (sellerProfileEditModalOpen) {
-        analyticsEvent("View.Store.Edit")
-      }
-    }
-  }, [sellerProfileEditModalOpen])
-
-  // Mobile uses checkout page, not modal. Increment view on page load
-  React.useEffect(() => {
-    if (!asModal) {
-      analyticsEvent("View.Store.Edit")
-    }
-  }, [])
-
-
   if (!asModal) {
     return (
-      <ErrorBounds className={clsx(
-        classes.root,
-        classes.asPage,
-        xsDown ? classes.paddingMobile : classes.paddingDesktop,
-        !smDown ? classes.minWidth500 : null,
-      )}>
-        <EditStoreForm
-          storePrivate={storePrivate}
-          closeEditStoreModal={undefined}
-        />
-      </ErrorBounds>
+      <ResponsivePadding>
+        <ErrorBounds className={clsx(
+          classes.root,
+          classes.asPage,
+          // xsDown ? classes.paddingMobile : classes.paddingDesktop,
+          classes.paddingDesktop,
+          !smDown ? classes.minWidth500 : null,
+        )}>
+          <div className={classes.storeEditMenu}>
+            <EditStoreForm
+              storePrivate={storePrivate}
+              closeEditStoreModal={undefined}
+            />
+          </div>
+        </ErrorBounds>
+      </ResponsivePadding>
     );
   } else {
     return (
@@ -137,10 +126,13 @@ const styles = (theme: Theme) => createStyles({
     paddingTop: '2rem',
   },
   asPage: {
-    border: '1px solid #eaeaea',
-    borderRadius: '4px',
-    backgroundColor: Colors.foregroundColor,
-    boxShadow: '0px 1px 1px 0 #e6ebf1',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  storeEditMenu: {
+    maxWidth: 540,
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -150,11 +142,9 @@ const styles = (theme: Theme) => createStyles({
     minWidth: '500px',
   },
   paddingMobile: {
-    padding: '2rem',
     paddingTop: '4rem',
   },
   paddingDesktop: {
-    padding: '2rem',
   },
   flexCol: {
     display: "flex",

@@ -1,5 +1,5 @@
 import { createStyles, Theme } from "@material-ui/core/styles";
-import { Colors } from "layout/AppTheme";
+import { Colors, Gradients, BoxShadows, BorderRadius2x } from "layout/AppTheme";
 
 
 export const styles = (theme: Theme) => createStyles({
@@ -13,6 +13,9 @@ export const styles = (theme: Theme) => createStyles({
   formRoot: {
     minWidth: '350px',
     maxWidth: '540px',
+    background: Colors.uniswapDarkNavy,
+    boxShadow: BoxShadows.shadow1.boxShadow,
+    borderRadius: BorderRadius2x,
   },
   maxWidth720: {
     width: '100%',
@@ -38,27 +41,26 @@ export const styles = (theme: Theme) => createStyles({
     fontSize: "0.9rem",
     fontWeight: 600,
     marginBottom: '0.25rem',
-    color: Colors.charcoal,
+    color: Colors.uniswapLightestGrey,
   },
   subtitle2: {
     fontSize: "0.8rem",
     fontWeight: 500,
     marginBottom: '0.25rem',
-    color: Colors.charcoal,
+    color: Colors.uniswapLightestGrey,
     marginTop: "0.25rem",
   },
   subtitle3: {
     fontSize: "0.7rem",
     fontWeight: 500,
     marginBottom: '0.5rem',
-    color: Colors.grey,
-    marginTop: "0.5rem",
+    color: Colors.uniswapLighterGrey,
   },
   subtitle4: {
     fontSize: "0.7rem",
     fontWeight: 500,
     marginBottom: '0.5rem',
-    color: Colors.darkGrey55,
+    color: Colors.uniswapLighterGrey,
     marginTop: "0.5rem",
   },
   formGroup: {
@@ -66,11 +68,6 @@ export const styles = (theme: Theme) => createStyles({
     flexWrap: 'wrap',
   },
   paperMargin: {
-    margin: '0rem',
-    padding: '1rem',
-    width: '100%',
-  },
-  paperMarginMd: {
     margin: '0rem',
     padding: '4rem',
     width: '100%',
@@ -157,7 +154,6 @@ export const styles = (theme: Theme) => createStyles({
   avatarSignin: {
     margin: theme.spacing(1),
     color: '#fff',
-    backgroundColor: theme.palette.primary.main,
   },
   accountCreatedRoot: {
     // height: '100%',
@@ -276,11 +272,11 @@ export const styles = (theme: Theme) => createStyles({
     fontWeight: 600,
     marginTop: '1.5rem',
     marginBottom: '0.5rem',
-    color: Colors.charcoal,
+    color: Colors.uniswapLighterGrey,
   },
   // avatar image
   greyText: {
-    color: Colors.mediumGrey,
+    color: Colors.uniswapLighterGrey,
   },
   redText: {
     color: Colors.lightRed,
@@ -322,6 +318,9 @@ export const styles = (theme: Theme) => createStyles({
     borderRadius: '4px 0px 0px 4px',
     padding: '0rem 0.5rem',
     outline: 'none',
+  },
+  marginBottomHalf: {
+    marginBottom: '0.5rem',
   },
 })
 
