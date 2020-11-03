@@ -170,36 +170,38 @@ const NewReleaseProducts = (props: ReactProps) => {
           : classes.carouselContainerPaddingLeft,
       )}>
         {
-          (option(products).edges([]).length === 0)
+          (option(products).edges([]).length === 0 && loading)
           ? <LoadingCards count={8} />
-          : products.edges.map(({ node: product }, i) => {
-              // console.log("p: ",product)
-              return (
-                <div key={product.id}
-                  className={
-                    xsDown
-                    ? classes.productCardXs
-                    : sm
-                      ? classes.productCardSm
-                      : classes.productCard
-                  }
-                >
-                  <div className={clsx(
-                    sm ? classes.flexItemMobile : classes.flexItem,
-                    classes.flexItemHover,
-                  )}>
-                    <PreviewCardResponsive
-                      product={product}
-                      refetch={undefined}
-                      listName={"new-release-list"}
-                      loadCarouselPics={loadCarouselPics}
-                      setLoadCarouselPics={setLoadCarouselPics}
-                      productIndex={i}
-                    />
+          : (option(products).edges([]).length === 0)
+            ? <div className={classes.noProductsYet}>No products yet</div>
+            : products.edges.map(({ node: product }, i) => {
+                // console.log("p: ",product)
+                return (
+                  <div key={product.id}
+                    className={
+                      xsDown
+                      ? classes.productCardXs
+                      : sm
+                        ? classes.productCardSm
+                        : classes.productCard
+                    }
+                  >
+                    <div className={clsx(
+                      sm ? classes.flexItemMobile : classes.flexItem,
+                      classes.flexItemHover,
+                    )}>
+                      <PreviewCardResponsive
+                        product={product}
+                        refetch={undefined}
+                        listName={"new-release-list"}
+                        loadCarouselPics={loadCarouselPics}
+                        setLoadCarouselPics={setLoadCarouselPics}
+                        productIndex={i}
+                      />
+                    </div>
                   </div>
-                </div>
-              )
-          })
+                )
+            })
         }
       </div>
     </main>
@@ -241,7 +243,7 @@ const styles = (theme: Theme) => createStyles({
     display: 'flex',
     flexDirection: 'row',
     flexWrap: 'wrap',
-    minHeight: '100vh',
+    // minHeight: '100vh',
     alignItems: 'flex-start',
     // justifyContent: 'center',
     justifyContent: 'flex-start',
@@ -389,6 +391,12 @@ const styles = (theme: Theme) => createStyles({
       duration: '100ms',
     }),
     width: '100%',
+  },
+  noProductsYet: {
+    color: Colors.uniswapLightestGrey,
+    fontSize: '1.5rem',
+    width: '100%',
+    textAlign: "center",
   },
 });
 

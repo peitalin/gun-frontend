@@ -29,7 +29,7 @@ const PreviewCardResponsive: React.FC<PreviewCardResponsiveProps> = (props) => {
       {/* xs */}
       <Hidden only={["sm", "md", "lg", "xl"]}>
         <ProductRow
-          product={product as any}
+          product={product}
           // Products is not Product type
           // make sure you get Products from gateway, not directly fron Hasura
         />
