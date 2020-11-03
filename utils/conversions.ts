@@ -2,8 +2,10 @@ import {
   Product,
   ProductEditInput,
   ProductVariantEditInput,
+  Product_Preview_Items,
 } from "typings/gqlTypes";
 import { oc as option } from "ts-optchain";
+import { DzuPreviewItem } from "typings/dropzone";
 import {
   deserialize,
 } from "components/TextEditor/helpersDeserializers"
@@ -27,10 +29,11 @@ export const productToProductEditInput = (
       model: "",
       ammoType: "",
       actionType: "",
-      boreDiameter: "",
+      caliber: "",
       serialNumber: "",
       location: "",
-      dealer: "",
+      dealerId: "",
+      dealer: undefined,
     }
   }
 
@@ -77,9 +80,29 @@ export const productToProductEditInput = (
     model: product.currentSnapshot.model,
     ammoType: product.currentSnapshot.ammoType,
     actionType: product.currentSnapshot.actionType,
-    boreDiameter: product.currentSnapshot.boreDiameter,
+    caliber: product.currentSnapshot.caliber,
     serialNumber: product.currentSnapshot.serialNumber,
     location: product.currentSnapshot.location,
     dealer: product.currentSnapshot.dealer,
   };
 }
+
+export const previewsToDzuPreviews = (
+  previewItems: Product_Preview_Items[]
+): DzuPreviewItem[] => {
+  return previewItems.map(p => {
+    return {
+      id: p?.id,
+      name: p?.image?.description,
+      previewUrl: p?.image?.original?.url,
+      fileId: p?.image?.id,
+      percent: 100,
+      size: p?.image?.original?.sizeInBytes,
+      duration: null,
+      status: 'done',
+      fileWithMeta: null,
+      youTubeVimeoEmbedLink: null,
+    }
+  })
+}
+

@@ -4,7 +4,7 @@ import { oc as option } from "ts-optchain";
 
 export const isYouTubeVimeoLink = (link: string) => {
 
-  console.log('YouTubeVimeo link: ', link)
+  // console.log('YouTubeVimeo link: ', link)
   if (!link) {
     return false
   }
@@ -59,14 +59,20 @@ export const extractYoutubePreview = ({
 
 
 export const extractYoutubeVimeoId = (videoUrl: string) => {
-  if (videoUrl.includes("youtu.be")) {
-    return videoUrl.split("/").pop()
-  }
   if (videoUrl.includes("watch?v=")) {
+    // this needs to be above "youtu.be" for links like:
+    // https://www.youtube.com/watch?v=BPzqTaSjbRg&feature=youtu.be
+    //
+    // which will return:
+    // ERROR:
+    // https://img.youtube.com/vi/watch?v=BPzqTaSjbRg&feature=youtu.be/0.jpg
+    // CORRECT VERSION:
+    // https://img.youtube.com/vi/BPzqTaSjbRg/0.jpg
     return videoUrl.split("?v=").pop().split('&')[0]
-  }
-  if (videoUrl.includes('vimeo.com')) {
-    return videoUrl.split('/').pop()
+  } else if (videoUrl.includes("youtu.be")) {
+    return videoUrl.split("/").pop().split('&')[0]
+  } else if (videoUrl.includes('vimeo.com')) {
+    return videoUrl.split("/").pop().split('&')[0]
   } else {
     return ""
   }

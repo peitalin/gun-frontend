@@ -52,24 +52,81 @@ export const validationSchemas = {
         .min(0)
         .max(100),
       actionType: Yup.string()
-        .min(0)
-        .max(100)
-        .required('Needs a actionType'),
-      boreDiameter: Yup.string()
+        .required('Needs an action type'),
+      caliber: Yup.string()
         .min(0)
         .max(100),
       serialNumber: Yup.string()
         .min(0)
         .max(100)
-        .required('Needs a serialNumber'),
+        .required('Needs a serial number'),
       location: Yup.string()
         .min(0)
-        .max(100)
-        .required('Needs a location'),
-      dealer: Yup.string()
+        .max(100),
+      dealerId: Yup.string()
         .min(0)
         .max(100)
-        .required('Needs a dealer'),
+        .test("dealerId", "A dealer must be chosen", function(value) {
+          // console.log("dealerId >>>>>>>>>>>>", value, this)
+          // this.path: the string path of the current validation
+          // this.schema: the resolved schema object that the test is running against.
+          // this.options: the options object that validate() or isValid() was called with
+          // this.parent: in the case of nested schema, this is the value of the parent object
+          // this.createError(Object: { path: String, message: String }):
+          // if (!this.parent.dealer && !this.parent.dealerId) {
+          if (!this.parent.dealerId && !this.parent.dealer?.licenseNumber) {
+            return false
+          } else {
+            return true
+          }
+        }),
+      dealer: Yup.object().shape({
+          licenseNumber: Yup.string()
+            .min(0)
+            .max(100),
+          name: Yup.string()
+            .min(0)
+            .max(100),
+          address: Yup.string()
+            .min(0)
+            .max(100),
+          city: Yup.string()
+            .min(0)
+            .max(100),
+          state: Yup.string()
+            .min(0)
+            .max(100),
+          postCode: Yup.string()
+            .min(0)
+            .max(100),
+        })
+        .test("dealer", "Dealer license number needed", function(value) {
+          if (
+            !this.parent.dealerId &&
+            !!this.parent.dealer &&
+            !this.parent.dealer?.licenseNumber
+          ) {
+            return false
+          } else {
+            return true
+          }
+        })
+        .test("dealer", "A dealer must be chosen or inputted", function(value) {
+          console.log(">>>>>>>>>>>>", value, this)
+          // this.path: the string path of the current validation
+          // this.schema: the resolved schema object that the test is running against.
+          // this.options: the options object that validate() or isValid() was called with
+          // this.parent: in the case of nested schema, this is the value of the parent object
+          // this.createError(Object: { path: String, message: String }):
+          if (!!this.parent.dealerId) {
+            return true
+          }
+          if (!this.parent.dealer && !this.parent.dealerId) {
+            return false
+          } else {
+            return true
+          }
+        }),
       categoryId: Yup.string()
         .required("Pick a category"),
       tags: Yup.array().of(Yup.string())
@@ -124,16 +181,44 @@ export const validationSchemas = {
         .min(minLengthProductName, `Name must be longer than ${minLengthProductName} chars`)
         .max(maxLengthProductName, `Name can't be longer than ${maxLengthProductName} chars`)
         .required('Product needs a name'),
-      tagline: Yup.string()
-        .min(minLengthProductTagline)
-        .max(maxLengthProductTagline)
-        .required('Needs a tagline'),
       description: Yup.string()
         .required('Needs a description')
         .max(maxLengthProductDescription)
         .test("description", "Needs a description", function(value) {
           return value !== '<p></p>'
         }),
+      condition: Yup.string()
+        .min(0)
+        .max(100)
+        .required('Needs a condition'),
+      make: Yup.string()
+        .min(0)
+        .max(100)
+        .required('Needs a make'),
+      model: Yup.string()
+        .min(0)
+        .max(100)
+        .required('Needs a model'),
+      ammoType: Yup.string()
+        .min(0)
+        .max(100),
+      actionType: Yup.string()
+        .required('Needs an action type'),
+      caliber: Yup.string()
+        .min(0)
+        .max(100),
+      serialNumber: Yup.string()
+        .min(0)
+        .max(100)
+        .required('Needs a serial number'),
+      location: Yup.string()
+        .min(0)
+        .max(100)
+        .required('Needs a location'),
+      dealer: Yup.string()
+        .min(0)
+        .max(100)
+        .required('Needs a dealer'),
       categoryId: Yup.string()
         .required("Pick a category"),
       tags: Yup.array().of(Yup.string())
