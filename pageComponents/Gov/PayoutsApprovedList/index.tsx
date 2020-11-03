@@ -5,7 +5,6 @@ import clsx from "clsx";
 import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
 import { Colors } from "layout/AppTheme";
 // Typings
-import { GenericConnection } from "typings";
 import {
   UserPublic,
   Orders,
@@ -18,7 +17,7 @@ import {
 // Utils Components
 import ErrorBounds from "components/ErrorBounds";
 import MenuItem from "@material-ui/core/MenuItem";
-import RelayDownloadIcon2 from "components/Icons/RelayDownloadIcon2";
+import DownloadIcon from "components/Icons/DownloadIcon";
 import LoadingBar from "components/LoadingBar";
 import PayoutOrderRow from "./PayoutOrderRow";
 import ButtonLoading from "components/ButtonLoading";
@@ -283,9 +282,9 @@ const PayoutsApprovedList = (props: ReactProps) => {
                   : () => alert('loading...')
               }
             >
-              <RelayDownloadIcon2
+              <DownloadIcon
                 className={classes.relayIcon}
-                fill={mouseOver ? Colors.blue : Colors.darkGrey}
+                color={mouseOver ? Colors.blue : Colors.darkGrey}
               />
               <Typography variant="body1"
                 className={clsx(

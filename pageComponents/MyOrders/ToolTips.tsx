@@ -8,7 +8,7 @@ import Typography from "@material-ui/core/Typography";
 // CSS
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useTheme } from '@material-ui/core/styles';
-import { Colors } from "layout/AppTheme";
+import { Colors, BoxShadows, BorderRadius } from "layout/AppTheme";
 
 
 
@@ -64,16 +64,16 @@ const styles = (theme: Theme) => createStyles({
   toolTip1: {
     padding: '1.5rem 2rem',
     marginBottom: '1rem',
-    border: '1px solid #eaeaea',
-    borderRadius: '4px',
-    backgroundColor: Colors.foregroundColor,
+    // border: `1px solid ${Colors.uniswapLightNavy}`,
+    borderRadius: BorderRadius,
+    backgroundColor: Colors.uniswapDarkNavy,
   },
   toolTip2: {
     padding: '1.5rem 2rem',
     marginBottom: '1rem',
-    border: '1px solid #eaeaea',
-    borderRadius: '2px',
-    backgroundColor: Colors.foregroundColor,
+    // border: `1px solid ${Colors.uniswapLightNavy}`,
+    borderRadius: BorderRadius,
+    backgroundColor: Colors.uniswapDarkNavy,
   },
 });
 

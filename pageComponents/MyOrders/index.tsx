@@ -3,7 +3,7 @@ import {oc as option} from "ts-optchain";
 import clsx from "clsx";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
-import { Colors, BoxShadows } from "layout/AppTheme";
+import { Colors, BoxShadows, BorderRadius, BorderRadius2x } from "layout/AppTheme";
 
 // redux
 import { GrandReduxState } from "reduxStore/grand-reducer";
@@ -48,6 +48,7 @@ import PaginateButtons from "components/Paginators/PaginateButtons";
 export const MY_DOWNLOADS_PAGINATION_COUNT = 10;
 import AlignCenterLayout from "components/AlignCenterLayout";
 import DescriptionLoading from "pageComponents/FrontPage/PreviewCardResponsiveCarousel/DescriptionLoading";
+import ResponsivePadding from "pageComponents/SellerProfileDashboard/ResponsivePadding";
 // Analytics
 import { useRouter } from "next/router";
 
@@ -128,7 +129,7 @@ const MyOrders: React.FC<ReactProps> = (props) => {
         <div className={classes.emptyItems}>
           <Typography variant="body1" className={classes.emptyItemsTitle}>
             Your saved orders will appear here
-            after you make your first deposit.
+            after your first purchase or sale.
           </Typography>
           <Button
           variant="outlined"
@@ -207,7 +208,7 @@ const OrdersLayout: React.FC<ReactProps> = (props) => {
   const smDown = useMediaQuery(theme.breakpoints.down("sm"))
 
   return (
-    <ErrorBounds className={"fadeInFast"}>
+    <ResponsivePadding>
       {/* {
         claimOrders &&
         claimOrders.length > 0 &&
@@ -215,24 +216,16 @@ const OrdersLayout: React.FC<ReactProps> = (props) => {
       } */}
       <AlignCenterLayout
         maxWidth={960}
-        className={clsx(classes.marginTop2)}
         withRecommendations
       >
+        <Typography className={classes.title} variant="h2">
+          My Orders
+        </Typography>
         <div className={clsx(classes.flexRowOuter)}>
-          <Typography className={classes.title} variant="h3">
-            My Orders
-          </Typography>
-        </div>
-        <div className={clsx(classes.flexRowOuter)}>
-          <div className={classes.productColumn60}>
-            {props.children}
-          </div>
-          <div className={classes.productColumn20}>
-            <ToolTips/>
-          </div>
+          {props.children}
         </div>
       </AlignCenterLayout>
-    </ErrorBounds>
+    </ResponsivePadding>
   )
 }
 
@@ -268,12 +261,6 @@ interface QueryData2 {
 interface QueryVar2 {
 }
 
-// interface MutationData {
-//   order: Order;
-// }
-// interface MutationVar {
-// }
-
 
 interface ReactProps extends WithStyles<typeof styles> {
   initialBuyerOrders?: OrdersConnection;
@@ -301,8 +288,8 @@ const styles = (theme: Theme) => createStyles({
     maxWidth: 400,
   },
   title: {
-    marginBottom: '2rem',
-    marginTop: '2rem',
+    marginBottom: '1rem',
+    marginTop: '1rem',
   },
   heading: {
     marginBottom: '1rem',
@@ -312,17 +299,19 @@ const styles = (theme: Theme) => createStyles({
     padding: '1.5rem 2rem',
     marginLeft: '1rem',
     marginBottom: '1rem',
-    border: '1px solid #eaeaea',
-    borderRadius: '4px',
-    backgroundColor: '#FCFCFE'
+    border: `1px solid ${Colors.uniswapNavy}`,
+    borderRadius: BorderRadius,
+    backgroundColor: Colors.uniswapDarkNavy,
+    boxShadow: BoxShadows.shadow1.boxShadow,
   },
   toolTip2: {
     padding: '1.5rem 2rem',
     marginLeft: '1rem',
     marginBottom: '1rem',
-    border: '1px solid #eaeaea',
-    borderRadius: '2px',
-    backgroundColor: '#FCFCFE'
+    border: `1px solid ${Colors.uniswapNavy}`,
+    borderRadius: BorderRadius,
+    backgroundColor: Colors.uniswapDarkNavy,
+    boxShadow: BoxShadows.shadow1.boxShadow,
   },
   pageRecommendationsContainer: {
     width: "100%",
@@ -376,8 +365,9 @@ const styles = (theme: Theme) => createStyles({
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: '2rem',
-    border: `1px solid ${Colors.lightGrey}`,
-    borderRadius: '4px',
+    borderRadius: BorderRadius,
+    backgroundColor: Colors.uniswapDarkNavy,
+    boxShadow: BoxShadows.shadow1.boxShadow,
     width: '100%',
     padding: '3rem',
   },
@@ -386,7 +376,7 @@ const styles = (theme: Theme) => createStyles({
   },
   divider: {
     width: '100%',
-    borderBottom: `1px solid ${Colors.slateGrey}`,
+    border: `1px solid ${Colors.uniswapDarkNavy}`,
   },
   ordersSectionContainer: {
     marginTop: "1rem",

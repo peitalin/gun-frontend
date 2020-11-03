@@ -17,7 +17,7 @@ import Button from "@material-ui/core/Button";
 // Icons
 import IconButton from "@material-ui/core/IconButton";
 import ClearIcon from "@material-ui/icons/Clear";
-import RelayDownloadIcon2 from "components/Icons/RelayDownloadIcon2";
+import DownloadIcon from "components/Icons/DownloadIcon";
 import LinkIcon from "@material-ui/icons/Link";
 // Errors
 import ErrorBounds from 'components/ErrorBounds';
@@ -73,7 +73,7 @@ const AccountCreated: React.FC<ReactProps> = (props) => {
               className={props.classes.button}
             >
               <Typography variant="body1" className={classes.buttonText}>
-                <RelayDownloadIcon2/>
+                <DownloadIcon/>
                 Upload Product
               </Typography>
             </Button>

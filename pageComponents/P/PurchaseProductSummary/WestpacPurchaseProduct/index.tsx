@@ -8,14 +8,7 @@ import { Colors, BorderRadius } from "layout/AppTheme";
 // Error
 import ErrorBounds from 'components/ErrorBounds';
 // Material UI
-import Button from '@material-ui/core/Button';
 import ButtonLoading from "components/ButtonLoading";
-import Typography from '@material-ui/core/Typography';
-import Checkbox from '@material-ui/core/Checkbox';
-import FormGroup from '@material-ui/core/FormGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import RelayDownloadIcon2 from "components/Icons/RelayDownloadIcon2";
-import Loading from 'components/Loading';
 import {
   UserPrivate, ID,
   Orders,
