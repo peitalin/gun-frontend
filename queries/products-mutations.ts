@@ -29,10 +29,17 @@ export const CREATE_PRODUCT = gql`
             model
             ammoType
             actionType
-            boreDiameter
+            caliber
             serialNumber
             location
-            dealer
+            dealer {
+              id
+              name
+              address
+              state
+              postCode
+              licenseNumber
+            }
           }
           currentVariants {
             variantId
@@ -78,10 +85,17 @@ export const EDIT_PRODUCT = gql`
           model
           ammoType
           actionType
-          boreDiameter
+          caliber
           serialNumber
           location
-          dealer
+          dealer {
+            id
+            name
+            address
+            state
+            postCode
+            licenseNumber
+          }
         }
         currentVariants {
           variantId

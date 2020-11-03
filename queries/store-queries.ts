@@ -29,17 +29,6 @@ export const GET_STORE_PUBLIC = gql`
 `;
 
 
-// export const GET_STORE_PUBLIC_BY_ID_OR_SLUG = gql`
-//   query getStoreByStoreIdOrSlug($storeIdOrSlug: String!) {
-//     getStoreByStoreIdOrSlug(storeIdOrSlug: $storeIdOrSlug) {
-//       ...StorePublicFragment
-//     }
-//   }
-//   ${ImageFragment}
-//   ${ProductFragment}
-//   ${StorePublicFragment}
-// `;
-
 export const GET_STORE_PRIVATE = gql`
   query getStorePrivate{
     user {
@@ -59,14 +48,12 @@ export const GET_STORE_PRIVATE = gql`
             ...ImageFragment
           }
           productsForSaleConnection(query: {
-            limit: 10,
+            limit: 20,
             offset: 0,
           }) {
             edges {
               node {
-                id
-                serialNumber
-                title
+                ...ProductFragment
               }
             }
           }
@@ -75,8 +62,8 @@ export const GET_STORE_PRIVATE = gql`
     }
   }
   ${ImageFragment}
+  ${ProductFragment}
 `;
-  // ${ProductFragment}
   // ${ProductSalesFragment}
 
 
@@ -86,7 +73,6 @@ export const GET_STORE_PRIVATE = gql`
 //       query: {
 //         sortAscending: false
 //         count: 5
-//         cursor: null
 //         pageBackwards: false
 //       }
 //     ) {
@@ -95,7 +81,6 @@ export const GET_STORE_PRIVATE = gql`
 //         endCursor
 //       }
 //       edges {
-//         cursor
 //         node {
 //           id
 //           name
@@ -106,60 +91,22 @@ export const GET_STORE_PRIVATE = gql`
 // `;
 
 
-// export const GET_PUBLISHED_PRODUCTS_CONNECTION = gql`
-// query getPublishedProductsConnection($query: ConnectionQuery) {
-//   user {
-//     id
-//     ... on UserPrivate {
-//       store {
-//         id
-//         dashboardPublishedProductsConnection(query: $query) {
-//           edges {
-//             cursor
-//             node {
-//               ...ProductFragment
-//             }
-//           }
-//           totalCount
-//           pageInfo {
-//             isLastPage
-//             endCursor
-//           }
-//         }
-//       }
-//     }
-//   }
-// }
-// ${ImageFragment}
-// ${ProductFragment}
-// `;
-
-
-// export const GET_UNPUBLISHED_PRODUCTS_CONNECTION = gql`
-// query getUnpublishedProductsConnection($query: ConnectionQuery) {
-//   user {
-//     id
-//     ... on UserPrivate {
-//       store {
-//         id
-//         dashboardUnpublishedProductsConnection(query: $query) {
-//           edges {
-//             cursor
-//             node {
-//               ...ProductFragment
-//             }
-//           }
-//           totalCount
-//           pageInfo {
-//             isLastPage
-//             endCursor
-//           }
-//         }
-//       }
-//     }
-//   }
-// }
-// ${ProductFragment}
-// `;
-
+export const DASHBOARD_PRODUCTS_CONNECTION = gql`
+query dashboardProductsConnection($query: ConnectionOffsetQuery) {
+  dashboardProductsConnection(query: $query) {
+    edges {
+      node {
+        ...ProductFragment
+      }
+    }
+    totalCount
+    pageInfo {
+      isLastPage
+      endCursor
+    }
+  }
+}
+${ImageFragment}
+${ProductFragment}
+`;
 

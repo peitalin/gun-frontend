@@ -65,10 +65,17 @@ export const ProductSnapshotsFragment = gql`
     model
     ammoType
     actionType
-    boreDiameter
+    caliber
     serialNumber
     location
-    dealer
+    dealer {
+      id
+      name
+      address
+      state
+      postCode
+      licenseNumber
+    }
   }
 `;
 
@@ -363,19 +370,7 @@ export const ProductFragment = gql`
     isSoldOut
 
     currentSnapshot {
-      id
-      title
-      createdAt
-      description
-      condition
-      make
-      model
-      ammoType
-      actionType
-      boreDiameter
-      serialNumber
-      location
-      dealer
+      ...ProductSnapshotsFragment
     }
 
     currentVariants {
@@ -398,6 +393,7 @@ export const ProductFragment = gql`
     }
   }
   ${ProductVariantFragment}
+  ${ProductSnapshotsFragment}
 `;
 
 
@@ -415,22 +411,22 @@ export const StorePublicFragment = gql`
     profile {
       ...ImageFragment
     }
-    # productsForSaleConnection {
-    #   edges {
-    #     node {
-    #       ...ProductFragment
-    #     }
-    #   }
-    #   totalCount
-    #   pageInfo {
-    #     isLastPage
-    #     endCursor
-    #   }
-    # }
+    productsForSaleConnection {
+      edges {
+        node {
+          ...ProductFragment
+        }
+      }
+      totalCount
+      pageInfo {
+        isLastPage
+        endCursor
+      }
+    }
   }
   ${ImageFragment}
+  ${ProductFragment}
 `;
-  // ${ProductFragment}
 
 export const StorePrivateFragment = gql`
   fragment StorePrivateFragment on StorePrivate {
