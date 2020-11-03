@@ -203,16 +203,6 @@ export const styles = (theme: Theme) => createStyles({
     color: "#ccc",
     textAlign: "center",
   },
-  policyBox: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    width: '100%',
-  },
-  policy: {
-    width: 'calc(100% - 4rem)',
-    marginBottom: '2rem',
-  },
   createProductButtonContainer: {
     display: "flex",
     flexDirection: "column",

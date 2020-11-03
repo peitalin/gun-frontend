@@ -44,9 +44,6 @@ const ProductEditModal: React.FC<ReactProps> = (props) => {
             closeModal={closeModal}
             product={product}
           />
-          {/* <div className={clsx(classes.productColumn40, 'fadeIn')}>
-            <SellingTips/>
-          </div> */}
         </div>
       </div>
     )

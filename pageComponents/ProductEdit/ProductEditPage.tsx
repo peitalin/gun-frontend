@@ -36,10 +36,11 @@ import ErrorBounds from 'components/ErrorBounds';
 import ErrorDisplay from "components/Error";
 import ButtonLoading from "components/ButtonLoading";
 // Subcomponents
-import Title from "pageComponents/ProductCreate/Title";
+import Title from "pageComponents/ProductCreate/TitleSerialNumber";
 import Description from "pageComponents/ProductCreate/Description";
 import IsPublished from "./IsPublished";
 import SelectCategories from "pageComponents/ProductCreate/SelectCategories";
+import SelectActionType from "pageComponents/ProductCreate/SelectActionType";
 import SelectTags from "pageComponents/ProductCreate/SelectTags";
 import PricingLicenses from "pageComponents/ProductCreate/PricingLicenses";
 import DisplaySnackBars from "pageComponents/ProductCreate/ProductCreatePage/DisplaySnackBars";
@@ -232,13 +233,11 @@ const ProductEditPage = (props: ReactProps) => {
               {...fprops}
             />
 
-            {/* <SelectTags
-              reducerName={reducerName}
-              {...fprops}
-            /> */}
-
             <SelectCategories
-              reducerName={reducerName}
+              {...fprops}
+            />
+
+            <SelectActionType
               {...fprops}
             />
 
