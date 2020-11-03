@@ -6,7 +6,6 @@ import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/s
 // Components
 import NavBarMain from "./NavBarMain";
 import { NavBarHeight } from "layout/NavBarMain/styles";
-import Loading from "components/Loading";
 import Footer from "./Footer";
 import GetUser from "./GetUser";
 import Modals from "./Modals";
@@ -41,7 +40,7 @@ const Layout: React.FC<ReactProps> = (props) => {
     s => s.reduxLogin.user
   );
 
-  const isSellerRoute = !!router.pathname.includes('/seller')
+  const isSellerRoute = !!router.pathname.includes('/admin')
     && !!option(user).store.id()
 
   const isGovRoute = !!router.pathname.includes('/gov')
@@ -178,6 +177,7 @@ const styles = (theme: Theme) => createStyles({
     flexDirection: 'row',
     justifyContent: 'flex-start',
     flexWrap: 'wrap',
+    background: Gradients.gradientUniswapDark.background,
   },
   govPageContainer: {
     position: 'relative',

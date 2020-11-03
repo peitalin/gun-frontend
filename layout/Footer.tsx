@@ -2,7 +2,8 @@ import React from "react";
 // Styles
 import clsx from 'clsx';
 import { withStyles, WithStyles, createStyles, Theme } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
+import { Colors, Gradients } from "layout/AppTheme";
+
 import Typography from '@material-ui/core/Typography';
 // Icons
 import Visa from 'components/Icons/Visa';
@@ -10,6 +11,8 @@ import Mastercard from 'components/Icons/Mastercard';
 import Paypal from 'components/Icons/Paypal';
 import ApplePay from 'components/Icons/ApplePay';
 import GooglePay from 'components/Icons/GooglePay';
+import Amex from 'components/Icons/Amex';
+import LogoCircle from "components/Icons/LogoCircle";
 // Social Icons
 import Facebook from 'components/Icons/Facebook';
 import Instagram from 'components/Icons/Instagram';
@@ -21,7 +24,10 @@ import { goToModalConnect } from "utils/modals";
 import { useDispatch, useSelector } from "react-redux";
 import { GrandReduxState } from 'reduxStore/grand-reducer';
 import Link from "next/link";
-import { Colors, Gradients } from "layout/AppTheme";
+import { useTheme } from "@material-ui/core/styles";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
+// Analytics
+import { analyticsEvent } from "utils/analytics";
 
 
 
@@ -30,6 +36,12 @@ const Footer: React.FC<ReactProps> = (props) => {
   const dispatch = useDispatch();
   const goToModal = goToModalConnect(dispatch);
   const { classes } = props;
+  const d = new Date();
+  const year = d.getUTCFullYear()
+
+  const theme = useTheme();
+  const smDown = useMediaQuery(theme.breakpoints.down('sm'));
+  const mdDown = useMediaQuery(theme.breakpoints.down('md'));
 
   return (
     <footer>
@@ -39,84 +51,110 @@ const Footer: React.FC<ReactProps> = (props) => {
           <div className={classes.firstBlock}>
 
             <div className={clsx(
-              classes.firstBlockColumn,
-              classes.wide
+              classes.flexColWide,
+              classes.marginBottom2,
             )}>
-              <Typography variant="subtitle1" className={classes.title}>
-                GunMarketplace
-              </Typography>
-              <Typography variant="body2" className={classes.subtitle}>
-                Buy and sell all firearms.
+              <div className={clsx(
+                classes.title,
+                mdDown ? classes.textAlignCenter : null,
+              )}>
+                <LogoCircle/>
+              </div>
+              <Typography variant="body2"
+                className={clsx(
+                  classes.subtitle,
+                  mdDown ? classes.textAlignCenter : null
+                )}
+              >
+                Supporting arms trade
               </Typography>
             </div>
 
-            <div className={clsx(
-              classes.firstBlockColumn,
-              classes.narrow
-            )}>
-              <Link href={'/become-a-seller'}>
-                <a className={classes.link}>
-                  <Typography variant="body2" className={classes.link}>
-                    Become a Seller
-                  </Typography>
-                </a>
-              </Link>
-              <div onClick={() => goToModal.contactUs()}>
-                <a className={classes.link}>
-                  <Typography variant="body2" className={classes.link}>
-                    Contact Us
-                  </Typography>
-                </a>
-              </div>
-              <Link href={'/faq'}>
-                <a className={classes.link}>
-                  <Typography variant="body2" className={classes.link}>
+
+            <div className={classes.flexRow}>
+              <div className={classes.flexColItem}>
+                <Link href={'/start'} prefetch={false}>
+                  <a className={classes.link}>
+                    <Typography variant="body2" className={classes.linkText}>
+                      Create a Store
+                    </Typography>
+                  </a>
+                </Link>
+                <Link href={'/affiliates'} prefetch={false}>
+                  <a className={classes.link}>
+                    <Typography variant="body2" className={classes.linkText}>
+                      Affiliate Program
+                    </Typography>
+                  </a>
+                </Link>
+                <Link href={"/contact-us"} prefetch={false}>
+                  <a className={classes.link}>
+                    <Typography variant="body2" className={classes.linkText}>
+                      Contact Us
+                    </Typography>
+                  </a>
+                </Link>
+                <a
+                  className={classes.link}
+                  // href='https://help.relay.shop/hc/en-us'
+                  target="_blank"
+                >
+                  <Typography variant="body2" className={classes.linkText}>
                     FAQ
                   </Typography>
                 </a>
-              </Link>
-            </div>
+              </div>
 
-            <div className={clsx(
-              classes.firstBlockColumn,
-              classes.widest
-            )}>
-              <Link href={'/refund-policy'}>
-                <a className={classes.link}>
-                  <Typography variant="body2" className={classes.link}>
+              <div className={classes.flexColItem}>
+                <a
+                  // href={'https://help.relay.shop/hc/en-us/articles/360036185952-Refund-Policy'}
+                  className={classes.link}
+                  target={"_blank"}
+                  onClick={() => analyticsEvent("View.RefundPolicy")}
+                >
+                  <Typography variant="body2" className={classes.linkText}>
                     Refund Policy
                   </Typography>
                 </a>
-              </Link>
-              <Link href={'/terms-of-service'}>
-                <a className={classes.link}>
-                  <Typography variant="body2" className={classes.link}>
+                <a
+                  // href={'https://help.relay.shop/hc/en-us/articles/360038530771-Terms-of-Service'}
+                  className={classes.link}
+                  target={"_blank"}
+                  onClick={() => analyticsEvent("View.Terms")}
+                >
+                  <Typography variant="body2" className={classes.linkText}>
                     Terms of Service
                   </Typography>
                 </a>
-              </Link>
-              <Link href={'/privacy-policy'}>
-                <a className={classes.link}>
-                  <Typography variant="body2" className={classes.link}>
+                <a
+                  // href={'https://help.relay.shop/hc/en-us/articles/360038152632-Privacy-Policy'}
+                  className={classes.link}
+                  target={"_blank"}
+                  onClick={() => analyticsEvent("View.Privacy")}
+                >
+                  <Typography variant="body2" className={classes.linkText}>
                     Privacy Policy
                   </Typography>
                 </a>
-              </Link>
+              </div>
             </div>
           </div>
         </div>
 
         <div className={classes.footerSubsection}>
           <div className={classes.thirdBlock}>
-            <div className={classes.siteFooterCredits}>
-              <Typography variant="body2" className={classes.link}>
-                <a
-                  className={classes.link}
-                  href="https://www.gunmarketplace.com.au" target="_blank">
-                  Copyright © 2020 Gun Marketplace. All rights reserved.
-                </a>
+            <div className={clsx(
+              classes.siteFooterCredits,
+              mdDown ? classes.siteFooterCreditsCenter : classes.siteFooterCreditsSpaceBetween,
+              smDown ? classes.textAlignCenter : null,
+            )}>
+              <Typography variant="body2" className={clsx(
+                classes.linkText,
+                classes.fontSize09,
+              )}>
+                { `© ${year} Gunmarketplace. All rights reserved.` }
               </Typography>
-              {/* <SocialIcons classes={classes}/> */}
+              <PaymentIcons/>
             </div>
           </div>
         </div>
@@ -142,7 +180,7 @@ const Footer: React.FC<ReactProps> = (props) => {
 //         <Pinterest size={30}/>
 //       </div>
 //       <div className={classes.socialIconsItem}>
-//         <YouTube size={30}/>
+//         <YouTube height={30} width={30}/>
 //       </div>
 //     </div>
 //   )
@@ -152,7 +190,7 @@ const Footer: React.FC<ReactProps> = (props) => {
 interface ReactProps extends WithStyles<typeof styles> {
 }
 
-const FOOTER_MAX_WIDTH = 720;
+const FOOTER_MAX_WIDTH = 1024;
 const styles = (theme: Theme) => createStyles({
   footerContainer: {
     bottom: 0,
@@ -160,19 +198,21 @@ const styles = (theme: Theme) => createStyles({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
-    borderRadius: '0px',
-    borderTop: `1px solid ${Colors.uniswapLightNavy}`,
-    background: Gradients.gradientUniswapDark.background,
-    paddingTop: "15vh",
-    color: Colors.uniswapLightestGrey,
+    // background: Gradients.gradientUniswapDark.background,
+    // backgroundColor: Colors.uniswapDarkNavy,
+    backgroundColor: Colors.mediumBlack,
+    paddingTop: "4rem",
+    color: Colors.cream,
   },
   title: {
     color: Colors.cream,
-    fontWeight: 600,
+    fontWeight: 400,
+    marginBottom: '0.5rem',
   },
   subtitle: {
     color: Colors.cream,
-    fontWeight: 600,
+    fontWeight: 400,
+    fontSize: '0.9rem',
   },
   footerSubsection: {
     display: 'flex',
@@ -188,13 +228,31 @@ const styles = (theme: Theme) => createStyles({
     maxWidth: FOOTER_MAX_WIDTH,
     width: '100%',
     textAlign: 'left',
+    marginBottom: "3rem",
   },
-  firstBlockColumn: {
+  flexRow: {
+    display: 'flex',
+    flexDirection: 'row',
+    flexGrow: 1,
+    flexBasis: '33%',
+    // margin: '0rem 0rem 2rem 0rem',
+  },
+  flexColItem: {
     display: 'flex',
     flexDirection: 'column',
     flexGrow: 1,
-    flexBasis: '33%',
-    margin: '0rem 0rem 2rem 0rem',
+    flexBasis: '45%',
+    marginLeft: '1rem',
+    minWidth: 130,
+    // margin: '0rem 0rem 2rem 0rem',
+  },
+  flexColWide: {
+    display: 'flex',
+    flexDirection: 'column',
+    flexGrow: 1,
+    flexBasis: '50%',
+    minWidth: 350,
+    // margin: '0rem 0rem 2rem 0rem',
   },
   narrow: {
     minWidth: "140px",
@@ -225,12 +283,19 @@ const styles = (theme: Theme) => createStyles({
   siteFooterCredits: {
     marginBottom: 0,
     width: '100%',
-    borderTop: '1px solid #dadada',
+    borderTop: `1px solid ${Colors.charcoal}`,
     color: Colors.mediumGrey,
     display: 'flex',
     flexDirection: "row",
-    justifyContent: 'center',
+    flexWrap: 'wrap',
     padding: '0.5rem',
+    paddingTop: '1rem',
+  },
+  siteFooterCreditsSpaceBetween: {
+    justifyContent: 'space-between',
+  },
+  siteFooterCreditsCenter: {
+    justifyContent: 'center',
   },
   socialIcons: {
     display: 'flex',
@@ -247,10 +312,14 @@ const styles = (theme: Theme) => createStyles({
     height: '44px',
     marginRight: '1rem',
     border: "1px solid #888888",
-    borderRadius: "6px",
+    borderRadius: "4px",
   },
   link: {
-    fontWeight: 600,
+    marginBottom: '1rem',
+  },
+  linkText: {
+    fontWeight: 500,
+    fontSize: '0.9rem',
     lineHeight: '1rem',
     color: Colors.mediumGrey,
     textDecoration: 'none',
@@ -259,7 +328,44 @@ const styles = (theme: Theme) => createStyles({
       cursor: 'pointer',
     }
   },
+  textAlignCenter: {
+    textAlign: 'center',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  fontSize09: {
+    fontSize: '0.9rem',
+    marginBottom: "1rem",
+  },
+  marginBottom2: {
+    marginBottom: '4rem',
+  },
 })
 
+export const PaymentIcons = withStyles(styles)(({ classes }: ReactProps) => {
+  return (
+    <div className={classes.socialIcons}>
+      <div className={classes.socialIconsItem}>
+        <Visa/>
+      </div>
+        <div className={classes.socialIconsItem}>
+        <Mastercard/>
+      </div>
+      <div className={classes.socialIconsItem}>
+        <Paypal/>
+      </div>
+      <div className={classes.socialIconsItem}>
+        <ApplePay/>
+      </div>
+      <div className={classes.socialIconsItem}>
+        <GooglePay/>
+      </div>
+      <div className={classes.socialIconsItem}>
+        <Amex/>
+      </div>
+    </div>
+  )
+})
 
 export default withStyles(styles)( Footer );
