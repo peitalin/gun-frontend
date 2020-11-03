@@ -12,6 +12,7 @@ export const GridItem = SortableElement((props) => {
       width: '88px', // 1.6 ratio
       backgroundColor: '#e5e5e5',
       borderRadius: '4px',
+      cursor: 'grab',
     }}>
       {value}
     </div>

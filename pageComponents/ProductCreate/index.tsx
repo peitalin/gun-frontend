@@ -1,23 +1,18 @@
 import React from "react";
-import { useState } from "react";
 // Styles
 import clsx from "clsx";
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
+import { Gradients, Colors, BoxShadows } from "layout/AppTheme";
 // Material UI
 import Dialog from "@material-ui/core/Dialog";
 // Redux
 import { useSelector, useDispatch } from "react-redux";
 import { GrandReduxState } from "reduxStore/grand-reducer";
 import { Actions } from "reduxStore/actions";
-// Typings
-import { ID, UserPrivate, Product, Connection } from "typings/gqlTypes";
 // Components
-import dynamic from "next/dynamic";
-// import ProductCreatePage from "./ProductCreatePage";
-import Loading from "components/Loading";
 import ProductCreatePage from "./ProductCreatePage";
+import BannerProductCreate from "components/BannerProductCreate";
 // Router
-import { Colors } from "layout/AppTheme";
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 
@@ -49,8 +44,24 @@ const ProductCreate: React.FC<ReactProps> = (props) => {
   if (!asModal) {
     return (
       <div className={classes.outerContainer}>
-        <div className={classes.flexRowInner}>
-          <div className={clsx(classes.productColumn60, 'fadeInFast')}>
+        <div className={classes.bannerOuter}>
+          <BannerProductCreate/>
+        </div>
+        <div className={classes.stickyNavbar}>
+          {
+            ["Title", "Model", "Description", "Images", "Price"].map(s => {
+              return (
+                <a className={classes.stickyLink} key={s} href={`#${s}`}>
+                  <div key={s}>
+                    {s}
+                  </div>
+                </a>
+              )
+            })
+          }
+        </div>
+        <div className={classes.flexRow}>
+          <div className={classes.flexRowInner}>
             <ProductCreatePage
               asModal={false}
               closeModal={closeModal}
@@ -112,23 +123,55 @@ const styles = (theme: Theme) => createStyles({
     width: '100%',
     display: 'flex',
     justifyContent: 'center',
+    flexDirection: 'column',
     // backgroundColor: Colors.darkWhite,
+  },
+  bannerOuter: {
+    position: 'relative',
+    width: '100%',
+  },
+  flexRow: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
   },
   flexRowInner: {
     display: 'flex',
     flexDirection: 'row',
     flexWrap: 'wrap',
-    maxWidth: 1000,
+    maxWidth: 1160,
   },
-  productColumn60: {
-    flexBasis: '60%',
-    flexGrow: 1,
-    minWidth: 360,
+  stickyNavbar: {
+    width: '100%',
+    position: "sticky",
+    top: 0,
+    left: 0,
+    zIndex: 1,
+    height: '3rem',
+    color: Colors.uniswapLighterGrey,
+    // borderBottom: `1px solid ${Colors.uniswapNavy}`,
+    background: Colors.uniswapDarkNavy,
+    boxShadow: BoxShadows.shadow2.boxShadow,
+    // background: Gradients.gradientUniswapDark.background,
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-around",
+    alignItems: "center",
   },
-  productColumn40: {
-    flexBasis: '40%',
+  stickyLink: {
+    color: Colors.uniswapLighterGrey,
+    height: '100%',
+    // flexBasis: '20%',
     flexGrow: 1,
-    minWidth: 280,
+    textAlign: 'center',
+    display: 'flex',
+    justifyContent: 'center',
+    flexDirection: 'column',
+    borderBottom: `2px solid ${Colors.uniswapDarkNavy}`,
+    "&:hover": {
+      color: Colors.uniswapLightestGrey,
+      borderBottom: `2px solid ${Colors.uniswapLighterGrey}`,
+    },
   },
 });
 

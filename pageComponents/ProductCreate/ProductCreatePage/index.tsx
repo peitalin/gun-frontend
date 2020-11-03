@@ -20,35 +20,50 @@ import Switch from '@material-ui/core/Switch';
 // Snackbar
 import { useSnackbar, ProviderContext } from "notistack";
 // Subcomponents
-import Title from "../Title";
-import MakeAndModel from "../MakeAndModel";
+import TitleSerialNumber from "../TitleSerialNumber";
 import GunAttributes from "../GunAttributes";
 import Description from "../Description";
-import SelectCategories from "../SelectCategories"
 import PricingLicenses from "../PricingLicenses";
 import StoreOrLogin from "../StoreOrLogin";
+
+import SelectTags from "../SelectTags";
+import SelectFieldPlaceholder from "../SSR/SelectFieldPlaceholder";
+// const SelectTags = dynamic(() => import("../SelectTags"), {
+//   loading: () => <SelectTagsPlaceholder/>,
+//   ssr: false,
+// })
+// import SelectCategories from "../SelectCategories"
+const SelectCategories = dynamic(() => import("../SelectCategories"), {
+  loading: () => <SelectFieldPlaceholder title={"Category"}/>,
+  ssr: false,
+})
+// import SelectActionType from "../SelectFieldPlaceholder"
+const SelectActionType = dynamic(() => import("../SelectActionType"), {
+  loading: () => <SelectFieldPlaceholder title={"Action Type"}/>,
+  ssr: false,
+})
+// import SelectCondition from "../SelectCondition"
+const SelectCondition = dynamic(() => import("../SelectCondition"), {
+  loading: () => <SelectFieldPlaceholder title={"Condition"}/>,
+  ssr: false,
+})
+// import SelectDealer from "../SelectDealer"
+const SelectDealer = dynamic(() => import("../SelectDealer"), {
+  loading: () => <SelectFieldPlaceholder title={"Dealer"}/>,
+  ssr: false,
+})
 // same dir components
 import ProductCreateButton from "./ProductCreateButton";
 import ProductCreateForm from "./ProductCreateForm";
 import StoreOrLoginContainer from "./StoreOrLoginContainer";
 import SectionBorder from "./SectionBorder";
 // Product Preview Page
-import Dialog from '@material-ui/core/Dialog';
-import ProductId from "pageComponents/P/ProductId";
 import Tooltip from '@material-ui/core/Tooltip';
-import IconButton from "@material-ui/core/IconButton";
-import ClearIcon from "@material-ui/icons/Clear";
 
 // SSR Subcomponents
 import dynamic from 'next/dynamic'
 import UploadInputPlaceholder from "../SSR/UploadInputPlaceholder";
 import UploadPreviewPlaceholder from "../SSR/UploadPreviewPlaceholder";
-import SelectTags from "../SelectTags";
-// import SelectTagsPlaceholder from "../SSR/SelectTagsPlaceholder";
-// const SelectTags = dynamic(() => import("../SelectTags"), {
-//   loading: () => <SelectTagsPlaceholder/>,
-//   ssr: false,
-// })
 const PreviewItemUploader = dynamic(() => import("../PreviewItemUploaderGrid"), {
   loading: () => <UploadPreviewPlaceholder/>,
   ssr: false,
@@ -87,7 +102,6 @@ import {
   ReducerName,
   DzuPreviewOrder,
   DzuPreviewItem,
-  DzuFilePreview
 } from "typings/dropzone";
 // Graphql
 import { useMutation, useApolloClient } from "@apollo/client";
@@ -103,8 +117,6 @@ import Portal from "@material-ui/core/Portal"
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { serializeHtml } from 'components/TextEditor/helpersSerializers';
-// Analytics
-import { useAnalytics, analyticsEvent } from "utils/analytics";
 // Video Preview
 import { getYouTubeVimeoImagePreview } from "utils/links";
 
@@ -217,9 +229,10 @@ const ProductCreatePage = (props: ReactProps) => {
           model: values.model,
           ammoType: values.ammoType,
           actionType: values.actionType,
-          boreDiameter: values.boreDiameter,
+          caliber: values.caliber,
           serialNumber: values.serialNumber,
           location: values.location,
+          dealerId: values.dealerId,
           dealer: values.dealer,
           categoryId: values.categoryId,
           tags: (values.tags as string[]).join(','),
@@ -228,8 +241,6 @@ const ProductCreatePage = (props: ReactProps) => {
         }
       },
     }).then(res => {
-
-      analyticsEvent("Product.Created", { isPublished: values.isPublished })
 
       setTimeout(() => {
         resetForm()
@@ -310,6 +321,18 @@ const ProductCreatePage = (props: ReactProps) => {
                   disableLoginButton={true}
                   buttonText={"Create Store"}
                 />
+
+                <div>
+                  <a onClick={() => {
+                      console.log("fprops.values: ", fprops.values)
+                      console.log("fprops.errors: ", fprops.errors)
+                    }}
+                    style={{ color: "#eee", cursor: "pointer" }}
+                  >
+                    print formik values
+                  </a>
+                </div>
+
               </StoreOrLoginContainer>
 
               <ProductCreateForm
@@ -321,19 +344,26 @@ const ProductCreatePage = (props: ReactProps) => {
               >
 
                 <SectionBorder>
-                  <Title {...fprops} />
+                  <TitleSerialNumber {...fprops} />
                   <SelectCategories
-                    reducerName={reducerName}
+                    {...fprops}
+                  />
+                  <SelectActionType
                     {...fprops}
                   />
                 </SectionBorder>
 
-                <SectionBorder style={{ paddingBottom: '0.5rem' }}>
-                  <MakeAndModel {...fprops} />
+                <SectionBorder>
+                  <SelectDealer
+                    {...fprops}
+                  />
                 </SectionBorder>
 
-                <SectionBorder style={{ paddingBottom: '0.5rem' }}>
+                <SectionBorder style={{ paddingBottom: '1rem' }}>
                   <GunAttributes {...fprops} />
+                  <SelectCondition
+                    {...fprops}
+                  />
                 </SectionBorder>
 
                 <SectionBorder>
@@ -387,44 +417,6 @@ const ProductCreatePage = (props: ReactProps) => {
                   />
                 </ProductCreateButtonWrapper>
 
-                {/* <Portal>
-                  <div style={{ position: 'fixed', top: 12, left: 12}}>
-                    <Button
-                      variant="contained"
-                      color="secondary"
-                      onClick={() => {
-                        console.info(
-                          "productCreateInput.currentVariants[0].previewItems: ",
-                          productCreateInput.currentVariants[0].previewItems
-                        )
-                        fprops.setFieldValue(
-                          "currentVariants",
-                          reduxToFormikCurrentVariants(
-                            productCreateInput,
-                            dzuPreviewItems,
-                            dzuPreviewOrder,
-                            dzuFiles,
-                          )
-                        );
-                        console.info(
-                          "fprops.values.currentVariants[0].previewItems",
-                          fprops.values.currentVariants[0].previewItems
-                        )
-                      }}
-                    >
-                      Print state
-                    </Button>
-                    <a onClick={() => {
-                      console.log("fprops.values.description", fprops.values.description)
-                      let htmlDescription = serializeHtml(values.description)
-                      console.log('htmlDescription', htmlDescription)
-                    }}>
-                      print description
-                    </a>
-                    <a onClick={() => fprops.resetForm()}>reset form</a>
-                  </div>
-                </Portal> */}
-
               </ProductCreateForm>
               <DisplaySnackBars error={error} data={data}/>
             </div>
@@ -432,7 +424,7 @@ const ProductCreatePage = (props: ReactProps) => {
             <div className={clsx(classes.productColumn40, 'fadeIn')}>
               {
                 !mdDown &&
-                <Tooltip title="Preview the Product Page" placement="top-start">
+                <Tooltip title="Preview the Product Page" placement="bottom-start">
                   <div className={clsx(
                     classes.stickyProductPreviewContainer,
                     'fadeIn',
@@ -457,49 +449,6 @@ const ProductCreatePage = (props: ReactProps) => {
                 </Tooltip>
               }
             </div>
-
-            {/* <Dialog
-              open={openPreviewPage}
-              onClose={() => setOpenPreviewPage(false)}
-              // fullScreen={smDown}
-              // fullWidth={smDown}
-              // fullScreen={true}
-              fullWidth={true}
-              // maxWidth="md"
-              BackdropProps={{
-                classes: { root: classes.modalBackdrop, }
-              }}
-              PaperProps={{
-                classes: {
-                  root: smDown
-                    ? classes.fullMaxHeight
-                    : classes.modalPaperScrollPaper
-                }
-              }}
-              scroll={"body"}
-            >
-              <IconButton
-                onClick={() => setOpenPreviewPage(false)}
-                className={classes.previewIconButton}
-                classes={{ root: classes.iconButton }}
-                size="small"
-              >
-                <ClearIcon classes={{ root: classes.svgIcon }}/>
-              </IconButton>
-
-              <ProductId
-                initialProduct={
-                  productCreateInputToProduct(
-                    fprops.values,
-                    categories,
-                    currentVariantsInput,
-                    user?.store,
-                  )
-                }
-                // disablePayments={true}
-              />
-            </Dialog> */}
-
           </>
         );
       }}
@@ -516,13 +465,7 @@ const productCreateInputToProduct = (
 
   let featuredVariant = currentVariants.find(v => v.isDefault)
 
-  let googleBucketUrl = "https://image-content.gunmarketplace.com/"
-    // EFC_ENV === "production"
-    // ? "https://image-content.relaydownloads.com/"
-    // : (EFC_ENV === undefined && NODE_ENV === undefined)
-    //   ? "https://local-image-content.fileworks.net/"
-    //   : "https://image-content.fileworks.net/"
-
+  let googleBucketUrl = 'https://storage.googleapis.com/gunmarket-images-dev/'
 
   let previewFeaturedVariant = {
     ...featuredVariant,
@@ -553,7 +496,7 @@ const productCreateInputToProduct = (
     },
   }
 
-  console.log("previewFeaturedVariant", previewFeaturedVariant)
+  // console.log("previewFeaturedVariant", previewFeaturedVariant)
 
   let product = {
     ...p,
@@ -567,6 +510,9 @@ const productCreateInputToProduct = (
     store: store,
     snapshotId: "prod_snapshot_preview",
     snapshotCreatedAt: new Date(),
+    currentSnapshot: {
+      ...p,
+    },
     isExcludedFromAutomaticLists: false,
     isExcludedFromSearch: false,
     isPublished: true, // to display ProductPreviewPage

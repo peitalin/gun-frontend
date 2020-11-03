@@ -51,73 +51,58 @@ const MakeAndModel = (props: ReactProps & FormikProps<FormikFields>) => {
 
 
   return (
-    <ErrorBounds>
+    <ErrorBounds className={classes.positionRelative}>
+
+      <div id="Model" style={{
+        position: 'absolute',
+        top: '-6rem',
+      }}/>
 
       <Typography color={"primary"} variant="subtitle1" gutterBottom>
-        Serial Number
+        Make
       </Typography>
       <TextInput
-        name="serial-number"
-        placeholder="Serial number"
+        name="make"
+        placeholder="Make"
         className={classes.textField}
-        value={values.serialNumber}
+        value={values.make}
         onChange={(e) => {
           if (e.target.value.length <= maxLengthTitle) {
-            fprops.setFieldValue("serialNumber", e.target.value)
+            fprops.setFieldValue("make", e.target.value)
           }
-          fprops.setFieldTouched('serialNumber', true)
+          fprops.setFieldTouched('make', true)
         }}
         inputProps={{ style: { width: '100%' }}}
-        errorMessage={props.errors.serialNumber}
-        touched={!!touched.serialNumber}
+        errorMessage={props.errors.make}
+        touched={!!touched.make}
         disableInitialValidationMessage={true}
         limit={{
           max: maxLengthTitle,
-          count: values.serialNumber.length
+          count: values.make.length
         }}
       />
 
       <Typography color={"primary"} variant="subtitle1" gutterBottom>
-        Action Type
+        Model
       </Typography>
       <TextInput
-        name="action type"
-        placeholder="Action Type"
+        name="model"
+        placeholder="Model"
         className={classes.textField}
-        value={values.actionType}
+        value={values.model}
         onChange={(e) => {
-          fprops.setFieldValue("actionType", e.target.value)
-          fprops.setFieldTouched('actionType', true)
+          if (e.target.value.length <= maxLengthTitle) {
+            fprops.setFieldValue("model", e.target.value)
+          }
+          fprops.setFieldTouched('model', true)
         }}
         inputProps={{ style: { width: '100%' }}}
-        errorMessage={props.errors.actionType}
-        touched={!!touched.actionType}
+        errorMessage={props.errors.model}
+        touched={!!touched.model}
         disableInitialValidationMessage={true}
         limit={{
           max: maxLengthTitle,
-          count: values.actionType.length
-        }}
-      />
-
-      <Typography color={"primary"} variant="subtitle1" gutterBottom>
-        Ammo Type
-      </Typography>
-      <TextInput
-        name="ammo type"
-        placeholder="Ammo Type"
-        className={classes.textField}
-        value={values.ammoType}
-        onChange={(e) => {
-          fprops.setFieldValue("ammoType", e.target.value)
-          fprops.setFieldTouched('ammoType', true)
-        }}
-        inputProps={{ style: { width: '100%' }}}
-        errorMessage={props.errors.ammoType}
-        touched={!!touched.ammoType}
-        disableInitialValidationMessage={true}
-        limit={{
-          max: maxLengthTitle,
-          count: values.ammoType.length
+          count: values.model.length
         }}
       />
 
@@ -139,7 +124,7 @@ const MakeAndModel = (props: ReactProps & FormikProps<FormikFields>) => {
         disableInitialValidationMessage={true}
         limit={{
           max: maxLengthTitle,
-          count: values.caliber.length
+          count: values?.caliber?.length
         }}
       />
     </ErrorBounds>
@@ -149,9 +134,8 @@ const MakeAndModel = (props: ReactProps & FormikProps<FormikFields>) => {
 interface ReactProps extends WithStyles<typeof styles> {
 }
 interface FormikFields {
-  serialNumber: string;
-  actionType: string;
-  ammoType: string;
+  make: string;
+  model: string;
   caliber: string;
 }
 

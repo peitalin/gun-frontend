@@ -18,15 +18,14 @@ export const styles = (theme: Theme) => createStyles({
     justifyContent: 'center',
   },
   productColumn60: {
-    flexBasis: '65%',
+    flexBasis: '66%',
     flexGrow: 1,
-    minWidth: 370,
+    minWidth: 360,
   },
   productColumn40: {
-    flexBasis: '30%',
+    // flexBasis: '40%',
     flexGrow: 1,
-    minWidth: 300,
-    maxWidth: 400,
+    minWidth: 280,
   },
   coverGrey: {
     height: '100%',
@@ -285,6 +284,7 @@ export const styles = (theme: Theme) => createStyles({
     marginBottom: '1rem',
     color: Colors.grey,
     lineHeight: '1rem',
+    textAlign: 'center',
   },
   createProductButtonContainer: {
     display: "flex",
@@ -318,6 +318,10 @@ export const styles = (theme: Theme) => createStyles({
     display: "flex",
     flexDirection: "row",
     flexWrap: "wrap",
+    // display: 'flex',
+    // flexDirection: 'column',
+    padding: '0px',
+    width: '100%'
   },
   buttonRoot: {
     margin: '0.1rem',
@@ -358,7 +362,7 @@ export const styles = (theme: Theme) => createStyles({
     marginBottom: '0.5rem',
     // border: `1px solid ${Colors.lightGrey}`,
     border: `1px solid ${Colors.uniswapLightNavy}`,
-    // overrides .MuiExpansionPanel-rounded:first-child
+    // overrides .MuiAccordion-rounded:first-child
     // border radius
     borderRadius: `${BorderRadius}px !important`,
     backgroundColor: Colors.uniswapMediumNavy,
@@ -392,7 +396,7 @@ export const styles = (theme: Theme) => createStyles({
     margin: 0,
   },
   selectedCategoryClosed: {
-    color: Colors.uniswapMediumGrey, // to match uniswapLightestGrey with placeholder dim
+    color: Colors.uniswapLightGrey, // to match uniswapLightestGrey with placeholder dim
     fontSize: '1rem',
     transition: theme.transitions.create('color', {
       duration: "2000ms",
@@ -423,7 +427,7 @@ export const styles = (theme: Theme) => createStyles({
   },
   stickyProductPreviewContainer: {
     position: 'sticky',
-    top: '1rem',
+    top: '4rem',
     marginTop: '1rem',
     marginBottom: '1rem',
     cursor: "pointer",
@@ -474,6 +478,26 @@ export const styles = (theme: Theme) => createStyles({
     position: 'relative',
     width: '100%',
     marginTop: '0.5rem',
+  },
+  dealerDropdown: {
+    flexGrow: 1,
+    minWidth: 200,
+    // marginRight: '1rem',
+    // marginLeft: '1rem',
+    marginBottom: '0.5rem',
+  },
+  dontSeeDealerLink: {
+    color: Colors.uniswapLighterGrey,
+    textAlign: "center",
+    width: "100%",
+    "&:hover": {
+      cursor: "pointer",
+      color: Colors.gradientUniswapBlue1,
+    }
+  },
+  marginTop1: {
+    marginTop: '1rem',
+    width: "100%",
   },
 })
 

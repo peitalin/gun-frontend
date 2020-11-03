@@ -1,15 +1,12 @@
 import React from "react";
-import { oc as option } from "ts-optchain";
 import clsx from "clsx";
 // Redux
 import { useDispatch, useSelector } from "react-redux";
 import { Actions } from "reduxStore/actions";
 import { GrandReduxState } from "reduxStore/grand-reducer";
-// Graphql
-import { GET_PRODUCT_CATEGORIES } from "queries/categories-queries";
-import { useQuery } from '@apollo/client';
 // Typings
 import { Categories } from "typings/gqlTypes";
+import { ActionTypes, ActionType } from "typings";
 import { ReducerName } from "typings/dropzone";
 // Styles
 import { withStyles, WithStyles } from "@material-ui/core/styles";
@@ -20,7 +17,7 @@ import FormGroup from '@material-ui/core/FormGroup';
 import Button from '@material-ui/core/Button';
 // Select Component
 import DropdownInput from "components/Fields/DropdownInput";
-import { sortCategoriesByName } from "layout/NavBarMain/CategoryBar/categoryHooks";
+import { sortActionTypeByName } from "layout/NavBarMain/CategoryBar/categoryHooks";
 // Util components
 import Loading from "components/Loading";
 import ErrorDisplay from "components/Error";
@@ -35,7 +32,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 
 
-const SelectCategories = (props: ReactProps & FormikProps<FormikFields>) => {
+const SelectActionType = (props: ReactProps & FormikProps<FormikFields>) => {
 
   const {
     classes,
@@ -45,34 +42,20 @@ const SelectCategories = (props: ReactProps & FormikProps<FormikFields>) => {
 
   const [openExpander, setOpenExpander] = React.useState(defaultExpanded);
 
-  const setCategoryId = (newCat: SelectOption) => {
-    // // Redux
-    // dispatch(actions.UPDATE_CATEGORY_ID(newCat.value))
-    // Formik
-    fprops.setFieldValue("categoryId", newCat.value)
-    // props.validateForm()
+  const setActionType = (newCat: SelectOption) => {
+    fprops.setFieldValue("actionType", newCat.value)
   }
 
-  // Apollo Graphql
-  const {
-    loading,
-    error,
-    data
-  } = useQuery<QueryData, null>(GET_PRODUCT_CATEGORIES)
+  const actionTypeChoices = ActionTypes
+      .sort(sortActionTypeByName)
 
-
-  const categories = option(data).getProductCategories([])
-      .filter(c => !!c && !!c.name)
-      .sort(sortCategoriesByName)
-
-  const chosenCategory = categories.find(c => c.id === fprops.values.categoryId)
-  // const categorySuggestions = createCategorySuggestions(categories);
+  const chosenActionType = actionTypeChoices.find(a => a === fprops.values.actionType)
 
   return (
     <ErrorBounds className={classes.positionRelative}>
       <div className={clsx(classes.formContainer)}>
         <Typography color={"primary"} variant="subtitle1">
-          Category
+          Action Type
         </Typography>
         <FormGroup row
           className={clsx(classes.formGroup, classes.marginTop05)}
@@ -87,8 +70,8 @@ const SelectCategories = (props: ReactProps & FormikProps<FormikFields>) => {
             expanded={openExpander}
             onChange={(event, expanded) => {
               setOpenExpander(s => !s)
-              if (!fprops.touched.categoryId) {
-                fprops.setFieldTouched("categoryId", true)
+              if (!fprops.touched.actionType) {
+                fprops.setFieldTouched("actionType", true)
               }
             }}
             elevation={0} // remove box-shadow
@@ -110,7 +93,7 @@ const SelectCategories = (props: ReactProps & FormikProps<FormikFields>) => {
               }}
             >
               <Typography className={
-                  !option(chosenCategory).name()
+                  !chosenActionType
                     ? classes.selectedCategoryEmpty
                     : openExpander
                       ? classes.selectedCategoryOpen
@@ -120,9 +103,9 @@ const SelectCategories = (props: ReactProps & FormikProps<FormikFields>) => {
                 variant="body1"
               >
                 {
-                  option(chosenCategory).name()
-                    ? chosenCategory.name
-                    : "Select a category"
+                  chosenActionType
+                    ? chosenActionType
+                    : "Select Action Type"
                 }
               </Typography>
             </AccordionSummary>
@@ -133,49 +116,45 @@ const SelectCategories = (props: ReactProps & FormikProps<FormikFields>) => {
                 padding: '0px',
                 width: '100%'
               }}>
-                {
-                  error
-                  ? <ErrorDisplay title={"SelectCategories"} error={error}/>
-                  : <div className={classes.categoryButtonsContainer}>
-                      {
-                        categories.map((category, i) => {
-                          return (
-                            <Button
-                              key={category.name + `${i}`}
-                              classes={{
-                                root: clsx(
-                                  classes.buttonRoot,
-                                  (category.id === fprops.values.categoryId)
-                                    ? classes.buttonSelected
-                                    : null,
-                                )
-                              }}
-                              variant="outlined"
-                              onClick={() => {
-                                fprops.setFieldTouched("categoryId", true)
-                                setCategoryId({
-                                  label: category.name,
-                                  value: category.id,
-                                })
-                                setOpenExpander(s => !s)
-                              }}
-                            >
-                              {category.name}
-                            </Button>
-                          )
-                        })
-                      }
-                    </div>
-                }
+                <div className={classes.categoryButtonsContainer}>
+                  {
+                    actionTypeChoices.map((aType, i) => {
+                      return (
+                        <Button
+                          key={aType + `${i}`}
+                          classes={{
+                            root: clsx(
+                              classes.buttonRoot,
+                              (aType === fprops.values.actionType)
+                                ? classes.buttonSelected
+                                : null,
+                            )
+                          }}
+                          variant="outlined"
+                          onClick={() => {
+                            fprops.setFieldTouched("actionType", true)
+                            setActionType({
+                              label: aType,
+                              value: aType,
+                            })
+                            setOpenExpander(s => !s)
+                          }}
+                        >
+                          {aType}
+                        </Button>
+                      )
+                    })
+                  }
+                </div>
               </div>
             </AccordionDetails>
           </Accordion>
 
           <div className={classes.categoryContainer}>
             <ValidationErrorMsg
-              touched={fprops.touched.categoryId}
+              touched={fprops.touched.actionType}
               focused={false}
-              errorMessage={fprops.errors.categoryId}
+              errorMessage={fprops.errors.actionType}
               disableInitialValidationMessage={true}
             />
           </div>
@@ -186,14 +165,6 @@ const SelectCategories = (props: ReactProps & FormikProps<FormikFields>) => {
 }
 
 
-const createCategorySuggestions = (categories: Categories[]) => {
-  return categories.sort().map(category => {
-    return {
-      label: `${category.name}`,
-      value: category.id,
-    }
-  })
-}
 
 export interface SelectOption {
   label: string;
@@ -202,14 +173,11 @@ export interface SelectOption {
 interface ReactProps extends WithStyles<typeof styles> {
   defaultExpanded?: boolean
 }
-interface QueryData {
-  getProductCategories: Categories[]
-}
 interface FormikFields {
-  categoryId: string;
+  actionType?: string;
 }
 
-export default withStyles(styles)( SelectCategories );
+export default withStyles(styles)( SelectActionType );
 
 
 

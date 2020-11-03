@@ -5,6 +5,8 @@ import { createStyles, Theme } from '@material-ui/core/styles';
 
 // Ultramarine blue
 const secondary = "#2484FF"
+const foregroundColor = "#222429"
+const backgroundColor = "#2E3443"
 
 export const Colors = {
   secondary: secondary,
@@ -17,8 +19,8 @@ export const Colors = {
   slateGreyDarkest: "#4A6476",
   slateGreyBlack: "#253848",
   // greyscale
-  backgroundColor: "#f4f4f4",
-  foregroundColor: "#fefefe",
+  backgroundColor: backgroundColor,
+  foregroundColor: foregroundColor,
   white: "#fefefe",
   cream: "#fafafa",
   darkWhite: "#F7F7F7",
@@ -76,15 +78,17 @@ export const Colors = {
   gradientFlamingo1: '#f093fb',
   gradientFlamingo2: '#f5576c',
   // uniswap
+
   uniswapLightestGrey: '#B4B5BB',
+  uniswapLightGrey: '#C4C5CB',
   uniswapLighterGrey: '#6D7283',
   uniswapGrey: '#41444E',
   uniswapMediumGrey: '#65666D',
   uniswapLightNavy: '#3A3F4A',
   uniswapNavy: '#2E3443',
   uniswapMediumNavy: '#2D2F36',
+  uniswapGreyNavy: '#282A31',
   uniswapDarkNavy: "#222429",
-  uniswapRoyalNavy: "#212F46",
   gradientUniswapDark1: "#2E3545",
   gradientUniswapDark2: "#2D2F36",
   gradientUniswapFluro1: "#DC3078",
@@ -161,6 +165,31 @@ export const Gradients = {
     color1: Colors.gradientUniswapBlueGreen,
     color2: Colors.gradientUniswapGreen,
   },
+  gradientRainbow: {
+    webkitTextFillColor: 'transparent',
+    background: `
+      linear-gradient(110.78deg,
+        rgb(118, 230, 80) -1.13%,
+        rgb(249, 214, 73) 15.22%,
+        rgb(240, 142, 53) 32.09%,
+        rgb(236, 81, 87) 48.96%,
+        rgb(255, 24, 189) 67.94%,
+        rgb(26, 75, 255) 85.34%,
+        rgb(98, 216, 249) 99.57%)
+    `,
+    '-webkit-background-clip': 'text',
+    'background-clip': 'text',
+    '-webkit-text-fill-color': 'transparent',
+    '-webkit-box-decoration-break': 'clone',
+  },
+  gradientRainbow2: {
+    background: `linear-gradient(92.05deg, #BCA1F7 12.09%, #E577B4 42.58%, #FF7170 84.96%)`,
+    webkitTextFillColor: 'transparent',
+    '-webkit-background-clip': 'text',
+    'background-clip': 'text',
+    '-webkit-text-fill-color': 'transparent',
+    '-webkit-box-decoration-break': 'clone',
+  }
 }
 
 export const BoxShadows = {
@@ -200,11 +229,15 @@ export interface Breakpoints {
   xl: number;
 };
 
+export type ScreenSizes = "xs" | "sm" | "md" | "lg" | "xl";
 
 export const BorderRadius = 8;
 export const BorderRadius2x = 16;
+export const BorderRadius3x = 24;
+export const BorderRadius4x = 32;
 
 export const fontFam = [
+  "Roobert TRIAL",
   '"Helvetica Neue"',
   'Arial',
   'sans-serif',
@@ -227,10 +260,10 @@ export const notifyStyles = (theme: Theme) => createStyles({
 });
 
 
-export const AppTheme = ({ darkMode }: { darkMode: boolean }) => createMuiTheme({
+export const AppTheme = createMuiTheme({
   palette: {
 
-    type: darkMode ? 'dark' : 'light',
+    // type: darkMode ? 'dark' : 'light',
 
     primary: {
       main: Colors.uniswapLightestGrey,

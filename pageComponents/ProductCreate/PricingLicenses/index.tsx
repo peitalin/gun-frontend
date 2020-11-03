@@ -36,52 +36,6 @@ const PricingLicenses = (props: ReactProps & FormikProps<FormikFields>) => {
   const dispatch = useDispatch();
   const actions = createActions(reducerName);
 
-  const [licensesOpen, setLicensesOpen] = React.useState(
-    currentVariants.length === 2
-  );
-
-  const toggleVariants = event => {
-    if (currentVariants.length < 2) {
-      setLicensesOpen(true);
-      addVariant()
-    } else {
-      setLicensesOpen(false);
-      removeVariant(1)
-      // remove extended license in position 1
-    }
-  };
-
-  const addVariant = () => {
-
-    let newVariant = (reducerName === ReducerName.reduxProductCreate)
-      ? {
-          ...initialVariant,
-          previewItems: currentVariants[0].previewItems,
-          quantityAvailable: currentVariants[0].quantityAvailable,
-        }
-      : {
-          ...initialVariant,
-          previewItems: currentVariants[0].previewItems,
-          quantityAvailable: currentVariants[0].quantityAvailable,
-          variantId: null,
-          // ProductEdit? pass variantId to backend or null?
-        };
-
-    dispatch(actions.addVariant([ newVariant ]))
-    fprops.setFieldValue("currentVariants", [
-      ...currentVariants,
-      newVariant,
-    ])
-  }
-
-  const removeVariant = async(i: number) => {
-    dispatch(actions.removeVariant(i))
-    fprops.setFieldValue("currentVariants", [
-      ...currentVariants.slice(0, i),
-      ...currentVariants.slice(i + 1),
-    ])
-  }
-
   React.useEffect(() => {
     fprops.setFieldValue("currentVariants", [
       ...currentVariants
@@ -90,7 +44,13 @@ const PricingLicenses = (props: ReactProps & FormikProps<FormikFields>) => {
 
 
   return (
-    <ErrorBounds className={classes.root}>
+    <ErrorBounds className={clsx(classes.root, classes.positionRelative)}>
+
+      <div id="Price" style={{
+        position: 'absolute',
+        top: '-6rem',
+      }}/>
+
       <div className={classes.flexRow}>
         <Typography
           className={classes.title}
@@ -99,18 +59,6 @@ const PricingLicenses = (props: ReactProps & FormikProps<FormikFields>) => {
         >
           Price
         </Typography>
-        {/* <div className={classes.switchContainer}>
-          <Typography variant="subtitle2">
-            Add Licenses
-          </Typography>
-          <Switch
-            checked={licensesOpen}
-            onChange={toggleVariants}
-            value="checkedA"
-            color="secondary"
-            inputProps={{ 'aria-label': 'secondary checkbox' }}
-          />
-        </div> */}
       </div>
       {
         currentVariants.map((variant, position) => {
@@ -121,7 +69,7 @@ const PricingLicenses = (props: ReactProps & FormikProps<FormikFields>) => {
               position={position}
               reducerName={reducerName}
               // bind position to functions first
-              removeVariant={() => removeVariant(position)}
+              // removeVariant={() => removeVariant(position)}
               {...fprops}
             />
           )
@@ -258,12 +206,14 @@ export const styles = (theme: Theme) => createStyles({
     }
   },
   title: {
-    marginBottom: '1rem',
   },
   switchContainer: {
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
+  },
+  positionRelative: {
+    position: 'relative',
   },
 })
 

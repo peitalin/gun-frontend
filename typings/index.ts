@@ -5,7 +5,6 @@ import {
 } from "typings/gqlTypes";
 
 type ID = any;
-type Order = any;
 type Edge = any;
 type Connection = any;
 type PageBasedConnectionEdge = any;
@@ -15,10 +14,6 @@ type PaymentMethod = any;
 type PayoutMethod = any;
 
 
-export interface SendgridStatus {
-  message: string;
-}
-
 export interface SendPasswordResetResponse {
   resetId: string;
   emailSentTo: string;
@@ -27,39 +22,6 @@ export interface SendPasswordResetResponse {
   };
 }
 
-export interface StripeCustomerCreationResponse {
-  status: string;
-  response: StripeCustomerProfile;
-  endpoint: string;
-}
-
-export interface StripeCustomerProfile {
-  id: string;
-  object: string;
-  accountBalance?: number;
-  address?: any;
-  balance?: number;
-  businessVatId?: string;
-  created?: Date;
-  currency?: string;
-  defaultSource?: string;
-  delinquent?: boolean;
-  description?: string;
-  email?: string;
-  invoicePrefix?: string;
-  invoiceSettings?: any;
-  livemode?: boolean;
-  metadata?: string;
-  name?: string;
-  phone?: string;
-  preferredLocales?: string[];
-  shipping?: any;
-  sources?: any;
-  taxExempt?: string;
-  taxIds?: any;
-  taxInfo?: any;
-  taxInfoVerification?: any;
-}
 
 export type HtmlEvent = React.ChangeEvent<
   HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
@@ -71,46 +33,6 @@ export interface SubtotalDisplay {
   subtotalPaypal: string;
 }
 
-export interface ConfirmOrderAfterFrontendPaymentResponse {
-  data?: {
-    confirmOrderAfterFrontendPayment: {
-      order: Order;
-    };
-  };
-}
-
-export interface CheckoutProductsForFrontendPaymentResponse {
-  data?: {
-    checkoutProductsForFrontendPayment: {
-      order: Order;
-    };
-  };
-}
-
-export interface CheckoutCartForFrontendPaymentResponse {
-  data?: {
-    checkoutCartForFrontendPayment: {
-      order: Order;
-    };
-  };
-}
-
-export interface CheckoutProductsResponse {
-  data?: {
-    checkoutProducts: {
-      order: Order;
-    };
-  };
-}
-
-export interface CheckoutCartResponse {
-  data?: {
-    checkoutCart: {
-      order: Order;
-    };
-  };
-}
-
 export interface GenericEdge<T> extends Edge {
   node: T;
 }
@@ -120,16 +42,6 @@ export interface GenericConnection<T> extends Connection {
   pageInfo?: any;
 }
 
-export interface GenericPageBasedEdge<T> extends PageBasedConnectionEdge {
-  node?: T;
-}
-
-export interface GenericPageBasedConnection<T> extends PageBasedConnection {
-  // pageInfo: PageBasedConnectionPageInfo;
-  edges?: GenericPageBasedEdge<T>[];
-  // totalCount: number;
-  totalAmount?: number;
-}
 
 export interface CreateStoreInput {
   userId: ID;
@@ -184,10 +96,18 @@ export interface ProductCreateEditCommonInput {
   model: string;
   ammoType?: string;
   actionType: string;
-  boreDiameter?: string;
+  caliber?: string;
   serialNumber: string;
   location: string;
-  dealer: string;
+  dealerId?: string;
+  dealer?: {
+    licenseNumber?: string;
+    name?: string;
+    postCode?: string;
+    address?: string;
+    state?: string;
+    city?: string;
+  };
   isPublished: boolean;
   productId?: ID;
   currentVariants: ProductVariantInput[] | ProductVariantEditInput[];
@@ -201,3 +121,94 @@ export interface ProductCreateInputFrontEnd extends ProductCreateEditCommonInput
 export interface ProductEditInputFrontEnd extends ProductCreateEditCommonInput  {
   currentVariants: ProductVariantEditInput[];
 };
+
+
+export enum ActionType {
+  BOLT = "Bolt",
+  BREAK = "Break",
+  LEVER = "Lever",
+  PUMP = "Pump",
+  REVOLVING = "Revolving",
+  SEMI_AUTOMATIC = "Semi Automatic",
+  SINGLE_SHOT = "Single Shot",
+  SPRING = "Spring",
+  STRAIGHT_PULL = "Straight Pull",
+  CO2 = "CO2",
+  FLINTLINK = "Flintlock",
+  GAS_RAM = "Gas Ram",
+  INLINE = "Inline",
+  PERCUSSION_CAP = "Percussion Cap",
+  PCP = "PCP",
+  DOUBLE = "Double",
+  OTHER = "Other"
+}
+
+export const ActionTypes = [
+  ActionType.BOLT,
+  ActionType.BREAK,
+  ActionType.LEVER,
+  ActionType.PUMP,
+  ActionType.REVOLVING,
+  ActionType.SEMI_AUTOMATIC,
+  ActionType.SINGLE_SHOT,
+  ActionType.STRAIGHT_PULL,
+  ActionType.CO2,
+  ActionType.FLINTLINK,
+  ActionType.GAS_RAM,
+  ActionType.INLINE,
+  ActionType.PERCUSSION_CAP,
+  ActionType.PCP,
+  ActionType.DOUBLE,
+  ActionType.OTHER,
+]
+
+
+export enum Condition {
+  PERFECT = "Perfect",
+  EXCELLENT = "Excellent",
+  GOOD = "Good",
+  FAIR = "Fair",
+  POOR = "Poor",
+}
+
+export const getConditionDescription = (c: Condition) => {
+  switch (c) {
+    case Condition.PERFECT: {
+      return ConditionDescriptions.PERFECT
+    }
+    case Condition.EXCELLENT: {
+      return ConditionDescriptions.EXCELLENT
+    }
+    case Condition.GOOD: {
+      return ConditionDescriptions.GOOD
+    }
+    case Condition.FAIR: {
+      return ConditionDescriptions.FAIR
+    }
+    case Condition.POOR: {
+      return ConditionDescriptions.POOR
+    }
+  }
+}
+
+export enum ConditionDescriptions {
+  PERFECT = "New condition",
+  // Perfect - New condition.
+  EXCELLENT = "New condition, little use, no noticeable marring",
+  // Excellent - New condition, little use, no noticeable marring.
+  GOOD = "Perfect working condition, no appreciable wearing on working surfaces, no corrosion or pitting, only minor surface dents or scratches",
+  // Good - Perfect working condition, no appreciable wearing on working surfaces, no corrosion or pitting, only minor surface dents or scratches.
+  FAIR = "Safe working condition, minor wear on surface, no broken parts, no corrosion or pitting that will interfere with functioning",
+  // Fair - Safe working condition, minor wear on surface, no broken parts, no corrosion or pitting that will interfere with functioning.
+  POOR = "Safe working condition but well worn, perhaps requiring replacement of minor parts or adjustments",
+  // Poor - Safe working condition but well worn, perhaps requiring replacement of minor parts or adjustments.
+}
+
+
+export const Conditions = [
+  Condition.PERFECT,
+  Condition.EXCELLENT,
+  Condition.GOOD,
+  Condition.FAIR,
+  Condition.POOR,
+]

@@ -68,18 +68,6 @@ const PriceFields = (props: ReactProps & FormikProps<FormikFields>) => {
     }
   }, 16);
 
-  const [updatePriceWas] = useDebouncedCallback((e: any) => {
-    let cents = parseInt(e)
-    let index = position || 0;
-    if (cents) {
-      dispatch(actions.UPDATE_PRICE_WAS({ priceWas: cents, position: index }))
-      fprops.setFieldValue(`currentVariants[${position}].priceWas`, cents)
-    } else {
-      dispatch(actions.UPDATE_PRICE_WAS({ priceWas: undefined, position: index }))
-      fprops.setFieldValue(`currentVariants[${position}].priceWas`, undefined)
-    }
-  }, 16);
-
 
   // RIFM - masking currency values
   const [variablePrice, setVariablePrice] = React.useState(
@@ -108,14 +96,14 @@ const PriceFields = (props: ReactProps & FormikProps<FormikFields>) => {
         >
           {({ value, onChange }) => (
             <div className={clsx(classes.flexCol50, classes.marginRight)}>
-              <div className={classes.priceFlexRow}>
+              {/* <div className={classes.priceFlexRow}>
                 <Typography
                   className={classes.priceLabel}
                   variant="subtitle2"
                 >
                   Now (USD)
                 </Typography>
-              </div>
+              </div> */}
               <div className={classes.container}>
                 <TextInputAdorned
                   startAdornment={"$ "}

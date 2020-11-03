@@ -220,6 +220,13 @@ const PreviewItemUploaderGrid = (props: ReactProps & FormikProps<FormikFields>) 
 
   return (
     <ErrorBounds className={classes.uploaderRoot}>
+
+      <div id="Images" style={{
+        position: 'absolute',
+        top: '-6rem',
+      }}/>
+
+
       <div className={classes.previewTitleBox}>
         <Typography variant="subtitle1">
           Product Images
@@ -268,6 +275,7 @@ const PreviewItemUploaderGrid = (props: ReactProps & FormikProps<FormikFields>) 
             justifyContent: "center",
             padding: "1rem",
             backgroundColor: Colors.uniswapMediumNavy,
+            marginBottom: '1rem',
           },
           dropzoneActive: {
             border: "2px dashed #2484FF",

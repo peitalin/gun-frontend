@@ -76,16 +76,6 @@ const StoreOrLogin = (props: StoreOrLoginProps) => {
       return (
         <SellerProfile
           userStore={user.store}
-          avatarBorderStyle={{
-            height: '66px',
-            width: '66px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            borderRadius: '100%',
-            // background: Gradients.gradientPurple.background,
-            background: Gradients.gradientUniswapFluro.background,
-          }}
         />
       )
     }

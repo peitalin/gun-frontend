@@ -25,7 +25,7 @@ import {
 
 
 
-const Title = (props: ReactProps & FormikProps<FormikFields>) => {
+const TitleSerialNumber = (props: ReactProps & FormikProps<FormikFields>) => {
 
   const {
     classes,
@@ -53,9 +53,18 @@ const Title = (props: ReactProps & FormikProps<FormikFields>) => {
   }, 64);
 
   return (
-    <ErrorBounds>
+    <ErrorBounds className={classes.positionRelative}>
 
-      <Typography color={"primary"} variant="subtitle1" gutterBottom>
+      <div id="Title" style={{
+        position: 'absolute',
+        top: '-6rem',
+      }}/>
+
+      <Typography
+        color={"primary"}
+        variant="subtitle1"
+        gutterBottom
+      >
         Title
       </Typography>
       <TextInput
@@ -80,6 +89,30 @@ const Title = (props: ReactProps & FormikProps<FormikFields>) => {
         }}
       />
 
+      <Typography color={"primary"} variant="subtitle1" gutterBottom>
+        Serial Number
+      </Typography>
+      <TextInput
+        name="serial-number"
+        placeholder="Serial number"
+        className={classes.textField}
+        value={values.serialNumber}
+        onChange={(e) => {
+          if (e.target.value.length <= maxLengthTitle) {
+            fprops.setFieldValue("serialNumber", e.target.value)
+          }
+          fprops.setFieldTouched('serialNumber', true)
+        }}
+        inputProps={{ style: { width: '100%' }}}
+        errorMessage={props.errors.serialNumber}
+        touched={!!touched.serialNumber}
+        disableInitialValidationMessage={true}
+        limit={{
+          max: maxLengthTitle,
+          count: values?.serialNumber?.length
+        }}
+      />
+
     </ErrorBounds>
   )
 }
@@ -88,10 +121,11 @@ interface ReactProps extends WithStyles<typeof styles> {
 }
 interface FormikFields {
   title: string;
+  serialNumber: string;
 }
 
 
 export default withStyles(styles)(React.memo(
-  (props: ReactProps & FormikProps<FormikFields>) => <Title {...props}/>,
+  (props: ReactProps & FormikProps<FormikFields>) => <TitleSerialNumber {...props}/>,
 ));
 

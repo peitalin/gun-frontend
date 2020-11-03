@@ -20,39 +20,14 @@ const License = (props: ReactProps & FormikProps<FormikFields>) => {
     classes,
     variant,
     position,
-    removeVariant,
     reducerName,
     ...fprops
   } = props;
-
-  // Formik props
-  const {
-    values,
-    touched,
-    errors,
-    dirty,
-    isSubmitting,
-    handleChange,
-    handleBlur,
-    handleSubmit,
-    handleReset,
-  } = fprops;
-
 
   return (
     <div className={classes.root}>
       <div className={classes.fieldsContainer}>
         <div className={classes.flexRow}>
-          {
-            (props.position !== 0) &&
-            <Typography
-              className={classes.label}
-              color={"primary"}
-              variant="subtitle2"
-            >
-              {variant.variantName}
-            </Typography>
-          }
           <PriceFields
             position={props.position}
             reducerName={reducerName}
@@ -69,7 +44,6 @@ interface ReactProps extends WithStyles<typeof styles> {
   variant: ProductVariantInput;
   position: number;
   reducerName: ReducerName;
-  removeVariant(): void;
 }
 
 interface FormikFields {

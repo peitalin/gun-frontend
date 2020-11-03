@@ -1,7 +1,6 @@
 import React from "react";
-import { useState, useEffect } from "react";
 import { oc as option } from "ts-optchain";
-import { Colors } from "layout/AppTheme";
+import { Colors, Gradients } from "layout/AppTheme";
 // Graphql
 import { Store, StorePrivate, UserPrivate, ID } from "typings/gqlTypes";
 // Styles
@@ -25,7 +24,7 @@ const SellerProfile: React.FC<StoreProps> = (props) => {
     classes
   } = props;
   // imgloaded
-  const [avatarImgLoaded, setAvatarImgLoaded] = useState(false);
+  const [avatarImgLoaded, setAvatarImgLoaded] = React.useState(false);
 
   return (
     <ErrorBounds className={clsx(classes.container)}>
@@ -116,9 +115,16 @@ const styles = (theme: Theme) => createStyles({
     border: `4px solid ${Colors.uniswapLightNavy}`,
   },
   avatarBorder: {
-    borderRadius: '50%',
-    background: Colors.grey,
     marginBottom: '0.5rem',
+    // outer fluro circle
+    height: '66px',
+    width: '66px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: '100%',
+    // background: Gradients.gradientPurple.background,
+    background: Gradients.gradientUniswapFluro.background,
   },
   avatarButton: {
     padding: theme.spacing(1),

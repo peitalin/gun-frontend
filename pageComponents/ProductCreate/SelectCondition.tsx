@@ -1,16 +1,7 @@
 import React from "react";
-import { oc as option } from "ts-optchain";
 import clsx from "clsx";
-// Redux
-import { useDispatch, useSelector } from "react-redux";
-import { Actions } from "reduxStore/actions";
-import { GrandReduxState } from "reduxStore/grand-reducer";
-// Graphql
-import { GET_PRODUCT_CATEGORIES } from "queries/categories-queries";
-import { useQuery } from '@apollo/client';
 // Typings
-import { Categories } from "typings/gqlTypes";
-import { ReducerName } from "typings/dropzone";
+import { Conditions, Condition, getConditionDescription } from "typings";
 // Styles
 import { withStyles, WithStyles } from "@material-ui/core/styles";
 import { styles } from './commonStyles';
@@ -20,7 +11,7 @@ import FormGroup from '@material-ui/core/FormGroup';
 import Button from '@material-ui/core/Button';
 // Select Component
 import DropdownInput from "components/Fields/DropdownInput";
-import { sortCategoriesByName } from "layout/NavBarMain/CategoryBar/categoryHooks";
+import Tooltip from '@material-ui/core/Tooltip';
 // Util components
 import Loading from "components/Loading";
 import ErrorDisplay from "components/Error";
@@ -35,7 +26,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 
 
-const SelectCategories = (props: ReactProps & FormikProps<FormikFields>) => {
+const SelectCondition = (props: ReactProps & FormikProps<FormikFields>) => {
 
   const {
     classes,
@@ -45,34 +36,19 @@ const SelectCategories = (props: ReactProps & FormikProps<FormikFields>) => {
 
   const [openExpander, setOpenExpander] = React.useState(defaultExpanded);
 
-  const setCategoryId = (newCat: SelectOption) => {
-    // // Redux
-    // dispatch(actions.UPDATE_CATEGORY_ID(newCat.value))
-    // Formik
-    fprops.setFieldValue("categoryId", newCat.value)
-    // props.validateForm()
+  const setCondition = (newCat: SelectOption) => {
+    fprops.setFieldValue("condition", newCat.value)
   }
 
-  // Apollo Graphql
-  const {
-    loading,
-    error,
-    data
-  } = useQuery<QueryData, null>(GET_PRODUCT_CATEGORIES)
+  const conditionChoices = Conditions
 
-
-  const categories = option(data).getProductCategories([])
-      .filter(c => !!c && !!c.name)
-      .sort(sortCategoriesByName)
-
-  const chosenCategory = categories.find(c => c.id === fprops.values.categoryId)
-  // const categorySuggestions = createCategorySuggestions(categories);
+  const chosenCondition = conditionChoices.find(a => a === fprops.values.condition)
 
   return (
     <ErrorBounds className={classes.positionRelative}>
       <div className={clsx(classes.formContainer)}>
         <Typography color={"primary"} variant="subtitle1">
-          Category
+          Condition
         </Typography>
         <FormGroup row
           className={clsx(classes.formGroup, classes.marginTop05)}
@@ -87,8 +63,8 @@ const SelectCategories = (props: ReactProps & FormikProps<FormikFields>) => {
             expanded={openExpander}
             onChange={(event, expanded) => {
               setOpenExpander(s => !s)
-              if (!fprops.touched.categoryId) {
-                fprops.setFieldTouched("categoryId", true)
+              if (!fprops.touched.condition) {
+                fprops.setFieldTouched("condition", true)
               }
             }}
             elevation={0} // remove box-shadow
@@ -110,7 +86,7 @@ const SelectCategories = (props: ReactProps & FormikProps<FormikFields>) => {
               }}
             >
               <Typography className={
-                  !option(chosenCategory).name()
+                  !chosenCondition
                     ? classes.selectedCategoryEmpty
                     : openExpander
                       ? classes.selectedCategoryOpen
@@ -120,9 +96,9 @@ const SelectCategories = (props: ReactProps & FormikProps<FormikFields>) => {
                 variant="body1"
               >
                 {
-                  option(chosenCategory).name()
-                    ? chosenCategory.name
-                    : "Select a category"
+                  chosenCondition
+                    ? chosenCondition
+                    : "Select Condition"
                 }
               </Typography>
             </AccordionSummary>
@@ -133,49 +109,51 @@ const SelectCategories = (props: ReactProps & FormikProps<FormikFields>) => {
                 padding: '0px',
                 width: '100%'
               }}>
-                {
-                  error
-                  ? <ErrorDisplay title={"SelectCategories"} error={error}/>
-                  : <div className={classes.categoryButtonsContainer}>
-                      {
-                        categories.map((category, i) => {
-                          return (
-                            <Button
-                              key={category.name + `${i}`}
-                              classes={{
-                                root: clsx(
-                                  classes.buttonRoot,
-                                  (category.id === fprops.values.categoryId)
-                                    ? classes.buttonSelected
-                                    : null,
-                                )
-                              }}
-                              variant="outlined"
-                              onClick={() => {
-                                fprops.setFieldTouched("categoryId", true)
-                                setCategoryId({
-                                  label: category.name,
-                                  value: category.id,
-                                })
-                                setOpenExpander(s => !s)
-                              }}
-                            >
-                              {category.name}
-                            </Button>
-                          )
-                        })
-                      }
-                    </div>
-                }
+                <div className={classes.categoryButtonsContainer}>
+                  {
+                    conditionChoices.map((cond, i) => {
+                      let conditionDescription = getConditionDescription(cond)
+                      return (
+                        <Tooltip key={cond + `${i}`}
+                          title={conditionDescription}
+                          placement={"top"}
+                        >
+                          <Button
+                            key={cond + `${i}`}
+                            classes={{
+                              root: clsx(
+                                classes.buttonRoot,
+                                (cond === fprops.values.condition)
+                                  ? classes.buttonSelected
+                                  : null,
+                              )
+                            }}
+                            variant="outlined"
+                            onClick={() => {
+                              fprops.setFieldTouched("condition", true)
+                              setCondition({
+                                label: cond,
+                                value: cond,
+                              })
+                              setOpenExpander(s => !s)
+                            }}
+                          >
+                            {cond}
+                          </Button>
+                        </Tooltip>
+                      )
+                    })
+                  }
+                </div>
               </div>
             </AccordionDetails>
           </Accordion>
 
           <div className={classes.categoryContainer}>
             <ValidationErrorMsg
-              touched={fprops.touched.categoryId}
+              touched={fprops.touched.condition}
               focused={false}
-              errorMessage={fprops.errors.categoryId}
+              errorMessage={fprops.errors.condition}
               disableInitialValidationMessage={true}
             />
           </div>
@@ -186,14 +164,6 @@ const SelectCategories = (props: ReactProps & FormikProps<FormikFields>) => {
 }
 
 
-const createCategorySuggestions = (categories: Categories[]) => {
-  return categories.sort().map(category => {
-    return {
-      label: `${category.name}`,
-      value: category.id,
-    }
-  })
-}
 
 export interface SelectOption {
   label: string;
@@ -202,14 +172,11 @@ export interface SelectOption {
 interface ReactProps extends WithStyles<typeof styles> {
   defaultExpanded?: boolean
 }
-interface QueryData {
-  getProductCategories: Categories[]
-}
 interface FormikFields {
-  categoryId: string;
+  condition?: string;
 }
 
-export default withStyles(styles)( SelectCategories );
+export default withStyles(styles)( SelectCondition );
 
 
 

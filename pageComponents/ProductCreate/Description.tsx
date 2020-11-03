@@ -71,8 +71,18 @@ const Description = (props: ReactProps & FormikProps<FormikFields>) => {
 
 
   return (
-    <ErrorBounds className={classes.descriptionRoot}>
-      <Typography color={"primary"} variant="subtitle1" gutterBottom>
+    <ErrorBounds className={clsx(classes.descriptionRoot, classes.positionRelative)}>
+
+      <div id="Description" style={{
+        position: 'absolute',
+        top: '-6rem',
+      }}/>
+
+      <Typography
+        color={"primary"}
+        variant="subtitle1"
+        gutterBottom
+      >
         Description
       </Typography>
 
