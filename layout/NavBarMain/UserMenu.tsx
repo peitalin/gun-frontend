@@ -122,7 +122,7 @@ export const UserMenu: React.FC<ReactProps> = (props) => {
 
 
           <MenuItem className={classes.menuItem} onClick={handleCloseMenu}>
-            <Link href="/admin">
+            <Link href="/admin/products">
               <a className={classes.menuLink}>
                 <LibraryBooks className={classes.menuIcon}/>
                 <span className={classes.menuText}>Seller Dashboard</span>
@@ -152,7 +152,7 @@ export const UserMenu: React.FC<ReactProps> = (props) => {
           <MenuItem className={classes.menuItem} onClick={handleCloseMenu}>
             {
               option(user).store.id()
-              ? <Link href="/admin">
+              ? <Link href="/admin/products">
                   <a className={classes.menuLink}>
                     <StorefrontIcon className={classes.menuIcon}/>
                     <span className={classes.menuText}> Seller Dashboard </span>

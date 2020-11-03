@@ -31,15 +31,18 @@ const categoryLinkColorHover2 = Colors.secondaryBright
 export const styles = (theme: Theme) => createStyles({
   baseBar: {
     zIndex: 5,
-    // backgroundColor: "#fefefe",
     background: Gradients.gradientUniswapDark.background,
-    borderBottom: Colors.uniswapNavy,
     height: `${MainBarHeight - 1}px`, // 1px for borderBottom
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
     position: 'relative',
+  },
+  baseBarBorderBottom: {
+    borderBottom: `1px solid ${Colors.uniswapLightNavy}`,
+  },
+  baseBarBoxShadow: {
     boxShadow: BoxShadows.shadow1.boxShadow,
   },
   baseBarInner: {
@@ -327,7 +330,7 @@ export const styles = (theme: Theme) => createStyles({
     // background: Gradients.gradientUniswapDark.background,
     // background: Gradients.gradientUniswapFluro.background,
     background: Gradients.gradientUniswapFluro.background,
-    height: '1.5rem',
+    height: '0.5rem',
     zIndex: 5,
   },
   newsBarInner: {
@@ -337,7 +340,7 @@ export const styles = (theme: Theme) => createStyles({
     paddingRight: '1rem',
   },
   newsBarHeadline: {
-    color: "#ddd",
+    color: Colors.uniswapDarkNavy,
   },
   link: {
     color: theme.palette.grey[600],

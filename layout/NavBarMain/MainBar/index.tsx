@@ -8,26 +8,16 @@ import clsx from 'clsx';
 import { withStyles, WithStyles } from "@material-ui/core/styles";
 import { styles } from "../styles";
 import { Colors } from "layout/AppTheme";
-// Components
-import Login from "layout/Login";
-import Logo from "components/Icons/Logo";
-import Badge from '@material-ui/core/Badge';
-import Searchbar from "layout/NavBarMain/Searchbar";
-// MUI
-import UserMenu from "layout/NavBarMain/UserMenu";
-import Button from "@material-ui/core/Button";
-import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
-import CloudUploadIcon from '@material-ui/icons/CloudUpload';
-import SearchIcon from '@material-ui/icons/Search';
-import SearchbarMobile from "layout/NavBarMain/SearchbarMobile";
 // Modals
 import { goToModalConnect } from "utils/modals";
 import { useDispatch, useSelector } from "react-redux";
 // Router
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { asCurrency as c } from "utils/prices";
-import Hidden from '@material-ui/core/Hidden';
+import Hidden from 'components/HiddenFix';
+// media query
+import { useTheme } from "@material-ui/core/styles";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
 // DesktopMainBars
 import DesktopMainBarXl from "./DesktopMainBarXl";
 import DesktopMainBarLg from "./DesktopMainBarLg";
@@ -42,6 +32,12 @@ const MainBar = (props: ReactProps) => {
   const { classes } = props;
   const router = useRouter()
   const color = Colors.uniswapLighterGrey;
+
+  const theme = useTheme();
+  const xsDown = useMediaQuery(theme.breakpoints.down('xs'));
+  const smDown = useMediaQuery(theme.breakpoints.down('sm'));
+  const mdDown = useMediaQuery(theme.breakpoints.down('md'));
+  const lgDown = useMediaQuery(theme.breakpoints.down('lg'));
 
   const {
     cartCount,
@@ -71,6 +67,7 @@ const MainBar = (props: ReactProps) => {
   return (
     <nav className={clsx(
       classes.baseBar,
+      lgDown ? classes.baseBarBorderBottom : classes.baseBarBoxShadow
     )}>
 
       {/* MOBILE */}
