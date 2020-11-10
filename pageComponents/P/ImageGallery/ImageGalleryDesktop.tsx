@@ -85,7 +85,7 @@ const ImageGalleryDesktop: React.FC<ReactProps> = (props) => {
   const theme = useTheme();
   const xsDown = useMediaQuery(theme.breakpoints.down('xs'));
   // const wishlistConnectionResponse = usePaginateQueryHook(QueryWishlistHookArgs);
-  const chosenVariant = option(props).selectedOption.value();
+  const featuredVariant = option(props).selectedOption.value();
 
   return (
     <div className={classes.root}>
@@ -160,7 +160,6 @@ const ImageGalleryDesktop: React.FC<ReactProps> = (props) => {
                       option(previewItem).image.original.url()
                       ? <ThumbnailImage
                           previewItem={previewItem}
-                          carouselSize={true}
                           onClick={() => {
                             handleImageClick(previewItem)
                             setIndex(i)

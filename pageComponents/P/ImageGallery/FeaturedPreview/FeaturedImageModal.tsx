@@ -72,8 +72,8 @@ const FeaturedImageModal = (props: ReactProps) => {
               props.setIndex(indexNew)
             }
           }}
-          containerStyle={{ height: '100%' }}
-          style={{ height: '100%' }}
+          containerStyle={{ height: '100%', width: '100%' }}
+          style={{ height: '100%', width: '100%' }}
         >
           {
             previewItems.map(( previewItem, i ) => {

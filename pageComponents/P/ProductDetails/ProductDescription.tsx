@@ -65,7 +65,7 @@ const styles = (theme: Theme) => createStyles({
     position: "relative",
     wordWrap: 'break-word',
     marginTop: '1rem',
-    borderTop: `1px solid ${Colors.lightestGrey}`,
+    borderTop: `1px solid ${theme.colors.uniswapLighterGrey}`,
     paddingTop: '2rem',
     paddingBottom: '1rem',
 

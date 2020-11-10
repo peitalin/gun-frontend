@@ -25,7 +25,6 @@ import PurchaseProductSummary from "pageComponents/P/PurchaseProductSummary";
 import ErrorPage from "pages/_error";
 // Router
 import { useRouter } from "next/router";
-// import ProductPageRecommendations from "./ProductPageRecommendations";
 // Next
 import Hidden from "components/HiddenFix";
 // media query
@@ -155,8 +154,8 @@ const Products: React.FC<ReactProps> = (props) => {
   if (product && !product.isPublished) {
     return <ErrorPage statusCode={400} message={"Product is not available"}/>
   }
-  if (product && product.currentVariants.every(v => v.isSoldOut)) {
-    return <ErrorPage statusCode={400} message={"Product is not available"}/>
+  if (product && product.featuredVariant.isSoldOut) {
+    return <ErrorPage statusCode={400} message={"Product is sold out"}/>
   }
   if (error) {
     return <ErrorPage statusCode={400} message={"Product cannot be found"}/>

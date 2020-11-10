@@ -68,7 +68,7 @@ const styles = (theme: Theme) => createStyles({
   sellerProfileRoot: {
     marginTop: '1rem',
     padding: '2rem 0rem 1rem 0',
-    borderTop: `1px solid ${Colors.lightestGrey}`,
+    borderTop: `1px solid ${theme.colors.uniswapLighterGrey}`,
   },
   flexCol: {
     display: 'flex',
@@ -88,9 +88,9 @@ const styles = (theme: Theme) => createStyles({
     fontSize: '0.8rem',
     marginRight: '0.5rem',
     // backgroundImage: `url("data:image/svg+xml,%3Csvg width='30' height='30' viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 20.5V18H0v-2h20v-2H0v-2h20v-2H0V8h20V6H0V4h20V2H0V0h22v20h2V0h2v20h2V0h2v20h2V0h2v20h2V0h2v20h2v2H20v-1.5zM0 20h2v20H0V20zm4 0h2v20H4V20zm4 0h2v20H8V20zm4 0h2v20h-2V20zm4 0h2v20h-2V20zm4 4h20v2H20v-2zm0 4h20v2H20v-2zm0 4h20v2H20v-2zm0 4h20v2H20v-2z' fill='%23aaaaaa' fill-opacity='0.3' fill-rule='evenodd'/%3E%3C/svg%3E")`,
-    backgroundColor: `${Colors.backgroundColor}`,
+    backgroundColor: `${theme.colors.uniswapGrey}`,
     color: `${theme.palette.primary.light}`,
-    border: `1px solid ${theme.palette.primary.light}`,
+    border: `1px solid ${theme.colors.uniswapLighterGrey}`,
     transition: theme.transitions.create(['border','color'], {
       easing: theme.transitions.easing.easeIn,
       duration: "100ms",
@@ -98,7 +98,6 @@ const styles = (theme: Theme) => createStyles({
     "&:hover": {
       color: `${theme.palette.secondary.light}`,
       textDecoration: 'none',
-      border: `1px solid ${theme.palette.secondary.light}`,
       transition: theme.transitions.create(['border', 'color'], {
         easing: theme.transitions.easing.easeIn,
         duration: "100ms",

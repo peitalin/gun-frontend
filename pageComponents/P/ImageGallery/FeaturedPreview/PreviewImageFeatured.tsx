@@ -94,8 +94,8 @@ const PreviewImageFeatured: React.FC<ReactProps> = (props) => {
               xs: 600,
               sm: 600,
               md: 600,
-              lg: 800,
-              xl: 1200,
+              lg: 600,
+              xl: 600,
             })}
           />
         }

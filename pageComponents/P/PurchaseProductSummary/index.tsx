@@ -73,11 +73,11 @@ const PurchaseProductSummary: React.FC<ReactProps> = (props) => {
   const aClient = useApolloClient();
   const router = useRouter();
 
-  const chosenVariant = selectedOption.value;
+  const featuredVariant = selectedOption.value;
 
   const showVisaPay =
-    option(chosenVariant).variantId() &&
-    !option(chosenVariant).isSoldOut() &&
+    option(featuredVariant).variantId() &&
+    !option(featuredVariant).isSoldOut() &&
     option(props).product.id() &&
     !xsDown
 
@@ -88,9 +88,9 @@ const PurchaseProductSummary: React.FC<ReactProps> = (props) => {
 
         <div className={classes.flexCol66}>
           {
-            (option(chosenVariant).variantId() && option(props).product.id())
+            (option(featuredVariant).variantId() && option(props).product.id())
             ? <>
-                <ProductHeading product={props.product} chosenVariant={chosenVariant}/>
+                <ProductHeading product={props.product} featuredVariant={featuredVariant}/>
                 <ProductLicenses
                   increaseQuantity={increaseQuantity}
                   decreaseQuantity={decreaseQuantity}
@@ -99,7 +99,7 @@ const PurchaseProductSummary: React.FC<ReactProps> = (props) => {
                   variantOptions={variantOptions}
                   handleChangeVariantOption={handleChangeVariantOption}
                 />
-                <ProductPricing chosenVariant={chosenVariant}/>
+                <ProductPricing featuredVariant={featuredVariant}/>
               </>
             : <div style={{
                 minHeight: 380,
@@ -147,8 +147,8 @@ const PurchaseProductSummary: React.FC<ReactProps> = (props) => {
                       user={user}
                       // className={"fadeIn"}
                       product={props.product}
-                      quotedPrice={chosenVariant.price}
-                      title={`Reserve for ${c(chosenVariant.price)} USD`}
+                      quotedPrice={featuredVariant.price}
+                      title={`Reserve for ${c(featuredVariant.price)} USD`}
                       showIcon={true}
                       display={true}
                       buttonHeight={xsDown ? '40px' : '40px'}
@@ -205,7 +205,6 @@ const styles = (theme: Theme) => createStyles({
     flexDirection: 'column',
     alignItems: 'center',
     padding: '1rem 1rem',
-    boxShadow: "0px 2px 10px 4px rgba(0,0,0,0.1)",
   },
   flexCol: {
     display: 'flex',

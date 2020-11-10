@@ -15,7 +15,7 @@ import { Colors } from "layout/AppTheme";
 
 const ProductHeading = (props: ReactProps) => {
 
-  const { classes, product, chosenVariant } = props;
+  const { classes, product, featuredVariant } = props;
 
   return (
     <ErrorBounds className={classes.headingRoot}>
@@ -34,7 +34,7 @@ const ProductHeading = (props: ReactProps) => {
 
 interface ReactProps extends WithStyles<typeof styles> {
   product: Product;
-  chosenVariant: Product_Variants;
+  featuredVariant: Product_Variants;
 }
 
 const styles = (theme: Theme) => createStyles({

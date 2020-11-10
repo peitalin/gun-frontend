@@ -23,13 +23,13 @@ const ProductPricing = (props: ReactProps) => {
         classes.marginTopHalf,
       )}>
         {
-          option(props).chosenVariant.price() &&
+          option(props).featuredVariant.price() &&
           <PriceDisplayProductPage
-            price={option(props).chosenVariant.price()}
-            priceWas={option(props).chosenVariant.priceWas()}
-            // quantityAvailable={option(props).chosenVariant.currentStockLevel.quantityAvailable()}
+            price={option(props).featuredVariant.price()}
+            priceWas={option(props).featuredVariant.priceWas()}
+            // quantityAvailable={option(props).featuredVariant.currentStockLevel.quantityAvailable()}
             quantityAvailable={1}
-            isSoldOut={option(props).chosenVariant.isSoldOut()}
+            isSoldOut={option(props).featuredVariant.isSoldOut()}
           />
         }
       </div>
@@ -39,7 +39,7 @@ const ProductPricing = (props: ReactProps) => {
 
 
 interface ReactProps extends WithStyles<typeof styles> {
-  chosenVariant: Product_Variants;
+  featuredVariant: Product_Variants;
 }
 
 const styles = (theme: Theme) => createStyles({
