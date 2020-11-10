@@ -379,9 +379,6 @@ export const ProductFragment = gql`
     featuredVariant {
       ...ProductVariantFragment
     }
-    chosenVariant {
-      ...ProductVariantFragment
-    }
     store {
       id
       name

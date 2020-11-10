@@ -138,6 +138,9 @@ export const unpublishProduct = async(
   productEditInput: ProductEditInput,
   aClient: ApolloClient<object>,
 ) => {
+
+  console.log("productEditInput: ", productEditInput)
+
   const response = await aClient.mutate<MutationDataPublishProduct, MutationVarPublishProduct>({
     mutation: EDIT_PRODUCT,
     variables: {
@@ -155,6 +158,9 @@ export const publishProduct = async(
   productEditInput: ProductEditInput,
   aClient: ApolloClient<object>,
 ) => {
+
+  console.log("productEditInput: ", productEditInput)
+
   const response = await aClient.mutate<MutationDataPublishProduct, MutationVarPublishProduct>({
     mutation: EDIT_PRODUCT,
     variables: {
