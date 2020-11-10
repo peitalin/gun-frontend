@@ -33,8 +33,9 @@ const BannerProductCreateDesktop: NextPage<ReactProps> = (props) => {
           color: "#181818",
           alignItems: 'center',
           // marginLeft: '1.5rem',
+          marginTop: '7rem',
         }}
-        height={250}
+        height={480}
         ditherStyle={{
           background: bannerDither
         }}
@@ -45,17 +46,17 @@ const BannerProductCreateDesktop: NextPage<ReactProps> = (props) => {
         </div>
         <div className={classes.mainTitleContainer}>
           <Typography variant={"h2"} className={classes.mainTitle}>
-            Sell used guns on Gun Marketplace
+            Trade used guns on Gun Marketplace
           </Typography>
         </div>
         <Typography variant={"body2"} className={classes.subline1}>
-          No listing fees. No subscription fees. No maintenance time.
+          No listing fees. Protected by escrow.
         </Typography>
         <Typography variant={"body2"} className={classes.subline1}>
-          Just upload your products, set your own prices, and
+          Just upload your listing, set prices,
         </Typography>
         <Typography variant={"body2"} className={classes.subline1}>
-          choose a gun dealer for transfers
+          and choose a licensed dealer
         </Typography>
       </Banner>
     </Hidden>

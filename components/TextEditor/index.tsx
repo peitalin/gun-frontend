@@ -329,7 +329,7 @@ export const styles = (theme: Theme) => createStyles({
     opacity: 0.25,
     position: 'absolute',
     right: '0.25rem',
-    bottom: '-1.125rem',
+    bottom: '-1.25rem',
   },
 })
 

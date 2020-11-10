@@ -12,8 +12,7 @@ export const styles = (theme: Theme) => createStyles({
     justifyContent: 'center',
     alignItems: 'center',
     // color ext
-    backgroundImage: Gradients.gradientUniswapBlueGreen.background,
-    // backgroundImage: Gradients.gradientRainbow.background,
+    backgroundImage: Gradients.gradientUniswapBlue.background,
     backgroundColor: 'initial',
     '-webkit-text-fill-color': 'transparent',
     '-webkit-background-clip': 'text',
@@ -30,7 +29,7 @@ export const styles = (theme: Theme) => createStyles({
     marginBottom: '0.5rem',
     fontFamily: fontFam,
     color: Colors.lightestGrey,
-    // fontSize: '1rem',
+    fontSize: '1.5rem',
     textAlign: "center",
   },
   mainTitle: {
@@ -69,6 +68,6 @@ export const styles = (theme: Theme) => createStyles({
     fontWeight: 500,
     fontSize: '0.9375rem',
     textAlign: 'center',
-    marginBottom: '0.5rem',
+    marginBottom: '0.25rem',
   },
 })

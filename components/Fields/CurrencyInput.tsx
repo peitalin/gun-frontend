@@ -10,7 +10,7 @@ import { TextField } from '@material-ui/core';
 import InputBase from "@material-ui/core/InputBase";
 import { withStyles, WithStyles } from "@material-ui/core/styles";
 import Button from '@material-ui/core/Button';
-
+import ValidationErrorMsg from "./ValidationErrorMsg";
 
 
 
@@ -21,6 +21,8 @@ const CurrencyInput = (props: ReactProps) => {
   const {
     errorMessage,
     touched = false,
+    disableInitialValidationMessage = false,
+    validationErrorMsgStyle,
     classes,
     ...rest
   } = props;
@@ -48,12 +50,14 @@ const CurrencyInput = (props: ReactProps) => {
         {...rest}
       />
 
-      <div className={clsx(
-        touched ? classes.errorMessage : classes.errorMessageUntouched,
-        focused ? classes.errorMessageFocused : null,
-      )}>
-        <span className={"fadeIn"}>{props.errorMessage}</span>
-      </div>
+      <ValidationErrorMsg
+        touched={touched}
+        focused={focused}
+        errorMessage={props.errorMessage}
+        disableInitialValidationMessage={disableInitialValidationMessage}
+        style={validationErrorMsgStyle}
+      />
+
       {
         props.limit &&
         <div className={classes.count}>
@@ -108,6 +112,8 @@ interface ReactProps extends WithStyles<typeof styles> {
   ): void;
   defaultValue: string;
   value: string;
+  disableInitialValidationMessage?: boolean;
+  validationErrorMsgStyle?: any;
   [key: string]: any;
 }
 

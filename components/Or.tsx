@@ -36,12 +36,12 @@ const styles = (theme: Theme) => createStyles({
   },
   dividerLine: {
     flexGrow: 1,
-    borderBottom: `1px solid ${Colors.lightGrey}`,
+    borderBottom: `1px solid ${Colors.uniswapMediumGrey}`,
     height: '1px',
   },
   dividerText: {
     margin: '0rem 0.5rem',
-    color: Colors.darkGrey,
+    color: Colors.uniswapMediumGrey,
     fontWeight: 400,
     fontSize: '0.875rem',
   },

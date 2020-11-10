@@ -253,13 +253,15 @@ export const styles = (theme: Theme) => createStyles({
     border: 'none',
     fontSize: '0.75rem',
     fontWeight: 600,
+    background: Colors.uniswapMediumNavy,
+    color: Colors.uniswapLighterGrey,
     '&:focus': {
       border: 'none',
       outline: 'none',
-      color: Colors.charcoal,
+      color: Colors.uniswapLightestGrey,
     },
     '&::placeholder': {
-      color: Colors.uniswapLightNavy,
+      color: Colors.uniswapLighterGrey,
     }
   },
   yearInputHidden: {
@@ -270,13 +272,15 @@ export const styles = (theme: Theme) => createStyles({
     border: 'none',
     fontSize: '0.75rem',
     fontWeight: 600,
+    background: Colors.uniswapMediumNavy,
+    color: Colors.uniswapLighterGrey,
     '&:focus': {
       border: 'none',
       outline: 'none',
-      color: Colors.charcoal,
+      color: Colors.uniswapLightestGrey,
     },
     '&::placeholder': {
-      color: Colors.uniswapLightNavy,
+      color: Colors.uniswapLighterGrey,
     }
   },
   adornedStart: {

@@ -12,29 +12,46 @@ import Router from "next/router";
 
 
 
-
 const BackTo = (props: ReactProps) => {
 
-  const { classes, title } = props;
-  const router = useRouter();
+  const {
+    classes,
+    title,
+    textLink,
+  } = props;
 
-  return (
-    <div className={classes.goBackContainer}>
-      <Button
-        variant={"outlined"}
-        color={"primary"}
-        onClick={() => Router.back()}
-      >
-        <KeyboardArrowLeft className={classes.iconButton}/>
-        { title ? title : "Back to listings" }
-      </Button>
-    </div>
-  )
+  if (!!textLink) {
+    return (
+      <div className={classes.flexRowSpaceBetween}>
+        <div className={classes.flexColRightBottom}>
+          <a className={classes.textLinkLink} onClick={() => Router.back()}>
+            <Typography variant="body1" className={classes.backLinkText}>
+              {title}
+            </Typography>
+          </a>
+        </div>
+      </div>
+    )
+  } else {
+    return (
+      <div className={classes.goBackContainer}>
+        <Button
+          variant={"outlined"}
+          color={"primary"}
+          onClick={() => Router.back()}
+        >
+          <KeyboardArrowLeft className={classes.iconButton}/>
+          { title ? title : "Back to listings" }
+        </Button>
+      </div>
+    )
+  }
 }
 
 
 interface ReactProps extends WithStyles<typeof styles> {
   title?: string;
+  textLink?: boolean;
 }
 
 export const styles = (theme: Theme) => createStyles({
@@ -43,7 +60,8 @@ export const styles = (theme: Theme) => createStyles({
     alignItems: 'center',
     position: 'relative',
     width: '100%',
-    padding: '2rem',
+    paddingTop: '1rem',
+    paddingBottom: '1rem',
   },
   iconButton: {
   },
@@ -51,6 +69,35 @@ export const styles = (theme: Theme) => createStyles({
     fontWeight: 600,
     width: '100%',
     textAlign: 'center',
+  },
+  textLinkLink: {
+    marginTop: "1rem",
+  },
+  margin1: {
+    marginTop: '1rem',
+    marginBottom: '1rem',
+  },
+  flexRowSpaceBetween: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+  },
+  flexColRightBottom: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+    justifyContent: 'flex-end',
+  },
+  backLinkText: {
+    fontSize: '1rem',
+    fontWeight: 500,
+    marginBottom: '1rem',
+    color: theme.colors.uniswapLighterGrey,
+    "&:hover": {
+      cursor: "pointer",
+      color: Colors.blue,
+    },
   },
 });
 

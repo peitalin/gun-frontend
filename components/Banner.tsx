@@ -16,7 +16,10 @@ const Banner: React.FC<ReactProps> = (props) => {
   // }, [])
 
   return (
-    <div className={clsx(classes.bannerContainer, "fadeInFast")}
+    <div className={clsx(
+      classes.bannerContainer,
+      // "fadeInFast"
+    )}
       style={{
         height: props.height ? props.height : bannerHeight,
         ...props.bannerContainerStyles,

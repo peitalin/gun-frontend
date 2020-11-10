@@ -12,6 +12,7 @@ import { Colors, BorderRadius, fontFam } from "layout/AppTheme";
 import { useFocus } from "utils/hooks";
 // MUI
 import InputBase from "@material-ui/core/InputBase";
+import ValidationErrorMsg from "./ValidationErrorMsg";
 
 
 
@@ -22,7 +23,9 @@ const TextInputAdorned = (props: ReactProps) => {
   const focused = useFocus(ref);
   const {
     errorMessage,
+    validationErrorMsgStyle,
     touched = false,
+    disableInitialValidationMessage = false,
     classes,
     ...rest
   } = props;
@@ -52,12 +55,14 @@ const TextInputAdorned = (props: ReactProps) => {
         />
       </div>
 
-      <div className={clsx(
-        touched ? classes.errorMessage : classes.errorMessageUntouched,
-        focused ? classes.errorMessageFocused : null,
-      )}>
-        <span className={"fadeIn"}>{props.errorMessage}</span>
-      </div>
+      <ValidationErrorMsg
+        touched={touched}
+        focused={focused}
+        errorMessage={props.errorMessage}
+        disableInitialValidationMessage={disableInitialValidationMessage}
+        style={validationErrorMsgStyle}
+      />
+
       {
         props.limit &&
         <div className={classes.count}>
@@ -109,6 +114,8 @@ interface ReactProps extends WithStyles<typeof styles> {
   ): void;
   defaultValue: string;
   value: string;
+  disableInitialValidationMessage?: boolean;
+  validationErrorMsgStyle?: any;
   [key: string]: any;
 }
 

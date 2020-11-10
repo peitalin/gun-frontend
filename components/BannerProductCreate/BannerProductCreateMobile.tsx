@@ -37,8 +37,9 @@ const BannerProductCreateMobile: NextPage<ReactProps> = (props) => {
           maxWidth: 'calc(100vw - 2rem)',
           height: '100%',
           color: "#181818",
+          paddingTop: "5rem",
         }}
-        height={220}
+        height={300}
         ditherStyle={{
           background: bannerDitherMobile
         }}
@@ -48,13 +49,17 @@ const BannerProductCreateMobile: NextPage<ReactProps> = (props) => {
         </div>
         <div className={classes.mainTitleContainerMobile}>
           <Typography variant={"h4"} className={classes.mainTitleMobile}>
-            Buy and Sell Used Guns on Gun Marketplace
+            Trade used guns on Gun Marketplace
           </Typography>
         </div>
         <Typography variant={"body2"} className={classes.subline1Mobile}>
-          No listing fees. No subscription fees. No maintenance time.
-          Just upload your products, set your own prices, and
-          select a licensed gun dealer to handle transfers.
+          No listing fees. Protected by escrow.
+        </Typography>
+        <Typography variant={"body2"} className={classes.subline1Mobile}>
+          Just upload your listing, set prices,
+        </Typography>
+        <Typography variant={"body2"} className={classes.subline1Mobile}>
+          and choose a licensed dealer
         </Typography>
       </Banner>
     </Hidden>

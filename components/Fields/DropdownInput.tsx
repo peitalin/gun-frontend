@@ -31,6 +31,7 @@ const DropdownInput = (props: ReactProps) => {
     onChange,
     options,
     delimiter,
+    validationErrorMsgStyle,
     placeholder = "Select an option",
     ...rest
   } = props;
@@ -210,6 +211,7 @@ const DropdownInput = (props: ReactProps) => {
         focused={focused}
         errorMessage={props.errorMessage}
         disableInitialValidationMessage={disableInitialValidationMessage}
+        style={validationErrorMsgStyle}
       />
 
       {

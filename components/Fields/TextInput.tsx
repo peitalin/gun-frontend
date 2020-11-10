@@ -20,6 +20,7 @@ const TextInput = (props: ReactProps) => {
     errorMessage,
     touched = false,
     disabled = false,
+    validationErrorMsgStyle,
     disableInitialValidationMessage = false,
     classes,
     ...rest
@@ -84,6 +85,7 @@ const TextInput = (props: ReactProps) => {
           focused={focused}
           errorMessage={props.errorMessage}
           disableInitialValidationMessage={disableInitialValidationMessage}
+          style={validationErrorMsgStyle}
         />
 
         {
@@ -124,6 +126,7 @@ const TextInput = (props: ReactProps) => {
           focused={focused}
           errorMessage={props.errorMessage}
           disableInitialValidationMessage={disableInitialValidationMessage}
+          style={props.validationErrorMsgStyle}
         />
 
 
@@ -168,9 +171,10 @@ interface ReactProps extends WithStyles<typeof styles> {
   errorMessage?: string;
   touched?: boolean; // sets error colors as grey if not-touched, red if so
   disabled?: boolean;
-  disableInitialValidationMessage?: boolean;
   limit?: { count: number, max: number };
   buttonWidth?: any;
+  disableInitialValidationMessage?: boolean;
+  validationErrorMsgStyle?: any;
   [key: string]: any;
 }
 

@@ -8,7 +8,6 @@ import Hidden from "components/HiddenFix";
 import Loading from "components/Loading";
 import LoadingCards from "pageComponents/FrontPage/LoadingCards";
 import Typography from "@material-ui/core/Typography";
-import ProductPageRecommendations from "pageComponents/P/ProductPageRecommendations";
 // Next
 import dynamic from "next/dynamic";
 // const YouMayAlsoLike = dynamic(
@@ -53,7 +52,7 @@ const AlignCenterLayout: React.FC<ReactProps> = (props) => {
         <div className={classes.pageRecommendationsContainer}>
           <Hidden mdUp>
             <div className={classes.pageRecommendations}>
-              <ProductPageRecommendations/>
+              <YouMayAlsoLike/>
             </div>
           </Hidden>
           <Hidden smDown>

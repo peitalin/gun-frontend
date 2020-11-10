@@ -28,6 +28,7 @@ const KeywordDropdownInput = (props: ReactProps) => {
     touched = false,
     disabled = false,
     disableInitialValidationMessage = false,
+    validationErrorMsgStyle,
     classes,
     ...rest
   } = props;
@@ -274,6 +275,7 @@ const KeywordDropdownInput = (props: ReactProps) => {
         focused={focused}
         errorMessage={errorMessage}
         disableInitialValidationMessage={disableInitialValidationMessage}
+        style={props.validationErrorMsgStyle}
       />
 
       {
@@ -329,6 +331,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   disabled?: boolean;
   placeholder?: string;
   disableInitialValidationMessage?: boolean;
+  validationErrorMsgStyle?: any;
   limit?: { count: number, max: number };
 }
 interface ReactState {

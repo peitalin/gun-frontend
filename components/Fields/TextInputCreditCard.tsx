@@ -33,6 +33,7 @@ const TextInputCreditCard = (props: ReactProps) => {
     touched = false,
     disabled = false,
     disableInitialValidationMessage = false,
+    validationErrorMsgStyle,
     classes,
     forceShowCardError,
     setForceShowCardError,
@@ -325,6 +326,7 @@ const TextInputCreditCard = (props: ReactProps) => {
         focused={focused}
         errorMessage={props.errorMessage}
         disableInitialValidationMessage={disableInitialValidationMessage}
+        style={props.validationErrorMsgStyle}
       />
     </div>
   )
@@ -359,6 +361,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   touched?: boolean; // sets error colors as grey if not-touched, red if so
   disabled?: boolean;
   disableInitialValidationMessage?: boolean;
+  validationErrorMsgStyle?: any;
   buttonWidth?: any;
   rows?: number;
   isCreditCardField?: boolean;
