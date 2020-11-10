@@ -1,6 +1,7 @@
 import React from "react";
 import { withStyles, WithStyles, Theme, createStyles } from "@material-ui/core/styles";
 import { oc as option } from "ts-optchain";
+import { BorderRadius2x } from "layout/AppTheme";
 // Redux
 import { connect, useSelector, useDispatch } from "react-redux"
 import { GrandReduxState } from 'reduxStore/grand-reducer';
@@ -377,9 +378,6 @@ interface QueryData {
 const styles = (theme: Theme) => createStyles({
   dialogPaperFull: {
     width: "calc(100% - 0.5rem)",
-  },
-  dialogPaper: {
-    margin: '1rem',
   },
   modal: {
     position: "fixed",

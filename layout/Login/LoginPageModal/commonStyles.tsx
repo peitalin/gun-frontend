@@ -1,5 +1,5 @@
 import { withStyles, createStyles, Theme, fade } from "@material-ui/core/styles";
-import { BorderRadius, Colors } from "layout/AppTheme";
+import { BorderRadius2x, BorderRadius, Colors } from "layout/AppTheme";
 
 const emailInputMaxWidth = 350;
 
@@ -15,7 +15,8 @@ const styles = (theme: Theme) => createStyles({
     width: "100%",
   },
   dialogPaper: {
-    margin: '0rem',
+    margin: '1rem',
+    borderRadius: `${BorderRadius2x}px`,
   },
   modal: {
     position: "fixed",
@@ -60,7 +61,6 @@ const styles = (theme: Theme) => createStyles({
     flexDirection: 'column',
     alignItems: 'center',
     padding: "2rem",
-    borderRadius: "0px 0px 4px 4px",
   },
   avatar: {
     margin: theme.spacing(1),
@@ -119,6 +119,7 @@ const styles = (theme: Theme) => createStyles({
     top: '1.5rem',
   },
   dontHaveAccount: {
+    color: Colors.uniswapLightGrey,
     marginTop: '0.5rem',
   },
   // for mobile menu, unlogged in user

@@ -21,8 +21,6 @@ import Typography from "@material-ui/core/Typography";
 // media query
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
-// analytics
-import { analyticsEvent } from "utils/analytics";
 
 
 const LoginPageModal: React.FC<ReactProps> = (props) => {
@@ -85,29 +83,29 @@ const LoginPageModal: React.FC<ReactProps> = (props) => {
     }
   }
 
-  React.useEffect(() => {
-    if (props.openModal) {
-      if (tabIndex === 0) {
-        analyticsEvent("View.Login")
-      }
-      if (tabIndex === 1) {
-        analyticsEvent("View.CreateAccount")
-      }
-      if (tabIndex === 2) {
-        analyticsEvent("View.PasswordReset")
-      }
-    }
-  }, [props.openModal, tabIndex])
+  // React.useEffect(() => {
+  //   if (props.openModal) {
+  //     if (tabIndex === 0) {
+  //       analyticsEvent("View.Login")
+  //     }
+  //     if (tabIndex === 1) {
+  //       analyticsEvent("View.CreateAccount")
+  //     }
+  //     if (tabIndex === 2) {
+  //       analyticsEvent("View.PasswordReset")
+  //     }
+  //   }
+  // }, [props.openModal, tabIndex])
 
-  React.useEffect(() => {
-    if (props.numUnclaimedOrders) {
-      if (tabIndex === 0) {
-        analyticsEvent("View.OrderClaim.Signup")
-      } else {
-        analyticsEvent("View.OrderClaim.Login")
-      }
-    }
-  }, [])
+  // React.useEffect(() => {
+  //   if (props.numUnclaimedOrders) {
+  //     if (tabIndex === 0) {
+  //       analyticsEvent("View.OrderClaim.Signup")
+  //     } else {
+  //       analyticsEvent("View.OrderClaim.Login")
+  //     }
+  //   }
+  // }, [])
 
 
   const renderButton = () => {
