@@ -307,7 +307,7 @@ const styles = (theme: Theme) => createStyles({
     height: 40,
   },
   subtitle1: {
-    color: Colors.black,
+    color: Colors.uniswapLightGrey,
     marginTop: '2rem',
     marginBottom: '0.5rem',
   },

@@ -75,11 +75,11 @@ const OrderDetailsPage: FunctionComponent<ReactProps> = (props) => {
             />
             {/* <Row
               fieldName={"Product Variant ID:"}
-              fieldValue={order.product.chosenVariant.variantId}
+                fieldValue={order.product.featuredVariant.variantId}
             />
             <Row
               fieldName={"Product Variant Name:"}
-              fieldValue={order.product.chosenVariant.variantName}
+              fieldValue={order.product.featuredVariant.variantName}
             /> */}
           </div>
           <div className={classNames(classes.flexCol, classes.section)}>

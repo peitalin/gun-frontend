@@ -4,7 +4,7 @@ import {oc as option} from "ts-optchain";
 import clsx from "clsx";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
-import { Colors } from "layout/AppTheme";
+import { Colors, BorderRadius, BorderRadius3x } from "layout/AppTheme";
 // Router
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -169,7 +169,7 @@ const styles = (theme: Theme) => createStyles({
     margin: '4rem 1rem 0rem 1rem',
     // border: `1px solid ${Colors.lightGrey}`,
     // borderBottom: `0px solid ${Colors.lightGrey}`,
-    borderRadius: '2px',
+    borderRadius: BorderRadius3x,
   },
   routeMenuList: {
     listStyle: "none",
@@ -177,16 +177,16 @@ const styles = (theme: Theme) => createStyles({
     margin: '1rem 0rem',
   },
   routeListItem: {
-    padding: "0.6rem 1rem",
+    padding: "0.8rem 1rem",
     margin: "0.25rem 0rem",
-    borderRadius: `4px`,
+    borderRadius: BorderRadius3x,
     color: Colors.darkGrey,
     fontSize: '0.9rem',
     fontWeight: 500,
     background: fade(Colors.foregroundColor, 0),
     border: '1px solid rgba(0,0,0,0)',
     "&:hover": {
-      background: fade(Colors.lightGrey, 0.5),
+      background: fade(Colors.lightGrey, 0.1),
       transition: theme.transitions.create(['background', 'border-right'], {
         easing: theme.transitions.easing.easeIn,
         duration: "100ms",
@@ -194,16 +194,16 @@ const styles = (theme: Theme) => createStyles({
     }
   },
   routeListItemSelected: {
-    padding: "0.6rem 1rem",
+    padding: "0.8rem 1rem",
     margin: "0.25rem 0rem",
-    borderRadius: `4px`,
+    borderRadius: BorderRadius3x,
     color: Colors.darkGrey,
     fontSize: '0.9rem',
     fontWeight: 500,
     border: `1px solid ${Colors.mediumGrey}`,
     background: Colors.foregroundColor,
     "&:hover": {
-      background: fade(Colors.lightGrey, 0.5),
+      background: fade(Colors.lightGrey, 0.1),
       transition: theme.transitions.create(['background', 'border-right'], {
         easing: theme.transitions.easing.easeIn,
         duration: "100ms",

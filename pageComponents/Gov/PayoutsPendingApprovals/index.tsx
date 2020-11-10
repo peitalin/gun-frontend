@@ -40,7 +40,6 @@ import PeriodPicker from "./PeriodPicker";
 import OrdersPendingApprovalTable from "./OrdersPendingApprovalTable";
 import PayoutItemsTable from "./PayoutItemsTable";
 import TransactionsTable from "./TransactionsTable";
-import PayoutsTable from "./PayoutsTable";
 // formatters
 import dayjs from 'dayjs';
 import currency from "currency.js";
@@ -243,7 +242,7 @@ const styles = (theme: Theme) => createStyles({
     justifyContent: "space-between",
   },
   link: {
-    fontFamily: '"Segoe UI","Helvetica Neue",Arial,sans-serif',
+    fontFamily: '"Helvetica Neue",Arial,sans-serif',
     fontSize: "0.8rem",
     color: "#2484FF",
     textAlign: "center",

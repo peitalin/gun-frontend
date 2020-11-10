@@ -273,10 +273,12 @@ const useRowStyles = makeStyles({
   hiddenRowRoot: {
   },
   backgroundGrey: {
-    backgroundColor: Colors.slateGrey,
+    // backgroundColor: Colors.slateGrey,
+    backgroundColor: Colors.uniswapGrey,
   },
   backgroundGrey2: {
-    backgroundColor: fade(Colors.slateGrey, 0.7),
+    // backgroundColor: fade(Colors.slateGrey, 0.7),
+    backgroundColor: fade(Colors.uniswapGrey, 0.7),
   },
   marginBox: {
     margin: "1rem 1rem 2rem 1rem",
@@ -291,17 +293,14 @@ const useRowStyles = makeStyles({
   },
   form10Button: {
     margin: "0.5rem 0rem",
-    backgroundColor: Colors.foregroundColor,
   },
   approveButton: {
     height: '36px',
     margin: "0.5rem 0.5rem 0.5rem 0.5rem",
-    backgroundColor: Colors.foregroundColor,
   },
   unapproveButton: {
     height: '36px',
     margin: "0.5rem 0.5rem 0.5rem 0rem",
-    backgroundColor: Colors.foregroundColor,
     border: `1px solid ${Colors.red}`,
     color: Colors.red,
     "&:hover": {
@@ -322,10 +321,9 @@ const useRowStyles = makeStyles({
   headerRow: {
     display: "flex",
     flexDirection: "row",
-    // backgroundColor: Colors.slateGreyDark,
-    backgroundColor: Colors.slateGreyDarker,
+    backgroundColor: Colors.uniswapMediumGrey,
+    color: Colors.cream,
     boxShadow: BoxShadows.shadow1.boxShadow,
-    // borderBottom: `1px solid ${Colors.slateGreyDarker}`,
   },
   headerCell1: {
     flexBasis: '25%',

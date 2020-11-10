@@ -1,5 +1,4 @@
-import * as React from "react";
-import { NextPage, NextPageContext } from 'next';
+import React from "react";
 import {oc as option} from "ts-optchain";
 import clsx from "clsx";
 // Redux
@@ -8,7 +7,7 @@ import { GrandReduxState } from 'reduxStore/grand-reducer';
 import { Actions } from 'reduxStore/actions';
 // Styles
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
-import { Colors } from "layout/AppTheme";
+import { Colors, BorderRadius } from "layout/AppTheme";
 // Typings
 import {
   UserPrivate,
@@ -43,6 +42,8 @@ import { Formik } from 'formik';
 import { validationSchemas } from "utils/validation";
 import SnackBarA from "components/Snackbars/SnackbarA";
 import SnackbarsSuccessErrors from "components/Snackbars/SnackbarsSuccessErrors";
+// Snackbar
+import { useSnackbar } from "notistack";
 
 
 
@@ -64,6 +65,7 @@ const RefundOrders: React.FC<ReactOrdersFormProps> = (props) => {
     setRecentPaypalToken
   ] = React.useState<{ status: string, token: string }>(undefined);
 
+  const snackbar = useSnackbar();
 
   const searchOrder = async(orderId: ID) => {
     try {
@@ -77,7 +79,8 @@ const RefundOrders: React.FC<ReactOrdersFormProps> = (props) => {
         setErrorMsg(undefined)
       }
     } catch(e) {
-      setErrorMsg("OrderID does not exist.")
+      // setErrorMsg("OrderID does not exist.")
+      snackbar.enqueueSnackbar(`OrderID does not exist`, { variant: "error" })
     }
   }
 
@@ -472,10 +475,8 @@ interface QueryVar3 {
 const styles = (theme: Theme) => createStyles({
   root: {
     padding: '3rem',
-    borderRadius: '2px',
-    border: '1px solid #eaeaea',
+    borderRadius: BorderRadius,
     backgroundColor: Colors.foregroundColor,
-    boxShadow: '0px 1px 1px 0 #e6ebf1',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -506,11 +507,11 @@ const styles = (theme: Theme) => createStyles({
   orderItemButton: {
     padding: "0.5rem 1rem",
     width: '100%',
-    borderRadius: '2px',
-    borderRight: `1px solid ${Colors.lightPurple}`,
-    borderLeft: `1px solid ${Colors.lightPurple}`,
-    borderTop: `1px solid ${Colors.lightPurple}`,
-    borderBottom: `1px solid ${Colors.lightPurple}`,
+    borderRadius: BorderRadius,
+    border: `1px solid ${Colors.gradientUniswapBlue1}`,
+    "&:hover": {
+      border: `1px solid ${Colors.blue}`,
+    },
   },
   discountRoot: {
     margin: '1rem',

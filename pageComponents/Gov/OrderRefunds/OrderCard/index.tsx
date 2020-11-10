@@ -167,7 +167,7 @@ const OrderCard = (props: ReactProps & FormikProps<FormikFields>) => {
                 Variant:
               </Typography>
               <Typography className={classes.name} variant="body1">
-                {product.chosenVariant.variantName}
+                {product.featuredVariant.variantName}
               </Typography>
             </div> */}
             <div className={classes.flexRow}>

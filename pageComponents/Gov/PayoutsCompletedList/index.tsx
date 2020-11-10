@@ -3,7 +3,7 @@ import {oc as option} from "ts-optchain";
 import clsx from "clsx";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
-import { Colors } from "layout/AppTheme";
+import { Colors, BoxShadows, BorderRadius } from "layout/AppTheme";
 // Typings
 import {
   UserPublic,
@@ -143,7 +143,7 @@ const PayoutsCompletedList = (props: ReactProps) => {
       </div>
 
 
-      <div className={classes.paper}>
+      <div className={clsx(classes.paper, classes.boxShadowBorder)}>
         <div className={classes.flexRowTitle}>
           <div className={classes.flexItem}>
             <Typography variant="subtitle1" className={classes.subtitle}>
@@ -301,7 +301,7 @@ const styles = (theme: Theme) => createStyles({
     width: '100%',
     padding: '16px', // same padding as MenuItem 16px
     paddingBottom: '1rem',
-    borderBottom: '1px solid #eaeaea',
+    borderBottom: `1px solid ${Colors.uniswapNavy}`,
   },
   flexRow: {
     display: 'flex',
@@ -348,9 +348,12 @@ const styles = (theme: Theme) => createStyles({
   customersPlaceholder: {
     minHeight: 200,
   },
+  boxShadowBorder: {
+    boxShadow: BoxShadows.shadow1.boxShadow,
+    borderRadius: BorderRadius,
+  },
   paper: {
-    borderRadius: '4px',
-    border: '1px solid #eaeaea',
+    // border: `1px solid ${Colors.uniswapNavy}`,
     backgroundColor: Colors.foregroundColor,
     width: '100%',
     height: '100%',
