@@ -1,4 +1,3 @@
-
 import { createStyles, Theme, fade } from "@material-ui/core/styles";
 import { fontFam, Colors, BoxShadows, BorderRadius } from "layout/AppTheme";
 
@@ -11,13 +10,6 @@ export const styles = (theme: Theme) => createStyles({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center',
-    paddingBottom: '4rem',
-    border: `1px solid ${Colors.mediumLightGrey}`,
-    backgroundColor: Colors.foregroundColor,
-    boxShadow: BoxShadows.shadow4.boxShadow,
-    padding: "2rem",
-    // borderRadius: BorderRadius,
-    borderRadius: `4px`,
   },
   rootSm: {
     flexGrow: 1,
@@ -202,6 +194,16 @@ export const styles = (theme: Theme) => createStyles({
   formIncomplete: {
     color: "#ccc",
     textAlign: "center",
+  },
+  policyBox: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    width: '100%',
+  },
+  policy: {
+    width: 'calc(100% - 4rem)',
+    marginBottom: '2rem',
   },
   createProductButtonContainer: {
     display: "flex",

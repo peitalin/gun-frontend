@@ -18,7 +18,6 @@ import { Product, ID } from "typings/gqlTypes";
 
 const ProductEditModal: React.FC<ReactProps> = (props) => {
 
-  const [showConfirmCloseModal, setShowConfirmCloseModal] = useState(false);
   const [fadeOut, setFadeOut] = useState(false);
   const { classes, asModal, product } = props;
 

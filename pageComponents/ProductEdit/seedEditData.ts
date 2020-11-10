@@ -18,7 +18,7 @@ export const seedProductEditDataAction = (product: Product) =>
   const actions = Actions.reduxProductEdit;
   // console.log("converting product", product)
   const productEditInput = productToProductEditInput(product);
-  console.log("seeding productedit data into redux", productEditInput)
+  // console.log("seeding productedit data into redux", productEditInput)
 
   batch(() => {
     dispatch(actions.UPDATE_PRODUCT_EDIT(productEditInput))

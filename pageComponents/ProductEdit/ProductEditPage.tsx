@@ -25,34 +25,64 @@ import {
 import { withStyles, WithStyles } from "@material-ui/core/styles";
 import { styles } from "./commonStyles";
 // MUI
-import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
-import Switch from '@material-ui/core/Switch';
 // Icons
 import ClearIcon from "@material-ui/icons/Clear";
 import IconButton from "@material-ui/core/IconButton";
 // Errors
 import ErrorBounds from 'components/ErrorBounds';
-import ErrorDisplay from "components/Error";
 import ButtonLoading from "components/ButtonLoading";
 // Subcomponents
+import ProductEditFormLayout from "./ProductEditFormLayout";
 import Title from "pageComponents/ProductCreate/TitleSerialNumber";
-import Description from "pageComponents/ProductCreate/Description";
-import IsPublished from "./IsPublished";
-import SelectCategories from "pageComponents/ProductCreate/SelectCategories";
-import SelectActionType from "pageComponents/ProductCreate/SelectActionType";
-import SelectTags from "pageComponents/ProductCreate/SelectTags";
-import PricingLicenses from "pageComponents/ProductCreate/PricingLicenses";
 import DisplaySnackBars from "pageComponents/ProductCreate/ProductCreatePage/DisplaySnackBars";
+// Subcomponents
+import TitleSerialNumber from "pageComponents/ProductCreate/TitleSerialNumber";
+import GunAttributes from "pageComponents/ProductCreate/GunAttributes";
+import Description from "pageComponents/ProductCreate/Description";
+import PricingLicenses from "pageComponents/ProductCreate/PricingLicenses";
+
+import SelectTags from "pageComponents/ProductCreate/SelectTags";
+import SelectFieldPlaceholder from "pageComponents/ProductCreate/SSR/SelectFieldPlaceholder";
+// const SelectTags = dynamic(() => import("pageComponents/ProductCreate/SelectTags"), {
+//   loading: () => <SelectTagsPlaceholder/>,
+//   ssr: false,
+// })
+// import SelectCategories from "pageComponents/ProductCreate/SelectCategories"
+const SelectCategories = dynamic(() => import("pageComponents/ProductCreate/SelectCategories"), {
+  loading: () => <SelectFieldPlaceholder title={"Category"}/>,
+  ssr: false,
+})
+// import SelectActionType from "pageComponents/ProductCreate/SelectFieldPlaceholder"
+const SelectActionType = dynamic(() => import("pageComponents/ProductCreate/SelectActionType"), {
+  loading: () => <SelectFieldPlaceholder title={"Action Type"}/>,
+  ssr: false,
+})
+// import SelectCondition from "pageComponents/ProductCreate/SelectCondition"
+const SelectCondition = dynamic(() => import("pageComponents/ProductCreate/SelectCondition"), {
+  loading: () => <SelectFieldPlaceholder title={"Condition"}/>,
+  ssr: false,
+})
+// import SelectDealer from "pageComponents/ProductCreate/SelectDealer"
+const SelectDealer = dynamic(() => import("pageComponents/ProductCreate/SelectDealer"), {
+  loading: () => <SelectFieldPlaceholder title={"Dealer"}/>,
+  ssr: false,
+})
+// same dir components
+import SectionBorder from "pageComponents/ProductCreate/ProductCreatePage/SectionBorder";
+// Product Preview Page
+import Tooltip from '@material-ui/core/Tooltip';
+
 // SSR Subcomponents
 import dynamic from 'next/dynamic'
 import UploadInputPlaceholder from "pageComponents/ProductCreate/SSR/UploadInputPlaceholder";
 import UploadPreviewPlaceholder from "pageComponents/ProductCreate/SSR/UploadPreviewPlaceholder";
-
 const PreviewItemUploaderGrid = dynamic(() => import("pageComponents/ProductCreate/PreviewItemUploaderGrid"), {
   loading: () => <UploadPreviewPlaceholder/>,
   ssr: false,
 })
+// Product Preview Card
+import PreviewCardResponsive from "pageComponents/FrontPage/PreviewCardResponsiveCarousel";
 
 // Validation
 import { Formik, FormikErrors } from 'formik';
@@ -83,7 +113,12 @@ import {
 const ProductEditPage = (props: ReactProps) => {
 
   // Props & State
-  const { classes, asModal, closeModal, product } = props;
+  const {
+    classes,
+    asModal,
+    closeModal,
+    product
+  } = props;
   const router = useRouter();
 
   // Redux
@@ -109,8 +144,6 @@ const ProductEditPage = (props: ReactProps) => {
   });
 
   const productEditInput = reduxProductEdit.productEditInput;
-  // see if any previewItems are a before'after slider image
-  const [showBeforeAfterPreviews, setShowBeforeAfterPreviews] = React.useState(true);
 
 
   // Effects
@@ -124,7 +157,7 @@ const ProductEditPage = (props: ReactProps) => {
   const [productEdit, {data, loading: apolloLoading, error}] =
   useMutation<MutationData, MutationVar>(EDIT_PRODUCT, {
     variables: {
-      productEditInput: productEditInput as any
+      productEditInput: undefined
     },
     onError: (err) => console.log(err),
     onCompleted: async(data: MutationData) => {
@@ -138,28 +171,6 @@ const ProductEditPage = (props: ReactProps) => {
         // reset redux form
         dispatch(actions.RESET_PRODUCT_EDIT())
       }, 200)
-
-      try {
-
-        ///// Refetch product data
-        // 1. refresh /gallery
-        aClient.query({
-          query: GET_RECOMMENDED_PRODUCTS,
-          variables: { count: 18 }
-        });
-        // 2. refreshes /product/:productId
-        aClient.query({
-          query: GET_PRODUCT,
-          variables: { productId: productEditInput.productId }
-        });
-        // 3. refreshs /admin productsForSale Connections
-        aClient.query({
-          query: GET_STORE_PRIVATE,
-        });
-
-      } catch (e) {
-        console.log(e)
-      }
     },
   })
 
@@ -191,13 +202,25 @@ const ProductEditPage = (props: ReactProps) => {
             productEditInput: {
               title: values.title,
               description: htmlDescription,
+              condition: values.condition,
+              make: values.make,
+              model: values.model,
+              ammoType: values.ammoType,
+              actionType: values.actionType,
+              caliber: values.caliber,
+              serialNumber: values.serialNumber,
+              location: values.location,
               categoryId: values.categoryId,
               tags: values.tags,
               currentVariants: values.currentVariants,
               isPublished: values.isPublished,
               productId: values.productId,
-            } as any
+              dealerId: values.dealerId,
+              dealer: values.dealer,
+            }
           },
+        }).finally(() => {
+          setState(s => ({ ...s, loading: false }))
         })
       }}
     >
@@ -221,41 +244,64 @@ const ProductEditPage = (props: ReactProps) => {
         // console.info("fprops.values: ", fprops.values)
 
         return (
-          <ProductEditForm
+          <ProductEditFormLayout
             classes={classes}
             asModal={asModal}
             closeModal={closeModal}
             onSubmit={handleSubmit} // dispatches to <Formik onSubmit={}/>
           >
-            <Title {...fprops}/>
+            <SectionBorder>
+              <TitleSerialNumber {...fprops} />
+              <SelectCategories
+                {...fprops}
+              />
+              <SelectActionType
+                {...fprops}
+              />
+            </SectionBorder>
 
-            <Description
-              {...fprops}
-            />
+            <SectionBorder>
+              <SelectDealer
+                {...fprops}
+              />
+            </SectionBorder>
 
-            <SelectCategories
-              {...fprops}
-            />
+            <SectionBorder style={{ paddingBottom: '1rem' }}>
+              <GunAttributes {...fprops} />
+              <SelectCondition
+                {...fprops}
+              />
+            </SectionBorder>
 
-            <SelectActionType
-              {...fprops}
-            />
+            <SectionBorder>
+              <Description
+                {...fprops}
+              />
+              {/* <SelectTags
+                reducerName={reducerName}
+                {...fprops}
+              /> */}
+            </SectionBorder>
 
-            <PreviewItemUploaderGrid
-              reducerName={reducerName}
-              productInput={productEditInput}
-              storeId={product.store.id}
-              productId={product.id}
-              dzuPreviewItems={dzuPreviewItems}
-              dzuPreviewOrder={dzuPreviewOrder}
-              {...fprops}
-            />
+            <SectionBorder>
+              <PreviewItemUploaderGrid
+                reducerName={reducerName}
+                productInput={productEditInput}
+                storeId={product.store.id}
+                productId={product.id}
+                dzuPreviewItems={dzuPreviewItems}
+                dzuPreviewOrder={dzuPreviewOrder}
+                {...fprops}
+              />
+            </SectionBorder>
 
-            <PricingLicenses
-              reducerName={reducerName}
-              currentVariants={values.currentVariants}
-              {...fprops}
-            />
+            <SectionBorder>
+              <PricingLicenses
+                reducerName={reducerName}
+                currentVariants={values.currentVariants}
+                {...fprops}
+              />
+            </SectionBorder>
 
             <ErrorBounds className={classes.flexButtons}>
               <div className={classes.flexButtonItem}>
@@ -269,6 +315,8 @@ const ProductEditPage = (props: ReactProps) => {
                   Back to Listings
                 </Button>
               </div>
+
+              <div className={classes.flexButtonSpacer}/>
               <div className={classes.flexButtonSpacer}/>
               <div className={classes.flexButtonItem}>
                 <ButtonLoading
@@ -322,39 +370,11 @@ const ProductEditPage = (props: ReactProps) => {
                 data={data}
               />
             </ErrorBounds>
-          </ProductEditForm>
+          </ProductEditFormLayout>
         )
       }}
     </Formik>
   </div>
-  )
-}
-
-const ProductEditForm: React.FC<ProductEditFormProps> = (props) => {
-  const { classes, asModal, closeModal, children } = props;
-  const { onSubmit } = props; // submits to Formik validation
-  // with a callback to Formik.onSubmit prop
-  const theme = useTheme();
-  const smDown = useMediaQuery(theme.breakpoints.down('sm'));
-
-  return (
-    <div className={smDown ? classes.rootSm : classes.root}>
-      <div className={classes.maxWidth500}>
-        <div className={asModal ? classes.modalMargin : classes.pageMargin}>
-          {
-            asModal &&
-            <div className={classes.flexEnd}>
-              <IconButton onClick={closeModal}>
-                <ClearIcon/>
-              </IconButton>
-            </div>
-          }
-        </div>
-        <form onSubmit={onSubmit}>
-          {children}
-        </form>
-      </div>
-    </div>
   )
 }
 
@@ -370,13 +390,6 @@ interface ReduxState {
   reduxProductEdit: ReduxStateProductEdit;
   dzuPreviewOrder: DzuPreviewOrder[];
   dzuPreviewItems: DzuPreviewItem[];
-}
-
-
-interface ProductEditFormProps extends WithStyles<typeof styles> {
-  asModal?: boolean;
-  closeModal(): void;
-  onSubmit(e: React.FormEvent<HTMLFormElement>): void;
 }
 
 export interface MutationData {
