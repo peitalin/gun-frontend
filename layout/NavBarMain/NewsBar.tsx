@@ -17,10 +17,10 @@ const NewsBar = (props: NewsBarProps) => {
 
   return (
     <nav className={clsx(
-      classes.baseBar,
+      classes.baseBarDashboard,
       classes.newsBar,
     )}>
-      <div className={classes.baseBarInner}>
+      <div className={classes.baseBarInnerDashboard}>
         <Hidden mdDown>
           {/* <BreadcrumbRoutes/> */}
           <div className={classes.newsBarInner}>

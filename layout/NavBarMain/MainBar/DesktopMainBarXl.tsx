@@ -24,7 +24,7 @@ import { useRouter } from "next/router";
 import { asCurrency as c } from "utils/prices";
 // Chat
 import OpenChatButton from "pageComponents/ChatCenter/OpenChatButton";
-
+import { isMainPages } from "."
 
 
 const DesktopMainBarXl = (props: DesktopMainBarProps) => {
@@ -39,15 +39,16 @@ const DesktopMainBarXl = (props: DesktopMainBarProps) => {
   } = props;
 
   const dispatch = useDispatch();
-  const goToModal = goToModalConnect(dispatch);
   const router = useRouter()
 
-  const goToProductCreate = () => {
-    router.push('/sell')
-  }
+  let isHomePage = isMainPages(router)
 
   return (
-    <div className={classes.baseBarInner}>
+    <div className={
+      isHomePage
+        ? classes.baseBarInnerHomePage
+        : classes.baseBarInnerDashboard
+    }>
 
       <div style={{ flexBasis: '0.5rem' }}></div>
 
@@ -57,34 +58,29 @@ const DesktopMainBarXl = (props: DesktopMainBarProps) => {
         </a>
       </Link>
 
-      <div style={{ marginRight: '1rem' }}>
-        <Searchbar color={color}/>
-      </div>
-
       <div style={{ flexGrow: 1}}/>
 
-      <Button
-        className={clsx(
-          classes.navbarButton,
-          endRoute === 'sell' ? classes.navbarButtonSelected : null,
-        )}
-        variant="text"
-        color="primary"
-        onClick={() => goToProductCreate()}
-      >
-        <div className={classes.flexItem}>
-          <span className={
-            endRoute === 'sell' ? classes.selectedRouteText : null
-          }>
-            Upload Listing
-          </span>
-        </div>
-      </Button>
-
+      <Link href="/sell">
+        <a className={classes.buttonLink}>
+          <Button
+              className={classes.navbarButton}
+              variant={"text"}
+              color="primary"
+            >
+              <div>
+                <span className={
+                  endRoute === 'sell' ? classes.selectedRouteText : null
+                }>
+                  Sell
+                </span>
+              </div>
+            </Button>
+        </a>
+      </Link>
 
       {
         loggedIn
-        ? <Link href="/my-orders">
+        ? <Link href="/admin/orders">
             <a className={classes.buttonLink}>
               <Button
                   className={classes.navbarButton}
@@ -93,7 +89,7 @@ const DesktopMainBarXl = (props: DesktopMainBarProps) => {
                 >
                   <div>
                     <span className={
-                      endRoute === 'my-orders' ? classes.selectedRouteText : null
+                      endRoute === '/admin/orders' ? classes.selectedRouteText : null
                     }>
                       Orders
                     </span>
@@ -101,7 +97,7 @@ const DesktopMainBarXl = (props: DesktopMainBarProps) => {
                 </Button>
             </a>
           </Link>
-        : <div className={classes.myDownloadsLogin}>
+        : <div className={classes.buttonMarginRight}>
             <Login
               buttonText={"Orders"}
               titleLogin={"Login to continue"}
@@ -123,7 +119,7 @@ const DesktopMainBarXl = (props: DesktopMainBarProps) => {
               },
             }}
           />
-        : <div className={classes.myDownloadsLogin}>
+        : <div className={classes.buttonMarginRight}>
             <Login
               buttonText={"Offers"}
               titleLogin={"Login to continue"}

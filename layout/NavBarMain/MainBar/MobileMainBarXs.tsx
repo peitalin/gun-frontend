@@ -14,7 +14,10 @@ import Badge from '@material-ui/core/Badge';
 import MobileMenuDropdown from "layout/NavBarMain/MobileMenuDropdown";
 import Button from "@material-ui/core/Button";
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import SettingsIcon from '@material-ui/icons/Settings';
 import SearchbarMobile from "layout/NavBarMain/SearchbarMobile";
+import StorefrontIcon from "@material-ui/icons/Storefront";
+import Login from "layout/Login";
 // Modals
 import { goToModalConnect } from "utils/modals";
 import { useDispatch, useSelector } from "react-redux";
@@ -22,8 +25,6 @@ import { useDispatch, useSelector } from "react-redux";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { navbarRoutes } from "./navbarRoutes";
-// Analytics
-import { useAnalytics, analyticsEvent } from "utils/analytics";
 
 
 
@@ -67,19 +68,18 @@ const MobileMainBar = (props: MobileMainBarProps) => {
         <Button
           className={clsx(
             classes.navbarButtonMobile,
-            endRoute === 'start' ? classes.navbarButtonSelected : null,
+            endRoute === 'sell' ? classes.navbarButtonSelected : null,
           )}
           variant="text"
           color="primary"
           onClick={() => {
-            router.push(navbarRoutes.start)
-            analyticsEvent("Nav.Upload.Pressed")
+            router.push(navbarRoutes.sell)
             props.setMobileMenuOpen(s => false)
           }}
         >
           <span className={clsx(
             classes.buttonText,
-            endRoute === 'start' ? classes.selectedRouteText : null
+            endRoute === 'sell' ? classes.selectedRouteText : null
           )}>
             Sell
           </span>
@@ -96,7 +96,6 @@ const MobileMainBar = (props: MobileMainBarProps) => {
             )}
             onClick={() => {
               props.setMobileMenuOpen(s => false)
-              analyticsEvent("Nav.Logo.Pressed")
             }}
           >
             <Logo color={color}/>
@@ -115,28 +114,41 @@ const MobileMainBar = (props: MobileMainBarProps) => {
         />
       </div>
 
+
       <div className={clsx(
         "fadeIn",
         hide ? classes.mainBarInnerHide : classes.mainBarInner,
       )}>
-        <Button
-          className={classes.navbarButtonMobile}
-          variant="text"
-          color="primary"
-          onClick={() => {
-            router.push(navbarRoutes.checkout)
-            props.setMobileMenuOpen(s => false)
-            analyticsEvent("Nav.Cart.Pressed")
-          }}
-        >
-          <Badge
-            badgeContent={cartCount}
-            classes={{ colorSecondary: classes.badge }}
-            color="secondary"
-          >
-            <ShoppingCartIcon className={classes.icons}/>
-          </Badge>
-        </Button>
+        {
+          loggedIn
+          ? <Button
+              className={classes.navbarButton}
+              variant={"text"}
+              color="primary"
+              onClick={() => {
+                router.push(navbarRoutes.admin)
+                props.setMobileMenuOpen(s => false)
+              }}
+            >
+              <div>
+                <span className={
+                  endRoute === '/admin/products' ? classes.selectedRouteText : null
+                }>
+                  Store
+                </span>
+              </div>
+              {/* <StorefrontIcon className={classes.icons}/> */}
+            </Button>
+          : <div className={classes.buttonMarginRight}>
+              <Login
+                buttonText={"Store"}
+                titleLogin={"Login to continue"}
+                buttonProps={{
+                  color: "primary",
+                }}
+              />
+            </div>
+        }
       </div>
     </div>
   )

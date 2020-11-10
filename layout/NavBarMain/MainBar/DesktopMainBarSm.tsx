@@ -26,6 +26,7 @@ import { useRouter } from "next/router";
 // Router
 import Link from "next/link";
 import { asCurrency as c } from "utils/prices";
+import { isMainPages } from "."
 
 
 
@@ -41,7 +42,6 @@ const DesktopMainBarSm = (props: ReactProps & DesktopMainBarProps) => {
   } = props;
 
   const dispatch = useDispatch();
-  const goToModal = goToModalConnect(dispatch);
   const router = useRouter()
 
   const [hide, setHide] = React.useState(false)
@@ -50,18 +50,16 @@ const DesktopMainBarSm = (props: ReactProps & DesktopMainBarProps) => {
     router.push('/sell')
   }
 
-  const goToMyWishlist = () => {
-    router.push('/my-list')
-  }
-
-  const goToMyDownloads = () => {
-    router.push('/my-orders')
-  }
-
+  let isHomePage = isMainPages(router)
 
   return (
-    <div className={clsx(classes.baseBarInner, classes.flexStart)}>
-      <div style={{ flexGrow: 1 }}></div>
+    <div className={
+      isHomePage
+        ? clsx(classes.baseBarInnerHomePage)
+        : clsx(classes.baseBarInnerDashboard)
+    }>
+
+      <div style={{ flexBasis: '1rem', minWidth: '0.5rem' }}></div>
 
       <Link href="/">
         <a className={classes.buttonLink}>
@@ -69,7 +67,9 @@ const DesktopMainBarSm = (props: ReactProps & DesktopMainBarProps) => {
         </a>
       </Link>
 
-      <div className={
+      <div style={{ flexGrow: 1 }}></div>
+
+      {/* <div className={
         !hide ? "fadeIn" : null
       }>
         <SearchbarMobile
@@ -78,7 +78,7 @@ const DesktopMainBarSm = (props: ReactProps & DesktopMainBarProps) => {
           setMobileMenuOpen={props.setMobileMenuOpen}
           setHideMenuItems={setHide}
         />
-      </div>
+      </div> */}
 
       <div className={clsx(
         classes.mainBarInner,
@@ -102,42 +102,34 @@ const DesktopMainBarSm = (props: ReactProps & DesktopMainBarProps) => {
 
         {
           loggedIn
-          ? <Button
-              className={classes.navbarButton}
-              variant={"text"}
-              color="primary"
-              onClick={goToMyDownloads}
-            >
-              <div>
-                <span className={
-                  endRoute === 'my-orders' ? classes.selectedRouteText : null
-                }>
-                    Downloads
-                </span>
-              </div>
-            </Button>
-          : <div className={classes.myDownloadsLogin}>
+          ? <Link href="/admin/orders">
+              <a className={classes.buttonLink}>
+                <Button
+                    className={classes.navbarButton}
+                    variant={"text"}
+                    color="primary"
+                  >
+                    <div>
+                      <span className={
+                        endRoute === '/admin/orders' ? classes.selectedRouteText : null
+                      }>
+                        Orders
+                      </span>
+                    </div>
+                  </Button>
+              </a>
+            </Link>
+          : <div className={classes.buttonMarginRight}>
               <Login
-                titleLogin={"Downloads"}
-                buttonProps={{ color: "primary" }}
+                buttonText={"Orders"}
+                titleLogin={"Login to continue"}
+                buttonProps={{
+                  color: "primary",
+                }}
               />
             </div>
-          }
+        }
 
-        <Button
-          className={classes.navbarButton}
-          variant="text"
-          color="primary"
-          onClick={() => goToModal.checkout()}
-        >
-          <Badge
-            badgeContent={cartCount}
-            classes={{ colorSecondary: classes.badge }}
-            color="secondary"
-          >
-            <ShoppingCartIcon className={classes.icons}/>
-          </Badge>
-        </Button>
 
         <div className={classes.navbarButton}>
           <UserMenu loggedIn={loggedIn} />
@@ -148,7 +140,6 @@ const DesktopMainBarSm = (props: ReactProps & DesktopMainBarProps) => {
         </div>
       </div>
 
-      <div style={{ flexGrow: 1 }}></div>
     </div>
   )
 }

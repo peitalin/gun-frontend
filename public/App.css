@@ -2,37 +2,37 @@
 
 @font-face {
   font-family: 'Roobert TRIAL';
-  src: url('/roobert/Roobert-Light.otf');
+  src: url('/public/roobert/Roobert-Light.otf');
   font-weight: 300;
   font-style: normal;
 }
 @font-face {
   font-family: 'Roobert TRIAL';
-  src: url('/roobert/Roobert-Regular.otf');
+  src: url('/public/roobert/Roobert-Regular.otf');
   font-weight: 400;
   font-style: normal;
 }
 @font-face {
   font-family: 'Roobert TRIAL';
-  src: url('/roobert/Roobert-Medium.otf');
+  src: url('/public/roobert/Roobert-Medium.otf');
   font-weight: 500;
   font-style: normal;
 }
 @font-face {
   font-family: 'Roobert TRIAL';
-  src: url('/roobert/Roobert-SemiBold.otf');
+  src: url('/public/roobert/Roobert-SemiBold.otf');
   font-weight: 600;
   font-style: normal;
 }
 @font-face {
   font-family: 'Roobert TRIAL';
-  src: url('/roobert/Roobert-Bold.otf');
+  src: url('/public/roobert/Roobert-Bold.otf');
   font-weight: 700;
   font-style: normal;
 }
 @font-face {
   font-family: 'Roobert TRIAL';
-  src: url('/roobert/Roobert-Heavy.otf');
+  src: url('/public/roobert/Roobert-Heavy.otf');
   font-weight: 800;
   font-style: normal;
 }

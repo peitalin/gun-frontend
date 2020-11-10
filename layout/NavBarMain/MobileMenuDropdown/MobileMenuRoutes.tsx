@@ -21,8 +21,6 @@ import Login from "layout/Login"
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { goToModalConnect } from "utils/modals";
-// Analytics
-import { useAnalytics, analyticsEvent } from "utils/analytics";
 
 
 
@@ -68,34 +66,11 @@ const MobileMenuRoutes = (props: ReactProps) => {
       }
 
 
-      {/* <div className={clsx(
-        classes.mobileMenuFlexitem,
-        classes.mobileMenuItemRoot
-      )}>
-        <Button
-          classes={{
-            root: classes.buttonUploadProduct
-          }}
-          variant="text"
-          color="primary"
-          onClick={() => {
-            // router.push("/sell")
-            props.closeMobileMenu()
-          }}
-        >
-          <Typography variant="body2" className={classes.uploadProductText}>
-            Add Product
-          </Typography>
-        </Button>
-      </div> */}
-
       {
         loggedIn &&
         <div className={classes.mobileMenuFlexitem}>
           <Link href="/sell">
-            <a className={classes.menuLink}
-              onClick={() => analyticsEvent("Nav.AddProduct.Pressed")}
-            >
+            <a className={classes.menuLink}>
               <MenuItem
                 className={clsx(
                   classes.mobileMenuFlexitem,
@@ -121,7 +96,7 @@ const MobileMenuRoutes = (props: ReactProps) => {
       >
         {
           loggedIn
-          ? <Link href="/admin">
+          ? <Link href="/admin/products">
               <a className={classes.aLink}>
                 <Typography className={classes.mobileMenuItemTextEmph}>
                   Manage Store
@@ -142,7 +117,7 @@ const MobileMenuRoutes = (props: ReactProps) => {
       {
         loggedIn
         ? <div className={classes.mobileMenuFlexitem}>
-            <Link href="/orders">
+            <Link href="/admin/orders">
               <a className={classes.menuLink}>
                 <MenuItem
                   className={clsx(
@@ -167,7 +142,7 @@ const MobileMenuRoutes = (props: ReactProps) => {
               buttonText={"Orders"}
               buttonType={"menuItem"}
               menuItemTextClassName={classes.mobileMenuItemText}
-              redirectOnComplete={"/orders"}
+              redirectOnComplete={"/admin/orders"}
               callbackOnComplete={() => {
                 // only close menu after login, otherwise login component unmounts
                 // and login modal never shows
@@ -179,58 +154,10 @@ const MobileMenuRoutes = (props: ReactProps) => {
 
       <Divider style={dividerStyle}/>
 
-      {
-        loggedIn &&
-        <div className={classes.mobileMenuFlexitem}>
-          <Link href="/wishlist">
-            <a className={classes.menuLink}
-              // onClick={() => analyticsEvent("Nav.Wishlist.Pressed")}
-            >
-              <MenuItem
-                className={clsx(
-                  classes.mobileMenuFlexitem,
-                  classes.mobileMenuItemRoot
-                )}
-                onClick={() => props.closeMobileMenu()}
-              >
-                <Typography className={classes.mobileMenuItemText}>
-                  Wishlist
-                </Typography>
-              </MenuItem>
-            </a>
-          </Link>
-        </div>
-      }
-
-      {/* {
-        loggedIn &&
-        <div className={classes.mobileMenuFlexitem}>
-          <Link href="/followed-stores">
-            <a className={classes.menuLink}
-              onClick={() => analyticsEvent("Nav.FollowedStores.Pressed")}
-            >
-              <MenuItem
-                className={clsx(
-                  classes.mobileMenuFlexitem,
-                  classes.mobileMenuItemRoot
-                )}
-                onClick={() => props.closeMobileMenu()}
-              >
-                <Typography className={classes.mobileMenuItemText}>
-                  Following
-                </Typography>
-              </MenuItem>
-            </a>
-          </Link>
-        </div>
-      } */}
-
 
       <div className={classes.mobileMenuFlexitem}>
         <Link href="/categories">
-          <a className={classes.menuLink}
-            // onClick={() => analyticsEvent("Nav.Categories.Pressed")}
-          >
+          <a className={classes.menuLink}>
             <MenuItem
               className={clsx(
                 classes.mobileMenuFlexitem,

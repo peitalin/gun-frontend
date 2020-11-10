@@ -8,7 +8,7 @@ import ClearIcon from '@material-ui/icons/Clear';
 import InputBase from '@material-ui/core/InputBase';
 import Button from "@material-ui/core/Button";
 import { useRouter } from "next/router";
-import { Colors } from "layout/AppTheme";
+import { Colors, BorderRadius3x } from "layout/AppTheme";
 
 
 
@@ -118,11 +118,12 @@ let styles = (theme: Theme) => createStyles({
   searchbar: {
     flexGrow: 1,
     position: 'relative',
-    borderRadius: theme.shape.borderRadius,
+    borderRadius: BorderRadius3x,
     marginLeft: 0,
     width: '100%',
     [theme.breakpoints.up('sm')]: {
       marginLeft: theme.spacing(1),
+      marginRight: theme.spacing(1),
       width: 'auto',
     },
   },

@@ -41,7 +41,6 @@ const styles = (theme: Theme) => createStyles({
     zIndex: 3, // above wishlist button which has zIndex: 1
     // 3: above email inputs
     position: 'fixed',
-    // top: `${NewsBarHeight + MainBarHeight}px`,
     top: 0,
     left: 0,
     backgroundColor: "rgba(47, 57, 65, .85)",

@@ -13,7 +13,7 @@ import { goToModalConnect } from "utils/modals";
 import { useDispatch, useSelector } from "react-redux";
 // Router
 import Link from "next/link";
-import { useRouter } from "next/router";
+import { useRouter, NextRouter } from "next/router";
 import Hidden from 'components/HiddenFix';
 // media query
 import { useTheme } from "@material-ui/core/styles";
@@ -63,15 +63,25 @@ const MainBar = (props: ReactProps) => {
     subtotal,
   };
 
+  let isHomePage = isMainPages(router)
 
   return (
-    <nav className={clsx(
-      classes.baseBar,
-      lgDown ? classes.baseBarBorderBottom : classes.baseBarBoxShadow
-    )}>
+    <nav className={
+      isHomePage
+      ? clsx(
+          classes.baseBarHomePage,
+          smDown
+            ? classes.baseBarDitherSm
+            : classes.baseBarDither
+        )
+      : clsx(
+          classes.baseBarDashboard,
+          classes.baseBarBorderBottom
+        )
+    }>
 
       {/* MOBILE */}
-      <Hidden smUp implementation="css">
+      <Hidden className={classes.width100} mdUp implementation="css">
         <MobileMainBarXs
           // Dither
           mobileMenuOpen={props.mobileMenuOpen}
@@ -81,30 +91,29 @@ const MainBar = (props: ReactProps) => {
       </Hidden>
 
       {/* Desktop */}
-      <Hidden lgDown implementation="css">
+      <Hidden className={classes.width100} lgDown implementation="css">
         <DesktopMainBarXl
           {...navBarProps}
         />
       </Hidden>
-      <Hidden only={["xs", "sm", "md", "xl"]} implementation="css">
+      <Hidden className={classes.width100} only={["xs", "sm", "md", "xl"]} implementation="css">
         <DesktopMainBarLg
           {...navBarProps}
         />
       </Hidden>
-      <Hidden only={["xs", "sm", "lg", "xl"]} implementation="css">
+      <Hidden className={classes.width100} only={["xs", "sm", "lg", "xl"]} implementation="css">
         <DesktopMainBarMd
           mobileMenuOpen={props.mobileMenuOpen}
           setMobileMenuOpen={props.setMobileMenuOpen}
           {...navBarProps}
         />
       </Hidden>
-      <Hidden only={["xs", "md", "lg", "xl"]} implementation="css">
-        <DesktopMainBarSm
+      {/* <Hidden className={classes.width100} only={["xs", "md", "lg", "xl"]} implementation="css"> <DesktopMainBarSm
           mobileMenuOpen={props.mobileMenuOpen}
           setMobileMenuOpen={props.setMobileMenuOpen}
           {...navBarProps}
         />
-      </Hidden>
+      </Hidden> */}
 
     </nav>
   );
@@ -112,17 +121,19 @@ const MainBar = (props: ReactProps) => {
 
 
 
+export const isMainPages = (router: NextRouter) => {
+  if (router.pathname === '/') {
+    return true
+  }
+  if (router.pathname === '/sell') {
+    return true
+  }
+  return false
+}
 
 interface ReactProps extends WithStyles<typeof styles> {
   mobileMenuOpen: boolean;
   setMobileMenuOpen(f: (s: boolean) => boolean): void;
-}
-interface MobileMainBarProps extends ReactProps {
-  endRoute: string;
-  cartCount: number;
-  loggedIn: boolean;
-  color: string;
-  subtotal: number;
 }
 
 interface ReduxProps {

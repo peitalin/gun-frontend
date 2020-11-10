@@ -4,7 +4,7 @@ import { oc as option } from "ts-optchain";
 import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
 import clsx from "clsx";
 import { Colors, BorderRadius, Gradients } from "layout/AppTheme";
-import { NewsBarHeight, MainBarHeight, NavBarHeight } from "layout/NavBarMain/styles";
+import { NewsBarHeight, MainBarHeightDashboard, NavBarHeight } from "layout/NavBarMain/styles";
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
 import { GrandReduxState } from 'reduxStore/grand-reducer';
@@ -115,11 +115,12 @@ const styles = (theme: Theme) => createStyles({
   mobileMenuExpanderRoot: {
     zIndex: 2,
     position: "absolute", // relative to MainBar, which is under NewsBar
-    top: `calc(${MainBarHeight}px + 0.5rem - 1px)`, // 1px tucked under navbar
+    top: `calc(${MainBarHeightDashboard}px + 1rem - 1px)`, // 1px tucked under navbar
     left: '0.5rem',
     width: 'calc(100% - 1rem)',
     borderRadius: BorderRadius,
     background: Colors.uniswapDarkNavy,
+    border: `1px solid ${Colors.uniswapMediumNavy}`,
     // transform: "translateX(-100%)",
     // opacity: 0,
     // transition: theme.transitions.create(['all'], {

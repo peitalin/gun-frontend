@@ -25,6 +25,7 @@ import OpenChatButton from "pageComponents/ChatCenter/OpenChatButton";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { asCurrency as c } from "utils/prices";
+import { isMainPages } from "."
 
 
 
@@ -40,7 +41,6 @@ const DesktopMainBarLg = (props: DesktopMainBarProps) => {
   } = props;
 
   const dispatch = useDispatch();
-  const goToModal = goToModalConnect(dispatch);
   const router = useRouter()
   const [hide, setHide] = React.useState(false)
 
@@ -52,12 +52,14 @@ const DesktopMainBarLg = (props: DesktopMainBarProps) => {
     router.push('/my-list')
   }
 
-  const goToMyDownloads = () => {
-    router.push('/my-orders')
-  }
+  let isHomePage = isMainPages(router)
 
   return (
-    <div className={classes.baseBarInner}>
+    <div className={
+      isHomePage
+        ? classes.baseBarInnerHomePage
+        : classes.baseBarInnerDashboard
+    }>
 
       <div style={{ flexBasis: '0.5rem' }}></div>
 
@@ -67,13 +69,7 @@ const DesktopMainBarLg = (props: DesktopMainBarProps) => {
         </a>
       </Link>
 
-      <div style={{ marginRight: '1rem' }} className={
-        !hide ? "fadeIn" : null
-      }>
-        <Searchbar color={color}/>
-      </div>
-
-      <div style={{ flexGrow: 0.9 }}/>
+      <div style={{ flexGrow: 1 }}/>
 
       <div className={clsx(
         classes.mainBarInner,
@@ -97,56 +93,36 @@ const DesktopMainBarLg = (props: DesktopMainBarProps) => {
           </div>
         </Button>
 
-
         {
           loggedIn
-          ? <Button
-              className={classes.navbarButton}
-              variant={"text"}
-              color="primary"
-              onClick={goToMyWishlist}
-            >
-              <div>
-                <span className={
-                  endRoute === 'my-list' ? classes.selectedRouteText : null
-                }>
-                  Wishlist
-                </span>
-              </div>
-            </Button>
-          : <div className={classes.myDownloadsLogin}>
-              <Login
-                buttonText={"Wishlist"}
-                titleLogin={"Login to continue"}
-                buttonProps={{ color: "primary" }}
-              />
-            </div>
-          }
-
-        {/* {
-          loggedIn
-          ? <Button
-              className={classes.navbarButton}
-              variant={"text"}
-              color="primary"
-              onClick={goToMyDownloads}
-            >
-              <div>
-                <span className={
-                  endRoute === 'my-orders' ? classes.selectedRouteText : null
-                }>
-                    Orders
-                </span>
-              </div>
-            </Button>
-          : <div className={classes.myDownloadsLogin}>
+          ? <Link href="/admin/orders">
+              <a className={classes.buttonLink}>
+                <Button
+                    className={classes.navbarButton}
+                    variant={"text"}
+                    color="primary"
+                  >
+                    <div>
+                      <span className={
+                        endRoute === '/admin/orders' ? classes.selectedRouteText : null
+                      }>
+                        Orders
+                      </span>
+                    </div>
+                  </Button>
+              </a>
+            </Link>
+          : <div className={classes.buttonMarginRight}>
               <Login
                 buttonText={"Orders"}
                 titleLogin={"Login to continue"}
-                buttonProps={{ color: "primary" }}
+                buttonProps={{
+                  color: "primary",
+                }}
               />
             </div>
-          } */}
+        }
+
 
         {
           loggedIn
@@ -159,7 +135,7 @@ const DesktopMainBarLg = (props: DesktopMainBarProps) => {
                 },
               }}
             />
-          : <div className={classes.myDownloadsLogin}>
+          : <div className={classes.buttonMarginRight}>
               <Login
                 buttonText={"Offers"}
                 titleLogin={"Login to continue"}
@@ -170,23 +146,6 @@ const DesktopMainBarLg = (props: DesktopMainBarProps) => {
             </div>
         }
 
-        {/* <Button
-          className={classes.navbarButton}
-          variant="text"
-          color="primary"
-          onClick={() => goToModal.checkout()}
-        >
-          <Badge
-            badgeContent={cartCount}
-            classes={{ colorSecondary: classes.badge }}
-            color="secondary"
-          >
-            <ShoppingCartIcon className={classes.icons}/>
-          </Badge>
-          <span className={classes.cartText}>
-            {c(subtotal)}
-          </span>
-        </Button> */}
 
         <div className={classes.navbarButton}>
           <UserMenu loggedIn={loggedIn} />
@@ -197,7 +156,6 @@ const DesktopMainBarLg = (props: DesktopMainBarProps) => {
         </div>
       </div>
 
-      <div style={{ flexGrow: 0.1 }}/>
     </div>
   )
 }

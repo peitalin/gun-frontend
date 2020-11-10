@@ -23,6 +23,7 @@ import { useRouter } from "next/router";
 import { asCurrency as c } from "utils/prices";
 // Chat
 import OpenChatButton from "pageComponents/ChatCenter/OpenChatButton";
+import { isMainPages } from "."
 
 
 
@@ -47,37 +48,27 @@ const DesktopMainBarMd = (props: ReactProps & DesktopMainBarProps) => {
     router.push('/sell')
   }
 
-  const goToMyWishlist = () => {
-    router.push('/my-list')
-  }
-
-  const goToMyDownloads = () => {
-    router.push('/my-orders')
-  }
+  let isHomePage = isMainPages(router)
 
   return (
-    <div className={clsx(classes.baseBarInner, classes.flexStart)}>
+    <div className={
+      isHomePage
+        ? clsx(classes.baseBarInnerHomePage, classes.flexStart)
+        : clsx(classes.baseBarInnerDashboard, classes.flexStart)
+    }>
 
       <div style={{ flexBasis: '1rem', minWidth: '0.5rem' }}></div>
 
-      <Link href="/">
-        <a className={classes.buttonLink}>
-          <Logo color={color}/>
-        </a>
-      </Link>
+      <div className={!hide ? "fadeIn" : "hidden"}>
+        <Link href="/">
+          <a className={classes.buttonLink}>
+            <Logo color={color} disableLogo={true}/>
+          </a>
+        </Link>
+      </div>
 
       <div style={{ flexGrow: 1 }}></div>
 
-      <div className={
-        !hide ? "fadeIn" : null
-      }>
-        <SearchbarMobile
-          color={color}
-          mobileMenuOpen={props.mobileMenuOpen}
-          setMobileMenuOpen={props.setMobileMenuOpen}
-          setHideMenuItems={setHide}
-        />
-      </div>
 
       <div className={clsx(
         classes.mainBarInner,
@@ -103,8 +94,40 @@ const DesktopMainBarMd = (props: ReactProps & DesktopMainBarProps) => {
 
         {
           loggedIn
-          ? <OpenChatButton/>
-          : <div className={classes.myDownloadsLogin}>
+          ? <Link href="/admin/orders">
+              <a className={classes.buttonLink}>
+                <Button
+                    className={classes.navbarButton}
+                    variant={"text"}
+                    color="primary"
+                  >
+                    <div>
+                      <span className={
+                        endRoute === '/admin/orders' ? classes.selectedRouteText : null
+                      }>
+                        Orders
+                      </span>
+                    </div>
+                  </Button>
+              </a>
+            </Link>
+          : <div className={classes.buttonMarginRight}>
+              <Login
+                buttonText={"Orders"}
+                titleLogin={"Login to continue"}
+                buttonProps={{
+                  color: "primary",
+                }}
+              />
+            </div>
+        }
+
+        {
+          loggedIn
+          ? <div className={classes.buttonMarginRight}>
+              <OpenChatButton/>
+            </div>
+          : <div className={classes.buttonMarginRight}>
               <Login
                 buttonText={"Orders"}
                 titleLogin={"Login to continue"}
@@ -112,24 +135,6 @@ const DesktopMainBarMd = (props: ReactProps & DesktopMainBarProps) => {
               />
             </div>
         }
-
-        <Button
-          className={classes.navbarButton}
-          variant="text"
-          color="primary"
-          onClick={() => goToModal.checkout()}
-        >
-          <Badge
-            badgeContent={cartCount}
-            classes={{ colorSecondary: classes.badge }}
-            color="secondary"
-          >
-            <ShoppingCartIcon className={classes.icons}/>
-          </Badge>
-          <span className={classes.cartText}>
-            {c(subtotal)}
-          </span>
-        </Button>
 
         <div className={classes.navbarButton}>
           <UserMenu loggedIn={loggedIn} />
@@ -140,7 +145,6 @@ const DesktopMainBarMd = (props: ReactProps & DesktopMainBarProps) => {
         </div>
       </div>
 
-      <div style={{ flexGrow: 1 }}></div>
     </div>
   )
 }

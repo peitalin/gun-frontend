@@ -13,10 +13,10 @@ export const useCategoriesList = () => {
   const [categories, setCategories] = React.useState([] as Categories[]);
 
   const staticCategories = [
-    "Lightroom Presets",
-    "Video LUTs",
-    "Design Templates",
-    "eBooks"
+    "Ammo",
+    "Pistols",
+    "Rifles",
+    "Misc"
   ]
 
   React.useEffect(() => {

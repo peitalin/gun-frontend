@@ -65,7 +65,7 @@ export const UserMenu: React.FC<ReactProps> = (props) => {
   } else {
     return (
       <>
-        <Hidden mdDown implementation="css">
+        <Hidden smDown implementation="css">
           <Button
             onClick={handleClickMenu}
             aria-controls="user-menu"
@@ -77,7 +77,7 @@ export const UserMenu: React.FC<ReactProps> = (props) => {
             <MenuIcon/>
           </Button>
         </Hidden>
-        <Hidden lgUp implementation="css">
+        <Hidden mdUp implementation="css">
           <Button
             onClick={handleClickMenu}
             aria-controls="user-menu"
@@ -122,34 +122,6 @@ export const UserMenu: React.FC<ReactProps> = (props) => {
 
 
           <MenuItem className={classes.menuItem} onClick={handleCloseMenu}>
-            <Link href="/admin/products">
-              <a className={classes.menuLink}>
-                <LibraryBooks className={classes.menuIcon}/>
-                <span className={classes.menuText}>Seller Dashboard</span>
-              </a>
-            </Link>
-          </MenuItem>
-
-          <MenuItem className={classes.menuItem} onClick={handleCloseMenu}>
-            <Link href="/my-orders">
-              <a className={classes.menuLink}>
-                <ShoppingCartIcon className={classes.menuIcon}/>
-                <span className={classes.menuText}> My Orders </span>
-              </a>
-            </Link>
-          </MenuItem>
-
-          {/* <MenuItem  className={classes.menuItem} onClick={handleCloseMenu}>
-            <Link href="/my-list">
-              <a className={classes.menuLink}>
-                <CardGiftcard className={classes.menuIcon}/>
-                <span className={classes.menuText}> Wishlist </span>
-              </a>
-            </Link>
-          </MenuItem  className={classes.menuItem}> */}
-
-
-          <MenuItem className={classes.menuItem} onClick={handleCloseMenu}>
             {
               option(user).store.id()
               ? <Link href="/admin/products">
@@ -166,6 +138,25 @@ export const UserMenu: React.FC<ReactProps> = (props) => {
                 </Link>
             }
           </MenuItem>
+
+          <MenuItem className={classes.menuItem} onClick={handleCloseMenu}>
+            <Link href="/admin/orders">
+              <a className={classes.menuLink}>
+                <ShoppingCartIcon className={classes.menuIcon}/>
+                <span className={classes.menuText}> My Orders </span>
+              </a>
+            </Link>
+          </MenuItem>
+
+          {/* <MenuItem  className={classes.menuItem} onClick={handleCloseMenu}>
+            <Link href="/my-list">
+              <a className={classes.menuLink}>
+                <CardGiftcard className={classes.menuIcon}/>
+                <span className={classes.menuText}> Wishlist </span>
+              </a>
+            </Link>
+          </MenuItem  className={classes.menuItem}> */}
+
 
           <MenuItem className={classes.menuItem} onClick={() => {
             handleCloseMenu();

@@ -1,56 +1,88 @@
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
-import { Colors, Gradients, BoxShadows } from "layout/AppTheme";
+import { Colors, Gradients, BoxShadows, BorderRadius2x, BorderRadius3x } from "layout/AppTheme";
 
 
 /////////////// STYLES /////////////////////
-export const MainBarHeight = 55;
-export const NewsBarHeight = 25;
+export const MainBarHeightHomePage = 150;
+export const MainBarHeightDashboard = 55;
+
+export const NewsBarHeight = 8;
 export const CategoryBarHeight = 44;
 export const CategoryBarHeightMobile = 30;
 // export const NavBarHeight = MainBarHeight + NewsBarHeight + CategoryBarHeight;
-export const NavBarHeight = MainBarHeight + NewsBarHeight;
-
-
-// const categoryBarColor = Colors.deepRed
-// const categoryLinkColor = Colors.lightGrey
-// const categoryLinkColorHover = Colors.foregroundColor
+export const NavBarHeight = MainBarHeightHomePage + NewsBarHeight;
 
 const categoryBarColor = Colors.black
 const categoryLinkColor = Colors.slateGrey
 const categoryLinkColorHover = Colors.magenta
-// const categoryLinkColorHover = Colors.lightGreen
-
-// const categoryBarColor = Colors.foregroundColor
-// const categoryLinkColor = Colors.darkGrey
-// const categoryLinkColorHover = Colors.secondaryBright
 
 const categoryLinkColor2 = Colors.darkGrey
 const categoryLinkColorHover2 = Colors.secondaryBright
 
 
 export const styles = (theme: Theme) => createStyles({
-  baseBar: {
+  baseBarHomePage: {
     zIndex: 5,
-    background: Gradients.gradientUniswapDark.background,
-    height: `${MainBarHeight - 1}px`, // 1px for borderBottom
+    // background: Gradients.gradientUniswapDark.background,
+    background: 'transparent',
+    height: `${MainBarHeightHomePage}px`,
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    position: 'relative',
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
+    position: "absolute",
+    width: '100%',
+    // position: 'relative',
   },
-  baseBarBorderBottom: {
-    borderBottom: `1px solid ${Colors.uniswapLightNavy}`,
-  },
-  baseBarBoxShadow: {
-    boxShadow: BoxShadows.shadow1.boxShadow,
-  },
-  baseBarInner: {
-    width: '100vw',
+  baseBarInnerHomePage: {
+    // width: '100vw',
+    width: '100%',
     display: "flex",
     position: "relative",
     justifyContent: 'center',
     alignItems: "center",
+  },
+  baseBarBorderBottom: {
+    borderBottom: `1px solid ${Colors.uniswapLightNavy}`,
+  },
+  baseBarDither: {
+    background: Gradients.gradientBlackDitherDown.background,
+    padding: '2rem',
+    paddingTop: '2rem',
+    top: `${NewsBarHeight}px`,
+  },
+  baseBarDitherSm: {
+    background: Gradients.gradientBlackDitherDown.background,
+    padding: '0rem',
+    paddingTop: '1rem',
+    top: `${NewsBarHeight}px`,
+  },
+  baseBarBoxShadow: {
+    boxShadow: BoxShadows.shadow1.boxShadow,
+  },
+
+  baseBarDashboard: {
+    zIndex: 5,
+    background: Gradients.gradientUniswapDark.background,
+    // background: Colors.uniswapDarkNavy,
+    height: `${MainBarHeightDashboard - 1}px`, // 1px for borderBottom
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+    position: 'relative',
+  },
+  baseBarInnerDashboard: {
+    // width: '100vw',
+    width: '100%',
+    display: "flex",
+    position: "relative",
+    justifyContent: 'center',
+    alignItems: "center",
+  },
+  width100: {
+    width: '100%',
   },
 
   // Main Bar
@@ -81,7 +113,7 @@ export const styles = (theme: Theme) => createStyles({
   },
   navbarButton: {
     marginRight: "0.5rem",
-    minWidth: '50px',
+    minWidth: '60px',
   },
   navbarButtonSelected: {
     color: Colors.secondaryBright,
@@ -124,7 +156,6 @@ export const styles = (theme: Theme) => createStyles({
     color: "#fefefe",
   },
   buttonLink: {
-    marginRight: "0.5rem",
   },
   buttonLinkLogo: {
     marginLeft: "1rem",
@@ -136,7 +167,7 @@ export const styles = (theme: Theme) => createStyles({
     marginLeft: 12,
     marginRight: 20,
   },
-  myDownloadsLogin: {
+  buttonMarginRight: {
     marginRight: '0.5rem',
   },
 
@@ -327,11 +358,11 @@ export const styles = (theme: Theme) => createStyles({
 
   // News Bar
   newsBar: {
-    // background: Gradients.gradientUniswapDark.background,
-    // background: Gradients.gradientUniswapFluro.background,
+    // background: Gradients.gradientBlack.background,
     background: Gradients.gradientUniswapFluro.background,
-    height: '0.5rem',
+    height: `${NewsBarHeight}px`,
     zIndex: 5,
+    position: "relative",
   },
   newsBarInner: {
     display: "flex",
@@ -367,7 +398,7 @@ export const styles = (theme: Theme) => createStyles({
     position: 'relative',
   },
   navbarButtonMobile: {
-    marginRight: "1%",
+    marginRight: "0.5rem",
     minWidth: 50,
   },
   baseBarInnerMobile: {
@@ -375,7 +406,7 @@ export const styles = (theme: Theme) => createStyles({
     paddingLeft: '0.5rem',
     paddingRight: '0.5rem',
     width: '100vw',
-    height: MainBarHeight,
+    height: MainBarHeightDashboard,
     display: "flex",
     position: "relative",
     justifyContent: 'space-between',

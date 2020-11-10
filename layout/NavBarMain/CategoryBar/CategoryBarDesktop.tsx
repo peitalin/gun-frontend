@@ -21,10 +21,10 @@ const CategoryBar: React.FC<ReactProps> = (props) => {
 
   return (
     <nav className={clsx(
-      classes.baseBar,
+      classes.baseBarDashboard,
       classes.categoryBar,
     )}>
-      <div className={classes.baseBarInner}>
+      <div className={classes.baseBarInnerDashboard}>
         <div className={classes.categoryBarInner}>
 
           <Link href={`/sale`}>
