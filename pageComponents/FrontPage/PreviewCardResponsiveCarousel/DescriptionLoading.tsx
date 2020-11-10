@@ -72,6 +72,7 @@ interface DescriptionLoadingProps extends WithStyles<typeof styles> {
   rowFormat?: boolean;
 }
 
+
 export const styles = (theme: Theme) => createStyles({
   descriptionContainer: {
     marginTop: "0.5rem",
@@ -83,19 +84,19 @@ export const styles = (theme: Theme) => createStyles({
     position: 'relative', // for wishlist Button position: absolute
   },
   loadingDescription: {
-    color: Colors.lightGrey,
+    color: theme.colors.uniswapLightNavy,
     height: '100%',
     width: '100%',
   },
   loadingDescriptionLine1: {
-    backgroundColor: Colors.lightestGrey,
+    backgroundColor: theme.colors.uniswapDarkNavy,
     height: '1rem',
     width: '100%',
     borderRadius: '4px',
     opacity: 0.8,
   },
   loadingDescriptionLine2: {
-    backgroundColor: Colors.lightestGrey,
+    backgroundColor: theme.colors.uniswapDarkNavy,
     height: '1rem',
     marginTop: '0.75rem',
     width: '80%',
@@ -103,7 +104,7 @@ export const styles = (theme: Theme) => createStyles({
     opacity: 0.8,
   },
   loadingDescriptionLine3: {
-    backgroundColor: Colors.lightestGrey,
+    backgroundColor: theme.colors.uniswapDarkNavy,
     height: '1rem',
     marginTop: '0.75rem',
     width: '60%',
@@ -111,7 +112,7 @@ export const styles = (theme: Theme) => createStyles({
     opacity: 0.8,
   },
   loadingDescriptionLine4: {
-    backgroundColor: Colors.lightestGrey,
+    backgroundColor: theme.colors.uniswapDarkNavy,
     height: '1rem',
     marginTop: '0.75rem',
     width: '40%',
@@ -131,8 +132,8 @@ export const styles = (theme: Theme) => createStyles({
     position: 'relative', // for wishlist Button position: absolute
   },
   loadingDescriptionPic: {
-    color: Colors.lightGrey,
-    backgroundColor: Colors.lightestGrey,
+    color: theme.colors.uniswapLightNavy,
+    backgroundColor: theme.colors.uniswapDarkNavy,
     borderRadius: '4px',
     height: 75,
     minWidth: 120,
@@ -140,14 +141,14 @@ export const styles = (theme: Theme) => createStyles({
     marginRight: '0.75rem',
   },
   loadingDescriptionLine1Mobile: {
-    backgroundColor: Colors.lightestGrey,
+    backgroundColor: theme.colors.uniswapDarkNavy,
     height: '1rem',
     width: '100%',
     borderRadius: '4px',
     opacity: 0.8,
   },
   loadingDescriptionLine2Mobile: {
-    backgroundColor: Colors.lightestGrey,
+    backgroundColor: theme.colors.uniswapDarkNavy,
     height: '1rem',
     marginTop: '0.75rem',
     width: '80%',
@@ -155,7 +156,7 @@ export const styles = (theme: Theme) => createStyles({
     opacity: 0.8,
   },
   loadingDescriptionLine3Mobile: {
-    backgroundColor: Colors.lightestGrey,
+    backgroundColor: theme.colors.uniswapDarkNavy,
     height: '1rem',
     marginTop: '0.75rem',
     width: '60%',

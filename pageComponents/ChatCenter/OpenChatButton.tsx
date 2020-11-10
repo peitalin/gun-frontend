@@ -46,7 +46,7 @@ const OpenChatButton: React.FC<ReactProps> = (props) => {
   return (
     <Button
       variant="text"
-      color="secondary"
+      color={"primary"}
       onClick={() => openModal()}
       {...props.buttonProps}
     >
