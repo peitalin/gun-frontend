@@ -212,7 +212,7 @@ export const useScrollYPosition = () => {
   React.useEffect(() => {
     const updateScrollY = throttle(() => {
       setScrollYPosition(window.scrollY);
-    }, 64)
+    }, 16)
     window.addEventListener("scroll", updateScrollY);
     return () => window.removeEventListener("scroll", updateScrollY)
   }, [

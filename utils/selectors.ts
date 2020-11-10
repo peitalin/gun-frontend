@@ -6,7 +6,7 @@ import { oc as option } from "ts-optchain";
 
 
 export const youTubeLinksSelector = createSelector(
-  (state: GrandReduxState) => state.reduxProductCreate.previewItems,
+  (state: GrandReduxState) => state.reduxProductCreate.dzuPreviewItems,
   previewItems => previewItems.filter(p =>
     p.youTubeEmbedLink !== undefined  &&
     p.youTubeEmbedLink !== ""

@@ -15,6 +15,7 @@ export const productToProductEditInput = (
   product: Product,
   toHtml?: boolean,
 ): ProductEditInput => {
+
   if (!product) {
     return {
       productId: "",
@@ -57,22 +58,21 @@ export const productToProductEditInput = (
     title: product.currentSnapshot.title,
     categoryId: product.category.id,
     description: description,
-    currentVariants: product.currentVariants.map(variant => {
-      return {
-        variantId: variant.variantId,
-        variantName: variant.variantName,
-        variantDescription: variant.variantDescription,
-        priceWas: variant.priceWas,
-        price: variant.price,
-        isDefault: variant.isDefault,
-        previewItems: variant.previewItems.map((p, index) => ({
-          // id: p.id,
-          // position: index,
-          imageId: option(p).image.id(),
-          youTubeEmbedLink: p.youTubeEmbedLink,
-        })),
+    currentVariants: [
+      {
+        variantId: product.featuredVariant?.variantId,
+        variantName: product.featuredVariant?.variantName,
+        variantDescription: product.featuredVariant?.variantDescription,
+        priceWas: product.featuredVariant?.priceWas,
+        price: product.featuredVariant?.price,
+        isDefault: product.featuredVariant?.isDefault,
+        previewItems: (product.featuredVariant?.previewItems ?? [])
+          .map((p, index) => ({
+            imageId: option(p).image.id(),
+            youTubeEmbedLink: p.youTubeEmbedLink,
+          }))
       } as ProductVariantEditInput
-    }),
+    ],
     tags: product.tags,
     isPublished: product.isPublished,
     condition: product.currentSnapshot.condition,
@@ -83,7 +83,7 @@ export const productToProductEditInput = (
     caliber: product.currentSnapshot.caliber,
     serialNumber: product.currentSnapshot.serialNumber,
     location: product.currentSnapshot.location,
-    dealer: product.currentSnapshot.dealer,
+    dealerId: product.currentSnapshot.dealer.id,
   };
 }
 

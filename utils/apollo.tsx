@@ -222,12 +222,6 @@ const cacheOptions = {
     ProductPrivate: {
       keyFields: ["id"],
       fields: {
-        chosenVariant: {
-          merge: (existing, incoming, opts) => {
-            // return opts.mergeObjects(existing, incoming)
-            return incoming
-          }
-        },
         featuredVariant: {
           merge: (existing, incoming, opts) => {
             // return opts.mergeObjects(existing, incoming)
@@ -254,12 +248,6 @@ const cacheOptions = {
     ProductDownload: {
       keyFields: ["id"],
       fields: {
-        chosenVariant: {
-          merge: (existing, incoming, opts) => {
-            // return opts.mergeObjects(existing, incoming)
-            return incoming
-          }
-        },
         featuredVariant: {
           merge: (existing, incoming, opts) => {
             // return opts.mergeObjects(existing, incoming)
@@ -286,12 +274,6 @@ const cacheOptions = {
     ProductPublic: {
       keyFields: ["id"],
       fields: {
-        chosenVariant: {
-          merge: (existing, incoming, opts) => {
-            // return opts.mergeObjects(existing, incoming)
-            return incoming
-          }
-        },
         featuredVariant: {
           merge: (existing, incoming, opts) => {
             // return opts.mergeObjects(existing, incoming)
