@@ -41,7 +41,6 @@ export const convertHasuraProduct = (p: Products): Product => {
     createdAt: p.createdAt, // override currentSnapshot.createdAt
     snapshotId: p.currentSnapshot.id,
     featuredVariant: featuredVariant ? featuredVariant : variants[0],
-    chosenVariant: featuredVariant ? featuredVariant : variants[0],
     currentVariants: variants,
   }
   // resolver.ts: category, store
@@ -173,9 +172,8 @@ const convertHasuraUserRole = (r: string): Role => {
 
 
 export type StoreHasuraExtended = Stores & {
-  productsForSaleConnection?: Products[]
-  dashboardPublishedProductsConnection?: Products[]
-  dashboardUnpublishedProductsConnection?: Products[]
+  productsForSaleConnection?: ProductsConnection
+  dashboardProductsConnection?: ProductsConnection
 }
 
 export const convertHasuraStore = (
@@ -197,25 +195,8 @@ export const convertHasuraStore = (
     } as any,
     cover: convertHasuraImage(s.cover),
     profile: convertHasuraImage(s.profile),
-    productsForSaleConnection: formConnection(
-      s.productsForSaleConnection.map(p => convertHasuraProduct(p)),
-      productsForSaleCount,
-      10,
-    ),
-    dashboardPublishedProductsConnection:
-      s.dashboardPublishedProductsConnection.map(p => convertHasuraProduct(p)),
-    dashboardUnpublishedProductsConnection:
-      s.dashboardUnpublishedProductsConnection.map(p => convertHasuraProduct(p)),
-    // dashboardPublishedProductsConnection: formConnection(
-    //   s.dashboardPublishedProductsConnection.map(p => convertHasuraProduct(p)),
-    //   publishedProductsCount,
-    //   10
-    // ),
-    // dashboardUnpublishedProductsConnection: formConnection(
-    //   s.dashboardUnpublishedProductsConnection.map(p => convertHasuraProduct(p)),
-    //   unpublishedProductsCount,
-    //   10
-    // ),
+    productsForSaleConnection: s.productsForSaleConnection,
+    dashboardProductsConnection: s.dashboardProductsConnection,
     __typename: "StorePrivate",
     analytics: null as any,
   };

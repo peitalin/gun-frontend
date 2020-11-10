@@ -2394,9 +2394,9 @@ export type ImageUrl = {
 };
 
 export type InsertDealerInput = {
-  address?: Maybe<Scalars['String']>;
+  address: Scalars['String'];
   city?: Maybe<Scalars['String']>;
-  name?: Maybe<Scalars['String']>;
+  name: Scalars['String'];
   postCode?: Maybe<Scalars['String']>;
   state?: Maybe<Scalars['String']>;
   licenseNumber: Scalars['String'];
@@ -3146,6 +3146,8 @@ export type Mutation = {
    * AccessRule – LOGGED_IN
    */
   editProduct: ProductMutationResponse;
+  publishProduct: ProductMutationResponse;
+  unpublishProduct: ProductMutationResponse;
   /**
    * Delete a product from the logged-in user's store.
    * 
@@ -4296,6 +4298,16 @@ export type MutationCreateProductArgs = {
 
 export type MutationEditProductArgs = {
   productEditInput?: Maybe<ProductEditInput>;
+};
+
+
+export type MutationPublishProductArgs = {
+  productId: Scalars['String'];
+};
+
+
+export type MutationUnpublishProductArgs = {
+  productId: Scalars['String'];
 };
 
 
@@ -6601,7 +6613,6 @@ export type Product = {
   /** Whether or not it has been sold */
   isSoldOut: Scalars['Boolean'];
   /** Chosen variant, for cartItems */
-  chosenVariant?: Maybe<Product_Variants>;
   featuredVariant?: Maybe<Product_Variants>;
   currentVariants: Array<Product_Variants>;
   currentSnapshot: Product_Snapshots;
@@ -7777,8 +7788,6 @@ export type ProductDownload = Product & {
   isExcludedFromSearch: Scalars['Boolean'];
   /** Whether or not it has been sold */
   isSoldOut: Scalars['Boolean'];
-  /** Chosen variant, for cartItems */
-  chosenVariant?: Maybe<Product_Variants>;
   currentVariants: Array<Product_Variants>;
   featuredVariant?: Maybe<Product_Variants>;
   currentSnapshot: Product_Snapshots;
@@ -7811,11 +7820,11 @@ export type ProductEditInput = {
   /** A whole bunch of words to describe the product #TODO: regex */
   description: Scalars['String'];
   condition: Scalars['String'];
-  make?: Maybe<Scalars['String']>;
-  model?: Maybe<Scalars['String']>;
+  make: Scalars['String'];
+  model: Scalars['String'];
   ammoType?: Maybe<Scalars['String']>;
   actionType?: Maybe<Scalars['String']>;
-  caliber?: Maybe<Scalars['String']>;
+  caliber: Scalars['String'];
   serialNumber: Scalars['String'];
   location: Scalars['String'];
   dealerId?: Maybe<Scalars['String']>;
@@ -7894,8 +7903,6 @@ export type ProductPrivate = Product & {
   isExcludedFromSearch: Scalars['Boolean'];
   /** Whether or not it has been sold */
   isSoldOut: Scalars['Boolean'];
-  /** Chosen variant, for cartItems */
-  chosenVariant?: Maybe<Product_Variants>;
   currentVariants: Array<Product_Variants>;
   featuredVariant?: Maybe<Product_Variants>;
   currentSnapshot: Product_Snapshots;
@@ -7940,7 +7947,6 @@ export type ProductPublic = Product & {
   /** Whether or not it has been sold */
   isSoldOut: Scalars['Boolean'];
   /** Chosen variant, for cartItems */
-  chosenVariant?: Maybe<Product_Variants>;
   featuredVariant?: Maybe<Product_Variants>;
   currentVariants: Array<Product_Variants>;
   currentSnapshot: Product_Snapshots;
@@ -12620,9 +12626,6 @@ type ProductFragment_ProductPrivate_ = { __typename?: 'ProductPrivate', id: stri
   )>, featuredVariant?: Maybe<(
     { __typename?: 'product_variants' }
     & ProductVariantFragment
-  )>, chosenVariant?: Maybe<(
-    { __typename?: 'product_variants' }
-    & ProductVariantFragment
   )>, store?: Maybe<{ __typename?: 'StorePrivate', id: string, name: string } | { __typename?: 'StorePublic', id: string, name: string }>, category?: Maybe<{ __typename?: 'categories', id: string, name: string, categoryGroup: string }> };
 
 type ProductFragment_ProductPublic_ = { __typename?: 'ProductPublic', id: string, updatedAt?: Maybe<any>, tags?: Maybe<string>, isPublished: boolean, isSuspended: boolean, isDeleted: boolean, isExcludedFromRecommendations: boolean, storeId: string, isSoldOut: boolean, currentSnapshot: (
@@ -12634,9 +12637,6 @@ type ProductFragment_ProductPublic_ = { __typename?: 'ProductPublic', id: string
   )>, featuredVariant?: Maybe<(
     { __typename?: 'product_variants' }
     & ProductVariantFragment
-  )>, chosenVariant?: Maybe<(
-    { __typename?: 'product_variants' }
-    & ProductVariantFragment
   )>, store?: Maybe<{ __typename?: 'StorePrivate', id: string, name: string } | { __typename?: 'StorePublic', id: string, name: string }>, category?: Maybe<{ __typename?: 'categories', id: string, name: string, categoryGroup: string }> };
 
 type ProductFragment_ProductDownload_ = { __typename?: 'ProductDownload', id: string, updatedAt?: Maybe<any>, tags?: Maybe<string>, isPublished: boolean, isSuspended: boolean, isDeleted: boolean, isExcludedFromRecommendations: boolean, storeId: string, isSoldOut: boolean, currentSnapshot: (
@@ -12646,9 +12646,6 @@ type ProductFragment_ProductDownload_ = { __typename?: 'ProductDownload', id: st
     { __typename?: 'product_variants' }
     & ProductVariantFragment
   )>, featuredVariant?: Maybe<(
-    { __typename?: 'product_variants' }
-    & ProductVariantFragment
-  )>, chosenVariant?: Maybe<(
     { __typename?: 'product_variants' }
     & ProductVariantFragment
   )>, store?: Maybe<{ __typename?: 'StorePrivate', id: string, name: string } | { __typename?: 'StorePublic', id: string, name: string }>, category?: Maybe<{ __typename?: 'categories', id: string, name: string, categoryGroup: string }> };
@@ -13094,9 +13091,6 @@ export const ProductFragmentFragmentDoc = gql`
     ...ProductVariantFragment
   }
   featuredVariant {
-    ...ProductVariantFragment
-  }
-  chosenVariant {
     ...ProductVariantFragment
   }
   store {
