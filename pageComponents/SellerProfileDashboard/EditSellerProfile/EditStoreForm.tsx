@@ -109,6 +109,30 @@ const EditStoreForm: React.FC<ReactProps> = (props) => {
     }
   })
 
+  const haspayoutMethodChanged = ({
+    bsb,
+    accountName,
+    accountNumber,
+    existingPayoutMethod
+  }: {
+    bsb,
+    accountName,
+    accountNumber,
+    existingPayoutMethod
+  }) => {
+    let payoutMethod = existingPayoutMethod;
+    if (bsb !== payoutMethod.bsb) {
+      return true
+    }
+    if (accountName !== payoutMethod.accountName) {
+      return true
+    }
+    if (accountNumber !== payoutMethod.accountNumber) {
+      return true
+    } else {
+      return false
+    }
+  }
 
   return (
     <Formik
@@ -131,10 +155,14 @@ const EditStoreForm: React.FC<ReactProps> = (props) => {
         console.log('formik values...: ', values);
         console.log("my storeId", userRedux.store.id)
         // Dispatch Apollo Mutation after validation
-        if (
-          values.bsb &&
-          values.bsb !== userRedux.payoutMethod.bsb
-        ) {
+        let payoutMethodChanged = haspayoutMethodChanged({
+          bsb: values.bsb,
+          accountName: values.accountName,
+          accountNumber: values.accountNumber,
+          existingPayoutMethod: userRedux?.payoutMethod
+        })
+
+        if (payoutMethodChanged) {
 
           let pm1 = storeEdit({
             variables: {

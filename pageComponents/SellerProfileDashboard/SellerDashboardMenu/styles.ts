@@ -1,7 +1,7 @@
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 import { Colors, BoxShadows, BorderRadius, BorderRadius2x, Gradients } from "layout/AppTheme";
 import {
-  MainBarHeight,
+  MainBarHeightDashboard,
   NewsBarHeight,
   CategoryBarHeight,
   CategoryBarHeightMobile,
@@ -32,7 +32,7 @@ export const styles = (theme: Theme) => createStyles({
     // boxShadow: `0px 2px 4px -1px rgba(0,0,0,0.2),
     //   0px 1px 1px 0px rgba(0,0,0,0.12)`,
     borderBottom: '1px solid #eaeaea',
-    height: `${MainBarHeight - 1}px`, // 1px for borderBottom
+    height: `${MainBarHeightDashboard - 1}px`,
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center',
@@ -198,7 +198,7 @@ export const styles = (theme: Theme) => createStyles({
     paddingLeft: '0.5rem',
     paddingRight: '0.5rem',
     width: '100vw',
-    height: MainBarHeight,
+    height: MainBarHeightDashboard - 1,
     display: "flex",
     position: "relative",
     justifyContent: 'space-between',

@@ -21,8 +21,6 @@ import { useTheme } from '@material-ui/core/styles';
 import { connect, useDispatch, useSelector } from "react-redux";
 import { GrandReduxState } from "reduxStore/grand-reducer";
 import { Actions } from "reduxStore/actions";
-// Analytics
-import { analyticsEvent } from "utils/analytics";
 
 
 

@@ -101,30 +101,11 @@ const MenuExpanded = (
             <div className={classes.dashboardInnerContainer}>
               {
                 Object.keys(routeMappings).map(k => {
+                  let defaultRoute = '/admin/products'
                   return (
-                    // <Link key={k}
-                    //   href={k.length ? `/admin/${k}` : '/admin'}
-                    // >
-                    //   <a className={classes.dashboardLink}>
-                    //     <MenuItem
-                    //       // className={classes.menuItem}
-                    //       className={clsx(
-                    //         classes.mobileMenuFlexitem,
-                    //         classes.mobileMenuItemRoot
-                    //       )}
-                    //       onClick={props.hideExpandMenu}
-                    //     >
-                    //       <Typography className={classes.dashboardLinkText}>
-                    //         {routeMappings[k]}
-                    //       </Typography>
-                    //     </MenuItem>
-                    //   </a>
-                    // </Link>
                     <div key={k} className={classes.mobileMenuFlexitem}>
-                      <Link href={k.length ? `/admin/${k}` : '/admin'}>
-                        <a className={classes.menuLink}
-                          // onClick={() => analyticsEvent("Nav.Wishlist.Pressed")}
-                        >
+                      <Link href={k.length ? `/admin/${k}` : defaultRoute}>
+                        <a className={classes.menuLink}>
                           <MenuItem
                             className={clsx(
                               classes.mobileMenuFlexitem,
