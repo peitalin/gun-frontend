@@ -64,17 +64,17 @@ const ProductEditPage = (props: ReactProps) => {
         productId: option(router).query.productId() as any
       },
       onCompleted: (data: QueryData) => {
-        dispatch(seedProductEditDataAction(data.product))
+        dispatch(seedProductEditDataAction(data.getProductById))
       },
-      // onError: (err) => console.log(err),
+      onError: (err) => console.log(err),
       ssr: true,
     },
   )
 
   React.useEffect(() => {
-    if (data && data.product) {
+    if (data && data.getProductById) {
       console.log("seeding product edit data")
-      dispatch(seedProductEditDataAction(data.product))
+      dispatch(seedProductEditDataAction(data.getProductById))
     }
   }, [data])
 
@@ -98,21 +98,24 @@ const ProductEditPage = (props: ReactProps) => {
               redirectRoute={"/admin/products"}
             />
           )
-        } else if (data && data.product) {
+        } else if (!!data?.getProductById) {
           return (
             <div className={classes.contentContainer}>
               <div className={classes.rootOuter}>
                 <Typography className={classes.title} variant="h2">
-                  Edit Product Listing
+                  Edit Product
                 </Typography>
-                <BackTo/>
+                <BackTo
+                  textLink={true}
+                  title={"Back to Products"}
+                />
                 <ErrorBounds className={clsx(
                   classes.pageRoot,
                   smDown ? classes.paddingMobile : classes.paddingMobile,
                 )}>
                   <ProductEdit
                     asModal={false}
-                    product={data.product}
+                    product={data.getProductById}
                   />
                 </ErrorBounds>
               </div>
@@ -139,7 +142,7 @@ const ProductEditPage = (props: ReactProps) => {
 interface ReactProps extends WithStyles<typeof styles> {
 }
 interface QueryData {
-  product: Product;
+  getProductById: Product;
 }
 interface QueryVar {
   productId: ID;
@@ -147,7 +150,6 @@ interface QueryVar {
 
 export const styles = (theme: Theme) => createStyles({
   pageRoot: {
-    boxShadow: '0px 1px 1px 0 #e6ebf1',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -213,7 +215,6 @@ export const styles = (theme: Theme) => createStyles({
     marginTop: "2rem",
   },
   title: {
-    marginBottom: '1rem',
   },
 });
 

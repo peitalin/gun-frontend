@@ -4,6 +4,8 @@ import Link from 'next/link';
 
 import Typography from "@material-ui/core/Typography";
 import { oc as option } from "ts-optchain";
+// styles
+import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
 // Graphql
 import { useQuery, ApolloClient, useApolloClient } from "@apollo/client";
 import { GET_USER } from "queries/user-queries";
@@ -20,6 +22,9 @@ const AdminProfileWrapper = dynamic(() => import("layout/GetUser/AdminProfileWra
 
 
 const GovRoot = (props: ReactProps) => {
+
+  const { classes } = props;
+
   return (
     <AdminProfileWrapper>
       {({ data, loading, error }: AdminProfileProps) => {
@@ -28,24 +33,33 @@ const GovRoot = (props: ReactProps) => {
         const disabled = option(user).userRole() !== Role.PLATFORM_ADMIN;
 
         return (
-          <div className='hero'>
+          <div className={classes.govHomePageSSR}>
             {
               !user &&
-              <Typography variant="h4">
-                Please login
-              </Typography>
+              <div className={classes.homeHeading}>
+                <Typography variant="h4">
+                  Please login
+                </Typography>
+              </div>
             }
             {
               user && disabled &&
-              <Typography variant="h4">
-                Access denied
-              </Typography>
+              <div className={classes.homeHeading}>
+                <Typography variant="h4">
+                  Access denied
+                </Typography>
+              </div>
             }
             {
               user && !disabled &&
-              <Typography variant="h4">
-                {`Logged in as Admin: ${user.email}`}
-              </Typography>
+              <div className={classes.homeHeading}>
+                <Typography variant="h4" gutterBottom>
+                  {`Logged in as PLATFORM_ADMIN:`}
+                </Typography>
+                <Typography variant="h4">
+                  {user.email}
+                </Typography>
+              </div>
             }
           </div>
         )
@@ -55,13 +69,29 @@ const GovRoot = (props: ReactProps) => {
 
 }
 
-interface ReactProps {
+interface ReactProps extends WithStyles<typeof styles> {
   user: UserPrivate;
   apolloClient: ApolloClient<any>;
 }
 interface QueryData {
   user: UserPrivate;
 }
+const styles = (theme: Theme) => createStyles({
+  govHomePageSSR: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  homeHeading: {
+    paddingTop: '4rem',
+    padding: '1rem',
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+})
 
 
 ////////// SSR ///////////
@@ -91,4 +121,4 @@ GovRoot.getInitialProps = async (ctx: Context) => {
 }
 
 
-export default GovRoot;
+export default withStyles(styles)( GovRoot );

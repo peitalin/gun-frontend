@@ -11,9 +11,6 @@ import Divider from "components/Divider";
 // Components
 import { Colors } from "layout/AppTheme";
 import { useRouter } from "next/router";
-
-// Recommendations
-import ProductPageRecommendations from "pageComponents/P/ProductPageRecommendations";
 // Next
 import dynamic from "next/dynamic";
 import Hidden from "@material-ui/core/Hidden";
