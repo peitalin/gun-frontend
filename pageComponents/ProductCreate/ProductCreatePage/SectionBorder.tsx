@@ -74,9 +74,10 @@ const styles = (theme: Theme) => createStyles({
   sectionBorderSm: {
     borderRadius: '0px',
     padding: '1rem',
-    marginBottom: '0rem',
     background: Colors.uniswapDarkNavy,
-    boxShadow: BoxShadows.shadow4.boxShadow,
+    // boxShadow: BoxShadows.shadow4.boxShadow,
+    // borderBottom: `2px solid ${Colors.uniswapNavy}`,
+    marginBottom: '0rem',
   },
   formOuterContainer: {
     // background: "transparent",

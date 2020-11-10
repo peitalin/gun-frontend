@@ -188,12 +188,12 @@ interface ReactProps extends WithStyles<typeof styles> {
 }
 interface FormikFields {
   dealer?: {
-    name: string;
-    address: string;
-    city: string;
-    state: string;
-    postCode: string;
-    licenseNumber: string;
+    name?: string;
+    address?: string;
+    city?: string;
+    state?: string;
+    postCode?: string;
+    licenseNumber?: string;
   }
 }
 

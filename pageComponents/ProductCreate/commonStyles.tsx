@@ -95,13 +95,14 @@ export const styles = (theme: Theme) => createStyles({
     background: Colors.uniswapDarkNavy,
     boxShadow: BoxShadows.shadow4.boxShadow,
   },
-  sectionBorderSm: {
-    borderRadius: '0px',
-    padding: '1rem',
-    marginBottom: '0rem',
-    background: Colors.uniswapDarkNavy,
-    boxShadow: BoxShadows.shadow4.boxShadow,
-  },
+  // sectionBorderSm: {
+  //   borderRadius: '0px',
+  //   padding: '1rem',
+  //   marginBottom: '0rem',
+  //   background: Colors.uniswapDarkNavy,
+  //   // boxShadow: BoxShadows.shadow4.boxShadow,
+  //   borderBottom: `1px solid ${Colors.uniswapNavy}`,
+  // },
   padding1: {
     padding: '1rem',
   },
@@ -201,6 +202,7 @@ export const styles = (theme: Theme) => createStyles({
     display: 'flex',
     justifyContent: 'center',
     flexDirection: 'row',
+    flexWrap: "wrap",
   },
   flexCol50: {
     flexBasis: '40%',
@@ -428,8 +430,8 @@ export const styles = (theme: Theme) => createStyles({
   stickyProductPreviewContainer: {
     position: 'sticky',
     top: '4rem',
-    marginTop: '1rem',
     marginBottom: '1rem',
+    marginLeft: '1rem',
     cursor: "pointer",
     // from SellingTips to product card preview
     // display: 'flex',
@@ -472,7 +474,7 @@ export const styles = (theme: Theme) => createStyles({
     },
   },
   descriptionRoot: {
-    marginBottom: '2rem',
+    marginBottom: '1rem',
   },
   categoryContainer: {
     position: 'relative',
@@ -490,6 +492,7 @@ export const styles = (theme: Theme) => createStyles({
     color: Colors.uniswapLighterGrey,
     textAlign: "center",
     width: "100%",
+    marginTop: "1rem",
     "&:hover": {
       cursor: "pointer",
       color: Colors.gradientUniswapBlue1,
@@ -498,6 +501,13 @@ export const styles = (theme: Theme) => createStyles({
   marginTop1: {
     marginTop: '1rem',
     width: "100%",
+  },
+  printFormikValues: {
+    color: Colors.cream,
+    "&:hover": {
+      cursor: "pointer",
+      color: Colors.gradientUniswapBlue1,
+    }
   },
 })
 

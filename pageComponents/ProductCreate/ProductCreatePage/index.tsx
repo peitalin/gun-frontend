@@ -55,6 +55,7 @@ const SelectDealer = dynamic(() => import("../SelectDealer"), {
 // same dir components
 import ProductCreateButton from "./ProductCreateButton";
 import ProductCreateForm from "./ProductCreateForm";
+import ProductCreateLayout from "./ProductCreateLayout";
 import StoreOrLoginContainer from "./StoreOrLoginContainer";
 import SectionBorder from "./SectionBorder";
 // Product Preview Page
@@ -74,7 +75,9 @@ import PreviewCardResponsive from "pageComponents/FrontPage/PreviewCardResponsiv
 // Graphql
 import { GET_PRODUCT_CATEGORIES } from "queries/categories-queries";
 import { useQuery } from '@apollo/client';
-import { useScrollYPosition } from "utils/hooks";
+import { useMutation, useApolloClient } from "@apollo/client";
+import { CREATE_PRODUCT } from "queries/products-mutations";
+// import { GET_RECOMMENDED_PRODUCTS } from "queries/products-queries";
 // ENV variables
 // import getConfig from 'next/config'
 // const {
@@ -103,10 +106,6 @@ import {
   DzuPreviewOrder,
   DzuPreviewItem,
 } from "typings/dropzone";
-// Graphql
-import { useMutation, useApolloClient } from "@apollo/client";
-import { CREATE_PRODUCT } from "queries/products-mutations";
-import { GET_RECOMMENDED_PRODUCTS } from "queries/products-queries";
 // Validation
 import { Formik, FormikErrors } from 'formik';
 import { validationSchemas } from "utils/validation";
@@ -194,14 +193,6 @@ const ProductCreatePage = (props: ReactProps) => {
         window.scrollTo(0, 0);
         dispatch(actions.RESET_PRODUCT_CREATE())
       }, 200);
-      try {
-        await aClient.query({
-          query: GET_RECOMMENDED_PRODUCTS,
-          variables: { count: 18 }
-        });
-      } catch (e) {
-        console.log(e)
-      }
     }
   })
 
@@ -312,8 +303,19 @@ const ProductCreatePage = (props: ReactProps) => {
         // console.log('values.currentVariants: ', values.currentVariants);
 
         return (
-          <>
-            <div className={classes.productColumn60}>
+          <ProductCreateLayout
+            productPreviewSticky={productCreateInputToProduct(
+              fprops.values,
+              categories,
+              currentVariantsInput,
+              user?.store,
+            )}
+            loadCarouselPics={loadCarouselPics}
+            setLoadCarouselPics={setLoadCarouselPics}
+            asModal={asModal}
+            closeModal={closeModal}
+          >
+              <DisplaySnackBars error={error} data={data}/>
 
               <StoreOrLoginContainer>
                 <StoreOrLogin
@@ -321,18 +323,16 @@ const ProductCreatePage = (props: ReactProps) => {
                   disableLoginButton={true}
                   buttonText={"Create Store"}
                 />
-
                 <div>
                   <a onClick={() => {
                       console.log("fprops.values: ", fprops.values)
                       console.log("fprops.errors: ", fprops.errors)
                     }}
-                    style={{ color: "#eee", cursor: "pointer" }}
+                    className={classes.printFormikValues}
                   >
                     print formik values
                   </a>
                 </div>
-
               </StoreOrLoginContainer>
 
               <ProductCreateForm
@@ -370,10 +370,10 @@ const ProductCreatePage = (props: ReactProps) => {
                   <Description
                     {...fprops}
                   />
-                  <SelectTags
+                  {/* <SelectTags
                     reducerName={reducerName}
                     {...fprops}
-                  />
+                  /> */}
                 </SectionBorder>
 
                 <SectionBorder>
@@ -418,38 +418,7 @@ const ProductCreatePage = (props: ReactProps) => {
                 </ProductCreateButtonWrapper>
 
               </ProductCreateForm>
-              <DisplaySnackBars error={error} data={data}/>
-            </div>
-
-            <div className={clsx(classes.productColumn40, 'fadeIn')}>
-              {
-                !mdDown &&
-                <Tooltip title="Preview the Product Page" placement="bottom-start">
-                  <div className={clsx(
-                    classes.stickyProductPreviewContainer,
-                    'fadeIn',
-                  )}>
-                    <PreviewCardResponsive
-                      product={productCreateInputToProduct(
-                        fprops.values,
-                        categories,
-                        currentVariantsInput,
-                        user?.store,
-                      )}
-                      // cardsPerRowLayout={4}
-                      // boxShadow={true}
-                      // refetch={wishlistConnectionResponse.refetch}
-                      loadCarouselPics={loadCarouselPics}
-                      setLoadCarouselPics={setLoadCarouselPics}
-                      productIndex={0}
-                      // previewImageEmptyMessage={"Preview Listing"}
-                      // onClick={() => setOpenPreviewPage(true)}
-                    />
-                  </div>
-                </Tooltip>
-              }
-            </div>
-          </>
+          </ProductCreateLayout>
         );
       }}
     </Formik>
@@ -518,7 +487,6 @@ const productCreateInputToProduct = (
     isPublished: true, // to display ProductPreviewPage
     isDeleted: false,
     isSuspended: false,
-    chosenVariant: previewFeaturedVariant,
     featuredVariant: previewFeaturedVariant,
   } as any
   // console.log("productCreateInputtoProduct:::", product)

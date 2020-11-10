@@ -125,6 +125,9 @@ const PriceFields = (props: ReactProps & FormikProps<FormikFields>) => {
                     : null
                   }
                   touched={option(touched).currentVariants[position].price()}
+                  validationErrorMsgStyle={{
+                    bottom: '-1.15rem',
+                  }}
                 />
               </div>
             </div>

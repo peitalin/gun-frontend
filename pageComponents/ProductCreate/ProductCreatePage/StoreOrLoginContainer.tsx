@@ -74,15 +74,16 @@ export const styles = (theme: Theme) => createStyles({
     width: '100%',
   },
   pagePadding1: {
-    padding: '1rem 1rem 0rem 1rem',
+    marginBottom: '1rem',
   },
   pagePadding2: {
     padding: '1rem',
   },
   pagePaddingSm: {
     background: Colors.uniswapDarkNavy,
-    margin: '0rem 0rem 0rem 0rem',
+    margin: '1rem 0rem 0rem 0rem',
     padding: '1rem',
+    borderRadius: '0px',
   },
 })
 

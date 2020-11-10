@@ -12,9 +12,11 @@ import { Actions } from "reduxStore/actions";
 // Components
 import ProductCreatePage from "./ProductCreatePage";
 import BannerProductCreate from "components/BannerProductCreate";
+import { useScrollYPosition } from "utils/hooks";
 // Router
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { refLinks, viewingWhichSection } from "./RefLink";
 
 
 
@@ -42,6 +44,10 @@ const ProductCreate: React.FC<ReactProps> = (props) => {
 
 
   if (!asModal) {
+
+    let y = useScrollYPosition()
+    let currentViewSection = viewingWhichSection(y)
+
     return (
       <div className={classes.outerContainer}>
         <div className={classes.bannerOuter}>
@@ -49,9 +55,16 @@ const ProductCreate: React.FC<ReactProps> = (props) => {
         </div>
         <div className={classes.stickyNavbar}>
           {
-            ["Title", "Model", "Description", "Images", "Price"].map(s => {
+            Object.values(refLinks).map(s => {
+              let ref = `#product-create-nav-${s}`
               return (
-                <a className={classes.stickyLink} key={s} href={`#${s}`}>
+                <a key={s} href={ref}
+                  className={
+                    currentViewSection === s
+                    ? classes.stickyLinkHighlighted
+                    : classes.stickyLink
+                  }
+                >
                   <div key={s}>
                     {s}
                   </div>
@@ -147,9 +160,9 @@ const styles = (theme: Theme) => createStyles({
     top: 0,
     left: 0,
     zIndex: 1,
-    height: '3rem',
+    height: '2.5rem',
     color: Colors.uniswapLighterGrey,
-    // borderBottom: `1px solid ${Colors.uniswapNavy}`,
+    // borderTop: `1px solid ${Colors.uniswapNavy}`,
     background: Colors.uniswapDarkNavy,
     boxShadow: BoxShadows.shadow2.boxShadow,
     // background: Gradients.gradientUniswapDark.background,
@@ -170,7 +183,21 @@ const styles = (theme: Theme) => createStyles({
     borderBottom: `2px solid ${Colors.uniswapDarkNavy}`,
     "&:hover": {
       color: Colors.uniswapLightestGrey,
-      borderBottom: `2px solid ${Colors.uniswapLighterGrey}`,
+    },
+  },
+  stickyLinkHighlighted: {
+    color: Colors.gradientUniswapBlue1,
+    height: '100%',
+    // flexBasis: '20%',
+    flexGrow: 1,
+    textAlign: 'center',
+    display: 'flex',
+    justifyContent: 'center',
+    flexDirection: 'column',
+    borderBottom: `2px solid ${Colors.gradientUniswapBlue1}`,
+    "&:hover": {
+      color: Colors.blue,
+      borderBottom: `2px solid ${Colors.blue}`,
     },
   },
 });

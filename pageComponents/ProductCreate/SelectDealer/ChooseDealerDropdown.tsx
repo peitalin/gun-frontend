@@ -27,25 +27,32 @@ const ChooseDealerDropdown = (props: ReactProps & FormikProps<FormikFields>) => 
   } = props;
 
   const setDealerId = (newCat: SelectOption) => {
-    fprops.setFieldValue("dealerId", newCat.value)
+    if (!!newCat?.value) {
+      fprops.setFieldValue("dealerId", newCat?.value)
+    }
   }
+
+  let dealerOptions = createDealerSuggestions(props.dealers)
+  // initial stateShape
+  let initialDealer = dealerOptions.find(d => d.value === fprops.values.dealerId)
+
+  // console.log("dealerOptions: ", dealerOptions)
+  // console.log("initialDealer: ", initialDealer)
 
   return (
     <>
-      <DropdownInput
-        className={classes.dealerDropdown}
-        stateShape={
-          // initial stateShape
-          { label: "Choose a dealer", value: ""}
-        }
-        onChange={({ label, value }: SelectOption) =>
-          setDealerId({ label, value })
-        }
-        options={
-          createDealerSuggestions(props.dealers)
-        }
-        placeholder={"Select a dealer"}
-      />
+      {
+        fprops.values?.dealerId &&
+        <DropdownInput
+          className={classes.dealerDropdown}
+          stateShape={initialDealer}
+          onChange={({ label, value }: SelectOption) =>
+            setDealerId({ label, value })
+          }
+          options={dealerOptions}
+          placeholder={initialDealer?.label}
+        />
+      }
 
       <div className={classes.errorMsgContainer}>
         <ValidationErrorMsg
@@ -53,6 +60,10 @@ const ChooseDealerDropdown = (props: ReactProps & FormikProps<FormikFields>) => 
           focused={false}
           errorMessage={fprops.errors.dealerId}
           disableInitialValidationMessage={false}
+          style={{
+            top: '-0.75rem',
+            right: '0.25rem',
+          }}
         />
       </div>
     </>
@@ -64,12 +75,14 @@ const createDealerSuggestions = (dealers: Dealers[]): SelectOption[] => {
   if (!dealers) {
     return []
   }
-  return dealers.map(dealer => {
-    return {
-      label: `${dealer.name}, ${dealer.postCode} #${dealer.licenseNumber}`,
-      value: dealer.id,
-    }
-  })
+  return dealers.map(dealer => createDealerOption(dealer))
+}
+
+const createDealerOption = (dealer: Dealers) => {
+  return {
+    label: `${dealer.name}, ${dealer.postCode} #${dealer.licenseNumber}`,
+    value: dealer.id,
+  }
 }
 
 export interface SelectOption {
@@ -83,12 +96,12 @@ interface ReactProps extends WithStyles<typeof styles> {
 interface FormikFields {
   dealerId?: string;
   dealer?: {
-    name: string;
-    address: string;
-    city: string;
-    state: string;
-    postCode: string;
-    licenseNumber: string;
+    name?: string;
+    address?: string;
+    city?: string;
+    state?: string;
+    postCode?: string;
+    licenseNumber?: string;
   };
 }
 

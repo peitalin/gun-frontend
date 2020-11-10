@@ -1,13 +1,9 @@
 import React from "react";
 import { oc as option } from "ts-optchain";
 import clsx from "clsx";
-import { ReduxStateProductCreate } from "reduxStore/product_create-reducer";
 // Styles
 import { withStyles, WithStyles } from "@material-ui/core/styles";
 import { styles } from '../commonStyles';
-// Icons
-import ClearIcon from "@material-ui/icons/Clear";
-import IconButton from "@material-ui/core/IconButton";
 // CSS
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
@@ -30,60 +26,24 @@ const ProductCreateForm: React.FC<ProductCreateFormProps> = (props) => {
   const smDown = useMediaQuery(theme.breakpoints.down('sm'));
 
   return (
-    <div
+    <form
+      onSubmit={onSubmit}
+      id={'on-submit-form'}
       className={clsx(
-        classes.root,
-        "prevent-accidental-drag-drop-product-create-form"
+        smDown ? classes.formOuterContainerSm : classes.formOuterContainer,
       )}
-      onDragOver={(e) => {
-        e.preventDefault()
-      }}
-      onDrop={(e) => {
-        console.log("ahh! you missed the dropzone")
-        e.preventDefault()
-      }}
     >
-      <div className={classes.maxWidth}>
-        <div className={
-          smDown ? classes.pageMarginSm : classes.pageMargin
-        }>
-
-          {
-            asModal &&
-            <div className={clsx(
-              classes.flexCol,
-              classes.orderTitle,
-              classes.spaceBetween
-            )}>
-              <div className={classes.flexEnd}>
-                <IconButton onClick={closeModal}>
-                  <ClearIcon/>
-                </IconButton>
-              </div>
+      {
+        disableForm
+        ? <>
+            <div className={classes.coverGrey}/>
+            <div className={disableForm ? classes.disableForm : null}>
+              {children}
             </div>
-          }
-
-          <form
-            onSubmit={onSubmit}
-            id={'on-submit-form'}
-            className={clsx(
-              smDown ? classes.formOuterContainerSm : classes.formOuterContainer,
-            )}
-          >
-            {
-              disableForm
-              ? <>
-                  <div className={classes.coverGrey}/>
-                  <div className={disableForm ? classes.disableForm : null}>
-                    {children}
-                  </div>
-                </>
-              : <>{children}</>
-            }
+          </>
+        : <>{children}</>
+      }
           </form>
-        </div>
-      </div>
-    </div>
   )
 }
 

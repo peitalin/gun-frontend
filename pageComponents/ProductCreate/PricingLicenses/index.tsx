@@ -21,6 +21,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Button from '@material-ui/core/Button';
 import FormGroup from '@material-ui/core/FormGroup';
 import Switch from '@material-ui/core/Switch';
+import RefLink, { refLinks } from "../RefLink";
 // Components
 import Or from "components/Or";
 import License from "./License";
@@ -46,10 +47,7 @@ const PricingLicenses = (props: ReactProps & FormikProps<FormikFields>) => {
   return (
     <ErrorBounds className={clsx(classes.root, classes.positionRelative)}>
 
-      <div id="Price" style={{
-        position: 'absolute',
-        top: '-6rem',
-      }}/>
+      <RefLink refId={refLinks.price}/>
 
       <div className={classes.flexRow}>
         <Typography

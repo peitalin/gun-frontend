@@ -38,6 +38,7 @@ import { maxPreviewImages } from "utils/limitsAndRules";
 import ValidationErrorMsg from "components/Fields/ValidationErrorMsg";
 import { useFocus } from "utils/hooks";
 import { reduxToFormikCurrentVariants } from "../ProductCreatePage";
+import RefLink, { refLinks } from "../RefLink";
 
 
 
@@ -172,6 +173,8 @@ const PreviewItemUploaderGrid = (props: ReactProps & FormikProps<FormikFields>) 
         .finally(() => {
           setLoading(false)
         })
+    } else {
+      setLoading(false)
     }
   }
 
@@ -221,11 +224,7 @@ const PreviewItemUploaderGrid = (props: ReactProps & FormikProps<FormikFields>) 
   return (
     <ErrorBounds className={classes.uploaderRoot}>
 
-      <div id="Images" style={{
-        position: 'absolute',
-        top: '-6rem',
-      }}/>
-
+      <RefLink refId={refLinks.images}/>
 
       <div className={classes.previewTitleBox}>
         <Typography variant="subtitle1">

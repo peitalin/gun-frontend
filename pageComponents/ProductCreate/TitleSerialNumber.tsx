@@ -22,6 +22,7 @@ import {
   maxLengthTitle,
   maxLengthProductName
 } from "utils/limitsAndRules";
+import RefLink, { refLinks } from "./RefLink";
 
 
 
@@ -55,10 +56,7 @@ const TitleSerialNumber = (props: ReactProps & FormikProps<FormikFields>) => {
   return (
     <ErrorBounds className={classes.positionRelative}>
 
-      <div id="Title" style={{
-        position: 'absolute',
-        top: '-6rem',
-      }}/>
+      <RefLink refId={refLinks.title}/>
 
       <Typography
         color={"primary"}

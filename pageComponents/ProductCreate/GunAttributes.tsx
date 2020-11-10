@@ -22,7 +22,7 @@ import {
   maxLengthTitle,
   maxLengthProductName
 } from "utils/limitsAndRules";
-
+import RefLink, { refLinks } from "./RefLink";
 
 
 const MakeAndModel = (props: ReactProps & FormikProps<FormikFields>) => {
@@ -53,10 +53,7 @@ const MakeAndModel = (props: ReactProps & FormikProps<FormikFields>) => {
   return (
     <ErrorBounds className={classes.positionRelative}>
 
-      <div id="Model" style={{
-        position: 'absolute',
-        top: '-6rem',
-      }}/>
+      <RefLink refId={refLinks.model}/>
 
       <Typography color={"primary"} variant="subtitle1" gutterBottom>
         Make

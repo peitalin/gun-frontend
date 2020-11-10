@@ -112,7 +112,7 @@ const styles = (theme: Theme) => createStyles({
     height: 60,
     width: 60,
     margin: theme.spacing(1),
-    border: `4px solid ${Colors.uniswapLightNavy}`,
+    border: `4px solid ${theme.colors.uniswapLightNavy}`,
   },
   avatarBorder: {
     marginBottom: '0.5rem',
@@ -123,7 +123,6 @@ const styles = (theme: Theme) => createStyles({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: '100%',
-    // background: Gradients.gradientPurple.background,
     background: Gradients.gradientUniswapFluro.background,
   },
   avatarButton: {
@@ -135,16 +134,16 @@ const styles = (theme: Theme) => createStyles({
   },
   link: {
     cursor: 'pointer',
-    color: Colors.blue,
+    color: theme.colors.blue,
   },
   name: {
     marginLeft: '0.5rem',
     fontWeight: 600,
-    color: Colors.uniswapLightestGrey,
+    color: theme.colors.uniswapLightestGrey,
   },
   website: {
     marginLeft: '0.5rem',
-    color: Colors.uniswapLighterGrey,
+    color: theme.colors.uniswapLighterGrey,
     fontSize: '0.8rem',
   },
 });

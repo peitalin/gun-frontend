@@ -25,7 +25,7 @@ const TextEditorSSR = dynamic(() => import('../../components/TextEditor'), {
 import { maxLengthProductDescription } from "utils/limitsAndRules";
 /// Debounce
 import { useDebouncedCallback } from 'use-debounce';
-
+import RefLink, { refLinks } from "./RefLink";
 
 
 
@@ -73,10 +73,7 @@ const Description = (props: ReactProps & FormikProps<FormikFields>) => {
   return (
     <ErrorBounds className={clsx(classes.descriptionRoot, classes.positionRelative)}>
 
-      <div id="Description" style={{
-        position: 'absolute',
-        top: '-6rem',
-      }}/>
+      <RefLink refId={refLinks.description}/>
 
       <Typography
         color={"primary"}
@@ -99,7 +96,7 @@ const Description = (props: ReactProps & FormikProps<FormikFields>) => {
         touched={fprops.touched}
         setFieldTouched={fprops.setFieldTouched}
         editorStyle={{
-          maxWidth: 'calc(100vw - 4rem)', // constrain width for mobile
+          // maxWidth: 'calc(100vw - 4rem)', // constrain width for mobile
           background: Colors.uniswapMediumNavy,
         }}
       />
