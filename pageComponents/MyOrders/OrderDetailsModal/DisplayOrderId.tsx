@@ -66,11 +66,7 @@ interface ReactProps extends WithStyles<typeof styles> {
 
 const styles = (theme: Theme) => createStyles({
   root: {
-    // boxShadow: "0px 3px 8px -4px rgba(22,22,22,0.2)",
-    // border: '1px solid #eaeaea',
-    borderRadius: "4px",
     marginBottom: "0.3rem",
-    backgroundColor: '#FCFCFE',
   },
   title: {
     marginBottom: '0.5rem',

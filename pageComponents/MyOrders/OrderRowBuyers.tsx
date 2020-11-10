@@ -114,8 +114,7 @@ const styles = (theme: Theme) => createStyles({
     padding: '1rem',
     borderRadius: BorderRadius,
     backgroundColor: Colors.foregroundColor,
-    border: `1px solid ${Colors.lightGrey}`,
-    // boxShadow: BoxShadows.shadowLight.boxShadow,
+    boxShadow: BoxShadows.shadow1.boxShadow,
     // "&:hover": {
     //   boxShadow: BoxShadows.shadowLight.boxShadow,
     // },

@@ -118,12 +118,8 @@ const styles = (theme: Theme) => createStyles({
     flexGrow: 1,
     padding: '1rem',
     borderRadius: BorderRadius,
-    backgroundColor: Colors.foregroundColor,
-    border: `1px solid ${Colors.lightGrey}`,
-    // boxShadow: BoxShadows.shadowLight.boxShadow,
-    // "&:hover": {
-    //   boxShadow: BoxShadows.shadowLight.boxShadow,
-    // },
+    backgroundColor: theme.colors.uniswapDarkNavy,
+    boxShadow: BoxShadows.shadow1.boxShadow,
   },
   width100: {
     width: '100%',

@@ -3,7 +3,7 @@ import {oc as option} from "ts-optchain";
 import clsx from "clsx";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
-import { Colors } from "layout/AppTheme";
+import { Colors, BorderRadius, BoxShadows } from "layout/AppTheme";
 // Utils Components
 import ErrorBounds from "components/ErrorBounds";
 // MUI
@@ -114,16 +114,15 @@ const styles = (theme: Theme) => createStyles({
   orderItemsContainer: {
     marginLeft: '0.5rem',
     padding: '1rem',
-    boxShadow: "0px 3px 8px -4px rgba(22,22,22,0.2)",
-    // border: '1px solid #eaeaea',
-    borderRadius: "4px",
     marginBottom: "0.5rem",
-    backgroundColor: '#FCFCFE',
+    borderRadius: BorderRadius,
+    backgroundColor: theme.colors.uniswapMediumNavy,
+    boxShadow: BoxShadows.shadow1.boxShadow,
   },
   closeIcon: {
-    background: Colors.lightestGrey,
+    background: Colors.uniswapGrey,
     "&:hover": {
-      background: Colors.lightGrey,
+      background: Colors.uniswapMediumGrey,
     },
   },
   closeIconButtonContainer: {

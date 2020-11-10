@@ -366,7 +366,7 @@ const styles = (theme: Theme) => createStyles({
     alignItems: 'center',
     marginBottom: '2rem',
     borderRadius: BorderRadius,
-    backgroundColor: Colors.uniswapDarkNavy,
+    backgroundColor: theme.colors.uniswapDarkNavy,
     boxShadow: BoxShadows.shadow1.boxShadow,
     width: '100%',
     padding: '3rem',
@@ -376,7 +376,8 @@ const styles = (theme: Theme) => createStyles({
   },
   divider: {
     width: '100%',
-    border: `1px solid ${Colors.uniswapDarkNavy}`,
+    marginTop: '1rem',
+    marginBottom: '1rem',
   },
   ordersSectionContainer: {
     marginTop: "1rem",

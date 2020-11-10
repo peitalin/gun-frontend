@@ -3,7 +3,7 @@ import {oc as option} from "ts-optchain";
 import clsx from "clsx";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
-import { Colors } from "layout/AppTheme";
+import { Colors, BoxShadows, BorderRadius } from "layout/AppTheme";
 // Utils Components
 import ErrorBounds from "components/ErrorBounds";
 // MUI
@@ -132,11 +132,10 @@ interface ReactProps extends WithStyles<typeof styles> {
 const styles = (theme: Theme) => createStyles({
   root: {
     padding: '1rem',
-    boxShadow: "0px 3px 8px -4px rgba(22,22,22,0.2)",
-    // border: '1px solid #eaeaea',
-    borderRadius: "4px",
+    borderRadius: BorderRadius,
     marginBottom: "0.5rem",
-    backgroundColor: '#FCFCFE',
+    backgroundColor: theme.colors.uniswapMediumNavy,
+    boxShadow: BoxShadows.shadow1.boxShadow,
   },
   title: {
     marginBottom: '0.5rem',

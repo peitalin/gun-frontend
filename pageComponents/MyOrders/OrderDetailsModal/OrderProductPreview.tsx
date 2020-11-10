@@ -23,11 +23,11 @@ const OrderProductPreview: React.FC<ReactProps> = (props) => {
   const { classes, product } = props;
   const { title } = product.currentSnapshot;
 
-  // const previewItem = option(product).chosenVariant.previewItems([])[0];
+  // const previewItem = option(product).featuredVariant.previewItems([])[0];
   // const previewItem = option(product).productVariants[0].previewItems([])[0];
   const previewItem = option(product).productVariants[0].previewItems([])[0];
 
-  // let price = option(product).chosenVariant.price();
+  // let price = option(product).featuredVariant.price();
 
   // const priceDetails = option(item).priceDetails();
   // console.log('product', product)

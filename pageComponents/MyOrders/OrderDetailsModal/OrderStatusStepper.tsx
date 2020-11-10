@@ -45,6 +45,7 @@ const OrderStatusStepper: React.FC<ReactProps> = (props) => {
                 // }}
                 StepIconProps={{
                   classes: {
+                    root: classes.stepperGrey,
                     active: classes.stepperBlue,
                     completed: classes.stepperBlue,
                   }
@@ -102,8 +103,11 @@ const styles = (theme: Theme) => createStyles({
     flexDirection: "column",
     justifyContent: "center",
   },
+  stepperGrey: {
+    fill: `${Colors.uniswapMediumGrey} !important`,
+  },
   stepperBlue: {
-    color: `${Colors.blue} !important`,
+    fill: `${Colors.cream} !important`,
   },
   title: {
     margiBottom: '0.5rem',

@@ -330,7 +330,7 @@ const Form10Upload = (props: ReactProps) => {
               display: "flex",
               flexDirection: "column",
               justifyContent: "center",
-              backgroundColor: "#fefefe",
+              // backgroundColor: "#fefefe",
               minHeight: 'unset',
             },
             dropzoneActive: {
@@ -388,11 +388,11 @@ const styles = (theme: Theme) => createStyles({
   avatar: {
     width: 90,
     height: 90,
-    border: "1px solid #fafafa",
+    border: `1px solid ${theme.colors.uniswapGrey}`,
     boxShadow: "0px 0px 1px 1px rgba(0,0,0,0.5)",
     // marginTop: '1rem',
     marginBottom: '0.5rem',
-    background: Colors.lightGrey,
+    background: theme.colors.uniswapLightGrey,
   },
   avatarEdit: {
     transition: theme.transitions.create('transform, border', {
