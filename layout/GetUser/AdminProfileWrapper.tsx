@@ -3,7 +3,7 @@ import { NextPage, NextPageContext } from 'next';
 import { oc as option } from "ts-optchain";
 // styles
 import { createStyles, Theme, withStyles, WithStyles } from "@material-ui/core/styles";
-import { Colors } from "layout/AppTheme";
+import { Colors, BoxShadows, BorderRadius } from "layout/AppTheme";
 // Redux
 import { Actions } from "reduxStore/actions";
 import { GrandReduxState } from "reduxStore/grand-reducer";
@@ -126,8 +126,10 @@ const styles = (theme: Theme) => createStyles({
     height: '100%',
     minHeight: 'calc(600px)',
     width: '100%',
-    background: "#fafafa",
-    border: "1px solid #eaeaea",
+    // border: `1px solid ${Colors.uniswapLightGrey}`,
+    background: Colors.uniswapDarkNavy,
+    boxShadow: BoxShadows.shadow1.boxShadow,
+    borderRadius: BorderRadius,
     padding: '1rem',
     // display: 'flex',
     // flexDirection: 'column',

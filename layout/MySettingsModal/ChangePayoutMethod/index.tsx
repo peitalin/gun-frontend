@@ -72,9 +72,9 @@ const ChangePayoutMethod = (props: ReactProps & ReduxProps) => {
     <Formik
       // 1. feed product data to edit into formik state.
       initialValues={{
-        newBsb: props.user?.payoutMethod?.bsb,
-        newAccountNumber: props.user?.payoutMethod?.accountNumber,
-        newAccountName: props.user?.payoutMethod?.accountName,
+        bsb: props.user?.payoutMethod?.bsb,
+        accountNumber: props.user?.payoutMethod?.accountNumber,
+        accountName: props.user?.payoutMethod?.accountName,
       }}
       validationSchema={validationSchemas.ChangePayoutMethod}
       onSubmit={(values, { setSubmitting, resetForm }) => {
@@ -83,9 +83,9 @@ const ChangePayoutMethod = (props: ReactProps & ReduxProps) => {
         setPayoutMethod({
           variables: {
             payoutType: "BANK",
-            bsb: values.newBsb,
-            accountNumber: values.newAccountNumber,
-            accountName: values.newAccountName,
+            bsb: values.bsb,
+            accountNumber: values.accountNumber,
+            accountName: values.accountName,
           }
         }).then(r => {
           resetForm()
@@ -117,6 +117,7 @@ const ChangePayoutMethod = (props: ReactProps & ReduxProps) => {
         let accountNumber3 = props.user?.payoutMethod?.accountNumber.slice(5)
 
         let accountName = props.user?.payoutMethod?.accountName
+        console.log("errors:", fprops.errors)
 
         return (
           <form className={classes.root}
@@ -204,42 +205,48 @@ const ChangePayoutMethod = (props: ReactProps & ReduxProps) => {
                   required
                   placeholder={"Enter a Bank BSB number"}
                   className={classes.textField}
-                  value={values.newBsb}
+                  value={values.bsb}
                   onChange={(e) => {
-                    console.log("e.target.value", e.target.value)
-                    fprops.setFieldValue("newBsb", e.target.value)
+                    console.log("bsb: ", e.target.value)
+                    let value = e.target.value
+                    if (value.length <= 6) {
+                      fprops.setFieldValue("bsb", e.target.value)
+                    }
                   }}
                   inputProps={{ style: { width: '100%' }}}
-                  errorMessage={errors.newBsb}
-                  touched={touched.newBsb}
+                  errorMessage={errors.bsb}
+                  touched={touched.bsb}
                 />
 
                 <TextInput
                   required
                   placeholder={"Enter a Bank Account number"}
                   className={classes.textField}
-                  value={values.newAccountNumber}
+                  value={values.accountNumber}
                   onChange={(e) => {
-                    console.log("e.target.value", e.target.value)
-                    fprops.setFieldValue("newAccountNumber", e.target.value)
+                    console.log("accountNumber: ", e.target.value)
+                    let value = e.target.value
+                    if (value.length <= 10) {
+                      fprops.setFieldValue("accountNumber", e.target.value)
+                    }
                   }}
                   inputProps={{ style: { width: '100%' }}}
-                  errorMessage={errors.newAccountNumber}
-                  touched={touched.newAccountNumber}
+                  errorMessage={errors.accountNumber}
+                  touched={touched.accountNumber}
                 />
 
                 <TextInput
                   required
                   placeholder={"Enter a Account name"}
                   className={classes.textField}
-                  value={values.newAccountName}
+                  value={values.accountName}
                   onChange={(e) => {
-                    console.log("e.target.value", e.target.value)
-                    fprops.setFieldValue("newAccountName", e.target.value)
+                    console.log("accountName: ", e.target.value)
+                    fprops.setFieldValue("accountName", e.target.value)
                   }}
                   inputProps={{ style: { width: '100%' }}}
-                  errorMessage={errors.newAccountName}
-                  touched={touched.newAccountName}
+                  errorMessage={errors.accountName}
+                  touched={touched.accountName}
                 />
 
                 <ButtonLoading

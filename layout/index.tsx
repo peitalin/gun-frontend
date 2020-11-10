@@ -177,7 +177,7 @@ const styles = (theme: Theme) => createStyles({
     flexDirection: 'row',
     justifyContent: 'flex-start',
     flexWrap: 'wrap',
-    background: Gradients.gradientUniswapDark.background,
+    // background: Gradients.gradientUniswapDark.background,
   },
   govPageContainer: {
     position: 'relative',

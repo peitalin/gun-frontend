@@ -131,7 +131,7 @@ export const SellerProfileWrapper = (props) => {
         // console.log('saving refetchStore: ', refetch)
         dispatch(Actions.reduxRefetch.SET_REFETCH_STORE(refetch))
         // merge StorePrivate (dashboard stuff)
-        console.log('saving GET_STORE_PRIVATE: ', data.user)
+        // console.log('saving GET_STORE_PRIVATE: ', data.user)
         if (option(data).user.store.id()) {
           dispatch(Actions.reduxLogin.SET_USER_STORE(data.user.store))
         }

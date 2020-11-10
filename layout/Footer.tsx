@@ -26,8 +26,8 @@ import { GrandReduxState } from 'reduxStore/grand-reducer';
 import Link from "next/link";
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
-// Analytics
-import { analyticsEvent } from "utils/analytics";
+// // Analytics
+// import { analyticsEvent } from "utils/analytics";
 
 
 
@@ -58,16 +58,16 @@ const Footer: React.FC<ReactProps> = (props) => {
                 classes.title,
                 mdDown ? classes.textAlignCenter : null,
               )}>
-                <LogoCircle/>
+                <LogoCircle />
               </div>
-              <Typography variant="body2"
+              {/* <Typography variant="body2"
                 className={clsx(
                   classes.subtitle,
                   mdDown ? classes.textAlignCenter : null
                 )}
               >
                 Supporting arms trade
-              </Typography>
+              </Typography> */}
             </div>
 
 
@@ -110,7 +110,7 @@ const Footer: React.FC<ReactProps> = (props) => {
                   // href={'https://help.relay.shop/hc/en-us/articles/360036185952-Refund-Policy'}
                   className={classes.link}
                   target={"_blank"}
-                  onClick={() => analyticsEvent("View.RefundPolicy")}
+                  // onClick={() => analyticsEvent("View.RefundPolicy")}
                 >
                   <Typography variant="body2" className={classes.linkText}>
                     Refund Policy
@@ -120,7 +120,7 @@ const Footer: React.FC<ReactProps> = (props) => {
                   // href={'https://help.relay.shop/hc/en-us/articles/360038530771-Terms-of-Service'}
                   className={classes.link}
                   target={"_blank"}
-                  onClick={() => analyticsEvent("View.Terms")}
+                  // onClick={() => analyticsEvent("View.Terms")}
                 >
                   <Typography variant="body2" className={classes.linkText}>
                     Terms of Service
@@ -130,7 +130,7 @@ const Footer: React.FC<ReactProps> = (props) => {
                   // href={'https://help.relay.shop/hc/en-us/articles/360038152632-Privacy-Policy'}
                   className={classes.link}
                   target={"_blank"}
-                  onClick={() => analyticsEvent("View.Privacy")}
+                  // onClick={() => analyticsEvent("View.Privacy")}
                 >
                   <Typography variant="body2" className={classes.linkText}>
                     Privacy Policy
@@ -351,18 +351,6 @@ export const PaymentIcons = withStyles(styles)(({ classes }: ReactProps) => {
       </div>
         <div className={classes.socialIconsItem}>
         <Mastercard/>
-      </div>
-      <div className={classes.socialIconsItem}>
-        <Paypal/>
-      </div>
-      <div className={classes.socialIconsItem}>
-        <ApplePay/>
-      </div>
-      <div className={classes.socialIconsItem}>
-        <GooglePay/>
-      </div>
-      <div className={classes.socialIconsItem}>
-        <Amex/>
       </div>
     </div>
   )
