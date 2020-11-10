@@ -2,6 +2,72 @@
 import { createMuiTheme, fade } from '@material-ui/core/styles';
 import { createStyles, Theme } from '@material-ui/core/styles';
 
+declare module '@material-ui/core/styles/createMuiTheme' {
+  interface Theme {
+    colors: {
+      uniswapLightestGrey: React.CSSProperties['color'],
+      uniswapLightGrey: React.CSSProperties['color'],
+      uniswapLighterGrey: React.CSSProperties['color'],
+      uniswapGrey: React.CSSProperties['color'],
+      uniswapMediumGrey: React.CSSProperties['color'],
+      uniswapLightNavy: React.CSSProperties['color'],
+      uniswapNavy: React.CSSProperties['color'],
+      uniswapMediumNavy: React.CSSProperties['color'],
+      uniswapGreyNavy: React.CSSProperties['color'],
+      uniswapDarkNavy: React.CSSProperties['color'],
+      //
+      blue: React.CSSProperties['color'],
+      green: React.CSSProperties['color'],
+    },
+    gradients: {
+      gradientUniswapDark: {
+        background: React.CSSProperties['background'],
+        color1: React.CSSProperties['color'],
+        color2: React.CSSProperties['color'],
+      },
+      gradientUniswapFluro: {
+        background: React.CSSProperties['background'],
+        color1: React.CSSProperties['color'],
+        color2: React.CSSProperties['color'],
+      },
+    },
+  }
+  interface ThemeOptions {
+    colors: {
+      uniswapLightestGrey: React.CSSProperties['color'],
+      uniswapLightGrey: React.CSSProperties['color'],
+      uniswapLighterGrey: React.CSSProperties['color'],
+      uniswapGrey: React.CSSProperties['color'],
+      uniswapMediumGrey: React.CSSProperties['color'],
+      uniswapLightNavy: React.CSSProperties['color'],
+      uniswapNavy: React.CSSProperties['color'],
+      uniswapMediumNavy: React.CSSProperties['color'],
+      uniswapGreyNavy: React.CSSProperties['color'],
+      uniswapDarkNavy: React.CSSProperties['color'],
+    },
+    gradients: {
+      gradientUniswapDark: {
+        background: React.CSSProperties['background'],
+        color1: React.CSSProperties['color'],
+        color2: React.CSSProperties['color'],
+      },
+      gradientUniswapFluro: {
+        background: React.CSSProperties['background'],
+        color1: React.CSSProperties['color'],
+        color2: React.CSSProperties['color'],
+      },
+    },
+  }
+}
+
+// declare module "@material-ui/core/styles/createPalette" {
+//   interface Palette {
+//     neutral: Palette['primary'];
+//   }
+//   interface PaletteOptions {
+//     neutral: PaletteOptions['primary'];
+//   }
+// }
 
 // Ultramarine blue
 const secondary = "#2484FF"
@@ -121,9 +187,14 @@ export const Gradients = {
     color2: Colors.gradientFlamingo2,
   },
   gradientBlack:  {
-    background: `linear-gradient(120deg, ${Colors.lighterBlack} 0%, ${Colors.black} 100%)`,
+    background: `linear-gradient(120deg, ${Colors.lighterBlack} 0%, ${Colors.black} 90%)`,
     color1: Colors.lighterBlack,
     color2: Colors.black,
+  },
+  gradientBlackDitherDown:  {
+    background: `linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%)`,
+    color1: Colors.black,
+    color2: 'rgba(0,0,0,0)',
   },
   gradientDarkerGrey:  {
     background: `linear-gradient(120deg, ${Colors.lightGrey} 0%, ${Colors.grey} 100%)`,
@@ -247,23 +318,49 @@ export const fontFam = [
 export const notifyStyles = (theme: Theme) => createStyles({
   variantSuccess: {
     backgroundColor: Colors.blue,
+    color: Colors.cream,
   },
   variantError: {
     backgroundColor: Colors.red,
+    color: Colors.cream,
   },
   variantInfo: {
     backgroundColor: Colors.lighterBlack,
+    color: Colors.cream,
   },
   variantWarning: {
     backgroundColor: Colors.magenta,
+    color: Colors.cream,
   },
 });
 
 
 export const AppTheme = createMuiTheme({
-  palette: {
+  colors: {
+    uniswapLightestGrey: '#B4B5BB',
+    uniswapLightGrey: '#C4C5CB',
+    uniswapLighterGrey: '#6D7283',
+    uniswapGrey: '#41444E',
+    uniswapMediumGrey: '#65666D',
+    uniswapLightNavy: '#3A3F4A',
+    uniswapNavy: '#2E3443',
+    uniswapMediumNavy: '#2D2F36',
+    uniswapGreyNavy: '#282A31',
+    uniswapDarkNavy: "#222429",
+    ...Colors,
+  },
+  gradients: {
+    gradientUniswapDark:  {
+      background: `linear-gradient(140deg, ${Colors.gradientUniswapDark1} 20%, ${Colors.gradientUniswapDark2} 80%)`,
+      color1: Colors.gradientUniswapDark1,
+      color2: Colors.gradientUniswapDark2,
+    },
+    ...Gradients
+  },
 
+  palette: {
     // type: darkMode ? 'dark' : 'light',
+    type: true ? 'dark' : 'light',
 
     primary: {
       main: Colors.uniswapLightestGrey,
@@ -272,9 +369,16 @@ export const AppTheme = createMuiTheme({
       // main: '#EB365D'
       // main: Colors.red,
       main: Colors.secondary,
-    }, // red/pink
+    }, // red/pinkk
     // secondary: { main: '#65BF93' }, // green
     error: { main: '#D92F20' },
+    background: {
+      // CANNOT BE A linear-gradient background
+      // default: Gradients.gradientUniswapDark.background,
+      default: Colors.uniswapDarkNavy,
+      paper: Colors.uniswapDarkNavy,
+    },
+
   },
   typography: {
     fontSize: 16,
@@ -300,9 +404,10 @@ export const AppTheme = createMuiTheme({
       root: {
         minWidth: '40px',
         textTransform: 'none',
-        color: Colors.uniswapLighterGrey,
+        color: Colors.uniswapLightestGrey,
+        borderRadius: BorderRadius3x,
         "&:hover": {
-          backgroundColor: `rgba(72, 72, 72, 0.24)`,
+          backgroundColor: `rgba(240, 240, 240, 0.20)`,
         },
       },
       text: {
@@ -321,9 +426,9 @@ export const AppTheme = createMuiTheme({
         fontWeight: 600,
       },
       textPrimary: {
-        color: Colors.uniswapLighterGrey,
+        color: Colors.uniswapLightestGrey,
         "&:hover": {
-          backgroundColor: `rgba(72, 72, 72, 0.24)`,
+          backgroundColor: `rgba(240, 240, 240, 0.20)`,
         },
       },
       containedPrimary: {
@@ -348,18 +453,42 @@ export const AppTheme = createMuiTheme({
     MuiInput: {
       root: {
         fontSize: '1rem',
-      }
+      },
+      underline: {
+        "&:before": {
+          borderBottom: `1px solid ${Colors.uniswapGrey}`,
+        },
+        "&&&&:hover:before": {
+          borderBottom: `1px solid ${Colors.uniswapLighterGrey}`,
+        },
+        "&:after": {
+          borderBottom: `1px solid ${Colors.uniswapGrey}`,
+        },
+      },
     },
     MuiInputLabel: {
       root: {
         fontSize: '0.8rem',
       }
     },
+    MuiInputBase: {
+      root: {
+        color: Colors.uniswapLighterGrey,
+        // "&:hover": {
+        //   borderBottom: `1px solid ${Colors.uniswapGrey}`,
+        // },
+      }
+    },
+    MuiFormLabel: {
+      root: {
+        color: Colors.uniswapLighterGrey,
+      }
+    },
     MuiSvgIcon: {
       root: {
         height: '1.25rem',
         width: '1.25rem',
-        fill: Colors.uniswapLighterGrey,
+        fill: Colors.uniswapLightestGrey,
       }
     },
     MuiBadge: {
@@ -406,6 +535,30 @@ export const AppTheme = createMuiTheme({
       thumb: {
         backgroundColor: Colors.uniswapLightNavy,
       }
+    },
+    MuiPaper: {
+      root: {
+        backgroundColor: Colors.uniswapDarkNavy,
+        color: Colors.uniswapLighterGrey,
+      },
+    },
+    MuiTablePagination: {
+      root: {
+        color: Colors.uniswapLighterGrey,
+      },
+    },
+    MuiTableCell: {
+      head: {
+        color: Colors.uniswapLightestGrey,
+      },
+      root: {
+        borderBottom: `1px solid ${Colors.uniswapLightNavy}`,
+      },
+    },
+    MuiStepLabel: {
+      label: {
+        color: Colors.uniswapMediumGrey,
+      },
     },
     MuiTypography: {
       h1: {
