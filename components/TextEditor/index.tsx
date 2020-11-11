@@ -139,11 +139,13 @@ const TextEditor = (props: ReactProps) => {
   // console.log('value', value)
 
   return (
-    <div className={classes.root}>
+    <div className={clsx(classes.root, props.className)}
+      style={props.containerStyle}
+    >
       <div
         className={clsx(
           classes.editorContainer,
-          focused ? classes.focusedBorder : null,
+          (focused && !props.disableFocusOutline) ? classes.focusedBorder : null,
           (option(fprops).touched.description() && !focused && errorMessage)
             ? classes.errorBorder
             : null,
@@ -173,7 +175,10 @@ const TextEditor = (props: ReactProps) => {
             className={classes.editor}
             renderElement={renderElement}
             renderLeaf={renderLeaf}
-            placeholder="A full description of your product"
+            placeholder={
+              props.placeholder ||
+              "A full description of your product"
+            }
             spellCheck
             // autoFocus
             onKeyDown={event => {
@@ -226,6 +231,12 @@ interface ReactProps extends WithStyles<typeof styles> {
   values?: FormikFields
   setFieldTouched?(...a: any): any
   resetSlate?: boolean;
+  disableFocusOutline?: boolean;
+  className?: any;
+  placeholder?: string;
+  containerStyle?: {
+    [key:string]: any
+  };
   editorStyle?: {
     [key:string]: any
   };
@@ -237,28 +248,31 @@ interface FormikFields {
 export const styles = (theme: Theme) => createStyles({
   root: {
     position: 'relative',
-    marginBottom: '1rem',
   },
   editorContainer: {
     height: '100%',
     width: '100%',
     position: 'relative',
     border: `1px solid ${Colors.uniswapGrey}`,
-    color: Colors.uniswapLightestGrey,
+    color: Colors.cream,
     borderRadius: BorderRadius,
     transition: theme.transitions.create(['border-color', 'box-shadow'], {
       easing: theme.transitions.easing.easeIn,
       duration: "200ms",
     }),
+    boxShadow: `rgba(0,0,0,0) 0 0 0 0px`,
+    borderWidth: '1px',
   },
   focusedBorder: {
     // border is a boxShadow
-    boxShadow: `${fade('#50B5F5', 0.2)} 0 0 0 2px`,
+    boxShadow: `${fade(Colors.blue, 0.2)} 0 0 0 2px`,
+    borderRadius: BorderRadius,
     borderColor: Colors.blue,
     transition: theme.transitions.create(['border-color', 'box-shadow'], {
       easing: theme.transitions.easing.easeIn,
       duration: "200ms",
     }),
+    borderWidth: '1px',
   },
   errorBorder: {
     border: `1px solid ${fade(theme.palette.error.light, 0.4)}`,
@@ -277,7 +291,7 @@ export const styles = (theme: Theme) => createStyles({
     marginLeft: 0,
     marginRight: 0,
     paddingLeft: '10px',
-    color: Colors.uniswapLighterGrey,
+    color: Colors.uniswapLightestGrey,
     fontStyle: 'italic',
   },
   errorMessage: {

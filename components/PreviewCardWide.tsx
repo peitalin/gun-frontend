@@ -217,7 +217,7 @@ const styles = (theme: Theme) => createStyles({
   },
   title: {
     fontWeight: 600,
-    color: "#444",
+    color: theme.colors.uniswapLightestGrey,
     marginBottom: '0.4rem',
     lineHeight: '1.25rem',
     fontSize: '1.125rem'
