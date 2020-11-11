@@ -62,9 +62,9 @@ const CreateOfferSubscription = (props: ReactProps) => {
           title={"Message Seller"}
           buyerUserId={userId}
           sellerUserId={
-            // temporary
-            option(props).product.store.id() ||
-            "user_82cc9d34-6119-4748-8ea2-ff440f1b85af"
+            // if storeId, backend won't looks up the user.id for the store
+            // make sure its the store's user.id
+            option(props).product.store.userId()
           }
           productId={option(props).product.id()}
           openChatAfterwards={true}

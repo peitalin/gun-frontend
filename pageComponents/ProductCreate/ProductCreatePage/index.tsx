@@ -78,14 +78,6 @@ import { useQuery } from '@apollo/client';
 import { useMutation, useApolloClient } from "@apollo/client";
 import { CREATE_PRODUCT } from "queries/products-mutations";
 // import { GET_RECOMMENDED_PRODUCTS } from "queries/products-queries";
-// ENV variables
-// import getConfig from 'next/config'
-// const {
-//   publicRuntimeConfig: {
-//     GUN_ENV,
-//     NODE_ENV
-//   }
-// } = getConfig()
 
 // Typings
 import {

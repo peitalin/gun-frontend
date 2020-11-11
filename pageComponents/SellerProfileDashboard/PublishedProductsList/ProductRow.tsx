@@ -51,7 +51,6 @@ import copy from "clipboard-copy";
 // ENV variables
 import getConfig from 'next/config'
 import { GET_STORE_PRIVATE } from "queries/store-queries";
-const { publicRuntimeConfig: { EFC_ENV } } = getConfig()
 
 
 
@@ -141,7 +140,7 @@ const ProductRow = (props: ReactProps) => {
       { variant: "info" }
     )
     await copy(
-      EFC_ENV === "development"
+      process.env.NODE_ENV === "development"
       ? `dev.gunmarketplace.com.au/p/${product.id}`
       : `gunmarketplace.com.au/p/${product.id}`
     )
@@ -489,7 +488,7 @@ const styles = (theme: Theme) => createStyles({
   },
   name: {
     fontWeight: 600,
-    color: Colors.charcoal,
+    color: theme.colors.uniswapLightestGrey,
     fontSize: "1rem",
     lineHeight: '1rem',
     marginBottom: '0.25rem',
@@ -505,7 +504,7 @@ const styles = (theme: Theme) => createStyles({
     // overflow: 'hidden',
     // width: '100%', // must set width for textOverflow
     "&:hover": {
-      color: Colors.magenta,
+      color: Colors.blue,
     },
   },
   affiliateLink: {

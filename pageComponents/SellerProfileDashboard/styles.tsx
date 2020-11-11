@@ -33,7 +33,7 @@ export const styles = (theme: Theme) => createStyles({
   },
   contentContainer: {
     flexBasis: '65%',
-    maxWidth: '1024px',
+    maxWidth: '1160px',
     flexGrow: 1,
     display: 'flex',
     flexDirection: 'column',

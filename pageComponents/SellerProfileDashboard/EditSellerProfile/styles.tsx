@@ -147,9 +147,8 @@ export const styles = (theme: Theme) => createStyles({
     marginTop: '0.5rem',
   },
   bioLength: {
-    fontFamily: '"Segoe UI","Helvetica Neue",Arial,sans-serif',
     fontSize: '0.8rem',
-    color: '#cccccc',
+    color: Colors.uniswapLighterGrey,
   },
   avatarSignin: {
     margin: theme.spacing(1),

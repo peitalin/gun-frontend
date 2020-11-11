@@ -95,6 +95,9 @@ const Description = (props: ReactProps & FormikProps<FormikFields>) => {
         values={fprops.values}
         touched={fprops.touched}
         setFieldTouched={fprops.setFieldTouched}
+        containerStyle={{
+          marginBottom: '1rem',
+        }}
         editorStyle={{
           // maxWidth: 'calc(100vw - 4rem)', // constrain width for mobile
           background: Colors.uniswapMediumNavy,

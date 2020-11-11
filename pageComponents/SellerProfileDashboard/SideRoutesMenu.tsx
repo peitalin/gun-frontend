@@ -108,7 +108,7 @@ const SideMenu: React.FC<ReactProps> = (props) => {
                   : classes.routeListItem
               }>
                 <Typography variant="subtitle1" className={classes.routeListItemText}>
-                  My Products
+                  Products
                 </Typography>
               </div>
             </a>
@@ -123,7 +123,22 @@ const SideMenu: React.FC<ReactProps> = (props) => {
                   : classes.routeListItem
               }>
                 <Typography variant="subtitle1" className={classes.routeListItemText}>
-                  My Orders
+                  Orders
+                </Typography>
+              </div>
+            </a>
+          </Link>
+        </li>
+        <li>
+          <Link href={"/admin/offers"} scroll={false}>
+            <a>
+              <div className={
+                isSelectedRoute("/admin/offers")
+                  ? classes.routeListItemSelected
+                  : classes.routeListItem
+              }>
+                <Typography variant="subtitle1" className={classes.routeListItemText}>
+                  Offers
                 </Typography>
               </div>
             </a>
