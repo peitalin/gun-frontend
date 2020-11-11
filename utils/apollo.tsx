@@ -52,9 +52,9 @@ let cfg = getConfig();
 // const SERVER_URI = process.env.SERVER_GATEWAY_GRAPHQL_URL;
 // const WS_URI = process.env.GATEWAY_GRAPHQL_WS_URL
 
-let GATEWAY_GRAPHQL_URL="https://api.gunmarketplace.com.au/gateway/graphql"
+let GATEWAY_GRAPHQL_URL="https://api.gunmarketplace.com.au/graphql"
 let GATEWAY_GRAPHQL_WS_URL="wss://api.gunmarketplace.com.au/v1/graphql"
-let SERVER_GATEWAY_GRAPHQL_URL="https://api.gunmarketplace.com.au/gateway/graphql"
+let SERVER_GATEWAY_GRAPHQL_URL="https://api.gunmarketplace.com.au/graphql"
 const URI = GATEWAY_GRAPHQL_URL;
 const SERVER_URI = SERVER_GATEWAY_GRAPHQL_URL;
 const WS_URI = GATEWAY_GRAPHQL_WS_URL
