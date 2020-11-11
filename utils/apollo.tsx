@@ -17,19 +17,25 @@ import { DocumentNode } from "graphql"
 import https from "https";
 import { oc as option } from "ts-optchain";
 
-// ENV variables
+// // ENV variables
+// import getConfig from 'next/config'
+// const {
+//   // Available both client and server side
+//   publicRuntimeConfig: {
+//     GATEWAY_GRAPHQL_URL,
+//     GATEWAY_GRAPHQL_WS_URL,
+//     SERVER_GATEWAY_GRAPHQL_URL,
+//     NODE_ENV,
+//     EFC_ENV,
+//   },
+// } = getConfig()
+// /////////// Environment Variables in .env
+// // ENV variables
 import getConfig from 'next/config'
-const {
-  // Available both client and server side
-  publicRuntimeConfig: {
-    GATEWAY_GRAPHQL_URL,
-    GATEWAY_GRAPHQL_WS_URL,
-    SERVER_GATEWAY_GRAPHQL_URL,
-    NODE_ENV,
-    EFC_ENV,
-  },
-} = getConfig()
-/////////// Environment Variables in .env
+let cfg = getConfig();
+let GATEWAY_GRAPHQL_URL = cfg?.publicRuntimeConfig?.GATEWAY_GRAPHQL_URL
+let GATEWAY_GRAPHQL_WS_URL = cfg?.publicRuntimeConfig?.GATEWAY_GRAPHQL_WS_URL
+let SERVER_GATEWAY_GRAPHQL_URL = cfg?.publicRuntimeConfig?.SERVER_GATEWAY_GRAPHQL_URL
 
 // let GATEWAY_GRAPHQL_URL="https://api.gunmarketplace.com.au/gateway/graphql"
 // let GATEWAY_GRAPHQL_WS_URL="wss://api.gunmarketplace.com.au/v1/graphql"
@@ -40,7 +46,6 @@ const {
 // let GATEWAY_GRAPHQL_WS_URL = "wss://0.0.0.0:443/v1/graphql"
 // // let GATEWAY_GRAPHQL_WS_URL = "ws://0.0.0.0:7070/v1/graphql"
 // let SERVER_GATEWAY_GRAPHQL_URL = "https://0.0.0.0/gateway/graphql"
-
 
 
 // const URI = process.env.GATEWAY_GRAPHQL_URL;

@@ -29,20 +29,18 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 // // Analytics
 // import { analyticsEvent } from "utils/analytics";
 
-// ENV variables
+// // ENV variables
 import getConfig from 'next/config'
-const {
-  // Available both client and server side
-  publicRuntimeConfig: {
-    GATEWAY_GRAPHQL_URL,
-    GATEWAY_GRAPHQL_WS_URL,
-    SERVER_GATEWAY_GRAPHQL_URL,
-    NODE_ENV,
-    EFC_ENV,
-  },
-} = getConfig()
+let cfg = getConfig();
+let GATEWAY_GRAPHQL_URL = cfg?.publicRuntimeConfig?.GATEWAY_GRAPHQL_URL
+let GATEWAY_GRAPHQL_WS_URL = cfg?.publicRuntimeConfig?.GATEWAY_GRAPHQL_WS_URL
+let SERVER_GATEWAY_GRAPHQL_URL = cfg?.publicRuntimeConfig?.SERVER_GATEWAY_GRAPHQL_URL
+
 
 // for printing testing only
+// const URI = process.env.GATEWAY_GRAPHQL_URL;
+// const SERVER_URI = process.env.SERVER_GATEWAY_GRAPHQL_URL;
+// const WS_URI = process.env.GATEWAY_GRAPHQL_WS_URL;
 const URI = GATEWAY_GRAPHQL_URL;
 const SERVER_URI = SERVER_GATEWAY_GRAPHQL_URL;
 const WS_URI = GATEWAY_GRAPHQL_WS_URL;
