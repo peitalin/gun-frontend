@@ -12652,7 +12652,7 @@ type ProductFragment_ProductDownload_ = { __typename?: 'ProductDownload', id: st
 
 export type ProductFragment = ProductFragment_ProductPrivate_ | ProductFragment_ProductPublic_ | ProductFragment_ProductDownload_;
 
-type StorePublicFragment_StorePrivate_ = { __typename?: 'StorePrivate', id: string, createdAt: any, updatedAt?: Maybe<any>, name: string, bio?: Maybe<string>, website?: Maybe<string>, cover?: Maybe<(
+type StorePublicFragment_StorePrivate_ = { __typename?: 'StorePrivate', id: string, createdAt: any, updatedAt?: Maybe<any>, name: string, bio?: Maybe<string>, website?: Maybe<string>, userId: string, cover?: Maybe<(
     { __typename?: 'image_parents' }
     & ImageFragment
   )>, profile?: Maybe<(
@@ -12669,7 +12669,7 @@ type StorePublicFragment_StorePrivate_ = { __typename?: 'StorePrivate', id: stri
         & ProductFragment_ProductDownload_
       ) }>, pageInfo: { __typename?: 'PageInfo', isLastPage: boolean, endCursor?: Maybe<any> } } };
 
-type StorePublicFragment_StorePublic_ = { __typename?: 'StorePublic', id: string, createdAt: any, updatedAt?: Maybe<any>, name: string, bio?: Maybe<string>, website?: Maybe<string>, cover?: Maybe<(
+type StorePublicFragment_StorePublic_ = { __typename?: 'StorePublic', id: string, createdAt: any, updatedAt?: Maybe<any>, name: string, bio?: Maybe<string>, website?: Maybe<string>, userId: string, cover?: Maybe<(
     { __typename?: 'image_parents' }
     & ImageFragment
   )>, profile?: Maybe<(
@@ -13113,6 +13113,7 @@ export const StorePublicFragmentFragmentDoc = gql`
   name
   bio
   website
+  userId
   cover {
     ...ImageFragment
   }
