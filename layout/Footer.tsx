@@ -35,9 +35,9 @@ let cfg = getConfig();
 // let GATEWAY_GRAPHQL_URL = cfg?.publicRuntimeConfig?.GATEWAY_GRAPHQL_URL
 // let GATEWAY_GRAPHQL_WS_URL = cfg?.publicRuntimeConfig?.GATEWAY_GRAPHQL_WS_URL
 // let SERVER_GATEWAY_GRAPHQL_URL = cfg?.publicRuntimeConfig?.SERVER_GATEWAY_GRAPHQL_URL
-let GATEWAY_GRAPHQL_URL="https://api.gunmarketplace.com.au/graphql"
+let GATEWAY_GRAPHQL_URL="https://api.gunmarketplace.com.au/gateway/graphql"
 let GATEWAY_GRAPHQL_WS_URL="wss://api.gunmarketplace.com.au/v1/graphql"
-let SERVER_GATEWAY_GRAPHQL_URL="https://api.gunmarketplace.com.au/graphql"
+let SERVER_GATEWAY_GRAPHQL_URL="https://api.gunmarketplace.com.au/gateway/graphql"
 
 
 // for printing testing only
