@@ -3,6 +3,8 @@ import React from 'react';
 import clsx from "clsx";
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
+// Styles
+import { Colors, BoxShadows, BorderRadius2x } from "layout/AppTheme";
 
 
 export const Banner: React.FC<ReactProps> = (props) => {

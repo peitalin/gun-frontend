@@ -1,9 +1,9 @@
 import React from 'react';
-// Styles
 import clsx from "clsx";
 import { oc as option } from "ts-optchain";
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
-import { Colors } from "layout/AppTheme";
+// Styles
+import { Colors, BoxShadows, BorderRadius2x, BorderRadius } from "layout/AppTheme";
 
 import { useQuery, useSubscription } from '@apollo/client';
 import gql from 'graphql-tag';
@@ -299,11 +299,10 @@ export const CurrentConversation: React.FC<ReactProps> = (props) => {
             userName={userName}
             userId={userId}
           />
-          { /* Bottom div to scroll to */}
-          <div style={{ "height": 0 }}
-            id="newMessage" // anchor to scroll back to
-          >
-          </div>
+
+          { /* Bottom div to scroll to
+            // anchor to scroll back to */}
+          <div style={{ "height": 0 }} id="newMessage"/>
         </>
       }
     </div>
@@ -331,7 +330,7 @@ interface QueryVar {
 }
 
 
-const styles = (theme: Theme) => createStyles({
+export const styles = (theme: Theme) => createStyles({
   oldNewSeparator: {
     fontSize: '18px',
     textAlign: 'center',
@@ -345,7 +344,9 @@ const styles = (theme: Theme) => createStyles({
     height: '50vh',
     overflow: 'scroll',
     position: 'relative',
-    border: '1px solid #eee',
+    background: theme.colors.uniswapDarkNavy,
+    borderRadius: BorderRadius,
+    boxShadow: BoxShadows.shadow1.boxShadow,
   },
   chatWrapper: {
     display: 'flex',

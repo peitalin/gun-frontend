@@ -2,7 +2,7 @@
 import React from 'react';
 import { oc as option } from "ts-optchain";
 // Styles
-import { Colors, BoxShadows } from "layout/AppTheme";
+import { Colors, BoxShadows, BorderRadius2x } from "layout/AppTheme";
 import clsx from "clsx";
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
 // graphql
@@ -24,8 +24,7 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 // Material UI
 import Dialog from "@material-ui/core/Dialog";
 import Button from "@material-ui/core/Button";
-
-
+import ResponsivePadding from "pageComponents/SellerProfileDashboard/ResponsivePadding";
 
 
 const EMIT_ONLINE_EVENT = gql`
@@ -43,7 +42,7 @@ const EMIT_ONLINE_EVENT = gql`
 `;
 
 
-const ChatMain: React.FC<ReactProps> = (props) => {
+const ChatCenter: React.FC<ReactProps> = (props) => {
 
   const {
     classes,
@@ -102,56 +101,56 @@ const ChatMain: React.FC<ReactProps> = (props) => {
 
   if (!asModal) {
     return (
-      <div className={classes.root}>
-        <div className={clsx(classes.chatContainer, classes.flexRow)}>
-          {
-            userId &&
-            <ChatLayout
-              user={user}
-              refetch={state.refetch}
-              setRefetch={setRefetch}
-            />
-          }
+      <ResponsivePadding>
+        <div className={classes.root}>
+          <div className={clsx(classes.chatContainer, classes.flexRow)}>
+            {
+              userId &&
+              <ChatLayout
+                user={user}
+                refetch={state.refetch}
+                setRefetch={setRefetch}
+              />
+            }
+          </div>
         </div>
-      </div>
+      </ResponsivePadding>
     )
   } else {
     return (
-      <>
-        <Dialog
-          open={chatCenterOpen}
-          onClose={closeModal}
-          fullScreen={false}
-          fullWidth={true}
-          // fullWidth={false}
-          BackdropProps={{
-            classes: {
-              root: classes.modalBackdrop,
+      <Dialog
+        open={chatCenterOpen}
+        onClose={closeModal}
+        fullScreen={false}
+        fullWidth={true}
+        // fullWidth={false}
+        BackdropProps={{
+          classes: {
+            root: classes.modalBackdrop,
+          }
+        }}
+        PaperProps={{
+          classes: {
+            root: smDown
+              ? classes.fullMaxHeight
+              : classes.modalPaperScrollPaper
+          }
+        }}
+        scroll={"body"}
+      >
+        <div className={classes.root}>
+          <div className={clsx(classes.chatContainer, classes.flexRow)}>
+            {
+              userId &&
+              <ChatLayout
+                user={user}
+                refetch={state.refetch}
+                setRefetch={setRefetch}
+              />
             }
-          }}
-          PaperProps={{
-            classes: {
-              root: smDown
-                ? classes.fullMaxHeight
-                : classes.modalPaperScrollPaper
-            }
-          }}
-          scroll={"body"}
-        >
-          <div className={classes.root}>
-            <div className={clsx(classes.chatContainer, classes.flexRow)}>
-              {
-                userId &&
-                <ChatLayout
-                  user={user}
-                  refetch={state.refetch}
-                  setRefetch={setRefetch}
-                />
-              }
-            </div>
           </div>
-        </Dialog>
-      </>
+        </div>
+      </Dialog>
     )
   }
 };
@@ -169,14 +168,18 @@ interface QueryVar {
 
 const styles = (theme: Theme) => createStyles({
   root: {
+    paddingTop: '1rem',
     width: '100%',
     display: 'flex',
     flexDirection: "column",
     justifyContent: 'center',
+    background: 'transparent',
   },
   chatContainer: {
     overflow: "hidden",
-    boxShadow: BoxShadows.shadow1.boxShadow,
+    // background: theme.colors.uniswapDarkNavy,
+    // borderRadius: BorderRadius2x,
+    // boxShadow: BoxShadows.shadow1.boxShadow,
   },
   flexRow: {
     display: 'flex',
@@ -202,6 +205,8 @@ const styles = (theme: Theme) => createStyles({
   },
   modalPaperScrollPaper: {
     // maxHeight: "calc(100% - 32px)",
+    background: 'transparent',
+    boxShadow: 'unset',
   },
   fullMaxHeight: {
     maxHeight: "100%",
@@ -210,4 +215,4 @@ const styles = (theme: Theme) => createStyles({
 });
 
 
-export default withStyles(styles)( ChatMain );
+export default withStyles(styles)( ChatCenter );

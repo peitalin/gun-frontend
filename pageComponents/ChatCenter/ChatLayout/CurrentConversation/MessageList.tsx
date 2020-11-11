@@ -1,10 +1,11 @@
 import React from 'react';
-import { Colors } from "layout/AppTheme";
 import { oc as option } from "ts-optchain";
 // Styles
 import clsx from "clsx";
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
 import { Chat_Rooms, Chat_Messages, Bids } from "typings/gqlTypes";
+// Styles
+import { Colors, BoxShadows, BorderRadius2x, BorderRadius3x } from "layout/AppTheme";
 
 import dayjs from "dayjs";
 import { showDateAndTime } from "utils/dates";
@@ -248,6 +249,7 @@ const styles = (theme: Theme) => createStyles({
     color: Colors.darkGrey,
   },
   messageText: {
+    color: Colors.uniswapDarkNavy,
   },
   messageNameTime: {
     width: '100%',
@@ -260,7 +262,7 @@ const styles = (theme: Theme) => createStyles({
     fontSize: "16px",
     backgroundColor: "#E1F7CB",
     margin: '1rem',
-    borderRadius: '4px',
+    borderRadius: BorderRadius2x,
     width: '75%',
     // stick to right side
     marginLeft: 'calc(25% - 1rem)',

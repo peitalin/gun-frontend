@@ -1,9 +1,9 @@
 import React from 'react';
 import { oc as option } from "ts-optchain";
-import { Colors } from "layout/AppTheme";
 // Styles
 import clsx from "clsx";
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
+import { Colors, BoxShadows, BorderRadius2x, BorderRadius } from "layout/AppTheme";
 
 import { useSubscription } from '@apollo/client';
 import { Users_Online, Chat_Users } from "typings/gqlTypes";
@@ -75,23 +75,19 @@ const ConversationsListPanel: React.FC<ReactProps> = (props) => {
 
   return (
     <div className={classes.onlineUsersRoot}>
-      <p className={
-          xsDown
-            ? classes.mobileUserListHeading
-            : classes.userListHeading
-        }
-      >
-        { "Current Offers" }
-      </p>
+      <Typography className={clsx(
+        classes.borderRadiusTop,
+        xsDown
+          ? classes.mobileUserListHeading
+          : classes.userListHeading
+      )}>
+        Current Offers
+      </Typography>
       <ul className={
         xsDown
           ? classes.mobileUserList
           : classes.userList
       }>
-        <Typography>
-          Current Offers
-        </Typography>
-        <Divider/>
         {
           (activeConvos.length > 0) &&
           activeConvos.map(c => {
@@ -126,17 +122,22 @@ const ConversationsListPanel: React.FC<ReactProps> = (props) => {
             )
           })
         }
-        </ul>
+      </ul>
 
+      <Typography className={clsx(
+        xsDown
+          ? classes.mobileUserListHeading
+          : classes.userListHeading
+      )}>
+        Archived Offers
+      </Typography>
       <ul className={
         xsDown
           ? classes.mobileUserList
           : classes.userList
       }>
-        <Typography>
-          Archived Offers
-        </Typography>
-        <Divider/>
+        {/* <Typography className={classes.subheading1}>
+        </Typography> */}
         {
           (archivedConvos.length > 0) &&
           archivedConvos.map(c => {
@@ -188,8 +189,6 @@ interface QueryData {
   users_online: Users_Online[]
 }
 
-let headingColor = Colors.charcoal;
-let listItemColor = Colors.charcoal;
 
 const styles = (theme: Theme) => createStyles({
   onlineUsersRoot: {
@@ -206,22 +205,30 @@ const styles = (theme: Theme) => createStyles({
     minHeight: '8rem',
   },
   userListLi: {
-    borderBottom: '1px solid #444',
-    color: headingColor,
+    color: theme.colors.uniswapLighterGrey,
+  },
+  subheading1: {
+    margin: '1rem',
+    fontSize: '1rem',
+    textAlign: "center",
+    color: theme.colors.uniswapLighterGrey,
   },
   userListHeading: {
     fontWeight: 600,
     padding: '15px 10px',
     marginTop: 0,
     marginBottom: 0,
-    backgroundColor: Colors.blue,
-    color: headingColor,
-    borderBottom: `4px solid ${Colors.white}`,
+    backgroundColor: theme.colors.uniswapMediumNavy,
+    color: theme.colors.uniswapLightestGrey,
+    textAlign: "center",
+  },
+  borderRadiusTop: {
+    borderRadius: `${BorderRadius}px ${BorderRadius}px 0px 0px`,
   },
   mobileUserListHeading: {
     fontSize: '14px',
-    backgroundColor: '#222',
-    color: headingColor,
+    backgroundColor: theme.colors.uniswapMediumNavy,
+    color: theme.colors.uniswapLighterGrey,
     fontWeight: 600,
     marginBottom: 0,
     padding: '5px',
@@ -236,7 +243,7 @@ const styles = (theme: Theme) => createStyles({
     width: "50%",
   },
   mobileUserList: {
-    backgroundColor: '#4f5050',
+    backgroundColor: theme.colors.uniswapMediumNavy,
     paddingInlineStart: '0px',
     marginBottom: 0,
   },
@@ -246,13 +253,13 @@ const styles = (theme: Theme) => createStyles({
   menuLink: {
   },
   menuIcon: {
-    color: listItemColor,
+    color: theme.colors.uniswapLighterGrey,
   },
   menuIconHighlighted: {
     color: Colors.blue,
   },
   menuText: {
-    color: listItemColor,
+    color: theme.colors.uniswapLighterGrey,
     fontSize: '0.9rem',
     margin: '0.25rem',
   },

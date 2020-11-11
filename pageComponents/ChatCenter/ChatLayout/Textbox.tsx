@@ -2,7 +2,7 @@ import React from 'react';
 // Styles
 import clsx from "clsx";
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
-import { Colors } from "layout/AppTheme";
+import { Colors, BoxShadows, BorderRadius } from "layout/AppTheme";
 
 import { useMutation, useApolloClient } from "@apollo/client";
 import gql from 'graphql-tag';
@@ -149,70 +149,67 @@ export const Textbox: React.FC<ReactProps> = (props) => {
 
   // Mutation component. Add message to the state of <RenderMessages> after mutation.
   return (
-    <div>
-      <form onSubmit={sendMessage}>
-        <div className={classes.textboxWrapper}>
-          <TypingIndicator userId={props.userId} />
-          <div className={classes.textEditorWrapper}>
+    <form onSubmit={sendMessage}>
+      <div className={classes.textboxWrapper}>
+        <TypingIndicator userId={props.userId} />
+        <div className={classes.textEditorWrapper}>
 
-            <TextInput
-              placeholder={"Enter a bid"}
-              className={classes.inputField}
-              value={offerPrice}
-              onChange={(e) => setOfferPrice(e.target.value)}
-              inputProps={{
-                style: { width: '100%' },
-              }}
-            />
+          <TextInput
+            placeholder={"Enter a bid"}
+            className={classes.inputField}
+            value={offerPrice}
+            onChange={(e) => setOfferPrice(e.target.value)}
+            inputProps={{
+              style: { width: '100%' },
+            }}
+          />
 
-            <TextEditorSSR
-              // errorMessage={errors.description}
-              // touched={touched.description}
-              onChange={(value) => {
-                setDescription(value)
-              }}
-              resetSlate={resetSlate}
-              // limit={{
-              //   max: maxLengthProductDescription, // 2000 chars
-              // }}
-              editorStyle={{
-                border: 'unset',
-                // borderTop: '2px solid rgba(170, 170, 170, 0.4)',
-                borderTop: '2px solid #fff',
-                borderRadius: '0px',
-              }}
-            />
+          <TextEditorSSR
+            // errorMessage={errors.description}
+            // touched={touched.description}
+            onChange={(value) => {
+              setDescription(value)
+            }}
+            resetSlate={resetSlate}
+            // limit={{
+            //   max: maxLengthProductDescription, // 2000 chars
+            // }}
+            className={classes.textEditorRoot}
+            placeholder={"Send a message"}
+            // disableFocusOutline={true}
+            editorStyle={{
+            }}
+          />
 
-            <Button
-              variant={"outlined"}
-              className={clsx(classes.sendButton)}
-              onClick={sendMessage}
-            >
-              Send
-            </Button>
+          <Button
+            variant={"outlined"}
+            className={clsx(classes.sendButton)}
+            onClick={sendMessage}
+          >
+            Send
+          </Button>
 
-            <Button
-              variant={"outlined"}
-              className={clsx(classes.sendBidButton)}
-              onClick={sendBidMessage}
-              // onClick={() => {
-              //   setShowBidMenu(s => !s)
-              // }}
-            >
-              Create Bid
-            </Button>
+          <Button
+            variant={"outlined"}
+            className={clsx(classes.sendBidButton)}
+            onClick={sendBidMessage}
+            // onClick={() => {
+            //   setShowBidMenu(s => !s)
+            // }}
+          >
+            Create Bid
+          </Button>
 
-            <Button
-              variant={"outlined"}
-              className={clsx(classes.typoButton)}
-              onClick={dispatchResetSlate}
-            >
-              Reset slate.js
-            </Button>
-          </div>
+          <Button
+            variant={"outlined"}
+            className={clsx(classes.typoButton)}
+            onClick={dispatchResetSlate}
+          >
+            Reset slate.js
+          </Button>
         </div>
-      </form>
-    </div>
+      </div>
+    </form>
   )
 }
 
@@ -253,17 +250,17 @@ interface MutVarsBid {
 const styles = (theme: Theme) => createStyles({
   sendButton: {
     position: 'absolute',
-    bottom: 4,
-    right: 4,
+    bottom: 8,
+    right: 8,
   },
   sendBidButton: {
     position: 'absolute',
-    bottom: 4,
-    left: '0rem',
+    bottom: 8,
+    left: 8,
   },
   typoButton: {
     position: 'absolute',
-    bottom: 4,
+    bottom: 8,
     right: '5rem',
   },
   textBox: {
@@ -271,9 +268,13 @@ const styles = (theme: Theme) => createStyles({
   textboxWrapper: {
     position: 'relative',
   },
+  textEditorRoot: {
+    background: theme.colors.uniswapMediumNavy,
+    borderRadius: BorderRadius,
+  },
   textEditorWrapper: {
-    background: Colors.white,
     height: '100%',
+    marginTop: '0.5rem',
   },
   typoTextbox: {
     // fontSize: '16px',

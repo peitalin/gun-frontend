@@ -1,13 +1,20 @@
 import React from 'react';
 import { oc as option } from "ts-optchain";
 // components
-import CurrentConversation from './CurrentConversation';
+import dynamic from "next/dynamic";
+// import CurrentConversation from './CurrentConversation';
+import CurrentConversationLoading from './CurrentConversation/CurrentConversationLoading';
+const CurrentConversation = dynamic(() => import("./CurrentConversation"), {
+  loading: () => <CurrentConversationLoading/>,
+  ssr: false,
+})
+
 import Textbox from './Textbox'
 import ConversationsListPanel from './ConversationsListPanel';
 import ProductPanel from './ProductPanel';
 import { UserPrivate } from "typings/gqlTypes";
 // Styles
-import { Colors, BoxShadows } from "layout/AppTheme";
+import { Colors, BoxShadows, BorderRadius2x, BorderRadius } from "layout/AppTheme";
 import clsx from "clsx";
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
 // typings
@@ -103,17 +110,21 @@ export const ChatLayout: React.FC<ReactProps> = (props) => {
         />
       </div>
       <div className={clsx(classes.col75, classes.wd75)}>
-        <CurrentConversation
-          chatDivId={chatDivId}
-          currentConversation={currentConversation}
-          refetch={refetch}
-          setRefetch={setRefetch}
-          setMutationCallback={setMutationCallback}
-          isBottom={isBottom}
-          setIsBottom={setIsBottom}
-          userName={userName}
-          userId={userId}
-        />
+        {
+          loading
+          ? <CurrentConversationLoading/>
+          : <CurrentConversation
+              chatDivId={chatDivId}
+              currentConversation={currentConversation}
+              refetch={refetch}
+              setRefetch={setRefetch}
+              setMutationCallback={setMutationCallback}
+              isBottom={isBottom}
+              setIsBottom={setIsBottom}
+              userName={userName}
+              userId={userId}
+            />
+        }
         <ScrollDownButton
           chatDivId={chatDivId}
           isBottom={isBottom}
@@ -126,7 +137,7 @@ export const ChatLayout: React.FC<ReactProps> = (props) => {
           product={option(currentConversation).chatRoom.product()}
         />
       </div>
-      <div className={clsx(classes.col25, classes.wd25)}>
+      <div className={clsx(classes.col25, classes.wd25, classes.productPanelFixed)}>
         <ProductPanel
           currentConversation={currentConversation}
         />
@@ -150,12 +161,14 @@ interface QueryVar {
 
 const styles = (theme: Theme) => createStyles({
   col25: {
-    backgroundColor: Colors.lightGrey,
-    borderRight: `4px solid ${Colors.white}`,
+    background: theme.colors.uniswapDarkNavy,
+    borderRadius: BorderRadius2x,
+    boxShadow: BoxShadows.shadow1.boxShadow,
   },
   wd25: {
     width: '25%',
     minWidth: 280,
+    marginRight: '0.5rem',
   },
   col75: {
     display: 'flex',
@@ -164,16 +177,16 @@ const styles = (theme: Theme) => createStyles({
   },
   wd75: {
     width: '75%',
+    minWidth: 360,
+    marginRight: '0.5rem',
   },
   chatLayout: {
     display: 'flex',
     width: '100%',
-    background: Colors.lightestGrey,
-    border: `4px solid ${Colors.white}`,
-    borderRadius: '1px',
+    borderRadius: BorderRadius,
   },
   onlineUsersContainer: {
-    background: Colors.grey,
+    backgroundColor: theme.colors.uniswapDarkNavy,
   },
   mobileview: {
     position: "absolute",
@@ -181,6 +194,24 @@ const styles = (theme: Theme) => createStyles({
     bottom: "152px",
     width: "50%",
   },
+  productPanelFixed: {
+    position: 'fixed',
+    border: `1px solid ${theme.colors.uniswapGrey}`,
+    bottom: '-18%',
+    left: '1rem',
+    boxShadow: BoxShadows.shadow2.boxShadow,
+    transition: theme.transitions.create('bottom', {
+      easing: theme.transitions.easing.sharp,
+      duration: "150ms",
+    }),
+    "&:hover": {
+      bottom: '1rem',
+      transition: theme.transitions.create('bottom', {
+        easing: theme.transitions.easing.sharp,
+        duration: "150ms",
+      }),
+    },
+  }
 })
 
 
