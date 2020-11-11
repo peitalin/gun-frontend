@@ -29,6 +29,23 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 // // Analytics
 // import { analyticsEvent } from "utils/analytics";
 
+// ENV variables
+import getConfig from 'next/config'
+const {
+  // Available both client and server side
+  publicRuntimeConfig: {
+    GATEWAY_GRAPHQL_URL,
+    GATEWAY_GRAPHQL_WS_URL,
+    SERVER_GATEWAY_GRAPHQL_URL,
+    NODE_ENV,
+    EFC_ENV,
+  },
+} = getConfig()
+
+// for printing testing only
+const URI = GATEWAY_GRAPHQL_URL;
+const SERVER_URI = SERVER_GATEWAY_GRAPHQL_URL;
+const WS_URI = GATEWAY_GRAPHQL_WS_URL;
 
 
 const Footer: React.FC<ReactProps> = (props) => {
@@ -73,6 +90,7 @@ const Footer: React.FC<ReactProps> = (props) => {
 
             <div className={classes.flexRow}>
               <div className={classes.flexColItem}>
+
                 <Link href={'/start'} prefetch={false}>
                   <a className={classes.link}>
                     <Typography variant="body2" className={classes.linkText}>
@@ -136,6 +154,23 @@ const Footer: React.FC<ReactProps> = (props) => {
                     Privacy Policy
                   </Typography>
                 </a>
+
+                <div className={classes.link}>
+                  <Typography variant="body2" className={classes.linkText}>
+                    {`GATEWAY_GRAPHQL_URL: ${URI}`}
+                  </Typography>
+                </div>
+                <div className={classes.link}>
+                  <Typography variant="body2" className={classes.linkText}>
+                    {`SERVER_URI: ${SERVER_URI}`}
+                  </Typography>
+                </div>
+                <div className={classes.link}>
+                  <Typography variant="body2" className={classes.linkText}>
+                    {`WS_URI: ${WS_URI}`}
+                  </Typography>
+                </div>
+
               </div>
             </div>
           </div>
