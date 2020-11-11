@@ -32,7 +32,7 @@ const DisplayOrderId: React.FC<ReactProps> = (props) => {
             <Typography variant="subtitle2" className={classes.subHeading}>
               Order Date
             </Typography>
-            <Typography variant="body1">
+            <Typography variant="body1" className={classes.bodyText}>
               {new Date(order.createdAt).toDateString()}
             </Typography>
           </div>
@@ -40,7 +40,7 @@ const DisplayOrderId: React.FC<ReactProps> = (props) => {
             <Typography variant="subtitle2" className={classes.subHeading}>
               Order ID
             </Typography>
-            <Typography variant="body1">
+            <Typography variant="body1" className={classes.bodyText}>
               {order.id}
             </Typography>
           </div>
@@ -48,7 +48,7 @@ const DisplayOrderId: React.FC<ReactProps> = (props) => {
             <Typography variant="subtitle2" className={classes.subHeading}>
               Seller/Store
             </Typography>
-            <Typography variant="body1">
+            <Typography variant="body1" className={classes.bodyText}>
               {order?.product?.store?.user?.email ?? "NA"}
             </Typography>
           </div>
@@ -94,6 +94,10 @@ const styles = (theme: Theme) => createStyles({
   subHeading: {
     fontWeight: 600,
     marginTop: '0.5rem',
+  },
+  bodyText: {
+    fontSize: '0.9rem',
+    marginBottom: '0.5rem',
   },
 });
 

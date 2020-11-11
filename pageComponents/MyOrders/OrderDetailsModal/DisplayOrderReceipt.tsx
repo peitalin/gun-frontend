@@ -132,8 +132,8 @@ interface ReactProps extends WithStyles<typeof styles> {
 const styles = (theme: Theme) => createStyles({
   root: {
     padding: '1rem',
-    borderRadius: BorderRadius,
     marginBottom: "0.5rem",
+    borderRadius: BorderRadius,
     backgroundColor: theme.colors.uniswapMediumNavy,
     boxShadow: BoxShadows.shadow1.boxShadow,
   },

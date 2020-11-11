@@ -430,7 +430,7 @@ const styles = (theme: Theme) => createStyles({
   },
   card: {
     borderRadius: "4px",
-    border: `1px solid ${Colors.mediumLightGrey}`,
+    // border: `1px solid ${Colors.mediumLightGrey}`,
     transition: theme.transitions.create('height', {
       easing: theme.transitions.easing.sharp,
       duration: "200ms",

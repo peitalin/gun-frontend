@@ -166,22 +166,22 @@ const styles = (theme: Theme) => createStyles({
   name: {
     fontWeight: 600,
     fontSize: '1rem',
-    color: Colors.charcoal,
+    color: theme.colors.uniswapLightestGrey,
     marginBottom: "0.25rem",
   },
   tagline: {
     fontWeight: 600,
-    color: Colors.darkGrey,
+    color: theme.colors.uniswapLighterGrey,
     marginBottom: "0.25rem",
   },
   variant: {
     fontWeight: 600,
-    color: Colors.darkGrey,
+    color: theme.colors.uniswapGrey,
     marginBottom: "0.25rem",
   },
   storeName: {
     fontWeight: 600,
-    color: Colors.grey,
+    color: theme.colors.uniswapLighterGrey,
     marginBottom: "0.25rem",
     "&:hover": {
       color: Colors.lightBlue,
