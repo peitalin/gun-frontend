@@ -19,7 +19,6 @@ import CreateStoreForm from "pageComponents/StoreCreation/CreateStoreForm";
 import MetaHeadersPage from "layout/MetaHeadersPage";
 // ENV variables
 import getConfig from 'next/config'
-const { publicRuntimeConfig: { EFC_ENV } } = getConfig()
 
 
 
@@ -45,12 +44,12 @@ const CreateStorePageSSR = (props: ReactProps) => {
           Create a free account and upload your product.
         `}
         // ogImage={
-        //   EFC_ENV === "development"
+        //   process.env.NODE_ENV === "development"
         //   ? "https://image-content.fileworks.net/og-img-relay-start.png"
         //   : "https://image-content.relaydownloads.com/og-img-relay-start.png"
         // }
         // ogUrl={
-        //   EFC_ENV === "development"
+        //   process.env.NODE_ENV === "development"
         //   ? "https://fileworks.net/create-store"
         //   : "https://relaydownloads.com/create-store"
         // }

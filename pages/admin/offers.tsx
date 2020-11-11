@@ -1,12 +1,11 @@
 import React from "react";
-import {oc as option} from "ts-optchain";
 // Styles
 import { withStyles, WithStyles } from "@material-ui/core/styles";
 import { styles } from "pageComponents/SellerProfileDashboard/styles";
 import clsx from "clsx";
 // Components
-import PublishedProductsList from "pageComponents/SellerProfileDashboard/PublishedProductsList";
 import LoadingBarSSR from "components/LoadingBarSSR";
+// next
 // SSR disable
 import dynamic from "next/dynamic";
 import { SellerProfileProps } from "layout/GetUser/SellerProfileWrapper";
@@ -14,34 +13,34 @@ const SellerProfileWrapper = dynamic(() => import("layout/GetUser/SellerProfileW
   loading: () => <LoadingBarSSR/>,
   ssr: false,
 })
+// Chat
+import OpenChatButton from "pageComponents/ChatCenter/OpenChatButton";
 // Meta headers
 import MetaHeadersPage from "layout/MetaHeadersPage";
+import ChatCenter from "pageComponents/ChatCenter";
 
 
+const OffersAdminPage = (props: ReactProps) => {
 
-
-
-const PublishedProductsPage = (props: ReactProps) => {
-
-  const {
-    classes
-  } = props;
+  // state
+  const { classes } = props;
 
   return (
     <>
       <MetaHeadersPage
-        title="Products - Seller Dashboard"
+        title="Edit Store - GM.shop"
         robots="noindex"
       />
       <SellerProfileWrapper>
       {({ data, loading, error }: SellerProfileProps) => {
         return (
           <div className={classes.contentContainer}>
-            <PublishedProductsList
-              store={option(data).user.store()}
-            />
+            {
+              data && data.user && data.user.store &&
+              <ChatCenter asModal={false} />
+            }
           </div>
-        )
+        );
       }}
       </SellerProfileWrapper>
     </>
@@ -51,4 +50,6 @@ const PublishedProductsPage = (props: ReactProps) => {
 interface ReactProps extends WithStyles<typeof styles> {
 }
 
-export default withStyles(styles)( PublishedProductsPage );
+export default withStyles(styles)( OffersAdminPage );
+
+

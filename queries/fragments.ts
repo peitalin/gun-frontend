@@ -402,6 +402,7 @@ export const StorePublicFragment = gql`
     name
     bio
     website
+    userId
     cover {
       ...ImageFragment
     }
