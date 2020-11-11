@@ -22,8 +22,6 @@ import { useDispatch, useSelector } from "react-redux";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { asCurrency as c } from "utils/prices";
-// Chat
-import OpenChatButton from "pageComponents/ChatCenter/OpenChatButton";
 import { isMainPages } from "."
 
 
@@ -110,15 +108,23 @@ const DesktopMainBarXl = (props: DesktopMainBarProps) => {
 
       {
         loggedIn
-        ? <OpenChatButton
-            title={"Offers"}
-            buttonProps={{
-              color: "primary",
-              classes: {
-                root: classes.marginRight,
-              },
-            }}
-          />
+        ? <Link href="/admin/offers">
+            <a className={classes.buttonLink}>
+              <Button
+                  className={classes.navbarButton}
+                  variant={"text"}
+                  color="primary"
+                >
+                  <div>
+                    <span className={
+                      endRoute === '/admin/offers' ? classes.selectedRouteText : null
+                    }>
+                      Offers
+                    </span>
+                  </div>
+                </Button>
+            </a>
+          </Link>
         : <div className={classes.buttonMarginRight}>
             <Login
               buttonText={"Offers"}

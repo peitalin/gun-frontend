@@ -11,9 +11,6 @@ import SearchbarMobile from "layout/NavBarMain/SearchbarMobile";
 // MUI
 import UserMenu from "layout/NavBarMain/UserMenu";
 import Button from "@material-ui/core/Button";
-import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
-import CloudUploadIcon from '@material-ui/icons/CloudUpload';
-import SearchIcon from '@material-ui/icons/Search';
 // Modals
 import { goToModalConnect } from "utils/modals";
 import { useDispatch, useSelector } from "react-redux";
@@ -21,8 +18,6 @@ import { useDispatch, useSelector } from "react-redux";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { asCurrency as c } from "utils/prices";
-// Chat
-import OpenChatButton from "pageComponents/ChatCenter/OpenChatButton";
 import { isMainPages } from "."
 
 
@@ -124,17 +119,34 @@ const DesktopMainBarMd = (props: ReactProps & DesktopMainBarProps) => {
 
         {
           loggedIn
-          ? <div className={classes.buttonMarginRight}>
-              <OpenChatButton/>
-            </div>
+          ? <Link href="/admin/offers">
+              <a className={classes.buttonLink}>
+                <Button
+                    className={classes.navbarButton}
+                    variant={"text"}
+                    color="primary"
+                  >
+                    <div>
+                      <span className={
+                        endRoute === '/admin/offers' ? classes.selectedRouteText : null
+                      }>
+                        Offers
+                      </span>
+                    </div>
+                  </Button>
+              </a>
+            </Link>
           : <div className={classes.buttonMarginRight}>
               <Login
-                buttonText={"Orders"}
+                buttonText={"Offers"}
                 titleLogin={"Login to continue"}
-                buttonProps={{ color: "primary" }}
+                buttonProps={{
+                  color: "primary",
+                }}
               />
             </div>
         }
+
 
         <div className={classes.navbarButton}>
           <UserMenu loggedIn={loggedIn} />

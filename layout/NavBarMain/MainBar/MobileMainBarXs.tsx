@@ -86,7 +86,6 @@ const MobileMainBar = (props: MobileMainBarProps) => {
         </Button>
       </div>
 
-
       {
         !hide &&
         <Link href="/">

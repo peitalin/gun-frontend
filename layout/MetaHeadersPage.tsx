@@ -2,7 +2,6 @@ import React from 'react';
 import Head from 'next/head';
 // ENV variables
 import getConfig from 'next/config'
-const { publicRuntimeConfig: { EFC_ENV } } = getConfig()
 
 
 const HeaderPage: React.FC<HeaderPageProps> = (props) => (
@@ -24,7 +23,7 @@ const HeaderPage: React.FC<HeaderPageProps> = (props) => (
     {
       // skip indexing on fileworks.net
       // but allow relay.shop to index
-      EFC_ENV === "development"
+      process.env.NODE_ENV === "development"
         ? <meta name="robots" content={"noindex"}/>
         : <meta name="robots" content={props.robots || "all"}/>
         // https://moz.com/learn/seo/robots-meta-directives
@@ -45,11 +44,11 @@ const HeaderPage: React.FC<HeaderPageProps> = (props) => (
       props.ogImage
       ? <meta property="og:image" content={props.ogImage} />
       : <meta property="og:image"
-          content={
-            EFC_ENV === "development"
-            ? "https://image-content.fileworks.net/og-img-relay-default.png"
-            : "https://image-content.relaydownloads.com/og-img-relay-default.png"
-          }
+          // content={
+          //   EFC_ENV === "development"
+          //   ? "https://image-content.fileworks.net/og-img-relay-default.png"
+          //   : "https://image-content.relaydownloads.com/og-img-relay-default.png"
+          // }
         />
     }
     {
