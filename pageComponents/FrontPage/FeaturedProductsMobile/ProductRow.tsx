@@ -7,7 +7,7 @@ import { BorderRadius, BoxShadows, Colors } from "layout/AppTheme";
 import { useDispatch, useSelector } from "react-redux";
 import { Actions } from "reduxStore/actions";
 // Typings
-import { Product } from "typings/gqlTypes";
+import { Product, SoldOutStatus } from "typings/gqlTypes";
 // Utils
 import ErrorBounds from "components/ErrorBounds";
 // Material UI
@@ -35,7 +35,6 @@ const ProductRow = (props: ReactProps) => {
   const price = option(featuredVariant).price();
   const priceWas = option(featuredVariant).priceWas();
   const quantityAvailable = 0;
-  const soldOutStatus = false;
 
   const dispatch = useDispatch();
   const actions = Actions.reduxProductEdit;
@@ -100,7 +99,7 @@ const ProductRow = (props: ReactProps) => {
                       priceWas={priceWas}
                       hideSavings={true}
                       quantityAvailable={0}
-                      soldOutStatus={soldOutStatus}
+                      soldOutStatus={product.soldOutStatus}
                       countDownStyle={{ }}
                     />
                   : <span style={{ color: Colors.grey }}></span>

@@ -13,7 +13,7 @@ import Link from "next/link";
 import WishlistIcon from "components/WishlistIcon";
 import DiscountBadge from "components/DiscountBadge";
 // Typings
-import { Categories, Product, Product_Preview_Items } from "typings/gqlTypes";
+import { Categories, Product, Product_Preview_Items, SoldOutStatus } from "typings/gqlTypes";
 import { genSrcSet, genImgBreakpoints } from "utils/images";
 import { getYouTubeVimeoImagePreview } from "utils/links";
 import PriceDisplayMain from "components/PriceDisplayMain";
@@ -299,7 +299,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   price: number;
   priceWas?: number;
   quantityAvailable?: number | null;
-  soldOutStatus?: boolean;
+  soldOutStatus?: string;
   viewWidth?: number | string;
   viewWidthOffset?: number | string;
   productVariantId?: string;
