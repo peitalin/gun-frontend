@@ -150,7 +150,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   price: number;
   priceWas?: number;
   quantityAvailable?: number | null;
-  isSoldOut?: boolean;
+  soldOutStatus?: boolean;
   viewWidth?: number;
   viewWidthOffset?: number | string;
   productId?: string;
@@ -202,7 +202,7 @@ const PreviewCardResponsive: React.FC<PreviewCardResponsiveProps> = (props) => {
             price={option(featuredVariant).price()}
             priceWas={option(featuredVariant).priceWas()}
             quantityAvailable={0}
-            isSoldOut={false}
+            soldOutStatus={false}
             fit={original
               ? (original.heightInPixels > original.widthInPixels)
               : false
@@ -233,7 +233,7 @@ const PreviewCardResponsive: React.FC<PreviewCardResponsiveProps> = (props) => {
           price={option(featuredVariant).price()}
           priceWas={option(featuredVariant).priceWas()}
           quantityAvailable={0}
-          isSoldOut={false}
+          soldOutStatus={false}
           fit={original
             ? (original.heightInPixels > original.widthInPixels)
             : false
@@ -263,7 +263,7 @@ const PreviewCardResponsive: React.FC<PreviewCardResponsiveProps> = (props) => {
           price={option(featuredVariant).price()}
           priceWas={option(featuredVariant).priceWas()}
           quantityAvailable={0}
-          isSoldOut={false}
+          soldOutStatus={false}
           fit={original
             ? (original.heightInPixels > original.widthInPixels)
             : false
@@ -292,7 +292,7 @@ const PreviewCardResponsive: React.FC<PreviewCardResponsiveProps> = (props) => {
           price={option(featuredVariant).price()}
           priceWas={option(featuredVariant).priceWas()}
           quantityAvailable={0}
-          isSoldOut={false}
+          soldOutStatus={false}
           fit={original
             ? (original.heightInPixels > original.widthInPixels)
             : false

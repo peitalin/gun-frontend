@@ -51,7 +51,7 @@ const PreviewCardResponsive: React.FC<PreviewCardResponsiveProps> = (props) => {
             price={option(featuredVariant).price()}
             priceWas={option(featuredVariant).priceWas()}
             quantityAvailable={0}
-            isSoldOut={product?.isSoldOut}
+            soldOutStatus={product?.soldOutStatus}
             fit={original
               ? (original.heightInPixels > original.widthInPixels)
               : false
@@ -82,7 +82,7 @@ const PreviewCardResponsive: React.FC<PreviewCardResponsiveProps> = (props) => {
           price={option(featuredVariant).price()}
           priceWas={option(featuredVariant).priceWas()}
           quantityAvailable={0}
-          isSoldOut={product?.isSoldOut}
+          soldOutStatus={product?.soldOutStatus}
           fit={original
             ? (original.heightInPixels > original.widthInPixels)
             : false
@@ -112,7 +112,7 @@ const PreviewCardResponsive: React.FC<PreviewCardResponsiveProps> = (props) => {
           price={option(featuredVariant).price()}
           priceWas={option(featuredVariant).priceWas()}
           quantityAvailable={0}
-          isSoldOut={product?.isSoldOut}
+          soldOutStatus={product?.soldOutStatus}
           fit={original
             ? (original.heightInPixels > original.widthInPixels)
             : false
@@ -141,7 +141,7 @@ const PreviewCardResponsive: React.FC<PreviewCardResponsiveProps> = (props) => {
           price={option(featuredVariant).price()}
           priceWas={option(featuredVariant).priceWas()}
           quantityAvailable={0}
-          isSoldOut={product?.isSoldOut}
+          soldOutStatus={product?.soldOutStatus}
           fit={original
             ? (original.heightInPixels > original.widthInPixels)
             : false

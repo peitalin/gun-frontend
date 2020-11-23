@@ -56,10 +56,10 @@ app.prepare().then(() => {
     // enable local HTTPS for secure cookies,
     try {
       keyFile = fs.readFileSync(
-        "../efc-configs/keys/local/mkcert/localhost.privkey.pem"
+        "./configs/certs/localhost-key.pem"
       );
       certFile = fs.readFileSync(
-        "../efc-configs/keys/local/mkcert/localhost.fullchain.pem"
+        "./configs/certs/localhost-cert.pem"
       );
       server = https.createServer(
         { key: keyFile, cert: certFile },

@@ -146,7 +146,7 @@ const FeaturedProductsMobile = (props: ReactProps) => {
                   price={option(featuredVariant).price()}
                   priceWas={option(featuredVariant).priceWas()}
                   // quantityAvailable={option(featuredVariant).currentStockLevel.quantityAvailable()}
-                  isSoldOut={option(featuredVariant).isSoldOut()}
+                  soldOutStatus={option(featuredVariant).soldOutStatus()}
                   fit={original ? (original.heightInPixels > original.widthInPixels) : false}
                   topHalfFraction={props.topHalfFraction}
                 />

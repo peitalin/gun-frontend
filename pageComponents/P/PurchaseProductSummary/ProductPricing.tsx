@@ -29,7 +29,7 @@ const ProductPricing = (props: ReactProps) => {
             priceWas={option(props).featuredVariant.priceWas()}
             // quantityAvailable={option(props).featuredVariant.currentStockLevel.quantityAvailable()}
             quantityAvailable={1}
-            isSoldOut={option(props).featuredVariant.isSoldOut()}
+            soldOutStatus={option(props).featuredVariant.soldOutStatus()}
           />
         }
       </div>

@@ -1,6 +1,7 @@
 import React from "react";
 import clsx from "clsx";
 import { oc as option } from "ts-optchain";
+import { SoldOutStatus } from "typings/gqlTypes";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
 import { Colors } from "layout/AppTheme";
@@ -12,6 +13,7 @@ import { Price } from "typings/gqlTypes";
 import CountdownBadge from "./CountdownBadge";
 // money
 import currency from "currency.js";
+import { convertSoldOutStatus } from "utils/strings";
 
 
 
@@ -21,7 +23,7 @@ const PriceDisplay7 = (props: ReactProps) => {
     classes,
     hidePriceWas = false,
     hideSavings = false,
-    isSoldOut = false,
+    soldOutStatus = SoldOutStatus.AVAILABLE,
   } = props;
 
   const {
@@ -37,14 +39,14 @@ const PriceDisplay7 = (props: ReactProps) => {
     :  currency((price - priceWas)/100, { formatWithSymbol: true })
 
 
-
-  if (isSoldOut) {
+  if (soldOutStatus !== SoldOutStatus.AVAILABLE) {
     return (
       <Typography className={classes.price} variant="body1">
-        SOLD OUT
+        {convertSoldOutStatus(soldOutStatus)}
       </Typography>
     )
   }
+
 
   return (
     <div className={classes.priceOuterContainer}>
@@ -111,7 +113,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   hideSavings?: boolean;
   hidePriceWas?: boolean;
   quantityAvailable?: number | null;
-  isSoldOut?: boolean;
+  soldOutStatus?: string;
   price: number;
   priceWas?: number;
   countDownStyle?: any;

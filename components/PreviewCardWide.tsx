@@ -17,6 +17,7 @@ import { Product_Preview_Items, Categories } from "typings/gqlTypes";
 import { genSrcSet } from "utils/files";
 import { getYouTubeVimeoImagePreview } from "utils/links";
 import PriceDisplayMain from "components/PriceDisplayMain";
+import { convertSoldOutStatus } from "utils/strings";
 
 
 
@@ -131,7 +132,7 @@ const PreviewCardWide = (props: ReactProps) => {
                   priceWas={props.priceWas}
                   hideSavings={true}
                   quantityAvailable={props.quantityAvailable}
-                  isSoldOut={props.isSoldOut}
+                  soldOutStatus={props.soldOutStatus}
                 />
               : <span style={{ color: Colors.grey }}></span>
             }
@@ -153,7 +154,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   price: number;
   priceWas?: number;
   quantityAvailable?: number;
-  isSoldOut?: boolean;
+  soldOutStatus?: string;
   topHalfFraction?: number;
 }
 

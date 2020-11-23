@@ -3,6 +3,7 @@ import {oc as option} from "ts-optchain";
 import clsx from "clsx";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
+import { SoldOutStatus } from "typings/gqlTypes";
 // GraphQL
 import { useQuery, useApolloClient } from "@apollo/client";
 // Typings
@@ -25,15 +26,10 @@ import PurchaseProductSummary from "pageComponents/P/PurchaseProductSummary";
 import ErrorPage from "pages/_error";
 // Router
 import { useRouter } from "next/router";
-// Next
-import Hidden from "components/HiddenFix";
 // media query
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
 import { lgUpMediaQuery, col2MinWidth } from "./common";
-// import { basePriceDetailsFactory } from "reduxStore/pricing/priceCalculator";
-// // Analytics
-// import { useAnalytics } from "utils/analytics";
 // Meta headers
 import MetaHeadersPage from "layout/MetaHeadersPage";
 // SSR
@@ -96,15 +92,27 @@ const Products: React.FC<ReactProps> = (props) => {
         variantDescription: undefined,
         previewItems: [],
         isDefault: false,
-        isSoldOut: false,
+        soldOutStatus: SoldOutStatus.AVAILABLE,
       } as any,
     }
   );
 
+  React.useEffect(() => {
+    if (!!product?.featuredVariant?.variantId) {
+      setSelectedOption({
+        label: "variant",
+        value: product?.featuredVariant
+      })
+    }
+  }, [product])
+
   const variantOptions = option(product).currentVariants([])
-    .filter(v => !v.isSoldOut)
+    .filter(v => v?.soldOutStatus !== SoldOutStatus.AVAILABLE)
     .map(v => ({ label: v.variantName, value: v }))
 
+  let isSoldOut = product?.soldOutStatus === SoldOutStatus.SOLD_OUT
+  let isReserved = product?.soldOutStatus === SoldOutStatus.RESERVED
+  let isAvailable = product?.soldOutStatus === SoldOutStatus.AVAILABLE
 
   const handleChangeVariantOption = (
     selectedOption: { label: string, value: Product_Variants }
@@ -124,7 +132,7 @@ const Products: React.FC<ReactProps> = (props) => {
   React.useEffect(() => {
     if (
       option(product).featuredVariant.productId() &&
-      !option(product).featuredVariant.isSoldOut()
+      (isSoldOut || isReserved)
     ) {
         setSelectedOption({
           label: option(product).featuredVariant.variantName(),
@@ -133,7 +141,7 @@ const Products: React.FC<ReactProps> = (props) => {
     } else {
 
       let nextVariant = option(product).currentVariants([])
-        .filter(v => !v.isSoldOut)[0]
+        .filter(v => v?.soldOutStatus !== SoldOutStatus.AVAILABLE)[0]
 
       if (!!nextVariant && nextVariant.variantName) {
         setSelectedOption({
@@ -154,7 +162,10 @@ const Products: React.FC<ReactProps> = (props) => {
   if (product && !product.isPublished) {
     return <ErrorPage statusCode={400} message={"Product is not available"}/>
   }
-  if (product && product.featuredVariant.isSoldOut) {
+  if (product && isReserved) {
+    return <ErrorPage statusCode={400} message={"Product is sold (reserved)"}/>
+  }
+  if (product && isSoldOut) {
     return <ErrorPage statusCode={400} message={"Product is sold out"}/>
   }
   if (error) {

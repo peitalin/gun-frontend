@@ -112,7 +112,7 @@ const ProductPanel: React.FC<ReactProps> = (props) => {
               // price: number;
               // priceWas: number;
               // quantityAvailable?: number;
-              // isSoldOut?: boolean;
+              // soldOutStatus?: boolean;
               // topHalfFraction?: number;
             />
             <div className={classes.buttonContainer}>

@@ -29,7 +29,6 @@ const DeleteAccount = (props: ReactProps) => {
     setCurrentPassword(pass);
   };
 
-
   const togglePasswordChange = () => {
     setShowPasswordChanger(show => !show)
     setCurrentPassword("")
@@ -56,13 +55,13 @@ const DeleteAccount = (props: ReactProps) => {
                 className={clsx("fadeIn", classes.showDeleteForm)}
                 variant="subtitle2"
               >
-                {"Delete Account"}
+                Delete Account
               </Typography>
             : <Typography
                 className={clsx("fadeIn", classes.showDeleteForm)}
                 variant="subtitle2"
               >
-                {"Cancel"}
+                Cancel
               </Typography>
           }
         </a>

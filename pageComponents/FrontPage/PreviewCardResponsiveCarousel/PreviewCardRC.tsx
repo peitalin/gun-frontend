@@ -275,7 +275,7 @@ const PreviewCardRC = (props: ReactProps) => {
                       price={props.price}
                       priceWas={props.priceWas}
                       quantityAvailable={props.quantityAvailable}
-                      isSoldOut={props.isSoldOut}
+                      soldOutStatus={props.soldOutStatus}
                     />
                   : <span style={{ color: Colors.grey }}>.... .... ....</span>
                 }
@@ -299,7 +299,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   price: number;
   priceWas?: number;
   quantityAvailable?: number | null;
-  isSoldOut?: boolean;
+  soldOutStatus?: boolean;
   viewWidth?: number | string;
   viewWidthOffset?: number | string;
   productVariantId?: string;

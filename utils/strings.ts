@@ -1,3 +1,4 @@
+import { SoldOutStatus } from "typings/gqlTypes";
 
 export const toCamelCase = (s: string): string => {
   return s.replace(/(\_\w)/g, (w) => w[1].toUpperCase())
@@ -33,8 +34,6 @@ export const setEquals = <T>(set1: Set<T>, set2: Set<T>): boolean => {
 }
 
 
-
-
 export const trimTitle = (title: string, maxLength?: number) => {
   if (!title) {
     return ""
@@ -43,4 +42,19 @@ export const trimTitle = (title: string, maxLength?: number) => {
   return title.length > mlength
     ? title.slice(0, mlength) + '...'
     : title
+}
+
+
+export const convertSoldOutStatus = (s: string) => {
+  switch (s) {
+    case SoldOutStatus.AVAILABLE: {
+      return "Available"
+    }
+    case SoldOutStatus.RESERVED: {
+      return "Reserved"
+    }
+    case SoldOutStatus.SOLD_OUT: {
+      return "Sold Out"
+    }
+  }
 }

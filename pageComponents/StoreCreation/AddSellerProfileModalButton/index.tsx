@@ -75,7 +75,7 @@ const AddSellerProfileButton = (props: ReactProps) => {
         scroll={'body'}
       >
         {
-          !option(store).id()
+          (!option(store).id() || store.name === "Deleted Store")
           ? <CreateStoreForm asModal={true} />
           : <AccountCreated asModal={true} />
         }

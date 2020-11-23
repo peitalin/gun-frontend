@@ -35,7 +35,7 @@ const ProductRow = (props: ReactProps) => {
   const price = option(featuredVariant).price();
   const priceWas = option(featuredVariant).priceWas();
   const quantityAvailable = 0;
-  const isSoldOut = false;
+  const soldOutStatus = false;
 
   const dispatch = useDispatch();
   const actions = Actions.reduxProductEdit;
@@ -100,7 +100,7 @@ const ProductRow = (props: ReactProps) => {
                       priceWas={priceWas}
                       hideSavings={true}
                       quantityAvailable={0}
-                      isSoldOut={isSoldOut}
+                      soldOutStatus={soldOutStatus}
                       countDownStyle={{ }}
                     />
                   : <span style={{ color: Colors.grey }}></span>

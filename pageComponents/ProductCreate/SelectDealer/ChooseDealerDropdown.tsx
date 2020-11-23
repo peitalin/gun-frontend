@@ -36,23 +36,20 @@ const ChooseDealerDropdown = (props: ReactProps & FormikProps<FormikFields>) => 
   // initial stateShape
   let initialDealer = dealerOptions.find(d => d.value === fprops.values.dealerId)
 
-  // console.log("dealerOptions: ", dealerOptions)
-  // console.log("initialDealer: ", initialDealer)
+  console.log("dealerOptions: ", dealerOptions)
+  console.log("initialDealer: ", initialDealer)
 
   return (
     <>
-      {
-        fprops.values?.dealerId &&
-        <DropdownInput
-          className={classes.dealerDropdown}
-          stateShape={initialDealer}
-          onChange={({ label, value }: SelectOption) =>
-            setDealerId({ label, value })
-          }
-          options={dealerOptions}
-          placeholder={initialDealer?.label}
-        />
-      }
+      <DropdownInput
+        className={classes.dealerDropdown}
+        stateShape={initialDealer}
+        onChange={({ label, value }: SelectOption) =>
+          setDealerId({ label, value })
+        }
+        options={dealerOptions}
+        placeholder={initialDealer?.label}
+      />
 
       <div className={classes.errorMsgContainer}>
         <ValidationErrorMsg

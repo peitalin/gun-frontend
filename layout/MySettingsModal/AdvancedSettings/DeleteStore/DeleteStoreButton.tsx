@@ -3,7 +3,7 @@ import { oc as option } from "ts-optchain";
 // Styles
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
 // Graphql Queries
-import { useMutation } from "@apollo/client";
+import { useMutation, useApolloClient } from "@apollo/client";
 import { DELETE_STORE, DELETE_ACCOUNT } from "queries/deletions-mutations";
 // import { UserPrivate } from "typings/gqlTypes";
 type UserPrivate = any;
@@ -16,6 +16,11 @@ import ErrorDisplay, { GraphQLErrors } from "components/Error";
 import ErrorBounds from "components/ErrorBounds";
 import SnackBarA from "components/Snackbars/SnackbarA";
 import ConfirmDeleteModal from "components/ConfirmDeleteModal";
+// Redux
+import { GrandReduxState } from "reduxStore/grand-reducer";
+import { Actions } from "reduxStore/actions";
+import { useDispatch } from "react-redux";
+import { refetchUser, setUserOnCompleted } from "layout/GetUser";
 
 
 
@@ -25,12 +30,25 @@ const DeleteAccountButton = (props: ReactProps) => {
   const [displaySuccess, setDisplaySuccess] = React.useState(true);
   const [openDeleteModal, setOpenDeleteModal] = React.useState(false)
 
+  const dispatch = useDispatch();
+  const apolloClient = useApolloClient();
+
   const [deleteStore, {loading, data, error}] =
   useMutation<MutationData, MutationVar>(
     DELETE_STORE, {
       variables: {
         password: props.password,
-      }
+      },
+      onCompleted: async () => {
+        let { data } = await refetchUser(apolloClient)()
+        setUserOnCompleted(dispatch)(data)
+        setOpenDeleteModal(false)
+        dispatch(Actions.reduxModals.TOGGLE_STORE_CREATE_MODAL(false))
+        // logout(apolloClient, dispatch)("/")
+      },
+      onError: (e) => {
+        console.log(e)
+      },
     }
   );
 

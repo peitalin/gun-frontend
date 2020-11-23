@@ -84,6 +84,7 @@ const FeaturedImageModal = (props: ReactProps) => {
               } else {
                 return (
                   <ThumbnailImage
+                    key={i}
                     previewItem={previewItem}
                     showLoadingBar={false}
                   />

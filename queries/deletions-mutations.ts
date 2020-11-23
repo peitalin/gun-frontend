@@ -1,6 +1,6 @@
 
 import gql from "graphql-tag";
-import { ProductFragment } from "./fragments";
+import { ProductFragment, StorePrivateFragment } from "./fragments";
 
 export const DELETE_ACCOUNT = gql`
   mutation deleteAccount($password: String!) {
@@ -15,8 +15,12 @@ export const DELETE_STORE = gql`
   mutation deleteStore($password: String!) {
     deleteStore(password: $password) {
       __typename
+      store {
+        ...StorePrivateFragment
+      }
     }
   }
+  ${StorePrivateFragment}
 `;
 
 

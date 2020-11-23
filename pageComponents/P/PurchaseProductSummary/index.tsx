@@ -6,7 +6,8 @@ import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/
 import { Colors } from "layout/AppTheme";
 // Typings
 import {
-  Product, ID, Product_Variants, UserPrivate, ProductPreviewItem
+  Product, ID, Product_Variants, UserPrivate, ProductPreviewItem,
+  SoldOutStatus,
 } from "typings/gqlTypes";
 import { SelectedVariantProps } from "../ProductId";
 // Redux
@@ -77,10 +78,11 @@ const PurchaseProductSummary: React.FC<ReactProps> = (props) => {
 
   const showVisaPay =
     option(featuredVariant).variantId() &&
-    !option(featuredVariant).isSoldOut() &&
     option(props).product.id() &&
     !xsDown
 
+  const showProductInfo = option(featuredVariant).variantId() && option(props).product.id()
+  console.log("featuredVariant", featuredVariant)
 
   return (
     <div className={classes.purchaseCheckoutSummaryRoot}>
@@ -88,7 +90,7 @@ const PurchaseProductSummary: React.FC<ReactProps> = (props) => {
 
         <div className={classes.flexCol66}>
           {
-            (option(featuredVariant).variantId() && option(props).product.id())
+            showProductInfo
             ? <>
                 <ProductHeading product={props.product} featuredVariant={featuredVariant}/>
                 <ProductLicenses
@@ -129,12 +131,12 @@ const PurchaseProductSummary: React.FC<ReactProps> = (props) => {
           }>
 
             {
-              props.product?.isSoldOut
+              (props.product?.soldOutStatus !== SoldOutStatus.AVAILABLE)
               ? <div className={clsx(
                   classes.maxWidth,
                   classes.visaContainer,
                 )}>
-                  Sold Out
+                  {props.product?.soldOutStatus}
                 </div>
               : <div className={clsx(
                   classes.maxWidth,

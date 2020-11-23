@@ -58,7 +58,7 @@ const OrderProductPreview: React.FC<ReactProps> = (props) => {
               pastTense={true}
               price={price}
               quantityAvailable={null}
-              isSoldOut={false}
+              soldOutStatus={product.soldOutStatus}
             /> */}
           </div>
 

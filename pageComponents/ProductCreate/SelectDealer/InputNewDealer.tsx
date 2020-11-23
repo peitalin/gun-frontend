@@ -26,6 +26,7 @@ const InputNewDealer = (props: ReactProps & FormikProps<FormikFields>) => {
   let maxLength = 60;
 
   console.log('errors:', fprops.errors)
+  console.log('dealer:',  fprops.values?.dealer)
 
   return (
     <>
@@ -68,7 +69,7 @@ const InputNewDealer = (props: ReactProps & FormikProps<FormikFields>) => {
           fprops.setFieldTouched('dealer.licenseNumber', true)
         }}
         inputProps={{ style: { width: '100%' }}}
-        errorMessage={fprops.errors?.dealer}
+        errorMessage={fprops.errors?.dealer?.licenseNumber}
         touched={!!fprops?.touched?.dealer}
         // disableInitialValidationMessage={true}
         limit={{

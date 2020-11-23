@@ -426,7 +426,11 @@ const productCreateInputToProduct = (
 
   let featuredVariant = currentVariants.find(v => v.isDefault)
 
-  let googleBucketUrl = 'https://storage.googleapis.com/gunmarket-images-dev/'
+  // let googleBucketUrl = NODE_ENV === "production"
+  //   ? 'https://storage.googleapis.com/production-gunmarketplace-images/'
+  //   : 'https://storage.googleapis.com/develop-gunmarketplace-images/'
+
+  let googleBucketUrl = 'https://storage.googleapis.com/develop-gunmarketplace-images/'
 
   let previewFeaturedVariant = {
     ...featuredVariant,

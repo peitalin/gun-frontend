@@ -82,7 +82,7 @@ const GridPreviewCardLight = (props: ReactProps) => {
     : option(product).currentSnapshot.title()
 
   const category = option(product).category();
-  const isSoldOut = option(product).featuredVariant.isSoldOut();
+  const soldOutStatus = option(product).featuredVariant.soldOutStatus();
 
   const getCardMaxWidth = (cardsPerRow: number) => {
     // minus 16px (1rem) for left-padding on carousel
@@ -264,7 +264,7 @@ const GridPreviewCardLight = (props: ReactProps) => {
                     price={price}
                     priceWas={priceWas}
                     quantityAvailable={1}
-                    isSoldOut={isSoldOut}
+                    soldOutStatus={soldOutStatus}
                   />
                 </div>
               </div>

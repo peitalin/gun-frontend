@@ -90,7 +90,7 @@ export const ProductVariantsFragment = gql`
     variantName
     variantDescription
     isDefault
-    isSoldOut
+    soldOutStatus
     position
     price
     priceWas
@@ -352,7 +352,7 @@ export const ProductVariantFragment = gql`
       }
       youTubeEmbedLink
     }
-    isSoldOut
+    soldOutStatus
   }
   ${ImageFragment}
 `;
@@ -367,7 +367,7 @@ export const ProductFragment = gql`
     isDeleted
     isExcludedFromRecommendations
     storeId
-    isSoldOut
+    soldOutStatus
 
     currentSnapshot {
       ...ProductSnapshotsFragment

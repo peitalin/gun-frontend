@@ -5262,9 +5262,13 @@ export type OrdersEdge = {
 
 /** Order Status for individual items. */
 export enum OrderStatus {
+  /** step 1, buyer purchases item */
   CREATED = 'CREATED',
+  /** step 1a: payment success */
   CONFIRMED_PAYMENT_FORM_10_REQUIRED = 'CONFIRMED_PAYMENT_FORM_10_REQUIRED',
+  /** step 1b: payment failed */
   FAILED = 'FAILED',
+  /** step 1c: payment refunded */
   REFUNDED = 'REFUNDED',
   /** step 2, seller delivers product */
   FORM_10_SUBMITTED = 'FORM_10_SUBMITTED',
@@ -6611,7 +6615,7 @@ export type Product = {
   /** Whether or not a platform admin has hidden it from search results */
   isExcludedFromSearch: Scalars['Boolean'];
   /** Whether or not it has been sold */
-  isSoldOut: Scalars['Boolean'];
+  soldOutStatus: Scalars['String'];
   /** Chosen variant, for cartItems */
   featuredVariant?: Maybe<Product_Variants>;
   currentVariants: Array<Product_Variants>;
@@ -6941,6 +6945,7 @@ export type Product_Snapshots = {
   /** An aggregated array relationship */
   products_aggregate: Products_Aggregate;
   serialNumber: Scalars['String'];
+  tags?: Maybe<Scalars['String']>;
   title: Scalars['String'];
 };
 
@@ -7040,6 +7045,7 @@ export type Product_Snapshots_Bool_Exp = {
   productId?: Maybe<String_Comparison_Exp>;
   products?: Maybe<Products_Bool_Exp>;
   serialNumber?: Maybe<String_Comparison_Exp>;
+  tags?: Maybe<String_Comparison_Exp>;
   title?: Maybe<String_Comparison_Exp>;
 };
 
@@ -7067,6 +7073,7 @@ export type Product_Snapshots_Insert_Input = {
   productId?: Maybe<Scalars['String']>;
   products?: Maybe<Products_Arr_Rel_Insert_Input>;
   serialNumber?: Maybe<Scalars['String']>;
+  tags?: Maybe<Scalars['String']>;
   title?: Maybe<Scalars['String']>;
 };
 
@@ -7086,6 +7093,7 @@ export type Product_Snapshots_Max_Fields = {
   model?: Maybe<Scalars['String']>;
   productId?: Maybe<Scalars['String']>;
   serialNumber?: Maybe<Scalars['String']>;
+  tags?: Maybe<Scalars['String']>;
   title?: Maybe<Scalars['String']>;
 };
 
@@ -7104,6 +7112,7 @@ export type Product_Snapshots_Max_Order_By = {
   model?: Maybe<Order_By>;
   productId?: Maybe<Order_By>;
   serialNumber?: Maybe<Order_By>;
+  tags?: Maybe<Order_By>;
   title?: Maybe<Order_By>;
 };
 
@@ -7123,6 +7132,7 @@ export type Product_Snapshots_Min_Fields = {
   model?: Maybe<Scalars['String']>;
   productId?: Maybe<Scalars['String']>;
   serialNumber?: Maybe<Scalars['String']>;
+  tags?: Maybe<Scalars['String']>;
   title?: Maybe<Scalars['String']>;
 };
 
@@ -7141,6 +7151,7 @@ export type Product_Snapshots_Min_Order_By = {
   model?: Maybe<Order_By>;
   productId?: Maybe<Order_By>;
   serialNumber?: Maybe<Order_By>;
+  tags?: Maybe<Order_By>;
   title?: Maybe<Order_By>;
 };
 
@@ -7184,6 +7195,7 @@ export type Product_Snapshots_Order_By = {
   productId?: Maybe<Order_By>;
   products_aggregate?: Maybe<Products_Aggregate_Order_By>;
   serialNumber?: Maybe<Order_By>;
+  tags?: Maybe<Order_By>;
   title?: Maybe<Order_By>;
 };
 
@@ -7221,6 +7233,8 @@ export enum Product_Snapshots_Select_Column {
   /** column name */
   SERIALNUMBER = 'serialNumber',
   /** column name */
+  TAGS = 'tags',
+  /** column name */
   TITLE = 'title'
 }
 
@@ -7239,6 +7253,7 @@ export type Product_Snapshots_Set_Input = {
   model?: Maybe<Scalars['String']>;
   productId?: Maybe<Scalars['String']>;
   serialNumber?: Maybe<Scalars['String']>;
+  tags?: Maybe<Scalars['String']>;
   title?: Maybe<Scalars['String']>;
 };
 
@@ -7271,6 +7286,8 @@ export enum Product_Snapshots_Update_Column {
   /** column name */
   SERIALNUMBER = 'serialNumber',
   /** column name */
+  TAGS = 'tags',
+  /** column name */
   TITLE = 'title'
 }
 
@@ -7280,7 +7297,6 @@ export type Product_Variants = {
   createdAt: Scalars['timestamptz'];
   currency?: Maybe<Scalars['String']>;
   isDefault: Scalars['Boolean'];
-  isSoldOut: Scalars['Boolean'];
   position: Scalars['Int'];
   /** An array relationship */
   previewItems: Array<Product_Preview_Items>;
@@ -7290,6 +7306,7 @@ export type Product_Variants = {
   priceWas?: Maybe<Scalars['Int']>;
   productId: Scalars['String'];
   snapshotId: Scalars['String'];
+  soldOutStatus: Scalars['String'];
   storeId: Scalars['String'];
   variantDescription: Scalars['String'];
   variantId: Scalars['String'];
@@ -7391,13 +7408,13 @@ export type Product_Variants_Bool_Exp = {
   createdAt?: Maybe<Timestamptz_Comparison_Exp>;
   currency?: Maybe<String_Comparison_Exp>;
   isDefault?: Maybe<Boolean_Comparison_Exp>;
-  isSoldOut?: Maybe<Boolean_Comparison_Exp>;
   position?: Maybe<Int_Comparison_Exp>;
   previewItems?: Maybe<Product_Preview_Items_Bool_Exp>;
   price?: Maybe<Int_Comparison_Exp>;
   priceWas?: Maybe<Int_Comparison_Exp>;
   productId?: Maybe<String_Comparison_Exp>;
   snapshotId?: Maybe<String_Comparison_Exp>;
+  soldOutStatus?: Maybe<String_Comparison_Exp>;
   storeId?: Maybe<String_Comparison_Exp>;
   variantDescription?: Maybe<String_Comparison_Exp>;
   variantId?: Maybe<String_Comparison_Exp>;
@@ -7423,13 +7440,13 @@ export type Product_Variants_Insert_Input = {
   createdAt?: Maybe<Scalars['timestamptz']>;
   currency?: Maybe<Scalars['String']>;
   isDefault?: Maybe<Scalars['Boolean']>;
-  isSoldOut?: Maybe<Scalars['Boolean']>;
   position?: Maybe<Scalars['Int']>;
   previewItems?: Maybe<Product_Preview_Items_Arr_Rel_Insert_Input>;
   price?: Maybe<Scalars['Int']>;
   priceWas?: Maybe<Scalars['Int']>;
   productId?: Maybe<Scalars['String']>;
   snapshotId?: Maybe<Scalars['String']>;
+  soldOutStatus?: Maybe<Scalars['String']>;
   storeId?: Maybe<Scalars['String']>;
   variantDescription?: Maybe<Scalars['String']>;
   variantId?: Maybe<Scalars['String']>;
@@ -7447,6 +7464,7 @@ export type Product_Variants_Max_Fields = {
   priceWas?: Maybe<Scalars['Int']>;
   productId?: Maybe<Scalars['String']>;
   snapshotId?: Maybe<Scalars['String']>;
+  soldOutStatus?: Maybe<Scalars['String']>;
   storeId?: Maybe<Scalars['String']>;
   variantDescription?: Maybe<Scalars['String']>;
   variantId?: Maybe<Scalars['String']>;
@@ -7463,6 +7481,7 @@ export type Product_Variants_Max_Order_By = {
   priceWas?: Maybe<Order_By>;
   productId?: Maybe<Order_By>;
   snapshotId?: Maybe<Order_By>;
+  soldOutStatus?: Maybe<Order_By>;
   storeId?: Maybe<Order_By>;
   variantDescription?: Maybe<Order_By>;
   variantId?: Maybe<Order_By>;
@@ -7480,6 +7499,7 @@ export type Product_Variants_Min_Fields = {
   priceWas?: Maybe<Scalars['Int']>;
   productId?: Maybe<Scalars['String']>;
   snapshotId?: Maybe<Scalars['String']>;
+  soldOutStatus?: Maybe<Scalars['String']>;
   storeId?: Maybe<Scalars['String']>;
   variantDescription?: Maybe<Scalars['String']>;
   variantId?: Maybe<Scalars['String']>;
@@ -7496,6 +7516,7 @@ export type Product_Variants_Min_Order_By = {
   priceWas?: Maybe<Order_By>;
   productId?: Maybe<Order_By>;
   snapshotId?: Maybe<Order_By>;
+  soldOutStatus?: Maybe<Order_By>;
   storeId?: Maybe<Order_By>;
   variantDescription?: Maybe<Order_By>;
   variantId?: Maybe<Order_By>;
@@ -7530,13 +7551,13 @@ export type Product_Variants_Order_By = {
   createdAt?: Maybe<Order_By>;
   currency?: Maybe<Order_By>;
   isDefault?: Maybe<Order_By>;
-  isSoldOut?: Maybe<Order_By>;
   position?: Maybe<Order_By>;
   previewItems_aggregate?: Maybe<Product_Preview_Items_Aggregate_Order_By>;
   price?: Maybe<Order_By>;
   priceWas?: Maybe<Order_By>;
   productId?: Maybe<Order_By>;
   snapshotId?: Maybe<Order_By>;
+  soldOutStatus?: Maybe<Order_By>;
   storeId?: Maybe<Order_By>;
   variantDescription?: Maybe<Order_By>;
   variantId?: Maybe<Order_By>;
@@ -7558,8 +7579,6 @@ export enum Product_Variants_Select_Column {
   /** column name */
   ISDEFAULT = 'isDefault',
   /** column name */
-  ISSOLDOUT = 'isSoldOut',
-  /** column name */
   POSITION = 'position',
   /** column name */
   PRICE = 'price',
@@ -7569,6 +7588,8 @@ export enum Product_Variants_Select_Column {
   PRODUCTID = 'productId',
   /** column name */
   SNAPSHOTID = 'snapshotId',
+  /** column name */
+  SOLDOUTSTATUS = 'soldOutStatus',
   /** column name */
   STOREID = 'storeId',
   /** column name */
@@ -7586,12 +7607,12 @@ export type Product_Variants_Set_Input = {
   createdAt?: Maybe<Scalars['timestamptz']>;
   currency?: Maybe<Scalars['String']>;
   isDefault?: Maybe<Scalars['Boolean']>;
-  isSoldOut?: Maybe<Scalars['Boolean']>;
   position?: Maybe<Scalars['Int']>;
   price?: Maybe<Scalars['Int']>;
   priceWas?: Maybe<Scalars['Int']>;
   productId?: Maybe<Scalars['String']>;
   snapshotId?: Maybe<Scalars['String']>;
+  soldOutStatus?: Maybe<Scalars['String']>;
   storeId?: Maybe<Scalars['String']>;
   variantDescription?: Maybe<Scalars['String']>;
   variantId?: Maybe<Scalars['String']>;
@@ -7668,8 +7689,6 @@ export enum Product_Variants_Update_Column {
   /** column name */
   ISDEFAULT = 'isDefault',
   /** column name */
-  ISSOLDOUT = 'isSoldOut',
-  /** column name */
   POSITION = 'position',
   /** column name */
   PRICE = 'price',
@@ -7679,6 +7698,8 @@ export enum Product_Variants_Update_Column {
   PRODUCTID = 'productId',
   /** column name */
   SNAPSHOTID = 'snapshotId',
+  /** column name */
+  SOLDOUTSTATUS = 'soldOutStatus',
   /** column name */
   STOREID = 'storeId',
   /** column name */
@@ -7787,7 +7808,7 @@ export type ProductDownload = Product & {
   /** Whether or not a platform admin has hidden it from search results */
   isExcludedFromSearch: Scalars['Boolean'];
   /** Whether or not it has been sold */
-  isSoldOut: Scalars['Boolean'];
+  soldOutStatus: Scalars['String'];
   currentVariants: Array<Product_Variants>;
   featuredVariant?: Maybe<Product_Variants>;
   currentSnapshot: Product_Snapshots;
@@ -7902,7 +7923,7 @@ export type ProductPrivate = Product & {
   /** Whether or not a platform admin has hidden it from search results */
   isExcludedFromSearch: Scalars['Boolean'];
   /** Whether or not it has been sold */
-  isSoldOut: Scalars['Boolean'];
+  soldOutStatus: Scalars['String'];
   currentVariants: Array<Product_Variants>;
   featuredVariant?: Maybe<Product_Variants>;
   currentSnapshot: Product_Snapshots;
@@ -7945,7 +7966,7 @@ export type ProductPublic = Product & {
   /** Whether or not a platform admin has hidden it from search results */
   isExcludedFromSearch: Scalars['Boolean'];
   /** Whether or not it has been sold */
-  isSoldOut: Scalars['Boolean'];
+  soldOutStatus: Scalars['String'];
   /** Chosen variant, for cartItems */
   featuredVariant?: Maybe<Product_Variants>;
   currentVariants: Array<Product_Variants>;
@@ -7967,12 +7988,12 @@ export type Products = {
   isExcludedFromRecommendations: Scalars['Boolean'];
   isExcludedFromSearch: Scalars['Boolean'];
   isPublished: Scalars['Boolean'];
-  isSoldOut: Scalars['Boolean'];
   isSuspended: Scalars['Boolean'];
   /** An array relationship */
   productVariants: Array<Product_Variants>;
   /** An aggregated array relationship */
   productVariants_aggregate: Product_Variants_Aggregate;
+  soldOutStatus: Scalars['String'];
   /** An object relationship */
   store?: Maybe<Stores>;
   storeId: Scalars['String'];
@@ -8049,9 +8070,9 @@ export type Products_Bool_Exp = {
   isExcludedFromRecommendations?: Maybe<Boolean_Comparison_Exp>;
   isExcludedFromSearch?: Maybe<Boolean_Comparison_Exp>;
   isPublished?: Maybe<Boolean_Comparison_Exp>;
-  isSoldOut?: Maybe<Boolean_Comparison_Exp>;
   isSuspended?: Maybe<Boolean_Comparison_Exp>;
   productVariants?: Maybe<Product_Variants_Bool_Exp>;
+  soldOutStatus?: Maybe<String_Comparison_Exp>;
   store?: Maybe<Stores_Bool_Exp>;
   storeId?: Maybe<String_Comparison_Exp>;
   updatedAt?: Maybe<Timestamptz_Comparison_Exp>;
@@ -8075,9 +8096,9 @@ export type Products_Insert_Input = {
   isExcludedFromRecommendations?: Maybe<Scalars['Boolean']>;
   isExcludedFromSearch?: Maybe<Scalars['Boolean']>;
   isPublished?: Maybe<Scalars['Boolean']>;
-  isSoldOut?: Maybe<Scalars['Boolean']>;
   isSuspended?: Maybe<Scalars['Boolean']>;
   productVariants?: Maybe<Product_Variants_Arr_Rel_Insert_Input>;
+  soldOutStatus?: Maybe<Scalars['String']>;
   store?: Maybe<Stores_Obj_Rel_Insert_Input>;
   storeId?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['timestamptz']>;
@@ -8090,6 +8111,7 @@ export type Products_Max_Fields = {
   createdAt?: Maybe<Scalars['timestamptz']>;
   currentSnapshotId?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
+  soldOutStatus?: Maybe<Scalars['String']>;
   storeId?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['timestamptz']>;
 };
@@ -8100,6 +8122,7 @@ export type Products_Max_Order_By = {
   createdAt?: Maybe<Order_By>;
   currentSnapshotId?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
+  soldOutStatus?: Maybe<Order_By>;
   storeId?: Maybe<Order_By>;
   updatedAt?: Maybe<Order_By>;
 };
@@ -8111,6 +8134,7 @@ export type Products_Min_Fields = {
   createdAt?: Maybe<Scalars['timestamptz']>;
   currentSnapshotId?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
+  soldOutStatus?: Maybe<Scalars['String']>;
   storeId?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['timestamptz']>;
 };
@@ -8121,6 +8145,7 @@ export type Products_Min_Order_By = {
   createdAt?: Maybe<Order_By>;
   currentSnapshotId?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
+  soldOutStatus?: Maybe<Order_By>;
   storeId?: Maybe<Order_By>;
   updatedAt?: Maybe<Order_By>;
 };
@@ -8159,9 +8184,9 @@ export type Products_Order_By = {
   isExcludedFromRecommendations?: Maybe<Order_By>;
   isExcludedFromSearch?: Maybe<Order_By>;
   isPublished?: Maybe<Order_By>;
-  isSoldOut?: Maybe<Order_By>;
   isSuspended?: Maybe<Order_By>;
   productVariants_aggregate?: Maybe<Product_Variants_Aggregate_Order_By>;
+  soldOutStatus?: Maybe<Order_By>;
   store?: Maybe<Stores_Order_By>;
   storeId?: Maybe<Order_By>;
   updatedAt?: Maybe<Order_By>;
@@ -8191,9 +8216,9 @@ export enum Products_Select_Column {
   /** column name */
   ISPUBLISHED = 'isPublished',
   /** column name */
-  ISSOLDOUT = 'isSoldOut',
-  /** column name */
   ISSUSPENDED = 'isSuspended',
+  /** column name */
+  SOLDOUTSTATUS = 'soldOutStatus',
   /** column name */
   STOREID = 'storeId',
   /** column name */
@@ -8210,8 +8235,8 @@ export type Products_Set_Input = {
   isExcludedFromRecommendations?: Maybe<Scalars['Boolean']>;
   isExcludedFromSearch?: Maybe<Scalars['Boolean']>;
   isPublished?: Maybe<Scalars['Boolean']>;
-  isSoldOut?: Maybe<Scalars['Boolean']>;
   isSuspended?: Maybe<Scalars['Boolean']>;
+  soldOutStatus?: Maybe<Scalars['String']>;
   storeId?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['timestamptz']>;
 };
@@ -8235,9 +8260,9 @@ export enum Products_Update_Column {
   /** column name */
   ISPUBLISHED = 'isPublished',
   /** column name */
-  ISSOLDOUT = 'isSoldOut',
-  /** column name */
   ISSUSPENDED = 'isSuspended',
+  /** column name */
+  SOLDOUTSTATUS = 'soldOutStatus',
   /** column name */
   STOREID = 'storeId',
   /** column name */
@@ -9798,6 +9823,12 @@ export type SignUpMutationResponse = {
    __typename?: 'SignUpMutationResponse';
   user: UserPrivate;
 };
+
+export enum SoldOutStatus {
+  SOLD_OUT = 'SOLD_OUT',
+  RESERVED = 'RESERVED',
+  AVAILABLE = 'AVAILABLE'
+}
 
 /** Information about a store */
 export type Store = {
@@ -12563,7 +12594,7 @@ export type ProductDetailsFragment = { __typename?: 'products', id: string, crea
 
 export type ProductSnapshotsFragment = { __typename?: 'product_snapshots', id: string, createdAt: any, productId: string, title: string, description: string, condition: string, make: string, model: string, ammoType?: Maybe<string>, actionType: string, caliber?: Maybe<string>, serialNumber: string, location: string, dealer?: Maybe<{ __typename?: 'dealers', id: string, name?: Maybe<string>, address?: Maybe<string>, state?: Maybe<string>, postCode?: Maybe<string>, licenseNumber: string }> };
 
-export type ProductVariantsFragment = { __typename?: 'product_variants', variantSnapshotId: string, variantId: string, snapshotId: string, productId: string, storeId: string, createdAt: any, variantName: string, variantDescription: string, isDefault: boolean, isSoldOut: boolean, position: number, price: number, priceWas?: Maybe<number>, previewItems: Array<{ __typename?: 'product_preview_items', id: string, imageId?: Maybe<string>, position: number, youTubeEmbedLink?: Maybe<string>, variantSnapshotId?: Maybe<string>, image?: Maybe<(
+export type ProductVariantsFragment = { __typename?: 'product_variants', variantSnapshotId: string, variantId: string, snapshotId: string, productId: string, storeId: string, createdAt: any, variantName: string, variantDescription: string, isDefault: boolean, soldOutStatus: string, position: number, price: number, priceWas?: Maybe<number>, previewItems: Array<{ __typename?: 'product_preview_items', id: string, imageId?: Maybe<string>, position: number, youTubeEmbedLink?: Maybe<string>, variantSnapshotId?: Maybe<string>, image?: Maybe<(
       { __typename?: 'image_parents' }
       & ImageFragment
     )> }> };
@@ -12612,12 +12643,12 @@ export type OrdersFragment = { __typename?: 'orders', id: string, createdAt: any
     & ProductsFragment
   ), payoutItems: Array<{ __typename?: 'payout_items', id: string, storeId: string, payeeType: string, amount: number, paymentProcessingFee: number, createdAt: any, payoutStatus: string, currency: string, orderId: string, txnId: string, payoutId?: Maybe<string>, taxes: number }> };
 
-export type ProductVariantFragment = { __typename?: 'product_variants', variantSnapshotId: string, variantId: string, snapshotId: string, productId: string, storeId: string, createdAt: any, variantName: string, variantDescription: string, isDefault: boolean, position: number, price: number, priceWas?: Maybe<number>, isSoldOut: boolean, previewItems: Array<{ __typename?: 'product_preview_items', id: string, youTubeEmbedLink?: Maybe<string>, image?: Maybe<(
+export type ProductVariantFragment = { __typename?: 'product_variants', variantSnapshotId: string, variantId: string, snapshotId: string, productId: string, storeId: string, createdAt: any, variantName: string, variantDescription: string, isDefault: boolean, position: number, price: number, priceWas?: Maybe<number>, soldOutStatus: string, previewItems: Array<{ __typename?: 'product_preview_items', id: string, youTubeEmbedLink?: Maybe<string>, image?: Maybe<(
       { __typename?: 'image_parents' }
       & ImageFragment
     )> }> };
 
-type ProductFragment_ProductPrivate_ = { __typename?: 'ProductPrivate', id: string, updatedAt?: Maybe<any>, tags?: Maybe<string>, isPublished: boolean, isSuspended: boolean, isDeleted: boolean, isExcludedFromRecommendations: boolean, storeId: string, isSoldOut: boolean, currentSnapshot: (
+type ProductFragment_ProductPrivate_ = { __typename?: 'ProductPrivate', id: string, updatedAt?: Maybe<any>, tags?: Maybe<string>, isPublished: boolean, isSuspended: boolean, isDeleted: boolean, isExcludedFromRecommendations: boolean, storeId: string, soldOutStatus: string, currentSnapshot: (
     { __typename?: 'product_snapshots' }
     & ProductSnapshotsFragment
   ), currentVariants: Array<(
@@ -12628,7 +12659,7 @@ type ProductFragment_ProductPrivate_ = { __typename?: 'ProductPrivate', id: stri
     & ProductVariantFragment
   )>, store?: Maybe<{ __typename?: 'StorePrivate', id: string, name: string } | { __typename?: 'StorePublic', id: string, name: string }>, category?: Maybe<{ __typename?: 'categories', id: string, name: string, categoryGroup: string }> };
 
-type ProductFragment_ProductPublic_ = { __typename?: 'ProductPublic', id: string, updatedAt?: Maybe<any>, tags?: Maybe<string>, isPublished: boolean, isSuspended: boolean, isDeleted: boolean, isExcludedFromRecommendations: boolean, storeId: string, isSoldOut: boolean, currentSnapshot: (
+type ProductFragment_ProductPublic_ = { __typename?: 'ProductPublic', id: string, updatedAt?: Maybe<any>, tags?: Maybe<string>, isPublished: boolean, isSuspended: boolean, isDeleted: boolean, isExcludedFromRecommendations: boolean, storeId: string, soldOutStatus: string, currentSnapshot: (
     { __typename?: 'product_snapshots' }
     & ProductSnapshotsFragment
   ), currentVariants: Array<(
@@ -12639,7 +12670,7 @@ type ProductFragment_ProductPublic_ = { __typename?: 'ProductPublic', id: string
     & ProductVariantFragment
   )>, store?: Maybe<{ __typename?: 'StorePrivate', id: string, name: string } | { __typename?: 'StorePublic', id: string, name: string }>, category?: Maybe<{ __typename?: 'categories', id: string, name: string, categoryGroup: string }> };
 
-type ProductFragment_ProductDownload_ = { __typename?: 'ProductDownload', id: string, updatedAt?: Maybe<any>, tags?: Maybe<string>, isPublished: boolean, isSuspended: boolean, isDeleted: boolean, isExcludedFromRecommendations: boolean, storeId: string, isSoldOut: boolean, currentSnapshot: (
+type ProductFragment_ProductDownload_ = { __typename?: 'ProductDownload', id: string, updatedAt?: Maybe<any>, tags?: Maybe<string>, isPublished: boolean, isSuspended: boolean, isDeleted: boolean, isExcludedFromRecommendations: boolean, storeId: string, soldOutStatus: string, currentSnapshot: (
     { __typename?: 'product_snapshots' }
     & ProductSnapshotsFragment
   ), currentVariants: Array<(
@@ -12845,7 +12876,7 @@ export const ProductVariantsFragmentFragmentDoc = gql`
   variantName
   variantDescription
   isDefault
-  isSoldOut
+  soldOutStatus
   position
   price
   priceWas
@@ -13070,7 +13101,7 @@ export const ProductVariantFragmentFragmentDoc = gql`
     }
     youTubeEmbedLink
   }
-  isSoldOut
+  soldOutStatus
 }
     ${ImageFragmentFragmentDoc}`;
 export const ProductFragmentFragmentDoc = gql`
@@ -13083,7 +13114,7 @@ export const ProductFragmentFragmentDoc = gql`
   isDeleted
   isExcludedFromRecommendations
   storeId
-  isSoldOut
+  soldOutStatus
   currentSnapshot {
     ...ProductSnapshotsFragment
   }

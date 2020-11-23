@@ -19,6 +19,7 @@ import SnackBarA from "components/Snackbars/SnackbarA";
 import { logout } from "queries/requests";
 import ConfirmDeleteModal from "components/ConfirmDeleteModal";
 import { useDispatch } from "react-redux";
+import { refetchUser, setUserOnCompleted } from "layout/GetUser";
 
 
 const DeleteAccountButton = (props: ReactProps) => {
@@ -34,11 +35,13 @@ const DeleteAccountButton = (props: ReactProps) => {
       variables: {
         password: props.password,
       },
-      onCompleted: () => {
-        logout(apolloClient, dispatch)("/")
+      onCompleted: async () => {
+        let { data } = await refetchUser(apolloClient)()
+        setUserOnCompleted(dispatch)(data)
+        // logout(apolloClient, dispatch)("/")
       },
       onError: (e) => {
-        // console.log(e)
+        console.log(e)
       },
     }
   );
