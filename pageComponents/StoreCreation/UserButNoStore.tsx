@@ -71,7 +71,7 @@ const UserButNoStore: React.FC<ReactProps> = (props) => {
             <Button
               variant={"contained"}
               color={"secondary"}
-              onClick={() => router.push("/create-seller-profile")}
+              onClick={() => router.push("/create-store")}
               className={props.classes.button}
             >
               <Typography variant="body1" className={classes.buttonText}>

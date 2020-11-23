@@ -177,7 +177,7 @@ export const SellerProfileWrapper = (props) => {
         message={"Store required. Redirecting to create a store..."}
         redirectCondition={!option(data2).user.store.id()}
         redirectDelay={1000}
-        redirectRoute={"/create-seller-profile"}
+        redirectRoute={"/create-store"}
       />
     )
   } else {
