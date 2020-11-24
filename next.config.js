@@ -82,7 +82,11 @@ module.exports =
     // generateInDevMode: true,
 
     env: {
-      // (this is dynamically defined through process.env + nextRuntimeDotenv above)
+      // (this is defined at BUILD-time through process.env + nextRuntimeDotenv above)
+      NODE_ENV: process.env.NODE_ENV,
+      GATEWAY_GRAPHQL_URL: process.env.GATEWAY_GRAPHQL_URL,
+      SERVER_GATEWAY_GRAPHQL_URL: process.env.SERVER_GATEWAY_GRAPHQL_URL,
+      GATEWAY_GRAPHQL_WS_URL: process.env.GATEWAY_GRAPHQL_WS_URL,
     }
 
   })))
