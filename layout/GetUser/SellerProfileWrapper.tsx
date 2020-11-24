@@ -6,6 +6,7 @@ import { Actions } from "reduxStore/actions";
 import { GrandReduxState } from "reduxStore/grand-reducer";
 import { Dispatch, Store } from "redux";
 import { batch, useDispatch, useSelector } from "react-redux";
+import { Colors } from "layout/AppTheme";
 // Graphql
 import { useQuery } from "@apollo/client";
 import { GET_USER } from "queries/user-queries";
@@ -15,6 +16,7 @@ import { ApolloClient } from "@apollo/client";
 // Typings
 import { UserPrivate } from 'typings/gqlTypes';
 import Loading from "components/Loading";
+import LoadingBar from "components/LoadingBar";
 import LoadingBarSSR from "components/LoadingBarSSR";
 import ErrorDisplay from "components/Error";
 import SnackbarsSuccessErrors from "components/Snackbars/SnackbarsSuccessErrors";
@@ -155,8 +157,13 @@ export const SellerProfileWrapper = (props) => {
   let data2 = getUserDataFromGqlOrRedux()
 
   if (loading) {
-    // return <Loading fixed loading={loading} delay={"200ms"} />;
-    return <LoadingBarSSR/>;
+    return <LoadingBar
+            absoluteTop
+            color={Colors.blue}
+            height={4}
+            width={'100vw'}
+            loading={true}
+          />
   }
   if (!option(data2).user.id() && process.browser) {
     // user who is not logged in will error, causing a redirect

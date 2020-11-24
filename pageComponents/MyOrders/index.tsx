@@ -102,15 +102,16 @@ const MyOrders: React.FC<ReactProps> = (props) => {
     return (
       <OrdersLayout {...props}>
         {
-          [1,2,3,4,5].map(x => {
+          [1,2,3].map(x => {
             return (
             <DescriptionLoading
               key={x}
               rowFormat
-              height={xsDown ? 112 : 245}
+              height={xsDown ? 120 : 200}
               mobilePicHeight={xsDown ? 60 : 80}
               mobilePicWidth={xsDown ? 96 : 128}
               style={{
+                maxWidth: 480,
                 marginTop: '0rem',
                 marginRight: '1rem',
               }}
@@ -272,6 +273,7 @@ const styles = (theme: Theme) => createStyles({
   flexRowOuter: {
     display: 'flex',
     justifyContent: 'center',
+    flexDirection: "column",
     maxWidth: 960,
     flexWrap: "wrap",
   },

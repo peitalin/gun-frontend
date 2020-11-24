@@ -87,7 +87,6 @@ app.prepare().then(() => {
 
   // Serve cached responses
   expressServer.get("*", async (req, res) => {
-    // await processAffiliateClickIfApplicable(req, res);
     if (req.query.noCache) {
       res.setHeader("X-Cache-Status", "DISABLED");
       requestHandler(req, res);
@@ -163,32 +162,5 @@ const requestHandler = (req, res) => {
     app.serveStatic(req, res, filePath);
   } else {
     handle(req, res, parsedUrl);
-  }
-};
-
-const processAffiliateClickIfApplicable = async (req, res) => {
-  const parsedUrl = parse(req.url, true);
-  const { pathname, query } = parsedUrl;
-
-  // We're looking for "ref" as a query string parameter
-  if (query.ref) {
-    const affiliateId = query.ref;
-
-    // Tell the gateway about the click, and expect a set-cookie header in response if valid
-    // We just want to pass it on to browser so it hangs around for future requests
-    try {
-      const clickRecordResult = await serverApolloClient.mutate({
-        mutation: gql`mutation recordAffiliateLinkClick {
-        recordAffiliateLinkClick(affiliateId: "${affiliateId}", path: "${pathname}") {
-          success
-        }
-      }
-      `,
-      });
-      const setCookieHeader = clickRecordResult.context.setCookie;
-      res.set("set-cookie", setCookieHeader);
-    } catch (error) {
-      // (ignore)
-    }
   }
 };
