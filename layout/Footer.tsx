@@ -3,8 +3,8 @@ import React from "react";
 import clsx from 'clsx';
 import { withStyles, WithStyles, createStyles, Theme } from '@material-ui/core/styles';
 import { Colors, Gradients } from "layout/AppTheme";
-
 import Typography from '@material-ui/core/Typography';
+import { UserPrivate, Role } from "typings/gqlTypes";
 // Icons
 import Visa from 'components/Icons/Visa';
 import Mastercard from 'components/Icons/Mastercard';
@@ -38,11 +38,13 @@ const NODE_ENV = process.env.NODE_ENV;
 
 const Footer: React.FC<ReactProps> = (props) => {
 
-  const dispatch = useDispatch();
-  const goToModal = goToModalConnect(dispatch);
   const { classes } = props;
   const d = new Date();
   const year = d.getUTCFullYear()
+
+  const { user } = useSelector<GrandReduxState, ReduxState>(state => {
+    return { user: state.reduxLogin.user }
+  })
 
   const theme = useTheme();
   const smDown = useMediaQuery(theme.breakpoints.down('sm'));
@@ -143,26 +145,31 @@ const Footer: React.FC<ReactProps> = (props) => {
                   </Typography>
                 </a>
 
-                <div className={classes.link}>
-                  <Typography variant="body2" className={classes.linkText}>
-                    {`GATEWAY_GRAPHQL_URL: ${URI}`}
-                  </Typography>
-                </div>
-                <div className={classes.link}>
-                  <Typography variant="body2" className={classes.linkText}>
-                    {`SERVER_URI: ${SERVER_URI}`}
-                  </Typography>
-                </div>
-                <div className={classes.link}>
-                  <Typography variant="body2" className={classes.linkText}>
-                    {`WS_URI: ${WS_URI}`}
-                  </Typography>
-                </div>
-                <div className={classes.link}>
-                  <Typography variant="body2" className={classes.linkText}>
-                    {`NODE_ENV: ${NODE_ENV}`}
-                  </Typography>
-                </div>
+                {
+                  user?.userRole === Role.PLATFORM_ADMIN &&
+                  <>
+                    <div className={classes.link}>
+                      <Typography variant="body2" className={classes.linkText}>
+                        {`GATEWAY_GRAPHQL_URL: ${URI}`}
+                      </Typography>
+                    </div>
+                    <div className={classes.link}>
+                      <Typography variant="body2" className={classes.linkText}>
+                        {`SERVER_URI: ${SERVER_URI}`}
+                      </Typography>
+                    </div>
+                    <div className={classes.link}>
+                      <Typography variant="body2" className={classes.linkText}>
+                        {`WS_URI: ${WS_URI}`}
+                      </Typography>
+                    </div>
+                    <div className={classes.link}>
+                      <Typography variant="body2" className={classes.linkText}>
+                        {`NODE_ENV: ${NODE_ENV}`}
+                      </Typography>
+                    </div>
+                  </>
+                }
 
               </div>
             </div>
@@ -216,6 +223,9 @@ const Footer: React.FC<ReactProps> = (props) => {
 
 
 interface ReactProps extends WithStyles<typeof styles> {
+}
+interface ReduxState {
+  user: UserPrivate;
 }
 
 const FOOTER_MAX_WIDTH = 1024;
