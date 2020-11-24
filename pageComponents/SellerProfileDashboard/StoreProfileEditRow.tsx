@@ -48,13 +48,6 @@ const StoreProfileEdit: React.FC<ReactProps> = (props) => {
           </div>
         </div>
         <div className={classes.flexRow}>
-          {/* <Button
-            variant="outlined"
-            className={clsx(classes.link, classes.editProfileButton)}
-            onClick={() => router.push('/seller/edit-seller-profile')}
-          >
-            Edit Seller Profile
-          </Button> */}
           <EditSellerProfile asModal={true}/>
         </div>
       </div>

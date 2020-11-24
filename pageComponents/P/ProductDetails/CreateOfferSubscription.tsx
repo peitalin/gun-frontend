@@ -52,10 +52,11 @@ const CreateOfferSubscription = (props: ReactProps) => {
   )
   // console.log("existing productIds", existingChatsProductIds)
   // console.log("alreadyChatting about product?", alreadyChattingAboutProduct)
-
+  let buyerIsSeller = option(props).product.store.userId() === userId
 
   return (
     <div className={classes.createOfferRoot}>
+
       {
         (userId && !alreadyChattingAboutProduct) &&
         <CreateChatButton
@@ -66,16 +67,19 @@ const CreateOfferSubscription = (props: ReactProps) => {
             // make sure its the store's user.id
             option(props).product.store.userId()
           }
+          disabled={buyerIsSeller}
           productId={option(props).product.id()}
           openChatAfterwards={true}
         />
       }
+
       {
         (
           userId &&
           alreadyChattingAboutProduct &&
           alreadyChattingAboutProduct.productId &&
-          alreadyChattingAboutProduct.chatRoomId
+          alreadyChattingAboutProduct.chatRoomId &&
+          !buyerIsSeller
         ) &&
         <OpenChatButton
           title={"Continue Offer"}

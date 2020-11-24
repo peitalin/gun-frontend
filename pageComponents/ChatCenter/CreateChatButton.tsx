@@ -58,8 +58,11 @@ const CreateChatButton: React.FC<ReactProps> = (props) => {
   const dispatch = useDispatch();
 
   const {
+    buyerUserId,
+    sellerUserId,
     openChatAfterwards = false,
   } = props;
+
 
   const chatCenterOpen = useSelector<GrandReduxState, boolean>(
     state => state.reduxModals.chatCenterOpen

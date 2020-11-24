@@ -87,16 +87,16 @@ export const setLoginExpiration = (hoursFromNow: number) => {
   let loginExpiresAt = new Date(new Date().getTime() + (hours * 60 * 60 * 1000))
   let countDown = loginExpiresAt.getTime() - Date.now();
   // X milliseconds from now.
-  localStorage.setItem("efc-login-valid-until", loginExpiresAt.getTime().toString());
+  localStorage.setItem("gm-login-valid-until", loginExpiresAt.getTime().toString());
   localStorage.setItem("efc-login-time-left", countDown.toString());
 };
 
 export const clearLoginExpiration = () => {
-  localStorage.removeItem("efc-login-valid-until")
+  localStorage.removeItem("gm-login-valid-until")
 };
 
 export const checkThenSetLoggedInStatus = (setLoginStatusFn: (...args: any) => any) => {
-  let expiryDate = parseInt(localStorage.getItem("efc-login-valid-until"));
+  let expiryDate = parseInt(localStorage.getItem("gm-login-valid-until"));
   let countDown = expiryDate - Date.now();
   if (countDown > 0) {
     setLoginStatusFn()
@@ -104,7 +104,7 @@ export const checkThenSetLoggedInStatus = (setLoginStatusFn: (...args: any) => a
 }
 
 export const runOnLoginExpiration = (fn: (...args: any) => any): void => {
-  let expiryDate = parseInt(localStorage.getItem("efc-login-valid-until"));
+  let expiryDate = parseInt(localStorage.getItem("gm-login-valid-until"));
   if (!isNaN(expiryDate)) {
     // set countdown timer
     let countDown = expiryDate - Date.now();

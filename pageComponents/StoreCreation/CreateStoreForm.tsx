@@ -168,7 +168,6 @@ const CreateStoreForm: React.FC<ReactProps> = (props) => {
             if (props.closeModal) {
               props.closeModal()
             }
-            // router.push("/seller?created=store")
           })
         })
 
@@ -201,7 +200,7 @@ const CreateStoreForm: React.FC<ReactProps> = (props) => {
               <Button
                 variant="outlined"
                 onClick={() => {
-                  router.push("/seller")
+                  router.push("/admin")
                 }}
               >
                 View Seller Dashboard
