@@ -56,6 +56,7 @@ async(route?: string): Promise<BlankMutationResponse> => {
       route.includes('/terms-of-service') ||
       route.includes('/privacy-policy') ||
       route.includes('/refund-policy') ||
+      route.includes('/admin') ||
       (route.includes('/sell') && !route.includes('/seller')) ||
       route === '/'
     ) {
@@ -72,7 +73,7 @@ async(route?: string): Promise<BlankMutationResponse> => {
     // back to public product gallery page
   }
 
-  localStorage.removeItem("efc-login-valid-until");
+  localStorage.removeItem("gm-login-valid-until");
 
   return data
 }

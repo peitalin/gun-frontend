@@ -21,7 +21,7 @@ const FloatingBanner = (props: ReactProps) => {
     displaySuccess,
     setDisplaySuccess,
     classes,
-    redirectRoute = '/seller',
+    redirectRoute = '/admin',
     mdDown = false,
   } = props;
 

@@ -5,29 +5,10 @@ const fs = require('fs');
 const withCSS = require('@zeit/next-css')
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
-
 // environment
-const dev = process.env.NODE_ENV !== 'production'
-const nextRuntimeDotenv = require('next-runtime-dotenv')
 require("dotenv").config();
 // offline first
 const withOffline = require('next-offline')
-
-const withConfig = nextRuntimeDotenv({
-  // path: '.env',
-  public: [
-    'GATEWAY_GRAPHQL_URL',
-    'SERVER_GATEWAY_GRAPHQL_URL',
-    'GATEWAY_GRAPHQL_WS_URL',
-    'NODE_ENV',
-    'STRIPE_PUBLIC_KEY',
-    'PAYPAL_CLIENT_ID',
-    'FEATURED_LIST_ID'
-  ],
-  server: [
-    'IN_DOCKER',
-  ]
-})
 
 
 module.exports =
