@@ -29,26 +29,11 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 // // Analytics
 // import { analyticsEvent } from "utils/analytics";
 
-// // ENV variables
-// import getConfig from 'next/config'
-// let cfg = getConfig();
-// let GATEWAY_GRAPHQL_URL = cfg?.publicRuntimeConfig?.GATEWAY_GRAPHQL_URL
-// let GATEWAY_GRAPHQL_WS_URL = cfg?.publicRuntimeConfig?.GATEWAY_GRAPHQL_WS_URL
-// let SERVER_GATEWAY_GRAPHQL_URL = cfg?.publicRuntimeConfig?.SERVER_GATEWAY_GRAPHQL_URL
-// let GATEWAY_GRAPHQL_URL="https://api.gunmarketplace.com.au/gateway/graphql"
-// let GATEWAY_GRAPHQL_WS_URL="wss://api.gunmarketplace.com.au/v1/graphql"
-// let SERVER_GATEWAY_GRAPHQL_URL="https://api.gunmarketplace.com.au/gateway/graphql"
-
-let ENVS = JSON.stringify(process.env)
-
-
 // for printing testing only
 const URI = process.env.GATEWAY_GRAPHQL_URL;
 const SERVER_URI = process.env.SERVER_GATEWAY_GRAPHQL_URL;
 const WS_URI = process.env.GATEWAY_GRAPHQL_WS_URL;
-// const URI = GATEWAY_GRAPHQL_URL;
-// const SERVER_URI = SERVER_GATEWAY_GRAPHQL_URL;
-// const WS_URI = GATEWAY_GRAPHQL_WS_URL;
+const NODE_ENV = process.env.NODE_ENV;
 
 
 const Footer: React.FC<ReactProps> = (props) => {
@@ -175,7 +160,7 @@ const Footer: React.FC<ReactProps> = (props) => {
                 </div>
                 <div className={classes.link}>
                   <Typography variant="body2" className={classes.linkText}>
-                    {`process.env: ${ENVS}`}
+                    {`NODE_ENV: ${NODE_ENV}`}
                   </Typography>
                 </div>
 
