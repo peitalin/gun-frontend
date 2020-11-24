@@ -57,7 +57,7 @@ const RowExpander = (props: RowExpanderProps) => {
     {
       refetchQueries: props.refetchQueriesParams,
       awaitRefetchQueries: true,
-    }
+    },
   );
 
   const [open, setOpen] = React.useState(false);

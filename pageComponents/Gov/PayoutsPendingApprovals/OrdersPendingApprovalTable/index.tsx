@@ -82,7 +82,7 @@ const OrdersPendingApprovalTable: NextPage<ReactProps> = (props) => {
           offset: ordersC.offset,
         }
       },
-      // fetchPolicy: "network-only",
+      fetchPolicy: "cache-and-network",
     }
   );
 
@@ -94,7 +94,7 @@ const OrdersPendingApprovalTable: NextPage<ReactProps> = (props) => {
           offset: ordersPA.offset,
         }
       },
-      // fetchPolicy: "network-only",
+      fetchPolicy: "cache-and-network",
     }
   );
 
@@ -106,7 +106,7 @@ const OrdersPendingApprovalTable: NextPage<ReactProps> = (props) => {
           offset: ordersAA.offset,
         }
       },
-      // fetchPolicy: "network-only",
+      fetchPolicy: "cache-and-network",
     }
   );
 
@@ -154,7 +154,7 @@ const OrdersPendingApprovalTable: NextPage<ReactProps> = (props) => {
     .map(edge => edge.node)
 
 
-  console.log("orders", ordersAdminApproved)
+  // console.log("orders", ordersAdminApproved)
 
 
   if (_ordersAdminApproved.loading || _ordersPendingApproval.loading) {
@@ -174,6 +174,7 @@ const OrdersPendingApprovalTable: NextPage<ReactProps> = (props) => {
           Created Orders
         </Typography>
         <DataTableOrdersPending
+          tableName={"Created Orders"}
           admin={props.admin}
           rows={ordersCreated}
           getNextPage={() => {
@@ -192,12 +193,14 @@ const OrdersPendingApprovalTable: NextPage<ReactProps> = (props) => {
           // getPage={(pageNumber: number) => getPage(pageNumber)}
           setCount={setCount}
           totalCount={0}
+          refetchQueriesParams={refetchQueriesParams}
         />
 
         <Typography variant="h4" className={classes.subtitle1}>
           Orders Pending Approval
         </Typography>
         <DataTableOrdersPending
+          tableName={"Pending Approval"}
           admin={props.admin}
           rows={ordersPendingApproval}
           getNextPage={() => {
@@ -211,10 +214,12 @@ const OrdersPendingApprovalTable: NextPage<ReactProps> = (props) => {
           totalCount={0}
           refetchQueriesParams={refetchQueriesParams}
         />
+
         <Typography variant="h4" className={classes.subtitle1}>
           Admin Approved Orders
         </Typography>
         <DataTableOrdersPending
+          tableName={"Approved Orders"}
           admin={props.admin}
           rows={ordersAdminApproved}
           getNextPage={() => {
@@ -226,6 +231,7 @@ const OrdersPendingApprovalTable: NextPage<ReactProps> = (props) => {
           // getPage={(pageNumber: number) => getPage(pageNumber)}
           setCount={setCount}
           totalCount={0}
+          refetchQueriesParams={refetchQueriesParams}
         />
       </main>
     )

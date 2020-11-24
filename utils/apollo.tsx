@@ -333,11 +333,19 @@ const cacheOptions = {
       },
     },
 
+
     orders: {
-      keyFields: ["id"],
+      keyFields: ["id", "updatedAt"],
+      fields: {
+        currentSnapshot: {
+          merge: (existing, incoming, opts) => {
+            return incoming
+          }
+        }
+      }
     },
     order_snapshots: {
-      keyFields: ["id"],
+      keyFields: ["id", "orderStatus"],
     },
   }
 }

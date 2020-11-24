@@ -63,6 +63,9 @@ const DataTableOrdersPending = (
     setPage(0);
   };
 
+  console.log("tableName: ", props.tableName)
+  console.log("refetchQueriesParams: ", props.refetchQueriesParams)
+
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
@@ -137,6 +140,7 @@ const DataTableOrdersPending = (
 
 interface DataTableProps<T> {
   rows: T[];
+  tableName?: string;
   totalCount?: number;
   setCount?(count: number): void;
   getNextPage?(): void;
