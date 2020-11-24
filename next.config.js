@@ -82,8 +82,8 @@ module.exports =
     // generateInDevMode: true,
 
     env: {
-      // (this is defined at BUILD-time through process.env + nextRuntimeDotenv above)
-      NODE_ENV: process.env.NODE_ENV,
+      // (this is defined at BUILD-time through vercel's process.env)
+      // Vercel: set environment variables in the dashboard
       GATEWAY_GRAPHQL_URL: process.env.GATEWAY_GRAPHQL_URL,
       SERVER_GATEWAY_GRAPHQL_URL: process.env.SERVER_GATEWAY_GRAPHQL_URL,
       GATEWAY_GRAPHQL_WS_URL: process.env.GATEWAY_GRAPHQL_WS_URL,
