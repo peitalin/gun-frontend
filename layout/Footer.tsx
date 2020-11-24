@@ -39,6 +39,8 @@ let GATEWAY_GRAPHQL_URL="https://api.gunmarketplace.com.au/gateway/graphql"
 let GATEWAY_GRAPHQL_WS_URL="wss://api.gunmarketplace.com.au/v1/graphql"
 let SERVER_GATEWAY_GRAPHQL_URL="https://api.gunmarketplace.com.au/gateway/graphql"
 
+let ENVS = JSON.stringify(process.env)
+
 
 // for printing testing only
 // const URI = process.env.GATEWAY_GRAPHQL_URL;
@@ -169,6 +171,11 @@ const Footer: React.FC<ReactProps> = (props) => {
                 <div className={classes.link}>
                   <Typography variant="body2" className={classes.linkText}>
                     {`WS_URI: ${WS_URI}`}
+                  </Typography>
+                </div>
+                <div className={classes.link}>
+                  <Typography variant="body2" className={classes.linkText}>
+                    {`process.env: ${ENVS}`}
                   </Typography>
                 </div>
 
