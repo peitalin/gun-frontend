@@ -81,17 +81,10 @@ const Footer: React.FC<ReactProps> = (props) => {
             <div className={classes.flexRow}>
               <div className={classes.flexColItem}>
 
-                <Link href={'/start'} prefetch={false}>
+                <Link href={'/create-store'} prefetch={false}>
                   <a className={classes.link}>
                     <Typography variant="body2" className={classes.linkText}>
                       Create a Store
-                    </Typography>
-                  </a>
-                </Link>
-                <Link href={'/affiliates'} prefetch={false}>
-                  <a className={classes.link}>
-                    <Typography variant="body2" className={classes.linkText}>
-                      Affiliate Program
                     </Typography>
                   </a>
                 </Link>
