@@ -5,10 +5,19 @@ const fs = require('fs');
 const withCSS = require('@zeit/next-css')
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
+
 // environment
+const dev = process.env.NODE_ENV !== 'production'
+const nextRuntimeDotenv = require('next-runtime-dotenv')
 require("dotenv").config();
 // offline first
 const withOffline = require('next-offline')
+
+const withConfig = nextRuntimeDotenv({
+  // path: '.env',
+  public: [],
+  server: []
+})
 
 
 module.exports =

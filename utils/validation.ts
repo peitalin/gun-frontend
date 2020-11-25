@@ -64,35 +64,30 @@ export const validationSchemas = {
         .min(0)
         .max(100),
       dealerId: Yup.string()
-        .min(0)
-        .max(100)
-        .test("dealerId", "A dealer must be chosen", function(value) {
-          // console.log("dealerId >>>>>>>>>>>>", value, this)
-          // this.path: the string path of the current validation
-          // this.schema: the resolved schema object that the test is running against.
-          // this.options: the options object that validate() or isValid() was called with
-          // this.parent: in the case of nested schema, this is the value of the parent object
-          // this.createError(Object: { path: String, message: String }):
-          // if (!this.parent.dealer && !this.parent.dealerId) {
-          if (!this.parent.dealerId && !this.parent.dealer?.licenseNumber) {
-            return false
-          } else {
-            return true
-          }
+        .when('dealer', {
+          is: (val) => {
+            console.log("dealer val: ", val)
+            return val?.licenseNumber === undefined
+              || val?.address === undefined
+              || val?.name === undefined
+          },
+          then: Yup.string()
+            .min(3)
+            .max(100)
+            .required("A dealer must be chosen"),
+          otherwise: Yup.string().nullable(),
         }),
+
       dealer: Yup.object().shape({
           licenseNumber: Yup.string()
             .min(0)
-            .max(100)
-            .required("licenseNumber required"),
+            .max(100),
           name: Yup.string()
             .min(0)
-            .max(100)
-            .required("dealer name required"),
+            .max(100),
           address: Yup.string()
             .min(0)
-            .max(100)
-            .required("address required"),
+            .max(100),
           city: Yup.string()
             .min(0)
             .max(100),
@@ -104,10 +99,32 @@ export const validationSchemas = {
             .max(100),
         })
         .test("dealer", "Dealer license number needed", function(value) {
+          let validatingDealerForm = !this.parent.dealerId && !!this.parent.dealer ;
           if (
-            !this.parent.dealerId &&
-            !!this.parent.dealer &&
+            validatingDealerForm &&
             !this.parent.dealer?.licenseNumber
+          ) {
+            return false
+          } else {
+            return true
+          }
+        })
+        .test("dealer", "Dealer address needed", function(value) {
+          let validatingDealerForm = !this.parent.dealerId && !!this.parent.dealer ;
+          if (
+            validatingDealerForm &&
+            !this.parent.dealer?.address
+          ) {
+            return false
+          } else {
+            return true
+          }
+        })
+        .test("dealer", "Dealer name needed", function(value) {
+          let validatingDealerForm = !this.parent.dealerId && !!this.parent.dealer ;
+          if (
+            validatingDealerForm &&
+            !this.parent.dealer?.name
           ) {
             return false
           } else {
@@ -130,6 +147,57 @@ export const validationSchemas = {
             return true
           }
         }),
+
+      // dealer: Yup.object().shape({
+      //     licenseNumber: Yup.string()
+      //       .min(0)
+      //       .max(100),
+      //       // .required("licenseNumber required"),
+      //     name: Yup.string()
+      //       .min(0)
+      //       .max(100),
+      //       // .required("dealer name required"),
+      //     address: Yup.string()
+      //       .min(0)
+      //       .max(100),
+      //       // .required("address required"),
+      //     city: Yup.string()
+      //       .min(0)
+      //       .max(100),
+      //     state: Yup.string()
+      //       .min(0)
+      //       .max(100),
+      //     postCode: Yup.string()
+      //       .min(0)
+      //       .max(100),
+      //   })
+      //   .test("dealer", "Dealer license number needed", function(value) {
+      //     if (
+      //       !this.parent.dealerId &&
+      //       !!this.parent.dealer &&
+      //       !this.parent.dealer?.licenseNumber
+      //     ) {
+      //       return false
+      //     } else {
+      //       return true
+      //     }
+      //   })
+      //   .test("dealer", "A dealer must be chosen or inputted", function(value) {
+      //     console.log(">>>>>>>>>>>>", value, this)
+      //     // this.path: the string path of the current validation
+      //     // this.schema: the resolved schema object that the test is running against.
+      //     // this.options: the options object that validate() or isValid() was called with
+      //     // this.parent: in the case of nested schema, this is the value of the parent object
+      //     // this.createError(Object: { path: String, message: String }):
+      //     if (!!this.parent.dealerId) {
+      //       return true
+      //     }
+      //     if (!this.parent.dealer && !this.parent.dealerId) {
+      //       return false
+      //     } else {
+      //       return true
+      //     }
+      //   }),
       categoryId: Yup.string()
         .required("Pick a category"),
       tags: Yup.array().of(Yup.string())
