@@ -221,6 +221,9 @@ const PreviewItemUploaderGrid = (props: ReactProps & FormikProps<FormikFields>) 
   }, [props.dzuPreviewItems, props.dzuPreviewOrder])
 
 
+  console.log("touched: ", fprops.touched)
+  console.log("errors: ", fprops.errors)
+
   return (
     <ErrorBounds className={classes.uploaderRoot}>
 
@@ -290,7 +293,7 @@ const PreviewItemUploaderGrid = (props: ReactProps & FormikProps<FormikFields>) 
         touched={option(fprops).touched.currentVariants[0].previewItems()}
         focused={focused}
         errorMessage={option(fprops).errors.currentVariants[0].previewItems()}
-        disableInitialValidationMessage={true}
+        disableInitialValidationMessage={false}
       />
 
     </ErrorBounds>

@@ -41,6 +41,7 @@ const UploadInput = (props: IInputProps & ReactProps) => {
               // console.log('ref.current: ', ref.current);
               (ref.current as any).click()
             }
+            props.setTouched()
           }}
           onClick={(e) => {
             console.log("input button clicked")
@@ -67,6 +68,7 @@ const UploadInput = (props: IInputProps & ReactProps) => {
           accept={accept}
           multiple
           onChange={async(e) => {
+            props.setTouched()
             if (getFilesFromEvent) {
               onFiles(await getFilesFromEvent(e))
             } else if (files) {

@@ -30,7 +30,9 @@ const Header: React.FC<{}> = (props) => (
     {
       process.browser &&
       // <script type="text/javascript" src="https://api.quickstream.westpac.com.au/rest/v1/quickstream-api-1.0.min.js"></script>
-      <script type="text/javascript" src="https://api.quickstream.support.qvalent.com/rest/v1/quickstream-api-1.0.min.js"></script>
+      <script type="text/javascript"
+        src="https://api.quickstream.support.qvalent.com/rest/v1/quickstream-api-1.0.min.js"
+      />
     }
 
   </Head>

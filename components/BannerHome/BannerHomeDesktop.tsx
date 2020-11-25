@@ -71,6 +71,48 @@ const BannerHomeDesktop: NextPage<ReactProps> = (props) => {
         marginBottom: '4rem',
       }}>
         <Searchbar color={Colors.uniswapLightestGrey}/>
+
+        {/* <form method="POST" className={classes.emailForm}>
+          <div className="md:flex-1">
+            <div className={classes.emailInputBox}>
+              <div className="flex">
+                <input
+                  className={classes.emailFormInput}
+                  id="email"
+                  autoComplete="email"
+                  name="email"
+                  autoCorrect="off"
+                  autoCapitalize="off"
+                  spellCheck="false"
+                  type="email"
+                  aria-describedby="emailError"
+                  aria-invalid="false"
+                  placeholder="name@email.com"
+                />
+              </div>
+              <div className="text-sm text-error-pure bg-error-pure bg-opacity-10 py-2 px-4 -mx-4 -mb-4 mt-2 error-triangle hidden" id="emailError">
+                <div className="leading-tight crop-tight"></div>
+              </div>
+            </div>
+          </div>
+          <Button
+              className={clsx(
+                classes.buttonBrowseCategories,
+                classes.minWidth184,
+                classes.buttonHeightDesktop,
+              )}
+              type="submit"
+              variant="text"
+              color="primary"
+              classes={{
+                root: classes.buttonRoot,
+                label: classes.buttonFontSizeDesktop,
+              }}
+            >
+              Join Waitlist
+          </Button>
+        </form> */}
+
       </div>
 
       <div className={classes.mainTitleContainer}>

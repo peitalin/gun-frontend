@@ -189,6 +189,34 @@ export const styles = (theme: Theme) => createStyles({
   },
   saveAlt: {
   },
+
+  /// Email form
+  emailForm: {
+  },
+  emailInputBox: {
+    transitionDuration: "0.15s",
+    width: "100%",
+    padding: "1rem",
+    borderWidth: "1px",
+    borderRadius: "0.25rem",
+  },
+  emailFormInput: {
+    width: "100%",
+    lineHeight: "1.375rem",
+    fontSize: "1.125rem",
+    textOverflow: "ellipsis",
+  },
+  emailButton: {
+    marginTop: "1rem",
+    width: "100%",
+    paddingLeft: '2.5rem',
+    paddingRight: '2.5rem',
+    backgroundColor: "rgba(244,219,216,0.1)",
+    borderColor: "rgba(244,219,216,0.1)",
+    fontWeight: 600,
+    padding: '.5rem 1.5rem',
+    lineHeight: '1.75rem',
+  },
 })
 
 

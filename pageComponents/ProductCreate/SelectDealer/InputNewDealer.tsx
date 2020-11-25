@@ -25,13 +25,13 @@ const InputNewDealer = (props: ReactProps & FormikProps<FormikFields>) => {
 
   let maxLength = 60;
 
-  console.log('errors:', fprops.errors)
-  console.log('dealer:',  fprops.values?.dealer)
+  // console.log('errors:', fprops.errors)
+  // console.log('dealer:',  fprops.values?.dealer)
 
   return (
     <>
       <Typography color={"primary"} variant="subtitle2" gutterBottom>
-        Name
+        Name - required
       </Typography>
       <TextInput
         name="dealer.name"
@@ -80,7 +80,7 @@ const InputNewDealer = (props: ReactProps & FormikProps<FormikFields>) => {
 
 
       <Typography color={"primary"} variant="subtitle2" gutterBottom>
-        Address
+        Address - required
       </Typography>
       <TextInput
         name="dealer.address"

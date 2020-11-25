@@ -221,10 +221,3 @@ interface ReduxState {
 }
 
 export default UploadLayoutPreviews;
-
-// export default React.memo(
-//   (props: ILayoutProps & ReactProps) => <UploadLayout {...props}/>,
-//   // (prevProps, nextProps) => {
-//   //   return false
-//   // },
-// );

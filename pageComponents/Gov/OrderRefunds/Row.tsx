@@ -44,7 +44,7 @@ const styles = (theme: Theme) => createStyles({
   },
   orderHeader: {
     textAlign: 'center',
-    color: Colors.black,
+    color: Colors.uniswapLightestGrey,
   },
   orderCol: {
     display: 'flex',

@@ -33,9 +33,11 @@ import OrderItemCard from "./OrderCard";
 import RefundTaxesFees from "./RefundTaxesFees";
 // Graphql
 import { useQuery, useApolloClient, ApolloClient } from "@apollo/client";
-import { GET_ORDER_AS_ADMIN, GET_RECENT_TRANSACTIONS } from "queries/orders-queries";
+import {
+  GET_ORDER_AS_ADMIN,
+  GET_RECENT_TRANSACTIONS,
+} from "queries/orders-queries";
 // Refund
-// import { makeRefund } from "utils/requests";
 import { v4 as uuidv4 } from "uuid"
 // Validation
 import { Formik } from 'formik';
@@ -251,10 +253,10 @@ const RefundOrders: React.FC<ReactOrdersFormProps> = (props) => {
                 />
               </Section>
               <Section classes={classes} title={"Order Price Breakdown"}>
-                {/* <OrderPrices
+                <OrderPrices
                   order={order}
                   {...fprops}
-                /> */}
+                />
               </Section>
               {/* <Section classes={classes} title={"Refund Line Items"}>
                 {
@@ -461,14 +463,6 @@ interface QueryData2 {
 interface QueryVar2 {
   count: number;
 }
-interface QueryData3 {
-  refreshPaypalToken: {
-    status: string;
-    token: string;
-  }
-}
-interface QueryVar3 {
-}
 
 
 
@@ -559,24 +553,6 @@ const styles = (theme: Theme) => createStyles({
     margin: '0.1rem',
   },
 });
-
-
-// ////////// SSR ///////////
-// interface Context extends NextPageContext {
-//   apolloClient: ApolloClient<any>;
-// }
-
-// RefundOrders.getInitialProps = async (ctx: Context) => {
-//     return {
-//       setOrderId: undefined,
-//       orderId: "",
-//       searchOrder: undefined,
-//       onSubmit: undefined,
-//       disableRefundButton: true,
-//       onClickDebugPrint: undefined,
-//       errorMsg: undefined,
-//     } as ReactOrdersFormProps & ReactOrdersSearchProps
-// }
 
 
 export default withStyles(styles)( RefundOrders );

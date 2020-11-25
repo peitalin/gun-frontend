@@ -36,8 +36,8 @@ const ChooseDealerDropdown = (props: ReactProps & FormikProps<FormikFields>) => 
   // initial stateShape
   let initialDealer = dealerOptions.find(d => d.value === fprops.values.dealerId)
 
-  console.log("dealerOptions: ", dealerOptions)
-  console.log("initialDealer: ", initialDealer)
+  // console.log("dealerOptions: ", dealerOptions)
+  // console.log("initialDealer: ", initialDealer)
 
   return (
     <>

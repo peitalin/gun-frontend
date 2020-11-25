@@ -10,6 +10,7 @@ import {
   ID,
   PaymentProcessor,
   PayeeType,
+  Order_Snapshots,
 } from "typings/gqlTypes";
 // import {
 //   MakeRefundParams,
@@ -35,11 +36,11 @@ const OrderPrices = (props: ReactProps & FormikProps<FormikFields>) => {
 
 
   const { classes, order, ...fprops } = props;
-  // const tx = option(order).currentSnapshot.transaction();
+  const tx = option(order).currentSnapshot.transaction();
 
   // // order details
-  // const osnap = option(order).currentSnapshot();
-  // const total = option(osnap).total(0);
+  const osnap = option(order).currentSnapshot();
+  const total = order.total;
   // const subtotal = option(osnap).subtotal(0);
   // const paymentProcessingFee = option(osnap).paymentProcessingFee(0);
   // const taxes = option(osnap).taxes(0);
@@ -57,85 +58,63 @@ const OrderPrices = (props: ReactProps & FormikProps<FormikFields>) => {
     handleReset,
   } = fprops;
 
-  let refundOrderItemIds = option(values).refundOrderItemIds([]);
+  // let refundOrderIds = option(values).refundOrderIds([]);
 
-  // let refundingOrderItems = order.items
-  //   .filter(oitem => refundOrderItemIds.includes(oitem.id));
+  let totalRefund = order.payoutItems
+    .reduce((acc, pitem) => {
+      return acc
+        + pitem.amount
+        + pitem.paymentProcessingFee
+    }, 0)
 
-  // let totalRefund = refundingOrderItems
-  //   .flatMap(oitem => [...oitem.payoutItems])
-  //   .reduce((acc, pitem) => {
-  //     return acc
-  //       + pitem.amount
-  //       + pitem.paymentProcessingFee
-  //   }, 0)
+  let totalPaymentFees = order.payoutItems
+    .reduce((acc, pitem) => {
+      return acc + pitem.paymentProcessingFee
+    }, 0)
 
-  // let totalPaymentFees = refundingOrderItems
-  //   .flatMap(oitem => [...oitem.payoutItems])
-  //   .reduce((acc, pitem) => {
-  //     return acc + pitem.paymentProcessingFee
-  //   }, 0)
+  let totalTaxes = order.payoutItems
+    .reduce((acc, pitem) => {
+      return acc + pitem.taxes
+    }, 0)
 
-
-  // if (!osnap) {
-  if (false) {
-    return <Loading inline loading={!order}/>
-  } else {
-    return (
-      <div className={classes.root}>
-        <div className={classes.maxWidth}>
-          <OrderTitleRow classes={classes}
-            fieldName={"Line Item"}
-            addLess={"+/-"}
-            fieldAmount={"Amount Left"}
-            fieldRefunded={"Refunded"}
-            fieldRefund={"Refunding"}
+  return (
+    <div className={classes.root}>
+      <div className={classes.maxWidth}>
+        <OrderTitleRow classes={classes}
+          fieldName={"Line Item"}
+          addLess={"+/-"}
+          fieldAmount={"Amount Left"}
+          fieldRefunded={"Refunded"}
+          fieldRefund={"Refunding"}
+        />
+        <div className={classes.flexCol}>
+          <OrderPriceRow classes={classes}
+            fieldName={"Total"}
+            addLess={"+"}
+            fieldAmount={total}
+            fieldRefunded={""}
+            fieldRefund={totalRefund}
           />
-          <div className={classes.flexCol}>
-            {/* <OrderPriceRow classes={classes}
-              fieldName={"Total"}
-              addLess={"+"}
-              fieldAmount={total}
-              fieldRefunded={""}
-              fieldRefund={totalRefund}
-            />
-            <OrderPriceRow classes={classes}
-              fieldName={"Inc. Payment Fees"}
-              addLess={"-"}
-              fieldAmount={totalPaymentFees}
-              fieldRefunded={""}
-              fieldRefund={totalPaymentFees}
-            />
-            <OrderPriceRow classes={classes}
-              fieldName={"Taxes"}
-              addLess={"-"}
-              fieldAmount={taxes}
-              fieldRefunded={""}
-              fieldRefund={option(values).taxes(0)}
-            /> */}
-            <LineBreak width={1} borderColor={fade(Colors.lightPurple,0.8)}/>
-          </div>
+          <OrderPriceRow classes={classes}
+            fieldName={"Inc. Payment Fees"}
+            addLess={"-"}
+            fieldAmount={totalPaymentFees}
+            fieldRefunded={""}
+            fieldRefund={totalPaymentFees}
+          />
+          <OrderPriceRow classes={classes}
+            fieldName={"Taxes"}
+            addLess={"-"}
+            fieldAmount={totalTaxes}
+            fieldRefunded={""}
+            fieldRefund={totalTaxes}
+          />
         </div>
       </div>
-    )
-  }
-}
-
-const LineBreak = (props) => {
-  const {
-    width = 1,
-    borderColor = Colors.purple,
-  } = props;
-  return (
-    <div style={{
-        width: '99.5%',
-        border: `${width}px solid ${borderColor}`,
-        marginTop: '0rem',
-        marginBottom: '0rem',
-      }}
-    ></div>
+    </div>
   )
 }
+
 
 const OrderRow = ({
   classes, isHeader, isSubtotal,
@@ -169,7 +148,7 @@ const OrderRow = ({
           { isHeader ? fieldAmount : c(fieldAmount) }
         </Typography>
       </div>
-      {/* <div className={clsx(classes.orderColTiny, classes.textEnd)}>
+      <div className={clsx(classes.orderColTiny, classes.textEnd)}>
         <Typography variant="subtitle2"
           className={clsx(
             classes.orderCellText,
@@ -178,7 +157,7 @@ const OrderRow = ({
         >
           { isHeader ? fieldRefunded : c(fieldRefunded) }
         </Typography>
-      </div> */}
+      </div>
       <div className={clsx(classes.orderColSmall, classes.textEnd)}>
         <Typography variant="subtitle2"
           className={clsx(
@@ -229,39 +208,21 @@ const OrderPriceRow = ({
     />
   )
 }
-const OrderSubtitleRow = ({
-  classes, fieldName, addLess, fieldAmount, fieldRefunded, fieldRefund,
-  ...props
-}) => {
-  return (
-    <OrderRow
-      classes={classes}
-      style={props.style}
-      isHeader={false}
-      isSubtotal={true}
-      fieldName={fieldName}
-      addLess={addLess}
-      fieldAmount={fieldAmount}
-      fieldRefunded={fieldRefunded}
-      fieldRefund={fieldRefund}
-    />
-  )
-}
 
 
 interface ReactProps extends WithStyles<typeof styles> {
   order: Orders
 }
 interface FormikFields {
-  orderId: ID;
-  refundOrderItemIds: string[],
-  chargeId: ID;
-  paymentIntentId: ID;
-  taxes: number;
-  // reason: RefundReason;
-  reasonDetail: string;
-  paypalInvoiceNumber: string;
-  paymentProcessor: PaymentProcessor,
+  // orderId: ID;
+  // refundOrderIds: string[],
+  // chargeId: ID;
+  // paymentIntentId: ID;
+  // taxes: number;
+  // // reason: RefundReason;
+  // reasonDetail: string;
+  // paypalInvoiceNumber: string;
+  // paymentProcessor: PaymentProcessor,
 }
 
 const styles = (theme: Theme) => createStyles({
@@ -288,7 +249,7 @@ const styles = (theme: Theme) => createStyles({
     height: 40,
     background: fade(Colors.lightPurple, 0.1),
     border: `1px solid ${fade(Colors.purple, 0.5)}`,
-    borderRadius: `${BorderRadius}px`,
+    // borderRadius: `${BorderRadius}px`,
   },
   orderSubtitleRow: {
     display: 'flex',
@@ -309,10 +270,10 @@ const styles = (theme: Theme) => createStyles({
     justifyContent: 'space-between',
     alignItems: 'center',
     height: 40,
-    borderRadius: `${BorderRadius}px`,
-    borderBottom: `1px solid ${Colors.lightestGrey}`,
-    borderLeft: `1px solid ${Colors.lightestGrey}`,
-    borderRight: `1px solid ${Colors.lightestGrey}`,
+    // borderRadius: `${BorderRadius}px`,
+    borderBottom: `1px solid ${theme.colors.uniswapLightestGrey}`,
+    borderLeft: `1px solid ${theme.colors.uniswapLightestGrey}`,
+    borderRight: `1px solid ${theme.colors.uniswapLightestGrey}`,
     transition: theme.transitions.create(['border'], {
       easing: theme.transitions.easing.easeIn,
       duration: "100ms",
@@ -324,7 +285,7 @@ const styles = (theme: Theme) => createStyles({
   },
   orderCellText: {
     textAlign: 'start',
-    color: Colors.black,
+    color: theme.colors.uniswapLightestGrey,
     textTransform: 'capitalize',
   },
   orderCellRefundText: {
