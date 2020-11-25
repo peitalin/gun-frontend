@@ -284,6 +284,19 @@ export const OrdersFragment = gql`
       form10Image {
         ...ImageFragment
       }
+      transaction {
+        id
+        total
+        createdAt
+        currency
+        receiptNumber
+        customerId
+        orderId
+        paymentProcessor
+        paymentMethodId
+        paymentIntentId
+        refundId
+      }
     }
     orderSnapshots {
       id

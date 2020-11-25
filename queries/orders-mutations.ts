@@ -137,3 +137,24 @@ export const MARK_PAYOUT_AS_PAID = gql`
   }
   ${OrdersFragment}
 `;
+
+
+
+export const REFUND_ORDER = gql`
+  mutation createOrder(
+    $orderId: String!
+    $reason: String
+    $reasonDetails: String
+  ) {
+    refundOrder(
+      orderId: $orderId
+      reason: $reason
+      reasonDetails: $reasonDetails
+    ) {
+      order {
+        ...OrdersFragment
+      }
+    }
+  }
+  ${OrdersFragment}
+`;

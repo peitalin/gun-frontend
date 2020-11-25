@@ -154,23 +154,22 @@ export const GET_RECENT_TRANSACTIONS = gql`
       createdAt
       total
       currency
-      # paymentMethod {
-      #   id
-      #   email
-      #   last4
-      #   expYear
-      # }
-      # paymentMethodId
-      # paymentIntentId
-      # paymentProcessor
-      # details
-      # refund {
-      #   id
-      #   createdAt
-      #   transactionId
-      #   storeId
-      #   orderItemIds
-      # }
+      paymentMethod {
+        id
+        email
+        last4
+        expYear
+      }
+      paymentMethodId
+      paymentIntentId
+      paymentProcessor
+      details
+      refund {
+        id
+        createdAt
+        transactionId
+        # storeId
+      }
     }
   }
 `;
