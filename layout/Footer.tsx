@@ -138,36 +138,48 @@ const Footer: React.FC<ReactProps> = (props) => {
                   </Typography>
                 </a>
 
-                {
-                  user?.userRole === Role.PLATFORM_ADMIN &&
-                  <>
-                    <div className={classes.link}>
-                      <Typography variant="body2" className={classes.linkText}>
-                        {`GATEWAY_GRAPHQL_URL: ${URI}`}
-                      </Typography>
-                    </div>
-                    <div className={classes.link}>
-                      <Typography variant="body2" className={classes.linkText}>
-                        {`SERVER_URI: ${SERVER_URI}`}
-                      </Typography>
-                    </div>
-                    <div className={classes.link}>
-                      <Typography variant="body2" className={classes.linkText}>
-                        {`WS_URI: ${WS_URI}`}
-                      </Typography>
-                    </div>
-                    <div className={classes.link}>
-                      <Typography variant="body2" className={classes.linkText}>
-                        {`NODE_ENV: ${NODE_ENV}`}
-                      </Typography>
-                    </div>
-                  </>
-                }
-
               </div>
             </div>
           </div>
         </div>
+
+        {
+          user?.userRole === Role.PLATFORM_ADMIN &&
+          <div className={classes.flexColApiLinks}>
+            <div className={classes.apiLink}>
+              <Typography variant="body2" className={classes.apiLinkHeading}>
+                {`GATEWAY_GRAPHQL_URL: `}
+              </Typography>
+              <Typography variant="body2" className={classes.apiLinkText}>
+                {`${URI}`}
+              </Typography>
+            </div>
+            <div className={classes.apiLink}>
+              <Typography variant="body2" className={classes.apiLinkHeading}>
+                {`SERVER_URI: `}
+              </Typography>
+              <Typography variant="body2" className={classes.apiLinkText}>
+                {`${SERVER_URI}`}
+              </Typography>
+            </div>
+            <div className={classes.apiLink}>
+              <Typography variant="body2" className={classes.apiLinkHeading}>
+                {`WS_URI: `}
+              </Typography>
+              <Typography variant="body2" className={classes.apiLinkText}>
+                {`${WS_URI}`}
+              </Typography>
+            </div>
+            <div className={classes.apiLink}>
+              <Typography variant="body2" className={classes.apiLinkHeading}>
+                {`NODE_ENV: `}
+              </Typography>
+              <Typography variant="body2" className={classes.apiLinkText}>
+                {`${NODE_ENV}`}
+              </Typography>
+            </div>
+          </div>
+        }
 
         <div className={classes.footerSubsection}>
           <div className={classes.thirdBlock}>
@@ -285,6 +297,17 @@ const styles = (theme: Theme) => createStyles({
     minWidth: 350,
     // margin: '0rem 0rem 2rem 0rem',
   },
+  flexColApiLinks: {
+    display: 'flex',
+    flexDirection: 'column',
+    flexGrow: 1,
+    flexBasis: '45%',
+    marginLeft: '2rem',
+    marginRight: '2rem',
+    marginBottom: '2rem',
+    minWidth: 130,
+    // margin: '0rem 0rem 2rem 0rem',
+  },
   narrow: {
     minWidth: "140px",
   },
@@ -371,6 +394,27 @@ const styles = (theme: Theme) => createStyles({
   },
   marginBottom2: {
     marginBottom: '4rem',
+  },
+  apiLink: {
+    marginBottom: '1rem',
+  },
+  apiLinkText: {
+    fontWeight: 500,
+    fontSize: '0.9rem',
+    lineHeight: '1rem',
+    color: theme.colors.uniswapLighterGrey,
+    textDecoration: 'none',
+    '&:hover': {
+      color: theme.colors.uniswapLightestGrey,
+      cursor: 'pointer',
+    }
+  },
+  apiLinkHeading: {
+    fontWeight: 500,
+    fontSize: '0.9rem',
+    lineHeight: '1rem',
+    color: theme.colors.uniswapLightestGrey,
+    textDecoration: 'none',
   },
 })
 
