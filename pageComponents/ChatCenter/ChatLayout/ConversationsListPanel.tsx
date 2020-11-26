@@ -95,7 +95,7 @@ const ConversationsListPanel: React.FC<ReactProps> = (props) => {
             const chatRoom = option(c).chatRoom()
             const chatRoomId = option(c).chatRoom.id()
             const product = option(c).chatRoom.product()
-            const owner = option(c).chatRoom.owner()
+            const { user: otherUser } = c.chatRoom.users.find(u => u.userId !== userId)
 
             return (
               <MenuItem key={chatRoomId}
@@ -113,7 +113,7 @@ const ConversationsListPanel: React.FC<ReactProps> = (props) => {
                     : classes.menuIcon
                 }/>
                 <span className={classes.menuText}>
-                  {`${owner.firstName} - ${product.currentSnapshot.title}`}
+                  {`${otherUser.firstName} - ${product.currentSnapshot.title}`}
                 </span>
                 {/* <span className={classes.menuText}>
                   {`${chatRoom.name} - ${product.currentSnapshot.title}`}

@@ -275,9 +275,14 @@ const styles = (theme: Theme) => createStyles({
     color: Colors.greenCool,
   },
   myMessageText: {
+    color: theme.colors.uniswapMediumGrey
   },
   myMessageNameTime: {
     width: '100%',
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: "0.5rem",
   },
   myMessageName: {
     color: Colors.greenCool,

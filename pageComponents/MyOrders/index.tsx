@@ -89,8 +89,8 @@ const MyOrders: React.FC<ReactProps> = (props) => {
     }
   );
 
-  console.log("buyer data::::: ", buyerOrdersResponse)
-  console.log("seller data::::: ", sellerOrdersResponse)
+  console.log("buyer data::::: ", buyerOrdersResponse?.data)
+  console.log("seller data::::: ", sellerOrdersResponse?.data)
 
   const buyerOrdersConnection = option(buyerOrdersResponse)
     .data.user.buyerOrdersConnection() || props.initialBuyerOrders;

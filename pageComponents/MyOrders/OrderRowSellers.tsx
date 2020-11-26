@@ -34,8 +34,7 @@ const OrderRowSellers: React.FC<ReactProps> = (props) => {
   const theme = useTheme();
   const smDown = useMediaQuery(theme.breakpoints.down("sm"))
 
-  console.log("porduct: ",product)
-  // const previewItem = option(product).productVariants[0].previewItems[0](null);
+  // console.log("!!porduct: ",product)
   const previewItem = getFeaturedPreviewFromProduct(product)
 
   return (
