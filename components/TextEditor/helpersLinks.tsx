@@ -2,6 +2,7 @@ import isUrl from 'is-url'
 import { Transforms, Editor, Range } from 'slate'
 
 
+
 export const withLinks = editor => {
   const { insertData, insertText, isInline } = editor
 

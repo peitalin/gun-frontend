@@ -4,6 +4,7 @@ import { Node, Text } from 'slate'
 import escapeHtml from 'escape-html'
 const LIST_TYPES = ['numbered-list', 'bulleted-list']
 import { jsx } from 'slate-hyperscript'
+import { WHITE_SPACE_FOR_P_TAGS } from "./globalWhiteSpaceSetting";
 
 
 ///////////////////////////////////////
@@ -19,16 +20,15 @@ import { jsx } from 'slate-hyperscript'
 ///////////////////////////////////////
 ///////////////////////////////////////
 
-export const EMPTY_ELEM = "<p></p>"
-
+export const EMPTY_ELEM = "<p></p>";
 
 export const serializeText = nodes => {
   return nodes.map(n => Node.string(n)).join('\n')
 }
 
 export const serializeHtml = nodes => {
-  // DO NOT JOIN with \n
-  // Fucks up spacing inside the editor textarea
+  // DO NOT JOIN WITH \n, breaks description rendering for newlines
+  // INCONSISTENCY when joing with \n
   return nodes.map(n => serializeHtmlNode(n)).join('')
 }
 
@@ -57,7 +57,7 @@ export const serializeHtmlNode = element => {
   // double spacing is preserved
   // min-height: 1.5rem so that each empty <p> tag is consistent with line heights
   let lineHeight = "1.5rem";
-  let pTag = `<p style="white-space: pre-wrap; min-height: ${lineHeight}">${children}</p>`;
+  let pTag = `<p style="white-space: ${WHITE_SPACE_FOR_P_TAGS}; min-height: ${lineHeight}">${children}</p>`;
 
   if (element && !element.type) {
     return pTag
@@ -84,6 +84,8 @@ export const serializeHtmlNode = element => {
         return `<li>${children}</li>`
       case 'numbered-list':
         return `<ol>${children}</ol>`
+      case 'strong':
+        return `<strong>${children}</strong>`
       case 'bold':
         return `<strong>${children}</strong>`
       case 'italics':

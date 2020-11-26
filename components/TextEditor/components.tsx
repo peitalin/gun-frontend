@@ -37,7 +37,7 @@ export const styles = (theme: Theme) => createStyles({
     cursor: 'pointer',
     "&:hover": {
       color: Colors.secondary,
-      backgroundColor: Colors.uniswapLightNavy,
+      backgroundColor: Colors.lightGrey,
     },
     padding: '0.5rem',
   },
@@ -56,7 +56,7 @@ export const styles = (theme: Theme) => createStyles({
   toolbar: {
     position: 'relative',
     padding: '0rem 0.5rem',
-    borderBottom: `1px solid ${Colors.uniswapGrey}`,
+    borderBottom: '2px solid #eee',
     marginBottom: '1rem',
   },
 })
@@ -73,9 +73,9 @@ export const Button = withStyles(styles)(
           props.classes.button
         )}
         style={{
-          color: active
-            ? Colors.gradientUniswapBlue1
-            : Colors.uniswapLighterGrey,
+          color: reversed
+            ? active ? 'white' : '#aaa'
+            : active ? 'black' : '#ccc'
         }}
       />
     )

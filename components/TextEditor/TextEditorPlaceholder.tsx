@@ -1,6 +1,6 @@
 
 import React from "react";
-import { Colors, BorderRadius } from "layout/AppTheme";
+import { Colors } from "layout/AppTheme";
 
 const TextEditorPlaceholder = () => {
   return (
@@ -8,8 +8,7 @@ const TextEditorPlaceholder = () => {
       height: '165px',
       width: '100%',
       marginBottom: 'calc(1rem + 18px)',
-      border: `1px solid ${Colors.uniswapLighterGrey}`,
-      borderRadius: BorderRadius,
+      border: `1px solid ${Colors.lightGrey}`,
     }}>
     </div>
   )

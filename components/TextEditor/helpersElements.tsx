@@ -1,5 +1,6 @@
 import React from 'react';
 import { ImageElement } from "./components";
+import { WHITE_SPACE_FOR_P_TAGS } from "./globalWhiteSpaceSetting";
 
 // for when slate.js is empty initially.
 // represents empty text field
@@ -24,8 +25,7 @@ export const Element = props => {
   // disable attributes
   // e.g. no color text, etc
   let attributes = {
-    'white-space': "pre-wrap",
-    // whitespace: "pre-wrap",
+    "white-space": WHITE_SPACE_FOR_P_TAGS,
   }
 
   // console.log("Element: ", element)
