@@ -588,44 +588,28 @@ export const validationSchemas = {
     Yup.object().shape({
       orderId: Yup.string()
         .required('orderId required'),
-      refundOrderItems: Yup.array().of(
-          Yup.object({
-            orderItemId: Yup.string()
-              .required('missing an orderItemId'),
-            disableItem: Yup.boolean()
-              .required('missing disableItem'),
-            refundPayoutItems: Yup.array().of(
-              Yup.object({
-                storeId: Yup.string()
-                  .required('missing a storeId'),
-                payeeType: Yup.string()
-                  .required('missing a PayeeType (STORE or AFFILIATE)'),
-                amount: Yup.number()
-                  .required('Add an amount'),
-              })
-            )
-          })
-      ),
-      chargeId: Yup.string()
-        .required('chargeId required'),
-      paymentIntentId: Yup.string() // Stripe Only
-        .nullable(true)
-        .test("paymentIntentId", "Must exist for Stripe transactions", function(value) {
-          if (this.parent.paymentProcessor === "Stripe") {
-            return !!value
-          } else {
-            // if Paypal, return true (passes validation check)
-            return true
-          }
-        }),
-      paypalInvoiceNumber: Yup.string()
-        .nullable(true), // Paypal Only
-      taxes: Yup.number()
-        .required('taxes required'),
-      paymentProcessingFee: Yup.number()
-        .required('paymentProcessingFee required'),
-      paymentProcessor: Yup.string()
-        .required('paymentProcessor required'),
+      reason: Yup.string()
+        .required('reason required'),
+      reasonDetails: Yup.string()
+        .required('reasonDetails - bank refund ID required'),
+      // paymentIntentId: Yup.string() // Stripe Only
+      //   .nullable(true)
+      //   .test("paymentIntentId", "Must exist for Stripe transactions", function(value) {
+      //     if (this.parent.paymentProcessor === "Stripe") {
+      //       return !!value
+      //     } else {
+      //       // if Paypal, return true (passes validation check)
+      //       return true
+      //     }
+      //   }),
+      // paypalInvoiceNumber: Yup.string()
+      //   .nullable(true), // Paypal Only
+      // taxes: Yup.number()
+      //   .required('taxes required'),
+      // paymentProcessingFee: Yup.number()
+      //   .required('paymentProcessingFee required'),
+      // paymentProcessor: Yup.string()
+      //   .required('paymentProcessor required'),
         // Stripe || Paypal
     }),
 

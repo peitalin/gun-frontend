@@ -1,4 +1,10 @@
-import { ID, Image_Parents } from "typings/gqlTypes";
+import {
+  Image_Parents,
+  ID,
+  Products,
+  Product_Preview_Items,
+  Product_Variants,
+} from "typings/gqlTypes";
 import { Breakpoints } from "layout/AppTheme";
 
 export const concatChunksToUInt8Array = (chunks, receivedLength): Uint8Array => {
@@ -34,3 +40,9 @@ export const genImgBreakpoints = ({ xs, sm, md, lg, xl }: Breakpoints) => {
   `
 }
 
+
+export const getFeaturedPreviewFromProduct = (
+  product: Products & { featuredVariant?: Product_Variants}
+): Product_Preview_Items => {
+  return product?.featuredVariant?.[0].previewItems?.[0]
+}

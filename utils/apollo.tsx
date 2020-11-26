@@ -297,7 +297,6 @@ const cacheOptions = {
       },
     },
 
-
     orders: {
       keyFields: ["id", "updatedAt"],
       fields: {
@@ -330,7 +329,7 @@ let _authCookie: string | undefined = undefined;
 export const constructCookie = (): string => {
   let cookie = "";
   if (_authCookie) {
-    cookie = `efc-auth=${_authCookie}`;
+    cookie = `gun-auth=${_authCookie}`;
   }
   console.log("cookie going out:",cookie)
   return cookie;
