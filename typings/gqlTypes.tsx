@@ -8677,6 +8677,12 @@ export type Query = {
    */
   getOrdersAdminApprovedConnection: OrdersConnection;
   /**
+   * Orders which have been refunded
+   * 
+   * AccessRule – PLATFORM_ADMIN
+   */
+  getOrdersRefundedConnection: OrdersConnection;
+  /**
    * Orders which have completed payouts
    * 
    * AccessRule – PLATFORM_ADMIN
@@ -9480,6 +9486,11 @@ export type QueryGetOrdersPendingApprovalConnectionAdminArgs = {
 
 
 export type QueryGetOrdersAdminApprovedConnectionArgs = {
+  query: ConnectionOffsetQueryOrders;
+};
+
+
+export type QueryGetOrdersRefundedConnectionArgs = {
   query: ConnectionOffsetQueryOrders;
 };
 
