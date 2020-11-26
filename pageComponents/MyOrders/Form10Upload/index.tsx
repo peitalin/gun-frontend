@@ -303,8 +303,12 @@ const Form10Upload = (props: ReactProps) => {
               errorMessage={props.errorMessage}
               loading={loading}
               disableButton={
-                (orderStatus === OrderStatus.ADMIN_APPROVED ||
-                orderStatus === OrderStatus.COMPLETE)
+                (
+                  orderStatus === OrderStatus.ADMIN_APPROVED ||
+                  orderStatus === OrderStatus.COMPLETE ||
+                  orderStatus === OrderStatus.REFUNDED ||
+                  orderStatus === OrderStatus.FAILED
+                )
               }
               buttonText={
                 orderStatus === OrderStatus.ADMIN_APPROVED

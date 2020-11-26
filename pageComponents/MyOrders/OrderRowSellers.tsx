@@ -22,6 +22,7 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 import Form10Upload from "./Form10Upload";
 import OrderStatus from "./OrderStatus";
 // import { getStoreIdOrSlug } from "utils/links";
+import { getFeaturedPreviewFromProduct } from "utils/images";
 
 
 
@@ -34,7 +35,8 @@ const OrderRowSellers: React.FC<ReactProps> = (props) => {
   const smDown = useMediaQuery(theme.breakpoints.down("sm"))
 
   console.log("porduct: ",product)
-  const previewItem = option(product).productVariants[0].previewItems[0](null);
+  // const previewItem = option(product).productVariants[0].previewItems[0](null);
+  const previewItem = getFeaturedPreviewFromProduct(product)
 
   return (
     <ErrorBounds className={clsx(

@@ -132,7 +132,7 @@ export const styles = (theme: Theme) => createStyles({
     fontSize: '0.9rem',
   },
   uploadButtonTextLimit: {
-    color: theme.colors.green,
+    color: theme.colors.uniswapGrey,
     fontSize: '0.9rem',
   },
   subtitle: {

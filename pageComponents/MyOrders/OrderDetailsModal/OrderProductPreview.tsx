@@ -12,6 +12,7 @@ import ErrorBounds from "components/ErrorBounds";
 import { centsToDollarSelector } from "utils/selectors";
 import { Products } from "typings/gqlTypes";
 import PriceDisplayMain from "components/PriceDisplayMain";
+import { getFeaturedPreviewFromProduct } from "utils/images";
 
 
 
@@ -23,10 +24,7 @@ const OrderProductPreview: React.FC<ReactProps> = (props) => {
   const { classes, product } = props;
   const { title } = product.currentSnapshot;
 
-  // const previewItem = option(product).featuredVariant.previewItems([])[0];
-  // const previewItem = option(product).productVariants[0].previewItems([])[0];
-  const previewItem = option(product).productVariants[0].previewItems([])[0];
-
+  const previewItem = getFeaturedPreviewFromProduct(product)
   // let price = option(product).featuredVariant.price();
 
   // const priceDetails = option(item).priceDetails();

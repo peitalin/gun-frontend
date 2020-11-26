@@ -4,6 +4,7 @@ import clsx from "clsx";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 import { Colors, BorderRadius, BoxShadows } from "layout/AppTheme";
+import { OrderStatus } from "typings/gqlTypes";
 // Utils Components
 import ErrorBounds from "components/ErrorBounds";
 // MUI
@@ -16,9 +17,11 @@ import { Orders } from "typings/gqlTypes";
 import DisplayOrderReceipt from "./DisplayOrderReceipt";
 import DisplayOrderId from "./DisplayOrderId";
 import OrderStatusStepper from "./OrderStatusStepper";
+import OrderStatusStepperRefund from "./OrderStatusStepperRefund";
+import OrderProductPreview from "./OrderProductPreview";
+// theme
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
-import OrderProductPreview from "./OrderProductPreview";
 
 
 
@@ -66,9 +69,15 @@ const OrderDetailsPage: React.FC<ReactProps> = (props) => {
         </div>
       </div>
 
-      <OrderStatusStepper
-        order={props.order}
-      />
+      {
+        props.order?.currentSnapshot?.orderStatus === OrderStatus.REFUNDED
+        ? <OrderStatusStepperRefund
+            order={props.order}
+          />
+        : <OrderStatusStepper
+            order={props.order}
+          />
+      }
 
     </ErrorBounds>
   );
