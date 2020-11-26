@@ -4418,7 +4418,7 @@ export type MutationRearrangeCuratedListItemsArgs = {
 
 
 export type MutationRefundOrderArgs = {
-  orderId?: Maybe<Scalars['String']>;
+  orderId: Scalars['String'];
   reason?: Maybe<Scalars['String']>;
   reasonDetails?: Maybe<Scalars['String']>;
 };
@@ -5288,9 +5288,11 @@ export enum OrderStatus {
   FAILED = 'FAILED',
   /** step 1c: payment refunded */
   REFUNDED = 'REFUNDED',
-  /** step 2, seller delivers product */
+  /** step 2, seller delivers product, submits receipt form 10 */
   FORM_10_SUBMITTED = 'FORM_10_SUBMITTED',
-  /** step 3, admin checks and approves uploaded form10 */
+  /** step 3a, admin checks and rejects uploaded form10, prompt seller to resubmit */
+  FORM_10_REVISE_AND_RESUBMIT = 'FORM_10_REVISE_AND_RESUBMIT',
+  /** step 3b, admin checks and approves uploaded form10 */
   ADMIN_APPROVED = 'ADMIN_APPROVED',
   /** step 4, payout completed, westpac transaction ID inputted */
   COMPLETE = 'COMPLETE'
@@ -12631,7 +12633,7 @@ export type ProductsFragment = (
   { __typename?: 'products', currentSnapshotId: string, currentSnapshot: (
     { __typename?: 'product_snapshots' }
     & ProductSnapshotsFragment
-  ), productVariants: Array<(
+  ), featuredVariant: Array<(
     { __typename?: 'product_variants' }
     & ProductVariantsFragment
   )> }
@@ -12663,7 +12665,7 @@ export type UsersFragment = { __typename?: 'users', id: string, email: string, u
 export type OrdersFragment = { __typename?: 'orders', id: string, createdAt: any, updatedAt: any, bidId?: Maybe<string>, total: number, currency: string, buyerId: string, sellerId: string, productId: string, bid?: Maybe<{ __typename?: 'bids', id: string, bidStatus: string, createdAt?: Maybe<any>, updatedAt?: Maybe<any>, acceptedPrice?: Maybe<number>, offerPrice: number }>, buyer?: Maybe<{ __typename?: 'users', id: string, firstName?: Maybe<string>, lastName?: Maybe<string>, email: string }>, seller?: Maybe<{ __typename?: 'stores', id: string, name: string, website?: Maybe<string>, createdAt: any, updatedAt?: Maybe<any>, user: { __typename?: 'users', id: string, firstName?: Maybe<string>, lastName?: Maybe<string>, email: string, payoutMethod?: Maybe<{ __typename?: 'payout_methods', id: string, createdAt: any, updatedAt?: Maybe<any>, payoutType?: Maybe<string>, bsb?: Maybe<string>, accountNumber?: Maybe<string>, accountName?: Maybe<string> }> } }>, currentSnapshot?: Maybe<{ __typename?: 'order_snapshots', id: string, orderStatus: string, createdAt: any, adminApproverId?: Maybe<string>, dealerApproverId?: Maybe<string>, adminApprover?: Maybe<{ __typename?: 'users', id: string, firstName?: Maybe<string>, lastName?: Maybe<string>, email: string }>, dealerApprover?: Maybe<{ __typename?: 'users', id: string, firstName?: Maybe<string>, lastName?: Maybe<string>, email: string }>, form10Image?: Maybe<(
       { __typename?: 'image_parents' }
       & ImageFragment
-    )> }>, orderSnapshots: Array<{ __typename?: 'order_snapshots', id: string, orderStatus: string, createdAt: any, adminApproverId?: Maybe<string>, dealerApproverId?: Maybe<string>, adminApprover?: Maybe<{ __typename?: 'users', id: string, firstName?: Maybe<string>, lastName?: Maybe<string>, email: string }>, dealerApprover?: Maybe<{ __typename?: 'users', id: string, firstName?: Maybe<string>, lastName?: Maybe<string>, email: string }>, form10Image?: Maybe<(
+    )>, transaction?: Maybe<{ __typename?: 'transactions', id: string, total: number, createdAt: any, currency?: Maybe<string>, receiptNumber: string, customerId?: Maybe<string>, orderId?: Maybe<string>, paymentProcessor?: Maybe<string>, paymentMethodId?: Maybe<string>, paymentIntentId?: Maybe<string>, refundId?: Maybe<string> }> }>, orderSnapshots: Array<{ __typename?: 'order_snapshots', id: string, orderStatus: string, createdAt: any, adminApproverId?: Maybe<string>, dealerApproverId?: Maybe<string>, adminApprover?: Maybe<{ __typename?: 'users', id: string, firstName?: Maybe<string>, lastName?: Maybe<string>, email: string }>, dealerApprover?: Maybe<{ __typename?: 'users', id: string, firstName?: Maybe<string>, lastName?: Maybe<string>, email: string }>, form10Image?: Maybe<(
       { __typename?: 'image_parents' }
       & ImageFragment
     )> }>, product: (
@@ -12761,6 +12763,13 @@ export type UserPrivateFragment = { __typename?: 'UserPrivate', id: string, firs
     { __typename?: 'StorePrivate' }
     & StorePrivateFragment
   )>, payoutMethod?: Maybe<{ __typename?: 'payout_methods', id: string, payoutType?: Maybe<string>, bsb?: Maybe<string>, accountNumber?: Maybe<string>, accountName?: Maybe<string> }> };
+
+export type RefundFragment = { __typename?: 'refunds', id: string, transactionId: string, orderId: string, createdAt: any, reason: string, reasonDetails: string, receiptNumber: string };
+
+export type TransactionFragment = { __typename?: 'transactions', id: string, total: number, createdAt: any, currency?: Maybe<string>, receiptNumber: string, customerId?: Maybe<string>, orderId?: Maybe<string>, paymentProcessor?: Maybe<string>, paymentMethodId?: Maybe<string>, paymentIntentId?: Maybe<string>, refundId?: Maybe<string>, refund?: Maybe<(
+    { __typename?: 'refunds' }
+    & RefundFragment
+  )> };
 
 export type Unnamed_1_MutationVariables = Exact<{
   image_parents_input: Array<Image_Parents_Insert_Input>;
@@ -12927,7 +12936,7 @@ export const ProductsFragmentFragmentDoc = gql`
   currentSnapshot {
     ...ProductSnapshotsFragment
   }
-  productVariants {
+  featuredVariant: productVariants(limit: 1, where: {isDefault: {_eq: true}}, order_by: {createdAt: desc}) {
     ...ProductVariantsFragment
   }
 }
@@ -13063,6 +13072,19 @@ export const OrdersFragmentFragmentDoc = gql`
     }
     form10Image {
       ...ImageFragment
+    }
+    transaction {
+      id
+      total
+      createdAt
+      currency
+      receiptNumber
+      customerId
+      orderId
+      paymentProcessor
+      paymentMethodId
+      paymentIntentId
+      refundId
     }
   }
   orderSnapshots {
@@ -13250,6 +13272,35 @@ export const UserPrivateFragmentFragmentDoc = gql`
   }
 }
     ${StorePrivateFragmentFragmentDoc}`;
+export const RefundFragmentFragmentDoc = gql`
+    fragment RefundFragment on refunds {
+  id
+  transactionId
+  orderId
+  createdAt
+  reason
+  reasonDetails
+  receiptNumber
+}
+    `;
+export const TransactionFragmentFragmentDoc = gql`
+    fragment TransactionFragment on transactions {
+  id
+  total
+  createdAt
+  currency
+  receiptNumber
+  customerId
+  orderId
+  paymentProcessor
+  paymentMethodId
+  paymentIntentId
+  refundId
+  refund {
+    ...RefundFragment
+  }
+}
+    ${RefundFragmentFragmentDoc}`;
 export const RegisterUploadDocument = gql`
     mutation registerUpload($uploadType: UploadType!, $mimeType: String!, $fileSize: Int!) {
   uploadRegister(uploadType: $uploadType, mimeType: $mimeType, fileSize: $fileSize) {

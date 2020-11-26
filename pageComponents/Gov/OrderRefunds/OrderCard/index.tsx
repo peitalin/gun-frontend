@@ -8,14 +8,10 @@ import {
   PayeeType,
   ID, PaymentProcessor,
   PayoutStatus,
+  Products,
+  Product_Preview_Items,
+  Product_Variants,
 } from "typings/gqlTypes";
-// import {
-//   MakeRefundParams,
-//   RefundReason,
-//   RefundOrderItem,
-//   RefundPayoutItem,
-//   PayoutSplit
-// } from "typings";
 // Utils
 import ErrorBounds from "components/ErrorBounds";
 // Material UI
@@ -35,14 +31,22 @@ const c = (s) => currency(s/100, { formatWithSymbol: true }).format()
 // validation
 import { FormikProps } from 'formik';
 import { splitPlatformFee } from "utils/prices";
+import { getFeaturedPreviewFromProduct } from "utils/images";
 
 
 
 
 const OrderCard = (props: ReactProps & FormikProps<FormikFields>) => {
 
-  const { classes, order, total, subtotal, ...fprops } = props;
-  const product = option(order).product();
+  const {
+    classes,
+    order,
+    total,
+    subtotal,
+    ...fprops
+  } = props;
+
+  const product: Products & { featuredVariant?: Product_Variants } = option(order).product();
   // const priceDetails = option(orderItem).priceDetails();
 
   const [showOrderDetails, setShowOrderDetails] = React.useState(false);
@@ -74,53 +78,7 @@ const OrderCard = (props: ReactProps & FormikProps<FormikFields>) => {
     handleReset,
   } = fprops;
 
-
-  const findItemInFormikRefundItems = (orderItemId: ID): [ID, number] => {
-    // Find state.refundItem in formik.values.refundItems
-    let rItemIndex = values.refundOrderItemIds.findIndex(oid =>
-      oid === orderItemId
-    );
-    // -1 if not found
-    if (rItemIndex >= 0) {
-      let rItem = values.refundOrderItemIds[rItemIndex];
-      return [rItem, rItemIndex]
-    } else {
-      return [null, rItemIndex]
-    }
-  }
-
-  const isItemInFormikRefundItems = (orderItemId: ID): boolean => {
-    let [rItem, rItemIndex] = findItemInFormikRefundItems(orderItemId)
-    return !!rItem
-  }
-
-  const updatedFormikRefundOrderItems = (oid: ID): ID[] => {
-    let [rItemId, rItemIndex] = findItemInFormikRefundItems(oid)
-    // if exists, either update item amounts + disableStatus, or remove from formik
-    console.log("rItemId update: ", rItemId)
-    if (rItemId) {
-      // remove item if clicked item exists in refundOrderItemId array
-      return [
-        ...values.refundOrderItemIds.slice(0, rItemIndex),
-        ...values.refundOrderItemIds.slice(rItemIndex + 1)
-      ]
-    } else {
-      // otherwise append state.refundItem to formik.values.refundItems
-      return [
-        ...values.refundOrderItemIds,
-        oid
-      ]
-    }
-  }
-
-  const handleUpdateRefundItem = (
-    orderId: ID,
-  ) => {
-    // create a new refundOrderItemId
-    setRefundOrderId(orderId);
-    let newFormikRefundOrderItemIds = updatedFormikRefundOrderItems(orderId)
-    fprops.setFieldValue("refundOrderItemIds", newFormikRefundOrderItemIds)
-  }
+  // console.log("OOOOOO: ", order)
 
   const isRefunded = option(order).currentSnapshot.orderStatus() === OrderStatus.REFUNDED;
   const isPaid = false
@@ -135,6 +93,8 @@ const OrderCard = (props: ReactProps & FormikProps<FormikFields>) => {
     return <Loading inline loading={dataNeExists}/>
   }
 
+  let featuredPreview = getFeaturedPreviewFromProduct(product)
+
   return (
     <ErrorBounds className={clsx(
       classes.root,
@@ -143,13 +103,13 @@ const OrderCard = (props: ReactProps & FormikProps<FormikFields>) => {
     )}>
       <div className={classes.orderItemsContainer}>
 
-        <div className={classes.flexCol}>
-        {
-          option(product).currentSnapshot.currentVariants[0].previewItems[0]() &&
-          <ProductPreviewCardRow
-            previewItem={product.currentSnapshot.currentVariants[0].previewItems[0]}
-          />
-        }
+        <div className={clsx(classes.flexCol, classes.marginRight1)}>
+          {
+            !!featuredPreview &&
+            <ProductPreviewCardRow
+              previewItem={featuredPreview}
+            />
+          }
         </div>
 
         <div className={classes.flexCol}>
@@ -162,14 +122,6 @@ const OrderCard = (props: ReactProps & FormikProps<FormikFields>) => {
                 {product.currentSnapshot.title}
               </Typography>
             </div>
-            {/* <div className={classes.flexRow}>
-              <Typography className={classes.fieldName} variant="subtitle1">
-                Variant:
-              </Typography>
-              <Typography className={classes.name} variant="body1">
-                {product.featuredVariant.variantName}
-              </Typography>
-            </div> */}
             <div className={classes.flexRow}>
               <Typography className={classes.fieldName} variant="subtitle1">
                 StoreId:
@@ -193,36 +145,12 @@ const OrderCard = (props: ReactProps & FormikProps<FormikFields>) => {
               <Typography
                 className={classes.orderDetailsButtonText}
                 variant={"body2"}
-                gutterBottom
               >
                 Order Details
               </Typography>
             </Button>
             </div>
 
-            <FormGroup row className={classes.flexRow}>
-              <FormControlLabel
-                // className={classes.flexItem}
-                disabled={isRefunded || isPaid}
-                control={
-                  <Checkbox
-                    checked={isItemInFormikRefundItems(order.id)}
-                    onChange={() => {
-                      // add to list of refundOrderItemIds if not already in it
-                      handleUpdateRefundItem(order.id)
-                    }}
-                    value="Special"
-                    color="primary"
-                  />
-                }
-                label={
-                  <div>
-                    {"Add item to refund total: "}
-                    <span className={classes.actualPrice}>{actualPriceStr}</span>
-                  </div>
-                }
-              />
-            </FormGroup>
           </div>
         </div>
 
@@ -245,14 +173,8 @@ interface ReactProps extends WithStyles<typeof styles> {
 }
 interface FormikFields {
   orderId: ID;
-  refundOrderItemIds: ID[],
-  chargeId: ID;
-  paymentIntentId: ID;
-  taxes: number;
-  // reason: RefundReason;
-  reasonDetail: string;
-  paypalInvoiceNumber: string;
-  paymentProcessor: PaymentProcessor,
+  reason: string;
+  reasonDetails: string;
 }
 
 
@@ -279,7 +201,6 @@ const styles = (theme: Theme) => createStyles({
     marginBottom: '1rem',
     marginRight: '0rem',
     paddingBottom: '1rem',
-    borderBottom: '1px solid #f2f2f2',
   },
   orderItemsContainer: {
     display: 'flex',
@@ -290,22 +211,17 @@ const styles = (theme: Theme) => createStyles({
     marginLeft: "1rem",
   },
   name: {
+    fontSize: '1rem',
     fontWeight: 500,
-    color: "#484848",
+    color: theme.colors.uniswapLighterGrey,
+    marginBottom: "0.5rem",
   },
   fieldName: {
     fontWeight: 400,
-    width: '55px',
-    color: Colors.purple,
-  },
-  addItemToRefund: {
-    minWidth: '120px',
-    marginRight: '.5rem',
-    backgroundColor: "#EDF0F2",
-    border: '1px solid #EDF0F2',
-    "&:hover": {
-      border: '1px solid #eaeaea',
-    }
+    fontSize: '1rem',
+    width: '80px',
+    color: theme.colors.uniswapLightestGrey,
+    marginBottom: "0.5rem",
   },
   orderDetailsButton: {
     marginTop: '1rem',
@@ -317,20 +233,14 @@ const styles = (theme: Theme) => createStyles({
       border: '1px solid #aaaaaa',
     }
   },
-  downloadButtonIcon: {
-    color: "#484848",
-    fontSize: '0.9rem',
-    marginRight: '0.1rem',
-  },
-  downloadButtonText: {
-    fontSize: '0.7rem',
-    color: "#484848",
-    fontWeight: 500,
-  },
   orderDetailsButtonText: {
     fontSize: '0.7rem',
     color: "#888",
     fontWeight: 500,
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   actualPrice: {
     color: Colors.secondary,
@@ -338,8 +248,8 @@ const styles = (theme: Theme) => createStyles({
   refundedGrayscale: {
     filter: 'grayscale(1)',
   },
-  refundedBlur: {
-    filter: "blur(1px)",
+  marginRight1: {
+    marginRight: '1rem',
   },
 });
 

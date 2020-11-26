@@ -13,9 +13,10 @@ import {
   UserPrivate,
   ID,
   Orders,
+  OrderStatus,
   Transactions,
+  OrderMutationResponse,
 } from "typings/gqlTypes";
-// import { RefundReason, MakeRefundParams } from "typings";
 // Material UI
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
@@ -29,7 +30,7 @@ import ErrorBounds from "components/ErrorBounds";
 import Loading from "components/Loading";
 import OrderSummary from "./OrderSummary";
 import OrderPrices from "./OrderPrices";
-import OrderItemCard from "./OrderCard";
+import OrderCard from "./OrderCard";
 import RefundTaxesFees from "./RefundTaxesFees";
 // Graphql
 import { useQuery, useApolloClient, ApolloClient } from "@apollo/client";
@@ -37,6 +38,9 @@ import {
   GET_ORDER_AS_ADMIN,
   GET_RECENT_TRANSACTIONS,
 } from "queries/orders-queries";
+import {
+  REFUND_ORDER
+} from "queries/refunds-mutations";
 // Refund
 import { v4 as uuidv4 } from "uuid"
 // Validation
@@ -46,11 +50,12 @@ import SnackBarA from "components/Snackbars/SnackbarA";
 import SnackbarsSuccessErrors from "components/Snackbars/SnackbarsSuccessErrors";
 // Snackbar
 import { useSnackbar } from "notistack";
+import currency from "currency.js";
+const c = (s) => currency(s/100, { formatWithSymbol: true }).format()
 
 
 
-
-const RefundOrders: React.FC<ReactOrdersFormProps> = (props) => {
+const RefundOrders: React.FC<OrderRefundsProps> = (props) => {
 
   const { classes } = props;
   const aClient = useApolloClient();
@@ -100,6 +105,46 @@ const RefundOrders: React.FC<ReactOrdersFormProps> = (props) => {
     } catch(e) {
       setErrorMsg("Transactions do not exist.")
     }
+  }
+
+
+  const makeRefund = async({ orderId, reason, reasonDetails }: {
+    orderId: string,
+    reason: string,
+    reasonDetails: string,
+  }) => {
+
+    console.log("refunding orderId:", orderId);
+
+    const { errors, data } = await aClient.mutate<QueryData3, QueryVar3>({
+      mutation: REFUND_ORDER,
+      variables: {
+        orderId: orderId,
+        reason: reason,
+        reasonDetails: reasonDetails,
+      }
+    });
+
+    console.log("refund response:", data);
+    alert(JSON.stringify({ REFUND: data }));
+    // data.refundOrder.order
+    if (errors) {
+      setErrorMsg(`Refund failed with msg: ${errors}`)
+    }
+    return data;
+  }
+
+  const canBeRefunded = (ostatus: string): boolean => {
+    if (ostatus === undefined) {
+      return false
+    }
+    if (ostatus === OrderStatus.CONFIRMED_PAYMENT_FORM_10_REQUIRED) {
+      return true
+    }
+    if (ostatus === OrderStatus.FORM_10_REVISE_AND_RESUBMIT) {
+      return true
+    }
+    return false
   }
 
 
@@ -164,41 +209,29 @@ const RefundOrders: React.FC<ReactOrdersFormProps> = (props) => {
       </RefundOrdersSearch>
       <Formik
         initialValues={{
-          // orderId: order.id,
-          // refundOrderItemIds: [],
-          // chargeId: order.currentSnapshot.transaction.chargeId,
-          // paymentIntentId: order.currentSnapshot.transaction.paymentIntentId,
-          // taxes: 0,
-          // reason: RefundReason.RequestedByCustomer,
-          // reasonDetail: '',
-          // paypalInvoiceNumber: `${uuidv4()}`,
-          // paymentProcessor: order.currentSnapshot.transaction.paymentProcessor,
+          orderId: order.id,
+          reason: "",
+          reasonDetails: '',
         }}
         validationSchema={validationSchemas.Refund}
         onSubmit={(values, { setSubmitting }) => {
-          console.log("not inmplemented")
-        //   console.log('formik values: ', values);
-        //   console.log("refunding order", order)
-        //   makeRefund({
-        //     orderId: values.orderId,
-        //     refundOrderItemIds: values.refundOrderItemIds,
-        //     chargeId: values.chargeId,
-        //     paymentIntentId: values.paymentIntentId,
-        //     taxes: values.taxes,
-        //     reason: values.reason,
-        //     reasonDetail: values.reasonDetail,
-        //     paypalInvoiceNumber: values.paypalInvoiceNumber,
-        //     paymentProcessor: values.paymentProcessor,
-        //   }).then(res => {
-        //     console.log(res)
-        //     setLoading(false)
-        //     searchOrder(values.orderId)
-        //     setRefundMsg(JSON.stringify(res))
-        //   }).catch(e => {
-        //     console.log(e)
-        //     setLoading(false)
-        //     setErrorMsg(JSON.stringify(e))
-        //   })
+          console.log("not implemented")
+          console.log('formik values: ', values);
+          console.log("refunding order", order)
+          makeRefund({
+            orderId: values.orderId,
+            reason: values.reason,
+            reasonDetails: values.reasonDetails,
+          }).then(res => {
+            console.log(res)
+            setLoading(false)
+            searchOrder(values.orderId)
+            setRefundMsg(JSON.stringify(res))
+          }).catch(e => {
+            console.log(e)
+            setLoading(false)
+            setErrorMsg(JSON.stringify(e))
+          })
         }}
       >
         {(fprops) => {
@@ -229,20 +262,21 @@ const RefundOrders: React.FC<ReactOrdersFormProps> = (props) => {
             <RefundOrdersForm
               classes={classes}
               onSubmit={handleSubmit}
+              total={c(total)}
               disableRefundButton={
-                !order.id
-                // || values.refundOrderItemIds.length === 0
+                !order.id ||
+                !canBeRefunded(order?.currentSnapshot?.orderStatus)
               }
               onClickDebugPrint={() => {
-                console.log(fprops.errors)
-                setLoading(true)
+                console.log("fprops.errors:", fprops.errors)
+                setLoading(false)
               }}
             >
               <div className={classes.backButton}>
                 <IconButton onClick={() => setOrder(undefined)}>
                   <KeyboardArrowLeft/>
                 </IconButton>
-                <Typography variant="subtitle2">
+                <Typography className={classes.goBackText} variant="subtitle2">
                   Go Back
                 </Typography>
               </div>
@@ -258,22 +292,43 @@ const RefundOrders: React.FC<ReactOrdersFormProps> = (props) => {
                   {...fprops}
                 />
               </Section>
-              {/* <Section classes={classes} title={"Refund Line Items"}>
+              <Section classes={classes} title={"Refunding Order"}>
                 {
-                  option(order).items([]).every((o: OrderItem) => !!o.id) &&
-                  option(order).items([]).every((o: OrderItem) => !!o.orderStatus) &&
-                  option(order).items([]).every((o: OrderItem) => !!o.priceDetails) &&
-                  order.items.map(oitem =>
-                    <OrderItemCard
-                      key={oitem.id}
-                      orderItem={oitem}
-                      total={total}
-                      subtotal={subtotal}
-                      {...fprops}
-                    />
-                  )
+                  order.id &&
+                  <OrderCard
+                    order={order}
+                    total={total}
+                    subtotal={subtotal}
+                    {...fprops}
+                  />
                 }
-              </Section> */}
+              </Section>
+
+              <TextInput
+                placeholder={"Enter Reason for Refund"}
+                value={values.reason}
+                onChange={(e) => fprops.setFieldValue("reason", e.target.value)}
+                disabled={canBeRefunded(order?.currentSnapshot?.orderStatus)}
+                inputProps={{
+                  root: { },
+                  style: {
+                    padding: '0.55rem',
+                    marginBottom: "0.5rem",
+                  }
+                }}
+              />
+              <TextInput
+                placeholder={"Enter Bank Refund ID number"}
+                value={values.reasonDetails}
+                onChange={(e) => fprops.setFieldValue("reasonDetails", e.target.value)}
+                disabled={canBeRefunded(order?.currentSnapshot?.orderStatus)}
+                inputProps={{
+                  root: { },
+                  style: {
+                    padding: '0.55rem',
+                  }
+                }}
+              />
 
               <Loading fixed loading={loading}/>
               <SnackBarA
@@ -378,6 +433,7 @@ const RefundOrdersForm: React.FC<ReactOrdersFormProps> = (props) => {
     onSubmit,
     disableRefundButton,
     onClickDebugPrint,
+    total,
   } = props;
 
   return (
@@ -392,7 +448,7 @@ const RefundOrdersForm: React.FC<ReactOrdersFormProps> = (props) => {
             color={"primary"}
             onClick={onClickDebugPrint}
           >
-            Refund Order
+            { `Refund Order: ${total}` }
           </ButtonLoading>
         </div>
       </form>
@@ -436,11 +492,18 @@ interface ReactOrdersSearchProps extends WithStyles<typeof styles> {
   errorMsg: string;
   loading: boolean;
 }
-interface ReactOrdersFormProps extends WithStyles<typeof styles> {
+interface OrderRefundsProps extends WithStyles<typeof styles> {
   onSubmit(args: any): void;
   disableRefundButton: boolean;
   onClickDebugPrint(): void;
 }
+interface ReactOrdersFormProps extends WithStyles<typeof styles> {
+  onSubmit(args: any): void;
+  disableRefundButton: boolean;
+  onClickDebugPrint(): void;
+  total: string;
+}
+
 interface DisplayRecentOrderIdProps extends WithStyles<typeof styles> {
   recentTx: Transactions[];
   setOrderId(id: ID): void;
@@ -462,6 +525,14 @@ interface QueryData2 {
 }
 interface QueryVar2 {
   count: number;
+}
+interface QueryData3 {
+  refundOrder: OrderMutationResponse;
+}
+interface QueryVar3 {
+  orderId: string;
+  reason?: string;
+  reasonDetails?: string;
 }
 
 
@@ -517,6 +588,9 @@ const styles = (theme: Theme) => createStyles({
   titleSpacer: {
     marginBottom: '0.5rem',
     marginTop: '0.5rem',
+  },
+  goBackText: {
+    marginLeft: '0.5rem',
   },
   form: {
     width: '100%',

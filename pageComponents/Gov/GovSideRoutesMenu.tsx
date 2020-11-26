@@ -140,6 +140,21 @@ const GovSideRoutesMenu: React.FC<ReactProps> = (props) => {
             </a>
           </Link>
         </li>
+        <li>
+          <Link href={"/gov/payouts/refunded"} scroll={false}>
+            <a>
+              <div className={
+                isSelectedRoute("refunded")
+                  ? classes.routeListItemSelected
+                  : classes.routeListItem
+              }>
+                <Typography variant="subtitle1" className={classes.routeListItemText}>
+                  Refunded
+                </Typography>
+              </div>
+            </a>
+          </Link>
+        </li>
 
       </ul>
     </div>

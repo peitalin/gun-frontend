@@ -8,6 +8,7 @@ import { Product } from "typings/gqlTypes";
 import { Colors } from "layout/AppTheme";
 // Material UI
 import Typography from "@material-ui/core/Typography";
+import { WHITE_SPACE_FOR_P_TAGS } from "components/TextEditor/globalWhiteSpaceSetting";
 
 
 
@@ -31,9 +32,12 @@ const ProductDescription = (props: ReactProps) => {
           // expandDescription ? props.classes.expand : null,
         )}
       >
-        <span dangerouslySetInnerHTML={{
-          __html: String(option(props).product.currentSnapshot.description(""))
-        }}/>
+        <span
+          style={{ whiteSpace: WHITE_SPACE_FOR_P_TAGS }}
+          dangerouslySetInnerHTML={{
+            __html: String(props.product?.currentSnapshot?.description ?? "")
+          }}
+        />
       </Typography>
       {/* {
         !expandDescription

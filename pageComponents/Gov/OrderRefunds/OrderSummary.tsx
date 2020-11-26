@@ -29,39 +29,37 @@ const OrderSummary = (props: ReactProps) => {
   } else {
     return (
       <div className={classes.root}>
-        <Row fieldName={"Order ID:"} fieldValue={order.id} />
+        <Row fieldName={"Order ID:"} fieldValue={order?.id} />
         <Row
           fieldName={"OrderSnapshot ID:"}
-          fieldValue={order.currentSnapshot.id}
+          fieldValue={order?.currentSnapshot?.id}
         />
-        {/* <Row
+        <Row
           fieldName={"User:"}
           fieldValue={
-            order.user
-              ? `${order.user.firstName} ${order.user.lastName} – ${order.userId}`
-              : "UNCLAIMED"
+            `${order?.buyer?.firstName} ${order?.buyer?.lastName} – ${order?.buyer?.email}`
           }
-        /> */}
-        <Row fieldName={"Created At:"} fieldValue={asTime(order.createdAt)} />
-        <Row fieldName={"Updated At:"} fieldValue={asTime(order.updatedAt)} />
+        />
+        <Row fieldName={"Created At:"} fieldValue={asTime(order?.createdAt)} />
+        <Row fieldName={"Updated At:"} fieldValue={asTime(order?.updatedAt)} />
         <Row
           fieldName={"Order Status:"}
           fieldValue={`${orderStatusHumanFriendly(order)} (${
-            order.currentSnapshot.orderStatus
+            order?.currentSnapshot?.orderStatus
           })`}
         />
 
-        {/* <Row
+        <Row
           fieldName={"Processor:"}
-          fieldValue={order.currentSnapshot.transaction.paymentProcessor}
-        /> */}
+          fieldValue={order?.currentSnapshot?.transaction?.paymentProcessor}
+        />
       </div>
     );
   }
 };
 
 const orderStatusHumanFriendly = (order: Orders): string => {
-  switch (order.currentSnapshot.orderStatus) {
+  switch (order?.currentSnapshot?.orderStatus) {
     case OrderStatus.CREATED:
       return "Unfinished";
     case OrderStatus.FAILED:
@@ -72,6 +70,8 @@ const orderStatusHumanFriendly = (order: Orders): string => {
       return "Form10 submitted, approval required";
     case OrderStatus.REFUNDED:
       return "Refunded";
+    default:
+      return "Unexpected order status";
   }
   return "";
 };
