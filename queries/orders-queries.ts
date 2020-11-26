@@ -4,6 +4,7 @@ import {
   PaymentMethodFragment,
   ImageFragment,
   OrdersFragment,
+  RefundFragment,
 } from "./fragments";
 
 
@@ -88,6 +89,21 @@ export const GET_ORDERS_PAYOUTS_COMPLETE_CONNECTION = gql`
   ${OrdersFragment}
 `;
 
+export const GET_ORDERS_REFUNDED_CONNECTION = gql`
+  query($query: ConnectionOffsetQueryOrders!) {
+    getOrdersRefundedConnection(query: $query) {
+      edges {
+        node {
+          ...OrdersFragment
+        }
+      }
+      totalCount
+    }
+  }
+  ${OrdersFragment}
+`;
+
+
 
 export const GET_SELLER_ORDERS_CONNECTION = gql`
   query ($query: ConnectionOffsetQueryOrders) {
@@ -165,11 +181,9 @@ export const GET_RECENT_TRANSACTIONS = gql`
       paymentProcessor
       details
       refund {
-        id
-        createdAt
-        transactionId
-        # storeId
+        ...RefundFragment
       }
     }
   }
+  ${RefundFragment}
 `;

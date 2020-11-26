@@ -116,7 +116,11 @@ export const ProductsFragment = gql`
     currentSnapshot {
       ...ProductSnapshotsFragment
     }
-    productVariants {
+    featuredVariant: productVariants(
+      limit: 1
+      where: { isDefault: {_eq: true }}
+      order_by: { createdAt: desc }
+    ) {
       ...ProductVariantsFragment
     }
     # productVariants(
@@ -563,6 +567,39 @@ export const UserPrivateFragment = gql`
   }
   ${StorePrivateFragment}
 `;
-  // # ${ProductFragment}
+// # ${ProductFragment}
 // ${OrderFragment}
 // ${PaymentMethodFragment}
+
+export const RefundFragment = gql`
+  fragment RefundFragment on refunds {
+    id
+    transactionId
+    orderId
+    createdAt
+    reason
+    reasonDetails
+    receiptNumber
+  }
+`;
+
+
+export const TransactionFragment = gql`
+  fragment TransactionFragment on transactions {
+    id
+    total
+    createdAt
+    currency
+    receiptNumber
+    customerId
+    orderId
+    paymentProcessor
+    paymentMethodId
+    paymentIntentId
+    refundId
+    refund {
+      ...RefundFragment
+    }
+  }
+  ${RefundFragment}
+`;
