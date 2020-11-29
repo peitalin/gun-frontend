@@ -68,10 +68,9 @@ const SignUp: React.FC<ReactProps> = (props) => {
     props.setTabIndex(0)
   }
 
-  const [dateString, setDateString] = React.useState("")
+  const [isBackspace, setIsBackspace] = React.useState(false)
 
   const { classes } = props;
-
 
   return (
     <ErrorBounds className={classes.outerContainer}>
@@ -139,17 +138,19 @@ const SignUp: React.FC<ReactProps> = (props) => {
               placeholder={"DD/MM/YYYY"}
               autoComplete="license-expiry"
               value={state.licenseExpiry}
-              // onKeyDown={(e) => {
-              //   e.persist()
-              //   if (e.keyCode === 8) {
-              //      // if key is backspace
-              //     console.log("onKeyDown backspace: ", e.keyCode)
-              //   }
-              //   console.log("onKeyDown value: ", (e.target as any)?.value)
-              // }}
+              onKeyDown={(e) => {
+                e.persist()
+                if (e.keyCode === 8) {
+                   // if key is backspace
+                  // console.log("onKeyDown backspace: ", e.keyCode)
+                  setIsBackspace(true)
+                } else {
+                  setIsBackspace(false)
+                }
+              }}
               onChange={(e) => {
                 e.persist(); // for persisting synthetic events
-                let expiry = formatGunLicenseExpiry(e.target.value)
+                let expiry = formatGunLicenseExpiry(e.target.value, isBackspace)
                 // console.log("formatted expiry: ", expiry)
                 setState(s => ({ ...s, licenseExpiry: expiry }))
               }}

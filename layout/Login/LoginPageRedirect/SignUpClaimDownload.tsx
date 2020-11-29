@@ -56,6 +56,8 @@ const SignUp: React.FC<ReactProps> = (props) => {
     props.setTabIndex(0)
   }
 
+  const [isBackspace, setIsBackspace] = React.useState(false)
+
   return (
   <ErrorBounds className={classes.outerContainer}>
 
@@ -132,6 +134,16 @@ const SignUp: React.FC<ReactProps> = (props) => {
         type={"string"}
         autoComplete="license-expiry"
         value={state.licenseExpiry}
+        onKeyDown={(e) => {
+          e.persist()
+          if (e.keyCode === 8) {
+              // if key is backspace
+            // console.log("onKeyDown backspace: ", e.keyCode)
+            setIsBackspace(true)
+          } else {
+            setIsBackspace(false)
+          }
+        }}
         onChange={(e) => {
           e.persist(); // for persisting synthetic events
           let value = e.target.value

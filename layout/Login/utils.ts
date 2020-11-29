@@ -140,6 +140,8 @@ export const formatGunLicenseExpiry = (
 ) => {
 
   console.log("input: ", dateString)
+  console.log("isBackspace: ", isBackspace)
+  // let isBackspace = dateString.match(/[0-9]{2}[/-]$/g)
 
   // if ends with dd/ or mm/ or dd-
   // then it's a backspace and remove the trailing / or -
@@ -189,7 +191,11 @@ export const formatGunLicenseExpiry = (
       return `${day}/${month}/${year}`
     } else {
       // 1 digit month, partially filled
-      return `${day}/${month}`
+      if (!isBackspace && month.length === 2) {
+        return `${day}/${month}/`
+      } else {
+        return `${day}/${month}`
+      }
     }
   }
 
@@ -210,7 +216,11 @@ export const formatGunLicenseExpiry = (
       return `${day}/${month}`
     } else {
       let day = dayBetween0and32(dd)
-      return `${day}`
+      if (!isBackspace && day.length === 2) {
+        return `${day}/`
+      } else {
+        return `${day}`
+      }
     }
 
   }
@@ -229,5 +239,5 @@ const yearBetween2020and2200 = (year) => {
   if (year?.length === 4 && parseInt(year) < 2020) {
     return '2020'
   }
-  return year < 2200 ? year : 220;
+  return year < 2099 ? year : 2099;
 }
