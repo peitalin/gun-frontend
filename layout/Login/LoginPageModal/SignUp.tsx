@@ -19,6 +19,7 @@ import LockIcon from "@material-ui/icons/Lock";
 import ClearIcon from "@material-ui/icons/Clear";
 import IconButton from "@material-ui/core/IconButton";
 import ButtonLoading from "components/ButtonLoading";
+import { formatGunLicenseExpiry } from "../utils";
 //
 import Link from "next/link";
 
@@ -32,6 +33,8 @@ const SignUp: React.FC<ReactProps> = (props) => {
     password: "",
     firstName: "",
     lastName: "",
+    licenseNumber: "",
+    licenseExpiry: undefined,
   })
 
   React.useEffect(() => {
@@ -42,6 +45,8 @@ const SignUp: React.FC<ReactProps> = (props) => {
         password: "",
         firstName: "",
         lastName: "",
+        licenseNumber: "",
+        licenseExpiry: undefined,
       })
     }
   }, [])
@@ -54,6 +59,8 @@ const SignUp: React.FC<ReactProps> = (props) => {
       password: state.password,
       firstName: state.firstName,
       lastName: state.lastName,
+      licenseNumber: state.licenseNumber,
+      licenseExpiry: state.licenseExpiry,
     });
   }
 
@@ -61,8 +68,10 @@ const SignUp: React.FC<ReactProps> = (props) => {
     props.setTabIndex(0)
   }
 
+  const [dateString, setDateString] = React.useState("")
 
   const { classes } = props;
+
 
   return (
     <ErrorBounds className={classes.outerContainer}>
@@ -109,6 +118,44 @@ const SignUp: React.FC<ReactProps> = (props) => {
               }}
             />
           </FormControl>
+          <FormControl margin="normal" required fullWidth>
+            <InputLabel htmlFor="sign-up-email">Gun License Number</InputLabel>
+            <Input
+              name="gun-license-number"
+              type={"string"}
+              autoComplete="license-number"
+              value={state.licenseNumber}
+              onChange={(e) => {
+                e.persist(); // for persisting synthetic events
+                setState(s => ({ ...s, licenseNumber: option(e).target.value() }))
+              }}
+            />
+          </FormControl>
+          <FormControl margin="normal" required fullWidth>
+            <InputLabel htmlFor="sign-up-email">Gun License Expiry</InputLabel>
+            <Input
+              name="gun-license-expiry"
+              type={"string"}
+              placeholder={"DD/MM/YYYY"}
+              autoComplete="license-expiry"
+              value={state.licenseExpiry}
+              // onKeyDown={(e) => {
+              //   e.persist()
+              //   if (e.keyCode === 8) {
+              //      // if key is backspace
+              //     console.log("onKeyDown backspace: ", e.keyCode)
+              //   }
+              //   console.log("onKeyDown value: ", (e.target as any)?.value)
+              // }}
+              onChange={(e) => {
+                e.persist(); // for persisting synthetic events
+                let expiry = formatGunLicenseExpiry(e.target.value)
+                // console.log("formatted expiry: ", expiry)
+                setState(s => ({ ...s, licenseExpiry: expiry }))
+              }}
+            />
+          </FormControl>
+
           <FormControl margin="normal" required fullWidth>
             <InputLabel htmlFor="sign-up-email">Email Address</InputLabel>
             <Input
@@ -187,6 +234,8 @@ interface ReactProps extends WithStyles<typeof styles> {
     password: string,
     firstName?: string,
     lastName?: string
+    licenseNumber: string,
+    licenseExpiry: Date,
   }): void;
   email?: string;
   handleToggleModal?(): void;

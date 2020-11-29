@@ -9,6 +9,7 @@ import styles from './commonStylesClaimDownload';
 import ErrorBounds from "components/ErrorBounds";
 import Or from "components/Or";
 import ButtonLoading from "components/ButtonLoading";
+import { formatGunLicenseExpiry } from "../utils";
 
 
 
@@ -22,6 +23,8 @@ const SignUp: React.FC<ReactProps> = (props) => {
     password: "",
     firstName: "",
     lastName: "",
+    licenseNumber: "",
+    licenseExpiry: undefined,
   })
 
   const resetForm = () => {
@@ -32,6 +35,8 @@ const SignUp: React.FC<ReactProps> = (props) => {
       password: "",
       firstName: "",
       lastName: "",
+      licenseNumber: "",
+      licenseExpiry: undefined,
     }));
   }
 
@@ -42,6 +47,8 @@ const SignUp: React.FC<ReactProps> = (props) => {
       password: state.password,
       firstName: state.firstName,
       lastName: state.lastName,
+      licenseNumber: state.licenseNumber,
+      licenseExpiry: state.licenseExpiry,
     });
   }
 
@@ -94,6 +101,42 @@ const SignUp: React.FC<ReactProps> = (props) => {
           e.persist(); // for persisting synthetic events
           let value = e.target.value
           setState(s => ({ ...s, lastName: value }))
+        }}
+        inputProps={{ style: { width: '100%' }}}
+      />
+
+      <Typography className={classes.subtitle} variant={"body1"}>
+        Gun License Number
+      </Typography>
+      <TextInput
+        className={classes.textInput}
+        required
+        placeholder="Gun License Number"
+        type={"string"}
+        autoComplete="license-number"
+        value={state.licenseNumber}
+        onChange={(e) => {
+          e.persist(); // for persisting synthetic events
+          let value = e.target.value
+          setState(s => ({ ...s, licenseNumber: value }))
+        }}
+        inputProps={{ style: { width: '100%' }}}
+      />
+      <Typography className={classes.subtitle} variant={"body1"}>
+        Gun License Expiry
+      </Typography>
+      <TextInput
+        className={classes.textInput}
+        required
+        placeholder="Expiry: DD/MM/YYYY"
+        type={"string"}
+        autoComplete="license-expiry"
+        value={state.licenseExpiry}
+        onChange={(e) => {
+          e.persist(); // for persisting synthetic events
+          let value = e.target.value
+          let expiry = formatGunLicenseExpiry(e.target.value)
+          setState(s => ({ ...s, licenseExpiry: expiry }))
         }}
         inputProps={{ style: { width: '100%' }}}
       />
@@ -173,6 +216,8 @@ interface ReactProps extends WithStyles<typeof styles> {
     password: string,
     firstName?: string,
     lastName?: string
+    licenseNumber: string,
+    licenseExpiry: Date,
   }): void;
   email?: string;
   title?: string;

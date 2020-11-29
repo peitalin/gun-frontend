@@ -35,13 +35,19 @@ export const isLoginInputOk =
 
 export const isSignUpInputOk =
 (snackbar: ProviderContext) =>
-({ email, password, firstName, lastName }) => {
+({ email, password, licenseNumber, licenseExpiry, firstName, lastName }) => {
 
   if (!email) {
     snackbar.enqueueSnackbar("Email is missing!", { variant: "error" })
     return false
   } else if (!password) {
     snackbar.enqueueSnackbar("Password is missing!", { variant: "error" })
+    return false
+  } else if (!licenseNumber) {
+    snackbar.enqueueSnackbar("Gun owner license number missing!", { variant: "error" })
+    return false
+  } else if (!licenseExpiry) {
+    snackbar.enqueueSnackbar("License expiry date missing!", { variant: "error" })
     return false
   } else if (!firstName) {
     snackbar.enqueueSnackbar("Name is missing!", { variant: "error" })
@@ -121,3 +127,107 @@ export const runOnLoginExpiration = (fn: (...args: any) => any): void => {
     }, countDown)
   }
 };
+
+
+export const validateLicenseExpiryDate = (dateString: string) => {
+  return !!dateString.match(/[0-9]{1,2}[/][0-9]{1,2}[/][0-9]{4}/g)
+}
+
+
+export const formatGunLicenseExpiry = (
+  dateString: string,
+  isBackspace?: boolean,
+) => {
+
+  console.log("input: ", dateString)
+
+  // if ends with dd/ or mm/ or dd-
+  // then it's a backspace and remove the trailing / or -
+  let d = dateString.match(/[0-9]{2}[/-]$/g)
+    ? dateString.slice(0, -1)
+    : dateString
+
+
+  if (!d) {
+    return ""
+  }
+
+  let dd;
+  let mm;
+  let yyyy;
+
+  if (d.match(/[/]/g) && d.match(/[/]/g)?.length === 2) {
+    // e.g '11/12/2020' or '11/12/2',
+    // anything with days and months already filled
+    dd = d.match(/[0-9]{1,2}/g)[0]
+    mm = d.match(/[0-9]{1,2}/g)[1]
+    // the rest is partially filled year
+    yyyy = d.match(/[0-9]{1,2}/g).slice(2).join('').slice(0,4)
+
+    let day = dayBetween0and32(dd)
+    let month = monthBetween0and13(mm)
+    let year = yearBetween2020and2200(yyyy)
+
+    return `${day}/${month}/${year}`
+  }
+
+
+  if (d.match(/[/]/g) && d.match(/[/]/g)?.length === 1) {
+    // e.g '11/12' or '11/1',
+    // anything with days and months already filled
+    dd = d.match(/[0-9]{1,2}/g)[0]
+    mm = d.match(/[0-9]{1,2}/g)[1]
+    // // the rest is partially filled year
+    yyyy = d.match(/[0-9]{1,2}/g)[2]
+
+    let day = dayBetween0and32(dd)
+    let month = monthBetween0and13(mm)
+    let year = yearBetween2020and2200(yyyy)
+
+    if (!!yyyy) {
+      // 2 digit month complete
+      return `${day}/${month}/${year}`
+    } else {
+      // 1 digit month, partially filled
+      return `${day}/${month}`
+    }
+  }
+
+  // console.log('expiry', expiry)
+  let dmatch = d.match(/[0-9]{1,3}/g)
+
+  if (!dmatch) {
+    return ""
+  } else {
+
+    // from ["ddd"] -> "dd/d"
+    let dd = dmatch.join("").slice(0,2)
+    let mm = dmatch.join("").slice(2,4)
+
+    if (mm.length > 0) {
+      let day = dayBetween0and32(dd)
+      let month = monthBetween0and13(mm)
+      return `${day}/${month}`
+    } else {
+      let day = dayBetween0and32(dd)
+      return `${day}`
+    }
+
+  }
+}
+
+
+const dayBetween0and32 = (dd) => {
+  return (dd === '00')
+    ? '01' : dd < 32 ? dd : 31;
+}
+const monthBetween0and13 = (mm) => {
+  return (mm === '00')
+    ? '01' : mm < 13 ? mm : 12;
+}
+const yearBetween2020and2200 = (year) => {
+  if (year?.length === 4 && parseInt(year) < 2020) {
+    return '2020'
+  }
+  return year < 2200 ? year : 220;
+}

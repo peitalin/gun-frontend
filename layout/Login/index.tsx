@@ -81,13 +81,15 @@ const Login: React.FC<ReactProps> = (props) => {
   /////////////////////////////////////////////////
 
   const handleGraphQLResponse = ({ data, loading, errors, refetch }: Aprops) => {
+
+    setState(s => ({ ...s, buttonLoading: false }))
+
     if (errors !== undefined) {
       handleGqlError(errors)
     }
     if (!data) {
       console.log("No data")
     }
-    setState(s => ({ ...s, buttonLoading: false }))
 
     if (data && data.logInUsingEmail || data && data.signUpUsingEmail) {
       // optional chaining
@@ -121,6 +123,7 @@ const Login: React.FC<ReactProps> = (props) => {
   }
 
   const handleGqlError = (errors) => {
+    setState(s => ({ ...s, buttonLoading: false }))
     snackbar.enqueueSnackbar(
       translateErrorMsg(JSON.stringify(errors[0].message)),
       { variant: "error" }
@@ -183,9 +186,10 @@ const Login: React.FC<ReactProps> = (props) => {
   /////////////////////////////////////////////////
   //// 2. Signup Call
   /////////////////////////////////////////////////
-  const dispatchCreateUser = async({ email, password, firstName, lastName }) => {
+  const dispatchCreateUser = async({ email, password, licenseNumber, licenseExpiry, firstName, lastName }) => {
 
-    if (!isSignUpInputOk(snackbar)({ email, password, firstName, lastName })) {
+    if (!isSignUpInputOk(snackbar)({ email, password, licenseNumber, licenseExpiry, firstName, lastName })) {
+      setState(s => ({ ...s, buttonLoading: false }))
       return null
     } else {
       setState(s => ({ ...s, buttonLoading: true }))
@@ -202,6 +206,8 @@ const Login: React.FC<ReactProps> = (props) => {
         password: password,
         firstName: firstName,
         lastName: lastName,
+        licenseNumber: licenseNumber,
+        licenseExpiry: new Date(licenseExpiry),
       },
       update: (cache, { data: { createUser } }) => {
       },
