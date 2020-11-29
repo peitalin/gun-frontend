@@ -6,7 +6,7 @@ import { Actions } from "reduxStore/actions";
 // Styles
 import { withStyles, WithStyles, fade } from "@material-ui/core/styles";
 import { styles } from './styles';
-import { Colors, BorderRadius, BorderRadius2x } from "layout/AppTheme";
+import { Colors } from "layout/AppTheme";
 // Material UI
 import Typography from "@material-ui/core/Typography";
 // Media uploader
@@ -39,6 +39,7 @@ import ValidationErrorMsg from "components/Fields/ValidationErrorMsg";
 import { useFocus } from "utils/hooks";
 import { reduxToFormikCurrentVariants } from "../ProductCreatePage";
 import RefLink, { refLinks } from "../RefLink";
+import { DZU_UPLOAD_STATUS, handleUploadingStates } from "components/DropzoneUploader/utils";
 
 
 
@@ -83,59 +84,38 @@ const PreviewItemUploaderGrid = (props: ReactProps & FormikProps<FormikFields>) 
     //// called every time a file's `status` changes
     let { meta, file, xhr } = fileWithMeta;
     // console.info("status:", status, meta, file)
+    let D = DZU_UPLOAD_STATUS;
 
-    if (status === "getting_upload_params") {
-      setLoading(true)
-    }
+    handleUploadingStates({
+      status,
+      fileWithMeta,
+      setLoading,
+      uploadingCallback: () => {
+        if (status === D.UPLOADING && !!meta.previewUrl) {
+          let optimisticPreview: DzuPreviewItem = {
+            id: meta.id,
+            name: meta.name,
+            previewUrl: meta.previewUrl,
+            fileId: "",
+            percent: meta.percent,
+            size: meta.size,
+            status: meta.status,
+            duration: meta.duration,
+            fileWithMeta: fileWithMeta,
+            youTubeVimeoEmbedLink: "", // image, not youtube link
+          }
+          let previewOrder = {
+            id: meta.id,
+            index: undefined, // assigned in redux reducer,
+          }
+          dispatch(actions.ADD_PREVIEW_ITEMS([ optimisticPreview ]))
+          dispatch(actions.ADD_DZU_PREVIEW_ORDER([ previewOrder ]))
+        }
+      },
+    })
 
-    if (status === "uploading" && !!meta.previewUrl) {
-      // Step 1.
-      let optimisticPreview: DzuPreviewItem = {
-        id: meta.id,
-        name: meta.name,
-        previewUrl: meta.previewUrl,
-        fileId: "",
-        percent: meta.percent,
-        size: meta.size,
-        status: meta.status,
-        duration: meta.duration,
-        fileWithMeta: fileWithMeta,
-        youTubeVimeoEmbedLink: "", // image, not youtube link
-      }
-      let previewOrder = {
-        id: meta.id,
-        index: undefined, // assigned in redux reducer,
-      }
-      dispatch(actions.ADD_PREVIEW_ITEMS([ optimisticPreview ]))
-      dispatch(actions.ADD_DZU_PREVIEW_ORDER([ previewOrder ]))
-    }
 
-    if (status === "error_upload_params") {
-      setLoading(false)
-      console.info("error_upload_params:", status, meta, file)
-    }
-    if (status === "exception_upload") {
-      setLoading(false)
-      console.info("exception_upload:", status, meta, file)
-    }
-    if (status === "error_upload") {
-      setLoading(false)
-      console.info("error_upload:", status, meta, file)
-    }
-    if (status === "rejected_max_files") {
-      setLoading(false)
-      console.info("rejected_max_files:", status, meta, file)
-    }
-    if (status === "aborted") {
-      setLoading(false)
-      console.info("aborted:", status, meta, file)
-    }
-    if (status === "removed") {
-      setLoading(false)
-      console.info("removed:", status, meta, file)
-    }
-
-    if (status === "done") {
+    if (status === D.DONE) {
       let googleUpload = googleUploads.find(g => g.metaId === meta.id);
 
       // Owner is going to be the store, but may also be the product if it already exists
@@ -174,6 +154,7 @@ const PreviewItemUploaderGrid = (props: ReactProps & FormikProps<FormikFields>) 
           setLoading(false)
         })
     } else {
+      // uncaught Uploader state, undo loading state
       setLoading(false)
     }
   }
@@ -195,6 +176,7 @@ const PreviewItemUploaderGrid = (props: ReactProps & FormikProps<FormikFields>) 
 
   const ref = React.useRef(null);
   const focused = useFocus(ref);
+  const numFiles = option(fprops).values.currentVariants[0].previewItems.length(0);
 
   const [googleUploads, setGoogleUploads] = React.useState<GoogleUpload[]>([]);
   const [loading, setLoading] = React.useState(false);
@@ -213,16 +195,13 @@ const PreviewItemUploaderGrid = (props: ReactProps & FormikProps<FormikFields>) 
     );
     props.validateForm()
 
-    setTimeout(() => {
-      console.log('formik current variants updated!', fprops.values.currentVariants)
-    }, 0)
+    // setTimeout(() => {
+    //   console.log('formik current variants updated!', fprops.values.currentVariants)
+    // }, 0)
 
     return () => {}
   }, [props.dzuPreviewItems, props.dzuPreviewOrder])
 
-
-  console.log("touched: ", fprops.touched)
-  console.log("errors: ", fprops.errors)
 
   return (
     <ErrorBounds className={classes.uploaderRoot}>
@@ -234,9 +213,9 @@ const PreviewItemUploaderGrid = (props: ReactProps & FormikProps<FormikFields>) 
           Product Images
         </Typography>
         <div className={classes.previewItemSubtitle}>
-          Recommended size: 16:10 landscape images. Add up to 10 images.
+          Recommended size: 1280 x 800.
           <br/>
-          The first image will used as the thumbnail image.
+          The first image will be used as a preview.
         </div>
       </div>
 
@@ -262,6 +241,7 @@ const PreviewItemUploaderGrid = (props: ReactProps & FormikProps<FormikFields>) 
         // See comments in /components/ReactDropzone/Dropzone.tsx
         accept={"image/*"}
         maxFiles={maxPreviewImages}
+        numFiles={numFiles}
         inputContent={(files, extra) => (extra.reject ? 'Image files only' : 'Drag Images')}
         styles={{
           dropzoneReject: {
@@ -269,15 +249,13 @@ const PreviewItemUploaderGrid = (props: ReactProps & FormikProps<FormikFields>) 
             backgroundColor: '#DAA'
           },
           dropzone: {
-            border: `2px dashed ${Colors.uniswapLighterGrey}`,
-            borderRadius: BorderRadius,
-            // borderRadius: BorderRadius2x,
+            border: "2px dashed rgb(221, 221, 221)",
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",
+            marginBottom: '0.5rem',
             padding: "1rem",
-            backgroundColor: Colors.uniswapMediumNavy,
-            marginBottom: '1rem',
+            backgroundColor: "#fefefe",
           },
           dropzoneActive: {
             border: "2px dashed #2484FF",
@@ -293,7 +271,7 @@ const PreviewItemUploaderGrid = (props: ReactProps & FormikProps<FormikFields>) 
         touched={option(fprops).touched.currentVariants[0].previewItems()}
         focused={focused}
         errorMessage={option(fprops).errors.currentVariants[0].previewItems()}
-        disableInitialValidationMessage={false}
+        disableInitialValidationMessage={true}
       />
 
     </ErrorBounds>
@@ -319,7 +297,6 @@ interface GoogleUpload {
   googleUploadId: string;
   googleUploadUrl: string;
 }
-
 
 export default withStyles(styles)( PreviewItemUploaderGrid );
 

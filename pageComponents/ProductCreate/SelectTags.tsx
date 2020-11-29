@@ -19,7 +19,12 @@ import Typography from "@material-ui/core/Typography";
 import FormGroup from '@material-ui/core/FormGroup';
 // Select Component
 import DropdownInput from "components/Fields/DropdownInput";
-import KeywordDropdownInput from "components/Fields/KeywordDropdownInput";
+import dynamic from 'next/dynamic'
+import SelectTagsPlaceholder from './SSR/SelectTagsPlaceholder';
+const KeywordDropdownInput = dynamic(() => import('components/Fields/KeywordDropdownInput'), {
+  loading: () => <SelectTagsPlaceholder/>,
+  ssr: false
+})
 // Util components
 import Loading from "components/Loading";
 import ErrorDisplay from "components/Error";

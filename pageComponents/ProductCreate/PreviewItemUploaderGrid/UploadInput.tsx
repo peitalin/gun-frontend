@@ -9,7 +9,7 @@ import UploadIcon from "components/Icons/UploadIcon";
 import { Colors } from "layout/AppTheme";
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
 // Youtube component
-import AddYouTubeVimeoLink from "./UploadLayoutPreviews/AddYouTubeVimeoLink";
+import AddYouTubeVimeoLink from "components/UploaderComponents/AddYouTubeVimeoLink";
 // Typings
 import { ReducerName } from "typings/dropzone";
 

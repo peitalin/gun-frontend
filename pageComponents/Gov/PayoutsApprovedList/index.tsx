@@ -309,6 +309,7 @@ const PayoutsApprovedList = (props: ReactProps) => {
                 },
                 style: {
                   width: '100%',
+                  minWidth: '180px',
                   height: "19px",
                   borderRadius: "4px 0 0 4px",
                   borderRight: 'none',
@@ -332,7 +333,7 @@ const PayoutsApprovedList = (props: ReactProps) => {
               // disabled={!readyForApproval}
               color="secondary"
               style={{
-                width: '320px',
+                minWidth: '200px',
                 height: '36px',
               }}
             >

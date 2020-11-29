@@ -1,6 +1,6 @@
 
 import React from "react";
-import { Colors } from "layout/AppTheme";
+import { Colors, BorderRadius } from "layout/AppTheme";
 import { DzuPreviewOrder, DzuPreviewItem } from "typings/dropzone";
 // Components
 import ImageUploadProgress from "./ImageUploadProgress";
@@ -31,14 +31,17 @@ const ImagePreview: React.FC<ReactProps> = (props) => {
       key={dzuPreview.id}
       // Image Preview Embedded as CSS background
       // to avoid image flickers
+      className={"dzu-uploader-image-preview-style"}
       style={{
         backgroundImage: `url(${dzuPreview.previewUrl})`,
         backgroundSize: 'cover',
         backgroundPosition: '50%',
-        width: '100%',
-        height: '100%',
+        // width: '100%',
+        // height: '100%',
+        minWidth: 88,
+        height: 55,
         position: 'relative', //for upload progress positioning
-        borderRadius: '4px',
+        borderRadius: BorderRadius,
         borderTop: '1px solid #666',
         borderLeft: '1px solid #666',
         borderRight: '1px solid #666',

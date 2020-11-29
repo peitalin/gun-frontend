@@ -20,14 +20,14 @@ import Typography from "@material-ui/core/Typography";
 // Typings
 import { ReducerName } from "typings/dropzone";
 import { DzuPreviewOrder, DzuPreviewItem } from "typings/dropzone";
+import { makeOnSortEndHandler, makeHandleRemoveHandler } from "components/UploaderComponents/sorterUtils";
 // Components
-import VideoPreview from "./VideoPreview";
+import VideoPreview from "components/UploaderComponents/VideoPreview";
 // Grid
-import { GridItem, Grid } from "../DraggableGrid";
+import Grid from "components/UploaderComponents/DraggableGrid";
 import ImagePreview from "./ImagePreview";
 // Youtube component
-import AddYouTubeVimeoLink from "./AddYouTubeVimeoLink";
-import { reorderPreviews } from "./sorter";
+import AddYouTubeVimeoLink from "components/UploaderComponents/AddYouTubeVimeoLink";
 // media query
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
@@ -78,16 +78,16 @@ const UploadLayoutPreviews: React.FC<ILayoutProps & ReactProps> = (props) => {
   const onSortStart = ({node, index, collection}, event) => {
   }
 
-  const onSortEnd = ({ oldIndex, newIndex }) => {
-    // create new order from existing previews
-    let newDzuOrder = reorderPreviews({ oldIndex, newIndex, dzuPreviewOrder })
-    // then sort the arrays by position
-    dispatch(actions.REORDER_DZU_PREVIEW_ORDER(newDzuOrder))
-  };
+  const onSortEnd = makeOnSortEndHandler({
+    dispatch,
+    actions,
+    dzuPreviewOrder,
+  });
 
-  const handleRemove = (previewId) => {
-    dispatch(actions.REMOVE_PREVIEW_ITEMS([ previewId ]));
-  }
+  const handleRemove = makeHandleRemoveHandler({
+    dispatch,
+    actions
+  });
 
   const getNumItemsInGrid = () => {
     // because Uploader form is responsive, it will
@@ -221,3 +221,10 @@ interface ReduxState {
 }
 
 export default UploadLayoutPreviews;
+
+// export default React.memo(
+//   (props: ILayoutProps & ReactProps) => <UploadLayout {...props}/>,
+//   // (prevProps, nextProps) => {
+//   //   return false
+//   // },
+// );
