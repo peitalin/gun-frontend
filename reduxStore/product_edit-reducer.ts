@@ -501,7 +501,10 @@ export const reduxReducerProductEdit = (
       let removeIds: ID[] = action.payload;
       let newDzuPreviewOrder = state.dzuPreviewOrder
           .filter(f => !removeIds.includes(f.id))
+          .map((item, i) => ({ ...item, index: i}))
+          // reindex using position in list,
 
+      // console.log("NEW DZU ORDER: ", newDzuPreviewOrder)
       return {
         ...state,
         dzuPreviewOrder: newDzuPreviewOrder
@@ -510,12 +513,13 @@ export const reduxReducerProductEdit = (
 
     case A.REORDER_DZU_PREVIEW_ORDER().type: {
 
-      let items: DzuPreviewOrder[] = action.payload;
+      let items: DzuPreviewOrder[] = action.payload
       let newItemsOrder = items.sort((a, b) => a.index - b.index);
 
       return {
         ...state,
-        dzuPreviewOrder: newItemsOrder
+        dzuPreviewOrder: newItemsOrder.map((item, i) => ({ ...item, index: i}))
+        // reindex using position in list,
       }
     }
 
