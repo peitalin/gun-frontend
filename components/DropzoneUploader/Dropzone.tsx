@@ -18,7 +18,7 @@ import {
 // Typings
 import { ReducerName } from "typings/dropzone";
 
-import UploadInputImageDirect from "../../pageComponents/ProductCreate/PreviewItemUploaderGrid/UploadInput";
+import UploadInputImageDirect from "pageComponents/ProductCreate/PreviewItemUploaderGrid/UploadInput";
 
 
 export type StatusValue =

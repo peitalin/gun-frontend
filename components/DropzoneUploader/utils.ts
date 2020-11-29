@@ -1,5 +1,5 @@
 import React from 'react'
-import { IStyleCustomization } from './Dropzone'
+import { IFileWithMeta, IMeta, IStyleCustomization } from './Dropzone'
 
 export const formatBytes = (b: number) => {
   const units = ['bytes', 'kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
@@ -110,4 +110,69 @@ export const getFilesFromEvent = (
   }
 
   return Array.prototype.slice.call(items)
+}
+
+
+export enum DZU_UPLOAD_STATUS {
+  GETTING_UPLOAD_PARAMS = "getting_upload_params",
+  UPLOADING = "uploading",
+  ERROR_UPLOAD_PARAMS = "error_upload_params",
+  EXCEPTION_UPLOAD = "exception_upload",
+  ERROR_UPLOAD = "error_upload",
+  REJECTED_MAX_FILES = "rejected_max_files",
+  ABORTED = "aborted",
+  REMOVED = "removed",
+  DONE = "done",
+}
+import { DzuPreviewItem } from "typings/dropzone";
+
+
+export const handleUploadingStates = ({
+  status,
+  fileWithMeta,
+  setLoading,
+  uploadingCallback,
+}: {
+  status: string,
+  fileWithMeta: IFileWithMeta,
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>,
+  uploadingCallback: () => void,
+}) => {
+
+  const D = DZU_UPLOAD_STATUS;
+  let { meta, file, xhr } = fileWithMeta;
+
+  if (status === D.GETTING_UPLOAD_PARAMS) {
+    setLoading(true)
+  }
+
+  if (status === D.UPLOADING && !!meta.previewUrl) {
+    uploadingCallback()
+  }
+
+  if (status === D.ERROR_UPLOAD_PARAMS) {
+    setLoading(false)
+    console.info("error_upload_params:", status, meta, file)
+  }
+  if (status === D.EXCEPTION_UPLOAD) {
+    setLoading(false)
+    console.info("exception_upload:", status, meta, file)
+  }
+  if (status === D.ERROR_UPLOAD) {
+    setLoading(false)
+    console.info("error_upload:", status, meta, file)
+  }
+  if (status === D.REJECTED_MAX_FILES) {
+    setLoading(false)
+    console.info("rejected_max_files:", status, meta, file)
+  }
+  if (status === D.ABORTED) {
+    setLoading(false)
+    console.info("aborted:", status, meta, file)
+  }
+  if (status === D.REMOVED) {
+    setLoading(false)
+    console.info("removed:", status, meta, file)
+  }
+
 }

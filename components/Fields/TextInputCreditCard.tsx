@@ -55,37 +55,6 @@ const TextInputCreditCard = (props: ReactProps) => {
   const [expiry, setExpiry] = React.useState(undefined)
   const [cvc, setCVC] = React.useState(undefined)
 
-  const formatExpiry = dateString => {
-    if (!dateString) {
-      return ""
-    }
-    console.log('expiry', expiry)
-    if (dateString.slice(-1) === "/") {
-      let dd = dateString.replace(/\s/g, '');
-      let month = dd.slice(0,2)
-      return month
-    } else if (dateString.includes("/")) {
-      let dd = dateString.replace(/\s/g, '');
-      let [month, year] = dd.split('/')
-      month = month > 12 ? 12 : month
-      return `${month.slice(0,2)}/${year.slice(0,2)}`
-    } else if (dateString.length > 1) {
-      let dd = dateString.replace(/\s/g, '');
-      let month = dd.slice(0,2)
-      month = month > 12 ? 12 : month
-      let year = dd.slice(2,4)
-      return `${month}/${year}`
-    } else {
-      if (dateString.startsWith('1') || dateString.startsWith('0')) {
-        return dateString.replace(/\s/g, '');
-      } else {
-        // month cannot start with anything above '1' single digit month
-        let dd = dateString.replace(/\s/g, '');
-        return `0${dd}`
-      }
-    }
-  }
-
   const formatCVC = cvcString => {
     if (!cvcString) {
       return ""
@@ -330,6 +299,39 @@ const TextInputCreditCard = (props: ReactProps) => {
       />
     </div>
   )
+}
+
+
+
+export const formatExpiry = ( dateString ) => {
+  if (!dateString) {
+    return ""
+  }
+  // console.log('expiry', expiry)
+  if (dateString.slice(-1) === "/") {
+    let dd = dateString.replace(/\s/g, '');
+    let month = dd.slice(0,2)
+    return month
+  } else if (dateString.includes("/")) {
+    let dd = dateString.replace(/\s/g, '');
+    let [month, year] = dd.split('/')
+    month = month > 12 ? 12 : month
+    return `${month.slice(0,2)}/${year.slice(0,2)}`
+  } else if (dateString.length > 1) {
+    let dd = dateString.replace(/\s/g, '');
+    let month = dd.slice(0,2)
+    month = month > 12 ? 12 : month
+    let year = dd.slice(2,4)
+    return `${month}/${year}`
+  } else {
+    if (dateString.startsWith('1') || dateString.startsWith('0')) {
+      return dateString.replace(/\s/g, '');
+    } else {
+      // month cannot start with anything above '1' single digit month
+      let dd = dateString.replace(/\s/g, '');
+      return `0${dd}`
+    }
+  }
 }
 
 const selectErrorColor = (
