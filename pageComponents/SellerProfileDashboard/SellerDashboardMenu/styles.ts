@@ -191,7 +191,7 @@ export const styles = (theme: Theme) => createStyles({
     }
   },
   navbarButtonMobile: {
-    marginRight: "1%",
+    marginRight: "0.25rem",
   },
   baseBarInnerMobile: {
     zIndex: 3,

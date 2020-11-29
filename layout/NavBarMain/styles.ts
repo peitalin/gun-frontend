@@ -398,7 +398,7 @@ export const styles = (theme: Theme) => createStyles({
     position: 'relative',
   },
   navbarButtonMobile: {
-    marginRight: "0.5rem",
+    marginRight: "0.25rem",
     minWidth: 50,
   },
   baseBarInnerMobile: {
@@ -413,7 +413,7 @@ export const styles = (theme: Theme) => createStyles({
     alignItems: "center",
   },
   logoMobile: {
-    margin: '0rem 1rem',
+    margin: '0rem 0.5rem',
     textTransform: "capitalize",
     fontWeight: 500,
     // transform: 'scale(0.9)',
