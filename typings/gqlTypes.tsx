@@ -1641,6 +1641,14 @@ export type Edge = {
   cursor: Scalars['PageCursor'];
 };
 
+export type EditUserLicenseInput = {
+  licenseNumber?: Maybe<Scalars['String']>;
+  expiry?: Maybe<Scalars['Date']>;
+  licenseCategory?: Maybe<Scalars['String']>;
+  state?: Maybe<Scalars['String']>;
+  verified?: Maybe<Scalars['Boolean']>;
+};
+
 export enum FacetAttributes {
   _CATEGORYNAMEFACET = '_categoryNameFacet',
   _CATEGORYGROUPFACET = '_categoryGroupFacet',
@@ -4163,6 +4171,10 @@ export type MutationSignUpUsingEmailArgs = {
   lastName?: Maybe<Scalars['String']>;
   email: Scalars['String'];
   password: Scalars['String'];
+  licenseNumber: Scalars['String'];
+  licenseExpiry: Scalars['Date'];
+  licenseCategory?: Maybe<Scalars['String']>;
+  licenseState?: Maybe<Scalars['String']>;
 };
 
 
@@ -4204,6 +4216,7 @@ export type MutationEditUserProfileArgs = {
   username?: Maybe<Scalars['String']>;
   firstName?: Maybe<Scalars['String']>;
   lastName?: Maybe<Scalars['String']>;
+  editUserLicenseInput?: Maybe<EditUserLicenseInput>;
   payoutMethod?: Maybe<Scalars['String']>;
 };
 
@@ -11599,7 +11612,7 @@ export type User_Licenses = {
    __typename?: 'user_licenses';
   expiry: Scalars['timestamp'];
   id: Scalars['String'];
-  licenseCategory: Scalars['String'];
+  licenseCategory?: Maybe<Scalars['String']>;
   licenseNumber: Scalars['String'];
   state?: Maybe<Scalars['String']>;
   verified: Scalars['Boolean'];
@@ -11817,6 +11830,8 @@ export type UserPrivate = User & {
   payoutHistoryConnection?: Maybe<PayoutsConnection>;
   wishlistItemsConnection?: Maybe<WishlistItemsConnection>;
   followingStores?: Maybe<FollowingStoresConnection>;
+  licenseId?: Maybe<Scalars['String']>;
+  license?: Maybe<User_Licenses>;
 };
 
 
@@ -11857,6 +11872,8 @@ export type UserPublic = User & {
   firstName?: Maybe<Scalars['String']>;
   lastName?: Maybe<Scalars['String']>;
   email: Scalars['String'];
+  licenseId?: Maybe<Scalars['String']>;
+  license?: Maybe<User_Licenses>;
 };
 
 /** columns and relationships of "users" */
@@ -12580,6 +12597,7 @@ export type UserWithRole = User & {
   lastName?: Maybe<Scalars['String']>;
   email: Scalars['String'];
   userRole: Role;
+  licenseId?: Maybe<Scalars['String']>;
 };
 
 /** An individual item in a wishlist */
@@ -12668,10 +12686,10 @@ export type StoresFragment = { __typename?: 'stores', id: string, createdAt: any
     & ProductsFragment
   )> };
 
-export type UsersFragment = { __typename?: 'users', id: string, email: string, username?: Maybe<string>, userRole?: Maybe<string>, createdAt?: Maybe<any>, updatedAt?: Maybe<any>, firstName?: Maybe<string>, lastName?: Maybe<string>, emailVerified?: Maybe<boolean>, storeId?: Maybe<string>, sellerReferredById?: Maybe<string>, payoutMethodId?: Maybe<string>, payoutSplitId?: Maybe<string>, isDeleted: boolean, isSuspended: boolean, lastSeen?: Maybe<any>, store?: Maybe<(
+export type UsersFragment = { __typename?: 'users', id: string, email: string, username?: Maybe<string>, userRole?: Maybe<string>, createdAt?: Maybe<any>, updatedAt?: Maybe<any>, firstName?: Maybe<string>, lastName?: Maybe<string>, emailVerified?: Maybe<boolean>, storeId?: Maybe<string>, sellerReferredById?: Maybe<string>, payoutMethodId?: Maybe<string>, payoutSplitId?: Maybe<string>, isDeleted: boolean, isSuspended: boolean, lastSeen?: Maybe<any>, licenseId?: Maybe<string>, store?: Maybe<(
     { __typename?: 'stores' }
     & StoresFragment
-  )>, payoutMethod?: Maybe<{ __typename?: 'payout_methods', id: string, storeId: string, createdAt: any, updatedAt?: Maybe<any>, payoutType?: Maybe<string>, bsb?: Maybe<string>, accountNumber?: Maybe<string>, accountName?: Maybe<string> }> };
+  )>, payoutMethod?: Maybe<{ __typename?: 'payout_methods', id: string, storeId: string, createdAt: any, updatedAt?: Maybe<any>, payoutType?: Maybe<string>, bsb?: Maybe<string>, accountNumber?: Maybe<string>, accountName?: Maybe<string> }>, license?: Maybe<{ __typename?: 'user_licenses', id: string, licenseNumber: string, expiry: any, licenseCategory?: Maybe<string>, state?: Maybe<string>, verified: boolean }> };
 
 export type OrdersFragment = { __typename?: 'orders', id: string, createdAt: any, updatedAt: any, bidId?: Maybe<string>, total: number, currency: string, buyerId: string, sellerId: string, productId: string, bid?: Maybe<{ __typename?: 'bids', id: string, bidStatus: string, createdAt?: Maybe<any>, updatedAt?: Maybe<any>, acceptedPrice?: Maybe<number>, offerPrice: number }>, buyer?: Maybe<{ __typename?: 'users', id: string, firstName?: Maybe<string>, lastName?: Maybe<string>, email: string }>, seller?: Maybe<{ __typename?: 'stores', id: string, name: string, website?: Maybe<string>, createdAt: any, updatedAt?: Maybe<any>, user: { __typename?: 'users', id: string, firstName?: Maybe<string>, lastName?: Maybe<string>, email: string, payoutMethod?: Maybe<{ __typename?: 'payout_methods', id: string, createdAt: any, updatedAt?: Maybe<any>, payoutType?: Maybe<string>, bsb?: Maybe<string>, accountNumber?: Maybe<string>, accountName?: Maybe<string> }> } }>, currentSnapshot?: Maybe<{ __typename?: 'order_snapshots', id: string, orderStatus: string, createdAt: any, adminApproverId?: Maybe<string>, dealerApproverId?: Maybe<string>, adminApprover?: Maybe<{ __typename?: 'users', id: string, firstName?: Maybe<string>, lastName?: Maybe<string>, email: string }>, dealerApprover?: Maybe<{ __typename?: 'users', id: string, firstName?: Maybe<string>, lastName?: Maybe<string>, email: string }>, form10Image?: Maybe<(
       { __typename?: 'image_parents' }
@@ -12770,7 +12788,7 @@ export type StorePrivateFragment = { __typename?: 'StorePrivate', id: string, na
 
 export type PaymentMethodFragment = { __typename?: 'payment_methods', id: string, userId: string, createdAt: any, updatedAt?: Maybe<any>, customerId?: Maybe<string>, paymentProcessor?: Maybe<string>, paymentMethodTypes?: Maybe<string>, last4?: Maybe<string>, expMonth?: Maybe<number>, expYear?: Maybe<number>, email?: Maybe<string>, name?: Maybe<string>, details?: Maybe<string> };
 
-export type UserPrivateFragment = { __typename?: 'UserPrivate', id: string, firstName?: Maybe<string>, lastName?: Maybe<string>, email: string, emailVerified?: Maybe<boolean>, userRole: Role, isSuspended: boolean, store?: Maybe<(
+export type UserPrivateFragment = { __typename?: 'UserPrivate', id: string, firstName?: Maybe<string>, lastName?: Maybe<string>, email: string, emailVerified?: Maybe<boolean>, userRole: Role, isSuspended: boolean, license?: Maybe<{ __typename?: 'user_licenses', id: string, licenseNumber: string, licenseCategory?: Maybe<string>, verified: boolean, expiry: any, state?: Maybe<string> }>, store?: Maybe<(
     { __typename?: 'StorePrivate' }
     & StorePrivateFragment
   )>, payoutMethod?: Maybe<{ __typename?: 'payout_methods', id: string, payoutType?: Maybe<string>, bsb?: Maybe<string>, accountNumber?: Maybe<string>, accountName?: Maybe<string> }> };
@@ -13015,6 +13033,15 @@ export const UsersFragmentFragmentDoc = gql`
   isDeleted
   isSuspended
   lastSeen
+  licenseId
+  license {
+    id
+    licenseNumber
+    expiry
+    licenseCategory
+    state
+    verified
+  }
 }
     ${StoresFragmentFragmentDoc}`;
 export const OrdersFragmentFragmentDoc = gql`
@@ -13271,6 +13298,14 @@ export const UserPrivateFragmentFragmentDoc = gql`
   emailVerified
   userRole
   isSuspended
+  license {
+    id
+    licenseNumber
+    licenseCategory
+    verified
+    expiry
+    state
+  }
   store {
     ...StorePrivateFragment
   }

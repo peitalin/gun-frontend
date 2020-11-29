@@ -32,7 +32,7 @@ export const analyticsUser = (user: UserPrivate) => {
   if (window.analytics) {
     const parameters = {
       email: user.email,
-      emailVerified: user.emailVerified || false,
+      licenseId: user.licenseId || false,
       signupDate: user.createdAt,
       storeId: user.storeId || undefined,
       storeCreationDate: (user.store && user.store.createdAt) || undefined,

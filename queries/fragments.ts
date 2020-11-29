@@ -216,6 +216,15 @@ export const UsersFragment = gql`
     isDeleted
     isSuspended
     lastSeen
+    licenseId
+    license {
+      id
+      licenseNumber
+      expiry
+      licenseCategory
+      state
+      verified
+    }
   }
   ${StoresFragment}
 `;
@@ -526,6 +535,14 @@ export const UserPrivateFragment = gql`
     emailVerified
     userRole
     isSuspended
+    license {
+      id
+      licenseNumber
+      licenseCategory
+      verified
+      expiry
+      state
+    }
     store {
       ...StorePrivateFragment
     }
