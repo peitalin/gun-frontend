@@ -46,3 +46,11 @@ export const SEND_RESET_PASSWORD_EMAIL = gql`
     }
   }
 `;
+
+export const SEND_TEST_WELCOME_EMAIL = gql`
+  mutation sendTestWelcomeEmail {
+    sendTestWelcomeEmail {
+      success
+    }
+  }
+`;

@@ -11,6 +11,7 @@ import { useQuery, ApolloClient, useApolloClient } from "@apollo/client";
 import { GET_USER } from "queries/user-queries";
 import { UserPrivate, Role } from 'typings/gqlTypes';
 import LoadingBarSSR from "components/LoadingBarSSR";
+import TestEmailButton from "pageComponents/Gov/TestEmailButton";
 // SSR disable
 import dynamic from "next/dynamic";
 import { AdminProfileProps } from "layout/GetUser/AdminProfileWrapper";
@@ -61,6 +62,7 @@ const GovRoot = (props: ReactProps) => {
                 </Typography>
               </div>
             }
+            <TestEmailButton />
           </div>
         )
       }}
