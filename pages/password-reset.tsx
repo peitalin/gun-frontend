@@ -20,7 +20,7 @@ import { useRouter } from "next/router";
 import { NextPage, NextPageContext } from 'next';
 
 import Portal from '@material-ui/core/Portal';
-import { CONFIRM_RESET_PASSWORD } from "queries/user-mutations";
+import { CONFIRM_RESET_PASSWORD } from "queries/emails-mutations";
 import { useMutation } from "@apollo/client";
 // Meta headers
 import MetaHeadersPage from "layout/MetaHeadersPage";

@@ -9,7 +9,6 @@ import Loading from "components/Loading";
 import { NextPage, NextPageContext } from 'next';
 // GraphQL
 import { serverApolloClient } from "utils/apollo";
-import ChatCenter from "pageComponents/ChatCenter";
 // Redux
 import { useSelector } from 'react-redux';
 import { GrandReduxState } from 'reduxStore/grand-reducer';
@@ -23,7 +22,7 @@ const AdminProfileWrapper = dynamic(() => import("layout/GetUser/AdminProfileWra
   loading: () => <LoadingBarSSR/>,
   ssr: false,
 })
-import RandomProducts from "pageComponents/Gov/RandomProducts";
+import TestEmails from "pageComponents/Gov/TestEmails";
 
 
 
@@ -38,7 +37,7 @@ const GovRandomProducts: NextPage<ReactProps> = (props) => {
     <AdminProfileWrapper>
       {({ data, loading, error }: AdminProfileProps) => {
         return (
-          <RandomProducts />
+          <TestEmails />
         )
       }}
     </AdminProfileWrapper>

@@ -11,6 +11,7 @@ import { useQuery, ApolloClient, useApolloClient } from "@apollo/client";
 import { GET_USER } from "queries/user-queries";
 import { UserPrivate, Role } from 'typings/gqlTypes';
 import LoadingBarSSR from "components/LoadingBarSSR";
+import TestEmails from "pageComponents/Gov/TestEmails";
 // SSR disable
 import dynamic from "next/dynamic";
 import { AdminProfileProps } from "layout/GetUser/AdminProfileWrapper";
@@ -21,7 +22,7 @@ const AdminProfileWrapper = dynamic(() => import("layout/GetUser/AdminProfileWra
 
 
 
-const GovRoot = (props: ReactProps) => {
+const TestEmailsSSR = (props: ReactProps) => {
 
   const { classes } = props;
 
@@ -35,31 +36,19 @@ const GovRoot = (props: ReactProps) => {
         return (
           <div className={classes.govHomePageSSR}>
             {
-              !user &&
-              <div className={classes.homeHeading}>
-                <Typography variant="h4">
-                  Please login
-                </Typography>
-              </div>
-            }
-            {
-              user && disabled &&
-              <div className={classes.homeHeading}>
-                <Typography variant="h4">
-                  Access denied
-                </Typography>
-              </div>
-            }
-            {
               user && !disabled &&
               <div className={classes.homeHeading}>
-                <Typography variant="h4" gutterBottom>
+                <Typography variant="body2" gutterBottom>
                   {`Logged in as PLATFORM_ADMIN:`}
                 </Typography>
-                <Typography variant="h4">
+                <Typography variant="body2">
                   {user.email}
                 </Typography>
               </div>
+            }
+            {
+              !disabled &&
+              <TestEmails/>
             }
           </div>
         )
@@ -99,7 +88,7 @@ interface Context extends NextPageContext {
   apolloClient: ApolloClient<any>;
 }
 
-GovRoot.getInitialProps = async (ctx: Context) => {
+TestEmailsSSR.getInitialProps = async (ctx: Context) => {
 
   try {
     const { data, loading, errors } = await ctx.apolloClient.query<QueryData>({
@@ -121,4 +110,4 @@ GovRoot.getInitialProps = async (ctx: Context) => {
 }
 
 
-export default withStyles(styles)( GovRoot );
+export default withStyles(styles)( TestEmailsSSR );
