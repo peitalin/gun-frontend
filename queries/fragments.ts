@@ -200,7 +200,6 @@ export const UsersFragment = gql`
     lastName
     emailVerified
     storeId
-    sellerReferredById
     payoutMethod {
       id
       storeId

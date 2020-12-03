@@ -34,23 +34,3 @@ export const GET_USER = gql`
   }
   ${UserPrivateFragment}
 `;
-
-export const SEND_RESET_PASSWORD_EMAIL = gql`
-  mutation sendResetPasswordEmail($email: String!) {
-    sendResetPasswordEmail(email: $email) {
-      resetId
-      emailSentTo
-      status {
-        message
-      }
-    }
-  }
-`;
-
-export const SEND_TEST_WELCOME_EMAIL = gql`
-  mutation sendTestWelcomeEmail {
-    sendTestWelcomeEmail {
-      success
-    }
-  }
-`;
