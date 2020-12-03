@@ -434,6 +434,7 @@ export type BlankMutationResponse = {
    __typename?: 'BlankMutationResponse';
   /** Should always be true if you get this result instead of a MutationErrorSummary - mainly here to allow gql to build */
   success: Scalars['Boolean'];
+  status?: Maybe<Scalars['JSON']>;
 };
 
 /** expression to compare columns of type Boolean. All fields are combined with logical 'AND'. */
@@ -3327,6 +3328,19 @@ export type Mutation = {
   markPayoutsAsPaid: MarkPayoutsAsPaidMutationResponse;
   createMockPreviewItems: Product_Preview_Items_Mutation_Response;
   generateRandomProducts: Array<Maybe<ProductPrivate>>;
+  sendTestWelcomeEmail: BlankMutationResponse;
+  sendTestPasswordChangedEmail: BlankMutationResponse;
+  sendPayoutDetailsChangedEmail: BlankMutationResponse;
+  sendConfirmedPaymentBuyerEmail: BlankMutationResponse;
+  sendConfirmedPaymentSellerEmail: BlankMutationResponse;
+  sendConfirmedPaymentAdminEmail: BlankMutationResponse;
+  sendRefundedBuyerEmail: BlankMutationResponse;
+  sendRefundedSellerEmail: BlankMutationResponse;
+  sendRefundedAdminEmail: BlankMutationResponse;
+  sendForm10ReviseAndResubmitSellerEmail: BlankMutationResponse;
+  sendForm10SubmittedAdminEmail: BlankMutationResponse;
+  sendForm10ApprovedBuyerEmail: BlankMutationResponse;
+  sendForm10ApprovedSellerEmail: BlankMutationResponse;
 };
 
 
@@ -4493,6 +4507,51 @@ export type MutationCreateMockPreviewItemsArgs = {
 
 export type MutationGenerateRandomProductsArgs = {
   config?: Maybe<CreateProductsConfig>;
+};
+
+
+export type MutationSendTestPasswordChangedEmailArgs = {
+  email?: Maybe<Scalars['String']>;
+};
+
+
+export type MutationSendPayoutDetailsChangedEmailArgs = {
+  userId: Scalars['String'];
+};
+
+
+export type MutationSendConfirmedPaymentBuyerEmailArgs = {
+  userId: Scalars['String'];
+};
+
+
+export type MutationSendConfirmedPaymentSellerEmailArgs = {
+  userId: Scalars['String'];
+};
+
+
+export type MutationSendRefundedBuyerEmailArgs = {
+  userId: Scalars['String'];
+};
+
+
+export type MutationSendRefundedSellerEmailArgs = {
+  userId: Scalars['String'];
+};
+
+
+export type MutationSendForm10ReviseAndResubmitSellerEmailArgs = {
+  userId: Scalars['String'];
+};
+
+
+export type MutationSendForm10ApprovedBuyerEmailArgs = {
+  userId: Scalars['String'];
+};
+
+
+export type MutationSendForm10ApprovedSellerEmailArgs = {
+  userId: Scalars['String'];
 };
 
 /** Something that went wrong during a mutation. */
@@ -9826,6 +9885,7 @@ export type ResetPasswordResponse = {
   email?: Maybe<Scalars['String']>;
   expiresAt?: Maybe<Scalars['Date']>;
   resetId?: Maybe<Scalars['String']>;
+  status?: Maybe<Scalars['JSON']>;
 };
 
 export enum Role {
@@ -9861,6 +9921,7 @@ export type SendResetPasswordResponse = {
    __typename?: 'SendResetPasswordResponse';
   resetId?: Maybe<Scalars['String']>;
   emailSentTo?: Maybe<Scalars['String']>;
+  status?: Maybe<Scalars['JSON']>;
 };
 
 export type SignUpMutationResponse = {
@@ -11903,7 +11964,6 @@ export type Users = {
   payoutMethod?: Maybe<Payout_Methods>;
   payoutMethodId?: Maybe<Scalars['String']>;
   payoutSplitId?: Maybe<Scalars['String']>;
-  sellerReferredById?: Maybe<Scalars['String']>;
   /** An object relationship */
   store?: Maybe<Stores>;
   /** An object relationship */
@@ -11994,7 +12054,6 @@ export type Users_Bool_Exp = {
   payoutMethod?: Maybe<Payout_Methods_Bool_Exp>;
   payoutMethodId?: Maybe<String_Comparison_Exp>;
   payoutSplitId?: Maybe<String_Comparison_Exp>;
-  sellerReferredById?: Maybe<String_Comparison_Exp>;
   store?: Maybe<Stores_Bool_Exp>;
   storeById?: Maybe<Stores_Bool_Exp>;
   storeId?: Maybe<String_Comparison_Exp>;
@@ -12031,7 +12090,6 @@ export type Users_Insert_Input = {
   payoutMethod?: Maybe<Payout_Methods_Obj_Rel_Insert_Input>;
   payoutMethodId?: Maybe<Scalars['String']>;
   payoutSplitId?: Maybe<Scalars['String']>;
-  sellerReferredById?: Maybe<Scalars['String']>;
   store?: Maybe<Stores_Obj_Rel_Insert_Input>;
   storeById?: Maybe<Stores_Obj_Rel_Insert_Input>;
   storeId?: Maybe<Scalars['String']>;
@@ -12057,7 +12115,6 @@ export type Users_Max_Fields = {
   passwordHash?: Maybe<Scalars['String']>;
   payoutMethodId?: Maybe<Scalars['String']>;
   payoutSplitId?: Maybe<Scalars['String']>;
-  sellerReferredById?: Maybe<Scalars['String']>;
   storeId?: Maybe<Scalars['String']>;
   stripeCustomerId?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['timestamptz']>;
@@ -12080,7 +12137,6 @@ export type Users_Max_Order_By = {
   passwordHash?: Maybe<Order_By>;
   payoutMethodId?: Maybe<Order_By>;
   payoutSplitId?: Maybe<Order_By>;
-  sellerReferredById?: Maybe<Order_By>;
   storeId?: Maybe<Order_By>;
   stripeCustomerId?: Maybe<Order_By>;
   updatedAt?: Maybe<Order_By>;
@@ -12104,7 +12160,6 @@ export type Users_Min_Fields = {
   passwordHash?: Maybe<Scalars['String']>;
   payoutMethodId?: Maybe<Scalars['String']>;
   payoutSplitId?: Maybe<Scalars['String']>;
-  sellerReferredById?: Maybe<Scalars['String']>;
   storeId?: Maybe<Scalars['String']>;
   stripeCustomerId?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['timestamptz']>;
@@ -12127,7 +12182,6 @@ export type Users_Min_Order_By = {
   passwordHash?: Maybe<Order_By>;
   payoutMethodId?: Maybe<Order_By>;
   payoutSplitId?: Maybe<Order_By>;
-  sellerReferredById?: Maybe<Order_By>;
   storeId?: Maybe<Order_By>;
   stripeCustomerId?: Maybe<Order_By>;
   updatedAt?: Maybe<Order_By>;
@@ -12317,7 +12371,6 @@ export type Users_Order_By = {
   payoutMethod?: Maybe<Payout_Methods_Order_By>;
   payoutMethodId?: Maybe<Order_By>;
   payoutSplitId?: Maybe<Order_By>;
-  sellerReferredById?: Maybe<Order_By>;
   store?: Maybe<Stores_Order_By>;
   storeById?: Maybe<Stores_Order_By>;
   storeId?: Maybe<Order_By>;
@@ -12367,8 +12420,6 @@ export enum Users_Select_Column {
   /** column name */
   PAYOUTSPLITID = 'payoutSplitId',
   /** column name */
-  SELLERREFERREDBYID = 'sellerReferredById',
-  /** column name */
   STOREID = 'storeId',
   /** column name */
   STRIPECUSTOMERID = 'stripeCustomerId',
@@ -12398,7 +12449,6 @@ export type Users_Set_Input = {
   passwordHash?: Maybe<Scalars['String']>;
   payoutMethodId?: Maybe<Scalars['String']>;
   payoutSplitId?: Maybe<Scalars['String']>;
-  sellerReferredById?: Maybe<Scalars['String']>;
   storeId?: Maybe<Scalars['String']>;
   stripeCustomerId?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['timestamptz']>;
@@ -12576,8 +12626,6 @@ export enum Users_Update_Column {
   /** column name */
   PAYOUTSPLITID = 'payoutSplitId',
   /** column name */
-  SELLERREFERREDBYID = 'sellerReferredById',
-  /** column name */
   STOREID = 'storeId',
   /** column name */
   STRIPECUSTOMERID = 'stripeCustomerId',
@@ -12686,7 +12734,7 @@ export type StoresFragment = { __typename?: 'stores', id: string, createdAt: any
     & ProductsFragment
   )> };
 
-export type UsersFragment = { __typename?: 'users', id: string, email: string, username?: Maybe<string>, userRole?: Maybe<string>, createdAt?: Maybe<any>, updatedAt?: Maybe<any>, firstName?: Maybe<string>, lastName?: Maybe<string>, emailVerified?: Maybe<boolean>, storeId?: Maybe<string>, sellerReferredById?: Maybe<string>, payoutMethodId?: Maybe<string>, payoutSplitId?: Maybe<string>, isDeleted: boolean, isSuspended: boolean, lastSeen?: Maybe<any>, licenseId?: Maybe<string>, store?: Maybe<(
+export type UsersFragment = { __typename?: 'users', id: string, email: string, username?: Maybe<string>, userRole?: Maybe<string>, createdAt?: Maybe<any>, updatedAt?: Maybe<any>, firstName?: Maybe<string>, lastName?: Maybe<string>, emailVerified?: Maybe<boolean>, storeId?: Maybe<string>, payoutMethodId?: Maybe<string>, payoutSplitId?: Maybe<string>, isDeleted: boolean, isSuspended: boolean, lastSeen?: Maybe<any>, licenseId?: Maybe<string>, store?: Maybe<(
     { __typename?: 'stores' }
     & StoresFragment
   )>, payoutMethod?: Maybe<{ __typename?: 'payout_methods', id: string, storeId: string, createdAt: any, updatedAt?: Maybe<any>, payoutType?: Maybe<string>, bsb?: Maybe<string>, accountNumber?: Maybe<string>, accountName?: Maybe<string> }>, license?: Maybe<{ __typename?: 'user_licenses', id: string, licenseNumber: string, expiry: any, licenseCategory?: Maybe<string>, state?: Maybe<string>, verified: boolean }> };
@@ -13017,7 +13065,6 @@ export const UsersFragmentFragmentDoc = gql`
   lastName
   emailVerified
   storeId
-  sellerReferredById
   payoutMethod {
     id
     storeId

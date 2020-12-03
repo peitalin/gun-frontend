@@ -9,7 +9,8 @@ import { ReduxStateLogin } from 'reduxStore/login-reducer';
 import { Actions } from 'reduxStore/actions';
 // Graphql
 import { CREATE_USER } from "queries/user-mutations";
-import { LOGIN, GET_USER, SEND_RESET_PASSWORD_EMAIL } from "queries/user-queries";
+import { LOGIN, GET_USER } from "queries/user-queries";
+import { SEND_RESET_PASSWORD_EMAIL } from "queries/emails-mutations";
 import { UserPrivate } from "typings/gqlTypes";
 import { SendPasswordResetResponse } from "typings";
 

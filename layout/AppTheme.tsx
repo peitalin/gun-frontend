@@ -553,6 +553,7 @@ export const AppTheme = createMuiTheme({
       },
       root: {
         borderBottom: `1px solid ${Colors.uniswapLightNavy}`,
+        padding: 4,
       },
     },
     MuiStepLabel: {
