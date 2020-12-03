@@ -266,11 +266,13 @@ interface MutVar {
 
 const useRowStyles = makeStyles({
   rowExpanderRoot: {
+    backgroundColor: lighten(Colors.uniswapGreyNavy, 0.01),
     '& > *': {
       borderBottom: 'unset',
     },
   },
   hiddenRowRoot: {
+    backgroundColor: lighten(Colors.uniswapGreyNavy, 0.01),
   },
   backgroundGrey: {
     // backgroundColor: Colors.slateGrey,

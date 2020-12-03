@@ -84,6 +84,7 @@ const DataTableOrdersPending = (
               </TableHead>
               <TableBody>
                 {
+                  (rows?.length > 0) &&
                   rows.map((order, index) => {
 
                     console.log("order: ", order.payoutItems)

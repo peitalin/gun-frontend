@@ -88,9 +88,9 @@ const UploadInput = (props: IInputProps & ReactProps) => {
           - optional
         </span>
       </Typography> */}
-      <AddYouTubeVimeoLink
+      {/* <AddYouTubeVimeoLink
         reducerName={props.reducerName}
-      />
+      /> */}
     </>
   )
 }

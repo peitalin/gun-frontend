@@ -249,13 +249,13 @@ const PreviewItemUploaderGrid = (props: ReactProps & FormikProps<FormikFields>) 
             backgroundColor: '#DAA'
           },
           dropzone: {
-            border: "2px dashed rgb(221, 221, 221)",
+            border: `2px dashed ${Colors.uniswapLighterGrey}`,
+            backgroundColor: Colors.uniswapGreyNavy,
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",
             marginBottom: '0.5rem',
             padding: "1rem",
-            backgroundColor: "#fefefe",
           },
           dropzoneActive: {
             border: "2px dashed #2484FF",

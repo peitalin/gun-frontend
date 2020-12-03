@@ -22,98 +22,69 @@ import { useQuery, useApolloClient, ApolloClient } from "@apollo/client";
 import { useSnackbar } from "notistack";
 import currency from "currency.js";
 import {
-  SEND_TEST_WELCOME_EMAIL,
-  SEND_RESET_PASSWORD_EMAIL,
-} from "queries/user-queries";
+  SEND_PAYOUT_COMPLETE_SELLER_EMAIL
+} from "queries/emails-mutations";
 
 
 
-const TestEmailButton: React.FC<ReactProps> = (props) => {
+const SendPayoutCompleteEmails: React.FC<ReactProps> = (props) => {
 
   const { classes } = props;
   const aClient = useApolloClient();
- // state
-  const [loading1, setLoading1] = React.useState(false);
+  const { user } = useSelector<GrandReduxState, { user: UserPrivate }>(s => {
+    return { user: s.reduxLogin.user }
+  })
+  // state
+  const [loading, setLoading] = React.useState(false);
   const [loading2, setLoading2] = React.useState(false);
+  const [loading3, setLoading3] = React.useState(false);
 
   const snackbar = useSnackbar();
 
-  const sendTestWelcomeEmail = async() => {
-    // setLoading1(true)
+  const sendPayoutCompleteSellerEmail = async() => {
+    setLoading(true)
     try {
       const { errors, data } = await aClient.mutate<QueryData, QueryVar>({
-        mutation: SEND_TEST_WELCOME_EMAIL,
-        variables: {},
+        mutation: SEND_PAYOUT_COMPLETE_SELLER_EMAIL,
+        variables: {
+          userId: user.id
+        },
         fetchPolicy: "no-cache", // always do a network request, no caches
       })
-      if (data.sendTestWelcomeEmail) {
+      if (data.sendPayoutCompleteSellerEmail) {
         snackbar.enqueueSnackbar(`Email send success`, { variant: "success" })
+        alert(JSON.stringify(data.sendPayoutCompleteSellerEmail.status))
       }
     } catch(e) {
       // setErrorMsg("OrderID does not exist.")
       snackbar.enqueueSnackbar(`Email failed to send`, { variant: "error" })
+      console.log("errors: ", e)
     }
-    // setLoading1(false)
+    setLoading(false)
   }
 
-
-  const sendTestResetPasswordButton = async() => {
-    // setLoading2(true)
-    try {
-      const { errors, data } = await aClient.mutate<QueryData, QueryVar>({
-        mutation: SEND_RESET_PASSWORD_EMAIL,
-        variables: {},
-        fetchPolicy: "no-cache", // always do a network request, no caches
-      })
-      if (data.sendTestWelcomeEmail) {
-        snackbar.enqueueSnackbar(`Email send success`, { variant: "success" })
-      }
-    } catch(e) {
-      // setErrorMsg("OrderID does not exist.")
-      snackbar.enqueueSnackbar(`Email failed to send`, { variant: "error" })
-    }
-    // setLoading2(false)
-  }
 
   return (
-    <>
+    <div className={classes.rootPayoutCompleteEmailsButtons}>
       <ButtonLoading
         variant="outlined"
         className={classes.approveButton}
         onClick={() => {
-          sendTestWelcomeEmail()
+          sendPayoutCompleteSellerEmail()
         }}
         loadingIconColor={Colors.blue}
         replaceTextWhenLoading={true}
-        loading={loading1}
-        disabled={loading1}
+        loading={loading}
+        disabled={loading}
         color="secondary"
         style={{
           width: '240px',
           height: '36px',
         }}
       >
-        Send Test Email
+        Payout Complete Seller
       </ButtonLoading>
-      <ButtonLoading
-        variant="outlined"
-        className={classes.approveButton}
-        onClick={() => {
-          sendTestResetPasswordButton()
-        }}
-        loadingIconColor={Colors.blue}
-        replaceTextWhenLoading={true}
-        loading={loading2}
-        disabled={loading2}
-        color="secondary"
-        style={{
-          width: '240px',
-          height: '36px',
-        }}
-      >
-        Send Test Password Reset
-      </ButtonLoading>
-    </>
+    </div>
   )
 }
 
@@ -123,13 +94,22 @@ const TestEmailButton: React.FC<ReactProps> = (props) => {
 interface ReactProps extends WithStyles<typeof styles> {
 }
 interface QueryData {
-  sendTestWelcomeEmail: BlankMutationResponse;
+  sendPayoutCompleteSellerEmail: BlankMutationResponse;
 }
 interface QueryVar {
+  userId: string
 }
 
 
 const styles = (theme: Theme) => createStyles({
+  rootPayoutCompleteEmailsButtons: {
+    margin: "1rem 0rem",
+    display: "flex",
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "center",
+    alignItems: "center",
+  },
   approveButton: {
     height: '36px',
     margin: "0.5rem 0.5rem 0.5rem 0.5rem",
@@ -137,7 +117,7 @@ const styles = (theme: Theme) => createStyles({
 });
 
 
-export default withStyles(styles)( TestEmailButton );
+export default withStyles(styles)( SendPayoutCompleteEmails );
 
 
 

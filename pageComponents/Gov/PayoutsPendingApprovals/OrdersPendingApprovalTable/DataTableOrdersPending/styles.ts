@@ -1,5 +1,6 @@
 
 import { lighten, makeStyles } from '@material-ui/core/styles';
+import { Colors } from "layout/AppTheme";
 
 
 export const useStyles = makeStyles(theme => ({
@@ -48,5 +49,18 @@ export const useStyles = makeStyles(theme => ({
     flexDirection: 'row',
     justifyContent: 'flex-end',
     flexWrap: 'wrap',
+  },
+  emptyTableRow: {
+    minHeight: 100,
+    width: '100%',
+    backgroundColor: lighten(Colors.uniswapGreyNavy, 0.01),
+    display: "flex",
+    justifyContent: "center",
+  },
+  emptyTableCell: {
+    width: '100%',
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
   },
 }));
