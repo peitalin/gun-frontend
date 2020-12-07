@@ -22,7 +22,6 @@ import LinkLoading from "pageComponents/FrontPage/PreviewCardResponsiveCarousel/
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import Hidden from "@material-ui/core/Hidden";
-import ProductRow from "pageComponents/FrontPage/FeaturedProductsMobile/ProductRow";
 import DescriptionLoading from "pageComponents/FrontPage/PreviewCardResponsiveCarousel/DescriptionLoading";
 // Carousel
 import AirCarousel from "components/AirCarousel";

@@ -21,7 +21,7 @@ import PriceDisplayMain from "components/PriceDisplayMain";
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import Hidden from "@material-ui/core/Hidden";
-import ProductRow from "pageComponents/FrontPage/FeaturedProductsMobile/ProductRow";
+import ProductRow from "pageComponents/FrontPage/_FeaturedProductsMobile/ProductRow";
 // Carousel
 import AirCarousel from "components/AirCarousel";
 import { useScrollXPosition, useCalcNumItemsFromWindowWidth } from "utils/hooks";

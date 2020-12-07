@@ -29,12 +29,9 @@ const ProductRow = (props: ReactProps) => {
   const { classes, product } = props;
 
   const featuredVariant = option(product).currentVariants[0]();
-  const previewItem = option(product).currentVariants[0].previewItems[0]();
-  const previewItems = option(product).currentVariants[0].previewItems([]);
 
   const price = option(featuredVariant).price();
   const priceWas = option(featuredVariant).priceWas();
-  const quantityAvailable = 0;
 
   const dispatch = useDispatch();
   const actions = Actions.reduxProductEdit;

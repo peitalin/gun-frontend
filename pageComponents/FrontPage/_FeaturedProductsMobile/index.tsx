@@ -33,9 +33,6 @@ import {
   CuratedListItemsEdge,
   CuratedListItem,
 } from "typings/gqlTypes";
-// Paginator hooks
-import { ConnectionQueryProps } from "components/Paginators/usePaginateQueryHook";
-import usePaginateQueryHook from "components/Paginators/usePaginateQueryHook";
 // redux
 import { useSelector } from "react-redux";
 import { GrandReduxState } from "reduxStore/grand-reducer";
@@ -134,8 +131,7 @@ const FeaturedProductsMobile = (props: ReactProps) => {
               // refetch={wishlistConnectionResponse.refetch}
             />
             <Link
-              href={"/p/[productIdOrSlug]"}
-              // as={`/p/${getProductIdOrSlug(product)}`}
+              href={"/p/[productId]"}
             >
               <a className={classes.flexRowLink}>
                 <PreviewCardWide

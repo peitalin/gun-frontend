@@ -15,7 +15,7 @@ import usePaginateQueryHook from "components/Paginators/usePaginateQueryHook";
 import AirCarousel from "components/AirCarousel";
 import { useScrollXPosition } from "utils/hooks";
 import Typography from "@material-ui/core/Typography";
-import { DocumentNode } from "graphql";
+
 
 
 const PaginateCarousel = <QueryData, QueryVar, NodeType extends { id: ID }>(
@@ -32,6 +32,8 @@ const PaginateCarousel = <QueryData, QueryVar, NodeType extends { id: ID }>(
   const [accumConnection, setAccumConnection] = React.useState(initialConnectionState);
   const [el, setEl] = React.useState<HTMLElement>(null);
 
+  // console.log("props.sortAscneding: ", props.sortAscending)
+
   const {
     loading,
     error,
@@ -43,9 +45,11 @@ const PaginateCarousel = <QueryData, QueryVar, NodeType extends { id: ID }>(
   } = usePaginateQueryHook<QueryData, QueryVar, NodeType>({
     query: props.query,
     variables: props.variables,
+    sortAscending: props.sortAscending,
     connectionSelector: props.connectionSelector,
     count: props.count + 1 || 3,
-    ssr: props.ssr,
+    // ssr: props.ssr,
+    ssr: true, // must always be true cuase Apollo is retarded
     fetchPolicy: props.fetchPolicy
   });
 
@@ -103,8 +107,8 @@ const PaginateCarousel = <QueryData, QueryVar, NodeType extends { id: ID }>(
         id={props.id}
         handleClickLeft={getPrevPage}
         handleClickRight={getNextPage}
-        disableButtons={true}
-        scrollSnapType={"none"}
+        disableButtons={false}
+        scrollSnapType={"x proximity"}
       >
         {
           props.children({
@@ -119,32 +123,15 @@ const PaginateCarousel = <QueryData, QueryVar, NodeType extends { id: ID }>(
           })
         }
       </AirCarousel>
-      {
-        option(connection).pageInfo.isLastPage() &&
-        <div style={{
-          marginTop: '0.5rem',
-          display: 'flex',
-          justifyContent: "center",
-          alignItems: "center",
-          width: "100%",
-        }}>
-          <Typography variant="subtitle2">
-            End. No more results.
-          </Typography>
-        </div>
-      }
-      {
-        loading &&
-        <Loading fixed loading={loading} delay={"100ms"}/>
-      }
     </>
   )
 }
 
 
 interface PaginateCarouselProps<QueryData, NodeType> {
-  query: DocumentNode;
+  query: any;
   variables: any;
+  sortAscending: boolean;
   count?: number;
   id: string;
   connectionSelector(data: QueryData): [GenericConnection<NodeType>, string];

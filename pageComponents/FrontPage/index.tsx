@@ -14,6 +14,8 @@ import { ProductsConnection, ConnectionOffsetQuery } from "typings/gqlTypes";
 // Components
 import dynamic from "next/dynamic";
 import NewReleaseProducts from "pageComponents/FrontPage/NewReleaseProducts";
+import FeaturedProducts from "pageComponents/FrontPage/FeaturedProducts";
+
 // import ProductCreatePage from "./ProductCreatePage";
 import Loading from "components/Loading";
 import CookiesBanner from "components/CookiesBanner";
@@ -21,53 +23,80 @@ import CovidBanner from "components/CovidBanner";
 import BannerHome from "components/BannerHome";
 // Router
 import { Colors, Gradients } from "layout/AppTheme";
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
 // GraphQL
 import { useQuery, useApolloClient } from "@apollo/client";
+
+// Category Component
+// import CategoryIdOrName from "pageComponents/Categories/CategoryIdOrName";
+import AlignCenterLayout from "components/AlignCenterLayout";
+export const MAX_WIDTH_GRID: number = 1160;
+// show exactly 4 product cards in carousel + 1rem padding on left
+// 270px each card (including margin of 16px) = 290
 
 
 
 
 const FrontPage: React.FC<ReactProps> = (props) => {
 
-  const { classes, children } = props;
-
-  const dispatch = useDispatch();
+  const {
+    classes,
+    initialFeaturedProducts,
+  } = props;
 
   // const theme = useTheme();
   // const lgDown = useMediaQuery(theme.breakpoints.down('lg'));
   // const mdDown = useMediaQuery(theme.breakpoints.down('md'));
   // const smDown = useMediaQuery(theme.breakpoints.down('sm'));
 
-
-
   return (
     <div className={classes.outerContainer}>
+
       <BannerHome />
-      {/* <CovidBanner /> */}
-      <div className={classes.flexRowInner}>
-        <div className={clsx(classes.productColumn60)}>
-          <div style={{
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
-            <div className={classes.maxWidth}>
-              <NewReleaseProducts
-                initialProducts={undefined}
-                count={24}
-              />
-            </div>
-          </div>
-        </div>
-      </div>
+
+      <AlignCenterLayout
+        maxWidth={MAX_WIDTH_GRID || 1160}
+        withRecommendations={false}
+      >
+        <FeaturedProducts
+          initialFeaturedProducts={initialFeaturedProducts}
+          count={4}
+          cardsPerRow={{
+            xs: 1.5,
+            sm: 1.5,
+            md: 2,
+            lg: 3,
+            xl: 4,
+          }}
+        />
+
+        <FeaturedProducts
+          initialFeaturedProducts={initialFeaturedProducts}
+          count={4}
+          offset={2} // for demo purposes
+          cardsPerRow={{
+            xs: 1.5,
+            sm: 1.5,
+            md: 2,
+            lg: 3,
+            xl: 4,
+          }}
+        />
+
+        {/* <NewReleaseProducts
+          initialProducts={undefined}
+          count={32}
+          title={"New Releases"}
+        /> */}
+
+      </AlignCenterLayout>
+
     </div>
   )
 }
 
+
 interface ReactProps extends WithStyles<typeof styles> {
+  initialFeaturedProducts?: ProductsConnection;
 }
 interface QueryData {
   productsAllConnection: ProductsConnection;

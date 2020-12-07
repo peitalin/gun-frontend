@@ -75,33 +75,6 @@ const PriceDisplayProductPage = (props: ReactProps) => {
             }
           </div>
         </div>
-        {/* {
-          expiresAt &&
-          expiresAt.getSeconds &&
-          expiresAt.getSeconds() > 0 &&
-          <div className={classes.innerContainerSpreadCountdown}>
-            <div className={classes.countDownTag}>
-              <Typography className={classes.finalCountDown} variant="body1">
-                Sale ends in &nbsp;
-              </Typography>
-              <CountdownBadge
-                className={classes.time}
-                endDate={expiresAt}
-                style={props.countDownStyle}
-              />
-            </div>
-          </div>
-        } */}
-        {/* {
-          props.quantityAvailable &&
-          <div className={classes.innerContainerSpreadCountdown}>
-              <div className={classes.innerContainerSpreadEnd}>
-                <Typography className={classes.quantityText} variant="body1">
-                  {`${props.quantityAvailable} available`}
-                </Typography>
-              </div>
-          </div>
-        } */}
       </>
     </div>
   )

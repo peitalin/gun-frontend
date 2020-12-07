@@ -5,7 +5,7 @@ import {oc as option} from "ts-optchain";
 import { useQuery } from "@apollo/client";
 import { DocumentNode } from "graphql";
 // typings
-import { PageCursor } from "typings/gqlTypes";
+import { PageBasedConnection, PageCursor } from "typings/gqlTypes";
 import { WatchQueryFetchPolicy } from "@apollo/client";
 
 
@@ -44,7 +44,8 @@ const usePaginatePagedQuery = () =>
       query: {
         count: connectionQuery.count,
         pageNumber: connectionQuery.page.pageNumber,
-        sortAscending: connectionQuery.sortAscending,
+        // sortAscending: connectionQuery.sortAscending,
+        sortAscending: props.sortAscending,
       },
     },
     fetchPolicy: 'network-only', // don't use cache
@@ -95,6 +96,7 @@ export interface usePaginateQueryProps<QueryData, NodeType> {
   query: DocumentNode;
   variables: any;
   connectionSelector(data: QueryData): [
+    // GenericCursorBasedConnection<NodeType> | GenericPageBasedConnection<NodeType>,
     any,
     string
   ];
@@ -104,7 +106,7 @@ export interface usePaginateQueryProps<QueryData, NodeType> {
   count?: number;
   ssr?: boolean;
   fetchPolicy?: WatchQueryFetchPolicy;
-  sortAscending?: boolean;
+  sortAscending: boolean;
   refetchQueries?(result?: any): void;
   awaitRefetchQueries?: boolean;
 }

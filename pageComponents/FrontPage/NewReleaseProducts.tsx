@@ -8,7 +8,7 @@ import Link from "next/link";
 // Material UI
 import Typography from "@material-ui/core/Typography";
 // Components
-import PreviewCardResponsive from "pageComponents/FrontPage/PreviewCardResponsiveCarousel";
+import PreviewCardResponsive from "pageComponents/FrontPage/PreviewCardResponsive";
 import PreviewCardLoading from "./PreviewCardLoading";
 import LoadingCards from "./LoadingCards";
 import Loading from "components/Loading";
@@ -164,7 +164,6 @@ const NewReleaseProducts = (props: ReactProps) => {
       <div className={clsx(
         classes.carouselContainer,
         classes.maxWidth100vw,
-        smDown ? classes.paddingRight : null,
         xsDown
           ? classes.carouselContainerPaddingLeftXs
           : classes.carouselContainerPaddingLeft,
@@ -254,9 +253,6 @@ const styles = (theme: Theme) => createStyles({
   carouselContainerPaddingLeftXs: {
     paddingLeft: '0.5rem', // balances 1rem margin-right on flexItems
   },
-  paddingRight: {
-    paddingRight: '0.5rem',
-  },
   productCard: {
     display: 'flex',
     flexDirection: 'row',
@@ -268,7 +264,7 @@ const styles = (theme: Theme) => createStyles({
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    marginRight: '0rem',
+    marginRight: '1rem',
     marginBottom: '1rem',
   },
   productCardXs: {

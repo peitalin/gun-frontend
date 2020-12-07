@@ -15,8 +15,6 @@ import { GenericConnection } from "typings";
 import { DocumentNode } from "graphql";
 
 
-
-// React.FC<ReactProps> typings not working on VSCode
 const PaginateButtonsWithQuery = <QueryData, QueryVar, NodeType>(
   props: PaginateButtonsWithQueryProps<QueryData, NodeType>
 ) => {
@@ -41,6 +39,7 @@ const PaginateButtonsWithQuery = <QueryData, QueryVar, NodeType>(
   });
   // refetch not being passed down from usePaginateQueryHook.
   // refetch is undefined when usePaginateQueryHook is first initialized
+  // Apollo buggy
 
   if (
     !connectionQuery.page.hasPreviousPage &&
@@ -117,25 +116,37 @@ export const PaginateButtons: React.FC<PaginateButtonsProps> = (props) => {
         alignItems: 'center',
       }}>
         <Button
+          style={{
+            marginRight: '0.5rem',
+          }}
           disabled={!connectionQuery.page.hasPreviousPage}
           variant="text"
           onClick={() => {
             getPrevPage()
           }}
         >
-          Previous
+          Prev
         </Button>
         {
           cursorsHead.map(cursor => {
+
+            let pageNumber = cursors.find(c => c.cursor === connectionQuery.cursor)
+              ? cursors.find(c => c.cursor === connectionQuery.cursor).page
+              : 1
+
             return (
               <Button
                 key={cursor.page}
+                style={{
+                  marginRight: '0.25rem',
+                  minWidth: '2rem',
+                }}
                 disabled={false}
-                variant="text"
+                variant="outlined"
+                // color={cursor.page === pageNumber ? "secondary" : "primary"}
                 onClick={() => {
                   getPageAtCursor(cursor.cursor)
                 }}
-                style={{ minWidth: '2rem' }}
               >
                 {cursor.page}
               </Button>
@@ -148,17 +159,20 @@ export const PaginateButtons: React.FC<PaginateButtonsProps> = (props) => {
         }
         {
           (cursors.length > 6) &&
-          cursors.slice(-3).map(cursor => {
+          cursors.slice(-3).map((cursor, index) => {
             return (
               <Button
-                key={cursor.page}
+                key={index}
+                style={{
+                  marginRight: '0.25rem',
+                  minWidth: '2rem'
+                }}
                 disabled={false}
-                variant="text"
+                variant="outlined"
                 onClick={() => {
                   setCursors(s => s.slice(0, cursor.page + 1))
                   getPageAtCursor(cursor.cursor)
                 }}
-                style={{ minWidth: '2rem' }}
               >
                 {cursor.page}
               </Button>
@@ -167,6 +181,9 @@ export const PaginateButtons: React.FC<PaginateButtonsProps> = (props) => {
         }
         <Button
           disabled={!connectionQuery.page.hasNextPage}
+          style={{
+            marginLeft: '0.25rem',
+          }}
           variant="text"
           onClick={() => {
             // add cursor if its not already in cursors list.

@@ -3,10 +3,10 @@ import * as React from "react";
 import {oc as option} from "ts-optchain";
 // GraphQL
 import { useQuery } from "@apollo/client";
-import { DocumentNode } from "graphql";
 import { WatchQueryFetchPolicy } from "@apollo/client";
+import { DocumentNode } from "graphql";
 // typings
-import { Connection, ConnectionQuery, PageCursor } from "typings/gqlTypes";
+import { Connection, PageCursor } from "typings/gqlTypes";
 
 
 
@@ -24,6 +24,8 @@ const usePaginateQuery = <QueryData, QueryVar, NodeType>(
       hasNextPage: false,
       hasPreviousPage: false
     },
+    cursor: undefined, // must be undefined, not null, for caching
+    // caching cursor === undefined queries
   } as ConnectionQueryProps);
 
   const getPrevPage = () => {
@@ -52,12 +54,14 @@ const usePaginateQuery = <QueryData, QueryVar, NodeType>(
     setConnectionQuery(s => ({
       ...s,
       pageBackwards: false,
+      sortAscending: false,
       cursor: cursor,
     }))
   }
 
-  const { loading, error, data, refetch } = useQuery<QueryData, QueryVar>(
-    props.query as any, {
+  // console.log("sortAscending: ", props.sortAscending)
+
+  const apolloIsShitResults = useQuery<QueryData, QueryVar>(props.query, {
     variables: {
       ...props.variables,
       // THIS MUST BE NAMED query, not connectionQuery
@@ -66,13 +70,29 @@ const usePaginateQuery = <QueryData, QueryVar, NodeType>(
         cursor: connectionQuery.cursor,
         pageBackwards: connectionQuery.pageBackwards,
         sortAscending: connectionQuery.sortAscending,
+        // sortAscending: props.sortAscending,
+        // sortAscending: false,
       },
     },
-    fetchPolicy: props.fetchPolicy || 'network-only', // don't use cache
+    fetchPolicy: props.fetchPolicy || 'cache-first', // use cache if possible.
+    // prevents hard-refresh when cursor === undefined (first page)
     ssr: props.ssr || false,
   });
-  // console.log('error', error)
-  // console.log('data', data)
+
+  const {
+    loading,
+    error,
+    data,
+  } =  apolloIsShitResults;
+
+  let refetch;
+
+  if (apolloIsShitResults) {
+    refetch = apolloIsShitResults.refetch
+  } else {
+    refetch = () => console.log("not defined, apollo are retards")
+  }
+
 
   const [connection, connectionName] = props.connectionSelector(data);
 
@@ -87,7 +107,10 @@ const usePaginateQuery = <QueryData, QueryVar, NodeType>(
           hasNextPage: false,
           hasPreviousPage: false
         };
-        setConnectionQuery(s => ({ ...s, page: page }))
+        setConnectionQuery(s => ({
+          ...s,
+          page: page
+        }))
       } else {
 
         const forwardsCursor = connection.edges[connection.edges.length - 1].cursor || null;
@@ -96,13 +119,16 @@ const usePaginateQuery = <QueryData, QueryVar, NodeType>(
           backwardsCursor,
           forwardsCursor,
           hasNextPage: !connectionQuery.pageBackwards
-            ? !connection.pageInfo.isLastPage
+            ? !option(connection).pageInfo.isLastPage()
             : true,
           hasPreviousPage: connectionQuery.pageBackwards
-            ? !connection.pageInfo.isLastPage
+            ? !option(connection).pageInfo.isLastPage()
             : connectionQuery.cursor != null
         };
-        setConnectionQuery(s => ({ ...s, page: page }))
+        setConnectionQuery(s => ({
+          ...s,
+          page: page
+        }))
       }
     }
   }, [
@@ -111,6 +137,8 @@ const usePaginateQuery = <QueryData, QueryVar, NodeType>(
     props.count,
   ])
 
+
+  // https://github.com/apollographql/react-apollo/issues/3862
 
   return {
     getPrevPage,
@@ -130,6 +158,7 @@ interface usePaginateQueryProps<QueryData, NodeType> {
   query: DocumentNode;
   variables: any;
   connectionSelector(data: QueryData): [
+    // GenericCursorBasedConnection<NodeType> | GenericPageBasedConnection<NodeType>,
     any,
     string
   ];
@@ -137,7 +166,7 @@ interface usePaginateQueryProps<QueryData, NodeType> {
   // The function can return 2 second argument: connectionName,
   // for queries where the Connection is nested (not in top level of response)
   count?: number;
-  sortAscending?: boolean;
+  sortAscending: boolean;
   // apollo useQuery props
   ssr?: boolean;
   fetchPolicy?: WatchQueryFetchPolicy;

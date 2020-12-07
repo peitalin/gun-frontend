@@ -150,7 +150,7 @@ const styles = (theme: Theme) => createStyles({
     zIndex: 1,
     right: '1rem',
     background: Colors.cream,
-    border: `1px solid ${Colors.darkerGrey}`,
+    border: `1px solid ${Colors.black}`,
     "&:hover": {
       background: Colors.cream,
     }
@@ -158,7 +158,7 @@ const styles = (theme: Theme) => createStyles({
   favoriteRoot: {
     width: '1rem',
     height: '1rem',
-    fill: Colors.darkerGrey,
+    fill: Colors.black,
     "&:hover": {
       fill: Colors.red,
     },
@@ -168,7 +168,7 @@ const styles = (theme: Theme) => createStyles({
     height: '1rem',
     fill: Colors.red,
     "&:hover": {
-      fill: Colors.darkerGrey,
+      fill: Colors.black,
     },
   },
 });

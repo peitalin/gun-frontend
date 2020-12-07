@@ -13,7 +13,6 @@ import { WatchQueryFetchPolicy } from "@apollo/client";
 // Paginator hooks
 import usePaginateQueryHook from "components/Paginators/usePaginateQueryHook";
 import { useScrollYPosition } from "utils/hooks";
-import { DocumentNode } from "graphql";
 // throttle
 const throttle = require('lodash.throttle');
 
@@ -43,6 +42,7 @@ const PaginateOnScroll = <QueryData, QueryVar, NodeType extends { id: ID }>(
   } = usePaginateQueryHook<QueryData, QueryVar, NodeType>({
     query: props.query,
     variables: props.variables,
+    sortAscending: props.sortAscending,
     connectionSelector: props.connectionSelector,
     count: props.count || 3,
     ssr: props.ssr,
@@ -89,25 +89,26 @@ const PaginateOnScroll = <QueryData, QueryVar, NodeType extends { id: ID }>(
 
   return (
     <>
-    {
-      props.children({
-        loading,
-        error,
-        data: {
-          [connectionName]: {
-            ...accumConnection
-          }
-        },
-      })
-    }
+      {
+        props.children({
+          loading,
+          error,
+          data: {
+            [connectionName]: {
+              ...accumConnection
+            }
+          },
+        })
+      }
     </>
   )
 }
 
 
 interface PaginateScrollProps<QueryData, NodeType> {
-  query: DocumentNode;
+  query: any;
   variables: any;
+  sortAscending: boolean;
   connectionSelector(data: QueryData): [GenericConnection<NodeType>, string];
   count?: number;
   id?: string;
