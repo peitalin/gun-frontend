@@ -7,7 +7,7 @@ import { Categories, Product, SoldOutStatus } from "typings/gqlTypes";
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import Hidden from "@material-ui/core/Hidden";
-import ProductRow from "pageComponents/FrontPage/FeaturedProductsMobile/ProductRow";
+import ProductRow from "pageComponents/FrontPage/_FeaturedProductsMobile/ProductRow";
 import PreviewCardRC from "./PreviewCardRC";
 
 

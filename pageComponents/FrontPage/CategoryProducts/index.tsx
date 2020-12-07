@@ -6,15 +6,13 @@ import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/s
 import { Colors, BorderRadius } from "layout/AppTheme";
 import clsx from "clsx";
 // Typings
-import { Connection, Product, ProductsConnectionCursorBased, CuratedListItemsConnection } from "typings/gqlTypes";
+import { Connection, Product, ProductsConnection } from "typings/gqlTypes";
 
 import getConfig from "next/config";
 const {
   publicRuntimeConfig: { FEATURED_LIST_ID }
 } = getConfig();
-import { getProductIdOrSlug } from "utils/links";
 
-import CategoryProductsMobile from "pageComponents/FrontPage/CategoryProducts/CategoryProductsMobile";
 import CategoryProductsMobileCarousel from "pageComponents/FrontPage/CategoryProducts/CategoryProductsMobileCarousel";
 import CategoryProductsDesktop from "pageComponents/FrontPage/CategoryProducts/CategoryProductsDesktop";
 import Hidden from 'components/HiddenFix';
@@ -72,7 +70,7 @@ const CategoryProducts = (props: ReactProps) => {
 
 
 interface ReactProps extends WithStyles<typeof styles> {
-  initialProducts?: ProductsConnectionCursorBased;
+  initialProducts?: ProductsConnection;
   count: number;
   cardsPerRow?: {
     xs?: number;

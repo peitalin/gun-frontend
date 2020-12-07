@@ -29,7 +29,6 @@ import {
   WishlistItem,
   ProductsConnection,
   CuratedListItemsConnection,
-  // useCuratedListItemsConnectionQuery,
   CuratedListItemsEdge,
   CuratedListItem,
 } from "typings/gqlTypes";

@@ -17,7 +17,7 @@ import {
   GET_PRODUCTS_BY_CATEGORY,
 } from "queries/products-queries";
 // GraphQL Typings
-import { Connection, Product } from "typings/gqlTypes";
+import { Connection, Product, ProductsConnection } from "typings/gqlTypes";
 // Paginator hooks
 import usePaginateQueryHook from "components/Paginators/usePaginateQueryHook";
 import Or from "components/Or";
@@ -75,9 +75,6 @@ const CategoryProducts = (props: ReactProps) => {
   const connection = option(data).productsByCategoryConnectionPageBased(initialProducts);
   const numProducts = option(connection).edges([]).length;
 
-  // wishlist refetch
-  const wishlistConnectionResponse = usePaginateQueryHook(QueryWishlistHookArgs);
-
   const theme = useTheme();
   // jumboXL preview card on sm screen size only, remove right margin
   const sm = useMediaQuery(theme.breakpoints.only("sm"))
@@ -127,7 +124,6 @@ const CategoryProducts = (props: ReactProps) => {
                     <PreviewCardResponsive
                       product={product}
                       cardsPerRow={cardsPerRow}
-                      refetch={wishlistConnectionResponse.refetch}
                       listName={"categories-list"}
                       loadCarouselPics={loadCarouselPics}
                       setLoadCarouselPics={setLoadCarouselPics}
@@ -161,7 +157,7 @@ const CategoryProducts = (props: ReactProps) => {
 /////////// Typings //////////////
 
 interface ReactProps extends WithStyles<typeof styles> {
-  initialProducts?: ProductsConnectionCursorBased;
+  initialProducts?: ProductsConnection;
   count: number;
   cardsPerRow?: {
     xs?: number;
@@ -173,7 +169,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   categoryIdOrName: string;
 }
 interface QueryData {
-  productsByCategoryConnectionPageBased: ProductsConnectionCursorBased;
+  productsByCategoryConnectionPageBased: ProductsConnection;
 }
 interface QueryVar {
 }
