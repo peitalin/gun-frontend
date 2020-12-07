@@ -38,7 +38,7 @@ export const styles = (theme: Theme) => createStyles({
     objectFit: "cover",
     height: '100%',
     border: 'none',
-    backgroundColor: Colors.lightestGrey,
+    backgroundColor: theme.colors.uniswapNavy,
   },
   emptyYouTubeVimeo: {
     display: 'flex',

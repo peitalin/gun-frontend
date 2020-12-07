@@ -17,23 +17,23 @@ import { ProductPreviewItem, Product, ID } from "typings/gqlTypes";
 import { genSrcSet, genImgBreakpoints } from "utils/images";
 import { getYouTubeVimeoImagePreview } from "utils/links";
 import PriceDisplayMain from "components/PriceDisplayMain";
-import LinkLoading from "pageComponents/FrontPage/PreviewCardResponsiveCarousel/LinkLoading";
+import LinkLoading from "pageComponents/FrontPage/PreviewCardResponsive/LinkLoading";
 // Responsiveness
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import Hidden from "@material-ui/core/Hidden";
-import DescriptionLoading from "pageComponents/FrontPage/PreviewCardResponsiveCarousel/DescriptionLoading";
+import DescriptionLoading from "pageComponents/FrontPage/PreviewCardResponsive/DescriptionLoading";
 // Carousel
 import AirCarousel from "components/AirCarousel";
 import { useScrollXPosition, useCalcNumItemsFromWindowWidth } from "utils/hooks";
 import AspectRatioConstraint from "components/AspectRatioConstraint";
-import PreviewImageEmpty from "pageComponents/FrontPage/PreviewCardResponsiveCarousel/PreviewImageEmpty";
-import AspectCarouselItemLink from "pageComponents/FrontPage/PreviewCardResponsiveCarousel/AspectCarouselItemLink";
+import PreviewImageEmpty from "pageComponents/FrontPage/PreviewCardResponsive/PreviewImageEmpty";
+import AspectCarouselItemLink from "pageComponents/FrontPage/PreviewCardResponsive/AspectCarouselItemLink";
 import {
   CARD_MAX_WIDTH_XL,
   DESCRIPTION_HEIGHT,
   styles,
-} from "pageComponents/FrontPage/PreviewCardResponsiveCarousel/styles";
+} from "pageComponents/FrontPage/PreviewCardResponsive/styles";
 
 
 

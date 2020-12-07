@@ -55,7 +55,6 @@ const FeaturedProductsDesktop = (props: ReactProps) => {
 
   const theme = useTheme();
   // jumboXL preview card on sm screen size only, remove right margin
-  const sm = useMediaQuery(theme.breakpoints.only("sm"))
   const smDown = useMediaQuery(theme.breakpoints.down("sm"))
   const xsDown = useMediaQuery(theme.breakpoints.down("xs"))
 
@@ -68,7 +67,7 @@ const FeaturedProductsDesktop = (props: ReactProps) => {
           className={clsx(classes.title, classes.maxWidth)}
           gutterBottom
         >
-          Featured Downloads
+          {props.title || "Featured"}
         </Typography>
       </div>
 
@@ -105,6 +104,7 @@ const FeaturedProductsDesktop = (props: ReactProps) => {
 /////////// Typings //////////////
 
 interface ReactProps extends WithStyles<typeof styles> {
+  title?: string;
   cardsPerRow?: {
     xs?: number;
     sm?: number;

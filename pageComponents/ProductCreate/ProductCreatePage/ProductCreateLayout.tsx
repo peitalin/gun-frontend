@@ -10,7 +10,7 @@ import ClearIcon from "@material-ui/icons/Clear";
 import IconButton from "@material-ui/core/IconButton";
 
 // Product Preview Card
-import PreviewCardResponsive from "pageComponents/FrontPage/PreviewCardResponsiveCarousel";
+import PreviewCardResponsive from "pageComponents/FrontPage/PreviewCardResponsive";
 import Tooltip from '@material-ui/core/Tooltip';
 import {
   ID,

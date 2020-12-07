@@ -22,11 +22,11 @@ import Hidden from "@material-ui/core/Hidden";
 import ProductRow from "pageComponents/FrontPage/FeaturedProducts/ProductRow";
 // Loading
 import LoadingBar from "components/LoadingBar";
-import { styles } from "./PreviewCardResponsiveCarousel/styles";
-import PreviewImageEmpty from "./PreviewCardResponsiveCarousel/PreviewImageEmpty";
+import { styles } from "./PreviewCardResponsive/styles";
+import PreviewImageEmpty from "./PreviewCardResponsive/PreviewImageEmpty";
 import {
   CARD_MAX_WIDTH_XL,
-} from "./PreviewCardResponsiveCarousel/styles";
+} from "./PreviewCardResponsive/styles";
 
 
 /// NOTE:

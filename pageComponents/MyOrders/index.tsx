@@ -47,7 +47,7 @@ import ErrorDisplay from "components/Error";
 import PaginateButtons from "components/Paginators/PaginateButtons";
 export const MY_DOWNLOADS_PAGINATION_COUNT = 10;
 import AlignCenterLayout from "components/AlignCenterLayout";
-import DescriptionLoading from "pageComponents/FrontPage/PreviewCardResponsiveCarousel/DescriptionLoading";
+import DescriptionLoading from "pageComponents/FrontPage/PreviewCardResponsive/DescriptionLoading";
 import ResponsivePadding from "pageComponents/SellerProfileDashboard/ResponsivePadding";
 // Analytics
 import { useRouter } from "next/router";

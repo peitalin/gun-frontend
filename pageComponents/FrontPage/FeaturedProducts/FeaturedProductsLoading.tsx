@@ -14,9 +14,6 @@ import {
   Product,
   ProductsConnection,
 } from "typings/gqlTypes";
-// Paginator hooks
-import { ConnectionQueryProps } from "components/Paginators/usePaginatePagedQueryHook";
-import usePaginateQueryHook from "components/Paginators/usePaginatePagedQueryHook";
 // redux
 import { useSelector } from "react-redux";
 import { GrandReduxState } from "reduxStore/grand-reducer";
@@ -41,7 +38,6 @@ const FeaturedProductsMobile = (props: ReactProps) => {
 
   const {
     classes,
-    productsConnection,
     cardsPerRow = {
       xs: 1.5,
       sm: 1.5,
@@ -50,11 +46,6 @@ const FeaturedProductsMobile = (props: ReactProps) => {
       xl: 1.5,
     },
   } = props;
-
-  const connection = option(props).productsConnection();
-
-  const products = option(connection).edges([])
-      .map(curatedItem => curatedItem.node)
 
   return (
     <main className={classes.root}>
@@ -69,21 +60,12 @@ const FeaturedProductsMobile = (props: ReactProps) => {
         disableButtons={false}
         scrollSnapType={"x proximity"}
       >
-        {
-          products.map((product, i) =>
-            <div key={i} style={{
-              marginLeft: '0.5rem',
-            }}>
-              <PreviewCardResponsive
-                product={product as Product}
-                cardsPerRow={cardsPerRow}
-                xsCardRow={false}
-                listName={"featured-list"}
-                productIndex={i}
-              />
-            </div>
-          )
-        }
+        <LoadingCards
+          count={6}
+          xsCardRow={false}
+          flexWrapItems={false}
+          cardsPerRow={cardsPerRow}
+        />
       </AirCarousel>
     </main>
   )
@@ -95,7 +77,6 @@ const FeaturedProductsMobile = (props: ReactProps) => {
 
 interface ReactProps extends WithStyles<typeof styles> {
   title?: string;
-  productsConnection: ProductsConnection;
   cardsPerRow?: {
     xs?: number;
     sm?: number;

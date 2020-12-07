@@ -82,7 +82,7 @@ const PreviewItemUploaderGrid = dynamic(() => import("pageComponents/ProductCrea
   ssr: false,
 })
 // Product Preview Card
-import PreviewCardResponsive from "pageComponents/FrontPage/PreviewCardResponsiveCarousel";
+import PreviewCardResponsive from "pageComponents/FrontPage/PreviewCardResponsive";
 
 // Validation
 import { Formik, FormikErrors } from 'formik';

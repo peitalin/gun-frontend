@@ -13,9 +13,9 @@ import {
   Order_By,
 } from "typings/gqlTypes";
 
-// import FeaturedProductsMobile from "pageComponents/FrontPage/FeaturedProducts/FeaturedProductsMobile";
 import FeaturedProductsMobileCarousel from "pageComponents/FrontPage/FeaturedProducts/FeaturedProductsMobileCarousel";
 import FeaturedProductsDesktop from "pageComponents/FrontPage/FeaturedProducts/FeaturedProductsDesktop";
+import FeaturedProductsLoading from "pageComponents/FrontPage/FeaturedProducts/FeaturedProductsLoading";
 import Hidden from 'components/HiddenFix';
 
 // const FEATURED_LIST_ID = 'prodlist_1bea860c-7b8b-476d-a417-82728287dc9d'
@@ -82,6 +82,14 @@ const FeaturedProducts = (props: ReactProps) => {
 
   let connection = option(data).productsAllConnection()
     || initialFeaturedProducts;
+
+  if (loading) {
+    return (
+      <FeaturedProductsLoading
+        cardsPerRow={cardsPerRow}
+      />
+    )
+  }
 
   return (
     <>
