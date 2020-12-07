@@ -3341,6 +3341,7 @@ export type Mutation = {
   sendForm10SubmittedAdminEmail: BlankMutationResponse;
   sendForm10ApprovedBuyerEmail: BlankMutationResponse;
   sendForm10ApprovedSellerEmail: BlankMutationResponse;
+  sendPayoutCompleteSellerEmail: BlankMutationResponse;
 };
 
 
@@ -4551,6 +4552,11 @@ export type MutationSendForm10ApprovedBuyerEmailArgs = {
 
 
 export type MutationSendForm10ApprovedSellerEmailArgs = {
+  userId: Scalars['String'];
+};
+
+
+export type MutationSendPayoutCompleteSellerEmailArgs = {
   userId: Scalars['String'];
 };
 

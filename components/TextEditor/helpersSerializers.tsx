@@ -41,9 +41,9 @@ export const serializeHtmlNode = element => {
     let text = element.text
 
     if (element.bold && element.italics) {
-      return `<i><strong>${text}</strong></i>`
+      return `<i><b>${text}</b></i>`
     } else if (element.bold) {
-      return `<strong>${text}</strong>`
+      return `<b>${text}</b>`
     } else if (element.italics) {
       return `<i>${text}</i>`
     } else {
@@ -85,9 +85,9 @@ export const serializeHtmlNode = element => {
       case 'numbered-list':
         return `<ol>${children}</ol>`
       case 'strong':
-        return `<strong>${children}</strong>`
+        return `<b>${children}</b>`
       case 'bold':
-        return `<strong>${children}</strong>`
+        return `<b>${children}</b>`
       case 'italics':
         return `<em>${children}</em>`
       case 'link':

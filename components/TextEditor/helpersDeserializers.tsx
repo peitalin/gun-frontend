@@ -20,8 +20,8 @@ import { WHITE_SPACE_FOR_P_TAGS } from "./globalWhiteSpaceSetting";
 export const ELEMENT_TAGS = {
   A: el => ({ type: 'link', url: el.getAttribute('href') }),
   BLOCKQUOTE: () => ({ type: 'quote' }),
-  H1: () => ({ type: 'heading-one' }),
-  H2: () => ({ type: 'heading-two' }),
+  H1: () => ({ type: 'p' }),
+  H2: () => ({ type: 'p' }),
   /// Don't deserialize H3 onwards as headings
   H3: () => ({ type: 'p' }),
   H4: () => ({ type: 'p' }),
@@ -33,15 +33,19 @@ export const ELEMENT_TAGS = {
   // H4: () => ({ type: 'heading-four' }),
   // H5: () => ({ type: 'heading-five' }),
   // H6: () => ({ type: 'heading-six' }),
+  LINK: el => ({ type: 'link', url: el.getAttribute('href') }),
   IMG: el => ({ type: 'image', url: el.getAttribute('src') }),
   LI: () => ({ type: 'list-item' }),
   OL: () => ({ type: 'numbered-list' }),
-  P: () => ({ type: 'paragraph' }),
-  OP: () => ({ type: 'paragraph' }),
-  STRONG: () => ({ type: 'bold' }),
+  HR: () => ({ type: 'p' }),
+  DIV: () => ({ type: 'p' }),
+  P: () => ({ type: 'p' }),
+  OP: () => ({ type: 'p' }),
+  // STRONG: () => ({ type: 'bold' }),
   PRE: () => ({ type: 'code' }),
   UL: () => ({ type: 'bulleted-list' }),
-  B: () => ({ type: 'break' }),
+  I: () => ({ type: 'italic' }),
+  B: () => ({ type: 'bold' }),
   BR: () => ({ type: 'break' }),
 }
 
@@ -52,8 +56,9 @@ export const TEXT_TAGS = {
   // H6: () => ({ bold: true }),
   // CODE: () => ({ code: true }),
   // DEL: () => ({ strikethrough: true }),
-  // EM: () => ({ italic: true }),
-  // I: () => ({ italic: true }),
+  B: () => ({ bold: true }),
+  EM: () => ({ italic: true }),
+  I: () => ({ italic: true }),
   // S: () => ({ strikethrough: true }),
   // U: () => ({ underline: true }),
   // Strong elements can contain <a> elements, not a TEXT_TAG
@@ -80,14 +85,6 @@ export const deserialize = (el) => {
     // return "";
   }
 
-  if (
-    nodeName === 'PRE' &&
-    el.childNodes[0] &&
-    el.childNodes[0].nodeName === 'CODE'
-  ) {
-    parent = el.childNodes[0]
-  }
-
 
   const children = Array.from(parent.childNodes)
     .map(deserialize)
@@ -101,21 +98,22 @@ export const deserialize = (el) => {
 
       // console.log("nnild:", n)
       // console.log("nodeName: ", nodeName)
+      return n
 
-      if (n === "\n" && (nodeName === "paragraph" || nodeName === "P")) {
-        // don't allow nested P tags when converting \n to p tags
-        return { text: "" }
-        // return n
-      }
-      if (n === "\n") {
-        return { type: "paragraph", children: [{ text: "" }] }
-        // return n
-      } else  {
-        return n
-      }
+      // if (n === "\n" && (nodeName === "paragraph" || nodeName === "P")) {
+      //   // don't allow nested P tags when converting \n to p tags
+      //   return { text: "" }
+      //   // return n
+      // }
+      // if (n === "\n") {
+      //   // return { type: "paragraph", children: [{ text: "" }] }
+      //   return n
+      // } else  {
+      //   return n
+      // }
     })
 
-  console.log("children:", children)
+  // console.log("children:", children)
 
   if (nodeName === 'BODY') {
     return jsx('fragment', {}, children)
@@ -130,8 +128,16 @@ export const deserialize = (el) => {
       // slate.js because its a sack of shit
       return ['']
     }
+    console.log("children", children)
+
     return children
-      .map((child: Node) => jsx('text', attrs, child))
+      .map((child: Node) => {
+        if (typeof child === 'string') {
+          return jsx('text', attrs, child)
+        } else {
+          return jsx('element', attrs, child)
+        }
+      })
   }
 
   if (ELEMENT_TAGS[nodeName]) {

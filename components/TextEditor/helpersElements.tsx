@@ -78,24 +78,24 @@ export const Element = props => {
 export const Leaf = ({ attributes, children, leaf }) => {
 
   if (leaf.bold) {
-    children = <strong>{children}</strong>
+    children = <b>{children}</b>
   }
 
-  if (leaf.code) {
-    children = <code>{children}</code>
-  }
+  // if (leaf.code) {
+  //   children = <code>{children}</code>
+  // }
 
-  if (leaf.italic) {
-    children = <em>{children}</em>
-  }
+  // if (leaf.italic) {
+  //   children = <em>{children}</em>
+  // }
 
-  if (leaf.underline) {
-    children = <u>{children}</u>
-  }
+  // if (leaf.underline) {
+  //   children = <u>{children}</u>
+  // }
 
-  if (leaf.strikethrough) {
-    children = <del>{children}</del>
-  }
+  // if (leaf.strikethrough) {
+  //   children = <del>{children}</del>
+  // }
 
   return <span {...attributes}>{children}</span>
 }
