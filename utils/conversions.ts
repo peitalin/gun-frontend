@@ -41,7 +41,7 @@ export const productToProductEditInput = (
     productId: product.id,
     title: product.currentSnapshot.title,
     categoryId: product.category.id,
-    description: product.description,
+    description: product.currentSnapshot.description,
     currentVariants: [
       {
         variantId: product.featuredVariant?.variantId,
