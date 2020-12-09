@@ -247,7 +247,7 @@ const PreviewCardRC = (props: ReactProps) => {
       </AirCarousel>
 
       <div className={classes.descriptionContainerOuter}>
-        {
+        {/* {
           showWishListButton &&
           productId &&
           <WishlistIcon
@@ -258,7 +258,7 @@ const PreviewCardRC = (props: ReactProps) => {
               top: '-0.8rem',
             }}
           />
-        }
+        } */}
         <LinkLoading
           href={"/p/[productId]"}
           as={`/p/${props.product?.id}`}

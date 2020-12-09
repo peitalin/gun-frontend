@@ -121,8 +121,10 @@ interface ReactProps extends WithStyles<typeof styles> {
   showLoadingBar?: boolean;
 }
 
-// const patternColor = fade(Colors.black, 0.9);
-// const backgroundColor = Colors.black;
+// const objectFit = 'contain';
+// const objectFit = 'cover';
+const objectFit1 = 'cover';
+const objectFit = 'cover';
 
 const styles = (theme: Theme) => createStyles({
   card: {
@@ -137,6 +139,10 @@ const styles = (theme: Theme) => createStyles({
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'center',
+    background: Colors.black,
+  },
+  compareSlider: {
+    width: "100%",
   },
   cardActionAreaWide: {
     height: '100%',
@@ -153,27 +159,42 @@ const styles = (theme: Theme) => createStyles({
   cardMediaTall: {
     height: "100%",
     width: '100%',
-    objectFit: "scale-down",
+    objectFit: objectFit1,
   },
   cardMediaWide: {
     height: '100%',
-    objectFit: "scale-down",
+    objectFit: objectFit1,
     backgroundColor: Colors.black,
   },
   cardMediaWideLgDown: {
     height: '100%',
-    objectFit: "scale-down",
+    // objectFit: "contain",
+    objectFit: objectFit,
     backgroundColor: Colors.black,
   },
   cardMediaWideLoading: {
     height: '100%',
-    objectFit: "scale-down",
+    // objectFit: "contain",
+    objectFit: objectFit,
     backgroundColor: Colors.lightestGrey,
   },
   cardMediaWideLgDownLoading: {
     height: '100%',
-    objectFit: "scale-down",
+    // objectFit: "contain",
+    objectFit: objectFit,
     backgroundColor: Colors.lightestGrey,
+  },
+  cardMediaWideLoadingBlack: {
+    height: '100%',
+    // objectFit: "contain",
+    objectFit: objectFit,
+    backgroundColor: Colors.black,
+  },
+  cardMediaWideLgDownLoadingBlack: {
+    height: '100%',
+    // objectFit: "contain",
+    objectFit: objectFit,
+    backgroundColor: Colors.black,
   },
 });
 

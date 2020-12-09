@@ -94,9 +94,6 @@ import { GET_RECOMMENDED_PRODUCTS, GET_PRODUCT } from "queries/products-queries"
 import { GET_STORE_PRIVATE } from "queries/store-queries";
 import { productToProductEditInput } from "utils/conversions";
 import { useRouter } from "next/router";
-import {
-  serializeHtml,
-} from 'components/TextEditor/helpersSerializers';
 import { createOption } from "components/Fields/KeywordDropdownInput";
 // Snackbar
 import { useSnackbar, ProviderContext } from "notistack";
@@ -196,12 +193,11 @@ const ProductEditPage = (props: ReactProps) => {
       onSubmit={(values, { setSubmitting }) => {
         console.log('formik values: ', values);
         // // Dispatch Apollo Mutation after validation
-        let htmlDescription = serializeHtml(values.description)
         productEdit({
           variables: {
             productEditInput: {
               title: values.title,
-              description: htmlDescription,
+              description: values.description,
               condition: values.condition,
               make: values.make,
               model: values.model,

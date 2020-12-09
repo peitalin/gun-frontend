@@ -199,14 +199,13 @@ const ProductCreatePage = (props: ReactProps) => {
 
   const onSubmitFormik = (values, { setSubmitting, resetForm }) => {
     console.log("dispatching productCreate with values: ", values)
-    // serialize Slate rich-text object as html
-    let htmlDescription = serializeHtml(values.description)
+    // let htmlDescription = serializeHtml(values.description)
     // Apollo Mutation
     productCreate({
       variables: {
         productCreateInput: {
           title: values.title,
-          description: htmlDescription,
+          description: values.description,
           condition: values.condition,
           make: values.make,
           model: values.model,
@@ -388,25 +387,30 @@ const ProductCreatePage = (props: ReactProps) => {
                 </SectionBorder>
 
                 <ProductCreateButtonWrapper {...props}>
-                  <ProductCreateButton
-                    // Save Draft Button
-                    classes={classes}
-                    onClick={() => processProductData({ publishNow: false }) }
-                    postInstantly={false}
-                    loading={state.loading}
-                    errors={errors}
-                    disabled={isFormikDisabled(errors) || state.loading}
-                  />
-                  <div className={classes.flexButtonSpacer}/>
-                  <ProductCreateButton
-                    // Post Instantly Button
-                    classes={classes}
-                    onClick={() => processProductData({ publishNow: true }) }
-                    postInstantly={true}
-                    loading={state.loading}
-                    errors={errors}
-                    disabled={isFormikDisabled(errors) || state.loading}
-                  />
+                  {
+                    process.browser &&
+                    <>
+                      <ProductCreateButton
+                        // Save Draft Button
+                        classes={classes}
+                        onClick={() => processProductData({ publishNow: false }) }
+                        postInstantly={false}
+                        loading={state.loading}
+                        errors={errors}
+                        disabled={isFormikDisabled(errors) || state.loading}
+                      />
+                      <div className={classes.flexButtonSpacer}/>
+                      <ProductCreateButton
+                        // Post Instantly Button
+                        classes={classes}
+                        onClick={() => processProductData({ publishNow: true }) }
+                        postInstantly={true}
+                        loading={state.loading}
+                        errors={errors}
+                        disabled={isFormikDisabled(errors) || state.loading}
+                      />
+                    </>
+                  }
                 </ProductCreateButtonWrapper>
 
               </ProductCreateForm>
@@ -468,9 +472,10 @@ const productCreateInputToProduct = (
     id: "product_preview",
     createdAt: new Date(),
     category: categories.find(c => c.id === p.categoryId),
-    description: p?.description
-      ? serializeHtml(p.description)
-      : p.description,
+    // description: p?.description
+    //   ? serializeHtml(p.description)
+    //   : p.description,
+    description: p.description,
     storeId: null, // <LinkLoading disable={!product.storeId}>
     store: store,
     snapshotId: "prod_snapshot_preview",

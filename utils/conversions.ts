@@ -13,7 +13,6 @@ import {
 
 export const productToProductEditInput = (
   product: Product,
-  toHtml?: boolean,
 ): ProductEditInput => {
 
   if (!product) {
@@ -21,7 +20,7 @@ export const productToProductEditInput = (
       productId: "",
       title: "",
       categoryId: "",
-      description: "",
+      description: "<p></p>",
       currentVariants: [],
       tags: [] as any,
       isPublished: false,
@@ -38,26 +37,11 @@ export const productToProductEditInput = (
     }
   }
 
-  let description;
-
-  if (!toHtml) {
-    // parse html DOM from string
-    let descriptionHtml = new DOMParser().parseFromString(
-      product.currentSnapshot.description,
-      'text/html'
-    )
-    // slate.js object representation
-    description = deserialize(descriptionHtml.body)
-    // console.log("deserialized slate obj", description)
-  } else {
-    description = product.currentSnapshot.description
-  }
-
   return {
     productId: product.id,
     title: product.currentSnapshot.title,
     categoryId: product.category.id,
-    description: description,
+    description: product.description,
     currentVariants: [
       {
         variantId: product.featuredVariant?.variantId,

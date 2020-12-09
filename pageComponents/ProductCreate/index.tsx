@@ -57,19 +57,32 @@ const ProductCreate: React.FC<ReactProps> = (props) => {
           {
             Object.values(refLinks).map(s => {
               let ref = `#product-create-nav-${s}`
-              return (
-                <a key={s} href={ref}
-                  className={
-                    currentViewSection === s
-                    ? classes.stickyLinkHighlighted
-                    : classes.stickyLink
-                  }
-                >
-                  <div key={s}>
-                    {s}
-                  </div>
-                </a>
-              )
+              if (process.browser) {
+                return (
+                  <a key={s} href={ref}
+                    className={
+                      currentViewSection === s
+                      ? classes.stickyLinkHighlighted
+                      : classes.stickyLink
+                    }
+                  >
+                    <div key={s}>
+                      {s}
+                    </div>
+                  </a>
+                )
+              } else {
+                return (
+                  <a key={s} href={ref}
+                    className={classes.stickyLink}
+                  >
+                    <div key={s}>
+                      {s}
+                    </div>
+                  </a>
+
+                )
+              }
             })
           }
         </div>

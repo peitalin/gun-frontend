@@ -35,33 +35,16 @@ const ProductDescription = (props: ReactProps) => {
         <span
           style={{ whiteSpace: WHITE_SPACE_FOR_P_TAGS }}
           dangerouslySetInnerHTML={{
-            __html: String(props.product?.currentSnapshot?.description ?? "")
+            __html: String(props.productDescription ?? "")
           }}
         />
       </Typography>
-      {/* {
-        !expandDescription
-        ? <Typography
-            variant="subtitle1"
-            className={classes.seeMore}
-            onClick={() => setExpandDescription(true)}
-          >
-            See more
-          </Typography>
-        : <Typography
-            variant="subtitle1"
-            className={classes.seeLess}
-            onClick={() => setExpandDescription(false)}
-          >
-            See less
-          </Typography>
-      } */}
     </div>
   )
 }
 
 interface ReactProps extends WithStyles<typeof styles> {
-  product: Product;
+  productDescription: string;
 }
 
 const styles = (theme: Theme) => createStyles({
@@ -69,7 +52,7 @@ const styles = (theme: Theme) => createStyles({
     position: "relative",
     wordWrap: 'break-word',
     marginTop: '1rem',
-    borderTop: `1px solid ${theme.colors.uniswapLighterGrey}`,
+    borderTop: `1px solid ${theme.colors.uniswapGrey}`,
     paddingTop: '2rem',
     paddingBottom: '1rem',
 

@@ -93,7 +93,7 @@ const ProductRow = (props: ReactProps) => {
     handleClose()
     // remove files, not a valid field in productEditInput graphql call
     await publishProduct(
-      productToProductEditInput(product, true),
+      productToProductEditInput(product),
       apolloClient
     )
     // await before refetching
@@ -106,7 +106,7 @@ const ProductRow = (props: ReactProps) => {
     handleClose()
     // remove files, not a valid field in productEditInput graphql call
     await unpublishProduct(
-      productToProductEditInput(product, true),
+      productToProductEditInput(product),
       apolloClient
     )
     // await before refetching

@@ -197,7 +197,7 @@ const styles = (theme: Theme) => createStyles({
   productPanelFixed: {
     position: 'fixed',
     border: `1px solid ${theme.colors.uniswapGrey}`,
-    bottom: '-18%',
+    bottom: '-33%',
     left: '1rem',
     boxShadow: BoxShadows.shadow2.boxShadow,
     transition: theme.transitions.create('bottom', {

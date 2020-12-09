@@ -51,7 +51,7 @@ const ProductDetails = (props: ReactProps) => {
       {
         option(props).product.currentSnapshot.description() &&
         <ProductDescription
-          product={props.product}
+          productDescription={props.product?.currentSnapshot?.description}
         />
       }
       {

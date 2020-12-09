@@ -34,7 +34,7 @@ const initialProductEditState: ReduxStateProductEdit = {
     categoryId: "",
     tags: [],
     title: "",
-    description: "",
+    description: "<p></p>",
     condition: "",
     make: "",
     model: "",

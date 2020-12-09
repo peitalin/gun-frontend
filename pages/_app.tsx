@@ -46,6 +46,7 @@ declare global {
     paypal: PaypalClient
     analytics: any;
     QuickstreamAPI: WestpacQuickstreamClient;
+    ClassicEditor: any
   }
 }
 

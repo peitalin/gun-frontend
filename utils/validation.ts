@@ -66,7 +66,7 @@ export const validationSchemas = {
       dealerId: Yup.string()
         .when('dealer', {
           is: (val) => {
-            console.log("dealer val: ", val)
+            // console.log("dealer val: ", val)
             return val?.licenseNumber === undefined
               || val?.address === undefined
               || val?.name === undefined
