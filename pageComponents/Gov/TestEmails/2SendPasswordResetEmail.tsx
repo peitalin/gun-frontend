@@ -157,8 +157,8 @@ const SendPasswordResetEmail: React.FC<ReactProps> = (props) => {
         }}
         loadingIconColor={Colors.blue}
         replaceTextWhenLoading={true}
-        loading={loading2}
-        disabled={loading2}
+        loading={loading3}
+        disabled={loading3}
         color="secondary"
         style={{
           width: '240px',

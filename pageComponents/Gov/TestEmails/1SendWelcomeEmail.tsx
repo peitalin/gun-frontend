@@ -34,12 +34,11 @@ const SendWelcome: React.FC<ReactProps> = (props) => {
   const aClient = useApolloClient();
  // state
   const [loading1, setLoading1] = React.useState(false);
-  const [loading2, setLoading2] = React.useState(false);
 
   const snackbar = useSnackbar();
 
   const sendWelcomeEmail = async() => {
-    // setLoading1(true)
+    setLoading1(true)
     try {
       const { errors, data } = await aClient.mutate<QueryData, QueryVar>({
         mutation: SEND_WELCOME_EMAIL,
@@ -54,7 +53,7 @@ const SendWelcome: React.FC<ReactProps> = (props) => {
       // setErrorMsg("OrderID does not exist.")
       snackbar.enqueueSnackbar(`Email failed to send`, { variant: "error" })
     }
-    // setLoading1(false)
+    setLoading1(false)
   }
 
   return (
