@@ -6,27 +6,7 @@ import { Colors, BorderRadius } from "layout/AppTheme";
 import clsx from "clsx";
 // Material UI
 import Typography from "@material-ui/core/Typography";
-// Components
-import PreviewCardRC from "pageComponents/FrontPage/PreviewCardResponsive/PreviewCardRC";
-import ProductRowMobile from "components/ProductRowMobile";
-// Typings
-import {
-  Product,
-  ProductsConnection,
-} from "typings/gqlTypes";
-// redux
-import { useSelector } from "react-redux";
-import { GrandReduxState } from "reduxStore/grand-reducer";
-import { WishlistItemId } from "reduxStore/wishlist-reducer";
-// Wishlist
-import Divider from "components/Divider";
-import PreviewCardResponsive from "pageComponents/FrontPage/PreviewCardResponsive";
 import LoadingCards from "pageComponents/FrontPage/LoadingCards";
-
-import { DEV_FEATURED_LIST_ID } from ".";
-import PaginateCarousel from "components/Paginators/PaginateCarousel";
-import Loading from "components/Loading";
-import { GET_ALL_PRODUCTS } from "queries/gun-queries";
 import AirCarousel from "components/AirCarousel";
 
 

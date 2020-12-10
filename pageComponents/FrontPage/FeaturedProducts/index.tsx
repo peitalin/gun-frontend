@@ -69,6 +69,7 @@ const FeaturedProducts = (props: ReactProps) => {
         limit: 12 || count,
         offset: props.offset || 0,
         orderBy: orderBy.value,
+        where: { isPublished: { _eq: true } }
         // orderBy: {
         //   // price: OrderBy.ASC,
         //   // price: OrderBy.DESC
