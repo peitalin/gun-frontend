@@ -115,10 +115,10 @@ const SideMenu: React.FC<ReactProps> = (props) => {
           </Link>
         </li>
         <li>
-          <Link href={"/orders"} scroll={false}>
+          <Link href={"/admin/orders"} scroll={false}>
             <a>
               <div className={
-                isSelectedRoute("/orders")
+                isSelectedRoute("/admin/orders")
                   ? classes.routeListItemSelected
                   : classes.routeListItem
               }>

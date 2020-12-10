@@ -29,12 +29,18 @@ const MyOrdersHistoryAdminPage = (props: ReactProps) => {
   return (
     <>
       <MetaHeadersPage
-        title="Orders - Buyer Orders"
+        title="Orders - Seller Dashboard"
         robots="noindex"
       />
+      <SellerProfileWrapper>
+      {({ data, loading, error }: SellerProfileProps) => {
+        return (
         <div className={classes.contentContainer}>
           <MyOrders />
         </div>
+        );
+      }}
+      </SellerProfileWrapper>
     </>
   );
 }
