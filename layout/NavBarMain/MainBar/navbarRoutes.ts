@@ -1,6 +1,6 @@
 export const navbarRoutes = {
   sell: "/sell",
-  orders: "/admin/orders",
+  orders: "/orders",
   admin: "/admin/products",
   createStore: "/create-store",
 };

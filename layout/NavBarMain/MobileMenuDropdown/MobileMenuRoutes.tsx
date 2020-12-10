@@ -117,7 +117,7 @@ const MobileMenuRoutes = (props: ReactProps) => {
       {
         loggedIn
         ? <div className={classes.mobileMenuFlexitem}>
-            <Link href="/admin/orders">
+            <Link href="/orders">
               <a className={classes.menuLink}>
                 <MenuItem
                   className={clsx(
@@ -142,7 +142,7 @@ const MobileMenuRoutes = (props: ReactProps) => {
               buttonText={"Orders"}
               buttonType={"menuItem"}
               menuItemTextClassName={classes.mobileMenuItemText}
-              redirectOnComplete={"/admin/orders"}
+              redirectOnComplete={"/orders"}
               callbackOnComplete={() => {
                 // only close menu after login, otherwise login component unmounts
                 // and login modal never shows

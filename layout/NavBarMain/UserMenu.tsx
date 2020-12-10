@@ -140,7 +140,7 @@ export const UserMenu: React.FC<ReactProps> = (props) => {
           </MenuItem>
 
           <MenuItem className={classes.menuItem} onClick={handleCloseMenu}>
-            <Link href="/admin/orders">
+            <Link href="/orders">
               <a className={classes.menuLink}>
                 <ShoppingCartIcon className={classes.menuIcon}/>
                 <span className={classes.menuText}> My Orders </span>

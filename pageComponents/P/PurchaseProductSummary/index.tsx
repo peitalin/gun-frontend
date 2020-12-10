@@ -155,7 +155,7 @@ const PurchaseProductSummary: React.FC<ReactProps> = (props) => {
                       buttonHeight={xsDown ? '40px' : '40px'}
                       handleOrderPostPurchase={
                         (order) => {
-                          router.push("/admin/orders")
+                          router.push("/orders")
                         }
                       }
                     />

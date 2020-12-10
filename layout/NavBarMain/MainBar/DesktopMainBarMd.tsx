@@ -89,7 +89,7 @@ const DesktopMainBarMd = (props: ReactProps & DesktopMainBarProps) => {
 
         {
           loggedIn
-          ? <Link href="/admin/orders">
+          ? <Link href="/orders">
               <a className={classes.buttonLink}>
                 <Button
                     className={classes.navbarButton}
@@ -98,7 +98,7 @@ const DesktopMainBarMd = (props: ReactProps & DesktopMainBarProps) => {
                   >
                     <div>
                       <span className={
-                        endRoute === '/admin/orders' ? classes.selectedRouteText : null
+                        endRoute === '/orders' ? classes.selectedRouteText : null
                       }>
                         Orders
                       </span>
