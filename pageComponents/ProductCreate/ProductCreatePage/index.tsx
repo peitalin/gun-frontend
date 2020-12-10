@@ -314,7 +314,7 @@ const ProductCreatePage = (props: ReactProps) => {
                   disableLoginButton={true}
                   buttonText={"Create Store"}
                 />
-                <div>
+                {/* <div>
                   <a onClick={() => {
                       console.log("fprops.values: ", fprops.values)
                       console.log("fprops.errors: ", fprops.errors)
@@ -323,7 +323,7 @@ const ProductCreatePage = (props: ReactProps) => {
                   >
                     print formik values
                   </a>
-                </div>
+                </div> */}
               </StoreOrLoginContainer>
 
               <ProductCreateForm
