@@ -56,7 +56,7 @@ const WestpacPurchaseProduct = (props: ReactProps) => {
       return
     }
 
-    const response = await aClient.mutate<MutData1, MutVar1>({
+    const response = await aClient.mutate<MutDataCreateOrder, MutVarCreateOrder>({
       mutation: CREATE_ORDER,
       variables: {
         productId: product.id,
@@ -78,7 +78,7 @@ const WestpacPurchaseProduct = (props: ReactProps) => {
     singleUseTokenId: string,
   ) => {
 
-    const response = await aClient.mutate<MutData1, MutVar2>({
+    const response = await aClient.mutate<MutDataConfirmOrder, MutVarConfirmOrder>({
       mutation: CONFIRM_ORDER,
       variables: {
         orderId: orderId,
@@ -86,7 +86,7 @@ const WestpacPurchaseProduct = (props: ReactProps) => {
       }
     });
     console.log("confirmOrder response: ", response);
-    let order = response.data?.createOrder?.order;
+    let order = response.data?.confirmOrder?.order;
 
     if (order.currentSnapshot.orderStatus === OrderStatus.CONFIRMED_PAYMENT_FORM_10_REQUIRED) {
       setData("Your order was confirmed!") // trigger success snackbar
@@ -335,10 +335,10 @@ interface ReactProps extends WithStyles<typeof styles> {
   product: Product;
 }
 
-interface MutData1 {
+interface MutDataCreateOrder {
   createOrder: OrderMutationResponse;
 }
-interface MutVar1 {
+interface MutVarCreateOrder {
   productId: string
   productSnapshotId: string
   variantId: string
@@ -348,7 +348,10 @@ interface MutVar1 {
   sellerId: string
   bidId: string
 }
-interface MutVar2 {
+interface MutDataConfirmOrder {
+  confirmOrder: OrderMutationResponse;
+}
+interface MutVarConfirmOrder {
   orderId: string
   singleUseTokenId: string
 }

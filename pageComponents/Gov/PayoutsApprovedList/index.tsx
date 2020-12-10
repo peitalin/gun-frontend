@@ -56,6 +56,7 @@ import dayjs from 'dayjs';
 // Copy and tooltip for emails when on mobile
 import Tooltip from '@material-ui/core/Tooltip';
 import copy from "clipboard-copy";
+import { useRouter } from "next/router";
 
 
 
@@ -63,8 +64,9 @@ const PayoutsApprovedList = (props: ReactProps) => {
 
   const { classes } = props;
 
-  const snackbar = useSnackbar();
   const aClient = useApolloClient();
+  const router = useRouter();
+  const snackbar = useSnackbar();
 
   const theme = useTheme();
   const smDown = useMediaQuery(theme.breakpoints.down('sm'));
@@ -101,6 +103,12 @@ const PayoutsApprovedList = (props: ReactProps) => {
     markPayoutsAsPaidResponse
   ] = useMutation<MutData2, MutVar2>(
     MARK_PAYOUTS_AS_PAID,
+    {
+      onCompleted: () => {
+        snackbar.enqueueSnackbar(`Payouts market complete.`, { variant: "info" })
+        router.push("/gov/payouts/complete")
+      },
+    }
   );
 
 
