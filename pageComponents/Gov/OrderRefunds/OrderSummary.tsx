@@ -62,14 +62,20 @@ const orderStatusHumanFriendly = (order: Orders): string => {
   switch (order?.currentSnapshot?.orderStatus) {
     case OrderStatus.CREATED:
       return "Unfinished";
-    case OrderStatus.FAILED:
-      return "Failed";
     case OrderStatus.CONFIRMED_PAYMENT_FORM_10_REQUIRED:
       return "Deposit confirmed, form10 upload required";
-    case OrderStatus.FORM_10_SUBMITTED:
-      return "Form10 submitted, approval required";
+    case OrderStatus.FAILED:
+      return "Failed";
     case OrderStatus.REFUNDED:
       return "Refunded";
+    case OrderStatus.FORM_10_SUBMITTED:
+      return "Form10 submitted, approval required";
+    case OrderStatus.FORM_10_REVISE_AND_RESUBMIT:
+      return "Form10 rejected, resubmission";
+    case OrderStatus.ADMIN_APPROVED:
+      return "Admin approved";
+    case OrderStatus.COMPLETE:
+      return "Order complete and paid out";
     default:
       return "Unexpected order status";
   }
