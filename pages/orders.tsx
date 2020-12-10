@@ -32,18 +32,9 @@ const MyOrdersHistoryAdminPage = (props: ReactProps) => {
         title="Orders - Seller Dashboard"
         robots="noindex"
       />
-      <SellerProfileWrapper>
-      {({ data, loading, error }: SellerProfileProps) => {
-        return (
-          <div className={classes.contentContainer}>
-            <MyOrders
-              initialBuyerOrders={data.user.buyerOrdersConnection}
-              initialSellerOrders={data.user.sellerOrdersConnection}
-            />
-          </div>
-        )
-      }}
-      </SellerProfileWrapper>
+        <div className={classes.contentContainer}>
+          <MyOrders />
+        </div>
     </>
   );
 }
