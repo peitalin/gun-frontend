@@ -121,7 +121,7 @@ export const UNAPPROVE_FORM_10 = gql`
 
 
 
-export const MARK_PAYOUT_AS_PAID = gql`
+export const MARK_PAYOUTS_AS_PAID = gql`
   mutation marktPayoutsAsPaid(
     $orderIds: [String!]!
     $payoutId: String!

@@ -3321,6 +3321,11 @@ export type Mutation = {
    */
   unapproveForm10: OrderMutationResponse;
   /**
+   * AccessRule – ADMIN
+   * For admins to reject a form10 and alert seller to resubmit the form 10
+   */
+  reviseAndResubmitForm10: OrderMutationResponse;
+  /**
    * AccessRule – LOGGED_IN
    * For Admins to confirm and attach Westpac Payout IDs to orders
    * After funds have been transferred to sellers
@@ -3328,7 +3333,7 @@ export type Mutation = {
   markPayoutsAsPaid: MarkPayoutsAsPaidMutationResponse;
   createMockPreviewItems: Product_Preview_Items_Mutation_Response;
   generateRandomProducts: Array<Maybe<ProductPrivate>>;
-  sendTestWelcomeEmail: BlankMutationResponse;
+  sendWelcomeEmail: BlankMutationResponse;
   sendTestPasswordChangedEmail: BlankMutationResponse;
   sendPayoutDetailsChangedEmail: BlankMutationResponse;
   sendConfirmedPaymentBuyerEmail: BlankMutationResponse;
@@ -4488,6 +4493,12 @@ export type MutationApproveForm10Args = {
 
 
 export type MutationUnapproveForm10Args = {
+  orderId: Scalars['String'];
+  adminApproverId: Scalars['String'];
+};
+
+
+export type MutationReviseAndResubmitForm10Args = {
   orderId: Scalars['String'];
   adminApproverId: Scalars['String'];
 };

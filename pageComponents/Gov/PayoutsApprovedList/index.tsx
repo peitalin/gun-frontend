@@ -37,7 +37,7 @@ import { useApolloClient } from "@apollo/client";
 import {
   GET_ORDERS_ADMIN_APPROVED_CONNECTION,
 } from "queries/orders-queries";
-import { MARK_PAYOUT_AS_PAID } from "queries/orders-mutations";
+import { MARK_PAYOUTS_AS_PAID } from "queries/orders-mutations";
 import { useMutation } from "@apollo/client";
 import { DocumentNode } from "graphql";
 // Search Component
@@ -100,7 +100,7 @@ const PayoutsApprovedList = (props: ReactProps) => {
     markPayoutsAsPaid,
     markPayoutsAsPaidResponse
   ] = useMutation<MutData2, MutVar2>(
-    MARK_PAYOUT_AS_PAID,
+    MARK_PAYOUTS_AS_PAID,
   );
 
 
@@ -232,6 +232,7 @@ const PayoutsApprovedList = (props: ReactProps) => {
     setIndex,
   } = useFacetSearchOptions({
     limit: numItemsPerPage * overfetchBy,
+    // currently 50 items
     overfetchBy: overfetchBy,
   })
 

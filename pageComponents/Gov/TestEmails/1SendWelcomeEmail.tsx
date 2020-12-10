@@ -22,7 +22,7 @@ import { useQuery, useApolloClient, ApolloClient } from "@apollo/client";
 import { useSnackbar } from "notistack";
 import currency from "currency.js";
 import {
-  SEND_TEST_WELCOME_EMAIL,
+  SEND_WELCOME_EMAIL,
   SEND_RESET_PASSWORD_EMAIL,
 } from "queries/emails-mutations";
 
@@ -38,15 +38,15 @@ const SendWelcome: React.FC<ReactProps> = (props) => {
 
   const snackbar = useSnackbar();
 
-  const sendTestWelcomeEmail = async() => {
+  const sendWelcomeEmail = async() => {
     // setLoading1(true)
     try {
       const { errors, data } = await aClient.mutate<QueryData, QueryVar>({
-        mutation: SEND_TEST_WELCOME_EMAIL,
+        mutation: SEND_WELCOME_EMAIL,
         variables: {},
         fetchPolicy: "no-cache", // always do a network request, no caches
       })
-      if (data.sendTestWelcomeEmail) {
+      if (data.sendWelcomeEmail) {
         snackbar.enqueueSnackbar(`Email send success`, { variant: "success" })
         alert(JSON.stringify(data))
       }
@@ -63,7 +63,7 @@ const SendWelcome: React.FC<ReactProps> = (props) => {
         variant="outlined"
         className={classes.approveButton}
         onClick={() => {
-          sendTestWelcomeEmail()
+          sendWelcomeEmail()
         }}
         loadingIconColor={Colors.blue}
         replaceTextWhenLoading={true}
@@ -87,7 +87,7 @@ const SendWelcome: React.FC<ReactProps> = (props) => {
 interface ReactProps extends WithStyles<typeof styles> {
 }
 interface QueryData {
-  sendTestWelcomeEmail: BlankMutationResponse;
+  sendWelcomeEmail: BlankMutationResponse;
 }
 interface QueryVar {
 }

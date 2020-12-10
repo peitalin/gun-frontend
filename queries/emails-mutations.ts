@@ -2,9 +2,9 @@ import gql from "graphql-tag";
 import { UserPrivateFragment } from "./fragments";
 
 
-export const SEND_TEST_WELCOME_EMAIL = gql`
-  mutation sendTestWelcomeEmail {
-    sendTestWelcomeEmail {
+export const SEND_WELCOME_EMAIL = gql`
+  mutation sendWelcomeEmail {
+    sendWelcomeEmail {
       success
       status
     }
