@@ -297,7 +297,7 @@ const PreviewCardRC = (props: ReactProps) => {
                     <PriceDisplayMain
                       price={price}
                       priceWas={priceWas}
-                      soldOutStatus={props.soldOutStatus}
+                      soldOutStatus={product.soldOutStatus}
                     />
                   }
                 </div>
@@ -334,7 +334,6 @@ interface ReactProps extends WithStyles<typeof styles> {
   refetch?(): void;
   hidePrice?: boolean;
   // carousels
-  soldOutStatus?: string;
   loadCarouselPics?: any;
   setLoadCarouselPics?(a: any): any;
   productIndex?: number;

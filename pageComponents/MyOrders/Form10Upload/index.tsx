@@ -124,6 +124,7 @@ const Form10Upload = (props: ReactProps) => {
         if (
           orderStatus === OrderStatus.CONFIRMED_PAYMENT_FORM_10_REQUIRED
           || orderStatus === OrderStatus.FORM_10_SUBMITTED
+          || orderStatus === OrderStatus.FORM_10_REVISE_AND_RESUBMIT
         ) {
           await addForm10({
             variables: {

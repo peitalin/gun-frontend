@@ -162,12 +162,12 @@ const Products: React.FC<ReactProps> = (props) => {
   if (product && !product.isPublished) {
     return <ErrorPage statusCode={400} message={"Product is not available"}/>
   }
-  if (product && isReserved) {
-    return <ErrorPage statusCode={400} message={"Product is sold (reserved)"}/>
-  }
-  if (product && isSoldOut) {
-    return <ErrorPage statusCode={400} message={"Product is sold out"}/>
-  }
+  // if (product && isReserved) {
+  //   return <ErrorPage statusCode={400} message={"Product is sold (reserved)"}/>
+  // }
+  // if (product && isSoldOut) {
+  //   return <ErrorPage statusCode={400} message={"Product is sold out"}/>
+  // }
   if (error) {
     return <ErrorPage statusCode={400} message={"Product cannot be found"}/>
   }

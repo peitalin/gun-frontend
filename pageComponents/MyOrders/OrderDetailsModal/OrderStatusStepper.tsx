@@ -82,10 +82,12 @@ function getActiveStepFromOrderStatus(orderStatus: string) {
       return 0
     case OrderStatus.FORM_10_SUBMITTED:
       return 1
+    case OrderStatus.FORM_10_REVISE_AND_RESUBMIT:
+      return 1
     case OrderStatus.ADMIN_APPROVED:
-      return 2
-    case OrderStatus.COMPLETE:
       return 3
+    case OrderStatus.COMPLETE:
+      return 4
     default:
       return 0
   }

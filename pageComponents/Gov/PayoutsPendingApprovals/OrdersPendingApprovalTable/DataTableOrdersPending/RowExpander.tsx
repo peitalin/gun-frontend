@@ -29,7 +29,11 @@ import currency from 'currency.js';
 import { User, OrderStatus, Orders } from "typings/gqlTypes";
 import { useMutation } from "@apollo/client";
 import { DocumentNode } from "graphql";
-import { APPROVE_FORM_10, UNAPPROVE_FORM_10 } from "queries/orders-mutations";
+import {
+  APPROVE_FORM_10,
+  UNAPPROVE_FORM_10,
+  REVISE_AND_RESUBMIT_FORM_10,
+} from "queries/orders-mutations";
 
 
 
@@ -52,8 +56,8 @@ const RowExpander = (props: RowExpanderProps) => {
     }
   );
 
-  const [unapproveForm10, unapproveForm10Response] = useMutation<MutData, MutVar>(
-    UNAPPROVE_FORM_10,
+  const [reviseAndResubmit, reviseAndResubmitResponse] = useMutation<MutData, MutVar>(
+    REVISE_AND_RESUBMIT_FORM_10,
     {
       refetchQueries: props.refetchQueriesParams,
       awaitRefetchQueries: true,
@@ -172,32 +176,29 @@ const RowExpander = (props: RowExpanderProps) => {
 
                 }
               </ButtonLoading>
-              {
-                alreadyApproved &&
-                <ButtonLoading
-                  variant="outlined"
-                  className={classes.unapproveButton}
-                  onClick={() => {
-                    unapproveForm10({
-                      variables: {
-                        orderId: row.id, // row.id => order.id
-                        adminApproverId: admin.id, // row.id => order.id
-                      }
-                    })
-                  }}
-                  loadingIconColor={Colors.red}
-                  replaceTextWhenLoading={true}
-                  loading={unapproveForm10Response.loading}
-                  disabled={!alreadyApproved}
-                  color="secondary"
-                  style={{
-                    width: '150px',
-                    height: '36px',
-                  }}
-                >
-                  Revert Approval
-                </ButtonLoading>
-              }
+              <ButtonLoading
+                variant="outlined"
+                className={classes.unapproveButton}
+                onClick={() => {
+                  reviseAndResubmit({
+                    variables: {
+                      orderId: row.id, // row.id => order.id
+                      adminApproverId: admin.id, // row.id => order.id
+                    }
+                  })
+                }}
+                loadingIconColor={Colors.red}
+                replaceTextWhenLoading={true}
+                loading={reviseAndResubmitResponse.loading}
+                disabled={!readyForApproval}
+                color="secondary"
+                style={{
+                  width: '150px',
+                  height: '36px',
+                }}
+              >
+                Reject Form 10
+              </ButtonLoading>
             </div>
 
 

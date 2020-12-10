@@ -119,6 +119,24 @@ export const UNAPPROVE_FORM_10 = gql`
 `;
 
 
+export const REVISE_AND_RESUBMIT_FORM_10 = gql`
+  mutation reviseAndResubmitForm10(
+    $orderId: String!
+    $adminApproverId: String!
+  ) {
+    reviseAndResubmitForm10(
+      orderId: $orderId
+      adminApproverId: $adminApproverId
+    ) {
+      order {
+        ...OrdersFragment
+      }
+    }
+  }
+  ${OrdersFragment}
+`;
+
+
 
 
 export const MARK_PAYOUTS_AS_PAID = gql`

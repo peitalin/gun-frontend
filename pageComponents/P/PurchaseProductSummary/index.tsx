@@ -39,7 +39,6 @@ const WestpacPurchaseProduct = dynamic(() => import("./WestpacPurchaseProduct"),
   loading: (props) => <VisaButtonLoading/>,
   ssr: false,
 });
-// import { handleOrderPostPurchase } from "layout/Checkout/CheckoutPage/CommonPurchase";
 
 
 
@@ -155,13 +154,9 @@ const PurchaseProductSummary: React.FC<ReactProps> = (props) => {
                       display={true}
                       buttonHeight={xsDown ? '40px' : '40px'}
                       handleOrderPostPurchase={
-                        () => {}
-                        // handleOrderPostPurchase(
-                        //   aClient,
-                        //   dispatch,
-                        //   router,
-                        //   !!loggedInAsEmail,
-                        // )
+                        (order) => {
+                          router.push("/admin/orders")
+                        }
                       }
                     />
                   }

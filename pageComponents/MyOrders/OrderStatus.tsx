@@ -67,7 +67,10 @@ const translateOrderStatus = (o: string): string => {
     return "Order refunded."
   }
   if (o === OrderStatus.FORM_10_SUBMITTED) {
-    return "Form 10 Sumitted, pending approval."
+    return "Form 10 Submitted, pending approval."
+  }
+  if (o === OrderStatus.FORM_10_REVISE_AND_RESUBMIT) {
+    return "Form 10 Rejected, resubmit a copy."
   }
   if (o === OrderStatus.ADMIN_APPROVED) {
     return "Admin approved payout."

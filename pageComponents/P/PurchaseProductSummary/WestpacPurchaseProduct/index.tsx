@@ -86,18 +86,18 @@ const WestpacPurchaseProduct = (props: ReactProps) => {
       }
     });
     console.log("confirmOrder response: ", response);
-    // if (order.id && order.currentSnapshot.orderStatus === OrderStatus.CONFIRMED) {
-    //   setData("Your order was confirmed!") // trigger success snackbar
-    //   console.log('Success! order response:', order)
-    //   props.handleOrderPostPurchase(order)
-    // } else {
-    //   if (option(stripeConfirmResponse).error.message()) {
-    //     setError(`${stripeConfirmResponse.error.message}`)
-    //   } else {
-    //     setError("Payment failed. Please try another payment method.")
-    //   }
-    //   // trigger error snackbar
-    // }
+    let order = response.data?.createOrder?.order;
+
+    if (order.currentSnapshot.orderStatus === OrderStatus.CONFIRMED_PAYMENT_FORM_10_REQUIRED) {
+      setData("Your order was confirmed!") // trigger success snackbar
+      console.log('Success! order response:', order)
+      props.handleOrderPostPurchase(order)
+    } else {
+      console.log("Error checking out: ", response.errors)
+      setError("Payment failed. Please try another payment method.")
+      // trigger error snackbar
+    }
+
     return response
   }
 
