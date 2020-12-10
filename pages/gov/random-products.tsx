@@ -22,7 +22,7 @@ const AdminProfileWrapper = dynamic(() => import("layout/GetUser/AdminProfileWra
   loading: () => <LoadingBarSSR/>,
   ssr: false,
 })
-import TestEmails from "pageComponents/Gov/TestEmails";
+import RandomProducts from "pageComponents/Gov/RandomProducts";
 
 
 
@@ -37,7 +37,7 @@ const GovRandomProducts: NextPage<ReactProps> = (props) => {
     <AdminProfileWrapper>
       {({ data, loading, error }: AdminProfileProps) => {
         return (
-          <TestEmails />
+          <RandomProducts />
         )
       }}
     </AdminProfileWrapper>
