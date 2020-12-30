@@ -26,6 +26,8 @@ import { GrandReduxState } from "reduxStore/grand-reducer";
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 
+import StripeProvider from "layout/StripeProvider";
+
 
 
 
@@ -99,7 +101,7 @@ const Layout: React.FC<ReactProps> = (props) => {
   }
 
   return (
-    <>
+    <StripeProvider>
       <Header/>
       <NavBarMain />
       <GetUser/>
@@ -110,7 +112,7 @@ const Layout: React.FC<ReactProps> = (props) => {
       <Footer>
         {/* <BreadcrumbRoutes dark/> */}
       </Footer>
-    </>
+    </StripeProvider>
   )
 };
 
@@ -139,7 +141,7 @@ const styles = (theme: Theme) => createStyles({
   rootMobileSellerDashboard: {
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     width: '100%',
   },
   pageOuterContainer: {
