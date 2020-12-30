@@ -35,11 +35,15 @@ import { asCurrency as c } from "utils/prices";
 
 import { VisaButtonLoading, PaypalButtonLoading } from "./PaymentButtonLoadingSSR";
 import dynamic from "next/dynamic";
-const WestpacPurchaseProduct = dynamic(() => import("./WestpacPurchaseProduct"), {
+
+const VisaPurchaseProduct = dynamic(() => import("./VisaPurchaseProduct"), {
   loading: (props) => <VisaButtonLoading/>,
   ssr: false,
 });
 
+// Stripe Provider
+import { Stripe } from "@stripe/stripe-js";
+import {useStripe, useElements, CardElement} from '@stripe/react-stripe-js';
 
 
 
@@ -142,8 +146,8 @@ const PurchaseProductSummary: React.FC<ReactProps> = (props) => {
                   classes.visaContainer,
                 )}>
                   {
-                    showVisaPay &&
-                    <WestpacPurchaseProduct
+                    true &&
+                    <VisaPurchaseProduct
                       // disable on mobile
                       user={user}
                       // className={"fadeIn"}

@@ -15,9 +15,8 @@ import { ProductsConnection, ConnectionOffsetQuery } from "typings/gqlTypes";
 import dynamic from "next/dynamic";
 import NewReleaseProducts from "pageComponents/FrontPage/NewReleaseProducts";
 import FeaturedProducts from "pageComponents/FrontPage/FeaturedProducts";
-
-// import ProductCreatePage from "./ProductCreatePage";
 import Loading from "components/Loading";
+// import ProductCreatePage from "./ProductCreatePage";
 import CookiesBanner from "components/CookiesBanner";
 import CovidBanner from "components/CovidBanner";
 import BannerHome from "components/BannerHome";
@@ -57,6 +56,7 @@ const FrontPage: React.FC<ReactProps> = (props) => {
         maxWidth={MAX_WIDTH_GRID || 1160}
         withRecommendations={false}
       >
+
         <FeaturedProducts
           initialFeaturedProducts={initialFeaturedProducts}
           count={4}

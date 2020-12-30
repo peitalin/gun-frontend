@@ -10,12 +10,14 @@ import ErrorBounds from 'components/ErrorBounds';
 // Material UI
 import ButtonLoading from "components/ButtonLoading";
 import {
-  UserPrivate, ID,
+  UserPrivate,
+  ID,
   Orders,
   OrderStatus,
   Product,
+  OrderMutationResponse,
+  OrderCreateMutationResponse,
 } from 'typings/gqlTypes';
-import { OrderMutationResponse } from "typings/gqlTypes";
 // Redux
 import { useDispatch, useSelector } from "react-redux";
 import { GrandReduxState } from "reduxStore/grand-reducer";
@@ -66,6 +68,7 @@ const WestpacPurchaseProduct = (props: ReactProps) => {
         total: variant.price,
         buyerId: props.user.id,
         sellerId: product.store.id,
+        stripePaymentData: "",
         bidId: undefined,
       }
     });
@@ -182,7 +185,7 @@ const WestpacPurchaseProduct = (props: ReactProps) => {
 
                 // 1. Create an order first with the backend
                 let orderResponse = await createOrderFirst();
-                let order = option(orderResponse).order();
+                let order = option(orderResponse).unconfirmedOrder();
                 console.log("ORDER_MUTATION response: ", orderResponse)
                 console.log("ORDER response: ", order)
 
@@ -198,7 +201,9 @@ const WestpacPurchaseProduct = (props: ReactProps) => {
                       // 3b. use token to make a payment, and confirm the order
                       let singleUseTokenId = data.token;
                       snackbar.enqueueSnackbar(`Success token: ${singleUseTokenId}`, { variant: "success" })
+
                       let res = await confirmOrderSecond(order.id, singleUseTokenId)
+
                       // 4. once payment is finalized, and order is finalized
                       // proceed with screen transitions, etc
                       console.log("order res: ", res)
@@ -336,7 +341,7 @@ interface ReactProps extends WithStyles<typeof styles> {
 }
 
 interface MutDataCreateOrder {
-  createOrder: OrderMutationResponse;
+  createOrder: OrderCreateMutationResponse;
 }
 interface MutVarCreateOrder {
   productId: string
@@ -346,6 +351,7 @@ interface MutVarCreateOrder {
   total: number
   buyerId: string
   sellerId: string
+  stripePaymentData: string
   bidId: string
 }
 interface MutDataConfirmOrder {
