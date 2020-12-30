@@ -77,6 +77,7 @@ module.exports =
       GATEWAY_GRAPHQL_URL: process.env.GATEWAY_GRAPHQL_URL,
       SERVER_GATEWAY_GRAPHQL_URL: process.env.SERVER_GATEWAY_GRAPHQL_URL,
       GATEWAY_GRAPHQL_WS_URL: process.env.GATEWAY_GRAPHQL_WS_URL,
+      STRIPE_PUBLIC_KEY: process.env.STRIPE_PUBLIC_KEY,
     }
 
   })))
