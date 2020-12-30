@@ -30,6 +30,8 @@
     "@material-ui/icons": "^4.9.1",
     "@material-ui/lab": "^4.0.0-alpha.56",
     "@next/bundle-analyzer": "^9.3.2",
+    "@stripe/react-stripe-js": "^1.1.2",
+    "@stripe/stripe-js": "^1.11.0",
     "@types/ckeditor": "^4.9.10",
     "babel-plugin-transform-remove-console": "^6.9.4",
     "clipboard-copy": "^3.1.0",
