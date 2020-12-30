@@ -3293,7 +3293,7 @@ export type Mutation = {
    * AccessRule – LOGGED_IN
    * For a buyer to create an order
    */
-  createOrder: OrderMutationResponse;
+  createOrder: OrderCreateMutationResponse;
   /**
    * AccessRule – LOGGED_IN
    * For a buyer to make payment and confirm an order.
@@ -4465,13 +4465,14 @@ export type MutationCreateOrderArgs = {
   total: Scalars['Int'];
   buyerId: Scalars['String'];
   sellerId: Scalars['String'];
+  stripePaymentData: Scalars['String'];
   bidId?: Maybe<Scalars['String']>;
 };
 
 
 export type MutationConfirmOrderArgs = {
   orderId: Scalars['String'];
-  singleUseTokenId: Scalars['String'];
+  stripeConfirmPaymentData: Scalars['String'];
 };
 
 
@@ -4870,7 +4871,7 @@ export enum Order_Snapshots_Update_Column {
 export type OrderCreateMutationResponse = {
    __typename?: 'OrderCreateMutationResponse';
   unconfirmedOrder: Orders;
-  paymentProcessorResponse: Scalars['String'];
+  stripePaymentIntent: Scalars['String'];
 };
 
 export type OrderMutationResponse = {
