@@ -59,8 +59,16 @@ const OrderPrices = (props: ReactProps & FormikProps<FormikFields>) => {
   } = fprops;
 
   // let refundOrderIds = option(values).refundOrderIds([]);
+  let totalItem = order.payoutItems
+    .filter(p => p.amount > 0) // only positive items are order itme purchases
+    .reduce((acc, pitem) => {
+      return acc
+        + pitem.amount
+        + pitem.paymentProcessingFee
+    }, 0)
 
-  let totalRefund = order.payoutItems
+  let totalItemRefund = order.payoutItems
+    .filter(p => p.amount < 0) // only negative items are refunds
     .reduce((acc, pitem) => {
       return acc
         + pitem.amount
@@ -73,9 +81,19 @@ const OrderPrices = (props: ReactProps & FormikProps<FormikFields>) => {
     }, 0)
 
   let totalTaxes = order.payoutItems
+    .filter(p => p.payoutStatus !== "REFUNDING") // only positive are taxes
     .reduce((acc, pitem) => {
       return acc + pitem.taxes
     }, 0)
+
+  let refundedTaxes = order.payoutItems
+    .filter(p => p.payoutStatus === "REFUNDING") // only positive are taxes
+    .reduce((acc, pitem) => {
+      return acc - pitem.taxes
+    }, 0)
+
+  console.log("totalItemRefund: ", totalItemRefund)
+  console.log("payoutItems: ", order.payoutItems)
 
   return (
     <div className={classes.root}>
@@ -89,25 +107,32 @@ const OrderPrices = (props: ReactProps & FormikProps<FormikFields>) => {
         />
         <div className={classes.flexCol}>
           <OrderPriceRow classes={classes}
-            fieldName={"Total"}
-            addLess={"+"}
-            fieldAmount={total}
-            fieldRefunded={""}
-            fieldRefund={totalRefund}
+            fieldName={"Item"}
+            addLess={""}
+            fieldAmount={totalItem}
+            fieldRefunded={totalItemRefund}
+            fieldRefund={""}
           />
           <OrderPriceRow classes={classes}
             fieldName={"Inc. Payment Fees"}
-            addLess={"-"}
+            addLess={""}
             fieldAmount={totalPaymentFees}
             fieldRefunded={""}
             fieldRefund={totalPaymentFees}
           />
           <OrderPriceRow classes={classes}
             fieldName={"Taxes"}
-            addLess={"-"}
+            addLess={""}
             fieldAmount={totalTaxes}
-            fieldRefunded={""}
-            fieldRefund={totalTaxes}
+            fieldRefunded={refundedTaxes}
+            fieldRefund={""}
+          />
+          <OrderPriceRow classes={classes}
+            fieldName={"Total"}
+            addLess={""}
+            fieldAmount={total}
+            fieldRefunded={totalItemRefund + refundedTaxes}
+            fieldRefund={""}
           />
         </div>
       </div>

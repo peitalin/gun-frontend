@@ -4465,7 +4465,7 @@ export type MutationCreateOrderArgs = {
   total: Scalars['Int'];
   buyerId: Scalars['String'];
   sellerId: Scalars['String'];
-  stripePaymentData: Scalars['String'];
+  stripeCreatePaymentData: Scalars['String'];
   bidId?: Maybe<Scalars['String']>;
 };
 

@@ -45,6 +45,7 @@ const RowExpander = (props: RowExpanderProps) => {
     row,
     admin,
     index,
+    initialOpen = false,
   } = props;
 
 
@@ -64,7 +65,7 @@ const RowExpander = (props: RowExpanderProps) => {
     },
   );
 
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(initialOpen);
   const [openImage, setOpenImage] = React.useState(false);
 
   const classes = useRowStyles();
@@ -79,6 +80,7 @@ const RowExpander = (props: RowExpanderProps) => {
   let alreadyApproved = (row.orderStatus as string) === OrderStatus.ADMIN_APPROVED
 
   let isEvenRow = index % 2 === 0
+
 
   return (
     <>
@@ -213,6 +215,7 @@ const RowExpander = (props: RowExpanderProps) => {
               <div className={classes.scrollableTable}>
                 {
                   row.history.map((historyRow, i) =>  {
+
                     return (
                       <div key={i} className={clsx(
                         classes.bodyRow,
@@ -256,6 +259,7 @@ interface RowExpanderProps {
       offset?: number
     },
   }[];
+  initialOpen?: boolean;
 }
 
 interface MutData {

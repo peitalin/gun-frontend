@@ -31,7 +31,11 @@ import Loading from "components/Loading";
 import OrderSummary from "./OrderSummary";
 import OrderPrices from "./OrderPrices";
 import OrderCard from "./OrderCard";
-import RefundTaxesFees from "./RefundTaxesFees";
+import RowExpander from "../PayoutsPendingApprovals/OrdersPendingApprovalTable/DataTableOrdersPending/RowExpander";
+import { createData } from '../PayoutsPendingApprovals/OrdersPendingApprovalTable/DataTableOrdersPending/createData';
+import TableContainer from '@material-ui/core/TableContainer';
+import Table from '@material-ui/core/Table';
+
 // Graphql
 import { useQuery, useApolloClient, ApolloClient } from "@apollo/client";
 import {
@@ -154,11 +158,14 @@ const RefundOrders: React.FC<OrderRefundsProps> = (props) => {
 
   if (order) {
     console.log("incoming order: ", order)
+    console.log("order status:", order?.currentSnapshot?.orderStatus)
   }
 
   const user = useSelector<GrandReduxState, UserPrivate>(
     state => option(state).reduxLogin.user()
   );
+
+  let canOrderBeRefunded = canBeRefunded(order?.currentSnapshot?.orderStatus)
 
   // if (!option(order).currentSnapshot.transaction.chargeId()) {
   if (!option(order).currentSnapshot.id()) {
@@ -265,7 +272,7 @@ const RefundOrders: React.FC<OrderRefundsProps> = (props) => {
               total={c(total)}
               disableRefundButton={
                 !order.id ||
-                !canBeRefunded(order?.currentSnapshot?.orderStatus)
+                !canOrderBeRefunded
               }
               onClickDebugPrint={() => {
                 console.log("fprops.errors:", fprops.errors)
@@ -304,11 +311,43 @@ const RefundOrders: React.FC<OrderRefundsProps> = (props) => {
                 }
               </Section>
 
+              {
+                !!order?.id &&
+                <Section classes={classes} title={"Order History"}>
+
+                  <TableContainer component={Paper}>
+                    <Table aria-label="collapsible table">
+                      <RowExpander
+                        key={order.id}
+                        initialOpen={true}
+                        row={
+                          createData({
+                            id: order.id,
+                            total: order.total,
+                            createdAt: order.createdAt,
+                            seller: order.seller as any,
+                            buyer: order.buyer,
+                            currentOrderSnapshot: order.currentSnapshot,
+                            orderSnapshots: order.orderSnapshots,
+                            product: order.product,
+                            payoutId: order?.payoutItems?.[0]?.payoutId,
+                            payoutStatus: order?.payoutItems?.[0]?.payoutStatus,
+                          })
+                        }
+                        admin={undefined}
+                        index={0}
+                        refetchQueriesParams={undefined}
+                      />
+                    </Table>
+                  </TableContainer>
+                </Section>
+              }
+
               <TextInput
                 placeholder={"Enter Reason for Refund"}
                 value={values.reason}
                 onChange={(e) => fprops.setFieldValue("reason", e.target.value)}
-                disabled={canBeRefunded(order?.currentSnapshot?.orderStatus)}
+                disabled={!canOrderBeRefunded}
                 inputProps={{
                   root: { },
                   style: {
@@ -318,10 +357,10 @@ const RefundOrders: React.FC<OrderRefundsProps> = (props) => {
                 }}
               />
               <TextInput
-                placeholder={"Enter Bank Refund ID number"}
+                placeholder={"Enter Refund reason details"}
                 value={values.reasonDetails}
                 onChange={(e) => fprops.setFieldValue("reasonDetails", e.target.value)}
-                disabled={canBeRefunded(order?.currentSnapshot?.orderStatus)}
+                disabled={!canOrderBeRefunded}
                 inputProps={{
                   root: { },
                   style: {
