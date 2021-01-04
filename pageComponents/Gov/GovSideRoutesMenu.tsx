@@ -107,7 +107,7 @@ const GovSideRoutesMenu: React.FC<ReactProps> = (props) => {
 
         <li>
           <Typography variant="subtitle1" className={classes.routeListItemTitle}>
-            Payouts
+            Escrow Payouts
           </Typography>
         </li>
 

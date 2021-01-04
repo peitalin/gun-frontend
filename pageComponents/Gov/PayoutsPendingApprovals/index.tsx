@@ -36,10 +36,7 @@ import {
 import Loading from 'components/Loading';
 import SnackBarA from "components/Snackbars/SnackbarA";
 // Components
-import PeriodPicker from "./PeriodPicker";
 import OrdersPendingApprovalTable from "./OrdersPendingApprovalTable";
-import PayoutItemsTable from "./PayoutItemsTable";
-import TransactionsTable from "./TransactionsTable";
 // formatters
 import dayjs from 'dayjs';
 import currency from "currency.js";
@@ -51,9 +48,7 @@ import currency from "currency.js";
 const OrdersPendingApprovals: React.FC<ReactProps> = (props) => {
 
   const { classes } = props;
-  const aClient = useApolloClient();
   const c = (s) => currency(s/100, { formatWithSymbol: true }).format()
-  // const asTime = (d: Date) => dayjs(d).format("YYYY-MM-DD HH:mm:ss")
   const asTime = (d: Date) => dayjs(d).format("YYYY-MM-DD")
 
   const d = new Date();
@@ -62,39 +57,6 @@ const OrdersPendingApprovals: React.FC<ReactProps> = (props) => {
   const [year, setYear] = React.useState<any>(d.getUTCFullYear());
 
   const [isLoading, setIsLoading] = React.useState(false);
-  const [hasQueryResponded, setGqlResponded] = React.useState(false);
-
-  const [selectApprovePayouts, setSelectApprovePayouts] = React.useState([]);
-  const [payoutCount, setPayoutCount] = React.useState(5);
-
-  const [refetchPayoutItems, setRefetchPayoutItems] = React.useState(undefined)
-  const [refetchPayouts, setRefetchPayouts] = React.useState(undefined)
-  const [refetchTransactions, setRefetchTransactions] = React.useState(undefined)
-
-  const refetchAll = () => {
-    if (refetchPayoutItems) {
-      try {
-        refetchPayoutItems()
-      } catch (e) {
-        console.error(e)
-      }
-    }
-    if (refetchPayouts) {
-      try {
-        refetchPayouts()
-      } catch (e) {
-        console.error(e)
-      }
-    }
-    if (refetchTransactions) {
-      try {
-        refetchTransactions()
-      } catch (e) {
-        console.error(e)
-      }
-    }
-  }
-
 
 
   return (
@@ -105,73 +67,7 @@ const OrdersPendingApprovals: React.FC<ReactProps> = (props) => {
           month={month}
           year={year}
           admin={props.admin}
-          // setRefetchPayoutItems={setRefetchPayoutItems}
-          // refetchAll={refetchAll}
         />
-
-        {/* <PayoutItemsTable
-          month={month}
-          year={year}
-          setRefetchPayoutItems={setRefetchPayoutItems}
-          refetchAll={refetchAll}
-        />
-        <br/> */}
-
-        {/* <TransactionsTable
-          month={month}
-          year={year}
-          setRefetchTransactions={setRefetchTransactions}
-          refetchAll={refetchAll}
-        />
-        <br/> */}
-
-        {/* <PeriodPicker
-          month={month}
-          setMonth={setMonth}
-          year={year}
-          setYear={setYear}
-        >
-          <Button
-            onClick={async() => {
-              setIsLoading(true)
-              await createPayouts({
-              })
-              setIsLoading(false)
-            }}
-            variant="outlined"
-            color="secondary"
-            className={classes.createPayoutsButton}
-          >
-            Create Payouts
-          </Button>
-
-          <Button
-            onClick={async() => {
-              setIsLoading(true)
-              const payoutIds = selectApprovePayouts.map(({ node }) => node.id);
-              console.log("dispatching payouts for: ", payoutIds)
-              await approvePayouts({
-                variables: {
-                  payoutIds: payoutIds
-                }
-              })
-              setIsLoading(false)
-            }}
-            variant="outlined"
-            color="primary"
-            className={classes.createPayoutsButton}
-          >
-            Approve Payouts
-          </Button>
-        </PeriodPicker>
-
-        <PayoutsTable
-          month={month}
-          year={year}
-          setSelectApprovePayouts={setSelectApprovePayouts}
-          setRefetchPayouts={setRefetchPayouts}
-          refetchAll={refetchAll}
-        /> */}
 
         <Loading fixed loading={isLoading} delay={'200ms'}/>
 

@@ -3,11 +3,7 @@ import clsx from 'clsx';
 import { Colors, BoxShadows } from 'layout/AppTheme';
 import { makeStyles, fade, lighten } from '@material-ui/core/styles';
 import { oc as option } from "ts-optchain";
-// table
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableRow from '@material-ui/core/TableRow';
+
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import { createData } from "./createData";
@@ -84,33 +80,39 @@ const RowExpander = (props: RowExpanderProps) => {
 
   return (
     <>
-      <TableRow className={clsx(
+      <div className={clsx(
         classes.rowExpanderRoot,
         open && isEvenRow && classes.backgroundGrey,
         open && !isEvenRow && classes.backgroundGrey2,
       )}>
-        <TableCell>
+        <div>
           <IconButton aria-label="expand row"
             size="medium"
             onClick={() => setOpen(!open)}
           >
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
-        </TableCell>
-        <TableCell component="th" scope="row">
+        </div>
+        <div className={classes.flexItemTiny}>
           {row.id}
-        </TableCell>
-        <TableCell align="right">{asTime(row.createdAt)}</TableCell>
-        <TableCell align="right">{c(row.total)}</TableCell>
-        <TableCell align="right">{row.orderStatus}</TableCell>
-        <TableCell align="right">{option(row).seller.user.email()}</TableCell>
-      </TableRow>
-      <TableRow className={clsx(
+        </div>
+        <div className={classes.flexItemSlim}>{asTime(row.createdAt)}</div>
+        <div className={classes.flexItemTiny}>{c(row.total)}</div>
+        <div className={classes.flexItemSlim}>
+          {
+            row.orderStatus.length > 22
+            ? row.orderStatus.slice(0, 22) + '..'
+            : row.orderStatus
+          }
+        </div>
+        <div className={classes.flexItemSlim}>{option(row).seller.user.email()}</div>
+      </div>
+      <div className={clsx(
         classes.hiddenRowRoot,
         open && isEvenRow && classes.backgroundGrey,
         open && !isEvenRow && classes.backgroundGrey2,
       )}>
-        <TableCell style={{ padding: 0 }} colSpan={6}>
+        <div style={{ padding: 0 }}>
           <Collapse in={open} timeout="auto" unmountOnExit>
 
             <div className={classes.marginBox}>
@@ -230,7 +232,9 @@ const RowExpander = (props: RowExpanderProps) => {
                           {historyRow.approverEmail}
                         </div>
                         <div className={classes.bodyCell3}>
-                          {historyRow.orderStatus}
+                          {
+                            historyRow.orderStatus
+                          }
                         </div>
                       </div>
                     )
@@ -240,8 +244,8 @@ const RowExpander = (props: RowExpanderProps) => {
             </div>
 
           </Collapse>
-        </TableCell>
-      </TableRow>
+        </div>
+      </div>
     </>
   );
 }
@@ -271,6 +275,9 @@ interface MutVar {
 
 const useRowStyles = makeStyles({
   rowExpanderRoot: {
+    width: "100%",
+    display: "flex",
+    flexDirection: "row",
     backgroundColor: lighten(Colors.uniswapGreyNavy, 0.01),
     '& > *': {
       borderBottom: 'unset',
@@ -361,11 +368,13 @@ const useRowStyles = makeStyles({
     flexBasis: '25%',
     flexGrow: 1,
     padding: '0.25rem 0.5rem 0.25rem 0.5rem',
+    fontSize: '0.825rem',
   },
   bodyCell2: {
     flexBasis: '30%',
     flexGrow: 1,
     padding: '0.25rem 0.5rem 0.25rem 0.5rem',
+    fontSize: '0.825rem',
   },
   bodyCell3: {
     flexBasis: '45%',
@@ -374,6 +383,7 @@ const useRowStyles = makeStyles({
     justifyContent: "flex-start",
     flexDirection: "row",
     padding: '0.25rem 0.5rem 0.25rem 0.5rem',
+    fontSize: '0.825rem',
   },
   backOdd: {
     backgroundColor: Colors.slateGreyDark,
@@ -390,6 +400,49 @@ const useRowStyles = makeStyles({
       backgroundColor: Colors.slateGreyDarker,
       color: Colors.black,
     },
+  },
+  flexItemWide: {
+    flexBasis: "30%",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: 'flex-start',
+    paddingRight: '0.5rem',
+    marginRight: '0.5rem',
+    textOverflow: 'ellipsis',
+    overflow: 'hidden',
+    flexGrow: 1,
+  },
+  flexItemSlim: {
+    flexBasis: "5%",
+    flexGrow: 1,
+    minWidth: 40,
+    display: "flex",
+    justifyContent: "flex-end",
+    alignItems: 'center',
+    paddingRight: '0.5rem',
+    marginRight: '0.5rem',
+    textOverflow: 'ellipsis',
+    overflow: 'hidden',
+    fontSize: '0.825rem',
+  },
+  flexItemTiny: {
+    flexBasis: "10%",
+    minWidth: 60,
+    display: "flex",
+    justifyContent: "flex-end",
+    alignItems: 'center',
+    paddingRight: '0.5rem',
+    marginRight: '0.5rem',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    fontSize: '0.825rem',
+  },
+  subtitle: {
+    fontWeight: 600,
+    fontSize: '0.825rem',
+    textTransform: "capitalize",
   },
 });
 

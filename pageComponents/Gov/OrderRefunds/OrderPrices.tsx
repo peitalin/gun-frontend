@@ -81,13 +81,13 @@ const OrderPrices = (props: ReactProps & FormikProps<FormikFields>) => {
     }, 0)
 
   let totalTaxes = order.payoutItems
-    .filter(p => p.payoutStatus !== "REFUNDING") // only positive are taxes
+    .filter(p => p.payoutStatus !== "REFUNDING" && p.payoutStatus !== "REFUNDED") // only positive are taxes
     .reduce((acc, pitem) => {
       return acc + pitem.taxes
     }, 0)
 
   let refundedTaxes = order.payoutItems
-    .filter(p => p.payoutStatus === "REFUNDING") // only positive are taxes
+    .filter(p => p.payoutStatus === "REFUNDING" || p.payoutStatus === "REFUNDED") // only positive are taxes
     .reduce((acc, pitem) => {
       return acc - pitem.taxes
     }, 0)

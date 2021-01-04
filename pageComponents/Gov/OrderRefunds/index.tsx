@@ -343,31 +343,36 @@ const RefundOrders: React.FC<OrderRefundsProps> = (props) => {
                 </Section>
               }
 
-              <TextInput
-                placeholder={"Enter Reason for Refund"}
-                value={values.reason}
-                onChange={(e) => fprops.setFieldValue("reason", e.target.value)}
-                disabled={!canOrderBeRefunded}
-                inputProps={{
-                  root: { },
-                  style: {
-                    padding: '0.55rem',
-                    marginBottom: "0.5rem",
-                  }
-                }}
-              />
-              <TextInput
-                placeholder={"Enter Refund reason details"}
-                value={values.reasonDetails}
-                onChange={(e) => fprops.setFieldValue("reasonDetails", e.target.value)}
-                disabled={!canOrderBeRefunded}
-                inputProps={{
-                  root: { },
-                  style: {
-                    padding: '0.55rem',
-                  }
-                }}
-              />
+              {
+                canOrderBeRefunded &&
+                <>
+                  <TextInput
+                    placeholder={"Enter Reason for Refund"}
+                    value={values.reason}
+                    onChange={(e) => fprops.setFieldValue("reason", e.target.value)}
+                    disabled={!canOrderBeRefunded}
+                    inputProps={{
+                      root: { },
+                      style: {
+                        padding: '0.55rem',
+                        marginBottom: "0.5rem",
+                      }
+                    }}
+                  />
+                  <TextInput
+                    placeholder={"Enter Refund reason details"}
+                    value={values.reasonDetails}
+                    onChange={(e) => fprops.setFieldValue("reasonDetails", e.target.value)}
+                    disabled={!canOrderBeRefunded}
+                    inputProps={{
+                      root: { },
+                      style: {
+                        padding: '0.55rem',
+                      }
+                    }}
+                  />
+                </>
+              }
 
               <Loading fixed loading={loading}/>
               <SnackBarA
