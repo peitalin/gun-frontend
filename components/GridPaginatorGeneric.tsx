@@ -117,7 +117,7 @@ interface ReactProps<T> {
   connection: GenericConnection<T>;
   index: number;
   totalCount: number;
-  setTotalCount: React.Dispatch<React.SetStateAction<number>>;
+  setTotalCount?: React.Dispatch<React.SetStateAction<number>>;
   numItemsPerPage?: number;
   overfetchBy?: number;
   disableAnimation?: boolean;
@@ -148,7 +148,9 @@ export const useStyles = makeStyles({
     flexDirection: 'column',
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
-    minHeight: 520, // 2x 260px tall product cards
+    marginBottom: '1rem',
+    // minHeight: 520, // 2x 260px tall product cards
+    minHeight: 200, // 2x 260px tall product cards
   },
   flexRow: {
     display: 'flex',
@@ -174,111 +176,4 @@ export const useStyles = makeStyles({
 
 export default GridPaginatorGeneric;
 
-
-
-
-
-// const VirtualizedViews = (props) => {
-
-//   const { classes, productsGroupedInGrids, disableAnimation } = props
-
-//   return (
-//       <VirtualizeSwipeableViews
-//         enableMouseEvents={false}
-//         index={props.index}
-//         containerStyle={{ height: '100%' }}
-//         style={{ height: '100%' }}
-//         springConfig={disableAnimation ? noAnim : someAnim}
-//         slideRenderer={({ index, key }) => {
-//           let productGroup = productsGroupedInGrids[index]
-//           // console.log("productsGrid: ", productsGroupedInGrids)
-//           // console.log("index: ", index)
-//           // console.log("productGroup: ", productGroup)
-//           if (!productGroup || productGroup.length === 0) {
-//             return (
-//               <div key={`product-group-${index}`} style={{ marginTop: '1rem' }}>
-//                 <LoadingCards count={8}/>
-//               </div>
-//             )
-//           } else {
-//             return (
-//               <div key={`product-group-${index}`}
-//                 className={clsx(
-//                   classes.flexRow,
-//                   "staggerFadeIn",
-//                 )}
-//               >
-//               {
-//                 (productGroup && productGroup.length > 0) &&
-//                 productGroup.map(product =>
-//                   <div key={product.id}
-//                     className={clsx(classes.marginRight1)}
-//                   >
-//                     <PreviewCardResponsive
-//                       product={product}
-//                     />
-//                   </div>
-//                 )
-//               }
-//               </div>
-//             )
-//           }
-//         }}
-//       />
-//   )
-// }
-
-
-// const BindKeyboardViews = (props) => {
-
-//   const { classes, productsGroupedInGrids, disableAnimation } = props
-
-//   return (
-//       <BindKeyboardSwipeableViews
-//         enableMouseEvents={false}
-//         index={props.index}
-//         containerStyle={{ height: '100%' }}
-//         style={{ height: '100%' }}
-//         springConfig={disableAnimation ? noAnim : someAnim}
-//       >
-//         {
-//           Object.values(productsGroupedInGrids).map(( productGroup, index) =>
-//             <div key={`product-group-${index}`}
-//               className={clsx(classes.flexRow, "staggerFadeIn")}
-//             >
-//             {
-//               (productGroup as Product[]).map(product => {
-
-//                 const featuredPreviewItem = option(product).featuredVariant.previewItems[0]();
-//                 const commonPreviewCardProps = {
-//                   listName: 'grid-paginator-list',
-//                   // loadCarouselPics: undefined,
-//                   // setLoadCarouselPics: undefined,
-//                   // refetch: undefined,
-//                   // boxShadow: undefined,
-//                   // style: undefined,
-//                   productIndex: index,
-//                   maxWidthOfRow: 1160,
-//                 }
-
-//                 return (
-//                   <div key={product.id} className={classes.marginRight1}>
-//                     {/* <PreviewCardResponsive
-//                       product={product}
-//                     /> */}
-//                     <GridPreviewCardLight
-//                       {...commonPreviewCardProps}
-//                       product={product}
-//                       cardsPerRow={4}
-//                     />
-//                   </div>
-//                 )
-//               })
-//             }
-//             </div>
-//           )
-//         }
-//       </BindKeyboardSwipeableViews>
-//   )
-// }
 

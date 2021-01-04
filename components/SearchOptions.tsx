@@ -116,7 +116,9 @@ const SearchOptionsPaginator: React.FC<ReactProps> = (props) => {
   }
 
   React.useEffect(() => {
-    setOrderBy(orderByOptions[0])
+    if (setOrderBy) {
+      setOrderBy(orderByOptions[0])
+    }
   }, [])
 
   React.useEffect(() => {
@@ -153,7 +155,7 @@ const SearchOptionsPaginator: React.FC<ReactProps> = (props) => {
             )}>
               <SearchOptionsSearchFilter
                 value={searchTermUi}
-                placeholder="Search for products…"
+                placeholder={props.placeholder || "Search for products…"}
                 onSearchTermChange={(searchTerm: string) => {
                   setSearchTermUi(searchTerm);
                   debounceSetSearchTerm(searchTerm)
@@ -339,9 +341,9 @@ export const setCategoryFacets = (
 
 interface ReactProps extends WithStyles<typeof styles> {
   // order
-  setOrderBy(a?: SelectOption): void;
+  setOrderBy?(a?: SelectOption): void;
   // search term
-  setSearchTerm(searchTerm?: string): void;
+  setSearchTerm?(searchTerm?: string): void;
   // Category Facets
   setCategoryFacets?(args: { categoryName?: string, clearFacets?: boolean }): void;
   facets?: string[];
@@ -352,7 +354,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   paginationParams: {
     limit: number
     pageParam: number
-    setPageParam(a?: any): void;
+    setPageParam?(a?: any): void;
     totalCount: number
     overfetchBy: number
     index: number
@@ -375,6 +377,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   maxCategoryInputWidth?: any;
   hidePaginator?: boolean;
   updateSetPageDelay?: number;
+  placeholder?: string;
 }
 export interface SelectOption {
   label: string;
