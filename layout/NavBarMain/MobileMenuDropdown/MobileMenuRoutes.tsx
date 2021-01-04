@@ -156,7 +156,7 @@ const MobileMenuRoutes = (props: ReactProps) => {
 
 
       <div className={classes.mobileMenuFlexitem}>
-        <Link href="/categories">
+        <Link href="/">
           <a className={classes.menuLink}>
             <MenuItem
               className={clsx(
@@ -166,7 +166,7 @@ const MobileMenuRoutes = (props: ReactProps) => {
               onClick={() => props.closeMobileMenu()}
             >
               <Typography className={classes.mobileMenuItemText}>
-                Browse Categories
+                Browse Products
               </Typography>
             </MenuItem>
           </a>

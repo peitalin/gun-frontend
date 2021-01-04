@@ -93,7 +93,7 @@ const BannerHomeMobile: NextPage<ReactProps> = (props) => {
                     classes: { root: classes.buttonRoot }
                   }}
                 />
-              : <Link href={"/categories"}>
+              : <Link href={"/"}>
                   <a style={{ marginRight: '1rem' }}>
                     <Button
                         className={clsx(
@@ -107,7 +107,7 @@ const BannerHomeMobile: NextPage<ReactProps> = (props) => {
                           root: classes.buttonRoot,
                         }}
                       >
-                        Browse Categories
+                        Browse Products
                     </Button>
                   </a>
                 </Link>

@@ -119,7 +119,7 @@ const OrdersRefundedList = (props: ReactProps) => {
   const connection = option(data).getOrdersRefundedConnection();
   const orderIds = option(connection).edges([]).map(({ node }) => node.id)
 
-  let noPayoutsToBePaid = !loading &&
+  let noRefundsYet = !loading &&
     option(connection).edges([]).length === 0
 
 
@@ -218,7 +218,7 @@ const OrdersRefundedList = (props: ReactProps) => {
           }}
         >
           {
-            noPayoutsToBePaid &&
+            noRefundsYet &&
             <div className={clsx(
               classes.paper,
               classes.customersPlaceholder,
@@ -226,7 +226,7 @@ const OrdersRefundedList = (props: ReactProps) => {
               classes.customerNoEmailsBox,
             )}>
               <Typography variant="subtitle2">
-                No completed payouts yet
+                No refunds yet
               </Typography>
             </div>
           }

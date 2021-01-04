@@ -136,10 +136,10 @@ const MyOrders: React.FC<ReactProps> = (props) => {
           variant="outlined"
           color="primary"
           onClick={() => {
-            router.push(`/categories`)
+            router.push(`/`)
           }}
           >
-            Browse Categories
+            Browse Products
           </Button>
         </div>
       </OrdersLayout>

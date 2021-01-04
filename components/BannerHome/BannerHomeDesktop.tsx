@@ -152,7 +152,7 @@ const BannerHomeDesktop: NextPage<ReactProps> = (props) => {
                     }
                   }}
                 />
-              : <Link href={"/categories"}>
+              : <Link href={"/"}>
                   <a style={{ marginRight: '1rem' }}>
                     <Button
                         className={clsx(
@@ -167,7 +167,7 @@ const BannerHomeDesktop: NextPage<ReactProps> = (props) => {
                           label: classes.buttonFontSizeDesktop,
                         }}
                       >
-                        Browse Categories
+                        Browse Products
                     </Button>
                   </a>
                 </Link>

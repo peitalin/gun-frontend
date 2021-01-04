@@ -58,7 +58,6 @@ const OrdersPendingApprovals: React.FC<ReactProps> = (props) => {
 
   const [isLoading, setIsLoading] = React.useState(false);
 
-
   return (
     <div className={classes.root}>
       <div className={clsx(classes.spaceBetween)}>
@@ -78,26 +77,6 @@ const OrdersPendingApprovals: React.FC<ReactProps> = (props) => {
 
 interface ReactProps extends WithStyles<typeof styles> {
   admin: User
-}
-
-interface MutationData {
-  createPayouts: Payout[];
-}
-interface MutationVar {
-  month: number;
-  year: number;
-  query?: ConnectionQuery;
-}
-
-interface MutationData2 {
-  approvePayouts: {
-    approvedPayouts: Payout[];
-    payoutsAlreadyApproved: Payout[];
-  }
-}
-interface MutationVar2 {
-  payoutIds: ID[];
-  query?: ConnectionQuery;
 }
 
 
