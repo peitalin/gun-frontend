@@ -31,8 +31,8 @@ import Loading from "components/Loading";
 import OrderSummary from "./OrderSummary";
 import OrderPrices from "./OrderPrices";
 import OrderCard from "./OrderCard";
-import RowExpander from "../PayoutsPendingApprovals/OrdersPendingApprovalTable/DataTableOrdersPending/RowExpander";
-import { createData } from '../PayoutsPendingApprovals/OrdersPendingApprovalTable/DataTableOrdersPending/createData';
+import RowExpander from "../PayoutsPendingApprovals/OrdersPendingApprovalTable/RowExpander";
+import { createData } from '../PayoutsPendingApprovals/OrdersPendingApprovalTable/createData';
 import TableContainer from '@material-ui/core/TableContainer';
 import Table from '@material-ui/core/Table';
 
