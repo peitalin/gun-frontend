@@ -27,14 +27,13 @@ import { getFeaturedPreviewFromProduct } from "utils/images";
 
 const OrderRowBuyers: React.FC<ReactProps> = (props) => {
 
-  const [showOrderDetails, setShowOrderDetails] = useState(false);
   const { classes, order } = props;
   const { product } = order;
 
   const theme = useTheme();
   const smDown = useMediaQuery(theme.breakpoints.down("sm"))
 
-  // console.log("!!porduct: ",product)
+  // console.log("!!product: ",product)
   const previewItem = getFeaturedPreviewFromProduct(product)
 
   return (
@@ -66,13 +65,13 @@ const OrderRowBuyers: React.FC<ReactProps> = (props) => {
             'fadeIn'
           )}>
             <Typography className={classes.name} variant="body2">
-              {option(product).currentSnapshot.title("")}
+              {product?.currentSnapshot?.title}
             </Typography>
             <Typography className={classes.tagline} variant="body2">
-              {option(product).currentSnapshot.model("")}
+              {product?.currentSnapshot?.model}
             </Typography>
             {
-              option(product).store.id() &&
+              !!product?.store?.id &&
               <Link
                 href="/s/[storeId]"
                 as={`/s/${option(product).store.id()}`}

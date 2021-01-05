@@ -52,6 +52,22 @@ import ResponsivePadding from "pageComponents/SellerProfileDashboard/ResponsiveP
 // Analytics
 import { useRouter } from "next/router";
 
+// Search Component
+import SearchOptions, { SelectOption, setCategoryFacets } from "components/SearchOptions";
+import {
+  useFacetSearchOptions,
+  useEffectUpdateGridAccum,
+  totalItemsInCategoriesFacets,
+} from "utils/hooksFacetSearch";
+// Grid Components
+import GridPaginatorGeneric from "components/GridPaginatorGeneric";
+
+
+
+/////////////////////////////////// paginator
+let numItemsPerPage = 3;
+let overfetchBy = 1;
+
 
 
 
@@ -63,12 +79,42 @@ const MyOrders: React.FC<ReactProps> = (props) => {
   const theme = useTheme();
   const xsDown = useMediaQuery(theme.breakpoints.down("xs"));
 
+  //// BUYER ORDERS Paginator Hooks
+  let {
+    paginationParams: {
+      limit: bLimit,
+      offset: bOffset,
+      pageParam: bPageParam,
+      setPageParam: bSetPageParam,
+    },
+    index: bIndex,
+    setIndex: bSetIndex,
+  } = useFacetSearchOptions({
+    limit: numItemsPerPage * overfetchBy,
+    overfetchBy: overfetchBy,
+  })
+
+  //// SELLER ORDERS Paginator Hooks
+  let {
+    paginationParams: {
+      limit: sLimit,
+      offset: sOffset,
+      pageParam: sPageParam,
+      setPageParam: sSetPageParam,
+    },
+    index: sIndex,
+    setIndex: sSetIndex,
+  } = useFacetSearchOptions({
+    limit: numItemsPerPage * overfetchBy,
+    overfetchBy: overfetchBy,
+  })
+
   const buyerOrdersResponse = useQuery<QueryData, QueryVar>(
     GET_BUYER_ORDERS_CONNECTION, {
       variables: {
         query: {
-          limit: 30,
-          offset: 0,
+          limit: bLimit,
+          offset: bOffset,
           orderBy: { createdAt: Order_By.DESC }
         }
       },
@@ -80,8 +126,8 @@ const MyOrders: React.FC<ReactProps> = (props) => {
     GET_SELLER_ORDERS_CONNECTION, {
       variables: {
         query: {
-          limit: 10,
-          offset: 0,
+          limit: sLimit,
+          offset: sOffset,
           orderBy: { createdAt: Order_By.DESC }
         }
       },
@@ -98,30 +144,9 @@ const MyOrders: React.FC<ReactProps> = (props) => {
   const sellerOrdersConnection = option(sellerOrdersResponse)
     .data.user.sellerOrdersConnection() || props.initialSellerOrders;
 
-  if (buyerOrdersResponse.loading || sellerOrdersResponse.loading) {
-    return (
-      <OrdersLayout {...props}>
-        {
-          [1,2,3].map(x => {
-            return (
-            <DescriptionLoading
-              key={x}
-              rowFormat
-              height={xsDown ? 120 : 200}
-              mobilePicHeight={xsDown ? 60 : 80}
-              mobilePicWidth={xsDown ? 96 : 128}
-              style={{
-                maxWidth: 480,
-                marginTop: '0rem',
-                marginRight: '1rem',
-              }}
-            />
-            )
-          })
-        }
-      </OrdersLayout>
-    )
-  } else if (
+
+
+  if (
     !option(buyerOrdersConnection).edges[0]() &&
     !option(sellerOrdersConnection).edges[0]()
   ) {
@@ -159,39 +184,134 @@ const MyOrders: React.FC<ReactProps> = (props) => {
   } else {
     return (
       <OrdersLayout {...props}>
+
         <OrdersSection
           classes={props.classes}
           title={"Your Purchases"}
         >
-          {
-            (option(buyerOrdersConnection).edges([]).length > 0) &&
-            buyerOrdersConnection.edges.map(({ node: order }, i) => {
-              return (
-                <OrderRowBuyers
-                  key={i}
-                  order={order}
-                />
-              )
-            })
-          }
+          <SearchOptions
+            paginationParams={{
+              totalCount: buyerOrdersConnection?.totalCount,
+              overfetchBy: overfetchBy,
+              limit: bLimit,
+              pageParam: bPageParam,
+              setPageParam: bSetPageParam,
+              index: bIndex,
+              setIndex: bSetIndex,
+            }}
+            updateSetPageDelay={0}
+            disableSearchFilter
+            disableSortby
+            disablePriceFilter
+            disableCategories
+            maxCategoryInputWidth={250}
+            topSectionStyles={{
+              justifyContent: 'flex-end',
+              alignItems: 'flex-end',
+              display: 'flex',
+              flexDirection: 'column',
+              marginTop: '1rem',
+              paddingRight: '1rem',
+            }}
+            bottomSectionStyles={{
+              marginBottom: '1rem',
+            }}
+          >
+            <GridPaginatorGeneric<Orders>
+              index={bIndex}
+              connection={buyerOrdersConnection}
+              totalCount={buyerOrdersConnection?.totalCount ?? 0}
+              numItemsPerPage={numItemsPerPage}
+              className={classes.rowContainer}
+              classNameRoot={classes.gridRootBuyer}
+            >
+              {({ node: order }) => {
+                if (buyerOrdersResponse.loading) {
+                  return (
+                    <></>
+                    // <DescriptionLoading
+                    //   rowFormat
+                    //   height={xsDown ? 120 : 200}
+                    //   mobilePicHeight={xsDown ? 60 : 80}
+                    //   mobilePicWidth={xsDown ? 96 : 128}
+                    //   style={{
+                    //     maxWidth: 480,
+                    //     marginTop: '0rem',
+                    //     marginRight: '1rem',
+                    //   }}
+                    // />
+                  )
+                }
+                return (
+                  <OrderRowBuyers
+                    key={order.id}
+                    order={order}
+                  />
+                )
+              }}
+            </GridPaginatorGeneric>
+          </SearchOptions>
         </OrdersSection>
+
+
         <div className={classes.divider}/>
+
+
         <OrdersSection
           classes={props.classes}
           title={"Your Sales"}
         >
-          {
-            (option(sellerOrdersConnection).edges([]).length > 0) &&
-            sellerOrdersConnection.edges.map(({ node: order }, i) => {
-              return (
-                <OrderRowSellers
-                  key={i}
-                  order={order}
-                />
-              )
-            })
-          }
+          <SearchOptions
+            paginationParams={{
+              totalCount: sellerOrdersConnection?.totalCount,
+              overfetchBy: overfetchBy,
+              limit: sLimit,
+              pageParam: sPageParam,
+              setPageParam: sSetPageParam,
+              index: sIndex,
+              setIndex: sSetIndex,
+            }}
+            updateSetPageDelay={0}
+            disableSearchFilter
+            disableSortby
+            disablePriceFilter
+            disableCategories
+            maxCategoryInputWidth={250}
+            topSectionStyles={{
+              justifyContent: 'flex-end',
+              alignItems: 'flex-end',
+              display: 'flex',
+              flexDirection: 'column',
+              marginTop: '1rem',
+              paddingRight: '1rem',
+            }}
+            bottomSectionStyles={{
+              marginBottom: '1rem',
+            }}
+          >
+            <GridPaginatorGeneric<Orders>
+              index={sIndex}
+              connection={sellerOrdersConnection}
+              totalCount={sellerOrdersConnection?.totalCount ?? 0}
+              numItemsPerPage={numItemsPerPage}
+              className={classes.rowContainer}
+              classNameRoot={classes.gridRootSeller}
+            >
+              {({ node: order }) => {
+                if (sellerOrdersResponse.loading) {
+                  return <></>
+                }
+                return (
+                  <OrderRowSellers
+                    key={order.id}
+                    order={order}
+                  />
+                )
+              }}
+            </GridPaginatorGeneric>
+          </SearchOptions>
         </OrdersSection>
+
       </OrdersLayout>
     )
   }
@@ -383,6 +503,23 @@ const styles = (theme: Theme) => createStyles({
   },
   ordersSectionContainer: {
     marginTop: "1rem",
+  },
+  rowContainer: {
+    width: '100%',
+  },
+  gridRootBuyer: {
+    // backgroundColor: theme.colors.uniswapDarkNavy,
+    minHeight: (116 + 10) * numItemsPerPage,
+    // 116px + 10px padding * number of rows
+    borderRadius: `0px 0px ${BorderRadius}px ${BorderRadius}px`,
+    paddingBottom: '0.25rem',
+  },
+  gridRootSeller: {
+    // backgroundColor: theme.colors.uniswapDarkNavy,
+    minHeight: (220 + 10) * numItemsPerPage,
+    // 116px + 10px padding * number of rows
+    borderRadius: `0px 0px ${BorderRadius}px ${BorderRadius}px`,
+    paddingBottom: '0.25rem',
   },
 });
 

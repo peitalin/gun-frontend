@@ -266,41 +266,169 @@ textarea {
   animation-delay: 0.2s;
 }
 
-.staggerFadeIn *:nth-child(1) {
-  animation: fadeInFast 1s cubic-bezier(0.6, 0.2, 0.4, 1.1) both;
-  animation-delay: .0s;
-}
-.staggerFadeIn *:nth-child(2) {
-  animation: fadeInFast 1s cubic-bezier(0.6, 0.2, 0.4, 1.1) both;
+.staggerFadeIn > div:nth-child(1) {
+  animation: fadeIn 1s cubic-bezier(0.6, 0.2, 0.4, 1.1) both;
   animation-delay: .1s;
 }
-.staggerFadeIn *:nth-child(3) {
-  animation: fadeInFast 1s cubic-bezier(0.6, 0.2, 0.4, 1.1) both;
+.staggerFadeIn > div:nth-child(2) {
+  animation: fadeIn 1s cubic-bezier(0.6, 0.2, 0.4, 1.1) both;
   animation-delay: .2s;
 }
-.staggerFadeIn *:nth-child(4) {
-  animation: fadeInFast 1s cubic-bezier(0.6, 0.2, 0.4, 1.1) both;
+.staggerFadeIn > div:nth-child(3) {
+  animation: fadeIn 1s cubic-bezier(0.6, 0.2, 0.4, 1.1) both;
   animation-delay: .3s;
 }
-.staggerFadeIn *:nth-child(5) {
-  animation: fadeInFast 1s cubic-bezier(0.6, 0.2, 0.4, 1.1) both;
+.staggerFadeIn > div:nth-child(4) {
+  animation: fadeIn 1s cubic-bezier(0.6, 0.2, 0.4, 1.1) both;
   animation-delay: .4s;
 }
-.staggerFadeIn *:nth-child(6) {
-  animation: fadeInFast 1s cubic-bezier(0.6, 0.2, 0.4, 1.1) both;
+.staggerFadeIn > div:nth-child(5) {
+  animation: fadeIn 1s cubic-bezier(0.6, 0.2, 0.4, 1.1) both;
   animation-delay: .45s;
 }
-.staggerFadeIn *:nth-child(7) {
-  animation: fadeInFast 1s cubic-bezier(0.6, 0.2, 0.4, 1.1) both;
+.staggerFadeIn > div:nth-child(6) {
+  animation: fadeIn 1s cubic-bezier(0.6, 0.2, 0.4, 1.1) both;
   animation-delay: .5s;
 }
-.staggerFadeIn *:nth-child(8) {
-  animation: fadeInFast 1s cubic-bezier(0.6, 0.2, 0.4, 1.1) both;
+.staggerFadeIn > div:nth-child(7) {
+  animation: fadeIn 1s cubic-bezier(0.6, 0.2, 0.4, 1.1) both;
   animation-delay: .55s;
 }
-.staggerFadeIn *:nth-child(9) {
-  animation: fadeInFast 1s cubic-bezier(0.6, 0.2, 0.4, 1.1) both;
+.staggerFadeIn > div:nth-child(8) {
+  animation: fadeIn 1s cubic-bezier(0.6, 0.2, 0.4, 1.1) both;
   animation-delay: .6s;
+}
+.staggerFadeIn > div:nth-child(9) {
+  animation: fadeIn 1s cubic-bezier(0.6, 0.2, 0.4, 1.1) both;
+  animation-delay: .65s;
+}
+.staggerFadeIn > div:nth-child(10) {
+  animation: fadeIn 1s cubic-bezier(0.6, 0.2, 0.4, 1.1) both;
+  animation-delay: .7s;
+}
+.staggerFadeIn > div:nth-child(11) {
+  animation: fadeIn 1s cubic-bezier(0.6, 0.2, 0.4, 1.1) both;
+  animation-delay: .75s;
+}
+.staggerFadeIn > div:nth-child(12) {
+  animation: fadeIn 1s cubic-bezier(0.6, 0.2, 0.4, 1.1) both;
+  animation-delay: .8s;
+}
+.staggerFadeIn > div:nth-child(13) {
+  animation: fadeIn 1s cubic-bezier(0.6, 0.2, 0.4, 1.1) both;
+  animation-delay: .8s;
+}
+.staggerFadeIn > div:nth-child(14) {
+  animation: fadeIn 1s cubic-bezier(0.6, 0.2, 0.4, 1.1) both;
+  animation-delay: .8s;
+}
+.staggerFadeIn > div:nth-child(15) {
+  animation: fadeIn 1s cubic-bezier(0.6, 0.2, 0.4, 1.1) both;
+  animation-delay: .8s;
+}
+.staggerFadeIn > div:nth-child(16) {
+  animation: fadeIn 1s cubic-bezier(0.6, 0.2, 0.4, 1.1) both;
+  animation-delay: .8s;
+}
+.staggerFadeIn > div:nth-child(17) {
+  animation: fadeIn 1s cubic-bezier(0.6, 0.2, 0.4, 1.1) both;
+  animation-delay: .8s;
+}
+.staggerFadeIn > div:nth-child(18) {
+  animation: fadeIn 1s cubic-bezier(0.6, 0.2, 0.4, 1.1) both;
+  animation-delay: .8s;
+}
+.staggerFadeIn > div:nth-child(18) {
+  animation: fadeIn 1s cubic-bezier(0.6, 0.2, 0.4, 1.1) both;
+  animation-delay: .8s;
+}
+.staggerFadeIn > div:nth-child(19) {
+  animation: fadeIn 1s cubic-bezier(0.6, 0.2, 0.4, 1.1) both;
+  animation-delay: .8s;
+}
+.staggerFadeIn > div:nth-child(20) {
+  animation: fadeIn 1s cubic-bezier(0.6, 0.2, 0.4, 1.1) both;
+  animation-delay: .8s;
+}
+.staggerFadeIn > div:nth-child(21) {
+  animation: fadeIn 1s cubic-bezier(0.6, 0.2, 0.4, 1.1) both;
+  animation-delay: .9s;
+}
+.staggerFadeIn > div:nth-child(22) {
+  animation: fadeIn 1s cubic-bezier(0.6, 0.2, 0.4, 1.1) both;
+  animation-delay: .9s;
+}
+.staggerFadeIn > div:nth-child(23) {
+  animation: fadeIn 1s cubic-bezier(0.6, 0.2, 0.4, 1.1) both;
+  animation-delay: .9s;
+}
+.staggerFadeIn > div:nth-child(24) {
+  animation: fadeIn 1s cubic-bezier(0.6, 0.2, 0.4, 1.1) both;
+  animation-delay: .9s;
+}
+.staggerFadeIn > div:nth-child(25) {
+  animation: fadeIn 1s cubic-bezier(0.6, 0.2, 0.4, 1.1) both;
+  animation-delay: .9s;
+}
+.staggerFadeIn > div:nth-child(26) {
+  animation: fadeIn 1s cubic-bezier(0.6, 0.2, 0.4, 1.1) both;
+  animation-delay: .9s;
+}
+.staggerFadeIn > div:nth-child(27) {
+  animation: fadeIn 1s cubic-bezier(0.6, 0.2, 0.4, 1.1) both;
+  animation-delay: .9s;
+}
+.staggerFadeIn > div:nth-child(28) {
+  animation: fadeIn 1s cubic-bezier(0.6, 0.2, 0.4, 1.1) both;
+  animation-delay: .9s;
+}
+.staggerFadeIn > div:nth-child(29) {
+  animation: fadeIn 1s cubic-bezier(0.6, 0.2, 0.4, 1.1) both;
+  animation-delay: .9s;
+}
+.staggerFadeIn > div:nth-child(30) {
+  animation: fadeIn 1s cubic-bezier(0.6, 0.2, 0.4, 1.1) both;
+  animation-delay: .9s;
+}
+.staggerFadeIn > div:nth-child(31) {
+  animation: fadeIn 1s cubic-bezier(0.6, 0.2, 0.4, 1.1) both;
+  animation-delay: 1s;
+}
+.staggerFadeIn > div:nth-child(32) {
+  animation: fadeIn 1s cubic-bezier(0.6, 0.2, 0.4, 1.1) both;
+  animation-delay: 1s;
+}
+.staggerFadeIn > div:nth-child(33) {
+  animation: fadeIn 1s cubic-bezier(0.6, 0.2, 0.4, 1.1) both;
+  animation-delay: 1s;
+}
+.staggerFadeIn > div:nth-child(34) {
+  animation: fadeIn 1s cubic-bezier(0.6, 0.2, 0.4, 1.1) both;
+  animation-delay: 1s;
+}
+.staggerFadeIn > div:nth-child(35) {
+  animation: fadeIn 1s cubic-bezier(0.6, 0.2, 0.4, 1.1) both;
+  animation-delay: 1s;
+}
+.staggerFadeIn > div:nth-child(36) {
+  animation: fadeIn 1s cubic-bezier(0.6, 0.2, 0.4, 1.1) both;
+  animation-delay: 1s;
+}
+.staggerFadeIn > div:nth-child(37) {
+  animation: fadeIn 1s cubic-bezier(0.6, 0.2, 0.4, 1.1) both;
+  animation-delay: 1s;
+}
+.staggerFadeIn > div:nth-child(38) {
+  animation: fadeIn 1s cubic-bezier(0.6, 0.2, 0.4, 1.1) both;
+  animation-delay: 1s;
+}
+.staggerFadeIn > div:nth-child(39) {
+  animation: fadeIn 1s cubic-bezier(0.6, 0.2, 0.4, 1.1) both;
+  animation-delay: 1s;
+}
+.staggerFadeIn > div:nth-child(40) {
+  animation: fadeIn 1s cubic-bezier(0.6, 0.2, 0.4, 1.1) both;
+  animation-delay: 1s;
 }
 
 
