@@ -204,7 +204,9 @@ export const useEffectUpdateGridAccum = <T>({
 
     // console.log("totalCount>", totalCount)
     if (productsConnection && !totalCount) {
-      setTotalCount(productsConnection.totalCount)
+      if (setTotalCount) {
+        setTotalCount(productsConnection.totalCount)
+      }
     }
 
   }, [productsConnection, searchTerm, index, totalCount])
