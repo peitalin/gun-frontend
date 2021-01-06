@@ -244,7 +244,7 @@ const OrdersPendingApprovalTable: NextPage<ReactProps> = (props) => {
             index: ordersCreatedIndex,
             setIndex: ordersCreatedSetIndex,
           }}
-          updateSetPageDelay={150}
+          updateSetPageDelay={0}
           disableSearchFilter
           disableSortby
           disablePriceFilter
@@ -318,7 +318,7 @@ const OrdersPendingApprovalTable: NextPage<ReactProps> = (props) => {
             index: ordersPAIndex,
             setIndex: ordersPASetIndex,
           }}
-          updateSetPageDelay={150}
+          updateSetPageDelay={0}
           disableSearchFilter
           disableSortby
           disablePriceFilter
@@ -390,7 +390,7 @@ const OrdersPendingApprovalTable: NextPage<ReactProps> = (props) => {
             index: ordersAAIndex,
             setIndex: ordersAASetIndex,
           }}
-          updateSetPageDelay={150}
+          updateSetPageDelay={0}
           disableSearchFilter
           disableSortby
           disablePriceFilter

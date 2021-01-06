@@ -447,7 +447,7 @@ const PayoutsApprovedList = (props: ReactProps) => {
               classes.customerNoEmailsBox,
             )}>
               <Typography variant="subtitle2">
-                No approved payouts pending Westpac payout
+                No approved payouts pending
               </Typography>
             </div>
           }

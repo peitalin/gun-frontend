@@ -237,6 +237,7 @@ const OrdersRefundedList = (props: ReactProps) => {
             setTotalCount={setTotalCount}
             numItemsPerPage={numItemsPerPage}
             gridItemClassName={classes.gridItem}
+            classNameRoot={classes.gridRoot}
           >
             {({ node: order, key }) => {
               console.log("node: order:", order)
@@ -362,7 +363,7 @@ const styles = (theme: Theme) => createStyles({
     height: '100%',
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     alignItems: 'center',
     minHeight: 420,
   },
@@ -418,6 +419,9 @@ const styles = (theme: Theme) => createStyles({
   },
   gridItem: {
     width: '100%',
+  },
+  gridRoot: {
+    minHeight: 400,
   },
 });
 
