@@ -8,24 +8,42 @@ import {
 
 
 export const GET_STORE_PUBLIC = gql`
-  query getStorePublic($storeId: String!) {
+  query getStorePublic(
+    $storeId: String!
+    # $searchTerm: String
+    # $query: ConnectionOffsetQuery
+  ) {
     store(id: $storeId) {
-      ...StorePublicFragment
-      productsForSaleConnection(query: {
-        limit: 10,
-        offset: 0,
-      }) {
+      id
+      name
+      createdAt
+      updatedAt
+      website
+      bio
+      isSuspended
+      isDeleted
+      cover {
+        ...ImageFragment
+      }
+      profile {
+        ...ImageFragment
+      }
+      productsForSaleConnection(
+        query: {
+          limit: 20,
+          offset: 0,
+        }
+      ) {
         edges {
           node {
-            id
-            serialNumber
-            title
+            ...ProductFragment
           }
         }
       }
     }
   }
-  ${StorePublicFragment}
+  ${ImageFragment}
+  ${ProductFragment}
 `;
 
 
@@ -41,6 +59,8 @@ export const GET_STORE_PRIVATE = gql`
           updatedAt
           website
           bio
+          isSuspended
+          isDeleted
           cover {
             ...ImageFragment
           }

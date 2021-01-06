@@ -6,22 +6,20 @@ import {
 } from "./fragments";
 
 export const GET_RECOMMENDED_PRODUCTS = gql`
-  query getRecommendedProducts($query: ConnectionQuery) {
-    productsRecommendedConnection(query: $query) {
+  query getRecommendedProducts($query: ConnectionOffsetQuery) {
+    getRecommendedProductsConnection(query: $query) {
       totalCount
       pageInfo {
         isLastPage
         endCursor
       }
       edges {
-        # cursor
         node {
           ...ProductFragment
         }
       }
     }
   }
-  ${ImageFragment}
   ${ProductFragment}
 `;
 

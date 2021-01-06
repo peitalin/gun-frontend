@@ -14,6 +14,8 @@ import {
   GET_BUYER_ORDERS_CONNECTION,
   GET_SELLER_ORDERS_CONNECTION,
 } from "queries/orders-queries";
+
+import Loading from "components/Loading";
 // graphl
 import { useMutation, useQuery } from "@apollo/client";
 
@@ -148,6 +150,33 @@ const MyOrders: React.FC<ReactProps> = (props) => {
 
   if (
     !option(buyerOrdersConnection).edges[0]() &&
+    !option(sellerOrdersConnection).edges[0]() &&
+    (buyerOrdersResponse.loading || sellerOrdersResponse.loading)
+  ) {
+    return (
+      <>
+        {
+          [1,2,3,4,5].map(i => {
+            return (
+              <DescriptionLoading
+                key={i}
+                rowFormat
+                height={xsDown ? 120 : 200}
+                mobilePicHeight={xsDown ? 60 : 80}
+                mobilePicWidth={xsDown ? 96 : 128}
+                style={{
+                  maxWidth: 480,
+                  marginTop: '0rem',
+                  marginRight: '1rem',
+                }}
+              />
+            )
+          })
+        }
+      </>
+    )
+  } else if (
+    !option(buyerOrdersConnection).edges[0]() &&
     !option(sellerOrdersConnection).edges[0]()
   ) {
     return (
@@ -157,12 +186,8 @@ const MyOrders: React.FC<ReactProps> = (props) => {
             Your saved orders will appear here
             after your first purchase or sale.
           </Typography>
-          <Button
-          variant="outlined"
-          color="primary"
-          onClick={() => {
-            router.push(`/`)
-          }}
+          <Button variant="outlined" color="primary"
+            onClick={() => router.push(`/`)}
           >
             Browse Products
           </Button>
@@ -227,20 +252,7 @@ const MyOrders: React.FC<ReactProps> = (props) => {
             >
               {({ node: order }) => {
                 if (buyerOrdersResponse.loading) {
-                  return (
-                    <></>
-                    // <DescriptionLoading
-                    //   rowFormat
-                    //   height={xsDown ? 120 : 200}
-                    //   mobilePicHeight={xsDown ? 60 : 80}
-                    //   mobilePicWidth={xsDown ? 96 : 128}
-                    //   style={{
-                    //     maxWidth: 480,
-                    //     marginTop: '0rem',
-                    //     marginRight: '1rem',
-                    //   }}
-                    // />
-                  )
+                  return <></>
                 }
                 return (
                   <OrderRowBuyers

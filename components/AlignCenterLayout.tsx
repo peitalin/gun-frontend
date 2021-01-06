@@ -5,23 +5,24 @@ import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/s
 // Components
 import Hidden from "components/HiddenFix";
 // Recommendations
-import Loading from "components/Loading";
 import LoadingCards from "pageComponents/FrontPage/LoadingCards";
 import Typography from "@material-ui/core/Typography";
+
+import YouMayAlsoLikeMobile from "components/Recommendations/YouMayAlsoLikeMobile";
 // Next
 import dynamic from "next/dynamic";
-// const YouMayAlsoLike = dynamic(
-//   () => import("components/Recommendations/YouMayAlsoLike"), {
-//     ssr: false,
-//     loading: () =>
-//     <div style={{ paddingLeft: '1rem', marginTop: '2rem' }}>
-//       <span style={{ height: '50px' }}></span>
-//       <LoadingCards alignCenter/>
-//     </div>
-//     // 2rem for marginTop
-//     // 50px to match YouMayALsoLikeRecommendations Typography component
-//   }
-// );
+const YouMayAlsoLike = dynamic(
+  () => import("components/Recommendations/YouMayAlsoLike"), {
+    ssr: false,
+    loading: () =>
+    <div style={{ paddingLeft: '1rem', marginTop: '2rem' }}>
+      <span style={{ height: '50px' }}></span>
+      <LoadingCards alignCenter/>
+    </div>
+    // 2rem for marginTop
+    // 50px to match YouMayALsoLikeRecommendations Typography component
+  }
+);
 
 
 const AlignCenterLayout: React.FC<ReactProps> = (props) => {
@@ -47,23 +48,25 @@ const AlignCenterLayout: React.FC<ReactProps> = (props) => {
         })
       }
 
-      {/* {
+
+      {
         withRecommendations &&
-        <div className={classes.pageRecommendationsContainer}>
+        <div className={clsx(
+          classes.pageRecommendationsContainer,
+          props.pageRecommendationsContainerClassname
+        )}>
           <Hidden mdUp>
-            <div className={classes.pageRecommendations}>
-              <YouMayAlsoLike/>
-            </div>
+            <YouMayAlsoLikeMobile/>
           </Hidden>
           <Hidden smDown>
             <YouMayAlsoLike
               // initialProducts={initialProductsLimitedRelease}
-              title={"You may also like"}
+              title={"Related Products"}
               maxWidth={1160}
             />
           </Hidden>
         </div>
-      } */}
+      }
     </div>
   )
 };
@@ -71,8 +74,9 @@ const AlignCenterLayout: React.FC<ReactProps> = (props) => {
 interface ReactProps extends WithStyles<typeof styles> {
   className?: any;
   withRecommendations?: boolean;
-  maxWidth?: number | 'unset';
+  maxWidth?: number | string;
   style?: any;
+  pageRecommendationsContainerClassname?: any;
 }
 
 const styles = (theme: Theme) => createStyles({

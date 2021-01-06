@@ -4,7 +4,7 @@ import { oc as option } from "ts-optchain";
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 // Typings
 import { Store, ID, ConnectionOffsetQuery } from "typings/gqlTypes";
-// import StoreId from "pageComponents/Stores/StoreId";
+import StoreId from "pageComponents/S/StoreId";
 // SSR
 import { NextPage, NextPageContext } from 'next';
 import { ApolloClient } from "@apollo/client";
@@ -28,7 +28,7 @@ const Stores = (props: ReactProps) => {
         }
       />
       { option(store).name() }
-      {/* <StoreId initialStore={props.initialStore}/> */}
+      <StoreId initialStore={props.initialStore}/>
     </>
   )
 }
@@ -60,7 +60,7 @@ export async function getServerSideProps(ctx: Context) {
 // But, seems to make intiialProps undefined for SSR pages
 
 
-  const storeId: string = ctx.query.storeId || ctx.query.storeIdOrSlug as any;
+  const storeId: string = ctx.query.storeId as any;
   // console.log('getInitialProps ctx: ', ctx.query);
   console.log('getInitialProps storeId: ', storeId);
   // // for blocking sleep.

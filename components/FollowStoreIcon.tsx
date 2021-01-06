@@ -80,7 +80,7 @@ const FollowStoreIcon: React.FC<ReactProps> = (props) => {
   })
 
   const added = isInFollowingStores()
-  console.log("following stores", followingStoresIds)
+  // console.log("following stores", followingStoresIds)
 
   return (
     <IconButton
