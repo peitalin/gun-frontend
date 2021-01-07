@@ -118,13 +118,6 @@ const StoresId: React.FC<ReactProps> = (props) => {
   const store = option(data).store() || initialStore;
   let productsForSaleConnection = option(data).store.productsForSaleConnection()
 
-  // React.useEffect(() => {
-  //   let storesCurrentCategories = option(data).getStoreByStoreIdOrSlug.storesCurrentCategories()
-  //   if (storesCurrentCategories) {
-  //     setCurrentCategories(storesCurrentCategories)
-  //   }
-  // }, [option(data).getStoreByStoreIdOrSlug.storesCurrentCategories()])
-
   let totalItemsInFacet = totalItemsInCategoriesFacets({
     facets: facets,
     facetsDistribution: option(productsForSaleConnection).facetsDistribution(),
@@ -133,13 +126,15 @@ const StoresId: React.FC<ReactProps> = (props) => {
     searchTerm: searchTerm,
   })
 
-
   // console.log('store: ', store)
 
   if (error) {
-    return <ErrorDisplay title={"Seller Profile"} error={error}/>
+    return (
+      <ErrorBounds className={clsx(classes.root, classes.flexCol)}>
+        <ErrorDisplay title={"Seller Profile"} error={error}/>
+      </ErrorBounds>
+    )
   } else if (
-    !store?.id ||
     store?.isSuspended === true ||
     store?.isDeleted === true
   ) {
@@ -192,7 +187,7 @@ const StoresId: React.FC<ReactProps> = (props) => {
         </div>
 
         <AlignCenterLayout
-          maxWidth={'calc(1160px - 1rem)'}
+          maxWidth={1160}
           className={classes.storeProductsRoot}
           withRecommendations={true}
         >

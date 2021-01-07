@@ -43,7 +43,7 @@ const LoadingCards = (props: ReactProps) => {
     {
       [...Array(count).keys()]
       .map(i =>
-        <div key={i}>
+        <div className={classes.loadingProductCardRoot} key={i}>
           {/* Desktop Loading Cards */}
           <Hidden xsDown implementation="css">
             <div className={classes.productImage}>
@@ -157,6 +157,9 @@ const styles = (theme: Theme) => createStyles({
         duration: "200ms",
       }),
     }
+  },
+  loadingProductCardRoot: {
+    marginBottom: '1rem',
   },
   descriptionLoading: {
     display: 'flex',

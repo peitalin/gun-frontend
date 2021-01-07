@@ -8656,7 +8656,7 @@ export type Query = {
    * 
    * AccessRule – PUBLIC
    */
-  productsRecommendedConnection: ProductsConnection;
+  getRecommendedProductsConnection: ProductsConnection;
   /**
    * Retrieve all of the products on the platform that can be purchased.
    * 
@@ -9483,9 +9483,8 @@ export type QueryUserByEmailOrIdArgs = {
 };
 
 
-export type QueryProductsRecommendedConnectionArgs = {
-  query?: Maybe<ConnectionQuery>;
-  currentlyViewingProductIdOrSlug?: Maybe<Scalars['String']>;
+export type QueryGetRecommendedProductsConnectionArgs = {
+  query?: Maybe<ConnectionOffsetQuery>;
 };
 
 

@@ -109,7 +109,7 @@ const YouMayAlsoLikeRecommendations = (props: ReactProps) => {
                     product={product}
                     // refetch={wishlistConnectionResponse.refetch}
                     style={{
-                      marginBottom: '0.5rem',
+                      marginBottom: '1rem',
                     }}
                   />
                 </div>
@@ -135,7 +135,6 @@ interface QueryVar {
 
 const styles = (theme: Theme) => createStyles({
   root: {
-    marginBottom: '1rem',
   },
   maxWidth: {
     maxWidth: '1160px',
