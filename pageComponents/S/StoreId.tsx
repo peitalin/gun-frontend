@@ -12,6 +12,7 @@ import {
   Product,
   Store,
   FacetsDistributionObject,
+  ProductsConnection,
 } from "typings/gqlTypes";
 // Utils
 import Typography from "@material-ui/core/Typography";
@@ -31,7 +32,10 @@ import Suspended from "./Suspended";
 import { useAnalytics } from "utils/analytics";
 // pagination
 import { useQuery } from "@apollo/client";
-import { GET_STORE_PUBLIC } from "queries/store-queries";
+import {
+  GET_STORE_PUBLIC,
+  GET_STORE_PRODUCTS_FOR_SALE_CONNECTION,
+} from "queries/store-queries";
 // Responsiveness
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
@@ -92,16 +96,25 @@ const StoresId: React.FC<ReactProps> = (props) => {
   })
 
 
-  const { loading, error, data } = useQuery<QueryData, QueryVar>(
+  const storeResponse = useQuery<QueryData1, QueryVar1>(
     GET_STORE_PUBLIC, {
+    variables: { storeId: storeId },
+    fetchPolicy: "cache-and-network",
+    // fetchPolicy: "cache-first",
+    ssr: true,
+  });
+
+
+  const { loading, error, data } = useQuery<QueryData2, QueryVar2>(
+    GET_STORE_PRODUCTS_FOR_SALE_CONNECTION, {
     variables: {
       storeId: storeId,
       // these query variables are for productsForSaleConnectionConnection
-      // searchTerm: searchTerm ? searchTerm : "*",
+      searchTerm: searchTerm ? searchTerm : "*",
       query: {
         limit: limit, // when accumulating products, accumulate offset
         offset: offset,
-        // orderBy: orderBy.value,
+        orderBy: orderBy.value,
         // filters: `_price >= ${priceRange[0]} AND _price <= ${priceRange[1]}`,
         // facetFilters: (facets && facets.length > 0)
         //   ? [facets]
@@ -113,10 +126,9 @@ const StoresId: React.FC<ReactProps> = (props) => {
     ssr: true,
   });
 
-
   // products connection
-  const store = option(data).store() || initialStore;
-  let productsForSaleConnection = option(data).store.productsForSaleConnection()
+  const store = option(storeResponse).data.store() || initialStore;
+  let productsForSaleConnection = data?.getStoreProductsForSaleConnection;
 
   let totalItemsInFacet = totalItemsInCategoriesFacets({
     facets: facets,
@@ -128,13 +140,7 @@ const StoresId: React.FC<ReactProps> = (props) => {
 
   // console.log('store: ', store)
 
-  if (error) {
-    return (
-      <ErrorBounds className={clsx(classes.root, classes.flexCol)}>
-        <ErrorDisplay title={"Seller Profile"} error={error}/>
-      </ErrorBounds>
-    )
-  } else if (
+  if (
     store?.isSuspended === true ||
     store?.isDeleted === true
   ) {
@@ -147,6 +153,12 @@ const StoresId: React.FC<ReactProps> = (props) => {
         />
       </ErrorBounds>
     );
+  } else if (error) {
+    return (
+      <ErrorBounds className={clsx(classes.root, classes.flexCol)}>
+        <ErrorDisplay title={"Seller Profile"} error={error}/>
+      </ErrorBounds>
+    )
   } else {
     return (
       <ErrorBounds className={clsx(classes.root, classes.flexCol)}>
@@ -217,6 +229,7 @@ const StoresId: React.FC<ReactProps> = (props) => {
               flexDirection: 'column',
               marginBottom: '1rem',
               paddingRight: '1rem',
+              paddingLeft: '1rem',
             }}
             bottomSectionStyles={{
               marginBottom: '2rem',
@@ -228,7 +241,7 @@ const StoresId: React.FC<ReactProps> = (props) => {
               totalCount={totalCount}
               setTotalCount={setTotalCount}
               numItemsPerPage={numItemsPerPage}
-              classNameRoot={classes.minHeight560}
+              classNameRoot={classes.paginatorRoot}
             >
               {({ node: product }) => {
 
@@ -267,10 +280,17 @@ const StoresId: React.FC<ReactProps> = (props) => {
 interface ReactProps extends WithStyles<typeof styles> {
   initialStore: Store;
 }
-interface QueryData {
+interface QueryData1 {
   store: Store;
 }
-interface QueryVar {
+interface QueryVar1 {
+  storeId: ID;
+}
+
+interface QueryData2 {
+  getStoreProductsForSaleConnection: ProductsConnection;
+}
+interface QueryVar2 {
   storeId: ID;
   searchTerm?: string;
   query?: ConnectionOffsetQuery;

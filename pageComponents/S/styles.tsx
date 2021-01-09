@@ -6,7 +6,6 @@ import { Colors } from "layout/AppTheme";
 export const styles = (theme: Theme) => createStyles({
   root: {
     position: 'relative',
-    paddingLeft: '1rem',
   },
   productColumn40: {
     margin: '1rem',
@@ -122,6 +121,10 @@ export const styles = (theme: Theme) => createStyles({
     marginTop: '2rem',
   },
   storeProductsRoot: {
+  },
+  paginatorRoot: {
+    paddingLeft: "1rem",
+    minHeight: 600,
   },
   translateUp60: {
     transform: 'translate(0px, -60px)',

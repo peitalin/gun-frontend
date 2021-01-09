@@ -158,12 +158,12 @@ const PublishedProductsList = (props: ReactProps) => {
     limitOverfetchBy: limit * overfetchBy
   })
 
-  const refetchTheProducts = () => {
+  const refetchTheProducts = async () => {
     if (
       getProductsResponse &&
       typeof getProductsResponse.refetch === 'function'
     ) {
-      getProductsResponse.refetch()
+      await getProductsResponse.refetch()
     }
   }
 
@@ -171,20 +171,18 @@ const PublishedProductsList = (props: ReactProps) => {
 
   React.useEffect(() => {
     getProducts()
-    setTimeout(() => { getProducts() }, 0)
   }, [])
 
-  React.useEffect(() => {
-    // if (getProducts) {
-    //   dispatch(Actions.reduxRefetch.SET_REFETCH_PUBLISHED_PRODUCTS(getProducts as any))
-    // }
-    // const storesCurrentCategories = option(getProductsResponse).data.user.store.storesCurrentCategories()
-    // if (storesCurrentCategories) {
-    //   setCurrentCategories(storesCurrentCategories)
-    // }
-  }, [getProductsResponse.data])
+  // React.useEffect(() => {
+  //   // if (getProducts) {
+  //   //   dispatch(Actions.reduxRefetch.SET_REFETCH_PUBLISHED_PRODUCTS(getProducts as any))
+  //   // }
+  //   // const storesCurrentCategories = option(getProductsResponse).data.user.store.storesCurrentCategories()
+  //   // if (storesCurrentCategories) {
+  //   //   setCurrentCategories(storesCurrentCategories)
+  //   // }
+  // }, [getProductsResponse.data])
 
-  useAnalytics("View.Dashboard.Products")
 
   // console.log("gridAccum", gridAccum)
   // console.log("index", index)
@@ -217,6 +215,7 @@ const PublishedProductsList = (props: ReactProps) => {
             setIndex: setIndex,
           }}
           disablePriceFilter
+          disableCategories
           dropdownContainerStyle={{ marginRight: 0 }}
           topSectionStyles={{
             padding: '1rem',
@@ -276,6 +275,7 @@ const PublishedProductsList = (props: ReactProps) => {
                       <ProductRow
                         key={product.id}
                         product={product}
+                        loading={getProductsResponse.loading}
                         refetchProducts={refetchTheProducts}
                         {...publishedProps}
                       />
@@ -285,6 +285,7 @@ const PublishedProductsList = (props: ReactProps) => {
                       <ProductRow
                         key={product.id}
                         product={product}
+                        loading={getProductsResponse.loading}
                         refetchProducts={refetchTheProducts}
                         {...unpublishedProps}
                       />
@@ -310,6 +311,7 @@ const PublishedProductsList = (props: ReactProps) => {
           connection &&
           <EditProductPage
             productsConnection={connection}
+            loading={getProductsResponse.loading}
           />
         }
       </ResponsivePadding>
@@ -321,9 +323,10 @@ const PublishedProductsList = (props: ReactProps) => {
 
 const EditProductPage = (props: {
   productsConnection: ProductsConnection,
+  loading: boolean,
 }) => {
 
-  const { productsConnection } = props;
+  const { productsConnection, loading } = props;
   const router = useRouter();
 
   return <>
@@ -332,7 +335,7 @@ const EditProductPage = (props: {
     .filter(({ node: product }) => product.id === router.query.productId)
     .map(({ node: product }) =>
       <div key={product.id}>
-        <ProductRow product={product}/>
+        <ProductRow product={product} loading={loading}/>
         <ProductEdit
           asModal={false}
           product={product}

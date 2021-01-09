@@ -59,6 +59,7 @@ const ProductRow = (props: ReactProps) => {
   const {
     classes,
     product,
+    loading,
     hideDelete = false,
     hidePublish = false,
     hideUnpublish = false,
@@ -97,7 +98,7 @@ const ProductRow = (props: ReactProps) => {
       apolloClient
     )
     // await before refetching
-    props.refetchProducts()
+    await props.refetchProducts()
     setLoadingPublish(false)
   };
 
@@ -110,7 +111,7 @@ const ProductRow = (props: ReactProps) => {
       apolloClient
     )
     // await before refetching
-    props.refetchProducts()
+    await props.refetchProducts()
     setLoadingPublish(false)
   };
 
@@ -129,7 +130,7 @@ const ProductRow = (props: ReactProps) => {
       // ]
     })
     // await before refetching
-    props.refetchProducts()
+    await props.refetchProducts()
     setLoadingPublish(false)
   };
 
@@ -147,6 +148,7 @@ const ProductRow = (props: ReactProps) => {
   };
 
 
+  console.log("loadingPublish: ", loadingPublish)
 
   let user = useSelector<GrandReduxState, UserPrivate>(s =>
     s.reduxLogin.user
@@ -230,17 +232,17 @@ const ProductRow = (props: ReactProps) => {
           <div className={mdDown ? classes.rowCell2Mobile : classes.rowCell2}>
             <Typography variant="caption"
               className={clsx(
-                loadingPublish
+                (loadingPublish || loading)
                   ? classes.loading
                   : product.isPublished
                     ? classes.published
                     : classes.unpublished,
-                !loadingPublish && "fadeIn",
-                loadingPublish && "pulseFast",
+                !(loadingPublish || loading) && "fadeIn",
+                (loadingPublish || loading) && "pulseFast",
               )}
             >
               {
-                loadingPublish
+                (loadingPublish || loading)
                   ? "PENDING"
                   : product.isPublished
                     ? "PUBLISHED"
@@ -363,12 +365,13 @@ const ProductRow = (props: ReactProps) => {
 
 interface ReactProps extends WithStyles<typeof styles> {
   product: Product;
+  loading?: boolean;
   hideDelete?: boolean;
   hidePublish?: boolean;
   hideUnpublish?: boolean;
   hideViewButton?: boolean;
   hideShareLinkButton?: boolean,
-  refetchProducts?(): void;
+  refetchProducts?(): Promise<void>;
 }
 
 const styles = (theme: Theme) => createStyles({

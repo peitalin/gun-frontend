@@ -54,7 +54,7 @@ const FrontPage: React.FC<ReactProps> = (props) => {
 
       <AlignCenterLayout
         maxWidth={MAX_WIDTH_GRID || 1160}
-        withRecommendations={false}
+        withRecommendations={true}
       >
 
         <FeaturedProducts
@@ -69,7 +69,7 @@ const FrontPage: React.FC<ReactProps> = (props) => {
           }}
         />
 
-        <FeaturedProducts
+        {/* <FeaturedProducts
           initialFeaturedProducts={initialFeaturedProducts}
           count={4}
           offset={2} // for demo purposes
@@ -80,7 +80,7 @@ const FrontPage: React.FC<ReactProps> = (props) => {
             lg: 3,
             xl: 4,
           }}
-        />
+        /> */}
 
         {/* <NewReleaseProducts
           initialProducts={undefined}

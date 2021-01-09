@@ -12,7 +12,7 @@ const ProductList = (props: {
   hidePublish?: boolean,
   hideViewButton?: boolean,
   hideShareLinkButton?: boolean,
-  refetchProducts?(): void;
+  refetchProducts?(): Promise<void>;
 }) => {
   return <>
   {

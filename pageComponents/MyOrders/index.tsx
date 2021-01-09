@@ -349,7 +349,7 @@ const OrdersLayout: React.FC<ReactProps> = (props) => {
       } */}
       <AlignCenterLayout
         maxWidth={960}
-        withRecommendations
+        withRecommendations={props.withRecommendations}
       >
         <Typography className={classes.title} variant="h2">
           My Orders
@@ -399,6 +399,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   initialBuyerOrders?: OrdersConnection;
   initialSellerOrders?: OrdersConnection;
   title?: string;
+  withRecommendations?: boolean;
 }
 
 const styles = (theme: Theme) => createStyles({

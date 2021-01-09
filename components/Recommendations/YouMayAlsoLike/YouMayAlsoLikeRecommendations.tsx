@@ -135,6 +135,7 @@ interface QueryVar {
 
 const styles = (theme: Theme) => createStyles({
   root: {
+
   },
   maxWidth: {
     maxWidth: '1160px',
@@ -149,7 +150,7 @@ const styles = (theme: Theme) => createStyles({
     flexWrap: 'wrap',
     alignItems: 'center',
     justifyContent: 'flex-start',
-    // paddingLeft: '1rem', // balances 1rem margin-right on flexItems
+    paddingLeft: '1rem', // balances 1rem margin-right on flexItems
   },
   paddingRight: {
     paddingRight: '1rem',
@@ -179,6 +180,7 @@ const styles = (theme: Theme) => createStyles({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'flex-start',
+    paddingLeft: '1rem', // balances 1rem margin-right on flexItems
   },
   flexCol: {
     display: 'flex',
