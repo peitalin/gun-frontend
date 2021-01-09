@@ -9975,6 +9975,7 @@ export type Store = {
 
 /** Information about a store */
 export type StoreProductsForSaleConnectionArgs = {
+  searchTerm?: Maybe<Scalars['String']>;
   query?: Maybe<ConnectionOffsetQuery>;
 };
 
@@ -10036,6 +10037,7 @@ export type StorePrivate = Store & {
 
 /** Private store info */
 export type StorePrivateProductsForSaleConnectionArgs = {
+  searchTerm?: Maybe<Scalars['String']>;
   query?: Maybe<ConnectionOffsetQuery>;
 };
 
@@ -10071,6 +10073,7 @@ export type StorePublic = Store & {
 
 /** Public store info */
 export type StorePublicProductsForSaleConnectionArgs = {
+  searchTerm?: Maybe<Scalars['String']>;
   query?: Maybe<ConnectionOffsetQuery>;
 };
 

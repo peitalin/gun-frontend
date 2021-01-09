@@ -10,8 +10,6 @@ import {
 export const GET_STORE_PUBLIC = gql`
   query getStorePublic(
     $storeId: String!
-    # $searchTerm: String
-    # $query: ConnectionOffsetQuery
   ) {
     store(id: $storeId) {
       id
@@ -28,22 +26,9 @@ export const GET_STORE_PUBLIC = gql`
       profile {
         ...ImageFragment
       }
-      productsForSaleConnection(
-        query: {
-          limit: 20,
-          offset: 0,
-        }
-      ) {
-        edges {
-          node {
-            ...ProductFragment
-          }
-        }
-      }
     }
   }
   ${ImageFragment}
-  ${ProductFragment}
 `;
 
 
@@ -67,24 +52,12 @@ export const GET_STORE_PRIVATE = gql`
           profile {
             ...ImageFragment
           }
-          productsForSaleConnection(query: {
-            limit: 20,
-            offset: 0,
-          }) {
-            edges {
-              node {
-                ...ProductFragment
-              }
-            }
-          }
         }
       }
     }
   }
   ${ImageFragment}
-  ${ProductFragment}
 `;
-  // ${ProductSalesFragment}
 
 
 // export const GET_ALL_STORES = gql`
@@ -112,21 +85,48 @@ export const GET_STORE_PRIVATE = gql`
 
 
 export const DASHBOARD_PRODUCTS_CONNECTION = gql`
-query dashboardProductsConnection($query: ConnectionOffsetQuery) {
-  dashboardProductsConnection(query: $query) {
-    edges {
-      node {
-        ...ProductFragment
+  query dashboardProductsConnection(
+    $searchTerm: String
+    $query: ConnectionOffsetQuery
+  ) {
+    dashboardProductsConnection(
+      searchTerm: $searchTerm
+      query: $query
+    ) {
+      edges {
+        node {
+          ...ProductFragment
+        }
+      }
+      totalCount
+      pageInfo {
+        isLastPage
+        endCursor
       }
     }
-    totalCount
-    pageInfo {
-      isLastPage
-      endCursor
-    }
   }
-}
-${ImageFragment}
-${ProductFragment}
+  ${ProductFragment}
 `;
 
+
+export const GET_STORE_PRODUCTS_FOR_SALE_CONNECTION = gql`
+  query getStoreProductsForSaleConnection(
+    $storeId: String!
+    $searchTerm: String
+    $query: ConnectionOffsetQuery
+  ) {
+    getStoreProductsForSaleConnection(
+      storeId: $storeId
+      searchTerm: $searchTerm
+      query: $query
+    ) {
+      edges {
+        node {
+          ...ProductFragment
+        }
+      }
+      totalCount
+    }
+  }
+  ${ProductFragment}
+`;

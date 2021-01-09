@@ -36,7 +36,7 @@ const MyOrdersHistoryAdminPage = (props: ReactProps) => {
       {({ data, loading, error }: SellerProfileProps) => {
         return (
         <div className={classes.contentContainer}>
-          <MyOrders />
+          <MyOrders withRecommendations={false}/>
         </div>
         );
       }}

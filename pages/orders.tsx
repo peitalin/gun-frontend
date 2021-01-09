@@ -1,8 +1,7 @@
 import React from "react";
 import { oc as option } from "ts-optchain";
 // Styles
-import { withStyles, WithStyles } from "@material-ui/core/styles";
-import { styles } from "pageComponents/SellerProfileDashboard/styles";
+import { withStyles, WithStyles, Theme, createStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
 // Components
 import LoadingBarSSR from "components/LoadingBarSSR";
@@ -20,7 +19,7 @@ const SellerProfileWrapper = dynamic(() => import("layout/GetUser/SellerProfileW
 import MetaHeadersPage from "layout/MetaHeadersPage";
 
 
-const MyOrdersHistoryAdminPage = (props: ReactProps) => {
+const MyOrdersHistoryPage = (props: ReactProps) => {
   // state
   const {
     classes
@@ -32,9 +31,9 @@ const MyOrdersHistoryAdminPage = (props: ReactProps) => {
         title="Orders - Buyer Orders"
         robots="noindex"
       />
-        <div className={classes.contentContainer}>
-          <MyOrders />
-        </div>
+      <div className={classes.contentContainerPublicPage}>
+        <MyOrders withRecommendations={true}/>
+      </div>
     </>
   );
 }
@@ -42,6 +41,16 @@ const MyOrdersHistoryAdminPage = (props: ReactProps) => {
 interface ReactProps extends WithStyles<typeof styles> {
 }
 
-export default withStyles(styles)( MyOrdersHistoryAdminPage );
+const styles = (theme: Theme) => createStyles({
+  contentContainerPublicPage: {
+    flexGrow: 1,
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    marginBottom: '1rem',
+  },
+})
+
+export default withStyles(styles)( MyOrdersHistoryPage );
 
 
