@@ -1298,6 +1298,12 @@ export enum Chat_Users_Update_Column {
   USERID = 'userId'
 }
 
+export type CoinbaseExchangeRates = {
+   __typename?: 'CoinbaseExchangeRates';
+  currency?: Maybe<Scalars['String']>;
+  rates?: Maybe<Scalars['JSON']>;
+};
+
 export type Connection = {
   totalCount?: Maybe<Scalars['Int']>;
   pageInfo: PageInfo;
@@ -1306,7 +1312,8 @@ export type Connection = {
 export type ConnectionOffsetQuery = {
   limit: Scalars['Int'];
   offset?: Maybe<Scalars['Int']>;
-  orderBy?: Maybe<Products_Order_By>;
+  /** orderBy: products_order_by // hasura's orderby */
+  orderBy?: Maybe<ProductsOrderBy>;
   where?: Maybe<Products_Bool_Exp>;
   filters?: Maybe<Scalars['String']>;
   facetFilters?: Maybe<Array<Maybe<Array<Maybe<Scalars['String']>>>>>;
@@ -3339,6 +3346,7 @@ export type Mutation = {
   sendConfirmedPaymentBuyerEmail: BlankMutationResponse;
   sendConfirmedPaymentSellerEmail: BlankMutationResponse;
   sendConfirmedPaymentAdminEmail: BlankMutationResponse;
+  sendConfirmedPaymentDealerEmail: BlankMutationResponse;
   sendRefundedBuyerEmail: BlankMutationResponse;
   sendRefundedSellerEmail: BlankMutationResponse;
   sendRefundedAdminEmail: BlankMutationResponse;
@@ -4535,41 +4543,74 @@ export type MutationSendPayoutDetailsChangedEmailArgs = {
 
 export type MutationSendConfirmedPaymentBuyerEmailArgs = {
   userId: Scalars['String'];
+  orderId: Scalars['String'];
 };
 
 
 export type MutationSendConfirmedPaymentSellerEmailArgs = {
   userId: Scalars['String'];
+  orderId: Scalars['String'];
+};
+
+
+export type MutationSendConfirmedPaymentAdminEmailArgs = {
+  orderId: Scalars['String'];
+};
+
+
+export type MutationSendConfirmedPaymentDealerEmailArgs = {
+  dealerId: Scalars['String'];
+  sellerId: Scalars['String'];
+  buyerId: Scalars['String'];
+  orderId: Scalars['String'];
 };
 
 
 export type MutationSendRefundedBuyerEmailArgs = {
   userId: Scalars['String'];
+  orderId: Scalars['String'];
 };
 
 
 export type MutationSendRefundedSellerEmailArgs = {
   userId: Scalars['String'];
+  orderId: Scalars['String'];
+};
+
+
+export type MutationSendRefundedAdminEmailArgs = {
+  orderId: Scalars['String'];
+  buyerEmail: Scalars['String'];
 };
 
 
 export type MutationSendForm10ReviseAndResubmitSellerEmailArgs = {
   userId: Scalars['String'];
+  orderId: Scalars['String'];
+};
+
+
+export type MutationSendForm10SubmittedAdminEmailArgs = {
+  orderId: Scalars['String'];
+  sellerEmail: Scalars['String'];
 };
 
 
 export type MutationSendForm10ApprovedBuyerEmailArgs = {
   userId: Scalars['String'];
+  orderId: Scalars['String'];
 };
 
 
 export type MutationSendForm10ApprovedSellerEmailArgs = {
   userId: Scalars['String'];
+  orderId: Scalars['String'];
 };
 
 
 export type MutationSendPayoutCompleteSellerEmailArgs = {
   userId: Scalars['String'];
+  orderId: Scalars['String'];
 };
 
 /** Something that went wrong during a mutation. */
@@ -4866,6 +4907,14 @@ export enum Order_Snapshots_Update_Column {
   REFUNDID = 'refundId',
   /** column name */
   TRANSACTIONID = 'transactionId'
+}
+
+/** column ordering options */
+export enum OrderBy {
+  /** in the ascending order, nulls last */
+  ASC = 'asc',
+  /** in the descending order, nulls first */
+  DESC = 'desc'
 }
 
 export type OrderCreateMutationResponse = {
@@ -8420,6 +8469,12 @@ export type ProductSoldPeriodSummary = {
   grossAmount: Scalars['Price'];
 };
 
+/** ordering options when selecting data from "products" */
+export type ProductsOrderBy = {
+  createdAt?: Maybe<OrderBy>;
+  price?: Maybe<OrderBy>;
+};
+
 export type ProductsSoldPeriodSummaryConnection = Connection & {
    __typename?: 'ProductsSoldPeriodSummaryConnection';
   totalCount?: Maybe<Scalars['Int']>;
@@ -8873,6 +8928,7 @@ export type Query = {
    * AccessRule – PUBLIC
    */
   getStoreById?: Maybe<Store>;
+  getStoreProductsForSaleConnection: ProductsConnection;
   /**
    * Get all gun dealers
    * 
@@ -8881,6 +8937,7 @@ export type Query = {
   getAllDealers?: Maybe<Array<Maybe<Dealers>>>;
   /** Store sellers's view of currently published products. */
   dashboardProductsConnection: ProductsConnection;
+  getCoinbaseExchangeRates?: Maybe<CoinbaseExchangeRates>;
 };
 
 
@@ -9677,6 +9734,13 @@ export type QueryGetStoreByIdArgs = {
 };
 
 
+export type QueryGetStoreProductsForSaleConnectionArgs = {
+  storeId: Scalars['String'];
+  searchTerm?: Maybe<Scalars['String']>;
+  query?: Maybe<ConnectionOffsetQuery>;
+};
+
+
 export type QueryDashboardProductsConnectionArgs = {
   searchTerm?: Maybe<Scalars['String']>;
   query?: Maybe<ConnectionOffsetQuery>;
@@ -9993,14 +10057,6 @@ export type StoreAnalytics = {
    * - all time
    */
   payoutHistorySummaries: PayoutHistorySummaries;
-  /** List of sold items */
-  salesHistoryConnection: StoreSalesHistoryConnection;
-};
-
-
-/** Collection of analytical information */
-export type StoreAnalyticsSalesHistoryConnectionArgs = {
-  query?: Maybe<ConnectionQuery>;
 };
 
 export type StoreMutationResponse = {
@@ -11913,6 +11969,7 @@ export type UserPrivate = User & {
   followingStores?: Maybe<FollowingStoresConnection>;
   licenseId?: Maybe<Scalars['String']>;
   license?: Maybe<User_Licenses>;
+  phoneNumber?: Maybe<Scalars['String']>;
 };
 
 
