@@ -27,6 +27,9 @@ import {
   SEND_REFUNDED_SELLER_EMAIL,
 } from "queries/emails-mutations";
 
+import TextInput from "components/Fields/TextInput";
+import Typography from '@material-ui/core/Typography';
+
 
 
 const SendRefundedEmails: React.FC<ReactProps> = (props) => {
@@ -49,7 +52,8 @@ const SendRefundedEmails: React.FC<ReactProps> = (props) => {
       const { errors, data } = await aClient.mutate<QueryData, QueryVar>({
         mutation: SEND_REFUNDED_BUYER_EMAIL,
         variables: {
-          userId: user.id
+          userId: user.id,
+          orderId: orderId,
         },
         fetchPolicy: "no-cache", // always do a network request, no caches
       })
@@ -71,7 +75,8 @@ const SendRefundedEmails: React.FC<ReactProps> = (props) => {
       const { errors, data } = await aClient.mutate<QueryData2, QueryVar2>({
         mutation: SEND_REFUNDED_SELLER_EMAIL,
         variables: {
-          userId: user.id
+          userId: user.id,
+          orderId: orderId,
         },
         fetchPolicy: "no-cache", // always do a network request, no caches
       })
@@ -93,6 +98,7 @@ const SendRefundedEmails: React.FC<ReactProps> = (props) => {
       const { errors, data } = await aClient.mutate<QueryData3, QueryVar3>({
         mutation: SEND_REFUNDED_ADMIN_EMAIL,
         variables: {
+          buyerEmail: buyerEmail
           // default email is admin@gunmarketplace.com.au set in notify-service
         },
         fetchPolicy: "no-cache", // always do a network request, no caches
@@ -179,6 +185,7 @@ interface QueryData {
 }
 interface QueryVar {
   userId: string
+  orderId: string
 }
 
 interface QueryData2 {
@@ -186,12 +193,14 @@ interface QueryData2 {
 }
 interface QueryVar2 {
   userId: string
+  orderId: string
 }
 
 interface QueryData3 {
   sendRefundedAdminEmail: BlankMutationResponse;
 }
 interface QueryVar3 {
+  buyerEmail: string
 }
 
 

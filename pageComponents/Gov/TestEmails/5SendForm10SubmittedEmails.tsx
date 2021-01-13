@@ -26,6 +26,8 @@ import {
   SEND_FORM10_REVISE_AND_RESUBMIT_SELLER_EMAIL,
 } from "queries/emails-mutations";
 
+import TextInput from "components/Fields/TextInput";
+import Typography from '@material-ui/core/Typography';
 
 
 const SendForm10SubmittedEmails: React.FC<ReactProps> = (props) => {
@@ -47,7 +49,8 @@ const SendForm10SubmittedEmails: React.FC<ReactProps> = (props) => {
       const { errors, data } = await aClient.mutate<QueryData, QueryVar>({
         mutation: SEND_FORM10_SUBMITTED_ADMIN_EMAIL,
         variables: {
-          // userId: user.id
+          orderId: props.orderId,
+          sellerEmail: props.sellerEmail,
         },
         fetchPolicy: "no-cache", // always do a network request, no caches
       })
@@ -69,7 +72,8 @@ const SendForm10SubmittedEmails: React.FC<ReactProps> = (props) => {
       const { errors, data } = await aClient.mutate<QueryData2, QueryVar2>({
         mutation: SEND_FORM10_REVISE_AND_RESUBMIT_SELLER_EMAIL,
         variables: {
-          userId: user.id
+          userId: user.id,
+          orderId: props.orderId,
         },
         fetchPolicy: "no-cache", // always do a network request, no caches
       })
@@ -88,6 +92,7 @@ const SendForm10SubmittedEmails: React.FC<ReactProps> = (props) => {
 
   return (
     <div className={classes.rootForm10SubmittedEmailsButtons}>
+
       <ButtonLoading
         variant="outlined"
         className={classes.approveButton}
@@ -132,11 +137,15 @@ const SendForm10SubmittedEmails: React.FC<ReactProps> = (props) => {
 
 
 interface ReactProps extends WithStyles<typeof styles> {
+  orderId: string
+  sellerEmail: string
 }
 interface QueryData {
   sendForm10SubmittedAdminEmail: BlankMutationResponse;
 }
 interface QueryVar {
+  orderId: string
+  sellerEmail: string
 }
 
 interface QueryData2 {
@@ -144,6 +153,7 @@ interface QueryData2 {
 }
 interface QueryVar2 {
   userId: string
+  orderId: string
 }
 
 

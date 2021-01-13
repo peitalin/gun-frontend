@@ -26,6 +26,8 @@ import {
   SEND_FORM10_APPROVED_SELLER_EMAIL,
 } from "queries/emails-mutations";
 
+import TextInput from "components/Fields/TextInput";
+import Typography from '@material-ui/core/Typography';
 
 
 const SendForm10ApprovedEmails: React.FC<ReactProps> = (props) => {
@@ -39,6 +41,7 @@ const SendForm10ApprovedEmails: React.FC<ReactProps> = (props) => {
   const [loading, setLoading] = React.useState(false);
   const [loading2, setLoading2] = React.useState(false);
   const [loading3, setLoading3] = React.useState(false);
+  const [orderId, setOrderId] = React.useState("owp4wncjt");
 
   const snackbar = useSnackbar();
 
@@ -48,7 +51,8 @@ const SendForm10ApprovedEmails: React.FC<ReactProps> = (props) => {
       const { errors, data } = await aClient.mutate<QueryData, QueryVar>({
         mutation: SEND_FORM10_APPROVED_BUYER_EMAIL,
         variables: {
-          userId: user.id
+          userId: user.id,
+          orderId: props.orderId,
         },
         fetchPolicy: "no-cache", // always do a network request, no caches
       })
@@ -70,7 +74,8 @@ const SendForm10ApprovedEmails: React.FC<ReactProps> = (props) => {
       const { errors, data } = await aClient.mutate<QueryData2, QueryVar2>({
         mutation: SEND_FORM10_APPROVED_SELLER_EMAIL,
         variables: {
-          userId: user.id
+          userId: user.id,
+          orderId: props.orderId,
         },
         fetchPolicy: "no-cache", // always do a network request, no caches
       })
@@ -89,6 +94,7 @@ const SendForm10ApprovedEmails: React.FC<ReactProps> = (props) => {
 
   return (
     <div className={classes.rootForm10ApprovedEmailsButtons}>
+
       <ButtonLoading
         variant="outlined"
         className={classes.approveButton}
@@ -133,12 +139,14 @@ const SendForm10ApprovedEmails: React.FC<ReactProps> = (props) => {
 
 
 interface ReactProps extends WithStyles<typeof styles> {
+  orderId: string
 }
 interface QueryData {
   sendForm10ApprovedBuyerEmail: BlankMutationResponse;
 }
 interface QueryVar {
   userId: string
+  orderId: string
 }
 
 interface QueryData2 {
@@ -146,13 +154,9 @@ interface QueryData2 {
 }
 interface QueryVar2 {
   userId: string
+  orderId: string
 }
 
-interface QueryData3 {
-  sendForm10ApprovedAdminEmail: BlankMutationResponse;
-}
-interface QueryVar3 {
-}
 
 
 const styles = (theme: Theme) => createStyles({

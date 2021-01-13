@@ -23,10 +23,13 @@ import { useSnackbar } from "notistack";
 import currency from "currency.js";
 import {
   SEND_CONFIRMED_PAYMENT_ADMIN_EMAIL,
+  SEND_CONFIRMED_PAYMENT_DEALER_EMAIL,
   SEND_CONFIRMED_PAYMENT_BUYER_EMAIL,
   SEND_CONFIRMED_PAYMENT_SELLER_EMAIL,
 } from "queries/emails-mutations";
 
+import TextInput from "components/Fields/TextInput";
+import Typography from '@material-ui/core/Typography';
 
 
 const SendConfirmedPaymentEmails: React.FC<ReactProps> = (props) => {
@@ -40,6 +43,7 @@ const SendConfirmedPaymentEmails: React.FC<ReactProps> = (props) => {
   const [loading, setLoading] = React.useState(false);
   const [loading2, setLoading2] = React.useState(false);
   const [loading3, setLoading3] = React.useState(false);
+  const [loading4, setLoading4] = React.useState(false);
 
   const snackbar = useSnackbar();
 
@@ -49,7 +53,8 @@ const SendConfirmedPaymentEmails: React.FC<ReactProps> = (props) => {
       const { errors, data } = await aClient.mutate<QueryData, QueryVar>({
         mutation: SEND_CONFIRMED_PAYMENT_BUYER_EMAIL,
         variables: {
-          userId: user.id
+          userId: user.id,
+          orderId: props.orderId,
         },
         fetchPolicy: "no-cache", // always do a network request, no caches
       })
@@ -71,13 +76,15 @@ const SendConfirmedPaymentEmails: React.FC<ReactProps> = (props) => {
       const { errors, data } = await aClient.mutate<QueryData2, QueryVar2>({
         mutation: SEND_CONFIRMED_PAYMENT_SELLER_EMAIL,
         variables: {
-          userId: user.id
+          userId: user.id,
+          orderId: props.orderId,
         },
         fetchPolicy: "no-cache", // always do a network request, no caches
       })
       if (data.sendConfirmedPaymentSellerEmail) {
         snackbar.enqueueSnackbar(`Email send success`, { variant: "success" })
         alert(JSON.stringify(data))
+        console.log(JSON.stringify(data))
       }
     } catch(e) {
       // setErrorMsg("OrderID does not exist.")
@@ -93,6 +100,7 @@ const SendConfirmedPaymentEmails: React.FC<ReactProps> = (props) => {
       const { errors, data } = await aClient.mutate<QueryData3, QueryVar3>({
         mutation: SEND_CONFIRMED_PAYMENT_ADMIN_EMAIL,
         variables: {
+          orderId: props.orderId,
           // default email is admin@gunmarketplace.com.au set in notify-service
         },
         fetchPolicy: "no-cache", // always do a network request, no caches
@@ -109,8 +117,38 @@ const SendConfirmedPaymentEmails: React.FC<ReactProps> = (props) => {
     setLoading3(false)
   }
 
+  const sendConfirmedPaymentDealerEmail = async() => {
+    setLoading4(true)
+    try {
+      const { errors, data } = await aClient.mutate<QueryData4, QueryVar4>({
+        mutation: SEND_CONFIRMED_PAYMENT_DEALER_EMAIL,
+        variables: {
+          // test email to admin@gunmarketplace.com.au
+          dealerId: "dealer_4hnqv165",
+          // send email to admin@gunmarketplace.com.au
+          sellerId: "user_7cdb74ec-caa2-4b38-bfd6-61affb4e6846",
+          // send email to admin+jade1@gunmarketplace.com.au
+          buyerId: "user_361aafb4-277c-4bc0-bb9d-5e97d40fba84",
+          orderId: props.orderId,
+        },
+        fetchPolicy: "no-cache", // always do a network request, no caches
+      })
+      if (data.sendConfirmedPaymentDealerEmail) {
+        snackbar.enqueueSnackbar(`Email send success`, { variant: "success" })
+        alert(JSON.stringify(data))
+        console.log("response: ", data)
+      }
+    } catch(e) {
+      // setErrorMsg("OrderID does not exist.")
+      snackbar.enqueueSnackbar(`Email failed to send`, { variant: "error" })
+      console.log("errors: ", e)
+    }
+    setLoading4(false)
+  }
+
   return (
     <div className={classes.rootConfirmedPaymentEmailsButtons}>
+
       <ButtonLoading
         variant="outlined"
         className={classes.approveButton}
@@ -165,6 +203,24 @@ const SendConfirmedPaymentEmails: React.FC<ReactProps> = (props) => {
       >
         Confirmed Payment Admin
       </ButtonLoading>
+      <ButtonLoading
+        variant="outlined"
+        className={classes.approveButton}
+        onClick={() => {
+          sendConfirmedPaymentDealerEmail()
+        }}
+        loadingIconColor={Colors.blue}
+        replaceTextWhenLoading={true}
+        loading={loading4}
+        disabled={loading4}
+        color="secondary"
+        style={{
+          width: '240px',
+          height: '36px',
+        }}
+      >
+        Confirmed Payment Dealer
+      </ButtonLoading>
     </div>
   )
 }
@@ -173,12 +229,14 @@ const SendConfirmedPaymentEmails: React.FC<ReactProps> = (props) => {
 
 
 interface ReactProps extends WithStyles<typeof styles> {
+  orderId: string;
 }
 interface QueryData {
   sendConfirmedPaymentBuyerEmail: BlankMutationResponse;
 }
 interface QueryVar {
   userId: string
+  orderId: string
 }
 
 interface QueryData2 {
@@ -186,13 +244,26 @@ interface QueryData2 {
 }
 interface QueryVar2 {
   userId: string
+  orderId: string
 }
 
 interface QueryData3 {
   sendConfirmedPaymentAdminEmail: BlankMutationResponse;
 }
 interface QueryVar3 {
+  orderId: string
 }
+
+interface QueryData4 {
+  sendConfirmedPaymentDealerEmail: BlankMutationResponse;
+}
+interface QueryVar4 {
+  dealerId: string
+  sellerId: string
+  buyerId: string
+  orderId: string
+}
+
 
 
 const styles = (theme: Theme) => createStyles({

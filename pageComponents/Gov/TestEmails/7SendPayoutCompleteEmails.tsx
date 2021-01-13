@@ -38,6 +38,7 @@ const SendPayoutCompleteEmails: React.FC<ReactProps> = (props) => {
   const [loading, setLoading] = React.useState(false);
   const [loading2, setLoading2] = React.useState(false);
   const [loading3, setLoading3] = React.useState(false);
+  const [orderId, setOrderId] = React.useState("owp4wncjt");
 
   const snackbar = useSnackbar();
 
@@ -47,7 +48,8 @@ const SendPayoutCompleteEmails: React.FC<ReactProps> = (props) => {
       const { errors, data } = await aClient.mutate<QueryData, QueryVar>({
         mutation: SEND_PAYOUT_COMPLETE_SELLER_EMAIL,
         variables: {
-          userId: user.id
+          userId: user.id,
+          orderId: props.orderId,
         },
         fetchPolicy: "no-cache", // always do a network request, no caches
       })
@@ -92,12 +94,14 @@ const SendPayoutCompleteEmails: React.FC<ReactProps> = (props) => {
 
 
 interface ReactProps extends WithStyles<typeof styles> {
+  orderId: string
 }
 interface QueryData {
   sendPayoutCompleteSellerEmail: BlankMutationResponse;
 }
 interface QueryVar {
   userId: string
+  orderId: string
 }
 
 
