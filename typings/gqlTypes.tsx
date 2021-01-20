@@ -10,6 +10,7 @@ export type Scalars = {
   Float: number;
   timestamp: any;
   timestamptz: any;
+  seed_float: any;
   /** Standard date string */
   Date: Date;
   PageCursor: any;
@@ -1444,6 +1445,8 @@ export type Dealers = {
   name?: Maybe<Scalars['String']>;
   postCode?: Maybe<Scalars['String']>;
   state?: Maybe<Scalars['String']>;
+  /** An object relationship */
+  user?: Maybe<Users>;
 };
 
 /** aggregated selection of "dealers" */
@@ -1493,6 +1496,7 @@ export type Dealers_Bool_Exp = {
   name?: Maybe<String_Comparison_Exp>;
   postCode?: Maybe<String_Comparison_Exp>;
   state?: Maybe<String_Comparison_Exp>;
+  user?: Maybe<Users_Bool_Exp>;
 };
 
 /** unique or primary key constraints on table "dealers" */
@@ -1512,6 +1516,7 @@ export type Dealers_Insert_Input = {
   name?: Maybe<Scalars['String']>;
   postCode?: Maybe<Scalars['String']>;
   state?: Maybe<Scalars['String']>;
+  user?: Maybe<Users_Obj_Rel_Insert_Input>;
 };
 
 /** aggregate max on columns */
@@ -1591,6 +1596,7 @@ export type Dealers_Order_By = {
   name?: Maybe<Order_By>;
   postCode?: Maybe<Order_By>;
   state?: Maybe<Order_By>;
+  user?: Maybe<Users_Order_By>;
 };
 
 /** primary key columns input for table: "dealers" */
@@ -1656,6 +1662,359 @@ export type EditUserLicenseInput = {
   state?: Maybe<Scalars['String']>;
   verified?: Maybe<Scalars['Boolean']>;
 };
+
+/** columns and relationships of "email_subscriptions" */
+export type Email_Subscriptions = {
+   __typename?: 'email_subscriptions';
+  id: Scalars['String'];
+  subject_: Scalars['String'];
+  subscribers: Scalars['String'];
+};
+
+/** aggregated selection of "email_subscriptions" */
+export type Email_Subscriptions_Aggregate = {
+   __typename?: 'email_subscriptions_aggregate';
+  aggregate?: Maybe<Email_Subscriptions_Aggregate_Fields>;
+  nodes: Array<Email_Subscriptions>;
+};
+
+/** aggregate fields of "email_subscriptions" */
+export type Email_Subscriptions_Aggregate_Fields = {
+   __typename?: 'email_subscriptions_aggregate_fields';
+  count?: Maybe<Scalars['Int']>;
+  max?: Maybe<Email_Subscriptions_Max_Fields>;
+  min?: Maybe<Email_Subscriptions_Min_Fields>;
+};
+
+
+/** aggregate fields of "email_subscriptions" */
+export type Email_Subscriptions_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<Email_Subscriptions_Select_Column>>;
+  distinct?: Maybe<Scalars['Boolean']>;
+};
+
+/** order by aggregate values of table "email_subscriptions" */
+export type Email_Subscriptions_Aggregate_Order_By = {
+  count?: Maybe<Order_By>;
+  max?: Maybe<Email_Subscriptions_Max_Order_By>;
+  min?: Maybe<Email_Subscriptions_Min_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "email_subscriptions" */
+export type Email_Subscriptions_Arr_Rel_Insert_Input = {
+  data: Array<Email_Subscriptions_Insert_Input>;
+  on_conflict?: Maybe<Email_Subscriptions_On_Conflict>;
+};
+
+/** Boolean expression to filter rows from the table "email_subscriptions". All fields are combined with a logical 'AND'. */
+export type Email_Subscriptions_Bool_Exp = {
+  _and?: Maybe<Array<Maybe<Email_Subscriptions_Bool_Exp>>>;
+  _not?: Maybe<Email_Subscriptions_Bool_Exp>;
+  _or?: Maybe<Array<Maybe<Email_Subscriptions_Bool_Exp>>>;
+  id?: Maybe<String_Comparison_Exp>;
+  subject_?: Maybe<String_Comparison_Exp>;
+  subscribers?: Maybe<String_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "email_subscriptions" */
+export enum Email_Subscriptions_Constraint {
+  /** unique or primary key constraint */
+  EMAIL_SUBSCRIPTIONS_PKEY = 'email_subscriptions_pkey'
+}
+
+/** input type for inserting data into table "email_subscriptions" */
+export type Email_Subscriptions_Insert_Input = {
+  id?: Maybe<Scalars['String']>;
+  subject_?: Maybe<Scalars['String']>;
+  subscribers?: Maybe<Scalars['String']>;
+};
+
+/** aggregate max on columns */
+export type Email_Subscriptions_Max_Fields = {
+   __typename?: 'email_subscriptions_max_fields';
+  id?: Maybe<Scalars['String']>;
+  subject_?: Maybe<Scalars['String']>;
+  subscribers?: Maybe<Scalars['String']>;
+};
+
+/** order by max() on columns of table "email_subscriptions" */
+export type Email_Subscriptions_Max_Order_By = {
+  id?: Maybe<Order_By>;
+  subject_?: Maybe<Order_By>;
+  subscribers?: Maybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type Email_Subscriptions_Min_Fields = {
+   __typename?: 'email_subscriptions_min_fields';
+  id?: Maybe<Scalars['String']>;
+  subject_?: Maybe<Scalars['String']>;
+  subscribers?: Maybe<Scalars['String']>;
+};
+
+/** order by min() on columns of table "email_subscriptions" */
+export type Email_Subscriptions_Min_Order_By = {
+  id?: Maybe<Order_By>;
+  subject_?: Maybe<Order_By>;
+  subscribers?: Maybe<Order_By>;
+};
+
+/** response of any mutation on the table "email_subscriptions" */
+export type Email_Subscriptions_Mutation_Response = {
+   __typename?: 'email_subscriptions_mutation_response';
+  /** number of affected rows by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data of the affected rows by the mutation */
+  returning: Array<Email_Subscriptions>;
+};
+
+/** input type for inserting object relation for remote table "email_subscriptions" */
+export type Email_Subscriptions_Obj_Rel_Insert_Input = {
+  data: Email_Subscriptions_Insert_Input;
+  on_conflict?: Maybe<Email_Subscriptions_On_Conflict>;
+};
+
+/** on conflict condition type for table "email_subscriptions" */
+export type Email_Subscriptions_On_Conflict = {
+  constraint: Email_Subscriptions_Constraint;
+  update_columns: Array<Email_Subscriptions_Update_Column>;
+  where?: Maybe<Email_Subscriptions_Bool_Exp>;
+};
+
+/** ordering options when selecting data from "email_subscriptions" */
+export type Email_Subscriptions_Order_By = {
+  id?: Maybe<Order_By>;
+  subject_?: Maybe<Order_By>;
+  subscribers?: Maybe<Order_By>;
+};
+
+/** primary key columns input for table: "email_subscriptions" */
+export type Email_Subscriptions_Pk_Columns_Input = {
+  id: Scalars['String'];
+};
+
+/** select columns of table "email_subscriptions" */
+export enum Email_Subscriptions_Select_Column {
+  /** column name */
+  ID = 'id',
+  /** column name */
+  SUBJECT_ = 'subject_',
+  /** column name */
+  SUBSCRIBERS = 'subscribers'
+}
+
+/** input type for updating data in table "email_subscriptions" */
+export type Email_Subscriptions_Set_Input = {
+  id?: Maybe<Scalars['String']>;
+  subject_?: Maybe<Scalars['String']>;
+  subscribers?: Maybe<Scalars['String']>;
+};
+
+/** update columns of table "email_subscriptions" */
+export enum Email_Subscriptions_Update_Column {
+  /** column name */
+  ID = 'id',
+  /** column name */
+  SUBJECT_ = 'subject_',
+  /** column name */
+  SUBSCRIBERS = 'subscribers'
+}
+
+/** columns and relationships of "emails" */
+export type Emails = {
+   __typename?: 'emails';
+  createdAt: Scalars['timestamp'];
+  emailType: Scalars['String'];
+  from_: Scalars['String'];
+  id: Scalars['String'];
+  subject_: Scalars['String'];
+  to_: Scalars['String'];
+};
+
+/** aggregated selection of "emails" */
+export type Emails_Aggregate = {
+   __typename?: 'emails_aggregate';
+  aggregate?: Maybe<Emails_Aggregate_Fields>;
+  nodes: Array<Emails>;
+};
+
+/** aggregate fields of "emails" */
+export type Emails_Aggregate_Fields = {
+   __typename?: 'emails_aggregate_fields';
+  count?: Maybe<Scalars['Int']>;
+  max?: Maybe<Emails_Max_Fields>;
+  min?: Maybe<Emails_Min_Fields>;
+};
+
+
+/** aggregate fields of "emails" */
+export type Emails_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<Emails_Select_Column>>;
+  distinct?: Maybe<Scalars['Boolean']>;
+};
+
+/** order by aggregate values of table "emails" */
+export type Emails_Aggregate_Order_By = {
+  count?: Maybe<Order_By>;
+  max?: Maybe<Emails_Max_Order_By>;
+  min?: Maybe<Emails_Min_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "emails" */
+export type Emails_Arr_Rel_Insert_Input = {
+  data: Array<Emails_Insert_Input>;
+  on_conflict?: Maybe<Emails_On_Conflict>;
+};
+
+/** Boolean expression to filter rows from the table "emails". All fields are combined with a logical 'AND'. */
+export type Emails_Bool_Exp = {
+  _and?: Maybe<Array<Maybe<Emails_Bool_Exp>>>;
+  _not?: Maybe<Emails_Bool_Exp>;
+  _or?: Maybe<Array<Maybe<Emails_Bool_Exp>>>;
+  createdAt?: Maybe<Timestamp_Comparison_Exp>;
+  emailType?: Maybe<String_Comparison_Exp>;
+  from_?: Maybe<String_Comparison_Exp>;
+  id?: Maybe<String_Comparison_Exp>;
+  subject_?: Maybe<String_Comparison_Exp>;
+  to_?: Maybe<String_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "emails" */
+export enum Emails_Constraint {
+  /** unique or primary key constraint */
+  EMAILS_PKEY = 'emails_pkey'
+}
+
+/** input type for inserting data into table "emails" */
+export type Emails_Insert_Input = {
+  createdAt?: Maybe<Scalars['timestamp']>;
+  emailType?: Maybe<Scalars['String']>;
+  from_?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+  subject_?: Maybe<Scalars['String']>;
+  to_?: Maybe<Scalars['String']>;
+};
+
+/** aggregate max on columns */
+export type Emails_Max_Fields = {
+   __typename?: 'emails_max_fields';
+  createdAt?: Maybe<Scalars['timestamp']>;
+  emailType?: Maybe<Scalars['String']>;
+  from_?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+  subject_?: Maybe<Scalars['String']>;
+  to_?: Maybe<Scalars['String']>;
+};
+
+/** order by max() on columns of table "emails" */
+export type Emails_Max_Order_By = {
+  createdAt?: Maybe<Order_By>;
+  emailType?: Maybe<Order_By>;
+  from_?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  subject_?: Maybe<Order_By>;
+  to_?: Maybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type Emails_Min_Fields = {
+   __typename?: 'emails_min_fields';
+  createdAt?: Maybe<Scalars['timestamp']>;
+  emailType?: Maybe<Scalars['String']>;
+  from_?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+  subject_?: Maybe<Scalars['String']>;
+  to_?: Maybe<Scalars['String']>;
+};
+
+/** order by min() on columns of table "emails" */
+export type Emails_Min_Order_By = {
+  createdAt?: Maybe<Order_By>;
+  emailType?: Maybe<Order_By>;
+  from_?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  subject_?: Maybe<Order_By>;
+  to_?: Maybe<Order_By>;
+};
+
+/** response of any mutation on the table "emails" */
+export type Emails_Mutation_Response = {
+   __typename?: 'emails_mutation_response';
+  /** number of affected rows by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data of the affected rows by the mutation */
+  returning: Array<Emails>;
+};
+
+/** input type for inserting object relation for remote table "emails" */
+export type Emails_Obj_Rel_Insert_Input = {
+  data: Emails_Insert_Input;
+  on_conflict?: Maybe<Emails_On_Conflict>;
+};
+
+/** on conflict condition type for table "emails" */
+export type Emails_On_Conflict = {
+  constraint: Emails_Constraint;
+  update_columns: Array<Emails_Update_Column>;
+  where?: Maybe<Emails_Bool_Exp>;
+};
+
+/** ordering options when selecting data from "emails" */
+export type Emails_Order_By = {
+  createdAt?: Maybe<Order_By>;
+  emailType?: Maybe<Order_By>;
+  from_?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  subject_?: Maybe<Order_By>;
+  to_?: Maybe<Order_By>;
+};
+
+/** primary key columns input for table: "emails" */
+export type Emails_Pk_Columns_Input = {
+  id: Scalars['String'];
+};
+
+/** select columns of table "emails" */
+export enum Emails_Select_Column {
+  /** column name */
+  CREATEDAT = 'createdAt',
+  /** column name */
+  EMAILTYPE = 'emailType',
+  /** column name */
+  FROM_ = 'from_',
+  /** column name */
+  ID = 'id',
+  /** column name */
+  SUBJECT_ = 'subject_',
+  /** column name */
+  TO_ = 'to_'
+}
+
+/** input type for updating data in table "emails" */
+export type Emails_Set_Input = {
+  createdAt?: Maybe<Scalars['timestamp']>;
+  emailType?: Maybe<Scalars['String']>;
+  from_?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+  subject_?: Maybe<Scalars['String']>;
+  to_?: Maybe<Scalars['String']>;
+};
+
+/** update columns of table "emails" */
+export enum Emails_Update_Column {
+  /** column name */
+  CREATEDAT = 'createdAt',
+  /** column name */
+  EMAILTYPE = 'emailType',
+  /** column name */
+  FROM_ = 'from_',
+  /** column name */
+  ID = 'id',
+  /** column name */
+  SUBJECT_ = 'subject_',
+  /** column name */
+  TO_ = 'to_'
+}
 
 export enum FacetAttributes {
   _CATEGORYNAMEFACET = '_categoryNameFacet',
@@ -2433,6 +2792,10 @@ export type Int_Comparison_Exp = {
 
 
 
+export type List_Products_Random_Args = {
+  seed?: Maybe<Scalars['seed_float']>;
+};
+
 export type Login2Response = {
    __typename?: 'Login2Response';
   email?: Maybe<Scalars['String']>;
@@ -2748,6 +3111,14 @@ export type Mutation = {
   delete_dealers?: Maybe<Dealers_Mutation_Response>;
   /** delete single row from the table: "dealers" */
   delete_dealers_by_pk?: Maybe<Dealers>;
+  /** delete data from the table: "email_subscriptions" */
+  delete_email_subscriptions?: Maybe<Email_Subscriptions_Mutation_Response>;
+  /** delete single row from the table: "email_subscriptions" */
+  delete_email_subscriptions_by_pk?: Maybe<Email_Subscriptions>;
+  /** delete data from the table: "emails" */
+  delete_emails?: Maybe<Emails_Mutation_Response>;
+  /** delete single row from the table: "emails" */
+  delete_emails_by_pk?: Maybe<Emails>;
   /** delete data from the table: "image_owners" */
   delete_image_owners?: Maybe<Image_Owners_Mutation_Response>;
   /** delete single row from the table: "image_owners" */
@@ -2784,6 +3155,10 @@ export type Mutation = {
   delete_payout_methods?: Maybe<Payout_Methods_Mutation_Response>;
   /** delete single row from the table: "payout_methods" */
   delete_payout_methods_by_pk?: Maybe<Payout_Methods>;
+  /** delete data from the table: "phone_numbers" */
+  delete_phone_numbers?: Maybe<Phone_Numbers_Mutation_Response>;
+  /** delete single row from the table: "phone_numbers" */
+  delete_phone_numbers_by_pk?: Maybe<Phone_Numbers>;
   /** delete data from the table: "product_preview_items" */
   delete_product_preview_items?: Maybe<Product_Preview_Items_Mutation_Response>;
   /** delete single row from the table: "product_preview_items" */
@@ -2844,6 +3219,14 @@ export type Mutation = {
   insert_dealers?: Maybe<Dealers_Mutation_Response>;
   /** insert a single row into the table: "dealers" */
   insert_dealers_one?: Maybe<Dealers>;
+  /** insert data into the table: "email_subscriptions" */
+  insert_email_subscriptions?: Maybe<Email_Subscriptions_Mutation_Response>;
+  /** insert a single row into the table: "email_subscriptions" */
+  insert_email_subscriptions_one?: Maybe<Email_Subscriptions>;
+  /** insert data into the table: "emails" */
+  insert_emails?: Maybe<Emails_Mutation_Response>;
+  /** insert a single row into the table: "emails" */
+  insert_emails_one?: Maybe<Emails>;
   /** insert data into the table: "image_owners" */
   insert_image_owners?: Maybe<Image_Owners_Mutation_Response>;
   /** insert a single row into the table: "image_owners" */
@@ -2880,6 +3263,10 @@ export type Mutation = {
   insert_payout_methods?: Maybe<Payout_Methods_Mutation_Response>;
   /** insert a single row into the table: "payout_methods" */
   insert_payout_methods_one?: Maybe<Payout_Methods>;
+  /** insert data into the table: "phone_numbers" */
+  insert_phone_numbers?: Maybe<Phone_Numbers_Mutation_Response>;
+  /** insert a single row into the table: "phone_numbers" */
+  insert_phone_numbers_one?: Maybe<Phone_Numbers>;
   /** insert data into the table: "product_preview_items" */
   insert_product_preview_items?: Maybe<Product_Preview_Items_Mutation_Response>;
   /** insert a single row into the table: "product_preview_items" */
@@ -2940,6 +3327,14 @@ export type Mutation = {
   update_dealers?: Maybe<Dealers_Mutation_Response>;
   /** update single row of the table: "dealers" */
   update_dealers_by_pk?: Maybe<Dealers>;
+  /** update data of the table: "email_subscriptions" */
+  update_email_subscriptions?: Maybe<Email_Subscriptions_Mutation_Response>;
+  /** update single row of the table: "email_subscriptions" */
+  update_email_subscriptions_by_pk?: Maybe<Email_Subscriptions>;
+  /** update data of the table: "emails" */
+  update_emails?: Maybe<Emails_Mutation_Response>;
+  /** update single row of the table: "emails" */
+  update_emails_by_pk?: Maybe<Emails>;
   /** update data of the table: "image_owners" */
   update_image_owners?: Maybe<Image_Owners_Mutation_Response>;
   /** update single row of the table: "image_owners" */
@@ -2976,6 +3371,10 @@ export type Mutation = {
   update_payout_methods?: Maybe<Payout_Methods_Mutation_Response>;
   /** update single row of the table: "payout_methods" */
   update_payout_methods_by_pk?: Maybe<Payout_Methods>;
+  /** update data of the table: "phone_numbers" */
+  update_phone_numbers?: Maybe<Phone_Numbers_Mutation_Response>;
+  /** update single row of the table: "phone_numbers" */
+  update_phone_numbers_by_pk?: Maybe<Phone_Numbers>;
   /** update data of the table: "product_preview_items" */
   update_product_preview_items?: Maybe<Product_Preview_Items_Mutation_Response>;
   /** update single row of the table: "product_preview_items" */
@@ -3419,6 +3818,26 @@ export type MutationDelete_Dealers_By_PkArgs = {
 };
 
 
+export type MutationDelete_Email_SubscriptionsArgs = {
+  where: Email_Subscriptions_Bool_Exp;
+};
+
+
+export type MutationDelete_Email_Subscriptions_By_PkArgs = {
+  id: Scalars['String'];
+};
+
+
+export type MutationDelete_EmailsArgs = {
+  where: Emails_Bool_Exp;
+};
+
+
+export type MutationDelete_Emails_By_PkArgs = {
+  id: Scalars['String'];
+};
+
+
 export type MutationDelete_Image_OwnersArgs = {
   where: Image_Owners_Bool_Exp;
 };
@@ -3505,6 +3924,16 @@ export type MutationDelete_Payout_MethodsArgs = {
 
 
 export type MutationDelete_Payout_Methods_By_PkArgs = {
+  id: Scalars['String'];
+};
+
+
+export type MutationDelete_Phone_NumbersArgs = {
+  where: Phone_Numbers_Bool_Exp;
+};
+
+
+export type MutationDelete_Phone_Numbers_By_PkArgs = {
   id: Scalars['String'];
 };
 
@@ -3671,6 +4100,30 @@ export type MutationInsert_Dealers_OneArgs = {
 };
 
 
+export type MutationInsert_Email_SubscriptionsArgs = {
+  objects: Array<Email_Subscriptions_Insert_Input>;
+  on_conflict?: Maybe<Email_Subscriptions_On_Conflict>;
+};
+
+
+export type MutationInsert_Email_Subscriptions_OneArgs = {
+  object: Email_Subscriptions_Insert_Input;
+  on_conflict?: Maybe<Email_Subscriptions_On_Conflict>;
+};
+
+
+export type MutationInsert_EmailsArgs = {
+  objects: Array<Emails_Insert_Input>;
+  on_conflict?: Maybe<Emails_On_Conflict>;
+};
+
+
+export type MutationInsert_Emails_OneArgs = {
+  object: Emails_Insert_Input;
+  on_conflict?: Maybe<Emails_On_Conflict>;
+};
+
+
 export type MutationInsert_Image_OwnersArgs = {
   objects: Array<Image_Owners_Insert_Input>;
   on_conflict?: Maybe<Image_Owners_On_Conflict>;
@@ -3776,6 +4229,18 @@ export type MutationInsert_Payout_MethodsArgs = {
 export type MutationInsert_Payout_Methods_OneArgs = {
   object: Payout_Methods_Insert_Input;
   on_conflict?: Maybe<Payout_Methods_On_Conflict>;
+};
+
+
+export type MutationInsert_Phone_NumbersArgs = {
+  objects: Array<Phone_Numbers_Insert_Input>;
+  on_conflict?: Maybe<Phone_Numbers_On_Conflict>;
+};
+
+
+export type MutationInsert_Phone_Numbers_OneArgs = {
+  object: Phone_Numbers_Insert_Input;
+  on_conflict?: Maybe<Phone_Numbers_On_Conflict>;
 };
 
 
@@ -3961,6 +4426,30 @@ export type MutationUpdate_Dealers_By_PkArgs = {
 };
 
 
+export type MutationUpdate_Email_SubscriptionsArgs = {
+  _set?: Maybe<Email_Subscriptions_Set_Input>;
+  where: Email_Subscriptions_Bool_Exp;
+};
+
+
+export type MutationUpdate_Email_Subscriptions_By_PkArgs = {
+  _set?: Maybe<Email_Subscriptions_Set_Input>;
+  pk_columns: Email_Subscriptions_Pk_Columns_Input;
+};
+
+
+export type MutationUpdate_EmailsArgs = {
+  _set?: Maybe<Emails_Set_Input>;
+  where: Emails_Bool_Exp;
+};
+
+
+export type MutationUpdate_Emails_By_PkArgs = {
+  _set?: Maybe<Emails_Set_Input>;
+  pk_columns: Emails_Pk_Columns_Input;
+};
+
+
 export type MutationUpdate_Image_OwnersArgs = {
   _set?: Maybe<Image_Owners_Set_Input>;
   where: Image_Owners_Bool_Exp;
@@ -4076,6 +4565,18 @@ export type MutationUpdate_Payout_MethodsArgs = {
 export type MutationUpdate_Payout_Methods_By_PkArgs = {
   _set?: Maybe<Payout_Methods_Set_Input>;
   pk_columns: Payout_Methods_Pk_Columns_Input;
+};
+
+
+export type MutationUpdate_Phone_NumbersArgs = {
+  _set?: Maybe<Phone_Numbers_Set_Input>;
+  where: Phone_Numbers_Bool_Exp;
+};
+
+
+export type MutationUpdate_Phone_Numbers_By_PkArgs = {
+  _set?: Maybe<Phone_Numbers_Set_Input>;
+  pk_columns: Phone_Numbers_Pk_Columns_Input;
 };
 
 
@@ -6740,6 +7241,189 @@ export enum PayoutStatus {
   REFUNDED = 'REFUNDED'
 }
 
+/** columns and relationships of "phone_numbers" */
+export type Phone_Numbers = {
+   __typename?: 'phone_numbers';
+  areaCode: Scalars['String'];
+  countryCode: Scalars['String'];
+  id: Scalars['String'];
+  number: Scalars['String'];
+  userId: Scalars['String'];
+};
+
+/** aggregated selection of "phone_numbers" */
+export type Phone_Numbers_Aggregate = {
+   __typename?: 'phone_numbers_aggregate';
+  aggregate?: Maybe<Phone_Numbers_Aggregate_Fields>;
+  nodes: Array<Phone_Numbers>;
+};
+
+/** aggregate fields of "phone_numbers" */
+export type Phone_Numbers_Aggregate_Fields = {
+   __typename?: 'phone_numbers_aggregate_fields';
+  count?: Maybe<Scalars['Int']>;
+  max?: Maybe<Phone_Numbers_Max_Fields>;
+  min?: Maybe<Phone_Numbers_Min_Fields>;
+};
+
+
+/** aggregate fields of "phone_numbers" */
+export type Phone_Numbers_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<Phone_Numbers_Select_Column>>;
+  distinct?: Maybe<Scalars['Boolean']>;
+};
+
+/** order by aggregate values of table "phone_numbers" */
+export type Phone_Numbers_Aggregate_Order_By = {
+  count?: Maybe<Order_By>;
+  max?: Maybe<Phone_Numbers_Max_Order_By>;
+  min?: Maybe<Phone_Numbers_Min_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "phone_numbers" */
+export type Phone_Numbers_Arr_Rel_Insert_Input = {
+  data: Array<Phone_Numbers_Insert_Input>;
+  on_conflict?: Maybe<Phone_Numbers_On_Conflict>;
+};
+
+/** Boolean expression to filter rows from the table "phone_numbers". All fields are combined with a logical 'AND'. */
+export type Phone_Numbers_Bool_Exp = {
+  _and?: Maybe<Array<Maybe<Phone_Numbers_Bool_Exp>>>;
+  _not?: Maybe<Phone_Numbers_Bool_Exp>;
+  _or?: Maybe<Array<Maybe<Phone_Numbers_Bool_Exp>>>;
+  areaCode?: Maybe<String_Comparison_Exp>;
+  countryCode?: Maybe<String_Comparison_Exp>;
+  id?: Maybe<String_Comparison_Exp>;
+  number?: Maybe<String_Comparison_Exp>;
+  userId?: Maybe<String_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "phone_numbers" */
+export enum Phone_Numbers_Constraint {
+  /** unique or primary key constraint */
+  PHONE_NUMBERS_PKEY = 'phone_numbers_pkey'
+}
+
+/** input type for inserting data into table "phone_numbers" */
+export type Phone_Numbers_Insert_Input = {
+  areaCode?: Maybe<Scalars['String']>;
+  countryCode?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+  number?: Maybe<Scalars['String']>;
+  userId?: Maybe<Scalars['String']>;
+};
+
+/** aggregate max on columns */
+export type Phone_Numbers_Max_Fields = {
+   __typename?: 'phone_numbers_max_fields';
+  areaCode?: Maybe<Scalars['String']>;
+  countryCode?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+  number?: Maybe<Scalars['String']>;
+  userId?: Maybe<Scalars['String']>;
+};
+
+/** order by max() on columns of table "phone_numbers" */
+export type Phone_Numbers_Max_Order_By = {
+  areaCode?: Maybe<Order_By>;
+  countryCode?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  number?: Maybe<Order_By>;
+  userId?: Maybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type Phone_Numbers_Min_Fields = {
+   __typename?: 'phone_numbers_min_fields';
+  areaCode?: Maybe<Scalars['String']>;
+  countryCode?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+  number?: Maybe<Scalars['String']>;
+  userId?: Maybe<Scalars['String']>;
+};
+
+/** order by min() on columns of table "phone_numbers" */
+export type Phone_Numbers_Min_Order_By = {
+  areaCode?: Maybe<Order_By>;
+  countryCode?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  number?: Maybe<Order_By>;
+  userId?: Maybe<Order_By>;
+};
+
+/** response of any mutation on the table "phone_numbers" */
+export type Phone_Numbers_Mutation_Response = {
+   __typename?: 'phone_numbers_mutation_response';
+  /** number of affected rows by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data of the affected rows by the mutation */
+  returning: Array<Phone_Numbers>;
+};
+
+/** input type for inserting object relation for remote table "phone_numbers" */
+export type Phone_Numbers_Obj_Rel_Insert_Input = {
+  data: Phone_Numbers_Insert_Input;
+  on_conflict?: Maybe<Phone_Numbers_On_Conflict>;
+};
+
+/** on conflict condition type for table "phone_numbers" */
+export type Phone_Numbers_On_Conflict = {
+  constraint: Phone_Numbers_Constraint;
+  update_columns: Array<Phone_Numbers_Update_Column>;
+  where?: Maybe<Phone_Numbers_Bool_Exp>;
+};
+
+/** ordering options when selecting data from "phone_numbers" */
+export type Phone_Numbers_Order_By = {
+  areaCode?: Maybe<Order_By>;
+  countryCode?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  number?: Maybe<Order_By>;
+  userId?: Maybe<Order_By>;
+};
+
+/** primary key columns input for table: "phone_numbers" */
+export type Phone_Numbers_Pk_Columns_Input = {
+  id: Scalars['String'];
+};
+
+/** select columns of table "phone_numbers" */
+export enum Phone_Numbers_Select_Column {
+  /** column name */
+  AREACODE = 'areaCode',
+  /** column name */
+  COUNTRYCODE = 'countryCode',
+  /** column name */
+  ID = 'id',
+  /** column name */
+  NUMBER = 'number',
+  /** column name */
+  USERID = 'userId'
+}
+
+/** input type for updating data in table "phone_numbers" */
+export type Phone_Numbers_Set_Input = {
+  areaCode?: Maybe<Scalars['String']>;
+  countryCode?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+  number?: Maybe<Scalars['String']>;
+  userId?: Maybe<Scalars['String']>;
+};
+
+/** update columns of table "phone_numbers" */
+export enum Phone_Numbers_Update_Column {
+  /** column name */
+  AREACODE = 'areaCode',
+  /** column name */
+  COUNTRYCODE = 'countryCode',
+  /** column name */
+  ID = 'id',
+  /** column name */
+  NUMBER = 'number',
+  /** column name */
+  USERID = 'userId'
+}
+
 
 /** Set of link slugs that are most current / best suit an item being routed to. */
 export type PrimaryLinkSlugs = {
@@ -8570,6 +9254,18 @@ export type Query = {
   dealers_aggregate: Dealers_Aggregate;
   /** fetch data from the table: "dealers" using primary key columns */
   dealers_by_pk?: Maybe<Dealers>;
+  /** fetch data from the table: "email_subscriptions" */
+  email_subscriptions: Array<Email_Subscriptions>;
+  /** fetch aggregated fields from the table: "email_subscriptions" */
+  email_subscriptions_aggregate: Email_Subscriptions_Aggregate;
+  /** fetch data from the table: "email_subscriptions" using primary key columns */
+  email_subscriptions_by_pk?: Maybe<Email_Subscriptions>;
+  /** fetch data from the table: "emails" */
+  emails: Array<Emails>;
+  /** fetch aggregated fields from the table: "emails" */
+  emails_aggregate: Emails_Aggregate;
+  /** fetch data from the table: "emails" using primary key columns */
+  emails_by_pk?: Maybe<Emails>;
   /** fetch data from the table: "image_owners" */
   image_owners: Array<Image_Owners>;
   /** fetch aggregated fields from the table: "image_owners" */
@@ -8588,6 +9284,10 @@ export type Query = {
   image_variants_aggregate: Image_Variants_Aggregate;
   /** fetch data from the table: "image_variants" using primary key columns */
   image_variants_by_pk?: Maybe<Image_Variants>;
+  /** execute function "list_products_random" which returns "products" */
+  list_products_random: Array<Products>;
+  /** execute function "list_products_random" and query aggregates on result of table type "products" */
+  list_products_random_aggregate: Products_Aggregate;
   /** fetch data from the table: "migrations" */
   migrations: Array<Migrations>;
   /** fetch aggregated fields from the table: "migrations" */
@@ -8624,6 +9324,12 @@ export type Query = {
   payout_methods_aggregate: Payout_Methods_Aggregate;
   /** fetch data from the table: "payout_methods" using primary key columns */
   payout_methods_by_pk?: Maybe<Payout_Methods>;
+  /** fetch data from the table: "phone_numbers" */
+  phone_numbers: Array<Phone_Numbers>;
+  /** fetch aggregated fields from the table: "phone_numbers" */
+  phone_numbers_aggregate: Phone_Numbers_Aggregate;
+  /** fetch data from the table: "phone_numbers" using primary key columns */
+  phone_numbers_by_pk?: Maybe<Phone_Numbers>;
   /** fetch data from the table: "product_preview_items" */
   product_preview_items: Array<Product_Preview_Items>;
   /** fetch aggregated fields from the table: "product_preview_items" */
@@ -9080,6 +9786,52 @@ export type QueryDealers_By_PkArgs = {
 };
 
 
+export type QueryEmail_SubscriptionsArgs = {
+  distinct_on?: Maybe<Array<Email_Subscriptions_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Email_Subscriptions_Order_By>>;
+  where?: Maybe<Email_Subscriptions_Bool_Exp>;
+};
+
+
+export type QueryEmail_Subscriptions_AggregateArgs = {
+  distinct_on?: Maybe<Array<Email_Subscriptions_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Email_Subscriptions_Order_By>>;
+  where?: Maybe<Email_Subscriptions_Bool_Exp>;
+};
+
+
+export type QueryEmail_Subscriptions_By_PkArgs = {
+  id: Scalars['String'];
+};
+
+
+export type QueryEmailsArgs = {
+  distinct_on?: Maybe<Array<Emails_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Emails_Order_By>>;
+  where?: Maybe<Emails_Bool_Exp>;
+};
+
+
+export type QueryEmails_AggregateArgs = {
+  distinct_on?: Maybe<Array<Emails_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Emails_Order_By>>;
+  where?: Maybe<Emails_Bool_Exp>;
+};
+
+
+export type QueryEmails_By_PkArgs = {
+  id: Scalars['String'];
+};
+
+
 export type QueryImage_OwnersArgs = {
   distinct_on?: Maybe<Array<Image_Owners_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -9146,6 +9898,26 @@ export type QueryImage_Variants_AggregateArgs = {
 
 export type QueryImage_Variants_By_PkArgs = {
   id: Scalars['String'];
+};
+
+
+export type QueryList_Products_RandomArgs = {
+  args: List_Products_Random_Args;
+  distinct_on?: Maybe<Array<Products_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Products_Order_By>>;
+  where?: Maybe<Products_Bool_Exp>;
+};
+
+
+export type QueryList_Products_Random_AggregateArgs = {
+  args: List_Products_Random_Args;
+  distinct_on?: Maybe<Array<Products_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Products_Order_By>>;
+  where?: Maybe<Products_Bool_Exp>;
 };
 
 
@@ -9283,6 +10055,29 @@ export type QueryPayout_Methods_AggregateArgs = {
 
 
 export type QueryPayout_Methods_By_PkArgs = {
+  id: Scalars['String'];
+};
+
+
+export type QueryPhone_NumbersArgs = {
+  distinct_on?: Maybe<Array<Phone_Numbers_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Phone_Numbers_Order_By>>;
+  where?: Maybe<Phone_Numbers_Bool_Exp>;
+};
+
+
+export type QueryPhone_Numbers_AggregateArgs = {
+  distinct_on?: Maybe<Array<Phone_Numbers_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Phone_Numbers_Order_By>>;
+  where?: Maybe<Phone_Numbers_Bool_Exp>;
+};
+
+
+export type QueryPhone_Numbers_By_PkArgs = {
   id: Scalars['String'];
 };
 
@@ -9998,6 +10793,7 @@ export type SearchResultsEdge = PageBasedConnectionEdge & {
   node: SearchResultItem;
 };
 
+
 export type SendResetPasswordResponse = {
    __typename?: 'SendResetPasswordResponse';
   resetId?: Maybe<Scalars['String']>;
@@ -10529,6 +11325,18 @@ export type Subscription = {
   dealers_aggregate: Dealers_Aggregate;
   /** fetch data from the table: "dealers" using primary key columns */
   dealers_by_pk?: Maybe<Dealers>;
+  /** fetch data from the table: "email_subscriptions" */
+  email_subscriptions: Array<Email_Subscriptions>;
+  /** fetch aggregated fields from the table: "email_subscriptions" */
+  email_subscriptions_aggregate: Email_Subscriptions_Aggregate;
+  /** fetch data from the table: "email_subscriptions" using primary key columns */
+  email_subscriptions_by_pk?: Maybe<Email_Subscriptions>;
+  /** fetch data from the table: "emails" */
+  emails: Array<Emails>;
+  /** fetch aggregated fields from the table: "emails" */
+  emails_aggregate: Emails_Aggregate;
+  /** fetch data from the table: "emails" using primary key columns */
+  emails_by_pk?: Maybe<Emails>;
   /** fetch data from the table: "image_owners" */
   image_owners: Array<Image_Owners>;
   /** fetch aggregated fields from the table: "image_owners" */
@@ -10547,6 +11355,10 @@ export type Subscription = {
   image_variants_aggregate: Image_Variants_Aggregate;
   /** fetch data from the table: "image_variants" using primary key columns */
   image_variants_by_pk?: Maybe<Image_Variants>;
+  /** execute function "list_products_random" which returns "products" */
+  list_products_random: Array<Products>;
+  /** execute function "list_products_random" and query aggregates on result of table type "products" */
+  list_products_random_aggregate: Products_Aggregate;
   /** fetch data from the table: "migrations" */
   migrations: Array<Migrations>;
   /** fetch aggregated fields from the table: "migrations" */
@@ -10583,6 +11395,12 @@ export type Subscription = {
   payout_methods_aggregate: Payout_Methods_Aggregate;
   /** fetch data from the table: "payout_methods" using primary key columns */
   payout_methods_by_pk?: Maybe<Payout_Methods>;
+  /** fetch data from the table: "phone_numbers" */
+  phone_numbers: Array<Phone_Numbers>;
+  /** fetch aggregated fields from the table: "phone_numbers" */
+  phone_numbers_aggregate: Phone_Numbers_Aggregate;
+  /** fetch data from the table: "phone_numbers" using primary key columns */
+  phone_numbers_by_pk?: Maybe<Phone_Numbers>;
   /** fetch data from the table: "product_preview_items" */
   product_preview_items: Array<Product_Preview_Items>;
   /** fetch aggregated fields from the table: "product_preview_items" */
@@ -10787,6 +11605,52 @@ export type SubscriptionDealers_By_PkArgs = {
 };
 
 
+export type SubscriptionEmail_SubscriptionsArgs = {
+  distinct_on?: Maybe<Array<Email_Subscriptions_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Email_Subscriptions_Order_By>>;
+  where?: Maybe<Email_Subscriptions_Bool_Exp>;
+};
+
+
+export type SubscriptionEmail_Subscriptions_AggregateArgs = {
+  distinct_on?: Maybe<Array<Email_Subscriptions_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Email_Subscriptions_Order_By>>;
+  where?: Maybe<Email_Subscriptions_Bool_Exp>;
+};
+
+
+export type SubscriptionEmail_Subscriptions_By_PkArgs = {
+  id: Scalars['String'];
+};
+
+
+export type SubscriptionEmailsArgs = {
+  distinct_on?: Maybe<Array<Emails_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Emails_Order_By>>;
+  where?: Maybe<Emails_Bool_Exp>;
+};
+
+
+export type SubscriptionEmails_AggregateArgs = {
+  distinct_on?: Maybe<Array<Emails_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Emails_Order_By>>;
+  where?: Maybe<Emails_Bool_Exp>;
+};
+
+
+export type SubscriptionEmails_By_PkArgs = {
+  id: Scalars['String'];
+};
+
+
 export type SubscriptionImage_OwnersArgs = {
   distinct_on?: Maybe<Array<Image_Owners_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -10853,6 +11717,26 @@ export type SubscriptionImage_Variants_AggregateArgs = {
 
 export type SubscriptionImage_Variants_By_PkArgs = {
   id: Scalars['String'];
+};
+
+
+export type SubscriptionList_Products_RandomArgs = {
+  args: List_Products_Random_Args;
+  distinct_on?: Maybe<Array<Products_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Products_Order_By>>;
+  where?: Maybe<Products_Bool_Exp>;
+};
+
+
+export type SubscriptionList_Products_Random_AggregateArgs = {
+  args: List_Products_Random_Args;
+  distinct_on?: Maybe<Array<Products_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Products_Order_By>>;
+  where?: Maybe<Products_Bool_Exp>;
 };
 
 
@@ -10990,6 +11874,29 @@ export type SubscriptionPayout_Methods_AggregateArgs = {
 
 
 export type SubscriptionPayout_Methods_By_PkArgs = {
+  id: Scalars['String'];
+};
+
+
+export type SubscriptionPhone_NumbersArgs = {
+  distinct_on?: Maybe<Array<Phone_Numbers_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Phone_Numbers_Order_By>>;
+  where?: Maybe<Phone_Numbers_Bool_Exp>;
+};
+
+
+export type SubscriptionPhone_Numbers_AggregateArgs = {
+  distinct_on?: Maybe<Array<Phone_Numbers_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Phone_Numbers_Order_By>>;
+  where?: Maybe<Phone_Numbers_Bool_Exp>;
+};
+
+
+export type SubscriptionPhone_Numbers_By_PkArgs = {
   id: Scalars['String'];
 };
 
@@ -11969,7 +12876,8 @@ export type UserPrivate = User & {
   followingStores?: Maybe<FollowingStoresConnection>;
   licenseId?: Maybe<Scalars['String']>;
   license?: Maybe<User_Licenses>;
-  phoneNumber?: Maybe<Scalars['String']>;
+  phoneNumberId?: Maybe<Scalars['String']>;
+  phoneNumber?: Maybe<Phone_Numbers>;
 };
 
 
@@ -12023,6 +12931,9 @@ export type Users = {
   /** An aggregated array relationship */
   conversations_aggregate: Chat_Users_Aggregate;
   createdAt?: Maybe<Scalars['timestamptz']>;
+  /** An object relationship */
+  dealer?: Maybe<Dealers>;
+  dealerId?: Maybe<Scalars['String']>;
   defaultPaymentMethodId?: Maybe<Scalars['String']>;
   email: Scalars['String'];
   emailVerified?: Maybe<Scalars['Boolean']>;
@@ -12041,6 +12952,9 @@ export type Users = {
   payoutMethod?: Maybe<Payout_Methods>;
   payoutMethodId?: Maybe<Scalars['String']>;
   payoutSplitId?: Maybe<Scalars['String']>;
+  /** An object relationship */
+  phoneNumber?: Maybe<Phone_Numbers>;
+  phoneNumberId?: Maybe<Scalars['String']>;
   /** An object relationship */
   store?: Maybe<Stores>;
   /** An object relationship */
@@ -12115,6 +13029,8 @@ export type Users_Bool_Exp = {
   cartId?: Maybe<String_Comparison_Exp>;
   conversations?: Maybe<Chat_Users_Bool_Exp>;
   createdAt?: Maybe<Timestamptz_Comparison_Exp>;
+  dealer?: Maybe<Dealers_Bool_Exp>;
+  dealerId?: Maybe<String_Comparison_Exp>;
   defaultPaymentMethodId?: Maybe<String_Comparison_Exp>;
   email?: Maybe<String_Comparison_Exp>;
   emailVerified?: Maybe<Boolean_Comparison_Exp>;
@@ -12131,6 +13047,8 @@ export type Users_Bool_Exp = {
   payoutMethod?: Maybe<Payout_Methods_Bool_Exp>;
   payoutMethodId?: Maybe<String_Comparison_Exp>;
   payoutSplitId?: Maybe<String_Comparison_Exp>;
+  phoneNumber?: Maybe<Phone_Numbers_Bool_Exp>;
+  phoneNumberId?: Maybe<String_Comparison_Exp>;
   store?: Maybe<Stores_Bool_Exp>;
   storeById?: Maybe<Stores_Bool_Exp>;
   storeId?: Maybe<String_Comparison_Exp>;
@@ -12151,6 +13069,8 @@ export type Users_Insert_Input = {
   cartId?: Maybe<Scalars['String']>;
   conversations?: Maybe<Chat_Users_Arr_Rel_Insert_Input>;
   createdAt?: Maybe<Scalars['timestamptz']>;
+  dealer?: Maybe<Dealers_Obj_Rel_Insert_Input>;
+  dealerId?: Maybe<Scalars['String']>;
   defaultPaymentMethodId?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
   emailVerified?: Maybe<Scalars['Boolean']>;
@@ -12167,6 +13087,8 @@ export type Users_Insert_Input = {
   payoutMethod?: Maybe<Payout_Methods_Obj_Rel_Insert_Input>;
   payoutMethodId?: Maybe<Scalars['String']>;
   payoutSplitId?: Maybe<Scalars['String']>;
+  phoneNumber?: Maybe<Phone_Numbers_Obj_Rel_Insert_Input>;
+  phoneNumberId?: Maybe<Scalars['String']>;
   store?: Maybe<Stores_Obj_Rel_Insert_Input>;
   storeById?: Maybe<Stores_Obj_Rel_Insert_Input>;
   storeId?: Maybe<Scalars['String']>;
@@ -12181,6 +13103,7 @@ export type Users_Max_Fields = {
    __typename?: 'users_max_fields';
   cartId?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['timestamptz']>;
+  dealerId?: Maybe<Scalars['String']>;
   defaultPaymentMethodId?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
   firstName?: Maybe<Scalars['String']>;
@@ -12192,6 +13115,7 @@ export type Users_Max_Fields = {
   passwordHash?: Maybe<Scalars['String']>;
   payoutMethodId?: Maybe<Scalars['String']>;
   payoutSplitId?: Maybe<Scalars['String']>;
+  phoneNumberId?: Maybe<Scalars['String']>;
   storeId?: Maybe<Scalars['String']>;
   stripeCustomerId?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['timestamptz']>;
@@ -12203,6 +13127,7 @@ export type Users_Max_Fields = {
 export type Users_Max_Order_By = {
   cartId?: Maybe<Order_By>;
   createdAt?: Maybe<Order_By>;
+  dealerId?: Maybe<Order_By>;
   defaultPaymentMethodId?: Maybe<Order_By>;
   email?: Maybe<Order_By>;
   firstName?: Maybe<Order_By>;
@@ -12214,6 +13139,7 @@ export type Users_Max_Order_By = {
   passwordHash?: Maybe<Order_By>;
   payoutMethodId?: Maybe<Order_By>;
   payoutSplitId?: Maybe<Order_By>;
+  phoneNumberId?: Maybe<Order_By>;
   storeId?: Maybe<Order_By>;
   stripeCustomerId?: Maybe<Order_By>;
   updatedAt?: Maybe<Order_By>;
@@ -12226,6 +13152,7 @@ export type Users_Min_Fields = {
    __typename?: 'users_min_fields';
   cartId?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['timestamptz']>;
+  dealerId?: Maybe<Scalars['String']>;
   defaultPaymentMethodId?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
   firstName?: Maybe<Scalars['String']>;
@@ -12237,6 +13164,7 @@ export type Users_Min_Fields = {
   passwordHash?: Maybe<Scalars['String']>;
   payoutMethodId?: Maybe<Scalars['String']>;
   payoutSplitId?: Maybe<Scalars['String']>;
+  phoneNumberId?: Maybe<Scalars['String']>;
   storeId?: Maybe<Scalars['String']>;
   stripeCustomerId?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['timestamptz']>;
@@ -12248,6 +13176,7 @@ export type Users_Min_Fields = {
 export type Users_Min_Order_By = {
   cartId?: Maybe<Order_By>;
   createdAt?: Maybe<Order_By>;
+  dealerId?: Maybe<Order_By>;
   defaultPaymentMethodId?: Maybe<Order_By>;
   email?: Maybe<Order_By>;
   firstName?: Maybe<Order_By>;
@@ -12259,6 +13188,7 @@ export type Users_Min_Order_By = {
   passwordHash?: Maybe<Order_By>;
   payoutMethodId?: Maybe<Order_By>;
   payoutSplitId?: Maybe<Order_By>;
+  phoneNumberId?: Maybe<Order_By>;
   storeId?: Maybe<Order_By>;
   stripeCustomerId?: Maybe<Order_By>;
   updatedAt?: Maybe<Order_By>;
@@ -12432,6 +13362,8 @@ export type Users_Order_By = {
   cartId?: Maybe<Order_By>;
   conversations_aggregate?: Maybe<Chat_Users_Aggregate_Order_By>;
   createdAt?: Maybe<Order_By>;
+  dealer?: Maybe<Dealers_Order_By>;
+  dealerId?: Maybe<Order_By>;
   defaultPaymentMethodId?: Maybe<Order_By>;
   email?: Maybe<Order_By>;
   emailVerified?: Maybe<Order_By>;
@@ -12448,6 +13380,8 @@ export type Users_Order_By = {
   payoutMethod?: Maybe<Payout_Methods_Order_By>;
   payoutMethodId?: Maybe<Order_By>;
   payoutSplitId?: Maybe<Order_By>;
+  phoneNumber?: Maybe<Phone_Numbers_Order_By>;
+  phoneNumberId?: Maybe<Order_By>;
   store?: Maybe<Stores_Order_By>;
   storeById?: Maybe<Stores_Order_By>;
   storeId?: Maybe<Order_By>;
@@ -12468,6 +13402,8 @@ export enum Users_Select_Column {
   CARTID = 'cartId',
   /** column name */
   CREATEDAT = 'createdAt',
+  /** column name */
+  DEALERID = 'dealerId',
   /** column name */
   DEFAULTPAYMENTMETHODID = 'defaultPaymentMethodId',
   /** column name */
@@ -12497,6 +13433,8 @@ export enum Users_Select_Column {
   /** column name */
   PAYOUTSPLITID = 'payoutSplitId',
   /** column name */
+  PHONENUMBERID = 'phoneNumberId',
+  /** column name */
   STOREID = 'storeId',
   /** column name */
   STRIPECUSTOMERID = 'stripeCustomerId',
@@ -12512,6 +13450,7 @@ export enum Users_Select_Column {
 export type Users_Set_Input = {
   cartId?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['timestamptz']>;
+  dealerId?: Maybe<Scalars['String']>;
   defaultPaymentMethodId?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
   emailVerified?: Maybe<Scalars['Boolean']>;
@@ -12526,6 +13465,7 @@ export type Users_Set_Input = {
   passwordHash?: Maybe<Scalars['String']>;
   payoutMethodId?: Maybe<Scalars['String']>;
   payoutSplitId?: Maybe<Scalars['String']>;
+  phoneNumberId?: Maybe<Scalars['String']>;
   storeId?: Maybe<Scalars['String']>;
   stripeCustomerId?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['timestamptz']>;
@@ -12675,6 +13615,8 @@ export enum Users_Update_Column {
   /** column name */
   CREATEDAT = 'createdAt',
   /** column name */
+  DEALERID = 'dealerId',
+  /** column name */
   DEFAULTPAYMENTMETHODID = 'defaultPaymentMethodId',
   /** column name */
   EMAIL = 'email',
@@ -12702,6 +13644,8 @@ export enum Users_Update_Column {
   PAYOUTMETHODID = 'payoutMethodId',
   /** column name */
   PAYOUTSPLITID = 'payoutSplitId',
+  /** column name */
+  PHONENUMBERID = 'phoneNumberId',
   /** column name */
   STOREID = 'storeId',
   /** column name */
