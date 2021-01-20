@@ -127,7 +127,7 @@ const PublishedProductsList = (props: ReactProps) => {
       query: {
         limit: limit,
         offset: offset,
-        orderBy: orderBy.value,
+        orderBy: orderBy.value as any,
         // filters: `_price >= ${priceRange[0]} AND _price <= ${priceRange[1]}`,
         facetFilters: (facets && facets.length > 0)
           ? [facets]

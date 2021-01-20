@@ -1,14 +1,7 @@
 import React from "react";
-import { useState } from "react";
 // Styles
 import clsx from "clsx";
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
-// Material UI
-import Dialog from "@material-ui/core/Dialog";
-// Redux
-import { useSelector, useDispatch } from "react-redux";
-import { GrandReduxState } from "reduxStore/grand-reducer";
-import { Actions } from "reduxStore/actions";
 // Typings
 import { ProductsConnection, ConnectionOffsetQuery } from "typings/gqlTypes";
 // Components
@@ -17,8 +10,6 @@ import NewReleaseProducts from "pageComponents/FrontPage/NewReleaseProducts";
 import FeaturedProducts from "pageComponents/FrontPage/FeaturedProducts";
 import Loading from "components/Loading";
 // import ProductCreatePage from "./ProductCreatePage";
-import CookiesBanner from "components/CookiesBanner";
-import CovidBanner from "components/CovidBanner";
 import BannerHome from "components/BannerHome";
 // Router
 import { Colors, Gradients } from "layout/AppTheme";
@@ -34,13 +25,14 @@ export const MAX_WIDTH_GRID: number = 1160;
 
 
 
-
 const FrontPage: React.FC<ReactProps> = (props) => {
 
   const {
     classes,
     initialFeaturedProducts,
   } = props;
+
+  const aClient = useApolloClient();
 
   // const theme = useTheme();
   // const lgDown = useMediaQuery(theme.breakpoints.down('lg'));

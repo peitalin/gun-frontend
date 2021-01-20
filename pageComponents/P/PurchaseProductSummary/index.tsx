@@ -40,6 +40,10 @@ const VisaPurchaseProduct = dynamic(() => import("./VisaPurchaseProduct"), {
   loading: (props) => <VisaButtonLoading/>,
   ssr: false,
 });
+// const CoinbasePay = dynamic(() => import("./CoinbasePay"), {
+//   loading: (props) => <VisaButtonLoading/>,
+//   ssr: false,
+// });
 
 // Stripe Provider
 import { Stripe } from "@stripe/stripe-js";
@@ -89,6 +93,7 @@ const PurchaseProductSummary: React.FC<ReactProps> = (props) => {
 
   return (
     <div className={classes.purchaseCheckoutSummaryRoot}>
+
       <div className={clsx(classes.flexRow, classes.width100, classes.paddingBottom)}>
 
         <div className={classes.flexCol66}>
@@ -145,25 +150,27 @@ const PurchaseProductSummary: React.FC<ReactProps> = (props) => {
                   classes.maxWidth,
                   classes.visaContainer,
                 )}>
-                  {
-                    true &&
-                    <VisaPurchaseProduct
-                      // disable on mobile
-                      user={user}
-                      // className={"fadeIn"}
-                      product={props.product}
-                      quotedPrice={featuredVariant.price}
-                      title={`Reserve for ${c(featuredVariant.price)} USD`}
-                      showIcon={true}
-                      display={true}
-                      buttonHeight={xsDown ? '40px' : '40px'}
-                      handleOrderPostPurchase={
-                        (order) => {
-                          router.push("/orders")
-                        }
+                  <VisaPurchaseProduct
+                    // disable on mobile
+                    user={user}
+                    // className={"fadeIn"}
+                    product={props.product}
+                    quotedPrice={featuredVariant.price}
+                    title={`Reserve for ${c(featuredVariant.price)} AUD`}
+                    showIcon={true}
+                    display={true}
+                    buttonHeight={xsDown ? '40px' : '40px'}
+                    handleOrderPostPurchase={
+                      (order) => {
+                        router.push("/orders")
                       }
+                    }
+                  />
+                  {/* <div className={classes.coinbasePayContainer}>
+                    <CoinbasePay
+                      price={featuredVariant.price}
                     />
-                  }
+                  </div> */}
                 </div>
             }
 
@@ -284,7 +291,7 @@ const styles = (theme: Theme) => createStyles({
     },
   },
   visaContainer: {
-    zIndex: 1, // above paypal button for dropdown menu
+    // zIndex: 1, // above paypal button for dropdown menu
   },
   expanderTall: {
     flexGrow: 1,
@@ -312,6 +319,9 @@ const styles = (theme: Theme) => createStyles({
     border: `1px solid rgba(170, 170, 170, 0.4)`,
     padding: "0.5rem",
     borderRadius: '4px',
+  },
+  coinbasePayContainer: {
+    marginTop: "0.45rem",
   },
 });
 

@@ -48,7 +48,7 @@ export const styles = (theme: Theme) => createStyles({
     justifyContent: 'center',
   },
   paddingDesktop: {
-    padding: '0rem 1rem 2rem 1rem',
+    // padding: '0rem 1rem 2rem 1rem',
   },
   paddingMobile: {
     padding: '0rem 0.5rem 0.5rem 0.5rem',

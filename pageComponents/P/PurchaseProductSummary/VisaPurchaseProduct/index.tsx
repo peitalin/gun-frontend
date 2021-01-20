@@ -4,7 +4,7 @@ import { oc as option } from 'ts-optchain';
 import clsx from "clsx";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
-import { Colors, BorderRadius } from "layout/AppTheme";
+import { Colors, BorderRadius, BorderRadius3x } from "layout/AppTheme";
 // Error
 import ErrorBounds from 'components/ErrorBounds';
 // Material UI
@@ -372,7 +372,7 @@ interface MutVarConfirmOrder {
 /////////////// Styles /////////////
 const styles = (theme: Theme) => createStyles({
   root: {
-    position: "relative",
+    // position: "relative",
     marginTop: '.25rem',
     // marginLeft: '2rem', // 2rem matches with 40px height button
     // marginRight: '2rem', // 2rem matches with 40px height button
@@ -387,7 +387,7 @@ const styles = (theme: Theme) => createStyles({
     backgroundColor: Colors.cream,
     border: `1px solid rgba(170, 170, 170, 0.4)`,
     padding: "0.5rem",
-    borderRadius: BorderRadius,
+    borderRadius: BorderRadius3x,
   },
   receiptLink: {
     fontFamily: '"Segoe UI","Helvetica Neue",Arial,sans-serif',
