@@ -28,7 +28,7 @@ const MyOrdersHistoryPage = (props: ReactProps) => {
   return (
     <>
       <MetaHeadersPage
-        title="Orders - Buyer Orders"
+        title="Orders"
         robots="noindex"
       />
       <div className={classes.contentContainerPublicPage}>
