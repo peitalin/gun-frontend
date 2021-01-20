@@ -45,7 +45,7 @@ async(route?: string): Promise<BlankMutationResponse> => {
 
   if (route) {
     if (
-      (route.includes('/download') && !route.includes('/my-orders')) ||
+      (route.includes('/download') && !route.includes('/orders')) ||
       route.includes('/categories') ||
       route.includes('/stores') ||
       route.includes('/s') ||
