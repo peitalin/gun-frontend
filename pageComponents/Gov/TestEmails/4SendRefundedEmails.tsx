@@ -53,7 +53,7 @@ const SendRefundedEmails: React.FC<ReactProps> = (props) => {
         mutation: SEND_REFUNDED_BUYER_EMAIL,
         variables: {
           userId: user.id,
-          orderId: orderId,
+          orderId: props.orderId,
         },
         fetchPolicy: "no-cache", // always do a network request, no caches
       })
@@ -76,7 +76,7 @@ const SendRefundedEmails: React.FC<ReactProps> = (props) => {
         mutation: SEND_REFUNDED_SELLER_EMAIL,
         variables: {
           userId: user.id,
-          orderId: orderId,
+          orderId: props.orderId,
         },
         fetchPolicy: "no-cache", // always do a network request, no caches
       })
@@ -98,7 +98,8 @@ const SendRefundedEmails: React.FC<ReactProps> = (props) => {
       const { errors, data } = await aClient.mutate<QueryData3, QueryVar3>({
         mutation: SEND_REFUNDED_ADMIN_EMAIL,
         variables: {
-          buyerEmail: buyerEmail
+          orderId: props.orderId,
+          buyerEmail: props.buyerEmail,
           // default email is admin@gunmarketplace.com.au set in notify-service
         },
         fetchPolicy: "no-cache", // always do a network request, no caches
@@ -179,6 +180,8 @@ const SendRefundedEmails: React.FC<ReactProps> = (props) => {
 
 
 interface ReactProps extends WithStyles<typeof styles> {
+  orderId: string
+  buyerEmail: string
 }
 interface QueryData {
   sendRefundedBuyerEmail: BlankMutationResponse;
@@ -200,6 +203,7 @@ interface QueryData3 {
   sendRefundedAdminEmail: BlankMutationResponse;
 }
 interface QueryVar3 {
+  orderId: string
   buyerEmail: string
 }
 
