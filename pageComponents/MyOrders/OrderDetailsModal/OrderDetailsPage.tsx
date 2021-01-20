@@ -121,7 +121,8 @@ const styles = (theme: Theme) => createStyles({
     justifyContent: 'center',
   },
   orderItemsContainer: {
-    marginLeft: '0.5rem',
+    marginLeft: "0.25rem",
+    marginRight: "0.25rem",
     padding: '1rem',
     marginBottom: "0.5rem",
     borderRadius: BorderRadius,

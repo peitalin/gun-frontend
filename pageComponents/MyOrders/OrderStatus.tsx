@@ -101,7 +101,8 @@ const styles = (theme: Theme) => createStyles({
   root: {
     // background: Colors.cream,
     width: "100%",
-    marginTop: "0.25rem",
+    marginTop: "0.5rem",
+    marginBottom: "1rem",
   },
   flexCol: {
     display: 'flex',
@@ -132,7 +133,6 @@ const styles = (theme: Theme) => createStyles({
   flexItemOrderStatusTranslation: {
     flexGrow: 1,
     flexBasis: '40%',
-    marginRight: '2rem',
     color: Colors.grey,
   },
   flexItemMed: {

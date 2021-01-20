@@ -40,53 +40,43 @@ const OrderRowSellers: React.FC<ReactProps> = (props) => {
   return (
     <ErrorBounds className={clsx(
       classes.root,
-      classes.flexRowWithBorder,
+      classes.flexRow,
     )}>
 
       <div className={clsx(
-        classes.flexRow,
+        classes.flexCol,
         (!order && !product) ? "pulse" : null,
       )}>
-        <div className={classes.flexCol}>
-          <ProductPreviewCardRow
-            previewItem={previewItem}
-            height={55}
-            width={88}
-          />
-        </div>
 
-        <div className={clsx(
-          classes.flexRow,
-          classes.width100,
-          classes.marginLeft,
-        )}>
-          <div className={clsx(
-            classes.flexCol,
-            classes.orderInfoContainer,
-            'fadeIn'
-          )}>
-            <Typography className={classes.name} variant="body2">
-              {option(product).currentSnapshot.title("")}
-            </Typography>
-            <Typography className={classes.tagline} variant="body2">
-              {option(product).currentSnapshot.model("")}
-            </Typography>
+        <ProductPreviewCardRow
+          previewItem={previewItem}
+          height={55}
+          width={88}
+        />
 
-            {
-              option(product).store.id() &&
-              <Link
-                href="/s/[storeId]"
-                as={`/s/${option(product).store.id()}`}
-              >
-                <a>
-                  <Typography className={classes.storeName} variant="body2">
-                    {option(product).store.name()}
-                  </Typography>
-                </a>
-              </Link>
-            }
-            <OrderStatus order={order} />
-          </div>
+        <div className={classes.detailsContainer}>
+
+          <Typography className={classes.name} variant="body2">
+            {option(product).currentSnapshot.title("")}
+          </Typography>
+          <Typography className={classes.tagline} variant="body2">
+            {option(product).currentSnapshot.model("")}
+          </Typography>
+
+          {
+            option(product).store.id() &&
+            <Link
+              href="/s/[storeId]"
+              as={`/s/${option(product).store.id()}`}
+            >
+              <a>
+                <Typography className={classes.storeName} variant="body2">
+                  {option(product).store.name()}
+                </Typography>
+              </a>
+            </Link>
+          }
+          <OrderStatus order={order} />
 
           <div className={clsx(classes.flexCol, 'fadeIn')}>
             <div className={classes.flexRowFlexEnd}>
@@ -116,26 +106,17 @@ const styles = (theme: Theme) => createStyles({
   root: {
     display: 'flex',
     flexDirection: 'row',
-    flexGrow: 1,
     padding: '1rem',
     borderRadius: BorderRadius,
-    backgroundColor: theme.colors.uniswapDarkNavy,
+    backgroundColor: Colors.foregroundColor,
     boxShadow: BoxShadows.shadow1.boxShadow,
-  },
-  width100: {
-    width: '100%',
+    marginBottom: '0.5rem',
   },
   flexCol: {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
-  },
-  flexRowOuter: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
     width: '100%',
-    margin: "0.5rem",
   },
   flexRow: {
     display: 'flex',
@@ -143,26 +124,13 @@ const styles = (theme: Theme) => createStyles({
     justifyContent: 'flex-start',
     width: '100%',
   },
-  flexRowWithBorder: {
-    display: 'flex',
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    marginBottom: '0.5rem',
-    marginRight: '0rem',
-    paddingBottom: '1rem',
-    // borderBottom: `1px solid ${Colors.lightGrey}`,
-  },
   flexRowFlexEnd: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'flex-end',
   },
-  marginLeft: {
-    marginLeft: "1rem",
-  },
-  orderInfoContainer: {
-    flexGrow: 1,
-    justifyContent: 'flex-start',
+  detailsContainer: {
+    marginTop: '0.5rem',
   },
   name: {
     fontWeight: 600,
@@ -175,11 +143,6 @@ const styles = (theme: Theme) => createStyles({
     color: theme.colors.uniswapLighterGrey,
     marginBottom: "0.25rem",
   },
-  variant: {
-    fontWeight: 600,
-    color: theme.colors.uniswapGrey,
-    marginBottom: "0.25rem",
-  },
   storeName: {
     fontWeight: 600,
     color: theme.colors.uniswapLighterGrey,
@@ -188,41 +151,8 @@ const styles = (theme: Theme) => createStyles({
       color: Colors.lightBlue,
     },
   },
-  fileCol: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    width: '100%',
-    marginTop: "1rem",
-    padding: '0.5rem',
-    minHeight: 62,
-  },
-  downloadsBorder: {
-    border: `1px solid ${Colors.lightGrey}`,
-    borderRadius: "4px",
-  },
-  orderDetailsButton: {
-    height: '38px',
-    minWidth: '150px',
-    border: `1px solid ${Colors.grey}`,
-    marginTop: '0.5rem',
-    "&:hover": {
-      border: '1px solid #aaaaaa',
-    }
-  },
-  orderDetailsButtonText: {
-    fontSize: '0.875rem',
-    color: Colors.darkGrey,
-    fontWeight: 500,
-  },
-  refundedGrayBlur: {
-    filter: 'grayscale(1) blur(0.75px)',
-  },
-  refundedGrayscale: {
-    filter: 'grayscale(1)',
-  },
 });
+
 
 
 export default withStyles(styles)( OrderRowSellers );

@@ -136,6 +136,8 @@ const styles = (theme: Theme) => createStyles({
     borderRadius: BorderRadius,
     backgroundColor: theme.colors.uniswapMediumNavy,
     boxShadow: BoxShadows.shadow1.boxShadow,
+    marginLeft: "0.25rem",
+    marginRight: "0.25rem",
   },
   title: {
     marginBottom: '0.5rem',

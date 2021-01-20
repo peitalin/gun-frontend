@@ -338,27 +338,22 @@ const OrdersLayout: React.FC<ReactProps> = (props) => {
 
   const dispatch = useDispatch();
   const theme = useTheme();
-  const smDown = useMediaQuery(theme.breakpoints.down("sm"))
+  const mdDown = useMediaQuery(theme.breakpoints.down("md"))
 
   return (
-    <ResponsivePadding>
-      {/* {
-        claimOrders &&
-        claimOrders.length > 0 &&
-        <PurchaseSuccessBanner />
-      } */}
-      <AlignCenterLayout
-        maxWidth={960}
-        withRecommendations={props.withRecommendations}
-      >
+    <AlignCenterLayout
+      maxWidth={960}
+      withRecommendations={props.withRecommendations}
+    >
+      <div className={
+        mdDown ? classes.flexRowRootMobile : classes.flexRowRoot
+      }>
         <Typography className={classes.title} variant="h2">
           My Orders
         </Typography>
-        <div className={clsx(classes.flexRowOuter)}>
-          {props.children}
-        </div>
-      </AlignCenterLayout>
-    </ResponsivePadding>
+        {props.children}
+      </div>
+    </AlignCenterLayout>
   )
 }
 
@@ -371,7 +366,6 @@ const OrdersSection: React.FC<ReactProps> = (props) => {
   } = props;
 
   const theme = useTheme();
-  const smDown = useMediaQuery(theme.breakpoints.down("sm"))
 
   return (
     <div className={classes.ordersSectionContainer}>
@@ -403,12 +397,21 @@ interface ReactProps extends WithStyles<typeof styles> {
 }
 
 const styles = (theme: Theme) => createStyles({
-  flexRowOuter: {
+  flexRowRoot: {
     display: 'flex',
     justifyContent: 'center',
     flexDirection: "column",
     maxWidth: 960,
     flexWrap: "wrap",
+    padding: '1rem',
+  },
+  flexRowRootMobile: {
+    display: 'flex',
+    justifyContent: 'center',
+    flexDirection: "column",
+    maxWidth: 960,
+    flexWrap: "wrap",
+    padding: '0.5rem',
   },
   productColumn60: {
     flexBasis: '60%',
@@ -518,7 +521,6 @@ const styles = (theme: Theme) => createStyles({
     marginTop: "1rem",
   },
   rowContainer: {
-    width: '100%',
   },
   gridRootBuyer: {
     // backgroundColor: theme.colors.uniswapDarkNavy,
