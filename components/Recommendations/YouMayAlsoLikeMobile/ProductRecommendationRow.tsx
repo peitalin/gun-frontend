@@ -148,14 +148,14 @@ const styles = (theme: Theme) => createStyles({
     marginRight: '0rem',
     // backgroundColor: Colors.foregroundColor,
     // opacity: 1,
-    "&:hover": {
-      backgroundColor: Colors.slateGrey,
-      // opacity: 0.8,
-      transition: theme.transitions.create(['opacity', 'backgroundColor'], {
-        easing: theme.transitions.easing.easeIn,
-        duration: '100ms',
-      })
-    },
+    // "&:hover": {
+    //   backgroundColor: Colors.slateGrey,
+    //   // opacity: 0.8,
+    //   transition: theme.transitions.create(['opacity', 'backgroundColor'], {
+    //     easing: theme.transitions.easing.easeIn,
+    //     duration: '100ms',j
+    //   })
+    // },
   },
   previewCard: {
     marginRight: '0.5rem',
@@ -167,25 +167,17 @@ const styles = (theme: Theme) => createStyles({
     textTransform: "uppercase",
     fontWeight: 500,
     fontSize: '.65rem',
-    color: "#888",
+    color: theme.colors.uniswapLighterGrey,
     marginTop: '0.2rem',
     marginBottom: '0.2rem',
     lineHeight: '1rem',
   },
   title: {
     fontWeight: 500,
-    color: "#444",
+    color: theme.colors.uniswapLightGrey,
     marginBottom: '0.2rem',
     fontSize: '0.875rem',
     lineHeight: '1rem',
-  },
-  name: {
-    fontWeight: 1,
-    color: "#484848",
-  },
-  tagline: {
-    fontWeight: 400,
-    color: "#888888",
   },
   priceAbsoluteBottom: {
     // position: "relative",

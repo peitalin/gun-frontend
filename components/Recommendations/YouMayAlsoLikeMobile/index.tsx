@@ -77,7 +77,7 @@ const styles = (theme: Theme) => createStyles({
   },
   pageRecommendationsBox: {
     marginTop: '2rem',
-    padding: '1rem',
+    padding: '0.5rem',
   },
   productImage: {
     display: 'flex',
