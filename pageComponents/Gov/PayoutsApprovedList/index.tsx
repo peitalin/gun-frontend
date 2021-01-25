@@ -374,6 +374,11 @@ const PayoutsApprovedList = (props: ReactProps) => {
               Order ID
             </Typography>
           </div>
+          <div className={classes.flexItemWide}>
+            <Typography variant="subtitle1" className={classes.subtitle}>
+              Date
+            </Typography>
+          </div>
           <div className={classes.flexItem}>
             <Typography variant="subtitle1" className={classes.subtitle}>
               Total Amount
@@ -428,6 +433,9 @@ const PayoutsApprovedList = (props: ReactProps) => {
           disablePriceFilter
           disableSearchFilter
           disableSortby
+          style={{
+            flexGrow: 1,
+          }}
           topSectionStyles={{
             justifyContent: 'flex-end',
             alignItems: 'flex-end',
@@ -436,6 +444,10 @@ const PayoutsApprovedList = (props: ReactProps) => {
           }}
           bottomSectionStyles={{
             marginBottom: '2rem',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+            flexGrow: 1,
           }}
         >
           {
@@ -446,7 +458,7 @@ const PayoutsApprovedList = (props: ReactProps) => {
               classes.flexCol,
               classes.customerNoEmailsBox,
             )}>
-              <Typography variant="subtitle2">
+              <Typography variant="subtitle2" className={classes.margin2}>
                 No approved payouts pending
               </Typography>
             </div>
@@ -499,6 +511,7 @@ const styles = (theme: Theme) => createStyles({
     flexDirection: 'column',
     alignItems: 'flex-start',
     minHeight: 'calc(100vh - 90px - 120px)',
+    flexGrow: 1,
   },
   rootMobile: {
     padding: '0.5rem',
@@ -583,7 +596,7 @@ const styles = (theme: Theme) => createStyles({
     height: '100%',
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     alignItems: 'center',
     minHeight: 420,
   },
@@ -648,6 +661,9 @@ const styles = (theme: Theme) => createStyles({
   markPayoutCompleteButton: {
     margin: "0.5rem 0.5rem 0.5rem 0.5rem",
     backgroundColor: Colors.foregroundColor,
+  },
+  margin2: {
+    margin: '2rem',
   },
 });
 

@@ -22,13 +22,11 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import Loading from "components/Loading";
 // helpers
-import dayjs from 'dayjs';
+import { formatDate } from "utils/dates";
 import currency from "currency.js";
 // validation
 import { FormikProps } from 'formik';
 const c = (s) => currency(s/100, { formatWithSymbol: true }).format()
-const asTime = (d: Date) => dayjs(d).format("DD-MM-YYYY HH:mm A")
-import { splitPlatformFee } from "utils/prices";
 
 
 

@@ -56,6 +56,8 @@ import SnackbarsSuccessErrors from "components/Snackbars/SnackbarsSuccessErrors"
 import { useSnackbar } from "notistack";
 import currency from "currency.js";
 const c = (s) => currency(s/100, { formatWithSymbol: true }).format()
+// router
+import { useRouter } from "next/router";
 
 
 
@@ -77,6 +79,9 @@ const RefundOrders: React.FC<OrderRefundsProps> = (props) => {
   ] = React.useState<{ status: string, token: string }>(undefined);
 
   const snackbar = useSnackbar();
+  const router = useRouter();
+
+  console.log("query: ", router?.query)
 
   const searchOrder = async(orderId: ID) => {
     try {
@@ -154,6 +159,11 @@ const RefundOrders: React.FC<OrderRefundsProps> = (props) => {
 
   React.useEffect(() => {
     getRecentTransactions(5)
+    if (!!router?.query?.orderId) {
+      let orderId: string = router?.query?.orderId as any
+      setOrderId(orderId)
+      searchOrder(orderId)
+    }
   }, [])
 
   if (order) {

@@ -21,6 +21,7 @@ import { useSnackbar, ProviderContext } from "notistack";
 import Tooltip from '@material-ui/core/Tooltip';
 import copy from "clipboard-copy";
 import currency from 'currency.js';
+import { formatDate } from "utils/dates";
 
 
 
@@ -69,6 +70,11 @@ const PayoutOrderRow = (props: ReactProps) => {
       <div className={classes.flexItem}>
         <Typography variant="body2" className={classes.id}>
           {orderId}
+        </Typography>
+      </div>
+      <div className={classes.flexItemWide}>
+        <Typography variant="body2" className={classes.id}>
+          {formatDate(order.createdAt)}
         </Typography>
       </div>
       <div className={classes.flexItem}>

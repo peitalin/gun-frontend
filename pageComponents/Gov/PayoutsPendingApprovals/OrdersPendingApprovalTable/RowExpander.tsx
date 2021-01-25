@@ -1,7 +1,7 @@
 import React from 'react';
 import clsx from 'clsx';
 import { Colors, BoxShadows } from 'layout/AppTheme';
-import { makeStyles, fade, lighten } from '@material-ui/core/styles';
+import { fade, lighten, createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles';
 import { oc as option } from "ts-optchain";
 
 import Typography from '@material-ui/core/Typography';
@@ -18,7 +18,7 @@ import TableHead from '@material-ui/core/TableHead';
 import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown"
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 
-import dayjs from 'dayjs';
+import { formatDate } from "utils/dates";
 import currency from 'currency.js';
 
 // graphql
@@ -42,6 +42,7 @@ const RowExpander = (props: RowExpanderProps) => {
     admin,
     index,
     initialOpen = false,
+    classes,
   } = props;
 
 
@@ -64,9 +65,6 @@ const RowExpander = (props: RowExpanderProps) => {
   const [open, setOpen] = React.useState(initialOpen);
   const [openImage, setOpenImage] = React.useState(false);
 
-  const classes = useRowStyles();
-
-  const asTime = (d: Date) => dayjs(d).format("YYYY-MM-DD HH:mm:ss")
   const c = (s) => currency(s/100, { formatWithSymbol: true }).format()
 
   let form10 = option(row).form10();
@@ -96,7 +94,7 @@ const RowExpander = (props: RowExpanderProps) => {
         <div className={classes.flexItemTiny}>
           {row.id}
         </div>
-        <div className={classes.flexItemSlim}>{asTime(row.createdAt)}</div>
+        <div className={classes.flexItemSlim}>{formatDate(row.createdAt)}</div>
         <div className={classes.flexItemTiny}>{c(row.total)}</div>
         <div className={classes.flexItemSlim}>
           {
@@ -226,7 +224,7 @@ const RowExpander = (props: RowExpanderProps) => {
                           : classes.backOdd,
                       )}>
                         <div className={classes.bodyCell1}>
-                          {asTime(historyRow.date)}
+                          {formatDate(historyRow.date)}
                         </div>
                         <div className={classes.bodyCell2}>
                           {historyRow.approverEmail}
@@ -251,7 +249,7 @@ const RowExpander = (props: RowExpanderProps) => {
 }
 
 
-interface RowExpanderProps {
+interface RowExpanderProps extends WithStyles<typeof styles> {
   row: ReturnType<typeof createData>
   admin: User
   index?: number
@@ -273,12 +271,17 @@ interface MutVar {
   adminApproverId: string;
 }
 
-const useRowStyles = makeStyles({
+const styles = (theme: Theme) => createStyles({
   rowExpanderRoot: {
     width: "100%",
     display: "flex",
+    color: theme.palette.type === "dark"
+      ? theme.colors.uniswapLightestGrey
+      : theme.colors.uniswapDarkNavy,
     flexDirection: "row",
-    backgroundColor: lighten(Colors.uniswapGreyNavy, 0.01),
+    backgroundColor: theme.palette.type === 'dark'
+      ? lighten(Colors.uniswapGreyNavy, 0.01)
+      : lighten(Colors.slateGrey, 0.01),
     '& > *': {
       borderBottom: 'unset',
     },
@@ -323,7 +326,6 @@ const useRowStyles = makeStyles({
       color: Colors.cream,
     },
   },
-
 
   // scrollable table
   scrollableTable: {
@@ -448,4 +450,4 @@ const useRowStyles = makeStyles({
 
 
 
-export default RowExpander;
+export default withStyles(styles)( RowExpander );

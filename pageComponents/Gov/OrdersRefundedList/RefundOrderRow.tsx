@@ -21,7 +21,7 @@ import { useSnackbar, ProviderContext } from "notistack";
 import Tooltip from '@material-ui/core/Tooltip';
 import copy from "clipboard-copy";
 import currency from 'currency.js';
-
+import { formatDate } from "utils/dates";
 
 
 const RefundOrderRow = (props: ReactProps) => {
@@ -37,20 +37,6 @@ const RefundOrderRow = (props: ReactProps) => {
   const xsDown = useMediaQuery(theme.breakpoints.down('xs'));
 
   const c = (s) => currency(s/100, { formatWithSymbol: true }).format()
-
-  const formatBsb = (a: string): string => {
-    if (!a) {
-      return ""
-    }
-    return a.slice(0,3) + '-' + a.slice(3)
-  }
-
-  const formatAccountNumber = (a: string): string => {
-    if (!a) {
-      return ""
-    }
-    return a.slice(0,2) + '-' + a.slice(2,5) + '-' + a.slice(5)
-  }
 
   let orderId = option(order).id();
   let totalAmount = c(option(order).total(0));
@@ -69,6 +55,11 @@ const RefundOrderRow = (props: ReactProps) => {
       <div className={classes.flexItem}>
         <Typography variant="body2" className={classes.id}>
           {orderId}
+        </Typography>
+      </div>
+      <div className={classes.flexItemWide}>
+        <Typography variant="body2" className={classes.id}>
+          {formatDate(order.createdAt)}
         </Typography>
       </div>
       <div className={classes.flexItem}>

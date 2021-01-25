@@ -47,10 +47,9 @@ import {
 // Grid Components
 import GridPaginatorGeneric from "components/GridPaginatorGeneric";
 
-// csv
-import dayjs from 'dayjs';
 // Copy and tooltip for emails when on mobile
 import Tooltip from '@material-ui/core/Tooltip';
+import dayjs from 'dayjs';
 
 
 
@@ -68,10 +67,6 @@ const PayoutsCompletedList = (props: ReactProps) => {
   const [mouseOver, setMouseOver] = React.useState(false)
   const [loading2, setLoading2] = React.useState(false)
 
-  const getDateNow = () => {
-    let d = new Date()
-    return dayjs(d).format("DD-MM-YYYY hh:mm A")
-  }
   //////////////// END CSV DOWNLOAD FUNCTION ///////////////
 
 
@@ -148,6 +143,11 @@ const PayoutsCompletedList = (props: ReactProps) => {
           <div className={classes.flexItem}>
             <Typography variant="subtitle1" className={classes.subtitle}>
               Order ID
+            </Typography>
+          </div>
+          <div className={classes.flexItemWide}>
+            <Typography variant="subtitle1" className={classes.subtitle}>
+              Date
             </Typography>
           </div>
           <div className={classes.flexItem}>
@@ -270,7 +270,7 @@ interface MutVar2 {
 
 const styles = (theme: Theme) => createStyles({
   root: {
-    padding: '0rem 1rem 2rem 1rem',
+    padding: '0rem 0rem 2rem 1rem',
     width: '100%',
     display: 'flex',
     flexDirection: 'column',

@@ -148,6 +148,11 @@ const OrdersRefundedList = (props: ReactProps) => {
               Order ID
             </Typography>
           </div>
+          <div className={classes.flexItemWide}>
+            <Typography variant="subtitle1" className={classes.subtitle}>
+              Date
+            </Typography>
+          </div>
           <div className={classes.flexItem}>
             <Typography variant="subtitle1" className={classes.subtitle}>
               Total Amount

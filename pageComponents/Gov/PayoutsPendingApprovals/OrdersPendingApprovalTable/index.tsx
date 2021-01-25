@@ -26,7 +26,7 @@ import { ConnectionQueryProps } from "components/Paginators/usePaginatePagedQuer
 import ErrorDisplay from "components/Error";
 import LoadingBar from "components/LoadingBar";
 // formatters
-import dayjs from 'dayjs';
+import { formatDate } from "utils/dates";
 import currency from "currency.js";
 // graphl
 import { useMutation, useQuery } from "@apollo/client";
@@ -59,7 +59,6 @@ const OrdersPendingApprovalTable: NextPage<ReactProps> = (props) => {
   } = props;
 
   const c = (s) => currency(s/100, { formatWithSymbol: true }).format()
-  const asTime = (d: Date) => dayjs(d).format("YYYY-MM-DD HH:mm:ss")
   const [count, setCount] = React.useState(10);
 
   const [itemsPerPage, setItemsPerPage] = React.useState(3);

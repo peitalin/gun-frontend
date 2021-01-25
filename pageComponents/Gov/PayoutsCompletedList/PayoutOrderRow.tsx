@@ -21,6 +21,8 @@ import { useSnackbar, ProviderContext } from "notistack";
 import Tooltip from '@material-ui/core/Tooltip';
 import copy from "clipboard-copy";
 import currency from 'currency.js';
+import { useRouter } from "next/router"
+import { formatDate } from "utils/dates";
 
 
 
@@ -35,6 +37,7 @@ const PayoutOrderRow = (props: ReactProps) => {
   const theme = useTheme();
   const smDown = useMediaQuery(theme.breakpoints.down('sm'));
   const xsDown = useMediaQuery(theme.breakpoints.down('xs'));
+  const router = useRouter();
 
   const c = (s) => currency(s/100, { formatWithSymbol: true }).format()
 
@@ -56,55 +59,55 @@ const PayoutOrderRow = (props: ReactProps) => {
   let totalAmount = c(option(order).total(0));
 
   return (
-    <MenuItem
-      className={clsx(classes.flexRow, classes.customerItem)}
-      onClick={() => {
-        copy(order.id)
-        snackbar.enqueueSnackbar(
-          `Copied ${order.id}`,
-          { variant: "info" }
-        )
-      }}
-    >
-      <div className={classes.flexItem}>
-        <Typography variant="body2" className={classes.id}>
-          {orderId}
-        </Typography>
-      </div>
-      <div className={classes.flexItem}>
-        <Typography variant="body2" className={classes.id}>
-          {totalAmount}
-        </Typography>
-      </div>
-      <Tooltip title={"Email"}>
+    <Tooltip title={`go to order ${order.id}`} placement={"top-start"}>
+      <MenuItem
+        className={clsx(classes.flexRow, classes.customerItem)}
+        onClick={() => {
+          copy(order.id)
+          snackbar.enqueueSnackbar(
+            `Navigating to ${order.id}`,
+            { variant: "info" }
+          )
+          router.push(`/gov/orders?orderId=${order.id}`)
+        }}
+      >
+        <div className={classes.flexItem}>
+          <Typography variant="body2" className={classes.id}>
+            {orderId}
+          </Typography>
+        </div>
+        <div className={classes.flexItemWide}>
+          <Typography variant="body2" className={classes.id}>
+            {formatDate(order.createdAt)}
+          </Typography>
+        </div>
+        <div className={classes.flexItem}>
+          <Typography variant="body2" className={classes.id}>
+            {totalAmount}
+          </Typography>
+        </div>
         <div className={classes.flexItemWide}>
           <Typography variant="body2" className={classes.id}>
             {order?.seller?.user?.email}
           </Typography>
         </div>
-      </Tooltip>
-      <Tooltip title={"BSB"}>
         <div className={classes.flexItem}>
           <Typography variant="body2" className={classes.id}>
             {formatBsb(order?.seller?.user?.payoutMethod?.bsb)}
           </Typography>
         </div>
-      </Tooltip>
-      <Tooltip title={"Account Number"}>
         <div className={classes.flexItemWide}>
           <Typography variant="body2" className={classes.id}>
             {formatAccountNumber(order?.seller?.user?.payoutMethod?.accountNumber)}
           </Typography>
         </div>
-      </Tooltip>
-      <Tooltip title={"Account Name"}>
         <div className={classes.flexItem}>
           <Typography variant="body2" className={classes.id}>
             {order?.seller?.user?.payoutMethod?.accountName}
           </Typography>
         </div>
-      </Tooltip>
-    </MenuItem>
+      </MenuItem>
+    </Tooltip>
   );
 }
 
