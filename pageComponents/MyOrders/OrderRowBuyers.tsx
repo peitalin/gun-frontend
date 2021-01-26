@@ -94,7 +94,6 @@ const styles = (theme: Theme) => createStyles({
   root: {
     display: 'flex',
     flexDirection: 'row',
-    flexGrow: 1,
     padding: '1rem',
     borderRadius: BorderRadius,
     backgroundColor: Colors.foregroundColor,

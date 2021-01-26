@@ -114,7 +114,8 @@ const styles = (theme: Theme) => createStyles({
     display: 'flex',
     flexDirection: "column",
     justifyContent: 'center',
-    background: Gradients.gradientUniswapDark.background,
+    // background: theme.gradients.gradientUniswapDark.background,
+    // background: Gradients.gradientUniswapDark.background,
     // background: Colors.uniswapDarkNavy,
   },
   flexRowInner: {

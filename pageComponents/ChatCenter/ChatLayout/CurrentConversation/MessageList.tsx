@@ -7,7 +7,7 @@ import { Chat_Rooms, Chat_Messages, Bids } from "typings/gqlTypes";
 // Styles
 import { Colors, BoxShadows, BorderRadius2x, BorderRadius3x } from "layout/AppTheme";
 
-import dayjs from "dayjs";
+import { formatDate } from "utils/dates";
 import { showDateAndTime } from "utils/dates";
 import ButtonLoading from "components/ButtonLoading";
 import { gql } from "@apollo/client";
