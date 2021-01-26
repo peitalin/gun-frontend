@@ -41,14 +41,14 @@ export const UPDATE_USER = gql`
     $email: String
     $firstName: String
     $lastName: String
-    $payoutMethod: String
+    $payoutMethodId: String
   ) {
     editUserProfile(
       username: $username
       email: $email
       firstName: $firstName
       lastName: $lastName
-      payoutMethod: $payoutMethod
+      payoutMethodId: $payoutMethodId
     ) {
       user {
         id

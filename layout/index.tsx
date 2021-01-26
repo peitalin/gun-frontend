@@ -150,20 +150,21 @@ const styles = (theme: Theme) => createStyles({
     width: "100%",
     minWidth: '320px',
     minHeight: `calc(100vh - 140px)`,
-    background: Gradients.gradientUniswapDark.background,
+    // background: theme.gradients.gradientUniswapDark.background,
+    background: theme.palette.type === "dark"
+      ? theme.gradients.gradientUniswapDark.background
+      : theme.gradients.gradientGrey.background,
     // offset 140px for navbar
   },
   pageInnerContainer: {
     minHeight: `calc(100vh - ${NavBarHeight}px)`,
     // offset for navbar
     maxWidth: '100%',
-    background: Gradients.gradientUniswapDark.background,
   },
   flexJustify: {
     display: 'flex',
     flexDirection: "row",
     justifyContent: "center",
-    backgroundColor: Colors.backgroundColor,
   },
   sellerPageContainer: {
     position: 'relative',

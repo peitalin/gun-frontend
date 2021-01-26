@@ -12,6 +12,7 @@ import TextInput from "components/Fields/TextInput";
 import { HtmlEvent, CreateStoreInput } from "typings";
 // Validation
 import { FormikProps } from 'formik';
+import MuiPhoneNumber from "material-ui-phone-number";
 
 
 
@@ -39,18 +40,23 @@ const ChangeUserEmailFields: React.FC<ReactProps & FormikProps<FormikFields>> = 
 
 
   const handleSetFirstName = (e: HtmlEvent) => {
-    let pass = e.target.value;
-    fprops.setFieldValue("firstName", pass)
+    let s = e.target.value;
+    fprops.setFieldValue("firstName", s)
   };
 
   const handleSetLastName = (e: HtmlEvent) => {
-    let pass = e.target.value;
-    fprops.setFieldValue("lastName", pass)
+    let s = e.target.value;
+    fprops.setFieldValue("lastName", s)
   };
 
   const handleSetEmail = (e: HtmlEvent) => {
-    let pass = e.target.value;
-    fprops.setFieldValue("email", pass)
+    let s = e.target.value;
+    fprops.setFieldValue("email", s)
+  };
+
+  const handleSetPhoneNumber = (e: HtmlEvent) => {
+    console.log("e::::", e)
+    fprops.setFieldValue("phoneNumber", e)
   };
 
 
@@ -100,6 +106,23 @@ const ChangeUserEmailFields: React.FC<ReactProps & FormikProps<FormikFields>> = 
             errorMessage={errors.email}
             touched={touched.email}
           />
+
+          <Typography variant="body1" className={classes.passwordTitle}>
+            Mobile Number
+          </Typography>
+          <MuiPhoneNumber
+            name="phone"
+            label="e.g. +61 433 666 777"
+            data-cy="user-phone"
+            defaultCountry={"au"}
+            onlyCountries={["au"]}
+            // preferredCountries={["au"]}
+            // disableCountryCode={true}
+            // https://github.com/alexplumb/material-ui-phone-number
+            value={values.phoneNumber}
+            onChange={handleSetPhoneNumber}
+          />
+
         </div>
       </div>
     </div>
@@ -110,6 +133,8 @@ interface FormikFields {
   firstName: string;
   lastName: string;
   email: string;
+  phoneNumber?: string;
+  countryCode?: string;
 }
 
 interface ReactProps extends WithStyles<typeof styles> {

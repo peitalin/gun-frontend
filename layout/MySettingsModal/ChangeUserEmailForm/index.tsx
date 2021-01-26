@@ -8,10 +8,7 @@ import { Colors } from "layout/AppTheme";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 // Components
-import Loading from "components/Loading";
-import ErrorDisplay, { GraphQLErrors } from "components/Error";
 import ErrorBounds from "components/ErrorBounds";
-import SnackBarA from "components/Snackbars/SnackbarA";
 import SnackbarsSuccessErrors from "components/Snackbars/SnackbarsSuccessErrors"
 import ButtonLoading from "components/ButtonLoading";
 // Typings
@@ -29,9 +26,7 @@ import { UPDATE_USER } from "queries/user-mutations";
 import { useSelector, useDispatch } from "react-redux";
 import { GrandReduxState } from "reduxStore/grand-reducer";
 import { Actions } from "reduxStore/actions";
-// import { UserPrivate } from "typings/gqlTypes";
-type UserPrivate = any;
-import { EditUserProfileInput } from "typings";
+import { UserPrivate, MutationEditUserProfileArgs } from "typings/gqlTypes";
 
 
 
@@ -46,22 +41,22 @@ const ChangeUserEmailForm = (props: ReactProps) => {
   );
 
   const [editUserProfile, { loading, data, error }] =
-  useMutation<MutationData, EditUserProfileInput>(
+  useMutation<MutationData, MutationEditUserProfileArgs>(
     UPDATE_USER, {
     variables: {
       firstName: reduxUser.firstName,
       lastName: reduxUser.lastName,
       email: reduxUser.email,
+      editUserPhoneNumberInput: {
+        phoneNumber: "",
+      },
+      editUserLicenseInput: {
+        licenseNumber: "",
+      },
     },
     onError: (err) => console.log(err),
     update: (cache, { data: { editUserProfile: { user } } }) => {
       try {
-        cache.writeQuery({
-          query: GET_USER,
-          data: {
-            user: { ...reduxUser, ...user }
-          },
-        });
         // update reduxLogin user
         dispatch(Actions.reduxLogin.SET_USER({
           ...reduxUser,
@@ -71,11 +66,7 @@ const ChangeUserEmailForm = (props: ReactProps) => {
         console.log(error)
       }
     },
-    onCompleted: () => {
-      // setTimeout(() => {
-      //   // togglePasswordChange()
-      // }, 800)
-    }
+    onCompleted: () => { }
   })
 
 
@@ -87,7 +78,7 @@ const ChangeUserEmailForm = (props: ReactProps) => {
         lastName: reduxUser.lastName,
         email: reduxUser.email,
       }}
-      validationSchema={validationSchemas.EditUserEmail}
+      validationSchema={validationSchemas.EditUserProfile}
       onSubmit={(values, { setSubmitting, resetForm }) => {
         // Dispatch Apollo Mutation after validation
         editUserProfile({
