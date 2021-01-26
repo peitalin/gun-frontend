@@ -1,6 +1,8 @@
 
 import { createMuiTheme, fade } from '@material-ui/core/styles';
 import { createStyles, Theme } from '@material-ui/core/styles';
+import { ThemeOptions } from "@material-ui/core/styles";
+
 
 declare module '@material-ui/core/styles/createMuiTheme' {
   interface Theme {
@@ -26,6 +28,11 @@ declare module '@material-ui/core/styles/createMuiTheme' {
         color2: React.CSSProperties['color'],
       },
       gradientUniswapFluro: {
+        background: React.CSSProperties['background'],
+        color1: React.CSSProperties['color'],
+        color2: React.CSSProperties['color'],
+      },
+      gradientGrey:  {
         background: React.CSSProperties['background'],
         color1: React.CSSProperties['color'],
         color2: React.CSSProperties['color'],
@@ -334,300 +341,310 @@ export const notifyStyles = (theme: Theme) => createStyles({
   },
 });
 
-
-export const AppTheme = createMuiTheme({
-  colors: {
-    uniswapLightestGrey: '#B4B5BB',
-    uniswapLightGrey: '#C4C5CB',
-    uniswapLighterGrey: '#6D7283',
-    uniswapGrey: '#41444E',
-    uniswapMediumGrey: '#65666D',
-    uniswapLightNavy: '#3A3F4A',
-    uniswapNavy: '#2E3443',
-    uniswapMediumNavy: '#2D2F36',
-    uniswapGreyNavy: '#282A31',
-    uniswapDarkNavy: "#222429",
-    ...Colors,
-  },
-  gradients: {
-    gradientUniswapDark:  {
-      background: `linear-gradient(140deg, ${Colors.gradientUniswapDark1} 20%, ${Colors.gradientUniswapDark2} 80%)`,
-      color1: Colors.gradientUniswapDark1,
-      color2: Colors.gradientUniswapDark2,
+/// To be used in: createMuiTheme(AppTheme)
+/// in _app.tsx
+export const createAppTheme = (darkMode: boolean): ThemeOptions =>  {
+  return {
+    colors: {
+      uniswapLightestGrey: darkMode ? '#B4B5BB' : "#222",
+      uniswapLightGrey: darkMode ? '#C4C5CB' : "#222",
+      uniswapLighterGrey: darkMode ? '#6D7283' : "#222",
+      uniswapGrey: darkMode ? '#41444E' : "#222",
+      uniswapMediumGrey: darkMode ? '#65666D' : "#222",
+      uniswapLightNavy: darkMode ? '#3A3F4A' : "#222",
+      uniswapNavy: darkMode ? '#2E3443' : "#222",
+      uniswapMediumNavy: darkMode ? '#2D2F36' : "#222",
+      uniswapGreyNavy: darkMode ? '#282A31' : "#222",
+      uniswapDarkNavy: darkMode ? "#222429" : "#222",
+      ...Colors,
     },
-    ...Gradients
-  },
-
-  palette: {
-    // type: darkMode ? 'dark' : 'light',
-    type: true ? 'dark' : 'light',
-
-    primary: {
-      main: Colors.uniswapLightestGrey,
-    },
-    secondary: {
-      // main: '#EB365D'
-      // main: Colors.red,
-      main: Colors.secondary,
-    }, // red/pinkk
-    // secondary: { main: '#65BF93' }, // green
-    error: { main: '#D92F20' },
-    background: {
-      // CANNOT BE A linear-gradient background
-      // default: Gradients.gradientUniswapDark.background,
-      default: Colors.uniswapDarkNavy,
-      paper: Colors.uniswapDarkNavy,
+    gradients: {
+      gradientUniswapDark: !darkMode
+        ? {
+            background: `linear-gradient(140deg, ${Colors.gradientUniswapDark1} 20%, ${Colors.gradientUniswapDark2} 80%)`,
+            color1: Colors.gradientUniswapDark1,
+            color2: Colors.gradientUniswapDark2,
+          }
+        : {
+            background: `linear-gradient(140deg, ${Colors.gradientUniswapFluro1} 20%, ${Colors.gradientUniswapFluro2} 80%)`,
+            color1: Colors.gradientUniswapFluro1,
+            color2: Colors.gradientUniswapFluro2,
+          }
+      ,
+      ...Gradients
     },
 
-  },
-  typography: {
-    fontSize: 16,
-    fontFamily: fontFam,
-  },
-  breakpoints: {
-    values: breakpoints
-  },
-  overrides: {
-    // a: {
-    //   textDecoration: "none"
-    // },
-    MuiMenuItem: {
-      root: {
-        color: Colors.uniswapLighterGrey,
-        "&:hover": {
-          backgroundColor: `rgba(72, 72, 72, 0.24)`,
+    palette: {
+      // type: prefersDarkMode ? 'dark' : 'light',
+      // type: true ? 'dark' : 'light',
+
+      primary: {
+        main: Colors.uniswapLightestGrey,
+      },
+      secondary: {
+        // main: '#EB365D'
+        // main: Colors.red,
+        main: Colors.secondary,
+      }, // red/pinkk
+      // secondary: { main: '#65BF93' }, // green
+      error: { main: '#D92F20' },
+      background: {
+        // CANNOT BE A linear-gradient background
+        // default: Gradients.gradientUniswapDark.background,
+        default: Colors.uniswapDarkNavy,
+        paper: Colors.uniswapDarkNavy,
+      },
+
+    },
+    typography: {
+      fontSize: 16,
+      fontFamily: fontFam,
+    },
+    breakpoints: {
+      values: breakpoints
+    },
+    overrides: {
+      // a: {
+      //   textDecoration: "none"
+      // },
+      MuiMenuItem: {
+        root: {
+          color: Colors.uniswapLighterGrey,
+          "&:hover": {
+            backgroundColor: `rgba(72, 72, 72, 0.24)`,
+          },
+        }
+      },
+      MuiButton: {
+        // Name of the rule
+        root: {
+          minWidth: '40px',
+          textTransform: 'none',
+          color: Colors.uniswapLightestGrey,
+          borderRadius: BorderRadius3x,
+          "&:hover": {
+            backgroundColor: `rgba(240, 240, 240, 0.20)`,
+          },
         },
-      }
-    },
-    MuiButton: {
-      // Name of the rule
-      root: {
-        minWidth: '40px',
-        textTransform: 'none',
-        color: Colors.uniswapLightestGrey,
-        borderRadius: BorderRadius3x,
-        "&:hover": {
-          backgroundColor: `rgba(240, 240, 240, 0.20)`,
+        text: {
+          fontSize: '0.9rem',
+          fontWeight: 600,
+          // Some CSS
+          // background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+          // borderRadius: 4,
+          // border: 0,
         },
-      },
-      text: {
-        fontSize: '0.9rem',
-        fontWeight: 600,
-        // Some CSS
-        // background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
-        // borderRadius: 4,
-        // border: 0,
-      },
-      label: {
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        fontSize: '0.9rem',
-        fontWeight: 600,
-      },
-      textPrimary: {
-        color: Colors.uniswapLightestGrey,
-        "&:hover": {
-          backgroundColor: `rgba(240, 240, 240, 0.20)`,
+        label: {
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          fontSize: '0.9rem',
+          fontWeight: 600,
         },
-      },
-      containedPrimary: {
-        "&:hover": {
+        textPrimary: {
+          color: Colors.uniswapLightestGrey,
+          "&:hover": {
+            backgroundColor: `rgba(240, 240, 240, 0.20)`,
+          },
+        },
+        containedPrimary: {
+          "&:hover": {
+            color: "#fafafa",
+            backgroundColor: "#383838",
+          }
+        },
+        containedSecondary: {
           color: "#fafafa",
-          backgroundColor: "#383838",
+          // backgroundColor: '#65BF93', // green
+          backgroundColor: Colors.secondary,
+          "&:hover": {
+            color: Colors.cream,
+            // backgroundColor: "#75CFA3",
+            // backgroundColor: '#65CFA3', // green
+            // backgroundColor: fade(Colors.red, 0.9), // red/pink
+            backgroundColor: Colors.secondaryBright,
+          }
+        },
+      },
+      MuiInput: {
+        root: {
+          fontSize: '1rem',
+        },
+        underline: {
+          "&:before": {
+            borderBottom: `1px solid ${Colors.uniswapGrey}`,
+          },
+          "&&&&:hover:before": {
+            borderBottom: `1px solid ${Colors.uniswapLighterGrey}`,
+          },
+          "&:after": {
+            borderBottom: `1px solid ${Colors.uniswapGrey}`,
+          },
+        },
+      },
+      MuiInputLabel: {
+        root: {
+          fontSize: '0.8rem',
         }
       },
-      containedSecondary: {
-        color: "#fafafa",
-        // backgroundColor: '#65BF93', // green
-        backgroundColor: Colors.secondary,
-        "&:hover": {
-          color: Colors.cream,
-          // backgroundColor: "#75CFA3",
-          // backgroundColor: '#65CFA3', // green
-          // backgroundColor: fade(Colors.red, 0.9), // red/pink
-          backgroundColor: Colors.secondaryBright,
+      MuiInputBase: {
+        root: {
+          color: Colors.uniswapLighterGrey,
+          // "&:hover": {
+          //   borderBottom: `1px solid ${Colors.uniswapGrey}`,
+          // },
         }
       },
-    },
-    MuiInput: {
-      root: {
-        fontSize: '1rem',
+      MuiFormLabel: {
+        root: {
+          color: Colors.uniswapLighterGrey,
+        }
       },
-      underline: {
-        "&:before": {
-          borderBottom: `1px solid ${Colors.uniswapGrey}`,
+      MuiSvgIcon: {
+        root: {
+          height: '1.25rem',
+          width: '1.25rem',
+          fill: Colors.uniswapLightestGrey,
+        }
+      },
+      MuiBadge: {
+        anchorOriginTopRightRectangle: {
+          transform: 'scale(0.8) translate(50%, -50%)'
+        }
+      },
+      MuiDialog: {
+        paperWidthXs: {
+          maxWidth: '100%',
         },
-        "&&&&:hover:before": {
-          borderBottom: `1px solid ${Colors.uniswapLighterGrey}`,
+        paperWidthSm: {
+          maxWidth: '100%',
         },
-        "&:after": {
-          borderBottom: `1px solid ${Colors.uniswapGrey}`,
+        paperWidthMd: {
+          maxWidth: '100%',
         },
       },
-    },
-    MuiInputLabel: {
-      root: {
-        fontSize: '0.8rem',
+      MuiTouchRipple: {
+        root: {
+          // backgroundColor: '#00ff00'
+        },
+        child: {
+          backgroundColor: '#A5BFD5'
+        },
+        ripple: {
+          // backgroundColor: '#ff0000'
+        },
+        rippleVisible: {
+          // backgroundColor: '#222222'
+        },
+        ripplePulsate: {
+          // backgroundColor: '#888888'
+        },
+        childLeaving: {
+          backgroundColor: '#46597A'
+        },
+        childPulsate: {
+          backgroundColor: '#00ff00'
+        },
+        // https://material-ui.com/api/touch-ripple/#css
+      },
+      MuiSwitch: {
+        thumb: {
+          backgroundColor: Colors.uniswapLightNavy,
+        }
+      },
+      MuiPaper: {
+        root: {
+          backgroundColor: Colors.uniswapDarkNavy,
+          color: Colors.uniswapLighterGrey,
+        },
+      },
+      MuiTablePagination: {
+        root: {
+          color: Colors.uniswapLighterGrey,
+        },
+      },
+      MuiTableCell: {
+        head: {
+          color: Colors.uniswapLightestGrey,
+        },
+        root: {
+          borderBottom: `1px solid ${Colors.uniswapLightNavy}`,
+          padding: 4,
+        },
+      },
+      MuiStepLabel: {
+        label: {
+          color: Colors.uniswapMediumGrey,
+        },
+      },
+      MuiTypography: {
+        h1: {
+          fontSize: "2rem",
+          fontWeight: 700,
+          lineHeight: 1.5,
+          color: Colors.uniswapLightestGrey,
+        },
+        h2: {
+          fontSize: "1.5rem",
+          fontWeight: 700,
+          lineHeight: 1.5,
+          color: Colors.uniswapLightestGrey,
+        },
+        h3: {
+          fontSize: "1.25rem",
+          fontWeight: 600,
+          lineHeight: 1.25,
+          color: Colors.uniswapLightestGrey,
+        },
+        h4: {
+          fontSize: "1.125rem",
+          fontWeight: 600,
+          lineHeight: 1.25,
+          color: Colors.uniswapLightestGrey,
+        },
+        h5: {
+          fontSize: "1rem",
+          fontWeight: 600,
+          lineHeight: 1.25,
+          color: Colors.uniswapLightestGrey,
+        },
+        h6: {
+          fontSize: "0.875rem",
+          fontWeight: 700,
+          lineHeight: 1.25,
+          color: Colors.uniswapLightestGrey,
+        },
+        body1: {
+          fontSize: "1rem",
+          fontWeight: 400,
+          lineHeight: 1.25,
+          color: Colors.uniswapLightestGrey,
+        },
+        body2: {
+          fontSize: "0.875rem",
+          fontWeight: 400,
+          lineHeight: 1.25,
+          color: Colors.uniswapLightestGrey,
+        },
+        subtitle1: {
+          fontSize: "1.125rem",
+          fontWeight: 500,
+          lineHeight: 1,
+          color: Colors.uniswapLightestGrey,
+        },
+        subtitle2: {
+          fontSize: "1rem",
+          fontWeight: 400,
+          lineHeight: 0.9,
+          color: Colors.uniswapLightestGrey,
+        },
+        caption: {
+          fontSize: "0.7rem",
+          fontWeight: 500,
+          lineHeight: 0.9,
+          color: Colors.uniswapLightestGrey,
+        },
       }
-    },
-    MuiInputBase: {
-      root: {
-        color: Colors.uniswapLighterGrey,
-        // "&:hover": {
-        //   borderBottom: `1px solid ${Colors.uniswapGrey}`,
-        // },
-      }
-    },
-    MuiFormLabel: {
-      root: {
-        color: Colors.uniswapLighterGrey,
-      }
-    },
-    MuiSvgIcon: {
-      root: {
-        height: '1.25rem',
-        width: '1.25rem',
-        fill: Colors.uniswapLightestGrey,
-      }
-    },
-    MuiBadge: {
-      anchorOriginTopRightRectangle: {
-        transform: 'scale(0.8) translate(50%, -50%)'
-      }
-    },
-    MuiDialog: {
-      paperWidthXs: {
-        maxWidth: '100%',
-      },
-      paperWidthSm: {
-        maxWidth: '100%',
-      },
-      paperWidthMd: {
-        maxWidth: '100%',
-      },
-    },
-    MuiTouchRipple: {
-      root: {
-        // backgroundColor: '#00ff00'
-      },
-      child: {
-        backgroundColor: '#A5BFD5'
-      },
-      ripple: {
-        // backgroundColor: '#ff0000'
-      },
-      rippleVisible: {
-        // backgroundColor: '#222222'
-      },
-      ripplePulsate: {
-        // backgroundColor: '#888888'
-      },
-      childLeaving: {
-        backgroundColor: '#46597A'
-      },
-      childPulsate: {
-        backgroundColor: '#00ff00'
-      },
-      // https://material-ui.com/api/touch-ripple/#css
-    },
-    MuiSwitch: {
-      thumb: {
-        backgroundColor: Colors.uniswapLightNavy,
-      }
-    },
-    MuiPaper: {
-      root: {
-        backgroundColor: Colors.uniswapDarkNavy,
-        color: Colors.uniswapLighterGrey,
-      },
-    },
-    MuiTablePagination: {
-      root: {
-        color: Colors.uniswapLighterGrey,
-      },
-    },
-    MuiTableCell: {
-      head: {
-        color: Colors.uniswapLightestGrey,
-      },
-      root: {
-        borderBottom: `1px solid ${Colors.uniswapLightNavy}`,
-        padding: 4,
-      },
-    },
-    MuiStepLabel: {
-      label: {
-        color: Colors.uniswapMediumGrey,
-      },
-    },
-    MuiTypography: {
-      h1: {
-        fontSize: "2rem",
-        fontWeight: 700,
-        lineHeight: 1.5,
-        color: Colors.uniswapLightestGrey,
-      },
-      h2: {
-        fontSize: "1.5rem",
-        fontWeight: 700,
-        lineHeight: 1.5,
-        color: Colors.uniswapLightestGrey,
-      },
-      h3: {
-        fontSize: "1.25rem",
-        fontWeight: 600,
-        lineHeight: 1.25,
-        color: Colors.uniswapLightestGrey,
-      },
-      h4: {
-        fontSize: "1.125rem",
-        fontWeight: 600,
-        lineHeight: 1.25,
-        color: Colors.uniswapLightestGrey,
-      },
-      h5: {
-        fontSize: "1rem",
-        fontWeight: 600,
-        lineHeight: 1.25,
-        color: Colors.uniswapLightestGrey,
-      },
-      h6: {
-        fontSize: "0.875rem",
-        fontWeight: 700,
-        lineHeight: 1.25,
-        color: Colors.uniswapLightestGrey,
-      },
-      body1: {
-        fontSize: "1rem",
-        fontWeight: 400,
-        lineHeight: 1.25,
-        color: Colors.uniswapLightestGrey,
-      },
-      body2: {
-        fontSize: "0.875rem",
-        fontWeight: 400,
-        lineHeight: 1.25,
-        color: Colors.uniswapLightestGrey,
-      },
-      subtitle1: {
-        fontSize: "1.125rem",
-        fontWeight: 500,
-        lineHeight: 1,
-        color: Colors.uniswapLightestGrey,
-      },
-      subtitle2: {
-        fontSize: "1rem",
-        fontWeight: 400,
-        lineHeight: 0.9,
-        color: Colors.uniswapLightestGrey,
-      },
-      caption: {
-        fontSize: "0.7rem",
-        fontWeight: 500,
-        lineHeight: 0.9,
-        color: Colors.uniswapLightestGrey,
-      },
     }
-  },
-});
+}
+}

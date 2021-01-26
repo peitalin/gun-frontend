@@ -3,17 +3,20 @@ import { NextPage, NextPageContext } from 'next';
 import { oc as option } from "ts-optchain";
 // Redux
 import { Dispatch, Store } from "redux";
-import { Provider, batch, useDispatch } from "react-redux";
+// redux
+import { Provider, batch, useDispatch, useSelector } from "react-redux";
 import { makeStore, GrandReduxState } from "reduxStore/grand-reducer";
 import { Actions } from "reduxStore/actions";
 // Layout
 import Layout from "layout";
 // MUI
-import { ThemeProvider } from '@material-ui/core/styles'
 import CssBaseline from '@material-ui/core/CssBaseline';
-import { AppTheme } from 'layout/AppTheme';
+import { createAppTheme, Colors, Gradients, notifyStyles } from 'layout/AppTheme';
+import { PaletteOptions } from "@material-ui/core/styles/createPalette";
+import { ThemeOptions } from "@material-ui/core/styles";
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import { withStyles, WithStyles } from '@material-ui/core/styles';
-import { notifyStyles } from "layout/AppTheme";
 // Next
 import App from "next/app";
 // Redux
@@ -37,6 +40,9 @@ import { serverApolloClient } from "utils/apollo";
 import { PaypalClient } from "typings/typings-paypal";
 import { WestpacQuickstreamClient } from "typings/typings-westpac";
 import Router from "next/router";
+import dayjs from 'dayjs'
+import utc from "dayjs/plugin/utc"
+dayjs.extend(utc)
 
 
 declare global {
@@ -126,10 +132,12 @@ class MyApp extends App<AppProps> {
         (notistackRef.current as ProviderContext).closeSnackbar(key);
     }
 
+
+
     return (
       <Provider store={store}>
         <ApolloProvider client={apollo}>
-          <ThemeProvider theme={AppTheme}>
+          <ThemeProviderDarkMode>
             <SnackbarProvider
               ref={notistackRef}
               autoHideDuration={4000}
@@ -154,11 +162,58 @@ class MyApp extends App<AppProps> {
                 <Component {...pageProps} key={router.route} />
               </Layout>
             </SnackbarProvider>
-          </ThemeProvider>
+          </ThemeProviderDarkMode>
         </ApolloProvider>
       </Provider>
     );
   }
+}
+
+
+const ThemeProviderDarkMode = (props) => {
+
+  let darkMode;
+  let localStorageDarkMode: "dark" | "light" = undefined;
+
+  if (process.browser && !!window) {
+    localStorageDarkMode = window?.localStorage?.getItem('gmDarkMode') as any;
+  }
+
+  if (localStorageDarkMode !== undefined) {
+    darkMode = localStorageDarkMode === "dark" ? true : false;
+  } else {
+    // let operatin system decide, e.g. dark mode in MacOs
+    darkMode = useMediaQuery('(prefers-color-scheme: dark)');
+  }
+
+  let darkModeTheme: PaletteOptions = {
+    type: darkMode ? 'dark' : 'light',
+    // type: "light",
+    // type: "dark"
+  }
+  console.log("darkMode: ", darkMode)
+  console.log("darkModeTheme: ", darkModeTheme)
+
+  let appTheme: ThemeOptions = createAppTheme(darkMode);
+
+  const theme = React.useMemo(
+    () =>
+      createMuiTheme({
+        ...appTheme,
+        palette: {
+          ...appTheme.palette,
+          ...darkModeTheme
+        }
+      }),
+
+    [darkMode],
+  );
+  return (
+    <ThemeProvider theme={theme}>
+      {props.children}
+    </ThemeProvider>
+  )
+
 }
 
 

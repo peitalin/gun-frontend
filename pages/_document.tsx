@@ -1,7 +1,7 @@
 import React from 'react';
 import Document, { Head, Main, NextScript } from 'next/document';
 import { ServerStyleSheets } from '@material-ui/core/styles';
-import { AppTheme } from 'layout/AppTheme';
+import { Colors } from 'layout/AppTheme';
 
 
 
@@ -16,7 +16,7 @@ export default class MyDocument extends Document {
             content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no"
           />
           {/* PWA primary color */}
-          <meta name="theme-color" content={AppTheme.palette.primary.main} />
+          <meta name="theme-color" content={Colors.black} />
         </Head>
         <body>
           <Main />
