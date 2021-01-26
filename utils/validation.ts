@@ -484,8 +484,8 @@ export const validationSchemas = {
         .required('password is needed'),
     }),
 
-  // Edit UserEmail form
-  EditUserEmail:
+  // Edit UserProfile form
+  EditUserProfile:
     Yup.object().shape({
       firstName: Yup.string()
         .nullable(),
@@ -493,6 +493,12 @@ export const validationSchemas = {
         .nullable(),
       email: Yup.string()
         .email("Not a valid email")
+        .nullable(),
+      phoneNumber: Yup.string()
+        .nullable(),
+      countryCode: Yup.string()
+        .nullable(),
+      areaCode: Yup.string()
         .nullable(),
     }),
 

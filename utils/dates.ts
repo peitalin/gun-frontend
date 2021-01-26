@@ -31,6 +31,10 @@ export const showDateAndTime = (d: Date) => {
   return dayjs(d).format("DD MMM YY, hh:mm:ss A")
 }
 
+export const formatDate = (d: Date) => {
+  return dayjs.utc(d).local().format("DD-MM-YYYY hh:mm A")
+}
+
 export const showDate = (d: Date) => {
   return dayjs(d).format("DD MMM YY")
 }
