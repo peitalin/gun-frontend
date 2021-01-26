@@ -1660,7 +1660,12 @@ export type EditUserLicenseInput = {
   expiry?: Maybe<Scalars['Date']>;
   licenseCategory?: Maybe<Scalars['String']>;
   state?: Maybe<Scalars['String']>;
-  verified?: Maybe<Scalars['Boolean']>;
+};
+
+export type EditUserPhoneNumberInput = {
+  phoneNumber?: Maybe<Scalars['String']>;
+  areaCode?: Maybe<Scalars['String']>;
+  countryCode?: Maybe<Scalars['String']>;
 };
 
 /** columns and relationships of "email_subscriptions" */
@@ -3459,6 +3464,9 @@ export type Mutation = {
    * AccessRule – LOGGED_IN
    */
   editUserProfile: UserMutationResponse;
+  editUserPhoneNumber: UserMutationResponse;
+  editUserLicense: UserMutationResponse;
+  adminApproveUserLicense: UserMutationResponse;
   /**
    * Delete the account associated with the logged-in user.
    * 
@@ -4746,7 +4754,29 @@ export type MutationEditUserProfileArgs = {
   firstName?: Maybe<Scalars['String']>;
   lastName?: Maybe<Scalars['String']>;
   editUserLicenseInput?: Maybe<EditUserLicenseInput>;
-  payoutMethod?: Maybe<Scalars['String']>;
+  editUserPhoneNumberInput?: Maybe<EditUserPhoneNumberInput>;
+  payoutMethodId?: Maybe<Scalars['String']>;
+};
+
+
+export type MutationEditUserPhoneNumberArgs = {
+  phoneNumber: Scalars['String'];
+  areaCode?: Maybe<Scalars['String']>;
+  countryCode: Scalars['String'];
+};
+
+
+export type MutationEditUserLicenseArgs = {
+  licenseNumber: Scalars['String'];
+  licenseExpiry: Scalars['Date'];
+  licenseCategory?: Maybe<Scalars['String']>;
+  licenseState?: Maybe<Scalars['String']>;
+};
+
+
+export type MutationAdminApproveUserLicenseArgs = {
+  userId: Scalars['String'];
+  verified: Scalars['Boolean'];
 };
 
 

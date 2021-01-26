@@ -136,9 +136,10 @@ const SearchOptionsPaginator: React.FC<ReactProps> = (props) => {
 
   return (
     <div className={clsx(
-      classes.root,
-      props.float && classes.rootFixed,
-    )}>
+      classes.searchOptionsRoot,
+      props.className,
+      props.float && classes.searchOptionsRootFixed,
+    )} style={props.style}>
 
       <div className={classes.topSection}
         style={props.topSectionStyles}
@@ -378,6 +379,8 @@ interface ReactProps extends WithStyles<typeof styles> {
   hidePaginator?: boolean;
   updateSetPageDelay?: number;
   placeholder?: string;
+  className?: any;
+  style?: any;
 }
 export interface SelectOption {
   label: string;
@@ -390,14 +393,14 @@ export interface SelectOption {
 /////////// Styles //////////////
 
 const styles = (theme: Theme) => createStyles({
-  root: {
+  searchOptionsRoot: {
     display: "flex",
     justifyContent: "center",
     flexDirection: "column",
     alignItems: 'center',
     width: '100%',
   },
-  rootFixed: {
+  searchOptionsRootFixed: {
     position: 'fixed',
     top: '0rem',
     background: '#fff',
