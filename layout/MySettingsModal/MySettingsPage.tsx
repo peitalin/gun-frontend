@@ -20,7 +20,8 @@ import { Actions } from "reduxStore/actions";
 import PaymentMethods from "./PaymentMethods";
 import ChangePasswordForm from "./ChangePasswordForm";
 import ChangePayoutMethod from "./ChangePayoutMethod";
-import ChangeUserEmailForm from "./ChangeUserEmailForm";
+import ChangeUserProfileForm from "./ChangeUserProfileForm";
+import ChangeUserLicenseForm from "./ChangeUserLicenseForm";
 import AdvancedSettings from "./AdvancedSettings";
 // // Next
 // import dynamic from 'next/dynamic'
@@ -55,21 +56,30 @@ const MySettings = (props: ReactProps & ReduxProps) => {
     )}>
       <div className={props.classes.titleRow}>
         <Typography variant="h2">
-          My Profile Settings
+          My Settings
         </Typography>
-        <IconButton onClick={() => props.goBack()}>
-          <ClearIcon/>
-        </IconButton>
+        {
+          asModal &&
+          <IconButton onClick={() => props.goBack()}>
+            <ClearIcon/>
+          </IconButton>
+        }
       </div>
 
       <div className={classes.section}>
-        <ChangeUserEmailForm
+        <ChangeUserProfileForm
           goBack={props.goBack}
         />
       </div>
 
       <div className={classes.section}>
         <ChangePasswordForm/>
+      </div>
+
+      <div className={classes.section}>
+        <ChangeUserLicenseForm
+          goBack={props.goBack}
+        />
       </div>
 
       {

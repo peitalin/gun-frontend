@@ -16,7 +16,7 @@ import { HtmlEvent } from "typings";
 // Validation
 import { Formik, FormikProps } from 'formik';
 import { validationSchemas } from "utils/validation";
-import ChangeUserEmailFields from "./ChangeUserEmailFields";
+import ChangeUserProfileFields from "./ChangeUserProfileFields";
 // Graphql Queries
 import { useMutation } from "@apollo/client";
 import { GET_USER } from "queries/user-queries";
@@ -31,7 +31,7 @@ import { UserPrivate, MutationEditUserProfileArgs } from "typings/gqlTypes";
 
 
 
-const ChangeUserEmailForm = (props: ReactProps) => {
+const ChangeUserProfileForm = (props: ReactProps) => {
 
   const { classes } = props;
   const dispatch = useDispatch();
@@ -44,29 +44,20 @@ const ChangeUserEmailForm = (props: ReactProps) => {
   useMutation<MutationData, MutationEditUserProfileArgs>(
     UPDATE_USER, {
     variables: {
-      firstName: reduxUser.firstName,
-      lastName: reduxUser.lastName,
-      email: reduxUser.email,
+      firstName: reduxUser?.firstName,
+      lastName: reduxUser?.lastName,
+      email: reduxUser?.email,
       editUserPhoneNumberInput: {
-        phoneNumber: "",
-      },
-      editUserLicenseInput: {
-        licenseNumber: "",
+        phoneNumber: reduxUser?.phoneNumber?.number,
+        areaCode: reduxUser?.phoneNumber?.areaCode,
+        countryCode: reduxUser?.phoneNumber?.countryCode,
       },
     },
     onError: (err) => console.log(err),
+    onCompleted: () => {},
     update: (cache, { data: { editUserProfile: { user } } }) => {
-      try {
-        // update reduxLogin user
-        dispatch(Actions.reduxLogin.SET_USER({
-          ...reduxUser,
-          ...user
-        }))
-      } catch (error) {
-        console.log(error)
-      }
+      dispatch(Actions.reduxLogin.SET_USER({ ...reduxUser, ...user }))
     },
-    onCompleted: () => { }
   })
 
 
@@ -74,18 +65,27 @@ const ChangeUserEmailForm = (props: ReactProps) => {
     <Formik
       // 1. feed product data to edit into formik state.
       initialValues={{
-        firstName: reduxUser.firstName,
-        lastName: reduxUser.lastName,
-        email: reduxUser.email,
+        firstName: reduxUser?.firstName,
+        lastName: reduxUser?.lastName,
+        email: reduxUser?.email,
+        phoneNumber: reduxUser?.phoneNumber?.number,
+        countryCode: reduxUser?.phoneNumber?.countryCode,
+        areaCode: reduxUser?.phoneNumber?.areaCode,
       }}
       validationSchema={validationSchemas.EditUserProfile}
       onSubmit={(values, { setSubmitting, resetForm }) => {
         // Dispatch Apollo Mutation after validation
+        console.log('values::::::', values)
         editUserProfile({
           variables: {
             firstName: values.firstName,
             lastName: values.lastName,
             email: values.email,
+            editUserPhoneNumberInput: {
+              phoneNumber: values.phoneNumber,
+              countryCode: values.countryCode,
+              areaCode: values.areaCode,
+            },
           }
         }).then(r => {
           resetForm()
@@ -114,7 +114,7 @@ const ChangeUserEmailForm = (props: ReactProps) => {
           )}>
             <form onSubmit={ handleSubmit }>
 
-              <ChangeUserEmailFields
+              <ChangeUserProfileFields
                 {...fprops}
               />
 
@@ -164,6 +164,7 @@ const styles = (theme: Theme) => createStyles({
     display: 'flex',
     flexDirection: "row",
     justifyContent: 'space-between',
+    alignItems: 'center',
   },
   formContainer: {
     padding: "0",
@@ -179,10 +180,6 @@ const styles = (theme: Theme) => createStyles({
     color: "#2484FF",
     cursor: 'pointer',
   },
-  showPasswordChanger: {
-    marginBottom: '0.5rem',
-    color: "#2484FF",
-  },
   buttonContainer: {
     display: 'flex',
     justifyContent: 'flex-end',
@@ -196,5 +193,5 @@ const styles = (theme: Theme) => createStyles({
   },
 });
 
-export default withStyles(styles)( ChangeUserEmailForm );
+export default withStyles(styles)( ChangeUserProfileForm );
 

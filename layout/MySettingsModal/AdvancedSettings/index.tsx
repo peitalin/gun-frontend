@@ -80,6 +80,7 @@ const styles = (theme: Theme) => createStyles({
     display: 'flex',
     flexDirection: "row",
     justifyContent: 'space-between',
+    alignItems: 'center',
   },
   formContainer: {
     padding: "0",
@@ -95,7 +96,6 @@ const styles = (theme: Theme) => createStyles({
     cursor: 'pointer',
   },
   showDeleteForm: {
-    marginBottom: '0.5rem',
     color: Colors.blue,
   },
   passwordTitle: {

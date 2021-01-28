@@ -7,19 +7,23 @@ import { Colors } from "layout/AppTheme";
 import { withStyles, WithStyles, Theme, createStyles } from "@material-ui/core/styles";
 // Material UI
 import Typography from "@material-ui/core/Typography";
-import TextInput from "components/Fields/TextInput";
+import TextInputUnderline from "components/Fields/TextInputUnderline";
 // Typings
 import { HtmlEvent, CreateStoreInput } from "typings";
 // Validation
 import { FormikProps } from 'formik';
-import MuiPhoneNumber from "material-ui-phone-number";
+import dynamic from "next/dynamic";
+import Loading from 'components/Loading';
+const MuiPhoneNumber = dynamic(() => import("material-ui-phone-number"), {
+  loading: () => <Loading/>,
+  ssr: false,
+})
 
 
 
 
 
-
-const ChangeUserEmailFields: React.FC<ReactProps & FormikProps<FormikFields>> = (props) => {
+const ChangeUserProfileFields: React.FC<ReactProps & FormikProps<FormikFields>> = (props) => {
 
   const {
     classes,
@@ -54,23 +58,26 @@ const ChangeUserEmailFields: React.FC<ReactProps & FormikProps<FormikFields>> = 
     fprops.setFieldValue("email", s)
   };
 
-  const handleSetPhoneNumber = (e: HtmlEvent) => {
+  const handleSetPhoneNumber = (e: string) => {
     console.log("e::::", e)
-    fprops.setFieldValue("phoneNumber", e)
+    let countryCode = e.split(" ").slice(0,1)[0]
+    let number = e.split(" ").slice(1).join(' ')
+    fprops.setFieldValue("phoneNumber", number)
+    fprops.setFieldValue("countryCode", countryCode)
   };
-
 
   return (
     <div className={classes.root}>
       <div className={classes.innerRoot}>
         <div className={clsx(classes.formContainer, "fadeInFast")}>
 
-          <Typography variant="body1" className={classes.passwordTitle}>
+          <Typography variant="body1" className={classes.fieldHeading}>
             Name
           </Typography>
-          <TextInput
+          <TextInputUnderline
             type="name"
             placeholder={"Name"}
+            label="" // remove moving label
             className={classes.textField}
             value={values.firstName}
             onChange={handleSetFirstName}
@@ -79,12 +86,13 @@ const ChangeUserEmailFields: React.FC<ReactProps & FormikProps<FormikFields>> = 
             touched={touched.firstName}
           />
 
-          <Typography variant="body1" className={classes.passwordTitle}>
-            Lastname
+          <Typography variant="body1" className={classes.fieldHeading}>
+            Last Name
           </Typography>
-          <TextInput
+          <TextInputUnderline
             type="surname"
             placeholder={"Last Name"}
+            label="" // remove moving label
             className={classes.textField}
             value={values.lastName}
             onChange={handleSetLastName}
@@ -93,12 +101,13 @@ const ChangeUserEmailFields: React.FC<ReactProps & FormikProps<FormikFields>> = 
             touched={touched.lastName}
           />
 
-          <Typography variant="body1" className={classes.passwordTitle}>
+          <Typography variant="body1" className={classes.fieldHeading}>
             Email
           </Typography>
-          <TextInput
+          <TextInputUnderline
             type="email"
             placeholder={"email"}
+            label="" // remove moving label
             className={classes.textField}
             value={values.email}
             onChange={handleSetEmail}
@@ -107,19 +116,21 @@ const ChangeUserEmailFields: React.FC<ReactProps & FormikProps<FormikFields>> = 
             touched={touched.email}
           />
 
-          <Typography variant="body1" className={classes.passwordTitle}>
+          <Typography variant="body1" className={classes.fieldHeading}>
             Mobile Number
           </Typography>
           <MuiPhoneNumber
-            name="phone"
+            //@ts-ignore
+            name={"phone"}
             label="e.g. +61 433 666 777"
+            // label={`${values.countryCode} ${values.phoneNumber}`}
             data-cy="user-phone"
             defaultCountry={"au"}
             onlyCountries={["au"]}
             // preferredCountries={["au"]}
             // disableCountryCode={true}
             // https://github.com/alexplumb/material-ui-phone-number
-            value={values.phoneNumber}
+            value={`${values.countryCode} ${values.phoneNumber}`}
             onChange={handleSetPhoneNumber}
           />
 
@@ -184,10 +195,9 @@ const styles = (theme: Theme) => createStyles({
     color: Colors.lightRed,
   },
   showPasswordChanger: {
-    marginBottom: '0.5rem',
     color: "#2484FF",
   },
-  passwordTitle: {
+  fieldHeading: {
     fontWeight: 600,
     lineHeight: '1.5rem',
     marginTop: '1rem',
@@ -214,5 +224,5 @@ const styles = (theme: Theme) => createStyles({
 });
 
 
-export default withStyles(styles)( ChangeUserEmailFields );
+export default withStyles(styles)( ChangeUserProfileFields );
 

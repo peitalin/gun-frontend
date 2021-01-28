@@ -158,7 +158,15 @@ export const UserMenu: React.FC<ReactProps> = (props) => {
           </MenuItem  className={classes.menuItem}> */}
 
 
-          <MenuItem className={classes.menuItem} onClick={() => {
+          <MenuItem className={classes.menuItem} onClick={handleCloseMenu}>
+            <Link href="/settings">
+              <a className={classes.menuLink}>
+                <ShoppingCartIcon className={classes.menuIcon}/>
+                <span className={classes.menuText}> My Settings </span>
+              </a>
+            </Link>
+          </MenuItem>
+          {/* <MenuItem className={classes.menuItem} onClick={() => {
             handleCloseMenu();
             goToModal.mySettings()
           }}>
@@ -166,7 +174,7 @@ export const UserMenu: React.FC<ReactProps> = (props) => {
               <PermIdentityIcon className={classes.menuIcon}/>
               <span className={classes.menuText}> My Settings </span>
             </a>
-          </MenuItem>
+          </MenuItem> */}
 
           <Divider/>
 

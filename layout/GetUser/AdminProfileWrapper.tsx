@@ -17,8 +17,8 @@ import { useApolloClient } from "@apollo/client";
 import { ApolloClient } from "@apollo/client";
 // Typings
 import { UserPrivate } from 'typings/gqlTypes';
-import Loading from "components/Loading";
 import LoadingBarSSR from "components/LoadingBarSSR";
+import LoadingBar from "components/LoadingBar";
 import ErrorDisplay from "components/Error";
 import SnackbarsSuccessErrors from "components/Snackbars/SnackbarsSuccessErrors";
 import Redirect from "pageComponents/Redirect";
@@ -46,7 +46,13 @@ const AdminProfileWrapper = (
   });
 
   if (loading) {
-    return <Loading fixed loading={loading} delay={"200ms"} />;
+    return <LoadingBar
+            absoluteTop
+            color={Colors.blue}
+            height={4}
+            width={'100vw'}
+            loading={true}
+          />
   }
   if (error && !option(data).user.id()) {
     return (

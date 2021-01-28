@@ -8,7 +8,7 @@ import { Colors } from "layout/AppTheme";
 import { withStyles, WithStyles, Theme, createStyles } from "@material-ui/core/styles";
 // Material UI
 import Typography from "@material-ui/core/Typography";
-import TextInput from "components/Fields/TextInput";
+import TextInputUnderline from "components/Fields/TextInputUnderline";
 import Divider from "components/Divider";
 import Button from "@material-ui/core/Button";
 import ButtonLoading from "components/ButtonLoading";
@@ -86,9 +86,10 @@ const ChangePasswordFields: React.FC<ReactProps & FormikProps<FormikFields>> = (
           <Typography variant="body1" className={classes.passwordTitle}>
             For security, please enter your current password.
           </Typography>
-          <TextInput
+          <TextInputUnderline
             type="password"
             placeholder={"Enter your current password"}
+            label="" // remove moving label
             className={classes.textField}
             value={props.currentPassword}
             onChange={handleSetCurrentPassword}
@@ -100,9 +101,10 @@ const ChangePasswordFields: React.FC<ReactProps & FormikProps<FormikFields>> = (
           <Typography variant="body1" className={classes.passwordTitle}>
             Enter your new password
           </Typography>
-          <TextInput
+          <TextInputUnderline
             type="password"
             placeholder={"New password"}
+            label="" // remove moving label
             className={classes.textField}
             value={props.newPassword}
             onChange={handleSetNewPassword}
@@ -114,9 +116,10 @@ const ChangePasswordFields: React.FC<ReactProps & FormikProps<FormikFields>> = (
           <Typography variant="body1" className={classes.passwordTitle}>
             Enter your new password again to confirm
           </Typography>
-          <TextInput
+          <TextInputUnderline
             type="password"
             placeholder={"New password again"}
+            label="" // remove moving label
             className={classes.textField}
             value={props.newPasswordAgain}
             onChange={handleSetNewPasswordAgain}
@@ -203,10 +206,6 @@ const styles = (theme: Theme) => createStyles({
   },
   redText: {
     color: Colors.lightRed,
-  },
-  showPasswordChanger: {
-    marginBottom: '0.5rem',
-    color: "#2484FF",
   },
   passwordTitle: {
     fontWeight: 600,

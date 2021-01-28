@@ -79,7 +79,7 @@ const ChangePasswordForm = (props: ReactProps) => {
 
 
   return (
-    <ErrorBounds className={classes.root}>
+    <ErrorBounds className={classes.changePasswordRoot}>
       <div className={classes.flexRow}>
         <Typography variant="h4">
           Password
@@ -206,12 +206,16 @@ interface MutationVar {
 
 
 const styles = (theme: Theme) => createStyles({
-  root: {
+  changePasswordRoot: {
+    display: 'flex',
+    flexDirection: "column",
+    justifyContent: 'center',
   },
   flexRow: {
     display: 'flex',
     flexDirection: "row",
     justifyContent: 'space-between',
+    alignItems: 'center',
   },
   formContainer: {
     padding: "0",
@@ -228,7 +232,6 @@ const styles = (theme: Theme) => createStyles({
     cursor: 'pointer',
   },
   showPasswordChanger: {
-    marginBottom: '0.5rem',
     color: "#2484FF",
   },
   passwordTitle: {
