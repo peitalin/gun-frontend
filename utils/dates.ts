@@ -36,7 +36,7 @@ export const formatDate = (d: Date) => {
 }
 
 export const showDate = (d: Date) => {
-  return dayjs(d).format("DD MMM YY")
+  return dayjs.utc(d).local().format("DD-MM-YYYY")
 }
 
 export const showTime = (d: Date) => {

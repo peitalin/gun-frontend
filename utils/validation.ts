@@ -502,6 +502,19 @@ export const validationSchemas = {
         .nullable(),
     }),
 
+  // Edit UserLicense form
+  EditUserLicense:
+    Yup.object().shape({
+      licenseNumber: Yup.string()
+        .required(),
+      licenseExpiry: Yup.date()
+        .required(),
+      licenseCategory: Yup.string()
+        .nullable(),
+      licenseState: Yup.string()
+        .nullable(),
+    }),
+
   // Password Reset
   PasswordReset:
     Yup.object().shape({
