@@ -1655,13 +1655,6 @@ export type Edge = {
   cursor: Scalars['PageCursor'];
 };
 
-export type EditUserLicenseInput = {
-  licenseNumber?: Maybe<Scalars['String']>;
-  expiry?: Maybe<Scalars['Date']>;
-  licenseCategory?: Maybe<Scalars['String']>;
-  state?: Maybe<Scalars['String']>;
-};
-
 export type EditUserPhoneNumberInput = {
   phoneNumber?: Maybe<Scalars['String']>;
   areaCode?: Maybe<Scalars['String']>;
@@ -4753,7 +4746,6 @@ export type MutationEditUserProfileArgs = {
   username?: Maybe<Scalars['String']>;
   firstName?: Maybe<Scalars['String']>;
   lastName?: Maybe<Scalars['String']>;
-  editUserLicenseInput?: Maybe<EditUserLicenseInput>;
   editUserPhoneNumberInput?: Maybe<EditUserPhoneNumberInput>;
   payoutMethodId?: Maybe<Scalars['String']>;
 };
@@ -12684,11 +12676,11 @@ export type User = {
 /** columns and relationships of "user_licenses" */
 export type User_Licenses = {
    __typename?: 'user_licenses';
-  expiry: Scalars['timestamp'];
   id: Scalars['String'];
   licenseCategory?: Maybe<Scalars['String']>;
+  licenseExpiry: Scalars['timestamp'];
   licenseNumber: Scalars['String'];
-  state?: Maybe<Scalars['String']>;
+  licenseState?: Maybe<Scalars['String']>;
   verified: Scalars['Boolean'];
 };
 
@@ -12732,11 +12724,11 @@ export type User_Licenses_Bool_Exp = {
   _and?: Maybe<Array<Maybe<User_Licenses_Bool_Exp>>>;
   _not?: Maybe<User_Licenses_Bool_Exp>;
   _or?: Maybe<Array<Maybe<User_Licenses_Bool_Exp>>>;
-  expiry?: Maybe<Timestamp_Comparison_Exp>;
   id?: Maybe<String_Comparison_Exp>;
   licenseCategory?: Maybe<String_Comparison_Exp>;
+  licenseExpiry?: Maybe<Timestamp_Comparison_Exp>;
   licenseNumber?: Maybe<String_Comparison_Exp>;
-  state?: Maybe<String_Comparison_Exp>;
+  licenseState?: Maybe<String_Comparison_Exp>;
   verified?: Maybe<Boolean_Comparison_Exp>;
 };
 
@@ -12748,50 +12740,50 @@ export enum User_Licenses_Constraint {
 
 /** input type for inserting data into table "user_licenses" */
 export type User_Licenses_Insert_Input = {
-  expiry?: Maybe<Scalars['timestamp']>;
   id?: Maybe<Scalars['String']>;
   licenseCategory?: Maybe<Scalars['String']>;
+  licenseExpiry?: Maybe<Scalars['timestamp']>;
   licenseNumber?: Maybe<Scalars['String']>;
-  state?: Maybe<Scalars['String']>;
+  licenseState?: Maybe<Scalars['String']>;
   verified?: Maybe<Scalars['Boolean']>;
 };
 
 /** aggregate max on columns */
 export type User_Licenses_Max_Fields = {
    __typename?: 'user_licenses_max_fields';
-  expiry?: Maybe<Scalars['timestamp']>;
   id?: Maybe<Scalars['String']>;
   licenseCategory?: Maybe<Scalars['String']>;
+  licenseExpiry?: Maybe<Scalars['timestamp']>;
   licenseNumber?: Maybe<Scalars['String']>;
-  state?: Maybe<Scalars['String']>;
+  licenseState?: Maybe<Scalars['String']>;
 };
 
 /** order by max() on columns of table "user_licenses" */
 export type User_Licenses_Max_Order_By = {
-  expiry?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   licenseCategory?: Maybe<Order_By>;
+  licenseExpiry?: Maybe<Order_By>;
   licenseNumber?: Maybe<Order_By>;
-  state?: Maybe<Order_By>;
+  licenseState?: Maybe<Order_By>;
 };
 
 /** aggregate min on columns */
 export type User_Licenses_Min_Fields = {
    __typename?: 'user_licenses_min_fields';
-  expiry?: Maybe<Scalars['timestamp']>;
   id?: Maybe<Scalars['String']>;
   licenseCategory?: Maybe<Scalars['String']>;
+  licenseExpiry?: Maybe<Scalars['timestamp']>;
   licenseNumber?: Maybe<Scalars['String']>;
-  state?: Maybe<Scalars['String']>;
+  licenseState?: Maybe<Scalars['String']>;
 };
 
 /** order by min() on columns of table "user_licenses" */
 export type User_Licenses_Min_Order_By = {
-  expiry?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   licenseCategory?: Maybe<Order_By>;
+  licenseExpiry?: Maybe<Order_By>;
   licenseNumber?: Maybe<Order_By>;
-  state?: Maybe<Order_By>;
+  licenseState?: Maybe<Order_By>;
 };
 
 /** response of any mutation on the table "user_licenses" */
@@ -12818,11 +12810,11 @@ export type User_Licenses_On_Conflict = {
 
 /** ordering options when selecting data from "user_licenses" */
 export type User_Licenses_Order_By = {
-  expiry?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   licenseCategory?: Maybe<Order_By>;
+  licenseExpiry?: Maybe<Order_By>;
   licenseNumber?: Maybe<Order_By>;
-  state?: Maybe<Order_By>;
+  licenseState?: Maybe<Order_By>;
   verified?: Maybe<Order_By>;
 };
 
@@ -12834,41 +12826,41 @@ export type User_Licenses_Pk_Columns_Input = {
 /** select columns of table "user_licenses" */
 export enum User_Licenses_Select_Column {
   /** column name */
-  EXPIRY = 'expiry',
-  /** column name */
   ID = 'id',
   /** column name */
   LICENSECATEGORY = 'licenseCategory',
   /** column name */
+  LICENSEEXPIRY = 'licenseExpiry',
+  /** column name */
   LICENSENUMBER = 'licenseNumber',
   /** column name */
-  STATE = 'state',
+  LICENSESTATE = 'licenseState',
   /** column name */
   VERIFIED = 'verified'
 }
 
 /** input type for updating data in table "user_licenses" */
 export type User_Licenses_Set_Input = {
-  expiry?: Maybe<Scalars['timestamp']>;
   id?: Maybe<Scalars['String']>;
   licenseCategory?: Maybe<Scalars['String']>;
+  licenseExpiry?: Maybe<Scalars['timestamp']>;
   licenseNumber?: Maybe<Scalars['String']>;
-  state?: Maybe<Scalars['String']>;
+  licenseState?: Maybe<Scalars['String']>;
   verified?: Maybe<Scalars['Boolean']>;
 };
 
 /** update columns of table "user_licenses" */
 export enum User_Licenses_Update_Column {
   /** column name */
-  EXPIRY = 'expiry',
-  /** column name */
   ID = 'id',
   /** column name */
   LICENSECATEGORY = 'licenseCategory',
   /** column name */
+  LICENSEEXPIRY = 'licenseExpiry',
+  /** column name */
   LICENSENUMBER = 'licenseNumber',
   /** column name */
-  STATE = 'state',
+  LICENSESTATE = 'licenseState',
   /** column name */
   VERIFIED = 'verified'
 }
@@ -13788,7 +13780,7 @@ export type StoresFragment = { __typename?: 'stores', id: string, createdAt: any
 export type UsersFragment = { __typename?: 'users', id: string, email: string, username?: Maybe<string>, userRole?: Maybe<string>, createdAt?: Maybe<any>, updatedAt?: Maybe<any>, firstName?: Maybe<string>, lastName?: Maybe<string>, emailVerified?: Maybe<boolean>, storeId?: Maybe<string>, payoutMethodId?: Maybe<string>, payoutSplitId?: Maybe<string>, isDeleted: boolean, isSuspended: boolean, lastSeen?: Maybe<any>, licenseId?: Maybe<string>, store?: Maybe<(
     { __typename?: 'stores' }
     & StoresFragment
-  )>, payoutMethod?: Maybe<{ __typename?: 'payout_methods', id: string, storeId: string, createdAt: any, updatedAt?: Maybe<any>, payoutType?: Maybe<string>, bsb?: Maybe<string>, accountNumber?: Maybe<string>, accountName?: Maybe<string> }>, license?: Maybe<{ __typename?: 'user_licenses', id: string, licenseNumber: string, expiry: any, licenseCategory?: Maybe<string>, state?: Maybe<string>, verified: boolean }> };
+  )>, payoutMethod?: Maybe<{ __typename?: 'payout_methods', id: string, storeId: string, createdAt: any, updatedAt?: Maybe<any>, payoutType?: Maybe<string>, bsb?: Maybe<string>, accountNumber?: Maybe<string>, accountName?: Maybe<string> }>, license?: Maybe<{ __typename?: 'user_licenses', id: string, licenseNumber: string, licenseExpiry: any, licenseCategory?: Maybe<string>, licenseState?: Maybe<string>, verified: boolean }> };
 
 export type OrdersFragment = { __typename?: 'orders', id: string, createdAt: any, updatedAt: any, bidId?: Maybe<string>, total: number, currency: string, buyerId: string, sellerId: string, productId: string, bid?: Maybe<{ __typename?: 'bids', id: string, bidStatus: string, createdAt?: Maybe<any>, updatedAt?: Maybe<any>, acceptedPrice?: Maybe<number>, offerPrice: number }>, buyer?: Maybe<{ __typename?: 'users', id: string, firstName?: Maybe<string>, lastName?: Maybe<string>, email: string }>, seller?: Maybe<{ __typename?: 'stores', id: string, name: string, website?: Maybe<string>, createdAt: any, updatedAt?: Maybe<any>, user: { __typename?: 'users', id: string, firstName?: Maybe<string>, lastName?: Maybe<string>, email: string, payoutMethod?: Maybe<{ __typename?: 'payout_methods', id: string, createdAt: any, updatedAt?: Maybe<any>, payoutType?: Maybe<string>, bsb?: Maybe<string>, accountNumber?: Maybe<string>, accountName?: Maybe<string> }> } }>, currentSnapshot?: Maybe<{ __typename?: 'order_snapshots', id: string, orderStatus: string, createdAt: any, adminApproverId?: Maybe<string>, dealerApproverId?: Maybe<string>, adminApprover?: Maybe<{ __typename?: 'users', id: string, firstName?: Maybe<string>, lastName?: Maybe<string>, email: string }>, dealerApprover?: Maybe<{ __typename?: 'users', id: string, firstName?: Maybe<string>, lastName?: Maybe<string>, email: string }>, form10Image?: Maybe<(
       { __typename?: 'image_parents' }
@@ -13887,7 +13879,7 @@ export type StorePrivateFragment = { __typename?: 'StorePrivate', id: string, na
 
 export type PaymentMethodFragment = { __typename?: 'payment_methods', id: string, userId: string, createdAt: any, updatedAt?: Maybe<any>, customerId?: Maybe<string>, paymentProcessor?: Maybe<string>, paymentMethodTypes?: Maybe<string>, last4?: Maybe<string>, expMonth?: Maybe<number>, expYear?: Maybe<number>, email?: Maybe<string>, name?: Maybe<string>, details?: Maybe<string> };
 
-export type UserPrivateFragment = { __typename?: 'UserPrivate', id: string, firstName?: Maybe<string>, lastName?: Maybe<string>, email: string, emailVerified?: Maybe<boolean>, userRole: Role, isSuspended: boolean, license?: Maybe<{ __typename?: 'user_licenses', id: string, licenseNumber: string, licenseCategory?: Maybe<string>, verified: boolean, expiry: any, state?: Maybe<string> }>, store?: Maybe<(
+export type UserPrivateFragment = { __typename?: 'UserPrivate', id: string, firstName?: Maybe<string>, lastName?: Maybe<string>, email: string, emailVerified?: Maybe<boolean>, userRole: Role, isSuspended: boolean, license?: Maybe<{ __typename?: 'user_licenses', id: string, licenseNumber: string, licenseCategory?: Maybe<string>, licenseExpiry: any, licenseState?: Maybe<string>, verified: boolean }>, store?: Maybe<(
     { __typename?: 'StorePrivate' }
     & StorePrivateFragment
   )>, payoutMethod?: Maybe<{ __typename?: 'payout_methods', id: string, payoutType?: Maybe<string>, bsb?: Maybe<string>, accountNumber?: Maybe<string>, accountName?: Maybe<string> }> };
@@ -14135,9 +14127,9 @@ export const UsersFragmentFragmentDoc = gql`
   license {
     id
     licenseNumber
-    expiry
+    licenseExpiry
     licenseCategory
-    state
+    licenseState
     verified
   }
 }
@@ -14400,9 +14392,9 @@ export const UserPrivateFragmentFragmentDoc = gql`
     id
     licenseNumber
     licenseCategory
+    licenseExpiry
+    licenseState
     verified
-    expiry
-    state
   }
   store {
     ...StorePrivateFragment

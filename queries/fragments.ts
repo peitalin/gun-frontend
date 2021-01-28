@@ -219,9 +219,9 @@ export const UsersFragment = gql`
     license {
       id
       licenseNumber
-      expiry
+      licenseExpiry
       licenseCategory
-      state
+      licenseState
       verified
     }
   }
@@ -538,9 +538,15 @@ export const UserPrivateFragment = gql`
       id
       licenseNumber
       licenseCategory
+      licenseExpiry
+      licenseState
       verified
-      expiry
-      state
+    }
+    phoneNumber {
+      id
+      areaCode
+      countryCode
+      number
     }
     store {
       ...StorePrivateFragment

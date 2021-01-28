@@ -42,6 +42,7 @@ export const UPDATE_USER = gql`
     $firstName: String
     $lastName: String
     $payoutMethodId: String
+    $editUserPhoneNumberInput: EditUserPhoneNumberInput
   ) {
     editUserProfile(
       username: $username
@@ -49,6 +50,7 @@ export const UPDATE_USER = gql`
       firstName: $firstName
       lastName: $lastName
       payoutMethodId: $payoutMethodId
+      editUserPhoneNumberInput: $editUserPhoneNumberInput
     ) {
       user {
         id
@@ -132,4 +134,37 @@ export const CONFIRM_RESET_PASSWORD = gql`
       expiresAt
     }
   }
+`;
+
+
+
+// # userId: $userId,
+// NOTE: userID is extracted from the auth-cookie automatically server-side
+// It is attached automatically if you are logged in.
+export const EDIT_USER_LICENSE = gql`
+  mutation editUserLicense(
+    $licenseNumber: String!
+    $licenseExpiry: Date!
+    $licenseCategory: String
+    $licenseState: String
+  ) {
+    editUserLicense(
+      licenseNumber: $licenseNumber
+      licenseExpiry: $licenseExpiry
+      licenseCategory: $licenseCategory
+      licenseState: $licenseState
+    ) {
+      user {
+        id
+        lastName
+        firstName
+        username
+        email
+        ... on UserPrivate {
+          ...UserPrivateFragment
+        }
+      }
+    }
+  }
+  ${UserPrivateFragment}
 `;
