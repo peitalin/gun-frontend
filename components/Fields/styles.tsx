@@ -289,6 +289,30 @@ export const styles = (theme: Theme) => createStyles({
     fontFamily: fontFam,
     color: Colors.black,
   },
+  inputUnderline: {
+    position: 'relative',
+    // backgroundColor: theme.palette.common.white,
+    borderRadius: BorderRadius,
+    fontSize: "16px",
+    fontWeight: 400,
+    width: '100%',
+    color: textColor,
+    transition: theme.transitions.create(['border-color', 'box-shadow'], {
+      easing: theme.transitions.easing.easeIn,
+      duration: "200ms",
+    }),
+    // Use the system font instead of the default Roboto font.
+    fontFamily: fontFam,
+    '&:focus': {
+      boxShadow: `${fade('#50B5F5', 0.2)} 0 0 0 2px`,
+      borderColor: Colors.blue,
+      color: Colors.blue,
+    },
+    // '&:invalid': {
+    //   boxShadow: `${fade(theme.palette.error.light, 0.2)} 0 0 0 1px`,
+    //   borderColor: theme.palette.error.main,
+    // },
+  },
 })
 
 
