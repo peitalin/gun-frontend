@@ -73,7 +73,7 @@ const ThumbnailImage: React.FC<ReactProps> = (props) => {
           showLoadingBar &&
           <LoadingBar
             absoluteTop
-            color={Colors.magenta}
+            color={Colors.gradientUniswapBlue1}
             height={4}
             width={'100vw'}
             loading={true}
