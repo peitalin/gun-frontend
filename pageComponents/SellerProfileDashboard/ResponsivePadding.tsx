@@ -26,7 +26,7 @@ const ResponsivePadding: React.FC<ReactProps> = (props) => {
       smDown ? classes.paddingMobile : classes.paddingDesktop,
       "fadeInFast",
       props.className,
-    )}>
+    )} style={props.style}>
       {props.children}
     </ErrorBounds>
   )
@@ -34,6 +34,7 @@ const ResponsivePadding: React.FC<ReactProps> = (props) => {
 
 interface ReactProps extends WithStyles<typeof styles> {
   className?: any;
+  style?: any;
 }
 
 

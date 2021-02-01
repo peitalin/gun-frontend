@@ -38,7 +38,7 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 import EmptyProductList from "pageComponents/SellerProfileDashboard/PublishedProductsList/EmptyProductList";
 // pagination
 import PaginateButtons from "components/Paginators/PaginateButtons";
-import { useQuery, useLazyQuery, useApolloClient } from "@apollo/client";
+import { useQuery, useLazyQuery } from "@apollo/client";
 import {
   GET_STORE_PRIVATE,
   DASHBOARD_PRODUCTS_CONNECTION,
@@ -184,6 +184,7 @@ const PublishedProductsList = (props: ReactProps) => {
   // }, [getProductsResponse.data])
 
 
+  console.log("connection", connection)
   // console.log("gridAccum", gridAccum)
   // console.log("index", index)
   // console.log("pageParam", pageParam)
@@ -191,7 +192,7 @@ const PublishedProductsList = (props: ReactProps) => {
 
   if (!productId) {
     return (
-      <ResponsivePadding>
+      <ResponsivePadding style={{ marginRight: '0.5rem' }}>
         <div className={classes.goBackContainer}>
           <Typography className={classes.title} variant="h2">
             Products
@@ -250,7 +251,7 @@ const PublishedProductsList = (props: ReactProps) => {
               }
               <LoadingBar
                 absoluteBottom
-                color={Colors.magenta}
+                color={Colors.gradientUniswapBlue1}
                 height={4}
                 width={'100%'}
                 loading={getProductsResponse.loading}
