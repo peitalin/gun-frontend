@@ -46,40 +46,39 @@ const OrderRowBuyers: React.FC<ReactProps> = (props) => {
         classes.flexCol,
         (!order && !product) ? "pulse" : null,
       )}>
+          <ProductPreviewCardRow
+            previewItem={previewItem}
+            height={55}
+            width={88}
+          />
 
-        <ProductPreviewCardRow
-          previewItem={previewItem}
-          height={55}
-          width={88}
-        />
-
-        <div className={classes.detailsContainer}>
-          <Typography className={classes.name} variant="body2">
-            {product?.currentSnapshot?.title}
-          </Typography>
-          <Typography className={classes.tagline} variant="body2">
-            {product?.currentSnapshot?.model}
-          </Typography>
-          {
-            !!product?.store?.id &&
-            <Link
-              href="/s/[storeId]"
-              as={`/s/${option(product).store.id()}`}
-            >
-              <a>
-                <Typography className={classes.storeName} variant="body2">
-                  {option(product).store.name()}
-                </Typography>
-              </a>
-            </Link>
-          }
-          <OrderStatus order={order} />
-          <div className={classes.flexRowFlexEnd}>
-            <OrderDetailsModal
-              order={order}
-            />
+          <div className={classes.detailsContainer}>
+            <Typography className={classes.name} variant="body2">
+              {product?.currentSnapshot?.title}
+            </Typography>
+            <Typography className={classes.tagline} variant="body2">
+              {product?.currentSnapshot?.model}
+            </Typography>
+            {
+              !!product?.store?.id &&
+              <Link
+                href="/s/[storeId]"
+                as={`/s/${option(product).store.id()}`}
+              >
+                <a>
+                  <Typography className={classes.storeName} variant="body2">
+                    {option(product).store.name()}
+                  </Typography>
+                </a>
+              </Link>
+            }
+            <OrderStatus order={order} />
+            <div className={classes.flexRowFlexEnd}>
+              <OrderDetailsModal
+                order={order}
+              />
+            </div>
           </div>
-        </div>
 
       </div>
     </ErrorBounds>

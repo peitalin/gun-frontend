@@ -41,58 +41,56 @@ const OrderRowSellers: React.FC<ReactProps> = (props) => {
     <ErrorBounds className={clsx(
       classes.root,
       classes.flexRow,
+      (!order && !product) ? "pulse" : null,
     )}>
 
-      <div className={clsx(
-        classes.flexCol,
-        (!order && !product) ? "pulse" : null,
-      )}>
+      <div className={classes.flexRow}>
+        <div className={classes.flexCol}>
+          <ProductPreviewCardRow
+            previewItem={previewItem}
+            height={55}
+            width={88}
+          />
+          <div className={classes.detailsContainer}>
+            <Typography className={classes.name} variant="body2">
+              {option(product).currentSnapshot.title("")}
+            </Typography>
+            <Typography className={classes.tagline} variant="body2">
+              {option(product).currentSnapshot.model("")}
+            </Typography>
+            {
+              option(product).store.id() &&
+              <Link
+                href="/s/[storeId]"
+                as={`/s/${option(product).store.id()}`}
+              >
+                <a>
+                  <Typography className={classes.storeName} variant="body2">
+                    {option(product).store.name()}
+                  </Typography>
+                </a>
+              </Link>
+            }
+            <OrderStatus order={order} />
+          </div>
+        </div>
 
-        <ProductPreviewCardRow
-          previewItem={previewItem}
-          height={55}
-          width={88}
-        />
-
-        <div className={classes.detailsContainer}>
-
-          <Typography className={classes.name} variant="body2">
-            {option(product).currentSnapshot.title("")}
-          </Typography>
-          <Typography className={classes.tagline} variant="body2">
-            {option(product).currentSnapshot.model("")}
-          </Typography>
-
-          {
-            option(product).store.id() &&
-            <Link
-              href="/s/[storeId]"
-              as={`/s/${option(product).store.id()}`}
-            >
-              <a>
-                <Typography className={classes.storeName} variant="body2">
-                  {option(product).store.name()}
-                </Typography>
-              </a>
-            </Link>
-          }
-          <OrderStatus order={order} />
-
-          <div className={clsx(classes.flexCol, 'fadeIn')}>
-            <div className={classes.flexRowFlexEnd}>
-              <Form10Upload
-                order={order}
-              />
-            </div>
-
-            <div className={classes.flexRowFlexEnd}>
-              <OrderDetailsModal
-                order={order}
-              />
-            </div>
+      <div className={classes.flexRow}>
+        <div className={clsx(classes.flexCol, 'fadeIn')}>
+          <div className={classes.flexRowFlexEnd}>
+            <Form10Upload
+              order={order}
+            />
           </div>
 
+          <div className={classes.flexRowFlexEnd}>
+            <OrderDetailsModal
+              order={order}
+            />
+          </div>
         </div>
+      </div>
+
       </div>
     </ErrorBounds>
   )
