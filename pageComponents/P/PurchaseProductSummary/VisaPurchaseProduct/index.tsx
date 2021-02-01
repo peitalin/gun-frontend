@@ -5,16 +5,6 @@ import clsx from "clsx";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
 import { Colors, BorderRadius, BorderRadius3x } from "layout/AppTheme";
-// Error
-import ErrorBounds from 'components/ErrorBounds';
-// Material UI
-import Button from '@material-ui/core/Button';
-import ButtonLoading from "components/ButtonLoading";
-import Typography from '@material-ui/core/Typography';
-import Checkbox from '@material-ui/core/Checkbox';
-import FormGroup from '@material-ui/core/FormGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Loading from 'components/Loading';
 // Stripe
 import {
   CardElement,
@@ -31,8 +21,7 @@ import {
 
 
 import {
-  StripeCreatePaymentData,
-  StripeConfirmPaymentData,
+  StripeAuthorizePaymentData,
   StripeConfirmResponse,
 } from "../purchaseFunctions";
 import {
@@ -43,24 +32,17 @@ import {
   OrderMutationResponse,
   OrderCreateMutationResponse,
 } from 'typings/gqlTypes';
-// Redux
-import { useDispatch, useSelector } from "react-redux";
-import { GrandReduxState } from "reduxStore/grand-reducer";
-import { Actions } from "reduxStore/actions";
 // Components
-import TextInput from "components/Fields/TextInput"
+import ErrorBounds from 'components/ErrorBounds';
+import ButtonLoading from "components/ButtonLoading";
 import SnackbarsSuccessErrors from "components/Snackbars/SnackbarsSuccessErrors";
 // Graphql
-import { GET_USER_PAYMENT_METHODS } from "queries/payment_methods-queries";
 import { useApolloClient, useLazyQuery } from '@apollo/client';
-// Analytics
-import { useAnalytics, analyticsEvent } from "utils/analytics";
 // Snackbar
-import { useSnackbar, ProviderContext } from "notistack";
+import { useSnackbar } from "notistack";
 
 import {
   CREATE_ORDER,
-  CONFIRM_ORDER,
 } from "queries/orders-mutations";
 
 
@@ -96,11 +78,13 @@ const VisaPurchaseProduct = (props: ReactProps) => {
 
 
 
-  const createOrderFirst = async({
+  const createOrderAndHoldFundsFirst = async({
     paymentMethodId,
     quotedPrice,
     stripeCustomerId,
   }) => {
+    // creates an order on the backend, and places a hold on the users card
+    // with a payment authorization (to be captured later)
 
     setLoading(true)
     const variant = featuredVariant;
@@ -113,10 +97,9 @@ const VisaPurchaseProduct = (props: ReactProps) => {
     let order: Orders;
     let stripeConfirmResponse: StripeConfirmResponse;
 
-    const stripeCreatePaymentData: StripeCreatePaymentData = {
+    const stripeAuthorizePaymentData: StripeAuthorizePaymentData = {
       paymentMethod: paymentMethodId,
       customerId: stripeCustomerId,
-      savePaymentMethod: false,
     };
 
     // 1. Create Order + create stripe payment intent in the backend
@@ -130,7 +113,7 @@ const VisaPurchaseProduct = (props: ReactProps) => {
         total: variant.price,
         buyerId: props.user.id,
         sellerId: product.store.id,
-        stripeCreatePaymentData: JSON.stringify(stripeCreatePaymentData),
+        stripeAuthorizePaymentData: JSON.stringify(stripeAuthorizePaymentData),
         bidId: undefined,
       }
     });
@@ -138,79 +121,64 @@ const VisaPurchaseProduct = (props: ReactProps) => {
 
     let unconfirmedOrder = response.data.createOrder;
     let stripePaymentIntent = JSON.parse(
-      option(response).data.createOrder.stripePaymentIntent()
+      response?.data?.createOrder?.stripePaymentIntent ?? "{}"
     );
     console.info("stripePaymentIntent", stripePaymentIntent)
 
-    // 2. confirm the payment intent on the front-end, which prompts 3DS
-    // pop-up if card needs it.
-    let stripeConfirmOptions: ConfirmCardPaymentData = {
-      payment_method: {
-        card: elements.getElement(CardElement),
-        // activates 3DS prompt with test cards for newCards
-        // otherwise Stripe 3DS is dynamic and you can set fraud detection rules
-      }
-    }
+    // // 2. confirm the payment intent on the front-end, which prompts 3DS
+    // // pop-up if card needs it.
+    // let stripeConfirmOptions: ConfirmCardPaymentData = {
+    //   payment_method: {
+    //     card: elements.getElement(CardElement),
+    //     // activates 3DS prompt with test cards for newCards
+    //     // otherwise Stripe 3DS is dynamic and you can set fraud detection rules
+    //   }
+    // }
+    // stripeConfirmResponse = await stripe.confirmCardPayment(
+    //   stripePaymentIntent.client_secret,
+    //   stripeConfirmOptions
+    // );
+    // console.info("stripeConfirmResponse", stripeConfirmResponse)
 
-    stripeConfirmResponse = await stripe.confirmCardPayment(
-      stripePaymentIntent.client_secret,
-      stripeConfirmOptions
-    );
-
-    console.info("stripeConfirmResponse", stripeConfirmResponse)
     setLoading(false)
 
     return response.data.createOrder
   }
 
-  const confirmOrderSecond = async(
-    orderId: string,
-    paymentIntent: any,
-  ) => {
 
-    setLoading(true)
+  // const confirmOrderSecond = async(
+  //   orderId: string,
+  //   paymentIntent: any,
+  // ) => {
 
-    const stripeConfirmPaymentData: StripeConfirmPaymentData = {
-      paymentIntent: paymentIntent,
-    };
+  //   setLoading(true)
 
-    const response = await aClient.mutate<MutDataConfirmOrder, MutVarConfirmOrder>({
-      mutation: CONFIRM_ORDER,
-      variables: {
-        orderId: orderId,
-        stripeConfirmPaymentData: JSON.stringify(stripeConfirmPaymentData)
-      }
-    });
-    console.log("confirmOrder response: ", response);
-    let order = response.data?.confirmOrder?.order;
+  //   const stripeConfirmPaymentData: StripeConfirmPaymentData = {
+  //     paymentIntent: paymentIntent,
+  //   };
 
-    if (order.currentSnapshot.orderStatus === OrderStatus.CONFIRMED_PAYMENT_FORM_10_REQUIRED) {
-      setData("Your order was confirmed!") // trigger success snackbar
-      console.log('Success! order response:', order)
-      props.handleOrderPostPurchase(order)
-    } else {
-      console.log("Error checking out: ", response.errors)
-      setError("Payment failed. Please try another payment method.")
-      // trigger error snackbar
-    }
-    setLoading(false)
-    return response
-  }
+  //   const response = await aClient.mutate<MutDataConfirmOrder, MutVarConfirmOrder>({
+  //     mutation: CONFIRM_ORDER,
+  //     variables: {
+  //       orderId: orderId,
+  //       stripeConfirmPaymentData: JSON.stringify(stripeConfirmPaymentData)
+  //     }
+  //   });
+  //   console.log("confirmOrder response: ", response);
+  //   let order = response.data?.confirmOrder?.order;
 
-
-  const handleWestpacError = (errors: any[]) => {
-    let errorMsgs = errors
-      .map(e => `${e.fieldName}: ${e.messages[0]}`)
-
-    errorMsgs.forEach(msg => {
-      snackbar.enqueueSnackbar(msg, { variant: "error" })
-    })
-    setForceShowCardError(true)
-    setTimeout(() => {
-      setForceShowCardError(false)
-    }, 9000)
-  }
-
+  //   if (order.currentSnapshot.orderStatus === OrderStatus.CONFIRMED_PAYMENT_FORM_10_REQUIRED) {
+  //     setData("Your order was confirmed!") // trigger success snackbar
+  //     console.log('Success! order response:', order)
+  //     props.handleOrderPostPurchase(order)
+  //   } else {
+  //     console.log("Error checking out: ", response.errors)
+  //     setError("Payment failed. Please try another payment method.")
+  //     // trigger error snackbar
+  //   }
+  //   setLoading(false)
+  //   return response
+  // }
 
   const { classes, display, disableButton } = props;
 
@@ -222,16 +190,6 @@ const VisaPurchaseProduct = (props: ReactProps) => {
   const [loading, setLoading] = React.useState(false);
   const [data, setData] = React.useState(undefined);
   const [error, setError] = React.useState(undefined);
-
-  // email if user is not logged in
-  const [buyerName, setBuyerName] = React.useState("");
-  const [creditCardNumber, setCreditCardNumber] = React.useState();
-  const [cardValid, setCardValid] = React.useState(undefined);
-  const [forceShowCardError, setForceShowCardError] = React.useState(false)
-
-  const [showStripeElement, setShowStripeElement] = React.useState(false);
-  const [showSavePaymentMethod, setShowSavePaymentMethod] = React.useState(false);
-
 
   return (
     <ErrorBounds name="Visa Checkout" className={props.className}>
@@ -272,7 +230,7 @@ const VisaPurchaseProduct = (props: ReactProps) => {
                       .then(async (newPaymentMethod) => {
 
                         // 1. Create an order first with the backend
-                        let orderResponse = await createOrderFirst({
+                        let orderResponse = await createOrderAndHoldFundsFirst({
                           quotedPrice: featuredVariant.price,
                           paymentMethodId: newPaymentMethod.id,
                           stripeCustomerId: option(props).user.stripeCustomerId(),
@@ -282,20 +240,20 @@ const VisaPurchaseProduct = (props: ReactProps) => {
                         let stripePaymentIntent = JSON.parse(orderResponse?.stripePaymentIntent);
                         console.log("1b: stripe PaymentIntent: ", stripePaymentIntent)
 
+                        snackbar.enqueueSnackbar(`Success order placed: ${order.id}`, { variant: "success" })
 
-                        if (option(order).id()) {
-                          // 2. use response to make a payment, and confirm the order
-                          snackbar.enqueueSnackbar(`Success order: ${order.id}`, { variant: "success" })
-                          let res = await confirmOrderSecond(order.id, stripePaymentIntent)
-                          // 4. once payment is finalized, and order is finalized
-                          // proceed with screen transitions, etc
-                          console.log("2: ORDER CONFIRM RESPONSE: ", res)
-                        }
+                        // if (option(order).id()) {
+                        //   // 2. use response to make a payment, and confirm the order
+                        //   // snackbar.enqueueSnackbar(`Success order: ${order.id}`, { variant: "success" })
+                        //   let res = await confirmOrderSecond(order.id, stripePaymentIntent)
+                        //   // 4. once payment is finalized, and order is finalized
+                        //   // proceed with screen transitions, etc
+                        //   console.log("2: ORDER CONFIRM RESPONSE: ", res)
+                        // }
 
                         setLoading(false)
                         // console.log("refetching user: ", refetchUser)
                         // await refetchUser() // refetchUser downloads
-
                         return data
                       })
                       .catch(e => {
@@ -358,7 +316,7 @@ interface MutVarCreateOrder {
   total: number
   buyerId: string
   sellerId: string
-  stripeCreatePaymentData: string
+  stripeAuthorizePaymentData: string
   bidId: string
 }
 interface MutDataConfirmOrder {

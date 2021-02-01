@@ -119,7 +119,7 @@ const PurchaseProductSummary: React.FC<ReactProps> = (props) => {
               }}>
                 <LoadingBar
                   absoluteTop
-                  color={Colors.magenta}
+                  color={Colors.gradientUniswapBlue1}
                   height={4}
                   width={'100%'}
                   loading={true}

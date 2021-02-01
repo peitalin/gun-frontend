@@ -15,10 +15,9 @@ import {
 ////////////////////////////
 ////////////////////////////
 
-export interface StripeCreatePaymentData {
+export interface StripeAuthorizePaymentData {
   paymentMethod: string;
   customerId?: string;
-  savePaymentMethod?: boolean;
 }
 
 export interface StripeConfirmPaymentData {

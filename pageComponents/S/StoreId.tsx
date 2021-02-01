@@ -167,7 +167,7 @@ const StoresId: React.FC<ReactProps> = (props) => {
           loading &&
           <LoadingBar
             absoluteTop
-            color={Colors.magenta}
+            color={Colors.gradientUniswapBlue1}
             height={4}
             width={'100vw'}
             loading={true}

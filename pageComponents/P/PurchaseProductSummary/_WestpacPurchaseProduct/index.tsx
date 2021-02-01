@@ -39,7 +39,7 @@ import { Rifm } from 'rifm';
 
 import {
   CREATE_ORDER,
-  CONFIRM_ORDER,
+  CAPTURE_PAYMENT_FOR_ORDER,
 } from "queries/orders-mutations";
 
 
@@ -76,13 +76,13 @@ const WestpacPurchaseProduct = (props: ReactProps) => {
     return response.data.createOrder
   }
 
-  const confirmOrderSecond = async(
+  const capturePaymentForOrderSecond = async(
     orderId: string,
     singleUseTokenId: string,
   ) => {
 
     const response = await aClient.mutate<MutDataConfirmOrder, MutVarConfirmOrder>({
-      mutation: CONFIRM_ORDER,
+      mutation: CAPTURE_PAYMENT_FOR_ORDER,
       variables: {
         orderId: orderId,
         singleUseTokenId: singleUseTokenId,
@@ -202,7 +202,7 @@ const WestpacPurchaseProduct = (props: ReactProps) => {
                       let singleUseTokenId = data.token;
                       snackbar.enqueueSnackbar(`Success token: ${singleUseTokenId}`, { variant: "success" })
 
-                      let res = await confirmOrderSecond(order.id, singleUseTokenId)
+                      let res = await capturePaymentForOrderSecond(order.id, singleUseTokenId)
 
                       // 4. once payment is finalized, and order is finalized
                       // proceed with screen transitions, etc
