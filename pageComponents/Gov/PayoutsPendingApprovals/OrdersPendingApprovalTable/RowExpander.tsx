@@ -42,6 +42,7 @@ const RowExpander = (props: RowExpanderProps) => {
     admin,
     index,
     initialOpen = false,
+    showApprovalButtons = true,
     classes,
   } = props;
 
@@ -75,6 +76,9 @@ const RowExpander = (props: RowExpanderProps) => {
 
   let isEvenRow = index % 2 === 0
 
+  let phoneNumber = !!row?.seller?.user?.phoneNumber?.number
+    ? `${row?.seller?.user?.phoneNumber?.countryCode} ${row?.seller?.user?.phoneNumber?.number}`
+    : "NA"
 
   return (
     <>
@@ -98,12 +102,14 @@ const RowExpander = (props: RowExpanderProps) => {
         <div className={classes.flexItemTiny}>{c(row.total)}</div>
         <div className={classes.flexItemSlim}>
           {
-            row.orderStatus.length > 22
+            row.orderStatus?.length > 22
             ? row.orderStatus.slice(0, 22) + '..'
             : row.orderStatus
           }
         </div>
-        <div className={classes.flexItemSlim}>{option(row).seller.user.email()}</div>
+        <div className={classes.flexItemSlim}>
+          {row?.seller?.user?.email}
+        </div>
       </div>
       <div className={clsx(
         classes.hiddenRowRoot,
@@ -114,6 +120,29 @@ const RowExpander = (props: RowExpanderProps) => {
           <Collapse in={open} timeout="auto" unmountOnExit>
 
             <div className={classes.marginBox}>
+
+              <div className={classes.sellerDetailsBox}>
+                <Typography variant="h6" component="div">
+                  Seller Details
+                </Typography>
+                <div className={classes.sellerDetailsRow}>
+                  <Typography className={classes.sellerDetailsHeader} variant="body1">
+                    Email:
+                  </Typography>
+                  <Typography className={classes.sellerDetailsInfo} variant="body1">
+                    {row?.seller?.user?.email}
+                  </Typography>
+                </div>
+                <div className={classes.sellerDetailsRow}>
+                  <Typography className={classes.sellerDetailsHeader} variant="body1">
+                    Phone:
+                  </Typography>
+                  <Typography className={classes.sellerDetailsInfo} variant="body1">
+                    {phoneNumber}
+                  </Typography>
+                </div>
+              </div>
+
               <Typography variant="h6" gutterBottom component="div">
                 Order Details
               </Typography>
@@ -132,7 +161,7 @@ const RowExpander = (props: RowExpanderProps) => {
                       media: classes.cardMediaWide
                     }}
                     onClick={() => setOpenImage(false)}
-                    image={option(row).form10.original.url()}
+                    image={row?.form10?.original?.url}
                   />
                 </Dialog>
               }
@@ -148,59 +177,64 @@ const RowExpander = (props: RowExpanderProps) => {
                   : "Waiting on Form 10"
                 }
               </Button>
-              <ButtonLoading
-                variant="outlined"
-                className={classes.approveButton}
-                onClick={() => {
-                  approveForm10({
-                    variables: {
-                      orderId: row.id, // row.id => order.id
-                      adminApproverId: admin.id, // row.id => order.id
-                    }
-                  })
-                }}
-                loadingIconColor={Colors.blue}
-                replaceTextWhenLoading={true}
-                loading={loading}
-                disabled={!readyForApproval}
-                color="secondary"
-                style={{
-                  width: '150px',
-                  height: '36px',
-                }}
-              >
-                {
-                  readyForApproval
-                  ? "Approve Form 10"
-                  : alreadyApproved
-                    ? "Approved"
-                    : "Awaiting Seller"
+              {
+                showApprovalButtons &&
+                <>
+                  <ButtonLoading
+                    variant="outlined"
+                    className={classes.approveButton}
+                    onClick={() => {
+                      approveForm10({
+                        variables: {
+                          orderId: row.id, // row.id => order.id
+                          adminApproverId: admin.id, // row.id => order.id
+                        }
+                      })
+                    }}
+                    loadingIconColor={Colors.blue}
+                    replaceTextWhenLoading={true}
+                    loading={loading}
+                    disabled={!readyForApproval}
+                    color="secondary"
+                    style={{
+                      width: '150px',
+                      height: '36px',
+                    }}
+                  >
+                    {
+                      readyForApproval
+                      ? "Approve Form 10"
+                      : alreadyApproved
+                        ? "Approved"
+                        : "Awaiting Seller"
 
-                }
-              </ButtonLoading>
-              <ButtonLoading
-                variant="outlined"
-                className={classes.unapproveButton}
-                onClick={() => {
-                  reviseAndResubmit({
-                    variables: {
-                      orderId: row.id, // row.id => order.id
-                      adminApproverId: admin.id, // row.id => order.id
                     }
-                  })
-                }}
-                loadingIconColor={Colors.red}
-                replaceTextWhenLoading={true}
-                loading={reviseAndResubmitResponse.loading}
-                disabled={!readyForApproval}
-                color="secondary"
-                style={{
-                  width: '150px',
-                  height: '36px',
-                }}
-              >
-                Reject Form 10
-              </ButtonLoading>
+                  </ButtonLoading>
+                  <ButtonLoading
+                    variant="outlined"
+                    className={classes.unapproveButton}
+                    onClick={() => {
+                      reviseAndResubmit({
+                        variables: {
+                          orderId: row.id, // row.id => order.id
+                          adminApproverId: admin.id, // row.id => order.id
+                        }
+                      })
+                    }}
+                    loadingIconColor={Colors.red}
+                    replaceTextWhenLoading={true}
+                    loading={reviseAndResubmitResponse.loading}
+                    disabled={!readyForApproval}
+                    color="secondary"
+                    style={{
+                      width: '150px',
+                      height: '36px',
+                    }}
+                  >
+                    Reject Form 10
+                  </ButtonLoading>
+                </>
+              }
             </div>
 
 
@@ -262,6 +296,7 @@ interface RowExpanderProps extends WithStyles<typeof styles> {
     },
   }[];
   initialOpen?: boolean;
+  showApprovalButtons?: boolean;
 }
 
 interface MutData {
@@ -346,12 +381,14 @@ const styles = (theme: Theme) => createStyles({
     flexGrow: 1,
     padding: '0.25rem 0.5rem',
     fontWeight: 600,
+    fontSize: '14px',
   },
   headerCell2: {
     flexBasis: '30%',
     flexGrow: 1,
     padding: '0.25rem 0.5rem',
     fontWeight: 600,
+    fontSize: '14px',
   },
   headerCell3: {
     flexBasis: '45%',
@@ -361,6 +398,7 @@ const styles = (theme: Theme) => createStyles({
     flexDirection: "row",
     padding: '0.25rem 0.5rem',
     fontWeight: 600,
+    fontSize: '14px',
   },
   bodyRow: {
     display: "flex",
@@ -445,6 +483,23 @@ const styles = (theme: Theme) => createStyles({
     fontWeight: 600,
     fontSize: '0.825rem',
     textTransform: "capitalize",
+  },
+  sellerDetailsBox: {
+    marginBottom: '1rem',
+  },
+  sellerDetailsRow: {
+    display: 'flex',
+    width: '100%',
+    justifyContent: 'flex-start',
+  },
+  sellerDetailsHeader: {
+    width: '60px',
+    fontWeight: 400,
+    fontSize: "14px",
+  },
+  sellerDetailsInfo: {
+    fontWeight: 400,
+    fontSize: "14px",
   },
 });
 

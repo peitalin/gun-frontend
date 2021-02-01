@@ -1,40 +1,13 @@
 import * as React from "react";
-import { oc as option } from "ts-optchain";
 import clsx from "classnames";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 import { Colors } from "layout/AppTheme";
-// MUI
-import Typography from "@material-ui/core/Typography";
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import InputLabel from '@material-ui/core/InputLabel';
-import Button from '@material-ui/core/Button';
-
-import Layout from "layout";
-
 import {
-  PayoutItem,
-  PayoutStatus,
-  Connection, ConnectionQuery, Edge,
-  StoreSales,
-  Payout,
-  ID,
-  Transactions,
   User,
 } from "typings/gqlTypes";
 // Graphql
-import { useQuery, useMutation, useApolloClient } from "@apollo/client";
-import {
-  GET_PAYOUTS_IN_PERIOD_ADMIN,
-} from "queries/payouts-queries";
-import {
-  CREATE_PAYOUTS,
-  APPROVE_PAYOUTS,
-} from "queries/payouts-mutations";
 import Loading from 'components/Loading';
-import SnackBarA from "components/Snackbars/SnackbarA";
 // Components
 import OrdersPendingApprovalTable from "./OrdersPendingApprovalTable";
 // formatters
@@ -48,12 +21,10 @@ import currency from "currency.js";
 const OrdersPendingApprovals: React.FC<ReactProps> = (props) => {
 
   const { classes } = props;
-  const c = (s) => currency(s/100, { formatWithSymbol: true }).format()
-  const asTime = (d: Date) => dayjs(d).format("YYYY-MM-DD")
 
   const d = new Date();
   // get current month + year
-  const [month, setMonth] = React.useState<any>(d.getMonth());
+  const [month, setMonth] = React.useState<any>(d.getMonth() + 1);
   const [year, setYear] = React.useState<any>(d.getUTCFullYear());
 
   const [isLoading, setIsLoading] = React.useState(false);
@@ -61,15 +32,12 @@ const OrdersPendingApprovals: React.FC<ReactProps> = (props) => {
   return (
     <div className={classes.root}>
       <div className={clsx(classes.spaceBetween)}>
-
         <OrdersPendingApprovalTable
           month={month}
           year={year}
           admin={props.admin}
         />
-
         <Loading fixed loading={isLoading} delay={'200ms'}/>
-
       </div>
     </div>
   )

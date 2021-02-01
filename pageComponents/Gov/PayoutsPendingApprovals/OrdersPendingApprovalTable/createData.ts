@@ -3,7 +3,8 @@ import {
   Orders,
   Products,
   User,
-  StorePublic,
+  StorePrivate,
+  Stores,
   OrderStatus,
 } from "typings/gqlTypes";
 import { oc as option } from "ts-optchain";
@@ -24,7 +25,7 @@ export const createData = ({
   id: string,
   createdAt: Date,
   total: number,
-  seller: StorePublic,
+  seller: Stores,
   buyer: User,
   currentOrderSnapshot: Order_Snapshots,
   orderSnapshots?: Order_Snapshots[]
@@ -68,7 +69,7 @@ export const createData = ({
 const getUserWhoActionedOrderStatus = (
   orderSnapshot: Order_Snapshots,
   buyer: User,
-  seller: StorePublic,
+  seller: Stores,
 ): User => {
 
   let orderStatus = option(orderSnapshot).orderStatus();

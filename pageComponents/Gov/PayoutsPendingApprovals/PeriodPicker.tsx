@@ -10,7 +10,6 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
-import Button from '@material-ui/core/Button';
 import Paper from "@material-ui/core/Paper";
 
 
@@ -75,11 +74,12 @@ const PeriodPicker: FunctionComponent<ReactProps> = (props) => {
               id: 'year-simple',
             }}
           >
-            <MenuItem value={2018}>2018</MenuItem>
-            <MenuItem value={2019}>2019</MenuItem>
             <MenuItem value={2020}>2020</MenuItem>
             <MenuItem value={2021}>2021</MenuItem>
             <MenuItem value={2022}>2022</MenuItem>
+            <MenuItem value={2023}>2023</MenuItem>
+            <MenuItem value={2024}>2024</MenuItem>
+            <MenuItem value={2025}>2025</MenuItem>
           </Select>
         </FormControl>
           {props.children}

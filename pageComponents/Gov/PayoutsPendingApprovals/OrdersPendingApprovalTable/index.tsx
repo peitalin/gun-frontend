@@ -212,7 +212,7 @@ const OrdersPendingApprovalTable: NextPage<ReactProps> = (props) => {
     return (
       <LoadingBar
         absoluteTop
-        color={Colors.magenta}
+        color={Colors.gradientUniswapBlue1}
         height={4}
         width={'100vw'}
         loading={true}
@@ -273,12 +273,12 @@ const OrdersPendingApprovalTable: NextPage<ReactProps> = (props) => {
           >
             {({ node: order }) => {
 
-              // console.log("order: ", order.payoutitems)
+              console.log("order>>>>>>: ", order)
               const row2 = createData({
                 id: order.id,
                 total: order.total,
                 createdAt: order.createdAt,
-                seller: order.seller as any,
+                seller: order.seller,
                 buyer: order.buyer,
                 currentOrderSnapshot: order.currentSnapshot,
                 orderSnapshots: order.orderSnapshots,
@@ -294,6 +294,7 @@ const OrdersPendingApprovalTable: NextPage<ReactProps> = (props) => {
                   admin={props.admin}
                   index={ordersCreatedIndex}
                   refetchQueriesParams={refetchQueriesParams}
+                  showApprovalButtons={false}
                 />
               )
             }}
@@ -367,6 +368,7 @@ const OrdersPendingApprovalTable: NextPage<ReactProps> = (props) => {
                   admin={props.admin}
                   index={ordersPAIndex}
                   refetchQueriesParams={refetchQueriesParams}
+                  showApprovalButtons={true}
                 />
               )
             }}
@@ -439,6 +441,7 @@ const OrdersPendingApprovalTable: NextPage<ReactProps> = (props) => {
                   admin={props.admin}
                   index={ordersAAIndex}
                   refetchQueriesParams={refetchQueriesParams}
+                  showApprovalButtons={true}
                 />
               )
             }}
