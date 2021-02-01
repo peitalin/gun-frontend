@@ -38,7 +38,7 @@ const Loading: React.FC<ReactProps> = (props) => {
     delay,
     loading = true,
   } = props;
-  const color = props.color || Colors.magenta;
+  const color = props.color || Colors.gradientUniswapBlue1;
 
   if (!loading) {
     return <span className={classes.placeholder}/>;
