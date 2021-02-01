@@ -273,6 +273,12 @@ export const OrdersFragment = gql`
           accountNumber
           accountName
         }
+        phoneNumber {
+          id
+          areaCode
+          countryCode
+          number
+        }
       }
     }
     currentSnapshot {
@@ -350,6 +356,7 @@ export const OrdersFragment = gql`
       payoutId
       taxes
     }
+    paymentIntentId
   }
   ${ProductsFragment}
   ${ImageFragment}

@@ -12,7 +12,7 @@ export const CREATE_ORDER = gql`
     $total: Int!
     $buyerId: String!
     $sellerId: String!
-    $stripeCreatePaymentData: String!
+    $stripeAuthorizePaymentData: String!
     $bidId: String
   ) {
     createOrder(
@@ -23,7 +23,7 @@ export const CREATE_ORDER = gql`
       total: $total
       buyerId: $buyerId
       sellerId: $sellerId
-      stripeCreatePaymentData: $stripeCreatePaymentData
+      stripeAuthorizePaymentData: $stripeAuthorizePaymentData
       bidId: $bidId
     ) {
       unconfirmedOrder {
@@ -35,14 +35,13 @@ export const CREATE_ORDER = gql`
   ${OrdersFragment}
 `;
 
-export const CONFIRM_ORDER = gql`
-  mutation confirmOrder(
+export const CAPTURE_PAYMENT_FOR_ORDER = gql`
+  mutation capturePaymentForOrder(
     $orderId: String!
     $stripeConfirmPaymentData: String!
   ) {
-    confirmOrder(
+    capturePaymentForOrder(
       orderId: $orderId
-      stripeConfirmPaymentData: $stripeConfirmPaymentData
     ) {
       order {
         ...OrdersFragment
