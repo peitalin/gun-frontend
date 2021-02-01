@@ -2,8 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { oc as option } from "ts-optchain";
 // Graphql
-// import { Store, StorePrivate, UserPrivate, ID } from "typings/gqlTypes";
-type StorePrivate = any;
+import { Store, StorePrivate, UserPrivate, ID } from "typings/gqlTypes";
 
 // Styles
 import { withStyles, WithStyles, Theme, createStyles } from "@material-ui/core/styles";
@@ -104,7 +103,7 @@ const styles = (theme: Theme) => createStyles({
     color: Colors.blue,
     cursor: 'pointer',
     "&:hover": {
-      color: Colors.magenta,
+      color: Colors.gradientUniswapBlue1,
     },
   },
   profileText: {

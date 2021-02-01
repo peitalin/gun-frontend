@@ -14,7 +14,7 @@ export const NavBarHeight = MainBarHeightHomePage + NewsBarHeight;
 
 const categoryBarColor = Colors.black
 const categoryLinkColor = Colors.slateGrey
-const categoryLinkColorHover = Colors.magenta
+const categoryLinkColorHover = Colors.gradientUniswapBlue1
 
 const categoryLinkColor2 = Colors.darkGrey
 const categoryLinkColorHover2 = Colors.secondaryBright
