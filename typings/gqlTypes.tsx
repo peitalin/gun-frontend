@@ -3457,7 +3457,6 @@ export type Mutation = {
    * AccessRule – LOGGED_IN
    */
   editUserProfile: UserMutationResponse;
-  editUserPhoneNumber: UserMutationResponse;
   editUserLicense: UserMutationResponse;
   adminApproveUserLicense: UserMutationResponse;
   /**
@@ -3706,7 +3705,7 @@ export type Mutation = {
    * For a buyer to make payment and confirm an order.
    * using a Westpac token + Westpac customer Id
    */
-  confirmOrder: OrderMutationResponse;
+  capturePaymentForOrder: OrderMutationResponse;
   /**
    * AccessRule – LOGGED_IN
    * For a seller to upload form 10 after disposing gun
@@ -4751,13 +4750,6 @@ export type MutationEditUserProfileArgs = {
 };
 
 
-export type MutationEditUserPhoneNumberArgs = {
-  phoneNumber: Scalars['String'];
-  areaCode?: Maybe<Scalars['String']>;
-  countryCode: Scalars['String'];
-};
-
-
 export type MutationEditUserLicenseArgs = {
   licenseNumber: Scalars['String'];
   licenseExpiry: Scalars['Date'];
@@ -4996,14 +4988,13 @@ export type MutationCreateOrderArgs = {
   total: Scalars['Int'];
   buyerId: Scalars['String'];
   sellerId: Scalars['String'];
-  stripeCreatePaymentData: Scalars['String'];
+  stripeAuthorizePaymentData: Scalars['String'];
   bidId?: Maybe<Scalars['String']>;
 };
 
 
-export type MutationConfirmOrderArgs = {
+export type MutationCapturePaymentForOrderArgs = {
   orderId: Scalars['String'];
-  stripeConfirmPaymentData: Scalars['String'];
 };
 
 
@@ -5470,6 +5461,7 @@ export type Orders = {
   orderSnapshots: Array<Order_Snapshots>;
   /** An aggregated array relationship */
   orderSnapshots_aggregate: Order_Snapshots_Aggregate;
+  paymentIntentId?: Maybe<Scalars['String']>;
   /** An array relationship */
   payoutItems: Array<Payout_Items>;
   /** An aggregated array relationship */
@@ -5604,6 +5596,7 @@ export type Orders_Bool_Exp = {
   currentSnapshotId?: Maybe<String_Comparison_Exp>;
   id?: Maybe<String_Comparison_Exp>;
   orderSnapshots?: Maybe<Order_Snapshots_Bool_Exp>;
+  paymentIntentId?: Maybe<String_Comparison_Exp>;
   payoutItems?: Maybe<Payout_Items_Bool_Exp>;
   product?: Maybe<Products_Bool_Exp>;
   productId?: Maybe<String_Comparison_Exp>;
@@ -5641,6 +5634,7 @@ export type Orders_Insert_Input = {
   currentSnapshotId?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
   orderSnapshots?: Maybe<Order_Snapshots_Arr_Rel_Insert_Input>;
+  paymentIntentId?: Maybe<Scalars['String']>;
   payoutItems?: Maybe<Payout_Items_Arr_Rel_Insert_Input>;
   product?: Maybe<Products_Obj_Rel_Insert_Input>;
   productId?: Maybe<Scalars['String']>;
@@ -5662,6 +5656,7 @@ export type Orders_Max_Fields = {
   currency?: Maybe<Scalars['String']>;
   currentSnapshotId?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
+  paymentIntentId?: Maybe<Scalars['String']>;
   productId?: Maybe<Scalars['String']>;
   productSnapshotId?: Maybe<Scalars['String']>;
   sellerId?: Maybe<Scalars['String']>;
@@ -5679,6 +5674,7 @@ export type Orders_Max_Order_By = {
   currency?: Maybe<Order_By>;
   currentSnapshotId?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
+  paymentIntentId?: Maybe<Order_By>;
   productId?: Maybe<Order_By>;
   productSnapshotId?: Maybe<Order_By>;
   sellerId?: Maybe<Order_By>;
@@ -5697,6 +5693,7 @@ export type Orders_Min_Fields = {
   currency?: Maybe<Scalars['String']>;
   currentSnapshotId?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
+  paymentIntentId?: Maybe<Scalars['String']>;
   productId?: Maybe<Scalars['String']>;
   productSnapshotId?: Maybe<Scalars['String']>;
   sellerId?: Maybe<Scalars['String']>;
@@ -5714,6 +5711,7 @@ export type Orders_Min_Order_By = {
   currency?: Maybe<Order_By>;
   currentSnapshotId?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
+  paymentIntentId?: Maybe<Order_By>;
   productId?: Maybe<Order_By>;
   productSnapshotId?: Maybe<Order_By>;
   sellerId?: Maybe<Order_By>;
@@ -5757,6 +5755,7 @@ export type Orders_Order_By = {
   currentSnapshotId?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   orderSnapshots_aggregate?: Maybe<Order_Snapshots_Aggregate_Order_By>;
+  paymentIntentId?: Maybe<Order_By>;
   payoutItems_aggregate?: Maybe<Payout_Items_Aggregate_Order_By>;
   product?: Maybe<Products_Order_By>;
   productId?: Maybe<Order_By>;
@@ -5789,6 +5788,8 @@ export enum Orders_Select_Column {
   /** column name */
   ID = 'id',
   /** column name */
+  PAYMENTINTENTID = 'paymentIntentId',
+  /** column name */
   PRODUCTID = 'productId',
   /** column name */
   PRODUCTSNAPSHOTID = 'productSnapshotId',
@@ -5812,6 +5813,7 @@ export type Orders_Set_Input = {
   currency?: Maybe<Scalars['String']>;
   currentSnapshotId?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
+  paymentIntentId?: Maybe<Scalars['String']>;
   productId?: Maybe<Scalars['String']>;
   productSnapshotId?: Maybe<Scalars['String']>;
   sellerId?: Maybe<Scalars['String']>;
@@ -5879,6 +5881,8 @@ export enum Orders_Update_Column {
   CURRENTSNAPSHOTID = 'currentSnapshotId',
   /** column name */
   ID = 'id',
+  /** column name */
+  PAYMENTINTENTID = 'paymentIntentId',
   /** column name */
   PRODUCTID = 'productId',
   /** column name */
@@ -5959,11 +5963,6 @@ export enum OrderStatus {
   /** step 4, payout completed, westpac transaction ID inputted */
   COMPLETE = 'COMPLETE'
 }
-
-export type PageBasedConnection = {
-  totalCount?: Maybe<Scalars['Int']>;
-  pageInfo: PageBasedConnectionPageInfo;
-};
 
 export type PageBasedConnectionEdge = {
   pageNumber: Scalars['Int'];
@@ -7266,7 +7265,7 @@ export enum PayoutStatus {
 /** columns and relationships of "phone_numbers" */
 export type Phone_Numbers = {
    __typename?: 'phone_numbers';
-  areaCode: Scalars['String'];
+  areaCode?: Maybe<Scalars['String']>;
   countryCode: Scalars['String'];
   id: Scalars['String'];
   number: Scalars['String'];
@@ -10799,22 +10798,6 @@ export type SalesBreakdown = {
   actualPrice: Scalars['Int'];
 };
 
-/** An item in a search result (this can accomodate multiple types of items in a search result) */
-export type SearchResultItem = ProductPublic | ProductPrivate;
-
-export type SearchResultsConnection = PageBasedConnection & {
-   __typename?: 'SearchResultsConnection';
-  totalCount?: Maybe<Scalars['Int']>;
-  pageInfo: PageBasedConnectionPageInfo;
-  edges: Array<SearchResultsEdge>;
-};
-
-export type SearchResultsEdge = PageBasedConnectionEdge & {
-   __typename?: 'SearchResultsEdge';
-  pageNumber: Scalars['Int'];
-  node: SearchResultItem;
-};
-
 
 export type SendResetPasswordResponse = {
    __typename?: 'SendResetPasswordResponse';
@@ -10831,7 +10814,8 @@ export type SignUpMutationResponse = {
 export enum SoldOutStatus {
   SOLD_OUT = 'SOLD_OUT',
   RESERVED = 'RESERVED',
-  AVAILABLE = 'AVAILABLE'
+  AVAILABLE = 'AVAILABLE',
+  ABANDONED = 'ABANDONED'
 }
 
 /** Information about a store */
@@ -13782,7 +13766,7 @@ export type UsersFragment = { __typename?: 'users', id: string, email: string, u
     & StoresFragment
   )>, payoutMethod?: Maybe<{ __typename?: 'payout_methods', id: string, storeId: string, createdAt: any, updatedAt?: Maybe<any>, payoutType?: Maybe<string>, bsb?: Maybe<string>, accountNumber?: Maybe<string>, accountName?: Maybe<string> }>, license?: Maybe<{ __typename?: 'user_licenses', id: string, licenseNumber: string, licenseExpiry: any, licenseCategory?: Maybe<string>, licenseState?: Maybe<string>, verified: boolean }> };
 
-export type OrdersFragment = { __typename?: 'orders', id: string, createdAt: any, updatedAt: any, bidId?: Maybe<string>, total: number, currency: string, buyerId: string, sellerId: string, productId: string, bid?: Maybe<{ __typename?: 'bids', id: string, bidStatus: string, createdAt?: Maybe<any>, updatedAt?: Maybe<any>, acceptedPrice?: Maybe<number>, offerPrice: number }>, buyer?: Maybe<{ __typename?: 'users', id: string, firstName?: Maybe<string>, lastName?: Maybe<string>, email: string }>, seller?: Maybe<{ __typename?: 'stores', id: string, name: string, website?: Maybe<string>, createdAt: any, updatedAt?: Maybe<any>, user: { __typename?: 'users', id: string, firstName?: Maybe<string>, lastName?: Maybe<string>, email: string, payoutMethod?: Maybe<{ __typename?: 'payout_methods', id: string, createdAt: any, updatedAt?: Maybe<any>, payoutType?: Maybe<string>, bsb?: Maybe<string>, accountNumber?: Maybe<string>, accountName?: Maybe<string> }> } }>, currentSnapshot?: Maybe<{ __typename?: 'order_snapshots', id: string, orderStatus: string, createdAt: any, adminApproverId?: Maybe<string>, dealerApproverId?: Maybe<string>, adminApprover?: Maybe<{ __typename?: 'users', id: string, firstName?: Maybe<string>, lastName?: Maybe<string>, email: string }>, dealerApprover?: Maybe<{ __typename?: 'users', id: string, firstName?: Maybe<string>, lastName?: Maybe<string>, email: string }>, form10Image?: Maybe<(
+export type OrdersFragment = { __typename?: 'orders', id: string, createdAt: any, updatedAt: any, bidId?: Maybe<string>, total: number, currency: string, buyerId: string, sellerId: string, productId: string, paymentIntentId?: Maybe<string>, bid?: Maybe<{ __typename?: 'bids', id: string, bidStatus: string, createdAt?: Maybe<any>, updatedAt?: Maybe<any>, acceptedPrice?: Maybe<number>, offerPrice: number }>, buyer?: Maybe<{ __typename?: 'users', id: string, firstName?: Maybe<string>, lastName?: Maybe<string>, email: string }>, seller?: Maybe<{ __typename?: 'stores', id: string, name: string, website?: Maybe<string>, createdAt: any, updatedAt?: Maybe<any>, user: { __typename?: 'users', id: string, firstName?: Maybe<string>, lastName?: Maybe<string>, email: string, payoutMethod?: Maybe<{ __typename?: 'payout_methods', id: string, createdAt: any, updatedAt?: Maybe<any>, payoutType?: Maybe<string>, bsb?: Maybe<string>, accountNumber?: Maybe<string>, accountName?: Maybe<string> }>, phoneNumber?: Maybe<{ __typename?: 'phone_numbers', id: string, areaCode?: Maybe<string>, countryCode: string, number: string }> } }>, currentSnapshot?: Maybe<{ __typename?: 'order_snapshots', id: string, orderStatus: string, createdAt: any, adminApproverId?: Maybe<string>, dealerApproverId?: Maybe<string>, adminApprover?: Maybe<{ __typename?: 'users', id: string, firstName?: Maybe<string>, lastName?: Maybe<string>, email: string }>, dealerApprover?: Maybe<{ __typename?: 'users', id: string, firstName?: Maybe<string>, lastName?: Maybe<string>, email: string }>, form10Image?: Maybe<(
       { __typename?: 'image_parents' }
       & ImageFragment
     )>, transaction?: Maybe<{ __typename?: 'transactions', id: string, total: number, createdAt: any, currency?: Maybe<string>, receiptNumber: string, customerId?: Maybe<string>, orderId?: Maybe<string>, paymentProcessor?: Maybe<string>, paymentMethodId?: Maybe<string>, paymentIntentId?: Maybe<string>, refundId?: Maybe<string> }> }>, orderSnapshots: Array<{ __typename?: 'order_snapshots', id: string, orderStatus: string, createdAt: any, adminApproverId?: Maybe<string>, dealerApproverId?: Maybe<string>, adminApprover?: Maybe<{ __typename?: 'users', id: string, firstName?: Maybe<string>, lastName?: Maybe<string>, email: string }>, dealerApprover?: Maybe<{ __typename?: 'users', id: string, firstName?: Maybe<string>, lastName?: Maybe<string>, email: string }>, form10Image?: Maybe<(
@@ -13879,7 +13863,7 @@ export type StorePrivateFragment = { __typename?: 'StorePrivate', id: string, na
 
 export type PaymentMethodFragment = { __typename?: 'payment_methods', id: string, userId: string, createdAt: any, updatedAt?: Maybe<any>, customerId?: Maybe<string>, paymentProcessor?: Maybe<string>, paymentMethodTypes?: Maybe<string>, last4?: Maybe<string>, expMonth?: Maybe<number>, expYear?: Maybe<number>, email?: Maybe<string>, name?: Maybe<string>, details?: Maybe<string> };
 
-export type UserPrivateFragment = { __typename?: 'UserPrivate', id: string, firstName?: Maybe<string>, lastName?: Maybe<string>, email: string, emailVerified?: Maybe<boolean>, userRole: Role, isSuspended: boolean, license?: Maybe<{ __typename?: 'user_licenses', id: string, licenseNumber: string, licenseCategory?: Maybe<string>, licenseExpiry: any, licenseState?: Maybe<string>, verified: boolean }>, store?: Maybe<(
+export type UserPrivateFragment = { __typename?: 'UserPrivate', id: string, firstName?: Maybe<string>, lastName?: Maybe<string>, email: string, emailVerified?: Maybe<boolean>, userRole: Role, isSuspended: boolean, license?: Maybe<{ __typename?: 'user_licenses', id: string, licenseNumber: string, licenseCategory?: Maybe<string>, licenseExpiry: any, licenseState?: Maybe<string>, verified: boolean }>, phoneNumber?: Maybe<{ __typename?: 'phone_numbers', id: string, areaCode?: Maybe<string>, countryCode: string, number: string }>, store?: Maybe<(
     { __typename?: 'StorePrivate' }
     & StorePrivateFragment
   )>, payoutMethod?: Maybe<{ __typename?: 'payout_methods', id: string, payoutType?: Maybe<string>, bsb?: Maybe<string>, accountNumber?: Maybe<string>, accountName?: Maybe<string> }> };
@@ -14178,6 +14162,12 @@ export const OrdersFragmentFragmentDoc = gql`
         accountNumber
         accountName
       }
+      phoneNumber {
+        id
+        areaCode
+        countryCode
+        number
+      }
     }
   }
   currentSnapshot {
@@ -14255,6 +14245,7 @@ export const OrdersFragmentFragmentDoc = gql`
     payoutId
     taxes
   }
+  paymentIntentId
 }
     ${ImageFragmentFragmentDoc}
 ${ProductsFragmentFragmentDoc}`;
@@ -14395,6 +14386,12 @@ export const UserPrivateFragmentFragmentDoc = gql`
     licenseExpiry
     licenseState
     verified
+  }
+  phoneNumber {
+    id
+    areaCode
+    countryCode
+    number
   }
   store {
     ...StorePrivateFragment
