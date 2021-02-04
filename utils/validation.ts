@@ -611,27 +611,15 @@ export const validationSchemas = {
         .required('reason required'),
       reasonDetails: Yup.string()
         .required('reasonDetails - bank refund ID required'),
-      // paymentIntentId: Yup.string() // Stripe Only
-      //   .nullable(true)
-      //   .test("paymentIntentId", "Must exist for Stripe transactions", function(value) {
-      //     if (this.parent.paymentProcessor === "Stripe") {
-      //       return !!value
-      //     } else {
-      //       // if Paypal, return true (passes validation check)
-      //       return true
-      //     }
-      //   }),
-      // paypalInvoiceNumber: Yup.string()
-      //   .nullable(true), // Paypal Only
-      // taxes: Yup.number()
-      //   .required('taxes required'),
-      // paymentProcessingFee: Yup.number()
-      //   .required('paymentProcessingFee required'),
-      // paymentProcessor: Yup.string()
-      //   .required('paymentProcessor required'),
-        // Stripe || Paypal
     }),
 
+  // Payment Intent Authorization Cancels
+  PaymentCancel:
+    Yup.object().shape({
+      orderId: Yup.string()
+        .required('orderId required'),
+      markProductAbandoned: Yup.boolean(),
+    }),
 
   // Creating Zendesk Support Ticket
   CreateSupportTicket:
