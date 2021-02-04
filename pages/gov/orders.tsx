@@ -24,7 +24,7 @@ const AdminProfileWrapper = dynamic(() => import("layout/GetUser/AdminProfileWra
   loading: () => <LoadingBarSSR/>,
   ssr: false,
 })
-import OrderRefundsPage from "pageComponents/Gov/OrderRefunds";
+import OrderViewerPage from "pageComponents/Gov/OrderViewer";
 
 
 
@@ -40,7 +40,7 @@ const GovOrdersPage: NextPage<ReactProps> = (props) => {
     <AdminProfileWrapper>
       {({ data, loading, error }: AdminProfileProps) => {
         return (
-          <OrderRefundsPage
+          <OrderViewerPage
             onSubmit={undefined}
             disableRefundButton={true}
             onClickDebugPrint={undefined}

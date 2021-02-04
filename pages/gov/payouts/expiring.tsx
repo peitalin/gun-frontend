@@ -1,12 +1,11 @@
 import React from "react";
-import { oc as option } from "ts-optchain";
 // Styles
 import { withStyles, WithStyles } from "@material-ui/core/styles";
 import { styles } from "pageComponents/SellerProfileDashboard/styles";
 import clsx from "clsx";
 // Components
 import LoadingBarSSR from "components/LoadingBarSSR";
-import OrdersRefundedList from "pageComponents/Gov/OrdersRefundedList";
+import OrdersExpiringList from "pageComponents/Gov/OrdersExpiringList";
 // next
 // SSR disable
 import dynamic from "next/dynamic";
@@ -18,7 +17,7 @@ const AdminProfileWrapper = dynamic(() => import("layout/GetUser/AdminProfileWra
 
 
 
-const PayoutsCompletedListPage = (props: ReactProps) => {
+const OrdersExpiringListPage = (props: ReactProps) => {
   // state
   const {
     classes
@@ -29,10 +28,12 @@ const PayoutsCompletedListPage = (props: ReactProps) => {
       disablePadding
       disableAdminBorder
     >
-      {(spp: AdminProfileProps) => {
+      {({ data, loading, error }: AdminProfileProps) => {
         return (
           <div className={classes.contentContainer}>
-            <OrdersRefundedList />
+            <OrdersExpiringList
+              admin={data.user}
+            />
           </div>
         )
       }}
@@ -43,6 +44,6 @@ const PayoutsCompletedListPage = (props: ReactProps) => {
 interface ReactProps extends WithStyles<typeof styles> {
 }
 
-export default withStyles(styles)( PayoutsCompletedListPage );
+export default withStyles(styles)( OrdersExpiringListPage );
 
 

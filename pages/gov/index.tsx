@@ -6,6 +6,7 @@ import Typography from "@material-ui/core/Typography";
 import { oc as option } from "ts-optchain";
 // styles
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
+import { BorderRadius, BoxShadows } from "layout/AppTheme";
 // Graphql
 import { useQuery, ApolloClient, useApolloClient } from "@apollo/client";
 import { GET_USER } from "queries/user-queries";
@@ -80,11 +81,15 @@ const styles = (theme: Theme) => createStyles({
   govHomePageSSR: {
     display: "flex",
     flexDirection: "column",
-    justifyContent: "center",
+    justifyContent: "flex-start",
     alignItems: "center",
+    background: theme.colors.uniswapDarkNavy,
+    boxShadow: BoxShadows.shadow1.boxShadow,
+    borderRadius: BorderRadius,
+    minHeight: '80vh',
   },
   homeHeading: {
-    paddingTop: '4rem',
+    paddingTop: '8rem',
     padding: '1rem',
     display: "flex",
     flexDirection: "column",

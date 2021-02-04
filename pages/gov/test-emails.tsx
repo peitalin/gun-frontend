@@ -37,18 +37,7 @@ const TestEmailsSSR = (props: ReactProps) => {
           <div className={classes.govHomePageSSR}>
             {
               user && !disabled &&
-              <div className={classes.homeHeading}>
-                <Typography variant="body2" gutterBottom>
-                  {`Logged in as PLATFORM_ADMIN:`}
-                </Typography>
-                <Typography variant="body2">
-                  {user.email}
-                </Typography>
-              </div>
-            }
-            {
-              !disabled &&
-              <TestEmails/>
+              <TestEmails userEmail={user.email} />
             }
           </div>
         )
@@ -67,14 +56,6 @@ interface QueryData {
 }
 const styles = (theme: Theme) => createStyles({
   govHomePageSSR: {
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  homeHeading: {
-    paddingTop: '4rem',
-    padding: '1rem',
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",

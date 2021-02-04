@@ -191,8 +191,8 @@ const ThemeProviderDarkMode = (props) => {
     // type: "light",
     // type: "dark"
   }
-  console.log("darkMode: ", darkMode)
-  console.log("darkModeTheme: ", darkModeTheme)
+  // console.log("darkMode: ", darkMode)
+  // console.log("darkModeTheme: ", darkModeTheme)
 
   let appTheme: ThemeOptions = createAppTheme(darkMode);
 

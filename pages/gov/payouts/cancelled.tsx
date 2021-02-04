@@ -5,7 +5,8 @@ import { styles } from "pageComponents/SellerProfileDashboard/styles";
 import clsx from "clsx";
 // Components
 import LoadingBarSSR from "components/LoadingBarSSR";
-import PayoutsCompletedList from "pageComponents/Gov/PayoutsCompletedList";
+import OrdersCancelledList from "pageComponents/Gov/OrdersCancelledList";
+// next
 // SSR disable
 import dynamic from "next/dynamic";
 import { AdminProfileProps } from "layout/GetUser/AdminProfileWrapper";
@@ -16,7 +17,7 @@ const AdminProfileWrapper = dynamic(() => import("layout/GetUser/AdminProfileWra
 
 
 
-const PayoutsCompletedListPage = (props: ReactProps) => {
+const PayoutsCancelledListPage = (props: ReactProps) => {
   // state
   const {
     classes
@@ -30,7 +31,7 @@ const PayoutsCompletedListPage = (props: ReactProps) => {
       {(spp: AdminProfileProps) => {
         return (
           <div className={classes.contentContainer}>
-            <PayoutsCompletedList />
+            <OrdersCancelledList />
           </div>
         )
       }}
@@ -41,6 +42,6 @@ const PayoutsCompletedListPage = (props: ReactProps) => {
 interface ReactProps extends WithStyles<typeof styles> {
 }
 
-export default withStyles(styles)( PayoutsCompletedListPage );
+export default withStyles(styles)( PayoutsCancelledListPage );
 
 
