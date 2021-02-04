@@ -42,7 +42,7 @@ const GovOrdersPage: NextPage<ReactProps> = (props) => {
         return (
           <OrderViewerPage
             onSubmit={undefined}
-            disableRefundButton={true}
+            disableCancelOrderButton={true}
             onClickDebugPrint={undefined}
           />
         )
