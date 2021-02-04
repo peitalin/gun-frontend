@@ -43,61 +43,50 @@ const OrderRowSellers: React.FC<ReactProps> = (props) => {
       classes.flexRow,
       (!order && !product) ? "pulse" : null,
     )}>
+      {
+        !props.loading &&
+        <div className={classes.flexRow}>
+          <div className={classes.flexCol}>
+            <ProductPreviewCardRow
+              previewItem={previewItem}
+              height={55}
+              width={88}
+            />
+            <div className={clsx(classes.detailsContainer, "fadeIn")}>
+              <Typography className={classes.name} variant="body2">
+                {option(product).currentSnapshot.title("")}
+              </Typography>
+              <Typography className={classes.tagline} variant="body2">
+                {option(product).currentSnapshot.model("")}
+              </Typography>
+              <OrderStatus order={order} />
+            </div>
+          </div>
 
-      <div className={classes.flexRow}>
-        <div className={classes.flexCol}>
-          <ProductPreviewCardRow
-            previewItem={previewItem}
-            height={55}
-            width={88}
-          />
-          <div className={classes.detailsContainer}>
-            <Typography className={classes.name} variant="body2">
-              {option(product).currentSnapshot.title("")}
-            </Typography>
-            <Typography className={classes.tagline} variant="body2">
-              {option(product).currentSnapshot.model("")}
-            </Typography>
-            {
-              option(product).store.id() &&
-              <Link
-                href="/s/[storeId]"
-                as={`/s/${option(product).store.id()}`}
-              >
-                <a>
-                  <Typography className={classes.storeName} variant="body2">
-                    {option(product).store.name()}
-                  </Typography>
-                </a>
-              </Link>
-            }
-            <OrderStatus order={order} />
+          <div className={classes.flexRow}>
+            <div className={clsx(classes.flexCol)}>
+              <div className={classes.flexRowFlexEnd}>
+                <Form10Upload
+                  order={order}
+                />
+              </div>
+
+              <div className={classes.flexRowFlexEnd}>
+                <OrderDetailsModal
+                  order={order}
+                />
+              </div>
+            </div>
           </div>
         </div>
-
-      <div className={classes.flexRow}>
-        <div className={clsx(classes.flexCol, 'fadeIn')}>
-          <div className={classes.flexRowFlexEnd}>
-            <Form10Upload
-              order={order}
-            />
-          </div>
-
-          <div className={classes.flexRowFlexEnd}>
-            <OrderDetailsModal
-              order={order}
-            />
-          </div>
-        </div>
-      </div>
-
-      </div>
+      }
     </ErrorBounds>
   )
 }
 
 interface ReactProps extends WithStyles<typeof styles> {
   order: Orders;
+  loading?: boolean;
 }
 
 const styles = (theme: Theme) => createStyles({
@@ -109,11 +98,12 @@ const styles = (theme: Theme) => createStyles({
     backgroundColor: Colors.foregroundColor,
     boxShadow: BoxShadows.shadow1.boxShadow,
     marginBottom: '0.5rem',
+    height: 220,
   },
   flexCol: {
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-start',
     width: '100%',
   },
   flexRow: {

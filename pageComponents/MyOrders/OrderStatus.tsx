@@ -102,7 +102,7 @@ const styles = (theme: Theme) => createStyles({
     // background: Colors.cream,
     width: "100%",
     marginTop: "0.5rem",
-    marginBottom: "1rem",
+    marginBottom: "0.5rem",
   },
   flexCol: {
     display: 'flex',

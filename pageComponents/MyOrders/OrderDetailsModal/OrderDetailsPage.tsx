@@ -28,6 +28,8 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 const OrderDetailsPage: React.FC<ReactProps> = (props) => {
 
   const { classes, order } = props;
+
+  const product = order.product;
   const theme = useTheme();
   const xsDown = useMediaQuery(theme.breakpoints.down('xs'))
 

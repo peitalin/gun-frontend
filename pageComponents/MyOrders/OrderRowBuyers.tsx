@@ -14,8 +14,6 @@ import Typography from "@material-ui/core/Typography";
 import ErrorBounds from "components/ErrorBounds";
 import ProductPreviewCardRow from "components/ProductPreviewCardRow";
 import OrderDetailsModal from "./OrderDetailsModal";
-// File requests
-import Link from "next/link";
 // mediaQuery
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
@@ -42,16 +40,17 @@ const OrderRowBuyers: React.FC<ReactProps> = (props) => {
       classes.flexRow,
     )}>
 
-      <div className={clsx(
-        classes.flexCol,
-        (!order && !product) ? "pulse" : null,
-      )}>
+      {
+        !props.loading &&
+        <div className={clsx(
+          classes.flexCol,
+          (!order && !product) ? "pulse" : null,
+        )}>
           <ProductPreviewCardRow
             previewItem={previewItem}
             height={55}
             width={88}
           />
-
           <div className={classes.detailsContainer}>
             <Typography className={classes.name} variant="body2">
               {product?.currentSnapshot?.title}
@@ -59,19 +58,6 @@ const OrderRowBuyers: React.FC<ReactProps> = (props) => {
             <Typography className={classes.tagline} variant="body2">
               {product?.currentSnapshot?.model}
             </Typography>
-            {
-              !!product?.store?.id &&
-              <Link
-                href="/s/[storeId]"
-                as={`/s/${option(product).store.id()}`}
-              >
-                <a>
-                  <Typography className={classes.storeName} variant="body2">
-                    {option(product).store.name()}
-                  </Typography>
-                </a>
-              </Link>
-            }
             <OrderStatus order={order} />
             <div className={classes.flexRowFlexEnd}>
               <OrderDetailsModal
@@ -79,14 +65,15 @@ const OrderRowBuyers: React.FC<ReactProps> = (props) => {
               />
             </div>
           </div>
-
-      </div>
+        </div>
+      }
     </ErrorBounds>
   )
 }
 
 interface ReactProps extends WithStyles<typeof styles> {
   order: Orders;
+  loading?: boolean;
 }
 
 const styles = (theme: Theme) => createStyles({
@@ -98,6 +85,7 @@ const styles = (theme: Theme) => createStyles({
     backgroundColor: Colors.foregroundColor,
     boxShadow: BoxShadows.shadow1.boxShadow,
     marginBottom: '0.5rem',
+    height: 220,
   },
   flexCol: {
     display: 'flex',
@@ -129,14 +117,6 @@ const styles = (theme: Theme) => createStyles({
     fontWeight: 600,
     color: theme.colors.uniswapLighterGrey,
     marginBottom: "0.25rem",
-  },
-  storeName: {
-    fontWeight: 600,
-    color: theme.colors.uniswapLighterGrey,
-    marginBottom: "0.25rem",
-    "&:hover": {
-      color: Colors.lightBlue,
-    },
   },
 });
 

@@ -10,18 +10,14 @@ import ErrorBounds from "components/ErrorBounds";
 import Typography from "@material-ui/core/Typography";
 // Components
 import { Orders } from "typings/gqlTypes";
-// Icons
-import LockIcon from "@material-ui/icons/Lock";
-import LocalOfferIcon from "@material-ui/icons/LocalOffer";
-// Components
-import { asCurrency as c } from "utils/prices";
-import Divider from "components/Divider";
+import Link from "next/link";
 
 
 
 const DisplayOrderId: React.FC<ReactProps> = (props) => {
 
   const { classes, order } = props;
+  const product = order.product;
 
   return (
     <ErrorBounds>
@@ -44,14 +40,24 @@ const DisplayOrderId: React.FC<ReactProps> = (props) => {
               {order.id}
             </Typography>
           </div>
-          <div className={classes.flexItem1}>
-            <Typography variant="subtitle2" className={classes.subHeading}>
-              Seller/Store
-            </Typography>
-            <Typography variant="body1" className={classes.bodyText}>
-              {order?.product?.store?.user?.email ?? "NA"}
-            </Typography>
-          </div>
+          {
+            !!product?.store?.id &&
+            <div className={classes.flexItem1}>
+              <Typography variant="subtitle2" className={classes.subHeading}>
+                Store name
+              </Typography>
+                <Link
+                  href="/s/[storeId]"
+                  as={`/s/${product?.store?.id}`}
+                >
+                  <a>
+                    <Typography className={classes.storeName} variant="body2">
+                      {product?.store?.name}
+                    </Typography>
+                  </a>
+                </Link>
+            </div>
+          }
         </div>
       </div>
 
@@ -98,6 +104,14 @@ const styles = (theme: Theme) => createStyles({
   bodyText: {
     fontSize: '0.9rem',
     marginBottom: '0.5rem',
+  },
+  storeName: {
+    fontWeight: 500,
+    color: theme.colors.uniswapLighterGrey,
+    marginBottom: "0.25rem",
+    "&:hover": {
+      color: Colors.lightBlue,
+    },
   },
 });
 

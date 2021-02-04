@@ -150,33 +150,6 @@ const MyOrders: React.FC<ReactProps> = (props) => {
 
   if (
     !option(buyerOrdersConnection).edges[0]() &&
-    !option(sellerOrdersConnection).edges[0]() &&
-    (buyerOrdersResponse.loading || sellerOrdersResponse.loading)
-  ) {
-    return (
-      <>
-        {
-          [1,2,3,4,5].map(i => {
-            return (
-              <DescriptionLoading
-                key={i}
-                rowFormat
-                height={xsDown ? 120 : 200}
-                mobilePicHeight={xsDown ? 60 : 80}
-                mobilePicWidth={xsDown ? 96 : 128}
-                style={{
-                  maxWidth: 480,
-                  marginTop: '0rem',
-                  marginRight: '1rem',
-                }}
-              />
-            )
-          })
-        }
-      </>
-    )
-  } else if (
-    !option(buyerOrdersConnection).edges[0]() &&
     !option(sellerOrdersConnection).edges[0]()
   ) {
     return (
@@ -193,18 +166,6 @@ const MyOrders: React.FC<ReactProps> = (props) => {
           </Button>
         </div>
       </OrdersLayout>
-    )
-  } else if (buyerOrdersResponse.error) {
-    return (
-      <ErrorDisplay title={"Orders couldn't load."}
-        error={buyerOrdersResponse.error}
-      />
-    )
-  } else if (sellerOrdersResponse.error) {
-    return (
-      <ErrorDisplay title={"Orders couldn't load."}
-        error={sellerOrdersResponse.error}
-      />
     )
   } else {
     return (
@@ -250,16 +211,22 @@ const MyOrders: React.FC<ReactProps> = (props) => {
               className={classes.rowContainer}
               classNameRoot={classes.gridRootBuyer}
             >
-              {({ node: order }) => {
-                if (buyerOrdersResponse.loading) {
-                  return <></>
+              {({ node: order, key }) => {
+                if (buyerOrdersResponse.error && key === 0) {
+                  return (
+                    <ErrorDisplay title={"Orders couldn't load."}
+                      error={buyerOrdersResponse.error}
+                    />
+                  )
+                } else {
+                  return (
+                    <OrderRowBuyers
+                      key={order.id}
+                      order={order}
+                      loading={buyerOrdersResponse.loading}
+                    />
+                  )
                 }
-                return (
-                  <OrderRowBuyers
-                    key={order.id}
-                    order={order}
-                  />
-                )
               }}
             </GridPaginatorGeneric>
           </SearchOptions>
@@ -309,16 +276,22 @@ const MyOrders: React.FC<ReactProps> = (props) => {
               className={classes.rowContainer}
               classNameRoot={classes.gridRootSeller}
             >
-              {({ node: order }) => {
-                if (sellerOrdersResponse.loading) {
-                  return <></>
+              {({ node: order, key }) => {
+                if (sellerOrdersResponse.error && key === 0) {
+                  return (
+                    <ErrorDisplay title={"Orders couldn't load."}
+                      error={sellerOrdersResponse.error}
+                    />
+                  )
+                } else {
+                  return (
+                    <OrderRowSellers
+                      key={order.id}
+                      order={order}
+                      loading={sellerOrdersResponse.loading}
+                    />
+                  )
                 }
-                return (
-                  <OrderRowSellers
-                    key={order.id}
-                    order={order}
-                  />
-                )
               }}
             </GridPaginatorGeneric>
           </SearchOptions>
