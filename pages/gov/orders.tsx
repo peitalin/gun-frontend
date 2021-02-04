@@ -30,11 +30,9 @@ import OrderViewerPage from "pageComponents/Gov/OrderViewer";
 
 const GovOrdersPage: NextPage<ReactProps> = (props) => {
 
-  const apolloClient = useApolloClient()
   const user = useSelector<GrandReduxState, UserPrivate>(
     state => state.reduxLogin.user
   );
-  const userId = option(user).id()
 
   return (
     <AdminProfileWrapper>
