@@ -57,7 +57,7 @@ const AdminProfileWrapper = (
   if (error && !option(data).user.id()) {
     return (
       <Redirect
-        message={"Login required. Redirecting to login..."}
+        message={"Admin login required. Redirecting..."}
         redirectCondition={!option(data).user.id()}
         redirectDelay={1000}
         redirectRoute={"/login"}
@@ -133,9 +133,9 @@ const styles = (theme: Theme) => createStyles({
     minHeight: 'calc(600px)',
     width: '100%',
     // border: `1px solid ${Colors.uniswapLightGrey}`,
-    background: Colors.uniswapDarkNavy,
-    boxShadow: BoxShadows.shadow1.boxShadow,
-    borderRadius: BorderRadius,
+    // background: Colors.uniswapDarkNavy,
+    // boxShadow: BoxShadows.shadow1.boxShadow,
+    // borderRadius: BorderRadius,
     padding: '1rem',
     // display: 'flex',
     // flexDirection: 'column',

@@ -92,9 +92,6 @@ const ProductPreviewCardRow = (props: ReactProps) => {
                 // previewLoaded ? classes.imagePreview : classes.imagePreviewPlaceholder,
                 // previewLoaded ? "fadeIn" : "hidden",
               )}
-              // classes={{
-              //   media: classes.cardMedia
-              // }}
               style={{
                 ...props.style,
                 height: props.height ? props.height : CARD_HEIGHT,

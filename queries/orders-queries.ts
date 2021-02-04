@@ -9,25 +9,6 @@ import {
 
 
 
-export const GET_ALL_ORDERS_CONNECTION2 = gql`
-  query getOrdersPendingApprovalConnectionAdmin(
-    $query: ConnectionOffsetQueryOrders!
-  ) {
-    getOrdersPendingApprovalConnectionAdmin(query: $query) {
-      totalCount
-      pageInfo {
-        isLastPage
-        endCursor
-      }
-      edges {
-        node {
-          ...OrdersFragment
-        }
-      }
-    }
-  }
-  ${OrdersFragment}
-`;
 
 export const GET_ORDERS_CREATED_CONNECTION = gql`
   query($query: ConnectionOffsetQueryOrders!) {
@@ -89,9 +70,9 @@ export const GET_ORDERS_PAYOUTS_COMPLETE_CONNECTION = gql`
   ${OrdersFragment}
 `;
 
-export const GET_ORDERS_REFUNDED_CONNECTION = gql`
+export const GET_ORDERS_CANCELLED_CONNECTION = gql`
   query($query: ConnectionOffsetQueryOrders!) {
-    getOrdersRefundedConnection(query: $query) {
+    getOrdersCancelledConnection(query: $query) {
       edges {
         node {
           ...OrdersFragment
@@ -103,6 +84,19 @@ export const GET_ORDERS_REFUNDED_CONNECTION = gql`
   ${OrdersFragment}
 `;
 
+export const GET_ORDERS_EXPIRING_CONNECTION = gql`
+  query($query: ConnectionOffsetQueryOrders!) {
+    getOrdersExpiringConnection(query: $query) {
+      edges {
+        node {
+          ...OrdersFragment
+        }
+      }
+      totalCount
+    }
+  }
+  ${OrdersFragment}
+`;
 
 
 export const GET_SELLER_ORDERS_CONNECTION = gql`

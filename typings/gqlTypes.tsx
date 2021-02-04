@@ -3693,8 +3693,6 @@ export type Mutation = {
    * AccessRule – PLATFORM_ADMIN
    */
   rearrangeCuratedListItems: CuratedListMutationResponse;
-  /** AccessRule – PLATFORM_ADMIN */
-  refundOrder: OrderMutationResponse;
   /**
    * AccessRule – LOGGED_IN
    * For a buyer to create an order
@@ -3737,6 +3735,10 @@ export type Mutation = {
    * After funds have been transferred to sellers
    */
   markPayoutsAsPaid: MarkPayoutsAsPaidMutationResponse;
+  /** AccessRule – PLATFORM_ADMIN */
+  refundOrder: OrderMutationResponse;
+  /** AccessRule – PLATFORM_ADMIN */
+  cancelOrderAndPayment: OrderMutationResponse;
   createMockPreviewItems: Product_Preview_Items_Mutation_Response;
   generateRandomProducts: Array<Maybe<ProductPrivate>>;
   sendWelcomeEmail: BlankMutationResponse;
@@ -4973,13 +4975,6 @@ export type MutationRearrangeCuratedListItemsArgs = {
 };
 
 
-export type MutationRefundOrderArgs = {
-  orderId: Scalars['String'];
-  reason?: Maybe<Scalars['String']>;
-  reasonDetails?: Maybe<Scalars['String']>;
-};
-
-
 export type MutationCreateOrderArgs = {
   productId: Scalars['String'];
   productSnapshotId: Scalars['String'];
@@ -5030,6 +5025,19 @@ export type MutationReviseAndResubmitForm10Args = {
 export type MutationMarkPayoutsAsPaidArgs = {
   orderIds: Array<Scalars['String']>;
   payoutId: Scalars['String'];
+};
+
+
+export type MutationRefundOrderArgs = {
+  orderId: Scalars['String'];
+  reason?: Maybe<Scalars['String']>;
+  reasonDetails?: Maybe<Scalars['String']>;
+};
+
+
+export type MutationCancelOrderAndPaymentArgs = {
+  orderId: Scalars['String'];
+  markProductAbandoned?: Maybe<Scalars['Boolean']>;
 };
 
 
@@ -5948,17 +5956,19 @@ export type OrdersEdge = {
 export enum OrderStatus {
   /** step 1, buyer purchases item */
   CREATED = 'CREATED',
-  /** step 1a: payment success */
+  /** step 1a: payment authorization success */
   CONFIRMED_PAYMENT_FORM_10_REQUIRED = 'CONFIRMED_PAYMENT_FORM_10_REQUIRED',
-  /** step 1b: payment failed */
+  /** step 1b: payment authorization failed */
   FAILED = 'FAILED',
-  /** step 1c: payment refunded */
+  /** step 1c: payment authorization was cancelled (not captured) */
+  CANCELLED = 'CANCELLED',
+  /** step 1d: payment refunded (should not reach this state unless emergency) */
   REFUNDED = 'REFUNDED',
   /** step 2, seller delivers product, submits receipt form 10 */
   FORM_10_SUBMITTED = 'FORM_10_SUBMITTED',
   /** step 3a, admin checks and rejects uploaded form10, prompt seller to resubmit */
   FORM_10_REVISE_AND_RESUBMIT = 'FORM_10_REVISE_AND_RESUBMIT',
-  /** step 3b, admin checks and approves uploaded form10 */
+  /** step 3b, admin checks and approves uploaded form10, payment is captured here */
   ADMIN_APPROVED = 'ADMIN_APPROVED',
   /** step 4, payout completed, westpac transaction ID inputted */
   COMPLETE = 'COMPLETE'
@@ -8734,16 +8744,6 @@ export type ProductFileDownloadLink = {
   expiresAt: Scalars['Date'];
 };
 
-export type ProductFileLinkMutationResponse = {
-   __typename?: 'ProductFileLinkMutationResponse';
-  downloadLink: ProductFileDownloadLink;
-};
-
-export type ProductFileLinksMutationResponse = {
-   __typename?: 'ProductFileLinksMutationResponse';
-  downloadLinks: Array<ProductFileDownloadLink>;
-};
-
 export type ProductMutationResponse = {
    __typename?: 'ProductMutationResponse';
   product: Product;
@@ -9133,21 +9133,6 @@ export enum Products_Update_Column {
   UPDATEDAT = 'updatedAt'
 }
 
-/** Record for the seller, of an item from their store that was included in a recent purchase on the platform */
-export type ProductSale = {
-   __typename?: 'ProductSale';
-  order: Orders;
-  user?: Maybe<UserPublic>;
-  userId?: Maybe<Scalars['ID']>;
-  payoutItems?: Maybe<Array<Maybe<Payout_Items>>>;
-};
-
-export type ProductSalesEdge = Edge & {
-   __typename?: 'ProductSalesEdge';
-  cursor: Scalars['PageCursor'];
-  node: ProductSale;
-};
-
 export type ProductsConnection = Connection & {
    __typename?: 'ProductsConnection';
   totalCount?: Maybe<Scalars['Int']>;
@@ -9519,12 +9504,6 @@ export type Query = {
    */
   getOrder?: Maybe<Orders>;
   /**
-   * Get details of items within one of your Product Sales.
-   * 
-   * AccessRule – OWNER
-   */
-  getProductSale?: Maybe<ProductSale>;
-  /**
    * List payoutItems between startDate and endDate.
    * 
    * AccessRule – PLATFORM_ADMIN
@@ -9549,11 +9528,18 @@ export type Query = {
    */
   getOrdersAdminApprovedConnection: OrdersConnection;
   /**
+   * Orders which are close to being expiring need to be cancelled
+   * Orders which are older than 3 days, and have not have product disposed by
+   * seller + approved by admins
+   * AccessRule – PLATFORM_ADMIN
+   */
+  getOrdersExpiringConnection: OrdersConnection;
+  /**
    * Orders which have been refunded
    * 
    * AccessRule – PLATFORM_ADMIN
    */
-  getOrdersRefundedConnection: OrdersConnection;
+  getOrdersCancelledConnection: OrdersConnection;
   /**
    * Orders which have completed payouts
    * 
@@ -9604,13 +9590,6 @@ export type Query = {
    * AccessRule – PLATFORM_ADMIN
    */
   getRecentTransactions: Array<Transactions>;
-  /**
-   * List sales summaries for stores in the period between startDate and endDate.
-   * ONLY RETURNS stores which actually made a sale in the period.
-   * 
-   * AccessRule – PLATFORM_ADMIN
-   */
-  getStoreSalesInPeriodAdmin: StoreSalesInPeriodConnection;
   /**
    * Collection of products the user has saved for maybe purchasing later.
    * 
@@ -10424,11 +10403,6 @@ export type QueryGetOrderArgs = {
 };
 
 
-export type QueryGetProductSaleArgs = {
-  orderItemId: Scalars['String'];
-};
-
-
 export type QueryGetPayoutItemsInPeriodAdminArgs = {
   month?: Maybe<Scalars['Int']>;
   year?: Maybe<Scalars['Int']>;
@@ -10452,7 +10426,12 @@ export type QueryGetOrdersAdminApprovedConnectionArgs = {
 };
 
 
-export type QueryGetOrdersRefundedConnectionArgs = {
+export type QueryGetOrdersExpiringConnectionArgs = {
+  query: ConnectionOffsetQueryOrders;
+};
+
+
+export type QueryGetOrdersCancelledConnectionArgs = {
   query: ConnectionOffsetQueryOrders;
 };
 
@@ -10503,13 +10482,6 @@ export type QueryGetTransactionsInPeriodAdminArgs = {
 
 export type QueryGetRecentTransactionsArgs = {
   count: Scalars['Int'];
-};
-
-
-export type QueryGetStoreSalesInPeriodAdminArgs = {
-  startDate: Scalars['Date'];
-  endDate: Scalars['Date'];
-  query?: Maybe<ConnectionQuery>;
 };
 
 
@@ -11239,26 +11211,6 @@ export type StoreSales = {
   totalSalesRevenue: Scalars['Int'];
   salesBreakdown: Array<SalesBreakdown>;
   order: Array<Orders>;
-};
-
-export type StoreSalesEdge = Edge & {
-   __typename?: 'StoreSalesEdge';
-  cursor: Scalars['PageCursor'];
-  node: StoreSales;
-};
-
-export type StoreSalesHistoryConnection = Connection & {
-   __typename?: 'StoreSalesHistoryConnection';
-  totalCount?: Maybe<Scalars['Int']>;
-  pageInfo: PageInfo;
-  edges: Array<ProductSalesEdge>;
-};
-
-export type StoreSalesInPeriodConnection = Connection & {
-   __typename?: 'StoreSalesInPeriodConnection';
-  totalCount?: Maybe<Scalars['Int']>;
-  pageInfo: PageInfo;
-  edges: Array<StoreSalesEdge>;
 };
 
 export type StoresConnection = Connection & {
