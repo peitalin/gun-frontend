@@ -105,7 +105,7 @@ const PayoutsApprovedList = (props: ReactProps) => {
     MARK_PAYOUTS_AS_PAID,
     {
       onCompleted: () => {
-        snackbar.enqueueSnackbar(`Payouts market complete.`, { variant: "info" })
+        snackbar.enqueueSnackbar(`Payouts marked complete.`, { variant: "info" })
         router.push("/gov/payouts/complete")
       },
     }
