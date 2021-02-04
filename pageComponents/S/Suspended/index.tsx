@@ -3,7 +3,7 @@ import clsx from "clsx";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
 // Typings
-import { PageBasedConnection, Product } from "typings/gqlTypes";
+import { Product } from "typings/gqlTypes";
 // Utils
 import ErrorBounds from "components/ErrorBounds";
 import Loading from "components/Loading";

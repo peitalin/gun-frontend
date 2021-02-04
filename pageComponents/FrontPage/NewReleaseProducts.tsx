@@ -78,7 +78,7 @@ const NewReleaseProducts = (props: ReactProps) => {
       query: {
         limit: 12 || count,
         offset: 0,
-        orderBy: orderBy.value,
+        orderBy: orderBy.value as any,
         // orderBy: {
         //   // price: OrderBy.ASC,
         //   // price: OrderBy.DESC

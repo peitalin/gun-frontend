@@ -49,7 +49,7 @@ const MainBar = (props: ReactProps) => {
     // subtotal: state.reduxCart.cart.subtotal,
     cartCount: 0,
     subtotal: 0,
-    loggedIn: option(state).reduxLogin.user.id(),
+    loggedIn: !!state?.reduxLogin?.user?.id,
   }));
 
   const endRoute = router.pathname.split('/').pop();

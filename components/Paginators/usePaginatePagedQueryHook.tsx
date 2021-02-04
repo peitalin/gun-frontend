@@ -5,7 +5,7 @@ import {oc as option} from "ts-optchain";
 import { useQuery } from "@apollo/client";
 import { DocumentNode } from "graphql";
 // typings
-import { PageBasedConnection, PageCursor } from "typings/gqlTypes";
+import { PageCursor } from "typings/gqlTypes";
 import { WatchQueryFetchPolicy } from "@apollo/client";
 
 
