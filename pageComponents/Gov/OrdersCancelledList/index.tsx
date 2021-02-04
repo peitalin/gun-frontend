@@ -10,9 +10,12 @@ import {
   Orders,
   OrderStatus,
   ConnectionOffsetQuery,
+  Order_By,
+  ProductsOrderBy,
   PayeeType,
   Connection,
   OrdersConnection,
+  OrderBy,
 } from "typings/gqlTypes";
 // Utils Components
 import ErrorBounds from "components/ErrorBounds";
@@ -106,6 +109,10 @@ const OrdersCancelledList = (props: ReactProps) => {
         query: {
           limit: limit,
           offset: offset,
+          orderBy: {
+            // createdAt: Order_By.ASC,
+            createdAt: OrderBy.DESC,
+          }
         },
       },
       fetchPolicy: "no-cache",
