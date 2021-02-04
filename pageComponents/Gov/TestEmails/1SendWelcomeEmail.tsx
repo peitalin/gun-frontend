@@ -11,16 +11,14 @@ import { Colors, BorderRadius } from "layout/AppTheme";
 // Typings
 import {
   UserPrivate,
-  ID,
   BlankMutationResponse,
 } from "typings/gqlTypes";
 // Material UI
 import ButtonLoading from "components/ButtonLoading";
 // Graphql
-import { useQuery, useApolloClient, ApolloClient } from "@apollo/client";
+import { useQuery, useApolloClient } from "@apollo/client";
 // Snackbar
 import { useSnackbar } from "notistack";
-import currency from "currency.js";
 import {
   SEND_WELCOME_EMAIL,
   SEND_RESET_PASSWORD_EMAIL,

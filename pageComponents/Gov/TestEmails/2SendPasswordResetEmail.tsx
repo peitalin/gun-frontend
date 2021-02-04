@@ -32,11 +32,12 @@ import {
 
 const SendPasswordResetEmail: React.FC<ReactProps> = (props) => {
 
-  const { classes } = props;
+  const {
+    classes,
+    user,
+  } = props;
   const aClient = useApolloClient();
-  const { user } = useSelector<GrandReduxState, { user: UserPrivate }>(s => {
-    return { user: s.reduxLogin.user }
-  })
+
  // state
   const [loading, setLoading] = React.useState(false);
   const [loading2, setLoading2] = React.useState(false);
@@ -175,6 +176,7 @@ const SendPasswordResetEmail: React.FC<ReactProps> = (props) => {
 
 
 interface ReactProps extends WithStyles<typeof styles> {
+  user: UserPrivate;
 }
 interface QueryData {
   sendResetPasswordEmail: BlankMutationResponse;

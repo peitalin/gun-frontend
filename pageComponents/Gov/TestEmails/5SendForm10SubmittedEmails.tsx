@@ -11,6 +11,7 @@ import { Colors, BorderRadius } from "layout/AppTheme";
 // Typings
 import {
   UserPrivate,
+  Users,
   ID,
   BlankMutationResponse,
 } from "typings/gqlTypes";
@@ -34,9 +35,7 @@ const SendForm10SubmittedEmails: React.FC<ReactProps> = (props) => {
 
   const { classes } = props;
   const aClient = useApolloClient();
-  const { user } = useSelector<GrandReduxState, { user: UserPrivate }>(s => {
-    return { user: s.reduxLogin.user }
-  })
+
   // state
   const [loading, setLoading] = React.useState(false);
   const [loading2, setLoading2] = React.useState(false);
@@ -50,7 +49,7 @@ const SendForm10SubmittedEmails: React.FC<ReactProps> = (props) => {
         mutation: SEND_FORM10_SUBMITTED_ADMIN_EMAIL,
         variables: {
           orderId: props.orderId,
-          sellerEmail: props.sellerEmail,
+          sellerEmail: props.seller.email,
         },
         fetchPolicy: "no-cache", // always do a network request, no caches
       })
@@ -72,7 +71,7 @@ const SendForm10SubmittedEmails: React.FC<ReactProps> = (props) => {
       const { errors, data } = await aClient.mutate<QueryData2, QueryVar2>({
         mutation: SEND_FORM10_REVISE_AND_RESUBMIT_SELLER_EMAIL,
         variables: {
-          userId: user.id,
+          userId: props.seller.id,
           orderId: props.orderId,
         },
         fetchPolicy: "no-cache", // always do a network request, no caches
@@ -138,7 +137,8 @@ const SendForm10SubmittedEmails: React.FC<ReactProps> = (props) => {
 
 interface ReactProps extends WithStyles<typeof styles> {
   orderId: string
-  sellerEmail: string
+  buyer: Users;
+  seller: Users;
 }
 interface QueryData {
   sendForm10SubmittedAdminEmail: BlankMutationResponse;

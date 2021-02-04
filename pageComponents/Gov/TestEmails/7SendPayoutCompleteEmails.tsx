@@ -10,7 +10,7 @@ import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/s
 import { Colors, BorderRadius } from "layout/AppTheme";
 // Typings
 import {
-  UserPrivate,
+  Users,
   ID,
   BlankMutationResponse,
 } from "typings/gqlTypes";
@@ -31,14 +31,10 @@ const SendPayoutCompleteEmails: React.FC<ReactProps> = (props) => {
 
   const { classes } = props;
   const aClient = useApolloClient();
-  const { user } = useSelector<GrandReduxState, { user: UserPrivate }>(s => {
-    return { user: s.reduxLogin.user }
-  })
+
   // state
   const [loading, setLoading] = React.useState(false);
   const [loading2, setLoading2] = React.useState(false);
-  const [loading3, setLoading3] = React.useState(false);
-  const [orderId, setOrderId] = React.useState("owp4wncjt");
 
   const snackbar = useSnackbar();
 
@@ -48,7 +44,7 @@ const SendPayoutCompleteEmails: React.FC<ReactProps> = (props) => {
       const { errors, data } = await aClient.mutate<QueryData, QueryVar>({
         mutation: SEND_PAYOUT_COMPLETE_SELLER_EMAIL,
         variables: {
-          userId: user.id,
+          userId: props.seller.id,
           orderId: props.orderId,
         },
         fetchPolicy: "no-cache", // always do a network request, no caches
@@ -95,6 +91,8 @@ const SendPayoutCompleteEmails: React.FC<ReactProps> = (props) => {
 
 interface ReactProps extends WithStyles<typeof styles> {
   orderId: string
+  buyer: Users;
+  seller: Users;
 }
 interface QueryData {
   sendPayoutCompleteSellerEmail: BlankMutationResponse;

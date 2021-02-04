@@ -11,6 +11,7 @@ import { Colors, BorderRadius } from "layout/AppTheme";
 // Typings
 import {
   UserPrivate,
+  Users,
   ID,
   BlankMutationResponse,
 } from "typings/gqlTypes";
@@ -36,9 +37,7 @@ const SendRefundedEmails: React.FC<ReactProps> = (props) => {
 
   const { classes } = props;
   const aClient = useApolloClient();
-  const { user } = useSelector<GrandReduxState, { user: UserPrivate }>(s => {
-    return { user: s.reduxLogin.user }
-  })
+
   // state
   const [loading, setLoading] = React.useState(false);
   const [loading2, setLoading2] = React.useState(false);
@@ -52,7 +51,7 @@ const SendRefundedEmails: React.FC<ReactProps> = (props) => {
       const { errors, data } = await aClient.mutate<QueryData, QueryVar>({
         mutation: SEND_REFUNDED_BUYER_EMAIL,
         variables: {
-          userId: user.id,
+          userId: props.buyer.id,
           orderId: props.orderId,
         },
         fetchPolicy: "no-cache", // always do a network request, no caches
@@ -75,7 +74,7 @@ const SendRefundedEmails: React.FC<ReactProps> = (props) => {
       const { errors, data } = await aClient.mutate<QueryData2, QueryVar2>({
         mutation: SEND_REFUNDED_SELLER_EMAIL,
         variables: {
-          userId: user.id,
+          userId: props.seller.id,
           orderId: props.orderId,
         },
         fetchPolicy: "no-cache", // always do a network request, no caches
@@ -99,7 +98,7 @@ const SendRefundedEmails: React.FC<ReactProps> = (props) => {
         mutation: SEND_REFUNDED_ADMIN_EMAIL,
         variables: {
           orderId: props.orderId,
-          buyerEmail: props.buyerEmail,
+          buyerEmail: props.buyer.email,
           // default email is admin@gunmarketplace.com.au set in notify-service
         },
         fetchPolicy: "no-cache", // always do a network request, no caches
@@ -181,7 +180,8 @@ const SendRefundedEmails: React.FC<ReactProps> = (props) => {
 
 interface ReactProps extends WithStyles<typeof styles> {
   orderId: string
-  buyerEmail: string
+  buyer: Users;
+  seller: Users;
 }
 interface QueryData {
   sendRefundedBuyerEmail: BlankMutationResponse;
