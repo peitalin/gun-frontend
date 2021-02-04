@@ -63,7 +63,6 @@ const PayoutOrderRow = (props: ReactProps) => {
       <MenuItem
         className={clsx(classes.flexRow, classes.customerItem)}
         onClick={() => {
-          copy(order.id)
           snackbar.enqueueSnackbar(
             `Navigating to ${order.id}`,
             { variant: "info" }

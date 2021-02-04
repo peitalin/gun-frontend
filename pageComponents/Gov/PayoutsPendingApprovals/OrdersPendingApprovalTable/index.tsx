@@ -516,18 +516,6 @@ interface QueryVar {
 const styles = (theme: Theme) => createStyles({
   root: {
   },
-  flexCol: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    marginBottom: '0.5rem',
-  },
-  flexRowStart: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    flexWrap: 'wrap',
-  },
   flexRow: {
     display: 'flex',
     flexDirection: 'row',
@@ -538,35 +526,6 @@ const styles = (theme: Theme) => createStyles({
   flexItem: {
     flexGrow: 0.5,
     flexBasis: "33%",
-  },
-  spaceBetween: {
-    justifyContent: "space-between",
-  },
-  link: {
-    fontSize: "0.8rem",
-    color: "#2484FF",
-    textAlign: "center",
-    marginBottom: "0.5rem",
-  },
-  width100: {
-    width: '100%',
-  },
-  dateInputContainer: {
-    margin: '1rem',
-    maxWidth: 400,
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: "center",
-  },
-  monthSelect: {
-    padding: '1rem',
-  },
-  yearSelect: {
-    padding: '1rem',
-  },
-  createPayoutsButton: {
-    height: 40,
   },
   subtitle1: {
     color: Colors.uniswapLightGrey,
@@ -588,19 +547,6 @@ const styles = (theme: Theme) => createStyles({
     padding: '16px', // same padding as MenuItem 16px
     paddingBottom: '1rem',
     borderBottom: `1px solid ${Colors.uniswapGrey}`,
-  },
-  flexItemWide: {
-    flexBasis: "30%",
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: 'flex-start',
-    paddingRight: '0.5rem',
-    marginRight: '0.5rem',
-    textOverflow: 'ellipsis',
-    whiteSpace: 'nowrap',
-    overflow: 'hidden',
-    flexGrow: 1,
   },
   flexItemSlim: {
     flexGrow: 1,

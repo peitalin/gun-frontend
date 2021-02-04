@@ -98,7 +98,7 @@ const GovSideRoutesMenu: React.FC<ReactProps> = (props) => {
                   : classes.routeListItem
               }>
                 <Typography variant="subtitle1" className={classes.routeListItemText}>
-                  Order Refunds
+                  Order Viewer
                 </Typography>
               </div>
             </a>
@@ -135,7 +135,7 @@ const GovSideRoutesMenu: React.FC<ReactProps> = (props) => {
                   : classes.routeListItem
               }>
                 <Typography variant="subtitle1" className={classes.routeListItemText}>
-                  Approved
+                  Approved Payouts
                 </Typography>
               </div>
             </a>
@@ -150,22 +150,47 @@ const GovSideRoutesMenu: React.FC<ReactProps> = (props) => {
                   : classes.routeListItem
               }>
                 <Typography variant="subtitle1" className={classes.routeListItemText}>
-                  Complete
+                  Completed Payouts
                 </Typography>
               </div>
             </a>
           </Link>
         </li>
+
+
         <li>
-          <Link href={"/gov/payouts/refunded"} scroll={false}>
+          <Typography variant="subtitle1" className={classes.routeListItemTitle}>
+            Expiring Orders
+          </Typography>
+        </li>
+
+
+        <li>
+          <Link href={"/gov/payouts/expiring"} scroll={false}>
             <a>
               <div className={
-                isSelectedRoute("refunded")
+                isSelectedRoute("expiring")
                   ? classes.routeListItemSelected
                   : classes.routeListItem
               }>
                 <Typography variant="subtitle1" className={classes.routeListItemText}>
-                  Refunded
+                  Expiring Orders
+                </Typography>
+              </div>
+            </a>
+          </Link>
+        </li>
+
+        <li>
+          <Link href={"/gov/payouts/cancelled"} scroll={false}>
+            <a>
+              <div className={
+                isSelectedRoute("cancelled")
+                  ? classes.routeListItemSelected
+                  : classes.routeListItem
+              }>
+                <Typography variant="subtitle1" className={classes.routeListItemText}>
+                  Cancelled Orders
                 </Typography>
               </div>
             </a>

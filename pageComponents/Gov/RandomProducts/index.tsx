@@ -3,7 +3,7 @@ import {oc as option} from "ts-optchain";
 import clsx from "clsx";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
-import { Colors } from "layout/AppTheme";
+import { Colors, BoxShadows, BorderRadius } from "layout/AppTheme";
 // Graphql
 import { gql, useApolloClient, useMutation } from '@apollo/client';
 // Material UI
@@ -80,6 +80,7 @@ const RandomProducts = (props: ReactProps) => {
               style={{
                 width: '280px',
                 height: '36px',
+                marginBottom: '1rem',
               }}
               loading={loading}
               onClick={async() => {
@@ -148,7 +149,12 @@ const styles = (theme: Theme) => createStyles({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: "flex-start",
+    padding: '1rem',
+    background: Colors.uniswapDarkNavy,
+    boxShadow: BoxShadows.shadow1.boxShadow,
+    borderRadius: BorderRadius,
+    minHeight: '80vh',
   },
   flexCol: {
     display: 'flex',

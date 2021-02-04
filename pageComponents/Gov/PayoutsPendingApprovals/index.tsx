@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import clsx from "classnames";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
@@ -58,58 +58,8 @@ const styles = (theme: Theme) => createStyles({
     // backgroundColor: Colors.foregroundColor,
     // boxShadow: '0px 1px 1px 0 #e6ebf1',
   },
-  flexCol: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    marginBottom: '0.5rem',
-  },
-  flexRowStart: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    flexWrap: 'wrap',
-  },
-  flexRow: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    flexWrap: 'wrap',
-    marginBottom: '0.5rem',
-  },
-  flexItem: {
-    flexGrow: 0.5,
-    flexBasis: "33%",
-  },
   spaceBetween: {
     justifyContent: "space-between",
-  },
-  link: {
-    fontFamily: '"Helvetica Neue",Arial,sans-serif',
-    fontSize: "0.8rem",
-    color: "#2484FF",
-    textAlign: "center",
-    marginBottom: "0.5rem",
-  },
-  width100: {
-    width: '100%',
-  },
-  dateInputContainer: {
-    margin: '1rem',
-    maxWidth: 600,
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: "center",
-  },
-  monthSelect: {
-    padding: '1rem',
-  },
-  yearSelect: {
-    padding: '1rem',
-  },
-  createPayoutsButton: {
-    height: 40,
   },
 });
 
