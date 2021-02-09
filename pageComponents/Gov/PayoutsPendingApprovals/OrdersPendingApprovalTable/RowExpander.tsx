@@ -18,6 +18,9 @@ import TableHead from '@material-ui/core/TableHead';
 import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown"
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 
+// router
+import Link from "next/link";
+
 import { formatDate } from "utils/dates";
 import currency from 'currency.js';
 
@@ -177,6 +180,17 @@ const RowExpander = (props: RowExpanderProps) => {
                   : "Waiting on Form 10"
                 }
               </Button>
+
+              <Link href={`/gov/orders?orderId=${row.id}`}>
+                <a>
+                  <Button
+                    variant="outlined"
+                    className={classes.viewOrderButton}
+                  >
+                    View Order
+                  </Button>
+                </a>
+              </Link>
               {
                 showApprovalButtons &&
                 <>
@@ -345,6 +359,10 @@ const styles = (theme: Theme) => createStyles({
   },
   form10Button: {
     margin: "0.5rem 0rem",
+  },
+  viewOrderButton: {
+    margin: "0.5rem 0rem",
+    marginLeft: "0.5rem",
   },
   approveButton: {
     height: '36px',

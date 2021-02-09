@@ -44,6 +44,7 @@ import { useSnackbar } from "notistack";
 import {
   CREATE_ORDER,
 } from "queries/orders-mutations";
+import { checkThenSetLoggedInStatus } from 'layout/Login/utils';
 
 
 
@@ -94,16 +95,14 @@ const VisaPurchaseProduct = (props: ReactProps) => {
       return
     }
 
-    let order: Orders;
-    let stripeConfirmResponse: StripeConfirmResponse;
-
     const stripeAuthorizePaymentData: StripeAuthorizePaymentData = {
       paymentMethod: paymentMethodId,
       customerId: stripeCustomerId,
     };
 
     // 1. Create Order + create stripe payment intent in the backend
-    const response = await aClient.mutate<MutDataCreateOrder, MutVarCreateOrder>({
+    console.log('rrrrrrrrr:')
+    return await aClient.mutate<MutDataCreateOrder, MutVarCreateOrder>({
       mutation: CREATE_ORDER,
       variables: {
         productId: product.id,
@@ -116,33 +115,22 @@ const VisaPurchaseProduct = (props: ReactProps) => {
         stripeAuthorizePaymentData: JSON.stringify(stripeAuthorizePaymentData),
         bidId: undefined,
       }
-    });
-    console.log("createOrder response: ", response.data.createOrder)
-
-    let unconfirmedOrder = response.data.createOrder;
-    let stripePaymentIntent = JSON.parse(
-      response?.data?.createOrder?.stripePaymentIntent ?? "{}"
-    );
-    console.info("stripePaymentIntent", stripePaymentIntent)
-
-    // // 2. confirm the payment intent on the front-end, which prompts 3DS
-    // // pop-up if card needs it.
-    // let stripeConfirmOptions: ConfirmCardPaymentData = {
-    //   payment_method: {
-    //     card: elements.getElement(CardElement),
-    //     // activates 3DS prompt with test cards for newCards
-    //     // otherwise Stripe 3DS is dynamic and you can set fraud detection rules
-    //   }
-    // }
-    // stripeConfirmResponse = await stripe.confirmCardPayment(
-    //   stripePaymentIntent.client_secret,
-    //   stripeConfirmOptions
-    // );
-    // console.info("stripeConfirmResponse", stripeConfirmResponse)
-
-    setLoading(false)
-
-    return response.data.createOrder
+    })
+    .then(response => {
+      let stripePaymentIntent = JSON.parse(
+        response?.data?.createOrder?.stripePaymentIntent ?? "{}"
+      );
+      console.log("createOrder response: ", response)
+      console.info("stripePaymentIntent", stripePaymentIntent)
+      return response.data.createOrder
+    })
+    .catch(err => {
+      snackbar.enqueueSnackbar(`${err}`, { variant: "error" })
+      return {} as any
+    })
+    .finally(() => {
+      setLoading(false)
+    })
   }
 
 

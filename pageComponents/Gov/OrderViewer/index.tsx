@@ -128,10 +128,13 @@ const OrderViewer: React.FC<ReactProps> = (props) => {
     });
 
     console.log("payment cancel response:", data);
-    alert(JSON.stringify({ CANCELLED: data }));
+    alert(JSON.stringify({ CANCELLED: data?.cancelOrderAndPayment }));
     // data.refundOrder.order
     if (errors) {
-      setErrorMsg(`Payment authorization cancel failed with msg: ${errors}`)
+      snackbar.enqueueSnackbar(
+        `Payment authorization cancel failed with msg: ${errors}`,
+        { variant: "error" }
+      )
     }
     return data;
   }
@@ -255,6 +258,7 @@ const OrderViewer: React.FC<ReactProps> = (props) => {
                 console.log("fprops.errors:", fprops.errors)
                 setLoading(false)
               }}
+              {...fprops}
             >
               <div className={classes.backButton}>
                 <IconButton onClick={() => setOrder(undefined)}>
@@ -321,22 +325,6 @@ const OrderViewer: React.FC<ReactProps> = (props) => {
               </OrderViewerSection>
 
               <Loading fixed loading={loading}/>
-              <SnackBarA
-                open={!!cancelledPaymentMsg}
-                closeSnackbar={() => setCancelMsg(undefined)}
-                message={
-                  `Cancelled payment: ${cancelledPaymentMsg}`
-                }
-                autoHideDuration={50000}
-                variant={"info"}
-              />
-              <SnackBarA
-                open={!!errorMsg}
-                closeSnackbar={() => setErrorMsg(undefined)}
-                message={`Payment cancel response: ${errorMsg}`}
-                autoHideDuration={50000}
-                variant={"error"}
-              />
             </CancelOrderForm>
           )
         }}

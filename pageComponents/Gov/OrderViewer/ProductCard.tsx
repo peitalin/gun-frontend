@@ -98,6 +98,14 @@ const ProductCard = (props: ReactProps & FormikProps<FormikFields>) => {
                 {product.id}
               </Typography>
             </div>
+            <div className={classes.flexRow}>
+              <Typography className={classes.fieldKey} variant="subtitle1">
+                Product Status:
+              </Typography>
+              <Typography className={classes.fieldInfo} variant="subtitle1">
+                {product.soldOutStatus}
+              </Typography>
+            </div>
 
             <Typography className={classes.fieldTitle} variant="subtitle1">
               Store

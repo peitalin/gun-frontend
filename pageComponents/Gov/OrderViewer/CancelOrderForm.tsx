@@ -1,25 +1,32 @@
 import React from "react";
 import clsx from "clsx";
 // Styles
-import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
+import { withStyles, createStyles, WithStyles, Theme, lighten } from "@material-ui/core/styles";
 import { Colors, BorderRadius } from "layout/AppTheme";
 // Material UI
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
-import ButtonLoading from "components/ButtonLoading";
 import TextInput from "components/Fields/TextInput";
+import Checkbox, { CheckboxProps } from '@material-ui/core/Checkbox';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 // Utils Components
 import ErrorBounds from "components/ErrorBounds";
+// validation
+import { FormikProps } from 'formik';
 
 
 
-const CancelOrderForm: React.FC<ReactOrdersFormProps> = (props) => {
+const CancelOrderForm = (
+  props: ReactProps & { children: React.ReactNode } & FormikProps<FormikFields>
+) => {
+
   const {
     classes,
     onSubmit,
     disableCancelOrderButton,
     onClickDebugPrint,
     total,
+    ...fprops
   } = props;
 
   return (
@@ -27,16 +34,39 @@ const CancelOrderForm: React.FC<ReactOrdersFormProps> = (props) => {
       <form className={classes.form} onSubmit={onSubmit}>
         {props.children}
         <div className={clsx(classes.flexCol, classes.section1)}>
-          <ButtonLoading
-            class={classes.cancelButton}
+          <Button
+            className={
+              disableCancelOrderButton
+                ? classes.cancelButtonDisabled
+                : classes.cancelButtonEnabled
+            }
             type="submit" // this sets off Form submit
-            disabled={!!disableCancelOrderButton}
+            disabled={disableCancelOrderButton}
             variant={"outlined"}
             color={"primary"}
             onClick={onClickDebugPrint}
           >
             { `Cancel Order: ${total}` }
-          </ButtonLoading>
+          </Button>
+
+          {
+            !disableCancelOrderButton &&
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={fprops.values.markProductAbandoned}
+                  onChange={() => {
+                    fprops.setFieldValue(
+                      "markProductAbandoned",
+                      !fprops.values.markProductAbandoned,
+                    )
+                  }}
+                  name="markAbandonded"
+                />
+              }
+              label="Also mark product ABANDONED"
+            />
+          }
           {
             disableCancelOrderButton
             ? <Typography className={classes.caption} variant="caption">
@@ -52,13 +82,17 @@ const CancelOrderForm: React.FC<ReactOrdersFormProps> = (props) => {
   )
 }
 
-interface ReactOrdersFormProps extends WithStyles<typeof styles> {
+interface ReactProps extends WithStyles<typeof styles> {
   onSubmit(args: any): void;
   disableCancelOrderButton: boolean;
   onClickDebugPrint(): void;
   total: string;
 }
 
+interface FormikFields {
+  orderId: string;
+  markProductAbandoned: boolean;
+}
 
 const styles = (theme: Theme) => createStyles({
   root: {
@@ -91,8 +125,15 @@ const styles = (theme: Theme) => createStyles({
     marginTop: "1rem",
     fontSize: 14,
   },
-  cancelButton: {
+  cancelButtonDisabled: {
     maxWidth: 250,
+  },
+  cancelButtonEnabled: {
+    maxWidth: 250,
+    backgroundColor: Colors.red,
+    "&:hover": {
+      backgroundColor: lighten(Colors.red,0.1),
+    }
   },
 });
 

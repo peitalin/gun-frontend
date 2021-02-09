@@ -12,16 +12,14 @@ import { Orders, OrderStatus } from "typings/gqlTypes";
 // Material UI
 import Row from "./Row";
 // formatters
-import dayjs from "dayjs";
-import currency from "currency.js";
 import Loading from "components/Loading";
 import { formatDate } from "utils/dates";
 
 
 
 const OrderSummary = (props: ReactProps) => {
+
   const { classes, order } = props;
-  const c = s => currency(s / 100, { formatWithSymbol: true }).format();
 
   if (!order) {
     return <Loading inline loading={!order} />;
