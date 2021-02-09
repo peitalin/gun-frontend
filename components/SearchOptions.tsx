@@ -64,6 +64,7 @@ const SearchOptionsPaginator: React.FC<ReactProps> = (props) => {
     totalCount,
     overfetchBy,
     index,
+    pageParam,
     setIndex,
     limit
   } = paginationParams;
@@ -132,6 +133,12 @@ const SearchOptionsPaginator: React.FC<ReactProps> = (props) => {
       paginationParams.setPageParam(index+1)
     }
   }, [index])
+
+  React.useEffect(() => {
+    // set page UI to pageParam (which may be url queyr params)
+    // only do this on initial mount once
+    setPageUi(pageParam)
+  }, [])
 
 
   return (

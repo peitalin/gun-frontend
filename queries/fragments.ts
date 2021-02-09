@@ -39,6 +39,7 @@ export const ProductDetailsFragment = gql`
     isDeleted
     isExcludedFromSearch
     isExcludedFromRecommendations
+    soldOutStatus
     storeId
     store {
       id

@@ -19,15 +19,50 @@ import {
   splitArrayIntoGrid,
   GridMap,
 } from "components/GridPaginatorHelpers";
+import { NextRouter } from "next/router";
 
 
+export enum PaginatorType {
+  limitOffset = "limitOffset",
+  page = "page",
+}
 
 
 export const useFacetSearchOptions = ({
   limit,
   overfetchBy,
   maxPriceCents,
-}: { limit: number, overfetchBy?: number; maxPriceCents?: number }): FacetSearchParams => {
+  router,
+  paginatorType,
+  scrollToTopOnPagination = false,
+}: {
+  limit: number,
+  overfetchBy?: number;
+  maxPriceCents?: number
+  router?: NextRouter,
+  paginatorType?: PaginatorType;
+  scrollToTopOnPagination?: boolean;
+}): FacetSearchParams => {
+
+  const calcOffset = (page: number, limit: number): number => {
+    if (!page) {
+      // offset = 0
+      return 0
+    }
+    if (!limit) {
+      // offset = 0
+      return 0
+    }
+
+    let offset = (page * limit) - limit
+
+    if (offset < 0) {
+      return 0
+    } else {
+      return Math.floor(offset / overfetchBy)
+      // offset accounts for overfetch (2x overfetch)
+    }
+  }
 
   ///// Search params
   // search filters
@@ -37,13 +72,23 @@ export const useFacetSearchOptions = ({
     label: "Newest",
     value: { createdAt: Order_By.DESC }
   });
+
+  const initialSearchTerm = !!router?.query?.q
+    ? decodeURIComponent(router?.query?.q as string)
+    : undefined
+
+  const initialPageParam = !!router?.query?.page
+    ? parseInt(decodeURIComponent(router?.query?.page as string)) ?? 1
+    : 1
+
   /// Search Terms
-  const [searchTerm, setSearchTerm] = React.useState("");
+  const [searchTerm, setSearchTerm] = React.useState(initialSearchTerm);
 
   /// Pagination
   // actual page query param dispatched for pagination
-  const [pageParam, setPageParam] = React.useState(1);
+  const [pageParam, setPageParam] = React.useState(initialPageParam);
   const [totalCount, setTotalCount] = React.useState(0);
+  const [offset, setOffset] = React.useState(calcOffset(pageParam, limit));
 
   const [
     currentCategories,
@@ -67,15 +112,79 @@ export const useFacetSearchOptions = ({
   }, [facets, searchTerm, priceRange[0], priceRange[1]])
 
 
-  const calcOffset = (page: number, limit: number): number => {
-    let offset = (page * limit) - limit
-    if (offset < 0) {
-      return 0
-    } else {
-      return Math.floor(offset / overfetchBy)
-      // offset accounts for overfetch (2x overfetch)
+  //////// Set searchTerm and pageParam from url query params when they change
+  /// for exampke, then pasting urls
+  React.useEffect(() => {
+    setSearchTerm(initialSearchTerm)
+  }, [initialSearchTerm])
+
+  React.useEffect(() => {
+    setPageParam(initialPageParam)
+  }, [initialPageParam])
+
+  ////////////////////////////////////////////////////
+  /// query params syncing
+  ////////////////////////////////////////////////////
+  React.useEffect(() => {
+    // let path = router.pathname
+    console.log('searchTerm', searchTerm)
+
+    let newOffset = calcOffset(pageParam, limit)
+    setOffset(newOffset)
+
+    if (router) {
+
+      let urlPath = router.asPath.split('?')[0]
+
+      if (paginatorType === PaginatorType.page) {
+        // shallow update pagination query params when navigating using buttons
+        // https://nextjs.org/docs/routing/shallow-routing
+        if (searchTerm !== undefined && searchTerm !== "") {
+          if (pageParam === 1) {
+            router.push(
+              `${router.pathname}?q=${searchTerm}`,
+              `${urlPath}?q=${searchTerm}`,
+              { shallow: true }
+            )
+          } else {
+            router.push(
+              `${router.pathname}?q=${searchTerm}&page=${pageParam}`,
+              `${urlPath}?q=${searchTerm}&page=${pageParam}`,
+              { shallow: true }
+            )
+          }
+        } else {
+          //// WARNING:
+          /// for pages like category/[categorySlug]
+          /// router.push() may trigger a full page change if you push
+          /// category/graphics instead of category/[categorySlug]
+          /// when combined with pageParam hook, this leads to an infinite render loop
+          // console.log("pageParammmmmmm", pageParam)
+          if (pageParam === 1) {
+            router.push(
+              `${router.pathname}`,
+              `${urlPath}`,
+              { shallow: true, }
+            )
+          } else {
+            router.push(
+              `${router.pathname}?page=${pageParam}`,
+              `${urlPath}?page=${pageParam}`,
+              { shallow: true, }
+            )
+          }
+        }
+      }
     }
-  }
+  }, [pageParam, searchTerm])
+
+
+  // scroll to top when page changes
+  React.useEffect(() => {
+    if (scrollToTopOnPagination) {
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    }
+  }, [pageParam])
 
   return {
     // orderBy
@@ -93,7 +202,7 @@ export const useFacetSearchOptions = ({
     // pagination
     paginationParams: {
       limit,
-      offset: calcOffset(pageParam, limit),
+      offset: offset,
       pageParam,
       setPageParam,
       totalCount,
