@@ -24,6 +24,7 @@ import { formatDate, showDate } from "utils/dates";
 import Portal from "@material-ui/core/Portal";
 import ButtonLoading from "components/ButtonLoading";
 
+import DropdownInput from "components/Fields/DropdownInput";
 
 
 
@@ -57,17 +58,23 @@ const ChangeUserLicenseFields: React.FC<ReactProps & FormikProps<FormikFields>> 
     fprops.setFieldValue("licenseExpiry", d)
   };
 
-  const handleSetLicenseCategory = (e: HtmlEvent) => {
-    let s = e.target.value;
-    fprops.setFieldValue("licenseCategory", s)
-  };
-
   const handleSetLicenseState = (e: HtmlEvent) => {
     let s = e.target.value;
     fprops.setFieldValue("licenseState", s)
   };
 
+
   console.log("licenseExpiry: ", values.licenseExpiry)
+
+  let licenseCategoryOptions = createLicenseCategorySuggestions()
+  // initial stateShape
+  let initialCategoryLicense = licenseCategoryOptions
+    .find(d => d.value === fprops.values.licenseCategory)
+
+  const [licenseCategory, setLicenseCategory] = React.useState(initialCategoryLicense)
+
+  console.log("licenseCategory: ", licenseCategory);
+  console.log("fprops.values.licenseCategory: ", fprops.values.licenseExpiry);
 
   return (
     <>
@@ -122,12 +129,18 @@ const ChangeUserLicenseFields: React.FC<ReactProps & FormikProps<FormikFields>> 
       <Typography variant="body1" className={classes.fieldHeading}>
         License Category
       </Typography>
-      <TextInputUnderline
+      <DropdownInput
+        stateShape={initialCategoryLicense}
+        onChange={({ label, value }: SelectOption) => {
+          setLicenseCategory({ label, value })
+          fprops.setFieldValue("licenseCategory", value)
+        }}
+        value={licenseCategory}
+        options={licenseCategoryOptions}
+
         placeholder={"Category"}
         label="" // remove moving label
         className={classes.textField}
-        value={values.licenseCategory}
-        onChange={handleSetLicenseCategory}
         inputProps={{ style: { width: '100%' }}}
         errorMessage={errors.licenseCategory}
         touched={touched.licenseCategory}
@@ -149,6 +162,28 @@ const ChangeUserLicenseFields: React.FC<ReactProps & FormikProps<FormikFields>> 
 
     </>
   )
+}
+
+const createLicenseCategorySuggestions = (): SelectOption[] => {
+  return [
+    "Category A",
+    "Category B",
+    "Category C",
+    "Category D",
+    "Category E",
+    "Category H",
+  ].map(c => {
+    return {
+      label: c,
+      value: c,
+    }
+  })
+}
+
+
+export interface SelectOption {
+  label: string;
+  value: string | any;
 }
 
 interface FormikFields {
