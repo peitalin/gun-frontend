@@ -60,6 +60,9 @@ const translateOrderStatus = (o: string): string => {
   if (o === OrderStatus.CONFIRMED_PAYMENT_FORM_10_REQUIRED) {
     return "Payment received, pending seller action."
   }
+  if (o === OrderStatus.CANCELLED) {
+    return "Payment was cancelled and refunding due to seller inaction."
+  }
   if (o === OrderStatus.FAILED) {
     return "Payment failed. Order reverted."
   }

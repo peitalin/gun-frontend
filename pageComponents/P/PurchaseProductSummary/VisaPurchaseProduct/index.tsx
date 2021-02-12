@@ -35,7 +35,6 @@ import {
 // Components
 import ErrorBounds from 'components/ErrorBounds';
 import ButtonLoading from "components/ButtonLoading";
-import SnackbarsSuccessErrors from "components/Snackbars/SnackbarsSuccessErrors";
 // Graphql
 import { useApolloClient, useLazyQuery } from '@apollo/client';
 // Snackbar
@@ -44,7 +43,6 @@ import { useSnackbar } from "notistack";
 import {
   CREATE_ORDER,
 } from "queries/orders-mutations";
-import { checkThenSetLoggedInStatus } from 'layout/Login/utils';
 
 
 
@@ -61,16 +59,13 @@ const VisaPurchaseProduct = (props: ReactProps) => {
     // knows from which Element to create the PaymentMethod,
     // See our createPaymentMethod documentation for more:
     // https://stripe.com/docs/stripe-js/reference#stripe-create-payment-method
-    let billing_details = undefined;
-    billing_details = {
-      email: props.user?.email,
-    }
     let { paymentMethod, error } = await stripe.createPaymentMethod({
       type: 'card',
       card: elements.getElement(CardElement),
-      billing_details: billing_details
+      billing_details: {
+        email: props.user?.email,
+      }
     })
-
     if (error) {
       console.error('createNewPaymentMethod error:', error)
     }
@@ -81,7 +76,6 @@ const VisaPurchaseProduct = (props: ReactProps) => {
 
   const createOrderAndHoldFundsFirst = async({
     paymentMethodId,
-    quotedPrice,
     stripeCustomerId,
   }) => {
     // creates an order on the backend, and places a hold on the users card
@@ -101,7 +95,6 @@ const VisaPurchaseProduct = (props: ReactProps) => {
     };
 
     // 1. Create Order + create stripe payment intent in the backend
-    console.log('rrrrrrrrr:')
     return await aClient.mutate<MutDataCreateOrder, MutVarCreateOrder>({
       mutation: CREATE_ORDER,
       variables: {
@@ -130,45 +123,13 @@ const VisaPurchaseProduct = (props: ReactProps) => {
     })
     .finally(() => {
       setLoading(false)
+      if (typeof props.refetchProduct === "function") {
+        props.refetchProduct()
+      }
     })
   }
 
-
-  // const confirmOrderSecond = async(
-  //   orderId: string,
-  //   paymentIntent: any,
-  // ) => {
-
-  //   setLoading(true)
-
-  //   const stripeConfirmPaymentData: StripeConfirmPaymentData = {
-  //     paymentIntent: paymentIntent,
-  //   };
-
-  //   const response = await aClient.mutate<MutDataConfirmOrder, MutVarConfirmOrder>({
-  //     mutation: CONFIRM_ORDER,
-  //     variables: {
-  //       orderId: orderId,
-  //       stripeConfirmPaymentData: JSON.stringify(stripeConfirmPaymentData)
-  //     }
-  //   });
-  //   console.log("confirmOrder response: ", response);
-  //   let order = response.data?.confirmOrder?.order;
-
-  //   if (order.currentSnapshot.orderStatus === OrderStatus.CONFIRMED_PAYMENT_FORM_10_REQUIRED) {
-  //     setData("Your order was confirmed!") // trigger success snackbar
-  //     console.log('Success! order response:', order)
-  //     props.handleOrderPostPurchase(order)
-  //   } else {
-  //     console.log("Error checking out: ", response.errors)
-  //     setError("Payment failed. Please try another payment method.")
-  //     // trigger error snackbar
-  //   }
-  //   setLoading(false)
-  //   return response
-  // }
-
-  const { classes, display, disableButton } = props;
+  const { classes, disableButton } = props;
 
   const product = props.product;
   const featuredVariant = props.product.featuredVariant;
@@ -176,8 +137,6 @@ const VisaPurchaseProduct = (props: ReactProps) => {
   const aClient = useApolloClient();
 
   const [loading, setLoading] = React.useState(false);
-  const [data, setData] = React.useState(undefined);
-  const [error, setError] = React.useState(undefined);
 
   return (
     <ErrorBounds name="Visa Checkout" className={props.className}>
@@ -219,7 +178,6 @@ const VisaPurchaseProduct = (props: ReactProps) => {
 
                         // 1. Create an order first with the backend
                         let orderResponse = await createOrderAndHoldFundsFirst({
-                          quotedPrice: featuredVariant.price,
                           paymentMethodId: newPaymentMethod.id,
                           stripeCustomerId: option(props).user.stripeCustomerId(),
                         });
@@ -230,23 +188,12 @@ const VisaPurchaseProduct = (props: ReactProps) => {
 
                         snackbar.enqueueSnackbar(`Success order placed: ${order.id}`, { variant: "success" })
 
-                        // if (option(order).id()) {
-                        //   // 2. use response to make a payment, and confirm the order
-                        //   // snackbar.enqueueSnackbar(`Success order: ${order.id}`, { variant: "success" })
-                        //   let res = await confirmOrderSecond(order.id, stripePaymentIntent)
-                        //   // 4. once payment is finalized, and order is finalized
-                        //   // proceed with screen transitions, etc
-                        //   console.log("2: ORDER CONFIRM RESPONSE: ", res)
-                        // }
-
-                        setLoading(false)
-                        // console.log("refetching user: ", refetchUser)
-                        // await refetchUser() // refetchUser downloads
-                        return data
+                        if (typeof props.handleOrderPostPurchase === "function") {
+                          props.handleOrderPostPurchase(order)
+                        }
                       })
                       .catch(e => {
                         console.warn(e)
-                        setError("Error processing order. Please retry.")
                         setLoading(false)
                       })
               }
@@ -270,12 +217,6 @@ const VisaPurchaseProduct = (props: ReactProps) => {
 
         </div>
       </div>
-      <SnackbarsSuccessErrors
-        data={data}
-        error={error}
-        successMessage={data}
-        errorMessage={error}
-      />
     </ErrorBounds>
   );
 };
@@ -289,8 +230,8 @@ interface ReactProps extends WithStyles<typeof styles> {
   title?: string;
   showIcon?: boolean;
   handleOrderPostPurchase(order: any): void;
-  quotedPrice: number; // in cents
   product: Product;
+  refetchProduct?(): void;
 }
 
 interface MutDataCreateOrder {

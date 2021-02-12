@@ -84,7 +84,6 @@ interface ReactProps extends WithStyles<typeof styles> {
   pastTense?: boolean;
   hideSavings?: boolean;
   hidePriceWas?: boolean;
-  quantityAvailable?: number | null;
   soldOutStatus?: string;
   price: number;
   priceWas: number;

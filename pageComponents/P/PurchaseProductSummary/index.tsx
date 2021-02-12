@@ -45,10 +45,6 @@ const VisaPurchaseProduct = dynamic(() => import("./VisaPurchaseProduct"), {
 //   ssr: false,
 // });
 
-// Stripe Provider
-import { Stripe } from "@stripe/stripe-js";
-import {useStripe, useElements, CardElement} from '@stripe/react-stripe-js';
-
 
 
 
@@ -58,11 +54,8 @@ const PurchaseProductSummary: React.FC<ReactProps> = (props) => {
 
   const {
     classes,
-    quantity = 1,
     selectedOption,
     // ProductLicense
-    increaseQuantity,
-    decreaseQuantity,
     variantOptions,
     handleChangeVariantOption,
   } = props;
@@ -70,7 +63,6 @@ const PurchaseProductSummary: React.FC<ReactProps> = (props) => {
   const user = useSelector<GrandReduxState, UserPrivate>(
     s => s.reduxLogin.user
   );
-  const loggedInAsEmail = option(user).email();
 
   const theme = useTheme();
   const xsDown = useMediaQuery(theme.breakpoints.down('xs'));
@@ -82,11 +74,6 @@ const PurchaseProductSummary: React.FC<ReactProps> = (props) => {
   const router = useRouter();
 
   const featuredVariant = selectedOption.value;
-
-  const showVisaPay =
-    option(featuredVariant).variantId() &&
-    option(props).product.id() &&
-    !xsDown
 
   const showProductInfo = option(featuredVariant).variantId() && option(props).product.id()
   console.log("featuredVariant", featuredVariant)
@@ -102,9 +89,6 @@ const PurchaseProductSummary: React.FC<ReactProps> = (props) => {
             ? <>
                 <ProductHeading product={props.product} featuredVariant={featuredVariant}/>
                 <ProductLicenses
-                  increaseQuantity={increaseQuantity}
-                  decreaseQuantity={decreaseQuantity}
-                  quantity={quantity}
                   selectedOption={selectedOption}
                   variantOptions={variantOptions}
                   handleChangeVariantOption={handleChangeVariantOption}
@@ -155,7 +139,7 @@ const PurchaseProductSummary: React.FC<ReactProps> = (props) => {
                     user={user}
                     // className={"fadeIn"}
                     product={props.product}
-                    quotedPrice={featuredVariant.price}
+                    refetchProduct={props.refetchProduct}
                     title={`Reserve for ${c(featuredVariant.price)} AUD`}
                     showIcon={true}
                     display={true}
@@ -174,7 +158,6 @@ const PurchaseProductSummary: React.FC<ReactProps> = (props) => {
                 </div>
             }
 
-
           </div>
         </div>
       </div>
@@ -187,14 +170,7 @@ const PurchaseProductSummary: React.FC<ReactProps> = (props) => {
 interface ReactProps extends WithStyles<typeof styles> {
   product: Product;
   selectedOption: SelectedVariantProps;
-  quantity?: number;
-  // ProductLicense
-  increaseQuantity(): void;
-  decreaseQuantity(): void;
-  // selectedOption: {
-  //   label: string;
-  //   value: Product_Variants;
-  // };
+  refetchProduct?(): void;
   variantOptions: {
     label: string;
     value: Product_Variants;

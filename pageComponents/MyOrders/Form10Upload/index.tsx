@@ -308,6 +308,7 @@ const Form10Upload = (props: ReactProps) => {
                   orderStatus === OrderStatus.ADMIN_APPROVED ||
                   orderStatus === OrderStatus.COMPLETE ||
                   orderStatus === OrderStatus.REFUNDED ||
+                  orderStatus === OrderStatus.CANCELLED ||
                   orderStatus === OrderStatus.FAILED
                 )
               }

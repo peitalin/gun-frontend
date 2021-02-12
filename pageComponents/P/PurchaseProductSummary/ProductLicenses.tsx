@@ -23,9 +23,6 @@ const ProductLicenses = (props: ReactProps) => {
     selectedOption,
     handleChangeVariantOption,
     variantOptions,
-    decreaseQuantity,
-    increaseQuantity,
-    quantity,
   } = props;
 
   const productVariant = selectedOption.value;
@@ -70,9 +67,6 @@ const ProductLicenses = (props: ReactProps) => {
 
 
 interface ReactProps extends WithStyles<typeof styles> {
-  increaseQuantity(): void;
-  decreaseQuantity(): void;
-  quantity: number;
   selectedOption: {
     label: string;
     value: Product_Variants;

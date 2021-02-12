@@ -63,7 +63,7 @@ const Products: React.FC<ReactProps> = (props) => {
 
   ///////// DATA
 
-  const { loading, error, data } = useQuery<QueryData, QueryVar>(
+  const { loading, error, data, refetch } = useQuery<QueryData, QueryVar>(
     GET_PRODUCT, {
     variables: {
       productId: productId
@@ -71,31 +71,30 @@ const Products: React.FC<ReactProps> = (props) => {
     ssr: true,
   })
   const product = option(data).getProductById() || props.initialProduct;
-  console.log("product:::::::", product)
 
   ////////// VARIANTS
-  const [quantity, setQuantity] = React.useState(1);
-  const [selectedOption, setSelectedOption] = React.useState<SelectedVariantProps>(
-    {
-      label: "variant",
-      value: option(product).featuredVariant() || {
-        productId: undefined,
-        variantId: undefined,
-        snapshotId: undefined,
-        variantSnapshotId: undefined,
-        position: 0,
-        storeId: undefined,
-        createdAt: undefined,
-        price: undefined,
-        priceWas: undefined,
-        variantName: undefined,
-        variantDescription: undefined,
-        previewItems: [],
-        isDefault: false,
-        soldOutStatus: SoldOutStatus.AVAILABLE,
-      } as any,
-    }
-  );
+  const [
+    selectedOption,
+    setSelectedOption
+  ] = React.useState<SelectedVariantProps>({
+    label: "variant",
+    value: option(product).featuredVariant() || {
+      productId: undefined,
+      variantId: undefined,
+      snapshotId: undefined,
+      variantSnapshotId: undefined,
+      position: 0,
+      storeId: undefined,
+      createdAt: undefined,
+      price: undefined,
+      priceWas: undefined,
+      variantName: undefined,
+      variantDescription: undefined,
+      previewItems: [],
+      isDefault: false,
+      soldOutStatus: SoldOutStatus.AVAILABLE,
+    } as any,
+  });
 
   React.useEffect(() => {
     if (!!product?.featuredVariant?.variantId) {
@@ -119,15 +118,6 @@ const Products: React.FC<ReactProps> = (props) => {
   ) => {
     setSelectedOption(selectedOption)
   };
-
-  const decreaseQuantity = () => {
-    // decrement only if larger than 1
-    setQuantity(s => s > 1 ? s - 1 : 1);
-  }
-
-  const increaseQuantity = () => {
-    setQuantity(s => s + 1);
-  }
 
   React.useEffect(() => {
     if (
@@ -162,12 +152,6 @@ const Products: React.FC<ReactProps> = (props) => {
   if (product && !product.isPublished) {
     return <ErrorPage statusCode={400} message={"Product is not available"}/>
   }
-  // if (product && isReserved) {
-  //   return <ErrorPage statusCode={400} message={"Product is sold (reserved)"}/>
-  // }
-  // if (product && isSoldOut) {
-  //   return <ErrorPage statusCode={400} message={"Product is sold out"}/>
-  // }
   if (error) {
     return <ErrorPage statusCode={400} message={"Product cannot be found"}/>
   }
@@ -212,10 +196,8 @@ const Products: React.FC<ReactProps> = (props) => {
           <PurchaseProductSummary
             product={product}
             selectedOption={selectedOption}
-            quantity={quantity}
+            refetchProduct={refetch}
             // productLicense props
-            increaseQuantity={increaseQuantity}
-            decreaseQuantity={decreaseQuantity}
             variantOptions={variantOptions}
             handleChangeVariantOption={handleChangeVariantOption}
           />
