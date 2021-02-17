@@ -18,14 +18,13 @@ import FeaturedProductsDesktop from "pageComponents/FrontPage/FeaturedProducts/F
 import FeaturedProductsLoading from "pageComponents/FrontPage/FeaturedProducts/FeaturedProductsLoading";
 import Hidden from 'components/HiddenFix';
 
-// const FEATURED_LIST_ID = 'prodlist_1bea860c-7b8b-476d-a417-82728287dc9d'
-export const DEV_FEATURED_LIST_ID = 'prodlist_838af685-ba9c-40b4-80ee-fcf9529bdcfc'
 // useMediaQuery
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 // Graphql
 import { useQuery, useApolloClient } from "@apollo/client";
 import { GET_ALL_PRODUCTS } from "queries/gun-queries";
+
 
 
 
@@ -68,14 +67,14 @@ const FeaturedProducts = (props: ReactProps) => {
       query: {
         limit: 12 || count,
         offset: props.offset || 0,
-        orderBy: orderBy.value,
-        where: { isPublished: { _eq: true } }
-        // orderBy: {
-        //   // price: OrderBy.ASC,
-        //   // price: OrderBy.DESC
-        //   // createdAt: OrderBy.ASC,
-        //   // createdAt: OrderBy.DESC,
-        // }
+        // orderBy: orderBy.value,
+        where: { isPublished: { _eq: true } },
+        orderBy: {
+          // price: Order_By.ASC,
+          // price: Order_By.DESC
+          // createdAt: Order_By.ASC,
+          createdAt: Order_By.DESC,
+        }
       }
     },
     ssr: true,
@@ -95,13 +94,10 @@ const FeaturedProducts = (props: ReactProps) => {
   return (
     <>
       <Hidden xsDown implementation="css">
-        {
-          (DEV_FEATURED_LIST_ID) &&
-          <FeaturedProductsDesktop
-            productsConnection={connection}
-            cardsPerRow={cardsPerRow}
-          />
-        }
+        <FeaturedProductsDesktop
+          productsConnection={connection}
+          cardsPerRow={cardsPerRow}
+        />
       </Hidden>
       <Hidden smUp implementation="css">
         <FeaturedProductsMobileCarousel

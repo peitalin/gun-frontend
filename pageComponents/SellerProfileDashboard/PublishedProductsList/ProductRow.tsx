@@ -224,7 +224,7 @@ const ProductRow = (props: ReactProps) => {
                 price={product.featuredVariant.price}
                 priceWas={product.featuredVariant.priceWas}
                 hideSavings={true}
-                soldOutStatus={product.featuredVariant.soldOutStatus}
+                soldOutStatus={product.soldOutStatus}
               />
             </div>
           </div>

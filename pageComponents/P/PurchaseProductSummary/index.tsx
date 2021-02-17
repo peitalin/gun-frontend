@@ -93,7 +93,10 @@ const PurchaseProductSummary: React.FC<ReactProps> = (props) => {
                   variantOptions={variantOptions}
                   handleChangeVariantOption={handleChangeVariantOption}
                 />
-                <ProductPricing featuredVariant={featuredVariant}/>
+                <ProductPricing
+                  featuredVariant={featuredVariant}
+                  soldOutStatus={props.product.soldOutStatus}
+                />
               </>
             : <div style={{
                 minHeight: 380,

@@ -21,9 +21,7 @@ import {
 import usePaginateQueryHook from "components/Paginators/usePaginateQueryHook";
 import Or from "components/Or";
 import { useScrollYPosition } from "utils/hooks";
-// redux
-import { useDispatch, useSelector } from "react-redux";
-import { GrandReduxState } from "reduxStore/grand-reducer";
+
 import { WishlistItemId } from "reduxStore/wishlist-reducer";
 // useMediaQuery
 import { useTheme } from "@material-ui/core/styles";

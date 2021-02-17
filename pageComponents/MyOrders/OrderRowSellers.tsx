@@ -95,8 +95,15 @@ const styles = (theme: Theme) => createStyles({
     flexDirection: 'row',
     padding: '1rem',
     borderRadius: BorderRadius,
-    backgroundColor: Colors.foregroundColor,
-    boxShadow: BoxShadows.shadow1.boxShadow,
+    backgroundColor: theme.palette.type === 'dark'
+      ? Colors.uniswapDarkNavy
+      : Colors.cream,
+    boxShadow: theme.palette.type === 'dark'
+      ? BoxShadows.shadow1.boxShadow
+      : 'unset',
+    border: theme.palette.type === 'dark'
+      ? `unset`
+      : `1px solid ${Colors.slateGrey}`,
     marginBottom: '0.5rem',
     height: 220,
   },
