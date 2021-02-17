@@ -7,6 +7,14 @@ import { ThemeOptions } from "@material-ui/core/styles";
 declare module '@material-ui/core/styles/createMuiTheme' {
   interface Theme {
     colors: {
+      cream: React.CSSProperties['color'],
+      darkWhite: React.CSSProperties['color'],
+      slateGrey: React.CSSProperties['color'],
+      blue: React.CSSProperties['color'],
+      lightBlue: React.CSSProperties['color'],
+      ultramarineBlue: React.CSSProperties['color'],
+      mediumBlack: React.CSSProperties['color'],
+      black1A: React.CSSProperties['color'],
       uniswapLightestGrey: React.CSSProperties['color'],
       uniswapLightGrey: React.CSSProperties['color'],
       uniswapLighterGrey: React.CSSProperties['color'],
@@ -18,7 +26,6 @@ declare module '@material-ui/core/styles/createMuiTheme' {
       uniswapGreyNavy: React.CSSProperties['color'],
       uniswapDarkNavy: React.CSSProperties['color'],
       //
-      blue: React.CSSProperties['color'],
       green: React.CSSProperties['color'],
     },
     gradients: {
@@ -37,10 +44,28 @@ declare module '@material-ui/core/styles/createMuiTheme' {
         color1: React.CSSProperties['color'],
         color2: React.CSSProperties['color'],
       },
+      gradientGrey2:  {
+        background: React.CSSProperties['background'],
+        color1: React.CSSProperties['color'],
+        color2: React.CSSProperties['color'],
+      },
+      gradientGrey3:  {
+        background: React.CSSProperties['background'],
+        color1: React.CSSProperties['color'],
+        color2: React.CSSProperties['color'],
+      },
     },
   }
   interface ThemeOptions {
     colors: {
+      cream: React.CSSProperties['color'],
+      darkWhite: React.CSSProperties['color'],
+      slateGrey: React.CSSProperties['color'],
+      blue: React.CSSProperties['color'],
+      lightBlue: React.CSSProperties['color'],
+      ultramarineBlue: React.CSSProperties['color'],
+      mediumBlack: React.CSSProperties['color'],
+      black1A: React.CSSProperties['color'],
       uniswapLightestGrey: React.CSSProperties['color'],
       uniswapLightGrey: React.CSSProperties['color'],
       uniswapLighterGrey: React.CSSProperties['color'],
@@ -63,18 +88,21 @@ declare module '@material-ui/core/styles/createMuiTheme' {
         color1: React.CSSProperties['color'],
         color2: React.CSSProperties['color'],
       },
+      gradientGrey2:  {
+        background: React.CSSProperties['background'],
+        color1: React.CSSProperties['color'],
+        color2: React.CSSProperties['color'],
+      },
+      gradientGrey3:  {
+        background: React.CSSProperties['background'],
+        color1: React.CSSProperties['color'],
+        color2: React.CSSProperties['color'],
+      },
     },
   }
 }
 
-// declare module "@material-ui/core/styles/createPalette" {
-//   interface Palette {
-//     neutral: Palette['primary'];
-//   }
-//   interface PaletteOptions {
-//     neutral: PaletteOptions['primary'];
-//   }
-// }
+
 
 // Ultramarine blue
 const secondary = "#2484FF"
@@ -162,6 +190,7 @@ export const Colors = {
   uniswapMediumNavy: '#2D2F36',
   uniswapGreyNavy: '#282A31',
   uniswapDarkNavy: "#222429",
+  ultramarineBlue: "#3773DE",
   gradientUniswapDark1: "#2E3545",
   gradientUniswapDark2: "#2D2F36",
   gradientUniswapFluro1: "#DC3078",
@@ -185,6 +214,11 @@ export const Gradients = {
   },
   gradientGrey2:  {
     background: `linear-gradient(120deg, ${Colors.gradientGrey1} 25%, ${Colors.gradientGrey2} 100%)`,
+    color1: Colors.gradientGrey1,
+    color2: Colors.gradientGrey2,
+  },
+  gradientGrey3:  {
+    background: `linear-gradient(120deg, ${Colors.gradientGrey2} 25%, ${Colors.gradientGrey1} 50%, ${Colors.gradientGrey1} 75%)`,
     color1: Colors.gradientGrey1,
     color2: Colors.gradientGrey2,
   },
@@ -343,7 +377,8 @@ export const notifyStyles = (theme: Theme) => createStyles({
 
 /// To be used in: createMuiTheme(AppTheme)
 /// in _app.tsx
-export const createAppTheme = (darkMode: boolean): ThemeOptions =>  {
+export const createAppTheme = (darkModeStr: "dark"|"light"): ThemeOptions =>  {
+  let darkMode = darkModeStr === 'dark'
   return {
     colors: {
       uniswapLightestGrey: darkMode ? '#B4B5BB' : "#222",
@@ -359,18 +394,6 @@ export const createAppTheme = (darkMode: boolean): ThemeOptions =>  {
       ...Colors,
     },
     gradients: {
-      gradientUniswapDark: !darkMode
-        ? {
-            background: `linear-gradient(140deg, ${Colors.gradientUniswapDark1} 20%, ${Colors.gradientUniswapDark2} 80%)`,
-            color1: Colors.gradientUniswapDark1,
-            color2: Colors.gradientUniswapDark2,
-          }
-        : {
-            background: `linear-gradient(140deg, ${Colors.gradientUniswapFluro1} 20%, ${Colors.gradientUniswapFluro2} 80%)`,
-            color1: Colors.gradientUniswapFluro1,
-            color2: Colors.gradientUniswapFluro2,
-          }
-      ,
       ...Gradients
     },
 
@@ -472,13 +495,19 @@ export const createAppTheme = (darkMode: boolean): ThemeOptions =>  {
         },
         underline: {
           "&:before": {
-            borderBottom: `1px solid ${Colors.uniswapGrey}`,
+            borderBottom: darkMode
+              ? `1px solid ${Colors.uniswapGrey}`
+              : `1px solid ${Colors.uniswapLightestGrey}`,
           },
           "&&&&:hover:before": {
-            borderBottom: `1px solid ${Colors.uniswapLighterGrey}`,
+            borderBottom: darkMode
+              ? `1px solid ${Colors.uniswapLighterGrey}`
+              : `1px solid ${Colors.uniswapLightestGrey}`,
           },
           "&:after": {
-            borderBottom: `1px solid ${Colors.uniswapGrey}`,
+            borderBottom: darkMode
+              ? `1px solid ${Colors.uniswapGrey}`
+              : `1px solid ${Colors.uniswapLightestGrey}`,
           },
         },
       },
@@ -554,21 +583,23 @@ export const createAppTheme = (darkMode: boolean): ThemeOptions =>  {
       },
       MuiPaper: {
         root: {
-          backgroundColor: Colors.uniswapDarkNavy,
-          color: Colors.uniswapLighterGrey,
+          backgroundColor: darkMode ? Colors.uniswapDarkNavy : Colors.cream,
+          color: darkMode ? Colors.uniswapLighterGrey : Colors.black,
         },
       },
       MuiTablePagination: {
         root: {
-          color: Colors.uniswapLighterGrey,
+          color: darkMode ? Colors.uniswapLighterGrey : Colors.black,
         },
       },
       MuiTableCell: {
         head: {
-          color: Colors.uniswapLightestGrey,
+          color: darkMode ? Colors.uniswapLighterGrey : Colors.black1A,
         },
         root: {
-          borderBottom: `1px solid ${Colors.uniswapLightNavy}`,
+          borderBottom: darkMode
+            ? `1px solid ${Colors.uniswapLightNavy}`
+            : `1px solid ${Colors.uniswapLightestGrey}`,
           padding: 4,
         },
       },
@@ -582,67 +613,67 @@ export const createAppTheme = (darkMode: boolean): ThemeOptions =>  {
           fontSize: "2rem",
           fontWeight: 700,
           lineHeight: 1.5,
-          color: Colors.uniswapLightestGrey,
+          color: darkMode ? Colors.uniswapLightestGrey : Colors.black,
         },
         h2: {
           fontSize: "1.5rem",
           fontWeight: 700,
           lineHeight: 1.5,
-          color: Colors.uniswapLightestGrey,
+          color: darkMode ? Colors.uniswapLightestGrey : Colors.black,
         },
         h3: {
           fontSize: "1.25rem",
           fontWeight: 600,
           lineHeight: 1.25,
-          color: Colors.uniswapLightestGrey,
+          color: darkMode ? Colors.uniswapLightestGrey : Colors.black,
         },
         h4: {
           fontSize: "1.125rem",
           fontWeight: 600,
           lineHeight: 1.25,
-          color: Colors.uniswapLightestGrey,
+          color: darkMode ? Colors.uniswapLightestGrey : Colors.black,
         },
         h5: {
           fontSize: "1rem",
           fontWeight: 600,
           lineHeight: 1.25,
-          color: Colors.uniswapLightestGrey,
+          color: darkMode ? Colors.uniswapLightestGrey : Colors.black,
         },
         h6: {
           fontSize: "0.875rem",
           fontWeight: 700,
           lineHeight: 1.25,
-          color: Colors.uniswapLightestGrey,
+          color: darkMode ? Colors.uniswapLightestGrey : Colors.black,
         },
         body1: {
           fontSize: "1rem",
           fontWeight: 400,
           lineHeight: 1.25,
-          color: Colors.uniswapLightestGrey,
+          color: darkMode ? Colors.uniswapLightestGrey : Colors.black,
         },
         body2: {
           fontSize: "0.875rem",
           fontWeight: 400,
           lineHeight: 1.25,
-          color: Colors.uniswapLightestGrey,
+          color: darkMode ? Colors.uniswapLightestGrey : Colors.black,
         },
         subtitle1: {
           fontSize: "1.125rem",
           fontWeight: 500,
           lineHeight: 1,
-          color: Colors.uniswapLightestGrey,
+          color: darkMode ? Colors.uniswapLightestGrey : Colors.black,
         },
         subtitle2: {
           fontSize: "1rem",
           fontWeight: 400,
           lineHeight: 0.9,
-          color: Colors.uniswapLightestGrey,
+          color: darkMode ? Colors.uniswapLightestGrey : Colors.black,
         },
         caption: {
           fontSize: "0.7rem",
           fontWeight: 500,
           lineHeight: 0.9,
-          color: Colors.uniswapLightestGrey,
+          color: darkMode ? Colors.uniswapLightestGrey : Colors.black,
         },
       }
     }

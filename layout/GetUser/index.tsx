@@ -79,7 +79,7 @@ export const setUserOnCompleted =
   refetch?: ApolloRefetch
 ) => {
 
-  console.log("update redux user with data: ", data)
+  // console.log("update redux user with data: ", data)
   // update Redux user state on initial page load
   if (option(data).user.id() && refetch) {
     // set User profile, and userRefetch in REDUX
@@ -95,7 +95,7 @@ export const reduxBatchUpdate = {
   userStore: (data: QueryData, refetch?: ApolloRefetch) => (dispatch: Dispatch) => {
     batch(() => {
       // set User Profile in REDUX
-      console.log("setting user.store in redux: ", data.user.store)
+      // console.log("setting user.store in redux: ", data.user.store)
       dispatch(Actions.reduxLogin.SET_USER(data.user));
 
       dispatch(Actions.reduxWishlist.SET_WISHLIST(

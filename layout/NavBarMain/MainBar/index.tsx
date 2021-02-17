@@ -31,7 +31,6 @@ const MainBar = (props: ReactProps) => {
 
   const { classes } = props;
   const router = useRouter()
-  const color = Colors.uniswapLighterGrey;
 
   const theme = useTheme();
   const xsDown = useMediaQuery(theme.breakpoints.down('xs'));
@@ -40,27 +39,24 @@ const MainBar = (props: ReactProps) => {
   const lgDown = useMediaQuery(theme.breakpoints.down('lg'));
 
   const {
-    cartCount,
-    subtotal,
+    darkMode,
     loggedIn,
   } = useSelector<GrandReduxState, ReduxProps>(state => ({
-    // cart: state.reduxCart.cart,
-    // cartCount: state.reduxCart.cart.items.length,
-    // subtotal: state.reduxCart.cart.subtotal,
-    cartCount: 0,
-    subtotal: 0,
+    darkMode: state?.reduxLogin?.darkMode,
     loggedIn: !!state?.reduxLogin?.user?.id,
   }));
+
+  const color = darkMode === 'dark'
+    ? Colors.cream
+    : Colors.black
 
   const endRoute = router.pathname.split('/').pop();
 
   const navBarProps = {
     classes,
     endRoute,
-    cartCount,
     loggedIn,
     color,
-    subtotal,
   };
 
   let isHomePage = isMainPages(router)
@@ -138,8 +134,7 @@ interface ReactProps extends WithStyles<typeof styles> {
 
 interface ReduxProps {
   loggedIn: boolean;
-  cartCount: number;
-  subtotal: number;
+  darkMode: "dark"|"light";
 }
 
 

@@ -153,7 +153,7 @@ const styles = (theme: Theme) => createStyles({
     // background: theme.gradients.gradientUniswapDark.background,
     background: theme.palette.type === "dark"
       ? theme.gradients.gradientUniswapDark.background
-      : theme.gradients.gradientGrey.background,
+      : theme.gradients.gradientGrey3.background,
     // offset 140px for navbar
   },
   pageInnerContainer: {

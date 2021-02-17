@@ -24,6 +24,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { asCurrency as c } from "utils/prices";
 import { isMainPages } from "."
+import ToggleDarkMode from "layout/NavBarMain/ToggleDarkMode";
 
 
 
@@ -32,10 +33,8 @@ const DesktopMainBarLg = (props: DesktopMainBarProps) => {
   const {
     classes,
     endRoute,
-    cartCount,
     loggedIn,
     color,
-    subtotal,
   } = props;
 
   const dispatch = useDispatch();
@@ -63,7 +62,7 @@ const DesktopMainBarLg = (props: DesktopMainBarProps) => {
 
       <Link href="/">
         <a className={classes.buttonLinkLogo}>
-          <Logo color={color}/>
+          <Logo fillColor={color}/>
         </a>
       </Link>
 
@@ -73,6 +72,9 @@ const DesktopMainBarLg = (props: DesktopMainBarProps) => {
         classes.mainBarInner,
         hide ? "displayNone" : "fadeIn"
       )}>
+
+        <ToggleDarkMode/>
+
         <Button
           className={clsx(
             classes.navbarButton,
@@ -168,10 +170,8 @@ const DesktopMainBarLg = (props: DesktopMainBarProps) => {
 
 interface DesktopMainBarProps extends WithStyles<typeof styles> {
   endRoute: string;
-  cartCount: number;
   loggedIn: boolean;
   color: string;
-  subtotal: number;
 }
 
 export default withStyles(styles)( DesktopMainBarLg );

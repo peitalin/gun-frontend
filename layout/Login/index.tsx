@@ -407,39 +407,6 @@ const styles = (theme: Theme) => createStyles({
     color: "#2484FF",
     cursor: 'pointer',
   },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-  },
-  avatarSignin: {
-    margin: theme.spacing(1),
-    color: '#fff',
-    backgroundColor: theme.palette.primary.main,
-  },
-  avatarSignup: {
-    margin: theme.spacing(1),
-    color: '#fff',
-    backgroundColor: theme.palette.primary.main,
-  },
-  checkBox: {
-    fontSize: "0.8rem",
-  },
-  form: {
-    width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(1),
-  },
-  submit: {
-    marginTop: theme.spacing(1),
-  },
-  secureCheckout: {
-    color: "#bbbbbb",
-  },
-  secureCheckoutIcon: {
-    color: "#bbbbbb",
-    height: '0.8rem',
-    width: '0.8rem',
-    marginRight: "0.1rem",
-  },
 });
 
 export default withStyles(styles)( Login );

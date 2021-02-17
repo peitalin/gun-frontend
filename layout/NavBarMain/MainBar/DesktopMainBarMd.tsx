@@ -19,6 +19,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { asCurrency as c } from "utils/prices";
 import { isMainPages } from "."
+import ToggleDarkMode from "layout/NavBarMain/ToggleDarkMode";
 
 
 
@@ -27,10 +28,8 @@ const DesktopMainBarMd = (props: ReactProps & DesktopMainBarProps) => {
   const {
     classes,
     endRoute,
-    cartCount,
     loggedIn,
     color,
-    subtotal,
   } = props;
 
   const dispatch = useDispatch();
@@ -57,7 +56,7 @@ const DesktopMainBarMd = (props: ReactProps & DesktopMainBarProps) => {
       <div className={!hide ? "fadeIn" : "hidden"}>
         <Link href="/">
           <a className={classes.buttonLink}>
-            <Logo color={color} disableLogo={true}/>
+            <Logo fillColor={color} disableLogo={true}/>
           </a>
         </Link>
       </div>
@@ -69,6 +68,9 @@ const DesktopMainBarMd = (props: ReactProps & DesktopMainBarProps) => {
         classes.mainBarInner,
         hide ? "displayNone" : "fadeIn"
       )}>
+
+        <ToggleDarkMode/>
+
         <Button
           className={clsx(
             classes.navbarButton,
@@ -168,10 +170,8 @@ interface ReactProps extends WithStyles<typeof styles> {
 }
 interface DesktopMainBarProps extends WithStyles<typeof styles> {
   endRoute: string;
-  cartCount: number;
   loggedIn: boolean;
   color: string;
-  subtotal: number;
 }
 interface MobileMainBarProps extends DesktopMainBarProps {
   mobileMenuOpen: boolean;
@@ -180,8 +180,6 @@ interface MobileMainBarProps extends DesktopMainBarProps {
 
 interface ReduxProps {
   loggedIn: boolean;
-  cartCount: number;
-  subtotal: number;
 }
 
 

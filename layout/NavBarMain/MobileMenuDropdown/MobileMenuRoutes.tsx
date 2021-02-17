@@ -21,6 +21,7 @@ import Login from "layout/Login"
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { goToModalConnect } from "utils/modals";
+import ToggleDarkMode from "layout/NavBarMain/ToggleDarkMode";
 
 
 
@@ -64,7 +65,6 @@ const MobileMenuRoutes = (props: ReactProps) => {
           </Link>
         </MenuItem>
       }
-
 
       {
         loggedIn &&
@@ -191,7 +191,24 @@ const MobileMenuRoutes = (props: ReactProps) => {
         </Link>
       </div>
 
-      {/* <Divider style={dividerStyle}/> */}
+      <Divider style={dividerStyle}/>
+
+      <MenuItem
+        className={clsx(
+          classes.mobileMenuFlexitem,
+          classes.mobileMenuItemRoot,
+          classes.mobileMenuFlexitemSpaceBetween,
+        )}
+      >
+        <div className={classes.toggleDarkModeText}>
+          <Typography className={classes.mobileMenuItemTextEmph2}>
+            Dark/Light Mode
+          </Typography>
+        </div>
+        <ToggleDarkMode/>
+      </MenuItem>
+
+
 
       {
         loggedIn &&
@@ -307,6 +324,11 @@ const styles = (theme: Theme) => createStyles({
     height: '1.5rem',
     display: 'flex',
     alignItems: 'center',
+  },
+  toggleDarkModeText: {
+  },
+  mobileMenuFlexitemSpaceBetween: {
+    justifyContent: 'space-between',
   },
 });
 

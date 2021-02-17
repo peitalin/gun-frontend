@@ -33,6 +33,9 @@ const styles = (theme: Theme) => createStyles({
   title: {
     marginTop: '2rem',
     margin: '1rem',
+    color: theme.palette.type === 'dark'
+      ? `${Colors.uniswapLightGrey}`
+      : `${Colors.uniswapGrey}`,
   },
   subtitle: {
     marginBottom: '0.25rem',
@@ -61,6 +64,9 @@ const styles = (theme: Theme) => createStyles({
     flexDirection: 'column',
     alignItems: 'center',
     padding: "2rem",
+    backgroundColor: theme.palette.type === 'dark'
+      ? theme.colors.uniswapDarkNavy
+      : theme.colors.darkWhite,
   },
   avatar: {
     margin: theme.spacing(1),
@@ -119,7 +125,9 @@ const styles = (theme: Theme) => createStyles({
     top: '1.5rem',
   },
   dontHaveAccount: {
-    color: Colors.uniswapLightGrey,
+    color: theme.palette.type === 'dark'
+      ? `${Colors.uniswapLightGrey}`
+      : `${Colors.uniswapGrey}`,
     marginTop: '0.5rem',
   },
   // for mobile menu, unlogged in user

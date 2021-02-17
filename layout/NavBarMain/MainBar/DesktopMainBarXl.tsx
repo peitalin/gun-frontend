@@ -23,6 +23,8 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { asCurrency as c } from "utils/prices";
 import { isMainPages } from "."
+import ToggleDarkMode from "layout/NavBarMain/ToggleDarkMode";
+
 
 
 const DesktopMainBarXl = (props: DesktopMainBarProps) => {
@@ -30,10 +32,8 @@ const DesktopMainBarXl = (props: DesktopMainBarProps) => {
   const {
     classes,
     endRoute,
-    cartCount,
     loggedIn,
     color,
-    subtotal,
   } = props;
 
   const dispatch = useDispatch();
@@ -52,11 +52,13 @@ const DesktopMainBarXl = (props: DesktopMainBarProps) => {
 
       <Link href="/">
         <a className={classes.buttonLinkLogo}>
-          <Logo color={color}/>
+          <Logo fillColor={color}/>
         </a>
       </Link>
 
       <div style={{ flexGrow: 1}}/>
+
+      <ToggleDarkMode/>
 
       <Link href="/sell">
         <a className={classes.buttonLink}>
@@ -167,10 +169,8 @@ const DesktopMainBarXl = (props: DesktopMainBarProps) => {
 
 interface DesktopMainBarProps extends WithStyles<typeof styles> {
   endRoute: string;
-  cartCount: number;
   loggedIn: boolean;
   color: string;
-  subtotal: number;
 }
 
 export default withStyles(styles)( DesktopMainBarXl );

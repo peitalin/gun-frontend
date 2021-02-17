@@ -33,10 +33,8 @@ const MobileMainBar = (props: MobileMainBarProps) => {
   const {
     classes,
     endRoute,
-    cartCount,
     loggedIn,
     color,
-    subtotal,
   } = props;
 
   const dispatch = useDispatch();
@@ -97,7 +95,7 @@ const MobileMainBar = (props: MobileMainBarProps) => {
               props.setMobileMenuOpen(s => false)
             }}
           >
-            <Logo color={color}/>
+            <Logo fillColor={color}/>
           </a>
         </Link>
       }
@@ -160,10 +158,8 @@ interface ReactProps extends WithStyles<typeof styles> {
 }
 interface MobileMainBarProps extends ReactProps {
   endRoute: string;
-  cartCount: number;
   loggedIn: boolean;
   color: string;
-  subtotal: number;
   numUnclaimedOrders?: number;
 }
 

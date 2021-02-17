@@ -43,7 +43,9 @@ export const styles = (theme: Theme) => createStyles({
     alignItems: "center",
   },
   baseBarBorderBottom: {
-    borderBottom: `1px solid ${Colors.uniswapLightNavy}`,
+    borderBottom: theme.palette.type === 'dark'
+      ? `1px solid ${Colors.uniswapLightNavy}`
+      : `1px solid ${Colors.slateGreyDarker}`,
   },
   baseBarDither: {
     background: Gradients.gradientBlackDitherDown.background,
@@ -63,7 +65,9 @@ export const styles = (theme: Theme) => createStyles({
 
   baseBarDashboard: {
     zIndex: 5,
-    background: Gradients.gradientUniswapDark.background,
+    background: theme.palette.type === 'dark'
+      ? Gradients.gradientUniswapDark.background
+      : Gradients.gradientGrey2.background,
     // background: Colors.uniswapDarkNavy,
     height: `${MainBarHeightDashboard - 1}px`, // 1px for borderBottom
     display: 'flex',
@@ -175,7 +179,9 @@ export const styles = (theme: Theme) => createStyles({
   categoryBar: {
     height: `${CategoryBarHeight - 1}px`, // 1px for borderBottom
     // background: categoryBarColor,
-    background: Gradients.gradientUniswapDark.background,
+    background: theme.palette.type === 'dark'
+      ? Gradients.gradientUniswapDark.background
+      : Gradients.gradientGrey2.background,
     border: '0px solid',
     // boxShadow: "1px 1px 1px 1px rgba(22,22,22,0.2)"
     boxShadow: "0px 1px 2px 0px rgba(40,40,40,0.3)",
@@ -359,7 +365,9 @@ export const styles = (theme: Theme) => createStyles({
   // News Bar
   newsBar: {
     // background: Gradients.gradientBlack.background,
-    background: Gradients.gradientUniswapFluro.background,
+    background: theme.palette.type === 'dark'
+      ? Gradients.gradientUniswapFluro.background
+      : Gradients.gradientUniswapBlueGreen.background,
     height: `${NewsBarHeight}px`,
     zIndex: 5,
     position: "relative",

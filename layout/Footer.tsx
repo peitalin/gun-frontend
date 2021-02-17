@@ -241,9 +241,10 @@ const styles = (theme: Theme) => createStyles({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
-    // background: Gradients.gradientUniswapDark.background,
-    // backgroundColor: Colors.uniswapDarkNavy,
-    backgroundColor: Colors.mediumBlack,
+    // backgroundColor: Colors.mediumBlack,
+    backgroundColor: theme.palette.type === 'dark'
+      ? theme.colors.mediumBlack
+      : theme.colors.ultramarineBlue,
     paddingTop: "4rem",
     color: Colors.cream,
   },
@@ -337,7 +338,9 @@ const styles = (theme: Theme) => createStyles({
   siteFooterCredits: {
     marginBottom: 0,
     width: '100%',
-    borderTop: `1px solid ${Colors.charcoal}`,
+    borderTop: theme.palette.type === 'dark'
+      ? `1px solid ${Colors.charcoal}`
+      : `1px solid ${Colors.darkWhite}`,
     color: Colors.mediumGrey,
     display: 'flex',
     flexDirection: "row",
@@ -375,10 +378,12 @@ const styles = (theme: Theme) => createStyles({
     fontWeight: 500,
     fontSize: '0.9rem',
     lineHeight: '1rem',
-    color: Colors.mediumGrey,
+    color: theme.palette.type === 'dark'
+      ? theme.colors.uniswapLightestGrey
+      : theme.colors.darkWhite,
     textDecoration: 'none',
     '&:hover': {
-      color: Colors.lightGrey,
+      color: Colors.cream,
       cursor: 'pointer',
     }
   },
@@ -402,10 +407,12 @@ const styles = (theme: Theme) => createStyles({
     fontWeight: 500,
     fontSize: '0.9rem',
     lineHeight: '1rem',
-    color: theme.colors.uniswapLighterGrey,
+    color: theme.palette.type === 'dark'
+      ? theme.colors.uniswapLightestGrey
+      : theme.colors.darkWhite,
     textDecoration: 'none',
     '&:hover': {
-      color: theme.colors.uniswapLightestGrey,
+      color: theme.colors.cream,
       cursor: 'pointer',
     }
   },
@@ -413,7 +420,9 @@ const styles = (theme: Theme) => createStyles({
     fontWeight: 500,
     fontSize: '0.9rem',
     lineHeight: '1rem',
-    color: theme.colors.uniswapLightestGrey,
+    color: theme.palette.type === 'dark'
+      ? theme.colors.uniswapLightestGrey
+      : theme.colors.darkWhite,
     textDecoration: 'none',
   },
 })

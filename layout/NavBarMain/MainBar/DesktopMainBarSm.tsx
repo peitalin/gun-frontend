@@ -35,10 +35,8 @@ const DesktopMainBarSm = (props: ReactProps & DesktopMainBarProps) => {
   const {
     classes,
     endRoute,
-    cartCount,
     loggedIn,
     color,
-    subtotal,
   } = props;
 
   const dispatch = useDispatch();
@@ -63,7 +61,7 @@ const DesktopMainBarSm = (props: ReactProps & DesktopMainBarProps) => {
 
       <Link href="/">
         <a className={classes.buttonLink}>
-          <Logo color={color} disableLogo={true}/>
+          <Logo fillColor={color} disableLogo={true}/>
         </a>
       </Link>
 
@@ -163,8 +161,6 @@ interface MobileMainBarProps extends DesktopMainBarProps {
 
 interface ReduxProps {
   loggedIn: boolean;
-  cartCount: number;
-  subtotal: number;
 }
 
 
