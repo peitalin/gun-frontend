@@ -33,7 +33,7 @@ const ProductRecommendationRow = (props: ReactProps) => {
 
   const featuredVariant = product?.featuredVariant;
   const price = featuredVariant?.price;
-  const soldOutStatus = featuredVariant?.soldOutStatus;
+  const soldOutStatus = product?.soldOutStatus;
 
   return (
     <ErrorBounds className={clsx(

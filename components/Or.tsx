@@ -36,12 +36,16 @@ const styles = (theme: Theme) => createStyles({
   },
   dividerLine: {
     flexGrow: 1,
-    borderBottom: `1px solid ${Colors.uniswapMediumGrey}`,
+    borderBottom: theme.palette.type === 'dark'
+      ? `1px solid ${Colors.uniswapMediumGrey}`
+      : `1px solid ${Colors.uniswapLightestGrey}`,
     height: '1px',
   },
   dividerText: {
     margin: '0rem 0.5rem',
-    color: Colors.uniswapMediumGrey,
+    color: theme.palette.type === 'dark'
+      ? `1px solid ${Colors.uniswapMediumGrey}`
+      : `1px solid ${Colors.uniswapLightestGrey}`,
     fontWeight: 400,
     fontSize: '0.875rem',
   },

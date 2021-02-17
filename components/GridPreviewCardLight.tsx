@@ -64,24 +64,24 @@ const GridPreviewCardLight = (props: ReactProps) => {
   let price = product.featuredVariant.price
   let priceWas = product.featuredVariant.priceWas
 
-  const productId = option(product).id();
-  const productVariantId = option(product).featuredVariant.variantId()
+  const productId = product?.id;
+  const productVariantId = product?.featuredVariant?.variantId
 
-  const previewItems = option(product).featuredVariant.previewItems([])
+  const previewItems = product?.featuredVariant?.previewItems ?? []
   const featuredPreview = previewItems[0];
-  const image = option(featuredPreview).image();
+  const image = featuredPreview?.image;
   let youTubeVimeoPreview = getYouTubeVimeoImagePreview(
-    option(featuredPreview).youTubeEmbedLink()
+    featuredPreview?.youTubeEmbedLink
   );
 
   const numPreviews = previewItems.length;
 
-  const title = option(product).currentSnapshot.title('').length > 50
+  const title = (product?.currentSnapshot?.title ?? "").length > 50
     ? product.currentSnapshot.title.slice(0, 52) + '...'
-    : option(product).currentSnapshot.title()
+    : product?.currentSnapshot?.title
 
-  const category = option(product).category();
-  const soldOutStatus = option(product).featuredVariant.soldOutStatus();
+  const category = product?.category;
+  const soldOutStatus = product?.soldOutStatus;
 
   const getCardMaxWidth = (cardsPerRow: number) => {
     // minus 16px (1rem) for left-padding on carousel
@@ -195,12 +195,12 @@ const GridPreviewCardLight = (props: ReactProps) => {
             product={product}
           >
             {
-              option(image).original.url()
+              image?.original?.url
               ? <CardMedia
                   title={title}
                   component="img"
                   className={clsx(classes.cardMedia)}
-                  src={option(image).original.url()}
+                  src={image?.original?.url}
                   srcSet={genSrcSet(image)}
                   sizes={genImgBreakpoints(imgSizesSrcSet)}
                 />
@@ -233,7 +233,7 @@ const GridPreviewCardLight = (props: ReactProps) => {
         <LinkLoading
           href={"/p/[productIdOrSlug]"}
           as={`/p/${props.product.id}`}
-          disable={!option(props).product.storeId()}
+          disable={!props?.product?.storeId}
         >
           {
             !productId
@@ -249,7 +249,7 @@ const GridPreviewCardLight = (props: ReactProps) => {
                   variant="body2"
                   component="div"
                 >
-                  {option(category).name()}
+                  {category?.name}
                 </Typography>
                 <Typography
                   className={classes.title}
