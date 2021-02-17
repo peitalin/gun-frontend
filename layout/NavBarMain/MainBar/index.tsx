@@ -46,9 +46,11 @@ const MainBar = (props: ReactProps) => {
     loggedIn: !!state?.reduxLogin?.user?.id,
   }));
 
-  const color = darkMode === 'dark'
+  const color = router.pathname === '/'
     ? Colors.cream
-    : Colors.black
+    : darkMode === 'dark'
+      ? Colors.cream
+      : Colors.black
 
   const endRoute = router.pathname.split('/').pop();
 
