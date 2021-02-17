@@ -4,7 +4,7 @@ import { oc as option } from "ts-optchain";
 // Redux
 import { Dispatch, Store } from "redux";
 // redux
-import { Provider, batch, useDispatch, useSelector } from "react-redux";
+import { Provider, useDispatch, useSelector } from "react-redux";
 import { makeStore, GrandReduxState } from "reduxStore/grand-reducer";
 import { Actions } from "reduxStore/actions";
 // Layout
@@ -22,8 +22,7 @@ import App from "next/app";
 // Redux
 import withRedux from "next-redux-wrapper";
 // Apollo Graphql
-import { ApolloProvider } from '@apollo/client';
-import { ApolloClient } from '@apollo/client';
+import { ApolloProvider, ApolloClient } from '@apollo/client';
 import withApollo from 'utils/apollo';
 // queries
 import { GET_USER } from "queries/user-queries";
@@ -33,13 +32,12 @@ import "../public/App.css";
 import { SnackbarProvider, ProviderContext } from 'notistack';
 import IconButtonCancel from "components/IconButtonCancel";
 // Typings
-// import { UserPrivate } from 'typings/gqlTypes';
-type UserPrivate = any;
+import { UserPrivate } from 'typings/gqlTypes';
 import { serverApolloClient } from "utils/apollo";
 // Payment Clients
 import { PaypalClient } from "typings/typings-paypal";
-import { WestpacQuickstreamClient } from "typings/typings-westpac";
-import Router from "next/router";
+// import { WestpacQuickstreamClient } from "typings/typings-westpac";
+
 import dayjs from 'dayjs'
 import utc from "dayjs/plugin/utc"
 dayjs.extend(utc)
@@ -51,7 +49,7 @@ declare global {
     gapi: any;
     paypal: PaypalClient
     analytics: any;
-    QuickstreamAPI: WestpacQuickstreamClient;
+    // QuickstreamAPI: WestpacQuickstreamClient;
     ClassicEditor: any
   }
 }
@@ -172,27 +170,45 @@ class MyApp extends App<AppProps> {
 
 const ThemeProviderDarkMode = (props) => {
 
-  let darkMode;
-  let localStorageDarkMode: "dark" | "light" = undefined;
+  let darkMode = useSelector<GrandReduxState, "dark"|"light">(s => {
+    return s.reduxLogin.darkMode
+  })
+  let dispatch = useDispatch()
 
-  if (process.browser && !!window) {
-    localStorageDarkMode = window?.localStorage?.getItem('gmDarkMode') as any;
-  }
 
-  if (localStorageDarkMode !== undefined) {
-    darkMode = localStorageDarkMode === "dark" ? true : false;
-  } else {
-    // let operatin system decide, e.g. dark mode in MacOs
-    darkMode = useMediaQuery('(prefers-color-scheme: dark)');
-  }
+  React.useEffect(() => {
+
+    // do this only once per page load
+    let localStorageDarkMode: "dark" | "light" = undefined;
+    if (process.browser && !!window) {
+      localStorageDarkMode = window?.localStorage?.getItem('gmDarkMode') as any;
+    }
+
+    if (localStorageDarkMode !== undefined) {
+      // first check if browser has dark mode preferences initially
+      if (localStorageDarkMode === "dark") {
+        dispatch(Actions.reduxLogin.SET_DARK_MODE())
+      } else {
+        dispatch(Actions.reduxLogin.SET_LIGHT_MODE())
+      }
+    // } else {
+    //   // then let operating system decide, e.g. dark mode in MacOs
+    //   let osDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
+    //   if (osDarkMode) {
+    //     dispatch(Actions.reduxLogin.SET_DARK_MODE())
+    //   } else {
+    //     dispatch(Actions.reduxLogin.SET_LIGHT_MODE())
+    //   }
+    }
+  }, [])
 
   let darkModeTheme: PaletteOptions = {
-    type: darkMode ? 'dark' : 'light',
+    type: darkMode,
     // type: "light",
     // type: "dark"
   }
   // console.log("darkMode: ", darkMode)
-  // console.log("darkModeTheme: ", darkModeTheme)
+  console.log("darkModeTheme: ", darkModeTheme)
 
   let appTheme: ThemeOptions = createAppTheme(darkMode);
 

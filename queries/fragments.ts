@@ -91,7 +91,6 @@ export const ProductVariantsFragment = gql`
     variantName
     variantDescription
     isDefault
-    soldOutStatus
     position
     price
     priceWas
@@ -385,7 +384,6 @@ export const ProductVariantFragment = gql`
       }
       youTubeEmbedLink
     }
-    soldOutStatus
   }
   ${ImageFragment}
 `;
@@ -393,6 +391,7 @@ export const ProductVariantFragment = gql`
 export const ProductFragment = gql`
   fragment ProductFragment on Product {
     id
+    createdAt
     updatedAt
     tags
     isPublished
@@ -406,9 +405,6 @@ export const ProductFragment = gql`
       ...ProductSnapshotsFragment
     }
 
-    currentVariants {
-      ...ProductVariantFragment
-    }
     featuredVariant {
       ...ProductVariantFragment
     }

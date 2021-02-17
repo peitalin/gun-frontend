@@ -47,6 +47,9 @@ export const trimTitle = (title: string, maxLength?: number) => {
 
 export const convertSoldOutStatus = (s: string) => {
   switch (s) {
+    case SoldOutStatus.ABANDONED: {
+      return "Abandoned"
+    }
     case SoldOutStatus.AVAILABLE: {
       return "Available"
     }

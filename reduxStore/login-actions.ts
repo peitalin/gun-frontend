@@ -18,6 +18,16 @@ export const reduxLoginActions = {
       payload: payload
     }),
 
+    SET_DARK_MODE: (payload?: null): ActionType<null> => ({
+      type: "SET_DARK_MODE",
+      payload: payload
+    }),
+
+    SET_LIGHT_MODE: (payload?: null): ActionType<null> => ({
+      type: "SET_LIGHT_MODE",
+      payload: payload
+    }),
+
     CLEAR_USER: (payload?: null): ActionType<null> => ({
       type: "CLEAR_USER",
       payload: payload
