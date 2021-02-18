@@ -135,7 +135,9 @@ const styles = (theme: Theme) => createStyles({
     marginBottom: '1rem',
   },
   customerItem: {
-    borderBottom: `1px solid ${theme.colors.uniswapNavy}`,
+    borderBottom: theme.palette.type === 'dark'
+      ? `1px solid ${Colors.uniswapNavy}`
+      : `1px solid ${Colors.slateGreyDark}`,
     paddingTop: '0.5rem',
     paddingBottom: '0.5rem',
     minHeight: 50,

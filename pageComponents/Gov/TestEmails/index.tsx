@@ -239,8 +239,15 @@ const styles = (theme: Theme) => createStyles({
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
-    background: Colors.uniswapDarkNavy,
-    boxShadow: BoxShadows.shadow1.boxShadow,
+    background: theme.palette.type === 'dark'
+      ? Colors.uniswapDarkNavy
+      : Colors.darkWhite,
+    boxShadow: theme.palette.type === 'dark'
+      ? BoxShadows.shadow1.boxShadow
+      : 'unset',
+    border: theme.palette.type === 'dark'
+      ? `unset`
+      : `1px solid ${Colors.slateGreyDarker}`,
     borderRadius: BorderRadius,
   },
   textField: {
@@ -254,9 +261,9 @@ const styles = (theme: Theme) => createStyles({
     width: '100%',
     maxWidth: 300,
     borderRadius: BorderRadius,
-    border: `1px solid ${Colors.gradientUniswapBlue1}`,
+    border: `1px solid ${Colors.blue}`,
     "&:hover": {
-      border: `1px solid ${Colors.blue}`,
+      border: `1px solid ${Colors.green}`,
     },
   },
 });

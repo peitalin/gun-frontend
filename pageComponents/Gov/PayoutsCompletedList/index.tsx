@@ -302,7 +302,9 @@ const styles = (theme: Theme) => createStyles({
     width: '100%',
     padding: '16px', // same padding as MenuItem 16px
     paddingBottom: '1rem',
-    borderBottom: `1px solid ${Colors.uniswapNavy}`,
+    borderBottom: theme.palette.type === 'dark'
+      ? `1px solid ${Colors.uniswapNavy}`
+      : `1px solid ${Colors.slateGreyDarker}`,
   },
   flexRow: {
     display: 'flex',
@@ -350,12 +352,19 @@ const styles = (theme: Theme) => createStyles({
     minHeight: 200,
   },
   boxShadowBorder: {
-    boxShadow: BoxShadows.shadow1.boxShadow,
+    boxShadow: theme.palette.type === 'dark'
+      ? BoxShadows.shadow1.boxShadow
+      : 'unset',
     borderRadius: BorderRadius,
   },
   paper: {
-    // border: `1px solid ${Colors.uniswapNavy}`,
-    backgroundColor: Colors.foregroundColor,
+    background: theme.palette.type === 'dark'
+      ? Colors.uniswapDarkNavy
+      : Colors.darkWhite,
+    border: theme.palette.type === 'dark'
+      ? `unset`
+      : `1px solid ${Colors.slateGreyDarker}`,
+    borderRadius: BorderRadius,
     width: '100%',
     height: '100%',
     display: 'flex',

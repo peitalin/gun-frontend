@@ -336,15 +336,19 @@ const styles = (theme: Theme) => createStyles({
     },
   },
   hiddenRowRoot: {
-    backgroundColor: lighten(Colors.uniswapGreyNavy, 0.01),
+    backgroundColor: theme.palette.type === 'dark'
+      ? lighten(Colors.uniswapGreyNavy, 0.01)
+      : lighten(Colors.slateGrey, 0.01),
   },
   backgroundGrey: {
-    // backgroundColor: Colors.slateGrey,
-    backgroundColor: Colors.uniswapGrey,
+    backgroundColor: theme.palette.type === 'dark'
+      ? Colors.uniswapGrey
+      : Colors.slateGreyDark,
   },
   backgroundGrey2: {
-    // backgroundColor: fade(Colors.slateGrey, 0.7),
-    backgroundColor: fade(Colors.uniswapGrey, 0.7),
+    backgroundColor: theme.palette.type === 'dark'
+      ? fade(Colors.uniswapGrey, 0.7)
+      : Colors.slateGreyDarker,
   },
   marginBox: {
     margin: "1rem 1rem 2rem 1rem",
@@ -445,7 +449,9 @@ const styles = (theme: Theme) => createStyles({
   },
   backOdd: {
     backgroundColor: Colors.slateGreyDark,
-    color: Colors.slateGreyDarkest,
+    color: theme.palette.type === 'dark'
+      ? Colors.slateGreyDarkest
+      : Colors.charcoal,
     "&:hover": {
       backgroundColor: Colors.slateGreyDarker,
       color: Colors.black,
@@ -453,7 +459,9 @@ const styles = (theme: Theme) => createStyles({
   },
   backEven: {
     backgroundColor: Colors.slateGrey,
-    color: Colors.slateGreyDarkest,
+    color: theme.palette.type === 'dark'
+      ? Colors.slateGreyDarkest
+      : Colors.charcoal,
     "&:hover": {
       backgroundColor: Colors.slateGreyDarker,
       color: Colors.black,

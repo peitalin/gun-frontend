@@ -73,7 +73,6 @@ const styles = (theme: Theme) => createStyles({
   root: {
     padding: '3rem',
     borderRadius: BorderRadius,
-    backgroundColor: Colors.foregroundColor,
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -95,9 +94,9 @@ const styles = (theme: Theme) => createStyles({
     padding: "0.5rem 1rem",
     width: '100%',
     borderRadius: BorderRadius,
-    border: `1px solid ${Colors.gradientUniswapBlue1}`,
+    border: `1px solid ${Colors.blue}`,
     "&:hover": {
-      border: `1px solid ${Colors.blue}`,
+      border: `1px solid ${Colors.green}`,
     },
   },
   textField: {

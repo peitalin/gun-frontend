@@ -5,6 +5,9 @@ import { NextPage, NextPageContext } from 'next';
 // Styles
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 import { Colors, BorderRadius } from "layout/AppTheme";
+// Redux
+import { useSelector, useDispatch } from "react-redux";
+import { GrandReduxState } from 'reduxStore/grand-reducer';
 // MUI
 import Typography from "@material-ui/core/Typography";
 // Typings
@@ -58,12 +61,9 @@ const OrdersPendingApprovalTable: NextPage<ReactProps> = (props) => {
     // refetchAll: undefined,
   } = props;
 
-  const c = (s) => currency(s/100, { formatWithSymbol: true }).format()
-  const [count, setCount] = React.useState(10);
-
-  const [itemsPerPage, setItemsPerPage] = React.useState(3);
-
-
+  const isDarkMode = useSelector<GrandReduxState, boolean>(s => {
+    return s.reduxLogin.darkMode === 'dark'
+  })
 
   /////////////////////////////////// paginator
   let numItemsPerPage = 5;
@@ -259,6 +259,12 @@ const OrdersPendingApprovalTable: NextPage<ReactProps> = (props) => {
           }}
           bottomSectionStyles={{
             marginBottom: '1rem',
+            backgroundColor: isDarkMode ? Colors.uniswapDarkNavy : Colors.cream,
+            border: isDarkMode
+              ? `1px solid ${Colors.uniswapNavy}`
+              : `1px solid ${Colors.slateGreyDarker}`,
+            borderRadius: BorderRadius,
+            paddingBottom: '0.5rem',
           }}
         >
           <TitleRows classes={classes}/>
@@ -331,9 +337,20 @@ const OrdersPendingApprovalTable: NextPage<ReactProps> = (props) => {
             flexDirection: 'column',
             marginTop: '1rem',
             paddingRight: '1rem',
+            backgroundColor: isDarkMode ? Colors.uniswapDarkNavy : Colors.cream,
+            // border: isDarkMode
+            //   ? `1px solid ${Colors.uniswapNavy}`
+            //   : `1px solid ${Colors.slateGreyDarker}`,
+            borderRadius: BorderRadius,
           }}
           bottomSectionStyles={{
             marginBottom: '1rem',
+            backgroundColor: isDarkMode ? Colors.uniswapDarkNavy : Colors.cream,
+            border: isDarkMode
+              ? `1px solid ${Colors.uniswapNavy}`
+              : `1px solid ${Colors.slateGreyDarker}`,
+            borderRadius: BorderRadius,
+            paddingBottom: '0.5rem',
           }}
         >
           <TitleRows classes={classes}/>
@@ -407,6 +424,12 @@ const OrdersPendingApprovalTable: NextPage<ReactProps> = (props) => {
           }}
           bottomSectionStyles={{
             marginBottom: '1rem',
+            backgroundColor: isDarkMode ? Colors.uniswapDarkNavy : Colors.cream,
+            border: isDarkMode
+              ? `1px solid ${Colors.uniswapNavy}`
+              : `1px solid ${Colors.slateGreyDarker}`,
+            borderRadius: BorderRadius,
+            paddingBottom: '0.5rem',
           }}
         >
           <TitleRows classes={classes}/>
@@ -528,7 +551,9 @@ const styles = (theme: Theme) => createStyles({
     flexBasis: "33%",
   },
   subtitle1: {
-    color: Colors.uniswapLightGrey,
+    color: theme.palette.type === 'dark'
+      ? Colors.uniswapLightGrey
+      : Colors.black,
     marginTop: '2rem',
     marginBottom: '0.5rem',
   },
@@ -536,8 +561,13 @@ const styles = (theme: Theme) => createStyles({
     width: '100%',
   },
   flexRowTitle: {
-    backgroundColor: Colors.uniswapDarkNavy,
+    backgroundColor: theme.palette.type === 'dark'
+      ? Colors.uniswapDarkNavy
+      : Colors.cream,
     borderRadius: `${BorderRadius}px ${BorderRadius}px 0px 0px`,
+    borderBottom: theme.palette.type === 'dark'
+      ? `1px solid ${Colors.uniswapGrey}`
+      : `1px solid ${Colors.slateGreyDark}`,
     position: "relative", // for <LoadingBar/> absolute position
     display: 'flex',
     flexDirection: 'row',
@@ -546,7 +576,6 @@ const styles = (theme: Theme) => createStyles({
     width: '100%',
     padding: '16px', // same padding as MenuItem 16px
     paddingBottom: '1rem',
-    borderBottom: `1px solid ${Colors.uniswapGrey}`,
   },
   flexItemSlim: {
     flexGrow: 1,
@@ -582,7 +611,8 @@ const styles = (theme: Theme) => createStyles({
     width: 44,
   },
   gridRoot: {
-    backgroundColor: theme.colors.uniswapDarkNavy,
+    backgroundColor: theme.palette.type === 'dark'
+      ? Colors.uniswapDarkNavy : Colors.cream,
     borderRadius: `0px 0px ${BorderRadius}px ${BorderRadius}px`,
     paddingBottom: '0.25rem',
   },

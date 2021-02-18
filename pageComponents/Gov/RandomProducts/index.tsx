@@ -151,8 +151,15 @@ const styles = (theme: Theme) => createStyles({
     alignItems: 'center',
     justifyContent: "flex-start",
     padding: '1rem',
-    background: Colors.uniswapDarkNavy,
-    boxShadow: BoxShadows.shadow1.boxShadow,
+    background: theme.palette.type === 'dark'
+      ? Colors.uniswapDarkNavy
+      : Colors.darkWhite,
+    boxShadow: theme.palette.type === 'dark'
+      ? BoxShadows.shadow1.boxShadow
+      : 'unset',
+    border: theme.palette.type === 'dark'
+      ? `unset`
+      : `1px solid ${Colors.slateGreyDarker}`,
     borderRadius: BorderRadius,
     minHeight: '80vh',
   },

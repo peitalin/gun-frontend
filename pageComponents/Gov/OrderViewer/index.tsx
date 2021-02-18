@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import { GrandReduxState } from 'reduxStore/grand-reducer';
 // Styles
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
-import { Colors, BorderRadius } from "layout/AppTheme";
+import { Colors, BorderRadius, BoxShadows } from "layout/AppTheme";
 // Typings
 import {
   UserPrivate,
@@ -366,7 +366,15 @@ const styles = (theme: Theme) => createStyles({
   root: {
     padding: '3rem',
     borderRadius: BorderRadius,
-    backgroundColor: Colors.foregroundColor,
+    background: theme.palette.type === 'dark'
+      ? Colors.uniswapDarkNavy
+      : Colors.darkWhite,
+    boxShadow: theme.palette.type === 'dark'
+      ? BoxShadows.shadow1.boxShadow
+      : 'unset',
+    border: theme.palette.type === 'dark'
+      ? `unset`
+      : `1px solid ${Colors.slateGreyDarker}`,
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -393,15 +401,6 @@ const styles = (theme: Theme) => createStyles({
   section1: {
     marginTop: '1rem',
     marginBottom: '1rem',
-  },
-  orderItemButton: {
-    padding: "0.5rem 1rem",
-    width: '100%',
-    borderRadius: BorderRadius,
-    border: `1px solid ${Colors.gradientUniswapBlue1}`,
-    "&:hover": {
-      border: `1px solid ${Colors.blue}`,
-    },
   },
   textField: {
     marginBottom: '0.5rem',

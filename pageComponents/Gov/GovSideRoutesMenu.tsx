@@ -239,10 +239,15 @@ const styles = (theme: Theme) => createStyles({
     color: Colors.darkGrey,
     fontSize: '0.9rem',
     fontWeight: 500,
-    background: fade(Colors.foregroundColor, 0),
+    // background: theme.palette.type === 'dark'
+    //   ? Colors.uniswapDarkNavy
+    //   : 'transparent',
+    background: "transparent",
     border: '1px solid rgba(0,0,0,0)',
     "&:hover": {
-      background: fade(Colors.lightGrey, 0.1),
+      background: theme.palette.type === 'dark'
+        ? fade(Colors.lightGrey, 0.1)
+        : Colors.cream,
       transition: theme.transitions.create(['background', 'border-right'], {
         easing: theme.transitions.easing.easeIn,
         duration: "100ms",
@@ -256,10 +261,16 @@ const styles = (theme: Theme) => createStyles({
     color: Colors.darkGrey,
     fontSize: '0.9rem',
     fontWeight: 500,
-    border: `1px solid ${Colors.mediumGrey}`,
-    background: Colors.foregroundColor,
+    border: theme.palette.type === 'dark'
+      ? `1px solid ${Colors.mediumGrey}`
+      : `1px solid ${Colors.charcoal}`,
+    background: theme.palette.type === 'dark'
+      ? Colors.uniswapDarkNavy
+      : Colors.darkWhite,
     "&:hover": {
-      background: fade(Colors.lightGrey, 0.1),
+      background: theme.palette.type === 'dark'
+        ? fade(Colors.lightGrey, 0.1)
+        : Colors.cream,
       transition: theme.transitions.create(['background', 'border-right'], {
         easing: theme.transitions.easing.easeIn,
         duration: "100ms",

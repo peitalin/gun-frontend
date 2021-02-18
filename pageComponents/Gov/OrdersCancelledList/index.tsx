@@ -305,7 +305,11 @@ const styles = (theme: Theme) => createStyles({
     justifyContent: 'flex-end',
   },
   flexRowTitle: {
-    position: "relative",
+    background: theme.palette.type === 'dark'
+      ? Colors.uniswapDarkNavy
+      : Colors.darkWhite,
+    borderRadius: `${BorderRadius}px ${BorderRadius}px 0px 0px`,
+    position: "relative", // for <LoadingBar/> absolute position
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center',
@@ -313,7 +317,9 @@ const styles = (theme: Theme) => createStyles({
     width: '100%',
     padding: '16px', // same padding as MenuItem 16px
     paddingBottom: '1rem',
-    borderBottom: `1px solid ${Colors.uniswapNavy}`,
+    borderBottom: theme.palette.type === 'dark'
+      ? `1px solid ${Colors.uniswapGrey}`
+      : `1px solid ${Colors.slateGreyDarker}`,
   },
   flexRow: {
     display: 'flex',
@@ -365,8 +371,16 @@ const styles = (theme: Theme) => createStyles({
     borderRadius: BorderRadius,
   },
   paper: {
-    // border: `1px solid ${Colors.uniswapNavy}`,
-    backgroundColor: Colors.foregroundColor,
+    background: theme.palette.type === 'dark'
+      ? Colors.uniswapDarkNavy
+      : Colors.darkWhite,
+    boxShadow: theme.palette.type === 'dark'
+      ? BoxShadows.shadow1.boxShadow
+      : 'unset',
+    border: theme.palette.type === 'dark'
+      ? `unset`
+      : `1px solid ${Colors.slateGreyDarker}`,
+    paddingBottom: '0.25rem',
     width: '100%',
     height: '100%',
     display: 'flex',
