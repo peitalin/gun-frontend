@@ -26,7 +26,7 @@ const PriceDisplayProductPage = (props: ReactProps) => {
     soldOutStatus = SoldOutStatus.AVAILABLE,
   } = props;
 
-  const actualPrice = props.price;
+  const actualPrice = props.price ?? 0;
   const basePrice = props.priceWas;
 
   const price = currency(actualPrice/100, { formatWithSymbol: true })
@@ -53,26 +53,6 @@ const PriceDisplayProductPage = (props: ReactProps) => {
             <Typography className={classes.price} variant="body1">
               {price.format()}
             </Typography>
-            {
-              basePrice &&
-              !hidePriceWas &&
-              (basePrice > actualPrice) &&
-              <Typography className={classes.priceWas} variant="body1">
-                {priceWas.format()}
-              </Typography>
-            }
-            {
-              basePrice &&
-              !hideSavings &&
-              (basePrice > actualPrice) &&
-              <Typography className={classes.priceSavings} variant="body1">
-                {
-                  props.pastTense
-                    ? `You saved ${savings.format()} (${savingsPercent}%)`
-                    : `You save ${savings.format()} (${savingsPercent}%)`
-                }
-              </Typography>
-            }
           </div>
         </div>
       </>

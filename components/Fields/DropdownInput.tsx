@@ -9,6 +9,8 @@ import { Colors, Gradients, fontFam, BorderRadius } from "layout/AppTheme";
 import { useFocus } from "utils/hooks";
 import { styles } from "components/Fields/styles";
 import ValidationErrorMsg from "./ValidationErrorMsg";
+import { useSelector } from "react-redux";
+import { GrandReduxState, Actions } from "reduxStore/grand-reducer";
 
 
 
@@ -16,6 +18,10 @@ const DropdownInput = (props: ReactProps) => {
 
   const ref = React.useRef(null);
   const focused = useFocus(ref);
+
+  const isDarkMode = useSelector<GrandReduxState, boolean>(s => {
+    return s.reduxLogin.darkMode === 'dark'
+  })
 
   const {
     // Formik
@@ -80,8 +86,13 @@ const DropdownInput = (props: ReactProps) => {
                   borderRadius: BorderRadius,
                   colors: {
                     ...theme.colors,
-                    primary25: Colors.lightGrey,
-                    primary: Colors.charcoal,
+                    color: isDarkMode
+                      ? Colors.uniswapLightestGrey
+                      : Colors.black,
+                    primary25: isDarkMode
+                      ? Colors.uniswapLightNavy
+                      : Colors.lightBlue,
+                    primary: Colors.uniswapLighterGrey,
                   },
                 })
             }
@@ -141,8 +152,12 @@ const DropdownInput = (props: ReactProps) => {
                   borderRadius: BorderRadius,
                   colors: {
                     ...theme.colors,
-                    color: Colors.uniswapLightestGrey,
-                    primary25: Colors.uniswapLightNavy,
+                    color: isDarkMode
+                      ? Colors.uniswapLightestGrey
+                      : Colors.black,
+                    primary25: isDarkMode
+                      ? Colors.uniswapLightNavy
+                      : Colors.slateGreyDarker,
                     primary: Colors.uniswapLighterGrey,
                   },
                 })
@@ -161,16 +176,15 @@ const DropdownInput = (props: ReactProps) => {
                   color: Colors.grey,
                 }),
                 singleValue: styles => ({
-                  color: Colors.uniswapLighterGrey,
-
+                  color: isDarkMode ? Colors.uniswapLighterGrey : Colors.charcoal,
                 }),
                 indicatorSeparator: styles => ({
                   ...styles,
-                  backgroundColor: Colors.uniswapLighterGrey,
+                  backgroundColor: isDarkMode ? Colors.uniswapLighterGrey : Colors.slateGreyDarker,
                 }),
                 indicatorsContainer: styles => ({
                   ...styles,
-                  color: Colors.uniswapLighterGrey,
+                  color: isDarkMode ? Colors.uniswapLighterGrey : Colors.charcoal,
                   cursor: "pointer",
                 }),
                 menu: styles => ({
@@ -181,14 +195,17 @@ const DropdownInput = (props: ReactProps) => {
                   "&:hover": {
                     cursor: "pointer",
                   },
-                  background: Colors.uniswapDarkNavy,
-                  color: Colors.uniswapLighterGrey,
+                  background: isDarkMode
+                    ? Colors.uniswapDarkNavy
+                    : Colors.slateGrey,
                 }),
                 control: (base, state) => ({
                   ...base,
-                  background: Colors.uniswapLightNavy,
+                  background: isDarkMode
+                    ? Colors.uniswapLightNavy
+                    : Colors.slateGrey,
                   // // match with the menu
-                  // borderRadius: state.isFocused ? "3px 3px 0 0" : 3,
+                  borderRadius: BorderRadius,
                   // // Overwrittes the different states of border
                   border: `0px solid ${Colors.uniswapLighterGrey}`,
                   // // borderColor: state.isFocused ? Colors.gradientUniswapBlue1 : "unset",

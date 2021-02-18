@@ -253,7 +253,9 @@ export const styles = (theme: Theme) => createStyles({
     height: '100%',
     width: '100%',
     position: 'relative',
-    border: `1px solid ${theme.colors.uniswapGrey}`,
+    border: theme.palette.type === 'dark'
+      ? `1px solid ${Colors.uniswapGrey}`
+      : `1px solid ${Colors.slateGreyDarker}`,
     color: Colors.cream,
     borderRadius: BorderRadius,
     transition: theme.transitions.create(['border-color', 'box-shadow'], {

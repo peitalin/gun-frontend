@@ -160,13 +160,19 @@ export const styles = (theme: Theme) => createStyles({
     fontSize: "0.9rem",
     fontWeight: 400,
     fontFamily: fontFam,
-    color: Colors.uniswapLightestGrey,
+    color: theme.palette.type === "dark"
+      ? Colors.uniswapLightestGrey
+      : Colors.black,
     padding: '0.5rem 0rem',
   },
   inputBorder: {
     position: 'relative',
-    backgroundColor: Colors.uniswapMediumNavy,
-    border: `1px solid ${Colors.uniswapLightNavy}`,
+    background: theme.palette.type === "dark"
+      ? Colors.uniswapMediumNavy
+      : Colors.slateGrey,
+    border: theme.palette.type === "dark"
+      ? `1px solid ${Colors.uniswapLightNavy}`
+      : `1px solid ${Colors.slateGreyDarker}`,
     borderRadius: BorderRadius,
     width: '100%',
     padding: '0rem 0.5rem', // -> 36px in total height

@@ -56,7 +56,9 @@ export const styles = (theme: Theme) => createStyles({
   toolbar: {
     position: 'relative',
     padding: '0rem 0.5rem',
-    borderBottom: `1px solid ${theme.colors.uniswapGrey}`,
+    borderBottom: theme.palette.type === 'dark'
+      ? `1px solid ${Colors.uniswapGrey}`
+      : `1px solid ${Colors.slateGreyDarker}`,
     marginBottom: '1rem',
   },
 })

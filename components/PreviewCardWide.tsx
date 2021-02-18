@@ -206,7 +206,10 @@ const styles = (theme: Theme) => createStyles({
   descriptionContainer: {
     paddingTop: "0.7rem",
     padding: "0.5rem",
-    backgroundColor: Colors.foregroundColor,
+    backgroundColor: "transparent",
+    // backgroundColor: theme.palette.type === 'dark'
+    //   ? Colors.uniswapDarkNavy
+    //   : Colors.cream
   },
   category: {
     textTransform: "uppercase",

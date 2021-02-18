@@ -242,7 +242,9 @@ let styles = (theme: Theme) => createStyles({
     width: '100%',
     padding: 0,
     fontSize: '16px', // above 16px so mobile web doesn't zoom
-    color: theme.colors.uniswapLightestGrey,
+    color: theme.palette.type === 'dark'
+      ? theme.colors.uniswapLightestGrey
+      : Colors.charcoal,
     transition: theme.transitions.create('width', {
       easing: theme.transitions.easing.easeInOut,
       duration: '300ms',

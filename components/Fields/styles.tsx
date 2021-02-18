@@ -37,15 +37,20 @@ export const styles = (theme: Theme) => createStyles({
   },
   input: {
     position: 'relative',
-    // backgroundColor: theme.palette.common.white,
-    background: Colors.uniswapMediumNavy,
-    border: `1px solid ${Colors.uniswapLightNavy}`,
+    background: theme.palette.type === "dark"
+      ? Colors.uniswapMediumNavy
+      : Colors.slateGrey,
+    border: theme.palette.type === "dark"
+      ? `1px solid ${Colors.uniswapLightNavy}`
+      : `1px solid ${Colors.slateGreyDarker}`,
+    color: theme.palette.type === "dark"
+      ? Colors.uniswapLightestGrey
+      : Colors.black,
     borderRadius: BorderRadius,
     fontSize: "16px",
     fontWeight: 400,
     width: '100%',
     padding: '0.75rem 0.5rem',
-    color: textColor,
     transition: theme.transitions.create(['border-color', 'box-shadow'], {
       easing: theme.transitions.easing.easeIn,
       duration: "200ms",
@@ -145,9 +150,12 @@ export const styles = (theme: Theme) => createStyles({
     justifyContent: "center",
     alignItems: "center",
     position: 'relative',
-    // backgroundColor: theme.palette.common.white,
-    background: Colors.uniswapMediumNavy,
-    border: `1px solid ${Colors.grey}`,
+    background: theme.palette.type === "dark"
+      ? Colors.uniswapMediumNavy
+      : Colors.slateGrey,
+    border: theme.palette.type === "dark"
+      ? `1px solid ${Colors.grey}`
+      : `1px solid ${Colors.slateGreyDarker}`,
     borderRadius: BorderRadius,
     padding: '0.58em',
     transition: theme.transitions.create(['border-color', 'box-shadow', 'color'], {
@@ -158,7 +166,9 @@ export const styles = (theme: Theme) => createStyles({
   textFieldContainerFocused: {
     boxShadow: `${fade('#50B5F5', 0.2)} 0 0 0 2px`,
     borderColor: Colors.blue,
-    color: textColor,
+    color: theme.palette.type === "dark"
+      ? Colors.uniswapLightestGrey
+      : Colors.black,
     transition: theme.transitions.create(['border-color', 'box-shadow', 'color'], {
       easing: theme.transitions.easing.easeIn,
       duration: "200ms",
@@ -168,7 +178,9 @@ export const styles = (theme: Theme) => createStyles({
     display: "flex",
     flexDirection: "column",
     justifyContent: "flex-end",
-    color: Colors.uniswapLightestGrey,
+    color: theme.palette.type === "dark"
+      ? Colors.uniswapLightestGrey
+      : Colors.black,
   },
   countText: {
     fontSize: "0.8rem",
@@ -177,19 +189,25 @@ export const styles = (theme: Theme) => createStyles({
     position: 'absolute',
     right: '0.5rem',
     bottom: '1.25rem',
-    color: Colors.uniswapLightestGrey,
+    color: theme.palette.type === "dark"
+      ? Colors.uniswapLightestGrey
+      : Colors.black,
   },
   keywordsCountText: {
     fontSize: "0.8rem",
     fontFamily: '"Helvetica Neue",Arial,sans-serif',
     opacity: 0.25,
-    color: Colors.uniswapLightestGrey,
+    color: theme.palette.type === "dark"
+      ? Colors.uniswapLightestGrey
+      : Colors.black,
   },
   keywordsCountAbsolute: {
     position: 'absolute',
     right: '0.5rem',
     bottom: '0.25rem',
-    color: Colors.uniswapLightestGrey,
+    color: theme.palette.type === "dark"
+      ? Colors.uniswapLightestGrey
+      : Colors.black,
     // bottom: '-1.125rem',
   },
 
@@ -200,7 +218,9 @@ export const styles = (theme: Theme) => createStyles({
     fontSize: "16px",
     fontWeight: 400,
     width: '100%',
-    color: textColor,
+    color: theme.palette.type === "dark"
+      ? Colors.uniswapLightestGrey
+      : Colors.black,
     transition: theme.transitions.create(['border-color', 'box-shadow'], {
       easing: theme.transitions.easing.easeIn,
       duration: "200ms",
@@ -222,9 +242,12 @@ export const styles = (theme: Theme) => createStyles({
     justifyContent: "center",
     alignItems: "center",
     position: 'relative',
-    // backgroundColor: theme.palette.common.white,
-    background: Colors.uniswapMediumNavy,
-    border: `1px solid ${Colors.uniswapLightNavy}`,
+    background: theme.palette.type === "dark"
+      ? Colors.uniswapMediumNavy
+      : Colors.slateGrey,
+    border: theme.palette.type === "dark"
+      ? `1px solid ${Colors.uniswapLightNavy}`
+      : `1px solid ${Colors.slateGreyDarker}`,
     borderRadius: BorderRadius,
     padding: '0.25rem 0.5rem',
     transition: theme.transitions.create(['border-color', 'box-shadow', 'color'], {
@@ -233,7 +256,9 @@ export const styles = (theme: Theme) => createStyles({
     }),
   },
   textFieldContainerCCFocused: {
-    color: textColor,
+    color: theme.palette.type === "dark"
+      ? Colors.uniswapLightestGrey
+      : Colors.black,
     transition: theme.transitions.create(['border-color', 'box-shadow', 'color'], {
       easing: theme.transitions.easing.easeIn,
       duration: "200ms",
@@ -253,12 +278,18 @@ export const styles = (theme: Theme) => createStyles({
     border: 'none',
     fontSize: '0.75rem',
     fontWeight: 600,
-    background: Colors.uniswapMediumNavy,
-    color: Colors.uniswapLighterGrey,
+    background: theme.palette.type === "dark"
+      ? Colors.uniswapMediumNavy
+      : Colors.slateGrey,
+    color: theme.palette.type === "dark"
+      ? Colors.uniswapLightestGrey
+      : Colors.black,
     '&:focus': {
       border: 'none',
       outline: 'none',
-      color: Colors.uniswapLightestGrey,
+      color: theme.palette.type === "dark"
+        ? Colors.uniswapLightestGrey
+        : Colors.black,
     },
     '&::placeholder': {
       color: Colors.uniswapLighterGrey,
@@ -272,12 +303,16 @@ export const styles = (theme: Theme) => createStyles({
     border: 'none',
     fontSize: '0.75rem',
     fontWeight: 600,
-    background: Colors.uniswapMediumNavy,
+    background: theme.palette.type === "dark"
+      ? Colors.uniswapMediumNavy
+      : Colors.slateGrey,
     color: Colors.uniswapLighterGrey,
     '&:focus': {
       border: 'none',
       outline: 'none',
-      color: Colors.uniswapLightestGrey,
+      color: theme.palette.type === "dark"
+        ? Colors.uniswapLightestGrey
+        : Colors.black,
     },
     '&::placeholder': {
       color: Colors.uniswapLighterGrey,
@@ -291,7 +326,6 @@ export const styles = (theme: Theme) => createStyles({
   },
   inputUnderline: {
     position: 'relative',
-    // backgroundColor: theme.palette.common.white,
     borderRadius: BorderRadius,
     fontSize: "16px",
     fontWeight: 400,
