@@ -39,10 +39,6 @@ const OrderStatusStepper: React.FC<ReactProps> = (props) => {
           stepsLabels.map(label => (
             <Step key={label}>
               <StepLabel
-                // classes={{
-                //   completed: classes.stepperBlue,
-                //   active: classes.stepperBlue,
-                // }}
                 StepIconProps={{
                   classes: {
                     root: classes.stepperGrey,
@@ -106,10 +102,14 @@ const styles = (theme: Theme) => createStyles({
     justifyContent: "center",
   },
   stepperGrey: {
-    fill: `${Colors.uniswapMediumGrey} !important`,
+    fill: theme.palette.type === 'dark'
+      ? `${Colors.uniswapMediumGrey} !important`
+      : `${Colors.slateGreyDarker} !important`,
   },
   stepperBlue: {
-    fill: `${Colors.cream} !important`,
+    fill: theme.palette.type === 'dark'
+      ? `${Colors.cream} !important`
+      : `${Colors.blue} !important`,
   },
   title: {
     margiBottom: '0.5rem',

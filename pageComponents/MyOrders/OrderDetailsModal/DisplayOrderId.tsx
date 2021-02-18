@@ -107,7 +107,9 @@ const styles = (theme: Theme) => createStyles({
   },
   storeName: {
     fontWeight: 500,
-    color: theme.colors.uniswapLighterGrey,
+    color: theme.palette.type === 'dark'
+      ? theme.colors.uniswapLighterGrey
+      : theme.colors.uniswapDarkNavy,
     marginBottom: "0.25rem",
     "&:hover": {
       color: Colors.lightBlue,

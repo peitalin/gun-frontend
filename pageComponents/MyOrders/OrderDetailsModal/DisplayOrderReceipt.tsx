@@ -134,8 +134,12 @@ const styles = (theme: Theme) => createStyles({
     padding: '1rem',
     marginBottom: "0.5rem",
     borderRadius: BorderRadius,
-    backgroundColor: theme.colors.uniswapMediumNavy,
-    boxShadow: BoxShadows.shadow1.boxShadow,
+    backgroundColor: theme.palette.type === 'dark'
+      ? theme.colors.uniswapMediumNavy
+      : theme.colors.slateGrey,
+    boxShadow: theme.palette.type === 'dark'
+      ? BoxShadows.shadow1.boxShadow
+      : 'unset',
     marginLeft: "0.25rem",
     marginRight: "0.25rem",
   },

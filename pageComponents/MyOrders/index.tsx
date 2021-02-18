@@ -150,7 +150,9 @@ const MyOrders: React.FC<ReactProps> = (props) => {
 
   if (
     !option(buyerOrdersConnection).edges[0]() &&
-    !option(sellerOrdersConnection).edges[0]()
+    !option(sellerOrdersConnection).edges[0]() &&
+    !buyerOrdersResponse.loading &&
+    !sellerOrdersResponse.loading
   ) {
     return (
       <OrdersLayout {...props}>
@@ -403,7 +405,6 @@ const styles = (theme: Theme) => createStyles({
     marginTop: '1rem',
   },
   heading: {
-    marginBottom: '1rem',
     marginTop: '1rem',
   },
   toolTip1: {
@@ -477,8 +478,15 @@ const styles = (theme: Theme) => createStyles({
     alignItems: 'center',
     marginBottom: '2rem',
     borderRadius: BorderRadius,
-    backgroundColor: theme.colors.uniswapDarkNavy,
-    boxShadow: BoxShadows.shadow1.boxShadow,
+    backgroundColor: theme.palette.type === 'dark'
+      ? theme.colors.uniswapDarkNavy
+      : Colors.cream,
+    boxShadow: theme.palette.type === 'dark'
+      ? BoxShadows.shadow1.boxShadow
+      : 'unset',
+    border: theme.palette.type === 'dark'
+      ? `1px solid ${Colors.uniswapLightNavy}`
+      : `1px solid ${Colors.slateGreyDark}`,
     width: '100%',
     padding: '3rem',
   },

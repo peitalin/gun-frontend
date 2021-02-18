@@ -83,15 +83,24 @@ const styles = (theme: Theme) => createStyles({
   orderDetailsButton: {
     height: '38px',
     minWidth: '150px',
-    border: `1px solid ${Colors.grey}`,
+    border: theme.palette.type === 'dark'
+      ? `1px solid ${Colors.grey}`
+      : `1px solid ${Colors.black}`,
     marginTop: '0.5rem',
     "&:hover": {
-      border: '1px solid #aaaaaa',
-    }
+      border: `1px solid ${theme.colors.blue}`,
+      color: theme.colors.blue,
+      "& > span > p": {
+        color: theme.colors.blue,
+        transition: theme.transitions.create('color', {
+          easing: theme.transitions.easing.sharp,
+          duration: "250ms",
+        }),
+      },
+    },
   },
   orderDetailsButtonText: {
     fontSize: '0.875rem',
-    color: Colors.darkGrey,
     fontWeight: 500,
   },
 });

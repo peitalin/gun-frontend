@@ -50,6 +50,7 @@ const OrderDetailsPage: React.FC<ReactProps> = (props) => {
             <IconButton
               className={classes.closeIcon}
               onClick={props.closeModal}
+              size={"medium"}
             >
               <ClearIcon/>
             </IconButton>
@@ -128,11 +129,17 @@ const styles = (theme: Theme) => createStyles({
     padding: '1rem',
     marginBottom: "0.5rem",
     borderRadius: BorderRadius,
-    backgroundColor: theme.colors.uniswapMediumNavy,
-    boxShadow: BoxShadows.shadow1.boxShadow,
+    backgroundColor: theme.palette.type === 'dark'
+      ? theme.colors.uniswapMediumNavy
+      : theme.colors.slateGrey,
+    boxShadow: theme.palette.type === 'dark'
+      ? BoxShadows.shadow1.boxShadow
+      : 'unset',
   },
   closeIcon: {
-    background: Colors.uniswapGrey,
+    background: theme.palette.type === 'dark'
+      ? Colors.uniswapGrey
+      : Colors.slateGreyDarker,
     "&:hover": {
       background: Colors.uniswapMediumGrey,
     },
