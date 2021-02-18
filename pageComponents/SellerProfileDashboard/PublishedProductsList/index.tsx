@@ -5,7 +5,6 @@ import clsx from "clsx";
 // Redux
 import { useSelector, useDispatch } from "react-redux";
 import { GrandReduxState } from 'reduxStore/grand-reducer';
-import { Actions } from "reduxStore/actions";
 // Router
 import { useRouter } from "next/router";
 // Styles
@@ -67,6 +66,9 @@ const PublishedProductsList = (props: ReactProps) => {
 
   const router = useRouter();
   const dispatch = useDispatch();
+  const isDarkMode = useSelector<GrandReduxState, boolean>(s => {
+    return s.reduxLogin.darkMode === 'dark'
+  })
   const productId = option(router).query.productId();
 
   const theme = useTheme();
@@ -221,15 +223,25 @@ const PublishedProductsList = (props: ReactProps) => {
           topSectionStyles={{
             padding: '1rem',
             paddingBottom: '0.5rem',
-            backgroundColor: Colors.uniswapDarkNavy,
-            border: `1px solid ${Colors.uniswapNavy}`,
+            backgroundColor: isDarkMode ? Colors.uniswapDarkNavy : Colors.cream,
+            border: isDarkMode
+              ? `1px solid ${Colors.uniswapNavy}`
+              : `1px solid ${Colors.slateGreyDarker}`,
+            // boxShadow: isDarkMode
+            //   ? 'unset'
+            //   : BoxShadows.shadow3.boxShadow,
             borderRadius: BorderRadius2x,
           }}
           bottomSectionStyles={{
             marginTop: "0.5rem",
             paddingBottom: '1rem',
-            backgroundColor: Colors.uniswapDarkNavy,
-            border: `1px solid ${Colors.uniswapNavy}`,
+            backgroundColor: isDarkMode ? Colors.uniswapDarkNavy : Colors.cream,
+            border: isDarkMode
+              ? `1px solid ${Colors.uniswapNavy}`
+              : `1px solid ${Colors.slateGreyDarker}`,
+            // boxShadow: isDarkMode
+            //   ? 'unset'
+            //   : BoxShadows.shadow3.boxShadow,
             borderRadius: BorderRadius,
           }}
         >
@@ -460,23 +472,31 @@ export const styles = (theme: Theme) => createStyles({
     justifyContent: 'flex-start',
   },
   titleCell1: {
-    color: Colors.uniswapLighterGrey,
+    color: theme.palette.type === 'dark'
+      ? `1px solid ${Colors.uniswapLighterGrey}`
+      : `1px solid ${Colors.charcoal}`,
     flexBasis: '60%',
     flexGrow: 1,
     padding: '0.5rem',
-    borderBottom: `1px solid ${Colors.uniswapLightNavy}`,
+    borderBottom: theme.palette.type === 'dark'
+      ? `1px solid ${Colors.uniswapLightNavy}`
+      : `1px solid ${Colors.slateGreyDark}`,
     justifyContent: 'flex-start',
     minWidth: 300,
     fontSize: "0.825rem",
     fontWeight: 600,
   },
   titleCell2: {
-    color: Colors.uniswapLighterGrey,
+    color: theme.palette.type === 'dark'
+      ? `1px solid ${Colors.uniswapLighterGrey}`
+      : `1px solid ${Colors.charcoal}`,
     flexBasis: '10%',
     flexGrow: 1,
     padding: '0.5rem',
     paddingLeft: '0rem',
-    borderBottom: `1px solid ${Colors.uniswapLightNavy}`,
+    borderBottom: theme.palette.type === 'dark'
+      ? `1px solid ${Colors.uniswapLightNavy}`
+      : `1px solid ${Colors.slateGreyDark}`,
     justifyContent: 'flex-start',
     minWidth: 100,
     fontSize: "0.825rem",
@@ -487,7 +507,9 @@ export const styles = (theme: Theme) => createStyles({
     flexBasis: '30%',
     flexGrow: 1,
     padding: '0.5rem',
-    borderBottom: `1px solid ${Colors.uniswapLightNavy}`,
+    borderBottom: theme.palette.type === 'dark'
+      ? `1px solid ${Colors.uniswapLightNavy}`
+      : `1px solid ${Colors.slateGreyDark}`,
     justifyContent: 'flex-start',
     minWidth: 150,
     fontSize: "0.825rem",

@@ -155,16 +155,30 @@ const styles = (theme: Theme) => createStyles({
   },
   modalPaperScrollPaper: {
     margin: 0,
+    background: 'unset', // remove default color in material-ui
+    // for border radius
   },
   linkButton: {
     cursor: 'pointer',
     height: 40,
     position: "relative",
-    border: `1px solid ${Colors.uniswapLightNavy}`,
+    border: theme.palette.type === 'dark'
+      ? `1px solid ${Colors.uniswapLightNavy}`
+      : `1px solid ${Colors.black}`,
+    color: theme.palette.type === 'dark'
+      ? `${Colors.uniswapLightNavy}`
+      : `${Colors.black}`,
     borderRadius: BorderRadius,
+    transition: theme.transitions.create('color', {
+      easing: theme.transitions.easing.sharp,
+      duration: "100ms",
+    }),
     "&:hover": {
       border: `1px solid ${Colors.blue}`,
       color: Colors.blue,
+      "& > span": {
+        color: Colors.blue,
+      },
     },
   },
 });

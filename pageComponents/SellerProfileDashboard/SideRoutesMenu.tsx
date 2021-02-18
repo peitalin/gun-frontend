@@ -9,10 +9,9 @@ import { Colors, Gradients, BorderRadius } from "layout/AppTheme";
 import Link from "next/link";
 // Redux
 import { useSelector, useDispatch } from "react-redux";
-import { GrandReduxState } from 'reduxStore/grand-reducer';
-import { Actions } from 'reduxStore/actions';
+import { GrandReduxState, Actions } from 'reduxStore/grand-reducer';
 // Utils
-import { ID, StorePrivate } from "typings/gqlTypes";
+import { ID, UserPrivate, Dealers } from "typings/gqlTypes";
 // Material UI
 import Typography from "@material-ui/core/Typography";
 import Avatar from "@material-ui/core/Avatar";
@@ -33,19 +32,9 @@ const SideMenu: React.FC<ReactProps> = (props) => {
     return Router.pathname.split('/').pop() === path.split('/').pop()
   }
 
-  const copyText = () => {
-    var copyText = document.getElementById("copyText") as HTMLInputElement;
-    copyText.select();
-    document.execCommand("copy");
-    console.log("copied: ", copyText.value);
-  }
-
-
-  const { classes, storePrivate } = props;
-  const profile = option(storePrivate).profile();
+  const { classes, user } = props;
   // imgloaded
   const [avatarImgLoaded, setAvatarImgLoaded] = useState(false);
-
   const dispatch = useDispatch();
 
   return (
@@ -53,32 +42,41 @@ const SideMenu: React.FC<ReactProps> = (props) => {
       <div className={classes.routeProfile}>
         <div className={classes.storeProfile}>
 
-          <div className={classes.avatarBorder}>
-            <Avatar className={classes.avatar}>
-              <img
-                src={option(profile).original.url()}
-                onLoad={() => setAvatarImgLoaded(true)}
-                className={clsx(
-                  classes.avatarImg,
-                  avatarImgLoaded ? "fadeIn" : null,
-                )}
-              />
-            </Avatar>
-          </div>
+          {/* {
+            dealerId &&
+            <div className={classes.avatarBorder}>
+              <Avatar className={classes.avatar}>
+                <img
+                  src={option(profile).original.url()}
+                  onLoad={() => setAvatarImgLoaded(true)}
+                  className={clsx(
+                    classes.avatarImg,
+                    avatarImgLoaded ? "fadeIn" : null,
+                  )}
+                />
+              </Avatar>
+            </div>
+          } */}
 
           <Link
             href="/s/[storeId]"
-            as={`/s/${storePrivate.id}`}
+            as={`/s/${user?.store?.id}`}
             scroll={false}
           >
             <a className={clsx(classes.flexCol, classes.viewStoreLink)}>
               <Tooltip title="View my store" placement={"left"}>
-                <Typography className={classes.subtitle} variant="h6">
-                  {storePrivate && storePrivate.name}
+                <Typography className={classes.title} variant="h6">
+                  {user?.store?.name}
                 </Typography>
               </Tooltip>
             </a>
           </Link>
+          <Typography className={classes.subtitle} variant="h6">
+            {user?.license?.licenseNumber}
+          </Typography>
+          <Typography className={classes.subtitle} variant="h6">
+            {user?.license?.licenseState}
+          </Typography>
 
         </div>
       </div>
@@ -152,7 +150,7 @@ const SideMenu: React.FC<ReactProps> = (props) => {
 
 
 interface ReactProps extends WithStyles<typeof styles> {
-  storePrivate: StorePrivate;
+  user: UserPrivate;
 }
 
 
@@ -160,10 +158,19 @@ const styles = (theme: Theme) => createStyles({
   routeProfile: {
     maxWidth: 250,
   },
-  subtitle: {
+  title: {
+    fontSize: '1.25rem',
+    fontWeight: 600,
+    color: Colors.black,
     "&:hover": {
       color: Colors.secondary,
-    }
+    },
+  },
+  subtitle: {
+    fontSize: '0.9rem',
+    fontWeight: 500,
+    color: Colors.uniswapLighterGrey,
+    width: '100%',
   },
   routeMenu: {
     display: 'flex',
@@ -222,14 +229,6 @@ const styles = (theme: Theme) => createStyles({
     flexDirection: 'column',
     justifyContent: 'center',
   },
-  routeSectionDivider: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    marginTop: '0.5rem',
-    marginBottom: "0.5rem",
-    borderBottom: `2px solid ${Colors.charcoal}`,
-  },
   storeProfile: {
     display: "flex",
     position: "relative",
@@ -238,6 +237,7 @@ const styles = (theme: Theme) => createStyles({
     justifyContent: "center",
     margin: "2rem 0rem 0rem 0rem",
     maxWidth: 300,
+    width: "100%",
   },
   // avatar outline circle
   avatarBorder: {
@@ -271,73 +271,8 @@ const styles = (theme: Theme) => createStyles({
       duration: "200ms",
     }),
   },
-  addItemButton: {
-    padding: "0.5rem 1rem",
-    marginTop: "0.25rem",
-    marginBottom: "0.25rem",
-    width: '100%',
-    borderRadius: '2px',
-    border: `1px solid ${Colors.secondary}`,
-    backgroundColor: Colors.secondary,
-    minWidth: 180,
-  },
-  addItemButtonText: {
-    textAlign: 'center',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    fontSize: '0.9rem',
-    fontWeight: 600,
-    color: Colors.cream,
-    textTransform: "none",
-  },
-  viewSellerProfileButton: {
-    width: '100%',
-    position: 'relative',
-    backgroundColor: Colors.cream,
-  },
   viewStoreLink: {
     margin: '0.5rem 0rem',
-  },
-  viewMyStoreText: {
-    textAlign: 'center',
-    color: Colors.blue,
-    fontSize: '0.9rem',
-    fontWeight: 600,
-    "&:hover": {
-      color: fade(Colors.blue, 0.8),
-    }
-  },
-  storeLink: {
-    marginTop: '2rem',
-    // marginLeft: '1rem',
-    fontWeight: 600,
-  },
-  storeNameCopyContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    marginBottom: '1rem',
-    width: '100%',
-    maxWidth: 400,
-  },
-  storeNameCopyButton: {
-    borderRadius: '0px 4px 4px 0px',
-    borderTop: '1px solid rgba(36, 132, 255, 0.7)',
-    borderRight: '1px solid rgba(36, 132, 255, 0.7)',
-    borderBottom: '1px solid rgba(36, 132, 255, 0.7)',
-    borderLeft: '1px solid rgba(36, 132, 255, 0.7)',
-    color: "rgba(36, 132, 255, 0.8)",
-    backgroundColor: "rgba(36, 132, 255, 0.1)",
-  },
-  storeNameCopy: {
-    width: '100%',
-    height: 35,
-    fontSize: '1rem',
-    border: '1px solid #ced4da',
-    borderRight: '0px solid rgba(36, 132, 255, 0.7)',
-    borderRadius: '4px 0px 0px 4px',
-    padding: '0rem 0.5rem',
-    outline: 'none',
   },
 });
 

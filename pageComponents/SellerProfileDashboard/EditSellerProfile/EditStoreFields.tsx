@@ -129,7 +129,8 @@ const EditStoreFields: React.FC<ReactProps & FormikProps<FormikFields>> = (props
   return (
     <div className={classes.root}>
       <div className={classes.innerRoot}>
-        <div className={clsx(classes.flexCol, classes.width100)}>
+
+        {/* <div className={clsx(classes.flexCol, classes.width100)}>
           <StoreEditProfilePic
             storeId={option(props).storeId()}
             profileImage={storePrivate.profile}
@@ -146,7 +147,7 @@ const EditStoreFields: React.FC<ReactProps & FormikProps<FormikFields>> = (props
             }
             </Typography>
           </div>
-        </div>
+        </div> */}
 
         <Typography variant="subtitle1" className={classes.subtitle1}>
           Your Seller Name
@@ -169,7 +170,7 @@ const EditStoreFields: React.FC<ReactProps & FormikProps<FormikFields>> = (props
           <div style={{ marginTop: '0.25rem' }}></div>
         </div>
 
-        <div className={classes.margin1}>
+        {/* <div className={classes.margin1}>
           <div className={clsx(classes.flexRow, classes.spaceBetween)}>
             <Typography variant="subtitle1" className={classes.subtitle1}>
               Bio<span className={classes.greyText}> - optional</span>
@@ -211,7 +212,7 @@ const EditStoreFields: React.FC<ReactProps & FormikProps<FormikFields>> = (props
               inputProps={{ style: { width: '100%' }}}
             />
           </div>
-        </div>
+        </div> */}
 
 
         <div className={classes.margin1}>
@@ -249,8 +250,9 @@ const EditStoreFields: React.FC<ReactProps & FormikProps<FormikFields>> = (props
               touched={touched.accountName}
             />
             <Typography variant="body1" className={classes.subtitle3}>
-              We will send your monthly earnings automatically to this Bank account
-              after your order has been settled and approved, typically wihtin 5 days.
+              We will send your funds automatically to this Bank account
+              after your order has been settled and approved,
+              typically in 5 business days.
             </Typography>
             {
               errors.bsb &&

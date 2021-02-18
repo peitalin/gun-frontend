@@ -303,9 +303,12 @@ const EditStoreFormWrapper: React.FC<FormWrapperProps> = (props) => {
                   color={"secondary"}
                   onClick={() => {
                     //  type="submit" sets off the obSubmit handler above
-                    console.log('pressed...')
+                    console.log('submitting...')
                   }}
-                  className={props.classes.button}
+                  className={classes.button}
+                  classes={{
+                    label: classes.buttonText
+                  }}
                   replaceTextWhenLoading={true}
                   loading={loading}
                   disabled={loading}

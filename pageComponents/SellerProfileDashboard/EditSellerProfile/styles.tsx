@@ -1,5 +1,5 @@
 import { createStyles, Theme } from "@material-ui/core/styles";
-import { Colors, Gradients, BoxShadows, BorderRadius2x } from "layout/AppTheme";
+import { Colors, Gradients, BoxShadows, BorderRadius2x, BorderRadius } from "layout/AppTheme";
 
 
 export const styles = (theme: Theme) => createStyles({
@@ -13,8 +13,15 @@ export const styles = (theme: Theme) => createStyles({
   formRoot: {
     minWidth: '350px',
     maxWidth: '540px',
-    background: Colors.uniswapDarkNavy,
-    boxShadow: BoxShadows.shadow1.boxShadow,
+    background: theme.palette.type === 'dark'
+      ? Colors.uniswapDarkNavy
+      : Colors.cream,
+    boxShadow: theme.palette.type === 'dark'
+      ? BoxShadows.shadow1.boxShadow
+      : 'unset',
+    border: theme.palette.type === 'dark'
+      ? 'unset'
+      : `1px solid ${Colors.slateGreyDarker}`,
     borderRadius: BorderRadius2x,
   },
   maxWidth720: {
@@ -28,6 +35,7 @@ export const styles = (theme: Theme) => createStyles({
     padding: '0.5rem 1rem',
     height: 40,
     width: '100%',
+    borderRadius: BorderRadius,
   },
   buttonText: {
     display: "flex",
@@ -41,26 +49,34 @@ export const styles = (theme: Theme) => createStyles({
     fontSize: "0.9rem",
     fontWeight: 600,
     marginBottom: '0.25rem',
-    color: Colors.uniswapLightestGrey,
+    color: theme.palette.type === 'dark'
+      ? Colors.uniswapLightestGrey
+      : Colors.black,
   },
   subtitle2: {
     fontSize: "0.8rem",
     fontWeight: 500,
     marginBottom: '0.25rem',
-    color: Colors.uniswapLightestGrey,
+    color: theme.palette.type === 'dark'
+      ? Colors.uniswapLightestGrey
+      : Colors.black,
     marginTop: "0.25rem",
   },
   subtitle3: {
     fontSize: "0.7rem",
     fontWeight: 500,
     marginBottom: '0.5rem',
-    color: Colors.uniswapLighterGrey,
+    color: theme.palette.type === 'dark'
+      ? Colors.uniswapLightestGrey
+      : Colors.black,
   },
   subtitle4: {
     fontSize: "0.7rem",
     fontWeight: 500,
     marginBottom: '0.5rem',
-    color: Colors.uniswapLighterGrey,
+    color: theme.palette.type === 'dark'
+      ? Colors.uniswapLightestGrey
+      : Colors.black,
     marginTop: "0.5rem",
   },
   formGroup: {
@@ -148,7 +164,9 @@ export const styles = (theme: Theme) => createStyles({
   },
   bioLength: {
     fontSize: '0.8rem',
-    color: Colors.uniswapLighterGrey,
+    color: theme.palette.type === 'dark'
+      ? Colors.uniswapLightestGrey
+      : Colors.black,
   },
   avatarSignin: {
     margin: theme.spacing(1),
@@ -271,11 +289,15 @@ export const styles = (theme: Theme) => createStyles({
     fontWeight: 600,
     marginTop: '1.5rem',
     marginBottom: '0.5rem',
-    color: Colors.uniswapLighterGrey,
+    color: theme.palette.type === 'dark'
+      ? Colors.uniswapLighterGrey
+      : Colors.charcoal,
   },
   // avatar image
   greyText: {
-    color: Colors.uniswapLighterGrey,
+    color: theme.palette.type === 'dark'
+      ? Colors.uniswapLighterGrey
+      : Colors.charcoal,
   },
   redText: {
     color: Colors.lightRed,

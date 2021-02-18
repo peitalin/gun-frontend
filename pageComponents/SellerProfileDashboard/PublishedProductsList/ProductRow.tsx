@@ -471,7 +471,9 @@ const styles = (theme: Theme) => createStyles({
     marginBottom: '1rem',
     marginRight: '0rem',
     paddingBottom: '1rem',
-    borderBottom: `1px solid ${Colors.uniswapNavy}`,
+    borderBottom: theme.palette.type === 'dark'
+      ? `1px solid ${Colors.uniswapNavy}`
+      : `1px solid ${Colors.slateGrey}`,
     position: 'relative',
   },
   flexRowWithBorderMobile: {
@@ -483,7 +485,9 @@ const styles = (theme: Theme) => createStyles({
     marginBottom: '1rem',
     marginRight: '0rem',
     paddingBottom: '0.5rem',
-    borderBottom: `1px solid ${Colors.uniswapNavy}`,
+    borderBottom: theme.palette.type === 'dark'
+      ? `1px solid ${Colors.uniswapNavy}`
+      : `1px solid ${Colors.slateGrey}`,
     position: 'relative',
   },
   marginLeft: {
@@ -491,7 +495,9 @@ const styles = (theme: Theme) => createStyles({
   },
   name: {
     fontWeight: 600,
-    color: theme.colors.uniswapLightestGrey,
+    color: theme.palette.type === 'dark'
+      ? Colors.uniswapLightGrey
+      : Colors.charcoal,
     fontSize: "1rem",
     lineHeight: '1rem',
     marginBottom: '0.25rem',

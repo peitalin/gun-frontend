@@ -153,7 +153,6 @@ const StoreEditProfilePic = (props: ReactProps & FormikProps<FormikFields>) => {
               display: "flex",
               flexDirection: "column",
               justifyContent: "center",
-              backgroundColor: Colors.uniswapNavy,
               minHeight: 'unset',
             },
             dropzoneActive: {
