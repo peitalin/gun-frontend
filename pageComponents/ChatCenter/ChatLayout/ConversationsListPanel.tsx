@@ -218,17 +218,26 @@ const styles = (theme: Theme) => createStyles({
     padding: '15px 10px',
     marginTop: 0,
     marginBottom: 0,
-    backgroundColor: theme.colors.uniswapMediumNavy,
     color: theme.colors.uniswapLightestGrey,
     textAlign: "center",
+    background: theme.palette.type === 'dark'
+      ? Colors.uniswapMediumNavy
+      : Colors.slateGrey,
+    // border: theme.palette.type === 'dark'
+    //   ? `unset`
+    //   : `1px solid ${Colors.slateGreyDarker}`,
   },
   borderRadiusTop: {
-    borderRadius: `${BorderRadius}px ${BorderRadius}px 0px 0px`,
+    borderRadius: `${BorderRadius2x}px ${BorderRadius2x}px 0px 0px`,
   },
   mobileUserListHeading: {
     fontSize: '14px',
-    backgroundColor: theme.colors.uniswapMediumNavy,
-    color: theme.colors.uniswapLighterGrey,
+    backgroundColor: theme.palette.type === 'dark'
+      ? Colors.uniswapMediumNavy
+      : Colors.slateGrey,
+    color: theme.palette.type === 'dark'
+      ? Colors.uniswapLighterGrey
+      : Colors.black,
     fontWeight: 600,
     marginBottom: 0,
     padding: '5px',
@@ -243,7 +252,9 @@ const styles = (theme: Theme) => createStyles({
     width: "50%",
   },
   mobileUserList: {
-    backgroundColor: theme.colors.uniswapMediumNavy,
+    backgroundColor: theme.palette.type === 'dark'
+      ? Colors.uniswapMediumNavy
+      : Colors.slateGrey,
     paddingInlineStart: '0px',
     marginBottom: 0,
   },

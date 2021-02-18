@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import { oc as option } from "ts-optchain";
 // GraphQL
 import { Product, Product_Variants } from "typings/gqlTypes";
@@ -21,11 +21,11 @@ const ProductHeading = (props: ReactProps) => {
     <ErrorBounds className={classes.headingRoot}>
       <div className={classes.greyBorder}>
         <Typography variant="subtitle1" className={classes.productTitle}>
-          {option(product).currentSnapshot.title()}
+          {product?.currentSnapshot?.title}
         </Typography>
       </div>
       <Typography variant="body1" className={classes.tagline}>
-        {option(product).currentSnapshot.model()}
+        {product?.currentSnapshot?.model}
       </Typography>
     </ErrorBounds>
   )

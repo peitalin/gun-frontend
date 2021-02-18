@@ -249,7 +249,9 @@ const styles = (theme: Theme) => createStyles({
     color: Colors.darkGrey,
   },
   messageText: {
-    color: Colors.uniswapDarkNavy,
+    color: theme.palette.type === 'dark'
+      ? Colors.uniswapDarkNavy
+      : Colors.slateGrey,
   },
   messageNameTime: {
     width: '100%',

@@ -23,7 +23,7 @@ import { StorePrivate, UserPrivate, Image_Parents } from "typings/gqlTypes";
 import { HtmlEvent, CreateStoreInput } from "typings";
 // Validation
 import { FormikProps } from 'formik';
-import StoreCreateProfilePic from "./StoreCreateProfilePic";
+// import StoreCreateProfilePic from "./StoreCreateProfilePic";
 
 
 
@@ -102,18 +102,11 @@ const CreateStoreFields: React.FC<ReactProps & FormikProps<FormikFields>> = (pro
   };
 
 
-  const copyText = () => {
-    var copyText = document.getElementById("copyText") as HTMLInputElement;
-    copyText.select();
-    document.execCommand("copy");
-    console.log("copied: ", copyText.value);
-  }
-
-
   return (
     <div className={classes.root}>
       <div className={classes.innerRoot}>
-        <div className={clsx(classes.flexCol, classes.width100)}>
+
+        {/* <div className={clsx(classes.flexCol, classes.width100)}>
           <StoreCreateProfilePic
             userId={userId} // store create associates to userId
             profileImage={profileImage}
@@ -124,14 +117,14 @@ const CreateStoreFields: React.FC<ReactProps & FormikProps<FormikFields>> = (pro
           <div className={classes.avatarErrorMsg}>
             <Typography variant="subtitle1" className={classes.subtitle1}>
               <span className={classes.greyText}></span>
-              {/* {
+              {
                 errors.profileId
                 ? <span className={classes.redText}>{`Profile pic required`}</span>
                 : <span className={classes.greyText}></span>
-              } */}
+              }
             </Typography>
           </div>
-        </div>
+        </div> */}
 
         <Typography variant="subtitle1" className={classes.subtitle1}>
           Your store name
@@ -158,7 +151,8 @@ const CreateStoreFields: React.FC<ReactProps & FormikProps<FormikFields>> = (pro
           <div style={{ marginTop: '0.25rem' }}></div>
         </div>
 
-        <div className={classes.margin1}>
+        {/* <div className={classes.margin1}>
+
           <div className={clsx(classes.flexRow, classes.spaceBetween)}>
             <Typography variant="subtitle1" className={classes.subtitle1}>
               Bio<span className={classes.greyText}> - optional</span>
@@ -228,13 +222,13 @@ const CreateStoreFields: React.FC<ReactProps & FormikProps<FormikFields>> = (pro
               />
             </div>
           }
-        </div>
+        </div> */}
 
 
         <div className={classes.margin1}>
           <div className={clsx(classes.flexRow, classes.width100)}>
             <Typography variant="subtitle1" className={classes.subtitle1}>
-              Where should we send your monthly earnings?
+              Where should we send your earnings?
             </Typography>
             {
               errors.bsb
@@ -270,14 +264,14 @@ const CreateStoreFields: React.FC<ReactProps & FormikProps<FormikFields>> = (pro
               touched={touched.accountName}
             />
             <Typography variant="body1" className={classes.subtitle3}>
-              We will send your monthly earnings automatically to this Bank account
-              after your order has been settled and approved, typically wihtin 5 days.
+              We will send your funds automatically to this Bank account
+              after your order has been settled and approved,
+              typically in 5 business days.
             </Typography>
 
             <Divider/>
             <Typography variant="body1" className={classes.subtitle4}>
-              By signing up, you agree to comply with Gunmarketplace’s Terms of Service
-              and Seller Agreement.
+              By signing up, you agree to comply with gunmarketplace.com.au’s Terms of Service.
               <a className={classes.link}
                 href={'https://help.gunmarketplace.com/hc/en-us/articles/360038530771-Terms-of-Service'}
                 style={{ marginLeft: '0.25rem' }}

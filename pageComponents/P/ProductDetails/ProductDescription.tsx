@@ -20,16 +20,22 @@ const ProductDescription = (props: ReactProps) => {
   } = props;
 
   return (
-    <div className={classes.descriptionContainer}>
-      <Typography variant="subtitle2" className={classes.title}>
-        Description
+    <div className={clsx(
+        classes.descriptionContainer,
+        props.removeTopBorder ? null : classes.topBorder,
+      )}
+      style={props.containerStyle}
+    >
+      <Typography variant="subtitle2"
+        className={classes.title}
+        style={props.titleStyle}
+      >
+        { props.productName ?? "Description" }
       </Typography>
       <Typography
         variant="body1"
         className={clsx(
           classes.productDescription,
-          props.classes.expand,
-          // expandDescription ? props.classes.expand : null,
         )}
       >
         <span
@@ -45,6 +51,10 @@ const ProductDescription = (props: ReactProps) => {
 
 interface ReactProps extends WithStyles<typeof styles> {
   productDescription: string;
+  productName?: string;
+  titleStyle?: any;
+  containerStyle?: any;
+  removeTopBorder?: boolean;
 }
 
 const styles = (theme: Theme) => createStyles({
@@ -52,10 +62,8 @@ const styles = (theme: Theme) => createStyles({
     position: "relative",
     wordWrap: 'break-word',
     marginTop: '1rem',
-    borderTop: `1px solid ${theme.colors.uniswapGrey}`,
     paddingTop: '2rem',
     paddingBottom: '1rem',
-
     // outlineOffset: '-2px',
     // outline: '2px dashed #28A',
   },
@@ -63,30 +71,14 @@ const styles = (theme: Theme) => createStyles({
     marginBottom: '1rem',
     fontWeight: 500,
   },
+  topBorder: {
+    borderTop: theme.palette.type === 'dark'
+      ? `1px solid ${theme.colors.uniswapGrey}`
+      : `1px solid ${theme.colors.slateGrey}`,
+  },
   productDescription: {
     maxHeight: "33vh",
     overflowY: 'hidden',
-  },
-  expand: {
-    maxHeight: "100%",
-  },
-  seeMore: {
-    fontSize: '1rem',
-    color: "#2484cF",
-    cursor: "pointer",
-    position: "absolute",
-    "&:hover": {
-      color: "#2484FF",
-    },
-  },
-  seeLess: {
-    fontSize: '1rem',
-    color: "#2484cF",
-    position: "absolute",
-    cursor: "pointer",
-    "&:hover": {
-      color: "#2484FF",
-    },
   },
 });
 

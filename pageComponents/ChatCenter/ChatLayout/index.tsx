@@ -161,9 +161,16 @@ interface QueryVar {
 
 const styles = (theme: Theme) => createStyles({
   col25: {
-    background: theme.colors.uniswapDarkNavy,
     borderRadius: BorderRadius2x,
-    boxShadow: BoxShadows.shadow1.boxShadow,
+    background: theme.palette.type === 'dark'
+      ? Colors.uniswapDarkNavy
+      : Colors.darkWhite,
+    border: theme.palette.type === 'dark'
+      ? `unset`
+      : `1px solid ${Colors.slateGreyDarker}`,
+    boxShadow: theme.palette.type === 'dark'
+      ? BoxShadows.shadow1.boxShadow
+      : 'unset',
   },
   wd25: {
     width: '25%',
@@ -186,7 +193,9 @@ const styles = (theme: Theme) => createStyles({
     borderRadius: BorderRadius,
   },
   onlineUsersContainer: {
-    backgroundColor: theme.colors.uniswapDarkNavy,
+    backgroundColor: theme.palette.type === 'dark'
+      ? Colors.uniswapDarkNavy
+      : Colors.darkWhite,
   },
   mobileview: {
     position: "absolute",
@@ -196,10 +205,14 @@ const styles = (theme: Theme) => createStyles({
   },
   productPanelFixed: {
     position: 'fixed',
-    border: `1px solid ${theme.colors.uniswapGrey}`,
+    border: theme.palette.type === 'dark'
+      ? `unset`
+      : `1px solid ${Colors.slateGreyDarker}`,
+    boxShadow: theme.palette.type === 'dark'
+      ? BoxShadows.shadow1.boxShadow
+      : 'unset',
     bottom: '-33%',
     left: '1rem',
-    boxShadow: BoxShadows.shadow2.boxShadow,
     transition: theme.transitions.create('bottom', {
       easing: theme.transitions.easing.sharp,
       duration: "150ms",

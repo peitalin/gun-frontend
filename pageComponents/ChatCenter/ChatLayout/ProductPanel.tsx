@@ -243,7 +243,9 @@ const styles = (theme: Theme) => createStyles({
     width: "50%",
   },
   mobileUserList: {
-    backgroundColor: '#4f5050',
+    backgroundColor: theme.palette.type === 'dark'
+      ? Colors.uniswapGrey
+      : Colors.uniswapLighterGrey,
     paddingInlineStart: '0px',
     marginBottom: 0,
   },

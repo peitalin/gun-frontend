@@ -344,9 +344,16 @@ export const styles = (theme: Theme) => createStyles({
     height: '50vh',
     overflow: 'scroll',
     position: 'relative',
-    background: theme.colors.uniswapDarkNavy,
     borderRadius: BorderRadius,
-    boxShadow: BoxShadows.shadow1.boxShadow,
+    background: theme.palette.type === 'dark'
+      ? Colors.uniswapDarkNavy
+      : Colors.darkWhite,
+    border: theme.palette.type === 'dark'
+      ? `unset`
+      : `1px solid ${Colors.slateGreyDarker}`,
+    boxShadow: theme.palette.type === 'dark'
+      ? BoxShadows.shadow1.boxShadow
+      : 'unset',
   },
   chatWrapper: {
     display: 'flex',

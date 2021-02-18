@@ -105,13 +105,8 @@ const Products: React.FC<ReactProps> = (props) => {
     }
   }, [product])
 
-  const variantOptions = option(product).currentVariants([])
-    .filter(v => v?.soldOutStatus !== SoldOutStatus.AVAILABLE)
+  const variantOptions = option(product).currentSnapshot.currentVariants([])
     .map(v => ({ label: v.variantName, value: v }))
-
-  let isSoldOut = product?.soldOutStatus === SoldOutStatus.SOLD_OUT
-  let isReserved = product?.soldOutStatus === SoldOutStatus.RESERVED
-  let isAvailable = product?.soldOutStatus === SoldOutStatus.AVAILABLE
 
   const handleChangeVariantOption = (
     selectedOption: { label: string, value: Product_Variants }
@@ -120,25 +115,11 @@ const Products: React.FC<ReactProps> = (props) => {
   };
 
   React.useEffect(() => {
-    if (
-      option(product).featuredVariant.productId() &&
-      (isSoldOut || isReserved)
-    ) {
-        setSelectedOption({
-          label: option(product).featuredVariant.variantName(),
-          value: option(product).featuredVariant(),
-        })
-    } else {
-
-      let nextVariant = option(product).currentVariants([])
-        .filter(v => v?.soldOutStatus !== SoldOutStatus.AVAILABLE)[0]
-
-      if (!!nextVariant && nextVariant.variantName) {
-        setSelectedOption({
-          label: nextVariant.variantName,
-          value: nextVariant,
-        })
-      }
+    if (product?.featuredVariant?.productId) {
+      setSelectedOption({
+        label: product?.featuredVariant?.variantName,
+        value: product?.featuredVariant,
+      })
     }
   }, [loading])
 

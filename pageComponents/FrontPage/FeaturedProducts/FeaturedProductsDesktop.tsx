@@ -1,5 +1,4 @@
 import React from "react";
-import { oc as option } from "ts-optchain";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 import { Colors, BorderRadius } from "layout/AppTheme";
@@ -71,7 +70,7 @@ const FeaturedProductsDesktop = (props: ReactProps) => {
 
       <div className={classes.carouselContainer}>
         {
-          (option(props).productsConnection.edges([]).length > 0)
+          ((props?.productsConnection?.edges ?? []).length > 0)
           ? props.productsConnection.edges.map(({ node: product }, i) =>
               <div key={product.id + `_${i}`}
                 className={xsDown ? classes.productImageXs : classes.productImage}

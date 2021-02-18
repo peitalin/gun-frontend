@@ -269,7 +269,9 @@ const styles = (theme: Theme) => createStyles({
     position: 'relative',
   },
   textEditorRoot: {
-    background: theme.colors.uniswapMediumNavy,
+    background: theme.palette.type === 'dark'
+      ? Colors.uniswapMediumNavy
+      : Colors.slateGrey,
     borderRadius: BorderRadius,
   },
   textEditorWrapper: {

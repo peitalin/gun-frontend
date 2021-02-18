@@ -38,13 +38,17 @@ export const styles = (theme: Theme) => createStyles({
     objectFit: "cover",
     height: '100%',
     border: 'none',
-    backgroundColor: theme.colors.uniswapNavy,
+    backgroundColor: theme.palette.type === 'dark'
+      ? theme.colors.uniswapGreyNavy
+      : theme.colors.slateGrey,
   },
   emptyYouTubeVimeo: {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    color: Colors.grey,
+    color: theme.palette.type === 'dark'
+      ? Colors.uniswapLighterGrey
+      : Colors.grey,
     fontSize: '0.9rem',
   },
 });
