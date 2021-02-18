@@ -36,7 +36,7 @@ import { UserPrivate } from 'typings/gqlTypes';
 import { serverApolloClient } from "utils/apollo";
 // Payment Clients
 import { PaypalClient } from "typings/typings-paypal";
-// import { WestpacQuickstreamClient } from "typings/typings-westpac";
+import { WestpacQuickstreamClient } from "typings/typings-westpac";
 
 import dayjs from 'dayjs'
 import utc from "dayjs/plugin/utc"
@@ -49,7 +49,7 @@ declare global {
     gapi: any;
     paypal: PaypalClient
     analytics: any;
-    // QuickstreamAPI: WestpacQuickstreamClient;
+    QuickstreamAPI: WestpacQuickstreamClient;
     ClassicEditor: any
   }
 }
@@ -191,14 +191,14 @@ const ThemeProviderDarkMode = (props) => {
       } else {
         dispatch(Actions.reduxLogin.SET_LIGHT_MODE())
       }
-    // } else {
-    //   // then let operating system decide, e.g. dark mode in MacOs
-    //   let osDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
-    //   if (osDarkMode) {
-    //     dispatch(Actions.reduxLogin.SET_DARK_MODE())
-    //   } else {
-    //     dispatch(Actions.reduxLogin.SET_LIGHT_MODE())
-    //   }
+    } else {
+      // then let operating system decide, e.g. dark mode in MacOs
+      let osDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
+      if (osDarkMode) {
+        dispatch(Actions.reduxLogin.SET_DARK_MODE())
+      } else {
+        dispatch(Actions.reduxLogin.SET_LIGHT_MODE())
+      }
     }
   }, [])
 

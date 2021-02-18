@@ -6,7 +6,7 @@ import Typography from "@material-ui/core/Typography";
 import { oc as option } from "ts-optchain";
 // styles
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
-import { BorderRadius, BoxShadows } from "layout/AppTheme";
+import { BorderRadius, BoxShadows, Colors } from "layout/AppTheme";
 // Graphql
 import { useQuery, ApolloClient, useApolloClient } from "@apollo/client";
 import { GET_USER } from "queries/user-queries";
@@ -83,8 +83,15 @@ const styles = (theme: Theme) => createStyles({
     flexDirection: "column",
     justifyContent: "flex-start",
     alignItems: "center",
-    background: theme.colors.uniswapDarkNavy,
-    boxShadow: BoxShadows.shadow1.boxShadow,
+    background: theme.palette.type === 'dark'
+      ? Colors.uniswapDarkNavy
+      : Colors.darkWhite,
+    boxShadow: theme.palette.type === 'dark'
+      ? BoxShadows.shadow1.boxShadow
+      : 'unset',
+    border: theme.palette.type === 'dark'
+      ? `unset`
+      : `1px solid ${Colors.slateGreyDarker}`,
     borderRadius: BorderRadius,
     minHeight: '80vh',
   },

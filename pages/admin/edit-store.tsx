@@ -37,7 +37,7 @@ const EditStoreAdminPage = (props: ReactProps) => {
   return (
     <>
       <MetaHeadersPage
-        title="Edit Store - GM.shop"
+        title="Edit Store - gunmarketplace.com.au"
         robots="noindex"
       />
       <SellerProfileWrapper>
