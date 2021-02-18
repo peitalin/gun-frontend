@@ -436,8 +436,7 @@ export const validationSchemas = {
         .min(minLengthStoreName, "Must be more than 3 letters!"),
       bio: Yup.string().nullable(),
       website: Yup.string().nullable(),
-      profileId: Yup.string()
-        .required('A profile pic is needed!'),
+      profileId: Yup.string().nullable(),
       coverId: Yup.string().nullable(),
       bsb: Yup.string()
         .min(6, "Must 6 digits!")
