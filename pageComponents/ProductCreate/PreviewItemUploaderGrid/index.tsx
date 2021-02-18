@@ -2,7 +2,7 @@ import React from "react";
 import { oc as option } from "ts-optchain";
 // Redux
 import { useDispatch, useSelector } from "react-redux";
-import { Actions } from "reduxStore/actions";
+import { GrandReduxState, Actions } from "reduxStore/grand-reducer";
 // Styles
 import { withStyles, WithStyles, fade } from "@material-ui/core/styles";
 import { styles } from './styles';
@@ -181,6 +181,10 @@ const PreviewItemUploaderGrid = (props: ReactProps & FormikProps<FormikFields>) 
   const [googleUploads, setGoogleUploads] = React.useState<GoogleUpload[]>([]);
   const [loading, setLoading] = React.useState(false);
 
+  const isDarkMode = useSelector<GrandReduxState, boolean>(s => {
+    return s.reduxLogin.darkMode === 'dark'
+  })
+
   //// Effects ////
 
   React.useEffect(() => {
@@ -249,8 +253,12 @@ const PreviewItemUploaderGrid = (props: ReactProps & FormikProps<FormikFields>) 
             backgroundColor: '#DAA'
           },
           dropzone: {
-            border: `2px dashed ${Colors.uniswapLighterGrey}`,
-            backgroundColor: Colors.uniswapGreyNavy,
+            border: isDarkMode
+              ? `2px dashed ${Colors.uniswapLighterGrey}`
+              : `2px dashed ${Colors.slateGreyDarker}`,
+            backgroundColor: isDarkMode
+              ? Colors.uniswapGreyNavy
+              : Colors.darkWhite,
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",

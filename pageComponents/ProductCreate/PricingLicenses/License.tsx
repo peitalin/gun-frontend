@@ -58,8 +58,6 @@ interface FormikFields {
 export const styles = (theme: Theme) => createStyles({
   root: {
     padding: '0rem',
-    marginTop: '0.5rem',
-    marginBottom: '0.5rem',
     borderRadius: '4px',
     display: 'flex',
     flexDirection: 'row',

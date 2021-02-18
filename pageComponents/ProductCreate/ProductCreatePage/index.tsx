@@ -69,9 +69,6 @@ const PreviewItemUploader = dynamic(() => import("../PreviewItemUploaderGrid"), 
   loading: () => <UploadPreviewPlaceholder/>,
   ssr: false,
 })
-
-// Product Preview Card
-import PreviewCardResponsive from "pageComponents/FrontPage/PreviewCardResponsive";
 // Graphql
 import { GET_PRODUCT_CATEGORIES } from "queries/categories-queries";
 import { useQuery } from '@apollo/client';

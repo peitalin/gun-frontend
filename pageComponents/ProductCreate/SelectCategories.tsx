@@ -1,5 +1,4 @@
 import React from "react";
-import { oc as option } from "ts-optchain";
 import clsx from "clsx";
 // Redux
 import { useDispatch, useSelector } from "react-redux";
@@ -61,7 +60,7 @@ const SelectCategories = (props: ReactProps & FormikProps<FormikFields>) => {
   } = useQuery<QueryData, null>(GET_PRODUCT_CATEGORIES)
 
 
-  const categories = option(data).getProductCategories([])
+  const categories = (data?.getProductCategories ?? [])
       .filter(c => !!c && !!c.name)
       .sort(sortCategoriesByName)
 
@@ -110,17 +109,17 @@ const SelectCategories = (props: ReactProps & FormikProps<FormikFields>) => {
               }}
             >
               <Typography className={
-                  !option(chosenCategory).name()
+                  !chosenCategory?.name
                     ? classes.selectedCategoryEmpty
                     : openExpander
                       ? classes.selectedCategoryOpen
                       : classes.selectedCategoryClosed
                 }
                 color={"primary"}
-                variant="body1"
+                variant="subtitle1"
               >
                 {
-                  option(chosenCategory).name()
+                  chosenCategory?.name
                     ? chosenCategory.name
                     : "Select a category"
                 }

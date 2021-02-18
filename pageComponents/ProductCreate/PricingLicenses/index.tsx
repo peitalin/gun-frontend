@@ -52,8 +52,7 @@ const PricingLicenses = (props: ReactProps & FormikProps<FormikFields>) => {
       <div className={classes.flexRow}>
         <Typography
           className={classes.title}
-          variant="h3"
-          gutterBottom
+          variant="subtitle1"
         >
           Price
         </Typography>
@@ -204,6 +203,7 @@ export const styles = (theme: Theme) => createStyles({
     }
   },
   title: {
+    fontWeight: 500,
   },
   switchContainer: {
     display: "flex",

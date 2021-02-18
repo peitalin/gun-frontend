@@ -99,7 +99,7 @@ const ProductCreateLayout: React.FC<ProductCreateFormProps> = (props) => {
                 loadCarouselPics={props.loadCarouselPics}
                 setLoadCarouselPics={props.setLoadCarouselPics}
                 productIndex={0}
-                // previewImageEmptyMessage={"Preview Listing"}
+                previewImageEmptyMessage={"Preview Listing"}
                 // onClick={() => setOpenPreviewPage(true)}
               />
             </div>

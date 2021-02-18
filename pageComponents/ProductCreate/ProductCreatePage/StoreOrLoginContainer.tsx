@@ -66,8 +66,15 @@ export const styles = (theme: Theme) => createStyles({
     justifyContent: 'center',
     flexWrap: "wrap",
     borderRadius: BorderRadius2x,
-    background: Colors.uniswapDarkNavy,
-    boxShadow: BoxShadows.shadow4.boxShadow,
+    background: theme.palette.type === 'dark'
+      ? Colors.uniswapDarkNavy
+      : Colors.cream,
+    boxShadow: theme.palette.type === 'dark'
+      ? BoxShadows.shadow4.boxShadow
+      : 'unset',
+    border: theme.palette.type === 'dark'
+      ? 'unset'
+      : `1px solid ${Colors.slateGrey}`,
   },
   maxWidth: {
     maxWidth: 600,

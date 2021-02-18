@@ -327,11 +327,18 @@ export const styles = (theme: Theme) => createStyles({
   },
   buttonRoot: {
     margin: '0.1rem',
-    color: Colors.uniswapLightestGrey,
-    border: `1px solid ${Colors.uniswapLighterGrey}`,
+    color: theme.palette.type === 'dark'
+      ? Colors.uniswapLightestGrey
+      : Colors.charcoal,
+    border: theme.palette.type === 'dark'
+      ? `1px solid ${Colors.uniswapLighterGrey}`
+      : `1px solid ${Colors.charcoal}`,
     borderRadius: '2rem',
     flexGrow: 1,
     "&:hover": {
+      "& > span": {
+        color: Colors.gradientUniswapBlue1,
+      },
       border: `1px solid ${Colors.gradientUniswapBlue1}`,
       transition: theme.transitions.create(['color', 'border', 'background'], {
         easing: theme.transitions.easing.easeInOut,
@@ -344,7 +351,13 @@ export const styles = (theme: Theme) => createStyles({
     border: `1px solid ${Colors.gradientUniswapBlue1}`,
     fontSize: '0.7rem',
     color: Colors.cream,
+    "& > span": {
+      color: Colors.cream,
+    },
     "&:hover": {
+      "& > span": {
+        color: Colors.cream,
+      },
       backgroundImage: Gradients.gradientUniswapBlue2.background,
       border: `1px solid ${Colors.gradientUniswapFluro2}`,
       transition: theme.transitions.create(['color', 'border', 'background'], {
@@ -363,11 +376,15 @@ export const styles = (theme: Theme) => createStyles({
     marginLeft: '0rem',
     marginBottom: '0.5rem',
     // border: `1px solid ${Colors.lightGrey}`,
-    border: `1px solid ${Colors.uniswapLightNavy}`,
+    border: theme.palette.type === 'dark'
+      ? `1px solid ${Colors.uniswapLightNavy}`
+      : `1px solid ${Colors.slateGreyDarker}`,
     // overrides .MuiAccordion-rounded:first-child
     // border radius
     borderRadius: `${BorderRadius}px !important`,
-    backgroundColor: Colors.uniswapMediumNavy,
+    backgroundColor: theme.palette.type === 'dark'
+      ? Colors.uniswapMediumNavy
+      : Colors.slateGrey,
     transition: theme.transitions.create('border', {
       duration: "1200ms",
     }),
@@ -398,8 +415,11 @@ export const styles = (theme: Theme) => createStyles({
     margin: 0,
   },
   selectedCategoryClosed: {
-    color: Colors.uniswapLightGrey, // to match uniswapLightestGrey with placeholder dim
+    color: theme.palette.type === 'dark'
+      ? Colors.uniswapLightGrey // to match uniswapLightestGrey with placeholder dim
+      : Colors.uniswapMediumGrey,
     fontSize: '1rem',
+    fontWeight: 400,
     transition: theme.transitions.create('color', {
       duration: "2000ms",
     }),
@@ -407,15 +427,19 @@ export const styles = (theme: Theme) => createStyles({
   selectedCategoryOpen: {
     color: Colors.secondary,
     fontSize: '1rem',
+    fontWeight: 400,
     transition: theme.transitions.create('color', {
       duration: "200ms",
     }),
   },
   selectedCategoryEmpty: {
     // color: Colors.uniswapLighterGrey,
-    color: Colors.uniswapMediumGrey, // to match uniswapLightestGrey with placeholder dim
+    color: theme.palette.type === 'dark'
+      ? Colors.uniswapMediumGrey // to match uniswapLightestGrey with placeholder dim
+      : Colors.darkerGrey,
     // in TextInputa.input class
     fontSize: '1rem',
+    fontWeight: 400,
   },
   uploaderSwitcherTitle: {
     width: '100%',

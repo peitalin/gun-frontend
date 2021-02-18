@@ -74,9 +74,7 @@ const StoreOrLogin = (props: StoreOrLoginProps) => {
       )
     } else {
       return (
-        <SellerProfile
-          userStore={user.store}
-        />
+        <SellerProfile user={user} />
       )
     }
   } else {
@@ -89,7 +87,7 @@ const StoreOrLogin = (props: StoreOrLoginProps) => {
           {
             !props.disableSubtitle &&
             <Typography variant="h4" className={classes.loginTitle}>
-              Don't have a GM store yet?
+              Don't have a store yet?
             </Typography>
           }
           <div className={classes.createStoreButtonContainer}>
@@ -107,7 +105,7 @@ const StoreOrLogin = (props: StoreOrLoginProps) => {
           {
             !props.disableSubtitle &&
             <Typography variant="h4" className={classes.loginTitle}>
-              Don't have a GM store yet?
+              Don't have a store yet?
             </Typography>
           }
           {
@@ -121,7 +119,7 @@ const StoreOrLogin = (props: StoreOrLoginProps) => {
                   buttonText={
                     props.buttonText
                       ? props.buttonText
-                      : "Create your relay.shop link for free"
+                      : "Create your account for free"
                   }
                   titleLogin={"Login"}
                   titleSignup={"Create Account"}

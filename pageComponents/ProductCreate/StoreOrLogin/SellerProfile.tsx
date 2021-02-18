@@ -19,7 +19,7 @@ import EditSellerProfile from "pageComponents/SellerProfileDashboard/EditSellerP
 const SellerProfile: React.FC<StoreProps> = (props) => {
 
   const {
-    userStore: store,
+    user,
     avatarBorderStyle,
     classes
   } = props;
@@ -28,12 +28,12 @@ const SellerProfile: React.FC<StoreProps> = (props) => {
 
   return (
     <ErrorBounds className={clsx(classes.container)}>
-      <Typography variant="subtitle1" className={classes.title}>
+      {/* <Typography variant="subtitle1" className={classes.title}>
         Your Seller Profile
-      </Typography>
+      </Typography> */}
       <div className={classes.flexContainer}>
         <div className={classes.flexRow}>
-          <div className={classes.avatarBorder} style={{ ...avatarBorderStyle }}>
+          {/* <div className={classes.avatarBorder} style={{ ...avatarBorderStyle }}>
             <Avatar
               className={clsx(
                 classes.avatar,
@@ -42,14 +42,16 @@ const SellerProfile: React.FC<StoreProps> = (props) => {
               src={option(store).profile.original.url()}
               onLoad={() => setAvatarImgLoaded(true)}
             />
-          </div>
+          </div> */}
           <div className={classes.flexCol}>
             <Typography variant="body1" className={classes.name}>
-              {store.name}
+              {user?.store?.name}
             </Typography>
-            <Typography variant="body1" className={classes.website}>
-              {/* {store.website ?? "www.gunmarketplace.com.au"} */}
-              {"www.gunmarketplace.com.au"}
+            <Typography variant="body1" className={classes.licenseInfo}>
+              {user?.license?.licenseNumber}
+            </Typography>
+            <Typography variant="body1" className={classes.licenseInfo}>
+              {user?.license?.licenseState}
             </Typography>
           </div>
         </div>
@@ -65,7 +67,7 @@ const SellerProfile: React.FC<StoreProps> = (props) => {
 type StoreProps = ReactProps;
 
 interface ReactProps extends WithStyles<typeof styles> {
-  userStore: StorePrivate;
+  user: UserPrivate;
   avatarBorderStyle?: any;
 }
 
@@ -138,13 +140,17 @@ const styles = (theme: Theme) => createStyles({
   },
   name: {
     marginLeft: '0.5rem',
+    fontSize: '1.125rem',
     fontWeight: 600,
-    color: theme.colors.uniswapLightestGrey,
+    color: theme.palette.type === 'dark'
+      ? theme.colors.uniswapLightestGrey
+      : Colors.black,
   },
-  website: {
+  licenseInfo: {
     marginLeft: '0.5rem',
     color: theme.colors.uniswapLighterGrey,
-    fontSize: '0.8rem',
+    fontSize: '0.9rem',
+    fontWeight: 500,
   },
 });
 

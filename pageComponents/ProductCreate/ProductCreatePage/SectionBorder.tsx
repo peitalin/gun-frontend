@@ -4,7 +4,7 @@ import clsx from "clsx";
 import { withStyles, WithStyles, createStyles, Theme, fade } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 // Icons
-import { Colors, BorderRadius2x, BorderRadius, BoxShadows } from "layout/AppTheme";
+import { Colors, BorderRadius2x, BorderRadius, BoxShadows, Gradients } from "layout/AppTheme";
 import Link from "next/link";
 // CSS
 import { useTheme } from "@material-ui/core/styles";
@@ -46,7 +46,8 @@ const SectionBorder: React.FC<ReactProps> = ({
   return (
     <div
       className={clsx(
-        smDown ? classes.sectionBorderSm : classes.sectionBorder
+        classes.sectionBorder,
+        smDown ? classes.sectionBorderMobile : classes.sectionBorderDesktop
       )}
       style={style}
     >
@@ -64,19 +65,25 @@ interface ReactProps extends WithStyles<typeof styles> {
 
 const styles = (theme: Theme) => createStyles({
   sectionBorder: {
-    // border: `1px solid ${Colors.mediumLightGrey}`,
+    background: theme.palette.type === 'dark'
+      ? Colors.uniswapDarkNavy
+      // : Gradients.gradientGrey2.background,
+      : Colors.cream,
+    boxShadow: theme.palette.type === 'dark'
+      ? BoxShadows.shadow4.boxShadow
+      : 'unset',
+    border: theme.palette.type === 'dark'
+      ? 'unset'
+      : `1px solid ${Colors.slateGrey}`,
+  },
+  sectionBorderDesktop: {
     borderRadius: BorderRadius2x,
     padding: '2rem',
     marginBottom: '1rem',
-    background: Colors.uniswapDarkNavy,
-    boxShadow: BoxShadows.shadow4.boxShadow,
   },
-  sectionBorderSm: {
+  sectionBorderMobile: {
     borderRadius: '0px',
     padding: '1rem',
-    background: Colors.uniswapDarkNavy,
-    // boxShadow: BoxShadows.shadow4.boxShadow,
-    // borderBottom: `2px solid ${Colors.uniswapNavy}`,
     marginBottom: '0rem',
   },
   formOuterContainer: {

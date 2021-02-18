@@ -164,7 +164,6 @@ interface FormikFields {
 
 export const styles = (theme: Theme) => createStyles({
   root: {
-    paddingTop: '0.5rem',
     width: '100%',
   },
   flexRow: {

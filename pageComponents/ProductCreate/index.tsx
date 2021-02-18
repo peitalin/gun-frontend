@@ -174,18 +174,25 @@ const styles = (theme: Theme) => createStyles({
     left: 0,
     zIndex: 1,
     height: '2.5rem',
-    color: Colors.uniswapLighterGrey,
-    // borderTop: `1px solid ${Colors.uniswapNavy}`,
-    background: Colors.uniswapDarkNavy,
-    boxShadow: BoxShadows.shadow2.boxShadow,
-    // background: Gradients.gradientUniswapDark.background,
+    color: theme.palette.type === 'dark'
+      ? Colors.uniswapLighterGrey
+      : Colors.black,
+    background: theme.palette.type === 'dark'
+      ? Colors.uniswapDarkNavy
+      : Colors.slateGrey,
+    boxShadow: theme.palette.type === 'dark'
+      ? BoxShadows.shadow2.boxShadow
+      : 'unset',
+      // : BoxShadows.shadow3.boxShadow,
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-around",
     alignItems: "center",
   },
   stickyLink: {
-    color: Colors.uniswapLighterGrey,
+    color: theme.palette.type === 'dark'
+      ? Colors.uniswapLighterGrey
+      : Colors.uniswapLighterGrey,
     height: '100%',
     // flexBasis: '20%',
     flexGrow: 1,
@@ -193,9 +200,13 @@ const styles = (theme: Theme) => createStyles({
     display: 'flex',
     justifyContent: 'center',
     flexDirection: 'column',
-    borderBottom: `2px solid ${Colors.uniswapDarkNavy}`,
+    borderBottom: theme.palette.type === 'dark'
+      ? `3px solid ${Colors.uniswapDarkNavy}`
+      : `1px solid ${Colors.slateGreyDarker}`,
     "&:hover": {
-      color: Colors.uniswapLightestGrey,
+      color: theme.palette.type === 'dark'
+        ? Colors.uniswapLightestGrey
+        : Colors.black,
     },
   },
   stickyLinkHighlighted: {

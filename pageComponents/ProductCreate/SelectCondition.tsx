@@ -93,7 +93,7 @@ const SelectCondition = (props: ReactProps & FormikProps<FormikFields>) => {
                       : classes.selectedCategoryClosed
                 }
                 color={"primary"}
-                variant="body1"
+                variant="subtitle1"
               >
                 {
                   chosenCondition

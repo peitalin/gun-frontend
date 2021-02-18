@@ -70,9 +70,9 @@ const Description = (props: ReactProps & FormikProps<FormikFields>) => {
       <RefLink refId={refLinks.description}/>
 
       <Typography
+        className={classes.marginBottom1}
         color={"primary"}
         variant="subtitle1"
-        gutterBottom
       >
         Description
       </Typography>
@@ -96,13 +96,20 @@ const Description = (props: ReactProps & FormikProps<FormikFields>) => {
         {...fprops}
       />
 
-      {
-        (user?.userRole === Role.PLATFORM_ADMIN) &&
         <ProductDescription
-          // productName={"Description"}
+          productName={"Description Preview"}
           productDescription={values.description}
+          removeTopBorder={true}
+          titleStyle={{
+            marginBottom: '0rem',
+            color: Colors.slateGreyDarkest
+          }}
+          containerStyle={{
+            paddingTop: '1rem',
+            paddingBottom: '1rem',
+            marginTop: '1rem',
+          }}
         />
-      }
 
     </ErrorBounds>
   )
@@ -112,6 +119,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   showHtml?: boolean;
 }
 interface FormikFields {
+  title: string;
   description: string;
 }
 
