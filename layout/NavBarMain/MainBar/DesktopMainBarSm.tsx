@@ -93,7 +93,7 @@ const DesktopMainBarSm = (props: ReactProps & DesktopMainBarProps) => {
         >
           <span className={
             endRoute === 'sell' ? classes.selectedRouteText : null
-          }>
+          } style={{ color: color }}>
             Sell
           </span>
         </Button>
@@ -110,7 +110,7 @@ const DesktopMainBarSm = (props: ReactProps & DesktopMainBarProps) => {
                     <div>
                       <span className={
                         endRoute === '/orders' ? classes.selectedRouteText : null
-                      }>
+                      } style={{ color: color }}>
                         Orders
                       </span>
                     </div>
@@ -130,7 +130,7 @@ const DesktopMainBarSm = (props: ReactProps & DesktopMainBarProps) => {
 
 
         <div className={classes.navbarButton}>
-          <UserMenu loggedIn={loggedIn} />
+          <UserMenu loggedIn={loggedIn} color={color} />
           {
             !loggedIn &&
             <Login/>

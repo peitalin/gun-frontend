@@ -70,7 +70,7 @@ const DesktopMainBarXl = (props: DesktopMainBarProps) => {
               <div>
                 <span className={
                   endRoute === 'sell' ? classes.selectedRouteText : null
-                }>
+                } style={{ color: color }}>
                   Sell
                 </span>
               </div>
@@ -90,7 +90,7 @@ const DesktopMainBarXl = (props: DesktopMainBarProps) => {
                   <div>
                     <span className={
                       endRoute === '/orders' ? classes.selectedRouteText : null
-                    }>
+                    } style={{ color: color }}>
                       Orders
                     </span>
                   </div>
@@ -108,7 +108,7 @@ const DesktopMainBarXl = (props: DesktopMainBarProps) => {
           </div>
       }
 
-      {
+      {/* {
         loggedIn
         ? <Link href="/admin/offers">
             <a className={classes.buttonLink}>
@@ -120,7 +120,7 @@ const DesktopMainBarXl = (props: DesktopMainBarProps) => {
                   <div>
                     <span className={
                       endRoute === '/admin/offers' ? classes.selectedRouteText : null
-                    }>
+                    } style={{ color: color }}>
                       Offers
                     </span>
                   </div>
@@ -136,7 +136,7 @@ const DesktopMainBarXl = (props: DesktopMainBarProps) => {
               }}
             />
           </div>
-      }
+      } */}
 
       {/* <Button
         className={classes.navbarButton}
@@ -157,7 +157,7 @@ const DesktopMainBarXl = (props: DesktopMainBarProps) => {
       </Button> */}
 
       <div className={classes.navbarButton}>
-        <UserMenu loggedIn={loggedIn} />
+        <UserMenu loggedIn={loggedIn} color={color} />
         {
           !loggedIn &&
           <Login/>
@@ -171,6 +171,7 @@ interface DesktopMainBarProps extends WithStyles<typeof styles> {
   endRoute: string;
   loggedIn: boolean;
   color: string;
+  isDarkMode: boolean;
 }
 
 export default withStyles(styles)( DesktopMainBarXl );

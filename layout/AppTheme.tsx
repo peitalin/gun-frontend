@@ -117,7 +117,7 @@ export const Colors = {
   slateGrey: "#EDF0F2",
   slateGreyDark: "#E2E8ED",
   slateGreyDarker: "#D0D5DF",
-  slateGreyDarkest: "#4A6476",
+  slateGreyDarkest: "#B0B5BF",
   slateGreyBlack: "#253848",
   // greyscale
   backgroundColor: backgroundColor,
@@ -241,6 +241,11 @@ export const Gradients = {
     background: `linear-gradient(120deg, ${Colors.lightGrey} 0%, ${Colors.grey} 100%)`,
     color1: Colors.lightGrey,
     color2: Colors.grey,
+  },
+  gradientDarkGrey:  {
+    background: `linear-gradient(120deg, ${Colors.darkGrey55} 0%, ${Colors.charcoal} 80%)`,
+    color1: Colors.darkGrey55,
+    color2: Colors.charcoal,
   },
   gradientUniswapDark:  {
     background: `linear-gradient(140deg, ${Colors.gradientUniswapDark1} 20%, ${Colors.gradientUniswapDark2} 80%)`,
@@ -398,11 +403,10 @@ export const createAppTheme = (darkModeStr: "dark"|"light"): ThemeOptions =>  {
     },
 
     palette: {
-      // type: prefersDarkMode ? 'dark' : 'light',
       // type: true ? 'dark' : 'light',
 
       primary: {
-        main: Colors.uniswapLightestGrey,
+        main: darkMode ? Colors.uniswapLightestGrey : Colors.black,
       },
       secondary: {
         // main: '#EB365D'
@@ -414,10 +418,9 @@ export const createAppTheme = (darkModeStr: "dark"|"light"): ThemeOptions =>  {
       background: {
         // CANNOT BE A linear-gradient background
         // default: Gradients.gradientUniswapDark.background,
-        default: Colors.uniswapDarkNavy,
-        paper: Colors.uniswapDarkNavy,
+        default: darkMode ? Colors.uniswapDarkNavy : Colors.cream,
+        paper: darkMode ? Colors.uniswapDarkNavy : Colors.cream,
       },
-
     },
     typography: {
       fontSize: 16,
@@ -434,7 +437,9 @@ export const createAppTheme = (darkModeStr: "dark"|"light"): ThemeOptions =>  {
         root: {
           color: Colors.uniswapLighterGrey,
           "&:hover": {
-            backgroundColor: `rgba(72, 72, 72, 0.24)`,
+            backgroundColor: darkMode
+              ? `rgba(72, 72, 72, 0.24)`
+              : `rgba(72, 72, 72, 0.24)`,
           },
         }
       },
@@ -465,9 +470,11 @@ export const createAppTheme = (darkModeStr: "dark"|"light"): ThemeOptions =>  {
           fontWeight: 600,
         },
         textPrimary: {
-          color: Colors.uniswapLightestGrey,
+          color: darkMode ? Colors.uniswapLightestGrey : Colors.black,
           "&:hover": {
-            backgroundColor: `rgba(240, 240, 240, 0.20)`,
+            backgroundColor: darkMode
+              ? `rgba(240, 240, 240, 0.20)`
+              : `rgba(200, 200, 200, 0.20)`,
           },
         },
         containedPrimary: {
@@ -518,7 +525,7 @@ export const createAppTheme = (darkModeStr: "dark"|"light"): ThemeOptions =>  {
       },
       MuiInputBase: {
         root: {
-          color: Colors.uniswapLighterGrey,
+          color: darkMode ? Colors.uniswapLighterGrey : Colors.black,
           // "&:hover": {
           //   borderBottom: `1px solid ${Colors.uniswapGrey}`,
           // },
@@ -526,14 +533,14 @@ export const createAppTheme = (darkModeStr: "dark"|"light"): ThemeOptions =>  {
       },
       MuiFormLabel: {
         root: {
-          color: Colors.uniswapLighterGrey,
+          color: darkMode ? Colors.uniswapLighterGrey : Colors.black,
         }
       },
       MuiSvgIcon: {
         root: {
           height: '1.25rem',
           width: '1.25rem',
-          fill: Colors.uniswapLightestGrey,
+          fill: darkMode ? Colors.uniswapLightestGrey : Colors.black,
         }
       },
       MuiBadge: {
@@ -578,23 +585,27 @@ export const createAppTheme = (darkModeStr: "dark"|"light"): ThemeOptions =>  {
       },
       MuiSwitch: {
         thumb: {
-          backgroundColor: Colors.uniswapLightNavy,
-        }
+          // backgroundColor: darkMode ? Colors.uniswapLightNavy : Colors.darkWhite,
+          backgroundColor: darkMode ? Colors.uniswapLightNavy : Colors.uniswapLightNavy,
+        },
+        colorSecondary: {
+          // backgroundColor: darkMode ? Colors.purple : Colors.blue,
+        },
       },
       MuiPaper: {
         root: {
           backgroundColor: darkMode ? Colors.uniswapDarkNavy : Colors.cream,
-          color: darkMode ? Colors.uniswapLighterGrey : Colors.black,
+          color: darkMode ? Colors.uniswapLighterGrey : Colors.charcoal,
         },
       },
       MuiTablePagination: {
         root: {
-          color: darkMode ? Colors.uniswapLighterGrey : Colors.black,
+          color: darkMode ? Colors.uniswapLighterGrey : Colors.charcoal,
         },
       },
       MuiTableCell: {
         head: {
-          color: darkMode ? Colors.uniswapLighterGrey : Colors.black1A,
+          color: darkMode ? Colors.uniswapLighterGrey : Colors.charcoal,
         },
         root: {
           borderBottom: darkMode
@@ -606,6 +617,11 @@ export const createAppTheme = (darkModeStr: "dark"|"light"): ThemeOptions =>  {
       MuiStepLabel: {
         label: {
           color: Colors.uniswapMediumGrey,
+        },
+      },
+      MuiStepIcon: {
+        text: {
+          fill: darkMode ? Colors.uniswapMediumGrey : Colors.cream,
         },
       },
       MuiTypography: {

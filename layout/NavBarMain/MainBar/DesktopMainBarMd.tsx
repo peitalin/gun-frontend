@@ -83,7 +83,7 @@ const DesktopMainBarMd = (props: ReactProps & DesktopMainBarProps) => {
           <div className={classes.flexItem}>
             <span className={
               endRoute === 'sell' ? classes.selectedRouteText : null
-            }>
+            } style={{ color: color }}>
               Sell
             </span>
           </div>
@@ -101,7 +101,7 @@ const DesktopMainBarMd = (props: ReactProps & DesktopMainBarProps) => {
                     <div>
                       <span className={
                         endRoute === '/orders' ? classes.selectedRouteText : null
-                      }>
+                      } style={{ color: color }}>
                         Orders
                       </span>
                     </div>
@@ -119,7 +119,7 @@ const DesktopMainBarMd = (props: ReactProps & DesktopMainBarProps) => {
             </div>
         }
 
-        {
+        {/* {
           loggedIn
           ? <Link href="/admin/offers">
               <a className={classes.buttonLink}>
@@ -131,7 +131,7 @@ const DesktopMainBarMd = (props: ReactProps & DesktopMainBarProps) => {
                     <div>
                       <span className={
                         endRoute === '/admin/offers' ? classes.selectedRouteText : null
-                      }>
+                      } style={{ color: color }}>
                         Offers
                       </span>
                     </div>
@@ -147,11 +147,11 @@ const DesktopMainBarMd = (props: ReactProps & DesktopMainBarProps) => {
                 }}
               />
             </div>
-        }
+        } */}
 
 
         <div className={classes.navbarButton}>
-          <UserMenu loggedIn={loggedIn} />
+          <UserMenu loggedIn={loggedIn} color={color} />
           {
             !loggedIn &&
             <Login/>

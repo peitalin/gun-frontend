@@ -139,7 +139,9 @@ const styles = (theme: Theme) => createStyles({
   section: {
     paddingBottom: '0.5rem',
     marginBottom: '2rem',
-    borderBottom: `1px solid ${Colors.uniswapMediumNavy}`,
+    borderBottom: theme.palette.type === 'dark'
+      ? `1px solid ${Colors.uniswapMediumNavy}`
+      : `1px solid ${Colors.slateGrey}`,
   },
   sectionLast: {
     paddingBottom: '0.5rem',

@@ -45,11 +45,12 @@ const MainBar = (props: ReactProps) => {
     darkMode: state?.reduxLogin?.darkMode,
     loggedIn: !!state?.reduxLogin?.user?.id,
   }));
+  // console.log("router.pathname: ", router.pathname)
 
-  const color = router.pathname === '/'
+  const color = router.pathname === '/' || router.pathname === '/sell'
     ? Colors.cream
     : darkMode === 'dark'
-      ? Colors.cream
+      ? Colors.slateGrey
       : Colors.black
 
   const endRoute = router.pathname.split('/').pop();
@@ -58,6 +59,7 @@ const MainBar = (props: ReactProps) => {
     classes,
     endRoute,
     loggedIn,
+    isDarkMode: darkMode === 'dark',
     color,
   };
 

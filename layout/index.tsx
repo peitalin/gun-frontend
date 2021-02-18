@@ -57,7 +57,9 @@ const Layout: React.FC<ReactProps> = (props) => {
           <ErrorBounds className={classes.flexJustify}>
             <div className={clsx(classes.sellerPageContainer, "fadeIn")}>
               <div className={classes.minWidth240}>
-                <SideRoutesMenu storePrivate={user.store} />
+                <SideRoutesMenu
+                  user={user}
+                />
               </div>
               <div className={classes.flex75}>
                 {props.children}

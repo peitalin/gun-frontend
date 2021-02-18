@@ -2,15 +2,14 @@ import React from "react";
 import { oc as option } from "ts-optchain";
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
-import { GrandReduxState } from 'reduxStore/grand-reducer';
-import { Actions } from 'reduxStore/actions';
+import { GrandReduxState, Actions } from 'reduxStore/grand-reducer';
 import { UserPrivate, Role } from "typings/gqlTypes";
 
 // Router
 import { goToModalConnect } from "utils/modals";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
-import { Colors } from "layout/AppTheme";
+import { Colors, BorderRadius2x, BorderRadius4x } from "layout/AppTheme";
 // MUI
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
@@ -46,13 +45,15 @@ export const UserMenu: React.FC<ReactProps> = (props) => {
     setAnchorEl(null);
   }
 
-  const { classes } = props;
+  const { classes, color } = props;
 
   const [anchorEl, setAnchorEl] = React.useState(null);
 
-  const user = useSelector<GrandReduxState, UserPrivate>(
-    state => state.reduxLogin.user
-  );
+  const {
+    user,
+  } = useSelector<GrandReduxState, ReduxProps>(state => ({
+    user: state?.reduxLogin?.user,
+  }));
 
   const dispatch = useDispatch();
   const goToModal = goToModalConnect(dispatch);
@@ -71,10 +72,12 @@ export const UserMenu: React.FC<ReactProps> = (props) => {
             aria-controls="user-menu"
             aria-haspopup="true"
           >
-            <span className={classes.iconText}>
-              {option(user).firstName("Menu")}
+            <span className={classes.iconText}
+              style={{ color: color }}
+            >
+              {user?.firstName ?? "Menu"}
             </span>
-            <MenuIcon/>
+            <MenuIcon style={{ fill: color }}/>
           </Button>
         </Hidden>
         <Hidden mdUp implementation="css">
@@ -86,7 +89,6 @@ export const UserMenu: React.FC<ReactProps> = (props) => {
             <MenuIcon/>
           </Button>
         </Hidden>
-
 
         <Menu
           classes={{
@@ -103,8 +105,6 @@ export const UserMenu: React.FC<ReactProps> = (props) => {
           open={Boolean(anchorEl)}
           onClose={handleCloseMenu}
         >
-
-
           {
             user.userRole === Role.PLATFORM_ADMIN &&
             <MenuItem className={classes.menuItem} onClick={handleCloseMenu}>
@@ -112,14 +112,15 @@ export const UserMenu: React.FC<ReactProps> = (props) => {
               <Link href="/gov/payouts/pending-approval">
                 <a className={classes.menuLink}>
                   <LibraryBooks className={classes.menuIcon}/>
-                  <span className={classes.menuText}> Governance Dashboard</span>
+                  <span className={classes.menuText}>
+                    Governance Dashboard
+                  </span>
                 </a>
               </Link>
             </MenuItem>
           }
 
           <Divider/>
-
 
           <MenuItem className={classes.menuItem} onClick={handleCloseMenu}>
             {
@@ -156,7 +157,6 @@ export const UserMenu: React.FC<ReactProps> = (props) => {
               </a>
             </Link>
           </MenuItem  className={classes.menuItem}> */}
-
 
           <MenuItem className={classes.menuItem} onClick={handleCloseMenu}>
             <Link href="/settings">
@@ -202,7 +202,7 @@ export const UserMenu: React.FC<ReactProps> = (props) => {
             logout(apolloClient, dispatch)('/')
           }}>
             <a className={classes.menuLink}>
-              <QAIcon className={classes.menuIcon}/>
+              <QAIcon className={classes.menuIcon} />
               <span className={classes.menuText}> Logout </span>
             </a>
           </MenuItem>
@@ -217,10 +217,13 @@ export const UserMenu: React.FC<ReactProps> = (props) => {
 
 interface ReactProps extends WithStyles<typeof styles> {
   loggedIn: boolean;
+  color?: string;
+}
+interface ReduxProps {
+  user: UserPrivate;
 }
 
 /////////////// STYLES /////////////////////
-const menuTextColor = Colors.lightGrey;
 
 const styles = (theme: Theme) => createStyles({
   iconText: {
@@ -231,25 +234,33 @@ const styles = (theme: Theme) => createStyles({
     top: "3rem",
     right: 0,
     width: theme.spacing(32),
-    borderRadius: 16,
-    backgroundColor: Colors.uniswapDarkNavy,
+    borderRadius: BorderRadius2x,
+    backgroundColor: theme.palette.type === 'dark'
+      ? Colors.uniswapDarkNavy
+      : Colors.slateGrey,
   },
   z5001: {
     zIndex: 5001,
   },
   menuText: {
-    color: menuTextColor,
+    color: theme.palette.type === 'dark'
+      ? Colors.lightGrey
+      : Colors.black,
     fontSize: '0.9rem',
-  },
-  menuItem: {
-    "&:hover": {
-      backgroundColor: Colors.uniswapNavy,
-      color: Colors.cream,
-    },
   },
   menuIcon: {
     marginRight: "0.5rem",
-    color: menuTextColor,
+    color: theme.palette.type === 'dark'
+      ? Colors.lightGrey
+      : Colors.black,
+  },
+  menuItem: {
+    "&:hover": {
+      backgroundColor: theme.palette.type === 'dark'
+        ? Colors.uniswapNavy
+        : Colors.slateGreyDarker,
+      color: Colors.cream,
+    },
   },
   menuLink: {
     padding: '0.5rem',

@@ -242,9 +242,9 @@ const styles = (theme: Theme) => createStyles({
     flexDirection: 'column',
     justifyContent: 'space-between',
     // backgroundColor: Colors.mediumBlack,
-    backgroundColor: theme.palette.type === 'dark'
-      ? theme.colors.mediumBlack
-      : theme.colors.ultramarineBlue,
+    background: theme.palette.type === 'dark'
+      ? Gradients.gradientBlack.background
+      : Gradients.gradientDarkGrey.background,
     paddingTop: "4rem",
     color: Colors.cream,
   },
