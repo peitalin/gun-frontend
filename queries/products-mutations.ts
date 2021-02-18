@@ -41,7 +41,7 @@ export const CREATE_PRODUCT = gql`
               licenseNumber
             }
           }
-          currentVariants {
+          featuredVariant {
             variantId
             variantName
             variantDescription
@@ -97,7 +97,7 @@ export const EDIT_PRODUCT = gql`
             licenseNumber
           }
         }
-        currentVariants {
+        featuredVariant {
           variantId
           variantName
           variantDescription
