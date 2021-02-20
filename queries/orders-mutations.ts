@@ -85,14 +85,13 @@ export const REMOVE_FORM_10 = gql`
 `;
 
 
+// ADMIN ONLY
 export const APPROVE_FORM_10 = gql`
   mutation approveForm10(
     $orderId: String!
-    $adminApproverId: String!
   ) {
     approveForm10(
       orderId: $orderId
-      adminApproverId: $adminApproverId
     ) {
       order {
         ...OrdersFragment
@@ -103,14 +102,13 @@ export const APPROVE_FORM_10 = gql`
 `;
 
 
+// ADMIN ONLY
 export const UNAPPROVE_FORM_10 = gql`
   mutation unapproveForm10(
     $orderId: String!
-    $adminApproverId: String!
   ) {
     unapproveForm10(
       orderId: $orderId
-      adminApproverId: $adminApproverId
     ) {
       order {
         ...OrdersFragment
@@ -121,14 +119,13 @@ export const UNAPPROVE_FORM_10 = gql`
 `;
 
 
+// ADMIN ONLY
 export const REVISE_AND_RESUBMIT_FORM_10 = gql`
   mutation reviseAndResubmitForm10(
     $orderId: String!
-    $adminApproverId: String!
   ) {
     reviseAndResubmitForm10(
       orderId: $orderId
-      adminApproverId: $adminApproverId
     ) {
       order {
         ...OrdersFragment
@@ -137,7 +134,6 @@ export const REVISE_AND_RESUBMIT_FORM_10 = gql`
   }
   ${OrdersFragment}
 `;
-
 
 
 

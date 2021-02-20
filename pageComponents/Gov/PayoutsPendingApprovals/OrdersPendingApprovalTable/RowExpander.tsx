@@ -449,7 +449,7 @@ const styles = (theme: Theme) => createStyles({
   backOdd: {
     backgroundColor: Colors.slateGreyDark,
     color: theme.palette.type === 'dark'
-      ? Colors.slateGreyDarkest
+      ? Colors.charcoal
       : Colors.charcoal,
     "&:hover": {
       backgroundColor: Colors.slateGreyDarker,
@@ -459,7 +459,7 @@ const styles = (theme: Theme) => createStyles({
   backEven: {
     backgroundColor: Colors.slateGrey,
     color: theme.palette.type === 'dark'
-      ? Colors.slateGreyDarkest
+      ? Colors.charcoal
       : Colors.charcoal,
     "&:hover": {
       backgroundColor: Colors.slateGreyDarker,

@@ -5006,19 +5006,16 @@ export type MutationRemoveForm10Args = {
 
 export type MutationApproveForm10Args = {
   orderId: Scalars['String'];
-  adminApproverId: Scalars['String'];
 };
 
 
 export type MutationUnapproveForm10Args = {
   orderId: Scalars['String'];
-  adminApproverId: Scalars['String'];
 };
 
 
 export type MutationReviseAndResubmitForm10Args = {
   orderId: Scalars['String'];
-  adminApproverId: Scalars['String'];
 };
 
 
@@ -12766,6 +12763,7 @@ export type UserPrivate = User & {
   userRole: Role;
   buyerOrdersConnection?: Maybe<OrdersConnection>;
   sellerOrdersConnection?: Maybe<OrdersConnection>;
+  sellerOrdersActionItemsConnection?: Maybe<OrdersConnection>;
   paymentMethods?: Maybe<Array<Maybe<Payment_Methods>>>;
   defaultPaymentMethodId?: Maybe<Scalars['ID']>;
   defaultPaymentMethod?: Maybe<Payment_Methods>;
@@ -12792,6 +12790,12 @@ export type UserPrivateBuyerOrdersConnectionArgs = {
 
 /** Private user info */
 export type UserPrivateSellerOrdersConnectionArgs = {
+  query?: Maybe<ConnectionOffsetQueryOrders>;
+};
+
+
+/** Private user info */
+export type UserPrivateSellerOrdersActionItemsConnectionArgs = {
   query?: Maybe<ConnectionOffsetQueryOrders>;
 };
 
