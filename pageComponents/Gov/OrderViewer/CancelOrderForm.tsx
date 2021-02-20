@@ -98,7 +98,9 @@ const styles = (theme: Theme) => createStyles({
   root: {
     padding: '3rem',
     borderRadius: BorderRadius,
-    backgroundColor: Colors.foregroundColor,
+    backgroundColor: theme.palette.type === 'dark'
+      ? Colors.uniswapDarkNavy
+      : Colors.cream,
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -130,8 +132,11 @@ const styles = (theme: Theme) => createStyles({
   },
   cancelButtonEnabled: {
     maxWidth: 250,
+    color: Colors.cream,
     backgroundColor: Colors.red,
+    border: `1px solid ${Colors.magenta}`,
     "&:hover": {
+      border: `1px solid ${Colors.pink}`,
       backgroundColor: lighten(Colors.red,0.1),
     }
   },

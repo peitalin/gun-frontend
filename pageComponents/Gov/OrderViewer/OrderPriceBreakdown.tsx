@@ -302,9 +302,12 @@ const styles = (theme: Theme) => createStyles({
     justifyContent: 'space-between',
     alignItems: 'center',
     height: 40,
-    background: fade(Colors.lightPurple, 0.1),
-    border: `1px solid ${fade(Colors.purple, 0.5)}`,
-    // borderRadius: `${BorderRadius}px`,
+    background: theme.palette.type === 'dark'
+      ? Colors.uniswapMediumNavy
+      : Colors.slateGrey,
+    border: theme.palette.type === 'dark'
+      ? `1px solid ${Colors.uniswapLighterGrey}`
+      : `1px solid ${Colors.darkGrey}`,
   },
   orderSubtitleRow: {
     display: 'flex',
@@ -312,11 +315,15 @@ const styles = (theme: Theme) => createStyles({
     justifyContent: 'space-between',
     alignItems: 'center',
     height: 40,
-    background: fade(Colors.lightPurple, 0.1),
-    border: `1px solid ${fade(Colors.purple, 0.0)}`,
+    background: theme.palette.type === 'dark'
+      ? Colors.uniswapMediumNavy
+      : Colors.slateGrey,
+    border: theme.palette.type === 'dark'
+      ? `1px solid ${Colors.uniswapLighterGrey}`
+      : `1px solid ${Colors.darkGrey}`,
     borderRadius: `${BorderRadius}px`,
     "&:hover": {
-      background: fade(Colors.lightPurple, 0.2),
+      background: fade(Colors.lightBlue, 0.2),
     }
   },
   orderRow: {
@@ -326,21 +333,24 @@ const styles = (theme: Theme) => createStyles({
     alignItems: 'center',
     height: 40,
     // borderRadius: `${BorderRadius}px`,
-    borderBottom: `1px solid ${theme.colors.uniswapLightestGrey}`,
-    borderLeft: `1px solid ${theme.colors.uniswapLightestGrey}`,
-    borderRight: `1px solid ${theme.colors.uniswapLightestGrey}`,
+    border: theme.palette.type === 'dark'
+      ? `1px solid ${Colors.uniswapLightestGrey}`
+      : `1px solid ${Colors.slateGreyDarker}`,
+    borderTop: `none`,
     transition: theme.transitions.create(['border'], {
       easing: theme.transitions.easing.easeIn,
       duration: "100ms",
     }),
     margin: "0rem 0rem",
     "&:hover": {
-      background: fade(Colors.lightPurple, 0.1),
+      background: fade(Colors.lightBlue, 0.1),
     }
   },
   orderCellText: {
     textAlign: 'start',
-    color: theme.colors.uniswapLightestGrey,
+    color: theme.palette.type === 'dark'
+      ? Colors.uniswapLightestGrey
+      : Colors.black,
     textTransform: 'capitalize',
   },
   orderCellRefundText: {

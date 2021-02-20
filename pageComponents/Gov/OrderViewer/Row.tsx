@@ -35,17 +35,23 @@ const styles = (theme: Theme) => createStyles({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    height: 40,
+    height: 50,
     marginBottom: '0.25rem',
-    background: Colors.uniswapMediumNavy,
+    background: theme.palette.type === 'dark'
+      ? Colors.uniswapMediumNavy
+      : Colors.slateGrey,
     "&:hover": {
-      background: fade(Colors.lightPurple, 0.2),
+      background: theme.palette.type === 'dark'
+        ? fade(Colors.lightBlue, 0.3)
+        : fade(Colors.lightBlue, 0.3),
     },
     borderRadius: `${BorderRadius}px`,
   },
   orderHeader: {
-    textAlign: 'center',
-    color: Colors.uniswapLightestGrey,
+    lineHeight: '1.25rem',
+    color: theme.palette.type === 'dark'
+      ? Colors.uniswapLightestGrey
+      : Colors.black,
   },
   orderCol: {
     display: 'flex',
@@ -53,19 +59,21 @@ const styles = (theme: Theme) => createStyles({
     justifyContent: 'center',
     flexGrow: 1,
     padding: '0.5rem',
-    color: Colors.purple,
+    color: theme.palette.type === 'dark'
+      ? Colors.uniswapLightestGrey
+      : Colors.black,
   },
   smallCol: {
     flexBasis: '25%',
     alignItems: 'flex-end',
-    borderRadius: `${BorderRadius}px 0px 0px ${BorderRadius}`,
+    borderRadius: `${BorderRadius}px 0px 0px ${BorderRadius}px`,
     // border: `1px solid ${fade(Colors.purple, 0.5)}`,
   },
   largeCol: {
     flexBasis: '75%',
     alignItems: 'flex-start',
     paddingRight: '1rem',
-    borderRadius: `0px ${BorderRadius}px ${BorderRadius} 0px`,
+    borderRadius: `0px ${BorderRadius}px ${BorderRadius}px 0px`,
   },
 });
 

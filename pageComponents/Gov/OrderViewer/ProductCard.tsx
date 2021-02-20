@@ -195,7 +195,9 @@ const styles = (theme: Theme) => createStyles({
   fieldTitle: {
     fontWeight: 500,
     fontSize: '1rem',
-    color: theme.colors.uniswapLightestGrey,
+    color: theme.palette.type === 'dark'
+      ? Colors.uniswapLightestGrey
+      : Colors.charcoal,
     marginBottom: "0.5rem",
     marginTop: "0.5rem",
   },
@@ -203,13 +205,17 @@ const styles = (theme: Theme) => createStyles({
     fontWeight: 400,
     fontSize: '0.9rem',
     width: '150px',
-    color: theme.colors.uniswapLightestGrey,
+    color: theme.palette.type === 'dark'
+      ? Colors.uniswapLightestGrey
+      : Colors.charcoal,
     marginBottom: "0.5rem",
   },
   fieldInfo: {
     fontSize: '0.9rem',
     fontWeight: 500,
-    color: theme.colors.uniswapLighterGrey,
+    color: theme.palette.type === 'dark'
+      ? Colors.uniswapLighterGrey
+      : Colors.black,
     marginBottom: "0.5rem",
   },
   refundedGrayscale: {

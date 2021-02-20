@@ -448,10 +448,12 @@ export const createAppTheme = (darkModeStr: "dark"|"light"): ThemeOptions =>  {
         root: {
           minWidth: '40px',
           textTransform: 'none',
-          color: Colors.uniswapLightestGrey,
+          color: darkMode ? Colors.uniswapLightestGrey : Colors.black,
           borderRadius: BorderRadius3x,
           "&:hover": {
-            backgroundColor: `rgba(240, 240, 240, 0.20)`,
+            backgroundColor: darkMode
+              ? `rgba(240, 240, 240, 0.20)`
+              : `rgba(140, 140, 140, 0.20)`,
           },
         },
         text: {

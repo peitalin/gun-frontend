@@ -83,6 +83,8 @@ const RowExpander = (props: RowExpanderProps) => {
     ? `${row?.seller?.user?.phoneNumber?.countryCode} ${row?.seller?.user?.phoneNumber?.number}`
     : "NA"
 
+  // console.log("admin: ", admin)
+
   return (
     <>
       <div className={clsx(
@@ -201,7 +203,6 @@ const RowExpander = (props: RowExpanderProps) => {
                       approveForm10({
                         variables: {
                           orderId: row.id, // row.id => order.id
-                          adminApproverId: admin.id, // row.id => order.id
                         }
                       })
                     }}
@@ -231,7 +232,6 @@ const RowExpander = (props: RowExpanderProps) => {
                       reviseAndResubmit({
                         variables: {
                           orderId: row.id, // row.id => order.id
-                          adminApproverId: admin.id, // row.id => order.id
                         }
                       })
                     }}
@@ -317,7 +317,6 @@ interface MutData {
 }
 interface MutVar {
   orderId: string; // row.id => order.id
-  adminApproverId: string;
 }
 
 const styles = (theme: Theme) => createStyles({

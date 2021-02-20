@@ -13,6 +13,7 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   GET_BUYER_ORDERS_CONNECTION,
   GET_SELLER_ORDERS_CONNECTION,
+  GET_SELLER_ORDERS_ACTION_ITEMS_CONNECTION,
 } from "queries/orders-queries";
 
 import Loading from "components/Loading";
@@ -111,6 +112,22 @@ const MyOrders: React.FC<ReactProps> = (props) => {
     overfetchBy: overfetchBy,
   })
 
+  //// SELLER ORDERS ACTION ITEMS Paginator Hooks
+  let {
+    paginationParams: {
+      limit: saiLimit,
+      offset: saiOffset,
+      pageParam: saiPageParam,
+      setPageParam: saiSetPageParam,
+    },
+    index: saiIndex,
+    setIndex: saiSetIndex,
+  } = useFacetSearchOptions({
+    limit: numItemsPerPage * overfetchBy,
+    overfetchBy: overfetchBy,
+  })
+
+
   const buyerOrdersResponse = useQuery<QueryData, QueryVar>(
     GET_BUYER_ORDERS_CONNECTION, {
       variables: {
@@ -137,8 +154,22 @@ const MyOrders: React.FC<ReactProps> = (props) => {
     }
   );
 
+  const sellerOrdersActionItemsResponse = useQuery<QueryData3, QueryVar3>(
+    GET_SELLER_ORDERS_ACTION_ITEMS_CONNECTION, {
+      variables: {
+        query: {
+          limit: saiLimit,
+          offset: saiOffset,
+          orderBy: { createdAt: Order_By.DESC }
+        }
+      },
+      fetchPolicy: "network-only",
+    }
+  );
+
   console.log("buyer data::::: ", buyerOrdersResponse?.data)
   console.log("seller data::::: ", sellerOrdersResponse?.data)
+  console.log("seller action items data::::: ", sellerOrdersResponse?.data)
 
   const buyerOrdersConnection = option(buyerOrdersResponse)
     .data.user.buyerOrdersConnection() || props.initialBuyerOrders;
@@ -146,13 +177,17 @@ const MyOrders: React.FC<ReactProps> = (props) => {
   const sellerOrdersConnection = option(sellerOrdersResponse)
     .data.user.sellerOrdersConnection() || props.initialSellerOrders;
 
+  const sellerOrdersActionItemsConnection = option(sellerOrdersActionItemsResponse)
+    .data.user.sellerOrdersActionItemsConnection();
 
 
   if (
     !option(buyerOrdersConnection).edges[0]() &&
     !option(sellerOrdersConnection).edges[0]() &&
+    !option(sellerOrdersActionItemsConnection).edges[0]() &&
     !buyerOrdersResponse.loading &&
-    !sellerOrdersResponse.loading
+    !sellerOrdersResponse.loading &&
+    !sellerOrdersActionItemsResponse.loading
   ) {
     return (
       <OrdersLayout {...props}>
@@ -235,6 +270,74 @@ const MyOrders: React.FC<ReactProps> = (props) => {
         </OrdersSection>
 
 
+        {
+          (sellerOrdersActionItemsConnection?.totalCount > 0) &&
+          <>
+            <div className={classes.divider}/>
+            <OrdersSection
+              classes={props.classes}
+              title={"Your Urgent Action Items"}
+            >
+              <SearchOptions
+                paginationParams={{
+                  totalCount: sellerOrdersActionItemsConnection?.totalCount,
+                  overfetchBy: overfetchBy,
+                  limit: saiLimit,
+                  pageParam: saiPageParam,
+                  setPageParam: saiSetPageParam,
+                  index: saiIndex,
+                  setIndex: saiSetIndex,
+                }}
+                updateSetPageDelay={0}
+                disableSearchFilter
+                disableSortby
+                disablePriceFilter
+                disableCategories
+                maxCategoryInputWidth={250}
+                topSectionStyles={{
+                  justifyContent: 'flex-end',
+                  alignItems: 'flex-end',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  marginTop: '1rem',
+                  paddingRight: '1rem',
+                }}
+                bottomSectionStyles={{
+                  marginBottom: '1rem',
+                }}
+              >
+                <GridPaginatorGeneric<Orders>
+                  index={saiIndex}
+                  connection={sellerOrdersActionItemsConnection}
+                  totalCount={sellerOrdersActionItemsConnection?.totalCount ?? 0}
+                  numItemsPerPage={numItemsPerPage}
+                  className={classes.rowContainer}
+                  classNameRoot={classes.gridRootSeller}
+                >
+                  {({ node: order, key }) => {
+                    if (sellerOrdersActionItemsResponse.error && key === 0) {
+                      return (
+                        <ErrorDisplay title={"Orders couldn't load."}
+                          error={sellerOrdersActionItemsResponse.error}
+                        />
+                      )
+                    } else {
+                      return (
+                        <OrderRowSellers
+                          key={order.id}
+                          order={order}
+                          loading={sellerOrdersActionItemsResponse.loading}
+                        />
+                      )
+                    }
+                  }}
+                </GridPaginatorGeneric>
+              </SearchOptions>
+            </OrdersSection>
+          </>
+        }
+
+
         <div className={classes.divider}/>
 
 
@@ -297,6 +400,7 @@ const MyOrders: React.FC<ReactProps> = (props) => {
               }}
             </GridPaginatorGeneric>
           </SearchOptions>
+
         </OrdersSection>
 
       </OrdersLayout>
@@ -361,6 +465,11 @@ interface QueryData2 {
   user: UserPrivate
 }
 interface QueryVar2 {
+}
+interface QueryData3 {
+  user: UserPrivate
+}
+interface QueryVar3 {
 }
 
 
