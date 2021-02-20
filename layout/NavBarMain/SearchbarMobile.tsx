@@ -54,8 +54,12 @@ const Searchbar = (props: SearchbarProps) => {
             variant="text"
             color="primary"
             onClick={handleClickSearch}
+            style={{ color: color }}
           >
-            <SearchIcon className={classes.searchIconOuter}/>
+            <SearchIcon
+              className={classes.searchIconOuter}
+              style={{ fill: color }}
+            />
           </Button>
           <InputBase
             value={value}

@@ -31,14 +31,15 @@ export const MobileMenuDropdown: React.FC<ReactProps> = (props) => {
 
   const {
     mobileMenuOpen,
-    setMobileMenuOpen
+    setMobileMenuOpen,
+    classes,
+    color
   } = props;
 
   function toggleMenuOpen(event) {
     setMobileMenuOpen(s => !s);
   }
 
-  const { classes } = props;
   const dispatch = useDispatch();
 
   return (
@@ -50,8 +51,8 @@ export const MobileMenuDropdown: React.FC<ReactProps> = (props) => {
       >
         {
           mobileMenuOpen
-          ? <ClearIcon/>
-          : <MenuIcon/>
+          ? <ClearIcon style={{ fill: color }} />
+          : <MenuIcon style={{ fill: color }} />
         }
       </Button>
       <MobileMenuExpander classes={classes}
@@ -95,6 +96,7 @@ const MobileMenuExpander: React.FC<MobileMenuExpanderProps> = (props) => {
 
 interface ReactProps extends WithStyles<typeof styles> {
   loggedIn: boolean;
+  color?: string;
   mobileMenuOpen: boolean;
   setMobileMenuOpen(f: (s: boolean) => boolean): void;
 }
@@ -119,8 +121,12 @@ const styles = (theme: Theme) => createStyles({
     left: '0.5rem',
     width: 'calc(100% - 1rem)',
     borderRadius: BorderRadius,
-    background: Colors.uniswapDarkNavy,
-    border: `1px solid ${Colors.uniswapMediumNavy}`,
+    background: theme.palette.type === 'dark'
+      ? Colors.uniswapDarkNavy
+      : Colors.cream,
+    border: theme.palette.type === 'dark'
+      ? `1px solid ${Colors.uniswapMediumNavy}`
+      : `1px solid ${Colors.black}`,
     // transform: "translateX(-100%)",
     // opacity: 0,
     // transition: theme.transitions.create(['all'], {

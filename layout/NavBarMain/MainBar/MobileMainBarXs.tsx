@@ -52,6 +52,7 @@ const MobileMainBar = (props: MobileMainBarProps) => {
         <div className={classes.navbarButtonMobile}>
           <MobileMenuDropdown
             loggedIn={loggedIn}
+            color={color}
             mobileMenuOpen={props.mobileMenuOpen}
             setMobileMenuOpen={props.setMobileMenuOpen}
           />
@@ -78,7 +79,9 @@ const MobileMainBar = (props: MobileMainBarProps) => {
           <span className={clsx(
             classes.buttonText,
             endRoute === 'sell' ? classes.selectedRouteText : null
-          )}>
+          )}
+            style={{ color: color }}
+          >
             Sell
           </span>
         </Button>
@@ -129,8 +132,12 @@ const MobileMainBar = (props: MobileMainBarProps) => {
             >
               <div>
                 <span className={
-                  endRoute === '/admin/products' ? classes.selectedRouteText : null
-                }>
+                    endRoute === '/admin/products'
+                      ? classes.selectedRouteText
+                      : null
+                  }
+                  style={{ color: color }}
+                >
                   Store
                 </span>
               </div>
@@ -141,7 +148,7 @@ const MobileMainBar = (props: MobileMainBarProps) => {
                 buttonText={"Store"}
                 titleLogin={"Login to continue"}
                 buttonProps={{
-                  color: "primary",
+                  style: { color: color }
                 }}
               />
             </div>

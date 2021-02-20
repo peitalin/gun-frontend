@@ -102,7 +102,7 @@ const DesktopMainBarXl = (props: DesktopMainBarProps) => {
               buttonText={"Orders"}
               titleLogin={"Login to continue"}
               buttonProps={{
-                color: "primary",
+                style: { color: color }
               }}
             />
           </div>
@@ -132,7 +132,7 @@ const DesktopMainBarXl = (props: DesktopMainBarProps) => {
               buttonText={"Offers"}
               titleLogin={"Login to continue"}
               buttonProps={{
-                color: "primary",
+                style: { color: color }
               }}
             />
           </div>
@@ -160,7 +160,11 @@ const DesktopMainBarXl = (props: DesktopMainBarProps) => {
         <UserMenu loggedIn={loggedIn} color={color} />
         {
           !loggedIn &&
-          <Login/>
+          <Login
+            buttonProps={{
+              style: { color: color }
+            }}
+          />
         }
       </div>
     </div>

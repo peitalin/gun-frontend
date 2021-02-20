@@ -51,7 +51,7 @@ const MainBar = (props: ReactProps) => {
     ? Colors.cream
     : darkMode === 'dark'
       ? Colors.slateGrey
-      : Colors.black
+      : Colors.cream
 
   const endRoute = router.pathname.split('/').pop();
 

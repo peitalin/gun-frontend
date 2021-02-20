@@ -100,7 +100,6 @@ const DesktopMainBarLg = (props: DesktopMainBarProps) => {
                 <Button
                     className={classes.navbarButton}
                     variant={"text"}
-                    color="primary"
                   >
                     <div>
                       <span className={
@@ -117,7 +116,7 @@ const DesktopMainBarLg = (props: DesktopMainBarProps) => {
                 buttonText={"Orders"}
                 titleLogin={"Login to continue"}
                 buttonProps={{
-                  color: "primary",
+                  style: { color: color }
                 }}
               />
             </div>
@@ -129,18 +128,18 @@ const DesktopMainBarLg = (props: DesktopMainBarProps) => {
           ? <Link href="/admin/offers">
               <a className={classes.buttonLink}>
                 <Button
-                    className={classes.navbarButton}
-                    variant={"text"}
-                    color="primary"
-                  >
-                    <div>
-                      <span className={
-                        endRoute === '/admin/offers' ? classes.selectedRouteText : null
-                      } style={{ color: color }}>
-                        Offers
-                      </span>
-                    </div>
-                  </Button>
+                  className={classes.navbarButton}
+                  variant={"text"}
+                  color="primary"
+                >
+                  <div>
+                    <span className={
+                      endRoute === '/admin/offers' ? classes.selectedRouteText : null
+                    } style={{ color: color }}>
+                      Offers
+                    </span>
+                  </div>
+                </Button>
               </a>
             </Link>
           : <div className={classes.buttonMarginRight}>
@@ -148,7 +147,7 @@ const DesktopMainBarLg = (props: DesktopMainBarProps) => {
                 buttonText={"Offers"}
                 titleLogin={"Login to continue"}
                 buttonProps={{
-                  color: "primary",
+                  style: { color: color }
                 }}
               />
             </div>
@@ -159,7 +158,11 @@ const DesktopMainBarLg = (props: DesktopMainBarProps) => {
           <UserMenu loggedIn={loggedIn} color={color} />
           {
             !loggedIn &&
-            <Login/>
+            <Login
+              buttonProps={{
+                style: { color: color }
+              }}
+            />
           }
         </div>
       </div>
