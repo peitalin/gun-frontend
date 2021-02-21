@@ -1,5 +1,4 @@
 import React from "react";
-import { oc as option } from "ts-optchain";
 import clsx from "clsx";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
@@ -10,7 +9,7 @@ import ErrorBounds from "components/ErrorBounds";
 import Loading from "components/Loading";
 // Material UI
 import Typography from "@material-ui/core/Typography";
-import SellerProfile from "pageComponents/P/ProductDetails/SellerProfile";
+import ProductModelMake from "pageComponents/P/ProductDetails/ProductModelMake";
 import { SelectedVariantProps } from "../ProductId";
 // redux
 import { useSelector, useDispatch } from "react-redux";
@@ -25,7 +24,6 @@ const ProductDescription = dynamic(
     ssr: false,
   }
 )
-import CreateOfferSubscription from "./CreateOfferSubscription";
 
 
 
@@ -45,20 +43,14 @@ const ProductDetails = (props: ReactProps) => {
   return (
     <div className={classes.productDetailsContainer}>
       {
-        option(props).product.store() &&
-        <SellerProfile store={props.product.store}/>
+        props?.product?.currentSnapshot &&
+        <ProductModelMake product={props.product}/>
       }
       {
-        option(props).product.currentSnapshot.description() &&
+        props?.product?.currentSnapshot?.description &&
         <ProductDescription
+          productName={props.product?.currentSnapshot?.title}
           productDescription={props.product?.currentSnapshot?.description}
-        />
-      }
-      {
-        option(user).id() &&
-        <CreateOfferSubscription
-          userId={user.id}
-          product={option(props).product()}
         />
       }
     </div>
@@ -78,10 +70,11 @@ interface QueryVar {
 
 const styles = (theme: Theme) => createStyles({
   productDetailsContainer: {
-    height: "100%",
     position: "relative",
     wordWrap: 'break-word',
     marginBottom: '4rem',
+    paddingLeft: '1rem',
+    paddingRight: '1rem',
   },
   title: {
     marginTop: '1.5rem',

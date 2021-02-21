@@ -5,7 +5,7 @@ import clsx from "clsx";
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 // GraphQL
 import { Product } from "typings/gqlTypes";
-import { Colors } from "layout/AppTheme";
+import { Colors, BorderRadius, BoxShadows } from "layout/AppTheme";
 // Material UI
 import Typography from "@material-ui/core/Typography";
 import { WHITE_SPACE_FOR_P_TAGS } from "components/TextEditor/globalWhiteSpaceSetting";
@@ -22,7 +22,6 @@ const ProductDescription = (props: ReactProps) => {
   return (
     <div className={clsx(
         classes.descriptionContainer,
-        props.removeTopBorder ? null : classes.topBorder,
       )}
       style={props.containerStyle}
     >
@@ -30,7 +29,7 @@ const ProductDescription = (props: ReactProps) => {
         className={classes.title}
         style={props.titleStyle}
       >
-        { props.productName ?? "Description" }
+        { "Description" }
       </Typography>
       <Typography
         variant="body1"
@@ -39,7 +38,9 @@ const ProductDescription = (props: ReactProps) => {
         )}
       >
         <span
-          style={{ whiteSpace: WHITE_SPACE_FOR_P_TAGS }}
+          style={{
+            whiteSpace: WHITE_SPACE_FOR_P_TAGS
+          }}
           dangerouslySetInnerHTML={{
             __html: String(props.productDescription ?? "")
           }}
@@ -54,7 +55,6 @@ interface ReactProps extends WithStyles<typeof styles> {
   productName?: string;
   titleStyle?: any;
   containerStyle?: any;
-  removeTopBorder?: boolean;
 }
 
 const styles = (theme: Theme) => createStyles({
@@ -62,23 +62,28 @@ const styles = (theme: Theme) => createStyles({
     position: "relative",
     wordWrap: 'break-word',
     marginTop: '1rem',
-    paddingTop: '2rem',
-    paddingBottom: '1rem',
-    // outlineOffset: '-2px',
-    // outline: '2px dashed #28A',
+    padding: '1rem',
+    border: theme.palette.type === 'dark'
+      ? `1px solid ${theme.colors.uniswapGrey}`
+      : `1px solid ${Colors.slateGreyDarker}`,
+    borderRadius: BorderRadius,
+    background: theme.palette.type === 'dark'
+      ? Colors.uniswapDarkNavy
+      : Colors.cream,
+    boxShadow: theme.palette.type === 'dark'
+      ? BoxShadows.shadow3.boxShadow
+      : 'unset',
   },
   title: {
-    marginBottom: '1rem',
+    marginTop: '0.5rem',
     fontWeight: 500,
-  },
-  topBorder: {
-    borderTop: theme.palette.type === 'dark'
-      ? `1px solid ${theme.colors.uniswapGrey}`
-      : `1px solid ${theme.colors.slateGrey}`,
   },
   productDescription: {
     maxHeight: "33vh",
     overflowY: 'hidden',
+    color: theme.palette.type === 'dark'
+      ? Colors.uniswapLighterGrey
+      : Colors.slateGreyLightBlack,
   },
 });
 
