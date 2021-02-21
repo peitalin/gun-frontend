@@ -11,12 +11,12 @@ import Dialog from "@material-ui/core/Dialog";
 // Material UI
 import AspectRatioConstraint from "components/AspectRatioConstraint";
 import PreviewImageFeatured from "../PreviewImageFeatured";
-import ThumbnailImage from "../ThumbnailImage";
 import ImageInModal from "./ImageInModal";
 import VideoInModal from "./VideoInModal";
 import FeaturedVideo from "../FeaturedVideo";
 
-import SwipeableViews from 'components/Swiper/SwipeableViews';
+// import SwipeableViews from 'react-swipeable-views';
+import SwipeableViews from "components/Swiper/SwipeableViews";
 import { bindKeyboard } from 'react-swipeable-views-utils';
 const BindKeyboardSwipeableViews = bindKeyboard(SwipeableViews);
 //
@@ -35,9 +35,6 @@ const SwipeableModalPreviews = (props: ReactProps) => {
     isMobile = false,
   } = props;
 
-  const imageId = option(previewItem).image.original.id()
-
-
   const previewItems = option(props).product.featuredVariant.previewItems([])
     .filter(p =>
       option(p).image.original.id() !== undefined ||
@@ -48,7 +45,7 @@ const SwipeableModalPreviews = (props: ReactProps) => {
   return (
     <>
       <BindKeyboardSwipeableViews
-        enableMouseEvents={true}
+        enableMouseEvents={false} //disable drag
         index={props.index}
         onChangeIndex={(indexNew, indexLatest) => {
           if (!isMobile && props.setIndex) {
@@ -67,14 +64,25 @@ const SwipeableModalPreviews = (props: ReactProps) => {
                 </div>
               )
             } else {
-              return (
-                <ImageInModal
-                  key={i}
-                  previewItem={previewItem}
-                  onClick={() => closeModal(imageId)}
-                  showLoadingBar={false}
-                />
-              )
+              // only load image for current index on carousel
+              if (props.index === i) {
+                return (
+                  <ImageInModal
+                    key={i}
+                    previewItem={previewItem}
+                    showLoadingBar={false}
+                  />
+                )
+              } else {
+                // otherwise render an empty placeholder
+                return (
+                  <ImageInModal
+                    key={i}
+                    previewItem={undefined}
+                    showLoadingBar={false}
+                  />
+                )
+              }
             }
           })
         }

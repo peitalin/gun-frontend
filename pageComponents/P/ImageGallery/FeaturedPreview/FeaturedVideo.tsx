@@ -6,7 +6,7 @@ import { styles } from "./styles";
 import { Colors } from "layout/AppTheme";
 // Typings
 import { Product_Preview_Items } from "typings/gqlTypes";
-import { generateYouTubeVimeoEmbedLink } from "utils/links";
+import { generateYouTubeVimeoEmbedLink, extractYoutubeVimeoId } from "utils/links";
 // Components
 import AspectRatioConstraint from "components/AspectRatioConstraint";
 // media query
@@ -26,9 +26,7 @@ const FeaturedVideo = (props: ReactProps) => {
     previewItem,
   } = props;
 
-  let videoUrl = generateYouTubeVimeoEmbedLink(
-    option(previewItem).youTubeEmbedLink("")
-  );
+  let videoId = extractYoutubeVimeoId(previewItem?.youTubeEmbedLink)
 
   const theme = useTheme();
   const xsDown = useMediaQuery(theme.breakpoints.down('xs'));
@@ -39,7 +37,7 @@ const FeaturedVideo = (props: ReactProps) => {
       <div className={classes.featuredImageRoot}>
         <div className={classes.card}>
           <YouTube
-            videoId={option(previewItem).youTubeEmbedLink("").split("?v=")[1]}
+            videoId={videoId}
             className={classes.cardMedia}
             containerClassName={classes.cardActionArea}
             // opts={obj}

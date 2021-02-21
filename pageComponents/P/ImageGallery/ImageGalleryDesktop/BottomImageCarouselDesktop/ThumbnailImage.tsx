@@ -2,9 +2,9 @@ import React from "react";
 import clsx from "clsx";
 import { oc as option } from "ts-optchain";
 import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
-import { Colors } from "layout/AppTheme";
+import { Colors, BorderRadius } from "layout/AppTheme";
 // Typings
-import { Product_Preview_Items } from "typings/gqlTypes";
+import { ProductPreviewItem } from "typings/gqlTypes";
 import { genSrcSet, genImgBreakpoints } from "utils/images";
 import Loading from "components/Loading";
 import LoadingBar from "components/LoadingBar";
@@ -14,6 +14,8 @@ import CardActionArea from "@material-ui/core/CardActionArea";
 import CardMedia from "@material-ui/core/CardMedia";
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
+// Analytics
+import { useAnalytics, analyticsEvent } from "utils/analytics";
 
 
 
@@ -23,14 +25,21 @@ const ThumbnailImage: React.FC<ReactProps> = (props) => {
   const {
     classes,
     previewItem,
+    carouselSize = false,
     showLoadingBar = false,
   } = props;
   const image = option(previewItem).image();
+
+  // const portraitMode = option(image).original.heightInPixels()
+  //                     > option(image).original.widthInPixels()
 
   const theme = useTheme();
   const xsDown = useMediaQuery(theme.breakpoints.down("xs"));
 
   let loading = (!imgLoaded || !previewItem);
+  // console.log("previewItem", previewItem)
+  // console.log("imgLoaded", imgLoaded)
+  // console.log("loading", loading)
 
   React.useEffect(() => {
     // React BUG: all event fired before hydration are lost.
@@ -45,13 +54,34 @@ const ThumbnailImage: React.FC<ReactProps> = (props) => {
     <Card className={classes.card}>
       <CardActionArea
         onClick={props.onClick}
-        classes={{ root: classes.cardActionAreaWide }}
+        // classes={{
+        //   root: !portraitMode
+        //     ? classes.cardActionAreaWide
+        //     : classes.cardActionAreaTall
+        // }}
+        classes={{
+          root: classes.cardActionAreaWide
+        }}
       >
         {
           option(image).original.url() &&
           <CardMedia
             component="img"
-            classes={{ media: classes.cardMediaWide }}
+            // className={loading ? 'shimmer' : null}
+            // classes={{
+            //   media: !portraitMode
+            //     ? classes.cardMediaWide
+            //     : (xsDown && portraitMode)
+            //       ? clsx(classes.cardMediaTall, classes.cardImg)
+            //       : classes.cardMediaTall,
+            // }}
+            classes={{
+              media: classes.cardMediaWide
+              // media: carouselSize
+              //     ? classes.cardMediaWide80
+              //     : classes.cardMediaWide
+
+            }}
             onLoad={() => setImgLoaded(s => s + 1)}
             src={option(image).original.url()}
             srcSet={
@@ -73,7 +103,7 @@ const ThumbnailImage: React.FC<ReactProps> = (props) => {
           showLoadingBar &&
           <LoadingBar
             absoluteTop
-            color={Colors.gradientUniswapBlue1}
+            color={Colors.magenta}
             height={4}
             width={'100vw'}
             loading={true}
@@ -85,15 +115,18 @@ const ThumbnailImage: React.FC<ReactProps> = (props) => {
 }
 
 interface ReactProps extends WithStyles<typeof styles> {
-  previewItem?: Product_Preview_Items;
+  previewItem?: ProductPreviewItem;
   onClick?(a: any): void;
+  carouselSize?: boolean;
   showLoadingBar?: boolean;
 }
 
+// const patternColor = fade(Colors.black, 0.9);
+// const backgroundColor = Colors.black;
 
 const styles = (theme: Theme) => createStyles({
   card: {
-    borderRadius: "1px",
+    borderRadius: BorderRadius,
     width: "100%",
     height: '100%',
     backgroundColor: Colors.lightestGrey,
@@ -101,6 +134,7 @@ const styles = (theme: Theme) => createStyles({
       easing: theme.transitions.easing.sharp,
       duration: "200ms",
     }),
+    boxShadow: "unset",
   },
   cardActionAreaWide: {
     height: '100%',

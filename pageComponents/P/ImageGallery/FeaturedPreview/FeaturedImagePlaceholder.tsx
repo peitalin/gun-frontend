@@ -18,13 +18,11 @@ import { useTheme } from '@material-ui/core/styles';
 
 const FeaturedImagePlaceholder = (props: ReactProps) => {
 
-  const [imgModalLoaded, setImgModalLoaded] = React.useState(0);
   const theme = useTheme();
   const xsDown = useMediaQuery(theme.breakpoints.down('xs'));
 
   const {
     classes,
-    previewItem,
   } = props;
 
   return (
@@ -34,8 +32,9 @@ const FeaturedImagePlaceholder = (props: ReactProps) => {
         xsDown ? classes.featuredImageRootXSDown : null
       )}>
         <PreviewImageFeatured
-          previewItem={previewItem}
+          previewItem={undefined}
           showLoadingBar={true}
+          transitioning={props.transitioning}
         />
       </div>
     </AspectRatioConstraint>
@@ -43,8 +42,8 @@ const FeaturedImagePlaceholder = (props: ReactProps) => {
 }
 
 interface ReactProps extends WithStyles<typeof styles> {
-  previewItem?: Product_Preview_Items;
   onClick?(a: any): void;
+  transitioning?: boolean;
 }
 
 

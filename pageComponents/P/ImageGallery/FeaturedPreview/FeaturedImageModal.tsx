@@ -13,18 +13,18 @@ import AspectRatioConstraint from "components/AspectRatioConstraint";
 // Featured Preview
 import PreviewImageFeatured from "./PreviewImageFeatured";
 import FeaturedVideo from "./FeaturedVideo";
-// carousel thumbnails
-import ThumbnailImage from "./ThumbnailImage";
 // modal components
 import ImageInModal from "./InModal/ImageInModal";
 import VideoInModal from "./InModal/VideoInModal";
+import FeaturedImagePlaceholder from "./FeaturedImagePlaceholder";
 import SwipeableModalPreviews from "./InModal/SwipeableModalPreviews";
 // media query
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
 import { lgUpMediaQuery } from "../../common";
 
-import SwipeableViews from 'components/Swiper/SwipeableViews';
+// import SwipeableViews from 'react-swipeable-views';
+import SwipeableViews from "components/Swiper/SwipeableViews";
 import { bindKeyboard } from 'react-swipeable-views-utils';
 const BindKeyboardSwipeableViews = bindKeyboard(SwipeableViews);
 
@@ -64,77 +64,100 @@ const FeaturedImageModal = (props: ReactProps) => {
         classes.featuredImageRoot,
         xsDown ? classes.featuredImageRootXSDown : null
       )}>
-        <BindKeyboardSwipeableViews
-          enableMouseEvents={false}
-          index={props.index}
-          onChangeIndex={(indexNew, indexLatest) => {
-            if (!isMobile && props.setIndex) {
-              props.setIndex(indexNew)
-            }
-          }}
-          containerStyle={{ height: '100%', width: '100%' }}
-          style={{ height: '100%', width: '100%' }}
-        >
-          {
-            previewItems.map(( previewItem, i ) => {
-              if (!!previewItem.youTubeEmbedLink) {
-                return (
-                  <FeaturedVideo key={i} previewItem={previewItem} />
-                )
-              } else {
-                return (
-                  <ThumbnailImage
-                    key={i}
-                    previewItem={previewItem}
-                    showLoadingBar={false}
-                  />
-                )
-                // return (
-                //   <PreviewImageFeatured
-                //     key={i}
-                //     previewItem={previewItem}
-                //     onClick={() => {
-                //       openModal(imageId)
-                //     }}
-                //     showLoadingBar={false}
-                //   />
-                // )
+        {
+          isMobile
+          ? <PreviewImageFeatured
+              previewItem={previewItem}
+              onClick={() => openModal(imageId)}
+              showLoadingBar={false}
+            />
+          : <BindKeyboardSwipeableViews
+              enableMouseEvents={false}
+              index={props.index}
+              onChangeIndex={(indexNew, indexLatest) => {
+                if (!isMobile && props.setIndex) {
+                  props.setIndex(indexNew)
+                }
+              }}
+              slideStyle={{
+                background: Colors.black,
+              }}
+              containerStyle={{
+                height: '100%',
+                width: '100%',
+                // background: Colors.black,
+              }}
+              style={{
+                height: '100%',
+                width: '100%',
+                // backgroundColor: Colors.black,
+              }}
+            >
+              {
+                previewItems.map(( previewItem, i ) => {
+                  if (!!previewItem.youTubeEmbedLink) {
+                    return (
+                      <FeaturedVideo key={i} previewItem={previewItem} />
+                    )
+                  } else {
+                    // only load image for current index on carousel
+                    if (props.index === i) {
+                      return (
+                        <PreviewImageFeatured
+                          className={"fadeIn"}
+                          key={i}
+                          previewItem={previewItem}
+                          onClick={() => {
+                            openModal(imageId)
+                          }}
+                          showLoadingBar={false}
+                        />
+                      )
+                    } else {
+                      // otherwise render an empty placeholder
+                      // transitioning: shows a black background for fadeIn
+                      return (
+                        <FeaturedImagePlaceholder key={i} transitioning={true}/>
+                      )
+                    }
+                  }
+                })
               }
-            })
-          }
-        </BindKeyboardSwipeableViews>
+            </BindKeyboardSwipeableViews>
+        }
 
-        {/* <Dialog
-          open={option(openedModals)([]).includes(imageId)}
-          onClose={() => closeModal(imageId)}
-          // full height
-          fullScreen={false}
-          fullWidth={false}
-          maxWidth={"xl"}
-          BackdropProps={{
-            classes: { root: classes.modalBackdrop }
-          }}
-          PaperProps={{
-            classes: {
-              root: mdUp
-                ? classes.modalPaperScrollPaper
-                : classes.modalPaperScrollPaperSm
-            }
-          }}
-          scroll="body"
-        >
-          <div className={classes.modalContainer}>
-            <div className={clsx(classes.paper, classes.paperLoaded)}>
-            {
-              isMobile
-              ? <div className={classes.imageInModalContainer}>
-                  <img // click this image to close modal
-                    className={classes.imageInModal}
-                    src={imageUrl}
-                    onClick={() => closeModal(imageId)}
-                  />
-                </div>
-              : <SwipeableModalPreviews
+
+        {
+          !isMobile &&
+          <Dialog
+            open={option(openedModals)([]).includes(imageId)}
+            onClose={(event: object, reason: string) => {
+              if (
+                reason === "backdropClick" ||
+                reason === "escapeKeyDown"
+              ) {
+                closeModal(imageId)
+              }
+            }}
+            // full height
+            fullScreen={false}
+            fullWidth={false}
+            maxWidth={"xl"}
+            BackdropProps={{
+              classes: { root: classes.modalBackdrop }
+            }}
+            PaperProps={{
+              classes: {
+                root: mdUp
+                  ? classes.modalPaperScrollPaper
+                  : classes.modalPaperScrollPaperSm
+              }
+            }}
+            scroll="body"
+          >
+            <div className={classes.modalContainer}>
+              <div className={clsx(classes.paper, classes.paperLoaded)}>
+                <SwipeableModalPreviews
                   previewItem={previewItem}
                   closeModal={closeModal}
                   isMobile={false}
@@ -142,10 +165,10 @@ const FeaturedImageModal = (props: ReactProps) => {
                   index={props.index}
                   setIndex={props.setIndex}
                 />
-            }
+              </div>
             </div>
-          </div>
-        </Dialog> */}
+          </Dialog>
+        }
 
       </div>
     </AspectRatioConstraint>

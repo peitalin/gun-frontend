@@ -1,5 +1,5 @@
 import { createStyles, Theme, fade } from "@material-ui/core/styles";
-import { fontFam, Colors } from "layout/AppTheme";
+import { fontFam, Colors, BorderRadius } from "layout/AppTheme";
 
 
 export const styles = (theme: Theme) => createStyles({
@@ -10,8 +10,10 @@ export const styles = (theme: Theme) => createStyles({
     justifyContent: "center",
     display: "flex",
     flexDirection: "row",
-    borderRadius: "4px",
-    backgroundColor: Colors.lightestGrey,
+    borderRadius: BorderRadius,
+    backgroundColor: theme.palette.type === 'dark'
+      ? Colors.uniswapDarkNavy
+      : Colors.lightestGrey,
   },
   // featuredImageRootXSDown: {
   //   position: 'absolute',
@@ -55,7 +57,8 @@ export const styles = (theme: Theme) => createStyles({
   modalPaperScrollPaper: {
     backgroundColor: 'rgba(0,0,0,0)',
     boxShadow: 'unset',
-    pointerEvents: 'none',
+    // pointerEvents: 'none', // click-through image to close modal
+    // position: 'fixed',
     // allow click through on portrait images to close modal
   },
   videoInModalContainer: {

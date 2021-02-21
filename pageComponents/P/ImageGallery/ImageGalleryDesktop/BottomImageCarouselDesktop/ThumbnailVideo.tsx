@@ -1,7 +1,7 @@
 import React from "react";
 import clsx from "clsx";
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
-import { fontFam, Colors } from "layout/AppTheme";
+import { fontFam, Colors, BorderRadius } from "layout/AppTheme";
 // Material UI
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
@@ -91,17 +91,17 @@ interface ReactProps extends WithStyles<typeof styles> {
 
 export const styles = (theme: Theme) => createStyles({
   imagePreviewPlaceholder: {
-    borderRadius: "4px",
+    borderRadius: BorderRadius,
     height: '100px',
     width: '150px',
   },
   imagePreview: {
-    borderRadius: "4px",
+    borderRadius: BorderRadius,
     height: 100,
     width: 150,
   },
   card: {
-    borderRadius: "1px",
+    borderRadius: BorderRadius,
     width: "100%",
     boxShadow: 'none',
   },
@@ -116,7 +116,7 @@ export const styles = (theme: Theme) => createStyles({
     color: "#7C858E"
   },
   cardOuter: {
-    borderRadius: "1px",
+    borderRadius: BorderRadius,
     height: "100%",
   },
   cardMediaVideo: {

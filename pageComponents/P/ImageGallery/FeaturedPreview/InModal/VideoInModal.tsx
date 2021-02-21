@@ -32,7 +32,6 @@ const VideoInModal: React.FC<ReactProps> = (props) => {
   const theme = useTheme();
   const xsDown = useMediaQuery(theme.breakpoints.down("xs"));
 
-
   return (
     <Card className={classes.card}>
       <CardActionArea

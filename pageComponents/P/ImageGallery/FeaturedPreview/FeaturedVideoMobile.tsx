@@ -2,7 +2,7 @@ import React from "react";
 import clsx from "clsx";
 import { oc as option } from "ts-optchain";
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
-import { Colors } from "layout/AppTheme";
+import { Colors, BorderRadius } from "layout/AppTheme";
 // Typings
 import { Product_Preview_Items } from "typings/gqlTypes";
 // Material UI
@@ -10,6 +10,7 @@ import { Product_Preview_Items } from "typings/gqlTypes";
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
 import YouTube from 'react-youtube';
+import { generateYouTubeVimeoEmbedLink, extractYoutubeVimeoId } from "utils/links";
 
 
 
@@ -25,19 +26,18 @@ const FeaturedVideoMobile = (props: ReactProps) => {
     previewItem,
   } = props;
 
-  // let videoUrl = generateYouTubeVimeoEmbedLink(
-  //   option(previewItem).youTubeEmbedLink("")
-  // );
-
   const theme = useTheme();
   const xsDown = useMediaQuery(theme.breakpoints.down('xs'));
   const lgDown = useMediaQuery(theme.breakpoints.down("lg"));
+
+  let videoId = extractYoutubeVimeoId(previewItem?.youTubeEmbedLink)
 
   return (
     <div className={classes.featuredImageContainer}>
       <div className={classes.card}>
         <YouTube
-          videoId={option(previewItem).youTubeEmbedLink("").split("?v=")[1]}
+          // videoId={option(previewItem).youTubeEmbedLink("").split("?v=")[1]}
+          videoId={videoId}
           className={classes.cardMedia}
           containerClassName={classes.cardActionArea}
           // opts={obj}
@@ -71,7 +71,7 @@ const styles = (theme: Theme) => createStyles({
     justifyContent: "center",
     display: "flex",
     flexDirection: "row",
-    borderRadius: "2px 2px 2px 2px",
+    borderRadius: BorderRadius,
   },
   featuredImageContainerXSDown: {
     position: 'absolute',
@@ -80,7 +80,7 @@ const styles = (theme: Theme) => createStyles({
     left:0,
   },
   card: {
-    borderRadius: "1px",
+    borderRadius: BorderRadius,
     width: "100%",
     height: '100%',
     transition: theme.transitions.create('height', {
@@ -100,7 +100,6 @@ const styles = (theme: Theme) => createStyles({
   },
   cardActionArea: {
     height: '100%',
-    background: "#f8f8f8",
     display: "flex",
     flexDirection: "row",
   },

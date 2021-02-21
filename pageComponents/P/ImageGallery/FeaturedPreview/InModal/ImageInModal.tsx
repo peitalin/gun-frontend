@@ -17,16 +17,15 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 
 
-
 const ImageInModal: React.FC<ReactProps> = (props) => {
 
   const [imgLoaded, setImgLoaded] = React.useState(0);
+
   const {
     classes,
     previewItem,
     showLoadingBar = false,
   } = props;
-  const image = option(previewItem).image();
 
   const theme = useTheme();
   const xsDown = useMediaQuery(theme.breakpoints.down("xs"));
@@ -41,6 +40,23 @@ const ImageInModal: React.FC<ReactProps> = (props) => {
     }
     return () => {}
   }, [])
+
+
+  let image = previewItem?.image;
+
+  let urlSrc = option(image).original.url();
+
+  let srcSet = (option(image).variants([]).length > 0)
+      ? genSrcSet(image)
+      : null;
+
+  let imgSizes = genImgBreakpoints({
+      xs: 400,
+      sm: 600,
+      md: 600,
+      lg: 800,
+      xl: 1200,
+  })
 
   return (
     <div className={classes.card}>
@@ -65,8 +81,8 @@ const ImageInModal: React.FC<ReactProps> = (props) => {
             }
             src={option(image).original.url()}
             sizes={genImgBreakpoints({
-              xs: 600,
-              sm: 600,
+              xs: 400,
+              sm: 400,
               md: 600,
               lg: 1200,
               xl: 1200,
@@ -78,7 +94,7 @@ const ImageInModal: React.FC<ReactProps> = (props) => {
           showLoadingBar &&
           <LoadingBar
             absoluteTop
-            color={Colors.gradientUniswapBlue1}
+            color={Colors.blue}
             height={4}
             width={'100vw'}
             loading={true}
@@ -137,6 +153,9 @@ const styles = (theme: Theme) => createStyles({
     "&:hover": {
       opacity: 0, // disable hover dither
     }
+  },
+  compareSlider: {
+    width: "100%",
   },
 });
 
