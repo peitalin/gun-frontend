@@ -6,7 +6,7 @@ import Link from "next/link";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 // Typings
-import { PageBasedConnection, Product } from "typings/gqlTypes";
+import { Product } from "typings/gqlTypes";
 // Utils Components
 import ErrorBounds from "components/ErrorBounds";
 // Components

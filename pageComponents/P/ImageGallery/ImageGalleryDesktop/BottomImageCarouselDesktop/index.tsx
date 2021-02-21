@@ -7,7 +7,7 @@ import { Colors } from "layout/AppTheme";
 // Typings
 import {
   Product,
-  ProductPreviewItem,
+  Product_Preview_Items,
 } from "typings/gqlTypes";
 // carousel
 import ThumbnailImage from "./ThumbnailImage";
@@ -31,7 +31,7 @@ const BottomImageCarouselDesktop: React.FC<ReactProps> = (props) => {
     numberOfItemsWide = 6,
   } = props;
 
-  const handleImageClick = (previewItem: ProductPreviewItem) => {
+  const handleImageClick = (previewItem: Product_Preview_Items) => {
     props.setFeaturedPreviewItem(previewItem)
   }
 

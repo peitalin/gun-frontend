@@ -99,7 +99,6 @@ const Description = (props: ReactProps & FormikProps<FormikFields>) => {
         <ProductDescription
           productName={"Description Preview"}
           productDescription={values.description}
-          removeTopBorder={true}
           titleStyle={{
             marginBottom: '0rem',
             color: Colors.slateGreyDarkest

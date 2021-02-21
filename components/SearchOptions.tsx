@@ -27,7 +27,6 @@ const DropdownInput = dynamic(() => import("components/Fields/DropdownInput"), {
   }}/>,
   ssr: false,
 })
-import { selectStyles } from "pageComponents/P/PurchaseProductSummary/ProductLicenses";
 // import DropdownInput from "components/Fields/DropdownInput";
 import SearchOptionsSearchFilter from "components/SearchOptionsSearchFilter";
 import SearchOptionsPriceFilter from "components/SearchOptionsPriceFilter";
@@ -342,6 +341,75 @@ export const setCategoryFacets = (
 
   }
 }
+
+
+
+export const selectStyles = ({ width }: { width?: any }) => ({
+  container: base => ({
+    ...base,
+    flex: 1,
+    border: 'none',
+    width: width || '175px',
+    cursor: "pointer",
+    "&:hover": {
+      cursor: "pointer",
+    },
+  }),
+  control: styles => ({
+    ...styles,
+    // border: '1px solid #eaeaea',
+    border: 'none',
+    boxShadow: 'none',
+    // background: buttonBackgroundColor,
+    backgroundColor: Colors.dropDownGrey,
+    '&:hover': {
+      border: 'none',
+      cursor: "pointer",
+      backgroundColor: Colors.dropDownGreyHover,
+    },
+    "&:focus": {
+      border: 'none',
+    },
+    borderRadius: '4px',
+    fontFamily: '"Helvetica Neue",Arial,sans-serif',
+    fontSize: '0.9rem',
+    color: Colors.darkGrey,
+    // fontSize: '1rem',
+    width: '100%',
+  }),
+  singleValue: (styles, { data, isDisabled, isFocused, isSelected }) => ({
+    color: Colors.darkGrey,
+  }),
+  indicatorSeparator: styles => ({
+    display:'none'
+  }),
+  option: (styles, { data, isDisabled, isFocused, isSelected }) => {
+    return {
+      ...styles,
+      backgroundColor: isSelected
+        ? Colors.charcoal
+        : isFocused
+          ? Colors.lightGrey
+          : Colors.dropDownGrey,
+      fontFamily: '"Helvetica Neue",Arial,sans-serif',
+      fontSize: '1rem',
+      cursor: isDisabled ? 'not-allowed' : 'pointer',
+      "&:hover": {
+        cursor: isDisabled ? 'not-allowed' : 'pointer',
+      },
+    };
+  },
+  menu: styles => ({
+    ...styles,
+    zIndex: 10,
+    marginTop: '2px',
+    cursor: "pointer",
+    "&:hover": {
+      cursor: "pointer",
+    },
+  })
+});
+
 
 
 

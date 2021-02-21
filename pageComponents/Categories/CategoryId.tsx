@@ -6,16 +6,18 @@ import clsx from "clsx";
 import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
 // GraphQL
 import {
-  GET_PRODUCTS_BY_CATEGORY_NEW,
- } from "queries/product-category-queries";
+  GET_PRODUCTS_BY_CATEGORY,
+ } from "queries/products-queries";
 // Typings
 import {
   ID,
-  ProductCategoryOrGroup,
   Product,
-  PublicProductsOrderBy,
-  SearchParams,
-  PublicProductsConnection,
+  ProductsConnection,
+  Categories,
+  // ProductCategoryOrGroup,
+  // PublicProductsOrderBy,
+  // SearchParams,
+  // PublicProductsConnection,
 } from "typings/gqlTypes";
 // Utils
 import ErrorBounds from "components/ErrorBounds";
@@ -53,7 +55,7 @@ import CategoriesCarousel from "./CategoriesCarousel";
 // Grid Components
 import GridPaginatorGeneric from "components/GridPaginatorGeneric";
 import GridPreviewCardLight from "components/GridPreviewCardLight";
-import BannerCategory from "components/Banners/BannerCategory";
+// import BannerCategory from "components/Banners/BannerCategory";
 import Redirect from "pageComponents/Redirect";
 
 
@@ -109,7 +111,7 @@ const CategoryId: React.FC<ReactProps> = (props) => {
   })
 
   const { data, loading, error } = useQuery<QueryData1, QueryVar1>(
-    GET_PRODUCTS_BY_CATEGORY_NEW, {
+    GET_PRODUCTS_BY_CATEGORY, {
     variables: {
       nav: {
         limitOffset: {
@@ -117,11 +119,11 @@ const CategoryId: React.FC<ReactProps> = (props) => {
           offset: offset
         }
       },
-      categoryId: props.categoryOrCategoryGroup?.category?.id,
+      categoryId: props.categoryOrCategoryGroup?.id,
       categoryGroupId:
-        props.categoryOrCategoryGroup?.category?.id
+        props.categoryOrCategoryGroup?.id
           ? undefined
-          : props.categoryOrCategoryGroup?.categoryGroup?.id,
+          : props.categoryOrCategoryGroup?.id,
       // only do categoryGroupId if categoryId is missing
       search: {
         searchTerm: searchTerm || "*"
@@ -144,29 +146,11 @@ const CategoryId: React.FC<ReactProps> = (props) => {
   }, [])
 
 
-  const categoryName: string = props.categoryOrCategoryGroup?.category?.name
-    || props.categoryOrCategoryGroup?.categoryGroup?.name
-    || "Missing Category"
+  const categoryName: string = props.categoryOrCategoryGroup?.name
 
-  const categorySlug: string = props.categoryOrCategoryGroup?.category?.slug
-    || props.categoryOrCategoryGroup?.categoryGroup?.slug
+  const categorySlug: string = props.categoryOrCategoryGroup?.slug
 
   let missingCategory = !categorySlug
-
-  const blurb: string = props.categoryOrCategoryGroup?.categoryGroup?.pageConfig?.blurb
-  // console.log("blurb1:", blurb)
-
-  const categoriesMetadata = props.categoryOrCategoryGroup?.categoryGroup?.categories
-  // console.log("categoriesMetadata:", categoriesMetadata)
-
-  const bannerBackgroundImage =
-    props.categoryOrCategoryGroup?.categoryGroup?.pageConfig?.bannerBackgroundImage
-    || props.categoryOrCategoryGroup?.category?.pageConfig?.bannerBackgroundImage
-
-  const bannerForegroundImage =
-    props.categoryOrCategoryGroup?.categoryGroup?.pageConfig?.bannerForegroundImage
-    || props.categoryOrCategoryGroup?.category?.pageConfig?.bannerForegroundImage
-
 
   const [showTitle, setShowTitle] = React.useState(false);
 
@@ -247,16 +231,16 @@ const CategoryId: React.FC<ReactProps> = (props) => {
             ? classes.bannerContainerSm
             : classes.bannerContainer
         }>
-          <BannerCategory
+          {/* <BannerCategory
             categorySlug={categorySlug}
             categoryName={categoryName}
             blurb={blurb}
             bannerForegroundImage={bannerForegroundImage}
             bannerBackgroundImage={bannerBackgroundImage}
-          />
+          /> */}
         </div>
 
-        {
+        {/* {
           (categoriesMetadata?.length > 0) &&
           <CategoriesCarousel
             style={{
@@ -265,7 +249,7 @@ const CategoryId: React.FC<ReactProps> = (props) => {
             }}
             categoriesMetadata={categoriesMetadata}
           />
-        }
+        } */}
 
         <div className={classes.sectionContainer}>
 
@@ -371,8 +355,8 @@ const CategoryId: React.FC<ReactProps> = (props) => {
 }
 
 interface ReactProps extends WithStyles<typeof styles> {
-  initialProducts: PublicProductsConnection;
-  categoryOrCategoryGroup: ProductCategoryOrGroup;
+  initialProducts: ProductsConnection;
+  categoryOrCategoryGroup: Categories;
   lightTheme?: boolean;
   brickDisplay?: boolean;
   title?: string;
@@ -380,7 +364,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   disableMetaHeader?: boolean;
 }
 interface QueryData1 {
-  publicProductsByCategoryNew: PublicProductsConnection
+  publicProductsByCategoryNew: ProductsConnection
 }
 interface QueryVar1 {
   nav?: {
@@ -391,8 +375,8 @@ interface QueryVar1 {
   },
   categoryId?: ID;
   categoryGroupId?: ID;
-  search?: SearchParams;
-  orderBy?: PublicProductsOrderBy;
+  search?: any;
+  orderBy?: any;
 }
 
 

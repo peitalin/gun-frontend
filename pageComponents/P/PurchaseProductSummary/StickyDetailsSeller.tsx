@@ -162,7 +162,7 @@ const styles = (theme: Theme) => createStyles({
     transform: 'rotate(90deg)',
     fill: theme.palette.type === 'dark'
       ? Colors.uniswapLighterGrey
-      : Colors.slateGreyBlac,
+      : Colors.slateGreyBlack,
   },
   bidButtonContainer: {
     position: 'absolute',

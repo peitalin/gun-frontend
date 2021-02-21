@@ -11,13 +11,15 @@ import ClearIcon from '@material-ui/icons/Clear';
 import {
   Categories,
 } from "typings/gqlTypes";
+
 // MUI expander
 import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+
 // Dropdown Select Component
-import { selectStyles } from "pageComponents/P/PurchaseProductSummary/ProductLicenses";
+import { selectStyles } from "components/SearchOptions";
 import dynamic from "next/dynamic";
 const DropdownInput = dynamic(() => import("components/Fields/DropdownInput"), {
   loading: () => <div style={{
@@ -202,6 +204,7 @@ const CategoryButton: React.FC<CategoryButtonProps> = (props) => {
     </Button>
   )
 }
+
 
 interface CategoryButtonProps extends WithStyles<typeof styles> {
   onClick(): void;

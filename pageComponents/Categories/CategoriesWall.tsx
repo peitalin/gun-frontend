@@ -1,6 +1,6 @@
 import React from "react";
 import { oc as option } from "ts-optchain";
-import { ProductCategory, Product } from "typings/gqlTypes";
+import { Categories, Product } from "typings/gqlTypes";
 // Styles
 import clsx from "clsx";
 import { withStyles, WithStyles, Theme, createStyles } from "@material-ui/core/styles";
@@ -129,7 +129,7 @@ const CategoriesWall: React.FC<ReactProps> = (props) => {
 
 
 interface ReactProps extends WithStyles<typeof styles> {
-  categories: ProductCategory[];
+  categories: Categories[];
 }
 const categoryLinkColor2 = Colors.black
 const categoryLinkColorHover2 = Colors.secondaryBright
