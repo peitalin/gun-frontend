@@ -46,11 +46,11 @@ dayjs.extend(utc)
 declare global {
   interface Window {
     App: any;
-    gapi: any;
     paypal: PaypalClient
     analytics: any;
     QuickstreamAPI: WestpacQuickstreamClient;
     ClassicEditor: any
+    __forceSmoothScrollPolyfill__: boolean
   }
 }
 

@@ -458,6 +458,7 @@ export type Categories = {
   createdAt: Scalars['timestamp'];
   id: Scalars['String'];
   name: Scalars['String'];
+  slug?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['timestamp']>;
 };
 
@@ -505,6 +506,7 @@ export type Categories_Bool_Exp = {
   createdAt?: Maybe<Timestamp_Comparison_Exp>;
   id?: Maybe<String_Comparison_Exp>;
   name?: Maybe<String_Comparison_Exp>;
+  slug?: Maybe<String_Comparison_Exp>;
   updatedAt?: Maybe<Timestamp_Comparison_Exp>;
 };
 
@@ -520,6 +522,7 @@ export type Categories_Insert_Input = {
   createdAt?: Maybe<Scalars['timestamp']>;
   id?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
+  slug?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['timestamp']>;
 };
 
@@ -530,6 +533,7 @@ export type Categories_Max_Fields = {
   createdAt?: Maybe<Scalars['timestamp']>;
   id?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
+  slug?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['timestamp']>;
 };
 
@@ -539,6 +543,7 @@ export type Categories_Max_Order_By = {
   createdAt?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   name?: Maybe<Order_By>;
+  slug?: Maybe<Order_By>;
   updatedAt?: Maybe<Order_By>;
 };
 
@@ -549,6 +554,7 @@ export type Categories_Min_Fields = {
   createdAt?: Maybe<Scalars['timestamp']>;
   id?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
+  slug?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['timestamp']>;
 };
 
@@ -558,6 +564,7 @@ export type Categories_Min_Order_By = {
   createdAt?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   name?: Maybe<Order_By>;
+  slug?: Maybe<Order_By>;
   updatedAt?: Maybe<Order_By>;
 };
 
@@ -589,6 +596,7 @@ export type Categories_Order_By = {
   createdAt?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   name?: Maybe<Order_By>;
+  slug?: Maybe<Order_By>;
   updatedAt?: Maybe<Order_By>;
 };
 
@@ -608,6 +616,8 @@ export enum Categories_Select_Column {
   /** column name */
   NAME = 'name',
   /** column name */
+  SLUG = 'slug',
+  /** column name */
   UPDATEDAT = 'updatedAt'
 }
 
@@ -617,6 +627,7 @@ export type Categories_Set_Input = {
   createdAt?: Maybe<Scalars['timestamp']>;
   id?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
+  slug?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['timestamp']>;
 };
 
@@ -630,6 +641,8 @@ export enum Categories_Update_Column {
   ID = 'id',
   /** column name */
   NAME = 'name',
+  /** column name */
+  SLUG = 'slug',
   /** column name */
   UPDATEDAT = 'updatedAt'
 }

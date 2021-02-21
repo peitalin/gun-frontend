@@ -118,6 +118,7 @@ export const Colors = {
   slateGreyDark: "#E2E8ED",
   slateGreyDarker: "#D0D5DF",
   slateGreyDarkest: "#B0B5BF",
+  slateGreyLightBlack: "#555555",
   slateGreyBlack: "#253848",
   // greyscale
   backgroundColor: backgroundColor,
@@ -135,7 +136,6 @@ export const Colors = {
   dropDownGreyHover: "rgba(152,152,152,0.15)",
   grey: "#aaa",
   darkerGrey: "#888",
-  darkGrey55: "#555555",
   darkGrey: "#767676",
   charcoal: "#484848",
   lighterBlack: "#333333",
@@ -243,8 +243,8 @@ export const Gradients = {
     color2: Colors.grey,
   },
   gradientDarkGrey:  {
-    background: `linear-gradient(120deg, ${Colors.darkGrey55} 0%, ${Colors.charcoal} 80%)`,
-    color1: Colors.darkGrey55,
+    background: `linear-gradient(120deg, ${Colors.slateGreyLightBlack} 0%, ${Colors.charcoal} 80%)`,
+    color1: Colors.slateGreyLightBlack,
     color2: Colors.charcoal,
   },
   gradientUniswapDark:  {
@@ -320,7 +320,7 @@ export const BoxShadows = {
     boxShadow: '0 1px 1px rgba(0,0,0,0.1),0 4px 4px rgba(0,0,0,0.1),0 0 0 1px rgba(0,0,0,0.02)',
   },
   shadow4: {
-    boxShadow: "0px 2px 10px 4px rgba(0,0,0,0.1)"
+    boxShadow: `rgb(0 0 0 / 12%) 0px 6px 16px` // airbnb shadows
   },
   shadowStart: {
     boxShadow: '0 6px 8px 4px rgba(0,0,0,0.1),0 4px 8px rgba(0,0,0,0.2),0 0 0 1px rgba(0,0,0,0.02)',
