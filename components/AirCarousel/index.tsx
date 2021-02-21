@@ -17,12 +17,9 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 const AirCarousel: React.FC<ReactProps> = (props) => {
 
-  const [cursor, setCursor] = React.useState(0);
-  const [showLeftButton, setShowLeftButton] = React.useState(false);
-  const [showRightButton, setShowRightButton] = React.useState(false);
-  // dom elements
-  const [airCarousel, setAirCarousel] = React.useState(undefined);
-  const [showButtons, setShowButtons] = React.useState(false);
+  const theme = useTheme();
+  const smDown = useMediaQuery(theme.breakpoints.down("sm"))
+  const xsDown = useMediaQuery(theme.breakpoints.down("xs"))
 
   const {
     disableButtons = false,
@@ -32,11 +29,15 @@ const AirCarousel: React.FC<ReactProps> = (props) => {
     leftDither = false,
     rightDither = false,
     scrollItemsPerClick = 4,
+    onlyShowButtonsOnMouseOver = true,
   } = props;
 
-  const theme = useTheme();
-  const smDown = useMediaQuery(theme.breakpoints.down("sm"))
-  const xsDown = useMediaQuery(theme.breakpoints.down("xs"))
+  const [cursor, setCursor] = React.useState(0);
+  const [showLeftButton, setShowLeftButton] = React.useState(false);
+  const [showRightButton, setShowRightButton] = React.useState(false);
+  // dom elements
+  const [airCarousel, setAirCarousel] = React.useState(undefined);
+  const [showButtons, setShowButtons] = React.useState(!onlyShowButtonsOnMouseOver);
 
   React.useEffect(() => {
     if (process.browser) {
@@ -70,7 +71,6 @@ const AirCarousel: React.FC<ReactProps> = (props) => {
   const selectedDot = Math.round(scrollLeft / clientWidth);
 
 
-
   return (
     <ErrorBounds fragment>
       <div
@@ -79,12 +79,16 @@ const AirCarousel: React.FC<ReactProps> = (props) => {
           // "fadeInFast",
         )}
         // disable on mobile, otheriwse need to double tap for link navigation
-        onMouseOver={
-          !smDown ? () => setShowButtons(true) : null
-        }
-        onMouseLeave={
-          !smDown ? () => setShowButtons(false) : null
-        }
+        onMouseOver={() => {
+          if (onlyShowButtonsOnMouseOver) {
+            setShowButtons(true)
+          }
+        }}
+        onMouseLeave={() => {
+          if (onlyShowButtonsOnMouseOver) {
+            setShowButtons(false)
+          }
+        }}
         style={{
           position: "relative",
           zIndex: 0,
@@ -100,13 +104,15 @@ const AirCarousel: React.FC<ReactProps> = (props) => {
             <AirButtonLeft
               className={showButtons ? "fadeInFast" : "hidden"}
               onClick={() => {
+                console.log('clicked left button')
                 let newCursor = (cursor - option(airItems)[0].clientWidth(0) * scrollItemsPerClick);
-                smScroll((newCursor < 0) ? 0 : newCursor)
+                // smScroll((newCursor < 0) ? 0 : newCursor)
+                smScroll(0)
                 setCursor((newCursor <= 0) ? 0 : newCursor)
 
                 setShowLeftButton((newCursor <= 0) ? false : true)
                 setShowRightButton((newCursor >= maxCursor) ? false : true)
-                if(props.handleClickLeft) {
+                if (props.handleClickLeft) {
                   props.handleClickLeft()
                 }
               }}
@@ -119,12 +125,14 @@ const AirCarousel: React.FC<ReactProps> = (props) => {
               className={showButtons ? "fadeInFast" : "hidden"}
               onClick={() => {
                 let newCursor = (cursor + option(airItems)[0].clientWidth(0)) * scrollItemsPerClick;
+                // console.log("newCursor: ", airItems[0])
+                // console.log("airItems: ", newCursor)
                 smScroll((newCursor > maxCursor) ? maxCursor : newCursor)
                 setCursor((newCursor > maxCursor) ? maxCursor : newCursor)
 
                 setShowLeftButton((newCursor <= 0) ? false : true)
                 setShowRightButton((newCursor >= maxCursor) ? false : true)
-                if(props.handleClickRight) {
+                if (props.handleClickRight) {
                   props.handleClickRight()
                 }
               }}
@@ -144,7 +152,10 @@ const AirCarousel: React.FC<ReactProps> = (props) => {
           />
         }
         <div className="air-carousel-inner"
-          style={{ overflow: "hidden" }}
+          style={{
+            overflow: "hidden",
+            ...props.innerCarouselStyle,
+          }}
         >
           {
             leftDither &&
@@ -214,7 +225,9 @@ interface ReactProps {
   disableSmartButtons?: boolean;
   showPositionIndicator?: boolean;
   totalNumberOfItems?: number;
-  scrollSnapType?: string;
+  scrollSnapType?:
+    "x mandatory" | "y mandator" | "both mandatory" | "none" |
+    "x proximity" | "y proximity" | "both proximity";
   // https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-snap-type
     // "x mandatory" |
     // "y mandatory" |
@@ -231,6 +244,8 @@ interface ReactProps {
   buttonLeftStyle?: any;
   buttonRightStyle?: any;
   style?: any;
+  innerCarouselStyle?: any;
+  onlyShowButtonsOnMouseOver?: boolean;
 }
 
 // export default React.memo(

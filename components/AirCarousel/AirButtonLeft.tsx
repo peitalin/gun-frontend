@@ -84,7 +84,9 @@ const styles = (theme: Theme) => createStyles({
     borderWidth: "2px",
     borderStyle: "solid",
     borderColor: "transparent",
-    background: Colors.uniswapDarkNavy,
+    background: theme.palette.type === 'dark'
+      ? Colors.uniswapDarkNavy
+      : Colors.cream,
     transition: theme.transitions.create('opacity', {
       easing: theme.transitions.easing.easeIn,
       duration: "200ms",

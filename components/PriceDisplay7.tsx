@@ -148,7 +148,8 @@ const styles = (theme: Theme) => createStyles({
   countDownTag: {
     display: 'flex',
     // backgroundColor: Colors.lightestGrey,
-    backgroundColor: fade(Colors.green, 0.2),
+    // backgroundColor: fade(Colors.green, 0.2),
+    backgroundColor: fade(Colors.blue, 0.2),
     padding: '0.2rem 0.5rem',
     borderRadius: '2px',
     // border: `1px solid ${Colors.charcoal}`,

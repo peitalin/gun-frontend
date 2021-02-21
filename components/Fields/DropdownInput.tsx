@@ -108,7 +108,7 @@ const DropdownInput = (props: ReactProps) => {
                   ...styles,
                   fontWeight: 400,
                   fontFamily: fontFam,
-                  color: Colors.darkGrey55,
+                  color: Colors.slateGreyLightBlack,
                 }),
                 menu: styles => ({
                   ...styles,
