@@ -24,7 +24,7 @@ const UserProfileWrapper = dynamic(() => import("layout/GetUser/UserProfileWrapp
 })
 
 
-const SettingsPage: NextPage<ReactProps> = (props) => {
+const SettingsPageSSR: NextPage<ReactProps> = (props) => {
 
   const { classes } = props;
 
@@ -37,7 +37,7 @@ const SettingsPage: NextPage<ReactProps> = (props) => {
       <UserProfileWrapper>
       {({ data, loading, error }: UserProfileProps) => {
         return (
-          <div className={classes.root}>
+          <div className={classes.rootSSR}>
             <MySettings
               asModal={false}
             />
@@ -59,7 +59,7 @@ interface Context extends NextPageContext {
   apolloClient: ApolloClient<any>;
 }
 
-SettingsPage.getInitialProps = async (ctx: Context) => {
+SettingsPageSSR.getInitialProps = async (ctx: Context) => {
   return {
     query: ctx.query as any,
     classes: undefined,
@@ -68,17 +68,16 @@ SettingsPage.getInitialProps = async (ctx: Context) => {
 
 
 const styles = (theme: Theme) => createStyles({
-  root: {
+  rootSSR: {
     display: 'flex',
     justifyContent: "center",
-    padding: "2rem",
   },
   maxWidth: {
     maxWidth: 400,
   },
 });
 
-export default withStyles(styles)( SettingsPage );
+export default withStyles(styles)( SettingsPageSSR );
 
 
 

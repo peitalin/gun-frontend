@@ -80,7 +80,6 @@ const MyOrders: React.FC<ReactProps> = (props) => {
   const router = useRouter();
 
   const theme = useTheme();
-  const xsDown = useMediaQuery(theme.breakpoints.down("xs"));
 
   //// BUYER ORDERS Paginator Hooks
   let {
@@ -418,15 +417,23 @@ const OrdersLayout: React.FC<ReactProps> = (props) => {
   const dispatch = useDispatch();
   const theme = useTheme();
   const mdDown = useMediaQuery(theme.breakpoints.down("md"))
+  const xsDown = useMediaQuery(theme.breakpoints.down("xs"));
+  const smDown = useMediaQuery(theme.breakpoints.down('sm'))
+  const md = useMediaQuery(theme.breakpoints.only('md'))
+  const lg = useMediaQuery(theme.breakpoints.only('lg'))
+  const xlUp = useMediaQuery(theme.breakpoints.up('xl'))
 
   return (
     <AlignCenterLayout
       maxWidth={960}
       withRecommendations={props.withRecommendations}
     >
-      <div className={
-        mdDown ? classes.flexRowRootMobile : classes.flexRowRoot
-      }>
+      <div className={clsx(
+        mdDown ? classes.flexRowRootMobile : classes.flexRowRoot,
+        smDown && classes.paddingMobile,
+        (md || lg) && classes.paddingIpad,
+        xlUp && classes.paddingDesktop,
+      )}>
         <Typography className={classes.title} variant="h2">
           My Orders
         </Typography>
@@ -510,7 +517,6 @@ const styles = (theme: Theme) => createStyles({
     maxWidth: 400,
   },
   title: {
-    marginBottom: '1rem',
     marginTop: '1rem',
   },
   heading: {
@@ -561,6 +567,15 @@ const styles = (theme: Theme) => createStyles({
   },
   padding05: {
     padding: '0.5rem',
+  },
+  paddingMobile: {
+    paddingTop: '4rem',
+  },
+  paddingIpad: {
+    paddingTop: '4rem',
+  },
+  paddingDesktop: {
+    paddingTop: '2rem',
   },
   purchaseSuccessBackground: {
     width: '100%',

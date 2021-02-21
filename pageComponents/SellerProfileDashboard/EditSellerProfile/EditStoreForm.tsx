@@ -271,9 +271,12 @@ const EditStoreFormWrapper: React.FC<FormWrapperProps> = (props) => {
   const smUp = useMediaQuery(theme.breakpoints.up('sm'));
 
   return (
-    <div className={clsx(classes.formRoot)}>
+    <div className={clsx(
+      classes.formRoot,
+      smUp ? classes.formBordersDesktop : classes.formBordersMobile
+    )}>
       <div className={classes.maxWidth720}>
-        <div className={classes.paperMargin}>
+        <div className={smUp ? classes.paperMarginDesktop : classes.paperMarginMobile}>
           <div className={classes.flexColMargin}>
             <Typography color={"primary"} variant="h3">
               Edit Your Store

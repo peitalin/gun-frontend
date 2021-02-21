@@ -218,7 +218,7 @@ const EditStoreFields: React.FC<ReactProps & FormikProps<FormikFields>> = (props
         <div className={classes.margin1}>
           <div className={clsx(classes.flexRow, classes.spaceBetween)}>
             <Typography variant="subtitle1" className={classes.subtitle1}>
-              Where should we send your monthly earnings?
+              Where should we send your earnings?
             </Typography>
           </div>
           <div className={clsx(classes.formContainer, "fadeInFast")}>

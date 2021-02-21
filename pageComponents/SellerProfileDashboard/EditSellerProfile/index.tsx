@@ -32,8 +32,11 @@ const EditSellerProfile = (props: ReactProps) => {
   } = props;
   // CSS
   const theme = useTheme();
-  const xsDown = useMediaQuery(theme.breakpoints.down('xs'))
   const smDown = useMediaQuery(theme.breakpoints.down('sm'))
+  const md = useMediaQuery(theme.breakpoints.only('md'))
+  const lg = useMediaQuery(theme.breakpoints.only('lg'))
+  const xlUp = useMediaQuery(theme.breakpoints.up('xl'))
+
   // redux
   const dispatch = useDispatch();
   const sellerProfileEditModalOpen = useSelector<GrandReduxState, boolean>(
@@ -58,8 +61,9 @@ const EditSellerProfile = (props: ReactProps) => {
         <ErrorBounds className={clsx(
           classes.root,
           classes.asPage,
-          // xsDown ? classes.paddingMobile : classes.paddingDesktop,
-          classes.paddingDesktop,
+          smDown && classes.paddingMobile,
+          (md || lg) && classes.paddingIpad,
+          xlUp && classes.paddingDesktop,
           !smDown ? classes.minWidth500 : null,
         )}>
           <div className={classes.storeEditMenu}>
@@ -121,7 +125,6 @@ const styles = (theme: Theme) => createStyles({
     flexDirection: "column",
     justifyContent: "center",
     marginBottom: '1rem',
-    paddingTop: '2rem',
   },
   asPage: {
     display: 'flex',
@@ -140,9 +143,13 @@ const styles = (theme: Theme) => createStyles({
     minWidth: '500px',
   },
   paddingMobile: {
-    paddingTop: '4rem',
+    paddingTop: '2rem',
+  },
+  paddingIpad: {
+    paddingTop: '5rem',
   },
   paddingDesktop: {
+    paddingTop: '2rem',
   },
   flexCol: {
     display: "flex",

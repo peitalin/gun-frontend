@@ -13,6 +13,8 @@ export const styles = (theme: Theme) => createStyles({
   formRoot: {
     minWidth: '350px',
     maxWidth: '540px',
+  },
+  formBordersDesktop: {
     background: theme.palette.type === 'dark'
       ? Colors.uniswapDarkNavy
       : Colors.cream,
@@ -23,6 +25,11 @@ export const styles = (theme: Theme) => createStyles({
       ? 'unset'
       : `1px solid ${Colors.slateGreyDarker}`,
     borderRadius: BorderRadius2x,
+  },
+  formBordersMobile: {
+    background: 'transparent',
+    boxShadow: 'unset',
+    border: 'unset',
   },
   maxWidth720: {
     width: '100%',
@@ -48,7 +55,7 @@ export const styles = (theme: Theme) => createStyles({
   subtitle1: {
     fontSize: "0.9rem",
     fontWeight: 600,
-    marginBottom: '0.25rem',
+    marginBottom: '0.5rem',
     color: theme.palette.type === 'dark'
       ? Colors.uniswapLightestGrey
       : Colors.black,
@@ -83,9 +90,14 @@ export const styles = (theme: Theme) => createStyles({
     display: 'flex',
     flexWrap: 'wrap',
   },
-  paperMargin: {
+  paperMarginDesktop: {
     margin: '0rem',
     padding: '4rem',
+    width: '100%',
+  },
+  paperMarginMobile: {
+    margin: '0rem',
+    padding: '1rem',
     width: '100%',
   },
   textField: {

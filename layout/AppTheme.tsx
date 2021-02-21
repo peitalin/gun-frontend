@@ -145,7 +145,7 @@ export const Colors = {
   pitchBlack: "#000000",
   // purples
   magenta: "#EB466D",
-  purple: "#9991DB",
+  purple: "#A981EB",
   lightPurple: "#B8B3E9",
   // red
   darkestRed: '#6A1617',
@@ -273,7 +273,7 @@ export const Gradients = {
     color2: Colors.gradientUniswapFluro2,
   },
   gradientUniswapBlueGreen:  {
-    background: `linear-gradient(140deg, ${Colors.gradientUniswapBlue1} 20%, ${Colors.gradientUniswapGreen} 80%)`,
+    background: `linear-gradient(140deg, ${Colors.gradientUniswapBlue1} 30%, ${Colors.gradientUniswapGreen} 90%)`,
     color1: Colors.gradientUniswapBlue1,
     color2: Colors.gradientUniswapGreen,
   },
@@ -590,9 +590,15 @@ export const createAppTheme = (darkModeStr: "dark"|"light"): ThemeOptions =>  {
           // backgroundColor: darkMode ? Colors.uniswapLightNavy : Colors.darkWhite,
           backgroundColor: darkMode ? Colors.uniswapLightNavy : Colors.uniswapLightNavy,
         },
-        colorSecondary: {
-          // backgroundColor: darkMode ? Colors.purple : Colors.blue,
-        },
+        track: {
+          "$checked$checked + &": {
+            opacity: 1.0,
+            // backgroundColor: "rgb(129, 171, 134)" // Light green, aka #74d77f
+            backgroundColor: darkMode
+              ? Colors.purple
+              : Colors.blue,
+          }
+        }
       },
       MuiPaper: {
         root: {

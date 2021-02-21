@@ -23,7 +23,7 @@ const routeMappings = {
 
 
 
-const SellerDashboardRoutes: React.FC<ReactProps> = (props) => {
+const SellerDropdownMenu: React.FC<ReactProps> = (props) => {
 
   const { classes } = props;
   const router = useRouter();
@@ -154,4 +154,4 @@ interface MenuExpandedProps {
   hideExpandMenu(): void;
 }
 
-export default withStyles(styles)( SellerDashboardRoutes );
+export default withStyles(styles)( SellerDropdownMenu );

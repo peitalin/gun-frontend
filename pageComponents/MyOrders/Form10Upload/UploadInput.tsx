@@ -123,33 +123,15 @@ export const styles = (theme: Theme) => createStyles({
     width: '150px',
     borderRadius: BorderRadius3x,
   },
-  uploadButtonTextDisabled: {
-    color: theme.colors.uniswapGrey,
-    fontSize: '0.9rem',
-  },
   uploadButtonText: {
     color: theme.colors.blue,
     fontSize: '0.9rem',
   },
   uploadButtonTextLimit: {
-    color: theme.colors.uniswapGrey,
+    color: theme.palette.type === 'dark'
+      ? theme.colors.uniswapGrey
+      : Colors.slateGreyDarkest,
     fontSize: '0.9rem',
-  },
-  subtitle: {
-    color: theme.colors.uniswapMediumNavy,
-    fontSize: '0.8rem',
-  },
-  youTubeInput: {
-    fontSize: "0.8rem",
-    fontWeight: 500,
-    marginTop: '1rem',
-    marginBottom: '0.25rem',
-    color: theme.colors.uniswapDarkNavy,
-    width: '100%',
-  },
-  youTubeSpan: {
-    color: theme.colors.uniswapMediumNavy,
-    marginLeft: '0.25rem',
   },
 })
 

@@ -194,7 +194,7 @@ const PublishedProductsList = (props: ReactProps) => {
 
   if (!productId) {
     return (
-      <ResponsivePadding style={{ marginRight: '0.5rem' }}>
+      <ResponsivePadding>
         <div className={classes.goBackContainer}>
           <Typography className={classes.title} variant="h2">
             Products

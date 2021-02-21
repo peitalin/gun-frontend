@@ -28,6 +28,9 @@ import AdvancedSettings from "./AdvancedSettings";
 // const DynamicPaymentMethods = dynamic(() => import('./PaymentMethods'))
 import { refetchUser } from "layout/GetUser";
 import { useApolloClient } from "@apollo/client";
+// media query
+import { useTheme } from "@material-ui/core/styles";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 
 
@@ -38,6 +41,9 @@ const MySettings = (props: ReactProps & ReduxProps) => {
     classes,
     asModal = true,
   } = props;
+
+  const theme = useTheme();
+  const smDown = useMediaQuery(theme.breakpoints.down('sm'));
 
   const apolloClient = useApolloClient();
 
@@ -52,7 +58,8 @@ const MySettings = (props: ReactProps & ReduxProps) => {
 
   return (
     <ErrorBounds className={clsx(
-      asModal ? classes.root : classes.rootPage
+      asModal ? classes.root : classes.rootPage,
+      smDown ? classes.rootPaddingMobile : classes.rootPaddingDesktop,
     )}>
       <div className={props.classes.titleRow}>
         <Typography variant="h2">
@@ -114,16 +121,20 @@ interface ReduxProps {
 
 const styles = (theme: Theme) => createStyles({
   root: {
-    padding: "2rem",
     maxWidth: "720px",
     position: "relative",
     overflowY: "hidden",
     height: "100%",
   },
   rootPage: {
-    padding: "0rem",
     maxWidth: "720px",
     position: "relative",
+  },
+  rootPaddingDesktop: {
+    padding: "2rem",
+  },
+  rootPaddingMobile: {
+    padding: "1rem",
   },
   titleRow: {
     display: 'flex',

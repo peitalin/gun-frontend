@@ -9,14 +9,7 @@ import {
 } from "layout/NavBarMain/styles";
 
 
-const dashboardBarColor = Colors.foregroundColor
-const dashboardLinkColor = Colors.darkGrey
 const dashboardLinkColorHover = Colors.secondaryBright
-
-// const dashboardBarColor = Colors.black
-// const dashboardLinkColor = Colors.slateGrey
-// const dashboardLinkColorHover = Colors.lightGreen
-
 
 const dashboardLinkColor2 = Colors.darkGrey
 const dashboardLinkColorHover2 = Colors.secondaryBright
@@ -29,9 +22,6 @@ export const styles = (theme: Theme) => createStyles({
   baseBar: {
     zIndex: 5,
     backgroundColor: "#fefefe",
-    // boxShadow: `0px 2px 4px -1px rgba(0,0,0,0.2),
-    //   0px 1px 1px 0px rgba(0,0,0,0.12)`,
-    borderBottom: '1px solid #eaeaea',
     height: `${MainBarHeightDashboard - 1}px`,
     display: 'flex',
     flexDirection: 'row',
@@ -59,12 +49,17 @@ export const styles = (theme: Theme) => createStyles({
   // Category Bar
   dashboardBar: {
     height: '3rem',
-    background: Gradients.gradientUniswapDark.background,
-    border: '0px solid',
     position: 'absolute',
-    // boxShadow: "1px 1px 1px 1px rgba(22,22,22,0.2)"
-    boxShadow: BoxShadows.shadow1.boxShadow,
     top: "0",
+    background: theme.palette.type === 'dark'
+      ? Gradients.gradientUniswapDark.background
+      : Gradients.gradientGrey2.background,
+    boxShadow: theme.palette.type === 'dark'
+      ? BoxShadows.shadow3.boxShadow
+      : BoxShadows.shadow3.boxShadow,
+    borderBottom: theme.palette.type === 'dark'
+      ? `1px solid ${Colors.uniswapGrey}`
+      : `1px solid ${Colors.slateGreyDarkest}`,
   },
   dashboardBarMobile: {
     height: 30,
@@ -104,7 +99,9 @@ export const styles = (theme: Theme) => createStyles({
     whiteSpace: 'nowrap',
   },
   dashboardSelectedLink: {
-    color: Colors.uniswapLightestGrey,
+    color: theme.palette.type === 'dark'
+      ? Colors.uniswapLightestGrey
+      : Colors.black,
     fontSize: '1rem',
     fontWeight: 600,
     "&:hover": {
@@ -165,7 +162,15 @@ export const styles = (theme: Theme) => createStyles({
     width: '100%',
     height: '100%',
     borderRadius: BorderRadius,
-    background: Colors.uniswapDarkNavy,
+    background: theme.palette.type === 'dark'
+      ? Colors.uniswapDarkNavy
+      : Colors.cream,
+    boxShadow: theme.palette.type === 'dark'
+      ? BoxShadows.shadow1.boxShadow
+      : "unset",
+    // border: theme.palette.type === 'dark'
+    //   ? `1px solid ${Colors.uniswapGrey}`
+    //   : `1px solid ${Colors.slateGreyDark}`,
   },
   dashboardInnerContainer: {
     width: '100%',
@@ -179,7 +184,9 @@ export const styles = (theme: Theme) => createStyles({
     width: '100%',
     height: 50,
     cursor: 'pointer',
-    borderBottom: `1px solid ${Colors.uniswapNavy}`,
+    borderBottom: theme.palette.type === 'dark'
+      ? `1px solid ${Colors.uniswapNavy}`
+      : `1px solid ${Colors.slateGreyDark}`,
   },
 
   link: {

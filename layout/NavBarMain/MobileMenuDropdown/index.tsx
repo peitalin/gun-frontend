@@ -126,7 +126,7 @@ const styles = (theme: Theme) => createStyles({
       : Colors.cream,
     border: theme.palette.type === 'dark'
       ? `1px solid ${Colors.uniswapMediumNavy}`
-      : `1px solid ${Colors.black}`,
+      : `1px solid ${Colors.slateGreyBlack}`,
     // transform: "translateX(-100%)",
     // opacity: 0,
     // transition: theme.transitions.create(['all'], {

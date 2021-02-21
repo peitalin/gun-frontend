@@ -45,7 +45,7 @@ const AdvancedSettings = (props: ReactProps) => {
                 className={clsx("fadeIn", classes.showDeleteForm)}
                 variant="subtitle2"
               >
-                {"Show Advanced Settings"}
+                {"Show Settings"}
               </Typography>
           }
         </a>

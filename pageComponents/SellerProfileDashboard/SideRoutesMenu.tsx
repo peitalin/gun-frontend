@@ -26,7 +26,7 @@ import Router from 'next/router'
 
 
 
-const SideMenu: React.FC<ReactProps> = (props) => {
+const SideRoutesMenu: React.FC<ReactProps> = (props) => {
 
   const isSelectedRoute = (path: string): boolean => {
     return Router.pathname.split('/').pop() === path.split('/').pop()
@@ -161,7 +161,9 @@ const styles = (theme: Theme) => createStyles({
   title: {
     fontSize: '1.25rem',
     fontWeight: 600,
-    color: Colors.black,
+    color: theme.palette.type === 'dark'
+      ? Colors.uniswapLightestGrey
+      : Colors.black,
     "&:hover": {
       color: Colors.secondary,
     },
@@ -197,8 +199,11 @@ const styles = (theme: Theme) => createStyles({
     fontSize: '0.9rem',
     fontWeight: 500,
     borderRight: '4px solid rgba(0,0,0,0)',
+    borderRadius: BorderRadius,
     "&:hover": {
-      background: fade(Colors.lightGrey, 0.05),
+      background: theme.palette.type === 'dark'
+        ? fade(Colors.lightGrey, 0.05)
+        : fade(Colors.black, 0.05),
       transition: theme.transitions.create(['background', 'border-right'], {
         easing: theme.transitions.easing.easeIn,
         duration: "100ms",
@@ -208,12 +213,21 @@ const styles = (theme: Theme) => createStyles({
   routeListItemSelected: {
     padding: "0.6rem 1rem",
     margin: "0.25rem 0rem",
-    color: Colors.gradientUniswapFluro1,
     fontSize: '0.9rem',
     fontWeight: 500,
-    borderRight: `4px solid ${Colors.gradientUniswapFluro1}`,
+    "& > h6": {
+      color: theme.palette.type === 'dark'
+        ? Colors.purple
+        : Colors.blue,
+    },
+    borderRight: theme.palette.type === 'dark'
+      ? `2px solid ${Colors.purple}`
+      : `2px solid ${Colors.lightBlue}`,
+    borderRadius: `${BorderRadius}px 0px 0px ${BorderRadius}px`,
     "&:hover": {
-      background: fade(Colors.lightGrey, 0.05),
+      background: theme.palette.type === 'dark'
+        ? fade(Colors.lightGrey, 0.05)
+        : fade(Colors.black, 0.05),
       transition: theme.transitions.create(['background', 'border-right'], {
         easing: theme.transitions.easing.easeIn,
         duration: "100ms",
@@ -277,4 +291,4 @@ const styles = (theme: Theme) => createStyles({
 });
 
 
-export default withStyles(styles)( SideMenu );
+export default withStyles(styles)( SideRoutesMenu );

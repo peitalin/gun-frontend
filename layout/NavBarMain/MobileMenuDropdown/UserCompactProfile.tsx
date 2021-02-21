@@ -97,18 +97,25 @@ const styles = (theme: Theme) => createStyles({
   profileTitle: {
     fontWeight: 600,
     marginBottom: '0.25rem',
-    color: Colors.uniswapLightestGrey,
+    color: theme.palette.type === 'dark'
+      ? Colors.uniswapLightestGrey
+      : Colors.black,
   },
   profileEmail: {
     fontWeight: 400,
     fontSize: '0.7rem',
-    color: Colors.uniswapLighterGrey,
+    color: theme.palette.type === 'dark'
+      ? Colors.uniswapLighterGrey
+      : Colors.darkGrey,
   },
   logout: {
     fontSize: '0.9rem',
     marginRight: '1rem',
     fontWeight: 500,
-    color: Colors.uniswapLightNavy,
+    // color: Colors.uniswapLightNavy,
+    color: theme.palette.type === 'dark'
+      ? Colors.uniswapLighterGrey
+      : Colors.charcoal,
     cursor: 'pointer',
     "&:hover": {
       color: Colors.blue,

@@ -135,7 +135,7 @@ const ChangePayoutMethod = (props: ReactProps & ReduxProps) => {
                       className={clsx('fadeIn', classes.showPayoutChanger)}
                       variant="subtitle2"
                     >
-                      {"Change payout method"}
+                      {"Change bank account"}
                     </Typography>
                   : <Typography
                       className={clsx('fadeIn', classes.showPayoutChanger)}
@@ -149,8 +149,8 @@ const ChangePayoutMethod = (props: ReactProps & ReduxProps) => {
 
             <div className={classes.currentBankDetails}>
 
-              <Typography variant="body1" className={classes.title}>
-                Current Bank details:
+              <Typography variant="body1" className={classes.subtitle}>
+                Bank account receiving earnings:
               </Typography >
 
               <div className={classes.bankDetailsContainer}>
@@ -385,7 +385,7 @@ const styles = (theme: Theme) => createStyles({
     color: Colors.uniswapLighterGrey,
   },
   currentBankDetails: {
-    marginTop: '1rem',
+    marginTop: '2rem',
   },
   subtitle: {
     margin: '0.5rem 0rem',

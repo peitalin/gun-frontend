@@ -105,7 +105,7 @@ const MobileMenuRoutes = (props: ReactProps) => {
             </Link>
           : <Link href="/create-store">
               <a className={classes.aLink}>
-                <Typography className={classes.mobileMenuItemTextEmph}>
+                <Typography className={classes.mobileMenuItemText}>
                   Create Store
                 </Typography>
               </a>
@@ -198,11 +198,12 @@ const MobileMenuRoutes = (props: ReactProps) => {
           classes.mobileMenuFlexitem,
           classes.mobileMenuItemRoot,
           classes.mobileMenuFlexitemSpaceBetween,
+          classes.maxHeight40,
         )}
       >
         <div className={classes.toggleDarkModeText}>
-          <Typography className={classes.mobileMenuItemTextEmph2}>
-            Dark/Light Mode
+          <Typography className={classes.mobileMenuItemText}>
+            Dark Mode
           </Typography>
         </div>
         <ToggleDarkMode/>
@@ -213,21 +214,25 @@ const MobileMenuRoutes = (props: ReactProps) => {
       {
         loggedIn &&
         <div className={classes.mobileMenuFlexitem}>
-          <MenuItem
-            className={clsx(
-              classes.mobileMenuFlexitem,
-              classes.mobileMenuItemRoot
-            )}
-            onClick={() => {
-              // dispatch(Actions.reduxStripe.SHOW_MY_SETTINGS_STRIPE_COMPONENT())
-              goToModal.mySettings()
-              props.closeMobileMenu()
-            }}
-          >
-            <Typography className={classes.mobileMenuItemText}>
-              Settings
-            </Typography>
-          </MenuItem>
+          <Link href="/settings">
+            <a className={classes.menuLink}>
+              <MenuItem
+                className={clsx(
+                  classes.mobileMenuFlexitem,
+                  classes.mobileMenuItemRoot
+                )}
+                onClick={() => {
+                  // dispatch(Actions.reduxStripe.SHOW_MY_SETTINGS_STRIPE_COMPONENT())
+                  // goToModal.mySettings()
+                  props.closeMobileMenu()
+                }}
+              >
+                <Typography className={classes.mobileMenuItemText}>
+                  Settings
+                </Typography>
+              </MenuItem>
+            </a>
+          </Link>
         </div>
       }
     </div>
@@ -274,11 +279,15 @@ const styles = (theme: Theme) => createStyles({
   },
   mobileMenuItemTextEmph: {
     fontWeight: 500,
-    color: Colors.gradientUniswapBlue1,
+    color: theme.palette.type === 'dark'
+      ? Colors.gradientUniswapFluro1
+      : Colors.gradientUniswapBlue1,
   },
   mobileMenuItemTextEmph2: {
     fontWeight: 500,
-    color: Colors.gradientUniswapGreen,
+    color: theme.palette.type === 'dark'
+      ? Colors.purple
+      : Colors.gradientUniswapGreen,
   },
   aLink: {
     color: Colors.charcoal,
@@ -289,7 +298,9 @@ const styles = (theme: Theme) => createStyles({
   buttonLogin: {
     backgroundColor: Colors.cream,
     border: `1px solid ${Colors.charcoal}`,
-    color: Colors.charcoal,
+    color: theme.palette.type === 'dark'
+      ? Colors.uniswapGrey
+      : Colors.charcoal,
     minWidth: '150px',
     "&:hover": {
       color: Colors.secondaryBright,
@@ -299,22 +310,6 @@ const styles = (theme: Theme) => createStyles({
         easing: theme.transitions.easing.easeIn,
         duration: "100ms",
       })
-    }
-  },
-  buttonUploadProduct: {
-    backgroundImage: Gradients.gradientUniswapBlueGreen.background,
-    border: `1px solid ${Colors.gradientUniswapBlue1}`,
-    fontSize: '0.7rem',
-    color: Colors.cream,
-    minWidth: "150px",
-    "&:hover": {
-      backgroundImage: Gradients.gradientUniswapBlueGreen2.background,
-      border: `1px solid ${Colors.gradientUniswapGreen}`,
-      transition: theme.transitions.create(['color', 'border', 'background'], {
-        easing: theme.transitions.easing.easeInOut,
-        duration: "200ms",
-      }),
-      backgroundPosition: '-75px',
     }
   },
   uploadProductText: {
@@ -329,6 +324,9 @@ const styles = (theme: Theme) => createStyles({
   },
   mobileMenuFlexitemSpaceBetween: {
     justifyContent: 'space-between',
+  },
+  maxHeight40: {
+    maxHeight: 40,
   },
 });
 
