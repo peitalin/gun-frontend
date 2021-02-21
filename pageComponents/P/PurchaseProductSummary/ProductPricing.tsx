@@ -23,7 +23,7 @@ const ProductPricing = (props: ReactProps) => {
         classes.marginTopHalf,
       )}>
         {
-          option(props).featuredVariant.price() &&
+          props?.featuredVariant?.price !== undefined &&
           <PriceDisplayProductPage
             price={option(props).featuredVariant.price()}
             priceWas={option(props).featuredVariant.priceWas()}

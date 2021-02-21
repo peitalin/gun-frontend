@@ -4,7 +4,7 @@ import { oc as option } from 'ts-optchain';
 import clsx from "clsx";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
-import { Colors, BorderRadius, BorderRadius3x } from "layout/AppTheme";
+import { Colors, BorderRadius, BorderRadius3x, Gradients } from "layout/AppTheme";
 // Stripe
 import {
   CardElement,
@@ -35,6 +35,8 @@ import {
 // Components
 import ErrorBounds from 'components/ErrorBounds';
 import ButtonLoading from "components/ButtonLoading";
+import { useSelector } from "react-redux";
+import { GrandReduxState, Actions } from "reduxStore/grand-reducer";
 // Graphql
 import { useApolloClient, useLazyQuery } from '@apollo/client';
 // Snackbar
@@ -52,6 +54,9 @@ const VisaPurchaseProduct = (props: ReactProps) => {
   const stripe: Stripe = useStripe();
   const elements = useElements();
   const snackbar = useSnackbar();
+  const isDarkMode = useSelector<GrandReduxState, boolean>(s => {
+    return s.reduxLogin.darkMode === 'dark'
+  })
 
 
   const createNewPaymentMethod = async(): Promise<PaymentMethod> => {
@@ -152,10 +157,22 @@ const VisaPurchaseProduct = (props: ReactProps) => {
                   hidePostalCode: true,
                   style: {
                     base: {
+                      color: isDarkMode
+                        ? Colors.uniswapLightestGrey
+                        : Colors.slateGreyBlack,
+                      iconColor: isDarkMode
+                        ? Colors.uniswapLightestGrey
+                        : Colors.slateGreyBlack,
+                      lineHeight: '1.5rem',
                       "::placeholder": {
                         fontSize: "0.875rem",
                         fontWeight: '400',
-                        color: Colors.grey,
+                        color: isDarkMode
+                          ? Colors.uniswapLightestGrey
+                          : Colors.slateGreyDarkest,
+                        iconColor: isDarkMode
+                          ? Colors.uniswapLightestGrey
+                          : Colors.slateGreyDarkest,
                       },
                     },
                   }
@@ -205,11 +222,11 @@ const VisaPurchaseProduct = (props: ReactProps) => {
               color="secondary"
               className={classes.buyButton}
               style={{
-                height: props.buttonHeight ? props.buttonHeight : "40px",
+                height: props.buttonHeight ? props.buttonHeight : "38px",
               }}
             >
               <span style={{ marginLeft: '0.25rem' }}>
-              { props.title ? props.title : "Buy Instantly" }
+                { props.title ? props.title : "Buy Instantly" }
               </span>
             </ButtonLoading>
           </div>
@@ -269,15 +286,18 @@ const styles = (theme: Theme) => createStyles({
   },
   creditCardContainer: {
     margin: "0px",
-    height: 38,
-    // border: `2px solid ${Colors.charcoal}`,
-    backgroundColor: Colors.cream,
+    height: 40,
+    backgroundColor: theme.palette.type === 'dark'
+      ? Colors.uniswapMediumNavy
+      : Colors.cream,
+    // color: theme.palette.type === 'dark'
+    //   ? Colors.uniswapLightestGrey
+    //   : Colors.black,
     border: `1px solid rgba(170, 170, 170, 0.4)`,
     padding: "0.5rem",
-    borderRadius: BorderRadius3x,
+    borderRadius: BorderRadius,
   },
   receiptLink: {
-    fontFamily: '"Segoe UI","Helvetica Neue",Arial,sans-serif',
   },
   stripeElement: {
     boxSizing: 'border-box',
@@ -285,7 +305,7 @@ const styles = (theme: Theme) => createStyles({
     padding: '10px 12px',
     border: '1px solid transparent',
     borderRadius: BorderRadius,
-    backgroundColor: 'white',
+    // backgroundColor: 'white',
     boxShadow: '0 1px 3px 0 #e6ebf1',
     transition: 'box-shadow 150ms ease',
     "&:focus": {
@@ -323,6 +343,7 @@ const styles = (theme: Theme) => createStyles({
   },
   buyButton: {
     width: "100%",
+    borderRadius: BorderRadius,
   },
   emailField: {
     flexGrow: 1,

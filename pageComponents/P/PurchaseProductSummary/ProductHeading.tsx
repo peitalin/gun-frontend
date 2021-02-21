@@ -24,8 +24,14 @@ const ProductHeading = (props: ReactProps) => {
           {product?.currentSnapshot?.title}
         </Typography>
       </div>
-      <Typography variant="body1" className={classes.tagline}>
+      <Typography variant="body1" className={classes.subInfo}>
         {product?.currentSnapshot?.model}
+      </Typography>
+      <Typography variant="body1" className={classes.subInfo}>
+        {product?.currentSnapshot?.make}
+      </Typography>
+      <Typography variant="body1" className={classes.subInfo}>
+        {product?.currentSnapshot?.serialNumber}
       </Typography>
     </ErrorBounds>
   )
@@ -47,13 +53,13 @@ const styles = (theme: Theme) => createStyles({
   },
   productTitle: {
     fontSize: '1.25rem',
-    lineHeight: "1.75rem",
+    lineHeight: "1.5rem",
     fontWeight: 700,
-    marginBottom: '0.5rem',
+    // marginBottom: '0.5rem',
   },
-  tagline: {
+  subInfo: {
     color: Colors.darkerGrey,
-    fontSize: '1rem',
+    fontSize: '0.9rem',
     fontWeight: 400,
   },
   ratings: {

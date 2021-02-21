@@ -3,7 +3,7 @@ import {oc as option} from "ts-optchain";
 import clsx from "clsx";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
-import { Colors } from "layout/AppTheme";
+import { Colors, BoxShadows, BorderRadius } from "layout/AppTheme";
 // Typings
 import {
   Product, ID, Product_Variants, UserPrivate, ProductPreviewItem,
@@ -20,7 +20,6 @@ import { useApolloClient } from "@apollo/client";
 // Components
 import ProductHeading from "./ProductHeading";
 import ProductPricing from "./ProductPricing";
-import ProductLicenses from "./ProductLicenses";
 // UI components
 import ButtonLoading from "components/ButtonLoading";
 import Loading from "components/Loading";
@@ -88,11 +87,6 @@ const PurchaseProductSummary: React.FC<ReactProps> = (props) => {
             showProductInfo
             ? <>
                 <ProductHeading product={props.product} featuredVariant={featuredVariant}/>
-                <ProductLicenses
-                  selectedOption={selectedOption}
-                  variantOptions={variantOptions}
-                  handleChangeVariantOption={handleChangeVariantOption}
-                />
                 <ProductPricing
                   featuredVariant={featuredVariant}
                   soldOutStatus={props.product.soldOutStatus}
@@ -187,11 +181,20 @@ interface ReactProps extends WithStyles<typeof styles> {
 
 const styles = (theme: Theme) => createStyles({
   purchaseCheckoutSummaryRoot: {
-    borderRadius: '4px',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
     padding: '1rem 1rem',
+    borderRadius: BorderRadius,
+    background: theme.palette.type === 'dark'
+      ? Colors.uniswapDarkNavy
+      : Colors.cream,
+    border: theme.palette.type === 'dark'
+      ? `1px solid ${theme.colors.uniswapGrey}`
+      : `1px solid ${Colors.slateGreyDarker}`,
+    boxShadow: theme.palette.type === 'dark'
+      ? BoxShadows.shadow1.boxShadow
+      : BoxShadows.shadow4.boxShadow,
   },
   flexCol: {
     display: 'flex',
