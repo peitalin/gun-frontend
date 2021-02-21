@@ -19,6 +19,7 @@ const CategoryBreadcrumbs = (props: ReactProps) => {
     classes,
     categoryGroup,
     categoryName,
+    categorySlug,
     dark = false,
   } = props;
 
@@ -36,8 +37,8 @@ const CategoryBreadcrumbs = (props: ReactProps) => {
           <a className={classes.link}>Categories</a>
         </Link>
         <Link
-          href="/categories/[categoryIdOrName]"
-          as={`/categories/${categoryName}`}
+          href="/categories/[categorySlug]"
+          as={`/categories/${categorySlug}`}
         >
           <a className={classes.link}>{categoryName}</a>
         </Link>
@@ -50,6 +51,7 @@ const CategoryBreadcrumbs = (props: ReactProps) => {
 interface ReactProps extends WithStyles<typeof styles> {
   categoryGroup?: string;
   categoryName: string;
+  categorySlug: string;
   dark?: boolean;
 }
 
@@ -67,14 +69,18 @@ const styles = (theme: Theme) => createStyles({
   },
   link: {
     fontSize: '0.8rem',
-    color: '#b4b4b4',
+    color: theme.palette.type === 'dark'
+      ? Colors.uniswapLighterGrey
+      : Colors.slateGreyLightBlack,
     textDecoration: 'none',
     '&:hover': {
       color: Colors.secondary,
     }
   },
   separator: {
-    color: "#aaaaaa",
+    color: theme.palette.type === 'dark'
+      ? Colors.uniswapLighterGrey
+      : Colors.slateGreyLightBlack,
   },
 });
 

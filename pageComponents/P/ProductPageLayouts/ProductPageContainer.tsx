@@ -46,8 +46,9 @@ const ProductPageContainer: React.FC<ProductContainerProps> = (props) => {
         >
           <div className={clsx(classes.breadCrumbRoutes)}>
             <CategoryBreadcrumbs
-              categoryGroup={option(product).category.categoryGroup("")}
-              categoryName={option(product).category.name("")}
+              categoryGroup={product?.category?.categoryGroup}
+              categoryName={product?.category?.name}
+              categorySlug={product?.category?.name}
             />
           </div>
         </Hidden>

@@ -137,7 +137,7 @@ const ProductRow = (props: ReactProps) => {
 
   const handleCopy = async () => {
     snackbar.enqueueSnackbar(
-      "Copied referral link!",
+      "Copied product link!",
       { variant: "info" }
     )
     await copy(
@@ -532,6 +532,9 @@ const styles = (theme: Theme) => createStyles({
     fontWeight: 500,
     fontSize: "0.7rem",
     color: Colors.green,
+    // color: theme.palette.type === 'dark'
+    //   ? Colors.green
+    //   : Colors.lightBlue,
   },
   unpublished: {
     color: Colors.grey,

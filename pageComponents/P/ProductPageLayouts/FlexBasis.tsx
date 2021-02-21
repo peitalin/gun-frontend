@@ -9,17 +9,28 @@ const flexBasisStyles = (theme: Theme) => createStyles({
   flexBasis66: {
     width: '100%',
     flexGrow: 1,
-    flexBasis: '66.66%',
-
+    flexBasis: '63%',
+    // outlineOffset: '-2px',
+    // outline: '2px dashed #A48',
+  },
+  flexBasis66NoGrow: {
+    width: '100%',
+    flexBasis: '63%',
     // outlineOffset: '-2px',
     // outline: '2px dashed #A48',
   },
   flexBasis33: {
     width: '100%',
     flexGrow: 1,
-    flexBasis: '33.33%',
+    flexBasis: '33%',
     position: 'relative',
-
+    // outlineOffset: '-2px',
+    // outline: '2px dashed #A48',
+  },
+  flexBasis33NoGrow: {
+    width: '100%',
+    flexBasis: '33%',
+    position: 'relative',
     // outlineOffset: '-2px',
     // outline: '2px dashed #A48',
   },
@@ -30,6 +41,7 @@ interface FlexBasisProps extends WithStyles<typeof flexBasisStyles> {
   children?: React.ReactElement;
   hidden?: boolean;
   hiddenClassName?: any;
+  flexGrow?: boolean;
 }
 
 const isHiddenComponent = (props: HiddenProps & FlexBasisProps) => {
@@ -49,13 +61,21 @@ const isHiddenComponent = (props: HiddenProps & FlexBasisProps) => {
     !!props.initialWidth
 }
 
+
+
 export const FlexBasis66 = withStyles(flexBasisStyles)(
   (props: FlexBasisProps & HiddenProps) => {
+
+    const {
+      flexGrow = true,
+    } = props;
 
     if (isHiddenComponent(props)) {
       return (
         <Hidden className={clsx(
-            props.classes.flexBasis66,
+            flexGrow
+              ? props.classes.flexBasis66
+              : props.classes.flexBasis66NoGrow,
             props.className
           )}
           only={props.only}
@@ -78,7 +98,9 @@ export const FlexBasis66 = withStyles(flexBasisStyles)(
     } else {
       return (
         <div className={clsx(
-          props.classes.flexBasis66,
+          flexGrow
+            ? props.classes.flexBasis66
+            : props.classes.flexBasis66NoGrow,
           props.className
         )}>
           {props.children}
@@ -88,13 +110,20 @@ export const FlexBasis66 = withStyles(flexBasisStyles)(
   }
 )
 
+
 export const FlexBasis33 = withStyles(flexBasisStyles)(
   (props: FlexBasisProps & HiddenProps) => {
+
+    const {
+      flexGrow = true,
+    } = props;
 
     if (isHiddenComponent(props)) {
       return (
         <Hidden className={clsx(
-            props.classes.flexBasis66,
+            flexGrow
+              ? props.classes.flexBasis33
+              : props.classes.flexBasis33NoGrow,
             props.className
           )}
           only={props.only}
@@ -117,7 +146,9 @@ export const FlexBasis33 = withStyles(flexBasisStyles)(
     } else {
       return (
         <div className={clsx(
-          props.classes.flexBasis33,
+          flexGrow
+            ? props.classes.flexBasis33
+            : props.classes.flexBasis33NoGrow,
           props.className
         )}>
           {props.children}

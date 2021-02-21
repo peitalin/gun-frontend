@@ -3,11 +3,12 @@ import {oc as option} from "ts-optchain";
 import clsx from "clsx";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
+import { Colors } from "layout/AppTheme";
 import { SoldOutStatus } from "typings/gqlTypes";
 // GraphQL
 import { useQuery, useApolloClient } from "@apollo/client";
 // Typings
-import { Product, ID, Product_Variants } from "typings/gqlTypes";
+import { Product, UserPrivate, Product_Variants } from "typings/gqlTypes";
 import {
   GET_PRODUCT,
 } from "queries/products-queries";
@@ -18,6 +19,12 @@ import CategoryBreadcrumbs from "./ProductPageLayouts/CategoryBreadcrumbs";
 import { FlexBasis33, FlexBasis66 } from "./ProductPageLayouts/FlexBasis";
 import ProductPageContainer from "./ProductPageLayouts/ProductPageContainer";
 import ProductRowSection from "./ProductPageLayouts/ProductRowSection";
+import ProductColumnSection from "./ProductPageLayouts/ProductColumnSection";
+import StickyDetailsSeller from "./PurchaseProductSummary/StickyDetailsSeller";
+import StickyDetailsDealer from "./PurchaseProductSummary/StickyDetailsDealer";
+// Redux
+import { useSelector } from "react-redux";
+import { GrandReduxState, Actions } from "reduxStore/grand-reducer";
 
 // GridImage
 import ImageGalleryDesktop from "pageComponents/P/ImageGallery/ImageGalleryDesktop";
@@ -29,7 +36,7 @@ import { useRouter } from "next/router";
 // media query
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
-import { lgUpMediaQuery, col2MinWidth } from "./common";
+import { below1024Query, col2MinWidth } from "./common";
 // Meta headers
 import MetaHeadersPage from "layout/MetaHeadersPage";
 // SSR
@@ -52,14 +59,19 @@ const Products: React.FC<ReactProps> = (props) => {
 
   const theme = useTheme();
   const xsDown = useMediaQuery(theme.breakpoints.down('xs'));
-  const lgUp = useMediaQuery(lgUpMediaQuery);
+  const mdDown = useMediaQuery(theme.breakpoints.down('md'));
+  const below1024 = useMediaQuery(below1024Query);
+  const lgDown = useMediaQuery(theme.breakpoints.down("lg"));
 
   // index for the featuredPreview Carousel
   const [index, setIndex] = React.useState(0);
 
   const router = useRouter();
-
   const productId: string = option(router).query.productId() as any;
+
+  const user = useSelector<GrandReduxState, UserPrivate>(s =>
+    s.reduxLogin.user
+  )
 
   ///////// DATA
 
@@ -138,74 +150,112 @@ const Products: React.FC<ReactProps> = (props) => {
   }
 
   return (
-    <ProductPageContainer
-      product={product}
-      loading={loading}
-    >
+    <ProductPageContainer product={product} loading={loading}>
 
-      <ProductRowSection isMobileRow>
+      <ProductColumnSection isMobileRow>
         <ImageGalleryMobile
           product={product}
-          loading={loading}
+          loading={loading && !product}
           index={index}
           setIndex={setIndex}
+          selectedOption={selectedOption}
         />
-      </ProductRowSection>
+      </ProductColumnSection>
 
-      <ProductRowSection isTopRow>
-        <FlexBasis66
-          className={classes.paddingLeftRight1}
-          // HiddenProps
-          only={['xs']}
-          implementation="css"
-        >
-          <ImageGalleryDesktop
-            product={product}
-            selectedOption={selectedOption}
-            // product={undefined}
-            //// sometimes SSR preload looks off when product is undefined
-            //// replicate by setting product = undefined
-            loading={loading}
-            numberOfItemsTall={16}
-            numberOfItemsWide={8}
-            index={index}
-            setIndex={setIndex}
-          />
-        </FlexBasis66>
+      <FlexBasis66
+        // flexGrow={mdDown} // do not add flexGrow, messes
+        // up responsive imageGallery + floating purchaseSummary
+        implementation="css"
+      >
+        <ProductColumnSection>
+          {
+            !xsDown &&
+            <ImageGalleryDesktop
+              product={product}
+              selectedOption={selectedOption}
+              // product={undefined}
+              //// sometimes SSR preload looks off when product is undefined
+              //// replicate by setting product = undefined
+              loading={loading && !product}
+              numberOfItemsTall={16}
+              numberOfItemsWide={8}
+              index={index}
+              setIndex={setIndex}
+            />
+          }
 
-        <FlexBasis33>
-          <PurchaseProductSummary
-            product={product}
-            selectedOption={selectedOption}
-            refetchProduct={refetch}
-            // productLicense props
-            variantOptions={variantOptions}
-            handleChangeVariantOption={handleChangeVariantOption}
-          />
-        </FlexBasis33>
-      </ProductRowSection>
+          {
+            // !lgDown && below1024 &&
+            below1024 &&
+            <FlexBasis33 className={clsx(
+              below1024 ? classes.positionLgDown : classes.positionSticky,
+              (!lgDown && below1024) && classes.minWidth440,
+              // between 720px and 1024px, expand purchase card to minWidth 440px
+              // to force position: sticky to position: relative
+            )}>
+              <>
+                <PurchaseProductSummary
+                  product={product}
+                  selectedOption={selectedOption}
+                  refetchProduct={refetch}
+                  variantOptions={variantOptions}
+                  handleChangeVariantOption={handleChangeVariantOption}
+                />
+                <StickyDetailsSeller
+                  user={user}
+                  product={product}
+                  below1024={below1024}
+                />
+                <StickyDetailsDealer
+                  dealer={product?.currentSnapshot?.dealer}
+                  below1024={below1024}
+                />
+              </>
+            </FlexBasis33>
+          }
 
-      <ProductRowSection isBottomRow>
-        <FlexBasis66 className={classes.paddingLeftRight1}>
           {
             product &&
             <ProductDetails
               product={product}
               selectedOption={selectedOption}
+              // showProductId={
+              //   user?.userRole === Role.PLATFORM_ADMIN ||
+              //   user?.userRole === Role.PLATFORM_EDITOR
+              // }
             />
           }
-        </FlexBasis66>
-        <FlexBasis33>
+        </ProductColumnSection>
+      </FlexBasis66>
+
+      {
+        !below1024 &&
+        <FlexBasis33 className={clsx(
+          below1024 ? classes.positionLgDown : classes.positionSticky,
+          (!lgDown && below1024) && classes.minWidth440,
+          // between 720px and 1024px, expand purchase card to minWidth 440px
+          // to force position: sticky to position: relative
+        )}>
           <>
-            recommendations
-          {/* <ProductPageRecommendations
-            index={index}
-            setIndex={setIndex}
-            currentlyViewingProductIdOrSlug={productId}
-          /> */}
+            <PurchaseProductSummary
+              product={product}
+              selectedOption={selectedOption}
+              refetchProduct={refetch}
+              variantOptions={variantOptions}
+              handleChangeVariantOption={handleChangeVariantOption}
+            />
+            <StickyDetailsSeller
+              user={user}
+              product={product}
+              below1024={below1024}
+            />
+            <StickyDetailsDealer
+              dealer={product?.currentSnapshot?.dealer}
+              below1024={below1024}
+            />
           </>
         </FlexBasis33>
-      </ProductRowSection>
+      }
 
     </ProductPageContainer>
   );
@@ -233,7 +283,34 @@ const styles = (theme: Theme) => createStyles({
   paddingLeftRight1: {
     paddingLeft: '1rem',
     paddingRight: '1rem',
-  }
+  },
+  positionSticky: {
+    position: "sticky",
+    top: "1rem",
+    paddingRight: '1rem',
+    //
+    height: "100%",
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  minWidth440: {
+    // expand product purchase card to 400px when near 1024px, to
+    // force flexbox layout to shift, and to change
+    // position: sticky to position: relative
+    minWidth: 440,
+  },
+  positionLgDown: {
+    position: "relative",
+    top: "1rem",
+    //
+    // height: "100%",
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 });
 
 
