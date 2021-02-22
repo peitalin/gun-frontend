@@ -43,6 +43,19 @@ export type ApprovePayoutsResult = {
   payoutsAlreadyApproved?: Maybe<Array<Maybe<Payout>>>;
 };
 
+/** Information about a person on the platform */
+export type BasicUser = {
+  id: Scalars['ID'];
+  createdAt?: Maybe<Scalars['Date']>;
+  /**
+   * firstName: String
+   * lastName: String
+   * email: String
+   */
+  licenseId?: Maybe<Scalars['String']>;
+  license?: Maybe<User_Licenses>;
+};
+
 /** columns and relationships of "bids" */
 export type Bids = {
    __typename?: 'bids';
@@ -9365,13 +9378,13 @@ export type Query = {
    * 
    * AccessRule – PUBLIC
    */
-  user?: Maybe<User>;
+  user?: Maybe<BasicUser>;
   /**
    * Lookup private information about a user using their ID or email address.
    * 
    * AccessRule – PLATFORM_ADMIN
    */
-  userByEmailOrId?: Maybe<User>;
+  userByEmailOrId?: Maybe<BasicUser>;
   /**
    * Query the list of products that are recommended for the logged-in user.
    * If nobody is logged in, a general list of recommendations is still returned.
@@ -10751,7 +10764,7 @@ export type Store = {
   createdAt: Scalars['Date'];
   updatedAt?: Maybe<Scalars['Date']>;
   userId: Scalars['ID'];
-  user?: Maybe<User>;
+  user?: Maybe<BasicUser>;
   name: Scalars['String'];
   profileId?: Maybe<Scalars['ID']>;
   profile?: Maybe<Image_Parents>;
@@ -12556,19 +12569,6 @@ export enum UploadType {
   PRODUCT_FILE = 'PRODUCT_FILE'
 }
 
-/** Information about a person on the platform */
-export type User = {
-  id: Scalars['ID'];
-  createdAt?: Maybe<Scalars['Date']>;
-  /**
-   * firstName: String
-   * lastName: String
-   * email: String
-   */
-  licenseId?: Maybe<Scalars['String']>;
-  license?: Maybe<User_Licenses>;
-};
-
 /** columns and relationships of "user_licenses" */
 export type User_Licenses = {
    __typename?: 'user_licenses';
@@ -12767,7 +12767,7 @@ export type UserMutationResponse = {
 };
 
 /** Private user info */
-export type UserPrivate = User & {
+export type UserPrivate = BasicUser & {
    __typename?: 'UserPrivate';
   id: Scalars['ID'];
   createdAt?: Maybe<Scalars['Date']>;
@@ -12836,15 +12836,13 @@ export type UserPrivateFollowingStoresArgs = {
 };
 
 /** Public user info */
-export type UserPublic = User & {
+export type UserPublic = BasicUser & {
    __typename?: 'UserPublic';
   id: Scalars['ID'];
   createdAt?: Maybe<Scalars['Date']>;
-  /**
-   * firstName: String
-   * lastName: String
-   * email: String
-   */
+  firstName?: Maybe<Scalars['String']>;
+  lastName?: Maybe<Scalars['String']>;
+  /** email: String */
   licenseId?: Maybe<Scalars['String']>;
   license?: Maybe<User_Licenses>;
 };
@@ -13585,7 +13583,7 @@ export enum Users_Update_Column {
   USERNAME = 'username'
 }
 
-export type UserWithRole = User & {
+export type UserWithRole = BasicUser & {
    __typename?: 'UserWithRole';
   id: Scalars['ID'];
   createdAt?: Maybe<Scalars['Date']>;
@@ -13710,7 +13708,7 @@ type ProductFragment_ProductPrivate_ = { __typename?: 'ProductPrivate', id: stri
   ), featuredVariant: (
     { __typename?: 'product_variants' }
     & ProductVariantFragment
-  ), store?: Maybe<{ __typename?: 'StorePrivate', id: string, name: string, user?: Maybe<{ __typename?: 'UserPrivate', license?: Maybe<{ __typename?: 'user_licenses', id: string, licenseNumber: string, licenseCategory?: Maybe<string>, licenseExpiry: any, licenseState?: Maybe<string> }> }> } | { __typename?: 'StorePublic', id: string, name: string, user?: Maybe<{ __typename?: 'UserPublic', license?: Maybe<{ __typename?: 'user_licenses', id: string, licenseNumber: string, licenseCategory?: Maybe<string>, licenseExpiry: any, licenseState?: Maybe<string> }> }> }>, category?: Maybe<{ __typename?: 'categories', id: string, name: string, categoryGroup: string }> };
+  ), store?: Maybe<{ __typename?: 'StorePrivate', id: string, name: string, userId: string, user?: Maybe<{ __typename?: 'UserPrivate', id: string, license?: Maybe<{ __typename?: 'user_licenses', id: string, licenseNumber: string, licenseCategory?: Maybe<string>, licenseExpiry: any, licenseState?: Maybe<string>, verified: boolean }> }> } | { __typename?: 'StorePublic', id: string, name: string, userId: string, user?: Maybe<{ __typename?: 'UserPublic', id: string, license?: Maybe<{ __typename?: 'user_licenses', id: string, licenseNumber: string, licenseCategory?: Maybe<string>, licenseExpiry: any, licenseState?: Maybe<string>, verified: boolean }> }> }>, category?: Maybe<{ __typename?: 'categories', id: string, name: string, categoryGroup: string }> };
 
 type ProductFragment_ProductPublic_ = { __typename?: 'ProductPublic', id: string, createdAt?: Maybe<any>, updatedAt?: Maybe<any>, tags?: Maybe<string>, isPublished: boolean, isSuspended: boolean, isDeleted: boolean, isExcludedFromRecommendations: boolean, storeId: string, soldOutStatus: string, currentSnapshot: (
     { __typename?: 'product_snapshots' }
@@ -13718,7 +13716,7 @@ type ProductFragment_ProductPublic_ = { __typename?: 'ProductPublic', id: string
   ), featuredVariant: (
     { __typename?: 'product_variants' }
     & ProductVariantFragment
-  ), store?: Maybe<{ __typename?: 'StorePrivate', id: string, name: string, user?: Maybe<{ __typename?: 'UserPrivate', license?: Maybe<{ __typename?: 'user_licenses', id: string, licenseNumber: string, licenseCategory?: Maybe<string>, licenseExpiry: any, licenseState?: Maybe<string> }> }> } | { __typename?: 'StorePublic', id: string, name: string, user?: Maybe<{ __typename?: 'UserPublic', license?: Maybe<{ __typename?: 'user_licenses', id: string, licenseNumber: string, licenseCategory?: Maybe<string>, licenseExpiry: any, licenseState?: Maybe<string> }> }> }>, category?: Maybe<{ __typename?: 'categories', id: string, name: string, categoryGroup: string }> };
+  ), store?: Maybe<{ __typename?: 'StorePrivate', id: string, name: string, userId: string, user?: Maybe<{ __typename?: 'UserPrivate', id: string, license?: Maybe<{ __typename?: 'user_licenses', id: string, licenseNumber: string, licenseCategory?: Maybe<string>, licenseExpiry: any, licenseState?: Maybe<string>, verified: boolean }> }> } | { __typename?: 'StorePublic', id: string, name: string, userId: string, user?: Maybe<{ __typename?: 'UserPublic', id: string, license?: Maybe<{ __typename?: 'user_licenses', id: string, licenseNumber: string, licenseCategory?: Maybe<string>, licenseExpiry: any, licenseState?: Maybe<string>, verified: boolean }> }> }>, category?: Maybe<{ __typename?: 'categories', id: string, name: string, categoryGroup: string }> };
 
 export type ProductFragment = ProductFragment_ProductPrivate_ | ProductFragment_ProductPublic_;
 
@@ -13773,18 +13771,6 @@ export type TransactionFragment = { __typename?: 'transactions', id: string, tot
     { __typename?: 'refunds' }
     & RefundFragment
   )> };
-
-export type Unnamed_1_MutationVariables = Exact<{
-  image_parents_input: Array<Image_Parents_Insert_Input>;
-  image_variants_input: Array<Image_Variants_Insert_Input>;
-  product_preview_items_input: Array<Product_Preview_Items_Insert_Input>;
-  product_variants_input: Array<Product_Variants_Insert_Input>;
-  product_snapshots_input: Array<Product_Snapshots_Insert_Input>;
-  products_input: Array<Products_Insert_Input>;
-}>;
-
-
-export type Unnamed_1_Mutation = { __typename?: 'Mutation', insert_image_parents?: Maybe<{ __typename?: 'image_parents_mutation_response', affected_rows: number }>, insert_image_variants?: Maybe<{ __typename?: 'image_variants_mutation_response', affected_rows: number }>, insert_product_preview_items?: Maybe<{ __typename?: 'product_preview_items_mutation_response', affected_rows: number }>, insert_product_variants?: Maybe<{ __typename?: 'product_variants_mutation_response', affected_rows: number }>, insert_product_snapshots?: Maybe<{ __typename?: 'product_snapshots_mutation_response', affected_rows: number }>, insert_products?: Maybe<{ __typename?: 'products_mutation_response', affected_rows: number }> };
 
 export type ProductsAllConnectionQueryVariables = Exact<{
   searchTerm: Scalars['String'];
@@ -14189,13 +14175,16 @@ export const ProductFragmentFragmentDoc = gql`
   store {
     id
     name
+    userId
     user {
+      id
       license {
         id
         licenseNumber
         licenseCategory
         licenseExpiry
         licenseState
+        verified
       }
     }
   }

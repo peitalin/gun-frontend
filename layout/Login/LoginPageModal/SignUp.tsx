@@ -151,7 +151,7 @@ const SignUp: React.FC<ReactProps> = (props) => {
               onChange={(e) => {
                 e.persist(); // for persisting synthetic events
                 let expiry = formatGunLicenseExpiry(e.target.value, isBackspace)
-                // console.log("formatted expiry: ", expiry)
+                console.log("formatted expiry: ", expiry)
                 setState(s => ({ ...s, licenseExpiry: expiry }))
               }}
             />

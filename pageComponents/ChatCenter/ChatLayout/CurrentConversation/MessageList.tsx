@@ -67,7 +67,10 @@ const MessageItem = (props: MessageItemProps) => {
 
   const [updateBidMessage, { data, loading }] = useMutation<MutData, MutVars>(
     UPDATE_BID_MESSAGE, {
-      // variables: { }, // add later in sendMessage()
+      variables: {
+        bidId: bid?.id,
+        bidStatus: "WITHDRAWN",
+      }, // add later in sendMessage()
       onCompleted: (data) => {
         console.log(data)
       },
@@ -85,6 +88,7 @@ const MessageItem = (props: MessageItemProps) => {
   }
 
   let bidDisabled = isBidDisabled(bid)
+  // console.log("bid.id: ", bid?.id)
 
   if (isMe) {
     return (
@@ -109,13 +113,15 @@ const MessageItem = (props: MessageItemProps) => {
           <div className={classes.messageText}>
             {`Offer: ${m.bid.offerPrice}`}
             <ButtonLoading
-              onClick={() => {
-                updateBidMessage({
+              onClick={async() => {
+                console.log("bid.id: ", bid?.id)
+                let response = await updateBidMessage({
                   variables: {
-                    bidId: bid.id,
+                    bidId: bid?.id,
                     bidStatus: "WITHDRAWN",
                   }
                 })
+                console.log("res: ", response)
               }}
               loadingIconColor={Colors.blue}
               replaceTextWhenLoading={true}

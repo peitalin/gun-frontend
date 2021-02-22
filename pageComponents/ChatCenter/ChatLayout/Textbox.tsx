@@ -31,6 +31,13 @@ import {
   EMIT_TYPING_EVENT,
 } from "queries/chat-mutations";
 
+import TextInputAdorned from 'components/Fields/TextInputAdorned';
+import { Rifm } from 'rifm';
+import { formatCurrency, parseNumber} from "utils/currencyInput";
+// Typings
+import { asCurrency as c } from "utils/prices";
+/// Debounce
+import { useDebouncedCallback } from 'use-debounce';
 
 
 
@@ -146,6 +153,22 @@ export const Textbox: React.FC<ReactProps> = (props) => {
     }
   )
 
+  // Debounce Formik State changes to limit lag
+  const [updatePrice] = useDebouncedCallback((e: any) => {
+    let cents = Math.round(parseFloat(e)) // round: 200.9999 => 201
+    console.log('cents: ', cents)
+    if (cents) {
+      setOfferPrice(cents)
+    } else {
+      // setOfferPrice(undefined)
+    }
+  }, 16);
+
+
+  // RIFM - masking currency values
+  const [displayedPrice, setDisplayedPrice] = React.useState(
+    c(0) || ''
+  );
 
   // Mutation component. Add message to the state of <RenderMessages> after mutation.
   return (
@@ -154,29 +177,55 @@ export const Textbox: React.FC<ReactProps> = (props) => {
         <TypingIndicator userId={props.userId} />
         <div className={classes.textEditorWrapper}>
 
-          <TextInput
-            placeholder={"Enter a bid"}
-            className={classes.inputField}
-            value={offerPrice}
-            onChange={(e) => setOfferPrice(e.target.value)}
-            inputProps={{
-              style: { width: '100%' },
+          <Rifm
+            // $ need to be in regexp to prevent cursor jumping on backspace
+            accept={/[\d.]/g}
+            format={formatCurrency}
+            value={displayedPrice}
+            onChange={value => {
+              // values before currency mask
+              // multiple by 100 as formik/graphql takes cents, not dollars
+              let dollars = parseNumber(value)
+              setDisplayedPrice(dollars)
+              updatePrice(dollars * 100)
+              // multiple by 100 as formik/graphql takes cents, not dollars
             }}
-          />
+          >
+            {({ value, onChange }) => (
+              <TextInputAdorned
+                startAdornment={"$ "}
+                name={'bid'}
+                type="currency"
+                // placeholder="0.00"
+                placeholder={"Enter a bid"}
+                className={classes.inputField}
+                value={value || ""}
+                onChange={(e) => {
+                  e.persist()
+                  onChange(e)
+                }}
+                inputProps={{ style: { width: '100%', marginLeft: '0.25rem' }}}
+                // errorMessage={
+                //   errors?.currentVariants?.[position]?.price
+                //   ? errors.currentVariants[position].price
+                //   : null
+                // }
+                // touched={touched?.currentVariants?.[position]?.price}
+                // validationErrorMsgStyle={{
+                //   bottom: '-1.15rem',
+                // }}
+              />
+            )}
+          </Rifm>
+
 
           <TextEditorSSR
-            // errorMessage={errors.description}
-            // touched={touched.description}
             onChange={(value) => {
               setDescription(value)
             }}
             resetSlate={resetSlate}
-            // limit={{
-            //   max: maxLengthProductDescription, // 2000 chars
-            // }}
             className={classes.textEditorRoot}
             placeholder={"Send a message"}
-            // disableFocusOutline={true}
             editorStyle={{
             }}
           />

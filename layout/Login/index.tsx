@@ -211,6 +211,7 @@ const Login: React.FC<ReactProps> = (props) => {
         licenseExpiry: new Date(licenseExpiry),
       },
       update: (cache, { data: { createUser } }) => {
+        setState(s => ({ ...s, buttonLoading: true }))
       },
       errorPolicy: "all", // propagate errors from backend to Snackbar
     });

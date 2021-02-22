@@ -1,10 +1,8 @@
 import gql from "graphql-tag";
 import {
   ProductFragment,
-  PaymentMethodFragment,
   ImageFragment,
   OrdersFragment,
-  RefundFragment,
 } from "./fragments";
 
 
@@ -198,9 +196,14 @@ export const GET_RECENT_TRANSACTIONS = gql`
       paymentProcessor
       details
       refund {
-        ...RefundFragment
+        id
+        transactionId
+        orderId
+        createdAt
+        reason
+        reasonDetails
+        receiptNumber
       }
     }
   }
-  ${RefundFragment}
 `;

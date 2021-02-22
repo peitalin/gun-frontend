@@ -20,7 +20,8 @@ import { getYouTubeVimeoImagePreview } from "utils/links";
 const ProductPreviewCardRow = (props: ReactProps) => {
 
   // const [previewLoaded, setPreviewLoaded] = React.useState(0);
-  const { classes, previewItem } = props;
+  const { classes } = props;
+  const previewItem = props.previewItem;
 
   return (
     <Card

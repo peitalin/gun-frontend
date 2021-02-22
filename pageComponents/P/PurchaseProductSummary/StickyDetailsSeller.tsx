@@ -26,6 +26,8 @@ const StickyDetailsSeller = (props: ReactProps) => {
   const {
     classes,
     storeName,
+    product,
+    buyerId,
     seller,
   } = props;
 
@@ -35,6 +37,8 @@ const StickyDetailsSeller = (props: ReactProps) => {
     await copy(text);
     console.log("Copied!");
   };
+
+  console.log("seller: ", seller)
 
   return (
     <div className={clsx(
@@ -69,15 +73,15 @@ const StickyDetailsSeller = (props: ReactProps) => {
           </div>
         </div>
       </div>
-      {/* {
-        user?.id &&
+      {
+        seller?.id &&
         <div className={classes.bidButtonContainer}>
           <CreateOfferSubscription
-            userId={user.id}
-            product={props?.product}
+            userId={buyerId}
+            product={product}
           />
         </div>
-      } */}
+      }
       <div className={classes.arrowDownContainer}>
         <ArrowDownwardIcon
           className={classes.arrowIcon}
@@ -90,6 +94,8 @@ const StickyDetailsSeller = (props: ReactProps) => {
 
 interface ReactProps extends WithStyles<typeof styles> {
   seller: UserPublic
+  buyerId: string
+  product: Product
   storeName: string
   below1024: boolean
 }

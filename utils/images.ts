@@ -44,5 +44,5 @@ export const genImgBreakpoints = ({ xs, sm, md, lg, xl }: Breakpoints) => {
 export const getFeaturedPreviewFromProduct = (
   product: Products & { featuredVariant?: Product_Variants}
 ): Product_Preview_Items => {
-  return product?.featuredVariant?.[0].previewItems?.[0]
+  return product?.featuredVariant?.previewItems?.[0]
 }

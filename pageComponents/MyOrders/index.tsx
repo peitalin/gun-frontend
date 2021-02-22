@@ -184,9 +184,9 @@ const MyOrders: React.FC<ReactProps> = (props) => {
     !option(buyerOrdersConnection).edges[0]() &&
     !option(sellerOrdersConnection).edges[0]() &&
     !option(sellerOrdersActionItemsConnection).edges[0]() &&
-    !buyerOrdersResponse.loading &&
     !sellerOrdersResponse.loading &&
-    !sellerOrdersActionItemsResponse.loading
+    !sellerOrdersActionItemsResponse.loading &&
+    !buyerOrdersResponse.loading
   ) {
     return (
       <OrdersLayout {...props}>

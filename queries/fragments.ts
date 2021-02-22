@@ -28,7 +28,7 @@ export const ImageFragment = gql`
 
 
 export const ProductDetailsFragment = gql`
-  fragment ProductDetailsFragment on products {
+  fragment ProductDetailsFragment on Product {
     id
     createdAt
     updatedAt
@@ -109,34 +109,75 @@ export const ProductVariantsFragment = gql`
 `;
 
 
-export const ProductsFragment = gql`
-  fragment ProductsFragment on products {
-    ...ProductDetailsFragment
-    currentSnapshotId
+export const ProductFragment = gql`
+  fragment ProductFragment on Product {
+    id
+    createdAt
+    updatedAt
+    tags
+    isPublished
+    isSuspended
+    isDeleted
+    isExcludedFromRecommendations
+    storeId
+    soldOutStatus
+
     currentSnapshot {
       ...ProductSnapshotsFragment
     }
-    featuredVariant: productVariants(
-      limit: 1
-      where: { isDefault: {_eq: true }}
-      order_by: { createdAt: desc }
-    ) {
+
+    featuredVariant {
       ...ProductVariantsFragment
     }
-    # productVariants(
-    #   where: {productId: {_in: $productIds }}
-    # ) {
-    #   ...ProductVariantsFragment
-    # }
+    store {
+      id
+      name
+      userId
+      user {
+        id
+        license {
+          id
+          licenseNumber
+          licenseCategory
+          licenseExpiry
+          licenseState
+          verified
+        }
+      }
+    }
+    category {
+      id
+      name
+      categoryGroup
+    }
   }
-  ${ProductDetailsFragment}
-  ${ProductSnapshotsFragment}
   ${ProductVariantsFragment}
+  ${ProductSnapshotsFragment}
 `;
+
+// export const ProductsFragment = gql`
+//   fragment ProductsFragment on Products {
+//     ...ProductDetailsFragment
+//     currentSnapshotId
+//     currentSnapshot {
+//       ...ProductSnapshotsFragment
+//     }
+//     featuredVariant: productVariants(
+//       limit: 1
+//       where: { isDefault: {_eq: true }}
+//       order_by: { createdAt: desc }
+//     ) {
+//       ...ProductVariantsFragment
+//     }
+//   }
+//   ${ProductDetailsFragment}
+//   ${ProductSnapshotsFragment}
+//   ${ProductVariantsFragment}
+// `;
 
 
 export const StoresFragment = gql`
-  fragment StoresFragment on stores {
+  fragment StoresFragment on Store {
     id
     createdAt
     name
@@ -153,40 +194,13 @@ export const StoresFragment = gql`
     profile {
       ...ImageFragment
     }
-
-    productsForSaleConnection: products(
-      where: {
-        isPublished: {_eq: true },
-        isDeleted: {_eq: false },
-        isSuspended: {_eq: false}
-      }
-    ) {
-      ...ProductsFragment
-    }
-
-    dashboardPublishedProductsConnection: products(
-      where: {
-        isPublished: {_eq: true }
-      }
-    ) {
-      ...ProductsFragment
-    }
-
-    dashboardUnpublishedProductsConnection: products(
-      where: {
-        isPublished: {_eq: false }
-      }
-    ) {
-      ...ProductsFragment
-    }
   }
   ${ImageFragment}
-  ${ProductsFragment}
 `;
 
 
 export const UsersFragment = gql`
-  fragment UsersFragment on users {
+  fragment UsersFragment on User {
     store {
       ...StoresFragment
     }
@@ -230,7 +244,7 @@ export const UsersFragment = gql`
 
 
 export const OrdersFragment = gql`
-  fragment OrdersFragment on orders {
+  fragment OrdersFragment on Order {
     id
     createdAt
     updatedAt
@@ -248,9 +262,9 @@ export const OrdersFragment = gql`
     buyerId
     buyer {
       id
-      firstName
-      lastName
-      email
+      # firstName
+      # lastName
+      # email
     }
     sellerId
     seller {
@@ -261,24 +275,24 @@ export const OrdersFragment = gql`
       updatedAt
       user {
         id
-        firstName
-        lastName
-        email
-        payoutMethod {
-          id
-          createdAt
-          updatedAt
-          payoutType
-          bsb
-          accountNumber
-          accountName
-        }
-        phoneNumber {
-          id
-          areaCode
-          countryCode
-          number
-        }
+        # firstName
+        # lastName
+        # email
+        # payoutMethod {
+        #   id
+        #   createdAt
+        #   updatedAt
+        #   payoutType
+        #   bsb
+        #   accountNumber
+        #   accountName
+        # }
+        # phoneNumber {
+        #   id
+        #   areaCode
+        #   countryCode
+        #   number
+        # }
       }
     }
     currentSnapshot {
@@ -340,7 +354,7 @@ export const OrdersFragment = gql`
     }
     productId
     product {
-      ...ProductsFragment
+      ...ProductFragment
     }
     payoutItems {
       id
@@ -358,79 +372,11 @@ export const OrdersFragment = gql`
     }
     paymentIntentId
   }
-  ${ProductsFragment}
+  ${ProductFragment}
   ${ImageFragment}
 `;
 
 
-export const ProductVariantFragment = gql`
-  fragment ProductVariantFragment on product_variants {
-    variantSnapshotId
-    variantId
-    snapshotId
-    productId
-    storeId
-    createdAt
-    variantName
-    variantDescription
-    isDefault
-    position
-    price
-    priceWas
-    previewItems {
-      id
-      image {
-        ...ImageFragment
-      }
-      youTubeEmbedLink
-    }
-  }
-  ${ImageFragment}
-`;
-
-export const ProductFragment = gql`
-  fragment ProductFragment on Product {
-    id
-    createdAt
-    updatedAt
-    tags
-    isPublished
-    isSuspended
-    isDeleted
-    isExcludedFromRecommendations
-    storeId
-    soldOutStatus
-
-    currentSnapshot {
-      ...ProductSnapshotsFragment
-    }
-
-    featuredVariant {
-      ...ProductVariantFragment
-    }
-    store {
-      id
-      name
-      user {
-        license {
-          id
-          licenseNumber
-          licenseCategory
-          licenseExpiry
-          licenseState
-          # verified
-        }
-      }
-    }
-    category {
-      id
-      name
-      categoryGroup
-    }
-  }
-  ${ProductVariantFragment}
-  ${ProductSnapshotsFragment}
-`;
 
 
 export const StorePublicFragment = gql`
@@ -607,17 +553,6 @@ export const UserPrivateFragment = gql`
 // ${OrderFragment}
 // ${PaymentMethodFragment}
 
-export const RefundFragment = gql`
-  fragment RefundFragment on refunds {
-    id
-    transactionId
-    orderId
-    createdAt
-    reason
-    reasonDetails
-    receiptNumber
-  }
-`;
 
 
 export const TransactionFragment = gql`
@@ -634,8 +569,13 @@ export const TransactionFragment = gql`
     paymentIntentId
     refundId
     refund {
-      ...RefundFragment
+      id
+      transactionId
+      orderId
+      createdAt
+      reason
+      reasonDetails
+      receiptNumber
     }
   }
-  ${RefundFragment}
 `;

@@ -1,16 +1,5 @@
 import gql from "graphql-tag";
 
-export const RefundFragment = gql`
-  fragment RefundFragment on Refund {
-    id
-    transactionId
-    orderId
-    orderItemIds
-    createdAt
-    reason
-    reasonDetails
-  }
-`;
 
 /// Lookup Store via OrderItem
 export const OrderItemStoreFragment = gql`
@@ -56,10 +45,15 @@ export const TransactionFragment = gql`
       }
     }
     refund {
-      ...RefundFragment
+      id
+      transactionId
+      orderId
+      orderItemIds
+      createdAt
+      reason
+      reasonDetails
     }
   }
-  ${RefundFragment}
 `;
 
 export const PayoutItemFragment = gql`

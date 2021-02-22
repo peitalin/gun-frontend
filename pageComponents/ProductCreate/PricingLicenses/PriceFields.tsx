@@ -114,11 +114,11 @@ const PriceFields = (props: ReactProps & FormikProps<FormikFields>) => {
                   onBlur={handleBlur}
                   inputProps={{ style: { width: '100%', marginLeft: '0.25rem' }}}
                   errorMessage={
-                    errors?.currentVariants[position]?.price
+                    errors?.currentVariants?.[position]?.price
                     ? errors.currentVariants[position].price
                     : null
                   }
-                  touched={touched?.currentVariants[position]?.price}
+                  touched={touched?.currentVariants?.[position]?.price}
                   validationErrorMsgStyle={{
                     bottom: '-1.15rem',
                   }}
@@ -134,11 +134,11 @@ const PriceFields = (props: ReactProps & FormikProps<FormikFields>) => {
       <div className={classes.container}>
         <PriceDisplayProductPage
           hideSavings={
-            (currentVariants[position]?.priceWas ?? 0)
-            <= (currentVariants[position]?.price ?? 0)
+            (currentVariants?.[position]?.priceWas ?? 0)
+            <= (currentVariants?.[position]?.price ?? 0)
           }
-          price={currentVariants[position]?.price}
-          priceWas={currentVariants[position]?.priceWas}
+          price={currentVariants?.[position]?.price}
+          priceWas={currentVariants?.[position]?.priceWas}
         />
       </div>
     </ErrorBounds>

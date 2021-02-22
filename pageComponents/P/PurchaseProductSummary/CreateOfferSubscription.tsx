@@ -51,7 +51,12 @@ const CreateOfferSubscription = (props: ReactProps) => {
   )
   // console.log("existing productIds", existingChatsProductIds)
   // console.log("alreadyChatting about product?", alreadyChattingAboutProduct)
+
   let buyerIsSeller = props?.product?.store?.userId === userId
+
+  // console.log("buyerIsSeller", buyerIsSeller)
+  // console.log("userId", userId)
+  // console.log("userId2", props.product?.store?.userId)
 
   return (
     <div className={classes.createOfferRoot}>

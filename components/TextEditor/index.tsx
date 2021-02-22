@@ -256,7 +256,9 @@ export const styles = (theme: Theme) => createStyles({
     border: theme.palette.type === 'dark'
       ? `1px solid ${Colors.uniswapGrey}`
       : `1px solid ${Colors.slateGreyDarker}`,
-    color: Colors.cream,
+    color: theme.palette.type === 'dark'
+      ? Colors.cream
+      : Colors.black,
     borderRadius: BorderRadius,
     transition: theme.transitions.create(['border-color', 'box-shadow'], {
       easing: theme.transitions.easing.easeIn,

@@ -51,9 +51,9 @@ export const INSERT_BID_MESSAGE = gql`
       chatRoomId: $chatRoomId,
       content: $content,
       senderId: $senderId,
-      bidId: $bidId,
-      bids: {data: [
-        {
+      # bidId: $bidId, # already determined by bid.id in line below
+      bid: {
+        data: {
           id: $bidId,
           productId: $productId,
           productSnapshotId: $productSnapshotId,
@@ -62,7 +62,7 @@ export const INSERT_BID_MESSAGE = gql`
           offerPrice: $offerPrice,
           bidStatus: $bidStatus
         }
-      ]}
+      }
     }]) {
       affected_rows
       # ...ChatMessageFragment
