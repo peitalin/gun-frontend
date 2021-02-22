@@ -28,7 +28,7 @@ import OrderSummary from "./OrderSummary";
 import OrderPriceBreakdown from "./OrderPriceBreakdown";
 import ProductCard from "./ProductCard";
 import RowExpander from "../PayoutsPendingApprovals/OrdersPendingApprovalTable/RowExpander";
-import { createData } from '../PayoutsPendingApprovals/OrdersPendingApprovalTable/createData';
+import { createDataForPendingApprovalTable } from '../PayoutsPendingApprovals/OrdersPendingApprovalTable/createData';
 import { canBeCancelled } from "pageComponents/Gov/OrderViewer/cancelHelpers";
 import TableContainer from '@material-ui/core/TableContainer';
 import Table from '@material-ui/core/Table';
@@ -284,7 +284,7 @@ const OrderViewer: React.FC<ReactProps> = (props) => {
                         key={order.id}
                         initialOpen={true}
                         row={
-                          createData({
+                          createDataForPendingApprovalTable({
                             id: order.id,
                             total: order.total,
                             createdAt: order.createdAt,

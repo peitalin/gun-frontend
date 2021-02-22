@@ -2,7 +2,7 @@ import {
   Order_Snapshots,
   Orders,
   Products,
-  User,
+  Users,
   StorePrivate,
   Stores,
   OrderStatus,
@@ -10,7 +10,7 @@ import {
 import { oc as option } from "ts-optchain";
 
 
-export const createData = ({
+export const createDataForPendingApprovalTable = ({
   id,
   createdAt,
   total,
@@ -26,7 +26,7 @@ export const createData = ({
   createdAt: Date,
   total: number,
   seller: Stores,
-  buyer: User,
+  buyer: Users,
   currentOrderSnapshot: Order_Snapshots,
   orderSnapshots?: Order_Snapshots[]
   product?: Products,
@@ -68,9 +68,9 @@ export const createData = ({
 
 const getUserWhoActionedOrderStatus = (
   orderSnapshot: Order_Snapshots,
-  buyer: User,
+  buyer: Users,
   seller: Stores,
-): User => {
+): Users => {
 
   let orderStatus = option(orderSnapshot).orderStatus();
 

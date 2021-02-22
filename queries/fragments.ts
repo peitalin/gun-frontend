@@ -411,6 +411,16 @@ export const ProductFragment = gql`
     store {
       id
       name
+      user {
+        license {
+          id
+          licenseNumber
+          licenseCategory
+          licenseExpiry
+          licenseState
+          # verified
+        }
+      }
     }
     category {
       id

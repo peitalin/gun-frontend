@@ -6,7 +6,7 @@ import { oc as option } from "ts-optchain";
 
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
-import { createData } from "./createData";
+import { createDataForExpiringTable } from "./createData";
 
 import Dialog from "@material-ui/core/Dialog";
 import Button from "@material-ui/core/Button";
@@ -304,7 +304,7 @@ const RowExpander = (props: RowExpanderProps) => {
 
 
 interface RowExpanderProps extends WithStyles<typeof styles> {
-  row: ReturnType<typeof createData>
+  row: ReturnType<typeof createDataForExpiringTable>
   admin: User
   index?: number
   refetchQueriesParams?: {

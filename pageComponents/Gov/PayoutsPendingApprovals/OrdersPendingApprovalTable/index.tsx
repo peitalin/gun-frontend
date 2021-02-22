@@ -35,7 +35,7 @@ import currency from "currency.js";
 import { useMutation, useQuery } from "@apollo/client";
 
 import RowExpander from "./RowExpander";
-import { createData } from "./createData";
+import { createDataForPendingApprovalTable } from "./createData";
 
 // Search Component
 import SearchOptions, { SelectOption, setCategoryFacets } from "components/SearchOptions";
@@ -280,7 +280,7 @@ const OrdersPendingApprovalTable: NextPage<ReactProps> = (props) => {
             {({ node: order }) => {
 
               console.log("order>>>>>>: ", order)
-              const row2 = createData({
+              const row2 = createDataForPendingApprovalTable({
                 id: order.id,
                 total: order.total,
                 createdAt: order.createdAt,
@@ -365,7 +365,7 @@ const OrdersPendingApprovalTable: NextPage<ReactProps> = (props) => {
             {({ node: order }) => {
 
               // console.log("order: ", order.payoutItems)
-              const row2 = createData({
+              const row2 = createDataForPendingApprovalTable({
                 id: order.id,
                 total: order.total,
                 createdAt: order.createdAt,
@@ -444,7 +444,7 @@ const OrdersPendingApprovalTable: NextPage<ReactProps> = (props) => {
             {({ node: order }) => {
 
               // console.log("order: ", order.payoutitems)
-              const row2 = createData({
+              const row2 = createDataForPendingApprovalTable({
                 id: order.id,
                 total: order.total,
                 createdAt: order.createdAt,
