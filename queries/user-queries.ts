@@ -24,10 +24,10 @@ export const GET_USER = gql`
   query getUser {
     user {
       id
-      firstName
-      lastName
-      email
       ... on UserPrivate {
+        firstName
+        lastName
+        email
         ...UserPrivateFragment
       }
     }
