@@ -1,6 +1,5 @@
 import React from "react";
 import { useState } from "react";
-import { oc as option } from "ts-optchain";
 // Styles
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
 // Material UI

@@ -1,5 +1,4 @@
 import React from "react";
-import { oc as option } from "ts-optchain";
 import clsx from "clsx";
 // Redux
 import { useDispatch, useSelector } from "react-redux";
@@ -68,7 +67,7 @@ const SelectTags = (props: ReactProps & FormikProps<FormikFields>) => {
             setTags={setTags}
             disableInitialValidationMessage={true}
             limit={{
-              count: option(fprops).values.tags([]).length,
+              count: (fprops?.values?.tags ?? []).length,
               max: 10,
             }}
             // touched={!!fprops.touched.tags}

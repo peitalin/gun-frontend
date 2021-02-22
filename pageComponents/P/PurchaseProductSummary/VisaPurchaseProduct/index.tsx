@@ -1,6 +1,5 @@
 
 import React from 'react';
-import { oc as option } from 'ts-optchain';
 import clsx from "clsx";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
@@ -88,7 +87,7 @@ const VisaPurchaseProduct = (props: ReactProps) => {
 
     setLoading(true)
     const variant = featuredVariant;
-    if (!option(props).user.id()) {
+    if (!props?.user?.id) {
       snackbar.enqueueSnackbar(`Login to purchase.`, { variant: "info" })
       setLoading(false)
       return
@@ -196,7 +195,7 @@ const VisaPurchaseProduct = (props: ReactProps) => {
                         // 1. Create an order first with the backend
                         let orderResponse = await createOrderAndHoldFundsFirst({
                           paymentMethodId: newPaymentMethod.id,
-                          stripeCustomerId: option(props).user.stripeCustomerId(),
+                          stripeCustomerId: props?.user?.stripeCustomerId,
                         });
                         console.log("1: ORDER_MUTATION response: ", orderResponse)
                         let order = orderResponse?.unconfirmedOrder;

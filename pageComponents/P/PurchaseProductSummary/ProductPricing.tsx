@@ -1,6 +1,5 @@
 import React from "react";
 import clsx from "clsx";
-import { oc as option } from "ts-optchain";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 // Utils Components
@@ -19,15 +18,14 @@ const ProductPricing = (props: ReactProps) => {
     <ErrorBounds>
       <div className={clsx(
         classes.flexCol,
-        classes.marginBottom1,
-        classes.marginTopHalf,
+        classes.marginProductPricing,
       )}>
         {
           props?.featuredVariant?.price !== undefined &&
           <PriceDisplayProductPage
-            price={option(props).featuredVariant.price()}
-            priceWas={option(props).featuredVariant.priceWas()}
-            soldOutStatus={option(props).soldOutStatus()}
+            price={props?.featuredVariant?.price}
+            priceWas={props?.featuredVariant?.priceWas}
+            soldOutStatus={props?.soldOutStatus}
           />
         }
       </div>
@@ -51,11 +49,9 @@ const styles = (theme: Theme) => createStyles({
     display: 'flex',
     flexDirection: 'row',
   },
-  marginTopHalf: {
+  marginProductPricing: {
+    marginBottom: '0.5rem',
     marginTop: '0.5rem',
-  },
-  marginBottom1: {
-    marginBottom: '1rem',
   },
 });
 

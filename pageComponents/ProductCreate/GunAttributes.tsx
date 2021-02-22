@@ -1,19 +1,11 @@
 import React from "react";
-import { oc as option } from "ts-optchain";
 import clsx from "clsx";
-// Redux
-import { useSelector, useDispatch } from "react-redux";
-/// Debounce
-import { useDebouncedCallback } from 'use-debounce';
 // Styles
 import { withStyles, WithStyles } from "@material-ui/core/styles";
 import { styles } from "./commonStyles";
 // Material UI
 import Typography from "@material-ui/core/Typography";
 import TextInput from "components/Fields/TextInput";
-// Typings
-import { ProductCreateInput } from "typings/gqlTypes";
-import { HtmlEvent } from "typings";
 // Components
 import Loading from "components/Loading";
 import ErrorBounds from 'components/ErrorBounds';

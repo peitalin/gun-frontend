@@ -1,5 +1,4 @@
 import React from "react";
-import { oc as option } from "ts-optchain";
 // GraphQL
 import { Product, Product_Variants } from "typings/gqlTypes";
 // Material UI
@@ -45,7 +44,6 @@ interface ReactProps extends WithStyles<typeof styles> {
 
 const styles = (theme: Theme) => createStyles({
   headingRoot: {
-    marginBottom: '0.5rem'
   },
   greyBorder: {
     padding: "0.25rem 0rem",

@@ -88,7 +88,9 @@ function GridPaginatorGeneric<T>(props: ReactProps<T> & ReactChildren<T>) {
                   .filter(p => !!p)
                   .map(( product, j ) =>
                     props.loading
-                    ? <LoadingCards count={1}/>
+                    ? props.loadingComponent
+                      ? props.loadingComponent
+                      : <LoadingCards key={j} count={1}/>
                     : <div key={j} className={props.gridItemClassName}>
                         {
                           props.children({
@@ -128,8 +130,8 @@ interface ReactProps<T> {
   // product rows only, for seller dashboard
   refetchProducts?(): void;
   loading?: boolean;
+  loadingComponent?: React.ReactElement;
   containerStyle?: any;
-
 }
 interface ReactChildren<T> {
   // GridPaginator will split node[] into node[][]

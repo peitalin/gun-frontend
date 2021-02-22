@@ -1,5 +1,4 @@
 import React from "react";
-import {oc as option} from "ts-optchain";
 import clsx from "clsx";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
@@ -74,11 +73,13 @@ const PurchaseProductSummary: React.FC<ReactProps> = (props) => {
 
   const featuredVariant = selectedOption.value;
 
-  const showProductInfo = option(featuredVariant).variantId() && option(props).product.id()
-  console.log("featuredVariant", featuredVariant)
+  const showProductInfo = featuredVariant?.variantId && props?.product?.id
+  // console.log("featuredVariant", featuredVariant)
 
   return (
-    <div className={classes.purchaseCheckoutSummaryRoot}>
+    <div className={clsx(
+      classes.purchaseCheckoutSummaryRoot,
+    )}>
 
       <div className={clsx(classes.flexRow, classes.width100, classes.paddingBottom)}>
 
@@ -195,6 +196,8 @@ const styles = (theme: Theme) => createStyles({
     boxShadow: theme.palette.type === 'dark'
       ? BoxShadows.shadow1.boxShadow
       : BoxShadows.shadow4.boxShadow,
+    width: '100%',
+    // maxWidth: '600px',
   },
   flexCol: {
     display: 'flex',
@@ -260,7 +263,6 @@ const styles = (theme: Theme) => createStyles({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    paddingBottom: '1rem',
     maxWidth: 'unset',
     minWidth: '224px',
     width: '100%',

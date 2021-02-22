@@ -1,5 +1,4 @@
 import React from "react";
-import {oc as option} from "ts-optchain";
 import clsx from "clsx";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
@@ -67,7 +66,7 @@ const Products: React.FC<ReactProps> = (props) => {
   const [index, setIndex] = React.useState(0);
 
   const router = useRouter();
-  const productId: string = option(router).query.productId() as any;
+  const productId: string = router?.query?.productId as any;
 
   const user = useSelector<GrandReduxState, UserPrivate>(s =>
     s.reduxLogin.user
@@ -82,7 +81,7 @@ const Products: React.FC<ReactProps> = (props) => {
     },
     ssr: true,
   })
-  const product = option(data).getProductById() || props.initialProduct;
+  const product = data?.getProductById || props.initialProduct;
 
   ////////// VARIANTS
   const [
@@ -90,7 +89,7 @@ const Products: React.FC<ReactProps> = (props) => {
     setSelectedOption
   ] = React.useState<SelectedVariantProps>({
     label: "variant",
-    value: option(product).featuredVariant() || {
+    value: product?.featuredVariant || {
       productId: undefined,
       variantId: undefined,
       snapshotId: undefined,
@@ -117,7 +116,7 @@ const Products: React.FC<ReactProps> = (props) => {
     }
   }, [product])
 
-  const variantOptions = option(product).currentSnapshot.currentVariants([])
+  const variantOptions = (product?.currentSnapshot?.currentVariants ?? [])
     .map(v => ({ label: v.variantName, value: v }))
 
   const handleChangeVariantOption = (
@@ -304,6 +303,7 @@ const styles = (theme: Theme) => createStyles({
   positionLgDown: {
     position: "relative",
     top: "1rem",
+    padding: '0rem 1rem',
     //
     // height: "100%",
     display: 'flex',

@@ -1,5 +1,4 @@
 import React from "react";
-import {oc as option} from "ts-optchain";
 import clsx from "clsx";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
@@ -29,13 +28,13 @@ const ProductPageContainer: React.FC<ProductContainerProps> = (props) => {
     )}>
 
       <MetaHeadersPage
-        title={`${option(product).currentSnapshot.title()} - ${option(product).store.name()} | Gun Marketplace Australia`}
+        title={`${product?.currentSnapshot?.title} - ${product?.store?.name} | Gun Marketplace Australia`}
         description={
-          option(product).currentSnapshot.title()
-            ? `${option(product).currentSnapshot.title()} — ${option(product).currentSnapshot.description()}`
-            : `${option(product).currentSnapshot.description()}`
+          product?.currentSnapshot?.title
+            ? `${product?.currentSnapshot?.title} — ${product?.currentSnapshot?.description}`
+            : `${product?.currentSnapshot?.description}`
         }
-        keyword={option(product).currentSnapshot.title()}
+        keyword={product?.currentSnapshot?.title}
       />
 
       <div className={clsx(classes.flexCol, classes.alignItemsCenter)}>

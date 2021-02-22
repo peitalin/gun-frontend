@@ -1,10 +1,7 @@
-import * as React from "react";
-import { oc as option } from "ts-optchain";
-import { useState } from "react";
+import React from "react";
 // Redux
 import { useSelector, useDispatch } from "react-redux";
-import { GrandReduxState } from "reduxStore/grand-reducer";
-import { Actions } from "reduxStore/actions";
+import { GrandReduxState, Actions } from "reduxStore/grand-reducer";
 import { AddVariantInput, EditVariantInput } from "reduxStore/product_create-actions";
 // Styles
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";

@@ -1,5 +1,4 @@
 import React from "react";
-import { oc as option } from "ts-optchain";
 import clsx from "clsx";
 // Redux
 import { useDispatch, useSelector } from "react-redux";
@@ -135,8 +134,8 @@ const ProductEditPage = (props: ReactProps) => {
   } = useSelector<GrandReduxState, ReduxState>(state => {
     return {
       reduxProductEdit: state[reducerName],
-      dzuPreviewOrder: option(state[reducerName]).dzuPreviewOrder(),
-      dzuPreviewItems: option(state[reducerName]).dzuPreviewItems(),
+      dzuPreviewOrder: state[reducerName]?.dzuPreviewOrder,
+      dzuPreviewItems: state[reducerName]?.dzuPreviewItems,
     }
   });
 

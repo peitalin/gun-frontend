@@ -1,10 +1,7 @@
 import React from "react";
-import { oc as option } from "ts-optchain";
-import { useState, useEffect } from "react";
 // Redux
 import { useDispatch, useSelector } from "react-redux";
-import { GrandReduxState } from "reduxStore/grand-reducer";
-import { Actions } from "reduxStore/actions";
+import { GrandReduxState, Actions } from "reduxStore/grand-reducer";
 import { ReduxStateProductCreate } from "reduxStore/product_create-reducer";
 // Styles
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
@@ -12,9 +9,6 @@ import clsx from "clsx";
 import { Colors } from "layout/AppTheme";
 // Material UI
 import Typography from "@material-ui/core/Typography";
-import Checkbox from '@material-ui/core/Checkbox';
-import FormGroup from '@material-ui/core/FormGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
 // Components
 import ErrorBounds from 'components/ErrorBounds';
 import PriceDisplayProductPage from "components/PriceDisplayProductPage";
@@ -71,10 +65,10 @@ const PriceFields = (props: ReactProps & FormikProps<FormikFields>) => {
 
   // RIFM - masking currency values
   const [variablePrice, setVariablePrice] = React.useState(
-    c(option(currentVariants)[position].price()) || ''
+    c(currentVariants[position]?.price) || ''
   );
   const [variablePriceWas, setVariablePriceWas] = React.useState(
-    c(option(currentVariants)[position].priceWas()) || ''
+    c(currentVariants[position]?.priceWas) || ''
   );
 
   return (
@@ -120,11 +114,11 @@ const PriceFields = (props: ReactProps & FormikProps<FormikFields>) => {
                   onBlur={handleBlur}
                   inputProps={{ style: { width: '100%', marginLeft: '0.25rem' }}}
                   errorMessage={
-                    option(errors).currentVariants[position].price()
+                    errors?.currentVariants[position]?.price
                     ? errors.currentVariants[position].price
                     : null
                   }
-                  touched={option(touched).currentVariants[position].price()}
+                  touched={touched?.currentVariants[position]?.price}
                   validationErrorMsgStyle={{
                     bottom: '-1.15rem',
                   }}
@@ -140,11 +134,11 @@ const PriceFields = (props: ReactProps & FormikProps<FormikFields>) => {
       <div className={classes.container}>
         <PriceDisplayProductPage
           hideSavings={
-            option(currentVariants)[position].priceWas(0)
-            <= option(currentVariants)[position].price(0)
+            (currentVariants[position]?.priceWas ?? 0)
+            <= (currentVariants[position]?.price ?? 0)
           }
-          price={option(currentVariants)[position].price()}
-          priceWas={option(currentVariants)[position].priceWas()}
+          price={currentVariants[position]?.price}
+          priceWas={currentVariants[position]?.priceWas}
         />
       </div>
     </ErrorBounds>

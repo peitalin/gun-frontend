@@ -76,7 +76,8 @@ const styles = (theme: Theme) => createStyles({
   },
   title: {
     marginTop: '0.5rem',
-    fontWeight: 500,
+    fontWeight: 600,
+    fontSize: "1rem",
   },
   productDescription: {
     maxHeight: "33vh",

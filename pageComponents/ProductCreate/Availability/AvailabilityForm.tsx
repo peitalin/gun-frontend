@@ -1,5 +1,4 @@
 import React from "react";
-import { oc as option } from "ts-optchain";
 // Styles
 import { createStyles, Theme, withStyles, WithStyles } from "@material-ui/core/styles";
 // Material UI
@@ -128,18 +127,6 @@ export const styles = (theme: Theme) => createStyles({
   label: {
     width: '100%',
     marginBottom: '0.25rem',
-  },
-  optionName: {
-    flexBasis: '33%',
-    margin: '0px',
-    marginRight: '1rem'
-  },
-  optionValues: {
-    flexBasis: '66%',
-    marginRight: '1rem'
-  },
-  deleteButton: {
-    height: '100%',
   },
 });
 

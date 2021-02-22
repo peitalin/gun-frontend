@@ -1,5 +1,4 @@
 import React from "react";
-import { oc as option } from "ts-optchain";
 import clsx from "clsx";
 // Redux
 import { useSelector, useDispatch } from "react-redux";
@@ -156,10 +155,10 @@ const ProductCreatePage = (props: ReactProps) => {
   } = useSelector<GrandReduxState, ReduxState>(state => {
     return {
       reduxProductCreate: state[reducerName],
-      dzuPreviewOrder: option(state[reducerName]).dzuPreviewOrder(),
-      dzuPreviewItems: option(state[reducerName]).dzuPreviewItems(),
-      user: option(state).reduxLogin.user(),
-      storeId: option(state).reduxLogin.user.store.id(),
+      dzuPreviewOrder: state[reducerName]?.dzuPreviewOrder,
+      dzuPreviewItems: state[reducerName]?.dzuPreviewItems,
+      user: state?.reduxLogin?.user,
+      storeId: state?.reduxLogin?.user?.store?.id,
     }
   });
 
@@ -191,7 +190,7 @@ const ProductCreatePage = (props: ReactProps) => {
     GET_PRODUCT_CATEGORIES
   )
 
-  const categories = option(categoryData).data.categories([]);
+  const categories = (categoryData?.data?.categories ?? []);
 
 
   const onSubmitFormik = (values, { setSubmitting, resetForm }) => {
@@ -229,9 +228,9 @@ const ProductCreatePage = (props: ReactProps) => {
   }
 
   const disableForm =
-      (!option(user).id() || // no user
-      !option(user).store.id() || // or no store
-      option(user).store.isDeleted())  // or deleted store
+      (!user?.id || // no user
+      !user?.store?.id || // or no store
+      user?.store?.isDeleted)  // or deleted store
 
 
   return (
@@ -436,8 +435,8 @@ const productCreateInputToProduct = (
   let previewFeaturedVariant = {
     ...featuredVariant,
     variantId: "variant_temp_1",
-    previewItems: option(featuredVariant).previewItems([]).map(p => {
-      let imageId = option(p).imageId();
+    previewItems: (featuredVariant?.previewItems ?? []).map(p => {
+      let imageId = p?.imageId;
       if (imageId) {
         return {
           ...p,
@@ -517,13 +516,13 @@ export const reduxToFormikCurrentVariants = (
   // pulls preview items from redux into each current variant in formik
   // we store just a single copy of preview items in redux, then duplicate
   // across all currentVariants in Formik before sending to backend.
-  return option(productCreateInput).currentVariants([]).map(v => {
+  return (productCreateInput?.currentVariants ?? []).map(v => {
 
     // pull preview items from redux into each current variant in formik
     let previewItems = dzuPreviewOrder.map(
       order => dzuPreviewItems.find(p => p.id === order.id)
     )
-    .filter(pv => !!option(pv).fileId() || !!option(pv).youTubeVimeoEmbedLink())
+    .filter(pv => !!pv?.fileId || !!pv?.youTubeVimeoEmbedLink)
     .map(pv => {
       return {
         imageId: pv.fileId,

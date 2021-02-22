@@ -1,5 +1,4 @@
 import React from "react";
-import { oc as option } from "ts-optchain";
 import { Colors, BorderRadius, BoxShadows, BorderRadius2x } from "layout/AppTheme";
 import clsx from "clsx";
 // Styles

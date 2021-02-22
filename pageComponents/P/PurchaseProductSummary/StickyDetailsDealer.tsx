@@ -34,7 +34,7 @@ const StickyDetailsDealer = (props: ReactProps) => {
   return (
     <div className={clsx(
       classes.dealerDetailsProductPageRoot,
-      props.below1024 ? classes.relativeMenu : classes.stickyMenu,
+      props.below1024 ? classes.normalMenu : classes.stickyMenu,
     )}>
       <div className={clsx(
         classes.flexRow,
@@ -88,24 +88,28 @@ const styles = (theme: Theme) => createStyles({
     // FeaturedImgage and ProductDetails when ProductPurchaseCard is too tall
     // position: 'absolute',
     // bottom: '-7rem',
-    width: 'calc(100%)',
+    width: '100%',
   },
-  relativeMenu: {
-    position: 'relative',
+  normalMenu: {
+    display: "flex",
+    justifyContent: "center",
+    width: '100%',
+    marginBottom: "1rem",
+    borderRadius: "0px",
   },
   dealerDetailsInnerContainer: {
     padding: '1rem',
-    maxWidth: "600px",
+    // maxWidth: "600px",
     background: theme.palette.type === 'dark'
       ? Colors.uniswapDarkNavy
       : Colors.cream,
     border: theme.palette.type === 'dark'
       ? `1px solid ${theme.colors.uniswapGrey}`
       : `1px solid ${Colors.slateGreyDarker}`,
+    boxShadow: BoxShadows.shadow4.boxShadow,
   },
   positionStickyBox: {
     borderRadius: BorderRadius,
-    boxShadow: BoxShadows.shadow4.boxShadow,
   },
   positionRelativeBox: {
     borderRadius: BorderRadius,
@@ -121,6 +125,7 @@ const styles = (theme: Theme) => createStyles({
     flexDirection: 'row',
     flexWrap: 'wrap',
     alignItems: 'center',
+    width: '100%',
   },
   referInstructions: {
   },
@@ -130,7 +135,7 @@ const styles = (theme: Theme) => createStyles({
     marginBottom: "0.25rem",
   },
   caption: {
-    fontSize: '12px',
+    fontSize: '0.875rem',
     color: theme.palette.type === 'dark'
       ? Colors.uniswapLighterGrey
       : Colors.darkGrey,

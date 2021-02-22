@@ -1,5 +1,4 @@
 import React from "react";
-import { oc as option } from "ts-optchain";
 import clsx from "clsx";
 // Styles
 import { withStyles, WithStyles } from "@material-ui/core/styles";
@@ -38,7 +37,7 @@ const SelectDealers = (props: ReactProps & FormikProps<FormikFields>) => {
     data
   } = useQuery<QueryData, null>(GET_ALL_DEALERS)
 
-  const dealers = option(data).getAllDealers([])
+  const dealers = (data?.getAllDealers ?? [])
       .filter(c => !!c && !!c.name)
 
   // console.log("dealerId: ", fprops.values.dealerId)

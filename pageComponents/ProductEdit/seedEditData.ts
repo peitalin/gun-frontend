@@ -3,7 +3,6 @@ import {
   productToProductEditInput,
   previewsToDzuPreviews,
 } from "utils/conversions";
-import { oc as option } from "ts-optchain";
 // Redux
 import { batch } from "react-redux";
 import { Dispatch } from "redux";

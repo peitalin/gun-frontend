@@ -1,5 +1,4 @@
 import React from "react";
-import { oc as option } from "ts-optchain";
 // Redux
 import { useDispatch, useSelector } from "react-redux";
 import { GrandReduxState, Actions } from "reduxStore/grand-reducer";
@@ -176,7 +175,7 @@ const PreviewItemUploaderGrid = (props: ReactProps & FormikProps<FormikFields>) 
 
   const ref = React.useRef(null);
   const focused = useFocus(ref);
-  const numFiles = option(fprops).values.currentVariants[0].previewItems.length(0);
+  const numFiles = (fprops?.values?.currentVariants?.[0]?.previewItems ?? []).length;
 
   const [googleUploads, setGoogleUploads] = React.useState<GoogleUpload[]>([]);
   const [loading, setLoading] = React.useState(false);
@@ -276,9 +275,9 @@ const PreviewItemUploaderGrid = (props: ReactProps & FormikProps<FormikFields>) 
       <Loading fixed loading={loading}/>
 
       <ValidationErrorMsg
-        touched={option(fprops).touched.currentVariants[0].previewItems()}
+        touched={fprops?.touched?.currentVariants?.[0]?.previewItems}
         focused={focused}
-        errorMessage={option(fprops).errors.currentVariants[0].previewItems()}
+        errorMessage={fprops?.errors?.currentVariants?.[0]?.previewItems}
         disableInitialValidationMessage={true}
         style={{
           bottom: '-0.75rem',

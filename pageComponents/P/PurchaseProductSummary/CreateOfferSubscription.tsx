@@ -1,5 +1,4 @@
 import React from "react";
-import { oc as option } from "ts-optchain";
 import clsx from "clsx";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
@@ -36,23 +35,23 @@ const CreateOfferSubscription = (props: ReactProps) => {
 
   React.useEffect(() => {
     // set initial conversation on mount + data response
-    if (option(data).conversations([]).length > 0) {
+    if ((data?.conversations ?? []).length > 0) {
       dispatch(Actions.reduxConversation.SET_CONVERSATIONS(data.conversations))
     }
   }, [data, loading])
 
-  const existingChatsProductIds = option(data).conversations([]).map(c => {
+  const existingChatsProductIds = (data?.conversations ?? []).map(c => {
     return {
-      chatRoomId: option(c).chatRoom.id(),
-      productId: option(c).chatRoom.product.id()
+      chatRoomId: c?.chatRoom?.id,
+      productId: c?.chatRoom?.product?.id
     }
   })
   const alreadyChattingAboutProduct = existingChatsProductIds.find(
-    z => z.productId === option(props).product.id()
+    z => z.productId === props?.product?.id
   )
   // console.log("existing productIds", existingChatsProductIds)
   // console.log("alreadyChatting about product?", alreadyChattingAboutProduct)
-  let buyerIsSeller = option(props).product.store.userId() === userId
+  let buyerIsSeller = props?.product?.store?.userId === userId
 
   return (
     <div className={classes.createOfferRoot}>
@@ -65,10 +64,10 @@ const CreateOfferSubscription = (props: ReactProps) => {
           sellerUserId={
             // if storeId, backend won't looks up the user.id for the store
             // make sure its the store's user.id
-            option(props).product.store.userId()
+            props?.product?.store?.userId
           }
           disabled={buyerIsSeller}
-          productId={option(props).product.id()}
+          productId={props?.product?.id}
           openChatAfterwards={true}
         />
       }
@@ -76,9 +75,8 @@ const CreateOfferSubscription = (props: ReactProps) => {
       {
         (
           userId &&
-          alreadyChattingAboutProduct &&
-          alreadyChattingAboutProduct.productId &&
-          alreadyChattingAboutProduct.chatRoomId &&
+          alreadyChattingAboutProduct?.productId &&
+          alreadyChattingAboutProduct?.chatRoomId &&
           !buyerIsSeller
         ) &&
         <OpenChatButton
