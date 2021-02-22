@@ -7,7 +7,7 @@ import Link from "next/link";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
 // Typings
-import { Product, UserPrivate } from "typings/gqlTypes";
+import { Product, UserPublic } from "typings/gqlTypes";
 // Material UI
 import Typography from "@material-ui/core/Typography";
 import Avatar from '@material-ui/core/Avatar';
@@ -25,8 +25,8 @@ const StickyDetailsSeller = (props: ReactProps) => {
 
   const {
     classes,
-    user,
-    product,
+    storeName,
+    seller,
   } = props;
 
   const snackbar = useSnackbar();
@@ -49,22 +49,22 @@ const StickyDetailsSeller = (props: ReactProps) => {
         <div className={clsx(classes.flexCol, classes.referInstructions)}>
           <div>
             <Typography className={classes.title} variant="h4">
-              {user?.store?.name}
+              {storeName}
             </Typography>
           </div>
           <div>
             <Typography className={classes.caption} variant="body1">
-              {`License: ${user?.license?.licenseNumber}`}
+              {`License: ${seller?.license?.licenseNumber ?? "..."}`}
             </Typography>
           </div>
           <div>
             <Typography className={classes.caption} variant="body1">
-              {`Category: ${user?.license?.licenseCategory}`}
+              {`Category: ${seller?.license?.licenseCategory ?? "NA"}`}
             </Typography>
           </div>
           <div>
             <Typography className={classes.caption} variant="body1">
-              {`State: ${user?.license?.licenseState}`}
+              {`State: ${seller?.license?.licenseState ?? "..."}`}
             </Typography>
           </div>
         </div>
@@ -89,8 +89,8 @@ const StickyDetailsSeller = (props: ReactProps) => {
 
 
 interface ReactProps extends WithStyles<typeof styles> {
-  user: UserPrivate
-  product: Product
+  seller: UserPublic
+  storeName: string
   below1024: boolean
 }
 

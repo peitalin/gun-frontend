@@ -202,8 +202,8 @@ const Products: React.FC<ReactProps> = (props) => {
                   handleChangeVariantOption={handleChangeVariantOption}
                 />
                 <StickyDetailsSeller
-                  user={user}
-                  product={product}
+                  seller={product?.store?.user}
+                  storeName={product?.store?.name}
                   below1024={below1024}
                 />
                 <StickyDetailsDealer
@@ -245,8 +245,8 @@ const Products: React.FC<ReactProps> = (props) => {
               handleChangeVariantOption={handleChangeVariantOption}
             />
             <StickyDetailsSeller
-              user={user}
-              product={product}
+              seller={product?.store?.user}
+              storeName={product?.store?.name}
               below1024={below1024}
             />
             <StickyDetailsDealer

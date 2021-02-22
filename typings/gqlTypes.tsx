@@ -10751,6 +10751,7 @@ export type Store = {
   createdAt: Scalars['Date'];
   updatedAt?: Maybe<Scalars['Date']>;
   userId: Scalars['ID'];
+  user?: Maybe<User>;
   name: Scalars['String'];
   profileId?: Maybe<Scalars['ID']>;
   profile?: Maybe<Image_Parents>;
@@ -10800,6 +10801,7 @@ export type StorePrivate = Store & {
   createdAt: Scalars['Date'];
   updatedAt?: Maybe<Scalars['Date']>;
   userId: Scalars['ID'];
+  user?: Maybe<UserPrivate>;
   name: Scalars['String'];
   profileId?: Maybe<Scalars['ID']>;
   profile?: Maybe<Image_Parents>;
@@ -10815,7 +10817,6 @@ export type StorePrivate = Store & {
   /** Store sellers's view of currently published products. */
   dashboardProductsConnection: ProductsConnection;
   analytics?: Maybe<StoreAnalytics>;
-  user?: Maybe<UserPrivate>;
   payoutSplit?: Maybe<PayoutSplit>;
 };
 
@@ -10840,6 +10841,7 @@ export type StorePublic = Store & {
   createdAt: Scalars['Date'];
   updatedAt?: Maybe<Scalars['Date']>;
   userId: Scalars['ID'];
+  user?: Maybe<UserPublic>;
   name: Scalars['String'];
   profileId?: Maybe<Scalars['ID']>;
   profile?: Maybe<Image_Parents>;
@@ -10852,7 +10854,6 @@ export type StorePublic = Store & {
   /** Whether or not it has been deleted */
   isDeleted: Scalars['Boolean'];
   productsForSaleConnection: ProductsConnection;
-  user: UserPublic;
 };
 
 
@@ -12559,9 +12560,13 @@ export enum UploadType {
 export type User = {
   id: Scalars['ID'];
   createdAt?: Maybe<Scalars['Date']>;
-  firstName?: Maybe<Scalars['String']>;
-  lastName?: Maybe<Scalars['String']>;
-  email: Scalars['String'];
+  /**
+   * firstName: String
+   * lastName: String
+   * email: String
+   */
+  licenseId?: Maybe<Scalars['String']>;
+  license?: Maybe<User_Licenses>;
 };
 
 /** columns and relationships of "user_licenses" */
@@ -12835,9 +12840,11 @@ export type UserPublic = User & {
    __typename?: 'UserPublic';
   id: Scalars['ID'];
   createdAt?: Maybe<Scalars['Date']>;
-  firstName?: Maybe<Scalars['String']>;
-  lastName?: Maybe<Scalars['String']>;
-  email: Scalars['String'];
+  /**
+   * firstName: String
+   * lastName: String
+   * email: String
+   */
   licenseId?: Maybe<Scalars['String']>;
   license?: Maybe<User_Licenses>;
 };
@@ -13587,6 +13594,7 @@ export type UserWithRole = User & {
   email: Scalars['String'];
   userRole: Role;
   licenseId?: Maybe<Scalars['String']>;
+  license?: Maybe<User_Licenses>;
 };
 
 /** An individual item in a wishlist */
@@ -13702,7 +13710,7 @@ type ProductFragment_ProductPrivate_ = { __typename?: 'ProductPrivate', id: stri
   ), featuredVariant: (
     { __typename?: 'product_variants' }
     & ProductVariantFragment
-  ), store?: Maybe<{ __typename?: 'StorePrivate', id: string, name: string } | { __typename?: 'StorePublic', id: string, name: string }>, category?: Maybe<{ __typename?: 'categories', id: string, name: string, categoryGroup: string }> };
+  ), store?: Maybe<{ __typename?: 'StorePrivate', id: string, name: string, user?: Maybe<{ __typename?: 'UserPrivate', license?: Maybe<{ __typename?: 'user_licenses', id: string, licenseNumber: string, licenseCategory?: Maybe<string>, licenseExpiry: any, licenseState?: Maybe<string> }> }> } | { __typename?: 'StorePublic', id: string, name: string, user?: Maybe<{ __typename?: 'UserPublic', license?: Maybe<{ __typename?: 'user_licenses', id: string, licenseNumber: string, licenseCategory?: Maybe<string>, licenseExpiry: any, licenseState?: Maybe<string> }> }> }>, category?: Maybe<{ __typename?: 'categories', id: string, name: string, categoryGroup: string }> };
 
 type ProductFragment_ProductPublic_ = { __typename?: 'ProductPublic', id: string, createdAt?: Maybe<any>, updatedAt?: Maybe<any>, tags?: Maybe<string>, isPublished: boolean, isSuspended: boolean, isDeleted: boolean, isExcludedFromRecommendations: boolean, storeId: string, soldOutStatus: string, currentSnapshot: (
     { __typename?: 'product_snapshots' }
@@ -13710,7 +13718,7 @@ type ProductFragment_ProductPublic_ = { __typename?: 'ProductPublic', id: string
   ), featuredVariant: (
     { __typename?: 'product_variants' }
     & ProductVariantFragment
-  ), store?: Maybe<{ __typename?: 'StorePrivate', id: string, name: string } | { __typename?: 'StorePublic', id: string, name: string }>, category?: Maybe<{ __typename?: 'categories', id: string, name: string, categoryGroup: string }> };
+  ), store?: Maybe<{ __typename?: 'StorePrivate', id: string, name: string, user?: Maybe<{ __typename?: 'UserPrivate', license?: Maybe<{ __typename?: 'user_licenses', id: string, licenseNumber: string, licenseCategory?: Maybe<string>, licenseExpiry: any, licenseState?: Maybe<string> }> }> } | { __typename?: 'StorePublic', id: string, name: string, user?: Maybe<{ __typename?: 'UserPublic', license?: Maybe<{ __typename?: 'user_licenses', id: string, licenseNumber: string, licenseCategory?: Maybe<string>, licenseExpiry: any, licenseState?: Maybe<string> }> }> }>, category?: Maybe<{ __typename?: 'categories', id: string, name: string, categoryGroup: string }> };
 
 export type ProductFragment = ProductFragment_ProductPrivate_ | ProductFragment_ProductPublic_;
 
@@ -14181,6 +14189,15 @@ export const ProductFragmentFragmentDoc = gql`
   store {
     id
     name
+    user {
+      license {
+        id
+        licenseNumber
+        licenseCategory
+        licenseExpiry
+        licenseState
+      }
+    }
   }
   category {
     id
