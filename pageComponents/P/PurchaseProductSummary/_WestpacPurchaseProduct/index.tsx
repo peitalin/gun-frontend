@@ -12,7 +12,7 @@ import ButtonLoading from "components/ButtonLoading";
 import {
   UserPrivate,
   ID,
-  Orders,
+  Order,
   OrderStatus,
   Product,
   OrderMutationResponse,
@@ -67,7 +67,7 @@ const WestpacPurchaseProduct = (props: ReactProps) => {
         variantSnapshotId: variant.variantSnapshotId,
         total: variant.price,
         buyerId: props.user.id,
-        sellerId: product.store.id,
+        sellerStoreId: product.store.id,
         stripePaymentData: "",
         bidId: undefined,
       }
@@ -335,7 +335,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   buttonHeight?: any;
   title?: string;
   showIcon?: boolean;
-  handleOrderPostPurchase(order: Orders): void;
+  handleOrderPostPurchase(order: Order): void;
   quotedPrice: number; // in cents
   product: Product;
 }
@@ -350,7 +350,7 @@ interface MutVarCreateOrder {
   variantSnapshotId: string
   total: number
   buyerId: string
-  sellerId: string
+  sellerStoreId: string
   stripePaymentData: string
   bidId: string
 }

@@ -1,7 +1,6 @@
 
 import {
   ID,
-  User,
   PaymentProcessor,
   RegisterUploadMutationResult,
   RegisterUploadMutationVariables,

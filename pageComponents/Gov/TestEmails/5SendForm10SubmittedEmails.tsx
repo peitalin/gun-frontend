@@ -11,7 +11,6 @@ import { Colors, BorderRadius } from "layout/AppTheme";
 // Typings
 import {
   UserPrivate,
-  Users,
   ID,
   BlankMutationResponse,
 } from "typings/gqlTypes";
@@ -137,8 +136,8 @@ const SendForm10SubmittedEmails: React.FC<ReactProps> = (props) => {
 
 interface ReactProps extends WithStyles<typeof styles> {
   orderId: string
-  buyer: Users;
-  seller: Users;
+  buyer: UserPrivate;
+  seller: UserPrivate;
 }
 interface QueryData {
   sendForm10SubmittedAdminEmail: BlankMutationResponse;

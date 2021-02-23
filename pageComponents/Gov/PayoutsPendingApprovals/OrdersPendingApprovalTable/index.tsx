@@ -14,8 +14,7 @@ import Typography from "@material-ui/core/Typography";
 import {
   UserPrivate,
   OrdersConnection,
-  Orders,
-  User,
+  Order,
   OrderStatus,
   ConnectionOffsetQuery
 } from "typings/gqlTypes";
@@ -23,7 +22,7 @@ import {
   GET_ORDERS_CREATED_CONNECTION,
   GET_ORDERS_PENDING_APPROVAL_CONNECTION,
   GET_ORDERS_ADMIN_APPROVED_CONNECTION,
-} from "queries/orders-queries";
+} from "queries/orders-admin-queries";
 // Pagination
 import { ConnectionQueryProps } from "components/Paginators/usePaginatePagedQueryHook";
 import ErrorDisplay from "components/Error";
@@ -207,6 +206,8 @@ const OrdersPendingApprovalTable: NextPage<ReactProps> = (props) => {
     _ordersAdminApproved?.data?.getOrdersAdminApprovedConnection
 
 
+  console.log("ordersCreatedConnection:",ordersCreatedConnection)
+  console.log("ordersPendingApprovalConnection:",ordersPendingApprovalConnection)
 
   if (_ordersAdminApproved.loading || _ordersPendingApproval.loading) {
     return (
@@ -268,7 +269,7 @@ const OrdersPendingApprovalTable: NextPage<ReactProps> = (props) => {
           }}
         >
           <TitleRows classes={classes}/>
-          <GridPaginatorGeneric<Orders>
+          <GridPaginatorGeneric<Order>
             index={ordersCreatedIndex}
             connection={ordersCreatedConnection}
             totalCount={ordersCreatedConnection?.totalCount ?? 0}
@@ -284,8 +285,8 @@ const OrdersPendingApprovalTable: NextPage<ReactProps> = (props) => {
                 id: order.id,
                 total: order.total,
                 createdAt: order.createdAt,
-                seller: order.seller,
-                buyer: order.buyer,
+                sellerStore: order.sellerStore as any,
+                buyer: order.buyer as any,
                 currentOrderSnapshot: order.currentSnapshot,
                 orderSnapshots: order.orderSnapshots,
                 product: order.product,
@@ -354,7 +355,7 @@ const OrdersPendingApprovalTable: NextPage<ReactProps> = (props) => {
           }}
         >
           <TitleRows classes={classes}/>
-          <GridPaginatorGeneric<Orders>
+          <GridPaginatorGeneric<Order>
             index={ordersPAIndex}
             connection={ordersPendingApprovalConnection}
             totalCount={ordersPendingApprovalConnection?.totalCount ?? 0}
@@ -364,13 +365,13 @@ const OrdersPendingApprovalTable: NextPage<ReactProps> = (props) => {
           >
             {({ node: order }) => {
 
-              // console.log("order: ", order.payoutItems)
+              console.log("order>>>>>>: ", order)
               const row2 = createDataForPendingApprovalTable({
                 id: order.id,
                 total: order.total,
                 createdAt: order.createdAt,
-                seller: order.seller as any,
-                buyer: order.buyer,
+                sellerStore: order.sellerStore as any,
+                buyer: order.buyer as any,
                 currentOrderSnapshot: order.currentSnapshot,
                 orderSnapshots: order.orderSnapshots,
                 product: order.product,
@@ -433,7 +434,7 @@ const OrdersPendingApprovalTable: NextPage<ReactProps> = (props) => {
           }}
         >
           <TitleRows classes={classes}/>
-          <GridPaginatorGeneric<Orders>
+          <GridPaginatorGeneric<Order>
             index={ordersAAIndex}
             connection={ordersAdminApprovedConnection}
             totalCount={ordersAdminApprovedConnection?.totalCount ?? 0}
@@ -448,8 +449,8 @@ const OrdersPendingApprovalTable: NextPage<ReactProps> = (props) => {
                 id: order.id,
                 total: order.total,
                 createdAt: order.createdAt,
-                seller: order.seller as any,
-                buyer: order.buyer,
+                sellerStore: order.sellerStore as any,
+                buyer: order.buyer as any,
                 currentOrderSnapshot: order.currentSnapshot,
                 orderSnapshots: order.orderSnapshots,
                 product: order.product,
@@ -521,7 +522,7 @@ const TitleRows = (props: TitleRowsProps) => {
 interface ReactProps extends WithStyles<typeof styles> {
   month?: number;
   year?: number;
-  admin: User;
+  admin: UserPrivate;
 }
 interface TitleRowsProps extends WithStyles<typeof styles> {
 }

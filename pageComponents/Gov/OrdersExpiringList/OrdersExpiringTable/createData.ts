@@ -1,10 +1,12 @@
 import {
-  Order_Snapshots,
-  Orders,
-  Products,
+  OrderSnapshot,
+  Product,
   Users,
+  UserWithRole,
+  UserPrivate,
+  BasicUser,
   StorePrivate,
-  Stores,
+  Store,
   OrderStatus,
 } from "typings/gqlTypes";
 import { oc as option } from "ts-optchain";
@@ -14,7 +16,7 @@ export const createDataForExpiringTable = ({
   id,
   createdAt,
   total,
-  seller,
+  sellerStore,
   buyer,
   orderSnapshots,
   product,
@@ -25,11 +27,11 @@ export const createDataForExpiringTable = ({
   id: string,
   createdAt: Date,
   total: number,
-  seller: Stores,
-  buyer: Users,
-  currentOrderSnapshot: Order_Snapshots,
-  orderSnapshots?: Order_Snapshots[]
-  product?: Products,
+  sellerStore: StorePrivate,
+  buyer: UserPrivate,
+  currentOrderSnapshot: OrderSnapshot,
+  orderSnapshots?: OrderSnapshot[]
+  product?: Product,
   payoutId?: string,
   payoutStatus?: string,
 }) => {
@@ -38,11 +40,11 @@ export const createDataForExpiringTable = ({
     id: id,
     createdAt: createdAt,
     total: total,
-    orderStatus: option(currentOrderSnapshot).orderStatus(),
-    form10: option(currentOrderSnapshot).form10Image(),
-    seller: seller,
+    orderStatus: currentOrderSnapshot?.orderStatus,
+    form10: currentOrderSnapshot?.form10Image,
+    sellerStore: sellerStore,
     product: product,
-    history: orderSnapshots
+    history: (orderSnapshots ?? [])
       .slice()
       .sort((a, b) => {
         let dateA = new Date(a.createdAt).getTime()
@@ -51,14 +53,14 @@ export const createDataForExpiringTable = ({
       })
       .map(o => {
 
-        let approver = getUserWhoActionedOrderStatus(o, buyer, seller)
+        let approver = getUserWhoActionedOrderStatus(o, buyer, sellerStore)
 
         return {
-          date: option(o).createdAt(),
-          approverId: option(approver).id(),
-          approverEmail: option(approver).email(),
-          orderStatus: option(o).orderStatus(),
-          form10Image: option(o).form10Image(),
+          date: o?.createdAt,
+          approverId: approver?.id,
+          approverEmail: approver?.email,
+          orderStatus: o?.orderStatus,
+          form10Image: o?.form10Image,
         }
       }),
     payoutId: payoutId,
@@ -67,25 +69,25 @@ export const createDataForExpiringTable = ({
 }
 
 const getUserWhoActionedOrderStatus = (
-  orderSnapshot: Order_Snapshots,
-  buyer: Users,
-  seller: Stores,
-): Users => {
+  orderSnapshot: OrderSnapshot,
+  buyer: UserPrivate,
+  sellerStore: StorePrivate,
+): UserWithRole => {
 
-  let orderStatus = option(orderSnapshot).orderStatus();
+  let orderStatus = orderSnapshot?.orderStatus;
 
   switch (orderStatus) {
     case OrderStatus.CREATED:  {
-      return buyer
+      return buyer as any
     }
     case OrderStatus.FAILED:  {
-      return buyer
+      return buyer as any
     }
     case OrderStatus.CONFIRMED_PAYMENT_FORM_10_REQUIRED:  {
-      return buyer
+      return buyer as any
     }
     case OrderStatus.FORM_10_SUBMITTED:  {
-      return seller?.user
+      return sellerStore?.user as any
     }
     case OrderStatus.ADMIN_APPROVED:  {
       return orderSnapshot.adminApprover

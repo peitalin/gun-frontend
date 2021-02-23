@@ -11,7 +11,7 @@ export const CREATE_ORDER = gql`
     $variantSnapshotId: String!
     $total: Int!
     $buyerId: String!
-    $sellerId: String!
+    $sellerStoreId: String!
     $stripeAuthorizePaymentData: String!
     $bidId: String
   ) {
@@ -22,7 +22,7 @@ export const CREATE_ORDER = gql`
       variantSnapshotId: $variantSnapshotId
       total: $total
       buyerId: $buyerId
-      sellerId: $sellerId
+      sellerStoreId: $sellerStoreId
       stripeAuthorizePaymentData: $stripeAuthorizePaymentData
       bidId: $bidId
     ) {

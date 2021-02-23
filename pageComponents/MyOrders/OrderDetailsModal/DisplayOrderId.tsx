@@ -9,7 +9,7 @@ import ErrorBounds from "components/ErrorBounds";
 // MUI
 import Typography from "@material-ui/core/Typography";
 // Components
-import { Orders } from "typings/gqlTypes";
+import { Order } from "typings/gqlTypes";
 import Link from "next/link";
 
 
@@ -67,7 +67,7 @@ const DisplayOrderId: React.FC<ReactProps> = (props) => {
 
 
 interface ReactProps extends WithStyles<typeof styles> {
-  order: Orders;
+  order: Order;
 }
 
 const styles = (theme: Theme) => createStyles({

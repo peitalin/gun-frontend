@@ -27,32 +27,7 @@ export const ImageFragment = gql`
 `;
 
 
-export const ProductDetailsFragment = gql`
-  fragment ProductDetailsFragment on Product {
-    id
-    createdAt
-    updatedAt
-    currentSnapshotId
-    categoryId
-    isPublished
-    isSuspended
-    isDeleted
-    isExcludedFromSearch
-    isExcludedFromRecommendations
-    soldOutStatus
-    storeId
-    store {
-      id
-      createdAt
-      name
-      website
-      user {
-        id
-        email
-      }
-    }
-  }
-`;
+
 
 export const ProductSnapshotsFragment = gql`
   fragment ProductSnapshotsFragment on product_snapshots {
@@ -132,18 +107,33 @@ export const ProductFragment = gql`
     store {
       id
       name
-      userId
-      user {
-        id
-        license {
-          id
-          licenseNumber
-          licenseCategory
-          licenseExpiry
-          licenseState
-          verified
-        }
-      }
+      # ...on StorePublic {
+      #   id
+      #   name
+      #   userId
+      #   user {
+      #     id
+      #     license {
+      #       id
+      #       licenseNumber
+      #       licenseCategory
+      #       licenseExpiry
+      #       licenseState
+      #       verified
+      #     }
+      #   }
+      # }
+      # user {
+      #   id
+      #   license {
+      #     id
+      #     licenseNumber
+      #     licenseCategory
+      #     licenseExpiry
+      #     licenseState
+      #     verified
+      #   }
+      # }
     }
     category {
       id
@@ -155,25 +145,6 @@ export const ProductFragment = gql`
   ${ProductSnapshotsFragment}
 `;
 
-// export const ProductsFragment = gql`
-//   fragment ProductsFragment on Products {
-//     ...ProductDetailsFragment
-//     currentSnapshotId
-//     currentSnapshot {
-//       ...ProductSnapshotsFragment
-//     }
-//     featuredVariant: productVariants(
-//       limit: 1
-//       where: { isDefault: {_eq: true }}
-//       order_by: { createdAt: desc }
-//     ) {
-//       ...ProductVariantsFragment
-//     }
-//   }
-//   ${ProductDetailsFragment}
-//   ${ProductSnapshotsFragment}
-//   ${ProductVariantsFragment}
-// `;
 
 
 export const StoresFragment = gql`
@@ -184,7 +155,9 @@ export const StoresFragment = gql`
     bio
     website
     user {
-      id
+      ... on UserPublic {
+        id
+      }
     }
     coverId
     profileId
@@ -200,7 +173,7 @@ export const StoresFragment = gql`
 
 
 export const UsersFragment = gql`
-  fragment UsersFragment on User {
+  fragment UsersFragment on UserPrivate {
     store {
       ...StoresFragment
     }
@@ -225,7 +198,6 @@ export const UsersFragment = gql`
       accountName
     }
     payoutMethodId
-    payoutSplitId
     isDeleted
     isSuspended
     lastSeen
@@ -243,6 +215,98 @@ export const UsersFragment = gql`
 `;
 
 
+
+export const UserLicenseFragment = gql`
+  fragment UserLicenseFragment on user_licenses {
+    id
+    licenseNumber
+    licenseCategory
+    licenseExpiry
+    licenseState
+    verified
+  }
+`;
+
+export const BidFragment = gql`
+  fragment BidFragment on bids {
+    id
+    bidStatus
+    createdAt
+    updatedAt
+    acceptedPrice
+    offerPrice
+  }
+`;
+
+export const TransactionFragment = gql`
+  fragment TransactionFragment on transactions {
+    id
+    total
+    createdAt
+    currency
+    receiptNumber
+    customerId
+    orderId
+    paymentProcessor
+    paymentMethodId
+    paymentIntentId
+    refundId
+    refund {
+      id
+      transactionId
+      orderId
+      createdAt
+      reason
+      reasonDetails
+      receiptNumber
+    }
+  }
+`;
+
+export const PayoutItemFragment = gql`
+  fragment PayoutItemFragment on payout_items {
+    id
+    storeId
+    payeeType
+    amount
+    paymentProcessingFee
+    createdAt
+    payoutStatus
+    currency
+    orderId
+    txnId
+    payoutId
+    taxes
+  }
+`;
+
+export const OrderSnapshotFragment = gql`
+  fragment OrderSnapshotFragment on OrderSnapshot {
+    id
+    orderStatus
+    createdAt
+    adminApproverId
+    adminApprover {
+      id
+      firstName
+      lastName
+      email
+    }
+    dealerApproverId
+    dealerApprover {
+      id
+      firstName
+      lastName
+      email
+    }
+    form10Image {
+      ...ImageFragment
+    }
+  }
+  ${ImageFragment}
+`;
+
+
 export const OrdersFragment = gql`
   fragment OrdersFragment on Order {
     id
@@ -250,131 +314,107 @@ export const OrdersFragment = gql`
     updatedAt
     bidId
     bid {
-      id
-      bidStatus
-      createdAt
-      updatedAt
-      acceptedPrice
-      offerPrice
+      ...BidFragment
     }
     total
     currency
     buyerId
     buyer {
       id
-      # firstName
-      # lastName
-      # email
+      license {
+        ...UserLicenseFragment
+      }
     }
-    sellerId
-    seller {
+    sellerStoreId
+    sellerStore {
       id
       name
       website
       createdAt
       updatedAt
       user {
-        id
-        # firstName
-        # lastName
-        # email
-        # payoutMethod {
-        #   id
-        #   createdAt
-        #   updatedAt
-        #   payoutType
-        #   bsb
-        #   accountNumber
-        #   accountName
-        # }
-        # phoneNumber {
-        #   id
-        #   areaCode
-        #   countryCode
-        #   number
-        # }
+        ...on UserPublic{
+          id
+          license {
+            ...UserLicenseFragment
+          }
+        }
+        ...on UserPrivate{
+          firstName
+          lastName
+          email
+          payoutMethod {
+            id
+            createdAt
+            updatedAt
+            payoutType
+            bsb
+            accountNumber
+            accountName
+          }
+          phoneNumber {
+            id
+            areaCode
+            countryCode
+            number
+          }
+        }
       }
     }
     currentSnapshot {
-      id
-      orderStatus
-      createdAt
-      adminApproverId
-      adminApprover {
-        id
-        firstName
-        lastName
-        email
-      }
-      dealerApproverId
-      dealerApprover {
-        id
-        firstName
-        lastName
-        email
-      }
-      form10Image {
-        ...ImageFragment
-      }
+      ...OrderSnapshotFragment
       transaction {
-        id
-        total
-        createdAt
-        currency
-        receiptNumber
-        customerId
-        orderId
-        paymentProcessor
-        paymentMethodId
-        paymentIntentId
-        refundId
+        ...TransactionFragment
       }
     }
     orderSnapshots {
-      id
-      orderStatus
-      createdAt
-      adminApproverId
-      adminApprover {
-        id
-        firstName
-        lastName
-        email
-      }
-      dealerApproverId
-      dealerApprover {
-        id
-        firstName
-        lastName
-        email
-      }
-      form10Image {
-        ...ImageFragment
-      }
+      ...OrderSnapshotFragment
     }
     productId
     product {
-      ...ProductFragment
+      id
+      createdAt
+      updatedAt
+      tags
+      isPublished
+      isSuspended
+      isDeleted
+      isExcludedFromRecommendations
+      storeId
+      soldOutStatus
+      currentSnapshot {
+        ...ProductSnapshotsFragment
+      }
+      featuredVariant {
+        ...ProductVariantsFragment
+      }
+      store {
+        ...on StorePublic {
+          id
+          name
+          userId
+          user {
+            id
+          }
+        }
+      }
     }
     payoutItems {
-      id
-      storeId
-      payeeType
-      amount
-      paymentProcessingFee
-      createdAt
-      payoutStatus
-      currency
-      orderId
-      txnId
-      payoutId
-      taxes
+      ...PayoutItemFragment
     }
     paymentIntentId
   }
-  ${ProductFragment}
+  ${OrderSnapshotFragment}
   ${ImageFragment}
+  ${PayoutItemFragment}
+  ${TransactionFragment}
+  ${UserLicenseFragment}
+  ${BidFragment}
+  ${ProductSnapshotsFragment}
+  ${ProductVariantsFragment}
 `;
+
+
 
 
 
@@ -411,6 +451,7 @@ export const StorePublicFragment = gql`
   ${ProductFragment}
 `;
 
+
 export const StorePrivateFragment = gql`
   fragment StorePrivateFragment on StorePrivate {
     id
@@ -427,42 +468,6 @@ export const StorePrivateFragment = gql`
     profile {
       ...ImageFragment
     }
-    # dashboardPublishedProductsConnection {
-    #   edges {
-    #     node {
-    #       ...ProductFragment
-    #     }
-    #   }
-    #   totalCount
-    #   pageInfo {
-    #     isLastPage
-    #     endCursor
-    #   }
-    # }
-    # dashboardUnpublishedProductsConnection {
-    #   edges {
-    #     node {
-    #       ...ProductFragment
-    #     }
-    #   }
-    #   totalCount
-    #   pageInfo {
-    #     isLastPage
-    #     endCursor
-    #   }
-    # }
-    # productsForSaleConnection {
-    #   edges {
-    #     node {
-    #       ...ProductFragment
-    #     }
-    #   }
-    #   totalCount
-    #   pageInfo {
-    #     isLastPage
-    #     endCursor
-    #   }
-    # }
   }
   ${ImageFragment}
 `;
@@ -552,30 +557,3 @@ export const UserPrivateFragment = gql`
 // # ${ProductFragment}
 // ${OrderFragment}
 // ${PaymentMethodFragment}
-
-
-
-export const TransactionFragment = gql`
-  fragment TransactionFragment on transactions {
-    id
-    total
-    createdAt
-    currency
-    receiptNumber
-    customerId
-    orderId
-    paymentProcessor
-    paymentMethodId
-    paymentIntentId
-    refundId
-    refund {
-      id
-      transactionId
-      orderId
-      createdAt
-      reason
-      reasonDetails
-      receiptNumber
-    }
-  }
-`;

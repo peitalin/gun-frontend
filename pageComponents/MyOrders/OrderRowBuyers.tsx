@@ -6,7 +6,7 @@ import clsx from "clsx";
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 import { Colors, BoxShadows, BorderRadius } from "layout/AppTheme";
 // Typings
-import { Product, Orders, Products, ID  } from "typings/gqlTypes";
+import { Product, Order, Products, ID  } from "typings/gqlTypes";
 // Material UI
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
@@ -31,7 +31,7 @@ const OrderRowBuyers: React.FC<ReactProps> = (props) => {
   const theme = useTheme();
   const smDown = useMediaQuery(theme.breakpoints.down("sm"))
 
-  // console.log("!!product: ",product)
+  console.log("!!product: ",product)
   const previewItem = getFeaturedPreviewFromProduct(product)
 
   return (
@@ -72,7 +72,7 @@ const OrderRowBuyers: React.FC<ReactProps> = (props) => {
 }
 
 interface ReactProps extends WithStyles<typeof styles> {
-  order: Orders;
+  order: Order;
   loading?: boolean;
 }
 

@@ -6,7 +6,7 @@ import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/s
 import { Colors } from "layout/AppTheme";
 // Types
 import { asCurrency as c } from "utils/prices";
-import { Orders, OrderStatus } from "typings/gqlTypes";
+import { Order, OrderStatus } from "typings/gqlTypes";
 // Utils Components
 import ErrorBounds from "components/ErrorBounds";
 import Typography from "@material-ui/core/Typography";
@@ -46,7 +46,7 @@ const OrderStatusStepperRefund: React.FC<ReactProps> = (props) => {
 
 
 interface ReactProps extends WithStyles<typeof styles> {
-  order: Orders;
+  order: Order;
 }
 
 

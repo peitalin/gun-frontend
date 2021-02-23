@@ -108,7 +108,7 @@ const VisaPurchaseProduct = (props: ReactProps) => {
         variantSnapshotId: variant.variantSnapshotId,
         total: variant.price,
         buyerId: props.user.id,
-        sellerId: product.store.id,
+        sellerStoreId: product.store.id,
         stripeAuthorizePaymentData: JSON.stringify(stripeAuthorizePaymentData),
         bidId: undefined,
       }
@@ -260,7 +260,7 @@ interface MutVarCreateOrder {
   variantSnapshotId: string
   total: number
   buyerId: string
-  sellerId: string
+  sellerStoreId: string
   stripeAuthorizePaymentData: string
   bidId: string
 }

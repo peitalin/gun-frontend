@@ -6,7 +6,7 @@ import clsx from "clsx";
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 import { Colors } from "layout/AppTheme";
 // Utils
-import { ID, Orders, UploadType, Order_Snapshots, OrderStatus } from "typings/gqlTypes";
+import { ID, Order, UploadType, Order_Snapshots, OrderStatus } from "typings/gqlTypes";
 // Media uploader
 import { IFileWithMeta, IUploadParams } from "components/DropzoneUploader/Dropzone";
 import Dropzone from "components/DropzoneUploader/Dropzone";
@@ -200,6 +200,7 @@ const Form10Upload = (props: ReactProps) => {
     }
   );
 
+
   const [removeForm10, removeForm10Response] = useMutation<MutDataRemove, MutVarRemove>(
     REMOVE_FORM_10, {
       variables: {
@@ -351,14 +352,13 @@ const Form10Upload = (props: ReactProps) => {
 
 
 interface ReactProps extends WithStyles<typeof styles> {
-  order: Orders;
+  order: Order;
   errorMessage?: string;
 }
 
 // add form10
 interface MutDataAdd {
-  update_orders: { returning: Orders[] },
-  insert_order_snapshots_one: Order_Snapshots
+  order: Order
 }
 interface MutVarAdd {
   orderId: string
@@ -367,8 +367,7 @@ interface MutVarAdd {
 
 // remove form10
 interface MutDataRemove {
-  update_orders: { returning: Orders[] },
-  insert_order_snapshots_one: Order_Snapshots
+  order: Order
 }
 interface MutVarRemove {
   orderId: string

@@ -11,7 +11,6 @@ import { Colors, BorderRadius } from "layout/AppTheme";
 // Typings
 import {
   UserPrivate,
-  Users,
   ID,
   BlankMutationResponse,
 } from "typings/gqlTypes";
@@ -229,8 +228,8 @@ const SendConfirmedPaymentEmails: React.FC<ReactProps> = (props) => {
 
 interface ReactProps extends WithStyles<typeof styles> {
   orderId: string;
-  buyer: Users;
-  seller: Users;
+  buyer: UserPrivate;
+  seller: UserPrivate;
 }
 interface QueryData {
   sendConfirmedPaymentBuyerEmail: BlankMutationResponse;

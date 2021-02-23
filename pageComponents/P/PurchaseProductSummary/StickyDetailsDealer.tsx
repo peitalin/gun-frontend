@@ -49,22 +49,22 @@ const StickyDetailsDealer = (props: ReactProps) => {
           </div>
           <div>
             <Typography className={classes.caption} variant="body1">
-              {`License Number: ${dealer?.licenseNumber ?? "..."}`}
+              {`License Number: ${dealer?.licenseNumber ?? ""}`}
             </Typography>
           </div>
           <div>
             <Typography className={classes.caption} variant="body1">
-              {`Postcode: ${dealer?.postCode ?? "NA"}`}
+              {`Postcode: ${dealer?.postCode ?? ""}`}
             </Typography>
           </div>
           <div>
             <Typography className={classes.caption} variant="body1">
-              {`City: ${dealer?.city ?? "NA"}`}
+              {`City: ${dealer?.city ?? ""}`}
             </Typography>
           </div>
           <div>
             <Typography className={classes.caption} variant="body1">
-              {`Address: ${dealer?.address ?? "NA"}`}
+              {`Address: ${dealer?.address ?? ""}`}
             </Typography>
           </div>
         </div>

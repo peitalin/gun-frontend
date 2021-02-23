@@ -1,6 +1,6 @@
 import { ActionType } from "./actions"
 import { reduxLoginActions as A } from "./login-actions";
-import { User, UserPrivate, StorePrivate } from "typings/gqlTypes";
+import { UserPrivate, StorePrivate } from "typings/gqlTypes";
 
 
 ////// login state reducer //////////

@@ -10,7 +10,7 @@ import Button from '@material-ui/core/Button';
 // Utils Components
 import ErrorBounds from "components/ErrorBounds";
 import { centsToDollarSelector } from "utils/selectors";
-import { Products } from "typings/gqlTypes";
+import { Product } from "typings/gqlTypes";
 import PriceDisplayMain from "components/PriceDisplayMain";
 import { getFeaturedPreviewFromProduct } from "utils/images";
 
@@ -69,7 +69,7 @@ const OrderProductPreview: React.FC<ReactProps> = (props) => {
 
 
 interface ReactProps extends WithStyles<typeof styles> {
-  product: Products;
+  product: Product;
 }
 
 const styles = (theme: Theme) => createStyles({

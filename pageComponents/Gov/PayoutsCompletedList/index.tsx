@@ -7,7 +7,7 @@ import { Colors, BoxShadows, BorderRadius } from "layout/AppTheme";
 // Typings
 import {
   UserPublic,
-  Orders,
+  Order,
   OrderStatus,
   ConnectionOffsetQuery,
   PayeeType,
@@ -36,7 +36,7 @@ import { useSnackbar, ProviderContext } from "notistack";
 import { useApolloClient } from "@apollo/client";
 import {
   GET_ORDERS_PAYOUTS_COMPLETE_CONNECTION,
-} from "queries/orders-queries";
+} from "queries/orders-admin-queries";
 // Search Component
 import SearchOptions, { SelectOption, setCategoryFacets } from "components/SearchOptions";
 import {
@@ -227,7 +227,7 @@ const PayoutsCompletedList = (props: ReactProps) => {
               </Typography>
             </div>
           }
-          <GridPaginatorGeneric<Orders>
+          <GridPaginatorGeneric<Order>
             index={index}
             connection={connection}
             totalCount={totalCount}
@@ -261,7 +261,7 @@ interface QueryData {
 }
 
 interface MutData2 {
-  orders: Orders[]
+  orders: Order[]
 }
 interface MutVar2 {
   orderIds: string[];

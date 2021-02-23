@@ -4,7 +4,7 @@ import clsx from "classnames";
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 import { Colors } from "layout/AppTheme";
 import {
-  User,
+  UserPrivate,
 } from "typings/gqlTypes";
 // Components
 import OrdersExpiringTable from "./OrdersExpiringTable";
@@ -27,7 +27,7 @@ const OrdersExpiringList: React.FC<ReactProps> = (props) => {
 }
 
 interface ReactProps extends WithStyles<typeof styles> {
-  admin: User
+  admin: UserPrivate
 }
 
 

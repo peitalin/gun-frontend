@@ -240,7 +240,7 @@ export const convertHasuraOrder = (
 
 export const convertHasuraOrderEdge = (o: Orders): OrdersEdge => {
   return {
-    node: convertHasuraOrder(o),
+    node: convertHasuraOrder(o) as any,
     __typename: "OrdersEdge"
   }
 }

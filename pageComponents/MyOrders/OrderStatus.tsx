@@ -6,7 +6,7 @@ import clsx from "clsx";
 import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
 import { Colors } from "layout/AppTheme";
 // Typings
-import { Orders, OrderStatus } from "typings/gqlTypes";
+import { Order, OrderStatus } from "typings/gqlTypes";
 // Material UI
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
@@ -97,7 +97,7 @@ const translateOrderStatus = (o: string): string => {
 
 
 interface ReactProps extends WithStyles<typeof styles> {
-  order: Orders;
+  order: Order;
 }
 
 const styles = (theme: Theme) => createStyles({

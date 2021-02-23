@@ -25,7 +25,7 @@ import { formatDate } from "utils/dates";
 import currency from 'currency.js';
 
 // graphql
-import { User, OrderStatus, OrderMutationResponse } from "typings/gqlTypes";
+import { UserPrivate, OrderStatus, OrderMutationResponse } from "typings/gqlTypes";
 import { useMutation, useApolloClient } from "@apollo/client";
 import { DocumentNode } from "graphql";
 import {
@@ -101,8 +101,8 @@ const RowExpander = (props: RowExpanderProps) => {
 
   let isEvenRow = index % 2 === 0
 
-  let phoneNumber = !!row?.seller?.user?.phoneNumber?.number
-    ? `${row?.seller?.user?.phoneNumber?.countryCode} ${row?.seller?.user?.phoneNumber?.number}`
+  let phoneNumber = !!row?.sellerStore?.user?.phoneNumber?.number
+    ? `${row?.sellerStore?.user?.phoneNumber?.countryCode} ${row?.sellerStore?.user?.phoneNumber?.number}`
     : "NA"
 
   let canOrderBeCancelled = canBeCancelled(row.orderStatus)
@@ -162,7 +162,7 @@ const RowExpander = (props: RowExpanderProps) => {
                     Email:
                   </Typography>
                   <Typography className={classes.sellerDetailsInfo} variant="body1">
-                    {row?.seller?.user?.email}
+                    {row?.sellerStore?.user?.email}
                   </Typography>
                 </div>
                 <div className={classes.sellerDetailsRow}>
@@ -305,7 +305,7 @@ const RowExpander = (props: RowExpanderProps) => {
 
 interface RowExpanderProps extends WithStyles<typeof styles> {
   row: ReturnType<typeof createDataForExpiringTable>
-  admin: User
+  admin: UserPrivate
   index?: number
   refetchQueriesParams?: {
     query: DocumentNode,

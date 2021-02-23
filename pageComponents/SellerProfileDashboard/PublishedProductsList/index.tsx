@@ -13,8 +13,6 @@ import { Colors, BorderRadius, BorderRadius2x, BoxShadows } from "layout/AppThem
 // Typings
 import {
   UserPrivate,
-  // OrderBy,
-  // ProductsConnectionCursorBased,
   ProductsConnection,
   StorePrivate,
   ConnectionOffsetQuery,

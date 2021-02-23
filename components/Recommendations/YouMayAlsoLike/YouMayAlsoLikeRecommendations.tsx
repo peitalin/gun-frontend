@@ -66,7 +66,7 @@ const YouMayAlsoLikeRecommendations = (props: ReactProps) => {
 
 
   let productsExist = option(connection).edges([]).length > 0;
-  console.log("recommmmmmm", data)
+  // console.log("recommmmmmm", data)
 
   if (!productsExist && !loading) {
     return <div className={"you-may-also-like-products-empty"}></div>

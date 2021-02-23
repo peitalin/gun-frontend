@@ -4,11 +4,11 @@ import clsx from "clsx";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 import { Colors, BorderRadius, BoxShadows } from "layout/AppTheme";
-import { ID, Orders, UserPrivate, Transactions } from "typings/gqlTypes";
+import { ID, Order, UserPrivate, Transactions } from "typings/gqlTypes";
 import {
   GET_ORDER_AS_ADMIN,
   GET_RECENT_TRANSACTIONS,
-} from "queries/orders-queries";
+} from "queries/orders-admin-queries";
 // Redux
 import { useDispatch, useSelector } from "react-redux";
 import { GrandReduxState } from 'reduxStore/grand-reducer';
@@ -46,7 +46,7 @@ const TestEmailButton: React.FC<ReactProps> = (props) => {
   const [orderId, setOrderId] = React.useState("");
   const [sellerEmail, setSellerEmail] = React.useState("");
   const [buyerEmail, setBuyerEmail] = React.useState("");
-  const [order, setOrder] = React.useState<Orders>(undefined);
+  const [order, setOrder] = React.useState<Order>(undefined);
   const [recentTx, setRecentTx] = React.useState<Transactions[]>([]);
 
   const searchOrder = async(orderId: string) => {
@@ -59,8 +59,8 @@ const TestEmailButton: React.FC<ReactProps> = (props) => {
       if (data.getOrderAsAdmin) {
         let order = data.getOrderAsAdmin;
         setOrder(order)
-        setSellerEmail(order.seller.user.email)
-        setBuyerEmail(order.buyer.email)
+        setSellerEmail(order?.sellerStore?.user?.email)
+        setBuyerEmail(order?.buyer?.email)
       }
     } catch(e) {
       // setErrorMsg("OrderID does not exist.")
@@ -149,27 +149,27 @@ const TestEmailButton: React.FC<ReactProps> = (props) => {
         <SendPaymentConfirmedEmails
           orderId={orderId}
           buyer={order?.buyer}
-          seller={order?.seller?.user}
+          seller={order?.sellerStore?.user}
         />
         <SendRefundedEmails
           orderId={orderId}
           buyer={order?.buyer}
-          seller={order?.seller?.user}
+          seller={order?.sellerStore?.user}
         />
         <SendForm10SubmittedEmails
           orderId={orderId}
           buyer={order?.buyer}
-          seller={order?.seller?.user}
+          seller={order?.sellerStore?.user}
         />
         <SendForm10ApprovedEmails
           orderId={orderId}
           buyer={order?.buyer}
-          seller={order?.seller?.user}
+          seller={order?.sellerStore?.user}
         />
         <SendPayoutCompleteEmails
           orderId={orderId}
           buyer={order?.buyer}
-          seller={order?.seller?.user}
+          seller={order?.sellerStore?.user}
         />
       </div>
     </div>
@@ -183,7 +183,7 @@ interface ReactProps extends WithStyles<typeof styles> {
 }
 
 interface QueryData {
-  getOrderAsAdmin: Orders;
+  getOrderAsAdmin: Order;
 }
 interface QueryVar {
   orderId: ID;

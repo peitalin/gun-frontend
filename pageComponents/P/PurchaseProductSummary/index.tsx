@@ -30,6 +30,7 @@ import { useTheme } from '@material-ui/core/styles';
 import { useRouter } from "next/router";
 // checkout
 import { asCurrency as c } from "utils/prices";
+import { soldOutStatusToDisplayMessage } from "./soldOutStatusUtils";
 
 import { VisaButtonLoading, PaypalButtonLoading } from "./PaymentButtonLoadingSSR";
 import dynamic from "next/dynamic";
@@ -126,7 +127,9 @@ const PurchaseProductSummary: React.FC<ReactProps> = (props) => {
                   classes.maxWidth,
                   classes.visaContainer,
                 )}>
-                  {props.product?.soldOutStatus}
+                  <span className={classes.soldOutStatusMessage}>
+                    {soldOutStatusToDisplayMessage(props.product?.soldOutStatus)}
+                  </span>
                 </div>
               : <div className={clsx(
                   classes.maxWidth,
@@ -306,6 +309,11 @@ const styles = (theme: Theme) => createStyles({
   },
   coinbasePayContainer: {
     marginTop: "0.45rem",
+  },
+  soldOutStatusMessage: {
+    color: theme.palette.type === 'dark'
+      ? Colors.uniswapMediumGrey
+      : Colors.slateGreyDarkest
   },
 });
 

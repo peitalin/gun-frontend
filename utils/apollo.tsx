@@ -136,7 +136,8 @@ export default withApollo(
 
       ssrMode: true,
 
-      cache: new InMemoryCache(cacheOptions),
+      // cache: new InMemoryCache(cacheOptions),
+      cache: new InMemoryCache(),
 
     })
   }
@@ -176,7 +177,8 @@ export const serverApolloClient = (ctx) => {
 
     ssrMode: true,
 
-    cache: new InMemoryCache(cacheOptions),
+    // cache: new InMemoryCache(cacheOptions),
+    cache: new InMemoryCache(),
 
     defaultOptions: defaultOptions,
 
@@ -186,8 +188,8 @@ export const serverApolloClient = (ctx) => {
 const cacheOptions = {
   addTypename: true,
   possibleTypes: {
-    User: ["UserPrivate", "UserPublic", "UserWithRole"],
-    Product: ["ProductPublic", "ProductPrivate", "ProductDownload"],
+    User: ["UserPrivate", "UserPublic", "BasicUser"],
+    Product: ["ProductPublic", "ProductPrivate"],
     Store: ["StorePublic", "StorePrivate"],
   },
   typePolicies: {
@@ -204,40 +206,6 @@ const cacheOptions = {
         currentVariants: {
           merge: (existing, incoming, opts) => {
             // do not merge variants
-            return incoming
-          }
-        },
-        relevantDiscounts: {
-          merge: (existing, incoming, opts) => {
-            // do not merge discounts
-            // they refer to bought/unbought products
-            // and thus should not be merged
-            return incoming
-          }
-        },
-      },
-    },
-
-    ProductDownload: {
-      keyFields: ["id"],
-      fields: {
-        featuredVariant: {
-          merge: (existing, incoming, opts) => {
-            // return opts.mergeObjects(existing, incoming)
-            return incoming
-          }
-        },
-        currentVariants: {
-          merge: (existing, incoming, opts) => {
-            // do not merge variants
-            return incoming
-          }
-        },
-        relevantDiscounts: {
-          merge: (existing, incoming, opts) => {
-            // do not merge discounts
-            // they refer to bought/unbought products
-            // and thus should not be merged
             return incoming
           }
         },
@@ -259,14 +227,6 @@ const cacheOptions = {
             return incoming
           }
         },
-        relevantDiscounts: {
-          merge: (existing, incoming, opts) => {
-            // do not merge discounts
-            // they refer to bought/unbought products
-            // and thus should not be merged
-            return incoming
-          }
-        },
       },
     },
 
@@ -281,15 +241,16 @@ const cacheOptions = {
         },
       }
     },
+
     Store: {
       keyFields: ["id"],
       fields: {
-        dashboardPublishedProductsConnection: {
+        productsForSaleConnection: {
           merge: (existing, incoming, opts) => {
             return opts.mergeObjects(existing, incoming)
           }
         },
-        dashboardUnpublishedProductsConnection: {
+        dashboardProductsConnection: {
           merge: (existing, incoming, opts) => {
             return opts.mergeObjects(existing, incoming)
           }
@@ -297,18 +258,19 @@ const cacheOptions = {
       },
     },
 
-    orders: {
-      keyFields: ["id", "updatedAt"],
-      fields: {
-        currentSnapshot: {
-          merge: (existing, incoming, opts) => {
-            return incoming
-          }
-        }
-      }
+    Order: {
+      keyFields: ["id"],
+      // fields: {
+      //   currentSnapshot: {
+      //     merge: (existing, incoming, opts) => {
+      //       return incoming
+      //     }
+      //   }
+      // }
     },
-    order_snapshots: {
-      keyFields: ["id", "orderStatus"],
+
+    OrderSnapshot: {
+      keyFields: ["id"],
     },
   }
 }

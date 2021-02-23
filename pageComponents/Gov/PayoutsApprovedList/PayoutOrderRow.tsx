@@ -6,7 +6,7 @@ import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/
 import { Colors } from "layout/AppTheme";
 // Typings
 import {
-  Orders
+  Order
 } from "typings/gqlTypes";
 // Utils Components
 import MenuItem from "@material-ui/core/MenuItem";
@@ -85,28 +85,28 @@ const PayoutOrderRow = (props: ReactProps) => {
       <Tooltip title={"Email"}>
         <div className={classes.flexItemWide}>
           <Typography variant="body2" className={classes.id}>
-            {order.seller.user.email}
+            {order.sellerStore.user.email}
           </Typography>
         </div>
       </Tooltip>
       <Tooltip title={"BSB"}>
         <div className={classes.flexItem}>
           <Typography variant="body2" className={classes.id}>
-            {formatBsb(order.seller.user.payoutMethod.bsb)}
+            {formatBsb(order.sellerStore.user.payoutMethod.bsb)}
           </Typography>
         </div>
       </Tooltip>
       <Tooltip title={"Account Number"}>
         <div className={classes.flexItemWide}>
           <Typography variant="body2" className={classes.id}>
-            {formatAccountNumber(order.seller.user.payoutMethod.accountNumber)}
+            {formatAccountNumber(order.sellerStore.user.payoutMethod.accountNumber)}
           </Typography>
         </div>
       </Tooltip>
       <Tooltip title={"Account Name"}>
         <div className={classes.flexItem}>
           <Typography variant="body2" className={classes.id}>
-            {order.seller.user.payoutMethod.accountName}
+            {order.sellerStore.user.payoutMethod.accountName}
           </Typography>
         </div>
       </Tooltip>
@@ -116,7 +116,7 @@ const PayoutOrderRow = (props: ReactProps) => {
 
 
 interface ReactProps extends WithStyles<typeof styles> {
-  order: Orders
+  order: Order
 }
 
 const styles = (theme: Theme) => createStyles({

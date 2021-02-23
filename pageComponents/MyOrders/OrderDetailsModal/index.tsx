@@ -9,7 +9,7 @@ import Dialog from "@material-ui/core/Dialog";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 // utils
-import { UserPrivate, Orders } from "typings/gqlTypes";
+import { UserPrivate, Order } from "typings/gqlTypes";
 import ErrorBounds from "components/ErrorBounds";
 import { useWindowWidth } from "utils/hooks";
 // Components
@@ -67,7 +67,7 @@ const OrderDetailsModal: React.FC<ReactProps> = (props) => {
 
 
 interface ReactProps extends WithStyles<typeof styles> {
-  order: Orders;
+  order: Order;
 }
 
 

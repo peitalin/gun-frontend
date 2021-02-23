@@ -1,7 +1,7 @@
 import {
   Image_Parents,
   ID,
-  Products,
+  Product,
   Product_Preview_Items,
   Product_Variants,
 } from "typings/gqlTypes";
@@ -42,7 +42,7 @@ export const genImgBreakpoints = ({ xs, sm, md, lg, xl }: Breakpoints) => {
 
 
 export const getFeaturedPreviewFromProduct = (
-  product: Products & { featuredVariant?: Product_Variants}
+  product: Product & { featuredVariant?: Product_Variants}
 ): Product_Preview_Items => {
   return product?.featuredVariant?.previewItems?.[0]
 }

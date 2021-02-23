@@ -153,7 +153,7 @@ const ProductRow = (props: ReactProps) => {
   let user = useSelector<GrandReduxState, UserPrivate>(s =>
     s.reduxLogin.user
   );
-  let productName = product.currentSnapshot.title
+  let productName = product?.currentSnapshot?.title
 
   if (!option(product).featuredVariant()) {
     return <Loading />

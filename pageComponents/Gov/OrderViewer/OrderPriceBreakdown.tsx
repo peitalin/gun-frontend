@@ -6,7 +6,7 @@ import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/
 import { BorderRadius, Colors } from "layout/AppTheme";
 // Typings
 import {
-  Orders,
+  Order,
   PayeeType,
 } from "typings/gqlTypes";
 // Material UI
@@ -280,7 +280,7 @@ const OrderPriceRow = ({
 
 
 interface ReactProps extends WithStyles<typeof styles> {
-  order: Orders
+  order: Order
 }
 interface FormikFields {
 }

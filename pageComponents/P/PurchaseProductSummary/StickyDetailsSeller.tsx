@@ -58,17 +58,17 @@ const StickyDetailsSeller = (props: ReactProps) => {
           </div>
           <div>
             <Typography className={classes.caption} variant="body1">
-              {`License: ${seller?.license?.licenseNumber ?? "..."}`}
+              {`License: ${seller?.license?.licenseNumber ?? ""}`}
             </Typography>
           </div>
           <div>
             <Typography className={classes.caption} variant="body1">
-              {`Category: ${seller?.license?.licenseCategory ?? "NA"}`}
+              {`Category: ${seller?.license?.licenseCategory ?? ""}`}
             </Typography>
           </div>
           <div>
             <Typography className={classes.caption} variant="body1">
-              {`State: ${seller?.license?.licenseState ?? "..."}`}
+              {`State: ${seller?.license?.licenseState ?? ""}`}
             </Typography>
           </div>
         </div>

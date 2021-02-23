@@ -9,16 +9,15 @@ import { Colors, BorderRadius } from "layout/AppTheme";
 import Typography from "@material-ui/core/Typography";
 // Typings
 import {
-  UserPrivate,
   OrdersConnection,
-  Orders,
-  User,
+  Order,
   OrderStatus,
+  UserPrivate,
   ConnectionOffsetQuery
 } from "typings/gqlTypes";
 import {
   GET_ORDERS_EXPIRING_CONNECTION,
-} from "queries/orders-queries";
+} from "queries/orders-admin-queries";
 // Pagination
 import { ConnectionQueryProps } from "components/Paginators/usePaginatePagedQueryHook";
 import ErrorDisplay from "components/Error";
@@ -149,7 +148,7 @@ const OrdersPendingApprovalTable: NextPage<ReactProps> = (props) => {
         }}
       >
         <TitleRows classes={classes}/>
-        <GridPaginatorGeneric<Orders>
+        <GridPaginatorGeneric<Order>
           index={ordersExpiringIndex}
           connection={ordersExpiringConnection}
           totalCount={ordersExpiringConnection?.totalCount ?? 0}
@@ -165,7 +164,7 @@ const OrdersPendingApprovalTable: NextPage<ReactProps> = (props) => {
               id: order.id,
               total: order.total,
               createdAt: order.createdAt,
-              seller: order.seller,
+              sellerStore: order.sellerStore,
               buyer: order.buyer,
               currentOrderSnapshot: order.currentSnapshot,
               orderSnapshots: order.orderSnapshots,
@@ -231,7 +230,7 @@ const TitleRows = (props: TitleRowsProps) => {
 
 
 interface ReactProps extends WithStyles<typeof styles> {
-  admin: User;
+  admin: UserPrivate;
 }
 interface TitleRowsProps extends WithStyles<typeof styles> {
 }

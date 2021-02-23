@@ -4,9 +4,11 @@ import clsx from "clsx";
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 // Typings
 import {
-  Orders, OrderStatus,
+  OrderStatus,
+  Order,
+  ProductPrivate,
+  StorePrivate,
   ID,
-  Products,
   Product_Variants,
 } from "typings/gqlTypes";
 // Utils
@@ -30,12 +32,14 @@ const ProductCard = (props: ReactProps & FormikProps<FormikFields>) => {
   const {
     classes,
     order,
+    store,
+    product,
     total,
     subtotal,
     ...fprops
   } = props;
 
-  const product: Products & { featuredVariant?: Product_Variants } = option(order).product();
+  console.log("PRODUCTTTTT:", product)
 
   const isRefunded = order?.currentSnapshot?.orderStatus === OrderStatus.REFUNDED;
   const isCancelled = order?.currentSnapshot?.orderStatus === OrderStatus.CANCELLED;
@@ -44,16 +48,17 @@ const ProductCard = (props: ReactProps & FormikProps<FormikFields>) => {
   // if payoutStatus is not UNPAID. Refund not allowed in any state other than "UNPAID"
 
   // data not exists
-  const dataNeExists = !option(product).store.id()
+  const dataNeExists = !product.id
     || !order.id
+    || !store.id
 
   if (dataNeExists) {
     return <Loading inline loading={dataNeExists}/>
   }
 
   let featuredPreview = getFeaturedPreviewFromProduct(product)
-  let countryCode = order?.product?.store?.user?.phoneNumber?.countryCode;
-  let phoneNumber = order?.product?.store?.user?.phoneNumber?.number;
+  let countryCode = store?.user?.phoneNumber?.countryCode;
+  let phoneNumber = store?.user?.phoneNumber?.number;
   let phoneNumberFull = !!phoneNumber
     ? `${countryCode} ${phoneNumber}`
     : "NA"
@@ -116,7 +121,7 @@ const ProductCard = (props: ReactProps & FormikProps<FormikFields>) => {
                 StoreId:
               </Typography>
               <Typography className={classes.fieldInfo} variant="subtitle1">
-                {product?.store?.id}
+                {store?.id}
               </Typography>
             </div>
             <div className={classes.flexRow}>
@@ -124,7 +129,7 @@ const ProductCard = (props: ReactProps & FormikProps<FormikFields>) => {
                 Store Name:
               </Typography>
               <Typography className={classes.fieldInfo} variant="subtitle1">
-                {order.product.store.name}
+                {store.name}
               </Typography>
             </div>
             <div className={classes.flexRow}>
@@ -132,7 +137,7 @@ const ProductCard = (props: ReactProps & FormikProps<FormikFields>) => {
                 Store User Email:
               </Typography>
               <Typography className={classes.fieldInfo} variant="subtitle1">
-                {order.product.store.user.email}
+                {store.user.email}
               </Typography>
             </div>
             <div className={classes.flexRow}>
@@ -154,7 +159,9 @@ const ProductCard = (props: ReactProps & FormikProps<FormikFields>) => {
 
 
 interface ReactProps extends WithStyles<typeof styles> {
-  order: Orders;
+  order: Order;
+  store: StorePrivate;
+  product: ProductPrivate;
   total: number;
   subtotal: number;
 }

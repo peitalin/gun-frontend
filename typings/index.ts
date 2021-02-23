@@ -2,13 +2,13 @@
 import {
   ProductVariantInput,
   ProductVariantEditInput,
+  Connection,
+  Edge,
+  ID,
+  Payment_Methods,
+  Payout_Methods,
+  PageInfo,
 } from "typings/gqlTypes";
-
-type ID = any;
-type Edge = any;
-type Connection = any;
-type PageBasedConnectionEdge = any;
-type PageBasedConnection = any;
 
 type PaymentMethod = any;
 type PayoutMethod = any;
@@ -33,13 +33,14 @@ export interface SubtotalDisplay {
   subtotalPaypal: string;
 }
 
-export interface GenericEdge<T> extends Edge {
+export interface GenericEdge<T> {
   node: T;
 }
 
-export interface GenericConnection<T> extends Connection {
+export interface GenericConnection<T> {
   edges?: GenericEdge<T>[];
-  pageInfo?: any;
+  pageInfo: any;
+  totalCount?: any;
 }
 
 

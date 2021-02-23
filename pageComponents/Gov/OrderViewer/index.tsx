@@ -11,7 +11,7 @@ import { Colors, BorderRadius, BoxShadows } from "layout/AppTheme";
 import {
   UserPrivate,
   ID,
-  Orders,
+  Order,
   OrderStatus,
   Transactions,
   OrderMutationResponse,
@@ -43,7 +43,7 @@ import { useQuery, useApolloClient } from "@apollo/client";
 import {
   GET_ORDER_AS_ADMIN,
   GET_RECENT_TRANSACTIONS,
-} from "queries/orders-queries";
+} from "queries/orders-admin-queries";
 import {
   CANCEL_ORDER_AND_PAYMENT,
 } from "queries/refunds-mutations";
@@ -70,7 +70,7 @@ const OrderViewer: React.FC<ReactProps> = (props) => {
   const [loading, setLoading] = React.useState(false);
 
   const [orderId, setOrderId] = React.useState(undefined);
-  const [order, setOrder] = React.useState<Orders>(undefined);
+  const [order, setOrder] = React.useState<Order>(undefined);
   const [recentTx, setRecentTx] = React.useState<Transactions[]>([]);
 
   const snackbar = useSnackbar();
@@ -288,8 +288,8 @@ const OrderViewer: React.FC<ReactProps> = (props) => {
                             id: order.id,
                             total: order.total,
                             createdAt: order.createdAt,
-                            seller: order.seller as any,
-                            buyer: order.buyer,
+                            sellerStore: order.sellerStore as any,
+                            buyer: order.buyer as any,
                             currentOrderSnapshot: order.currentSnapshot,
                             orderSnapshots: order.orderSnapshots,
                             product: order.product,
@@ -311,6 +311,8 @@ const OrderViewer: React.FC<ReactProps> = (props) => {
                   order.id &&
                   <ProductCard
                     order={order}
+                    product={order.product as any}
+                    store={order.sellerStore as any}
                     total={total}
                     subtotal={subtotal}
                     {...fprops}
@@ -341,7 +343,7 @@ interface ReactProps extends WithStyles<typeof styles> {
 }
 
 interface QueryData {
-  getOrderAsAdmin: Orders;
+  getOrderAsAdmin: Order;
 }
 interface QueryVar {
   orderId: ID;

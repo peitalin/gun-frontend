@@ -7,7 +7,7 @@ import { Colors, BoxShadows, BorderRadius } from "layout/AppTheme";
 // Typings
 import {
   UserPublic,
-  Orders,
+  Order,
   OrderStatus,
   ConnectionOffsetQuery,
   Order_By,
@@ -39,7 +39,7 @@ import { useSnackbar, ProviderContext } from "notistack";
 import { useApolloClient } from "@apollo/client";
 import {
   GET_ORDERS_CANCELLED_CONNECTION,
-} from "queries/orders-queries";
+} from "queries/orders-admin-queries";
 // Search Component
 import SearchOptions, { SelectOption, setCategoryFacets } from "components/SearchOptions";
 import {
@@ -238,7 +238,7 @@ const OrdersCancelledList = (props: ReactProps) => {
               </Typography>
             </div>
           }
-          <GridPaginatorGeneric<Orders>
+          <GridPaginatorGeneric<Order>
             index={index}
             connection={connection}
             totalCount={totalCount}
@@ -271,13 +271,6 @@ interface QueryData {
   getOrdersCancelledConnection: OrdersConnection
 }
 
-interface MutData2 {
-  orders: Orders[]
-}
-interface MutVar2 {
-  orderIds: string[];
-  payoutId: string;
-}
 
 const styles = (theme: Theme) => createStyles({
   root: {

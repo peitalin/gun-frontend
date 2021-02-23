@@ -1,21 +1,16 @@
 import React from "react";
-import {oc as option} from "ts-optchain";
 import clsx from "clsx";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 import { Colors } from "layout/AppTheme";
 
 // redux
-import { GrandReduxState } from "reduxStore/grand-reducer";
-import { Actions } from "reduxStore/actions";
 import { useSelector, useDispatch } from "react-redux";
 
 // Utils Components
 import Tick from "components/Icons/Tick";
 // MUI
 import Typography from "@material-ui/core/Typography";
-// Subcomponents
-import { Orders } from "typings/gqlTypes";
 // Icons
 import ClearIcon from "@material-ui/icons/Clear";
 import IconButton from "@material-ui/core/IconButton";

@@ -7,7 +7,7 @@ import { Colors, BoxShadows, BorderRadius } from "layout/AppTheme";
 // Typings
 import {
   UserPublic,
-  Orders,
+  Order,
   OrderStatus,
   ConnectionOffsetQuery,
   PayeeType,
@@ -36,7 +36,7 @@ import { useSnackbar, ProviderContext } from "notistack";
 import { useApolloClient } from "@apollo/client";
 import {
   GET_ORDERS_ADMIN_APPROVED_CONNECTION,
-} from "queries/orders-queries";
+} from "queries/orders-admin-queries";
 import { MARK_PAYOUTS_AS_PAID } from "queries/orders-mutations";
 import { useMutation } from "@apollo/client";
 import { DocumentNode } from "graphql";
@@ -153,16 +153,16 @@ const PayoutsApprovedList = (props: ReactProps) => {
             return !found
           })
           .map(order => {
-            let bsb = order.seller?.user?.payoutMethod?.bsb
-            let accountNumber = order.seller?.user?.payoutMethod?.accountNumber
-            let accountName = order?.seller?.user?.payoutMethod?.accountName
+            let bsb = order.sellerStore?.user?.payoutMethod?.bsb
+            let accountNumber = order.sellerStore?.user?.payoutMethod?.accountNumber
+            let accountName = order?.sellerStore?.user?.payoutMethod?.accountName
             let id = order.id
             let amount = order.total / 100
             // map to csv headers
             return {
-              bsb: order.seller?.user?.payoutMethod?.bsb,
-              accountNumber: order.seller?.user?.payoutMethod?.accountNumber,
-              accountName: order?.seller?.user?.payoutMethod?.accountName,
+              bsb: order.sellerStore?.user?.payoutMethod?.bsb,
+              accountNumber: order.sellerStore?.user?.payoutMethod?.accountNumber,
+              accountName: order?.sellerStore?.user?.payoutMethod?.accountName,
               id: order.id,
               amount: order.total / 100,
             }
@@ -463,7 +463,7 @@ const PayoutsApprovedList = (props: ReactProps) => {
               </Typography>
             </div>
           }
-          <GridPaginatorGeneric<Orders>
+          <GridPaginatorGeneric<Order>
             index={index}
             connection={connection}
             totalCount={totalCount}
@@ -496,7 +496,7 @@ interface QueryData {
 }
 
 interface MutData2 {
-  orders: Orders[]
+  orders: Order[]
 }
 interface MutVar2 {
   orderIds: string[];

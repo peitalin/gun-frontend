@@ -4,7 +4,8 @@ import clsx from "clsx";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 import { Colors, BorderRadius, BoxShadows } from "layout/AppTheme";
-import { OrderStatus } from "typings/gqlTypes";
+// TYpings
+import { OrderStatus, Order } from "typings/gqlTypes";
 // Utils Components
 import ErrorBounds from "components/ErrorBounds";
 // MUI
@@ -12,7 +13,6 @@ import Typography from "@material-ui/core/Typography";
 // Icons
 import ClearIcon from "@material-ui/icons/Clear";
 import IconButton from "@material-ui/core/IconButton";
-import { Orders } from "typings/gqlTypes";
 // Components
 import DisplayOrderReceipt from "./DisplayOrderReceipt";
 import DisplayOrderId from "./DisplayOrderId";
@@ -88,7 +88,7 @@ const OrderDetailsPage: React.FC<ReactProps> = (props) => {
 
 
 interface ReactProps extends WithStyles<typeof styles> {
-  order: Orders;
+  order: Order;
   closeModal?(): void;
   disableTitle?: boolean;
 }

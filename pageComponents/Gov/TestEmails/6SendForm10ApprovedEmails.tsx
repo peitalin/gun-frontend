@@ -10,7 +10,7 @@ import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/s
 import { Colors, BorderRadius } from "layout/AppTheme";
 // Typings
 import {
-  Users,
+  UserPrivate,
   ID,
   BlankMutationResponse,
 } from "typings/gqlTypes";
@@ -136,8 +136,8 @@ const SendForm10ApprovedEmails: React.FC<ReactProps> = (props) => {
 
 interface ReactProps extends WithStyles<typeof styles> {
   orderId: string
-  buyer: Users;
-  seller: Users;
+  buyer: UserPrivate;
+  seller: UserPrivate;
 }
 interface QueryData {
   sendForm10ApprovedBuyerEmail: BlankMutationResponse;

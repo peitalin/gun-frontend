@@ -35,7 +35,7 @@ import {
   UserPrivate,
   OrderStatus,
   OrdersConnection,
-  Orders,
+  Order,
   Order_By,
   Orders_Order_By,
 } from "typings/gqlTypes";
@@ -239,7 +239,7 @@ const MyOrders: React.FC<ReactProps> = (props) => {
               marginBottom: '1rem',
             }}
           >
-            <GridPaginatorGeneric<Orders>
+            <GridPaginatorGeneric<Order>
               index={bIndex}
               connection={buyerOrdersConnection}
               totalCount={buyerOrdersConnection?.totalCount ?? 0}
@@ -305,7 +305,7 @@ const MyOrders: React.FC<ReactProps> = (props) => {
                   marginBottom: '1rem',
                 }}
               >
-                <GridPaginatorGeneric<Orders>
+                <GridPaginatorGeneric<Order>
                   index={saiIndex}
                   connection={sellerOrdersActionItemsConnection}
                   totalCount={sellerOrdersActionItemsConnection?.totalCount ?? 0}
@@ -372,7 +372,7 @@ const MyOrders: React.FC<ReactProps> = (props) => {
               marginBottom: '1rem',
             }}
           >
-            <GridPaginatorGeneric<Orders>
+            <GridPaginatorGeneric<Order>
               index={sIndex}
               connection={sellerOrdersConnection}
               totalCount={sellerOrdersConnection?.totalCount ?? 0}

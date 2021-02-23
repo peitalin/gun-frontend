@@ -4,15 +4,12 @@ import clsx from "classnames";
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 import { Colors } from "layout/AppTheme";
 import {
-  User,
+  UserPrivate,
 } from "typings/gqlTypes";
 // Graphql
 import Loading from 'components/Loading';
 // Components
 import OrdersPendingApprovalTable from "./OrdersPendingApprovalTable";
-// formatters
-import dayjs from 'dayjs';
-import currency from "currency.js";
 
 
 
@@ -44,7 +41,7 @@ const OrdersPendingApprovals: React.FC<ReactProps> = (props) => {
 }
 
 interface ReactProps extends WithStyles<typeof styles> {
-  admin: User
+  admin: UserPrivate
 }
 
 
