@@ -6,7 +6,7 @@ import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/
 import { Colors } from "layout/AppTheme";
 // Typings
 import {
-  Order
+  OrderAdmin
 } from "typings/gqlTypes";
 // Utils Components
 import MenuItem from "@material-ui/core/MenuItem";
@@ -95,7 +95,7 @@ const CancelledOrderRow = (props: ReactProps) => {
 
 
 interface ReactProps extends WithStyles<typeof styles> {
-  order: Order
+  order: OrderAdmin
 }
 
 const styles = (theme: Theme) => createStyles({

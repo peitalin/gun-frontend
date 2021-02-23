@@ -8,6 +8,7 @@ import { Colors, BoxShadows, BorderRadius } from "layout/AppTheme";
 import {
   UserPublic,
   Order,
+  OrderAdmin,
   OrderStatus,
   ConnectionOffsetQuery,
   Order_By,
@@ -247,8 +248,8 @@ const OrdersCancelledList = (props: ReactProps) => {
             gridItemClassName={classes.gridItem}
             classNameRoot={classes.gridRoot}
           >
-            {({ node: order, key }) => {
-              console.log("node: order:", order)
+            {({ node , key }) => {
+              let order = node as OrderAdmin
               return (
                 <CancelledOrderRow key={key} order={order}/>
               )

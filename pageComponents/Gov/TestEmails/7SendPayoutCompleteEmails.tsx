@@ -54,7 +54,6 @@ const SendPayoutCompleteEmails: React.FC<ReactProps> = (props) => {
         alert(JSON.stringify(data.sendPayoutCompleteSellerEmail.status))
       }
     } catch(e) {
-      // setErrorMsg("OrderID does not exist.")
       snackbar.enqueueSnackbar(`Email failed to send`, { variant: "error" })
       console.log("errors: ", e)
     }

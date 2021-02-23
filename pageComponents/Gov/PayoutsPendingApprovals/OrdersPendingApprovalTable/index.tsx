@@ -15,6 +15,7 @@ import {
   UserPrivate,
   OrdersConnection,
   Order,
+  OrderAdmin,
   OrderStatus,
   ConnectionOffsetQuery
 } from "typings/gqlTypes";
@@ -206,8 +207,8 @@ const OrdersPendingApprovalTable: NextPage<ReactProps> = (props) => {
     _ordersAdminApproved?.data?.getOrdersAdminApprovedConnection
 
 
-  console.log("ordersCreatedConnection:",ordersCreatedConnection)
-  console.log("ordersPendingApprovalConnection:",ordersPendingApprovalConnection)
+  // console.log("ordersCreatedConnection:",ordersCreatedConnection)
+  // console.log("ordersPendingApprovalConnection:",ordersPendingApprovalConnection)
 
   if (_ordersAdminApproved.loading || _ordersPendingApproval.loading) {
     return (
@@ -278,15 +279,16 @@ const OrdersPendingApprovalTable: NextPage<ReactProps> = (props) => {
             className={classes.rowContainer}
             classNameRoot={classes.gridRoot}
           >
-            {({ node: order }) => {
+            {({ node }) => {
 
-              console.log("order>>>>>>: ", order)
+              let order = node as OrderAdmin;
+              // console.log("order>>>>>>: ", order)
               const row2 = createDataForPendingApprovalTable({
                 id: order.id,
                 total: order.total,
                 createdAt: order.createdAt,
-                sellerStore: order.sellerStore as any,
-                buyer: order.buyer as any,
+                sellerStore: order.sellerStore,
+                buyer: order.buyer,
                 currentOrderSnapshot: order.currentSnapshot,
                 orderSnapshots: order.orderSnapshots,
                 product: order.product,
@@ -363,15 +365,16 @@ const OrdersPendingApprovalTable: NextPage<ReactProps> = (props) => {
             className={classes.rowContainer}
             classNameRoot={classes.gridRoot}
           >
-            {({ node: order }) => {
+            {({ node }) => {
 
-              console.log("order>>>>>>: ", order)
+              let order = node as OrderAdmin;
+
               const row2 = createDataForPendingApprovalTable({
                 id: order.id,
                 total: order.total,
                 createdAt: order.createdAt,
-                sellerStore: order.sellerStore as any,
-                buyer: order.buyer as any,
+                sellerStore: order.sellerStore,
+                buyer: order.buyer,
                 currentOrderSnapshot: order.currentSnapshot,
                 orderSnapshots: order.orderSnapshots,
                 product: order.product,
@@ -442,15 +445,16 @@ const OrdersPendingApprovalTable: NextPage<ReactProps> = (props) => {
             className={classes.rowContainer}
             classNameRoot={classes.gridRoot}
           >
-            {({ node: order }) => {
+            {({ node }) => {
 
+              let order = node as OrderAdmin
               // console.log("order: ", order.payoutitems)
               const row2 = createDataForPendingApprovalTable({
                 id: order.id,
                 total: order.total,
                 createdAt: order.createdAt,
-                sellerStore: order.sellerStore as any,
-                buyer: order.buyer as any,
+                sellerStore: order.sellerStore,
+                buyer: order.buyer,
                 currentOrderSnapshot: order.currentSnapshot,
                 orderSnapshots: order.orderSnapshots,
                 product: order.product,

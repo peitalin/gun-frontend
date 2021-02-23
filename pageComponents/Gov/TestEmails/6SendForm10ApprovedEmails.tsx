@@ -1,5 +1,4 @@
 import React from "react";
-import {oc as option} from "ts-optchain";
 import clsx from "clsx";
 // Redux
 import { useDispatch, useSelector } from "react-redux";
@@ -57,7 +56,6 @@ const SendForm10ApprovedEmails: React.FC<ReactProps> = (props) => {
         alert(JSON.stringify(data.sendForm10ApprovedBuyerEmail.status))
       }
     } catch(e) {
-      // setErrorMsg("OrderID does not exist.")
       snackbar.enqueueSnackbar(`Email failed to send`, { variant: "error" })
       console.log("errors: ", e)
     }
@@ -80,7 +78,6 @@ const SendForm10ApprovedEmails: React.FC<ReactProps> = (props) => {
         alert(JSON.stringify(data.sendForm10ApprovedSellerEmail.status))
       }
     } catch(e) {
-      // setErrorMsg("OrderID does not exist.")
       snackbar.enqueueSnackbar(`Email failed to send`, { variant: "error" })
       console.log("errors: ", e)
     }

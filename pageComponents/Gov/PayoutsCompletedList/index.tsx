@@ -8,6 +8,7 @@ import { Colors, BoxShadows, BorderRadius } from "layout/AppTheme";
 import {
   UserPublic,
   Order,
+  OrderAdmin,
   OrderStatus,
   ConnectionOffsetQuery,
   PayeeType,
@@ -236,7 +237,8 @@ const PayoutsCompletedList = (props: ReactProps) => {
             gridItemClassName={classes.gridItem}
             classNameRoot={classes.gridRoot}
           >
-            {({ node: order, key }) => {
+            {({ node , key }) => {
+              let order = node as OrderAdmin;
               console.log("node: order:", order)
               return (
                 <PayoutOrderRow key={key} order={order}/>
@@ -261,7 +263,7 @@ interface QueryData {
 }
 
 interface MutData2 {
-  orders: Order[]
+  orders: OrderAdmin[]
 }
 interface MutVar2 {
   orderIds: string[];

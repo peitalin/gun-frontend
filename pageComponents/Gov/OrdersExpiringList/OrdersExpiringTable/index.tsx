@@ -11,6 +11,7 @@ import Typography from "@material-ui/core/Typography";
 import {
   OrdersConnection,
   Order,
+  OrderAdmin,
   OrderStatus,
   UserPrivate,
   ConnectionOffsetQuery
@@ -157,8 +158,9 @@ const OrdersPendingApprovalTable: NextPage<ReactProps> = (props) => {
           className={classes.rowContainer}
           classNameRoot={classes.gridRoot}
         >
-          {({ node: order }) => {
+          {({ node }) => {
 
+            let order = node as OrderAdmin;
             console.log("order>>>>>>: ", order)
             const row2 = createDataForExpiringTable({
               id: order.id,

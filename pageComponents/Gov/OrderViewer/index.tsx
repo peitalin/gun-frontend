@@ -12,6 +12,7 @@ import {
   UserPrivate,
   ID,
   Order,
+  OrderAdmin,
   OrderStatus,
   Transactions,
   OrderMutationResponse,
@@ -70,7 +71,7 @@ const OrderViewer: React.FC<ReactProps> = (props) => {
   const [loading, setLoading] = React.useState(false);
 
   const [orderId, setOrderId] = React.useState(undefined);
-  const [order, setOrder] = React.useState<Order>(undefined);
+  const [order, setOrder] = React.useState<OrderAdmin>(undefined);
   const [recentTx, setRecentTx] = React.useState<Transactions[]>([]);
 
   const snackbar = useSnackbar();
@@ -343,7 +344,7 @@ interface ReactProps extends WithStyles<typeof styles> {
 }
 
 interface QueryData {
-  getOrderAsAdmin: Order;
+  getOrderAsAdmin: OrderAdmin;
 }
 interface QueryVar {
   orderId: ID;

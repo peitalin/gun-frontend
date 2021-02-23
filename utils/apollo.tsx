@@ -136,8 +136,8 @@ export default withApollo(
 
       ssrMode: true,
 
-      // cache: new InMemoryCache(cacheOptions),
-      cache: new InMemoryCache(),
+      cache: new InMemoryCache(cacheOptions),
+      // cache: new InMemoryCache(),
 
     })
   }
@@ -177,8 +177,8 @@ export const serverApolloClient = (ctx) => {
 
     ssrMode: true,
 
-    // cache: new InMemoryCache(cacheOptions),
-    cache: new InMemoryCache(),
+    cache: new InMemoryCache(cacheOptions),
+    // cache: new InMemoryCache(),
 
     defaultOptions: defaultOptions,
 
@@ -191,6 +191,7 @@ const cacheOptions = {
     User: ["UserPrivate", "UserPublic", "BasicUser"],
     Product: ["ProductPublic", "ProductPrivate"],
     Store: ["StorePublic", "StorePrivate"],
+    Order: ["OrderPublic", "OrderAdmin"],
   },
   typePolicies: {
 
@@ -258,19 +259,26 @@ const cacheOptions = {
       },
     },
 
-    Order: {
+    OrderPublic: {
       keyFields: ["id"],
-      // fields: {
-      //   currentSnapshot: {
-      //     merge: (existing, incoming, opts) => {
-      //       return incoming
-      //     }
-      //   }
-      // }
+      fields: {
+        currentSnapshot: {
+          merge: (existing, incoming, opts) => {
+            return incoming
+          }
+        }
+      }
     },
 
-    OrderSnapshot: {
+    OrderAdmin: {
       keyFields: ["id"],
+      fields: {
+        currentSnapshot: {
+          merge: (existing, incoming, opts) => {
+            return incoming
+          }
+        }
+      }
     },
   }
 }

@@ -77,16 +77,16 @@ const getUserWhoActionedOrderStatus = (
 
   switch (orderStatus) {
     case OrderStatus.CREATED:  {
-      return buyer as any
+      return { ...buyer, __typename: "UserWithRole" } as UserWithRole
     }
     case OrderStatus.FAILED:  {
-      return buyer as any
+      return { ...buyer, __typename: "UserWithRole" } as UserWithRole
     }
     case OrderStatus.CONFIRMED_PAYMENT_FORM_10_REQUIRED:  {
-      return buyer as any
+      return { ...buyer, __typename: "UserWithRole" } as UserWithRole
     }
     case OrderStatus.FORM_10_SUBMITTED:  {
-      return sellerStore?.user as any
+      return { ...sellerStore?.user, __typename: "UserWithRole" } as UserWithRole
     }
     case OrderStatus.ADMIN_APPROVED:  {
       return orderSnapshot.adminApprover

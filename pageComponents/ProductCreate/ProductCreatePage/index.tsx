@@ -445,14 +445,14 @@ const productCreateInputToProduct = (
               url: `${googleBucketUrl}${imageId}`
             }
           },
-        } as any
+        }
       } else if (p.youTubeEmbedLink) {
         return {
           ...p,
           youTubeEmbedLink: p.youTubeEmbedLink
-        } as any
+        }
       } else {
-        return { ...p } as any
+        return { ...p }
       }
     }),
     priceDetails: {

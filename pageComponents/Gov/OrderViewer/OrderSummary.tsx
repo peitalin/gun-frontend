@@ -8,7 +8,7 @@ import {
   fade
 } from "@material-ui/core/styles";
 import { BorderRadius, Colors } from "layout/AppTheme";
-import { Order, OrderStatus, UserPrivate } from "typings/gqlTypes";
+import { OrderAdmin, OrderStatus, UserPrivate } from "typings/gqlTypes";
 // Material UI
 import Row from "./Row";
 // formatters
@@ -20,7 +20,7 @@ import { formatDate } from "utils/dates";
 const OrderSummary = (props: ReactProps) => {
 
   const { classes, order } = props;
-  const buyer: UserPrivate = order.buyer as any;
+  const buyer = order.buyer;
 
   if (!order) {
     return <Loading inline loading={!order} />;
@@ -54,7 +54,7 @@ const OrderSummary = (props: ReactProps) => {
   }
 };
 
-const orderStatusHumanFriendly = (order: Order): string => {
+const orderStatusHumanFriendly = (order: OrderAdmin): string => {
   switch (order?.currentSnapshot?.orderStatus) {
     case OrderStatus.CREATED:
       return "Order created";
@@ -79,7 +79,7 @@ const orderStatusHumanFriendly = (order: Order): string => {
 };
 
 interface ReactProps extends WithStyles<typeof styles> {
-  order: Order;
+  order: OrderAdmin;
 }
 
 const styles = (theme: Theme) => createStyles({

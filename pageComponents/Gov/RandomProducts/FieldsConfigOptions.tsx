@@ -18,7 +18,6 @@ import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
 import Switch from '@material-ui/core/Switch';
 // Graphql
 import { useQuery, useApolloClient } from "@apollo/client";
-import { GET_ORDER_AS_ADMIN } from "queries/orders-queries";
 // Formik
 import { FormikProps } from 'formik';
 import { FormikFieldsRandomProductsConfig } from "./RandomProductsFormik";

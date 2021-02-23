@@ -48,7 +48,6 @@ const SendWelcome: React.FC<ReactProps> = (props) => {
         alert(JSON.stringify(data))
       }
     } catch(e) {
-      // setErrorMsg("OrderID does not exist.")
       snackbar.enqueueSnackbar(`Email failed to send`, { variant: "error" })
     }
     setLoading1(false)

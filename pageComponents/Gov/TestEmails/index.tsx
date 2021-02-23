@@ -4,7 +4,7 @@ import clsx from "clsx";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 import { Colors, BorderRadius, BoxShadows } from "layout/AppTheme";
-import { ID, Order, UserPrivate, Transactions } from "typings/gqlTypes";
+import { ID, OrderAdmin, UserPrivate, Transactions } from "typings/gqlTypes";
 import {
   GET_ORDER_AS_ADMIN,
   GET_RECENT_TRANSACTIONS,
@@ -46,7 +46,7 @@ const TestEmailButton: React.FC<ReactProps> = (props) => {
   const [orderId, setOrderId] = React.useState("");
   const [sellerEmail, setSellerEmail] = React.useState("");
   const [buyerEmail, setBuyerEmail] = React.useState("");
-  const [order, setOrder] = React.useState<Order>(undefined);
+  const [order, setOrder] = React.useState<OrderAdmin>(undefined);
   const [recentTx, setRecentTx] = React.useState<Transactions[]>([]);
 
   const searchOrder = async(orderId: string) => {
@@ -183,7 +183,7 @@ interface ReactProps extends WithStyles<typeof styles> {
 }
 
 interface QueryData {
-  getOrderAsAdmin: Order;
+  getOrderAsAdmin: OrderAdmin;
 }
 interface QueryVar {
   orderId: ID;

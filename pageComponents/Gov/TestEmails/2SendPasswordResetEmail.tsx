@@ -60,7 +60,6 @@ const SendPasswordResetEmail: React.FC<ReactProps> = (props) => {
         console.log("response: ", data.sendResetPasswordEmail)
       }
     } catch(e) {
-      // setErrorMsg("OrderID does not exist.")
       snackbar.enqueueSnackbar(`Email failed to send`, { variant: "error" })
       console.log("errors: ", e)
     }
@@ -83,7 +82,6 @@ const SendPasswordResetEmail: React.FC<ReactProps> = (props) => {
         alert(JSON.stringify(data))
       }
     } catch(e) {
-      // setErrorMsg("OrderID does not exist.")
       snackbar.enqueueSnackbar(`Email failed to send`, { variant: "error" })
       console.log("errors: ", e)
     }
@@ -105,7 +103,6 @@ const SendPasswordResetEmail: React.FC<ReactProps> = (props) => {
         alert(JSON.stringify(data))
       }
     } catch(e) {
-      // setErrorMsg("OrderID does not exist.")
       snackbar.enqueueSnackbar(`Email failed to send`, { variant: "error" })
       console.log("errors: ", e)
     }

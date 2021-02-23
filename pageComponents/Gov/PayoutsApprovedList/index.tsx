@@ -8,6 +8,7 @@ import { Colors, BoxShadows, BorderRadius } from "layout/AppTheme";
 import {
   UserPublic,
   Order,
+  OrderAdmin,
   OrderStatus,
   ConnectionOffsetQuery,
   PayeeType,
@@ -147,7 +148,7 @@ const PayoutsApprovedList = (props: ReactProps) => {
       if (newOrdersEdges.length > 0) {
 
         let newOrders = newOrdersEdges
-          .map(({ node: order}) => order)
+          .map(({ node: order }) => order as OrderAdmin)
           .filter(newOrder => {
             let found = accumPayouts.find(u => u.id === newOrder.id)
             return !found
@@ -471,7 +472,8 @@ const PayoutsApprovedList = (props: ReactProps) => {
             numItemsPerPage={numItemsPerPage}
             gridItemClassName={classes.gridItem}
           >
-            {({ node: order, key }) => {
+            {({ node , key }) => {
+              let order = node as OrderAdmin
               console.log("node: order:", order)
               return (
                 <PayoutOrderRow key={key} order={order}/>
@@ -496,7 +498,7 @@ interface QueryData {
 }
 
 interface MutData2 {
-  orders: Order[]
+  orders: OrderAdmin[]
 }
 interface MutVar2 {
   orderIds: string[];
