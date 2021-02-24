@@ -3437,49 +3437,41 @@ export type Mutation = {
   update_users_by_pk?: Maybe<Users>;
   /**
    * Create a new account using an email address and password.
-   * 
    * AccessRule – PUBLIC
    */
   signUpUsingEmail: SignUpMutationResponse;
   /**
    * Log in using an email address and password.
-   * 
    * AccessRule – PUBLIC
    */
   logInUsingEmail: LoginMutationResponse;
   /**
    * Log out and invalidate access tokens.
-   * 
    * AccessRule – LOGGED_IN
    */
   logOut: BlankMutationResponse;
   /**
    * Send a password reset email.
-   * 
    * AccessRule – PUBLIC
    */
   sendResetPasswordEmail: SendResetPasswordResponse;
   /**
    * Confirm password reset after receiving email
-   * 
    * AccessRule – PUBLIC
    */
   confirmResetPassword: ResetPasswordResponse;
   /**
    * Change your password.
-   * 
    * AccessRule – LOGGED_IN
    */
   changePassword: UserMutationResponse;
   /**
    * Change your payout method.
-   * 
    * AccessRule – LOGGED_IN
    */
   setPayoutMethod: UserMutationResponse;
   /**
    * Edit user profile information.
-   * 
    * AccessRule – LOGGED_IN
    */
   editUserProfile: UserMutationResponse;
@@ -4732,6 +4724,8 @@ export type MutationSignUpUsingEmailArgs = {
   licenseExpiry: Scalars['Date'];
   licenseCategory?: Maybe<Scalars['String']>;
   licenseState?: Maybe<Scalars['String']>;
+  phoneNumber?: Maybe<Scalars['String']>;
+  countryCode?: Maybe<Scalars['String']>;
 };
 
 
@@ -5530,7 +5524,7 @@ export type OrderPublic = Order & {
    __typename?: 'OrderPublic';
   bid?: Maybe<Bids>;
   bidId?: Maybe<Scalars['String']>;
-  buyer?: Maybe<UserPublic>;
+  buyer?: Maybe<BasicUser>;
   buyerId?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['Date']>;
   currency?: Maybe<Scalars['String']>;
@@ -13816,7 +13810,13 @@ export type OrderSnapshotFragment = { __typename?: 'OrderSnapshot', id: string, 
 type OrdersFragment_OrderPublic_ = { __typename?: 'OrderPublic', id?: Maybe<string>, createdAt?: Maybe<any>, updatedAt?: Maybe<any>, bidId?: Maybe<string>, total?: Maybe<number>, currency?: Maybe<string>, buyerId?: Maybe<string>, sellerStoreId?: Maybe<string>, productId?: Maybe<string>, paymentIntentId?: Maybe<string>, bid?: Maybe<(
     { __typename?: 'bids' }
     & BidFragment
-  )>, buyer?: Maybe<{ __typename?: 'UserPublic', id: string, license?: Maybe<(
+  )>, buyer?: Maybe<{ __typename?: 'UserPrivate', firstName?: Maybe<string>, lastName?: Maybe<string>, id: string, license?: Maybe<(
+      { __typename?: 'user_licenses' }
+      & UserLicenseFragment
+    )> } | { __typename?: 'UserWithRole', id: string, license?: Maybe<(
+      { __typename?: 'user_licenses' }
+      & UserLicenseFragment
+    )> } | { __typename?: 'UserPublic', id: string, license?: Maybe<(
       { __typename?: 'user_licenses' }
       & UserLicenseFragment
     )> }>, sellerStore?: Maybe<{ __typename?: 'StorePrivate', id: string, name: string, website?: Maybe<string>, createdAt: any, updatedAt?: Maybe<any>, user?: Maybe<{ __typename?: 'UserPrivate', firstName?: Maybe<string>, lastName?: Maybe<string>, email: string, payoutMethod?: Maybe<{ __typename?: 'payout_methods', id: string, createdAt: any, updatedAt?: Maybe<any>, payoutType?: Maybe<string>, bsb?: Maybe<string>, accountNumber?: Maybe<string>, accountName?: Maybe<string> }>, phoneNumber?: Maybe<{ __typename?: 'phone_numbers', id: string, areaCode?: Maybe<string>, countryCode: string, number: string }> }> } | { __typename?: 'StorePublic', id: string, name: string, website?: Maybe<string>, createdAt: any, updatedAt?: Maybe<any>, user?: Maybe<{ __typename?: 'UserPublic', id: string, license?: Maybe<(
@@ -13851,7 +13851,7 @@ type OrdersFragment_OrderPublic_ = { __typename?: 'OrderPublic', id?: Maybe<stri
 type OrdersFragment_OrderAdmin_ = { __typename?: 'OrderAdmin', id?: Maybe<string>, createdAt?: Maybe<any>, updatedAt?: Maybe<any>, bidId?: Maybe<string>, total?: Maybe<number>, currency?: Maybe<string>, buyerId?: Maybe<string>, sellerStoreId?: Maybe<string>, productId?: Maybe<string>, paymentIntentId?: Maybe<string>, bid?: Maybe<(
     { __typename?: 'bids' }
     & BidFragment
-  )>, buyer?: Maybe<{ __typename?: 'UserPrivate', id: string, license?: Maybe<(
+  )>, buyer?: Maybe<{ __typename?: 'UserPrivate', firstName?: Maybe<string>, lastName?: Maybe<string>, id: string, license?: Maybe<(
       { __typename?: 'user_licenses' }
       & UserLicenseFragment
     )> }>, sellerStore?: Maybe<{ __typename?: 'StorePrivate', id: string, name: string, website?: Maybe<string>, createdAt: any, updatedAt?: Maybe<any>, user?: Maybe<{ __typename?: 'UserPrivate', firstName?: Maybe<string>, lastName?: Maybe<string>, email: string, payoutMethod?: Maybe<{ __typename?: 'payout_methods', id: string, createdAt: any, updatedAt?: Maybe<any>, payoutType?: Maybe<string>, bsb?: Maybe<string>, accountNumber?: Maybe<string>, accountName?: Maybe<string> }>, phoneNumber?: Maybe<{ __typename?: 'phone_numbers', id: string, areaCode?: Maybe<string>, countryCode: string, number: string }> }> }>, currentSnapshot?: Maybe<(
@@ -14200,6 +14200,10 @@ export const OrdersFragmentFragmentDoc = gql`
     id
     license {
       ...UserLicenseFragment
+    }
+    ... on UserPrivate {
+      firstName
+      lastName
     }
   }
   sellerStoreId

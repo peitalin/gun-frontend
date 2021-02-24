@@ -125,7 +125,6 @@ const StoreOrLogin = (props: StoreOrLoginProps) => {
                   titleSignup={"Create Account"}
                   initialTabIndex={1}
                   buttonType={props.buttonType}
-                  // compact
                   buttonProps={{
                     classes: {
                       root: clsx(
@@ -150,7 +149,6 @@ const StoreOrLogin = (props: StoreOrLoginProps) => {
                     titleLogin={"Log In"}
                     titleSignup={"Create Account"}
                     initialTabIndex={0}
-                    // compact
                     buttonProps={{
                       classes: { root: classes.buttonLogin }
                     }}

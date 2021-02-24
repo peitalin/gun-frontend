@@ -67,7 +67,8 @@ const styles = (theme: Theme) => createStyles({
     justifyContent: 'center',
     alignItems: 'center',
     padding: '2rem',
-    height: 'calc(100vh - 124px)',
+    minHeight: 'calc(100vh - 124px)',
+    height: '100%',
   },
   maxWidth: {
     maxWidth: 400,

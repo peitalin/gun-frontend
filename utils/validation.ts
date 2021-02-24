@@ -508,7 +508,7 @@ export const validationSchemas = {
         .required(),
       licenseExpiry: Yup.date()
         .required(),
-      licenseCategory: Yup.string()
+      licenseCategory: Yup.array().of(Yup.string())
         .nullable(),
       licenseState: Yup.string()
         .nullable(),

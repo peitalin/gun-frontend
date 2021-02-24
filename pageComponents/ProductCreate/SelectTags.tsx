@@ -19,17 +19,18 @@ import FormGroup from '@material-ui/core/FormGroup';
 // Select Component
 import DropdownInput from "components/Fields/DropdownInput";
 import dynamic from 'next/dynamic'
-import SelectTagsPlaceholder from './SSR/SelectTagsPlaceholder';
+
+import SelectTagsPlaceholder from 'pageComponents/ProductCreate/SSR/SelectTagsPlaceholder';
 const KeywordDropdownInput = dynamic(() => import('components/Fields/KeywordDropdownInput'), {
   loading: () => <SelectTagsPlaceholder/>,
   ssr: false
 })
+import { createOption } from "components/Fields/KeywordDropdownInput";
 // Util components
 import Loading from "components/Loading";
 import ErrorDisplay from "components/Error";
 import ErrorBounds from 'components/ErrorBounds';
 import { Formik, Form, FormikProps, ErrorMessage } from 'formik';
-import { createOption } from "components/Fields/KeywordDropdownInput";
 
 
 

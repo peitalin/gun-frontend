@@ -324,6 +324,10 @@ export const OrdersFragment = gql`
       license {
         ...UserLicenseFragment
       }
+      ...on UserPrivate {
+        firstName
+        lastName
+      }
     }
     sellerStoreId
     sellerStore {
@@ -333,13 +337,13 @@ export const OrdersFragment = gql`
       createdAt
       updatedAt
       user {
-        ...on UserPublic{
+        ...on UserPublic {
           id
           license {
             ...UserLicenseFragment
           }
         }
-        ...on UserPrivate{
+        ...on UserPrivate {
           firstName
           lastName
           email
