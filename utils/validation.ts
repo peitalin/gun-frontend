@@ -620,6 +620,14 @@ export const validationSchemas = {
       markProductAbandoned: Yup.boolean(),
     }),
 
+  // User license approvals
+  ApproveUnapproveUserLicense:
+    Yup.object().shape({
+      userId: Yup.string()
+        .required('userId required'),
+      verified: Yup.boolean(),
+    }),
+
   // Creating Zendesk Support Ticket
   CreateSupportTicket:
     Yup.object().shape({

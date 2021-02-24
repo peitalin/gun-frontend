@@ -31,9 +31,15 @@ const MyOrdersHistoryPage = (props: ReactProps) => {
         title="Orders"
         robots="noindex"
       />
-      <div className={classes.contentContainerPublicPage}>
-        <MyOrders withRecommendations={true}/>
-      </div>
+      <SellerProfileWrapper>
+      {(dataUser: SellerProfileProps) => {
+        return (
+          <div className={classes.contentContainerPublicPage}>
+            <MyOrders withRecommendations={true}/>
+          </div>
+        )
+      }}
+      </SellerProfileWrapper>
     </>
   );
 }

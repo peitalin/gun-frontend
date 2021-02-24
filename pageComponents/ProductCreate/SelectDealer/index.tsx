@@ -56,14 +56,13 @@ const SelectDealers = (props: ReactProps & FormikProps<FormikFields>) => {
         <FormGroup row
           className={clsx(classes.formGroup, classes.marginTop1)}
         >
-          {
+          <ChooseDealerDropdown dealers={dealers} {...fprops}/>
+
+          {/* {
             chooseDealer
             ? <ChooseDealerDropdown dealers={dealers} {...fprops}/>
             : <InputNewDealer dealers={dealers} {...fprops}/>
           }
-
-          {/* <InputNewDealer {...fprops} /> */}
-
           <div className={classes.dontSeeDealerLink}
             onClick={() => {
               // currently choosing dealer from menu, switching to inputing dealer
@@ -83,7 +82,7 @@ const SelectDealers = (props: ReactProps & FormikProps<FormikFields>) => {
               ? "Don't see your dealer?"
               : "Back"
             }
-          </div>
+          </div> */}
 
         </FormGroup>
       </div>

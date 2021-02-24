@@ -6,8 +6,7 @@ import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/s
 import { Colors, BoxShadows, BorderRadius, BorderRadius2x } from "layout/AppTheme";
 
 // redux
-import { GrandReduxState } from "reduxStore/grand-reducer";
-import { Actions } from "reduxStore/actions";
+import { GrandReduxState, Actions } from "reduxStore/grand-reducer";
 import { useSelector, useDispatch } from "react-redux";
 // Typings
 import {
@@ -16,9 +15,8 @@ import {
   GET_SELLER_ORDERS_ACTION_ITEMS_CONNECTION,
 } from "queries/orders-queries";
 
-import Loading from "components/Loading";
 // graphl
-import { useMutation, useQuery } from "@apollo/client";
+import { useLazyQuery, useQuery } from "@apollo/client";
 
 // Utils Components
 import ErrorBounds from "components/ErrorBounds";

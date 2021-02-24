@@ -106,6 +106,22 @@ const GovSideRoutesMenu: React.FC<ReactProps> = (props) => {
         </li>
 
         <li>
+          <Link href={"/gov/users"} scroll={false}>
+            <a>
+              <div className={
+                isSelectedRoute("users")
+                  ? classes.routeListItemSelected
+                  : classes.routeListItem
+              }>
+                <Typography variant="subtitle1" className={classes.routeListItemText}>
+                  User Viewer
+                </Typography>
+              </div>
+            </a>
+          </Link>
+        </li>
+
+        <li>
           <Typography variant="subtitle1" className={classes.routeListItemTitle}>
             Escrow Payouts
           </Typography>

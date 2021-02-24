@@ -166,7 +166,6 @@ const OrderViewer: React.FC<ReactProps> = (props) => {
     return (
       <>
         <OrderSearch
-          classes={classes}
           orderId={orderId}
           setOrderId={setOrderId}
           searchOrder={searchOrder}
@@ -185,7 +184,6 @@ const OrderViewer: React.FC<ReactProps> = (props) => {
   return (
     <>
       <OrderSearch
-        classes={classes}
         orderId={orderId}
         setOrderId={setOrderId}
         searchOrder={searchOrder}
@@ -248,7 +246,6 @@ const OrderViewer: React.FC<ReactProps> = (props) => {
 
           return (
             <CancelOrderForm
-              classes={classes}
               onSubmit={handleSubmit}
               total={c(total)}
               disableCancelOrderButton={
@@ -320,7 +317,7 @@ const OrderViewer: React.FC<ReactProps> = (props) => {
                   />
                 }
               </OrderViewerSection>
-              <OrderViewerSection classes={classes} title={"Price Breakdown"}>
+              <OrderViewerSection title={"Price Breakdown"}>
                 <OrderPriceBreakdown
                   order={order}
                   {...fprops}
@@ -436,18 +433,6 @@ const styles = (theme: Theme) => createStyles({
     justifyContent: 'center',
     alignItems: 'center',
     textAlign: 'start',
-  },
-  recentOrdersInner: {
-    maxWidth: 400,
-  },
-  recentOrderId: {
-    fontFamily: "courier",
-    fontWeight: 600,
-    cursor: 'pointer',
-    "&:hover": {
-      color: "#aaf",
-    },
-    margin: '0.1rem',
   },
 });
 
