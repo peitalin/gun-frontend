@@ -228,6 +228,9 @@ const Login: React.FC<ReactProps> = (props) => {
         lastName: lastName,
         licenseNumber: licenseNumber,
         licenseExpiry: new Date(licenseExpiry),
+        licenseState: licenseState,
+        phoneNumber: phoneNumber,
+        countryCode: countryCode,
       },
       update: (cache, { data: { createUser } }) => {
         setState(s => ({ ...s, buttonLoading: true }))

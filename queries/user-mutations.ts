@@ -12,6 +12,8 @@ export const CREATE_USER = gql`
     $licenseExpiry: Date!
     $licenseCategory: String
     $licenseState: String
+    $phoneNumber: String
+    $countryCode: String
   ) {
     signUpUsingEmail(
       email: $email
@@ -23,6 +25,8 @@ export const CREATE_USER = gql`
       licenseExpiry: $licenseExpiry
       licenseCategory: $licenseCategory
       licenseState: $licenseState
+      phoneNumber: $phoneNumber
+      countryCode: $countryCode
     ) {
       user {
         ...UserPrivateFragment
