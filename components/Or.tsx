@@ -38,14 +38,14 @@ const styles = (theme: Theme) => createStyles({
     flexGrow: 1,
     borderBottom: theme.palette.type === 'dark'
       ? `1px solid ${Colors.uniswapMediumGrey}`
-      : `1px solid ${Colors.uniswapLightestGrey}`,
+      : `1px solid ${Colors.slateGreyDark}`,
     height: '1px',
   },
   dividerText: {
     margin: '0rem 0.5rem',
     color: theme.palette.type === 'dark'
       ? `1px solid ${Colors.uniswapMediumGrey}`
-      : `1px solid ${Colors.uniswapLightestGrey}`,
+      : `1px solid ${Colors.slateGreyDark}`,
     fontWeight: 400,
     fontSize: '0.875rem',
   },

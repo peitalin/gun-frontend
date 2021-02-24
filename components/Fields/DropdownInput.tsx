@@ -101,25 +101,25 @@ const DropdownInput = (props: ReactProps) => {
               props.styles
               ? props.styles
               : {
-                input: styles => ({
-                  color: props.hideCursor ? 'transparent' : Colors.black
-                }),
-                placeholder: styles => ({
-                  ...styles,
-                  fontWeight: 400,
-                  fontFamily: fontFam,
-                  color: Colors.slateGreyLightBlack,
-                }),
-                menu: styles => ({
-                  ...styles,
-                  zIndex: 10,
-                  marginTop: '2px',
-                  cursor: "pointer",
-                  "&:hover": {
+                  input: styles => ({
+                    color: props.hideCursor ? 'transparent' : Colors.black
+                  }),
+                  placeholder: styles => ({
+                    ...styles,
+                    fontWeight: 400,
+                    fontFamily: fontFam,
+                    color: Colors.slateGreyLightBlack,
+                  }),
+                  menu: styles => ({
+                    ...styles,
+                    zIndex: 10,
+                    marginTop: '2px',
                     cursor: "pointer",
-                  },
-              })
-              }
+                    "&:hover": {
+                      cursor: "pointer",
+                    },
+                  })
+                }
             }
             inputRef={ref}
           />
@@ -162,63 +162,71 @@ const DropdownInput = (props: ReactProps) => {
                   },
                 })
             }
-            styles={
-              props.styles
-              ? props.styles
-              : {
-                input: styles => ({
-                  color: props.hideCursor ? 'transparent' : Colors.uniswapLightestGrey
-                }),
-                placeholder: styles => ({
-                  ...styles,
-                  fontWeight: 400,
-                  fontFamily: fontFam,
-                  color: Colors.grey,
-                }),
-                singleValue: styles => ({
-                  color: isDarkMode ? Colors.uniswapLighterGrey : Colors.charcoal,
-                }),
-                indicatorSeparator: styles => ({
-                  ...styles,
-                  backgroundColor: isDarkMode ? Colors.uniswapLighterGrey : Colors.slateGreyDarker,
-                }),
-                indicatorsContainer: styles => ({
-                  ...styles,
-                  color: isDarkMode ? Colors.uniswapLighterGrey : Colors.charcoal,
+            styles={{
+              input: styles => ({
+                color: props.hideCursor
+                  ? 'transparent'
+                  : Colors.uniswapLightestGrey,
+              }),
+              placeholder: styles => ({
+                ...styles,
+                fontWeight: 400,
+                fontFamily: fontFam,
+                color: Colors.grey,
+              }),
+              singleValue: styles => ({
+                color: isDarkMode ? Colors.uniswapLighterGrey : Colors.charcoal,
+              }),
+              indicatorSeparator: styles => ({
+                ...styles,
+                backgroundColor: isDarkMode ? Colors.uniswapLighterGrey : Colors.slateGreyDarker,
+              }),
+              indicatorsContainer: styles => ({
+                ...styles,
+                color: isDarkMode ? Colors.uniswapLighterGrey : Colors.charcoal,
+                cursor: "pointer",
+              }),
+              container: styles => ({
+                ...styles,
+                height: 40,
+                borderRadius: BorderRadius,
+                border: isDarkMode
+                  ? `1px solid ${Colors.uniswapLighterGrey}`
+                  : `1px solid ${Colors.slateGreyDarker}`,
+              }),
+              menu: styles => ({
+                ...styles,
+                zIndex: 10,
+                marginTop: '2px',
+                cursor: "pointer",
+                "&:hover": {
                   cursor: "pointer",
-                }),
-                menu: styles => ({
-                  ...styles,
-                  zIndex: 10,
-                  marginTop: '2px',
-                  cursor: "pointer",
-                  "&:hover": {
-                    cursor: "pointer",
-                  },
-                  background: isDarkMode
-                    ? Colors.uniswapDarkNavy
-                    : Colors.slateGrey,
-                }),
-                control: (base, state) => ({
-                  ...base,
-                  background: isDarkMode
-                    ? Colors.uniswapLightNavy
-                    : Colors.slateGrey,
-                  // // match with the menu
-                  borderRadius: BorderRadius,
-                  // // Overwrittes the different states of border
-                  border: `0px solid ${Colors.uniswapLighterGrey}`,
-                  // // borderColor: state.isFocused ? Colors.gradientUniswapBlue1 : "unset",
-                  // // Removes weird border around container
-                  // boxShadow: state.isFocused ? null : null,
-                  // "&:hover": {
-                  //   // Overwrittes the different states of border
-                  //   // borderColor: state.isFocused ? "red" : "blue"
-                  //   borderColors: Colors.gradientUniswapFluro1,
-                  // }
-                }),
-              }
-            }
+                },
+                background: isDarkMode
+                  ? Colors.uniswapDarkNavy
+                  : Colors.slateGrey,
+              }),
+              control: (base, state) => ({
+                ...base,
+                background: isDarkMode
+                  ? Colors.uniswapLightNavy
+                  : Colors.slateGrey,
+                // // match with the menu
+                borderRadius: BorderRadius,
+                // // Overwrittes the different states of border
+                border: isDarkMode
+                  ? `0px solid ${Colors.uniswapLighterGrey}`
+                  : `0px solid ${Colors.slateGrey}`,
+                // // borderColor: state.isFocused ? Colors.gradientUniswapBlue1 : "unset",
+                // // Removes weird border around container
+                // boxShadow: state.isFocused ? null : null,
+                // "&:hover": {
+                //   // Overwrittes the different states of border
+                //   // borderColor: state.isFocused ? "red" : "blue"
+                //   borderColors: Colors.gradientUniswapFluro1,
+                // }
+              }),
+            }}
             inputRef={ref}
           />
       }
