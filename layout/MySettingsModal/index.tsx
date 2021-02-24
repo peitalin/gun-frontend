@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 // Styles
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
 import { Colors, BorderRadius2x, Gradients, BorderRadius } from "layout/AppTheme";

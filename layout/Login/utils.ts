@@ -35,7 +35,17 @@ export const isLoginInputOk =
 
 export const isSignUpInputOk =
 (snackbar: ProviderContext) =>
-({ email, password, licenseNumber, licenseExpiry, firstName, lastName }) => {
+({
+  email,
+  password,
+  licenseNumber,
+  licenseExpiry,
+  licenseState,
+  phoneNumber,
+  countryCode,
+  firstName,
+  lastName
+}) => {
 
   if (!email) {
     snackbar.enqueueSnackbar("Email is missing!", { variant: "error" })
@@ -48,6 +58,9 @@ export const isSignUpInputOk =
     return false
   } else if (!licenseExpiry) {
     snackbar.enqueueSnackbar("License expiry date missing!", { variant: "error" })
+    return false
+  } else if (!licenseState) {
+    snackbar.enqueueSnackbar("License state missing!", { variant: "error" })
     return false
   } else if (!firstName) {
     snackbar.enqueueSnackbar("Name is missing!", { variant: "error" })
@@ -241,3 +254,13 @@ const yearBetween2020and2200 = (year) => {
   }
   return year < 2099 ? year : 2099;
 }
+
+
+export const formatPhoneNumber = (s: string) => {
+  let countryCode = s.split(" ").slice(0,1)[0]
+  let number = s.split(" ").slice(1).join(' ')
+  return {
+    countryCode,
+    number
+  }
+};

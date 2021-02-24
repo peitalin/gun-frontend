@@ -18,6 +18,7 @@ const MuiPhoneNumber = dynamic(() => import("material-ui-phone-number"), {
   loading: () => <Loading/>,
   ssr: false,
 })
+import { formatPhoneNumber } from "layout/Login/utils";
 
 
 
@@ -58,10 +59,8 @@ const ChangeUserProfileFields: React.FC<ReactProps & FormikProps<FormikFields>> 
     fprops.setFieldValue("email", s)
   };
 
-  const handleSetPhoneNumber = (e: string) => {
-    console.log("e::::", e)
-    let countryCode = e.split(" ").slice(0,1)[0]
-    let number = e.split(" ").slice(1).join(' ')
+  const handleSetPhoneNumber = (s: string) => {
+    let { countryCode, number } = formatPhoneNumber(s)
     fprops.setFieldValue("phoneNumber", number)
     fprops.setFieldValue("countryCode", countryCode)
   };

@@ -21,7 +21,20 @@ import IconButton from "@material-ui/core/IconButton";
 import ButtonLoading from "components/ButtonLoading";
 import { formatGunLicenseExpiry } from "../utils";
 //
-import Link from "next/link";
+import {
+  createLicenseCategorySuggestions,
+  createLicenseStateSuggestions,
+  SelectOption,
+} from "layout/MySettingsModal/ChangeUserLicenseForm/licenseUtils";
+import DropdownInput from "components/Fields/DropdownInput";
+
+import dynamic from "next/dynamic";
+import Loading from 'components/Loading';
+const MuiPhoneNumber = dynamic(() => import("material-ui-phone-number"), {
+  loading: () => <Loading/>,
+  ssr: false,
+})
+import { formatPhoneNumber } from "layout/Login/utils";
 
 
 
@@ -35,6 +48,9 @@ const SignUp: React.FC<ReactProps> = (props) => {
     lastName: "",
     licenseNumber: "",
     licenseExpiry: undefined,
+    licenseState: undefined,
+    phoneNumber: "",
+    countryCode: "",
   })
 
   React.useEffect(() => {
@@ -47,6 +63,9 @@ const SignUp: React.FC<ReactProps> = (props) => {
         lastName: "",
         licenseNumber: "",
         licenseExpiry: undefined,
+        licenseState: undefined,
+        phoneNumber: "",
+        countryCode: "",
       })
     }
   }, [])
@@ -61,6 +80,9 @@ const SignUp: React.FC<ReactProps> = (props) => {
       lastName: state.lastName,
       licenseNumber: state.licenseNumber,
       licenseExpiry: state.licenseExpiry,
+      licenseState: state.licenseState,
+      phoneNumber: state.phoneNumber,
+      countryCode: state.countryCode,
     });
   }
 
@@ -68,9 +90,25 @@ const SignUp: React.FC<ReactProps> = (props) => {
     props.setTabIndex(0)
   }
 
-  const [isBackspace, setIsBackspace] = React.useState(false)
+  const handleSetPhoneNumber = (s: string) => {
+    let { countryCode, number } = formatPhoneNumber(s)
+    setState(s => ({
+      ...s,
+      phoneNumber: number,
+      countryCode: countryCode
+    }))
+  };
 
   const { classes } = props;
+
+  const [isBackspace, setIsBackspace] = React.useState(false)
+
+  let licenseStateOptions = createLicenseStateSuggestions()
+  // initial stateShape
+  let initialStateLicense = licenseStateOptions
+    .find(d => d.value === state.licenseState)
+  const [licenseState, setLicenseState] = React.useState(initialStateLicense)
+
 
   return (
     <ErrorBounds className={classes.outerContainer}>
@@ -93,7 +131,7 @@ const SignUp: React.FC<ReactProps> = (props) => {
         </Typography>
 
         <form className={classes.form}>
-          <FormControl margin="normal" fullWidth>
+          <FormControl margin="dense" fullWidth>
             <InputLabel htmlFor="name">Name</InputLabel>
             <Input
               name="first-name"
@@ -105,7 +143,7 @@ const SignUp: React.FC<ReactProps> = (props) => {
               }}
             />
           </FormControl>
-          <FormControl margin="normal" fullWidth>
+          <FormControl margin="dense" fullWidth>
             <InputLabel htmlFor="last-name">Last Name</InputLabel>
             <Input
               name="last-name"
@@ -117,7 +155,7 @@ const SignUp: React.FC<ReactProps> = (props) => {
               }}
             />
           </FormControl>
-          <FormControl margin="normal" required fullWidth>
+          <FormControl margin="dense" required fullWidth>
             <InputLabel htmlFor="sign-up-email">Gun License Number</InputLabel>
             <Input
               name="gun-license-number"
@@ -130,7 +168,7 @@ const SignUp: React.FC<ReactProps> = (props) => {
               }}
             />
           </FormControl>
-          <FormControl margin="normal" required fullWidth>
+          <FormControl margin="dense" required fullWidth>
             <InputLabel htmlFor="sign-up-email">Gun License Expiry</InputLabel>
             <Input
               name="gun-license-expiry"
@@ -157,7 +195,44 @@ const SignUp: React.FC<ReactProps> = (props) => {
             />
           </FormControl>
 
-          <FormControl margin="normal" required fullWidth>
+          <FormControl margin="dense" required fullWidth>
+            <DropdownInput
+              stateShape={initialStateLicense}
+              onChange={({ label, value }: SelectOption) => {
+                // set dropdown object
+                setLicenseState({ label, value })
+                // then set it in state
+                setState(s => ({ ...s, licenseState: value }))
+              }}
+              value={licenseState}
+              options={licenseStateOptions}
+              placeholder={"Gun License State"}
+              label="" // remove moving label
+              className={classes.textField}
+              inputProps={{ style: { width: '100%' }}}
+              // errorMessage={errors.licenseState}
+              // touched={touched.licenseState}
+            />
+          </FormControl>
+
+          <FormControl margin="dense" required fullWidth>
+            <MuiPhoneNumber
+              //@ts-ignore
+              name={"phone"}
+              label="Mobile number e.g: +61 433 666 777"
+              // label={`${values.countryCode} ${values.phoneNumber}`}
+              data-cy="user-phone"
+              defaultCountry={"au"}
+              onlyCountries={["au"]}
+              // preferredCountries={["au"]}
+              // disableCountryCode={true}
+              // https://github.com/alexplumb/material-ui-phone-number
+              value={`${state.countryCode} ${state.phoneNumber}`}
+              onChange={handleSetPhoneNumber}
+            />
+          </FormControl>
+
+          <FormControl margin="dense" required fullWidth>
             <InputLabel htmlFor="sign-up-email">Email Address</InputLabel>
             <Input
               name="sign-up-email"
@@ -170,7 +245,7 @@ const SignUp: React.FC<ReactProps> = (props) => {
               }}
             />
           </FormControl>
-          <FormControl margin="normal" required fullWidth>
+          <FormControl margin="dense" required fullWidth>
             <InputLabel htmlFor="password">
               Password
               <LockIcon className={classes.secureCheckoutIcon}/>
@@ -198,20 +273,6 @@ const SignUp: React.FC<ReactProps> = (props) => {
           >
             Create Account
           </ButtonLoading>
-          {/* <Typography variant="caption" className={classes.termsText}>
-            By signing up, I agree to the
-            <a className={classes.link}
-              href={"https://help.relay.shop/hc/en-us/articles/360038530771-Terms-of-Service"}
-            >
-              Terms of Service
-            </a>
-            and
-            <a className={classes.link}
-              href={"https://help.relay.shop/hc/en-us/articles/360038152632-Privacy-Policy"}
-            >
-              Privacy Policy.
-            </a>
-          </Typography> */}
         </form>
 
         <div className={classes.preHeader}>
@@ -237,6 +298,9 @@ interface ReactProps extends WithStyles<typeof styles> {
     lastName?: string
     licenseNumber: string,
     licenseExpiry: Date,
+    licenseState: string,
+    phoneNumber?: string,
+    countryCode?: string,
   }): void;
   email?: string;
   handleToggleModal?(): void;

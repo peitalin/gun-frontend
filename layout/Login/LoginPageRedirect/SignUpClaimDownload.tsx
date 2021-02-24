@@ -10,13 +10,26 @@ import ErrorBounds from "components/ErrorBounds";
 import Or from "components/Or";
 import ButtonLoading from "components/ButtonLoading";
 import { formatGunLicenseExpiry } from "../utils";
+//
+import {
+  createLicenseCategorySuggestions,
+  createLicenseStateSuggestions,
+  SelectOption,
+} from "layout/MySettingsModal/ChangeUserLicenseForm/licenseUtils";
+import DropdownInput from "components/Fields/DropdownInput";
+
+import dynamic from "next/dynamic";
+import Loading from 'components/Loading';
+const MuiPhoneNumber = dynamic(() => import("material-ui-phone-number"), {
+  loading: () => <Loading/>,
+  ssr: false,
+})
+import { formatPhoneNumber } from "layout/Login/utils";
 
 
 
 const SignUp: React.FC<ReactProps> = (props) => {
 
-
-  const { classes } = props;
 
   const [state, setState] = React.useState({
     email: "",
@@ -25,6 +38,9 @@ const SignUp: React.FC<ReactProps> = (props) => {
     lastName: "",
     licenseNumber: "",
     licenseExpiry: undefined,
+    licenseState: undefined,
+    phoneNumber: "",
+    countryCode: "",
   })
 
   const resetForm = () => {
@@ -37,6 +53,9 @@ const SignUp: React.FC<ReactProps> = (props) => {
       lastName: "",
       licenseNumber: "",
       licenseExpiry: undefined,
+      licenseState: undefined,
+      phoneNumber: "",
+      countryCode: "",
     }));
   }
 
@@ -56,7 +75,25 @@ const SignUp: React.FC<ReactProps> = (props) => {
     props.setTabIndex(0)
   }
 
+
+  const handleSetPhoneNumber = (s: string) => {
+    let { countryCode, number } = formatPhoneNumber(s)
+    setState(s => ({
+      ...s,
+      phoneNumber: number,
+      countryCode: countryCode
+    }))
+  };
+
+  const { classes } = props;
+
   const [isBackspace, setIsBackspace] = React.useState(false)
+
+  let licenseStateOptions = createLicenseStateSuggestions()
+  // initial stateShape
+  let initialStateLicense = licenseStateOptions
+    .find(d => d.value === state.licenseState)
+  const [licenseState, setLicenseState] = React.useState(initialStateLicense)
 
   return (
   <ErrorBounds className={classes.outerContainer}>
@@ -152,6 +189,45 @@ const SignUp: React.FC<ReactProps> = (props) => {
         }}
         inputProps={{ style: { width: '100%' }}}
       />
+
+      <Typography variant="body1" className={classes.fieldHeading}>
+        License State
+      </Typography>
+      <DropdownInput
+        className={classes.textInput}
+        stateShape={initialStateLicense}
+        onChange={({ label, value }: SelectOption) => {
+          // set dropdown object
+          setLicenseState({ label, value })
+          // then set it in state
+          setState(s => ({ ...s, licenseState: value }))
+        }}
+        value={licenseState}
+        options={licenseStateOptions}
+        placeholder={"Gun License State"}
+        label="" // remove moving label
+        inputProps={{ style: { width: '100%' }}}
+      />
+
+      <div className={classes.phoneNumberContainer}>
+        <Typography variant="body1" className={classes.fieldHeading}>
+          Phone Number
+        </Typography>
+        <MuiPhoneNumber
+          //@ts-ignore
+          name={"phone"}
+          label="Mobile number e.g: +61 433 666 777"
+          // label={`${values.countryCode} ${values.phoneNumber}`}
+          data-cy="user-phone"
+          defaultCountry={"au"}
+          onlyCountries={["au"]}
+          // preferredCountries={["au"]}
+          // disableCountryCode={true}
+          // https://github.com/alexplumb/material-ui-phone-number
+          value={`${state.countryCode} ${state.phoneNumber}`}
+          onChange={handleSetPhoneNumber}
+        />
+      </div>
 
       <Typography className={classes.subtitle} variant={"body1"}>
         Email

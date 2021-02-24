@@ -21,10 +21,19 @@ const DatePicker = dynamic(() => import("react-datepicker"), {
   ssr: false,
 })
 import { formatDate, showDate } from "utils/dates";
-import Portal from "@material-ui/core/Portal";
-import ButtonLoading from "components/ButtonLoading";
 
+import {
+  createLicenseCategorySuggestions,
+  createLicenseStateSuggestions,
+  SelectOption,
+} from "layout/MySettingsModal/ChangeUserLicenseForm/licenseUtils";
 import DropdownInput from "components/Fields/DropdownInput";
+import SelectTagsPlaceholder from 'pageComponents/ProductCreate/SSR/SelectTagsPlaceholder';
+const MultiDropdownSelect = dynamic(() => import('components/Fields/MultiDropdownSelect'), {
+  loading: () => <SelectTagsPlaceholder/>,
+  ssr: false
+})
+import { createOption } from "components/Fields/MultiDropdownSelect";
 
 
 
@@ -58,27 +67,36 @@ const ChangeUserLicenseFields: React.FC<ReactProps & FormikProps<FormikFields>> 
     fprops.setFieldValue("licenseExpiry", d)
   };
 
-  const handleSetLicenseState = (e: HtmlEvent) => {
-    let s = e.target.value;
-    fprops.setFieldValue("licenseState", s)
-  };
+  const handleSetLicenseCategory = (options: SelectOption[]) => {
+    let newCategories = (options ?? []).map(t => t.value)
+    // Formik
+    fprops.setFieldValue("licenseCategory", newCategories)
+    fprops.setFieldTouched("licenseCategory", true)
+    props.validateForm()
+  }
 
-
-  console.log("licenseExpiry: ", values.licenseExpiry)
+  // console.log("licenseExpiry: ", values.licenseExpiry)
 
   let licenseCategoryOptions = createLicenseCategorySuggestions()
   // initial stateShape
   let initialCategoryLicense = licenseCategoryOptions
     .find(d => d.value === fprops.values.licenseCategory)
-
   const [licenseCategory, setLicenseCategory] = React.useState(initialCategoryLicense)
 
-  console.log("licenseCategory: ", licenseCategory);
-  console.log("fprops.values.licenseCategory: ", fprops.values.licenseExpiry);
+
+  let licenseStateOptions = createLicenseStateSuggestions()
+  // initial stateShape
+  let initialStateLicense = licenseStateOptions
+    .find(d => d.value === fprops.values.licenseState)
+  const [licenseState, setLicenseState] = React.useState(initialStateLicense)
+
+  // console.log("licenseCategoryOptions: ", licenseCategoryOptions);
+  console.log("fprops.values.licenseCategory: ", fprops.values.licenseCategory);
+  // console.log("licenseState: ", licenseState);
+  // console.log("fprops.values.licenseState: ", fprops.values.licenseState);
 
   return (
     <>
-
       <Typography variant="body1" className={classes.fieldHeading}>
         License Number
       </Typography>
@@ -129,32 +147,38 @@ const ChangeUserLicenseFields: React.FC<ReactProps & FormikProps<FormikFields>> 
       <Typography variant="body1" className={classes.fieldHeading}>
         License Category
       </Typography>
-      <DropdownInput
-        stateShape={initialCategoryLicense}
-        onChange={({ label, value }: SelectOption) => {
-          setLicenseCategory({ label, value })
-          fprops.setFieldValue("licenseCategory", value)
-        }}
-        value={licenseCategory}
+      <MultiDropdownSelect
+        // disabled={loading}
+        // loading={loading}
+        initialTags={
+          ((fprops.values?.licenseCategory as string[]) ?? [])
+            .map(t => createOption(t))
+        }
         options={licenseCategoryOptions}
-
-        placeholder={"Category"}
-        label="" // remove moving label
-        className={classes.textField}
-        inputProps={{ style: { width: '100%' }}}
-        errorMessage={errors.licenseCategory}
-        touched={touched.licenseCategory}
+        setTags={handleSetLicenseCategory}
+        disableInitialValidationMessage={true}
+        limit={{
+          count: (fprops?.values?.licenseCategory ?? []).length,
+          max: 10,
+        }}
+        errorMessage={errors?.licenseCategory?.[0]}
+        touched={touched?.licenseCategory?.[0]}
       />
 
       <Typography variant="body1" className={classes.fieldHeading}>
         License State
       </Typography>
-      <TextInputUnderline
-        placeholder={"State"}
+      <DropdownInput
+        stateShape={initialStateLicense}
+        onChange={({ label, value }: SelectOption) => {
+          setLicenseState({ label, value })
+          fprops.setFieldValue("licenseState", value)
+        }}
+        value={licenseState}
+        options={licenseStateOptions}
+        placeholder={"License State"}
         label="" // remove moving label
         className={classes.textField}
-        value={values.licenseState}
-        onChange={handleSetLicenseState}
         inputProps={{ style: { width: '100%' }}}
         errorMessage={errors.licenseState}
         touched={touched.licenseState}
@@ -164,32 +188,11 @@ const ChangeUserLicenseFields: React.FC<ReactProps & FormikProps<FormikFields>> 
   )
 }
 
-const createLicenseCategorySuggestions = (): SelectOption[] => {
-  return [
-    "Category A",
-    "Category B",
-    "Category C",
-    "Category D",
-    "Category E",
-    "Category H",
-  ].map(c => {
-    return {
-      label: c,
-      value: c,
-    }
-  })
-}
-
-
-export interface SelectOption {
-  label: string;
-  value: string | any;
-}
 
 interface FormikFields {
   licenseNumber: string
   licenseExpiry: Date
-  licenseCategory: string
+  licenseCategory: string[]
   licenseState: string
 }
 

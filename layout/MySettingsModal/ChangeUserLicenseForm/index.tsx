@@ -101,7 +101,9 @@ const ChangeUserLicenseForm = (props: ReactProps) => {
         initialValues={{
           licenseNumber: reduxUser?.license?.licenseNumber,
           licenseExpiry: reduxUser?.license?.licenseExpiry,
-          licenseCategory: reduxUser?.license?.licenseCategory,
+          licenseCategory: reduxUser?.license?.licenseCategory
+            ? reduxUser?.license?.licenseCategory?.split(',')
+            : [],
           licenseState: reduxUser?.license?.licenseState,
         }}
         validationSchema={validationSchemas.EditUserLicense}
@@ -112,7 +114,7 @@ const ChangeUserLicenseForm = (props: ReactProps) => {
             variables: {
               licenseNumber: values.licenseNumber,
               licenseExpiry: values.licenseExpiry,
-              licenseCategory: values.licenseCategory,
+              licenseCategory: values.licenseCategory.join(','),
               licenseState: values.licenseState,
             }
           }).then(r => {

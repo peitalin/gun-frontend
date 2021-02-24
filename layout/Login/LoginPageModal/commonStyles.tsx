@@ -174,6 +174,18 @@ const styles = (theme: Theme) => createStyles({
     justifyContent: "center",
     alignItems: "center",
   },
+  textField: {
+    width: "100%",
+    "&:focus-within": {
+      color: '#24A4FF',
+    },
+  },
+  fieldHeading: {
+    fontWeight: 600,
+    lineHeight: '1.5rem',
+    marginTop: '1rem',
+    marginBottom: '0.1rem',
+  },
 });
 
 export default styles;

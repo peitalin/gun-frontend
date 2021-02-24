@@ -15,7 +15,6 @@ import { UserPrivate } from "typings/gqlTypes";
 import { SendPasswordResetResponse } from "typings";
 
 import LoginPageModal from "./LoginPageModal";
-import LoginPageCompact from "./LoginPageCompact";
 import LoginPageRedirect from "./LoginPageRedirect";
 
 import { useApolloClient } from "@apollo/client";
@@ -187,9 +186,29 @@ const Login: React.FC<ReactProps> = (props) => {
   /////////////////////////////////////////////////
   //// 2. Signup Call
   /////////////////////////////////////////////////
-  const dispatchCreateUser = async({ email, password, licenseNumber, licenseExpiry, firstName, lastName }) => {
+  const dispatchCreateUser = async({
+    email,
+    password,
+    licenseNumber,
+    licenseExpiry,
+    licenseState,
+    phoneNumber,
+    countryCode,
+    firstName,
+    lastName
+  }) => {
 
-    if (!isSignUpInputOk(snackbar)({ email, password, licenseNumber, licenseExpiry, firstName, lastName })) {
+    if (!isSignUpInputOk(snackbar)({
+      email,
+      password,
+      licenseNumber,
+      licenseExpiry,
+      licenseState,
+      phoneNumber,
+      countryCode,
+      firstName,
+      lastName
+    })) {
       setState(s => ({ ...s, buttonLoading: false }))
       return null
     } else {
@@ -301,19 +320,7 @@ const Login: React.FC<ReactProps> = (props) => {
   return (
     <>
       {
-        props.compact
-        ? <LoginPageCompact
-            className={props.className}
-            buttonLoading={state.buttonLoading}
-            loggedIn={reduxLogin.loggedIn}
-            tabIndex={state.tabIndex}
-            setTabIndex={setTabIndex}
-            title={titleLogin}
-            dispatchLogin={dispatchLogin}
-            dispatchCreateUser={dispatchCreateUser}
-            dispatchResetPassword={dispatchResetPassword}
-          />
-        : props.asFormLayout
+        props.asFormLayout
           ? <LoginPageRedirect
               className={props.className}
               buttonLoading={state.buttonLoading}

@@ -1,4 +1,5 @@
 import { withStyles, createStyles, Theme } from "@material-ui/core/styles";
+import { Colors } from "layout/AppTheme";
 
 const styles = (theme: Theme) => createStyles({
   loginRoot: {
@@ -28,7 +29,7 @@ const styles = (theme: Theme) => createStyles({
   },
   textInput: {
     width: "100%",
-    marginBottom: '0.5rem',
+    marginBottom: '0.75rem',
   },
   outerContainer: {
     minWidth: 330,
@@ -120,6 +121,18 @@ const styles = (theme: Theme) => createStyles({
   },
   marginTop1: {
     marginTop: "1rem",
+  },
+  fieldHeading: {
+    width: '100%',
+    fontWeight: 600,
+    lineHeight: '1.5rem',
+  },
+  phoneNumberContainer: {
+    width: '100%',
+    marginBottom: "0.75rem",
+    "& > div": {
+      width: '100%',
+    }
   },
 });
 
