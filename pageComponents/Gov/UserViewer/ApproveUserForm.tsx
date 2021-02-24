@@ -70,13 +70,16 @@ const styles = (theme: Theme) => createStyles({
   root: {
     padding: '3rem',
     borderRadius: BorderRadius,
-    backgroundColor: theme.palette.type === 'dark'
-      ? Colors.uniswapDarkNavy
-      : Colors.cream,
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
+    border: theme.palette.type === 'dark'
+      ? `1px solid ${Colors.uniswapGrey}`
+      : `1px solid ${Colors.slateGreyDark}`,
+    backgroundColor: theme.palette.type === 'dark'
+      ? `${Colors.uniswapDarkNavy}`
+      : `${Colors.cream}`,
   },
   flexCol: {
     display: 'flex',

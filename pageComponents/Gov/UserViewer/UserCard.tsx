@@ -142,7 +142,7 @@ const UserCard = (props: ReactProps & FormikProps<FormikFields>) => {
                 classes.fieldKeyBold,
                 user?.license?.verified ? classes.blue : classes.red
               )} variant="subtitle1">
-                License Verified?:
+                License Verified:
               </Typography>
               <Typography className={clsx(
                 classes.fieldInfoBold,

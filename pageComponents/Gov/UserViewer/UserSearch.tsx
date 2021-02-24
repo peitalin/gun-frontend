@@ -77,6 +77,12 @@ const styles = (theme: Theme) => createStyles({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
+    border: theme.palette.type === 'dark'
+      ? `1px solid ${Colors.uniswapGrey}`
+      : `1px solid ${Colors.slateGreyDark}`,
+    backgroundColor: theme.palette.type === 'dark'
+      ? `${Colors.uniswapDarkNavy}`
+      : `${Colors.cream}`,
   },
   searchRoot: {
     marginBottom: '2rem',
