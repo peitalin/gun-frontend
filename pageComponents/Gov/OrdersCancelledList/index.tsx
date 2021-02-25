@@ -139,7 +139,7 @@ const OrdersCancelledList = (props: ReactProps) => {
             Orders Cancelled
           </Typography>
           <Typography variant="body1" className={classes.emailCountCaption}>
-            { `${option(connection).totalCount(0)} completed payouts` }
+            { `${option(connection).totalCount(0)} cancelled orders` }
           </Typography>
         </div>
       </div>

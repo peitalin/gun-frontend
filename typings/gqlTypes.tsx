@@ -3774,6 +3774,8 @@ export type Mutation = {
   sendForm10ApprovedBuyerEmail: BlankMutationResponse;
   sendForm10ApprovedSellerEmail: BlankMutationResponse;
   sendPayoutCompleteSellerEmail: BlankMutationResponse;
+  editDealer?: Maybe<UserMutationResponse>;
+  createDealerForUser?: Maybe<UserMutationResponse>;
 };
 
 
@@ -5152,6 +5154,26 @@ export type MutationSendPayoutCompleteSellerEmailArgs = {
   orderId: Scalars['String'];
 };
 
+
+export type MutationEditDealerArgs = {
+  name?: Maybe<Scalars['String']>;
+  address?: Maybe<Scalars['String']>;
+  city?: Maybe<Scalars['String']>;
+  postCode?: Maybe<Scalars['String']>;
+  state?: Maybe<Scalars['String']>;
+  licenseNumber?: Maybe<Scalars['String']>;
+};
+
+
+export type MutationCreateDealerForUserArgs = {
+  name?: Maybe<Scalars['String']>;
+  address?: Maybe<Scalars['String']>;
+  city?: Maybe<Scalars['String']>;
+  postCode?: Maybe<Scalars['String']>;
+  state?: Maybe<Scalars['String']>;
+  licenseNumber?: Maybe<Scalars['String']>;
+};
+
 /** Something that went wrong during a mutation. */
 export type MutationError = {
    __typename?: 'MutationError';
@@ -5222,9 +5244,6 @@ export type Order_Snapshots = {
   adminApproverId?: Maybe<Scalars['String']>;
   createdAt: Scalars['timestamp'];
   /** An object relationship */
-  dealerApprover?: Maybe<Users>;
-  dealerApproverId?: Maybe<Scalars['String']>;
-  /** An object relationship */
   form10Image?: Maybe<Image_Parents>;
   form10ImageId?: Maybe<Scalars['String']>;
   id: Scalars['String'];
@@ -5281,8 +5300,6 @@ export type Order_Snapshots_Bool_Exp = {
   adminApprover?: Maybe<Users_Bool_Exp>;
   adminApproverId?: Maybe<String_Comparison_Exp>;
   createdAt?: Maybe<Timestamp_Comparison_Exp>;
-  dealerApprover?: Maybe<Users_Bool_Exp>;
-  dealerApproverId?: Maybe<String_Comparison_Exp>;
   form10Image?: Maybe<Image_Parents_Bool_Exp>;
   form10ImageId?: Maybe<String_Comparison_Exp>;
   id?: Maybe<String_Comparison_Exp>;
@@ -5305,8 +5322,6 @@ export type Order_Snapshots_Insert_Input = {
   adminApprover?: Maybe<Users_Obj_Rel_Insert_Input>;
   adminApproverId?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['timestamp']>;
-  dealerApprover?: Maybe<Users_Obj_Rel_Insert_Input>;
-  dealerApproverId?: Maybe<Scalars['String']>;
   form10Image?: Maybe<Image_Parents_Obj_Rel_Insert_Input>;
   form10ImageId?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
@@ -5323,7 +5338,6 @@ export type Order_Snapshots_Max_Fields = {
    __typename?: 'order_snapshots_max_fields';
   adminApproverId?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['timestamp']>;
-  dealerApproverId?: Maybe<Scalars['String']>;
   form10ImageId?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
   orderId?: Maybe<Scalars['String']>;
@@ -5336,7 +5350,6 @@ export type Order_Snapshots_Max_Fields = {
 export type Order_Snapshots_Max_Order_By = {
   adminApproverId?: Maybe<Order_By>;
   createdAt?: Maybe<Order_By>;
-  dealerApproverId?: Maybe<Order_By>;
   form10ImageId?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   orderId?: Maybe<Order_By>;
@@ -5350,7 +5363,6 @@ export type Order_Snapshots_Min_Fields = {
    __typename?: 'order_snapshots_min_fields';
   adminApproverId?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['timestamp']>;
-  dealerApproverId?: Maybe<Scalars['String']>;
   form10ImageId?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
   orderId?: Maybe<Scalars['String']>;
@@ -5363,7 +5375,6 @@ export type Order_Snapshots_Min_Fields = {
 export type Order_Snapshots_Min_Order_By = {
   adminApproverId?: Maybe<Order_By>;
   createdAt?: Maybe<Order_By>;
-  dealerApproverId?: Maybe<Order_By>;
   form10ImageId?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   orderId?: Maybe<Order_By>;
@@ -5399,8 +5410,6 @@ export type Order_Snapshots_Order_By = {
   adminApprover?: Maybe<Users_Order_By>;
   adminApproverId?: Maybe<Order_By>;
   createdAt?: Maybe<Order_By>;
-  dealerApprover?: Maybe<Users_Order_By>;
-  dealerApproverId?: Maybe<Order_By>;
   form10Image?: Maybe<Image_Parents_Order_By>;
   form10ImageId?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
@@ -5424,8 +5433,6 @@ export enum Order_Snapshots_Select_Column {
   /** column name */
   CREATEDAT = 'createdAt',
   /** column name */
-  DEALERAPPROVERID = 'dealerApproverId',
-  /** column name */
   FORM10IMAGEID = 'form10ImageId',
   /** column name */
   ID = 'id',
@@ -5443,7 +5450,6 @@ export enum Order_Snapshots_Select_Column {
 export type Order_Snapshots_Set_Input = {
   adminApproverId?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['timestamp']>;
-  dealerApproverId?: Maybe<Scalars['String']>;
   form10ImageId?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
   orderId?: Maybe<Scalars['String']>;
@@ -5458,8 +5464,6 @@ export enum Order_Snapshots_Update_Column {
   ADMINAPPROVERID = 'adminApproverId',
   /** column name */
   CREATEDAT = 'createdAt',
-  /** column name */
-  DEALERAPPROVERID = 'dealerApproverId',
   /** column name */
   FORM10IMAGEID = 'form10ImageId',
   /** column name */
@@ -6055,9 +6059,6 @@ export type OrderSnapshot = {
   adminApprover?: Maybe<UserWithRole>;
   adminApproverId?: Maybe<Scalars['String']>;
   createdAt: Scalars['timestamp'];
-  /** An object relationship */
-  dealerApprover?: Maybe<UserWithRole>;
-  dealerApproverId?: Maybe<Scalars['String']>;
   /** An object relationship */
   form10Image?: Maybe<Image_Parents>;
   form10ImageId?: Maybe<Scalars['String']>;
@@ -9483,6 +9484,13 @@ export type Query = {
    */
   userByEmailOrIdAdminOnly?: Maybe<BasicUser>;
   /**
+   * Get recent users who just signed up, a helper function for Admin dashboard
+   * to verify users
+   * 
+   * AccessRule – PLATFORM_ADMIN
+   */
+  getRecentUsers: Array<BasicUser>;
+  /**
    * Query the list of products that are recommended for the logged-in user.
    * If nobody is logged in, a general list of recommendations is still returned.
    * 
@@ -10400,6 +10408,12 @@ export type QueryUserByEmailOrIdAdminOnlyArgs = {
 };
 
 
+export type QueryGetRecentUsersArgs = {
+  limit: Scalars['Int'];
+  offset: Scalars['Int'];
+};
+
+
 export type QueryGetRecommendedProductsConnectionArgs = {
   query?: Maybe<ConnectionOffsetQuery>;
 };
@@ -10825,6 +10839,7 @@ export type ResetPasswordResponse = {
 export enum Role {
   ANON = 'ANON',
   USER = 'USER',
+  DEALER = 'DEALER',
   PLATFORM_ADMIN = 'PLATFORM_ADMIN',
   SYSTEM = 'SYSTEM'
 }
@@ -12896,6 +12911,8 @@ export type UserPrivate = BasicUser & {
   license?: Maybe<User_Licenses>;
   phoneNumberId?: Maybe<Scalars['String']>;
   phoneNumber?: Maybe<Phone_Numbers>;
+  dealerId?: Maybe<Scalars['String']>;
+  dealer?: Maybe<Dealers>;
 };
 
 
@@ -12947,6 +12964,8 @@ export type UserPublic = BasicUser & {
    */
   licenseId?: Maybe<Scalars['String']>;
   license?: Maybe<User_Licenses>;
+  dealerId?: Maybe<Scalars['String']>;
+  dealer?: Maybe<Dealers>;
 };
 
 /** columns and relationships of "users" */
@@ -13695,6 +13714,8 @@ export type UserWithRole = BasicUser & {
   userRole: Role;
   licenseId?: Maybe<Scalars['String']>;
   license?: Maybe<User_Licenses>;
+  dealerId?: Maybe<Scalars['String']>;
+  dealer?: Maybe<Dealers>;
 };
 
 /** An individual item in a wishlist */
@@ -13759,7 +13780,7 @@ type ProductFragment_ProductPrivate_ = { __typename?: 'ProductPrivate', id: stri
   ), featuredVariant: (
     { __typename?: 'product_variants' }
     & ProductVariantsFragment
-  ), store?: Maybe<{ __typename?: 'StorePrivate', id: string, name: string }>, category?: Maybe<{ __typename?: 'categories', id: string, name: string, categoryGroup: string }> };
+  ), store?: Maybe<{ __typename?: 'StorePrivate', id: string, name: string, user?: Maybe<{ __typename?: 'UserPrivate', id: string, license?: Maybe<{ __typename?: 'user_licenses', id: string, licenseNumber: string, licenseCategory?: Maybe<string>, licenseExpiry: any, licenseState?: Maybe<string>, verified: boolean }> }> }>, category?: Maybe<{ __typename?: 'categories', id: string, name: string, categoryGroup: string }> };
 
 type ProductFragment_ProductPublic_ = { __typename?: 'ProductPublic', id: string, createdAt?: Maybe<any>, updatedAt?: Maybe<any>, tags?: Maybe<string>, isPublished: boolean, isSuspended: boolean, isDeleted: boolean, isExcludedFromRecommendations: boolean, storeId: string, soldOutStatus: string, currentSnapshot: (
     { __typename?: 'product_snapshots' }
@@ -13767,7 +13788,7 @@ type ProductFragment_ProductPublic_ = { __typename?: 'ProductPublic', id: string
   ), featuredVariant: (
     { __typename?: 'product_variants' }
     & ProductVariantsFragment
-  ), store?: Maybe<{ __typename?: 'StorePrivate', id: string, name: string } | { __typename?: 'StorePublic', id: string, name: string }>, category?: Maybe<{ __typename?: 'categories', id: string, name: string, categoryGroup: string }> };
+  ), store?: Maybe<{ __typename?: 'StorePrivate', id: string, name: string, user?: Maybe<{ __typename?: 'UserPrivate', id: string, license?: Maybe<{ __typename?: 'user_licenses', id: string, licenseNumber: string, licenseCategory?: Maybe<string>, licenseExpiry: any, licenseState?: Maybe<string>, verified: boolean }> }> } | { __typename?: 'StorePublic', id: string, name: string, user?: Maybe<{ __typename?: 'UserPublic', id: string, license?: Maybe<{ __typename?: 'user_licenses', id: string, licenseNumber: string, licenseCategory?: Maybe<string>, licenseExpiry: any, licenseState?: Maybe<string>, verified: boolean }> }> }>, category?: Maybe<{ __typename?: 'categories', id: string, name: string, categoryGroup: string }> };
 
 export type ProductFragment = ProductFragment_ProductPrivate_ | ProductFragment_ProductPublic_;
 
@@ -13802,7 +13823,7 @@ export type TransactionFragment = { __typename?: 'transactions', id: string, tot
 
 export type PayoutItemFragment = { __typename?: 'payout_items', id: string, storeId: string, payeeType: string, amount: number, paymentProcessingFee: number, createdAt: any, payoutStatus: string, currency: string, orderId: string, txnId: string, payoutId?: Maybe<string>, taxes: number };
 
-export type OrderSnapshotFragment = { __typename?: 'OrderSnapshot', id: string, orderStatus: string, createdAt: any, adminApproverId?: Maybe<string>, dealerApproverId?: Maybe<string>, adminApprover?: Maybe<{ __typename?: 'UserWithRole', id: string, firstName?: Maybe<string>, lastName?: Maybe<string>, email: string }>, dealerApprover?: Maybe<{ __typename?: 'UserWithRole', id: string, firstName?: Maybe<string>, lastName?: Maybe<string>, email: string }>, form10Image?: Maybe<(
+export type OrderSnapshotFragment = { __typename?: 'OrderSnapshot', id: string, orderStatus: string, createdAt: any, adminApproverId?: Maybe<string>, adminApprover?: Maybe<{ __typename?: 'UserWithRole', id: string, firstName?: Maybe<string>, lastName?: Maybe<string>, email: string }>, form10Image?: Maybe<(
     { __typename?: 'image_parents' }
     & ImageFragment
   )> };
@@ -13810,7 +13831,7 @@ export type OrderSnapshotFragment = { __typename?: 'OrderSnapshot', id: string, 
 type OrdersFragment_OrderPublic_ = { __typename?: 'OrderPublic', id?: Maybe<string>, createdAt?: Maybe<any>, updatedAt?: Maybe<any>, bidId?: Maybe<string>, total?: Maybe<number>, currency?: Maybe<string>, buyerId?: Maybe<string>, sellerStoreId?: Maybe<string>, productId?: Maybe<string>, paymentIntentId?: Maybe<string>, bid?: Maybe<(
     { __typename?: 'bids' }
     & BidFragment
-  )>, buyer?: Maybe<{ __typename?: 'UserPrivate', firstName?: Maybe<string>, lastName?: Maybe<string>, id: string, license?: Maybe<(
+  )>, buyer?: Maybe<{ __typename?: 'UserPrivate', firstName?: Maybe<string>, lastName?: Maybe<string>, email: string, id: string, license?: Maybe<(
       { __typename?: 'user_licenses' }
       & UserLicenseFragment
     )> } | { __typename?: 'UserWithRole', id: string, license?: Maybe<(
@@ -13851,7 +13872,7 @@ type OrdersFragment_OrderPublic_ = { __typename?: 'OrderPublic', id?: Maybe<stri
 type OrdersFragment_OrderAdmin_ = { __typename?: 'OrderAdmin', id?: Maybe<string>, createdAt?: Maybe<any>, updatedAt?: Maybe<any>, bidId?: Maybe<string>, total?: Maybe<number>, currency?: Maybe<string>, buyerId?: Maybe<string>, sellerStoreId?: Maybe<string>, productId?: Maybe<string>, paymentIntentId?: Maybe<string>, bid?: Maybe<(
     { __typename?: 'bids' }
     & BidFragment
-  )>, buyer?: Maybe<{ __typename?: 'UserPrivate', firstName?: Maybe<string>, lastName?: Maybe<string>, id: string, license?: Maybe<(
+  )>, buyer?: Maybe<{ __typename?: 'UserPrivate', firstName?: Maybe<string>, lastName?: Maybe<string>, email: string, id: string, license?: Maybe<(
       { __typename?: 'user_licenses' }
       & UserLicenseFragment
     )> }>, sellerStore?: Maybe<{ __typename?: 'StorePrivate', id: string, name: string, website?: Maybe<string>, createdAt: any, updatedAt?: Maybe<any>, user?: Maybe<{ __typename?: 'UserPrivate', firstName?: Maybe<string>, lastName?: Maybe<string>, email: string, payoutMethod?: Maybe<{ __typename?: 'payout_methods', id: string, createdAt: any, updatedAt?: Maybe<any>, payoutType?: Maybe<string>, bsb?: Maybe<string>, accountNumber?: Maybe<string>, accountName?: Maybe<string> }>, phoneNumber?: Maybe<{ __typename?: 'phone_numbers', id: string, areaCode?: Maybe<string>, countryCode: string, number: string }> }> }>, currentSnapshot?: Maybe<(
@@ -14081,13 +14102,6 @@ export const OrderSnapshotFragmentFragmentDoc = gql`
     lastName
     email
   }
-  dealerApproverId
-  dealerApprover {
-    id
-    firstName
-    lastName
-    email
-  }
   form10Image {
     ...ImageFragment
   }
@@ -14204,6 +14218,7 @@ export const OrdersFragmentFragmentDoc = gql`
     ... on UserPrivate {
       firstName
       lastName
+      email
     }
   }
   sellerStoreId
@@ -14313,6 +14328,17 @@ export const ProductFragmentFragmentDoc = gql`
   store {
     id
     name
+    user {
+      id
+      license {
+        id
+        licenseNumber
+        licenseCategory
+        licenseExpiry
+        licenseState
+        verified
+      }
+    }
   }
   category {
     id

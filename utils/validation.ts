@@ -461,8 +461,8 @@ export const validationSchemas = {
       profileId: Yup.string().nullable(),
       coverId: Yup.string().nullable(),
       bsb: Yup.string()
-        .min(6, "Must 6 digits!")
-        .max(6, "Must 6 digits!")
+        .min(6, "Must be 6 digits!")
+        .max(6, "Must be 6 digits!")
         .required('A BSB number required.'),
       accountNumber: Yup.string()
         .min(8, "Must be 8-10 digits!")
@@ -470,6 +470,23 @@ export const validationSchemas = {
         .required('bank account number required.'),
       accountName: Yup.string()
         .required('bank account name required.'),
+    }),
+
+  // Edit Dealer
+  EditDealer:
+    Yup.object().shape({
+      name: Yup.string().nullable()
+        .required("Can't be empty")
+        .min(3, "Must be more than 3 letters!"),
+      address: Yup.string().nullable(),
+      city: Yup.string().nullable(),
+      postCode: Yup.string().nullable(),
+      state: Yup.string().nullable()
+        .required('A license number required.'),
+      licenseNumber: Yup.string()
+        .min(6, "Must be 6 digits!")
+        .max(6, "Must be 6 digits!")
+        .required('A license number required.'),
     }),
 
   // Sign Up

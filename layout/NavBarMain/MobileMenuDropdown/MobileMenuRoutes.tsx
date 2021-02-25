@@ -56,7 +56,7 @@ const MobileMenuRoutes = (props: ReactProps) => {
           )}
           onClick={() => props.closeMobileMenu()}
         >
-          <Link href="/gov/payouts/pending-approval">
+          <Link href="/gov/escrow/pending-approval">
             <a className={classes.aLink}>
               <Typography className={classes.mobileMenuItemTextEmph2}>
                 Governance Dashboard

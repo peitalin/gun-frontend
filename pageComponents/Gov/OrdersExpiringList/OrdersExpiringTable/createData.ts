@@ -9,8 +9,9 @@ import {
   Store,
   OrderStatus,
 } from "typings/gqlTypes";
-import { oc as option } from "ts-optchain";
-
+import {
+  getUserWhoActionedOrderStatus
+} from "../../PayoutsPendingApprovals/OrdersPendingApprovalTable/createData";
 
 export const createDataForExpiringTable = ({
   id,
@@ -66,38 +67,4 @@ export const createDataForExpiringTable = ({
     payoutId: payoutId,
     payoutStatus: payoutStatus,
   };
-}
-
-const getUserWhoActionedOrderStatus = (
-  orderSnapshot: OrderSnapshot,
-  buyer: UserPrivate,
-  sellerStore: StorePrivate,
-): UserWithRole => {
-
-  let orderStatus = orderSnapshot?.orderStatus;
-
-  switch (orderStatus) {
-    case OrderStatus.CREATED:  {
-      return { ...buyer, __typename: "UserWithRole" } as UserWithRole
-    }
-    case OrderStatus.FAILED:  {
-      return { ...buyer, __typename: "UserWithRole" } as UserWithRole
-    }
-    case OrderStatus.CONFIRMED_PAYMENT_FORM_10_REQUIRED:  {
-      return { ...buyer, __typename: "UserWithRole" } as UserWithRole
-    }
-    case OrderStatus.FORM_10_SUBMITTED:  {
-      return { ...sellerStore?.user, __typename: "UserWithRole" } as UserWithRole
-    }
-    case OrderStatus.ADMIN_APPROVED:  {
-      return orderSnapshot.adminApprover
-    }
-    case OrderStatus.COMPLETE:  {
-      return orderSnapshot.adminApprover
-    }
-    case OrderStatus.REFUNDED:  {
-      return orderSnapshot.adminApprover
-    }
-  }
-
 }

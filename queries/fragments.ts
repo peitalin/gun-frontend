@@ -276,13 +276,6 @@ export const OrderSnapshotFragment = gql`
       lastName
       email
     }
-    dealerApproverId
-    dealerApprover {
-      id
-      firstName
-      lastName
-      email
-    }
     form10Image {
       ...ImageFragment
     }
@@ -311,6 +304,7 @@ export const OrdersFragment = gql`
       ...on UserPrivate {
         firstName
         lastName
+        email
       }
     }
     sellerStoreId
@@ -501,8 +495,18 @@ export const UserPrivateFragment = gql`
       countryCode
       number
     }
+    storeId
     store {
       ...StorePrivateFragment
+    }
+    dealerId
+    dealer {
+      id
+      name
+      address
+      state
+      postCode
+      licenseNumber
     }
     # orderHistoryConnection {
     #   totalCount

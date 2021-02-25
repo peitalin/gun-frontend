@@ -64,31 +64,6 @@ class MyApp extends App<AppProps> {
     const { Component } = initialProps;
     const { ctx }: { ctx: Context } = initialProps;
 
-    // console.log('MyApp req headers:\n', option(ctx).req.headers.cookie());
-    // const cookie = option(ctx).req.headers.cookie();
-
-    // if (cookie && /efc-auth/.exec(cookie)) {
-    //   try {
-
-    //     userResponse = await serverApolloClient(ctx).query<QueryData>({
-    //       query: GET_USER,
-    //     });
-
-    //     console.log("initial GetUser response:", userResponse)
-    //     if (option(userResponse).data.user.cart()) {
-    //       dispatch(Actions.reduxLogin.SET_USER(userResponse.data.user));
-    //     }
-    //     if (option(userResponse).data.user.store()) {
-    //       dispatch(Actions.reduxProductCreate.UPDATE_STORE_ID(userResponse.data.user.store.id));
-    //     }
-    //     if (option(userResponse).data.user()) {
-    //       dispatch(Actions.reduxLogin.SET_USER(userResponse.data.user));
-    //     }
-    //   } catch(e) {
-    //     console.log("MyApp -> GetUser err:", e)
-    //   }
-    // }
-
     const pageProps = Component.getInitialProps
       ? await Component.getInitialProps(ctx)
       : {};
@@ -204,11 +179,9 @@ const ThemeProviderDarkMode = (props) => {
 
   let darkModeTheme: PaletteOptions = {
     type: darkMode,
-    // type: "light",
-    // type: "dark"
   }
-  // console.log("darkMode: ", darkMode)
-  console.log("darkModeTheme: ", darkModeTheme)
+  // // console.log("darkMode: ", darkMode)
+  // console.log("darkModeTheme: ", darkModeTheme)
 
   let appTheme: ThemeOptions = createAppTheme(darkMode);
 

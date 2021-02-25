@@ -260,7 +260,9 @@ const styles = (theme: Theme) => createStyles({
     flexBasis: "33%",
   },
   subtitle1: {
-    color: Colors.uniswapLightGrey,
+    color: theme.palette.type === 'dark'
+      ? Colors.uniswapLightGrey
+      : Colors.black,
     marginTop: '2rem',
     marginBottom: '0.5rem',
   },

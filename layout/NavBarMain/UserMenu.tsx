@@ -109,11 +109,27 @@ export const UserMenu: React.FC<ReactProps> = (props) => {
             user.userRole === Role.PLATFORM_ADMIN &&
             <MenuItem className={classes.menuItem} onClick={handleCloseMenu}>
               {/* <Link href="/gov/random-products"> */}
-              <Link href="/gov/payouts/pending-approval">
+              <Link href="/gov/escrow/pending-approval">
                 <a className={classes.menuLink}>
                   <LibraryBooks className={classes.menuIcon}/>
                   <span className={classes.menuText}>
                     Governance Dashboard
+                  </span>
+                </a>
+              </Link>
+            </MenuItem>
+          }
+
+          {
+            (user.userRole === Role.PLATFORM_ADMIN ||
+            user.userRole === Role.DEALER) &&
+            <MenuItem className={classes.menuItem} onClick={handleCloseMenu}>
+              {/* <Link href="/gov/random-products"> */}
+              <Link href="/dealers">
+                <a className={classes.menuLink}>
+                  <LibraryBooks className={classes.menuIcon}/>
+                  <span className={classes.menuText}>
+                    Dealer Dashboard
                   </span>
                 </a>
               </Link>

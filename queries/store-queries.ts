@@ -53,6 +53,53 @@ export const GET_STORE_PRIVATE = gql`
             ...ImageFragment
           }
         }
+        dealerId
+        dealer {
+          id
+          name
+          address
+          city
+          state
+          postCode
+          licenseNumber
+        }
+      }
+    }
+  }
+  ${ImageFragment}
+`;
+
+export const GET_DEALER_PRIVATE = gql`
+  query getDealerPrivate{
+    user {
+      id
+      ... on UserPrivate {
+        store {
+          id
+          name
+          createdAt
+          updatedAt
+          website
+          bio
+          isSuspended
+          isDeleted
+          cover {
+            ...ImageFragment
+          }
+          profile {
+            ...ImageFragment
+          }
+        }
+        dealerId
+        dealer {
+          id
+          name
+          address
+          city
+          state
+          postCode
+          licenseNumber
+        }
       }
     }
   }

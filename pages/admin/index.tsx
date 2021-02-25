@@ -45,7 +45,7 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 
 
-const AdminHomeRedirect = (props: ReactProps) => {
+const AdminDashboardHome = (props: ReactProps) => {
   // state
   const {
     classes
@@ -157,5 +157,5 @@ export const styles = (theme: Theme) => createStyles({
   },
 });
 
-export default withStyles(styles)( AdminHomeRedirect );
+export default withStyles(styles)( AdminDashboardHome );
 

@@ -54,6 +54,11 @@ export const reduxModalsActions = {
     payload: payload
   }),
 
+  TOGGLE_DEALER_PROFILE_EDIT_MODAL: (payload?: boolean): ActionType<boolean> => ({
+    type: "TOGGLE_DEALER_PROFILE_EDIT_MODAL",
+    payload: payload
+  }),
+
   TOGGLE_CHECKOUT_MODAL: (payload?: boolean): ActionType<boolean> => ({
     type: "TOGGLE_CHECKOUT_MODAL",
     payload: payload

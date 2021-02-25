@@ -64,6 +64,15 @@ export interface EditStoreInput {
   website: string | null | undefined;
 }
 
+export interface EditDealerInput {
+  name: string | undefined;
+  address: string | undefined;
+  city: string | undefined;
+  state: string | undefined;
+  postCode: string | undefined;
+  licenseNumber: string | undefined;
+}
+
 export enum PayoutType {
   PAYPAL = "PAYPAL",
   BANK = "BANK"
