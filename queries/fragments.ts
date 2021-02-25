@@ -107,33 +107,17 @@ export const ProductFragment = gql`
     store {
       id
       name
-      # ...on StorePublic {
-      #   id
-      #   name
-      #   userId
-      #   user {
-      #     id
-      #     license {
-      #       id
-      #       licenseNumber
-      #       licenseCategory
-      #       licenseExpiry
-      #       licenseState
-      #       verified
-      #     }
-      #   }
-      # }
-      # user {
-      #   id
-      #   license {
-      #     id
-      #     licenseNumber
-      #     licenseCategory
-      #     licenseExpiry
-      #     licenseState
-      #     verified
-      #   }
-      # }
+      user {
+        id
+        license {
+          id
+          licenseNumber
+          licenseCategory
+          licenseExpiry
+          licenseState
+          verified
+        }
+      }
     }
     category {
       id

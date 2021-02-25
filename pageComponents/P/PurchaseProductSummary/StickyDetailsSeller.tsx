@@ -1,7 +1,7 @@
 import React from "react";
 import {oc as option} from "ts-optchain";
 import clsx from "clsx";
-import { Colors, BoxShadows, BorderRadius } from "layout/AppTheme";
+import { Colors, BoxShadows, BorderRadius, Gradients } from "layout/AppTheme";
 // Router
 import Link from "next/link";
 // Styles
@@ -17,6 +17,10 @@ import copy from "clipboard-copy";
 import { useSnackbar } from "notistack";
 import CreateOfferSubscription from "./CreateOfferSubscription";
 import ArrowDownwardIcon from '@material-ui/icons/Forward';
+import Tick from "components/Icons/Tick"
+import { showDate } from "utils/dates";
+import { GrandReduxState } from "reduxStore/grand-reducer";
+import { useSelector } from "react-redux";
 
 
 
@@ -33,6 +37,10 @@ const StickyDetailsSeller = (props: ReactProps) => {
 
   const snackbar = useSnackbar();
 
+  const isDarkMode = useSelector<GrandReduxState, boolean>(s => {
+    return s.reduxLogin.darkMode === 'dark'
+  })
+
   const handleCopy = async (text) => {
     await copy(text);
     console.log("Copied!");
@@ -46,31 +54,58 @@ const StickyDetailsSeller = (props: ReactProps) => {
       props.below1024 ? classes.relativeMenu : classes.stickyMenu,
     )}>
       <div className={clsx(
-        classes.flexRow,
         classes.storeDetailsInnerContainer,
         props.below1024 ? classes.positionRelativeBox : classes.positionStickyBox,
       )}>
-        <div className={clsx(classes.flexCol, classes.referInstructions)}>
-          <div>
-            <Typography className={classes.title} variant="h4">
-              {storeName}
-            </Typography>
-          </div>
-          <div>
+
+        <div className={classes.flexRow}>
+          <Typography className={classes.title} variant="h4">
+            {storeName}
+          </Typography>
+        </div>
+
+        <div className={classes.flexRow}>
+
+          <div className={clsx(classes.flexCol, classes.fieldKeysCol)}>
             <Typography className={classes.caption} variant="body1">
-              {`License: ${seller?.license?.licenseNumber ?? ""}`}
+              License:
             </Typography>
-          </div>
-          <div>
             <Typography className={classes.caption} variant="body1">
-              {`Category: ${seller?.license?.licenseCategory ?? ""}`}
+              State:
             </Typography>
-          </div>
-          <div>
             <Typography className={classes.caption} variant="body1">
-              {`State: ${seller?.license?.licenseState ?? ""}`}
+              Expiry:
             </Typography>
           </div>
+
+          <div className={clsx(classes.flexCol)}>
+            <Typography className={classes.caption} variant="body1">
+              {`${seller?.license?.licenseNumber ?? ""}`}
+            </Typography>
+            <Typography className={classes.caption} variant="body1">
+              {`${seller?.license?.licenseState ?? ""}`}
+            </Typography>
+            {
+              seller?.license?.licenseExpiry &&
+              <Typography className={classes.caption} variant="body1">
+                {`${showDate(seller?.license?.licenseExpiry) ?? ""}`}
+              </Typography>
+            }
+            {
+              // seller?.license?.verified &&
+              true &&
+              <div className={classes.verifiedBadge}>
+                Verified License
+                <Tick className={classes.tick}
+                  size={30}
+                  color={isDarkMode ? Colors.purple : Colors.blue}
+                  outerCircleColor={isDarkMode ? Colors.purple : Colors.blue}
+                  innerCircleColor={isDarkMode ? Colors.uniswapNavy : Colors.slateGrey}
+                />
+              </div>
+            }
+          </div>
+
         </div>
       </div>
       {
@@ -121,6 +156,7 @@ const styles = (theme: Theme) => createStyles({
   },
   storeDetailsInnerContainer: {
     padding: '1rem',
+    minHeight: '130px',
     // maxWidth: "600px",
     background: theme.palette.type === 'dark'
       ? Colors.uniswapDarkNavy
@@ -146,10 +182,11 @@ const styles = (theme: Theme) => createStyles({
     display: 'flex',
     flexDirection: 'row',
     flexWrap: 'wrap',
-    alignItems: 'center',
+    alignItems: 'flex-start',
     width: '100%',
   },
-  referInstructions: {
+  fieldKeysCol: {
+    minWidth: 60,
   },
   title: {
     fontSize: '1rem',
@@ -161,6 +198,13 @@ const styles = (theme: Theme) => createStyles({
     color: theme.palette.type === 'dark'
       ? Colors.uniswapLighterGrey
       : Colors.darkGrey,
+  },
+  captionSmall: {
+    fontSize: '0.8rem',
+    paddingLeft: '1rem',
+    color: theme.palette.type === 'dark'
+      ? Colors.uniswapLightGrey
+      : Colors.slateGreyDarkest,
   },
   arrowDownContainer: {
     position: 'absolute',
@@ -177,8 +221,36 @@ const styles = (theme: Theme) => createStyles({
   },
   bidButtonContainer: {
     position: 'absolute',
-    bottom: '0.75rem',
-    right: '0.75rem',
+    bottom: '1rem',
+    right: '1rem',
+  },
+  verifiedBadge: {
+    position: 'absolute',
+    top: "1rem",
+    right: "1rem",
+    borderRadius: '4px',
+    fontSize: '0.875rem',
+    background: theme.palette.type === 'dark'
+      ? Gradients.gradientUniswapDark.background
+      : Gradients.gradientGrey2.background,
+    color: theme.palette.type === 'dark'
+      ? Colors.purple
+      : Colors.blue,
+    border: theme.palette.type === 'dark'
+      ? `1px solid ${Colors.purple}`
+      : `1px solid ${Colors.blue}`,
+    padding: '0.3rem 0.6rem',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  tick: {
+    marginLeft: '0.25rem',
+    height: '20px',
+    width: '20px',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
 

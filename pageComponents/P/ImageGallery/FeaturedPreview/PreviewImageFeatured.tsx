@@ -131,7 +131,7 @@ const PreviewImageFeatured: React.FC<ReactProps> = (props) => {
           showLoadingBar &&
           <LoadingBar
             absoluteTop
-            color={Colors.blue}
+            color={Colors.ultramarineBlue}
             height={4}
             width={'100vw'}
             loading={true}

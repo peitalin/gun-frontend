@@ -147,6 +147,7 @@ const Products: React.FC<ReactProps> = (props) => {
   if (error) {
     return <ErrorPage statusCode={400} message={"Product cannot be found"}/>
   }
+  console.log("product.store:", product?.store)
 
   return (
     <ProductPageContainer product={product} loading={loading}>

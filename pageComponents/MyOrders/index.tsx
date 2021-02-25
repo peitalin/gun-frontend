@@ -205,72 +205,11 @@ const MyOrders: React.FC<ReactProps> = (props) => {
     return (
       <OrdersLayout {...props}>
 
-        <OrdersSection
-          classes={props.classes}
-          title={"Your Purchases"}
-        >
-          <SearchOptions
-            paginationParams={{
-              totalCount: buyerOrdersConnection?.totalCount,
-              overfetchBy: overfetchBy,
-              limit: bLimit,
-              pageParam: bPageParam,
-              setPageParam: bSetPageParam,
-              index: bIndex,
-              setIndex: bSetIndex,
-            }}
-            updateSetPageDelay={0}
-            disableSearchFilter
-            disableSortby
-            disablePriceFilter
-            disableCategories
-            maxCategoryInputWidth={250}
-            topSectionStyles={{
-              justifyContent: 'flex-end',
-              alignItems: 'flex-end',
-              display: 'flex',
-              flexDirection: 'column',
-              marginTop: '1rem',
-              paddingRight: '1rem',
-            }}
-            bottomSectionStyles={{
-              marginBottom: '1rem',
-            }}
-          >
-            <GridPaginatorGeneric<Order>
-              index={bIndex}
-              connection={buyerOrdersConnection}
-              totalCount={buyerOrdersConnection?.totalCount ?? 0}
-              numItemsPerPage={numItemsPerPage}
-              className={classes.rowContainer}
-              classNameRoot={classes.gridRootBuyer}
-            >
-              {({ node: order, key }) => {
-                if (buyerOrdersResponse.error && key === 0) {
-                  return (
-                    <ErrorDisplay title={"Orders couldn't load."}
-                      error={buyerOrdersResponse.error}
-                    />
-                  )
-                } else {
-                  return (
-                    <OrderRowBuyers
-                      key={order.id}
-                      order={order}
-                      loading={buyerOrdersResponse.loading}
-                    />
-                  )
-                }
-              }}
-            </GridPaginatorGeneric>
-          </SearchOptions>
-        </OrdersSection>
 
 
         {
           (sellerOrdersActionItemsConnection?.totalCount > 0) &&
           <>
-            <div className={classes.divider}/>
             <OrdersSection
               classes={props.classes}
               title={"Your Urgent Action Items"}
@@ -309,7 +248,7 @@ const MyOrders: React.FC<ReactProps> = (props) => {
                   totalCount={sellerOrdersActionItemsConnection?.totalCount ?? 0}
                   numItemsPerPage={numItemsPerPage}
                   className={classes.rowContainer}
-                  classNameRoot={classes.gridRootSeller}
+                  // classNameRoot={classes.gridRootSeller}
                 >
                   {({ node: order, key }) => {
                     if (sellerOrdersActionItemsResponse.error && key === 0) {
@@ -331,12 +270,72 @@ const MyOrders: React.FC<ReactProps> = (props) => {
                 </GridPaginatorGeneric>
               </SearchOptions>
             </OrdersSection>
+            <div className={classes.divider}/>
           </>
         }
 
+        <OrdersSection
+          classes={props.classes}
+          title={"Your Purchases"}
+        >
+          <SearchOptions
+            paginationParams={{
+              totalCount: buyerOrdersConnection?.totalCount,
+              overfetchBy: overfetchBy,
+              limit: bLimit,
+              pageParam: bPageParam,
+              setPageParam: bSetPageParam,
+              index: bIndex,
+              setIndex: bSetIndex,
+            }}
+            updateSetPageDelay={0}
+            disableSearchFilter
+            disableSortby
+            disablePriceFilter
+            disableCategories
+            maxCategoryInputWidth={250}
+            topSectionStyles={{
+              justifyContent: 'flex-end',
+              alignItems: 'flex-end',
+              display: 'flex',
+              flexDirection: 'column',
+              marginTop: '1rem',
+              paddingRight: '1rem',
+            }}
+            bottomSectionStyles={{
+              marginBottom: '1rem',
+            }}
+          >
+            <GridPaginatorGeneric<Order>
+              index={bIndex}
+              connection={buyerOrdersConnection}
+              totalCount={buyerOrdersConnection?.totalCount ?? 0}
+              numItemsPerPage={numItemsPerPage}
+              className={classes.rowContainer}
+              // classNameRoot={classes.gridRootBuyer}
+            >
+              {({ node: order, key }) => {
+                if (buyerOrdersResponse.error && key === 0) {
+                  return (
+                    <ErrorDisplay title={"Orders couldn't load."}
+                      error={buyerOrdersResponse.error}
+                    />
+                  )
+                } else {
+                  return (
+                    <OrderRowBuyers
+                      key={order.id}
+                      order={order}
+                      loading={buyerOrdersResponse.loading}
+                    />
+                  )
+                }
+              }}
+            </GridPaginatorGeneric>
+          </SearchOptions>
+        </OrdersSection>
 
         <div className={classes.divider}/>
-
 
         <OrdersSection
           classes={props.classes}

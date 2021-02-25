@@ -20,8 +20,6 @@ import { useApolloClient } from "@apollo/client";
 import ProductHeading from "./ProductHeading";
 import ProductPricing from "./ProductPricing";
 // UI components
-import ButtonLoading from "components/ButtonLoading";
-import Loading from "components/Loading";
 import LoadingBar from "components/LoadingBar";
 import Or from "components/Or";
 // media query
@@ -185,6 +183,7 @@ interface ReactProps extends WithStyles<typeof styles> {
 
 const styles = (theme: Theme) => createStyles({
   purchaseCheckoutSummaryRoot: {
+    position: "relative",
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
