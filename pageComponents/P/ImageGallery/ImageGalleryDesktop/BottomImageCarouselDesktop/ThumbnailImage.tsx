@@ -129,7 +129,9 @@ const styles = (theme: Theme) => createStyles({
     borderRadius: BorderRadius,
     width: "100%",
     height: '100%',
-    backgroundColor: Colors.lightestGrey,
+    backgroundColor: theme.palette.type === 'dark'
+      ? Colors.uniswapDarkNavy
+      : Colors.slateGrey,
     transition: theme.transitions.create('height', {
       easing: theme.transitions.easing.sharp,
       duration: "200ms",

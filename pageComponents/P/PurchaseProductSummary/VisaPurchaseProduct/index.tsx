@@ -34,6 +34,8 @@ import {
 // Components
 import ErrorBounds from 'components/ErrorBounds';
 import ButtonLoading from "components/ButtonLoading";
+import CreateOfferSubscription from "../CreateOfferSubscription";
+// redux
 import { useSelector } from "react-redux";
 import { GrandReduxState, Actions } from "reduxStore/grand-reducer";
 // Graphql
@@ -53,8 +55,17 @@ const VisaPurchaseProduct = (props: ReactProps) => {
   const stripe: Stripe = useStripe();
   const elements = useElements();
   const snackbar = useSnackbar();
-  const isDarkMode = useSelector<GrandReduxState, boolean>(s => {
-    return s.reduxLogin.darkMode === 'dark'
+
+  interface ReduxState {
+    isDarkMode: boolean;
+    buyer: UserPrivate
+  }
+
+  const { isDarkMode, buyer } = useSelector<GrandReduxState, ReduxState>(s => {
+    return {
+      isDarkMode: s.reduxLogin.darkMode === 'dark',
+      buyer: s.reduxLogin.user,
+    }
   })
 
 
@@ -230,6 +241,19 @@ const VisaPurchaseProduct = (props: ReactProps) => {
             </ButtonLoading>
           </div>
 
+          {
+            // !disableButton &&
+            // !!buyer?.id &&
+            true &&
+            <div className={classes.flexRowCenter}>
+              <div className={classes.bidButtonContainer}>
+                <CreateOfferSubscription
+                  userId={buyer?.id}
+                  product={product}
+                />
+              </div>
+            </div>
+          }
 
         </div>
       </div>
@@ -366,6 +390,10 @@ const styles = (theme: Theme) => createStyles({
     "&:hover": {
       color: fade(Colors.blue, 0.9),
     },
+  },
+  bidButtonContainer: {
+    width: "100%",
+    marginTop: "0.5rem",
   },
 });
 

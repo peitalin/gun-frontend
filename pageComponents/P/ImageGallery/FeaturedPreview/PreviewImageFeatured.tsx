@@ -58,7 +58,7 @@ const PreviewImageFeatured: React.FC<ReactProps> = (props) => {
       if (props.transitioning) {
         return !!urlSrc
           ? classes.cardMediaWideLgDown
-          : classes.cardMediaWideLgDownLoadingBlack
+          : classes.cardMediaWideLgDownLoadingDark
       } else {
         return !!urlSrc
           ? classes.cardMediaWideLgDown
@@ -68,7 +68,7 @@ const PreviewImageFeatured: React.FC<ReactProps> = (props) => {
       if (props.transitioning) {
         return !!urlSrc
           ? classes.cardMediaWide
-          : classes.cardMediaWideLoadingBlack
+          : classes.cardMediaWideLoadingDark
       } else {
         return !!urlSrc
           ? classes.cardMediaWide
@@ -96,8 +96,6 @@ const PreviewImageFeatured: React.FC<ReactProps> = (props) => {
   // console.log("image src:", urlSrc)
   // console.log("image src after:", urlSrcAfter)
 
-  //  Before/After Image cards
-  //  Normal Image cards
   return (
     <Card
       className={clsx(classes.card, props.className)}
@@ -170,7 +168,6 @@ const styles = (theme: Theme) => createStyles({
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'center',
-    background: Colors.black,
   },
   compareSlider: {
     width: "100%",
@@ -195,37 +192,43 @@ const styles = (theme: Theme) => createStyles({
   cardMediaWide: {
     height: '100%',
     objectFit: objectFit1,
-    backgroundColor: Colors.black,
   },
   cardMediaWideLgDown: {
     height: '100%',
     // objectFit: "contain",
     objectFit: objectFit,
-    backgroundColor: Colors.black,
   },
   cardMediaWideLoading: {
     height: '100%',
     // objectFit: "contain",
     objectFit: objectFit,
-    backgroundColor: Colors.lightestGrey,
+    backgroundColor: theme.palette.type === 'dark'
+      ? Colors.uniswapDarkNavy
+      : Colors.slateGreyDark,
   },
   cardMediaWideLgDownLoading: {
     height: '100%',
     // objectFit: "contain",
     objectFit: objectFit,
-    backgroundColor: Colors.lightestGrey,
+    backgroundColor: theme.palette.type === 'dark'
+      ? Colors.uniswapDarkNavy
+      : Colors.slateGreyDark,
   },
-  cardMediaWideLoadingBlack: {
+  cardMediaWideLoadingDark: {
     height: '100%',
     // objectFit: "contain",
     objectFit: objectFit,
-    backgroundColor: Colors.black,
+    backgroundColor: theme.palette.type === 'dark'
+      ? Colors.uniswapDarkNavy
+      : Colors.slateGreyDark,
   },
-  cardMediaWideLgDownLoadingBlack: {
+  cardMediaWideLgDownLoadingDark: {
     height: '100%',
     // objectFit: "contain",
     objectFit: objectFit,
-    backgroundColor: Colors.black,
+    backgroundColor: theme.palette.type === 'dark'
+      ? Colors.uniswapDarkNavy
+      : Colors.slateGreyDark,
   },
 });
 

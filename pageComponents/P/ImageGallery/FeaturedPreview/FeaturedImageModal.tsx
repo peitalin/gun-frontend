@@ -22,6 +22,8 @@ import SwipeableModalPreviews from "./InModal/SwipeableModalPreviews";
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
 import { lgUpMediaQuery } from "../../common";
+import { useSelector } from "react-redux";
+import { GrandReduxState } from "reduxStore/grand-reducer";
 
 // import SwipeableViews from 'react-swipeable-views';
 import SwipeableViews from "components/Swiper/SwipeableViews";
@@ -50,6 +52,9 @@ const FeaturedImageModal = (props: ReactProps) => {
   const imageId = option(previewItem).image.original.id()
   const imageUrl = option(previewItem).image.original.url()
 
+  const isDarkMode = useSelector<GrandReduxState, boolean>(s => {
+    return s.reduxLogin.darkMode === 'dark'
+  })
 
   const previewItems = option(props).product.featuredVariant.previewItems([])
     .filter(p =>
@@ -80,17 +85,17 @@ const FeaturedImageModal = (props: ReactProps) => {
                 }
               }}
               slideStyle={{
-                background: Colors.black,
+                background: isDarkMode
+                  ? Colors.uniswapDarkNavy
+                  : Colors.slateGreyDark,
               }}
               containerStyle={{
                 height: '100%',
                 width: '100%',
-                // background: Colors.black,
               }}
               style={{
                 height: '100%',
                 width: '100%',
-                // backgroundColor: Colors.black,
               }}
             >
               {

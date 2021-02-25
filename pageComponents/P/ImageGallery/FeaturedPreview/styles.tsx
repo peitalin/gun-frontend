@@ -12,7 +12,7 @@ export const styles = (theme: Theme) => createStyles({
     flexDirection: "row",
     borderRadius: BorderRadius,
     backgroundColor: theme.palette.type === 'dark'
-      ? Colors.uniswapDarkNavy
+      ? Colors.blac
       : Colors.lightestGrey,
   },
   // featuredImageRootXSDown: {
@@ -73,7 +73,6 @@ export const styles = (theme: Theme) => createStyles({
     borderRadius: "1px",
     width: "100%",
     height: '100%',
-    background: "rgba(0,0,0,0)",
     transition: theme.transitions.create('height', {
       easing: theme.transitions.easing.sharp,
       duration: "200ms",

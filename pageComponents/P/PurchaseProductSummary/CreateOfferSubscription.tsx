@@ -64,7 +64,7 @@ const CreateOfferSubscription = (props: ReactProps) => {
       {
         (userId && !alreadyChattingAboutProduct) &&
         <CreateChatButton
-          title={"Make a bid"}
+          title={"Place a Bid"}
           buyerUserId={userId}
           sellerUserId={
             // if storeId, backend won't looks up the user.id for the store
@@ -86,8 +86,8 @@ const CreateOfferSubscription = (props: ReactProps) => {
         ) &&
         <OpenChatButton
           title={"Continue Offer"}
-          productId={alreadyChattingAboutProduct.productId}
-          chatRoomId={alreadyChattingAboutProduct.chatRoomId}
+          productId={alreadyChattingAboutProduct?.productId}
+          chatRoomId={alreadyChattingAboutProduct?.chatRoomId}
         />
       }
     </div>

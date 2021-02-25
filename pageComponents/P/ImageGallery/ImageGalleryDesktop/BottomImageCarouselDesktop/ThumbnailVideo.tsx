@@ -65,7 +65,6 @@ const ThumbnailVideo: React.FC<ReactProps> = (props) => {
         onClick={onClick}
         classes={{ root: classes.cardActionArea }}
       >
-        {/* <YouTubeIcon height={60} width={60} disableBackground={true}/> */}
         <CardMedia
           component="img"
           classes={{ media: classes.cardMediaVideo }}
@@ -90,30 +89,16 @@ interface ReactProps extends WithStyles<typeof styles> {
 
 
 export const styles = (theme: Theme) => createStyles({
-  imagePreviewPlaceholder: {
-    borderRadius: BorderRadius,
-    height: '100px',
-    width: '150px',
-  },
-  imagePreview: {
-    borderRadius: BorderRadius,
-    height: 100,
-    width: 150,
-  },
   card: {
     borderRadius: BorderRadius,
     width: "100%",
     boxShadow: 'none',
   },
   cardActionArea: {
-    background: "#f8f8f8",
     display: "flex",
     flexDirection: "row",
     height: '100%',
     // backgroundImage: `url("data:image/svg+xml,%3Csvg width='30' height='30' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 20.5V18H0v-2h20v-2H0v-2h20v-2H0V8h20V6H0V4h20V2H0V0h22v20h2V0h2v20h2V0h2v20h2V0h2v20h2V0h2v20h2v2H20v-1.5zM0 20h2v20H0V20zm4 0h2v20H4V20zm4 0h2v20H8V20zm4 0h2v20h-2V20zm4 0h2v20h-2V20zm4 4h20v2H20v-2zm0 4h20v2H20v-2zm0 4h20v2H20v-2zm0 4h20v2H20v-2z' fill='%23dddddd' fill-opacity='0.3' fill-rule='evenodd'/%3E%3C/svg%3E")`,
-  },
-  grey: {
-    color: "#7C858E"
   },
   cardOuter: {
     borderRadius: BorderRadius,
@@ -129,31 +114,6 @@ export const styles = (theme: Theme) => createStyles({
     objectFit: "cover",
     height: 100,
     width: 160,
-  },
-  cardMediaFit: {
-    // objectFit: "contain",
-    objectFit: "cover",
-    // width: "unset", // width: 100% before
-    // transform: 'translateX(50%)',
-    // boxShadow: "0px 1px 3px 1px rgba(0,0,0,0.6)",
-  },
-  iconButton: {
-    background: "rgba(24,24,24, 0.2)",
-    "&:hover": {
-      background: "rgba(24,24,24, 0.3)",
-    },
-  },
-  previewIconButton: {
-    position: "absolute",
-    right: -5,
-    top: -5,
-    zIndex: 1502,
-  },
-  svgIcon: {
-    fill: "#eaeaea",
-    "&:hover": {
-      fill: "#fafafa",
-    },
   },
 })
 

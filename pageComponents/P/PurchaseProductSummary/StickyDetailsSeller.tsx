@@ -15,7 +15,6 @@ import Avatar from '@material-ui/core/Avatar';
 import copy from "clipboard-copy";
 // Snackbar
 import { useSnackbar } from "notistack";
-import CreateOfferSubscription from "./CreateOfferSubscription";
 import ArrowDownwardIcon from '@material-ui/icons/Forward';
 import Tick from "components/Icons/Tick"
 import { showDate } from "utils/dates";
@@ -108,15 +107,6 @@ const StickyDetailsSeller = (props: ReactProps) => {
 
         </div>
       </div>
-      {
-        seller?.id &&
-        <div className={classes.bidButtonContainer}>
-          <CreateOfferSubscription
-            userId={buyerId}
-            product={product}
-          />
-        </div>
-      }
       <div className={classes.arrowDownContainer}>
         <ArrowDownwardIcon
           className={classes.arrowIcon}
@@ -157,6 +147,7 @@ const styles = (theme: Theme) => createStyles({
   storeDetailsInnerContainer: {
     padding: '1rem',
     minHeight: '130px',
+    width: '100%',
     // maxWidth: "600px",
     background: theme.palette.type === 'dark'
       ? Colors.uniswapDarkNavy
