@@ -1,10 +1,9 @@
 
 import React from 'react';
-import { oc as option } from "ts-optchain";
 // Styles
-import { Colors, BoxShadows } from "layout/AppTheme";
+import { Colors, BoxShadows, BorderRadius } from "layout/AppTheme";
 import clsx from "clsx";
-import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
+import { withStyles, WithStyles, createStyles, Theme, fade } from "@material-ui/core/styles";
 // typings
 import { Chat_Rooms, Chat_Messages } from "typings/gqlTypes";
 // components
@@ -45,6 +44,7 @@ const OpenChatButton: React.FC<ReactProps> = (props) => {
 
   return (
     <Button
+      className={classes.chatButton}
       variant="text"
       color={"primary"}
       onClick={() => openModal()}
@@ -94,6 +94,26 @@ const styles = (theme: Theme) => createStyles({
   fullMaxHeight: {
     maxHeight: "100%",
     width: '100%',
+  },
+  chatButton: {
+    width: '100%',
+    height: 40,
+    borderRadius: BorderRadius,
+    backgroundColor: theme.palette.type === 'dark'
+      ? Colors.purple
+      : Colors.green,
+    color: Colors.cream,
+    border: theme.palette.type === 'dark'
+      ? `1px solid ${Colors.purple}`
+      : `1px solid ${Colors.green}`,
+    "&:hover": {
+      border: theme.palette.type === 'dark'
+        ? `1px solid ${Colors.purple}`
+        : `1px solid ${Colors.green}`,
+      backgroundColor: theme.palette.type === 'dark'
+        ? fade(Colors.purple, 0.9)
+        : fade(Colors.green, 0.9),
+    }
   },
 });
 

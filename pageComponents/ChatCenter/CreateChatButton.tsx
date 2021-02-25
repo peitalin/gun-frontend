@@ -1,9 +1,8 @@
 import React from 'react';
-import { oc as option } from "ts-optchain";
 // Styles
-import { Colors, BoxShadows } from "layout/AppTheme";
+import { Colors, BorderRadius } from "layout/AppTheme";
 import clsx from "clsx";
-import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
+import { withStyles, WithStyles, createStyles, Theme, fade } from "@material-ui/core/styles";
 // graphql
 import gql from 'graphql-tag'
 import { useMutation, useQuery } from '@apollo/client';
@@ -102,9 +101,9 @@ const CreateChatButton: React.FC<ReactProps> = (props) => {
     <div>
       <ButtonLoading
         type="submit"
+        className={props.classes.chatButton}
         style={{
           // width: '150px',
-          height: 40,
         }}
         variant={"outlined"}
         color={"primary"}
@@ -122,7 +121,6 @@ const CreateChatButton: React.FC<ReactProps> = (props) => {
             openModal()
           }
         }}
-        className={props.classes.button}
       >
         { props.title ? props.title : 'Send a message' }
       </ButtonLoading>
@@ -161,7 +159,25 @@ const styles = (theme: Theme) => createStyles({
     flexDirection: 'row',
     flexWrap: 'wrap',
   },
-  button: {
+  chatButton: {
+    width: '100%',
+    height: 40,
+    borderRadius: BorderRadius,
+    backgroundColor: theme.palette.type === 'dark'
+      ? Colors.purple
+      : Colors.green,
+    color: Colors.cream,
+    border: theme.palette.type === 'dark'
+      ? `1px solid ${Colors.purple}`
+      : `1px solid ${Colors.green}`,
+    "&:hover": {
+      border: theme.palette.type === 'dark'
+        ? `1px solid ${Colors.purple}`
+        : `1px solid ${Colors.green}`,
+      backgroundColor: theme.palette.type === 'dark'
+        ? fade(Colors.purple, 0.9)
+        : fade(Colors.green, 0.9),
+    }
   },
 });
 

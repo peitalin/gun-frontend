@@ -9,12 +9,14 @@ import { Colors, Gradients } from "layout/AppTheme";
 import Banner from "components/Banner";
 import Typography from "@material-ui/core/Typography";
 import Button from '@material-ui/core/Button';
+import SearchbarMain from "./SearchbarMain";
 // Router
 import { useRouter } from 'next/router';
 // SSR
 import { NextPage, NextPageContext } from 'next';
 import Login from "layout/Login";
 import Hidden from 'components/HiddenFix';
+
 // CSS
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
@@ -70,7 +72,12 @@ const BannerHomeDesktop: NextPage<ReactProps> = (props) => {
         marginTop: "6rem",
         marginBottom: '4rem',
       }}>
+
         <Searchbar color={Colors.uniswapLightestGrey}/>
+
+        <div className={classes.searchContainer}>
+          <SearchbarMain />
+        </div>
 
         {/* <form method="POST" className={classes.emailForm}>
           <div className="md:flex-1">

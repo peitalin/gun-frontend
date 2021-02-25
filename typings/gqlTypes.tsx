@@ -13937,10 +13937,10 @@ export type StorePrivateFragment = { __typename?: 'StorePrivate', id: string, na
 
 export type PaymentMethodFragment = { __typename?: 'payment_methods', id: string, userId: string, createdAt: any, updatedAt?: Maybe<any>, customerId?: Maybe<string>, paymentProcessor?: Maybe<string>, paymentMethodTypes?: Maybe<string>, last4?: Maybe<string>, expMonth?: Maybe<number>, expYear?: Maybe<number>, email?: Maybe<string>, name?: Maybe<string>, details?: Maybe<string> };
 
-export type UserPrivateFragment = { __typename?: 'UserPrivate', id: string, firstName?: Maybe<string>, lastName?: Maybe<string>, email: string, emailVerified?: Maybe<boolean>, userRole: Role, isSuspended: boolean, license?: Maybe<{ __typename?: 'user_licenses', id: string, licenseNumber: string, licenseCategory?: Maybe<string>, licenseExpiry: any, licenseState?: Maybe<string>, verified: boolean }>, phoneNumber?: Maybe<{ __typename?: 'phone_numbers', id: string, areaCode?: Maybe<string>, countryCode: string, number: string }>, store?: Maybe<(
+export type UserPrivateFragment = { __typename?: 'UserPrivate', id: string, firstName?: Maybe<string>, lastName?: Maybe<string>, email: string, emailVerified?: Maybe<boolean>, userRole: Role, isSuspended: boolean, storeId?: Maybe<string>, dealerId?: Maybe<string>, license?: Maybe<{ __typename?: 'user_licenses', id: string, licenseNumber: string, licenseCategory?: Maybe<string>, licenseExpiry: any, licenseState?: Maybe<string>, verified: boolean }>, phoneNumber?: Maybe<{ __typename?: 'phone_numbers', id: string, areaCode?: Maybe<string>, countryCode: string, number: string }>, store?: Maybe<(
     { __typename?: 'StorePrivate' }
     & StorePrivateFragment
-  )>, payoutMethod?: Maybe<{ __typename?: 'payout_methods', id: string, payoutType?: Maybe<string>, bsb?: Maybe<string>, accountNumber?: Maybe<string>, accountName?: Maybe<string> }> };
+  )>, dealer?: Maybe<{ __typename?: 'dealers', id: string, name?: Maybe<string>, address?: Maybe<string>, state?: Maybe<string>, postCode?: Maybe<string>, licenseNumber: string }>, payoutMethod?: Maybe<{ __typename?: 'payout_methods', id: string, payoutType?: Maybe<string>, bsb?: Maybe<string>, accountNumber?: Maybe<string>, accountName?: Maybe<string> }> };
 
 export type ProductsAllConnectionQueryVariables = Exact<{
   searchTerm: Scalars['String'];
@@ -14436,8 +14436,18 @@ export const UserPrivateFragmentFragmentDoc = gql`
     countryCode
     number
   }
+  storeId
   store {
     ...StorePrivateFragment
+  }
+  dealerId
+  dealer {
+    id
+    name
+    address
+    state
+    postCode
+    licenseNumber
   }
   payoutMethod {
     id

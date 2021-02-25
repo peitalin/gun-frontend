@@ -53,7 +53,6 @@ const DealerDashboardHome = (props: ReactProps) => {
       >
         Dealer Dashboard
       </Typography>
-
     </div>
   )
 }

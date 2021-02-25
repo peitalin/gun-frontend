@@ -217,6 +217,9 @@ export const styles = (theme: Theme) => createStyles({
     padding: '.5rem 1.5rem',
     lineHeight: '1.75rem',
   },
+  searchContainer: {
+    marginTop: '2rem',
+  },
 })
 
 
