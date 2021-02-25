@@ -29,11 +29,10 @@ import { useQuery, useLazyQuery, useApolloClient } from "@apollo/client";
 // import { GET_DASHBOARD_PRODUCTS_CONNECTION } from "queries/store-queries";
 // Meta headers
 import CardMedia from "@material-ui/core/CardMedia";
-import HomeSection2 from "./HomeSection2";
 
 
 
-const SellerDashboardHome = (props: ReactProps) => {
+const DealerDashboardHome = (props: ReactProps) => {
 
   const {
     classes,
@@ -45,24 +44,6 @@ const SellerDashboardHome = (props: ReactProps) => {
   const router = useRouter();
   const snackbar = useSnackbar();
 
-  // const { data, loading, error } = useQuery<QueryData, QueryVar>(
-  //   GET_DASHBOARD_PRODUCTS_CONNECTION, {
-  //   variables: {
-  //     query: {
-  //       limit: 1,
-  //       offset: 0,
-  //     }
-  //   },
-  //   errorPolicy: "all",
-  // });
-
-
-  // const connection: ProductsConnection =
-  //   option(data).user.store.dashboardProductsConnection()
-
-  // const hasNoProducts = option(connection).edges([]).length === 0;
-
-
   return (
     <div className={
       xsDown ? classes.rootXs : classes.root
@@ -70,10 +51,8 @@ const SellerDashboardHome = (props: ReactProps) => {
       <Typography variant={"h2"}
         className={xsDown ? classes.padding1 : null}
       >
-        Seller Dashboard
+        Dealer Dashboard
       </Typography>
-
-      <HomeSection2/>
 
     </div>
   )
@@ -135,6 +114,6 @@ export const styles = (theme: Theme) => createStyles({
 });
 
 
-export default withStyles(styles)( SellerDashboardHome );
+export default withStyles(styles)( DealerDashboardHome );
 
 
