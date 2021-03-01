@@ -5,7 +5,7 @@ import { Colors } from "layout/AppTheme";
 
 import Typography from '@material-ui/core/Typography';
 // Components
-import styles from './commonStylesClaimDownload';
+import styles from './commonStylesPageRedirect';
 import ErrorBounds from "components/ErrorBounds";
 import TextInput from "components/Fields/TextInput";
 // Router

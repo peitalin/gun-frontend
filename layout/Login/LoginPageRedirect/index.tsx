@@ -3,9 +3,9 @@ import { withStyles, WithStyles } from '@material-ui/core/styles';
 import { ReduxStateLogin } from 'reduxStore/login-reducer';
 import clsx from "clsx";
 
-import styles from './commonStylesClaimDownload';
-import SignUp from './SignUpClaimDownload';
-import SignIn from './SignInClaimDownload';
+import styles from './commonStylesPageRedirect';
+import SignUp from './SignUpPageRedirect';
+import SignIn from './SignInPageRedirect';
 import ResetPassword from './ResetPassword';
 import ErrorBounds from "components/ErrorBounds";
 

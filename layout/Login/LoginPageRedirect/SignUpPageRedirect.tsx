@@ -5,7 +5,7 @@ import { Colors } from "layout/AppTheme";
 import Typography from '@material-ui/core/Typography';
 import TextInput from 'components/Fields/TextInput';
 // Typings
-import styles from './commonStylesClaimDownload';
+import styles from './commonStylesPageRedirect';
 import ErrorBounds from "components/ErrorBounds";
 import Or from "components/Or";
 import ButtonLoading from "components/ButtonLoading";

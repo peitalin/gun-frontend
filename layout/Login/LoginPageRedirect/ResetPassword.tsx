@@ -6,7 +6,7 @@ import FormControl from '@material-ui/core/FormControl';
 import TextInput from "components/Fields/TextInput";
 import Typography from '@material-ui/core/Typography';
 // Components
-import styles from './commonStylesClaimDownload';
+import styles from './commonStylesPageRedirect';
 import ErrorBounds from "components/ErrorBounds";
 // Clear
 import ClearIcon from "@material-ui/icons/Clear";

@@ -14,7 +14,7 @@ import { SEND_RESET_PASSWORD_EMAIL } from "queries/emails-mutations";
 import { UserPrivate } from "typings/gqlTypes";
 import { SendPasswordResetResponse } from "typings";
 
-import LoginPageModal from "./LoginPageModal";
+import LoginModal from "./LoginModal";
 import LoginPageRedirect from "./LoginPageRedirect";
 
 import { useApolloClient } from "@apollo/client";
@@ -198,13 +198,14 @@ const Login: React.FC<ReactProps> = (props) => {
     lastName
   }) => {
 
-    console.log("licenseStae:", licenseState)
+    let licenseExpiry2 =new Date(licenseExpiry)
+    console.log("licenseSExpiiirrreee:", licenseExpiry2)
 
     if (!isSignUpInputOk(snackbar)({
       email,
       password,
       licenseNumber,
-      licenseExpiry,
+      licenseExpiry: licenseExpiry2,
       licenseState,
       phoneNumber,
       countryCode,
@@ -229,7 +230,7 @@ const Login: React.FC<ReactProps> = (props) => {
         firstName: firstName,
         lastName: lastName,
         licenseNumber: licenseNumber,
-        licenseExpiry: new Date(licenseExpiry),
+        licenseExpiry: licenseExpiry2,
         licenseState: licenseState,
         phoneNumber: phoneNumber,
         countryCode: countryCode,
@@ -338,7 +339,7 @@ const Login: React.FC<ReactProps> = (props) => {
               dispatchCreateUser={dispatchCreateUser}
               dispatchResetPassword={dispatchResetPassword}
             />
-          : <LoginPageModal
+          : <LoginModal
               className={props.className}
               buttonLoading={state.buttonLoading}
               buttonText={buttonText}
