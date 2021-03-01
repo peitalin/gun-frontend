@@ -109,6 +109,7 @@ const SignUp: React.FC<ReactProps> = (props) => {
     .find(d => d.value === state.licenseState)
   const [licenseState, setLicenseState] = React.useState(initialStateLicense)
 
+  console.log("licenseState: ", state)
 
   return (
     <ErrorBounds className={classes.outerContainer}>

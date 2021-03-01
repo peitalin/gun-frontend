@@ -68,6 +68,9 @@ const SignUp: React.FC<ReactProps> = (props) => {
       lastName: state.lastName,
       licenseNumber: state.licenseNumber,
       licenseExpiry: state.licenseExpiry,
+      licenseState: state.licenseState,
+      phoneNumber: state.phoneNumber,
+      countryCode: state.countryCode,
     });
   }
 
@@ -94,6 +97,8 @@ const SignUp: React.FC<ReactProps> = (props) => {
   let initialStateLicense = licenseStateOptions
     .find(d => d.value === state.licenseState)
   const [licenseState, setLicenseState] = React.useState(initialStateLicense)
+
+  console.log("licenseState2: ", state)
 
   return (
   <ErrorBounds className={classes.outerContainer}>
@@ -306,6 +311,9 @@ interface ReactProps extends WithStyles<typeof styles> {
     lastName?: string
     licenseNumber: string,
     licenseExpiry: Date,
+    licenseState: string,
+    phoneNumber?: string,
+    countryCode?: string,
   }): void;
   email?: string;
   title?: string;

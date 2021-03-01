@@ -467,11 +467,17 @@ export type Boolean_Comparison_Exp = {
 /** columns and relationships of "categories" */
 export type Categories = {
    __typename?: 'categories';
+  /** An object relationship */
+  bannerImage?: Maybe<Image_Parents>;
+  bannerImageId?: Maybe<Scalars['String']>;
   categoryGroup: Scalars['String'];
   createdAt: Scalars['timestamp'];
   id: Scalars['String'];
   name: Scalars['String'];
   slug?: Maybe<Scalars['String']>;
+  /** An object relationship */
+  thumbImage?: Maybe<Image_Parents>;
+  thumbImageId?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['timestamp']>;
 };
 
@@ -515,11 +521,15 @@ export type Categories_Bool_Exp = {
   _and?: Maybe<Array<Maybe<Categories_Bool_Exp>>>;
   _not?: Maybe<Categories_Bool_Exp>;
   _or?: Maybe<Array<Maybe<Categories_Bool_Exp>>>;
+  bannerImage?: Maybe<Image_Parents_Bool_Exp>;
+  bannerImageId?: Maybe<String_Comparison_Exp>;
   categoryGroup?: Maybe<String_Comparison_Exp>;
   createdAt?: Maybe<Timestamp_Comparison_Exp>;
   id?: Maybe<String_Comparison_Exp>;
   name?: Maybe<String_Comparison_Exp>;
   slug?: Maybe<String_Comparison_Exp>;
+  thumbImage?: Maybe<Image_Parents_Bool_Exp>;
+  thumbImageId?: Maybe<String_Comparison_Exp>;
   updatedAt?: Maybe<Timestamp_Comparison_Exp>;
 };
 
@@ -531,53 +541,65 @@ export enum Categories_Constraint {
 
 /** input type for inserting data into table "categories" */
 export type Categories_Insert_Input = {
+  bannerImage?: Maybe<Image_Parents_Obj_Rel_Insert_Input>;
+  bannerImageId?: Maybe<Scalars['String']>;
   categoryGroup?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['timestamp']>;
   id?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   slug?: Maybe<Scalars['String']>;
+  thumbImage?: Maybe<Image_Parents_Obj_Rel_Insert_Input>;
+  thumbImageId?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['timestamp']>;
 };
 
 /** aggregate max on columns */
 export type Categories_Max_Fields = {
    __typename?: 'categories_max_fields';
+  bannerImageId?: Maybe<Scalars['String']>;
   categoryGroup?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['timestamp']>;
   id?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   slug?: Maybe<Scalars['String']>;
+  thumbImageId?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['timestamp']>;
 };
 
 /** order by max() on columns of table "categories" */
 export type Categories_Max_Order_By = {
+  bannerImageId?: Maybe<Order_By>;
   categoryGroup?: Maybe<Order_By>;
   createdAt?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   name?: Maybe<Order_By>;
   slug?: Maybe<Order_By>;
+  thumbImageId?: Maybe<Order_By>;
   updatedAt?: Maybe<Order_By>;
 };
 
 /** aggregate min on columns */
 export type Categories_Min_Fields = {
    __typename?: 'categories_min_fields';
+  bannerImageId?: Maybe<Scalars['String']>;
   categoryGroup?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['timestamp']>;
   id?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   slug?: Maybe<Scalars['String']>;
+  thumbImageId?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['timestamp']>;
 };
 
 /** order by min() on columns of table "categories" */
 export type Categories_Min_Order_By = {
+  bannerImageId?: Maybe<Order_By>;
   categoryGroup?: Maybe<Order_By>;
   createdAt?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   name?: Maybe<Order_By>;
   slug?: Maybe<Order_By>;
+  thumbImageId?: Maybe<Order_By>;
   updatedAt?: Maybe<Order_By>;
 };
 
@@ -605,11 +627,15 @@ export type Categories_On_Conflict = {
 
 /** ordering options when selecting data from "categories" */
 export type Categories_Order_By = {
+  bannerImage?: Maybe<Image_Parents_Order_By>;
+  bannerImageId?: Maybe<Order_By>;
   categoryGroup?: Maybe<Order_By>;
   createdAt?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   name?: Maybe<Order_By>;
   slug?: Maybe<Order_By>;
+  thumbImage?: Maybe<Image_Parents_Order_By>;
+  thumbImageId?: Maybe<Order_By>;
   updatedAt?: Maybe<Order_By>;
 };
 
@@ -621,6 +647,8 @@ export type Categories_Pk_Columns_Input = {
 /** select columns of table "categories" */
 export enum Categories_Select_Column {
   /** column name */
+  BANNERIMAGEID = 'bannerImageId',
+  /** column name */
   CATEGORYGROUP = 'categoryGroup',
   /** column name */
   CREATEDAT = 'createdAt',
@@ -630,22 +658,28 @@ export enum Categories_Select_Column {
   NAME = 'name',
   /** column name */
   SLUG = 'slug',
+  /** column name */
+  THUMBIMAGEID = 'thumbImageId',
   /** column name */
   UPDATEDAT = 'updatedAt'
 }
 
 /** input type for updating data in table "categories" */
 export type Categories_Set_Input = {
+  bannerImageId?: Maybe<Scalars['String']>;
   categoryGroup?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['timestamp']>;
   id?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   slug?: Maybe<Scalars['String']>;
+  thumbImageId?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['timestamp']>;
 };
 
 /** update columns of table "categories" */
 export enum Categories_Update_Column {
+  /** column name */
+  BANNERIMAGEID = 'bannerImageId',
   /** column name */
   CATEGORYGROUP = 'categoryGroup',
   /** column name */
@@ -656,6 +690,8 @@ export enum Categories_Update_Column {
   NAME = 'name',
   /** column name */
   SLUG = 'slug',
+  /** column name */
+  THUMBIMAGEID = 'thumbImageId',
   /** column name */
   UPDATEDAT = 'updatedAt'
 }

@@ -90,7 +90,6 @@ interface ReactProps extends WithStyles<typeof styles> {
 
 export const styles = (theme: Theme) => createStyles({
   card: {
-    borderRadius: BorderRadius,
     width: "100%",
     boxShadow: 'none',
   },

@@ -73,10 +73,9 @@ const BannerHomeDesktop: NextPage<ReactProps> = (props) => {
         marginBottom: '4rem',
       }}>
 
-        <Searchbar color={Colors.uniswapLightestGrey}/>
 
         <div className={classes.searchContainer}>
-          <SearchbarMain />
+          <SearchbarMain color={Colors.slateGrey}/>
         </div>
 
         {/* <form method="POST" className={classes.emailForm}>

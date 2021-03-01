@@ -12,7 +12,7 @@ export const styles = (theme: Theme) => createStyles({
     flexDirection: "row",
     borderRadius: BorderRadius,
     backgroundColor: theme.palette.type === 'dark'
-      ? Colors.blac
+      ? Colors.black
       : Colors.lightestGrey,
   },
   // featuredImageRootXSDown: {

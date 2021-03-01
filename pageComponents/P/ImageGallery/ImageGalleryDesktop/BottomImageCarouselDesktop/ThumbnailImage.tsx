@@ -126,7 +126,6 @@ interface ReactProps extends WithStyles<typeof styles> {
 
 const styles = (theme: Theme) => createStyles({
   card: {
-    borderRadius: BorderRadius,
     width: "100%",
     height: '100%',
     backgroundColor: theme.palette.type === 'dark'

@@ -198,6 +198,8 @@ const Login: React.FC<ReactProps> = (props) => {
     lastName
   }) => {
 
+    console.log("licenseStae:", licenseState)
+
     if (!isSignUpInputOk(snackbar)({
       email,
       password,

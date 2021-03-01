@@ -10,11 +10,12 @@ import NewReleaseProducts from "pageComponents/FrontPage/NewReleaseProducts";
 import FeaturedProducts from "pageComponents/FrontPage/FeaturedProducts";
 import Loading from "components/Loading";
 // import ProductCreatePage from "./ProductCreatePage";
-import BannerHome from "components/BannerHome";
+import BannerHome from "pageComponents/FrontPage/BannerHome";
 // Router
 import { Colors, Gradients } from "layout/AppTheme";
 // GraphQL
 import { useQuery, useApolloClient } from "@apollo/client";
+import CategoryCarouselMain from "./CategoryCarouselMain";
 
 // Category Component
 // import CategoryIdOrName from "pageComponents/Categories/CategoryIdOrName";
@@ -48,6 +49,8 @@ const FrontPage: React.FC<ReactProps> = (props) => {
         maxWidth={MAX_WIDTH_GRID || 1180}
         withRecommendations={false}
       >
+
+        <CategoryCarouselMain />
 
         <FeaturedProducts
           initialFeaturedProducts={initialFeaturedProducts}
@@ -114,9 +117,6 @@ const styles = (theme: Theme) => createStyles({
     display: 'flex',
     flexDirection: "column",
     justifyContent: 'center',
-    // background: theme.gradients.gradientUniswapDark.background,
-    // background: Gradients.gradientUniswapDark.background,
-    // background: Colors.uniswapDarkNavy,
   },
   flexRowInner: {
     display: 'flex',

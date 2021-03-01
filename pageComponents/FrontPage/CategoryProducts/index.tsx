@@ -8,17 +8,10 @@ import clsx from "clsx";
 // Typings
 import { Connection, Product, ProductsConnection } from "typings/gqlTypes";
 
-import getConfig from "next/config";
-const {
-  publicRuntimeConfig: { FEATURED_LIST_ID }
-} = getConfig();
-
 import CategoryProductsMobileCarousel from "pageComponents/FrontPage/CategoryProducts/CategoryProductsMobileCarousel";
 import CategoryProductsDesktop from "pageComponents/FrontPage/CategoryProducts/CategoryProductsDesktop";
 import Hidden from 'components/HiddenFix';
 
-// const FEATURED_LIST_ID = 'prodlist_1bea860c-7b8b-476d-a417-82728287dc9d'
-export const DEV_FEATURED_LIST_ID = 'prodlist_838af685-ba9c-40b4-80ee-fcf9529bdcfc'
 
 
 
@@ -43,15 +36,12 @@ const CategoryProducts = (props: ReactProps) => {
   return (
     <>
       <Hidden xsDown implementation="css">
-        {
-          (FEATURED_LIST_ID || DEV_FEATURED_LIST_ID) &&
-          <CategoryProductsDesktop
-            initialProducts={initialProducts}
-            count={count}
-            cardsPerRow={cardsPerRow}
-            categoryIdOrName={categoryIdOrName}
-          />
-        }
+        <CategoryProductsDesktop
+          initialProducts={initialProducts}
+          count={count}
+          cardsPerRow={cardsPerRow}
+          categoryIdOrName={categoryIdOrName}
+        />
       </Hidden>
       <Hidden smUp implementation="css">
         <CategoryProductsMobileCarousel

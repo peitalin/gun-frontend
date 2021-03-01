@@ -9,6 +9,19 @@ import Button from "@material-ui/core/Button";
 import { useRouter } from "next/router";
 import { useSnackbar, ProviderContext } from "notistack";
 
+// Search Component
+import SearchOptions, { SelectOption, setCategoryFacets } from "components/SearchOptions";
+import {
+  useFacetSearchOptions,
+  useEffectUpdateGridAccum,
+  totalItemsInCategoriesFacets,
+  PaginatorType,
+} from "utils/hooksFacetSearch";
+
+
+
+
+
 
 const SearchbarMain = (props: SearchbarProps) => {
 
@@ -49,6 +62,43 @@ const SearchbarMain = (props: SearchbarProps) => {
     }
   }
 
+  /////////////////////////////////// paginator
+  let numItemsPerPage = 40;
+  let overfetchBy = 1;
+  // overfetch by 2x pages
+
+  let {
+    orderBy,
+    setOrderBy,
+    priceRange,
+    setPriceRange,
+    searchTerm,
+    setSearchTerm,
+    facets,
+    setFacets,
+    paginationParams: {
+      limit,
+      offset,
+      totalCount,
+      setTotalCount,
+      pageParam,
+      setPageParam,
+    },
+    currentCategories,
+    setCurrentCategories,
+    index,
+    setIndex,
+  } = useFacetSearchOptions({
+    limit: numItemsPerPage * overfetchBy,
+    overfetchBy: overfetchBy,
+    router: router,
+    paginatorType: PaginatorType.page,
+  })
+
+
+  // console.log("totalCount: ", data?.search?.totalCount)
+  // console.log('data: ', data)
+
   return (
     <div className={classes.searchRoot}>
       <div className={classes.searchbar}>
@@ -59,7 +109,7 @@ const SearchbarMain = (props: SearchbarProps) => {
           inputRef={input => {
             // input.blur()
           }}
-          placeholder="Search presets, templates, categories…"
+          placeholder="Search pistols, rifles…"
           classes={{
             root: classes.inputRoot,
             input: classes.inputInput,
@@ -86,27 +136,49 @@ const SearchbarMain = (props: SearchbarProps) => {
       >
         Search
       </Button>
+
+      <SearchOptions
+        // facets={facets}
+        setCategoryFacets={setCategoryFacets({ facets, setFacets })}
+        // currentCategories={currentCategories}
+        setSearchTerm={setSearchTerm}
+        setOrderBy={setOrderBy}
+        setPriceRange={setPriceRange}
+        placeholder={"Search for products..."}
+        paginationParams={{
+          totalCount: totalCount,
+          overfetchBy: overfetchBy,
+          limit: limit,
+          pageParam: pageParam,
+          setPageParam: setPageParam,
+          index: index,
+          setIndex: setIndex,
+        }}
+        updateSetPageDelay={0}
+        disableSearchFilter
+        disableSortby
+        disablePriceFilter
+        // disableCategories
+        hidePaginator
+        maxCategoryInputWidth={250}
+        topSectionStyles={{
+          justifyContent: 'flex-end',
+          alignItems: 'flex-end',
+          display: 'flex',
+          flexDirection: 'column',
+          marginTop: '1rem',
+          paddingRight: '1rem',
+        }}
+        bottomSectionStyles={{
+          marginBottom: '1rem',
+        }}
+      >
+
+      </SearchOptions>
     </div>
   )
 }
 
-export const SearchExpander = (props) => {
-  return <div style={{ flexGrow: 1 }}/>
-}
-
-
-const SearchAdornmentButton = ({ classes, onClick, color }) => {
-  return (
-    <Button
-      className={classes.searchButton}
-      variant="text"
-      color="primary"
-      onClick={onClick}
-    >
-      <SearchIcon style={{ fill: color || "#242424" }}/>
-    </Button>
-  )
-}
 
 
 interface SearchbarProps extends WithStyles<typeof styles> {
@@ -130,10 +202,9 @@ let styles = (theme: Theme) => createStyles({
   searchbar: {
     width: '100%',
     position: 'relative',
-    borderLeft: `1px solid ${Colors.lightGrey}`,
-    borderTop: `1px solid ${Colors.lightGrey}`,
-    borderBottom: `1px solid ${Colors.lightGrey}`,
-    borderRight: `1px solid ${Colors.lightGrey}`,
+    border: theme.palette.type === 'dark'
+      ? `1px solid ${Colors.lightGrey}`
+      : `1px solid ${Colors.lightGrey}`,
     // borderRadius: `${BorderRadius}px 0px 0px ${BorderRadius}px`,
     borderRadius: `${BorderRadius}px ${BorderRadius}px ${BorderRadius}px ${BorderRadius}px`,
     // backgroundColor: "rgba(152,152,152,0.1)",
@@ -151,9 +222,9 @@ let styles = (theme: Theme) => createStyles({
     justifyContent: 'center',
   },
   inputRoot: {
-    color: 'inherit',
     fontSize: '0.9rem',
     width: '100%',
+    color: Colors.slateGrey,
   },
   inputInput: {
     width: '100%',
@@ -171,7 +242,7 @@ let styles = (theme: Theme) => createStyles({
     padding: '8px',
     width: 100,
     marginLeft: "0.5rem",
-    // borderRadius: `0px ${BorderRadius}px ${BorderRadius}px 0px`,
+    borderRadius: `${BorderRadius}px`,
     backgroundColor: Colors.secondary,
     "&:hover": {
       color: Colors.cream,
