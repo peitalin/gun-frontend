@@ -155,6 +155,8 @@ let styles = (theme: Theme) => createStyles({
     alignItems: "flex-start",
     background: Colors.cream,
     borderRadius: BorderRadius4x,
+    marginTop: '2rem',
+    marginBottom: '2rem',
   },
   flex: {
     display: "flex",
