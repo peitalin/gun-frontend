@@ -49,6 +49,7 @@ const styles = (theme: Theme) => createStyles({
   },
   orderHeader: {
     lineHeight: '1.25rem',
+    textAlign: "end",
     color: theme.palette.type === 'dark'
       ? Colors.uniswapLightestGrey
       : Colors.black,

@@ -10,8 +10,8 @@ import MyOrders from "pageComponents/MyOrders";
 // next
 // SSR disable
 import dynamic from "next/dynamic";
-import { SellerProfileProps } from "layout/GetUser/SellerProfileWrapper";
-const SellerProfileWrapper = dynamic(() => import("layout/GetUser/SellerProfileWrapper"), {
+import { UserProfileProps } from "layout/GetUser/UserProfileWrapper";
+const UserProfileWrapper = dynamic(() => import("layout/GetUser/UserProfileWrapper"), {
   loading: () => <LoadingBarSSR/>,
   ssr: false,
 })
@@ -31,15 +31,15 @@ const MyOrdersHistoryPage = (props: ReactProps) => {
         title="Orders"
         robots="noindex"
       />
-      <SellerProfileWrapper>
-      {(dataUser: SellerProfileProps) => {
+      <UserProfileWrapper>
+      {(dataUser: UserProfileProps) => {
         return (
           <div className={classes.contentContainerPublicPage}>
             <MyOrders withRecommendations={true}/>
           </div>
         )
       }}
-      </SellerProfileWrapper>
+      </UserProfileWrapper>
     </>
   );
 }

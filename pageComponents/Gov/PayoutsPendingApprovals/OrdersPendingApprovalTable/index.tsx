@@ -283,6 +283,7 @@ const OrdersPendingApprovalTable: NextPage<ReactProps> = (props) => {
 
               let order = node as OrderAdmin;
               // console.log("order>>>>>>: ", order)
+
               const row2 = createDataForPendingApprovalTable({
                 id: order.id,
                 total: order.total,
@@ -294,6 +295,7 @@ const OrdersPendingApprovalTable: NextPage<ReactProps> = (props) => {
                 product: order.product,
                 payoutId: order?.payoutItems?.[0]?.payoutId,
                 payoutStatus: order?.payoutItems?.[0]?.payoutStatus,
+                paymentIntentStatus: order?.paymentIntent?.status,
               })
 
               return (
@@ -368,6 +370,7 @@ const OrdersPendingApprovalTable: NextPage<ReactProps> = (props) => {
             {({ node }) => {
 
               let order = node as OrderAdmin;
+              console.log("order.paymentIntent.status>>>>>>: ", order?.paymentIntent?.status)
 
               const row2 = createDataForPendingApprovalTable({
                 id: order.id,
@@ -380,6 +383,7 @@ const OrdersPendingApprovalTable: NextPage<ReactProps> = (props) => {
                 product: order.product,
                 payoutId: order?.payoutItems?.[0]?.payoutId,
                 payoutStatus: order?.payoutItems?.[0]?.payoutStatus,
+                paymentIntentStatus: order?.paymentIntent?.status,
               })
 
               return (
@@ -460,6 +464,7 @@ const OrdersPendingApprovalTable: NextPage<ReactProps> = (props) => {
                 product: order.product,
                 payoutId: order?.payoutItems?.[0]?.payoutId,
                 payoutStatus: order?.payoutItems?.[0]?.payoutStatus,
+                paymentIntentStatus: order?.paymentIntent?.status,
               })
 
               return (

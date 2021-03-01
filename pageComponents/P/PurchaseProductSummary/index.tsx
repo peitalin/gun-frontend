@@ -30,7 +30,7 @@ import { useRouter } from "next/router";
 import { asCurrency as c } from "utils/prices";
 import { soldOutStatusToDisplayMessage } from "./soldOutStatusUtils";
 
-import { VisaButtonLoading, PaypalButtonLoading } from "./PaymentButtonLoadingSSR";
+import VisaButtonLoading from "./VisaButtonLoadingSSR";
 import dynamic from "next/dynamic";
 
 const VisaPurchaseProduct = dynamic(() => import("./VisaPurchaseProduct"), {

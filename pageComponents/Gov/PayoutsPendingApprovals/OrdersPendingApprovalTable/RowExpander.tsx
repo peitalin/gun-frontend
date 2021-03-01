@@ -151,6 +151,14 @@ const RowExpander = (props: RowExpanderProps) => {
               <Typography variant="h6" gutterBottom component="div">
                 Order Details
               </Typography>
+              <div className={classes.sellerDetailsRow}>
+                <Typography className={classes.sellerDetailsHeader} variant="body1">
+                  Stripe Payment Intent Status:
+                </Typography>
+                <Typography className={classes.sellerDetailsInfo} variant="body1">
+                  {row?.paymentIntentStatus}
+                </Typography>
+              </div>
               {
                 form10Exists &&
                 <Dialog

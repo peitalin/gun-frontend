@@ -125,7 +125,10 @@ const MyOrders: React.FC<ReactProps> = (props) => {
   })
 
 
-  const buyerOrdersResponse = useQuery<QueryData, QueryVar>(
+  const [
+    getBuyerOrders,
+    buyerOrdersResponse
+  ] = useLazyQuery<QueryData, QueryVar>(
     GET_BUYER_ORDERS_CONNECTION, {
       variables: {
         query: {
@@ -138,7 +141,10 @@ const MyOrders: React.FC<ReactProps> = (props) => {
     }
   );
 
-  const sellerOrdersResponse = useQuery<QueryData2, QueryVar2>(
+  const [
+    getSellerOrders,
+    sellerOrdersResponse
+  ] = useLazyQuery<QueryData2, QueryVar2>(
     GET_SELLER_ORDERS_CONNECTION, {
       variables: {
         query: {
@@ -151,7 +157,10 @@ const MyOrders: React.FC<ReactProps> = (props) => {
     }
   );
 
-  const sellerOrdersActionItemsResponse = useQuery<QueryData3, QueryVar3>(
+  const [
+    getSellerOrdersACtionItems,
+    sellerOrdersActionItemsResponse
+  ] = useLazyQuery<QueryData3, QueryVar3>(
     GET_SELLER_ORDERS_ACTION_ITEMS_CONNECTION, {
       variables: {
         query: {
@@ -163,6 +172,12 @@ const MyOrders: React.FC<ReactProps> = (props) => {
       fetchPolicy: "network-only",
     }
   );
+
+  React.useEffect(() => {
+    getBuyerOrders()
+    getSellerOrders()
+    getSellerOrdersACtionItems()
+  }, [])
 
   console.log("buyer data::::: ", buyerOrdersResponse?.data)
   console.log("seller data::::: ", sellerOrdersResponse?.data)

@@ -46,6 +46,18 @@ const OrderSummary = (props: ReactProps) => {
           })`}
         />
         <Row
+          fieldName={"Stripe Payment Intent ID:"}
+          fieldValue={`${
+            order?.paymentIntent?.id
+          }`}
+        />
+        <Row
+          fieldName={"Stripe Payment Status:"}
+          fieldValue={`${
+            order?.paymentIntent?.status
+          }`}
+        />
+        <Row
           fieldName={"Westpac Payout ID:"}
           fieldValue={order?.payoutItems?.[0]?.payoutId}
         />

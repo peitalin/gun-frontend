@@ -22,23 +22,16 @@ import CardMedia from "@material-ui/core/CardMedia";
 // theme css
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
-// swiper
-import SwipeableViews from "components/Swiper/SwipeableViews";
-import { bindKeyboard } from 'react-swipeable-views-utils';
-const BindKeyboardSwipeableViews = bindKeyboard(SwipeableViews);
-import {
-  splitArrayIntoGrid,
-  GridMap,
-} from "components/GridPaginatorHelpers";
+import { CategoryPreviewCard } from ".";
 
 
 
 
-const CategoryCarouselMainDesktop = (props: ReactProps) => {
+const CategoryCarouselMobile = (props: ReactProps) => {
 
   const {
     classes,
-    categoriesMetadata,
+    categoriesPreviewCards,
   } = props;
 
   const theme = useTheme();
@@ -50,7 +43,6 @@ const CategoryCarouselMainDesktop = (props: ReactProps) => {
 
   const smDown = useMediaQuery(theme.breakpoints.down("sm"));
 
-  const [index, setIndex] = React.useState(0);
 
   const getScrollItemsForScreenSize = () => {
     if (xs) {
@@ -77,7 +69,6 @@ const CategoryCarouselMainDesktop = (props: ReactProps) => {
     ? props.initialNumItems
     : getScrollItemsForScreenSize()
 
-  console.log("numItems", numItems)
   // let categoryGroups = splitArrayIntoGrid(categoriesMetadata, numItems)
 
   return (
@@ -110,15 +101,13 @@ const CategoryCarouselMainDesktop = (props: ReactProps) => {
           }}
         >
           {
-            (categoriesMetadata ?? []).map((c, i) => {
+            (categoriesPreviewCards ?? []).map((c, i) => {
 
-              let lastImage = c?.thumbImage?.variants?.slice(-1)
+              let imageUrl = c.imageUrl
 
-              let imageUrl = c?.thumbImage?.variants?.length > 3
-                ? c?.thumbImage?.variants?.[3]?.url
-                : lastImage?.pop()?.url
-              // console.log("c.pageConfig: ", c.pageConfig)
-              // console.log("imageUrl: ", imageUrl)
+              // let imageUrl = c?.thumbImage?.variants?.length > 3
+              //   ? c?.thumbImage?.variants?.[3]?.url
+              //   : lastImage?.pop()?.url
 
               return (
                 <AirItemTall key={i}
@@ -164,7 +153,7 @@ const CategoryCarouselMainDesktop = (props: ReactProps) => {
 
 interface ReactProps extends WithStyles<typeof styles> {
   style?: any;
-  categoriesMetadata: Array<Categories>
+  categoriesPreviewCards: Array<CategoryPreviewCard>
   initialNumItems?: number
 }
 
@@ -182,6 +171,8 @@ export const styles = (theme: Theme) => createStyles({
     width: 'calc(100% - 0rem)',
   },
   innerRootSm: {
+    marginBottom: '1rem',
+    height: '120px',
     width: 'calc(100% - 0rem)',
     paddingLeft: '0.25rem',
   },
@@ -189,32 +180,17 @@ export const styles = (theme: Theme) => createStyles({
     marginBottom: '0.5rem',
   },
   linkImage: {
-    color: Colors.charcoal,
-    // backgroundColor: Colors.slateGrey,
+    width: '100%',
+    height: '120px',
     position: "relative",
-    "&:hover": {
-      color: Colors.secondaryBright,
-      // backgroundColor: Colors.lighterGrey,
+    "& > div > p": {
+      color: Colors.slateGreyDarkest,
     },
-    borderRadius: BorderRadius2x,
-    width: '100%',
-    height: '100%',
-  },
-  buttonNoWrap: {
-    whiteSpace: "nowrap",
-    background: Colors.slateGrey,
-  },
-  linkText: {
-    position: "absolute",
-    top: 0,
-    left: 0,
-    width: '100%',
-    height: '100%',
-    textAlign: 'center',
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    flexDirection: "row",
+    "&:hover": {
+      "& > div > p": {
+        color: Colors.secondaryBright,
+      },
+    },
   },
   categoryImage: {
     display: "flex",
@@ -230,6 +206,7 @@ export const styles = (theme: Theme) => createStyles({
     position: "absolute",
     top: 0,
     left: 0,
+    border: `1px solid ${Colors.slateGrey}`,
   },
   cardText: {
     marginTop: '0.25rem',
@@ -269,5 +246,5 @@ export const styles = (theme: Theme) => createStyles({
 });
 
 
-export default withStyles(styles)( CategoryCarouselMainDesktop );
+export default withStyles(styles)( CategoryCarouselMobile );
 

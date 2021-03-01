@@ -54,10 +54,13 @@ export const isSignUpInputOk =
     snackbar.enqueueSnackbar("Password is missing!", { variant: "error" })
     return false
   } else if (!phoneNumber) {
-    snackbar.enqueueSnackbar("Phone number missing!", { variant: "error" })
+    snackbar.enqueueSnackbar("Mobile number missing!", { variant: "error" })
+    return false
+  } else if (phoneNumber.length < 9) {
+    snackbar.enqueueSnackbar("Mobile number too short!", { variant: "error" })
     return false
   } else if (!countryCode) {
-    snackbar.enqueueSnackbar("Phone number (country code) missing!", { variant: "error" })
+    snackbar.enqueueSnackbar("Mobile number (country code) missing!", { variant: "error" })
     return false
   } else if (!licenseNumber) {
     snackbar.enqueueSnackbar("Gun owner license number missing!", { variant: "error" })

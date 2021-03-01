@@ -15,7 +15,7 @@ import BannerHome from "pageComponents/FrontPage/BannerHome";
 import { Colors, Gradients } from "layout/AppTheme";
 // GraphQL
 import { useQuery, useApolloClient } from "@apollo/client";
-import CategoryCarouselMain from "./CategoryCarouselMain";
+import CategoryCarouselStart from "./CategoryCarouselStart";
 
 // Category Component
 // import CategoryIdOrName from "pageComponents/Categories/CategoryIdOrName";
@@ -50,7 +50,7 @@ const FrontPage: React.FC<ReactProps> = (props) => {
         withRecommendations={false}
       >
 
-        <CategoryCarouselMain />
+        <CategoryCarouselStart />
 
         <FeaturedProducts
           initialFeaturedProducts={initialFeaturedProducts}
@@ -92,12 +92,6 @@ const FrontPage: React.FC<ReactProps> = (props) => {
 
 interface ReactProps extends WithStyles<typeof styles> {
   initialFeaturedProducts?: ProductsConnection;
-}
-interface QueryData {
-  productsAllConnection: ProductsConnection;
-}
-interface QueryVar {
-  query: ConnectionOffsetQuery
 }
 
 

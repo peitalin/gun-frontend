@@ -385,6 +385,9 @@ export const OrdersFragment = gql`
       ...PayoutItemFragment
     }
     paymentIntentId
+    ...on OrderAdmin {
+      paymentIntent
+    }
   }
   ${OrderSnapshotFragment}
   ${ImageFragment}

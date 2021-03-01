@@ -22,6 +22,7 @@ export const createDataForPendingApprovalTable = ({
   currentOrderSnapshot,
   payoutId,
   payoutStatus,
+  paymentIntentStatus,
 }: {
   id: string,
   createdAt: Date,
@@ -33,6 +34,7 @@ export const createDataForPendingApprovalTable = ({
   product?: Product,
   payoutId?: string,
   payoutStatus?: string,
+  paymentIntentStatus?: string,
 }) => {
 
   return {
@@ -64,6 +66,7 @@ export const createDataForPendingApprovalTable = ({
       }),
     payoutId: payoutId,
     payoutStatus: payoutStatus,
+    paymentIntentStatus: paymentIntentStatus,
   };
 }
 

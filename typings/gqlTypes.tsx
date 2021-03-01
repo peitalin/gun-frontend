@@ -1718,9 +1718,9 @@ export type Edge = {
 };
 
 export type EditUserPhoneNumberInput = {
-  phoneNumber?: Maybe<Scalars['String']>;
+  phoneNumber: Scalars['String'];
   areaCode?: Maybe<Scalars['String']>;
-  countryCode?: Maybe<Scalars['String']>;
+  countryCode: Scalars['String'];
 };
 
 /** columns and relationships of "email_subscriptions" */
@@ -4762,8 +4762,8 @@ export type MutationSignUpUsingEmailArgs = {
   licenseExpiry: Scalars['Date'];
   licenseCategory?: Maybe<Scalars['String']>;
   licenseState?: Maybe<Scalars['String']>;
-  phoneNumber?: Maybe<Scalars['String']>;
-  countryCode?: Maybe<Scalars['String']>;
+  phoneNumber: Scalars['String'];
+  countryCode: Scalars['String'];
 };
 
 
@@ -4805,7 +4805,7 @@ export type MutationEditUserProfileArgs = {
   username?: Maybe<Scalars['String']>;
   firstName?: Maybe<Scalars['String']>;
   lastName?: Maybe<Scalars['String']>;
-  editUserPhoneNumberInput?: Maybe<EditUserPhoneNumberInput>;
+  editUserPhoneNumberInput: EditUserPhoneNumberInput;
   payoutMethodId?: Maybe<Scalars['String']>;
 };
 
@@ -5528,6 +5528,7 @@ export type OrderAdmin = Order & {
   orderSnapshots?: Maybe<Array<Maybe<OrderSnapshot>>>;
   /** orderSnapshots_aggregate: Order_Snapshots_Aggregate, */
   paymentIntentId?: Maybe<Scalars['String']>;
+  paymentIntent?: Maybe<Scalars['JSON']>;
   payoutItems?: Maybe<Array<Maybe<Payout_Items>>>;
   /** payoutItems_aggregate: Payout_Items_Aggregate, */
   product?: Maybe<ProductPrivate>;
@@ -7434,6 +7435,7 @@ export type Phone_Numbers = {
    __typename?: 'phone_numbers';
   areaCode?: Maybe<Scalars['String']>;
   countryCode: Scalars['String'];
+  created_at?: Maybe<Scalars['timestamptz']>;
   id: Scalars['String'];
   number: Scalars['String'];
   userId: Scalars['String'];
@@ -7481,6 +7483,7 @@ export type Phone_Numbers_Bool_Exp = {
   _or?: Maybe<Array<Maybe<Phone_Numbers_Bool_Exp>>>;
   areaCode?: Maybe<String_Comparison_Exp>;
   countryCode?: Maybe<String_Comparison_Exp>;
+  created_at?: Maybe<Timestamptz_Comparison_Exp>;
   id?: Maybe<String_Comparison_Exp>;
   number?: Maybe<String_Comparison_Exp>;
   userId?: Maybe<String_Comparison_Exp>;
@@ -7496,6 +7499,7 @@ export enum Phone_Numbers_Constraint {
 export type Phone_Numbers_Insert_Input = {
   areaCode?: Maybe<Scalars['String']>;
   countryCode?: Maybe<Scalars['String']>;
+  created_at?: Maybe<Scalars['timestamptz']>;
   id?: Maybe<Scalars['String']>;
   number?: Maybe<Scalars['String']>;
   userId?: Maybe<Scalars['String']>;
@@ -7506,6 +7510,7 @@ export type Phone_Numbers_Max_Fields = {
    __typename?: 'phone_numbers_max_fields';
   areaCode?: Maybe<Scalars['String']>;
   countryCode?: Maybe<Scalars['String']>;
+  created_at?: Maybe<Scalars['timestamptz']>;
   id?: Maybe<Scalars['String']>;
   number?: Maybe<Scalars['String']>;
   userId?: Maybe<Scalars['String']>;
@@ -7515,6 +7520,7 @@ export type Phone_Numbers_Max_Fields = {
 export type Phone_Numbers_Max_Order_By = {
   areaCode?: Maybe<Order_By>;
   countryCode?: Maybe<Order_By>;
+  created_at?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   number?: Maybe<Order_By>;
   userId?: Maybe<Order_By>;
@@ -7525,6 +7531,7 @@ export type Phone_Numbers_Min_Fields = {
    __typename?: 'phone_numbers_min_fields';
   areaCode?: Maybe<Scalars['String']>;
   countryCode?: Maybe<Scalars['String']>;
+  created_at?: Maybe<Scalars['timestamptz']>;
   id?: Maybe<Scalars['String']>;
   number?: Maybe<Scalars['String']>;
   userId?: Maybe<Scalars['String']>;
@@ -7534,6 +7541,7 @@ export type Phone_Numbers_Min_Fields = {
 export type Phone_Numbers_Min_Order_By = {
   areaCode?: Maybe<Order_By>;
   countryCode?: Maybe<Order_By>;
+  created_at?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   number?: Maybe<Order_By>;
   userId?: Maybe<Order_By>;
@@ -7565,6 +7573,7 @@ export type Phone_Numbers_On_Conflict = {
 export type Phone_Numbers_Order_By = {
   areaCode?: Maybe<Order_By>;
   countryCode?: Maybe<Order_By>;
+  created_at?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   number?: Maybe<Order_By>;
   userId?: Maybe<Order_By>;
@@ -7582,6 +7591,8 @@ export enum Phone_Numbers_Select_Column {
   /** column name */
   COUNTRYCODE = 'countryCode',
   /** column name */
+  CREATED_AT = 'created_at',
+  /** column name */
   ID = 'id',
   /** column name */
   NUMBER = 'number',
@@ -7593,6 +7604,7 @@ export enum Phone_Numbers_Select_Column {
 export type Phone_Numbers_Set_Input = {
   areaCode?: Maybe<Scalars['String']>;
   countryCode?: Maybe<Scalars['String']>;
+  created_at?: Maybe<Scalars['timestamptz']>;
   id?: Maybe<Scalars['String']>;
   number?: Maybe<Scalars['String']>;
   userId?: Maybe<Scalars['String']>;
@@ -7604,6 +7616,8 @@ export enum Phone_Numbers_Update_Column {
   AREACODE = 'areaCode',
   /** column name */
   COUNTRYCODE = 'countryCode',
+  /** column name */
+  CREATED_AT = 'created_at',
   /** column name */
   ID = 'id',
   /** column name */
@@ -13143,6 +13157,8 @@ export type Users_Bool_Exp = {
 /** unique or primary key constraints on table "users" */
 export enum Users_Constraint {
   /** unique or primary key constraint */
+  USERS_EMAIL_KEY = 'users_email_key',
+  /** unique or primary key constraint */
   USERS_PKEY = 'users_pkey'
 }
 
@@ -13905,7 +13921,7 @@ type OrdersFragment_OrderPublic_ = { __typename?: 'OrderPublic', id?: Maybe<stri
     & PayoutItemFragment
   )>>> };
 
-type OrdersFragment_OrderAdmin_ = { __typename?: 'OrderAdmin', id?: Maybe<string>, createdAt?: Maybe<any>, updatedAt?: Maybe<any>, bidId?: Maybe<string>, total?: Maybe<number>, currency?: Maybe<string>, buyerId?: Maybe<string>, sellerStoreId?: Maybe<string>, productId?: Maybe<string>, paymentIntentId?: Maybe<string>, bid?: Maybe<(
+type OrdersFragment_OrderAdmin_ = { __typename?: 'OrderAdmin', paymentIntent?: Maybe<any>, id?: Maybe<string>, createdAt?: Maybe<any>, updatedAt?: Maybe<any>, bidId?: Maybe<string>, total?: Maybe<number>, currency?: Maybe<string>, buyerId?: Maybe<string>, sellerStoreId?: Maybe<string>, productId?: Maybe<string>, paymentIntentId?: Maybe<string>, bid?: Maybe<(
     { __typename?: 'bids' }
     & BidFragment
   )>, buyer?: Maybe<{ __typename?: 'UserPrivate', firstName?: Maybe<string>, lastName?: Maybe<string>, email: string, id: string, license?: Maybe<(
@@ -14335,6 +14351,9 @@ export const OrdersFragmentFragmentDoc = gql`
     ...PayoutItemFragment
   }
   paymentIntentId
+  ... on OrderAdmin {
+    paymentIntent
+  }
 }
     ${BidFragmentFragmentDoc}
 ${UserLicenseFragmentFragmentDoc}
