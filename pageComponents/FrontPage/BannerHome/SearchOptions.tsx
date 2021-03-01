@@ -2,7 +2,7 @@ import React from "react";
 import { oc as option } from "ts-optchain";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
-import { Colors, BorderRadius, BoxShadows } from "layout/AppTheme";
+import { Colors, BorderRadius, BoxShadows, BorderRadius4x } from "layout/AppTheme";
 import clsx from "clsx";
 // Material UI
 import Typography from "@material-ui/core/Typography";
@@ -31,6 +31,9 @@ const DropdownInput = dynamic(() => import("components/Fields/DropdownInput"), {
 import SearchOptionsSearchFilter from "./SearchOptionsSearchFilter";
 import SearchOptionsPriceFilter from "./SearchOptionsPriceFilter";
 import SearchOptionsCategoryFilter from "./SearchOptionsCategoryFilter";
+import CategoryDropdown from './CategoryDropdown';
+import SearchIcon from '@material-ui/icons/Search';
+import InputBase from '@material-ui/core/InputBase';
 // Responsiveness
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
@@ -144,7 +147,6 @@ const SearchOptionsPaginator: React.FC<ReactProps> = (props) => {
     <div className={clsx(
       classes.searchOptionsRoot,
       props.className,
-      props.float && classes.searchOptionsRootFixed,
     )} style={props.style}>
 
       <div className={classes.topSection}
@@ -154,22 +156,77 @@ const SearchOptionsPaginator: React.FC<ReactProps> = (props) => {
         <div className={clsx(classes.filterSection, classes.maxWidth100vw)}
           style={{ ...props.filterSectionStyles }}
         >
+
           {
             !disableSearchFilter &&
-            <div className={clsx(
-              classes.marginBottom05,
-              smDown && classes.width100Sm,
-            )}>
-              <SearchOptionsSearchFilter
-                value={searchTermUi}
-                placeholder={props.placeholder || "Search for products…"}
-                onSearchTermChange={(searchTerm: string) => {
-                  setSearchTermUi(searchTerm);
-                  debounceSetSearchTerm(searchTerm)
+            <div className={classes.searchbar}>
+              {/* note: needs the newline here to work
+                // @ts-ignore */}
+              <InputBase
+                value={props.value}
+                inputRef={input => {
+                  // input.blur()
                 }}
+                placeholder="Search pistols, rifles…"
+                classes={{
+                  root: classes.inputRoot,
+                  input: classes.inputInput,
+                }}
+                onChange={e => props.setValue(e.target.value)}
+                onKeyPress={props.onEnter}
+                startAdornment={
+                  <div className={classes.searchAdornIcon}>
+                    <SearchIcon style={{ fill: "#242424" }}/>
+                  </div>
+                }
               />
             </div>
           }
+
+          {/* {
+            !disableCategories &&
+            <div style={{ ...props.categorySectionStyles }}>
+              <SearchOptionsCategoryFilter
+                currentCategories={currentCategories}
+                facets={facets}
+                setCategoryFacets={setCategoryFacets}
+                dropdown={true}
+                defaultExpanded={false}
+                maxWidth={props.maxCategoryInputWidth}
+              />
+            </div>
+          } */}
+          {
+            !disableCategories &&
+            <div style={{ ...props.categorySectionStyles }}>
+              <CategoryDropdown
+                dropDownItems={[
+                  [
+                    {
+                      name: 'all categories',
+                    },
+                    {
+                      name: 'pistols',
+                    },
+                    {
+                      name: 'rifles',
+                    },
+                    {
+                      name: 'carbines',
+                    },
+                  ]
+                ]}
+                itemName={"Categories"}
+                // currentCategories={currentCategories}
+                // facets={facets}
+                // setCategoryFacets={setCategoryFacets}
+                // dropdown={true}
+                // defaultExpanded={false}
+                // maxWidth={props.maxCategoryInputWidth}
+              />
+            </div>
+          }
+
           {
             props.setPriceRange &&
             !disablePriceFilter &&
@@ -179,6 +236,8 @@ const SearchOptionsPaginator: React.FC<ReactProps> = (props) => {
               />
             </div>
           }
+
+          {props.children}
 
           {
             !disableSortby &&
@@ -223,78 +282,22 @@ const SearchOptionsPaginator: React.FC<ReactProps> = (props) => {
               </div>
             </>
           }
-          {
-            !disableCategories &&
-            <div className={clsx(
-              classes.marginBottom05,
-              classes.marginLeft05,
-              smDown && classes.width100Sm,
-            )}>
-              <div style={{ ...props.categorySectionStyles }}>
-                <SearchOptionsCategoryFilter
-                  currentCategories={currentCategories}
-                  facets={facets}
-                  setCategoryFacets={setCategoryFacets}
-                  dropdown={true}
-                  defaultExpanded={false}
-                  maxWidth={props.maxCategoryInputWidth}
-                />
-              </div>
-            </div>
-          }
+
+          <Button
+            className={classes.searchButtonRed}
+            variant="text"
+            color="primary"
+            onClick={props.onClick}
+          >
+            <SearchIcon className={classes.iconOuter}/>
+            Search
+          </Button>
+
         </div>
 
-        {/* {
-          !disableCategories &&
-          <div className={classes.marginBottom05}>
-            <div style={{ ...props.categorySectionStyles }}>
-              <SearchOptionsCategoryFilter
-                currentCategories={currentCategories}
-                facets={facets}
-                setCategoryFacets={setCategoryFacets}
-                dropdown={true}
-                defaultExpanded={false}
-                maxWidth={props.maxCategoryInputWidth}
-              />
-            </div>
-          </div>
-        } */}
+
       </div>
 
-      <div className={classes.bottomSection}
-        style={props.bottomSectionStyles}
-      >
-
-        {props.children}
-
-        <div className={clsx(classes.paginationContainer, classes.marginRight05)}>
-        {
-          paginationParams &&
-          !hidePaginator &&
-          <div className={clsx(classes.marginRight05)}>
-            <Pagination
-              disabled={totalCount === 0}
-              count={totalPages || 1}
-              page={pageUi}
-              // page={index+1}
-              onMouseDown={(e) => {
-                // console.log("mouse down: ", e)
-              }}
-              onChange={(event, page) => {
-                // update paginator UI first
-                setPageUi(page)
-                // setTimeout(() => {
-                // }, 0)
-                // then update pageParams (gQL request) + index change in carousel
-                debounceSetPageParam(page)
-                debounceSetIndex(page - 1)
-
-              }}
-            />
-          </div>
-        }
-        </div>
-      </div>
 
     </div>
   )
@@ -426,7 +429,6 @@ interface ReactProps extends WithStyles<typeof styles> {
   currentCategories?: Categories[];
   // price range
   setPriceRange?(a?: any): void;
-  float?: boolean;
   paginationParams: {
     limit: number
     pageParam: number
@@ -456,6 +458,11 @@ interface ReactProps extends WithStyles<typeof styles> {
   placeholder?: string;
   className?: any;
   style?: any;
+
+  value?: any;
+  setValue?(a: any): any;
+  onClick?(a: any): any;
+  onEnter?(a: any): any;
 }
 export interface SelectOption {
   label: string;
@@ -471,21 +478,12 @@ const styles = (theme: Theme) => createStyles({
   searchOptionsRoot: {
     display: "flex",
     justifyContent: "center",
-    flexDirection: "column",
+    flexDirection: "row",
     alignItems: 'center',
     width: '100%',
   },
-  searchOptionsRootFixed: {
-    position: 'fixed',
-    top: '0rem',
-    background: '#fff',
-    padding: '1rem',
-    zIndex: 100,
-    boxShadow: BoxShadows.shadow1.boxShadow,
-  },
   topSection: {
     width: '100%',
-    paddingRight: '1rem',
   },
   bottomSection: {
     width: '100%',
@@ -583,33 +581,195 @@ const styles = (theme: Theme) => createStyles({
     flexDirection: 'row',
   },
 
+
+  // searchIcon: {
+  //   width: theme.spacing(6),
+  //   height: '100%',
+  //   position: 'absolute',
+  //   pointerEvents: 'none',
+  //   display: 'flex',
+  //   alignItems: 'center',
+  //   justifyContent: 'center',
+  // },
+  // searchButton: {
+  //   padding: '8px'
+  // },
+  // searchButtonRed: {
+  //   color: Colors.cream,
+  //   padding: '8px',
+  //   width: 100,
+  //   marginLeft: "0.5rem",
+  //   borderRadius: `${BorderRadius}px`,
+  //   backgroundColor: Colors.secondary,
+  //   "&:hover": {
+  //     color: Colors.cream,
+  //     backgroundColor: Colors.secondaryBright,
+  //   },
+  // },
+  // searchAdornIcon: {
+  //   marginLeft: '0.75rem',
+  //   marginTop: '0.25rem',
+  // },
+  // inputRoot: {
+  //   color: 'inherit',
+  //   width: '0',
+  //   fontSize: '0.9rem',
+  //   opacity: 0,
+  //   transition: theme.transitions.create(['width', 'opacity'], {
+  //     easing: theme.transitions.easing.easeInOut,
+  //     duration: '300ms',
+  //   }),
+  // },
+  // iconOuter: {
+  //   fill: theme.palette.primary.main,
+  // },
+  // searchIconInner: {
+  //   width: theme.spacing(6),
+  //   height: '100%',
+  //   position: 'absolute',
+  //   pointerEvents: 'none',
+  //   display: 'flex',
+  //   alignItems: 'center',
+  //   justifyContent: 'center',
+  // },
+  // inputInput: {
+  //   width: '100%',
+  //   padding: 0,
+  //   fontSize: '16px', // above 16px so mobile web doesn't zoom
+  //   color: theme.palette.type === 'dark'
+  //     ? theme.colors.uniswapLightestGrey
+  //     : Colors.charcoal,
+  //   transition: theme.transitions.create('width', {
+  //     easing: theme.transitions.easing.easeInOut,
+  //     duration: '300ms',
+  //   }),
+  //   [theme.breakpoints.up('xs')]: {
+  //     // width: '0rem',
+  //     '&:focus': {
+  //       // width: 'calc(80vw)',
+  //     },
+  //   },
+  //   [theme.breakpoints.up('sm')]: {
+  //     // width: '0rem',
+  //     '&:focus': {
+  //       // width: 'calc(80vw)',
+  //     },
+  //   },
+  //   [theme.breakpoints.up('md')]: {
+  //     // width: '0rem',
+  //     '&:focus': {
+  //       // width: 'calc(60vw)',
+  //     },
+  //   },
+  //   [theme.breakpoints.up('lg')]: {
+  //     // width: '0rem',
+  //     '&:focus': {
+  //       // width: 'calc(80vw)',
+  //     },
+  //   },
+  // },
+  // searchbar: {
+  //   position: 'relative',
+  //   // borderRadius: theme.shape.borderRadius,
+  //   marginLeft: 0,
+  //   width: 40,
+  //   display: 'flex',
+  //   flexDirection: 'row',
+  //   alignItems: 'center',
+  //   justifyContent: 'flex-start',
+  //   transition: theme.transitions.create('width', {
+  //     easing: theme.transitions.easing.easeInOut,
+  //     duration: '300ms',
+  //   }),
+  // },
+
+  searchbar: {
+    position: 'relative',
+    height: '44px',
+    cursor: 'pointer',
+    "&:hover": {
+      background: Colors.slateGreyDarker,
+    },
+    // borderRadius: `${BorderRadius}px 0px 0px ${BorderRadius}px`,
+    // borderRadius: `${BorderRadius}px ${BorderRadius}px ${BorderRadius}px ${BorderRadius}px`,
+    // backgroundColor: "rgba(152,152,152,0.1)",
+    // '&:hover': {
+    //   backgroundColor: "rgba(152,152,152,0.05)",
+    // },
+    borderRadius: BorderRadius4x,
+  },
+  searchIcon: {
+    width: theme.spacing(6),
+    height: '100%',
+    position: 'absolute',
+    pointerEvents: 'none',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  inputRoot: {
+    color: 'inherit',
+    fontSize: '0.9rem',
+    width: '100%',
+  },
+  inputInput: {
+    width: '100%',
+    paddingTop: 12,
+    paddingRight: 12,
+    paddingBottom: 12,
+    paddingLeft: 12,
+    transition: theme.transitions.create('width'),
+  },
+  searchButton: {
+    padding: '8px'
+  },
+  searchButtonRed: {
+    color: Colors.cream,
+    padding: '8px',
+    width: 100,
+    // borderRadius: `0px ${BorderRadius}px ${BorderRadius}px 0px`,
+    backgroundColor: Colors.secondary,
+    "&:hover": {
+      color: Colors.cream,
+      backgroundColor: Colors.secondaryBright,
+    },
+    height: '44px',
+  },
+  searchAdornIcon: {
+    marginLeft: '0.75rem',
+    marginTop: '0.25rem',
+  },
+  iconOuter: {
+    fill: Colors.cream,
+    marginRight: '0.1rem',
+  },
 });
 
 
-// export default withStyles(styles)( SearchOptionsPaginator );
+export default withStyles(styles)( SearchOptionsPaginator );
 
-export default withStyles(styles)(React.memo(
-  (props: ReactProps) => <SearchOptionsPaginator {...props}/>,
-  (prevProps, nextProps) => {
+// export default withStyles(styles)(React.memo(
+//   (props: ReactProps) => <SearchOptionsPaginator {...props}/>,
+//   (prevProps, nextProps) => {
 
-    // let prevLength = option(prevProps).productsForSaleConnection.edges([]).length
-    // let nextLength = option(nextProps).productsForSaleConnection.edges([]).length
+//     // let prevLength = option(prevProps).productsForSaleConnection.edges([]).length
+//     // let nextLength = option(nextProps).productsForSaleConnection.edges([]).length
 
-    let stopRerender = false;
-    // let rerender =  prevLength < nextLength
-    //     && prevProps.index !== nextProps.index
-    //     && prevProps.itemsPerGrid !== nextProps.itemsPerGrid
-    let pTotalCount = option(prevProps).paginationParams.totalCount()
-    let nTotalCount = option(nextProps).paginationParams.totalCount()
+//     let stopRerender = false;
+//     // let rerender =  prevLength < nextLength
+//     //     && prevProps.index !== nextProps.index
+//     //     && prevProps.itemsPerGrid !== nextProps.itemsPerGrid
+//     let pTotalCount = option(prevProps).paginationParams.totalCount()
+//     let nTotalCount = option(nextProps).paginationParams.totalCount()
 
-    if (pTotalCount > 0 && nTotalCount === undefined) {
-      stopRerender = true
-    }
+//     if (pTotalCount > 0 && nTotalCount === undefined) {
+//       stopRerender = true
+//     }
 
-    // console.log("PREV paginationParams: ", prevProps.paginationParams)
-    // console.log("NEXT paginationParams: ", nextProps.paginationParams)
+//     // console.log("PREV paginationParams: ", prevProps.paginationParams)
+//     // console.log("NEXT paginationParams: ", nextProps.paginationParams)
 
-    // if true, don't re-render
-    return stopRerender
-  },
-))
+//     // if true, don't re-render
+//     return stopRerender
+//   },
+// ))

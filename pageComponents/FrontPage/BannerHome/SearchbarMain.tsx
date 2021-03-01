@@ -1,6 +1,6 @@
 import React from "react";
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
-import { Colors, BorderRadius } from "layout/AppTheme";
+import { Colors, BorderRadius4x } from "layout/AppTheme";
 import ErrorBounds from "components/ErrorBounds";
 // MUI
 import SearchIcon from '@material-ui/icons/Search';
@@ -10,7 +10,7 @@ import { useRouter } from "next/router";
 import { useSnackbar, ProviderContext } from "notistack";
 
 // Search Component
-import SearchOptions, { SelectOption, setCategoryFacets } from "components/SearchOptions";
+import SearchOptions, { SelectOption, setCategoryFacets } from "./SearchOptions";
 import {
   useFacetSearchOptions,
   useEffectUpdateGridAccum,
@@ -97,47 +97,16 @@ const SearchbarMain = (props: SearchbarProps) => {
 
 
   // console.log("totalCount: ", data?.search?.totalCount)
-  // console.log('data: ', data)
+  console.log('value: ', value)
 
   return (
     <div className={classes.searchRoot}>
-      <div className={classes.searchbar}>
-        {/* note: needs the newline here to work
-          // @ts-ignore */}
-        <InputBase
-          value={value}
-          inputRef={input => {
-            // input.blur()
-          }}
-          placeholder="Search pistols, rifles…"
-          classes={{
-            root: classes.inputRoot,
-            input: classes.inputInput,
-          }}
-          onChange={e => setValue(e.target.value)}
-          onKeyPress={onEnter}
-          startAdornment={
-            // <SearchAdornmentButton
-            //   classes={classes}
-            //   onClick={onClick}
-            //   color={color}
-            // />
-            <div className={classes.searchAdornIcon}>
-              <SearchIcon style={{ fill: color || "#242424" }}/>
-            </div>
-          }
-        />
-      </div>
-      <Button
-        className={classes.searchButtonRed}
-        variant="text"
-        color="primary"
-        onClick={onClick}
-      >
-        Search
-      </Button>
 
       <SearchOptions
+        value={value}
+        setValue={setValue}
+        onEnter={onEnter}
+        onClick={onClick}
         // facets={facets}
         setCategoryFacets={setCategoryFacets({ facets, setFacets })}
         // currentCategories={currentCategories}
@@ -155,7 +124,7 @@ const SearchbarMain = (props: SearchbarProps) => {
           setIndex: setIndex,
         }}
         updateSetPageDelay={0}
-        disableSearchFilter
+        // disableSearchFilter
         disableSortby
         disablePriceFilter
         // disableCategories
@@ -166,14 +135,8 @@ const SearchbarMain = (props: SearchbarProps) => {
           alignItems: 'flex-end',
           display: 'flex',
           flexDirection: 'column',
-          marginTop: '1rem',
-          paddingRight: '1rem',
-        }}
-        bottomSectionStyles={{
-          marginBottom: '1rem',
         }}
       >
-
       </SearchOptions>
     </div>
   )
@@ -187,71 +150,17 @@ interface SearchbarProps extends WithStyles<typeof styles> {
 
 let styles = (theme: Theme) => createStyles({
   searchRoot: {
-    width: '100%',
-    maxWidth: 400,
     display: "flex",
     justifyContent: "flex-start",
-    alignItems: "center",
+    alignItems: "flex-start",
+    background: Colors.cream,
+    borderRadius: BorderRadius4x,
   },
   flex: {
     display: "flex",
     flexGrow: 1,
     alignItems: "center",
     cursor: 'pointer',
-  },
-  searchbar: {
-    width: '100%',
-    position: 'relative',
-    border: theme.palette.type === 'dark'
-      ? `1px solid ${Colors.lightGrey}`
-      : `1px solid ${Colors.lightGrey}`,
-    // borderRadius: `${BorderRadius}px 0px 0px ${BorderRadius}px`,
-    borderRadius: `${BorderRadius}px ${BorderRadius}px ${BorderRadius}px ${BorderRadius}px`,
-    // backgroundColor: "rgba(152,152,152,0.1)",
-    // '&:hover': {
-    //   backgroundColor: "rgba(152,152,152,0.05)",
-    // },
-  },
-  searchIcon: {
-    width: theme.spacing(6),
-    height: '100%',
-    position: 'absolute',
-    pointerEvents: 'none',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  inputRoot: {
-    fontSize: '0.9rem',
-    width: '100%',
-    color: Colors.slateGrey,
-  },
-  inputInput: {
-    width: '100%',
-    paddingTop: 12,
-    paddingRight: 12,
-    paddingBottom: 12,
-    paddingLeft: 12,
-    transition: theme.transitions.create('width'),
-  },
-  searchButton: {
-    padding: '8px'
-  },
-  searchButtonRed: {
-    color: Colors.cream,
-    padding: '8px',
-    width: 100,
-    marginLeft: "0.5rem",
-    borderRadius: `${BorderRadius}px`,
-    backgroundColor: Colors.secondary,
-    "&:hover": {
-      color: Colors.cream,
-      backgroundColor: Colors.secondaryBright,
-    },
-  },
-  searchAdornIcon: {
-    marginLeft: '0.75rem',
-    marginTop: '0.25rem',
   },
 });
 

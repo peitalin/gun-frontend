@@ -218,7 +218,13 @@ export const styles = (theme: Theme) => createStyles({
     lineHeight: '1.75rem',
   },
   searchContainer: {
-    marginTop: '2rem',
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    width: '100%',
+    padding: '1rem',
+    marginTop: "2rem",
+    marginBottom: '2rem',
   },
 })
 

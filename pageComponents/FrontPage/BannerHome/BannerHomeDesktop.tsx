@@ -63,63 +63,10 @@ const BannerHomeDesktop: NextPage<ReactProps> = (props) => {
       dither={true}
     >
 
-      <div style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        width: 'calc(100% - 6rem)',
-        padding: '1rem',
-        marginTop: "6rem",
-        marginBottom: '4rem',
-      }}>
-
-
-        <div className={classes.searchContainer}>
-          <SearchbarMain color={Colors.slateGrey}/>
-        </div>
-
-        {/* <form method="POST" className={classes.emailForm}>
-          <div className="md:flex-1">
-            <div className={classes.emailInputBox}>
-              <div className="flex">
-                <input
-                  className={classes.emailFormInput}
-                  id="email"
-                  autoComplete="email"
-                  name="email"
-                  autoCorrect="off"
-                  autoCapitalize="off"
-                  spellCheck="false"
-                  type="email"
-                  aria-describedby="emailError"
-                  aria-invalid="false"
-                  placeholder="name@email.com"
-                />
-              </div>
-              <div className="text-sm text-error-pure bg-error-pure bg-opacity-10 py-2 px-4 -mx-4 -mb-4 mt-2 error-triangle hidden" id="emailError">
-                <div className="leading-tight crop-tight"></div>
-              </div>
-            </div>
-          </div>
-          <Button
-              className={clsx(
-                classes.buttonBrowseCategories,
-                classes.minWidth184,
-                classes.buttonHeightDesktop,
-              )}
-              type="submit"
-              variant="text"
-              color="primary"
-              classes={{
-                root: classes.buttonRoot,
-                label: classes.buttonFontSizeDesktop,
-              }}
-            >
-              Join Waitlist
-          </Button>
-        </form> */}
-
+      <div className={classes.searchContainer}>
+        <SearchbarMain color={Colors.slateGrey}/>
       </div>
+
 
       <div className={classes.mainTitleContainer}>
         <Typography className={mdDown ? classes.mainTitleMd : classes.mainTitle}>
