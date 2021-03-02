@@ -167,7 +167,7 @@ const SearchOptionsPaginator: React.FC<ReactProps> = (props) => {
                   <div className={classes.searchAdornIcon}
                     onClick={() => searchRef.current.focus()}
                   >
-                    <SearchIcon style={{ fill: Colors.black }} />
+                    <SearchIcon className={classes.searchIcon}/>
                   </div>
                 }
               />
@@ -276,7 +276,7 @@ const SearchOptionsPaginator: React.FC<ReactProps> = (props) => {
 
           <Button
             className={clsx(
-              classes.searchButtonRed,
+              classes.searchButtonBluePurple,
               focused ? classes.searchButtonShort : classes.searchButtonWide,
               focused ? classes.height55 : classes.height40,
             )}
@@ -580,8 +580,13 @@ const styles = (theme: Theme) => createStyles({
   searchbar: {
     position: 'relative',
     cursor: 'pointer',
+    background: theme.palette.type === 'dark'
+      ? Colors.uniswapDarkNavy
+      : Colors.cream,
     "&:hover": {
-      background: Colors.slateGreyDarker,
+      background: theme.palette.type === 'dark'
+        ? Colors.uniswapGreyNavy
+        : Colors.slateGreyDarker,
     },
     display: 'flex',
     justifyContent: 'center',
@@ -652,13 +657,9 @@ const styles = (theme: Theme) => createStyles({
     boxShadow: BoxShadows.shadow4.boxShadow,
   },
   searchIcon: {
-    width: theme.spacing(6),
-    height: '100%',
-    position: 'absolute',
-    pointerEvents: 'none',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
+    fill: theme.palette.type === 'dark'
+      ? Colors.uniswapLighterGrey
+      : Colors.black,
   },
   inputRoot: {
     color: 'inherit',
@@ -671,20 +672,29 @@ const styles = (theme: Theme) => createStyles({
     paddingBottom: 12,
     paddingLeft: 12,
     fontWeight: 500,
+    color: theme.palette.type === 'dark'
+      ? Colors.uniswapLightestGrey
+      : Colors.black,
     transition: theme.transitions.create('width'),
   },
   searchButton: {
     padding: '8px'
   },
-  searchButtonRed: {
+  searchButtonBluePurple: {
     color: Colors.cream,
     padding: '8px',
     margin: '5px',
     borderRadius: '2rem',
-    backgroundColor: Colors.secondary,
+    // backgroundColor: Colors.secondary,
+    backgroundColor: theme.palette.type === 'dark'
+      ? Colors.purple
+      : Colors.secondary,
     "&:hover": {
       color: Colors.cream,
-      backgroundColor: Colors.secondaryBright,
+      // backgroundColor: Colors.secondaryBright,
+      backgroundColor: theme.palette.type === 'dark'
+        ? fade(Colors.purple, 0.9)
+        : Colors.secondaryBright,
     },
   },
   searchAdornIcon: {

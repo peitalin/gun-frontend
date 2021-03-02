@@ -156,7 +156,12 @@ let styles = (theme: Theme) => createStyles({
     display: "flex",
     justifyContent: "flex-start",
     alignItems: "flex-start",
-    background: Colors.cream,
+    border: theme.palette.type === 'dark'
+      ? `1px solid ${Colors.uniswapLightNavy}`
+      : `unset`,
+    background: theme.palette.type === 'dark'
+      ? Colors.uniswapDarkNavy
+      : Colors.cream,
     borderRadius: BorderRadius4x,
     marginTop: '2rem',
     marginBottom: '2rem',

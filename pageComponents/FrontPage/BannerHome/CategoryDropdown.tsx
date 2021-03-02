@@ -127,7 +127,6 @@ interface ReactProps extends WithStyles<typeof styles> {
 
 
 /////////////// STYLES /////////////////////
-const categoryLinkColor = Colors.darkGrey
 
 
 export const styles = (theme: Theme) => createStyles({
@@ -140,17 +139,23 @@ export const styles = (theme: Theme) => createStyles({
     alignItems: "center",
     cursor: 'pointer',
     "&:hover": {
-      background: Colors.slateGreyDarker,
+      background: theme.palette.type === 'dark'
+        ? Colors.uniswapGreyNavy
+        : Colors.slateGreyDarker,
       // borderBottom: '3px solid',
       "& > div > span": {
-        color: Colors.blue,
+        color: theme.palette.type === 'dark'
+          ? Colors.purple
+          : Colors.blue,
         transition: theme.transitions.create(['color'], {
           easing: theme.transitions.easing.easeIn,
           duration: '100ms',
         })
       },
       "& > div > svg": {
-        fill: Colors.blue,
+        fill: theme.palette.type === 'dark'
+          ? Colors.purple
+          : Colors.blue,
         transition: theme.transitions.create(['fill'], {
           easing: theme.transitions.easing.easeIn,
           duration: '100ms',
@@ -159,7 +164,9 @@ export const styles = (theme: Theme) => createStyles({
     },
   },
   categoryTitleText: {
-    color: categoryLinkColor,
+    color: theme.palette.type === 'dark'
+      ? Colors.uniswapLighterGrey
+      : Colors.black,
     minWidth: '140px',
     whiteSpace: 'nowrap',
     fontSize: '0.825rem',
@@ -184,7 +191,9 @@ export const styles = (theme: Theme) => createStyles({
     justifyContent: "flex-start",
   },
   dropdownArrow: {
-    fill: categoryLinkColor,
+    fill: theme.palette.type === 'dark'
+      ? Colors.uniswapLighterGrey
+      : Colors.black,
   },
   iconText: {
   },
@@ -195,7 +204,9 @@ export const styles = (theme: Theme) => createStyles({
     padding: '1rem',
     width: '100%',
     minWidth: 300,
-    border: `1px solid ${Colors.slateGrey}`,
+    border: theme.palette.type === 'dark'
+      ? `1px solid ${Colors.uniswapLightNavy}`
+      : `1px solid ${Colors.slateGreyBlack}`,
     borderRadius: BorderRadius3x,
     boxShadow: BoxShadows.shadow5.boxShadow,
     backgroundColor: theme.palette.type === 'dark'
@@ -205,19 +216,23 @@ export const styles = (theme: Theme) => createStyles({
   buttonRoot: {
     margin: '0.15rem',
     color: theme.palette.type === 'dark'
-      ? Colors.uniswapLightestGrey
-      : Colors.charcoal,
+      ? Colors.uniswapLighterGrey
+      : Colors.black,
     border: theme.palette.type === 'dark'
-      ? `1px solid ${Colors.uniswapLighterGrey}`
-      : `1px solid ${Colors.charcoal}`,
+      ? `1px solid ${Colors.uniswapLightNavy}`
+      : `1px solid ${Colors.slateGreyDarker}`,
     borderRadius: BorderRadius,
     flexGrow: 1,
     flexBasis: '100%',
     "&:hover": {
       "& > span": {
-        color: Colors.gradientUniswapBlue1,
+        color: theme.palette.type === 'dark'
+          ? Colors.purple
+          : Colors.black,
       },
-      border: `1px solid ${Colors.gradientUniswapBlue1}`,
+      border: theme.palette.type === 'dark'
+        ? `1px solid ${Colors.purple}`
+        : `1px solid ${Colors.black}`,
       transition: theme.transitions.create(['color', 'border', 'background'], {
         easing: theme.transitions.easing.easeInOut,
         duration: "200ms",
@@ -225,9 +240,12 @@ export const styles = (theme: Theme) => createStyles({
     }
   },
   buttonSelected: {
-    background: Colors.ultramarineBlue,
-    border: `1px solid ${Colors.gradientUniswapBlue1}`,
-    fontSize: '0.7rem',
+    background: theme.palette.type === 'dark'
+      ? Colors.purple
+      : Colors.secondary,
+    border: theme.palette.type === 'dark'
+      ? `1px solid ${Colors.purple}`
+      : `1px solid ${Colors.blue}`,
     color: Colors.cream,
     "& > span": {
       color: Colors.cream,
@@ -236,8 +254,12 @@ export const styles = (theme: Theme) => createStyles({
       "& > span": {
         color: Colors.cream,
       },
-      background: Colors.ultramarineBlue,
-      border: `1px solid ${Colors.gradientUniswapFluro2}`,
+      background: theme.palette.type === 'dark'
+        ? Colors.purple
+        : Colors.blue,
+      border: theme.palette.type === 'dark'
+        ? `1px solid ${Colors.purple}`
+        : `1px solid ${Colors.blue}`,
       transition: theme.transitions.create(['color', 'border', 'background'], {
         easing: theme.transitions.easing.easeInOut,
         duration: "200ms",
