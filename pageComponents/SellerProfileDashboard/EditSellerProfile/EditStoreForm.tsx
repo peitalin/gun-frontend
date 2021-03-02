@@ -309,9 +309,6 @@ const EditStoreFormWrapper: React.FC<FormWrapperProps> = (props) => {
                     console.log('submitting...')
                   }}
                   className={classes.button}
-                  classes={{
-                    label: classes.buttonText
-                  }}
                   replaceTextWhenLoading={true}
                   loading={loading}
                   disabled={loading}
