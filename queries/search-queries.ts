@@ -49,3 +49,11 @@ export const SEARCH_ALL_PRODUCTS = gql`
   ${ProductFragment}
 `;
 
+
+export const REINDEX_SEARCH_INDEX_ADMIN = gql`
+  mutation reindexSearchIndex {
+    reindexSearchIndex {
+      success
+    }
+  }
+`;

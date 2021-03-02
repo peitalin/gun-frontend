@@ -222,3 +222,8 @@ export const Conditions = [
   Condition.FAIR,
   Condition.POOR,
 ]
+
+export interface SelectOption {
+  label: string;
+  value: string | any;
+}

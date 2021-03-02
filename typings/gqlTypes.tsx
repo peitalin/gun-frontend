@@ -3812,6 +3812,7 @@ export type Mutation = {
   sendPayoutCompleteSellerEmail: BlankMutationResponse;
   editDealer?: Maybe<UserMutationResponse>;
   createDealerForUser?: Maybe<UserMutationResponse>;
+  reindexSearchIndex?: Maybe<BlankMutationResponse>;
 };
 
 
