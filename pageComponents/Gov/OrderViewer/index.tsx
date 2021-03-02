@@ -266,7 +266,7 @@ const OrderViewer: React.FC<ReactProps> = (props) => {
                   Go Back
                 </Typography>
               </div>
-              <OrderViewerSection classes={classes} title={"Order Summary"}>
+              <OrderViewerSection title={"Order Summary"}>
                 <OrderSummary
                   order={order}
                   {...fprops}
@@ -274,7 +274,7 @@ const OrderViewer: React.FC<ReactProps> = (props) => {
               </OrderViewerSection>
               {
                 !!order?.id &&
-                <OrderViewerSection classes={classes} title={"Order History"}>
+                <OrderViewerSection title={"Order History"}>
 
                   <TableContainer component={Paper}>
                     <Table aria-label="collapsible table">
@@ -304,7 +304,7 @@ const OrderViewer: React.FC<ReactProps> = (props) => {
                   </TableContainer>
                 </OrderViewerSection>
               }
-              <OrderViewerSection classes={classes} title={"Product Details"}>
+              <OrderViewerSection title={"Product Details"}>
                 {
                   order.id &&
                   <ProductCard
