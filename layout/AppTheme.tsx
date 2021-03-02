@@ -322,6 +322,10 @@ export const BoxShadows = {
   shadow4: {
     boxShadow: `rgb(0 0 0 / 12%) 0px 6px 16px` // airbnb shadows
   },
+  shadow5: {
+    boxShadow: `rgba(0, 0, 0, 0.15) 0px 16px 32px, rgba(0, 0, 0, 0.1) 0px 3px 8px`,
+    // airbnb shadows
+  },
   shadowStart: {
     boxShadow: '0 6px 8px 4px rgba(0,0,0,0.1),0 4px 8px rgba(0,0,0,0.2),0 0 0 1px rgba(0,0,0,0.02)',
   },
@@ -365,18 +369,30 @@ export const notifyStyles = (theme: Theme) => createStyles({
   variantSuccess: {
     backgroundColor: Colors.blue,
     color: Colors.cream,
+    "& > div > span > svg": {
+      fill: `${Colors.cream}`,
+    },
   },
   variantError: {
     backgroundColor: Colors.red,
     color: Colors.cream,
+    "& > div > span > svg": {
+      fill: `${Colors.cream}`,
+    },
   },
   variantInfo: {
     backgroundColor: Colors.lighterBlack,
     color: Colors.cream,
+    "& > div > span > svg": {
+      fill: `${Colors.cream}`,
+    }
   },
   variantWarning: {
     backgroundColor: Colors.magenta,
     color: Colors.cream,
+    "& > div > span > svg": {
+      fill: `${Colors.cream}`,
+    },
   },
 });
 
