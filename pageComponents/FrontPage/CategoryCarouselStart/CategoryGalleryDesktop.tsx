@@ -67,6 +67,7 @@ const CategoryGalleryDesktop = (props: ReactProps) => {
 
           return (
             <div className={classes.imageFlexItem}
+              key={i}
               style={getImgSizes()}
             >
               <Link key={i}

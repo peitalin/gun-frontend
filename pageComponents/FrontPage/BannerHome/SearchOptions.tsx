@@ -1,9 +1,9 @@
 import React from "react";
 import { oc as option } from "ts-optchain";
+import clsx from "clsx";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
 import { Colors, BorderRadius, BoxShadows, BorderRadius4x } from "layout/AppTheme";
-import clsx from "clsx";
 // Material UI
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
@@ -14,12 +14,11 @@ import {
   Order_By,
   Categories,
 } from "typings/gqlTypes";
-import { useDebouncedCallback } from 'use-debounce';
 // Select Component
 import dynamic from "next/dynamic";
 const DropdownInput = dynamic(() => import("components/Fields/DropdownInput"), {
   loading: () => <div style={{
-    height: 40,
+    height: 50,
     width: 250,
     border: `1px solid ${Colors.lightGrey}`,
     background: Colors.white,
@@ -71,13 +70,6 @@ const SearchOptionsPaginator: React.FC<ReactProps> = (props) => {
     limit
   } = paginationParams;
 
-  const totalPages = (totalCount * overfetchBy > 0)
-    ? Math.ceil(totalCount * overfetchBy / limit)
-    : 0;
-
-  // console.log("totalCount: ", totalCount)
-  // console.log("totalPages: ", totalPages)
-  // console.log("overfetchBy: ", overfetchBy)
 
   const orderByOptions = [
     { label: "Newest", value: { createdAt: Order_By.DESC }},
@@ -86,37 +78,10 @@ const SearchOptionsPaginator: React.FC<ReactProps> = (props) => {
     { label: "Lowest Price", value: { price: Order_By.ASC }},
   ];
 
-  // for fast UI updates.
-  const [searchTermUi, setSearchTermUi] = React.useState("");
-  // for actual gql dispatch for search term
-  const [debounceSetSearchTerm] = useDebouncedCallback((s: string) => {
-    console.log("setting searchTerm: ", s)
-    setSearchTerm(s)
-  }, 128);
 
   // for fast UI updates
   const [pageUi, setPageUi] = React.useState(1);
-  // for actual gql dispatch for pagination page
-  const [debounceSetPageParam, cancel, callPending] = useDebouncedCallback(
-    (page: number) => {
-      if (option(paginationParams).setPageParam()) {
-        paginationParams.setPageParam(page)
-      }
-    },
-    updateSetPageDelay
-  ) // debounce by 540ms
 
-  const [debounceSetIndex] = useDebouncedCallback((index: number) => {
-      setIndex(index)
-    },
-    updateSetPageDelay
-  ) // debounce by 540ms
-
-  const sortAlphabetically = (c1: Categories, c2: Categories): number => {
-    let c1name = option(c1).name() ? c1.name.toLowerCase() : ""
-    let c2name = option(c2).name() ? c2.name.toLowerCase() : ""
-    return (c1name > c2name) ? 1 : -1
-  }
 
   React.useEffect(() => {
     if (setOrderBy) {
@@ -142,11 +107,18 @@ const SearchOptionsPaginator: React.FC<ReactProps> = (props) => {
     setPageUi(pageParam)
   }, [])
 
+  const searchRef = React.useRef(null)
+  const [searchFocused, setSearchFocused] = React.useState(false)
+  const [categoryFocused, setCategoryFocused] = React.useState(false)
+
+  const focused = searchFocused || categoryFocused
+
 
   return (
     <div className={clsx(
       classes.searchOptionsRoot,
       props.className,
+      focused ? classes.height65 : classes.height50,
     )} style={props.style}>
 
       <div className={classes.topSection}
@@ -159,72 +131,91 @@ const SearchOptionsPaginator: React.FC<ReactProps> = (props) => {
 
           {
             !disableSearchFilter &&
-            <div className={classes.searchbar}>
+            <div className={clsx(
+              classes.searchbar,
+              focused ? classes.height65 : classes.height50,
+              searchFocused && classes.boxShadow,
+            )}
+              onClick={() => searchRef.current.focus()}
+            >
               {/* note: needs the newline here to work
                 // @ts-ignore */}
               <InputBase
-                value={props.value}
+                value={props.searchTerm}
+                ref={searchRef}
                 inputRef={input => {
-                  // input.blur()
                 }}
                 placeholder="Search pistols, rifles…"
                 classes={{
-                  root: classes.inputRoot,
+                  root: clsx(
+                    classes.inputRoot,
+                    focused ? classes.searchWide : classes.searchShort,
+                  ),
                   input: classes.inputInput,
                 }}
-                onChange={e => props.setValue(e.target.value)}
+                onFocus={e => {
+                  // console.log('onFocus:', e)
+                  setSearchFocused(true)
+                }}
+                onBlur={e => {
+                  // console.log('onBlur:', e)
+                  setSearchFocused(false)
+                }}
+                onChange={e => props.setSearchTerm(e.target.value)}
                 onKeyPress={props.onEnter}
                 startAdornment={
-                  <div className={classes.searchAdornIcon}>
-                    <SearchIcon style={{ fill: "#242424" }}/>
+                  <div className={classes.searchAdornIcon}
+                    onClick={() => searchRef.current.focus()}
+                  >
+                    <SearchIcon style={{ fill: Colors.black }} />
                   </div>
                 }
               />
             </div>
           }
 
-          {/* {
-            !disableCategories &&
-            <div style={{ ...props.categorySectionStyles }}>
-              <SearchOptionsCategoryFilter
-                currentCategories={currentCategories}
-                facets={facets}
-                setCategoryFacets={setCategoryFacets}
-                dropdown={true}
-                defaultExpanded={false}
-                maxWidth={props.maxCategoryInputWidth}
-              />
-            </div>
-          } */}
           {
             !disableCategories &&
-            <div style={{ ...props.categorySectionStyles }}>
-              <CategoryDropdown
-                dropDownItems={[
-                  [
-                    {
-                      name: 'all categories',
-                    },
-                    {
-                      name: 'pistols',
-                    },
-                    {
-                      name: 'rifles',
-                    },
-                    {
-                      name: 'carbines',
-                    },
-                  ]
-                ]}
-                itemName={"Categories"}
-                // currentCategories={currentCategories}
-                // facets={facets}
-                // setCategoryFacets={setCategoryFacets}
-                // dropdown={true}
-                // defaultExpanded={false}
-                // maxWidth={props.maxCategoryInputWidth}
-              />
-            </div>
+            <CategoryDropdown
+              className={
+                clsx(
+                  focused ? classes.height65 : classes.height50,
+                  categoryFocused && classes.boxShadow,
+                )
+              }
+              currentCategories={props.currentCategories}
+              setCurrentCategories={(categories) => {
+                props.setCurrentCategories(categories)
+              }}
+              dropDownItems={[
+                {
+                  name: 'All Categories',
+                  id: undefined,
+                  slug: undefined,
+                },
+                {
+                  name: 'Pistols',
+                  id: "category_0001",
+                  slug: "pistols",
+                },
+                {
+                  name: 'Rifles',
+                  id: "category_0002",
+                  slug: "rifles",
+                },
+                {
+                  name: 'Carbines',
+                  id: "category_0003",
+                  slug: "carbines",
+                },
+                {
+                  name: 'Semi-automatics',
+                  id: "category_0004",
+                  slug: 'semi-automatics',
+                },
+              ]}
+              setFocused={setCategoryFocused}
+            />
           }
 
           {
@@ -284,7 +275,11 @@ const SearchOptionsPaginator: React.FC<ReactProps> = (props) => {
           }
 
           <Button
-            className={classes.searchButtonRed}
+            className={clsx(
+              classes.searchButtonRed,
+              focused ? classes.searchButtonShort : classes.searchButtonWide,
+              focused ? classes.height55 : classes.height40,
+            )}
             variant="text"
             color="primary"
             onClick={props.onClick}
@@ -422,11 +417,13 @@ interface ReactProps extends WithStyles<typeof styles> {
   // order
   setOrderBy?(a?: SelectOption): void;
   // search term
+  searchTerm: string;
   setSearchTerm?(searchTerm?: string): void;
   // Category Facets
   setCategoryFacets?(args: { categoryName?: string, clearFacets?: boolean }): void;
   facets?: string[];
   currentCategories?: Categories[];
+  setCurrentCategories: React.Dispatch<React.SetStateAction<Categories[]>>
   // price range
   setPriceRange?(a?: any): void;
   paginationParams: {
@@ -459,8 +456,6 @@ interface ReactProps extends WithStyles<typeof styles> {
   className?: any;
   style?: any;
 
-  value?: any;
-  setValue?(a: any): any;
   onClick?(a: any): any;
   onEnter?(a: any): any;
 }
@@ -582,121 +577,79 @@ const styles = (theme: Theme) => createStyles({
   },
 
 
-  // searchIcon: {
-  //   width: theme.spacing(6),
-  //   height: '100%',
-  //   position: 'absolute',
-  //   pointerEvents: 'none',
-  //   display: 'flex',
-  //   alignItems: 'center',
-  //   justifyContent: 'center',
-  // },
-  // searchButton: {
-  //   padding: '8px'
-  // },
-  // searchButtonRed: {
-  //   color: Colors.cream,
-  //   padding: '8px',
-  //   width: 100,
-  //   marginLeft: "0.5rem",
-  //   borderRadius: `${BorderRadius}px`,
-  //   backgroundColor: Colors.secondary,
-  //   "&:hover": {
-  //     color: Colors.cream,
-  //     backgroundColor: Colors.secondaryBright,
-  //   },
-  // },
-  // searchAdornIcon: {
-  //   marginLeft: '0.75rem',
-  //   marginTop: '0.25rem',
-  // },
-  // inputRoot: {
-  //   color: 'inherit',
-  //   width: '0',
-  //   fontSize: '0.9rem',
-  //   opacity: 0,
-  //   transition: theme.transitions.create(['width', 'opacity'], {
-  //     easing: theme.transitions.easing.easeInOut,
-  //     duration: '300ms',
-  //   }),
-  // },
-  // iconOuter: {
-  //   fill: theme.palette.primary.main,
-  // },
-  // searchIconInner: {
-  //   width: theme.spacing(6),
-  //   height: '100%',
-  //   position: 'absolute',
-  //   pointerEvents: 'none',
-  //   display: 'flex',
-  //   alignItems: 'center',
-  //   justifyContent: 'center',
-  // },
-  // inputInput: {
-  //   width: '100%',
-  //   padding: 0,
-  //   fontSize: '16px', // above 16px so mobile web doesn't zoom
-  //   color: theme.palette.type === 'dark'
-  //     ? theme.colors.uniswapLightestGrey
-  //     : Colors.charcoal,
-  //   transition: theme.transitions.create('width', {
-  //     easing: theme.transitions.easing.easeInOut,
-  //     duration: '300ms',
-  //   }),
-  //   [theme.breakpoints.up('xs')]: {
-  //     // width: '0rem',
-  //     '&:focus': {
-  //       // width: 'calc(80vw)',
-  //     },
-  //   },
-  //   [theme.breakpoints.up('sm')]: {
-  //     // width: '0rem',
-  //     '&:focus': {
-  //       // width: 'calc(80vw)',
-  //     },
-  //   },
-  //   [theme.breakpoints.up('md')]: {
-  //     // width: '0rem',
-  //     '&:focus': {
-  //       // width: 'calc(60vw)',
-  //     },
-  //   },
-  //   [theme.breakpoints.up('lg')]: {
-  //     // width: '0rem',
-  //     '&:focus': {
-  //       // width: 'calc(80vw)',
-  //     },
-  //   },
-  // },
-  // searchbar: {
-  //   position: 'relative',
-  //   // borderRadius: theme.shape.borderRadius,
-  //   marginLeft: 0,
-  //   width: 40,
-  //   display: 'flex',
-  //   flexDirection: 'row',
-  //   alignItems: 'center',
-  //   justifyContent: 'flex-start',
-  //   transition: theme.transitions.create('width', {
-  //     easing: theme.transitions.easing.easeInOut,
-  //     duration: '300ms',
-  //   }),
-  // },
-
   searchbar: {
     position: 'relative',
-    height: '44px',
     cursor: 'pointer',
     "&:hover": {
       background: Colors.slateGreyDarker,
     },
-    // borderRadius: `${BorderRadius}px 0px 0px ${BorderRadius}px`,
-    // borderRadius: `${BorderRadius}px ${BorderRadius}px ${BorderRadius}px ${BorderRadius}px`,
-    // backgroundColor: "rgba(152,152,152,0.1)",
-    // '&:hover': {
-    //   backgroundColor: "rgba(152,152,152,0.05)",
-    // },
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
     borderRadius: BorderRadius4x,
+  },
+  height65: {
+    height: 65,
+    transition: theme.transitions.create(['width', 'height'], {
+      easing: theme.transitions.easing.sharp,
+      duration: "100ms",
+    }),
+  },
+  height55: {
+    height: 55,
+    transition: theme.transitions.create(['width', 'height', 'margin'], {
+      easing: theme.transitions.easing.sharp,
+      duration: "100ms",
+    }),
+  },
+  height50: {
+    height: 50,
+    transition: theme.transitions.create(['width', 'height', 'margin'], {
+      easing: theme.transitions.easing.sharp,
+      duration: "300ms",
+      delay: 300,
+    }),
+  },
+  height40: {
+    height: 40,
+    transition: theme.transitions.create(['width', 'height', 'margin'], {
+      easing: theme.transitions.easing.sharp,
+      duration: "300ms",
+      delay: 300,
+    }),
+  },
+  searchShort: {
+    width: 220,
+    transition: theme.transitions.create(['width', 'height'], {
+      easing: theme.transitions.easing.sharp,
+      duration: "300ms",
+      delay: 300,
+    }),
+  },
+  searchWide: {
+    width: 260,
+    transition: theme.transitions.create(['width', 'height'], {
+      easing: theme.transitions.easing.sharp,
+      duration: "100ms",
+    }),
+  },
+  searchButtonShort: {
+    width: 120,
+    transition: theme.transitions.create(['width', 'height'], {
+      easing: theme.transitions.easing.sharp,
+      duration: "100ms",
+    }),
+  },
+  searchButtonWide: {
+    width: 140,
+    transition: theme.transitions.create(['width', 'height'], {
+      easing: theme.transitions.easing.sharp,
+      duration: "300ms",
+      delay: 300,
+    }),
+  },
+  boxShadow: {
+    boxShadow: BoxShadows.shadow4.boxShadow,
   },
   searchIcon: {
     width: theme.spacing(6),
@@ -710,7 +663,6 @@ const styles = (theme: Theme) => createStyles({
   inputRoot: {
     color: 'inherit',
     fontSize: '0.9rem',
-    width: '100%',
   },
   inputInput: {
     width: '100%',
@@ -718,6 +670,7 @@ const styles = (theme: Theme) => createStyles({
     paddingRight: 12,
     paddingBottom: 12,
     paddingLeft: 12,
+    fontWeight: 500,
     transition: theme.transitions.create('width'),
   },
   searchButton: {
@@ -726,18 +679,18 @@ const styles = (theme: Theme) => createStyles({
   searchButtonRed: {
     color: Colors.cream,
     padding: '8px',
-    width: 100,
-    // borderRadius: `0px ${BorderRadius}px ${BorderRadius}px 0px`,
+    margin: '5px',
+    borderRadius: '2rem',
     backgroundColor: Colors.secondary,
     "&:hover": {
       color: Colors.cream,
       backgroundColor: Colors.secondaryBright,
     },
-    height: '44px',
   },
   searchAdornIcon: {
     marginLeft: '0.75rem',
     marginTop: '0.25rem',
+    pointerEvents: "none",
   },
   iconOuter: {
     fill: Colors.cream,

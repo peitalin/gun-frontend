@@ -26,41 +26,10 @@ import {
 const SearchbarMain = (props: SearchbarProps) => {
 
   let { classes, color } = props;
-  const [value, setValue] = React.useState("");
   const router = useRouter();
 
   const snackbar = useSnackbar();
   const inputRefUnfocus = React.useRef(null);
-
-  const onEnter = (event) => {
-    if (event.key === "Enter") {
-      if (!value) {
-        snackbar.enqueueSnackbar(
-          `No search term entered!`,
-          { variant: "info" }
-        )
-        return
-      }
-      router.push(`/search?q=${encodeURIComponent(value)}`)
-      if (inputRefUnfocus.current && inputRefUnfocus.current.focus) {
-        inputRefUnfocus.current.focus()
-      }
-    }
-  }
-
-  const onClick = (event) => {
-    if (!value) {
-      snackbar.enqueueSnackbar(
-        `No search term entered!`,
-        { variant: "info" }
-      )
-      return
-    }
-    router.push(`/search?q=${encodeURIComponent(value)}`)
-    if (inputRefUnfocus.current && inputRefUnfocus.current.focus) {
-      inputRefUnfocus.current.focus()
-    }
-  }
 
   /////////////////////////////////// paginator
   let numItemsPerPage = 40;
@@ -95,22 +64,56 @@ const SearchbarMain = (props: SearchbarProps) => {
     paginatorType: PaginatorType.page,
   })
 
+  const onEnter = (event) => {
+    if (event.key === "Enter") {
+      if (!searchTerm) {
+        snackbar.enqueueSnackbar(
+          `No search term entered!`,
+          { variant: "info" }
+        )
+        return
+      }
+      router.push(`/search?q=${encodeURIComponent(searchTerm)}`)
+      if (inputRefUnfocus.current && inputRefUnfocus.current.focus) {
+        inputRefUnfocus.current.focus()
+      }
+    }
+  }
+
+  const onClick = (event) => {
+    if (!searchTerm) {
+      snackbar.enqueueSnackbar(
+        `No search term entered!`,
+        { variant: "info" }
+      )
+      return
+    }
+    let url = `/search?q=${encodeURIComponent(searchTerm)}`
+    if ((currentCategories ?? []).length > 0) {
+      url += `&category=${currentCategories?.[0]?.slug}`
+    }
+    router.push(url)
+    if (inputRefUnfocus.current && inputRefUnfocus.current.focus) {
+      inputRefUnfocus.current.focus()
+    }
+  }
 
   // console.log("totalCount: ", data?.search?.totalCount)
-  console.log('value: ', value)
+  // console.log('searchTerm: ', searchTerm)
+  console.log('currentcategories: ', currentCategories)
 
   return (
     <div className={classes.searchRoot}>
 
       <SearchOptions
-        value={value}
-        setValue={setValue}
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
         onEnter={onEnter}
         onClick={onClick}
         // facets={facets}
-        setCategoryFacets={setCategoryFacets({ facets, setFacets })}
-        // currentCategories={currentCategories}
-        setSearchTerm={setSearchTerm}
+        // setCategoryFacets={setCategoryFacets({ facets, setFacets })}
+        setCurrentCategories={setCurrentCategories as any}
+        currentCategories={currentCategories as any}
         setOrderBy={setOrderBy}
         setPriceRange={setPriceRange}
         placeholder={"Search for products..."}

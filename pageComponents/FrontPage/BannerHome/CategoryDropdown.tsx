@@ -3,17 +3,30 @@ import { oc as option } from "ts-optchain";
 // Styles
 import clsx from "clsx";
 import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
-import { Colors, BorderRadius4x } from "layout/AppTheme";
+import {
+  Colors,
+  BorderRadius4x,
+  BorderRadius3x,
+  BorderRadius2x,
+  BorderRadius,
+  Gradients,
+  BoxShadows
+} from "layout/AppTheme";
 // MUI
 import Typography from "@material-ui/core/Typography";
 import KeyboardArrowDown from "@material-ui/icons/KeyboardArrowDown"
+import MenuItem from '@material-ui/core/MenuItem';
+import Menu from '@material-ui/core/Menu';
+import MenuIcon from "@material-ui/icons/Menu";
+import Button from "@material-ui/core/Button";
+import ClickAwayListener from '@material-ui/core/ClickAwayListener';
+
 // hooks
 import Link from "next/link";
-import { categorySelectors } from "utils/selectors";
+import { SelectOption } from "typings";
 import {
   Categories,
 } from "typings/gqlTypes";
-import Popover from '@material-ui/core/Popover';
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 
@@ -25,95 +38,77 @@ const CategoryDropdown: React.FC<ReactProps> = (props) => {
   const {
     classes,
     dropDownItems,
-    itemName,
   } = props;
 
   const theme = useTheme();
   const smDown = useMediaQuery(theme.breakpoints.down("sm"));
 
-  const [openedPopover, setOpenedPopover] = React.useState(false)
-  const popoverAnchor = React.useRef(null);
+  const [open, setOpen] = React.useState(false);
 
-  const popoverEnter = ({ currentTarget }) => {
-    setOpenedPopover(true)
+  const handleClick = () => {
+    setOpen((prev) => !prev);
+    props.setFocused(true)
   };
 
-  const popoverLeave = ({ currentTarget }) => {
-    setOpenedPopover(false)
+  const handleClickAway = () => {
+    setOpen(false);
+    props.setFocused(false)
   };
 
   // console.log("dropDownItems: ", dropDownItems)
+  let selectedCategory = props.currentCategories?.[0]
+  // console.log('currente-categories:::::', props.currentCategories)
 
   return (
-    <div className={classes.categoryDropdownRoot}>
-
-      <Typography
-        className={clsx(
-          classes.categoryLinkTextNoUnderline,
-          classes.categoryLinkTextMainHeight,
+    <ClickAwayListener onClickAway={handleClickAway}>
+      <div className={clsx(
+          classes.categoryDropdownRoot,
+          props.className,
         )}
-        ref={popoverAnchor}
-        aria-owns="mouse-over-popover"
-        aria-haspopup="true"
-        onMouseEnter={popoverEnter}
-        onMouseLeave={popoverLeave}
+        onClick={handleClick}
       >
-        {itemName}
-        <KeyboardArrowDown className={classes.dropdownArrow}/>
-      </Typography>
 
-      <Popover
-        id="mouse-over-popover"
-        className={classes.popover}
-        classes={{
-          root: classes.popoverRoot,
-          paper: classes.popoverContent,
-        }}
-        open={openedPopover}
-        anchorEl={popoverAnchor.current}
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'left',
-        }}
-        transformOrigin={{
-          vertical: 'top',
-          horizontal: 'left',
-        }}
-        PaperProps={{
-          onMouseEnter: popoverEnter,
-          onMouseLeave: popoverLeave
-        }}
-        // disableRestoreFocus
-      >
-        <div className={classes.categoryDropdownContainer}>
-          {
-            dropDownItems.map((d, j) => {
-              return (
-                <div key={j} className={classes.categoryDropdownInner}>
-                  {
-                    d.map((e, i) => {
-                      return (
-                        <Typography
-                          className={clsx(
-                            classes.categoryLinkTextNoUnderline,
-                            smDown
-                              ? classes.categoryLinkTextMainHeightSm
-                              : classes.categoryLinkTextMainHeight,
-                          )}
-                        >
-                          {e.name}
-                        </Typography>
-
-                      )
-                    })
-                  }
-                </div>
-              )
-            })
-          }
+        <div className={classes.categoryTitleText}>
+          <span className={classes.iconText}>
+            {selectedCategory?.name || "Select Category"}
+          </span>
+          <KeyboardArrowDown className={classes.dropdownArrow}/>
         </div>
-      </Popover>
-    </div>
+
+        {
+          open &&
+          <div className={classes.categoryDropdownContainer}>
+            <div className={classes.categoryButtonsContainer}>
+              {
+                dropDownItems.map((category, i) => {
+                  return (
+                    <Button
+                      key={category.name + `${i}`}
+                      classes={{
+                        root: clsx(
+                          classes.buttonRoot,
+                          (props.currentCategories ?? []).find(c => category.id === c.id)
+                            ? classes.buttonSelected
+                            : null,
+                        )
+                      }}
+                      variant="outlined"
+                      onClick={() => {
+                        props.setCurrentCategories([category])
+                      }}
+                    >
+                      {category.name}
+                    </Button>
+                  )
+                })
+              }
+          </div>
+          </div>
+        }
+
+
+      </div>
+    </ClickAwayListener>
   );
 };
 
@@ -122,74 +117,53 @@ const CategoryDropdown: React.FC<ReactProps> = (props) => {
 
 
 interface ReactProps extends WithStyles<typeof styles> {
-  dropDownItems: any[][];
-  itemName: string;
+  dropDownItems: any[];
+  className?: any;
+  setFocused?(a: boolean): void;
+  currentCategories?: Categories[];
+  setCurrentCategories(c: Categories[]): void;
 }
 
 
 
 /////////////// STYLES /////////////////////
-export const CategoryBarHeight = 44;
-
 const categoryLinkColor = Colors.darkGrey
-const categoryLinkColorHover = fade(Colors.secondaryBright, 0.8)
-
-const categoryLinkColor2 = Colors.darkGrey
-const categoryLinkColorHover2 = Colors.secondaryBright
 
 
 export const styles = (theme: Theme) => createStyles({
   categoryDropdownRoot: {
+    position: "relative",
     borderRadius: BorderRadius4x,
     padding: '0rem 1rem',
-    height: '44px',
-    // border: `1px solid ${Colors.slateGrey}`,
+    display: 'flex',
+    justifyContent: "center",
+    alignItems: "center",
     cursor: 'pointer',
     "&:hover": {
       background: Colors.slateGreyDarker,
+      // borderBottom: '3px solid',
+      "& > div > span": {
+        color: Colors.blue,
+        transition: theme.transitions.create(['color'], {
+          easing: theme.transitions.easing.easeIn,
+          duration: '100ms',
+        })
+      },
+      "& > div > svg": {
+        fill: Colors.blue,
+        transition: theme.transitions.create(['fill'], {
+          easing: theme.transitions.easing.easeIn,
+          duration: '100ms',
+        })
+      },
     },
   },
-  categoryHeading: {
-    marginBottom: "0.5rem",
-  },
-  categoryLinkGroups: {
-    marginRight: '0.5rem',
-    marginLeft: '0.5rem',
-  },
-  categoryLinkGroupsSm: {
-    marginTop: '0.5rem',
-    marginBottom: '0.5rem',
-  },
-  categoryLinkTextMain: {
+  categoryTitleText: {
     color: categoryLinkColor,
-    minWidth: '50px',
+    minWidth: '140px',
     whiteSpace: 'nowrap',
     fontSize: '0.825rem',
-    fontWeight: 600,
-    // bottom border
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderBottom: '3px solid rgba(0,0,0,0)',
-    transition: theme.transitions.create(['border', 'color'], {
-      easing: theme.transitions.easing.easeIn,
-      duration: '100ms',
-    }),
-    "&:hover": {
-      borderBottom: '3px solid',
-      color: categoryLinkColorHover,
-      transition: theme.transitions.create(['border', 'color'], {
-        easing: theme.transitions.easing.easeIn,
-        duration: '100ms',
-      })
-    },
-  },
-  categoryLinkTextNoUnderline: {
-    color: categoryLinkColor,
-    minWidth: '50px',
-    whiteSpace: 'nowrap',
-    fontSize: '0.825rem',
-    fontWeight: 600,
+    fontWeight: 500,
     // bottom border
     display: 'flex',
     justifyContent: 'center',
@@ -199,62 +173,77 @@ export const styles = (theme: Theme) => createStyles({
       easing: theme.transitions.easing.easeIn,
       duration: '100ms',
     }),
-    "&:hover": {
-      // borderBottom: '3px solid',
-      color: categoryLinkColorHover,
-      transition: theme.transitions.create(['border', 'color'], {
-        easing: theme.transitions.easing.easeIn,
-        duration: '100ms',
-      })
-    },
-  },
-  categoryLinkTextMainHeight: {
-    height: CategoryBarHeight,
-  },
-  categoryLinkTextMainHeightSm: {
-    height: '2rem',
-  },
-  categoryLinkText: {
-    color: categoryLinkColor2,
-    "&:hover": {
-      color: categoryLinkColorHover2,
-    },
-    marginBottom: '0.25rem',
-    minWidth: '50px',
-    whiteSpace: 'nowrap',
-    fontSize: '0.8rem',
-  },
-  popover: {
-    pointerEvents: 'none',
-  },
-  popoverRoot: {
-    marginTop: '-1px',
-    transform: "translateX(-1rem)",
-    borderRadius: 0,
-  },
-  popoverContent: {
-    pointerEvents: 'auto',
-  },
-  paper: {
-    padding: '1rem',
   },
   categoryDropdownContainer: {
+    position: 'absolute',
+    top: '3.5rem',
     padding: '1rem',
-    minHeight: '100px',
-    minWidth: '150px',
+    minWidth: '300px',
     display: "flex",
     flexDirection: "row",
     justifyContent: "flex-start",
   },
-  categoryDropdownInner: {
+  dropdownArrow: {
+    fill: categoryLinkColor,
+  },
+  iconText: {
+  },
+  categoryButtonsContainer: {
     display: "flex",
     flexDirection: "column",
-    justifyContent: "center",
-    marginLeft: '0.5rem',
-    marginRight: '0.5rem',
+    // flexWrap: "wrap",
+    padding: '1rem',
+    width: '100%',
+    minWidth: 300,
+    border: `1px solid ${Colors.slateGrey}`,
+    borderRadius: BorderRadius3x,
+    boxShadow: BoxShadows.shadow5.boxShadow,
+    backgroundColor: theme.palette.type === 'dark'
+      ? Colors.uniswapDarkNavy
+      : Colors.slateGrey,
   },
-  dropdownArrow: {
-    marginLeft: "0.25rem",
+  buttonRoot: {
+    margin: '0.15rem',
+    color: theme.palette.type === 'dark'
+      ? Colors.uniswapLightestGrey
+      : Colors.charcoal,
+    border: theme.palette.type === 'dark'
+      ? `1px solid ${Colors.uniswapLighterGrey}`
+      : `1px solid ${Colors.charcoal}`,
+    borderRadius: BorderRadius,
+    flexGrow: 1,
+    flexBasis: '100%',
+    "&:hover": {
+      "& > span": {
+        color: Colors.gradientUniswapBlue1,
+      },
+      border: `1px solid ${Colors.gradientUniswapBlue1}`,
+      transition: theme.transitions.create(['color', 'border', 'background'], {
+        easing: theme.transitions.easing.easeInOut,
+        duration: "200ms",
+      }),
+    }
+  },
+  buttonSelected: {
+    background: Colors.ultramarineBlue,
+    border: `1px solid ${Colors.gradientUniswapBlue1}`,
+    fontSize: '0.7rem',
+    color: Colors.cream,
+    "& > span": {
+      color: Colors.cream,
+    },
+    "&:hover": {
+      "& > span": {
+        color: Colors.cream,
+      },
+      background: Colors.ultramarineBlue,
+      border: `1px solid ${Colors.gradientUniswapFluro2}`,
+      transition: theme.transitions.create(['color', 'border', 'background'], {
+        easing: theme.transitions.easing.easeInOut,
+        duration: "200ms",
+      }),
+      backgroundPosition: '-75px',
+    }
   },
 });
 
