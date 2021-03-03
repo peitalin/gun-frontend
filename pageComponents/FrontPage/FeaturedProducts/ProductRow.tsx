@@ -154,9 +154,13 @@ const styles = (theme: Theme) => createStyles({
     marginBottom: '1rem',
     paddingBottom: '1rem',
     paddingTop: 0,
-    borderBottom: `1px solid ${Colors.lightestGrey}`,
+    borderBottom: theme.palette.type === 'dark'
+      ? `1px solid ${Colors.uniswapNavy}`
+      : `1px solid ${Colors.slateGreyDark}`,
     "&:hover": {
-      borderBottom: `1px solid ${Colors.lightestGrey}`,
+      borderBottom: theme.palette.type === 'dark'
+        ? `1px solid ${Colors.uniswapLightNavy}`
+        : `1px solid ${Colors.slateGreyDarker}`,
       transition: theme.transitions.create('border', {
         easing: theme.transitions.easing.easeIn,
       })

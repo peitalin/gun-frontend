@@ -9,7 +9,7 @@ import { Product } from "typings/gqlTypes";
 // Utils Components
 import ErrorBounds from "components/ErrorBounds";
 // Components
-import { Colors } from "layout/AppTheme";
+import { Colors, Gradients } from "layout/AppTheme";
 import Typography from "@material-ui/core/Typography";
 
 
@@ -61,7 +61,9 @@ export const styles = (theme: Theme) => createStyles({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    background: Colors.cream,
+    background: theme.palette.type === 'dark'
+      ? Gradients.gradientUniswapDark.background
+      : Gradients.gradientGrey3.background,
     borderRadius: '4px',
     width: '100%',
   },

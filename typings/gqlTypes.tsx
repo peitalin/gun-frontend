@@ -2077,6 +2077,7 @@ export enum Emails_Update_Column {
 }
 
 export enum FacetAttributes {
+  _CATEGORYSLUGFACET = '_categorySlugFacet',
   _CATEGORYNAMEFACET = '_categoryNameFacet',
   _CATEGORYGROUPFACET = '_categoryGroupFacet',
   _STOREIDFACET = '_storeIdFacet',

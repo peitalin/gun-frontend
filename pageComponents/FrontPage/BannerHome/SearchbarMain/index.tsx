@@ -159,13 +159,11 @@ let styles = (theme: Theme) => createStyles({
     alignItems: "flex-start",
     border: theme.palette.type === 'dark'
       ? `1px solid ${Colors.uniswapLightNavy}`
-      : `unset`,
+      : `1px solid ${Colors.slateGreyDarker}`,
     background: theme.palette.type === 'dark'
       ? Colors.uniswapDarkNavy
       : Colors.cream,
     borderRadius: BorderRadius4x,
-    marginTop: '2rem',
-    marginBottom: '2rem',
   },
   flex: {
     display: "flex",

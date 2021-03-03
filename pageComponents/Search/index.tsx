@@ -43,6 +43,7 @@ import LoadingBar from "components/LoadingBar";
 import SearchOptions from "components/SearchOptions";
 import GridPaginatorGeneric from "components/GridPaginatorGeneric";
 import ProductRow from "pageComponents/FrontPage/FeaturedProducts/ProductRow";
+import SearchbarMain from "pageComponents/FrontPage/BannerHome/SearchbarMain";
 
 
 
@@ -92,20 +93,36 @@ const SearchResults = (props: ReactProps) => {
     paginatorType: PaginatorType.page,
   })
 
+  let categorySlug: string = router?.query?.category as any;
+  let q: string = router?.query?.q as any;
+
+  React.useEffect(() => {
+    setSearchTerm(q);
+    setCurrentCategories([{
+      name: categorySlug,
+      id: undefined,
+      slug: categorySlug,
+    } as any])
+  }, [])
+
   const { loading, data, error } = useQuery<QueryData, QueryVar>(
     SEARCH_ALL_PRODUCTS, {
     variables: {
-      // searchTerm: searchTerm || " ", // if no search term, don't error, return all.
       searchTerm: searchTerm,
       query: {
         limit: limit,
         offset: offset,
+        facetFilters: categorySlug
+        ? [
+            [ `_categorySlugFacet:${categorySlug}` ]
+            // [ `_storeIdFacet:${storeId}` ]
+          ]
+        : undefined
       }
     },
     ssr: true,
   });
 
-  useAnalytics("View.Search", { searchTerm: searchTerm });
   const searchResultsConnection = data?.search || props.initialSearch;
 
   // console.log("searchTerm: ", searchTerm)
@@ -114,6 +131,7 @@ const SearchResults = (props: ReactProps) => {
   }, [data?.search?.totalCount])
 
   // console.log("totalCount: ", data?.search?.totalCount)
+  // console.log('data: ', data)
   // console.log('data: ', data)
 
   if (error) {
@@ -141,7 +159,7 @@ const SearchResults = (props: ReactProps) => {
           loading &&
           <LoadingBar
             absoluteTop
-            color={Colors.magenta}
+            color={Colors.blue}
             height={4}
             width={'100vw'}
             loading={true}
@@ -152,6 +170,9 @@ const SearchResults = (props: ReactProps) => {
           classes.maxWidth,
           classes.padding1,
         )}>
+          <div className={classes.searchContainer}>
+            <SearchbarMain color={Colors.slateGrey}/>
+          </div>
           <div className={classes.titleContainer}>
             <Typography variant="h4" className={classes.title}>
               {"Search results for "}
@@ -332,6 +353,13 @@ const styles = (theme: Theme) => createStyles({
       easing: theme.transitions.easing.easeIn,
       duration: "200ms",
     }),
+  },
+  searchContainer: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    width: '100%',
+    marginBottom: '2rem',
   },
 });
 

@@ -26,7 +26,6 @@ import { GrandReduxState } from "reduxStore/grand-reducer";
 import { Actions } from "reduxStore/actions";
 import { UserPrivate } from "typings/gqlTypes";
 import Link from "next/link";
-import Searchbar from "layout/NavBarMain/Searchbar";
 
 
 

@@ -223,8 +223,8 @@ export const styles = (theme: Theme) => createStyles({
     alignItems: "center",
     width: '100%',
     padding: '1rem',
-    marginTop: "2rem",
-    marginBottom: '2rem',
+    marginTop: "4rem",
+    marginBottom: '4rem',
   },
 })
 

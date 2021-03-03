@@ -27,9 +27,7 @@ const DropdownInput = dynamic(() => import("components/Fields/DropdownInput"), {
   ssr: false,
 })
 // import DropdownInput from "components/Fields/DropdownInput";
-import SearchOptionsSearchFilter from "./SearchOptionsSearchFilter";
 import SearchOptionsPriceFilter from "./SearchOptionsPriceFilter";
-import SearchOptionsCategoryFilter from "./SearchOptionsCategoryFilter";
 import CategoryDropdown from './CategoryDropdown';
 import SearchIcon from '@material-ui/icons/Search';
 import InputBase from '@material-ui/core/InputBase';

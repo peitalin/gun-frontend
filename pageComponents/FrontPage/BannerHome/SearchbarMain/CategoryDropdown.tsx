@@ -182,6 +182,7 @@ export const styles = (theme: Theme) => createStyles({
     }),
   },
   categoryDropdownContainer: {
+    zIndex: 1,
     position: 'absolute',
     top: '3.5rem',
     padding: '1rem',

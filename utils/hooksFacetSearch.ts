@@ -127,54 +127,69 @@ export const useFacetSearchOptions = ({
   ////////////////////////////////////////////////////
   React.useEffect(() => {
     // let path = router.pathname
-    console.log('searchTerm', searchTerm)
+    // console.log('searchTerm', searchTerm)
 
     let newOffset = calcOffset(pageParam, limit)
     setOffset(newOffset)
 
+
     if (router) {
 
       let urlPath = router.asPath.split('?')[0]
+      let params;
+      console.log("routery.query:", router?.query)
 
-      // if (paginatorType === PaginatorType.page) {
-      //   // shallow update pagination query params when navigating using buttons
-      //   // https://nextjs.org/docs/routing/shallow-routing
-      //   if (searchTerm !== undefined && searchTerm !== "") {
-      //     if (pageParam === 1) {
-      //       router.push(
-      //         `${router.pathname}?q=${searchTerm}`,
-      //         `${urlPath}?q=${searchTerm}`,
-      //         { shallow: true }
-      //       )
-      //     } else {
-      //       router.push(
-      //         `${router.pathname}?q=${searchTerm}&page=${pageParam}`,
-      //         `${urlPath}?q=${searchTerm}&page=${pageParam}`,
-      //         { shallow: true }
-      //       )
-      //     }
-      //   } else {
-      //     //// WARNING:
-      //     /// for pages like category/[categorySlug]
-      //     /// router.push() may trigger a full page change if you push
-      //     /// category/graphics instead of category/[categorySlug]
-      //     /// when combined with pageParam hook, this leads to an infinite render loop
-      //     // console.log("pageParammmmmmm", pageParam)
-      //     if (pageParam === 1) {
-      //       router.push(
-      //         `${router.pathname}`,
-      //         `${urlPath}`,
-      //         { shallow: true, }
-      //       )
-      //     } else {
-      //       router.push(
-      //         `${router.pathname}?page=${pageParam}`,
-      //         `${urlPath}?page=${pageParam}`,
-      //         { shallow: true, }
-      //       )
-      //     }
-      //   }
-      // }
+      if (router?.query) {
+        params = Object.keys(router?.query).map(key => {
+          let value = router.query[key]
+          // let param = encodeURIComponent(`${key}=${value}`)
+          let param = `${key}=${value}`
+          return param
+        }).join('&')
+        if (params) {
+          params = `?${params}`
+        }
+      }
+
+      if (paginatorType === PaginatorType.page) {
+        // shallow update pagination query params when navigating using buttons
+        // https://nextjs.org/docs/routing/shallow-routing
+        if (searchTerm !== undefined && searchTerm !== "") {
+          if (pageParam === 1) {
+            router.push(
+              `${router.pathname}${params}`,
+              `${urlPath}${params}`,
+              { shallow: true }
+            )
+          } else {
+            router.push(
+              `${router.pathname}${params}&page=${pageParam}`,
+              `${urlPath}${params}&page=${pageParam}`,
+              { shallow: true }
+            )
+          }
+        } else {
+          //// WARNING:
+          /// for pages like category/[categorySlug]
+          /// router.push() may trigger a full page change if you push
+          /// category/graphics instead of category/[categorySlug]
+          /// when combined with pageParam hook, this leads to an infinite render loop
+          // console.log("pageParammmmmmm", pageParam)
+          if (pageParam === 1) {
+            router.push(
+              `${router.pathname}`,
+              `${urlPath}`,
+              { shallow: true, }
+            )
+          } else {
+            router.push(
+              `${router.pathname}?page=${pageParam}`,
+              `${urlPath}?page=${pageParam}`,
+              { shallow: true, }
+            )
+          }
+        }
+      }
     }
   }, [pageParam, searchTerm])
 
