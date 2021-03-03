@@ -106,12 +106,12 @@ const SearchResults = (props: ReactProps) => {
   });
 
   useAnalytics("View.Search", { searchTerm: searchTerm });
-  const searchResultsConnection = data?.productsAllConnection || props.initialSearch;
+  const searchResultsConnection = data?.search || props.initialSearch;
 
   // console.log("searchTerm: ", searchTerm)
   React.useEffect(() => {
-    setTotalCount(data?.productsAllConnection?.totalCount)
-  }, [data?.productsAllConnection?.totalCount])
+    setTotalCount(data?.search?.totalCount)
+  }, [data?.search?.totalCount])
 
   // console.log("totalCount: ", data?.search?.totalCount)
   // console.log('data: ', data)
@@ -250,7 +250,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   initialSearch?: ProductsConnection;
 }
 interface QueryData {
-  productsAllConnection: ProductsConnection;
+  search: ProductsConnection;
 }
 interface QueryVar {
   searchTerm: string;

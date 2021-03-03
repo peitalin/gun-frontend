@@ -37,7 +37,6 @@ import EmptyProductList from "pageComponents/SellerProfileDashboard/PublishedPro
 import PaginateButtons from "components/Paginators/PaginateButtons";
 import { useQuery, useLazyQuery } from "@apollo/client";
 import {
-  GET_STORE_PRIVATE,
   DASHBOARD_PRODUCTS_CONNECTION,
 } from "queries/store-queries";
 // Analytics
@@ -135,9 +134,10 @@ const PublishedProductsList = (props: ReactProps) => {
       }
     },
     onError: useCallback((e) => { console.log(e) }, []),
-    onCompleted: useCallback(async (data) => { }, []),
-    // fetchPolicy: "network-only",
+    onCompleted: useCallback(async (data) => { console.log(data) }, []),
+    fetchPolicy: "network-only",
     // fetchPolicy: "cache-and-network",
+    // fetchPolicy: "no-cache",
     // buggy, infinite request loop when using fetchPolicy: network-only
     // apollo devs are retards
     // https://github.com/apollographql/apollo-client/issues/6301
@@ -167,24 +167,40 @@ const PublishedProductsList = (props: ReactProps) => {
     }
   }
 
+  const refetch = useCallback(() => {
+    // apollo devs are retards
+    // https://github.com/apollographql/react-apollo/issues/3862
+    setTimeout(() => refetchTheProducts(), 0)
+  }, [refetchTheProducts])
+
   /////////// Hooks ///////////
 
   React.useEffect(() => {
     getProducts()
-  }, [])
-
-  // React.useEffect(() => {
-  //   // if (getProducts) {
-  //   //   dispatch(Actions.reduxRefetch.SET_REFETCH_PUBLISHED_PRODUCTS(getProducts as any))
-  //   // }
-  //   // const storesCurrentCategories = option(getProductsResponse).data.user.store.storesCurrentCategories()
-  //   // if (storesCurrentCategories) {
-  //   //   setCurrentCategories(storesCurrentCategories)
-  //   // }
-  // }, [getProductsResponse.data])
+    console.log("router.query: ", router.query)
+    if (router?.query?.created) {
+      if (getProductsResponse?.data?.dashboardProductsConnection?.edges) {
 
 
-  console.log("connection", connection)
+        console.log("router.query.created: ", router.query.created)
+        let foundProduct = (connection?.edges ?? [])
+          .find(({ node }) => node.id === router?.query?.created)
+
+        console.log("foundProduct: ", foundProduct)
+
+        if (!foundProduct?.node?.id) {
+          console.log("product missing:", router.query.created)
+          // getProducts()
+          console.log("getProductsReponse:",  getProductsResponse)
+          refetch()
+        }
+
+
+      }
+    }
+  }, [getProductsResponse?.data])
+
+  // console.log("connection", connection)
   // console.log("gridAccum", gridAccum)
   // console.log("index", index)
   // console.log("pageParam", pageParam)

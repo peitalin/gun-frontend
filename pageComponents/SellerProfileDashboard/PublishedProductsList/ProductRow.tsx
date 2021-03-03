@@ -15,7 +15,7 @@ import { Product } from "typings/gqlTypes";
 import ErrorBounds from "components/ErrorBounds";
 import ProductPreviewCardRow from "components/ProductPreviewCardRow";
 import Typography from "@material-ui/core/Typography";
-import PriceDisplay7 from "components/PriceDisplay7";
+import PriceDisplayProductEdit from "components/PriceDisplayProductEdit";
 import Loading from "components/Loading";
 // Snackbar
 import { useSnackbar, ProviderContext } from "notistack";
@@ -148,7 +148,7 @@ const ProductRow = (props: ReactProps) => {
   };
 
 
-  console.log("loadingPublish: ", loadingPublish)
+  // console.log("loadingPublish: ", loadingPublish)
 
   let user = useSelector<GrandReduxState, UserPrivate>(s =>
     s.reduxLogin.user
@@ -220,10 +220,8 @@ const ProductRow = (props: ReactProps) => {
                   </Typography>
                 </a>
               </Tooltip> */}
-              <PriceDisplay7
+              <PriceDisplayProductEdit
                 price={product.featuredVariant.price}
-                priceWas={product.featuredVariant.priceWas}
-                hideSavings={true}
                 soldOutStatus={product.soldOutStatus}
               />
             </div>

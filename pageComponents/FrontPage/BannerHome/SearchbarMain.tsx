@@ -10,6 +10,7 @@ import { useRouter } from "next/router";
 import { useSnackbar, ProviderContext } from "notistack";
 
 // Search Component
+import { Categories } from "typings/gqlTypes";
 import SearchOptions, { SelectOption, setCategoryFacets } from "./SearchOptions";
 import {
   useFacetSearchOptions,

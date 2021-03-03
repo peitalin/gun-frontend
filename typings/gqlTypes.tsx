@@ -9555,6 +9555,12 @@ export type Query = {
    */
   productsAllConnection: ProductsConnection;
   /**
+   * Search all of the products on the platform that can be purchased.
+   * 
+   * AccessRule – PUBLIC
+   */
+  search: ProductsConnection;
+  /**
    * Retrieve all of the products for sale within a specific category.
    * 
    * AccessRule – PUBLIC
@@ -10471,6 +10477,12 @@ export type QueryGetRecommendedProductsConnectionArgs = {
 
 
 export type QueryProductsAllConnectionArgs = {
+  searchTerm?: Maybe<Scalars['String']>;
+  query?: Maybe<ConnectionOffsetQuery>;
+};
+
+
+export type QuerySearchArgs = {
   searchTerm?: Maybe<Scalars['String']>;
   query?: Maybe<ConnectionOffsetQuery>;
 };

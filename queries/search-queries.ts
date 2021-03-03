@@ -26,11 +26,11 @@ export const SEARCH = gql`
 
 
 export const SEARCH_ALL_PRODUCTS = gql`
-  query productsAllConnection(
+  query search(
     $searchTerm: String!
     $query: ConnectionOffsetQuery
   ) {
-    productsAllConnection(
+    search(
       searchTerm: $searchTerm,
       query: $query
     ) {

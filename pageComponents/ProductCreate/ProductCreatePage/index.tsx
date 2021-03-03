@@ -175,8 +175,9 @@ const ProductCreatePage = (props: ReactProps) => {
       setTimeout(() => closeModal(), 200)
       // reset redux form
       setTimeout(() => {
-        // console.log(values)
-        router.push("/admin/products?created=product")
+        let pid = data?.createProduct?.product?.id
+        console.log("createdProduct response: ", data?.createProduct)
+        router.push(`/admin/products?created=${pid}`)
         // scroll to top
         window.scrollTo(0, 0);
         dispatch(actions.RESET_PRODUCT_CREATE())
@@ -184,14 +185,12 @@ const ProductCreatePage = (props: ReactProps) => {
     }
   })
 
-
   // Apollo Graphql
   const categoryData = useQuery<{ categories: Categories[] }, null>(
     GET_PRODUCT_CATEGORIES
   )
 
   const categories = (categoryData?.data?.categories ?? []);
-
 
   const onSubmitFormik = (values, { setSubmitting, resetForm }) => {
     console.log("dispatching productCreate with values: ", values)
@@ -357,10 +356,6 @@ const ProductCreatePage = (props: ReactProps) => {
                   <Description
                     {...fprops}
                   />
-                  {/* <SelectTags
-                    reducerName={reducerName}
-                    {...fprops}
-                  /> */}
                 </SectionBorder>
 
                 <SectionBorder>

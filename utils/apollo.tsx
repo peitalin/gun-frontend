@@ -210,6 +210,12 @@ const cacheOptions = {
             return incoming
           }
         },
+        currentSnapshot: {
+          merge: (existing, incoming, opts) => {
+            // return opts.mergeObjects(existing, incoming)
+            return incoming
+          }
+        },
       },
     },
 
@@ -225,6 +231,12 @@ const cacheOptions = {
         currentVariants: {
           merge: (existing, incoming, opts) => {
             // do not merge variants
+            return incoming
+          }
+        },
+        currentSnapshot: {
+          merge: (existing, incoming, opts) => {
+            // return opts.mergeObjects(existing, incoming)
             return incoming
           }
         },

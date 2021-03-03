@@ -36,6 +36,9 @@ import InputBase from '@material-ui/core/InputBase';
 // Responsiveness
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
+// Graphql
+import { GET_PRODUCT_CATEGORIES } from "queries/categories-queries";
+import { useQuery } from '@apollo/client';
 
 
 
@@ -106,6 +109,15 @@ const SearchOptionsPaginator: React.FC<ReactProps> = (props) => {
     // only do this on initial mount once
     setPageUi(pageParam)
   }, [])
+
+
+  // Apollo Graphql
+  const categoryData = useQuery<{ getProductCategories: Categories[] }, null>(
+    GET_PRODUCT_CATEGORIES
+  )
+  let categories = categoryData?.data?.getProductCategories
+  console.log('categories: ', categories)
+
 
   const searchRef = React.useRef(null)
   const [searchFocused, setSearchFocused] = React.useState(false)
@@ -187,34 +199,35 @@ const SearchOptionsPaginator: React.FC<ReactProps> = (props) => {
               setCurrentCategories={(categories) => {
                 props.setCurrentCategories(categories)
               }}
+              setFocused={setCategoryFocused}
               dropDownItems={[
                 {
                   name: 'All Categories',
                   id: undefined,
                   slug: undefined,
                 },
-                {
-                  name: 'Pistols',
-                  id: "category_0001",
-                  slug: "pistols",
-                },
-                {
-                  name: 'Rifles',
-                  id: "category_0002",
-                  slug: "rifles",
-                },
-                {
-                  name: 'Carbines',
-                  id: "category_0003",
-                  slug: "carbines",
-                },
-                {
-                  name: 'Semi-automatics',
-                  id: "category_0004",
-                  slug: 'semi-automatics',
-                },
+                ...(categories ?? []),
+                // {
+                //   name: 'Pistols',
+                //   id: "category_0001",
+                //   slug: "pistols",
+                // },
+                // {
+                //   name: 'Rifles',
+                //   id: "category_0002",
+                //   slug: "rifles",
+                // },
+                // {
+                //   name: 'Carbines',
+                //   id: "category_0003",
+                //   slug: "carbines",
+                // },
+                // {
+                //   name: 'Semi-automatics',
+                //   id: "category_0004",
+                //   slug: 'semi-automatics',
+                // },
               ]}
-              setFocused={setCategoryFocused}
             />
           }
 

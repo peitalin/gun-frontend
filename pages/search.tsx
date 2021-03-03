@@ -1,7 +1,6 @@
 import React from "react";
 // Typings
 import { Product, ProductsConnection } from "typings/gqlTypes";
-import { SEARCH_ALL_PRODUCTS } from "queries/search-queries";
 // Utils
 import { Colors } from "layout/AppTheme";
 // SSR
