@@ -80,8 +80,8 @@ export const validationSchemas = {
 
       dealer: Yup.object().shape({
           licenseNumber: Yup.string()
-            .min(0)
-            .max(100),
+            .min(5, "Must be at least 5 digits!")
+            .max(15, "Must be less than 15 digits!"),
           name: Yup.string()
             .min(0)
             .max(100),
@@ -147,57 +147,6 @@ export const validationSchemas = {
             return true
           }
         }),
-
-      // dealer: Yup.object().shape({
-      //     licenseNumber: Yup.string()
-      //       .min(0)
-      //       .max(100),
-      //       // .required("licenseNumber required"),
-      //     name: Yup.string()
-      //       .min(0)
-      //       .max(100),
-      //       // .required("dealer name required"),
-      //     address: Yup.string()
-      //       .min(0)
-      //       .max(100),
-      //       // .required("address required"),
-      //     city: Yup.string()
-      //       .min(0)
-      //       .max(100),
-      //     state: Yup.string()
-      //       .min(0)
-      //       .max(100),
-      //     postCode: Yup.string()
-      //       .min(0)
-      //       .max(100),
-      //   })
-      //   .test("dealer", "Dealer license number needed", function(value) {
-      //     if (
-      //       !this.parent.dealerId &&
-      //       !!this.parent.dealer &&
-      //       !this.parent.dealer?.licenseNumber
-      //     ) {
-      //       return false
-      //     } else {
-      //       return true
-      //     }
-      //   })
-      //   .test("dealer", "A dealer must be chosen or inputted", function(value) {
-      //     console.log(">>>>>>>>>>>>", value, this)
-      //     // this.path: the string path of the current validation
-      //     // this.schema: the resolved schema object that the test is running against.
-      //     // this.options: the options object that validate() or isValid() was called with
-      //     // this.parent: in the case of nested schema, this is the value of the parent object
-      //     // this.createError(Object: { path: String, message: String }):
-      //     if (!!this.parent.dealerId) {
-      //       return true
-      //     }
-      //     if (!this.parent.dealer && !this.parent.dealerId) {
-      //       return false
-      //     } else {
-      //       return true
-      //     }
-      //   }),
       categoryId: Yup.string()
         .required("Pick a category"),
       tags: Yup.array().of(Yup.string())
@@ -484,8 +433,8 @@ export const validationSchemas = {
       state: Yup.string().nullable()
         .required('A license number required.'),
       licenseNumber: Yup.string()
-        .min(6, "Must be 6 digits!")
-        .max(6, "Must be 6 digits!")
+        .min(5, "Must be at least 5 digits!")
+        .max(15, "Must be less than 15 digits!")
         .required('A license number required.'),
     }),
 
@@ -522,6 +471,8 @@ export const validationSchemas = {
   EditUserLicense:
     Yup.object().shape({
       licenseNumber: Yup.string()
+        .min(5, "Must be at least 5 digits!")
+        .max(15, "Must be less than 15 digits!")
         .required(),
       licenseExpiry: Yup.date()
         .required(),
@@ -611,8 +562,8 @@ export const validationSchemas = {
         .max(6, "Must 6 digits!")
         .required('A BSB number required.'),
       accountNumber: Yup.string()
-        .min(8, "Must be 8-10 digits!")
-        .max(10, "Must be 8-10 digits!")
+        .min(6, "Must be 6-10 digits!")
+        .max(10, "Must be 6-10 digits!")
         .required('bank account number required.'),
       accountName: Yup.string()
         .required('bank account name required.'),

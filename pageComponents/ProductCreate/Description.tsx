@@ -79,7 +79,7 @@ const Description = (props: ReactProps & FormikProps<FormikFields>) => {
       <TextEditorCK
         errorMessage={errors.description}
         limit={{
-          max: maxLengthProductDescription, // 2000 chars
+          max: maxLengthProductDescription, // 4000 chars
         }}
         errors={fprops.errors}
         values={fprops.values}
