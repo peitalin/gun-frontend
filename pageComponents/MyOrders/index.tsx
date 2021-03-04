@@ -175,8 +175,8 @@ const MyOrders: React.FC<ReactProps> = (props) => {
 
   React.useEffect(() => {
     getBuyerOrders()
-    // getSellerOrders()
-    // getSellerOrdersACtionItems()
+    getSellerOrders()
+    getSellerOrdersACtionItems()
   }, [])
 
   console.log("buyer data::::: ", buyerOrdersResponse?.data)

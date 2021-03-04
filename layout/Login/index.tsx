@@ -236,7 +236,7 @@ const Login: React.FC<ReactProps> = (props) => {
         countryCode: countryCode,
       },
       update: (cache, { data: { createUser } }) => {
-        setState(s => ({ ...s, buttonLoading: true }))
+        setState(s => ({ ...s, buttonLoading: false }))
       },
       errorPolicy: "all", // propagate errors from backend to Snackbar
     });
