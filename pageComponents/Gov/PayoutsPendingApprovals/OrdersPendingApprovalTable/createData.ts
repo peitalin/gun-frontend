@@ -44,6 +44,7 @@ export const createDataForPendingApprovalTable = ({
     orderStatus: currentOrderSnapshot?.orderStatus,
     form10: currentOrderSnapshot?.form10Image,
     sellerStore: sellerStore,
+    buyer: buyer,
     product: product,
     history: (orderSnapshots ?? [])
       .slice()

@@ -148,14 +148,36 @@ const RowExpander = (props: RowExpanderProps) => {
                 </div>
               </div>
 
+              <div className={classes.sellerDetailsBox}>
+                <Typography variant="h6" component="div">
+                  Buyer Details
+                </Typography>
+                <div className={classes.sellerDetailsRow}>
+                  <Typography className={classes.sellerDetailsHeader} variant="body1">
+                    Name:
+                  </Typography>
+                  <Typography className={classes.sellerDetailsInfo} variant="body1">
+                    {`${row?.buyer?.firstName} ${row?.buyer?.lastName}`}
+                  </Typography>
+                </div>
+                <div className={classes.sellerDetailsRow}>
+                  <Typography className={classes.sellerDetailsHeader} variant="body1">
+                    Email:
+                  </Typography>
+                  <Typography className={classes.sellerDetailsInfo} variant="body1">
+                    {row?.buyer?.email}
+                  </Typography>
+                </div>
+              </div>
+
               <Typography variant="h6" gutterBottom component="div">
                 Order Details
               </Typography>
               <div className={classes.sellerDetailsRow}>
-                <Typography className={classes.sellerDetailsHeader} variant="body1">
+                <Typography className={classes.orderDetailsHeader} variant="body1">
                   Stripe Payment Intent Status:
                 </Typography>
-                <Typography className={classes.sellerDetailsInfo} variant="body1">
+                <Typography className={classes.orderDetailsInfo} variant="body1">
                   {row?.paymentIntentStatus}
                 </Typography>
               </div>
@@ -533,6 +555,17 @@ const styles = (theme: Theme) => createStyles({
   sellerDetailsInfo: {
     fontWeight: 400,
     fontSize: "14px",
+  },
+  orderDetailsHeader: {
+    width: '200px',
+    fontWeight: 400,
+    fontSize: "14px",
+  },
+  orderDetailsInfo: {
+    fontWeight: 500,
+    color: Colors.secondary,
+    fontSize: "14px",
+    marginBottom: '1.5rem',
   },
 });
 
