@@ -46,7 +46,7 @@ export const UPDATE_USER = gql`
     $firstName: String
     $lastName: String
     $payoutMethodId: String
-    $editUserPhoneNumberInput: EditUserPhoneNumberInput
+    $editUserPhoneNumberInput: EditUserPhoneNumberInput!
   ) {
     editUserProfile(
       username: $username
