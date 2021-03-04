@@ -122,6 +122,7 @@ export const ProductFragment = gql`
     category {
       id
       name
+      slug
       categoryGroup
     }
   }
@@ -315,8 +316,8 @@ export const OrdersFragment = gql`
       createdAt
       updatedAt
       user {
+        id
         ...on UserPublic {
-          id
           license {
             ...UserLicenseFragment
           }
@@ -371,13 +372,11 @@ export const OrdersFragment = gql`
         ...ProductVariantsFragment
       }
       store {
-        ...on StorePublic {
+        id
+        name
+        userId
+        user {
           id
-          name
-          userId
-          user {
-            id
-          }
         }
       }
     }

@@ -141,64 +141,64 @@ const MyOrders: React.FC<ReactProps> = (props) => {
     }
   );
 
-  const [
-    getSellerOrders,
-    sellerOrdersResponse
-  ] = useLazyQuery<QueryData2, QueryVar2>(
-    GET_SELLER_ORDERS_CONNECTION, {
-      variables: {
-        query: {
-          limit: sLimit,
-          offset: sOffset,
-          orderBy: { createdAt: Order_By.DESC }
-        }
-      },
-      fetchPolicy: "network-only",
-    }
-  );
+  // const [
+  //   getSellerOrders,
+  //   sellerOrdersResponse
+  // ] = useLazyQuery<QueryData2, QueryVar2>(
+  //   GET_SELLER_ORDERS_CONNECTION, {
+  //     variables: {
+  //       query: {
+  //         limit: sLimit,
+  //         offset: sOffset,
+  //         orderBy: { createdAt: Order_By.DESC }
+  //       }
+  //     },
+  //     fetchPolicy: "network-only",
+  //   }
+  // );
 
-  const [
-    getSellerOrdersACtionItems,
-    sellerOrdersActionItemsResponse
-  ] = useLazyQuery<QueryData3, QueryVar3>(
-    GET_SELLER_ORDERS_ACTION_ITEMS_CONNECTION, {
-      variables: {
-        query: {
-          limit: saiLimit,
-          offset: saiOffset,
-          orderBy: { createdAt: Order_By.DESC }
-        }
-      },
-      fetchPolicy: "network-only",
-    }
-  );
+  // const [
+  //   getSellerOrdersACtionItems,
+  //   sellerOrdersActionItemsResponse
+  // ] = useLazyQuery<QueryData3, QueryVar3>(
+  //   GET_SELLER_ORDERS_ACTION_ITEMS_CONNECTION, {
+  //     variables: {
+  //       query: {
+  //         limit: saiLimit,
+  //         offset: saiOffset,
+  //         orderBy: { createdAt: Order_By.DESC }
+  //       }
+  //     },
+  //     fetchPolicy: "network-only",
+  //   }
+  // );
 
   React.useEffect(() => {
     getBuyerOrders()
-    getSellerOrders()
-    getSellerOrdersACtionItems()
+    // getSellerOrders()
+    // getSellerOrdersACtionItems()
   }, [])
 
   console.log("buyer data::::: ", buyerOrdersResponse?.data)
-  console.log("seller data::::: ", sellerOrdersResponse?.data)
-  console.log("seller action items data::::: ", sellerOrdersResponse?.data)
+  // console.log("seller data::::: ", sellerOrdersResponse?.data)
+  // console.log("seller action items data::::: ", sellerOrdersResponse?.data)
 
   const buyerOrdersConnection = option(buyerOrdersResponse)
     .data.user.buyerOrdersConnection() || props.initialBuyerOrders;
 
-  const sellerOrdersConnection = option(sellerOrdersResponse)
-    .data.user.sellerOrdersConnection() || props.initialSellerOrders;
+  // const sellerOrdersConnection = option(sellerOrdersResponse)
+  //   .data.user.sellerOrdersConnection() || props.initialSellerOrders;
 
-  const sellerOrdersActionItemsConnection = option(sellerOrdersActionItemsResponse)
-    .data.user.sellerOrdersActionItemsConnection();
+  // const sellerOrdersActionItemsConnection = option(sellerOrdersActionItemsResponse)
+  //   .data.user.sellerOrdersActionItemsConnection();
 
 
   if (
     !option(buyerOrdersConnection).edges[0]() &&
-    !option(sellerOrdersConnection).edges[0]() &&
-    !option(sellerOrdersActionItemsConnection).edges[0]() &&
-    !sellerOrdersResponse.loading &&
-    !sellerOrdersActionItemsResponse.loading &&
+    // !option(sellerOrdersConnection).edges[0]() &&
+    // !option(sellerOrdersActionItemsConnection).edges[0]() &&
+    // !sellerOrdersResponse.loading &&
+    // !sellerOrdersActionItemsResponse.loading &&
     !buyerOrdersResponse.loading
   ) {
     return (
@@ -222,7 +222,7 @@ const MyOrders: React.FC<ReactProps> = (props) => {
 
 
 
-        {
+        {/* {
           (sellerOrdersActionItemsConnection?.totalCount > 0) &&
           <>
             <OrdersSection
@@ -287,7 +287,7 @@ const MyOrders: React.FC<ReactProps> = (props) => {
             </OrdersSection>
             <div className={classes.divider}/>
           </>
-        }
+        } */}
 
         <OrdersSection
           classes={props.classes}
@@ -352,7 +352,7 @@ const MyOrders: React.FC<ReactProps> = (props) => {
 
         <div className={classes.divider}/>
 
-        <OrdersSection
+        {/* <OrdersSection
           classes={props.classes}
           title={"Your Sales"}
         >
@@ -412,7 +412,7 @@ const MyOrders: React.FC<ReactProps> = (props) => {
             </GridPaginatorGeneric>
           </SearchOptions>
 
-        </OrdersSection>
+        </OrdersSection> */}
 
       </OrdersLayout>
     )
