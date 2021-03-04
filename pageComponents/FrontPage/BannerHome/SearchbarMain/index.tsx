@@ -74,7 +74,11 @@ const SearchbarMain = (props: SearchbarProps) => {
         )
         return
       }
-      router.push(`/search?q=${encodeURIComponent(searchTerm)}`)
+      let url = `/search?q=${encodeURIComponent(searchTerm)}`
+      if ((currentCategories ?? []).length > 0) {
+        url += `&category=${currentCategories?.[0]?.slug}`
+      }
+      router.push(url)
       if (inputRefUnfocus.current && inputRefUnfocus.current.focus) {
         inputRefUnfocus.current.focus()
       }
@@ -101,7 +105,7 @@ const SearchbarMain = (props: SearchbarProps) => {
 
   // console.log("totalCount: ", data?.search?.totalCount)
   // console.log('searchTerm: ', searchTerm)
-  console.log('currentcategories: ', currentCategories)
+  // console.log('currentcategories: ', currentCategories)
 
   return (
     <div className={classes.searchRoot}>

@@ -108,7 +108,7 @@ const SearchResults = (props: ReactProps) => {
   const { loading, data, error } = useQuery<QueryData, QueryVar>(
     SEARCH_ALL_PRODUCTS, {
     variables: {
-      searchTerm: searchTerm,
+      searchTerm: searchTerm ?? "*",
       query: {
         limit: limit,
         offset: offset,

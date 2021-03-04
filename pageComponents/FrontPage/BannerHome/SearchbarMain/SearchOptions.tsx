@@ -114,7 +114,7 @@ const SearchOptionsPaginator: React.FC<ReactProps> = (props) => {
     GET_PRODUCT_CATEGORIES
   )
   let categories = categoryData?.data?.getProductCategories
-  console.log('categories: ', categories)
+  // console.log('categories: ', categories)
 
 
   const searchRef = React.useRef(null)

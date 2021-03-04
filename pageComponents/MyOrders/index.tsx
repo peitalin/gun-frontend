@@ -141,37 +141,37 @@ const MyOrders: React.FC<ReactProps> = (props) => {
     }
   );
 
-  // const [
-  //   getSellerOrders,
-  //   sellerOrdersResponse
-  // ] = useLazyQuery<QueryData2, QueryVar2>(
-  //   GET_SELLER_ORDERS_CONNECTION, {
-  //     variables: {
-  //       query: {
-  //         limit: sLimit,
-  //         offset: sOffset,
-  //         orderBy: { createdAt: Order_By.DESC }
-  //       }
-  //     },
-  //     fetchPolicy: "network-only",
-  //   }
-  // );
+  const [
+    getSellerOrders,
+    sellerOrdersResponse
+  ] = useLazyQuery<QueryData2, QueryVar2>(
+    GET_SELLER_ORDERS_CONNECTION, {
+      variables: {
+        query: {
+          limit: sLimit,
+          offset: sOffset,
+          orderBy: { createdAt: Order_By.DESC }
+        }
+      },
+      fetchPolicy: "network-only",
+    }
+  );
 
-  // const [
-  //   getSellerOrdersACtionItems,
-  //   sellerOrdersActionItemsResponse
-  // ] = useLazyQuery<QueryData3, QueryVar3>(
-  //   GET_SELLER_ORDERS_ACTION_ITEMS_CONNECTION, {
-  //     variables: {
-  //       query: {
-  //         limit: saiLimit,
-  //         offset: saiOffset,
-  //         orderBy: { createdAt: Order_By.DESC }
-  //       }
-  //     },
-  //     fetchPolicy: "network-only",
-  //   }
-  // );
+  const [
+    getSellerOrdersACtionItems,
+    sellerOrdersActionItemsResponse
+  ] = useLazyQuery<QueryData3, QueryVar3>(
+    GET_SELLER_ORDERS_ACTION_ITEMS_CONNECTION, {
+      variables: {
+        query: {
+          limit: saiLimit,
+          offset: saiOffset,
+          orderBy: { createdAt: Order_By.DESC }
+        }
+      },
+      fetchPolicy: "network-only",
+    }
+  );
 
   React.useEffect(() => {
     getBuyerOrders()
@@ -180,25 +180,72 @@ const MyOrders: React.FC<ReactProps> = (props) => {
   }, [])
 
   console.log("buyer data::::: ", buyerOrdersResponse?.data)
-  // console.log("seller data::::: ", sellerOrdersResponse?.data)
-  // console.log("seller action items data::::: ", sellerOrdersResponse?.data)
+  console.log("seller data::::: ", sellerOrdersResponse?.data)
+  console.log("seller action items data::::: ", sellerOrdersResponse?.data)
 
   const buyerOrdersConnection = option(buyerOrdersResponse)
     .data.user.buyerOrdersConnection() || props.initialBuyerOrders;
 
-  // const sellerOrdersConnection = option(sellerOrdersResponse)
-  //   .data.user.sellerOrdersConnection() || props.initialSellerOrders;
+  const sellerOrdersConnection = option(sellerOrdersResponse)
+    .data.user.sellerOrdersConnection() || props.initialSellerOrders;
 
-  // const sellerOrdersActionItemsConnection = option(sellerOrdersActionItemsResponse)
-  //   .data.user.sellerOrdersActionItemsConnection();
+  const sellerOrdersActionItemsConnection = option(sellerOrdersActionItemsResponse)
+    .data.user.sellerOrdersActionItemsConnection();
+
+
+  const refetchTheOrders = async () => {
+    let b = buyerOrdersResponse
+    let s = sellerOrdersResponse
+    let sai = sellerOrdersActionItemsResponse
+
+    if (b && typeof b.refetch === 'function') {
+      await b.refetch()
+    }
+    if (s && typeof s.refetch === 'function') {
+      await s.refetch()
+    }
+    if (sai && typeof sai.refetch === 'function') {
+      await sai.refetch()
+    }
+  }
+
+  const refetchOrders = React.useCallback(() => {
+    // apollo devs are retards
+    // https://github.com/apollographql/react-apollo/issues/3862
+    setTimeout(() => refetchTheOrders(), 0)
+  }, [refetchTheOrders])
+
+  /// if orders not refetching due to fast refresh bugs
+  // React.useEffect(() => {
+  //   getProducts()
+  //   console.log("router.query: ", router.query)
+  //   if (router?.query?.created) {
+  //     if (getProductsResponse?.data?.dashboardProductsConnection?.edges) {
+
+  //       console.log("router.query.created: ", router.query.created)
+  //       let foundProduct = (connection?.edges ?? [])
+  //         .find(({ node }) => node.id === router?.query?.created)
+
+  //       console.log("foundProduct: ", foundProduct)
+
+  //       if (!foundProduct?.node?.id) {
+  //         console.log("product missing:", router.query.created)
+  //         // getProducts()
+  //         console.log("getProductsReponse:",  getProductsResponse)
+  //         refetch()
+  //       }
+
+  //     }
+  //   }
+  // }, [getProductsResponse?.data])
 
 
   if (
     !option(buyerOrdersConnection).edges[0]() &&
-    // !option(sellerOrdersConnection).edges[0]() &&
-    // !option(sellerOrdersActionItemsConnection).edges[0]() &&
-    // !sellerOrdersResponse.loading &&
-    // !sellerOrdersActionItemsResponse.loading &&
+    !option(sellerOrdersConnection).edges[0]() &&
+    !option(sellerOrdersActionItemsConnection).edges[0]() &&
+    !sellerOrdersResponse.loading &&
+    !sellerOrdersActionItemsResponse.loading &&
     !buyerOrdersResponse.loading
   ) {
     return (
@@ -222,7 +269,7 @@ const MyOrders: React.FC<ReactProps> = (props) => {
 
 
 
-        {/* {
+        {
           (sellerOrdersActionItemsConnection?.totalCount > 0) &&
           <>
             <OrdersSection
@@ -287,7 +334,7 @@ const MyOrders: React.FC<ReactProps> = (props) => {
             </OrdersSection>
             <div className={classes.divider}/>
           </>
-        } */}
+        }
 
         <OrdersSection
           classes={props.classes}
@@ -352,7 +399,7 @@ const MyOrders: React.FC<ReactProps> = (props) => {
 
         <div className={classes.divider}/>
 
-        {/* <OrdersSection
+        <OrdersSection
           classes={props.classes}
           title={"Your Sales"}
         >
@@ -412,7 +459,7 @@ const MyOrders: React.FC<ReactProps> = (props) => {
             </GridPaginatorGeneric>
           </SearchOptions>
 
-        </OrdersSection> */}
+        </OrdersSection>
 
       </OrdersLayout>
     )

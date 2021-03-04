@@ -181,7 +181,6 @@ const PublishedProductsList = (props: ReactProps) => {
     if (router?.query?.created) {
       if (getProductsResponse?.data?.dashboardProductsConnection?.edges) {
 
-
         console.log("router.query.created: ", router.query.created)
         let foundProduct = (connection?.edges ?? [])
           .find(({ node }) => node.id === router?.query?.created)
@@ -194,7 +193,6 @@ const PublishedProductsList = (props: ReactProps) => {
           console.log("getProductsReponse:",  getProductsResponse)
           refetch()
         }
-
 
       }
     }

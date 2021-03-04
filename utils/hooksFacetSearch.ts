@@ -136,59 +136,50 @@ export const useFacetSearchOptions = ({
     if (router) {
 
       let urlPath = router.asPath.split('?')[0]
-      let params;
-      console.log("routery.query:", router?.query)
+      let params: string[];
+      // console.log("routery.query:", router?.query)
 
+      // sync url query params with the facet Hooks params and inject
+      // it into urls
       if (router?.query) {
         params = Object.keys(router?.query).map(key => {
           let value = router.query[key]
           // let param = encodeURIComponent(`${key}=${value}`)
           let param = `${key}=${value}`
           return param
-        }).join('&')
-        if (params) {
-          params = `?${params}`
+        })
+        // console.log("initial params: ", params)
+      } else {
+        // Sync facetHooks params to the url
+        if (searchTerm !== undefined && searchTerm !== "") {
+          if (params.map(p => p.includes('q=')).every(b => b === false)) {
+            // search query doesnt yet exist, add facetSearch param
+            params = [`q=${searchTerm}`, ...params]
+          }
         }
+        if (pageParam > 1) {
+          if (params.map(p => p.includes('page=')).every(b => b === false)) {
+            // page query doesnt yet exist, add facetSearch param
+            params = [`page=${pageParam}`, ...params]
+          }
+        }
+      }
+
+      // console.log("params before join: ", params)
+      let params_str: string = params.join('&')
+      // console.log("params_str after join: ", params_str)
+      if (params_str) {
+        params_str = `?${params_str}`
       }
 
       if (paginatorType === PaginatorType.page) {
         // shallow update pagination query params when navigating using buttons
         // https://nextjs.org/docs/routing/shallow-routing
-        if (searchTerm !== undefined && searchTerm !== "") {
-          if (pageParam === 1) {
-            router.push(
-              `${router.pathname}${params}`,
-              `${urlPath}${params}`,
-              { shallow: true }
-            )
-          } else {
-            router.push(
-              `${router.pathname}${params}&page=${pageParam}`,
-              `${urlPath}${params}&page=${pageParam}`,
-              { shallow: true }
-            )
-          }
-        } else {
-          //// WARNING:
-          /// for pages like category/[categorySlug]
-          /// router.push() may trigger a full page change if you push
-          /// category/graphics instead of category/[categorySlug]
-          /// when combined with pageParam hook, this leads to an infinite render loop
-          // console.log("pageParammmmmmm", pageParam)
-          if (pageParam === 1) {
-            router.push(
-              `${router.pathname}`,
-              `${urlPath}`,
-              { shallow: true, }
-            )
-          } else {
-            router.push(
-              `${router.pathname}?page=${pageParam}`,
-              `${urlPath}?page=${pageParam}`,
-              { shallow: true, }
-            )
-          }
-        }
+        router.push(
+          `${router.pathname}${params_str}`,
+          `${urlPath}${params_str}`,
+          { shallow: true }
+        )
       }
     }
   }, [pageParam, searchTerm])
