@@ -443,8 +443,8 @@ export const validationSchemas = {
         .max(6, "Must 6 digits!")
         .required('BSB number required.'),
       accountNumber: Yup.string()
-        .min(6, "Must be 6-9 digits!")
-        .max(9, "Must be 6-9 digits!")
+        .min(6, "Must be 6-10 digits!")
+        .max(10, "Must be 6-10 digits!")
         .required('bank account number required.'),
       accountName: Yup.string()
         .required('bank account name required.'),
@@ -461,12 +461,12 @@ export const validationSchemas = {
       profileId: Yup.string().nullable(),
       coverId: Yup.string().nullable(),
       bsb: Yup.string()
-        .min(6, "Must be 6 digits!")
-        .max(6, "Must be 6 digits!")
-        .required('A BSB number required.'),
+        .min(6, "Must 6 digits!")
+        .max(6, "Must 6 digits!")
+        .required('BSB number required.'),
       accountNumber: Yup.string()
-        .min(8, "Must be 8-10 digits!")
-        .max(10, "Must be 8-10 digits!")
+        .min(6, "Must be 6-10 digits!")
+        .max(10, "Must be 6-10 digits!")
         .required('bank account number required.'),
       accountName: Yup.string()
         .required('bank account name required.'),
