@@ -91,7 +91,7 @@ const DropdownInput = (props: ReactProps) => {
                       : Colors.black,
                     primary25: isDarkMode
                       ? Colors.uniswapLightNavy
-                      : Colors.lightBlue,
+                      : Colors.slateGreyBlack,
                     primary: Colors.uniswapLighterGrey,
                   },
                 })

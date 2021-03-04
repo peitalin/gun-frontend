@@ -198,7 +198,7 @@ const Login: React.FC<ReactProps> = (props) => {
     lastName
   }) => {
 
-    let licenseExpiry2 =new Date(licenseExpiry)
+    let licenseExpiry2 = new Date(licenseExpiry)
     console.log("licenseSExpiiirrreee:", licenseExpiry2)
 
     if (!isSignUpInputOk(snackbar)({

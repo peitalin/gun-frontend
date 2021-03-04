@@ -36,6 +36,13 @@ const MuiPhoneNumber = dynamic(() => import("material-ui-phone-number"), {
 })
 import { formatPhoneNumber } from "layout/Login/utils";
 
+import "components/DatePicker/react-datepicker.css";
+const DatePicker = dynamic(() => import("react-datepicker"), {
+  loading: () => <Loading/>,
+  ssr: false,
+})
+import Button from '@material-ui/core/Button';
+import { showDate } from "utils/dates";
 
 
 
@@ -170,33 +177,43 @@ const SignUp: React.FC<ReactProps> = (props) => {
             />
           </FormControl>
           <FormControl margin="dense" required fullWidth>
-            <InputLabel htmlFor="sign-up-email">Gun License Expiry</InputLabel>
-            <Input
-              name="gun-license-expiry"
-              type={"string"}
-              placeholder={"DD/MM/YYYY"}
-              autoComplete="license-expiry"
-              value={state.licenseExpiry}
-              onKeyDown={(e) => {
-                e.persist()
-                if (e.keyCode === 8) {
-                   // if key is backspace
-                  // console.log("onKeyDown backspace: ", e.keyCode)
-                  setIsBackspace(true)
-                } else {
-                  setIsBackspace(false)
-                }
+            <Typography className={classes.miniTitle}>
+              License Expiry
+            </Typography>
+            <DatePicker
+              selected={
+                state.licenseExpiry
+                ? new Date(state.licenseExpiry)
+                : new Date()
+              }
+              onChange={(expiryDate: Date) => {
+                setState(s => ({ ...s, licenseExpiry: expiryDate }))
               }}
-              onChange={(e) => {
-                e.persist(); // for persisting synthetic events
-                let expiry = formatGunLicenseExpiry(e.target.value, isBackspace)
-                console.log("formatted expiry: ", expiry)
-                setState(s => ({ ...s, licenseExpiry: expiry }))
-              }}
+              showTimeSelect={false}
+              timeFormat="HH:mm"
+              timeIntervals={10}
+              timeCaption="time"
+              dateFormat="MMMM d, yyyy h:mm aa"
+              customInput={
+                <Button className={classes.datePickButton}
+                  variant="outlined"
+                  color="primary"
+                >
+                  {
+                    state.licenseExpiry
+                      ? showDate(state.licenseExpiry)
+                      : "Select License Expiry"
+                  }
+                </Button>
+              }
+              popperPlacement="top"
             />
           </FormControl>
 
           <FormControl margin="dense" required fullWidth>
+            <Typography className={classes.miniTitle}>
+              License State
+            </Typography>
             <DropdownInput
               stateShape={initialStateLicense}
               onChange={({ label, value }: SelectOption) => {

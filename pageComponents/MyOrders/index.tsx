@@ -158,7 +158,7 @@ const MyOrders: React.FC<ReactProps> = (props) => {
   );
 
   const [
-    getSellerOrdersACtionItems,
+    getSellerOrdersActionItems,
     sellerOrdersActionItemsResponse
   ] = useLazyQuery<QueryData3, QueryVar3>(
     GET_SELLER_ORDERS_ACTION_ITEMS_CONNECTION, {
@@ -176,7 +176,7 @@ const MyOrders: React.FC<ReactProps> = (props) => {
   React.useEffect(() => {
     getBuyerOrders()
     getSellerOrders()
-    getSellerOrdersACtionItems()
+    getSellerOrdersActionItems()
   }, [])
 
   console.log("buyer data::::: ", buyerOrdersResponse?.data)

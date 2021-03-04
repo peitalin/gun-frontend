@@ -186,6 +186,36 @@ const styles = (theme: Theme) => createStyles({
     marginTop: '1rem',
     marginBottom: '0.1rem',
   },
+  datePickButton: {
+    width: "100%",
+    borderRadius: BorderRadius,
+    border: theme.palette.type === 'dark'
+      ? `1px solid ${Colors.uniswapLighterGrey}`
+      : `1px solid ${Colors.slateGreyDarker}`,
+    backgroundColor: theme.palette.type === 'dark'
+      ? Colors.uniswapLightNavy
+      : Colors.slateGrey,
+    color: theme.palette.type === 'dark'
+      ? Colors.uniswapLightestGrey
+      : Colors.slateGreyLightBlack,
+    "&:hover": {
+      backgroundColor: theme.palette.type === 'dark'
+        ? Colors.uniswapMediumNavy
+        : Colors.slateGreyDark,
+      border: theme.palette.type === 'dark'
+        ? `1px solid ${Colors.uniswapLighterGrey}`
+        : `1px solid ${Colors.slateGreyDarkest}`,
+    },
+  },
+  miniTitle: {
+    fontSize: '0.825rem',
+    fontWeight: 400,
+    color: theme.palette.type === 'dark'
+      ? Colors.uniswapLightestGrey
+      : Colors.slateGreyBlack,
+    marginBottom: '0.5rem',
+    marginTop: '0.5rem',
+  },
 });
 
 export default styles;
