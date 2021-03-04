@@ -44,7 +44,12 @@ const StickyDetailsDealer = (props: ReactProps) => {
         <div className={clsx(classes.flexCol, classes.referInstructions)}>
           <div>
             <Typography className={classes.title} variant="h4">
-              {dealer?.name}
+              Transferring Dealer
+            </Typography>
+          </div>
+          <div>
+            <Typography className={classes.subtitle} variant="body1">
+              {`${dealer?.name ?? ""}`}
             </Typography>
           </div>
           <div>
@@ -54,17 +59,12 @@ const StickyDetailsDealer = (props: ReactProps) => {
           </div>
           <div>
             <Typography className={classes.caption} variant="body1">
+              {`State: ${dealer?.state ?? ""}`}
+            </Typography>
+          </div>
+          <div>
+            <Typography className={classes.caption} variant="body1">
               {`Postcode: ${dealer?.postCode ?? ""}`}
-            </Typography>
-          </div>
-          <div>
-            <Typography className={classes.caption} variant="body1">
-              {`City: ${dealer?.city ?? ""}`}
-            </Typography>
-          </div>
-          <div>
-            <Typography className={classes.caption} variant="body1">
-              {`Address: ${dealer?.address ?? ""}`}
             </Typography>
           </div>
         </div>
@@ -131,8 +131,15 @@ const styles = (theme: Theme) => createStyles({
   },
   title: {
     fontSize: '1rem',
-    marginTop: "0.25rem",
-    marginBottom: "0.25rem",
+    marginTop: "0.5rem",
+  },
+  subtitle: {
+    fontSize: '0.9rem',
+    fontWeight: 500,
+    marginBottom: "0.5rem",
+    color: theme.palette.type === 'dark'
+      ? Colors.uniswapLightestGrey
+      : Colors.black,
   },
   caption: {
     fontSize: '0.875rem',

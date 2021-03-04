@@ -443,8 +443,8 @@ export const validationSchemas = {
         .max(6, "Must 6 digits!")
         .required('BSB number required.'),
       accountNumber: Yup.string()
-        .min(8, "Must be 8-9 digits!")
-        .max(9, "Must be 8-9 digits!")
+        .min(6, "Must be 6-9 digits!")
+        .max(9, "Must be 6-9 digits!")
         .required('bank account number required.'),
       accountName: Yup.string()
         .required('bank account name required.'),

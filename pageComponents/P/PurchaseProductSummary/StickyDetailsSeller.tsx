@@ -59,7 +59,8 @@ const StickyDetailsSeller = (props: ReactProps) => {
 
         <div className={classes.flexRow}>
           <Typography className={classes.title} variant="h4">
-            {storeName}
+            Private User
+            {/* {storeName} */}
           </Typography>
         </div>
 
@@ -67,7 +68,7 @@ const StickyDetailsSeller = (props: ReactProps) => {
 
           <div className={clsx(classes.flexCol, classes.fieldKeysCol)}>
             <Typography className={classes.caption} variant="body1">
-              License:
+              License Number:
             </Typography>
             <Typography className={classes.caption} variant="body1">
               State:
@@ -177,12 +178,20 @@ const styles = (theme: Theme) => createStyles({
     width: '100%',
   },
   fieldKeysCol: {
-    minWidth: 60,
+    minWidth: 110,
   },
   title: {
     fontSize: '1rem',
-    marginTop: "0.25rem",
-    marginBottom: "0.25rem",
+    marginTop: "0.5rem",
+    marginBottom: "0.5rem",
+  },
+  subtitle: {
+    fontSize: '0.9rem',
+    fontWeight: 500,
+    marginBottom: "0.5rem",
+    color: theme.palette.type === 'dark'
+      ? Colors.uniswapLightestGrey
+      : Colors.black,
   },
   caption: {
     fontSize: '0.875rem',
@@ -217,8 +226,8 @@ const styles = (theme: Theme) => createStyles({
   },
   verifiedBadge: {
     position: 'absolute',
-    top: "1rem",
-    right: "1rem",
+    top: ".75rem",
+    right: "0.75rem",
     borderRadius: '4px',
     fontSize: '0.875rem',
     background: theme.palette.type === 'dark'
