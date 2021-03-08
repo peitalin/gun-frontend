@@ -92,11 +92,11 @@ export const getUserWhoActionedOrderStatus = (
     case OrderStatus.CONFIRMED_PAYMENT_FORM_10_REQUIRED:  {
       return { ...buyer, __typename: "UserWithRole" } as UserWithRole
     }
-    case OrderStatus.FORM_10_REVISE_AND_RESUBMIT:  {
-      return { ...sellerStore?.user, __typename: "UserWithRole" } as UserWithRole
-    }
     case OrderStatus.FORM_10_SUBMITTED:  {
       return { ...sellerStore?.user, __typename: "UserWithRole" } as UserWithRole
+    }
+    case OrderStatus.FORM_10_REVISE_AND_RESUBMIT:  {
+      return orderSnapshot.adminApprover
     }
     case OrderStatus.CANCELLED:  {
       return orderSnapshot.adminApprover
