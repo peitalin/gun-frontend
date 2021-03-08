@@ -1,9 +1,8 @@
-import * as React from "react";
+import React from "react";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 // GraphQL
-import { GET_PRODUCTS_BY_CATEGORY } from "queries/products-queries";
-// import { GET_CATEGORY_PAGE_METADATA } from "queries/app-layout-queries";
+import { GET_PRODUCT_CATEGORIES } from "queries/categories-queries";
 // Typings
 import {
   ID,
@@ -53,7 +52,7 @@ const CategorySlugSSR: NextPage<ReactProps> = (props) => {
       />
       <CategoryId
         initialProducts={props.initialProducts}
-        categoryOrCategoryGroup={props.categoryOrCategoryGroup}
+        categoryOrCategoryGroup={props.category}
       />
     </>
   )
@@ -62,11 +61,11 @@ const CategorySlugSSR: NextPage<ReactProps> = (props) => {
 interface ReactProps {
   initialProducts: ProductsConnection;
   categoryName?: string;
-  categoryOrCategoryGroup: Categories;
+  category: Categories;
 }
 
 interface QueryData1 {
-  categoryOrCategoryGroup: Categories;
+  getProductCategories: Categories[];
 }
 interface QueryVar1 {
   slug?: string;
@@ -86,34 +85,27 @@ CategorySlugSSR.getInitialProps = async (ctx: Context) => {
 
     try {
 
-      // const {
-      //   data: { categoryOrCategoryGroup }
-      // } = await serverApolloClient(ctx).query<QueryData1, QueryVar1>({
-      //   query: GET_CATEGORY_PAGE_METADATA,
-      //   variables: {
-      //     slug: categorySlug
-      //   },
-      // })
-      // console.log('getInitialProps CategoryPage: ', categoryOrCategoryGroup);
+      const { data } = await serverApolloClient(ctx).query<QueryData1, QueryVar1>({
+        query: GET_PRODUCT_CATEGORIES,
+      })
 
-      // let categoryName = categoryOrCategoryGroup?.category?.name
-      //   || categoryOrCategoryGroup?.categoryGroup?.name
+      let selectedCategory = (data?.getProductCategories ?? []).find(s => {
+        return s.slug === categorySlug
+      })
+
+      let categoryName = selectedCategory?.name
 
       // return props
       return {
         initialProducts: undefined,
-        // categoryName: categoryName,
-        // categoryOrCategoryGroup: categoryOrCategoryGroup,
-        categoryName: "",
-        categoryOrCategoryGroup: undefined,
-        classes: undefined,
+        categoryName: categoryName,
+        category: selectedCategory,
       };
     } catch(e) {
       return {
         initialProducts: undefined,
         categoryName: "",
-        categoryOrCategoryGroup: undefined,
-        classes: undefined,
+        category: undefined,
       };
     }
 
@@ -121,8 +113,7 @@ CategorySlugSSR.getInitialProps = async (ctx: Context) => {
     return {
       initialProducts: undefined,
       categoryName: "",
-      categoryOrCategoryGroup: undefined,
-      classes: undefined,
+      category: undefined,
     };
   }
 }

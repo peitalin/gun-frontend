@@ -75,19 +75,13 @@ CategoriesPage.getInitialProps = async (ctx: Context) => {
     console.log('getInitialProps Categories: ', data);
     // return props
     return {
-      initialCategories: data.categories || {
-        pageInfo: {},
-        edges: []
-      },
+      initialCategories: data.categories || [],
       classes: undefined,
     };
 
   } catch(e) {
     return {
-      initialCategories: {
-        pageInfo: {},
-        edges: []
-      },
+      initialCategories: [],
       classes: undefined,
     };
   }
