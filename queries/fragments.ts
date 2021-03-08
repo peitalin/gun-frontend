@@ -302,10 +302,17 @@ export const OrdersFragment = gql`
       license {
         ...UserLicenseFragment
       }
+      # Only viewable by admin or if user is the buyer
       ...on UserPrivate {
         firstName
         lastName
         email
+        phoneNumber {
+          id
+          areaCode
+          countryCode
+          number
+        }
       }
     }
     sellerStoreId
@@ -322,10 +329,14 @@ export const OrdersFragment = gql`
             ...UserLicenseFragment
           }
         }
+        # Only viewable by admin or if user is the seller
         ...on UserPrivate {
           firstName
           lastName
           email
+          license {
+            ...UserLicenseFragment
+          }
           payoutMethod {
             id
             createdAt
