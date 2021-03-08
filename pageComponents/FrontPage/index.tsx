@@ -54,7 +54,7 @@ const FrontPage: React.FC<ReactProps> = (props) => {
 
         <FeaturedProducts
           initialFeaturedProducts={initialFeaturedProducts}
-          count={4}
+          count={24}
           cardsPerRow={{
             xs: 1.5,
             sm: 1.5,

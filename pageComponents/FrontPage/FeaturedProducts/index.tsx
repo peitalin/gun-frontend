@@ -35,7 +35,7 @@ const FeaturedProducts = (props: ReactProps) => {
   const {
     classes,
     initialFeaturedProducts,
-    count = 8,
+    count = 16,
     cardsPerRow = {
       xs: 1.5,
       sm: 1.5,
@@ -65,7 +65,7 @@ const FeaturedProducts = (props: ReactProps) => {
     variables: {
       searchTerm: searchTerm || "*",
       query: {
-        limit: 12 || count,
+        limit: count,
         offset: props.offset || 0,
         // orderBy: orderBy.value,
         where: { isPublished: { _eq: true } },

@@ -51,6 +51,7 @@ const SearchOptionsPaginator: React.FC<ReactProps> = (props) => {
     setOrderBy,
     setCategoryFacets,
     paginationParams,
+    isCategoriesPage = false,
     updateSetPageDelay = 256,
     disableCategories = false,
     disableSearchFilter = false,
@@ -113,8 +114,7 @@ const SearchOptionsPaginator: React.FC<ReactProps> = (props) => {
   const categoryData = useQuery<{ getProductCategories: Categories[] }, null>(
     GET_PRODUCT_CATEGORIES
   )
-  let categories = categoryData?.data?.getProductCategories
-  // console.log('categories: ', categories)
+  let categories = categoryData?.data?.getProductCategories ?? []
 
 
   const searchRef = React.useRef(null)
@@ -125,186 +125,160 @@ const SearchOptionsPaginator: React.FC<ReactProps> = (props) => {
 
 
   return (
-    <div className={clsx(
-      classes.searchOptionsRoot,
-      props.className,
-      focused ? classes.height65 : classes.height50,
-    )} style={props.style}>
+    <div className={classes.searchRoot}>
+      <div className={clsx(
+        classes.searchOptionsRoot,
+        props.className,
+        focused ? classes.height65 : classes.height50,
+      )} style={props.style}>
 
-      <div className={classes.topSection}
-        style={props.topSectionStyles}
-      >
-
-        <div className={clsx(classes.filterSection, classes.maxWidth100vw)}
-          style={{ ...props.filterSectionStyles }}
+        <div className={classes.topSection}
+          style={props.topSectionStyles}
         >
 
-          {
-            !disableSearchFilter &&
-            <div className={clsx(
-              classes.searchbar,
-              focused ? classes.height65 : classes.height50,
-              searchFocused && classes.boxShadow,
-            )}
-              onClick={() => searchRef.current.focus()}
-            >
-              {/* note: needs the newline here to work
-                // @ts-ignore */}
-              <InputBase
-                value={props.searchTerm}
-                ref={searchRef}
-                inputRef={input => {
-                }}
-                placeholder="Search pistols, rifles…"
-                classes={{
-                  root: clsx(
-                    classes.inputRoot,
-                    focused ? classes.searchWide : classes.searchShort,
-                  ),
-                  input: classes.inputInput,
-                }}
-                onFocus={e => {
-                  // console.log('onFocus:', e)
-                  setSearchFocused(true)
-                }}
-                onBlur={e => {
-                  // console.log('onBlur:', e)
-                  setSearchFocused(false)
-                }}
-                onChange={e => props.setSearchTerm(e.target.value)}
-                onKeyPress={props.onEnter}
-                startAdornment={
-                  <div className={classes.searchAdornIcon}
-                    onClick={() => searchRef.current.focus()}
-                  >
-                    <SearchIcon className={classes.searchIcon}/>
-                  </div>
-                }
-              />
-            </div>
-          }
+          <div className={clsx(classes.filterSection, classes.maxWidth100vw)}
+            style={{ ...props.filterSectionStyles }}
+          >
 
-          {
-            !disableCategories &&
-            <CategoryDropdown
-              className={
-                clsx(
-                  focused ? classes.height65 : classes.height50,
-                  categoryFocused && classes.boxShadow,
-                )
-              }
-              currentCategories={props.currentCategories}
-              setCurrentCategories={(categories) => {
-                props.setCurrentCategories(categories)
-              }}
-              setFocused={setCategoryFocused}
-              dropDownItems={[
-                {
-                  name: 'All Categories',
-                  id: undefined,
-                  slug: undefined,
-                },
-                ...(categories ?? []),
-                // {
-                //   name: 'Pistols',
-                //   id: "category_0001",
-                //   slug: "pistols",
-                // },
-                // {
-                //   name: 'Rifles',
-                //   id: "category_0002",
-                //   slug: "rifles",
-                // },
-                // {
-                //   name: 'Carbines',
-                //   id: "category_0003",
-                //   slug: "carbines",
-                // },
-                // {
-                //   name: 'Semi-automatics',
-                //   id: "category_0004",
-                //   slug: 'semi-automatics',
-                // },
-              ]}
-            />
-          }
-
-          {
-            props.setPriceRange &&
-            !disablePriceFilter &&
-            <div className={classes.marginRight05}>
-              <SearchOptionsPriceFilter
-                setPriceRange={props.setPriceRange}
-              />
-            </div>
-          }
-
-          {props.children}
-
-          {
-            !disableSortby &&
-            <>
-              <div className="search-expander" style={{ flexGrow: 1 }}/>
+            {
+              !disableSearchFilter &&
               <div className={clsx(
-                  classes.dropdownContainer,
-                  classes.marginRight05,
-                  classes.marginLeft05,
-                )}
-                style={{ ...props.dropdownContainerStyle }}
+                classes.searchbar,
+                focused ? classes.height65 : classes.height50,
+                searchFocused && classes.boxShadow,
+              )}
+                onClick={() => searchRef.current.focus()}
               >
-                <DropdownInput
-                  stateShape={
-                    orderByOptions[0]
-                    // initial stateShape
-                    // { label: "Design Templates", value: "category_123123"}
+                {/* note: needs the newline here to work
+                  // @ts-ignore */}
+                <InputBase
+                  value={props.searchTerm}
+                  ref={searchRef}
+                  // inputRef={input => {
+                  // }}
+                  placeholder="Search pistols, rifles…"
+                  classes={{
+                    root: clsx(
+                      classes.inputRoot,
+                      focused ? classes.searchWide : classes.searchShort,
+                    ),
+                    input: classes.inputInput,
+                  }}
+                  onFocus={e => {
+                    // console.log('onFocus:', e)
+                    setSearchFocused(true)
+                  }}
+                  onBlur={e => {
+                    // console.log('onBlur:', e)
+                    setSearchFocused(false)
+                  }}
+                  onChange={e => props.setSearchTerm(e.target.value)}
+                  onKeyPress={props.onEnter}
+                  startAdornment={
+                    <div className={classes.searchAdornIcon}
+                      onClick={() => searchRef.current.focus()}
+                    >
+                      <SearchIcon className={classes.searchIcon}/>
+                    </div>
                   }
-                  isSearchable={false}
-                  hideCursor={true}
-                  onChange={({ label, value }: SelectOption) =>
-                    setTimeout(() => {
-                      setOrderBy({ label, value })
-                    }, 0)
-                    // let UI update first for menu to close
-                  }
-                  options={orderByOptions}
-                  placeholder={"Select a category"}
-                  styles={selectStyles({ width: 200 })}
-                  theme={theme => ({
-                    ...theme,
-                    // width: '100%',
-                    maxWidth: '200px',
-                    borderRadius: 0,
-                    colors: {
-                      ...theme.colors,
-                      primary25: '#e2e2e2',
-                      primary: '#333333',
-                    }
-                  })}
                 />
               </div>
-            </>
-          }
+            }
 
-          <Button
-            className={clsx(
-              classes.searchButtonBluePurple,
-              focused ? classes.searchButtonShort : classes.searchButtonWide,
-              focused ? classes.height55 : classes.height40,
-            )}
-            variant="text"
-            color="primary"
-            onClick={props.onClick}
-          >
-            <SearchIcon className={classes.iconOuter}/>
-            Search
-          </Button>
+            {
+              !disableCategories &&
+              <CategoryDropdown
+                className={clsx(
+                  focused ? classes.height65 : classes.height50,
+                  categoryFocused && classes.boxShadow,
+                )}
+                isCategoriesPage={isCategoriesPage}
+                currentCategories={props.currentCategories}
+                setCurrentCategories={(categories) => {
+                  props.setCurrentCategories(categories)
+                }}
+                setFocused={setCategoryFocused}
+                dropDownItems={[
+                  ...(categories ?? []),
+                ]}
+              />
+            }
+
+            {
+              props.setPriceRange &&
+              !disablePriceFilter &&
+              <div className={classes.marginRight05}>
+                <SearchOptionsPriceFilter
+                  setPriceRange={props.setPriceRange}
+                />
+              </div>
+            }
+
+            {props.children}
+
+            {
+              !disableSortby &&
+              <>
+                <div className="search-expander" style={{ flexGrow: 1 }}/>
+                <div className={clsx(
+                    classes.dropdownContainer,
+                    classes.marginRight05,
+                    classes.marginLeft05,
+                  )}
+                  style={{ ...props.dropdownContainerStyle }}
+                >
+                  <DropdownInput
+                    stateShape={
+                      orderByOptions[0]
+                      // initial stateShape
+                      // { label: "Design Templates", value: "category_123123"}
+                    }
+                    isSearchable={false}
+                    hideCursor={true}
+                    onChange={({ label, value }: SelectOption) =>
+                      setTimeout(() => {
+                        setOrderBy({ label, value })
+                      }, 0)
+                      // let UI update first for menu to close
+                    }
+                    options={orderByOptions}
+                    placeholder={"Select a category"}
+                    styles={selectStyles({ width: 200 })}
+                    theme={theme => ({
+                      ...theme,
+                      // width: '100%',
+                      maxWidth: '200px',
+                      borderRadius: 0,
+                      colors: {
+                        ...theme.colors,
+                        primary25: '#e2e2e2',
+                        primary: '#333333',
+                      }
+                    })}
+                  />
+                </div>
+              </>
+            }
+
+            <Button
+              className={clsx(
+                classes.searchButtonBluePurple,
+                focused ? classes.searchButtonShort : classes.searchButtonWide,
+                focused ? classes.height55 : classes.height40,
+              )}
+              variant="text"
+              color="primary"
+              onClick={props.onClick}
+            >
+              <SearchIcon className={classes.iconOuter}/>
+              Search
+            </Button>
+
+          </div>
 
         </div>
 
-
       </div>
-
-
     </div>
   )
 }
@@ -380,7 +354,6 @@ export const selectStyles = ({ width }: { width?: any }) => ({
       border: 'none',
     },
     borderRadius: '4px',
-    fontFamily: '"Helvetica Neue",Arial,sans-serif',
     fontSize: '0.9rem',
     color: Colors.darkGrey,
     // fontSize: '1rem',
@@ -456,6 +429,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   topSectionStyles?: any;
   // for bottom section, where the child components + paginators are
   bottomSectionStyles?: any;
+  isCategoriesPage?: boolean;
   disableCategories?: boolean;
   disableSearchFilter?: boolean;
   disablePriceFilter?: boolean;
@@ -466,7 +440,6 @@ interface ReactProps extends WithStyles<typeof styles> {
   placeholder?: string;
   className?: any;
   style?: any;
-
   onClick?(a: any): any;
   onEnter?(a: any): any;
 }
@@ -481,6 +454,18 @@ export interface SelectOption {
 /////////// Styles //////////////
 
 const styles = (theme: Theme) => createStyles({
+  searchRoot: {
+    display: "flex",
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
+    border: theme.palette.type === 'dark'
+      ? `1px solid ${Colors.uniswapLightNavy}`
+      : `1px solid ${Colors.slateGreyDarker}`,
+    background: theme.palette.type === 'dark'
+      ? Colors.uniswapDarkNavy
+      : Colors.cream,
+    borderRadius: BorderRadius4x,
+  },
   searchOptionsRoot: {
     display: "flex",
     justifyContent: "center",
@@ -643,7 +628,7 @@ const styles = (theme: Theme) => createStyles({
     }),
   },
   searchWide: {
-    width: 260,
+    width: 240,
     transition: theme.transitions.create(['width', 'height'], {
       easing: theme.transitions.easing.sharp,
       duration: "100ms",

@@ -80,27 +80,56 @@ const CategoryDropdown: React.FC<ReactProps> = (props) => {
           <div className={classes.categoryDropdownContainer}>
             <div className={classes.categoryButtonsContainer}>
               {
-                dropDownItems.map((category, i) => {
-                  return (
-                    <Button
-                      key={category.name + `${i}`}
-                      classes={{
-                        root: clsx(
-                          classes.buttonRoot,
-                          (props.currentCategories ?? []).find(c => category.id === c.id)
-                            ? classes.buttonSelected
-                            : null,
-                        )
-                      }}
-                      variant="outlined"
-                      onClick={() => {
-                        props.setCurrentCategories([category])
-                      }}
-                    >
-                      {category.name}
-                    </Button>
-                  )
-                })
+                props.isCategoriesPage
+                ? dropDownItems.map((category, i) => {
+                    return (
+                      <Link key={category.name + `${i}`}
+                        href="/categories/[categorySlug]"
+                        as={`/categories/${category?.slug}`}
+                      >
+                        <a>
+                          <Button
+                            key={category.name + `${i}`}
+                            classes={{
+                              root: clsx(
+                                classes.buttonRoot,
+                                (props.currentCategories ?? []).find(c => category.id === c.id)
+                                  ? classes.buttonSelected
+                                  : null,
+                              )
+                            }}
+                            variant="outlined"
+                            onClick={() => {
+                              props.setCurrentCategories([category as any])
+                            }}
+                          >
+                            {category.name}
+                          </Button>
+                        </a>
+                      </Link>
+                    )
+                  })
+                : dropDownItems.map((category, i) => {
+                    return (
+                      <Button
+                        key={category.name + `${i}`}
+                        classes={{
+                          root: clsx(
+                            classes.buttonRoot,
+                            (props.currentCategories ?? []).find(c => category.id === c.id)
+                              ? classes.buttonSelected
+                              : null,
+                          )
+                        }}
+                        variant="outlined"
+                        onClick={() => {
+                          props.setCurrentCategories([category as any])
+                        }}
+                      >
+                        {category.name}
+                          </Button>
+                    )
+                  })
               }
           </div>
           </div>
@@ -117,11 +146,16 @@ const CategoryDropdown: React.FC<ReactProps> = (props) => {
 
 
 interface ReactProps extends WithStyles<typeof styles> {
-  dropDownItems: any[];
+  dropDownItems: {
+    name?: string
+    id?: string
+    slug?: string
+  }[];
   className?: any;
   setFocused?(a: boolean): void;
   currentCategories?: Categories[];
   setCurrentCategories(c: Categories[]): void;
+  isCategoriesPage?: boolean;
 }
 
 
@@ -207,7 +241,7 @@ export const styles = (theme: Theme) => createStyles({
     minWidth: 300,
     border: theme.palette.type === 'dark'
       ? `1px solid ${Colors.uniswapLightNavy}`
-      : `1px solid ${Colors.slateGreyBlack}`,
+      : `1px solid ${Colors.slateGreyDarker}`,
     borderRadius: BorderRadius3x,
     boxShadow: BoxShadows.shadow5.boxShadow,
     background: theme.palette.type === 'dark'
@@ -215,6 +249,7 @@ export const styles = (theme: Theme) => createStyles({
       : Colors.cream,
   },
   buttonRoot: {
+    width: '100%',
     margin: '0.15rem',
     color: theme.palette.type === 'dark'
       ? Colors.uniswapLighterGrey

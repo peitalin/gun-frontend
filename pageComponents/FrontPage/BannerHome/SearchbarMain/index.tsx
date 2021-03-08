@@ -7,11 +7,11 @@ import SearchIcon from '@material-ui/icons/Search';
 import InputBase from '@material-ui/core/InputBase';
 import Button from "@material-ui/core/Button";
 import { useRouter } from "next/router";
-import { useSnackbar, ProviderContext } from "notistack";
+import { useSnackbar } from "notistack";
 
 // Search Component
 import { Categories } from "typings/gqlTypes";
-import SearchOptions, { SelectOption, setCategoryFacets } from "./SearchOptions";
+import SearchOptions from "./SearchOptions";
 import {
   useFacetSearchOptions,
   useEffectUpdateGridAccum,
@@ -27,10 +27,9 @@ import {
 const SearchbarMain = (props: SearchbarProps) => {
 
   let { classes, color } = props;
-  const router = useRouter();
 
+  const router = useRouter();
   const snackbar = useSnackbar();
-  const inputRefUnfocus = React.useRef(null);
 
   /////////////////////////////////// paginator
   let numItemsPerPage = 40;
@@ -79,9 +78,6 @@ const SearchbarMain = (props: SearchbarProps) => {
         url += `&category=${currentCategories?.[0]?.slug}`
       }
       router.push(url)
-      if (inputRefUnfocus.current && inputRefUnfocus.current.focus) {
-        inputRefUnfocus.current.focus()
-      }
     }
   }
 
@@ -98,55 +94,59 @@ const SearchbarMain = (props: SearchbarProps) => {
       url += `&category=${currentCategories?.[0]?.slug}`
     }
     router.push(url)
-    if (inputRefUnfocus.current && inputRefUnfocus.current.focus) {
-      inputRefUnfocus.current.focus()
-    }
   }
 
+  let initialCategorySlug: string = router?.query?.categorySlug as any;
   // console.log("totalCount: ", data?.search?.totalCount)
   // console.log('searchTerm: ', searchTerm)
   // console.log('currentcategories: ', currentCategories)
+  // sync selected category in searchbar to SSR category from url bar
+  React.useEffect(() => {
+    let selectedCategory = currentCategories.find(c => {
+      return c.slug === initialCategorySlug
+    })
+    if (selectedCategory) {
+      setCurrentCategories([selectedCategory])
+    }
+  }, [initialCategorySlug])
 
   return (
-    <div className={classes.searchRoot}>
-
-      <SearchOptions
-        searchTerm={searchTerm}
-        setSearchTerm={setSearchTerm}
-        onEnter={onEnter}
-        onClick={onClick}
-        // facets={facets}
-        // setCategoryFacets={setCategoryFacets({ facets, setFacets })}
-        setCurrentCategories={setCurrentCategories as any}
-        currentCategories={currentCategories as any}
-        setOrderBy={setOrderBy}
-        setPriceRange={setPriceRange}
-        placeholder={"Search for products..."}
-        paginationParams={{
-          totalCount: totalCount,
-          overfetchBy: overfetchBy,
-          limit: limit,
-          pageParam: pageParam,
-          setPageParam: setPageParam,
-          index: index,
-          setIndex: setIndex,
-        }}
-        updateSetPageDelay={0}
-        // disableSearchFilter
-        disableSortby
-        disablePriceFilter
-        // disableCategories
-        hidePaginator
-        maxCategoryInputWidth={250}
-        topSectionStyles={{
-          justifyContent: 'flex-end',
-          alignItems: 'flex-end',
-          display: 'flex',
-          flexDirection: 'column',
-        }}
-      >
+    <SearchOptions
+      searchTerm={searchTerm}
+      setSearchTerm={setSearchTerm}
+      onEnter={onEnter}
+      onClick={onClick}
+      // facets={facets}
+      // setCategoryFacets={setCategoryFacets({ facets, setFacets })}
+      setCurrentCategories={setCurrentCategories as any}
+      currentCategories={currentCategories as any}
+      setOrderBy={setOrderBy}
+      setPriceRange={setPriceRange}
+      placeholder={"Search for products..."}
+      paginationParams={{
+        totalCount: totalCount,
+        overfetchBy: overfetchBy,
+        limit: limit,
+        pageParam: pageParam,
+        setPageParam: setPageParam,
+        index: index,
+        setIndex: setIndex,
+      }}
+      updateSetPageDelay={0}
+      // disableSearchFilter
+      disableSortby
+      disablePriceFilter
+      // disableCategories
+      hidePaginator
+      maxCategoryInputWidth={250}
+      topSectionStyles={{
+        justifyContent: 'flex-end',
+        alignItems: 'flex-end',
+        display: 'flex',
+        flexDirection: 'column',
+      }}
+    >
       </SearchOptions>
-    </div>
   )
 }
 
@@ -157,24 +157,6 @@ interface SearchbarProps extends WithStyles<typeof styles> {
 }
 
 let styles = (theme: Theme) => createStyles({
-  searchRoot: {
-    display: "flex",
-    justifyContent: "flex-start",
-    alignItems: "flex-start",
-    border: theme.palette.type === 'dark'
-      ? `1px solid ${Colors.uniswapLightNavy}`
-      : `1px solid ${Colors.slateGreyDarker}`,
-    background: theme.palette.type === 'dark'
-      ? Colors.uniswapDarkNavy
-      : Colors.cream,
-    borderRadius: BorderRadius4x,
-  },
-  flex: {
-    display: "flex",
-    flexGrow: 1,
-    alignItems: "center",
-    cursor: 'pointer',
-  },
 });
 
 
