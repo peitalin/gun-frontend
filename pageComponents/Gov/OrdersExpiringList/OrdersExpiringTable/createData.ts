@@ -24,6 +24,8 @@ export const createDataForExpiringTable = ({
   currentOrderSnapshot,
   payoutId,
   payoutStatus,
+  paymentIntentStatus,
+  paymentIntentId,
 }: {
   id: string,
   createdAt: Date,
@@ -35,6 +37,8 @@ export const createDataForExpiringTable = ({
   product?: Product,
   payoutId?: string,
   payoutStatus?: string,
+  paymentIntentStatus?: string,
+  paymentIntentId?: string,
 }) => {
 
   return {
@@ -44,6 +48,7 @@ export const createDataForExpiringTable = ({
     orderStatus: currentOrderSnapshot?.orderStatus,
     form10: currentOrderSnapshot?.form10Image,
     sellerStore: sellerStore,
+    buyer: buyer,
     product: product,
     history: (orderSnapshots ?? [])
       .slice()
@@ -66,5 +71,7 @@ export const createDataForExpiringTable = ({
       }),
     payoutId: payoutId,
     payoutStatus: payoutStatus,
+    paymentIntentStatus: paymentIntentStatus,
+    paymentIntentId: paymentIntentId,
   };
 }

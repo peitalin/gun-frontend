@@ -12,36 +12,29 @@ import Dialog from "@material-ui/core/Dialog";
 import Button from "@material-ui/core/Button";
 import CardMedia from "@material-ui/core/CardMedia";
 import ButtonLoading from "components/ButtonLoading";
-import Tooltip from '@material-ui/core/Tooltip';
 
 import Collapse from '@material-ui/core/Collapse';
 import TableHead from '@material-ui/core/TableHead';
 import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown"
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
-import Checkbox, { CheckboxProps } from '@material-ui/core/Checkbox';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
+
+// router
+import Link from "next/link";
 
 import { formatDate } from "utils/dates";
 import currency from 'currency.js';
 
 // graphql
-import { UserPrivate, OrderStatus, OrderMutationResponse } from "typings/gqlTypes";
-import { useMutation, useApolloClient } from "@apollo/client";
+import { UserPrivate, OrderStatus, Orders } from "typings/gqlTypes";
+import { useMutation } from "@apollo/client";
 import { DocumentNode } from "graphql";
 import {
   APPROVE_FORM_10,
+  UNAPPROVE_FORM_10,
   REVISE_AND_RESUBMIT_FORM_10,
 } from "queries/orders-mutations";
-import {
-  CANCEL_ORDER_AND_PAYMENT,
-} from "queries/refunds-mutations";
-import {
-  getDateWithOffset,
-  get7DaysFromDate,
-  getCountdownForExpiry,
-} from "utils/dates";
-import { canBeCancelled } from "pageComponents/Gov/OrderViewer/cancelHelpers";
-import { useSnackbar } from "notistack";
+
+
 
 
 
@@ -56,63 +49,45 @@ const RowExpander = (props: RowExpanderProps) => {
     classes,
   } = props;
 
-  const aClient = useApolloClient();
-  const snackbar = useSnackbar();
 
-  const [loading, setLoading] = React.useState(false);
-  const [markAbandoned, setMarkAbandoned] = React.useState(true);
+  const [approveForm10, { data, loading, error }] = useMutation<MutData, MutVar>(
+    APPROVE_FORM_10,
+    {
+      refetchQueries: props.refetchQueriesParams,
+      awaitRefetchQueries: true,
+    }
+  );
+
+  const [reviseAndResubmit, reviseAndResubmitResponse] = useMutation<MutData, MutVar>(
+    REVISE_AND_RESUBMIT_FORM_10,
+    {
+      refetchQueries: props.refetchQueriesParams,
+      awaitRefetchQueries: true,
+    },
+  );
+
   const [open, setOpen] = React.useState(initialOpen);
   const [openImage, setOpenImage] = React.useState(false);
-
-
-  const makeCancelledPayment = async({ orderId, markProductAbandoned }: {
-    orderId: string,
-    markProductAbandoned: boolean,
-  }) => {
-
-    console.log("cancelling orderId:", orderId);
-    setLoading(true)
-
-    const { errors, data } = await aClient.mutate<MutData3, MutVar3>({
-      mutation: CANCEL_ORDER_AND_PAYMENT,
-      variables: {
-        orderId: orderId,
-        markProductAbandoned: markProductAbandoned,
-      }
-    });
-
-    setLoading(false)
-    console.log("payment cancel response:", data);
-    alert(JSON.stringify({ CANCELLED: data }));
-    // data.refundOrder.order
-    if (errors) {
-      snackbar.enqueueSnackbar(
-        `Payment authorization cancel failed with msg: ${errors}`,
-        { variant: "error" }
-      )
-    }
-    return data;
-  }
 
   const c = (s) => currency(s/100, { formatWithSymbol: true }).format()
 
   let form10 = option(row).form10();
   let form10Exists = !!option(form10).original.url();
 
+  let readyForApproval = row.orderStatus === OrderStatus.FORM_10_SUBMITTED
+  let alreadyApproved = (row.orderStatus as string) === OrderStatus.ADMIN_APPROVED
+
   let isEvenRow = index % 2 === 0
 
-  let phoneNumber = !!row?.sellerStore?.user?.phoneNumber?.number
+  let sellerPhoneNumber = !!row?.sellerStore?.user?.phoneNumber?.number
     ? `${row?.sellerStore?.user?.phoneNumber?.countryCode} ${row?.sellerStore?.user?.phoneNumber?.number}`
     : "NA"
 
-  let canOrderBeCancelled = canBeCancelled(row.orderStatus)
+  let buyerPhoneNumber = !!row?.buyer?.phoneNumber?.number
+    ? `${row?.buyer?.phoneNumber?.countryCode} ${row?.sellerStore?.user?.phoneNumber?.number}`
+    : "NA"
 
-  console.log("createdAt: ", new Date(row.createdAt))
-  let expiryDate = get7DaysFromDate(new Date(row.createdAt))
-
-  let countDown = getCountdownForExpiry({
-    expiryDate: expiryDate
-  })
+  // console.log("admin: ", admin)
 
   return (
     <>
@@ -133,7 +108,6 @@ const RowExpander = (props: RowExpanderProps) => {
           {row.id}
         </div>
         <div className={classes.flexItemSlim}>{formatDate(row.createdAt)}</div>
-        <div className={classes.flexItemSlim}>{countDown}</div>
         <div className={classes.flexItemTiny}>{c(row.total)}</div>
         <div className={classes.flexItemSlim}>
           {
@@ -141,6 +115,9 @@ const RowExpander = (props: RowExpanderProps) => {
             ? row.orderStatus.slice(0, 22) + '..'
             : row.orderStatus
           }
+        </div>
+        <div className={classes.flexItemSlim}>
+          {row?.sellerStore?.user?.email}
         </div>
       </div>
       <div className={clsx(
@@ -157,20 +134,58 @@ const RowExpander = (props: RowExpanderProps) => {
                 <Typography variant="h6" component="div">
                   Seller Details
                 </Typography>
-                <div className={classes.sellerDetailsRow}>
-                  <Typography className={classes.sellerDetailsHeader} variant="body1">
+                <div className={classes.userDetailsRow}>
+                  <Typography className={classes.userDetailsHeader} variant="body1">
+                    Name:
+                  </Typography>
+                  <Typography className={classes.userDetailsInfo} variant="body1">
+                    {`${row?.sellerStore?.user?.firstName} ${row?.sellerStore?.user?.lastName}`}
+                  </Typography>
+                </div>
+                <div className={classes.userDetailsRow}>
+                  <Typography className={classes.userDetailsHeader} variant="body1">
                     Email:
                   </Typography>
-                  <Typography className={classes.sellerDetailsInfo} variant="body1">
+                  <Typography className={classes.userDetailsInfo} variant="body1">
                     {row?.sellerStore?.user?.email}
                   </Typography>
                 </div>
-                <div className={classes.sellerDetailsRow}>
-                  <Typography className={classes.sellerDetailsHeader} variant="body1">
+                <div className={classes.userDetailsRow}>
+                  <Typography className={classes.userDetailsHeader} variant="body1">
                     Phone:
                   </Typography>
-                  <Typography className={classes.sellerDetailsInfo} variant="body1">
-                    {phoneNumber}
+                  <Typography className={classes.userDetailsInfo} variant="body1">
+                    {sellerPhoneNumber}
+                  </Typography>
+                </div>
+              </div>
+
+              <div className={classes.sellerDetailsBox}>
+                <Typography variant="h6" component="div">
+                  Buyer Details
+                </Typography>
+                <div className={classes.userDetailsRow}>
+                  <Typography className={classes.userDetailsHeader} variant="body1">
+                    Name:
+                  </Typography>
+                  <Typography className={classes.userDetailsInfo} variant="body1">
+                    {`${row?.buyer?.firstName} ${row?.buyer?.lastName}`}
+                  </Typography>
+                </div>
+                <div className={classes.userDetailsRow}>
+                  <Typography className={classes.userDetailsHeader} variant="body1">
+                    Email:
+                  </Typography>
+                  <Typography className={classes.userDetailsInfo} variant="body1">
+                    {row?.buyer?.email}
+                  </Typography>
+                </div>
+                <div className={classes.userDetailsRow}>
+                  <Typography className={classes.userDetailsHeader} variant="body1">
+                    Phone:
+                  </Typography>
+                  <Typography className={classes.userDetailsInfo} variant="body1">
+                    {buyerPhoneNumber}
                   </Typography>
                 </div>
               </div>
@@ -178,6 +193,22 @@ const RowExpander = (props: RowExpanderProps) => {
               <Typography variant="h6" gutterBottom component="div">
                 Order Details
               </Typography>
+              <div className={classes.userDetailsRow}>
+                <Typography className={classes.orderDetailsHeader} variant="body1">
+                  Stripe Payment Intent Status:
+                </Typography>
+                <Typography className={classes.orderDetailsInfo} variant="body1">
+                  {row?.paymentIntentStatus}
+                </Typography>
+              </div>
+              <div className={classes.userDetailsRow}>
+                <Typography className={classes.orderDetailsHeader} variant="body1">
+                  Stripe Payment Intent ID:
+                </Typography>
+                <Typography className={classes.orderDetailsInfoBottom} variant="body1">
+                  {row?.paymentIntentId}
+                </Typography>
+              </div>
               {
                 form10Exists &&
                 <Dialog
@@ -197,66 +228,90 @@ const RowExpander = (props: RowExpanderProps) => {
                   />
                 </Dialog>
               }
+              <Button
+                variant="outlined"
+                className={classes.form10Button}
+                disabled={!form10Exists}
+                onClick={() => setOpenImage(true)}
+              >
+                {
+                  form10Exists
+                  ? "Show Form 10"
+                  : "Waiting on Form 10"
+                }
+              </Button>
 
-              <div className={classes.buttonContainer}>
+              <Link href={`/gov/orders?orderId=${row.id}`}>
+                <a>
+                  <Button
+                    variant="outlined"
+                    className={classes.viewOrderButton}
+                  >
+                    View Order
+                  </Button>
+                </a>
+              </Link>
+              {
+                showApprovalButtons &&
+                <>
+                  <ButtonLoading
+                    variant="outlined"
+                    className={classes.approveButton}
+                    onClick={() => {
+                      approveForm10({
+                        variables: {
+                          orderId: row.id, // row.id => order.id
+                        }
+                      })
+                    }}
+                    loadingIconColor={Colors.blue}
+                    replaceTextWhenLoading={true}
+                    loading={loading}
+                    disabled={!readyForApproval}
+                    color="secondary"
+                    style={{
+                      width: '150px',
+                      height: '36px',
+                    }}
+                  >
+                    {
+                      readyForApproval
+                      ? "Approve Form 10"
+                      : alreadyApproved
+                        ? "Approved"
+                        : "Awaiting Seller"
 
-                <Button
-                  variant="outlined"
-                  className={classes.form10Button}
-                  disabled={!form10Exists}
-                  onClick={() => setOpenImage(true)}
-                >
-                  {
-                    form10Exists
-                    ? "Show Form 10"
-                    : "Waiting on Form 10"
-                  }
-                </Button>
-
-                <ButtonLoading
-                  variant="outlined"
-                  className={classes.cancelButton}
-                  onClick={() => {
-                    makeCancelledPayment({
-                      orderId: row.id,
-                      markProductAbandoned: markAbandoned,
-                    })
-                  }}
-                  loadingIconColor={Colors.blue}
-                  replaceTextWhenLoading={true}
-                  loading={loading}
-                  disabled={!canOrderBeCancelled}
-                  color="secondary"
-                  style={{
-                    width: '240px',
-                    height: '36px',
-                  }}
-                >
-                  {
-                    canOrderBeCancelled
-                    ? "Cancel Order and Payment"
-                    : "Cannot cancel"
-                  }
-                </ButtonLoading>
-                {/* <Typography className={classes.cancelButtonCaption} variant="caption">
-                  This will cancel the order and payment hold
-                </Typography> */}
-
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={markAbandoned}
-                      onChange={() => {
-                        setMarkAbandoned(s => !s)
-                      }}
-                      name="markAbandonded"
-                    />
-                  }
-                  label="Also mark product ABANDONED"
-                />
-              </div>
+                    }
+                  </ButtonLoading>
+                  <ButtonLoading
+                    variant="outlined"
+                    className={classes.unapproveButton}
+                    onClick={() => {
+                      reviseAndResubmit({
+                        variables: {
+                          orderId: row.id, // row.id => order.id
+                        }
+                      })
+                    }}
+                    loadingIconColor={Colors.red}
+                    replaceTextWhenLoading={true}
+                    loading={reviseAndResubmitResponse.loading}
+                    disabled={!readyForApproval}
+                    color="secondary"
+                    style={{
+                      width: '150px',
+                      height: '36px',
+                    }}
+                  >
+                    Reject Form 10
+                  </ButtonLoading>
+                </>
+              }
             </div>
 
+            <Typography variant="h6" component="div">
+              Order Status
+            </Typography>
 
             <div className={classes.tTable} >
               <div>
@@ -323,16 +378,7 @@ interface MutData {
 }
 interface MutVar {
   orderId: string; // row.id => order.id
-  adminApproverId: string;
 }
-interface MutData3 {
-  cancelOrderAndPayment: OrderMutationResponse;
-}
-interface MutVar3 {
-  orderId: string;
-  markProductAbandoned?: boolean;
-}
-
 
 const styles = (theme: Theme) => createStyles({
   rowExpanderRoot: {
@@ -378,16 +424,15 @@ const styles = (theme: Theme) => createStyles({
   form10Button: {
     margin: "0.5rem 0rem",
   },
-  cancelButton: {
+  viewOrderButton: {
+    margin: "0.5rem 0rem",
+    marginLeft: "0.5rem",
+  },
+  approveButton: {
     height: '36px',
+    margin: "0.5rem 0.5rem 0.5rem 0.5rem",
   },
-  cancelButtonCaption: {
-    width: 240,
-    marginTop: "0.25rem",
-    textAlign: "center",
-    color: theme.colors.uniswapLighterGrey,
-  },
-  uncancelButton: {
+  unapproveButton: {
     height: '36px',
     margin: "0.5rem 0.5rem 0.5rem 0rem",
     border: `1px solid ${Colors.red}`,
@@ -465,7 +510,7 @@ const styles = (theme: Theme) => createStyles({
   backOdd: {
     backgroundColor: Colors.slateGreyDark,
     color: theme.palette.type === 'dark'
-      ? Colors.slateGreyDarkest
+      ? Colors.charcoal
       : Colors.charcoal,
     "&:hover": {
       backgroundColor: Colors.slateGreyDarker,
@@ -475,7 +520,7 @@ const styles = (theme: Theme) => createStyles({
   backEven: {
     backgroundColor: Colors.slateGrey,
     color: theme.palette.type === 'dark'
-      ? Colors.slateGreyDarkest
+      ? Colors.charcoal
       : Colors.charcoal,
     "&:hover": {
       backgroundColor: Colors.slateGreyDarker,
@@ -528,25 +573,33 @@ const styles = (theme: Theme) => createStyles({
   sellerDetailsBox: {
     marginBottom: '1rem',
   },
-  sellerDetailsRow: {
+  userDetailsRow: {
     display: 'flex',
     width: '100%',
     justifyContent: 'flex-start',
   },
-  sellerDetailsHeader: {
-    width: '60px',
+  userDetailsHeader: {
+    width: '70px',
     fontWeight: 400,
     fontSize: "14px",
   },
-  sellerDetailsInfo: {
+  userDetailsInfo: {
     fontWeight: 400,
     fontSize: "14px",
   },
-  buttonContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'flex-start',
-    alignItems: 'flex-start',
+  orderDetailsHeader: {
+    width: '200px',
+    fontWeight: 400,
+    fontSize: "14px",
+  },
+  orderDetailsInfo: {
+    fontWeight: 500,
+    color: Colors.secondary,
+    fontSize: "14px",
+  },
+  orderDetailsInfoBottom: {
+    fontSize: "12px",
+    marginBottom: '1.5rem',
   },
 });
 
