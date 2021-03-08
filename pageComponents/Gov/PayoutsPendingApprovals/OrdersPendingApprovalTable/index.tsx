@@ -32,7 +32,7 @@ import LoadingBar from "components/LoadingBar";
 import { formatDate } from "utils/dates";
 import currency from "currency.js";
 // graphl
-import { useMutation, useQuery } from "@apollo/client";
+import { useMutation, useQuery, useLazyQuery } from "@apollo/client";
 
 import RowExpander from "./RowExpander";
 import { createDataForPendingApprovalTable } from "./createData";
@@ -130,7 +130,10 @@ const OrdersPendingApprovalTable: NextPage<ReactProps> = (props) => {
 
 
 
-  const _ordersCreated = useQuery<QueryData, QueryVar>(
+  const [
+    getOrdersCreated,
+    _ordersCreated
+  ] = useLazyQuery<QueryData, QueryVar>(
     GET_ORDERS_CREATED_CONNECTION, {
       variables: {
         query: {
@@ -142,7 +145,10 @@ const OrdersPendingApprovalTable: NextPage<ReactProps> = (props) => {
     }
   );
 
-  const _ordersPendingApproval = useQuery<QueryData, QueryVar>(
+  const [
+    getOrdersPendingApproval,
+    _ordersPendingApproval
+  ] = useLazyQuery<QueryData, QueryVar>(
     GET_ORDERS_PENDING_APPROVAL_CONNECTION, {
       variables: {
         query: {
@@ -154,7 +160,10 @@ const OrdersPendingApprovalTable: NextPage<ReactProps> = (props) => {
     }
   );
 
-  const _ordersAdminApproved = useQuery<QueryData, QueryVar>(
+  const [
+    getOrdersAdminApproved,
+    _ordersAdminApproved,
+  ] = useLazyQuery<QueryData, QueryVar>(
     GET_ORDERS_ADMIN_APPROVED_CONNECTION, {
       variables: {
         query: {
@@ -195,6 +204,48 @@ const OrdersPendingApprovalTable: NextPage<ReactProps> = (props) => {
       },
     },
   ]
+
+
+
+  const refetchTheOrders = async () => {
+    if (
+      _ordersCreated &&
+      typeof _ordersCreated.refetch === 'function'
+    ) {
+      await _ordersCreated.refetch()
+    }
+    if (
+      _ordersPendingApproval &&
+      typeof _ordersPendingApproval.refetch === 'function'
+    ) {
+      await _ordersPendingApproval.refetch()
+    }
+    if (
+      _ordersAdminApproved &&
+      typeof _ordersAdminApproved.refetch === 'function'
+    ) {
+      await _ordersAdminApproved.refetch()
+    }
+  }
+
+  const refetchOrders = React.useCallback(() => {
+    // apollo devs are retards
+    // https://github.com/apollographql/react-apollo/issues/3862
+    console.log('force refetching orders..')
+    setTimeout(() => refetchTheOrders(), 0)
+  }, [refetchTheOrders])
+
+
+  React.useEffect(() => {
+
+    getOrdersCreated()
+    getOrdersPendingApproval()
+    getOrdersAdminApproved()
+
+    refetchOrders()
+
+  }, [_ordersCreated?.data])
+
 
 
   const ordersCreatedConnection =
@@ -296,6 +347,7 @@ const OrdersPendingApprovalTable: NextPage<ReactProps> = (props) => {
                 payoutId: order?.payoutItems?.[0]?.payoutId,
                 payoutStatus: order?.payoutItems?.[0]?.payoutStatus,
                 paymentIntentStatus: order?.paymentIntent?.status,
+                paymentIntentId: order?.paymentIntentId,
               })
 
               return (
@@ -384,6 +436,7 @@ const OrdersPendingApprovalTable: NextPage<ReactProps> = (props) => {
                 payoutId: order?.payoutItems?.[0]?.payoutId,
                 payoutStatus: order?.payoutItems?.[0]?.payoutStatus,
                 paymentIntentStatus: order?.paymentIntent?.status,
+                paymentIntentId: order?.paymentIntentId,
               })
 
               return (
@@ -465,6 +518,7 @@ const OrdersPendingApprovalTable: NextPage<ReactProps> = (props) => {
                 payoutId: order?.payoutItems?.[0]?.payoutId,
                 payoutStatus: order?.payoutItems?.[0]?.payoutStatus,
                 paymentIntentStatus: order?.paymentIntent?.status,
+                paymentIntentId: order?.paymentIntent?.id,
               })
 
               return (

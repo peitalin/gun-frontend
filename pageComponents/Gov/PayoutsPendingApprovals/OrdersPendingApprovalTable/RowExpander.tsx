@@ -79,8 +79,12 @@ const RowExpander = (props: RowExpanderProps) => {
 
   let isEvenRow = index % 2 === 0
 
-  let phoneNumber = !!row?.sellerStore?.user?.phoneNumber?.number
+  let sellerPhoneNumber = !!row?.sellerStore?.user?.phoneNumber?.number
     ? `${row?.sellerStore?.user?.phoneNumber?.countryCode} ${row?.sellerStore?.user?.phoneNumber?.number}`
+    : "NA"
+
+  let buyerPhoneNumber = !!row?.buyer?.phoneNumber?.number
+    ? `${row?.buyer?.phoneNumber?.countryCode} ${row?.sellerStore?.user?.phoneNumber?.number}`
     : "NA"
 
   // console.log("admin: ", admin)
@@ -130,20 +134,28 @@ const RowExpander = (props: RowExpanderProps) => {
                 <Typography variant="h6" component="div">
                   Seller Details
                 </Typography>
-                <div className={classes.sellerDetailsRow}>
-                  <Typography className={classes.sellerDetailsHeader} variant="body1">
+                <div className={classes.userDetailsRow}>
+                  <Typography className={classes.userDetailsHeader} variant="body1">
+                    Name:
+                  </Typography>
+                  <Typography className={classes.userDetailsInfo} variant="body1">
+                    {`${row?.sellerStore?.user?.firstName} ${row?.sellerStore?.user?.lastName}`}
+                  </Typography>
+                </div>
+                <div className={classes.userDetailsRow}>
+                  <Typography className={classes.userDetailsHeader} variant="body1">
                     Email:
                   </Typography>
-                  <Typography className={classes.sellerDetailsInfo} variant="body1">
+                  <Typography className={classes.userDetailsInfo} variant="body1">
                     {row?.sellerStore?.user?.email}
                   </Typography>
                 </div>
-                <div className={classes.sellerDetailsRow}>
-                  <Typography className={classes.sellerDetailsHeader} variant="body1">
+                <div className={classes.userDetailsRow}>
+                  <Typography className={classes.userDetailsHeader} variant="body1">
                     Phone:
                   </Typography>
-                  <Typography className={classes.sellerDetailsInfo} variant="body1">
-                    {phoneNumber}
+                  <Typography className={classes.userDetailsInfo} variant="body1">
+                    {sellerPhoneNumber}
                   </Typography>
                 </div>
               </div>
@@ -152,20 +164,28 @@ const RowExpander = (props: RowExpanderProps) => {
                 <Typography variant="h6" component="div">
                   Buyer Details
                 </Typography>
-                <div className={classes.sellerDetailsRow}>
-                  <Typography className={classes.sellerDetailsHeader} variant="body1">
+                <div className={classes.userDetailsRow}>
+                  <Typography className={classes.userDetailsHeader} variant="body1">
                     Name:
                   </Typography>
-                  <Typography className={classes.sellerDetailsInfo} variant="body1">
+                  <Typography className={classes.userDetailsInfo} variant="body1">
                     {`${row?.buyer?.firstName} ${row?.buyer?.lastName}`}
                   </Typography>
                 </div>
-                <div className={classes.sellerDetailsRow}>
-                  <Typography className={classes.sellerDetailsHeader} variant="body1">
+                <div className={classes.userDetailsRow}>
+                  <Typography className={classes.userDetailsHeader} variant="body1">
                     Email:
                   </Typography>
-                  <Typography className={classes.sellerDetailsInfo} variant="body1">
+                  <Typography className={classes.userDetailsInfo} variant="body1">
                     {row?.buyer?.email}
+                  </Typography>
+                </div>
+                <div className={classes.userDetailsRow}>
+                  <Typography className={classes.userDetailsHeader} variant="body1">
+                    Phone:
+                  </Typography>
+                  <Typography className={classes.userDetailsInfo} variant="body1">
+                    {buyerPhoneNumber}
                   </Typography>
                 </div>
               </div>
@@ -173,12 +193,20 @@ const RowExpander = (props: RowExpanderProps) => {
               <Typography variant="h6" gutterBottom component="div">
                 Order Details
               </Typography>
-              <div className={classes.sellerDetailsRow}>
+              <div className={classes.userDetailsRow}>
                 <Typography className={classes.orderDetailsHeader} variant="body1">
                   Stripe Payment Intent Status:
                 </Typography>
                 <Typography className={classes.orderDetailsInfo} variant="body1">
                   {row?.paymentIntentStatus}
+                </Typography>
+              </div>
+              <div className={classes.userDetailsRow}>
+                <Typography className={classes.orderDetailsHeader} variant="body1">
+                  Stripe Payment Intent ID:
+                </Typography>
+                <Typography className={classes.orderDetailsInfoBottom} variant="body1">
+                  {row?.paymentIntentId}
                 </Typography>
               </div>
               {
@@ -282,6 +310,9 @@ const RowExpander = (props: RowExpanderProps) => {
             </div>
 
 
+            <Typography variant="h6" component="div">
+              Order Status
+            </Typography>
             <div className={classes.tTable} >
               <div>
                 <div className={classes.headerRow}>
@@ -542,17 +573,17 @@ const styles = (theme: Theme) => createStyles({
   sellerDetailsBox: {
     marginBottom: '1rem',
   },
-  sellerDetailsRow: {
+  userDetailsRow: {
     display: 'flex',
     width: '100%',
     justifyContent: 'flex-start',
   },
-  sellerDetailsHeader: {
-    width: '60px',
+  userDetailsHeader: {
+    width: '70px',
     fontWeight: 400,
     fontSize: "14px",
   },
-  sellerDetailsInfo: {
+  userDetailsInfo: {
     fontWeight: 400,
     fontSize: "14px",
   },
@@ -565,6 +596,9 @@ const styles = (theme: Theme) => createStyles({
     fontWeight: 500,
     color: Colors.secondary,
     fontSize: "14px",
+  },
+  orderDetailsInfoBottom: {
+    fontSize: "12px",
     marginBottom: '1.5rem',
   },
 });

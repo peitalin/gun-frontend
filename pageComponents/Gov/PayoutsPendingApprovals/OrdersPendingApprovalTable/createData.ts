@@ -23,6 +23,7 @@ export const createDataForPendingApprovalTable = ({
   payoutId,
   payoutStatus,
   paymentIntentStatus,
+  paymentIntentId,
 }: {
   id: string,
   createdAt: Date,
@@ -35,6 +36,7 @@ export const createDataForPendingApprovalTable = ({
   payoutId?: string,
   payoutStatus?: string,
   paymentIntentStatus?: string,
+  paymentIntentId?: string,
 }) => {
 
   return {
@@ -68,6 +70,7 @@ export const createDataForPendingApprovalTable = ({
     payoutId: payoutId,
     payoutStatus: payoutStatus,
     paymentIntentStatus: paymentIntentStatus,
+    paymentIntentId: paymentIntentId,
   };
 }
 
