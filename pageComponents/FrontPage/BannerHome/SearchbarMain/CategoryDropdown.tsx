@@ -210,9 +210,9 @@ export const styles = (theme: Theme) => createStyles({
       : `1px solid ${Colors.slateGreyBlack}`,
     borderRadius: BorderRadius3x,
     boxShadow: BoxShadows.shadow5.boxShadow,
-    backgroundColor: theme.palette.type === 'dark'
+    background: theme.palette.type === 'dark'
       ? Colors.uniswapDarkNavy
-      : Colors.slateGrey,
+      : Colors.cream,
   },
   buttonRoot: {
     margin: '0.15rem',

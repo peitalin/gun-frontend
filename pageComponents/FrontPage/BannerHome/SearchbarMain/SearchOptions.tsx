@@ -721,29 +721,3 @@ const styles = (theme: Theme) => createStyles({
 
 
 export default withStyles(styles)( SearchOptionsPaginator );
-
-// export default withStyles(styles)(React.memo(
-//   (props: ReactProps) => <SearchOptionsPaginator {...props}/>,
-//   (prevProps, nextProps) => {
-
-//     // let prevLength = option(prevProps).productsForSaleConnection.edges([]).length
-//     // let nextLength = option(nextProps).productsForSaleConnection.edges([]).length
-
-//     let stopRerender = false;
-//     // let rerender =  prevLength < nextLength
-//     //     && prevProps.index !== nextProps.index
-//     //     && prevProps.itemsPerGrid !== nextProps.itemsPerGrid
-//     let pTotalCount = option(prevProps).paginationParams.totalCount()
-//     let nTotalCount = option(nextProps).paginationParams.totalCount()
-
-//     if (pTotalCount > 0 && nTotalCount === undefined) {
-//       stopRerender = true
-//     }
-
-//     // console.log("PREV paginationParams: ", prevProps.paginationParams)
-//     // console.log("NEXT paginationParams: ", nextProps.paginationParams)
-
-//     // if true, don't re-render
-//     return stopRerender
-//   },
-// ))
