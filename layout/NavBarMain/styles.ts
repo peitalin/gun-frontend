@@ -66,7 +66,7 @@ export const styles = (theme: Theme) => createStyles({
   baseBarDashboard: {
     zIndex: 5,
     background: theme.palette.type === 'dark'
-      ? Gradients.gradientUniswapDark.background
+      ? Gradients.gradientUniswapDarkRotated.background
       : Gradients.gradientGrey2.background,
     // background: Colors.uniswapDarkNavy,
     height: `${MainBarHeightDashboard - 1}px`, // 1px for borderBottom

@@ -79,7 +79,8 @@ function GridPaginatorGeneric<T>(props: ReactProps<T> & ReactChildren<T>) {
             return (
               <div key={`product-group-${index}`}
                 className={clsx(
-                  props.loading ? "fadeIn" : "staggerFadeIn",
+                  // props.loading ? "fadeIn" : "staggerFadeIn",
+                  "fadeIn",
                   props.className ? props.className : classes.flexRow,
                 )}
               >

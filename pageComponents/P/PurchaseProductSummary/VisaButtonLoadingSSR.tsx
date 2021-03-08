@@ -52,7 +52,9 @@ const styles = (theme: Theme) => createStyles({
     backgroundColor: theme.palette.type === 'dark'
       ? Colors.uniswapDarkNavy
       : Colors.slateGrey,
-    border: `1px solid ${Colors.lightGrey}`,
+    border: theme.palette.type === 'dark'
+      ? `1px solid ${Colors.uniswapNavy}`
+      : `1px solid ${Colors.lightGrey}`,
   },
   visaButton: {
     width: "100%",

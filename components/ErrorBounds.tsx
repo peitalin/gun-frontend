@@ -104,15 +104,12 @@ const styles = (theme: Theme) => createStyles({
     paddingTop: theme.spacing(2),
     color: red[800],
     fontWeight: 'bold',
-    fontFamily: '"Helvetica Neue",Arial,sans-serif',
   },
   errLine: {
     color: grey[700],
-    fontFamily: '"Helvetica Neue",Arial,sans-serif',
   },
   errHeading: {
     color: red[700],
-    fontFamily: '"Helvetica Neue",Arial,sans-serif',
   },
   errInnerContainer: {
     marginBottom: 20,
@@ -128,7 +125,9 @@ const styles = (theme: Theme) => createStyles({
     boxShadow: "1px 2px 3px 0px rgba(76,76,76,0.4)",
     borderRadius: BorderRadius,
     border: `1px solid ${Colors.red}`,
-    backgroundColor: Colors.uniswapMediumNavy,
+    backgroundColor: theme.palette.type === 'dark'
+      ? Colors.uniswapMediumNavy
+      : Colors.slateGrey,
     transition: "all 100ms",
     "&:hover": {
       transition: "all 100ms",

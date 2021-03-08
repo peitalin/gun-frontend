@@ -252,6 +252,11 @@ export const Gradients = {
     color1: Colors.gradientUniswapDark1,
     color2: Colors.gradientUniswapDark2,
   },
+  gradientUniswapDarkRotated:  {
+    background: `linear-gradient(240deg, ${Colors.gradientUniswapDark1} 20%, ${Colors.gradientUniswapDark2} 80%)`,
+    color1: Colors.gradientUniswapDark1,
+    color2: Colors.gradientUniswapDark2,
+  },
   gradientUniswapFluro:  {
     background: `linear-gradient(120deg, ${Colors.gradientUniswapFluro1} 20%, ${Colors.gradientUniswapFluro2} 80%)`,
     color1: Colors.gradientUniswapFluro1,

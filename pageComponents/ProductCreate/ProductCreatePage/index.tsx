@@ -219,6 +219,11 @@ const ProductCreatePage = (props: ReactProps) => {
       },
     }).then(res => {
 
+      snackbar.enqueueSnackbar(
+        `Escrow order succeeded`,
+        { variant: "info" }
+      )
+
       setTimeout(() => {
         resetForm()
         // wait 500ms for page transition before trying to reset form
@@ -261,6 +266,10 @@ const ProductCreatePage = (props: ReactProps) => {
         )
 
         const processProductData = ({ publishNow }: { publishNow: boolean }) => {
+          snackbar.enqueueSnackbar(
+            `Creating escrow for order...`,
+            { variant: "info" }
+          )
           fprops.setFieldValue("isPublished", publishNow);
           // update formik with redux currentVariants
           fprops.setFieldValue("currentVariants", currentVariantsInput);
@@ -309,16 +318,6 @@ const ProductCreatePage = (props: ReactProps) => {
                   disableLoginButton={true}
                   buttonText={"Create Store"}
                 />
-                {/* <div>
-                  <a onClick={() => {
-                      console.log("fprops.values: ", fprops.values)
-                      console.log("fprops.errors: ", fprops.errors)
-                    }}
-                    className={classes.printFormikValues}
-                  >
-                    print formik values
-                  </a>
-                </div> */}
               </StoreOrLoginContainer>
 
               <ProductCreateForm

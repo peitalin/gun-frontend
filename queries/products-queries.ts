@@ -60,14 +60,14 @@ export const GET_PRODUCT = gql`
 
 export const GET_PRODUCTS_BY_CATEGORY = gql`
   query productsByCategoryConnection(
-    $categoryId: String
-    $categoryName: String
-    $query: ConnectionQuery
+    $categorySlug: String!
+    $query: ConnectionOffsetQuery!
+    $searchTerm: String
   ) {
     productsByCategoryConnection(
-      categoryId: $categoryId
-      categoryName: $categoryName
+      categorySlug: $categorySlug
       query: $query
+      searchTerm: $searchTerm
     ) {
       totalCount
       pageInfo {
@@ -75,13 +75,11 @@ export const GET_PRODUCTS_BY_CATEGORY = gql`
         endCursor
       }
       edges {
-        # cursor
         node {
           ...ProductFragment
         }
       }
     }
   }
-  ${ImageFragment}
   ${ProductFragment}
 `;
