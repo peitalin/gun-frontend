@@ -176,7 +176,7 @@ const OrderPriceBreakdown = (props: ReactProps & FormikProps<FormikFields>) => {
             fieldCaptured={totalTaxesCaptured}
             fieldPaid={totalTaxesPaid}
           />
-          <OrderPriceRow classes={classes}
+          <OrderPriceRowBottom classes={classes}
             fieldName={"Total"}
             addLess={""}
             fieldAmount={order.total}
@@ -191,7 +191,10 @@ const OrderPriceBreakdown = (props: ReactProps & FormikProps<FormikFields>) => {
 
 
 const OrderRow = ({
-  classes, isHeader, isSubtotal,
+  classes,
+  isHeader,
+  isSubtotal,
+  isBottomRow,
   fieldName,
   addLess,
   fieldAmount,
@@ -203,6 +206,7 @@ const OrderRow = ({
     <div className={clsx(
         isHeader && classes.orderTitleRow,
         isSubtotal && classes.orderSubtitleRow,
+        isBottomRow && classes.borderRoundedBottom,
         (!isHeader && !isSubtotal) ? classes.orderRow : null,
       )}
       style={props.style}
@@ -251,6 +255,7 @@ const OrderTitleRow = ({
       style={props.style}
       isHeader={true}
       isSubtotal={false}
+      isBottomRow={false}
       fieldName={fieldName}
       addLess={addLess}
       fieldAmount={fieldAmount}
@@ -269,6 +274,26 @@ const OrderPriceRow = ({
       style={props.style}
       isHeader={false}
       isSubtotal={false}
+      isBottomRow={false}
+      fieldName={fieldName}
+      addLess={addLess}
+      fieldAmount={fieldAmount}
+      fieldCaptured={fieldCaptured}
+      fieldPaid={fieldPaid}
+    />
+  )
+}
+const OrderPriceRowBottom = ({
+  classes, fieldName, addLess, fieldAmount, fieldCaptured, fieldPaid,
+  ...props
+}) => {
+  return (
+    <OrderRow
+      classes={classes}
+      style={props.style}
+      isHeader={false}
+      isSubtotal={false}
+      isBottomRow={true}
       fieldName={fieldName}
       addLess={addLess}
       fieldAmount={fieldAmount}
@@ -308,6 +333,7 @@ const styles = (theme: Theme) => createStyles({
     border: theme.palette.type === 'dark'
       ? `1px solid ${Colors.uniswapLighterGrey}`
       : `1px solid ${Colors.darkGrey}`,
+    borderRadius: `${BorderRadius}px ${BorderRadius}px 0px 0px`,
   },
   orderSubtitleRow: {
     display: 'flex',
@@ -345,6 +371,9 @@ const styles = (theme: Theme) => createStyles({
     "&:hover": {
       background: fade(Colors.lightBlue, 0.1),
     }
+  },
+  borderRoundedBottom: {
+    borderRadius: `0px 0px ${BorderRadius}px ${BorderRadius}px`,
   },
   orderCellText: {
     textAlign: 'start',

@@ -293,6 +293,8 @@ const OrderViewer: React.FC<ReactProps> = (props) => {
                             product: order.product,
                             payoutId: order?.payoutItems?.[0]?.payoutId,
                             payoutStatus: order?.payoutItems?.[0]?.payoutStatus,
+                            paymentIntentStatus: order?.paymentIntent?.status,
+                            paymentIntentId: order?.paymentIntent?.id,
                           })
                         }
                         admin={undefined}
