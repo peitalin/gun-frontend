@@ -34,79 +34,9 @@ const CategoriesWall: React.FC<ReactProps> = (props) => {
   return (
     <div className={classes.categoryOuterContainer}>
       <div className={classes.categoryInnerContainer}>
-        {/* <Typography variant="subtitle2" className={classes.categoryHeading}>
-          Design
-        </Typography> */}
         {
-          option(props).categories() &&
-          props.categories.slice(0,numPerSection).map(c => {
-            return (
-              <Link key={c.id}
-                href="/categories/[categorySlug]"
-                as={`/categories/${c.slug}`}
-              >
-                <a className={classes.categoryLink}>
-                  <Typography className={classes.categoryLinkText}>
-                    {c.name}
-                  </Typography>
-                </a>
-              </Link>
-            )
-          })
-        }
-      </div>
-      <div className={classes.categoryInnerContainer}>
-        {/* <Typography variant="subtitle2" className={classes.categoryHeading}>
-          Video
-        </Typography> */}
-        {
-          option(props).categories() &&
-          props.categories.slice(numPerSection, numPerSection*2).map(c => {
-            return (
-              <Link key={c.id}
-                href="/categories/[categorySlug]"
-                as={`/categories/${c.slug}`}
-              >
-                <a className={classes.categoryLink}>
-                  <Typography className={classes.categoryLinkText}>
-                    {c.name}
-                  </Typography>
-                </a>
-              </Link>
-            )
-          })
-        }
-      </div>
-      <div className={classes.categoryInnerContainer}>
-        {/* <Typography variant="subtitle2" className={classes.categoryHeading}>
-          Sounds
-        </Typography> */}
-        {
-          option(props).categories() &&
-          props.categories.slice(numPerSection*2, numPerSection*3).map(c => {
-            // disable <Link> for now.
-            return (
-              <Link key={c.id}
-                href="/categories/[categorySlug]"
-                as={`/categories/${c.slug}`}
-              >
-                <a className={classes.categoryLink}>
-                  <Typography className={classes.categoryLinkText}>
-                    {c.name}
-                  </Typography>
-                </a>
-              </Link>
-            )
-          })
-        }
-      </div>
-      <div className={classes.categoryInnerContainer}>
-        {/* <Typography variant="subtitle2" className={classes.categoryHeading}>
-          Music Genres
-        </Typography> */}
-        {
-          option(props).categories() &&
-          props.categories.slice(numPerSection*3).map(c => {
+          props.categories &&
+          (props.categories ?? []).map(c => {
             return (
               <Link key={c.id}
                 href="/categories/[categorySlug]"

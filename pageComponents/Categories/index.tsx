@@ -56,7 +56,7 @@ const Categories: React.FC<ReactProps> = (props) => {
             <Typography variant="h4"
               className={mdDown ? classes.subtitleMobile : classes.subtitleDesktop}
             >
-              {"Discover all types of creative assets on Relay"}
+              {"Discover firearm listings across categories"}
             </Typography>
           </div>
           {props.children}
