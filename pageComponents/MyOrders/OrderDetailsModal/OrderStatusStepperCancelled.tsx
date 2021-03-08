@@ -16,7 +16,7 @@ import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 
 
-const OrderStatusStepperRefund: React.FC<ReactProps> = (props) => {
+const OrderStatusStepperCancelled: React.FC<ReactProps> = (props) => {
 
   const { classes, order } = props;
 
@@ -63,6 +63,8 @@ function getActiveStepFromOrderStatus(orderStatus: string) {
       return 0
     case OrderStatus.REFUNDED:
       return 1
+    case OrderStatus.CANCELLED:
+      return 1
     default:
       return 0
   }
@@ -84,37 +86,6 @@ const styles = (theme: Theme) => createStyles({
     margiBottom: '0.5rem',
     textAlign: "center",
   },
-  flexCol: {
-    display: 'flex',
-    flexDirection: 'column',
-  },
-  backButton: {
-    marginRight: theme.spacing(1),
-  },
-  instructions: {
-    marginTop: theme.spacing(1),
-    marginBottom: theme.spacing(1),
-  },
-  flexCol400: {
-    display: 'flex',
-    flexDirection: 'column',
-    flexGrow: 1,
-    flexBasis: '50%',
-    maxWidth: 400,
-  },
-  flexRow: {
-    display: 'flex',
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-  },
-  flexItem1: {
-    flexGrow: 0.75,
-    flexBasis: '75%',
-  },
-  subHeading: {
-    fontWeight: 600,
-    marginTop: '0.5rem',
-  },
 });
 
-export default withStyles(styles)( OrderStatusStepperRefund );
+export default withStyles(styles)( OrderStatusStepperCancelled );

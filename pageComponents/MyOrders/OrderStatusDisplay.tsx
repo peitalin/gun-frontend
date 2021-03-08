@@ -22,7 +22,7 @@ import { useApolloClient } from "@apollo/client";
 
 
 
-const OrderStatusComponent: React.FC<ReactProps> = (props) => {
+const OrderStatusDisplay: React.FC<ReactProps> = (props) => {
 
   const { classes, order } = props;
 
@@ -37,7 +37,10 @@ const OrderStatusComponent: React.FC<ReactProps> = (props) => {
         classes.flexCol,
         smDown ? classes.flexWrap : null,
       )}>
-        <div className={classes.flexRowInner}>
+        <div className={clsx(
+          classes.flexRowInner,
+          props.orderCancelled ? classes.borderOrderCancelled : classes.borderOrderSuccess,
+        )}>
           <div className={classes.flexItemOrderStatusTranslation}>
             <Typography variant="subtitle2" className={classes.orderStatusText}>
               <b>Status:</b> &nbsp;
@@ -98,6 +101,7 @@ const translateOrderStatus = (o: string): string => {
 
 interface ReactProps extends WithStyles<typeof styles> {
   order: Order;
+  orderCancelled: boolean;
 }
 
 const styles = (theme: Theme) => createStyles({
@@ -113,7 +117,12 @@ const styles = (theme: Theme) => createStyles({
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
     width: '100%',
+  },
+  borderOrderSuccess: {
     borderLeft: `4px solid ${Colors.blue}`,
+  },
+  borderOrderCancelled: {
+    borderLeft: `4px solid ${Colors.red}`,
   },
   flexWrap: {
     flexWrap: 'wrap',
@@ -159,4 +168,4 @@ const styles = (theme: Theme) => createStyles({
 });
 
 
-export default withStyles(styles)( OrderStatusComponent );
+export default withStyles(styles)( OrderStatusDisplay );

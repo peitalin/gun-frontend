@@ -115,37 +115,6 @@ const styles = (theme: Theme) => createStyles({
     margiBottom: '0.5rem',
     textAlign: "center",
   },
-  flexCol: {
-    display: 'flex',
-    flexDirection: 'column',
-  },
-  backButton: {
-    marginRight: theme.spacing(1),
-  },
-  instructions: {
-    marginTop: theme.spacing(1),
-    marginBottom: theme.spacing(1),
-  },
-  flexCol400: {
-    display: 'flex',
-    flexDirection: 'column',
-    flexGrow: 1,
-    flexBasis: '50%',
-    maxWidth: 400,
-  },
-  flexRow: {
-    display: 'flex',
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-  },
-  flexItem1: {
-    flexGrow: 0.75,
-    flexBasis: '75%',
-  },
-  subHeading: {
-    fontWeight: 600,
-    marginTop: '0.5rem',
-  },
 });
 
 export default withStyles(styles)( OrderStatusStepper );

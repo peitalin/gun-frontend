@@ -20,8 +20,9 @@ import Link from "next/link";
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import Form10Upload from "./Form10Upload";
-import OrderStatus from "./OrderStatus";
+import OrderStatusDisplay from "./OrderStatusDisplay";
 // import { getStoreIdOrSlug } from "utils/links";
+import { OrderStatus } from "typings/gqlTypes";
 import { getFeaturedPreviewFromProduct } from "utils/images";
 
 
@@ -36,6 +37,10 @@ const OrderRowSellers: React.FC<ReactProps> = (props) => {
 
   // console.log("!!porduct: ",product)
   const previewItem = getFeaturedPreviewFromProduct(product)
+
+  const orderCancelled =
+    order?.currentSnapshot?.orderStatus === OrderStatus.REFUNDED ||
+    order?.currentSnapshot?.orderStatus === OrderStatus.CANCELLED
 
   return (
     <ErrorBounds className={clsx(
@@ -59,7 +64,10 @@ const OrderRowSellers: React.FC<ReactProps> = (props) => {
               <Typography className={classes.tagline} variant="body2">
                 {option(product).currentSnapshot.model("")}
               </Typography>
-              <OrderStatus order={order} />
+              <OrderStatusDisplay
+                order={order}
+                orderCancelled={orderCancelled}
+              />
             </div>
           </div>
 
@@ -74,6 +82,7 @@ const OrderRowSellers: React.FC<ReactProps> = (props) => {
               <div className={classes.flexRowFlexEnd}>
                 <OrderDetailsModal
                   order={order}
+                  orderCancelled={orderCancelled}
                 />
               </div>
             </div>

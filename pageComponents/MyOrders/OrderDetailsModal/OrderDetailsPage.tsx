@@ -17,7 +17,7 @@ import IconButton from "@material-ui/core/IconButton";
 import DisplayOrderReceipt from "./DisplayOrderReceipt";
 import DisplayOrderId from "./DisplayOrderId";
 import OrderStatusStepper from "./OrderStatusStepper";
-import OrderStatusStepperRefund from "./OrderStatusStepperRefund";
+import OrderStatusStepperCancelled from "./OrderStatusStepperCancelled";
 import OrderProductPreview from "./OrderProductPreview";
 // theme
 import { useTheme } from "@material-ui/core/styles";
@@ -73,8 +73,8 @@ const OrderDetailsPage: React.FC<ReactProps> = (props) => {
       </div>
 
       {
-        props.order?.currentSnapshot?.orderStatus === OrderStatus.REFUNDED
-        ? <OrderStatusStepperRefund
+        props.orderCancelled
+        ? <OrderStatusStepperCancelled
             order={props.order}
           />
         : <OrderStatusStepper
@@ -89,6 +89,7 @@ const OrderDetailsPage: React.FC<ReactProps> = (props) => {
 
 interface ReactProps extends WithStyles<typeof styles> {
   order: Order;
+  orderCancelled: boolean;
   closeModal?(): void;
   disableTitle?: boolean;
 }
@@ -132,16 +133,18 @@ const styles = (theme: Theme) => createStyles({
     backgroundColor: theme.palette.type === 'dark'
       ? theme.colors.uniswapMediumNavy
       : theme.colors.slateGrey,
-    boxShadow: theme.palette.type === 'dark'
-      ? BoxShadows.shadow1.boxShadow
-      : 'unset',
+    border: theme.palette.type === 'dark'
+      ? `1px solid ${Colors.uniswapLightNavy}`
+      : `1px solid ${Colors.slateGreyDarker}`,
   },
   closeIcon: {
     background: theme.palette.type === 'dark'
       ? Colors.uniswapGrey
       : Colors.slateGreyDarker,
     "&:hover": {
-      background: Colors.uniswapMediumGrey,
+      background: theme.palette.type === 'dark'
+        ? Colors.uniswapMediumGrey
+        : Colors.slateGreyDarkest,
     },
   },
   closeIconButtonContainer: {

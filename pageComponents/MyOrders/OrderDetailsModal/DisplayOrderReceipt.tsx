@@ -137,9 +137,9 @@ const styles = (theme: Theme) => createStyles({
     backgroundColor: theme.palette.type === 'dark'
       ? theme.colors.uniswapMediumNavy
       : theme.colors.slateGrey,
-    boxShadow: theme.palette.type === 'dark'
-      ? BoxShadows.shadow1.boxShadow
-      : 'unset',
+    border: theme.palette.type === 'dark'
+      ? `1px solid ${Colors.uniswapLightNavy}`
+      : `1px solid ${Colors.slateGreyDarker}`,
     marginLeft: "0.25rem",
     marginRight: "0.25rem",
   },

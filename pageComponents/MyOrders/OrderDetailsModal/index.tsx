@@ -44,6 +44,7 @@ const OrderDetailsModal: React.FC<ReactProps> = (props) => {
       >
         <OrderDetailsPage
           order={props.order}
+          orderCancelled={props.orderCancelled}
           closeModal={closeModal}
         />
       </Dialog>
@@ -68,6 +69,7 @@ const OrderDetailsModal: React.FC<ReactProps> = (props) => {
 
 interface ReactProps extends WithStyles<typeof styles> {
   order: Order;
+  orderCancelled: boolean;
 }
 
 

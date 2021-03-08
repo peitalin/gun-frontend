@@ -14,11 +14,13 @@ import Typography from "@material-ui/core/Typography";
 import ErrorBounds from "components/ErrorBounds";
 import ProductPreviewCardRow from "components/ProductPreviewCardRow";
 import OrderDetailsModal from "./OrderDetailsModal";
+import OrderStatusDisplay from "./OrderStatusDisplay";
 // mediaQuery
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import Form10Upload from "./Form10Upload";
-import OrderStatus from "./OrderStatus";
+// Typings
+import { OrderStatus } from "typings/gqlTypes";
 import { getFeaturedPreviewFromProduct } from "utils/images";
 
 
@@ -32,6 +34,10 @@ const OrderRowBuyers: React.FC<ReactProps> = (props) => {
   const smDown = useMediaQuery(theme.breakpoints.down("sm"))
 
   const previewItem = getFeaturedPreviewFromProduct(product)
+
+  const orderCancelled =
+    order?.currentSnapshot?.orderStatus === OrderStatus.REFUNDED ||
+    order?.currentSnapshot?.orderStatus === OrderStatus.CANCELLED
 
   return (
     <ErrorBounds className={clsx(
@@ -57,10 +63,14 @@ const OrderRowBuyers: React.FC<ReactProps> = (props) => {
             <Typography className={classes.tagline} variant="body2">
               {product?.currentSnapshot?.model}
             </Typography>
-            <OrderStatus order={order} />
+            <OrderStatusDisplay
+              order={order}
+              orderCancelled={orderCancelled}
+            />
             <div className={classes.flexRowFlexEnd}>
               <OrderDetailsModal
                 order={order}
+                orderCancelled={orderCancelled}
               />
             </div>
           </div>
