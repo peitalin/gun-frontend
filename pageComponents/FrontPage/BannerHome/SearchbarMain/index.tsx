@@ -102,7 +102,7 @@ const SearchbarMain = (props: SearchbarProps) => {
   // console.log('currentcategories: ', currentCategories)
   // sync selected category in searchbar to SSR category from url bar
   React.useEffect(() => {
-    let selectedCategory = currentCategories.find(c => {
+    let selectedCategory = (currentCategories ?? []).find(c => {
       return c.slug === initialCategorySlug
     })
     if (selectedCategory) {
