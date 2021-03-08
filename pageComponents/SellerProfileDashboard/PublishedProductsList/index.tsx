@@ -17,6 +17,7 @@ import {
   StorePrivate,
   ConnectionOffsetQuery,
   Product,
+  SoldOutStatus,
 } from "typings/gqlTypes";
 // Utils Components
 import ErrorBounds from "components/ErrorBounds";
@@ -295,11 +296,15 @@ const PublishedProductsList = (props: ReactProps) => {
                 className={classes.flexCol}
               >
                 {({ node: product }) => {
+
+                  let hideEdit = product.soldOutStatus !== SoldOutStatus.AVAILABLE
+
                   if (product.isPublished) {
                     return (
                       <ProductRow
                         key={product.id}
                         product={product}
+                        hideEdit={hideEdit}
                         loading={getProductsResponse.loading}
                         refetchProducts={refetchTheProducts}
                         {...publishedProps}
@@ -310,6 +315,7 @@ const PublishedProductsList = (props: ReactProps) => {
                       <ProductRow
                         key={product.id}
                         product={product}
+                        hideEdit={hideEdit}
                         loading={getProductsResponse.loading}
                         refetchProducts={refetchTheProducts}
                         {...unpublishedProps}

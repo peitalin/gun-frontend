@@ -8,6 +8,7 @@ import ProductRow from "pageComponents/SellerProfileDashboard/PublishedProductsL
 const ProductList = (props: {
   productsConnection: ProductsConnection,
   hideDelete?: boolean,
+  hideEdit?: boolean,
   hideUnpublish?: boolean,
   hidePublish?: boolean,
   hideViewButton?: boolean,
@@ -23,6 +24,7 @@ const ProductList = (props: {
           hidePublish={props.hidePublish}
           hideUnpublish={props.hideUnpublish}
           hideDelete={props.hideDelete}
+          hideEdit={props.hideEdit}
           hideViewButton={props.hideViewButton}
           hideShareLinkButton={props.hideShareLinkButton}
           refetchProducts={props.refetchProducts}

@@ -61,6 +61,7 @@ const ProductRow = (props: ReactProps) => {
     product,
     loading,
     hideDelete = false,
+    hideEdit = false,
     hidePublish = false,
     hideUnpublish = false,
     hideViewButton = false,
@@ -365,6 +366,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   product: Product;
   loading?: boolean;
   hideDelete?: boolean;
+  hideEdit?: boolean;
   hidePublish?: boolean;
   hideUnpublish?: boolean;
   hideViewButton?: boolean;
