@@ -138,15 +138,22 @@ export const useFacetSearchOptions = ({
       let urlPath = router.asPath.split('?')[0]
       let params: string[];
       // console.log("routery.query:", router?.query)
+      // console.log("urlPath:", urlPath)
 
       // sync url query params with the facet Hooks params and inject
       // it into urls
       if (router?.query) {
         params = Object.keys(router?.query).map(key => {
-          let value = router.query[key]
-          // let param = encodeURIComponent(`${key}=${value}`)
-          let param = `${key}=${value}`
-          return param
+          if (urlPath.startsWith('/categories')) {
+            // skip turning [categorySlugs] into query params
+            // when on /categories/[categorySlug] pages
+            return null
+          } else {
+            let value = router.query[key]
+            // let param = encodeURIComponent(`${key}=${value}`)
+            let param = `${key}=${value}`
+            return param
+          }
         })
         // console.log("initial params: ", params)
       } else {

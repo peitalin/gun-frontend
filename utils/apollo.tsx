@@ -124,7 +124,6 @@ export default withApollo(
               },
               headers: {
                 'content-type': 'application/json',
-                // "x-hasura-admin-secret": "hescomingrightforus",
                 cookie: option(ctx).req.headers.cookie(),
                 // authorization: token ? `Bearer ${token}` : "",
                 ...headers,
@@ -166,7 +165,6 @@ export const serverApolloClient = (ctx) => {
         },
         headers: {
           'content-type': 'application/json',
-          "x-hasura-admin-secret": "hescomingrightforus",
           cookie: option(ctx).req.headers.cookie()
         },
         // Don't add all req headers, will request itself instead of gateway.
