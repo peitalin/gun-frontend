@@ -9,6 +9,7 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import ClearIcon from '@material-ui/icons/Clear';
 import Pagination from '@material-ui/lab/Pagination';
+import { useDebouncedCallback } from 'use-debounce';
 // GraphQL Typings
 import {
   Order_By,
@@ -31,6 +32,10 @@ import SearchOptionsPriceFilter from "./SearchOptionsPriceFilter";
 import CategoryDropdown from './CategoryDropdown';
 import SearchIcon from '@material-ui/icons/Search';
 import InputBase from '@material-ui/core/InputBase';
+import IconButton from "@material-ui/core/IconButton";
+import ArrowBack from "@material-ui/icons/ArrowBack";
+import ArrowForward from "@material-ui/icons/ArrowForward";
+
 // Responsiveness
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
@@ -72,6 +77,31 @@ const SearchOptionsPaginator: React.FC<ReactProps> = (props) => {
     limit
   } = paginationParams;
 
+  // for fast UI updates.
+  const [searchTermUi, setSearchTermUi] = React.useState("");
+  // for actual gql dispatch for search term
+  const [debounceSetSearchTerm] = useDebouncedCallback((s: string) => {
+    console.log("setting searchTerm: ", s)
+    setSearchTerm(s)
+  }, 128);
+
+  // for fast UI updates
+  const [pageUi, setPageUi] = React.useState(1);
+  // for actual gql dispatch for pagination page
+  const [debounceSetPageParam, cancel, callPending] = useDebouncedCallback(
+    (page: number) => {
+      if (option(paginationParams).setPageParam()) {
+        paginationParams.setPageParam(page)
+      }
+    },
+    updateSetPageDelay
+  ) // debounce by 540ms
+
+  const [debounceSetIndex] = useDebouncedCallback((index: number) => {
+      setIndex(index)
+    },
+    updateSetPageDelay
+  ) // debounce by 540ms
 
   const orderByOptions = [
     { label: "Newest", value: { createdAt: Order_By.DESC }},
@@ -79,10 +109,6 @@ const SearchOptionsPaginator: React.FC<ReactProps> = (props) => {
     { label: "Highest Price", value: { price: Order_By.DESC }},
     { label: "Lowest Price", value: { price: Order_By.ASC }},
   ];
-
-
-  // for fast UI updates
-  const [pageUi, setPageUi] = React.useState(1);
 
 
   React.useEffect(() => {
@@ -129,7 +155,6 @@ const SearchOptionsPaginator: React.FC<ReactProps> = (props) => {
       <div className={clsx(
         classes.searchOptionsRoot,
         props.className,
-        focused ? classes.height65 : classes.height50,
       )} style={props.style}>
 
         <div className={classes.topSection}
@@ -283,11 +308,38 @@ const SearchOptionsPaginator: React.FC<ReactProps> = (props) => {
               Search
             </Button>
 
+
           </div>
 
         </div>
 
       </div>
+
+      <div className={clsx(
+        classes.arrowContainer,
+        classes.height50,
+        // focused ? classes.height65 : classes.height50,
+      )}>
+        <Pagination
+          classes={{
+            root: classes.paginationPage,
+          }}
+          disabled={totalCount === 0}
+          count={totalCount || 0}
+          page={pageUi}
+          onMouseDown={(e) => {
+            // console.log("mouse down: ", e)
+          }}
+          onChange={(event, page) => {
+            // update paginator UI first
+            setPageUi(page)
+            // then update pageParams (gQL request) + index change in carousel
+            debounceSetPageParam(page)
+            debounceSetIndex(page - 1)
+          }}
+        />
+      </div>
+
     </div>
   )
 }
@@ -465,6 +517,12 @@ export interface SelectOption {
 const styles = (theme: Theme) => createStyles({
   searchRoot: {
     display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: 'center',
+  },
+  searchOptionsRoot: {
+    display: "flex",
     justifyContent: "flex-start",
     alignItems: "flex-start",
     border: theme.palette.type === 'dark'
@@ -475,14 +533,11 @@ const styles = (theme: Theme) => createStyles({
       : Colors.cream,
     borderRadius: BorderRadius4x,
   },
-  searchOptionsRoot: {
+  topSection: {
     display: "flex",
     justifyContent: "center",
     flexDirection: "row",
     alignItems: 'center',
-    width: '100%',
-  },
-  topSection: {
     width: '100%',
   },
   bottomSection: {
@@ -710,6 +765,32 @@ const styles = (theme: Theme) => createStyles({
   iconOuter: {
     fill: Colors.cream,
     marginRight: '0.1rem',
+  },
+  arrowContainer: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    minWidth: 100,
+    // height: 50,
+    marginLeft: '0.25rem',
+    padding: '0rem 0.25rem',
+    border: theme.palette.type === 'dark'
+      ? `1px solid ${Colors.uniswapLightNavy}`
+      : `1px solid ${Colors.slateGreyDarker}`,
+    background: theme.palette.type === 'dark'
+      ? Colors.uniswapDarkNavy
+      : Colors.cream,
+    borderRadius: BorderRadius4x,
+  },
+  backButton: {
+  },
+  forwardButton: {
+  },
+  paginationPage: {
+    "& > ul > li > button": {
+      color: Colors.uniswapLightestGrey
+    },
   },
 });
 

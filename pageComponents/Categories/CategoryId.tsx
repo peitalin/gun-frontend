@@ -76,7 +76,7 @@ const CategoryId: React.FC<ReactProps> = (props) => {
 
 
   /////////////////////////////////// paginator
-  let numItemsPerPage = 24;
+  let numItemsPerPage = 8;
   let overfetchBy = 1;
   // overfetch by 2x pages
 
@@ -156,6 +156,7 @@ const CategoryId: React.FC<ReactProps> = (props) => {
     totalCount: totalCount,
     searchTerm: searchTerm,
   })
+  console.log("totalCount: ", productsConnection?.totalCount)
 
 
   return (
@@ -209,7 +210,7 @@ const CategoryId: React.FC<ReactProps> = (props) => {
               setPriceRange={setPriceRange}
               placeholder={"Search for products..."}
               paginationParams={{
-                totalCount: totalCount,
+                totalCount: Math.ceil(productsConnection?.totalCount / numItemsPerPage),
                 overfetchBy: overfetchBy,
                 limit: limit,
                 pageParam: pageParam,
@@ -249,7 +250,7 @@ const CategoryId: React.FC<ReactProps> = (props) => {
             setTotalCount={setTotalCount}
             numItemsPerPage={numItemsPerPage}
             overfetchBy={overfetchBy}
-            // disableAnimation
+            disableAnimation
             loading={loading}
             containerStyle={{ minHeight: 284*2 }}
             // gridItemClassName={classes.gridItem}
@@ -269,10 +270,10 @@ const CategoryId: React.FC<ReactProps> = (props) => {
                     classes.marginRight1,
                   )}
                 >
-                  <PreviewCardResponsive
+                  {/* <PreviewCardResponsive
                     product={product}
-                  />
-                  {/* {
+                  /> */}
+                  {
                     mdDown
                     ? <PreviewCardResponsive
                         product={product}
@@ -282,7 +283,7 @@ const CategoryId: React.FC<ReactProps> = (props) => {
                         product={product}
                         cardsPerRow={4}
                       />
-                  } */}
+                  }
                 </div>
               )
             }}
