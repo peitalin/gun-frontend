@@ -31,11 +31,6 @@ const PriceDisplayMain = (props: ReactProps) => {
   } = props;
 
   const priceDisplay = currency(price/100, { formatWithSymbol: true })
-  const priceWasDisplay = currency(priceWas/100, { formatWithSymbol: true })
-
-  const savings = (price >= priceWas)
-    ?  currency(0, { formatWithSymbol: true })
-    :  currency((price - priceWas)/100, { formatWithSymbol: true })
 
 
   if (soldOutStatus !== SoldOutStatus.AVAILABLE) {
@@ -60,13 +55,6 @@ const PriceDisplayMain = (props: ReactProps) => {
             <Typography className={classes.price} variant="body1">
               {priceDisplay.format()}
             </Typography>
-            {
-              !hidePriceWas &&
-              (price > priceWas) &&
-              <Typography className={classes.priceWas} variant="body1">
-                {priceWasDisplay.format()}
-              </Typography>
-            }
           </div>
         </div>
       </>
