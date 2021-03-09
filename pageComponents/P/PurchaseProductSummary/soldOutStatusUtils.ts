@@ -9,7 +9,7 @@ export const soldOutStatusToDisplayMessage = (o: string) => {
       return "Product is abandoned and marked for deletion"
     }
     case SoldOutStatus.AVAILABLE: {
-      return "Product is available for purchases"
+      return "Product is available for purchase"
     }
     case SoldOutStatus.RESERVED: {
       return "Product is currently pending sale"
@@ -18,7 +18,7 @@ export const soldOutStatusToDisplayMessage = (o: string) => {
       return "Product is sold"
     }
     default: {
-      return "NA"
+      return ""
     }
   }
 }
