@@ -23,7 +23,10 @@ import { shuffle } from "utils/misc";
 
 const CategoryCarouselStart = (props: ReactProps) => {
 
-  const { classes } = props
+  const {
+    classes,
+    disableTitle = false,
+  } = props
 
   //////// Remember, the <Hidden/> CSS components,
   /////// initialNumItems should match this:
@@ -56,9 +59,9 @@ const CategoryCarouselStart = (props: ReactProps) => {
 
   let categoryPreviewCards = [
     {
-      name: 'Pistols',
-      slug: 'pistols',
-      imageUrl: "/img/categories-banner/pistols.jpg"
+      name: 'Handguns',
+      slug: 'handguns',
+      imageUrl: "/img/categories-banner/handguns.jpg"
     },
     {
       name: 'Rifles',
@@ -68,7 +71,7 @@ const CategoryCarouselStart = (props: ReactProps) => {
     {
       name: 'Shotguns',
       slug: 'shotguns',
-      imageUrl: "/img/categories-banner/semi-automatics.jpg"
+      imageUrl: "/img/categories-banner/shotguns.jpg"
     },
     {
       name: 'Combinations',
@@ -80,9 +83,12 @@ const CategoryCarouselStart = (props: ReactProps) => {
   return (
     <div className={classes.categoryCarouselRoot}>
 
-      <Typography className={classes.title}>
-        Categories
-      </Typography>
+      {
+        !disableTitle &&
+        <Typography className={classes.title}>
+          Categories
+        </Typography>
+      }
 
       <Hidden only={["xs", "sm", "md", "lg"]} implementation="css">
         {/* IMPLEMENTATION must be JS or scroll won't work */}
@@ -133,6 +139,7 @@ const CategoryCarouselStart = (props: ReactProps) => {
 interface ReactProps extends WithStyles<typeof styles> {
   title?: string;
   style?: any;
+  disableTitle?: boolean;
 }
 export interface CategoryPreviewCard {
   imageUrl: string,

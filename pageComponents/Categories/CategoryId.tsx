@@ -269,7 +269,10 @@ const CategoryId: React.FC<ReactProps> = (props) => {
                     classes.marginRight1,
                   )}
                 >
-                  {
+                  <PreviewCardResponsive
+                    product={product}
+                  />
+                  {/* {
                     mdDown
                     ? <PreviewCardResponsive
                         product={product}
@@ -279,7 +282,7 @@ const CategoryId: React.FC<ReactProps> = (props) => {
                         product={product}
                         cardsPerRow={4}
                       />
-                  }
+                  } */}
                 </div>
               )
             }}

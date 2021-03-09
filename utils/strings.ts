@@ -54,7 +54,7 @@ export const convertSoldOutStatus = (s: string) => {
       return "Available"
     }
     case SoldOutStatus.RESERVED: {
-      return "Reserved"
+      return "Pending Sale"
     }
     case SoldOutStatus.SOLD_OUT: {
       return "Sold Out"

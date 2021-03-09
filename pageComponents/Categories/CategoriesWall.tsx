@@ -10,31 +10,26 @@ import Typography from "@material-ui/core/Typography";
 import Link from "next/link";
 import { categorySelectors } from "utils/selectors";
 import { Colors } from "layout/AppTheme";
+import CategoryCarouselStart from "pageComponents/FrontPage/CategoryCarouselStart";
 
 
 
 
 const CategoriesWall: React.FC<ReactProps> = (props) => {
 
-  const { classes } = props;
-  // const {
-  //   design,
-  //   video,
-  //   sounds,
-  //   musicGenres
-  // } = categorySelectors(props.categories)
-
-  let numCategories = props.categories.length;
-  let numPerSection = numCategories / 4
-
-  console.log("num categories:", numCategories)
-  console.log("num per section:", numPerSection)
+  const {
+    classes,
+    categories,
+  } = props;
 
 
   return (
     <div className={classes.categoryOuterContainer}>
       <div className={classes.categoryInnerContainer}>
-        {
+        <CategoryCarouselStart
+          disableTitle={true}
+        />
+        {/* {
           props.categories &&
           (props.categories ?? []).map(c => {
             return (
@@ -50,7 +45,7 @@ const CategoriesWall: React.FC<ReactProps> = (props) => {
               </Link>
             )
           })
-        }
+        } */}
       </div>
     </div>
   )

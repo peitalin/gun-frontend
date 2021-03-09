@@ -12,7 +12,7 @@ export const soldOutStatusToDisplayMessage = (o: string) => {
       return "Product is available for purchases"
     }
     case SoldOutStatus.RESERVED: {
-      return "Product is currently under sale"
+      return "Product is currently pending sale"
     }
     case SoldOutStatus.SOLD_OUT: {
       return "Product is sold"

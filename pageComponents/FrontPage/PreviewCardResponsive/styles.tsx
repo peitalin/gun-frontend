@@ -1,6 +1,6 @@
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
 import { Gradient } from "@material-ui/icons";
-import { Colors, BorderRadius, Gradients, BoxShadows } from "layout/AppTheme";
+import { Colors, BorderRadius, BorderRadius2x, BoxShadows } from "layout/AppTheme";
 
 export const CARD_MAX_WIDTH_XL = 556;
 // Replace hash with html-encoded %23
@@ -24,7 +24,7 @@ export const styles = (theme: Theme) => createStyles({
       : `1px solid ${theme.colors.slateGrey}`,
   },
   card: {
-    borderRadius: `${BorderRadius}px ${BorderRadius}px 0px 0px`,
+    borderRadius: `${BorderRadius}px ${BorderRadius}px 2px 2px `,
     backgroundColor: theme.palette.type === 'dark'
       ? theme.colors.uniswapDarkNavy
       : theme.colors.slateGrey,
@@ -54,35 +54,60 @@ export const styles = (theme: Theme) => createStyles({
   descriptionContainerOuter: {
     position: 'relative', // for wishlist Button position: absolute
     width: '100%',
-    borderRadius: `0px 0px ${BorderRadius}px ${BorderRadius}px`,
+    borderRadius: `2px 2px ${BorderRadius}px ${BorderRadius}px`,
     backgroundColor: theme.palette.type === 'dark'
       ? theme.colors.uniswapDarkNavy
       : theme.colors.cream,
   },
   descriptionContainer: {
-    marginTop: "0.5rem",
-    paddingTop: "0.25rem",
-    margin: '0.5rem',
+    // marginTop: "0.5rem",
+    margin: '0.75rem',
     height: DESCRIPTION_HEIGHT, // ensure all cards descriptions are same height
     // cursor: 'pointer',
     position: 'relative', // for wishlist Button position: absolute
-
+    display: 'flex',
+    flexDirection: "column",
+    justifyContent: "space-between",
   },
-  category: {
+  descriptionDetailsFlexItem: {
+    bottom: '0.25rem',
+  },
+  priceDetailsFlexItem: {
+    bottom: '0.25rem',
+  },
+  makeModel: {
     textTransform: "uppercase",
     fontWeight: 500,
+    fontSize: '0.825rem',
     color: theme.palette.type === 'dark'
-      ? theme.colors.uniswapLighterGrey
-      : theme.colors.uniswapDarkNavy,
-    marginBottom: '0.4rem',
-    lineHeight: '1rem',
+      ? Colors.uniswapLighterGrey
+      : Colors.slateGreyLightBlack,
+    marginBottom: '0.1rem',
+    lineHeight: '0.9rem',
+  },
+  actionTag: {
+    position: 'absolute',
+    bottom: '0.25rem',
+    right: '0rem',
+    border: theme.palette.type === 'dark'
+      ? `1px solid ${Colors.uniswapLighterGrey}`
+      : `1px solid ${Colors.slateGreyDarker}`,
+    borderRadius: BorderRadius,
+    padding: '0.2rem 0.3rem',
+  },
+  actionType: {
+    textTransform: "uppercase",
+    fontWeight: 500,
+    fontSize: '0.7rem',
+    color: theme.palette.type === 'dark'
+      ? Colors.uniswapLighterGrey
+      : Colors.slateGreyDarkest,
   },
   title: {
     fontWeight: 600,
     marginBottom: '0.4rem',
     lineHeight: '1.25rem',
     overflowY: 'hidden',
-    minHeight: '2.5rem',
     maxHeight: '2.5rem',
   },
   tagline: {
@@ -90,9 +115,6 @@ export const styles = (theme: Theme) => createStyles({
     color: "#aaa",
     marginBottom: '0.4rem',
     lineHeight: '1rem',
-  },
-  priceAbsoluteBottom: {
-    bottom: '0.25rem',
   },
   flexRow100Width: {
     display: 'flex',

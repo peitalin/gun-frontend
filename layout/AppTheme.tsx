@@ -118,6 +118,8 @@ export const Colors = {
   slateGreyDark: "#E2E8ED",
   slateGreyDarker: "#D0D5DF",
   slateGreyDarkest: "#B0B5BF",
+  slateGreyLightestBlack: "#888888",
+  slateGreyLighterBlack: "#666666",
   slateGreyLightBlack: "#555555",
   slateGreyBlack: "#253848",
   // greyscale

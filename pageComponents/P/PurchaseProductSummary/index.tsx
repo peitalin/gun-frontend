@@ -139,7 +139,7 @@ const PurchaseProductSummary: React.FC<ReactProps> = (props) => {
                     // className={"fadeIn"}
                     product={props.product}
                     refetchProduct={props.refetchProduct}
-                    title={`Reserve for ${c(featuredVariant.price)} AUD`}
+                    title={`Buy for ${c(featuredVariant.price)} AUD`}
                     showIcon={true}
                     display={true}
                     buttonHeight={xsDown ? '40px' : '40px'}

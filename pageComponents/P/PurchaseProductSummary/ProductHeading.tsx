@@ -24,10 +24,10 @@ const ProductHeading = (props: ReactProps) => {
         </Typography>
       </div>
       <Typography variant="body1" className={classes.subInfo}>
-        {product?.currentSnapshot?.model}
+        {product?.currentSnapshot?.make}
       </Typography>
       <Typography variant="body1" className={classes.subInfo}>
-        {product?.currentSnapshot?.make}
+        {product?.currentSnapshot?.model}
       </Typography>
       <Typography variant="body1" className={classes.subInfo}>
         {product?.currentSnapshot?.serialNumber}

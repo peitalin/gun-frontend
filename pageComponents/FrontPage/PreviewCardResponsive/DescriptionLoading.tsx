@@ -47,8 +47,8 @@ const DescriptionLoading = (props: DescriptionLoadingProps) => {
         className={classes.descriptionContainer}
         style={{
           minHeight: height,
-          height: '100%',
-          // height: "112px", // ensure all cards descriptions are same height
+          // height: '100%',
+          height: "112px", // ensure all cards descriptions are same height
           ...style
         }}
       >

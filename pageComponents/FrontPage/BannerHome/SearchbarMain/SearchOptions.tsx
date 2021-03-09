@@ -637,7 +637,7 @@ const styles = (theme: Theme) => createStyles({
     }),
   },
   searchWide: {
-    width: 240,
+    width: 230,
     transition: theme.transitions.create(['width', 'height'], {
       easing: theme.transitions.easing.sharp,
       duration: "100ms",
@@ -651,7 +651,7 @@ const styles = (theme: Theme) => createStyles({
     }),
   },
   searchButtonWide: {
-    width: 140,
+    width: 130,
     transition: theme.transitions.create(['width', 'height'], {
       easing: theme.transitions.easing.sharp,
       duration: "300ms",

@@ -199,7 +199,7 @@ export const styles = (theme: Theme) => createStyles({
   categoryTitleText: {
     color: theme.palette.type === 'dark'
       ? Colors.uniswapLighterGrey
-      : Colors.black,
+      : Colors.slateGreyLightestBlack,
     minWidth: '140px',
     whiteSpace: 'nowrap',
     fontSize: '0.825rem',

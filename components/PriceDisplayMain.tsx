@@ -40,9 +40,15 @@ const PriceDisplayMain = (props: ReactProps) => {
 
   if (soldOutStatus !== SoldOutStatus.AVAILABLE) {
     return (
-      <Typography className={classes.price} variant="body1">
-        {convertSoldOutStatus(soldOutStatus)}
-      </Typography>
+      <div className={classes.priceOuterContainer}>
+        <div className={classes.innerContainerSpread}>
+          <div className={classes.priceInnerContainer}>
+            <Typography className={classes.price} variant="body1">
+              {convertSoldOutStatus(soldOutStatus)}
+            </Typography>
+          </div>
+        </div>
+      </div>
     )
   }
 
@@ -95,7 +101,7 @@ const styles = (theme: Theme) => createStyles({
     flexDirection: "row",
     justifyContent: 'space-between',
     alignItems: 'flex-end',
-    marginBottom: '0.5rem',
+    marginBottom: '0.25rem',
     marginTop: '0.25rem',
   },
   innerContainerSpreadCountdown: {
@@ -125,11 +131,13 @@ const styles = (theme: Theme) => createStyles({
   },
   price: {
     marginRight: '0.5rem',
-    fontSize: "1.25rem",
+    fontSize: "1.125rem",
     fontWeight: 500,
     lineHeight: 1.2, // needed to aligned price, priceWas, quantity
-    color: Colors.gradientUniswapBlue1,
-    // color: Gradients.gradientUniswapFluro.color1,
+    // color: Colors.gradientUniswapBlue1,
+    color: theme.palette.type === 'dark'
+      ? Colors.secondaryBright
+      : Colors.secondaryBright,
     // background: Gradients.gradientUniswapFluro.background,
     // webkitBackgroundClip: 'text',
     // webkitTextFillColor: 'transparent',
