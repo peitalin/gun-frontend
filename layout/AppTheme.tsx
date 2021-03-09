@@ -217,6 +217,11 @@ export const Gradients = {
     color1: Colors.gradientGrey1,
     color2: Colors.gradientGrey2,
   },
+  gradientGrey2Rotated:  {
+    background: `linear-gradient(220deg, ${Colors.gradientGrey1} 25%, ${Colors.gradientGrey2} 100%)`,
+    color1: Colors.gradientGrey1,
+    color2: Colors.gradientGrey2,
+  },
   gradientGrey3:  {
     background: `linear-gradient(120deg, ${Colors.gradientGrey2} 25%, ${Colors.gradientGrey1} 50%, ${Colors.gradientGrey1} 75%)`,
     color1: Colors.gradientGrey1,

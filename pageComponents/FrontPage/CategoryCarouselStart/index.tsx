@@ -61,19 +61,19 @@ const CategoryCarouselStart = (props: ReactProps) => {
       imageUrl: "/img/categories-banner/pistols.jpg"
     },
     {
-      name: 'Carbines',
-      slug: 'carbines',
-      imageUrl: "/img/categories-banner/carbines.jpg"
-    },
-    {
       name: 'Rifles',
       slug: 'rifles',
       imageUrl: "/img/categories-banner/rifles.jpg"
     },
     {
-      name: 'Semi Automatics',
-      slug: 'semi-automatics',
+      name: 'Shotguns',
+      slug: 'shotguns',
       imageUrl: "/img/categories-banner/semi-automatics.jpg"
+    },
+    {
+      name: 'Combinations',
+      slug: 'combinations',
+      imageUrl: "/img/categories-banner/combinations.jpg"
     },
   ]
 

@@ -42,8 +42,11 @@ const Footer: React.FC<ReactProps> = (props) => {
   const d = new Date();
   const year = d.getUTCFullYear()
 
-  const { user } = useSelector<GrandReduxState, ReduxState>(state => {
-    return { user: state.reduxLogin.user }
+  const { user, isDarkMode } = useSelector<GrandReduxState, ReduxState>(state => {
+    return {
+      user: state.reduxLogin.user,
+      isDarkMode: state.reduxLogin.darkMode === "dark"
+    }
   })
 
   const theme = useTheme();
@@ -65,7 +68,9 @@ const Footer: React.FC<ReactProps> = (props) => {
                 classes.title,
                 mdDown ? classes.textAlignCenter : null,
               )}>
-                <LogoCircle />
+                <LogoCircle
+                  color={isDarkMode ? Colors.cream : Colors.black}
+                />
               </div>
               {/* <Typography variant="body2"
                 className={clsx(
@@ -231,6 +236,7 @@ interface ReactProps extends WithStyles<typeof styles> {
 }
 interface ReduxState {
   user: UserPrivate;
+  isDarkMode: boolean;
 }
 
 const FOOTER_MAX_WIDTH = 1024;
@@ -244,17 +250,21 @@ const styles = (theme: Theme) => createStyles({
     // backgroundColor: Colors.mediumBlack,
     background: theme.palette.type === 'dark'
       ? Gradients.gradientBlack.background
-      : Gradients.gradientDarkGrey.background,
+      : Gradients.gradientGrey2Rotated.background,
     paddingTop: "4rem",
     color: Colors.cream,
   },
   title: {
-    color: Colors.cream,
+    color: theme.palette.type === 'dark'
+      ? Colors.cream
+      : Colors.black,
     fontWeight: 400,
     marginBottom: '0.5rem',
   },
   subtitle: {
-    color: Colors.cream,
+    color: theme.palette.type === 'dark'
+      ? Colors.cream
+      : Colors.black,
     fontWeight: 400,
     fontSize: '0.9rem',
   },
@@ -340,8 +350,10 @@ const styles = (theme: Theme) => createStyles({
     width: '100%',
     borderTop: theme.palette.type === 'dark'
       ? `1px solid ${Colors.charcoal}`
-      : `1px solid ${Colors.darkWhite}`,
-    color: Colors.mediumGrey,
+      : `1px solid ${Colors.slateGrey}`,
+    color: theme.palette.type === 'dark'
+      ? Colors.mediumGrey
+      : Colors.slateGreyBlack,
     display: 'flex',
     flexDirection: "row",
     flexWrap: 'wrap',
@@ -365,12 +377,6 @@ const styles = (theme: Theme) => createStyles({
     verticalAlign: 'top',
     marginLeft: '0.25rem',
   },
-  downloadIcon: {
-    height: '44px',
-    marginRight: '1rem',
-    border: "1px solid #888888",
-    borderRadius: "4px",
-  },
   link: {
     marginBottom: '1rem',
   },
@@ -379,11 +385,11 @@ const styles = (theme: Theme) => createStyles({
     fontSize: '0.9rem',
     lineHeight: '1rem',
     color: theme.palette.type === 'dark'
-      ? theme.colors.uniswapLightestGrey
-      : theme.colors.darkWhite,
+      ? Colors.uniswapLightestGrey
+      : Colors.black,
     textDecoration: 'none',
     '&:hover': {
-      color: Colors.cream,
+      color: Colors.secondaryBright,
       cursor: 'pointer',
     }
   },
@@ -412,7 +418,7 @@ const styles = (theme: Theme) => createStyles({
       : theme.colors.darkWhite,
     textDecoration: 'none',
     '&:hover': {
-      color: theme.colors.cream,
+      color: Colors.secondaryBright,
       cursor: 'pointer',
     }
   },

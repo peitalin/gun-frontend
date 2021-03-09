@@ -10,13 +10,14 @@ const LogoCircle = (props: LogoProps) => {
 
   const {
     classes,
+    color,
     hideTitle = true,
     disableLogo = false,
+    height = 75,
+    width = 120, // default: 509px
   } = props;
 
-  let fillColor = "#f2f2f2";
-  let height = 75
-  let width = 120 // default: 509px
+  let fillColor = color ?? "#f2f2f2";
 
   return (
     <div className={classes.logoContainer}
@@ -65,6 +66,7 @@ interface LogoProps extends WithStyles<typeof styles> {
   hideTitle?: boolean;
   disableLogo?: boolean;
   height?: any;
+  width?: any;
 }
 
 
