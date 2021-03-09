@@ -26,7 +26,6 @@ const ErrorPage = (props: ReactProps) => {
 
   return (
     <div className={clsx(classes.root, classes.flexRow)}>
-      <Divider style={{ width: '90%', marginBottom: "1rem" }}/>
       <div className={clsx(classes.flexCol, classes.maxWidth)}>
         <div className={classes.noResultsContainer}>
           <Typography variant="h4" className={classes.title}>
@@ -98,7 +97,12 @@ const styles = (theme: Theme) => createStyles({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    background: Colors.cream,
+    background: theme.palette.type === 'dark'
+      ? Colors.uniswapDarkNavy
+      : Colors.cream,
+    border: theme.palette.type === 'dark'
+      ? `1px solid ${Colors.uniswapNavy}`
+      : `1px solid ${Colors.slateGreyDarker}`,
     borderRadius: '8px',
     width: '100%',
   },
