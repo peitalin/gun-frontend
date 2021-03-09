@@ -244,27 +244,47 @@ const GridPreviewCardLight = (props: ReactProps) => {
             : <div className={classes.descriptionContainer}
                 style={cardWidthStyle}
               >
-                <Typography
-                  className={classes.category}
-                  variant="body2"
-                  component="div"
-                >
-                  {category?.name}
-                </Typography>
-                <Typography
-                  className={classes.title}
-                  variant="body1"
-                  component="div"
-                >
-                  { title ? title : "" }
-                </Typography>
-                <div className={classes.priceAbsoluteBottom}>
-                  <PriceDisplayMain
-                    price={price}
-                    priceWas={priceWas}
-                    quantityAvailable={1}
-                    soldOutStatus={soldOutStatus}
-                  />
+                <div className={classes.actionTag}>
+                  <Typography
+                    className={classes.actionType}
+                    variant="body2"
+                    component="div"
+                  >
+                    {product?.currentSnapshot?.actionType}
+                  </Typography>
+                </div>
+                <div className={classes.descriptionDetailsFlexItem}>
+                  <Typography
+                    className={classes.title}
+                    variant="body1"
+                    component="div"
+                  >
+                    { title ? title : "" }
+                  </Typography>
+                  <Typography
+                    className={classes.makeModel}
+                    variant="body2"
+                    component="div"
+                  >
+                    {`${product?.currentSnapshot?.make}`}
+                  </Typography>
+                  <Typography
+                    className={classes.makeModel}
+                    variant="body2"
+                    component="div"
+                  >
+                    {`${product?.currentSnapshot?.model}`}
+                  </Typography>
+                </div>
+                <div className={classes.priceDetailsFlexItem}>
+                  {
+                    price !== undefined &&
+                    <PriceDisplayMain
+                      price={price}
+                      priceWas={priceWas}
+                      soldOutStatus={product.soldOutStatus}
+                    />
+                  }
                 </div>
               </div>
           }

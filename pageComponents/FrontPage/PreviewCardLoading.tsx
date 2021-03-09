@@ -103,13 +103,13 @@ const PreviewCardLoading = (props: ReactProps) => {
           >
             <Typography
               className={clsx(
-                classes.category,
+                classes.makeModel,
                 // !option(props).category.name() ? "pulse" : null
               )}
               variant="body1"
               component="div"
             >
-              {option(props).category.name()}
+              {props?.category?.name}
             </Typography>
             <Typography
               className={clsx(
@@ -122,7 +122,7 @@ const PreviewCardLoading = (props: ReactProps) => {
               {option(title)("".repeat(2))}
             </Typography>
             <div className={clsx(
-              classes.priceAbsoluteBottom,
+              classes.priceDetailsFlexItem,
               // !option(props).priceDetails() ? "pulse" : null
             )}>
               {/* <LoadingBar
