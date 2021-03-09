@@ -117,7 +117,7 @@ const CategoryId: React.FC<ReactProps> = (props) => {
         limit: limit,
         offset: offset
       },
-      categorySlug: props.categoryOrCategoryGroup?.slug
+      categorySlug: props.initialRouteCategory?.slug
         ?? (router?.query?.categorySlug as any),
       searchTerm: searchTermForGql || "*",
     },
@@ -136,13 +136,14 @@ const CategoryId: React.FC<ReactProps> = (props) => {
     setSearchTermForGql(searchTerm)
   }
 
-  const categoryName: string = props.categoryOrCategoryGroup?.name
-  const categorySlug: string = props.categoryOrCategoryGroup?.slug
+  const categoryName: string = props.initialRouteCategory?.name
+  const categoryBlurb: string = props.initialRouteCategory?.blurb
+  const categorySlug: string = props.initialRouteCategory?.slug
 
   // sync selected category in searchbar to SSR category from url bar
   React.useEffect(() => {
-    setCurrentCategories([props.categoryOrCategoryGroup])
-  }, [props.categoryOrCategoryGroup])
+    setCurrentCategories([props.initialRouteCategory])
+  }, [props.initialRouteCategory])
 
   const productsConnection = data?.productsByCategoryConnection
     || props.initialProducts;
@@ -186,6 +187,8 @@ const CategoryId: React.FC<ReactProps> = (props) => {
         }>
           <BannerCategory
             categoryName={categoryName}
+            categorySlug={categorySlug}
+            categoryBlurb={categoryBlurb}
           />
         </div>
 
@@ -290,7 +293,7 @@ const CategoryId: React.FC<ReactProps> = (props) => {
 
 interface ReactProps extends WithStyles<typeof styles> {
   initialProducts: ProductsConnection;
-  categoryOrCategoryGroup: Categories;
+  initialRouteCategory: Categories;
   disableBreadcrumbs?: boolean;
   disableMetaHeader?: boolean;
 }

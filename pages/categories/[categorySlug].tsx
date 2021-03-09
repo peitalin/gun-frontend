@@ -52,7 +52,7 @@ const CategorySlugSSR: NextPage<ReactProps> = (props) => {
       />
       <CategoryId
         initialProducts={props.initialProducts}
-        categoryOrCategoryGroup={props.category}
+        initialRouteCategory={props.selectedCategory}
       />
     </>
   )
@@ -61,7 +61,7 @@ const CategorySlugSSR: NextPage<ReactProps> = (props) => {
 interface ReactProps {
   initialProducts: ProductsConnection;
   categoryName?: string;
-  category: Categories;
+  selectedCategory: Categories;
 }
 
 interface QueryData1 {
@@ -99,13 +99,13 @@ CategorySlugSSR.getInitialProps = async (ctx: Context) => {
       return {
         initialProducts: undefined,
         categoryName: categoryName,
-        category: selectedCategory,
+        selectedCategory: selectedCategory,
       };
     } catch(e) {
       return {
         initialProducts: undefined,
         categoryName: "",
-        category: undefined,
+        selectedCategory: undefined,
       };
     }
 
@@ -113,7 +113,7 @@ CategorySlugSSR.getInitialProps = async (ctx: Context) => {
     return {
       initialProducts: undefined,
       categoryName: "",
-      category: undefined,
+      selectedCategory: undefined,
     };
   }
 }

@@ -57,7 +57,6 @@ const CategoryDropdown: React.FC<ReactProps> = (props) => {
 
   // console.log("dropDownItems: ", dropDownItems)
   let selectedCategory = props.currentCategories?.[0]
-  // console.log('currente-categories:::::', props.currentCategories)
 
   return (
     <ClickAwayListener onClickAway={handleClickAway}>
@@ -93,7 +92,7 @@ const CategoryDropdown: React.FC<ReactProps> = (props) => {
                             classes={{
                               root: clsx(
                                 classes.buttonRoot,
-                                (props.currentCategories ?? []).find(c => category.id === c.id)
+                                (props.currentCategories ?? []).find(c => category?.id === c?.id)
                                   ? classes.buttonSelected
                                   : null,
                               )
@@ -116,7 +115,7 @@ const CategoryDropdown: React.FC<ReactProps> = (props) => {
                         classes={{
                           root: clsx(
                             classes.buttonRoot,
-                            (props.currentCategories ?? []).find(c => category.id === c.id)
+                            (props.currentCategories ?? []).find(c => category?.id === c?.id)
                               ? classes.buttonSelected
                               : null,
                           )

@@ -15,16 +15,37 @@ const BannerProductCreate: React.FC<ReactProps> = (props) => {
     classes,
   } = props;
 
-  const bannerImageUrl = "/img/banner10.jpg"
-  const bannerDitherMobile = 'linear-gradient(0deg, rgba(25,25,25,0.5) 10%, rgba(25,25,25,0.5) 90%)'
-  const bannerDither = 'linear-gradient(30deg, rgba(25,25,25,0.5) 10%, rgba(25,25,25,0.5) 90%)'
+  const getBannerImageUrl = (slug) => {
+    switch (slug) {
+      case "pistols": {
+        return "/img/banner5.jpg"
+      }
+      case "rifles": {
+        return "/img/banner10.jpg"
+      }
+      case "shotguns": {
+        return "/img/banner10.jpg"
+      }
+      case "combination": {
+        return "/img/banner4.jpg"
+      }
+      default: {
+        return "/img/banner10.jpg"
+      }
+    }
+  }
+
+  const bannerImageUrl = getBannerImageUrl(props.categorySlug)
+  const bannerDitherMobile = 'linear-gradient(0deg, rgba(25,25,25,0.4) 10%, rgba(25,25,25,0.4) 90%)'
+  const bannerDither = 'linear-gradient(30deg, rgba(25,25,25,0.4) 10%, rgba(25,25,25,0.4) 90%)'
 
   return (
     <>
       {/* Mobile */}
       <Hidden mdUp implementation='css' className={classes.width100}>
       <BannerCategoryMobile
-        blurb={props.blurb ?? "category description"}
+        categoryName={props.categoryName}
+        blurb={props.categoryBlurb ?? ""}
         bannerForegroundImageUrl={bannerImageUrl}
         bannerBackgroundImageUrl={bannerImageUrl}
         bannerDither={bannerDitherMobile}
@@ -34,7 +55,7 @@ const BannerProductCreate: React.FC<ReactProps> = (props) => {
       <Hidden smDown implementation="css" className={classes.width100}>
       <BannerCategoryDesktop
         categoryName={props.categoryName}
-        blurb={props.blurb ?? "cateogry description"}
+        blurb={props.categoryBlurb ?? ""}
         bannerForegroundImageUrl={undefined}
         bannerBackgroundImageUrl={bannerImageUrl}
         bannerDither={bannerDither}
@@ -47,7 +68,8 @@ const BannerProductCreate: React.FC<ReactProps> = (props) => {
 
 interface ReactProps extends WithStyles<typeof styles> {
   categoryName?: string
-  blurb?: string
+  categorySlug?: string
+  categoryBlurb?: string
 }
 
 

@@ -7,7 +7,12 @@ import { Colors } from "layout/AppTheme";
 // GraphQL
 import { useQuery } from "@apollo/client";
 // Typings
-import { ProductsConnection, ConnectionOffsetQuery, Product } from "typings/gqlTypes";
+import {
+  ProductsConnection,
+  ConnectionOffsetQuery,
+  Product,
+  Categories,
+} from "typings/gqlTypes";
 import { SEARCH_ALL_PRODUCTS } from "queries/search-queries";
 // Utils
 import ErrorDisplay from "components/Error";
@@ -55,7 +60,7 @@ const SearchResults = (props: ReactProps) => {
   // /// for testing only
   // const qQuery = decodeURIComponent(router.query.q as string);
   // const pageQuery = decodeURIComponent(router.query.page as string);
-  console.log("pathname: ", router.pathname)
+  // console.log("pathname: ", router.pathname)
   // console.log("query: ", initialSearchTerm)
   // console.log("page: ", initialPageParam)
 
@@ -133,6 +138,8 @@ const SearchResults = (props: ReactProps) => {
   // console.log("totalCount: ", data?.search?.totalCount)
   // console.log('data: ', data)
   // console.log('data: ', data)
+  // console.log('currentCategories: ', currentCategories)
+
 
   if (error) {
     if (error.message.includes("searchTerm")) {
@@ -171,7 +178,10 @@ const SearchResults = (props: ReactProps) => {
           classes.padding1,
         )}>
           <div className={classes.searchContainer}>
-            <SearchbarMain color={Colors.slateGrey}/>
+            <SearchbarMain
+              color={Colors.slateGrey}
+              initialRouteCategory={props.initialRouteCategory}
+            />
           </div>
           <div className={classes.titleContainer}>
             <Typography variant="h4" className={classes.title}>
@@ -180,43 +190,7 @@ const SearchResults = (props: ReactProps) => {
             </Typography>
           </div>
           <ErrorBounds className={classes.sectionContainer}>
-            <SearchOptions
-              facets={facets}
-              // setCategoryFacets={setCategoryFacets({ facets, setFacets })}
-              currentCategories={currentCategories}
-              setSearchTerm={setSearchTerm}
-              setOrderBy={setOrderBy}
-              setPriceRange={setPriceRange}
-              paginationParams={{
-                totalCount: totalCount,
-                overfetchBy: overfetchBy,
-                limit: limit,
-                pageParam: pageParam,
-                setPageParam: setPageParam,
-                index: index,
-                setIndex: setIndex,
-              }}
-              updateSetPageDelay={0}
-              disableCategories={true}
-              disablePriceFilter={true}
-              disableSearchFilter={true}
-              disableSortby={true} // disable for now
-              topSectionStyles={{
-                justifyContent: 'flex-end',
-                alignItems: 'flex-end',
-                display: 'flex',
-                flexDirection: 'column',
-                width: '100%',
-              }}
-              bottomSectionStyles={{
-                marginTop: '1rem',
-                marginBottom: '2rem',
-                width: '100%',
-              }}
-              filterSectionStyles={{
-                justifyContent: "flex-start"
-              }}
-            >
+
               {
                 (searchResultsConnection?.edges?.length === 0 && !loading) &&
                 <NoListings/>
@@ -248,20 +222,10 @@ const SearchResults = (props: ReactProps) => {
                   )
                 }}
               </GridPaginatorGeneric>
-            </SearchOptions>
           </ErrorBounds>
         </div>
 
-        {/* <Hidden mdUp>
-          <YouMayAlsoLikeMobile/>
-        </Hidden>
-        <Hidden smDown>
-          <YouMayAlsoLike
-            // initialProducts={initialProductsLimitedRelease}
-            title={"You may also like"}
-            maxWidth={1160}
-          />
-        </Hidden> */}
+
       </div>
     );
   }
@@ -269,6 +233,7 @@ const SearchResults = (props: ReactProps) => {
 
 interface ReactProps extends WithStyles<typeof styles> {
   initialSearch?: ProductsConnection;
+  initialRouteCategory?: Categories;
 }
 interface QueryData {
   search: ProductsConnection;

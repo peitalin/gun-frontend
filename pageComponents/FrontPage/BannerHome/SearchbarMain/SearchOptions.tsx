@@ -156,7 +156,7 @@ const SearchOptionsPaginator: React.FC<ReactProps> = (props) => {
                   ref={searchRef}
                   // inputRef={input => {
                   // }}
-                  placeholder="Search pistols, rifles…"
+                  placeholder="Search for firearms in…"
                   classes={{
                     root: clsx(
                       classes.inputRoot,
@@ -198,9 +198,18 @@ const SearchOptionsPaginator: React.FC<ReactProps> = (props) => {
                   props.setCurrentCategories(categories)
                 }}
                 setFocused={setCategoryFocused}
-                dropDownItems={[
-                  ...(categories ?? []),
-                ]}
+                dropDownItems={
+                  props.isCategoriesPage
+                  ? [ ...(categories ?? []) ]
+                  : [
+                      {
+                        id: undefined,
+                        slug: undefined,
+                        name: "All Categories",
+                      },
+                      ...(categories ?? []),
+                    ]
+                }
               />
             }
 

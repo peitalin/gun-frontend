@@ -96,19 +96,14 @@ const SearchbarMain = (props: SearchbarProps) => {
     router.push(url)
   }
 
-  let initialCategorySlug: string = router?.query?.categorySlug as any;
-  // console.log("totalCount: ", data?.search?.totalCount)
-  // console.log('searchTerm: ', searchTerm)
-  // console.log('currentcategories: ', currentCategories)
+
   // sync selected category in searchbar to SSR category from url bar
   React.useEffect(() => {
-    let selectedCategory = (currentCategories ?? []).find(c => {
-      return c.slug === initialCategorySlug
-    })
-    if (selectedCategory) {
-      setCurrentCategories([selectedCategory])
+    if (props.initialRouteCategory) {
+      setCurrentCategories([props.initialRouteCategory])
     }
-  }, [initialCategorySlug])
+  }, [props.initialRouteCategory])
+
 
   return (
     <SearchOptions
@@ -154,6 +149,7 @@ const SearchbarMain = (props: SearchbarProps) => {
 
 interface SearchbarProps extends WithStyles<typeof styles> {
   color?: string;
+  initialRouteCategory?: Categories;
 }
 
 let styles = (theme: Theme) => createStyles({

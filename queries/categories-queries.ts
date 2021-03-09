@@ -10,6 +10,7 @@ export const GET_PRODUCT_CATEGORIES = gql`
       updatedAt
       categoryGroup
       slug
+      blurb
       thumbImageId
       bannerImageId
       thumbImage {
