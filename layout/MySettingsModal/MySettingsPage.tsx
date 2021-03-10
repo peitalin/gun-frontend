@@ -96,12 +96,12 @@ const MySettings = (props: ReactProps & ReduxProps) => {
         </div >
       }
 
-      <div className={classes.sectionLast}>
+      {/* <div className={classes.sectionLast}>
         <AdvancedSettings
           user={user}
           goBack={props.goBack}
         />
-      </div>
+      </div> */}
 
     </ErrorBounds>
   );
