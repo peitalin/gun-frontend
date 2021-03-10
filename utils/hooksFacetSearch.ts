@@ -352,7 +352,8 @@ export const totalItemsInCategoriesFacets = ({
   searchTerm: string,
 }) => {
 
-  // console.log("facet distributions", facetsDistribution)
+  console.log("facet distributions", facetsDistribution)
+  console.log("facets", facets)
   let currentCategories = facets
     .map(f => f.replace("_categoryNameFacet:", "").toLowerCase())
 

@@ -25,6 +25,7 @@ const FeaturedProductsMobile = (props: ReactProps) => {
       lg: 1.5,
       xl: 1.5,
     },
+    numRows = 1,
   } = props;
 
   return (
@@ -32,21 +33,24 @@ const FeaturedProductsMobile = (props: ReactProps) => {
       <Typography variant="h3" className={classes.title} gutterBottom>
         {props.title || "Featured"}
       </Typography>
-
-      <AirCarousel
-        id={"featured-products-carousel-main"}
-        // handleClickLeft={getPrevPage}
-        // handleClickRight={getNextPage}
-        disableButtons={false}
-        scrollSnapType={"x proximity"}
-      >
-        <LoadingCards
-          count={6}
-          xsCardRow={false}
-          flexWrapItems={false}
-          cardsPerRow={cardsPerRow}
-        />
-      </AirCarousel>
+      {
+        [...Array(numRows).keys()].map(i =>
+          <AirCarousel
+            id={`featured-products-carousel-main-${i}`}
+            // handleClickLeft={getPrevPage}
+            // handleClickRight={getNextPage}
+            disableButtons={false}
+            scrollSnapType={"x proximity"}
+          >
+            <LoadingCards
+              count={6}
+              xsCardRow={false}
+              flexWrapItems={false}
+              cardsPerRow={cardsPerRow}
+            />
+          </AirCarousel>
+        )
+      }
     </main>
   )
 }
@@ -57,6 +61,7 @@ const FeaturedProductsMobile = (props: ReactProps) => {
 
 interface ReactProps extends WithStyles<typeof styles> {
   title?: string;
+  numRows?: number;
   cardsPerRow?: {
     xs?: number;
     sm?: number;
@@ -72,8 +77,8 @@ interface ReactProps extends WithStyles<typeof styles> {
 const styles = (theme: Theme) => createStyles({
   root: {
     margin: "0rem 0rem",
-    // paddingRight: '1rem', // subtract 1rem for carousel buttons: 1rem on both sides
-    // paddingLeft: '1rem', // subtract 1rem for carousel buttons: 1rem on both sides
+    paddingRight: '1rem', // subtract 1rem for carousel buttons: 1rem on both sides
+    paddingLeft: '1rem', // subtract 1rem for carousel buttons: 1rem on both sides
     width: '100%',
   },
   flexRowLink: {
@@ -82,9 +87,10 @@ const styles = (theme: Theme) => createStyles({
     alignItems: 'center',
   },
   title: {
-    paddingLeft: '0.5rem', // subtract 1rem for carousel buttons: 1rem on both sides
+    // paddingLeft: '0.5rem', // subtract 1rem for carousel buttons: 1rem on both sides
+    color: Colors.slateGreyDarkest,
     fontWeight: 600,
-    marginBottom: "0.5rem",
+    marginBottom: "1rem",
     marginTop: "2rem",
   },
   flexCol: {

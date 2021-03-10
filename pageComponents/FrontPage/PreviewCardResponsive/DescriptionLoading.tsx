@@ -11,7 +11,7 @@ const DescriptionLoading = (props: DescriptionLoadingProps) => {
   const {
     classes,
     isMobile = false,
-    height = 112,
+    height = 136,
     mobilePicHeight = 75,
     mobilePicWidth = 120,
     style,
@@ -22,8 +22,8 @@ const DescriptionLoading = (props: DescriptionLoadingProps) => {
       <div
         className={classes.descriptionContainerMobile}
         style={{
-          minHeight: height,
-          height: '100%',
+          height: height ?? '100%',
+          // height: '100%',
           // height: "112px", // ensure all cards descriptions are same height
           ...style
         }}
@@ -46,9 +46,9 @@ const DescriptionLoading = (props: DescriptionLoadingProps) => {
       <div
         className={classes.descriptionContainer}
         style={{
-          minHeight: height,
+          // minHeight: height,
           // height: '100%',
-          height: "112px", // ensure all cards descriptions are same height
+          height: height ?? '100%',
           ...style
         }}
       >
@@ -75,10 +75,8 @@ interface DescriptionLoadingProps extends WithStyles<typeof styles> {
 
 export const styles = (theme: Theme) => createStyles({
   descriptionContainer: {
-    marginTop: "0.5rem",
-    // paddingTop: "0.25rem",
     // margin: '0.5rem',
-    padding: '0.5rem',
+    padding: '1rem 0.5rem 0.5rem 0.5rem',
     // height: "136px", // ensure all cards descriptions are same height
     cursor: 'pointer',
     position: 'relative', // for wishlist Button position: absolute

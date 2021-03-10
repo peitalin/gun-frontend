@@ -140,6 +140,13 @@ const SearchResults = (props: ReactProps) => {
   // console.log('data: ', data)
   // console.log('currentCategories: ', currentCategories)
 
+  // sync selected category in searchbar to SSR category from url bar
+  React.useEffect(() => {
+    if (props.initialRouteCategory) {
+      setCurrentCategories([props.initialRouteCategory])
+    }
+  }, [props.initialRouteCategory])
+
 
   if (error) {
     if (error.message.includes("searchTerm")) {
@@ -182,6 +189,37 @@ const SearchResults = (props: ReactProps) => {
               color={Colors.slateGrey}
               initialRouteCategory={props.initialRouteCategory}
             />
+
+            {/* <SearchOptionsAirbnb
+              searchTerm={searchTerm}
+              setSearchTerm={setSearchTerm}
+              onEnter={onEnter}
+              onClick={onClick}
+              // facets={facets}
+              // setCategoryFacets={setCategoryFacets({ facets, setFacets })}
+              setCurrentCategories={setCurrentCategories as any}
+              currentCategories={currentCategories as any}
+              // this turns on category-page specifc searchbar
+              isCategoriesPage={true}
+              setOrderBy={setOrderBy}
+              setPriceRange={setPriceRange}
+              placeholder={"Search for products..."}
+              paginationParams={{
+                totalCount: Math.ceil(productsConnection?.totalCount / numItemsPerPage),
+                overfetchBy: overfetchBy,
+                limit: limit,
+                pageParam: pageParam,
+                setPageParam: setPageParam,
+                index: index,
+                setIndex: setIndex,
+              }}
+              updateSetPageDelay={0}
+              // disableSearchFilter
+              disableSortby
+              disablePriceFilter
+              // disableCategories
+              maxCategoryInputWidth={250}
+            /> */}
           </div>
           <div className={classes.titleContainer}>
             <Typography variant="h4" className={classes.title}>
@@ -325,6 +363,7 @@ const styles = (theme: Theme) => createStyles({
     alignItems: "center",
     width: '100%',
     marginBottom: '2rem',
+    height: 60,
   },
 });
 

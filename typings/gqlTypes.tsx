@@ -1504,6 +1504,20 @@ export type CuratedListsEdge = Edge & {
 };
 
 
+/** columns and relationships of "dealers" */
+export type Dealer = {
+   __typename?: 'Dealer';
+  address?: Maybe<Scalars['String']>;
+  city?: Maybe<Scalars['String']>;
+  id: Scalars['String'];
+  licenseNumber: Scalars['String'];
+  name?: Maybe<Scalars['String']>;
+  postCode?: Maybe<Scalars['String']>;
+  state?: Maybe<Scalars['String']>;
+  /** An object relationship */
+  user?: Maybe<BasicUser>;
+};
+
 export type DealerMutationResponse = {
    __typename?: 'DealerMutationResponse';
   status: Scalars['String'];
@@ -12977,7 +12991,7 @@ export type UserPrivate = BasicUser & {
   phoneNumberId?: Maybe<Scalars['String']>;
   phoneNumber?: Maybe<Phone_Numbers>;
   dealerId?: Maybe<Scalars['String']>;
-  dealer?: Maybe<Dealers>;
+  dealer?: Maybe<Dealer>;
 };
 
 
@@ -13030,7 +13044,7 @@ export type UserPublic = BasicUser & {
   licenseId?: Maybe<Scalars['String']>;
   license?: Maybe<User_Licenses>;
   dealerId?: Maybe<Scalars['String']>;
-  dealer?: Maybe<Dealers>;
+  dealer?: Maybe<Dealer>;
 };
 
 /** columns and relationships of "users" */
@@ -13782,7 +13796,7 @@ export type UserWithRole = BasicUser & {
   licenseId?: Maybe<Scalars['String']>;
   license?: Maybe<User_Licenses>;
   dealerId?: Maybe<Scalars['String']>;
-  dealer?: Maybe<Dealers>;
+  dealer?: Maybe<Dealer>;
 };
 
 /** An individual item in a wishlist */
@@ -14013,7 +14027,7 @@ export type PaymentMethodFragment = { __typename?: 'payment_methods', id: string
 export type UserPrivateFragment = { __typename?: 'UserPrivate', id: string, firstName?: Maybe<string>, lastName?: Maybe<string>, email: string, emailVerified?: Maybe<boolean>, userRole: Role, isSuspended: boolean, storeId?: Maybe<string>, dealerId?: Maybe<string>, license?: Maybe<{ __typename?: 'user_licenses', id: string, licenseNumber: string, licenseCategory?: Maybe<string>, licenseExpiry: any, licenseState?: Maybe<string>, verified: boolean }>, phoneNumber?: Maybe<{ __typename?: 'phone_numbers', id: string, areaCode?: Maybe<string>, countryCode: string, number: string }>, store?: Maybe<(
     { __typename?: 'StorePrivate' }
     & StorePrivateFragment
-  )>, dealer?: Maybe<{ __typename?: 'dealers', id: string, name?: Maybe<string>, address?: Maybe<string>, state?: Maybe<string>, postCode?: Maybe<string>, licenseNumber: string }>, payoutMethod?: Maybe<{ __typename?: 'payout_methods', id: string, payoutType?: Maybe<string>, bsb?: Maybe<string>, accountNumber?: Maybe<string>, accountName?: Maybe<string> }> };
+  )>, dealer?: Maybe<{ __typename?: 'Dealer', id: string, name?: Maybe<string>, address?: Maybe<string>, state?: Maybe<string>, postCode?: Maybe<string>, licenseNumber: string }>, payoutMethod?: Maybe<{ __typename?: 'payout_methods', id: string, payoutType?: Maybe<string>, bsb?: Maybe<string>, accountNumber?: Maybe<string>, accountName?: Maybe<string> }> };
 
 export type ProductsAllConnectionQueryVariables = Exact<{
   searchTerm: Scalars['String'];

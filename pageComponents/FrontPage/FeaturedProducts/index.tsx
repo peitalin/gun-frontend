@@ -87,6 +87,7 @@ const FeaturedProducts = (props: ReactProps) => {
     return (
       <FeaturedProductsLoading
         cardsPerRow={cardsPerRow}
+        numRows={3}
       />
     )
   }

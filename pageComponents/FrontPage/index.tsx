@@ -111,7 +111,6 @@ const styles = (theme: Theme) => createStyles({
     display: 'flex',
     flexDirection: "column",
     justifyContent: 'center',
-    marginBottom: "4rem",
   },
   flexRowInner: {
     display: 'flex',

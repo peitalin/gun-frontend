@@ -17,7 +17,7 @@ const BannerProductCreate: React.FC<ReactProps> = (props) => {
 
   const getBannerImageUrl = (slug) => {
     switch (slug) {
-      case "pistols": {
+      case "handguns": {
         return "/img/banner5.jpg"
       }
       case "rifles": {
@@ -30,7 +30,7 @@ const BannerProductCreate: React.FC<ReactProps> = (props) => {
         return "/img/banner4.jpg"
       }
       default: {
-        return "/img/banner10.jpg"
+        return "/img/banner5.jpg"
       }
     }
   }

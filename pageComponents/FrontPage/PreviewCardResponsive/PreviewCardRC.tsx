@@ -130,7 +130,7 @@ const PreviewCardRC = (props: ReactProps) => {
 
   /////////////////////////////////////////////////////////////////////////////
   /////////////////////////////////////////////////////////////////////////////
-  const carouselId = `air-paginator-${product.id}-${listName}-${props.productIndex}`
+  const carouselId = `air-paginator-${product?.id}-${listName}-${props.productIndex}`
   const imgSizesSrcSet = getImgSrcSetSizes(cardsPerRow, props.screenSize)
   // console.log("imgSizes srcSet: ", imgSizesSrcSet)
   // console.log("cardsPerRow", cardsPerRow)
@@ -271,7 +271,7 @@ const PreviewCardRC = (props: ReactProps) => {
             !productId
             ? <DescriptionLoading
                 style={cardWidthStyle}
-                height={DESCRIPTION_HEIGHT}
+                // height={DESCRIPTION_HEIGHT}
               />
             : <div className={classes.descriptionContainer}
                 style={cardWidthStyle}

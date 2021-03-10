@@ -11,7 +11,7 @@ import { useSnackbar } from "notistack";
 
 // Search Component
 import { Categories } from "typings/gqlTypes";
-import SearchOptions from "./SearchOptions";
+import SearchOptionsAirbnb from "./SearchOptionsAirbnb";
 import {
   useFacetSearchOptions,
   useEffectUpdateGridAccum,
@@ -106,7 +106,7 @@ const SearchbarMain = (props: SearchbarProps) => {
 
 
   return (
-    <SearchOptions
+    <SearchOptionsAirbnb
       searchTerm={searchTerm}
       setSearchTerm={setSearchTerm}
       onEnter={onEnter}
@@ -132,6 +132,7 @@ const SearchbarMain = (props: SearchbarProps) => {
       disableSortby
       disablePriceFilter
       // disableCategories
+      disablePaginators={router.pathname === "/"}
       hidePaginator
       maxCategoryInputWidth={250}
       topSectionStyles={{
@@ -141,7 +142,7 @@ const SearchbarMain = (props: SearchbarProps) => {
         flexDirection: 'column',
       }}
     >
-      </SearchOptions>
+      </SearchOptionsAirbnb>
   )
 }
 

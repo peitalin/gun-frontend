@@ -198,8 +198,8 @@ export const styles = (theme: Theme) => createStyles({
   },
   categoryTitleText: {
     color: theme.palette.type === 'dark'
-      ? Colors.uniswapLighterGrey
-      : Colors.slateGreyLightestBlack,
+      ? Colors.uniswapLightestGrey
+      : Colors.slateGreyBlack,
     minWidth: '140px',
     whiteSpace: 'nowrap',
     fontSize: '0.825rem',
@@ -226,7 +226,7 @@ export const styles = (theme: Theme) => createStyles({
   },
   dropdownArrow: {
     fill: theme.palette.type === 'dark'
-      ? Colors.uniswapLighterGrey
+      ? Colors.uniswapLightestGrey
       : Colors.black,
   },
   iconText: {

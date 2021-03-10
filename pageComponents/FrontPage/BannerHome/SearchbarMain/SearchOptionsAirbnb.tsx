@@ -62,7 +62,7 @@ const SearchOptionsPaginator: React.FC<ReactProps> = (props) => {
     disableSearchFilter = false,
     disablePriceFilter = false,
     disableSortby = false,
-    hidePaginator = false,
+    disablePaginators = false,
   } = props;
 
   const theme = useTheme();
@@ -134,7 +134,6 @@ const SearchOptionsPaginator: React.FC<ReactProps> = (props) => {
     // only do this on initial mount once
     setPageUi(pageParam)
   }, [])
-
 
   // Apollo Graphql
   const categoryData = useQuery<{ getProductCategories: Categories[] }, null>(
@@ -315,30 +314,33 @@ const SearchOptionsPaginator: React.FC<ReactProps> = (props) => {
 
       </div>
 
-      <div className={clsx(
-        classes.arrowContainer,
-        classes.height50,
-        // focused ? classes.height65 : classes.height50,
-      )}>
-        <Pagination
-          classes={{
-            root: classes.paginationPage,
-          }}
-          disabled={totalCount === 0}
-          count={totalCount || 0}
-          page={pageUi}
-          onMouseDown={(e) => {
-            // console.log("mouse down: ", e)
-          }}
-          onChange={(event, page) => {
-            // update paginator UI first
-            setPageUi(page)
-            // then update pageParams (gQL request) + index change in carousel
-            debounceSetPageParam(page)
-            debounceSetIndex(page - 1)
-          }}
-        />
-      </div>
+      {
+        !disablePaginators &&
+        <div className={clsx(
+          classes.arrowContainer,
+          classes.height50,
+          // focused ? classes.height65 : classes.height50,
+        )}>
+          <Pagination
+            classes={{
+              root: classes.paginationPage,
+            }}
+            disabled={totalCount === 0}
+            count={totalCount || 0}
+            page={pageUi}
+            onMouseDown={(e) => {
+              // console.log("mouse down: ", e)
+            }}
+            onChange={(event, page) => {
+              // update paginator UI first
+              setPageUi(page)
+              // then update pageParams (gQL request) + index change in carousel
+              debounceSetPageParam(page)
+              debounceSetIndex(page - 1)
+            }}
+          />
+        </div>
+      }
 
     </div>
   )
@@ -495,8 +497,8 @@ interface ReactProps extends WithStyles<typeof styles> {
   disableSearchFilter?: boolean;
   disablePriceFilter?: boolean;
   disableSortby?: boolean;
+  disablePaginators?: boolean;
   maxCategoryInputWidth?: any;
-  hidePaginator?: boolean;
   updateSetPageDelay?: number;
   placeholder?: string;
   className?: any;
@@ -771,7 +773,6 @@ const styles = (theme: Theme) => createStyles({
     flexDirection: "row",
     justifyContent: 'space-between',
     alignItems: 'center',
-    minWidth: 100,
     // height: 50,
     marginLeft: '0.25rem',
     padding: '0rem 0.25rem',
@@ -789,7 +790,9 @@ const styles = (theme: Theme) => createStyles({
   },
   paginationPage: {
     "& > ul > li > button": {
-      color: Colors.uniswapLightestGrey
+      color: theme.palette.type === 'dark'
+        ? Colors.uniswapLightestGrey
+        : Colors.slateGreyBlack,
     },
   },
 });

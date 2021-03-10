@@ -41,7 +41,7 @@ import { useAnalytics } from "utils/analytics";
 import MetaHeadersPage from "layout/MetaHeadersPage";
 import AlignCenterLayout from "components/AlignCenterLayout";
 // Search Component
-import SearchOptions from "pageComponents/FrontPage/BannerHome/SearchbarMain/SearchOptions";
+import SearchOptionsAirbnb from "pageComponents/FrontPage/BannerHome/SearchbarMain/SearchOptionsAirbnb";
 import {
   useFacetSearchOptions,
   useEffectUpdateGridAccum,
@@ -145,6 +145,12 @@ const CategoryId: React.FC<ReactProps> = (props) => {
     setCurrentCategories([props.initialRouteCategory])
   }, [props.initialRouteCategory])
 
+  React.useEffect(() => {
+    if (!loading && !!productsConnection?.totalCount) {
+      setTotalCount(productsConnection?.totalCount)
+    }
+  }, [loading])
+
   const productsConnection = data?.productsByCategoryConnection
     || props.initialProducts;
 
@@ -156,7 +162,8 @@ const CategoryId: React.FC<ReactProps> = (props) => {
     totalCount: totalCount,
     searchTerm: searchTerm,
   })
-  console.log("totalCount: ", productsConnection?.totalCount)
+  // console.log("totalCount: ", productsConnection?.totalCount)
+  // console.log("categorySlug: ", categorySlug)
 
 
   return (
@@ -195,7 +202,7 @@ const CategoryId: React.FC<ReactProps> = (props) => {
 
         <div className={classes.searchContainer}>
           <div className={classes.searchContainerInner}>
-            <SearchOptions
+            <SearchOptionsAirbnb
               searchTerm={searchTerm}
               setSearchTerm={setSearchTerm}
               onEnter={onEnter}
@@ -223,7 +230,6 @@ const CategoryId: React.FC<ReactProps> = (props) => {
               disableSortby
               disablePriceFilter
               // disableCategories
-              hidePaginator
               maxCategoryInputWidth={250}
             />
           </div>
