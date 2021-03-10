@@ -625,4 +625,29 @@ export const validationSchemas = {
       alwaysGreatestPreviews: Yup.boolean()
         .required("alwaysGreatestPreviews required"),
     }),
+
+  CreateDealer: Yup.object().shape({
+      dealerId: Yup.string()
+        .nullable(),
+      dealer: Yup.object().shape({
+        licenseNumber: Yup.string()
+          .max(100)
+          .nullable(),
+        name: Yup.string()
+          .max(100)
+          .nullable(),
+        address: Yup.string()
+          .max(100)
+          .nullable(),
+        city: Yup.string()
+          .max(100)
+          .nullable(),
+        state: Yup.string()
+          .max(100)
+          .nullable(),
+        postCode: Yup.string()
+          .max(100)
+          .nullable(),
+        }),
+    }),
 }
