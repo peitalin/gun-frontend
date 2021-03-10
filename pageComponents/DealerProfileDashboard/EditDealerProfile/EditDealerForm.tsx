@@ -11,7 +11,7 @@ import { withStyles, WithStyles } from "@material-ui/core/styles";
 import { styles } from './styles';
 // Graphql
 import { useMutation } from "@apollo/client";
-import { EDIT_DEALER } from "queries/dealer-mutations";
+import { EDIT_DEALER } from "queries/dealers-mutations";
 // Typings
 import { Dealers, UserPrivate } from "typings/gqlTypes";
 import { EditDealerInput } from "typings"
