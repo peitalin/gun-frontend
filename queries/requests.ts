@@ -24,9 +24,7 @@ import {
   SAVE_IMAGE_UPLOAD,
 } from "./content-mutations";
 import { EDIT_PRODUCT } from "./products-mutations";
-// import { EDIT_STORE_PROMO_CODE } from "./discounts-mutations";
 import { LOGOUT } from "queries/user-mutations";
-import Router from "next/router";
 import { EDIT_STORE } from "./store-mutations";
 
 

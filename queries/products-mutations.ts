@@ -117,3 +117,4 @@ export const EDIT_PRODUCT = gql`
   }
   ${ImageFragment}
 `;
+

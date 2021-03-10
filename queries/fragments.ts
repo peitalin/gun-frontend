@@ -48,9 +48,11 @@ export const ProductSnapshotsFragment = gql`
       id
       name
       address
+      city
       state
       postCode
       licenseNumber
+      createdAt
     }
   }
 `;
@@ -518,8 +520,10 @@ export const UserPrivateFragment = gql`
       name
       address
       state
+      city
       postCode
       licenseNumber
+      createdAt
     }
     # orderHistoryConnection {
     #   totalCount
