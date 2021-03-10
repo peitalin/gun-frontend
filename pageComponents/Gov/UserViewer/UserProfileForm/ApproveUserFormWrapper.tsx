@@ -16,47 +16,45 @@ import { FormikProps } from 'formik';
 
 
 
-const ApproveUserForm = (
+const ApproveUserFormWrapper = (
   props: ReactProps & { children: React.ReactNode } & FormikProps<FormikFields>
 ) => {
 
   const {
     classes,
-    onSubmit,
+    handleSubmit,
     onClickDebugPrint,
     ...fprops
   } = props;
 
   return (
-    <ErrorBounds className={classes.root}>
-      <form className={classes.form} onSubmit={onSubmit}>
-        {props.children}
-        <div className={clsx(classes.flexCol, classes.section1)}>
-          <Button
-            className={
-              props.licenseVerified
-                ? classes.buttonRed
-                : classes.buttonBlue
-            }
-            type="submit" // this sets off Form submit
-            variant={"outlined"}
-            color={"primary"}
-            onClick={onClickDebugPrint}
-          >
-            {
-             props.licenseVerified
-              ? `Unapprove User License`
-              : `Approve User License`
-            }
-          </Button>
-        </div>
+    <form className={classes.form} onSubmit={handleSubmit}>
+      {props.children}
+      <div className={clsx(classes.flexCol, classes.section1)}>
+        <Button
+          className={
+            props.licenseVerified
+              ? classes.buttonRed
+              : classes.buttonBlue
+          }
+          type="submit" // this sets off Form submit
+          variant={"outlined"}
+          color={"primary"}
+          onClick={onClickDebugPrint}
+        >
+          {
+            props.licenseVerified
+            ? `Unapprove User License`
+            : `Approve User License`
+          }
+        </Button>
+      </div>
       </form>
-    </ErrorBounds>
   )
 }
 
 interface ReactProps extends WithStyles<typeof styles> {
-  onSubmit(args: any): void;
+  handleSubmit(args: any): void;
   onClickDebugPrint(): void;
   licenseVerified: boolean;
 }
@@ -67,20 +65,6 @@ interface FormikFields {
 }
 
 const styles = (theme: Theme) => createStyles({
-  root: {
-    padding: '3rem',
-    borderRadius: BorderRadius,
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    border: theme.palette.type === 'dark'
-      ? `1px solid ${Colors.uniswapGrey}`
-      : `1px solid ${Colors.slateGreyDark}`,
-    backgroundColor: theme.palette.type === 'dark'
-      ? `${Colors.uniswapDarkNavy}`
-      : `${Colors.cream}`,
-  },
   flexCol: {
     display: 'flex',
     flexDirection: 'column',
@@ -125,7 +109,7 @@ const styles = (theme: Theme) => createStyles({
 });
 
 
-export default withStyles(styles)( ApproveUserForm );
+export default withStyles(styles)( ApproveUserFormWrapper );
 
 
 

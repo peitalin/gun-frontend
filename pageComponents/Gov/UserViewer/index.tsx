@@ -21,13 +21,10 @@ import Paper from "@material-ui/core/Paper";
 import TextInput from "components/Fields/TextInput";
 import IconButton from "@material-ui/core/IconButton";
 import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
-// Utils Components
-import Loading from "components/Loading";
-import UserCard from "./UserCard";
 // Components
-import UserViewerSection from "./UserViewerSection";
 import UserSearch from "./UserSearch";
-import ApproveUserForm from "./ApproveUserForm";
+import UserProfileForm from "./UserProfileForm";
+import DealerProfileCard from "./DealerProfileCard";
 import DisplayRecentUserIds from "./DisplayRecentUserIds";
 
 // Graphql
@@ -53,17 +50,19 @@ import { useRouter } from "next/router";
 const UserViewer: React.FC<ReactProps> = (props) => {
 
   const { classes } = props;
+
   const aClient = useApolloClient();
+  const snackbar = useSnackbar();
+  const router = useRouter();
+
  // state
   const [errorMsg, setErrorMsg] = React.useState(undefined);
   const [loading, setLoading] = React.useState(false);
-
   const [userId, setUserId] = React.useState(undefined);
-  const [user, setUser] = React.useState<UserPrivate>(undefined);
+  const [user, setUser] = React.useState<UserPrivate>(
+    router?.query?.userId as any
+  );
   const [recentUsers, setRecentUsers] = React.useState<UserPrivate[]>([]);
-
-  const snackbar = useSnackbar();
-  const router = useRouter();
 
   console.log("query: ", router?.query)
 
@@ -77,7 +76,15 @@ const UserViewer: React.FC<ReactProps> = (props) => {
         fetchPolicy: "no-cache", // always do a network request, no caches
       })
       if (data.userByEmailOrIdAdminOnly) {
+
         setUser(data.userByEmailOrIdAdminOnly)
+
+        let urlPath = router.asPath.split('?')[0]
+        router.push(
+          `${router.pathname}?userId=${userId}`,
+          `${urlPath}?userId=${userId}`,
+          { shallow: true }
+        )
       }
     } catch(e) {
       snackbar.enqueueSnackbar(`userId does not exist`, { variant: "error" })
@@ -100,34 +107,6 @@ const UserViewer: React.FC<ReactProps> = (props) => {
     } catch(e) {
       snackbar.enqueueSnackbar(`recent users do not exist`, { variant: "error" })
     }
-  }
-
-
-  const toggleApproveUserLicense = async({ userId, verified }: {
-    userId: string,
-    verified: boolean,
-  }) => {
-
-    console.log("approving/unapproving userId:", userId);
-
-    const { errors, data } = await aClient.mutate<MutData3, MutVar3>({
-      mutation: ADMIN_APPROVE_USER_LICENSE,
-      variables: {
-        userId: userId,
-        verified: verified,
-      }
-    });
-
-    console.log("user approve/unapprove response:", data);
-    alert(JSON.stringify({ VERIFIED: data?.adminApproveUserLicense }));
-    // data.refundOrder.order
-    if (errors) {
-      snackbar.enqueueSnackbar(
-        `User license (un)approval failed with msg: ${errors}`,
-        { variant: "error" }
-      )
-    }
-    return data;
   }
 
 
@@ -170,88 +149,36 @@ const UserViewer: React.FC<ReactProps> = (props) => {
 
   return (
     <>
-      <UserSearch
-        userId={userId}
-        setUserId={setUserId}
-        searchUser={searchUser}
-        errorMsg={errorMsg}
-        loading={loading}
-      >
-        <DisplayRecentUserIds
-          recentUsers={recentUsers}
+      <div className={classes.sectionPaper}>
+        <UserSearch
+          userId={userId}
           setUserId={setUserId}
+          searchUser={searchUser}
+          errorMsg={errorMsg}
+          loading={loading}
+        >
+          <DisplayRecentUserIds
+            recentUsers={recentUsers}
+            setUserId={setUserId}
+          />
+        </UserSearch>
+      </div>
+
+      <div className={classes.sectionPaper}>
+        <UserProfileForm
+          user={user}
+          setUser={setUser}
+          searchUser={searchUser}
         />
-      </UserSearch>
-      <Formik
-        initialValues={{
-          userId: user?.id,
-          verified: !user?.license?.verified,
-        }}
-        validationSchema={validationSchemas.ApproveUnapproveUserLicense}
-        onSubmit={(values, { setSubmitting }) => {
-          console.log("not implemented")
-          console.log('formik values: ', values);
-          toggleApproveUserLicense({
-            userId: user?.id,
-            verified: !user?.license?.verified,
-          }).then(res => {
-            console.log(res)
-            setLoading(false)
-            searchUser(values.userId)
-          }).catch(e => {
-            console.log(e)
-            setLoading(false)
-            setErrorMsg(JSON.stringify(e))
-          })
-        }}
-      >
-        {(fprops) => {
+      </div>
 
-          const {
-            values,
-            touched,
-            errors,
-            dirty,
-            isSubmitting,
-            handleChange,
-            handleBlur,
-            handleSubmit,
-            handleReset,
-            validateField,
-            validateForm,
-          } = fprops;
+      <div className={classes.sectionPaper}>
+        <DealerProfileCard
+          user={user}
+          searchUser={searchUser}
+        />
+      </div>
 
-          console.log('values', values)
-
-          return (
-            <ApproveUserForm
-              onSubmit={handleSubmit}
-              licenseVerified={user?.license?.verified}
-              onClickDebugPrint={() => {
-                console.log("fprops.errors:", fprops.errors)
-                setLoading(false)
-              }}
-              {...fprops}
-            >
-              <div className={classes.backButton}>
-                <IconButton onClick={() => setUser(undefined)}>
-                  <KeyboardArrowLeft/>
-                </IconButton>
-                <Typography className={classes.goBackText} variant="subtitle2">
-                  Go Back
-                </Typography>
-              </div>
-              <UserViewerSection title={"User Summary"}>
-                <UserCard
-                  user={user}
-                  {...fprops}
-                />
-              </UserViewerSection>
-              <Loading fixed loading={loading}/>
-            </ApproveUserForm>
-          )
-        }}
-      </Formik>
     </>
   )
 }
@@ -286,25 +213,22 @@ interface MutVar3 {
 
 
 const styles = (theme: Theme) => createStyles({
-  root: {
+  searchRoot: {
+  },
+  sectionPaper: {
     padding: '3rem',
+    marginBottom: '2rem',
     borderRadius: BorderRadius,
-    background: theme.palette.type === 'dark'
-      ? Colors.uniswapDarkNavy
-      : Colors.darkWhite,
-    boxShadow: theme.palette.type === 'dark'
-      ? BoxShadows.shadow1.boxShadow
-      : 'unset',
-    border: theme.palette.type === 'dark'
-      ? `unset`
-      : `1px solid ${Colors.slateGreyDarker}`,
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  searchRoot: {
-    marginBottom: '2rem',
+    border: theme.palette.type === 'dark'
+      ? `1px solid ${Colors.uniswapGrey}`
+      : `1px solid ${Colors.slateGreyDark}`,
+    backgroundColor: theme.palette.type === 'dark'
+      ? `${Colors.uniswapDarkNavy}`
+      : `${Colors.cream}`,
   },
   flexCol: {
     display: 'flex',

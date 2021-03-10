@@ -4,13 +4,13 @@ import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/s
 // Material UI
 import Typography from "@material-ui/core/Typography";
 
-const UserViewerSection: React.FC<UserViewerSectionProps> = ({
+const ViewParagraph: React.FC<ViewParagraphProps> = ({
   classes,
   title,
   ...props
 }) => {
   return (
-    <div className={classes.userViewerSection}>
+    <div className={classes.userViewParagraph}>
       {
         title &&
         <Typography color={"primary"} variant="h5" gutterBottom>
@@ -24,13 +24,13 @@ const UserViewerSection: React.FC<UserViewerSectionProps> = ({
   )
 }
 
-interface UserViewerSectionProps extends WithStyles<typeof styles> {
+interface ViewParagraphProps extends WithStyles<typeof styles> {
   title?: string;
 }
 
 
 const styles = (theme: Theme) => createStyles({
-  userViewerSection: {
+  userViewParagraph: {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
@@ -45,7 +45,7 @@ const styles = (theme: Theme) => createStyles({
 });
 
 
-export default withStyles(styles)( UserViewerSection );
+export default withStyles(styles)( ViewParagraph );
 
 
 

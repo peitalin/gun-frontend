@@ -1,5 +1,4 @@
 import React from "react";
-import { oc as option } from "ts-optchain";
 import clsx from "clsx";
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 // Typings
@@ -12,10 +11,8 @@ import ErrorBounds from "components/ErrorBounds";
 // Material UI
 import Typography from "@material-ui/core/Typography";
 import Loading from "components/Loading";
-// Components
-import ProductPreviewCardRow from "components/ProductPreviewCardRow";
-import { formatDate } from "utils/dates";
 // helpers
+import { formatDate } from "utils/dates";
 import { Colors } from "layout/AppTheme";
 // validation
 import { FormikProps } from 'formik';
@@ -23,7 +20,7 @@ import { FormikProps } from 'formik';
 
 
 
-const UserCard = (props: ReactProps & FormikProps<FormikFields>) => {
+const UserProfileDetails = (props: ReactProps & FormikProps<FormikFields>) => {
 
   const {
     classes,
@@ -35,7 +32,7 @@ const UserCard = (props: ReactProps & FormikProps<FormikFields>) => {
   let countryCode = user?.phoneNumber?.countryCode;
   let phoneNumber = user?.phoneNumber?.number;
   let phoneNumberFull = !!phoneNumber
-    ? `+${countryCode} ${phoneNumber}`
+    ? `${countryCode} ${phoneNumber}`
     : "NA"
 
 
@@ -70,7 +67,7 @@ const UserCard = (props: ReactProps & FormikProps<FormikFields>) => {
                 Name:
               </Typography>
               <Typography className={classes.fieldInfo} variant="subtitle1">
-                {user.firstName + " " + user.lastName}
+                {user?.firstName + " " + user?.lastName}
               </Typography>
             </div>
             <div className={classes.flexRow}>
@@ -78,7 +75,7 @@ const UserCard = (props: ReactProps & FormikProps<FormikFields>) => {
                 User Email:
               </Typography>
               <Typography className={classes.fieldInfo} variant="subtitle1">
-                {user.email}
+                {user?.email}
               </Typography>
             </div>
             <div className={classes.flexRow}>
@@ -86,7 +83,7 @@ const UserCard = (props: ReactProps & FormikProps<FormikFields>) => {
                 Created At
               </Typography>
               <Typography className={classes.fieldInfo} variant="subtitle1">
-                {formatDate(user.createdAt)}
+                {formatDate(user?.createdAt)}
               </Typography>
             </div>
 
@@ -188,7 +185,6 @@ const UserCard = (props: ReactProps & FormikProps<FormikFields>) => {
               </Typography>
             </div>
 
-
           </div>
         </div>
 
@@ -282,4 +278,4 @@ const styles = (theme: Theme) => createStyles({
   },
 });
 
-export default withStyles(styles)(UserCard);
+export default withStyles(styles)(UserProfileDetails);

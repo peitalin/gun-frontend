@@ -23,7 +23,7 @@ const UserSearch: React.FC<ReactUsersSearchProps> = (props) => {
   } = props;
 
   return (
-    <ErrorBounds className={clsx(classes.root, classes.searchRoot)}>
+    <ErrorBounds className={clsx(classes.searchRoot)}>
       <Typography variant="h4">
         View Users
       </Typography>
@@ -41,7 +41,7 @@ const UserSearch: React.FC<ReactUsersSearchProps> = (props) => {
           inputProps={{ style: { width: '100%' }}}
         />
         <Button
-          className={classes.orderItemButton}
+          className={classes.searchUserButton}
           variant={"outlined"}
           color={"primary"}
           onClick={() => searchUser(userId)}
@@ -70,22 +70,8 @@ interface ReactUsersSearchProps extends WithStyles<typeof styles> {
 
 
 const styles = (theme: Theme) => createStyles({
-  root: {
-    padding: '3rem',
-    borderRadius: BorderRadius,
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    border: theme.palette.type === 'dark'
-      ? `1px solid ${Colors.uniswapGrey}`
-      : `1px solid ${Colors.slateGreyDark}`,
-    backgroundColor: theme.palette.type === 'dark'
-      ? `${Colors.uniswapDarkNavy}`
-      : `${Colors.cream}`,
-  },
   searchRoot: {
-    marginBottom: '2rem',
+    width: '100%',
   },
   flexRow: {
     display: 'flex',
@@ -96,7 +82,7 @@ const styles = (theme: Theme) => createStyles({
   section: {
     margin: '2rem',
   },
-  orderItemButton: {
+  searchUserButton: {
     padding: "0.5rem 1rem",
     width: '100%',
     borderRadius: BorderRadius,
