@@ -7,17 +7,16 @@ import { Product } from "typings/gqlTypes";
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 // components
-import ProductCardImageCarousel from "./ProductCardImageCarousel";
+import ProductCardRC from "./ProductCardRC";
 
 
 
 
-const PreviewCardResponsive: React.FC<PreviewCardResponsiveProps> = (props) => {
+const ProductCardResponsive: React.FC<ProductCardResponsiveProps> = (props) => {
 
   const {
     product,
     refetch,
-    hidePrice = false,
     cardsPerRow = {
       xs: 1,
       sm: 2,
@@ -38,18 +37,13 @@ const PreviewCardResponsive: React.FC<PreviewCardResponsiveProps> = (props) => {
   const noMediaQuery = [xl, lg, md, sm, xs].every(s => !s);
   // if no media query applies
 
-  const featuredPreviewItem = option(product).featuredVariant.previewItems[0]();
+  const featuredPreviewItem = product?.featuredVariant?.previewItems?.[0];
 
   const commonPreviewCardProps = {
-    listName: props.listName,
-    loadCarouselPics: props.loadCarouselPics,
-    setLoadCarouselPics: props.setLoadCarouselPics,
-    productIndex: props.productIndex,
     refetch: refetch,
     boxShadow: props.boxShadow,
     style: props.style,
     maxWidthOfRow: maxWidthOfRow,
-    hidePrice: hidePrice,
     previewImageEmptyMessage: props.previewImageEmptyMessage,
     fit: option(featuredPreviewItem).image.original.heightInPixels() >
         option(featuredPreviewItem).image.original.widthInPixels(),
@@ -71,7 +65,7 @@ const PreviewCardResponsive: React.FC<PreviewCardResponsiveProps> = (props) => {
 
   //     {/* sm */}
   //     <Hidden only={["xs", "md", "lg", "xl"]} implementation="css">
-  //       <ProductCardImageCarousel
+  //       <ProductCardRC
   //         product={product}
   //         {...commonPreviewCardProps}
   //         screenSize={"sm"}
@@ -81,7 +75,7 @@ const PreviewCardResponsive: React.FC<PreviewCardResponsiveProps> = (props) => {
 
   //     {/* md */}
   //     <Hidden only={["xs", "sm", "lg", "xl"]} implementation="css">
-  //       <ProductCardImageCarousel
+  //       <ProductCardRC
   //         product={product}
   //         {...commonPreviewCardProps}
   //         screenSize={"md"}
@@ -91,7 +85,7 @@ const PreviewCardResponsive: React.FC<PreviewCardResponsiveProps> = (props) => {
 
   //     {/* lg */}
   //     <Hidden only={["xs", "sm", "md", "xl"]} implementation="css">
-  //       <ProductCardImageCarousel
+  //       <ProductCardRC
   //         product={product}
   //         {...commonPreviewCardProps}
   //         screenSize={"lg"}
@@ -101,7 +95,7 @@ const PreviewCardResponsive: React.FC<PreviewCardResponsiveProps> = (props) => {
 
   //     {/* xl */}
   //     <Hidden only={["xs", "sm", "md", "lg"]} implementation="css">
-  //       <ProductCardImageCarousel
+  //       <ProductCardRC
   //         product={product}
   //         {...commonPreviewCardProps}
   //         screenSize={"xl"}
@@ -113,7 +107,7 @@ const PreviewCardResponsive: React.FC<PreviewCardResponsiveProps> = (props) => {
 
   if (xl || noMediaQuery) {
     return (
-      <ProductCardImageCarousel
+      <ProductCardRC
         product={product}
         {...commonPreviewCardProps}
         screenSize={"xl"}
@@ -122,7 +116,7 @@ const PreviewCardResponsive: React.FC<PreviewCardResponsiveProps> = (props) => {
     )
   } else if (lg) {
     return (
-      <ProductCardImageCarousel
+      <ProductCardRC
         product={product}
         {...commonPreviewCardProps}
         screenSize={"lg"}
@@ -131,7 +125,7 @@ const PreviewCardResponsive: React.FC<PreviewCardResponsiveProps> = (props) => {
     )
   } else if (md) {
     return (
-      <ProductCardImageCarousel
+      <ProductCardRC
         product={product}
         {...commonPreviewCardProps}
         screenSize={"md"}
@@ -140,17 +134,17 @@ const PreviewCardResponsive: React.FC<PreviewCardResponsiveProps> = (props) => {
     )
   } else if (sm) {
     return (
-      <ProductCardImageCarousel
+      <ProductCardRC
         product={product}
         {...commonPreviewCardProps}
         screenSize={"sm"}
-        cardsPerRow={cardsPerRow.md} // 2 default
+        cardsPerRow={cardsPerRow.sm} // 1 default
       />
     )
   } else {
     // else if (xs)
     return (
-      <ProductCardImageCarousel
+      <ProductCardRC
         product={product}
         {...commonPreviewCardProps}
         screenSize={"sm"}
@@ -161,7 +155,7 @@ const PreviewCardResponsive: React.FC<PreviewCardResponsiveProps> = (props) => {
 }
 
 
-interface PreviewCardResponsiveProps {
+interface ProductCardResponsiveProps {
   product: Product;
   refetch?(): void;
   showWishListButton?: boolean;
@@ -174,12 +168,6 @@ interface PreviewCardResponsiveProps {
   };
   xsCardRow?: boolean; // use cards or rows for xs screen sizes
   maxWidthOfRow?: number;
-  // carousel props
-  listName?: string;
-  loadCarouselPics?: any;
-  setLoadCarouselPics?(a: any): any;
-  productIndex?: number;
-  hidePrice?: boolean;
   //
   boxShadow?: boolean;
   style?: any;
@@ -188,4 +176,4 @@ interface PreviewCardResponsiveProps {
 }
 
 
-export default PreviewCardResponsive;
+export default ProductCardResponsive;

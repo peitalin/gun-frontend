@@ -6,9 +6,6 @@ import { Colors, BorderRadius } from "layout/AppTheme";
 import clsx from "clsx";
 // Material UI
 import Typography from "@material-ui/core/Typography";
-// Components
-import PreviewCardRC from "pageComponents/FrontPage/PreviewCardResponsive/PreviewCardRC";
-import ProductRowMobile from "components/ProductRowMobile";
 // Graphql
 import { GET_PRODUCTS_BY_CATEGORY } from "queries/products-queries";
 // useMediaQuery
@@ -28,15 +25,9 @@ import { useSelector } from "react-redux";
 import { GrandReduxState } from "reduxStore/grand-reducer";
 import { WishlistItemId } from "reduxStore/wishlist-reducer";
 // Wishlist
-import Divider from "components/Divider";
-
-import PaginateButtons from "components/Paginators/PaginateButtons";
-import PaginateCarousel from "components/Paginators/PaginateCarousel";
-import Loading from "components/Loading";
-import PreviewCardResponsive from "pageComponents/FrontPage/PreviewCardResponsive";
+import ProductCardResponsive from "components/ProductCardResponsive";
 import LoadingCards from "pageComponents/FrontPage/LoadingCards";
 import AirCarousel from "components/AirCarousel";
-import { useScrollXPosition } from "utils/hooks";
 
 
 
@@ -86,7 +77,6 @@ const CategoryProductsMobile = (props: ReactProps) => {
         </Typography>
         <LoadingCards
           count={4}
-          xsCardRow={false}
           flexWrapItems={false}
           cardsPerRow={cardsPerRow}
         />
@@ -115,15 +105,9 @@ const CategoryProductsMobile = (props: ReactProps) => {
                   <div key={i} style={{
                     marginLeft: '0.5rem',
                   }}>
-                    <PreviewCardResponsive
+                    <ProductCardResponsive
                       product={product as Product}
                       cardsPerRow={cardsPerRow}
-                      xsCardRow={false}
-                      listName={`category-list-${categoryIdOrName}`}
-                      // refetch={wishlistConnectionResponse.refetch}
-                      // loadCarouselPics={loadCarouselPics}
-                      // setLoadCarouselPics={setLoadCarouselPics}
-                      productIndex={i}
                     />
                   </div>
                 )

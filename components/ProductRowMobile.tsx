@@ -14,7 +14,7 @@ import ErrorBounds from "components/ErrorBounds";
 import ProductPreviewCardRow from "components/ProductPreviewCardRow";
 import Typography from "@material-ui/core/Typography";
 import PriceDisplayMain from "components/PriceDisplayMain";
-import DescriptionLoading from "pageComponents/FrontPage/PreviewCardResponsive/DescriptionLoading";
+import DescriptionLoading from "components/ProductCardResponsive/DescriptionLoading";
 // next
 import Link from "next/link";
 import { convertSoldOutStatus } from "utils/strings";

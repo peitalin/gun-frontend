@@ -11,7 +11,7 @@ import {
   GET_RECOMMENDED_PRODUCTS,
 } from "queries/products-queries";
 // Components
-import PreviewCardResponsive from "pageComponents/FrontPage/PreviewCardResponsive";
+import ProductCardResponse from "components/ProductCardResponsive";
 import LoadingCards from "pageComponents/FrontPage/LoadingCards";
 // Typings
 import {
@@ -105,7 +105,7 @@ const YouMayAlsoLikeRecommendations = (props: ReactProps) => {
                   smDown ? classes.flexItemMobile : classes.flexItem,
                   classes.flexItemHover,
                 )}>
-                  <PreviewCardResponsive
+                  <ProductCardResponse
                     product={product}
                     // refetch={wishlistConnectionResponse.refetch}
                     style={{

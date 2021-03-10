@@ -46,7 +46,7 @@ const FrontPage: React.FC<ReactProps> = (props) => {
       <BannerHome />
 
       <AlignCenterLayout
-        maxWidth={MAX_WIDTH_GRID || 1180}
+        maxWidth={MAX_WIDTH_GRID || 1160}
         withRecommendations={false}
       >
 

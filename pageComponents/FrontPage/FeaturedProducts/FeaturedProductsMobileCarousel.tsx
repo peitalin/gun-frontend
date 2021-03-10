@@ -6,9 +6,6 @@ import { Colors, BorderRadius } from "layout/AppTheme";
 import clsx from "clsx";
 // Material UI
 import Typography from "@material-ui/core/Typography";
-// Components
-import PreviewCardRC from "pageComponents/FrontPage/PreviewCardResponsive/PreviewCardRC";
-import ProductRowMobile from "components/ProductRowMobile";
 // Typings
 import {
   Product,
@@ -22,11 +19,8 @@ import { useSelector } from "react-redux";
 import { GrandReduxState } from "reduxStore/grand-reducer";
 import { WishlistItemId } from "reduxStore/wishlist-reducer";
 // Wishlist
-import Divider from "components/Divider";
-import PreviewCardResponsive from "pageComponents/FrontPage/PreviewCardResponsive";
-import LoadingCards from "pageComponents/FrontPage/LoadingCards";
+import ProductCardResponsive from "components/ProductCardResponsive";
 
-import PaginateCarousel from "components/Paginators/PaginateCarousel";
 import Loading from "components/Loading";
 import { GET_ALL_PRODUCTS } from "queries/gun-queries";
 import AirCarousel from "components/AirCarousel";
@@ -65,7 +59,7 @@ const FeaturedProductsMobile = (props: ReactProps) => {
         id={"featured-products-carousel-main"}
         // handleClickLeft={getPrevPage}
         // handleClickRight={getNextPage}
-        disableButtons={false}
+        disableButtons={true}
         scrollSnapType={"x proximity"}
       >
         {
@@ -73,12 +67,9 @@ const FeaturedProductsMobile = (props: ReactProps) => {
             <div key={i} style={{
               marginLeft: '0.5rem',
             }}>
-              <PreviewCardResponsive
+              <ProductCardResponsive
                 product={product as Product}
                 cardsPerRow={cardsPerRow}
-                xsCardRow={false}
-                listName={"featured-list"}
-                productIndex={i}
               />
             </div>
           )

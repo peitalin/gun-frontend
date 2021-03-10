@@ -1531,7 +1531,7 @@ export type Dealers = {
   city?: Maybe<Scalars['String']>;
   id: Scalars['String'];
   licenseNumber: Scalars['String'];
-  name?: Maybe<Scalars['String']>;
+  name: Scalars['String'];
   postCode?: Maybe<Scalars['String']>;
   state?: Maybe<Scalars['String']>;
   /** An object relationship */
@@ -2115,6 +2115,7 @@ export type FacetsDistributionObject = {
    __typename?: 'FacetsDistributionObject';
   /** make a JSON type, keys are arbitrary category names */
   categoryNames?: Maybe<Scalars['JSON']>;
+  categorySlugs?: Maybe<Scalars['JSON']>;
   isPublished?: Maybe<Scalars['JSON']>;
   /** categoryGroups: JSON */
   stores?: Maybe<Scalars['JSON']>;
@@ -3840,6 +3841,7 @@ export type Mutation = {
   sendPayoutCompleteSellerEmail: BlankMutationResponse;
   editDealer?: Maybe<UserMutationResponse>;
   createDealerForUser?: Maybe<UserMutationResponse>;
+  setDealerIdForUser?: Maybe<UserMutationResponse>;
   reindexSearchIndex?: Maybe<BlankMutationResponse>;
 };
 
@@ -5231,12 +5233,19 @@ export type MutationEditDealerArgs = {
 
 
 export type MutationCreateDealerForUserArgs = {
-  name?: Maybe<Scalars['String']>;
+  dealerUserId: Scalars['String'];
+  name: Scalars['String'];
   address?: Maybe<Scalars['String']>;
   city?: Maybe<Scalars['String']>;
   postCode?: Maybe<Scalars['String']>;
   state?: Maybe<Scalars['String']>;
-  licenseNumber?: Maybe<Scalars['String']>;
+  licenseNumber: Scalars['String'];
+};
+
+
+export type MutationSetDealerIdForUserArgs = {
+  dealerUserId: Scalars['String'];
+  dealerId: Scalars['String'];
 };
 
 /** Something that went wrong during a mutation. */
@@ -13848,7 +13857,7 @@ export type SaveImageUploadMutation = { __typename?: 'Mutation', uploadSaveImage
 
 export type ImageFragment = { __typename?: 'image_parents', id: string, createdAt: any, tags?: Maybe<string>, description?: Maybe<string>, original?: Maybe<{ __typename?: 'image_variants', id: string, mimeType: string, heightInPixels: number, widthInPixels: number, sizeInBytes: number, url?: Maybe<string> }>, variants: Array<{ __typename?: 'image_variants', id: string, mimeType: string, sizeInBytes: number, widthInPixels: number, heightInPixels: number, url?: Maybe<string> }> };
 
-export type ProductSnapshotsFragment = { __typename?: 'product_snapshots', id: string, createdAt: any, productId: string, title: string, description: string, condition: string, make: string, model: string, ammoType?: Maybe<string>, actionType: string, caliber?: Maybe<string>, serialNumber: string, location: string, dealer?: Maybe<{ __typename?: 'dealers', id: string, name?: Maybe<string>, address?: Maybe<string>, state?: Maybe<string>, postCode?: Maybe<string>, licenseNumber: string }> };
+export type ProductSnapshotsFragment = { __typename?: 'product_snapshots', id: string, createdAt: any, productId: string, title: string, description: string, condition: string, make: string, model: string, ammoType?: Maybe<string>, actionType: string, caliber?: Maybe<string>, serialNumber: string, location: string, dealer?: Maybe<{ __typename?: 'dealers', id: string, name: string, address?: Maybe<string>, state?: Maybe<string>, postCode?: Maybe<string>, licenseNumber: string }> };
 
 export type ProductVariantsFragment = { __typename?: 'product_variants', variantSnapshotId: string, variantId: string, snapshotId: string, productId: string, storeId: string, createdAt: any, variantName: string, variantDescription: string, isDefault: boolean, position: number, price: number, priceWas?: Maybe<number>, previewItems: Array<{ __typename?: 'product_preview_items', id: string, imageId?: Maybe<string>, position: number, youTubeEmbedLink?: Maybe<string>, variantSnapshotId?: Maybe<string>, image?: Maybe<(
       { __typename?: 'image_parents' }

@@ -8,8 +8,7 @@ import Link from "next/link";
 // Material UI
 import Typography from "@material-ui/core/Typography";
 // Components
-import PreviewCardResponsive from "pageComponents/FrontPage/PreviewCardResponsive";
-import PreviewCardLoading from "./PreviewCardLoading";
+import ProductCardResponsive from "components/ProductCardResponsive";
 import LoadingCards from "./LoadingCards";
 import Loading from "components/Loading";
 // Graphql Typings
@@ -189,13 +188,9 @@ const NewReleaseProducts = (props: ReactProps) => {
                       sm ? classes.flexItemMobile : classes.flexItem,
                       classes.flexItemHover,
                     )}>
-                      <PreviewCardResponsive
+                      <ProductCardResponsive
                         product={product}
                         refetch={undefined}
-                        listName={"new-release-list"}
-                        loadCarouselPics={loadCarouselPics}
-                        setLoadCarouselPics={setLoadCarouselPics}
-                        productIndex={i}
                       />
                     </div>
                   </div>

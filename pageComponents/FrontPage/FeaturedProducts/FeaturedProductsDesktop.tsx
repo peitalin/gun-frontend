@@ -7,9 +7,11 @@ import Link from "next/link";
 // Material UI
 import Typography from "@material-ui/core/Typography";
 // Components
-import PreviewCardResponsive from "pageComponents/FrontPage/PreviewCardResponsive";
+// import PreviewCardResponsive from "pageComponents/FrontPage/PreviewCardResponsive";
+import ProductCardResponsive from "components/ProductCardResponsive";
 import LoadingCards from "pageComponents/FrontPage/LoadingCards";
 import WishlistIcon from "components/WishlistIcon";
+import GridPreviewCardLight from "components/GridPreviewCardLight";
 // GraphQL Typings
 import {
   Product,
@@ -73,20 +75,25 @@ const FeaturedProductsDesktop = (props: ReactProps) => {
           ((props?.productsConnection?.edges ?? []).length > 0)
           ? props.productsConnection.edges.map(({ node: product }, i) =>
               <div key={product.id + `_${i}`}
-                className={xsDown ? classes.productImageXs : classes.productImage}
+                className={xsDown ? classes.productCardWrapperXs : classes.productCardWrapper}
               >
                 <div className={clsx(
                   smDown ? classes.flexItemMobile : classes.flexItem,
+                  "staggerFadeIn",
                   classes.flexItemHover,
                 )}>
-                  <PreviewCardResponsive
+                  <ProductCardResponsive
+                    product={product as Product}
+                    cardsPerRow={cardsPerRow}
+                  />
+                  {/* <PreviewCardResponsive
                     product={product as Product}
                     cardsPerRow={cardsPerRow}
                     listName={"featured-list"}
                     loadCarouselPics={loadCarouselPics}
                     setLoadCarouselPics={setLoadCarouselPics}
                     productIndex={i}
-                  />
+                  /> */}
                 </div>
               </div>
             )
@@ -139,13 +146,14 @@ const styles = (theme: Theme) => createStyles({
   paddingRight: {
     paddingRight: '1rem',
   },
-  productImage: {
+  productCardWrapper: {
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
     marginRight: '1rem',
+    marginBottom: '1rem',
   },
-  productImageXs: {
+  productCardWrapperXs: {
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
@@ -179,7 +187,7 @@ const styles = (theme: Theme) => createStyles({
     position: 'relative',
   },
   flexItem: {
-    marginBottom: '1rem',
+    // marginBottom: '1rem',
     // borderBottom: "1px solid #f7f7f7",
     borderRadius: `${BorderRadius}px ${BorderRadius}px 0px 0px`,
     position: 'relative',

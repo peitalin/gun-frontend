@@ -5,11 +5,8 @@ import { oc as option } from "ts-optchain";
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
 import { Colors, BoxShadows, BorderRadius } from "layout/AppTheme";
 // Material UI
-import Card from "@material-ui/core/Card";
-import CardActionArea from "@material-ui/core/CardActionArea";
 import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
-import Link from "next/link";
 import WishlistIcon from "components/WishlistIcon";
 import DiscountBadge from "components/DiscountBadge";
 // Typings
@@ -20,16 +17,12 @@ import PriceDisplayMain from "components/PriceDisplayMain";
 // Responsiveness
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
-import Hidden from "@material-ui/core/Hidden";
-import ProductRow from "pageComponents/FrontPage/FeaturedProducts/ProductRow";
 import DescriptionLoading from "./DescriptionLoading";
 // Carousel
-import AirItemWide from "components/AirCarousel/AirItemWide";
 import AirCarousel from "components/AirCarousel";
-import AspectRatioConstraint from "components/AspectRatioConstraint";
 import PreviewImageEmpty from "./PreviewImageEmpty";
 import AspectCarouselItemLink from "./AspectCarouselItemLink";
-import LinkLoading from "./LinkLoading";
+import LinkLoading from "components/LinkLoading";
 import {
   CARD_MAX_WIDTH_XL,
   DESCRIPTION_HEIGHT,
@@ -44,7 +37,7 @@ import {
 
 
 
-const PreviewCardRC = (props: ReactProps) => {
+const ProductCardImageCarousel = (props: ReactProps) => {
   /// NOTE:
   /// There are 2 <Link> tags, one of the image, one for the description container
   /// This is to prevent the wishlist button from being inside the <Link> tag
@@ -135,7 +128,6 @@ const PreviewCardRC = (props: ReactProps) => {
   // console.log("imgSizes srcSet: ", imgSizesSrcSet)
   // console.log("cardsPerRow", cardsPerRow)
   // console.log("carouselId: ", carouselId)
-  let displayDiscountBadge = showDiscountBadge(price, priceWas);
 
   let previewItemsInSwiper = (props.setLoadCarouselPics !== undefined)
     ? previewItems
@@ -150,10 +142,6 @@ const PreviewCardRC = (props: ReactProps) => {
         ...props.style
       }}
     >
-      {
-        displayDiscountBadge &&
-        <DiscountBadge price={price} priceWas={priceWas}/>
-      }
       <AirCarousel
         id={carouselId}
         // handleClickLeft={getPrevPage}
@@ -361,4 +349,4 @@ interface ReactProps extends WithStyles<typeof styles> {
 }
 
 
-export default withStyles(styles)( PreviewCardRC );
+export default withStyles(styles)( ProductCardImageCarousel );

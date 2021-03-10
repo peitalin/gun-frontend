@@ -36,6 +36,7 @@ const FeaturedProductsMobile = (props: ReactProps) => {
       {
         [...Array(numRows).keys()].map(i =>
           <AirCarousel
+            key={`featured-products-carousel-main-${i}`}
             id={`featured-products-carousel-main-${i}`}
             // handleClickLeft={getPrevPage}
             // handleClickRight={getNextPage}
@@ -44,7 +45,6 @@ const FeaturedProductsMobile = (props: ReactProps) => {
           >
             <LoadingCards
               count={6}
-              xsCardRow={false}
               flexWrapItems={false}
               cardsPerRow={cardsPerRow}
             />

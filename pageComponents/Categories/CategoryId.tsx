@@ -25,7 +25,7 @@ import CategoryBreadcrumbs from "pageComponents/P/ProductPageLayouts/CategoryBre
 // MUI
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
-import PreviewCardResponsive from "pageComponents/FrontPage/PreviewCardResponsive";
+import ProductCardResponsive from "components/ProductCardResponsive";
 import Link from "next/link";
 import { BorderRadius3x, Colors } from "layout/AppTheme";
 // Apollo
@@ -276,12 +276,12 @@ const CategoryId: React.FC<ReactProps> = (props) => {
                     classes.marginRight1,
                   )}
                 >
-                  {/* <PreviewCardResponsive
+                  {/* <ProductCardResponsive
                     product={product}
                   /> */}
                   {
                     mdDown
-                    ? <PreviewCardResponsive
+                    ? <ProductCardResponsive
                         product={product}
                       />
                     : <GridPreviewCardLight

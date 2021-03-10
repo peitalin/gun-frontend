@@ -48,7 +48,7 @@ import {
 } from "utils/hooksFacetSearch";
 // Grid Components
 import GridPaginatorGeneric from "components/GridPaginatorGeneric";
-import PreviewCardResponsive from "pageComponents/FrontPage/PreviewCardResponsive";
+import ProductCardResponsive from "components/ProductCardResponsive";
 import GridPreviewCardLight from "components/GridPreviewCardLight";
 
 
@@ -257,7 +257,7 @@ const StoresId: React.FC<ReactProps> = (props) => {
                   <div className={classes.marginRight1}>
                     {
                       mdDown
-                      ? <PreviewCardResponsive
+                      ? <ProductCardResponsive
                           product={product}
                         />
                       : <GridPreviewCardLight

@@ -4,9 +4,9 @@ import { oc as option } from "ts-optchain";
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 import { Colors, BorderRadius } from "layout/AppTheme";
 import clsx from "clsx";
-import PreviewCardResponsive from "./PreviewCardResponsive";
+import ProductCardResponsive from "components/ProductCardResponsive";
 import Hidden from 'components/HiddenFix';
-import DescriptionLoading from "pageComponents/FrontPage/PreviewCardResponsive/DescriptionLoading";
+import DescriptionLoading from "components/ProductCardResponsive/DescriptionLoading";
 
 
 
@@ -22,7 +22,6 @@ const LoadingCards = (props: ReactProps) => {
       lg: 3,
       xl: 4,
     },
-    xsCardRow = true,
     flexWrapItems = true,
     alignCenter = false,
   } = props;
@@ -51,7 +50,7 @@ const LoadingCards = (props: ReactProps) => {
                 classes.flexItem,
                 classes.flexItemHover,
               )}>
-                <PreviewCardResponsive
+                <ProductCardResponsive
                   product={productLoading as any}
                   cardsPerRow={cardsPerRow}
                 />
@@ -65,22 +64,10 @@ const LoadingCards = (props: ReactProps) => {
                 ? classes.descriptionLoadingNoFlexWrap
                 : classes.descriptionLoading
             }>
-              {
-                xsCardRow
-                ? <DescriptionLoading
-                    isMobile
-                    style={{
-                      width: `calc(${100}vw - ${1+1}rem)`,
-                      maxWidth: 415, // Mobile size loading placeholders
-                    }}
-                    height={'100%'}
-                  />
-                : <PreviewCardResponsive
-                    product={productLoading as any}
-                    cardsPerRow={cardsPerRow}
-                    xsCardRow={xsCardRow}
-                  />
-              }
+              <ProductCardResponsive
+                product={productLoading as any}
+                cardsPerRow={cardsPerRow}
+              />
             </div>
           </Hidden>
         </div>
@@ -103,7 +90,6 @@ interface ReactProps extends WithStyles<typeof styles> {
     lg?: number;
     xl?: number;
   };
-  xsCardRow?: boolean;
   alignCenter?: boolean;
   flexWrapItems?: boolean;
 }

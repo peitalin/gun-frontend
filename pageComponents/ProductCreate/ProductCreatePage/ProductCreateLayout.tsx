@@ -9,7 +9,7 @@ import ClearIcon from "@material-ui/icons/Clear";
 import IconButton from "@material-ui/core/IconButton";
 
 // Product Preview Card
-import PreviewCardResponsive from "pageComponents/FrontPage/PreviewCardResponsive";
+import ProductCardResponsive from "components/ProductCardResponsive";
 import Tooltip from '@material-ui/core/Tooltip';
 import {
   ID,
@@ -90,14 +90,11 @@ const ProductCreateLayout: React.FC<ProductCreateFormProps> = (props) => {
               classes.stickyProductPreviewContainer,
               'fadeIn',
             )}>
-              <PreviewCardResponsive
+              <ProductCardResponsive
                 product={props.productPreviewSticky}
                 // cardsPerRowLayout={4}
                 // boxShadow={true}
                 // refetch={wishlistConnectionResponse.refetch}
-                loadCarouselPics={props.loadCarouselPics}
-                setLoadCarouselPics={props.setLoadCarouselPics}
-                productIndex={0}
                 previewImageEmptyMessage={"Preview Listing"}
                 // onClick={() => setOpenPreviewPage(true)}
               />

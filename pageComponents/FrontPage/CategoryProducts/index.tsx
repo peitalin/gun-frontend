@@ -35,7 +35,7 @@ const CategoryProducts = (props: ReactProps) => {
 
   return (
     <>
-      <Hidden xsDown implementation="css">
+      <Hidden smDown implementation="css">
         <CategoryProductsDesktop
           initialProducts={initialProducts}
           count={count}
@@ -43,7 +43,7 @@ const CategoryProducts = (props: ReactProps) => {
           categoryIdOrName={categoryIdOrName}
         />
       </Hidden>
-      <Hidden smUp implementation="css">
+      <Hidden mdUp implementation="css">
         <CategoryProductsMobileCarousel
           initialProducts={initialProducts}
           count={count}

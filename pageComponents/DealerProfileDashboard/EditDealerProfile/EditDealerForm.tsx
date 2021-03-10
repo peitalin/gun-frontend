@@ -11,7 +11,7 @@ import { withStyles, WithStyles } from "@material-ui/core/styles";
 import { styles } from './styles';
 // Graphql
 import { useMutation } from "@apollo/client";
-import { EDIT_STORE } from "queries/store-mutations";
+import { EDIT_DEALER } from "queries/dealer-mutations";
 // Typings
 import { Dealers, UserPrivate } from "typings/gqlTypes";
 import { EditDealerInput } from "typings"
@@ -47,7 +47,7 @@ const EditDealerForm: React.FC<ReactProps> = (props) => {
 
   const [dealerEdit, { data, loading, error }] =
   useMutation<MutationData, EditDealerInput>(
-    EDIT_STORE, {
+    EDIT_DEALER, {
     variables: {} as any,
     update: (cache, { data }: { data: MutationData }) => {
       const { editDealerProfile: { dealer } } = data;

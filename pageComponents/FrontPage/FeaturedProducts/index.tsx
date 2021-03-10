@@ -94,13 +94,13 @@ const FeaturedProducts = (props: ReactProps) => {
 
   return (
     <>
-      <Hidden xsDown implementation="css">
+      <Hidden smDown implementation="css">
         <FeaturedProductsDesktop
           productsConnection={connection}
           cardsPerRow={cardsPerRow}
         />
       </Hidden>
-      <Hidden smUp implementation="css">
+      <Hidden mdUp implementation="css">
         <FeaturedProductsMobileCarousel
           productsConnection={connection}
           cardsPerRow={cardsPerRow}

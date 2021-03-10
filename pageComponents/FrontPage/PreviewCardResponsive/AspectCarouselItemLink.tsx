@@ -12,8 +12,7 @@ import CardActionArea from "@material-ui/core/CardActionArea";
 import Link from "next/link";
 // Carousel
 import AirItemWide from "components/AirCarousel/AirItemWide";
-import AspectRatioConstraint from "components/AspectRatioConstraint";
-import LinkLoading from "./LinkLoading";
+import LinkLoading from "components/LinkLoading";
 import {
   styles,
 } from "./styles";

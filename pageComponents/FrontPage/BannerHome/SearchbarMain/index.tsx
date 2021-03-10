@@ -133,7 +133,6 @@ const SearchbarMain = (props: SearchbarProps) => {
       disablePriceFilter
       // disableCategories
       disablePaginators={router.pathname === "/"}
-      hidePaginator
       maxCategoryInputWidth={250}
       topSectionStyles={{
         justifyContent: 'flex-end',

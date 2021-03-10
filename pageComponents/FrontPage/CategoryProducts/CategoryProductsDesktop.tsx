@@ -8,7 +8,7 @@ import Link from "next/link";
 // Material UI
 import Typography from "@material-ui/core/Typography";
 // Components
-import PreviewCardResponsive from "pageComponents/FrontPage/PreviewCardResponsive";
+import ProductCardResponsive from "components/ProductCardResponsive";
 import LoadingCards from "../LoadingCards";
 // Graphql
 import {
@@ -121,13 +121,9 @@ const CategoryProducts = (props: ReactProps) => {
                     smDown ? classes.flexItemMobile : classes.flexItem,
                     classes.flexItemHover,
                   )}>
-                    <PreviewCardResponsive
-                      product={product}
+                    <ProductCardResponsive
+                      product={product as Product}
                       cardsPerRow={cardsPerRow}
-                      listName={"categories-list"}
-                      loadCarouselPics={loadCarouselPics}
-                      setLoadCarouselPics={setLoadCarouselPics}
-                      productIndex={i}
                     />
                   </div>
                 </div>

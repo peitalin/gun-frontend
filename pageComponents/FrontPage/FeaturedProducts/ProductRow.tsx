@@ -14,7 +14,7 @@ import ErrorBounds from "components/ErrorBounds";
 import ProductPreviewCardRow from "components/ProductPreviewCardRow";
 import Typography from "@material-ui/core/Typography";
 import PriceDisplayMain from "components/PriceDisplayMain";
-import DescriptionLoading from "pageComponents/FrontPage/PreviewCardResponsive/DescriptionLoading";
+import DescriptionLoading from "components/ProductCardResponsive/DescriptionLoading";
 // Modals
 import { goToModalConnect } from "utils/modals";
 // helpers

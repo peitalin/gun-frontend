@@ -42,7 +42,7 @@ const EditDealerProfile = (props: ReactProps) => {
     state => option(state).reduxModals.dealerProfileEditModalOpen()
   );
   const dealer = useSelector<GrandReduxState, Dealers>(
-    state => option(state).reduxLogin.user.dealer()
+    state => option(state).reduxLogin.user.dealer() as any
   );
 
   const closeEditDealerModal = () => {

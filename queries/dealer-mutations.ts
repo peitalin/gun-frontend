@@ -4,15 +4,17 @@ import { UserPrivateFragment } from "./fragments";
 
 
 export const CREATE_DEALER = gql`
-  mutation createStore(
-    $name: String!
-    $address: String
-    $city: String
-    $state: String
-    $postCode: String
-    $licenseNumber: String!
+  mutation createDealerForUser(
+    dealerUserId: String!
+    name: String!
+    address: String
+    city: String
+    postCode: String
+    state: String
+    licenseNumber: String!
   ) {
     createDealer(
+      dealerUserId: $dealerUserId
       name: $name,
       address: $address
       city: $city
@@ -32,7 +34,7 @@ export const CREATE_DEALER = gql`
 
 
 export const EDIT_DEALER = gql`
-  mutation editDealerProfile(
+  mutation editDealer(
     $name: String
     $address: String
     $city: String
@@ -40,13 +42,32 @@ export const EDIT_DEALER = gql`
     $postCode: String
     $licenseNumber: String!
   ) {
-    editDealerProfile(
+    editDealer(
       name: $name
       address: $address
       city: $city
       state: $state
       postCode: $postCode
       licenseNumber: $licenseNumber
+    ) {
+      user {
+        ... on UserPrivate {
+          ...UserPrivateFragment
+        }
+      }
+    }
+  }
+  ${UserPrivateFragment}
+`;
+
+export const SET_DEALER_ID_FOR_USER = gql`
+  mutation setDealerIdForUser(
+    dealerUserId: String!
+    dealerId: String!
+  ) {
+    setDealerIdForUser(
+      dealerUserId: $dealerUserId
+      dealerId: $dealerId
     ) {
       user {
         ... on UserPrivate {
