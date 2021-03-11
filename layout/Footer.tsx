@@ -148,44 +148,6 @@ const Footer: React.FC<ReactProps> = (props) => {
           </div>
         </div>
 
-        {
-          user?.userRole === Role.PLATFORM_ADMIN &&
-          <div className={classes.flexColApiLinks}>
-            <div className={classes.apiLink}>
-              <Typography variant="body2" className={classes.apiLinkHeading}>
-                {`GATEWAY_GRAPHQL_URL: `}
-              </Typography>
-              <Typography variant="body2" className={classes.apiLinkText}>
-                {`${URI}`}
-              </Typography>
-            </div>
-            <div className={classes.apiLink}>
-              <Typography variant="body2" className={classes.apiLinkHeading}>
-                {`SERVER_URI: `}
-              </Typography>
-              <Typography variant="body2" className={classes.apiLinkText}>
-                {`${SERVER_URI}`}
-              </Typography>
-            </div>
-            <div className={classes.apiLink}>
-              <Typography variant="body2" className={classes.apiLinkHeading}>
-                {`WS_URI: `}
-              </Typography>
-              <Typography variant="body2" className={classes.apiLinkText}>
-                {`${WS_URI}`}
-              </Typography>
-            </div>
-            <div className={classes.apiLink}>
-              <Typography variant="body2" className={classes.apiLinkHeading}>
-                {`NODE_ENV: `}
-              </Typography>
-              <Typography variant="body2" className={classes.apiLinkText}>
-                {`${NODE_ENV}`}
-              </Typography>
-            </div>
-          </div>
-        }
-
         <div className={classes.footerSubsection}>
           <div className={classes.thirdBlock}>
             <div className={clsx(
@@ -203,6 +165,47 @@ const Footer: React.FC<ReactProps> = (props) => {
             </div>
           </div>
         </div>
+
+        {
+          user?.userRole === Role.PLATFORM_ADMIN &&
+          <div className={classes.footerSubsection}>
+            <div className={classes.flexColApiLinks}>
+              <div className={classes.apiLink}>
+                <Typography variant="body2" className={classes.apiLinkHeading}>
+                  {`GATEWAY_GRAPHQL_URL: `}
+                </Typography>
+                <Typography variant="body2" className={classes.apiLinkText}>
+                  {`${URI}`}
+                </Typography>
+              </div>
+              <div className={classes.apiLink}>
+                <Typography variant="body2" className={classes.apiLinkHeading}>
+                  {`SERVER_URI: `}
+                </Typography>
+                <Typography variant="body2" className={classes.apiLinkText}>
+                  {`${SERVER_URI}`}
+                </Typography>
+              </div>
+              <div className={classes.apiLink}>
+                <Typography variant="body2" className={classes.apiLinkHeading}>
+                  {`WS_URI: `}
+                </Typography>
+                <Typography variant="body2" className={classes.apiLinkText}>
+                  {`${WS_URI}`}
+                </Typography>
+              </div>
+              <div className={classes.apiLink}>
+                <Typography variant="body2" className={classes.apiLinkHeading}>
+                  {`NODE_ENV: `}
+                </Typography>
+                <Typography variant="body2" className={classes.apiLinkText}>
+                  {`${NODE_ENV}`}
+                </Typography>
+              </div>
+            </div>
+          </div>
+        }
+
       </div>
     </footer>
   )
@@ -313,11 +316,8 @@ const styles = (theme: Theme) => createStyles({
     flexDirection: 'column',
     flexGrow: 1,
     flexBasis: '45%',
-    marginLeft: '2rem',
-    marginRight: '2rem',
-    marginBottom: '2rem',
     minWidth: 130,
-    // margin: '0rem 0rem 2rem 0rem',
+    margin: '1rem 0rem',
   },
   narrow: {
     minWidth: "140px",
@@ -348,17 +348,17 @@ const styles = (theme: Theme) => createStyles({
   siteFooterCredits: {
     marginBottom: 0,
     width: '100%',
-    borderTop: theme.palette.type === 'dark'
-      ? `1px solid ${Colors.charcoal}`
-      : `1px solid ${Colors.slateGrey}`,
+    // borderTop: theme.palette.type === 'dark'
+    //   ? `1px solid ${Colors.charcoal}`
+    //   : `1px solid ${Colors.slateGrey}`,
     color: theme.palette.type === 'dark'
       ? Colors.mediumGrey
       : Colors.slateGreyBlack,
     display: 'flex',
     flexDirection: "row",
     flexWrap: 'wrap',
-    padding: '0.5rem',
     paddingTop: '1rem',
+    paddingBottom: '1rem',
   },
   siteFooterCreditsSpaceBetween: {
     justifyContent: 'space-between',
@@ -414,8 +414,8 @@ const styles = (theme: Theme) => createStyles({
     fontSize: '0.9rem',
     lineHeight: '1rem',
     color: theme.palette.type === 'dark'
-      ? theme.colors.uniswapLightestGrey
-      : theme.colors.darkWhite,
+      ? Colors.uniswapGrey
+      : Colors.slateGreyDarkest,
     textDecoration: 'none',
     '&:hover': {
       color: Colors.secondaryBright,
@@ -427,8 +427,8 @@ const styles = (theme: Theme) => createStyles({
     fontSize: '0.9rem',
     lineHeight: '1rem',
     color: theme.palette.type === 'dark'
-      ? theme.colors.uniswapLightestGrey
-      : theme.colors.darkWhite,
+      ? Colors.uniswapLighterGrey
+      : Colors.slateGreyLightestBlack,
     textDecoration: 'none',
   },
 })
