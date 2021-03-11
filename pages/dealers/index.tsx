@@ -2,7 +2,7 @@ import React from "react";
 import { oc as option } from "ts-optchain";
 // Styles
 import { withStyles, WithStyles } from "@material-ui/core/styles";
-import { styles } from "pageComponents/DealerProfileDashboard/styles";
+import { styles } from "pageComponents/DealerDashboard/styles";
 import clsx from "clsx";
 // Typings
 import { StorePrivate } from "typings/gqlTypes";
@@ -13,7 +13,7 @@ import LoadingBarSSR from "components/LoadingBarSSR";
 // SSR disable
 import dynamic from "next/dynamic";
 const EditDealerProfile = dynamic(
-  () => import("pageComponents/DealerProfileDashboard/EditDealerProfile"), {
+  () => import("pageComponents/DealerDashboard/EditDealerProfile"), {
     loading: () => <Loading />,
     ssr: false,
   }
@@ -29,7 +29,7 @@ import MetaHeadersPage from "layout/MetaHeadersPage";
 
 
 
-const EditStoreAdminPage = (props: ReactProps) => {
+const EditDealerHomePage = (props: ReactProps) => {
 
   // state
   const { classes } = props;
@@ -37,7 +37,7 @@ const EditStoreAdminPage = (props: ReactProps) => {
   return (
     <>
       <MetaHeadersPage
-        title="Edit Store - gunmarketplace.com.au"
+        title="Edit Dealer Profile - gunmarketplace.com.au"
         robots="noindex"
       />
       <DealerProfileWrapper>
@@ -46,10 +46,7 @@ const EditStoreAdminPage = (props: ReactProps) => {
           <div className={classes.contentContainer}>
             {
               data && data.user && data.user.store &&
-              <>
-                DEALER DASBOARD
-                <EditDealerProfile/>
-              </>
+              <EditDealerProfile/>
             }
           </div>
         );
@@ -62,6 +59,6 @@ const EditStoreAdminPage = (props: ReactProps) => {
 interface ReactProps extends WithStyles<typeof styles> {
 }
 
-export default withStyles(styles)( EditStoreAdminPage );
+export default withStyles(styles)( EditDealerHomePage );
 
 

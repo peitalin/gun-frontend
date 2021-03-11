@@ -14,11 +14,11 @@ const DealerProfileWrapper = dynamic(() => import("layout/GetUser/DealerProfileW
   loading: () => <LoadingBarSSR/>,
   ssr: false,
 })
-import PayoutsPendingApprovals from "pageComponents/Gov/PayoutsPendingApprovals";
+import ArrivingOrders from "pageComponents/DealerDashboard/ArrivingOrders";
 
 
 
-const DealerPendingApprovalsPage: NextPage<ReactProps> = (props) => {
+const DealerArrivingOrders: NextPage<ReactProps> = (props) => {
   return (
     <DealerProfileWrapper
       disablePadding
@@ -27,7 +27,7 @@ const DealerPendingApprovalsPage: NextPage<ReactProps> = (props) => {
       {({ data, loading, error }: DealerProfileProps) => {
         return (
           <div className={props.classes.GovApprovalsRoot}>
-            <PayoutsPendingApprovals
+            <ArrivingOrders
               admin={data.user}
             />
           </div>
@@ -53,7 +53,7 @@ interface Context extends NextPageContext {
   apolloClient: ApolloClient<any>;
 }
 
-DealerPendingApprovalsPage.getInitialProps = async (ctx: Context) => {
+DealerArrivingOrders.getInitialProps = async (ctx: Context) => {
 
   // Will trigger this getInitialProps when requesting route /pages/ProductGallery
   // otherwise initialProps may be fed via /pages/index.tsx's getInitialProps
@@ -86,7 +86,7 @@ DealerPendingApprovalsPage.getInitialProps = async (ctx: Context) => {
 }
 
 
-export default withStyles(styles)( DealerPendingApprovalsPage );
+export default withStyles(styles)( DealerArrivingOrders );
 
 
 
