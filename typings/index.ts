@@ -109,6 +109,8 @@ export interface ProductCreateEditCommonInput {
   caliber?: string;
   serialNumber: string;
   location: string;
+  magazineCapacity?: string;
+  barrelLength?: string;
   dealerId?: string;
   dealer?: {
     licenseNumber?: string;

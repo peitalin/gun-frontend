@@ -31,6 +31,8 @@ export const CREATE_PRODUCT = gql`
             actionType
             caliber
             serialNumber
+            magazineCapacity
+            barrelLength
             location
             dealer {
               id

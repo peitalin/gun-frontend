@@ -14,10 +14,11 @@ import { UserPrivate } from "typings/gqlTypes";
 import ErrorBounds from "components/ErrorBounds";
 import { Colors, Gradients } from "layout/AppTheme";
 //
-import SideRoutesMenu from "pageComponents/SellerProfileDashboard/SideRoutesMenu";
-import SellerDashboardMenu from "pageComponents/SellerProfileDashboard/SellerDashboardMenu";
+import SellersSideRoutesMenu from "pageComponents/SellerDashboard/SellersSideRoutesMenu";
+import SellerDashboardMenu from "pageComponents/SellerDashboard/SellerDashboardMenu";
 //
 import GovSideRoutesMenu from "pageComponents/Gov/GovSideRoutesMenu";
+import DealersSideRoutesMenu from "pageComponents/DealerDashboard/DealersSideRoutesMenu";
 // Router
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
@@ -45,7 +46,9 @@ const Layout: React.FC<ReactProps> = (props) => {
   const isSellerRoute = !!router.pathname.includes('/admin')
     && !!option(user).store.id()
 
-  const isGovRoute = !!router.pathname.includes('/gov')
+  const isGovernanceRoute = !!router.pathname.startsWith('/gov')
+
+  const isDealerRoute = !!router.pathname.startsWith('/dealers')
 
   //////////// Render Layout
 
@@ -57,7 +60,7 @@ const Layout: React.FC<ReactProps> = (props) => {
           <ErrorBounds className={classes.flexJustify}>
             <div className={clsx(classes.sellerPageContainer, "fadeIn")}>
               <div className={classes.minWidth240}>
-                <SideRoutesMenu
+                <SellersSideRoutesMenu
                   user={user}
                 />
               </div>
@@ -83,12 +86,25 @@ const Layout: React.FC<ReactProps> = (props) => {
           </ErrorBounds>
         )
       }
-    } else if (isGovRoute) {
+    } else if (isGovernanceRoute) {
       return (
         <ErrorBounds className={classes.flexJustify}>
           <div className={clsx(classes.govPageContainer, "fadeIn")}>
             <div className={classes.minWidth240}>
               <GovSideRoutesMenu />
+            </div>
+            <div className={classes.flex75}>
+              {props.children}
+            </div>
+          </div>
+        </ErrorBounds>
+      )
+    } else if (isDealerRoute) {
+      return (
+        <ErrorBounds className={classes.flexJustify}>
+          <div className={clsx(classes.govPageContainer, "fadeIn")}>
+            <div className={classes.minWidth240}>
+              <DealersSideRoutesMenu />
             </div>
             <div className={classes.flex75}>
               {props.children}

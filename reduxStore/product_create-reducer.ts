@@ -43,6 +43,8 @@ export const initialProductCreateState: ReduxStateProductCreate = {
     caliber: "",
     serialNumber: "",
     location: "",
+    magazineCapacity: "",
+    barrelLength: "",
     dealerId: "",
     dealer: undefined,
     currentVariants: [

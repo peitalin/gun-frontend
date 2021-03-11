@@ -63,6 +63,14 @@ export const validationSchemas = {
       location: Yup.string()
         .min(0)
         .max(100),
+      magazineCapacity: Yup.string()
+        .min(0)
+        .max(100)
+        .required('Needs a magazine capacity'),
+      barrelLength: Yup.string()
+        .min(0)
+        .max(100)
+        .required('Needs a barrelLength'),
       dealerId: Yup.string()
         .when('dealer', {
           is: (val) => {
@@ -230,6 +238,14 @@ export const validationSchemas = {
       location: Yup.string()
         .min(0)
         .max(100),
+      magazineCapacity: Yup.string()
+        .min(0)
+        .max(100)
+        .required('Needs a magazine capacity'),
+      barrelLength: Yup.string()
+        .min(0)
+        .max(100)
+        .required('Needs a barrelLength'),
       dealerId: Yup.string()
         .min(0)
         .max(100)

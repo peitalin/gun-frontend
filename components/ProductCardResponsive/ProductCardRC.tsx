@@ -175,15 +175,18 @@ const ProductCardRC = (props: ReactProps) => {
             : <div className={classes.descriptionContainer}
                 style={cardWidthStyle}
               >
-                <div className={classes.actionTag}>
-                  <Typography
-                    className={classes.actionType}
-                    variant="body2"
-                    component="div"
-                  >
-                    {product?.currentSnapshot?.actionType}
-                  </Typography>
-                </div>
+                {
+                  product?.currentSnapshot?.actionType &&
+                  <div className={classes.actionTag}>
+                    <Typography
+                      className={classes.actionType}
+                      variant="body2"
+                      component="div"
+                    >
+                      {product?.currentSnapshot?.actionType}
+                    </Typography>
+                  </div>
+                }
                 <div className={classes.descriptionDetailsFlexItem}>
                   <Typography
                     className={classes.title}

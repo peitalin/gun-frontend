@@ -6,9 +6,6 @@ import {
 } from "typings/gqlTypes";
 import { oc as option } from "ts-optchain";
 import { DzuPreviewItem } from "typings/dropzone";
-import {
-  deserialize,
-} from "components/TextEditor/helpersDeserializers"
 
 
 export const productToProductEditInput = (
@@ -34,6 +31,8 @@ export const productToProductEditInput = (
       location: "",
       dealerId: "",
       dealer: undefined,
+      magazineCapacity: "",
+      barrelLength: "",
     }
   }
 
@@ -68,6 +67,8 @@ export const productToProductEditInput = (
     serialNumber: product.currentSnapshot.serialNumber,
     location: product.currentSnapshot.location,
     dealerId: product.currentSnapshot.dealer.id,
+    magazineCapacity: product.currentSnapshot.magazineCapacity,
+    barrelLength: product.currentSnapshot.barrelLength,
   };
 }
 

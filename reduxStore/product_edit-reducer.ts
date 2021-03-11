@@ -43,6 +43,8 @@ const initialProductEditState: ReduxStateProductEdit = {
     caliber: "",
     serialNumber: "",
     location: "",
+    magazineCapacity: "",
+    barrelLength: "",
     dealerId: "",
     dealer: undefined,
     currentVariants: [

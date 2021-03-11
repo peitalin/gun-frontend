@@ -44,6 +44,8 @@ export const ProductFragment = gql`
       ammoType
       make
       model
+      magazineCapacity
+      barrelLength
     }
     category {
       id

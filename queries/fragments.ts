@@ -44,6 +44,8 @@ export const ProductSnapshotsFragment = gql`
     caliber
     serialNumber
     location
+    magazineCapacity
+    barrelLength
     dealer {
       id
       name
