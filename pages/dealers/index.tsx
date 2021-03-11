@@ -45,8 +45,8 @@ const EditDealerHomePage = (props: ReactProps) => {
         return (
           <div className={classes.contentContainer}>
             {
-              data && data.user && data.user.store &&
-              <EditDealerProfile/>
+              data?.user?.dealer &&
+              <EditDealerProfile user={data?.user}/>
             }
           </div>
         );

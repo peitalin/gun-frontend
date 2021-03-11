@@ -30,13 +30,13 @@ import OrderViewerPage from "pageComponents/DealerDashboard/OrderViewer";
 
 const GovOrdersPage: NextPage<ReactProps> = (props) => {
 
-  const user = useSelector<GrandReduxState, UserPrivate>(
-    state => state.reduxLogin.user
-  );
 
   return (
     <DealerProfileWrapper>
       {({ data, loading, error }: DealerProfileProps) => {
+
+        let user = data?.user
+
         return (
           <OrderViewerPage
             onSubmit={undefined}

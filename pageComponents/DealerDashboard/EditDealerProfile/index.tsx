@@ -4,7 +4,7 @@ import clsx from "clsx";
 import { Colors, BorderRadius, BorderRadius2x, BoxShadows } from "layout/AppTheme";
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 // Typings
-import { Dealers } from "typings/gqlTypes";
+import { Dealers, UserPrivate } from "typings/gqlTypes";
 // Material UI
 import Button from "@material-ui/core/Button";
 // Utils Components
@@ -23,6 +23,7 @@ const EditDealerProfile = (props: ReactProps) => {
 
   const {
     classes,
+    user,
   } = props;
   // CSS
   const theme = useTheme();
@@ -30,11 +31,6 @@ const EditDealerProfile = (props: ReactProps) => {
   const md = useMediaQuery(theme.breakpoints.only('md'))
   const lg = useMediaQuery(theme.breakpoints.only('lg'))
   const xlUp = useMediaQuery(theme.breakpoints.up('xl'))
-
-  // redux
-  const dealer = useSelector<GrandReduxState, Dealers>(
-    state => state?.reduxLogin?.user?.dealer as any
-  );
 
   return (
     <ErrorBounds className={clsx(
@@ -47,7 +43,7 @@ const EditDealerProfile = (props: ReactProps) => {
     )}>
       <div className={classes.dealerEditMenu}>
         <EditDealerForm
-          dealer={dealer}
+          dealer={user?.dealer as any}
           closeEditDealerModal={undefined}
         />
       </div>
@@ -57,6 +53,7 @@ const EditDealerProfile = (props: ReactProps) => {
 
 
 interface ReactProps extends WithStyles<typeof styles> {
+  user: UserPrivate
 }
 
 const styles = (theme: Theme) => createStyles({
