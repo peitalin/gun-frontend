@@ -12,7 +12,7 @@ import Avatar from '@material-ui/core/Avatar';
 // Components
 import Loading from "components/Loading";
 import ErrorBounds from 'components/ErrorBounds';
-import EditSellerProfile from "pageComponents/SellerProfileDashboard/EditSellerProfile";
+import EditSellerProfile from "pageComponents/SellerDashboard/EditSellerProfile";
 
 
 
@@ -45,7 +45,7 @@ const SellerProfile: React.FC<StoreProps> = (props) => {
           </div> */}
           <div className={classes.flexCol}>
             <Typography variant="body1" className={classes.name}>
-              {user?.store?.name}
+              {"Private Seller"}
             </Typography>
             <Typography variant="body1" className={classes.licenseInfo}>
               {user?.license?.licenseNumber}
@@ -56,9 +56,9 @@ const SellerProfile: React.FC<StoreProps> = (props) => {
           </div>
         </div>
 
-        <div className={classes.flexEdit}>
+        {/* <div className={classes.flexEdit}>
           <EditSellerProfile asModal={true} />
-        </div>
+        </div> */}
       </div>
     </ErrorBounds>
   )

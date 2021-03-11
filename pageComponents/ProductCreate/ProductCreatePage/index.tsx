@@ -209,6 +209,8 @@ const ProductCreatePage = (props: ReactProps) => {
           caliber: values.caliber,
           serialNumber: values.serialNumber,
           location: values.location,
+          magazineCapacity: values.magazineCapacity,
+          barrelLength: values.barrelLength,
           dealerId: values.dealerId,
           dealer: values.dealer,
           categoryId: values.categoryId,

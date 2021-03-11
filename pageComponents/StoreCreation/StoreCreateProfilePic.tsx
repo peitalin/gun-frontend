@@ -21,8 +21,8 @@ import Button from "@material-ui/core/Button";
 // Components
 import Loading from "components/Loading";
 // DZU components
-import UploadLayout from "pageComponents/SellerProfileDashboard/EditSellerProfile/StoreEditProfilePic/UploadLayout";
-import UploadInput from "pageComponents/SellerProfileDashboard/EditSellerProfile/StoreEditProfilePic/UploadInput";
+import UploadLayout from "pageComponents/SellerDashboard/EditSellerProfile/StoreEditProfilePic/UploadLayout";
+import UploadInput from "pageComponents/SellerDashboard/EditSellerProfile/StoreEditProfilePic/UploadInput";
 // Validation
 import { FormikProps } from 'formik';
 

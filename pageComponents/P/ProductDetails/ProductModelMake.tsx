@@ -46,6 +46,22 @@ const ProductModelMake = (props: ReactProps) => {
         />
       }
       {
+        product?.currentSnapshot?.magazineCapacity &&
+        <ModelRow
+          classes={classes}
+          title={"Magazine Capacity:"}
+          value={product?.currentSnapshot?.magazineCapacity}
+        />
+      }
+      {
+        product?.currentSnapshot?.barrelLength &&
+        <ModelRow
+          classes={classes}
+          title={"Barrel Length:"}
+          value={product?.currentSnapshot?.barrelLength}
+        />
+      }
+      {
         product?.currentSnapshot?.caliber !== undefined &&
         <ModelRow
           classes={classes}

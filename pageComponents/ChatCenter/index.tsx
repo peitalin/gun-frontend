@@ -24,7 +24,7 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 // Material UI
 import Dialog from "@material-ui/core/Dialog";
 import Button from "@material-ui/core/Button";
-import ResponsivePadding from "pageComponents/SellerProfileDashboard/ResponsivePadding";
+import ResponsivePadding from "pageComponents/SellerDashboard/ResponsivePadding";
 
 
 const EMIT_ONLINE_EVENT = gql`

@@ -212,6 +212,8 @@ const ProductEditPage = (props: ReactProps) => {
               productId: values.productId,
               dealerId: values.dealerId,
               dealer: values.dealer,
+              magazineCapacity: values.magazineCapacity,
+              barrelLength: values.barrelLength,
             }
           },
         }).finally(() => {
