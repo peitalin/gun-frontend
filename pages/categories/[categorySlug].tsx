@@ -25,6 +25,7 @@ import MetaHeadersPage from "layout/MetaHeadersPage";
 
 
 const CategorySlugSSR: NextPage<ReactProps> = (props) => {
+
   return (
     <>
       <MetaHeadersPage

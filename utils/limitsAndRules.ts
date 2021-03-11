@@ -46,7 +46,7 @@ export const idMaxLength = 250;
 export const promoCodesMaxBulkAdd = 1; //50;
 export const searchTermMaxLength = 1000;
 export const websiteMaxLength = 2000;
-export const maxPrice = 999999; // $10k
+export const maxPrice = 1000001; // $10,000.01
 export const minCountVariants = 1;
 export const maxLengthListName = 250;
 

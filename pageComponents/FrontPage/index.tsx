@@ -3,7 +3,7 @@ import React from "react";
 import clsx from "clsx";
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
 // Typings
-import { ProductsConnection, ConnectionOffsetQuery } from "typings/gqlTypes";
+import { ProductsConnection, ConnectionOffsetQuery, Categories } from "typings/gqlTypes";
 // Components
 import dynamic from "next/dynamic";
 import NewReleaseProducts from "pageComponents/FrontPage/NewReleaseProducts";
@@ -15,7 +15,7 @@ import BannerHome from "pageComponents/FrontPage/BannerHome";
 import { Colors, Gradients } from "layout/AppTheme";
 // GraphQL
 import { useQuery, useApolloClient } from "@apollo/client";
-import CategoryCarouselStart from "./CategoryCarouselStart";
+import CategoryCarouselStart from "components/CategoryCarouselStart";
 
 // Category Component
 // import CategoryIdOrName from "pageComponents/Categories/CategoryIdOrName";
@@ -50,7 +50,7 @@ const FrontPage: React.FC<ReactProps> = (props) => {
         withRecommendations={false}
       >
 
-        <CategoryCarouselStart />
+        <CategoryCarouselStart categories={props.initialCategories}/>
 
         <FeaturedProducts
           initialFeaturedProducts={initialFeaturedProducts}
@@ -92,6 +92,7 @@ const FrontPage: React.FC<ReactProps> = (props) => {
 
 interface ReactProps extends WithStyles<typeof styles> {
   initialFeaturedProducts?: ProductsConnection;
+  initialCategories?: Categories[];
 }
 
 

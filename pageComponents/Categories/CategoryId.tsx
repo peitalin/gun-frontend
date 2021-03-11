@@ -163,7 +163,8 @@ const CategoryId: React.FC<ReactProps> = (props) => {
     searchTerm: searchTerm,
   })
   // console.log("totalCount: ", productsConnection?.totalCount)
-  // console.log("categorySlug: ", categorySlug)
+  console.log("initialRouteCategory: ", props.initialRouteCategory)
+  console.log("categorySlug: ", categorySlug)
 
 
   return (
@@ -209,8 +210,8 @@ const CategoryId: React.FC<ReactProps> = (props) => {
               onClick={onClick}
               // facets={facets}
               // setCategoryFacets={setCategoryFacets({ facets, setFacets })}
-              setCurrentCategories={setCurrentCategories as any}
-              currentCategories={currentCategories as any}
+              setCurrentCategories={setCurrentCategories}
+              currentCategories={currentCategories}
               // this turns on category-page specifc searchbar
               isCategoriesPage={true}
               setOrderBy={setOrderBy}

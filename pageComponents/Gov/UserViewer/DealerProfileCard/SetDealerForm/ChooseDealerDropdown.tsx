@@ -52,7 +52,13 @@ const createDealerSuggestions = (dealers: Dealers[]): SelectOption[] => {
   if (!dealers) {
     return []
   }
-  return dealers.map(dealer => createDealerOption(dealer))
+  return [
+    {
+      label: "Unlink dealer from User",
+      value: undefined,
+    },
+    ...dealers.map(dealer => createDealerOption(dealer))
+  ]
 }
 
 const createDealerOption = (dealer: Dealers) => {

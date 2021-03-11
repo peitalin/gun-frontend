@@ -148,7 +148,7 @@ const SetDealer = (props: ReactProps) => {
             { variant: "info" }
           )
 
-        } else if (values.dealerId) {
+        } else {
 
           setDealerForUser({
             variables: {
@@ -156,10 +156,17 @@ const SetDealer = (props: ReactProps) => {
               dealerUserId: props.dealerUserId,
             }
           })
-          snackbar.enqueueSnackbar(
-            `Linking ${props.dealerEmail}`,
-            { variant: "info" }
-          )
+          if (values.dealerId) {
+            snackbar.enqueueSnackbar(
+              `Linking ${props.dealerEmail}`,
+              { variant: "info" }
+            )
+          } else {
+            snackbar.enqueueSnackbar(
+              `Unlinking ${props.dealerEmail}`,
+              { variant: "info" }
+            )
+          }
         }
         //
       }}

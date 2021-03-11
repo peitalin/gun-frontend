@@ -63,7 +63,7 @@ export const EDIT_DEALER = gql`
 export const SET_DEALER_ID_FOR_USER = gql`
   mutation setDealerIdForUser(
     $dealerUserId: String!
-    $dealerId: String!
+    $dealerId: String
   ) {
     setDealerIdForUser(
       dealerUserId: $dealerUserId

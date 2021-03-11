@@ -2,16 +2,19 @@ import React from "react";
 import clsx from "clsx";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
-import { BorderRadius2x, Colors, BorderRadius } from "layout/AppTheme";
+import { BorderRadius2x, Colors, BorderRadius, Gradients } from "layout/AppTheme";
 // Components
 import Typography from "@material-ui/core/Typography";
 import CardMedia from "@material-ui/core/CardMedia";
 // Router
 import Link from "next/link";
+// typings
+import { Categories } from "typings/gqlTypes";
 // theme css
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
-import { CategoryPreviewCard } from ".";
+import { categoryPreviewsBackup } from "./utils";
+import AspectRatioConstraint from "components/AspectRatioConstraint";
 
 
 
@@ -20,7 +23,7 @@ const CategoryGalleryDesktop = (props: ReactProps) => {
 
   const {
     classes,
-    categoriesPreviewCards,
+    categories,
   } = props;
 
   const theme = useTheme();
@@ -57,38 +60,48 @@ const CategoryGalleryDesktop = (props: ReactProps) => {
     }
   }
 
-
   return (
     <div className={smDown ? classes.innerRootSm : classes.innerRoot}>
       {
-        categoriesPreviewCards.map((c, i) => {
+        (categories ?? []).map((c, i) => {
 
-          let imageUrl = c?.imageUrl
+          let imageUrl
+          let lastImage = (c?.thumbImage?.variants ?? [])?.[0]
+
+          if (c?.thumbImage?.variants?.length > 3) {
+            imageUrl = c?.thumbImage?.variants?.[3]?.url
+          } else {
+            imageUrl = lastImage?.url
+          }
+
+          // if (!imageUrl) {
+          //   imageUrl = categoryPreviewsBackup
+          //     .find(backup => backup.slug === c.slug)?.imageUrl
+          // }
 
           return (
             <div className={classes.imageFlexItem}
               key={i}
               style={getImgSizes()}
             >
+              <AspectRatioConstraint>
               <Link key={i}
                 href="/categories/[categorySlug]"
                 as={`/categories/${c?.slug}`}
               >
                 <a className={classes.linkImage}>
-                  {
-                    (!!imageUrl) &&
-                    <CardMedia
-                      component="img"
-                      // className={classes.image}
-                      classes={{ media: classes.categoryImage }}
-                      src={imageUrl}
-                    />
-                  }
+                  <CardMedia
+                    component="img"
+                    // className={classes.image}
+                    classes={{ media: classes.categoryImage }}
+                    src={imageUrl}
+                  />
                   <Typography variant="body1" className={classes.cardText}>
                     {c?.name}
                   </Typography>
                 </a>
               </Link>
+              </AspectRatioConstraint>
             </div>
           )
         })
@@ -100,7 +113,7 @@ const CategoryGalleryDesktop = (props: ReactProps) => {
 
 interface ReactProps extends WithStyles<typeof styles> {
   style?: any;
-  categoriesPreviewCards: Array<CategoryPreviewCard>
+  categories: Categories[]
   initialNumItems?: number
 }
 
@@ -136,11 +149,15 @@ export const styles = (theme: Theme) => createStyles({
     alignItems: "center",
     flexDirection: "row",
     textAlign: 'center',
-    border: `1px solid ${Colors.slateGrey}`,
+    border: theme.palette.type === 'dark'
+      ? `1px solid ${Colors.uniswapNavy}`
+      : `1px solid ${Colors.slateGreyDarker}`,
     borderRadius: BorderRadius2x,
     width: '100%',
     height: '100%',
-    background: Colors.slateGreyDark,
+    background: theme.palette.type === 'dark'
+      ? Colors.uniswapDarkNavy
+      : Colors.slateGreyDark,
   },
   cardText: {
     marginTop: '0.5rem',
@@ -161,7 +178,9 @@ export const styles = (theme: Theme) => createStyles({
   linkImage: {
     position: "relative",
     "& > p": {
-      color: Colors.slateGreyDarkest,
+      color: theme.palette.type === 'dark'
+        ? Colors.uniswapLightestGrey
+        : Colors.black,
     },
     "&:hover": {
       "& > p": {

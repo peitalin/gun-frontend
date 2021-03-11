@@ -32,9 +32,6 @@ import SearchOptionsPriceFilter from "./SearchOptionsPriceFilter";
 import CategoryDropdown from './CategoryDropdown';
 import SearchIcon from '@material-ui/icons/Search';
 import InputBase from '@material-ui/core/InputBase';
-import IconButton from "@material-ui/core/IconButton";
-import ArrowBack from "@material-ui/icons/ArrowBack";
-import ArrowForward from "@material-ui/icons/ArrowForward";
 
 // Responsiveness
 import { useTheme } from "@material-ui/core/styles";
@@ -137,9 +134,10 @@ const SearchOptionsPaginator: React.FC<ReactProps> = (props) => {
 
   // Apollo Graphql
   const categoryData = useQuery<{ getProductCategories: Categories[] }, null>(
-    GET_PRODUCT_CATEGORIES
+    GET_PRODUCT_CATEGORIES,
   )
   let categories = categoryData?.data?.getProductCategories ?? []
+  console.log("dropdown categories: ", categories)
 
 
   const searchRef = React.useRef(null)

@@ -17,13 +17,13 @@ import { ApolloClient } from "@apollo/client";
 import { serverApolloClient } from "utils/apollo";
 // Meta headers
 import MetaHeadersPage from "layout/MetaHeadersPage";
-// ENV variables
-import getConfig from 'next/config'
-const { publicRuntimeConfig: { EFC_ENV } } = getConfig()
+import { categoryPreviewsBackup } from "components/CategoryCarouselStart/utils";
 
 
 
 const CategoriesPage: NextPage<ReactProps> = (props) => {
+
+  console.log('initialCategories', props.initialCategories)
   return (
     <ErrorBounds className={props.classes.root}>
       <MetaHeadersPage
@@ -60,6 +60,13 @@ interface ReactProps extends WithStyles<typeof styles> {
   initialCategories: Categories[];
 }
 
+interface QueryData1 {
+  getProductCategories: Categories[];
+}
+interface QueryVar1 {
+  slug?: string;
+}
+
 ////////// SSR ///////////
 interface Context extends NextPageContext {
   apolloClient: ApolloClient<object>;
@@ -68,14 +75,15 @@ interface Context extends NextPageContext {
 CategoriesPage.getInitialProps = async (ctx: Context) => {
 
   try {
-    const { data }  = await serverApolloClient(ctx).query({
-      query: GET_PRODUCT_CATEGORIES,
-      variables: {}
-    });
-    console.log('getInitialProps Categories: ', data);
+    // const { data } = await serverApolloClient(ctx).query<QueryData1, QueryVar1>({
+    //   query: GET_PRODUCT_CATEGORIES,
+    // })
+    // let initialCategories = data?.getProductCategories ?? categoryPreviewsBackup as any;
+    let initialCategories: Categories[] = categoryPreviewsBackup as any;
+
     // return props
     return {
-      initialCategories: data.categories || [],
+      initialCategories: initialCategories,
       classes: undefined,
     };
 

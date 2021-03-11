@@ -2,9 +2,10 @@ import React from "react";
 import { oc as option } from "ts-optchain";
 // styles
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
-// Utils Components
-import ErrorBounds from 'components/ErrorBounds';
-import Loading from "components/Loading";
+// GQL
+import { GET_PRODUCT_CATEGORIES } from "queries/categories-queries";
+// Typings
+import { Categories } from "typings/gqlTypes";
 // SSR
 import { NextPage, NextPageContext } from 'next';
 import dynamic from "next/dynamic";
@@ -15,23 +16,14 @@ import FrontPage from "pageComponents/FrontPage";
 import { useSelector } from 'react-redux';
 import { GrandReduxState } from 'reduxStore/grand-reducer';
 import { UserPrivate } from "typings/gqlTypes";
-import gql from 'graphql-tag'
 import { useApolloClient, ApolloClient } from "@apollo/client";
+import { categoryPreviewsBackup } from "components/CategoryCarouselStart/utils";
 
 
 
 const HomePage: NextPage<ReactProps> = (props) => {
-
-  const apolloClient = useApolloClient()
-  const user = useSelector<GrandReduxState, UserPrivate>(
-    state => state.reduxLogin.user
-  );
-  const userId = option(user).id()
-
   return (
-    <div>
-      <FrontPage/>
-    </div>
+    <FrontPage initialCategories={props.initialCategories}/>
   )
 }
 
@@ -42,44 +34,47 @@ const styles = (theme: Theme) => createStyles({
 
 ///////////////// TYPINGS ///////////////////
 interface ReactProps extends WithStyles<typeof styles> {
+  initialCategories: Categories[];
+}
+interface QueryData1 {
+  getProductCategories: Categories[];
+}
+interface QueryVar1 {
+  slug?: string;
 }
 
-// ////////// SSR ///////////
-// interface Context extends NextPageContext {
-//   apolloClient: ApolloClient<any>;
-// }
+////////// SSR ///////////
+interface Context extends NextPageContext {
+  apolloClient: ApolloClient<any>;
+}
 
-// HomePage.getInitialProps = async (ctx: Context) => {
+HomePage.getInitialProps = async (ctx: Context) => {
 
-//   // Will trigger this getInitialProps when requesting route /pages/ProductGallery
-//   // otherwise initialProps may be fed via /pages/index.tsx's getInitialProps
-//   const aClient = serverApolloClient(ctx);
-//   const emptyConnection = { pageInfo: {}, edges: [] };
+  // Will trigger this getInitialProps when requesting route /pages/ProductGallery
+  // otherwise initialProps may be fed via /pages/index.tsx's getInitialProps
+  const aClient = serverApolloClient(ctx);
+  const emptyConnection = { pageInfo: {}, edges: [] };
 
-//   try {
+  try {
 
-//     // const req3 = aClient.query({
-//     //   query: GET_LIMITED_RELEASE_PRODUCTS,
-//     //   variables: {
-//     //     query: {
-//     //       count: 5,
-//     //       cursor: null,
-//     //       pageBackwards: false,
-//     //       sortAscending: false,
-//     //     }
-//     //   }
-//     // });
+    // const { data } = await aClient.query<QueryData1, QueryVar1>({
+    //   query: GET_PRODUCT_CATEGORIES,
+    // })
+    // let initialCategories = data?.getProductCategories ?? categoryPreviewsBackup as any;
+    let initialCategories: Categories[] = categoryPreviewsBackup as any;
 
-//     return {
-//       classes: undefined,
-//     } as any;
+    return {
+      initialCategories: initialCategories,
+      classes: undefined,
+    };
 
-//   } catch(e) {
-//     return {
-//       classes: undefined,
-//     };
-//   }
-// }
+  } catch(e) {
+    return {
+      initialCategories: [],
+      classes: undefined,
+    };
+  }
+}
 
 
 export default withStyles(styles)( HomePage );

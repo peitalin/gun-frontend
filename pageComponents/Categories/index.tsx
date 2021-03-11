@@ -113,7 +113,9 @@ const styles = (theme: Theme) => createStyles({
     marginBottom: "3rem",
     fontWeight: 600,
     fontSize: "1.25rem",
-    color: Colors.darkGrey,
+    color: theme.palette.type === 'dark'
+      ? Colors.uniswapLighterGrey
+      : Colors.slateGreyLighterBlack,
   },
   subtitleMobile: {
     marginBottom: "1rem",

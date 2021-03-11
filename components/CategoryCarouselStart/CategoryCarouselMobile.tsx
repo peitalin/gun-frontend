@@ -11,18 +11,15 @@ import { Categories } from "typings/gqlTypes";
 // Utils Components
 import ErrorBounds from "components/ErrorBounds";
 // Components
-import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
-import Divider from "components/Divider";
 import AirCarousel from "components/AirCarousel";
-import AirItemWide from "components/AirCarousel/AirItemWide"
 import AirItemTall from "components/AirCarousel/AirItemTall"
 import CardMedia from "@material-ui/core/CardMedia";
 // import Tooltip from '@material-ui/core/Tooltip';
 // theme css
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
-import { CategoryPreviewCard } from ".";
+import { categoryPreviewsBackup } from "./utils";
 
 
 
@@ -31,7 +28,7 @@ const CategoryCarouselMobile = (props: ReactProps) => {
 
   const {
     classes,
-    categoriesPreviewCards,
+    categories,
   } = props;
 
   const theme = useTheme();
@@ -101,13 +98,21 @@ const CategoryCarouselMobile = (props: ReactProps) => {
           }}
         >
           {
-            (categoriesPreviewCards ?? []).map((c, i) => {
+            (categories ?? []).map((c, i) => {
 
-              let imageUrl = c.imageUrl
+              let imageUrl
+              let lastImage = (c?.thumbImage?.variants ?? [])?.[0]
 
-              // let imageUrl = c?.thumbImage?.variants?.length > 3
-              //   ? c?.thumbImage?.variants?.[3]?.url
-              //   : lastImage?.pop()?.url
+              if (c?.thumbImage?.variants?.length > 3) {
+                imageUrl = c?.thumbImage?.variants?.[3]?.url
+              } else {
+                imageUrl = lastImage?.url
+              }
+
+              // if (!imageUrl) {
+              //   imageUrl = categoryPreviewsBackup
+              //     .find(backup => backup.slug === c.slug)?.imageUrl
+              // }
 
               return (
                 <AirItemTall key={i}
@@ -153,7 +158,7 @@ const CategoryCarouselMobile = (props: ReactProps) => {
 
 interface ReactProps extends WithStyles<typeof styles> {
   style?: any;
-  categoriesPreviewCards: Array<CategoryPreviewCard>
+  categories: Categories[]
   initialNumItems?: number
 }
 
@@ -184,7 +189,9 @@ export const styles = (theme: Theme) => createStyles({
     height: '120px',
     position: "relative",
     "& > div > p": {
-      color: Colors.slateGreyDarkest,
+      color: theme.palette.type === 'dark'
+        ? Colors.uniswapLightestGrey
+        : Colors.black,
     },
     "&:hover": {
       "& > div > p": {
@@ -202,11 +209,15 @@ export const styles = (theme: Theme) => createStyles({
     width: '100%',
     height: '100%',
     minHeight: 96,
-    background: Colors.slateGrey,
+    background: theme.palette.type === 'dark'
+      ? Colors.uniswapDarkNavy
+      : Colors.slateGreyDark,
     position: "absolute",
     top: 0,
     left: 0,
-    border: `1px solid ${Colors.slateGrey}`,
+    border: theme.palette.type === 'dark'
+      ? `1px solid ${Colors.uniswapNavy}`
+      : `1px solid ${Colors.slateGreyDarker}`,
   },
   cardText: {
     marginTop: '0.25rem',

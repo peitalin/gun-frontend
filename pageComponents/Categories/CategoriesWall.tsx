@@ -10,7 +10,7 @@ import Typography from "@material-ui/core/Typography";
 import Link from "next/link";
 import { categorySelectors } from "utils/selectors";
 import { Colors } from "layout/AppTheme";
-import CategoryCarouselStart from "pageComponents/FrontPage/CategoryCarouselStart";
+import CategoryCarouselStart from "components/CategoryCarouselStart";
 
 
 
@@ -22,12 +22,12 @@ const CategoriesWall: React.FC<ReactProps> = (props) => {
     categories,
   } = props;
 
-
   return (
     <div className={classes.categoryOuterContainer}>
       <div className={classes.categoryInnerContainer}>
         <CategoryCarouselStart
           disableTitle={true}
+          categories={props.categories}
         />
         {/* {
           props.categories &&
@@ -56,6 +56,7 @@ const CategoriesWall: React.FC<ReactProps> = (props) => {
 interface ReactProps extends WithStyles<typeof styles> {
   categories: Categories[];
 }
+
 const categoryLinkColor2 = Colors.black
 const categoryLinkColorHover2 = Colors.secondaryBright
 
