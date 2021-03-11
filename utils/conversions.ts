@@ -19,7 +19,6 @@ export const productToProductEditInput = (
       categoryId: "",
       description: "<p></p>",
       currentVariants: [],
-      tags: [] as any,
       isPublished: false,
       condition: "",
       make: "",
@@ -56,7 +55,6 @@ export const productToProductEditInput = (
           }))
       } as ProductVariantEditInput
     ],
-    tags: product.tags,
     isPublished: product.isPublished,
     condition: product.currentSnapshot.condition,
     make: product.currentSnapshot.make,

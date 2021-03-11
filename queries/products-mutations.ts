@@ -12,7 +12,6 @@ export const CREATE_PRODUCT = gql`
           isDeleted
           isExcludedFromRecommendations
           isExcludedFromSearch
-          tags
           updatedAt
           category {
             id
@@ -73,7 +72,6 @@ export const EDIT_PRODUCT = gql`
         isDeleted
         isExcludedFromRecommendations
         isExcludedFromSearch
-        tags
         # category {
         #   id
         #   name

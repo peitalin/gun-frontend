@@ -32,7 +32,6 @@ const initialProductEditState: ReduxStateProductEdit = {
   productEditInput: {
     productId: "",
     categoryId: "",
-    tags: [],
     title: "",
     description: "<p></p>",
     condition: "",
@@ -111,16 +110,6 @@ export const reduxReducerProductEdit = (
         productEditInput: {
           ...state.productEditInput,
           categoryId: action.payload
-        }
-      }
-    }
-
-    case A.UPDATE_TAGS().type: {
-      return {
-        ...state,
-        productEditInput: {
-          ...state.productEditInput,
-          tags: action.payload
         }
       }
     }

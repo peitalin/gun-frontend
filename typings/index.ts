@@ -98,7 +98,6 @@ export interface EditUserProfileInput {
 
 export interface ProductCreateEditCommonInput {
   categoryId: string;
-  tags: string[] | string;
   title: string;
   description: string;
   condition: string;

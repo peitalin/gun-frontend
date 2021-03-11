@@ -214,7 +214,6 @@ const ProductCreatePage = (props: ReactProps) => {
           dealerId: values.dealerId,
           dealer: values.dealer,
           categoryId: values.categoryId,
-          tags: (values.tags as string[]).join(','),
           isPublished: values.isPublished,
           currentVariants: values.currentVariants,
         }

@@ -32,7 +32,6 @@ export interface ReduxStateProductCreate {
 export const initialProductCreateState: ReduxStateProductCreate = {
   productCreateInput: {
     categoryId: "",
-    tags: [],
     title: "",
     description: "<p></p>",
     condition: "",
@@ -119,16 +118,6 @@ export const reduxReducerProductCreate = (
         ...state,
         productCreateInput: {
           ...state.productCreateInput
-        }
-      }
-    }
-
-    case A.UPDATE_TAGS().type: {
-      return {
-        ...state,
-        productCreateInput: {
-          ...state.productCreateInput,
-          tags: action.payload
         }
       }
     }

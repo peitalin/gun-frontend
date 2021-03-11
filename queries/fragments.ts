@@ -93,7 +93,6 @@ export const ProductFragment = gql`
     id
     createdAt
     updatedAt
-    tags
     isPublished
     isSuspended
     isDeleted
@@ -373,7 +372,6 @@ export const OrdersFragment = gql`
       id
       createdAt
       updatedAt
-      tags
       isPublished
       isSuspended
       isDeleted

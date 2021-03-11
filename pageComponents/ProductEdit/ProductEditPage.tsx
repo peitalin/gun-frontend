@@ -206,7 +206,6 @@ const ProductEditPage = (props: ReactProps) => {
               serialNumber: values.serialNumber,
               location: values.location,
               categoryId: values.categoryId,
-              tags: values.tags,
               currentVariants: values.currentVariants,
               isPublished: values.isPublished,
               productId: values.productId,

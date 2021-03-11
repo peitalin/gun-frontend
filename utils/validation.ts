@@ -157,8 +157,6 @@ export const validationSchemas = {
         }),
       categoryId: Yup.string()
         .required("Pick a category"),
-      tags: Yup.array().of(Yup.string())
-        .nullable(),
       currentVariants: Yup.array().of(Yup.object({
           price: Yup.number().nullable()
             .min(minPrice, "Minimum price: $1")
@@ -309,8 +307,6 @@ export const validationSchemas = {
         }),
       categoryId: Yup.string()
         .required("Pick a category"),
-      tags: Yup.array().of(Yup.string())
-        .nullable(),
       currentVariants: Yup.array().of(
           Yup.object({
             price: Yup.number().nullable(true)

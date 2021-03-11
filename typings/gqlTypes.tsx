@@ -7687,7 +7687,6 @@ export type Product = {
   updatedAt?: Maybe<Scalars['Date']>;
   categoryId: Scalars['ID'];
   category?: Maybe<Categories>;
-  tags?: Maybe<Scalars['String']>;
   storeId: Scalars['ID'];
   store?: Maybe<Store>;
   /** Whether or not the product owner has published it */
@@ -8883,8 +8882,6 @@ export type ProductEditInput = {
    * TODO: max number
    */
   currentVariants: Array<ProductVariantEditInput>;
-  /** Individual words (no spaces) that can help to surface the product in search results. #TODO: max number */
-  tags?: Maybe<Scalars['String']>;
   /** Whether or not to put the item up for sale. */
   isPublished: Scalars['Boolean'];
   /** Short description of the product #TODO: regex */
@@ -8952,7 +8949,6 @@ export type ProductPrivate = Product & {
   updatedAt?: Maybe<Scalars['Date']>;
   categoryId: Scalars['ID'];
   category?: Maybe<Categories>;
-  tags?: Maybe<Scalars['String']>;
   storeId: Scalars['ID'];
   store?: Maybe<StorePrivate>;
   /** Whether or not the product owner has published it */
@@ -8988,7 +8984,6 @@ export type ProductPublic = Product & {
   updatedAt?: Maybe<Scalars['Date']>;
   categoryId: Scalars['ID'];
   category?: Maybe<Categories>;
-  tags?: Maybe<Scalars['String']>;
   storeId: Scalars['ID'];
   store?: Maybe<Store>;
   /** Whether or not the product owner has published it */
@@ -13886,14 +13881,14 @@ export type SaveImageUploadMutation = { __typename?: 'Mutation', uploadSaveImage
 
 export type ImageFragment = { __typename?: 'image_parents', id: string, createdAt: any, tags?: Maybe<string>, description?: Maybe<string>, original?: Maybe<{ __typename?: 'image_variants', id: string, mimeType: string, heightInPixels: number, widthInPixels: number, sizeInBytes: number, url?: Maybe<string> }>, variants: Array<{ __typename?: 'image_variants', id: string, mimeType: string, sizeInBytes: number, widthInPixels: number, heightInPixels: number, url?: Maybe<string> }> };
 
-export type ProductSnapshotsFragment = { __typename?: 'product_snapshots', id: string, createdAt: any, productId: string, title: string, description: string, condition: string, make: string, model: string, ammoType?: Maybe<string>, actionType: string, caliber?: Maybe<string>, serialNumber: string, location: string, dealer?: Maybe<{ __typename?: 'dealers', id: string, name: string, address?: Maybe<string>, city?: Maybe<string>, state?: Maybe<string>, postCode?: Maybe<string>, licenseNumber: string, createdAt: any }> };
+export type ProductSnapshotsFragment = { __typename?: 'product_snapshots', id: string, createdAt: any, productId: string, title: string, description: string, condition: string, make: string, model: string, ammoType?: Maybe<string>, actionType: string, caliber?: Maybe<string>, serialNumber: string, location: string, magazineCapacity?: Maybe<string>, barrelLength?: Maybe<string>, dealer?: Maybe<{ __typename?: 'dealers', id: string, name: string, address?: Maybe<string>, city?: Maybe<string>, state?: Maybe<string>, postCode?: Maybe<string>, licenseNumber: string, createdAt: any }> };
 
 export type ProductVariantsFragment = { __typename?: 'product_variants', variantSnapshotId: string, variantId: string, snapshotId: string, productId: string, storeId: string, createdAt: any, variantName: string, variantDescription: string, isDefault: boolean, position: number, price: number, priceWas?: Maybe<number>, previewItems: Array<{ __typename?: 'product_preview_items', id: string, imageId?: Maybe<string>, position: number, youTubeEmbedLink?: Maybe<string>, variantSnapshotId?: Maybe<string>, image?: Maybe<(
       { __typename?: 'image_parents' }
       & ImageFragment
     )> }> };
 
-type ProductFragment_ProductPrivate_ = { __typename?: 'ProductPrivate', id: string, createdAt?: Maybe<any>, updatedAt?: Maybe<any>, tags?: Maybe<string>, isPublished: boolean, isSuspended: boolean, isDeleted: boolean, isExcludedFromRecommendations: boolean, storeId: string, soldOutStatus: string, currentSnapshot: (
+type ProductFragment_ProductPrivate_ = { __typename?: 'ProductPrivate', id: string, createdAt?: Maybe<any>, updatedAt?: Maybe<any>, isPublished: boolean, isSuspended: boolean, isDeleted: boolean, isExcludedFromRecommendations: boolean, storeId: string, soldOutStatus: string, currentSnapshot: (
     { __typename?: 'product_snapshots' }
     & ProductSnapshotsFragment
   ), featuredVariant: (
@@ -13901,7 +13896,7 @@ type ProductFragment_ProductPrivate_ = { __typename?: 'ProductPrivate', id: stri
     & ProductVariantsFragment
   ), store?: Maybe<{ __typename?: 'StorePrivate', id: string, name: string, user?: Maybe<{ __typename?: 'UserPrivate', id: string, license?: Maybe<{ __typename?: 'user_licenses', id: string, licenseNumber: string, licenseCategory?: Maybe<string>, licenseExpiry: any, licenseState?: Maybe<string>, verified: boolean }> }> }>, category?: Maybe<{ __typename?: 'categories', id: string, name: string, slug?: Maybe<string>, categoryGroup: string }> };
 
-type ProductFragment_ProductPublic_ = { __typename?: 'ProductPublic', id: string, createdAt?: Maybe<any>, updatedAt?: Maybe<any>, tags?: Maybe<string>, isPublished: boolean, isSuspended: boolean, isDeleted: boolean, isExcludedFromRecommendations: boolean, storeId: string, soldOutStatus: string, currentSnapshot: (
+type ProductFragment_ProductPublic_ = { __typename?: 'ProductPublic', id: string, createdAt?: Maybe<any>, updatedAt?: Maybe<any>, isPublished: boolean, isSuspended: boolean, isDeleted: boolean, isExcludedFromRecommendations: boolean, storeId: string, soldOutStatus: string, currentSnapshot: (
     { __typename?: 'product_snapshots' }
     & ProductSnapshotsFragment
   ), featuredVariant: (
@@ -13974,13 +13969,13 @@ type OrdersFragment_OrderPublic_ = { __typename?: 'OrderPublic', id?: Maybe<stri
   )>, orderSnapshots?: Maybe<Array<Maybe<(
     { __typename?: 'OrderSnapshot' }
     & OrderSnapshotFragment
-  )>>>, product?: Maybe<{ __typename?: 'ProductPrivate', id: string, createdAt?: Maybe<any>, updatedAt?: Maybe<any>, tags?: Maybe<string>, isPublished: boolean, isSuspended: boolean, isDeleted: boolean, isExcludedFromRecommendations: boolean, storeId: string, soldOutStatus: string, currentSnapshot: (
+  )>>>, product?: Maybe<{ __typename?: 'ProductPrivate', id: string, createdAt?: Maybe<any>, updatedAt?: Maybe<any>, isPublished: boolean, isSuspended: boolean, isDeleted: boolean, isExcludedFromRecommendations: boolean, storeId: string, soldOutStatus: string, currentSnapshot: (
       { __typename?: 'product_snapshots' }
       & ProductSnapshotsFragment
     ), featuredVariant: (
       { __typename?: 'product_variants' }
       & ProductVariantsFragment
-    ), store?: Maybe<{ __typename?: 'StorePrivate', id: string, name: string, userId: string, user?: Maybe<{ __typename?: 'UserPrivate', id: string }> }> } | { __typename?: 'ProductPublic', id: string, createdAt?: Maybe<any>, updatedAt?: Maybe<any>, tags?: Maybe<string>, isPublished: boolean, isSuspended: boolean, isDeleted: boolean, isExcludedFromRecommendations: boolean, storeId: string, soldOutStatus: string, currentSnapshot: (
+    ), store?: Maybe<{ __typename?: 'StorePrivate', id: string, name: string, userId: string, user?: Maybe<{ __typename?: 'UserPrivate', id: string }> }> } | { __typename?: 'ProductPublic', id: string, createdAt?: Maybe<any>, updatedAt?: Maybe<any>, isPublished: boolean, isSuspended: boolean, isDeleted: boolean, isExcludedFromRecommendations: boolean, storeId: string, soldOutStatus: string, currentSnapshot: (
       { __typename?: 'product_snapshots' }
       & ProductSnapshotsFragment
     ), featuredVariant: (
@@ -14009,7 +14004,7 @@ type OrdersFragment_OrderAdmin_ = { __typename?: 'OrderAdmin', paymentIntent?: M
   )>, orderSnapshots?: Maybe<Array<Maybe<(
     { __typename?: 'OrderSnapshot' }
     & OrderSnapshotFragment
-  )>>>, product?: Maybe<{ __typename?: 'ProductPrivate', id: string, createdAt?: Maybe<any>, updatedAt?: Maybe<any>, tags?: Maybe<string>, isPublished: boolean, isSuspended: boolean, isDeleted: boolean, isExcludedFromRecommendations: boolean, storeId: string, soldOutStatus: string, currentSnapshot: (
+  )>>>, product?: Maybe<{ __typename?: 'ProductPrivate', id: string, createdAt?: Maybe<any>, updatedAt?: Maybe<any>, isPublished: boolean, isSuspended: boolean, isDeleted: boolean, isExcludedFromRecommendations: boolean, storeId: string, soldOutStatus: string, currentSnapshot: (
       { __typename?: 'product_snapshots' }
       & ProductSnapshotsFragment
     ), featuredVariant: (
@@ -14271,6 +14266,8 @@ export const ProductSnapshotsFragmentFragmentDoc = gql`
   caliber
   serialNumber
   location
+  magazineCapacity
+  barrelLength
   dealer {
     id
     name
@@ -14407,7 +14404,6 @@ export const OrdersFragmentFragmentDoc = gql`
     id
     createdAt
     updatedAt
-    tags
     isPublished
     isSuspended
     isDeleted
@@ -14449,7 +14445,6 @@ export const ProductFragmentFragmentDoc = gql`
   id
   createdAt
   updatedAt
-  tags
   isPublished
   isSuspended
   isDeleted
