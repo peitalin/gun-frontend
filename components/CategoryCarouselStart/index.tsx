@@ -62,7 +62,7 @@ const CategoryCarouselStart = (props: ReactProps) => {
       {
         !disableTitle &&
         <Typography className={classes.title}>
-          Categories
+          { props.title ?? "Categories" }
         </Typography>
       }
 
@@ -130,7 +130,7 @@ export const styles = (theme: Theme) => createStyles({
     width: '100%',
   },
   title: {
-    fontSize: '1.25rem',
+    fontSize: '1.5rem',
     fontWeight: 600,
     paddingLeft: "1rem",
     marginTop: '2rem',

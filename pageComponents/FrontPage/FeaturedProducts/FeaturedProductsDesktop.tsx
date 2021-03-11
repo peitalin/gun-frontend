@@ -161,6 +161,7 @@ const styles = (theme: Theme) => createStyles({
     paddingRight: '1rem',
   },
   title: {
+    fontSize: '1.5rem',
     marginTop: "1rem",
     marginBottom: "1rem",
     marginLeft: '1rem',

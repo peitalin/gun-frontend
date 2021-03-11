@@ -96,12 +96,14 @@ const FeaturedProducts = (props: ReactProps) => {
     <>
       <Hidden smDown implementation="css">
         <FeaturedProductsDesktop
+          title={props.title}
           productsConnection={connection}
           cardsPerRow={cardsPerRow}
         />
       </Hidden>
       <Hidden mdUp implementation="css">
         <FeaturedProductsMobileCarousel
+          title={props.title}
           productsConnection={connection}
           cardsPerRow={cardsPerRow}
         />
@@ -118,6 +120,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   initialFeaturedProducts?: ProductsConnection;
   count?: number;
   offset?: number;
+  title?: string;
   cardsPerRow?: {
     xs?: number;
     sm?: number;

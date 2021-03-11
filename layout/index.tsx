@@ -162,7 +162,7 @@ const styles = (theme: Theme) => createStyles({
     minHeight: `calc(100vh - ${NavBarHeight}px)`,
     // offset for navbar
     maxWidth: '100%',
-    marginBottom: "2rem",
+    marginBottom: "4rem",
   },
   flexJustify: {
     display: 'flex',

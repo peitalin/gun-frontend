@@ -26,6 +26,7 @@ import { GrandReduxState } from 'reduxStore/grand-reducer';
 import Link from "next/link";
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
+import AlignCenterLayout from "components/AlignCenterLayout";
 // // Analytics
 // import { analyticsEvent } from "utils/analytics";
 
@@ -54,9 +55,12 @@ const Footer: React.FC<ReactProps> = (props) => {
   const mdDown = useMediaQuery(theme.breakpoints.down('md'));
 
   return (
-    <footer>
-      {props.children}
-      <div className={classes.footerContainer}>
+    <footer className={classes.footerContainer}>
+      <AlignCenterLayout
+        maxWidth={1160}
+        withRecommendations={false}
+      >
+        {props.children}
         <div className={classes.footerSubsection}>
           <div className={classes.firstBlock}>
 
@@ -205,8 +209,7 @@ const Footer: React.FC<ReactProps> = (props) => {
             </div>
           </div>
         }
-
-      </div>
+      </AlignCenterLayout>
     </footer>
   )
 }
@@ -243,6 +246,7 @@ interface ReduxState {
 }
 
 const FOOTER_MAX_WIDTH = 1024;
+
 const styles = (theme: Theme) => createStyles({
   footerContainer: {
     bottom: 0,
@@ -254,7 +258,7 @@ const styles = (theme: Theme) => createStyles({
     background: theme.palette.type === 'dark'
       ? Gradients.gradientBlack.background
       : Gradients.gradientGrey2Rotated.background,
-    paddingTop: "4rem",
+    paddingTop: "6rem",
     color: Colors.cream,
   },
   title: {
@@ -275,17 +279,17 @@ const styles = (theme: Theme) => createStyles({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center',
-    margin: '0 10%',
+    margin: '0rem 1rem',
   },
   firstBlock: {
     display: 'flex',
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'center',
-    maxWidth: FOOTER_MAX_WIDTH,
+    // maxWidth: FOOTER_MAX_WIDTH,
     width: '100%',
     textAlign: 'left',
-    marginBottom: "3rem",
+    marginBottom: "2rem",
   },
   flexRow: {
     display: 'flex',
@@ -333,7 +337,7 @@ const styles = (theme: Theme) => createStyles({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center',
-    maxWidth: FOOTER_MAX_WIDTH,
+    // maxWidth: FOOTER_MAX_WIDTH,
     width: '100%',
     marginBottom: '2rem',
   },
@@ -341,9 +345,9 @@ const styles = (theme: Theme) => createStyles({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center',
-    maxWidth: FOOTER_MAX_WIDTH,
+    // maxWidth: FOOTER_MAX_WIDTH,
     width: '100%',
-    marginBottom: '2rem',
+    marginRight: '2rem',
   },
   siteFooterCredits: {
     marginBottom: 0,
@@ -362,6 +366,7 @@ const styles = (theme: Theme) => createStyles({
   },
   siteFooterCreditsSpaceBetween: {
     justifyContent: 'space-between',
+    alignItems: "center",
   },
   siteFooterCreditsCenter: {
     justifyContent: 'center',
@@ -401,7 +406,6 @@ const styles = (theme: Theme) => createStyles({
   },
   fontSize09: {
     fontSize: '0.9rem',
-    marginBottom: "1rem",
   },
   marginBottom2: {
     marginBottom: '4rem',

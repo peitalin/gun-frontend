@@ -41,7 +41,7 @@ const FrontPage: React.FC<ReactProps> = (props) => {
   // const smDown = useMediaQuery(theme.breakpoints.down('sm'));
 
   return (
-    <div className={classes.outerContainer}>
+    <div className={classes.frontPageRoot}>
 
       <BannerHome />
 
@@ -50,9 +50,15 @@ const FrontPage: React.FC<ReactProps> = (props) => {
         withRecommendations={false}
       >
 
-        <CategoryCarouselStart categories={props.initialCategories}/>
+        <div className={classes.categoryCarouselFrontPageBox}>
+          <CategoryCarouselStart
+            title={"Explore Categories"}
+            categories={props.initialCategories}
+          />
+        </div>
 
         <FeaturedProducts
+          title={"Featured Products"}
           initialFeaturedProducts={initialFeaturedProducts}
           count={24}
           cardsPerRow={{
@@ -97,21 +103,19 @@ interface ReactProps extends WithStyles<typeof styles> {
 
 
 const styles = (theme: Theme) => createStyles({
-  modalBackdrop: {
-    backgroundColor: "rgba(47, 57, 65, .85)",
-  },
-  modalPaperScrollPaper: {
-    // maxHeight: "calc(100% - 32px)",
-  },
-  fullMaxHeight: {
-    maxHeight: "100%",
-    width: '100%',
-  },
-  outerContainer: {
+  frontPageRoot: {
     width: '100%',
     display: 'flex',
     flexDirection: "column",
     justifyContent: 'center',
+  },
+  categoryCarouselFrontPageBox: {
+    marginTop: '3rem',
+    marginBottom: '3rem',
+  },
+  fullMaxHeight: {
+    maxHeight: "100%",
+    width: '100%',
   },
   flexRowInner: {
     display: 'flex',
