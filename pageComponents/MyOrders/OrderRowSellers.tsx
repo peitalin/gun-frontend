@@ -19,7 +19,8 @@ import Link from "next/link";
 // mediaQuery
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
-import Form10Upload from "./Form10Upload";
+import Form10FileUploader from "./Form10FileUploader";
+
 import OrderStatusDisplay from "./OrderStatusDisplay";
 // import { getStoreIdOrSlug } from "utils/links";
 import { OrderStatus } from "typings/gqlTypes";
@@ -74,7 +75,10 @@ const OrderRowSellers: React.FC<ReactProps> = (props) => {
           <div className={classes.flexRow}>
             <div className={clsx(classes.flexCol)}>
               <div className={classes.flexRowFlexEnd}>
-                <Form10Upload
+                {/* <Form10Upload
+                  order={order}
+                /> */}
+                <Form10FileUploader
                   order={order}
                 />
               </div>
@@ -112,7 +116,7 @@ const styles = (theme: Theme) => createStyles({
       : 'unset',
     border: theme.palette.type === 'dark'
       ? `unset`
-      : `1px solid ${Colors.slateGrey}`,
+      : `1px solid ${Colors.slateGreyDark}`,
     marginBottom: '0.5rem',
     height: 220,
   },

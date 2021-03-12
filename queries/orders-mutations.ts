@@ -55,11 +55,11 @@ export const CAPTURE_PAYMENT_FOR_ORDER = gql`
 export const ADD_FORM_10 = gql`
   mutation addForm10(
     $orderId: String!
-    $form10ImageId: String!
+    $form10FileId: String!
   ) {
     addForm10(
       orderId: $orderId
-      form10ImageId: $form10ImageId
+      form10FileId: $form10FileId
     ) {
       order {
         ...OrdersFragment

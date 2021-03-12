@@ -9,6 +9,7 @@ import {
   UploadRegisterMutationResponse,
   SaveImageUploadMutation,
   SaveImageUploadMutationVariables,
+  UploadSaveFileMutationResponse,
   Product,
   ProductEditInput,
   Image_Parents,
@@ -22,6 +23,7 @@ import { ApolloClient } from "@apollo/client";
 import {
   REGISTER_UPLOAD,
   SAVE_IMAGE_UPLOAD,
+  UPLOAD_SAVE_FILE,
 } from "./content-mutations";
 import { EDIT_PRODUCT } from "./products-mutations";
 import { LOGOUT } from "queries/user-mutations";
@@ -54,6 +56,7 @@ async(route?: string): Promise<BlankMutationResponse> => {
       route.includes('/privacy-policy') ||
       route.includes('/refund-policy') ||
       route.includes('/admin') ||
+      route.includes('/dealers') ||
       (route.includes('/sell') && !route.includes('/seller')) ||
       route === '/'
     ) {
@@ -109,7 +112,7 @@ interface GSRegisterResponse {
   uploadUrl: string;
 }
 
-// 3 (file)
+// 2 (image)
 export const google_storage_save_image_to_db = async(
   uploadId: string,
   description: string | null,
@@ -129,6 +132,40 @@ export const google_storage_save_image_to_db = async(
   console.log("response ........", response)
   const result = response.data.uploadSaveImage;
   return result.image as any
+}
+
+// 3 (file)
+export const google_storage_save_file_to_db = async(
+  uploadId: string,
+  fileName: string,
+  ownerIds: string[],
+  aClient: ApolloClient<object>
+): Promise<ID> => {
+
+  interface SaveFileUploadVars {
+    uploadId: string
+    fileName: string
+    ownerIds: string[]
+  }
+  interface SaveFileUploadData {
+    uploadSaveFile: UploadSaveFileMutationResponse
+  }
+
+  const response = await aClient.mutate<SaveFileUploadData, SaveFileUploadVars>({
+    mutation: UPLOAD_SAVE_FILE,
+    variables: {
+      uploadId: uploadId,
+      fileName: fileName,
+      ownerIds: ownerIds
+    }
+  });
+  console.log("upload_save_file response: ", response)
+  const result = response.data.uploadSaveFile;
+  if (result.__typename === 'UploadSaveFileMutationResponse') {
+    return result.fileId
+  } else {
+    throw new Error("GSSave Error");
+  }
 }
 
 

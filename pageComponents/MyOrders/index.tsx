@@ -46,10 +46,10 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 // Utils Component
 import ErrorDisplay from "components/Error";
 import PaginateButtons from "components/Paginators/PaginateButtons";
-export const MY_DOWNLOADS_PAGINATION_COUNT = 10;
 import AlignCenterLayout from "components/AlignCenterLayout";
 // Analytics
 import { useRouter } from "next/router";
+export const MY_DOWNLOADS_PAGINATION_COUNT = 10;
 
 // Search Component
 import SearchOptions, { SelectOption, setCategoryFacets } from "components/SearchOptions";
@@ -264,8 +264,6 @@ const MyOrders: React.FC<ReactProps> = (props) => {
   } else {
     return (
       <OrdersLayout {...props}>
-
-
 
         {
           (sellerOrdersActionItemsConnection?.totalCount > 0) &&

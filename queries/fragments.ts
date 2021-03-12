@@ -27,6 +27,16 @@ export const ImageFragment = gql`
 `;
 
 
+export const ProductFileFragment = gql`
+  fragment ProductFileFragment on product_files {
+    id
+    fileName
+    createdAt
+    mimeType
+    sizeInBytes
+  }
+`;
+
 
 
 export const ProductSnapshotsFragment = gql`
@@ -283,8 +293,12 @@ export const OrderSnapshotFragment = gql`
     form10Image {
       ...ImageFragment
     }
+    form10File {
+      ...ProductFileFragment
+    }
   }
   ${ImageFragment}
+  ${ProductFileFragment}
 `;
 
 

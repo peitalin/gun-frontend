@@ -35,7 +35,7 @@ const MyOrdersHistoryPage = (props: ReactProps) => {
       {(dataUser: UserProfileProps) => {
         return (
           <div className={classes.contentContainerPublicPage}>
-            <MyOrders withRecommendations={true}/>
+            <MyOrders withRecommendations={false}/>
           </div>
         )
       }}

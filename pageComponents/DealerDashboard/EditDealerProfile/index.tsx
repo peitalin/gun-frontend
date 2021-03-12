@@ -42,10 +42,13 @@ const EditDealerProfile = (props: ReactProps) => {
       !smDown ? classes.minWidth500 : null,
     )}>
       <div className={classes.dealerEditMenu}>
+
+
         <EditDealerForm
           dealer={user?.dealer as any}
           closeEditDealerModal={undefined}
         />
+
       </div>
     </ErrorBounds>
   );

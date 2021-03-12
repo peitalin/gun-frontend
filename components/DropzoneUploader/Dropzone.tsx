@@ -18,6 +18,7 @@ import {
 // Typings
 import { ReducerName } from "typings/dropzone";
 
+import UploadInputFileDirect from "pageComponents/MyOrders/Form10FileUploader/UploadInput";
 import UploadInputImageDirect from "pageComponents/ProductCreate/PreviewItemUploaderGrid/UploadInput";
 
 
@@ -775,6 +776,84 @@ class Dropzone extends React.Component<IDropzoneProps, { active: boolean; dragge
     // seems to circumvent this bug. There is a event propagation bug with Layout
     // because it is doing component injection and not propogating events properly
     // to child components.
+    if (this.props.uploaderType === "file-uploader") {
+      return (
+        <>
+          <div
+            ref={this.dropzone}
+            className={className}
+            style={ style as React.CSSProperties}
+            onDragEnter={ this.handleDragEnter}
+            onDragOver={ this.handleDragOver}
+            onDragLeave={ this.handleDragLeave}
+            onDrop={ dropzoneDisabled ? this.handleDropDisabled : this.handleDrop}
+          >
+            {/*
+            //@ts-ignore */}
+            <UploadInputFileDirect
+              className={inputClassName}
+              labelClassName={inputLabelClassName}
+              labelWithFilesClassName={inputLabelWithFilesClassName}
+              style={inputStyle as React.CSSProperties}
+              labelStyle={inputLabelStyle as React.CSSProperties}
+              labelWithFilesStyle={inputLabelWithFilesStyle as React.CSSProperties}
+              getFilesFromEvent={this.getFilesFromEvent() as IInputProps['getFilesFromEvent']}
+              accept={accept}
+              multiple={multiple}
+              disabled={
+                dropzoneDisabled
+                || files.length < maxFiles
+                // || numFiles < maxFiles
+              }
+              content={resolveValue(inputContent, files, extra)}
+              withFilesContent={resolveValue(inputWithFilesContent, files, extra)}
+              onFiles={this.handleFiles} // see: https://stackoverflow.com/questions/39484895
+              files={files}
+              maxFiles={maxFiles}
+              numFiles={numFiles}
+              extra={extra}
+              onChange={this.handleOnChange}
+              reducerName={this.props.reducerName}
+            />
+          </div>
+
+          {/*
+          //@ts-ignore */}
+          <Layout
+            // Layout only provides previews and dragging previews.
+            // keep UploadInput outside of Layout because Layout swallows click
+            // events after Formik handeBlur.
+            // Layout it not propagating onClick/onChange events properly.
+            // Do you need to double click the button. Even if you can click it,
+            // if onChange doesnt work files will not be selected to upload
+            // This separation of UploadInput and Layout is a workaround for this issue.
+            UploadInput={null}
+            previews={previews}
+            submitButton={submitButton}
+            dropzoneProps={{
+              ref: this.dropzone,
+              className,
+              style: style as React.CSSProperties,
+              onDragEnter: this.handleDragEnter,
+              onDragOver: this.handleDragOver,
+              onDragLeave: this.handleDragLeave,
+              onDrop: dropzoneDisabled ? this.handleDropDisabled : this.handleDrop,
+            }}
+            files={files}
+            extra={
+              {
+                ...extra,
+                onFiles: this.handleFiles,
+                onCancelFile: this.handleCancel,
+                onRemoveFile: this.handleRemove,
+                onRestartFile: this.handleRestart,
+              } as IExtraLayout
+            }
+          />
+        </>
+      )
+    }
+
     if (this.props.uploaderType === 'image-uploader') {
       return (
         <>
@@ -925,10 +1004,11 @@ class Dropzone extends React.Component<IDropzoneProps, { active: boolean; dragge
       )
     } else {
       // classic mode
+      console.log("classic uploader mode")
       return (
         //@ts-ignore
         <Layout
-          UploadInput={(props) => {
+          UploadInput={(props, ref) => {
             if (UploadInput) {
               return (
                 //@ts-ignore

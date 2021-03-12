@@ -69,7 +69,7 @@ export const transactionIdPrefix = "txn_";
 export const refundIdPrefix = "ref_";
 export const productCategoryIdPrefix = "pcategory_";
 export const imageIdPrefix = "image_";
-export const fileIdPrefix = "product_file_";
+export const fileIdPrefix = "form_file_";
 export const productListIdPrefix = "prodlist_";
 export const productListItemIdPrefix = "prodlistitem_";
 

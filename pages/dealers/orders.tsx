@@ -30,7 +30,6 @@ import OrderViewerPage from "pageComponents/DealerDashboard/OrderViewer";
 
 const GovOrdersPage: NextPage<ReactProps> = (props) => {
 
-
   return (
     <DealerProfileWrapper>
       {({ data, loading, error }: DealerProfileProps) => {

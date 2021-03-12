@@ -11,6 +11,7 @@ export type Scalars = {
   timestamp: any;
   timestamptz: any;
   seed_float: any;
+  bigint: any;
   /** Standard date string */
   Date: Date;
   PageCursor: any;
@@ -441,6 +442,20 @@ export type Bids_Variance_Fields = {
 export type Bids_Variance_Order_By = {
   acceptedPrice?: Maybe<Order_By>;
   offerPrice?: Maybe<Order_By>;
+};
+
+
+/** expression to compare columns of type bigint. All fields are combined with logical 'AND'. */
+export type Bigint_Comparison_Exp = {
+  _eq?: Maybe<Scalars['bigint']>;
+  _gt?: Maybe<Scalars['bigint']>;
+  _gte?: Maybe<Scalars['bigint']>;
+  _in?: Maybe<Array<Scalars['bigint']>>;
+  _is_null?: Maybe<Scalars['Boolean']>;
+  _lt?: Maybe<Scalars['bigint']>;
+  _lte?: Maybe<Scalars['bigint']>;
+  _neq?: Maybe<Scalars['bigint']>;
+  _nin?: Maybe<Array<Scalars['bigint']>>;
 };
 
 /** Mutation result that doesn't need to give anything back. */
@@ -3262,6 +3277,14 @@ export type Mutation = {
   delete_phone_numbers?: Maybe<Phone_Numbers_Mutation_Response>;
   /** delete single row from the table: "phone_numbers" */
   delete_phone_numbers_by_pk?: Maybe<Phone_Numbers>;
+  /** delete data from the table: "product_file_owners" */
+  delete_product_file_owners?: Maybe<Product_File_Owners_Mutation_Response>;
+  /** delete single row from the table: "product_file_owners" */
+  delete_product_file_owners_by_pk?: Maybe<Product_File_Owners>;
+  /** delete data from the table: "product_files" */
+  delete_product_files?: Maybe<Product_Files_Mutation_Response>;
+  /** delete single row from the table: "product_files" */
+  delete_product_files_by_pk?: Maybe<Product_Files>;
   /** delete data from the table: "product_preview_items" */
   delete_product_preview_items?: Maybe<Product_Preview_Items_Mutation_Response>;
   /** delete single row from the table: "product_preview_items" */
@@ -3370,6 +3393,14 @@ export type Mutation = {
   insert_phone_numbers?: Maybe<Phone_Numbers_Mutation_Response>;
   /** insert a single row into the table: "phone_numbers" */
   insert_phone_numbers_one?: Maybe<Phone_Numbers>;
+  /** insert data into the table: "product_file_owners" */
+  insert_product_file_owners?: Maybe<Product_File_Owners_Mutation_Response>;
+  /** insert a single row into the table: "product_file_owners" */
+  insert_product_file_owners_one?: Maybe<Product_File_Owners>;
+  /** insert data into the table: "product_files" */
+  insert_product_files?: Maybe<Product_Files_Mutation_Response>;
+  /** insert a single row into the table: "product_files" */
+  insert_product_files_one?: Maybe<Product_Files>;
   /** insert data into the table: "product_preview_items" */
   insert_product_preview_items?: Maybe<Product_Preview_Items_Mutation_Response>;
   /** insert a single row into the table: "product_preview_items" */
@@ -3478,6 +3509,14 @@ export type Mutation = {
   update_phone_numbers?: Maybe<Phone_Numbers_Mutation_Response>;
   /** update single row of the table: "phone_numbers" */
   update_phone_numbers_by_pk?: Maybe<Phone_Numbers>;
+  /** update data of the table: "product_file_owners" */
+  update_product_file_owners?: Maybe<Product_File_Owners_Mutation_Response>;
+  /** update single row of the table: "product_file_owners" */
+  update_product_file_owners_by_pk?: Maybe<Product_File_Owners>;
+  /** update data of the table: "product_files" */
+  update_product_files?: Maybe<Product_Files_Mutation_Response>;
+  /** update single row of the table: "product_files" */
+  update_product_files_by_pk?: Maybe<Product_Files>;
   /** update data of the table: "product_preview_items" */
   update_product_preview_items?: Maybe<Product_Preview_Items_Mutation_Response>;
   /** update single row of the table: "product_preview_items" */
@@ -3570,7 +3609,6 @@ export type Mutation = {
   adminDeleteAccount: BlankMutationResponse;
   /**
    * Request to upload a piece of content.
-   * 
    * This is the first stage of uploading - registration.
    * 
    * How uploading works:
@@ -3583,13 +3621,11 @@ export type Mutation = {
   uploadRegister: UploadRegisterMutationResponse;
   /**
    * Request to save an uploaded image / make it official.
-   * 
    * This is the last stage of uploading - saving.
-   * Your uploaded image will be validated and made available for use.
-   * 
    * AccessRule – LOGGED_IN
    */
   uploadSaveImage: UploadSaveImageMutationResponse;
+  uploadSaveFile: UploadSaveFileMutationResponse;
   /**
    * Follow a store.
    * 
@@ -4041,6 +4077,26 @@ export type MutationDelete_Phone_Numbers_By_PkArgs = {
 };
 
 
+export type MutationDelete_Product_File_OwnersArgs = {
+  where: Product_File_Owners_Bool_Exp;
+};
+
+
+export type MutationDelete_Product_File_Owners_By_PkArgs = {
+  fileId: Scalars['String'];
+};
+
+
+export type MutationDelete_Product_FilesArgs = {
+  where: Product_Files_Bool_Exp;
+};
+
+
+export type MutationDelete_Product_Files_By_PkArgs = {
+  id: Scalars['String'];
+};
+
+
 export type MutationDelete_Product_Preview_ItemsArgs = {
   where: Product_Preview_Items_Bool_Exp;
 };
@@ -4344,6 +4400,30 @@ export type MutationInsert_Phone_NumbersArgs = {
 export type MutationInsert_Phone_Numbers_OneArgs = {
   object: Phone_Numbers_Insert_Input;
   on_conflict?: Maybe<Phone_Numbers_On_Conflict>;
+};
+
+
+export type MutationInsert_Product_File_OwnersArgs = {
+  objects: Array<Product_File_Owners_Insert_Input>;
+  on_conflict?: Maybe<Product_File_Owners_On_Conflict>;
+};
+
+
+export type MutationInsert_Product_File_Owners_OneArgs = {
+  object: Product_File_Owners_Insert_Input;
+  on_conflict?: Maybe<Product_File_Owners_On_Conflict>;
+};
+
+
+export type MutationInsert_Product_FilesArgs = {
+  objects: Array<Product_Files_Insert_Input>;
+  on_conflict?: Maybe<Product_Files_On_Conflict>;
+};
+
+
+export type MutationInsert_Product_Files_OneArgs = {
+  object: Product_Files_Insert_Input;
+  on_conflict?: Maybe<Product_Files_On_Conflict>;
 };
 
 
@@ -4683,6 +4763,32 @@ export type MutationUpdate_Phone_Numbers_By_PkArgs = {
 };
 
 
+export type MutationUpdate_Product_File_OwnersArgs = {
+  _set?: Maybe<Product_File_Owners_Set_Input>;
+  where: Product_File_Owners_Bool_Exp;
+};
+
+
+export type MutationUpdate_Product_File_Owners_By_PkArgs = {
+  _set?: Maybe<Product_File_Owners_Set_Input>;
+  pk_columns: Product_File_Owners_Pk_Columns_Input;
+};
+
+
+export type MutationUpdate_Product_FilesArgs = {
+  _inc?: Maybe<Product_Files_Inc_Input>;
+  _set?: Maybe<Product_Files_Set_Input>;
+  where: Product_Files_Bool_Exp;
+};
+
+
+export type MutationUpdate_Product_Files_By_PkArgs = {
+  _inc?: Maybe<Product_Files_Inc_Input>;
+  _set?: Maybe<Product_Files_Set_Input>;
+  pk_columns: Product_Files_Pk_Columns_Input;
+};
+
+
 export type MutationUpdate_Product_Preview_ItemsArgs = {
   _inc?: Maybe<Product_Preview_Items_Inc_Input>;
   _set?: Maybe<Product_Preview_Items_Set_Input>;
@@ -4894,6 +5000,13 @@ export type MutationUploadSaveImageArgs = {
 };
 
 
+export type MutationUploadSaveFileArgs = {
+  uploadId: Scalars['String'];
+  fileName: Scalars['String'];
+  ownerIds?: Maybe<Array<Maybe<Scalars['String']>>>;
+};
+
+
 export type MutationFollowStoreArgs = {
   storeId: Scalars['String'];
   query?: Maybe<ConnectionQuery>;
@@ -5098,7 +5211,7 @@ export type MutationCapturePaymentForOrderArgs = {
 
 export type MutationAddForm10Args = {
   orderId: Scalars['String'];
-  form10ImageId: Scalars['String'];
+  form10FileId: Scalars['String'];
 };
 
 
@@ -5332,6 +5445,9 @@ export type Order_Snapshots = {
   adminApproverId?: Maybe<Scalars['String']>;
   createdAt: Scalars['timestamp'];
   /** An object relationship */
+  form10File?: Maybe<Product_Files>;
+  form10FileId?: Maybe<Scalars['String']>;
+  /** An object relationship */
   form10Image?: Maybe<Image_Parents>;
   form10ImageId?: Maybe<Scalars['String']>;
   id: Scalars['String'];
@@ -5388,6 +5504,8 @@ export type Order_Snapshots_Bool_Exp = {
   adminApprover?: Maybe<Users_Bool_Exp>;
   adminApproverId?: Maybe<String_Comparison_Exp>;
   createdAt?: Maybe<Timestamp_Comparison_Exp>;
+  form10File?: Maybe<Product_Files_Bool_Exp>;
+  form10FileId?: Maybe<String_Comparison_Exp>;
   form10Image?: Maybe<Image_Parents_Bool_Exp>;
   form10ImageId?: Maybe<String_Comparison_Exp>;
   id?: Maybe<String_Comparison_Exp>;
@@ -5402,6 +5520,8 @@ export type Order_Snapshots_Bool_Exp = {
 /** unique or primary key constraints on table "order_snapshots" */
 export enum Order_Snapshots_Constraint {
   /** unique or primary key constraint */
+  ORDER_SNAPSHOTS_FORM_FILE_ID_KEY = 'order_snapshots_form_file_id_key',
+  /** unique or primary key constraint */
   ORDER_SNAPSHOTS_PKEY = 'order_snapshots_pkey'
 }
 
@@ -5410,6 +5530,8 @@ export type Order_Snapshots_Insert_Input = {
   adminApprover?: Maybe<Users_Obj_Rel_Insert_Input>;
   adminApproverId?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['timestamp']>;
+  form10File?: Maybe<Product_Files_Obj_Rel_Insert_Input>;
+  form10FileId?: Maybe<Scalars['String']>;
   form10Image?: Maybe<Image_Parents_Obj_Rel_Insert_Input>;
   form10ImageId?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
@@ -5426,6 +5548,7 @@ export type Order_Snapshots_Max_Fields = {
    __typename?: 'order_snapshots_max_fields';
   adminApproverId?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['timestamp']>;
+  form10FileId?: Maybe<Scalars['String']>;
   form10ImageId?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
   orderId?: Maybe<Scalars['String']>;
@@ -5438,6 +5561,7 @@ export type Order_Snapshots_Max_Fields = {
 export type Order_Snapshots_Max_Order_By = {
   adminApproverId?: Maybe<Order_By>;
   createdAt?: Maybe<Order_By>;
+  form10FileId?: Maybe<Order_By>;
   form10ImageId?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   orderId?: Maybe<Order_By>;
@@ -5451,6 +5575,7 @@ export type Order_Snapshots_Min_Fields = {
    __typename?: 'order_snapshots_min_fields';
   adminApproverId?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['timestamp']>;
+  form10FileId?: Maybe<Scalars['String']>;
   form10ImageId?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
   orderId?: Maybe<Scalars['String']>;
@@ -5463,6 +5588,7 @@ export type Order_Snapshots_Min_Fields = {
 export type Order_Snapshots_Min_Order_By = {
   adminApproverId?: Maybe<Order_By>;
   createdAt?: Maybe<Order_By>;
+  form10FileId?: Maybe<Order_By>;
   form10ImageId?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   orderId?: Maybe<Order_By>;
@@ -5498,6 +5624,8 @@ export type Order_Snapshots_Order_By = {
   adminApprover?: Maybe<Users_Order_By>;
   adminApproverId?: Maybe<Order_By>;
   createdAt?: Maybe<Order_By>;
+  form10File?: Maybe<Product_Files_Order_By>;
+  form10FileId?: Maybe<Order_By>;
   form10Image?: Maybe<Image_Parents_Order_By>;
   form10ImageId?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
@@ -5521,6 +5649,8 @@ export enum Order_Snapshots_Select_Column {
   /** column name */
   CREATEDAT = 'createdAt',
   /** column name */
+  FORM10FILEID = 'form10FileId',
+  /** column name */
   FORM10IMAGEID = 'form10ImageId',
   /** column name */
   ID = 'id',
@@ -5538,6 +5668,7 @@ export enum Order_Snapshots_Select_Column {
 export type Order_Snapshots_Set_Input = {
   adminApproverId?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['timestamp']>;
+  form10FileId?: Maybe<Scalars['String']>;
   form10ImageId?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
   orderId?: Maybe<Scalars['String']>;
@@ -5552,6 +5683,8 @@ export enum Order_Snapshots_Update_Column {
   ADMINAPPROVERID = 'adminApproverId',
   /** column name */
   CREATEDAT = 'createdAt',
+  /** column name */
+  FORM10FILEID = 'form10FileId',
   /** column name */
   FORM10IMAGEID = 'form10ImageId',
   /** column name */
@@ -6151,6 +6284,8 @@ export type OrderSnapshot = {
   /** An object relationship */
   form10Image?: Maybe<Image_Parents>;
   form10ImageId?: Maybe<Scalars['String']>;
+  form10File?: Maybe<Product_Files>;
+  form10FileId?: Maybe<Scalars['String']>;
   id: Scalars['String'];
   orderId: Scalars['String'];
   orderStatus: Scalars['String'];
@@ -7705,6 +7840,442 @@ export type Product = {
   currentSnapshotId: Scalars['String'];
   currentSnapshot: Product_Snapshots;
   featuredVariant: Product_Variants;
+};
+
+/** columns and relationships of "product_file_owners" */
+export type Product_File_Owners = {
+   __typename?: 'product_file_owners';
+  fileId: Scalars['String'];
+  ownerId: Scalars['String'];
+};
+
+/** aggregated selection of "product_file_owners" */
+export type Product_File_Owners_Aggregate = {
+   __typename?: 'product_file_owners_aggregate';
+  aggregate?: Maybe<Product_File_Owners_Aggregate_Fields>;
+  nodes: Array<Product_File_Owners>;
+};
+
+/** aggregate fields of "product_file_owners" */
+export type Product_File_Owners_Aggregate_Fields = {
+   __typename?: 'product_file_owners_aggregate_fields';
+  count?: Maybe<Scalars['Int']>;
+  max?: Maybe<Product_File_Owners_Max_Fields>;
+  min?: Maybe<Product_File_Owners_Min_Fields>;
+};
+
+
+/** aggregate fields of "product_file_owners" */
+export type Product_File_Owners_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<Product_File_Owners_Select_Column>>;
+  distinct?: Maybe<Scalars['Boolean']>;
+};
+
+/** order by aggregate values of table "product_file_owners" */
+export type Product_File_Owners_Aggregate_Order_By = {
+  count?: Maybe<Order_By>;
+  max?: Maybe<Product_File_Owners_Max_Order_By>;
+  min?: Maybe<Product_File_Owners_Min_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "product_file_owners" */
+export type Product_File_Owners_Arr_Rel_Insert_Input = {
+  data: Array<Product_File_Owners_Insert_Input>;
+  on_conflict?: Maybe<Product_File_Owners_On_Conflict>;
+};
+
+/** Boolean expression to filter rows from the table "product_file_owners". All fields are combined with a logical 'AND'. */
+export type Product_File_Owners_Bool_Exp = {
+  _and?: Maybe<Array<Maybe<Product_File_Owners_Bool_Exp>>>;
+  _not?: Maybe<Product_File_Owners_Bool_Exp>;
+  _or?: Maybe<Array<Maybe<Product_File_Owners_Bool_Exp>>>;
+  fileId?: Maybe<String_Comparison_Exp>;
+  ownerId?: Maybe<String_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "product_file_owners" */
+export enum Product_File_Owners_Constraint {
+  /** unique or primary key constraint */
+  PRODUCT_FILE_OWNERS_PKEY = 'product_file_owners_pkey'
+}
+
+/** input type for inserting data into table "product_file_owners" */
+export type Product_File_Owners_Insert_Input = {
+  fileId?: Maybe<Scalars['String']>;
+  ownerId?: Maybe<Scalars['String']>;
+};
+
+/** aggregate max on columns */
+export type Product_File_Owners_Max_Fields = {
+   __typename?: 'product_file_owners_max_fields';
+  fileId?: Maybe<Scalars['String']>;
+  ownerId?: Maybe<Scalars['String']>;
+};
+
+/** order by max() on columns of table "product_file_owners" */
+export type Product_File_Owners_Max_Order_By = {
+  fileId?: Maybe<Order_By>;
+  ownerId?: Maybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type Product_File_Owners_Min_Fields = {
+   __typename?: 'product_file_owners_min_fields';
+  fileId?: Maybe<Scalars['String']>;
+  ownerId?: Maybe<Scalars['String']>;
+};
+
+/** order by min() on columns of table "product_file_owners" */
+export type Product_File_Owners_Min_Order_By = {
+  fileId?: Maybe<Order_By>;
+  ownerId?: Maybe<Order_By>;
+};
+
+/** response of any mutation on the table "product_file_owners" */
+export type Product_File_Owners_Mutation_Response = {
+   __typename?: 'product_file_owners_mutation_response';
+  /** number of affected rows by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data of the affected rows by the mutation */
+  returning: Array<Product_File_Owners>;
+};
+
+/** input type for inserting object relation for remote table "product_file_owners" */
+export type Product_File_Owners_Obj_Rel_Insert_Input = {
+  data: Product_File_Owners_Insert_Input;
+  on_conflict?: Maybe<Product_File_Owners_On_Conflict>;
+};
+
+/** on conflict condition type for table "product_file_owners" */
+export type Product_File_Owners_On_Conflict = {
+  constraint: Product_File_Owners_Constraint;
+  update_columns: Array<Product_File_Owners_Update_Column>;
+  where?: Maybe<Product_File_Owners_Bool_Exp>;
+};
+
+/** ordering options when selecting data from "product_file_owners" */
+export type Product_File_Owners_Order_By = {
+  fileId?: Maybe<Order_By>;
+  ownerId?: Maybe<Order_By>;
+};
+
+/** primary key columns input for table: "product_file_owners" */
+export type Product_File_Owners_Pk_Columns_Input = {
+  fileId: Scalars['String'];
+};
+
+/** select columns of table "product_file_owners" */
+export enum Product_File_Owners_Select_Column {
+  /** column name */
+  FILEID = 'fileId',
+  /** column name */
+  OWNERID = 'ownerId'
+}
+
+/** input type for updating data in table "product_file_owners" */
+export type Product_File_Owners_Set_Input = {
+  fileId?: Maybe<Scalars['String']>;
+  ownerId?: Maybe<Scalars['String']>;
+};
+
+/** update columns of table "product_file_owners" */
+export enum Product_File_Owners_Update_Column {
+  /** column name */
+  FILEID = 'fileId',
+  /** column name */
+  OWNERID = 'ownerId'
+}
+
+/** columns and relationships of "product_files" */
+export type Product_Files = {
+   __typename?: 'product_files';
+  createdAt: Scalars['timestamptz'];
+  fileName: Scalars['String'];
+  id: Scalars['String'];
+  mimeType: Scalars['String'];
+  sizeInBytes: Scalars['bigint'];
+};
+
+/** aggregated selection of "product_files" */
+export type Product_Files_Aggregate = {
+   __typename?: 'product_files_aggregate';
+  aggregate?: Maybe<Product_Files_Aggregate_Fields>;
+  nodes: Array<Product_Files>;
+};
+
+/** aggregate fields of "product_files" */
+export type Product_Files_Aggregate_Fields = {
+   __typename?: 'product_files_aggregate_fields';
+  avg?: Maybe<Product_Files_Avg_Fields>;
+  count?: Maybe<Scalars['Int']>;
+  max?: Maybe<Product_Files_Max_Fields>;
+  min?: Maybe<Product_Files_Min_Fields>;
+  stddev?: Maybe<Product_Files_Stddev_Fields>;
+  stddev_pop?: Maybe<Product_Files_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<Product_Files_Stddev_Samp_Fields>;
+  sum?: Maybe<Product_Files_Sum_Fields>;
+  var_pop?: Maybe<Product_Files_Var_Pop_Fields>;
+  var_samp?: Maybe<Product_Files_Var_Samp_Fields>;
+  variance?: Maybe<Product_Files_Variance_Fields>;
+};
+
+
+/** aggregate fields of "product_files" */
+export type Product_Files_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<Product_Files_Select_Column>>;
+  distinct?: Maybe<Scalars['Boolean']>;
+};
+
+/** order by aggregate values of table "product_files" */
+export type Product_Files_Aggregate_Order_By = {
+  avg?: Maybe<Product_Files_Avg_Order_By>;
+  count?: Maybe<Order_By>;
+  max?: Maybe<Product_Files_Max_Order_By>;
+  min?: Maybe<Product_Files_Min_Order_By>;
+  stddev?: Maybe<Product_Files_Stddev_Order_By>;
+  stddev_pop?: Maybe<Product_Files_Stddev_Pop_Order_By>;
+  stddev_samp?: Maybe<Product_Files_Stddev_Samp_Order_By>;
+  sum?: Maybe<Product_Files_Sum_Order_By>;
+  var_pop?: Maybe<Product_Files_Var_Pop_Order_By>;
+  var_samp?: Maybe<Product_Files_Var_Samp_Order_By>;
+  variance?: Maybe<Product_Files_Variance_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "product_files" */
+export type Product_Files_Arr_Rel_Insert_Input = {
+  data: Array<Product_Files_Insert_Input>;
+  on_conflict?: Maybe<Product_Files_On_Conflict>;
+};
+
+/** aggregate avg on columns */
+export type Product_Files_Avg_Fields = {
+   __typename?: 'product_files_avg_fields';
+  sizeInBytes?: Maybe<Scalars['Float']>;
+};
+
+/** order by avg() on columns of table "product_files" */
+export type Product_Files_Avg_Order_By = {
+  sizeInBytes?: Maybe<Order_By>;
+};
+
+/** Boolean expression to filter rows from the table "product_files". All fields are combined with a logical 'AND'. */
+export type Product_Files_Bool_Exp = {
+  _and?: Maybe<Array<Maybe<Product_Files_Bool_Exp>>>;
+  _not?: Maybe<Product_Files_Bool_Exp>;
+  _or?: Maybe<Array<Maybe<Product_Files_Bool_Exp>>>;
+  createdAt?: Maybe<Timestamptz_Comparison_Exp>;
+  fileName?: Maybe<String_Comparison_Exp>;
+  id?: Maybe<String_Comparison_Exp>;
+  mimeType?: Maybe<String_Comparison_Exp>;
+  sizeInBytes?: Maybe<Bigint_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "product_files" */
+export enum Product_Files_Constraint {
+  /** unique or primary key constraint */
+  FILES_PKEY = 'files_pkey'
+}
+
+/** input type for incrementing integer column in table "product_files" */
+export type Product_Files_Inc_Input = {
+  sizeInBytes?: Maybe<Scalars['bigint']>;
+};
+
+/** input type for inserting data into table "product_files" */
+export type Product_Files_Insert_Input = {
+  createdAt?: Maybe<Scalars['timestamptz']>;
+  fileName?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+  mimeType?: Maybe<Scalars['String']>;
+  sizeInBytes?: Maybe<Scalars['bigint']>;
+};
+
+/** aggregate max on columns */
+export type Product_Files_Max_Fields = {
+   __typename?: 'product_files_max_fields';
+  createdAt?: Maybe<Scalars['timestamptz']>;
+  fileName?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+  mimeType?: Maybe<Scalars['String']>;
+  sizeInBytes?: Maybe<Scalars['bigint']>;
+};
+
+/** order by max() on columns of table "product_files" */
+export type Product_Files_Max_Order_By = {
+  createdAt?: Maybe<Order_By>;
+  fileName?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  mimeType?: Maybe<Order_By>;
+  sizeInBytes?: Maybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type Product_Files_Min_Fields = {
+   __typename?: 'product_files_min_fields';
+  createdAt?: Maybe<Scalars['timestamptz']>;
+  fileName?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+  mimeType?: Maybe<Scalars['String']>;
+  sizeInBytes?: Maybe<Scalars['bigint']>;
+};
+
+/** order by min() on columns of table "product_files" */
+export type Product_Files_Min_Order_By = {
+  createdAt?: Maybe<Order_By>;
+  fileName?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  mimeType?: Maybe<Order_By>;
+  sizeInBytes?: Maybe<Order_By>;
+};
+
+/** response of any mutation on the table "product_files" */
+export type Product_Files_Mutation_Response = {
+   __typename?: 'product_files_mutation_response';
+  /** number of affected rows by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data of the affected rows by the mutation */
+  returning: Array<Product_Files>;
+};
+
+/** input type for inserting object relation for remote table "product_files" */
+export type Product_Files_Obj_Rel_Insert_Input = {
+  data: Product_Files_Insert_Input;
+  on_conflict?: Maybe<Product_Files_On_Conflict>;
+};
+
+/** on conflict condition type for table "product_files" */
+export type Product_Files_On_Conflict = {
+  constraint: Product_Files_Constraint;
+  update_columns: Array<Product_Files_Update_Column>;
+  where?: Maybe<Product_Files_Bool_Exp>;
+};
+
+/** ordering options when selecting data from "product_files" */
+export type Product_Files_Order_By = {
+  createdAt?: Maybe<Order_By>;
+  fileName?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  mimeType?: Maybe<Order_By>;
+  sizeInBytes?: Maybe<Order_By>;
+};
+
+/** primary key columns input for table: "product_files" */
+export type Product_Files_Pk_Columns_Input = {
+  id: Scalars['String'];
+};
+
+/** select columns of table "product_files" */
+export enum Product_Files_Select_Column {
+  /** column name */
+  CREATEDAT = 'createdAt',
+  /** column name */
+  FILENAME = 'fileName',
+  /** column name */
+  ID = 'id',
+  /** column name */
+  MIMETYPE = 'mimeType',
+  /** column name */
+  SIZEINBYTES = 'sizeInBytes'
+}
+
+/** input type for updating data in table "product_files" */
+export type Product_Files_Set_Input = {
+  createdAt?: Maybe<Scalars['timestamptz']>;
+  fileName?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+  mimeType?: Maybe<Scalars['String']>;
+  sizeInBytes?: Maybe<Scalars['bigint']>;
+};
+
+/** aggregate stddev on columns */
+export type Product_Files_Stddev_Fields = {
+   __typename?: 'product_files_stddev_fields';
+  sizeInBytes?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev() on columns of table "product_files" */
+export type Product_Files_Stddev_Order_By = {
+  sizeInBytes?: Maybe<Order_By>;
+};
+
+/** aggregate stddev_pop on columns */
+export type Product_Files_Stddev_Pop_Fields = {
+   __typename?: 'product_files_stddev_pop_fields';
+  sizeInBytes?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev_pop() on columns of table "product_files" */
+export type Product_Files_Stddev_Pop_Order_By = {
+  sizeInBytes?: Maybe<Order_By>;
+};
+
+/** aggregate stddev_samp on columns */
+export type Product_Files_Stddev_Samp_Fields = {
+   __typename?: 'product_files_stddev_samp_fields';
+  sizeInBytes?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev_samp() on columns of table "product_files" */
+export type Product_Files_Stddev_Samp_Order_By = {
+  sizeInBytes?: Maybe<Order_By>;
+};
+
+/** aggregate sum on columns */
+export type Product_Files_Sum_Fields = {
+   __typename?: 'product_files_sum_fields';
+  sizeInBytes?: Maybe<Scalars['bigint']>;
+};
+
+/** order by sum() on columns of table "product_files" */
+export type Product_Files_Sum_Order_By = {
+  sizeInBytes?: Maybe<Order_By>;
+};
+
+/** update columns of table "product_files" */
+export enum Product_Files_Update_Column {
+  /** column name */
+  CREATEDAT = 'createdAt',
+  /** column name */
+  FILENAME = 'fileName',
+  /** column name */
+  ID = 'id',
+  /** column name */
+  MIMETYPE = 'mimeType',
+  /** column name */
+  SIZEINBYTES = 'sizeInBytes'
+}
+
+/** aggregate var_pop on columns */
+export type Product_Files_Var_Pop_Fields = {
+   __typename?: 'product_files_var_pop_fields';
+  sizeInBytes?: Maybe<Scalars['Float']>;
+};
+
+/** order by var_pop() on columns of table "product_files" */
+export type Product_Files_Var_Pop_Order_By = {
+  sizeInBytes?: Maybe<Order_By>;
+};
+
+/** aggregate var_samp on columns */
+export type Product_Files_Var_Samp_Fields = {
+   __typename?: 'product_files_var_samp_fields';
+  sizeInBytes?: Maybe<Scalars['Float']>;
+};
+
+/** order by var_samp() on columns of table "product_files" */
+export type Product_Files_Var_Samp_Order_By = {
+  sizeInBytes?: Maybe<Order_By>;
+};
+
+/** aggregate variance on columns */
+export type Product_Files_Variance_Fields = {
+   __typename?: 'product_files_variance_fields';
+  sizeInBytes?: Maybe<Scalars['Float']>;
+};
+
+/** order by variance() on columns of table "product_files" */
+export type Product_Files_Variance_Order_By = {
+  sizeInBytes?: Maybe<Order_By>;
 };
 
 /** columns and relationships of "product_preview_items" */
@@ -9503,6 +10074,18 @@ export type Query = {
   phone_numbers_aggregate: Phone_Numbers_Aggregate;
   /** fetch data from the table: "phone_numbers" using primary key columns */
   phone_numbers_by_pk?: Maybe<Phone_Numbers>;
+  /** fetch data from the table: "product_file_owners" */
+  product_file_owners: Array<Product_File_Owners>;
+  /** fetch aggregated fields from the table: "product_file_owners" */
+  product_file_owners_aggregate: Product_File_Owners_Aggregate;
+  /** fetch data from the table: "product_file_owners" using primary key columns */
+  product_file_owners_by_pk?: Maybe<Product_File_Owners>;
+  /** fetch data from the table: "product_files" */
+  product_files: Array<Product_Files>;
+  /** fetch aggregated fields from the table: "product_files" */
+  product_files_aggregate: Product_Files_Aggregate;
+  /** fetch data from the table: "product_files" using primary key columns */
+  product_files_by_pk?: Maybe<Product_Files>;
   /** fetch data from the table: "product_preview_items" */
   product_preview_items: Array<Product_Preview_Items>;
   /** fetch aggregated fields from the table: "product_preview_items" */
@@ -10257,6 +10840,52 @@ export type QueryPhone_Numbers_AggregateArgs = {
 
 
 export type QueryPhone_Numbers_By_PkArgs = {
+  id: Scalars['String'];
+};
+
+
+export type QueryProduct_File_OwnersArgs = {
+  distinct_on?: Maybe<Array<Product_File_Owners_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Product_File_Owners_Order_By>>;
+  where?: Maybe<Product_File_Owners_Bool_Exp>;
+};
+
+
+export type QueryProduct_File_Owners_AggregateArgs = {
+  distinct_on?: Maybe<Array<Product_File_Owners_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Product_File_Owners_Order_By>>;
+  where?: Maybe<Product_File_Owners_Bool_Exp>;
+};
+
+
+export type QueryProduct_File_Owners_By_PkArgs = {
+  fileId: Scalars['String'];
+};
+
+
+export type QueryProduct_FilesArgs = {
+  distinct_on?: Maybe<Array<Product_Files_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Product_Files_Order_By>>;
+  where?: Maybe<Product_Files_Bool_Exp>;
+};
+
+
+export type QueryProduct_Files_AggregateArgs = {
+  distinct_on?: Maybe<Array<Product_Files_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Product_Files_Order_By>>;
+  where?: Maybe<Product_Files_Bool_Exp>;
+};
+
+
+export type QueryProduct_Files_By_PkArgs = {
   id: Scalars['String'];
 };
 
@@ -11552,6 +12181,18 @@ export type Subscription = {
   phone_numbers_aggregate: Phone_Numbers_Aggregate;
   /** fetch data from the table: "phone_numbers" using primary key columns */
   phone_numbers_by_pk?: Maybe<Phone_Numbers>;
+  /** fetch data from the table: "product_file_owners" */
+  product_file_owners: Array<Product_File_Owners>;
+  /** fetch aggregated fields from the table: "product_file_owners" */
+  product_file_owners_aggregate: Product_File_Owners_Aggregate;
+  /** fetch data from the table: "product_file_owners" using primary key columns */
+  product_file_owners_by_pk?: Maybe<Product_File_Owners>;
+  /** fetch data from the table: "product_files" */
+  product_files: Array<Product_Files>;
+  /** fetch aggregated fields from the table: "product_files" */
+  product_files_aggregate: Product_Files_Aggregate;
+  /** fetch data from the table: "product_files" using primary key columns */
+  product_files_by_pk?: Maybe<Product_Files>;
   /** fetch data from the table: "product_preview_items" */
   product_preview_items: Array<Product_Preview_Items>;
   /** fetch aggregated fields from the table: "product_preview_items" */
@@ -12048,6 +12689,52 @@ export type SubscriptionPhone_Numbers_AggregateArgs = {
 
 
 export type SubscriptionPhone_Numbers_By_PkArgs = {
+  id: Scalars['String'];
+};
+
+
+export type SubscriptionProduct_File_OwnersArgs = {
+  distinct_on?: Maybe<Array<Product_File_Owners_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Product_File_Owners_Order_By>>;
+  where?: Maybe<Product_File_Owners_Bool_Exp>;
+};
+
+
+export type SubscriptionProduct_File_Owners_AggregateArgs = {
+  distinct_on?: Maybe<Array<Product_File_Owners_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Product_File_Owners_Order_By>>;
+  where?: Maybe<Product_File_Owners_Bool_Exp>;
+};
+
+
+export type SubscriptionProduct_File_Owners_By_PkArgs = {
+  fileId: Scalars['String'];
+};
+
+
+export type SubscriptionProduct_FilesArgs = {
+  distinct_on?: Maybe<Array<Product_Files_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Product_Files_Order_By>>;
+  where?: Maybe<Product_Files_Bool_Exp>;
+};
+
+
+export type SubscriptionProduct_Files_AggregateArgs = {
+  distinct_on?: Maybe<Array<Product_Files_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Product_Files_Order_By>>;
+  where?: Maybe<Product_Files_Bool_Exp>;
+};
+
+
+export type SubscriptionProduct_Files_By_PkArgs = {
   id: Scalars['String'];
 };
 
@@ -12777,14 +13464,14 @@ export type UploadRegisterMutationResponse = {
   putUrl: Scalars['String'];
 };
 
+export type UploadSaveFileMutationResponse = {
+   __typename?: 'UploadSaveFileMutationResponse';
+  fileId: Scalars['ID'];
+};
+
 export type UploadSaveImageMutationResponse = {
    __typename?: 'UploadSaveImageMutationResponse';
   image: Image_Parents;
-};
-
-export type UploadSaveProductFileMutationResponse = {
-   __typename?: 'UploadSaveProductFileMutationResponse';
-  fileId: Scalars['ID'];
 };
 
 /** A category of file upload – each one has a different purpose. */
@@ -13879,7 +14566,18 @@ export type SaveImageUploadMutation = { __typename?: 'Mutation', uploadSaveImage
       & ImageFragment
     ) } };
 
+export type UploadSaveFileMutationVariables = Exact<{
+  uploadId: Scalars['String'];
+  fileName: Scalars['String'];
+  ownerIds?: Maybe<Array<Maybe<Scalars['String']>>>;
+}>;
+
+
+export type UploadSaveFileMutation = { __typename?: 'Mutation', uploadSaveFile: { __typename?: 'UploadSaveFileMutationResponse', fileId: string } };
+
 export type ImageFragment = { __typename?: 'image_parents', id: string, createdAt: any, tags?: Maybe<string>, description?: Maybe<string>, original?: Maybe<{ __typename?: 'image_variants', id: string, mimeType: string, heightInPixels: number, widthInPixels: number, sizeInBytes: number, url?: Maybe<string> }>, variants: Array<{ __typename?: 'image_variants', id: string, mimeType: string, sizeInBytes: number, widthInPixels: number, heightInPixels: number, url?: Maybe<string> }> };
+
+export type ProductFileFragment = { __typename?: 'product_files', id: string, fileName: string, createdAt: any, mimeType: string, sizeInBytes: any };
 
 export type ProductSnapshotsFragment = { __typename?: 'product_snapshots', id: string, createdAt: any, productId: string, title: string, description: string, condition: string, make: string, model: string, ammoType?: Maybe<string>, actionType: string, caliber?: Maybe<string>, serialNumber: string, location: string, magazineCapacity?: Maybe<string>, barrelLength?: Maybe<string>, dealer?: Maybe<{ __typename?: 'dealers', id: string, name: string, address?: Maybe<string>, city?: Maybe<string>, state?: Maybe<string>, postCode?: Maybe<string>, licenseNumber: string, createdAt: any }> };
 
@@ -13940,6 +14638,9 @@ export type PayoutItemFragment = { __typename?: 'payout_items', id: string, stor
 export type OrderSnapshotFragment = { __typename?: 'OrderSnapshot', id: string, orderStatus: string, createdAt: any, adminApproverId?: Maybe<string>, adminApprover?: Maybe<{ __typename?: 'UserWithRole', id: string, firstName?: Maybe<string>, lastName?: Maybe<string>, email: string }>, form10Image?: Maybe<(
     { __typename?: 'image_parents' }
     & ImageFragment
+  )>, form10File?: Maybe<(
+    { __typename?: 'product_files' }
+    & ProductFileFragment
   )> };
 
 type OrdersFragment_OrderPublic_ = { __typename?: 'OrderPublic', id?: Maybe<string>, createdAt?: Maybe<any>, updatedAt?: Maybe<any>, bidId?: Maybe<string>, total?: Maybe<number>, currency?: Maybe<string>, buyerId?: Maybe<string>, sellerStoreId?: Maybe<string>, productId?: Maybe<string>, paymentIntentId?: Maybe<string>, bid?: Maybe<(
@@ -14210,6 +14911,15 @@ export const UserLicenseFragmentFragmentDoc = gql`
   verified
 }
     `;
+export const ProductFileFragmentFragmentDoc = gql`
+    fragment ProductFileFragment on product_files {
+  id
+  fileName
+  createdAt
+  mimeType
+  sizeInBytes
+}
+    `;
 export const OrderSnapshotFragmentFragmentDoc = gql`
     fragment OrderSnapshotFragment on OrderSnapshot {
   id
@@ -14225,8 +14935,12 @@ export const OrderSnapshotFragmentFragmentDoc = gql`
   form10Image {
     ...ImageFragment
   }
+  form10File {
+    ...ProductFileFragment
+  }
 }
-    ${ImageFragmentFragmentDoc}`;
+    ${ImageFragmentFragmentDoc}
+${ProductFileFragmentFragmentDoc}`;
 export const TransactionFragmentFragmentDoc = gql`
     fragment TransactionFragment on transactions {
   id
@@ -14618,6 +15332,17 @@ export const SaveImageUploadDocument = gql`
     ${ImageFragmentFragmentDoc}`;
 export type SaveImageUploadMutationResult = ApolloReactCommon.MutationResult<SaveImageUploadMutation>;
 export type SaveImageUploadMutationOptions = ApolloReactCommon.BaseMutationOptions<SaveImageUploadMutation, SaveImageUploadMutationVariables>;
+export const UploadSaveFileDocument = gql`
+    mutation uploadSaveFile($uploadId: String!, $fileName: String!, $ownerIds: [String]) {
+  uploadSaveFile(uploadId: $uploadId, fileName: $fileName, ownerIds: $ownerIds) {
+    ... on UploadSaveFileMutationResponse {
+      fileId
+    }
+  }
+}
+    `;
+export type UploadSaveFileMutationResult = ApolloReactCommon.MutationResult<UploadSaveFileMutation>;
+export type UploadSaveFileMutationOptions = ApolloReactCommon.BaseMutationOptions<UploadSaveFileMutation, UploadSaveFileMutationVariables>;
 export const ProductsAllConnectionDocument = gql`
     query productsAllConnection($searchTerm: String!, $query: ConnectionOffsetQuery) {
   productsAllConnection(searchTerm: $searchTerm, query: $query) {

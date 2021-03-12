@@ -18,7 +18,7 @@ import OrderStatusDisplay from "./OrderStatusDisplay";
 // mediaQuery
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
-import Form10Upload from "./Form10Upload";
+import Form10Upload from "./_Form10Upload";
 // Typings
 import { OrderStatus } from "typings/gqlTypes";
 import { getFeaturedPreviewFromProduct } from "utils/images";
@@ -99,7 +99,7 @@ const styles = (theme: Theme) => createStyles({
       : 'unset',
     border: theme.palette.type === 'dark'
       ? `unset`
-      : `1px solid ${Colors.slateGrey}`,
+      : `1px solid ${Colors.slateGreyDark}`,
     marginBottom: '0.5rem',
     height: 220,
   },

@@ -13,7 +13,7 @@ import { UserPrivate, Order } from "typings/gqlTypes";
 import ErrorBounds from "components/ErrorBounds";
 import { useWindowWidth } from "utils/hooks";
 // Components
-import OrderDetailsPage from "./OrderDetailsPage";
+import Form10PreviewPage from "./Form10PreviewPage";
 
 
 const OrderDetailsModal: React.FC<ReactProps> = (props) => {
@@ -21,16 +21,14 @@ const OrderDetailsModal: React.FC<ReactProps> = (props) => {
   const windowWidth = useWindowWidth();
   const { classes } = props;
 
-  const [showOrderDetails, setShowOrderDetails] = React.useState(false);
-
   const closeModal = () => {
-    setShowOrderDetails(false)
+    props.setShowModal(false)
   }
 
   return (
     <ErrorBounds>
       <Dialog
-        open={showOrderDetails}
+        open={props.showModal}
         onClose={closeModal}
         BackdropProps={{
           classes: { root: classes.modalBackdrop }
@@ -42,26 +40,11 @@ const OrderDetailsModal: React.FC<ReactProps> = (props) => {
           classes: { root: classes.modalPaperScrollPaper }
         }}
       >
-        <OrderDetailsPage
+        <Form10PreviewPage
           order={props.order}
-          orderCancelled={props.orderCancelled}
           closeModal={closeModal}
         />
       </Dialog>
-      <Button
-        className={classes.orderDetailsButton}
-        variant={"outlined"}
-        color={"primary"}
-        disabled={!props.order}
-        onClick={() => setShowOrderDetails(true)}
-      >
-        <Typography
-          className={classes.orderDetailsButtonText}
-          variant={"body2"}
-        >
-          Order Details
-        </Typography>
-      </Button>
     </ErrorBounds>
   )
 }
@@ -69,7 +52,9 @@ const OrderDetailsModal: React.FC<ReactProps> = (props) => {
 
 interface ReactProps extends WithStyles<typeof styles> {
   order: Order;
-  orderCancelled: boolean;
+  orderCancelled?: boolean;
+  showModal: boolean;
+  setShowModal(a: boolean): void;
 }
 
 
@@ -81,30 +66,7 @@ const styles = (theme: Theme) => createStyles({
     maxHeight: "calc(100% - 32px)",
     maxWidth: '880px',
     width: '100%',
-  },
-  orderDetailsButton: {
-    height: '38px',
-    minWidth: '150px',
-    borderRadius: BorderRadius,
-    border: theme.palette.type === 'dark'
-      ? `1px solid ${Colors.grey}`
-      : `1px solid ${Colors.black}`,
-    marginTop: '0.5rem',
-    "&:hover": {
-      border: `1px solid ${theme.colors.blue}`,
-      color: theme.colors.blue,
-      "& > span > p": {
-        color: theme.colors.blue,
-        transition: theme.transitions.create('color', {
-          easing: theme.transitions.easing.sharp,
-          duration: "250ms",
-        }),
-      },
-    },
-  },
-  orderDetailsButtonText: {
-    fontSize: '0.875rem',
-    fontWeight: 500,
+    height: '100%',
   },
 });
 

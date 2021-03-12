@@ -48,3 +48,20 @@ export const SAVE_IMAGE_UPLOAD = gql`
   ${ImageFragment}
 `;
 
+export const UPLOAD_SAVE_FILE = gql`
+  mutation uploadSaveFile(
+    $uploadId: String!
+    $fileName: String!
+    $ownerIds: [String]
+  ) {
+    uploadSaveFile(
+      uploadId: $uploadId
+      fileName: $fileName
+      ownerIds: $ownerIds
+    ) {
+      ... on UploadSaveFileMutationResponse {
+        fileId
+      }
+    }
+  }
+`;

@@ -100,6 +100,7 @@ const Form10Upload = (props: ReactProps) => {
       const ownerIds = [props.order.id];
       const description = null;
       const tags = "";
+
       google_storage_save_image_to_db(
         uploadId,
         description,
@@ -112,14 +113,6 @@ const Form10Upload = (props: ReactProps) => {
         setLoading(false)
         /// update order with form 10 here
         let orderStatus = props.order.currentSnapshot.orderStatus;
-
-        // await addForm10({
-        //   variables: {
-        //     orderId: order.id,
-        //     form10ImageId: image.id,
-        //   },
-        //   refetchQueries: refetchQueriesList,
-        // })
 
         if (
           orderStatus === OrderStatus.CONFIRMED_PAYMENT_FORM_10_REQUIRED
@@ -159,8 +152,6 @@ const Form10Upload = (props: ReactProps) => {
   }
 
   const handleRemoveForm10 = async() => {
-    let currentSnapshotId = `order_snapshot_${nanoid()}`;
-    console.log("order_snapshot_id: ", currentSnapshotId)
     return await removeForm10({
       variables: {
         orderId: order.id,
