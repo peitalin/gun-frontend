@@ -1004,7 +1004,7 @@ class Dropzone extends React.Component<IDropzoneProps, { active: boolean; dragge
       )
     } else {
       // classic mode
-      console.log("classic uploader mode")
+      // console.log("classic uploader mode")
       return (
         //@ts-ignore
         <Layout

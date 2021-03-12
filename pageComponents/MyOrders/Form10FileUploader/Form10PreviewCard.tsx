@@ -88,10 +88,10 @@ const Form10PreviewCard: React.FC<ReactProps> = (props) => {
 
 
   const [showModal, setShowModal] = React.useState(false);
-  const [redIcon, setRedIcon] = React.useState(false)
 
   let form10FilePreview = props?.order?.currentSnapshot?.form10File;
   let orderStatus = props?.order?.currentSnapshot?.orderStatus;
+  console.log("mimeType: ", form10FilePreview?.mimeType)
 
   return (
     <div className={classes.cardContainer}>
@@ -144,14 +144,25 @@ const Form10PreviewCard: React.FC<ReactProps> = (props) => {
             {
               form10FilePreview?.id
               ? <>
-                  <CardMedia
-                    component="img"
-                    classes={{
-                      media: classes.cardMediaWide
-                    }}
-                    image={"/img/pdf-uploaded.png"}
-                    onClick={() => setShowModal(true)}
-                  />
+                  {
+                    form10FilePreview?.mimeType === 'application/pdf'
+                    ? <CardMedia
+                        component="img"
+                        classes={{
+                          media: classes.cardMediaWide
+                        }}
+                        image={"/img/pdf-uploaded.png"}
+                        onClick={() => setShowModal(true)}
+                      />
+                    : <CardMedia
+                        component="img"
+                        classes={{
+                          media: classes.cardMediaWide
+                        }}
+                        image={"/img/img-uploaded.png"}
+                        onClick={() => setShowModal(true)}
+                      />
+                  }
                   <Typography className={classes.previewText} variant={"caption"}>
                     Click to preview
                   </Typography>
@@ -216,8 +227,9 @@ export const styles = (theme: Theme) => createStyles({
   },
   previewText: {
     position: "absolute",
-    bottom: '.25rem',
+    bottom: '.3rem',
     width: '100%',
+    fontSize: '0.7rem',
     textAlign: 'center',
     color: theme.palette.type === 'dark'
       ? Colors.uniswapLighterGrey
@@ -257,7 +269,7 @@ export const styles = (theme: Theme) => createStyles({
     border: theme.palette.type === 'dark'
       ? `1px solid ${Colors.uniswapLightNavy}`
       : `1px solid ${Colors.slateGreyDark}`,
-    padding: '1rem',
+    padding: '1.1rem',
     objectFit: "contain",
     borderRadius: BorderRadius,
     ...cardDimensions

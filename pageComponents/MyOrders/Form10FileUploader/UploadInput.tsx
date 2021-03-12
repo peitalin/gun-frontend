@@ -29,7 +29,7 @@ const UploadInput = (props: IInputProps & ReactProps) => {
   const text = 'Upload Form-10'
 
   let ref = React.useRef();
-  console.log("order UploadINput: ", props.order)
+  // console.log("order UploadINput: ", props.order)
 
   return (
     <label className={props.classes.label}>
