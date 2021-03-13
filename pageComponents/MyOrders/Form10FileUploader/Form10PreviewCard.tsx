@@ -206,8 +206,8 @@ interface ReactProps extends WithStyles<typeof styles> {
 
 
 export const cardDimensions = {
-  height: 93.75, // 150/1.6
-  width: 150,
+  height: 93.33, // 135/1.5
+  width: 140,
 }
 
 export const styles = (theme: Theme) => createStyles({

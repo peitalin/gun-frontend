@@ -1,5 +1,4 @@
 import React from "react";
-import {oc as option} from "ts-optchain";
 import clsx from "clsx";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
@@ -31,6 +30,7 @@ const OrderDetailsPage: React.FC<ReactProps> = (props) => {
   // const priceWasSelect = centsToDollarSelector(priceWas);
 
   let form10FileId = order?.currentSnapshot?.form10File?.id;
+  let form10MimeType = order?.currentSnapshot?.form10File?.mimeType;
   let form10Url = `https://storage.googleapis.com/develop-gunmarketplace-files/${form10FileId}`
 
   return (
@@ -53,11 +53,19 @@ const OrderDetailsPage: React.FC<ReactProps> = (props) => {
       </div>
 
       <div className={classes.flexRowWrap}>
-
-        <embed src={form10Url}
-          width="100%"
-          height="100%"
-        />
+        {
+          form10MimeType === "application/pdf"
+          ? <embed
+              className={classes.embedForm10Pdf}
+              src={form10Url}
+              width="100%"
+              height="100%"
+            />
+          : <img
+              className={classes.embedForm10Img}
+              src={form10Url}
+            />
+        }
       </div>
 
     </ErrorBounds>
@@ -72,7 +80,9 @@ interface ReactProps extends WithStyles<typeof styles> {
 
 const styles = (theme: Theme) => createStyles({
   root: {
-    padding: '2rem',
+    paddingTop: '1.5rem',
+    paddingRight: '1.5rem',
+    paddingLeft: '1.5rem',
     width: '100%',
     height: '100%',
   },
@@ -91,6 +101,18 @@ const styles = (theme: Theme) => createStyles({
     justifyContent: 'center',
     width: '100%',
     height: '100%',
+    // border: `1px solid ${Colors.charcoal}`,
+  },
+  embedForm10Pdf: {
+    boxShadow: BoxShadows.shadow5.boxShadow,
+    background: Colors.slateGreyLightBlack,
+    width: '100vw',
+    height: '100vh',
+  },
+  embedForm10Img: {
+    boxShadow: BoxShadows.shadow5.boxShadow,
+    background: Colors.slateGreyLightBlack,
+    objectFit: "contain",
   },
   closeIcon: {
     background: theme.palette.type === 'dark'
@@ -107,8 +129,8 @@ const styles = (theme: Theme) => createStyles({
     flexDirection: 'row',
     justifyContent: 'flex-end',
     position: 'absolute',
-    right: '0.5rem',
-    top: '0.5rem',
+    right: '0rem',
+    top: '0rem',
   },
 });
 

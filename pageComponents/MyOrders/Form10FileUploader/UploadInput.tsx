@@ -11,6 +11,7 @@ import Button from "@material-ui/core/Button";
 import LoadingBar from "components/LoadingBar";
 import Form10PreviewCard from "./Form10PreviewCard";
 import { Order } from "typings/gqlTypes";
+import { cardDimensions } from "./Form10PreviewCard";
 
 
 
@@ -127,7 +128,7 @@ export const styles = (theme: Theme) => createStyles({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    width: '150px',
+    width: cardDimensions.width,
     borderRadius: BorderRadius,
   },
   uploadButtonText: {

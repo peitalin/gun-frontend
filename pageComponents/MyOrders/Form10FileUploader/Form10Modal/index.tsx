@@ -63,10 +63,12 @@ const styles = (theme: Theme) => createStyles({
     backgroundColor: "rgba(47, 57, 65, .85)",
   },
   modalPaperScrollPaper: {
-    maxHeight: "calc(100% - 32px)",
-    maxWidth: '880px',
-    width: '100%',
-    height: '100%',
+    maxHeight: "calc(100% - 1rem)",
+    maxWidth: '960px',
+    // width: '100%',
+    // height: '100%',
+    boxShadow: 'unset',
+    background: 'transparent',
   },
 });
 

@@ -46,13 +46,12 @@ const OrderRowSellers: React.FC<ReactProps> = (props) => {
   return (
     <ErrorBounds className={clsx(
       classes.root,
-      classes.flexRow,
       (!order && !product) ? "pulse" : null,
     )}>
       {
         !props.loading &&
         <div className={classes.flexRow}>
-          <div className={classes.flexCol}>
+          <div className={clsx(classes.flexColItem, classes.minWidth150)}>
             <ProductPreviewCardRow
               previewItem={previewItem}
               height={55}
@@ -72,23 +71,21 @@ const OrderRowSellers: React.FC<ReactProps> = (props) => {
             </div>
           </div>
 
-          <div className={classes.flexRow}>
-            <div className={clsx(classes.flexCol)}>
-              <div className={classes.flexRowFlexEnd}>
-                {/* <Form10Upload
-                  order={order}
-                /> */}
-                <Form10FileUploader
-                  order={order}
-                />
-              </div>
+          <div className={clsx(classes.flexColItem)}>
+            <div className={classes.flexRowFlexEnd}>
+              {/* <Form10Upload
+                order={order}
+              /> */}
+              <Form10FileUploader
+                order={order}
+              />
+            </div>
 
-              <div className={classes.flexRowFlexEnd}>
-                <OrderDetailsModal
-                  order={order}
-                  orderCancelled={orderCancelled}
-                />
-              </div>
+            <div className={classes.flexRowFlexEnd}>
+              <OrderDetailsModal
+                order={order}
+                orderCancelled={orderCancelled}
+              />
             </div>
           </div>
         </div>
@@ -118,19 +115,25 @@ const styles = (theme: Theme) => createStyles({
       ? `unset`
       : `1px solid ${Colors.slateGreyDark}`,
     marginBottom: '0.5rem',
-    height: 220,
+    minHeight: 220,
   },
-  flexCol: {
+  minWidth150: {
+    minWidth: '150px',
+  },
+  flexColItem: {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'flex-start',
     width: '100%',
+    flexBasis: "50%",
   },
   flexRow: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'flex-start',
     width: '100%',
+    height: '100%',
+    flexWrap: "wrap",
   },
   flexRowFlexEnd: {
     display: 'flex',
