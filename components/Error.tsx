@@ -59,12 +59,36 @@ class ErrorDisplay extends React.Component<ReactProps, any> {
             ))
           }
           {
-            props.error?.networkError &&
-            <Typography color={"primary"} variant="h6" gutterBottom>
-              {props.error?.message}
-              <p>Unable to connect to server.</p>
-              <p>Please check your internet connection.</p>
-            </Typography>
+            ((props.error?.networkError?.result?.errors ?? []).length === 0)
+            ? <div>
+                <div className={classes.errMessage}>
+                  { props.error?.message }
+                </div>
+                <div className={classes.errLine}>
+                  <span>Unable to connect to server.</span>
+                </div>
+                <div className={classes.errLine}>
+                  <span>Please check your internet connection.</span>
+                </div>
+              </div>
+            : <div>
+                <div className={classes.errMessage}>
+                  { props.error?.message }
+                </div>
+                <div className={classes.errLine}>
+                  <span>Unable to connect to server.</span>
+                </div>
+                <div className={classes.errLine}>
+                  <span>Gunmarketplace's backend server has a bug:</span>
+                </div>
+              </div>
+          }
+          {
+            (props.error?.networkError?.result?.errors ?? []).map(err => (
+              <div key={err.message}>
+                <div className={classes.errMessage}>{ err.message }</div>
+              </div>
+            ))
           }
           <SnackbarA
             open={props?.error?.message && this.state.displayErr === true}
