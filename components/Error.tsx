@@ -1,10 +1,7 @@
 
-import * as React from "react";
+import React from "react";
 // import * as Sentry from "@sentry/browser";
-import { oc as option } from "ts-optchain";
-
 import { withStyles, createStyles, Theme } from "@material-ui/core/styles";
-// import JSONTree from "react-json-tree";
 
 // Material UI
 import Paper from "@material-ui/core/Paper";
@@ -33,55 +30,47 @@ class ErrorDisplay extends React.Component<ReactProps, any> {
   }
 
   render() {
+
     let props = this.props;
+    let classes = props.classes;
+    // console.log("err: ", JSON.stringify(props.error))
+
     return (
-      <Paper className={props.classes.errContainer}>
-        <Typography color={"primary"} variant="h4" gutterBottom>
+      <Paper className={classes.errContainer}>
+        <Typography className={classes.errTitle} variant="h4">
           { props.title }
         </Typography>
         <div style={{ maxWidth: "600px" }}>
-          <Typography color={"primary"}
-            className={props.classes.errMessage}
-            variant="h6"
-            gutterBottom
-          >
-            Errors:
-          </Typography>
           {
-            option(props).error.graphQLErrors() &&
-            props.error.graphQLErrors.map(err => (
+            (props.error?.graphQLErrors ?? []).map(err => (
               <div key={err.message}>
-                <div className={props.classes.errMessage}>{ err.message }</div>
-                <div className={props.classes.errLine}>
-                  {"line: " + option(err).locations[0].line()}
+                <div className={classes.errMessage}>{ err.message }</div>
+                <div className={classes.errLine}>
+                  in resolver:
                 </div>
-                <div className={props.classes.errLine}>
-                  {"column: " + option(err).locations[0].column()}
+                <div className={classes.errPath}>{ err.path }</div>
+                <div className={classes.errLine}>
+                  {"line: " + err?.locations?.[0]?.line}
                 </div>
-                {/* <JsonTree data={err}/> */}
+                <div className={classes.errLine}>
+                  {"column: " + err?.locations?.[0]?.column}
+                </div>
               </div>
             ))
           }
           {
-            option(props).error.networkError()
-            ? <Typography color={"primary"} variant="h6" gutterBottom>
-                {props.error.message}
-                <p>Unable to connect to server.</p>
-              </Typography>
-            : <div>
-                <Typography color={"primary"} variant="h6" gutterBottom>
-                  Please check your internet connection.
-                </Typography>
-                <div className={props.classes.errMessage}>
-                  {/* <JsonTree data={props}/> */}
-                </div>
-              </div>
+            props.error?.networkError &&
+            <Typography color={"primary"} variant="h6" gutterBottom>
+              {props.error?.message}
+              <p>Unable to connect to server.</p>
+              <p>Please check your internet connection.</p>
+            </Typography>
           }
           <SnackbarA
-            open={option(props).error.message() && this.state.displayErr === true}
+            open={props?.error?.message && this.state.displayErr === true}
             closeSnackbar={() => this.setState({ displayErr: false })}
-            message={option(props).error.message() ||
-              option(props).error.networkError.message()}
+            message={props?.error?.message ||
+              props?.error?.networkError?.message}
             variant={"error"}
             autoHideDuration={20000}
           />
@@ -92,44 +81,8 @@ class ErrorDisplay extends React.Component<ReactProps, any> {
 }
 
 
-// export const JsonTree = ({ data }) => (
-//   <div style={{
-//     fontFamily: '"Segoe UI","Helvetica Neue",Arial,sans-serif',
-//     margin: "1rem",
-//     padding: "0.5rem 1rem",
-//     backgroundColor: "#FFFFFB",
-//     border: '2px solid #213F5E',
-//   }}>
-//     <JSONTree
-//       data={data}
-//       theme={ themeJsonTree }
-//       invert={false}
-//     />
-//   </div>
-// )
-// const themeJsonTree = {
-//   scheme: 'embers',
-//   base00: '#16130F',
-//   base01: '#2C2620',
-//   base02: '#433B32',
-//   base03: '#5A5047',
-//   base04: '#8A8075',
-//   base05: '#A39A90',
-//   base06: '#BEB6AE',
-//   base07: '#DBD6D1',
-//   base08: '#826D57',
-//   base09: '#828257',
-//   base0A: '#6D8257',
-//   base0B: '#57826D',
-//   base0C: '#576D82',
-//   base0D: '#6D5782',
-//   base0E: '#82576D',
-//   base0F: '#825757'
-// };
 
 
-interface ReduxProps {
-}
 interface ReactProps {
   enqueueSnackbar?(args?: any, variables?: { variant: any }): any;
   title?: string;
@@ -156,23 +109,35 @@ interface ErrorLocation {
 }
 
 const styles = (theme: Theme) => createStyles({
+  errTitle: {
+    color: grey[800],
+    fontSize: '1.25rem',
+    fontFamily: '"Helvetica Neue",Arial,sans-serif',
+  },
   errMessage: {
     paddingTop: theme.spacing(2),
     color: red[800],
     fontWeight: 'bold',
-    fontFamily: '"Segoe UI","Helvetica Neue",Arial,sans-serif',
+    fontFamily: '"Helvetica Neue",Arial,sans-serif',
+  },
+  errPath: {
+    color: red[800],
+    fontWeight: 'bold',
+    fontSize: '1rem',
+    fontFamily: '"Helvetica Neue",Arial,sans-serif',
   },
   errLine: {
+    fontSize: '0.9rem',
     color: grey[700],
-    fontFamily: '"Segoe UI","Helvetica Neue",Arial,sans-serif',
+    fontFamily: '"Helvetica Neue",Arial,sans-serif',
   },
   errContainer: {
-    padding: 20,
-    margin: 20,
+    padding: '2rem 2rem',
+    margin: '1rem',
+    borderRadius: '2rem',
     backgroundColor: red[100],
     boxShadow: "1px 2px 3px 0px rgba(76,76,76,0.4)",
-    borderRadius: "4px",
-    border: `2px solid ${red[600]}`,
+    border: `3px solid ${red[600]}`,
     transition: "all 100ms",
     "&:hover": {
       transition: "all 100ms",
