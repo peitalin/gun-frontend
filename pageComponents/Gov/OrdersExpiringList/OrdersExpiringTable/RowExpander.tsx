@@ -2,7 +2,6 @@ import React from 'react';
 import clsx from 'clsx';
 import { Colors, BoxShadows } from 'layout/AppTheme';
 import { fade, lighten, createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles';
-import { oc as option } from "ts-optchain";
 
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
@@ -25,7 +24,7 @@ import { formatDate } from "utils/dates";
 import currency from 'currency.js';
 
 // graphql
-import { UserPrivate, OrderStatus, Orders } from "typings/gqlTypes";
+import { UserPrivate, OrderStatus, OrderAdmin } from "typings/gqlTypes";
 import { useMutation } from "@apollo/client";
 import { DocumentNode } from "graphql";
 import {
@@ -41,7 +40,7 @@ import {
 const RowExpander = (props: RowExpanderProps) => {
 
   const {
-    row,
+    order,
     admin,
     index,
     initialOpen = false,
@@ -49,6 +48,20 @@ const RowExpander = (props: RowExpanderProps) => {
     classes,
   } = props;
 
+  const row = createDataForExpiringTable({
+    id: order.id,
+    total: order.total,
+    createdAt: order.createdAt,
+    sellerStore: order.sellerStore,
+    buyer: order.buyer,
+    currentOrderSnapshot: order.currentSnapshot,
+    orderSnapshots: order.orderSnapshots,
+    product: order.product,
+    payoutId: order?.payoutItems?.[0]?.payoutId,
+    payoutStatus: order?.payoutItems?.[0]?.payoutStatus,
+    paymentIntentStatus: order?.paymentIntent?.status,
+    paymentIntentId: order?.paymentIntent?.id,
+  })
 
   const [approveForm10, { data, loading, error }] = useMutation<MutData, MutVar>(
     APPROVE_FORM_10,
@@ -71,8 +84,8 @@ const RowExpander = (props: RowExpanderProps) => {
 
   const c = (s) => currency(s/100, { formatWithSymbol: true }).format()
 
-  let form10 = option(row).form10();
-  let form10Exists = !!option(form10).original.url();
+  let form10 = row?.form10;
+  let form10Exists = !!form10;
 
   let readyForApproval = row.orderStatus === OrderStatus.FORM_10_SUBMITTED
   let alreadyApproved = (row.orderStatus as string) === OrderStatus.ADMIN_APPROVED
@@ -81,12 +94,17 @@ const RowExpander = (props: RowExpanderProps) => {
 
   let sellerPhoneNumber = !!row?.sellerStore?.user?.phoneNumber?.number
     ? `${row?.sellerStore?.user?.phoneNumber?.countryCode} ${row?.sellerStore?.user?.phoneNumber?.number}`
-    : "NA"
+    : "-"
 
   let buyerPhoneNumber = !!row?.buyer?.phoneNumber?.number
     ? `${row?.buyer?.phoneNumber?.countryCode} ${row?.sellerStore?.user?.phoneNumber?.number}`
-    : "NA"
+    : "-"
 
+  let dealer = row?.product?.currentSnapshot?.dealer;
+
+  let dealerPhoneNumber = !!dealer?.user?.phoneNumber?.number
+    ? `${dealer?.user?.phoneNumber?.countryCode} ${dealer?.user?.phoneNumber?.number}`
+    : "-"
   // console.log("admin: ", admin)
 
   return (
@@ -130,7 +148,7 @@ const RowExpander = (props: RowExpanderProps) => {
 
             <div className={classes.marginBox}>
 
-              <div className={classes.sellerDetailsBox}>
+              <div className={classes.userDetailsBox}>
                 <Typography variant="h6" component="div">
                   Seller Details
                 </Typography>
@@ -160,7 +178,7 @@ const RowExpander = (props: RowExpanderProps) => {
                 </div>
               </div>
 
-              <div className={classes.sellerDetailsBox}>
+              <div className={classes.userDetailsBox}>
                 <Typography variant="h6" component="div">
                   Buyer Details
                 </Typography>
@@ -186,6 +204,60 @@ const RowExpander = (props: RowExpanderProps) => {
                   </Typography>
                   <Typography className={classes.userDetailsInfo} variant="body1">
                     {buyerPhoneNumber}
+                  </Typography>
+                </div>
+              </div>
+
+              <div className={classes.userDetailsBox}>
+                <Typography variant="h6" component="div">
+                  Transferring Dealer Details
+                </Typography>
+                <div className={classes.userDetailsRow}>
+                  <Typography className={classes.userDetailsHeader} variant="body1">
+                    Name:
+                  </Typography>
+                  <Typography className={classes.userDetailsInfo} variant="body1">
+                    {`${dealer?.name}`}
+                  </Typography>
+                </div>
+                <div className={classes.userDetailsRow}>
+                  <Typography className={classes.userDetailsHeader} variant="body1">
+                    State
+                  </Typography>
+                  <Typography className={classes.userDetailsInfo} variant="body1">
+                    {`${dealer?.state}`}
+                  </Typography>
+                </div>
+                <div className={classes.userDetailsRow}>
+                  <Typography className={classes.userDetailsHeader} variant="body1">
+                    City
+                  </Typography>
+                  <Typography className={classes.userDetailsInfo} variant="body1">
+                    {`${dealer?.city}`}
+                  </Typography>
+                </div>
+                <div className={classes.userDetailsRow}>
+                  <Typography className={classes.userDetailsHeader} variant="body1">
+                    Postcode
+                  </Typography>
+                  <Typography className={classes.userDetailsInfo} variant="body1">
+                    {`${dealer?.postCode}`}
+                  </Typography>
+                </div>
+                <div className={classes.userDetailsRow}>
+                  <Typography className={classes.userDetailsHeader} variant="body1">
+                    Email:
+                  </Typography>
+                  <Typography className={classes.userDetailsInfo} variant="body1">
+                    {dealer?.user?.email}
+                  </Typography>
+                </div>
+                <div className={classes.userDetailsRow}>
+                  <Typography className={classes.userDetailsHeader} variant="body1">
+                    Phone:
+                  </Typography>
+                  <Typography className={classes.userDetailsInfo} variant="body1">
+                    {dealerPhoneNumber}
                   </Typography>
                 </div>
               </div>
@@ -247,7 +319,7 @@ const RowExpander = (props: RowExpanderProps) => {
                     variant="outlined"
                     className={classes.viewOrderButton}
                   >
-                    View Order
+                    View Order Cancel
                   </Button>
                 </a>
               </Link>
@@ -309,10 +381,10 @@ const RowExpander = (props: RowExpanderProps) => {
               }
             </div>
 
+
             <Typography variant="h6" component="div">
               Order Status
             </Typography>
-
             <div className={classes.tTable} >
               <div>
                 <div className={classes.headerRow}>
@@ -359,7 +431,7 @@ const RowExpander = (props: RowExpanderProps) => {
 
 
 interface RowExpanderProps extends WithStyles<typeof styles> {
-  row: ReturnType<typeof createDataForExpiringTable>
+  order: OrderAdmin;
   admin: UserPrivate
   index?: number
   refetchQueriesParams?: {
@@ -450,6 +522,9 @@ const styles = (theme: Theme) => createStyles({
     maxHeight: 300,
   },
   tTable: {
+    borderBottom: theme.palette.type === 'dark'
+      ? `4px solid ${Colors.uniswapLightNavy}`
+      : `4px solid ${Colors.slateGreyDarkest}`,
   },
   headerRow: {
     display: "flex",
@@ -570,7 +645,7 @@ const styles = (theme: Theme) => createStyles({
     fontSize: '0.825rem',
     textTransform: "capitalize",
   },
-  sellerDetailsBox: {
+  userDetailsBox: {
     marginBottom: '1rem',
   },
   userDetailsRow: {

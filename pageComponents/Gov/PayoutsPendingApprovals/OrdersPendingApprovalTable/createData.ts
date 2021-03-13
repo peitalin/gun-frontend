@@ -2,7 +2,7 @@ import {
   OrderSnapshot,
   Product,
   Users,
-  UserWithRole,
+  UserForDealers,
   UserPrivate,
   BasicUser,
   StorePrivate,
@@ -78,22 +78,22 @@ export const getUserWhoActionedOrderStatus = (
   orderSnapshot: OrderSnapshot,
   buyer: UserPrivate,
   sellerStore: StorePrivate,
-): UserWithRole => {
+): UserForDealers => {
 
   let orderStatus = orderSnapshot?.orderStatus;
 
   switch (orderStatus) {
     case OrderStatus.CREATED:  {
-      return { ...buyer, __typename: "UserWithRole" } as UserWithRole
+      return { ...buyer, __typename: "UserForDealers" } as UserForDealers
     }
     case OrderStatus.FAILED:  {
-      return { ...buyer, __typename: "UserWithRole" } as UserWithRole
+      return { ...buyer, __typename: "UserForDealers" } as UserForDealers
     }
     case OrderStatus.CONFIRMED_PAYMENT_FORM_10_REQUIRED:  {
-      return { ...buyer, __typename: "UserWithRole" } as UserWithRole
+      return { ...buyer, __typename: "UserForDealers" } as UserForDealers
     }
     case OrderStatus.FORM_10_SUBMITTED:  {
-      return { ...sellerStore?.user, __typename: "UserWithRole" } as UserWithRole
+      return { ...sellerStore?.user, __typename: "UserForDealers" } as UserForDealers
     }
     case OrderStatus.FORM_10_REVISE_AND_RESUBMIT:  {
       return orderSnapshot.adminApprover

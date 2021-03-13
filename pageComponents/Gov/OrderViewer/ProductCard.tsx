@@ -39,7 +39,6 @@ const ProductCard = (props: ReactProps & FormikProps<FormikFields>) => {
     ...fprops
   } = props;
 
-  console.log("PRODUCTTTTT:", product)
 
   const isRefunded = order?.currentSnapshot?.orderStatus === OrderStatus.REFUNDED;
   const isCancelled = order?.currentSnapshot?.orderStatus === OrderStatus.CANCELLED;
@@ -61,7 +60,7 @@ const ProductCard = (props: ReactProps & FormikProps<FormikFields>) => {
   let phoneNumber = store?.user?.phoneNumber?.number;
   let phoneNumberFull = !!phoneNumber
     ? `${countryCode} ${phoneNumber}`
-    : "NA"
+    : "-"
 
   return (
     <ErrorBounds className={clsx(

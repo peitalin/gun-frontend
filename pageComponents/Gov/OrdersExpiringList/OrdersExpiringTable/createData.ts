@@ -2,7 +2,6 @@ import {
   OrderSnapshot,
   Product,
   Users,
-  UserWithRole,
   UserPrivate,
   BasicUser,
   StorePrivate,

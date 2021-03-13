@@ -20,17 +20,11 @@ import {
   GET_ORDERS_EXPIRING_CONNECTION_ADMIN,
 } from "queries/orders-admin-queries";
 // Pagination
-import { ConnectionQueryProps } from "components/Paginators/usePaginatePagedQueryHook";
-import ErrorDisplay from "components/Error";
 import LoadingBar from "components/LoadingBar";
-// formatters
-import { formatDate } from "utils/dates";
-import currency from "currency.js";
 // graphl
 import { useMutation, useQuery } from "@apollo/client";
 
 import RowExpander from "./RowExpander";
-import { createDataForExpiringTable } from "./createData";
 
 // Search Component
 import SearchOptions, { SelectOption, setCategoryFacets } from "components/SearchOptions";
@@ -162,25 +156,11 @@ const OrdersPendingApprovalTable: NextPage<ReactProps> = (props) => {
 
             let order = node as OrderAdmin;
             console.log("order>>>>>>: ", order)
-            const row2 = createDataForExpiringTable({
-              id: order.id,
-              total: order.total,
-              createdAt: order.createdAt,
-              sellerStore: order.sellerStore,
-              buyer: order.buyer,
-              currentOrderSnapshot: order.currentSnapshot,
-              orderSnapshots: order.orderSnapshots,
-              product: order.product,
-              payoutId: order?.payoutItems?.[0]?.payoutId,
-              payoutStatus: order?.payoutItems?.[0]?.payoutStatus,
-              paymentIntentStatus: order?.paymentIntent?.status,
-              paymentIntentId: order?.paymentIntent?.id,
-            })
 
             return (
               <RowExpander
                 key={order.id}
-                row={row2}
+                order={order}
                 admin={props.admin}
                 index={ordersExpiringIndex}
                 showApprovalButtons={false}
