@@ -2,7 +2,6 @@ import React from 'react';
 import clsx from 'clsx';
 import { Colors, BoxShadows } from 'layout/AppTheme';
 import { fade, lighten, createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles';
-import { oc as option } from "ts-optchain";
 
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
@@ -17,7 +16,10 @@ import Collapse from '@material-ui/core/Collapse';
 import TableHead from '@material-ui/core/TableHead';
 import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown"
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
+import Form10PreviewCard from "pageComponents/MyOrders/Form10FileUploader/Form10PreviewCard";
 
+// Snackbar
+import { useSnackbar } from "notistack";
 // router
 import Link from "next/link";
 
@@ -25,7 +27,7 @@ import { formatDate } from "utils/dates";
 import currency from 'currency.js';
 
 // graphql
-import { UserPrivate, OrderStatus, Orders } from "typings/gqlTypes";
+import { UserPrivate, OrderStatus, OrderAdmin } from "typings/gqlTypes";
 import { useMutation } from "@apollo/client";
 import { DocumentNode } from "graphql";
 import {
@@ -41,13 +43,30 @@ import {
 const RowExpander = (props: RowExpanderProps) => {
 
   const {
-    row,
-    dealer,
+    order,
+    admin,
     index,
     initialOpen = false,
     showApprovalButtons = true,
     classes,
   } = props;
+
+  const snackbar = useSnackbar();
+
+  const row = createDataForArrivingOrdersTable({
+    id: order.id,
+    total: order.total,
+    createdAt: order.createdAt,
+    sellerStore: order.sellerStore,
+    buyer: order.buyer,
+    currentOrderSnapshot: order.currentSnapshot,
+    orderSnapshots: order.orderSnapshots,
+    product: order.product,
+    payoutId: order?.payoutItems?.[0]?.payoutId,
+    payoutStatus: order?.payoutItems?.[0]?.payoutStatus,
+    paymentIntentStatus: order?.paymentIntent?.status,
+    paymentIntentId: order?.paymentIntent?.id,
+  })
 
 
   const [approveForm10, { data, loading, error }] = useMutation<MutData, MutVar>(
@@ -71,19 +90,28 @@ const RowExpander = (props: RowExpanderProps) => {
 
   const c = (s) => currency(s/100, { formatWithSymbol: true }).format()
 
-  let form10 = option(row).form10();
-  let form10Exists = !!option(form10).original.url();
+  let form10 = row?.form10;
+  let form10Exists = !!form10;
 
   let readyForApproval = row.orderStatus === OrderStatus.FORM_10_SUBMITTED
   let alreadyApproved = (row.orderStatus as string) === OrderStatus.ADMIN_APPROVED
 
   let isEvenRow = index % 2 === 0
 
-  let phoneNumber = !!row?.sellerStore?.user?.phoneNumber?.number
+  let sellerPhoneNumber = !!row?.sellerStore?.user?.phoneNumber?.number
     ? `${row?.sellerStore?.user?.phoneNumber?.countryCode} ${row?.sellerStore?.user?.phoneNumber?.number}`
-    : "NA"
+    : "-"
 
-  // console.log("dealer: ", dealer)
+  let buyerPhoneNumber = !!row?.buyer?.phoneNumber?.number
+    ? `${row?.buyer?.phoneNumber?.countryCode} ${row?.sellerStore?.user?.phoneNumber?.number}`
+    : "-"
+
+  let dealer = row?.product?.currentSnapshot?.dealer;
+
+  let dealerPhoneNumber = !!dealer?.user?.phoneNumber?.number
+    ? `${dealer?.user?.phoneNumber?.countryCode} ${dealer?.user?.phoneNumber?.number}`
+    : "-"
+  // console.log("admin: ", admin)
 
   return (
     <>
@@ -107,8 +135,8 @@ const RowExpander = (props: RowExpanderProps) => {
         <div className={classes.flexItemTiny}>{c(row.total)}</div>
         <div className={classes.flexItemSlim}>
           {
-            row.orderStatus?.length > 22
-            ? row.orderStatus.slice(0, 22) + '..'
+            row.orderStatus?.length > 17
+            ? row.orderStatus.slice(0, 17) + '...'
             : row.orderStatus
           }
         </div>
@@ -126,24 +154,92 @@ const RowExpander = (props: RowExpanderProps) => {
 
             <div className={classes.marginBox}>
 
-              <div className={classes.sellerDetailsBox}>
+              <div className={classes.userDetailsBox}>
                 <Typography variant="h6" component="div">
                   Seller Details
                 </Typography>
-                <div className={classes.sellerDetailsRow}>
-                  <Typography className={classes.sellerDetailsHeader} variant="body1">
+                <div className={classes.userDetailsRow}>
+                  <Typography className={classes.userDetailsHeader} variant="body1">
+                    Name:
+                  </Typography>
+                  <Typography className={classes.userDetailsInfo} variant="body1">
+                    {`${row?.sellerStore?.user?.firstName} ${row?.sellerStore?.user?.lastName}`}
+                  </Typography>
+                </div>
+                <div className={classes.userDetailsRow}>
+                  <Typography className={classes.userDetailsHeader} variant="body1">
                     Email:
                   </Typography>
-                  <Typography className={classes.sellerDetailsInfo} variant="body1">
+                  <Typography className={classes.userDetailsInfo} variant="body1">
                     {row?.sellerStore?.user?.email}
                   </Typography>
                 </div>
-                <div className={classes.sellerDetailsRow}>
-                  <Typography className={classes.sellerDetailsHeader} variant="body1">
+                <div className={classes.userDetailsRow}>
+                  <Typography className={classes.userDetailsHeader} variant="body1">
                     Phone:
                   </Typography>
-                  <Typography className={classes.sellerDetailsInfo} variant="body1">
-                    {phoneNumber}
+                  <Typography className={classes.userDetailsInfo} variant="body1">
+                    {sellerPhoneNumber}
+                  </Typography>
+                </div>
+              </div>
+
+              <div className={classes.userDetailsBox}>
+                <Typography variant="h6" component="div">
+                  Buyer Details
+                </Typography>
+                <div className={classes.userDetailsRow}>
+                  <Typography className={classes.userDetailsHeader} variant="body1">
+                    Name:
+                  </Typography>
+                  <Typography className={classes.userDetailsInfo} variant="body1">
+                    {`${row?.buyer?.firstName} ${row?.buyer?.lastName}`}
+                  </Typography>
+                </div>
+                <div className={classes.userDetailsRow}>
+                  <Typography className={classes.userDetailsHeader} variant="body1">
+                    Email:
+                  </Typography>
+                  <Typography className={classes.userDetailsInfo} variant="body1">
+                    {row?.buyer?.email ?? "-"}
+                  </Typography>
+                </div>
+                <div className={classes.userDetailsRow}>
+                  <Typography className={classes.userDetailsHeader} variant="body1">
+                    Phone:
+                  </Typography>
+                  <Typography className={classes.userDetailsInfo} variant="body1">
+                    {buyerPhoneNumber}
+                  </Typography>
+                </div>
+              </div>
+
+              <div className={classes.userDetailsBox}>
+                <Typography variant="h6" component="div">
+                  Transferring Dealer Details
+                </Typography>
+                <div className={classes.userDetailsRow}>
+                  <Typography className={classes.userDetailsHeader} variant="body1">
+                    Name:
+                  </Typography>
+                  <Typography className={classes.userDetailsInfo} variant="body1">
+                    {`${dealer?.name}`}
+                  </Typography>
+                </div>
+                <div className={classes.userDetailsRow}>
+                  <Typography className={classes.userDetailsHeader} variant="body1">
+                    Email:
+                  </Typography>
+                  <Typography className={classes.userDetailsInfo} variant="body1">
+                    {dealer?.user?.email ?? "-"}
+                  </Typography>
+                </div>
+                <div className={classes.userDetailsRow}>
+                  <Typography className={classes.userDetailsHeader} variant="body1">
+                    Phone:
+                  </Typography>
+                  <Typography className={classes.userDetailsInfo} variant="body1">
+                    {dealerPhoneNumber}
                   </Typography>
                 </div>
               </div>
@@ -151,48 +247,46 @@ const RowExpander = (props: RowExpanderProps) => {
               <Typography variant="h6" gutterBottom component="div">
                 Order Details
               </Typography>
-              {
-                form10Exists &&
-                <Dialog
-                  open={openImage}
-                  onClose={() => setOpenImage(false)}
-                  // fullWidth={true}
-                  // fullScreen={true}
-                  scroll={'body'}
-                >
-                  <CardMedia
-                    component="img"
-                    classes={{
-                      media: classes.cardMediaWide
-                    }}
-                    onClick={() => setOpenImage(false)}
-                    image={row?.form10?.original?.url}
-                  />
-                </Dialog>
-              }
-              <Button
-                variant="outlined"
-                className={classes.form10Button}
-                disabled={!form10Exists}
-                onClick={() => setOpenImage(true)}
-              >
-                {
-                  form10Exists
-                  ? "Show Form 10"
-                  : "Waiting on Form 10"
-                }
-              </Button>
+              <div className={classes.userDetailsRow}>
+                <Typography className={classes.orderDetailsHeader} variant="body1">
+                  Stripe Payment Intent Status:
+                </Typography>
+                <Typography className={classes.orderDetailsInfo} variant="body1">
+                  {row?.paymentIntentStatus}
+                </Typography>
+              </div>
+              <div className={classes.userDetailsRow}>
+                <Typography className={classes.orderDetailsHeader} variant="body1">
+                  Stripe Payment Intent ID:
+                </Typography>
+                <Typography className={classes.orderDetailsInfoBottom} variant="body1">
+                  {row?.paymentIntentId}
+                </Typography>
+              </div>
 
-              <Link href={`/gov/orders?orderId=${row.id}`}>
-                <a>
-                  <Button
-                    variant="outlined"
-                    className={classes.viewOrderButton}
-                  >
-                    View Order
-                  </Button>
-                </a>
-              </Link>
+              <div>
+                <Typography className={classes.generateForm10Text}
+                  variant="h6" gutterBottom component="div">
+                  Generate Form-10 for Seller:
+                </Typography>
+                {
+                  props.order?.id &&
+                  <Form10PreviewCard
+                    order={props.order}
+                    inAdminDashboard={true}
+                    onMouseDown={() => {
+                      snackbar.enqueueSnackbar(
+                        `Generating Form-10`, { variant: "info" })
+
+                      setTimeout(() => {
+                        snackbar.enqueueSnackbar(
+                          `Not implemented yet`, { variant: "success" })
+                      }, 500)
+                    }}
+                  />
+                }
+              </div>
+
               {
                 showApprovalButtons &&
                 <>
@@ -298,8 +392,8 @@ const RowExpander = (props: RowExpanderProps) => {
 
 
 interface RowExpanderProps extends WithStyles<typeof styles> {
-  row: ReturnType<typeof createDataForArrivingOrdersTable>
-  dealer: UserPrivate
+  order: OrderAdmin;
+  admin: UserPrivate
   index?: number
   refetchQueriesParams?: {
     query: DocumentNode,
@@ -389,6 +483,9 @@ const styles = (theme: Theme) => createStyles({
     maxHeight: 300,
   },
   tTable: {
+    borderBottom: theme.palette.type === 'dark'
+      ? `4px solid ${Colors.uniswapLightNavy}`
+      : `4px solid ${Colors.slateGreyDarkest}`,
   },
   headerRow: {
     display: "flex",
@@ -509,22 +606,38 @@ const styles = (theme: Theme) => createStyles({
     fontSize: '0.825rem',
     textTransform: "capitalize",
   },
-  sellerDetailsBox: {
+  userDetailsBox: {
     marginBottom: '1rem',
   },
-  sellerDetailsRow: {
+  userDetailsRow: {
     display: 'flex',
     width: '100%',
     justifyContent: 'flex-start',
   },
-  sellerDetailsHeader: {
-    width: '60px',
+  userDetailsHeader: {
+    width: '70px',
     fontWeight: 400,
     fontSize: "14px",
   },
-  sellerDetailsInfo: {
+  userDetailsInfo: {
     fontWeight: 400,
     fontSize: "14px",
+  },
+  orderDetailsHeader: {
+    width: '200px',
+    fontWeight: 400,
+    fontSize: "14px",
+  },
+  orderDetailsInfo: {
+    fontWeight: 500,
+    color: Colors.secondary,
+    fontSize: "14px",
+  },
+  orderDetailsInfoBottom: {
+    fontSize: "12px",
+    marginBottom: '1.5rem',
+  },
+  generateForm10Text: {
   },
 });
 

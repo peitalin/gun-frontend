@@ -2,7 +2,7 @@ import {
   OrderSnapshot,
   Product,
   Users,
-  UserWithRole,
+  UserForDealers,
   UserPrivate,
   BasicUser,
   StorePrivate,
@@ -22,6 +22,8 @@ export const createDataForArrivingOrdersTable = ({
   currentOrderSnapshot,
   payoutId,
   payoutStatus,
+  paymentIntentStatus,
+  paymentIntentId,
 }: {
   id: string,
   createdAt: Date,
@@ -33,6 +35,8 @@ export const createDataForArrivingOrdersTable = ({
   product?: Product,
   payoutId?: string,
   payoutStatus?: string,
+  paymentIntentStatus?: string,
+  paymentIntentId?: string,
 }) => {
 
   return {
@@ -42,6 +46,7 @@ export const createDataForArrivingOrdersTable = ({
     orderStatus: currentOrderSnapshot?.orderStatus,
     form10: currentOrderSnapshot?.form10Image,
     sellerStore: sellerStore,
+    buyer: buyer,
     product: product,
     history: (orderSnapshots ?? [])
       .slice()
@@ -64,6 +69,8 @@ export const createDataForArrivingOrdersTable = ({
       }),
     payoutId: payoutId,
     payoutStatus: payoutStatus,
+    paymentIntentStatus: paymentIntentStatus,
+    paymentIntentId: paymentIntentId,
   };
 }
 
@@ -71,25 +78,25 @@ export const getUserWhoActionedOrderStatus = (
   orderSnapshot: OrderSnapshot,
   buyer: UserPrivate,
   sellerStore: StorePrivate,
-): UserWithRole => {
+): UserForDealers => {
 
   let orderStatus = orderSnapshot?.orderStatus;
 
   switch (orderStatus) {
     case OrderStatus.CREATED:  {
-      return { ...buyer, __typename: "UserWithRole" } as UserWithRole
+      return { ...buyer, __typename: "UserForDealers" } as UserForDealers
     }
     case OrderStatus.FAILED:  {
-      return { ...buyer, __typename: "UserWithRole" } as UserWithRole
+      return { ...buyer, __typename: "UserForDealers" } as UserForDealers
     }
     case OrderStatus.CONFIRMED_PAYMENT_FORM_10_REQUIRED:  {
-      return { ...buyer, __typename: "UserWithRole" } as UserWithRole
-    }
-    case OrderStatus.FORM_10_REVISE_AND_RESUBMIT:  {
-      return { ...sellerStore?.user, __typename: "UserWithRole" } as UserWithRole
+      return { ...buyer, __typename: "UserForDealers" } as UserForDealers
     }
     case OrderStatus.FORM_10_SUBMITTED:  {
-      return { ...sellerStore?.user, __typename: "UserWithRole" } as UserWithRole
+      return { ...sellerStore?.user, __typename: "UserForDealers" } as UserForDealers
+    }
+    case OrderStatus.FORM_10_REVISE_AND_RESUBMIT:  {
+      return orderSnapshot.adminApprover
     }
     case OrderStatus.CANCELLED:  {
       return orderSnapshot.adminApprover

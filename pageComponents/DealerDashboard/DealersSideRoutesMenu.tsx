@@ -27,14 +27,13 @@ const DealersSideRoutesMenu: React.FC<ReactProps> = (props) => {
   }
 
   const { classes, user } = props;
-  // imgloaded
-  const dispatch = useDispatch();
+  console.log("dealer.user :", user)
 
   return (
     <div className={classes.routeMenu}>
 
       <div className={classes.routeProfile}>
-        <div className={classes.storeProfile}>
+        <div className={classes.dealerProfile}>
 
           <Link
             href="/dealers/[dealerId]"
@@ -48,12 +47,19 @@ const DealersSideRoutesMenu: React.FC<ReactProps> = (props) => {
           <Typography className={classes.subtitle} variant="h6">
             {user?.dealer?.licenseNumber}
           </Typography>
-          <Typography className={classes.subtitle} variant="h6">
-            {user?.dealer?.state}
-          </Typography>
-          <Typography className={classes.subtitle} variant="h6">
-            {user?.dealer?.address}
-          </Typography>
+          {
+            user?.dealer?.city &&
+            <Typography className={classes.subtitle} variant="h6">
+              {user?.dealer?.city}
+            </Typography>
+          }
+          {
+            user?.dealer?.state &&
+            user?.dealer?.postCode &&
+            <Typography className={classes.subtitle} variant="h6">
+              {`${user?.dealer?.postCode}, ${user?.dealer?.state}`}
+            </Typography>
+          }
 
         </div>
       </div>
@@ -107,7 +113,7 @@ const DealersSideRoutesMenu: React.FC<ReactProps> = (props) => {
 
 
 interface ReactProps extends WithStyles<typeof styles> {
-  user?: UserPrivate;
+  user: UserPrivate;
 }
 
 
@@ -117,13 +123,12 @@ const styles = (theme: Theme) => createStyles({
   },
   title: {
     fontSize: '1.25rem',
+    lineHeight: '1.5rem',
     fontWeight: 600,
     color: theme.palette.type === 'dark'
       ? Colors.uniswapLightestGrey
       : Colors.black,
-    "&:hover": {
-      color: Colors.secondary,
-    },
+    marginBottom: '0.5rem',
   },
   subtitle: {
     fontSize: '0.9rem',
@@ -206,13 +211,13 @@ const styles = (theme: Theme) => createStyles({
     flexDirection: 'column',
     justifyContent: 'center',
   },
-  storeProfile: {
+  dealerProfile: {
     display: "flex",
     position: "relative",
     alignItems: "center",
     flexDirection: "column",
     justifyContent: "center",
-    margin: "2rem 0rem 0rem 0rem",
+    margin: "1rem 0rem 2rem 1rem",
     maxWidth: 300,
     width: "100%",
   },

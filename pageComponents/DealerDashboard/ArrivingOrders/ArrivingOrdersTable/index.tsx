@@ -21,7 +21,7 @@ import {
 } from "typings/gqlTypes";
 import {
   GET_ORDERS_ARRIVING_CONNECTION_DEALER,
-  GET_ORDERS_EXPIRING_CONNECTION_DEALER,
+  GET_ORDERS_COMPLETING_CONNECTION_DEALER,
 } from "queries/orders-dealer-queries";
 // Pagination
 import { ConnectionQueryProps } from "components/Paginators/usePaginatePagedQueryHook";
@@ -34,7 +34,6 @@ import currency from "currency.js";
 import { useMutation, useQuery } from "@apollo/client";
 
 import RowExpander from "./RowExpander";
-import { createDataForArrivingOrdersTable } from "./createData";
 
 // Search Component
 import SearchOptions, { SelectOption, setCategoryFacets } from "components/SearchOptions";
@@ -95,13 +94,13 @@ const ArrivingOrdersTable: NextPage<ReactProps> = (props) => {
   //// Pending Approval Paginator Hooks
   let {
     paginationParams: {
-      limit: ordersExpiringLimit,
-      offset: ordersExpiringOffset,
-      pageParam: ordersExpiringPageParam,
-      setPageParam: ordersExpiringSetPageParam,
+      limit: ordersCompletingLimit,
+      offset: ordersCompletingOffset,
+      pageParam: ordersCompletingPageParam,
+      setPageParam: ordersCompletingSetPageParam,
     },
-    index: ordersExpiringIndex,
-    setIndex: ordersExpiringSetIndex,
+    index: ordersCompletingIndex,
+    setIndex: ordersCompletingSetIndex,
   } = useFacetSearchOptions({
     limit: numItemsPerPage * overfetchBy,
     overfetchBy: overfetchBy,
@@ -123,12 +122,12 @@ const ArrivingOrdersTable: NextPage<ReactProps> = (props) => {
     }
   );
 
-  const _ordersExpiring = useQuery<QueryData2, QueryVar2>(
-    GET_ORDERS_EXPIRING_CONNECTION_DEALER, {
+  const _ordersCompleting = useQuery<QueryData2, QueryVar2>(
+    GET_ORDERS_COMPLETING_CONNECTION_DEALER, {
       variables: {
         query: {
-          limit: ordersExpiringLimit,
-          offset: ordersExpiringOffset,
+          limit: ordersCompletingLimit,
+          offset: ordersCompletingOffset,
         }
       },
       fetchPolicy: "cache-and-network",
@@ -136,8 +135,8 @@ const ArrivingOrdersTable: NextPage<ReactProps> = (props) => {
     }
   );
 
-  const ordersExpiringConnection =
-    _ordersExpiring?.data?.getOrdersExpiringConnectionDealer
+  const ordersCompletingConnection =
+    _ordersCompleting?.data?.getOrdersExpiringConnectionDealer
 
 
 
@@ -152,11 +151,11 @@ const ArrivingOrdersTable: NextPage<ReactProps> = (props) => {
       },
     },
     {
-      query: GET_ORDERS_EXPIRING_CONNECTION_DEALER,
+      query: GET_ORDERS_COMPLETING_CONNECTION_DEALER,
       variables: {
         query: {
-          limit: ordersExpiringLimit,
-          offset: ordersExpiringOffset,
+          limit: ordersCompletingLimit,
+          offset: ordersCompletingOffset,
         }
       },
     },
@@ -240,25 +239,13 @@ const ArrivingOrdersTable: NextPage<ReactProps> = (props) => {
             {({ node }) => {
 
               let order = node as OrderAdmin;
-              // console.log("order>>>>>>: ", order)
-              const row2 = createDataForArrivingOrdersTable({
-                id: order.id,
-                total: order.total,
-                createdAt: order.createdAt,
-                sellerStore: order.sellerStore,
-                buyer: order.buyer,
-                currentOrderSnapshot: order.currentSnapshot,
-                orderSnapshots: order.orderSnapshots,
-                product: order.product,
-                payoutId: order?.payoutItems?.[0]?.payoutId,
-                payoutStatus: order?.payoutItems?.[0]?.payoutStatus,
-              })
+              console.log("arriving order >>>>>>: ", order)
 
               return (
                 <RowExpander
                   key={order.id}
-                  row={row2}
-                  dealer={props.dealer}
+                  order={order}
+                  admin={props.dealer}
                   index={ordersArrivingIndex}
                   refetchQueriesParams={refetchQueriesParams}
                   showApprovalButtons={false}
