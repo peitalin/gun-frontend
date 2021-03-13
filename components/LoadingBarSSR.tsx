@@ -16,15 +16,13 @@ import dynamic from "next/dynamic";
 
 const LoadingBarSSR = (props) => {
   return (
-    <div className="LoadingBarSSR-position-relative" style={{ position: 'relative' }}>
-      <LoadingBar
-        absoluteTop
-        color={Colors.secondary}
-        height={4}
-        width={'100vw'}
-        loading={true}
-      />
-    </div>
+    <LoadingBar
+      absoluteTop
+      color={Colors.secondary}
+      height={4}
+      width={'100vw'}
+      loading={true}
+    />
   )
 }
 
