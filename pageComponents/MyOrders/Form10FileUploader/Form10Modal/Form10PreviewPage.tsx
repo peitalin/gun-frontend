@@ -33,6 +33,10 @@ const OrderDetailsPage: React.FC<ReactProps> = (props) => {
   let form10MimeType = order?.currentSnapshot?.form10File?.mimeType;
   let form10Url = `https://storage.googleapis.com/develop-gunmarketplace-files/${form10FileId}`
 
+  // legacy Form10 images
+  let form10ImageUrl = order?.currentSnapshot?.form10Image?.original?.url;
+  // console.log("form10 image: ", form10ImageUrl)
+
   return (
     <ErrorBounds className={clsx(
       xsDown ? classes.rootMobile : classes.root,
@@ -63,7 +67,11 @@ const OrderDetailsPage: React.FC<ReactProps> = (props) => {
             />
           : <img
               className={classes.embedForm10Img}
-              src={form10Url}
+              src={
+                !!form10FileId
+                  ? form10Url
+                  : form10ImageUrl
+              }
             />
         }
       </div>
@@ -113,6 +121,8 @@ const styles = (theme: Theme) => createStyles({
     boxShadow: BoxShadows.shadow5.boxShadow,
     background: Colors.slateGreyLightBlack,
     objectFit: "contain",
+    maxWidth: '100%',
+    maxHeight: '100%',
   },
   closeIcon: {
     background: theme.palette.type === 'dark'

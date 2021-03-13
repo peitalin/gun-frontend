@@ -87,10 +87,48 @@ const Form10PreviewCard: React.FC<ReactProps> = (props) => {
   );
 
 
+  const tipTextFromOrderStatus = (orderStatus: string) => {
+    switch (orderStatus) {
+      case OrderStatus.ADMIN_APPROVED: {
+        return "Approved by admin"
+      }
+      case OrderStatus.COMPLETE: {
+        return "Order Complete"
+      }
+      case OrderStatus.FORM_10_SUBMITTED: {
+        return "Pending Approval"
+      }
+      case OrderStatus.FORM_10_REVISE_AND_RESUBMIT: {
+        return "Form resubmission needed"
+      }
+      case OrderStatus.CANCELLED: {
+        return "Order Cancelled"
+      }
+      case OrderStatus.CONFIRMED_PAYMENT_FORM_10_REQUIRED: {
+        return "Upload receipt"
+      }
+      case OrderStatus.FAILED: {
+        return "Payment failed" // disabled
+      }
+      case OrderStatus.REFUNDED: {
+        return "Payment refunded" //disabled
+      }
+      default: {
+        return "" //disabled
+      }
+    }
+  }
+
+
+
   const [showModal, setShowModal] = React.useState(false);
 
   let form10FilePreview = props?.order?.currentSnapshot?.form10File;
+  let form10ImgPreview = props?.order?.currentSnapshot?.form10Image;
+
   let orderStatus = props?.order?.currentSnapshot?.orderStatus;
+  let tipText = tipTextFromOrderStatus(orderStatus)
+
   console.log("mimeType: ", form10FilePreview?.mimeType)
 
   return (
@@ -132,17 +170,10 @@ const Form10PreviewCard: React.FC<ReactProps> = (props) => {
           }}
         >
           <Tooltip placement="top"
-            title={
-              (orderStatus === OrderStatus.ADMIN_APPROVED ||
-              orderStatus === OrderStatus.COMPLETE)
-              ? "Approved by admin"
-              : (orderStatus === OrderStatus.FORM_10_SUBMITTED)
-                ? "Pending approval"
-                : "Upload Form-10"
-            }
+            title={tipText}
           >
             {
-              form10FilePreview?.id
+              (form10FilePreview?.id || form10ImgPreview?.id)
               ? <>
                   {
                     form10FilePreview?.mimeType === 'application/pdf'

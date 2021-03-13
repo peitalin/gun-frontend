@@ -1,4 +1,5 @@
 import React from "react";
+import clsx from "clsx";
 // Material UI
 import Typography from "@material-ui/core/Typography";
 // Media uploader
@@ -39,22 +40,32 @@ const UploadInput = (props: IInputProps & ReactProps) => {
         order={props.order}
         onMouseDown={(e) => {
           // console.log("onMouseDown!")
-          e.preventDefault()
-          if (ref && (ref as any).current) {
-            ((ref as any).current).click()
+          if (!disableButton) {
+            e.preventDefault()
+            if (ref && (ref as any).current) {
+              ((ref as any).current).click()
+            }
           }
         }}
       />
 
       <Button
-        className={props.classes.uploadButton}
+        className={clsx(
+          props.classes.uploadButton,
+          disableButton
+            ? props.classes.uploadButtonDisabled
+            : props.classes.uploadButtonEnabled,
+        )}
         variant="outlined"
         onMouseDown={(e) => {
-          e.preventDefault()
-          if (ref && (ref as any).current) {
-            ((ref as any).current).click()
+          if (!disableButton) {
+            e.preventDefault()
+            if (ref && (ref as any).current) {
+              ((ref as any).current).click()
+            }
           }
         }}
+        disabled={disableButton}
         onClick={(e) => {
           // console.log("input butt clicked")
         }}
@@ -123,13 +134,20 @@ export const styles = (theme: Theme) => createStyles({
   uploadButton: {
     position: "relative",
     overflow: "hidden",
-    border: `1px solid ${theme.colors.blue}`,
     height: 40,
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     width: cardDimensions.width,
     borderRadius: BorderRadius,
+  },
+  uploadButtonDisabled: {
+    border: theme.palette.type === 'dark'
+      ? `1px solid ${Colors.uniswapGrey}`
+      : `1px solid ${Colors.slateGreyDarkest}`,
+  },
+  uploadButtonEnabled: {
+    border: `1px solid ${Colors.blue}`,
   },
   uploadButtonText: {
     color: Colors.blue,
@@ -141,7 +159,7 @@ export const styles = (theme: Theme) => createStyles({
   },
   uploadButtonTextLimit: {
     color: theme.palette.type === 'dark'
-      ? theme.colors.uniswapGrey
+      ? Colors.uniswapGrey
       : Colors.slateGreyDarkest,
     fontSize: '0.9rem',
   },

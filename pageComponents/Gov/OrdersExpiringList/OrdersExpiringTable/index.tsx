@@ -17,7 +17,7 @@ import {
   ConnectionOffsetQuery
 } from "typings/gqlTypes";
 import {
-  GET_ORDERS_EXPIRING_CONNECTION,
+  GET_ORDERS_EXPIRING_CONNECTION_ADMIN,
 } from "queries/orders-admin-queries";
 // Pagination
 import { ConnectionQueryProps } from "components/Paginators/usePaginatePagedQueryHook";
@@ -85,7 +85,7 @@ const OrdersPendingApprovalTable: NextPage<ReactProps> = (props) => {
   })
 
   const _ordersExpiring = useQuery<QueryData, QueryVar>(
-    GET_ORDERS_EXPIRING_CONNECTION, {
+    GET_ORDERS_EXPIRING_CONNECTION_ADMIN, {
       variables: {
         query: {
           limit: ordersExpiringLimit,

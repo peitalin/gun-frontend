@@ -20,9 +20,8 @@ import {
   ConnectionOffsetQuery
 } from "typings/gqlTypes";
 import {
-  GET_ORDERS_CREATED_CONNECTION,
-  GET_ORDERS_PENDING_APPROVAL_CONNECTION,
-  GET_ORDERS_ADMIN_APPROVED_CONNECTION,
+  GET_ORDERS_ARRIVING_CONNECTION_DEALER,
+  GET_ORDERS_EXPIRING_CONNECTION_DEALER,
 } from "queries/orders-dealer-queries";
 // Pagination
 import { ConnectionQueryProps } from "components/Paginators/usePaginatePagedQueryHook";
@@ -55,10 +54,6 @@ const ArrivingOrdersTable: NextPage<ReactProps> = (props) => {
   //
   const {
     classes,
-    month = 10,
-    year = 2019,
-    // setRefetchPayoutItems: undefined,
-    // refetchAll: undefined,
   } = props;
 
   const isDarkMode = useSelector<GrandReduxState, boolean>(s => {
@@ -100,28 +95,13 @@ const ArrivingOrdersTable: NextPage<ReactProps> = (props) => {
   //// Pending Approval Paginator Hooks
   let {
     paginationParams: {
-      limit: ordersPALimit,
-      offset: ordersPAOffset,
-      pageParam: ordersPAPageParam,
-      setPageParam: ordersPASetPageParam,
+      limit: ordersExpiringLimit,
+      offset: ordersExpiringOffset,
+      pageParam: ordersExpiringPageParam,
+      setPageParam: ordersExpiringSetPageParam,
     },
-    index: ordersPAIndex,
-    setIndex: ordersPASetIndex,
-  } = useFacetSearchOptions({
-    limit: numItemsPerPage * overfetchBy,
-    overfetchBy: overfetchBy,
-  })
-
-  //// Admin Approved Paginator Hooks
-  let {
-    paginationParams: {
-      limit: ordersAALimit,
-      offset: ordersAAOffset,
-      pageParam: ordersAAPageParam,
-      setPageParam: ordersAASetPageParam,
-    },
-    index: ordersAAIndex,
-    setIndex: ordersAASetIndex,
+    index: ordersExpiringIndex,
+    setIndex: ordersExpiringSetIndex,
   } = useFacetSearchOptions({
     limit: numItemsPerPage * overfetchBy,
     overfetchBy: overfetchBy,
@@ -130,8 +110,8 @@ const ArrivingOrdersTable: NextPage<ReactProps> = (props) => {
 
 
 
-  const _ordersArriving = useQuery<QueryData, QueryVar>(
-    GET_ORDERS_CREATED_CONNECTION, {
+  const _ordersArriving = useQuery<QueryData1, QueryVar1>(
+    GET_ORDERS_ARRIVING_CONNECTION_DEALER, {
       variables: {
         query: {
           limit: ordersArrivingLimit,
@@ -139,13 +119,31 @@ const ArrivingOrdersTable: NextPage<ReactProps> = (props) => {
         }
       },
       fetchPolicy: "cache-and-network",
-      pollInterval: 1000,
+      pollInterval: 5000,
     }
   );
 
+  const _ordersExpiring = useQuery<QueryData2, QueryVar2>(
+    GET_ORDERS_EXPIRING_CONNECTION_DEALER, {
+      variables: {
+        query: {
+          limit: ordersExpiringLimit,
+          offset: ordersExpiringOffset,
+        }
+      },
+      fetchPolicy: "cache-and-network",
+      pollInterval: 5000,
+    }
+  );
+
+  const ordersExpiringConnection =
+    _ordersExpiring?.data?.getOrdersExpiringConnectionDealer
+
+
+
   let refetchQueriesParams = [
     {
-      query: GET_ORDERS_CREATED_CONNECTION,
+      query: GET_ORDERS_ARRIVING_CONNECTION_DEALER,
       variables: {
         query: {
           limit: ordersArrivingLimit,
@@ -153,11 +151,20 @@ const ArrivingOrdersTable: NextPage<ReactProps> = (props) => {
         }
       },
     },
+    {
+      query: GET_ORDERS_EXPIRING_CONNECTION_DEALER,
+      variables: {
+        query: {
+          limit: ordersExpiringLimit,
+          offset: ordersExpiringOffset,
+        }
+      },
+    },
   ]
 
 
   const ordersArrivingConnection =
-    _ordersArriving?.data?.getOrdersCreatedConnectionAdmin
+    _ordersArriving?.data?.getOrdersArrivingConnectionDealer
 
   // console.log("ordersArrivingConnection:",ordersArrivingConnection)
   // console.log("ordersPendingApprovalConnection:",ordersPendingApprovalConnection)
@@ -322,13 +329,17 @@ interface ReactProps extends WithStyles<typeof styles> {
 interface TitleRowsProps extends WithStyles<typeof styles> {
 }
 
-interface QueryData {
-  getOrdersCreatedConnectionAdmin?: OrdersConnection
-  getOrdersPendingApprovalConnectionAdmin?: OrdersConnection
-  getOrdersAdminApprovedConnection?: OrdersConnection
-}
-interface QueryVar {
+interface QueryVar1 {
   query?: ConnectionOffsetQuery
+}
+interface QueryData1 {
+  getOrdersArrivingConnectionDealer?: OrdersConnection
+}
+interface QueryVar2 {
+  query?: ConnectionOffsetQuery
+}
+interface QueryData2 {
+  getOrdersExpiringConnectionDealer?: OrdersConnection
 }
 
 

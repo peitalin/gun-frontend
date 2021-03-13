@@ -210,14 +210,39 @@ const FileUploader: React.FC<ReactProps> = (props) => {
     orderStatus === OrderStatus.CANCELLED ||
     orderStatus === OrderStatus.FAILED
 
-  let buttonText =
-    orderStatus === OrderStatus.ADMIN_APPROVED
-    ? "Approved"
-    : (orderStatus === OrderStatus.COMPLETE)
-      ? "Complete"
-      : (orderStatus === OrderStatus.FORM_10_SUBMITTED)
-        ? "Change Form10"
-        : "Upload Form10"
+  const buttonTextFromOrderStatus = (orderStatus: string) => {
+    switch (orderStatus) {
+      case OrderStatus.ADMIN_APPROVED: {
+        return "Approved"
+      }
+      case OrderStatus.COMPLETE: {
+        return "Completed"
+      }
+      case OrderStatus.FORM_10_SUBMITTED: {
+        return "Change Form"
+      }
+      case OrderStatus.FORM_10_REVISE_AND_RESUBMIT: {
+        return "Change Form"
+      }
+      case OrderStatus.CANCELLED: {
+        return "Cancelled"
+      }
+      case OrderStatus.CONFIRMED_PAYMENT_FORM_10_REQUIRED: {
+        return "Upload Form"
+      }
+      case OrderStatus.FAILED: {
+        return "Upload Form" // disabled
+      }
+      case OrderStatus.REFUNDED: {
+        return "Upload Form" //disabled
+      }
+      default: {
+        return "Upload Form" //disabled
+      }
+    }
+  }
+
+  let buttonText = buttonTextFromOrderStatus(orderStatus)
 
   // console.log("order: ", props.order)
   // console.log("form10FilePreview: ", form10FilePreview)
@@ -227,8 +252,6 @@ const FileUploader: React.FC<ReactProps> = (props) => {
 
   return (
     <ErrorBounds className={classes.fileUploadRoot}>
-
-      {/* <Form10PreviewCard order={props.order}/> */}
 
       <Dropzone
         // uploaderType="file-uploader"
