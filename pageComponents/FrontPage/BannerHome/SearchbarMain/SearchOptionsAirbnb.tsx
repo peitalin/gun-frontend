@@ -657,14 +657,14 @@ const styles = (theme: Theme) => createStyles({
     height: 65,
     transition: theme.transitions.create(['width', 'height'], {
       easing: theme.transitions.easing.sharp,
-      duration: "100ms",
+      duration: "0ms",
     }),
   },
   height55: {
     height: 55,
     transition: theme.transitions.create(['width', 'height', 'margin'], {
       easing: theme.transitions.easing.sharp,
-      duration: "100ms",
+      duration: "0ms",
     }),
   },
   height50: {
@@ -692,21 +692,21 @@ const styles = (theme: Theme) => createStyles({
     }),
   },
   searchWide: {
-    width: 230,
+    width: 240,
     transition: theme.transitions.create(['width', 'height'], {
       easing: theme.transitions.easing.sharp,
-      duration: "100ms",
+      duration: "0ms",
     }),
   },
   searchButtonShort: {
     width: 120,
     transition: theme.transitions.create(['width', 'height'], {
       easing: theme.transitions.easing.sharp,
-      duration: "100ms",
+      duration: "0ms",
     }),
   },
   searchButtonWide: {
-    width: 130,
+    width: 140,
     transition: theme.transitions.create(['width', 'height'], {
       easing: theme.transitions.easing.sharp,
       duration: "300ms",
