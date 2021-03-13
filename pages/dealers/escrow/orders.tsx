@@ -28,7 +28,7 @@ const DealerArrivingOrders: NextPage<ReactProps> = (props) => {
         return (
           <div className={props.classes.GovApprovalsRoot}>
             <ArrivingOrders
-              admin={data.user}
+              dealer={data.user}
             />
           </div>
         )
