@@ -14,7 +14,7 @@ import ErrorBounds from "components/ErrorBounds";
 import { useWindowWidth } from "utils/hooks";
 // Components
 import OrderDetailsPage from "./OrderDetailsPage";
-import { cardDimensions } from "../Form10FileUploader/Form10PreviewCard";
+import { cardDimensionsDefault } from "../Form10FileUploader/Form10PreviewCard";
 
 
 const OrderDetailsModal: React.FC<ReactProps> = (props) => {
@@ -85,7 +85,7 @@ const styles = (theme: Theme) => createStyles({
   },
   orderDetailsButton: {
     height: '38px',
-    minWidth: cardDimensions.width,
+    minWidth: cardDimensionsDefault.width,
     borderRadius: BorderRadius,
     border: theme.palette.type === 'dark'
       ? `1px solid ${Colors.grey}`

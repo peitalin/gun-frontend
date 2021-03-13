@@ -2,14 +2,10 @@ import React from "react";
 // Styles
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
 import { Colors, BorderRadius } from "layout/AppTheme";
-// Redux
-import { GrandReduxState } from "reduxStore/grand-reducer";
 // Material UI
 import Dialog from "@material-ui/core/Dialog";
-import Button from "@material-ui/core/Button";
-import Typography from "@material-ui/core/Typography";
 // utils
-import { UserPrivate, Order } from "typings/gqlTypes";
+import { Order } from "typings/gqlTypes";
 import ErrorBounds from "components/ErrorBounds";
 import { useWindowWidth } from "utils/hooks";
 // Components

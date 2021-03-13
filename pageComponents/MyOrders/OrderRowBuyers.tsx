@@ -18,7 +18,6 @@ import OrderStatusDisplay from "./OrderStatusDisplay";
 // mediaQuery
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
-import Form10Upload from "./_Form10Upload";
 // Typings
 import { OrderStatus } from "typings/gqlTypes";
 import { getFeaturedPreviewFromProduct } from "utils/images";

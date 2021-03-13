@@ -30,6 +30,11 @@ import { useSnackbar } from "notistack";
 import { Typography } from "@material-ui/core";
 
 
+export const cardDimensionsDefault = {
+  height: 93.33, // 135/1.5
+  width: 140,
+}
+
 
 
 
@@ -39,6 +44,7 @@ const Form10PreviewCard: React.FC<ReactProps> = (props) => {
   const {
     classes,
     order,
+    cardDimensions = { ...cardDimensionsDefault }
   } = props;
 
   const snackbar = useSnackbar();
@@ -49,7 +55,7 @@ const Form10PreviewCard: React.FC<ReactProps> = (props) => {
   const handleRemoveForm10 = async() => {
     return await removeForm10({
       variables: {
-        orderId: order.id,
+        orderId: order?.id,
       },
       refetchQueries: refetchQueriesList,
     })
@@ -80,7 +86,7 @@ const Form10PreviewCard: React.FC<ReactProps> = (props) => {
   const [removeForm10, removeForm10Response] = useMutation<MutDataRemove, MutVarRemove>(
     REMOVE_FORM_10, {
       variables: {
-        orderId: order.id,
+        orderId: order?.id,
       },
       refetchQueries: refetchQueriesList,
     }
@@ -96,7 +102,11 @@ const Form10PreviewCard: React.FC<ReactProps> = (props) => {
         return "Order Complete"
       }
       case OrderStatus.FORM_10_SUBMITTED: {
-        return "Pending Approval"
+        if (props.inAdminDashboard) {
+          return "Pending Admin Approval"
+        } else {
+          return "Pending Approval"
+        }
       }
       case OrderStatus.FORM_10_REVISE_AND_RESUBMIT: {
         return "Form resubmission needed"
@@ -105,7 +115,11 @@ const Form10PreviewCard: React.FC<ReactProps> = (props) => {
         return "Order Cancelled"
       }
       case OrderStatus.CONFIRMED_PAYMENT_FORM_10_REQUIRED: {
-        return "Upload receipt"
+        if (props.inAdminDashboard) {
+          return "Generate Receipt for Seller"
+        } else {
+          return "Upload Receipt from Dealer"
+        }
       }
       case OrderStatus.FAILED: {
         return "Payment failed" // disabled
@@ -133,8 +147,10 @@ const Form10PreviewCard: React.FC<ReactProps> = (props) => {
 
   return (
     <div className={classes.cardContainer}>
+
       {
         orderStatus === OrderStatus.FORM_10_SUBMITTED &&
+        !props.inAdminDashboard &&
         <Tooltip title="Remove file" placement={"right"}>
           <IconButton
             onClick={handleRemoveForm10}
@@ -148,6 +164,7 @@ const Form10PreviewCard: React.FC<ReactProps> = (props) => {
           </IconButton>
         </Tooltip>
       }
+
       {
         (orderStatus === OrderStatus.ADMIN_APPROVED ||
         orderStatus === OrderStatus.COMPLETE) &&
@@ -160,7 +177,10 @@ const Form10PreviewCard: React.FC<ReactProps> = (props) => {
           innerCircleColor={Colors.green}
         />
       }
-      <Card className={classes.card} elevation={0}>
+
+      <Card className={classes.card} elevation={0}
+        style={{...cardDimensions}}
+      >
         <CardActionArea
           // onClick={props.onClick}
           classes={{
@@ -168,6 +188,7 @@ const Form10PreviewCard: React.FC<ReactProps> = (props) => {
             focusHighlight: classes.focusHighlight,
             focusVisible: classes.focusHighlight,
           }}
+          style={{...cardDimensions}}
         >
           <Tooltip placement="top"
             title={tipText}
@@ -182,6 +203,7 @@ const Form10PreviewCard: React.FC<ReactProps> = (props) => {
                         classes={{
                           media: classes.cardMediaWide
                         }}
+                        style={{...cardDimensions}}
                         image={"/img/pdf-uploaded.png"}
                         onClick={() => setShowModal(true)}
                       />
@@ -190,6 +212,7 @@ const Form10PreviewCard: React.FC<ReactProps> = (props) => {
                         classes={{
                           media: classes.cardMediaWide
                         }}
+                        style={{...cardDimensions}}
                         image={"/img/img-uploaded.png"}
                         onClick={() => setShowModal(true)}
                       />
@@ -203,6 +226,7 @@ const Form10PreviewCard: React.FC<ReactProps> = (props) => {
                   classes={{
                     media: classes.cardMediaWide
                   }}
+                  style={{...cardDimensions}}
                   image={"/img/pdf-missing.png"}
                   onMouseDown={props.onMouseDown}
                 />
@@ -222,6 +246,18 @@ const Form10PreviewCard: React.FC<ReactProps> = (props) => {
 
 
 
+interface ReactProps extends WithStyles<typeof styles> {
+  order: Order;
+  inAdminDashboard?: boolean;
+  // onMouseDown only before OrderStatus === FORM10_SUBMITTED state
+  onMouseDown(a: any): void;
+  cardDimensions?: {
+    height?: any;
+    width?: any;
+  }
+}
+
+
 // remove form10
 interface MutDataRemove {
   order: Order
@@ -230,16 +266,6 @@ interface MutVarRemove {
   orderId: string
 }
 
-interface ReactProps extends WithStyles<typeof styles> {
-  order: Order;
-  onMouseDown(a: any): void;
-}
-
-
-export const cardDimensions = {
-  height: 93.33, // 135/1.5
-  width: 140,
-}
 
 export const styles = (theme: Theme) => createStyles({
   cardContainer: {
@@ -267,6 +293,7 @@ export const styles = (theme: Theme) => createStyles({
       : Colors.slateGreyDarkest,
   },
   card: {
+    position: "relative",
     borderRadius: "4px",
     // border: `1px solid ${Colors.mediumLightGrey}`,
     transition: theme.transitions.create('height', {
@@ -274,7 +301,7 @@ export const styles = (theme: Theme) => createStyles({
       duration: "200ms",
     }),
     backgroundColor: "rgba(0,0,0,0)",
-    ...cardDimensions
+    // ...cardDimensions
   },
   cardActionAreaWide: {
     // height: '100%',
@@ -283,8 +310,7 @@ export const styles = (theme: Theme) => createStyles({
     "&:hover $focusHighlight": {
       opacity: 0
     },
-    ...cardDimensions
-    // backgroundImage: `url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 20.5V18H0v-2h20v-2H0v-2h20v-2H0V8h20V6H0V4h20V2H0V0h22v20h2V0h2v20h2V0h2v20h2V0h2v20h2V0h2v20h2v2H20v-1.5zM0 20h2v20H0V20zm4 0h2v20H4V20zm4 0h2v20H8V20zm4 0h2v20h-2V20zm4 0h2v20h-2V20zm4 4h20v2H20v-2zm0 4h20v2H20v-2zm0 4h20v2H20v-2zm0 4h20v2H20v-2z' fill='%23${patternColor}' fill-opacity='0.3' fill-rule='evenodd'/%3E%3C/svg%3E")`,
+    // ...cardDimensions
   },
   previewIconButton: {
     position: "absolute",
@@ -303,7 +329,7 @@ export const styles = (theme: Theme) => createStyles({
     padding: '1.1rem',
     objectFit: "contain",
     borderRadius: BorderRadius,
-    ...cardDimensions
+    // ...cardDimensions
   },
   focusHighlight: {
     opacity: 0, // disable hover dither
