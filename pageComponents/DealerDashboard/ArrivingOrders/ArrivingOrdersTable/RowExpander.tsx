@@ -6,7 +6,7 @@ import { oc as option } from "ts-optchain";
 
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
-import { createDataForPendingApprovalTable } from "./createData";
+import { createDataForArrivingOrdersTable } from "./createData";
 
 import Dialog from "@material-ui/core/Dialog";
 import Button from "@material-ui/core/Button";
@@ -42,7 +42,7 @@ const RowExpander = (props: RowExpanderProps) => {
 
   const {
     row,
-    admin,
+    dealer,
     index,
     initialOpen = false,
     showApprovalButtons = true,
@@ -83,7 +83,7 @@ const RowExpander = (props: RowExpanderProps) => {
     ? `${row?.sellerStore?.user?.phoneNumber?.countryCode} ${row?.sellerStore?.user?.phoneNumber?.number}`
     : "NA"
 
-  // console.log("admin: ", admin)
+  // console.log("dealer: ", dealer)
 
   return (
     <>
@@ -298,8 +298,8 @@ const RowExpander = (props: RowExpanderProps) => {
 
 
 interface RowExpanderProps extends WithStyles<typeof styles> {
-  row: ReturnType<typeof createDataForPendingApprovalTable>
-  admin: UserPrivate
+  row: ReturnType<typeof createDataForArrivingOrdersTable>
+  dealer: UserPrivate
   index?: number
   refetchQueriesParams?: {
     query: DocumentNode,

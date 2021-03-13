@@ -11,7 +11,7 @@ import {
 } from "typings/gqlTypes";
 
 
-export const createDataForPendingApprovalTable = ({
+export const createDataForArrivingOrdersTable = ({
   id,
   createdAt,
   total,

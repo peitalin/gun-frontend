@@ -84,26 +84,10 @@ const DealersSideRoutesMenu: React.FC<ReactProps> = (props) => {
 
 
         <li>
-          <Link href={"/dealers/orders"} scroll={false}>
+          <Link href={"/dealers/escrow/orders"} scroll={false}>
             <a>
               <div className={
-                isSelectedRoute("orders")
-                  ? classes.routeListItemSelected
-                  : classes.routeListItem
-              }>
-                <Typography variant="subtitle1" className={classes.routeListItemText}>
-                  Orders Viewer
-                </Typography>
-              </div>
-            </a>
-          </Link>
-        </li>
-
-        <li>
-          <Link href={"/dealers/escrow/arriving-orders"} scroll={false}>
-            <a>
-              <div className={
-                isSelectedRoute("/arriving-orders")
+                isSelectedRoute("/orders")
                   ? classes.routeListItemSelected
                   : classes.routeListItem
               }>

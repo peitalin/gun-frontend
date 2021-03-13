@@ -23,7 +23,7 @@ import {
   GET_ORDERS_CREATED_CONNECTION,
   GET_ORDERS_PENDING_APPROVAL_CONNECTION,
   GET_ORDERS_ADMIN_APPROVED_CONNECTION,
-} from "queries/orders-admin-queries";
+} from "queries/orders-dealer-queries";
 // Pagination
 import { ConnectionQueryProps } from "components/Paginators/usePaginatePagedQueryHook";
 import ErrorDisplay from "components/Error";
@@ -35,7 +35,7 @@ import currency from "currency.js";
 import { useMutation, useQuery } from "@apollo/client";
 
 import RowExpander from "./RowExpander";
-import { createDataForPendingApprovalTable } from "./createData";
+import { createDataForArrivingOrdersTable } from "./createData";
 
 // Search Component
 import SearchOptions, { SelectOption, setCategoryFacets } from "components/SearchOptions";
@@ -81,17 +81,17 @@ const ArrivingOrdersTable: NextPage<ReactProps> = (props) => {
     // facets,
     // setFacets,
     paginationParams: {
-      limit: ordersCreatedLimit,
-      offset: ordersCreatedOffset,
+      limit: ordersArrivingLimit,
+      offset: ordersArrivingOffset,
       // totalCount,
       // setTotalCount,
-      pageParam: ordersCreatedPageParam,
-      setPageParam: ordersCreatedSetPageParam,
+      pageParam: ordersArrivingPageParam,
+      setPageParam: ordersArrivingSetPageParam,
     },
     // currentCategories,
     // setCurrentCategories,
-    index: ordersCreatedIndex,
-    setIndex: ordersCreatedSetIndex,
+    index: ordersArrivingIndex,
+    setIndex: ordersArrivingSetIndex,
   } = useFacetSearchOptions({
     limit: numItemsPerPage * overfetchBy,
     overfetchBy: overfetchBy,
@@ -130,39 +130,16 @@ const ArrivingOrdersTable: NextPage<ReactProps> = (props) => {
 
 
 
-  const _ordersCreated = useQuery<QueryData, QueryVar>(
+  const _ordersArriving = useQuery<QueryData, QueryVar>(
     GET_ORDERS_CREATED_CONNECTION, {
       variables: {
         query: {
-          limit: ordersCreatedLimit,
-          offset: ordersCreatedOffset,
+          limit: ordersArrivingLimit,
+          offset: ordersArrivingOffset,
         }
       },
       fetchPolicy: "cache-and-network",
-    }
-  );
-
-  const _ordersPendingApproval = useQuery<QueryData, QueryVar>(
-    GET_ORDERS_PENDING_APPROVAL_CONNECTION, {
-      variables: {
-        query: {
-          limit: ordersPALimit,
-          offset: ordersPAOffset,
-        }
-      },
-      fetchPolicy: "cache-and-network",
-    }
-  );
-
-  const _ordersAdminApproved = useQuery<QueryData, QueryVar>(
-    GET_ORDERS_ADMIN_APPROVED_CONNECTION, {
-      variables: {
-        query: {
-          limit: ordersAALimit,
-          offset: ordersAAOffset,
-        }
-      },
-      fetchPolicy: "cache-and-network",
+      pollInterval: 1000,
     }
   );
 
@@ -171,46 +148,21 @@ const ArrivingOrdersTable: NextPage<ReactProps> = (props) => {
       query: GET_ORDERS_CREATED_CONNECTION,
       variables: {
         query: {
-          limit: ordersCreatedLimit,
-          offset: ordersCreatedOffset,
-        }
-      },
-    },
-    {
-      query: GET_ORDERS_PENDING_APPROVAL_CONNECTION,
-      variables: {
-        query: {
-          limit: ordersPALimit,
-          offset: ordersPAOffset,
-        }
-      },
-    },
-    {
-      query: GET_ORDERS_ADMIN_APPROVED_CONNECTION ,
-      variables: {
-        query: {
-          limit: ordersAALimit,
-          offset: ordersAAOffset,
+          limit: ordersArrivingLimit,
+          offset: ordersArrivingOffset,
         }
       },
     },
   ]
 
 
-  const ordersCreatedConnection =
-    _ordersCreated?.data?.getOrdersCreatedConnectionAdmin
+  const ordersArrivingConnection =
+    _ordersArriving?.data?.getOrdersCreatedConnectionAdmin
 
-  const ordersPendingApprovalConnection =
-    _ordersPendingApproval?.data?.getOrdersPendingApprovalConnectionAdmin
-
-  const ordersAdminApprovedConnection =
-    _ordersAdminApproved?.data?.getOrdersAdminApprovedConnection
-
-
-  // console.log("ordersCreatedConnection:",ordersCreatedConnection)
+  // console.log("ordersArrivingConnection:",ordersArrivingConnection)
   // console.log("ordersPendingApprovalConnection:",ordersPendingApprovalConnection)
 
-  if (_ordersAdminApproved.loading || _ordersPendingApproval.loading) {
+  if (_ordersArriving.loading) {
     return (
       <LoadingBar
         absoluteTop
@@ -220,13 +172,12 @@ const ArrivingOrdersTable: NextPage<ReactProps> = (props) => {
         loading={true}
       />
     )
-  } else if (_ordersPendingApproval && _ordersAdminApproved) {
+  } else if (ordersArrivingConnection) {
     return (
       <main className={classes.root}>
 
-
         <Typography variant="h4" className={classes.subtitle1}>
-          Created Orders
+          Arriving Orders
         </Typography>
         <SearchOptions
           // facets={facets}
@@ -237,13 +188,13 @@ const ArrivingOrdersTable: NextPage<ReactProps> = (props) => {
           // setPriceRange={setPriceRange}
           // placeholder={"Search for orders..."}
           paginationParams={{
-            totalCount: ordersCreatedConnection?.totalCount,
+            totalCount: ordersArrivingConnection?.totalCount,
             overfetchBy: overfetchBy,
-            limit: ordersCreatedLimit,
-            pageParam: ordersCreatedPageParam,
-            setPageParam: ordersCreatedSetPageParam,
-            index: ordersCreatedIndex,
-            setIndex: ordersCreatedSetIndex,
+            limit: ordersArrivingLimit,
+            pageParam: ordersArrivingPageParam,
+            setPageParam: ordersArrivingSetPageParam,
+            index: ordersArrivingIndex,
+            setIndex: ordersArrivingSetIndex,
           }}
           updateSetPageDelay={0}
           disableSearchFilter
@@ -271,9 +222,9 @@ const ArrivingOrdersTable: NextPage<ReactProps> = (props) => {
         >
           <TitleRows classes={classes}/>
           <GridPaginatorGeneric<Order>
-            index={ordersCreatedIndex}
-            connection={ordersCreatedConnection}
-            totalCount={ordersCreatedConnection?.totalCount ?? 0}
+            index={ordersArrivingIndex}
+            connection={ordersArrivingConnection}
+            totalCount={ordersArrivingConnection?.totalCount ?? 0}
             // setTotalCount={setTotalCount}
             numItemsPerPage={numItemsPerPage}
             className={classes.rowContainer}
@@ -283,7 +234,7 @@ const ArrivingOrdersTable: NextPage<ReactProps> = (props) => {
 
               let order = node as OrderAdmin;
               // console.log("order>>>>>>: ", order)
-              const row2 = createDataForPendingApprovalTable({
+              const row2 = createDataForArrivingOrdersTable({
                 id: order.id,
                 total: order.total,
                 createdAt: order.createdAt,
@@ -300,8 +251,8 @@ const ArrivingOrdersTable: NextPage<ReactProps> = (props) => {
                 <RowExpander
                   key={order.id}
                   row={row2}
-                  admin={props.admin}
-                  index={ordersCreatedIndex}
+                  dealer={props.dealer}
+                  index={ordersArrivingIndex}
                   refetchQueriesParams={refetchQueriesParams}
                   showApprovalButtons={false}
                 />
@@ -311,175 +262,15 @@ const ArrivingOrdersTable: NextPage<ReactProps> = (props) => {
         </SearchOptions>
 
 
-
-
-
-        <Typography variant="h4" className={classes.subtitle1}>
-          Orders Pending Approval
-        </Typography>
-        <SearchOptions
-          paginationParams={{
-            totalCount: ordersPendingApprovalConnection?.totalCount,
-            overfetchBy: overfetchBy,
-            limit: ordersPALimit,
-            pageParam: ordersPAPageParam,
-            setPageParam: ordersPASetPageParam,
-            index: ordersPAIndex,
-            setIndex: ordersPASetIndex,
-          }}
-          updateSetPageDelay={0}
-          disableSearchFilter
-          disableSortby
-          disablePriceFilter
-          disableCategories
-          maxCategoryInputWidth={250}
-          topSectionStyles={{
-            justifyContent: 'flex-end',
-            alignItems: 'flex-end',
-            display: 'flex',
-            flexDirection: 'column',
-            marginTop: '1rem',
-            paddingRight: '1rem',
-            backgroundColor: isDarkMode ? Colors.uniswapDarkNavy : Colors.cream,
-            // border: isDarkMode
-            //   ? `1px solid ${Colors.uniswapNavy}`
-            //   : `1px solid ${Colors.slateGreyDarker}`,
-            borderRadius: BorderRadius,
-          }}
-          bottomSectionStyles={{
-            marginBottom: '1rem',
-            backgroundColor: isDarkMode ? Colors.uniswapDarkNavy : Colors.cream,
-            border: isDarkMode
-              ? `1px solid ${Colors.uniswapNavy}`
-              : `1px solid ${Colors.slateGreyDarker}`,
-            borderRadius: BorderRadius,
-            paddingBottom: '0.5rem',
-          }}
-        >
-          <TitleRows classes={classes}/>
-          <GridPaginatorGeneric<Order>
-            index={ordersPAIndex}
-            connection={ordersPendingApprovalConnection}
-            totalCount={ordersPendingApprovalConnection?.totalCount ?? 0}
-            numItemsPerPage={numItemsPerPage}
-            className={classes.rowContainer}
-            classNameRoot={classes.gridRoot}
-          >
-            {({ node }) => {
-
-              let order = node as OrderAdmin;
-
-              const row2 = createDataForPendingApprovalTable({
-                id: order.id,
-                total: order.total,
-                createdAt: order.createdAt,
-                sellerStore: order.sellerStore,
-                buyer: order.buyer,
-                currentOrderSnapshot: order.currentSnapshot,
-                orderSnapshots: order.orderSnapshots,
-                product: order.product,
-                payoutId: order?.payoutItems?.[0]?.payoutId,
-                payoutStatus: order?.payoutItems?.[0]?.payoutStatus,
-              })
-
-              return (
-                <RowExpander
-                  key={order.id}
-                  row={row2}
-                  admin={props.admin}
-                  index={ordersPAIndex}
-                  refetchQueriesParams={refetchQueriesParams}
-                  showApprovalButtons={true}
-                />
-              )
-            }}
-          </GridPaginatorGeneric>
-        </SearchOptions>
-
-
-
-
-        <Typography variant="h4" className={classes.subtitle1}>
-          Admin Approved Orders
-        </Typography>
-        <SearchOptions
-          paginationParams={{
-            totalCount: ordersAdminApprovedConnection?.totalCount,
-            overfetchBy: overfetchBy,
-            limit: ordersAALimit,
-            pageParam: ordersAAPageParam,
-            setPageParam: ordersAASetPageParam,
-            index: ordersAAIndex,
-            setIndex: ordersAASetIndex,
-          }}
-          updateSetPageDelay={0}
-          disableSearchFilter
-          disableSortby
-          disablePriceFilter
-          disableCategories
-          maxCategoryInputWidth={250}
-          topSectionStyles={{
-            justifyContent: 'flex-end',
-            alignItems: 'flex-end',
-            display: 'flex',
-            flexDirection: 'column',
-            marginTop: '1rem',
-            paddingRight: '1rem',
-          }}
-          bottomSectionStyles={{
-            marginBottom: '1rem',
-            backgroundColor: isDarkMode ? Colors.uniswapDarkNavy : Colors.cream,
-            border: isDarkMode
-              ? `1px solid ${Colors.uniswapNavy}`
-              : `1px solid ${Colors.slateGreyDarker}`,
-            borderRadius: BorderRadius,
-            paddingBottom: '0.5rem',
-          }}
-        >
-          <TitleRows classes={classes}/>
-          <GridPaginatorGeneric<Order>
-            index={ordersAAIndex}
-            connection={ordersAdminApprovedConnection}
-            totalCount={ordersAdminApprovedConnection?.totalCount ?? 0}
-            numItemsPerPage={numItemsPerPage}
-            className={classes.rowContainer}
-            classNameRoot={classes.gridRoot}
-          >
-            {({ node }) => {
-
-              let order = node as OrderAdmin
-              // console.log("order: ", order.payoutitems)
-              const row2 = createDataForPendingApprovalTable({
-                id: order.id,
-                total: order.total,
-                createdAt: order.createdAt,
-                sellerStore: order.sellerStore,
-                buyer: order.buyer,
-                currentOrderSnapshot: order.currentSnapshot,
-                orderSnapshots: order.orderSnapshots,
-                product: order.product,
-                payoutId: order?.payoutItems?.[0]?.payoutId,
-                payoutStatus: order?.payoutItems?.[0]?.payoutStatus,
-              })
-
-              return (
-                <RowExpander
-                  key={order.id}
-                  row={row2}
-                  admin={props.admin}
-                  index={ordersAAIndex}
-                  refetchQueriesParams={refetchQueriesParams}
-                  showApprovalButtons={true}
-                />
-              )
-            }}
-          </GridPaginatorGeneric>
-        </SearchOptions>
-
       </main>
     )
   } else {
-    return <ErrorDisplay title={"Order Connections error"} />
+    return (
+      <ErrorDisplay
+        title={"Arriving Order Connections error"}
+        error={_ordersArriving?.error}
+      />
+    )
   }
 }
 
@@ -526,7 +317,7 @@ const TitleRows = (props: TitleRowsProps) => {
 interface ReactProps extends WithStyles<typeof styles> {
   month?: number;
   year?: number;
-  admin: UserPrivate;
+  dealer: UserPrivate;
 }
 interface TitleRowsProps extends WithStyles<typeof styles> {
 }

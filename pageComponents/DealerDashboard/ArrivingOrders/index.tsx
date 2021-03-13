@@ -32,7 +32,7 @@ const ArrivingOrders: React.FC<ReactProps> = (props) => {
         <ArrivingOrdersTable
           month={month}
           year={year}
-          admin={props.admin}
+          dealer={props.dealer}
         />
         <Loading fixed loading={isLoading} delay={'200ms'}/>
       </div>
@@ -41,7 +41,7 @@ const ArrivingOrders: React.FC<ReactProps> = (props) => {
 }
 
 interface ReactProps extends WithStyles<typeof styles> {
-  admin: UserPrivate
+  dealer: UserPrivate
 }
 
 
