@@ -65,6 +65,19 @@ export const ProductSnapshotsFragment = gql`
       postCode
       licenseNumber
       createdAt
+      user {
+        id
+        firstName
+        lastName
+        email
+        userRole
+        licenseId
+        phoneNumberId
+        phoneNumber {
+          countryCode
+          number
+        }
+      }
     }
   }
 `;
@@ -319,6 +332,18 @@ export const OrdersFragment = gql`
       license {
         ...UserLicenseFragment
       }
+      # Only viewable by dealers
+      ...on UserForDealers {
+        firstName
+        lastName
+        email
+        phoneNumber {
+          id
+          areaCode
+          countryCode
+          number
+        }
+      }
       # Only viewable by admin or if user is the buyer
       ...on UserPrivate {
         firstName
@@ -344,6 +369,21 @@ export const OrdersFragment = gql`
         ...on UserPublic {
           license {
             ...UserLicenseFragment
+          }
+        }
+        # Only viewable by dealers
+        ...on UserForDealers {
+          firstName
+          lastName
+          email
+          license {
+            ...UserLicenseFragment
+          }
+          phoneNumber {
+            id
+            areaCode
+            countryCode
+            number
           }
         }
         # Only viewable by admin or if user is the seller
@@ -411,8 +451,31 @@ export const OrdersFragment = gql`
       ...PayoutItemFragment
     }
     paymentIntentId
+    ...on OrderDealer {
+      paymentIntent {
+        id
+        amount
+        # amountCapturable
+        # amountReceived
+        # captureMethod
+        createdAt
+        currency
+        liveMode
+        status
+      }
+    }
     ...on OrderAdmin {
-      paymentIntent
+      paymentIntent {
+        id
+        amount
+        amountCapturable
+        amountReceived
+        captureMethod
+        createdAt
+        currency
+        liveMode
+        status
+      }
     }
   }
   ${OrderSnapshotFragment}

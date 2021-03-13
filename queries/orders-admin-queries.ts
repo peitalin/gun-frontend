@@ -82,9 +82,9 @@ export const GET_ORDERS_CANCELLED_CONNECTION = gql`
   ${OrdersFragment}
 `;
 
-export const GET_ORDERS_EXPIRING_CONNECTION = gql`
+export const GET_ORDERS_EXPIRING_CONNECTION_ADMIN = gql`
   query($query: ConnectionOffsetQueryOrders!) {
-    getOrdersExpiringConnection(query: $query) {
+    getOrdersExpiringConnectionAdmin(query: $query) {
       edges {
         node {
           ...OrdersFragment

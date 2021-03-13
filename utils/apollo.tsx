@@ -189,7 +189,7 @@ const cacheOptions = {
     User: ["UserPrivate", "UserPublic", "BasicUser"],
     Product: ["ProductPublic", "ProductPrivate"],
     Store: ["StorePublic", "StorePrivate"],
-    Order: ["OrderPublic", "OrderAdmin"],
+    Order: ["OrderPublic", "OrderDealer", "OrderAdmin"],
   },
   typePolicies: {
 
@@ -257,18 +257,7 @@ const cacheOptions = {
       },
     },
 
-    OrderPublic: {
-      keyFields: ["id"],
-      fields: {
-        currentSnapshot: {
-          merge: (existing, incoming, opts) => {
-            return incoming
-          }
-        }
-      }
-    },
-
-    OrderAdmin: {
+    Order: {
       keyFields: ["id"],
       fields: {
         currentSnapshot: {
