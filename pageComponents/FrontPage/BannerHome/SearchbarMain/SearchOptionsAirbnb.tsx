@@ -127,17 +127,15 @@ const SearchOptionsPaginator: React.FC<ReactProps> = (props) => {
   }, [index])
 
   React.useEffect(() => {
-    // set page UI to pageParam (which may be url queyr params)
-    // only do this on initial mount once
+    // sync page UI to pageParam (which may be url query params)
     setPageUi(pageParam)
-  }, [])
+  }, [pageParam])
 
   // Apollo Graphql
   const categoryData = useQuery<{ getProductCategories: Categories[] }, null>(
     GET_PRODUCT_CATEGORIES,
   )
   let categories = categoryData?.data?.getProductCategories ?? []
-  console.log("dropdown categories: ", categories)
 
 
   const searchRef = React.useRef(null)

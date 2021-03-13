@@ -139,6 +139,7 @@ export const useFacetSearchOptions = ({
       let params: string[];
       // console.log("routery.query:", router?.query)
       // console.log("urlPath:", urlPath)
+      // console.log("params1: ", params)
 
       // sync url query params with the facet Hooks params and inject
       // it into urls
@@ -154,21 +155,22 @@ export const useFacetSearchOptions = ({
             let param = `${key}=${value}`
             return param
           }
-        })
+        }).filter(p => !!p)
         // console.log("initial params: ", params)
-      } else {
-        // Sync facetHooks params to the url
-        if (searchTerm !== undefined && searchTerm !== "") {
-          if (params.map(p => p.includes('q=')).every(b => b === false)) {
-            // search query doesnt yet exist, add facetSearch param
-            params = [`q=${searchTerm}`, ...params]
-          }
+      }
+      // console.log("params 2: ", params)
+
+      // Sync facetHooks params to the url
+      if (searchTerm !== undefined && searchTerm !== "") {
+        if (params.map(p => p.includes('q=')).every(b => b === false)) {
+          // search query doesnt yet exist, add facetSearch param
+          params = [`q=${searchTerm}`, ...params]
         }
-        if (pageParam > 1) {
-          if (params.map(p => p.includes('page=')).every(b => b === false)) {
-            // page query doesnt yet exist, add facetSearch param
-            params = [`page=${pageParam}`, ...params]
-          }
+      }
+      if (pageParam > 1) {
+        if (params.map(p => p.includes('page=')).every(b => b === false)) {
+          // page query doesnt yet exist, add facetSearch param
+          params = [`page=${pageParam}`, ...params]
         }
       }
 
@@ -352,8 +354,8 @@ export const totalItemsInCategoriesFacets = ({
   searchTerm: string,
 }) => {
 
-  console.log("facet distributions", facetsDistribution)
-  console.log("facets", facets)
+  // console.log("facet distributions", facetsDistribution)
+  // console.log("facets", facets)
   let currentCategories = facets
     .map(f => f.replace("_categoryNameFacet:", "").toLowerCase())
 

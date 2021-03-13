@@ -162,9 +162,14 @@ const CategoryId: React.FC<ReactProps> = (props) => {
     totalCount: totalCount,
     searchTerm: searchTerm,
   })
-  // console.log("totalCount: ", productsConnection?.totalCount)
-  console.log("initialRouteCategory: ", props.initialRouteCategory)
-  console.log("categorySlug: ", categorySlug)
+  // console.log("totalItemsInFacet: ", totalItemsInFacet)
+  // console.log("initialRouteCategory: ", props.initialRouteCategory)
+  // console.log("categorySlug: ", categorySlug)
+
+  // check pageParam sync on url, facetHooks, and UI component
+  // console.log("pageParam: ", pageParam)
+  // console.log("index: ", index)
+
 
 
   return (
@@ -218,7 +223,7 @@ const CategoryId: React.FC<ReactProps> = (props) => {
               setPriceRange={setPriceRange}
               placeholder={"Search for products..."}
               paginationParams={{
-                totalCount: Math.ceil(productsConnection?.totalCount / numItemsPerPage),
+                totalCount: Math.ceil(totalItemsInFacet / numItemsPerPage),
                 overfetchBy: overfetchBy,
                 limit: limit,
                 pageParam: pageParam,
