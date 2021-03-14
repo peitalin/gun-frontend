@@ -26,11 +26,9 @@ const DealerArrivingOrders: NextPage<ReactProps> = (props) => {
     >
       {({ data, loading, error }: DealerProfileProps) => {
         return (
-          <div className={props.classes.GovApprovalsRoot}>
-            <ArrivingOrders
-              dealer={data.user}
-            />
-          </div>
+          <ArrivingOrders
+            dealer={data.user}
+          />
         )
       }}
     </DealerProfileWrapper>
@@ -39,9 +37,6 @@ const DealerArrivingOrders: NextPage<ReactProps> = (props) => {
 
 
 const styles = (theme: Theme) => createStyles({
-  GovApprovalsRoot: {
-    marginTop: '2rem',
-  },
 })
 
 ///////////////// TYPINGS ///////////////////

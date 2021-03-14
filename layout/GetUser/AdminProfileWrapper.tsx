@@ -125,7 +125,6 @@ interface QueryData {
 const styles = (theme: Theme) => createStyles({
   adminWrapperRoot: {
     width: '100%',
-    paddingRight: '1rem',
   },
   adminInnerContainer: {
     margin: '1rem 0rem 1rem 0rem',

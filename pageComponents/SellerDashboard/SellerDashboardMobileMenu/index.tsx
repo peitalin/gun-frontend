@@ -16,7 +16,7 @@ import SellerDropdownMenu from "./SellerDropdownMenu";
 
 
 
-const SellerDashboardMenu: React.FC<ReactProps> = (props) => {
+const SellerDashboardMobileMenu: React.FC<ReactProps> = (props) => {
 
   const { classes } = props;
 
@@ -31,4 +31,4 @@ interface ReactProps extends WithStyles<typeof styles> {
   storePrivate: StorePrivate;
 }
 
-export default withStyles(styles)( SellerDashboardMenu );
+export default withStyles(styles)( SellerDashboardMobileMenu );

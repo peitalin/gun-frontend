@@ -102,7 +102,7 @@ const Form10PreviewCard: React.FC<ReactProps> = (props) => {
         return "Order Complete"
       }
       case OrderStatus.FORM_10_SUBMITTED: {
-        if (props.inAdminDashboard) {
+        if (props.inDealerDashboard) {
           return "Pending Admin Approval"
         } else {
           return "Pending Approval"
@@ -115,8 +115,10 @@ const Form10PreviewCard: React.FC<ReactProps> = (props) => {
         return "Order Cancelled"
       }
       case OrderStatus.CONFIRMED_PAYMENT_FORM_10_REQUIRED: {
-        if (props.inAdminDashboard) {
+        if (props.inDealerDashboard) {
           return "Generate Receipt for Seller"
+        } else if (props.inAdminDashboard) {
+          return "Waiting for Seller to upload receipt"
         } else {
           return "Upload Receipt from Dealer"
         }
@@ -151,6 +153,7 @@ const Form10PreviewCard: React.FC<ReactProps> = (props) => {
       {
         orderStatus === OrderStatus.FORM_10_SUBMITTED &&
         !props.inAdminDashboard &&
+        !props.inDealerDashboard &&
         <Tooltip title="Remove file" placement={"right"}>
           <IconButton
             onClick={handleRemoveForm10}
@@ -248,6 +251,7 @@ const Form10PreviewCard: React.FC<ReactProps> = (props) => {
 
 interface ReactProps extends WithStyles<typeof styles> {
   order: Order;
+  inDealerDashboard?: boolean;
   inAdminDashboard?: boolean;
   // onMouseDown only before OrderStatus === FORM10_SUBMITTED state
   onMouseDown(a: any): void;

@@ -52,7 +52,7 @@ export const styles = (theme: Theme) => createStyles({
     position: 'absolute',
     top: "0",
     background: theme.palette.type === 'dark'
-      ? Gradients.gradientUniswapDark.background
+      ? Gradients.gradientUniswapDarkRotated.background
       : Gradients.gradientGrey2.background,
     boxShadow: theme.palette.type === 'dark'
       ? BoxShadows.shadow3.boxShadow

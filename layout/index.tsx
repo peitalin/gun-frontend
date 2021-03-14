@@ -15,10 +15,13 @@ import ErrorBounds from "components/ErrorBounds";
 import { Colors, Gradients } from "layout/AppTheme";
 //
 import SellersSideRoutesMenu from "pageComponents/SellerDashboard/SellersSideRoutesMenu";
-import SellerDashboardMenu from "pageComponents/SellerDashboard/SellerDashboardMenu";
+import SellerDashboardMobileMenu from "pageComponents/SellerDashboard/SellerDashboardMobileMenu";
 //
 import GovSideRoutesMenu from "pageComponents/Gov/GovSideRoutesMenu";
+import GovDashboardMobileMenu from "pageComponents/Gov/GovDashboardMobileMenu";
+
 import DealersSideRoutesMenu from "pageComponents/DealerDashboard/DealersSideRoutesMenu";
+import DealerDashboardMobileMenu from "pageComponents/DealerDashboard/DealerDashboardMobileMenu";
 // Router
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
@@ -54,15 +57,14 @@ const Layout: React.FC<ReactProps> = (props) => {
 
   const renderLayout = () => {
     if (isSellerRoute) {
+
       if (!lgDown) {
         // desktop size
         return (
           <ErrorBounds className={classes.flexJustify}>
-            <div className={clsx(classes.sellerPageContainer, "fadeIn")}>
+            <div className={clsx(classes.dashboardContainer, "fadeIn")}>
               <div className={classes.minWidth240}>
-                <SellersSideRoutesMenu
-                  user={user}
-                />
+                <SellersSideRoutesMenu user={user} />
               </div>
               <div className={classes.flex75}>
                 {props.children}
@@ -73,45 +75,81 @@ const Layout: React.FC<ReactProps> = (props) => {
       } else {
         // mobile size
         return (
-          <ErrorBounds className={clsx(classes.sellerPageContainer, "fadeIn")}>
-            <div className={classes.rootMobileSellerDashboard}>
+          <ErrorBounds className={clsx(classes.dashboardContainer, "fadeIn")}>
+            <div className={classes.dashboardInnerContainerMobile}>
               {
                 // mobile, seller dashboard menu
-                isSellerRoute &&
                 lgDown &&
-                <SellerDashboardMenu storePrivate={user.store} />
+                <SellerDashboardMobileMenu storePrivate={user.store} />
               }
               {props.children}
             </div>
           </ErrorBounds>
         )
       }
+
     } else if (isGovernanceRoute) {
-      return (
-        <ErrorBounds className={classes.flexJustify}>
-          <div className={clsx(classes.govPageContainer, "fadeIn")}>
-            <div className={classes.minWidth240}>
-              <GovSideRoutesMenu />
+
+      if (!lgDown) {
+        // desktop size
+        return (
+          <ErrorBounds className={classes.flexJustify}>
+            <div className={clsx(classes.dashboardContainer, "fadeIn")}>
+              <div className={classes.minWidth240}>
+                <GovSideRoutesMenu />
+              </div>
+              <div className={classes.flex75}>
+                {props.children}
+              </div>
             </div>
-            <div className={classes.flex75}>
+          </ErrorBounds>
+        )
+      } else {
+        // mobile size
+        return (
+          <ErrorBounds className={clsx(classes.dashboardContainer, "fadeIn")}>
+            <div className={classes.dashboardInnerContainerMobile}>
+              {
+                // mobile, dashboard menu
+                lgDown && <GovDashboardMobileMenu />
+              }
               {props.children}
             </div>
-          </div>
-        </ErrorBounds>
-      )
+          </ErrorBounds>
+        )
+      }
+
     } else if (isDealerRoute) {
-      return (
-        <ErrorBounds className={classes.flexJustify}>
-          <div className={clsx(classes.govPageContainer, "fadeIn")}>
-            <div className={classes.minWidth240}>
-              <DealersSideRoutesMenu user={user}/>
+
+      if (!lgDown) {
+        // desktop size
+        return (
+          <ErrorBounds className={classes.flexJustify}>
+            <div className={clsx(classes.dashboardContainer, "fadeIn")}>
+              <div className={classes.minWidth240}>
+                <DealersSideRoutesMenu user={user} />
+              </div>
+              <div className={classes.flex75}>
+                {props.children}
+              </div>
             </div>
-            <div className={classes.flex75}>
+          </ErrorBounds>
+        )
+      } else {
+        // mobile size
+        return (
+          <ErrorBounds className={clsx(classes.dashboardContainer, "fadeIn")}>
+            <div className={classes.dashboardInnerContainerMobile}>
+              {
+                // mobile, seller dashboard menu
+                lgDown && <DealerDashboardMobileMenu user={user} />
+              }
               {props.children}
             </div>
-          </div>
-        </ErrorBounds>
-      )
+          </ErrorBounds>
+        )
+      }
+
     } else {
       // return normal layout
       return <>{props.children}</>
@@ -156,11 +194,12 @@ const styles = (theme: Theme) => createStyles({
     display: "flex",
     flexDirection: "column",
   },
-  rootMobileSellerDashboard: {
+  dashboardInnerContainerMobile: {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'flex-start',
     width: '100%',
+    marginTop: '3rem', // account for dropdown mobileMenu bar
   },
   pageOuterContainer: {
     display: "flex",
@@ -185,7 +224,7 @@ const styles = (theme: Theme) => createStyles({
     flexDirection: "row",
     justifyContent: "center",
   },
-  sellerPageContainer: {
+  dashboardContainer: {
     position: 'relative',
     minHeight: `calc(100vh - ${NavBarHeight}px)`,
     maxWidth: 1200,
@@ -200,21 +239,6 @@ const styles = (theme: Theme) => createStyles({
     justifyContent: 'flex-start',
     flexWrap: 'wrap',
     // background: Gradients.gradientUniswapDark.background,
-  },
-  govPageContainer: {
-    position: 'relative',
-    minHeight: `calc(100vh - ${NavBarHeight}px)`,
-    maxWidth: 1200,
-    width: '100%',
-    opacity: 1,
-    transition: theme.transitions.create('opacity', {
-      easing: theme.transitions.easing.easeIn,
-      duration: "200ms",
-    }),
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    flexWrap: 'wrap',
   },
   minWidth240: {
     width: 240,
