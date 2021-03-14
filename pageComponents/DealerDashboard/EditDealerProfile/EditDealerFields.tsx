@@ -61,7 +61,7 @@ const EditStoreFields: React.FC<ReactProps & FormikProps<FormikFields>> = (props
   const handleUpdateName = (e: HtmlEvent) => {
     let name = e.target.value;
     if (!name) {
-      fprops.setFieldValue('name', null)
+      fprops.setFieldValue('name', "")
       // backend fails on empty string
     } else {
       fprops.setFieldValue('name', name)
@@ -72,7 +72,7 @@ const EditStoreFields: React.FC<ReactProps & FormikProps<FormikFields>> = (props
   const handleUpdateLicenseNumber = (e: HtmlEvent) => {
     let s = e.target.value;
     if (!s) {
-      fprops.setFieldValue('licenseNumber', null)
+      fprops.setFieldValue('licenseNumber', "")
     } else {
       fprops.setFieldValue('licenseNumber', s)
     }
@@ -82,7 +82,7 @@ const EditStoreFields: React.FC<ReactProps & FormikProps<FormikFields>> = (props
   const handleUpdateCity = (e: HtmlEvent) => {
     let c = e.target.value;
     if (!c) {
-      fprops.setFieldValue('city', null)
+      fprops.setFieldValue('city', "")
     } else {
       fprops.setFieldValue('city', c)
     }
@@ -91,7 +91,7 @@ const EditStoreFields: React.FC<ReactProps & FormikProps<FormikFields>> = (props
   const handleUpdatePostcode = (e: HtmlEvent) => {
     let c = e.target.value;
     if (!c) {
-      fprops.setFieldValue('postCode', null)
+      fprops.setFieldValue('postCode', "")
     } else {
       fprops.setFieldValue('postCode', c)
     }
@@ -100,7 +100,7 @@ const EditStoreFields: React.FC<ReactProps & FormikProps<FormikFields>> = (props
   const handleUpdateState = (e: HtmlEvent) => {
     let c = e.target.value;
     if (!c) {
-      fprops.setFieldValue('state', null)
+      fprops.setFieldValue('state', "")
     } else {
       fprops.setFieldValue('state', c)
     }
@@ -109,7 +109,7 @@ const EditStoreFields: React.FC<ReactProps & FormikProps<FormikFields>> = (props
   const handleUpdateAddress = (e: HtmlEvent) => {
     let a = e.target.value;
     if (!a) {
-      fprops.setFieldValue('address', null)
+      fprops.setFieldValue('address', "")
       // backend fails on empty string
     } else {
       fprops.setFieldValue('address', a)

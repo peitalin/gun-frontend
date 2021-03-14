@@ -5713,7 +5713,7 @@ export type OrderAdmin = Order & {
   orderSnapshots?: Maybe<Array<Maybe<OrderSnapshot>>>;
   /** orderSnapshots_aggregate: Order_Snapshots_Aggregate, */
   paymentIntentId?: Maybe<Scalars['String']>;
-  paymentIntent?: Maybe<Scalars['JSON']>;
+  paymentIntent?: Maybe<PaymentIntent>;
   payoutItems?: Maybe<Array<Maybe<Payout_Items>>>;
   /** payoutItems_aggregate: Payout_Items_Aggregate, */
   product?: Maybe<ProductPrivate>;
@@ -5755,7 +5755,7 @@ export type OrderDealer = Order & {
   orderSnapshots?: Maybe<Array<Maybe<OrderSnapshot>>>;
   /** orderSnapshots_aggregate: Order_Snapshots_Aggregate, */
   paymentIntentId?: Maybe<Scalars['String']>;
-  paymentIntent?: Maybe<Scalars['JSON']>;
+  paymentIntent?: Maybe<PaymentIntent>;
   payoutItems?: Maybe<Array<Maybe<Payout_Items>>>;
   /** payoutItems_aggregate: Payout_Items_Aggregate, */
   product?: Maybe<ProductPrivate>;
@@ -6801,6 +6801,19 @@ export type Payment_Methods_Variance_Fields = {
 export type Payment_Methods_Variance_Order_By = {
   expMonth?: Maybe<Order_By>;
   expYear?: Maybe<Order_By>;
+};
+
+export type PaymentIntent = {
+   __typename?: 'PaymentIntent';
+  id?: Maybe<Scalars['String']>;
+  amount?: Maybe<Scalars['Int']>;
+  amountCapturable?: Maybe<Scalars['Int']>;
+  amountReceived?: Maybe<Scalars['Int']>;
+  captureMethod?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['Date']>;
+  currency?: Maybe<Scalars['String']>;
+  liveMode?: Maybe<Scalars['Boolean']>;
+  status?: Maybe<Scalars['String']>;
 };
 
 /** Payment Processor Company */
@@ -14749,7 +14762,7 @@ type OrdersFragment_OrderPublic_ = { __typename?: 'OrderPublic', id?: Maybe<stri
     & PayoutItemFragment
   )>>> };
 
-type OrdersFragment_OrderDealer_ = { __typename?: 'OrderDealer', paymentIntent?: Maybe<any>, id?: Maybe<string>, createdAt?: Maybe<any>, updatedAt?: Maybe<any>, bidId?: Maybe<string>, total?: Maybe<number>, currency?: Maybe<string>, buyerId?: Maybe<string>, sellerStoreId?: Maybe<string>, productId?: Maybe<string>, paymentIntentId?: Maybe<string>, bid?: Maybe<(
+type OrdersFragment_OrderDealer_ = { __typename?: 'OrderDealer', id?: Maybe<string>, createdAt?: Maybe<any>, updatedAt?: Maybe<any>, bidId?: Maybe<string>, total?: Maybe<number>, currency?: Maybe<string>, buyerId?: Maybe<string>, sellerStoreId?: Maybe<string>, productId?: Maybe<string>, paymentIntentId?: Maybe<string>, paymentIntent?: Maybe<{ __typename?: 'PaymentIntent', id?: Maybe<string>, amount?: Maybe<number>, createdAt?: Maybe<any>, currency?: Maybe<string>, liveMode?: Maybe<boolean>, status?: Maybe<string> }>, bid?: Maybe<(
     { __typename?: 'bids' }
     & BidFragment
   )>, buyer?: Maybe<{ __typename?: 'UserPrivate', firstName?: Maybe<string>, lastName?: Maybe<string>, email: string, id: string, phoneNumber?: Maybe<{ __typename?: 'phone_numbers', id: string, areaCode?: Maybe<string>, countryCode: string, number: string }>, license?: Maybe<(
@@ -14796,7 +14809,7 @@ type OrdersFragment_OrderDealer_ = { __typename?: 'OrderDealer', paymentIntent?:
     & PayoutItemFragment
   )>>> };
 
-type OrdersFragment_OrderAdmin_ = { __typename?: 'OrderAdmin', paymentIntent?: Maybe<any>, id?: Maybe<string>, createdAt?: Maybe<any>, updatedAt?: Maybe<any>, bidId?: Maybe<string>, total?: Maybe<number>, currency?: Maybe<string>, buyerId?: Maybe<string>, sellerStoreId?: Maybe<string>, productId?: Maybe<string>, paymentIntentId?: Maybe<string>, bid?: Maybe<(
+type OrdersFragment_OrderAdmin_ = { __typename?: 'OrderAdmin', id?: Maybe<string>, createdAt?: Maybe<any>, updatedAt?: Maybe<any>, bidId?: Maybe<string>, total?: Maybe<number>, currency?: Maybe<string>, buyerId?: Maybe<string>, sellerStoreId?: Maybe<string>, productId?: Maybe<string>, paymentIntentId?: Maybe<string>, paymentIntent?: Maybe<{ __typename?: 'PaymentIntent', id?: Maybe<string>, amount?: Maybe<number>, amountCapturable?: Maybe<number>, amountReceived?: Maybe<number>, captureMethod?: Maybe<string>, createdAt?: Maybe<any>, currency?: Maybe<string>, liveMode?: Maybe<boolean>, status?: Maybe<string> }>, bid?: Maybe<(
     { __typename?: 'bids' }
     & BidFragment
   )>, buyer?: Maybe<{ __typename?: 'UserPrivate', firstName?: Maybe<string>, lastName?: Maybe<string>, email: string, id: string, phoneNumber?: Maybe<{ __typename?: 'phone_numbers', id: string, areaCode?: Maybe<string>, countryCode: string, number: string }>, license?: Maybe<(
@@ -15291,10 +15304,27 @@ export const OrdersFragmentFragmentDoc = gql`
   }
   paymentIntentId
   ... on OrderDealer {
-    paymentIntent
+    paymentIntent {
+      id
+      amount
+      createdAt
+      currency
+      liveMode
+      status
+    }
   }
   ... on OrderAdmin {
-    paymentIntent
+    paymentIntent {
+      id
+      amount
+      amountCapturable
+      amountReceived
+      captureMethod
+      createdAt
+      currency
+      liveMode
+      status
+    }
   }
 }
     ${BidFragmentFragmentDoc}

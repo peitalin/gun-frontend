@@ -39,7 +39,7 @@ const EditDealerProfile = (props: ReactProps) => {
       smDown && classes.paddingMobile,
       (md || lg) && classes.paddingIpad,
       xlUp && classes.paddingDesktop,
-      !smDown ? classes.minWidth500 : null,
+      !smDown && classes.minWidth500,
     )}>
       <div className={classes.dealerEditMenu}>
 

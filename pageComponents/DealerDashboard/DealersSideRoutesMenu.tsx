@@ -27,7 +27,7 @@ const DealersSideRoutesMenu: React.FC<ReactProps> = (props) => {
   }
 
   const { classes, user } = props;
-  console.log("dealer.user :", user)
+  // console.log("dealer.user :", user)
 
   return (
     <div className={classes.routeMenu}>

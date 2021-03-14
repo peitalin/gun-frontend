@@ -73,12 +73,12 @@ const EditDealerForm: React.FC<ReactProps> = (props) => {
     <Formik
       // 1. feed product data to edit into formik state.
       initialValues={{
-        name: dealer?.name,
-        address: dealer?.address,
-        city: dealer?.city,
-        postCode: dealer?.postCode,
-        state: dealer?.state,
-        licenseNumber: dealer?.licenseNumber,
+        name: dealer?.name ?? "",
+        address: dealer?.address ?? "",
+        city: dealer?.city ?? "",
+        postCode: dealer?.postCode ?? "",
+        state: dealer?.state ?? "",
+        licenseNumber: dealer?.licenseNumber ?? "",
       }}
       validationSchema={validationSchemas.EditDealer}
       onSubmit={(values, { setSubmitting }) => {
