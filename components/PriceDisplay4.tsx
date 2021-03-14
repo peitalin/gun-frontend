@@ -1,16 +1,11 @@
 import React from "react";
 import clsx from "clsx";
-import { oc as option } from "ts-optchain";
 import { SoldOutStatus } from "typings/gqlTypes";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
 import { Colors } from "layout/AppTheme";
 // Material UI
 import Typography from "@material-ui/core/Typography";
-import Button from '@material-ui/core/Button';
-// Utils Components
-import { Price } from "typings/gqlTypes";
-import CountdownBadge from "./CountdownBadge";
 // money
 import currency from "currency.js";
 import { convertSoldOutStatus } from "utils/strings";
@@ -21,8 +16,6 @@ const PriceDisplay4 = (props: ReactProps) => {
 
   const {
     classes,
-    hidePriceWas = false,
-    hideSavings = false,
     soldOutStatus = SoldOutStatus.AVAILABLE,
   } = props;
 
@@ -32,11 +25,11 @@ const PriceDisplay4 = (props: ReactProps) => {
   } = props;
 
   const priceDisplay = currency(price/100, { formatWithSymbol: true })
-  const priceWasDisplay = currency(priceWas/100, { formatWithSymbol: true })
+  // const priceWasDisplay = currency(priceWas/100, { formatWithSymbol: true })
 
-  const savings = (price >= priceWas)
-    ?  currency(0, { formatWithSymbol: true })
-    :  currency((price - priceWas)/100, { formatWithSymbol: true })
+  // const savings = (price >= priceWas)
+  //   ?  currency(0, { formatWithSymbol: true })
+  //   :  currency((price - priceWas)/100, { formatWithSymbol: true })
 
 
   if (soldOutStatus !== SoldOutStatus.AVAILABLE) {
@@ -55,63 +48,17 @@ const PriceDisplay4 = (props: ReactProps) => {
             <Typography className={classes.price} variant="body1">
               {priceDisplay.format()}
             </Typography>
-            {
-              !hidePriceWas &&
-              (price > priceWas) &&
-              <Typography className={classes.priceWas} variant="body1">
-                {priceWasDisplay.format()}
-              </Typography>
-            }
           </div>
-          {
-            props.quantityAvailable &&
-            <div className={classes.innerContainerSpreadEnd}>
-              <Typography className={classes.quantityText} variant="body1">
-                {`${props.quantityAvailable} left`}
-              </Typography>
-            </div>
-          }
         </div>
-        {
-          !hideSavings &&
-          (price > priceWas) &&
-          <div className={classes.innerContainerSpread}>
-            <Typography className={classes.priceSavings} variant="body1">
-              {
-                props.pastTense
-                ? `You saved ${savings.format()}`
-                : `You save ${savings.format()}`
-              }
-            </Typography>
-          </div>
-        }
-        {/* <div className={clsx(classes.innerContainerSpread, classes.height18)}>
-          {
-            !hideSavings &&
-            (basePrice > actualPrice) &&
-            <Typography className={classes.priceSavings} variant="body1">
-              {
-                props.pastTense
-                ? `You saved ${savings.format()}`
-                : `You save ${savings.format()}${remainingText}`
-              }
-            </Typography>
-          }
-        </div> */}
       </>
     </div>
   )
 }
 
 interface ReactProps extends WithStyles<typeof styles> {
-  pastTense?: boolean;
-  hideSavings?: boolean;
-  hidePriceWas?: boolean;
-  quantityAvailable?: number | null;
   soldOutStatus?: string;
   price: number;
   priceWas?: number;
-  countDownStyle?: any;
 }
 
 
@@ -132,35 +79,11 @@ const styles = (theme: Theme) => createStyles({
     justifyContent: 'space-between',
     alignItems: 'flex-end',
   },
-  innerContainerSpreadCountdown: {
-    display: 'flex',
-    flexDirection: "row",
-    justifyContent: 'flex-start',
-    alignItems: 'flex-end',
-  },
-  countDownTag: {
-    display: 'flex',
-    // backgroundColor: Colors.lightestGrey,
-    // backgroundColor: Colors.charcoal,
-    // padding: '0.2rem 0.5rem',
-    borderRadius: '2px',
-    // border: `1px solid ${Colors.charcoal}`,
-    // border: `1px solid ${Colors.lightestGrey}`,
-  },
-  innerContainerSpreadEnd: {
-    display: 'flex',
-    flexDirection: "row",
-    justifyContent: 'flex-end',
-    alignItems: 'flex-end',
-  },
   soldOut: {
     marginRight: '0.5rem',
     fontSize: "0.7rem",
     fontWeight: 600,
     color: Colors.secondary,
-  },
-  height18: {
-    height: 18,
   },
   price: {
     marginRight: '0.5rem',
@@ -174,28 +97,6 @@ const styles = (theme: Theme) => createStyles({
     fontSize: "0.65rem",
     color: fade("#7C858E", 0.5), // grey
     // color: fade(Colors.secondaryBright, 0.5),
-  },
-  priceSavings: {
-    marginRight: '0.5rem',
-    color: Colors.purple,
-    fontSize: "0.65rem",
-  },
-  finalCountDown: {
-    color: Colors.grey,
-    fontSize: "0.65rem",
-    fontWeight: 600,
-  },
-  time: {
-    color: Colors.green,
-    // color: Colors.backgroundColor,
-    fontSize: "0.65rem",
-    fontWeight: 600,
-  },
-  quantityText: {
-    color: Colors.grey,
-    fontSize: "0.7rem",
-    fontWeight: 600,
-    marginRight: "1rem",
   },
 });
 

@@ -8,7 +8,10 @@ import { Product } from "typings/gqlTypes";
 import { Colors, BorderRadius, BoxShadows } from "layout/AppTheme";
 // Material UI
 import Typography from "@material-ui/core/Typography";
-import { WHITE_SPACE_FOR_P_TAGS } from "components/TextEditor/globalWhiteSpaceSetting";
+
+// export const WHITE_SPACE_FOR_P_TAGS = "pre-wrap"
+// // RENDERS newlines, spaces, etc in <p> tags.
+// // What you see is what you get in spacing.
 
 
 
@@ -38,9 +41,9 @@ const ProductDescription = (props: ReactProps) => {
         )}
       >
         <span
-          style={{
-            whiteSpace: WHITE_SPACE_FOR_P_TAGS
-          }}
+          // style={{
+          //   whiteSpace: WHITE_SPACE_FOR_P_TAGS
+          // }}
           dangerouslySetInnerHTML={{
             __html: String(props.productDescription ?? "")
           }}

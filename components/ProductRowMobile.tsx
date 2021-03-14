@@ -109,8 +109,6 @@ const ProductRow = (props: ReactProps) => {
                       ? <PriceDisplayMain
                           price={price}
                           priceWas={priceWas}
-                          hideSavings={true}
-                          quantityAvailable={0}
                           soldOutStatus={soldOutStatus}
                         />
                       : <span style={{ color: Colors.grey }}></span>

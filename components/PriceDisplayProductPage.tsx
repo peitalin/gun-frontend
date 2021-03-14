@@ -21,8 +21,6 @@ const PriceDisplayProductPage = (props: ReactProps) => {
 
   const {
     classes,
-    hidePriceWas = false,
-    hideSavings = false,
     soldOutStatus = SoldOutStatus.AVAILABLE,
   } = props;
 
@@ -30,12 +28,12 @@ const PriceDisplayProductPage = (props: ReactProps) => {
   const basePrice = props.priceWas;
 
   const price = currency(actualPrice/100, { formatWithSymbol: true })
-  const priceWas = currency(basePrice/100, { formatWithSymbol: true })
-  const savings = (actualPrice >= basePrice)
-    ?  currency(0, { formatWithSymbol: true })
-    :  currency((basePrice - actualPrice)/100, { formatWithSymbol: true })
+  // const priceWas = currency(basePrice/100, { formatWithSymbol: true })
+  // const savings = (actualPrice >= basePrice)
+  //   ?  currency(0, { formatWithSymbol: true })
+  //   :  currency((basePrice - actualPrice)/100, { formatWithSymbol: true })
 
-  const savingsPercent = Math.round((basePrice - actualPrice)/basePrice * 100);
+  // const savingsPercent = Math.round((basePrice - actualPrice)/basePrice * 100);
 
   if (soldOutStatus !== SoldOutStatus.AVAILABLE) {
     return (
@@ -62,12 +60,9 @@ const PriceDisplayProductPage = (props: ReactProps) => {
 
 interface ReactProps extends WithStyles<typeof styles> {
   pastTense?: boolean;
-  hideSavings?: boolean;
-  hidePriceWas?: boolean;
   soldOutStatus?: string;
   price: number;
   priceWas: number;
-  countDownStyle?: any;
 }
 
 const styles = (theme: Theme) => createStyles({
@@ -94,22 +89,6 @@ const styles = (theme: Theme) => createStyles({
     justifyContent: 'flex-start',
     alignItems: 'flex-end',
   },
-  countDownTag: {
-    display: 'flex',
-    // backgroundColor: Colors.lightestGrey,
-    // backgroundColor: Colors.charcoal,
-    // padding: '0.2rem 0.5rem',
-    borderRadius: '2px',
-    minWidth: '145px',
-    // border: `1px solid ${Colors.charcoal}`,
-    // border: `1px solid ${Colors.lightestGrey}`,
-  },
-  innerContainerSpreadEnd: {
-    display: 'flex',
-    flexDirection: "row",
-    justifyContent: 'flex-start',
-    alignItems: 'flex-start',
-  },
   price: {
     marginRight: '0.5rem',
     fontSize: "1.5rem",
@@ -129,28 +108,6 @@ const styles = (theme: Theme) => createStyles({
     color: Colors.green,
     fontSize: "0.875rem",
     fontWeight: 500,
-  },
-  finalCountDown: {
-    color: Colors.charcoal,
-    fontSize: "0.8rem",
-    fontWeight: 600,
-  },
-  timeUrgent: {
-    color: Colors.green,
-    // color: Colors.backgroundColor,
-    fontSize: "0.8rem",
-    fontWeight: 600,
-  },
-  time: {
-    color: Colors.green,
-    // color: Colors.backgroundColor,
-    fontSize: "0.8rem",
-    fontWeight: 600,
-  },
-  quantityText: {
-    fontWeight: 600,
-    color: Colors.grey,
-    fontSize: "0.8rem",
   },
 });
 

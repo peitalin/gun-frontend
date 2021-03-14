@@ -17,12 +17,6 @@ import ErrorBounds from 'components/ErrorBounds';
 import TextInput from "components/Fields/TextInput";
 
 // SSR dynamic import
-import dynamic from 'next/dynamic'
-import TextEditorPlaceholder from 'components/TextEditor/TextEditorPlaceholder';
-const TextEditorSSR = dynamic(() => import('../../components/TextEditor'), {
-  loading: () => <TextEditorPlaceholder/>,
-  ssr: false
-})
 import { maxLengthProductDescription } from "utils/limitsAndRules";
 /// Debounce
 import { useDebouncedCallback } from 'use-debounce';

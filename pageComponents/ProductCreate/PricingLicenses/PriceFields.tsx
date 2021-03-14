@@ -133,10 +133,6 @@ const PriceFields = (props: ReactProps & FormikProps<FormikFields>) => {
       </div>
       <div className={classes.container}>
         <PriceDisplayProductPage
-          hideSavings={
-            (currentVariants?.[position]?.priceWas ?? 0)
-            <= (currentVariants?.[position]?.price ?? 0)
-          }
           price={currentVariants?.[position]?.price}
           priceWas={currentVariants?.[position]?.priceWas}
         />

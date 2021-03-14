@@ -34,7 +34,6 @@ import { GrandReduxState, Actions } from 'reduxStore/grand-reducer';
 
 
 
-
 export const ChatLayout: React.FC<ReactProps> = (props) => {
 
   const [refetch, setRefetch] = React.useState(undefined)

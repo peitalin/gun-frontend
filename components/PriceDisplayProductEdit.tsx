@@ -1,16 +1,11 @@
 import React from "react";
 import clsx from "clsx";
-import { oc as option } from "ts-optchain";
 import { SoldOutStatus } from "typings/gqlTypes";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
 import { Colors } from "layout/AppTheme";
 // Material UI
 import Typography from "@material-ui/core/Typography";
-import Button from '@material-ui/core/Button';
-// Utils Components
-import { Price } from "typings/gqlTypes";
-import CountdownBadge from "./CountdownBadge";
 // money
 import currency from "currency.js";
 import { convertSoldOutStatus } from "utils/strings";
@@ -52,11 +47,8 @@ const PriceDisplayProductEdit = (props: ReactProps) => {
 }
 
 interface ReactProps extends WithStyles<typeof styles> {
-  pastTense?: boolean;
-  hideSavings?: boolean;
   soldOutStatus?: string;
   price: number;
-  countDownStyle?: any;
 }
 
 const styles = (theme: Theme) => createStyles({

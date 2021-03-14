@@ -10,16 +10,8 @@ import TypingIndicator from './TypingIndicator';
 import { v4 as uuidv4 } from "uuid"
 import { Chat_Messages_Mutation_Response, Products } from "typings/gqlTypes";
 import Button from "@material-ui/core/Button";
-import TextInput from "components/Fields/TextInput";
+import TextEditorCK from "components/TextEditorCK";
 
-import dynamic from "next/dynamic";
-import TextEditorPlaceholder from 'components/TextEditor/TextEditorPlaceholder';
-const TextEditorSSR = dynamic(() => import('components/TextEditor'), {
-  loading: () => <TextEditorPlaceholder/>,
-  ssr: false
-})
-import { serializeHtml, EMPTY_ELEM } from 'components/TextEditor/helpersSerializers';
-import { initialValue } from 'components/TextEditor/helpersElements';
 import { customAlphabet } from 'nanoid'
 const ID_ALPHABET = "123456789bcdfghjklmnpqrstvwxyz";
 const ID_LENGTH = 8;
@@ -38,35 +30,20 @@ import { formatCurrency, parseNumber} from "utils/currencyInput";
 import { asCurrency as c } from "utils/prices";
 /// Debounce
 import { useDebouncedCallback } from 'use-debounce';
+// Validation
+import { validationSchemas } from "utils/validation";
+import { Formik, Form, FormikProps, ErrorMessage } from 'formik';
 
 
 
 export const Textbox: React.FC<ReactProps> = (props) => {
 
-  const [description, setDescription] = React.useState(initialValue)
-  const [resetSlate, setResetSlate] = React.useState(false)
   const [showBidMenu, setShowBidMenu] = React.useState(false)
   const [offerPrice, setOfferPrice] = React.useState(undefined)
 
-  const { product, classes } = props;
+  const { classes } = props;
   const apolloClient = useApolloClient();
 
-  // const handleTyping = (text) => {
-  //   const textLength = text.length;
-  //   if (text === EMPTY_ELEM)
-
-  //   if ((textLength !== 0 && textLength % 5 === 0) || textLength === 1) {
-  //     emitTypingEvent();
-  //   }
-  //   setState(s => ({ ...s, text }));
-  // }
-
-  const dispatchResetSlate = () => {
-    setResetSlate(true)
-    setInterval(() => {
-      setResetSlate(false)
-    }, 0)
-  }
 
   const emitTypingEvent = async () => {
     if (props.userId) {
@@ -78,63 +55,6 @@ export const Textbox: React.FC<ReactProps> = (props) => {
         }
       }).then(res => console.log('emitted typing event', res));
     }
-  }
-
-  const sendMessage = (e) => {
-    e.preventDefault();
-    // serialize Slate rich-text object as html
-    let htmlDescription = serializeHtml(description)
-    if (!htmlDescription || htmlDescription === EMPTY_ELEM) {
-      return;
-    }
-    console.log("chatRoomId: ", props.chatRoomId)
-
-    insertMessage({
-      variables: {
-        msgId: `msg_${uuidv4()}`,
-        chatRoomId: props.chatRoomId,
-        senderId: props.userId,
-        content: htmlDescription,
-        // content: state.text,
-        previewItemId: undefined,
-      }
-    }).then(res => {
-      setDescription(initialValue)
-      dispatchResetSlate()
-    });
-  }
-
-
-  const sendBidMessage = (e) => {
-    e.preventDefault();
-    // serialize Slate rich-text object as html
-    let htmlDescription = serializeHtml(description)
-    if (!htmlDescription || htmlDescription === EMPTY_ELEM) {
-      return;
-    }
-    console.log("chatRoomId: ", props.chatRoomId)
-    let variables = {
-      msgId: `msg_${nanoid()}`,
-      chatRoomId: props.chatRoomId,
-      senderId: props.userId,
-      content: htmlDescription,
-      // content: state.text,
-      bidId: `bid_${nanoid()}`,
-      productId: props.product.id,
-      productSnapshotId: props.product.currentSnapshotId,
-      variantId: props.product.productVariants[0].variantId,
-      variantSnapshotId: props.product.productVariants[0].variantSnapshotId,
-      offerPrice: offerPrice,
-      bidStatus: "CREATED",
-    }
-    console.log("viarables: ", variables)
-
-    insertBidMessage({
-      variables: variables
-    }).then(res => {
-      setDescription(initialValue)
-      dispatchResetSlate()
-    });
   }
 
 
@@ -170,95 +90,174 @@ export const Textbox: React.FC<ReactProps> = (props) => {
     c(0) || ''
   );
 
-  // Mutation component. Add message to the state of <RenderMessages> after mutation.
   return (
-    <form onSubmit={sendMessage}>
-      <div className={classes.textboxWrapper}>
-        <TypingIndicator userId={props.userId} />
-        <div className={classes.textEditorWrapper}>
+    <Formik
+      initialValues={{
+        description: "<p></p>",
+      }}
+      validationSchema={validationSchemas.CreateDealer}
+      onSubmit={(values, { setSubmitting, resetForm }) => {
+        console.log("formik values: ", values)
+        //
+      }}
+    >
+      {(fprops) => {
 
-          <Rifm
-            // $ need to be in regexp to prevent cursor jumping on backspace
-            accept={/[\d.]/g}
-            format={formatCurrency}
-            value={displayedPrice}
-            onChange={value => {
-              // values before currency mask
-              // multiple by 100 as formik/graphql takes cents, not dollars
-              let dollars = parseNumber(value)
-              setDisplayedPrice(dollars)
-              updatePrice(dollars * 100)
-              // multiple by 100 as formik/graphql takes cents, not dollars
-            }}
-          >
-            {({ value, onChange }) => (
-              <TextInputAdorned
-                startAdornment={"$ "}
-                name={'bid'}
-                type="currency"
-                // placeholder="0.00"
-                placeholder={"Enter a bid"}
-                className={classes.inputField}
-                value={value || ""}
-                onChange={(e) => {
-                  e.persist()
-                  onChange(e)
-                }}
-                inputProps={{ style: { width: '100%', marginLeft: '0.25rem' }}}
-                // errorMessage={
-                //   errors?.currentVariants?.[position]?.price
-                //   ? errors.currentVariants[position].price
-                //   : null
-                // }
-                // touched={touched?.currentVariants?.[position]?.price}
-                // validationErrorMsgStyle={{
-                //   bottom: '-1.15rem',
-                // }}
-              />
-            )}
-          </Rifm>
+        const {
+          values,
+          touched,
+          errors,
+          dirty,
+          isSubmitting,
+          handleChange,
+          handleBlur,
+          handleSubmit,
+          handleReset,
+          validateField,
+          validateForm,
+        } = fprops;
+
+        // Mutation component. Add message to the state of <RenderMessages> after mutation.
+        return (
+          <form onSubmit={async() => {
+
+              let description = fprops?.values?.description;
+              console.log("chatRoomId: ", props.chatRoomId)
+
+              insertMessage({
+                variables: {
+                  msgId: `msg_${uuidv4()}`,
+                  chatRoomId: props.chatRoomId,
+                  senderId: props.userId,
+                  content: description,
+                  previewItemId: undefined,
+                }
+              }).then(res => {
+                fprops.resetForm()
+              });
+          }}>
+            <div className={classes.textboxWrapper}>
+              <TypingIndicator userId={props.userId} />
+              <div className={classes.textEditorWrapper}>
+
+                <Rifm
+                  // $ need to be in regexp to prevent cursor jumping on backspace
+                  accept={/[\d.]/g}
+                  format={formatCurrency}
+                  value={displayedPrice}
+                  onChange={value => {
+                    // values before currency mask
+                    // multiple by 100 as formik/graphql takes cents, not dollars
+                    let dollars = parseNumber(value)
+                    setDisplayedPrice(dollars)
+                    updatePrice(dollars * 100)
+                    // multiple by 100 as formik/graphql takes cents, not dollars
+                  }}
+                >
+                  {({ value, onChange }) => (
+                    <TextInputAdorned
+                      startAdornment={"$ "}
+                      name={'bid'}
+                      type="currency"
+                      // placeholder="0.00"
+                      placeholder={"Enter a bid"}
+                      className={classes.inputField}
+                      value={value || ""}
+                      onChange={(e) => {
+                        e.persist()
+                        onChange(e)
+                      }}
+                      inputProps={{ style: { width: '100%', marginLeft: '0.25rem' }}}
+                      // errorMessage={
+                      //   errors?.currentVariants?.[position]?.price
+                      //   ? errors.currentVariants[position].price
+                      //   : null
+                      // }
+                      // touched={touched?.currentVariants?.[position]?.price}
+                      // validationErrorMsgStyle={{
+                      //   bottom: '-1.15rem',
+                      // }}
+                    />
+                  )}
+                </Rifm>
 
 
-          <TextEditorSSR
-            onChange={(value) => {
-              setDescription(value)
-            }}
-            resetSlate={resetSlate}
-            className={classes.textEditorRoot}
-            placeholder={"Send a message"}
-            editorStyle={{
-            }}
-          />
+                <TextEditorCK
+                  className={classes.textEditorRoot}
+                  errorMessage={errors.description}
+                  limit={{
+                    max: 1000,
+                  }}
+                  errors={fprops.errors}
+                  values={fprops.values}
+                  touched={fprops.touched}
+                  setFieldTouched={fprops.setFieldTouched}
+                  containerStyle={{
+                    marginBottom: '1rem',
+                  }}
+                  editorStyle={{
+                    // maxWidth: 'calc(100vw - 4rem)', // constrain width for mobile
+                    background: Colors.uniswapMediumNavy,
+                  }}
+                  {...fprops}
+                />
 
-          <Button
-            variant={"outlined"}
-            className={clsx(classes.sendButton)}
-            onClick={sendMessage}
-          >
-            Send
-          </Button>
+                <Button
+                  type="submit" // this sets off Form submit
+                  variant={"outlined"}
+                  className={clsx(classes.sendButton)}
+                  onClick={() => { }}
+                >
+                  Send
+                </Button>
 
-          <Button
-            variant={"outlined"}
-            className={clsx(classes.sendBidButton)}
-            onClick={sendBidMessage}
-            // onClick={() => {
-            //   setShowBidMenu(s => !s)
-            // }}
-          >
-            Create Bid
-          </Button>
+                <Button
+                  variant={"outlined"}
+                  className={clsx(classes.sendBidButton)}
+                  onClick={async() => {
 
-          <Button
-            variant={"outlined"}
-            className={clsx(classes.typoButton)}
-            onClick={dispatchResetSlate}
-          >
-            Reset slate.js
-          </Button>
-        </div>
-      </div>
-    </form>
+                    let description = fprops.values?.description
+                    console.log("chatRoomId: ", props.chatRoomId)
+
+                    let variables = {
+                      msgId: `msg_${nanoid()}`,
+                      chatRoomId: props.chatRoomId,
+                      senderId: props.userId,
+                      content: description,
+                      // content: state.text,
+                      bidId: `bid_${nanoid()}`,
+                      productId: props.product.id,
+                      productSnapshotId: props.product.currentSnapshotId,
+                      variantId: props.product.productVariants[0].variantId,
+                      variantSnapshotId: props.product.productVariants[0].variantSnapshotId,
+                      offerPrice: offerPrice,
+                      bidStatus: "CREATED",
+                    }
+                    console.log("varables: ", variables)
+
+                    insertBidMessage({
+                      variables: variables
+                    }).then(res => {
+                      fprops.resetForm()
+                    });
+                  }}
+                >
+                  Create Bid
+                </Button>
+
+                <Button
+                  variant={"outlined"}
+                  className={clsx(classes.typoButton)}
+                  onClick={() => fprops.resetForm()}
+                >
+                  Reset Form
+                </Button>
+              </div>
+            </div>
+          </form>
+        )
+      }}
+    </Formik>
   )
 }
 
@@ -271,6 +270,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   chatRoomId: string;
   product: Products;
 }
+
 interface MutData {
   insert_chat_messages: Chat_Messages_Mutation_Response
 }

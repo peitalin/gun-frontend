@@ -96,12 +96,7 @@ const ProductRow = (props: ReactProps) => {
                     <PriceDisplayMain
                       price={product?.featuredVariant?.price}
                       priceWas={product?.featuredVariant?.priceWas}
-                      quantityAvailable={0}
                       soldOutStatus={product?.soldOutStatus}
-                      hideSavings={true}
-                      countDownStyle={{
-
-                      }}
                     />
                   </div>
                 </div>

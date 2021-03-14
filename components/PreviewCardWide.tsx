@@ -130,8 +130,6 @@ const PreviewCardWide = (props: ReactProps) => {
               ? <PriceDisplayMain
                   price={props.price}
                   priceWas={props.priceWas}
-                  hideSavings={true}
-                  quantityAvailable={props.quantityAvailable}
                   soldOutStatus={props.soldOutStatus}
                 />
               : <span style={{ color: Colors.grey }}></span>

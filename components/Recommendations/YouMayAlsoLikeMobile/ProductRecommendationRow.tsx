@@ -93,10 +93,7 @@ const ProductRecommendationRow = (props: ReactProps) => {
               price
               ? <PriceDisplay4
                   price={price}
-                  hideSavings={true}
-                  quantityAvailable={undefined}
                   soldOutStatus={soldOutStatus}
-                  countDownStyle={{ }}
                 />
               : <span style={{ color: Colors.grey }}></span>
             }

@@ -1,28 +1,12 @@
 import React from "react";
 import { useState, useEffect, useRef } from 'react'
-import { oc as option } from "ts-optchain";
 import clsx from "clsx";
-// Redux
-import { useSelector, useDispatch } from "react-redux";
 import { Colors } from "layout/AppTheme";
 // Styles
 import { withStyles, WithStyles } from "@material-ui/core/styles";
-// Material UI
-import Typography from "@material-ui/core/Typography";
-// Components
-import Loading from "components/Loading";
-import ErrorBounds from 'components/ErrorBounds';
-import TextInput from "components/Fields/TextInput";
 
 import { FormikProps, FormikErrors, FormikTouched, FormikState } from 'formik';
 import ValidationErrorMsg from "components/Fields/ValidationErrorMsg";
-// SSR dynamic import
-import dynamic from 'next/dynamic'
-import TextEditorPlaceholder from 'components/TextEditor/TextEditorPlaceholder';
-const TextEditorSSR = dynamic(() => import('../TextEditor'), {
-  loading: () => <TextEditorPlaceholder/>,
-  ssr: false
-})
 import { maxLengthProductDescription } from "utils/limitsAndRules";
 /// Debounce
 import { useDebouncedCallback } from 'use-debounce';
@@ -79,7 +63,10 @@ const TextEditorCK = (props: ReactProps & FormikProps<FormikFields>) => {
 
   if (editorLoaded) {
     return (
-      <div className="ck-content" style={{ position: "relative" }}>
+      <div
+        className={clsx("ck-content", props.className)}
+        style={{ position: "relative" }}
+      >
         <CKEditor
           editor={ClassicEditor}
 

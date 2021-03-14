@@ -25,28 +25,23 @@ import Description from "../Description";
 import PricingLicenses from "../PricingLicenses";
 import StoreOrLogin from "../StoreOrLogin";
 
-import SelectTags from "../SelectTags";
 import SelectFieldPlaceholder from "../SSR/SelectFieldPlaceholder";
 // const SelectTags = dynamic(() => import("../SelectTags"), {
 //   loading: () => <SelectTagsPlaceholder/>,
 //   ssr: false,
 // })
-// import SelectCategories from "../SelectCategories"
 const SelectCategories = dynamic(() => import("../SelectCategories"), {
   loading: () => <SelectFieldPlaceholder title={"Category"}/>,
   ssr: false,
 })
-// import SelectActionType from "../SelectFieldPlaceholder"
 const SelectActionType = dynamic(() => import("../SelectActionType"), {
   loading: () => <SelectFieldPlaceholder title={"Action Type"}/>,
   ssr: false,
 })
-// import SelectCondition from "../SelectCondition"
 const SelectCondition = dynamic(() => import("../SelectCondition"), {
   loading: () => <SelectFieldPlaceholder title={"Condition"}/>,
   ssr: false,
 })
-// import SelectDealer from "../SelectDealer"
 const SelectDealer = dynamic(() => import("../SelectDealer"), {
   loading: () => <SelectFieldPlaceholder title={"Dealer"}/>,
   ssr: false,
@@ -62,7 +57,6 @@ import Tooltip from '@material-ui/core/Tooltip';
 
 // SSR Subcomponents
 import dynamic from 'next/dynamic'
-import UploadInputPlaceholder from "../SSR/UploadInputPlaceholder";
 import UploadPreviewPlaceholder from "../SSR/UploadPreviewPlaceholder";
 const PreviewItemUploader = dynamic(() => import("../PreviewItemUploaderGrid"), {
   loading: () => <UploadPreviewPlaceholder/>,
@@ -99,13 +93,9 @@ import { Formik, FormikErrors } from 'formik';
 import { validationSchemas } from "utils/validation";
 // router
 import { useRouter } from "next/router";
-import Portal from "@material-ui/core/Portal"
 // CSS
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
-import { serializeHtml } from 'components/TextEditor/helpersSerializers';
-// Video Preview
-import { getYouTubeVimeoImagePreview } from "utils/links";
 
 
 
