@@ -309,8 +309,6 @@ const TitleRows = (props: TitleRowsProps) => {
 
 
 interface ReactProps extends WithStyles<typeof styles> {
-  month?: number;
-  year?: number;
   dealer: UserPrivate;
 }
 interface TitleRowsProps extends WithStyles<typeof styles> {

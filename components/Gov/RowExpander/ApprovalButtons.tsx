@@ -1,0 +1,146 @@
+import React from 'react';
+import clsx from 'clsx';
+import { Colors, BoxShadows } from 'layout/AppTheme';
+import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles';
+import ButtonLoading from "components/ButtonLoading";
+
+// Snackbar
+import { useSnackbar } from "notistack";
+// graphql
+import { OrderStatus, OrderAdmin } from "typings/gqlTypes";
+import { useMutation } from "@apollo/client";
+import { DocumentNode } from "graphql";
+import {
+  APPROVE_FORM_10,
+  UNAPPROVE_FORM_10,
+  REVISE_AND_RESUBMIT_FORM_10,
+} from "queries/orders-mutations";
+
+
+
+const ApprovalButtons = (props: ReactProps) => {
+
+  const {
+    orderId,
+    orderStatus,
+    classes,
+  } = props;
+
+  const snackbar = useSnackbar();
+
+  const [approveForm10, { data, loading, error }] = useMutation<MutData, MutVar>(
+    APPROVE_FORM_10,
+    {
+      refetchQueries: props.refetchQueriesParams,
+      awaitRefetchQueries: true,
+    }
+  );
+
+  const [reviseAndResubmit, reviseAndResubmitResponse] = useMutation<MutData, MutVar>(
+    REVISE_AND_RESUBMIT_FORM_10,
+    {
+      refetchQueries: props.refetchQueriesParams,
+      awaitRefetchQueries: true,
+    },
+  );
+
+  let readyForApproval = orderStatus === OrderStatus.FORM_10_SUBMITTED
+  let alreadyApproved = orderStatus === OrderStatus.ADMIN_APPROVED
+
+  return (
+    <>
+      <ButtonLoading
+        variant="outlined"
+        className={classes.approveButton}
+        onClick={() => {
+          approveForm10({
+            variables: {
+              orderId: orderId, // row.id => order.id
+            }
+          })
+        }}
+        loadingIconColor={Colors.blue}
+        replaceTextWhenLoading={true}
+        loading={loading}
+        disabled={!readyForApproval}
+        color="secondary"
+        style={{
+          width: '150px',
+          height: '36px',
+        }}
+      >
+        {
+          readyForApproval
+          ? "Approve Form 10"
+          : alreadyApproved
+            ? "Approved"
+            : "Awaiting Seller"
+        }
+      </ButtonLoading>
+      <ButtonLoading
+        variant="outlined"
+        className={classes.unapproveButton}
+        onClick={() => {
+          reviseAndResubmit({
+            variables: {
+              orderId: orderId, // row.id => order.id
+            }
+          })
+        }}
+        loadingIconColor={Colors.red}
+        replaceTextWhenLoading={true}
+        loading={reviseAndResubmitResponse.loading}
+        disabled={!readyForApproval}
+        color="secondary"
+        style={{
+          width: '150px',
+          height: '36px',
+        }}
+      >
+        Reject Form 10
+      </ButtonLoading>
+    </>
+  );
+}
+
+
+interface ReactProps extends WithStyles<typeof styles> {
+  orderId: string;
+  orderStatus: string;
+  refetchQueriesParams: {
+    query: DocumentNode,
+    variables?: {
+      query?: any
+      limit?: number
+      offset?: number
+    },
+  }[];
+}
+
+interface MutData {
+}
+interface MutVar {
+  orderId: string; // row.id => order.id
+}
+
+const styles = (theme: Theme) => createStyles({
+  approveButton: {
+    height: '36px',
+    margin: "0.5rem 0.5rem 0.5rem 0.5rem",
+  },
+  unapproveButton: {
+    height: '36px',
+    margin: "0.5rem 0.5rem 0.5rem 0rem",
+    border: `1px solid ${Colors.red}`,
+    color: Colors.red,
+    "&:hover": {
+      backgroundColor: Colors.pink,
+      border: `1px solid ${Colors.darkerRed}`,
+      color: Colors.cream,
+    },
+  },
+});
+
+
+
+export default withStyles(styles)( ApprovalButtons );

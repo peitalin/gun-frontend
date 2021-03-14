@@ -24,7 +24,7 @@ import LoadingBar from "components/LoadingBar";
 // graphl
 import { useMutation, useQuery } from "@apollo/client";
 
-import RowExpander from "./RowExpander";
+import RowExpanderExpiringOrders from "./RowExpanderExpiringOrders";
 
 // Search Component
 import SearchOptions, { SelectOption, setCategoryFacets } from "components/SearchOptions";
@@ -158,7 +158,7 @@ const OrdersPendingApprovalTable: NextPage<ReactProps> = (props) => {
             console.log("order>>>>>>: ", order)
 
             return (
-              <RowExpander
+              <RowExpanderExpiringOrders
                 key={order.id}
                 order={order}
                 admin={props.admin}

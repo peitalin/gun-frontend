@@ -8,9 +8,8 @@ import {
   Store,
   OrderStatus,
 } from "typings/gqlTypes";
-import {
-  getUserWhoActionedOrderStatus
-} from "../../PayoutsPendingApprovals/OrdersPendingApprovalTable/createData";
+import { getUserWhoActionedOrderStatus } from "components/Gov/createDataUtils";
+
 
 export const createDataForExpiringTable = ({
   id,
@@ -45,9 +44,10 @@ export const createDataForExpiringTable = ({
     createdAt: createdAt,
     total: total,
     orderStatus: currentOrderSnapshot?.orderStatus,
-    form10: currentOrderSnapshot?.form10Image,
+    form10: currentOrderSnapshot?.form10File ?? currentOrderSnapshot?.form10Image,
     sellerStore: sellerStore,
     buyer: buyer,
+    dealer: product?.currentSnapshot?.dealer,
     product: product,
     history: (orderSnapshots ?? [])
       .slice()
@@ -65,7 +65,6 @@ export const createDataForExpiringTable = ({
           approverId: approver?.id,
           approverEmail: approver?.email,
           orderStatus: o?.orderStatus,
-          form10Image: o?.form10Image,
         }
       }),
     payoutId: payoutId,

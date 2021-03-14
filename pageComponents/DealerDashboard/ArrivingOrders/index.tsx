@@ -30,8 +30,6 @@ const ArrivingOrders: React.FC<ReactProps> = (props) => {
     <div className={classes.root}>
       <div className={clsx(classes.spaceBetween)}>
         <ArrivingOrdersTable
-          month={month}
-          year={year}
           dealer={props.dealer}
         />
         <Loading fixed loading={isLoading} delay={'200ms'}/>
