@@ -72,8 +72,8 @@ interface ReactProps extends WithStyles<typeof styles> {
 const styles = (theme: Theme) => createStyles({
   escrowHistoryTableRoot: {
     borderBottom: theme.palette.type === 'dark'
-      ? `4px solid ${Colors.uniswapLightNavy}`
-      : `4px solid ${Colors.slateGreyDarkest}`,
+      ? `2px solid ${Colors.uniswapLightNavy}`
+      : `2px solid ${Colors.slateGreyDarkest}`,
   },
   scrollableTable: {
     overflow: "scroll",

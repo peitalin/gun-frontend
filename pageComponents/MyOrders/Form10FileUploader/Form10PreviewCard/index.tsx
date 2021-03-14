@@ -145,7 +145,6 @@ const Form10PreviewCard: React.FC<ReactProps> = (props) => {
   let orderStatus = props?.order?.currentSnapshot?.orderStatus;
   let tipText = tipTextFromOrderStatus(orderStatus)
 
-  console.log("mimeType: ", form10FilePreview?.mimeType)
 
   return (
     <div className={classes.cardContainer}>

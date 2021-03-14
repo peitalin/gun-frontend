@@ -438,6 +438,12 @@ export const OrdersFragment = gql`
       featuredVariant {
         ...ProductVariantsFragment
       }
+      category {
+        id
+        name
+        slug
+        categoryGroup
+      }
       store {
         id
         name

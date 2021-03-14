@@ -23,7 +23,7 @@ import currency from 'currency.js';
 import { UserPrivate, OrderStatus, OrderAdmin } from "typings/gqlTypes";
 import { useMutation } from "@apollo/client";
 import { DocumentNode } from "graphql";
-
+import { generatePDF } from "./generateForm10";
 
 
 
@@ -59,8 +59,6 @@ const RowExpander = (props: RowExpanderProps) => {
 
   const c = (s) => currency(s/100, { formatWithSymbol: true }).format()
 
-  let form10 = row?.form10;
-
   return (
     <>
       <RowExpanderTitle
@@ -82,6 +80,7 @@ const RowExpander = (props: RowExpanderProps) => {
           {row?.sellerStore?.user?.email}
         </div>
       </RowExpanderTitle>
+
 
       <RowExpanderHidden open={open} index={index}>
 
@@ -106,12 +105,17 @@ const RowExpander = (props: RowExpanderProps) => {
               inAdminDashboard={false}
               onMouseDown={() => {
                 snackbar.enqueueSnackbar(
-                  `Generating Form-10`, { variant: "info" })
+                  `Generating Form-10 for seller`,
+                  { variant: "info", autoHideDuration: 3000 }
+                )
 
-                setTimeout(() => {
-                  snackbar.enqueueSnackbar(
-                    `Not implemented yet`, { variant: "success" })
-                }, 500)
+                generatePDF({
+                  buyer: row?.buyer,
+                  sellerStore: row?.sellerStore,
+                  dealer: row?.dealer,
+                  order: order,
+                })
+
               }}
             />
           }

@@ -32,6 +32,7 @@ import { formatDate } from "utils/dates";
 import currency from "currency.js";
 // graphl
 import { useMutation, useQuery } from "@apollo/client";
+import { useRouter } from "next/router";
 
 import RowExpander from "./RowExpander";
 
@@ -50,10 +51,11 @@ import GridPaginatorGeneric from "components/GridPaginatorGeneric";
 
 const ArrivingOrdersTable: NextPage<ReactProps> = (props) => {
 
-  //
   const {
     classes,
   } = props;
+
+  const router = useRouter()
 
   const isDarkMode = useSelector<GrandReduxState, boolean>(s => {
     return s.reduxLogin.darkMode === 'dark'
@@ -247,6 +249,7 @@ const ArrivingOrdersTable: NextPage<ReactProps> = (props) => {
                   order={order}
                   admin={props.dealer}
                   index={ordersArrivingIndex}
+                  initialOpen={router?.query?.orderId === order?.id}
                   refetchQueriesParams={refetchQueriesParams}
                   showApprovalButtons={false}
                 />
