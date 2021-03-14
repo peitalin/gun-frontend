@@ -67,6 +67,7 @@ const styles = (theme: Theme) => createStyles({
     flexDirection: "column",
     justifyContent: "center",
     marginBottom: '1rem',
+    padding: '0.5rem',
   },
   asPage: {
     display: 'flex',

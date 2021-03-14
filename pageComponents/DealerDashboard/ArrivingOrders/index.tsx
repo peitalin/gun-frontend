@@ -49,6 +49,7 @@ interface ReactProps extends WithStyles<typeof styles> {
 const styles = (theme: Theme) => createStyles({
   root: {
     marginBottom: '1rem',
+    padding: '0.5rem',
   },
   spaceBetween: {
     justifyContent: "space-between",

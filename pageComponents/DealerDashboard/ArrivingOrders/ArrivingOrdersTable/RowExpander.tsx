@@ -267,13 +267,14 @@ const RowExpander = (props: RowExpanderProps) => {
               <div>
                 <Typography className={classes.generateForm10Text}
                   variant="h6" gutterBottom component="div">
-                  Generate Form-10 for Seller:
+                  Generate Form-10 for Seller
                 </Typography>
                 {
                   props.order?.id &&
                   <Form10PreviewCard
                     order={props.order}
-                    inAdminDashboard={true}
+                    inDealerDashboard={true}
+                    inAdminDashboard={false}
                     onMouseDown={() => {
                       snackbar.enqueueSnackbar(
                         `Generating Form-10`, { variant: "info" })

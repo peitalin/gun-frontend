@@ -14,8 +14,8 @@ const dashboardLinkColorHover = Colors.secondaryBright
 const dashboardLinkColor2 = Colors.darkGrey
 const dashboardLinkColorHover2 = Colors.secondaryBright
 
-const dashboardMenuHeight = 50 * 4
-// 4 items, 50px each
+const dashboardMenuHeight = 50 * 2
+// 2 items, 50px each
 
 
 export const styles = (theme: Theme) => createStyles({
@@ -52,7 +52,7 @@ export const styles = (theme: Theme) => createStyles({
     position: 'absolute',
     top: "0",
     background: theme.palette.type === 'dark'
-      ? Gradients.gradientUniswapDark.background
+      ? Gradients.gradientUniswapDarkRotated.background
       : Gradients.gradientGrey2.background,
     boxShadow: theme.palette.type === 'dark'
       ? BoxShadows.shadow3.boxShadow

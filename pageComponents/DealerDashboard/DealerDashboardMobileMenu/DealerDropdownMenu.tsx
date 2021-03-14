@@ -1,6 +1,4 @@
 import React from "react";
-import { oc as option } from "ts-optchain";
-import { Product } from "typings/gqlTypes";
 // Styles
 import clsx from "clsx";
 import { withStyles, WithStyles } from "@material-ui/core/styles";
@@ -15,9 +13,8 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Button from "@material-ui/core/Button";
 
 const routeMappings = {
-  '': "Home",
-  'edit-dealer': "Edit Dealer Profile",
-  'orders': "Orders",
+  '': "Edit Dealer Profile",
+  'escrow/orders': "Arriving Orders",
 }
 
 
@@ -33,16 +30,13 @@ const DealerDropdownMenu: React.FC<ReactProps> = (props) => {
     const lastPath = router.pathname.split("/").pop()
     const secondLastPath = router.pathname.split("/").slice(-2,-1)[0]
 
-    if (lastPath === "admin" || lastPath === "") {
-      return "Home"
+    if (lastPath === "dealers" || lastPath === "") {
+      return "Edit Dealer Profile"
     } else {
-      // if p123123 id in route, take 2nd last part of route
-      if (lastPath.startsWith('p') || lastPath.startsWith('[productId]')) {
-        return "Edit Product"
-      }
-      if (lastPath.startsWith('order') || lastPath.startsWith('[orderItemId]')) {
-        return "View Order Details"
-      }
+      // // if p123123 id in route, take 2nd last part of route
+      // if (lastPath.startsWith('order') || lastPath.startsWith('[orderItemId]')) {
+      //   return "Arriving Orders"
+      // }
       // otherwise return last part of route
       return lastPath.split('-').map(m => {
         //  otherwise change hyphens to spaces and capitalize
@@ -100,10 +94,10 @@ const MenuExpanded = (
             <div className={classes.dashboardInnerContainer}>
               {
                 Object.keys(routeMappings).map(k => {
-                  let defaultRoute = '/admin/products'
+                  let defaultRoute = '/dealers'
                   return (
                     <div key={k} className={classes.mobileMenuFlexitem}>
-                      <Link href={k.length ? `/admin/${k}` : defaultRoute}>
+                      <Link href={k.length ? `/dealers/${k}` : defaultRoute}>
                         <a className={classes.menuLink}>
                           <MenuItem
                             className={clsx(
