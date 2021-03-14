@@ -279,24 +279,9 @@ const OrderViewer: React.FC<ReactProps> = (props) => {
                   <TableContainer component={Paper}>
                     <Table aria-label="collapsible table">
                       <RowExpander
-                        key={order.id}
+                        key={order?.id}
                         initialOpen={true}
-                        row={
-                          createDataForPendingApprovalTable({
-                            id: order.id,
-                            total: order.total,
-                            createdAt: order.createdAt,
-                            sellerStore: order.sellerStore as any,
-                            buyer: order.buyer as any,
-                            currentOrderSnapshot: order.currentSnapshot,
-                            orderSnapshots: order.orderSnapshots,
-                            product: order.product,
-                            payoutId: order?.payoutItems?.[0]?.payoutId,
-                            payoutStatus: order?.payoutItems?.[0]?.payoutStatus,
-                            paymentIntentStatus: order?.paymentIntent?.status,
-                            paymentIntentId: order?.paymentIntent?.id,
-                          })
-                        }
+                        order={order}
                         admin={undefined}
                         index={0}
                         refetchQueriesParams={undefined}

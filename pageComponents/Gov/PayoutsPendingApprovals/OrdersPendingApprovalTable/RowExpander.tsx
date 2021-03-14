@@ -291,6 +291,7 @@ const RowExpander = (props: RowExpanderProps) => {
                 props.order?.id &&
                 <Form10PreviewCard
                   order={props.order}
+                  inDealerDashboard={false}
                   inAdminDashboard={true}
                   onMouseDown={() => {
                     snackbar.enqueueSnackbar(
@@ -300,40 +301,6 @@ const RowExpander = (props: RowExpanderProps) => {
                   }}
                 />
               }
-              <div className={classes.userDetailsRow}>
-              </div>
-
-              {/* {
-                form10Exists &&
-                <Dialog
-                  open={openImage}
-                  onClose={() => setOpenImage(false)}
-                  // fullWidth={true}
-                  // fullScreen={true}
-                  scroll={'body'}
-                >
-                  <CardMedia
-                    component="img"
-                    classes={{
-                      media: classes.cardMediaWide
-                    }}
-                    onClick={() => setOpenImage(false)}
-                    image={row?.form10?.original?.url}
-                  />
-                </Dialog>
-              }
-              <Button
-                variant="outlined"
-                className={classes.form10Button}
-                disabled={!form10Exists}
-                onClick={() => setOpenImage(true)}
-              >
-                {
-                  form10Exists
-                  ? "Show Form 10"
-                  : "Waiting on Form 10"
-                }
-              </Button> */}
 
               <Link href={`/gov/orders?orderId=${row.id}`}>
                 <a>
@@ -341,7 +308,7 @@ const RowExpander = (props: RowExpanderProps) => {
                     variant="outlined"
                     className={classes.viewOrderButton}
                   >
-                    View Order Cancel
+                    View Order
                   </Button>
                 </a>
               </Link>
@@ -354,7 +321,7 @@ const RowExpander = (props: RowExpanderProps) => {
                     onClick={() => {
                       approveForm10({
                         variables: {
-                          orderId: row.id, // row.id => order.id
+                          orderId: row?.id, // row.id => order.id
                         }
                       })
                     }}
@@ -383,7 +350,7 @@ const RowExpander = (props: RowExpanderProps) => {
                     onClick={() => {
                       reviseAndResubmit({
                         variables: {
-                          orderId: row.id, // row.id => order.id
+                          orderId: row?.id, // row.id => order.id
                         }
                       })
                     }}

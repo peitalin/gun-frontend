@@ -74,7 +74,7 @@ const OrdersCancelledList = (props: ReactProps) => {
 
 
   /////////////////////////////////// paginator
-  let numItemsPerPage = 50;
+  let numItemsPerPage = 20;
   let overfetchBy = 1;
   // overfetch by 1x pages
   let {

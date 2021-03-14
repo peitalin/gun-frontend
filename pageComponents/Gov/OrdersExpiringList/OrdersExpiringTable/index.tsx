@@ -92,7 +92,7 @@ const OrdersPendingApprovalTable: NextPage<ReactProps> = (props) => {
   );
 
   const ordersExpiringConnection =
-    _ordersExpiring?.data?.getOrdersExpiringConnection
+    _ordersExpiring?.data?.getOrdersExpiringConnectionAdmin
 
 
   return (
@@ -220,7 +220,7 @@ interface TitleRowsProps extends WithStyles<typeof styles> {
 }
 
 interface QueryData {
-  getOrdersExpiringConnection?: OrdersConnection
+  getOrdersExpiringConnectionAdmin: OrdersConnection
 }
 interface QueryVar {
   query?: ConnectionOffsetQuery

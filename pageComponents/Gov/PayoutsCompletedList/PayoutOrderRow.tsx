@@ -129,6 +129,9 @@ const styles = (theme: Theme) => createStyles({
     justifyContent: "flex-start",
     alignItems: 'center',
     paddingRight: '0.5rem',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
   },
   flexItemWide: {
     flexBasis: "15%",
@@ -138,6 +141,9 @@ const styles = (theme: Theme) => createStyles({
     alignItems: 'flex-start',
     paddingRight: '0.5rem',
     flexGrow: 1,
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
   },
   flexItem: {
     flexGrow: 1,

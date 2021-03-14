@@ -272,7 +272,7 @@ interface MutVar2 {
 
 const styles = (theme: Theme) => createStyles({
   root: {
-    padding: '0rem 0rem 2rem 1rem',
+    padding: '0rem 1rem 2rem 1rem',
     width: '100%',
     display: 'flex',
     flexDirection: 'column',
@@ -327,6 +327,9 @@ const styles = (theme: Theme) => createStyles({
     justifyContent: "flex-start",
     alignItems: 'center',
     paddingRight: '0.5rem',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
   },
   flexItemWide: {
     flexBasis: "15%",
@@ -337,6 +340,9 @@ const styles = (theme: Theme) => createStyles({
     alignItems: 'flex-start',
     paddingRight: '0.5rem',
     flexGrow: 1,
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
   },
   flexItem: {
     flexGrow: 1,

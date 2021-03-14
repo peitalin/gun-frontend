@@ -54,11 +54,13 @@ const CancelledOrderRow = (props: ReactProps) => {
         router.push(`/gov/orders?orderId=${order.id}`)
       }}
     >
-      <div className={classes.flexItem}>
-        <Typography variant="body2" className={classes.id}>
-          {orderId}
-        </Typography>
-      </div>
+      <Tooltip title={`Go to order ${order.id}`}>
+        <div className={classes.flexItem}>
+          <Typography variant="body2" className={classes.id}>
+            {orderId}
+          </Typography>
+        </div>
+      </Tooltip>
       <div className={classes.flexItemWide}>
         <Typography variant="body2" className={classes.id}>
           {formatDate(order.createdAt)}
@@ -69,7 +71,7 @@ const CancelledOrderRow = (props: ReactProps) => {
           {totalAmount}
         </Typography>
       </div>
-      <Tooltip title={"Email"}>
+      <Tooltip title={order?.sellerStore?.user?.email}>
         <div className={classes.flexItemWide}>
           <Typography variant="body2" className={classes.id}>
             {order?.sellerStore?.user?.email}
@@ -82,7 +84,7 @@ const CancelledOrderRow = (props: ReactProps) => {
           {order?.currentSnapshot?.orderStatus}
         </Typography>
       </div>
-      <Tooltip title={"Account Name"}>
+      <Tooltip title={order?.sellerStore?.user?.payoutMethod?.accountName}>
         <div className={classes.flexItem}>
           <Typography variant="body2" className={classes.id}>
             {order?.sellerStore?.user?.payoutMethod?.accountName}
@@ -121,6 +123,9 @@ const styles = (theme: Theme) => createStyles({
     alignItems: 'flex-start',
     paddingRight: '0.5rem',
     flexGrow: 1,
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
   },
   flexItem: {
     flexGrow: 1,

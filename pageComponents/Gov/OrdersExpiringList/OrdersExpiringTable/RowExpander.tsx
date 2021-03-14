@@ -16,6 +16,9 @@ import Collapse from '@material-ui/core/Collapse';
 import TableHead from '@material-ui/core/TableHead';
 import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown"
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
+import Form10PreviewCard from "pageComponents/MyOrders/Form10FileUploader/Form10PreviewCard";
+import Checkbox, { CheckboxProps } from '@material-ui/core/Checkbox';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 
 // router
 import Link from "next/link";
@@ -24,15 +27,23 @@ import { formatDate } from "utils/dates";
 import currency from 'currency.js';
 
 // graphql
-import { UserPrivate, OrderStatus, OrderAdmin } from "typings/gqlTypes";
-import { useMutation } from "@apollo/client";
+import { UserPrivate, OrderStatus, OrderAdmin, OrderMutationResponse } from "typings/gqlTypes";
+import { useMutation, useApolloClient } from "@apollo/client";
 import { DocumentNode } from "graphql";
 import {
   APPROVE_FORM_10,
-  UNAPPROVE_FORM_10,
   REVISE_AND_RESUBMIT_FORM_10,
 } from "queries/orders-mutations";
-
+import {
+  CANCEL_ORDER_AND_PAYMENT,
+} from "queries/refunds-mutations";
+import {
+  getDateWithOffset,
+  get7DaysFromDate,
+  getCountdownForExpiry,
+} from "utils/dates";
+import { canBeCancelled } from "pageComponents/Gov/OrderViewer/cancelHelpers";
+import { useSnackbar } from "notistack";
 
 
 
@@ -63,7 +74,7 @@ const RowExpander = (props: RowExpanderProps) => {
     paymentIntentId: order?.paymentIntent?.id,
   })
 
-  const [approveForm10, { data, loading, error }] = useMutation<MutData, MutVar>(
+  const [approveForm10, approveForm10Response] = useMutation<MutData, MutVar>(
     APPROVE_FORM_10,
     {
       refetchQueries: props.refetchQueriesParams,
@@ -79,8 +90,42 @@ const RowExpander = (props: RowExpanderProps) => {
     },
   );
 
+
+  const aClient = useApolloClient();
+  const snackbar = useSnackbar();
+
+  const [loading, setLoading] = React.useState(false);
+  const [markAbandoned, setMarkAbandoned] = React.useState(true);
   const [open, setOpen] = React.useState(initialOpen);
   const [openImage, setOpenImage] = React.useState(false);
+
+
+  const makeCancelledPayment = async({ orderId, markProductAbandoned }: {
+    orderId: string,
+    markProductAbandoned: boolean,
+  }) => {
+    console.log("cancelling orderId:", orderId);
+    setLoading(true)
+    const { errors, data } = await aClient.mutate<MutData3, MutVar3>({
+      mutation: CANCEL_ORDER_AND_PAYMENT,
+      variables: {
+        orderId: orderId,
+        markProductAbandoned: markProductAbandoned,
+      }
+    });
+    setLoading(false)
+    console.log("payment cancel response:", data);
+    alert(JSON.stringify({ CANCELLED: data }));
+    // data.refundOrder.order
+    if (errors) {
+      snackbar.enqueueSnackbar(
+        `Payment authorization cancel failed with msg: ${errors}`,
+        { variant: "error" }
+      )
+    }
+    return data;
+  }
+
 
   const c = (s) => currency(s/100, { formatWithSymbol: true }).format()
 
@@ -107,8 +152,16 @@ const RowExpander = (props: RowExpanderProps) => {
     : "-"
   // console.log("admin: ", admin)
 
+  let canOrderBeCancelled = canBeCancelled(row.orderStatus)
+  console.log("createdAt: ", new Date(row.createdAt))
+  let expiryDate = get7DaysFromDate(new Date(row.createdAt))
+  let countDown = getCountdownForExpiry({
+    expiryDate: expiryDate
+  })
+
   return (
     <>
+
       <div className={clsx(
         classes.rowExpanderRoot,
         open && isEvenRow && classes.backgroundGrey,
@@ -126,6 +179,7 @@ const RowExpander = (props: RowExpanderProps) => {
           {row.id}
         </div>
         <div className={classes.flexItemSlim}>{formatDate(row.createdAt)}</div>
+        <div className={classes.flexItemSlim}>{countDown}</div>
         <div className={classes.flexItemTiny}>{c(row.total)}</div>
         <div className={classes.flexItemSlim}>
           {
@@ -134,10 +188,8 @@ const RowExpander = (props: RowExpanderProps) => {
             : row.orderStatus
           }
         </div>
-        <div className={classes.flexItemSlim}>
-          {row?.sellerStore?.user?.email}
-        </div>
       </div>
+
       <div className={clsx(
         classes.hiddenRowRoot,
         open && isEvenRow && classes.backgroundGrey,
@@ -281,104 +333,136 @@ const RowExpander = (props: RowExpanderProps) => {
                   {row?.paymentIntentId}
                 </Typography>
               </div>
+
+
               {
-                form10Exists &&
-                <Dialog
-                  open={openImage}
-                  onClose={() => setOpenImage(false)}
-                  // fullWidth={true}
-                  // fullScreen={true}
-                  scroll={'body'}
-                >
-                  <CardMedia
-                    component="img"
-                    classes={{
-                      media: classes.cardMediaWide
-                    }}
-                    onClick={() => setOpenImage(false)}
-                    image={row?.form10?.original?.url}
-                  />
-                </Dialog>
+                props.order?.id &&
+                <Form10PreviewCard
+                  order={props.order}
+                  inDealerDashboard={false}
+                  inAdminDashboard={true}
+                  onMouseDown={() => {
+                    snackbar.enqueueSnackbar(
+                      `Waiting for seller to upload receipt`,
+                      { variant: "info" }
+                    )
+                  }}
+                />
               }
-              <Button
-                variant="outlined"
-                className={classes.form10Button}
-                disabled={!form10Exists}
-                onClick={() => setOpenImage(true)}
-              >
+
+
+              <div className={classes.buttonContainer}>
+
+                <Link href={`/gov/orders?orderId=${row.id}`}>
+                  <a>
+                    <Button
+                      variant="outlined"
+                      className={classes.viewOrderButton}
+                    >
+                      View Order
+                    </Button>
+                  </a>
+                </Link>
+
                 {
-                  form10Exists
-                  ? "Show Form 10"
-                  : "Waiting on Form 10"
+                  showApprovalButtons &&
+                  <>
+                    <ButtonLoading
+                      variant="outlined"
+                      className={classes.approveButton}
+                      onClick={() => {
+                        approveForm10({
+                          variables: {
+                            orderId: row.id, // row.id => order.id
+                          }
+                        })
+                      }}
+                      loadingIconColor={Colors.blue}
+                      replaceTextWhenLoading={true}
+                      loading={loading}
+                      disabled={!readyForApproval}
+                      color="secondary"
+                      style={{
+                        width: '150px',
+                        height: '36px',
+                      }}
+                    >
+                      {
+                        readyForApproval
+                        ? "Approve Form 10"
+                        : alreadyApproved
+                          ? "Approved"
+                          : "Awaiting Seller"
+
+                      }
+                    </ButtonLoading>
+                    <ButtonLoading
+                      variant="outlined"
+                      className={classes.unapproveButton}
+                      onClick={() => {
+                        reviseAndResubmit({
+                          variables: {
+                            orderId: row.id, // row.id => order.id
+                          }
+                        })
+                      }}
+                      loadingIconColor={Colors.red}
+                      replaceTextWhenLoading={true}
+                      loading={reviseAndResubmitResponse.loading}
+                      disabled={!readyForApproval}
+                      color="secondary"
+                      style={{
+                        width: '150px',
+                        height: '36px',
+                      }}
+                    >
+                      Reject Form 10
+                    </ButtonLoading>
+                  </>
                 }
-              </Button>
+              </div>
 
-              <Link href={`/gov/orders?orderId=${row.id}`}>
-                <a>
-                  <Button
-                    variant="outlined"
-                    className={classes.viewOrderButton}
-                  >
-                    View Order Cancel
-                  </Button>
-                </a>
-              </Link>
-              {
-                showApprovalButtons &&
-                <>
-                  <ButtonLoading
-                    variant="outlined"
-                    className={classes.approveButton}
-                    onClick={() => {
-                      approveForm10({
-                        variables: {
-                          orderId: row.id, // row.id => order.id
-                        }
-                      })
-                    }}
-                    loadingIconColor={Colors.blue}
-                    replaceTextWhenLoading={true}
-                    loading={loading}
-                    disabled={!readyForApproval}
-                    color="secondary"
-                    style={{
-                      width: '150px',
-                      height: '36px',
-                    }}
-                  >
-                    {
-                      readyForApproval
-                      ? "Approve Form 10"
-                      : alreadyApproved
-                        ? "Approved"
-                        : "Awaiting Seller"
+              <div className={classes.buttonContainer}>
+                <ButtonLoading
+                  variant="outlined"
+                  className={classes.cancelButton}
+                  onClick={() => {
+                    makeCancelledPayment({
+                      orderId: row.id,
+                      markProductAbandoned: markAbandoned,
+                    })
+                  }}
+                  loadingIconColor={Colors.red}
+                  replaceTextWhenLoading={true}
+                  loading={loading}
+                  disabled={!canOrderBeCancelled}
+                  color="secondary"
+                  style={{
+                    width: '240px',
+                    height: '36px',
+                  }}
+                >
+                  {
+                    canOrderBeCancelled
+                    ? "Cancel Order and Payment"
+                    : "Cannot cancel"
+                  }
+                </ButtonLoading>
 
-                    }
-                  </ButtonLoading>
-                  <ButtonLoading
-                    variant="outlined"
-                    className={classes.unapproveButton}
-                    onClick={() => {
-                      reviseAndResubmit({
-                        variables: {
-                          orderId: row.id, // row.id => order.id
-                        }
-                      })
-                    }}
-                    loadingIconColor={Colors.red}
-                    replaceTextWhenLoading={true}
-                    loading={reviseAndResubmitResponse.loading}
-                    disabled={!readyForApproval}
-                    color="secondary"
-                    style={{
-                      width: '150px',
-                      height: '36px',
-                    }}
-                  >
-                    Reject Form 10
-                  </ButtonLoading>
-                </>
-              }
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={markAbandoned}
+                      onChange={() => {
+                        setMarkAbandoned(s => !s)
+                      }}
+                      name="markAbandonded"
+                    />
+                  }
+                  label="Also mark product ABANDONED"
+                />
+
+              </div>
             </div>
 
 
@@ -452,6 +536,15 @@ interface MutVar {
   orderId: string; // row.id => order.id
 }
 
+interface MutData3 {
+  cancelOrderAndPayment: OrderMutationResponse;
+}
+interface MutVar3 {
+  orderId: string;
+  markProductAbandoned?: boolean;
+}
+
+
 const styles = (theme: Theme) => createStyles({
   rowExpanderRoot: {
     width: "100%",
@@ -498,7 +591,7 @@ const styles = (theme: Theme) => createStyles({
   },
   viewOrderButton: {
     margin: "0.5rem 0rem",
-    marginLeft: "0.5rem",
+    marginBottom: "1rem",
   },
   approveButton: {
     height: '36px',
@@ -675,6 +768,22 @@ const styles = (theme: Theme) => createStyles({
   orderDetailsInfoBottom: {
     fontSize: "12px",
     marginBottom: '1.5rem',
+  },
+  cancelButton: {
+    height: '36px',
+    border: `1px solid ${Colors.red}`,
+    color: Colors.red,
+    "&:hover": {
+      backgroundColor: fade(Colors.red, 0.8),
+      border: `1px solid ${Colors.darkerRed}`,
+      color: Colors.cream,
+    },
+  },
+  buttonContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
   },
 });
 
