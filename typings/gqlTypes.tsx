@@ -14751,13 +14751,13 @@ type OrdersFragment_OrderPublic_ = { __typename?: 'OrderPublic', id?: Maybe<stri
     ), featuredVariant: (
       { __typename?: 'product_variants' }
       & ProductVariantsFragment
-    ), store?: Maybe<{ __typename?: 'StorePrivate', id: string, name: string, userId: string, user?: Maybe<{ __typename?: 'UserPrivate', id: string }> }> } | { __typename?: 'ProductPublic', id: string, createdAt?: Maybe<any>, updatedAt?: Maybe<any>, isPublished: boolean, isSuspended: boolean, isDeleted: boolean, isExcludedFromRecommendations: boolean, storeId: string, soldOutStatus: string, currentSnapshot: (
+    ), category?: Maybe<{ __typename?: 'categories', id: string, name: string, slug?: Maybe<string>, categoryGroup: string }>, store?: Maybe<{ __typename?: 'StorePrivate', id: string, name: string, userId: string, user?: Maybe<{ __typename?: 'UserPrivate', id: string }> }> } | { __typename?: 'ProductPublic', id: string, createdAt?: Maybe<any>, updatedAt?: Maybe<any>, isPublished: boolean, isSuspended: boolean, isDeleted: boolean, isExcludedFromRecommendations: boolean, storeId: string, soldOutStatus: string, currentSnapshot: (
       { __typename?: 'product_snapshots' }
       & ProductSnapshotsFragment
     ), featuredVariant: (
       { __typename?: 'product_variants' }
       & ProductVariantsFragment
-    ), store?: Maybe<{ __typename?: 'StorePrivate', id: string, name: string, userId: string, user?: Maybe<{ __typename?: 'UserPrivate', id: string }> } | { __typename?: 'StorePublic', id: string, name: string, userId: string, user?: Maybe<{ __typename?: 'UserPrivate', id: string } | { __typename?: 'UserForDealers', id: string } | { __typename?: 'UserPublic', id: string } | { __typename?: 'UserWithRole', id: string }> }> }>, payoutItems?: Maybe<Array<Maybe<(
+    ), category?: Maybe<{ __typename?: 'categories', id: string, name: string, slug?: Maybe<string>, categoryGroup: string }>, store?: Maybe<{ __typename?: 'StorePrivate', id: string, name: string, userId: string, user?: Maybe<{ __typename?: 'UserPrivate', id: string }> } | { __typename?: 'StorePublic', id: string, name: string, userId: string, user?: Maybe<{ __typename?: 'UserPrivate', id: string } | { __typename?: 'UserForDealers', id: string } | { __typename?: 'UserPublic', id: string } | { __typename?: 'UserWithRole', id: string }> }> }>, payoutItems?: Maybe<Array<Maybe<(
     { __typename?: 'payout_items' }
     & PayoutItemFragment
   )>>> };
@@ -14804,7 +14804,7 @@ type OrdersFragment_OrderDealer_ = { __typename?: 'OrderDealer', id?: Maybe<stri
     ), featuredVariant: (
       { __typename?: 'product_variants' }
       & ProductVariantsFragment
-    ), store?: Maybe<{ __typename?: 'StorePrivate', id: string, name: string, userId: string, user?: Maybe<{ __typename?: 'UserPrivate', id: string }> }> }>, payoutItems?: Maybe<Array<Maybe<(
+    ), category?: Maybe<{ __typename?: 'categories', id: string, name: string, slug?: Maybe<string>, categoryGroup: string }>, store?: Maybe<{ __typename?: 'StorePrivate', id: string, name: string, userId: string, user?: Maybe<{ __typename?: 'UserPrivate', id: string }> }> }>, payoutItems?: Maybe<Array<Maybe<(
     { __typename?: 'payout_items' }
     & PayoutItemFragment
   )>>> };
@@ -14833,7 +14833,7 @@ type OrdersFragment_OrderAdmin_ = { __typename?: 'OrderAdmin', id?: Maybe<string
     ), featuredVariant: (
       { __typename?: 'product_variants' }
       & ProductVariantsFragment
-    ), store?: Maybe<{ __typename?: 'StorePrivate', id: string, name: string, userId: string, user?: Maybe<{ __typename?: 'UserPrivate', id: string }> }> }>, payoutItems?: Maybe<Array<Maybe<(
+    ), category?: Maybe<{ __typename?: 'categories', id: string, name: string, slug?: Maybe<string>, categoryGroup: string }>, store?: Maybe<{ __typename?: 'StorePrivate', id: string, name: string, userId: string, user?: Maybe<{ __typename?: 'UserPrivate', id: string }> }> }>, payoutItems?: Maybe<Array<Maybe<(
     { __typename?: 'payout_items' }
     & PayoutItemFragment
   )>>> };
@@ -15289,6 +15289,12 @@ export const OrdersFragmentFragmentDoc = gql`
     }
     featuredVariant {
       ...ProductVariantsFragment
+    }
+    category {
+      id
+      name
+      slug
+      categoryGroup
     }
     store {
       id
