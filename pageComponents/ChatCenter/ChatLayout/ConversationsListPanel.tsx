@@ -6,7 +6,7 @@ import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/s
 import { Colors, BoxShadows, BorderRadius2x, BorderRadius } from "layout/AppTheme";
 
 import { useSubscription } from '@apollo/client';
-import { Users_Online, Chat_Users } from "typings/gqlTypes";
+import { Users_Online, Chat_Users, ChatRoomStatus } from "typings/gqlTypes";
 // import moment from 'moment';
 import dayjs from 'dayjs'
 import gql from 'graphql-tag';
@@ -64,13 +64,13 @@ const ConversationsListPanel: React.FC<ReactProps> = (props) => {
   }
 
   const archivedConvos = option(props).conversations([])
-    .filter(c => c.chatRoom.status === "ARCHIVED")
+    .filter(c => c.chatRoom.status === ChatRoomStatus.ARCHIVED)
 
   const activeConvos = option(props).conversations([])
-    .filter(c => c.chatRoom.status === "ACTIVE")
+    .filter(c => c.chatRoom.status === ChatRoomStatus.ACTIVE)
 
   const completedConvos = option(props).conversations([])
-    .filter(c => c.chatRoom.status === "COMPLETED")
+    .filter(c => c.chatRoom.status === ChatRoomStatus.COMPLETED)
 
 
   return (

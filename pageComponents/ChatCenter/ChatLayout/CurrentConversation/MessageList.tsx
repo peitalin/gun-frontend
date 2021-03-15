@@ -3,7 +3,7 @@ import { oc as option } from "ts-optchain";
 // Styles
 import clsx from "clsx";
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
-import { Chat_Rooms, Chat_Messages, Bids } from "typings/gqlTypes";
+import { Chat_Rooms, Chat_Messages, Bids, BidStatus } from "typings/gqlTypes";
 // Styles
 import { Colors, BoxShadows, BorderRadius2x, BorderRadius3x } from "layout/AppTheme";
 
@@ -14,6 +14,7 @@ import { gql } from "@apollo/client";
 import { useMutation, useApolloClient } from "@apollo/client";
 import { UPDATE_BID_MESSAGE } from "queries/chat-mutations";
 
+import currency from 'currency.js';
 
 
 
@@ -28,7 +29,6 @@ export const MessageList: React.FC<ReactProps> = (props) => {
     userName,
     isNew,
   } = props;
-
 
   return (
     <div className={
@@ -59,6 +59,17 @@ export const MessageList: React.FC<ReactProps> = (props) => {
   );
 };
 
+
+
+
+
+
+
+
+
+
+
+
 const MessageItem = (props: MessageItemProps) => {
 
   const { classes, isMe } = props;
@@ -69,7 +80,7 @@ const MessageItem = (props: MessageItemProps) => {
     UPDATE_BID_MESSAGE, {
       variables: {
         bidId: bid?.id,
-        bidStatus: "WITHDRAWN",
+        bidStatus: BidStatus.WITHDRAWN,
       }, // add later in sendMessage()
       onCompleted: (data) => {
         console.log(data)
@@ -77,11 +88,13 @@ const MessageItem = (props: MessageItemProps) => {
     }
   )
 
+  const c = (s) => currency(s/100, { formatWithSymbol: true }).format()
+
   const isBidDisabled = (b: Bids) => {
     if (b && b.bidStatus) {
-      return b.bidStatus === "WITHDRAWN"
-          || b.bidStatus === "DECLINED"
-          || b.bidStatus === "ACCEPTED"
+      return b.bidStatus === BidStatus.WITHDRAWN
+          || b.bidStatus === BidStatus.DECLINED
+          || b.bidStatus === BidStatus.ACCEPTED
     } else {
       return undefined
     }
@@ -104,21 +117,21 @@ const MessageItem = (props: MessageItemProps) => {
         </div>
         <div className={classes.myMessageText}>
           <span dangerouslySetInnerHTML={{
-            __html: String(option(m).content(""))
+            __html: String(m?.content ?? "")
           }}/>
         </div>
         {
           m.bid &&
           m.bid.id &&
           <div className={classes.messageText}>
-            {`Offer: ${m.bid.offerPrice}`}
+            {`Offer: ${c(m.bid.offerPrice)}`}
             <ButtonLoading
               onClick={async() => {
                 console.log("bid.id: ", bid?.id)
                 let response = await updateBidMessage({
                   variables: {
                     bidId: bid?.id,
-                    bidStatus: "WITHDRAWN",
+                    bidStatus: BidStatus.WITHDRAWN,
                   }
                 })
                 console.log("res: ", response)
@@ -154,20 +167,20 @@ const MessageItem = (props: MessageItemProps) => {
         </div>
         <div className={classes.messageText}>
           <span dangerouslySetInnerHTML={{
-            __html: String(option(m).content(""))
+            __html: String(m?.content ?? "")
           }}/>
         </div>
         {
           m.bid &&
           m.bid.id &&
           <div className={classes.messageText}>
-            {`Offer: ${m.bid.offerPrice}`}
+            {`Offer: ${c(m.bid.offerPrice)}`}
             <ButtonLoading
               onClick={() => {
                 updateBidMessage({
                   variables: {
                     bidId: bid.id,
-                    bidStatus: "ACCEPTED",
+                    bidStatus: BidStatus.ACCEPTED,
                   }
                 })
               }}
@@ -193,7 +206,7 @@ const MessageItem = (props: MessageItemProps) => {
                   updateBidMessage({
                     variables: {
                       bidId: bid.id,
-                      bidStatus: "DECLINED",
+                      bidStatus: BidStatus.DECLINED,
                     }
                   })
                 }}
@@ -257,7 +270,7 @@ const styles = (theme: Theme) => createStyles({
   messageText: {
     color: theme.palette.type === 'dark'
       ? Colors.uniswapDarkNavy
-      : Colors.slateGrey,
+      : Colors.slateGreyBlack,
   },
   messageNameTime: {
     width: '100%',
@@ -298,6 +311,7 @@ const styles = (theme: Theme) => createStyles({
   bidMsgButton: {
     height: 35,
     backgroundColor: Colors.lightGrey,
+    color: Colors.slateGreyBlack,
     "&:hover": {
       backgroundColor: Colors.slateGrey,
     },

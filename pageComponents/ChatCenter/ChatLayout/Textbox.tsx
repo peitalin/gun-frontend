@@ -8,7 +8,7 @@ import { useMutation, useApolloClient } from "@apollo/client";
 import gql from 'graphql-tag';
 import TypingIndicator from './TypingIndicator';
 import { v4 as uuidv4 } from "uuid"
-import { Chat_Messages_Mutation_Response, Products } from "typings/gqlTypes";
+import { Chat_Messages_Mutation_Response, Products, BidStatus } from "typings/gqlTypes";
 import Button from "@material-ui/core/Button";
 import TextEditorCK from "components/TextEditorCK";
 
@@ -134,6 +134,7 @@ export const Textbox: React.FC<ReactProps> = (props) => {
                 }
               }).then(res => {
                 fprops.resetForm()
+                fprops.setFieldValue("description", "")
               });
           }}>
             <div className={classes.textboxWrapper}>
@@ -231,14 +232,15 @@ export const Textbox: React.FC<ReactProps> = (props) => {
                       variantId: props.product.productVariants[0].variantId,
                       variantSnapshotId: props.product.productVariants[0].variantSnapshotId,
                       offerPrice: offerPrice,
-                      bidStatus: "CREATED",
+                      bidStatus: BidStatus.CREATED,
                     }
-                    console.log("varables: ", variables)
+                    console.log("variables: ", variables)
 
                     insertBidMessage({
                       variables: variables
                     }).then(res => {
                       fprops.resetForm()
+                      fprops.setFieldValue("description", "")
                     });
                   }}
                 >

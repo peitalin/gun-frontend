@@ -85,12 +85,12 @@ const StickyDetailsSeller = (props: ReactProps) => {
             <Typography className={classes.caption} variant="body1">
               {`${seller?.license?.licenseState ?? ""}`}
             </Typography>
-            {
+            {/* {
               seller?.license?.licenseExpiry &&
               <Typography className={classes.caption} variant="body1">
                 {`${showDate(seller?.license?.licenseExpiry) ?? ""}`}
               </Typography>
-            }
+            } */}
             {
               // seller?.license?.verified &&
               true &&

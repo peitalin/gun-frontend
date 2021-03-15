@@ -444,6 +444,20 @@ export type Bids_Variance_Order_By = {
   offerPrice?: Maybe<Order_By>;
 };
 
+export enum BidStatus {
+  /** created by buyer or seller */
+  CREATED = 'CREATED',
+  /**
+   * accepted and ready for buyer to create an order
+   * based on this bid
+   */
+  ACCEPTED = 'ACCEPTED',
+  /** declined by the seller and no actions/steps further are available */
+  DECLINED = 'DECLINED',
+  /** withdrawn and no actions/steps further are available */
+  WITHDRAWN = 'WITHDRAWN'
+}
+
 
 /** expression to compare columns of type bigint. All fields are combined with logical 'AND'. */
 export type Bigint_Comparison_Exp = {
@@ -1387,6 +1401,12 @@ export enum Chat_Users_Update_Column {
   CHATROOMID = 'chatRoomId',
   /** column name */
   USERID = 'userId'
+}
+
+export enum ChatRoomStatus {
+  ACTIVE = 'ACTIVE',
+  ARCHIVED = 'ARCHIVED',
+  COMPLETED = 'COMPLETED'
 }
 
 export type CoinbaseExchangeRates = {
