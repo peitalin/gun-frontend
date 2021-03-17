@@ -8,15 +8,19 @@ import { BorderRadius, Colors } from "layout/AppTheme";
 import Typography from "@material-ui/core/Typography";
 
 
-const Row = ({ fieldName, fieldValue, classes }: ReactProps) => (
+const Row = ({ fieldName, fieldValue, styleValue, styleName, classes }: ReactProps) => (
   <div className={classes.orderTitleRow}>
     <div className={clsx(classes.orderCol, classes.smallCol)}>
-      <Typography variant="subtitle2" className={classes.orderHeader}>
+      <Typography variant="subtitle2" className={classes.orderHeader}
+        style={styleName}
+      >
         {fieldName}
       </Typography>
     </div>
     <div className={clsx(classes.orderCol, classes.largeCol)}>
-      <Typography variant="subtitle2" className={classes.orderHeader}>
+      <Typography variant="subtitle2" className={classes.orderHeader}
+        style={styleValue}
+      >
         {fieldValue}
       </Typography>
     </div>
@@ -26,6 +30,8 @@ const Row = ({ fieldName, fieldValue, classes }: ReactProps) => (
 interface ReactProps extends WithStyles<typeof styles> {
   fieldName: String;
   fieldValue: String;
+  styleName?: any;
+  styleValue?: any;
 }
 
 const styles = (theme: Theme) => createStyles({

@@ -56,6 +56,7 @@ const OrderSummary = (props: ReactProps) => {
           fieldValue={`${
             order?.paymentIntent?.status
           }`}
+          styleValue={{ color: Colors.secondary }}
         />
         <Row
           fieldName={"Westpac Payout ID:"}
@@ -73,9 +74,11 @@ const orderStatusHumanFriendly = (order: OrderAdmin): string => {
     case OrderStatus.CONFIRMED_PAYMENT_FORM_10_REQUIRED:
       return "Escrow funds authorized, form10 upload required";
     case OrderStatus.FAILED:
-      return "Failed";
+      return "Payment Failed";
     case OrderStatus.REFUNDED:
-      return "Refunded";
+      return "Order Refunded";
+    case OrderStatus.CANCELLED:
+      return "Order expired and cancelled";
     case OrderStatus.FORM_10_SUBMITTED:
       return "Form10 submitted, approval required";
     case OrderStatus.FORM_10_REVISE_AND_RESUBMIT:

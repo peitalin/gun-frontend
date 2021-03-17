@@ -128,11 +128,19 @@ const RowExpanderExpiringOrders = (props: RowExpanderProps) => {
 
 
   let canOrderBeCancelled = canBeCancelled(row.orderStatus)
-  // console.log("createdAt: ", new Date(row.createdAt))
-  let expiryDate = get7DaysFromDate(new Date(row.createdAt))
+
+  let createdAt = new Date(row.createdAt)
+  let expiryDate = get7DaysFromDate(createdAt)
   let countDown = getCountdownForExpiry({
     expiryDate: expiryDate
   })
+
+  // console.log(">>>>NOW: ", formatDate(new Date()))
+
+  // console.log(">>>>>!!!!!createdAt: ", new Date(row.createdAt))
+  // console.log("expiresAt: ", expiryDate)
+  // console.log("expiresAt2: ", formatDate(expiryDate))
+  // console.log("countdown: ", countDown)
 
   return (
     <>
@@ -142,7 +150,7 @@ const RowExpanderExpiringOrders = (props: RowExpanderProps) => {
         setOpen={setOpen}
       >
         <div className={classes.flexItemTiny}>{row.id}</div>
-        <div className={classes.flexItemSlim}>{formatDate(row.createdAt)}</div>
+        <div className={classes.flexItemSlim}>{formatDate(createdAt)}</div>
         <div className={classes.flexItemSlim}>{countDown}</div>
         <div className={classes.flexItemTiny}>{c(row.total)}</div>
         <div className={classes.flexItemSlim}>
