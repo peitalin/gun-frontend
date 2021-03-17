@@ -49,6 +49,7 @@ const PriceDisplayProductEdit = (props: ReactProps) => {
 interface ReactProps extends WithStyles<typeof styles> {
   soldOutStatus?: string;
   price: number;
+  priceWas?: number;
 }
 
 const styles = (theme: Theme) => createStyles({

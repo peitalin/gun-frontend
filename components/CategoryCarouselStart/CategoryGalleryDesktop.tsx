@@ -128,7 +128,6 @@ export const styles = (theme: Theme) => createStyles({
     alignItems: 'center',
     flexWrap: 'wrap',
     padding: '0rem 0.5rem', // offset flexItem 0.5rem gutters
-    marginBottom: '1rem',
   },
   innerRootSm: {
     // transform: 'translate(-10px, 0px)',
@@ -174,6 +173,7 @@ export const styles = (theme: Theme) => createStyles({
     maxWidth: 440,
     paddingLeft: '0.5rem',
     paddingRight: '0.5rem',
+    marginBottom: '2.5rem',
   },
   linkImage: {
     position: "relative",

@@ -68,9 +68,8 @@ export type Bids = {
   orderId?: Maybe<Scalars['String']>;
   productId: Scalars['String'];
   productSnapshotId: Scalars['String'];
-  updatedAt?: Maybe<Scalars['timestamp']>;
+  updatedAt?: Maybe<Scalars['timestamptz']>;
   variantId?: Maybe<Scalars['String']>;
-  variantSnapshotId?: Maybe<Scalars['String']>;
 };
 
 /** aggregated selection of "bids" */
@@ -150,9 +149,8 @@ export type Bids_Bool_Exp = {
   orderId?: Maybe<String_Comparison_Exp>;
   productId?: Maybe<String_Comparison_Exp>;
   productSnapshotId?: Maybe<String_Comparison_Exp>;
-  updatedAt?: Maybe<Timestamp_Comparison_Exp>;
+  updatedAt?: Maybe<Timestamptz_Comparison_Exp>;
   variantId?: Maybe<String_Comparison_Exp>;
-  variantSnapshotId?: Maybe<String_Comparison_Exp>;
 };
 
 /** unique or primary key constraints on table "bids" */
@@ -177,9 +175,8 @@ export type Bids_Insert_Input = {
   orderId?: Maybe<Scalars['String']>;
   productId?: Maybe<Scalars['String']>;
   productSnapshotId?: Maybe<Scalars['String']>;
-  updatedAt?: Maybe<Scalars['timestamp']>;
+  updatedAt?: Maybe<Scalars['timestamptz']>;
   variantId?: Maybe<Scalars['String']>;
-  variantSnapshotId?: Maybe<Scalars['String']>;
 };
 
 /** aggregate max on columns */
@@ -193,9 +190,8 @@ export type Bids_Max_Fields = {
   orderId?: Maybe<Scalars['String']>;
   productId?: Maybe<Scalars['String']>;
   productSnapshotId?: Maybe<Scalars['String']>;
-  updatedAt?: Maybe<Scalars['timestamp']>;
+  updatedAt?: Maybe<Scalars['timestamptz']>;
   variantId?: Maybe<Scalars['String']>;
-  variantSnapshotId?: Maybe<Scalars['String']>;
 };
 
 /** order by max() on columns of table "bids" */
@@ -210,7 +206,6 @@ export type Bids_Max_Order_By = {
   productSnapshotId?: Maybe<Order_By>;
   updatedAt?: Maybe<Order_By>;
   variantId?: Maybe<Order_By>;
-  variantSnapshotId?: Maybe<Order_By>;
 };
 
 /** aggregate min on columns */
@@ -224,9 +219,8 @@ export type Bids_Min_Fields = {
   orderId?: Maybe<Scalars['String']>;
   productId?: Maybe<Scalars['String']>;
   productSnapshotId?: Maybe<Scalars['String']>;
-  updatedAt?: Maybe<Scalars['timestamp']>;
+  updatedAt?: Maybe<Scalars['timestamptz']>;
   variantId?: Maybe<Scalars['String']>;
-  variantSnapshotId?: Maybe<Scalars['String']>;
 };
 
 /** order by min() on columns of table "bids" */
@@ -241,7 +235,6 @@ export type Bids_Min_Order_By = {
   productSnapshotId?: Maybe<Order_By>;
   updatedAt?: Maybe<Order_By>;
   variantId?: Maybe<Order_By>;
-  variantSnapshotId?: Maybe<Order_By>;
 };
 
 /** response of any mutation on the table "bids" */
@@ -278,7 +271,6 @@ export type Bids_Order_By = {
   productSnapshotId?: Maybe<Order_By>;
   updatedAt?: Maybe<Order_By>;
   variantId?: Maybe<Order_By>;
-  variantSnapshotId?: Maybe<Order_By>;
 };
 
 /** primary key columns input for table: "bids" */
@@ -307,9 +299,7 @@ export enum Bids_Select_Column {
   /** column name */
   UPDATEDAT = 'updatedAt',
   /** column name */
-  VARIANTID = 'variantId',
-  /** column name */
-  VARIANTSNAPSHOTID = 'variantSnapshotId'
+  VARIANTID = 'variantId'
 }
 
 /** input type for updating data in table "bids" */
@@ -322,9 +312,8 @@ export type Bids_Set_Input = {
   orderId?: Maybe<Scalars['String']>;
   productId?: Maybe<Scalars['String']>;
   productSnapshotId?: Maybe<Scalars['String']>;
-  updatedAt?: Maybe<Scalars['timestamp']>;
+  updatedAt?: Maybe<Scalars['timestamptz']>;
   variantId?: Maybe<Scalars['String']>;
-  variantSnapshotId?: Maybe<Scalars['String']>;
 };
 
 /** aggregate stddev on columns */
@@ -400,9 +389,7 @@ export enum Bids_Update_Column {
   /** column name */
   UPDATEDAT = 'updatedAt',
   /** column name */
-  VARIANTID = 'variantId',
-  /** column name */
-  VARIANTSNAPSHOTID = 'variantSnapshotId'
+  VARIANTID = 'variantId'
 }
 
 /** aggregate var_pop on columns */
@@ -447,15 +434,16 @@ export type Bids_Variance_Order_By = {
 export enum BidStatus {
   /** created by buyer or seller */
   CREATED = 'CREATED',
-  /**
-   * accepted and ready for buyer to create an order
-   * based on this bid
-   */
+  /** accepted and ready for buyer to create an order based on this bid */
   ACCEPTED = 'ACCEPTED',
   /** declined by the seller and no actions/steps further are available */
   DECLINED = 'DECLINED',
-  /** withdrawn and no actions/steps further are available */
-  WITHDRAWN = 'WITHDRAWN'
+  /** withdrawn by the buyer and no actions/steps further are available */
+  WITHDRAWN = 'WITHDRAWN',
+  /** spent by buyer and used to create an order with seller's accepted price */
+  SPENT = 'SPENT',
+  /** another bid was accepted and now these losing bids are expired */
+  EXPIRED = 'EXPIRED'
 }
 
 
@@ -3913,6 +3901,12 @@ export type Mutation = {
   createDealerForUser?: Maybe<UserMutationResponse>;
   setDealerIdForUser?: Maybe<UserMutationResponse>;
   reindexSearchIndex?: Maybe<BlankMutationResponse>;
+  sendChatMessage?: Maybe<Array<Maybe<Chat_Messages>>>;
+  emitTypingEvent?: Maybe<BlankMutationResponse>;
+  sendBidMessage?: Maybe<Array<Maybe<Chat_Messages>>>;
+  updateBid?: Maybe<Array<Maybe<Bids>>>;
+  updateChatStatus?: Maybe<Array<Maybe<Chat_Rooms>>>;
+  createNewChat?: Maybe<Array<Maybe<Chat_Rooms>>>;
 };
 
 
@@ -4143,7 +4137,7 @@ export type MutationDelete_Product_VariantsArgs = {
 
 
 export type MutationDelete_Product_Variants_By_PkArgs = {
-  variantSnapshotId: Scalars['String'];
+  variantId: Scalars['String'];
 };
 
 
@@ -5393,6 +5387,50 @@ export type MutationCreateDealerForUserArgs = {
 export type MutationSetDealerIdForUserArgs = {
   dealerUserId: Scalars['String'];
   dealerId?: Maybe<Scalars['String']>;
+};
+
+
+export type MutationSendChatMessageArgs = {
+  chatRoomId: Scalars['String'];
+  senderId: Scalars['String'];
+  content: Scalars['String'];
+  previewItemId?: Maybe<Scalars['String']>;
+};
+
+
+export type MutationEmitTypingEventArgs = {
+  senderId: Scalars['String'];
+};
+
+
+export type MutationSendBidMessageArgs = {
+  chatRoomId: Scalars['String'];
+  content: Scalars['String'];
+  productId: Scalars['String'];
+  productSnapshotId: Scalars['String'];
+  variantId: Scalars['String'];
+  offerPrice: Scalars['Int'];
+  bidStatus: Scalars['String'];
+};
+
+
+export type MutationUpdateBidArgs = {
+  bidId: Scalars['String'];
+  bidStatus: Scalars['String'];
+};
+
+
+export type MutationUpdateChatStatusArgs = {
+  chatRoomId: Scalars['String'];
+  chatStatus: Scalars['String'];
+};
+
+
+export type MutationCreateNewChatArgs = {
+  sellerUserId: Scalars['String'];
+  buyerUserId: Scalars['String'];
+  productId: Scalars['String'];
+  name?: Maybe<Scalars['String']>;
 };
 
 /** Something that went wrong during a mutation. */
@@ -9289,7 +9327,7 @@ export type Product_Variants_Order_By = {
 
 /** primary key columns input for table: "product_variants" */
 export type Product_Variants_Pk_Columns_Input = {
-  variantSnapshotId: Scalars['String'];
+  variantId: Scalars['String'];
 };
 
 /** select columns of table "product_variants" */
@@ -9652,6 +9690,7 @@ export type Products = {
   isExcludedFromSearch: Scalars['Boolean'];
   isPublished: Scalars['Boolean'];
   isSuspended: Scalars['Boolean'];
+  lastPerformanceReview?: Maybe<Scalars['timestamptz']>;
   /** An array relationship */
   productVariants: Array<Product_Variants>;
   /** An aggregated array relationship */
@@ -9660,7 +9699,7 @@ export type Products = {
   /** An object relationship */
   store?: Maybe<Stores>;
   storeId: Scalars['String'];
-  updatedAt: Scalars['timestamptz'];
+  updatedAt?: Maybe<Scalars['timestamptz']>;
 };
 
 
@@ -9734,6 +9773,7 @@ export type Products_Bool_Exp = {
   isExcludedFromSearch?: Maybe<Boolean_Comparison_Exp>;
   isPublished?: Maybe<Boolean_Comparison_Exp>;
   isSuspended?: Maybe<Boolean_Comparison_Exp>;
+  lastPerformanceReview?: Maybe<Timestamptz_Comparison_Exp>;
   productVariants?: Maybe<Product_Variants_Bool_Exp>;
   soldOutStatus?: Maybe<String_Comparison_Exp>;
   store?: Maybe<Stores_Bool_Exp>;
@@ -9760,6 +9800,7 @@ export type Products_Insert_Input = {
   isExcludedFromSearch?: Maybe<Scalars['Boolean']>;
   isPublished?: Maybe<Scalars['Boolean']>;
   isSuspended?: Maybe<Scalars['Boolean']>;
+  lastPerformanceReview?: Maybe<Scalars['timestamptz']>;
   productVariants?: Maybe<Product_Variants_Arr_Rel_Insert_Input>;
   soldOutStatus?: Maybe<Scalars['String']>;
   store?: Maybe<Stores_Obj_Rel_Insert_Input>;
@@ -9774,6 +9815,7 @@ export type Products_Max_Fields = {
   createdAt?: Maybe<Scalars['timestamptz']>;
   currentSnapshotId?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
+  lastPerformanceReview?: Maybe<Scalars['timestamptz']>;
   soldOutStatus?: Maybe<Scalars['String']>;
   storeId?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['timestamptz']>;
@@ -9785,6 +9827,7 @@ export type Products_Max_Order_By = {
   createdAt?: Maybe<Order_By>;
   currentSnapshotId?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
+  lastPerformanceReview?: Maybe<Order_By>;
   soldOutStatus?: Maybe<Order_By>;
   storeId?: Maybe<Order_By>;
   updatedAt?: Maybe<Order_By>;
@@ -9797,6 +9840,7 @@ export type Products_Min_Fields = {
   createdAt?: Maybe<Scalars['timestamptz']>;
   currentSnapshotId?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
+  lastPerformanceReview?: Maybe<Scalars['timestamptz']>;
   soldOutStatus?: Maybe<Scalars['String']>;
   storeId?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['timestamptz']>;
@@ -9808,6 +9852,7 @@ export type Products_Min_Order_By = {
   createdAt?: Maybe<Order_By>;
   currentSnapshotId?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
+  lastPerformanceReview?: Maybe<Order_By>;
   soldOutStatus?: Maybe<Order_By>;
   storeId?: Maybe<Order_By>;
   updatedAt?: Maybe<Order_By>;
@@ -9848,6 +9893,7 @@ export type Products_Order_By = {
   isExcludedFromSearch?: Maybe<Order_By>;
   isPublished?: Maybe<Order_By>;
   isSuspended?: Maybe<Order_By>;
+  lastPerformanceReview?: Maybe<Order_By>;
   productVariants_aggregate?: Maybe<Product_Variants_Aggregate_Order_By>;
   soldOutStatus?: Maybe<Order_By>;
   store?: Maybe<Stores_Order_By>;
@@ -9881,6 +9927,8 @@ export enum Products_Select_Column {
   /** column name */
   ISSUSPENDED = 'isSuspended',
   /** column name */
+  LASTPERFORMANCEREVIEW = 'lastPerformanceReview',
+  /** column name */
   SOLDOUTSTATUS = 'soldOutStatus',
   /** column name */
   STOREID = 'storeId',
@@ -9899,6 +9947,7 @@ export type Products_Set_Input = {
   isExcludedFromSearch?: Maybe<Scalars['Boolean']>;
   isPublished?: Maybe<Scalars['Boolean']>;
   isSuspended?: Maybe<Scalars['Boolean']>;
+  lastPerformanceReview?: Maybe<Scalars['timestamptz']>;
   soldOutStatus?: Maybe<Scalars['String']>;
   storeId?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['timestamptz']>;
@@ -9924,6 +9973,8 @@ export enum Products_Update_Column {
   ISPUBLISHED = 'isPublished',
   /** column name */
   ISSUSPENDED = 'isSuspended',
+  /** column name */
+  LASTPERFORMANCEREVIEW = 'lastPerformanceReview',
   /** column name */
   SOLDOUTSTATUS = 'soldOutStatus',
   /** column name */
@@ -10466,6 +10517,7 @@ export type Query = {
   /** Store sellers's view of currently published products. */
   dashboardProductsConnection: ProductsConnection;
   getCoinbaseExchangeRates?: Maybe<CoinbaseExchangeRates>;
+  getUserBidsForProduct?: Maybe<Chat_Rooms>;
 };
 
 
@@ -11015,7 +11067,7 @@ export type QueryProduct_Variants_AggregateArgs = {
 
 
 export type QueryProduct_Variants_By_PkArgs = {
-  variantSnapshotId: Scalars['String'];
+  variantId: Scalars['String'];
 };
 
 
@@ -11422,6 +11474,11 @@ export type QueryGetStoreProductsForSaleConnectionArgs = {
 export type QueryDashboardProductsConnectionArgs = {
   searchTerm?: Maybe<Scalars['String']>;
   query?: Maybe<ConnectionOffsetQuery>;
+};
+
+
+export type QueryGetUserBidsForProductArgs = {
+  productId: Scalars['String'];
 };
 
 export type RefundPayoutItem = {
@@ -12874,7 +12931,7 @@ export type SubscriptionProduct_Variants_AggregateArgs = {
 
 
 export type SubscriptionProduct_Variants_By_PkArgs = {
-  variantSnapshotId: Scalars['String'];
+  variantId: Scalars['String'];
 };
 
 
@@ -14715,7 +14772,12 @@ export type UsersFragment = { __typename?: 'UserPrivate', id: string, email: str
 
 export type UserLicenseFragment = { __typename?: 'user_licenses', id: string, licenseNumber: string, licenseCategory?: Maybe<string>, licenseExpiry: any, licenseState?: Maybe<string>, verified: boolean };
 
-export type BidFragment = { __typename?: 'bids', id: string, bidStatus: string, createdAt?: Maybe<any>, updatedAt?: Maybe<any>, acceptedPrice?: Maybe<number>, offerPrice: number };
+export type BidFragment = { __typename?: 'bids', id: string, productId: string, productSnapshotId: string, variantId?: Maybe<string>, offerPrice: number, acceptedPrice?: Maybe<number>, orderId?: Maybe<string>, bidStatus: string, createdAt?: Maybe<any>, updatedAt?: Maybe<any> };
+
+export type MessageFragment = { __typename?: 'chat_messages', id: string, chatRoomId: string, createdAt: any, content?: Maybe<string>, sender: { __typename?: 'users', id: string, firstName?: Maybe<string>, lastName?: Maybe<string> }, previewItem?: Maybe<{ __typename?: 'product_preview_items', id: string }>, bid?: Maybe<(
+    { __typename?: 'bids' }
+    & BidFragment
+  )> };
 
 export type TransactionFragment = { __typename?: 'transactions', id: string, total: number, createdAt: any, currency?: Maybe<string>, receiptNumber: string, customerId?: Maybe<string>, orderId?: Maybe<string>, paymentProcessor?: Maybe<string>, paymentMethodId?: Maybe<string>, paymentIntentId?: Maybe<string>, refundId?: Maybe<string>, refund?: Maybe<{ __typename?: 'refunds', id: string, transactionId: string, orderId: string, createdAt: any, reason: string, reasonDetails: string, receiptNumber: string }> };
 
@@ -15036,13 +15098,36 @@ export const UsersFragmentFragmentDoc = gql`
 export const BidFragmentFragmentDoc = gql`
     fragment BidFragment on bids {
   id
+  productId
+  productSnapshotId
+  variantId
+  offerPrice
+  acceptedPrice
+  orderId
   bidStatus
   createdAt
   updatedAt
-  acceptedPrice
-  offerPrice
 }
     `;
+export const MessageFragmentFragmentDoc = gql`
+    fragment MessageFragment on chat_messages {
+  id
+  chatRoomId
+  createdAt
+  sender {
+    id
+    firstName
+    lastName
+  }
+  content
+  previewItem {
+    id
+  }
+  bid {
+    ...BidFragment
+  }
+}
+    ${BidFragmentFragmentDoc}`;
 export const UserLicenseFragmentFragmentDoc = gql`
     fragment UserLicenseFragment on user_licenses {
   id

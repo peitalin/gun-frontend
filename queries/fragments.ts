@@ -241,12 +241,37 @@ export const UserLicenseFragment = gql`
 export const BidFragment = gql`
   fragment BidFragment on bids {
     id
+    productId
+    productSnapshotId
+    variantId
+    offerPrice
+    acceptedPrice
+    orderId
     bidStatus
     createdAt
     updatedAt
-    acceptedPrice
-    offerPrice
   }
+`;
+
+export const MessageFragment = gql`
+  fragment MessageFragment on chat_messages {
+    id
+    chatRoomId
+    createdAt
+    sender {
+      id
+      firstName
+      lastName
+    }
+    content
+    previewItem {
+      id
+    }
+    bid {
+      ...BidFragment
+    }
+  }
+  ${BidFragment}
 `;
 
 export const TransactionFragment = gql`

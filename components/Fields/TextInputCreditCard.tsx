@@ -9,7 +9,6 @@ import { styles } from "components/Fields/styles";
 import ValidationErrorMsg from "./ValidationErrorMsg";
 import StripeCardIcon from "components/Icons/StripeCardIcon";
 import InputAdornment from '@material-ui/core/InputAdornment';
-import { showDateAndTime } from "utils/dates";
 
 // text mask for credit card
 import { Rifm } from 'rifm';

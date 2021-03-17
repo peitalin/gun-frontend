@@ -27,7 +27,7 @@ const PriceDisplayProductPage = (props: ReactProps) => {
   const actualPrice = props.price ?? 0;
   const basePrice = props.priceWas;
 
-  const price = currency(actualPrice/100, { formatWithSymbol: true })
+  const price = currency(actualPrice/100, { formatWithSymbol: false })
   // const priceWas = currency(basePrice/100, { formatWithSymbol: true })
   // const savings = (actualPrice >= basePrice)
   //   ?  currency(0, { formatWithSymbol: true })
@@ -49,7 +49,7 @@ const PriceDisplayProductPage = (props: ReactProps) => {
         <div className={classes.innerContainerSpread}>
           <div className={classes.priceInnerContainer}>
             <Typography className={classes.price} variant="body1">
-              {price.format()}
+              {`${price.format()} AUD`}
             </Typography>
           </div>
         </div>
@@ -59,10 +59,9 @@ const PriceDisplayProductPage = (props: ReactProps) => {
 }
 
 interface ReactProps extends WithStyles<typeof styles> {
-  pastTense?: boolean;
   soldOutStatus?: string;
   price: number;
-  priceWas: number;
+  priceWas?: number;
 }
 
 const styles = (theme: Theme) => createStyles({

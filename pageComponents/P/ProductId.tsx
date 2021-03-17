@@ -3,14 +3,17 @@ import clsx from "clsx";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 import { Colors } from "layout/AppTheme";
-import { SoldOutStatus } from "typings/gqlTypes";
+import { SoldOutStatus, Chat_Rooms } from "typings/gqlTypes";
 // GraphQL
-import { useQuery, useApolloClient } from "@apollo/client";
+import { useQuery, useLazyQuery } from "@apollo/client";
 // Typings
 import { Product, UserPrivate, Product_Variants } from "typings/gqlTypes";
 import {
   GET_PRODUCT,
 } from "queries/products-queries";
+import {
+  GET_USER_BIDS_FOR_PRODUCT
+} from "queries/chat-queries";
 // Utils Components
 import ErrorBounds from "components/ErrorBounds";
 import Loading from "components/Loading";
@@ -19,6 +22,7 @@ import { FlexBasis33, FlexBasis66 } from "./ProductPageLayouts/FlexBasis";
 import ProductPageContainer from "./ProductPageLayouts/ProductPageContainer";
 import ProductRowSection from "./ProductPageLayouts/ProductRowSection";
 import ProductColumnSection from "./ProductPageLayouts/ProductColumnSection";
+import StickyDetailsBids from "./PurchaseProductSummary/StickyDetailsBids";
 import StickyDetailsSeller from "./PurchaseProductSummary/StickyDetailsSeller";
 import StickyDetailsDealer from "./PurchaseProductSummary/StickyDetailsDealer";
 // Redux
@@ -64,6 +68,7 @@ const Products: React.FC<ReactProps> = (props) => {
 
   // index for the featuredPreview Carousel
   const [index, setIndex] = React.useState(0);
+  const [selectedBid, setSelectedBid] = React.useState(undefined);
 
   const router = useRouter();
   const productId: string = router?.query?.productId as any;
@@ -73,6 +78,21 @@ const Products: React.FC<ReactProps> = (props) => {
   )
 
   ///////// DATA
+
+  const [
+    getUserBidsForProduct,
+    getUserBidsForProductResponse
+  ] = useLazyQuery<QueryData2, QueryVar>(
+    GET_USER_BIDS_FOR_PRODUCT, {
+    variables: {
+      productId: productId
+    },
+    ssr: true,
+  })
+
+  let userBids = (getUserBidsForProductResponse?.data?.getUserBidsForProduct?.messages ?? [])
+    .map(m => m?.bid)
+  console.log("userBids: ", userBids)
 
   const { loading, error, data, refetch } = useQuery<QueryData, QueryVar>(
     GET_PRODUCT, {
@@ -106,6 +126,13 @@ const Products: React.FC<ReactProps> = (props) => {
       soldOutStatus: SoldOutStatus.AVAILABLE,
     } as any,
   });
+
+
+  React.useEffect(() => {
+    if (user?.id) {
+      getUserBidsForProduct()
+    }
+  }, [user])
 
   React.useEffect(() => {
     if (!!product?.featuredVariant?.variantId) {
@@ -148,7 +175,6 @@ const Products: React.FC<ReactProps> = (props) => {
     return <ErrorPage statusCode={400} message={"Product cannot be found"}/>
   }
 
-  console.log("product.store:", product?.store)
 
   return (
     <ProductPageContainer product={product} loading={loading}>
@@ -201,7 +227,18 @@ const Products: React.FC<ReactProps> = (props) => {
                   refetchProduct={refetch}
                   variantOptions={variantOptions}
                   handleChangeVariantOption={handleChangeVariantOption}
+                  selectedBid={selectedBid}
                 />
+                {
+                  userBids.map(bid =>
+                    <StickyDetailsBids
+                      userBid={bid}
+                      selectedBid={selectedBid}
+                      setSelectedBid={setSelectedBid}
+                      below1024={below1024}
+                    />
+                  )
+                }
                 <StickyDetailsSeller
                   seller={product?.store?.user}
                   buyerId={user?.id}
@@ -246,7 +283,18 @@ const Products: React.FC<ReactProps> = (props) => {
               refetchProduct={refetch}
               variantOptions={variantOptions}
               handleChangeVariantOption={handleChangeVariantOption}
+              selectedBid={selectedBid}
             />
+            {
+              userBids.map(bid =>
+                <StickyDetailsBids
+                  userBid={bid}
+                  selectedBid={selectedBid}
+                  setSelectedBid={setSelectedBid}
+                  below1024={below1024}
+                />
+              )
+            }
             <StickyDetailsSeller
               seller={product?.store?.user}
               buyerId={user?.id}
@@ -278,6 +326,14 @@ interface QueryData {
 interface QueryVar {
   productId: string;
 }
+interface QueryData2 {
+  getUserBidsForProduct: Chat_Rooms;
+}
+export interface SelectedVariantProps {
+  label: string;
+  value: Product_Variants;
+}
+
 export interface SelectedVariantProps {
   label: string;
   value: Product_Variants;

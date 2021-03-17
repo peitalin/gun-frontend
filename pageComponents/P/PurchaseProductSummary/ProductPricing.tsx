@@ -4,7 +4,7 @@ import clsx from "clsx";
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 // Utils Components
 import ErrorBounds from "components/ErrorBounds";
-import { Product, Product_Variants } from "typings/gqlTypes";
+import { Product, Product_Variants, Bids } from "typings/gqlTypes";
 import PriceDisplayProductPage from "components/PriceDisplayProductPage";
 import Typography from "@material-ui/core/Typography";
 
@@ -13,6 +13,8 @@ import Typography from "@material-ui/core/Typography";
 const ProductPricing = (props: ReactProps) => {
 
   const { classes } = props;
+  const purchasePrice = props.selectedBid?.offerPrice ||
+          props?.featuredVariant?.price
 
   return (
     <ErrorBounds>
@@ -21,10 +23,10 @@ const ProductPricing = (props: ReactProps) => {
         classes.marginProductPricing,
       )}>
         {
-          props?.featuredVariant?.price !== undefined &&
+          purchasePrice !== undefined &&
           <PriceDisplayProductPage
-            price={props?.featuredVariant?.price}
-            priceWas={props?.featuredVariant?.priceWas}
+            price={purchasePrice}
+            // priceWas={props?.featuredVariant?.priceWas}
             soldOutStatus={props?.soldOutStatus}
           />
         }
@@ -37,6 +39,7 @@ const ProductPricing = (props: ReactProps) => {
 interface ReactProps extends WithStyles<typeof styles> {
   featuredVariant: Product_Variants;
   soldOutStatus: string;
+  selectedBid?: Bids
 }
 
 const styles = (theme: Theme) => createStyles({

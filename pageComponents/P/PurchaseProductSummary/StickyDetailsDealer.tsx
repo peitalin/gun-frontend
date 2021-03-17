@@ -41,33 +41,44 @@ const StickyDetailsDealer = (props: ReactProps) => {
         classes.dealerDetailsInnerContainer,
         props.below1024 ? classes.positionRelativeBox : classes.positionStickyBox,
       )}>
-        <div className={clsx(classes.flexCol, classes.referInstructions)}>
-          <div>
-            <Typography className={classes.title} variant="h4">
-              Transferring Dealer
-            </Typography>
-          </div>
+
+        <div className={classes.flexCol}>
+          <Typography className={classes.title} variant="h4">
+            Transferring Dealer
+          </Typography>
           <div>
             <Typography className={classes.subtitle} variant="body1">
               {`${dealer?.name ?? ""}`}
             </Typography>
           </div>
-          <div>
+        </div>
+
+        <div className={classes.flexRow}>
+          <div className={clsx(classes.flexCol, classes.fieldKeysCol)}>
             <Typography className={classes.caption} variant="body1">
-              {`License Number: ${dealer?.licenseNumber ?? ""}`}
+              License Number:
+            </Typography>
+            <Typography className={classes.caption} variant="body1">
+              State:
+            </Typography>
+            <Typography className={classes.caption} variant="body1">
+              Postcode:
             </Typography>
           </div>
-          <div>
+
+          <div className={clsx(classes.flexCol)}>
             <Typography className={classes.caption} variant="body1">
-              {`State: ${dealer?.state ?? ""}`}
+              {`${dealer?.licenseNumber ?? ""}`}
             </Typography>
-          </div>
-          <div>
             <Typography className={classes.caption} variant="body1">
-              {`Postcode: ${dealer?.postCode ?? ""}`}
+              {`${dealer?.state ?? ""}`}
+            </Typography>
+            <Typography className={classes.caption} variant="body1">
+              {`${dealer?.postCode ?? ""}`}
             </Typography>
           </div>
         </div>
+
       </div>
     </div>
   );
@@ -127,7 +138,8 @@ const styles = (theme: Theme) => createStyles({
     alignItems: 'center',
     width: '100%',
   },
-  referInstructions: {
+  fieldKeysCol: {
+    minWidth: 115,
   },
   title: {
     fontSize: '1rem',

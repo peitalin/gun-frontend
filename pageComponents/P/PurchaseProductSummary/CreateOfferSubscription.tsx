@@ -71,8 +71,8 @@ const CreateOfferSubscription = (props: ReactProps) => {
             // make sure its the store's user.id
             props?.product?.store?.userId
           }
-          // disabled={buyerIsSeller}
-          disabled={true}
+          disabled={buyerIsSeller}
+          // disabled={true}
           productId={props?.product?.id}
           openChatAfterwards={true}
         />
@@ -86,7 +86,7 @@ const CreateOfferSubscription = (props: ReactProps) => {
           !buyerIsSeller
         ) &&
         <OpenChatButton
-          title={"Continue Offer"}
+          title={"View Offers"}
           productId={alreadyChattingAboutProduct?.productId}
           chatRoomId={alreadyChattingAboutProduct?.chatRoomId}
         />

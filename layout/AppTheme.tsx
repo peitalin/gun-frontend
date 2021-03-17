@@ -150,12 +150,12 @@ export const Colors = {
   purple: "#A981EB",
   lightPurple: "#B8B3E9",
   // red
-  darkestRed: '#6A1617',
-  darkerRed: '#7A1F27',
-  darkRed: '#87212B',
-  deepRed: "#922435",
-  red: "#D83748",
-  lightRed: "#DC848A",
+  darkestRed: "#842022",
+  darkerRed: "#9C2829",
+  darkRed: "#AF2B2F",
+  red: "#C32E2D",
+  lightRed: "#DF3A37",
+  lighterRed: "#E44D49",
   pink: "#DC848B",
   // green
   green: "#57BC7A",

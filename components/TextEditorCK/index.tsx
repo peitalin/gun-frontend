@@ -33,21 +33,19 @@ const TextEditorCK = (props: ReactProps & FormikProps<FormikFields>) => {
     ...fprops
   } = props;
 
-  const [description, setDescription] = React.useState(
-    fprops.values.description || undefined
-  )
-
   const [focused, setFocused] = React.useState(false)
   const [charCount, setCharCount] = React.useState(0)
-
-  // Debounce Formik State changes to limit lag
-  const [updateDescription] = useDebouncedCallback((description: string) => {
-    setDescription(description)
-    fprops?.setFieldValue('description', description)
-    // if (!fprops.touched.description) {
-    //   fprops.setFieldTouched('description', true)
-    // }
-  }, 64);
+  // const [description, setDescription] = React.useState(
+  //   fprops.values.description || undefined
+  // )
+  // // Debounce Formik State changes to limit lag
+  // const [updateDescription] = useDebouncedCallback((description: string) => {
+  //   setDescription(description)
+  //   fprops?.setFieldValue('description', description)
+  //   // if (!fprops.touched.description) {
+  //   //   fprops.setFieldTouched('description', true)
+  //   // }
+  // }, 64);
 
   useEffect(() => {
     editorRef.current = {
@@ -57,7 +55,7 @@ const TextEditorCK = (props: ReactProps & FormikProps<FormikFields>) => {
     setEditorLoaded(true)
   }, [])
 
-  console.log("fprops.values.description:", fprops.values.description)
+  // console.log("fprops.values.description:", fprops.values.description)
   // console.log("fprops.setFieldValue.description", fprops.setFieldValue)
   // console.log("fprops.errors.description:", fprops.errors.description)
 
@@ -72,16 +70,12 @@ const TextEditorCK = (props: ReactProps & FormikProps<FormikFields>) => {
 
           config={ editorConfiguration }
           // data={'<p>Hello from CKEditor 5!</p>'}
-          data={description || "<p></p>"}
-          onInit={editor => {
-            // You can store the "editor" and use when it is needed.
-            console.log('Editor is ready to use!', editor)
-          }}
+          data={fprops?.values?.description || "<p></p>"}
           onChange={(event, editor) => {
             const description = editor.getData()
             // in HTML-string format
-            // console.log({ event, editor, data: description })
-            updateDescription(description)
+            fprops?.setFieldValue('description', description)
+            // updateDescription(description)
           }}
           onBlur={ ( event, editor ) => {
             // console.log( 'Blur.', editor );

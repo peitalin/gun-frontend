@@ -1,21 +1,16 @@
 import React from 'react';
-import { oc as option } from "ts-optchain";
-import { Colors } from "layout/AppTheme";
 // Styles
 import clsx from "clsx";
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
-
+import { Colors, BorderRadius } from "layout/AppTheme";
+// Apollo
 import { useMutation } from '@apollo/client';
 import { UPDATE_CHAT_STATUS } from "queries/chat-mutations";
-import { Chat_Rooms, Chat_Users, ProductPreviewItem } from "typings/gqlTypes";
-// import moment from 'moment';
-import dayjs from 'dayjs'
-import gql from 'graphql-tag';
+import { Chat_Rooms, Chat_Users, ChatRoomStatus } from "typings/gqlTypes";
 // css
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 // MUI
-import MenuItem from '@material-ui/core/MenuItem';
 import PermIdentityIcon from '@material-ui/icons/PermIdentity';
 import Typography from "@material-ui/core/Typography";
 import ProductPreviewCardRow from "components/ProductPreviewCardRow";
@@ -40,31 +35,42 @@ const ProductPanel: React.FC<ReactProps> = (props) => {
   } = props;
 
   const getNextChatStatus = (chatRoom: Chat_Rooms): string => {
-    if (option(chatRoom).status() === "ARCHIVED") {
-      return "ACTIVE"
-    } else {
-      return "ARCHIVED"
+    switch (chatRoom?.status) {
+      case ChatRoomStatus.ARCHIVED: {
+        return ChatRoomStatus.ACTIVE
+      }
+      case ChatRoomStatus.ACTIVE: {
+        return ChatRoomStatus.ARCHIVED
+      }
+      default: {
+        return ChatRoomStatus.COMPLETED
+      }
     }
   }
 
   const getNextChatStatusAction = (chatRoom: Chat_Rooms): string => {
-    if (option(chatRoom).status() === "ARCHIVED") {
-      return "Activate Offer"
-    } else {
-      return "Archive Offer"
+    switch (chatRoom?.status) {
+      case ChatRoomStatus.ARCHIVED: {
+        return "Activate Offer"
+      }
+      case ChatRoomStatus.ACTIVE: {
+        return "Archive Offer"
+      }
+      default: {
+        return "Deal Complete"
+      }
     }
   }
 
   const theme = useTheme();
   const xsDown = useMediaQuery(theme.breakpoints.down('xs'));
 
-  const chatRoom = option(currentConversation).chatRoom()
-  const chatRoomId = option(chatRoom).id()
-  const product = option(chatRoom).product()
-  const featuredVariant = option(product).productVariants([]).find(v => v.isDefault)
-  const previewItem = option(featuredVariant).previewItems([])[0]
+  const chatRoom = currentConversation?.chatRoom
+  const chatRoomId = chatRoom?.id
+  const product = chatRoom?.product
+  const featuredVariant = (product?.productVariants ?? []).find(v => v.isDefault)
+  const previewItem = featuredVariant?.previewItems?.[0]
 
-  const priceDisplay = currency(option(featuredVariant).price(1)/100, { formatWithSymbol: true })
 
   const [
     updateChatStatus,
@@ -73,7 +79,7 @@ const ProductPanel: React.FC<ReactProps> = (props) => {
     UPDATE_CHAT_STATUS, {
       variables: {
         chatRoomId: chatRoomId,
-        chatStatus: getNextChatStatus(option(currentConversation).chatRoom()),
+        chatStatus: getNextChatStatus(currentConversation?.chatRoom),
       }
     }
   );
@@ -82,11 +88,13 @@ const ProductPanel: React.FC<ReactProps> = (props) => {
   // console.log("product:::::", product)
   // console.log("previewItem:::::", previewItem)
 
-  const buyer = option(chatRoom).owner();
-  const _seller = option(currentConversation).chatRoom.users([])
+  const buyer = chatRoom?.owner;
+  const _seller = (currentConversation?.chatRoom?.users ?? [])
     .find(u => u.userId !== buyer.id)
 
-  const seller = option(_seller).user();
+  const seller = _seller?.user;
+
+  console.log("archiving offer:::::", data)
 
   return (
     <div className={classes.productPanelRoot}>
@@ -96,7 +104,7 @@ const ProductPanel: React.FC<ReactProps> = (props) => {
           <div className={classes.productContainerCol}>
             <Typography variant="h4" className={classes.productTitle}>
               {
-                `${option(seller).firstName()} ${option(seller).lastName()}`
+                `${seller?.firstName} ${seller?.lastName}`
               }
             </Typography>
             <PreviewCardWide
@@ -104,7 +112,7 @@ const ProductPanel: React.FC<ReactProps> = (props) => {
               title={product.currentSnapshot.title}
               tagline={product.currentSnapshot.model}
               category={product.category as any}
-              price={option(featuredVariant).price()}
+              price={featuredVariant?.price}
               // fit?: boolean; // object-fit the image
               // title: string;
               // tagline: string;
@@ -128,49 +136,20 @@ const ProductPanel: React.FC<ReactProps> = (props) => {
                   color: Colors.darkWhite,
                   marginBottom: '0.35rem', // paypal button annoying extra space
                   // border: `1px solid ${Colors.red}`,
-                  background: Colors.red,
+                  background: currentConversation?.chatRoom?.status === ChatRoomStatus.ARCHIVED
+                    ? Colors.blue
+                    : Colors.red,
                 }}
                 onClick={() => {
-                  updateChatStatus()
+                  updateChatStatus({
+                    variables: {
+                      chatRoomId: chatRoomId,
+                      chatStatus: getNextChatStatus(currentConversation?.chatRoom),
+                    }
+                  })
                 }}
               >
                 {getNextChatStatusAction(currentConversation.chatRoom)}
-              </ButtonLoading>
-              <ButtonLoading
-                replaceTextWhenLoading={true}
-                loading={loading}
-                disabled={loading}
-                loadingIconColor={Colors.lightestGrey}
-                style={{
-                  width: "100%",
-                  height: "40px",
-                  fontWeight: 500,
-                  color: Colors.white,
-                  marginBottom: '0.35rem', // paypal button annoying extra space
-                  backgroundColor: Colors.lightBlue
-                }}
-                onClick={() => {
-                }}
-              >
-                Make an Offer
-              </ButtonLoading>
-              <ButtonLoading
-                replaceTextWhenLoading={true}
-                loading={loading}
-                disabled={loading}
-                loadingIconColor={Colors.lightestGrey}
-                style={{
-                  width: "100%",
-                  height: "40px",
-                  fontWeight: 500,
-                  color: Colors.white,
-                  marginBottom: '0.35rem', // paypal button annoying extra space
-                  backgroundColor: Colors.blue
-                }}
-                onClick={() => {
-                }}
-              >
-                { `Buy now for $${priceDisplay} AUD` }
               </ButtonLoading>
             </div>
           </div>
@@ -283,6 +262,7 @@ const styles = (theme: Theme) => createStyles({
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
+    borderRadius: BorderRadius,
   },
 })
 

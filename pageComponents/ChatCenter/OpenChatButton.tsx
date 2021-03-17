@@ -18,6 +18,7 @@ import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 // Material UI
 import Button from "@material-ui/core/Button";
+import Link from "next/link";
 
 
 const OpenChatButton: React.FC<ReactProps> = (props) => {
@@ -42,17 +43,35 @@ const OpenChatButton: React.FC<ReactProps> = (props) => {
     }, 0)
   }
 
-  return (
-    <Button
-      className={classes.chatButton}
-      variant="text"
-      color={"primary"}
-      onClick={() => openModal()}
-      {...props.buttonProps}
-    >
-      { props.title ? props.title : "Offers" }
-    </Button>
-  )
+  if (props.asModal) {
+    return (
+      <Button
+        className={classes.chatButton}
+        variant="text"
+        color={"primary"}
+        onClick={() => openModal()}
+        {...props.buttonProps}
+      >
+        { props.title ? props.title : "Offers" }
+      </Button>
+    )
+  } else {
+    return (
+      <Link href={"/offers"}>
+        <a>
+          <Button
+            className={classes.chatButton}
+            variant="text"
+            color={"primary"}
+            // onClick={() => openModal()}
+            {...props.buttonProps}
+          >
+            { props.title ? props.title : "Offers" }
+          </Button>
+        </a>
+      </Link>
+    )
+  }
 };
 
 interface ReactProps extends WithStyles<typeof styles> {

@@ -192,34 +192,6 @@ const styles = (theme: Theme) => createStyles({
     lineHeight: '1.5rem',
     marginBottom: '0.1rem',
   },
-  endDivSpacer: {
-    height: '4.1rem',
-    // a little larger than endDiv to prevent scroll locking
-  },
-  endDiv: {
-    background: Colors.deepRed,
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    width: '100%',
-    height: '4rem',
-    color: Colors.cream,
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    cursor: 'pointer',
-    transition: theme.transitions.create('backgroundColor', {
-      easing: theme.transitions.easing.easeIn,
-      duration: 200,
-    }),
-    "&:hover": {
-      background: fade(Colors.deepRed, 0.9),
-      transition: theme.transitions.create('backgroundColor', {
-        easing: theme.transitions.easing.easeIn,
-        duration: 200,
-      })
-    },
-  },
 });
 
 export default withStyles(styles)( MySettings );

@@ -30,6 +30,7 @@ import {
   Product,
   OrderMutationResponse,
   OrderCreateMutationResponse,
+  Bids,
 } from 'typings/gqlTypes';
 // Components
 import ErrorBounds from 'components/ErrorBounds';
@@ -55,6 +56,17 @@ const VisaPurchaseProduct = (props: ReactProps) => {
   const stripe: Stripe = useStripe();
   const elements = useElements();
   const snackbar = useSnackbar();
+
+  const { classes, disableButton } = props;
+
+  const product = props.product;
+  const featuredVariant = props.product.featuredVariant;
+  const purchasePrice = props.selectedBid?.offerPrice
+    || featuredVariant.price
+
+  const aClient = useApolloClient();
+
+  const [loading, setLoading] = React.useState(false);
 
   interface ReduxState {
     isDarkMode: boolean;
@@ -97,7 +109,7 @@ const VisaPurchaseProduct = (props: ReactProps) => {
     // with a payment authorization (to be captured later)
 
     setLoading(true)
-    const variant = featuredVariant;
+
     if (!props?.user?.id) {
       snackbar.enqueueSnackbar(`Login to purchase.`, { variant: "info" })
       setLoading(false)
@@ -115,13 +127,13 @@ const VisaPurchaseProduct = (props: ReactProps) => {
       variables: {
         productId: product.id,
         productSnapshotId: product.currentSnapshot.id,
-        variantId: variant.variantId,
-        variantSnapshotId: variant.variantSnapshotId,
-        total: variant.price,
+        variantId: featuredVariant.variantId,
+        variantSnapshotId: featuredVariant.variantSnapshotId,
+        total: purchasePrice,
         buyerId: props.user.id,
         sellerStoreId: product.store.id,
         stripeAuthorizePaymentData: JSON.stringify(stripeAuthorizePaymentData),
-        bidId: undefined,
+        bidId: props.selectedBid?.id,
       }
     })
     .then(response => {
@@ -144,14 +156,6 @@ const VisaPurchaseProduct = (props: ReactProps) => {
     })
   }
 
-  const { classes, disableButton } = props;
-
-  const product = props.product;
-  const featuredVariant = props.product.featuredVariant;
-
-  const aClient = useApolloClient();
-
-  const [loading, setLoading] = React.useState(false);
 
   return (
     <ErrorBounds name="Visa Checkout" className={props.className}>
@@ -272,6 +276,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   handleOrderPostPurchase(order: any): void;
   product: Product;
   refetchProduct?(): void;
+  selectedBid?: Bids;
 }
 
 interface MutDataCreateOrder {

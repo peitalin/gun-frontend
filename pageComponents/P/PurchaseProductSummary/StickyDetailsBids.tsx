@@ -7,31 +7,31 @@ import Link from "next/link";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
 // Typings
-import { Product, UserPublic } from "typings/gqlTypes";
+import { Product, UserPublic, Bids, BidStatus } from "typings/gqlTypes";
 // Material UI
 import Typography from "@material-ui/core/Typography";
-import Avatar from '@material-ui/core/Avatar';
+import ButtonLoading from "components/ButtonLoading";
 // Copy
 import copy from "clipboard-copy";
 // Snackbar
 import { useSnackbar } from "notistack";
 import ArrowDownwardIcon from '@material-ui/icons/Forward';
 import Tick from "components/Icons/Tick"
-import { showDate } from "utils/dates";
+// redux
 import { GrandReduxState } from "reduxStore/grand-reducer";
 import { useSelector } from "react-redux";
+import { formatDate } from "utils/dates";
+import currency from 'currency.js';
 
 
 
 
-const StickyDetailsSeller = (props: ReactProps) => {
+
+const StickyDetailsBid = (props: ReactProps) => {
 
   const {
     classes,
-    storeName,
-    product,
-    buyerId,
-    seller,
+    userBid,
   } = props;
 
   const snackbar = useSnackbar();
@@ -45,20 +45,26 @@ const StickyDetailsSeller = (props: ReactProps) => {
     console.log("Copied!");
   };
 
+  const c = (s) => currency(s/100, { formatWithSymbol: false }).format()
+
+  console.log("bid: ", userBid)
+
+  let disabledButton = userBid?.bidStatus !== BidStatus.ACCEPTED
+  let thisBidIsSelected = props.userBid?.id === props.selectedBid?.id
+
   return (
     <div className={clsx(
-      classes.storeDetailsProductPageRoot,
+      classes.bidDetailsProductPageRoot,
       props.below1024 ? classes.relativeMenu : classes.stickyMenu,
     )}>
       <div className={clsx(
-        classes.storeDetailsInnerContainer,
+        classes.bidDetailsInnerContainer,
         props.below1024 ? classes.positionRelativeBox : classes.positionStickyBox,
       )}>
 
         <div className={classes.flexRow}>
           <Typography className={classes.title} variant="h4">
-            Private User
-            {/* {storeName} */}
+            {`Bid ${c(userBid?.offerPrice)} AUD`}
           </Typography>
         </div>
 
@@ -66,50 +72,75 @@ const StickyDetailsSeller = (props: ReactProps) => {
 
           <div className={clsx(classes.flexCol, classes.fieldKeysCol)}>
             <Typography className={classes.caption} variant="body1">
-              License Number:
+              ID:
             </Typography>
             <Typography className={classes.caption} variant="body1">
-              State:
+              Date:
             </Typography>
-            {/* <Typography className={classes.caption} variant="body1">
-              Expiry:
-            </Typography> */}
           </div>
 
           <div className={clsx(classes.flexCol)}>
             <Typography className={classes.caption} variant="body1">
-              {`${seller?.license?.licenseNumber ?? "-"}`}
+              {userBid?.id}
             </Typography>
             <Typography className={classes.caption} variant="body1">
-              {`${seller?.license?.licenseState ?? "-"}`}
+              {formatDate(userBid?.createdAt)}
             </Typography>
-            {/* {
-              seller?.license?.licenseExpiry &&
-              <Typography className={classes.caption} variant="body1">
-                {`${showDate(seller?.license?.licenseExpiry) ?? ""}`}
-              </Typography>
-            } */}
             {
-              // seller?.license?.verified &&
-              true &&
-              <div className={classes.verifiedBadge}>
-                Verified License
+              (userBid?.bidStatus === BidStatus.ACCEPTED) &&
+              <div className={clsx(classes.bidStatus, classes.bidGreen)}>
+                Accepted
                 <Tick className={classes.tick}
                   size={30}
-                  color={isDarkMode ? Colors.purple : Colors.blue}
-                  outerCircleColor={isDarkMode ? Colors.purple : Colors.blue}
+                  color={isDarkMode ? Colors.green : Colors.blue}
+                  outerCircleColor={isDarkMode ? Colors.green : Colors.blue}
                   innerCircleColor={isDarkMode ? Colors.uniswapNavy : Colors.slateGrey}
                 />
               </div>
             }
+            {
+              (userBid?.bidStatus === BidStatus.CREATED) &&
+              <div className={clsx(classes.bidStatus, classes.bidGrey)}>
+                Pending Acceptance
+              </div>
+            }
+            {
+              (userBid?.bidStatus !== BidStatus.CREATED &&
+              userBid?.bidStatus !== BidStatus.ACCEPTED) &&
+              <div className={clsx(classes.bidStatus, classes.bidRed)}>
+                {userBid?.bidStatus}
+              </div>
+            }
           </div>
 
+          <ButtonLoading
+            onClick={() => {
+              if (thisBidIsSelected) {
+                props.setSelectedBid(undefined)
+              } else {
+                props.setSelectedBid(userBid)
+              }
+            }}
+            loadingIconColor={Colors.blue}
+            replaceTextWhenLoading={true}
+            // loading={loading}
+            disabled={disabledButton}
+            variant="contained"
+            color="secondary"
+            className={classes.buyButton}
+            style={{
+              height: "38px",
+            }}
+          >
+            <span style={{ marginLeft: '0.25rem' }}>
+              {
+                thisBidIsSelected
+                ? "Cancel"
+                : "Select Bid"
+              }
+            </span>
+          </ButtonLoading>
         </div>
-      </div>
-      <div className={classes.arrowDownContainer}>
-        <ArrowDownwardIcon
-          className={classes.arrowIcon}
-        />
       </div>
     </div>
   );
@@ -117,15 +148,14 @@ const StickyDetailsSeller = (props: ReactProps) => {
 
 
 interface ReactProps extends WithStyles<typeof styles> {
-  seller: UserPublic
-  buyerId: string
-  product: Product
-  storeName: string
+  userBid: Bids
+  selectedBid: Bids
+  setSelectedBid?(b?: Bids): void
   below1024: boolean
 }
 
 const styles = (theme: Theme) => createStyles({
-  storeDetailsProductPageRoot: {
+  bidDetailsProductPageRoot: {
     position: 'relative',
     marginTop: '1rem',
   },
@@ -143,9 +173,8 @@ const styles = (theme: Theme) => createStyles({
     width: '100%',
     borderRadius: "0px",
   },
-  storeDetailsInnerContainer: {
+  bidDetailsInnerContainer: {
     padding: '1rem',
-    minHeight: '130px',
     width: '100%',
     // maxWidth: "600px",
     background: theme.palette.type === 'dark'
@@ -176,7 +205,7 @@ const styles = (theme: Theme) => createStyles({
     width: '100%',
   },
   fieldKeysCol: {
-    minWidth: 115,
+    minWidth: 50,
   },
   title: {
     fontSize: '1rem',
@@ -222,7 +251,7 @@ const styles = (theme: Theme) => createStyles({
     bottom: '1rem',
     right: '1rem',
   },
-  verifiedBadge: {
+  bidStatus: {
     position: 'absolute',
     top: ".75rem",
     right: "0.75rem",
@@ -231,17 +260,35 @@ const styles = (theme: Theme) => createStyles({
     background: theme.palette.type === 'dark'
       ? Gradients.gradientUniswapDark.background
       : Gradients.gradientGrey2.background,
-    color: theme.palette.type === 'dark'
-      ? Colors.purple
-      : Colors.blue,
-    border: theme.palette.type === 'dark'
-      ? `1px solid ${Colors.purple}`
-      : `1px solid ${Colors.blue}`,
     padding: '0.3rem 0.6rem',
     display: 'flex',
     flexDirection: 'row',
     justifyContent: "center",
     alignItems: "center",
+  },
+  bidGreen: {
+    color: theme.palette.type === 'dark'
+      ? Colors.green
+      : Colors.blue,
+    border: theme.palette.type === 'dark'
+      ? `1px solid ${Colors.green}`
+      : `1px solid ${Colors.blue}`,
+  },
+  bidGrey: {
+    color: theme.palette.type === 'dark'
+      ? Colors.uniswapMediumGrey
+      : Colors.slateGreyDarker,
+    border: theme.palette.type === 'dark'
+      ? `1px solid ${Colors.uniswapMediumGrey}`
+      : `1px solid ${Colors.slateGreyDarker}`,
+  },
+  bidRed: {
+    color: theme.palette.type === 'dark'
+      ? Colors.red
+      : Colors.red,
+    border: theme.palette.type === 'dark'
+      ? `1px solid ${Colors.red}`
+      : `1px solid ${Colors.red}`,
   },
   tick: {
     marginLeft: '0.25rem',
@@ -250,8 +297,17 @@ const styles = (theme: Theme) => createStyles({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  buyButton: {
+    marginTop: "0.5rem",
+    backgroundColor: Colors.green,
+    "&:hover": {
+      backgroundColor: Colors.greenCool,
+    },
+    width: "100%",
+    borderRadius: BorderRadius,
+  },
 });
 
-export default withStyles(styles)( StickyDetailsSeller );
+export default withStyles(styles)( StickyDetailsBid );
 
 

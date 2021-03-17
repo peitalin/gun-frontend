@@ -1,129 +1,82 @@
 import gql from "graphql-tag";
 import { ChatRoomFragment } from "./chat-subscriptions";
+import { BidFragment, MessageFragment } from "./fragments";
 
 
-export const INSERT_MESSAGE = gql`
-  mutation sendChatMessage(
-    $msgId: String!
-    $chatRoomId: String!
-    $senderId: String!
-    $content: String!
-    $previewItemId: String
-  ) {
-    insert_chat_messages(objects: [{
-      id: $msgId,
-      chatRoomId: $chatRoomId,
-      content: $content,
-      senderId: $senderId,
-      previewItemId: $previewItemId
-    }]) {
-      affected_rows
-      returning {
-        id
-        sender {
-          id
-          firstName
-          lastName
-          email
-        }
-        content
-      }
-    }
-  }
-`;
 
-export const INSERT_BID_MESSAGE = gql`
+export const SEND_BID_MESSAGE = gql`
   mutation sendBidMessage(
-    $msgId: String!
     $chatRoomId: String!
-    $senderId: String!
     $content: String!
-    $bidId: String!
     $productId: String!
     $productSnapshotId: String!
     $variantId: String!
-    $variantSnapshotId: String!
     $offerPrice: Int!
     $bidStatus: String!
   ) {
-    insert_chat_messages(objects: [{
-      id: $msgId,
+    sendBidMessage(
       chatRoomId: $chatRoomId,
       content: $content,
-      senderId: $senderId,
-      # bidId: $bidId, # already determined by bid.id in line below
-      bid: {
-        data: {
-          id: $bidId,
-          productId: $productId,
-          productSnapshotId: $productSnapshotId,
-          variantId: $variantId,
-          variantSnapshotId: $variantSnapshotId,
-          offerPrice: $offerPrice,
-          bidStatus: $bidStatus
-        }
-      }
-    }]) {
-      affected_rows
-      # ...ChatMessageFragment
+      productId: $productId,
+      productSnapshotId: $productSnapshotId,
+      variantId: $variantId,
+      offerPrice: $offerPrice,
+      bidStatus: $bidStatus
+    ) {
+      ...MessageFragment
     }
-    # insert_bids(objects: [{
-    #   id: $bidId,
-    #   productId: $productId,
-    #   productSnapshotId: $productSnapshotId,
-    #   variantId: $variantId,
-    #   variantSnapshotId: $variantSnapshotId,
-    #   offerPrice: $offerPrice,
-    #   bidStatus: $bidStatus
-    # }]) {
-    #   affected_rows
-    # }
   }
+  ${MessageFragment}
 `;
 
 
 export const UPDATE_BID_MESSAGE = gql`
-  mutation updateBids(
+  mutation updateBid(
     $bidId: String!
     $bidStatus: String!
   ) {
-    update_bids(
-      where: {id: {_eq: $bidId}},
-      _set: {bidStatus: $bidStatus}
+    updateBid(
+      bidId: $bidId
+      bidStatus: $bidStatus
     ) {
-      affected_rows
+      ...BidFragment
     }
   }
+  ${BidFragment}
 `;
 
-
-export const EMIT_TYPING_EVENT = gql`
-  mutation update_users($senderId: String!) {
-    update_users(
-      _set: { lastTyped: "now()" }
-      where: { id: { _eq: $senderId } }
-    ) {
-      affected_rows
-      returning {
-        id
-      }
-    }
-  }
-`;
 
 export const UPDATE_CHAT_STATUS = gql`
   mutation(
-    $chatRoomId: String
-    $chatStatus: String
+    $chatRoomId: String!
+    $chatStatus: String!
   ) {
-    update_chat_rooms(
-      where:{id: {_eq: $chatRoomId }},
-      _set: { status: $chatStatus }
+    updateChatStatus(
+      chatRoomId: $chatRoomId
+      chatStatus: $chatStatus
     ) {
-      returning {
-        ...ChatRoomFragment
-      }
+      ...ChatRoomFragment
     }
   }
   ${ChatRoomFragment}
 `
+
+export const CREATE_NEW_CHAT = gql`
+  # create chat room between buyer and seller
+  mutation createNewChat(
+    $sellerUserId: String!
+    $buyerUserId: String!
+    $productId: String!
+    $name: String
+  ) {
+    createNewChat(
+      buyerUserId: $buyerUserId,
+      sellerUserId: $sellerUserId,
+      productId: $productId,
+      name: $name,
+    ) {
+      ...ChatRoomFragment
+    }
+  }
+  ${ChatRoomFragment}
+`;

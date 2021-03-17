@@ -1,31 +1,23 @@
 import React from 'react';
 // Styles
 import clsx from "clsx";
-import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
+import { fade, withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
 import { Colors, BoxShadows, BorderRadius } from "layout/AppTheme";
 
 import { useMutation, useApolloClient } from "@apollo/client";
-import gql from 'graphql-tag';
 import TypingIndicator from './TypingIndicator';
-import { v4 as uuidv4 } from "uuid"
-import { Chat_Messages_Mutation_Response, Products, BidStatus } from "typings/gqlTypes";
+import { Chat_Messages, Products, BidStatus } from "typings/gqlTypes";
 import Button from "@material-ui/core/Button";
 import TextEditorCK from "components/TextEditorCK";
-
-import { customAlphabet } from 'nanoid'
-const ID_ALPHABET = "123456789bcdfghjklmnpqrstvwxyz";
-const ID_LENGTH = 8;
-const nanoid = customAlphabet(ID_ALPHABET, ID_LENGTH)
-
 import {
-  INSERT_BID_MESSAGE,
-  INSERT_MESSAGE,
-  EMIT_TYPING_EVENT,
+  SEND_BID_MESSAGE,
 } from "queries/chat-mutations";
 
 import TextInputAdorned from 'components/Fields/TextInputAdorned';
 import { Rifm } from 'rifm';
 import { formatCurrency, parseNumber} from "utils/currencyInput";
+// Snackbar
+import { useSnackbar } from "notistack";
 // Typings
 import { asCurrency as c } from "utils/prices";
 /// Debounce
@@ -33,39 +25,33 @@ import { useDebouncedCallback } from 'use-debounce';
 // Validation
 import { validationSchemas } from "utils/validation";
 import { Formik, Form, FormikProps, ErrorMessage } from 'formik';
+import { Snackbar } from '@material-ui/core';
 
 
 
 export const Textbox: React.FC<ReactProps> = (props) => {
 
-  const [showBidMenu, setShowBidMenu] = React.useState(false)
   const [offerPrice, setOfferPrice] = React.useState(undefined)
 
   const { classes } = props;
-  const apolloClient = useApolloClient();
 
+  const snackbar = useSnackbar();
 
-  const emitTypingEvent = async () => {
-    if (props.userId) {
-      console.log("emitting event")
-      await apolloClient.mutate({
-        mutation: EMIT_TYPING_EVENT,
-        variables: {
-          senderId: props.userId
-        }
-      }).then(res => console.log('emitted typing event', res));
-    }
-  }
+  // const emitTypingEvent = async () => {
+  //   if (props.userId) {
+  //     console.log("emitting event")
+  //     await apolloClient.mutate({
+  //       mutation: EMIT_TYPING_EVENT,
+  //       variables: {
+  //         senderId: props.userId
+  //       }
+  //     }).then(res => console.log('emitted typing event', res));
+  //   }
+  // }
 
-
-  const [insertMessage, msgMutationResponse] = useMutation<MutData, MutVars>(
-    INSERT_MESSAGE, {
-      // variables: { }, // add later in sendMessage()
-    }
-  )
 
   const [insertBidMessage, bidMutationResponse] = useMutation<MutData, MutVarsBid>(
-    INSERT_BID_MESSAGE, {
+    SEND_BID_MESSAGE, {
       // variables: { }, // add later in sendMessage()
       onCompleted: (data) => {
         console.log(data)
@@ -73,22 +59,9 @@ export const Textbox: React.FC<ReactProps> = (props) => {
     }
   )
 
-  // Debounce Formik State changes to limit lag
-  const [updatePrice] = useDebouncedCallback((e: any) => {
-    let cents = Math.round(parseFloat(e)) // round: 200.9999 => 201
-    console.log('cents: ', cents)
-    if (cents) {
-      setOfferPrice(cents)
-    } else {
-      // setOfferPrice(undefined)
-    }
-  }, 16);
-
-
   // RIFM - masking currency values
-  const [displayedPrice, setDisplayedPrice] = React.useState(
-    c(0) || ''
-  );
+  const [displayedPrice, setDisplayedPrice] = React.useState('');
+
 
   return (
     <Formik
@@ -98,7 +71,6 @@ export const Textbox: React.FC<ReactProps> = (props) => {
       validationSchema={validationSchemas.CreateDealer}
       onSubmit={(values, { setSubmitting, resetForm }) => {
         console.log("formik values: ", values)
-        //
       }}
     >
       {(fprops) => {
@@ -119,22 +91,37 @@ export const Textbox: React.FC<ReactProps> = (props) => {
 
         // Mutation component. Add message to the state of <RenderMessages> after mutation.
         return (
-          <form onSubmit={async() => {
+          <form onSubmit={async(e) => {
 
-              let description = fprops?.values?.description;
+              e.preventDefault(); // prevent refresh
+              let description = fprops.values?.description
               console.log("chatRoomId: ", props.chatRoomId)
 
-              insertMessage({
+              snackbar.enqueueSnackbar(
+                `sending a bid.`,
+                { variant: "info" }
+              )
+
+              insertBidMessage({
                 variables: {
-                  msgId: `msg_${uuidv4()}`,
                   chatRoomId: props.chatRoomId,
                   senderId: props.userId,
                   content: description,
-                  previewItemId: undefined,
+                  productId: props.product.id,
+                  productSnapshotId: props.product.currentSnapshotId,
+                  variantId: props.product.productVariants[0].variantId,
+                  offerPrice: offerPrice,
+                  bidStatus: BidStatus.CREATED,
                 }
               }).then(res => {
-                fprops.resetForm()
+                // fprops.resetForm()
                 fprops.setFieldValue("description", "")
+                setDisplayedPrice('')
+                setOfferPrice(0)
+                snackbar.enqueueSnackbar(
+                  `Bid placed successfully.`,
+                  { variant: "success" }
+                )
               });
           }}>
             <div className={classes.textboxWrapper}>
@@ -151,7 +138,14 @@ export const Textbox: React.FC<ReactProps> = (props) => {
                     // multiple by 100 as formik/graphql takes cents, not dollars
                     let dollars = parseNumber(value)
                     setDisplayedPrice(dollars)
-                    updatePrice(dollars * 100)
+                    console.log("dollars", dollars)
+                    let cents = Math.round(parseFloat((dollars * 100) as any)) // round: 200.9999 => 201
+                    console.log('cents: ', cents)
+                    if (cents) {
+                      setOfferPrice(cents)
+                    } else {
+                      // setOfferPrice(undefined)
+                    }
                     // multiple by 100 as formik/graphql takes cents, not dollars
                   }}
                 >
@@ -169,15 +163,6 @@ export const Textbox: React.FC<ReactProps> = (props) => {
                         onChange(e)
                       }}
                       inputProps={{ style: { width: '100%', marginLeft: '0.25rem' }}}
-                      // errorMessage={
-                      //   errors?.currentVariants?.[position]?.price
-                      //   ? errors.currentVariants[position].price
-                      //   : null
-                      // }
-                      // touched={touched?.currentVariants?.[position]?.price}
-                      // validationErrorMsgStyle={{
-                      //   bottom: '-1.15rem',
-                      // }}
                     />
                   )}
                 </Rifm>
@@ -204,56 +189,14 @@ export const Textbox: React.FC<ReactProps> = (props) => {
                 />
 
                 <Button
-                  type="submit" // this sets off Form submit
-                  variant={"outlined"}
-                  className={clsx(classes.sendButton)}
-                  onClick={() => { }}
-                >
-                  Send
-                </Button>
-
-                <Button
+                  type={"submit"}
                   variant={"outlined"}
                   className={clsx(classes.sendBidButton)}
-                  onClick={async() => {
-
-                    let description = fprops.values?.description
-                    console.log("chatRoomId: ", props.chatRoomId)
-
-                    let variables = {
-                      msgId: `msg_${nanoid()}`,
-                      chatRoomId: props.chatRoomId,
-                      senderId: props.userId,
-                      content: description,
-                      // content: state.text,
-                      bidId: `bid_${nanoid()}`,
-                      productId: props.product.id,
-                      productSnapshotId: props.product.currentSnapshotId,
-                      variantId: props.product.productVariants[0].variantId,
-                      variantSnapshotId: props.product.productVariants[0].variantSnapshotId,
-                      offerPrice: offerPrice,
-                      bidStatus: BidStatus.CREATED,
-                    }
-                    console.log("variables: ", variables)
-
-                    insertBidMessage({
-                      variables: variables
-                    }).then(res => {
-                      fprops.resetForm()
-                      fprops.setFieldValue("description", "")
-                    });
-                  }}
+                  onClick={() => { }}
                 >
                   Create Bid
                 </Button>
 
-                <Button
-                  variant={"outlined"}
-                  className={clsx(classes.typoButton)}
-                  onClick={() => fprops.resetForm()}
-                >
-                  Reset Form
-                </Button>
               </div>
             </div>
           </form>
@@ -274,26 +217,16 @@ interface ReactProps extends WithStyles<typeof styles> {
 }
 
 interface MutData {
-  insert_chat_messages: Chat_Messages_Mutation_Response
-}
-interface MutVars {
-  msgId: string
-  chatRoomId: string
-  senderId: string
-  content: string
-  previewItemId?: string
+  sendBidMessage: Chat_Messages[]
 }
 interface MutVarsBid {
-  msgId: string
   chatRoomId: string
   senderId: string
   content: string
   // previewItemId?: string
-  bidId: string
   productId: string
   productSnapshotId: string
   variantId: string
-  variantSnapshotId: string
   offerPrice: number
   bidStatus: string
 }
@@ -308,6 +241,15 @@ const styles = (theme: Theme) => createStyles({
     position: 'absolute',
     bottom: 8,
     left: 8,
+    color: Colors.cream,
+    background: theme.palette.type === "dark"
+      ? Colors.purple
+      : Colors.secondary,
+    "&:hover": {
+      background: theme.palette.type === "dark"
+        ? fade(Colors.purple, 0.9)
+        : fade(Colors.secondary, 0.9),
+    },
   },
   typoButton: {
     position: 'absolute',

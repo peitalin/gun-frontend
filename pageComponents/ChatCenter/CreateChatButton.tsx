@@ -4,9 +4,7 @@ import { Colors, BorderRadius } from "layout/AppTheme";
 import clsx from "clsx";
 import { withStyles, WithStyles, createStyles, Theme, fade } from "@material-ui/core/styles";
 // graphql
-import gql from 'graphql-tag'
 import { useMutation, useQuery } from '@apollo/client';
-import { useApolloClient } from "@apollo/client";
 // typings
 import { Chat_Rooms, Chat_Messages } from "typings/gqlTypes";
 // components
@@ -14,41 +12,15 @@ import ButtonLoading from "components/ButtonLoading";
 // css
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
-import { v4 as uuidv4 } from "uuid"
 // Snackbar
-import { useSnackbar, ProviderContext } from "notistack";
+import { useSnackbar } from "notistack";
 // Redux
 import { useSelector, useDispatch } from 'react-redux';
 import { GrandReduxState, Actions } from 'reduxStore/grand-reducer';
-import { UserPrivate } from "typings/gqlTypes";
+import { CREATE_NEW_CHAT } from "queries/chat-mutations"
 
 
 
-const CREATE_NEW_CHAT = gql`
-  # create chat room between buyer and seller
-  mutation createNewChat(
-    $chatRoomId: String!
-    $sellerUserId: String!
-    $buyerUserId: String!
-    $name: String
-    $productId: String!
-  ) {
-    insert_chat_rooms(objects: [{
-      id: $chatRoomId,
-      ownerId: $buyerUserId,
-      name: $name,
-      productId: $productId,
-      users: {
-        data: [
-          { userId: $sellerUserId },
-          { userId: $buyerUserId }
-        ]
-      }
-    }]) {
-      affected_rows
-    }
-  }
-`;
 
 
 const CreateChatButton: React.FC<ReactProps> = (props) => {
@@ -57,8 +29,6 @@ const CreateChatButton: React.FC<ReactProps> = (props) => {
   const dispatch = useDispatch();
 
   const {
-    buyerUserId,
-    sellerUserId,
     openChatAfterwards = false,
   } = props;
 
@@ -78,53 +48,51 @@ const CreateChatButton: React.FC<ReactProps> = (props) => {
   const [createChat, { data, loading }] = useMutation(
     CREATE_NEW_CHAT, {
       variables: {
-        chatRoomId: `chat_${uuidv4()}`,
         sellerUserId: props.sellerUserId,
         buyerUserId: props.buyerUserId,
         productId: props.productId,
+        name: props.name,
       },
       onCompleted: () => {
         snackbar.enqueueSnackbar(
-          "Chat created.",
+          "Bidding room created.",
           { variant: "info" }
         )
       },
       onError: (e) => {
         snackbar.enqueueSnackbar(
-          `Error creating chat: ${e}`,
+          `Error creating bidding room: ${e}`,
           { variant: "error" }
         )
       },
   })
 
   return (
-    <div>
-      <ButtonLoading
-        type="submit"
-        className={props.classes.chatButton}
-        style={{
-          // width: '150px',
-        }}
-        variant={"outlined"}
-        color={"primary"}
-        loadingIconColor={Colors.blue}
-        replaceTextWhenLoading={true}
-        loading={loading}
-        disabled={!process.browser || props.disabled}
-        // disabled={disabled}
-        onClick={() => {
-          createChat()
-          if (props.onClickCallback) {
-            props.onClickCallback()
-          }
-          if (props.openChatAfterwards) {
-            openModal()
-          }
-        }}
-      >
-        { props.title ? props.title : 'Send a message' }
-      </ButtonLoading>
-    </div>
+    <ButtonLoading
+      type="submit"
+      className={props.classes.chatButton}
+      style={{
+        // width: '150px',
+      }}
+      variant={"outlined"}
+      color={"primary"}
+      loadingIconColor={Colors.blue}
+      replaceTextWhenLoading={true}
+      loading={loading}
+      disabled={!process.browser || props.disabled}
+      // disabled={disabled}
+      onClick={() => {
+        createChat()
+        if (props.onClickCallback) {
+          props.onClickCallback()
+        }
+        if (props.openChatAfterwards) {
+          openModal()
+        }
+      }}
+    >
+      { props.title ? props.title : 'Suggest a price' }
+    </ButtonLoading>
   )
 }
 
@@ -134,15 +102,10 @@ interface ReactProps extends WithStyles<typeof styles> {
   sellerUserId: string
   buyerUserId: string
   productId: string
+  name?: string
   disabled?: boolean
   onClickCallback?(): void
   openChatAfterwards?: boolean
-}
-interface QueryData {
-  chatMessages: Chat_Messages;
-}
-interface QueryVar {
-  // query: ConnectionOffsetQuery
 }
 
 

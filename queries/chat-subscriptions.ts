@@ -1,39 +1,10 @@
 import gql from "graphql-tag";
-
-export const PreviewItemFragment = gql`
-  fragment PreviewItemFragment on product_preview_items {
-    id
-    imageId
-    youTubeEmbedLink
-    image {
-      id
-      original {
-        id
-        url
-        mimeType
-        heightInPixels
-        widthInPixels
-        sizeInBytes
-        url
-      }
-      variants {
-        id
-        mimeType
-        sizeInBytes
-        widthInPixels
-        heightInPixels
-        url
-      }
-      createdAt
-      tags
-      description
-    }
-  }
-`;
+import { ImageFragment, BidFragment } from "./fragments";
 
 
-export const ProductFragment = gql`
-  fragment ProductFragment on products {
+
+export const ProductLiteFragment = gql`
+  fragment ProductLiteFragment on products {
     id
     currentSnapshotId
     currentSnapshot {
@@ -54,7 +25,11 @@ export const ProductFragment = gql`
     productVariants {
       price
       previewItems {
-        ...PreviewItemFragment
+        id
+        imageId
+        image {
+          ...ImageFragment
+        }
       }
       createdAt
       isDefault
@@ -65,6 +40,7 @@ export const ProductFragment = gql`
       variantDescription
     }
   }
+  ${ImageFragment}
 `;
 
 
@@ -81,23 +57,18 @@ export const MessageFragment = gql`
     }
     content
     previewItem {
-      ...PreviewItemFragment
+      id
+      imageId
+      image {
+        ...ImageFragment
+      }
     }
     bid {
-      id
-      productId
-      productSnapshotId
-      variantId
-      variantSnapshotId
-      offerPrice
-      acceptedPrice
-      orderId
-      bidStatus
-      createdAt
-      updatedAt
+      ...BidFragment
     }
   }
-  ${PreviewItemFragment}
+  ${ImageFragment}
+  ${BidFragment}
 `;
 
 export const ChatRoomFragment = gql`
@@ -111,7 +82,7 @@ export const ChatRoomFragment = gql`
       lastName
     }
     product {
-      ...ProductFragment
+      ...ProductLiteFragment
     }
     users {
       user {
@@ -127,7 +98,7 @@ export const ChatRoomFragment = gql`
       ...MessageFragment
     }
   }
-  ${ProductFragment}
+  ${ProductLiteFragment}
   ${MessageFragment}
 `;
 

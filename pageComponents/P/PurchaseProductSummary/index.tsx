@@ -7,6 +7,7 @@ import { Colors, BoxShadows, BorderRadius } from "layout/AppTheme";
 import {
   Product, ID, Product_Variants, UserPrivate, ProductPreviewItem,
   SoldOutStatus,
+  Bids,
 } from "typings/gqlTypes";
 import { SelectedVariantProps } from "../ProductId";
 // Redux
@@ -70,7 +71,9 @@ const PurchaseProductSummary: React.FC<ReactProps> = (props) => {
   const aClient = useApolloClient();
   const router = useRouter();
 
-  const featuredVariant = selectedOption.value;
+  const featuredVariant = selectedOption?.value;
+  const productPrice = props.selectedBid?.offerPrice ||
+    featuredVariant?.price
 
   const showProductInfo = featuredVariant?.variantId && props?.product?.id
   // console.log("featuredVariant", featuredVariant)
@@ -89,6 +92,7 @@ const PurchaseProductSummary: React.FC<ReactProps> = (props) => {
                 <ProductHeading product={props.product} featuredVariant={featuredVariant}/>
                 <ProductPricing
                   featuredVariant={featuredVariant}
+                  selectedBid={props.selectedBid}
                   soldOutStatus={props.product.soldOutStatus}
                 />
               </>
@@ -139,10 +143,11 @@ const PurchaseProductSummary: React.FC<ReactProps> = (props) => {
                     // className={"fadeIn"}
                     product={props.product}
                     refetchProduct={props.refetchProduct}
-                    title={`Buy for ${c(featuredVariant.price)} AUD`}
+                    title={`Buy for ${c(productPrice)} AUD`}
                     showIcon={true}
                     display={true}
                     buttonHeight={xsDown ? '40px' : '40px'}
+                    selectedBid={props.selectedBid}
                     handleOrderPostPurchase={
                       (order) => {
                         router.push("/orders")
@@ -177,6 +182,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   handleChangeVariantOption(
     selectedOption: { label: string, value: Product_Variants }
   ): void;
+  selectedBid?: Bids
 }
 
 

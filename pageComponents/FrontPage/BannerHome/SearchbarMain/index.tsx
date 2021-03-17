@@ -60,8 +60,8 @@ const SearchbarMain = (props: SearchbarProps) => {
   } = useFacetSearchOptions({
     limit: numItemsPerPage * overfetchBy,
     overfetchBy: overfetchBy,
-    router: router,
-    paginatorType: PaginatorType.page,
+    // router: router,
+    // paginatorType: PaginatorType.page,
   })
 
   const onEnter = (event) => {
@@ -140,8 +140,7 @@ const SearchbarMain = (props: SearchbarProps) => {
         display: 'flex',
         flexDirection: 'column',
       }}
-    >
-      </SearchOptionsAirbnb>
+    />
   )
 }
 

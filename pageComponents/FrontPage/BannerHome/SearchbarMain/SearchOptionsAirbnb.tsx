@@ -76,14 +76,9 @@ const SearchOptionsPaginator: React.FC<ReactProps> = (props) => {
 
   // for fast UI updates.
   const [searchTermUi, setSearchTermUi] = React.useState("");
-  // for actual gql dispatch for search term
-  const [debounceSetSearchTerm] = useDebouncedCallback((s: string) => {
-    console.log("setting searchTerm: ", s)
-    setSearchTerm(s)
-  }, 128);
-
   // for fast UI updates
   const [pageUi, setPageUi] = React.useState(1);
+
   // for actual gql dispatch for pagination page
   const [debounceSetPageParam, cancel, callPending] = useDebouncedCallback(
     (page: number) => {

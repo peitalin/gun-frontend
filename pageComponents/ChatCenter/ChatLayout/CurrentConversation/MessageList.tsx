@@ -5,10 +5,9 @@ import clsx from "clsx";
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
 import { Chat_Rooms, Chat_Messages, Bids, BidStatus } from "typings/gqlTypes";
 // Styles
-import { Colors, BoxShadows, BorderRadius2x, BorderRadius3x } from "layout/AppTheme";
+import { Colors, BoxShadows, BorderRadius2x, BorderRadius3x, BorderRadius } from "layout/AppTheme";
 
 import { formatDate } from "utils/dates";
-import { showDateAndTime } from "utils/dates";
 import ButtonLoading from "components/ButtonLoading";
 import { gql } from "@apollo/client";
 import { useMutation, useApolloClient } from "@apollo/client";
@@ -112,7 +111,7 @@ const MessageItem = (props: MessageItemProps) => {
             <b>{`${m.sender.firstName} ${m.sender.lastName}`}</b>
           </div>
           <div className={classes.myMessageTime}>
-            <i>{showDateAndTime(m.createdAt)}</i>
+            <i>{formatDate(m.createdAt)}</i>
           </div>
         </div>
         <div className={classes.myMessageText}>
@@ -126,6 +125,10 @@ const MessageItem = (props: MessageItemProps) => {
           <div className={classes.messageText}>
             {`Offer: ${c(m.bid.offerPrice)}`}
             <ButtonLoading
+              className={clsx(
+                classes.bidMsgButton,
+                bidDisabled ? classes.bidMsgDisabled : classes.bidMsgRed,
+              )}
               onClick={async() => {
                 console.log("bid.id: ", bid?.id)
                 let response = await updateBidMessage({
@@ -142,7 +145,6 @@ const MessageItem = (props: MessageItemProps) => {
               disabled={bidDisabled}
               variant="outlined"
               color="primary"
-              className={classes.bidMsgButton}
             >
               {
                 bidDisabled
@@ -162,7 +164,7 @@ const MessageItem = (props: MessageItemProps) => {
             <b>{`${m.sender.firstName} ${m.sender.lastName}`}</b>
           </div>
           <div className={classes.messageTime}>
-            <i>{showDateAndTime(m.createdAt)}</i>
+            <i>{formatDate(m.createdAt)}</i>
           </div>
         </div>
         <div className={classes.messageText}>
@@ -171,15 +173,18 @@ const MessageItem = (props: MessageItemProps) => {
           }}/>
         </div>
         {
-          m.bid &&
-          m.bid.id &&
+          m?.bid?.id &&
           <div className={classes.messageText}>
-            {`Offer: ${c(m.bid.offerPrice)}`}
+            {`Offer: ${c(m?.bid?.offerPrice)}`}
             <ButtonLoading
+              className={clsx(
+                classes.bidMsgButton,
+                bidDisabled ? classes.bidMsgDisabled : classes.bidMsgBlue,
+              )}
               onClick={() => {
                 updateBidMessage({
                   variables: {
-                    bidId: bid.id,
+                    bidId: bid?.id,
                     bidStatus: BidStatus.ACCEPTED,
                   }
                 })
@@ -190,22 +195,25 @@ const MessageItem = (props: MessageItemProps) => {
               disabled={bidDisabled}
               variant="outlined"
               color="primary"
-              className={classes.bidMsgButton}
             >
               {
                 bidDisabled
-                ? `Offer ${bid.bidStatus}`
+                ? `Offer ${bid?.bidStatus}`
                 : "Accept"
               }
             </ButtonLoading>
             {
-              m.bid.id &&
+              m?.bid?.id &&
               !bidDisabled &&
               <ButtonLoading
+                className={clsx(
+                  classes.bidMsgButton,
+                  bidDisabled ? classes.bidMsgDisabled : classes.bidMsgRed,
+                )}
                 onClick={() => {
                   updateBidMessage({
                     variables: {
-                      bidId: bid.id,
+                      bidId: bid?.id,
                       bidStatus: BidStatus.DECLINED,
                     }
                   })
@@ -216,7 +224,6 @@ const MessageItem = (props: MessageItemProps) => {
                 disabled={bidDisabled}
                 variant="outlined"
                 color="secondary"
-                className={classes.bidMsgButton}
               >
                 { "Decline" }
               </ButtonLoading>
@@ -309,11 +316,34 @@ const styles = (theme: Theme) => createStyles({
     color: Colors.greenCool,
   },
   bidMsgButton: {
-    height: 35,
-    backgroundColor: Colors.lightGrey,
-    color: Colors.slateGreyBlack,
+    border: "unset",
     "&:hover": {
-      backgroundColor: Colors.slateGrey,
+      border: "unset",
+    },
+    borderRadius: BorderRadius,
+    color: Colors.cream,
+    height: 35,
+  },
+  bidMsgRed: {
+    backgroundColor: Colors.red,
+    "&:hover": {
+      backgroundColor: Colors.lightRed,
+    },
+  },
+  bidMsgBlue: {
+    backgroundColor: Colors.secondary,
+    "&:hover": {
+      backgroundColor: Colors.secondaryBright,
+    },
+  },
+  bidMsgDisabled: {
+    backgroundColor: theme.palette.type === 'dark'
+      ? Colors.slateGreyDarkest
+      : Colors.slateGreyDarker,
+    "&:hover": {
+      backgroundColor: theme.palette.type === 'dark'
+        ? Colors.slateGreyDarkest
+        : Colors.slateGreyDarker,
     },
   },
 })
