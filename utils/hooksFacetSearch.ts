@@ -75,7 +75,7 @@ export const useFacetSearchOptions = ({
 
   const initialSearchTerm = !!router?.query?.q
     ? decodeURIComponent(router?.query?.q as string)
-    : undefined
+    : ""
 
   const initialPageParam = !!router?.query?.page
     ? parseInt(decodeURIComponent(router?.query?.page as string)) ?? 1

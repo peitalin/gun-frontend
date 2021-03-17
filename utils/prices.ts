@@ -2,7 +2,7 @@ import { SubtotalDisplay } from "typings";
 import currency from "currency.js";
 
 
-export const asCurrency = (s) => currency(s/100, { formatWithSymbol: true }).format()
+export const asCurrency = (s) => currency(s/100, { formatWithSymbol: false }).format()
 
 
 export const centsToDollars = (totalCents: any): SubtotalDisplay => {

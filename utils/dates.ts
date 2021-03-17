@@ -36,9 +36,9 @@ export const getCountdownForExpiry = ({
   const diff = then - now;
 
   if (now > then) {
-    let expiryDateFormatted = showDate(expiryDate)
+    let expiryDateFormatted = formatDate(expiryDate)
     return `Expired ${expiryDateFormatted}`
-  }
+ }
 
   const seconds = Math.max(0, Math.floor((diff / 1000) % 60));
   const secondsStr = (seconds < 10) ? `0${seconds}` : seconds
@@ -56,16 +56,12 @@ export const getCountdownForExpiry = ({
 
 // dayjs format:
 // https://github.com/iamkun/dayjs/blob/dev/docs/en/API-reference.md#format-formatstringwithtokens-string
-export const showDateAndTime = (d: Date) => {
-  return dayjs(d).format("DD MMM YY, hh:mm:ss A")
-}
-
 export const formatDate = (d: Date) => {
-  return dayjs.utc(d).local().format("DD-MM-YYYY hh:mm A")
+  return dayjs.utc(d).format("DD-MM-YYYY hh:mm A")
 }
 
 export const showDate = (d: Date) => {
-  return dayjs.utc(d).local().format("DD-MM-YYYY")
+  return dayjs.utc(d).format("DD-MM-YYYY")
 }
 
 export const showTime = (d: Date) => {
