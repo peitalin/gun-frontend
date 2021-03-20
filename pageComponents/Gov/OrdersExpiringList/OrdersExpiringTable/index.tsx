@@ -16,16 +16,17 @@ import {
   UserPrivate,
   ConnectionOffsetQuery
 } from "typings/gqlTypes";
+// Redux
+import { useSelector, useDispatch } from "react-redux";
+import { GrandReduxState } from 'reduxStore/grand-reducer';
+// graphl
+import { useMutation, useQuery } from "@apollo/client";
 import {
   GET_ORDERS_EXPIRING_CONNECTION_ADMIN,
 } from "queries/orders-admin-queries";
-// Pagination
+// components
 import LoadingBar from "components/LoadingBar";
-// graphl
-import { useMutation, useQuery } from "@apollo/client";
-
 import RowExpanderExpiringOrders from "./RowExpanderExpiringOrders";
-
 // Search Component
 import SearchOptions, { SelectOption, setCategoryFacets } from "components/SearchOptions";
 import {
@@ -39,12 +40,17 @@ import GridPaginatorGeneric from "components/GridPaginatorGeneric";
 
 
 
-const OrdersPendingApprovalTable: NextPage<ReactProps> = (props) => {
+const OrdersExpiringTable: NextPage<ReactProps> = (props) => {
 
   //
   const {
     classes,
   } = props;
+
+
+  const isDarkMode = useSelector<GrandReduxState, boolean>(s => {
+    return s.reduxLogin.darkMode === 'dark'
+  })
 
   /////////////////////////////////// paginator
   let numItemsPerPage = 10;
@@ -140,6 +146,12 @@ const OrdersPendingApprovalTable: NextPage<ReactProps> = (props) => {
         }}
         bottomSectionStyles={{
           marginBottom: '1rem',
+          backgroundColor: isDarkMode ? Colors.uniswapDarkNavy : Colors.cream,
+          border: isDarkMode
+            ? `1px solid ${Colors.uniswapNavy}`
+            : `1px solid ${Colors.slateGreyDarker}`,
+          borderRadius: BorderRadius,
+          paddingBottom: '0.5rem',
         }}
       >
         <TitleRows classes={classes}/>
@@ -264,7 +276,7 @@ const styles = (theme: Theme) => createStyles({
     width: '100%',
     padding: '16px', // same padding as MenuItem 16px
     paddingBottom: '1rem',
-    border: theme.palette.type === 'dark'
+    borderBottom: theme.palette.type === 'dark'
       ? `1px solid ${Colors.uniswapGrey}`
       : `1px solid ${Colors.slateGreyDarker}`,
   },
@@ -304,14 +316,10 @@ const styles = (theme: Theme) => createStyles({
   gridRoot: {
     background: theme.palette.type === 'dark'
       ? Colors.uniswapDarkNavy
-      : Colors.darkWhite,
-    border: theme.palette.type === 'dark'
-      ? `unset`
-      : `1px solid ${Colors.slateGreyDarker}`,
-    borderTop: 'none',
+      : Colors.cream,
     borderRadius: `0px 0px ${BorderRadius}px ${BorderRadius}px`,
     paddingBottom: '0.25rem',
   },
 });
 
-export default withStyles(styles)( OrdersPendingApprovalTable );
+export default withStyles(styles)( OrdersExpiringTable );

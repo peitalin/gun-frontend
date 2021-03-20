@@ -581,9 +581,13 @@ const styles = (theme: Theme) => createStyles({
       ? Colors.uniswapDarkNavy
       : Colors.cream,
     borderRadius: `${BorderRadius}px ${BorderRadius}px 0px 0px`,
-    borderBottom: theme.palette.type === 'dark'
-      ? `1px solid ${Colors.uniswapGrey}`
-      : `1px solid ${Colors.slateGreyDark}`,
+    border: 'unset',
+    // border: theme.palette.type === 'dark'
+    //   ? `unset`
+    //   : `1px solid ${Colors.slateGreyDark}`,
+    // borderBottom: theme.palette.type === 'dark'
+    //   ? `1px solid ${Colors.uniswapGrey}`
+    //   : `1px solid ${Colors.slateGreyDark}`,
     position: "relative", // for <LoadingBar/> absolute position
     display: 'flex',
     flexDirection: 'row',

@@ -120,8 +120,8 @@ const OrdersCancelledList = (props: ReactProps) => {
     }
   )
 
-  const connection = option(data).getOrdersCancelledConnection();
-  const orderIds = option(connection).edges([]).map(({ node }) => node.id)
+  const connection = data?.getOrdersCancelledConnection;
+  const orderIds = (connection?.edges ?? []).map(({ node }) => node.id)
 
   let noRefundsYet = !loading &&
     option(connection).edges([]).length === 0
@@ -227,34 +227,29 @@ const OrdersCancelledList = (props: ReactProps) => {
           }}
         >
           {
-            noRefundsYet &&
-            <div className={clsx(
-              classes.paper,
-              classes.customersPlaceholder,
-              classes.flexCol,
-              classes.customerNoEmailsBox,
-            )}>
-              <Typography className={classes.cancelCaption} variant="subtitle2">
-                No order cancellations yet
-              </Typography>
-            </div>
+            noRefundsYet
+            ? <div className={classes.noCancelledOrdersBox}>
+                <Typography className={classes.cancelCaption}>
+                  No order cancellations yet
+                </Typography>
+              </div>
+            : <GridPaginatorGeneric<Order>
+                index={index}
+                connection={connection}
+                totalCount={totalCount}
+                setTotalCount={setTotalCount}
+                numItemsPerPage={numItemsPerPage}
+                gridItemClassName={classes.gridItem}
+                classNameRoot={classes.gridRoot}
+              >
+                {({ node , key }) => {
+                  let order = node as OrderAdmin
+                  return (
+                    <CancelledOrderRow key={key} order={order}/>
+                  )
+                }}
+              </GridPaginatorGeneric>
           }
-          <GridPaginatorGeneric<Order>
-            index={index}
-            connection={connection}
-            totalCount={totalCount}
-            setTotalCount={setTotalCount}
-            numItemsPerPage={numItemsPerPage}
-            gridItemClassName={classes.gridItem}
-            classNameRoot={classes.gridRoot}
-          >
-            {({ node , key }) => {
-              let order = node as OrderAdmin
-              return (
-                <CancelledOrderRow key={key} order={order}/>
-              )
-            }}
-          </GridPaginatorGeneric>
         </SearchOptions>
       </div>
     </ErrorBounds>
@@ -357,9 +352,6 @@ const styles = (theme: Theme) => createStyles({
     marginTop: '1rem',
     marginBottom: '1rem',
   },
-  customersPlaceholder: {
-    minHeight: 200,
-  },
   boxShadowBorder: {
     boxShadow: BoxShadows.shadow1.boxShadow,
     borderRadius: BorderRadius,
@@ -383,9 +375,19 @@ const styles = (theme: Theme) => createStyles({
     alignItems: 'center',
     minHeight: 420,
   },
-  customerNoEmailsBox: {
+  noCancelledOrdersBox: {
     borderRadius: '0px',
     border: '0px solid #eaeaea',
+    background: theme.palette.type === 'dark'
+      ? Colors.uniswapDarkNavy
+      : Colors.darkWhite,
+    padding: '2rem',
+    width: '100%',
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
     minHeight: 420,
   },
   subtitle: {
