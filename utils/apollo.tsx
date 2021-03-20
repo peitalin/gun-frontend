@@ -155,21 +155,43 @@ export default withApollo(
 export const serverApolloClient = (ctx) => {
 
   return new ApolloClient({
+    // link: ApolloLink.from([
+    //   onErrorHandler,
+    //   new HttpLink({
+    //     uri: SERVER_URI,
+    //     fetch: fetch,
+    //     fetchOptions: {
+    //       agent: new https.Agent({ rejectUnauthorized: false })
+    //     },
+    //     headers: {
+    //       'content-type': 'application/json',
+    //       cookie: option(ctx).req.headers.cookie()
+    //     },
+    //     // Don't add all req headers, will request itself instead of gateway.
+    //     // https://github.com/apollographql/apollo-client/issues/4193
+    //     credentials: 'include',
+    //   })
+    // ]),
+
     link: ApolloLink.from([
       onErrorHandler,
-      new HttpLink({
-        uri: SERVER_URI,
-        fetch: fetch,
-        fetchOptions: {
-          agent: new https.Agent({ rejectUnauthorized: false })
-        },
-        headers: {
-          'content-type': 'application/json',
-          cookie: option(ctx).req.headers.cookie()
-        },
-        // Don't add all req headers, will request itself instead of gateway.
-        // https://github.com/apollographql/apollo-client/issues/4193
-        credentials: 'include',
+      splitQueryOrSubscriptions({
+        useWebsockets: !!process.browser,
+        ctx: ctx,
+        httpLink:
+          new HttpLink({
+            uri: URI,
+            fetch: fetch,
+            fetchOptions: {
+              agent: new https.Agent({ rejectUnauthorized: false })
+            },
+            headers: {
+              'content-type': 'application/json',
+              cookie: option(ctx).req.headers.cookie(),
+              // authorization: token ? `Bearer ${token}` : "",
+            },
+            credentials: 'include',
+          }),
       })
     ]),
 
