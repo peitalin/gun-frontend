@@ -1,16 +1,13 @@
 
 import React from 'react';
-import { oc as option } from "ts-optchain";
 // Styles
 import { Colors, BoxShadows, BorderRadius2x } from "layout/AppTheme";
 import clsx from "clsx";
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
 // graphql
 import { useSubscription } from '@apollo/client';
-import gql from 'graphql-tag'
 import { useApolloClient } from "@apollo/client";
-// typings
-import { Chat_Rooms, Chat_Messages } from "typings/gqlTypes";
+import { EMIT_ONLINE_EVENT } from "queries/chat-mutations";
 // components
 import Typography from '@material-ui/core/Typography';
 import ChatLayout from './ChatLayout';
@@ -27,19 +24,6 @@ import Button from "@material-ui/core/Button";
 import ResponsivePadding from "pageComponents/SellerDashboard/ResponsivePadding";
 
 
-const EMIT_ONLINE_EVENT = gql`
-  mutation ($senderId:String!){
-    update_users (
-      _set: { lastSeen: "now()" }
-      where: { id: { _eq: $senderId } }
-    ) {
-      affected_rows
-      returning {
-        id
-      }
-    }
-  }
-`;
 
 
 const ChatCenter: React.FC<ReactProps> = (props) => {
@@ -57,7 +41,7 @@ const ChatCenter: React.FC<ReactProps> = (props) => {
   const user = useSelector<GrandReduxState, UserPrivate>(
     state => state.reduxLogin.user
   );
-  const userId = option(user).id()
+  const userId = user?.id
 
 
   const setRefetch = (refetch: () => {}) => {
@@ -81,22 +65,22 @@ const ChatCenter: React.FC<ReactProps> = (props) => {
   }
 
 
-  React.useEffect(() => {
-    // Emit and event saying the user is online every 3 seconds
-    let onlineEventIntervalId = setInterval(async () => {
-      if (userId) {
-        await apolloClient.mutate({
-          mutation: EMIT_ONLINE_EVENT,
-          variables: {
-            senderId: userId
-          }
-        });
-      }
-    }, 3000);
+  // React.useEffect(() => {
+  //   // Emit and event saying the user is online every 3 seconds
+  //   let onlineEventIntervalId = setInterval(async () => {
+  //     if (userId) {
+  //       await apolloClient.mutate({
+  //         mutation: EMIT_ONLINE_EVENT,
+  //         variables: {
+  //           senderId: userId
+  //         }
+  //       });
+  //     }
+  //   }, 3000);
 
-    // clear interval when component unmounts
-    () => clearInterval(onlineEventIntervalId)
-  }, [])
+  //   // clear interval when component unmounts
+  //   () => clearInterval(onlineEventIntervalId)
+  // }, [])
 
 
   if (!asModal) {
@@ -157,12 +141,6 @@ const ChatCenter: React.FC<ReactProps> = (props) => {
 
 interface ReactProps extends WithStyles<typeof styles> {
   asModal?: boolean
-}
-interface QueryData {
-  chatMessages: Chat_Messages;
-}
-interface QueryVar {
-  // query: ConnectionOffsetQuery
 }
 
 

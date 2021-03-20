@@ -3,7 +3,7 @@ import clsx from "clsx";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 // GraphQL
-import { Product, Chat_Users } from "typings/gqlTypes";
+import { Product, Conversation } from "typings/gqlTypes";
 // redux
 import { useDispatch } from "react-redux";
 import { Actions } from "reduxStore/actions";
@@ -27,28 +27,28 @@ const CreateOfferSubscription = (props: ReactProps) => {
 
   const { data, loading, error } = useSubscription<QueryData, QueryVar>(
     SUBSCRIBE_USER_CONVERSATIONS, {
-      variables: {
-        userId: userId
-      }
+      variables: { }
     }
   );
 
   React.useEffect(() => {
     // set initial conversation on mount + data response
-    if ((data?.conversations ?? []).length > 0) {
-      dispatch(Actions.reduxConversation.SET_CONVERSATIONS(data.conversations))
+    if ((data?.myConversations ?? []).length > 0) {
+      dispatch(Actions.reduxConversation.SET_CONVERSATIONS(data.myConversations))
     }
   }, [data, loading])
 
-  const existingChatsProductIds = (data?.conversations ?? []).map(c => {
+  const existingChatsProductIds = (data?.myConversations ?? []).map(c => {
     return {
       chatRoomId: c?.chatRoom?.id,
       productId: c?.chatRoom?.product?.id
     }
   })
+
   const alreadyChattingAboutProduct = existingChatsProductIds.find(
     z => z.productId === props?.product?.id
   )
+
   // console.log("existing productIds", existingChatsProductIds)
   // console.log("alreadyChatting about product?", alreadyChattingAboutProduct)
 
@@ -100,7 +100,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   product: Product;
 }
 interface QueryData {
-  conversations: Chat_Users[]
+  myConversations: Conversation[]
 }
 interface QueryVar {
   // query: ConnectionOffsetQuery

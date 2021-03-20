@@ -57,6 +57,21 @@ export type BasicUser = {
   license?: Maybe<User_Licenses>;
 };
 
+export type Bid = {
+   __typename?: 'Bid';
+  id?: Maybe<Scalars['String']>;
+  bidStatus?: Maybe<Scalars['String']>;
+  orderId?: Maybe<Scalars['String']>;
+  acceptedPrice?: Maybe<Scalars['Int']>;
+  offerPrice?: Maybe<Scalars['Int']>;
+  createdAt?: Maybe<Scalars['Date']>;
+  updatedAt?: Maybe<Scalars['Date']>;
+  status?: Maybe<BidStatus>;
+  productId?: Maybe<Scalars['String']>;
+  productSnapshotId?: Maybe<Scalars['String']>;
+  variantId?: Maybe<Scalars['String']>;
+};
+
 /** columns and relationships of "bids" */
 export type Bids = {
    __typename?: 'bids';
@@ -989,14 +1004,14 @@ export type Chat_Rooms = {
   /** An object relationship */
   owner: Users;
   ownerId: Scalars['String'];
+  /** An array relationship */
+  participants: Array<Chat_Users>;
+  /** An aggregated array relationship */
+  participants_aggregate: Chat_Users_Aggregate;
   /** An object relationship */
   product: Products;
   productId: Scalars['String'];
   status: Scalars['String'];
-  /** An array relationship */
-  users: Array<Chat_Users>;
-  /** An aggregated array relationship */
-  users_aggregate: Chat_Users_Aggregate;
 };
 
 
@@ -1021,7 +1036,7 @@ export type Chat_RoomsMessages_AggregateArgs = {
 
 
 /** columns and relationships of "chat_rooms" */
-export type Chat_RoomsUsersArgs = {
+export type Chat_RoomsParticipantsArgs = {
   distinct_on?: Maybe<Array<Chat_Users_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
   offset?: Maybe<Scalars['Int']>;
@@ -1031,7 +1046,7 @@ export type Chat_RoomsUsersArgs = {
 
 
 /** columns and relationships of "chat_rooms" */
-export type Chat_RoomsUsers_AggregateArgs = {
+export type Chat_RoomsParticipants_AggregateArgs = {
   distinct_on?: Maybe<Array<Chat_Users_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
   offset?: Maybe<Scalars['Int']>;
@@ -1085,10 +1100,10 @@ export type Chat_Rooms_Bool_Exp = {
   name?: Maybe<String_Comparison_Exp>;
   owner?: Maybe<Users_Bool_Exp>;
   ownerId?: Maybe<String_Comparison_Exp>;
+  participants?: Maybe<Chat_Users_Bool_Exp>;
   product?: Maybe<Products_Bool_Exp>;
   productId?: Maybe<String_Comparison_Exp>;
   status?: Maybe<String_Comparison_Exp>;
-  users?: Maybe<Chat_Users_Bool_Exp>;
 };
 
 /** unique or primary key constraints on table "chat_rooms" */
@@ -1105,10 +1120,10 @@ export type Chat_Rooms_Insert_Input = {
   name?: Maybe<Scalars['String']>;
   owner?: Maybe<Users_Obj_Rel_Insert_Input>;
   ownerId?: Maybe<Scalars['String']>;
+  participants?: Maybe<Chat_Users_Arr_Rel_Insert_Input>;
   product?: Maybe<Products_Obj_Rel_Insert_Input>;
   productId?: Maybe<Scalars['String']>;
   status?: Maybe<Scalars['String']>;
-  users?: Maybe<Chat_Users_Arr_Rel_Insert_Input>;
 };
 
 /** aggregate max on columns */
@@ -1183,10 +1198,10 @@ export type Chat_Rooms_Order_By = {
   name?: Maybe<Order_By>;
   owner?: Maybe<Users_Order_By>;
   ownerId?: Maybe<Order_By>;
+  participants_aggregate?: Maybe<Chat_Users_Aggregate_Order_By>;
   product?: Maybe<Products_Order_By>;
   productId?: Maybe<Order_By>;
   status?: Maybe<Order_By>;
-  users_aggregate?: Maybe<Chat_Users_Aggregate_Order_By>;
 };
 
 /** primary key columns input for table: "chat_rooms" */
@@ -1391,6 +1406,25 @@ export enum Chat_Users_Update_Column {
   USERID = 'userId'
 }
 
+export type ChatRoom = {
+   __typename?: 'ChatRoom';
+  id?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['Date']>;
+  ownerId?: Maybe<Scalars['String']>;
+  productId?: Maybe<Scalars['String']>;
+  owner?: Maybe<BasicUser>;
+  status?: Maybe<Scalars['String']>;
+  product?: Maybe<Product>;
+  participants?: Maybe<Array<Maybe<Conversation>>>;
+  messages?: Maybe<Array<Maybe<Message>>>;
+};
+
+
+export type ChatRoomMessagesArgs = {
+  limit?: Maybe<Scalars['Int']>;
+};
+
 export enum ChatRoomStatus {
   ACTIVE = 'ACTIVE',
   ARCHIVED = 'ARCHIVED',
@@ -1458,6 +1492,14 @@ export type ConnectionWithMetrics = {
   /** SUM(x) of a query, where x is a specific column to be aggregated */
   totalAmount?: Maybe<Scalars['Int']>;
   pageInfo: PageInfo;
+};
+
+export type Conversation = {
+   __typename?: 'Conversation';
+  userId?: Maybe<Scalars['String']>;
+  user?: Maybe<BasicUser>;
+  chatRoomId?: Maybe<Scalars['String']>;
+  chatRoom?: Maybe<ChatRoom>;
 };
 
 export type CreateProductsConfig = {
@@ -2945,6 +2987,24 @@ export type MarkPayoutsAsPaidMutationResponse = {
   orders: Array<Maybe<Order>>;
 };
 
+export type Message = {
+   __typename?: 'Message';
+  id?: Maybe<Scalars['String']>;
+  chatRoomId?: Maybe<Scalars['String']>;
+  senderId?: Maybe<Scalars['String']>;
+  sender?: Maybe<BasicUser>;
+  content?: Maybe<Scalars['String']>;
+  /**
+   * previewItemId: String
+   * previewItem: ProductPreviewItem
+   */
+  bidId?: Maybe<Scalars['String']>;
+  bid?: Maybe<Bid>;
+  createdAt?: Maybe<Scalars['Date']>;
+  editedAt?: Maybe<Scalars['Date']>;
+  readAt?: Maybe<Scalars['Date']>;
+};
+
 /** columns and relationships of "migrations" */
 export type Migrations = {
    __typename?: 'migrations';
@@ -3901,12 +3961,13 @@ export type Mutation = {
   createDealerForUser?: Maybe<UserMutationResponse>;
   setDealerIdForUser?: Maybe<UserMutationResponse>;
   reindexSearchIndex?: Maybe<BlankMutationResponse>;
-  sendChatMessage?: Maybe<Array<Maybe<Chat_Messages>>>;
+  sendChatMessage?: Maybe<Array<Maybe<Message>>>;
   emitTypingEvent?: Maybe<BlankMutationResponse>;
-  sendBidMessage?: Maybe<Array<Maybe<Chat_Messages>>>;
-  updateBid?: Maybe<Array<Maybe<Bids>>>;
-  updateChatStatus?: Maybe<Array<Maybe<Chat_Rooms>>>;
-  createNewChat?: Maybe<Array<Maybe<Chat_Rooms>>>;
+  sendBidMessage?: Maybe<Array<Maybe<Message>>>;
+  updateBid?: Maybe<Array<Maybe<Bid>>>;
+  updateChatStatus?: Maybe<Array<Maybe<ChatRoom>>>;
+  createNewChat?: Maybe<Array<Maybe<ChatRoom>>>;
+  saySomething?: Maybe<Scalars['String']>;
 };
 
 
@@ -5427,10 +5488,13 @@ export type MutationUpdateChatStatusArgs = {
 
 
 export type MutationCreateNewChatArgs = {
-  sellerUserId: Scalars['String'];
-  buyerUserId: Scalars['String'];
   productId: Scalars['String'];
   name?: Maybe<Scalars['String']>;
+};
+
+
+export type MutationSaySomethingArgs = {
+  message?: Maybe<Scalars['String']>;
 };
 
 /** Something that went wrong during a mutation. */
@@ -5454,7 +5518,7 @@ export type MutationErrorSummary = {
 };
 
 export type Order = {
-  bid?: Maybe<Bids>;
+  bid?: Maybe<Bid>;
   bidId?: Maybe<Scalars['String']>;
   buyer?: Maybe<BasicUser>;
   buyerId?: Maybe<Scalars['String']>;
@@ -5759,7 +5823,7 @@ export enum Order_Snapshots_Update_Column {
 
 export type OrderAdmin = Order & {
    __typename?: 'OrderAdmin';
-  bid?: Maybe<Bids>;
+  bid?: Maybe<Bid>;
   bidId?: Maybe<Scalars['String']>;
   buyer?: Maybe<UserPrivate>;
   buyerId?: Maybe<Scalars['String']>;
@@ -5801,7 +5865,7 @@ export type OrderCreateMutationResponse = {
 
 export type OrderDealer = Order & {
    __typename?: 'OrderDealer';
-  bid?: Maybe<Bids>;
+  bid?: Maybe<Bid>;
   bidId?: Maybe<Scalars['String']>;
   buyer?: Maybe<BasicUser>;
   buyerId?: Maybe<Scalars['String']>;
@@ -5834,7 +5898,7 @@ export type OrderMutationResponse = {
 
 export type OrderPublic = Order & {
    __typename?: 'OrderPublic';
-  bid?: Maybe<Bids>;
+  bid?: Maybe<Bid>;
   bidId?: Maybe<Scalars['String']>;
   buyer?: Maybe<BasicUser>;
   buyerId?: Maybe<Scalars['String']>;
@@ -10517,7 +10581,7 @@ export type Query = {
   /** Store sellers's view of currently published products. */
   dashboardProductsConnection: ProductsConnection;
   getCoinbaseExchangeRates?: Maybe<CoinbaseExchangeRates>;
-  getUserBidsForProduct?: Maybe<Chat_Rooms>;
+  getUserBidsForProduct?: Maybe<ChatRoom>;
 };
 
 
@@ -12382,6 +12446,10 @@ export type Subscription = {
   users_typing: Array<Users_Typing>;
   /** fetch aggregated fields from the table: "users_typing" */
   users_typing_aggregate: Users_Typing_Aggregate;
+  numberIncremented?: Maybe<Scalars['Int']>;
+  saidSomething?: Maybe<Scalars['String']>;
+  /** myConversations: JSON */
+  myConversations?: Maybe<Array<Maybe<Conversation>>>;
 };
 
 
@@ -14729,13 +14797,18 @@ export type ProductVariantsFragment = { __typename?: 'product_variants', variant
       & ImageFragment
     )> }> };
 
+export type UserLicenseFragment = { __typename?: 'user_licenses', id: string, licenseNumber: string, licenseCategory?: Maybe<string>, licenseExpiry: any, licenseState?: Maybe<string>, verified: boolean };
+
 type ProductFragment_ProductPrivate_ = { __typename?: 'ProductPrivate', id: string, createdAt?: Maybe<any>, updatedAt?: Maybe<any>, isPublished: boolean, isSuspended: boolean, isDeleted: boolean, isExcludedFromRecommendations: boolean, storeId: string, soldOutStatus: string, currentSnapshot: (
     { __typename?: 'product_snapshots' }
     & ProductSnapshotsFragment
   ), featuredVariant: (
     { __typename?: 'product_variants' }
     & ProductVariantsFragment
-  ), store?: Maybe<{ __typename?: 'StorePrivate', id: string, name: string, user?: Maybe<{ __typename?: 'UserPrivate', id: string, license?: Maybe<{ __typename?: 'user_licenses', id: string, licenseNumber: string, licenseCategory?: Maybe<string>, licenseExpiry: any, licenseState?: Maybe<string>, verified: boolean }> }> }>, category?: Maybe<{ __typename?: 'categories', id: string, name: string, slug?: Maybe<string>, categoryGroup: string }> };
+  ), store?: Maybe<{ __typename?: 'StorePrivate', id: string, name: string, user?: Maybe<{ __typename?: 'UserPrivate', id: string, license?: Maybe<(
+        { __typename?: 'user_licenses' }
+        & UserLicenseFragment
+      )> }> }>, category?: Maybe<{ __typename?: 'categories', id: string, name: string, slug?: Maybe<string>, categoryGroup: string }> };
 
 type ProductFragment_ProductPublic_ = { __typename?: 'ProductPublic', id: string, createdAt?: Maybe<any>, updatedAt?: Maybe<any>, isPublished: boolean, isSuspended: boolean, isDeleted: boolean, isExcludedFromRecommendations: boolean, storeId: string, soldOutStatus: string, currentSnapshot: (
     { __typename?: 'product_snapshots' }
@@ -14743,7 +14816,22 @@ type ProductFragment_ProductPublic_ = { __typename?: 'ProductPublic', id: string
   ), featuredVariant: (
     { __typename?: 'product_variants' }
     & ProductVariantsFragment
-  ), store?: Maybe<{ __typename?: 'StorePrivate', id: string, name: string, user?: Maybe<{ __typename?: 'UserPrivate', id: string, license?: Maybe<{ __typename?: 'user_licenses', id: string, licenseNumber: string, licenseCategory?: Maybe<string>, licenseExpiry: any, licenseState?: Maybe<string>, verified: boolean }> }> } | { __typename?: 'StorePublic', id: string, name: string, user?: Maybe<{ __typename?: 'UserPrivate', id: string, license?: Maybe<{ __typename?: 'user_licenses', id: string, licenseNumber: string, licenseCategory?: Maybe<string>, licenseExpiry: any, licenseState?: Maybe<string>, verified: boolean }> } | { __typename?: 'UserForDealers', id: string, license?: Maybe<{ __typename?: 'user_licenses', id: string, licenseNumber: string, licenseCategory?: Maybe<string>, licenseExpiry: any, licenseState?: Maybe<string>, verified: boolean }> } | { __typename?: 'UserPublic', id: string, license?: Maybe<{ __typename?: 'user_licenses', id: string, licenseNumber: string, licenseCategory?: Maybe<string>, licenseExpiry: any, licenseState?: Maybe<string>, verified: boolean }> } | { __typename?: 'UserWithRole', id: string, license?: Maybe<{ __typename?: 'user_licenses', id: string, licenseNumber: string, licenseCategory?: Maybe<string>, licenseExpiry: any, licenseState?: Maybe<string>, verified: boolean }> }> }>, category?: Maybe<{ __typename?: 'categories', id: string, name: string, slug?: Maybe<string>, categoryGroup: string }> };
+  ), store?: Maybe<{ __typename?: 'StorePrivate', id: string, name: string, user?: Maybe<{ __typename?: 'UserPrivate', id: string, license?: Maybe<(
+        { __typename?: 'user_licenses' }
+        & UserLicenseFragment
+      )> }> } | { __typename?: 'StorePublic', id: string, name: string, user?: Maybe<{ __typename?: 'UserPrivate', id: string, license?: Maybe<(
+        { __typename?: 'user_licenses' }
+        & UserLicenseFragment
+      )> } | { __typename?: 'UserForDealers', id: string, license?: Maybe<(
+        { __typename?: 'user_licenses' }
+        & UserLicenseFragment
+      )> } | { __typename?: 'UserPublic', id: string, license?: Maybe<(
+        { __typename?: 'user_licenses' }
+        & UserLicenseFragment
+      )> } | { __typename?: 'UserWithRole', id: string, license?: Maybe<(
+        { __typename?: 'user_licenses' }
+        & UserLicenseFragment
+      )> }> }>, category?: Maybe<{ __typename?: 'categories', id: string, name: string, slug?: Maybe<string>, categoryGroup: string }> };
 
 export type ProductFragment = ProductFragment_ProductPrivate_ | ProductFragment_ProductPublic_;
 
@@ -14768,14 +14856,27 @@ export type StoresFragment = StoresFragment_StorePrivate_ | StoresFragment_Store
 export type UsersFragment = { __typename?: 'UserPrivate', id: string, email: string, username?: Maybe<string>, userRole: Role, createdAt?: Maybe<any>, updatedAt?: Maybe<any>, firstName?: Maybe<string>, lastName?: Maybe<string>, emailVerified?: Maybe<boolean>, storeId?: Maybe<string>, payoutMethodId?: Maybe<string>, isDeleted: boolean, isSuspended: boolean, lastSeen?: Maybe<any>, licenseId?: Maybe<string>, store?: Maybe<(
     { __typename?: 'StorePrivate' }
     & StoresFragment_StorePrivate_
-  )>, payoutMethod?: Maybe<{ __typename?: 'payout_methods', id: string, storeId: string, createdAt: any, updatedAt?: Maybe<any>, payoutType?: Maybe<string>, bsb?: Maybe<string>, accountNumber?: Maybe<string>, accountName?: Maybe<string> }>, license?: Maybe<{ __typename?: 'user_licenses', id: string, licenseNumber: string, licenseExpiry: any, licenseCategory?: Maybe<string>, licenseState?: Maybe<string>, verified: boolean }> };
+  )>, payoutMethod?: Maybe<{ __typename?: 'payout_methods', id: string, storeId: string, createdAt: any, updatedAt?: Maybe<any>, payoutType?: Maybe<string>, bsb?: Maybe<string>, accountNumber?: Maybe<string>, accountName?: Maybe<string> }>, license?: Maybe<(
+    { __typename?: 'user_licenses' }
+    & UserLicenseFragment
+  )> };
 
-export type UserLicenseFragment = { __typename?: 'user_licenses', id: string, licenseNumber: string, licenseCategory?: Maybe<string>, licenseExpiry: any, licenseState?: Maybe<string>, verified: boolean };
+export type BidFragment = { __typename?: 'Bid', id?: Maybe<string>, productId?: Maybe<string>, productSnapshotId?: Maybe<string>, variantId?: Maybe<string>, offerPrice?: Maybe<number>, acceptedPrice?: Maybe<number>, orderId?: Maybe<string>, bidStatus?: Maybe<string>, createdAt?: Maybe<any>, updatedAt?: Maybe<any> };
 
-export type BidFragment = { __typename?: 'bids', id: string, productId: string, productSnapshotId: string, variantId?: Maybe<string>, offerPrice: number, acceptedPrice?: Maybe<number>, orderId?: Maybe<string>, bidStatus: string, createdAt?: Maybe<any>, updatedAt?: Maybe<any> };
-
-export type MessageFragment = { __typename?: 'chat_messages', id: string, chatRoomId: string, createdAt: any, content?: Maybe<string>, sender: { __typename?: 'users', id: string, firstName?: Maybe<string>, lastName?: Maybe<string> }, previewItem?: Maybe<{ __typename?: 'product_preview_items', id: string }>, bid?: Maybe<(
-    { __typename?: 'bids' }
+export type MessageFragment = { __typename?: 'Message', id?: Maybe<string>, chatRoomId?: Maybe<string>, createdAt?: Maybe<any>, content?: Maybe<string>, sender?: Maybe<{ __typename?: 'UserPrivate', firstName?: Maybe<string>, lastName?: Maybe<string>, email: string, id: string, license?: Maybe<(
+      { __typename?: 'user_licenses' }
+      & UserLicenseFragment
+    )> } | { __typename?: 'UserForDealers', id: string, license?: Maybe<(
+      { __typename?: 'user_licenses' }
+      & UserLicenseFragment
+    )> } | { __typename?: 'UserPublic', id: string, license?: Maybe<(
+      { __typename?: 'user_licenses' }
+      & UserLicenseFragment
+    )> } | { __typename?: 'UserWithRole', id: string, license?: Maybe<(
+      { __typename?: 'user_licenses' }
+      & UserLicenseFragment
+    )> }>, bid?: Maybe<(
+    { __typename?: 'Bid' }
     & BidFragment
   )> };
 
@@ -14792,7 +14893,7 @@ export type OrderSnapshotFragment = { __typename?: 'OrderSnapshot', id: string, 
   )> };
 
 type OrdersFragment_OrderPublic_ = { __typename?: 'OrderPublic', id?: Maybe<string>, createdAt?: Maybe<any>, updatedAt?: Maybe<any>, bidId?: Maybe<string>, total?: Maybe<number>, currency?: Maybe<string>, buyerId?: Maybe<string>, sellerStoreId?: Maybe<string>, productId?: Maybe<string>, paymentIntentId?: Maybe<string>, bid?: Maybe<(
-    { __typename?: 'bids' }
+    { __typename?: 'Bid' }
     & BidFragment
   )>, buyer?: Maybe<{ __typename?: 'UserPrivate', firstName?: Maybe<string>, lastName?: Maybe<string>, email: string, id: string, phoneNumber?: Maybe<{ __typename?: 'phone_numbers', id: string, areaCode?: Maybe<string>, countryCode: string, number: string }>, license?: Maybe<(
       { __typename?: 'user_licenses' }
@@ -14845,7 +14946,7 @@ type OrdersFragment_OrderPublic_ = { __typename?: 'OrderPublic', id?: Maybe<stri
   )>>> };
 
 type OrdersFragment_OrderDealer_ = { __typename?: 'OrderDealer', id?: Maybe<string>, createdAt?: Maybe<any>, updatedAt?: Maybe<any>, bidId?: Maybe<string>, total?: Maybe<number>, currency?: Maybe<string>, buyerId?: Maybe<string>, sellerStoreId?: Maybe<string>, productId?: Maybe<string>, paymentIntentId?: Maybe<string>, paymentIntent?: Maybe<{ __typename?: 'PaymentIntent', id?: Maybe<string>, amount?: Maybe<number>, createdAt?: Maybe<any>, currency?: Maybe<string>, liveMode?: Maybe<boolean>, status?: Maybe<string> }>, bid?: Maybe<(
-    { __typename?: 'bids' }
+    { __typename?: 'Bid' }
     & BidFragment
   )>, buyer?: Maybe<{ __typename?: 'UserPrivate', firstName?: Maybe<string>, lastName?: Maybe<string>, email: string, id: string, phoneNumber?: Maybe<{ __typename?: 'phone_numbers', id: string, areaCode?: Maybe<string>, countryCode: string, number: string }>, license?: Maybe<(
       { __typename?: 'user_licenses' }
@@ -14892,7 +14993,7 @@ type OrdersFragment_OrderDealer_ = { __typename?: 'OrderDealer', id?: Maybe<stri
   )>>> };
 
 type OrdersFragment_OrderAdmin_ = { __typename?: 'OrderAdmin', id?: Maybe<string>, createdAt?: Maybe<any>, updatedAt?: Maybe<any>, bidId?: Maybe<string>, total?: Maybe<number>, currency?: Maybe<string>, buyerId?: Maybe<string>, sellerStoreId?: Maybe<string>, productId?: Maybe<string>, paymentIntentId?: Maybe<string>, paymentIntent?: Maybe<{ __typename?: 'PaymentIntent', id?: Maybe<string>, amount?: Maybe<number>, amountCapturable?: Maybe<number>, amountReceived?: Maybe<number>, captureMethod?: Maybe<string>, createdAt?: Maybe<any>, currency?: Maybe<string>, liveMode?: Maybe<boolean>, status?: Maybe<string> }>, bid?: Maybe<(
-    { __typename?: 'bids' }
+    { __typename?: 'Bid' }
     & BidFragment
   )>, buyer?: Maybe<{ __typename?: 'UserPrivate', firstName?: Maybe<string>, lastName?: Maybe<string>, email: string, id: string, phoneNumber?: Maybe<{ __typename?: 'phone_numbers', id: string, areaCode?: Maybe<string>, countryCode: string, number: string }>, license?: Maybe<(
       { __typename?: 'user_licenses' }
@@ -15055,6 +15156,16 @@ export const StoresFragmentFragmentDoc = gql`
   }
 }
     ${ImageFragmentFragmentDoc}`;
+export const UserLicenseFragmentFragmentDoc = gql`
+    fragment UserLicenseFragment on user_licenses {
+  id
+  licenseNumber
+  licenseCategory
+  licenseExpiry
+  licenseState
+  verified
+}
+    `;
 export const UsersFragmentFragmentDoc = gql`
     fragment UsersFragment on UserPrivate {
   store {
@@ -15086,17 +15197,13 @@ export const UsersFragmentFragmentDoc = gql`
   lastSeen
   licenseId
   license {
-    id
-    licenseNumber
-    licenseExpiry
-    licenseCategory
-    licenseState
-    verified
+    ...UserLicenseFragment
   }
 }
-    ${StoresFragmentFragmentDoc}`;
+    ${StoresFragmentFragmentDoc}
+${UserLicenseFragmentFragmentDoc}`;
 export const BidFragmentFragmentDoc = gql`
-    fragment BidFragment on bids {
+    fragment BidFragment on Bid {
   id
   productId
   productSnapshotId
@@ -15110,34 +15217,28 @@ export const BidFragmentFragmentDoc = gql`
 }
     `;
 export const MessageFragmentFragmentDoc = gql`
-    fragment MessageFragment on chat_messages {
+    fragment MessageFragment on Message {
   id
   chatRoomId
   createdAt
   sender {
     id
-    firstName
-    lastName
+    ... on UserPrivate {
+      firstName
+      lastName
+      email
+    }
+    license {
+      ...UserLicenseFragment
+    }
   }
   content
-  previewItem {
-    id
-  }
   bid {
     ...BidFragment
   }
 }
-    ${BidFragmentFragmentDoc}`;
-export const UserLicenseFragmentFragmentDoc = gql`
-    fragment UserLicenseFragment on user_licenses {
-  id
-  licenseNumber
-  licenseCategory
-  licenseExpiry
-  licenseState
-  verified
-}
-    `;
+    ${UserLicenseFragmentFragmentDoc}
+${BidFragmentFragmentDoc}`;
 export const ProductFileFragmentFragmentDoc = gql`
     fragment ProductFileFragment on product_files {
   id
@@ -15468,12 +15569,7 @@ export const ProductFragmentFragmentDoc = gql`
     user {
       id
       license {
-        id
-        licenseNumber
-        licenseCategory
-        licenseExpiry
-        licenseState
-        verified
+        ...UserLicenseFragment
       }
     }
   }
@@ -15485,7 +15581,8 @@ export const ProductFragmentFragmentDoc = gql`
   }
 }
     ${ProductSnapshotsFragmentFragmentDoc}
-${ProductVariantsFragmentFragmentDoc}`;
+${ProductVariantsFragmentFragmentDoc}
+${UserLicenseFragmentFragmentDoc}`;
 export const StorePublicFragmentFragmentDoc = gql`
     fragment StorePublicFragment on Store {
   id

@@ -1,15 +1,13 @@
 import React from 'react';
-import { oc as option } from "ts-optchain";
 // Styles
 import clsx from "clsx";
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
-import { Chat_Rooms, Chat_Messages, Bids, BidStatus } from "typings/gqlTypes";
+import { Message, Bid, BidStatus } from "typings/gqlTypes";
 // Styles
 import { Colors, BoxShadows, BorderRadius2x, BorderRadius3x, BorderRadius } from "layout/AppTheme";
 
 import { formatDate } from "utils/dates";
 import ButtonLoading from "components/ButtonLoading";
-import { gql } from "@apollo/client";
 import { useMutation, useApolloClient } from "@apollo/client";
 import { UPDATE_BID_MESSAGE } from "queries/chat-mutations";
 
@@ -36,12 +34,10 @@ export const MessageList: React.FC<ReactProps> = (props) => {
       : classes.messageWrapperNew
     }>
       {
-        (option(props).messages([]).length > 0) &&
-        props.messages.map((message, i) => {
-          // console.log("=> message: ", message)
-          const isMe = option(message).sender.id() === userId
+        (props.messages ?? []).map((message, i) => {
+          const isMe = message?.sender?.id === userId
           return (
-            <MessageItem key={option(message).id()}
+            <MessageItem key={message?.id}
               classes={classes}
               isMe={isMe}
               message={message}
@@ -89,7 +85,7 @@ const MessageItem = (props: MessageItemProps) => {
 
   const c = (s) => currency(s/100, { formatWithSymbol: true }).format()
 
-  const isBidDisabled = (b: Bids) => {
+  const isBidDisabled = (b: Bid) => {
     if (b && b.bidStatus) {
       return b.bidStatus === BidStatus.WITHDRAWN
           || b.bidStatus === BidStatus.DECLINED
@@ -108,7 +104,11 @@ const MessageItem = (props: MessageItemProps) => {
       >
         <div className={classes.myMessageNameTime}>
           <div className={classes.myMessageName}>
-            <b>{`${m.sender.firstName} ${m.sender.lastName}`}</b>
+            {
+              m?.sender?.license?.licenseNumber
+              ? `User License: ${m.sender?.license?.licenseNumber}`
+              : `Private User: ${m.sender?.id}`
+            }
           </div>
           <div className={classes.myMessageTime}>
             <i>{formatDate(m.createdAt)}</i>
@@ -161,7 +161,11 @@ const MessageItem = (props: MessageItemProps) => {
       <div className={classes.yourMessage}>
         <div className={classes.messageNameTime}>
           <div className={classes.messageName}>
-            <b>{`${m.sender.firstName} ${m.sender.lastName}`}</b>
+            {
+              m?.sender?.license?.licenseNumber
+              ? `User License: ${m.sender?.license?.licenseNumber}`
+              : `Private User: ${m.sender?.id}`
+            }
           </div>
           <div className={classes.messageTime}>
             <i>{formatDate(m.createdAt)}</i>
@@ -239,11 +243,11 @@ interface ReactProps extends WithStyles<typeof styles> {
   isNew?: boolean;
   userName?: string;
   userId: string;
-  messages: Chat_Messages[];
+  messages: Message[];
 }
 interface MessageItemProps extends WithStyles<typeof styles> {
   isMe?: boolean;
-  message: Chat_Messages;
+  message: Message;
 }
 
 interface MutData {

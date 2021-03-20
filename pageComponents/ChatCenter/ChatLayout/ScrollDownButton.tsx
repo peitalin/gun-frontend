@@ -1,7 +1,6 @@
 import React from 'react';
 // Styles
 import clsx from "clsx";
-import { oc as option } from "ts-optchain";
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
 import { Colors, BoxShadows } from "layout/AppTheme";
 // components

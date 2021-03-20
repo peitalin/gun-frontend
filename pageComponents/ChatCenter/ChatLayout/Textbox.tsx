@@ -5,8 +5,8 @@ import { fade, withStyles, WithStyles, createStyles, Theme } from "@material-ui/
 import { Colors, BoxShadows, BorderRadius } from "layout/AppTheme";
 
 import { useMutation, useApolloClient } from "@apollo/client";
-import TypingIndicator from './TypingIndicator';
-import { Chat_Messages, Products, BidStatus } from "typings/gqlTypes";
+// import TypingIndicator from './TypingIndicator';
+import { Message, Product, BidStatus } from "typings/gqlTypes";
 import Button from "@material-ui/core/Button";
 import TextEditorCK from "components/TextEditorCK";
 import {
@@ -109,7 +109,7 @@ export const Textbox: React.FC<ReactProps> = (props) => {
                   content: description,
                   productId: props.product.id,
                   productSnapshotId: props.product.currentSnapshotId,
-                  variantId: props.product.productVariants[0].variantId,
+                  variantId: props.product?.featuredVariant?.variantId,
                   offerPrice: offerPrice,
                   bidStatus: BidStatus.CREATED,
                 }
@@ -125,7 +125,7 @@ export const Textbox: React.FC<ReactProps> = (props) => {
               });
           }}>
             <div className={classes.textboxWrapper}>
-              <TypingIndicator userId={props.userId} />
+              {/* <TypingIndicator userId={props.userId} /> */}
               <div className={classes.textEditorWrapper}>
 
                 <Rifm
@@ -208,16 +208,15 @@ export const Textbox: React.FC<ReactProps> = (props) => {
 
 interface ReactProps extends WithStyles<typeof styles> {
   userId: string;
-  userName: string;
   scrollToNewMessage?(): void;
   numOfNewMessages?: number;
   mutationCallback?(a: any): void;
   chatRoomId: string;
-  product: Products;
+  product: Product;
 }
 
 interface MutData {
-  sendBidMessage: Chat_Messages[]
+  sendBidMessage: Message[]
 }
 interface MutVarsBid {
   chatRoomId: string

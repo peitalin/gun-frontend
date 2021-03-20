@@ -7,7 +7,7 @@ import { SoldOutStatus, Chat_Rooms } from "typings/gqlTypes";
 // GraphQL
 import { useQuery, useLazyQuery } from "@apollo/client";
 // Typings
-import { Product, UserPrivate, Product_Variants } from "typings/gqlTypes";
+import { Product, UserPrivate, Product_Variants, BidStatus } from "typings/gqlTypes";
 import {
   GET_PRODUCT,
 } from "queries/products-queries";
@@ -230,7 +230,9 @@ const Products: React.FC<ReactProps> = (props) => {
                   selectedBid={selectedBid}
                 />
                 {
-                  userBids.map(bid =>
+                  userBids
+                  .filter(bid => bid.bidStatus === BidStatus.ACCEPTED)
+                  .map(bid =>
                     <StickyDetailsBids
                       userBid={bid}
                       selectedBid={selectedBid}
@@ -286,7 +288,9 @@ const Products: React.FC<ReactProps> = (props) => {
               selectedBid={selectedBid}
             />
             {
-              userBids.map(bid =>
+              userBids
+              .filter(bid => bid.bidStatus === BidStatus.ACCEPTED)
+              .map(bid =>
                 <StickyDetailsBids
                   userBid={bid}
                   selectedBid={selectedBid}

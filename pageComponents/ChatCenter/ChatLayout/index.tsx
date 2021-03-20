@@ -1,5 +1,4 @@
 import React from 'react';
-import { oc as option } from "ts-optchain";
 // components
 import dynamic from "next/dynamic";
 // import CurrentConversation from './CurrentConversation';
@@ -12,13 +11,12 @@ const CurrentConversation = dynamic(() => import("./CurrentConversation"), {
 import Textbox from './Textbox'
 import ConversationsListPanel from './ConversationsListPanel';
 import ProductPanel from './ProductPanel';
-import { UserPrivate } from "typings/gqlTypes";
+// typings
+import { UserPrivate, Conversation } from "typings/gqlTypes";
 // Styles
 import { Colors, BoxShadows, BorderRadius2x, BorderRadius } from "layout/AppTheme";
 import clsx from "clsx";
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
-// typings
-import { Chat_Rooms, Chat_Messages, Users, Chat_Users } from "typings/gqlTypes";
 // css
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
@@ -66,45 +64,44 @@ export const ChatLayout: React.FC<ReactProps> = (props) => {
   const { data, loading, error } = useSubscription<QueryData, QueryVar>(
     SUBSCRIBE_USER_CONVERSATIONS, {
       variables: {
-        userId: option(user).id()
+        messageLimit: 5
       }
     }
   );
 
-  const currentConversation = option(data).conversations([])
-    .find(c => option(c).chatRoom.id() === currentConversationId)
+  const currentConversation = (data?.myConversations ?? [])
+    .find(c => c?.chatRoom?.id === currentConversationId)
 
   const chatDivId = currentConversationId
-  const userId = option(user).id()
-  const userName = option(user).firstName("") + " " + option(user).lastName("");
+  const userId = user?.id
 
   React.useEffect(() => {
     // set initial conversation on mount + data response
-    if (option(data).conversations([]).length > 0) {
+    if ((data?.myConversations ?? []).length > 0) {
       if (!currentConversationId) {
         console.log("resetting current chatRoom id")
-        let currentConvo = option(data).conversations([])
+        let currentConvo = (data?.myConversations ?? [])
           .find(c => c.chatRoom.status === "ACTIVE")
-        let currentConvoId = option(currentConvo).chatRoom.id()
+        let currentConvoId = currentConvo?.chatRoom?.id
         setCurrentConversationId(currentConvoId)
       } else {
         setCurrentConversationId(currentConversationId)
       }
-      dispatch(Actions.reduxConversation.SET_CONVERSATIONS(data.conversations))
+      dispatch(Actions.reduxConversation.SET_CONVERSATIONS(data.myConversations))
     }
   }, [data, loading])
 
   // console.log("currentConversationId: ", currentConversationId)
-  // console.log("currentConversation: ", currentConversation)
+  console.log("subsription data: ", data)
+  console.log("currentConversation: ", currentConversation)
 
   return (
     <div className={classes.chatLayout}>
       <div className={clsx(classes.col25, classes.wd25)}>
         <ConversationsListPanel
           userId={userId}
-          userName={userName}
           chatDivId={chatDivId}
-          conversations={option(data).conversations()}
+          conversations={data?.myConversations}
           setCurrentConversationId={setCurrentConversationId}
         />
       </div>
@@ -120,7 +117,6 @@ export const ChatLayout: React.FC<ReactProps> = (props) => {
               setMutationCallback={setMutationCallback}
               isBottom={isBottom}
               setIsBottom={setIsBottom}
-              userName={userName}
               userId={userId}
             />
         }
@@ -129,11 +125,10 @@ export const ChatLayout: React.FC<ReactProps> = (props) => {
           isBottom={isBottom}
         />
         <Textbox
-          userName={userName}
           mutationCallback={mutationCallback}
           userId={userId}
           chatRoomId={chatDivId}
-          product={option(currentConversation).chatRoom.product()}
+          product={currentConversation?.chatRoom?.product}
         />
       </div>
       <div className={clsx(classes.col25, classes.wd25, classes.productPanelFixed)}>
@@ -152,10 +147,11 @@ interface ReactProps extends WithStyles<typeof styles> {
 }
 
 interface QueryData {
-  conversations: Chat_Users[]
+  myConversations: Conversation[]
 }
 interface QueryVar {
   // query: ConnectionOffsetQuery
+  messageLimit: number
 }
 
 const styles = (theme: Theme) => createStyles({

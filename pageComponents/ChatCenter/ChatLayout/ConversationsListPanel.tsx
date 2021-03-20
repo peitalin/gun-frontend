@@ -1,15 +1,10 @@
 import React from 'react';
-import { oc as option } from "ts-optchain";
 // Styles
 import clsx from "clsx";
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
 import { Colors, BoxShadows, BorderRadius2x, BorderRadius } from "layout/AppTheme";
 
-import { useSubscription } from '@apollo/client';
-import { Users_Online, Chat_Users, ChatRoomStatus } from "typings/gqlTypes";
-// import moment from 'moment';
-import dayjs from 'dayjs'
-import gql from 'graphql-tag';
+import { Conversation, ChatRoomStatus } from "typings/gqlTypes";
 // css
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
@@ -18,7 +13,7 @@ import Typography from '@material-ui/core/Typography';
 import MenuItem from '@material-ui/core/MenuItem';
 import Divider from '@material-ui/core/Divider';
 import PermIdentityIcon from '@material-ui/icons/PermIdentity';
-import { FETCH_ONLINE_USERS_SUBSCRIPTION } from "queries/chat-subscriptions";
+// import { FETCH_ONLINE_USERS_SUBSCRIPTION } from "queries/chat-subscriptions";
 
 
 
@@ -26,76 +21,69 @@ import { FETCH_ONLINE_USERS_SUBSCRIPTION } from "queries/chat-subscriptions";
 
 const ConversationsListPanel: React.FC<ReactProps> = (props) => {
 
-  const [state, setState] = React.useState({
-    time: new Date(),
-    refetch: null,
-  })
-
   const {
     classes,
     userId,
-    userName,
   } = props;
 
   const theme = useTheme();
-  const lgDown = useMediaQuery(theme.breakpoints.down('lg'));
-  const mdDown = useMediaQuery(theme.breakpoints.down('md'));
   const smDown = useMediaQuery(theme.breakpoints.down('sm'));
-  const xsDown = useMediaQuery(theme.breakpoints.down('xs'));
 
-  const { data, loading, error } = useSubscription<QueryData>(
-    FETCH_ONLINE_USERS_SUBSCRIPTION, {
-      variables: {}
-    }
-  );
+  // const { data, loading, error } = useSubscription<QueryData>(
+  //   FETCH_ONLINE_USERS_SUBSCRIPTION, {
+  //     variables: {}
+  //   }
+  // );
 
-  const renderOnlineUsers = () => {
-    return (
-      <p className={ classes.userListHeading }>
-        {
-          error
-          ? "Error loading online users"
-          : loading
-            ? null
-            : `Online Users ${option(data).users_online([]).length}`
-        }
-      </p>
+  // const renderOnlineUsers = () => {
+  //   return (
+  //     <p className={ classes.userListHeading }>
+  //       {
+  //         error
+  //         ? "Error loading online users"
+  //         : loading
+  //           ? null
+  //           : `Online Users ${(data?.users_online ?? []).length}`
+  //       }
+  //     </p>
+  //   )
+  // }
+
+  const archivedConvos = (props.conversations ?? [])
+    .filter(c =>
+      c.chatRoom.status === ChatRoomStatus.ARCHIVED ||
+      c.chatRoom.status === ChatRoomStatus.COMPLETED
     )
-  }
 
-  const archivedConvos = option(props).conversations([])
-    .filter(c => c.chatRoom.status === ChatRoomStatus.ARCHIVED)
-
-  const activeConvos = option(props).conversations([])
+  const activeConvos = (props.conversations ?? [])
     .filter(c => c.chatRoom.status === ChatRoomStatus.ACTIVE)
 
-  const completedConvos = option(props).conversations([])
-    .filter(c => c.chatRoom.status === ChatRoomStatus.COMPLETED)
+  // const completedConvos = (props.conversations ?? [])
+  //   .filter(c => c.chatRoom.status === ChatRoomStatus.COMPLETED)
 
 
   return (
     <div className={classes.onlineUsersRoot}>
       <Typography className={clsx(
         classes.borderRadiusTop,
-        xsDown
+        smDown
           ? classes.mobileUserListHeading
           : classes.userListHeading
       )}>
         Current Offers
       </Typography>
       <ul className={
-        xsDown
+        smDown
           ? classes.mobileUserList
           : classes.userList
       }>
         {
-          (activeConvos.length > 0) &&
-          activeConvos.map(c => {
+          (activeConvos ?? []).map(c => {
 
-            const chatRoom = option(c).chatRoom()
-            const chatRoomId = option(c).chatRoom.id()
-            const product = option(c).chatRoom.product()
-            const { user: otherUser } = c.chatRoom.users.find(u => u.userId !== userId)
+            const chatRoom = c?.chatRoom
+            const chatRoomId = c?.chatRoom?.id
+            const product = c?.chatRoom?.product
+            const { user: otherUser } = (c?.chatRoom?.participants ?? []).find(u => u.userId !== userId)
 
             return (
               <MenuItem key={chatRoomId}
@@ -113,7 +101,11 @@ const ConversationsListPanel: React.FC<ReactProps> = (props) => {
                     : classes.menuIcon
                 }/>
                 <span className={classes.menuText}>
-                  {`${otherUser.firstName} - ${product.currentSnapshot.title}`}
+                  {
+                    otherUser?.license?.licenseNumber
+                    ? `User License: ${otherUser?.license?.licenseNumber} - ${product.currentSnapshot.title}`
+                    : `Private User: ${otherUser?.id} - ${product.currentSnapshot.title}`
+                  }
                 </span>
                 {/* <span className={classes.menuText}>
                   {`${chatRoom.name} - ${product.currentSnapshot.title}`}
@@ -125,27 +117,26 @@ const ConversationsListPanel: React.FC<ReactProps> = (props) => {
       </ul>
 
       <Typography className={clsx(
-        xsDown
+        smDown
           ? classes.mobileUserListHeading
           : classes.userListHeading
       )}>
         Archived Offers
       </Typography>
       <ul className={
-        xsDown
+        smDown
           ? classes.mobileUserList
           : classes.userList
       }>
         {/* <Typography className={classes.subheading1}>
         </Typography> */}
         {
-          (archivedConvos.length > 0) &&
-          archivedConvos.map(c => {
+          (archivedConvos ?? []).map(c => {
 
-            const chatRoom = option(c).chatRoom()
-            const chatRoomId = option(c).chatRoom.id()
-            const product = option(c).chatRoom.product()
-            const owner = option(c).chatRoom.owner()
+            const chatRoom = c?.chatRoom
+            const chatRoomId = c?.chatRoom?.id
+            const product = c?.chatRoom?.product
+            const { user: otherUser } = (c?.chatRoom?.participants ?? []).find(u => u.userId !== userId)
 
             return (
               <MenuItem key={chatRoomId}
@@ -163,7 +154,11 @@ const ConversationsListPanel: React.FC<ReactProps> = (props) => {
                     : classes.menuIcon
                 }/>
                 <span className={classes.menuText}>
-                  {`${owner.firstName} - ${product.currentSnapshot.title}`}
+                  {
+                    otherUser?.license?.licenseNumber
+                    ? `User License: ${otherUser?.license?.licenseNumber} - ${product.currentSnapshot.title}`
+                    : `Private User: ${otherUser?.id} - ${product.currentSnapshot.title}`
+                  }
                 </span>
                 {/* <span className={classes.menuText}>
                   {`${chat.name} - ${product.currentSnapshot.title}`}
@@ -180,14 +175,13 @@ const ConversationsListPanel: React.FC<ReactProps> = (props) => {
 
 interface ReactProps extends WithStyles<typeof styles> {
   userId: string;
-  userName?: string;
   chatDivId: string;
-  conversations?: Chat_Users[]
+  conversations: Conversation[]
   setCurrentConversationId(c: string): void;
 }
-interface QueryData {
-  users_online: Users_Online[]
-}
+// interface QueryData {
+//   users_online: Users_Online[]
+// }
 
 
 const styles = (theme: Theme) => createStyles({

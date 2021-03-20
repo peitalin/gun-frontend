@@ -6,7 +6,7 @@ import { Colors, BorderRadius } from "layout/AppTheme";
 // Apollo
 import { useMutation } from '@apollo/client';
 import { UPDATE_CHAT_STATUS } from "queries/chat-mutations";
-import { Chat_Rooms, Chat_Users, ChatRoomStatus } from "typings/gqlTypes";
+import { Conversation, ChatRoomStatus, ChatRoom } from "typings/gqlTypes";
 // css
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
@@ -34,7 +34,7 @@ const ProductPanel: React.FC<ReactProps> = (props) => {
     currentConversation,
   } = props;
 
-  const getNextChatStatus = (chatRoom: Chat_Rooms): string => {
+  const getNextChatStatus = (chatRoom: ChatRoom): string => {
     switch (chatRoom?.status) {
       case ChatRoomStatus.ARCHIVED: {
         return ChatRoomStatus.ACTIVE
@@ -48,7 +48,7 @@ const ProductPanel: React.FC<ReactProps> = (props) => {
     }
   }
 
-  const getNextChatStatusAction = (chatRoom: Chat_Rooms): string => {
+  const getNextChatStatusAction = (chatRoom: ChatRoom): string => {
     switch (chatRoom?.status) {
       case ChatRoomStatus.ARCHIVED: {
         return "Activate Offer"
@@ -68,7 +68,7 @@ const ProductPanel: React.FC<ReactProps> = (props) => {
   const chatRoom = currentConversation?.chatRoom
   const chatRoomId = chatRoom?.id
   const product = chatRoom?.product
-  const featuredVariant = (product?.productVariants ?? []).find(v => v.isDefault)
+  const featuredVariant = product?.featuredVariant
   const previewItem = featuredVariant?.previewItems?.[0]
 
 
@@ -89,7 +89,7 @@ const ProductPanel: React.FC<ReactProps> = (props) => {
   // console.log("previewItem:::::", previewItem)
 
   const buyer = chatRoom?.owner;
-  const _seller = (currentConversation?.chatRoom?.users ?? [])
+  const _seller = (currentConversation?.chatRoom?.participants ?? [])
     .find(u => u.userId !== buyer.id)
 
   const seller = _seller?.user;
@@ -104,7 +104,7 @@ const ProductPanel: React.FC<ReactProps> = (props) => {
           <div className={classes.productContainerCol}>
             <Typography variant="h4" className={classes.productTitle}>
               {
-                `${seller?.firstName} ${seller?.lastName}`
+                `Seller: ${seller?.license?.licenseNumber}`
               }
             </Typography>
             <PreviewCardWide
@@ -161,12 +161,10 @@ const ProductPanel: React.FC<ReactProps> = (props) => {
 
 
 interface ReactProps extends WithStyles<typeof styles> {
-  currentConversation?: Chat_Users
+  currentConversation?: Conversation
 }
 interface QueryData {
-  update_chat: {
-    returning: Chat_Rooms
-  };
+  updateChatStatus: ChatRoom
 }
 interface QueryVar {
   chatRoomId: string

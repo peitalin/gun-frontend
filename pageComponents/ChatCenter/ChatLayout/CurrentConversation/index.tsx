@@ -1,6 +1,5 @@
 import React from 'react';
 import clsx from "clsx";
-import { oc as option } from "ts-optchain";
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
 // Styles
 import { Colors, BoxShadows, BorderRadius2x, BorderRadius } from "layout/AppTheme";
@@ -8,7 +7,7 @@ import { Colors, BoxShadows, BorderRadius2x, BorderRadius } from "layout/AppThem
 import { useQuery, useSubscription } from '@apollo/client';
 import gql from 'graphql-tag';
 // typings
-import { Chat_Rooms, Chat_Messages, Chat_Users } from "typings/gqlTypes";
+import { Conversation, Message } from "typings/gqlTypes";
 import Button from "@material-ui/core/Button";
 // components
 import Banner from './Banner';
@@ -20,48 +19,48 @@ import throttle from "lodash.throttle";
 
 // https://github.com/hasura/graphql-engine/blob/master/community/sample-apps/realtime-chat/src/components/RenderMessages.js
 
-const FETCH_MESSAGES = gql`
-  # query ($last_received_id: Int, $last_received_ts: createdAttz){
-  #   message (
-  #     order_by: {createdAt:asc}
-  #     where: {
-  #       _and: {
-  #         id: {
-  #           _neq: $last_received_id
-  #         },
-  #         createdAt: {
-  #           _gte: $last_received_ts
-  #         }
-  #       }
+// const FETCH_MESSAGES = gql`
+//   # query ($last_received_id: Int, $last_received_ts: createdAttz){
+//   #   message (
+//   #     order_by: {createdAt:asc}
+//   #     where: {
+//   #       _and: {
+//   #         id: {
+//   #           _neq: $last_received_id
+//   #         },
+//   #         createdAt: {
+//   #           _gte: $last_received_ts
+//   #         }
+//   #       }
 
-  #     }
-  #   ) {
-  #     id
-  #     text
-  #     userName
-  #     createdAt
-  #   }
-  # }
-  subscription MessageAdded {
-    chatMessages: chat_messages(
-      order_by: { createdAt: asc },
-      limit: 10
-    ) {
-      id
-      chatRoomId
-      createdAt
-      sender {
-        id
-        firstName
-        lastName
-      }
-      content
-      previewItem {
-        id
-      }
-    }
-  }
-`;
+//   #     }
+//   #   ) {
+//   #     id
+//   #     text
+//   #     userName
+//   #     createdAt
+//   #   }
+//   # }
+//   subscription MessageAdded {
+//     chatMessages: chat_messages(
+//       order_by: { createdAt: asc },
+//       limit: 10
+//     ) {
+//       id
+//       chatRoomId
+//       createdAt
+//       sender {
+//         id
+//         firstName
+//         lastName
+//       }
+//       content
+//       previewItem {
+//         id
+//       }
+//     }
+//   }
+// `;
 
 
 export const CurrentConversation: React.FC<ReactProps> = (props) => {
@@ -75,8 +74,8 @@ export const CurrentConversation: React.FC<ReactProps> = (props) => {
   } = props;
 
   const [state, setState] = React.useState({
-    messages: [] as Chat_Messages[],
-    newMessages: [] as Chat_Messages[],
+    messages: [] as Message[],
+    newMessages: [] as Message[],
     numMessagesBefore: 0,
     error: null,
     refetch: null,
@@ -161,7 +160,6 @@ export const CurrentConversation: React.FC<ReactProps> = (props) => {
     // scrollHeight: total height of scrollable area, including unseen area
     // clientHeight: height of viewable box
     // scrollTop: how far down you've scrolled in that element
-    // console.log(`scrollHeight: ${option(s).scrollHeight()} - ${chatDivId}`)
     // console.log("scrollclientHeight", s.clientHeight)
     // console.log("scrollTop", s.scrollTop)
     if (s && s.scrollHeight) {
@@ -200,37 +198,37 @@ export const CurrentConversation: React.FC<ReactProps> = (props) => {
     return false;
   }
 
-  const { data, loading, error } = useSubscription<QueryData, QueryVar>(
-    FETCH_MESSAGES, {
-      variables: {}
-      // variables: getLastReceivedVars()
-    }
-  );
+  // const { data, loading, error } = useSubscription<QueryData, QueryVar>(
+  //   FETCH_MESSAGES, {
+  //     variables: {}
+  //     // variables: getLastReceivedVars()
+  //   }
+  // );
 
-  const renderMessages = () => {
-    if (loading) {
-      return null;
-    }
-    if (error) {
-      return "Error: " + error;
-    }
-    // set refetch in local state to make a custom refetch
-    // if (!state.refetch) {
-    //   // setState(s => ({
-    //   //   ...s,
-    //   //   refetch: refetch
-    //   // }));
-    // }
-    const receivedMessages = data.chatMessages;
-    // load all messages to state in the beginning
-    if (receivedMessages.length !== 0) {
-      if (messages.length === 0) {
-        addOldMessages(receivedMessages);
-      }
-    }
-    // return null; real rendering happens below
-    return null;
-  }
+  // const renderMessages = () => {
+  //   if (loading) {
+  //     return null;
+  //   }
+  //   if (error) {
+  //     return "Error: " + error;
+  //   }
+  //   // set refetch in local state to make a custom refetch
+  //   // if (!state.refetch) {
+  //   //   // setState(s => ({
+  //   //   //   ...s,
+  //   //   //   refetch: refetch
+  //   //   // }));
+  //   // }
+  //   const receivedMessages = data.chatMessages;
+  //   // load all messages to state in the beginning
+  //   if (receivedMessages.length !== 0) {
+  //     if (messages.length === 0) {
+  //       addOldMessages(receivedMessages);
+  //     }
+  //   }
+  //   // return null; real rendering happens below
+  //   return null;
+  // }
 
 
   React.useEffect(() => {
@@ -253,22 +251,20 @@ export const CurrentConversation: React.FC<ReactProps> = (props) => {
   }, [chatDivId])
 
 
-  React.useEffect(() => {
-    if (option(data).chatMessages([]).length > 0) {
-      setState(s => ({ ...s, numMessagesBefore: data.chatMessages.length }))
-      scrollToBottom();
-      props.setIsBottom(true)
-    }
-  }, [ chatDivId ])
+  // React.useEffect(() => {
+  //   if ((data?.chatMessages ?? []).length > 0) {
+  //     setState(s => ({ ...s, numMessagesBefore: data.chatMessages.length }))
+  //     scrollToBottom();
+  //     props.setIsBottom(true)
+  //   }
+  // }, [ chatDivId ])
 
-  React.useEffect(() => {
-    renderMessages()
-  }, [ data, loading ])
+  // React.useEffect(() => {
+  //   renderMessages()
+  // }, [ data, loading ])
 
 
   // console.log("currentConversation: ", currentConversation)
-  // console.log("currentConversation.length: ",
-  //   option(currentConversation).chat.messages.length())
 
 
   return (
@@ -276,7 +272,7 @@ export const CurrentConversation: React.FC<ReactProps> = (props) => {
       {
         // Show old/new message separation
         // data && data.chatMessages &&
-        option(currentConversation).chatRoom.messages([]).length > 0 &&
+        (currentConversation?.chatRoom?.messages ?? []).length > 0 &&
         <>
           <div id="newMessage" className={classes.oldNewSeparator}>
           {
@@ -293,8 +289,7 @@ export const CurrentConversation: React.FC<ReactProps> = (props) => {
 
           { /* render new messages */}
           <MessageList
-            // messages={data.chatMessages}
-            messages={option(currentConversation).chatRoom.messages([])}
+            messages={currentConversation?.chatRoom?.messages}
             isNew={true}
             userName={userName}
             userId={userId}
@@ -319,11 +314,11 @@ interface ReactProps extends WithStyles<typeof styles> {
   setMutationCallback?(a?: any): any;
   isBottom: boolean;
   setIsBottom(a?: boolean): void;
-  currentConversation?: Chat_Users
+  currentConversation?: Conversation
 }
 
 interface QueryData {
-  chatMessages: Chat_Messages[];
+  chatMessages: Message[];
 }
 interface QueryVar {
   // query: ConnectionOffsetQuery

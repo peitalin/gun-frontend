@@ -28,7 +28,7 @@ const OffersAdminPage = (props: ReactProps) => {
   return (
     <>
       <MetaHeadersPage
-        title="Edit Store - gunmarketplace.com.au"
+        title="Offers - View bids on your listings - gunmarketplace.com.au"
         robots="noindex"
       />
       <SellerProfileWrapper>

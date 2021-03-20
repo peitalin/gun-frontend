@@ -48,8 +48,6 @@ const CreateChatButton: React.FC<ReactProps> = (props) => {
   const [createChat, { data, loading }] = useMutation(
     CREATE_NEW_CHAT, {
       variables: {
-        sellerUserId: props.sellerUserId,
-        buyerUserId: props.buyerUserId,
         productId: props.productId,
         name: props.name,
       },
