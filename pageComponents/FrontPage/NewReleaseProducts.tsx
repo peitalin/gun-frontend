@@ -1,5 +1,4 @@
 import React from "react";
-import { oc as option } from "ts-optchain";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 import { Colors, Gradients, BorderRadius } from "layout/AppTheme";
@@ -51,7 +50,6 @@ const NewReleaseProducts = (props: ReactProps) => {
     { label: "Lowest Price", value: { price: Order_By.ASC }},
   ];
 
-  const [loadCarouselPics, setLoadCarouselPics] = React.useState({});
   const [orderBy, setOrderBy] = React.useState(orderByOptions[0]);
   const [expand, setExpand] = React.useState(false);
   const [searchTermUi, setSearchTermUi] = React.useState("");
@@ -90,7 +88,7 @@ const NewReleaseProducts = (props: ReactProps) => {
   })
 
 
-  let products = option(data).productsAllConnection()
+  let products = data?.productsAllConnection
 
   return (
     <main className={classes.root}>
@@ -168,9 +166,9 @@ const NewReleaseProducts = (props: ReactProps) => {
           : classes.carouselContainerPaddingLeft,
       )}>
         {
-          (option(products).edges([]).length === 0 && loading)
+          ((products?.edges ?? []).length === 0 && loading)
           ? <LoadingCards count={8} />
-          : (option(products).edges([]).length === 0)
+          : ((products?.edges ?? []).length === 0)
             ? <div className={classes.noProductsYet}>No products yet</div>
             : products.edges.map(({ node: product }, i) => {
                 // console.log("p: ",product)

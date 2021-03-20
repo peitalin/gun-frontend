@@ -16,6 +16,7 @@ import { Colors, Gradients } from "layout/AppTheme";
 // GraphQL
 import { useQuery, useApolloClient } from "@apollo/client";
 import CategoryCarouselStart from "components/CategoryCarouselStart";
+// import SaySomethingSubscriptionTest from "./SaySomethingSubscriptionTest";
 
 // Category Component
 // import CategoryIdOrName from "pageComponents/Categories/CategoryIdOrName";
@@ -69,27 +70,26 @@ const FrontPage: React.FC<ReactProps> = (props) => {
             xl: 4,
           }}
         />
-
-        {/* <FeaturedProducts
-          initialFeaturedProducts={initialFeaturedProducts}
-          count={4}
-          offset={2} // for demo purposes
-          cardsPerRow={{
-            xs: 1.5,
-            sm: 1.5,
-            md: 2,
-            lg: 3,
-            xl: 4,
-          }}
-        /> */}
-
-        {/* <NewReleaseProducts
-          initialProducts={undefined}
-          count={32}
-          title={"New Releases"}
-        /> */}
-
       </AlignCenterLayout>
+
+      {/* <FeaturedProducts
+        initialFeaturedProducts={initialFeaturedProducts}
+        count={4}
+        offset={2} // for demo purposes
+        cardsPerRow={{
+          xs: 1.5,
+          sm: 1.5,
+          md: 2,
+          lg: 3,
+          xl: 4,
+        }}
+      /> */}
+
+      <NewReleaseProducts
+        initialProducts={undefined}
+        count={12}
+        title={"New Releases"}
+      />
 
     </div>
   )

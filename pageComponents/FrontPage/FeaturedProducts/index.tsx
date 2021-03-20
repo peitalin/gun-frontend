@@ -25,6 +25,11 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useQuery, useApolloClient } from "@apollo/client";
 import { GET_ALL_PRODUCTS } from "queries/gun-queries";
 
+import {
+  SAY_SOMETHING_MUTATION,
+  SAY_SOMETHING_SUBSCRIPTION
+} from "queries/chat-subscriptions";
+
 
 
 
