@@ -110,6 +110,17 @@ export const ProductVariantsFragment = gql`
   ${ImageFragment}
 `;
 
+export const UserLicenseFragment = gql`
+  fragment UserLicenseFragment on user_licenses {
+    id
+    licenseNumber
+    licenseCategory
+    licenseExpiry
+    licenseState
+    verified
+  }
+`;
+
 
 export const ProductFragment = gql`
   fragment ProductFragment on Product {
@@ -136,12 +147,7 @@ export const ProductFragment = gql`
       user {
         id
         license {
-          id
-          licenseNumber
-          licenseCategory
-          licenseExpiry
-          licenseState
-          verified
+          ...UserLicenseFragment
         }
       }
     }
@@ -152,6 +158,7 @@ export const ProductFragment = gql`
       categoryGroup
     }
   }
+  ${UserLicenseFragment}
   ${ProductVariantsFragment}
   ${ProductSnapshotsFragment}
 `;
@@ -214,32 +221,17 @@ export const UsersFragment = gql`
     lastSeen
     licenseId
     license {
-      id
-      licenseNumber
-      licenseExpiry
-      licenseCategory
-      licenseState
-      verified
+      ...UserLicenseFragment
     }
   }
   ${StoresFragment}
+  ${UserLicenseFragment}
 `;
 
 
-
-export const UserLicenseFragment = gql`
-  fragment UserLicenseFragment on user_licenses {
-    id
-    licenseNumber
-    licenseCategory
-    licenseExpiry
-    licenseState
-    verified
-  }
-`;
 
 export const BidFragment = gql`
-  fragment BidFragment on bids {
+  fragment BidFragment on Bid {
     id
     productId
     productSnapshotId
@@ -254,23 +246,30 @@ export const BidFragment = gql`
 `;
 
 export const MessageFragment = gql`
-  fragment MessageFragment on chat_messages {
+  fragment MessageFragment on Message {
     id
     chatRoomId
     createdAt
     sender {
       id
-      firstName
-      lastName
+      ...on UserPrivate {
+        firstName
+        lastName
+        email
+      }
+      license {
+        ...UserLicenseFragment
+      }
     }
     content
-    previewItem {
-      id
-    }
+    # previewItem {
+    #   id
+    # }
     bid {
       ...BidFragment
     }
   }
+  ${UserLicenseFragment}
   ${BidFragment}
 `;
 

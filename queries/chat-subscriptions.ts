@@ -1,115 +1,84 @@
 import gql from "graphql-tag";
-import { ImageFragment, BidFragment } from "./fragments";
+import { UserLicenseFragment, BidFragment, ProductFragment } from "./fragments";
 
-
-
-export const ProductLiteFragment = gql`
-  fragment ProductLiteFragment on products {
-    id
-    currentSnapshotId
-    currentSnapshot {
-      id
-      title
-      createdAt
-      actionType
-      ammoType
-      make
-      model
-      magazineCapacity
-      barrelLength
-    }
-    category {
-      id
-      name
-    }
-    productVariants {
-      price
-      previewItems {
-        id
-        imageId
-        image {
-          ...ImageFragment
-        }
-      }
-      createdAt
-      isDefault
-      variantId
-      snapshotId
-      variantSnapshotId
-      variantName
-      variantDescription
-    }
-  }
-  ${ImageFragment}
-`;
+import { enableExperimentalFragmentVariables } from 'graphql-tag'
+enableExperimentalFragmentVariables()
 
 
 
 export const MessageFragment = gql`
-  fragment MessageFragment on chat_messages {
+  fragment MessageFragment on Message {
     id
     chatRoomId
     createdAt
+    senderId
     sender {
       id
-      firstName
-      lastName
-    }
-    content
-    previewItem {
-      id
-      imageId
-      image {
-        ...ImageFragment
+      ...on UserPrivate {
+        firstName
+        lastName
+      }
+      license {
+        ...UserLicenseFragment
       }
     }
+    content
     bid {
       ...BidFragment
     }
   }
-  ${ImageFragment}
   ${BidFragment}
+  ${UserLicenseFragment}
 `;
 
 export const ChatRoomFragment = gql`
-  fragment ChatRoomFragment on chat_rooms {
+  fragment ChatRoomFragment on ChatRoom {
     id
     name
     status
     owner {
       id
-      firstName
-      lastName
-    }
-    product {
-      ...ProductLiteFragment
-    }
-    users {
-      user {
-        id
+      ...on UserPrivate {
         firstName
         lastName
       }
+      license {
+        ...UserLicenseFragment
+      }
     }
+    product {
+      ...ProductFragment
+    }
+    participants {
+      user {
+        id
+        license {
+          ...UserLicenseFragment
+        }
+      }
+    }
+    # messages {
+    #   ...MessageFragment
+    # }
     messages(
-      order_by: { createdAt: asc }
-      limit: 40
+      # order_by: { createdAt: asc }
+      limit: $messageLimit
     ) {
       ...MessageFragment
     }
   }
-  ${ProductLiteFragment}
+  ${ProductFragment}
+  ${UserLicenseFragment}
   ${MessageFragment}
 `;
 
 
 
 export const SUBSCRIBE_USER_CONVERSATIONS = gql`
-  subscription($userId: String!) {
-    conversations: chat_users (
-      order_by: {chatRoom: {createdAt: desc}}
-      where:{userId:{_eq: $userId}}
-    ) {
+  subscription($messageLimit: Int) {
+    myConversations(messageLimit: $messageLimit) {
+      userId
+      chatRoomId
       chatRoom {
         ...ChatRoomFragment
       }
@@ -119,31 +88,43 @@ export const SUBSCRIBE_USER_CONVERSATIONS = gql`
 `;
 
 
-export const GET_USER_TYPING = gql`
-  subscription ($selfId: String) {
-    users_typing (
-      where: { id: { _neq: $selfId } },
-      limit: 2
-      order_by: {lastTyped:desc}
-    ){
-      lastTyped
-      id
-      firstName
-      lastName
-      email
-    }
+// export const GET_USER_TYPING = gql`
+//   subscription ($selfId: String) {
+//     users_typing (
+//       where: { id: { _neq: $selfId } },
+//       limit: 2
+//       order_by: {lastTyped:desc}
+//     ){
+//       lastTyped
+//       id
+//       firstName
+//       lastName
+//       email
+//     }
+//   }
+// `;
+
+export const SAY_SOMETHING_MUTATION = gql`
+  mutation saySomething($message: String!) {
+    saySomething(message: $message)
   }
 `;
 
-export const FETCH_ONLINE_USERS_SUBSCRIPTION = gql`
+export const SAY_SOMETHING_SUBSCRIPTION = gql`
   subscription {
-    users_online (
-      order_by: {lastSeen:asc}
-    ) {
-      id
-      firstName
-      lastName
-      email
-    }
+    saidSomething
   }
 `;
+
+// export const FETCH_ONLINE_USERS_SUBSCRIPTION = gql`
+//   subscription {
+//     users_online (
+//       order_by: {lastSeen:asc}
+//     ) {
+//       id
+//       firstName
+//       lastName
+//       email
+//     }
+//   }
+// `;

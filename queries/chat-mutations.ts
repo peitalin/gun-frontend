@@ -64,14 +64,10 @@ export const UPDATE_CHAT_STATUS = gql`
 export const CREATE_NEW_CHAT = gql`
   # create chat room between buyer and seller
   mutation createNewChat(
-    $sellerUserId: String!
-    $buyerUserId: String!
     $productId: String!
     $name: String
   ) {
     createNewChat(
-      buyerUserId: $buyerUserId,
-      sellerUserId: $sellerUserId,
       productId: $productId,
       name: $name,
     ) {
@@ -79,4 +75,18 @@ export const CREATE_NEW_CHAT = gql`
     }
   }
   ${ChatRoomFragment}
+`;
+
+export const EMIT_ONLINE_EVENT = gql`
+  mutation ($senderId:String!){
+    update_users (
+      _set: { lastSeen: "now()" }
+      where: { id: { _eq: $senderId } }
+    ) {
+      affected_rows
+      returning {
+        id
+      }
+    }
+  }
 `;
