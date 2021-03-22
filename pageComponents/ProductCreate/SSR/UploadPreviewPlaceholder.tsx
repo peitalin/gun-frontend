@@ -3,6 +3,8 @@ import React from "react";
 import UploadIcon from "components/Icons/UploadIcon";
 import Typography from "@material-ui/core/Typography";
 import { Colors, BorderRadius, BorderRadius2x } from "layout/AppTheme";
+import { useSelector } from "react-redux"
+import { GrandReduxState } from "reduxStore/grand-reducer";
 
 
 
@@ -10,6 +12,10 @@ const UploadPreviewPlaceholder = (props) => {
 
   // let bRadius = BorderRadius2x;
   let bRadius = BorderRadius;
+
+  const isDarkMode = useSelector<GrandReduxState>(s => {
+    return s.reduxLogin.darkMode === 'dark'
+  })
 
   return (
     <div style={{
@@ -19,12 +25,16 @@ const UploadPreviewPlaceholder = (props) => {
         Product Images
       </Typography>
       <div style={{
-        border: `2px dashed ${Colors.uniswapLighterGrey}`,
+        border: isDarkMode
+          ? `2px dashed ${Colors.uniswapLighterGrey}`
+          : `2px dashed ${Colors.slateGreyDarker}`,
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
         padding: "1rem",
-        backgroundColor: Colors.uniswapMediumNavy,
+        backgroundColor: isDarkMode
+          ? Colors.uniswapMediumNavy
+          : Colors.slateGrey,
         borderRadius: bRadius,
       }}>
         <label
@@ -43,8 +53,12 @@ const UploadPreviewPlaceholder = (props) => {
           {/* <UploadIcon style={{ transform: "scale(0.9)" }}/> */}
           <div
             style={{
-              border: `1px solid ${Colors.uniswapLighterGrey}`,
-              backgroundColor: Colors.uniswapMediumNavy,
+              border: isDarkMode
+                ? `1px solid ${Colors.uniswapLighterGrey}`
+                : `1px solid ${Colors.slateGreyDarker}`,
+              backgroundColor: isDarkMode
+                ? Colors.uniswapMediumNavy
+                : Colors.slateGrey,
               height: 40,
               display: 'flex',
               justifyContent: 'center',

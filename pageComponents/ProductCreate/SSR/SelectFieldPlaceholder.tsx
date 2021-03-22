@@ -3,13 +3,16 @@ import React from "react";
 import UploadIcon from "components/Icons/UploadIcon";
 import Typography from "@material-ui/core/Typography";
 import { Colors, BorderRadius, BorderRadius2x } from "layout/AppTheme";
+import { useSelector } from "react-redux"
+import { GrandReduxState } from "reduxStore/grand-reducer";
 
 
 
 const SelectFieldPlaceholder = (props) => {
 
-  // let bRadius = BorderRadius2x;
-  let bRadius = BorderRadius;
+  const isDarkMode = useSelector<GrandReduxState>(s => {
+    return s.reduxLogin.darkMode === 'dark'
+  })
 
   return (
     <div style={{
@@ -19,18 +22,22 @@ const SelectFieldPlaceholder = (props) => {
         {props.title}
       </Typography>
       <div style={{
-        border: `1px solid ${Colors.uniswapGrey}`,
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
         padding: "1rem",
         height: '2.75rem',
-        background: Colors.uniswapMediumNavy,
-        borderRadius: bRadius,
+        border: isDarkMode
+          ? `1px solid ${Colors.uniswapGrey}`
+          : `1px solid ${Colors.slateGreyDarker}`,
+        background: isDarkMode
+          ? Colors.uniswapMediumNavy
+          : Colors.slateGrey,
+        borderRadius: BorderRadius,
       }}>
       </div>
     </div>
   )
 }
 
-export default SelectFieldPlaceholder
+export default SelectFieldPlaceholder;

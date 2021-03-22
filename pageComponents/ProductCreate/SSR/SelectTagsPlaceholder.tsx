@@ -3,10 +3,17 @@ import React from "react";
 import UploadIcon from "components/Icons/UploadIcon";
 import Typography from "@material-ui/core/Typography";
 import { Colors } from "layout/AppTheme";
+import { useSelector } from "react-redux"
+import { GrandReduxState } from "reduxStore/grand-reducer";
 
 
 
 const SelectTagsPlaceholder = (props) => {
+
+  const isDarkMode = useSelector<GrandReduxState>(s => {
+    return s.reduxLogin.darkMode === 'dark'
+  })
+
   return (
     <div style={{
       marginBottom: '1rem',
@@ -25,8 +32,12 @@ const SelectTagsPlaceholder = (props) => {
       }}>
         <div
           style={{
-            border: `1px solid ${Colors.mediumGrey}`,
-            backgroundColor: Colors.foregroundColor,
+            border: isDarkMode
+              ? `1px solid ${Colors.uniswapGrey}`
+              : `1px solid ${Colors.slateGreyDarker}`,
+            background: isDarkMode
+              ? Colors.uniswapMediumNavy
+              : Colors.slateGrey,
             height: 40,
             display: 'flex',
             justifyContent: 'center',
