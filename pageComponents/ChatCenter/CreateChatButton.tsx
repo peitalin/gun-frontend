@@ -6,7 +6,7 @@ import { withStyles, WithStyles, createStyles, Theme, fade } from "@material-ui/
 // graphql
 import { useMutation, useQuery } from '@apollo/client';
 // typings
-import { Chat_Rooms, Chat_Messages } from "typings/gqlTypes";
+import { ChatRoom, Message } from "typings/gqlTypes";
 // components
 import ButtonLoading from "components/ButtonLoading";
 // css
@@ -45,11 +45,12 @@ const CreateChatButton: React.FC<ReactProps> = (props) => {
     dispatch(Actions.reduxModals.TOGGLE_CHAT_CENTER_MODAL(true))
   }
 
-  const [createChat, { data, loading }] = useMutation(
+  const [createChat, { data, loading }] = useMutation<MData, MVar>(
     CREATE_NEW_CHAT, {
       variables: {
         productId: props.productId,
         name: props.name,
+        messageLimit: 40,
       },
       onCompleted: () => {
         snackbar.enqueueSnackbar(
@@ -106,6 +107,14 @@ interface ReactProps extends WithStyles<typeof styles> {
   openChatAfterwards?: boolean
 }
 
+interface MData {
+  createNewChat: ChatRoom
+}
+interface MVar {
+  productId: string
+  name: string
+  messageLimit: number
+}
 
 const styles = (theme: Theme) => createStyles({
   root: {

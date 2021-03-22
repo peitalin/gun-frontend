@@ -57,13 +57,7 @@ export const ChatRoomFragment = gql`
         }
       }
     }
-    # messages {
-    #   ...MessageFragment
-    # }
-    messages(
-      # order_by: { createdAt: asc }
-      limit: $messageLimit
-    ) {
+    messages {
       ...MessageFragment
     }
   }

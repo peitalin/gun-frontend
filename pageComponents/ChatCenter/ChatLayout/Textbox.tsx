@@ -108,7 +108,7 @@ export const Textbox: React.FC<ReactProps> = (props) => {
                   senderId: props.userId,
                   content: description,
                   productId: props.product.id,
-                  productSnapshotId: props.product.currentSnapshotId,
+                  productSnapshotId: props.product?.currentSnapshot?.id,
                   variantId: props.product?.featuredVariant?.variantId,
                   offerPrice: offerPrice,
                   bidStatus: BidStatus.CREATED,

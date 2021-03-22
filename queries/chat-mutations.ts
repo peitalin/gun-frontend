@@ -50,10 +50,12 @@ export const UPDATE_CHAT_STATUS = gql`
   mutation(
     $chatRoomId: String!
     $chatStatus: String!
+    $messageLimit: Int # used for ChatRoom fragment on backend
   ) {
     updateChatStatus(
       chatRoomId: $chatRoomId
       chatStatus: $chatStatus
+      messageLimit: $messageLimit
     ) {
       ...ChatRoomFragment
     }
@@ -66,10 +68,12 @@ export const CREATE_NEW_CHAT = gql`
   mutation createNewChat(
     $productId: String!
     $name: String
+    $messageLimit: Int # used for ChatRoom fragment on backend
   ) {
     createNewChat(
       productId: $productId,
       name: $name,
+      messageLimit: $messageLimit
     ) {
       ...ChatRoomFragment
     }
