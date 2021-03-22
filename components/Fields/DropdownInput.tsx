@@ -108,7 +108,9 @@ const DropdownInput = (props: ReactProps) => {
                     ...styles,
                     fontWeight: 400,
                     fontFamily: fontFam,
-                    color: Colors.slateGreyLightBlack,
+                    color: isDarkMode
+                      ? Colors.uniswapLightGrey
+                      : Colors.slateGreyLightBlack,
                   }),
                   menu: styles => ({
                     ...styles,
@@ -118,6 +120,7 @@ const DropdownInput = (props: ReactProps) => {
                     "&:hover": {
                       cursor: "pointer",
                     },
+                    color: isDarkMode ? Colors.uniswapLighterGrey : Colors.charcoal,
                   })
                 }
             }
@@ -202,8 +205,9 @@ const DropdownInput = (props: ReactProps) => {
                 "&:hover": {
                   cursor: "pointer",
                 },
+                color: isDarkMode ? Colors.uniswapLightestGrey : Colors.charcoal,
                 background: isDarkMode
-                  ? Colors.uniswapDarkNavy
+                  ? Colors.uniswapNavy
                   : Colors.slateGrey,
               }),
               control: (base, state) => ({
