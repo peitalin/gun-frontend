@@ -116,6 +116,50 @@ const MakeAndModel = (props: ReactProps & FormikProps<FormikFields>) => {
           count: values?.caliber?.length
         }}
       />
+
+      <Typography color={"primary"} variant="subtitle1" gutterBottom>
+        Magazine Capacity
+      </Typography>
+      <TextInput
+        name="magazine-capacity"
+        placeholder="Magazine Capacity"
+        className={classes.textField}
+        value={values.magazineCapacity}
+        onChange={(e) => {
+          fprops.setFieldValue("magazineCapacity", e.target.value)
+          fprops.setFieldTouched('magazineCapacity', true)
+        }}
+        inputProps={{ style: { width: '100%' }}}
+        errorMessage={props.errors.magazineCapacity}
+        touched={!!touched.magazineCapacity}
+        disableInitialValidationMessage={true}
+        limit={{
+          max: maxLengthTitle,
+          count: values?.magazineCapacity?.length
+        }}
+      />
+
+      <Typography color={"primary"} variant="subtitle1" gutterBottom>
+        Barrel Length
+      </Typography>
+      <TextInput
+        name="barrel-length"
+        placeholder="Barrel Length"
+        className={classes.textField}
+        value={values.barrelLength}
+        onChange={(e) => {
+          fprops.setFieldValue("barrelLength", e.target.value)
+          fprops.setFieldTouched('barrelLength', true)
+        }}
+        inputProps={{ style: { width: '100%' }}}
+        errorMessage={props.errors.barrelLength}
+        touched={!!touched.barrelLength}
+        disableInitialValidationMessage={true}
+        limit={{
+          max: maxLengthTitle,
+          count: values?.barrelLength?.length
+        }}
+      />
     </ErrorBounds>
   )
 }
@@ -126,6 +170,8 @@ interface FormikFields {
   make: string;
   model: string;
   caliber: string;
+  magazineCapacity: string;
+  barrelLength: string;
 }
 
 

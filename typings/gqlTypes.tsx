@@ -13176,6 +13176,11 @@ export type SubscriptionUsers_Typing_AggregateArgs = {
   where?: Maybe<Users_Typing_Bool_Exp>;
 };
 
+
+export type SubscriptionMyConversationsArgs = {
+  messageLimit?: Maybe<Scalars['Int']>;
+};
+
 export type SummaryStatistics = {
    __typename?: 'SummaryStatistics';
   amountSum: Scalars['Int'];

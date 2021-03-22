@@ -70,26 +70,27 @@ const FrontPage: React.FC<ReactProps> = (props) => {
             xl: 4,
           }}
         />
+
+        <NewReleaseProducts
+          initialProducts={undefined}
+          count={12}
+          title={"New Releases"}
+        />
+
+        {/* <FeaturedProducts
+          initialFeaturedProducts={initialFeaturedProducts}
+          count={4}
+          offset={2} // for demo purposes
+          cardsPerRow={{
+            xs: 1.5,
+            sm: 1.5,
+            md: 2,
+            lg: 3,
+            xl: 4,
+          }}
+        /> */}
+
       </AlignCenterLayout>
-
-      {/* <FeaturedProducts
-        initialFeaturedProducts={initialFeaturedProducts}
-        count={4}
-        offset={2} // for demo purposes
-        cardsPerRow={{
-          xs: 1.5,
-          sm: 1.5,
-          md: 2,
-          lg: 3,
-          xl: 4,
-        }}
-      /> */}
-
-      <NewReleaseProducts
-        initialProducts={undefined}
-        count={12}
-        title={"New Releases"}
-      />
 
     </div>
   )
