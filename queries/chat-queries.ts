@@ -8,7 +8,7 @@ export const GET_USER_BIDS_FOR_PRODUCT = gql`
       name
       status
       createdAt
-      users {
+      participants {
         userId
       }
       productId
