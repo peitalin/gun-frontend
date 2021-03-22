@@ -1,5 +1,4 @@
 import React from "react";
-import {oc as option} from "ts-optchain";
 import clsx from "clsx";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
@@ -12,9 +11,6 @@ import {
   OrderStatus,
   ConnectionOffsetQuery,
   Order_By,
-  ProductsOrderBy,
-  PayeeType,
-  Connection,
   OrdersConnection,
   OrderBy,
 } from "typings/gqlTypes";
@@ -30,12 +26,10 @@ import Typography from "@material-ui/core/Typography";
 // Media query
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
-// Analytics
-import { useAnalytics } from "utils/analytics";
 // Graphql
 import { useQuery, useLazyQuery } from "@apollo/client";
 // snackbar
-import { useSnackbar, ProviderContext } from "notistack";
+import { useSnackbar } from "notistack";
 // apollo
 import { useApolloClient } from "@apollo/client";
 import {
@@ -74,7 +68,7 @@ const OrdersCancelledList = (props: ReactProps) => {
 
 
   /////////////////////////////////// paginator
-  let numItemsPerPage = 20;
+  let numItemsPerPage = 16;
   let overfetchBy = 1;
   // overfetch by 1x pages
   let {
@@ -110,10 +104,11 @@ const OrdersCancelledList = (props: ReactProps) => {
         query: {
           limit: limit,
           offset: offset,
-          orderBy: {
-            // createdAt: Order_By.ASC,
-            createdAt: OrderBy.DESC,
-          }
+          // orderBy: {
+          //   currentSnapshot: {
+          //     createdAt: OrderBy.DESC,
+          //   }
+          // }
         },
       },
       fetchPolicy: "no-cache",
@@ -121,10 +116,7 @@ const OrdersCancelledList = (props: ReactProps) => {
   )
 
   const connection = data?.getOrdersCancelledConnection;
-  const orderIds = (connection?.edges ?? []).map(({ node }) => node.id)
-
-  let noRefundsYet = !loading &&
-    option(connection).edges([]).length === 0
+  let noRefundsYet = !loading && connection?.edges?.length === 0
 
 
   return (
@@ -139,7 +131,7 @@ const OrdersCancelledList = (props: ReactProps) => {
             Orders Cancelled
           </Typography>
           <Typography variant="body1" className={classes.emailCountCaption}>
-            { `${option(connection).totalCount(0)} cancelled orders` }
+            { `${connection?.totalCount ?? 0} cancelled orders` }
           </Typography>
         </div>
       </div>
@@ -154,7 +146,7 @@ const OrdersCancelledList = (props: ReactProps) => {
           </div>
           <div className={classes.flexItemWide}>
             <Typography variant="subtitle1" className={classes.subtitle}>
-              Date
+              Date Cancelled
             </Typography>
           </div>
           <div className={classes.flexItem}>
@@ -407,33 +399,6 @@ const styles = (theme: Theme) => createStyles({
     fontSize: '0.825rem',
     fontWeight: 500,
     marginBottom: '1rem',
-  },
-  exportContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: '1rem',
-    color: Colors.darkGrey,
-    "&:hover": {
-      cursor: "pointer",
-    },
-  },
-  relayIcon: {
-    fontSize: '0.825rem',
-    fontWeight: 500,
-    height: 15,
-    width: 15,
-    marginRight: '0.15rem',
-  },
-  exportCaption: {
-    marginLeft: "0.25rem",
-    fontSize: '0.825rem',
-    fontWeight: 500,
-    color: Colors.darkGrey,
-  },
-  blueText: {
-    color: Colors.blue,
   },
   cancelCaption: {
     margin: '1rem',

@@ -57,15 +57,15 @@ export const getCountdownForExpiry = ({
 // dayjs format:
 // https://github.com/iamkun/dayjs/blob/dev/docs/en/API-reference.md#format-formatstringwithtokens-string
 export const formatDate = (d: Date) => {
-  return dayjs.utc(d).format("DD-MM-YYYY hh:mm A")
+  return dayjs.utc(d).local().format("DD-MM-YYYY hh:mm A")
 }
 
 export const showDate = (d: Date) => {
-  return dayjs.utc(d).format("DD-MM-YYYY")
+  return dayjs.utc(d).local().format("DD-MM-YYYY")
 }
 
 export const showTime = (d: Date) => {
-  return dayjs(d).format("hh:mm:ss A")
+  return dayjs(d).local().format("hh:mm:ss A")
 }
 
 

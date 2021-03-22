@@ -63,7 +63,7 @@ const CancelledOrderRow = (props: ReactProps) => {
       </Tooltip>
       <div className={classes.flexItemWide}>
         <Typography variant="body2" className={classes.id}>
-          {formatDate(order.createdAt)}
+          {formatDate(order?.currentSnapshot?.createdAt)}
         </Typography>
       </div>
       <div className={classes.flexItem}>
