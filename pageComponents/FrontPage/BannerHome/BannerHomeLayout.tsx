@@ -56,13 +56,10 @@ const BannerHomeLayout: NextPage<ReactProps> = (props) => {
         background: bannerDither
       }}
       dither={true}
+      portraitMode={props.portraitMode}
     >
 
-      <div className={classes.searchContainer}
-        style={{
-          marginTop: mdDown ? "8rem" : "8rem",
-        }}
-      >
+      <div className={classes.searchContainer}>
         <Hidden className={"fadeIn"}>
           <SearchbarMain color={Colors.slateGrey}/>
         </Hidden>
@@ -172,6 +169,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   mdDown: boolean
   bannerImageUrl: string
   bannerDither: string
+  portraitMode?: boolean;
 }
 
 export default withStyles(styles)( BannerHomeLayout );

@@ -26,20 +26,24 @@ const BannerHome: NextPage<ReactProps> = (props) => {
 
   return (
     <>
+      {/* Mobile  */}
       <Hidden only={["lg", "xl"]} implementation="css">
         <BannerHomeLayout
           height={660}
           mdDown={true}
           bannerImageUrl={bannerMobileImageUrl}
           bannerDither={bannerDither}
+          portraitMode={true}
         />
       </Hidden>
+      {/* Desktop  */}
       <Hidden only={["xs", "sm", "md"]} implementation="css">
         <BannerHomeLayout
           height={540}
           mdDown={false}
           bannerImageUrl={bannerImageUrl}
           bannerDither={bannerDither}
+          portraitMode={false}
         />
       </Hidden>
     </>

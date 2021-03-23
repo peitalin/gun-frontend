@@ -33,6 +33,9 @@ import CategoryDropdown from './CategoryDropdown';
 import SearchIcon from '@material-ui/icons/Search';
 import InputBase from '@material-ui/core/InputBase';
 
+import { useRouter } from "next/router";
+import { useSnackbar } from "notistack";
+
 // Responsiveness
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
@@ -49,6 +52,7 @@ const SearchOptionsAirbnb: React.FC<ReactProps> = (props) => {
     classes,
     currentCategories,
     facets,
+    searchTerm,
     setSearchTerm,
     setOrderBy,
     setCategoryFacets,
@@ -66,6 +70,9 @@ const SearchOptionsAirbnb: React.FC<ReactProps> = (props) => {
   const smDown = useMediaQuery(theme.breakpoints.down("sm"))
   const mdDown = useMediaQuery(theme.breakpoints.down("md"))
 
+  const router = useRouter();
+  const snackbar = useSnackbar();
+
   const {
     totalCount,
     overfetchBy,
@@ -79,6 +86,8 @@ const SearchOptionsAirbnb: React.FC<ReactProps> = (props) => {
   const [searchTermUi, setSearchTermUi] = React.useState("");
   // for fast UI updates
   const [pageUi, setPageUi] = React.useState(1);
+
+  const clickBackgroundId = `search-background-${router.pathname}`
 
   // for actual gql dispatch for pagination page
   const [debounceSetPageParam, cancel, callPending] = useDebouncedCallback(
@@ -102,6 +111,59 @@ const SearchOptionsAirbnb: React.FC<ReactProps> = (props) => {
     { label: "Highest Price", value: { price: Order_By.DESC }},
     { label: "Lowest Price", value: { price: Order_By.ASC }},
   ];
+
+
+  const onEnterSearch = (event) => {
+    // Desktop only
+    if (mdDown) {
+      snackbar.enqueueSnackbar(
+        `Click search button`,
+        { variant: "info" }
+      )
+    }
+    if (!mdDown) {
+      if (event.key === "Enter") {
+        if (!searchTerm) {
+          snackbar.enqueueSnackbar(
+            `No search term entered!`,
+            { variant: "info" }
+          )
+          return
+        }
+        let url = `/search?q=${encodeURIComponent(searchTerm)}`
+        if ((currentCategories ?? []).length > 0) {
+          url += `&category=${currentCategories?.[0]?.slug}`
+        }
+        router.push(url)
+      }
+    }
+  }
+
+  const onClickSearch = (event) => {
+    if (!searchTerm) {
+      snackbar.enqueueSnackbar(
+        `No search term entered!`,
+        { variant: "info" }
+      )
+      return
+    }
+    let url = `/search?q=${encodeURIComponent(searchTerm)}`
+    if ((currentCategories ?? []).length > 0) {
+      url += `&category=${currentCategories?.[0]?.slug}`
+    }
+    focusSearchOnMobile(false)
+    router.push(url)
+  }
+
+  const focusSearchOnMobile = (b: boolean) => {
+    if (mdDown) {
+      // clickaway listerner for mobile only
+      setMobileFocused(b)
+      if (props.setFocusedOuter) {
+        props.setFocusedOuter(b)
+      }
+    }
+  }
 
 
   React.useEffect(() => {
@@ -135,19 +197,21 @@ const SearchOptionsAirbnb: React.FC<ReactProps> = (props) => {
 
 
   const searchRef = React.useRef(null)
+
   const [searchFocused, setSearchFocused] = React.useState(false)
   const [categoryFocused, setCategoryFocused] = React.useState(false)
   const [mobileFocused, setMobileFocused] = React.useState(false)
 
-  const focused = searchFocused || categoryFocused || (mdDown && mobileFocused)
+  const focused = searchFocused || categoryFocused || mobileFocused
 
   // console.log('focused: ', focused)
   // console.log('mobileFocused: ', mobileFocused)
   // console.log(`mdDown && !focused: ${mdDown && !focused}`)
 
   return (
-    <div className={classes.searchRoot}
-    >
+    <div className={clsx(
+      mdDown ? classes.searchRootMobile : classes.searchRoot,
+    )}>
       <div
         className={clsx(
           mdDown
@@ -160,23 +224,14 @@ const SearchOptionsAirbnb: React.FC<ReactProps> = (props) => {
         style={{ ...props.style }}
       >
 
-        <div
-          className={classes.clickBackgroundLayer}
-          onClick={() => {
-            if (mdDown) {
-              console.log('CLICKED BACKGROUND')
-              // clickaway listerner for mobile only
-              setMobileFocused(false)
-              if (props.setFocusedOuter) {
-                props.setFocusedOuter(false)
-              }
-            }
-          }}
-        ></div>
+        <div className={classes.clickBackgroundLayer}
+          onClick={() => focusSearchOnMobile(false)}
+          id={clickBackgroundId}
+        />
 
         <div className={classes.topSection}
           onClick={(event) => {
-            console.log('CLICKED stopePropagation')
+            // console.log('CLICKED stopPropagation')
             event.stopPropagation()
           }}
           style={props.topSectionStyles}
@@ -216,19 +271,14 @@ const SearchOptionsAirbnb: React.FC<ReactProps> = (props) => {
                   onFocus={e => {
                     // console.log('onFocus:', e)
                     setSearchFocused(true)
-                    if (mdDown) {
-                      setMobileFocused(true)
-                      if (props.setFocusedOuter) {
-                        props.setFocusedOuter(true)
-                      }
-                    }
+                    focusSearchOnMobile(true)
                   }}
                   onBlur={e => {
                     // console.log('onBlur:', e)
                     setSearchFocused(false)
                   }}
                   onChange={e => props.setSearchTerm(e.target.value)}
-                  onKeyPress={props.onEnter}
+                  onKeyPress={onEnterSearch}
                   startAdornment={
                     <div className={classes.searchAdornIcon}
                       onClick={() => searchRef.current.focus()}
@@ -255,12 +305,7 @@ const SearchOptionsAirbnb: React.FC<ReactProps> = (props) => {
                   props.setCurrentCategories(categories)
                 }}
                 setMobileFocused={(b: boolean) => {
-                  if (mdDown) {
-                    setMobileFocused(true)
-                    if (props.setFocusedOuter) {
-                      props.setFocusedOuter(true)
-                    }
-                  }
+                  focusSearchOnMobile(true)
                 }}
                 setFocused={(b: boolean) => {
                   setCategoryFocused(b)
@@ -355,7 +400,7 @@ const SearchOptionsAirbnb: React.FC<ReactProps> = (props) => {
               }}
               variant="text"
               color="primary"
-              onClick={props.onClick}
+              onClick={onClickSearch}
             >
               <SearchIcon className={classes.iconOuter}/>
               Search
@@ -365,7 +410,6 @@ const SearchOptionsAirbnb: React.FC<ReactProps> = (props) => {
           </div>
 
         </div>
-
       </div>
 
       {
@@ -374,6 +418,7 @@ const SearchOptionsAirbnb: React.FC<ReactProps> = (props) => {
           classes.arrowContainer,
           classes.height50,
           // focused ? classes.height65 : classes.height50,
+          mdDown && classes.marginTop,
           (mdDown && focused) && classes.displayNoneDelayed,
           // hide on mobile when menu is focused/expanded
         )}
@@ -564,8 +609,6 @@ interface ReactProps extends WithStyles<typeof styles> {
   placeholder?: string;
   className?: any;
   style?: any;
-  onClick?(a: any): any;
-  onEnter?(a: any): any;
 }
 export interface SelectOption {
   label: string;
@@ -581,6 +624,13 @@ const styles = (theme: Theme) => createStyles({
   searchRoot: {
     display: "flex",
     flexDirection: "row",
+    justifyContent: "center",
+    alignItems: 'center',
+    position: 'relative',
+  },
+  searchRootMobile: {
+    display: "flex",
+    flexDirection: "column",
     justifyContent: "center",
     alignItems: 'center',
     position: 'relative',
@@ -672,6 +722,9 @@ const styles = (theme: Theme) => createStyles({
   },
   width100Sm: {
     width: '100%',
+  },
+  marginTop: {
+    marginTop: '0.5rem',
   },
   marginBottom05: {
     marginBottom: '0.5rem',

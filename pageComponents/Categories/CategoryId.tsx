@@ -108,7 +108,6 @@ const CategoryId: React.FC<ReactProps> = (props) => {
     paginatorType: PaginatorType.page,
   })
 
-  const [searchTermForGql, setSearchTermForGql] = React.useState(undefined)
 
   const { data, loading, error } = useQuery<QueryData1, QueryVar1>(
     GET_PRODUCTS_BY_CATEGORY, {
@@ -119,22 +118,12 @@ const CategoryId: React.FC<ReactProps> = (props) => {
       },
       categorySlug: props.initialRouteCategory?.slug
         ?? (router?.query?.categorySlug as any),
-      searchTerm: searchTermForGql || "*",
+      searchTerm: searchTerm || "*",
     },
     fetchPolicy: "cache-and-network",
     ssr: true,
   });
 
-
-  const onEnter = (event) => {
-    if (event.key === "Enter") {
-      setSearchTermForGql(searchTerm)
-    }
-  }
-
-  const onClick = (event) => {
-    setSearchTermForGql(searchTerm)
-  }
 
   const categoryName: string = props.initialRouteCategory?.name
   const categoryBlurb: string = props.initialRouteCategory?.blurb
@@ -207,12 +196,14 @@ const CategoryId: React.FC<ReactProps> = (props) => {
         </div>
 
         <div className={classes.searchContainer}>
-          <div className={classes.searchContainerInner}>
+          <div className={
+            mdDown
+              ? classes.searchContainerInnerMobile
+              : classes.searchContainerInner
+          }>
             <SearchOptionsAirbnb
               searchTerm={searchTerm}
               setSearchTerm={setSearchTerm}
-              onEnter={onEnter}
-              onClick={onClick}
               // facets={facets}
               // setCategoryFacets={setCategoryFacets({ facets, setFacets })}
               setCurrentCategories={setCurrentCategories}
@@ -467,6 +458,14 @@ export const styles = (theme: Theme) => createStyles({
   searchContainerInner: {
     marginTop: "-2rem",
     marginBottom: "2rem",
+    height: '2rem',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  searchContainerInnerMobile: {
+    marginTop: "-0.25rem",
+    marginBottom: "2.5rem",
     height: '2rem',
     display: 'flex',
     justifyContent: 'center',

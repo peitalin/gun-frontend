@@ -24,9 +24,8 @@ const Banner: React.FC<ReactProps> = (props) => {
     >
       <BackgroundImage
         classes={classes}
-        // imgLoaded={imgLoaded > 0}
-        // setImgLoaded={() => setImgLoaded(s => s + 1)}
         src={props.src}
+        portraitMode={props.portraitMode}
         height={props.height ? props.height : bannerHeight}
       />
       {
@@ -57,7 +56,7 @@ const Banner: React.FC<ReactProps> = (props) => {
 }
 
 const BackgroundImage = (
-  { classes, src, imgLoaded, setImgLoaded, height }: BackgroundImageProps
+  { classes, src, height, portraitMode }: BackgroundImageProps
 ) => {
 
   const theme = useTheme();
@@ -68,12 +67,8 @@ const BackgroundImage = (
       <img
         className={classes.bannerBackground}
         style={{
-          height: mdDown
-            ? 'unset'
-            : height
-              ? height
-              : bannerHeight,
-          width: mdDown ? '100%' : 'unset',
+          height: height ? height : bannerHeight,
+          width: portraitMode ? '100%' : 'unset',
           // image to always fill screen on desktop
           minWidth: mdDown ? "unset" : 1160,
         }}
@@ -129,8 +124,7 @@ const Dither = ({ classes, imgLoaded, ditherDark, ditherStyle }: DitherProps) =>
 
 interface BackgroundImageProps extends WithStyles<typeof styles> {
   src?: string;
-  imgLoaded?: boolean;
-  setImgLoaded?(fn: (s: number) => number): void;
+  portraitMode?: boolean;
   height?: string | number;
 }
 interface DitherProps extends WithStyles<typeof styles> {
@@ -141,6 +135,7 @@ interface DitherProps extends WithStyles<typeof styles> {
 interface ReactProps extends WithStyles<typeof styles> {
   titleStyle?: any;
   ditherStyle?: any;
+  portraitMode?: boolean;
   color?: string;
   src?: string;
   dither?: boolean;

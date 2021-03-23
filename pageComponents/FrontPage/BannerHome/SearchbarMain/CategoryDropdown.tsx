@@ -100,7 +100,12 @@ const CategoryDropdown: React.FC<ReactProps> = (props) => {
                             }}
                             variant="outlined"
                             onClick={() => {
-                              props.setCurrentCategories([category as any])
+                              if (category.slug) {
+                                props.setCurrentCategories([category as any])
+                              } else {
+                                // all-categories, empty category filters
+                                props.setCurrentCategories([])
+                              }
                             }}
                           >
                             {category.name}
@@ -123,7 +128,12 @@ const CategoryDropdown: React.FC<ReactProps> = (props) => {
                         }}
                         variant="outlined"
                         onClick={() => {
-                          props.setCurrentCategories([category as any])
+                          if (category.slug) {
+                            props.setCurrentCategories([category as any])
+                          } else {
+                            // all-categories, empty category filters
+                            props.setCurrentCategories([])
+                          }
                         }}
                       >
                         {category.name}

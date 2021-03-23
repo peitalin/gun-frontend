@@ -19,7 +19,7 @@ const ProductCardResponsive: React.FC<ProductCardResponsiveProps> = (props) => {
     refetch,
     cardsPerRow = {
       xs: 1,
-      sm: 2,
+      sm: 1,
       md: 2,
       lg: 3,
       xl: 4,
@@ -48,6 +48,8 @@ const ProductCardResponsive: React.FC<ProductCardResponsiveProps> = (props) => {
     fit: option(featuredPreviewItem).image.original.heightInPixels() >
         option(featuredPreviewItem).image.original.widthInPixels(),
     onClick: props.onClick,
+    // hideActionType: xs || sm || md
+    hideActionType: false
   }
 
 

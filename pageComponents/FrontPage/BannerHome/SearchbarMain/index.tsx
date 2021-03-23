@@ -70,39 +70,6 @@ const SearchbarMain = (props: SearchbarProps) => {
     // paginatorType: PaginatorType.page,
   })
 
-  const onEnter = (event) => {
-    if (event.key === "Enter") {
-      if (!searchTerm) {
-        snackbar.enqueueSnackbar(
-          `No search term entered!`,
-          { variant: "info" }
-        )
-        return
-      }
-      let url = `/search?q=${encodeURIComponent(searchTerm)}`
-      if ((currentCategories ?? []).length > 0) {
-        url += `&category=${currentCategories?.[0]?.slug}`
-      }
-      router.push(url)
-    }
-  }
-
-  const onClick = (event) => {
-    if (!searchTerm) {
-      snackbar.enqueueSnackbar(
-        `No search term entered!`,
-        { variant: "info" }
-      )
-      return
-    }
-    let url = `/search?q=${encodeURIComponent(searchTerm)}`
-    if ((currentCategories ?? []).length > 0) {
-      url += `&category=${currentCategories?.[0]?.slug}`
-    }
-    router.push(url)
-  }
-
-
   // sync selected category in searchbar to SSR category from url bar
   React.useEffect(() => {
     if (props.initialRouteCategory) {
@@ -115,8 +82,6 @@ const SearchbarMain = (props: SearchbarProps) => {
     <SearchOptionsAirbnb
       searchTerm={searchTerm}
       setSearchTerm={setSearchTerm}
-      onEnter={onEnter}
-      onClick={onClick}
       // facets={facets}
       // setCategoryFacets={setCategoryFacets({ facets, setFacets })}
       setCurrentCategories={setCurrentCategories as any}

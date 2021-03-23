@@ -52,6 +52,7 @@ const ProductCardRC = (props: ReactProps) => {
     maxWidthOfRow = 1160,
     showWishListButton = true,
     isMobile = false,
+    hideActionType = false,
   } = props;
 
   let viewWidth = 100 / cardsPerRow;
@@ -177,6 +178,7 @@ const ProductCardRC = (props: ReactProps) => {
               >
                 {
                   product?.currentSnapshot?.actionType &&
+                  !hideActionType &&
                   <div className={classes.actionTag}>
                     <Typography
                       className={classes.actionType}
@@ -245,6 +247,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   style?: any;
   previewImageEmptyMessage?: string;
   onClick?(a: any): void;
+  hideActionType?: boolean;
 }
 
 
