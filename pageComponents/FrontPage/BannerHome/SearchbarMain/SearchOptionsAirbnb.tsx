@@ -115,14 +115,13 @@ const SearchOptionsAirbnb: React.FC<ReactProps> = (props) => {
 
   const onEnterSearch = (event) => {
     // Desktop only
-    if (mdDown) {
-      snackbar.enqueueSnackbar(
-        `Click search button`,
-        { variant: "info" }
-      )
-    }
-    if (!mdDown) {
-      if (event.key === "Enter") {
+    if (event.key === "Enter") {
+      if (mdDown) {
+        snackbar.enqueueSnackbar(
+          `Click search button`,
+          { variant: "info" }
+        )
+      } else {
         if (!searchTerm) {
           snackbar.enqueueSnackbar(
             `No search term entered!`,
