@@ -6,6 +6,11 @@ import BannerHomeLayout from "./BannerHomeLayout";
 // CSS
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
+import Hidden from "components/HiddenFix";
+import classes from "*.module.css";
+// styles
+import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
+import { Colors, Gradients } from "layout/AppTheme";
 
 
 
@@ -17,25 +22,40 @@ const BannerHome: NextPage<ReactProps> = (props) => {
   const bannerDither = 'linear-gradient(30deg, rgba(25,25,25,0.7) 10%, rgba(25,25,25,0.4) 60%)'
 
   const theme = useTheme();
-  const xsDown = useMediaQuery(theme.breakpoints.down("xs"));
-  const smDown = useMediaQuery(theme.breakpoints.down("sm"));
+  const mdDown = useMediaQuery(theme.breakpoints.down("md"));
 
   return (
-    <BannerHomeLayout
-      height={540}
-      heightMobile={600}
-      bannerImageUrl={bannerImageUrl}
-      bannerMobileImageUrl={bannerMobileImageUrl}
-      bannerDither={bannerDither}
-    />
+    <>
+      <Hidden only={["lg", "xl"]} implementation="css">
+        <BannerHomeLayout
+          height={660}
+          mdDown={true}
+          bannerImageUrl={bannerMobileImageUrl}
+          bannerDither={bannerDither}
+        />
+      </Hidden>
+      <Hidden only={["xs", "sm", "md"]} implementation="css">
+        <BannerHomeLayout
+          height={540}
+          mdDown={false}
+          bannerImageUrl={bannerImageUrl}
+          bannerDither={bannerDither}
+        />
+      </Hidden>
+    </>
   )
 }
 ///////////////// TYPINGS ///////////////////
-interface ReactProps {
+interface ReactProps extends WithStyles<typeof styles> {
 }
 
+export const styles = (theme: Theme) => createStyles({
+  width100: {
+    width: '100%',
+  },
+})
 
-export default BannerHome;
+export default withStyles(styles)(BannerHome);
 
 
 

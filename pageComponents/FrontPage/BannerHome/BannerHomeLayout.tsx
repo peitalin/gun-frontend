@@ -35,29 +35,23 @@ const BannerHomeLayout: NextPage<ReactProps> = (props) => {
   const {
     classes,
     bannerImageUrl,
-    bannerMobileImageUrl,
     bannerDither,
+    mdDown,
     height = 480,
-    heightMobile = 600,
   } = props;
 
   const user = useSelector<GrandReduxState, UserPrivate>(
     s => s.reduxLogin.user
   )
 
-  const theme = useTheme();
-  const mdDown = useMediaQuery(theme.breakpoints.down("md"));
-
   return (
     <Banner
       // in /public/img
-      src={mdDown ? bannerMobileImageUrl : bannerImageUrl}
+      src={bannerImageUrl}
       titleStyle={{
         color: "#181818",
       }}
-      height={
-        mdDown ? heightMobile : height
-      }
+      height={height}
       ditherStyle={{
         background: bannerDither
       }}
@@ -69,7 +63,9 @@ const BannerHomeLayout: NextPage<ReactProps> = (props) => {
           marginTop: mdDown ? "8rem" : "8rem",
         }}
       >
-        <SearchbarMain color={Colors.slateGrey}/>
+        <Hidden className={"fadeIn"}>
+          <SearchbarMain color={Colors.slateGrey}/>
+        </Hidden>
       </div>
 
 
@@ -173,9 +169,8 @@ const BannerHomeLayout: NextPage<ReactProps> = (props) => {
 ///////////////// TYPINGS ///////////////////
 interface ReactProps extends WithStyles<typeof styles> {
   height?: number
-  heightMobile?: number
+  mdDown: boolean
   bannerImageUrl: string
-  bannerMobileImageUrl: string
   bannerDither: string
 }
 

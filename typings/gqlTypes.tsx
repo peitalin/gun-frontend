@@ -5484,12 +5484,14 @@ export type MutationUpdateBidArgs = {
 export type MutationUpdateChatStatusArgs = {
   chatRoomId: Scalars['String'];
   chatStatus: Scalars['String'];
+  messageLimit?: Maybe<Scalars['Int']>;
 };
 
 
 export type MutationCreateNewChatArgs = {
   productId: Scalars['String'];
   name?: Maybe<Scalars['String']>;
+  messageLimit?: Maybe<Scalars['Int']>;
 };
 
 

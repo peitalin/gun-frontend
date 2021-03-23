@@ -601,16 +601,17 @@ const styles = (theme: Theme) => createStyles({
   },
   searchOptionsRootMobile: {
     display: "flex",
-    opacity: 0.98,
+    opacity: 0.99,
+    // opacity: 1,
     justifyContent: "center",
     alignItems: "center",
     background: theme.palette.type === 'dark'
       ? Colors.uniswapDarkNavy
       : Colors.cream,
-    zIndex: 10,
+    zIndex: 1,
   },
   searchMobileExpanded: {
-    height: '100vh',
+    height: '110vh',
     width: '100vw',
     transition:  theme.transitions.create(['height', 'width', 'border'], {
       easing: theme.transitions.easing.easeIn,

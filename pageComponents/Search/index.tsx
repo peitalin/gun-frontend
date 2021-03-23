@@ -33,6 +33,7 @@ import {
 } from "utils/hooksFacetSearch";
 // Meta headers
 import MetaHeadersPage from "layout/MetaHeadersPage";
+import Hidden from "components/HiddenFix";
 import LoadingBar from "components/LoadingBar";
 import SearchOptions from "components/SearchOptions";
 import GridPaginatorGeneric from "components/GridPaginatorGeneric";
@@ -170,71 +171,76 @@ const SearchResults = (props: ReactProps) => {
             loading={true}
           />
         }
-        <div className={clsx(
-          classes.searchContainer,
-          focusedOuter
-            ? classes.searchContainerFocused
-            : classes.searchContainerNotFocused,
-        )}>
-          {
-            focusedOuter &&
-            <div className={classes.searchNewsBar}>
-              <NewsBar/>
-            </div>
-          }
-          <SearchbarMain
-            color={Colors.slateGrey}
-            setFocusedOuter={setFocusedOuter}
-            initialRouteCategory={props.initialRouteCategory}
-          />
-        </div>
-        <div className={clsx(
-          classes.flexCol,
-          classes.maxWidth,
-          classes.padding1,
-        )}>
-          <div className={classes.titleContainer}>
-            <Typography variant="h4" className={classes.title}>
-              {"Search results for "}
-              <span className={classes.searchTerm}>{searchTerm}</span>
-            </Typography>
+
+        {/* prevent flash of unstyled content with mobile/desktop searchbar */}
+        <Hidden>
+          <div className={clsx(
+            classes.searchContainer,
+            focusedOuter
+              ? classes.searchContainerFocused
+              : classes.searchContainerNotFocused,
+          )}>
+            {
+              focusedOuter &&
+              <div className={classes.searchNewsBar}>
+                <NewsBar/>
+              </div>
+            }
+            <SearchbarMain
+              color={Colors.slateGrey}
+              setFocusedOuter={setFocusedOuter}
+              initialRouteCategory={props.initialRouteCategory}
+            />
           </div>
-          <ErrorBounds className={classes.sectionContainer}>
 
-              {
-                (searchResultsConnection?.edges?.length === 0 && !loading) &&
-                <NoListings/>
-              }
-              <GridPaginatorGeneric<Product>
-                index={index}
-                connection={searchResultsConnection}
-                totalCount={totalCount}
-                setTotalCount={setTotalCount}
-                numItemsPerPage={numItemsPerPage}
-                overfetchBy={overfetchBy}
-                // disableAnimation
-                loading={loading}
-                loadingComponent={
-                  <ProductRow
-                    product={undefined}
-                  />
+          <div className={clsx(
+            classes.flexCol,
+            classes.maxWidth,
+            classes.padding1,
+          )}>
+            <div className={classes.titleContainer}>
+              <Typography variant="h4" className={classes.title}>
+                {"Search results for "}
+                <span className={classes.searchTerm}>{searchTerm}</span>
+              </Typography>
+            </div>
+            <ErrorBounds className={classes.sectionContainer}>
+
+                {
+                  (searchResultsConnection?.edges?.length === 0 && !loading) &&
+                  <NoListings/>
                 }
-                containerStyle={{ minHeight: 284*2 }}
-                gridItemClassName={classes.gridItem}
-              >
-                {({ node: product }) => {
-
-                  return (
+                <GridPaginatorGeneric<Product>
+                  index={index}
+                  connection={searchResultsConnection}
+                  totalCount={totalCount}
+                  setTotalCount={setTotalCount}
+                  numItemsPerPage={numItemsPerPage}
+                  overfetchBy={overfetchBy}
+                  // disableAnimation
+                  loading={loading}
+                  loadingComponent={
                     <ProductRow
-                      key={product.id}
-                      product={product}
+                      product={undefined}
                     />
-                  )
-                }}
-              </GridPaginatorGeneric>
-          </ErrorBounds>
-        </div>
+                  }
+                  containerStyle={{ minHeight: 284*2 }}
+                  gridItemClassName={classes.gridItem}
+                >
+                  {({ node: product }) => {
 
+                    return (
+                      <ProductRow
+                        key={product.id}
+                        product={product}
+                      />
+                    )
+                  }}
+                </GridPaginatorGeneric>
+            </ErrorBounds>
+          </div>
+
+        </Hidden>
 
       </div>
     );
@@ -333,8 +339,6 @@ const styles = (theme: Theme) => createStyles({
     justifyContent: "center",
     alignItems: "center",
     width: '100%',
-    // paddingTop: '4rem',
-    // paddingBottom: '3rem',
   },
   searchContainerNotFocused: {
     paddingTop: '3rem',
