@@ -204,7 +204,7 @@ export const styles = (theme: Theme) => createStyles({
       : Colors.slateGreyBlack,
     minWidth: '140px',
     whiteSpace: 'nowrap',
-    fontSize: '0.825rem',
+    fontSize: '1rem',
     fontWeight: 500,
     // bottom border
     display: 'flex',

@@ -43,7 +43,7 @@ import { useQuery } from '@apollo/client';
 
 
 
-const SearchOptionsPaginator: React.FC<ReactProps> = (props) => {
+const SearchOptionsAirbnb: React.FC<ReactProps> = (props) => {
 
   const {
     classes,
@@ -205,7 +205,7 @@ const SearchOptionsPaginator: React.FC<ReactProps> = (props) => {
                   ref={searchRef}
                   // inputRef={input => {
                   // }}
-                  placeholder="Search for firearms…"
+                  placeholder="Search for firearms in…"
                   classes={{
                     root: clsx(
                       classes.inputRoot,
@@ -350,6 +350,9 @@ const SearchOptionsPaginator: React.FC<ReactProps> = (props) => {
                 focused ? classes.searchButtonShort : classes.searchButtonWide,
                 focused ? classes.height55 : classes.height40,
               )}
+              classes={{
+                label: classes.buttonLabel
+              }}
               variant="text"
               color="primary"
               onClick={props.onClick}
@@ -621,7 +624,7 @@ const styles = (theme: Theme) => createStyles({
   },
   searchMobileNotExpanded: {
     height: '52px',
-    width: '222px',
+    width: '242px',
     transition:  theme.transitions.create(['height', 'width', 'border'], {
       easing: theme.transitions.easing.easeIn,
       delay: 0,
@@ -788,7 +791,7 @@ const styles = (theme: Theme) => createStyles({
     }),
   },
   searchShort: {
-    width: 220,
+    width: 240,
     transition: theme.transitions.create(['width', 'height'], {
       easing: theme.transitions.easing.sharp,
       duration: "200ms",
@@ -796,21 +799,21 @@ const styles = (theme: Theme) => createStyles({
     }),
   },
   searchWide: {
-    width: 240,
+    width: 260,
     transition: theme.transitions.create(['width', 'height'], {
       easing: theme.transitions.easing.sharp,
       duration: "0ms",
     }),
   },
   searchButtonShort: {
-    width: 120,
+    width: 140,
     transition: theme.transitions.create(['width', 'height'], {
       easing: theme.transitions.easing.sharp,
       duration: "0ms",
     }),
   },
   searchButtonWide: {
-    width: 140,
+    width: 160,
     transition: theme.transitions.create(['width', 'height'], {
       easing: theme.transitions.easing.sharp,
       duration: "200ms",
@@ -830,6 +833,7 @@ const styles = (theme: Theme) => createStyles({
     fontSize: '0.9rem',
   },
   inputInput: {
+    fontSize: '1rem',
     width: '100%',
     paddingTop: 12,
     paddingRight: 12,
@@ -860,6 +864,9 @@ const styles = (theme: Theme) => createStyles({
         ? fade(Colors.purple, 0.9)
         : Colors.secondaryBright,
     },
+  },
+  buttonLabel: {
+    fontSize: '1rem',
   },
   searchAdornIcon: {
     marginLeft: '0.75rem',
@@ -900,4 +907,4 @@ const styles = (theme: Theme) => createStyles({
 });
 
 
-export default withStyles(styles)( SearchOptionsPaginator );
+export default withStyles(styles)( SearchOptionsAirbnb );
