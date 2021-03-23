@@ -12,12 +12,11 @@ import ErrorBounds from 'components/ErrorBounds';
 import { Formik, Form, FormikProps, ErrorMessage } from 'formik';
 import {
   maxLengthTitle,
-  maxLengthProductName
 } from "utils/limitsAndRules";
 import RefLink, { refLinks } from "./RefLink";
 
 
-const MakeAndModel = (props: ReactProps & FormikProps<FormikFields>) => {
+const GunAttributes = (props: ReactProps & FormikProps<FormikFields>) => {
 
   const {
     classes,
@@ -170,12 +169,9 @@ interface FormikFields {
   make: string;
   model: string;
   caliber: string;
-  magazineCapacity: string;
-  barrelLength: string;
+  magazineCapacity?: string;
+  barrelLength?: string;
 }
 
 
-export default withStyles(styles)(React.memo(
-  (props: ReactProps & FormikProps<FormikFields>) => <MakeAndModel {...props}/>,
-));
-
+export default withStyles(styles)(GunAttributes)

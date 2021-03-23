@@ -146,6 +146,7 @@ const ProductPanel: React.FC<ReactProps> = (props) => {
                     variables: {
                       chatRoomId: chatRoomId,
                       chatStatus: getNextChatStatus(currentConversation?.chatRoom),
+                      messageLimit: 40,
                     }
                   })
                 }}
