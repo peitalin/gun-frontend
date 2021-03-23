@@ -25,13 +25,13 @@ const UploadPreviewPlaceholder = (props) => {
         Product Images
       </Typography>
       <div style={{
-        border: isDarkMode
-          ? `2px dashed ${Colors.uniswapLighterGrey}`
-          : `2px dashed ${Colors.slateGreyDarker}`,
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
         padding: "1rem",
+        border: isDarkMode
+          ? `2px dashed ${Colors.uniswapLighterGrey}`
+          : `2px dashed ${Colors.slateGreyDarker}`,
         backgroundColor: isDarkMode
           ? Colors.uniswapMediumNavy
           : Colors.slateGrey,

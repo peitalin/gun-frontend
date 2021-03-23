@@ -2,18 +2,15 @@ import React from "react";
 import clsx from "clsx";
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 import { Colors } from "layout/AppTheme";
+// CSS
+import { useTheme } from "@material-ui/core/styles";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 
 
 const Banner: React.FC<ReactProps> = (props) => {
 
-  // const [imgLoaded, setImgLoaded] = React.useState(0);
   const { classes } = props;
-
-  // React.useEffect(() => {
-  //   // increment imgLoaded to force re-render on client-side
-  //   setImgLoaded(s => s + 1)
-  // }, [])
 
   return (
     <div className={clsx(
@@ -62,12 +59,23 @@ const Banner: React.FC<ReactProps> = (props) => {
 const BackgroundImage = (
   { classes, src, imgLoaded, setImgLoaded, height }: BackgroundImageProps
 ) => {
+
+  const theme = useTheme();
+  const mdDown = useMediaQuery(theme.breakpoints.down("md"));
+
   if (src) {
     return (
       <img
         className={classes.bannerBackground}
         style={{
-          height: height ? height : bannerHeight
+          height: mdDown
+            ? 'unset'
+            : height
+              ? height
+              : bannerHeight,
+          width: mdDown ? '100%' : 'unset',
+          // image to always fill screen on desktop
+          minWidth: mdDown ? "unset" : 1160,
         }}
         // onLoad={() => setImgLoaded(s => s + 1)}
         src={src}
@@ -78,7 +86,14 @@ const BackgroundImage = (
       <div
         className={classes.bannerBackground}
         style={{
-          height: height ? height : bannerHeight
+          height: mdDown
+            ? 'unset'
+            : height
+              ? height
+              : bannerHeight,
+          width: mdDown ? '100%' : 'unset',
+          // image to always fill screen on desktop
+          minWidth: mdDown ? "unset" : 1160,
         }}
       />
     )
@@ -165,8 +180,6 @@ const styles = (theme: Theme) => createStyles({
   },
   bannerBackground: {
     position: 'absolute',
-    // image to always fill screen
-    minWidth: 1160,
     // width: '100%',
     // filter: 'grayscale(1)',
   },

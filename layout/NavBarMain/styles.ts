@@ -3,7 +3,7 @@ import { Colors, Gradients, BoxShadows, BorderRadius2x, BorderRadius3x } from "l
 
 
 /////////////// STYLES /////////////////////
-export const MainBarHeightHomePage = 150;
+export const MainBarHeightHomePage = 130;
 export const MainBarHeightDashboard = 55;
 
 export const NewsBarHeight = 8;

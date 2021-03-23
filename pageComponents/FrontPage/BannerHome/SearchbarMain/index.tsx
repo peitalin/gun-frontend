@@ -18,6 +18,9 @@ import {
   totalItemsInCategoriesFacets,
   PaginatorType,
 } from "utils/hooksFacetSearch";
+// Responsiveness
+import { useTheme } from "@material-ui/core/styles";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 
 
@@ -30,6 +33,9 @@ const SearchbarMain = (props: SearchbarProps) => {
 
   const router = useRouter();
   const snackbar = useSnackbar();
+
+  const theme = useTheme();
+  const mdDown = useMediaQuery(theme.breakpoints.down("md"))
 
   /////////////////////////////////// paginator
   let numItemsPerPage = 40;
@@ -134,12 +140,14 @@ const SearchbarMain = (props: SearchbarProps) => {
       // disableCategories
       disablePaginators={router.pathname === "/"}
       maxCategoryInputWidth={250}
-      topSectionStyles={{
-        justifyContent: 'flex-end',
-        alignItems: 'flex-end',
-        display: 'flex',
-        flexDirection: 'column',
-      }}
+      setFocusedOuter={props.setFocusedOuter}
+      style={props.style}
+      filterSectionStyles={props.filterSectionStyles}
+      categorySectionStyles={props.categorySectionStyles}
+      dropdownContainerStyles={props.dropdownContainerStyles}
+      topSectionStyles={props.topSectionStyles}
+      bottomSectionStyles={props.bottomSectionStyles}
+      paginatorStyles={props.paginatorStyles}
     />
   )
 }
@@ -149,6 +157,16 @@ const SearchbarMain = (props: SearchbarProps) => {
 interface SearchbarProps extends WithStyles<typeof styles> {
   color?: string;
   initialRouteCategory?: Categories;
+  setFocusedOuter?(b: boolean): void;
+  style?: any;
+  filterSectionStyles?: any;
+  categorySectionStyles?: any;
+  dropdownContainerStyles?: any;
+  // for top section with search options + facets
+  topSectionStyles?: any;
+  // for bottom section, where the child components + paginators are
+  bottomSectionStyles?: any;
+  paginatorStyles?: any;
 }
 
 let styles = (theme: Theme) => createStyles({

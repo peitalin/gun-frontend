@@ -24,24 +24,13 @@ import SearchListings from "pageComponents/Search/SearchListings";
 import NoListings from "pageComponents/Search/NoListings";
 // Router
 import { useRouter } from "next/router";
-// Recommendations
-// import YouMayAlsoLikeMobile from "components/Recommendations/YouMayAlsoLikeMobile";
-// Next
-import dynamic from "next/dynamic";
-// const YouMayAlsoLike = dynamic(
-//   () => import("components/Recommendations/YouMayAlsoLike"), {
-//     loading: () => <Loading/>,
-//     ssr: false,
-//   }
-// );
+import NewsBar from "layout/NavBarMain/NewsBar";
 import {
   useFacetSearchOptions,
   useEffectUpdateGridAccum,
   totalItemsInCategoriesFacets,
   PaginatorType,
 } from "utils/hooksFacetSearch";
-// Analytics
-import { useAnalytics } from "utils/analytics";
 // Meta headers
 import MetaHeadersPage from "layout/MetaHeadersPage";
 import LoadingBar from "components/LoadingBar";
@@ -137,7 +126,6 @@ const SearchResults = (props: ReactProps) => {
 
   // console.log("totalCount: ", data?.search?.totalCount)
   // console.log('data: ', data)
-  // console.log('data: ', data)
   // console.log('currentCategories: ', currentCategories)
 
   // sync selected category in searchbar to SSR category from url bar
@@ -146,6 +134,9 @@ const SearchResults = (props: ReactProps) => {
       setCurrentCategories([props.initialRouteCategory])
     }
   }, [props.initialRouteCategory])
+
+  const [focusedOuter, setFocusedOuter] = React.useState(false)
+  console.log('focusedOuter: ', focusedOuter)
 
 
   if (error) {
@@ -180,47 +171,28 @@ const SearchResults = (props: ReactProps) => {
           />
         }
         <div className={clsx(
+          classes.searchContainer,
+          focusedOuter
+            ? classes.searchContainerFocused
+            : classes.searchContainerNotFocused,
+        )}>
+          {
+            focusedOuter &&
+            <div className={classes.searchNewsBar}>
+              <NewsBar/>
+            </div>
+          }
+          <SearchbarMain
+            color={Colors.slateGrey}
+            setFocusedOuter={setFocusedOuter}
+            initialRouteCategory={props.initialRouteCategory}
+          />
+        </div>
+        <div className={clsx(
           classes.flexCol,
           classes.maxWidth,
           classes.padding1,
         )}>
-          <div className={classes.searchContainer}>
-            <SearchbarMain
-              color={Colors.slateGrey}
-              initialRouteCategory={props.initialRouteCategory}
-            />
-
-            {/* <SearchOptionsAirbnb
-              searchTerm={searchTerm}
-              setSearchTerm={setSearchTerm}
-              onEnter={onEnter}
-              onClick={onClick}
-              // facets={facets}
-              // setCategoryFacets={setCategoryFacets({ facets, setFacets })}
-              setCurrentCategories={setCurrentCategories as any}
-              currentCategories={currentCategories as any}
-              // this turns on category-page specifc searchbar
-              isCategoriesPage={true}
-              setOrderBy={setOrderBy}
-              setPriceRange={setPriceRange}
-              placeholder={"Search for products..."}
-              paginationParams={{
-                totalCount: Math.ceil(productsConnection?.totalCount / numItemsPerPage),
-                overfetchBy: overfetchBy,
-                limit: limit,
-                pageParam: pageParam,
-                setPageParam: setPageParam,
-                index: index,
-                setIndex: setIndex,
-              }}
-              updateSetPageDelay={0}
-              // disableSearchFilter
-              disableSortby
-              disablePriceFilter
-              // disableCategories
-              maxCategoryInputWidth={250}
-            /> */}
-          </div>
           <div className={classes.titleContainer}>
             <Typography variant="h4" className={classes.title}>
               {"Search results for "}
@@ -284,8 +256,6 @@ interface QueryVar {
 const styles = (theme: Theme) => createStyles({
   root: {
     minHeight: `calc(100vh - ${NavBarHeight || 150}px)`,
-    paddingTop: '2rem',
-    paddingBottom: '2rem',
   },
   maxWidth: {
     maxWidth: 1024,
@@ -300,6 +270,7 @@ const styles = (theme: Theme) => createStyles({
   titleContainer: {
     display: 'flex',
     // shrinks classes.title width to own container
+    marginBottom: '2rem',
   },
   title: {
     marginBottom: "1rem",
@@ -362,8 +333,23 @@ const styles = (theme: Theme) => createStyles({
     justifyContent: "center",
     alignItems: "center",
     width: '100%',
-    marginBottom: '2rem',
-    height: 60,
+    // paddingTop: '4rem',
+    // paddingBottom: '3rem',
+  },
+  searchContainerNotFocused: {
+    paddingTop: '3rem',
+    paddingBottom: '1rem',
+  },
+  searchContainerFocused: {
+    position: 'fixed',
+    top: 0,
+    zIndex: 100,
+  },
+  searchNewsBar: {
+    position: 'fixed',
+    top: 0,
+    zIndex: 100,
+    width: '100%',
   },
 });
 

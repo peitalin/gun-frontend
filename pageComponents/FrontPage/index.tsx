@@ -71,11 +71,11 @@ const FrontPage: React.FC<ReactProps> = (props) => {
           }}
         />
 
-        <NewReleaseProducts
+        {/* <NewReleaseProducts
           initialProducts={undefined}
           count={12}
           title={"New Releases"}
-        />
+        /> */}
 
         {/* <FeaturedProducts
           initialFeaturedProducts={initialFeaturedProducts}

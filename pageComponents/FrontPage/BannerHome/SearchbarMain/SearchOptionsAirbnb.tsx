@@ -64,6 +64,7 @@ const SearchOptionsPaginator: React.FC<ReactProps> = (props) => {
 
   const theme = useTheme();
   const smDown = useMediaQuery(theme.breakpoints.down("sm"))
+  const mdDown = useMediaQuery(theme.breakpoints.down("md"))
 
   const {
     totalCount,
@@ -136,23 +137,56 @@ const SearchOptionsPaginator: React.FC<ReactProps> = (props) => {
   const searchRef = React.useRef(null)
   const [searchFocused, setSearchFocused] = React.useState(false)
   const [categoryFocused, setCategoryFocused] = React.useState(false)
+  const [mobileFocused, setMobileFocused] = React.useState(false)
 
-  const focused = searchFocused || categoryFocused
+  const focused = searchFocused || categoryFocused || (mdDown && mobileFocused)
 
+  // console.log('focused: ', focused)
+  // console.log('mobileFocused: ', mobileFocused)
+  // console.log(`mdDown && !focused: ${mdDown && !focused}`)
 
   return (
-    <div className={classes.searchRoot}>
-      <div className={clsx(
-        classes.searchOptionsRoot,
-        props.className,
-      )} style={props.style}>
+    <div className={classes.searchRoot}
+    >
+      <div
+        className={clsx(
+          mdDown
+            ? classes.searchOptionsRootMobile
+            : classes.searchOptionsRoot,
+          (mdDown && focused) && classes.searchMobileExpanded,
+          (mdDown && !focused) && classes.searchMobileNotExpanded,
+          props.className,
+        )}
+        style={{ ...props.style }}
+      >
+
+        <div
+          className={classes.clickBackgroundLayer}
+          onClick={() => {
+            if (mdDown) {
+              console.log('CLICKED BACKGROUND')
+              // clickaway listerner for mobile only
+              setMobileFocused(false)
+              if (props.setFocusedOuter) {
+                props.setFocusedOuter(false)
+              }
+            }
+          }}
+        ></div>
 
         <div className={classes.topSection}
+          onClick={(event) => {
+            console.log('CLICKED stopePropagation')
+            event.stopPropagation()
+          }}
           style={props.topSectionStyles}
         >
 
           <div className={clsx(classes.filterSection, classes.maxWidth100vw)}
-            style={{ ...props.filterSectionStyles }}
+            style={{
+              flexDirection: mdDown ? "column" : "row",
+              ...props.filterSectionStyles
+            }}
           >
 
             {
@@ -171,7 +205,7 @@ const SearchOptionsPaginator: React.FC<ReactProps> = (props) => {
                   ref={searchRef}
                   // inputRef={input => {
                   // }}
-                  placeholder="Search for firearms in…"
+                  placeholder="Search for firearms…"
                   classes={{
                     root: clsx(
                       classes.inputRoot,
@@ -182,6 +216,12 @@ const SearchOptionsPaginator: React.FC<ReactProps> = (props) => {
                   onFocus={e => {
                     // console.log('onFocus:', e)
                     setSearchFocused(true)
+                    if (mdDown) {
+                      setMobileFocused(true)
+                      if (props.setFocusedOuter) {
+                        props.setFocusedOuter(true)
+                      }
+                    }
                   }}
                   onBlur={e => {
                     // console.log('onBlur:', e)
@@ -205,6 +245,8 @@ const SearchOptionsPaginator: React.FC<ReactProps> = (props) => {
               <CategoryDropdown
                 className={clsx(
                   focused ? classes.height65 : classes.height50,
+                  (mdDown && !focused) && classes.displayNoneDelayed,
+                  // hide on mobile when not focused
                   categoryFocused && classes.boxShadow,
                 )}
                 isCategoriesPage={isCategoriesPage}
@@ -212,7 +254,17 @@ const SearchOptionsPaginator: React.FC<ReactProps> = (props) => {
                 setCurrentCategories={(categories) => {
                   props.setCurrentCategories(categories)
                 }}
-                setFocused={setCategoryFocused}
+                setMobileFocused={(b: boolean) => {
+                  if (mdDown) {
+                    setMobileFocused(true)
+                    if (props.setFocusedOuter) {
+                      props.setFocusedOuter(true)
+                    }
+                  }
+                }}
+                setFocused={(b: boolean) => {
+                  setCategoryFocused(b)
+                }}
                 dropDownItems={
                   props.isCategoriesPage
                   ? [ ...(categories ?? []) ]
@@ -231,7 +283,11 @@ const SearchOptionsPaginator: React.FC<ReactProps> = (props) => {
             {
               props.setPriceRange &&
               !disablePriceFilter &&
-              <div className={classes.marginRight05}>
+              <div className={clsx(
+                classes.marginRight05,
+                (mdDown && !focused) && classes.displayNoneDelayed,
+                // hide on mobile when not focused
+              )}>
                 <SearchOptionsPriceFilter
                   setPriceRange={props.setPriceRange}
                 />
@@ -248,8 +304,10 @@ const SearchOptionsPaginator: React.FC<ReactProps> = (props) => {
                     classes.dropdownContainer,
                     classes.marginRight05,
                     classes.marginLeft05,
+                    !(mdDown && focused) && classes.displayNoneDelayed,
+                    // hide on mobile when not focused
                   )}
-                  style={{ ...props.dropdownContainerStyle }}
+                  style={{ ...props.dropdownContainerStyles }}
                 >
                   <DropdownInput
                     stateShape={
@@ -287,6 +345,8 @@ const SearchOptionsPaginator: React.FC<ReactProps> = (props) => {
             <Button
               className={clsx(
                 classes.searchButtonBluePurple,
+                (mdDown && !focused) && classes.displayNoneDelayed,
+                // hide on mobile when not focused
                 focused ? classes.searchButtonShort : classes.searchButtonWide,
                 focused ? classes.height55 : classes.height40,
               )}
@@ -311,7 +371,11 @@ const SearchOptionsPaginator: React.FC<ReactProps> = (props) => {
           classes.arrowContainer,
           classes.height50,
           // focused ? classes.height65 : classes.height50,
-        )}>
+          (mdDown && focused) && classes.displayNoneDelayed,
+          // hide on mobile when menu is focused/expanded
+        )}
+          style={props.paginatorStyles}
+        >
           <Pagination
             classes={{
               root: classes.paginationPage,
@@ -475,14 +539,17 @@ interface ReactProps extends WithStyles<typeof styles> {
     onPrevPage?(a?: any): void;
     onNextPage?(a?: any): void;
   };
+  setFocusedOuter?(b: boolean): void;
   // styles overrrides
+  styles?: any;
   filterSectionStyles?: any;
   categorySectionStyles?: any;
-  dropdownContainerStyle?: any;
+  dropdownContainerStyles?: any;
   // for top section with search options + facets
   topSectionStyles?: any;
   // for bottom section, where the child components + paginators are
   bottomSectionStyles?: any;
+  paginatorStyles?: any;
   isCategoriesPage?: boolean;
   disableCategories?: boolean;
   disableSearchFilter?: boolean;
@@ -513,6 +580,12 @@ const styles = (theme: Theme) => createStyles({
     flexDirection: "row",
     justifyContent: "center",
     alignItems: 'center',
+    position: 'relative',
+  },
+  clickBackgroundLayer: {
+    position: 'absolute',
+    height: '100%',
+    width: '100%',
   },
   searchOptionsRoot: {
     display: "flex",
@@ -526,12 +599,49 @@ const styles = (theme: Theme) => createStyles({
       : Colors.cream,
     borderRadius: BorderRadius4x,
   },
+  searchOptionsRootMobile: {
+    display: "flex",
+    opacity: 0.98,
+    justifyContent: "center",
+    alignItems: "center",
+    background: theme.palette.type === 'dark'
+      ? Colors.uniswapDarkNavy
+      : Colors.cream,
+    zIndex: 10,
+  },
+  searchMobileExpanded: {
+    height: '100vh',
+    width: '100vw',
+    transition:  theme.transitions.create(['height', 'width', 'border'], {
+      easing: theme.transitions.easing.easeIn,
+      duration: 0,
+    }),
+    border: 'unset',
+  },
+  searchMobileNotExpanded: {
+    height: '52px',
+    width: '222px',
+    transition:  theme.transitions.create(['height', 'width', 'border'], {
+      easing: theme.transitions.easing.easeIn,
+      delay: 0,
+      duration: 0,
+    }),
+    border: theme.palette.type === 'dark'
+      ? `1px solid ${Colors.uniswapLightNavy}`
+      : `1px solid ${Colors.slateGreyDarker}`,
+    borderRadius: BorderRadius4x,
+  },
+  displayNoneDelayed: {
+    // display: 'none',
+    position: 'absolute',
+    zIndex: -1,
+    opacity: 0,
+  },
   topSection: {
     display: "flex",
     justifyContent: "center",
     flexDirection: "row",
     alignItems: 'center',
-    width: '100%',
   },
   bottomSection: {
     width: '100%',
@@ -540,7 +650,7 @@ const styles = (theme: Theme) => createStyles({
     display: "flex",
     justifyContent: "center",
     flexDirection: "row",
-    flexWrap: "wrap",
+    // flexWrap: "wrap",
     alignItems: 'center',
   },
   maxWidth100vw: {
@@ -568,7 +678,7 @@ const styles = (theme: Theme) => createStyles({
     flexDirection: "row",
     justifyContent: "flex-end",
     alignItems: "center",
-    flexWrap: "wrap",
+    // flexWrap: "wrap",
   },
   dropdownContainer: {
     // flexBasis: '30%',
@@ -664,24 +774,24 @@ const styles = (theme: Theme) => createStyles({
     height: 50,
     transition: theme.transitions.create(['width', 'height', 'margin'], {
       easing: theme.transitions.easing.sharp,
-      duration: "300ms",
-      delay: 300,
+      duration: "200ms",
+      delay: 200,
     }),
   },
   height40: {
     height: 40,
     transition: theme.transitions.create(['width', 'height', 'margin'], {
       easing: theme.transitions.easing.sharp,
-      duration: "300ms",
-      delay: 300,
+      duration: "200ms",
+      delay: 200,
     }),
   },
   searchShort: {
     width: 220,
     transition: theme.transitions.create(['width', 'height'], {
       easing: theme.transitions.easing.sharp,
-      duration: "300ms",
-      delay: 300,
+      duration: "200ms",
+      delay: 200,
     }),
   },
   searchWide: {
@@ -702,8 +812,8 @@ const styles = (theme: Theme) => createStyles({
     width: 140,
     transition: theme.transitions.create(['width', 'height'], {
       easing: theme.transitions.easing.sharp,
-      duration: "300ms",
-      delay: 300,
+      duration: "200ms",
+      delay: 200,
     }),
   },
   boxShadow: {

@@ -48,6 +48,7 @@ const CategoryDropdown: React.FC<ReactProps> = (props) => {
   const handleClick = () => {
     setOpen((prev) => !prev);
     props.setFocused(true)
+    props.setMobileFocused(true)
   };
 
   const handleClickAway = () => {
@@ -152,6 +153,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   }[];
   className?: any;
   setFocused?(a: boolean): void;
+  setMobileFocused?(a: boolean): void;
   currentCategories?: Categories[];
   setCurrentCategories(c: Categories[]): void;
   isCategoriesPage?: boolean;

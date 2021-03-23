@@ -12,31 +12,36 @@ export const styles = (theme: Theme) => createStyles({
   },
   mainTitleContainer: {
     display: 'flex',
-    flexDirection: 'row',
+    flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: '1rem',
+    width: '100%',
+    position: "relative",
   },
   mainTitle: {
     fontWeight: 600,
     fontFamily: fontFam,
     color: Colors.lightestGrey,
-    lineHeight: '1.5rem',
+    lineHeight: '3rem',
     fontSize: '2.5rem',
   },
   mainTitleSm: {
     fontWeight: 600,
     fontFamily: fontFam,
     color: Colors.lightestGrey,
-    lineHeight: '1.2rem',
-    fontSize: '1.5rem',
+    lineHeight: '2rem',
+    fontSize: '1.75rem',
+    marginBottom: "0.25rem",
+    textAlign: "center",
   },
   mainTitleMd: {
     fontWeight: 600,
     fontFamily: fontFam,
     color: Colors.lightestGrey,
-    lineHeight: '1.2rem',
+    lineHeight: '1.5rem',
     fontSize: '2rem',
+    marginBottom: "0.25rem",
   },
   mainTitleHighlight: {
     fontWeight: 600,
@@ -62,16 +67,17 @@ export const styles = (theme: Theme) => createStyles({
   subline1: {
     color: Colors.lightGrey,
     fontFamily: fontFam,
-    lineHeight: "1.25",
+    lineHeight: "1.5",
     fontWeight: 500,
-    fontSize: '1.375rem', // 20px
+    fontSize: '1.5rem', // 20px
   },
   subline1Sm: {
     color: Colors.lightGrey,
     fontFamily: fontFam,
-    lineHeight: "1.25",
+    lineHeight: "1.5",
     fontWeight: 500,
-    fontSize: '1rem', // 20px
+    fontSize: '1.125rem', // 20px
+    textAlign: "center",
   },
   subline1Md: {
     color: Colors.lightGrey,
@@ -102,9 +108,7 @@ export const styles = (theme: Theme) => createStyles({
   buttonsFlexRow: {
     display: "flex",
     flexDirection: "row",
-    marginTop: '1.2rem',
-    position: 'absolute',
-    top: 0,
+    marginTop: '1rem',
   },
   buttonCreateAccount: {
     marginRight: '0.5rem',
@@ -128,7 +132,6 @@ export const styles = (theme: Theme) => createStyles({
     opacity: 0,
   },
   buttonBecomeASeller: {
-    marginRight: '0.5rem',
     backgroundImage: Gradients.gradientUniswapFluro.background,
     border: `1px solid ${Colors.gradientUniswapFluro2}`,
     color: Colors.cream,
