@@ -1,5 +1,4 @@
 import React from "react";
-import {oc as option} from "ts-optchain";
 import clsx from "clsx";
 // Redux
 import { useSelector } from "react-redux";
@@ -15,6 +14,7 @@ import {
 // Components
 import DealerSearch from "./DealerSearch";
 import DisplayAllDealers from "./DisplayAllDealers";
+import DealerProfileForm from "./DealerProfileForm";
 
 // Graphql
 import { useApolloClient } from "@apollo/client";
@@ -32,7 +32,7 @@ import { useRouter } from "next/router";
 
 
 
-const UserViewer: React.FC<ReactProps> = (props) => {
+const DealerViewer: React.FC<ReactProps> = (props) => {
 
   const { classes } = props;
 
@@ -51,7 +51,8 @@ const UserViewer: React.FC<ReactProps> = (props) => {
 
   console.log("query: ", router?.query)
 
-  const searchDealerAsAdmin = async(dealerIdOrLicenseNumberOrEmail: string) => {
+
+  const searchDealerAsAdmin = async(dealerIdOrLicenseNumber: string) => {
     try {
       const { loading, errors, data } = await aClient.query<QueryData, QueryVar>({
         query: SEARCH_DEALER_AS_ADMIN,
@@ -108,25 +109,23 @@ const UserViewer: React.FC<ReactProps> = (props) => {
   }
 
   const admin = useSelector<GrandReduxState, UserPrivate>(
-    state => option(state).reduxLogin.user()
+    state => state?.reduxLogin?.user
   );
 
   if (!dealer?.id) {
     return (
-      <>
-        <DealerSearch
-          dealerIdOrLicenseNumber={dealerIdOrLicenseNumber}
+      <DealerSearch
+        dealerIdOrLicenseNumber={dealerIdOrLicenseNumber}
+        setDealerIdOrLicenseNumber={setDealerIdOrLicenseNumber}
+        searchDealerAsAdmin={searchDealerAsAdmin}
+        errorMsg={errorMsg}
+        loading={loading}
+      >
+        <DisplayAllDealers
+          allDealers={allDealers}
           setDealerIdOrLicenseNumber={setDealerIdOrLicenseNumber}
-          searchDealerAsAdmin={searchDealerAsAdmin}
-          errorMsg={errorMsg}
-          loading={loading}
-        >
-          <DisplayAllDealers
-            allDealers={allDealers}
-            setDealerIdOrLicenseNumber={setDealerIdOrLicenseNumber}
-          />
-        </DealerSearch>
-      </>
+        />
+      </DealerSearch>
     )
   }
 
@@ -148,8 +147,12 @@ const UserViewer: React.FC<ReactProps> = (props) => {
       </div>
 
       <div className={classes.sectionPaper}>
+        <DealerProfileForm
+          dealer={dealer}
+          setDealer={setDealer}
+          searchDealerAsAdmin={searchDealerAsAdmin}
+        />
       </div>
-
 
     </>
   )
@@ -157,8 +160,6 @@ const UserViewer: React.FC<ReactProps> = (props) => {
 
 
 interface ReactProps extends WithStyles<typeof styles> {
-  onSubmit(args: any): void;
-  onClickDebugPrint(): void;
 }
 
 interface QueryData {
@@ -246,7 +247,7 @@ const styles = (theme: Theme) => createStyles({
 });
 
 
-export default withStyles(styles)( UserViewer );
+export default withStyles(styles)( DealerViewer );
 
 
 

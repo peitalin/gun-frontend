@@ -18,7 +18,7 @@ const DisplayAllDealers = (props: ReactProps) => {
     <div className={classes.allDealersRoot}>
       <div className={classes.allDealersInner}>
         <Typography className={classes.heading} variant="subtitle2">
-          Recent Users:
+          List of Dealers:
         </Typography>
         {
           allDealers

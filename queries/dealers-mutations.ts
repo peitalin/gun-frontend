@@ -19,7 +19,10 @@ export const CREATE_NEW_DEALER = gql`
       postCode: $postCode
       licenseNumber: $licenseNumber
     ) {
-      ...DealerFragment
+      status
+      dealer {
+        ...DealerFragment
+      }
     }
   }
   ${DealerFragment}
@@ -84,11 +87,11 @@ export const EDIT_DEALER = gql`
 
 export const SET_DEALER_ID_FOR_USER = gql`
   mutation setDealerIdForUser(
-    $dealerUserId: String!
+    $dealerUserIdOrEmail: String!
     $dealerId: String
   ) {
     setDealerIdForUser(
-      dealerUserId: $dealerUserId
+      dealerUserIdOrEmail: $dealerUserIdOrEmail
       dealerId: $dealerId
     ) {
       user {
@@ -101,3 +104,28 @@ export const SET_DEALER_ID_FOR_USER = gql`
   ${UserPrivateFragment}
 `;
 
+export const UNLINK_USERS_FOR_DEALER = gql`
+  mutation unlinkUsersForDealerId(
+    $dealerId: String!
+  ) {
+    unlinkUsersForDealerId(
+      dealerId: $dealerId
+    ) {
+      status
+      dealer {
+        ...DealerFragment
+      }
+    }
+  }
+  ${DealerFragment}
+`;
+
+
+export const DELETE_DEALER = gql`
+  mutation deleteDealer($dealerId: String!) {
+    deleteDealer(dealerId: $dealerId) {
+      ...DealerFragment
+    }
+  }
+  ${DealerFragment}
+`;

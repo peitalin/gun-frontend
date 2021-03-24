@@ -4,19 +4,26 @@ import { withStyles, WithStyles } from "@material-ui/core/styles";
 import { styles } from "pageComponents/DealerDashboard/styles";
 import clsx from "clsx";
 // Typings
-import { StorePrivate } from "typings/gqlTypes";
+import { UserPrivate } from "typings/gqlTypes";
 // Components
 import Loading from "components/Loading";
 import LoadingBarSSR from "components/LoadingBarSSR";
 // next
 // SSR disable
 import dynamic from "next/dynamic";
-const EditDealerProfile = dynamic(
-  () => import("pageComponents/DealerDashboard/EditDealerProfile"), {
+const CreateDealerProfile = dynamic(
+  () => import("pageComponents/Gov/CreateDealerProfile"), {
     loading: () => <Loading />,
     ssr: false,
   }
 )
+// const DealerViewer = dynamic(
+//   () => import("pageComponents/Gov/DealerViewer"), {
+//     loading: () => <Loading />,
+//     ssr: false,
+//   }
+// )
+import DealerViewer from "pageComponents/Gov/DealerViewer";
 import { AdminProfileProps } from "layout/GetUser/AdminProfileWrapper";
 const AdminProfileWrapper = dynamic(() => import("layout/GetUser/AdminProfileWrapper"), {
   loading: () => <LoadingBarSSR/>,
@@ -43,7 +50,9 @@ const CreateDealerHomepage = (props: ReactProps) => {
       {({ data, loading, error }: AdminProfileProps) => {
         return (
           <div className={classes.contentContainer}>
-            <EditDealerProfile user={data?.user}/>
+            <CreateDealerProfile user={data?.user}/>
+            <div style={{ margin: '2rem' }}></div>
+            <DealerViewer />
           </div>
         );
       }}

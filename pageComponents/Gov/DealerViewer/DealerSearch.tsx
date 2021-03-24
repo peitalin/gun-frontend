@@ -46,7 +46,7 @@ const DealerSearch: React.FC<ReactProps> = (props) => {
           color={"primary"}
           onClick={() => searchDealerAsAdmin(dealerIdOrLicenseNumber)}
         >
-          Find User
+          Find Dealer
         </Button>
         {
           errorMsg &&

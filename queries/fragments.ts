@@ -50,17 +50,27 @@ export const DealerFragment = gql`
     createdAt
     user {
       id
-      firstName
-      lastName
-      email
-      userRole
       licenseId
-      phoneNumberId
-      phoneNumber {
+      license {
         id
-        countryCode
-        number
-        areaCode
+        licenseNumber
+        licenseExpiry
+        licenseState
+        licenseCategory
+        verified
+      }
+      ...on UserPrivate {
+        firstName
+        lastName
+        email
+        userRole
+        phoneNumberId
+        phoneNumber {
+          id
+          countryCode
+          number
+          areaCode
+        }
       }
     }
   }

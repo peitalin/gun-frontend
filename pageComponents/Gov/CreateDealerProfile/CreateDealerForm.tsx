@@ -69,14 +69,14 @@ const CreateDealerForm: React.FC<ReactProps> = (props) => {
     <Formik
       // 1. feed product data to edit into formik state.
       initialValues={{
-        name: dealer?.name ?? "",
-        address: dealer?.address ?? "",
-        city: dealer?.city ?? "",
-        postCode: dealer?.postCode ?? "",
-        state: dealer?.state ?? "",
-        licenseNumber: dealer?.licenseNumber ?? "",
+        name: "",
+        address: "",
+        city: "",
+        postCode: "",
+        state: "",
+        licenseNumber: "",
       }}
-      validationSchema={validationSchemas.EditDealer}
+      validationSchema={validationSchemas.CreateDealer}
       onSubmit={(values, { setSubmitting }) => {
         console.log('formik values...: ', values);
         // Dispatch Apollo Mutation after validation
@@ -176,7 +176,7 @@ const CreateDealerFormWrapper: React.FC<FormWrapperProps> = (props) => {
                 disabled={loading}
                 loadingIconColor={Colors.blue}
               >
-                Save Changes
+                Create New Dealer
               </ButtonLoading>
             </div>
           </div>

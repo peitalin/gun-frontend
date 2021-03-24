@@ -467,6 +467,13 @@ export const validationSchemas = {
         .required('A license number required.'),
     }),
 
+  // Dealer Profiel deletions
+  DeleteDealer:
+    Yup.object().shape({
+      dealerId: Yup.string()
+        .required('dealerId required'),
+    }),
+
   // Sign Up
   SignUp:
     Yup.object().shape({
