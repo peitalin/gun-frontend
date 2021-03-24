@@ -1,5 +1,4 @@
 import React from "react";
-import {oc as option} from "ts-optchain";
 // Styles
 import { withStyles, WithStyles } from "@material-ui/core/styles";
 import { styles } from "pageComponents/SellerDashboard/styles";
@@ -38,7 +37,7 @@ const PublishedProductsPage = (props: ReactProps) => {
         return (
           <div className={classes.contentContainer}>
             <PublishedProductsList
-              store={option(data).user.store()}
+              store={data?.user?.store}
             />
           </div>
         )

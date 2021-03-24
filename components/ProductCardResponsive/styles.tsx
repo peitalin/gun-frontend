@@ -78,9 +78,9 @@ export const styles = (theme: Theme) => createStyles({
   title: {
     fontWeight: 600,
     marginBottom: '0.25rem',
-    overflowY: 'hidden',
-    maxHeight: '2.5rem',
-    fontSize: '1.2rem',
+    // overflowY: 'hidden',
+    maxHeight: '2.75rem',
+    fontSize: '1.125rem',
     lineHeight: '1.25rem',
   },
   makeModel: {

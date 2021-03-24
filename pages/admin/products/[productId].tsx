@@ -1,5 +1,4 @@
 import React from "react";
-import { oc as option } from "ts-optchain";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 import { Colors } from "layout/AppTheme";
@@ -61,7 +60,7 @@ const ProductEditPage = (props: ReactProps) => {
   const { loading, error, data } = useQuery<QueryData, QueryVar>(
     GET_PRODUCT, {
       variables: {
-        productId: option(router).query.productId() as any
+        productId: router?.query?.productId as any
       },
       onCompleted: (data: QueryData) => {
         dispatch(seedProductEditDataAction(data.getProductById))

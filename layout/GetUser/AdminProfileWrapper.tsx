@@ -1,29 +1,20 @@
 import React from "react";
 import { NextPage, NextPageContext } from 'next';
-import { oc as option } from "ts-optchain";
 // styles
 import { createStyles, Theme, withStyles, WithStyles } from "@material-ui/core/styles";
 import { Colors, BoxShadows, BorderRadius } from "layout/AppTheme";
 // Redux
-import { Actions } from "reduxStore/actions";
-import { GrandReduxState } from "reduxStore/grand-reducer";
-import { Dispatch, Store } from "redux";
+import { GrandReduxState, Actions } from "reduxStore/grand-reducer";
 import { batch, useDispatch, useSelector } from "react-redux";
 // Graphql
 import { useQuery } from "@apollo/client";
 import { GET_USER } from "queries/user-queries";
 import { GET_STORE_PRIVATE } from "queries/store-queries";
-import { useApolloClient } from "@apollo/client";
-import { ApolloClient } from "@apollo/client";
 // Typings
-import { UserPrivate } from 'typings/gqlTypes';
-import LoadingBarSSR from "components/LoadingBarSSR";
+import { UserPrivate, Role } from 'typings/gqlTypes';
 import LoadingBar from "components/LoadingBar";
-import ErrorDisplay from "components/Error";
-import SnackbarsSuccessErrors from "components/Snackbars/SnackbarsSuccessErrors";
 import Redirect from "pageComponents/Redirect";
-// store deleted
-import { isStoreDeleted, storeDoesNotExist } from "utils/store";
+import { getUserDataFromGqlOrRedux } from "./utils";
 
 
 
@@ -45,25 +36,35 @@ const AdminProfileWrapper = (
     errorPolicy: "all",
   });
 
+  const {
+    userRedux,
+    isDarkMode
+  } = useSelector<GrandReduxState, ReduxProps>(s => ({
+    userRedux: s.reduxLogin.user,
+    isDarkMode: s.reduxLogin.darkMode === 'dark'
+  }))
+
+  const userIsAdmin = data?.user?.userRole === Role.PLATFORM_ADMIN
+
   if (loading) {
     return <LoadingBar
             absoluteTop
-            color={Colors.blue}
+            color={isDarkMode ? Colors.purple : Colors.blue}
             height={4}
             width={'100vw'}
             loading={true}
           />
   }
-  if (error && !option(data).user.id()) {
+  if (error && !data?.user?.id) {
     return (
       <Redirect
         message={"Admin login required. Redirecting..."}
-        redirectCondition={!option(data).user.id()}
+        redirectCondition={!data?.user?.id}
         redirectDelay={1000}
         redirectRoute={"/login"}
       />
     )
-  } else if (option(data).user.userRole() === "PLATFORM_ADMIN") {
+  } else if (userIsAdmin) {
     if (!disableAdminBorder) {
       return (
         <div className={props.classes.adminWrapperRoot}>
@@ -97,7 +98,7 @@ const AdminProfileWrapper = (
     return (
       <Redirect
         message={"Admin login required. Redirecting ..."}
-        redirectCondition={option(data).user.userRole() !== "PLATFORM_ADMIN"}
+        redirectCondition={!userIsAdmin}
         redirectDelay={2000}
         redirectRoute={"/login"}
       />
@@ -116,6 +117,12 @@ export interface AdminProfileProps {
 export interface ReactProps extends WithStyles<typeof styles> {
   disableAdminBorder?: boolean
   disablePadding?: boolean
+}
+
+
+interface ReduxProps {
+  userRedux: UserPrivate;
+  isDarkMode: boolean;
 }
 
 interface QueryData {

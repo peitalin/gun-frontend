@@ -9,6 +9,9 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import ClearIcon from '@material-ui/icons/Clear';
 import Pagination from '@material-ui/lab/Pagination';
+// Redux
+import { GrandReduxState } from "reduxStore/grand-reducer";
+import { useSelector } from "react-redux";
 // GraphQL Typings
 import {
   Order_By,
@@ -40,6 +43,13 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 const SearchOptionsPaginator: React.FC<ReactProps> = (props) => {
 
+  const isDarkMode = useSelector<GrandReduxState, boolean>(
+    s => s.reduxLogin.darkMode === 'dark'
+  )
+
+  const theme = useTheme();
+  const smDown = useMediaQuery(theme.breakpoints.down("sm"))
+
   const {
     classes,
     currentCategories,
@@ -56,9 +66,6 @@ const SearchOptionsPaginator: React.FC<ReactProps> = (props) => {
     hidePaginator = false,
   } = props;
 
-  const theme = useTheme();
-  const smDown = useMediaQuery(theme.breakpoints.down("sm"))
-
   const {
     totalCount,
     overfetchBy,
@@ -72,16 +79,16 @@ const SearchOptionsPaginator: React.FC<ReactProps> = (props) => {
     ? Math.ceil(totalCount * overfetchBy / limit)
     : 0;
 
-  // console.log("totalCount: ", totalCount)
-  // console.log("totalPages: ", totalPages)
-  // console.log("overfetchBy: ", overfetchBy)
-
   const orderByOptions = [
     { label: "Newest", value: { createdAt: Order_By.DESC }},
     { label: "Oldest", value: { createdAt: Order_By.ASC }},
     { label: "Highest Price", value: { price: Order_By.DESC }},
     { label: "Lowest Price", value: { price: Order_By.ASC }},
   ];
+
+  ///////////////////////////////////
+  ///////////// State /////////////
+  ///////////////////////////////////
 
   // for fast UI updates.
   const [searchTermUi, setSearchTermUi] = React.useState("");
@@ -114,6 +121,10 @@ const SearchOptionsPaginator: React.FC<ReactProps> = (props) => {
     let c2name = option(c2).name() ? c2.name.toLowerCase() : ""
     return (c1name > c2name) ? 1 : -1
   }
+
+  ///////////////////////////////////
+  ///////////// Effects /////////////
+  ///////////////////////////////////
 
   React.useEffect(() => {
     if (setOrderBy) {
@@ -207,17 +218,22 @@ const SearchOptionsPaginator: React.FC<ReactProps> = (props) => {
                   }
                   options={orderByOptions}
                   placeholder={"Select a category"}
+                  className={classes.width100}
                   styles={selectStyles({ width: 200 })}
                   theme={theme => ({
                     ...theme,
-                    // width: '100%',
                     maxWidth: '200px',
-                    borderRadius: 0,
+                    borderRadius: BorderRadius,
                     colors: {
                       ...theme.colors,
-                      primary25: '#e2e2e2',
-                      primary: '#333333',
-                    }
+                      color: isDarkMode
+                        ? Colors.uniswapLightestGrey
+                        : Colors.black,
+                      primary25: isDarkMode
+                        ? Colors.uniswapLightNavy
+                        : Colors.slateGreyDarker,
+                      primary: Colors.uniswapLighterGrey,
+                    },
                   })}
                 />
               </div>
@@ -490,13 +506,6 @@ const styles = (theme: Theme) => createStyles({
   bottomSection: {
     width: '100%',
   },
-  facetSection: {
-    display: "flex",
-    justifyContent: "center",
-    flexDirection: "row",
-    flexWrap: "wrap",
-    alignItems: 'center',
-  },
   maxWidth100vw: {
     maxWidth: '1160px',
     width: '100vw',
@@ -537,41 +546,6 @@ const styles = (theme: Theme) => createStyles({
     alignItems: 'flex-start',
     flexDirection: 'row',
   },
-  buttonRoot: {
-    marginRight: '0.5rem',
-    marginBottom: '0.5rem',
-    background: fade(Colors.slateGrey, 0.4),
-    border: 'none',
-    borderRadius: '2rem',
-    transition:  theme.transitions.create(['background', 'color'], {
-      easing: theme.transitions.easing.easeIn,
-      duration: 200,
-    }),
-    "&:hover": {
-      // background: Colors.lightGrey,
-      background: Colors.charcoal,
-      color: Colors.white,
-      transition:  theme.transitions.create(['background', 'color'], {
-        easing: theme.transitions.easing.easeIn,
-        duration: 200,
-      })
-    },
-  },
-  buttonSelected: {
-    background: Colors.darkGrey,
-    color: Colors.cream,
-    "&:hover": {
-      background: Colors.charcoal,
-      color: Colors.white,
-      transition:  theme.transitions.create('background', {
-        easing: theme.transitions.easing.easeIn,
-        duration: 100,
-      })
-    },
-  },
-  clearIcon: {
-    marginLeft: '0.25rem',
-  },
   paginationContainer: {
     flexBasis: '100%',
     // marginRight: '1rem',
@@ -582,7 +556,9 @@ const styles = (theme: Theme) => createStyles({
     alignItems: 'center',
     flexDirection: 'row',
   },
-
+  width100: {
+    width: '100%',
+  },
 });
 
 

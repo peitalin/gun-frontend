@@ -1,6 +1,5 @@
 import React from "react";
 import { NextPage, NextPageContext } from 'next';
-import { oc as option } from "ts-optchain";
 // Redux
 import { Actions } from "reduxStore/actions";
 import { GrandReduxState } from "reduxStore/grand-reducer";
@@ -15,22 +14,27 @@ import { useApolloClient } from "@apollo/client";
 import { ApolloClient } from "@apollo/client";
 // Typings
 import { UserPrivate } from 'typings/gqlTypes';
-import Loading from "components/Loading";
 import LoadingBar from "components/LoadingBar";
-import LoadingBarSSR from "components/LoadingBarSSR";
 import ErrorDisplay from "components/Error";
 import SnackbarsSuccessErrors from "components/Snackbars/SnackbarsSuccessErrors";
 import Redirect from "pageComponents/Redirect";
 // store deleted
 import { isStoreDeleted, storeDoesNotExist } from "utils/store";
+import { getUserDataFromGqlOrRedux } from "./utils";
+
+
 
 
 export const SellerProfileWrapper = (props) => {
 
   const dispatch = useDispatch();
-  const userRedux = useSelector<GrandReduxState, UserPrivate>(
-    s => s.reduxLogin.user
-  )
+  const {
+    userRedux,
+    isDarkMode
+  } = useSelector<GrandReduxState, ReduxProps>(s => ({
+    userRedux: s.reduxLogin.user,
+    isDarkMode: s.reduxLogin.darkMode === 'dark'
+  }))
 
   const { loading, data, error, refetch } = useQuery<QueryData>(
     GET_STORE_PRIVATE, {
@@ -44,7 +48,7 @@ export const SellerProfileWrapper = (props) => {
         dispatch(Actions.reduxRefetch.SET_REFETCH_STORE(refetch))
         // merge StorePrivate (dashboard stuff)
         // console.log('saving GET_STORE_PRIVATE: ', data.user)
-        if (option(data).user.store.id()) {
+        if (data?.user?.store?.id) {
           dispatch(Actions.reduxLogin.SET_USER_STORE(data.user.store))
         }
       }
@@ -53,31 +57,21 @@ export const SellerProfileWrapper = (props) => {
     errorPolicy: "all",
   });
 
-  const getUserDataFromGqlOrRedux = (): QueryData => {
-    if (option(data).user.store.id()) {
-      return data
-    }
-    if (option(userRedux).store.id()) {
-      return { user: userRedux }
-    } else {
-      return data
-    }
-  }
+  let data2 = getUserDataFromGqlOrRedux(data, userRedux)
 
-  let data2 = getUserDataFromGqlOrRedux()
 
   if (loading) {
     return <LoadingBar
             absoluteTop
-            color={Colors.blue}
+            color={isDarkMode ? Colors.purple : Colors.blue}
             height={4}
             width={'100vw'}
             loading={true}
           />
   }
-  if (!option(data2).user.id() && process.browser) {
+  if (!data2?.user?.id && process.browser) {
     // user who is not logged in will error, causing a redirect
-    let redirectCondition = !option(data2).user.id() && process.browser;
+    let redirectCondition = !data2?.user?.id && process.browser;
     // console.log("redirectCondition: ", redirectCondition)
     return (
       <Redirect
@@ -88,11 +82,11 @@ export const SellerProfileWrapper = (props) => {
       />
     )
   }
-  if (storeDoesNotExist(option(data2).user.store()) && process.browser) {
+  if (storeDoesNotExist(data2?.user?.store) && process.browser) {
     return (
       <Redirect
         message={"Store required. Redirecting to create a store..."}
-        redirectCondition={!option(data2).user.store.id()}
+        redirectCondition={!data2?.user?.store?.id}
         redirectDelay={1000}
         redirectRoute={"/create-store"}
       />
@@ -120,6 +114,11 @@ export interface SellerProfileProps {
   error: any;
   refetch(): void;
   data: QueryData;
+}
+
+interface ReduxProps {
+  userRedux: UserPrivate;
+  isDarkMode: boolean;
 }
 
 interface QueryData {

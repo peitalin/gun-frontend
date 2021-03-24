@@ -2,7 +2,7 @@ import React from "react";
 import clsx from "clsx";
 import { oc as option } from "ts-optchain";
 // Typings
-import { Product } from "typings/gqlTypes";
+import { Product, SoldOutStatus } from "typings/gqlTypes";
 // Responsiveness
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
@@ -49,7 +49,7 @@ const ProductCardResponsive: React.FC<ProductCardResponsiveProps> = (props) => {
         option(featuredPreviewItem).image.original.widthInPixels(),
     onClick: props.onClick,
     // hideActionType: xs || sm || md
-    hideActionType: false
+    hideActionType: product.soldOutStatus !== SoldOutStatus.AVAILABLE
   }
 
 

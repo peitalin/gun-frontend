@@ -1,8 +1,6 @@
 import React from "react";
-import { oc as option } from "ts-optchain";
 // Redux
-import { Actions } from "reduxStore/actions";
-import { GrandReduxState } from "reduxStore/grand-reducer";
+import { GrandReduxState, Actions } from "reduxStore/grand-reducer";
 import { useDispatch, useSelector } from "react-redux";
 import { Colors } from "layout/AppTheme";
 // Graphql
@@ -14,13 +12,18 @@ import LoadingBar from "components/LoadingBar";
 import Redirect from "pageComponents/Redirect";
 // store deleted
 import { dealerExists } from "utils/store";
+import { getUserDataFromGqlOrRedux } from "./utils";
 
 
 export const DealerProfileWrapper = (props) => {
 
-  const userRedux = useSelector<GrandReduxState, UserPrivate>(
-    s => s.reduxLogin.user
-  )
+  const {
+    userRedux,
+    isDarkMode
+  } = useSelector<GrandReduxState, ReduxProps>(s => ({
+    userRedux: s.reduxLogin.user,
+    isDarkMode: s.reduxLogin.darkMode === 'dark'
+  }))
 
   const { loading, data, error, refetch } = useQuery<QueryData>(
     GET_DEALER_PRIVATE, {
@@ -30,25 +33,13 @@ export const DealerProfileWrapper = (props) => {
     fetchPolicy: "network-only",
     errorPolicy: "all",
   });
-  console.log("user: ", data?.user)
 
-  const getUserDataFromGqlOrRedux = (): QueryData => {
-    if (data?.user?.dealer?.id) {
-      return data
-    }
-    if (userRedux?.dealer?.id) {
-      return { user: userRedux }
-    } else {
-      return data
-    }
-  }
-
-  let data2 = getUserDataFromGqlOrRedux()
+  let data2 = getUserDataFromGqlOrRedux(data, userRedux)
 
   if (loading) {
     return <LoadingBar
             absoluteTop
-            color={Colors.blue}
+            color={isDarkMode ? Colors.purple : Colors.blue}
             height={4}
             width={'100vw'}
             loading={true}
@@ -86,6 +77,11 @@ export interface DealerProfileProps {
   error: any;
   refetch(): void;
   data: QueryData;
+}
+
+interface ReduxProps {
+  userRedux: UserPrivate;
+  isDarkMode: boolean;
 }
 
 interface QueryData {
