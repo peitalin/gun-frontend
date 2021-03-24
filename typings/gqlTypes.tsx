@@ -1587,7 +1587,7 @@ export type Dealer = {
 export type DealerMutationResponse = {
    __typename?: 'DealerMutationResponse';
   status: Scalars['String'];
-  dealer?: Maybe<Dealers>;
+  dealer?: Maybe<Dealer>;
 };
 
 /** columns and relationships of "dealers" */
@@ -3665,25 +3665,25 @@ export type Mutation = {
   adminApproveUserLicense: UserMutationResponse;
   /**
    * Delete the account associated with the logged-in user.
-   *
+   * 
    * AccessRule – LOGGED_IN
    */
   deleteAccount: BlankMutationResponse;
   /**
    * Delete a specific user account.
-   *
+   * 
    * AccessRule – PLATFORM_ADMIN
    */
   adminDeleteAccount: BlankMutationResponse;
   /**
    * Request to upload a piece of content.
    * This is the first stage of uploading - registration.
-   *
+   * 
    * How uploading works:
    * 1. Register the upload and receive the upload ID and PUT URL.
    * 2. Use the PUT URL received in this response to actually upload the file.
    * 3. Then use uploadSave to make it official – your uploaded file will be validated.
-   *
+   * 
    * AccessRule – LOGGED_IN
    */
   uploadRegister: UploadRegisterMutationResponse;
@@ -3696,69 +3696,69 @@ export type Mutation = {
   uploadSaveFile: UploadSaveFileMutationResponse;
   /**
    * Follow a store.
-   *
+   * 
    * AccessRule – LOGGED_IN
    */
   followStore: FollowingStoresConnection;
   /**
    * Unfollow a store
-   *
+   * 
    * AccessRule – LOGGED_IN
    */
   unfollowStore: FollowingStoresConnection;
   /**
    * keeps track of when you last visited a store
-   *
+   * 
    * AccessRule – LOGGED_IN
    */
   visitStore: FollowingStoresConnection;
   /**
    * Add a product to the wishlist.
-   *
+   * 
    * AccessRule – LOGGED_IN
    */
   addProductToWishlist: BlankMutationResponse;
   /**
    * Remove a product from the wishlist.
-   *
+   * 
    * AccessRule – LOGGED_IN
    */
   removeProductFromWishlist: BlankMutationResponse;
   /**
    * Create the store profile for the logged-in user.
-   *
+   * 
    * AccessRule – LOGGED_IN
    */
   createStore?: Maybe<StoreMutationResponse>;
   /**
    * Edit the store profile for the logged-in user.
-   *
+   * 
    * AccessRule – LOGGED_IN
    */
   editStoreProfile?: Maybe<StoreMutationResponse>;
   /**
    * Delete the store associated with the logged-in user.
-   *
+   * 
    * AccessRule – LOGGED_IN
    */
   deleteStore: StoreMutationResponse;
   /**
    * Delete a specific store.
-   *
+   * 
    * AccessRule – PLATFORM_ADMIN
    */
   adminDeleteStore: StoreMutationResponse;
   /**
    * Create a product for the logged-in user's store.
-   *
+   * 
    * AccessRule – LOGGED_IN
    */
   createProduct: ProductMutationResponse;
   /**
    * Create a product for the logged-in user's store.
-   *
+   * 
    * If a platform admin has suspended the product, changing isPublished will not be able to override that.
-   *
+   * 
    * AccessRule – LOGGED_IN
    */
   editProduct: ProductMutationResponse;
@@ -3766,13 +3766,13 @@ export type Mutation = {
   unpublishProduct: ProductMutationResponse;
   /**
    * Delete a product from the logged-in user's store.
-   *
+   * 
    * AccessRule – OWNER
    */
   deleteProduct?: Maybe<ProductsMutationResponse>;
   /**
    * Delete a specific product.
-   *
+   * 
    * AccessRule – PLATFORM_ADMIN
    */
   adminDeleteProduct?: Maybe<ProductsMutationResponse>;
@@ -3782,28 +3782,28 @@ export type Mutation = {
    * - User will be logged out
    * - User will be unable to log back in
    * - If they are a store owner, their store will disappear
-   *
+   * 
    * AccessRule – PLATFORM_ADMIN
    */
   suspendUser: BlankMutationResponse;
   /**
    * Reinstate a suspended user's account.
    * This will reverse the number of side effects of suspension.
-   *
+   * 
    * AccessRule – PLATFORM_ADMIN
    */
   unsuspendUser: BlankMutationResponse;
   /**
    * Suspend a product.
    * This will force the product to become unavailable for purchase or downloading.
-   *
+   * 
    * AccessRule – PLATFORM_ADMIN
    */
   suspendProduct?: Maybe<ProductMutationResponse>;
   /**
    * Reinstate a suspended product.
    * This will reverse the number of side effects of suspension.
-   *
+   * 
    * AccessRule – PLATFORM_ADMIN
    */
   unsuspendProduct?: Maybe<ProductMutationResponse>;
@@ -3811,86 +3811,86 @@ export type Mutation = {
    * Exclude a product from any search results.
    * The only way to find the product will be through direct link, or
    * having it show up in an automatic or curated list.
-   *
+   * 
    * AccessRule – PLATFORM_ADMIN
    */
   excludeProductFromSearch?: Maybe<ProductMutationResponse>;
   /**
    * Re-include a product that was being excluded from search results.
-   *
+   * 
    * AccessRule – PLATFORM_ADMIN
    */
   includeProductInSearch?: Maybe<ProductMutationResponse>;
   /**
    * Suspend a store.
    * This will force the store and its products to become hidden for everyone except the store owner.
-   *
+   * 
    * AccessRule – PLATFORM_ADMIN
    */
   suspendStore?: Maybe<StoreMutationResponse>;
   /**
    * Reinstate a suspended store.
    * This will reverse the number of side effects of suspension.
-   *
+   * 
    * AccessRule – PLATFORM_ADMIN
    */
   unsuspendStore?: Maybe<StoreMutationResponse>;
   /**
    * Set the default payment method for a user (credit cards)
-   *
+   * 
    * AccessRule – LOGGED_IN
    */
   setDefaultPaymentMethod: AddRemovePaymentMethodResponse;
   /**
    * Add a payment method to a user's profile
-   *
+   * 
    * AccessRule – LOGGED_IN
    */
   addPaymentMethod: AddRemovePaymentMethodResponse;
   /**
    * Remove a payment method from a user's profile
-   *
+   * 
    * AccessRule – LOGGED_IN
    */
   removePaymentMethod: AddRemovePaymentMethodResponse;
   /**
    * Create a PayoutSplit for a seller
-   *
+   * 
    * AccessRule – PLATFORM_ADMIN
    */
   createPayoutSplit: PayoutSplit;
   /**
    * Create a new curated list.
-   *
+   * 
    * AccessRule – PLATFORM_ADMIN
    */
   createCuratedList: CuratedListMutationResponse;
   /**
    * Delete a curated list.
-   *
+   * 
    * AccessRule – PLATFORM_ADMIN
    */
   deleteCuratedList: BlankMutationResponse;
   /**
    * Add a product to a curated list.
-   *
+   * 
    * It will be added at the bottom, but you can rearrange items later.
-   *
+   * 
    * AccessRule – PLATFORM_ADMIN
    */
   addProductToCuratedList: CuratedListItemMutationResponse;
   /**
    * Remove an item in a curated list.
-   *
+   * 
    * AccessRule – PLATFORM_ADMIN
    */
   removeItemFromCuratedList: CuratedListMutationResponse;
   /**
    * Change the location of the items in a curated list.
-   *
+   * 
    * This works by providing the complete list of itemIds, in the order you want them to appear in the list.
    * It is designed to work well with a Save button design, rather than a real-time drag and drop edit UX.
-   *
+   * 
    * AccessRule – PLATFORM_ADMIN
    */
   rearrangeCuratedListItems: CuratedListMutationResponse;
@@ -3958,8 +3958,11 @@ export type Mutation = {
   sendForm10ApprovedSellerEmail: BlankMutationResponse;
   sendPayoutCompleteSellerEmail: BlankMutationResponse;
   editDealer?: Maybe<UserMutationResponse>;
+  createNewDealer?: Maybe<DealerMutationResponse>;
   createDealerForUser?: Maybe<UserMutationResponse>;
   setDealerIdForUser?: Maybe<UserMutationResponse>;
+  unlinkUsersForDealerId?: Maybe<DealerMutationResponse>;
+  deleteDealerAsAdmin?: Maybe<DealerMutationResponse>;
   reindexSearchIndex?: Maybe<BlankMutationResponse>;
   sendChatMessage?: Maybe<Array<Maybe<Message>>>;
   emitTypingEvent?: Maybe<BlankMutationResponse>;
@@ -5434,6 +5437,16 @@ export type MutationEditDealerArgs = {
 };
 
 
+export type MutationCreateNewDealerArgs = {
+  name: Scalars['String'];
+  address?: Maybe<Scalars['String']>;
+  city?: Maybe<Scalars['String']>;
+  postCode?: Maybe<Scalars['String']>;
+  state?: Maybe<Scalars['String']>;
+  licenseNumber: Scalars['String'];
+};
+
+
 export type MutationCreateDealerForUserArgs = {
   dealerUserId: Scalars['String'];
   name: Scalars['String'];
@@ -5446,8 +5459,18 @@ export type MutationCreateDealerForUserArgs = {
 
 
 export type MutationSetDealerIdForUserArgs = {
-  dealerUserId: Scalars['String'];
+  dealerUserIdOrEmail: Scalars['String'];
   dealerId?: Maybe<Scalars['String']>;
+};
+
+
+export type MutationUnlinkUsersForDealerIdArgs = {
+  dealerId: Scalars['String'];
+};
+
+
+export type MutationDeleteDealerAsAdminArgs = {
+  dealerId: Scalars['String'];
 };
 
 
@@ -10328,46 +10351,46 @@ export type Query = {
   users_typing_aggregate: Users_Typing_Aggregate;
   /**
    * Get the user who is currently logged in.
-   *
+   * 
    * AccessRule – LOGGED_IN
    */
   loggedInUser: UserPrivate;
   /**
    * Lookup public information about a user.
    * If the requested user is also the logged-in user, UserPrivate fields will be available.
-   *
+   * 
    * AccessRule – PUBLIC
    */
   user?: Maybe<BasicUser>;
   /**
    * Lookup private information about a user using their ID or email address.
-   *
+   * 
    * AccessRule – PLATFORM_ADMIN
    */
   userByEmailOrIdAdminOnly?: Maybe<BasicUser>;
   /**
    * Get recent users who just signed up, a helper function for Admin dashboard
    * to verify users
-   *
+   * 
    * AccessRule – PLATFORM_ADMIN
    */
   getRecentUsers: Array<BasicUser>;
   /**
    * Query the list of products that are recommended for the logged-in user.
    * If nobody is logged in, a general list of recommendations is still returned.
-   *
+   * 
    * AccessRule – PUBLIC
    */
   getRecommendedProductsConnection: ProductsConnection;
   /**
    * Retrieve all of the products on the platform that can be purchased.
-   *
+   * 
    * AccessRule – PUBLIC
    */
   productsAllConnection: ProductsConnection;
   /**
    * Search all of the products on the platform that can be purchased.
-   *
+   * 
    * AccessRule – PUBLIC
    */
   search: ProductsConnection;
@@ -10378,32 +10401,32 @@ export type Query = {
   productsByCategoryConnection?: Maybe<ProductsConnection>;
   /**
    * Get a product by its ID.
-   *
+   * 
    * AccessRule – PUBLIC
    */
   product?: Maybe<Product>;
   /**
    * Get a store by its ID.
-   *
+   * 
    * AccessRule – PUBLIC
    */
   store?: Maybe<Store>;
   /**
    * Get the full list of product categories.
    * TODO: The maximum expected number of categories is X
-   *
+   * 
    * AccessRule – PUBLIC
    */
   getProductCategories: Array<Categories>;
   /**
    * Get a category by its ID.
-   *
+   * 
    * AccessRule – PUBLIC
    */
   category?: Maybe<Categories>;
   /**
    * Query the complete list of products, on or off sale.
-   *
+   * 
    * AccessRule – PLATFORM_ADMIN
    */
   productsAdminConnection: ProductsConnection;
@@ -10494,92 +10517,93 @@ export type Query = {
   getPayoutItemsInPeriodAdminPaged: PayoutItemsPagedConnection;
   /**
    * List all payouts in the period between startDate and endDate.
-   *
+   * 
    * AccessRule – PLATFORM_ADMIN
    */
   getPayoutsInPeriodAdmin: PayoutsConnection;
   /**
    * List all payouts for a store/payee
-   *
+   * 
    * AccessRule – OWNER
    */
   getPayouts: PayoutsConnection;
   /**
    * List a specific payouts for a store/payee
-   *
+   * 
    * AccessRule – OWNER
    */
   getPayoutById: Payout;
   /**
    * get a store's payout split
-   *
+   * 
    * AccessRule – OWNER
    */
   getPayoutSplitByStoreId: PayoutSplit;
   /**
    * List transactions between startDate and endDate.
-   *
+   * 
    * AccessRule – PLATFORM_ADMIN
    */
   getTransactionsInPeriodAdmin: TransactionsConnection;
   /**
    * Get recent transactions, a helper function for Admin dashboard
    * to test refunds
-   *
+   * 
    * AccessRule – PLATFORM_ADMIN
    */
   getRecentTransactions: Array<Transactions>;
   /**
    * Collection of products the user has saved for maybe purchasing later.
-   *
+   * 
    * AccessRule – LOGGED_IN
    */
   wishlistItemsConnection: WishlistItemsConnection;
   /**
    * Collection of curated lists.
-   *
+   * 
    * AccessRule – PLATFORM_ADMIN
    */
   listOfCuratedListsConnection: CuratedListsConnection;
   /**
    * Get a curated list by its ID.
-   *
+   * 
    * AccessRule – PUBLIC
    */
   curatedList?: Maybe<CuratedList>;
   /**
    * Collection of items that make up a curated list.
-   *
+   * 
    * AccessRule – PUBLIC
    */
   curatedListItemsConnection?: Maybe<CuratedListItemsConnection>;
   /**
    * Collection of items that make up a curated list.
-   *
+   * 
    * This is the admin connection, which will show items that may otherwise be hidden due to published status etc.
-   *
+   * 
    * AccessRule – PLATFORM_ADMIN
    */
   curatedListItemsAdminConnection?: Maybe<CuratedListItemsConnection>;
   /**
    * Get the product by productId
-   *
+   * 
    * AccessRule – PUBLIC
    */
   getProductById?: Maybe<Product>;
   /**
    * Get the store by storeIdOrSlug
-   *
+   * 
    * AccessRule – PUBLIC
    */
   getStoreById?: Maybe<Store>;
   getStoreProductsForSaleConnection: ProductsConnection;
   /**
    * Get all gun dealers
-   *
    * AccessRule – PUBLIC
    */
-  getAllDealers?: Maybe<Array<Maybe<Dealers>>>;
+  getAllDealers?: Maybe<Array<Maybe<Dealer>>>;
+  /** Search for a gun dealer */
+  searchDealerAsAdmin?: Maybe<Dealer>;
   /** Store sellers's view of currently published products. */
   dashboardProductsConnection: ProductsConnection;
   getCoinbaseExchangeRates?: Maybe<CoinbaseExchangeRates>;
@@ -11534,6 +11558,11 @@ export type QueryGetStoreProductsForSaleConnectionArgs = {
   storeId: Scalars['String'];
   searchTerm?: Maybe<Scalars['String']>;
   query?: Maybe<ConnectionOffsetQuery>;
+};
+
+
+export type QuerySearchDealerAsAdminArgs = {
+  dealerIdOrLicenseNumber: Scalars['String'];
 };
 
 
@@ -14797,6 +14826,8 @@ export type ImageFragment = { __typename?: 'image_parents', id: string, createdA
 
 export type ProductFileFragment = { __typename?: 'product_files', id: string, fileName: string, createdAt: any, mimeType: string, sizeInBytes: any };
 
+export type DealerFragment = { __typename?: 'Dealer', id: string, name?: Maybe<string>, address?: Maybe<string>, state?: Maybe<string>, postCode?: Maybe<string>, licenseNumber: string, city?: Maybe<string>, createdAt?: Maybe<any>, user?: Maybe<{ __typename?: 'UserPrivate', firstName?: Maybe<string>, lastName?: Maybe<string>, email: string, userRole: Role, phoneNumberId?: Maybe<string>, id: string, licenseId?: Maybe<string>, phoneNumber?: Maybe<{ __typename?: 'phone_numbers', id: string, countryCode: string, number: string, areaCode?: Maybe<string> }>, license?: Maybe<{ __typename?: 'user_licenses', id: string, licenseNumber: string, licenseExpiry: any, licenseState?: Maybe<string>, licenseCategory?: Maybe<string>, verified: boolean }> } | { __typename?: 'UserForDealers', id: string, licenseId?: Maybe<string>, license?: Maybe<{ __typename?: 'user_licenses', id: string, licenseNumber: string, licenseExpiry: any, licenseState?: Maybe<string>, licenseCategory?: Maybe<string>, verified: boolean }> } | { __typename?: 'UserPublic', id: string, licenseId?: Maybe<string>, license?: Maybe<{ __typename?: 'user_licenses', id: string, licenseNumber: string, licenseExpiry: any, licenseState?: Maybe<string>, licenseCategory?: Maybe<string>, verified: boolean }> } | { __typename?: 'UserWithRole', id: string, licenseId?: Maybe<string>, license?: Maybe<{ __typename?: 'user_licenses', id: string, licenseNumber: string, licenseExpiry: any, licenseState?: Maybe<string>, licenseCategory?: Maybe<string>, verified: boolean }> }> };
+
 export type ProductSnapshotsFragment = { __typename?: 'product_snapshots', id: string, createdAt: any, productId: string, title: string, description: string, condition: string, make: string, model: string, ammoType?: Maybe<string>, actionType: string, caliber?: Maybe<string>, serialNumber: string, location: string, magazineCapacity?: Maybe<string>, barrelLength?: Maybe<string>, dealer?: Maybe<{ __typename?: 'dealers', id: string, name: string, address?: Maybe<string>, city?: Maybe<string>, state?: Maybe<string>, postCode?: Maybe<string>, licenseNumber: string, createdAt: any, user?: Maybe<{ __typename?: 'users', id: string, firstName?: Maybe<string>, lastName?: Maybe<string>, email: string, userRole?: Maybe<string>, licenseId?: Maybe<string>, phoneNumberId?: Maybe<string>, phoneNumber?: Maybe<{ __typename?: 'phone_numbers', countryCode: string, number: string }> }> }> };
 
 export type ProductVariantsFragment = { __typename?: 'product_variants', variantSnapshotId: string, variantId: string, snapshotId: string, productId: string, storeId: string, createdAt: any, variantName: string, variantDescription: string, isDefault: boolean, position: number, price: number, priceWas?: Maybe<number>, previewItems: Array<{ __typename?: 'product_preview_items', id: string, imageId?: Maybe<string>, position: number, youTubeEmbedLink?: Maybe<string>, variantSnapshotId?: Maybe<string>, image?: Maybe<(
@@ -15117,6 +15148,43 @@ export type EditStoreProfileMutation = { __typename?: 'Mutation', editStoreProfi
       & StorePrivateFragment
     ) }> };
 
+export const DealerFragmentFragmentDoc = gql`
+    fragment DealerFragment on Dealer {
+  id
+  name
+  address
+  state
+  postCode
+  licenseNumber
+  city
+  createdAt
+  user {
+    id
+    licenseId
+    license {
+      id
+      licenseNumber
+      licenseExpiry
+      licenseState
+      licenseCategory
+      verified
+    }
+    ... on UserPrivate {
+      firstName
+      lastName
+      email
+      userRole
+      phoneNumberId
+      phoneNumber {
+        id
+        countryCode
+        number
+        areaCode
+      }
+    }
+  }
+}
+    `;
 export const ImageFragmentFragmentDoc = gql`
     fragment ImageFragment on image_parents {
   id

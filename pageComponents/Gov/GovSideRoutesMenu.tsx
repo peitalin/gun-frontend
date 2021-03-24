@@ -44,25 +44,8 @@ const GovSideRoutesMenu: React.FC<ReactProps> = (props) => {
 
         <li className={classes.listSpacer}>
           <Typography variant="subtitle1" className={classes.routeListItemTitle}>
-            User Profiles
+            Profiles
           </Typography>
-        </li>
-
-
-        <li>
-          <Link href={"/gov/search"} scroll={false}>
-            <a>
-              <div className={
-                isSelectedRoute("search")
-                  ? classes.routeListItemSelected
-                  : classes.routeListItem
-              }>
-                <Typography variant="subtitle1" className={classes.routeListItemText}>
-                  Search Index
-                </Typography>
-              </div>
-            </a>
-          </Link>
         </li>
 
         <li>
@@ -204,6 +187,44 @@ const GovSideRoutesMenu: React.FC<ReactProps> = (props) => {
             </a>
           </Link>
         </li>
+
+        <li className={classes.listSpacer}>
+          <Typography variant="subtitle1" className={classes.routeListItemTitle}>
+            Featured Products
+          </Typography>
+        </li>
+
+        <li>
+          <Link href={"/gov/featured"} scroll={false}>
+            <a>
+              <div className={
+                isSelectedRoute("featured")
+                  ? classes.routeListItemSelected
+                  : classes.routeListItem
+              }>
+                <Typography variant="subtitle1" className={classes.routeListItemText}>
+                  Set Featured Products
+                </Typography>
+              </div>
+            </a>
+          </Link>
+        </li>
+        <li>
+          <Link href={"/gov/search"} scroll={false}>
+            <a>
+              <div className={
+                isSelectedRoute("search")
+                  ? classes.routeListItemSelected
+                  : classes.routeListItem
+              }>
+                <Typography variant="subtitle1" className={classes.routeListItemText}>
+                  Product Search Index
+                </Typography>
+              </div>
+            </a>
+          </Link>
+        </li>
+
 
         <li className={classes.listSpacer}>
           <Typography variant="subtitle1" className={classes.routeListItemTitle}>

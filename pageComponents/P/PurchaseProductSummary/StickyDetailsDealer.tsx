@@ -42,14 +42,16 @@ const StickyDetailsDealer = (props: ReactProps) => {
         props.below1024 ? classes.positionRelativeBox : classes.positionStickyBox,
       )}>
 
-        <div className={classes.flexCol}>
-          <Typography className={classes.title} variant="h4">
-            Transferring Dealer
-          </Typography>
-          <div>
-            <Typography className={classes.subtitle} variant="body1">
-              {`${dealer?.name ?? ""}`}
+        <div className={classes.flexRow}>
+          <div className={clsx(classes.flexCol)}>
+            <Typography className={classes.title} variant="h4">
+              Transferring Dealer
             </Typography>
+            <div>
+              <Typography className={classes.subtitle} variant="body1">
+                {`${dealer?.name ?? ""}`}
+              </Typography>
+            </div>
           </div>
         </div>
 
