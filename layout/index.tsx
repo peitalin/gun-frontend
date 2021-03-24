@@ -1,6 +1,5 @@
 import React from 'react';
 import clsx from "clsx";
-import { oc as option } from "ts-optchain";
 import Header from "./Header";
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 // Components
@@ -47,7 +46,7 @@ const Layout: React.FC<ReactProps> = (props) => {
   );
 
   const isSellerRoute = !!router.pathname.includes('/admin')
-    && !!option(user).store.id()
+    && !!user?.store?.id
 
   const isGovernanceRoute = !!router.pathname.startsWith('/gov')
 
@@ -96,7 +95,7 @@ const Layout: React.FC<ReactProps> = (props) => {
           <ErrorBounds className={classes.flexJustify}>
             <div className={clsx(classes.dashboardContainer, "fadeIn")}>
               <div className={classes.minWidth240}>
-                <GovSideRoutesMenu />
+                <GovSideRoutesMenu user={user} />
               </div>
               <div className={classes.flex75}>
                 {props.children}

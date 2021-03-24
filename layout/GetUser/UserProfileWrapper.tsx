@@ -19,11 +19,18 @@ import { getUserDataFromGqlOrRedux } from "./utils";
 
 export const UserProfileWrapper = (props) => {
 
+  const dispatch = useDispatch();
+
   const { loading, data, error, refetch } = useQuery<QueryData>(
     GET_USER, {
     variables: {},
     onError: (e) => {
       console.log(e)
+    },
+    onCompleted: (data) => {
+      if (data?.user?.id) {
+        dispatch(Actions.reduxLogin.SET_USER(data.user))
+      }
     },
     errorPolicy: "all",
   });

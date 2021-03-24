@@ -17,6 +17,8 @@ import { getUserDataFromGqlOrRedux } from "./utils";
 
 export const DealerProfileWrapper = (props) => {
 
+  const dispatch = useDispatch();
+
   const {
     userRedux,
     isDarkMode
@@ -29,7 +31,11 @@ export const DealerProfileWrapper = (props) => {
     GET_DEALER_PRIVATE, {
     variables: {},
     onError: (e) => { console.log(e) },
-    onCompleted: (data) => { },
+    onCompleted: (data) => {
+      if (data?.user?.id) {
+        dispatch(Actions.reduxLogin.SET_USER(data.user))
+      }
+    },
     fetchPolicy: "network-only",
     errorPolicy: "all",
   });

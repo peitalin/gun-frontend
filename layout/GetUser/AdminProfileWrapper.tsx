@@ -27,11 +27,15 @@ const AdminProfileWrapper = (
     disablePadding = false,
   } = props;
 
+  const dispatch = useDispatch();
+
   const { loading, data, error, refetch } = useQuery<QueryData>(
     GET_USER, {
     variables: {},
-    onError: (e) => {
-      console.log(e)
+    onCompleted: (data) => {
+      if (data?.user?.id) {
+        dispatch(Actions.reduxLogin.SET_USER(data.user))
+      }
     },
     errorPolicy: "all",
   });
@@ -44,7 +48,8 @@ const AdminProfileWrapper = (
     isDarkMode: s.reduxLogin.darkMode === 'dark'
   }))
 
-  const userIsAdmin = data?.user?.userRole === Role.PLATFORM_ADMIN
+  let data2 = getUserDataFromGqlOrRedux(data, userRedux)
+  const userIsAdmin = data2?.user?.userRole === Role.PLATFORM_ADMIN
 
   if (loading) {
     return <LoadingBar
