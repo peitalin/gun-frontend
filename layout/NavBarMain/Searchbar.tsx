@@ -1,10 +1,8 @@
-import * as React from "react";
+import React from "react";
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
-import ErrorBounds from "../../components/ErrorBounds";
 // MUI
 import SearchIcon from '@material-ui/icons/Search';
 import InputBase from '@material-ui/core/InputBase';
-import { useWindowWidth } from "utils/hooks";
 import { useRouter } from "next/router";
 import {
   Colors,
@@ -66,6 +64,9 @@ let styles = (theme: Theme) => createStyles({
     flexGrow: 1,
   },
   searchbar: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
     flexGrow: 1,
     position: 'relative',
     // border: `1px solid ${Colors.uniswapDarkNavy}`,

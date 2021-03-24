@@ -75,15 +75,22 @@ export const styles = (theme: Theme) => createStyles({
   priceDetailsFlexItem: {
     bottom: '0.25rem',
   },
+  title: {
+    fontWeight: 600,
+    marginBottom: '0.25rem',
+    overflowY: 'hidden',
+    maxHeight: '2.5rem',
+    fontSize: '1.2rem',
+    lineHeight: '1.25rem',
+  },
   makeModel: {
     textTransform: "uppercase",
     fontWeight: 500,
-    fontSize: '0.825rem',
+    fontSize: '0.9rem',
     color: theme.palette.type === 'dark'
       ? Colors.uniswapLighterGrey
       : Colors.slateGreyLightBlack,
-    marginBottom: '0.1rem',
-    lineHeight: '0.9rem',
+    lineHeight: '1rem',
   },
   actionTag: {
     position: 'absolute',
@@ -98,23 +105,10 @@ export const styles = (theme: Theme) => createStyles({
   actionType: {
     textTransform: "uppercase",
     fontWeight: 500,
-    fontSize: '0.7rem',
+    fontSize: '0.825rem',
     color: theme.palette.type === 'dark'
       ? Colors.uniswapLighterGrey
       : Colors.slateGreyDarkest,
-  },
-  title: {
-    fontWeight: 600,
-    marginBottom: '0.4rem',
-    lineHeight: '1.25rem',
-    overflowY: 'hidden',
-    maxHeight: '2.5rem',
-  },
-  tagline: {
-    fontSize: '.875rem',
-    color: "#aaa",
-    marginBottom: '0.4rem',
-    lineHeight: '1rem',
   },
   flexRow100Width: {
     display: 'flex',

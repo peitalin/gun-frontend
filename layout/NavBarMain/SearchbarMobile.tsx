@@ -120,6 +120,9 @@ let styles = (theme: Theme) => createStyles({
   button: {
   },
   searchbar: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
     flexGrow: 1,
     position: 'relative',
     borderRadius: BorderRadius3x,

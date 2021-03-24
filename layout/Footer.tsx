@@ -406,6 +406,7 @@ const styles = (theme: Theme) => createStyles({
   },
   fontSize09: {
     fontSize: '0.9rem',
+    marginBottom: '0.5rem',
   },
   marginBottom2: {
     marginBottom: '4rem',

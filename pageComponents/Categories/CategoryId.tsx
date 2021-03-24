@@ -273,10 +273,10 @@ const CategoryId: React.FC<ReactProps> = (props) => {
                     classes.marginRight1,
                   )}
                 >
-                  {/* <ProductCardResponsive
+                  <ProductCardResponsive
                     product={product}
-                  /> */}
-                  {
+                  />
+                  {/* {
                     mdDown
                     ? <ProductCardResponsive
                         product={product}
@@ -286,7 +286,7 @@ const CategoryId: React.FC<ReactProps> = (props) => {
                         product={product}
                         cardsPerRow={4}
                       />
-                  }
+                  } */}
                 </div>
               )
             }}
@@ -464,7 +464,7 @@ export const styles = (theme: Theme) => createStyles({
     alignItems: 'center',
   },
   searchContainerInnerMobile: {
-    marginTop: "-0.25rem",
+    marginTop: "-0.5rem",
     marginBottom: "2.5rem",
     height: '2rem',
     display: 'flex',

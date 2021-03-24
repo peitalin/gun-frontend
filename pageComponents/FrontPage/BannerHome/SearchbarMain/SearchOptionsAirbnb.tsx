@@ -626,6 +626,7 @@ const styles = (theme: Theme) => createStyles({
     justifyContent: "center",
     alignItems: 'center',
     position: 'relative',
+    flexWrap: "wrap",
   },
   searchRootMobile: {
     display: "flex",
@@ -663,8 +664,10 @@ const styles = (theme: Theme) => createStyles({
     zIndex: 1,
   },
   searchMobileExpanded: {
-    height: '110vh',
+    height: '100vh',
     width: '100vw',
+    position: 'fixed',
+    top: 0,
     transition:  theme.transitions.create(['height', 'width', 'border'], {
       easing: theme.transitions.easing.easeIn,
       duration: 0,
@@ -672,8 +675,8 @@ const styles = (theme: Theme) => createStyles({
     border: 'unset',
   },
   searchMobileNotExpanded: {
-    height: '52px',
-    width: '242px',
+    height: '52px', // height of the SearchInput plus 2px border
+    width: '242px', // width of the SearchInput plus 2px border
     transition:  theme.transitions.create(['height', 'width', 'border'], {
       easing: theme.transitions.easing.easeIn,
       delay: 0,
@@ -723,7 +726,7 @@ const styles = (theme: Theme) => createStyles({
     width: '100%',
   },
   marginTop: {
-    marginTop: '0.5rem',
+    marginTop: '0.25rem',
   },
   marginBottom05: {
     marginBottom: '0.5rem',

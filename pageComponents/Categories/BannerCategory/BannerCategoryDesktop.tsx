@@ -86,7 +86,7 @@ const BannerCategory: NextPage<ReactProps> = (props) => {
       </div>
       <div className={clsx(
         classes.bannerInnerBoxRight,
-        mdDown ? classes.minWidth300 : classes.minWidth400,
+        // mdDown ? classes.minWidth300 : classes.minWidth400,
       )}>
         {
           !!bannerForegroundImageUrl &&
