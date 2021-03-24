@@ -109,7 +109,7 @@ const styles = (theme: Theme) => createStyles({
     justifyContent: 'center',
     width: '100%',
     height: '100%',
-    // border: `1px solid ${Colors.charcoal}`,
+    maxHeight: '100vh', // Mobile height is buggy here
   },
   embedForm10Pdf: {
     boxShadow: BoxShadows.shadow5.boxShadow,
