@@ -73,7 +73,7 @@ const BannerHomeLayout: NextPage<ReactProps> = (props) => {
         <Typography variant={"subtitle2"}
           className={mdDown ? classes.subline1Sm : classes.subline1}
         >
-          Support independent gun owners directly
+          Support independent gun owners
         </Typography>
 
           {/* <div style={{ height: '40px', width: 1, opacity: 0 }}>placeholder</div> */}
@@ -136,7 +136,7 @@ const BannerHomeLayout: NextPage<ReactProps> = (props) => {
                       mdDown
                       ? clsx(
                           classes.buttonBecomeASeller,
-                          classes.minWidth160,
+                          classes.minWidth184,
                           classes.buttonHeightMobile
                         )
                       : clsx(

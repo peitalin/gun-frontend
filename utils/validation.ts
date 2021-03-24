@@ -450,6 +450,23 @@ export const validationSchemas = {
         .required('A license number required.'),
     }),
 
+  // Create new Dealer
+  CreateNewDealer:
+    Yup.object().shape({
+      name: Yup.string().nullable()
+        .required("Can't be empty")
+        .min(3, "Must be more than 3 letters!"),
+      address: Yup.string().nullable(),
+      city: Yup.string().nullable(),
+      postCode: Yup.string().nullable(),
+      state: Yup.string().nullable()
+        .required('A license number required.'),
+      licenseNumber: Yup.string()
+        .min(5, "Must be at least 5 digits!")
+        .max(15, "Must be less than 15 digits!")
+        .required('A license number required.'),
+    }),
+
   // Sign Up
   SignUp:
     Yup.object().shape({

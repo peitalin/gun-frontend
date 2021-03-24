@@ -13,3 +13,18 @@ export const GET_ALL_DEALERS = gql`
     }
   }
 `;
+
+
+export const SEARCH_DEALER_AS_ADMIN = gql`
+  query {
+    searchDealerAsAdmin($dealerIdOrLicenseNumber: String!) {
+      id
+      name
+      address
+      city
+      state
+      postCode
+      licenseNumber
+    }
+  }
+`;

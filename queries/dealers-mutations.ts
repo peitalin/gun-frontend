@@ -1,7 +1,29 @@
 import gql from "graphql-tag";
-import { UserPrivateFragment } from "./fragments";
+import { UserPrivateFragment, DealerFragment } from "./fragments";
 
 
+export const CREATE_NEW_DEALER = gql`
+  mutation createNewDealer(
+    $name: String!
+    $address: String
+    $city: String
+    $postCode: String
+    $state: String
+    $licenseNumber: String!
+  ) {
+    createNewDealer(
+      name: $name,
+      address: $address
+      city: $city
+      state: $state
+      postCode: $postCode
+      licenseNumber: $licenseNumber
+    ) {
+      ...DealerFragment
+    }
+  }
+  ${DealerFragment}
+`;
 
 export const CREATE_DEALER_FOR_USER = gql`
   mutation createDealerForUser(
@@ -78,3 +100,4 @@ export const SET_DEALER_ID_FOR_USER = gql`
   }
   ${UserPrivateFragment}
 `;
+

@@ -30,7 +30,7 @@ import { FormikProps } from 'formik';
 
 
 
-const EditStoreFields: React.FC<ReactProps & FormikProps<FormikFields>> = (props) => {
+const EditDealerFields: React.FC<ReactProps & FormikProps<FormikFields>> = (props) => {
 
   const {
     classes,
@@ -268,5 +268,5 @@ interface ReactProps extends WithStyles<typeof styles> {
 }
 
 
-export default withStyles(styles)( EditStoreFields );
+export default withStyles(styles)( EditDealerFields );
 

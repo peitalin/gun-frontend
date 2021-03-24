@@ -122,14 +122,19 @@ const SearchOptionsAirbnb: React.FC<ReactProps> = (props) => {
           { variant: "info" }
         )
       } else {
+        // if (!searchTerm) {
+        //   snackbar.enqueueSnackbar(
+        //     `No search term entered!`,
+        //     { variant: "error" }
+        //   )
+        //   return
+        // }
+        let url
         if (!searchTerm) {
-          snackbar.enqueueSnackbar(
-            `No search term entered!`,
-            { variant: "info" }
-          )
-          return
+          url = `/search?q=*`
+        } else {
+          url = `/search?q=${encodeURIComponent(searchTerm)}`
         }
-        let url = `/search?q=${encodeURIComponent(searchTerm)}`
         if ((currentCategories ?? []).length > 0) {
           url += `&category=${currentCategories?.[0]?.slug}`
         }
@@ -139,14 +144,19 @@ const SearchOptionsAirbnb: React.FC<ReactProps> = (props) => {
   }
 
   const onClickSearch = (event) => {
+    // if (!searchTerm) {
+    //   snackbar.enqueueSnackbar(
+    //     `No search term entered!`,
+    //     { variant: "error" }
+    //   )
+    //   return
+    // }
+    let url
     if (!searchTerm) {
-      snackbar.enqueueSnackbar(
-        `No search term entered!`,
-        { variant: "info" }
-      )
-      return
+      url = `/search?q=*`
+    } else {
+      url = `/search?q=${encodeURIComponent(searchTerm)}`
     }
-    let url = `/search?q=${encodeURIComponent(searchTerm)}`
     if ((currentCategories ?? []).length > 0) {
       url += `&category=${currentCategories?.[0]?.slug}`
     }

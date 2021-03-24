@@ -38,6 +38,33 @@ export const ProductFileFragment = gql`
 `;
 
 
+export const DealerFragment = gql`
+  fragment DealerFragment on Dealer {
+    id
+    name
+    address
+    state
+    postCode
+    licenseNumber
+    city
+    createdAt
+    user {
+      id
+      firstName
+      lastName
+      email
+      userRole
+      licenseId
+      phoneNumberId
+      phoneNumber {
+        id
+        countryCode
+        number
+        areaCode
+      }
+    }
+  }
+`;
 
 export const ProductSnapshotsFragment = gql`
   fragment ProductSnapshotsFragment on product_snapshots {

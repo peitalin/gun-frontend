@@ -169,7 +169,7 @@ export const styles = (theme: Theme) => createStyles({
     minWidth: 184,
   },
   buttonHeightMobile: {
-    height: 40,
+    height: 44,
   },
   buttonHeightDesktop: {
     height: 44,
