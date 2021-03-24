@@ -13,14 +13,20 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Button from "@material-ui/core/Button";
 
 const routeMappings = {
-  'escrow/pending-approval': "Escrow - Pending Approval",
-  'escrow/approved': "Escrow - Approved",
-  'escrow/complete': "Escrow - Completed",
-  'escrow/expiring': "Escrow - Expiring",
-  'escrow/cancelled': "Escrow - Cancelled",
-  'orders': "Order Search",
-  'search': "Search Index",
-  'users': "User Search",
+  'orders': "Profiles  -  Order Viewer",
+  'users': "Profiles  -  User Viewer",
+  'dealers': "Profiles  -  Dealer Viewer",
+
+  'escrow/pending-approval': "Escrow  -  Pending Approval",
+  'escrow/approved': "Escrow  -  Approved",
+  'escrow/complete': "Escrow  -  Completed",
+  'escrow/expiring': "Escrow  -  Expiring",
+  'escrow/cancelled': "Escrow  -  Cancelled",
+
+  'search': "Products  -  Search Index",
+  'featured': "Products  -  Set Featured Products",
+  'test-emails': "Test Tools  -  Test Emails",
+  'random-products': "Test Tools  -  Random Products",
 }
 
 

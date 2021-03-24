@@ -142,13 +142,14 @@ const CreateDealerFormWrapper: React.FC<FormWrapperProps> = (props) => {
   // const dispatch = useDispatch();
   const theme = useTheme();
   const smUp = useMediaQuery(theme.breakpoints.up('sm'));
+  const mdUp = useMediaQuery(theme.breakpoints.up('md'));
 
   return (
     <div className={clsx(
       classes.formRoot,
-      smUp ? classes.formBordersDesktop : classes.formBordersMobile
+      mdUp ? classes.formBordersDesktop : classes.formBordersMobile
     )}>
-      <div className={smUp ? classes.paperMarginDesktop : classes.paperMarginMobile}>
+      <div className={mdUp ? classes.paperMarginDesktop : classes.paperMarginMobile}>
         <div className={classes.flexColMargin}>
           <Typography color={"primary"} variant="h3">
             Create a Dealer Profile

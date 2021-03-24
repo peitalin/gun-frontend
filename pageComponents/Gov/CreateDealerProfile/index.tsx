@@ -39,7 +39,7 @@ const CreateDealerProfile = (props: ReactProps) => {
       smDown && classes.paddingMobile,
       (md || lg) && classes.paddingIpad,
       xlUp && classes.paddingDesktop,
-      !smDown && classes.minWidth500,
+      !smDown && classes.minWidthA,
     )}>
       <div className={classes.dealerEditMenu}>
         <CreateDealerForm dealer={user?.dealer} />
@@ -76,8 +76,8 @@ const styles = (theme: Theme) => createStyles({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  minWidth500: {
-    minWidth: '500px',
+  minWidthA: {
+    minWidth: '350px',
   },
   paddingMobile: {
     paddingTop: '2rem',
