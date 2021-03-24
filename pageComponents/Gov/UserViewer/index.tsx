@@ -12,7 +12,6 @@ import {
   UserPrivate,
   ID,
   Order,
-  OrderStatus,
   UserMutationResponse,
 } from "typings/gqlTypes";
 // Material UI
@@ -202,14 +201,6 @@ interface QueryVar2 {
   limit: number;
   offset: number;
 }
-interface MutData3 {
-  adminApproveUserLicense: UserMutationResponse;
-}
-interface MutVar3 {
-  userId: string;
-  verified: boolean;
-}
-
 
 
 const styles = (theme: Theme) => createStyles({
@@ -230,56 +221,11 @@ const styles = (theme: Theme) => createStyles({
       ? `${Colors.uniswapDarkNavy}`
       : `${Colors.cream}`,
   },
-  flexCol: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    width: '100%',
-  },
-  flexRow: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    flexWrap: 'wrap',
-  },
   section: {
     margin: '2rem',
   },
-  section1: {
-    marginTop: '1rem',
-    marginBottom: '1rem',
-  },
-  textField: {
-    marginBottom: '0.5rem',
-  },
-  titleSpacer: {
-    marginBottom: '0.5rem',
-    marginTop: '0.5rem',
-  },
-  goBackText: {
-    marginLeft: '0.5rem',
-  },
   form: {
     width: '100%',
-  },
-  actualPrice: {
-    color: Colors.secondary,
-  },
-  backButton: {
-    display: 'flex',
-    flexDirection: "row",
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-    textAlign: 'center',
-  },
-  recentOrders: {
-    marginTop: '1rem',
-    marginBottom: '1rem',
-    display: 'flex',
-    flexDirection: "column",
-    justifyContent: 'center',
-    alignItems: 'center',
-    textAlign: 'start',
   },
 });
 

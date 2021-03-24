@@ -1,6 +1,4 @@
 import React from "react";
-import { useState } from "react";
-import {oc as option} from "ts-optchain";
 import clsx from "clsx";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
@@ -10,10 +8,9 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 // Redux
 import { useSelector, useDispatch } from "react-redux";
-import { GrandReduxState } from 'reduxStore/grand-reducer';
-import { Actions } from 'reduxStore/actions';
+import { GrandReduxState, Actions } from 'reduxStore/grand-reducer';
 // Utils
-import { ID, StorePrivate } from "typings/gqlTypes";
+import { UserPrivate } from "typings/gqlTypes";
 // Material UI
 import Typography from "@material-ui/core/Typography";
 
@@ -21,7 +18,7 @@ import Typography from "@material-ui/core/Typography";
 
 const GovSideRoutesMenu: React.FC<ReactProps> = (props) => {
 
-  const { classes } = props;
+  const { classes,  } = props;
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -34,44 +31,23 @@ const GovSideRoutesMenu: React.FC<ReactProps> = (props) => {
 
       <div className={classes.routeProfile}>
         <div className={classes.storeProfile}>
+          <Typography className={classes.title}>
+            Governance
+          </Typography>
           <Typography className={classes.subtitle}>
-            Gov Dashboard
+            {`${props?.user?.email}`}
           </Typography>
         </div>
       </div>
 
       <ul className={classes.routeMenuList}>
-        <li>
-          <Link href={"/gov"} scroll={false}>
-            <a>
-              <div className={
-                isSelectedRoute("/gov")
-                  ? classes.routeListItemSelected
-                  : classes.routeListItem
-              }>
-                <Typography variant="subtitle1" className={classes.routeListItemText}>
-                  Home
-                </Typography>
-              </div>
-            </a>
-          </Link>
+
+        <li className={classes.listSpacer}>
+          <Typography variant="subtitle1" className={classes.routeListItemTitle}>
+            User Profiles
+          </Typography>
         </li>
 
-        <li>
-          <Link href={"/gov/test-emails"} scroll={false}>
-            <a>
-              <div className={
-                isSelectedRoute("test-emails")
-                  ? classes.routeListItemSelected
-                  : classes.routeListItem
-              }>
-                <Typography variant="subtitle1" className={classes.routeListItemText}>
-                  Test Emails
-                </Typography>
-              </div>
-            </a>
-          </Link>
-        </li>
 
         <li>
           <Link href={"/gov/search"} scroll={false}>
@@ -83,22 +59,6 @@ const GovSideRoutesMenu: React.FC<ReactProps> = (props) => {
               }>
                 <Typography variant="subtitle1" className={classes.routeListItemText}>
                   Search Index
-                </Typography>
-              </div>
-            </a>
-          </Link>
-        </li>
-
-        <li>
-          <Link href={"/gov/random-products"} scroll={false}>
-            <a>
-              <div className={
-                isSelectedRoute("random-products")
-                  ? classes.routeListItemSelected
-                  : classes.routeListItem
-              }>
-                <Typography variant="subtitle1" className={classes.routeListItemText}>
-                  Random Products
                 </Typography>
               </div>
             </a>
@@ -138,6 +98,22 @@ const GovSideRoutesMenu: React.FC<ReactProps> = (props) => {
         </li>
 
         <li>
+          <Link href={"/gov/dealers"} scroll={false}>
+            <a>
+              <div className={
+                isSelectedRoute("dealers")
+                  ? classes.routeListItemSelected
+                  : classes.routeListItem
+              }>
+                <Typography variant="subtitle1" className={classes.routeListItemText}>
+                  Dealer Viewer
+                </Typography>
+              </div>
+            </a>
+          </Link>
+        </li>
+
+        <li className={classes.listSpacer}>
           <Typography variant="subtitle1" className={classes.routeListItemTitle}>
             Escrow Payouts
           </Typography>
@@ -229,6 +205,44 @@ const GovSideRoutesMenu: React.FC<ReactProps> = (props) => {
           </Link>
         </li>
 
+        <li className={classes.listSpacer}>
+          <Typography variant="subtitle1" className={classes.routeListItemTitle}>
+            Testing Tools
+          </Typography>
+        </li>
+
+        <li>
+          <Link href={"/gov/test-emails"} scroll={false}>
+            <a>
+              <div className={
+                isSelectedRoute("test-emails")
+                  ? classes.routeListItemSelected
+                  : classes.routeListItem
+              }>
+                <Typography variant="subtitle1" className={classes.routeListItemText}>
+                  Test Emails
+                </Typography>
+              </div>
+            </a>
+          </Link>
+        </li>
+
+        <li>
+          <Link href={"/gov/random-products"} scroll={false}>
+            <a>
+              <div className={
+                isSelectedRoute("random-products")
+                  ? classes.routeListItemSelected
+                  : classes.routeListItem
+              }>
+                <Typography variant="subtitle1" className={classes.routeListItemText}>
+                  Test Random Products
+                </Typography>
+              </div>
+            </a>
+          </Link>
+        </li>
+
       </ul>
     </div>
   )
@@ -236,6 +250,7 @@ const GovSideRoutesMenu: React.FC<ReactProps> = (props) => {
 
 
 interface ReactProps extends WithStyles<typeof styles> {
+  user: UserPrivate;
 }
 
 
@@ -243,8 +258,15 @@ const styles = (theme: Theme) => createStyles({
   routeProfile: {
     maxWidth: 250,
   },
+  title: {
+    fontSize: "1.6rem",
+    marginBottom: "0.1rem",
+  },
   subtitle: {
-    fontSize: "1.5rem",
+    fontSize: "1rem",
+    color: theme.palette.type === 'dark'
+      ? Colors.uniswapMediumGrey
+      : Colors.slateGreyDarkest,
   },
   routeMenu: {
     display: 'flex',
@@ -266,7 +288,6 @@ const styles = (theme: Theme) => createStyles({
   },
   routeListItem: {
     padding: "0.8rem 1rem",
-    margin: "0.25rem 0rem",
     borderRadius: BorderRadius3x,
     color: Colors.darkGrey,
     fontSize: '0.9rem',
@@ -288,14 +309,13 @@ const styles = (theme: Theme) => createStyles({
   },
   routeListItemSelected: {
     padding: "0.8rem 1rem",
-    margin: "0.25rem 0rem",
     borderRadius: BorderRadius3x,
     color: Colors.darkGrey,
     fontSize: '0.9rem',
     fontWeight: 500,
     border: theme.palette.type === 'dark'
-      ? `1px solid ${Colors.mediumGrey}`
-      : `1px solid ${Colors.charcoal}`,
+      ? `1px solid ${Colors.uniswapMediumGrey}`
+      : `1px solid ${Colors.slateGreyLightBlack}`,
     background: theme.palette.type === 'dark'
       ? Colors.uniswapDarkNavy
       : Colors.darkWhite,
@@ -311,9 +331,16 @@ const styles = (theme: Theme) => createStyles({
   },
   routeListItemTitle: {
     textAlign: "start",
-    fontSize: '1.15rem',
+    fontSize: '1rem',
+    fontWeight: 400,
     marginTop: "1rem",
     marginBottom: "1rem",
+    color: theme.palette.type === 'dark'
+      ? Colors.uniswapMediumGrey
+      : Colors.slateGreyLightestBlack,
+    // color: theme.palette.type === 'dark'
+    //   ? Colors.uniswapLighterGrey
+    //   : Colors.slateGreyDarker,
   },
   routeListItemText: {
     textAlign: "start",
@@ -332,6 +359,9 @@ const styles = (theme: Theme) => createStyles({
     justifyContent: "center",
     margin: "2rem 0rem 0rem 0rem",
     maxWidth: 300,
+  },
+  listSpacer: {
+    marginTop: '3rem',
   },
 });
 
