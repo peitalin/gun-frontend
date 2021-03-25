@@ -29,7 +29,6 @@ import {
   useFacetSearchOptions,
   useEffectUpdateGridAccum,
   totalItemsInCategoriesFacets,
-  PaginatorType,
 } from "utils/hooksFacetSearch";
 // Meta headers
 import MetaHeadersPage from "layout/MetaHeadersPage";
@@ -85,7 +84,7 @@ const SearchResults = (props: ReactProps) => {
     limit: numItemsPerPage * overfetchBy,
     overfetchBy: overfetchBy,
     router: router,
-    paginatorType: PaginatorType.page,
+    syncUrlParams: true,
   })
 
   let categorySlug: string = router?.query?.category as any;

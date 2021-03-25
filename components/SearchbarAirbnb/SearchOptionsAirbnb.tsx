@@ -1,5 +1,4 @@
 import React from "react";
-import { oc as option } from "ts-optchain";
 import clsx from "clsx";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
@@ -57,8 +56,8 @@ const SearchOptionsAirbnb: React.FC<ReactProps> = (props) => {
     setOrderBy,
     setCategoryFacets,
     paginationParams,
-    isCategoriesPage = false,
-    updateSetPageDelay = 256,
+    syncUrlToCategory = false,
+    updateSetPageDelay = 128,
     disableCategories = false,
     disableSearchFilter = false,
     disablePriceFilter = false,
@@ -89,21 +88,22 @@ const SearchOptionsAirbnb: React.FC<ReactProps> = (props) => {
 
   const clickBackgroundId = `search-background-${router.pathname}`
 
-  // for actual gql dispatch for pagination page
-  const [debounceSetPageParam, cancel, callPending] = useDebouncedCallback(
-    (page: number) => {
-      if (option(paginationParams).setPageParam()) {
-        paginationParams.setPageParam(page)
-      }
-    },
-    updateSetPageDelay
-  ) // debounce by 540ms
+  // // for actual gql dispatch for pagination page
+  // const [debounceSetPageParam, cancel, callPending] = useDebouncedCallback(
+  //   (page: number) => {
+  //     console.log("debounce: ", page)
+  //     if (paginationParams?.setPageParam) {
+  //       paginationParams.setPageParam(page)
+  //     }
+  //   },
+  //   updateSetPageDelay
+  // ) // debounce by 540ms
 
-  const [debounceSetIndex] = useDebouncedCallback((index: number) => {
-      setIndex(index)
-    },
-    updateSetPageDelay
-  ) // debounce by 540ms
+  // const [debounceSetIndex] = useDebouncedCallback((index: number) => {
+  //     setIndex(index)
+  //   },
+  //   updateSetPageDelay
+  // ) // debounce by 540ms
 
   const orderByOptions = [
     { label: "Newest", value: { createdAt: Order_By.DESC }},
@@ -112,58 +112,6 @@ const SearchOptionsAirbnb: React.FC<ReactProps> = (props) => {
     { label: "Lowest Price", value: { price: Order_By.ASC }},
   ];
 
-
-  const onEnterSearch = (event) => {
-    // Desktop only
-    if (event.key === "Enter") {
-      if (mdDown) {
-        snackbar.enqueueSnackbar(
-          `Click search button`,
-          { variant: "info" }
-        )
-      } else {
-        // if (!searchTerm) {
-        //   snackbar.enqueueSnackbar(
-        //     `No search term entered!`,
-        //     { variant: "error" }
-        //   )
-        //   return
-        // }
-
-        let url
-        if (!searchTerm) {
-          url = `/search?q=*`
-        } else {
-          url = `/search?q=${encodeURIComponent(searchTerm)}`
-        }
-        if ((currentCategories ?? []).length > 0) {
-          url += `&category=${currentCategories?.[0]?.slug}`
-        }
-        router.push(url)
-      }
-    }
-  }
-
-  const onClickSearch = (event) => {
-    // if (!searchTerm) {
-    //   snackbar.enqueueSnackbar(
-    //     `No search term entered!`,
-    //     { variant: "error" }
-    //   )
-    //   return
-    // }
-    let url
-    if (!searchTerm) {
-      url = `/search?q=*`
-    } else {
-      url = `/search?q=${encodeURIComponent(searchTerm)}`
-    }
-    if ((currentCategories ?? []).length > 0) {
-      url += `&category=${currentCategories?.[0]?.slug}`
-    }
-    focusSearchOnMobile(false)
-    router.push(url)
-  }
 
   const focusSearchOnMobile = (b: boolean) => {
     if (mdDown) {
@@ -174,6 +122,21 @@ const SearchOptionsAirbnb: React.FC<ReactProps> = (props) => {
       }
     }
   }
+
+  const onClickSearch = (event) => {
+    if (props.onClickSearch) {
+      props.onClickSearch(event)
+    }
+    focusSearchOnMobile(false)
+  }
+
+  const onEnterSearch = (event) => {
+    if (props.onEnterSearch) {
+      props.onEnterSearch(event)
+    }
+    focusSearchOnMobile(false)
+  }
+
 
 
   React.useEffect(() => {
@@ -189,7 +152,7 @@ const SearchOptionsAirbnb: React.FC<ReactProps> = (props) => {
     // pageUI needs to be synced to
     // index (as the number of pages can shrink to 1)
     setPageUi(index+1)
-    if (option(paginationParams).setPageParam()) {
+    if (paginationParams?.setPageParam) {
       paginationParams.setPageParam(index+1)
     }
   }, [index])
@@ -217,6 +180,7 @@ const SearchOptionsAirbnb: React.FC<ReactProps> = (props) => {
   // console.log('focused: ', focused)
   // console.log('mobileFocused: ', mobileFocused)
   // console.log(`mdDown && !focused: ${mdDown && !focused}`)
+  // console.log('totalCount: ', totalCount)
 
   return (
     <div className={clsx(
@@ -309,7 +273,7 @@ const SearchOptionsAirbnb: React.FC<ReactProps> = (props) => {
                   // hide on mobile when not focused
                   categoryFocused && classes.boxShadow,
                 )}
-                isCategoriesPage={isCategoriesPage}
+                syncUrlToCategory={syncUrlToCategory}
                 currentCategories={props.currentCategories}
                 setCurrentCategories={(categories) => {
                   props.setCurrentCategories(categories)
@@ -321,7 +285,7 @@ const SearchOptionsAirbnb: React.FC<ReactProps> = (props) => {
                   setCategoryFocused(b)
                 }}
                 dropDownItems={
-                  props.isCategoriesPage
+                  props.syncUrlToCategory
                   ? [ ...(categories ?? []) ]
                   : [
                       {
@@ -435,11 +399,12 @@ const SearchOptionsAirbnb: React.FC<ReactProps> = (props) => {
           style={props.paginatorStyles}
         >
           <Pagination
+            size={mdDown ? "small" : "medium"}
             classes={{
               root: classes.paginationPage,
             }}
+            count={totalCount}
             disabled={totalCount === 0}
-            count={totalCount || 0}
             page={pageUi}
             onMouseDown={(e) => {
               // console.log("mouse down: ", e)
@@ -447,9 +412,13 @@ const SearchOptionsAirbnb: React.FC<ReactProps> = (props) => {
             onChange={(event, page) => {
               // update paginator UI first
               setPageUi(page)
+              if (paginationParams?.setPageParam) {
+                paginationParams.setPageParam(page)
+              }
+              setIndex(page - 1)
               // then update pageParams (gQL request) + index change in carousel
-              debounceSetPageParam(page)
-              debounceSetIndex(page - 1)
+              // debounceSetPageParam(page)
+              // debounceSetIndex(page - 1)
             }}
           />
         </div>
@@ -598,6 +567,8 @@ interface ReactProps extends WithStyles<typeof styles> {
     onNextPage?(a?: any): void;
   };
   setFocusedOuter?(b: boolean): void;
+  onClickSearch(event?: any): void;
+  onEnterSearch(event?: any): void;
   // styles overrrides
   styles?: any;
   filterSectionStyles?: any;
@@ -608,7 +579,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   // for bottom section, where the child components + paginators are
   bottomSectionStyles?: any;
   paginatorStyles?: any;
-  isCategoriesPage?: boolean;
+  syncUrlToCategory?: boolean;
   disableCategories?: boolean;
   disableSearchFilter?: boolean;
   disablePriceFilter?: boolean;

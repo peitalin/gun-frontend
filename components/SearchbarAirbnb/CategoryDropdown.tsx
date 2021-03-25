@@ -80,8 +80,10 @@ const CategoryDropdown: React.FC<ReactProps> = (props) => {
           <div className={classes.categoryDropdownContainer}>
             <div className={classes.categoryButtonsContainer}>
               {
-                props.isCategoriesPage
+                props.syncUrlToCategory
                 ? dropDownItems.map((category, i) => {
+                    // a category change triggers a route change
+                    // if we enable syncUrlToCategory
                     return (
                       <Link key={category.name + `${i}`}
                         href="/categories/[categorySlug]"
@@ -166,7 +168,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   setMobileFocused?(a: boolean): void;
   currentCategories?: Categories[];
   setCurrentCategories(c: Categories[]): void;
-  isCategoriesPage?: boolean;
+  syncUrlToCategory?: boolean;
 }
 
 

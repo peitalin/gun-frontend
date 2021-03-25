@@ -1,7 +1,6 @@
 import React from "react";
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 import { Colors, BorderRadius4x } from "layout/AppTheme";
-import ErrorBounds from "components/ErrorBounds";
 // MUI
 import SearchIcon from '@material-ui/icons/Search';
 import InputBase from '@material-ui/core/InputBase';
@@ -11,12 +10,11 @@ import { useSnackbar } from "notistack";
 
 // Search Component
 import { Categories } from "typings/gqlTypes";
-import SearchOptionsAirbnb from "./SearchOptionsAirbnb";
+import SearchOptionsAirbnb from "components/SearchbarAirbnb/SearchOptionsAirbnb";
 import {
   useFacetSearchOptions,
   useEffectUpdateGridAccum,
   totalItemsInCategoriesFacets,
-  PaginatorType,
 } from "utils/hooksFacetSearch";
 // Responsiveness
 import { useTheme } from "@material-ui/core/styles";
@@ -67,7 +65,7 @@ const SearchbarMain = (props: SearchbarProps) => {
     limit: numItemsPerPage * overfetchBy,
     overfetchBy: overfetchBy,
     // router: router,
-    // paginatorType: PaginatorType.page,
+    syncUrlParams: false,
   })
 
   // sync selected category in searchbar to SSR category from url bar
@@ -78,10 +76,48 @@ const SearchbarMain = (props: SearchbarProps) => {
   }, [props.initialRouteCategory])
 
 
+  const onEnterSearch = (event) => {
+    // Desktop only
+    if (event.key === "Enter") {
+      if (mdDown) {
+        snackbar.enqueueSnackbar(
+          `Click search button`,
+          { variant: "info" }
+        )
+      } else {
+        let url
+        if ((currentCategories ?? []).length > 0) {
+          url = `/categories/${currentCategories?.[0]?.slug}`
+        } else {
+          url = `/categories/all`
+        }
+        if (searchTerm) {
+          url += `?q=${encodeURIComponent(searchTerm)}`
+        }
+        router.push(url)
+      }
+    }
+  }
+
+  const onClickSearch = (event) => {
+    let url
+    if ((currentCategories ?? []).length > 0) {
+      url = `/categories/${currentCategories?.[0]?.slug}`
+    } else {
+      url = `/categories/all`
+    }
+    if (searchTerm) {
+      url += `?q=${encodeURIComponent(searchTerm)}`
+    }
+    router.push(url)
+  }
+
   return (
     <SearchOptionsAirbnb
       searchTerm={searchTerm}
       setSearchTerm={setSearchTerm}
+      onClickSearch={onClickSearch}
+      onEnterSearch={onEnterSearch}
       // facets={facets}
       // setCategoryFacets={setCategoryFacets({ facets, setFacets })}
       setCurrentCategories={setCurrentCategories as any}

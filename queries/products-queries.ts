@@ -60,12 +60,12 @@ export const GET_PRODUCT = gql`
 
 export const GET_PRODUCTS_BY_CATEGORY = gql`
   query productsByCategoryConnection(
-    $categorySlug: String!
+    $categorySlugs: [String]!
     $query: ConnectionOffsetQuery!
     $searchTerm: String
   ) {
     productsByCategoryConnection(
-      categorySlug: $categorySlug
+      categorySlugs: $categorySlugs
       query: $query
       searchTerm: $searchTerm
     ) {

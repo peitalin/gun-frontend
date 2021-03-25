@@ -64,7 +64,7 @@ const BannerCategoryMobile: NextPage<ReactProps> = (props) => {
         background: bannerDither
       }}
       height={
-        !!props.blurb ? 210 : 110
+        !!props.blurb ? 210 : 140
       }
       dither={true}
     >

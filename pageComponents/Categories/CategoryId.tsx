@@ -1,6 +1,5 @@
 
 import React from "react";
-import {oc as option} from "ts-optchain";
 import clsx from "clsx";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
@@ -35,25 +34,19 @@ import { useCategoriesList } from "layout/NavBarMain/CategoryBar/categoryHooks";
 // useMediaQuery
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
-// Analytics
-import { useAnalytics } from "utils/analytics";
-// Meta headers
-import MetaHeadersPage from "layout/MetaHeadersPage";
 import AlignCenterLayout from "components/AlignCenterLayout";
 // Search Component
-import SearchOptionsAirbnb from "pageComponents/FrontPage/BannerHome/SearchbarMain/SearchOptionsAirbnb";
+import SearchOptionsAirbnb from "components/SearchbarAirbnb/SearchOptionsAirbnb";
 import {
   useFacetSearchOptions,
   useEffectUpdateGridAccum,
   totalItemsInCategoriesFacets,
-  PaginatorType,
 } from "utils/hooksFacetSearch";
 import BannerCategory from "./BannerCategory";
 // Grid Components
 import GridPaginatorGeneric from "components/GridPaginatorGeneric";
 import GridPreviewCardLight from "components/GridPreviewCardLight";
 // import BannerCategory from "components/Banners/BannerCategory";
-import Redirect from "pageComponents/Redirect";
 import { useSnackbar } from "notistack";
 
 
@@ -105,8 +98,15 @@ const CategoryId: React.FC<ReactProps> = (props) => {
     limit: numItemsPerPage * overfetchBy,
     overfetchBy: overfetchBy,
     router: router,
-    paginatorType: PaginatorType.page,
+    syncUrlParams: true,
   })
+
+  const [searchTermForGql, setSearchTermForGql] = React.useState<string>(
+    (router?.query?.q as any)
+  )
+  const [categorySlugsForGql, setCategorySlugsForGql] = React.useState(
+    [props.initialRouteCategory?.slug]
+  )
 
 
   const { data, loading, error } = useQuery<QueryData1, QueryVar1>(
@@ -116,18 +116,17 @@ const CategoryId: React.FC<ReactProps> = (props) => {
         limit: limit,
         offset: offset
       },
-      categorySlug: props.initialRouteCategory?.slug
-        ?? (router?.query?.categorySlug as any),
-      searchTerm: searchTerm || "*",
+      // categorySlug: props.initialRouteCategory?.slug
+      //   ?? (router?.query?.categorySlug as any),
+      categorySlugs: categorySlugsForGql,
+      // require button click to change search
+      searchTerm: searchTermForGql || "*",
+      // require button click to change search
     },
     fetchPolicy: "cache-and-network",
     ssr: true,
   });
 
-
-  const categoryName: string = props.initialRouteCategory?.name
-  const categoryBlurb: string = props.initialRouteCategory?.blurb
-  const categorySlug: string = props.initialRouteCategory?.slug
 
   // sync selected category in searchbar to SSR category from url bar
   React.useEffect(() => {
@@ -146,19 +145,35 @@ const CategoryId: React.FC<ReactProps> = (props) => {
 
   let totalItemsInFacet = totalItemsInCategoriesFacets({
     facets: facets,
-    facetsDistribution: option(productsConnection).facetsDistribution() as any,
+    facetsDistribution: productsConnection?.facetsDistribution as any,
     productsConnection: productsConnection as any,
     totalCount: totalCount,
-    searchTerm: searchTerm,
+    searchTerm: searchTermForGql,
   })
   // console.log("totalItemsInFacet: ", totalItemsInFacet)
   // console.log("initialRouteCategory: ", props.initialRouteCategory)
   // console.log("categorySlug: ", categorySlug)
+  // console.log("currentCategories: ", currentCategories)
 
   // check pageParam sync on url, facetHooks, and UI component
   // console.log("pageParam: ", pageParam)
   // console.log("index: ", index)
+  // console.log("offset: ", offset)
 
+  const onEnterSearch = (event) => {
+    // Desktop only
+    if (event.key === "Enter") {
+      setPageParam(1) // reset to page 1 every time you hit search button
+      setSearchTermForGql(searchTerm)
+      setCategorySlugsForGql(currentCategories.map(c => c.slug))
+    }
+  }
+
+  const onClickSearch = (event) => {
+    setPageParam(1) // reset to page 1 every time you hit search button
+    setSearchTermForGql(searchTerm)
+    setCategorySlugsForGql(currentCategories.map(c => c.slug))
+  }
 
 
   return (
@@ -168,13 +183,6 @@ const CategoryId: React.FC<ReactProps> = (props) => {
       pageRecommendationsContainerClassname={classes.greyBackground}
       withRecommendations={false}
     >
-      {
-        !disableMetaHeader &&
-        <MetaHeadersPage
-          title={`${categoryName}`}
-          description={`Search categories of firearms`}
-        />
-      }
 
       <div className={clsx(
         classes.flexColStart,
@@ -189,9 +197,8 @@ const CategoryId: React.FC<ReactProps> = (props) => {
             : classes.bannerContainer
         }>
           <BannerCategory
-            categoryName={categoryName}
-            categorySlug={categorySlug}
-            categoryBlurb={categoryBlurb}
+            disableMetaHeader={disableMetaHeader}
+            currentCategories={currentCategories}
           />
         </div>
 
@@ -204,12 +211,14 @@ const CategoryId: React.FC<ReactProps> = (props) => {
             <SearchOptionsAirbnb
               searchTerm={searchTerm}
               setSearchTerm={setSearchTerm}
+              onClickSearch={onClickSearch}
+              onEnterSearch={onEnterSearch}
               // facets={facets}
               // setCategoryFacets={setCategoryFacets({ facets, setFacets })}
               setCurrentCategories={setCurrentCategories}
               currentCategories={currentCategories}
-              // this turns on category-page specifc searchbar
-              isCategoriesPage={true}
+              // this turns on category-page specific searchbar syncing
+              syncUrlToCategory={false}
               setOrderBy={setOrderBy}
               setPriceRange={setPriceRange}
               placeholder={"Search for products..."}
@@ -309,7 +318,7 @@ interface QueryData1 {
 }
 interface QueryVar1 {
   query: ConnectionOffsetQuery;
-  categorySlug?: ID;
+  categorySlugs?: string[];
   searchTerm?: string;
 }
 

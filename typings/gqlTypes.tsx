@@ -11369,7 +11369,7 @@ export type QuerySearchArgs = {
 
 
 export type QueryProductsByCategoryConnectionArgs = {
-  categorySlug: Scalars['String'];
+  categorySlugs: Array<Maybe<Scalars['String']>>;
   searchTerm?: Maybe<Scalars['String']>;
   query: ConnectionOffsetQuery;
 };

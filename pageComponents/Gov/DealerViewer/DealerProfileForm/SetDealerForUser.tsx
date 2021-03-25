@@ -5,11 +5,12 @@ import { withStyles, createStyles, WithStyles, Theme, lighten } from "@material-
 import { Colors, BorderRadius } from "layout/AppTheme";
 // Material UI
 import Button from "@material-ui/core/Button";
-import { Dealer } from "typings/gqlTypes";
 import TextInput from "components/Fields/TextInput";
-import { MutData2, MutData4 } from ".";
 // Snackbar
 import { useSnackbar } from "notistack";
+// typings
+import { Dealer } from "typings/gqlTypes";
+import { MutData2, MutData4 } from ".";
 
 
 

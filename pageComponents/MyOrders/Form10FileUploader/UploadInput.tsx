@@ -39,7 +39,7 @@ const UploadInput = (props: IInputProps & ReactProps) => {
 
 
   // console.log("order UploadInput: ", props.order)
-  console.log('loading1: ', props.loading)
+  // console.log('loading1: ', props.loading)
 
   return (
     <label className={props.classes.label}>

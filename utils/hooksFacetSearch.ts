@@ -22,10 +22,6 @@ import {
 import { NextRouter } from "next/router";
 
 
-export enum PaginatorType {
-  limitOffset = "limitOffset",
-  page = "page",
-}
 
 
 export const useFacetSearchOptions = ({
@@ -33,14 +29,14 @@ export const useFacetSearchOptions = ({
   overfetchBy,
   maxPriceCents,
   router,
-  paginatorType,
+  syncUrlParams,
   scrollToTopOnPagination = false,
 }: {
   limit: number,
   overfetchBy?: number;
   maxPriceCents?: number
   router?: NextRouter,
-  paginatorType?: PaginatorType;
+  syncUrlParams?: boolean;
   scrollToTopOnPagination?: boolean;
 }): FacetSearchParams => {
 
@@ -137,9 +133,21 @@ export const useFacetSearchOptions = ({
 
       let urlPath = router.asPath.split('?')[0]
       let params: string[];
-      // console.log("routery.query:", router?.query)
+      // console.log("router.query:", router?.query)
       // console.log("urlPath:", urlPath)
       // console.log("params1: ", params)
+      // console.log("currentCategories: ", currentCategories)
+
+      if (syncUrlParams) {
+        if (urlPath.startsWith('/categories')) {
+          // /all if currentCategories is empty array
+          if (currentCategories?.length === 0 || !currentCategories?.[0]) {
+            urlPath = `/categories/all`
+          } else {
+            urlPath = `/categories/${currentCategories?.[0]?.slug}`
+          }
+        }
+      }
 
       // sync url query params with the facet Hooks params and inject
       // it into urls
@@ -181,7 +189,7 @@ export const useFacetSearchOptions = ({
         params_str = `?${params_str}`
       }
 
-      if (paginatorType === PaginatorType.page) {
+      if (syncUrlParams) {
         // shallow update pagination query params when navigating using buttons
         // https://nextjs.org/docs/routing/shallow-routing
         router.push(
@@ -191,7 +199,7 @@ export const useFacetSearchOptions = ({
         )
       }
     }
-  }, [pageParam, searchTerm])
+  }, [pageParam, searchTerm, currentCategories])
 
 
   // scroll to top when page changes
@@ -346,12 +354,14 @@ export const totalItemsInCategoriesFacets = ({
   productsConnection,
   totalCount,
   searchTerm,
+  pageParam,
 }:{
   facets: string[],
   facetsDistribution: FacetsDistributionObject,
   productsConnection: ProductsConnection,
   totalCount: number,
   searchTerm: string,
+  pageParam?: number,
 }) => {
 
   // console.log("facet distributions", facetsDistribution)
