@@ -3,10 +3,7 @@ import React from "react";
 import clsx from "clsx";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
-// GraphQL
-import {
-  GET_PRODUCTS_BY_CATEGORY,
- } from "queries/products-queries";
+import { BorderRadius3x, Colors } from "layout/AppTheme";
 // Typings
 import {
   ID,
@@ -15,26 +12,29 @@ import {
   Categories,
   ConnectionOffsetQuery,
 } from "typings/gqlTypes";
-// Utils
-import ErrorBounds from "components/ErrorBounds";
 // Router
 import { useRouter } from "next/router";
-// Components
-import CategoryBreadcrumbs from "pageComponents/P/ProductPageLayouts/CategoryBreadcrumbs";
-// MUI
-import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
-import ProductCardResponsive from "components/ProductCardResponsive";
-import Link from "next/link";
-import { BorderRadius3x, Colors } from "layout/AppTheme";
-// Apollo
+// GraphQL
+import {
+  GET_PRODUCTS_BY_CATEGORY,
+ } from "queries/products-queries";
 import { useQuery, useApolloClient } from "@apollo/client";
+// categories
 import { categorySelectors } from "utils/selectors";
 import { useCategoriesList } from "layout/NavBarMain/CategoryBar/categoryHooks";
 // useMediaQuery
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
+// Components
+import Typography from "@material-ui/core/Typography";
 import AlignCenterLayout from "components/AlignCenterLayout";
+import Switch from '@material-ui/core/Switch';
+import ProductCardResponsive from "components/ProductCardResponsive";
+import ProductCardAsRow from "components/ProductCardAsRow";
+import IconButton from "@material-ui/core/IconButton";
+// import ListIcon from "@material-ui/icons/ViewList";
+import ListIcon from "@material-ui/icons/List";
+import GridIcon from "@material-ui/icons/ViewModule";
 // Search Component
 import SearchOptionsAirbnb from "components/SearchbarAirbnb/SearchOptionsAirbnb";
 import {
@@ -107,6 +107,7 @@ const CategoryId: React.FC<ReactProps> = (props) => {
   const [categorySlugsForGql, setCategorySlugsForGql] = React.useState(
     [props.initialRouteCategory?.slug]
   )
+  const [rowMode, setRowMode] = React.useState(false)
 
 
   const { data, loading, error } = useQuery<QueryData1, QueryVar1>(
@@ -202,6 +203,7 @@ const CategoryId: React.FC<ReactProps> = (props) => {
           />
         </div>
 
+
         <div className={classes.searchContainer}>
           <div className={
             mdDown
@@ -238,8 +240,33 @@ const CategoryId: React.FC<ReactProps> = (props) => {
               // disableCategories
               maxCategoryInputWidth={250}
             />
+            <div className={classes.listOrGridContainer}>
+              <IconButton
+                className={classes.listOrGridButtonLeft}
+                onClick={() => setRowMode(false)}
+                size={"medium"}
+              >
+                <GridIcon className={
+                  !rowMode
+                    ? classes.listOrGridIconSelected
+                    : classes.listOrGridIcon
+                }/>
+              </IconButton>
+              <IconButton
+                className={classes.listOrGridButtonRight}
+                onClick={() => setRowMode(true)}
+                size={"medium"}
+              >
+                <ListIcon className={
+                  rowMode
+                    ? classes.listOrGridIconSelected
+                    : classes.listOrGridIcon
+                }/>
+              </IconButton>
+            </div>
           </div>
         </div>
+
 
         <div className={classes.sectionContainer}>
           {
@@ -265,7 +292,9 @@ const CategoryId: React.FC<ReactProps> = (props) => {
             disableAnimation
             loading={loading}
             containerStyle={{ minHeight: 284*2 }}
-            // gridItemClassName={classes.gridItem}
+            gridItemClassName={
+              rowMode ? classes.gridItemRow : classes.gridItemCard
+            }
           >
             {({ node: product }) => {
 
@@ -278,13 +307,17 @@ const CategoryId: React.FC<ReactProps> = (props) => {
               return (
                 <div key={product.id}
                   className={clsx(
-                    classes.flexItem,
+                    rowMode ? classes.flexItemRows : classes.flexItemCards,
                     classes.marginRight1,
                   )}
                 >
-                  <ProductCardResponsive
-                    product={product}
-                  />
+                  {
+                    rowMode
+                    ? <ProductCardAsRow product={product}/>
+                    : <ProductCardResponsive
+                        product={product}
+                      />
+                  }
                   {/* {
                     mdDown
                     ? <ProductCardResponsive
@@ -356,8 +389,11 @@ export const styles = (theme: Theme) => createStyles({
     justifyContent: 'flex-start',
     flexWrap: 'wrap',
   },
-  flexItem: {
+  flexItemCards: {
     marginBottom: '1rem',
+  },
+  flexItemRows: {
+    marginBottom: '.25rem',
   },
   marginRight1: {
     marginRight: '1rem',
@@ -377,54 +413,6 @@ export const styles = (theme: Theme) => createStyles({
     width: '100%',
     minHeight: 600,
   },
-  tagContainer: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "flex-start",
-    alignItems: "center",
-    flexWrap: 'wrap',
-    margin: '0rem 1rem 1rem 0rem',
-  },
-  buttonRoot: {
-    marginRight: '0.5rem',
-    marginBottom: '0.5rem',
-    background: fade(Colors.cream, 1),
-    // border: `1xp solid ${Colors.charcoal}`,
-    border: 'none',
-    // borderRadius: '2rem',
-    transition:  theme.transitions.create(['background', 'color'], {
-      easing: theme.transitions.easing.easeIn,
-      duration: 200,
-    }),
-    "&:hover": {
-      // background: Colors.lightGrey,
-      background: Colors.charcoal,
-      color: Colors.white,
-      transition:  theme.transitions.create(['background', 'color'], {
-        easing: theme.transitions.easing.easeIn,
-        duration: 200,
-      })
-    },
-  },
-  buttonSelected: {
-    background: Colors.darkGrey,
-    color: Colors.cream,
-    "&:hover": {
-      background: Colors.darkerGrey,
-      color: Colors.red,
-      transition:  theme.transitions.create('background', {
-        easing: theme.transitions.easing.easeIn,
-        duration: 100,
-      })
-    },
-  },
-  breadCrumbsContainer: {
-  },
-  breadCrumbsContainerSm: {
-    position: "absolute",
-    top: '1rem',
-    zIndex: 1,
-  },
   title: {
     marginTop: '1rem',
     marginBottom: '0.5rem',
@@ -433,17 +421,6 @@ export const styles = (theme: Theme) => createStyles({
   subtitle: {
     marginBottom: '1rem',
     color: Colors.lightGrey,
-  },
-  titleDark: {
-    marginTop: '1rem',
-    marginBottom: '1rem',
-    color: Colors.charcoal,
-    //dark background, light fonts
-  },
-  subtitleDark: {
-    marginBottom: '1rem',
-    color: Colors.charcoal,
-    //dark background, light fonts
   },
   greyBackground: {
     backgroundColor: Colors.lightestGrey,
@@ -461,12 +438,12 @@ export const styles = (theme: Theme) => createStyles({
   searchContainer: {
     position: "relative",
     maxWidth: 1160,
-    padding: '0rem 1rem 1rem 1rem',
+    // padding: '0rem 1rem 1rem 1rem',
     width: '100%',
   },
   searchContainerInner: {
     marginTop: "-2rem",
-    marginBottom: "2rem",
+    marginBottom: "2.5rem",
     height: '2rem',
     display: 'flex',
     justifyContent: 'center',
@@ -491,6 +468,70 @@ export const styles = (theme: Theme) => createStyles({
     maxWidth: 1160,
     padding: '0rem',
     width: '100%',
+  },
+  gridItemRow: {
+    width: '100%',
+  },
+  gridItemCard: {
+  },
+  listOrGridContainer: {
+    paddingLeft: '0.25rem',
+    paddingRight: '1rem',
+    // marginBottom: '1rem',
+    display: "flex",
+    flexDirection: "row",
+    // width: '100%',
+    justifyContent: "flex-end",
+  },
+  listOrGridButtonLeft: {
+    borderRadius: `${BorderRadius3x}px 0px 0px ${BorderRadius3x}px`,
+    background: theme.palette.type === 'dark'
+      ? `${Colors.uniswapDarkNavy}`
+      : `${Colors.darkWhite}`,
+    "&:hover": {
+      background: theme.palette.type === 'dark'
+        ? `${Colors.uniswapMediumNavy}`
+        : `${Colors.slateGrey}`,
+    },
+    borderTop: theme.palette.type === 'dark'
+      ? `1px solid ${Colors.uniswapGrey}`
+      : `1px solid ${Colors.slateGreyDarker}`,
+    borderLeft: theme.palette.type === 'dark'
+      ? `1px solid ${Colors.uniswapGrey}`
+      : `1px solid ${Colors.slateGreyDarker}`,
+    borderBottom: theme.palette.type === 'dark'
+      ? `1px solid ${Colors.uniswapGrey}`
+      : `1px solid ${Colors.slateGreyDarker}`,
+  },
+  listOrGridButtonRight: {
+    // borderRadius: BorderRadius3x,
+    borderRadius: `0px ${BorderRadius3x}px ${BorderRadius3x}px 0px`,
+    background: theme.palette.type === 'dark'
+      ? `${Colors.uniswapDarkNavy}`
+      : `${Colors.darkWhite}`,
+    "&:hover": {
+      background: theme.palette.type === 'dark'
+        ? `${Colors.uniswapMediumNavy}`
+        : `${Colors.slateGrey}`,
+    },
+    borderTop: theme.palette.type === 'dark'
+      ? `1px solid ${Colors.uniswapGrey}`
+      : `1px solid ${Colors.slateGreyDarker}`,
+    borderRight: theme.palette.type === 'dark'
+      ? `1px solid ${Colors.uniswapGrey}`
+      : `1px solid ${Colors.slateGreyDarker}`,
+    borderBottom: theme.palette.type === 'dark'
+      ? `1px solid ${Colors.uniswapGrey}`
+      : `1px solid ${Colors.slateGreyDarker}`,
+  },
+  listOrGridIconSelected: {
+    borderRadius: BorderRadius3x,
+    fill: theme.palette.type === 'dark'
+      ? Colors.purple
+      : Colors.gradientUniswapBlue1,
+  },
+  listOrGridIcon: {
+    borderRadius: BorderRadius3x,
   },
 });
 

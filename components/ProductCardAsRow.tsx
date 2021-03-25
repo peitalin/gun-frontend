@@ -2,7 +2,7 @@ import React from "react";
 import { oc as option } from "ts-optchain";
 import clsx from "clsx";
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
-import { Colors } from "layout/AppTheme";
+import { Colors, BorderRadius } from "layout/AppTheme";
 // Redux
 import { useDispatch, useSelector } from "react-redux";
 import { Actions } from "reduxStore/actions";
@@ -21,7 +21,7 @@ import { convertSoldOutStatus } from "utils/strings";
 
 
 
-const ProductRow = (props: ReactProps) => {
+const ProductCardAsRow = (props: ReactProps) => {
 
   const {
     classes,
@@ -29,15 +29,18 @@ const ProductRow = (props: ReactProps) => {
     soldOutStatus = SoldOutStatus.AVAILABLE,
   } = props;
 
-  const featuredVariant = option(product).featuredVariant();
-  const price = option(featuredVariant).price();
-  const priceWas = option(featuredVariant).priceWas();
+  const title = product?.currentSnapshot?.title
+  const make = product?.currentSnapshot?.make
+  const model = product?.currentSnapshot?.model
+  const featuredVariant = product?.featuredVariant;
+  const price = featuredVariant?.price;
+  const priceWas = featuredVariant?.priceWas;
 
   const dispatch = useDispatch();
 
   const cardWidthStyle = {
-    width: `calc(${100}vw - ${1+1}rem)`,
-    maxWidth: 415
+    // width: `calc(${100}vw - ${1+1}rem)`,
+    // maxWidth: 415
     // getCardMaxWidth(cardsPerRow)
   };
 
@@ -68,27 +71,17 @@ const ProductRow = (props: ReactProps) => {
             <a className={classes.flexRowLink}>
               <div className={classes.flexCol}>
                 {
-                  option(product).featuredVariant.previewItems[0]() &&
+                  product?.featuredVariant?.previewItems?.[0] &&
                   <ProductPreviewCardRow
                     previewItem={product.featuredVariant.previewItems[0]}
                     className={classes.previewCard}
-                    height={75}
-                    width={75*1.6} // 16:10
+                    height={50}
+                    width={50*1.5}
                   />
                 }
               </div>
-              <div className={classes.flexCol}>
-                <div className={clsx(classes.flexCol)}>
-                  <Typography
-                    className={clsx(
-                      classes.category,
-                      !option(product).category.name() ? "pulse" : null
-                    )}
-                    variant="body1"
-                    component="div"
-                  >
-                    {option(product).category.name()}
-                  </Typography>
+              <div className={classes.flexRow}>
+                <div className={classes.flexCellItem}>
                   <Typography
                     className={clsx(
                       classes.title,
@@ -97,9 +90,45 @@ const ProductRow = (props: ReactProps) => {
                     variant="body1"
                     component="div"
                   >
-                    {!product?.currentSnapshot?.title}
+                    { title ? title : "" }
                   </Typography>
+                  <Typography
+                    className={classes.makeModel}
+                    variant="body2"
+                    component="div"
+                  >
+                    {`${make} - ${model}`}
+                  </Typography>
+                </div>
 
+                <div className={classes.flexCellItem}>
+                  {
+                    product?.currentSnapshot?.actionType &&
+                    <div className={classes.actionTag}>
+                      <Typography
+                        className={classes.actionType}
+                        variant="body2"
+                        component="div"
+                      >
+                        {product?.currentSnapshot?.actionType}
+                      </Typography>
+                    </div>
+                  }
+                  {
+                    product?.currentSnapshot?.caliber &&
+                    <div className={classes.actionTag}>
+                      <Typography
+                        className={classes.actionType}
+                        variant="body2"
+                        component="div"
+                      >
+                        {product?.currentSnapshot?.caliber}
+                      </Typography>
+                    </div>
+                  }
+                </div>
+
+                <div className={classes.flexCellItemSmall}>
                   <div className={clsx(
                     classes.priceAbsoluteBottom,
                     !price ? "pulse" : null
@@ -132,29 +161,26 @@ const styles = (theme: Theme) => createStyles({
   root: {
     display: 'flex',
     flexDirection: 'row',
+    position: 'relative',
   },
   flexCol: {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
   },
-  flexRowOuter: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    width: '100%',
-    margin: "0.5rem",
-  },
   flexRow: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'flex-start',
+    width: '100%',
   },
   flexRowLink: {
     display: 'flex',
     flexDirection: 'row',
-    alignItems: 'flex-start',
-    justifyContent: 'flex-start',
+    // alignItems: 'flex-start',
+    // justifyContent: 'flex-start',
+    alignItems: 'center',
+    justifyContent: 'center',
     width: '100%',
   },
   flexRowWithBorder: {
@@ -162,16 +188,28 @@ const styles = (theme: Theme) => createStyles({
     flexDirection: 'row',
     flexWrap: 'wrap',
     marginRight: '0rem',
-    marginBottom: '1rem',
-    paddingBottom: '1rem',
+    // paddingBottom: '0.5rem',
+    alignItems: "center",
+    justifyContent: "center",
     paddingTop: 0,
-    borderBottom: `1px solid ${Colors.lightestGrey}`,
+    borderRadius: BorderRadius,
+    background: theme.palette.type === 'dark'
+      ? `${Colors.uniswapDarkNavy}`
+      : `${Colors.cream}`,
     "&:hover": {
-      borderBottom: `1px solid ${Colors.lightestGrey}`,
-      transition: theme.transitions.create('border', {
-        easing: theme.transitions.easing.easeIn,
-      })
+      background: theme.palette.type === 'dark'
+        ? `${Colors.uniswapLightNavy}`
+        : `${Colors.slateGrey}`,
     },
+    // border: theme.palette.type === 'dark'
+    //   ? `1px solid ${Colors.uniswapLightNavy}`
+    //   : `1px solid ${Colors.slateGrey}`,
+  },
+  flexCellItem: {
+    flexBasis: '45%',
+  },
+  flexCellItemSmall: {
+    flexBasis: '15%',
   },
   marginLeft: {
     marginLeft: "1rem",
@@ -205,7 +243,7 @@ const styles = (theme: Theme) => createStyles({
     width: 'calc(100%)',
   },
   previewCard: {
-    marginRight: '0.5rem',
+    marginRight: '1rem',
     borderRadius: '4px',
   },
   price: {
@@ -214,8 +252,34 @@ const styles = (theme: Theme) => createStyles({
     fontWeight: 600,
     color: Colors.green
   },
+  makeModel: {
+    textTransform: "uppercase",
+    fontWeight: 500,
+    fontSize: '0.9rem',
+    color: theme.palette.type === 'dark'
+      ? Colors.uniswapLighterGrey
+      : Colors.slateGreyLightBlack,
+    lineHeight: '1rem',
+  },
+  actionTag: {
+    // position: 'absolute',
+    bottom: '0.25rem',
+    right: '0rem',
+    // border: theme.palette.type === 'dark'
+    //   ? `1px solid ${Colors.uniswapLighterGrey}`
+    //   : `1px solid ${Colors.slateGreyDarker}`,
+    borderRadius: BorderRadius,
+  },
+  actionType: {
+    textTransform: "uppercase",
+    fontWeight: 500,
+    fontSize: '0.9rem',
+    color: theme.palette.type === 'dark'
+      ? Colors.uniswapLighterGrey
+      : Colors.slateGreyDarkest,
+  },
 });
 
 
 
-export default withStyles(styles)(ProductRow);
+export default withStyles(styles)(ProductCardAsRow);

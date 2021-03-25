@@ -164,7 +164,7 @@ const MyOrders: React.FC<ReactProps> = (props) => {
           orderBy: { createdAt: Order_By.DESC }
         }
       },
-      onCompleted: (data) => console.log("completed SAI", data),
+      // onCompleted: (data) => console.log("completed SAI", data),
       fetchPolicy: "network-only",
     }
   );
