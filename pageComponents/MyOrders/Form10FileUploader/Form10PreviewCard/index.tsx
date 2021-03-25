@@ -103,8 +103,7 @@ const Form10PreviewCard: React.FC<ReactProps> = (props) => {
   let orderStatus = props?.order?.currentSnapshot?.orderStatus;
   let tipText = tipTextFromOrderStatus(orderStatus)
 
-  console.log("loading: ", props.loading)
-  console.log("tipText: ", tipText)
+  console.log("loading2: ", props.loading)
 
   return (
     <div className={classes.cardContainer}>

@@ -17,15 +17,6 @@ import { Order, OrderStatus } from "typings/gqlTypes";
 import Tooltip from '@material-ui/core/Tooltip';
 import ClearIcon from "@material-ui/icons/Clear";
 import IconButton from "@material-ui/core/IconButton";
-import Tick from "components/Icons/Tick";
-// graphl
-import { useMutation, useQuery } from "@apollo/client";
-import {
-  GET_BUYER_ORDERS_CONNECTION,
-  GET_SELLER_ORDERS_CONNECTION,
-} from "queries/orders-queries";
-import { REMOVE_FORM_10 } from "queries/orders-mutations";
-import { ADD_FORM_10 } from "queries/orders-mutations";
 
 
 
@@ -46,40 +37,9 @@ const UploadInput = (props: IInputProps & ReactProps) => {
   const ref = React.useRef();
   const order = props.order
 
-  const refetchQueriesList = [
-    {
-      query: GET_SELLER_ORDERS_CONNECTION,
-      variables: { query: { limit: 10, offset: 0 } }
-    },
-    {
-      query: GET_BUYER_ORDERS_CONNECTION,
-      variables: { query: { limit: 10, offset: 0 } }
-    },
-  ]
-
-
-  const handleRemoveForm10 = async() => {
-    return await removeForm10({
-      variables: {
-        orderId: order?.id,
-      },
-      refetchQueries: refetchQueriesList,
-    })
-  }
-
-  const [
-    removeForm10,
-    removeForm10Response
-  ] = useMutation<MutDataRemove, MutVarRemove>(
-    REMOVE_FORM_10, {
-      variables: {
-        orderId: order?.id,
-      },
-      refetchQueries: refetchQueriesList,
-    }
-  );
 
   // console.log("order UploadInput: ", props.order)
+  console.log('loading1: ', props.loading)
 
   return (
     <label className={props.classes.label}>
@@ -102,7 +62,7 @@ const UploadInput = (props: IInputProps & ReactProps) => {
         order?.currentSnapshot?.orderStatus === OrderStatus.FORM_10_SUBMITTED &&
         <Tooltip title="Remove file" placement={"right"}>
           <IconButton
-            onClick={handleRemoveForm10}
+            onClick={props.handleRemoveForm10}
             className={classes.previewIconButton}
             classes={{
               root: classes.iconButton,
@@ -139,7 +99,7 @@ const UploadInput = (props: IInputProps & ReactProps) => {
           props.loading &&
           <LoadingBar
             absoluteTop
-            color={Colors.gradientUniswapBlue1}
+            color={props.loadingColor ?? Colors.gradientUniswapBlue1}
             height={4}
             width={'100%'}
             loading={true}
@@ -182,17 +142,11 @@ const UploadInput = (props: IInputProps & ReactProps) => {
 
 interface ReactProps extends WithStyles<typeof styles> {
   disableButton?: boolean;
-  loading?: boolean;
+  loading: boolean;
+  loadingColor?: any;
   buttonText?: string;
   order?: Order;
-}
-
-// remove form10
-interface MutDataRemove {
-  order: Order
-}
-interface MutVarRemove {
-  orderId: string
+  handleRemoveForm10(a: any): Promise<any>;
 }
 
 export const styles = (theme: Theme) => createStyles({

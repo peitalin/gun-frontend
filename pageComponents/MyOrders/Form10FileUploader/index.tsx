@@ -20,7 +20,10 @@ import {
   GET_BUYER_ORDERS_CONNECTION,
   GET_SELLER_ORDERS_CONNECTION,
 } from "queries/orders-queries";
-import { ADD_FORM_10 } from "queries/orders-mutations";
+import {
+  ADD_FORM_10,
+  REMOVE_FORM_10,
+} from "queries/orders-mutations";
 
 // Typings
 import { Order, UploadType, OrderStatus } from "typings/gqlTypes";
@@ -48,6 +51,7 @@ const FileUploader: React.FC<ReactProps> = (props) => {
 
   const [googleUploads, setGoogleUploads] = React.useState<GoogleUpload[]>([]);
   const [loading, setLoading] = React.useState(false);
+  const [loadingColor, setLoadingColor] = React.useState(Colors.gradientUniswapBlue1);
 
   const aClient = useApolloClient();
   const snackbar = useSnackbar();
@@ -203,6 +207,31 @@ const FileUploader: React.FC<ReactProps> = (props) => {
     }
   );
 
+  const handleRemoveForm10 = async() => {
+    setLoading(true)
+    setLoadingColor(Colors.red)
+    return await removeForm10({
+      variables: {
+        orderId: order?.id,
+      },
+      refetchQueries: refetchQueriesList,
+    }).finally(() => {
+      setLoading(false)
+      setLoadingColor(Colors.gradientUniswapBlue1)
+    })
+  }
+
+  const [
+    removeForm10,
+    removeForm10Response
+  ] = useMutation<MutDataRemove, MutVarRemove>(
+    REMOVE_FORM_10, {
+      variables: {
+        orderId: order?.id,
+      },
+      refetchQueries: refetchQueriesList,
+    }
+  );
 
   let orderStatus = props?.order?.currentSnapshot?.orderStatus;
 
@@ -263,7 +292,6 @@ const FileUploader: React.FC<ReactProps> = (props) => {
         LayoutComponent={(layProps) =>
           <UploadLayoutPreviews
             order={order}
-            loading={loading}
             {...layProps}
           />
         }
@@ -271,6 +299,9 @@ const FileUploader: React.FC<ReactProps> = (props) => {
           <UploadInput
             order={order}
             disableButton={disableButton}
+            loading={loading}
+            loadingColor={loadingColor}
+            handleRemoveForm10={handleRemoveForm10}
             buttonText={buttonText}
             {...layProps}
           />
@@ -312,6 +343,14 @@ interface MutVarAdd {
   orderId: string
   form10FileId: string
 }
+// remove form10
+interface MutDataRemove {
+  order: Order
+}
+interface MutVarRemove {
+  orderId: string
+}
+
 
 interface ReactProps extends WithStyles<typeof styles> {
   order: Order;
