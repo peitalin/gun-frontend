@@ -14,9 +14,6 @@ import {
 import {
   GET_USER_BIDS_FOR_PRODUCT
 } from "queries/chat-queries";
-// Utils Components
-import ErrorBounds from "components/ErrorBounds";
-import Loading from "components/Loading";
 import CategoryBreadcrumbs from "./ProductPageLayouts/CategoryBreadcrumbs";
 import { FlexBasis33, FlexBasis66 } from "./ProductPageLayouts/FlexBasis";
 import ProductPageContainer from "./ProductPageLayouts/ProductPageContainer";

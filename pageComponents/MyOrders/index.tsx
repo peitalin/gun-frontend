@@ -17,35 +17,25 @@ import {
 
 // graphl
 import { useLazyQuery, useQuery } from "@apollo/client";
-
-// Utils Components
-import ErrorBounds from "components/ErrorBounds";
-import Tick from "components/Icons/Tick";
 // MUI
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 // Subcomponents
-import ToolTips from "pageComponents/MyOrders/ToolTips";
 import OrderRowSellers from "pageComponents/MyOrders/OrderRowSellers";
 import OrderRowBuyers from "pageComponents/MyOrders/OrderRowBuyers";
-import PurchaseSuccessBanner from "pageComponents/MyOrders/PurchaseSuccessBanner";
+import LoadingBar from "components/LoadingBar";
 import {
   UserPrivate,
   OrderStatus,
   OrdersConnection,
   Order,
   Order_By,
-  Orders_Order_By,
 } from "typings/gqlTypes";
-// Icons
-import ClearIcon from "@material-ui/icons/Clear";
-import IconButton from "@material-ui/core/IconButton";
 // CSS
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 // Utils Component
 import ErrorDisplay from "components/Error";
-import PaginateButtons from "components/Paginators/PaginateButtons";
 import AlignCenterLayout from "components/AlignCenterLayout";
 // Analytics
 import { useRouter } from "next/router";
@@ -66,7 +56,7 @@ import GridPaginatorGeneric from "components/GridPaginatorGeneric";
 /////////////////////////////////// paginator
 let numItemsPerPage = 4;
 let overfetchBy = 1;
-let maxWidthForOrdersComponent = 960
+let MAX_WIDTH_ORDERS_PAGER = 900
 
 
 
@@ -74,9 +64,15 @@ let maxWidthForOrdersComponent = 960
 const MyOrders: React.FC<ReactProps> = (props) => {
 
   const { classes } = props;
-  const router = useRouter();
 
+  const router = useRouter();
   const theme = useTheme();
+  const mdDown = useMediaQuery(theme.breakpoints.down("md"))
+  const maxWidthForOrders = mdDown ? '100%' : MAX_WIDTH_ORDERS_PAGER
+
+  const isDarkMode = useSelector<GrandReduxState, boolean>(
+    s => s.reduxLogin.darkMode === 'dark'
+  )
 
   //// BUYER ORDERS Paginator Hooks
   let {
@@ -180,10 +176,6 @@ const MyOrders: React.FC<ReactProps> = (props) => {
     getSellerOrdersActionItems()
   }, [])
 
-  // console.log("buyer data::::: ", buyerOrdersResponse?.data)
-  // console.log("seller action items data::::: ", sellerOrdersResponse?.data)
-  // console.log("seller data::::: ", sellerOrdersResponse?.data)
-
   const buyerOrdersConnection =
     buyerOrdersResponse?.data?.user?.buyerOrdersConnection
     || props.initialBuyerOrders;
@@ -245,15 +237,28 @@ const MyOrders: React.FC<ReactProps> = (props) => {
   const noOrdersExist = () => {
     return !buyerOrdersConnection?.edges?.[0] &&
           !sellerOrdersConnection?.edges?.[0] &&
-          !sellerOrdersActionItemsConnection?.edges?.[0] &&
-          !sellerOrdersActionItemsResponse.loading &&
-          !buyerOrdersResponse.loading &&
-          !sellerOrdersResponse.loading
+          !sellerOrdersActionItemsConnection?.edges?.[0]
+          && !requestsAreLoading()
   }
+  const requestsAreLoading = () => {
+    return sellerOrdersActionItemsResponse.loading ||
+          buyerOrdersResponse.loading ||
+          sellerOrdersResponse.loading
+  }
+
+
+  // console.log("buyer data::::: ", buyerOrdersResponse?.data)
+  // console.log("seller action items data::::: ", sellerOrdersResponse?.data)
+  // console.log("seller data::::: ", sellerOrdersResponse?.data)
+
 
   if (noOrdersExist()) {
     return (
-      <OrdersLayout {...props}>
+      <OrdersLayout
+        classes={classes}
+        withRecommendations={props.withRecommendations}
+        maxWidthForOrders={maxWidthForOrders}
+      >
         <div className={classes.emptyItems}>
           <Typography variant="body1" className={classes.emptyItemsTitle}>
             Your saved orders will appear here
@@ -269,7 +274,24 @@ const MyOrders: React.FC<ReactProps> = (props) => {
     )
   } else {
     return (
-      <OrdersLayout {...props}>
+      <OrdersLayout
+        classes={classes}
+        withRecommendations={props.withRecommendations}
+        maxWidthForOrders={maxWidthForOrders}
+      >
+
+        {
+          requestsAreLoading() &&
+          <LoadingBar
+            absoluteTop
+            color={
+              isDarkMode ? Colors.purple : Colors.gradientUniswapBlue1
+            }
+            height={4}
+            width={'100%'}
+            loading={true}
+          />
+        }
 
         {
           (sellerOrdersActionItemsConnection?.totalCount > 0) &&
@@ -441,7 +463,7 @@ const MyOrders: React.FC<ReactProps> = (props) => {
               className={classes.rowContainer}
               classNameRoot={classes.gridRootSeller}
               containerStyle={{
-                maxWidth: `calc(${maxWidthForOrdersComponent}px - 2rem)`,
+                maxWidth: `calc(${maxWidthForOrders}px - 2rem)`,
                 // -2rem to account for 2rem padding or orders rows
                 // overflows out of the paginator-grid
               }}
@@ -474,30 +496,28 @@ const MyOrders: React.FC<ReactProps> = (props) => {
 }
 
 
-const OrdersLayout: React.FC<ReactProps> = (props) => {
+const OrdersLayout: React.FC<OrdersLayoutProps> = (props) => {
 
   const {
     classes,
+    maxWidthForOrders,
+    withRecommendations,
   } = props;
 
-  const dispatch = useDispatch();
   const theme = useTheme();
   const mdDown = useMediaQuery(theme.breakpoints.down("md"))
-  const xsDown = useMediaQuery(theme.breakpoints.down("xs"));
-  const smDown = useMediaQuery(theme.breakpoints.down('sm'))
-  const md = useMediaQuery(theme.breakpoints.only('md'))
   const lg = useMediaQuery(theme.breakpoints.only('lg'))
   const xlUp = useMediaQuery(theme.breakpoints.up('xl'))
 
   return (
     <AlignCenterLayout
-      maxWidth={maxWidthForOrdersComponent}
-      withRecommendations={props.withRecommendations}
+      maxWidth={maxWidthForOrders}
+      withRecommendations={withRecommendations}
     >
       <div className={clsx(
         mdDown ? classes.flexRowRootMobile : classes.flexRowRoot,
-        smDown && classes.paddingMobile,
-        (md || lg) && classes.paddingIpad,
+        mdDown && classes.paddingMobile,
+        lg && classes.paddingIpad,
         xlUp && classes.paddingDesktop,
       )}>
         <Typography className={classes.title} variant="h2">
@@ -552,22 +572,16 @@ interface ReactProps extends WithStyles<typeof styles> {
   title?: string;
   withRecommendations?: boolean;
 }
+interface OrdersLayoutProps extends WithStyles<typeof styles> {
+  maxWidthForOrders: any;
+  withRecommendations?: boolean;
+}
 
 const styles = (theme: Theme) => createStyles({
   flexRowRoot: {
-    display: 'flex',
-    justifyContent: 'center',
-    flexDirection: "column",
-    maxWidth: maxWidthForOrdersComponent,
-    flexWrap: "wrap",
     padding: '1rem',
   },
   flexRowRootMobile: {
-    display: 'flex',
-    justifyContent: 'center',
-    flexDirection: "column",
-    maxWidth: maxWidthForOrdersComponent,
-    flexWrap: "wrap",
     padding: '0.5rem',
   },
   productColumn60: {
