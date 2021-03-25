@@ -1,12 +1,10 @@
 import React from "react";
-import { useState, useEffect } from "react";
-import { oc as option } from "ts-optchain";
 // styles
 import clsx from "clsx";
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 import { Colors, BoxShadows, BorderRadius } from "layout/AppTheme";
 // Typings
-import { Product, Order, Products, ID  } from "typings/gqlTypes";
+import { Order } from "typings/gqlTypes";
 // Material UI
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
@@ -25,16 +23,22 @@ import OrderStatusDisplay from "./OrderStatusDisplay";
 // import { getStoreIdOrSlug } from "utils/links";
 import { OrderStatus } from "typings/gqlTypes";
 import { getFeaturedPreviewFromProduct } from "utils/images";
+import DescriptionLoading from "components/ProductCardResponsive/DescriptionLoading";
 
 
 
 const OrderRowSellers: React.FC<ReactProps> = (props) => {
 
-  const { classes, order } = props;
+  const {
+    classes,
+    loading,
+    order
+  } = props;
   const { product } = order;
 
   const theme = useTheme();
   const smDown = useMediaQuery(theme.breakpoints.down("sm"))
+  const mdDown = useMediaQuery(theme.breakpoints.down("md"))
 
   // console.log("!!porduct: ",product)
   const previewItem = getFeaturedPreviewFromProduct(product)
@@ -43,44 +47,51 @@ const OrderRowSellers: React.FC<ReactProps> = (props) => {
     order?.currentSnapshot?.orderStatus === OrderStatus.REFUNDED ||
     order?.currentSnapshot?.orderStatus === OrderStatus.CANCELLED
 
-  return (
-    <ErrorBounds className={clsx(
-      classes.root,
-      (!order && !product) ? "pulse" : null,
-    )}>
-      {
-        !props.loading &&
-        <div className={classes.flexRow}>
-          <div className={clsx(classes.flexColItem, classes.minWidth150)}>
-            <ProductPreviewCardRow
-              previewItem={previewItem}
-              height={55}
-              width={88}
-            />
-            <div className={clsx(classes.detailsContainer, "fadeIn")}>
-              <Typography className={classes.name} variant="body2">
-                {option(product).currentSnapshot.title("")}
-              </Typography>
-              <Typography className={classes.tagline} variant="body2">
-                {option(product).currentSnapshot.model("")}
-              </Typography>
-              <OrderStatusDisplay
-                order={order}
-                orderCancelled={orderCancelled}
-              />
-            </div>
-          </div>
 
+  return (
+    <ErrorBounds className={classes.orderRowSellersRoot}>
+      <div className={classes.flexRow}>
+        {
+          loading
+          ? <DescriptionLoading
+              isMobile={true} // mobile style product row cards
+              style={{
+                flexBasis: '50%'
+              }}
+              height={'100%'}
+            />
+          : <div className={clsx(classes.flexColItem, classes.minWidth150)}>
+              <ProductPreviewCardRow
+                previewItem={previewItem}
+                height={55}
+                width={88}
+              />
+              <div className={clsx(classes.detailsContainer, "fadeIn")}>
+                <Typography className={classes.name} variant="body2">
+                  {product?.currentSnapshot?.title ?? ""}
+                </Typography>
+                <Typography className={classes.tagline} variant="body2">
+                  {product?.currentSnapshot?.model ?? ""}
+                </Typography>
+                {
+                  !loading &&
+                  <OrderStatusDisplay
+                    order={order}
+                    orderCancelled={orderCancelled}
+                  />
+                }
+              </div>
+            </div>
+        }
+
+        {
+          !loading &&
           <div className={clsx(classes.flexColItem)}>
             <div className={classes.flexRowFlexEnd}>
-              {/* <Form10Upload
-                order={order}
-              /> */}
               <Form10FileUploader
                 order={order}
               />
             </div>
-
             <div className={classes.flexRowFlexEnd}>
               <OrderDetailsModal
                 order={order}
@@ -88,8 +99,8 @@ const OrderRowSellers: React.FC<ReactProps> = (props) => {
               />
             </div>
           </div>
-        </div>
-      }
+        }
+      </div>
     </ErrorBounds>
   )
 }
@@ -100,7 +111,7 @@ interface ReactProps extends WithStyles<typeof styles> {
 }
 
 const styles = (theme: Theme) => createStyles({
-  root: {
+  orderRowSellersRoot: {
     display: 'flex',
     flexDirection: 'row',
     padding: '1rem',
@@ -116,6 +127,7 @@ const styles = (theme: Theme) => createStyles({
       : `1px solid ${Colors.slateGreyDark}`,
     marginBottom: '0.5rem',
     minHeight: 220,
+    width: '100%',
   },
   minWidth150: {
     minWidth: '150px',

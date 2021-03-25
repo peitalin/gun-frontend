@@ -64,8 +64,9 @@ import GridPaginatorGeneric from "components/GridPaginatorGeneric";
 
 
 /////////////////////////////////// paginator
-let numItemsPerPage = 3;
+let numItemsPerPage = 4;
 let overfetchBy = 1;
+let maxWidthForOrdersComponent = 960
 
 
 
@@ -135,7 +136,7 @@ const MyOrders: React.FC<ReactProps> = (props) => {
           orderBy: { createdAt: Order_By.DESC }
         }
       },
-      fetchPolicy: "network-only",
+      // fetchPolicy: "network-only",
     }
   );
 
@@ -151,7 +152,7 @@ const MyOrders: React.FC<ReactProps> = (props) => {
           orderBy: { createdAt: Order_By.DESC }
         }
       },
-      fetchPolicy: "network-only",
+      // fetchPolicy: "network-only",
     }
   );
 
@@ -167,28 +168,32 @@ const MyOrders: React.FC<ReactProps> = (props) => {
           orderBy: { createdAt: Order_By.DESC }
         }
       },
+      onCompleted: (data) => console.log("completed SAI", data),
       fetchPolicy: "network-only",
     }
   );
 
   React.useEffect(() => {
+    console.log('dispatching apollo calls')
     getBuyerOrders()
     getSellerOrders()
     getSellerOrdersActionItems()
   }, [])
 
-  console.log("buyer data::::: ", buyerOrdersResponse?.data)
-  console.log("seller data::::: ", sellerOrdersResponse?.data)
-  console.log("seller action items data::::: ", sellerOrdersResponse?.data)
+  // console.log("buyer data::::: ", buyerOrdersResponse?.data)
+  // console.log("seller action items data::::: ", sellerOrdersResponse?.data)
+  // console.log("seller data::::: ", sellerOrdersResponse?.data)
 
-  const buyerOrdersConnection = option(buyerOrdersResponse)
-    .data.user.buyerOrdersConnection() || props.initialBuyerOrders;
+  const buyerOrdersConnection =
+    buyerOrdersResponse?.data?.user?.buyerOrdersConnection
+    || props.initialBuyerOrders;
 
-  const sellerOrdersConnection = option(sellerOrdersResponse)
-    .data.user.sellerOrdersConnection() || props.initialSellerOrders;
+  const sellerOrdersConnection =
+    sellerOrdersResponse?.data?.user?.sellerOrdersConnection
+    || props.initialSellerOrders;
 
-  const sellerOrdersActionItemsConnection = option(sellerOrdersActionItemsResponse)
-    .data.user.sellerOrdersActionItemsConnection();
+  const sellerOrdersActionItemsConnection =
+    sellerOrdersActionItemsResponse?.data?.user?.sellerOrdersActionItemsConnection
 
 
   const refetchTheOrders = async () => {
@@ -208,44 +213,45 @@ const MyOrders: React.FC<ReactProps> = (props) => {
   }
 
   const refetchOrders = React.useCallback(() => {
+    console.log("Refetching orders")
     // apollo devs are retards
     // https://github.com/apollographql/react-apollo/issues/3862
     setTimeout(() => refetchTheOrders(), 0)
   }, [refetchTheOrders])
 
-  /// if orders not refetching due to fast refresh bugs
-  // React.useEffect(() => {
-  //   getProducts()
-  //   console.log("router.query: ", router.query)
-  //   if (router?.query?.created) {
-  //     if (getProductsResponse?.data?.dashboardProductsConnection?.edges) {
+  //////////////////////////////////////////
+  // if orders not refetching due to fast refresh bugs
+  React.useEffect(() => {
+    // console.log("router.query: ", router.query)
+    // if (router?.query?.created) {
+    //   if (getProductsResponse?.data?.dashboardProductsConnection?.edges) {
+    //     console.log("router.query.created: ", router.query.created)
+    //     let foundProduct = (connection?.edges ?? [])
+    //       .find(({ node }) => node.id === router?.query?.created)
+    //     console.log("foundProduct: ", foundProduct)
+    //     if (!foundProduct?.node?.id) {
+    //       console.log("product missing:", router.query.created)
+    //       // getProducts()
+    //       console.log("getProductsReponse:",  getProductsResponse)
+    //       refetch()
+    //     }
+    //   }
+    // }
+    if (noOrdersExist()) {
+      refetchOrders()
+    }
+  }, [])
 
-  //       console.log("router.query.created: ", router.query.created)
-  //       let foundProduct = (connection?.edges ?? [])
-  //         .find(({ node }) => node.id === router?.query?.created)
+  const noOrdersExist = () => {
+    return !buyerOrdersConnection?.edges?.[0] &&
+          !sellerOrdersConnection?.edges?.[0] &&
+          !sellerOrdersActionItemsConnection?.edges?.[0] &&
+          !sellerOrdersActionItemsResponse.loading &&
+          !buyerOrdersResponse.loading &&
+          !sellerOrdersResponse.loading
+  }
 
-  //       console.log("foundProduct: ", foundProduct)
-
-  //       if (!foundProduct?.node?.id) {
-  //         console.log("product missing:", router.query.created)
-  //         // getProducts()
-  //         console.log("getProductsReponse:",  getProductsResponse)
-  //         refetch()
-  //       }
-
-  //     }
-  //   }
-  // }, [getProductsResponse?.data])
-
-
-  if (
-    !option(buyerOrdersConnection).edges[0]() &&
-    !option(sellerOrdersConnection).edges[0]() &&
-    !option(sellerOrdersActionItemsConnection).edges[0]() &&
-    !sellerOrdersResponse.loading &&
-    !sellerOrdersActionItemsResponse.loading &&
-    !buyerOrdersResponse.loading
-  ) {
+  if (noOrdersExist()) {
     return (
       <OrdersLayout {...props}>
         <div className={classes.emptyItems}>
@@ -434,6 +440,11 @@ const MyOrders: React.FC<ReactProps> = (props) => {
               numItemsPerPage={numItemsPerPage}
               className={classes.rowContainer}
               classNameRoot={classes.gridRootSeller}
+              containerStyle={{
+                maxWidth: `calc(${maxWidthForOrdersComponent}px - 2rem)`,
+                // -2rem to account for 2rem padding or orders rows
+                // overflows out of the paginator-grid
+              }}
             >
               {({ node: order, key }) => {
                 if (sellerOrdersResponse.error && key === 0) {
@@ -480,7 +491,7 @@ const OrdersLayout: React.FC<ReactProps> = (props) => {
 
   return (
     <AlignCenterLayout
-      maxWidth={960}
+      maxWidth={maxWidthForOrdersComponent}
       withRecommendations={props.withRecommendations}
     >
       <div className={clsx(
@@ -547,7 +558,7 @@ const styles = (theme: Theme) => createStyles({
     display: 'flex',
     justifyContent: 'center',
     flexDirection: "column",
-    maxWidth: 960,
+    maxWidth: maxWidthForOrdersComponent,
     flexWrap: "wrap",
     padding: '1rem',
   },
@@ -555,7 +566,7 @@ const styles = (theme: Theme) => createStyles({
     display: 'flex',
     justifyContent: 'center',
     flexDirection: "column",
-    maxWidth: 960,
+    maxWidth: maxWidthForOrdersComponent,
     flexWrap: "wrap",
     padding: '0.5rem',
   },
