@@ -448,6 +448,7 @@ export const styles = (theme: Theme) => createStyles({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
+    paddingLeft: '1rem', // offset gridOrList buttons padding Right
   },
   searchContainerInnerMobile: {
     marginTop: "-0.5rem",
@@ -456,6 +457,7 @@ export const styles = (theme: Theme) => createStyles({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
+    paddingLeft: '1rem', // offset gridOrList buttons padding Right
   },
   bannerContainer: {
     position: "relative",
