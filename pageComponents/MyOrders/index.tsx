@@ -55,7 +55,7 @@ import GridPaginatorGeneric from "components/GridPaginatorGeneric";
 
 /////////////////////////////////// paginator
 let numItemsPerPage = 4;
-let overfetchBy = 1;
+let overfetchBy = 2;
 let MAX_WIDTH_ORDERS_PAGER = 900
 
 
