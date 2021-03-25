@@ -141,17 +141,19 @@ const RowExpander = (props: RowExpanderProps) => {
 
           {
             props.order?.id &&
-            <Form10PreviewCard
-              order={props.order}
-              inDealerDashboard={false}
-              inAdminDashboard={true}
-              onMouseDown={() => {
-                snackbar.enqueueSnackbar(
-                  `Waiting for seller to upload receipt`,
-                  { variant: "info" }
-                )
-              }}
-            />
+            <div className={classes.form10RowContainer}>
+              <Form10PreviewCard
+                order={props.order}
+                inDealerDashboard={false}
+                inAdminDashboard={true}
+                onMouseDown={() => {
+                  snackbar.enqueueSnackbar(
+                    `Waiting for seller to upload receipt`,
+                    { variant: "info" }
+                  )
+                }}
+              />
+            </div>
           }
 
           <Link href={`/gov/orders?orderId=${row.id}`}>
@@ -236,6 +238,10 @@ const styles = (theme: Theme) => createStyles({
     whiteSpace: 'nowrap',
     overflow: 'hidden',
     fontSize: '0.825rem',
+  },
+  form10RowContainer: {
+    display: 'flex',
+    // prevent form10 card from being 100% width of row
   },
 });
 
