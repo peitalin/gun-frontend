@@ -28,6 +28,7 @@ const UploadLayoutPreviews: React.FC<ReactProps & ILayoutProps> = ({
 
 interface ReactProps {
   order?: Order;
+  loading?: boolean;
 }
 
 export default UploadLayoutPreviews;

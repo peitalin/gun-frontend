@@ -52,68 +52,8 @@ const Form10PreviewCard: React.FC<ReactProps> = (props) => {
 
   //// Functions ////
 
-  const handleRemoveForm10 = async() => {
-    return await removeForm10({
-      variables: {
-        orderId: order?.id,
-      },
-      refetchQueries: refetchQueriesList,
-    })
-  }
-
-  const refetchQueriesList = [
-    {
-      query: GET_SELLER_ORDERS_CONNECTION,
-      variables: {
-        query: {
-          limit: 10,
-          offset: 0,
-        }
-      }
-    },
-    {
-      query: GET_BUYER_ORDERS_CONNECTION,
-      variables: {
-        query: {
-          limit: 10,
-          offset: 0,
-        }
-      }
-    },
-  ]
-
-
-  const [removeForm10, removeForm10Response] = useMutation<MutDataRemove, MutVarRemove>(
-    REMOVE_FORM_10, {
-      variables: {
-        orderId: order?.id,
-      },
-      refetchQueries: refetchQueriesList,
-    }
-  );
-
-
   const tipTextFromOrderStatus = (orderStatus: string) => {
     switch (orderStatus) {
-      case OrderStatus.ADMIN_APPROVED: {
-        return "Approved by admin"
-      }
-      case OrderStatus.COMPLETE: {
-        return "Order Complete"
-      }
-      case OrderStatus.FORM_10_SUBMITTED: {
-        if (props.inDealerDashboard) {
-          return "Pending Admin Approval"
-        } else {
-          return "Pending Approval"
-        }
-      }
-      case OrderStatus.FORM_10_REVISE_AND_RESUBMIT: {
-        return "Form resubmission needed"
-      }
-      case OrderStatus.CANCELLED: {
-        return "Order Cancelled"
-      }
       case OrderStatus.CONFIRMED_PAYMENT_FORM_10_REQUIRED: {
         if (props.inDealerDashboard) {
           return "Generate Receipt for Seller"
@@ -129,12 +69,30 @@ const Form10PreviewCard: React.FC<ReactProps> = (props) => {
       case OrderStatus.REFUNDED: {
         return "Payment refunded" //disabled
       }
+      case OrderStatus.CANCELLED: {
+        return "Order Cancelled"
+      }
+      case OrderStatus.FORM_10_SUBMITTED: {
+        if (props.inDealerDashboard) {
+          return "Pending Admin Approval"
+        } else {
+          return "Pending Approval"
+        }
+      }
+      case OrderStatus.FORM_10_REVISE_AND_RESUBMIT: {
+        return "Form resubmission needed"
+      }
+      case OrderStatus.ADMIN_APPROVED: {
+        return "Approved by admin"
+      }
+      case OrderStatus.COMPLETE: {
+        return "Order Complete"
+      }
       default: {
-        return "" //disabled
+        return "!" //disabled
       }
     }
   }
-
 
 
   const [showModal, setShowModal] = React.useState(false);
@@ -145,27 +103,11 @@ const Form10PreviewCard: React.FC<ReactProps> = (props) => {
   let orderStatus = props?.order?.currentSnapshot?.orderStatus;
   let tipText = tipTextFromOrderStatus(orderStatus)
 
+  console.log("loading: ", props.loading)
+  console.log("tipText: ", tipText)
 
   return (
     <div className={classes.cardContainer}>
-
-      {
-        orderStatus === OrderStatus.FORM_10_SUBMITTED &&
-        !props.inAdminDashboard &&
-        !props.inDealerDashboard &&
-        <Tooltip title="Remove file" placement={"right"}>
-          <IconButton
-            onClick={handleRemoveForm10}
-            className={classes.previewIconButton}
-            classes={{
-              root: classes.iconButton,
-            }}
-            size="small"
-          >
-            <ClearIcon classes={{ root: classes.svgIcon }}/>
-          </IconButton>
-        </Tooltip>
-      }
 
       {
         (orderStatus === OrderStatus.ADMIN_APPROVED ||
@@ -180,62 +122,61 @@ const Form10PreviewCard: React.FC<ReactProps> = (props) => {
         />
       }
 
-      <Card className={classes.card} elevation={0}
-        style={{...cardDimensions}}
-      >
-        <CardActionArea
-          // onClick={props.onClick}
-          classes={{
-            root: classes.cardActionAreaWide,
-            focusHighlight: classes.focusHighlight,
-            focusVisible: classes.focusHighlight,
-          }}
+      <Tooltip placement="left" title={tipText}>
+        <Card className={classes.card} elevation={0}
           style={{...cardDimensions}}
         >
-          <Tooltip placement="top"
-            title={tipText}
+          <CardActionArea
+            // onClick={props.onClick}
+            classes={{
+              root: classes.cardActionAreaWide,
+              focusHighlight: classes.focusHighlight,
+              focusVisible: classes.focusHighlight,
+            }}
+            style={{...cardDimensions}}
           >
-            {
-              (form10FilePreview?.id || form10ImgPreview?.id)
-              ? <>
-                  {
-                    form10FilePreview?.mimeType === 'application/pdf'
-                    ? <CardMedia
-                        component="img"
-                        classes={{
-                          media: classes.cardMediaWide
-                        }}
-                        style={{...cardDimensions}}
-                        image={"/img/pdf-uploaded.png"}
-                        onClick={() => setShowModal(true)}
-                      />
-                    : <CardMedia
-                        component="img"
-                        classes={{
-                          media: classes.cardMediaWide
-                        }}
-                        style={{...cardDimensions}}
-                        image={"/img/img-uploaded.png"}
-                        onClick={() => setShowModal(true)}
-                      />
-                  }
-                  <Typography className={classes.previewText} variant={"caption"}>
-                    Click to preview
-                  </Typography>
-                </>
-              : <CardMedia
-                  component="img"
-                  classes={{
-                    media: classes.cardMediaWide
-                  }}
-                  style={{...cardDimensions}}
-                  image={"/img/pdf-missing.png"}
-                  onMouseDown={props.onMouseDown}
-                />
-            }
-          </Tooltip>
-        </CardActionArea>
-      </Card>
+              {
+                (form10FilePreview?.id || form10ImgPreview?.id)
+                ? <>
+                    {
+                      form10FilePreview?.mimeType === 'application/pdf'
+                      ? <CardMedia
+                          component="img"
+                          classes={{
+                            media: classes.cardMediaWide
+                          }}
+                          style={{...cardDimensions}}
+                          image={"/img/pdf-uploaded.png"}
+                          onClick={() => setShowModal(true)}
+                        />
+                      : <CardMedia
+                          component="img"
+                          classes={{
+                            media: classes.cardMediaWide
+                          }}
+                          style={{...cardDimensions}}
+                          image={"/img/img-uploaded.png"}
+                          onClick={() => setShowModal(true)}
+                        />
+                    }
+                    <Typography className={classes.previewText} variant={"caption"}>
+                      Click to preview
+                    </Typography>
+                  </>
+                : <CardMedia
+                    component="img"
+                    classes={{
+                      media: classes.cardMediaWide
+                    }}
+                    style={{...cardDimensions}}
+                    image={"/img/pdf-missing.png"}
+                    onMouseDown={props.onMouseDown}
+                  />
+              }
+          </CardActionArea>
+        </Card>
+      </Tooltip>
+
       <Form10Modal
         order={order}
         // orderCancelled={orderCancelled}
@@ -250,6 +191,7 @@ const Form10PreviewCard: React.FC<ReactProps> = (props) => {
 
 interface ReactProps extends WithStyles<typeof styles> {
   order: Order;
+  loading?: boolean;
   inDealerDashboard?: boolean;
   inAdminDashboard?: boolean;
   // onMouseDown only before OrderStatus === FORM10_SUBMITTED state
@@ -261,29 +203,10 @@ interface ReactProps extends WithStyles<typeof styles> {
 }
 
 
-// remove form10
-interface MutDataRemove {
-  order: Order
-}
-interface MutVarRemove {
-  orderId: string
-}
-
-
 export const styles = (theme: Theme) => createStyles({
   cardContainer: {
     position: "relative",
     marginBottom: '0.5rem',
-  },
-  iconButton: {
-    background: Colors.darkGrey,
-    "&:hover": {
-      background: Colors.darkGrey,
-      // background: Colors.red,
-      // buggy on hover,
-    },
-    color: Colors.lightGrey,
-    padding: 2, // determines button size
   },
   previewText: {
     position: "absolute",
@@ -315,12 +238,6 @@ export const styles = (theme: Theme) => createStyles({
     },
     // ...cardDimensions
   },
-  previewIconButton: {
-    position: "absolute",
-    right: -8,
-    top: -8,
-    zIndex: 1502,
-  },
   cardMediaWide: {
     // objectFit: "scale-down",
     background: theme.palette.type === 'dark'
@@ -340,11 +257,11 @@ export const styles = (theme: Theme) => createStyles({
       opacity: 0, // disable hover dither
     }
   },
-  svgIcon: {
-    fill: "#eaeaea",
-    "&:hover": {
-      fill: "#fafafa",
-    },
+  previewIconButton: {
+    position: "absolute",
+    right: -8,
+    top: -8,
+    zIndex: 1502,
   },
 })
 

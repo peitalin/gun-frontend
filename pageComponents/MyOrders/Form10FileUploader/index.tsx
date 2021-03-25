@@ -47,6 +47,7 @@ const FileUploader: React.FC<ReactProps> = (props) => {
   } = props;
 
   const [googleUploads, setGoogleUploads] = React.useState<GoogleUpload[]>([]);
+  const [loading, setLoading] = React.useState(false);
 
   const aClient = useApolloClient();
   const snackbar = useSnackbar();
@@ -92,6 +93,7 @@ const FileUploader: React.FC<ReactProps> = (props) => {
     //// called every time a file's `status` changes
     let { meta, file, xhr } = fileWithMeta;
     // console.info("status:", status, meta, file)
+    setLoading(true)
 
     if (status === "done") {
 
@@ -159,6 +161,7 @@ const FileUploader: React.FC<ReactProps> = (props) => {
         console.log("err response:", err)
       })
       .finally(() => {
+        setLoading(false)
       })
 
     } else {
@@ -260,6 +263,7 @@ const FileUploader: React.FC<ReactProps> = (props) => {
         LayoutComponent={(layProps) =>
           <UploadLayoutPreviews
             order={order}
+            loading={loading}
             {...layProps}
           />
         }

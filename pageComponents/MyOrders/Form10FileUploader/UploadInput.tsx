@@ -11,8 +11,21 @@ import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/s
 import Button from "@material-ui/core/Button";
 import LoadingBar from "components/LoadingBar";
 import Form10PreviewCard from "./Form10PreviewCard";
-import { Order } from "typings/gqlTypes";
 import { cardDimensionsDefault } from "./Form10PreviewCard";
+// Typings
+import { Order, OrderStatus } from "typings/gqlTypes";
+import Tooltip from '@material-ui/core/Tooltip';
+import ClearIcon from "@material-ui/icons/Clear";
+import IconButton from "@material-ui/core/IconButton";
+import Tick from "components/Icons/Tick";
+// graphl
+import { useMutation, useQuery } from "@apollo/client";
+import {
+  GET_BUYER_ORDERS_CONNECTION,
+  GET_SELLER_ORDERS_CONNECTION,
+} from "queries/orders-queries";
+import { REMOVE_FORM_10 } from "queries/orders-mutations";
+import { ADD_FORM_10 } from "queries/orders-mutations";
 
 
 
@@ -26,18 +39,54 @@ const UploadInput = (props: IInputProps & ReactProps) => {
     disableButton,
     buttonText,
     onChange,
+    classes,
   } = props;
 
   const text = 'Upload Form-10'
+  const ref = React.useRef();
+  const order = props.order
 
-  let ref = React.useRef();
-  // console.log("order UploadINput: ", props.order)
+  const refetchQueriesList = [
+    {
+      query: GET_SELLER_ORDERS_CONNECTION,
+      variables: { query: { limit: 10, offset: 0 } }
+    },
+    {
+      query: GET_BUYER_ORDERS_CONNECTION,
+      variables: { query: { limit: 10, offset: 0 } }
+    },
+  ]
+
+
+  const handleRemoveForm10 = async() => {
+    return await removeForm10({
+      variables: {
+        orderId: order?.id,
+      },
+      refetchQueries: refetchQueriesList,
+    })
+  }
+
+  const [
+    removeForm10,
+    removeForm10Response
+  ] = useMutation<MutDataRemove, MutVarRemove>(
+    REMOVE_FORM_10, {
+      variables: {
+        orderId: order?.id,
+      },
+      refetchQueries: refetchQueriesList,
+    }
+  );
+
+  // console.log("order UploadInput: ", props.order)
 
   return (
     <label className={props.classes.label}>
 
       <Form10PreviewCard
         order={props.order}
+        loading={props.loading}
         onMouseDown={(e) => {
           // console.log("onMouseDown!")
           if (!disableButton) {
@@ -49,12 +98,28 @@ const UploadInput = (props: IInputProps & ReactProps) => {
         }}
       />
 
+     {
+        order?.currentSnapshot?.orderStatus === OrderStatus.FORM_10_SUBMITTED &&
+        <Tooltip title="Remove file" placement={"right"}>
+          <IconButton
+            onClick={handleRemoveForm10}
+            className={classes.previewIconButton}
+            classes={{
+              root: classes.iconButton,
+            }}
+            size="small"
+          >
+            <ClearIcon classes={{ root: classes.svgIcon }}/>
+          </IconButton>
+        </Tooltip>
+      }
+
       <Button
         className={clsx(
-          props.classes.uploadButton,
+          classes.uploadButton,
           disableButton
-            ? props.classes.uploadButtonDisabled
-            : props.classes.uploadButtonEnabled,
+            ? classes.uploadButtonDisabled
+            : classes.uploadButtonEnabled,
         )}
         variant="outlined"
         onMouseDown={(e) => {
@@ -83,8 +148,8 @@ const UploadInput = (props: IInputProps & ReactProps) => {
         <Typography variant="body1"
           className={
             disableButton
-              ? props.classes.uploadButtonTextLimit
-              : props.classes.uploadButtonText
+              ? classes.uploadButtonTextLimit
+              : classes.uploadButtonText
           }
         >
           {buttonText || text}
@@ -120,6 +185,14 @@ interface ReactProps extends WithStyles<typeof styles> {
   loading?: boolean;
   buttonText?: string;
   order?: Order;
+}
+
+// remove form10
+interface MutDataRemove {
+  order: Order
+}
+interface MutVarRemove {
+  orderId: string
 }
 
 export const styles = (theme: Theme) => createStyles({
@@ -162,6 +235,28 @@ export const styles = (theme: Theme) => createStyles({
       ? Colors.uniswapGrey
       : Colors.slateGreyDarkest,
     fontSize: '0.9rem',
+  },
+  previewIconButton: {
+    position: "absolute",
+    right: -8,
+    top: -8,
+    zIndex: 1502,
+  },
+  iconButton: {
+    background: Colors.darkGrey,
+    "&:hover": {
+      // background: Colors.darkGrey,
+      background: Colors.red,
+      // buggy on hover,
+    },
+    color: Colors.lightGrey,
+    padding: 2, // determines button size
+  },
+  svgIcon: {
+    fill: "#eaeaea",
+    "&:hover": {
+      fill: "#fafafa",
+    },
   },
 })
 
