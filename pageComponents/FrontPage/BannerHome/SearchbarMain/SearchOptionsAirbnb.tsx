@@ -129,6 +129,7 @@ const SearchOptionsAirbnb: React.FC<ReactProps> = (props) => {
         //   )
         //   return
         // }
+
         let url
         if (!searchTerm) {
           url = `/search?q=*`

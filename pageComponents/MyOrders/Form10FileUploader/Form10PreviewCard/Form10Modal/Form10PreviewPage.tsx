@@ -107,9 +107,6 @@ const styles = (theme: Theme) => createStyles({
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'center',
-    width: '100%',
-    height: '100%',
-    maxHeight: '100vh', // Mobile height is buggy here
   },
   embedForm10Pdf: {
     boxShadow: BoxShadows.shadow5.boxShadow,
