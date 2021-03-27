@@ -78,7 +78,7 @@ function GridPaginatorGeneric<T>(props: ReactProps<T> & ReactChildren<T>) {
       >
         {
           productGroups.map(( productGroup, index) => {
-            // console.log("productGroups:", productGroup)
+            // console.log("productGroup:", productGroup)
             return (
               <div key={`product-group-${index}`}
                 className={clsx(
@@ -89,6 +89,8 @@ function GridPaginatorGeneric<T>(props: ReactProps<T> & ReactChildren<T>) {
               >
                 {
                   props.loading
+                  && (productGroup?.length === 0)
+                  // if overfetching, only show loading if past the preloaded pages
                   ? [...Array(numItemsPerPage).keys()].map(j => {
                       return props.loadingComponent
                           ? <div key={j}>{props.loadingComponent}</div>

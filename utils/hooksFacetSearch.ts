@@ -297,7 +297,9 @@ export const useEffectUpdateGridAccum = <T>({
     // instantiate gridAccum with #numPages number of empty arrays []
     if (numPages) {
       [...Array(Math.ceil(numPages)).keys()].forEach(i => {
-        gridAccum[i] = []
+        if (gridAccum[i] === undefined) {
+          gridAccum[i] = []
+        }
       })
     }
   }, [totalCount])
@@ -332,7 +334,7 @@ export const useEffectUpdateGridAccum = <T>({
         return gridAccum[index+k] === undefined
           || gridAccum[index+k]?.length === 0
       })
-
+    console.log("indexesNeedUpdating", indexesNeedUpdating)
 
     // create/update the index with the products from that index-page-request
     if (products) {
@@ -364,7 +366,7 @@ export const useEffectUpdateGridAccum = <T>({
           gridAccum[index] = products
         }
 
-        // console.log("gridAccum: ", gridAccum)
+        console.log("gridAccum: ", gridAccum)
         setGridAccum(s => ({
           ...gridAccum,
         }))

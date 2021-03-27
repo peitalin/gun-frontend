@@ -335,7 +335,10 @@ const MyOrders: React.FC<ReactProps> = (props) => {
                   className={classes.rowContainer}
                   // disableAnimation={true}
                   // classNameRoot={classes.gridRootSeller}
-                  loading={sellerOrdersActionItemsResponse?.loading}
+                  loading={
+                    sellerOrdersActionItemsResponse?.loading
+                    // && not index-nth page was already loaded
+                  }
                   loadingComponent={
                     <OrderRowSellers order={undefined} loading={true} />
                   }
@@ -352,7 +355,11 @@ const MyOrders: React.FC<ReactProps> = (props) => {
                         <OrderRowSellers
                           key={order.id}
                           order={order}
-                          loading={sellerOrdersActionItemsResponse.loading}
+                          // loading={
+                          //   sellerOrdersActionItemsResponse?.loading
+                          //   // && not index-nth page was already loaded
+                          // }
+                          // loading={false} // determined by paginator parent
                         />
                       )
                     }
