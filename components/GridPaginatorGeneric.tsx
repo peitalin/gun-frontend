@@ -52,6 +52,7 @@ function GridPaginatorGeneric<T>(props: ReactProps<T> & ReactChildren<T>) {
     totalCount,
     setTotalCount,
     numItemsPerPage,
+    overfetchBy,
     loading,
   })
 

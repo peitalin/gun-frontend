@@ -361,7 +361,7 @@ const MyOrders: React.FC<ReactProps> = (props) => {
           </>
         }
 
-        <OrdersSection
+        {/* <OrdersSection
           classes={props.classes}
           title={"Your Purchases"}
         >
@@ -422,7 +422,7 @@ const MyOrders: React.FC<ReactProps> = (props) => {
               }}
             </GridPaginatorGeneric>
           </SearchOptions>
-        </OrdersSection>
+        </OrdersSection> */}
 
         <div className={classes.divider}/>
 
@@ -471,6 +471,7 @@ const MyOrders: React.FC<ReactProps> = (props) => {
                 // overflows out of the paginator-grid
               }}
               // disableAnimation={true}
+              overfetchBy={overfetchBy}
               loading={sellerOrdersResponse?.loading}
             >
               {({ node: order, key }) => {

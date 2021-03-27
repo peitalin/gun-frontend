@@ -273,6 +273,7 @@ export const useEffectUpdateGridAccum = <T>({
   setTotalCount,
   searchTerm,
   numItemsPerPage,
+  overfetchBy,
   loading,
 }: {
   index: number,
@@ -281,6 +282,7 @@ export const useEffectUpdateGridAccum = <T>({
   setTotalCount: React.Dispatch<React.SetStateAction<number>>,
   searchTerm?: string,
   numItemsPerPage?: number,
+  overfetchBy?: number,
   loading?: boolean,
 }): GridMap<T> => {
 
@@ -306,7 +308,6 @@ export const useEffectUpdateGridAccum = <T>({
     let gridAccumKeys = Object.keys(gridAccum);
     let products = option(productsConnection).edges([]).map(({ node }) => node);
     // console.log("index: ", index)
-    // console.log("gridAccum: ", gridAccum)
     // console.log("gridKeys: ", gridAccumKeys)
 
     // if skipping ahead multiple pages, check which intemediate pages
@@ -322,20 +323,34 @@ export const useEffectUpdateGridAccum = <T>({
       })
     }
 
+
+    let overfetchArray = [...Array(overfetchBy).keys()]
+    // see if index or any overfetched indexes are empty and need updating
+    let indexesNeedUpdating = overfetchArray.some(k => {
+        // console.log("k", k)
+        // console.log("index+k", gridAccum[index+k])
+        return gridAccum[index+k] === undefined
+          || gridAccum[index+k]?.length === 0
+      })
+
+
     // create/update the index with the products from that index-page-request
     if (products) {
-      if (gridAccum[index] === undefined || gridAccum[index]?.length === 0)  {
+
+      if (indexesNeedUpdating)  {
         // gridAccum[index] is empty and needs to be updated
         // console.log("instantiating grid...")
 
         // if more than 1 page, split products into groups and add to GridMap
         if (products.length > numItemsPerPage) {
+          // split incoming products from request into groups
+          // this may be from the 5th page onwards...5th and 6th pages incoming
           let productGroups = splitArrayIntoGrid(products, numItemsPerPage)
           // console.log("productGroups: ", productGroups)
           // when overfetching, there will be 2+ groups, allocate products to
           // the jth over-fetched group of products
           productGroups.forEach((productSubgroup, j) => {
-            // console.log("j: ", j)
+            // console.log("index: ", index)
             // console.log("index+j: ", index+j)
             // newGridAccum[index+j] = productSubgroup
             if (
@@ -349,6 +364,7 @@ export const useEffectUpdateGridAccum = <T>({
           gridAccum[index] = products
         }
 
+        // console.log("gridAccum: ", gridAccum)
         setGridAccum(s => ({
           ...gridAccum,
         }))
