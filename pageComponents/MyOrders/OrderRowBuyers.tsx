@@ -42,7 +42,7 @@ const OrderRowBuyers: React.FC<ReactProps> = (props) => {
     order?.currentSnapshot?.orderStatus === OrderStatus.CANCELLED
 
   return (
-    <ErrorBounds className={clsx(classes.orderRowBuyersRoot, "fadeIn")}>
+    <ErrorBounds className={classes.orderRowBuyersRoot}>
       <div className={classes.flexRow}>
         {
           loading

@@ -472,6 +472,9 @@ const MyOrders: React.FC<ReactProps> = (props) => {
               }}
               // disableAnimation={true}
               overfetchBy={overfetchBy}
+              loadingComponent={
+                <OrderRowSellers order={undefined} loading={true} />
+              }
               loading={sellerOrdersResponse?.loading}
             >
               {({ node: order, key }) => {

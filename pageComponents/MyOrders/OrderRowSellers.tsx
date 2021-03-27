@@ -34,13 +34,13 @@ const OrderRowSellers: React.FC<ReactProps> = (props) => {
     loading,
     order
   } = props;
-  const { product } = order;
+
+  const product = order?.product;
 
   const theme = useTheme();
   const smDown = useMediaQuery(theme.breakpoints.down("sm"))
   const mdDown = useMediaQuery(theme.breakpoints.down("md"))
 
-  // console.log("!!porduct: ",product)
   const previewItem = getFeaturedPreviewFromProduct(product)
 
   const orderCancelled =
@@ -48,7 +48,7 @@ const OrderRowSellers: React.FC<ReactProps> = (props) => {
     order?.currentSnapshot?.orderStatus === OrderStatus.CANCELLED
 
   return (
-    <ErrorBounds className={clsx(classes.orderRowSellersRoot, "fadeIn")}>
+    <ErrorBounds className={classes.orderRowSellersRoot}>
       <div className={classes.flexRow}>
         {
           loading

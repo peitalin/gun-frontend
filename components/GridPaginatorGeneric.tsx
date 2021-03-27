@@ -88,14 +88,16 @@ function GridPaginatorGeneric<T>(props: ReactProps<T> & ReactChildren<T>) {
                 )}
               >
                 {
-                  productGroup
-                  .filter(p => !!p)
-                  .map(( product, j ) =>
-                    props.loading
-                    ? props.loadingComponent
-                      ? props.loadingComponent
-                      : <LoadingCards key={j} count={1}/>
-                    : <div key={j} className={props.gridItemClassName}>
+                  props.loading
+                  ? [...Array(numItemsPerPage).keys()].map(j => {
+                      return props.loadingComponent
+                          ? <div key={j}>{props.loadingComponent}</div>
+                          : <LoadingCards key={j} count={1}/>
+                    })
+                  : productGroup
+                    .filter(p => !!p)
+                    .map(( product, j ) =>
+                      <div key={j} className={props.gridItemClassName}>
                         {
                           props.children({
                             key: j,
@@ -103,7 +105,7 @@ function GridPaginatorGeneric<T>(props: ReactProps<T> & ReactChildren<T>) {
                           })
                         }
                       </div>
-                  )
+                    )
                 }
               </div>
             )

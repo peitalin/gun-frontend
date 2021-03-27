@@ -34,6 +34,7 @@ const DropdownInput = dynamic(() => import("components/Fields/DropdownInput"), {
 import SearchOptionsSearchFilter from "components/SearchOptionsSearchFilter";
 import SearchOptionsPriceFilter from "components/SearchOptionsPriceFilter";
 import SearchOptionsCategoryFilter from "components/SearchOptionsCategoryFilter";
+import SearchOptionsPaginator from "components/SearchOptionsPaginator";
 // Responsiveness
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
@@ -41,7 +42,7 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 
 
-const SearchOptionsPaginator: React.FC<ReactProps> = (props) => {
+const SearchOptions: React.FC<ReactProps> = (props) => {
 
   const isDarkMode = useSelector<GrandReduxState, boolean>(
     s => s.reduxLogin.darkMode === 'dark'
@@ -283,33 +284,11 @@ const SearchOptionsPaginator: React.FC<ReactProps> = (props) => {
 
         {props.children}
 
-        <div className={clsx(classes.paginationContainer, classes.marginRight05)}>
-        {
-          paginationParams &&
-          !hidePaginator &&
-          <div className={clsx(classes.marginRight05)}>
-            <Pagination
-              disabled={totalCount === 0}
-              count={totalPages || 1}
-              page={pageUi}
-              // page={index+1}
-              onMouseDown={(e) => {
-                // console.log("mouse down: ", e)
-              }}
-              onChange={(event, page) => {
-                // update paginator UI first
-                setPageUi(page)
-                // setTimeout(() => {
-                // }, 0)
-                // then update pageParams (gQL request) + index change in carousel
-                debounceSetPageParam(page)
-                debounceSetIndex(page - 1)
+        <SearchOptionsPaginator
+          hidePaginator={hidePaginator}
+          paginationParams={paginationParams}
+        />
 
-              }}
-            />
-          </div>
-        }
-        </div>
       </div>
 
     </div>
@@ -562,30 +541,4 @@ const styles = (theme: Theme) => createStyles({
 });
 
 
-// export default withStyles(styles)( SearchOptionsPaginator );
-
-export default withStyles(styles)(React.memo(
-  (props: ReactProps) => <SearchOptionsPaginator {...props}/>,
-  (prevProps, nextProps) => {
-
-    // let prevLength = option(prevProps).productsForSaleConnection.edges([]).length
-    // let nextLength = option(nextProps).productsForSaleConnection.edges([]).length
-
-    let stopRerender = false;
-    // let rerender =  prevLength < nextLength
-    //     && prevProps.index !== nextProps.index
-    //     && prevProps.itemsPerGrid !== nextProps.itemsPerGrid
-    let pTotalCount = option(prevProps).paginationParams.totalCount()
-    let nTotalCount = option(nextProps).paginationParams.totalCount()
-
-    if (pTotalCount > 0 && nTotalCount === undefined) {
-      stopRerender = true
-    }
-
-    // console.log("PREV paginationParams: ", prevProps.paginationParams)
-    // console.log("NEXT paginationParams: ", nextProps.paginationParams)
-
-    // if true, don't re-render
-    return stopRerender
-  },
-))
+export default withStyles(styles)( SearchOptions );
