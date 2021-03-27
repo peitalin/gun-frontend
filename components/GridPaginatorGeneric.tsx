@@ -57,6 +57,7 @@ function GridPaginatorGeneric<T>(props: ReactProps<T> & ReactChildren<T>) {
   })
 
   let productGroups: T[][] = Object.values(productsGroupedInGrids)
+  // console.log("productsGroupsInGrids", productGroups)
 
   return (
     <AlignCenterLayout
@@ -78,9 +79,10 @@ function GridPaginatorGeneric<T>(props: ReactProps<T> & ReactChildren<T>) {
       >
         {
           productGroups.map(( productGroup, subindex) => {
-            if (index===2) {
+            if (index === 2) {
               console.log("subindex:", subindex)
               console.log("productGroup:", productGroup)
+              console.log("productGroup.length:", productGroup?.length)
             }
             return (
               <div key={`product-group-${subindex}`}
@@ -92,7 +94,7 @@ function GridPaginatorGeneric<T>(props: ReactProps<T> & ReactChildren<T>) {
               >
                 {
                   props.loading
-                  && (productGroup?.length === 0)
+                  && (productGroups[index]?.length === 0)
                   // if overfetching, only show loading if past the preloaded pages
                   ? [...Array(numItemsPerPage).keys()].map(j => {
                       return props.loadingComponent

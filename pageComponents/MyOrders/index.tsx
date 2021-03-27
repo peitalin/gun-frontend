@@ -355,6 +355,7 @@ const MyOrders: React.FC<ReactProps> = (props) => {
                         <OrderRowSellers
                           key={order.id}
                           order={order}
+                          loading={false}
                           // loading={
                           //   sellerOrdersActionItemsResponse?.loading
                           //   // && not index-nth page was already loaded
@@ -428,7 +429,8 @@ const MyOrders: React.FC<ReactProps> = (props) => {
                     <OrderRowBuyers
                       key={order.id}
                       order={order}
-                      loading={buyerOrdersResponse.loading}
+                      loading={false}
+                      // loading={buyerOrdersResponse.loading}
                     />
                   )
                 }
@@ -502,7 +504,8 @@ const MyOrders: React.FC<ReactProps> = (props) => {
                     <OrderRowSellers
                       key={order.id}
                       order={order}
-                      loading={sellerOrdersResponse.loading}
+                      // loading={sellerOrdersResponse.loading}
+                      loading={false}
                     />
                   )
                 }

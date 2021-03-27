@@ -316,15 +316,15 @@ export const useEffectUpdateGridAccum = <T>({
     // are missing and fill them in with blank arrays.
     // e.g. if you have pages [1,2], then visit page 7
 
-    // if (index > gridAccumKeys.length) {
-    //   [...Array(index).keys()].forEach(i => {
-    //     if (!gridAccumKeys.includes(`${i}`)) {
-    //       // if page does not yet exist in gridAccum, create an empty entry
-    //       // console.log('replacing newGridAccum[i]', i)
-    //       gridAccum[i] = []
-    //     }
-    //   })
-    // }
+    if (index > gridAccumKeys.length) {
+      [...Array(index).keys()].forEach(i => {
+        if (!gridAccumKeys.includes(`${i}`)) {
+          // if page does not yet exist in gridAccum, create an empty entry
+          // console.log('replacing newGridAccum[i]', i)
+          gridAccum[i] = []
+        }
+      })
+    }
 
 
     let overfetchArray = [...Array(overfetchBy).keys()]
@@ -335,7 +335,7 @@ export const useEffectUpdateGridAccum = <T>({
         return gridAccum[index+k] === undefined
           || gridAccum[index+k]?.length === 0
       })
-    console.log("indexesNeedUpdating", indexesNeedUpdating)
+    // console.log("indexesNeedUpdating", indexesNeedUpdating)
 
     // create/update the index with the products from that index-page-request
     if (products) {
@@ -361,7 +361,7 @@ export const useEffectUpdateGridAccum = <T>({
           }
         })
 
-        console.log("gridAccum: ", gridAccum)
+        // console.log("gridAccum: ", gridAccum)
         setGridAccum(s => ({
           ...gridAccum,
         }))
