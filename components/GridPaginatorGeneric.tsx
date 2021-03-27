@@ -77,10 +77,13 @@ function GridPaginatorGeneric<T>(props: ReactProps<T> & ReactChildren<T>) {
         springConfig={disableAnimation ? noAnim : someAnim}
       >
         {
-          productGroups.map(( productGroup, index) => {
-            // console.log("productGroup:", productGroup)
+          productGroups.map(( productGroup, subindex) => {
+            if (index===2) {
+              console.log("subindex:", subindex)
+              console.log("productGroup:", productGroup)
+            }
             return (
-              <div key={`product-group-${index}`}
+              <div key={`product-group-${subindex}`}
                 className={clsx(
                   // props.loading ? "fadeIn" : "staggerFadeIn",
                   "fadeIn",

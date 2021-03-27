@@ -315,15 +315,16 @@ export const useEffectUpdateGridAccum = <T>({
     // if skipping ahead multiple pages, check which intemediate pages
     // are missing and fill them in with blank arrays.
     // e.g. if you have pages [1,2], then visit page 7
-    if (index > gridAccumKeys.length) {
-      [...Array(index).keys()].forEach(i => {
-        if (!gridAccumKeys.includes(`${i}`)) {
-          // if page does not yet exist in gridAccum, create an empty entry
-          // console.log('replacing newGridAccum[i]', i)
-          gridAccum[i] = []
-        }
-      })
-    }
+
+    // if (index > gridAccumKeys.length) {
+    //   [...Array(index).keys()].forEach(i => {
+    //     if (!gridAccumKeys.includes(`${i}`)) {
+    //       // if page does not yet exist in gridAccum, create an empty entry
+    //       // console.log('replacing newGridAccum[i]', i)
+    //       gridAccum[i] = []
+    //     }
+    //   })
+    // }
 
 
     let overfetchArray = [...Array(overfetchBy).keys()]
@@ -340,31 +341,25 @@ export const useEffectUpdateGridAccum = <T>({
     if (products) {
 
       if (indexesNeedUpdating)  {
-        // gridAccum[index] is empty and needs to be updated
         // console.log("instantiating grid...")
+        // gridAccum[index] is empty and needs to be updated
 
-        // if more than 1 page, split products into groups and add to GridMap
-        if (products.length > numItemsPerPage) {
-          // split incoming products from request into groups
-          // this may be from the 5th page onwards...5th and 6th pages incoming
-          let productGroups = splitArrayIntoGrid(products, numItemsPerPage)
-          // console.log("productGroups: ", productGroups)
-          // when overfetching, there will be 2+ groups, allocate products to
-          // the jth over-fetched group of products
-          productGroups.forEach((productSubgroup, j) => {
-            // console.log("index: ", index)
-            // console.log("index+j: ", index+j)
-            // newGridAccum[index+j] = productSubgroup
-            if (
-              gridAccum[index+j] === undefined || gridAccum[index+j]?.length === 0
-            ) {
-              gridAccum[index+j] = productSubgroup
-            }
-          })
-        } else {
-          // if products.length fit on 1 page, assign products to index
-          gridAccum[index] = products
-        }
+        // split incoming products from request into groups
+        // this may be from the 5th page onwards...5th and 6th pages incoming
+        let productGroups = splitArrayIntoGrid(products, numItemsPerPage)
+        // console.log("productGroups: ", productGroups)
+        // when overfetching, there will be 2+ groups, allocate products to
+        // the jth over-fetched group of products
+        productGroups.forEach((productSubgroup, j) => {
+          // console.log("index: ", index)
+          // console.log("index+j: ", index+j)
+          // newGridAccum[index+j] = productSubgroup
+          if (
+            gridAccum[index+j] === undefined || gridAccum[index+j]?.length === 0
+          ) {
+            gridAccum[index+j] = productSubgroup
+          }
+        })
 
         console.log("gridAccum: ", gridAccum)
         setGridAccum(s => ({
