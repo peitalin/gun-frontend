@@ -34,6 +34,7 @@ function GridPaginatorGeneric<T>(props: ReactProps<T> & ReactChildren<T>) {
     totalCount,
     setTotalCount,
     numItemsPerPage,
+    loading,
     overfetchBy = 1,
     maxWidth = 1160,
     disableAnimation = false,
@@ -51,6 +52,7 @@ function GridPaginatorGeneric<T>(props: ReactProps<T> & ReactChildren<T>) {
     totalCount,
     setTotalCount,
     numItemsPerPage,
+    loading,
   })
 
   let productGroups: T[][] = Object.values(productsGroupedInGrids)
@@ -65,7 +67,7 @@ function GridPaginatorGeneric<T>(props: ReactProps<T> & ReactChildren<T>) {
       productsGroupedInGrids &&
       <BindKeyboardSwipeableViews
         enableMouseEvents={false}
-        index={props.index}
+        index={index}
         containerStyle={{ height: '100%' }}
         style={{
           height: '100%',

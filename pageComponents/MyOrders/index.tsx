@@ -54,7 +54,7 @@ import GridPaginatorGeneric from "components/GridPaginatorGeneric";
 
 
 /////////////////////////////////// paginator
-let numItemsPerPage = 4;
+let numItemsPerPage = 3;
 let overfetchBy = 2;
 let MAX_WIDTH_ORDERS_PAGER = 900
 
@@ -170,7 +170,6 @@ const MyOrders: React.FC<ReactProps> = (props) => {
   );
 
   React.useEffect(() => {
-    console.log('dispatching apollo calls')
     getBuyerOrders()
     getSellerOrders()
     getSellerOrdersActionItems()
@@ -205,7 +204,7 @@ const MyOrders: React.FC<ReactProps> = (props) => {
   }
 
   const refetchOrders = React.useCallback(() => {
-    console.log("Refetching orders")
+    // console.log("Refetching orders")
     // apollo devs are retards
     // https://github.com/apollographql/react-apollo/issues/3862
     setTimeout(() => refetchTheOrders(), 0)
@@ -334,6 +333,8 @@ const MyOrders: React.FC<ReactProps> = (props) => {
                   totalCount={sellerOrdersActionItemsConnection?.totalCount ?? 0}
                   numItemsPerPage={numItemsPerPage}
                   className={classes.rowContainer}
+                  // disableAnimation={true}
+                  loading={sellerOrdersActionItemsResponse?.loading}
                   // classNameRoot={classes.gridRootSeller}
                 >
                   {({ node: order, key }) => {
@@ -398,6 +399,8 @@ const MyOrders: React.FC<ReactProps> = (props) => {
               totalCount={buyerOrdersConnection?.totalCount ?? 0}
               numItemsPerPage={numItemsPerPage}
               className={classes.rowContainer}
+              // disableAnimation={true}
+              loading={buyerOrdersResponse?.loading}
               // classNameRoot={classes.gridRootBuyer}
             >
               {({ node: order, key }) => {
@@ -467,6 +470,8 @@ const MyOrders: React.FC<ReactProps> = (props) => {
                 // -2rem to account for 2rem padding or orders rows
                 // overflows out of the paginator-grid
               }}
+              // disableAnimation={true}
+              loading={sellerOrdersResponse?.loading}
             >
               {({ node: order, key }) => {
                 if (sellerOrdersResponse.error && key === 0) {

@@ -273,6 +273,7 @@ export const useEffectUpdateGridAccum = <T>({
   setTotalCount,
   searchTerm,
   numItemsPerPage,
+  loading,
 }: {
   index: number,
   productsConnection: GenericConnection<T>,
@@ -280,6 +281,7 @@ export const useEffectUpdateGridAccum = <T>({
   setTotalCount: React.Dispatch<React.SetStateAction<number>>,
   searchTerm?: string,
   numItemsPerPage?: number,
+  loading?: boolean,
 }): GridMap<T> => {
 
   // accumulate products for pre-fetching
@@ -287,11 +289,23 @@ export const useEffectUpdateGridAccum = <T>({
     0: [],
   })
 
+  // instantiate gridAccum data structure with #numPages for swipeable
   React.useEffect(() => {
-    // make a mutable new gridAccum
-    let newGridAccum = gridAccum;
+    let numPages = totalCount / numItemsPerPage;
+    // instantiate gridAccum with #numPages number of empty arrays []
+    if (numPages) {
+      [...Array(Math.ceil(numPages)).keys()].forEach(i => {
+        gridAccum[i] = []
+      })
+    }
+  }, [totalCount])
+
+
+  React.useEffect(() => {
+
     let gridAccumKeys = Object.keys(gridAccum);
     let products = option(productsConnection).edges([]).map(({ node }) => node);
+    // console.log("index: ", index)
     // console.log("gridAccum: ", gridAccum)
     // console.log("gridKeys: ", gridAccumKeys)
 
@@ -302,36 +316,43 @@ export const useEffectUpdateGridAccum = <T>({
       [...Array(index).keys()].forEach(i => {
         if (!gridAccumKeys.includes(`${i}`)) {
           // if page does not yet exist in gridAccum, create an empty entry
-          // if (newGridAccum[i].length < 1) {
-          // }
-          console.log('replacing newGridAccum[i]', i)
-          newGridAccum[i] = []
+          // console.log('replacing newGridAccum[i]', i)
+          gridAccum[i] = []
         }
       })
     }
 
     // create/update the index with the products from that index-page-request
     if (products) {
+      if (gridAccum[index] === undefined || gridAccum[index]?.length === 0)  {
+        // gridAccum[index] is empty and needs to be updated
+        // console.log("instantiating grid...")
 
-      // if overfetching, split products into groups and add to GridMap
-      if (numItemsPerPage && products.length > numItemsPerPage) {
-        let productGroups = splitArrayIntoGrid(products, numItemsPerPage)
-        // when overfetching, there will be 2+ groups, allocate products to
-        // the jth over-fetched group of products
-        productGroups.forEach((products, j) => {
-          // console.log("j: ", j)
-          // console.log("index+j: ", index+j)
-          newGridAccum[index+j] = products
-        })
-      } else {
-        // if not overfetching, assign produxts to index
-        newGridAccum[index] = products
+        // if more than 1 page, split products into groups and add to GridMap
+        if (products.length > numItemsPerPage) {
+          let productGroups = splitArrayIntoGrid(products, numItemsPerPage)
+          // console.log("productGroups: ", productGroups)
+          // when overfetching, there will be 2+ groups, allocate products to
+          // the jth over-fetched group of products
+          productGroups.forEach((productSubgroup, j) => {
+            // console.log("j: ", j)
+            // console.log("index+j: ", index+j)
+            // newGridAccum[index+j] = productSubgroup
+            if (
+              gridAccum[index+j] === undefined || gridAccum[index+j]?.length === 0
+            ) {
+              gridAccum[index+j] = productSubgroup
+            }
+          })
+        } else {
+          // if products.length fit on 1 page, assign products to index
+          gridAccum[index] = products
+        }
+
+        setGridAccum(s => ({
+          ...gridAccum,
+        }))
       }
-
-      setGridAccum(s => ({
-        ...newGridAccum,
-        ...s
-      }))
     }
 
     // console.log("totalCount>", totalCount)
@@ -341,7 +362,7 @@ export const useEffectUpdateGridAccum = <T>({
       }
     }
 
-  }, [productsConnection, searchTerm, index, totalCount])
+  }, [productsConnection, searchTerm, index, totalCount, loading])
 
   return gridAccum
 }

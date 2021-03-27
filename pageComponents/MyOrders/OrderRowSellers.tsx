@@ -47,9 +47,8 @@ const OrderRowSellers: React.FC<ReactProps> = (props) => {
     order?.currentSnapshot?.orderStatus === OrderStatus.REFUNDED ||
     order?.currentSnapshot?.orderStatus === OrderStatus.CANCELLED
 
-
   return (
-    <ErrorBounds className={classes.orderRowSellersRoot}>
+    <ErrorBounds className={clsx(classes.orderRowSellersRoot, "fadeIn")}>
       <div className={classes.flexRow}>
         {
           loading
