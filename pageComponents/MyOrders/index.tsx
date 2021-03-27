@@ -334,8 +334,11 @@ const MyOrders: React.FC<ReactProps> = (props) => {
                   numItemsPerPage={numItemsPerPage}
                   className={classes.rowContainer}
                   // disableAnimation={true}
-                  loading={sellerOrdersActionItemsResponse?.loading}
                   // classNameRoot={classes.gridRootSeller}
+                  loading={sellerOrdersActionItemsResponse?.loading}
+                  loadingComponent={
+                    <OrderRowSellers order={undefined} loading={true} />
+                  }
                 >
                   {({ node: order, key }) => {
                     if (sellerOrdersActionItemsResponse.error && key === 0) {
@@ -400,8 +403,11 @@ const MyOrders: React.FC<ReactProps> = (props) => {
               numItemsPerPage={numItemsPerPage}
               className={classes.rowContainer}
               // disableAnimation={true}
-              loading={buyerOrdersResponse?.loading}
               // classNameRoot={classes.gridRootBuyer}
+              loading={buyerOrdersResponse?.loading}
+              loadingComponent={
+                <OrderRowBuyers order={undefined} loading={true} />
+              }
             >
               {({ node: order, key }) => {
                 if (buyerOrdersResponse.error && key === 0) {

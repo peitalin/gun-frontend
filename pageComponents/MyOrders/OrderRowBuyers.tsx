@@ -30,10 +30,11 @@ const OrderRowBuyers: React.FC<ReactProps> = (props) => {
     loading,
     order,
   } = props;
-  const { product } = order;
 
-  const theme = useTheme();
-  const mdDown = useMediaQuery(theme.breakpoints.down("md"))
+  const product = order?.product;
+
+  // const theme = useTheme();
+  // const mdDown = useMediaQuery(theme.breakpoints.down("md"))
 
   const previewItem = getFeaturedPreviewFromProduct(product)
 
