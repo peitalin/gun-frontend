@@ -10,7 +10,7 @@ import {
   Product,
   ProductsConnection,
   Categories,
-  ConnectionOffsetQuery,
+  ConnectionQuery,
 } from "typings/gqlTypes";
 // Router
 import { useRouter } from "next/router";
@@ -350,7 +350,7 @@ interface QueryData1 {
   productsByCategoryConnection: ProductsConnection
 }
 interface QueryVar1 {
-  query: ConnectionOffsetQuery;
+  query: ConnectionQuery;
   categorySlugs?: string[];
   searchTerm?: string;
 }

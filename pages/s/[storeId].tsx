@@ -3,7 +3,7 @@ import { oc as option } from "ts-optchain";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 // Typings
-import { Store, ID, ConnectionOffsetQuery } from "typings/gqlTypes";
+import { Store, ID, ConnectionQuery } from "typings/gqlTypes";
 import StoreId from "pageComponents/S/StoreId";
 // SSR
 import { NextPage, NextPageContext } from 'next';
@@ -20,11 +20,11 @@ const Stores = (props: ReactProps) => {
   return (
     <>
       <MetaHeadersPage
-        title={`${option(store).name()} - Download Digital Products - GM Downloads`}
+        title={`${store?.name} - Purchse firearms on Gunmarketplace`}
         description={
-          option(store).bio()
-          ? `${option(store).bio()} — Download digital products by ${option(store).name()} on GM.`
-          : `Download digital products by ${option(store).name()} on GM.`
+          store?.bio
+          ? `${store?.bio} — Purchase firearms by ${store?.name} on GM.`
+          : `Pruchase firearms by ${store?.name} on GM.`
         }
       />
       { option(store).name() }
@@ -44,7 +44,7 @@ interface QueryData {
 }
 interface QueryVar {
   storeIdOrSlug: ID;
-  query?: ConnectionOffsetQuery;
+  query?: ConnectionQuery;
 }
 
 ////////// SSR ///////////

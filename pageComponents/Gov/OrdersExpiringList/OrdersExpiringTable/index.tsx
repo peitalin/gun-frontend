@@ -14,7 +14,7 @@ import {
   OrderAdmin,
   OrderStatus,
   UserPrivate,
-  ConnectionOffsetQuery
+  ConnectionQuery
 } from "typings/gqlTypes";
 // Redux
 import { useSelector, useDispatch } from "react-redux";
@@ -235,7 +235,7 @@ interface QueryData {
   getOrdersExpiringConnectionAdmin: OrdersConnection
 }
 interface QueryVar {
-  query?: ConnectionOffsetQuery
+  query?: ConnectionQuery
 }
 
 

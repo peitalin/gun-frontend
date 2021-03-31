@@ -15,9 +15,8 @@ import ProductCardResponse from "components/ProductCardResponsive";
 import LoadingCards from "pageComponents/FrontPage/LoadingCards";
 // Typings
 import {
-  ConnectionOffsetQuery,
+  ConnectionQuery,
   Product,
-  Edge,
   ProductsConnection,
 } from "typings/gqlTypes";
 // Router
@@ -130,7 +129,7 @@ interface QueryData {
   getRecommendedProductsConnection: ProductsConnection
 }
 interface QueryVar {
-  query?: ConnectionOffsetQuery
+  query?: ConnectionQuery
 }
 
 const styles = (theme: Theme) => createStyles({

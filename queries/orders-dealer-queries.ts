@@ -9,7 +9,7 @@ import {
 
 
 export const GET_ORDERS_ARRIVING_CONNECTION_DEALER = gql`
-  query($query: ConnectionOffsetQueryOrders!) {
+  query($query: ConnectionQueryOrders!) {
     getOrdersArrivingConnectionDealer(query: $query) {
       edges {
         node {
@@ -25,7 +25,7 @@ export const GET_ORDERS_ARRIVING_CONNECTION_DEALER = gql`
 
 
 export const GET_ORDERS_COMPLETING_CONNECTION_DEALER = gql`
-  query($query: ConnectionOffsetQueryOrders!) {
+  query($query: ConnectionQueryOrders!) {
     getOrdersCompletingConnectionDealer(query: $query) {
       edges {
         node {

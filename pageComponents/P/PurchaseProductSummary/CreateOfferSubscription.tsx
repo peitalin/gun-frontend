@@ -103,7 +103,7 @@ interface QueryData {
   myConversations: Conversation[]
 }
 interface QueryVar {
-  // query: ConnectionOffsetQuery
+  // query: ConnectionQuery
 }
 
 const styles = (theme: Theme) => createStyles({

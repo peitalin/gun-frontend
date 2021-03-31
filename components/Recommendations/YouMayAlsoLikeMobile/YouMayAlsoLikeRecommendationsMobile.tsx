@@ -11,7 +11,7 @@ import {
   GET_RECOMMENDED_PRODUCTS,
 } from "queries/products-queries";
 // Typings
-import { ProductsConnection, ConnectionOffsetQuery } from "typings/gqlTypes";
+import { ProductsConnection, ConnectionQuery } from "typings/gqlTypes";
 import { useQuery } from "@apollo/client";
 // CSS
 import useMediaQuery from '@material-ui/core/useMediaQuery';
@@ -70,7 +70,7 @@ interface QueryData {
   getRecommendedProductsConnection: ProductsConnection
 }
 interface QueryVar {
-  query: ConnectionOffsetQuery;
+  query: ConnectionQuery;
   currentlyViewingProductIdOrSlug?: string;
 }
 

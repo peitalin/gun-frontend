@@ -7,7 +7,6 @@ export const GET_WISHLIST_CONNECTION = gql`
       totalCount
       pageInfo {
         isLastPage
-        endCursor
       }
       edges {
         cursor

@@ -28,7 +28,7 @@ export const SEARCH = gql`
 export const SEARCH_ALL_PRODUCTS = gql`
   query search(
     $searchTerm: String!
-    $query: ConnectionOffsetQuery
+    $query: ConnectionQuery
   ) {
     search(
       searchTerm: $searchTerm,
@@ -37,7 +37,6 @@ export const SEARCH_ALL_PRODUCTS = gql`
       totalCount
       pageInfo {
         isLastPage
-        endCursor
       }
       edges {
         node {

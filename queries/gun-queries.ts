@@ -7,7 +7,7 @@ import { ProductFragment } from "queries/fragments";
 export const GET_ALL_PRODUCTS = gql`
   query productsAllConnection(
     $searchTerm: String!
-    $query: ConnectionOffsetQuery
+    $query: ConnectionQuery
   ) {
     productsAllConnection(
       searchTerm: $searchTerm,
@@ -16,7 +16,6 @@ export const GET_ALL_PRODUCTS = gql`
       totalCount
       pageInfo {
         isLastPage
-        endCursor
       }
       edges {
         node {

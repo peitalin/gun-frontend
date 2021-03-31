@@ -1,6 +1,5 @@
 
 import React from "react";
-import {oc as option} from "ts-optchain";
 // GraphQL
 import { useQuery } from "@apollo/client";
 import { DocumentNode } from "graphql";
@@ -56,7 +55,7 @@ const usePaginatePagedQuery = () =>
   // This effect resets new forwards and backwards cursors
   // after a new Graphql query everytime a new query is fetched
   React.useEffect(() => {
-    if (option(connection).edges()) {
+    if (connection?.edges) {
       if (connection.edges.length === 0) {
         const page = {
           pageNumber: 1,
@@ -76,7 +75,7 @@ const usePaginatePagedQuery = () =>
     console.log("updating pages...")
   }, [
     loading,
-    option(connection).pageInfo(),
+    connection?.pageInfo,
     props.count,
   ])
 

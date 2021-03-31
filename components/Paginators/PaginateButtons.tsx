@@ -1,6 +1,5 @@
 
 import React from "react";
-import {oc as option} from "ts-optchain";
 // Utils Components
 import ErrorDisplay from "components/Error";
 import ErrorBounds from "components/ErrorBounds";

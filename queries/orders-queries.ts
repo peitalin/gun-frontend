@@ -5,7 +5,7 @@ import {
 
 
 export const GET_SELLER_ORDERS_CONNECTION = gql`
-  query ($query: ConnectionOffsetQueryOrders) {
+  query ($query: ConnectionQueryOrders) {
     user {
       id
       ... on UserPrivate {
@@ -13,7 +13,6 @@ export const GET_SELLER_ORDERS_CONNECTION = gql`
           totalCount
           pageInfo {
             isLastPage
-            endCursor
           }
           edges {
             node {
@@ -29,7 +28,7 @@ export const GET_SELLER_ORDERS_CONNECTION = gql`
 
 
 export const GET_SELLER_ORDERS_ACTION_ITEMS_CONNECTION = gql`
-  query ($query: ConnectionOffsetQueryOrders) {
+  query ($query: ConnectionQueryOrders) {
     user {
       id
       ... on UserPrivate {
@@ -37,7 +36,6 @@ export const GET_SELLER_ORDERS_ACTION_ITEMS_CONNECTION = gql`
           totalCount
           pageInfo {
             isLastPage
-            endCursor
           }
           edges {
             node {
@@ -54,7 +52,7 @@ export const GET_SELLER_ORDERS_ACTION_ITEMS_CONNECTION = gql`
 
 
 export const GET_BUYER_ORDERS_CONNECTION = gql`
-  query ($query: ConnectionOffsetQueryOrders) {
+  query ($query: ConnectionQueryOrders) {
     user {
       id
       ... on UserPrivate {
@@ -62,7 +60,6 @@ export const GET_BUYER_ORDERS_CONNECTION = gql`
           totalCount
           pageInfo {
             isLastPage
-            endCursor
           }
           edges {
             node {

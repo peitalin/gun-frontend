@@ -6,12 +6,11 @@ import {
 } from "./fragments";
 
 export const GET_RECOMMENDED_PRODUCTS = gql`
-  query getRecommendedProducts($query: ConnectionOffsetQuery) {
+  query getRecommendedProducts($query: ConnectionQuery) {
     getRecommendedProductsConnection(query: $query) {
       totalCount
       pageInfo {
         isLastPage
-        endCursor
       }
       edges {
         node {
@@ -30,7 +29,6 @@ export const GET_ALL_PRODUCTS = gql`
       totalCount
       pageInfo {
         isLastPage
-        endCursor
       }
       edges {
         # cursor
@@ -61,7 +59,7 @@ export const GET_PRODUCT = gql`
 export const GET_PRODUCTS_BY_CATEGORY = gql`
   query productsByCategoryConnection(
     $categorySlugs: [String]!
-    $query: ConnectionOffsetQuery!
+    $query: ConnectionQuery!
     $searchTerm: String
   ) {
     productsByCategoryConnection(
@@ -72,7 +70,6 @@ export const GET_PRODUCTS_BY_CATEGORY = gql`
       totalCount
       pageInfo {
         isLastPage
-        endCursor
       }
       edges {
         node {

@@ -9,7 +9,7 @@ import { useQuery } from "@apollo/client";
 // Typings
 import {
   ProductsConnection,
-  ConnectionOffsetQuery,
+  ConnectionQuery,
   Product,
   Categories,
 } from "typings/gqlTypes";
@@ -255,7 +255,7 @@ interface QueryData {
 }
 interface QueryVar {
   searchTerm: string;
-  query: ConnectionOffsetQuery;
+  query: ConnectionQuery;
 }
 
 const styles = (theme: Theme) => createStyles({

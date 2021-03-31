@@ -9,7 +9,7 @@ import {
 
 
 export const GET_ORDERS_CREATED_CONNECTION = gql`
-  query($query: ConnectionOffsetQueryOrders!) {
+  query($query: ConnectionQueryOrders!) {
     getOrdersCreatedConnectionAdmin(query: $query) {
       edges {
         node {
@@ -25,7 +25,7 @@ export const GET_ORDERS_CREATED_CONNECTION = gql`
 
 
 export const GET_ORDERS_PENDING_APPROVAL_CONNECTION = gql`
-  query($query: ConnectionOffsetQueryOrders!) {
+  query($query: ConnectionQueryOrders!) {
     getOrdersPendingApprovalConnectionAdmin(query: $query) {
       edges {
         node {
@@ -40,7 +40,7 @@ export const GET_ORDERS_PENDING_APPROVAL_CONNECTION = gql`
 
 
 export const GET_ORDERS_ADMIN_APPROVED_CONNECTION = gql`
-  query($query: ConnectionOffsetQueryOrders!) {
+  query($query: ConnectionQueryOrders!) {
     getOrdersAdminApprovedConnection(query: $query) {
       edges {
         node {
@@ -55,7 +55,7 @@ export const GET_ORDERS_ADMIN_APPROVED_CONNECTION = gql`
 
 
 export const GET_ORDERS_PAYOUTS_COMPLETE_CONNECTION = gql`
-  query($query: ConnectionOffsetQueryOrders!) {
+  query($query: ConnectionQueryOrders!) {
     getOrdersPayoutCompleteConnection(query: $query) {
       edges {
         node {
@@ -69,7 +69,7 @@ export const GET_ORDERS_PAYOUTS_COMPLETE_CONNECTION = gql`
 `;
 
 export const GET_ORDERS_CANCELLED_CONNECTION = gql`
-  query($query: ConnectionOffsetQueryOrders!) {
+  query($query: ConnectionQueryOrders!) {
     getOrdersCancelledConnection(query: $query) {
       edges {
         node {
@@ -83,7 +83,7 @@ export const GET_ORDERS_CANCELLED_CONNECTION = gql`
 `;
 
 export const GET_ORDERS_EXPIRING_CONNECTION_ADMIN = gql`
-  query($query: ConnectionOffsetQueryOrders!) {
+  query($query: ConnectionQueryOrders!) {
     getOrdersExpiringConnectionAdmin(query: $query) {
       edges {
         node {

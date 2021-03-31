@@ -1,6 +1,10 @@
 import React from "react";
 import { NextPage, NextPageContext } from 'next';
-import { oc as option } from "ts-optchain";
+
+// Must import like this
+// https://github.com/mui-org/material-ui/issues/16962
+// import Head from 'next/Head';
+
 // Redux
 import { Dispatch, Store } from "redux";
 // redux
@@ -26,9 +30,13 @@ import { ApolloProvider, ApolloClient } from '@apollo/client';
 import withApollo from 'utils/apollo';
 // queries
 import { GET_USER } from "queries/user-queries";
+
 // css
+// all css must be imported here
 import "../public/App.css";
-// import "react-datepicker/dist/react-datepicker.css";
+import "react-datepicker/dist/react-datepicker.css";
+import "components/TextEditorCK/ckStyles.css";
+
 import { SnackbarProvider, ProviderContext } from 'notistack';
 import IconButtonCancel from "components/IconButtonCancel";
 // Typings
@@ -109,6 +117,12 @@ class MyApp extends App<AppProps> {
 
     return (
       <Provider store={store}>
+        {/* <Head>
+          <meta
+            name="viewport"
+            content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no"
+          />
+        </Head> */}
         <ApolloProvider client={apollo}>
           <ThemeProviderDarkMode>
             <SnackbarProvider
@@ -206,9 +220,6 @@ const ThemeProviderDarkMode = (props) => {
 }
 
 
-interface QueryData {
-  user: UserPrivate;
-}
 interface AppProps extends WithStyles<typeof notifyStyles> {
   apollo: ApolloClient<any>;
   store: Store<GrandReduxState>;

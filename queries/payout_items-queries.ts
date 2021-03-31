@@ -24,7 +24,6 @@ export const GET_PAYOUT_ITEMS_IN_PERIOD_ADMIN_PAGED = gql`
       }
       totalCount
       edges {
-        # cursor
         node {
           ...PayoutItemFragment
         }
@@ -45,12 +44,10 @@ export const GET_TRANSACTIONS_IN_PERIOD_ADMIN = gql`
       totalAmount
       totalFees
       pageInfo {
-        endCursor
         totalPages
         isLastPage
       }
       edges {
-        cursor
         node {
           ...TransactionFragment
         }

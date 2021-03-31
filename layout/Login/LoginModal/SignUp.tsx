@@ -36,7 +36,8 @@ const MuiPhoneNumber = dynamic(() => import("material-ui-phone-number"), {
 })
 import { formatPhoneNumber } from "layout/Login/utils";
 
-import "components/DatePicker/react-datepicker.css";
+// import in _app.tsx
+// import "components/DatePicker/react-datepicker.css";
 const DatePicker = dynamic(() => import("react-datepicker"), {
   loading: () => <Loading/>,
   ssr: false,

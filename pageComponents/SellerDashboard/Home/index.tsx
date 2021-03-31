@@ -8,7 +8,7 @@ import { Colors, BorderRadius } from "layout/AppTheme";
 import {
   UserPrivate,
   ProductsConnection,
-  ConnectionOffsetQuery,
+  ConnectionQuery,
 } from "typings/gqlTypes";
 // Utils Components
 import LoadingBarSSR from "components/LoadingBarSSR";
@@ -85,7 +85,7 @@ interface ReactProps extends WithStyles<typeof styles> {
 }
 interface QueryVar {
   searchTerm?: string;
-  query?: ConnectionOffsetQuery;
+  query?: ConnectionQuery;
 }
 interface QueryData {
   user: UserPrivate;

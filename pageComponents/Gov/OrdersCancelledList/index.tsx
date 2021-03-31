@@ -9,7 +9,7 @@ import {
   Order,
   OrderAdmin,
   OrderStatus,
-  ConnectionOffsetQuery,
+  ConnectionQuery,
   Order_By,
   OrdersConnection,
   OrderBy,
@@ -253,7 +253,7 @@ interface ReactProps extends WithStyles<typeof styles> {
 }
 // customer counts
 interface QueryVar {
-  query: ConnectionOffsetQuery
+  query: ConnectionQuery
 }
 interface QueryData {
   getOrdersCancelledConnection: OrdersConnection

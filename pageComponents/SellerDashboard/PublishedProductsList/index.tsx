@@ -15,7 +15,7 @@ import {
   UserPrivate,
   ProductsConnection,
   StorePrivate,
-  ConnectionOffsetQuery,
+  ConnectionQuery,
   Product,
   SoldOutStatus,
 } from "typings/gqlTypes";
@@ -383,7 +383,7 @@ interface ReactProps extends WithStyles<typeof styles> {
 
 interface QueryVar {
   searchTerm?: string;
-  query?: ConnectionOffsetQuery;
+  query?: ConnectionQuery;
 }
 interface QueryData {
   // user: UserPrivate;

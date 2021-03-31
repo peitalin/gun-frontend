@@ -14,7 +14,6 @@ export type Scalars = {
   bigint: any;
   /** Standard date string */
   Date: Date;
-  PageCursor: any;
   /** The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf). */
   JSON: any;
   /** Price value representing USD cents */
@@ -26,22 +25,6 @@ export type Scalars = {
 export type AddRemovePaymentMethodResponse = {
    __typename?: 'AddRemovePaymentMethodResponse';
   user: UserPrivate;
-};
-
-/** Basic insight into some interesting platform statistic (eg number of stores). */
-export type AdminInsight = {
-   __typename?: 'AdminInsight';
-  /** Name of the value (eg "Number of Sales Made"). */
-  name: Scalars['String'];
-  /** String version of value (eg "42,000"). */
-  value: Scalars['String'];
-};
-
-export type ApprovePayoutsResult = {
-   __typename?: 'ApprovePayoutsResult';
-  approvedPayouts?: Maybe<Array<Maybe<Payout>>>;
-  payoutsAlreadyApprovedIds?: Maybe<Array<Maybe<Scalars['ID']>>>;
-  payoutsAlreadyApproved?: Maybe<Array<Maybe<Payout>>>;
 };
 
 /** Information about a person on the platform */
@@ -1442,56 +1425,21 @@ export type Connection = {
   pageInfo: PageInfo;
 };
 
-export type ConnectionOffsetQuery = {
+export type ConnectionQuery = {
   limit: Scalars['Int'];
   offset?: Maybe<Scalars['Int']>;
-  /** orderBy: products_order_by // hasura's orderby */
+  /** orderBy: products_order_by # hasura's orderby */
   orderBy?: Maybe<ProductsOrderBy>;
   where?: Maybe<Products_Bool_Exp>;
   filters?: Maybe<Scalars['String']>;
   facetFilters?: Maybe<Array<Maybe<Array<Maybe<Scalars['String']>>>>>;
 };
 
-export type ConnectionOffsetQueryOrders = {
+export type ConnectionQueryOrders = {
   limit: Scalars['Int'];
   offset?: Maybe<Scalars['Int']>;
   orderBy?: Maybe<Orders_Order_By>;
   where?: Maybe<Orders_Bool_Exp>;
-};
-
-/** Parameters that control how to access pages within a Connection */
-export type ConnectionQuery = {
-  /**
-   * Whether or not to order the entire dataset in ascending form (as opposed to descending).
-   * Defaults to false.
-   */
-  sortAscending?: Maybe<Scalars['Boolean']>;
-  /**
-   * Reference to a point in the middle of the entire dataset from which to page either side of.
-   * If not provided then it defaults to the start of the entire dataset.
-   * If you need to access the other end of the dataset / navigate backwards, provide no cursor but flip sortAscending.
-   * Defaults to null.
-   */
-  cursor?: Maybe<Scalars['PageCursor']>;
-  /**
-   * Whether or not to select a page backwards from the provided cursor (as opposed to forwards).
-   * Either way the result set will exclude the item AT the specified cursor, because you already have it.
-   * Defaults to false.
-   */
-  pageBackwards?: Maybe<Scalars['Boolean']>;
-  /**
-   * Maximum number of items you want to see within a connection page.
-   * Defaults to the maximum you can ask for, which is a sensible number controlled by the server.
-   */
-  count?: Maybe<Scalars['Int']>;
-};
-
-export type ConnectionWithMetrics = {
-  /** COUNT(*) of a query, larger than the number of paginated results returned */
-  totalCount?: Maybe<Scalars['Int']>;
-  /** SUM(x) of a query, where x is a specific column to be aggregated */
-  totalAmount?: Maybe<Scalars['Int']>;
-  pageInfo: PageInfo;
 };
 
 export type Conversation = {
@@ -1511,17 +1459,15 @@ export type CreateProductsConfig = {
   alwaysDiscounted?: Maybe<Scalars['Boolean']>;
 };
 
-export type CreateRefundMutationResponse = {
-   __typename?: 'CreateRefundMutationResponse';
-  transaction: Transactions;
-};
-
 export type CuratedList = {
    __typename?: 'CuratedList';
   id: Scalars['ID'];
   createdAt: Scalars['Date'];
   updatedAt?: Maybe<Scalars['Date']>;
   name: Scalars['String'];
+  items: Array<CuratedListItem>;
+  adminItems: Array<CuratedListItem>;
+  viewAllPath?: Maybe<Scalars['String']>;
 };
 
 export type CuratedListItem = {
@@ -1537,16 +1483,15 @@ export type CuratedListItemMutationResponse = {
   item: CuratedListItem;
 };
 
-export type CuratedListItemsConnection = Connection & {
+export type CuratedListItemsConnection = {
    __typename?: 'CuratedListItemsConnection';
   totalCount?: Maybe<Scalars['Int']>;
   pageInfo: PageInfo;
   edges: Array<CuratedListItemsEdge>;
 };
 
-export type CuratedListItemsEdge = Edge & {
+export type CuratedListItemsEdge = {
    __typename?: 'CuratedListItemsEdge';
-  cursor: Scalars['PageCursor'];
   node: CuratedListItem;
 };
 
@@ -1555,16 +1500,15 @@ export type CuratedListMutationResponse = {
   list: CuratedList;
 };
 
-export type CuratedListsConnection = Connection & {
+export type CuratedListsConnection = {
    __typename?: 'CuratedListsConnection';
   totalCount?: Maybe<Scalars['Int']>;
   pageInfo: PageInfo;
   edges: Array<CuratedListsEdge>;
 };
 
-export type CuratedListsEdge = Edge & {
+export type CuratedListsEdge = {
    __typename?: 'CuratedListsEdge';
-  cursor: Scalars['PageCursor'];
   node: CuratedList;
 };
 
@@ -1818,10 +1762,6 @@ export enum Dealers_Update_Column {
   /** column name */
   STATE = 'state'
 }
-
-export type Edge = {
-  cursor: Scalars['PageCursor'];
-};
 
 export type EditUserPhoneNumberInput = {
   phoneNumber: Scalars['String'];
@@ -2207,16 +2147,15 @@ export type FollowedStore = {
   store?: Maybe<StorePublic>;
 };
 
-export type FollowingStoresConnection = Connection & {
+export type FollowingStoresConnection = {
    __typename?: 'FollowingStoresConnection';
   totalCount?: Maybe<Scalars['Int']>;
   pageInfo: PageInfo;
   edges: Array<FollowingStoresEdge>;
 };
 
-export type FollowingStoresEdge = Edge & {
+export type FollowingStoresEdge = {
    __typename?: 'FollowingStoresEdge';
-  cursor: Scalars['PageCursor'];
   node: FollowedStore;
 };
 
@@ -3707,12 +3646,6 @@ export type Mutation = {
    */
   unfollowStore: FollowingStoresConnection;
   /**
-   * keeps track of when you last visited a store
-   * 
-   * AccessRule – LOGGED_IN
-   */
-  visitStore: FollowingStoresConnection;
-  /**
    * Add a product to the wishlist.
    * 
    * AccessRule – LOGGED_IN
@@ -5092,12 +5025,6 @@ export type MutationFollowStoreArgs = {
 
 
 export type MutationUnfollowStoreArgs = {
-  storeId: Scalars['String'];
-  query?: Maybe<ConnectionQuery>;
-};
-
-
-export type MutationVisitStoreArgs = {
   storeId: Scalars['String'];
   query?: Maybe<ConnectionQuery>;
 };
@@ -6494,36 +6421,36 @@ export enum OrderStatus {
   COMPLETE = 'COMPLETE'
 }
 
-export type PageBasedConnectionEdge = {
-  pageNumber: Scalars['Int'];
+export type PageConfig = {
+   __typename?: 'PageConfig';
+  id?: Maybe<Scalars['ID']>;
+  name?: Maybe<Scalars['String']>;
+  path?: Maybe<Scalars['String']>;
+  items?: Maybe<Array<Maybe<PageConfigItem>>>;
 };
 
-export type PageBasedConnectionPageInfo = {
-   __typename?: 'PageBasedConnectionPageInfo';
-  pageNumber: Scalars['Int'];
-  isLastPage: Scalars['Boolean'];
-  totalPages?: Maybe<Scalars['Int']>;
+export type PageConfigItem = {
+   __typename?: 'PageConfigItem';
+  id: Scalars['ID'];
+  name: Scalars['String'];
+  viewAllPath: Scalars['String'];
+  hideViewAll: Scalars['Boolean'];
+  curatedListId?: Maybe<Scalars['ID']>;
+  curatedList?: Maybe<CuratedList>;
+  category?: Maybe<Categories>;
+  priceRange?: Maybe<PageConfigPriceRange>;
+  cardsPerRow: Scalars['Int'];
+  count: Scalars['Int'];
 };
 
-/** Parameters that control how to access pages within a Connection that uses a descrete page system instead of a cursor. */
-export type PageBasedConnectionQuery = {
-  sortAscending?: Maybe<Scalars['Boolean']>;
-  pageNumber?: Maybe<Scalars['Int']>;
-  count?: Maybe<Scalars['Int']>;
+export type PageConfigPriceRange = {
+   __typename?: 'PageConfigPriceRange';
+  lower?: Maybe<Scalars['Int']>;
+  upper?: Maybe<Scalars['Int']>;
 };
-
-export type PageBasedConnectionWithMetrics = {
-  /** COUNT(*) of a query, larger than the number of paginated results returned */
-  totalCount?: Maybe<Scalars['Int']>;
-  /** SUM(x) of a query, where x is a specific column to be aggregated */
-  totalAmount?: Maybe<Scalars['Int']>;
-  pageInfo: PageBasedConnectionPageInfo;
-};
-
 
 export type PageInfo = {
    __typename?: 'PageInfo';
-  endCursor?: Maybe<Scalars['PageCursor']>;
   isLastPage: Scalars['Boolean'];
   totalPages?: Maybe<Scalars['Int']>;
 };
@@ -6972,46 +6899,6 @@ export enum PaymentProcessor {
   GOOGLEPAY = 'GooglePay',
   NOPAYMENTFEES = 'NoPaymentFees'
 }
-
-/** Record of a payout event from the platform to the owner of a store */
-export type Payout = {
-   __typename?: 'Payout';
-  id: Scalars['ID'];
-  createdAt: Scalars['Date'];
-  storeId: Scalars['ID'];
-  payeeType: PayeeType;
-  amount: Scalars['Price'];
-  startPeriod: Scalars['Date'];
-  endPeriod: Scalars['Date'];
-  payoutDate: Scalars['Date'];
-  payoutStatus: PayoutStatus;
-  /**
-   * This should later be a payoutID -> bank account/paypal email/card
-   * sellers may have a variety of payout methods to choose from with Adyen.
-   */
-  payoutEmail: Scalars['String'];
-  currency: Scalars['String'];
-  payoutItemIds: Array<Scalars['ID']>;
-  approvedByIds: Array<Scalars['ID']>;
-  details?: Maybe<Scalars['String']>;
-  approvedByAdmins: Array<UserForDealers>;
-  /**
-   * Payout items breakdown.
-   * PayoutId -> PayoutItems -> OrderItems
-   */
-  payoutItems?: Maybe<Array<Maybe<PayoutItem>>>;
-  /**
-   * product sales breakdown.
-   * PayoutId -> PayoutItems -> OrderItems
-   */
-  productsBreakdownConnection: ProductsSoldPeriodSummaryConnection;
-};
-
-
-/** Record of a payout event from the platform to the owner of a store */
-export type PayoutProductsBreakdownConnectionArgs = {
-  query?: Maybe<ConnectionQuery>;
-};
 
 /** columns and relationships of "payout_items" */
 export type Payout_Items = {
@@ -7653,57 +7540,17 @@ export enum Payout_Methods_Update_Column {
 }
 
 export enum PayoutDealType {
-  /** What a normal seller receives. Sellers without an entry default to platform default of 15%. */
-  SELLER = 'SELLER',
-  /** someone who refers another seller earns this rate */
-  SELLER_AFFILIATE = 'SELLER_AFFILIATE',
-  /** seller referred by an affiliate earns this rate */
-  REFERRED_SELLER = 'REFERRED_SELLER',
-  /** Deal given to someone who shared their ref link to the site */
-  BUYER_AFFILIATE = 'BUYER_AFFILIATE'
-}
-
-export type PayoutEdge = Edge & {
-   __typename?: 'PayoutEdge';
-  cursor: Scalars['PageCursor'];
-  node: Payout;
-};
-
-/**
- * Summary of (upcoming) sales for
- * today, last 7 days, last 30 days, all time.
- * Includes deductions from refunds
- */
-export type PayoutHistorySummaries = {
-   __typename?: 'PayoutHistorySummaries';
-  today: SummaryStatistics;
-  last7Days: SummaryStatistics;
-  last30Days: SummaryStatistics;
-  lastPeriod: SummaryStatistics;
-  currentPeriod: SummaryStatistics;
-  allTime: SummaryStatistics;
-};
-
-export type PayoutInput = {
-  id?: Maybe<Scalars['ID']>;
-  createdAt?: Maybe<Scalars['Date']>;
-  storeId?: Maybe<Scalars['ID']>;
-  sellerPayment?: Maybe<Scalars['Price']>;
-  platformFee?: Maybe<Scalars['Price']>;
-  startPeriod?: Maybe<Scalars['Date']>;
-  endPeriod?: Maybe<Scalars['Date']>;
-  payoutDate?: Maybe<Scalars['Date']>;
-  payoutStatus?: Maybe<PayoutStatus>;
   /**
-   * This should later be a payoutID -> bank account/paypal email/card
-   * sellers may have a variety of payout methods to choose from with Adyen.
+   * What a normal seller receives.
+   * Sellers without an entry default to platform default of 5%.
    */
-  payoutEmail?: Maybe<Scalars['String']>;
-  currency?: Maybe<Scalars['String']>;
-  payoutItemIds?: Maybe<Array<Maybe<Scalars['ID']>>>;
-  approvedByIds?: Maybe<Array<Maybe<Scalars['ID']>>>;
-  details?: Maybe<Scalars['String']>;
-};
+  SELLER = 'SELLER',
+  /**
+   * What a dealer seller receives. S
+   * Sellers without an entry default to platform default of 5%.
+   */
+  DEALER = 'DEALER'
+}
 
 export type PayoutItem = {
    __typename?: 'PayoutItem';
@@ -7723,53 +7570,16 @@ export type PayoutItem = {
   payoutId?: Maybe<Scalars['ID']>;
 };
 
-export type PayoutItemsConnection = ConnectionWithMetrics & {
+export type PayoutItemsConnection = {
    __typename?: 'PayoutItemsConnection';
-  /** The number of transactions in the period */
   totalCount?: Maybe<Scalars['Int']>;
-  /** Sums the 'subtotal' column of the transactions table */
-  totalAmount?: Maybe<Scalars['Int']>;
   pageInfo: PageInfo;
-  edges: Array<PayoutItemsEdge>;
-};
-
-export type PayoutItemsEdge = Edge & {
-   __typename?: 'PayoutItemsEdge';
-  cursor: Scalars['PageCursor'];
-  node: PayoutItem;
-};
-
-export type PayoutItemsPagedConnection = PageBasedConnectionWithMetrics & {
-   __typename?: 'PayoutItemsPagedConnection';
-  /** The number of payoutItems in the period */
-  totalCount?: Maybe<Scalars['Int']>;
-  /** Sums the 'amount' column of the payout_items table */
-  totalAmount?: Maybe<Scalars['Int']>;
-  /** The amount of payment processing fees paid by sellers in the period */
-  totalFees?: Maybe<Scalars['Int']>;
-  pageInfo: PageBasedConnectionPageInfo;
-  edges: Array<PayoutItemsPagedEdge>;
-};
-
-export type PayoutItemsPagedEdge = PageBasedConnectionEdge & {
-   __typename?: 'PayoutItemsPagedEdge';
-  pageNumber: Scalars['Int'];
-  node: PayoutItem;
+  edges: Array<Payout_Items>;
 };
 
 export type PayoutMethodMutationResponse = {
    __typename?: 'PayoutMethodMutationResponse';
   payoutMethod: Payout_Methods;
-};
-
-export type PayoutsConnection = ConnectionWithMetrics & {
-   __typename?: 'PayoutsConnection';
-  /** The number of payouts in the period */
-  totalCount?: Maybe<Scalars['Int']>;
-  /** Sums the 'amount' column of the payouts table */
-  totalAmount?: Maybe<Scalars['Int']>;
-  pageInfo: PageInfo;
-  edges: Array<PayoutEdge>;
 };
 
 /** PayoutSplit */
@@ -10090,31 +9900,10 @@ export type ProductsMutationResponse = {
   products: Array<Product>;
 };
 
-/** Summary of how many sales of a specific product were made */
-export type ProductSoldPeriodSummary = {
-   __typename?: 'ProductSoldPeriodSummary';
-  product: Product;
-  numberOfSalesMade: Scalars['Int'];
-  grossAmount: Scalars['Price'];
-};
-
 /** ordering options when selecting data from "products" */
 export type ProductsOrderBy = {
   createdAt?: Maybe<OrderBy>;
   price?: Maybe<OrderBy>;
-};
-
-export type ProductsSoldPeriodSummaryConnection = Connection & {
-   __typename?: 'ProductsSoldPeriodSummaryConnection';
-  totalCount?: Maybe<Scalars['Int']>;
-  pageInfo: PageInfo;
-  edges: Array<ProductsSoldPeriodSummaryEdge>;
-};
-
-export type ProductsSoldPeriodSummaryEdge = Edge & {
-   __typename?: 'ProductsSoldPeriodSummaryEdge';
-  cursor: Scalars['PageCursor'];
-  node: ProductSoldPeriodSummary;
 };
 
 export type ProductVariantEditInput = {
@@ -10425,17 +10214,6 @@ export type Query = {
    */
   category?: Maybe<Categories>;
   /**
-   * Query the complete list of products, on or off sale.
-   * 
-   * AccessRule – PLATFORM_ADMIN
-   */
-  productsAdminConnection: ProductsConnection;
-  /**
-   * Query the complete list of stores.
-   * AccessRule – PLATFORM_ADMIN
-   */
-  storesAdminConnection: StoresConnection;
-  /**
    * List credit card payment methods the user has saved
    * AccessRule – OWNER
    */
@@ -10509,30 +10287,6 @@ export type Query = {
    * AccessRule – DEALER
    */
   getOrdersArrivingConnectionDealer: OrdersConnection;
-  /**
-   * List payoutItems between startDate and endDate.
-   * Paged connection.
-   * AccessRule – PLATFORM_ADMIN
-   */
-  getPayoutItemsInPeriodAdminPaged: PayoutItemsPagedConnection;
-  /**
-   * List all payouts in the period between startDate and endDate.
-   * 
-   * AccessRule – PLATFORM_ADMIN
-   */
-  getPayoutsInPeriodAdmin: PayoutsConnection;
-  /**
-   * List all payouts for a store/payee
-   * 
-   * AccessRule – OWNER
-   */
-  getPayouts: PayoutsConnection;
-  /**
-   * List a specific payouts for a store/payee
-   * 
-   * AccessRule – OWNER
-   */
-  getPayoutById: Payout;
   /**
    * get a store's payout split
    * 
@@ -11352,26 +11106,26 @@ export type QueryGetRecentUsersArgs = {
 
 
 export type QueryGetRecommendedProductsConnectionArgs = {
-  query?: Maybe<ConnectionOffsetQuery>;
+  query?: Maybe<ConnectionQuery>;
 };
 
 
 export type QueryProductsAllConnectionArgs = {
   searchTerm?: Maybe<Scalars['String']>;
-  query?: Maybe<ConnectionOffsetQuery>;
+  query?: Maybe<ConnectionQuery>;
 };
 
 
 export type QuerySearchArgs = {
   searchTerm?: Maybe<Scalars['String']>;
-  query?: Maybe<ConnectionOffsetQuery>;
+  query?: Maybe<ConnectionQuery>;
 };
 
 
 export type QueryProductsByCategoryConnectionArgs = {
   categorySlugs: Array<Maybe<Scalars['String']>>;
   searchTerm?: Maybe<Scalars['String']>;
-  query: ConnectionOffsetQuery;
+  query: ConnectionQuery;
 };
 
 
@@ -11387,16 +11141,6 @@ export type QueryStoreArgs = {
 
 export type QueryCategoryArgs = {
   id: Scalars['String'];
-};
-
-
-export type QueryProductsAdminConnectionArgs = {
-  query?: Maybe<ConnectionQuery>;
-};
-
-
-export type QueryStoresAdminConnectionArgs = {
-  query?: Maybe<ConnectionQuery>;
 };
 
 
@@ -11434,69 +11178,42 @@ export type QueryGetPayoutItemsInPeriodAdminArgs = {
 
 
 export type QueryGetOrdersCreatedConnectionAdminArgs = {
-  query: ConnectionOffsetQueryOrders;
+  query: ConnectionQueryOrders;
 };
 
 
 export type QueryGetOrdersPendingApprovalConnectionAdminArgs = {
-  query: ConnectionOffsetQueryOrders;
+  query: ConnectionQueryOrders;
 };
 
 
 export type QueryGetOrdersAdminApprovedConnectionArgs = {
-  query: ConnectionOffsetQueryOrders;
+  query: ConnectionQueryOrders;
 };
 
 
 export type QueryGetOrdersExpiringConnectionAdminArgs = {
-  query: ConnectionOffsetQueryOrders;
+  query: ConnectionQueryOrders;
 };
 
 
 export type QueryGetOrdersCancelledConnectionArgs = {
-  query: ConnectionOffsetQueryOrders;
+  query: ConnectionQueryOrders;
 };
 
 
 export type QueryGetOrdersPayoutCompleteConnectionArgs = {
-  query: ConnectionOffsetQueryOrders;
+  query: ConnectionQueryOrders;
 };
 
 
 export type QueryGetOrdersCompletingConnectionDealerArgs = {
-  query: ConnectionOffsetQueryOrders;
+  query: ConnectionQueryOrders;
 };
 
 
 export type QueryGetOrdersArrivingConnectionDealerArgs = {
-  query: ConnectionOffsetQueryOrders;
-};
-
-
-export type QueryGetPayoutItemsInPeriodAdminPagedArgs = {
-  month?: Maybe<Scalars['Int']>;
-  year?: Maybe<Scalars['Int']>;
-  payoutStatus?: Maybe<PayoutStatus>;
-  query: PageBasedConnectionQuery;
-};
-
-
-export type QueryGetPayoutsInPeriodAdminArgs = {
-  month: Scalars['Int'];
-  year: Scalars['Int'];
-  payoutStatus?: Maybe<PayoutStatus>;
-  query: ConnectionQuery;
-};
-
-
-export type QueryGetPayoutsArgs = {
-  storeId: Scalars['String'];
-  query: ConnectionQuery;
-};
-
-
-export type QueryGetPayoutByIdArgs = {
-  payoutId: Scalars['String'];
+  query: ConnectionQueryOrders;
 };
 
 
@@ -11557,7 +11274,7 @@ export type QueryGetStoreByIdArgs = {
 export type QueryGetStoreProductsForSaleConnectionArgs = {
   storeId: Scalars['String'];
   searchTerm?: Maybe<Scalars['String']>;
-  query?: Maybe<ConnectionOffsetQuery>;
+  query?: Maybe<ConnectionQuery>;
 };
 
 
@@ -11568,18 +11285,12 @@ export type QuerySearchDealerAsAdminArgs = {
 
 export type QueryDashboardProductsConnectionArgs = {
   searchTerm?: Maybe<Scalars['String']>;
-  query?: Maybe<ConnectionOffsetQuery>;
+  query?: Maybe<ConnectionQuery>;
 };
 
 
 export type QueryGetUserBidsForProductArgs = {
   productId: Scalars['String'];
-};
-
-export type RefundPayoutItem = {
-  storeId?: Maybe<Scalars['ID']>;
-  payeeType?: Maybe<PayeeType>;
-  amount?: Maybe<Scalars['Int']>;
 };
 
 /** columns and relationships of "refunds" */
@@ -11807,12 +11518,6 @@ export enum Role {
   SYSTEM = 'SYSTEM'
 }
 
-export type SalesBreakdown = {
-   __typename?: 'SalesBreakdown';
-  id: Scalars['ID'];
-  actualPrice: Scalars['Int'];
-};
-
 
 export type SendResetPasswordResponse = {
    __typename?: 'SendResetPasswordResponse';
@@ -11858,23 +11563,7 @@ export type Store = {
 /** Information about a store */
 export type StoreProductsForSaleConnectionArgs = {
   searchTerm?: Maybe<Scalars['String']>;
-  query?: Maybe<ConnectionOffsetQuery>;
-};
-
-/** Collection of analytical information */
-export type StoreAnalytics = {
-   __typename?: 'StoreAnalytics';
-  /** ID of the store owning the analytics */
-  storeId: Scalars['ID'];
-  /**
-   * The total sum of revenues from sold products,
-   * and counts of sold items in periods:
-   * - today
-   * - last 7 days
-   * - last 30 days
-   * - all time
-   */
-  payoutHistorySummaries: PayoutHistorySummaries;
+  query?: Maybe<ConnectionQuery>;
 };
 
 export type StoreMutationResponse = {
@@ -11904,7 +11593,6 @@ export type StorePrivate = Store & {
   productsForSaleConnection: ProductsConnection;
   /** Store sellers's view of currently published products. */
   dashboardProductsConnection: ProductsConnection;
-  analytics?: Maybe<StoreAnalytics>;
   payoutSplit?: Maybe<PayoutSplit>;
 };
 
@@ -11912,14 +11600,14 @@ export type StorePrivate = Store & {
 /** Private store info */
 export type StorePrivateProductsForSaleConnectionArgs = {
   searchTerm?: Maybe<Scalars['String']>;
-  query?: Maybe<ConnectionOffsetQuery>;
+  query?: Maybe<ConnectionQuery>;
 };
 
 
 /** Private store info */
 export type StorePrivateDashboardProductsConnectionArgs = {
   searchTerm?: Maybe<Scalars['String']>;
-  query?: Maybe<ConnectionOffsetQuery>;
+  query?: Maybe<ConnectionQuery>;
 };
 
 /** Public store info */
@@ -11948,7 +11636,7 @@ export type StorePublic = Store & {
 /** Public store info */
 export type StorePublicProductsForSaleConnectionArgs = {
   searchTerm?: Maybe<Scalars['String']>;
-  query?: Maybe<ConnectionOffsetQuery>;
+  query?: Maybe<ConnectionQuery>;
 };
 
 /** columns and relationships of "stores" */
@@ -12248,25 +11936,15 @@ export enum Stores_Update_Column {
   WEBSITE = 'website'
 }
 
-export type StoreSales = {
-   __typename?: 'StoreSales';
-  storeId: Scalars['ID'];
-  itemCount: Scalars['Int'];
-  totalSalesRevenue: Scalars['Int'];
-  salesBreakdown: Array<SalesBreakdown>;
-  order: Array<Orders>;
-};
-
-export type StoresConnection = Connection & {
+export type StoresConnection = {
    __typename?: 'StoresConnection';
   totalCount?: Maybe<Scalars['Int']>;
   pageInfo: PageInfo;
   edges: Array<StoresEdge>;
 };
 
-export type StoresEdge = Edge & {
+export type StoresEdge = {
    __typename?: 'StoresEdge';
-  cursor: Scalars['PageCursor'];
   node: Store;
 };
 
@@ -13212,12 +12890,6 @@ export type SubscriptionMyConversationsArgs = {
   messageLimit?: Maybe<Scalars['Int']>;
 };
 
-export type SummaryStatistics = {
-   __typename?: 'SummaryStatistics';
-  amountSum: Scalars['Int'];
-  count: Scalars['Int'];
-};
-
 
 /** expression to compare columns of type timestamp. All fields are combined with logical 'AND'. */
 export type Timestamp_Comparison_Exp = {
@@ -13671,22 +13343,11 @@ export type Transactions_Variance_Order_By = {
   total?: Maybe<Order_By>;
 };
 
-export type TransactionsConnection = Connection & {
+export type TransactionsConnection = {
    __typename?: 'TransactionsConnection';
-  /** The number of transactions in the period */
   totalCount?: Maybe<Scalars['Int']>;
-  /** Sums the 'amount' column of the payout_items table */
-  totalAmount?: Maybe<Scalars['Int']>;
-  /** The amount of payment processing fees paid by sellers in the period */
-  totalFees?: Maybe<Scalars['Int']>;
   pageInfo: PageInfo;
-  edges: Array<TransactionsEdge>;
-};
-
-export type TransactionsEdge = Edge & {
-   __typename?: 'TransactionsEdge';
-  cursor: Scalars['PageCursor'];
-  node: Transactions;
+  edges: Array<Transactions>;
 };
 
 export type UploadRegisterMutationResponse = {
@@ -13950,7 +13611,6 @@ export type UserPrivate = BasicUser & {
   store?: Maybe<StorePrivate>;
   payoutMethodId?: Maybe<Scalars['ID']>;
   payoutMethod?: Maybe<Payout_Methods>;
-  payoutHistoryConnection?: Maybe<PayoutsConnection>;
   wishlistItemsConnection?: Maybe<WishlistItemsConnection>;
   followingStores?: Maybe<FollowingStoresConnection>;
   licenseId?: Maybe<Scalars['String']>;
@@ -13964,25 +13624,19 @@ export type UserPrivate = BasicUser & {
 
 /** Private user info */
 export type UserPrivateBuyerOrdersConnectionArgs = {
-  query?: Maybe<ConnectionOffsetQueryOrders>;
+  query?: Maybe<ConnectionQueryOrders>;
 };
 
 
 /** Private user info */
 export type UserPrivateSellerOrdersConnectionArgs = {
-  query?: Maybe<ConnectionOffsetQueryOrders>;
+  query?: Maybe<ConnectionQueryOrders>;
 };
 
 
 /** Private user info */
 export type UserPrivateSellerOrdersActionItemsConnectionArgs = {
-  query?: Maybe<ConnectionOffsetQueryOrders>;
-};
-
-
-/** Private user info */
-export type UserPrivatePayoutHistoryConnectionArgs = {
-  query?: Maybe<ConnectionQuery>;
+  query?: Maybe<ConnectionQueryOrders>;
 };
 
 
@@ -14774,16 +14428,15 @@ export type WishlistItem = {
   product: Product;
 };
 
-export type WishlistItemsConnection = Connection & {
+export type WishlistItemsConnection = {
    __typename?: 'WishlistItemsConnection';
   totalCount?: Maybe<Scalars['Int']>;
   pageInfo: PageInfo;
   edges: Array<WishlistItemsEdge>;
 };
 
-export type WishlistItemsEdge = Edge & {
+export type WishlistItemsEdge = {
    __typename?: 'WishlistItemsEdge';
-  cursor: Scalars['PageCursor'];
   node: WishlistItem;
 };
 
@@ -15073,7 +14726,7 @@ type StorePublicFragment_StorePrivate_ = { __typename?: 'StorePrivate', id: stri
       ) | (
         { __typename?: 'ProductPublic' }
         & ProductFragment_ProductPublic_
-      ) }>, pageInfo: { __typename?: 'PageInfo', isLastPage: boolean, endCursor?: Maybe<any> } } };
+      ) }>, pageInfo: { __typename?: 'PageInfo', isLastPage: boolean } } };
 
 type StorePublicFragment_StorePublic_ = { __typename?: 'StorePublic', id: string, createdAt: any, updatedAt?: Maybe<any>, name: string, bio?: Maybe<string>, website?: Maybe<string>, userId: string, cover?: Maybe<(
     { __typename?: 'image_parents' }
@@ -15087,7 +14740,7 @@ type StorePublicFragment_StorePublic_ = { __typename?: 'StorePublic', id: string
       ) | (
         { __typename?: 'ProductPublic' }
         & ProductFragment_ProductPublic_
-      ) }>, pageInfo: { __typename?: 'PageInfo', isLastPage: boolean, endCursor?: Maybe<any> } } };
+      ) }>, pageInfo: { __typename?: 'PageInfo', isLastPage: boolean } } };
 
 export type StorePublicFragment = StorePublicFragment_StorePrivate_ | StorePublicFragment_StorePublic_;
 
@@ -15108,11 +14761,11 @@ export type UserPrivateFragment = { __typename?: 'UserPrivate', id: string, firs
 
 export type ProductsAllConnectionQueryVariables = Exact<{
   searchTerm: Scalars['String'];
-  query?: Maybe<ConnectionOffsetQuery>;
+  query?: Maybe<ConnectionQuery>;
 }>;
 
 
-export type ProductsAllConnectionQuery = { __typename?: 'Query', productsAllConnection: { __typename?: 'ProductsConnection', totalCount?: Maybe<number>, pageInfo: { __typename?: 'PageInfo', isLastPage: boolean, endCursor?: Maybe<any> }, edges: Array<{ __typename?: 'ProductsEdge', node: (
+export type ProductsAllConnectionQuery = { __typename?: 'Query', productsAllConnection: { __typename?: 'ProductsConnection', totalCount?: Maybe<number>, pageInfo: { __typename?: 'PageInfo', isLastPage: boolean }, edges: Array<{ __typename?: 'ProductsEdge', node: (
         { __typename?: 'ProductPrivate' }
         & ProductFragment_ProductPrivate_
       ) | (
@@ -15682,7 +15335,6 @@ export const StorePublicFragmentFragmentDoc = gql`
     totalCount
     pageInfo {
       isLastPage
-      endCursor
     }
   }
 }
@@ -15807,12 +15459,11 @@ export const UploadSaveFileDocument = gql`
 export type UploadSaveFileMutationResult = ApolloReactCommon.MutationResult<UploadSaveFileMutation>;
 export type UploadSaveFileMutationOptions = ApolloReactCommon.BaseMutationOptions<UploadSaveFileMutation, UploadSaveFileMutationVariables>;
 export const ProductsAllConnectionDocument = gql`
-    query productsAllConnection($searchTerm: String!, $query: ConnectionOffsetQuery) {
+    query productsAllConnection($searchTerm: String!, $query: ConnectionQuery) {
   productsAllConnection(searchTerm: $searchTerm, query: $query) {
     totalCount
     pageInfo {
       isLastPage
-      endCursor
     }
     edges {
       node {

@@ -107,34 +107,10 @@ export const GET_DEALER_PRIVATE = gql`
 `;
 
 
-// export const GET_ALL_STORES = gql`
-//   query getAllStores {
-//     storesAdminConnection(
-//       query: {
-//         sortAscending: false
-//         count: 5
-//         pageBackwards: false
-//       }
-//     ) {
-//       pageInfo {
-//         isLastPage
-//         endCursor
-//       }
-//       edges {
-//         node {
-//           id
-//           name
-//         }
-//       }
-//     }
-//   }
-// `;
-
-
 export const DASHBOARD_PRODUCTS_CONNECTION = gql`
   query dashboardProductsConnection(
     $searchTerm: String
-    $query: ConnectionOffsetQuery
+    $query: ConnectionQuery
   ) {
     dashboardProductsConnection(
       searchTerm: $searchTerm
@@ -148,7 +124,6 @@ export const DASHBOARD_PRODUCTS_CONNECTION = gql`
       totalCount
       pageInfo {
         isLastPage
-        endCursor
       }
     }
   }
@@ -160,7 +135,7 @@ export const GET_STORE_PRODUCTS_FOR_SALE_CONNECTION = gql`
   query getStoreProductsForSaleConnection(
     $storeId: String!
     $searchTerm: String
-    $query: ConnectionOffsetQuery
+    $query: ConnectionQuery
   ) {
     getStoreProductsForSaleConnection(
       storeId: $storeId

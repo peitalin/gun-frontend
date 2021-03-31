@@ -15,7 +15,9 @@ import { FormikProps } from 'formik';
 import Button from '@material-ui/core/Button';
 import Loading from 'components/Loading';
 import dynamic from "next/dynamic";
-import "components/DatePicker/react-datepicker.css";
+
+// import in _app.tsx
+// import "components/DatePicker/react-datepicker.css";
 const DatePicker = dynamic(() => import("react-datepicker"), {
   loading: () => <Loading/>,
   ssr: false,

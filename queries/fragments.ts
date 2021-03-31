@@ -584,7 +584,6 @@ export const StorePublicFragment = gql`
       totalCount
       pageInfo {
         isLastPage
-        endCursor
       }
     }
   }

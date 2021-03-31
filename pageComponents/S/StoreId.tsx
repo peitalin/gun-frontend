@@ -8,7 +8,7 @@ import { Colors, Gradients } from "layout/AppTheme";
 // Typings
 import {
   ID,
-  ConnectionOffsetQuery,
+  ConnectionQuery,
   Product,
   Store,
   FacetsDistributionObject,
@@ -293,7 +293,7 @@ interface QueryData2 {
 interface QueryVar2 {
   storeId: ID;
   searchTerm?: string;
-  query?: ConnectionOffsetQuery;
+  query?: ConnectionQuery;
 }
 
 export default withStyles(styles)( StoresId );

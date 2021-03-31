@@ -1,6 +1,5 @@
 
-import * as React from "react";
-import {oc as option} from "ts-optchain";
+import React from "react";
 // GraphQL
 import { useQuery } from "@apollo/client";
 import { WatchQueryFetchPolicy } from "@apollo/client";
@@ -99,7 +98,7 @@ const usePaginateQuery = <QueryData, QueryVar, NodeType>(
   // This effect resets new forwards and backwards cursors
   // after a new Graphql query everytime a new query is fetched
   React.useEffect(() => {
-    if (option(connection).edges()) {
+    if (connection?.edges) {
       if (connection.edges.length === 0) {
         const page = {
           backwardsCursor: null,
@@ -119,10 +118,10 @@ const usePaginateQuery = <QueryData, QueryVar, NodeType>(
           backwardsCursor,
           forwardsCursor,
           hasNextPage: !connectionQuery.pageBackwards
-            ? !option(connection).pageInfo.isLastPage()
+            ? !connection?.pageInfo?.isLastPage
             : true,
           hasPreviousPage: connectionQuery.pageBackwards
-            ? !option(connection).pageInfo.isLastPage()
+            ? !connection?.pageInfo?.isLastPage
             : connectionQuery.cursor != null
         };
         setConnectionQuery(s => ({
@@ -133,7 +132,7 @@ const usePaginateQuery = <QueryData, QueryVar, NodeType>(
     }
   }, [
     loading,
-    option(connection).pageInfo(),
+    connection?.pageInfo,
     props.count,
   ])
 

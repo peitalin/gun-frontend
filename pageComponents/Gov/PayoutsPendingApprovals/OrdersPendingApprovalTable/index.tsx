@@ -17,7 +17,7 @@ import {
   Order,
   OrderAdmin,
   OrderStatus,
-  ConnectionOffsetQuery
+  ConnectionQuery
 } from "typings/gqlTypes";
 import {
   GET_ORDERS_CREATED_CONNECTION,
@@ -548,7 +548,7 @@ interface QueryData {
   getOrdersAdminApprovedConnection?: OrdersConnection
 }
 interface QueryVar {
-  query?: ConnectionOffsetQuery
+  query?: ConnectionQuery
 }
 
 

@@ -79,11 +79,10 @@ function GridPaginatorGeneric<T>(props: ReactProps<T> & ReactChildren<T>) {
       >
         {
           productGroups.map(( productGroup, subindex) => {
-            if (index === 2) {
-              console.log("subindex:", subindex)
-              console.log("productGroup:", productGroup)
-              console.log("productGroup.length:", productGroup?.length)
-            }
+            // if (index === 2) {
+            //   console.log("subindex:", subindex)
+            //   console.log("productGroup:", productGroup)
+            // }
             return (
               <div key={`product-group-${subindex}`}
                 className={clsx(

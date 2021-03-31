@@ -11,7 +11,7 @@ import ProductCardResponsive from "components/ProductCardResponsive";
 import LoadingCards from "./LoadingCards";
 import Loading from "components/Loading";
 // Graphql Typings
-import { ProductsConnection, Order_By, ConnectionOffsetQuery } from "typings/gqlTypes";
+import { ProductsConnection, Order_By, ConnectionQuery } from "typings/gqlTypes";
 // useMediaQuery
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
@@ -214,7 +214,7 @@ interface QueryData {
 }
 interface QueryVar {
   searchTerm?: string;
-  query?: ConnectionOffsetQuery;
+  query?: ConnectionQuery;
 }
 interface SelectOption {
   label: string;

@@ -15,7 +15,8 @@ import { useDebouncedCallback } from 'use-debounce';
 // but loading CK editor via import first, results in "window no defined" errors
 // even checking for process.browser
 // So use !important on this stylesheet and then it overrides defaault styles
-import './ckStyles.css';
+// MUST BE IMPORTED IN _app.tsx
+// import './ckStyles.css';
 import { editorConfiguration } from "./editorConfiguration";
 
 

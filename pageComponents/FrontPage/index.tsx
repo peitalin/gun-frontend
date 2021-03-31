@@ -3,7 +3,7 @@ import React from "react";
 import clsx from "clsx";
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
 // Typings
-import { ProductsConnection, ConnectionOffsetQuery, Categories } from "typings/gqlTypes";
+import { ProductsConnection, ConnectionQuery, Categories } from "typings/gqlTypes";
 // Components
 import dynamic from "next/dynamic";
 import NewReleaseProducts from "pageComponents/FrontPage/NewReleaseProducts";

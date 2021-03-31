@@ -17,7 +17,7 @@ import {
   Order,
   OrderAdmin,
   OrderStatus,
-  ConnectionOffsetQuery
+  ConnectionQuery
 } from "typings/gqlTypes";
 import {
   GET_ORDERS_ARRIVING_CONNECTION_DEALER,
@@ -318,13 +318,13 @@ interface TitleRowsProps extends WithStyles<typeof styles> {
 }
 
 interface QueryVar1 {
-  query?: ConnectionOffsetQuery
+  query?: ConnectionQuery
 }
 interface QueryData1 {
   getOrdersArrivingConnectionDealer?: OrdersConnection
 }
 interface QueryVar2 {
-  query?: ConnectionOffsetQuery
+  query?: ConnectionQuery
 }
 interface QueryData2 {
   getOrdersExpiringConnectionDealer?: OrdersConnection

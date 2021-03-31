@@ -10,7 +10,7 @@ import {
   Order,
   OrderAdmin,
   OrderStatus,
-  ConnectionOffsetQuery,
+  ConnectionQuery,
   PayeeType,
   Connection,
   OrdersConnection,
@@ -256,7 +256,7 @@ interface ReactProps extends WithStyles<typeof styles> {
 }
 // customer counts
 interface QueryVar {
-  query: ConnectionOffsetQuery
+  query: ConnectionQuery
 }
 interface QueryData {
   getOrdersPayoutCompleteConnection: OrdersConnection

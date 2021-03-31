@@ -65,7 +65,7 @@ interface QueryData {
   conversations: Chat_Users[]
 }
 interface QueryVar {
-  // query: ConnectionOffsetQuery
+  // query: ConnectionQuery
 }
 
 const styles = (theme: Theme) => createStyles({

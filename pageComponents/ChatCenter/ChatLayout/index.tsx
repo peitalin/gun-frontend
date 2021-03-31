@@ -150,7 +150,7 @@ interface QueryData {
   myConversations: Conversation[]
 }
 interface QueryVar {
-  // query: ConnectionOffsetQuery
+  // query: ConnectionQuery
   messageLimit: number
 }
 

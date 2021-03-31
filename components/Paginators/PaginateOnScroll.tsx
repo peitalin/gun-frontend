@@ -1,20 +1,12 @@
 
-import * as React from "react";
-import {oc as option} from "ts-optchain";
-// Utils Components
-import ErrorDisplay from "components/Error";
-import ErrorBounds from "components/ErrorBounds";
-import Loading from "components/Loading";
-import Button from "@material-ui/core/Button";
+import React from "react";
 // Typings
-import { Connection, ID } from "typings/gqlTypes";
+import { ID } from "typings/gqlTypes";
 import { GenericConnection } from "typings";
 import { WatchQueryFetchPolicy } from "@apollo/client";
 // Paginator hooks
 import usePaginateQueryHook from "components/Paginators/usePaginateQueryHook";
 import { useScrollYPosition } from "utils/hooks";
-// throttle
-const throttle = require('lodash.throttle');
 
 
 
@@ -25,7 +17,7 @@ const PaginateOnScroll = <QueryData, QueryVar, NodeType extends { id: ID }>(
 
   const initialConnectionState: GenericConnection<NodeType> = {
     edges: [],
-    pageInfo: { endCursor: null, isLastPage: false },
+    pageInfo: { isLastPage: false },
     totalCount: 0,
   };
 
@@ -49,11 +41,10 @@ const PaginateOnScroll = <QueryData, QueryVar, NodeType extends { id: ID }>(
     fetchPolicy: props.fetchPolicy
   });
 
-  // const connection: Connection<keyof QueryData> = option(data)[props.connectionName]();
   const [connection, connectionName] = props.connectionSelector(data);
 
   React.useEffect(() => {
-    if (option(connection).edges()) {
+    if (connection?.edges) {
       setAccumConnection(s => {
         return {
           ...connection,
@@ -65,7 +56,7 @@ const PaginateOnScroll = <QueryData, QueryVar, NodeType extends { id: ID }>(
         }
       })
     }
-  }, [option(connection).edges()])
+  }, [connection?.edges])
 
 
 

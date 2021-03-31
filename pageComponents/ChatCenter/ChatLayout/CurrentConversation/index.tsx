@@ -321,7 +321,7 @@ interface QueryData {
   chatMessages: Message[];
 }
 interface QueryVar {
-  // query: ConnectionOffsetQuery
+  // query: ConnectionQuery
 }
 
 
