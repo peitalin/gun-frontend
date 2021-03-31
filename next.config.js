@@ -1,17 +1,11 @@
 const {resolve} = require('path');
 const path = require('path');
 const fs = require('fs');
-// CSS
-const withCSS = require('@zeit/next-css')
-const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-
 
 // environment
 const dev = process.env.NODE_ENV !== 'production'
 const nextRuntimeDotenv = require('next-runtime-dotenv')
 require("dotenv").config();
-// offline first
-const withOffline = require('next-offline')
 
 const withConfig = nextRuntimeDotenv({
   // path: '.env',
@@ -21,9 +15,7 @@ const withConfig = nextRuntimeDotenv({
 
 
 module.exports =
-  withConfig(
-  withOffline(
-  withCSS({
+  withConfig({
 
     webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
       // Note: we provide webpack above so you should not `require` it
@@ -39,22 +31,6 @@ module.exports =
       config.resolve.alias['typings'] = path.join(__dirname, 'typings')
       config.resolve.alias['utils'] = path.join(__dirname, 'utils')
 
-      // WORKBOX docs
-      // https://developers.google.com/web/tools/workbox/guides/generate-service-worker/webpack#adding_runtime_caching
-
-      config.plugins.push(
-        // optimize CSS
-        new OptimizeCssAssetsPlugin({
-          assetNameRegExp: /\.optimize\.css$/g,
-          cssProcessor: require('cssnano'),
-          cssProcessorPluginOptions: {
-            preset: ['default', { discardComments: { removeAll: true } }],
-          },
-          canPrint: true
-        })
-      )
-      // https://able.bio/drenther/building-a-progressive-web-app-with-nextjs-part-ii--98ojk46#web-app-manifest
-
       return config
     },
 
@@ -62,6 +38,12 @@ module.exports =
       // Perform customizations to webpack dev middleware config
       // Important: return the modified config
       return config
+    },
+
+    future: {
+      // webpack 5
+      // https://github.com/vercel/next.js/issues/21679
+      webpack5: true,
     },
 
     // disbable x-powered-by next header on requests
@@ -80,4 +62,4 @@ module.exports =
       STRIPE_PUBLIC_KEY: process.env.STRIPE_PUBLIC_KEY,
     }
 
-  })))
+  })

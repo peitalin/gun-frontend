@@ -49,15 +49,12 @@
     "lodash.throttle": "^4.1.1",
     "material-ui-phone-number": "^2.2.6",
     "nanoid": "^3.1.10",
-    "next": "9.4.0",
-    "next-offline": "^4.0.6",
+    "next": "^10.1.2",
     "next-redux-wrapper": "^4.0.1",
     "next-runtime-dotenv": "^1.2.0",
-    "next-with-apollo": "^5.1.0",
+    "next-with-apollo": "^5.1.1",
     "notistack": "^0.9.16",
-    "optimize-css-assets-webpack-plugin": "^5.0.3",
     "react": "^16.13.1",
-    "react-coinbase-commerce": "^1.4.4",
     "react-csv-downloader": "^2.1.0",
     "react-datepicker": "^2.16.0",
     "react-dom": "^16.13.1",
@@ -98,6 +95,7 @@
     "@zeit/next-css": "^1.0.1",
     "cacheable-response": "^2.0.7",
     "graphql": "^14.6.0",
-    "typescript": "^4.0.3"
+    "typescript": "^4.0.3",
+    "webpack": "^5.19.0"
   }
 }
