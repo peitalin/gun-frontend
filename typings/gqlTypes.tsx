@@ -14443,7 +14443,6 @@ export type WishlistItemsEdge = {
 
 
 
-
 export type RegisterUploadMutationVariables = Exact<{
   uploadType: UploadType;
   mimeType: Scalars['String'];
@@ -15502,5 +15501,4 @@ export type EditStoreProfileMutationResult = ApolloReactCommon.MutationResult<Ed
 export type EditStoreProfileMutationOptions = ApolloReactCommon.BaseMutationOptions<EditStoreProfileMutation, EditStoreProfileMutationVariables>;
 export type ID = Scalars["ID"]
 export type Price = Scalars["Price"]
-export type PageCursor = Scalars["PageCursor"]
 export type Exact<T extends { [key: string]: any }> = { [K in keyof T]: T[K] }

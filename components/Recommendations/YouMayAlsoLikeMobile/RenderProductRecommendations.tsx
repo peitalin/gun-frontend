@@ -9,7 +9,7 @@ import clsx from "clsx";
 // Material UI
 import Typography from "@material-ui/core/Typography";
 // Typings
-import { Product, Edge, ProductsConnection } from "typings/gqlTypes";
+import { Product, ProductsConnection } from "typings/gqlTypes";
 // Router
 import Link from "next/link";
 // Paginator hooks

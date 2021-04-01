@@ -2,8 +2,6 @@
 import {
   ProductVariantInput,
   ProductVariantEditInput,
-  Connection,
-  Edge,
   ID,
   Payment_Methods,
   Payout_Methods,

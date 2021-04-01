@@ -4,7 +4,6 @@ import React from "react";
 import { useQuery } from "@apollo/client";
 import { DocumentNode } from "graphql";
 // typings
-import { PageCursor } from "typings/gqlTypes";
 import { WatchQueryFetchPolicy } from "@apollo/client";
 
 
@@ -118,7 +117,7 @@ export interface ConnectionPage {
 
 export interface ConnectionQueryProps {
   sortAscending?: boolean;
-  cursor: PageCursor;
+  cursor: string;
   pageBackwards: boolean;
   count: number;
   // non-gql provided props

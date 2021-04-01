@@ -5,8 +5,6 @@ import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/s
 import { GET_PRODUCT_CATEGORIES } from "queries/categories-queries";
 // Typings
 import {
-  ID,
-  PageBasedConnectionQuery,
   ProductsConnection,
   Categories,
   // ProductCategoryOrGroup,

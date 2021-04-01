@@ -199,7 +199,6 @@ export const convertHasuraStore = (
     productsForSaleConnection: s.productsForSaleConnection,
     dashboardProductsConnection: s.dashboardProductsConnection,
     __typename: "StorePrivate",
-    analytics: null as any,
   };
 }
 

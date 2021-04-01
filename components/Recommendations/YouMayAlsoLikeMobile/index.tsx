@@ -13,7 +13,7 @@ import {
   GET_RECOMMENDED_PRODUCTS,
 } from "queries/products-queries";
 // Typings
-import { Product, Edge, ProductsConnection } from "typings/gqlTypes";
+import { Product, ProductsConnection } from "typings/gqlTypes";
 // Router
 import Link from "next/link";
 // Paginator hooks
