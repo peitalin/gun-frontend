@@ -84,8 +84,12 @@ function GridPaginatorGeneric<T>(props: ReactProps<T> & ReactChildren<T>) {
     {
       objectIdsGroupedInGrids &&
       <BindKeyboardSwipeableViews
-        enableMouseEvents={false}
+        enableMouseEvents={true}
+        disabled={true} //disable touch swiping
         index={index}
+        onSwitching={(i) => {
+          console.log("SWITCHED : ", i)
+        }}
         containerStyle={{ height: '100%' }}
         style={{
           height: '100%',
