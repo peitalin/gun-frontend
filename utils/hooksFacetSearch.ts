@@ -1,5 +1,4 @@
 import React from "react";
-import { oc as option } from "ts-optchain";
 // lodash
 const throttle = require('lodash.throttle');
 import { useDebouncedCallback } from 'use-debounce';
@@ -308,7 +307,7 @@ export const useEffectUpdateGridAccum = <T>({
   React.useEffect(() => {
 
     let gridAccumKeys = Object.keys(gridAccum);
-    let products = option(productsConnection).edges([]).map(({ node }) => node);
+    let products = (productsConnection?.edges ?? []).map(({ node }) => node);
     // console.log("index: ", index)
     // console.log("gridKeys: ", gridAccumKeys)
 
@@ -316,31 +315,33 @@ export const useEffectUpdateGridAccum = <T>({
     // are missing and fill them in with blank arrays.
     // e.g. if you have pages [1,2], then visit page 7
 
-    if (index > gridAccumKeys.length) {
-      [...Array(index).keys()].forEach(i => {
-        if (!gridAccumKeys.includes(`${i}`)) {
-          // if page does not yet exist in gridAccum, create an empty entry
-          // console.log('replacing newGridAccum[i]', i)
-          gridAccum[i] = []
-        }
-      })
-    }
+    // if (index > gridAccumKeys.length) {
+    //   [...Array(index).keys()].forEach(i => {
+    //     if (!gridAccumKeys.includes(`${i}`)) {
+    //       // if page does not yet exist in gridAccum, create an empty entry
+    //       // console.log('replacing newGridAccum[i]', i)
+    //       gridAccum[i] = []
+    //     }
+    //   })
+    // }
 
 
     let overfetchArray = [...Array(overfetchBy).keys()]
     // see if index or any overfetched indexes are empty and need updating
-    let indexesNeedUpdating = overfetchArray.some(k => {
+    let needsUpdating = overfetchArray.some(k => {
         // console.log("k", k)
         // console.log("index+k", gridAccum[index+k])
-        return gridAccum[index+k] === undefined
-          || gridAccum[index+k]?.length === 0
+        // if the incoming product request is new (1st item is not the
+        // first item in any of the pages), then we need to update the gridAccumulator
+        let thisPageFirstItem = gridAccum[index+k]?.[0] as any
+        return thisPageFirstItem?.id !== (products?.[0] as any)?.id
       })
-    // console.log("indexesNeedUpdating", indexesNeedUpdating)
+    // console.log("needsUpdating", needsUpdating)
+    // console.log("loading", loading)
 
     // create/update the index with the products from that index-page-request
     if (products) {
-
-      if (indexesNeedUpdating)  {
+      if (needsUpdating)  {
         // console.log("instantiating grid...")
         // gridAccum[index] is empty and needs to be updated
 
@@ -350,23 +351,24 @@ export const useEffectUpdateGridAccum = <T>({
         // console.log("productGroups: ", productGroups)
         // when overfetching, there will be 2+ groups, allocate products to
         // the jth over-fetched group of products
-        productGroups.forEach((productSubgroup, j) => {
-          // console.log("index: ", index)
-          // console.log("index+j: ", index+j)
-          // newGridAccum[index+j] = productSubgroup
+        productGroups.forEach((productSubgroup, k) => {
+          // console.log("productSubgroup[0]", productSubgroup?.[0])
+          // console.log("gridAccum[index+k][0]", gridAccum[index+k]?.[0])
+          // if 1st item on page-i is not the same as 1st item on productSubgroup-i
+          // then replace it
           if (
-            gridAccum[index+j] === undefined || gridAccum[index+j]?.length === 0
+            (gridAccum[index+k]?.[0] as any)?.id !== (productSubgroup?.[0] as any)?.id
           ) {
-            gridAccum[index+j] = productSubgroup
+            gridAccum[index+k] = productSubgroup
           }
         })
 
-        // console.log("gridAccum: ", gridAccum)
         setGridAccum(s => ({
           ...gridAccum,
         }))
       }
     }
+    // console.log("gridAccum: ", gridAccum)
 
     // console.log("totalCount>", totalCount)
     if (productsConnection && !totalCount) {
@@ -417,7 +419,7 @@ export const totalItemsInCategoriesFacets = ({
 
   } else if (!!searchTerm) {
     // accumu connection will have more products, go with that length
-    let length1 = option(productsConnection).edges([]).length
+    let length1 = productsConnection?.edges?.length ?? 0
     let length2 = totalCount
     return length1 > length2 ? length1 : length2
 
@@ -455,7 +457,7 @@ export const totalItemsInIsPublishedFacet = ({
   // to total count will be smaller than N(isPublished||isNotPublished)
   // otherwise, go with N(isPublished || isNotPublished) facet counts
 
-  let plength = option(productsConnection).edges([]).length
+  let plength = productsConnection?.edges?.length
 
   if (!!searchTerm) {
     // accum connection will have more products, go with that length

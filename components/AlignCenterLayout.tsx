@@ -38,7 +38,8 @@ const AlignCenterLayout: React.FC<ReactProps> = (props) => {
       {
         React.Children.map(props.children, (child) => {
           return (
-            <div className={classes.alignCenterChild} style={{
+            <div style={{
+              width: '100%',
               maxWidth: props.maxWidth ? props.maxWidth : 960,
               ...style
             }}>

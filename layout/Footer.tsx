@@ -245,7 +245,6 @@ interface ReduxState {
   isDarkMode: boolean;
 }
 
-const FOOTER_MAX_WIDTH = 1024;
 
 const styles = (theme: Theme) => createStyles({
   footerContainer: {

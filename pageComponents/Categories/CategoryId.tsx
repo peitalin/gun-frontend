@@ -298,12 +298,6 @@ const CategoryId: React.FC<ReactProps> = (props) => {
           >
             {({ node: product }) => {
 
-              const commonPreviewCardProps = {
-                listName: 'grid-category-paginator-list',
-                productIndex: index,
-                maxWidthOfRow: 1160,
-              }
-
               return (
                 <div key={product.id}
                   className={clsx(
