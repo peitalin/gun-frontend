@@ -68,7 +68,7 @@ const CategoryId: React.FC<ReactProps> = (props) => {
 
 
   /////////////////////////////////// paginator
-  let numItemsPerPage = 8;
+  let numItemsPerPage = 12;
   let overfetchBy = 1;
   // overfetch by 2x pages
 
@@ -239,33 +239,37 @@ const CategoryId: React.FC<ReactProps> = (props) => {
               // disableCategories
               maxCategoryInputWidth={250}
             />
-            <div className={classes.listOrGridContainer}>
-              <IconButton
-                className={classes.listOrGridButtonLeft}
-                onClick={() => setRowMode(false)}
-                size={"medium"}
-              >
-                <GridIcon className={
-                  !rowMode
-                    ? classes.listOrGridIconSelected
-                    : classes.listOrGridIcon
-                }/>
-              </IconButton>
-              <IconButton
-                className={classes.listOrGridButtonRight}
-                onClick={() => setRowMode(true)}
-                size={"medium"}
-              >
-                <ListIcon className={
-                  rowMode
-                    ? classes.listOrGridIconSelected
-                    : classes.listOrGridIcon
-                }/>
-              </IconButton>
-            </div>
           </div>
         </div>
 
+        <div className={
+          mdDown ? classes.rowToggleContainerMobile : classes.rowToggleContainerDesktop
+        }>
+          <div className={classes.listOrGridContainer}>
+            <IconButton
+              className={classes.listOrGridButtonLeft}
+              onClick={() => setRowMode(false)}
+              size={"medium"}
+            >
+              <GridIcon className={
+                !rowMode
+                  ? classes.listOrGridIconSelected
+                  : classes.listOrGridIcon
+              }/>
+            </IconButton>
+            <IconButton
+              className={classes.listOrGridButtonRight}
+              onClick={() => setRowMode(true)}
+              size={"medium"}
+            >
+              <ListIcon className={
+                rowMode
+                  ? classes.listOrGridIconSelected
+                  : classes.listOrGridIcon
+              }/>
+            </IconButton>
+            </div>
+        </div>
 
         <div className={classes.sectionContainer}>
           {
@@ -307,9 +311,7 @@ const CategoryId: React.FC<ReactProps> = (props) => {
                   {
                     rowMode
                     ? <ProductCardAsRow product={product}/>
-                    : <ProductCardResponsive
-                        product={product}
-                      />
+                    : <ProductCardResponsive product={product} />
                   }
                   {/* {
                     mdDown
@@ -394,8 +396,20 @@ export const styles = (theme: Theme) => createStyles({
   width100: {
     width: '100%',
   },
+  rowToggleContainerMobile: {
+    display: 'flex',
+    flexDirection: 'column',
+    position: 'absolute',
+    top: '0.5rem',
+    right: '0.5rem',
+  },
+  rowToggleContainerDesktop: {
+    width: '100%',
+    padding: '0rem 1rem',
+    marginBottom: '1rem',
+    marginTop: '-3.75rem',
+  },
   sectionContainer: {
-    // background: "#fefefe",
     position: 'relative',
     display: 'flex',
     flexDirection: 'column',
@@ -435,9 +449,9 @@ export const styles = (theme: Theme) => createStyles({
     width: '100%',
   },
   searchContainerInner: {
-    marginTop: "-2rem",
+    height: '3.5rem',
+    marginTop: "-1rem",
     marginBottom: "2.5rem",
-    height: '2rem',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
@@ -445,7 +459,7 @@ export const styles = (theme: Theme) => createStyles({
   },
   searchContainerInnerMobile: {
     marginTop: "-0.5rem",
-    marginBottom: "2.5rem",
+    marginBottom: "3rem",
     height: '2rem',
     display: 'flex',
     justifyContent: 'center',
@@ -470,9 +484,6 @@ export const styles = (theme: Theme) => createStyles({
   gridItemCard: {
   },
   listOrGridContainer: {
-    paddingLeft: '0.25rem',
-    paddingRight: '1rem',
-    // marginBottom: '1rem',
     display: "flex",
     flexDirection: "row",
     // width: '100%',

@@ -210,6 +210,10 @@ const styles = (theme: Theme) => createStyles({
   },
   flexCellItemSmall: {
     flexBasis: '15%',
+    display: "flex",
+    justifyContent: "flex-end",
+    alignItems: "center",
+    paddingRight: '1rem',
   },
   marginLeft: {
     marginLeft: "1rem",
@@ -239,8 +243,6 @@ const styles = (theme: Theme) => createStyles({
   priceAbsoluteBottom: {
     // position: "relative",
     // position: "absolute",
-    bottom: '0.5rem',
-    width: 'calc(100%)',
   },
   previewCard: {
     marginRight: '1rem',

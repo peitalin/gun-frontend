@@ -399,7 +399,8 @@ const SearchOptionsAirbnb: React.FC<ReactProps> = (props) => {
           style={props.paginatorStyles}
         >
           <Pagination
-            size={mdDown ? "small" : "medium"}
+            // size={mdDown ? "small" : "medium"}
+            size={"medium"}
             classes={{
               root: classes.paginationPage,
             }}
@@ -604,7 +605,7 @@ export interface SelectOption {
 const styles = (theme: Theme) => createStyles({
   searchRoot: {
     display: "flex",
-    flexDirection: "row",
+    flexDirection: "column",
     justifyContent: "center",
     alignItems: 'center',
     position: 'relative',
@@ -920,7 +921,7 @@ const styles = (theme: Theme) => createStyles({
     justifyContent: 'space-between',
     alignItems: 'center',
     // height: 50,
-    marginLeft: '0.25rem',
+    marginTop: '0.5rem',
     padding: '0rem 0.25rem',
     border: theme.palette.type === 'dark'
       ? `1px solid ${Colors.uniswapLightNavy}`
