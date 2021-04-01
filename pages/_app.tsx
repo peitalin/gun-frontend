@@ -36,6 +36,7 @@ import { GET_USER } from "queries/user-queries";
 import "../public/App.css";
 import "react-datepicker/dist/react-datepicker.css";
 import "components/TextEditorCK/ckStyles.css";
+import "components/DropzoneUploader/styles.css";
 
 import { SnackbarProvider, ProviderContext } from 'notistack';
 import IconButtonCancel from "components/IconButtonCancel";

@@ -2,8 +2,6 @@ import React from "react";
 // Styles
 import { withStyles, WithStyles } from "@material-ui/core/styles";
 import { ILayoutProps } from "components/DropzoneUploader/Dropzone";
-import "components/DropzoneUploader/styles.css";
-
 import { Order } from "typings/gqlTypes";
 
 

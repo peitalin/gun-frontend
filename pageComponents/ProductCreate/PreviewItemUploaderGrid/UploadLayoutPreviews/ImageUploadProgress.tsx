@@ -16,7 +16,6 @@ import {
   formatBytes,
   formatDuration,
 } from "components/DropzoneUploader/utils";
-import "components/DropzoneUploader/styles.css";
 
 // Typings
 import { DzuPreviewItem } from "typings/dropzone";

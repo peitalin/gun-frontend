@@ -7,7 +7,6 @@ import { styles } from "./styles";
 // Media uploader
 import { IFileWithMeta, IUploadParams } from "components/DropzoneUploader/Dropzone";
 import Dropzone from "components/DropzoneUploader/Dropzone";
-import "components/DropzoneUploader/styles.css";
 import {
   google_storage_register,
   google_storage_save_file_to_db,
