@@ -651,6 +651,7 @@ const styles = (theme: Theme) => createStyles({
     width: '100vw',
     position: 'fixed',
     top: 0,
+    left: 0,
     transition:  theme.transitions.create(['height', 'width', 'border'], {
       easing: theme.transitions.easing.easeIn,
       duration: 0,
