@@ -131,7 +131,7 @@ const MyOrders: React.FC<ReactProps> = (props) => {
           orderBy: { createdAt: Order_By.DESC }
         }
       },
-      // fetchPolicy: "network-only",
+      fetchPolicy: "network-only",
     }
   );
 
@@ -147,7 +147,7 @@ const MyOrders: React.FC<ReactProps> = (props) => {
           orderBy: { createdAt: Order_By.DESC }
         }
       },
-      // fetchPolicy: "network-only",
+      fetchPolicy: "network-only",
     }
   );
 

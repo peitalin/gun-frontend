@@ -308,11 +308,6 @@ export const useEffectUpdateGridAccum = <T>({
 
   React.useEffect(() => {
 
-    // let objectIds = (connection?.edges ?? []).map(({ node }) => {
-    //   return node
-    // });
-
-
     let gridAccumKeys = Object.keys(gridAccum);
     // if the incoming product request is new
     // then we need to update the gridAccumulator.
@@ -321,11 +316,12 @@ export const useEffectUpdateGridAccum = <T>({
     let skipUpdate = gridAccumKeys.some(k => {
         // console.log("k", k)
         // console.log("index+k", gridAccum[index+k])
-        // console.log("gridAccum[k][0]: ", gridAccum[k]?.[0])
-        // console.log("products[0]", products?.[0])
-        let gridPageFirstItem = gridAccum[k]?.[0] as any
+        // console.log("gridAccum[k]: ", gridAccum[k])
+        // console.log("objectIds[0]", objectIds?.[0])
+        let gridPageFirstItemId = gridAccum[k]?.[0] as any
+        // console.log("gridPageFirstItemId: ", gridPageFirstItemId)
         // if any pages match, then no need to update
-        return gridPageFirstItem?.id === objectIds?.[0]
+        return gridPageFirstItemId === objectIds?.[0]
       })
     // console.log("skipUpdate", skipUpdate)
     // console.log("loading", loading)
