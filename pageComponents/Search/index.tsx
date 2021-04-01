@@ -27,7 +27,6 @@ import { useRouter } from "next/router";
 import NewsBar from "layout/NavBarMain/NewsBar";
 import {
   useFacetSearchOptions,
-  useEffectUpdateGridAccum,
   totalItemsInCategoriesFacets,
 } from "utils/hooksFacetSearch";
 // Meta headers

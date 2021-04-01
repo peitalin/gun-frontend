@@ -40,7 +40,6 @@ import RowExpander from "./RowExpander";
 import SearchOptions, { SelectOption, setCategoryFacets } from "components/SearchOptions";
 import {
   useFacetSearchOptions,
-  useEffectUpdateGridAccum,
   totalItemsInCategoriesFacets,
 } from "utils/hooksFacetSearch";
 // Grid Components

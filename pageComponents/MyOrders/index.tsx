@@ -45,7 +45,6 @@ export const MY_DOWNLOADS_PAGINATION_COUNT = 10;
 import SearchOptions, { SelectOption, setCategoryFacets } from "components/SearchOptions";
 import {
   useFacetSearchOptions,
-  useEffectUpdateGridAccum,
   totalItemsInCategoriesFacets,
 } from "utils/hooksFacetSearch";
 // Grid Components
@@ -353,7 +352,7 @@ const MyOrders: React.FC<ReactProps> = (props) => {
                     } else {
                       return (
                         <OrderRowSellers
-                          key={order.id}
+                          key={order?.id}
                           order={order}
                           loading={false}
                           // loading={
@@ -427,7 +426,7 @@ const MyOrders: React.FC<ReactProps> = (props) => {
                 } else {
                   return (
                     <OrderRowBuyers
-                      key={order.id}
+                      key={order?.id}
                       order={order}
                       loading={false}
                       // loading={buyerOrdersResponse.loading}
@@ -502,7 +501,7 @@ const MyOrders: React.FC<ReactProps> = (props) => {
                 } else {
                   return (
                     <OrderRowSellers
-                      key={order.id}
+                      key={order?.id}
                       order={order}
                       // loading={sellerOrdersResponse.loading}
                       loading={false}

@@ -45,7 +45,6 @@ import { DocumentNode } from "graphql";
 import SearchOptions, { SelectOption, setCategoryFacets } from "components/SearchOptions";
 import {
   useFacetSearchOptions,
-  useEffectUpdateGridAccum,
   totalItemsInCategoriesFacets,
 } from "utils/hooksFacetSearch";
 // Grid Components

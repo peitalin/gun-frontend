@@ -39,7 +39,6 @@ import GridIcon from "@material-ui/icons/ViewModule";
 import SearchOptionsAirbnb from "components/SearchbarAirbnb/SearchOptionsAirbnb";
 import {
   useFacetSearchOptions,
-  useEffectUpdateGridAccum,
   totalItemsInCategoriesFacets,
 } from "utils/hooksFacetSearch";
 import BannerCategory from "./BannerCategory";

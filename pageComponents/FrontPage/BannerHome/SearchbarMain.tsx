@@ -13,7 +13,6 @@ import { Categories } from "typings/gqlTypes";
 import SearchOptionsAirbnb from "components/SearchbarAirbnb/SearchOptionsAirbnb";
 import {
   useFacetSearchOptions,
-  useEffectUpdateGridAccum,
   totalItemsInCategoriesFacets,
 } from "utils/hooksFacetSearch";
 // Responsiveness

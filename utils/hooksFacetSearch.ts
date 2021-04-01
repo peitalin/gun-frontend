@@ -267,7 +267,7 @@ interface FacetSearchParams {
 
 export const useEffectUpdateGridAccum = <T>({
   index,
-  productsConnection,
+  connection,
   totalCount,
   setTotalCount,
   searchTerm,
@@ -276,19 +276,21 @@ export const useEffectUpdateGridAccum = <T>({
   loading,
 }: {
   index: number,
-  productsConnection: GenericConnection<T>,
+  connection: GenericConnection<T>,
   totalCount: number,
   setTotalCount: React.Dispatch<React.SetStateAction<number>>,
   searchTerm?: string,
   numItemsPerPage?: number,
   overfetchBy?: number,
   loading?: boolean,
-}): GridMap<T> => {
+}): GridMap<string> => {
 
   // accumulate products for pre-fetching
-  const [gridAccum, setGridAccum] = React.useState<GridMap<T>>({
+  const [gridAccum, setGridAccum] = React.useState<GridMap<string>>({
     0: [],
   })
+
+  let objectIds = connection?.edges?.map(({ node }: any) => node.id)
 
   // instantiate gridAccum data structure with #numPages for swipeable
   React.useEffect(() => {
@@ -306,23 +308,10 @@ export const useEffectUpdateGridAccum = <T>({
 
   React.useEffect(() => {
 
-    let products = (productsConnection?.edges ?? []).map(({ node }) => node);
-    // console.log("index: ", index)
-    // console.log("gridKeys: ", gridAccumKeys)
+    // let objectIds = (connection?.edges ?? []).map(({ node }) => {
+    //   return node
+    // });
 
-    // if skipping ahead multiple pages, check which intemediate pages
-    // are missing and fill them in with blank arrays.
-    // e.g. if you have pages [1,2], then visit page 7
-
-    // if (index > gridAccumKeys.length) {
-    //   [...Array(index).keys()].forEach(i => {
-    //     if (!gridAccumKeys.includes(`${i}`)) {
-    //       // if page does not yet exist in gridAccum, create an empty entry
-    //       // console.log('replacing newGridAccum[i]', i)
-    //       gridAccum[i] = []
-    //     }
-    //   })
-    // }
 
     let gridAccumKeys = Object.keys(gridAccum);
     // if the incoming product request is new
@@ -336,32 +325,30 @@ export const useEffectUpdateGridAccum = <T>({
         // console.log("products[0]", products?.[0])
         let gridPageFirstItem = gridAccum[k]?.[0] as any
         // if any pages match, then no need to update
-        return gridPageFirstItem?.id === (products?.[0] as any)?.id
+        return gridPageFirstItem?.id === objectIds?.[0]
       })
     // console.log("skipUpdate", skipUpdate)
     // console.log("loading", loading)
 
     // create/update the index with the products from that index-page-request
-    if (products) {
+    if (objectIds) {
       if (!skipUpdate)  {
         // console.log("instantiating grid...")
         // gridAccum[index] is empty and needs to be updated
 
         // split incoming products from request into groups
         // this may be from the 5th page onwards...5th and 6th pages incoming
-        let productGroups = splitArrayIntoGrid(products, numItemsPerPage)
+        let objectIdGroups = splitArrayIntoGrid(objectIds, numItemsPerPage)
         // console.log("productGroups: ", productGroups)
         // when overfetching, there will be 2+ groups, allocate products to
         // the jth over-fetched group of products
-        productGroups.forEach((productSubgroup, k) => {
-          // console.log("productSubgroup[0]", productSubgroup?.[0])
-          // console.log("gridAccum[index+k][0]", gridAccum[index+k]?.[0])
-          // if 1st item on page-i is not the same as 1st item on productSubgroup-i
+        objectIdGroups.forEach((objectIdSubgroup, k) => {
+          // if 1st item on page-i is not the same as 1st item on objectSubgroup-i
           // then replace it
           if (
-            (gridAccum[index+k]?.[0] as any)?.id !== (productSubgroup?.[0] as any)?.id
+            (gridAccum[index+k]?.[0] as any)?.id !== objectIdSubgroup?.[0]
           ) {
-            gridAccum[index+k] = productSubgroup
+            gridAccum[index+k] = objectIdSubgroup
           }
         })
 
@@ -373,13 +360,13 @@ export const useEffectUpdateGridAccum = <T>({
     // console.log("gridAccum: ", gridAccum)
 
     // console.log("totalCount>", totalCount)
-    if (productsConnection && !totalCount) {
+    if (connection && !totalCount) {
       if (setTotalCount) {
-        setTotalCount(productsConnection.totalCount)
+        setTotalCount(connection.totalCount)
       }
     }
 
-  }, [productsConnection, searchTerm, index, totalCount, loading])
+  }, [connection, searchTerm, index, totalCount, loading])
 
   return gridAccum
 }

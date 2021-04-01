@@ -1,7 +1,7 @@
 
 
 export const splitArrayIntoGrid = <T>(
-  products: T[],
+  objects: T[],
   numItemsPerPage: number
 ): T[][] => {
 
@@ -13,10 +13,10 @@ export const splitArrayIntoGrid = <T>(
   let n = numItemsPerPage;
   let nRowArray = [...new Array(n).keys()];
 
-  let grid: T[][] = products.reduce((acc, product, i) =>
-    // for every nth item, group products into nRowArray
+  let grid: T[][] = objects.reduce((acc, product, i) =>
+    // for every nth item, group objects into nRowArray
     (i % n === 0)
-      ? [...acc, nRowArray.map((_,j) => products[i+j])]
+      ? [...acc, nRowArray.map((_,j) => objects[i+j])]
       : acc
   , [])
 

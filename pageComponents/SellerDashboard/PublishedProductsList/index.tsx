@@ -46,7 +46,6 @@ import { useAnalytics } from "utils/analytics";
 import SearchOptions, { SelectOption, setCategoryFacets } from "components/SearchOptions";
 import {
   useFacetSearchOptions,
-  useEffectUpdateGridAccum,
   totalItemsInIsPublishedFacet,
 } from "utils/hooksFacetSearch";
 // Grid Components

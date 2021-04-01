@@ -40,15 +40,30 @@ function GridPaginatorGeneric<T>(props: ReactProps<T> & ReactChildren<T>) {
     disableAnimation = false,
   } = props;
 
-  // console.log("connection.edges", connection)
+  // console.log("connection", connection)
   // console.log("index222: ", props.index)
 
   const classes = useStyles();
   const theme = useTheme();
+  const [ hashmap, setHashmap ] = React.useState({})
 
-  let productsGroupedInGrids = useEffectUpdateGridAccum({
+  // accumulate incoming objects in a hashamp to lookup with the gridPaginator
+  React.useEffect(() => {
+    let hashmapKeys = Object.keys(hashmap)
+    let newHashmap = {}
+    connection?.edges?.forEach(({ node }: { node: any }) => {
+      if (!hashmapKeys.includes(node?.id)) {
+        newHashmap[node?.id] = node
+      }
+    })
+    setHashmap(s => ({ ...hashmap, ...newHashmap }))
+
+  }, [connection])
+
+
+  let objectIdsGroupedInGrids = useEffectUpdateGridAccum({
     index,
-    productsConnection: connection,
+    connection: connection,
     totalCount,
     setTotalCount,
     numItemsPerPage,
@@ -56,8 +71,9 @@ function GridPaginatorGeneric<T>(props: ReactProps<T> & ReactChildren<T>) {
     loading,
   })
 
-  let productGroups: T[][] = Object.values(productsGroupedInGrids)
-  // console.log("productsGroupsInGrids", productGroups)
+  let objectIdGroups: string[][] = Object.values(objectIdsGroupedInGrids)
+
+  // console.log("objectIdsGroupsInGrids", objectIdGroups)
 
   return (
     <AlignCenterLayout
@@ -66,7 +82,7 @@ function GridPaginatorGeneric<T>(props: ReactProps<T> & ReactChildren<T>) {
       withRecommendations={false}
     >
     {
-      productsGroupedInGrids &&
+      objectIdsGroupedInGrids &&
       <BindKeyboardSwipeableViews
         enableMouseEvents={false}
         index={index}
@@ -78,11 +94,7 @@ function GridPaginatorGeneric<T>(props: ReactProps<T> & ReactChildren<T>) {
         springConfig={disableAnimation ? noAnim : someAnim}
       >
         {
-          productGroups.map(( productGroup, subindex) => {
-            // if (index === 2) {
-            //   console.log("subindex:", subindex)
-            //   console.log("productGroup:", productGroup)
-            // }
+          objectIdGroups.map(( objectIdGroup, subindex) => {
             return (
               <div key={`product-group-${subindex}`}
                 className={clsx(
@@ -93,25 +105,29 @@ function GridPaginatorGeneric<T>(props: ReactProps<T> & ReactChildren<T>) {
               >
                 {
                   props.loading
-                  && (productGroups[index]?.length === 0)
+                  && (objectIdGroups[index]?.length === 0)
                   // if overfetching, only show loading if past the preloaded pages
                   ? [...Array(numItemsPerPage).keys()].map(j => {
                       return props.loadingComponent
                           ? <div key={j}>{props.loadingComponent}</div>
                           : <LoadingCards key={j} count={1}/>
                     })
-                  : productGroup
-                    .filter(p => !!p)
-                    .map(( product, j ) =>
-                      <div key={j} className={props.gridItemClassName}>
-                        {
-                          props.children({
-                            key: j,
-                            node: product,
-                          })
-                        }
-                      </div>
-                    )
+                  : objectIdGroup
+                    .filter(objectId => !!hashmap[objectId])
+                    .map(( objectId: string, j ) => {
+                      // console.log("objectId: ", objectId)
+                      // console.log("hashmap[objectId]: ", hashmap[objectId])
+                      return (
+                        <div key={j} className={props.gridItemClassName}>
+                          {
+                            props.children({
+                              key: j,
+                              node: hashmap[objectId],
+                            })
+                          }
+                        </div>
+                      )
+                    })
                 }
               </div>
             )
