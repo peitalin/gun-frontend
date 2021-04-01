@@ -306,7 +306,6 @@ export const useEffectUpdateGridAccum = <T>({
 
   React.useEffect(() => {
 
-    let gridAccumKeys = Object.keys(gridAccum);
     let products = (productsConnection?.edges ?? []).map(({ node }) => node);
     // console.log("index: ", index)
     // console.log("gridKeys: ", gridAccumKeys)
@@ -325,23 +324,26 @@ export const useEffectUpdateGridAccum = <T>({
     //   })
     // }
 
-
-    let overfetchArray = [...Array(overfetchBy).keys()]
-    // see if index or any overfetched indexes are empty and need updating
-    let needsUpdating = overfetchArray.some(k => {
+    let gridAccumKeys = Object.keys(gridAccum);
+    // if the incoming product request is new
+    // then we need to update the gridAccumulator.
+    // we see if the 1st product in incoming request matches any of the 1st products
+    // in each gridAccumulator page
+    let skipUpdate = gridAccumKeys.some(k => {
         // console.log("k", k)
         // console.log("index+k", gridAccum[index+k])
-        // if the incoming product request is new (1st item is not the
-        // first item in any of the pages), then we need to update the gridAccumulator
-        let thisPageFirstItem = gridAccum[index+k]?.[0] as any
-        return thisPageFirstItem?.id !== (products?.[0] as any)?.id
+        // console.log("gridAccum[k][0]: ", gridAccum[k]?.[0])
+        // console.log("products[0]", products?.[0])
+        let gridPageFirstItem = gridAccum[k]?.[0] as any
+        // if any pages match, then no need to update
+        return gridPageFirstItem?.id === (products?.[0] as any)?.id
       })
-    // console.log("needsUpdating", needsUpdating)
+    // console.log("skipUpdate", skipUpdate)
     // console.log("loading", loading)
 
     // create/update the index with the products from that index-page-request
     if (products) {
-      if (needsUpdating)  {
+      if (!skipUpdate)  {
         // console.log("instantiating grid...")
         // gridAccum[index] is empty and needs to be updated
 
