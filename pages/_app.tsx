@@ -1,16 +1,12 @@
 import React from "react";
 import { NextPage, NextPageContext } from 'next';
-
-// Must import like this
-// https://github.com/mui-org/material-ui/issues/16962
-// import Head from 'next/Head';
-
 // Redux
 import { Dispatch, Store } from "redux";
-// redux
 import { Provider, useDispatch, useSelector } from "react-redux";
 import { makeStore, GrandReduxState } from "reduxStore/grand-reducer";
 import { Actions } from "reduxStore/actions";
+// Redux SSR Next
+import withRedux from "next-redux-wrapper";
 // Layout
 import Layout from "layout";
 // MUI
@@ -23,8 +19,6 @@ import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import { withStyles, WithStyles } from '@material-ui/core/styles';
 // Next
 import App from "next/app";
-// Redux
-import withRedux from "next-redux-wrapper";
 // Apollo Graphql
 import { ApolloProvider, ApolloClient } from '@apollo/client';
 import withApollo from 'utils/apollo';
@@ -115,15 +109,8 @@ class MyApp extends App<AppProps> {
     }
 
 
-
     return (
       <Provider store={store}>
-        {/* <Head>
-          <meta
-            name="viewport"
-            content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no"
-          />
-        </Head> */}
         <ApolloProvider client={apollo}>
           <ThemeProviderDarkMode>
             <SnackbarProvider

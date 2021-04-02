@@ -300,7 +300,6 @@ const CategoryId: React.FC<ReactProps> = (props) => {
             }
           >
             {({ node: product }) => {
-
               return (
                 <div key={product.id}
                   className={clsx(
@@ -311,7 +310,10 @@ const CategoryId: React.FC<ReactProps> = (props) => {
                   {
                     rowMode
                     ? <ProductCardAsRow product={product}/>
-                    : <ProductCardResponsive product={product} />
+                    : <ProductCardResponsive
+                        product={product}
+                        xsCardRow={false}
+                      />
                   }
                   {/* {
                     mdDown

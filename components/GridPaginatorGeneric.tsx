@@ -63,7 +63,7 @@ function GridPaginatorGeneric<T>(props: ReactProps<T> & ReactChildren<T>) {
 
   let objectIdsGroupedInGrids = useEffectUpdateGridAccum({
     index,
-    connection: connection,
+    connection,
     totalCount,
     setTotalCount,
     numItemsPerPage,
@@ -73,6 +73,7 @@ function GridPaginatorGeneric<T>(props: ReactProps<T> & ReactChildren<T>) {
 
   let objectIdGroups: string[][] = Object.values(objectIdsGroupedInGrids)
 
+  // console.log("hashmap", hashmap)
   // console.log("objectIdsGroupsInGrids", objectIdGroups)
 
   return (

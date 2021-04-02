@@ -1,5 +1,4 @@
 import React from "react";
-import { oc as option } from "ts-optchain";
 import clsx from "clsx";
 import { Colors, BorderRadius } from "layout/AppTheme";
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
@@ -38,7 +37,7 @@ const ProductPreviewCardRow = (props: ReactProps) => {
         classes={{ root: classes.cardActionArea }}
       >
       {
-        option(previewItem).image.original.id()
+        previewItem?.image?.original?.id
         ? <CardMedia
             component="img"
             title={props.title}
@@ -67,7 +66,7 @@ const ProductPreviewCardRow = (props: ReactProps) => {
             // empty 1px image. use background-image: url(image.jpg) instead
             // to prevent image re-render flashs
           />
-        : option(previewItem).youTubeEmbedLink()
+        : previewItem?.youTubeEmbedLink
           ? <CardMedia
               component="img"
               className={clsx(

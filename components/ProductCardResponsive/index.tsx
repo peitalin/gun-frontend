@@ -1,13 +1,14 @@
 import React from "react";
 import clsx from "clsx";
-import { oc as option } from "ts-optchain";
 // Typings
 import { Product, SoldOutStatus } from "typings/gqlTypes";
 // Responsiveness
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
+import Hidden from "components/HiddenFix";
 // components
 import ProductCardRC from "./ProductCardRC";
+import ProductCardAsRow from "components/ProductCardAsRow"
 
 
 
@@ -45,8 +46,8 @@ const ProductCardResponsive: React.FC<ProductCardResponsiveProps> = (props) => {
     style: props.style,
     maxWidthOfRow: maxWidthOfRow,
     previewImageEmptyMessage: props.previewImageEmptyMessage,
-    fit: option(featuredPreviewItem).image.original.heightInPixels() >
-        option(featuredPreviewItem).image.original.widthInPixels(),
+    fit: featuredPreviewItem?.image?.original?.heightInPixels >
+        featuredPreviewItem?.image?.original?.widthInPixels,
     onClick: props.onClick,
     // hideActionType: xs || sm || md
     hideActionType: product.soldOutStatus !== SoldOutStatus.AVAILABLE
@@ -58,102 +59,104 @@ const ProductCardResponsive: React.FC<ProductCardResponsiveProps> = (props) => {
   // and the js-controlled media queries kick into effect for responsiveness
   // Drawback: javascript carousels no longer work
 
-  // return (
-  //   <>
-  //     {/* xs */}
-  //     <Hidden only={["sm", "md", "lg", "xl"]} implementation="css">
-  //       <ProductRow product={product} />
-  //     </Hidden>
+  return (
+    <>
+      {/* xs */}
+      <Hidden only={["md", "lg", "xl"]} implementation="css">
+        {
+          xsCardRow
+          ? <ProductCardAsRow
+              product={product}
+            />
+          : <ProductCardRC
+              product={product}
+              {...commonPreviewCardProps}
+              screenSize={"xs"}
+              cardsPerRow={cardsPerRow.xs} // 1 default
+            />
+        }
+      </Hidden>
 
-  //     {/* sm */}
-  //     <Hidden only={["xs", "md", "lg", "xl"]} implementation="css">
-  //       <ProductCardRC
-  //         product={product}
-  //         {...commonPreviewCardProps}
-  //         screenSize={"sm"}
-  //         cardsPerRow={cardsPerRow.sm} // 1 default
-  //       />
-  //     </Hidden>
 
-  //     {/* md */}
-  //     <Hidden only={["xs", "sm", "lg", "xl"]} implementation="css">
-  //       <ProductCardRC
-  //         product={product}
-  //         {...commonPreviewCardProps}
-  //         screenSize={"md"}
-  //         cardsPerRow={cardsPerRow.md} // 2 default
-  //       />
-  //     </Hidden>
+      {/* sm + md  */}
+      <Hidden only={["xs", "sm", "lg", "xl"]} implementation="css">
+        <ProductCardRC
+          product={product}
+          {...commonPreviewCardProps}
+          screenSize={"md"}
+          cardsPerRow={cardsPerRow.md} // 2 default
+        />
+      </Hidden>
 
-  //     {/* lg */}
-  //     <Hidden only={["xs", "sm", "md", "xl"]} implementation="css">
-  //       <ProductCardRC
-  //         product={product}
-  //         {...commonPreviewCardProps}
-  //         screenSize={"lg"}
-  //         cardsPerRow={cardsPerRow.lg} // 3 default
-  //       />
-  //     </Hidden>
+      {/* lg */}
+      <Hidden only={["xs", "sm", "md", "xl"]} implementation="css">
+        <ProductCardRC
+          product={product}
+          {...commonPreviewCardProps}
+          screenSize={"lg"}
+          cardsPerRow={cardsPerRow.lg} // 3 default
+        />
+      </Hidden>
 
-  //     {/* xl */}
-  //     <Hidden only={["xs", "sm", "md", "lg"]} implementation="css">
-  //       <ProductCardRC
-  //         product={product}
-  //         {...commonPreviewCardProps}
-  //         screenSize={"xl"}
-  //         cardsPerRow={cardsPerRow.xl} // 4 default
-  //       />
-  //     </Hidden>
-  //   </>
-  // )
+      {/* xl */}
+      <Hidden only={["xs", "sm", "md", "lg"]} implementation="css">
+        <ProductCardRC
+          product={product}
+          {...commonPreviewCardProps}
+          screenSize={"xl"}
+          cardsPerRow={cardsPerRow.xl} // 4 default
+        />
+      </Hidden>
+    </>
+  )
 
-  if (xl || noMediaQuery) {
-    return (
-      <ProductCardRC
-        product={product}
-        {...commonPreviewCardProps}
-        screenSize={"xl"}
-        cardsPerRow={cardsPerRow.xl} // 4 default
-      />
-    )
-  } else if (lg) {
-    return (
-      <ProductCardRC
-        product={product}
-        {...commonPreviewCardProps}
-        screenSize={"lg"}
-        cardsPerRow={cardsPerRow.lg} // 3 default
-      />
-    )
-  } else if (md) {
-    return (
-      <ProductCardRC
-        product={product}
-        {...commonPreviewCardProps}
-        screenSize={"md"}
-        cardsPerRow={cardsPerRow.md} // 2 default
-      />
-    )
-  } else if (sm) {
-    return (
-      <ProductCardRC
-        product={product}
-        {...commonPreviewCardProps}
-        screenSize={"sm"}
-        cardsPerRow={cardsPerRow.sm} // 1 default
-      />
-    )
-  } else {
-    // else if (xs)
-    return (
-      <ProductCardRC
-        product={product}
-        {...commonPreviewCardProps}
-        screenSize={"sm"}
-        cardsPerRow={cardsPerRow.sm} // 1 default
-      />
-    )
-  }
+  // if (xl || noMediaQuery) {
+  //   return (
+  //     <ProductCardRC
+  //       product={product}
+  //       {...commonPreviewCardProps}
+  //       screenSize={"xl"}
+  //       cardsPerRow={cardsPerRow.xl} // 4 default
+  //     />
+  //   )
+  // } else if (lg) {
+  //   return (
+  //     <ProductCardRC
+  //       product={product}
+  //       {...commonPreviewCardProps}
+  //       screenSize={"lg"}
+  //       cardsPerRow={cardsPerRow.lg} // 3 default
+  //     />
+  //   )
+  // } else if (md) {
+  //   return (
+  //     <ProductCardRC
+  //       product={product}
+  //       {...commonPreviewCardProps}
+  //       screenSize={"md"}
+  //       cardsPerRow={cardsPerRow.md} // 2 default
+  //     />
+  //   )
+  // } else if (sm) {
+  //   return (
+  //     <ProductCardRC
+  //       product={product}
+  //       {...commonPreviewCardProps}
+  //       screenSize={"sm"}
+  //       cardsPerRow={cardsPerRow.sm} // 1 default
+  //     />
+  //   )
+  // } else {
+  //   // else if (xs)
+  //   return (
+  //     <ProductCardRC
+  //       product={product}
+  //       {...commonPreviewCardProps}
+  //       screenSize={"sm"}
+  //       cardsPerRow={cardsPerRow.sm} // 1 default
+  //     />
+  //   )
+  // }
 }
 
 

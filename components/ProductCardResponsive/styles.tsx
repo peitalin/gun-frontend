@@ -80,7 +80,7 @@ export const styles = (theme: Theme) => createStyles({
     marginBottom: '0.25rem',
     // overflowY: 'hidden',
     maxHeight: '2.75rem',
-    fontSize: '1.125rem',
+    fontSize: '1rem',
     lineHeight: '1.25rem',
   },
   makeModel: {
