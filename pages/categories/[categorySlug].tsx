@@ -88,9 +88,16 @@ CategorySlugSSR.getInitialProps = async (ctx: Context) => {
         query: GET_PRODUCT_CATEGORIES,
       })
 
-      let selectedCategory = (data?.getProductCategories ?? []).find(s => {
-        return s.slug === categorySlug
-      })
+      // "all" category slug is filtered out on the backend and ignored
+      // no category filter -> all categories
+      let defaultCategory = {
+        id: "",
+        slug: "all",
+        name: "All Categories"
+      } as any
+
+      let selectedCategory = [ ...data?.getProductCategories, defaultCategory ]
+        .find(s => s.slug === categorySlug)
 
       let categoryName = selectedCategory?.name
 

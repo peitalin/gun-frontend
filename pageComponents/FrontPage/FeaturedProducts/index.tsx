@@ -11,6 +11,7 @@ import {
   Product,
   ProductsConnection,
   Order_By,
+  PromotedList,
 } from "typings/gqlTypes";
 
 import FeaturedProductsMobileCarousel from "pageComponents/FrontPage/FeaturedProducts/FeaturedProductsMobileCarousel";
@@ -23,12 +24,12 @@ import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 // Graphql
 import { useQuery, useApolloClient } from "@apollo/client";
-import { GET_ALL_PRODUCTS } from "queries/gun-queries";
+import { GET_PROMOTED_LIST } from "queries/promoted_lists-queries";
 
-import {
-  SAY_SOMETHING_MUTATION,
-  SAY_SOMETHING_SUBSCRIPTION
-} from "queries/chat-subscriptions";
+// import {
+//   SAY_SOMETHING_MUTATION,
+//   SAY_SOMETHING_SUBSCRIPTION
+// } from "queries/chat-subscriptions";
 
 
 
@@ -39,7 +40,6 @@ const FeaturedProducts = (props: ReactProps) => {
 
   const {
     classes,
-    initialFeaturedProducts,
     count = 16,
     cardsPerRow = {
       xs: 1.5,
@@ -51,42 +51,17 @@ const FeaturedProducts = (props: ReactProps) => {
   } = props;
 
 
-  const orderByOptions = [
-    { label: "Newest", value: { createdAt: Order_By.DESC }},
-    { label: "Oldest", value: { createdAt: Order_By.ASC }},
-    { label: "Highest Price", value: { price: Order_By.DESC }},
-    { label: "Lowest Price", value: { price: Order_By.ASC }},
-  ];
-
-  const [orderBy, setOrderBy] = React.useState(orderByOptions[0]);
-  const [expand, setExpand] = React.useState(false);
-  const [searchTermUi, setSearchTermUi] = React.useState("");
-  const [searchTerm, setSearchTerm] = React.useState("");
-
-  const inputRefEl = React.useRef(null);
-
   const { loading, error, data } = useQuery<QueryData, QueryVar>(
-    GET_ALL_PRODUCTS, {
+    GET_PROMOTED_LIST, {
     variables: {
-      searchTerm: searchTerm || "*",
-      query: {
-        limit: count,
-        offset: props.offset || 0,
-        // orderBy: orderBy.value,
-        where: { isPublished: { _eq: true } },
-        orderBy: {
-          // price: Order_By.ASC,
-          // price: Order_By.DESC
-          // createdAt: Order_By.ASC,
-          createdAt: Order_By.DESC,
-        }
-      }
+      promotedListId: props.promotedListId,
+      limit: count,
+      offset: 0,
     },
     ssr: true,
   })
 
-  let connection = option(data).productsAllConnection()
-    || initialFeaturedProducts;
+  let connection = data?.promotedList?.promotedListItemsConnection
 
   if (loading) {
     return (
@@ -102,14 +77,14 @@ const FeaturedProducts = (props: ReactProps) => {
       <Hidden smDown implementation="css">
         <FeaturedProductsDesktop
           title={props.title}
-          productsConnection={connection}
+          connection={connection}
           cardsPerRow={cardsPerRow}
         />
       </Hidden>
       <Hidden mdUp implementation="css">
         <FeaturedProductsMobileCarousel
           title={props.title}
-          productsConnection={connection}
+          connection={connection}
           cardsPerRow={cardsPerRow}
         />
       </Hidden>
@@ -122,9 +97,8 @@ const FeaturedProducts = (props: ReactProps) => {
 
 
 interface ReactProps extends WithStyles<typeof styles> {
-  initialFeaturedProducts?: ProductsConnection;
+  promotedListId: string;
   count?: number;
-  offset?: number;
   title?: string;
   cardsPerRow?: {
     xs?: number;
@@ -135,7 +109,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   };
 }
 interface QueryData {
-  productsAllConnection: ProductsConnection;
+  promotedList?: PromotedList;
 }
 interface QueryVar {
 }

@@ -1459,59 +1459,6 @@ export type CreateProductsConfig = {
   alwaysDiscounted?: Maybe<Scalars['Boolean']>;
 };
 
-export type CuratedList = {
-   __typename?: 'CuratedList';
-  id: Scalars['ID'];
-  createdAt: Scalars['Date'];
-  updatedAt?: Maybe<Scalars['Date']>;
-  name: Scalars['String'];
-  items: Array<CuratedListItem>;
-  adminItems: Array<CuratedListItem>;
-  viewAllPath?: Maybe<Scalars['String']>;
-};
-
-export type CuratedListItem = {
-   __typename?: 'CuratedListItem';
-  id: Scalars['ID'];
-  addedAt: Scalars['Date'];
-  listId: Scalars['ID'];
-  product: Product;
-};
-
-export type CuratedListItemMutationResponse = {
-   __typename?: 'CuratedListItemMutationResponse';
-  item: CuratedListItem;
-};
-
-export type CuratedListItemsConnection = {
-   __typename?: 'CuratedListItemsConnection';
-  totalCount?: Maybe<Scalars['Int']>;
-  pageInfo: PageInfo;
-  edges: Array<CuratedListItemsEdge>;
-};
-
-export type CuratedListItemsEdge = {
-   __typename?: 'CuratedListItemsEdge';
-  node: CuratedListItem;
-};
-
-export type CuratedListMutationResponse = {
-   __typename?: 'CuratedListMutationResponse';
-  list: CuratedList;
-};
-
-export type CuratedListsConnection = {
-   __typename?: 'CuratedListsConnection';
-  totalCount?: Maybe<Scalars['Int']>;
-  pageInfo: PageInfo;
-  edges: Array<CuratedListsEdge>;
-};
-
-export type CuratedListsEdge = {
-   __typename?: 'CuratedListsEdge';
-  node: CuratedList;
-};
-
 
 /** columns and relationships of "dealers" */
 export type Dealer = {
@@ -3268,6 +3215,14 @@ export type Mutation = {
   delete_orders?: Maybe<Orders_Mutation_Response>;
   /** delete single row from the table: "orders" */
   delete_orders_by_pk?: Maybe<Orders>;
+  /** delete data from the table: "page_config_sections" */
+  delete_page_config_sections?: Maybe<Page_Config_Sections_Mutation_Response>;
+  /** delete single row from the table: "page_config_sections" */
+  delete_page_config_sections_by_pk?: Maybe<Page_Config_Sections>;
+  /** delete data from the table: "page_configs" */
+  delete_page_configs?: Maybe<Page_Configs_Mutation_Response>;
+  /** delete single row from the table: "page_configs" */
+  delete_page_configs_by_pk?: Maybe<Page_Configs>;
   /** delete data from the table: "payment_methods" */
   delete_payment_methods?: Maybe<Payment_Methods_Mutation_Response>;
   /** delete single row from the table: "payment_methods" */
@@ -3308,6 +3263,14 @@ export type Mutation = {
   delete_products?: Maybe<Products_Mutation_Response>;
   /** delete single row from the table: "products" */
   delete_products_by_pk?: Maybe<Products>;
+  /** delete data from the table: "promoted_list_items" */
+  delete_promoted_list_items?: Maybe<Promoted_List_Items_Mutation_Response>;
+  /** delete single row from the table: "promoted_list_items" */
+  delete_promoted_list_items_by_pk?: Maybe<Promoted_List_Items>;
+  /** delete data from the table: "promoted_lists" */
+  delete_promoted_lists?: Maybe<Promoted_Lists_Mutation_Response>;
+  /** delete single row from the table: "promoted_lists" */
+  delete_promoted_lists_by_pk?: Maybe<Promoted_Lists>;
   /** delete data from the table: "refunds" */
   delete_refunds?: Maybe<Refunds_Mutation_Response>;
   /** delete single row from the table: "refunds" */
@@ -3384,6 +3347,14 @@ export type Mutation = {
   insert_orders?: Maybe<Orders_Mutation_Response>;
   /** insert a single row into the table: "orders" */
   insert_orders_one?: Maybe<Orders>;
+  /** insert data into the table: "page_config_sections" */
+  insert_page_config_sections?: Maybe<Page_Config_Sections_Mutation_Response>;
+  /** insert a single row into the table: "page_config_sections" */
+  insert_page_config_sections_one?: Maybe<Page_Config_Sections>;
+  /** insert data into the table: "page_configs" */
+  insert_page_configs?: Maybe<Page_Configs_Mutation_Response>;
+  /** insert a single row into the table: "page_configs" */
+  insert_page_configs_one?: Maybe<Page_Configs>;
   /** insert data into the table: "payment_methods" */
   insert_payment_methods?: Maybe<Payment_Methods_Mutation_Response>;
   /** insert a single row into the table: "payment_methods" */
@@ -3424,6 +3395,14 @@ export type Mutation = {
   insert_products?: Maybe<Products_Mutation_Response>;
   /** insert a single row into the table: "products" */
   insert_products_one?: Maybe<Products>;
+  /** insert data into the table: "promoted_list_items" */
+  insert_promoted_list_items?: Maybe<Promoted_List_Items_Mutation_Response>;
+  /** insert a single row into the table: "promoted_list_items" */
+  insert_promoted_list_items_one?: Maybe<Promoted_List_Items>;
+  /** insert data into the table: "promoted_lists" */
+  insert_promoted_lists?: Maybe<Promoted_Lists_Mutation_Response>;
+  /** insert a single row into the table: "promoted_lists" */
+  insert_promoted_lists_one?: Maybe<Promoted_Lists>;
   /** insert data into the table: "refunds" */
   insert_refunds?: Maybe<Refunds_Mutation_Response>;
   /** insert a single row into the table: "refunds" */
@@ -3500,6 +3479,14 @@ export type Mutation = {
   update_orders?: Maybe<Orders_Mutation_Response>;
   /** update single row of the table: "orders" */
   update_orders_by_pk?: Maybe<Orders>;
+  /** update data of the table: "page_config_sections" */
+  update_page_config_sections?: Maybe<Page_Config_Sections_Mutation_Response>;
+  /** update single row of the table: "page_config_sections" */
+  update_page_config_sections_by_pk?: Maybe<Page_Config_Sections>;
+  /** update data of the table: "page_configs" */
+  update_page_configs?: Maybe<Page_Configs_Mutation_Response>;
+  /** update single row of the table: "page_configs" */
+  update_page_configs_by_pk?: Maybe<Page_Configs>;
   /** update data of the table: "payment_methods" */
   update_payment_methods?: Maybe<Payment_Methods_Mutation_Response>;
   /** update single row of the table: "payment_methods" */
@@ -3540,6 +3527,14 @@ export type Mutation = {
   update_products?: Maybe<Products_Mutation_Response>;
   /** update single row of the table: "products" */
   update_products_by_pk?: Maybe<Products>;
+  /** update data of the table: "promoted_list_items" */
+  update_promoted_list_items?: Maybe<Promoted_List_Items_Mutation_Response>;
+  /** update single row of the table: "promoted_list_items" */
+  update_promoted_list_items_by_pk?: Maybe<Promoted_List_Items>;
+  /** update data of the table: "promoted_lists" */
+  update_promoted_lists?: Maybe<Promoted_Lists_Mutation_Response>;
+  /** update single row of the table: "promoted_lists" */
+  update_promoted_lists_by_pk?: Maybe<Promoted_Lists>;
   /** update data of the table: "refunds" */
   update_refunds?: Maybe<Refunds_Mutation_Response>;
   /** update single row of the table: "refunds" */
@@ -3743,7 +3738,7 @@ export type Mutation = {
   /**
    * Exclude a product from any search results.
    * The only way to find the product will be through direct link, or
-   * having it show up in an automatic or curated list.
+   * having it show up in an automatic or promoted list.
    * 
    * AccessRule – PLATFORM_ADMIN
    */
@@ -3793,40 +3788,40 @@ export type Mutation = {
    */
   createPayoutSplit: PayoutSplit;
   /**
-   * Create a new curated list.
+   * Create a new promoted list.
    * 
    * AccessRule – PLATFORM_ADMIN
    */
-  createCuratedList: CuratedListMutationResponse;
+  createPromotedList: PromotedListMutationResponse;
   /**
-   * Delete a curated list.
+   * Delete a promoted list.
    * 
    * AccessRule – PLATFORM_ADMIN
    */
-  deleteCuratedList: BlankMutationResponse;
+  deletePromotedList: BlankMutationResponse;
   /**
-   * Add a product to a curated list.
+   * Add a product to a promoted list.
    * 
    * It will be added at the bottom, but you can rearrange items later.
    * 
    * AccessRule – PLATFORM_ADMIN
    */
-  addProductToCuratedList: CuratedListItemMutationResponse;
+  addProductToPromotedList: PromotedListItemMutationResponse;
   /**
-   * Remove an item in a curated list.
+   * Remove an item in a promoted list.
    * 
    * AccessRule – PLATFORM_ADMIN
    */
-  removeItemFromCuratedList: CuratedListMutationResponse;
+  removeItemFromPromotedList: PromotedListMutationResponse;
   /**
-   * Change the location of the items in a curated list.
+   * Change the location of the items in a promoted list.
    * 
    * This works by providing the complete list of itemIds, in the order you want them to appear in the list.
    * It is designed to work well with a Save button design, rather than a real-time drag and drop edit UX.
    * 
    * AccessRule – PLATFORM_ADMIN
    */
-  rearrangeCuratedListItems: CuratedListMutationResponse;
+  rearrangePromotedListItems: PromotedListMutationResponse;
   /**
    * AccessRule – LOGGED_IN
    * For a buyer to create an order
@@ -4048,6 +4043,26 @@ export type MutationDelete_Orders_By_PkArgs = {
 };
 
 
+export type MutationDelete_Page_Config_SectionsArgs = {
+  where: Page_Config_Sections_Bool_Exp;
+};
+
+
+export type MutationDelete_Page_Config_Sections_By_PkArgs = {
+  id: Scalars['String'];
+};
+
+
+export type MutationDelete_Page_ConfigsArgs = {
+  where: Page_Configs_Bool_Exp;
+};
+
+
+export type MutationDelete_Page_Configs_By_PkArgs = {
+  id: Scalars['String'];
+};
+
+
 export type MutationDelete_Payment_MethodsArgs = {
   where: Payment_Methods_Bool_Exp;
 };
@@ -4144,6 +4159,26 @@ export type MutationDelete_ProductsArgs = {
 
 
 export type MutationDelete_Products_By_PkArgs = {
+  id: Scalars['String'];
+};
+
+
+export type MutationDelete_Promoted_List_ItemsArgs = {
+  where: Promoted_List_Items_Bool_Exp;
+};
+
+
+export type MutationDelete_Promoted_List_Items_By_PkArgs = {
+  id: Scalars['String'];
+};
+
+
+export type MutationDelete_Promoted_ListsArgs = {
+  where: Promoted_Lists_Bool_Exp;
+};
+
+
+export type MutationDelete_Promoted_Lists_By_PkArgs = {
   id: Scalars['String'];
 };
 
@@ -4366,6 +4401,30 @@ export type MutationInsert_Orders_OneArgs = {
 };
 
 
+export type MutationInsert_Page_Config_SectionsArgs = {
+  objects: Array<Page_Config_Sections_Insert_Input>;
+  on_conflict?: Maybe<Page_Config_Sections_On_Conflict>;
+};
+
+
+export type MutationInsert_Page_Config_Sections_OneArgs = {
+  object: Page_Config_Sections_Insert_Input;
+  on_conflict?: Maybe<Page_Config_Sections_On_Conflict>;
+};
+
+
+export type MutationInsert_Page_ConfigsArgs = {
+  objects: Array<Page_Configs_Insert_Input>;
+  on_conflict?: Maybe<Page_Configs_On_Conflict>;
+};
+
+
+export type MutationInsert_Page_Configs_OneArgs = {
+  object: Page_Configs_Insert_Input;
+  on_conflict?: Maybe<Page_Configs_On_Conflict>;
+};
+
+
 export type MutationInsert_Payment_MethodsArgs = {
   objects: Array<Payment_Methods_Insert_Input>;
   on_conflict?: Maybe<Payment_Methods_On_Conflict>;
@@ -4483,6 +4542,30 @@ export type MutationInsert_ProductsArgs = {
 export type MutationInsert_Products_OneArgs = {
   object: Products_Insert_Input;
   on_conflict?: Maybe<Products_On_Conflict>;
+};
+
+
+export type MutationInsert_Promoted_List_ItemsArgs = {
+  objects: Array<Promoted_List_Items_Insert_Input>;
+  on_conflict?: Maybe<Promoted_List_Items_On_Conflict>;
+};
+
+
+export type MutationInsert_Promoted_List_Items_OneArgs = {
+  object: Promoted_List_Items_Insert_Input;
+  on_conflict?: Maybe<Promoted_List_Items_On_Conflict>;
+};
+
+
+export type MutationInsert_Promoted_ListsArgs = {
+  objects: Array<Promoted_Lists_Insert_Input>;
+  on_conflict?: Maybe<Promoted_Lists_On_Conflict>;
+};
+
+
+export type MutationInsert_Promoted_Lists_OneArgs = {
+  object: Promoted_Lists_Insert_Input;
+  on_conflict?: Maybe<Promoted_Lists_On_Conflict>;
 };
 
 
@@ -4722,6 +4805,32 @@ export type MutationUpdate_Orders_By_PkArgs = {
 };
 
 
+export type MutationUpdate_Page_Config_SectionsArgs = {
+  _inc?: Maybe<Page_Config_Sections_Inc_Input>;
+  _set?: Maybe<Page_Config_Sections_Set_Input>;
+  where: Page_Config_Sections_Bool_Exp;
+};
+
+
+export type MutationUpdate_Page_Config_Sections_By_PkArgs = {
+  _inc?: Maybe<Page_Config_Sections_Inc_Input>;
+  _set?: Maybe<Page_Config_Sections_Set_Input>;
+  pk_columns: Page_Config_Sections_Pk_Columns_Input;
+};
+
+
+export type MutationUpdate_Page_ConfigsArgs = {
+  _set?: Maybe<Page_Configs_Set_Input>;
+  where: Page_Configs_Bool_Exp;
+};
+
+
+export type MutationUpdate_Page_Configs_By_PkArgs = {
+  _set?: Maybe<Page_Configs_Set_Input>;
+  pk_columns: Page_Configs_Pk_Columns_Input;
+};
+
+
 export type MutationUpdate_Payment_MethodsArgs = {
   _inc?: Maybe<Payment_Methods_Inc_Input>;
   _set?: Maybe<Payment_Methods_Set_Input>;
@@ -4849,6 +4958,34 @@ export type MutationUpdate_ProductsArgs = {
 export type MutationUpdate_Products_By_PkArgs = {
   _set?: Maybe<Products_Set_Input>;
   pk_columns: Products_Pk_Columns_Input;
+};
+
+
+export type MutationUpdate_Promoted_List_ItemsArgs = {
+  _inc?: Maybe<Promoted_List_Items_Inc_Input>;
+  _set?: Maybe<Promoted_List_Items_Set_Input>;
+  where: Promoted_List_Items_Bool_Exp;
+};
+
+
+export type MutationUpdate_Promoted_List_Items_By_PkArgs = {
+  _inc?: Maybe<Promoted_List_Items_Inc_Input>;
+  _set?: Maybe<Promoted_List_Items_Set_Input>;
+  pk_columns: Promoted_List_Items_Pk_Columns_Input;
+};
+
+
+export type MutationUpdate_Promoted_ListsArgs = {
+  _inc?: Maybe<Promoted_Lists_Inc_Input>;
+  _set?: Maybe<Promoted_Lists_Set_Input>;
+  where: Promoted_Lists_Bool_Exp;
+};
+
+
+export type MutationUpdate_Promoted_Lists_By_PkArgs = {
+  _inc?: Maybe<Promoted_Lists_Inc_Input>;
+  _set?: Maybe<Promoted_Lists_Set_Input>;
+  pk_columns: Promoted_Lists_Pk_Columns_Input;
 };
 
 
@@ -5167,30 +5304,30 @@ export type MutationCreatePayoutSplitArgs = {
 };
 
 
-export type MutationCreateCuratedListArgs = {
+export type MutationCreatePromotedListArgs = {
   name: Scalars['String'];
 };
 
 
-export type MutationDeleteCuratedListArgs = {
+export type MutationDeletePromotedListArgs = {
   listId: Scalars['String'];
 };
 
 
-export type MutationAddProductToCuratedListArgs = {
+export type MutationAddProductToPromotedListArgs = {
   listId: Scalars['String'];
   productId: Scalars['String'];
   variantId?: Maybe<Scalars['String']>;
 };
 
 
-export type MutationRemoveItemFromCuratedListArgs = {
+export type MutationRemoveItemFromPromotedListArgs = {
   listId: Scalars['String'];
   itemId: Scalars['String'];
 };
 
 
-export type MutationRearrangeCuratedListItemsArgs = {
+export type MutationRearrangePromotedListItemsArgs = {
   listId: Scalars['String'];
   itemIdsInOrder: Array<Scalars['ID']>;
 };
@@ -5593,8 +5730,6 @@ export type Order_Snapshots_Bool_Exp = {
 
 /** unique or primary key constraints on table "order_snapshots" */
 export enum Order_Snapshots_Constraint {
-  /** unique or primary key constraint */
-  ORDER_SNAPSHOTS_FORM_FILE_ID_KEY = 'order_snapshots_form_file_id_key',
   /** unique or primary key constraint */
   ORDER_SNAPSHOTS_PKEY = 'order_snapshots_pkey'
 }
@@ -6421,32 +6556,538 @@ export enum OrderStatus {
   COMPLETE = 'COMPLETE'
 }
 
+/** columns and relationships of "page_config_sections" */
+export type Page_Config_Sections = {
+   __typename?: 'page_config_sections';
+  hideViewAll: Scalars['Boolean'];
+  id: Scalars['String'];
+  isNewestList?: Maybe<Scalars['Boolean']>;
+  pageConfigId: Scalars['String'];
+  position?: Maybe<Scalars['Int']>;
+  /** An object relationship */
+  promotedList?: Maybe<Promoted_Lists>;
+  promotedListId?: Maybe<Scalars['String']>;
+  title?: Maybe<Scalars['String']>;
+  viewAllPath: Scalars['String'];
+};
+
+/** aggregated selection of "page_config_sections" */
+export type Page_Config_Sections_Aggregate = {
+   __typename?: 'page_config_sections_aggregate';
+  aggregate?: Maybe<Page_Config_Sections_Aggregate_Fields>;
+  nodes: Array<Page_Config_Sections>;
+};
+
+/** aggregate fields of "page_config_sections" */
+export type Page_Config_Sections_Aggregate_Fields = {
+   __typename?: 'page_config_sections_aggregate_fields';
+  avg?: Maybe<Page_Config_Sections_Avg_Fields>;
+  count?: Maybe<Scalars['Int']>;
+  max?: Maybe<Page_Config_Sections_Max_Fields>;
+  min?: Maybe<Page_Config_Sections_Min_Fields>;
+  stddev?: Maybe<Page_Config_Sections_Stddev_Fields>;
+  stddev_pop?: Maybe<Page_Config_Sections_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<Page_Config_Sections_Stddev_Samp_Fields>;
+  sum?: Maybe<Page_Config_Sections_Sum_Fields>;
+  var_pop?: Maybe<Page_Config_Sections_Var_Pop_Fields>;
+  var_samp?: Maybe<Page_Config_Sections_Var_Samp_Fields>;
+  variance?: Maybe<Page_Config_Sections_Variance_Fields>;
+};
+
+
+/** aggregate fields of "page_config_sections" */
+export type Page_Config_Sections_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<Page_Config_Sections_Select_Column>>;
+  distinct?: Maybe<Scalars['Boolean']>;
+};
+
+/** order by aggregate values of table "page_config_sections" */
+export type Page_Config_Sections_Aggregate_Order_By = {
+  avg?: Maybe<Page_Config_Sections_Avg_Order_By>;
+  count?: Maybe<Order_By>;
+  max?: Maybe<Page_Config_Sections_Max_Order_By>;
+  min?: Maybe<Page_Config_Sections_Min_Order_By>;
+  stddev?: Maybe<Page_Config_Sections_Stddev_Order_By>;
+  stddev_pop?: Maybe<Page_Config_Sections_Stddev_Pop_Order_By>;
+  stddev_samp?: Maybe<Page_Config_Sections_Stddev_Samp_Order_By>;
+  sum?: Maybe<Page_Config_Sections_Sum_Order_By>;
+  var_pop?: Maybe<Page_Config_Sections_Var_Pop_Order_By>;
+  var_samp?: Maybe<Page_Config_Sections_Var_Samp_Order_By>;
+  variance?: Maybe<Page_Config_Sections_Variance_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "page_config_sections" */
+export type Page_Config_Sections_Arr_Rel_Insert_Input = {
+  data: Array<Page_Config_Sections_Insert_Input>;
+  on_conflict?: Maybe<Page_Config_Sections_On_Conflict>;
+};
+
+/** aggregate avg on columns */
+export type Page_Config_Sections_Avg_Fields = {
+   __typename?: 'page_config_sections_avg_fields';
+  position?: Maybe<Scalars['Float']>;
+};
+
+/** order by avg() on columns of table "page_config_sections" */
+export type Page_Config_Sections_Avg_Order_By = {
+  position?: Maybe<Order_By>;
+};
+
+/** Boolean expression to filter rows from the table "page_config_sections". All fields are combined with a logical 'AND'. */
+export type Page_Config_Sections_Bool_Exp = {
+  _and?: Maybe<Array<Maybe<Page_Config_Sections_Bool_Exp>>>;
+  _not?: Maybe<Page_Config_Sections_Bool_Exp>;
+  _or?: Maybe<Array<Maybe<Page_Config_Sections_Bool_Exp>>>;
+  hideViewAll?: Maybe<Boolean_Comparison_Exp>;
+  id?: Maybe<String_Comparison_Exp>;
+  isNewestList?: Maybe<Boolean_Comparison_Exp>;
+  pageConfigId?: Maybe<String_Comparison_Exp>;
+  position?: Maybe<Int_Comparison_Exp>;
+  promotedList?: Maybe<Promoted_Lists_Bool_Exp>;
+  promotedListId?: Maybe<String_Comparison_Exp>;
+  title?: Maybe<String_Comparison_Exp>;
+  viewAllPath?: Maybe<String_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "page_config_sections" */
+export enum Page_Config_Sections_Constraint {
+  /** unique or primary key constraint */
+  PAGE_CONFIG_ITEMS_PKEY = 'page_config_items_pkey'
+}
+
+/** input type for incrementing integer column in table "page_config_sections" */
+export type Page_Config_Sections_Inc_Input = {
+  position?: Maybe<Scalars['Int']>;
+};
+
+/** input type for inserting data into table "page_config_sections" */
+export type Page_Config_Sections_Insert_Input = {
+  hideViewAll?: Maybe<Scalars['Boolean']>;
+  id?: Maybe<Scalars['String']>;
+  isNewestList?: Maybe<Scalars['Boolean']>;
+  pageConfigId?: Maybe<Scalars['String']>;
+  position?: Maybe<Scalars['Int']>;
+  promotedList?: Maybe<Promoted_Lists_Obj_Rel_Insert_Input>;
+  promotedListId?: Maybe<Scalars['String']>;
+  title?: Maybe<Scalars['String']>;
+  viewAllPath?: Maybe<Scalars['String']>;
+};
+
+/** aggregate max on columns */
+export type Page_Config_Sections_Max_Fields = {
+   __typename?: 'page_config_sections_max_fields';
+  id?: Maybe<Scalars['String']>;
+  pageConfigId?: Maybe<Scalars['String']>;
+  position?: Maybe<Scalars['Int']>;
+  promotedListId?: Maybe<Scalars['String']>;
+  title?: Maybe<Scalars['String']>;
+  viewAllPath?: Maybe<Scalars['String']>;
+};
+
+/** order by max() on columns of table "page_config_sections" */
+export type Page_Config_Sections_Max_Order_By = {
+  id?: Maybe<Order_By>;
+  pageConfigId?: Maybe<Order_By>;
+  position?: Maybe<Order_By>;
+  promotedListId?: Maybe<Order_By>;
+  title?: Maybe<Order_By>;
+  viewAllPath?: Maybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type Page_Config_Sections_Min_Fields = {
+   __typename?: 'page_config_sections_min_fields';
+  id?: Maybe<Scalars['String']>;
+  pageConfigId?: Maybe<Scalars['String']>;
+  position?: Maybe<Scalars['Int']>;
+  promotedListId?: Maybe<Scalars['String']>;
+  title?: Maybe<Scalars['String']>;
+  viewAllPath?: Maybe<Scalars['String']>;
+};
+
+/** order by min() on columns of table "page_config_sections" */
+export type Page_Config_Sections_Min_Order_By = {
+  id?: Maybe<Order_By>;
+  pageConfigId?: Maybe<Order_By>;
+  position?: Maybe<Order_By>;
+  promotedListId?: Maybe<Order_By>;
+  title?: Maybe<Order_By>;
+  viewAllPath?: Maybe<Order_By>;
+};
+
+/** response of any mutation on the table "page_config_sections" */
+export type Page_Config_Sections_Mutation_Response = {
+   __typename?: 'page_config_sections_mutation_response';
+  /** number of affected rows by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data of the affected rows by the mutation */
+  returning: Array<Page_Config_Sections>;
+};
+
+/** input type for inserting object relation for remote table "page_config_sections" */
+export type Page_Config_Sections_Obj_Rel_Insert_Input = {
+  data: Page_Config_Sections_Insert_Input;
+  on_conflict?: Maybe<Page_Config_Sections_On_Conflict>;
+};
+
+/** on conflict condition type for table "page_config_sections" */
+export type Page_Config_Sections_On_Conflict = {
+  constraint: Page_Config_Sections_Constraint;
+  update_columns: Array<Page_Config_Sections_Update_Column>;
+  where?: Maybe<Page_Config_Sections_Bool_Exp>;
+};
+
+/** ordering options when selecting data from "page_config_sections" */
+export type Page_Config_Sections_Order_By = {
+  hideViewAll?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  isNewestList?: Maybe<Order_By>;
+  pageConfigId?: Maybe<Order_By>;
+  position?: Maybe<Order_By>;
+  promotedList?: Maybe<Promoted_Lists_Order_By>;
+  promotedListId?: Maybe<Order_By>;
+  title?: Maybe<Order_By>;
+  viewAllPath?: Maybe<Order_By>;
+};
+
+/** primary key columns input for table: "page_config_sections" */
+export type Page_Config_Sections_Pk_Columns_Input = {
+  id: Scalars['String'];
+};
+
+/** select columns of table "page_config_sections" */
+export enum Page_Config_Sections_Select_Column {
+  /** column name */
+  HIDEVIEWALL = 'hideViewAll',
+  /** column name */
+  ID = 'id',
+  /** column name */
+  ISNEWESTLIST = 'isNewestList',
+  /** column name */
+  PAGECONFIGID = 'pageConfigId',
+  /** column name */
+  POSITION = 'position',
+  /** column name */
+  PROMOTEDLISTID = 'promotedListId',
+  /** column name */
+  TITLE = 'title',
+  /** column name */
+  VIEWALLPATH = 'viewAllPath'
+}
+
+/** input type for updating data in table "page_config_sections" */
+export type Page_Config_Sections_Set_Input = {
+  hideViewAll?: Maybe<Scalars['Boolean']>;
+  id?: Maybe<Scalars['String']>;
+  isNewestList?: Maybe<Scalars['Boolean']>;
+  pageConfigId?: Maybe<Scalars['String']>;
+  position?: Maybe<Scalars['Int']>;
+  promotedListId?: Maybe<Scalars['String']>;
+  title?: Maybe<Scalars['String']>;
+  viewAllPath?: Maybe<Scalars['String']>;
+};
+
+/** aggregate stddev on columns */
+export type Page_Config_Sections_Stddev_Fields = {
+   __typename?: 'page_config_sections_stddev_fields';
+  position?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev() on columns of table "page_config_sections" */
+export type Page_Config_Sections_Stddev_Order_By = {
+  position?: Maybe<Order_By>;
+};
+
+/** aggregate stddev_pop on columns */
+export type Page_Config_Sections_Stddev_Pop_Fields = {
+   __typename?: 'page_config_sections_stddev_pop_fields';
+  position?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev_pop() on columns of table "page_config_sections" */
+export type Page_Config_Sections_Stddev_Pop_Order_By = {
+  position?: Maybe<Order_By>;
+};
+
+/** aggregate stddev_samp on columns */
+export type Page_Config_Sections_Stddev_Samp_Fields = {
+   __typename?: 'page_config_sections_stddev_samp_fields';
+  position?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev_samp() on columns of table "page_config_sections" */
+export type Page_Config_Sections_Stddev_Samp_Order_By = {
+  position?: Maybe<Order_By>;
+};
+
+/** aggregate sum on columns */
+export type Page_Config_Sections_Sum_Fields = {
+   __typename?: 'page_config_sections_sum_fields';
+  position?: Maybe<Scalars['Int']>;
+};
+
+/** order by sum() on columns of table "page_config_sections" */
+export type Page_Config_Sections_Sum_Order_By = {
+  position?: Maybe<Order_By>;
+};
+
+/** update columns of table "page_config_sections" */
+export enum Page_Config_Sections_Update_Column {
+  /** column name */
+  HIDEVIEWALL = 'hideViewAll',
+  /** column name */
+  ID = 'id',
+  /** column name */
+  ISNEWESTLIST = 'isNewestList',
+  /** column name */
+  PAGECONFIGID = 'pageConfigId',
+  /** column name */
+  POSITION = 'position',
+  /** column name */
+  PROMOTEDLISTID = 'promotedListId',
+  /** column name */
+  TITLE = 'title',
+  /** column name */
+  VIEWALLPATH = 'viewAllPath'
+}
+
+/** aggregate var_pop on columns */
+export type Page_Config_Sections_Var_Pop_Fields = {
+   __typename?: 'page_config_sections_var_pop_fields';
+  position?: Maybe<Scalars['Float']>;
+};
+
+/** order by var_pop() on columns of table "page_config_sections" */
+export type Page_Config_Sections_Var_Pop_Order_By = {
+  position?: Maybe<Order_By>;
+};
+
+/** aggregate var_samp on columns */
+export type Page_Config_Sections_Var_Samp_Fields = {
+   __typename?: 'page_config_sections_var_samp_fields';
+  position?: Maybe<Scalars['Float']>;
+};
+
+/** order by var_samp() on columns of table "page_config_sections" */
+export type Page_Config_Sections_Var_Samp_Order_By = {
+  position?: Maybe<Order_By>;
+};
+
+/** aggregate variance on columns */
+export type Page_Config_Sections_Variance_Fields = {
+   __typename?: 'page_config_sections_variance_fields';
+  position?: Maybe<Scalars['Float']>;
+};
+
+/** order by variance() on columns of table "page_config_sections" */
+export type Page_Config_Sections_Variance_Order_By = {
+  position?: Maybe<Order_By>;
+};
+
+/** columns and relationships of "page_configs" */
+export type Page_Configs = {
+   __typename?: 'page_configs';
+  id: Scalars['String'];
+  name?: Maybe<Scalars['String']>;
+  /** An array relationship */
+  pageConfigSections: Array<Page_Config_Sections>;
+  /** An aggregated array relationship */
+  pageConfigSections_aggregate: Page_Config_Sections_Aggregate;
+  urlPath?: Maybe<Scalars['String']>;
+};
+
+
+/** columns and relationships of "page_configs" */
+export type Page_ConfigsPageConfigSectionsArgs = {
+  distinct_on?: Maybe<Array<Page_Config_Sections_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Page_Config_Sections_Order_By>>;
+  where?: Maybe<Page_Config_Sections_Bool_Exp>;
+};
+
+
+/** columns and relationships of "page_configs" */
+export type Page_ConfigsPageConfigSections_AggregateArgs = {
+  distinct_on?: Maybe<Array<Page_Config_Sections_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Page_Config_Sections_Order_By>>;
+  where?: Maybe<Page_Config_Sections_Bool_Exp>;
+};
+
+/** aggregated selection of "page_configs" */
+export type Page_Configs_Aggregate = {
+   __typename?: 'page_configs_aggregate';
+  aggregate?: Maybe<Page_Configs_Aggregate_Fields>;
+  nodes: Array<Page_Configs>;
+};
+
+/** aggregate fields of "page_configs" */
+export type Page_Configs_Aggregate_Fields = {
+   __typename?: 'page_configs_aggregate_fields';
+  count?: Maybe<Scalars['Int']>;
+  max?: Maybe<Page_Configs_Max_Fields>;
+  min?: Maybe<Page_Configs_Min_Fields>;
+};
+
+
+/** aggregate fields of "page_configs" */
+export type Page_Configs_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<Page_Configs_Select_Column>>;
+  distinct?: Maybe<Scalars['Boolean']>;
+};
+
+/** order by aggregate values of table "page_configs" */
+export type Page_Configs_Aggregate_Order_By = {
+  count?: Maybe<Order_By>;
+  max?: Maybe<Page_Configs_Max_Order_By>;
+  min?: Maybe<Page_Configs_Min_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "page_configs" */
+export type Page_Configs_Arr_Rel_Insert_Input = {
+  data: Array<Page_Configs_Insert_Input>;
+  on_conflict?: Maybe<Page_Configs_On_Conflict>;
+};
+
+/** Boolean expression to filter rows from the table "page_configs". All fields are combined with a logical 'AND'. */
+export type Page_Configs_Bool_Exp = {
+  _and?: Maybe<Array<Maybe<Page_Configs_Bool_Exp>>>;
+  _not?: Maybe<Page_Configs_Bool_Exp>;
+  _or?: Maybe<Array<Maybe<Page_Configs_Bool_Exp>>>;
+  id?: Maybe<String_Comparison_Exp>;
+  name?: Maybe<String_Comparison_Exp>;
+  pageConfigSections?: Maybe<Page_Config_Sections_Bool_Exp>;
+  urlPath?: Maybe<String_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "page_configs" */
+export enum Page_Configs_Constraint {
+  /** unique or primary key constraint */
+  PAGE_CONFIGS_PATH_KEY = 'page_configs_path_key',
+  /** unique or primary key constraint */
+  PAGE_CONFIGS_PKEY = 'page_configs_pkey'
+}
+
+/** input type for inserting data into table "page_configs" */
+export type Page_Configs_Insert_Input = {
+  id?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  pageConfigSections?: Maybe<Page_Config_Sections_Arr_Rel_Insert_Input>;
+  urlPath?: Maybe<Scalars['String']>;
+};
+
+/** aggregate max on columns */
+export type Page_Configs_Max_Fields = {
+   __typename?: 'page_configs_max_fields';
+  id?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  urlPath?: Maybe<Scalars['String']>;
+};
+
+/** order by max() on columns of table "page_configs" */
+export type Page_Configs_Max_Order_By = {
+  id?: Maybe<Order_By>;
+  name?: Maybe<Order_By>;
+  urlPath?: Maybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type Page_Configs_Min_Fields = {
+   __typename?: 'page_configs_min_fields';
+  id?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  urlPath?: Maybe<Scalars['String']>;
+};
+
+/** order by min() on columns of table "page_configs" */
+export type Page_Configs_Min_Order_By = {
+  id?: Maybe<Order_By>;
+  name?: Maybe<Order_By>;
+  urlPath?: Maybe<Order_By>;
+};
+
+/** response of any mutation on the table "page_configs" */
+export type Page_Configs_Mutation_Response = {
+   __typename?: 'page_configs_mutation_response';
+  /** number of affected rows by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data of the affected rows by the mutation */
+  returning: Array<Page_Configs>;
+};
+
+/** input type for inserting object relation for remote table "page_configs" */
+export type Page_Configs_Obj_Rel_Insert_Input = {
+  data: Page_Configs_Insert_Input;
+  on_conflict?: Maybe<Page_Configs_On_Conflict>;
+};
+
+/** on conflict condition type for table "page_configs" */
+export type Page_Configs_On_Conflict = {
+  constraint: Page_Configs_Constraint;
+  update_columns: Array<Page_Configs_Update_Column>;
+  where?: Maybe<Page_Configs_Bool_Exp>;
+};
+
+/** ordering options when selecting data from "page_configs" */
+export type Page_Configs_Order_By = {
+  id?: Maybe<Order_By>;
+  name?: Maybe<Order_By>;
+  pageConfigSections_aggregate?: Maybe<Page_Config_Sections_Aggregate_Order_By>;
+  urlPath?: Maybe<Order_By>;
+};
+
+/** primary key columns input for table: "page_configs" */
+export type Page_Configs_Pk_Columns_Input = {
+  id: Scalars['String'];
+};
+
+/** select columns of table "page_configs" */
+export enum Page_Configs_Select_Column {
+  /** column name */
+  ID = 'id',
+  /** column name */
+  NAME = 'name',
+  /** column name */
+  URLPATH = 'urlPath'
+}
+
+/** input type for updating data in table "page_configs" */
+export type Page_Configs_Set_Input = {
+  id?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  urlPath?: Maybe<Scalars['String']>;
+};
+
+/** update columns of table "page_configs" */
+export enum Page_Configs_Update_Column {
+  /** column name */
+  ID = 'id',
+  /** column name */
+  NAME = 'name',
+  /** column name */
+  URLPATH = 'urlPath'
+}
+
 export type PageConfig = {
    __typename?: 'PageConfig';
   id?: Maybe<Scalars['ID']>;
   name?: Maybe<Scalars['String']>;
-  path?: Maybe<Scalars['String']>;
-  items?: Maybe<Array<Maybe<PageConfigItem>>>;
+  urlPath?: Maybe<Scalars['String']>;
+  pageConfigSections?: Maybe<Array<Maybe<PageConfigSection>>>;
 };
 
-export type PageConfigItem = {
-   __typename?: 'PageConfigItem';
+export type PageConfigSection = {
+   __typename?: 'PageConfigSection';
   id: Scalars['ID'];
-  name: Scalars['String'];
+  pageConfigId: Scalars['ID'];
   viewAllPath: Scalars['String'];
   hideViewAll: Scalars['Boolean'];
-  curatedListId?: Maybe<Scalars['ID']>;
-  curatedList?: Maybe<CuratedList>;
-  category?: Maybe<Categories>;
-  priceRange?: Maybe<PageConfigPriceRange>;
-  cardsPerRow: Scalars['Int'];
-  count: Scalars['Int'];
-};
-
-export type PageConfigPriceRange = {
-   __typename?: 'PageConfigPriceRange';
-  lower?: Maybe<Scalars['Int']>;
-  upper?: Maybe<Scalars['Int']>;
+  promotedListId?: Maybe<Scalars['ID']>;
+  isNewestList?: Maybe<Scalars['Boolean']>;
+  title?: Maybe<Scalars['String']>;
+  position?: Maybe<Scalars['Int']>;
 };
 
 export type PageInfo = {
@@ -9950,6 +10591,765 @@ export type ProductVariantInput = {
   quantityAvailable?: Maybe<Scalars['Int']>;
 };
 
+/** columns and relationships of "promoted_list_items" */
+export type Promoted_List_Items = {
+   __typename?: 'promoted_list_items';
+  createdAt: Scalars['timestamptz'];
+  expiresAt?: Maybe<Scalars['timestamptz']>;
+  id: Scalars['String'];
+  isAvailableForPurchase: Scalars['Boolean'];
+  ownerId?: Maybe<Scalars['String']>;
+  position?: Maybe<Scalars['Int']>;
+  /** An object relationship */
+  product?: Maybe<Products>;
+  productId: Scalars['String'];
+  promotedListId: Scalars['String'];
+  reservePrice?: Maybe<Scalars['Int']>;
+};
+
+/** aggregated selection of "promoted_list_items" */
+export type Promoted_List_Items_Aggregate = {
+   __typename?: 'promoted_list_items_aggregate';
+  aggregate?: Maybe<Promoted_List_Items_Aggregate_Fields>;
+  nodes: Array<Promoted_List_Items>;
+};
+
+/** aggregate fields of "promoted_list_items" */
+export type Promoted_List_Items_Aggregate_Fields = {
+   __typename?: 'promoted_list_items_aggregate_fields';
+  avg?: Maybe<Promoted_List_Items_Avg_Fields>;
+  count?: Maybe<Scalars['Int']>;
+  max?: Maybe<Promoted_List_Items_Max_Fields>;
+  min?: Maybe<Promoted_List_Items_Min_Fields>;
+  stddev?: Maybe<Promoted_List_Items_Stddev_Fields>;
+  stddev_pop?: Maybe<Promoted_List_Items_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<Promoted_List_Items_Stddev_Samp_Fields>;
+  sum?: Maybe<Promoted_List_Items_Sum_Fields>;
+  var_pop?: Maybe<Promoted_List_Items_Var_Pop_Fields>;
+  var_samp?: Maybe<Promoted_List_Items_Var_Samp_Fields>;
+  variance?: Maybe<Promoted_List_Items_Variance_Fields>;
+};
+
+
+/** aggregate fields of "promoted_list_items" */
+export type Promoted_List_Items_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<Promoted_List_Items_Select_Column>>;
+  distinct?: Maybe<Scalars['Boolean']>;
+};
+
+/** order by aggregate values of table "promoted_list_items" */
+export type Promoted_List_Items_Aggregate_Order_By = {
+  avg?: Maybe<Promoted_List_Items_Avg_Order_By>;
+  count?: Maybe<Order_By>;
+  max?: Maybe<Promoted_List_Items_Max_Order_By>;
+  min?: Maybe<Promoted_List_Items_Min_Order_By>;
+  stddev?: Maybe<Promoted_List_Items_Stddev_Order_By>;
+  stddev_pop?: Maybe<Promoted_List_Items_Stddev_Pop_Order_By>;
+  stddev_samp?: Maybe<Promoted_List_Items_Stddev_Samp_Order_By>;
+  sum?: Maybe<Promoted_List_Items_Sum_Order_By>;
+  var_pop?: Maybe<Promoted_List_Items_Var_Pop_Order_By>;
+  var_samp?: Maybe<Promoted_List_Items_Var_Samp_Order_By>;
+  variance?: Maybe<Promoted_List_Items_Variance_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "promoted_list_items" */
+export type Promoted_List_Items_Arr_Rel_Insert_Input = {
+  data: Array<Promoted_List_Items_Insert_Input>;
+  on_conflict?: Maybe<Promoted_List_Items_On_Conflict>;
+};
+
+/** aggregate avg on columns */
+export type Promoted_List_Items_Avg_Fields = {
+   __typename?: 'promoted_list_items_avg_fields';
+  position?: Maybe<Scalars['Float']>;
+  reservePrice?: Maybe<Scalars['Float']>;
+};
+
+/** order by avg() on columns of table "promoted_list_items" */
+export type Promoted_List_Items_Avg_Order_By = {
+  position?: Maybe<Order_By>;
+  reservePrice?: Maybe<Order_By>;
+};
+
+/** Boolean expression to filter rows from the table "promoted_list_items". All fields are combined with a logical 'AND'. */
+export type Promoted_List_Items_Bool_Exp = {
+  _and?: Maybe<Array<Maybe<Promoted_List_Items_Bool_Exp>>>;
+  _not?: Maybe<Promoted_List_Items_Bool_Exp>;
+  _or?: Maybe<Array<Maybe<Promoted_List_Items_Bool_Exp>>>;
+  createdAt?: Maybe<Timestamptz_Comparison_Exp>;
+  expiresAt?: Maybe<Timestamptz_Comparison_Exp>;
+  id?: Maybe<String_Comparison_Exp>;
+  isAvailableForPurchase?: Maybe<Boolean_Comparison_Exp>;
+  ownerId?: Maybe<String_Comparison_Exp>;
+  position?: Maybe<Int_Comparison_Exp>;
+  product?: Maybe<Products_Bool_Exp>;
+  productId?: Maybe<String_Comparison_Exp>;
+  promotedListId?: Maybe<String_Comparison_Exp>;
+  reservePrice?: Maybe<Int_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "promoted_list_items" */
+export enum Promoted_List_Items_Constraint {
+  /** unique or primary key constraint */
+  PROMOTED_LIST_ITEMS_PKEY = 'promoted_list_items_pkey'
+}
+
+/** input type for incrementing integer column in table "promoted_list_items" */
+export type Promoted_List_Items_Inc_Input = {
+  position?: Maybe<Scalars['Int']>;
+  reservePrice?: Maybe<Scalars['Int']>;
+};
+
+/** input type for inserting data into table "promoted_list_items" */
+export type Promoted_List_Items_Insert_Input = {
+  createdAt?: Maybe<Scalars['timestamptz']>;
+  expiresAt?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['String']>;
+  isAvailableForPurchase?: Maybe<Scalars['Boolean']>;
+  ownerId?: Maybe<Scalars['String']>;
+  position?: Maybe<Scalars['Int']>;
+  product?: Maybe<Products_Obj_Rel_Insert_Input>;
+  productId?: Maybe<Scalars['String']>;
+  promotedListId?: Maybe<Scalars['String']>;
+  reservePrice?: Maybe<Scalars['Int']>;
+};
+
+/** aggregate max on columns */
+export type Promoted_List_Items_Max_Fields = {
+   __typename?: 'promoted_list_items_max_fields';
+  createdAt?: Maybe<Scalars['timestamptz']>;
+  expiresAt?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['String']>;
+  ownerId?: Maybe<Scalars['String']>;
+  position?: Maybe<Scalars['Int']>;
+  productId?: Maybe<Scalars['String']>;
+  promotedListId?: Maybe<Scalars['String']>;
+  reservePrice?: Maybe<Scalars['Int']>;
+};
+
+/** order by max() on columns of table "promoted_list_items" */
+export type Promoted_List_Items_Max_Order_By = {
+  createdAt?: Maybe<Order_By>;
+  expiresAt?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  ownerId?: Maybe<Order_By>;
+  position?: Maybe<Order_By>;
+  productId?: Maybe<Order_By>;
+  promotedListId?: Maybe<Order_By>;
+  reservePrice?: Maybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type Promoted_List_Items_Min_Fields = {
+   __typename?: 'promoted_list_items_min_fields';
+  createdAt?: Maybe<Scalars['timestamptz']>;
+  expiresAt?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['String']>;
+  ownerId?: Maybe<Scalars['String']>;
+  position?: Maybe<Scalars['Int']>;
+  productId?: Maybe<Scalars['String']>;
+  promotedListId?: Maybe<Scalars['String']>;
+  reservePrice?: Maybe<Scalars['Int']>;
+};
+
+/** order by min() on columns of table "promoted_list_items" */
+export type Promoted_List_Items_Min_Order_By = {
+  createdAt?: Maybe<Order_By>;
+  expiresAt?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  ownerId?: Maybe<Order_By>;
+  position?: Maybe<Order_By>;
+  productId?: Maybe<Order_By>;
+  promotedListId?: Maybe<Order_By>;
+  reservePrice?: Maybe<Order_By>;
+};
+
+/** response of any mutation on the table "promoted_list_items" */
+export type Promoted_List_Items_Mutation_Response = {
+   __typename?: 'promoted_list_items_mutation_response';
+  /** number of affected rows by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data of the affected rows by the mutation */
+  returning: Array<Promoted_List_Items>;
+};
+
+/** input type for inserting object relation for remote table "promoted_list_items" */
+export type Promoted_List_Items_Obj_Rel_Insert_Input = {
+  data: Promoted_List_Items_Insert_Input;
+  on_conflict?: Maybe<Promoted_List_Items_On_Conflict>;
+};
+
+/** on conflict condition type for table "promoted_list_items" */
+export type Promoted_List_Items_On_Conflict = {
+  constraint: Promoted_List_Items_Constraint;
+  update_columns: Array<Promoted_List_Items_Update_Column>;
+  where?: Maybe<Promoted_List_Items_Bool_Exp>;
+};
+
+/** ordering options when selecting data from "promoted_list_items" */
+export type Promoted_List_Items_Order_By = {
+  createdAt?: Maybe<Order_By>;
+  expiresAt?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  isAvailableForPurchase?: Maybe<Order_By>;
+  ownerId?: Maybe<Order_By>;
+  position?: Maybe<Order_By>;
+  product?: Maybe<Products_Order_By>;
+  productId?: Maybe<Order_By>;
+  promotedListId?: Maybe<Order_By>;
+  reservePrice?: Maybe<Order_By>;
+};
+
+/** primary key columns input for table: "promoted_list_items" */
+export type Promoted_List_Items_Pk_Columns_Input = {
+  id: Scalars['String'];
+};
+
+/** select columns of table "promoted_list_items" */
+export enum Promoted_List_Items_Select_Column {
+  /** column name */
+  CREATEDAT = 'createdAt',
+  /** column name */
+  EXPIRESAT = 'expiresAt',
+  /** column name */
+  ID = 'id',
+  /** column name */
+  ISAVAILABLEFORPURCHASE = 'isAvailableForPurchase',
+  /** column name */
+  OWNERID = 'ownerId',
+  /** column name */
+  POSITION = 'position',
+  /** column name */
+  PRODUCTID = 'productId',
+  /** column name */
+  PROMOTEDLISTID = 'promotedListId',
+  /** column name */
+  RESERVEPRICE = 'reservePrice'
+}
+
+/** input type for updating data in table "promoted_list_items" */
+export type Promoted_List_Items_Set_Input = {
+  createdAt?: Maybe<Scalars['timestamptz']>;
+  expiresAt?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['String']>;
+  isAvailableForPurchase?: Maybe<Scalars['Boolean']>;
+  ownerId?: Maybe<Scalars['String']>;
+  position?: Maybe<Scalars['Int']>;
+  productId?: Maybe<Scalars['String']>;
+  promotedListId?: Maybe<Scalars['String']>;
+  reservePrice?: Maybe<Scalars['Int']>;
+};
+
+/** aggregate stddev on columns */
+export type Promoted_List_Items_Stddev_Fields = {
+   __typename?: 'promoted_list_items_stddev_fields';
+  position?: Maybe<Scalars['Float']>;
+  reservePrice?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev() on columns of table "promoted_list_items" */
+export type Promoted_List_Items_Stddev_Order_By = {
+  position?: Maybe<Order_By>;
+  reservePrice?: Maybe<Order_By>;
+};
+
+/** aggregate stddev_pop on columns */
+export type Promoted_List_Items_Stddev_Pop_Fields = {
+   __typename?: 'promoted_list_items_stddev_pop_fields';
+  position?: Maybe<Scalars['Float']>;
+  reservePrice?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev_pop() on columns of table "promoted_list_items" */
+export type Promoted_List_Items_Stddev_Pop_Order_By = {
+  position?: Maybe<Order_By>;
+  reservePrice?: Maybe<Order_By>;
+};
+
+/** aggregate stddev_samp on columns */
+export type Promoted_List_Items_Stddev_Samp_Fields = {
+   __typename?: 'promoted_list_items_stddev_samp_fields';
+  position?: Maybe<Scalars['Float']>;
+  reservePrice?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev_samp() on columns of table "promoted_list_items" */
+export type Promoted_List_Items_Stddev_Samp_Order_By = {
+  position?: Maybe<Order_By>;
+  reservePrice?: Maybe<Order_By>;
+};
+
+/** aggregate sum on columns */
+export type Promoted_List_Items_Sum_Fields = {
+   __typename?: 'promoted_list_items_sum_fields';
+  position?: Maybe<Scalars['Int']>;
+  reservePrice?: Maybe<Scalars['Int']>;
+};
+
+/** order by sum() on columns of table "promoted_list_items" */
+export type Promoted_List_Items_Sum_Order_By = {
+  position?: Maybe<Order_By>;
+  reservePrice?: Maybe<Order_By>;
+};
+
+/** update columns of table "promoted_list_items" */
+export enum Promoted_List_Items_Update_Column {
+  /** column name */
+  CREATEDAT = 'createdAt',
+  /** column name */
+  EXPIRESAT = 'expiresAt',
+  /** column name */
+  ID = 'id',
+  /** column name */
+  ISAVAILABLEFORPURCHASE = 'isAvailableForPurchase',
+  /** column name */
+  OWNERID = 'ownerId',
+  /** column name */
+  POSITION = 'position',
+  /** column name */
+  PRODUCTID = 'productId',
+  /** column name */
+  PROMOTEDLISTID = 'promotedListId',
+  /** column name */
+  RESERVEPRICE = 'reservePrice'
+}
+
+/** aggregate var_pop on columns */
+export type Promoted_List_Items_Var_Pop_Fields = {
+   __typename?: 'promoted_list_items_var_pop_fields';
+  position?: Maybe<Scalars['Float']>;
+  reservePrice?: Maybe<Scalars['Float']>;
+};
+
+/** order by var_pop() on columns of table "promoted_list_items" */
+export type Promoted_List_Items_Var_Pop_Order_By = {
+  position?: Maybe<Order_By>;
+  reservePrice?: Maybe<Order_By>;
+};
+
+/** aggregate var_samp on columns */
+export type Promoted_List_Items_Var_Samp_Fields = {
+   __typename?: 'promoted_list_items_var_samp_fields';
+  position?: Maybe<Scalars['Float']>;
+  reservePrice?: Maybe<Scalars['Float']>;
+};
+
+/** order by var_samp() on columns of table "promoted_list_items" */
+export type Promoted_List_Items_Var_Samp_Order_By = {
+  position?: Maybe<Order_By>;
+  reservePrice?: Maybe<Order_By>;
+};
+
+/** aggregate variance on columns */
+export type Promoted_List_Items_Variance_Fields = {
+   __typename?: 'promoted_list_items_variance_fields';
+  position?: Maybe<Scalars['Float']>;
+  reservePrice?: Maybe<Scalars['Float']>;
+};
+
+/** order by variance() on columns of table "promoted_list_items" */
+export type Promoted_List_Items_Variance_Order_By = {
+  position?: Maybe<Order_By>;
+  reservePrice?: Maybe<Order_By>;
+};
+
+/** columns and relationships of "promoted_lists" */
+export type Promoted_Lists = {
+   __typename?: 'promoted_lists';
+  cardsPerRow?: Maybe<Scalars['Int']>;
+  categoryFilterSlug?: Maybe<Scalars['String']>;
+  createdAt: Scalars['timestamptz'];
+  id: Scalars['String'];
+  numberOfSlots: Scalars['Int'];
+  /** An array relationship */
+  promotedListItems: Array<Promoted_List_Items>;
+  /** An aggregated array relationship */
+  promotedListItems_aggregate: Promoted_List_Items_Aggregate;
+  updatedAt: Scalars['timestamptz'];
+};
+
+
+/** columns and relationships of "promoted_lists" */
+export type Promoted_ListsPromotedListItemsArgs = {
+  distinct_on?: Maybe<Array<Promoted_List_Items_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Promoted_List_Items_Order_By>>;
+  where?: Maybe<Promoted_List_Items_Bool_Exp>;
+};
+
+
+/** columns and relationships of "promoted_lists" */
+export type Promoted_ListsPromotedListItems_AggregateArgs = {
+  distinct_on?: Maybe<Array<Promoted_List_Items_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Promoted_List_Items_Order_By>>;
+  where?: Maybe<Promoted_List_Items_Bool_Exp>;
+};
+
+/** aggregated selection of "promoted_lists" */
+export type Promoted_Lists_Aggregate = {
+   __typename?: 'promoted_lists_aggregate';
+  aggregate?: Maybe<Promoted_Lists_Aggregate_Fields>;
+  nodes: Array<Promoted_Lists>;
+};
+
+/** aggregate fields of "promoted_lists" */
+export type Promoted_Lists_Aggregate_Fields = {
+   __typename?: 'promoted_lists_aggregate_fields';
+  avg?: Maybe<Promoted_Lists_Avg_Fields>;
+  count?: Maybe<Scalars['Int']>;
+  max?: Maybe<Promoted_Lists_Max_Fields>;
+  min?: Maybe<Promoted_Lists_Min_Fields>;
+  stddev?: Maybe<Promoted_Lists_Stddev_Fields>;
+  stddev_pop?: Maybe<Promoted_Lists_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<Promoted_Lists_Stddev_Samp_Fields>;
+  sum?: Maybe<Promoted_Lists_Sum_Fields>;
+  var_pop?: Maybe<Promoted_Lists_Var_Pop_Fields>;
+  var_samp?: Maybe<Promoted_Lists_Var_Samp_Fields>;
+  variance?: Maybe<Promoted_Lists_Variance_Fields>;
+};
+
+
+/** aggregate fields of "promoted_lists" */
+export type Promoted_Lists_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<Promoted_Lists_Select_Column>>;
+  distinct?: Maybe<Scalars['Boolean']>;
+};
+
+/** order by aggregate values of table "promoted_lists" */
+export type Promoted_Lists_Aggregate_Order_By = {
+  avg?: Maybe<Promoted_Lists_Avg_Order_By>;
+  count?: Maybe<Order_By>;
+  max?: Maybe<Promoted_Lists_Max_Order_By>;
+  min?: Maybe<Promoted_Lists_Min_Order_By>;
+  stddev?: Maybe<Promoted_Lists_Stddev_Order_By>;
+  stddev_pop?: Maybe<Promoted_Lists_Stddev_Pop_Order_By>;
+  stddev_samp?: Maybe<Promoted_Lists_Stddev_Samp_Order_By>;
+  sum?: Maybe<Promoted_Lists_Sum_Order_By>;
+  var_pop?: Maybe<Promoted_Lists_Var_Pop_Order_By>;
+  var_samp?: Maybe<Promoted_Lists_Var_Samp_Order_By>;
+  variance?: Maybe<Promoted_Lists_Variance_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "promoted_lists" */
+export type Promoted_Lists_Arr_Rel_Insert_Input = {
+  data: Array<Promoted_Lists_Insert_Input>;
+  on_conflict?: Maybe<Promoted_Lists_On_Conflict>;
+};
+
+/** aggregate avg on columns */
+export type Promoted_Lists_Avg_Fields = {
+   __typename?: 'promoted_lists_avg_fields';
+  cardsPerRow?: Maybe<Scalars['Float']>;
+  numberOfSlots?: Maybe<Scalars['Float']>;
+};
+
+/** order by avg() on columns of table "promoted_lists" */
+export type Promoted_Lists_Avg_Order_By = {
+  cardsPerRow?: Maybe<Order_By>;
+  numberOfSlots?: Maybe<Order_By>;
+};
+
+/** Boolean expression to filter rows from the table "promoted_lists". All fields are combined with a logical 'AND'. */
+export type Promoted_Lists_Bool_Exp = {
+  _and?: Maybe<Array<Maybe<Promoted_Lists_Bool_Exp>>>;
+  _not?: Maybe<Promoted_Lists_Bool_Exp>;
+  _or?: Maybe<Array<Maybe<Promoted_Lists_Bool_Exp>>>;
+  cardsPerRow?: Maybe<Int_Comparison_Exp>;
+  categoryFilterSlug?: Maybe<String_Comparison_Exp>;
+  createdAt?: Maybe<Timestamptz_Comparison_Exp>;
+  id?: Maybe<String_Comparison_Exp>;
+  numberOfSlots?: Maybe<Int_Comparison_Exp>;
+  promotedListItems?: Maybe<Promoted_List_Items_Bool_Exp>;
+  updatedAt?: Maybe<Timestamptz_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "promoted_lists" */
+export enum Promoted_Lists_Constraint {
+  /** unique or primary key constraint */
+  PROMOTED_LIST_PKEY = 'promoted_list_pkey'
+}
+
+/** input type for incrementing integer column in table "promoted_lists" */
+export type Promoted_Lists_Inc_Input = {
+  cardsPerRow?: Maybe<Scalars['Int']>;
+  numberOfSlots?: Maybe<Scalars['Int']>;
+};
+
+/** input type for inserting data into table "promoted_lists" */
+export type Promoted_Lists_Insert_Input = {
+  cardsPerRow?: Maybe<Scalars['Int']>;
+  categoryFilterSlug?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['String']>;
+  numberOfSlots?: Maybe<Scalars['Int']>;
+  promotedListItems?: Maybe<Promoted_List_Items_Arr_Rel_Insert_Input>;
+  updatedAt?: Maybe<Scalars['timestamptz']>;
+};
+
+/** aggregate max on columns */
+export type Promoted_Lists_Max_Fields = {
+   __typename?: 'promoted_lists_max_fields';
+  cardsPerRow?: Maybe<Scalars['Int']>;
+  categoryFilterSlug?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['String']>;
+  numberOfSlots?: Maybe<Scalars['Int']>;
+  updatedAt?: Maybe<Scalars['timestamptz']>;
+};
+
+/** order by max() on columns of table "promoted_lists" */
+export type Promoted_Lists_Max_Order_By = {
+  cardsPerRow?: Maybe<Order_By>;
+  categoryFilterSlug?: Maybe<Order_By>;
+  createdAt?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  numberOfSlots?: Maybe<Order_By>;
+  updatedAt?: Maybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type Promoted_Lists_Min_Fields = {
+   __typename?: 'promoted_lists_min_fields';
+  cardsPerRow?: Maybe<Scalars['Int']>;
+  categoryFilterSlug?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['String']>;
+  numberOfSlots?: Maybe<Scalars['Int']>;
+  updatedAt?: Maybe<Scalars['timestamptz']>;
+};
+
+/** order by min() on columns of table "promoted_lists" */
+export type Promoted_Lists_Min_Order_By = {
+  cardsPerRow?: Maybe<Order_By>;
+  categoryFilterSlug?: Maybe<Order_By>;
+  createdAt?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  numberOfSlots?: Maybe<Order_By>;
+  updatedAt?: Maybe<Order_By>;
+};
+
+/** response of any mutation on the table "promoted_lists" */
+export type Promoted_Lists_Mutation_Response = {
+   __typename?: 'promoted_lists_mutation_response';
+  /** number of affected rows by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data of the affected rows by the mutation */
+  returning: Array<Promoted_Lists>;
+};
+
+/** input type for inserting object relation for remote table "promoted_lists" */
+export type Promoted_Lists_Obj_Rel_Insert_Input = {
+  data: Promoted_Lists_Insert_Input;
+  on_conflict?: Maybe<Promoted_Lists_On_Conflict>;
+};
+
+/** on conflict condition type for table "promoted_lists" */
+export type Promoted_Lists_On_Conflict = {
+  constraint: Promoted_Lists_Constraint;
+  update_columns: Array<Promoted_Lists_Update_Column>;
+  where?: Maybe<Promoted_Lists_Bool_Exp>;
+};
+
+/** ordering options when selecting data from "promoted_lists" */
+export type Promoted_Lists_Order_By = {
+  cardsPerRow?: Maybe<Order_By>;
+  categoryFilterSlug?: Maybe<Order_By>;
+  createdAt?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  numberOfSlots?: Maybe<Order_By>;
+  promotedListItems_aggregate?: Maybe<Promoted_List_Items_Aggregate_Order_By>;
+  updatedAt?: Maybe<Order_By>;
+};
+
+/** primary key columns input for table: "promoted_lists" */
+export type Promoted_Lists_Pk_Columns_Input = {
+  id: Scalars['String'];
+};
+
+/** select columns of table "promoted_lists" */
+export enum Promoted_Lists_Select_Column {
+  /** column name */
+  CARDSPERROW = 'cardsPerRow',
+  /** column name */
+  CATEGORYFILTERSLUG = 'categoryFilterSlug',
+  /** column name */
+  CREATEDAT = 'createdAt',
+  /** column name */
+  ID = 'id',
+  /** column name */
+  NUMBEROFSLOTS = 'numberOfSlots',
+  /** column name */
+  UPDATEDAT = 'updatedAt'
+}
+
+/** input type for updating data in table "promoted_lists" */
+export type Promoted_Lists_Set_Input = {
+  cardsPerRow?: Maybe<Scalars['Int']>;
+  categoryFilterSlug?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['String']>;
+  numberOfSlots?: Maybe<Scalars['Int']>;
+  updatedAt?: Maybe<Scalars['timestamptz']>;
+};
+
+/** aggregate stddev on columns */
+export type Promoted_Lists_Stddev_Fields = {
+   __typename?: 'promoted_lists_stddev_fields';
+  cardsPerRow?: Maybe<Scalars['Float']>;
+  numberOfSlots?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev() on columns of table "promoted_lists" */
+export type Promoted_Lists_Stddev_Order_By = {
+  cardsPerRow?: Maybe<Order_By>;
+  numberOfSlots?: Maybe<Order_By>;
+};
+
+/** aggregate stddev_pop on columns */
+export type Promoted_Lists_Stddev_Pop_Fields = {
+   __typename?: 'promoted_lists_stddev_pop_fields';
+  cardsPerRow?: Maybe<Scalars['Float']>;
+  numberOfSlots?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev_pop() on columns of table "promoted_lists" */
+export type Promoted_Lists_Stddev_Pop_Order_By = {
+  cardsPerRow?: Maybe<Order_By>;
+  numberOfSlots?: Maybe<Order_By>;
+};
+
+/** aggregate stddev_samp on columns */
+export type Promoted_Lists_Stddev_Samp_Fields = {
+   __typename?: 'promoted_lists_stddev_samp_fields';
+  cardsPerRow?: Maybe<Scalars['Float']>;
+  numberOfSlots?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev_samp() on columns of table "promoted_lists" */
+export type Promoted_Lists_Stddev_Samp_Order_By = {
+  cardsPerRow?: Maybe<Order_By>;
+  numberOfSlots?: Maybe<Order_By>;
+};
+
+/** aggregate sum on columns */
+export type Promoted_Lists_Sum_Fields = {
+   __typename?: 'promoted_lists_sum_fields';
+  cardsPerRow?: Maybe<Scalars['Int']>;
+  numberOfSlots?: Maybe<Scalars['Int']>;
+};
+
+/** order by sum() on columns of table "promoted_lists" */
+export type Promoted_Lists_Sum_Order_By = {
+  cardsPerRow?: Maybe<Order_By>;
+  numberOfSlots?: Maybe<Order_By>;
+};
+
+/** update columns of table "promoted_lists" */
+export enum Promoted_Lists_Update_Column {
+  /** column name */
+  CARDSPERROW = 'cardsPerRow',
+  /** column name */
+  CATEGORYFILTERSLUG = 'categoryFilterSlug',
+  /** column name */
+  CREATEDAT = 'createdAt',
+  /** column name */
+  ID = 'id',
+  /** column name */
+  NUMBEROFSLOTS = 'numberOfSlots',
+  /** column name */
+  UPDATEDAT = 'updatedAt'
+}
+
+/** aggregate var_pop on columns */
+export type Promoted_Lists_Var_Pop_Fields = {
+   __typename?: 'promoted_lists_var_pop_fields';
+  cardsPerRow?: Maybe<Scalars['Float']>;
+  numberOfSlots?: Maybe<Scalars['Float']>;
+};
+
+/** order by var_pop() on columns of table "promoted_lists" */
+export type Promoted_Lists_Var_Pop_Order_By = {
+  cardsPerRow?: Maybe<Order_By>;
+  numberOfSlots?: Maybe<Order_By>;
+};
+
+/** aggregate var_samp on columns */
+export type Promoted_Lists_Var_Samp_Fields = {
+   __typename?: 'promoted_lists_var_samp_fields';
+  cardsPerRow?: Maybe<Scalars['Float']>;
+  numberOfSlots?: Maybe<Scalars['Float']>;
+};
+
+/** order by var_samp() on columns of table "promoted_lists" */
+export type Promoted_Lists_Var_Samp_Order_By = {
+  cardsPerRow?: Maybe<Order_By>;
+  numberOfSlots?: Maybe<Order_By>;
+};
+
+/** aggregate variance on columns */
+export type Promoted_Lists_Variance_Fields = {
+   __typename?: 'promoted_lists_variance_fields';
+  cardsPerRow?: Maybe<Scalars['Float']>;
+  numberOfSlots?: Maybe<Scalars['Float']>;
+};
+
+/** order by variance() on columns of table "promoted_lists" */
+export type Promoted_Lists_Variance_Order_By = {
+  cardsPerRow?: Maybe<Order_By>;
+  numberOfSlots?: Maybe<Order_By>;
+};
+
+export type PromotedList = {
+   __typename?: 'PromotedList';
+  id: Scalars['ID'];
+  createdAt: Scalars['Date'];
+  updatedAt?: Maybe<Scalars['Date']>;
+  numberOfSlots?: Maybe<Scalars['Int']>;
+  categoryFilterSlug?: Maybe<Scalars['String']>;
+  /** promotedListItems: [PromotedListItem] */
+  promotedListItemsConnection?: Maybe<PromotedListItemsConnection>;
+  cardsPerRow?: Maybe<Scalars['Int']>;
+};
+
+export type PromotedListItem = {
+   __typename?: 'PromotedListItem';
+  id: Scalars['ID'];
+  createdAt: Scalars['Date'];
+  promotedListId: Scalars['ID'];
+  productId: Scalars['ID'];
+  product?: Maybe<Product>;
+  ownerId?: Maybe<Scalars['ID']>;
+  reservePrice?: Maybe<Scalars['Int']>;
+  isAvailableForPurchase: Scalars['Boolean'];
+  expiresAt?: Maybe<Scalars['Date']>;
+  position?: Maybe<Scalars['Int']>;
+};
+
+export type PromotedListItemMutationResponse = {
+   __typename?: 'PromotedListItemMutationResponse';
+  promotedListItem: PromotedListItem;
+};
+
+export type PromotedListItemsConnection = {
+   __typename?: 'PromotedListItemsConnection';
+  totalCount?: Maybe<Scalars['Int']>;
+  pageInfo: PageInfo;
+  edges: Array<PromotedListItemsEdge>;
+};
+
+export type PromotedListItemsEdge = {
+   __typename?: 'PromotedListItemsEdge';
+  node: PromotedListItem;
+};
+
+export type PromotedListMutationResponse = {
+   __typename?: 'PromotedListMutationResponse';
+  promotedList: PromotedList;
+};
+
 export type Query = {
    __typename?: 'Query';
   /** fetch data from the table: "bids" */
@@ -10040,6 +11440,18 @@ export type Query = {
   orders_aggregate: Orders_Aggregate;
   /** fetch data from the table: "orders" using primary key columns */
   orders_by_pk?: Maybe<Orders>;
+  /** fetch data from the table: "page_config_sections" */
+  page_config_sections: Array<Page_Config_Sections>;
+  /** fetch aggregated fields from the table: "page_config_sections" */
+  page_config_sections_aggregate: Page_Config_Sections_Aggregate;
+  /** fetch data from the table: "page_config_sections" using primary key columns */
+  page_config_sections_by_pk?: Maybe<Page_Config_Sections>;
+  /** fetch data from the table: "page_configs" */
+  page_configs: Array<Page_Configs>;
+  /** fetch aggregated fields from the table: "page_configs" */
+  page_configs_aggregate: Page_Configs_Aggregate;
+  /** fetch data from the table: "page_configs" using primary key columns */
+  page_configs_by_pk?: Maybe<Page_Configs>;
   /** fetch data from the table: "payment_methods" */
   payment_methods: Array<Payment_Methods>;
   /** fetch aggregated fields from the table: "payment_methods" */
@@ -10100,6 +11512,18 @@ export type Query = {
   products_aggregate: Products_Aggregate;
   /** fetch data from the table: "products" using primary key columns */
   products_by_pk?: Maybe<Products>;
+  /** fetch data from the table: "promoted_list_items" */
+  promoted_list_items: Array<Promoted_List_Items>;
+  /** fetch aggregated fields from the table: "promoted_list_items" */
+  promoted_list_items_aggregate: Promoted_List_Items_Aggregate;
+  /** fetch data from the table: "promoted_list_items" using primary key columns */
+  promoted_list_items_by_pk?: Maybe<Promoted_List_Items>;
+  /** fetch data from the table: "promoted_lists" */
+  promoted_lists: Array<Promoted_Lists>;
+  /** fetch aggregated fields from the table: "promoted_lists" */
+  promoted_lists_aggregate: Promoted_Lists_Aggregate;
+  /** fetch data from the table: "promoted_lists" using primary key columns */
+  promoted_lists_by_pk?: Maybe<Promoted_Lists>;
   /** fetch data from the table: "refunds" */
   refunds: Array<Refunds>;
   /** fetch aggregated fields from the table: "refunds" */
@@ -10289,64 +11713,39 @@ export type Query = {
   getOrdersArrivingConnectionDealer: OrdersConnection;
   /**
    * get a store's payout split
-   * 
    * AccessRule – OWNER
    */
   getPayoutSplitByStoreId: PayoutSplit;
   /**
    * List transactions between startDate and endDate.
-   * 
    * AccessRule – PLATFORM_ADMIN
    */
   getTransactionsInPeriodAdmin: TransactionsConnection;
   /**
    * Get recent transactions, a helper function for Admin dashboard
-   * to test refunds
-   * 
    * AccessRule – PLATFORM_ADMIN
    */
   getRecentTransactions: Array<Transactions>;
   /**
    * Collection of products the user has saved for maybe purchasing later.
-   * 
    * AccessRule – LOGGED_IN
    */
   wishlistItemsConnection: WishlistItemsConnection;
   /**
-   * Collection of curated lists.
-   * 
-   * AccessRule – PLATFORM_ADMIN
-   */
-  listOfCuratedListsConnection: CuratedListsConnection;
-  /**
-   * Get a curated list by its ID.
+   * Get a promoted list by its ID.
+   * returns promotedList.promotedListItemsConnection
    * 
    * AccessRule – PUBLIC
    */
-  curatedList?: Maybe<CuratedList>;
-  /**
-   * Collection of items that make up a curated list.
-   * 
-   * AccessRule – PUBLIC
-   */
-  curatedListItemsConnection?: Maybe<CuratedListItemsConnection>;
-  /**
-   * Collection of items that make up a curated list.
-   * 
-   * This is the admin connection, which will show items that may otherwise be hidden due to published status etc.
-   * 
-   * AccessRule – PLATFORM_ADMIN
-   */
-  curatedListItemsAdminConnection?: Maybe<CuratedListItemsConnection>;
+  promotedList?: Maybe<PromotedList>;
+  getPageConfig?: Maybe<PageConfig>;
   /**
    * Get the product by productId
-   * 
    * AccessRule – PUBLIC
    */
   getProductById?: Maybe<Product>;
   /**
    * Get the store by storeIdOrSlug
-   * 
    * AccessRule – PUBLIC
    */
   getStoreById?: Maybe<Store>;
@@ -10708,6 +12107,52 @@ export type QueryOrders_By_PkArgs = {
 };
 
 
+export type QueryPage_Config_SectionsArgs = {
+  distinct_on?: Maybe<Array<Page_Config_Sections_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Page_Config_Sections_Order_By>>;
+  where?: Maybe<Page_Config_Sections_Bool_Exp>;
+};
+
+
+export type QueryPage_Config_Sections_AggregateArgs = {
+  distinct_on?: Maybe<Array<Page_Config_Sections_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Page_Config_Sections_Order_By>>;
+  where?: Maybe<Page_Config_Sections_Bool_Exp>;
+};
+
+
+export type QueryPage_Config_Sections_By_PkArgs = {
+  id: Scalars['String'];
+};
+
+
+export type QueryPage_ConfigsArgs = {
+  distinct_on?: Maybe<Array<Page_Configs_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Page_Configs_Order_By>>;
+  where?: Maybe<Page_Configs_Bool_Exp>;
+};
+
+
+export type QueryPage_Configs_AggregateArgs = {
+  distinct_on?: Maybe<Array<Page_Configs_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Page_Configs_Order_By>>;
+  where?: Maybe<Page_Configs_Bool_Exp>;
+};
+
+
+export type QueryPage_Configs_By_PkArgs = {
+  id: Scalars['String'];
+};
+
+
 export type QueryPayment_MethodsArgs = {
   distinct_on?: Maybe<Array<Payment_Methods_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -10934,6 +12379,52 @@ export type QueryProducts_AggregateArgs = {
 
 
 export type QueryProducts_By_PkArgs = {
+  id: Scalars['String'];
+};
+
+
+export type QueryPromoted_List_ItemsArgs = {
+  distinct_on?: Maybe<Array<Promoted_List_Items_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Promoted_List_Items_Order_By>>;
+  where?: Maybe<Promoted_List_Items_Bool_Exp>;
+};
+
+
+export type QueryPromoted_List_Items_AggregateArgs = {
+  distinct_on?: Maybe<Array<Promoted_List_Items_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Promoted_List_Items_Order_By>>;
+  where?: Maybe<Promoted_List_Items_Bool_Exp>;
+};
+
+
+export type QueryPromoted_List_Items_By_PkArgs = {
+  id: Scalars['String'];
+};
+
+
+export type QueryPromoted_ListsArgs = {
+  distinct_on?: Maybe<Array<Promoted_Lists_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Promoted_Lists_Order_By>>;
+  where?: Maybe<Promoted_Lists_Bool_Exp>;
+};
+
+
+export type QueryPromoted_Lists_AggregateArgs = {
+  distinct_on?: Maybe<Array<Promoted_Lists_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Promoted_Lists_Order_By>>;
+  where?: Maybe<Promoted_Lists_Bool_Exp>;
+};
+
+
+export type QueryPromoted_Lists_By_PkArgs = {
   id: Scalars['String'];
 };
 
@@ -11239,25 +12730,15 @@ export type QueryWishlistItemsConnectionArgs = {
 };
 
 
-export type QueryListOfCuratedListsConnectionArgs = {
-  query?: Maybe<ConnectionQuery>;
+export type QueryPromotedListArgs = {
+  promotedListId: Scalars['String'];
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
 };
 
 
-export type QueryCuratedListArgs = {
-  listId: Scalars['String'];
-};
-
-
-export type QueryCuratedListItemsConnectionArgs = {
-  listId: Scalars['String'];
-  query?: Maybe<ConnectionQuery>;
-};
-
-
-export type QueryCuratedListItemsAdminConnectionArgs = {
-  listId: Scalars['String'];
-  query?: Maybe<ConnectionQuery>;
+export type QueryGetPageConfigArgs = {
+  urlPath: Scalars['String'];
 };
 
 
@@ -12057,6 +13538,18 @@ export type Subscription = {
   orders_aggregate: Orders_Aggregate;
   /** fetch data from the table: "orders" using primary key columns */
   orders_by_pk?: Maybe<Orders>;
+  /** fetch data from the table: "page_config_sections" */
+  page_config_sections: Array<Page_Config_Sections>;
+  /** fetch aggregated fields from the table: "page_config_sections" */
+  page_config_sections_aggregate: Page_Config_Sections_Aggregate;
+  /** fetch data from the table: "page_config_sections" using primary key columns */
+  page_config_sections_by_pk?: Maybe<Page_Config_Sections>;
+  /** fetch data from the table: "page_configs" */
+  page_configs: Array<Page_Configs>;
+  /** fetch aggregated fields from the table: "page_configs" */
+  page_configs_aggregate: Page_Configs_Aggregate;
+  /** fetch data from the table: "page_configs" using primary key columns */
+  page_configs_by_pk?: Maybe<Page_Configs>;
   /** fetch data from the table: "payment_methods" */
   payment_methods: Array<Payment_Methods>;
   /** fetch aggregated fields from the table: "payment_methods" */
@@ -12117,6 +13610,18 @@ export type Subscription = {
   products_aggregate: Products_Aggregate;
   /** fetch data from the table: "products" using primary key columns */
   products_by_pk?: Maybe<Products>;
+  /** fetch data from the table: "promoted_list_items" */
+  promoted_list_items: Array<Promoted_List_Items>;
+  /** fetch aggregated fields from the table: "promoted_list_items" */
+  promoted_list_items_aggregate: Promoted_List_Items_Aggregate;
+  /** fetch data from the table: "promoted_list_items" using primary key columns */
+  promoted_list_items_by_pk?: Maybe<Promoted_List_Items>;
+  /** fetch data from the table: "promoted_lists" */
+  promoted_lists: Array<Promoted_Lists>;
+  /** fetch aggregated fields from the table: "promoted_lists" */
+  promoted_lists_aggregate: Promoted_Lists_Aggregate;
+  /** fetch data from the table: "promoted_lists" using primary key columns */
+  promoted_lists_by_pk?: Maybe<Promoted_Lists>;
   /** fetch data from the table: "refunds" */
   refunds: Array<Refunds>;
   /** fetch aggregated fields from the table: "refunds" */
@@ -12505,6 +14010,52 @@ export type SubscriptionOrders_By_PkArgs = {
 };
 
 
+export type SubscriptionPage_Config_SectionsArgs = {
+  distinct_on?: Maybe<Array<Page_Config_Sections_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Page_Config_Sections_Order_By>>;
+  where?: Maybe<Page_Config_Sections_Bool_Exp>;
+};
+
+
+export type SubscriptionPage_Config_Sections_AggregateArgs = {
+  distinct_on?: Maybe<Array<Page_Config_Sections_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Page_Config_Sections_Order_By>>;
+  where?: Maybe<Page_Config_Sections_Bool_Exp>;
+};
+
+
+export type SubscriptionPage_Config_Sections_By_PkArgs = {
+  id: Scalars['String'];
+};
+
+
+export type SubscriptionPage_ConfigsArgs = {
+  distinct_on?: Maybe<Array<Page_Configs_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Page_Configs_Order_By>>;
+  where?: Maybe<Page_Configs_Bool_Exp>;
+};
+
+
+export type SubscriptionPage_Configs_AggregateArgs = {
+  distinct_on?: Maybe<Array<Page_Configs_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Page_Configs_Order_By>>;
+  where?: Maybe<Page_Configs_Bool_Exp>;
+};
+
+
+export type SubscriptionPage_Configs_By_PkArgs = {
+  id: Scalars['String'];
+};
+
+
 export type SubscriptionPayment_MethodsArgs = {
   distinct_on?: Maybe<Array<Payment_Methods_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -12731,6 +14282,52 @@ export type SubscriptionProducts_AggregateArgs = {
 
 
 export type SubscriptionProducts_By_PkArgs = {
+  id: Scalars['String'];
+};
+
+
+export type SubscriptionPromoted_List_ItemsArgs = {
+  distinct_on?: Maybe<Array<Promoted_List_Items_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Promoted_List_Items_Order_By>>;
+  where?: Maybe<Promoted_List_Items_Bool_Exp>;
+};
+
+
+export type SubscriptionPromoted_List_Items_AggregateArgs = {
+  distinct_on?: Maybe<Array<Promoted_List_Items_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Promoted_List_Items_Order_By>>;
+  where?: Maybe<Promoted_List_Items_Bool_Exp>;
+};
+
+
+export type SubscriptionPromoted_List_Items_By_PkArgs = {
+  id: Scalars['String'];
+};
+
+
+export type SubscriptionPromoted_ListsArgs = {
+  distinct_on?: Maybe<Array<Promoted_Lists_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Promoted_Lists_Order_By>>;
+  where?: Maybe<Promoted_Lists_Bool_Exp>;
+};
+
+
+export type SubscriptionPromoted_Lists_AggregateArgs = {
+  distinct_on?: Maybe<Array<Promoted_Lists_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Promoted_Lists_Order_By>>;
+  where?: Maybe<Promoted_Lists_Bool_Exp>;
+};
+
+
+export type SubscriptionPromoted_Lists_By_PkArgs = {
   id: Scalars['String'];
 };
 
@@ -13806,6 +15403,8 @@ export type Users_Bool_Exp = {
 
 /** unique or primary key constraints on table "users" */
 export enum Users_Constraint {
+  /** unique or primary key constraint */
+  USERS_DEALER_ID_KEY = 'users_dealer_id_key',
   /** unique or primary key constraint */
   USERS_EMAIL_KEY = 'users_email_key',
   /** unique or primary key constraint */

@@ -9,7 +9,7 @@ import Typography from "@material-ui/core/Typography";
 // Typings
 import {
   Product,
-  ProductsConnection,
+  PromotedListItemsConnection,
 } from "typings/gqlTypes";
 // Paginator hooks
 import { ConnectionQueryProps } from "components/Paginators/usePaginatePagedQueryHook";
@@ -34,7 +34,7 @@ const FeaturedProductsMobile = (props: ReactProps) => {
 
   const {
     classes,
-    productsConnection,
+    connection,
     cardsPerRow = {
       xs: 1.5,
       sm: 1.5,
@@ -44,10 +44,10 @@ const FeaturedProductsMobile = (props: ReactProps) => {
     },
   } = props;
 
-  const connection = option(props).productsConnection();
 
-  const products = option(connection).edges([])
-      .map(curatedItem => curatedItem.node)
+  const products = connection?.edges?.map(
+    promotedItem => promotedItem.node.product
+  )
 
   return (
     <main className={classes.root}>
@@ -63,12 +63,12 @@ const FeaturedProductsMobile = (props: ReactProps) => {
         scrollSnapType={"x proximity"}
       >
         {
-          products.map((product, i) =>
+          products?.map((product, i) =>
             <div key={i} style={{
               marginLeft: '0.5rem',
             }}>
               <ProductCardResponsive
-                product={product as Product}
+                product={product}
                 cardsPerRow={cardsPerRow}
               />
             </div>
@@ -85,7 +85,7 @@ const FeaturedProductsMobile = (props: ReactProps) => {
 
 interface ReactProps extends WithStyles<typeof styles> {
   title?: string;
-  productsConnection: ProductsConnection;
+  connection: PromotedListItemsConnection;
   cardsPerRow?: {
     xs?: number;
     sm?: number;

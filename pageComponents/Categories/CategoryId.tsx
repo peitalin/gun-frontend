@@ -104,7 +104,9 @@ const CategoryId: React.FC<ReactProps> = (props) => {
     (router?.query?.q as any)
   )
   const [categorySlugsForGql, setCategorySlugsForGql] = React.useState(
-    [props.initialRouteCategory?.slug]
+    props.initialRouteCategory?.slug
+      ? [props.initialRouteCategory?.slug]
+      : []
   )
   const [rowMode, setRowMode] = React.useState(false)
 
@@ -165,14 +167,18 @@ const CategoryId: React.FC<ReactProps> = (props) => {
     if (event.key === "Enter") {
       setPageParam(1) // reset to page 1 every time you hit search button
       setSearchTermForGql(searchTerm)
-      setCategorySlugsForGql(currentCategories.map(c => c.slug))
+      setCategorySlugsForGql(
+        currentCategories.map(c => c.slug)
+      )
     }
   }
 
   const onClickSearch = (event) => {
     setPageParam(1) // reset to page 1 every time you hit search button
     setSearchTermForGql(searchTerm)
-    setCategorySlugsForGql(currentCategories.map(c => c.slug))
+    setCategorySlugsForGql(
+      currentCategories.map(c => c.slug)
+    )
   }
 
 

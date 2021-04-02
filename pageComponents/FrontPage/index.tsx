@@ -2,17 +2,17 @@ import React from "react";
 // Styles
 import clsx from "clsx";
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
+import { Colors, Gradients } from "layout/AppTheme";
 // Typings
-import { ProductsConnection, ConnectionQuery, Categories } from "typings/gqlTypes";
+import { ProductsConnection, ConnectionQuery, Categories, PageConfig } from "typings/gqlTypes";
+
 // Components
 import dynamic from "next/dynamic";
 import NewReleaseProducts from "pageComponents/FrontPage/NewReleaseProducts";
 import FeaturedProducts from "pageComponents/FrontPage/FeaturedProducts";
-import Loading from "components/Loading";
-// import ProductCreatePage from "./ProductCreatePage";
+import CategoryProducts from "pageComponents/FrontPage/CategoryProducts";
 import BannerHome from "pageComponents/FrontPage/BannerHome";
-// Router
-import { Colors, Gradients } from "layout/AppTheme";
+
 // GraphQL
 import { useQuery, useApolloClient } from "@apollo/client";
 import CategoryCarouselStart from "components/CategoryCarouselStart";
@@ -31,6 +31,7 @@ const FrontPage: React.FC<ReactProps> = (props) => {
 
   const {
     classes,
+    pageConfig,
     initialFeaturedProducts,
   } = props;
 
@@ -40,6 +41,8 @@ const FrontPage: React.FC<ReactProps> = (props) => {
   // const lgDown = useMediaQuery(theme.breakpoints.down('lg'));
   // const mdDown = useMediaQuery(theme.breakpoints.down('md'));
   // const smDown = useMediaQuery(theme.breakpoints.down('sm'));
+
+  console.log("pageConfig => ", pageConfig)
 
   return (
     <div className={classes.frontPageRoot}>
@@ -58,48 +61,49 @@ const FrontPage: React.FC<ReactProps> = (props) => {
           />
         </div>
 
-        <FeaturedProducts
-          title={"Featured Products"}
-          initialFeaturedProducts={initialFeaturedProducts}
-          count={24}
-          cardsPerRow={{
-            xs: 1.5,
-            sm: 1.5,
-            md: 2,
-            lg: 3,
-            xl: 4,
-          }}
-        />
+        {
+          pageConfig?.pageConfigSections?.map(section => {
 
-        {/* <NewReleaseProducts
-          initialProducts={undefined}
-          count={12}
-          title={"New Releases"}
-        /> */}
+            if (section?.promotedListId) {
+              return (
+                <FeaturedProducts
+                  key={section?.id}
+                  title={section?.title}
+                  promotedListId={section.promotedListId}
+                  cardsPerRow={{
+                    xs: 1.5,
+                    sm: 1.5,
+                    md: 2,
+                    lg: 3,
+                    xl: 4,
+                  }}
+                />
+              )
+            }
 
-        {/* <FeaturedProducts
-          initialFeaturedProducts={initialFeaturedProducts}
-          count={4}
-          offset={2} // for demo purposes
-          cardsPerRow={{
-            xs: 1.5,
-            sm: 1.5,
-            md: 2,
-            lg: 3,
-            xl: 4,
-          }}
-        /> */}
+            if (section?.isNewestList) {
+              console.log("is New: ", section)
+              return (
+                <NewReleaseProducts
+                  key={section?.id}
+                  initialProducts={undefined}
+                  title={section?.title}
+                />
+              )
+            }
+          })
+        }
 
       </AlignCenterLayout>
-
     </div>
   )
 }
 
 
 interface ReactProps extends WithStyles<typeof styles> {
+  pageConfig: PageConfig;
+  initialCategories: Categories[];
   initialFeaturedProducts?: ProductsConnection;
-  initialCategories?: Categories[];
 }
 
 

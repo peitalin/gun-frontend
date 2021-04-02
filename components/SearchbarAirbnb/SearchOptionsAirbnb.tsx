@@ -49,7 +49,6 @@ const SearchOptionsAirbnb: React.FC<ReactProps> = (props) => {
 
   const {
     classes,
-    currentCategories,
     facets,
     searchTerm,
     setSearchTerm,
@@ -285,12 +284,12 @@ const SearchOptionsAirbnb: React.FC<ReactProps> = (props) => {
                   setCategoryFocused(b)
                 }}
                 dropDownItems={
-                  props.syncUrlToCategory
+                  syncUrlToCategory
                   ? [ ...(categories ?? []) ]
                   : [
                       {
                         id: undefined,
-                        slug: undefined,
+                        slug: 'all',
                         name: "All Categories",
                       },
                       ...(categories ?? []),

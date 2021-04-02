@@ -87,6 +87,7 @@ const NewReleaseProducts = (props: ReactProps) => {
     ssr: true,
   })
 
+  console.log("NewRElease", data)
 
   let products = data?.productsAllConnection
 

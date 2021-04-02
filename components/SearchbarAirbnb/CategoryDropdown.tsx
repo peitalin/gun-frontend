@@ -56,8 +56,10 @@ const CategoryDropdown: React.FC<ReactProps> = (props) => {
     props.setFocused(false)
   };
 
-  // console.log("dropDownItems: ", dropDownItems)
   let selectedCategory = props.currentCategories?.[0]
+  // console.log("dropDownItems: ", dropDownItems)
+  // console.log("currentCategories: ", props.currentCategories)
+  // console.log('selectedCategory: ', selectedCategory)
 
   return (
     <ClickAwayListener onClickAway={handleClickAway}>
@@ -70,7 +72,7 @@ const CategoryDropdown: React.FC<ReactProps> = (props) => {
 
         <div className={classes.categoryTitleText}>
           <span className={classes.iconText}>
-            {selectedCategory?.name || "Select Category"}
+            { selectedCategory?.name || "Select Category" }
           </span>
           <KeyboardArrowDown className={classes.dropdownArrow}/>
         </div>
@@ -102,12 +104,13 @@ const CategoryDropdown: React.FC<ReactProps> = (props) => {
                             }}
                             variant="outlined"
                             onClick={() => {
-                              if (category.slug) {
-                                props.setCurrentCategories([category as any])
-                              } else {
-                                // all-categories, empty category filters
-                                props.setCurrentCategories([])
-                              }
+                              console.log("setting: ", category)
+                              props.setCurrentCategories([category as any])
+                              // if (category.slug) {
+                              // } else {
+                              //   // all-categories, empty category filters
+                              //   props.setCurrentCategories([])
+                              // }
                             }}
                           >
                             {category.name}
@@ -139,15 +142,13 @@ const CategoryDropdown: React.FC<ReactProps> = (props) => {
                         }}
                       >
                         {category.name}
-                          </Button>
+                      </Button>
                     )
                   })
               }
-          </div>
+            </div>
           </div>
         }
-
-
       </div>
     </ClickAwayListener>
   );

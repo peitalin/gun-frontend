@@ -16,22 +16,11 @@ import GridPreviewCardLight from "components/GridPreviewCardLight";
 import {
   Product,
   Order_By,
-  ProductsConnection,
+  PromotedListItemsConnection,
 } from "typings/gqlTypes";
-// Paginator hooks
-import usePaginateQueryHook from "components/Paginators/usePaginateQueryHook";
-import Or from "components/Or";
-import { useScrollYPosition } from "utils/hooks";
-
-import { WishlistItemId } from "reduxStore/wishlist-reducer";
 // useMediaQuery
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
-
-import { useDebouncedCallback } from 'use-debounce';
-import { useQuery, useApolloClient } from "@apollo/client";
-import { GET_ALL_PRODUCTS } from "queries/gun-queries";
-// import { GET_CURATED_LIST } from "queries/curated-lists";
 
 
 
@@ -40,7 +29,7 @@ const FeaturedProductsDesktop = (props: ReactProps) => {
 
   const {
     classes,
-    productsConnection,
+    connection,
     cardsPerRow = {
       xs: 1,
       sm: 1,
@@ -50,13 +39,14 @@ const FeaturedProductsDesktop = (props: ReactProps) => {
     },
   } = props;
 
-  const [loadCarouselPics, setLoadCarouselPics] = React.useState({});
-
   const theme = useTheme();
   // jumboXL preview card on sm screen size only, remove right margin
   const smDown = useMediaQuery(theme.breakpoints.down("sm"))
   const xsDown = useMediaQuery(theme.breakpoints.down("xs"))
 
+  const products = connection?.edges?.map(
+    promotedItem => promotedItem.node.product
+  )
 
   return (
     <main className={classes.root}>
@@ -72,8 +62,8 @@ const FeaturedProductsDesktop = (props: ReactProps) => {
 
       <div className={classes.carouselContainer}>
         {
-          ((props?.productsConnection?.edges ?? []).length > 0)
-          ? props.productsConnection.edges.map(({ node: product }, i) =>
+          products?.length > 0
+          ? products?.map((product, i) =>
               <div key={product.id + `_${i}`}
                 className={xsDown ? classes.productCardWrapperXs : classes.productCardWrapper}
               >
@@ -83,17 +73,9 @@ const FeaturedProductsDesktop = (props: ReactProps) => {
                   classes.flexItemHover,
                 )}>
                   <ProductCardResponsive
-                    product={product as Product}
+                    product={product}
                     cardsPerRow={cardsPerRow}
                   />
-                  {/* <PreviewCardResponsive
-                    product={product as Product}
-                    cardsPerRow={cardsPerRow}
-                    listName={"featured-list"}
-                    loadCarouselPics={loadCarouselPics}
-                    setLoadCarouselPics={setLoadCarouselPics}
-                    productIndex={i}
-                  /> */}
                 </div>
               </div>
             )
@@ -116,7 +98,7 @@ interface ReactProps extends WithStyles<typeof styles> {
     lg?: number;
     xl?: number;
   };
-  productsConnection: ProductsConnection;
+  connection: PromotedListItemsConnection;
   // sortAscending: boolean; // must be top-level
   // cause Desktop and Mobile share the same queries. Possible clash in variables
   // don't want Desktop's sortAscend: true, while Mobile is false,

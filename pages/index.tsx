@@ -1,21 +1,16 @@
 import React from "react";
-import { oc as option } from "ts-optchain";
 // styles
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
 // GQL
-import { GET_PRODUCT_CATEGORIES } from "queries/categories-queries";
+import { GET_PAGE_CONFIG_BY_PATH } from "queries/page_configs-queries";
 // Typings
-import { Categories } from "typings/gqlTypes";
+import { PageConfig, Categories } from "typings/gqlTypes";
 // SSR
 import { NextPage, NextPageContext } from 'next';
 import dynamic from "next/dynamic";
 // GraphQL
 import { serverApolloClient } from "utils/apollo";
 import FrontPage from "pageComponents/FrontPage";
-// Redux
-import { useSelector } from 'react-redux';
-import { GrandReduxState } from 'reduxStore/grand-reducer';
-import { UserPrivate } from "typings/gqlTypes";
 import { useApolloClient, ApolloClient } from "@apollo/client";
 import { categoryPreviewsBackup } from "components/CategoryCarouselStart/utils";
 
@@ -23,7 +18,10 @@ import { categoryPreviewsBackup } from "components/CategoryCarouselStart/utils";
 
 const HomePage: NextPage<ReactProps> = (props) => {
   return (
-    <FrontPage initialCategories={props.initialCategories}/>
+    <FrontPage
+      pageConfig={props.pageConfig}
+      initialCategories={props.initialCategories}
+    />
   )
 }
 
@@ -35,12 +33,13 @@ const styles = (theme: Theme) => createStyles({
 ///////////////// TYPINGS ///////////////////
 interface ReactProps extends WithStyles<typeof styles> {
   initialCategories: Categories[];
+  pageConfig: PageConfig;
 }
 interface QueryData1 {
-  getProductCategories: Categories[];
+  getPageConfig: PageConfig;
 }
 interface QueryVar1 {
-  slug?: string;
+  urlPath: string;
 }
 
 ////////// SSR ///////////
@@ -53,24 +52,30 @@ HomePage.getInitialProps = async (ctx: Context) => {
   // Will trigger this getInitialProps when requesting route /pages/ProductGallery
   // otherwise initialProps may be fed via /pages/index.tsx's getInitialProps
   const aClient = serverApolloClient(ctx);
-  const emptyConnection = { pageInfo: {}, edges: [] };
 
   try {
 
-    // const { data } = await aClient.query<QueryData1, QueryVar1>({
-    //   query: GET_PRODUCT_CATEGORIES,
-    // })
+    const { data } = await aClient.query<QueryData1, QueryVar1>({
+      query: GET_PAGE_CONFIG_BY_PATH,
+      variables: {
+        urlPath: "/"
+      }
+    })
+    // console.log("pageConfig: ", data?.getPageConfig)
+
     // let initialCategories = data?.getProductCategories ?? categoryPreviewsBackup as any;
     let initialCategories: Categories[] = categoryPreviewsBackup as any;
 
     return {
       initialCategories: initialCategories,
+      pageConfig: data?.getPageConfig,
       classes: undefined,
     };
 
   } catch(e) {
     return {
       initialCategories: [],
+      pageConfig: undefined,
       classes: undefined,
     };
   }
