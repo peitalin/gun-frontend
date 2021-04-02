@@ -312,7 +312,6 @@ const CategoryId: React.FC<ReactProps> = (props) => {
                     ? <ProductCardAsRow product={product}/>
                     : <ProductCardResponsive
                         product={product}
-                        xsCardRow={false}
                       />
                   }
                   {/* {

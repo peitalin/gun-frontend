@@ -25,7 +25,7 @@ const ProductCardResponsive: React.FC<ProductCardResponsiveProps> = (props) => {
       lg: 3,
       xl: 4,
     },
-    xsCardRow = true,
+    xsCardRow = false,
     maxWidthOfRow = 1160,
   } = props;
 
