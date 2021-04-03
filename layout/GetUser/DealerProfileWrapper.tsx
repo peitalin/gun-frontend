@@ -31,11 +31,7 @@ export const DealerProfileWrapper = (props) => {
     GET_DEALER_PRIVATE, {
     variables: {},
     onError: (e) => { console.log(e) },
-    onCompleted: (data) => {
-      if (data?.user?.id) {
-        dispatch(Actions.reduxLogin.SET_USER(data.user))
-      }
-    },
+    onCompleted: (data) => { },
     fetchPolicy: "network-only",
     errorPolicy: "all",
   });
