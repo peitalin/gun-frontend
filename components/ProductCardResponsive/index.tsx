@@ -50,7 +50,8 @@ const ProductCardResponsive: React.FC<ProductCardResponsiveProps> = (props) => {
         featuredPreviewItem?.image?.original?.widthInPixels,
     onClick: props.onClick,
     // hideActionType: xs || sm || md
-    hideActionType: product.soldOutStatus !== SoldOutStatus.AVAILABLE
+    hideActionType: product?.soldOutStatus !== SoldOutStatus.AVAILABLE,
+    disableLoadingAnimation: props.disableLoadingAnimation,
   }
 
 
@@ -176,8 +177,9 @@ interface ProductCardResponsiveProps {
   //
   boxShadow?: boolean;
   style?: any;
-  previewImageEmptyMessage?: string;
+  previewImageEmptyMessage?: React.ReactNode;
   onClick?(a: any): void;
+  disableLoadingAnimation?: boolean;
 }
 
 

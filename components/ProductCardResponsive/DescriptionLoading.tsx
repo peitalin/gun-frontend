@@ -35,9 +35,18 @@ const DescriptionLoading = (props: DescriptionLoadingProps) => {
           }}
         />
         <div className={clsx(classes.loadingDescription)}>
-          <div className={clsx("pulse", classes.loadingDescriptionLine1Mobile)}/>
-          <div className={clsx("pulse", classes.loadingDescriptionLine2Mobile)}/>
-          <div className={clsx("pulse", classes.loadingDescriptionLine3Mobile)}/>
+          <div className={clsx(
+            !props.disableLoadingAnimation && "pulse",
+            classes.loadingDescriptionLine1Mobile
+          )}/>
+          <div className={clsx(
+            !props.disableLoadingAnimation && "pulse",
+            classes.loadingDescriptionLine2Mobile
+          )}/>
+          <div className={clsx(
+            !props.disableLoadingAnimation && "pulse",
+            classes.loadingDescriptionLine3Mobile
+          )}/>
         </div>
       </div>
     )
@@ -53,10 +62,22 @@ const DescriptionLoading = (props: DescriptionLoadingProps) => {
         }}
       >
         <div className={clsx(classes.loadingDescription)}>
-          <div className={clsx("pulse", classes.loadingDescriptionLine1)}/>
-          <div className={clsx("pulse", classes.loadingDescriptionLine2)}/>
-          <div className={clsx("pulse", classes.loadingDescriptionLine3)}/>
-          <div className={clsx("pulse", classes.loadingDescriptionLine4)}/>
+          <div className={clsx(
+            !props.disableLoadingAnimation && "pulse",
+            classes.loadingDescriptionLine1
+          )}/>
+          <div className={clsx(
+            !props.disableLoadingAnimation && "pulse",
+            classes.loadingDescriptionLine2
+          )}/>
+          <div className={clsx(
+            !props.disableLoadingAnimation && "pulse",
+            classes.loadingDescriptionLine3
+          )}/>
+          <div className={clsx(
+            !props.disableLoadingAnimation && "pulse",
+            classes.loadingDescriptionLine4
+          )}/>
         </div>
       </div>
     )
@@ -70,6 +91,7 @@ interface DescriptionLoadingProps extends WithStyles<typeof styles> {
   mobilePicHeight?: any;
   mobilePicWidth?: any;
   rowFormat?: boolean;
+  disableLoadingAnimation?: boolean;
 }
 
 

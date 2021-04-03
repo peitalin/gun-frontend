@@ -29,7 +29,7 @@ const PreviewImageEmpty: React.FC<ReactProps> = (props) => {
 
 interface ReactProps extends WithStyles<typeof styles> {
   style?: any;
-  previewImageEmptyMessage?: string;
+  previewImageEmptyMessage?: React.ReactNode;
   onClick?(a: any): void;
 }
 

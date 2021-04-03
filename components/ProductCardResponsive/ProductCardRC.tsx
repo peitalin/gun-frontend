@@ -53,6 +53,7 @@ const ProductCardRC = (props: ReactProps) => {
     showWishListButton = true,
     isMobile = false,
     hideActionType = false,
+    disableLoadingAnimation = false,
   } = props;
 
   let viewWidth = 100 / cardsPerRow;
@@ -171,6 +172,7 @@ const ProductCardRC = (props: ReactProps) => {
             !productId
             ? <DescriptionLoading
                 style={cardWidthStyle}
+                disableLoadingAnimation={disableLoadingAnimation}
                 // height={DESCRIPTION_HEIGHT}
               />
             : <div className={classes.descriptionContainer}
@@ -245,9 +247,10 @@ interface ReactProps extends WithStyles<typeof styles> {
   // carousels
   boxShadow?: boolean;
   style?: any;
-  previewImageEmptyMessage?: string;
+  previewImageEmptyMessage?: React.ReactNode;
   onClick?(a: any): void;
   hideActionType?: boolean;
+  disableLoadingAnimation?: boolean;
 }
 
 
