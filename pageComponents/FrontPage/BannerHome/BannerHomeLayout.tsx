@@ -76,71 +76,38 @@ const BannerHomeLayout: NextPage<ReactProps> = (props) => {
           Support independent gun owners
         </Typography>
 
-          {/* <div style={{ height: '40px', width: 1, opacity: 0 }}>placeholder</div> */}
-          {/* Hide buttons until JS kicks in so both buttons load at same time */}
-          {/* <Hidden smDown implementation="js">
-          </Hidden> */}
-
-            <div className={clsx(classes.buttonsFlexRow, 'fadeInFast')}>
-              {/* {
-                !option(user).id()
-                ? <Login
-                    initialTabIndex={1}
-                    titleSignup={"Create Free Account"}
-                    buttonText={"Create Free Account"}
-                    buttonProps={{
-                      className: clsx(
-                        classes.buttonCreateAccount,
-                        classes.minWidth184,
-                        classes.buttonHeightDesktop,
-                        classes.buttonFontSizeDesktop,
-                      ),
-                      classes: {
-                        root: classes.buttonRoot,
-                        label: classes.buttonFontSizeDesktop,
-                      }
-                    }}
-                  />
-                : <Link href={"/"}>
-                    <a style={{ marginRight: '1rem' }}>
-                      <Button
-                        className={
-                          mdDown
-                          ? clsx(
-                              classes.buttonBrowseCategories,
-                              classes.minWidth160,
-                              classes.buttonHeightMobile
-                            )
-                          : clsx(
-                              classes.buttonBrowseCategories,
-                              classes.minWidth184,
-                              classes.buttonHeightDesktop,
-                            )
-                        }
-                        variant="text"
-                        color="primary"
-                        classes={{
-                          root: classes.buttonRoot,
-                          label: classes.buttonFontSizeDesktop,
-                        }}
-                        >
-                          Browse Products
-                      </Button>
-                    </a>
-                  </Link>
-              } */}
-              <Link href={"/sell"}>
-                <a>
+        <div className={clsx(classes.buttonsFlexRow, 'fadeInFast')}>
+          {/* {
+            !option(user).id()
+            ? <Login
+                initialTabIndex={1}
+                titleSignup={"Create Free Account"}
+                buttonText={"Create Free Account"}
+                buttonProps={{
+                  className: clsx(
+                    classes.buttonCreateAccount,
+                    classes.minWidth184,
+                    classes.buttonHeightDesktop,
+                    classes.buttonFontSizeDesktop,
+                  ),
+                  classes: {
+                    root: classes.buttonRoot,
+                    label: classes.buttonFontSizeDesktop,
+                  }
+                }}
+              />
+            : <Link href={"/"}>
+                <a style={{ marginRight: '1rem' }}>
                   <Button
                     className={
                       mdDown
                       ? clsx(
-                          classes.buttonBecomeASeller,
-                          classes.minWidth184,
+                          classes.buttonBrowseCategories,
+                          classes.minWidth160,
                           classes.buttonHeightMobile
                         )
                       : clsx(
-                          classes.buttonBecomeASeller,
+                          classes.buttonBrowseCategories,
                           classes.minWidth184,
                           classes.buttonHeightDesktop,
                         )
@@ -151,12 +118,40 @@ const BannerHomeLayout: NextPage<ReactProps> = (props) => {
                       root: classes.buttonRoot,
                       label: classes.buttonFontSizeDesktop,
                     }}
-                  >
-                    Sell
+                    >
+                      Browse Products
                   </Button>
                 </a>
               </Link>
-            </div>
+          } */}
+          <Link href={"/sell"}>
+            <a>
+              <Button
+                className={
+                  mdDown
+                  ? clsx(
+                      classes.buttonBecomeASeller,
+                      classes.minWidth184,
+                      classes.buttonHeightMobile
+                    )
+                  : clsx(
+                      classes.buttonBecomeASeller,
+                      classes.minWidth184,
+                      classes.buttonHeightDesktop,
+                    )
+                }
+                variant="text"
+                color="primary"
+                classes={{
+                  root: classes.buttonRoot,
+                  label: classes.buttonFontSizeDesktop,
+                }}
+              >
+                Sell
+              </Button>
+            </a>
+          </Link>
+        </div>
       </div>
 
     </Banner>

@@ -7,19 +7,17 @@ import { Colors, Gradients } from "layout/AppTheme";
 import { ProductsConnection, ConnectionQuery, Categories, PageConfig } from "typings/gqlTypes";
 
 // Components
-import dynamic from "next/dynamic";
 import NewReleaseProducts from "pageComponents/FrontPage/NewReleaseProducts";
 import FeaturedProducts from "pageComponents/FrontPage/FeaturedProducts";
 import CategoryProducts from "pageComponents/FrontPage/CategoryProducts";
 import BannerHome from "pageComponents/FrontPage/BannerHome";
+import BannerPromotionsLink from "pageComponents/FrontPage/BannerPromotionsLink";
 
 // GraphQL
 import { useQuery, useApolloClient } from "@apollo/client";
 import CategoryCarouselStart from "components/CategoryCarouselStart";
 // import SaySomethingSubscriptionTest from "./SaySomethingSubscriptionTest";
 
-// Category Component
-// import CategoryIdOrName from "pageComponents/Categories/CategoryIdOrName";
 import AlignCenterLayout from "components/AlignCenterLayout";
 export const MAX_WIDTH_GRID: number = 1160;
 // show exactly 4 product cards in carousel + 1rem padding on left
@@ -62,7 +60,7 @@ const FrontPage: React.FC<ReactProps> = (props) => {
         </div>
 
         {
-          pageConfig?.pageConfigSections?.map(section => {
+          pageConfig?.pageConfigSections?.slice(0,2)?.map(section => {
 
             if (section?.promotedListId) {
               return (
@@ -93,6 +91,41 @@ const FrontPage: React.FC<ReactProps> = (props) => {
           })
         }
 
+        <div className={classes.bannerPromotionsPadding}>
+          <BannerPromotionsLink />
+        </div>
+
+        {
+          pageConfig?.pageConfigSections?.slice(2)?.map(section => {
+
+            if (section?.promotedListId) {
+              return (
+                <FeaturedProducts
+                  key={section?.id}
+                  title={section?.title}
+                  promotedListId={section.promotedListId}
+                  cardsPerRow={{
+                    xs: 1.5,
+                    sm: 1.5,
+                    md: 2,
+                    lg: 3,
+                    xl: 4,
+                  }}
+                />
+              )
+            }
+
+            if (section?.isNewestList) {
+              return (
+                <NewReleaseProducts
+                  key={section?.id}
+                  initialProducts={undefined}
+                  title={section?.title}
+                />
+              )
+            }
+          })
+        }
       </AlignCenterLayout>
     </div>
   )
@@ -138,6 +171,10 @@ const styles = (theme: Theme) => createStyles({
   },
   maxWidth: {
     maxWidth: '1160px', // 4 products per row
+  },
+  bannerPromotionsPadding: {
+    marginTop: "1rem",
+    padding: '0rem 1rem',
   },
 });
 
