@@ -42,7 +42,7 @@ const FrontPage: React.FC<ReactProps> = (props) => {
   // const mdDown = useMediaQuery(theme.breakpoints.down('md'));
   // const smDown = useMediaQuery(theme.breakpoints.down('sm'));
 
-  console.log("pageConfig => ", pageConfig)
+  // console.log("pageConfig => ", pageConfig)
 
   return (
     <div className={classes.frontPageRoot}>
@@ -82,7 +82,6 @@ const FrontPage: React.FC<ReactProps> = (props) => {
             }
 
             if (section?.isNewestList) {
-              console.log("is New: ", section)
               return (
                 <NewReleaseProducts
                   key={section?.id}

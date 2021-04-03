@@ -87,8 +87,6 @@ const NewReleaseProducts = (props: ReactProps) => {
     ssr: true,
   })
 
-  console.log("NewRElease", data)
-
   let products = data?.productsAllConnection
 
   return (
@@ -104,7 +102,7 @@ const NewReleaseProducts = (props: ReactProps) => {
         </Typography>
       </div>
 
-      <div className={clsx(classes.flexRowFlexEnd, classes.maxWidth100vw)}>
+      {/* <div className={clsx(classes.flexRowFlexEnd, classes.maxWidth100vw)}>
         <div className={clsx(classes.searchbar)}>
           <InputBase
             value={searchTermUi}
@@ -156,7 +154,7 @@ const NewReleaseProducts = (props: ReactProps) => {
           placeholder={"Select a category"}
           // className={classes.optionValues}
         />
-      </div>
+      </div> */}
 
 
       <div className={clsx(
@@ -269,15 +267,18 @@ const styles = (theme: Theme) => createStyles({
     marginBottom: '0.5rem',
   },
   title: {
-    color: Colors.uniswapLighterGrey,
+    color: theme.palette.type === 'dark'
+      ? Colors.uniswapLightestGrey
+      : Colors.slateGreyBlack,
     marginTop: "1rem",
-    marginBottom: "0.5rem",
+    marginBottom: "1rem",
     marginLeft: '1rem',
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'flex-start',
     flexGrow: 1,
     flexBasis: '50%',
+    fontSize: "1.5rem",
   },
   flexCol: {
     display: 'flex',
