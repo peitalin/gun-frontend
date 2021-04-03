@@ -17,6 +17,7 @@ export interface ReduxStateModals {
   checkoutModalOpen: boolean;
   storePromoCodeCreate: boolean;
   chatCenterOpen: boolean;
+  promotedItemPurchaseModalOpen: boolean;
 }
 
 const initialModalsState: ReduxStateModals = {
@@ -34,6 +35,7 @@ const initialModalsState: ReduxStateModals = {
   checkoutModalOpen: false,
   storePromoCodeCreate: false,
   chatCenterOpen: false,
+  promotedItemPurchaseModalOpen: false,
 }
 
 export const reduxReducerModals = (
@@ -99,6 +101,10 @@ export const reduxReducerModals = (
 
     case A.TOGGLE_CHAT_CENTER_MODAL().type: {
       return { ...state, chatCenterOpen: action.payload }
+    }
+
+    case A.TOGGLE_PROMOTED_ITEM_PURCHASE_MODAL().type: {
+      return { ...state, promotedItemPurchaseModalOpen: action.payload }
     }
 
     default: {

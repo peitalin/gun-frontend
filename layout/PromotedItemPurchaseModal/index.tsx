@@ -1,0 +1,97 @@
+import React from "react";
+// Styles
+import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
+import { Colors, BorderRadius2x, Gradients, BorderRadius } from "layout/AppTheme";
+// Material UI
+import Dialog from "@material-ui/core/Dialog";
+// Redux
+import { useDispatch, useSelector } from "react-redux";
+import { GrandReduxState } from "reduxStore/grand-reducer";
+import { Actions } from "reduxStore/actions";
+// Components
+import BuyPromotedItemPage from "./BuyPromotedItemPage";
+/// CSS
+import { useTheme } from "@material-ui/core/styles";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
+
+
+
+
+
+const PromotedItemPurchaseModal: React.FC<ReactProps> = (props) => {
+
+  const {
+    classes,
+    asModal = true,
+  } = props;
+
+  const dispatch = useDispatch();
+  const promotedItemPurchaseModalOpen = useSelector<GrandReduxState, boolean>(
+    state => state.reduxModals.promotedItemPurchaseModalOpen
+  );
+
+  const goBack = () => {
+    // unload Stripe card component first, then shut the modal
+    dispatch(Actions.reduxModals.TOGGLE_PROMOTED_ITEM_PURCHASE_MODAL(false))
+  }
+
+  const theme = useTheme();
+  const mdUp = useMediaQuery(theme.breakpoints.up("md"))
+
+  if (!asModal && process.browser) {
+    return <BuyPromotedItemPage goBack={goBack} asModal={asModal}/>
+  } else {
+    return (
+      <>
+        <Dialog
+          open={promotedItemPurchaseModalOpen}
+          // full height
+          fullScreen={mdUp ? false : true}
+          fullWidth={mdUp ? false : null}
+          maxWidth={"md"}
+          onClose={() => goBack()}
+          BackdropProps={{
+            classes: {
+              root: classes.modalBackdrop,
+            }
+          }}
+          PaperProps={{
+            classes: {
+              root: mdUp
+                ? classes.modalPaperScrollPaper
+                : classes.modalPaperScrollPaperSm
+            }
+          }}
+          scroll="body"
+        >
+          <BuyPromotedItemPage goBack={goBack}/>
+        </Dialog>
+      </>
+    )
+  }
+}
+
+interface ReactProps extends WithStyles<typeof styles> {
+  asModal?: boolean;
+}
+
+const styles = (theme: Theme) => createStyles({
+  modalBackdrop: {
+    backgroundColor: "rgba(47, 57, 65, .85)",
+  },
+  modalPaperScrollPaperSm: {
+    maxHeight: "calc(100% - rem)",
+    overflowY: 'hidden',
+    borderRadius: BorderRadius2x,
+  },
+  modalPaperScrollPaper: {
+    // maxHeight: "calc(100% - 0px)",
+    width: '100%',
+    maxWidth: '540px',
+    background: Colors.uniswapDarkNavy,
+    borderRadius: BorderRadius2x,
+  },
+});
+
+
+export default withStyles(styles)( PromotedItemPurchaseModal );

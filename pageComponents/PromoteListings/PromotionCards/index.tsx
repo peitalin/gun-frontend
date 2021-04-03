@@ -14,6 +14,9 @@ import {
   PromotedList,
 } from "typings/gqlTypes";
 
+import { useDispatch } from "react-redux";
+import { Actions } from 'reduxStore/grand-reducer';
+
 import PromotionCardsMobileCarousel from "pageComponents/PromoteListings/PromotionCards/PromotionCardsMobileCarousel";
 import PromotionCardsDesktop from "pageComponents/PromoteListings/PromotionCards/PromotionCardsDesktop";
 import PromotionCardsLoading from "pageComponents/PromoteListings/PromotionCards/PromotionCardsLoading";
@@ -45,6 +48,7 @@ const FeaturedProducts = (props: ReactProps) => {
     },
   } = props;
 
+  const dispatch = useDispatch()
 
   const { loading, error, data } = useQuery<QueryData, QueryVar>(
     GET_PROMOTED_LIST, {
@@ -55,6 +59,10 @@ const FeaturedProducts = (props: ReactProps) => {
     },
     ssr: true,
   })
+
+  const openPromotedItemPurchaseModal = () => {
+    dispatch(Actions.reduxModals.TOGGLE_PROMOTED_ITEM_PURCHASE_MODAL(true))
+  }
 
   let connection = data?.promotedList?.promotedListItemsConnection
 
@@ -74,6 +82,7 @@ const FeaturedProducts = (props: ReactProps) => {
           title={props.title}
           connection={connection}
           cardsPerRow={cardsPerRow}
+          onClick={openPromotedItemPurchaseModal}
         />
       </Hidden>
       <Hidden mdUp implementation="css">
@@ -81,6 +90,7 @@ const FeaturedProducts = (props: ReactProps) => {
           title={props.title}
           connection={connection}
           cardsPerRow={cardsPerRow}
+          onClick={openPromotedItemPurchaseModal}
         />
       </Hidden>
     </>

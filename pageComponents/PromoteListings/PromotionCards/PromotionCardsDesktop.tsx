@@ -88,6 +88,7 @@ const PromotionCardsDesktop = (props: ReactProps) => {
                 <ProductCardResponsive
                   product={promotedItem?.node?.product}
                   cardsPerRow={cardsPerRow}
+                  onClick={props.onClick}
                   disableLoadingAnimation={true}
                   previewImageEmptyMessage={
                     promotedItem?.node?.product?.id
@@ -124,6 +125,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   // cause Desktop and Mobile share the same queries. Possible clash in variables
   // don't want Desktop's sortAscend: true, while Mobile is false,
   // as both queries will be sent and returned data conflicts
+  onClick(): void;
 }
 
 
