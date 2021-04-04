@@ -17,6 +17,7 @@ import {
   Product,
   Order_By,
   PromotedListItemsConnection,
+  PromotedListItem,
 } from "typings/gqlTypes";
 // useMediaQuery
 import { useTheme } from "@material-ui/core/styles";
@@ -46,7 +47,7 @@ const PromotionCardsDesktop = (props: ReactProps) => {
   const xsDown = useMediaQuery(theme.breakpoints.down("xs"))
   const c = (s) => currency(s/100, { formatWithSymbol: true }).format()
 
-  const promotedItems = (connection?.edges ?? [])
+  const promotedItemsEdges = (connection?.edges ?? [])
     .map(promotedItem => {
       if (promotedItem?.node?.id?.startsWith("random")) {
         return {
@@ -76,8 +77,8 @@ const PromotionCardsDesktop = (props: ReactProps) => {
 
       <div className={classes.carouselContainer}>
         {
-          promotedItems?.map((promotedItem, i) =>
-            <div key={promotedItem?.node?.id + `_${i}`}
+          promotedItemsEdges?.map((promotedItemEdge, i) =>
+            <div key={promotedItemEdge?.node?.id + `_${i}`}
               className={xsDown ? classes.productCardWrapperXs : classes.productCardWrapper}
             >
               <div className={clsx(
@@ -86,16 +87,24 @@ const PromotionCardsDesktop = (props: ReactProps) => {
                 classes.flexItemHover,
               )}>
                 <ProductCardResponsive
-                  product={promotedItem?.node?.product}
+                  product={promotedItemEdge?.node?.product}
                   cardsPerRow={cardsPerRow}
-                  onClick={props.onClick}
+                  onClick={async(e) => {
+                    props.onClick(e)
+                    if (props?.setPosition) {
+                      props.setPosition(i);
+                    }
+                    if (props?.setCurrentPromotedListItem) {
+                      props.setCurrentPromotedListItem(promotedItemEdge.node);
+                    }
+                  }}
                   disableLoadingAnimation={true}
                   previewImageEmptyMessage={
-                    promotedItem?.node?.product?.id
+                    promotedItemEdge?.node?.product?.id
                       ? <div></div>
                       : <div className={classes.previewImageEmptyMessageText}>
                           {"Buy this slot for 2 days"} <br/>
-                          {`${c(promotedItem?.node?.reservePrice ?? 500)}`}
+                          {`${c(promotedItemEdge?.node?.reservePrice ?? 500)}`}
                         </div>
                   }
                 />
@@ -125,7 +134,9 @@ interface ReactProps extends WithStyles<typeof styles> {
   // cause Desktop and Mobile share the same queries. Possible clash in variables
   // don't want Desktop's sortAscend: true, while Mobile is false,
   // as both queries will be sent and returned data conflicts
-  onClick(): void;
+  onClick(e?: any): void;
+  setCurrentPromotedListItem(p: PromotedListItem): void;
+  setPosition(p: number): void;
 }
 
 

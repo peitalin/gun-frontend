@@ -1,5 +1,4 @@
 import React from "react";
-import { oc as option } from "ts-optchain";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 import { Colors, BorderRadius } from "layout/AppTheme";
@@ -10,6 +9,7 @@ import Typography from "@material-ui/core/Typography";
 import {
   Product,
   PromotedListItemsConnection,
+  PromotedListItem,
 } from "typings/gqlTypes";
 // Paginator hooks
 import { ConnectionQueryProps } from "components/Paginators/usePaginatePagedQueryHook";
@@ -45,9 +45,7 @@ const PromotionCardsMobile = (props: ReactProps) => {
   } = props;
 
 
-  const products = connection?.edges?.map(
-    promotedItem => promotedItem.node.product
-  )
+  const promotedItemsEdges = connection?.edges
 
   return (
     <main className={classes.root}>
@@ -63,14 +61,22 @@ const PromotionCardsMobile = (props: ReactProps) => {
         scrollSnapType={"x proximity"}
       >
         {
-          products?.map((product, i) =>
+          promotedItemsEdges?.map((promotedItemEdge, i) =>
             <div key={i} style={{
               marginLeft: '0.5rem',
             }}>
               <ProductCardResponsive
-                product={product}
+                product={promotedItemEdge?.node?.product}
                 cardsPerRow={cardsPerRow}
-                onClick={props.onClick}
+                onClick={async(e) => {
+                  props.onClick(e)
+                  if (props?.setPosition) {
+                    props.setPosition(i);
+                  }
+                  if (props?.setCurrentPromotedListItem) {
+                    props.setCurrentPromotedListItem(promotedItemEdge.node);
+                  }
+                }}
               />
             </div>
           )
@@ -97,7 +103,9 @@ interface ReactProps extends WithStyles<typeof styles> {
   // cause Desktop and Mobile share the same queries. Possible clash in variables
   // don't want Desktop's sortAscend: true, while Mobile is false,
   // as both queries will be sent and returned data conflicts
-  onClick(): void;
+  onClick(e?: any): void;
+  setCurrentPromotedListItem(p: PromotedListItem): void;
+  setPosition(p: number): void;
 }
 
 const styles = (theme: Theme) => createStyles({

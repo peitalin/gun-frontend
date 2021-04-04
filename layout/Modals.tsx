@@ -6,7 +6,6 @@ import clsx from "clsx";
 import MySettingsModal from "layout/MySettingsModal";
 // Chat
 import ChatCenterModal from "pageComponents/ChatCenter";
-import PromotedItemPurchaseModal from "layout/PromotedItemPurchaseModal";
 
 
 const Modals: React.FC<any> = (props) => {
@@ -14,7 +13,6 @@ const Modals: React.FC<any> = (props) => {
     <>
       <MySettingsModal/>
       <ChatCenterModal asModal/>
-      <PromotedItemPurchaseModal/>
       {/* <CheckoutModal/> */}
       {/* <ContactUsModal/> */}
     </>

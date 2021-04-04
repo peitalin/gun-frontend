@@ -3801,24 +3801,18 @@ export type Mutation = {
   deletePromotedList: BlankMutationResponse;
   /**
    * Add a product to a promoted list.
-   * 
-   * It will be added at the bottom, but you can rearrange items later.
-   * 
    * AccessRule – PLATFORM_ADMIN
    */
   addProductToPromotedList: PromotedListItemMutationResponse;
   /**
    * Remove an item in a promoted list.
-   * 
    * AccessRule – PLATFORM_ADMIN
    */
-  removeItemFromPromotedList: PromotedListMutationResponse;
+  removeProductFromPromotedList: PromotedListMutationResponse;
   /**
    * Change the location of the items in a promoted list.
-   * 
    * This works by providing the complete list of itemIds, in the order you want them to appear in the list.
    * It is designed to work well with a Save button design, rather than a real-time drag and drop edit UX.
-   * 
    * AccessRule – PLATFORM_ADMIN
    */
   rearrangePromotedListItems: PromotedListMutationResponse;
@@ -5315,15 +5309,16 @@ export type MutationDeletePromotedListArgs = {
 
 
 export type MutationAddProductToPromotedListArgs = {
-  listId: Scalars['String'];
+  promotedListItemId: Scalars['String'];
+  promotedListId: Scalars['String'];
   productId: Scalars['String'];
-  variantId?: Maybe<Scalars['String']>;
+  ownerId?: Maybe<Scalars['String']>;
 };
 
 
-export type MutationRemoveItemFromPromotedListArgs = {
-  listId: Scalars['String'];
-  itemId: Scalars['String'];
+export type MutationRemoveProductFromPromotedListArgs = {
+  promotedListId: Scalars['String'];
+  promotedListItemId: Scalars['String'];
 };
 
 
@@ -10602,7 +10597,7 @@ export type Promoted_List_Items = {
   position?: Maybe<Scalars['Int']>;
   /** An object relationship */
   product?: Maybe<Products>;
-  productId: Scalars['String'];
+  productId?: Maybe<Scalars['String']>;
   promotedListId: Scalars['String'];
   reservePrice?: Maybe<Scalars['Int']>;
 };

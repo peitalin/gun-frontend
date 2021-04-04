@@ -104,7 +104,14 @@ const ProductCardRC = (props: ReactProps) => {
       {
         //  If no PreviewItems
         (previewItems.length === 0) &&
-        <AspectGridItemLink product={product}>
+        <AspectGridItemLink
+          product={product}
+          disable={
+            !props.product?.storeId ||
+            typeof props.onClick === 'function'
+            // disable link when onClick is defined
+          }
+        >
           <PreviewImageEmpty
             previewImageEmptyMessage={props.previewImageEmptyMessage}
             onClick={props.onClick}
@@ -114,7 +121,14 @@ const ProductCardRC = (props: ReactProps) => {
 
       {
         firstPreview &&
-        <AspectGridItemLink product={product}>
+        <AspectGridItemLink
+          product={product}
+          disable={
+            !props.product?.storeId ||
+            typeof props.onClick === 'function'
+            // disable link when onClick is defined
+          }
+        >
           {
             firstPreview?.image?.original?.url
             ? <CardMedia
@@ -165,6 +179,7 @@ const ProductCardRC = (props: ReactProps) => {
           disable={
             !props.product?.storeId ||
             typeof props.onClick === 'function'
+            // disable link when onClick is defined
           }
           onClick={props.onClick}
         >

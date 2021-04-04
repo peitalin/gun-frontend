@@ -4,11 +4,13 @@ import clsx from "clsx";
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
 import { Colors, Gradients } from "layout/AppTheme";
 // Typings
-import { ProductsConnection, PageConfig } from "typings/gqlTypes";
+import { ProductsConnection, PageConfig, PromotedList } from "typings/gqlTypes";
 // Components
 import PromotionCards from "pageComponents/PromoteListings/PromotionCards";
 import BannerPromotionPurchases from "./BannerPromotionPurchases"
 import AlignCenterLayout from "components/AlignCenterLayout";
+import PromotedItemPurchaseModal from "./PromotedItemPurchaseModal";
+
 export const MAX_WIDTH_GRID: number = 1160;
 
 
@@ -22,7 +24,13 @@ const PromoteListings: React.FC<ReactProps> = (props) => {
 
   // const theme = useTheme();
   // const mdDown = useMediaQuery(theme.breakpoints.down('md'));
+  const [
+    currentPromotedListItem,
+    setCurrentPromotedListItem
+  ] = React.useState(undefined)
 
+  const [ position, setPosition ] = React.useState(0)
+  const [ refetch, setRefetch ] = React.useState(undefined)
   // console.log("pageConfig => ", pageConfig)
 
   return (
@@ -35,8 +43,15 @@ const PromoteListings: React.FC<ReactProps> = (props) => {
           <BannerPromotionPurchases />
         </div>
 
+        <PromotedItemPurchaseModal
+          asModal={true}
+          currentPromotedListItem={currentPromotedListItem}
+          position={position}
+          refetch={refetch}
+        />
+
         {
-          pageConfig?.pageConfigSections?.map(section => {
+          pageConfig?.pageConfigSections?.map(( section, i ) => {
 
             if (section?.promotedListId) {
               return (
@@ -44,6 +59,9 @@ const PromoteListings: React.FC<ReactProps> = (props) => {
                   key={section?.id}
                   title={section?.title}
                   promotedListId={section?.promotedListId}
+                  setCurrentPromotedListItem={setCurrentPromotedListItem}
+                  setPosition={setPosition}
+                  setRefetch={setRefetch}
                   cardsPerRow={{
                     xs: 1.5,
                     sm: 1.5,
@@ -67,7 +85,6 @@ const PromoteListings: React.FC<ReactProps> = (props) => {
 interface ReactProps extends WithStyles<typeof styles> {
   pageConfig: PageConfig;
 }
-
 
 const styles = (theme: Theme) => createStyles({
   promoteListingsRoot: {

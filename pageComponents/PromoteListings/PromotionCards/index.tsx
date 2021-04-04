@@ -1,6 +1,5 @@
 
 import React from "react";
-import { oc as option } from "ts-optchain";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 import { Colors, BorderRadius } from "layout/AppTheme";
@@ -12,6 +11,8 @@ import {
   ProductsConnection,
   Order_By,
   PromotedList,
+  PromotedListItem,
+  PromotedListItemsConnection,
 } from "typings/gqlTypes";
 
 import { useDispatch } from "react-redux";
@@ -34,11 +35,10 @@ import { GET_PROMOTED_LIST } from "queries/promoted_lists-queries";
 
 
 
-const FeaturedProducts = (props: ReactProps) => {
+const PromotionCards = (props: ReactProps) => {
 
   const {
     classes,
-    count = 4,
     cardsPerRow = {
       xs: 1.5,
       sm: 1.5,
@@ -50,21 +50,28 @@ const FeaturedProducts = (props: ReactProps) => {
 
   const dispatch = useDispatch()
 
-  const { loading, error, data } = useQuery<QueryData, QueryVar>(
+  const { loading, error, data, refetch } = useQuery<QueryData, QueryVar>(
     GET_PROMOTED_LIST, {
     variables: {
       promotedListId: props.promotedListId,
-      limit: count,
+      limit: 4,
       offset: 0,
+    },
+    onCompleted: () => {
+      if (typeof props.setRefetch === 'function') {
+        props.setRefetch(refetch)
+      }
     },
     ssr: true,
   })
 
+  let connection = data?.promotedList?.promotedListItemsConnection
+
+
+
   const openPromotedItemPurchaseModal = () => {
     dispatch(Actions.reduxModals.TOGGLE_PROMOTED_ITEM_PURCHASE_MODAL(true))
   }
-
-  let connection = data?.promotedList?.promotedListItemsConnection
 
   if (loading) {
     return (
@@ -83,6 +90,8 @@ const FeaturedProducts = (props: ReactProps) => {
           connection={connection}
           cardsPerRow={cardsPerRow}
           onClick={openPromotedItemPurchaseModal}
+          setCurrentPromotedListItem={props.setCurrentPromotedListItem}
+          setPosition={props.setPosition}
         />
       </Hidden>
       <Hidden mdUp implementation="css">
@@ -91,6 +100,8 @@ const FeaturedProducts = (props: ReactProps) => {
           connection={connection}
           cardsPerRow={cardsPerRow}
           onClick={openPromotedItemPurchaseModal}
+          setCurrentPromotedListItem={props.setCurrentPromotedListItem}
+          setPosition={props.setPosition}
         />
       </Hidden>
     </>
@@ -112,11 +123,17 @@ interface ReactProps extends WithStyles<typeof styles> {
     lg?: number;
     xl?: number;
   };
+  setCurrentPromotedListItem(p: PromotedListItem): void;
+  setPosition(p: number): void;
+  setRefetch(p: any): void;
 }
 interface QueryData {
   promotedList?: PromotedList;
 }
 interface QueryVar {
+  promotedListId: string,
+  limit: number,
+  offset: number,
 }
 
 const styles = (theme: Theme) => createStyles({
@@ -125,7 +142,7 @@ const styles = (theme: Theme) => createStyles({
 });
 
 
-export default withStyles(styles)( FeaturedProducts );
+export default withStyles(styles)( PromotionCards );
 
 
 

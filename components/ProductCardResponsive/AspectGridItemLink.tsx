@@ -20,6 +20,7 @@ const AspectCarouselItemLink: React.FC<CarouselItemLinkProps> = (props) => {
   const {
     classes,
     product,
+    disable = false,
   } = props;
 
   return (
@@ -31,7 +32,7 @@ const AspectCarouselItemLink: React.FC<CarouselItemLinkProps> = (props) => {
         <LinkLoading
           href={"/p/[productId]"}
           as={`/p/${product?.id}`}
-          disable={!product?.storeId}
+          disable={disable}
         >
           <CardActionArea classes={{ root: classes.cardActionArea }}>
             {props.children}
@@ -45,6 +46,7 @@ const AspectCarouselItemLink: React.FC<CarouselItemLinkProps> = (props) => {
 
 interface CarouselItemLinkProps extends WithStyles<typeof styles> {
   product: Product;
+  disable?: boolean;
 }
 
 
