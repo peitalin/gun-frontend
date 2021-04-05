@@ -22,7 +22,7 @@ import {
 import {
   StripeAuthorizePaymentData,
   StripeConfirmResponse,
-} from "../purchaseFunctions";
+} from "pageComponents/P/PurchaseProductSummary/purchaseFunctions";
 import {
   UserPrivate, ID,
   OrderStatus,
@@ -35,7 +35,6 @@ import {
 // Components
 import ErrorBounds from 'components/ErrorBounds';
 import ButtonLoading from "components/ButtonLoading";
-import CreateOfferSubscription from "../CreateOfferSubscription";
 // redux
 import { useSelector } from "react-redux";
 import { GrandReduxState, Actions } from "reduxStore/grand-reducer";
@@ -82,10 +81,6 @@ const VisaPurchaseProduct = (props: ReactProps) => {
 
 
   const createNewPaymentMethod = async(): Promise<PaymentMethod> => {
-    // Within the context of `Elements`, this call to createPaymentMethod
-    // knows from which Element to create the PaymentMethod,
-    // See our createPaymentMethod documentation for more:
-    // https://stripe.com/docs/stripe-js/reference#stripe-create-payment-method
     let { paymentMethod, error } = await stripe.createPaymentMethod({
       type: 'card',
       card: elements.getElement(CardElement),
@@ -206,21 +201,22 @@ const VisaPurchaseProduct = (props: ReactProps) => {
                 () => createNewPaymentMethod()
                       .then(async (newPaymentMethod) => {
 
-                        // 1. Create an order first with the backend
-                        let orderResponse = await createOrderAndHoldFundsFirst({
-                          paymentMethodId: newPaymentMethod.id,
-                          stripeCustomerId: props?.user?.stripeCustomerId,
-                        });
-                        console.log("1: ORDER_MUTATION response: ", orderResponse)
-                        let order = orderResponse?.unconfirmedOrder;
-                        let stripePaymentIntent = JSON.parse(orderResponse?.stripePaymentIntent);
-                        console.log("1b: stripe PaymentIntent: ", stripePaymentIntent)
+                        // // 1. Create an order first with the backend
+                        // let orderResponse = await createOrderAndHoldFundsFirst({
+                        //   paymentMethodId: newPaymentMethod.id,
+                        //   stripeCustomerId: props?.user?.stripeCustomerId,
+                        // });
 
-                        snackbar.enqueueSnackbar(`Success order placed: ${order.id}`, { variant: "success" })
+                        // console.log("1: ORDER_MUTATION response: ", orderResponse)
+                        // let order = orderResponse?.unconfirmedOrder;
+                        // let stripePaymentIntent = JSON.parse(orderResponse?.stripePaymentIntent);
+                        // console.log("1b: stripe PaymentIntent: ", stripePaymentIntent)
 
-                        if (typeof props.handleOrderPostPurchase === "function") {
-                          props.handleOrderPostPurchase(order)
-                        }
+                        // snackbar.enqueueSnackbar(`Success order placed: ${order.id}`, { variant: "success" })
+
+                        // if (typeof props.handleOrderPostPurchase === "function") {
+                        //   props.handleOrderPostPurchase(order)
+                        // }
                       })
                       .catch(e => {
                         console.warn(e)
@@ -243,20 +239,6 @@ const VisaPurchaseProduct = (props: ReactProps) => {
               </span>
             </ButtonLoading>
           </div>
-
-          {
-            // !disableButton &&
-            // !!buyer?.id &&
-            true &&
-            <div className={classes.flexRowCenter}>
-              <div className={classes.bidButtonContainer}>
-                <CreateOfferSubscription
-                  userId={buyer?.id}
-                  product={product}
-                />
-              </div>
-            </div>
-          }
 
         </div>
       </div>

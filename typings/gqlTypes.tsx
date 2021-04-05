@@ -5313,6 +5313,7 @@ export type MutationAddProductToPromotedListArgs = {
   promotedListId: Scalars['String'];
   productId: Scalars['String'];
   ownerId?: Maybe<Scalars['String']>;
+  position?: Maybe<Scalars['Int']>;
 };
 
 
@@ -11314,7 +11315,7 @@ export type PromotedListItem = {
   id: Scalars['ID'];
   createdAt: Scalars['Date'];
   promotedListId: Scalars['ID'];
-  productId: Scalars['ID'];
+  productId?: Maybe<Scalars['ID']>;
   product?: Maybe<Product>;
   ownerId?: Maybe<Scalars['ID']>;
   reservePrice?: Maybe<Scalars['Int']>;

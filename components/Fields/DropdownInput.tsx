@@ -32,6 +32,8 @@ const DropdownInput = (props: ReactProps) => {
     creatable = false,
     isMulti = false,
     isSearchable = true,
+    isClearable = true,
+    height = 40,
     limit,
     classes,
     onChange,
@@ -69,6 +71,7 @@ const DropdownInput = (props: ReactProps) => {
             placeholder={placeholder}
             isMulti={isMulti}
             isSearchable={isSearchable}
+            isClearable={isClearable}
             className={classes.optionValues}
             classes={{
               input: clsx(
@@ -138,6 +141,7 @@ const DropdownInput = (props: ReactProps) => {
             placeholder={placeholder}
             isMulti={isMulti}
             isSearchable={isSearchable}
+            isClearable={isClearable}
             className={classes.optionValues}
             classes={{
               input: clsx(
@@ -191,7 +195,7 @@ const DropdownInput = (props: ReactProps) => {
               }),
               container: styles => ({
                 ...styles,
-                height: 40,
+                height: height,
                 borderRadius: BorderRadius,
                 border: isDarkMode
                   ? `1px solid ${Colors.uniswapLighterGrey}`
@@ -217,6 +221,7 @@ const DropdownInput = (props: ReactProps) => {
                   : Colors.slateGrey,
                 // // match with the menu
                 borderRadius: BorderRadius,
+                height: '100%',
                 // // Overwrittes the different states of border
                 border: isDarkMode
                   ? `0px solid ${Colors.uniswapLighterGrey}`
@@ -289,9 +294,11 @@ interface ReactProps extends WithStyles<typeof styles> {
   inputId?: string;
   className?: any;
   isSearchable?: boolean;
+  isClearable?: boolean;
   hideCursor?: boolean;
   styles?: any;
   theme?: any;
+  height?: any;
   [key: string]: any;
 }
 export interface SelectOption {

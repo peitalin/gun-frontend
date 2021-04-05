@@ -8,6 +8,8 @@ import {
   ProductsConnection,
   PromotedListItem,
   PromotedList,
+  Role,
+  Product,
 } from "typings/gqlTypes";
 // Styles
 import { withStyles, WithStyles, createStyles, Theme, fade } from "@material-ui/core/styles";
@@ -24,6 +26,7 @@ import { GrandReduxState } from "reduxStore/grand-reducer";
 import { Actions } from "reduxStore/actions";
 import TextInput from "components/Fields/TextInput";
 import ButtonLoading from "components/ButtonLoading";
+import DropdownInput from "components/Fields/DropdownInput";
 
 // // Next
 // import dynamic from 'next/dynamic'
@@ -41,6 +44,7 @@ import {
   GET_PROMOTED_LIST,
 } from "queries/promoted_lists-queries";
 import { useQuery, useMutation } from "@apollo/client";
+import { useSnackbar } from "notistack";
 
 
 
@@ -54,12 +58,16 @@ const BuyPromotedItemPage = (props: ReactProps) => {
 
   const theme = useTheme();
   const smDown = useMediaQuery(theme.breakpoints.down('sm'));
+  const snackbar = useSnackbar();
 
   const user = useSelector<GrandReduxState, UserPrivate>(
     state => state.reduxLogin.user
   );
 
-  const [productId, setProductId] = React.useState("")
+  const [selectedProduct, setSelectedProduct] = React.useState({
+    label: undefined,
+    value: undefined,
+  })
 
   const [getYourProducts, getYourProductsResponse] = useLazyQuery<QueryData, QueryVar>(
     DASHBOARD_PRODUCTS_CONNECTION, {
@@ -131,7 +139,15 @@ const BuyPromotedItemPage = (props: ReactProps) => {
     getYourProducts()
   }, [user])
 
-  console.log("your products: ", getYourProductsResponse?.data)
+  // console.log("your products: ", getYourProductsResponse?.data)
+  // console.log("position: ", props.position)
+  console.log("selectedProduct: ", selectedProduct)
+
+  let connection = getYourProductsResponse?.data?.dashboardProductsConnection
+  let yourProducts = connection?.edges?.map(({ node }) => node)
+
+  let productOptions = createProductSuggestions(yourProducts)
+  let isAdmin = user.userRole === Role.PLATFORM_ADMIN
 
   return (
     <ErrorBounds className={clsx(
@@ -154,79 +170,158 @@ const BuyPromotedItemPage = (props: ReactProps) => {
       </div>
 
       <div>
-        1. Add a Stripe credit card checkout here.
-      </div>
-      <div>
-        2. Pick one of your products to assign to slot
+        1. Pick a product to assign to slot. Must be published.
       </div>
       <TextInput
         name="product.id"
         placeholder="Product ID"
         className={classes.textField}
-        value={productId}
+        value={selectedProduct.value ?? ""}
         onChange={(e) => {
-          setProductId(e.target.value)
+          setSelectedProduct({
+            label: e.target.value,
+            value: e.target.value,
+          })
         }}
         inputProps={{ style: { width: '100%' }}}
         disableInitialValidationMessage={true}
       />
+      <DropdownInput
+        className={classes.dropdownProducts}
+        stateShape={
+          selectedProduct?.value
+            ? selectedProduct
+            : undefined
+        }
+        onChange={(option: SelectOption) => {
+          setSelectedProduct({
+            label: option?.label,
+            value: option?.value,
+          })
+        }}
+        height={45}
+        isClearable={true}
+        options={productOptions}
+        placeholder={"Choose a Product"}
+      />
+      <div>
+        3. Add a Stripe credit card checkout here.
+      </div>
       <div>
         3. Purchase slot
       </div>
-      <ButtonLoading
-        onClick={async() => {
-          await addProductToPromotedList({
-            variables: {
-              promotedListItemId: props.promotedListItem?.id,
-              promotedListId: props.promotedListItem?.promotedListId,
-              productId: productId,
-              ownerId: user?.id,
-              position: props.promotedListItem?.position ?? props.position,
+      <div className={classes.buttonsBox}>
+        <ButtonLoading
+          className={classes.buttonBlue}
+          onClick={async() => {
+            if (isAdmin) {
+              await addProductToPromotedList({
+                variables: {
+                  promotedListItemId: props.promotedListItem?.id,
+                  promotedListId: props.promotedListItem?.promotedListId,
+                  productId: selectedProduct.value,
+                  ownerId: user?.id,
+                  position: props.promotedListItem?.position ?? props.position,
+                }
+              })
+            } else {
+              snackbar.enqueueSnackbar(
+                "Only for admins for now",
+                { variant: "info" }
+              )
             }
-          })
-        }}
-        loadingIconColor={Colors.blue}
-        replaceTextWhenLoading={true}
-        loading={addProductToPromotedListResponse?.loading}
-        disabled={addProductToPromotedListResponse?.loading || !productId}
-        variant="contained"
-        color="secondary"
-        className={classes.buttonBlue}
-        // style={{ height: "40px" }}
-      >
-        <span style={{ marginLeft: '0.25rem' }}>
-          {"Add Product to List"}
-        </span>
-      </ButtonLoading>
+          }}
+          loadingIconColor={Colors.blue}
+          replaceTextWhenLoading={true}
+          loading={addProductToPromotedListResponse?.loading}
+          disabled={
+            addProductToPromotedListResponse?.loading
+            || !selectedProduct?.value
+          }
+          variant="contained"
+          color="secondary"
+          // style={{ height: "40px" }}
+        >
+          <span style={{ marginLeft: '0.25rem' }}>
+            {"Add Product to List"}
+          </span>
+        </ButtonLoading>
 
-      <ButtonLoading
-        onClick={async() => {
-          await removeProductFromPromotedList({
-            variables: {
-              promotedListItemId: props.promotedListItem?.id,
-              promotedListId: props.promotedListItem?.promotedListId,
+        <ButtonLoading
+          className={classes.buttonRed}
+          onClick={async() => {
+            if (isAdmin) {
+              await removeProductFromPromotedList({
+                variables: {
+                  promotedListItemId: props.promotedListItem?.id,
+                  promotedListId: props.promotedListItem?.promotedListId,
+                }
+              })
+            } else {
+              snackbar.enqueueSnackbar(
+                "Only for admins for now",
+                { variant: "info" }
+              )
             }
-          })
-        }}
-        loadingIconColor={Colors.blue}
-        replaceTextWhenLoading={true}
-        loading={removeProductFromPromotedListResponse?.loading}
-        disabled={
-          removeProductFromPromotedListResponse?.loading
-          || !props.promotedListItem?.productId
-        }
-        variant="contained"
-        color="secondary"
-        className={classes.buttonRed}
-        // style={{ height: "40px" }}
-      >
-        <span style={{ marginLeft: '0.25rem' }}>
-          {"Clear Slot"}
-        </span>
-      </ButtonLoading>
+          }}
+          loadingIconColor={Colors.blue}
+          replaceTextWhenLoading={true}
+          loading={removeProductFromPromotedListResponse?.loading}
+          disabled={
+            removeProductFromPromotedListResponse?.loading
+            || !props.promotedListItem?.productId
+          }
+          variant="contained"
+          color="secondary"
+          // style={{ height: "40px" }}
+        >
+          <span style={{ marginLeft: '0.25rem' }}>
+            {"Clear Slot"}
+          </span>
+        </ButtonLoading>
+      </div>
 
     </ErrorBounds>
   );
+}
+
+
+const createProductSuggestions = (p: Product[]): GroupedSelectOption[] => {
+  if (!p) {
+    return []
+  }
+  let publishedProducts = p.filter(p => p.isPublished)
+  let unpublishedProducts = p.filter(p => !p.isPublished)
+  return [
+    {
+      label: "Published Products",
+      options: [
+        ...publishedProducts.map(p => createProductOption(p))
+      ],
+    },
+    {
+      label: "Unpublished Products",
+      options: [
+        ...unpublishedProducts.map(p => createProductOption(p))
+      ],
+    },
+  ]
+}
+
+const createProductOption = (p: Product) => {
+  return {
+    label: `${p.currentSnapshot?.title} #${p.currentSnapshot?.serialNumber}`,
+    value: p?.id,
+  }
+}
+
+export interface SelectOption {
+  label: string;
+  value: string | any;
+}
+export interface GroupedSelectOption {
+  label: string;
+  options: SelectOption[]
 }
 
 interface ReactProps extends WithStyles<typeof styles> {
@@ -294,11 +389,22 @@ const styles = (theme: Theme) => createStyles({
   },
   textField: {
     marginTop: "0.5rem",
+  },
+  dropdownProducts: {
+    marginTop: "0.5rem",
     marginBottom: "0.5rem",
+  },
+  buttonsBox: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
   },
   buttonBlue: {
     marginTop: "0.5rem",
     backgroundColor: Colors.blue,
+    borderRadius: BorderRadius,
+    maxWidth: 200,
     "&:hover": {
       backgroundColor: Colors.ultramarineBlue,
     },
@@ -307,6 +413,8 @@ const styles = (theme: Theme) => createStyles({
     marginTop: "0.5rem",
     marginBottom: "0.5rem",
     backgroundColor: Colors.red,
+    borderRadius: BorderRadius,
+    maxWidth: 200,
     "&:hover": {
       backgroundColor: Colors.lighterRed,
     },

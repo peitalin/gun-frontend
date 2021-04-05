@@ -8,15 +8,13 @@ import {
   Product, ID, Product_Variants, UserPrivate, ProductPreviewItem,
   SoldOutStatus,
   Bids,
+  Role,
 } from "typings/gqlTypes";
 import { SelectedVariantProps } from "../ProductId";
 // Redux
 import { useSelector, useDispatch } from "react-redux";
-import { Dispatch } from "redux";
 import { GrandReduxState } from "reduxStore/grand-reducer";
 import { Actions } from "reduxStore/actions";
-// useApolloClient
-import { useApolloClient } from "@apollo/client";
 // Components
 import ProductHeading from "./ProductHeading";
 import ProductPricing from "./ProductPricing";
@@ -43,6 +41,8 @@ const VisaPurchaseProduct = dynamic(() => import("./VisaPurchaseProduct"), {
 //   ssr: false,
 // });
 
+import copy from "clipboard-copy";
+import { useSnackbar } from "notistack";
 
 
 
@@ -68,7 +68,7 @@ const PurchaseProductSummary: React.FC<ReactProps> = (props) => {
   const mdDown = useMediaQuery(theme.breakpoints.down('md'));
 
   const dispatch = useDispatch();
-  const aClient = useApolloClient();
+  const snackbar = useSnackbar();
   const router = useRouter();
 
   const featuredVariant = selectedOption?.value;
@@ -83,6 +83,21 @@ const PurchaseProductSummary: React.FC<ReactProps> = (props) => {
       classes.purchaseCheckoutSummaryRoot,
     )}>
 
+      {
+        user.userRole === Role.PLATFORM_ADMIN &&
+        <div className={classes.copyProductId}
+          onClick={() => {
+            snackbar.enqueueSnackbar(
+              `Copied ${props.product?.id}`,
+              { variant: "info" }
+            )
+            copy(props.product?.id)
+          }}
+        >
+          {props.product?.id}
+        </div>
+      }
+
       <div className={clsx(classes.flexRow, classes.width100, classes.paddingBottom)}>
 
         <div className={classes.flexCol66}>
@@ -96,12 +111,7 @@ const PurchaseProductSummary: React.FC<ReactProps> = (props) => {
                   soldOutStatus={props.product.soldOutStatus}
                 />
               </>
-            : <div style={{
-                minHeight: 380,
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}>
+            : <div className={classes.loadingBarContainer}>
                 <LoadingBar
                   absoluteTop
                   color={Colors.gradientUniswapBlue1}
@@ -118,25 +128,16 @@ const PurchaseProductSummary: React.FC<ReactProps> = (props) => {
           mdDown ? classes.center : classes.alignItemsCenter,
         )}>
           <div className={
-            smDown
-            ? classes.buttonContainerMobile
-            : classes.buttonContainer
+            smDown ? classes.buttonContainerMobile : classes.buttonContainer
           }>
-
             {
               (props.product?.soldOutStatus !== SoldOutStatus.AVAILABLE)
-              ? <div className={clsx(
-                  classes.maxWidth,
-                  classes.visaContainer,
-                )}>
+              ? <div className={clsx(classes.maxWidth, classes.visaContainer)}>
                   <span className={classes.soldOutStatusMessage}>
                     {soldOutStatusToDisplayMessage(props.product?.soldOutStatus)}
                   </span>
                 </div>
-              : <div className={clsx(
-                  classes.maxWidth,
-                  classes.visaContainer,
-                )}>
+              : <div className={clsx(classes.maxWidth, classes.visaContainer)}>
                   <VisaPurchaseProduct
                     // disable on mobile
                     user={user}
@@ -319,6 +320,19 @@ const styles = (theme: Theme) => createStyles({
     color: theme.palette.type === 'dark'
       ? Colors.uniswapMediumGrey
       : Colors.slateGreyDarkest
+  },
+  loadingBarContainer: {
+    minHeight: 380,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  copyProductId: {
+    position: "fixed",
+    bottom: '1rem',
+    right: '1rem',
+    color: Colors.secondary,
+    cursor: "pointer",
   },
 });
 
