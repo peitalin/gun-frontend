@@ -87,7 +87,13 @@ const PromotionCardsDesktop = (props: ReactProps) => {
                 classes.flexItemHover,
               )}>
                 <ProductCardResponsive
-                  product={promotedItemEdge?.node?.product}
+                  product={
+                    // random generated products won't have productId
+                    // and will have isRandomFiller === true
+                    !promotedItemEdge?.node?.isRandomFiller
+                      ? promotedItemEdge?.node?.product
+                      : undefined
+                  }
                   cardsPerRow={cardsPerRow}
                   onClick={async(e) => {
                     props.onClick(e)
@@ -100,7 +106,10 @@ const PromotionCardsDesktop = (props: ReactProps) => {
                   }}
                   disableLoadingAnimation={true}
                   previewImageEmptyMessage={
-                    promotedItemEdge?.node?.product?.id
+                    // random generated products won't have productId
+                    // and will have isRandomFiller === true
+                    !promotedItemEdge?.node?.isRandomFiller &&
+                    promotedItemEdge?.node?.productId
                       ? <div></div>
                       : <div className={classes.previewImageEmptyMessageText}>
                           {"Buy this slot for 2 days"} <br/>

@@ -10,6 +10,8 @@ import {
   PromotedList,
   Role,
   Product,
+  PromotionPurchaseMutationResponse,
+  SoldOutStatus,
 } from "typings/gqlTypes";
 // Styles
 import { withStyles, WithStyles, createStyles, Theme, fade } from "@material-ui/core/styles";
@@ -31,7 +33,17 @@ import DropdownInput from "components/Fields/DropdownInput";
 // // Next
 // import dynamic from 'next/dynamic'
 // const DynamicPaymentMethods = dynamic(() => import('./PaymentMethods'))
-import { refetchUser } from "layout/GetUser";
+import currency from 'currency.js';
+
+import VisaButtonLoading from "pageComponents/P/PurchaseProductSummary/VisaButtonLoadingSSR";
+import dynamic from "next/dynamic";
+
+import VisaPurchasePromotion from "pageComponents/PromoteListings/PromotedItemPurchaseModal/VisaPurchasePromotion"
+// const VisaPurchasePromotion = dynamic(() => import("pageComponents/PromoteListings/PromotedItemPurchaseModal/VisaPurchasePromotion"), {
+//   loading: (props) => <VisaButtonLoading/>,
+//   ssr: false,
+// });
+
 import { useApolloClient, useLazyQuery } from "@apollo/client";
 // media query
 import { useTheme } from "@material-ui/core/styles";
@@ -45,6 +57,8 @@ import {
 } from "queries/promoted_lists-queries";
 import { useQuery, useMutation } from "@apollo/client";
 import { useSnackbar } from "notistack";
+import { formatDate } from "utils/dates";
+import dayjs from 'dayjs';
 
 
 
@@ -59,12 +73,13 @@ const BuyPromotedItemPage = (props: ReactProps) => {
   const theme = useTheme();
   const smDown = useMediaQuery(theme.breakpoints.down('sm'));
   const snackbar = useSnackbar();
+  const c = (s) => currency(s/100, { formatWithSymbol: true }).format()
 
   const user = useSelector<GrandReduxState, UserPrivate>(
     state => state.reduxLogin.user
   );
 
-  const [selectedProduct, setSelectedProduct] = React.useState({
+  const [selectedProductOption, setSelectedProductOption] = React.useState({
     label: undefined,
     value: undefined,
   })
@@ -130,24 +145,50 @@ const BuyPromotedItemPage = (props: ReactProps) => {
     }, []),
   });
 
-
-  // React.useEffect(() => {
-  //   refetchUser(apolloClient)
-  // }, [])
-
   React.useEffect(() => {
     getYourProducts()
   }, [user])
 
-  // console.log("your products: ", getYourProductsResponse?.data)
-  // console.log("position: ", props.position)
-  console.log("selectedProduct: ", selectedProduct)
 
   let connection = getYourProductsResponse?.data?.dashboardProductsConnection
   let yourProducts = connection?.edges?.map(({ node }) => node)
 
   let productOptions = createProductSuggestions(yourProducts)
-  let isAdmin = user.userRole === Role.PLATFORM_ADMIN
+  let isAdmin = user?.userRole === Role.PLATFORM_ADMIN
+
+  let selectedProductId = selectedProductOption?.value
+  let selectedProduct = (yourProducts ?? []).find(p => p.id === selectedProductId);
+
+  // console.log("your products: ", getYourProductsResponse?.data)
+  // console.log("position: ", props.position)
+  // console.log("selectedProductOption: ", selectedProductOption)
+  // console.log("selectedProduct: ", selectedProduct)
+
+  console.log("expiresAt11111: ", props.promotedListItem?.expiresAt)
+  let expiresAt = dayjs(props?.promotedListItem?.expiresAt)
+  let now = dayjs(new Date())
+  let notExpiredYet = now.unix() < expiresAt.unix()
+
+
+  let anotherUserOwnsSlotNow =
+    !!props.promotedListItem?.ownerId // owner exists
+    && props.promotedListItem?.ownerId !== user?.id // owner is not you
+    && notExpiredYet // and ownerhsip is not expired
+
+  let userOwnsSlotNow = props.promotedListItem?.ownerId === user?.id
+    && notExpiredYet
+
+  let slotIsFreeToPurchase = !anotherUserOwnsSlotNow && !userOwnsSlotNow
+
+  // console.log("promotedListItem", props.promotedListItem)
+  console.log("promotedListItem.ownerId:", props.promotedListItem?.ownerId)
+  console.log("userId:", user?.id)
+  console.log("anotherUserOwnsSlotNow:", anotherUserOwnsSlotNow)
+  console.log("userOwnsSlotNow: ", userOwnsSlotNow)
+  console.log("slotIsFreeToPurchase: ", slotIsFreeToPurchase)
+  console.log("expiresAt: ", expiresAt)
+  console.log("now: ", now)
+  console.log("not expired yet: ", now.unix() < expiresAt.unix())
 
   return (
     <ErrorBounds className={clsx(
@@ -176,9 +217,9 @@ const BuyPromotedItemPage = (props: ReactProps) => {
         name="product.id"
         placeholder="Product ID"
         className={classes.textField}
-        value={selectedProduct.value ?? ""}
+        value={selectedProductId ?? ""}
         onChange={(e) => {
-          setSelectedProduct({
+          setSelectedProductOption({
             label: e.target.value,
             value: e.target.value,
           })
@@ -189,12 +230,13 @@ const BuyPromotedItemPage = (props: ReactProps) => {
       <DropdownInput
         className={classes.dropdownProducts}
         stateShape={
-          selectedProduct?.value
-            ? selectedProduct
+          selectedProductId
+            ? selectedProductOption
             : undefined
         }
+        loading={getYourProductsResponse.loading}
         onChange={(option: SelectOption) => {
-          setSelectedProduct({
+          setSelectedProductOption({
             label: option?.label,
             value: option?.value,
           })
@@ -204,82 +246,131 @@ const BuyPromotedItemPage = (props: ReactProps) => {
         options={productOptions}
         placeholder={"Choose a Product"}
       />
-      <div>
-        3. Add a Stripe credit card checkout here.
-      </div>
-      <div>
-        3. Purchase slot
-      </div>
-      <div className={classes.buttonsBox}>
-        <ButtonLoading
-          className={classes.buttonBlue}
-          onClick={async() => {
-            if (isAdmin) {
-              await addProductToPromotedList({
-                variables: {
-                  promotedListItemId: props.promotedListItem?.id,
-                  promotedListId: props.promotedListItem?.promotedListId,
-                  productId: selectedProduct.value,
-                  ownerId: user?.id,
-                  position: props.promotedListItem?.position ?? props.position,
-                }
-              })
-            } else {
-              snackbar.enqueueSnackbar(
-                "Only for admins for now",
-                { variant: "info" }
-              )
-            }
-          }}
-          loadingIconColor={Colors.blue}
-          replaceTextWhenLoading={true}
-          loading={addProductToPromotedListResponse?.loading}
-          disabled={
-            addProductToPromotedListResponse?.loading
-            || !selectedProduct?.value
-          }
-          variant="contained"
-          color="secondary"
-          // style={{ height: "40px" }}
-        >
-          <span style={{ marginLeft: '0.25rem' }}>
-            {"Add Product to List"}
-          </span>
-        </ButtonLoading>
 
-        <ButtonLoading
-          className={classes.buttonRed}
-          onClick={async() => {
-            if (isAdmin) {
-              await removeProductFromPromotedList({
-                variables: {
-                  promotedListItemId: props.promotedListItem?.id,
-                  promotedListId: props.promotedListItem?.promotedListId,
-                }
-              })
-            } else {
-              snackbar.enqueueSnackbar(
-                "Only for admins for now",
-                { variant: "info" }
-              )
-            }
-          }}
-          loadingIconColor={Colors.blue}
-          replaceTextWhenLoading={true}
-          loading={removeProductFromPromotedListResponse?.loading}
-          disabled={
-            removeProductFromPromotedListResponse?.loading
-            || !props.promotedListItem?.productId
+      <div className={classes.helpMessages}>
+        <div>
+          {
+            !userOwnsSlotNow
+            ? "Another user currently owns this slot."
+            : "You currently own this slot."
           }
-          variant="contained"
-          color="secondary"
-          // style={{ height: "40px" }}
-        >
-          <span style={{ marginLeft: '0.25rem' }}>
-            {"Clear Slot"}
-          </span>
-        </ButtonLoading>
+        </div>
+        <div>
+          {
+            expiresAt !== undefined
+              ? `Ownership expires: ${expiresAt.format("YYYY-MM-DD HH:mm a")}`
+              : "2. Purchase slot for your product"
+          }
+        </div>
       </div>
+
+
+      {
+        selectedProductId &&
+        props.promotedListItem?.id &&
+        (slotIsFreeToPurchase) &&
+        <VisaPurchasePromotion
+          // className={"fadeIn"}
+          product={selectedProduct}
+          promotedListItem={props.promotedListItem}
+          refetch={props.refetch}
+          title={`Buy for ${c(500)} AUD`}
+          showIcon={true}
+          display={true}
+          // disableButton={!slotIsFreeToPurchase && isAdmin}
+          // buttonHeight={xsDown ? '40px' : '40px'}
+          // selectedBid={props.selectedBid}
+          handlePostPurchase={
+            (p: PromotionPurchaseMutationResponse) => {
+              // router.push("/orders")
+            }
+          }
+        />
+      }
+
+      {
+        // if user owns this promotion-slot and it hasn't expired
+        // or if it's an admin, then allow swapping/clearing promotion slot
+        (userOwnsSlotNow || isAdmin) &&
+        <div className={classes.buttonsBox}>
+          <ButtonLoading
+            className={classes.buttonBlue}
+            onClick={async() => {
+              if (!props.promotedListItem.isAvailableForPurchase) {
+                snackbar.enqueueSnackbar(
+                  "This slot can't be bought",
+                  { variant: "info" }
+                )
+              }
+              if (userOwnsSlotNow) {
+                await addProductToPromotedList({
+                  variables: {
+                    promotedListItemId: props.promotedListItem?.id,
+                    promotedListId: props.promotedListItem?.promotedListId,
+                    productId: selectedProductId,
+                    ownerId: user?.id,
+                    position: props.promotedListItem?.position ?? props.position,
+                  }
+                })
+              } else if (isAdmin) {
+                snackbar.enqueueSnackbar(
+                  "Another user currently owns this slot, cannot edit",
+                  { variant: "info" }
+                )
+              } else {
+              }
+            }}
+            loadingIconColor={Colors.blue}
+            replaceTextWhenLoading={true}
+            loading={addProductToPromotedListResponse?.loading}
+            disabled={
+              (addProductToPromotedListResponse?.loading || !selectedProductId)
+              && !anotherUserOwnsSlotNow
+            }
+            variant="contained"
+            color="secondary"
+            // style={{ height: "40px" }}
+          >
+            <span style={{ marginLeft: '0.25rem' }}>
+              {"Add Product to List"}
+            </span>
+          </ButtonLoading>
+
+          <ButtonLoading
+            className={classes.buttonRed}
+            onClick={async() => {
+              if (userOwnsSlotNow) {
+                await removeProductFromPromotedList({
+                  variables: {
+                    promotedListItemId: props.promotedListItem?.id,
+                    promotedListId: props.promotedListItem?.promotedListId,
+                  }
+                })
+              } else if (isAdmin) {
+                snackbar.enqueueSnackbar(
+                  "Another user currently owns this slot, cannot clear",
+                  { variant: "info" }
+                )
+              } else {
+              }
+            }}
+            loadingIconColor={Colors.blue}
+            replaceTextWhenLoading={true}
+            loading={removeProductFromPromotedListResponse?.loading}
+            disabled={
+              removeProductFromPromotedListResponse?.loading
+              || !props.promotedListItem?.productId
+            }
+            variant="contained"
+            color="secondary"
+            // style={{ height: "40px" }}
+          >
+            <span style={{ marginLeft: '0.25rem' }}>
+              {"Clear Slot"}
+            </span>
+          </ButtonLoading>
+        </div>
+      }
 
     </ErrorBounds>
   );
@@ -290,19 +381,35 @@ const createProductSuggestions = (p: Product[]): GroupedSelectOption[] => {
   if (!p) {
     return []
   }
-  let publishedProducts = p.filter(p => p.isPublished)
-  let unpublishedProducts = p.filter(p => !p.isPublished)
+
+  let availableProducts = p.filter(p => {
+    return (
+      p.isPublished
+      && p.soldOutStatus === SoldOutStatus.AVAILABLE
+      && !p.isSuspended
+      && !p.isDeleted
+    )
+  })
+  let unavailableProducts = p.filter(p => {
+    return !(
+      p.isPublished
+      && p.soldOutStatus === SoldOutStatus.AVAILABLE
+      && !p.isSuspended
+      && !p.isDeleted
+    )
+  })
+
   return [
     {
-      label: "Published Products",
+      label: "Available Products",
       options: [
-        ...publishedProducts.map(p => createProductOption(p))
+        ...availableProducts.map(p => createProductOption(p))
       ],
     },
     {
-      label: "Unpublished Products",
+      label: "Sold, Abandoned, Unpublished Products",
       options: [
-        ...unpublishedProducts.map(p => createProductOption(p))
+        ...unavailableProducts.map(p => createProductOption(p))
       ],
     },
   ]
@@ -356,6 +463,7 @@ interface MVar2 {
 interface MData2 {
   promotedList: PromotedList
 }
+
 
 
 const styles = (theme: Theme) => createStyles({
@@ -418,6 +526,14 @@ const styles = (theme: Theme) => createStyles({
     "&:hover": {
       backgroundColor: Colors.lighterRed,
     },
+  },
+  helpMessages: {
+    marginTop: "0.5rem",
+    marginBottom: "0.5rem",
+    display: 'flex',
+    flexDirection: "column",
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
   },
 });
 

@@ -31,6 +31,8 @@ import {
   OrderMutationResponse,
   OrderCreateMutationResponse,
   Bids,
+  PromotionPurchaseMutationResponse,
+  PromotedListItem,
 } from 'typings/gqlTypes';
 // Components
 import ErrorBounds from 'components/ErrorBounds';
@@ -40,12 +42,12 @@ import { useSelector } from "react-redux";
 import { GrandReduxState, Actions } from "reduxStore/grand-reducer";
 // Graphql
 import { useApolloClient, useLazyQuery } from '@apollo/client';
+import { useQuery, useMutation } from "@apollo/client";
 // Snackbar
 import { useSnackbar } from "notistack";
-
 import {
-  CREATE_ORDER,
-} from "queries/orders-mutations";
+  PURCHASE_PROMOTION
+} from "queries/promoted_lists-mutations";
 
 
 
@@ -59,11 +61,11 @@ const VisaPurchaseProduct = (props: ReactProps) => {
   const { classes, disableButton } = props;
 
   const product = props.product;
-  const featuredVariant = props.product.featuredVariant;
+  const featuredVariant = props.product?.featuredVariant;
   const purchasePrice = props.selectedBid?.offerPrice
-    || featuredVariant.price
+    || props.promotedListItem?.reservePrice
 
-  const aClient = useApolloClient();
+  console.log("purchasePirce: ", purchasePrice)
 
   const [loading, setLoading] = React.useState(false);
 
@@ -80,31 +82,59 @@ const VisaPurchaseProduct = (props: ReactProps) => {
   })
 
 
+  const [
+    purchasePromotion,
+    purchasePromotionResponse
+  ] = useMutation<MData3, MVar3>(
+    PURCHASE_PROMOTION, {
+    variables: {
+      promotedListItemId: undefined,
+      productId: undefined,
+      total: undefined,
+      buyerId: buyer?.id,
+      stripeAuthorizePaymentData: undefined,
+      currency: "AUD",
+      bidId: undefined,
+    },
+    onError: React.useCallback((err) => {
+      console.warn(err)
+      snackbar.enqueueSnackbar(`${err}`, { variant: "error" })
+    }, []),
+    onCompleted: React.useCallback(async (data) => {
+      console.log(data)
+      if (typeof props.refetch === "function") {
+        props.refetch()
+      }
+    }, []),
+  });
+
+
+
   const createNewPaymentMethod = async(): Promise<PaymentMethod> => {
     let { paymentMethod, error } = await stripe.createPaymentMethod({
       type: 'card',
       card: elements.getElement(CardElement),
-      billing_details: { email: props.user?.email }
+      billing_details: { email: buyer?.email }
     })
-    snackbar.enqueueSnackbar(
-      'createNewPaymentMethod error: ${error}',
-      { variant: "error"}
-    )
+    if (error) {
+      snackbar.enqueueSnackbar(
+        `createNewPaymentMethod error: ${error}`,
+        { variant: "error"}
+      )
+    }
     return paymentMethod
   }
 
 
-
-  const createOrderAndHoldFundsFirst = async({
+  const makePromotionPurchase = async({
     paymentMethodId,
-    stripeCustomerId,
-  }) => {
+  }): Promise<PromotionPurchaseMutationResponse> => {
     // creates an order on the backend, and places a hold on the users card
     // with a payment authorization (to be captured later)
 
     setLoading(true)
 
-    if (!props?.user?.id) {
+    if (!buyer?.id) {
       snackbar.enqueueSnackbar(`Login to purchase.`, { variant: "info" })
       setLoading(false)
       return
@@ -112,43 +142,34 @@ const VisaPurchaseProduct = (props: ReactProps) => {
 
     const stripeAuthorizePaymentData: StripeAuthorizePaymentData = {
       paymentMethod: paymentMethodId,
-      customerId: stripeCustomerId,
     };
 
     // 1. Create Order + create stripe payment intent in the backend
-    return await aClient.mutate<MutDataCreateOrder, MutVarCreateOrder>({
-      mutation: CREATE_ORDER,
+    return await purchasePromotion({
       variables: {
+        promotedListItemId: props.promotedListItem?.id,
         productId: product.id,
-        productSnapshotId: product.currentSnapshot.id,
-        variantId: featuredVariant.variantId,
-        variantSnapshotId: featuredVariant.variantSnapshotId,
         total: purchasePrice,
-        buyerId: props.user.id,
-        sellerStoreId: product.store.id,
+        buyerId: buyer.id,
         stripeAuthorizePaymentData: JSON.stringify(stripeAuthorizePaymentData),
+        currency: "AUD",
         bidId: props.selectedBid?.id,
       }
     })
     .then(response => {
       let stripePaymentIntent = JSON.parse(
-        response?.data?.createOrder?.stripePaymentIntent ?? "{}"
+        response?.data?.purchasePromotion?.stripePaymentIntent ?? "{}"
       );
-      console.log("createOrder response: ", response)
+      console.log("pruchasePromotion response: ", response)
       console.info("stripePaymentIntent", stripePaymentIntent)
-      return response.data.createOrder
-    })
-    .catch(err => {
-      snackbar.enqueueSnackbar(`${err}`, { variant: "error" })
-      return {} as any
+      return response?.data?.purchasePromotion
     })
     .finally(() => {
       setLoading(false)
-      if (typeof props.refetchProduct === "function") {
-        props.refetchProduct()
-      }
     })
   }
+
+
 
 
   return (
@@ -201,22 +222,23 @@ const VisaPurchaseProduct = (props: ReactProps) => {
                 () => createNewPaymentMethod()
                       .then(async (newPaymentMethod) => {
 
-                        // // 1. Create an order first with the backend
-                        // let orderResponse = await createOrderAndHoldFundsFirst({
-                        //   paymentMethodId: newPaymentMethod.id,
-                        //   stripeCustomerId: props?.user?.stripeCustomerId,
-                        // });
+                        // 1. Create a purchase first with the backend
+                        let promotionPurchaseResponse = await makePromotionPurchase({
+                          paymentMethodId: newPaymentMethod.id,
+                        });
 
-                        // console.log("1: ORDER_MUTATION response: ", orderResponse)
-                        // let order = orderResponse?.unconfirmedOrder;
-                        // let stripePaymentIntent = JSON.parse(orderResponse?.stripePaymentIntent);
-                        // console.log("1b: stripe PaymentIntent: ", stripePaymentIntent)
+                        console.log("1: PROMOTION_PURCHASE response: ", promotionPurchaseResponse)
+                        let stripePaymentIntent = JSON.parse(promotionPurchaseResponse?.stripePaymentIntent);
+                        console.log("1b: stripe PaymentIntent: ", stripePaymentIntent)
 
-                        // snackbar.enqueueSnackbar(`Success order placed: ${order.id}`, { variant: "success" })
+                        snackbar.enqueueSnackbar(
+                          `Purchased slot: ${promotionPurchaseResponse.promotionPurchase.id}`,
+                          { variant: "success" }
+                        )
 
-                        // if (typeof props.handleOrderPostPurchase === "function") {
-                        //   props.handleOrderPostPurchase(order)
-                        // }
+                        if (typeof props.handlePostPurchase === "function") {
+                          props.handlePostPurchase(promotionPurchaseResponse)
+                        }
                       })
                       .catch(e => {
                         console.warn(e)
@@ -249,37 +271,35 @@ const VisaPurchaseProduct = (props: ReactProps) => {
 interface ReactProps extends WithStyles<typeof styles> {
   display: boolean;
   disableButton?: boolean;
-  user?: UserPrivate;
   className?: string;
   buttonHeight?: any;
   title?: string;
   showIcon?: boolean;
-  handleOrderPostPurchase(order: any): void;
+  handlePostPurchase(p: any): void;
   product: Product;
-  refetchProduct?(): void;
+  promotedListItem: PromotedListItem;
+  refetch?(): void;
   selectedBid?: Bids;
 }
 
-interface MutDataCreateOrder {
-  createOrder: OrderCreateMutationResponse;
-}
-interface MutVarCreateOrder {
+interface MVar3 {
+  promotedListItemId: string
   productId: string
-  productSnapshotId: string
-  variantId: string
-  variantSnapshotId: string
   total: number
   buyerId: string
-  sellerStoreId: string
   stripeAuthorizePaymentData: string
-  bidId: string
+  currency?: string
+  bidId?: string
 }
-interface MutDataConfirmOrder {
-  confirmOrder: OrderMutationResponse;
+interface MData3 {
+  purchasePromotion: PromotionPurchaseMutationResponse
 }
-interface MutVarConfirmOrder {
-  orderId: string
-  stripeConfirmPaymentData: string
+
+interface MVar4 {
+  promotionPurchaseId: string
+}
+interface MData4 {
+  capturePaymentForPromotionPurchase: PromotionPurchaseMutationResponse
 }
 
 /////////////// Styles /////////////

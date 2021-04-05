@@ -3271,6 +3271,10 @@ export type Mutation = {
   delete_promoted_lists?: Maybe<Promoted_Lists_Mutation_Response>;
   /** delete single row from the table: "promoted_lists" */
   delete_promoted_lists_by_pk?: Maybe<Promoted_Lists>;
+  /** delete data from the table: "promotion_purchases" */
+  delete_promotion_purchases?: Maybe<Promotion_Purchases_Mutation_Response>;
+  /** delete single row from the table: "promotion_purchases" */
+  delete_promotion_purchases_by_pk?: Maybe<Promotion_Purchases>;
   /** delete data from the table: "refunds" */
   delete_refunds?: Maybe<Refunds_Mutation_Response>;
   /** delete single row from the table: "refunds" */
@@ -3403,6 +3407,10 @@ export type Mutation = {
   insert_promoted_lists?: Maybe<Promoted_Lists_Mutation_Response>;
   /** insert a single row into the table: "promoted_lists" */
   insert_promoted_lists_one?: Maybe<Promoted_Lists>;
+  /** insert data into the table: "promotion_purchases" */
+  insert_promotion_purchases?: Maybe<Promotion_Purchases_Mutation_Response>;
+  /** insert a single row into the table: "promotion_purchases" */
+  insert_promotion_purchases_one?: Maybe<Promotion_Purchases>;
   /** insert data into the table: "refunds" */
   insert_refunds?: Maybe<Refunds_Mutation_Response>;
   /** insert a single row into the table: "refunds" */
@@ -3535,6 +3543,10 @@ export type Mutation = {
   update_promoted_lists?: Maybe<Promoted_Lists_Mutation_Response>;
   /** update single row of the table: "promoted_lists" */
   update_promoted_lists_by_pk?: Maybe<Promoted_Lists>;
+  /** update data of the table: "promotion_purchases" */
+  update_promotion_purchases?: Maybe<Promotion_Purchases_Mutation_Response>;
+  /** update single row of the table: "promotion_purchases" */
+  update_promotion_purchases_by_pk?: Maybe<Promotion_Purchases>;
   /** update data of the table: "refunds" */
   update_refunds?: Maybe<Refunds_Mutation_Response>;
   /** update single row of the table: "refunds" */
@@ -3818,13 +3830,17 @@ export type Mutation = {
   rearrangePromotedListItems: PromotedListMutationResponse;
   /**
    * AccessRule – LOGGED_IN
+   * For a buyer to purchase a promotion slot
+   */
+  purchasePromotion: PromotionPurchaseMutationResponse;
+  /**
+   * AccessRule – LOGGED_IN
    * For a buyer to create an order
    */
   createOrder: OrderCreateMutationResponse;
   /**
    * AccessRule – LOGGED_IN
    * For a buyer to make payment and confirm an order.
-   * using a Westpac token + Westpac customer Id
    */
   capturePaymentForOrder: OrderMutationResponse;
   /**
@@ -4173,6 +4189,16 @@ export type MutationDelete_Promoted_ListsArgs = {
 
 
 export type MutationDelete_Promoted_Lists_By_PkArgs = {
+  id: Scalars['String'];
+};
+
+
+export type MutationDelete_Promotion_PurchasesArgs = {
+  where: Promotion_Purchases_Bool_Exp;
+};
+
+
+export type MutationDelete_Promotion_Purchases_By_PkArgs = {
   id: Scalars['String'];
 };
 
@@ -4560,6 +4586,18 @@ export type MutationInsert_Promoted_ListsArgs = {
 export type MutationInsert_Promoted_Lists_OneArgs = {
   object: Promoted_Lists_Insert_Input;
   on_conflict?: Maybe<Promoted_Lists_On_Conflict>;
+};
+
+
+export type MutationInsert_Promotion_PurchasesArgs = {
+  objects: Array<Promotion_Purchases_Insert_Input>;
+  on_conflict?: Maybe<Promotion_Purchases_On_Conflict>;
+};
+
+
+export type MutationInsert_Promotion_Purchases_OneArgs = {
+  object: Promotion_Purchases_Insert_Input;
+  on_conflict?: Maybe<Promotion_Purchases_On_Conflict>;
 };
 
 
@@ -4983,6 +5021,20 @@ export type MutationUpdate_Promoted_Lists_By_PkArgs = {
 };
 
 
+export type MutationUpdate_Promotion_PurchasesArgs = {
+  _inc?: Maybe<Promotion_Purchases_Inc_Input>;
+  _set?: Maybe<Promotion_Purchases_Set_Input>;
+  where: Promotion_Purchases_Bool_Exp;
+};
+
+
+export type MutationUpdate_Promotion_Purchases_By_PkArgs = {
+  _inc?: Maybe<Promotion_Purchases_Inc_Input>;
+  _set?: Maybe<Promotion_Purchases_Set_Input>;
+  pk_columns: Promotion_Purchases_Pk_Columns_Input;
+};
+
+
 export type MutationUpdate_RefundsArgs = {
   _set?: Maybe<Refunds_Set_Input>;
   where: Refunds_Bool_Exp;
@@ -5326,6 +5378,17 @@ export type MutationRemoveProductFromPromotedListArgs = {
 export type MutationRearrangePromotedListItemsArgs = {
   listId: Scalars['String'];
   itemIdsInOrder: Array<Scalars['ID']>;
+};
+
+
+export type MutationPurchasePromotionArgs = {
+  promotedListItemId: Scalars['String'];
+  productId: Scalars['String'];
+  total: Scalars['Int'];
+  buyerId: Scalars['String'];
+  stripeAuthorizePaymentData: Scalars['String'];
+  currency?: Maybe<Scalars['String']>;
+  bidId?: Maybe<Scalars['String']>;
 };
 
 
@@ -11322,6 +11385,7 @@ export type PromotedListItem = {
   isAvailableForPurchase: Scalars['Boolean'];
   expiresAt?: Maybe<Scalars['Date']>;
   position?: Maybe<Scalars['Int']>;
+  isRandomFiller?: Maybe<Scalars['Boolean']>;
 };
 
 export type PromotedListItemMutationResponse = {
@@ -11344,6 +11408,387 @@ export type PromotedListItemsEdge = {
 export type PromotedListMutationResponse = {
    __typename?: 'PromotedListMutationResponse';
   promotedList: PromotedList;
+};
+
+/** columns and relationships of "promotion_purchases" */
+export type Promotion_Purchases = {
+   __typename?: 'promotion_purchases';
+  buyerId: Scalars['String'];
+  createdAt: Scalars['timestamptz'];
+  currency: Scalars['String'];
+  fees: Scalars['Int'];
+  id: Scalars['String'];
+  paymentIntentId: Scalars['String'];
+  productId?: Maybe<Scalars['String']>;
+  promotedListId: Scalars['String'];
+  promotedListItemId: Scalars['String'];
+  total: Scalars['Int'];
+};
+
+/** aggregated selection of "promotion_purchases" */
+export type Promotion_Purchases_Aggregate = {
+   __typename?: 'promotion_purchases_aggregate';
+  aggregate?: Maybe<Promotion_Purchases_Aggregate_Fields>;
+  nodes: Array<Promotion_Purchases>;
+};
+
+/** aggregate fields of "promotion_purchases" */
+export type Promotion_Purchases_Aggregate_Fields = {
+   __typename?: 'promotion_purchases_aggregate_fields';
+  avg?: Maybe<Promotion_Purchases_Avg_Fields>;
+  count?: Maybe<Scalars['Int']>;
+  max?: Maybe<Promotion_Purchases_Max_Fields>;
+  min?: Maybe<Promotion_Purchases_Min_Fields>;
+  stddev?: Maybe<Promotion_Purchases_Stddev_Fields>;
+  stddev_pop?: Maybe<Promotion_Purchases_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<Promotion_Purchases_Stddev_Samp_Fields>;
+  sum?: Maybe<Promotion_Purchases_Sum_Fields>;
+  var_pop?: Maybe<Promotion_Purchases_Var_Pop_Fields>;
+  var_samp?: Maybe<Promotion_Purchases_Var_Samp_Fields>;
+  variance?: Maybe<Promotion_Purchases_Variance_Fields>;
+};
+
+
+/** aggregate fields of "promotion_purchases" */
+export type Promotion_Purchases_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<Promotion_Purchases_Select_Column>>;
+  distinct?: Maybe<Scalars['Boolean']>;
+};
+
+/** order by aggregate values of table "promotion_purchases" */
+export type Promotion_Purchases_Aggregate_Order_By = {
+  avg?: Maybe<Promotion_Purchases_Avg_Order_By>;
+  count?: Maybe<Order_By>;
+  max?: Maybe<Promotion_Purchases_Max_Order_By>;
+  min?: Maybe<Promotion_Purchases_Min_Order_By>;
+  stddev?: Maybe<Promotion_Purchases_Stddev_Order_By>;
+  stddev_pop?: Maybe<Promotion_Purchases_Stddev_Pop_Order_By>;
+  stddev_samp?: Maybe<Promotion_Purchases_Stddev_Samp_Order_By>;
+  sum?: Maybe<Promotion_Purchases_Sum_Order_By>;
+  var_pop?: Maybe<Promotion_Purchases_Var_Pop_Order_By>;
+  var_samp?: Maybe<Promotion_Purchases_Var_Samp_Order_By>;
+  variance?: Maybe<Promotion_Purchases_Variance_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "promotion_purchases" */
+export type Promotion_Purchases_Arr_Rel_Insert_Input = {
+  data: Array<Promotion_Purchases_Insert_Input>;
+  on_conflict?: Maybe<Promotion_Purchases_On_Conflict>;
+};
+
+/** aggregate avg on columns */
+export type Promotion_Purchases_Avg_Fields = {
+   __typename?: 'promotion_purchases_avg_fields';
+  fees?: Maybe<Scalars['Float']>;
+  total?: Maybe<Scalars['Float']>;
+};
+
+/** order by avg() on columns of table "promotion_purchases" */
+export type Promotion_Purchases_Avg_Order_By = {
+  fees?: Maybe<Order_By>;
+  total?: Maybe<Order_By>;
+};
+
+/** Boolean expression to filter rows from the table "promotion_purchases". All fields are combined with a logical 'AND'. */
+export type Promotion_Purchases_Bool_Exp = {
+  _and?: Maybe<Array<Maybe<Promotion_Purchases_Bool_Exp>>>;
+  _not?: Maybe<Promotion_Purchases_Bool_Exp>;
+  _or?: Maybe<Array<Maybe<Promotion_Purchases_Bool_Exp>>>;
+  buyerId?: Maybe<String_Comparison_Exp>;
+  createdAt?: Maybe<Timestamptz_Comparison_Exp>;
+  currency?: Maybe<String_Comparison_Exp>;
+  fees?: Maybe<Int_Comparison_Exp>;
+  id?: Maybe<String_Comparison_Exp>;
+  paymentIntentId?: Maybe<String_Comparison_Exp>;
+  productId?: Maybe<String_Comparison_Exp>;
+  promotedListId?: Maybe<String_Comparison_Exp>;
+  promotedListItemId?: Maybe<String_Comparison_Exp>;
+  total?: Maybe<Int_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "promotion_purchases" */
+export enum Promotion_Purchases_Constraint {
+  /** unique or primary key constraint */
+  PROMOTION_PURCHASES_PKEY = 'promotion_purchases_pkey'
+}
+
+/** input type for incrementing integer column in table "promotion_purchases" */
+export type Promotion_Purchases_Inc_Input = {
+  fees?: Maybe<Scalars['Int']>;
+  total?: Maybe<Scalars['Int']>;
+};
+
+/** input type for inserting data into table "promotion_purchases" */
+export type Promotion_Purchases_Insert_Input = {
+  buyerId?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['timestamptz']>;
+  currency?: Maybe<Scalars['String']>;
+  fees?: Maybe<Scalars['Int']>;
+  id?: Maybe<Scalars['String']>;
+  paymentIntentId?: Maybe<Scalars['String']>;
+  productId?: Maybe<Scalars['String']>;
+  promotedListId?: Maybe<Scalars['String']>;
+  promotedListItemId?: Maybe<Scalars['String']>;
+  total?: Maybe<Scalars['Int']>;
+};
+
+/** aggregate max on columns */
+export type Promotion_Purchases_Max_Fields = {
+   __typename?: 'promotion_purchases_max_fields';
+  buyerId?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['timestamptz']>;
+  currency?: Maybe<Scalars['String']>;
+  fees?: Maybe<Scalars['Int']>;
+  id?: Maybe<Scalars['String']>;
+  paymentIntentId?: Maybe<Scalars['String']>;
+  productId?: Maybe<Scalars['String']>;
+  promotedListId?: Maybe<Scalars['String']>;
+  promotedListItemId?: Maybe<Scalars['String']>;
+  total?: Maybe<Scalars['Int']>;
+};
+
+/** order by max() on columns of table "promotion_purchases" */
+export type Promotion_Purchases_Max_Order_By = {
+  buyerId?: Maybe<Order_By>;
+  createdAt?: Maybe<Order_By>;
+  currency?: Maybe<Order_By>;
+  fees?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  paymentIntentId?: Maybe<Order_By>;
+  productId?: Maybe<Order_By>;
+  promotedListId?: Maybe<Order_By>;
+  promotedListItemId?: Maybe<Order_By>;
+  total?: Maybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type Promotion_Purchases_Min_Fields = {
+   __typename?: 'promotion_purchases_min_fields';
+  buyerId?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['timestamptz']>;
+  currency?: Maybe<Scalars['String']>;
+  fees?: Maybe<Scalars['Int']>;
+  id?: Maybe<Scalars['String']>;
+  paymentIntentId?: Maybe<Scalars['String']>;
+  productId?: Maybe<Scalars['String']>;
+  promotedListId?: Maybe<Scalars['String']>;
+  promotedListItemId?: Maybe<Scalars['String']>;
+  total?: Maybe<Scalars['Int']>;
+};
+
+/** order by min() on columns of table "promotion_purchases" */
+export type Promotion_Purchases_Min_Order_By = {
+  buyerId?: Maybe<Order_By>;
+  createdAt?: Maybe<Order_By>;
+  currency?: Maybe<Order_By>;
+  fees?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  paymentIntentId?: Maybe<Order_By>;
+  productId?: Maybe<Order_By>;
+  promotedListId?: Maybe<Order_By>;
+  promotedListItemId?: Maybe<Order_By>;
+  total?: Maybe<Order_By>;
+};
+
+/** response of any mutation on the table "promotion_purchases" */
+export type Promotion_Purchases_Mutation_Response = {
+   __typename?: 'promotion_purchases_mutation_response';
+  /** number of affected rows by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data of the affected rows by the mutation */
+  returning: Array<Promotion_Purchases>;
+};
+
+/** input type for inserting object relation for remote table "promotion_purchases" */
+export type Promotion_Purchases_Obj_Rel_Insert_Input = {
+  data: Promotion_Purchases_Insert_Input;
+  on_conflict?: Maybe<Promotion_Purchases_On_Conflict>;
+};
+
+/** on conflict condition type for table "promotion_purchases" */
+export type Promotion_Purchases_On_Conflict = {
+  constraint: Promotion_Purchases_Constraint;
+  update_columns: Array<Promotion_Purchases_Update_Column>;
+  where?: Maybe<Promotion_Purchases_Bool_Exp>;
+};
+
+/** ordering options when selecting data from "promotion_purchases" */
+export type Promotion_Purchases_Order_By = {
+  buyerId?: Maybe<Order_By>;
+  createdAt?: Maybe<Order_By>;
+  currency?: Maybe<Order_By>;
+  fees?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  paymentIntentId?: Maybe<Order_By>;
+  productId?: Maybe<Order_By>;
+  promotedListId?: Maybe<Order_By>;
+  promotedListItemId?: Maybe<Order_By>;
+  total?: Maybe<Order_By>;
+};
+
+/** primary key columns input for table: "promotion_purchases" */
+export type Promotion_Purchases_Pk_Columns_Input = {
+  id: Scalars['String'];
+};
+
+/** select columns of table "promotion_purchases" */
+export enum Promotion_Purchases_Select_Column {
+  /** column name */
+  BUYERID = 'buyerId',
+  /** column name */
+  CREATEDAT = 'createdAt',
+  /** column name */
+  CURRENCY = 'currency',
+  /** column name */
+  FEES = 'fees',
+  /** column name */
+  ID = 'id',
+  /** column name */
+  PAYMENTINTENTID = 'paymentIntentId',
+  /** column name */
+  PRODUCTID = 'productId',
+  /** column name */
+  PROMOTEDLISTID = 'promotedListId',
+  /** column name */
+  PROMOTEDLISTITEMID = 'promotedListItemId',
+  /** column name */
+  TOTAL = 'total'
+}
+
+/** input type for updating data in table "promotion_purchases" */
+export type Promotion_Purchases_Set_Input = {
+  buyerId?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['timestamptz']>;
+  currency?: Maybe<Scalars['String']>;
+  fees?: Maybe<Scalars['Int']>;
+  id?: Maybe<Scalars['String']>;
+  paymentIntentId?: Maybe<Scalars['String']>;
+  productId?: Maybe<Scalars['String']>;
+  promotedListId?: Maybe<Scalars['String']>;
+  promotedListItemId?: Maybe<Scalars['String']>;
+  total?: Maybe<Scalars['Int']>;
+};
+
+/** aggregate stddev on columns */
+export type Promotion_Purchases_Stddev_Fields = {
+   __typename?: 'promotion_purchases_stddev_fields';
+  fees?: Maybe<Scalars['Float']>;
+  total?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev() on columns of table "promotion_purchases" */
+export type Promotion_Purchases_Stddev_Order_By = {
+  fees?: Maybe<Order_By>;
+  total?: Maybe<Order_By>;
+};
+
+/** aggregate stddev_pop on columns */
+export type Promotion_Purchases_Stddev_Pop_Fields = {
+   __typename?: 'promotion_purchases_stddev_pop_fields';
+  fees?: Maybe<Scalars['Float']>;
+  total?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev_pop() on columns of table "promotion_purchases" */
+export type Promotion_Purchases_Stddev_Pop_Order_By = {
+  fees?: Maybe<Order_By>;
+  total?: Maybe<Order_By>;
+};
+
+/** aggregate stddev_samp on columns */
+export type Promotion_Purchases_Stddev_Samp_Fields = {
+   __typename?: 'promotion_purchases_stddev_samp_fields';
+  fees?: Maybe<Scalars['Float']>;
+  total?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev_samp() on columns of table "promotion_purchases" */
+export type Promotion_Purchases_Stddev_Samp_Order_By = {
+  fees?: Maybe<Order_By>;
+  total?: Maybe<Order_By>;
+};
+
+/** aggregate sum on columns */
+export type Promotion_Purchases_Sum_Fields = {
+   __typename?: 'promotion_purchases_sum_fields';
+  fees?: Maybe<Scalars['Int']>;
+  total?: Maybe<Scalars['Int']>;
+};
+
+/** order by sum() on columns of table "promotion_purchases" */
+export type Promotion_Purchases_Sum_Order_By = {
+  fees?: Maybe<Order_By>;
+  total?: Maybe<Order_By>;
+};
+
+/** update columns of table "promotion_purchases" */
+export enum Promotion_Purchases_Update_Column {
+  /** column name */
+  BUYERID = 'buyerId',
+  /** column name */
+  CREATEDAT = 'createdAt',
+  /** column name */
+  CURRENCY = 'currency',
+  /** column name */
+  FEES = 'fees',
+  /** column name */
+  ID = 'id',
+  /** column name */
+  PAYMENTINTENTID = 'paymentIntentId',
+  /** column name */
+  PRODUCTID = 'productId',
+  /** column name */
+  PROMOTEDLISTID = 'promotedListId',
+  /** column name */
+  PROMOTEDLISTITEMID = 'promotedListItemId',
+  /** column name */
+  TOTAL = 'total'
+}
+
+/** aggregate var_pop on columns */
+export type Promotion_Purchases_Var_Pop_Fields = {
+   __typename?: 'promotion_purchases_var_pop_fields';
+  fees?: Maybe<Scalars['Float']>;
+  total?: Maybe<Scalars['Float']>;
+};
+
+/** order by var_pop() on columns of table "promotion_purchases" */
+export type Promotion_Purchases_Var_Pop_Order_By = {
+  fees?: Maybe<Order_By>;
+  total?: Maybe<Order_By>;
+};
+
+/** aggregate var_samp on columns */
+export type Promotion_Purchases_Var_Samp_Fields = {
+   __typename?: 'promotion_purchases_var_samp_fields';
+  fees?: Maybe<Scalars['Float']>;
+  total?: Maybe<Scalars['Float']>;
+};
+
+/** order by var_samp() on columns of table "promotion_purchases" */
+export type Promotion_Purchases_Var_Samp_Order_By = {
+  fees?: Maybe<Order_By>;
+  total?: Maybe<Order_By>;
+};
+
+/** aggregate variance on columns */
+export type Promotion_Purchases_Variance_Fields = {
+   __typename?: 'promotion_purchases_variance_fields';
+  fees?: Maybe<Scalars['Float']>;
+  total?: Maybe<Scalars['Float']>;
+};
+
+/** order by variance() on columns of table "promotion_purchases" */
+export type Promotion_Purchases_Variance_Order_By = {
+  fees?: Maybe<Order_By>;
+  total?: Maybe<Order_By>;
+};
+
+export type PromotionPurchaseMutationResponse = {
+   __typename?: 'PromotionPurchaseMutationResponse';
+  promotionPurchase: Promotion_Purchases;
+  promotedListItem: PromotedListItem;
+  stripePaymentIntent: Scalars['String'];
 };
 
 export type Query = {
@@ -11520,6 +11965,12 @@ export type Query = {
   promoted_lists_aggregate: Promoted_Lists_Aggregate;
   /** fetch data from the table: "promoted_lists" using primary key columns */
   promoted_lists_by_pk?: Maybe<Promoted_Lists>;
+  /** fetch data from the table: "promotion_purchases" */
+  promotion_purchases: Array<Promotion_Purchases>;
+  /** fetch aggregated fields from the table: "promotion_purchases" */
+  promotion_purchases_aggregate: Promotion_Purchases_Aggregate;
+  /** fetch data from the table: "promotion_purchases" using primary key columns */
+  promotion_purchases_by_pk?: Maybe<Promotion_Purchases>;
   /** fetch data from the table: "refunds" */
   refunds: Array<Refunds>;
   /** fetch aggregated fields from the table: "refunds" */
@@ -12421,6 +12872,29 @@ export type QueryPromoted_Lists_AggregateArgs = {
 
 
 export type QueryPromoted_Lists_By_PkArgs = {
+  id: Scalars['String'];
+};
+
+
+export type QueryPromotion_PurchasesArgs = {
+  distinct_on?: Maybe<Array<Promotion_Purchases_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Promotion_Purchases_Order_By>>;
+  where?: Maybe<Promotion_Purchases_Bool_Exp>;
+};
+
+
+export type QueryPromotion_Purchases_AggregateArgs = {
+  distinct_on?: Maybe<Array<Promotion_Purchases_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Promotion_Purchases_Order_By>>;
+  where?: Maybe<Promotion_Purchases_Bool_Exp>;
+};
+
+
+export type QueryPromotion_Purchases_By_PkArgs = {
   id: Scalars['String'];
 };
 
@@ -13618,6 +14092,12 @@ export type Subscription = {
   promoted_lists_aggregate: Promoted_Lists_Aggregate;
   /** fetch data from the table: "promoted_lists" using primary key columns */
   promoted_lists_by_pk?: Maybe<Promoted_Lists>;
+  /** fetch data from the table: "promotion_purchases" */
+  promotion_purchases: Array<Promotion_Purchases>;
+  /** fetch aggregated fields from the table: "promotion_purchases" */
+  promotion_purchases_aggregate: Promotion_Purchases_Aggregate;
+  /** fetch data from the table: "promotion_purchases" using primary key columns */
+  promotion_purchases_by_pk?: Maybe<Promotion_Purchases>;
   /** fetch data from the table: "refunds" */
   refunds: Array<Refunds>;
   /** fetch aggregated fields from the table: "refunds" */
@@ -14324,6 +14804,29 @@ export type SubscriptionPromoted_Lists_AggregateArgs = {
 
 
 export type SubscriptionPromoted_Lists_By_PkArgs = {
+  id: Scalars['String'];
+};
+
+
+export type SubscriptionPromotion_PurchasesArgs = {
+  distinct_on?: Maybe<Array<Promotion_Purchases_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Promotion_Purchases_Order_By>>;
+  where?: Maybe<Promotion_Purchases_Bool_Exp>;
+};
+
+
+export type SubscriptionPromotion_Purchases_AggregateArgs = {
+  distinct_on?: Maybe<Array<Promotion_Purchases_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Promotion_Purchases_Order_By>>;
+  where?: Maybe<Promotion_Purchases_Bool_Exp>;
+};
+
+
+export type SubscriptionPromotion_Purchases_By_PkArgs = {
   id: Scalars['String'];
 };
 

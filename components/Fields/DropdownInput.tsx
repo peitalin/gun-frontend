@@ -72,6 +72,7 @@ const DropdownInput = (props: ReactProps) => {
             isMulti={isMulti}
             isSearchable={isSearchable}
             isClearable={isClearable}
+            isLoading={props.loading}
             className={classes.optionValues}
             classes={{
               input: clsx(
@@ -142,6 +143,7 @@ const DropdownInput = (props: ReactProps) => {
             isMulti={isMulti}
             isSearchable={isSearchable}
             isClearable={isClearable}
+            isLoading={props.loading}
             className={classes.optionValues}
             classes={{
               input: clsx(
@@ -299,6 +301,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   styles?: any;
   theme?: any;
   height?: any;
+  loading?: boolean;
   [key: string]: any;
 }
 export interface SelectOption {

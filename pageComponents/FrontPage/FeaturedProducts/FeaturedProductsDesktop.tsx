@@ -63,8 +63,8 @@ const FeaturedProductsDesktop = (props: ReactProps) => {
       <div className={classes.carouselContainer}>
         {
           products?.length > 0
-          ? products?.map((product, i) =>
-              <div key={product.id + `_${i}`}
+          ? products?.filter(p => !!p).map((product, i) =>
+              <div key={product?.id + `_${i}`}
                 className={xsDown ? classes.productCardWrapperXs : classes.productCardWrapper}
               >
                 <div className={clsx(

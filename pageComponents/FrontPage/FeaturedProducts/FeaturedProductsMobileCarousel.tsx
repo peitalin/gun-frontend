@@ -63,7 +63,7 @@ const FeaturedProductsMobile = (props: ReactProps) => {
         scrollSnapType={"x proximity"}
       >
         {
-          products?.map((product, i) =>
+          products?.filter(p => !!p).map((product, i) =>
             <div key={i} style={{
               marginLeft: '0.5rem',
             }}>

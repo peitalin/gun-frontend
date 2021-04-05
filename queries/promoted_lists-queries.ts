@@ -37,6 +37,7 @@ export const GET_PROMOTED_LIST = gql`
             isAvailableForPurchase
             expiresAt
             position
+            isRandomFiller
           }
         }
       }
@@ -71,6 +72,7 @@ export const ADD_PRODUCT_TO_PROMOTED_LIST = gql`
         isAvailableForPurchase
         expiresAt
         position
+        isRandomFiller
       }
     }
   }
@@ -113,6 +115,7 @@ export const REMOVE_PRODUCT_FROM_PROMOTED_LIST = gql`
               isAvailableForPurchase
               expiresAt
               position
+              isRandomFiller
             }
           }
         }

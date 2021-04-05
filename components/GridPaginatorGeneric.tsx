@@ -38,6 +38,7 @@ function GridPaginatorGeneric<T>(props: ReactProps<T> & ReactChildren<T>) {
     overfetchBy = 1,
     maxWidth = 1160,
     disableAnimation = false,
+    disableFadeIn = false,
   } = props;
 
   // console.log("connection", connection)
@@ -104,7 +105,7 @@ function GridPaginatorGeneric<T>(props: ReactProps<T> & ReactChildren<T>) {
               <div key={`product-group-${subindex}`}
                 className={clsx(
                   // props.loading ? "fadeIn" : "staggerFadeIn",
-                  "fadeIn",
+                  !disableFadeIn && "fadeInFast",
                   props.className ? props.className : classes.flexRow,
                 )}
               >
@@ -156,6 +157,7 @@ interface ReactProps<T> {
   numItemsPerPage?: number;
   overfetchBy?: number;
   disableAnimation?: boolean;
+  disableFadeIn?: boolean;
   classNameRoot?: any;
   className?: any;
   gridItemClassName?: any;

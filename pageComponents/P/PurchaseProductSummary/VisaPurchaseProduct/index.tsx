@@ -91,10 +91,12 @@ const VisaPurchaseProduct = (props: ReactProps) => {
       card: elements.getElement(CardElement),
       billing_details: { email: props.user?.email }
     })
-    snackbar.enqueueSnackbar(
-      'createNewPaymentMethod error: ${error}',
-      { variant: "error"}
-    )
+    if (error) {
+      snackbar.enqueueSnackbar(
+        `createNewPaymentMethod error: ${error}`,
+        { variant: "error"}
+      )
+    }
     return paymentMethod
   }
 
