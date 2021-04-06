@@ -18,7 +18,7 @@ export const styles = (theme: Theme) => createStyles({
     justifyContent: 'center',
   },
   productColumn60: {
-    flexBasis: '66%',
+    flexBasis: '62%',
     flexGrow: 1,
     minWidth: 360,
   },

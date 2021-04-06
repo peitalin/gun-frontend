@@ -65,8 +65,7 @@ export const validationSchemas = {
         .max(100),
       magazineCapacity: Yup.string()
         .min(0)
-        .max(100)
-        .required('Needs a magazine capacity'),
+        .max(100),
       barrelLength: Yup.string()
         .min(0)
         .max(100)
@@ -238,8 +237,7 @@ export const validationSchemas = {
         .max(100),
       magazineCapacity: Yup.string()
         .min(0)
-        .max(100)
-        .required('Needs a magazine capacity'),
+        .max(100),
       barrelLength: Yup.string()
         .min(0)
         .max(100)

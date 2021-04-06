@@ -101,14 +101,16 @@ const styles = (theme: Theme) => createStyles({
   },
   modalPaperScrollPaperSm: {
     maxHeight: "calc(100% - rem)",
-    overflowY: 'hidden',
+    overflowY: 'visible', // let dropdown overhang modal
     borderRadius: BorderRadius2x,
   },
   modalPaperScrollPaper: {
     // maxHeight: "calc(100% - 0px)",
     width: '100%',
     maxWidth: '540px',
-    background: Colors.uniswapDarkNavy,
+    background: theme.palette.type === 'dark'
+      ? Colors.uniswapDarkNavy
+      : Colors.slateGreyDark,
     borderRadius: BorderRadius2x,
   },
 });
