@@ -64,9 +64,10 @@ const ProductCardRC = (props: ReactProps) => {
   const productId = product?.id;
   const previewItems = product?.featuredVariant?.previewItems ?? []
 
-  const title = product?.currentSnapshot?.title
+  const title = product?.currentSnapshot?.title?.slice(0,60)
   const price = product?.featuredVariant?.price;
   const priceWas = product?.featuredVariant?.price;
+  const squishLetters = title.length > 30
 
 
   const getCardMaxWidth = (cardsPerRow: number) => {
@@ -208,7 +209,10 @@ const ProductCardRC = (props: ReactProps) => {
                 }
                 <div className={classes.descriptionDetailsFlexItem}>
                   <Typography
-                    className={classes.title}
+                    className={clsx(
+                      classes.title,
+                      squishLetters && classes.squishLetters,
+                    )}
                     variant="body1"
                     component="div"
                   >

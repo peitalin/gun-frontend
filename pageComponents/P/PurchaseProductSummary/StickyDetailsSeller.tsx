@@ -57,7 +57,7 @@ const StickyDetailsSeller = (props: ReactProps) => {
 
         <div className={classes.flexRow}>
           <Typography className={classes.title} variant="h4">
-            Private User
+            Seller
             {/* {storeName} */}
           </Typography>
         </div>

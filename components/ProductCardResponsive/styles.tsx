@@ -78,7 +78,7 @@ export const styles = (theme: Theme) => createStyles({
   title: {
     fontWeight: 600,
     marginBottom: '0.25rem',
-    // overflowY: 'hidden',
+    overflowY: 'hidden',
     maxHeight: '2.75rem',
     fontSize: '1rem',
     lineHeight: '1.25rem',
@@ -130,5 +130,8 @@ export const styles = (theme: Theme) => createStyles({
   },
   marginBottom: {
     marginBottom: '1rem'
+  },
+  squishLetters: {
+    letterSpacing: '-0.25px',
   },
 });

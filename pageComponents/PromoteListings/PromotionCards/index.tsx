@@ -101,6 +101,7 @@ const PromotionCards = (props: ReactProps) => {
           onClick={openPromotedItemPurchaseModal}
           setCurrentPromotedListItem={props.setCurrentPromotedListItem}
           setPosition={props.setPosition}
+          user={user}
         />
       </Hidden>
       <Hidden mdUp implementation="css">
@@ -111,6 +112,7 @@ const PromotionCards = (props: ReactProps) => {
           onClick={openPromotedItemPurchaseModal}
           setCurrentPromotedListItem={props.setCurrentPromotedListItem}
           setPosition={props.setPosition}
+          user={user}
         />
       </Hidden>
     </>

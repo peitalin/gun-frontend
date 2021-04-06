@@ -10,21 +10,17 @@ import {
   Product,
   PromotedListItemsConnection,
   PromotedListItem,
+  UserPrivate,
+  Role,
 } from "typings/gqlTypes";
-// Paginator hooks
-import { ConnectionQueryProps } from "components/Paginators/usePaginatePagedQueryHook";
-import usePaginateQueryHook from "components/Paginators/usePaginatePagedQueryHook";
 // redux
 import { useSelector } from "react-redux";
 import { GrandReduxState } from "reduxStore/grand-reducer";
-import { WishlistItemId } from "reduxStore/wishlist-reducer";
 // Wishlist
 import ProductCardResponsive from "components/ProductCardResponsive";
 
-import Loading from "components/Loading";
-import { GET_ALL_PRODUCTS } from "queries/gun-queries";
 import AirCarousel from "components/AirCarousel";
-
+import { useSnackbar } from "notistack";
 
 
 
@@ -45,6 +41,7 @@ const PromotionCardsMobile = (props: ReactProps) => {
   } = props;
 
 
+  const snackbar = useSnackbar();
   const promotedItemsEdges = connection?.edges
 
   return (
@@ -62,13 +59,26 @@ const PromotionCardsMobile = (props: ReactProps) => {
       >
         {
           promotedItemsEdges?.map((promotedItemEdge, i) =>
-            <div key={i} style={{
-              marginLeft: '0.5rem',
-            }}>
+            <div key={i}
+              className={clsx(
+                classes.marginLeft,
+                !promotedItemEdge.node?.isAvailableForPurchase && classes.grayedOut,
+              )}
+            >
               <ProductCardResponsive
                 product={promotedItemEdge?.node?.product}
                 cardsPerRow={cardsPerRow}
                 onClick={async(e) => {
+                  if (
+                    !promotedItemEdge?.node?.isAvailableForPurchase
+                    && props.user?.userRole !== Role.PLATFORM_ADMIN
+                  ) {
+                    snackbar.enqueueSnackbar(
+                      "Slot reserved for admins",
+                      { variant: "info" }
+                    )
+                    return
+                  }
                   props.onClick(e)
                   if (props?.setPosition) {
                     props.setPosition(i);
@@ -106,6 +116,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   onClick(e?: any): void;
   setCurrentPromotedListItem(p: PromotedListItem): void;
   setPosition(p: number): void;
+  user: UserPrivate;
 }
 
 const styles = (theme: Theme) => createStyles({
@@ -168,6 +179,13 @@ const styles = (theme: Theme) => createStyles({
   // dividerFeaturedProduct: {
   //   border: `2px solid ${Colors.lightGrey}`,
   // },
+  marginLeft: {
+    marginLeft: '0.5rem',
+  },
+  grayedOut: {
+    // filter: "grayscale(1) blur(1px)",
+    filter: "grayscale(1)",
+  },
 });
 
 

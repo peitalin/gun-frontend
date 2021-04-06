@@ -47,16 +47,19 @@ const StickyDetailsDealer = (props: ReactProps) => {
             <Typography className={classes.title} variant="h4">
               Transferring Dealer
             </Typography>
-            <div>
+            {/* <div>
               <Typography className={classes.subtitle} variant="body1">
                 {`${dealer?.name ?? ""}`}
               </Typography>
-            </div>
+            </div> */}
           </div>
         </div>
 
         <div className={classes.flexRow}>
           <div className={clsx(classes.flexCol, classes.fieldKeysCol)}>
+            <Typography className={classes.caption} variant="body1">
+              Name:
+            </Typography>
             <Typography className={classes.caption} variant="body1">
               License Number:
             </Typography>
@@ -64,11 +67,14 @@ const StickyDetailsDealer = (props: ReactProps) => {
               State:
             </Typography>
             <Typography className={classes.caption} variant="body1">
-              Postcode:
+              Address:
             </Typography>
           </div>
 
           <div className={clsx(classes.flexCol)}>
+            <Typography className={classes.caption} variant="body1">
+              {`${dealer?.name ?? ""}`}
+            </Typography>
             <Typography className={classes.caption} variant="body1">
               {`${dealer?.licenseNumber ?? ""}`}
             </Typography>
@@ -76,7 +82,7 @@ const StickyDetailsDealer = (props: ReactProps) => {
               {`${dealer?.state ?? ""}`}
             </Typography>
             <Typography className={classes.caption} variant="body1">
-              {`${dealer?.postCode ?? ""}`}
+              {`${dealer?.address ?? ""}`}
             </Typography>
           </div>
         </div>

@@ -29,51 +29,7 @@ const ProductModelMake = (props: ReactProps) => {
       >
         {product?.currentSnapshot?.title}
       </Typography>
-      {
-        product?.currentSnapshot?.actionType &&
-        <ModelRow
-          classes={classes}
-          title={"Action type:"}
-          value={product?.currentSnapshot?.actionType}
-        />
-      }
-      {
-        product?.currentSnapshot?.ammoType &&
-        <ModelRow
-          classes={classes}
-          title={"Ammo type:"}
-          value={product?.currentSnapshot?.ammoType}
-        />
-      }
-      {
-        product?.currentSnapshot?.magazineCapacity &&
-        <ModelRow
-          classes={classes}
-          title={"Magazine Capacity:"}
-          value={product?.currentSnapshot?.magazineCapacity}
-        />
-      }
-      {
-        product?.currentSnapshot?.barrelLength &&
-        <ModelRow
-          classes={classes}
-          title={"Barrel Length:"}
-          value={product?.currentSnapshot?.barrelLength}
-        />
-      }
-      {
-        product?.currentSnapshot?.caliber !== undefined &&
-        <ModelRow
-          classes={classes}
-          title={"Caliber:"}
-          value={product?.currentSnapshot?.caliber}
-        />
-      }
-      <ModelRow
-        classes={classes}
-        title={"Condition:"}
-        value={product?.currentSnapshot?.condition}
-      />
+
       <ModelRow
         classes={classes}
         title={"Make:"}
@@ -84,11 +40,56 @@ const ProductModelMake = (props: ReactProps) => {
         title={"Model:"}
         value={product?.currentSnapshot?.model}
       />
+      {
+        product?.currentSnapshot?.caliber !== undefined &&
+        <ModelRow
+          classes={classes}
+          title={"Caliber:"}
+          value={product?.currentSnapshot?.caliber}
+        />
+      }
+      {
+        product?.currentSnapshot?.actionType &&
+        <ModelRow
+          classes={classes}
+          title={"Action type:"}
+          value={product?.currentSnapshot?.actionType}
+        />
+      }
+      {
+        product?.currentSnapshot?.barrelLength &&
+        <ModelRow
+          classes={classes}
+          title={"Barrel Length:"}
+          value={product?.currentSnapshot?.barrelLength}
+        />
+      }
+      {/* {
+        product?.currentSnapshot?.magazineCapacity &&
+        <ModelRow
+          classes={classes}
+          title={"Magazine Capacity:"}
+          value={product?.currentSnapshot?.magazineCapacity}
+        />
+      } */}
+      <ModelRow
+        classes={classes}
+        title={"Condition:"}
+        value={product?.currentSnapshot?.condition}
+      />
       <ModelRow
         classes={classes}
         title={"Serial Number:"}
         value={product?.currentSnapshot?.serialNumber}
       />
+      {
+        product?.currentSnapshot?.ammoType &&
+        <ModelRow
+          classes={classes}
+          title={"Ammo type:"}
+          value={product?.currentSnapshot?.ammoType}
+        />
+      }
     </div>
   );
 }

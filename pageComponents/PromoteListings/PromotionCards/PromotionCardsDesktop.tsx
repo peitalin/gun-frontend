@@ -15,14 +15,16 @@ import GridPreviewCardLight from "components/GridPreviewCardLight";
 // GraphQL Typings
 import {
   Product,
-  Order_By,
+  UserPrivate,
   PromotedListItemsConnection,
   PromotedListItem,
+  Role,
 } from "typings/gqlTypes";
 // useMediaQuery
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import currency from "currency.js";
+import { useSnackbar } from "notistack";
 
 
 
@@ -41,6 +43,7 @@ const PromotionCardsDesktop = (props: ReactProps) => {
     },
   } = props;
 
+  const snackbar = useSnackbar();
   const theme = useTheme();
   // jumboXL preview card on sm screen size only, remove right margin
   const smDown = useMediaQuery(theme.breakpoints.down("sm"))
@@ -83,6 +86,7 @@ const PromotionCardsDesktop = (props: ReactProps) => {
             >
               <div className={clsx(
                 smDown ? classes.flexItemMobile : classes.flexItem,
+                !promotedItemEdge.node?.isAvailableForPurchase && classes.grayedOut,
                 "staggerFadeIn",
                 classes.flexItemHover,
               )}>
@@ -96,6 +100,16 @@ const PromotionCardsDesktop = (props: ReactProps) => {
                   }
                   cardsPerRow={cardsPerRow}
                   onClick={async(e) => {
+                    if (
+                      !promotedItemEdge?.node?.isAvailableForPurchase
+                      && props.user?.userRole !== Role.PLATFORM_ADMIN
+                    ) {
+                      snackbar.enqueueSnackbar(
+                        "Slot reserved for admins",
+                        { variant: "info" }
+                      )
+                      return
+                    }
                     props.onClick(e)
                     if (props?.setPosition) {
                       props.setPosition(i);
@@ -146,6 +160,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   onClick(e?: any): void;
   setCurrentPromotedListItem(p: PromotedListItem): void;
   setPosition(p: number): void;
+  user: UserPrivate;
 }
 
 
@@ -233,7 +248,11 @@ const styles = (theme: Theme) => createStyles({
     justifyContent: 'center',
     alignItems: 'center',
     textAlign: 'center',
-  }
+  },
+  grayedOut: {
+    // filter: "grayscale(1) blur(1px)",
+    filter: "grayscale(1)",
+  },
 });
 
 
