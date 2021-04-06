@@ -37,7 +37,6 @@ const SellerProfileWrapper = dynamic(() => import("layout/GetUser/SellerProfileW
   loading: () => <LoadingBarSSR/>,
   ssr: false,
 })
-import BackTo from "components/BackTo";
 // Meta headers
 import MetaHeadersPage from "layout/MetaHeadersPage";
 import { useTheme } from "@material-ui/core/styles";

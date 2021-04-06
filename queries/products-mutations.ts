@@ -1,120 +1,27 @@
 import gql from "graphql-tag";
-import { ImageFragment } from "./fragments";
+import { ImageFragment, ProductFragment } from "./fragments";
 
 export const CREATE_PRODUCT = gql`
   mutation createProduct($productCreateInput: ProductCreateInput) {
     createProduct(productCreateInput: $productCreateInput) {
       ... on ProductMutationResponse {
         product {
-          id
-          isSuspended
-          isPublished
-          isDeleted
-          isExcludedFromRecommendations
-          isExcludedFromSearch
-          updatedAt
-          category {
-            id
-            name
-            categoryGroup
-          }
-          currentSnapshot {
-            id
-            createdAt
-            title
-            description
-            condition
-            make
-            model
-            ammoType
-            actionType
-            caliber
-            serialNumber
-            magazineCapacity
-            barrelLength
-            location
-            dealer {
-              id
-              name
-              address
-              state
-              postCode
-              licenseNumber
-            }
-          }
-          featuredVariant {
-            variantId
-            variantName
-            variantDescription
-            isDefault
-            previewItems {
-              id
-              youTubeEmbedLink
-              image {
-                ...ImageFragment
-              }
-            }
-          }
+          ...ProductFragment
         }
       }
     }
   }
-  ${ImageFragment}
+  ${ProductFragment}
 `;
 
 export const EDIT_PRODUCT = gql`
   mutation editProduct($productEditInput: ProductEditInput) {
     editProduct(productEditInput: $productEditInput) {
       product {
-        id
-        isSuspended
-        isPublished
-        isDeleted
-        isExcludedFromRecommendations
-        isExcludedFromSearch
-        # category {
-        #   id
-        #   name
-        #   categoryGroup
-        # }
-        currentSnapshot {
-          title
-          description
-          condition
-          make
-          model
-          ammoType
-          actionType
-          caliber
-          serialNumber
-          location
-          dealer {
-            id
-            name
-            address
-            state
-            postCode
-            licenseNumber
-          }
-        }
-        featuredVariant {
-          variantId
-          variantName
-          variantDescription
-          isDefault
-          previewItems {
-            id
-            youTubeEmbedLink
-            image {
-              ...ImageFragment
-            }
-          }
-        }
-        createdAt
-        updatedAt
+        ...ProductFragment
       }
     }
   }
-  ${ImageFragment}
+  ${ProductFragment}
 `;
 
