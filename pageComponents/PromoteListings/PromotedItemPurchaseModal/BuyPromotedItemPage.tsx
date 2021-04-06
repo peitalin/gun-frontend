@@ -469,7 +469,7 @@ const styles = (theme: Theme) => createStyles({
   root: {
     maxWidth: "720px",
     position: "relative",
-    overflowY: "hidden",
+    overflowY: 'visible', // let dropdown overhang modal
     height: "100%",
   },
   rootPage: {

@@ -112,6 +112,7 @@ const styles = (theme: Theme) => createStyles({
       ? Colors.uniswapDarkNavy
       : Colors.slateGreyDark,
     borderRadius: BorderRadius2x,
+    overflowY: 'visible', // let dropdown overhang modal
   },
 });
 
