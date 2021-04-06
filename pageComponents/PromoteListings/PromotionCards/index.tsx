@@ -6,17 +6,14 @@ import { Colors, BorderRadius } from "layout/AppTheme";
 import clsx from "clsx";
 // Typings
 import {
-  Connection,
-  Product,
-  ProductsConnection,
-  Order_By,
   PromotedList,
   PromotedListItem,
   PromotedListItemsConnection,
+  UserPrivate,
 } from "typings/gqlTypes";
 
-import { useDispatch } from "react-redux";
-import { Actions } from 'reduxStore/grand-reducer';
+import { useDispatch, useSelector } from "react-redux";
+import { Actions, GrandReduxState } from 'reduxStore/grand-reducer';
 
 import PromotionCardsMobileCarousel from "pageComponents/PromoteListings/PromotionCards/PromotionCardsMobileCarousel";
 import PromotionCardsDesktop from "pageComponents/PromoteListings/PromotionCards/PromotionCardsDesktop";
@@ -29,6 +26,8 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 // Graphql
 import { useQuery, useApolloClient } from "@apollo/client";
 import { GET_PROMOTED_LIST } from "queries/promoted_lists-queries";
+// snackbar
+import { useSnackbar } from "notistack";
 
 
 
@@ -49,6 +48,10 @@ const PromotionCards = (props: ReactProps) => {
   } = props;
 
   const dispatch = useDispatch()
+  const snackbar = useSnackbar();
+  const user = useSelector<GrandReduxState, UserPrivate>(
+    s => s.reduxLogin.user
+  )
 
   const { loading, error, data, refetch } = useQuery<QueryData, QueryVar>(
     GET_PROMOTED_LIST, {
@@ -68,9 +71,15 @@ const PromotionCards = (props: ReactProps) => {
   let connection = data?.promotedList?.promotedListItemsConnection
 
 
-
   const openPromotedItemPurchaseModal = () => {
-    dispatch(Actions.reduxModals.TOGGLE_PROMOTED_ITEM_PURCHASE_MODAL(true))
+    if (user?.id) {
+      dispatch(Actions.reduxModals.TOGGLE_PROMOTED_ITEM_PURCHASE_MODAL(true))
+    } else {
+      snackbar.enqueueSnackbar(
+        "Login to purchase this slot",
+        { variant: "info" }
+      )
+    }
   }
 
   if (loading) {
