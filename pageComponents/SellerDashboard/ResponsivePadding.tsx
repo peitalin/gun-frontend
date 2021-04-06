@@ -51,6 +51,7 @@ export const styles = (theme: Theme) => createStyles({
   paddingDesktop: {
     // padding: '0rem 1rem 2rem 1rem',
     marginRight: '0.5rem',
+    marginLeft: '0.5rem',
   },
   paddingMobile: {
     padding: '0rem 0.5rem 0.5rem 0.5rem',
