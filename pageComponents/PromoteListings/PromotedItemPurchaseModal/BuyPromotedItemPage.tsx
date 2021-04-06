@@ -164,7 +164,6 @@ const BuyPromotedItemPage = (props: ReactProps) => {
   // console.log("selectedProductOption: ", selectedProductOption)
   // console.log("selectedProduct: ", selectedProduct)
 
-  console.log("expiresAt11111: ", props.promotedListItem?.expiresAt)
   let expiresAt = dayjs(props?.promotedListItem?.expiresAt)
   let now = dayjs(new Date())
   let notExpiredYet = now.unix() < expiresAt.unix()
@@ -180,15 +179,15 @@ const BuyPromotedItemPage = (props: ReactProps) => {
 
   let slotIsFreeToPurchase = !anotherUserOwnsSlotNow && !userOwnsSlotNow
 
-  // console.log("promotedListItem", props.promotedListItem)
-  console.log("promotedListItem.ownerId:", props.promotedListItem?.ownerId)
-  console.log("userId:", user?.id)
-  console.log("anotherUserOwnsSlotNow:", anotherUserOwnsSlotNow)
-  console.log("userOwnsSlotNow: ", userOwnsSlotNow)
-  console.log("slotIsFreeToPurchase: ", slotIsFreeToPurchase)
-  console.log("expiresAt: ", expiresAt)
-  console.log("now: ", now)
-  console.log("not expired yet: ", now.unix() < expiresAt.unix())
+  // // console.log("promotedListItem", props.promotedListItem)
+  // console.log("promotedListItem.ownerId:", props.promotedListItem?.ownerId)
+  // console.log("userId:", user?.id)
+  // console.log("anotherUserOwnsSlotNow:", anotherUserOwnsSlotNow)
+  // console.log("userOwnsSlotNow: ", userOwnsSlotNow)
+  // console.log("slotIsFreeToPurchase: ", slotIsFreeToPurchase)
+  // console.log("expiresAt: ", expiresAt)
+  // console.log("now: ", now)
+  // console.log("not expired yet: ", now.unix() < expiresAt.unix())
 
   return (
     <ErrorBounds className={clsx(

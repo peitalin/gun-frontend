@@ -73,7 +73,7 @@ const PublishedProductsList = (props: ReactProps) => {
   const smDown = useMediaQuery(theme.breakpoints.down('sm'));
   const mdDown = useMediaQuery(theme.breakpoints.down('md'));
 
-  let numItemsPerPage = 50;
+  let numItemsPerPage = 3;
   let overfetchBy = 1;
 
   let {
@@ -135,24 +135,41 @@ const PublishedProductsList = (props: ReactProps) => {
     },
     onError: useCallback((e) => { console.log(e) }, []),
     onCompleted: useCallback(async (data) => { console.log(data) }, []),
-    fetchPolicy: "network-only",
-    // fetchPolicy: "cache-and-network",
+    // fetchPolicy: "network-only",
+    fetchPolicy: "cache-and-network",
+    nextFetchPolicy: 'cache-first',
     // fetchPolicy: "no-cache",
     // buggy, infinite request loop when using fetchPolicy: network-only
     // apollo devs are retards
     // https://github.com/apollographql/apollo-client/issues/6301
-    errorPolicy: "all",
+    // errorPolicy: "all",
   });
+
+  let refetchQuery = {
+    query: DASHBOARD_PRODUCTS_CONNECTION,
+    variables: {
+      searchTerm: searchTerm ? searchTerm : "*",
+      query: {
+        limit: limit,
+        offset: offset,
+        orderBy: orderBy.value as any,
+        // filters: `_price >= ${priceRange[0]} AND _price <= ${priceRange[1]}`,
+        facetFilters: (facets && facets.length > 0)
+          ? [facets]
+          : null,
+      }
+    },
+  }
 
 
   const connection: ProductsConnection =
-    option(getProductsResponse).data.dashboardProductsConnection()
+    getProductsResponse?.data?.dashboardProductsConnection
 
   let totalCountInFacet = totalItemsInIsPublishedFacet({
     searchTerm: searchTerm,
     priceRange: priceRange,
     isPublished: true,
-    facetsDistribution: option(connection).facetsDistribution(),
+    facetsDistribution: connection?.facetsDistribution,
     productsConnection: connection,
     totalCount: totalCount,
     limitOverfetchBy: limit * overfetchBy
@@ -177,7 +194,7 @@ const PublishedProductsList = (props: ReactProps) => {
 
   React.useEffect(() => {
     getProducts()
-    console.log("router.query: ", router.query)
+    // console.log("router.query: ", router.query)
     if (router?.query?.created) {
       if (getProductsResponse?.data?.dashboardProductsConnection?.edges) {
 
@@ -203,6 +220,7 @@ const PublishedProductsList = (props: ReactProps) => {
   // console.log("index", index)
   // console.log("pageParam", pageParam)
   // console.log("totalCountInFacet", totalCountInFacet)
+
 
   if (!productId) {
     return (
@@ -306,6 +324,7 @@ const PublishedProductsList = (props: ReactProps) => {
                         hideEdit={hideEdit}
                         loading={getProductsResponse.loading}
                         refetchProducts={refetchTheProducts}
+                        refetchQuery={refetchQuery}
                         {...publishedProps}
                       />
                     )
@@ -317,6 +336,7 @@ const PublishedProductsList = (props: ReactProps) => {
                         hideEdit={hideEdit}
                         loading={getProductsResponse.loading}
                         refetchProducts={refetchTheProducts}
+                        refetchQuery={refetchQuery}
                         {...unpublishedProps}
                       />
                     )
@@ -342,6 +362,7 @@ const PublishedProductsList = (props: ReactProps) => {
           <EditProductPage
             productsConnection={connection}
             loading={getProductsResponse.loading}
+            refetchQuery={refetchQuery}
           />
         }
       </ResponsivePadding>
@@ -354,6 +375,7 @@ const PublishedProductsList = (props: ReactProps) => {
 const EditProductPage = (props: {
   productsConnection: ProductsConnection,
   loading: boolean,
+  refetchQuery: { query: any, variables: any }
 }) => {
 
   const { productsConnection, loading } = props;
@@ -365,7 +387,11 @@ const EditProductPage = (props: {
     .filter(({ node: product }) => product.id === router.query.productId)
     .map(({ node: product }) =>
       <div key={product.id}>
-        <ProductRow product={product} loading={loading}/>
+        <ProductRow
+          product={product}
+          loading={loading}
+          refetchQuery={props.refetchQuery}
+        />
         <ProductEdit
           asModal={false}
           product={product}

@@ -5,12 +5,12 @@ import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/s
 import { Colors, BorderRadius, BoxShadows } from "layout/AppTheme";
 // Redux
 import { useDispatch, useSelector } from "react-redux";
-import { UserPrivate } from "typings/gqlTypes";
+import { ProductsConnection, ProductsEdge, SoldOutStatus, UserPrivate } from "typings/gqlTypes";
 import { GrandReduxState } from "reduxStore/grand-reducer";
 // Router
 import Link from "next/link";
 // Typings
-import { Product } from "typings/gqlTypes";
+import { Product, ProductEditInput, ProductPrivate } from "typings/gqlTypes";
 // Material UI
 import ErrorBounds from "components/ErrorBounds";
 import ProductPreviewCardRow from "components/ProductPreviewCardRow";
@@ -38,13 +38,14 @@ import Tooltip from '@material-ui/core/Tooltip';
 // media query
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
-import { publishProduct, unpublishProduct } from "queries/requests";
-import { useApolloClient } from "@apollo/client";
-// product edit
-import {
-  productToProductEditInput,
-} from "utils/conversions";
+// Graphql
+import { EDIT_PRODUCT } from "queries/products-mutations";
 import { DELETE_PRODUCT } from "queries/deletions-mutations";
+import { DASHBOARD_PRODUCTS_CONNECTION } from "queries/store-queries";
+import { useApolloClient, useMutation, gql } from "@apollo/client";
+import { ProductFragment } from "queries/fragments";
+// product edit
+import { productToProductEditInput } from "utils/conversions";
 import ConfirmDeleteModal from "components/ConfirmDeleteModal";
 // Copy
 import copy from "clipboard-copy";
@@ -82,6 +83,85 @@ const ProductRow = (props: ReactProps) => {
   const mdDown = useMediaQuery(theme.breakpoints.down('md'));
   const xsDown = useMediaQuery(theme.breakpoints.down('xs'));
 
+
+  const [editProduct, editProductResponse] = useMutation<MData, MVar>(
+    EDIT_PRODUCT, {
+    variables: {
+      productEditInput: productToProductEditInput(product)
+    },
+    onCompleted: (data) => { },
+    update: (cache, { data: { editProduct } }) => {
+
+      // console.log("incomingProduct.id: ", editProduct?.product?.id)
+      // console.log("incomingProduct.isPublished: ", editProduct?.product?.isPublished)
+
+      // Fetch the cached dashboardProductsConnection item with associated variables
+      // remember, variables need to match, or cache will not return the data
+      const existingData: {
+        dashboardProductsConnection: ProductsConnection
+      } = cache.readQuery({
+        query: props.refetchQuery?.query,
+        variables: props.refetchQuery?.variables,
+      });
+
+      let newEdges = existingData.dashboardProductsConnection.edges.map(edge => {
+        if (editProduct.product.id !== edge.node.id) {
+          return edge
+        } else {
+          console.log(`found product ${edge.node.id}!, replacing`)
+          return {
+            __typename: "ProductsEdge",
+            node: {
+              __typename: "ProductPrivate",
+              ...editProduct.product,
+            },
+          } as ProductsEdge
+        }
+      })
+
+      // cache.evict({
+      //   id: "ROOT_QUERY",
+      //   fieldName: "dashboardProductsConnection"
+      // })
+
+      cache.writeQuery({
+        query: props.refetchQuery?.query,
+        variables: props.refetchQuery?.variables,
+        data: {
+          dashboardProductsConnection: {
+            ...existingData.dashboardProductsConnection,
+            edges: newEdges
+          }
+        },
+      });
+
+      cache.modify({
+        fields: {
+          dashboardProductsConnection(existingConnection: ProductsConnection) {
+            console.log("cache.modify: ", existingConnection)
+            return {
+              ...existingConnection,
+              edges: newEdges
+            }
+          }
+        }
+      });
+
+    },
+    // refetchQueries: [props.refetchQuery],
+  });
+
+  const [deleteProduct, deleteProductResponse] = useMutation(
+    DELETE_PRODUCT, {
+    variables: {
+      productId: product.id
+    },
+    onCompleted: (data) => {
+      console.log("deleteProduct: ", data)
+    },
+    // refetchQueries: [props.refetchQuery],
+  })
+
   const handleClick = event => {
     setAnchorEl(event.currentTarget);
   };
@@ -91,44 +171,67 @@ const ProductRow = (props: ReactProps) => {
   };
 
   const handlePublish = async() => {
+    if (product.soldOutStatus !== SoldOutStatus.AVAILABLE) {
+      snackbar.enqueueSnackbar(
+        `${product.soldOutStatus} product cannot be edited.`,
+        { variant: "info"}
+      )
+      return
+    }
     setLoadingPublish(true)
     handleClose()
     // remove files, not a valid field in productEditInput graphql call
-    await publishProduct(
-      productToProductEditInput(product),
-      apolloClient
-    )
+    await editProduct({
+      variables: {
+        productEditInput: {
+          ...productToProductEditInput(product),
+          isPublished: true
+        }
+      }
+    })
     // await before refetching
-    await props.refetchProducts()
+    // await props.refetchProducts()
     setLoadingPublish(false)
   };
 
   const handleUnpublish = async() => {
+    if (product.soldOutStatus !== SoldOutStatus.AVAILABLE) {
+      snackbar.enqueueSnackbar(
+        `${product.soldOutStatus} product cannot be unpublished.`,
+        { variant: "info"}
+      )
+      return
+    }
     setLoadingPublish(true)
     handleClose()
     // remove files, not a valid field in productEditInput graphql call
-    await unpublishProduct(
-      productToProductEditInput(product),
-      apolloClient
-    )
+    await editProduct({
+      variables: {
+        productEditInput: {
+          ...productToProductEditInput(product),
+          isPublished: false
+        }
+      }
+    })
     // await before refetching
-    await props.refetchProducts()
+    // await props.refetchProducts()
     setLoadingPublish(false)
   };
 
   const handleDelete = async() => {
+    if (product.soldOutStatus !== SoldOutStatus.AVAILABLE) {
+      snackbar.enqueueSnackbar(
+        `${product.soldOutStatus} product cannot be deleted.`,
+        { variant: "info"}
+      )
+      return
+    }
     setLoadingPublish(true)
     handleClose()
-    await apolloClient.mutate({
-      mutation: DELETE_PRODUCT,
+    deleteProduct({
       variables: {
         productId: product.id
-      },
-      // refetchQueries: [
-      //   {
-      //     query: GET_STORE_PRIVATE
-      //   }
-      // ]
+      }
     })
     // await before refetching
     await props.refetchProducts()
@@ -149,7 +252,6 @@ const ProductRow = (props: ReactProps) => {
   };
 
 
-  // console.log("loadingPublish: ", loadingPublish)
 
   let user = useSelector<GrandReduxState, UserPrivate>(s =>
     s.reduxLogin.user
@@ -231,17 +333,17 @@ const ProductRow = (props: ReactProps) => {
           <div className={mdDown ? classes.rowCell2Mobile : classes.rowCell2}>
             <Typography variant="caption"
               className={clsx(
-                (loadingPublish || loading)
+                (loadingPublish)
                   ? classes.loading
                   : product.isPublished
                     ? classes.published
                     : classes.unpublished,
-                !(loadingPublish || loading) && "fadeIn",
-                (loadingPublish || loading) && "pulseFast",
+                !(loadingPublish) && "fadeIn",
+                (loadingPublish) && "pulseFast",
               )}
             >
               {
-                (loadingPublish || loading)
+                (loadingPublish)
                   ? "PENDING"
                   : product.isPublished
                     ? "PUBLISHED"
@@ -372,7 +474,17 @@ interface ReactProps extends WithStyles<typeof styles> {
   hideViewButton?: boolean;
   hideShareLinkButton?: boolean,
   refetchProducts?(): Promise<void>;
+  refetchQuery: { query: any, variables: any };
 }
+
+interface MData {
+  editProduct: { product: Product }
+}
+interface MVar {
+  productEditInput: ProductEditInput
+}
+
+
 
 const styles = (theme: Theme) => createStyles({
   root: {

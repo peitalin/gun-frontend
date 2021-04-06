@@ -14,6 +14,7 @@ const ProductList = (props: {
   hideViewButton?: boolean,
   hideShareLinkButton?: boolean,
   refetchProducts?(): Promise<void>;
+  refetchQuery: { query: any, variables: any };
 }) => {
   return <>
   {
@@ -28,6 +29,7 @@ const ProductList = (props: {
           hideViewButton={props.hideViewButton}
           hideShareLinkButton={props.hideShareLinkButton}
           refetchProducts={props.refetchProducts}
+          refetchQuery={props.refetchQuery}
         />
       </div>
     )
