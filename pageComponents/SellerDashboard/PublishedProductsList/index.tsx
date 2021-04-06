@@ -73,7 +73,7 @@ const PublishedProductsList = (props: ReactProps) => {
   const smDown = useMediaQuery(theme.breakpoints.down('sm'));
   const mdDown = useMediaQuery(theme.breakpoints.down('md'));
 
-  let numItemsPerPage = 3;
+  let numItemsPerPage = 10;
   let overfetchBy = 1;
 
   let {
