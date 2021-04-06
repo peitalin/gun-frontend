@@ -14,6 +14,8 @@ const BindKeyboardSwipeableViews = bindKeyboard(SwipeableViews);
 const VirtualizeSwipeableViews = bindKeyboard(virtualize(SwipeableViews));
 import AlignCenterLayout from "components/AlignCenterLayout";
 import LoadingCards from "pageComponents/FrontPage/LoadingCards";
+/// gql
+import { useApolloClient } from "@apollo/client";
 // helpers
 import { noAnim, someAnim, GridMap } from "./GridPaginatorHelpers";
 // Responsiveness
@@ -23,6 +25,7 @@ import {
   useEffectUpdateGridAccum,
 } from "utils/hooksFacetSearch";
 import { GenericConnection } from "typings";
+import { ProductFragment } from "queries/fragments";
 
 
 
@@ -43,6 +46,7 @@ function GridPaginatorGeneric<T>(props: ReactProps<T> & ReactChildren<T>) {
 
   // console.log("connection", connection)
   // console.log("index222: ", props.index)
+  const aClient = useApolloClient();
 
   const classes = useStyles();
   const theme = useTheme();
@@ -53,11 +57,20 @@ function GridPaginatorGeneric<T>(props: ReactProps<T> & ReactChildren<T>) {
     let hashmapKeys = Object.keys(hashmap)
     let newHashmap = {}
     connection?.edges?.forEach(({ node }: { node: any }) => {
-      if (!hashmapKeys.includes(node?.id)) {
-        newHashmap[node?.id] = node
-      }
+      // let uid = `${node.__typename}:{"id":"${node?.id}"}`
+      // let object = (aClient.cache as any)?.data?.data[uid]
+      // newHashmap[node?.id] = object
+      newHashmap[node?.id] = node
     })
     setHashmap(s => ({ ...hashmap, ...newHashmap }))
+
+    // let ff = aClient.cache.readFragment({
+    //   id: 'ProductPrivate:{"id":"p1qxypvrz"}',
+    //   fragment: ProductFragment,
+    //   fragmentName: "ProductFragment",
+    // })
+    // console.log("cache product: ", ff)
+    // console.log("cache: ", aClient.cache)
 
   }, [connection])
 
