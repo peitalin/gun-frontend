@@ -67,7 +67,7 @@ const ProductCardRC = (props: ReactProps) => {
   const title = product?.currentSnapshot?.title?.slice(0,60)
   const price = product?.featuredVariant?.price;
   const priceWas = product?.featuredVariant?.price;
-  const squishLetters = title.length > 30
+  const squishLetters = title?.length > 30
 
 
   const getCardMaxWidth = (cardsPerRow: number) => {
