@@ -26,9 +26,11 @@ const ChooseDealerDropdown = (props: ReactProps & FormikProps<FormikFields>) => 
   } = props;
 
   const setDealerId = (newCat: SelectOption) => {
-    if (!!newCat?.value) {
-      fprops.setFieldValue("dealerId", newCat?.value)
-    }
+    fprops.setFieldValue("dealerId", newCat?.value)
+    // if (!!newCat?.value) {
+    //   fprops.setFieldValue("dealerId", newCat?.value)
+    // } else {
+    // }
   }
 
   let dealerOptions = createDealerSuggestions(props.dealers)
@@ -43,8 +45,11 @@ const ChooseDealerDropdown = (props: ReactProps & FormikProps<FormikFields>) => 
       <DropdownInput
         className={classes.dealerDropdown}
         stateShape={initialDealer}
-        onChange={({ label, value }: SelectOption) =>
-          setDealerId({ label, value })
+        onChange={(option: SelectOption) =>
+          setDealerId({
+            label: option?.label,
+            value: option?.value,
+          })
         }
         options={dealerOptions}
         placeholder={initialDealer?.label}
@@ -91,14 +96,14 @@ interface ReactProps extends WithStyles<typeof styles> {
 }
 interface FormikFields {
   dealerId?: string;
-  dealer?: {
-    name?: string;
-    address?: string;
-    city?: string;
-    state?: string;
-    postCode?: string;
-    licenseNumber?: string;
-  };
+  // dealer?: {
+  //   name?: string;
+  //   address?: string;
+  //   city?: string;
+  //   state?: string;
+  //   postCode?: string;
+  //   licenseNumber?: string;
+  // };
 }
 
 

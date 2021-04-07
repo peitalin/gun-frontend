@@ -271,6 +271,7 @@ const ProductCreatePage = (props: ReactProps) => {
                 printValidationErrors(errors),
                 { variant: "error", autoHideDuration: 900000 }
               )
+              setState(s => ({ ...s, loading: false }))
             } else {
               setState(s => ({ ...s, loading: true }))
             }
@@ -485,11 +486,30 @@ const isFormikDisabled = (
 
 const printValidationErrors = (
   errors: FormikErrors<ProductCreateInput>
-): string[] => {
+): string => {
+
   // watch out for nested objects which may not be strings
   // if using Object.values()
-  const errorMsg = Object.keys(errors)
-  return ["Please fill out: ", ...errorMsg]
+  let priceError = errors?.currentVariants?.[0].price;
+  let priceWasError = errors?.currentVariants?.[0].priceWas;
+  let previewItemsError = errors?.currentVariants?.[0].previewItems;
+
+  let filterErrors: any = errors
+  if (priceError) {
+    filterErrors = { ...filterErrors, price: priceError }
+  }
+  if (priceWasError) {
+    filterErrors = { ...filterErrors, priceWas: priceWasError }
+  }
+  if (previewItemsError) {
+    filterErrors = { ...filterErrors, previewItems: previewItemsError }
+  }
+
+  const errorMsg = Object
+    .keys(filterErrors)
+    .filter(e => e !== "currentVariants")
+    .join(", ")
+  return `Please check: ${errorMsg}`
 }
 
 export const reduxToFormikCurrentVariants = (

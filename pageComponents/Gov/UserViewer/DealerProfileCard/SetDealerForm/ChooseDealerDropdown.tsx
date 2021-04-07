@@ -37,8 +37,11 @@ const ChooseDealerDropdown = (props: ReactProps & FormikProps<FormikFields>) => 
       <DropdownInput
         className={classes.dealerDropdown}
         stateShape={initialDealer}
-        onChange={({ label, value }: SelectOption) =>
-          setDealerId({ label, value })
+        onChange={(option: SelectOption) =>
+          setDealerId({
+            label: option?.label,
+            value: option?.value,
+          })
         }
         options={dealerOptions}
         placeholder={initialDealer?.label}

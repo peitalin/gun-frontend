@@ -40,7 +40,7 @@ const SelectDealers = (props: ReactProps & FormikProps<FormikFields>) => {
   const dealers = (data?.getAllDealers ?? [])
       .filter(c => !!c && !!c.name)
 
-  // console.log("dealerId: ", fprops.values.dealerId)
+  console.log("dealerId: ", fprops.values.dealerId)
   // console.log("dealer: ", fprops.values.dealer)
 
   return (
@@ -103,14 +103,14 @@ interface QueryData {
 }
 interface FormikFields {
   dealerId?: string;
-  dealer?: {
-    name?: string;
-    address?: string;
-    city?: string;
-    state?: string;
-    postCode?: string;
-    licenseNumber?: string;
-  };
+  // dealer?: {
+  //   name?: string;
+  //   address?: string;
+  //   city?: string;
+  //   state?: string;
+  //   postCode?: string;
+  //   licenseNumber?: string;
+  // };
 }
 
 export default withStyles(styles)( SelectDealers );

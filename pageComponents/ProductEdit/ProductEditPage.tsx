@@ -343,16 +343,32 @@ const ProductEditPage = (props: ReactProps) => {
                       )
                     );
 
+
                     setTimeout(() => {
-                      // need to await formikCurrencyVariants update
-                      if (Object.keys(errors).length > 0) {
-                        setState(s => ({ ...s, loading: false }))
+                      // need to await formikCurrentVariants update
+                      if (isFormikDisabled(errors)) {
                         snackbar.enqueueSnackbar(
-                          `Uh... ${JSON.stringify(errors)}`,
-                          { variant: "error" }
+                          printValidationErrors(errors),
+                          { variant: "error", autoHideDuration: 900000 }
                         )
+                        setState(s => ({ ...s, loading: false }))
+                      } else {
+                        setState(s => ({ ...s, loading: true }))
                       }
                     }, 0)
+
+                    // setTimeout(() => {
+                    //   // need to await formikCurrencyVariants update
+                    //   if (Object.keys(errors).length > 0) {
+                    //     setState(s => ({ ...s, loading: false }))
+                    //     Object.keys(errors).slice(0,3).map(err => {
+                    //       snackbar.enqueueSnackbar(
+                    //         `Uh... ${err}`,
+                    //         { variant: "error" }
+                    //       )
+                    //     })
+                    //   }
+                    // }, 0)
 
                     console.log('errors: ', errors);
                     console.log('values: ', values);
@@ -375,6 +391,38 @@ const ProductEditPage = (props: ReactProps) => {
 }
 
 
+const isFormikDisabled = (
+  errors: FormikErrors<ProductEditInput>,
+) => {
+  let formikErrors = Object.keys(errors)
+  return formikErrors.length > 0
+}
+
+const printValidationErrors = (
+  errors: FormikErrors<ProductEditInput>
+): string => {
+  // watch out for nested objects which may not be strings
+  // if using Object.values()
+  let priceError = errors?.currentVariants?.[0].price;
+  let priceWasError = errors?.currentVariants?.[0].priceWas;
+  let previewItemsError = errors?.currentVariants?.[0].previewItems;
+
+  let filterErrors: any = errors
+  if (priceError) {
+    filterErrors = { ...filterErrors, price: priceError }
+  }
+  if (priceWasError) {
+    filterErrors = { ...filterErrors, priceWas: priceWasError }
+  }
+  if (previewItemsError) {
+    filterErrors = { ...filterErrors, previewItems: previewItemsError }
+  }
+
+  const errorMsg = Object.keys(filterErrors)
+    .filter(e => e !== "currentVariants")
+    .join(", ")
+  return `Please check: ${errorMsg}`
+}
 
 interface ReactProps extends WithStyles<typeof styles> {
   asModal?: boolean;
