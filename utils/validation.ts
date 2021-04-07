@@ -61,10 +61,10 @@ export const validationSchemas = {
         .max(100)
         .required('Needs a serial number'),
       location: Yup.string()
-        .min(0)
+        .nullable()
         .max(100),
       magazineCapacity: Yup.string()
-        .min(0)
+        .nullable()
         .max(100),
       barrelLength: Yup.string()
         .min(0)
@@ -386,11 +386,9 @@ export const validationSchemas = {
     Yup.object().shape({
       userId: Yup.string()
         .required('A userId is needed!'),
-      storeId: Yup.string()
-        .required('A storeId is needed!'),
+      storeId: Yup.string(),
       name: Yup.string()
         .nullable()
-        .required('Name required!')
         .max(maxLengthStoreName)
         .min(minLengthStoreName, "Must be more than 3 letters!"),
       bio: Yup.string().nullable(),
