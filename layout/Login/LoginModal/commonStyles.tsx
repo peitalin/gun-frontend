@@ -190,21 +190,27 @@ const styles = (theme: Theme) => createStyles({
     width: "100%",
     borderRadius: BorderRadius,
     border: theme.palette.type === 'dark'
-      ? `1px solid ${Colors.uniswapLighterGrey}`
-      : `1px solid ${Colors.slateGreyDarker}`,
+      ? `1px solid ${Colors.ultramarineBlue}`
+      : `1px solid ${Colors.ultramarineBlue}`,
     backgroundColor: theme.palette.type === 'dark'
-      ? Colors.uniswapLightNavy
-      : Colors.slateGrey,
+      ? Colors.ultramarineBlue
+      : Colors.ultramarineBlue,
     color: theme.palette.type === 'dark'
       ? Colors.uniswapLightestGrey
-      : Colors.slateGreyLightBlack,
+      : Colors.uniswapLightestGrey,
     "&:hover": {
-      backgroundColor: theme.palette.type === 'dark'
-        ? Colors.uniswapMediumNavy
-        : Colors.slateGreyDark,
+      // backgroundColor: theme.palette.type === 'dark'
+      //   ? Colors.uniswapMediumNavy
+      //   : Colors.slateGreyDark,
+      // border: theme.palette.type === 'dark'
+      //   ? `1px solid ${Colors.uniswapLighterGrey}`
+      //   : `1px solid ${Colors.slateGreyDarkest}`,
       border: theme.palette.type === 'dark'
-        ? `1px solid ${Colors.uniswapLighterGrey}`
-        : `1px solid ${Colors.slateGreyDarkest}`,
+        ? `1px solid ${Colors.ultramarineBlue}`
+        : `1px solid ${Colors.ultramarineBlue}`,
+      backgroundColor: theme.palette.type === 'dark'
+        ? Colors.ultramarineBlue
+        : Colors.ultramarineBlue,
     },
   },
   miniTitle: {

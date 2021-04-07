@@ -111,7 +111,7 @@ const TextInputUnderline = (props: ReactProps) => {
           classes={{
             root: clsx(
               classes.inputUnderline,
-              errorInputColor === "red" ? classes.errorInput : null,
+              errorInputColor === "red" ? classes.errorInputUnderline : null,
               errorInputColor === "grey" ? classes.errorInputUntouched : null,
             ),
           }}

@@ -92,6 +92,15 @@ export const styles = (theme: Theme) => createStyles({
       color: `${fade(theme.palette.error.light, 0.1)}`,
     },
   },
+  errorInputUnderline: {
+    '&:focus': {
+      border: `1px solid ${theme.palette.error.light}`,
+      boxShadow: `${fade(theme.palette.error.light, 0.2)} 0 0 0 2px`,
+    },
+    "&:focus-within": {
+      color: `${fade(theme.palette.error.light, 0.1)}`,
+    },
+  },
   // ".errorInput:focus"
   errorMessage: {
     position: 'absolute',
