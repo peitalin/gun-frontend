@@ -14,6 +14,19 @@ export const GET_ORDERS_CREATED_CONNECTION = gql`
       edges {
         node {
           ...OrdersFragment
+          ...on OrderAdmin {
+            paymentIntent {
+              id
+              amount
+              amountCapturable
+              amountReceived
+              captureMethod
+              createdAt
+              currency
+              liveMode
+              status
+            }
+          }
         }
       }
       totalCount
@@ -30,6 +43,19 @@ export const GET_ORDERS_PENDING_APPROVAL_CONNECTION = gql`
       edges {
         node {
           ...OrdersFragment
+          ...on OrderAdmin {
+            paymentIntent {
+              id
+              amount
+              amountCapturable
+              amountReceived
+              captureMethod
+              createdAt
+              currency
+              liveMode
+              status
+            }
+          }
         }
       }
       totalCount
@@ -45,6 +71,19 @@ export const GET_ORDERS_ADMIN_APPROVED_CONNECTION = gql`
       edges {
         node {
           ...OrdersFragment
+          ...on OrderAdmin {
+            paymentIntent {
+              id
+              amount
+              amountCapturable
+              amountReceived
+              captureMethod
+              createdAt
+              currency
+              liveMode
+              status
+            }
+          }
         }
       }
       totalCount
@@ -102,6 +141,19 @@ export const GET_ORDER_AS_ADMIN = gql`
   query getOrderAsAdmin($orderId: String!) {
     getOrderAsAdmin(orderId: $orderId) {
       ...OrdersFragment
+      ...on OrderAdmin {
+        paymentIntent {
+          id
+          amount
+          amountCapturable
+          amountReceived
+          captureMethod
+          createdAt
+          currency
+          liveMode
+          status
+        }
+      }
     }
   }
   ${OrdersFragment}

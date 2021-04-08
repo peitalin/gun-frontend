@@ -32,12 +32,12 @@ const LoginPage: NextPage<ReactProps> = (props) => {
 
   React.useEffect(() => {
     if (!user?.id) {
-      console.log("evicting ROOT_QUERY.user profile.")
+      // console.log("evicting ROOT_QUERY.user profile.")
       aClient.cache.evict({
         id: "ROOT_QUERY",
         fieldName: "user"
       })
-      console.log("CACHE: ", aClient.cache)
+      // console.log("CACHE: ", aClient.cache)
     } else if (user?.id) {
       if (router?.query?.from) {
         router.back()

@@ -532,19 +532,20 @@ export const OrdersFragment = gql`
         status
       }
     }
-    ...on OrderAdmin {
-      paymentIntent {
-        id
-        amount
-        amountCapturable
-        amountReceived
-        captureMethod
-        createdAt
-        currency
-        liveMode
-        status
-      }
-    }
+    #### Stripe rate limits us if we spam them
+    # ...on OrderAdmin {
+    #   paymentIntent {
+    #     id
+    #     amount
+    #     amountCapturable
+    #     amountReceived
+    #     captureMethod
+    #     createdAt
+    #     currency
+    #     liveMode
+    #     status
+    #   }
+    # }
   }
   ${OrderSnapshotFragment}
   ${ImageFragment}

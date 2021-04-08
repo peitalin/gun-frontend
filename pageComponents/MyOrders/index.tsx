@@ -154,7 +154,7 @@ const MyOrders: React.FC<ReactProps> = (props) => {
         }
       },
       onCompleted: (data) => {
-        console.log("buyerOrders: ", data)
+        // console.log("buyerOrders: ", data)
       },
     }
   );
@@ -172,7 +172,7 @@ const MyOrders: React.FC<ReactProps> = (props) => {
         }
       },
       onCompleted: (data) => {
-        console.log("sellerOrders: ", data)
+        // console.log("sellerOrders: ", data)
       },
     }
   );
@@ -191,7 +191,7 @@ const MyOrders: React.FC<ReactProps> = (props) => {
       },
       // onCompleted: (data) => console.log("completed SAI", data),
       onCompleted: (data) => {
-        console.log("sellerAiOrders: ", data)
+        // console.log("sellerAiOrders: ", data)
       },
     }
   );
@@ -200,14 +200,14 @@ const MyOrders: React.FC<ReactProps> = (props) => {
     getBuyerOrders()
     getSellerOrders()
     getSellerOrdersActionItems()
-    console.log("user::::", user)
-    if (user?.id) {
-      setTimeout(() => {
-        getBuyerOrders()
-        getSellerOrders()
-        getSellerOrdersActionItems()
-      }, 0)
-    }
+    // console.log("user::::", user)
+    // if (user?.id) {
+    //   setTimeout(() => {
+    //     getBuyerOrders()
+    //     getSellerOrders()
+    //     getSellerOrdersActionItems()
+    //   }, 0)
+    // }
   }, [user])
 
   const buyerOrdersConnection =
