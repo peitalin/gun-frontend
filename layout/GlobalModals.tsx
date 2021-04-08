@@ -8,7 +8,7 @@ import MySettingsModal from "layout/MySettingsModal";
 import ChatCenterModal from "pageComponents/ChatCenter";
 
 
-const Modals: React.FC<any> = (props) => {
+const GlobalModals: React.FC<any> = (props) => {
   return (
     <>
       <MySettingsModal/>
@@ -22,6 +22,6 @@ const Modals: React.FC<any> = (props) => {
 
 
 
-export default Modals;
+export default GlobalModals;
 
 

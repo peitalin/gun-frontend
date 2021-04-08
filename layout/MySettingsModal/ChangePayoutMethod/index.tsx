@@ -9,7 +9,7 @@ import { connect, useDispatch, useSelector } from "react-redux";
 import { GrandReduxState } from "reduxStore/grand-reducer";
 import { Actions } from "reduxStore/actions";
 // Graphql Queries
-import { useMutation, useApolloClient } from "@apollo/client";
+import { useMutation, useApolloClient, ApolloError } from "@apollo/client";
 import { GET_USER } from "queries/user-queries";
 import { UPDATE_USER, SET_PAYOUT_METHOD } from "queries/user-mutations";
 // Material UI
@@ -19,10 +19,9 @@ import ErrorBounds from "components/ErrorBounds";
 import TextInput from "components/Fields/TextInput";
 import ButtonLoading from "components/ButtonLoading";
 import SnackBarA from "components/Snackbars/SnackbarA";
-import SnackbarsSuccessErrors from "components/Snackbars/SnackbarsSuccessErrors";
+import { useSnackbar } from "notistack";
 // Typings
 import { UserPrivate } from "typings/gqlTypes";
-import { HtmlEvent } from "typings";
 // Validation
 import { Formik, FormikProps } from 'formik';
 import { validationSchemas } from "utils/validation";
@@ -38,8 +37,10 @@ const ChangePayoutMethod = (props: ReactProps & ReduxProps) => {
 
   let [displayErr, setDisplayErr] = React.useState(true);
   let [displaySuccess, setDisplaySuccess] = React.useState(true);
+
   const aClient = useApolloClient();
   const dispatch = useDispatch();
+  const snackbar = useSnackbar();
 
 
   const [setPayoutMethod, { loading, data, error }] =
@@ -67,6 +68,10 @@ const ChangePayoutMethod = (props: ReactProps & ReduxProps) => {
     // variables: {}, // set later using formik values
   })
 
+  const formatError = (error: ApolloError) => {
+    let errMsg = error?.graphQLErrors?.[0]?.message ?? JSON.stringify(error)
+    return errMsg
+  }
 
   return (
     <Formik
@@ -279,7 +284,7 @@ const ChangePayoutMethod = (props: ReactProps & ReduxProps) => {
                 <SnackBarA
                   open={error !== undefined && displayErr}
                   closeSnackbar={() => setDisplayErr(false)}
-                  message={`Oh oh: ${JSON.stringify(error)}`}
+                  message={formatError(error)}
                   variant={"error"}
                   autoHideDuration={3000}
                 />

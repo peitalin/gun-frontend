@@ -3,7 +3,7 @@ import { oc as option } from "ts-optchain";
 // Styles
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
 // Graphql Queries
-import { useMutation, useApolloClient } from "@apollo/client";
+import { useMutation, useApolloClient, ApolloError } from "@apollo/client";
 import { DELETE_STORE, DELETE_ACCOUNT } from "queries/deletions-mutations";
 // import { UserPrivate } from "typings/gqlTypes";
 type UserPrivate = any;
@@ -59,6 +59,10 @@ const DeleteAccountButton = (props: ReactProps) => {
     }, 800)
   }
 
+  const formatError = (error: ApolloError) => {
+    return error?.graphQLErrors?.[0]?.message ?? JSON.stringify(error)
+  }
+
   if (loading) {
     return <Loading inline loading={true} delay={"400ms"} />;
   } else if (error) {
@@ -97,7 +101,7 @@ const DeleteAccountButton = (props: ReactProps) => {
         <SnackBarA
           open={error !== undefined && displayErr}
           closeSnackbar={() => setDisplayErr(false)}
-          message={`Oh oh: ${JSON.stringify(error)}`}
+          message={formatError(error)}
           variant={"error"}
           autoHideDuration={3000}
         />

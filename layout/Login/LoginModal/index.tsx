@@ -216,6 +216,7 @@ const LoginPageModal: React.FC<ReactProps> = (props) => {
             smDown ? true : false
           } // full height
           fullWidth={false}
+          scroll={"body"}
           maxWidth="xs"
           classes={{
             paperFullWidth: classes.dialogPaperFull,

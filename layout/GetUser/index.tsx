@@ -9,7 +9,7 @@ import { batch, useDispatch, useSelector } from "react-redux";
 // Graphql
 import { useQuery } from "@apollo/client";
 import { GET_USER } from "queries/user-queries";
-import { useApolloClient } from "@apollo/client";
+import { useApolloClient, useLazyQuery } from "@apollo/client";
 import { ApolloClient, ApolloError, ApolloQueryResult } from "@apollo/client";
 // Typings
 import { UserPrivate } from 'typings/gqlTypes';
@@ -17,7 +17,7 @@ import Loading from "components/Loading";
 import ErrorDisplay from "components/Error";
 // import { analyticsUser } from "utils/analytics";
 import { logout } from "queries/requests";
-import Router from "next/router";
+import { useRouter } from "next/router";
 
 
 
@@ -27,22 +27,25 @@ const GetUser = (props: ReactProps) => {
 
   const dispatch = useDispatch();
   const client = useApolloClient();
+  const router = useRouter();
+
   const { user } = useSelector<GrandReduxState, { user: UserPrivate }>(state => {
     return {
       user: option(state).reduxLogin.user()
     }
   })
 
-  const { data, error, loading, refetch } = useQuery<QueryData>(
+  const [getUser, { data, error, loading, refetch }] = useLazyQuery<QueryData>(
     GET_USER, {
     variables: {},
     onCompleted: (data: QueryData) => {
+      // console.log("ddddddddata", data)
       setUserOnCompleted(dispatch)(data, refetch)
     },
     onError: (error: ApolloError) => {
       // swallow error message: not loggedIn, and no user_id provided
       // if network error, attempt logout to clear redux user state
-      if (user && user.id) {
+      if (user?.id) {
         logout(client, dispatch)(undefined)
         // logout graphql call will fail, but it will clear redux User
         // and clear localStorage timer
@@ -50,6 +53,20 @@ const GetUser = (props: ReactProps) => {
     },
     ssr: true,
   })
+
+  React.useEffect(() => {
+    getUser()
+  }, [])
+
+  React.useEffect(() => {
+    // console.log("router.pathname change")
+    if (!user?.id) {
+      // console.log("refetching getUser().....")
+      // on router change, if redux has no user, attempt refetch of user
+      // profile so that cookies and auth are set
+      getUser()
+    }
+  }, [router.pathname])
 
   return <div className="get-user"></div>;
 };

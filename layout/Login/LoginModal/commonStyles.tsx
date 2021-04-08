@@ -15,7 +15,6 @@ const styles = (theme: Theme) => createStyles({
     width: "100%",
   },
   dialogPaper: {
-    // margin: '1rem',
     borderRadius: `${BorderRadius2x}px`,
   },
   modal: {

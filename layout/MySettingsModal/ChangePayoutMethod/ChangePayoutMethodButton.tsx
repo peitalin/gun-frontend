@@ -4,7 +4,7 @@ import { oc as option } from "ts-optchain";
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
 import { Colors } from "layout/AppTheme";
 // Graphql Queries
-import { useMutation, useApolloClient } from "@apollo/client";
+import { useMutation, useApolloClient, ApolloError } from "@apollo/client";
 import { GET_USER } from "queries/user-queries";
 import { UPDATE_USER, SET_PAYOUT_METHOD } from "queries/user-mutations";
 import { UserPrivate, ID } from "typings/gqlTypes";
@@ -28,14 +28,20 @@ const ChangePayoutMethodButton = (props: ReactProps) => {
 
   let [displayErr, setDisplayErr] = React.useState(true);
   let [displaySuccess, setDisplaySuccess] = React.useState(true);
+
   let {
     newBsb,
     newAccountNumber,
     newAccountName,
   } = props;
+
   const aClient = useApolloClient();
   const dispatch = useDispatch();
 
+  const formatError = (error: ApolloError) => {
+    let errMsg = error?.graphQLErrors?.[0]?.message ?? JSON.stringify(error)
+    return errMsg
+  }
 
   const [setPayoutMethod, { loading, data, error }] =
   useMutation<MutationData, MutationVars>(
@@ -101,7 +107,7 @@ const ChangePayoutMethodButton = (props: ReactProps) => {
         <SnackBarA
           open={error !== undefined && displayErr}
           closeSnackbar={() => setDisplayErr(false)}
-          message={`Oh oh: ${JSON.stringify(error)}`}
+          message={formatError(error)}
           variant={"error"}
           autoHideDuration={3000}
         />

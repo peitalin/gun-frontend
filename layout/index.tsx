@@ -7,7 +7,7 @@ import NavBarMain from "./NavBarMain";
 import { NavBarHeight } from "layout/NavBarMain/styles";
 import Footer from "./Footer";
 import GetUser from "./GetUser";
-import Modals from "./Modals";
+import GlobalModals from "./GlobalModals";
 // Typings
 import { UserPrivate } from "typings/gqlTypes";
 import ErrorBounds from "components/ErrorBounds";
@@ -158,15 +158,13 @@ const Layout: React.FC<ReactProps> = (props) => {
   return (
     <StripeProvider>
       <Header/>
-      <NavBarMain />
+      <NavBarMain/>
       <GetUser/>
-      <Modals/>
+      <GlobalModals/>
       <PageContainer classes={props.classes}>
         { renderLayout() }
       </PageContainer>
-      <Footer>
-        {/* <BreadcrumbRoutes dark/> */}
-      </Footer>
+      <Footer/>
     </StripeProvider>
   )
 };
