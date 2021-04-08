@@ -114,18 +114,20 @@ const DealerViewer: React.FC<ReactProps> = (props) => {
 
   if (!dealer?.id) {
     return (
-      <DealerSearch
-        dealerIdOrLicenseNumber={dealerIdOrLicenseNumber}
-        setDealerIdOrLicenseNumber={setDealerIdOrLicenseNumber}
-        searchDealerAsAdmin={searchDealerAsAdmin}
-        errorMsg={errorMsg}
-        loading={loading}
-      >
-        <DisplayAllDealers
-          allDealers={allDealers}
+      <div className={classes.sectionPaper}>
+        <DealerSearch
+          dealerIdOrLicenseNumber={dealerIdOrLicenseNumber}
           setDealerIdOrLicenseNumber={setDealerIdOrLicenseNumber}
-        />
-      </DealerSearch>
+          searchDealerAsAdmin={searchDealerAsAdmin}
+          errorMsg={errorMsg}
+          loading={loading}
+        >
+          <DisplayAllDealers
+            allDealers={allDealers}
+            setDealerIdOrLicenseNumber={setDealerIdOrLicenseNumber}
+          />
+        </DealerSearch>
+      </div>
     )
   }
 

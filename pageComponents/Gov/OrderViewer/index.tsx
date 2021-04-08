@@ -40,7 +40,7 @@ import CancelOrderForm from "./CancelOrderForm";
 import DisplayRecentOrderIds from "./DisplayRecentOrderIds";
 
 // Graphql
-import { useQuery, useApolloClient } from "@apollo/client";
+import { useMutation, useApolloClient } from "@apollo/client";
 import {
   GET_ORDER_AS_ADMIN,
   GET_RECENT_TRANSACTIONS,
@@ -68,7 +68,7 @@ const OrderViewer: React.FC<ReactProps> = (props) => {
  // state
   const [errorMsg, setErrorMsg] = React.useState(undefined);
   const [cancelledPaymentMsg, setCancelMsg] = React.useState(undefined);
-  const [loading, setLoading] = React.useState(false);
+  // const [loading, setLoading] = React.useState(false);
 
   const [orderId, setOrderId] = React.useState(undefined);
   const [order, setOrder] = React.useState<OrderAdmin>(undefined);
@@ -77,7 +77,23 @@ const OrderViewer: React.FC<ReactProps> = (props) => {
   const snackbar = useSnackbar();
   const router = useRouter();
 
-  console.log("query: ", router?.query)
+  const [
+    cancelOrderAndPayment,
+    { data, loading, error }
+  ] = useMutation<MutData3, MutVar3>(
+    CANCEL_ORDER_AND_PAYMENT, {
+    variables: {
+      orderId: orderId,
+      markProductAbandoned: undefined,
+    },
+    onCompleted: (data) => {
+      console.log("payment cancel response:", data);
+      alert(JSON.stringify({
+        CANCEL_ORDER_AND_PAYMENT: data?.cancelOrderAndPayment
+      }));
+    }
+  });
+
 
   const searchOrder = async(orderId: ID) => {
     try {
@@ -119,21 +135,17 @@ const OrderViewer: React.FC<ReactProps> = (props) => {
   }) => {
 
     console.log("cancelling orderId:", orderId);
-
-    const { errors, data } = await aClient.mutate<MutData3, MutVar3>({
-      mutation: CANCEL_ORDER_AND_PAYMENT,
+    await cancelOrderAndPayment({
       variables: {
         orderId: orderId,
         markProductAbandoned: markProductAbandoned,
       }
-    });
-
-    console.log("payment cancel response:", data);
-    alert(JSON.stringify({ CANCELLED: data?.cancelOrderAndPayment }));
+    })
     // data.refundOrder.order
-    if (errors) {
+    if (error) {
+      let errMsg = error.graphQLErrors?.[0]?.message;
       snackbar.enqueueSnackbar(
-        `Payment authorization cancel failed with msg: ${errors}`,
+        `Payment authorization cancel failed with msg: ${errMsg}`,
         { variant: "error" }
       )
     }
@@ -210,12 +222,10 @@ const OrderViewer: React.FC<ReactProps> = (props) => {
             markProductAbandoned: values.markProductAbandoned,
           }).then(res => {
             console.log(res)
-            setLoading(false)
             searchOrder(values.orderId)
             setCancelMsg(JSON.stringify(res))
           }).catch(e => {
             console.log(e)
-            setLoading(false)
             setErrorMsg(JSON.stringify(e))
           })
         }}
@@ -248,13 +258,13 @@ const OrderViewer: React.FC<ReactProps> = (props) => {
             <CancelOrderForm
               onSubmit={handleSubmit}
               total={c(total)}
+              loading={loading}
               disableCancelOrderButton={
                 !order.id ||
                 !canOrderBeCancelled
               }
               onClickDebugPrint={() => {
                 console.log("fprops.errors:", fprops.errors)
-                setLoading(false)
               }}
               {...fprops}
             >
@@ -276,8 +286,13 @@ const OrderViewer: React.FC<ReactProps> = (props) => {
                 !!order?.id &&
                 <OrderViewerSection title={"Order History"}>
 
-                  <TableContainer component={Paper}>
-                    <Table aria-label="collapsible table">
+                  <TableContainer
+                    component={Paper}
+                  >
+                    <Table
+                      aria-label="collapsible table"
+                      component={'div'}
+                    >
                       <RowExpander
                         key={order?.id}
                         initialOpen={true}

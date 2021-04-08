@@ -129,7 +129,7 @@ const UserViewer: React.FC<ReactProps> = (props) => {
 
   if (!user?.id) {
     return (
-      <>
+      <div className={classes.sectionPaper}>
         <UserSearch
           userId={userId}
           setUserId={setUserId}
@@ -142,7 +142,7 @@ const UserViewer: React.FC<ReactProps> = (props) => {
             setUserId={setUserId}
           />
         </UserSearch>
-      </>
+      </div>
     )
   }
 

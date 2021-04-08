@@ -24,7 +24,12 @@ const RowExpanderHidden: React.FC<ReactProps> = (props) => {
       open && !isEvenRow && classes.backgroundGrey2,
     )}>
       <div style={{ padding: 0 }}>
-        <Collapse in={open} timeout="auto" unmountOnExit>
+        <Collapse
+          in={open}
+          timeout="auto"
+          unmountOnExit
+          component={'div'}
+        >
           {props.children}
         </Collapse>
       </div>

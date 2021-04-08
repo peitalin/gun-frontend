@@ -36,7 +36,7 @@ const OrderSearch: React.FC<ReactOrdersSearchProps> = (props) => {
           name="orderId"
           placeholder="e.g. oxxxxxxxxxxxxxx"
           className={classes.textField}
-          value={orderId}
+          value={orderId ?? ""}
           onChange={(e) => setOrderId(e.target.value)}
           inputProps={{ style: { width: '100%' }}}
         />

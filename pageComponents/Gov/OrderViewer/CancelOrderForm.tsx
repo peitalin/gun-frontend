@@ -5,7 +5,7 @@ import { withStyles, createStyles, WithStyles, Theme, lighten } from "@material-
 import { Colors, BorderRadius } from "layout/AppTheme";
 // Material UI
 import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
+import ButtonLoading from "components/ButtonLoading";
 import TextInput from "components/Fields/TextInput";
 import Checkbox, { CheckboxProps } from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -26,6 +26,7 @@ const CancelOrderForm = (
     disableCancelOrderButton,
     onClickDebugPrint,
     total,
+    loading,
     ...fprops
   } = props;
 
@@ -34,7 +35,7 @@ const CancelOrderForm = (
       <form className={classes.form} onSubmit={onSubmit}>
         {props.children}
         <div className={clsx(classes.flexCol, classes.section1)}>
-          <Button
+          <ButtonLoading
             className={
               disableCancelOrderButton
                 ? classes.cancelButtonDisabled
@@ -43,11 +44,12 @@ const CancelOrderForm = (
             type="submit" // this sets off Form submit
             disabled={disableCancelOrderButton}
             variant={"outlined"}
-            color={"primary"}
+            loadingIconColor={Colors.cream}
             onClick={onClickDebugPrint}
+            loading={loading}
           >
             { `Cancel Order: ${total}` }
-          </Button>
+          </ButtonLoading>
 
           {
             !disableCancelOrderButton &&
@@ -87,6 +89,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   disableCancelOrderButton: boolean;
   onClickDebugPrint(): void;
   total: string;
+  loading: boolean;
 }
 
 interface FormikFields {
