@@ -23,24 +23,30 @@ export const GET_RECOMMENDED_PRODUCTS = gql`
 `;
 
 
-export const GET_ALL_PRODUCTS = gql`
-  query productsAllConnection($query: ConnectionQuery) {
-    productsAllConnection(query: $query) {
+export const GET_ALL_NEW_PRODUCTS = gql`
+  query productsAllConnection(
+    $searchTerm: String!
+    $query: ConnectionQuery
+  ) {
+    productsAllConnection(
+      searchTerm: $searchTerm,
+      query: $query
+    ) {
       totalCount
       pageInfo {
         isLastPage
       }
       edges {
-        # cursor
         node {
           ...ProductFragment
         }
       }
     }
   }
-  ${ImageFragment}
   ${ProductFragment}
 `;
+
+
 
 export const GET_PRODUCT = gql`
   query getProductById($productId: String!) {
