@@ -188,36 +188,11 @@ const PublishedProductsList = (props: ReactProps) => {
     }
   }
 
-  const refetch = useCallback(() => {
-    // apollo devs are retards
-    // https://github.com/apollographql/react-apollo/issues/3862
-    setTimeout(() => refetchTheProducts(), 0)
-  }, [refetchTheProducts])
-
   /////////// Hooks ///////////
 
   React.useEffect(() => {
     getProducts()
-    // console.log("router.query: ", router.query)
-    if (router?.query?.created) {
-      if (getProductsResponse?.data?.dashboardProductsConnection?.edges) {
-
-        console.log("router.query.created: ", router.query.created)
-        let foundProduct = (connection?.edges ?? [])
-          .find(({ node }) => node.id === router?.query?.created)
-
-        console.log("foundProduct: ", foundProduct)
-
-        if (!foundProduct?.node?.id) {
-          console.log("product missing:", router.query.created)
-          // getProducts()
-          console.log("getProductsReponse:",  getProductsResponse)
-          refetch()
-        }
-
-      }
-    }
-  }, [getProductsResponse?.data])
+  }, [])
 
   // console.log("connection", connection)
   // console.log("gridAccum", gridAccum)
