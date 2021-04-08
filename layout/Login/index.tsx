@@ -170,8 +170,8 @@ const Login: React.FC<ReactProps> = (props) => {
       })
     }
 
-    let { data, loading, errors, refetch }: Aprops = await apolloClient.query({
-      query: LOGIN,
+    let { data, loading, errors, refetch }: Aprops = await apolloClient.mutate({
+      mutation: LOGIN,
       variables: {
         email: email.trim(),
         password: password,

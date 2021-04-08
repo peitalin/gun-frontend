@@ -13,11 +13,14 @@ import Redirect from "pageComponents/Redirect";
 // store deleted
 import { dealerExists } from "utils/store";
 import { getUserDataFromGqlOrRedux } from "./utils";
+import { useRouter } from "next/router";
+
 
 
 export const DealerProfileWrapper = (props) => {
 
   const dispatch = useDispatch();
+  const router = useRouter();
 
   const {
     userRedux,
@@ -48,12 +51,14 @@ export const DealerProfileWrapper = (props) => {
           />
   }
   if (!dealerExists(data2?.user) && process.browser) {
+    // just for reference, not used for navgiation, we use router.back()
+    let from = router.pathname.replace(/[/]/g, '-').slice(1)
     return (
       <Redirect
         message={"Registered Dealers access only."}
         redirectCondition={!data2?.user?.dealer?.id}
         redirectDelay={1000}
-        redirectRoute={"/"}
+        redirectRoute={`/login?from=${from}`}
       />
     )
   } else {

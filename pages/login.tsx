@@ -4,20 +4,46 @@ import clsx from "clsx";
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 // SSR
 import { NextPage, NextPageContext } from 'next';
-import { ApolloClient } from "@apollo/client";
+import { ApolloClient, useApolloClient } from "@apollo/client";
+import { UserPrivate } from "typings/gqlTypes";
+// Redux
+import { GrandReduxState } from "reduxStore/grand-reducer";
+import { useSelector } from "react-redux";
 import Login from "layout/Login";
 // Meta headers
 import MetaHeadersPage from "layout/MetaHeadersPage";
+import { useRouter } from "next/router";
 
 
 
 const LoginPage: NextPage<ReactProps> = (props) => {
 
-  const { classes } = props;
-
   const {
-    query
+    classes,
+    query,
   } = props;
+
+  const router = useRouter();
+  const aClient = useApolloClient();
+
+  const user = useSelector<GrandReduxState, UserPrivate>(
+    s => s.reduxLogin.user
+  );
+
+  React.useEffect(() => {
+    if (!user?.id) {
+      console.log("evicting ROOT_QUERY.user profile.")
+      aClient.cache.evict({
+        id: "ROOT_QUERY",
+        fieldName: "user"
+      })
+      console.log("CACHE: ", aClient.cache)
+    } else if (user?.id) {
+      if (router?.query?.from) {
+        router.back()
+      }
+    }
+  }, [user])
 
   return (
     <div className={classes.root}>

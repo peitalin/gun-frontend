@@ -24,6 +24,7 @@ import {
 import ErrorBounds from "components/ErrorBounds";
 // Material UI
 import Typography from "@material-ui/core/Typography";
+import Button from "@material-ui/core/Button";
 // Components
 import ProductRow from "pageComponents/SellerDashboard/PublishedProductsList/ProductRow";
 import ProductList from "pageComponents/SellerDashboard/PublishedProductsList/ProductList";
@@ -283,45 +284,59 @@ const PublishedProductsList = (props: ReactProps) => {
                 ? classes.productsContainerSm
                 : classes.productsContainer
             }>
-              <GridPaginatorGeneric<Product>
-                index={index}
-                connection={connection}
-                totalCount={totalCount}
-                setTotalCount={setTotalCount}
-                numItemsPerPage={numItemsPerPage}
-                className={classes.flexCol}
-              >
-                {({ node: product }) => {
+              {
+                connection?.edges?.length === 0
+                ? <div className={classes.emptyItems}>
+                    <Typography variant="body1" className={classes.emptyItemsTitle}>
+                      Your product listings will appear here
+                      after your first upload.
+                    </Typography>
+                    <Button variant="outlined" color="primary"
+                      onClick={() => router.push(`/sell`)}
+                    >
+                      Browse Products
+                    </Button>
+                  </div>
+                : <GridPaginatorGeneric<Product>
+                    index={index}
+                    connection={connection}
+                    totalCount={totalCount}
+                    setTotalCount={setTotalCount}
+                    numItemsPerPage={numItemsPerPage}
+                    className={classes.flexCol}
+                  >
+                    {({ node: product }) => {
 
-                  let hideEdit = product.soldOutStatus !== SoldOutStatus.AVAILABLE
+                      let hideEdit = product.soldOutStatus !== SoldOutStatus.AVAILABLE
 
-                  if (product.isPublished) {
-                    return (
-                      <ProductRow
-                        key={product.id}
-                        product={product}
-                        hideEdit={hideEdit}
-                        loading={getProductsResponse.loading}
-                        refetchProducts={refetchTheProducts}
-                        refetchQuery={refetchQuery}
-                        {...publishedProps}
-                      />
-                    )
-                  } else {
-                    return (
-                      <ProductRow
-                        key={product.id}
-                        product={product}
-                        hideEdit={hideEdit}
-                        loading={getProductsResponse.loading}
-                        refetchProducts={refetchTheProducts}
-                        refetchQuery={refetchQuery}
-                        {...unpublishedProps}
-                      />
-                    )
-                  }
-                }}
-              </GridPaginatorGeneric>
+                      if (product.isPublished) {
+                        return (
+                          <ProductRow
+                            key={product.id}
+                            product={product}
+                            hideEdit={hideEdit}
+                            loading={getProductsResponse.loading}
+                            refetchProducts={refetchTheProducts}
+                            refetchQuery={refetchQuery}
+                            {...publishedProps}
+                          />
+                        )
+                      } else {
+                        return (
+                          <ProductRow
+                            key={product.id}
+                            product={product}
+                            hideEdit={hideEdit}
+                            loading={getProductsResponse.loading}
+                            refetchProducts={refetchTheProducts}
+                            refetchQuery={refetchQuery}
+                            {...unpublishedProps}
+                          />
+                        )
+                      }
+                    }}
+                  </GridPaginatorGeneric>
+              }
             </div>
           </div>
         </SearchOptions>
@@ -544,6 +559,30 @@ export const styles = (theme: Theme) => createStyles({
   productsContainerSm: {
     padding: '1rem',
     minHeight: '1085px'
+  },
+  emptyItems: {
+    minHeight: 300,
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: '2rem',
+    borderRadius: BorderRadius,
+    backgroundColor: theme.palette.type === 'dark'
+      ? theme.colors.uniswapDarkNavy
+      : Colors.cream,
+    boxShadow: theme.palette.type === 'dark'
+      ? BoxShadows.shadow1.boxShadow
+      : 'unset',
+    border: theme.palette.type === 'dark'
+      ? `1px solid ${Colors.uniswapLightNavy}`
+      : `1px solid ${Colors.slateGreyDark}`,
+    width: '100%',
+    padding: '3rem',
+  },
+  emptyItemsTitle: {
+    marginBottom: '1rem',
   },
 });
 

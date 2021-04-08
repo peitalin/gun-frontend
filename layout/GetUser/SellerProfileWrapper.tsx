@@ -21,6 +21,7 @@ import Redirect from "pageComponents/Redirect";
 // store deleted
 import { isStoreDeleted, storeDoesNotExist } from "utils/store";
 import { getUserDataFromGqlOrRedux } from "./utils";
+import { useRouter } from "next/router";
 
 
 
@@ -28,6 +29,8 @@ import { getUserDataFromGqlOrRedux } from "./utils";
 export const SellerProfileWrapper = (props) => {
 
   const dispatch = useDispatch();
+  const router = useRouter();
+
   const {
     userRedux,
     isDarkMode
@@ -73,12 +76,16 @@ export const SellerProfileWrapper = (props) => {
     // user who is not logged in will error, causing a redirect
     let redirectCondition = !data2?.user?.id && process.browser;
     // console.log("redirectCondition: ", redirectCondition)
+
+    // just for reference, not used for navgiation, we use router.back()
+    let from = router.pathname.replace(/[/]/g, '-').slice(1)
+
     return (
       <Redirect
         message={"Login required. Redirecting to login..."}
         redirectCondition={redirectCondition}
         redirectDelay={1000}
-        redirectRoute={"/login"}
+        redirectRoute={`/login?from=${from}`}
       />
     )
   }

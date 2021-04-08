@@ -76,12 +76,23 @@ const MyOrders: React.FC<ReactProps> = (props) => {
   const theme = useTheme();
   const mdDown = useMediaQuery(theme.breakpoints.down("md"))
   const maxWidthForOrders = mdDown ? '100%' : MAX_WIDTH_ORDERS_PAGER
+
   const aClient = useApolloClient();
+  // console.log("aClient.cache: ", aClient?.cache)
 
-  console.log("aClient.cache: ", aClient?.cache)
+  interface ReduxState {
+    isDarkMode: boolean;
+    user: UserPrivate
+  }
 
-  const isDarkMode = useSelector<GrandReduxState, boolean>(
-    s => s.reduxLogin.darkMode === 'dark'
+  const {
+    isDarkMode,
+    user
+  } = useSelector<GrandReduxState, ReduxState>(
+    s => ({
+      isDarkMode: s.reduxLogin.darkMode === 'dark',
+      user: s.reduxLogin.user,
+    })
   )
 
   //// BUYER ORDERS Paginator Hooks
@@ -142,7 +153,9 @@ const MyOrders: React.FC<ReactProps> = (props) => {
           orderBy: orderBy,
         }
       },
-      fetchPolicy: "network-only",
+      onCompleted: (data) => {
+        console.log("buyerOrders: ", data)
+      },
     }
   );
 
@@ -158,7 +171,9 @@ const MyOrders: React.FC<ReactProps> = (props) => {
           orderBy: orderBy,
         }
       },
-      fetchPolicy: "network-only",
+      onCompleted: (data) => {
+        console.log("sellerOrders: ", data)
+      },
     }
   );
 
@@ -175,7 +190,9 @@ const MyOrders: React.FC<ReactProps> = (props) => {
         }
       },
       // onCompleted: (data) => console.log("completed SAI", data),
-      fetchPolicy: "network-only",
+      onCompleted: (data) => {
+        console.log("sellerAiOrders: ", data)
+      },
     }
   );
 
@@ -183,7 +200,15 @@ const MyOrders: React.FC<ReactProps> = (props) => {
     getBuyerOrders()
     getSellerOrders()
     getSellerOrdersActionItems()
-  }, [])
+    console.log("user::::", user)
+    if (user?.id) {
+      setTimeout(() => {
+        getBuyerOrders()
+        getSellerOrders()
+        getSellerOrdersActionItems()
+      }, 0)
+    }
+  }, [user])
 
   const buyerOrdersConnection =
     buyerOrdersResponse?.data?.user?.buyerOrdersConnection
@@ -588,6 +613,7 @@ const styles = (theme: Theme) => createStyles({
   },
   title: {
     marginTop: '1rem',
+    marginBottom: '1rem',
   },
   heading: {
     marginTop: '1rem',

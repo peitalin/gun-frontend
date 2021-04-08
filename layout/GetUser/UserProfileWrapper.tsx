@@ -14,12 +14,14 @@ import LoadingBar from "components/LoadingBar";
 import LoadingBarSSR from "components/LoadingBarSSR";
 import Redirect from "pageComponents/Redirect";
 import { getUserDataFromGqlOrRedux } from "./utils";
+import { useRouter } from "next/router";
 
 
 
 export const UserProfileWrapper = (props) => {
 
   const dispatch = useDispatch();
+  const router = useRouter();
 
   const { loading, data, error, refetch } = useQuery<QueryData>(
     GET_USER, {
@@ -43,6 +45,7 @@ export const UserProfileWrapper = (props) => {
     isDarkMode: s.reduxLogin.darkMode === 'dark'
   }))
 
+
   if (loading) {
     return <LoadingBar
             absoluteTop
@@ -53,12 +56,16 @@ export const UserProfileWrapper = (props) => {
           />
   }
   if (error && !data?.user?.id) {
+
+    // just for reference, not used for navgiation, we use router.back()
+    let from = router.pathname.replace(/[/]/g, '-').slice(1)
+
     return (
       <Redirect
         message={"Login required. Redirecting to login..."}
         redirectCondition={!data?.user?.id}
         redirectDelay={1000}
-        redirectRoute={"/login"}
+        redirectRoute={`/login?from=${from}`}
       />
     )
   } else {

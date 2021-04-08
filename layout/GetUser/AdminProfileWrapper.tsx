@@ -15,6 +15,7 @@ import { UserPrivate, Role } from 'typings/gqlTypes';
 import LoadingBar from "components/LoadingBar";
 import Redirect from "pageComponents/Redirect";
 import { getUserDataFromGqlOrRedux } from "./utils";
+import { useRouter } from "next/router";
 
 
 
@@ -28,6 +29,7 @@ const AdminProfileWrapper = (
   } = props;
 
   const dispatch = useDispatch();
+  const router = useRouter();
 
   const { loading, data, error, refetch } = useQuery<QueryData>(
     GET_USER, {
@@ -61,12 +63,14 @@ const AdminProfileWrapper = (
           />
   }
   if (error && !data?.user?.id) {
+    // just for reference, not used for navgiation, we use router.back()
+    let from = router.pathname.replace(/[/]/g, '-').slice(1)
     return (
       <Redirect
         message={"Admin login required. Redirecting..."}
         redirectCondition={!data?.user?.id}
         redirectDelay={1000}
-        redirectRoute={"/login"}
+        redirectRoute={`/login?from=${from}`}
       />
     )
   } else if (userIsAdmin) {

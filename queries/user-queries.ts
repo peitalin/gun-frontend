@@ -3,20 +3,20 @@ import { UserPrivateFragment } from "./fragments";
 
 
 export const LOGIN = gql`
-mutation logInUsingEmail(
-  $email: String!
-  $password: String!
-) {
-  logInUsingEmail(
-    email: $email
-    password: $password
+  mutation logInUsingEmail(
+    $email: String!
+    $password: String!
   ) {
-    jwt
-    user {
-      ...UserPrivateFragment
+    logInUsingEmail(
+      email: $email
+      password: $password
+    ) {
+      jwt
+      user {
+        ...UserPrivateFragment
+      }
     }
   }
-}
   ${UserPrivateFragment}
 `;
 

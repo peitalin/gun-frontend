@@ -283,6 +283,28 @@ const cacheOptions = {
       }
     },
 
+    UserPrivate: {
+      keyFields: ["id"],
+      fields: {
+        buyerOrdersConnection: {
+          merge: (existing, incoming, opts) =>
+            opts.mergeObjects(existing, incoming),
+        },
+        sellerOrdersConnection: {
+          merge: (existing, incoming, opts) =>
+            opts.mergeObjects(existing, incoming),
+        },
+        sellerOrdersActionItemsConnection: {
+          merge: (existing, incoming, opts) =>
+            opts.mergeObjects(existing, incoming),
+        },
+        store: {
+          merge: (existing, incoming, opts) =>
+            opts.mergeObjects(existing, incoming),
+        },
+      }
+    },
+
     Store: {
       keyFields: ["id"],
       fields: {
