@@ -20,9 +20,6 @@ import { GrandReduxState } from "reduxStore/grand-reducer";
 import { WishlistItemId } from "reduxStore/wishlist-reducer";
 // Wishlist
 import ProductCardResponsive from "components/ProductCardResponsive";
-
-import Loading from "components/Loading";
-import { GET_ALL_PRODUCTS } from "queries/gun-queries";
 import AirCarousel from "components/AirCarousel";
 
 

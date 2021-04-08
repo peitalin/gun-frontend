@@ -17,7 +17,7 @@ import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 // GraphQL
 import { useQuery, useApolloClient } from "@apollo/client";
-import { GET_ALL_PRODUCTS } from "queries/gun-queries";
+import { GET_ALL_NEW_PRODUCTS } from "queries/products-queries";
 // Select Component
 // import DropdownInput from "components/Fields/DropdownInput";
 import dynamic from "next/dynamic";
@@ -25,13 +25,25 @@ const DropdownInput = dynamic(() => import("components/Fields/DropdownInput"), {
   loading: (props) => <Loading/>,
   ssr: false,
 });
-// MUI
-import SearchIcon from '@material-ui/icons/Search';
-import ClearIcon from '@material-ui/icons/Clear';
-import InputBase from '@material-ui/core/InputBase';
-import Button from "@material-ui/core/Button";
 import { useDebouncedCallback } from 'use-debounce';
-const throttle = require('lodash.throttle');
+
+
+const orderByOptions = [
+  { label: "Newest", value: { createdAt: Order_By.DESC }},
+  { label: "Oldest", value: { createdAt: Order_By.ASC }},
+  { label: "Highest Price", value: { price: Order_By.DESC }},
+  { label: "Lowest Price", value: { price: Order_By.ASC }},
+];
+
+export const initialVariables = {
+  searchTerm: "",
+  query: {
+    limit: 12,
+    offset: 0,
+    orderBy: orderByOptions[0],
+  },
+}
+
 
 
 const NewReleaseProducts = (props: ReactProps) => {
@@ -39,21 +51,13 @@ const NewReleaseProducts = (props: ReactProps) => {
   const {
     classes,
     initialProducts,
-    count = 24,
     title = "New Releases"
   } = props;
 
-  const orderByOptions = [
-    { label: "Newest", value: { createdAt: Order_By.DESC }},
-    { label: "Oldest", value: { createdAt: Order_By.ASC }},
-    { label: "Highest Price", value: { price: Order_By.DESC }},
-    { label: "Lowest Price", value: { price: Order_By.ASC }},
-  ];
-
-  const [orderBy, setOrderBy] = React.useState(orderByOptions[0]);
+  const [orderBy, setOrderBy] = React.useState(initialVariables?.query?.orderBy);
   const [expand, setExpand] = React.useState(false);
   const [searchTermUi, setSearchTermUi] = React.useState("");
-  const [searchTerm, setSearchTerm] = React.useState("");
+  const [searchTerm, setSearchTerm] = React.useState(initialVariables?.searchTerm);
 
   // Debounce Redux State changes to limit lag
   const [debounceUpdateSearchTerm] = useDebouncedCallback((name: string) => {
@@ -68,12 +72,27 @@ const NewReleaseProducts = (props: ReactProps) => {
   const smDown = useMediaQuery(theme.breakpoints.down("sm"))
   const xsDown = useMediaQuery(theme.breakpoints.down("xs"))
 
-  const { loading, error, data } = useQuery<QueryData, QueryVar>(
-    GET_ALL_PRODUCTS, {
+  // const aClient = useApolloClient();
+  // console.log("apollo CACHE::", aClient.cache)
+  // const newreleases = aClient?.cache?.readQuery<QueryDataNewReleases, any>({
+  //   query: GET_ALL_NEW_PRODUCTS,
+  //   variables: {
+  //     searchTerm: searchTerm,
+  //     query: {
+  //       limit: 12,
+  //       offset: 0,
+  //       orderBy: orderBy.value as any,
+  //     }
+  //   },
+  // });
+  // console.log("aClient.CACHE new releases: ", newreleases)
+
+  const { loading, error, data } = useQuery<QueryDataNewReleases, QueryVar>(
+    GET_ALL_NEW_PRODUCTS, {
     variables: {
       searchTerm: searchTerm,
       query: {
-        limit: 12 || count,
+        limit: 12,
         offset: 0,
         orderBy: orderBy.value as any,
         // orderBy: {
@@ -205,10 +224,9 @@ const NewReleaseProducts = (props: ReactProps) => {
 
 interface ReactProps extends WithStyles<typeof styles> {
   initialProducts?: ProductsConnection;
-  count?: number;
   title?: string;
 }
-interface QueryData {
+export interface QueryDataNewReleases {
   productsAllConnection: ProductsConnection;
 }
 interface QueryVar {

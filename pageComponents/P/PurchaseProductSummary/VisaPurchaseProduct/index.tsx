@@ -72,14 +72,13 @@ const VisaPurchaseProduct = (props: ReactProps) => {
   const purchasePrice = props.selectedBid?.offerPrice
     || featuredVariant.price
 
-  const aClient = useApolloClient();
+  // const aClient = useApolloClient();
   // console.log("apollo CACHE::", aClient.cache)
-
-  const user2 = aClient?.cache?.readQuery<UserPrivate, any>({
-    query: GET_BUYER_ORDERS_CONNECTION,
-    variables: initialVariables,
-  });
-  console.log("aClient.CACHE user: ", user2)
+  // const user2 = aClient?.cache?.readQuery<UserPrivate, any>({
+  //   query: GET_BUYER_ORDERS_CONNECTION,
+  //   variables: initialVariables,
+  // });
+  // console.log("aClient.CACHE user: ", user2)
 
   interface ReduxState {
     isDarkMode: boolean;

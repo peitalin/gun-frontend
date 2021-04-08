@@ -67,7 +67,18 @@ import { GET_PRODUCT_CATEGORIES } from "queries/categories-queries";
 import { useQuery } from '@apollo/client';
 import { useMutation, useApolloClient } from "@apollo/client";
 import { CREATE_PRODUCT } from "queries/products-mutations";
-// import { GET_RECOMMENDED_PRODUCTS } from "queries/products-queries";
+
+// CACHE UPDATES
+// update New Release connection in cache after product creation
+import { GET_ALL_NEW_PRODUCTS } from "queries/products-queries";
+import { initialVariables, QueryDataNewReleases } from "pageComponents/FrontPage/NewReleaseProducts";
+import { DASHBOARD_PRODUCTS_CONNECTION } from "queries/store-queries";
+// Warning: these are determined inside the facet hook, may get out of sync
+// if you change the defaults in that hook
+import {
+  initialDashboardVariables,
+  QueryDataDashboardProducts,
+} from "pageComponents/SellerDashboard/PublishedProductsList";
 
 // Typings
 import {
@@ -78,6 +89,7 @@ import {
   UserPrivate,
   ProductVariantInput,
   StorePrivate,
+  ProductsEdge,
 } from "typings/gqlTypes";
 import {
   ProductCreateInputFrontEnd,
@@ -177,7 +189,53 @@ const ProductCreatePage = (props: ReactProps) => {
     },
     update: (cache, { data: { createProduct }}) => {
       // update NEWEST PRODUCTS connection
+      let newProduct = createProduct?.product;
+      console.log("new product: ", newProduct)
 
+      const cacheData = cache.readQuery<QueryDataNewReleases, any>({
+        query: GET_ALL_NEW_PRODUCTS,
+        variables: initialVariables,
+      });
+
+      /// Update front page new releases products
+      if (cacheData?.productsAllConnection?.edges) {
+        cache.writeQuery({
+          query: GET_ALL_NEW_PRODUCTS,
+          variables: initialVariables,
+          data: {
+            productsAllConnection: {
+              edges: [
+                { node: newProduct },
+                ...(cacheData?.productsAllConnection?.edges ?? []),
+              ],
+              totalCount: (cacheData?.productsAllConnection?.edges?.length ?? 0) + 1,
+            }
+          },
+        });
+      }
+
+      /// Update dashboard products
+      const cacheData2 = cache.readQuery<QueryDataDashboardProducts, any>({
+        query: DASHBOARD_PRODUCTS_CONNECTION,
+        variables: initialDashboardVariables,
+      });
+      console.log("cache2: ", cacheData)
+      if (cacheData2?.dashboardProductsConnection?.edges) {
+        cache.writeQuery({
+          query: DASHBOARD_PRODUCTS_CONNECTION,
+          variables: initialDashboardVariables,
+          data: {
+            dashboardProductsConnection: {
+              ...cacheData2.dashboardProductsConnection,
+              edges: [
+                { node: newProduct },
+                ...(cacheData2?.dashboardProductsConnection?.edges ?? []),
+              ],
+              totalCount: (cacheData2?.dashboardProductsConnection?.edges?.length ?? 0) + 1,
+            }
+          },
+        });
+      }
     },
   })
 

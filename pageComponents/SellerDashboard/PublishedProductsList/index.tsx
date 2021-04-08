@@ -18,6 +18,7 @@ import {
   ConnectionQuery,
   Product,
   SoldOutStatus,
+  Order_By,
 } from "typings/gqlTypes";
 // Utils Components
 import ErrorBounds from "components/ErrorBounds";
@@ -52,6 +53,10 @@ import {
 import GridPaginatorGeneric from "components/GridPaginatorGeneric";
 
 
+let numItemsPerPage = 10;
+let overfetchBy = 1;
+export let initialDashboardVariables = {}
+// this is set later in the body ofthe Reat component
 
 
 const PublishedProductsList = (props: ReactProps) => {
@@ -72,9 +77,6 @@ const PublishedProductsList = (props: ReactProps) => {
   const xsDown = useMediaQuery(theme.breakpoints.down('xs'));
   const smDown = useMediaQuery(theme.breakpoints.down('sm'));
   const mdDown = useMediaQuery(theme.breakpoints.down('md'));
-
-  let numItemsPerPage = 10;
-  let overfetchBy = 1;
 
   let {
     orderBy,
@@ -119,7 +121,7 @@ const PublishedProductsList = (props: ReactProps) => {
     hideViewButton: true,
   };
 
-  const [getProducts, getProductsResponse] = useLazyQuery<QueryData, QueryVar>(
+  const [getProducts, getProductsResponse] = useLazyQuery<QueryDataDashboardProducts, QueryVar>(
     DASHBOARD_PRODUCTS_CONNECTION, {
     variables: {
       searchTerm: searchTerm ? searchTerm : "*",
@@ -160,6 +162,8 @@ const PublishedProductsList = (props: ReactProps) => {
       }
     },
   }
+
+  initialDashboardVariables = refetchQuery.variables
 
 
   const connection: ProductsConnection =
@@ -410,7 +414,7 @@ interface QueryVar {
   searchTerm?: string;
   query?: ConnectionQuery;
 }
-interface QueryData {
+export interface QueryDataDashboardProducts {
   // user: UserPrivate;
   dashboardProductsConnection: ProductsConnection;
 }

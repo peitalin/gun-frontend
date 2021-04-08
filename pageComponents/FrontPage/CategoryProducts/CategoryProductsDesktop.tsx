@@ -12,8 +12,6 @@ import ProductCardResponsive from "components/ProductCardResponsive";
 import LoadingCards from "../LoadingCards";
 // Graphql
 import {
-  GET_RECOMMENDED_PRODUCTS,
-  GET_ALL_PRODUCTS,
   GET_PRODUCTS_BY_CATEGORY,
 } from "queries/products-queries";
 // GraphQL Typings
