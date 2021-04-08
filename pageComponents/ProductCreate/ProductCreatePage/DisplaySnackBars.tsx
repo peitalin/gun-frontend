@@ -33,9 +33,10 @@ const DisplaySnackBars = ({
   }, [data])
 
   React.useEffect(() => {
-    if (error) {
+    let errMsg = error?.graphQLErrors?.[0]?.message ?? JSON.stringify(error)
+    if (errMsg) {
       snackbar.enqueueSnackbar(
-        `Oh oh: ${JSON.stringify(error)}`,
+        `${errMsg}`,
         { variant: "error", autoHideDuration: 6000 }
       )
     }

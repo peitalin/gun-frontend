@@ -22,7 +22,7 @@ import {
 import {
   StripeAuthorizePaymentData,
   StripeConfirmResponse,
-} from "../purchaseFunctions";
+} from "./purchaseTypings";
 import {
   UserPrivate, ID,
   OrderStatus,
@@ -40,13 +40,21 @@ import CreateOfferSubscription from "../CreateOfferSubscription";
 import { useSelector } from "react-redux";
 import { GrandReduxState, Actions } from "reduxStore/grand-reducer";
 // Graphql
-import { useApolloClient, useLazyQuery } from '@apollo/client';
+import { useApolloClient, useMutation } from '@apollo/client';
 // Snackbar
 import { useSnackbar } from "notistack";
 
 import {
   CREATE_ORDER,
 } from "queries/orders-mutations";
+// Graphql Queries to update after order
+import {
+  GET_BUYER_ORDERS_CONNECTION,
+  GET_SELLER_ORDERS_CONNECTION,
+  GET_SELLER_ORDERS_ACTION_ITEMS_CONNECTION,
+} from "queries/orders-queries";
+// initial variables for updating apollo cache
+import { initialVariables } from "pageComponents/MyOrders";
 
 
 
@@ -65,8 +73,13 @@ const VisaPurchaseProduct = (props: ReactProps) => {
     || featuredVariant.price
 
   const aClient = useApolloClient();
+  // console.log("apollo CACHE::", aClient.cache)
 
-  const [loading, setLoading] = React.useState(false);
+  const user2 = aClient?.cache?.readQuery<UserPrivate, any>({
+    query: GET_BUYER_ORDERS_CONNECTION,
+    variables: initialVariables,
+  });
+  console.log("aClient.CACHE user: ", user2)
 
   interface ReduxState {
     isDarkMode: boolean;
@@ -78,6 +91,158 @@ const VisaPurchaseProduct = (props: ReactProps) => {
       isDarkMode: s.reduxLogin.darkMode === 'dark',
       buyer: s.reduxLogin.user,
     }
+  })
+
+  const [
+    createOrder,
+    { data, loading, error }
+  ] = useMutation<MutDataCreateOrder, MutVarCreateOrder>(
+    CREATE_ORDER, {
+    variables: {
+      productId: undefined,
+      productSnapshotId: undefined,
+      variantId: undefined,
+      variantSnapshotId: undefined,
+      total: undefined,
+      buyerId: undefined,
+      sellerStoreId: undefined,
+      stripeAuthorizePaymentData: undefined,
+      bidId: undefined,
+    },
+    update: (cache, { data: { createOrder } }) => {
+
+      console.log("incoming order : ", createOrder?.unconfirmedOrder)
+      let newOrder = createOrder?.unconfirmedOrder;
+
+      // cache.evict({
+      //   id: "ROOT_QUERY",
+      //   fieldName: "dashboardProductsConnection"
+      // })
+
+      // Fetch the cached user.buyerOrdersConnection item with associated variables
+      // remember, variables need to match, or cache will not return the data
+      const cacheDataBuyerOrders = cache.readQuery<{ user: UserPrivate }, any>({
+        query: GET_BUYER_ORDERS_CONNECTION,
+        variables: initialVariables,
+      });
+      const cacheDataSellerOrders = cache.readQuery<{ user: UserPrivate }, any>({
+        query: GET_SELLER_ORDERS_CONNECTION,
+        variables: initialVariables,
+      });
+      const cacheDataSellerActionItems = cache.readQuery<{ user: UserPrivate }, any>({
+        query: GET_SELLER_ORDERS_ACTION_ITEMS_CONNECTION,
+        variables: initialVariables,
+      });
+
+      let updateBuyerOrders = newOrder?.buyerId === buyer?.id
+        && cacheDataBuyerOrders?.user?.buyerOrdersConnection
+
+      let updateSellerOrders = newOrder?.sellerStore?.user?.id === buyer?.id
+        && cacheDataSellerOrders?.user?.sellerOrdersConnection
+
+      let updateSellerActionItems = newOrder?.sellerStore?.user?.id === buyer?.id
+        && cacheDataSellerActionItems?.user?.sellerOrdersActionItemsConnection
+
+
+      // update user orders connections in Apollo cache if those
+      // connections are present, otherwise you might be spreading null
+      if (updateBuyerOrders) {
+        cache.writeQuery({
+          query: GET_BUYER_ORDERS_CONNECTION,
+          variables: initialVariables,
+          data: {
+            user: {
+              ...cacheDataBuyerOrders?.user,
+              buyerOrdersConnection: {
+                ...cacheDataBuyerOrders?.user?.buyerOrdersConnection,
+                edges: [
+                  { __typename: "OrdersEdge", node: newOrder },
+                  ...(cacheDataBuyerOrders?.user?.buyerOrdersConnection?.edges ?? []),
+                ],
+                totalCount: (cacheDataBuyerOrders?.user?.buyerOrdersConnection?.edges?.length ?? 0) + 1,
+              },
+            }
+          },
+        });
+      }
+
+      if (updateSellerOrders) {
+        console.log("UPDATING SELLER CACHE ", cacheDataSellerOrders)
+        cache.writeQuery({
+          query: GET_SELLER_ORDERS_CONNECTION,
+          variables: initialVariables,
+          data: {
+            user: {
+              ...cacheDataSellerOrders?.user,
+              sellerOrdersConnection: {
+                ...cacheDataSellerOrders?.user?.sellerOrdersConnection,
+                edges: [
+                  { __typename: "OrdersEdge", node: newOrder },
+                  ...(cacheDataSellerOrders?.user?.sellerOrdersConnection?.edges ?? []),
+                ],
+                totalCount: (cacheDataSellerOrders?.user?.sellerOrdersConnection?.edges?.length ?? 0) + 1,
+              },
+            }
+          },
+        });
+      }
+
+      if (updateSellerActionItems) {
+        console.log("UPDATING ACTION ITEMS CACHE ", cacheDataSellerActionItems)
+        cache.writeQuery({
+          query: GET_SELLER_ORDERS_ACTION_ITEMS_CONNECTION,
+          variables: initialVariables,
+          data: {
+            user: {
+              ...cacheDataSellerActionItems?.user,
+              sellerOrdersActionItemsConnection: {
+                ...cacheDataSellerActionItems?.user?.sellerOrdersActionItemsConnection,
+                edges: [
+                  { __typename: "OrdersEdge", node: newOrder },
+                  ...(cacheDataSellerActionItems?.user?.sellerOrdersActionItemsConnection?.edges ?? []),
+                ],
+                totalCount: (cacheDataSellerActionItems?.user?.sellerOrdersActionItemsConnection?.edges?.length ?? 0) + 1,
+              }
+            }
+          },
+        });
+      }
+
+      // cache.modify({
+      //   fields: {
+      //     dashboardProductsConnection(existingConnection: ProductsConnection) {
+      //       console.log("cache.modify: ", existingConnection)
+      //       return {
+      //         ...existingConnection,
+      //         edges: newEdges
+      //       }
+      //     }
+      //   }
+      // });
+
+    },
+    onError: (err) => {
+      let errMsg = err?.graphQLErrors?.[0]?.message ?? JSON.stringify(err)
+      snackbar.enqueueSnackbar(`${errMsg}`, { variant: "error" })
+    },
+    onCompleted: (data) => {
+      let stripePaymentIntent = JSON.parse(
+        data?.createOrder?.stripePaymentIntent ?? "{}"
+      );
+      console.log("createOrder response: ", data?.createOrder)
+      console.info("stripePaymentIntent", stripePaymentIntent)
+      snackbar.enqueueSnackbar(
+        `Success order placed: ${data?.createOrder?.unconfirmedOrder?.id}`,
+        { variant: "success" }
+      )
+      if (typeof props.handleOrderPostPurchase === "function") {
+        console.log("handleOrderPostPurchase()")
+        props.handleOrderPostPurchase(data?.createOrder?.unconfirmedOrder)
+      }
+      if (typeof props.refetchProduct === "function") {
+        props.refetchProduct()
+      }
+    },
   })
 
 
@@ -109,11 +274,8 @@ const VisaPurchaseProduct = (props: ReactProps) => {
     // creates an order on the backend, and places a hold on the users card
     // with a payment authorization (to be captured later)
 
-    setLoading(true)
-
     if (!props?.user?.id) {
       snackbar.enqueueSnackbar(`Login to purchase.`, { variant: "info" })
-      setLoading(false)
       return
     }
 
@@ -123,8 +285,7 @@ const VisaPurchaseProduct = (props: ReactProps) => {
     };
 
     // 1. Create Order + create stripe payment intent in the backend
-    return await aClient.mutate<MutDataCreateOrder, MutVarCreateOrder>({
-      mutation: CREATE_ORDER,
+    await createOrder({
       variables: {
         productId: product.id,
         productSnapshotId: product.currentSnapshot.id,
@@ -135,25 +296,7 @@ const VisaPurchaseProduct = (props: ReactProps) => {
         sellerStoreId: product.store.id,
         stripeAuthorizePaymentData: JSON.stringify(stripeAuthorizePaymentData),
         bidId: props.selectedBid?.id,
-      }
-    })
-    .then(response => {
-      let stripePaymentIntent = JSON.parse(
-        response?.data?.createOrder?.stripePaymentIntent ?? "{}"
-      );
-      console.log("createOrder response: ", response)
-      console.info("stripePaymentIntent", stripePaymentIntent)
-      return response.data.createOrder
-    })
-    .catch(err => {
-      snackbar.enqueueSnackbar(`${err}`, { variant: "error" })
-      return {} as any
-    })
-    .finally(() => {
-      setLoading(false)
-      if (typeof props.refetchProduct === "function") {
-        props.refetchProduct()
-      }
+      },
     })
   }
 
@@ -196,7 +339,7 @@ const VisaPurchaseProduct = (props: ReactProps) => {
                   // el.focus()
                 }}
                 onChange={(event) => {
-                  console.log('onChange', event)
+                  // console.log('onChange', event)
                 }}
                 />
             </div>
@@ -206,27 +349,11 @@ const VisaPurchaseProduct = (props: ReactProps) => {
             <ButtonLoading
               onClick={
                 () => createNewPaymentMethod()
-                      .then(async (newPaymentMethod) => {
-
-                        // 1. Create an order first with the backend
-                        let orderResponse = await createOrderAndHoldFundsFirst({
+                      .then(newPaymentMethod => {
+                        createOrderAndHoldFundsFirst({
                           paymentMethodId: newPaymentMethod.id,
                           stripeCustomerId: props?.user?.stripeCustomerId,
                         });
-                        console.log("1: ORDER_MUTATION response: ", orderResponse)
-                        let order = orderResponse?.unconfirmedOrder;
-                        let stripePaymentIntent = JSON.parse(orderResponse?.stripePaymentIntent);
-                        console.log("1b: stripe PaymentIntent: ", stripePaymentIntent)
-
-                        snackbar.enqueueSnackbar(`Success order placed: ${order.id}`, { variant: "success" })
-
-                        if (typeof props.handleOrderPostPurchase === "function") {
-                          props.handleOrderPostPurchase(order)
-                        }
-                      })
-                      .catch(e => {
-                        console.warn(e)
-                        setLoading(false)
                       })
               }
               loadingIconColor={Colors.blue}

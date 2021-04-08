@@ -1,6 +1,4 @@
 import React from "react";
-import { oc as option } from "ts-optchain";
-import { useState } from "react";
 // Styles
 import { withStyles, WithStyles, Theme, createStyles } from "@material-ui/core/styles";
 import { styles } from "./styles";
@@ -54,9 +52,9 @@ const CreateStoreFields: React.FC<ReactProps & FormikProps<FormikFields>> = (pro
   )
 
   // state
-  const [profileImage, setProfileImage] = useState(undefined);
-  const [showAbout, setShowAbout] = useState(false);
-  const [showWebsite, setShowWebsite] = useState(false);
+  const [profileImage, setProfileImage] = React.useState(undefined);
+  const [showAbout, setShowAbout] = React.useState(false);
+  const [showWebsite, setShowWebsite] = React.useState(false);
 
 
   const handleUpdateName = (e: HtmlEvent) => {

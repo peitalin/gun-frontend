@@ -89,7 +89,7 @@ const Products: React.FC<ReactProps> = (props) => {
 
   let userBids = (getUserBidsForProductResponse?.data?.getUserBidsForProduct?.messages ?? [])
     .map(m => m?.bid)
-  console.log("userBids: ", userBids)
+  // console.log("userBids: ", userBids)
 
   const { loading, error, data, refetch } = useQuery<QueryData, QueryVar>(
     GET_PRODUCT, {

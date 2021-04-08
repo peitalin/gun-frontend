@@ -156,8 +156,10 @@ const ProductCreatePage = (props: ReactProps) => {
   const currentVariants = reduxProductCreate.productCreateInput.currentVariants;
 
   // Apollo Mutation
-  const [productCreate, { loading, error, data }] =
-  useMutation<MutationData, MutationVar>(CREATE_PRODUCT, {
+  const [
+    productCreate,
+    { loading, error, data }
+  ] = useMutation<MutationData, MutationVar>(CREATE_PRODUCT, {
     variables: { productCreateInput: { ...productCreateInput } },
     onError: (err) => console.log(err),
     onCompleted: async(data: MutationData) => {
@@ -172,7 +174,11 @@ const ProductCreatePage = (props: ReactProps) => {
         window.scrollTo(0, 0);
         dispatch(actions.RESET_PRODUCT_CREATE())
       }, 200);
-    }
+    },
+    update: (cache, { data: { createProduct }}) => {
+      // update NEWEST PRODUCTS connection
+
+    },
   })
 
   // Apollo Graphql
@@ -209,12 +215,6 @@ const ProductCreatePage = (props: ReactProps) => {
         }
       },
     }).then(res => {
-
-      snackbar.enqueueSnackbar(
-        `Escrow order succeeded`,
-        { variant: "info" }
-      )
-
       setTimeout(() => {
         resetForm()
         // wait 500ms for page transition before trying to reset form
@@ -269,7 +269,7 @@ const ProductCreatePage = (props: ReactProps) => {
             if (isFormikDisabled(errors)) {
               snackbar.enqueueSnackbar(
                 printValidationErrors(errors),
-                { variant: "error", autoHideDuration: 900000 }
+                { variant: "error", autoHideDuration: 5000 }
               )
               setState(s => ({ ...s, loading: false }))
             } else {
@@ -494,7 +494,8 @@ const printValidationErrors = (
   let priceWasError = errors?.currentVariants?.[0].priceWas;
   let previewItemsError = errors?.currentVariants?.[0].previewItems;
 
-  let filterErrors: any = errors
+  let { currentVariants, ...filterErrors }: any = errors
+
   if (priceError) {
     filterErrors = { ...filterErrors, price: priceError }
   }
@@ -505,10 +506,7 @@ const printValidationErrors = (
     filterErrors = { ...filterErrors, previewItems: previewItemsError }
   }
 
-  const errorMsg = Object
-    .keys(filterErrors)
-    .filter(e => e !== "currentVariants")
-    .join(", ")
+  const errorMsg = Object.keys(filterErrors).join(", ")
   return `Please check: ${errorMsg}`
 }
 

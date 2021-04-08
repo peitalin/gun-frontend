@@ -84,7 +84,7 @@ const PurchaseProductSummary: React.FC<ReactProps> = (props) => {
     )}>
 
       {
-        user.userRole === Role.PLATFORM_ADMIN &&
+        user?.userRole === Role.PLATFORM_ADMIN &&
         <div className={classes.copyProductId}
           onClick={() => {
             snackbar.enqueueSnackbar(
@@ -151,6 +151,7 @@ const PurchaseProductSummary: React.FC<ReactProps> = (props) => {
                     selectedBid={props.selectedBid}
                     handleOrderPostPurchase={
                       (order) => {
+                        console.log("routing to /orders")
                         router.push("/orders")
                       }
                     }

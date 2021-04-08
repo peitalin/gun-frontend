@@ -22,7 +22,7 @@ import {
 import {
   StripeAuthorizePaymentData,
   StripeConfirmResponse,
-} from "pageComponents/P/PurchaseProductSummary/purchaseFunctions";
+} from "pageComponents/P/PurchaseProductSummary/VisaPurchaseProduct/purchaseTypings";
 import {
   UserPrivate, ID,
   OrderStatus,

@@ -8,7 +8,7 @@ import { Colors, BoxShadows, BorderRadius, BorderRadius2x } from "layout/AppThem
 // redux
 import { GrandReduxState, Actions } from "reduxStore/grand-reducer";
 import { useSelector, useDispatch } from "react-redux";
-// Typings
+// Graphql Queries
 import {
   GET_BUYER_ORDERS_CONNECTION,
   GET_SELLER_ORDERS_CONNECTION,
@@ -39,7 +39,6 @@ import ErrorDisplay from "components/Error";
 import AlignCenterLayout from "components/AlignCenterLayout";
 // Analytics
 import { useRouter } from "next/router";
-export const MY_DOWNLOADS_PAGINATION_COUNT = 10;
 
 // Search Component
 import SearchOptions, { SelectOption, setCategoryFacets } from "components/SearchOptions";
@@ -49,12 +48,21 @@ import {
 } from "utils/hooksFacetSearch";
 // Grid Components
 import GridPaginatorGeneric from "components/GridPaginatorGeneric";
-
+import { useApolloClient } from "@apollo/client";
 
 
 /////////////////////////////////// paginator
 let numItemsPerPage = 3;
 let overfetchBy = 2;
+let orderBy = { createdAt: Order_By.DESC }
+// initial variables for updating apollo cache elsewhere in app
+export const initialVariables = {
+  query: {
+    limit: numItemsPerPage * overfetchBy,
+    offset: 0,
+    orderBy: orderBy
+  },
+}
 let MAX_WIDTH_ORDERS_PAGER = 900
 
 
@@ -68,6 +76,9 @@ const MyOrders: React.FC<ReactProps> = (props) => {
   const theme = useTheme();
   const mdDown = useMediaQuery(theme.breakpoints.down("md"))
   const maxWidthForOrders = mdDown ? '100%' : MAX_WIDTH_ORDERS_PAGER
+  const aClient = useApolloClient();
+
+  console.log("aClient.cache: ", aClient?.cache)
 
   const isDarkMode = useSelector<GrandReduxState, boolean>(
     s => s.reduxLogin.darkMode === 'dark'
@@ -84,7 +95,7 @@ const MyOrders: React.FC<ReactProps> = (props) => {
     index: bIndex,
     setIndex: bSetIndex,
   } = useFacetSearchOptions({
-    limit: numItemsPerPage * overfetchBy,
+    limit: initialVariables.query.limit,
     overfetchBy: overfetchBy,
   })
 
@@ -99,7 +110,7 @@ const MyOrders: React.FC<ReactProps> = (props) => {
     index: sIndex,
     setIndex: sSetIndex,
   } = useFacetSearchOptions({
-    limit: numItemsPerPage * overfetchBy,
+    limit: initialVariables.query.limit,
     overfetchBy: overfetchBy,
   })
 
@@ -114,7 +125,7 @@ const MyOrders: React.FC<ReactProps> = (props) => {
     index: saiIndex,
     setIndex: saiSetIndex,
   } = useFacetSearchOptions({
-    limit: numItemsPerPage * overfetchBy,
+    limit: initialVariables.query.limit,
     overfetchBy: overfetchBy,
   })
 
@@ -128,7 +139,7 @@ const MyOrders: React.FC<ReactProps> = (props) => {
         query: {
           limit: bLimit,
           offset: bOffset,
-          orderBy: { createdAt: Order_By.DESC }
+          orderBy: orderBy,
         }
       },
       fetchPolicy: "network-only",
@@ -144,7 +155,7 @@ const MyOrders: React.FC<ReactProps> = (props) => {
         query: {
           limit: sLimit,
           offset: sOffset,
-          orderBy: { createdAt: Order_By.DESC }
+          orderBy: orderBy,
         }
       },
       fetchPolicy: "network-only",
@@ -160,7 +171,7 @@ const MyOrders: React.FC<ReactProps> = (props) => {
         query: {
           limit: saiLimit,
           offset: saiOffset,
-          orderBy: { createdAt: Order_By.DESC }
+          orderBy: orderBy,
         }
       },
       // onCompleted: (data) => console.log("completed SAI", data),
@@ -186,58 +197,13 @@ const MyOrders: React.FC<ReactProps> = (props) => {
     sellerOrdersActionItemsResponse?.data?.user?.sellerOrdersActionItemsConnection
 
 
-  const refetchTheOrders = async () => {
-    let b = buyerOrdersResponse
-    let s = sellerOrdersResponse
-    let sai = sellerOrdersActionItemsResponse
-
-    if (b && typeof b.refetch === 'function') {
-      await b.refetch()
-    }
-    if (s && typeof s.refetch === 'function') {
-      await s.refetch()
-    }
-    if (sai && typeof sai.refetch === 'function') {
-      await sai.refetch()
-    }
-  }
-
-  const refetchOrders = React.useCallback(() => {
-    // console.log("Refetching orders")
-    // apollo devs are retards
-    // https://github.com/apollographql/react-apollo/issues/3862
-    setTimeout(() => refetchTheOrders(), 0)
-  }, [refetchTheOrders])
-
-  //////////////////////////////////////////
-  // if orders not refetching due to fast refresh bugs
-  React.useEffect(() => {
-    // console.log("router.query: ", router.query)
-    // if (router?.query?.created) {
-    //   if (getProductsResponse?.data?.dashboardProductsConnection?.edges) {
-    //     console.log("router.query.created: ", router.query.created)
-    //     let foundProduct = (connection?.edges ?? [])
-    //       .find(({ node }) => node.id === router?.query?.created)
-    //     console.log("foundProduct: ", foundProduct)
-    //     if (!foundProduct?.node?.id) {
-    //       console.log("product missing:", router.query.created)
-    //       // getProducts()
-    //       console.log("getProductsReponse:",  getProductsResponse)
-    //       refetch()
-    //     }
-    //   }
-    // }
-    if (noOrdersExist()) {
-      refetchOrders()
-    }
-  }, [])
-
   const noOrdersExist = () => {
     return !buyerOrdersConnection?.edges?.[0] &&
           !sellerOrdersConnection?.edges?.[0] &&
           !sellerOrdersActionItemsConnection?.edges?.[0]
           && !requestsAreLoading()
   }
+
   const requestsAreLoading = () => {
     return sellerOrdersActionItemsResponse.loading ||
           buyerOrdersResponse.loading ||

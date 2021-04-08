@@ -39,6 +39,7 @@ const OrderDetailsModal: React.FC<ReactProps> = (props) => {
         fullScreen={windowWidth < 480}
         fullWidth={false}
         maxWidth={"lg"}
+        scroll={"body"}
         PaperProps={{
           classes: { root: classes.modalPaperScrollPaper }
         }}
@@ -79,7 +80,7 @@ const styles = (theme: Theme) => createStyles({
     backgroundColor: "rgba(47, 57, 65, .85)",
   },
   modalPaperScrollPaper: {
-    maxHeight: "calc(100% - 32px)",
+    // maxHeight: "calc(100% - 32px)",
     maxWidth: '880px',
     width: '100%',
   },

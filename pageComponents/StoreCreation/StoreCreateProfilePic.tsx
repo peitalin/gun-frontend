@@ -1,6 +1,4 @@
 import React from "react";
-import { useState } from "react";
-import {oc as option} from "ts-optchain";
 import clsx from "clsx";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
@@ -38,10 +36,10 @@ const StoreCreateProfilePic = (props: ReactProps & FormikProps<FormikFields>) =>
   const [loading, setLoading] = React.useState(false);
 
   // upload
-  const [uploadId, setUploadID] = useState("")
+  const [uploadId, setUploadID] = React.useState("")
   // imgloaded
-  const [profilePicPreview, setProfilePicPreview] = useState(
-    option(props).profileImage.original.url()
+  const [profilePicPreview, setProfilePicPreview] = React.useState(
+    props?.profileImage?.original?.url
   );
   const aClient = useApolloClient();
 

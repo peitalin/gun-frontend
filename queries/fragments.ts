@@ -425,6 +425,7 @@ export const OrdersFragment = gql`
       website
       createdAt
       updatedAt
+      userId
       user {
         id
         ...on UserPublic {

@@ -1,6 +1,4 @@
 import React from "react";
-import { oc as option } from "ts-optchain";
-import { useState } from "react";
 import clsx from "clsx";
 // Redux
 import { useDispatch, useSelector } from "react-redux";
@@ -11,7 +9,7 @@ import { withStyles, WithStyles } from "@material-ui/core/styles";
 import { styles } from './styles';
 import { Colors } from "layout/AppTheme";
 // Graphql
-import { useMutation } from "@apollo/client";
+import { useMutation, ApolloError } from "@apollo/client";
 import { CREATE_STORE } from "queries/store-mutations";
 import { GET_USER } from "queries/user-queries";
 // Typings
@@ -56,6 +54,10 @@ const CreateStoreForm: React.FC<ReactProps> = (props) => {
   const dispatch = useDispatch();
   const router = useRouter();
   const snackbar = useSnackbar();
+
+  const formatError = (error: ApolloError) => {
+    return error?.graphQLErrors?.[0]?.message ?? JSON.stringify(error)
+  }
 
   const {
     userRedux,
@@ -104,8 +106,7 @@ const CreateStoreForm: React.FC<ReactProps> = (props) => {
   React.useEffect(() => {
     if (data) {
       snackbar.enqueueSnackbar(
-        `Successfully created store:
-          ${option(data).createStore.store.name("Your store")}`,
+        `Successfully created your store`,
         { variant: "success" }
       )
     }
@@ -114,7 +115,7 @@ const CreateStoreForm: React.FC<ReactProps> = (props) => {
   React.useEffect(() => {
     if (error) {
       snackbar.enqueueSnackbar(
-        `Oh oh: ${JSON.stringify(error)}`,
+        formatError(error),
         { variant: "error" }
       )
     }
@@ -190,7 +191,7 @@ const CreateStoreForm: React.FC<ReactProps> = (props) => {
         } = fprops;
 
 
-        if (!storeDoesNotExist(option(userRedux).store())) {
+        if (!storeDoesNotExist(userRedux?.store)) {
           // if store does not exist, or is deleted
           return (
             <div className={classes.loginContainer}>
@@ -209,7 +210,7 @@ const CreateStoreForm: React.FC<ReactProps> = (props) => {
           )
         }
 
-        if (!option(userRedux).id()) {
+        if (!userRedux?.id) {
           return (
             <div className={classes.loginContainer}>
               <Login

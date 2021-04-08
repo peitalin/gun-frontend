@@ -2,12 +2,6 @@ import {
   StripeError,
   PaymentIntent,
 } from "@stripe/stripe-js";
-import {
-  Orders, OrderStatus,
-  ID,
-  ProductProductVariantId,
-} from "typings/gqlTypes";
-////////// EXPORT //////////
 
 ////////////////////////////
 ////////////////////////////
