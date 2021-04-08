@@ -1,5 +1,4 @@
 import React from "react";
-import { oc as option } from "ts-optchain";
 import clsx from "clsx";
 // Styles
 import { withStyles, WithStyles, createStyles, Theme, fade } from "@material-ui/core/styles";
@@ -68,21 +67,21 @@ const ChangePayoutMethod = (props: ReactProps & ReduxProps) => {
               <Paypal/>
             </div>
             {
-              option(props).user.payoutMethod.bsb() &&
+              props?.user?.payoutMethod?.bsb &&
               <Typography variant="body1" className={classes.email}>
-                {option(props).user.payoutMethod.bsb("NA")}
+                {props?.user?.payoutMethod?.bsb ?? "NA"}
               </Typography>
             }
             {
-              option(props).user.payoutMethod.accountNumber() &&
+              props?.user?.payoutMethod?.accountNumber &&
               <Typography variant="body1" className={classes.email}>
-                {option(props).user.payoutMethod.accountNumber("NA")}
+                {props?.user?.payoutMethod?.accountNumber ?? "NA"}
               </Typography>
             }
             {
-              option(props).user.payoutMethod.accountName() &&
+              props?.user?.payoutMethod?.accountName &&
               <Typography variant="body1" className={classes.email}>
-                {option(props).user.payoutMethod.accountName("NA")}
+                {props?.user?.payoutMethod?.accountName ?? "NA"}
               </Typography>
             }
           </div>
@@ -94,8 +93,8 @@ const ChangePayoutMethod = (props: ReactProps & ReduxProps) => {
             >
               {
                 !showPayoutMethodChanger
-                ? "Change payout bank account"
-                : "Cancel"
+                  ? "Change payout bank account"
+                  : "Cancel"
               }
             </Typography>
           </a>
@@ -111,7 +110,7 @@ const ChangePayoutMethod = (props: ReactProps & ReduxProps) => {
               <form autoComplete="off">
                 <TextInput
                   required
-                  placeholder={option(props).user.payoutMethod.bsb("123-456")}
+                  placeholder={props?.user?.payoutMethod?.bsb ?? "123-456"}
                   className={classes.textField}
                   value={newBsb}
                   onChange={handleSetNewBsb}
@@ -119,7 +118,7 @@ const ChangePayoutMethod = (props: ReactProps & ReduxProps) => {
                 />
                 <TextInput
                   required
-                  placeholder={option(props).user.payoutMethod.accountNumber("98-456-1122")}
+                  placeholder={props?.user?.payoutMethod?.accountNumber ?? "98-456-1122"}
                   className={classes.textField}
                   value={newAccountNumber}
                   onChange={handleSetNewAccountNumber}
@@ -127,7 +126,7 @@ const ChangePayoutMethod = (props: ReactProps & ReduxProps) => {
                 />
                 <TextInput
                   required
-                  placeholder={option(props).user.payoutMethod.accountName("Abel Smith")}
+                  placeholder={props?.user?.payoutMethod?.accountName ?? "Abel Smith"}
                   className={classes.textField}
                   value={newAccountName}
                   onChange={handleSetNewAccountName}
@@ -164,21 +163,21 @@ const ChangePayoutMethod = (props: ReactProps & ReduxProps) => {
             <Paypal/>
           </div>
           {
-            option(props).user.payoutMethod.bsb() &&
+            props?.user?.payoutMethod?.bsb &&
             <Typography variant="body1" className={classes.email}>
-              {option(props).user.payoutMethod.bsb("NA")}
+              {props?.user?.payoutMethod?.bsb ?? "NA"}
             </Typography>
           }
           {
-            option(props).user.payoutMethod.accountNumber() &&
+            props?.user?.payoutMethod?.accountNumber &&
             <Typography variant="body1" className={classes.email}>
-              {option(props).user.payoutMethod.accountNumber("NA")}
+              {props?.user?.payoutMethod?.accountNumber ?? "NA"}
             </Typography>
           }
           {
-            option(props).user.payoutMethod.accountName() &&
+            props?.user?.payoutMethod?.accountName &&
             <Typography variant="body1" className={classes.email}>
-              {option(props).user.payoutMethod.accountName("NA")}
+              {props.user.payoutMethod.accountName ?? "NA"}
             </Typography>
           }
         </div>
@@ -207,7 +206,7 @@ const ChangePayoutMethod = (props: ReactProps & ReduxProps) => {
             <form autoComplete="off">
               <TextInput
                 required
-                placeholder={option(props).user.payoutMethod.bsb("123-456")}
+                placeholder={props?.user?.payoutMethod?.bsb ?? "123-456"}
                 className={classes.textField}
                 value={newBsb}
                 onChange={handleSetNewBsb}
@@ -215,7 +214,7 @@ const ChangePayoutMethod = (props: ReactProps & ReduxProps) => {
               />
               <TextInput
                 required
-                placeholder={option(props).user.payoutMethod.accountNumber("98-456-1122")}
+                placeholder={props?.user?.payoutMethod?.accountNumber ?? "98-456-1122"}
                 className={classes.textField}
                 value={newAccountNumber}
                 onChange={handleSetNewAccountNumber}
@@ -223,7 +222,7 @@ const ChangePayoutMethod = (props: ReactProps & ReduxProps) => {
               />
               <TextInput
                 required
-                placeholder={option(props).user.payoutMethod.accountName("Abel Smith")}
+                placeholder={props?.user?.payoutMethod?.accountName ?? "Abel Smith"}
                 className={classes.textField}
                 value={newAccountName}
                 onChange={handleSetNewAccountName}

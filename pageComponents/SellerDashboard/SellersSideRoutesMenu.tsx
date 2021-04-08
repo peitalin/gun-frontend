@@ -1,6 +1,4 @@
 import React from "react";
-import { useState } from "react";
-import {oc as option} from "ts-optchain";
 import clsx from "clsx";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
@@ -14,11 +12,6 @@ import { GrandReduxState, Actions } from 'reduxStore/grand-reducer';
 import { ID, UserPrivate, Dealers } from "typings/gqlTypes";
 // Material UI
 import Typography from "@material-ui/core/Typography";
-import Avatar from "@material-ui/core/Avatar";
-import Button from "@material-ui/core/Button";
-import Divider from "@material-ui/core/Divider";
-import TextInput from "components/Fields/TextInput";
-import CloudUpload from "@material-ui/icons/CloudUpload";
 import Tooltip from '@material-ui/core/Tooltip';
 
 import { useRouter } from "next/router";
@@ -33,9 +26,6 @@ const SellersSideRoutesMenu: React.FC<ReactProps> = (props) => {
   }
 
   const { classes, user } = props;
-  // imgloaded
-  const [avatarImgLoaded, setAvatarImgLoaded] = useState(false);
-  const dispatch = useDispatch();
 
   return (
     <div className={classes.routeMenu}>
@@ -47,7 +37,7 @@ const SellersSideRoutesMenu: React.FC<ReactProps> = (props) => {
             <div className={classes.avatarBorder}>
               <Avatar className={classes.avatar}>
                 <img
-                  src={option(profile).original.url()}
+                  src={profile?.original?.url}
                   onLoad={() => setAvatarImgLoaded(true)}
                   className={clsx(
                     classes.avatarImg,

@@ -1,9 +1,8 @@
 import React from "react";
-import { oc as option } from "ts-optchain";
 // Styles
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
 // Graphql Queries
-import { useMutation, useApolloClient } from "@apollo/client";
+import { useMutation, useApolloClient, ApolloError } from "@apollo/client";
 import { GET_USER } from "queries/user-queries";
 import { UPDATE_USER, SET_PAYOUT_METHOD } from "queries/user-mutations";
 import { UserPrivate, ID } from "typings/gqlTypes";
@@ -66,6 +65,9 @@ const ChangePayoutMethodButton = (props: ReactProps) => {
     }
   })
 
+  const formatError = (error: ApolloError) => {
+    return error?.graphQLErrors?.[0]?.message ?? JSON.stringify(error)
+  }
 
   if (loading) {
     return <Loading inline loading={loading} delay={"400ms"} />;
@@ -91,7 +93,7 @@ const ChangePayoutMethodButton = (props: ReactProps) => {
         <SnackBarA
           open={error !== undefined && displayErr}
           closeSnackbar={() => setDisplayErr(false)}
-          message={`Oh oh: ${JSON.stringify(error)}`}
+          message={formatError(error)}
           variant={"error"}
           autoHideDuration={3000}
         />
