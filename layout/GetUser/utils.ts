@@ -10,10 +10,10 @@ export const getUserDataFromGqlOrRedux = (
   data: QueryData,
   userRedux: UserPrivate
 ): QueryData => {
-  if (data?.user?.dealer?.id) {
+  if (data?.user?.id) {
     return data
   }
-  if (userRedux?.dealer?.id) {
+  if (userRedux?.id) {
     return { user: userRedux }
   } else {
     return data

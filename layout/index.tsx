@@ -28,8 +28,8 @@ import { GrandReduxState } from "reduxStore/grand-reducer";
 // media query
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
-
 import StripeProvider from "layout/StripeProvider";
+
 
 
 
@@ -155,9 +155,16 @@ const Layout: React.FC<ReactProps> = (props) => {
     }
   }
 
+
   return (
     <StripeProvider>
-      <Header/>
+      <Header
+        showZendeskChat={
+          router.pathname === "/start"
+            ? false
+            : true
+        }
+      />
       <NavBarMain/>
       <GetUser/>
       <GlobalModals/>

@@ -16780,7 +16780,7 @@ type OrdersFragment_OrderDealer_ = { __typename?: 'OrderDealer', id?: Maybe<stri
     & PayoutItemFragment
   )>>> };
 
-type OrdersFragment_OrderAdmin_ = { __typename?: 'OrderAdmin', id?: Maybe<string>, createdAt?: Maybe<any>, updatedAt?: Maybe<any>, bidId?: Maybe<string>, total?: Maybe<number>, currency?: Maybe<string>, buyerId?: Maybe<string>, sellerStoreId?: Maybe<string>, productId?: Maybe<string>, paymentIntentId?: Maybe<string>, paymentIntent?: Maybe<{ __typename?: 'PaymentIntent', id?: Maybe<string>, amount?: Maybe<number>, amountCapturable?: Maybe<number>, amountReceived?: Maybe<number>, captureMethod?: Maybe<string>, createdAt?: Maybe<any>, currency?: Maybe<string>, liveMode?: Maybe<boolean>, status?: Maybe<string> }>, bid?: Maybe<(
+type OrdersFragment_OrderAdmin_ = { __typename?: 'OrderAdmin', id?: Maybe<string>, createdAt?: Maybe<any>, updatedAt?: Maybe<any>, bidId?: Maybe<string>, total?: Maybe<number>, currency?: Maybe<string>, buyerId?: Maybe<string>, sellerStoreId?: Maybe<string>, productId?: Maybe<string>, paymentIntentId?: Maybe<string>, bid?: Maybe<(
     { __typename?: 'Bid' }
     & BidFragment
   )>, buyer?: Maybe<{ __typename?: 'UserPrivate', firstName?: Maybe<string>, lastName?: Maybe<string>, email: string, id: string, phoneNumber?: Maybe<{ __typename?: 'phone_numbers', id: string, areaCode?: Maybe<string>, countryCode: string, number: string }>, license?: Maybe<(
@@ -17331,19 +17331,6 @@ export const OrdersFragmentFragmentDoc = gql`
     paymentIntent {
       id
       amount
-      createdAt
-      currency
-      liveMode
-      status
-    }
-  }
-  ... on OrderAdmin {
-    paymentIntent {
-      id
-      amount
-      amountCapturable
-      amountReceived
-      captureMethod
       createdAt
       currency
       liveMode
