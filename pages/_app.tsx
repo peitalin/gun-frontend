@@ -39,7 +39,7 @@ import { UserPrivate } from 'typings/gqlTypes';
 import { serverApolloClient } from "utils/apollo";
 // Payment Clients
 import { PaypalClient } from "typings/typings-paypal";
-import { WestpacQuickstreamClient } from "typings/typings-westpac";
+// import { WestpacQuickstreamClient } from "typings/typings-westpac";
 
 import dayjs from 'dayjs'
 import utc from "dayjs/plugin/utc"
@@ -51,8 +51,20 @@ declare global {
     App: any;
     paypal: PaypalClient
     analytics: any;
-    QuickstreamAPI: WestpacQuickstreamClient;
     ClassicEditor: any
+    chatwootSDK: {
+      run({ websiteToken, baseUrl }: {
+        websiteToken: string,
+        baseUrl: string,
+      }): any
+    },
+    chatwootSettings: {
+      hideMessageBubble?: boolean,
+      position?: 'left' | 'right', // This can be left or right
+      locale?: 'en', // Language to be set
+      type?: 'standard' | 'expanded_bubble', // [standard, expanded_bubble]
+      launcherTitle?: string // for expanded_bubble
+    }
     __forceSmoothScrollPolyfill__: boolean
   }
 }

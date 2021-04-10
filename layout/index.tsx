@@ -159,10 +159,13 @@ const Layout: React.FC<ReactProps> = (props) => {
   return (
     <StripeProvider>
       <Header
-        showZendeskChat={
-          router.pathname === "/start"
-            ? false
-            : true
+        showChatwoot={
+          (
+            router.pathname === "/"
+            || router.pathname.startsWith("/p/")
+            || router.pathname === "/sell"
+            || router.pathname === "/orders"
+          ) ? true : false
         }
       />
       <NavBarMain/>

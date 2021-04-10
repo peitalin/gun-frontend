@@ -330,8 +330,9 @@ const styles = (theme: Theme) => createStyles({
   },
   copyProductId: {
     position: "fixed",
+    zIndex: 10,
     bottom: '1rem',
-    right: '1rem',
+    left: '1rem',
     color: Colors.secondary,
     cursor: "pointer",
   },

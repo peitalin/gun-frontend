@@ -6,7 +6,7 @@ import ReactGA from 'react-ga'
 const Header: React.FC<ReactProps> = (props) => {
 
   const {
-    showZendeskChat = true
+    showChatwoot = true
   } = props;
 
   React.useEffect(() => {
@@ -19,6 +19,18 @@ const Header: React.FC<ReactProps> = (props) => {
       }
     }
   })
+
+  React.useEffect(() => {
+    if (process.browser && !!window) {
+      window.chatwootSettings = {
+        hideMessageBubble: false,
+        position: 'right', // This can be left or right
+        locale: 'en', // Language to be set
+        type: 'standard', // [standard, expanded_bubble]
+      }
+    }
+  }, [])
+
 
   return (
     <Head>
@@ -40,36 +52,53 @@ const Header: React.FC<ReactProps> = (props) => {
       <link rel="manifest" href="/public/manifest.json"/>
       {/* <link rel="manifest" href="/manifest.json"/> */}
 
-      {/* {
-        // enable on fileworks.net && relay.shop
+      {
+        process.env.NODE_ENV === "development" &&
+        showChatwoot &&
+        <script>
+          {`
+            (function(d,t) {
+              var BASE_URL="https://app.chatwoot.com";
+              var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+              g.src=BASE_URL+"/packs/js/sdk.js";
+              s.parentNode.insertBefore(g,s);
+              g.onload=function(){
+                window.chatwootSDK.run({
+                  websiteToken: '4n8FMavPqFoYYLCABTDzXkvK',
+                  baseUrl: BASE_URL
+                })
+              }
+            })(document,"script");
+          `}
+        </script>
+      }
+      {
         process.env.NODE_ENV === "production" &&
-        showZendeskChat &&
-        <script id="ze-snippet" src="https://static.zdassets.com/ekr/snippet.js?key="> </script>
-      } */}
-
-      <script>
-        {`
-          (function(d,t) {
-            var BASE_URL="https://app.chatwoot.com";
-            var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
-            g.src=BASE_URL+"/packs/js/sdk.js";
-            s.parentNode.insertBefore(g,s);
-            g.onload=function(){
-              window.chatwootSDK.run({
-                websiteToken: '4n8FMavPqFoYYLCABTDzXkvK',
-                baseUrl: BASE_URL
-              })
-            }
-          })(document,"script");
-        `}
-      </script>
+        showChatwoot &&
+        <script>
+          {`
+            (function(d,t) {
+              var BASE_URL="https://app.chatwoot.com";
+              var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+              g.src=BASE_URL+"/packs/js/sdk.js";
+              s.parentNode.insertBefore(g,s);
+              g.onload=function(){
+                window.chatwootSDK.run({
+                  websiteToken: '2SKqt7sF9HKnCGZv9fRm24iS',
+                  baseUrl: BASE_URL
+                })
+              }
+            })(document,"script");
+          `}
+        </script>
+      }
 
     </Head>
   )
 }
 
 interface ReactProps {
-  showZendeskChat: boolean;
+  showChatwoot: boolean;
 }
 
 
