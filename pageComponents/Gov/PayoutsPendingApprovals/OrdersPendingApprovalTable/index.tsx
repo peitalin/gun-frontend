@@ -32,6 +32,7 @@ import LoadingBar from "components/LoadingBar";
 import { useMutation, useQuery, useLazyQuery } from "@apollo/client";
 
 import RowExpander from "./RowExpander";
+import { useRouter } from "next/router";
 
 // Search Component
 import SearchOptions, { SelectOption, setCategoryFacets } from "components/SearchOptions";
@@ -59,6 +60,8 @@ const OrdersPendingApprovalTable: NextPage<ReactProps> = (props) => {
   const isDarkMode = useSelector<GrandReduxState, boolean>(s => {
     return s.reduxLogin.darkMode === 'dark'
   })
+
+  let router = useRouter();
 
   /////////////////////////////////// paginator
   let numItemsPerPage = 5;
@@ -336,6 +339,7 @@ const OrdersPendingApprovalTable: NextPage<ReactProps> = (props) => {
                   order={order}
                   admin={props.admin}
                   index={ordersCreatedIndex}
+                  initialOpen={router?.query?.orderId === order?.id}
                   refetchQueriesParams={refetchQueriesParams}
                   showApprovalButtons={false}
                 />
@@ -410,6 +414,7 @@ const OrdersPendingApprovalTable: NextPage<ReactProps> = (props) => {
                   order={order}
                   admin={props.admin}
                   index={ordersPAIndex}
+                  initialOpen={router?.query?.orderId === order?.id}
                   refetchQueriesParams={refetchQueriesParams}
                   showApprovalButtons={true}
                 />
@@ -478,6 +483,7 @@ const OrdersPendingApprovalTable: NextPage<ReactProps> = (props) => {
                   order={order}
                   admin={props.admin}
                   index={ordersAAIndex}
+                  initialOpen={router?.query?.orderId === order?.id}
                   refetchQueriesParams={refetchQueriesParams}
                   showApprovalButtons={true}
                 />
