@@ -49,9 +49,7 @@ import { productToProductEditInput } from "utils/conversions";
 import ConfirmDeleteModal from "components/ConfirmDeleteModal";
 // Copy
 import copy from "clipboard-copy";
-// ENV variables
-import getConfig from 'next/config'
-import { GET_STORE_PRIVATE } from "queries/store-queries";
+import { cacheUpdateEditProduct } from "pageComponents/ProductEdit/cacheUpdateEditProduct";
 
 
 
@@ -91,62 +89,10 @@ const ProductRow = (props: ReactProps) => {
     },
     onCompleted: (data) => { },
     update: (cache, { data: { editProduct } }) => {
-
-      // console.log("incomingProduct.id: ", editProduct?.product?.id)
-      // console.log("incomingProduct.isPublished: ", editProduct?.product?.isPublished)
-
-      // Fetch the cached dashboardProductsConnection item with associated variables
-      // remember, variables need to match, or cache will not return the data
-      const existingData: {
-        dashboardProductsConnection: ProductsConnection
-      } = cache.readQuery({
-        query: props.refetchQuery?.query,
-        variables: props.refetchQuery?.variables,
-      });
-
-      let newEdges = existingData.dashboardProductsConnection.edges.map(edge => {
-        if (editProduct.product.id !== edge.node.id) {
-          return edge
-        } else {
-          console.log(`found product ${edge.node.id}!, replacing`)
-          return {
-            __typename: "ProductsEdge",
-            node: {
-              __typename: "ProductPrivate",
-              ...editProduct.product,
-            },
-          } as ProductsEdge
-        }
+      cacheUpdateEditProduct({
+        cache: cache,
+        editProduct: editProduct
       })
-
-      // cache.evict({
-      //   id: "ROOT_QUERY",
-      //   fieldName: "dashboardProductsConnection"
-      // })
-
-      cache.writeQuery({
-        query: props.refetchQuery?.query,
-        variables: props.refetchQuery?.variables,
-        data: {
-          dashboardProductsConnection: {
-            ...existingData.dashboardProductsConnection,
-            edges: newEdges
-          }
-        },
-      });
-
-      cache.modify({
-        fields: {
-          dashboardProductsConnection(existingConnection: ProductsConnection) {
-            console.log("cache.modify: ", existingConnection)
-            return {
-              ...existingConnection,
-              edges: newEdges
-            }
-          }
-        }
-      });
-
     },
     // refetchQueries: [props.refetchQuery],
   });

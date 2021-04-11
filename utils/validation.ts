@@ -67,9 +67,8 @@ export const validationSchemas = {
         .nullable()
         .max(100),
       barrelLength: Yup.string()
-        .min(0)
         .max(100)
-        .required('Needs a barrelLength'),
+        .nullable(),
       dealerId: Yup.string()
         .required('Must choose a dealer'),
       // dealerId: Yup.string()
@@ -238,12 +237,11 @@ export const validationSchemas = {
         .min(0)
         .max(100),
       magazineCapacity: Yup.string()
-        .min(0)
-        .max(100),
-      barrelLength: Yup.string()
-        .min(0)
         .max(100)
-        .required('Needs a barrelLength'),
+        .nullable(),
+      barrelLength: Yup.string()
+        .max(100)
+        .nullable(),
       dealerId: Yup.string()
         .required('Must choose a dealer'),
       categoryId: Yup.string()

@@ -1,6 +1,5 @@
 import React from "react";
 import { useCallback } from "react";
-import {oc as option} from "ts-optchain";
 import clsx from "clsx";
 // Redux
 import { useSelector, useDispatch } from "react-redux";
@@ -38,10 +37,8 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 import EmptyProductList from "pageComponents/SellerDashboard/PublishedProductsList/EmptyProductList";
 // pagination
 import PaginateButtons from "components/Paginators/PaginateButtons";
-import { useQuery, useLazyQuery } from "@apollo/client";
-import {
-  DASHBOARD_PRODUCTS_CONNECTION,
-} from "queries/store-queries";
+import { useQuery, useLazyQuery, DocumentNode } from "@apollo/client";
+import { DASHBOARD_PRODUCTS_CONNECTION } from "queries/store-queries";
 // Analytics
 import { useAnalytics } from "utils/analytics";
 // Search Component
@@ -54,10 +51,19 @@ import {
 import GridPaginatorGeneric from "components/GridPaginatorGeneric";
 
 
+
 let numItemsPerPage = 10;
 let overfetchBy = 1;
-export let initialDashboardVariables = {}
-// this is set later in the body ofthe Reat component
+export let initialDashboardVariables: {
+  searchTerm: string,
+  query: {
+    limit: number
+    offset: number
+    orderBy: any
+    facetFilters: string[][]
+  },
+} = undefined
+// this is set later in the body of the React component
 
 
 const PublishedProductsList = (props: ReactProps) => {
@@ -72,7 +78,7 @@ const PublishedProductsList = (props: ReactProps) => {
   const isDarkMode = useSelector<GrandReduxState, boolean>(s => {
     return s.reduxLogin.darkMode === 'dark'
   })
-  const productId = option(router).query.productId();
+  const productId = router?.query?.productId;
 
   const theme = useTheme();
   const xsDown = useMediaQuery(theme.breakpoints.down('xs'));
