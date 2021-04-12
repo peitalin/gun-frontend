@@ -163,6 +163,8 @@ export const Colors = {
   greenCool: "#419677",
   greenCoolLight:'#6CBAA3',
   // blue
+  ultramarineBlue: secondary,
+  ultramarineBlueLight: fade(secondary, 0.9),
   blue: "#1DA1F3",
   lightBlue: '#479FF4',
   blueLightNavy: "#6087A1",
@@ -192,7 +194,6 @@ export const Colors = {
   uniswapMediumNavy: '#2D2F36',
   uniswapGreyNavy: '#282A31',
   uniswapDarkNavy: "#222429",
-  ultramarineBlue: "#3773DE",
   gradientUniswapDark1: "#2E3545",
   gradientUniswapDark2: "#2D2F36",
   gradientUniswapFluro1: "#DC3078",

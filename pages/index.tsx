@@ -13,15 +13,29 @@ import { serverApolloClient } from "utils/apollo";
 import FrontPage from "pageComponents/FrontPage";
 import { useApolloClient, ApolloClient } from "@apollo/client";
 import { categoryPreviewsBackup } from "components/CategoryCarouselStart/utils";
+// Meta headers
+import MetaHeadersPage from "layout/MetaHeadersPage";
 
 
 
 const HomePage: NextPage<ReactProps> = (props) => {
   return (
-    <FrontPage
-      pageConfig={props.pageConfig}
-      initialCategories={props.initialCategories}
-    />
+    <>
+      <MetaHeadersPage
+        title="Gunmarketplace.com.au - Buy and sell firearms safely"
+        ogTitle="Gunmarketplace.com.au - Buy and sell firearms safely"
+        description={`
+          Gunmarketplace is a marketplace for buying and selling firearms
+        `}
+        ogDescription={`
+          Gunmarketplace is a marketplace for buying and selling firearms
+        `}
+      />
+      <FrontPage
+        pageConfig={props.pageConfig}
+        initialCategories={props.initialCategories}
+      />
+    </>
   )
 }
 

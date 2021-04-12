@@ -1,5 +1,5 @@
 import { withStyles, createStyles, Theme, fade } from "@material-ui/core/styles";
-import { BorderRadius2x, BorderRadius, Colors } from "layout/AppTheme";
+import { BorderRadius4x, BorderRadius, Colors } from "layout/AppTheme";
 
 const emailInputMaxWidth = 350;
 
@@ -15,7 +15,7 @@ const styles = (theme: Theme) => createStyles({
     width: "100%",
   },
   dialogPaper: {
-    borderRadius: `${BorderRadius2x}px`,
+    borderRadius: `${BorderRadius4x}px`,
   },
   modal: {
     position: "fixed",
@@ -98,6 +98,7 @@ const styles = (theme: Theme) => createStyles({
   submit: {
     marginTop: theme.spacing(1),
     height: 40,
+    borderRadius: BorderRadius,
   },
   secureCheckout: {
     color: "#bbbbbb",
@@ -195,8 +196,8 @@ const styles = (theme: Theme) => createStyles({
       ? Colors.ultramarineBlue
       : Colors.ultramarineBlue,
     color: theme.palette.type === 'dark'
-      ? Colors.uniswapLightestGrey
-      : Colors.uniswapLightestGrey,
+      ? Colors.slateGrey
+      : Colors.cream,
     "&:hover": {
       // backgroundColor: theme.palette.type === 'dark'
       //   ? Colors.uniswapMediumNavy
