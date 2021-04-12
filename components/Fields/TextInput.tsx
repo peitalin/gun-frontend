@@ -53,6 +53,7 @@ const TextInput = (props: ReactProps) => {
           inputRef={ref}
           error={!!props.errorMessage}
           disabled={disabled}
+          autoFocus={props.autoFocus}
           {...rest}
         />
         <Button
@@ -112,6 +113,7 @@ const TextInput = (props: ReactProps) => {
             multiline: classes.selectMultiline,
           }}
           disabled={disabled}
+          autoFocus={props.autoFocus}
           inputRef={ref}
           error={!!props.errorMessage}
           style={{
@@ -171,6 +173,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   errorMessage?: string;
   touched?: boolean; // sets error colors as grey if not-touched, red if so
   disabled?: boolean;
+  autoFocus?: boolean;
   limit?: { count: number, max: number };
   buttonWidth?: any;
   disableInitialValidationMessage?: boolean;

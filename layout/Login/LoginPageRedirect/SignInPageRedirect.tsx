@@ -14,7 +14,6 @@ import Or from "components/Or";
 import ButtonLoading from "components/ButtonLoading";
 
 
-
 const SignInClaimDownload = (props: ReactProps) => {
 
   const [email, setEmail] = React.useState("");
@@ -40,6 +39,13 @@ const SignInClaimDownload = (props: ReactProps) => {
     props.setTabIndex(2)
   }
 
+  let emailInputId = 'sign-in-page-redirect-signup-email'
+
+  React.useEffect(() => {
+    let d = document.getElementById(emailInputId)
+    d?.focus()
+  }, [])
+
   return (
     <ErrorBounds className={classes.outerContainer}>
 
@@ -57,9 +63,11 @@ const SignInClaimDownload = (props: ReactProps) => {
           Email
         </Typography>
         <TextInput
+          id={emailInputId}
           className={classes.textInput}
           required
           type={"email"}
+          autoFocus={true}
           autoComplete="email"
           placeholder="Email"
           value={email}
