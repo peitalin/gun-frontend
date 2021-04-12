@@ -92,7 +92,9 @@ const FrontPage: React.FC<ReactProps> = (props) => {
         }
 
         <div className={classes.bannerPromotionsPadding}>
-          <BannerPromotionsLink />
+          <BannerPromotionsLink
+            disableMetaHeader={true}
+          />
         </div>
 
         {
