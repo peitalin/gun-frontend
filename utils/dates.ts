@@ -25,19 +25,26 @@ export const dateForCountdown = (
   }
 };
 
+interface CountDownExpiry {
+  countDown: string
+  isExpired: boolean;
+}
 
 export const getCountdownForExpiry = ({
   expiryDate,
 }: {
   expiryDate: Date,
-}): string => {
+}): CountDownExpiry => {
   const now = new Date().getTime();
   const then = new Date(expiryDate).getTime();
   const diff = then - now;
 
   if (now > then) {
     let expiryDateFormatted = formatDate(expiryDate)
-    return `Expired ${expiryDateFormatted}`
+    return {
+      countDown: `Expired ${expiryDateFormatted}`,
+      isExpired: true
+    }
  }
 
   const seconds = Math.max(0, Math.floor((diff / 1000) % 60));
@@ -51,7 +58,10 @@ export const getCountdownForExpiry = ({
 
   const days = Math.max(0, Math.floor(diff / (1000 * 60 * 60 * 24)));
 
-  return `${days}d ${hoursStr}hrs ${minutesStr}min`;
+  return {
+    countDown: `${days}d ${hoursStr}hrs ${minutesStr}min`,
+    isExpired: false
+  }
 };
 
 // dayjs format:

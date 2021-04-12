@@ -127,6 +127,17 @@ export const GET_ORDERS_EXPIRING_CONNECTION_ADMIN = gql`
       edges {
         node {
           ...OrdersFragment
+          paymentIntent {
+            id
+            amount
+            amountCapturable
+            amountReceived
+            captureMethod
+            createdAt
+            currency
+            liveMode
+            status
+          }
         }
       }
       totalCount

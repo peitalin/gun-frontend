@@ -111,6 +111,15 @@ const VisaPurchaseProduct = (props: ReactProps) => {
 
 
   const createNewPaymentMethod = async(): Promise<PaymentMethod> => {
+
+    if (!props.promotedListItem.isAvailableForPurchase) {
+      snackbar.enqueueSnackbar(
+        "This slot can't be bought",
+        { variant: "info" }
+      )
+      throw new Error("This slot can't be bought")
+    }
+
     let { paymentMethod, error } = await stripe.createPaymentMethod({
       type: 'card',
       card: elements.getElement(CardElement),

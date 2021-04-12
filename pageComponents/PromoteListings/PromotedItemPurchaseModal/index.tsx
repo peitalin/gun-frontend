@@ -32,7 +32,7 @@ const PromotedItemPurchaseModal: React.FC<ReactProps> = (props) => {
     state => state.reduxModals.promotedItemPurchaseModalOpen
   );
 
-  const goBack = () => {
+  const closeModal = () => {
     // unload Stripe card component first, then shut the modal
     dispatch(Actions.reduxModals.TOGGLE_PROMOTED_ITEM_PURCHASE_MODAL(false))
   }
@@ -45,7 +45,7 @@ const PromotedItemPurchaseModal: React.FC<ReactProps> = (props) => {
   if (!asModal && process.browser) {
     return (
       <BuyPromotedItemPage
-        goBack={goBack}
+        closeModal={closeModal}
         asModal={asModal}
         promotedListItem={props.currentPromotedListItem}
         position={props.position}
@@ -61,7 +61,7 @@ const PromotedItemPurchaseModal: React.FC<ReactProps> = (props) => {
           fullScreen={mdUp ? false : true}
           fullWidth={mdUp ? false : null}
           maxWidth={"md"}
-          onClose={() => goBack()}
+          onClose={() => closeModal()}
           BackdropProps={{
             classes: {
               root: classes.modalBackdrop,
@@ -79,7 +79,7 @@ const PromotedItemPurchaseModal: React.FC<ReactProps> = (props) => {
           <BuyPromotedItemPage
             promotedListItem={props.currentPromotedListItem}
             position={props.position}
-            goBack={goBack}
+            closeModal={closeModal}
             refetch={props.refetch}
           />
         </Dialog>

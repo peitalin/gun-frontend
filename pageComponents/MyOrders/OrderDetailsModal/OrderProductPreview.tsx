@@ -1,5 +1,4 @@
 import React from "react";
-import { oc as option } from "ts-optchain";
 import clsx from "clsx";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
@@ -25,10 +24,6 @@ const OrderProductPreview: React.FC<ReactProps> = (props) => {
   const { title } = product.currentSnapshot;
 
   const previewItem = getFeaturedPreviewFromProduct(product)
-  // let price = option(product).featuredVariant.price();
-
-  // const priceDetails = option(item).priceDetails();
-  // console.log('product', product)
 
   return (
     <ErrorBounds>
@@ -41,8 +36,8 @@ const OrderProductPreview: React.FC<ReactProps> = (props) => {
                 <img
                   className={classes.imagePreview}
                   onLoad={() => setImgLoaded(true)}
-                  src={option(previewItem).image.original.url()}
-                  alt={option(previewItem).id()}
+                  src={previewItem?.image?.original?.url}
+                  alt={previewItem?.id}
                 />
               }
             </div>

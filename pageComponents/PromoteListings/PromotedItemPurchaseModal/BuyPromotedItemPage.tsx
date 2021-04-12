@@ -123,6 +123,9 @@ const BuyPromotedItemPage = (props: ReactProps) => {
       if (typeof props.refetch === "function") {
         props.refetch()
       }
+      if (typeof props.closeModal === 'function') {
+        props.closeModal()
+      }
     }, []),
   });
 
@@ -169,21 +172,24 @@ const BuyPromotedItemPage = (props: ReactProps) => {
   let notExpiredYet = now.unix() < expiresAt.unix()
 
 
-  let anotherUserOwnsSlotNow =
+  let anotherUserOwnsSlot =
     !!props.promotedListItem?.ownerId // owner exists
     && props.promotedListItem?.ownerId !== user?.id // owner is not you
-    && notExpiredYet // and ownerhsip is not expired
+  let anotherUserOwnsSlotNow = anotherUserOwnsSlot && notExpiredYet
 
-  let userOwnsSlotNow = props.promotedListItem?.ownerId === user?.id
-    && notExpiredYet
+  let userOwnsSlot = props.promotedListItem?.ownerId === user?.id
+  let userOwnsSlotNow = userOwnsSlot && notExpiredYet
 
   let slotIsFreeToPurchase = !anotherUserOwnsSlotNow && !userOwnsSlotNow
 
   // // console.log("promotedListItem", props.promotedListItem)
   // console.log("promotedListItem.ownerId:", props.promotedListItem?.ownerId)
   // console.log("userId:", user?.id)
+  // console.log("anotherUserOwnsSlot:", anotherUserOwnsSlot)
   // console.log("anotherUserOwnsSlotNow:", anotherUserOwnsSlotNow)
+  // console.log("userOwnsSlot: ", userOwnsSlot)
   // console.log("userOwnsSlotNow: ", userOwnsSlotNow)
+
   // console.log("slotIsFreeToPurchase: ", slotIsFreeToPurchase)
   // console.log("expiresAt: ", expiresAt)
   // console.log("now: ", now)
@@ -201,7 +207,7 @@ const BuyPromotedItemPage = (props: ReactProps) => {
         {
           asModal &&
           <IconButton
-            onClick={() => props.goBack()}
+            onClick={() => props.closeModal()}
             className={classes.closeButton}
           >
             <ClearIcon/>
@@ -209,7 +215,7 @@ const BuyPromotedItemPage = (props: ReactProps) => {
         }
       </div>
 
-      <div>
+      <div className={classes.boldSubtitle}>
         1. Pick a product to assign to slot. Must be published.
       </div>
       <TextInput
@@ -249,16 +255,27 @@ const BuyPromotedItemPage = (props: ReactProps) => {
       <div className={classes.helpMessages}>
         <div>
           {
-            !userOwnsSlotNow
-            ? "Another user currently owns this slot."
-            : "You currently own this slot."
+            userOwnsSlot
+            ? "You own this slot."
+            : "Another user owns this slot."
           }
         </div>
         <div>
           {
-            expiresAt !== undefined
+            // if someone currently owns slot
+            (expiresAt !== undefined)
+            && (userOwnsSlotNow || anotherUserOwnsSlotNow)
+              // and he currently owns the slot
               ? `Ownership expires: ${expiresAt.format("YYYY-MM-DD HH:mm a")}`
-              : "2. Purchase slot for your product"
+              // or he no longer owns it
+              : `Ownership expired: ${expiresAt.format("YYYY-MM-DD HH:mm a")}`
+          }
+        </div>
+        <div className={classes.boldSubtitle}>
+          {
+            // if no one currently owns slot
+            (expiresAt !== undefined || !(userOwnsSlotNow || anotherUserOwnsSlotNow))
+            && "2. Purchase slot for your product"
           }
         </div>
       </div>
@@ -290,18 +307,21 @@ const BuyPromotedItemPage = (props: ReactProps) => {
       {
         // if user owns this promotion-slot and it hasn't expired
         // or if it's an admin, then allow swapping/clearing promotion slot
-        (userOwnsSlotNow || isAdmin) &&
+        (userOwnsSlot || isAdmin) &&
         <div className={classes.buttonsBox}>
           <ButtonLoading
             className={classes.buttonBlue}
             onClick={async() => {
-              if (!props.promotedListItem.isAvailableForPurchase) {
+
+              if (anotherUserOwnsSlotNow) {
                 snackbar.enqueueSnackbar(
-                  "This slot can't be bought",
+                  "Another user currently owns this slot, cannot edit",
                   { variant: "info" }
                 )
-              }
-              if (userOwnsSlotNow) {
+              } else if (
+                // if you own the slot or you're the admin
+                userOwnsSlotNow || isAdmin
+              ) {
                 await addProductToPromotedList({
                   variables: {
                     promotedListItemId: props.promotedListItem?.id,
@@ -311,21 +331,17 @@ const BuyPromotedItemPage = (props: ReactProps) => {
                     position: props.promotedListItem?.position ?? props.position,
                   }
                 })
-              } else if (isAdmin) {
+              } else {
                 snackbar.enqueueSnackbar(
-                  "Another user currently owns this slot, cannot edit",
+                  "Your ownership of this slot expired",
                   { variant: "info" }
                 )
-              } else {
               }
             }}
             loadingIconColor={Colors.blue}
             replaceTextWhenLoading={true}
             loading={addProductToPromotedListResponse?.loading}
-            disabled={
-              (addProductToPromotedListResponse?.loading || !selectedProductId)
-              && !anotherUserOwnsSlotNow
-            }
+            disabled={anotherUserOwnsSlotNow}
             variant="contained"
             color="secondary"
             // style={{ height: "40px" }}
@@ -338,7 +354,7 @@ const BuyPromotedItemPage = (props: ReactProps) => {
           <ButtonLoading
             className={classes.buttonRed}
             onClick={async() => {
-              if (userOwnsSlotNow) {
+              if (userOwnsSlot) {
                 await removeProductFromPromotedList({
                   variables: {
                     promotedListItemId: props.promotedListItem?.id,
@@ -387,6 +403,7 @@ const createProductSuggestions = (p: Product[]): GroupedSelectOption[] => {
       && p.soldOutStatus === SoldOutStatus.AVAILABLE
       && !p.isSuspended
       && !p.isDeleted
+      && !p.isExcludedFromRecommendations
     )
   })
   let unavailableProducts = p.filter(p => {
@@ -395,6 +412,7 @@ const createProductSuggestions = (p: Product[]): GroupedSelectOption[] => {
       && p.soldOutStatus === SoldOutStatus.AVAILABLE
       && !p.isSuspended
       && !p.isDeleted
+      && !p.isExcludedFromRecommendations
     )
   })
 
@@ -431,7 +449,7 @@ export interface GroupedSelectOption {
 }
 
 interface ReactProps extends WithStyles<typeof styles> {
-  goBack(): void;
+  closeModal(): void;
   asModal?: boolean;
   promotedListItem: PromotedListItem
   position: number
@@ -533,6 +551,10 @@ const styles = (theme: Theme) => createStyles({
     flexDirection: "column",
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
+  },
+  boldSubtitle: {
+    marginTop: "1rem",
+    fontWeight: 600,
   },
 });
 

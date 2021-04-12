@@ -131,7 +131,7 @@ const RowExpanderExpiringOrders = (props: RowExpanderProps) => {
 
   let createdAt = new Date(row.createdAt)
   let expiryDate = get7DaysFromDate(createdAt)
-  let countDown = getCountdownForExpiry({
+  let { countDown, isExpired } = getCountdownForExpiry({
     expiryDate: expiryDate
   })
 
@@ -151,7 +151,12 @@ const RowExpanderExpiringOrders = (props: RowExpanderProps) => {
       >
         <div className={classes.flexItemTiny}>{row.id}</div>
         <div className={classes.flexItemSlim}>{formatDate(createdAt)}</div>
-        <div className={classes.flexItemSlim}>{countDown}</div>
+        <div className={clsx(
+          classes.flexItemSlim,
+          isExpired && classes.redText,
+        )}>
+          {countDown}
+        </div>
         <div className={classes.flexItemTiny}>{c(row.total)}</div>
         <div className={classes.flexItemSlim}>
           {
@@ -339,6 +344,9 @@ const styles = (theme: Theme) => createStyles({
     flexDirection: 'column',
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
+  },
+  redText: {
+    color: Colors.lightRed,
   },
 });
 
