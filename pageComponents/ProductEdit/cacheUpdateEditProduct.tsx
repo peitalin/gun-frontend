@@ -75,3 +75,40 @@ export const cacheUpdateEditProduct = <T extends {}>({
       }
     });
 }
+
+
+
+export const cacheUpdateDeleteProduct = <T extends {}>({
+  cache,
+  deletedProductId, // product being deleted
+}: {
+  cache: ApolloCache<T>,
+  deletedProductId: string,
+}) => {
+
+    // console.log("incomingProduct.id: ", editProduct?.product?.id)
+    // console.log("incomingProduct.isPublished: ", editProduct?.product?.isPublished)
+
+    // Fetch the cached dashboardProductsConnection item with associated variables
+    // remember, variables need to match, or cache will not return the data
+    const existingData: {
+      dashboardProductsConnection: ProductsConnection
+    } = cache.readQuery({
+      query: DASHBOARD_PRODUCTS_CONNECTION,
+      variables: initialDashboardVariables,
+    });
+
+    cache.writeQuery({
+      query: DASHBOARD_PRODUCTS_CONNECTION,
+      variables: initialDashboardVariables,
+      data: {
+        dashboardProductsConnection: {
+          ...existingData.dashboardProductsConnection,
+          edges: existingData.dashboardProductsConnection.edges?.filter(
+            edge => edge.node.id !== deletedProductId
+          ),
+        }
+      },
+    });
+
+}

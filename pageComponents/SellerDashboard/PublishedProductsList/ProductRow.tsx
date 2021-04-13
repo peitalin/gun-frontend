@@ -49,7 +49,7 @@ import { productToProductEditInput } from "utils/conversions";
 import ConfirmDeleteModal from "components/ConfirmDeleteModal";
 // Copy
 import copy from "clipboard-copy";
-import { cacheUpdateEditProduct } from "pageComponents/ProductEdit/cacheUpdateEditProduct";
+import { cacheUpdateDeleteProduct, cacheUpdateEditProduct } from "pageComponents/ProductEdit/cacheUpdateEditProduct";
 
 
 
@@ -97,13 +97,22 @@ const ProductRow = (props: ReactProps) => {
     // refetchQueries: [props.refetchQuery],
   });
 
-  const [deleteProduct, deleteProductResponse] = useMutation(
+  const [
+    deleteProduct,
+    deleteProductResponse
+  ] = useMutation<MData2, { productId: string }>(
     DELETE_PRODUCT, {
     variables: {
       productId: product.id
     },
     onCompleted: (data) => {
-      console.log("deleteProduct: ", data)
+    },
+    update: (cache, { data: { deleteProduct } }) => {
+      console.log("deleteProduct: ", deleteProduct)
+      cacheUpdateDeleteProduct({
+        cache: cache,
+        deletedProductId: deleteProduct?.products?.[0]?.id ?? product?.id
+      })
     },
     // refetchQueries: [props.refetchQuery],
   })
@@ -119,7 +128,7 @@ const ProductRow = (props: ReactProps) => {
   const handlePublish = async() => {
     if (product.soldOutStatus !== SoldOutStatus.AVAILABLE) {
       snackbar.enqueueSnackbar(
-        `${product.soldOutStatus} product cannot be edited.`,
+        `${product.soldOutStatus} product cannot be published.`,
         { variant: "info"}
       )
       return
@@ -141,7 +150,10 @@ const ProductRow = (props: ReactProps) => {
   };
 
   const handleUnpublish = async() => {
-    if (product.soldOutStatus !== SoldOutStatus.AVAILABLE) {
+    if (
+      product.soldOutStatus !== SoldOutStatus.AVAILABLE
+      && product.soldOutStatus !== SoldOutStatus.ABANDONED
+    ) {
       snackbar.enqueueSnackbar(
         `${product.soldOutStatus} product cannot be unpublished.`,
         { variant: "info"}
@@ -165,7 +177,10 @@ const ProductRow = (props: ReactProps) => {
   };
 
   const handleDelete = async() => {
-    if (product.soldOutStatus !== SoldOutStatus.AVAILABLE) {
+    if (
+      product.soldOutStatus !== SoldOutStatus.AVAILABLE
+      && product.soldOutStatus !== SoldOutStatus.ABANDONED
+    ) {
       snackbar.enqueueSnackbar(
         `${product.soldOutStatus} product cannot be deleted.`,
         { variant: "info"}
@@ -428,6 +443,12 @@ interface MData {
 }
 interface MVar {
   productEditInput: ProductEditInput
+}
+interface MData2 {
+  deleteProduct: { products: Product[] }
+}
+interface MVar2 {
+  productId: string
 }
 
 
