@@ -119,7 +119,7 @@ const BuyPromotedItemPage = (props: ReactProps) => {
     },
     onError: React.useCallback((e) => { console.log(e) }, []),
     onCompleted: React.useCallback(async (data) => {
-      console.log(data)
+      // console.log(data)
       if (typeof props.refetch === "function") {
         props.refetch()
       }
@@ -157,6 +157,8 @@ const BuyPromotedItemPage = (props: ReactProps) => {
   let yourProducts = connection?.edges?.map(({ node }) => node)
 
   let productOptions = createProductSuggestions(yourProducts)
+  // console.log("productOptions: ", productOptions)
+
   let isAdmin = user?.userRole === Role.PLATFORM_ADMIN
 
   let selectedProductId = selectedProductOption?.value
@@ -397,7 +399,7 @@ const createProductSuggestions = (p: Product[]): GroupedSelectOption[] => {
     return []
   }
 
-  let availableProducts = p.filter(p => {
+  const isAvailableProduct = (p: Product) => {
     return (
       p.isPublished
       && p.soldOutStatus === SoldOutStatus.AVAILABLE
@@ -405,15 +407,13 @@ const createProductSuggestions = (p: Product[]): GroupedSelectOption[] => {
       && !p.isDeleted
       && !p.isExcludedFromRecommendations
     )
+  }
+
+  let availableProducts = p.filter(p => {
+    return isAvailableProduct(p)
   })
   let unavailableProducts = p.filter(p => {
-    return !(
-      p.isPublished
-      && p.soldOutStatus === SoldOutStatus.AVAILABLE
-      && !p.isSuspended
-      && !p.isDeleted
-      && !p.isExcludedFromRecommendations
-    )
+    return !isAvailableProduct(p)
   })
 
   return [
