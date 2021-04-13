@@ -29,7 +29,9 @@ import SendPaymentConfirmedEmails from "./3SendPaymentConfirmedEmails";
 import SendRefundedEmails from "./4SendRefundedEmails";
 import SendForm10SubmittedEmails from "./5SendForm10SubmittedEmails";
 import SendForm10ApprovedEmails from "./6SendForm10ApprovedEmails";
-import SendPayoutCompleteEmails from "./7SendPayoutCompleteEmails";
+import SendPayoutCompleteEmails from "./7SendPayoutCompleteEmails copy";
+import SendSendReviewRepublishOrRemoveEmails from "./8SendReviewRepublishOrRemoveEmails";
+import SendReviewRepublishOrRemoveEmails from "./8SendReviewRepublishOrRemoveEmails";
 
 
 
@@ -168,6 +170,11 @@ const TestEmailButton: React.FC<ReactProps> = (props) => {
         />
         <SendPayoutCompleteEmails
           orderId={orderId}
+          buyer={order?.buyer}
+          seller={order?.sellerStore?.user}
+        />
+        <SendReviewRepublishOrRemoveEmails
+          productId={order?.product?.id ?? "prod_testproductId"}
           buyer={order?.buyer}
           seller={order?.sellerStore?.user}
         />

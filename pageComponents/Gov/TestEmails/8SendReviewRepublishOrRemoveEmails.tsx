@@ -46,13 +46,13 @@ const SendReviewRepublishOrRemoveEmails: React.FC<ReactProps> = (props) => {
         mutation: SEND_REVIEW_REPUBLISH_OR_REMOVE_SELLER_EMAIL,
         variables: {
           userId: props.seller.id,
-          orderId: props.orderId,
+          productId: props.productId,
         },
         fetchPolicy: "no-cache", // always do a network request, no caches
       })
-      if (data.sendPayoutCompleteSellerEmail) {
+      if (data.sendReviewRepublishOrRemoveSellerEmail) {
         snackbar.enqueueSnackbar(`Email send success`, { variant: "success" })
-        alert(JSON.stringify(data.sendPayoutCompleteSellerEmail.status))
+        alert(JSON.stringify(data.sendReviewRepublishOrRemoveSellerEmail.status))
       }
     } catch(e) {
       snackbar.enqueueSnackbar(`Email failed to send`, { variant: "error" })
@@ -68,7 +68,7 @@ const SendReviewRepublishOrRemoveEmails: React.FC<ReactProps> = (props) => {
         variant="outlined"
         className={classes.approveButton}
         onClick={() => {
-          sendPayoutCompleteSellerEmail()
+          sendReviewOrRepublishSellerEmail()
         }}
         loadingIconColor={Colors.blue}
         replaceTextWhenLoading={true}
@@ -90,16 +90,16 @@ const SendReviewRepublishOrRemoveEmails: React.FC<ReactProps> = (props) => {
 
 
 interface ReactProps extends WithStyles<typeof styles> {
-  orderId: string
-    buyer: UserPrivate;
-    seller: UserPrivate;
+  productId: string
+  buyer: UserPrivate;
+  seller: UserPrivate;
 }
 interface QueryData {
   sendReviewRepublishOrRemoveSellerEmail: BlankMutationResponse;
 }
 interface QueryVar {
   userId: string
-  orderId: string
+  productId: string
 }
 
 
