@@ -15,6 +15,7 @@ import InfoBuyerSellerDealer from "components/Gov/RowExpander/InfoBuyerSellerDea
 
 // router
 import Link from "next/link";
+import Typography from "@material-ui/core/Typography";
 // Snackbar
 import { useSnackbar } from "notistack";
 
@@ -114,18 +115,34 @@ const RowExpander = (props: RowExpanderProps) => {
         open={open}
         setOpen={setOpen}
       >
-        <div className={classes.flexItemTiny}>{row.id}</div>
-        <div className={classes.flexItemSlim}>{formatDate(row.createdAt)}</div>
-        <div className={classes.flexItemTiny}>{c(row.total)}</div>
-        <div className={classes.flexItemSlim}>
-          {
-            row.orderStatus?.length > 22
-            ? row.orderStatus.slice(0, 22) + '..'
-            : row.orderStatus
-          }
+        <div className={classes.flexItemTiny}>
+          <Typography variant="body2" className={classes.rowText}>
+            {row.id}
+          </Typography>
         </div>
         <div className={classes.flexItemSlim}>
-          {row?.sellerStore?.user?.email}
+          <Typography variant="body2" className={classes.rowText}>
+            {formatDate(row.createdAt)}
+          </Typography>
+        </div>
+        <div className={classes.flexItemTiny}>
+          <Typography variant="body2" className={classes.rowText}>
+            {c(row.total)}
+          </Typography>
+        </div>
+        <div className={classes.flexItemSlim}>
+          <Typography variant="body2" className={classes.rowText}>
+          {
+            row.orderStatus.startsWith("CONFIRMED")
+              ? row.orderStatus.slice(0, 17)
+              : row.orderStatus
+          }
+          </Typography>
+        </div>
+        <div className={classes.flexItemSlim}>
+          <Typography variant="body2" className={classes.rowText}>
+            {row?.sellerStore?.user?.email}
+          </Typography>
         </div>
       </RowExpanderTitle>
 
@@ -222,7 +239,6 @@ const styles = (theme: Theme) => createStyles({
     alignItems: 'center',
     paddingRight: '0.5rem',
     marginRight: '0.5rem',
-    textOverflow: 'ellipsis',
     overflow: 'hidden',
     fontSize: '0.825rem',
   },
@@ -234,9 +250,12 @@ const styles = (theme: Theme) => createStyles({
     alignItems: 'center',
     paddingRight: '0.5rem',
     marginRight: '0.5rem',
-    textOverflow: 'ellipsis',
-    whiteSpace: 'nowrap',
     overflow: 'hidden',
+    fontSize: '0.825rem',
+  },
+  rowText: {
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
     fontSize: '0.825rem',
   },
   form10RowContainer: {

@@ -35,6 +35,9 @@ const URI = process.env.GATEWAY_GRAPHQL_URL;
 const SERVER_URI = process.env.SERVER_GATEWAY_GRAPHQL_URL;
 const WS_URI = process.env.GATEWAY_GRAPHQL_WS_URL;
 const NODE_ENV = process.env.NODE_ENV;
+const STRIPE_PUBLIC_KEY = process.env.STRIPE_PUBLIC_KEY
+
+
 
 
 const Footer: React.FC<ReactProps> = (props) => {
@@ -204,6 +207,14 @@ const Footer: React.FC<ReactProps> = (props) => {
                 </Typography>
                 <Typography variant="body2" className={classes.apiLinkText}>
                   {`${NODE_ENV}`}
+                </Typography>
+              </div>
+              <div className={classes.apiLink}>
+                <Typography variant="body2" className={classes.apiLinkHeading}>
+                  {`STRIPE_PUBLIC_KEY: `}
+                </Typography>
+                <Typography variant="body2" className={classes.apiLinkText}>
+                  {`${STRIPE_PUBLIC_KEY?.slice(0,15)}...`}
                 </Typography>
               </div>
             </div>

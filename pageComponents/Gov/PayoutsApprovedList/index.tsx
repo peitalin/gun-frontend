@@ -6,7 +6,7 @@ import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/
 import { Colors, BoxShadows, BorderRadius } from "layout/AppTheme";
 // Typings
 import {
-  UserPublic,
+  UserPrivate,
   Order,
   OrderAdmin,
   OrderStatus,
@@ -50,6 +50,7 @@ import {
 // Grid Components
 import GridPaginatorGeneric from "components/GridPaginatorGeneric";
 import TextInputAdorned from 'components/Fields/TextInputAdorned';
+import PayoutsApprovedTable from "./PayoutsApprovedTable";
 // csv
 import CsvDownloader from 'react-csv-downloader';
 import dayjs from 'dayjs';
@@ -57,6 +58,7 @@ import dayjs from 'dayjs';
 import Tooltip from '@material-ui/core/Tooltip';
 import copy from "clipboard-copy";
 import { useRouter } from "next/router";
+
 
 
 
@@ -76,20 +78,6 @@ const PayoutsApprovedList = (props: ReactProps) => {
   const [loading2, setLoading2] = React.useState(false)
 
   const csvLinkRef = React.useRef();
-  const headers = [
-    { label: "BSB", key: "bsb" },
-    { label: "Account Number", key: "accountNumber" },
-    { label: "Account Name", key: "accountName" },
-    { label: "Order Description", key: "id" },
-    { label: "Amount", key: "amount" },
-  ];
-  interface PayoutCsvRow {
-    bsb: string;
-    accountNumber: string;
-    accountName: string;
-    id: string;
-    amount: number;
-  }
   const [accumPayouts, setAccumPayouts] = React.useState<any[]>([])
   const [payoutId, setPayoutId] = React.useState(undefined);
 
@@ -112,7 +100,7 @@ const PayoutsApprovedList = (props: ReactProps) => {
   );
 
 
-  //////////////// BEING CSV DOWNLOAD FUNCTION ///////////////
+  //////////////// BEGIN CSV DOWNLOAD FUNCTION ///////////////
   const handleDownloadPayoutList = async() => {
 
     let isLastPage = false;
@@ -212,57 +200,8 @@ const PayoutsApprovedList = (props: ReactProps) => {
   }
   //////////////// END CSV DOWNLOAD FUNCTION ///////////////
 
-
-  /////////////////////////////////// paginator
-  let numItemsPerPage = 50;
-  let overfetchBy = 1;
-  // overfetch by 1x pages
-  let {
-    orderBy,
-    setOrderBy,
-    priceRange,
-    setPriceRange,
-    searchTerm,
-    setSearchTerm,
-    facets,
-    setFacets,
-    paginationParams: {
-      limit,
-      offset,
-      totalCount,
-      setTotalCount,
-      pageParam,
-      setPageParam,
-    },
-    currentCategories,
-    setCurrentCategories,
-    index,
-    setIndex,
-  } = useFacetSearchOptions({
-    limit: numItemsPerPage * overfetchBy,
-    // currently 50 items
-    overfetchBy: overfetchBy,
-  })
-
-
-  const { data, loading, error } = useQuery<QueryData, QueryVar>(
-  // const [getOrdersAdminApproved, { data, loading, error}] = useLazyQuery<QueryData, QueryVar>(
-    GET_ORDERS_ADMIN_APPROVED_CONNECTION, {
-      variables: {
-        query: {
-          limit: limit,
-          offset: offset,
-        },
-      },
-      fetchPolicy: "no-cache",
-    }
-  )
-
-  const connection = option(data).getOrdersAdminApprovedConnection();
-  const orderIds = option(connection).edges([]).map(({ node }) => node.id)
-
-  let noPayoutsToBePaid = !loading &&
-    option(connection).edges([]).length === 0
+  const [orderIds, setOrderIds] = React.useState([])
+  const [totalCountCsv, setTotalCountCsv] = React.useState(0)
 
 
   return (
@@ -278,7 +217,7 @@ const PayoutsApprovedList = (props: ReactProps) => {
           </Typography>
           <Typography variant="body1" className={classes.emailCountCaption}>
             {
-              `${option(connection).totalCount(0)} approved payouts awaiting action`
+              `${totalCountCsv} approved payouts awaiting action`
             }
           </Typography>
           <Tooltip title={"Export emails spreadsheet"}>
@@ -286,7 +225,7 @@ const PayoutsApprovedList = (props: ReactProps) => {
               onMouseOver={() => setMouseOver(true)}
               onMouseLeave={() => setMouseOver(false)}
               onClick={
-                option(connection).totalCount(0)
+                totalCountCsv
                   ? handleDownloadPayoutList
                   : () => alert('loading...')
               }
@@ -367,126 +306,19 @@ const PayoutsApprovedList = (props: ReactProps) => {
         </CsvDownloader>
       </div>
 
-      <div className={clsx(classes.paper, classes.boxShadowBorder)}>
-        <div className={classes.flexRowTitle}>
-          <div className={classes.flexItem}>
-            <Typography variant="subtitle1" className={classes.subtitle}>
-              Order ID
-            </Typography>
-          </div>
-          <div className={classes.flexItemWide}>
-            <Typography variant="subtitle1" className={classes.subtitle}>
-              Date
-            </Typography>
-          </div>
-          <div className={classes.flexItem}>
-            <Typography variant="subtitle1" className={classes.subtitle}>
-              Total Amount
-            </Typography>
-          </div>
-          <div className={classes.flexItemWide}>
-            <Typography variant="subtitle1" className={classes.subtitle}>
-              Email
-            </Typography>
-          </div>
-          <div className={classes.flexItem}>
-            <Typography variant="subtitle1" className={classes.subtitle}>
-              BSB
-            </Typography>
-          </div>
-          <div className={classes.flexItemWide}>
-            <Typography variant="subtitle1" className={classes.subtitle}>
-              Account Number
-            </Typography>
-          </div>
-          <div className={classes.flexItem}>
-            <Typography variant="subtitle1" className={classes.subtitle}>
-              Account Name
-            </Typography>
-          </div>
-          <LoadingBar
-            absoluteBottom
-            color={Colors.secondary}
-            height={4}
-            width={'100%'}
-            loading={loading || loading2}
-          />
-        </div>
-        <SearchOptions
-          facets={facets}
-          // setCategoryFacets={setCategoryFacets({ facets, setFacets })}
-          // currentCategories={currentCategories}
-          setSearchTerm={setSearchTerm}
-          setOrderBy={setOrderBy}
-          setPriceRange={setPriceRange}
-          paginationParams={{
-            totalCount: totalCount,
-            overfetchBy: overfetchBy,
-            limit: limit,
-            pageParam: pageParam,
-            setPageParam: setPageParam,
-            index: index,
-            setIndex: setIndex,
-          }}
-          updateSetPageDelay={0}
-          disableCategories
-          disablePriceFilter
-          disableSearchFilter
-          disableSortby
-          style={{
-            flexGrow: 1,
-          }}
-          topSectionStyles={{
-            justifyContent: 'flex-end',
-            alignItems: 'flex-end',
-            display: 'flex',
-            flexDirection: 'column',
-          }}
-          bottomSectionStyles={{
-            marginBottom: '2rem',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'space-between',
-            flexGrow: 1,
-          }}
-        >
-          {
-            noPayoutsToBePaid &&
-            <div className={clsx(
-              classes.paper,
-              classes.customersPlaceholder,
-              classes.flexCol,
-              classes.customerNoEmailsBox,
-            )}>
-              <Typography variant="subtitle2" className={classes.margin2}>
-                No approved payouts pending
-              </Typography>
-            </div>
-          }
-          <GridPaginatorGeneric<Order>
-            index={index}
-            connection={connection}
-            totalCount={totalCount}
-            setTotalCount={setTotalCount}
-            numItemsPerPage={numItemsPerPage}
-            gridItemClassName={classes.gridItem}
-          >
-            {({ node , key }) => {
-              let order = node as OrderAdmin
-              console.log("node: order:", order)
-              return (
-                <PayoutOrderRow key={key} order={order}/>
-              )
-            }}
-          </GridPaginatorGeneric>
-        </SearchOptions>
-      </div>
+      <PayoutsApprovedTable
+        admin={props.admin}
+        setTotalCountCsv={setTotalCountCsv}
+        setOrderIds={setOrderIds}
+      />
+
     </ErrorBounds>
   );
 }
 
 
 interface ReactProps extends WithStyles<typeof styles> {
+  admin: UserPrivate
 }
 // customer counts
 interface QueryVar {
@@ -554,24 +386,6 @@ const styles = (theme: Theme) => createStyles({
     flexDirection: 'row',
     justifyContent: 'space-between',
     width: '100%',
-  },
-  flexItemWidest: {
-    flexGrow: 1,
-    flexBasis: "25%",
-    display: "flex",
-    justifyContent: "flex-start",
-    alignItems: 'center',
-    paddingRight: '0.5rem',
-  },
-  flexItemWide: {
-    flexBasis: "15%",
-    // width: '50%',
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: 'flex-start',
-    paddingRight: '0.5rem',
-    flexGrow: 1,
   },
   flexItem: {
     flexGrow: 1,

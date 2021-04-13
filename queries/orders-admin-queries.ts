@@ -71,19 +71,20 @@ export const GET_ORDERS_ADMIN_APPROVED_CONNECTION = gql`
       edges {
         node {
           ...OrdersFragment
-          ...on OrderAdmin {
-            paymentIntent {
-              id
-              amount
-              amountCapturable
-              amountReceived
-              captureMethod
-              createdAt
-              currency
-              liveMode
-              status
-            }
-          }
+          # Already captured, no need to spam Stripe for status
+          # ...on OrderAdmin {
+          #   paymentIntent {
+          #     id
+          #     amount
+          #     amountCapturable
+          #     amountReceived
+          #     captureMethod
+          #     createdAt
+          #     currency
+          #     liveMode
+          #     status
+          #   }
+          # }
         }
       }
       totalCount

@@ -40,16 +40,12 @@ const PayoutOrderRow = (props: ReactProps) => {
   const c = (s) => currency(s/100, { formatWithSymbol: true }).format()
 
   const formatBsb = (a: string): string => {
-    if (!a) {
-      return ""
-    }
+    if (!a) { return "" }
     return a.slice(0,3) + '-' + a.slice(3)
   }
 
   const formatAccountNumber = (a: string): string => {
-    if (!a) {
-      return ""
-    }
+    if (!a) { return "" }
     return a.slice(0,2) + '-' + a.slice(2,5) + '-' + a.slice(5)
   }
 
@@ -72,9 +68,9 @@ const PayoutOrderRow = (props: ReactProps) => {
           {orderId}
         </Typography>
       </div>
-      <div className={classes.flexItemWide}>
+      <div className={classes.flexItem}>
         <Typography variant="body2" className={classes.id}>
-          {formatDate(order.createdAt)}
+          {formatDate(order.currentSnapshot?.createdAt)}
         </Typography>
       </div>
       <div className={classes.flexItem}>
@@ -83,13 +79,13 @@ const PayoutOrderRow = (props: ReactProps) => {
         </Typography>
       </div>
       <Tooltip title={"Email"}>
-        <div className={classes.flexItemWide}>
+        <div className={classes.flexItem}>
           <Typography variant="body2" className={classes.id}>
             {order.sellerStore.user.email}
           </Typography>
         </div>
       </Tooltip>
-      <Tooltip title={"BSB"}>
+      {/* <Tooltip title={"BSB"}>
         <div className={classes.flexItem}>
           <Typography variant="body2" className={classes.id}>
             {formatBsb(order.sellerStore.user.payoutMethod.bsb)}
@@ -109,7 +105,7 @@ const PayoutOrderRow = (props: ReactProps) => {
             {order.sellerStore.user.payoutMethod.accountName}
           </Typography>
         </div>
-      </Tooltip>
+      </Tooltip> */}
     </MenuItem>
   );
 }
@@ -125,14 +121,6 @@ const styles = (theme: Theme) => createStyles({
     flexDirection: 'row',
     justifyContent: 'center',
     width: '100%',
-  },
-  flexItemWidest: {
-    flexGrow: 1,
-    flexBasis: "25%",
-    display: "flex",
-    justifyContent: "flex-start",
-    alignItems: 'center',
-    paddingRight: '0.5rem',
   },
   flexItemWide: {
     flexBasis: "15%",

@@ -14,7 +14,7 @@ const AdminProfileWrapper = dynamic(() => import("layout/GetUser/AdminProfileWra
   loading: () => <LoadingBarSSR/>,
   ssr: false,
 })
-import PayoutsPendingApprovals from "pageComponents/Gov/PayoutsPendingApprovals";
+import OrdersPendingApprovals from "pageComponents/Gov/OrdersPendingApprovals";
 
 
 
@@ -27,7 +27,7 @@ const PendingApprovalsPage: NextPage<ReactProps> = (props) => {
       {({ data, loading, error }: AdminProfileProps) => {
         return (
           <div className={props.classes.GovApprovalsRoot}>
-            <PayoutsPendingApprovals
+            <OrdersPendingApprovals
               admin={data.user}
             />
           </div>

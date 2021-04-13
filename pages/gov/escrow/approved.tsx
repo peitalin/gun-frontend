@@ -29,10 +29,12 @@ const ApprovedPayoutsListPage = (props: ReactProps) => {
       disablePadding
       disableAdminBorder
     >
-      {(spp: AdminProfileProps) => {
+      {({ data, loading }: AdminProfileProps) => {
         return (
           <div className={classes.contentContainer}>
-            <ApprovedPayoutsList />
+            <ApprovedPayoutsList
+              admin={data?.user}
+            />
           </div>
         )
       }}
