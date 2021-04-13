@@ -257,3 +257,18 @@ export const SEND_PAYOUT_COMPLETE_SELLER_EMAIL = gql`
     }
   }
 `;
+
+export const SEND_REVIEW_REPUBLISH_OR_REMOVE_SELLER_EMAIL = gql`
+  mutation sendReviewRepublishOrRemoveSellerEmail(
+    $userId: String!
+    $productId: String!
+  ) {
+    sendReviewRepublishOrRemoveSellerEmail(
+      userId: $userId
+      productId: $productId
+    ) {
+      success
+      status
+    }
+  }
+`;
