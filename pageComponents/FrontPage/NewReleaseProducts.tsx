@@ -187,7 +187,7 @@ const NewReleaseProducts = (props: ReactProps) => {
           ((products?.edges ?? []).length === 0 && loading)
           ? <LoadingCards count={8} />
           : ((products?.edges ?? []).length === 0)
-            ? <div className={classes.noProductsYet}>No products yet</div>
+            ? <LoadingCards count={8} />
             : products.edges.map(({ node: product }, i) => {
                 // console.log("p: ",product)
                 return (

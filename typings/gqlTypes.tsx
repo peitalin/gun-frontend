@@ -3822,13 +3822,6 @@ export type Mutation = {
    */
   removeProductFromPromotedList: PromotedListMutationResponse;
   /**
-   * Change the location of the items in a promoted list.
-   * This works by providing the complete list of itemIds, in the order you want them to appear in the list.
-   * It is designed to work well with a Save button design, rather than a real-time drag and drop edit UX.
-   * AccessRule – PLATFORM_ADMIN
-   */
-  rearrangePromotedListItems: PromotedListMutationResponse;
-  /**
    * AccessRule – LOGGED_IN
    * For a buyer to purchase a promotion slot
    */
@@ -5372,12 +5365,6 @@ export type MutationAddProductToPromotedListArgs = {
 export type MutationRemoveProductFromPromotedListArgs = {
   promotedListId: Scalars['String'];
   promotedListItemId: Scalars['String'];
-};
-
-
-export type MutationRearrangePromotedListItemsArgs = {
-  listId: Scalars['String'];
-  itemIdsInOrder: Array<Scalars['ID']>;
 };
 
 
