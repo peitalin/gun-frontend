@@ -27,7 +27,7 @@ export const DELETE_STORE = gql`
 export const DELETE_PRODUCT = gql`
   mutation deleteProduct($productId: String!) {
     deleteProduct(productId: $productId) {
-      product {
+      products {
         ...ProductFragment
       }
     }
