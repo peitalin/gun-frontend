@@ -175,15 +175,27 @@ export const useFacetSearchOptions = ({
         }
       }
       if (pageParam > 1) {
-        if (params.map(p => p.includes('page=')).every(b => b === false)) {
+        if (!params.some(p => p.includes('page='))) {
           // page query doesnt yet exist, add facetSearch param
           params = [`page=${pageParam}`, ...params]
+        } else {
+          // page query exists, modify it
+          params = params.map(param => {
+            if (param.includes("page=")) {
+              return `page=${pageParam}`
+            } else {
+              return param
+            }
+          })
         }
+      } else {
+        // remove page query if page 1
+        params = params.filter(param => !param.includes("page="))
       }
 
-      // console.log("params before join: ", params)
+      console.log("params before join: ", params)
       let params_str: string = params.join('&')
-      // console.log("params_str after join: ", params_str)
+      console.log("params_str after join: ", params_str)
       if (params_str) {
         params_str = `?${params_str}`
       }
