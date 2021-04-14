@@ -1,6 +1,9 @@
 import gql from 'graphql-tag';
 import * as ApolloReactCommon from '@apollo/client';
 export type Maybe<T> = T | null;
+export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -23,7 +26,7 @@ export type Scalars = {
 };
 
 export type AddRemovePaymentMethodResponse = {
-   __typename?: 'AddRemovePaymentMethodResponse';
+  __typename?: 'AddRemovePaymentMethodResponse';
   user: UserPrivate;
 };
 
@@ -41,15 +44,14 @@ export type BasicUser = {
 };
 
 export type Bid = {
-   __typename?: 'Bid';
+  __typename?: 'Bid';
   id?: Maybe<Scalars['String']>;
-  bidStatus?: Maybe<Scalars['String']>;
   orderId?: Maybe<Scalars['String']>;
   acceptedPrice?: Maybe<Scalars['Int']>;
   offerPrice?: Maybe<Scalars['Int']>;
   createdAt?: Maybe<Scalars['Date']>;
   updatedAt?: Maybe<Scalars['Date']>;
-  status?: Maybe<BidStatus>;
+  bidStatus?: Maybe<BidStatus>;
   productId?: Maybe<Scalars['String']>;
   productSnapshotId?: Maybe<Scalars['String']>;
   variantId?: Maybe<Scalars['String']>;
@@ -57,7 +59,7 @@ export type Bid = {
 
 /** columns and relationships of "bids" */
 export type Bids = {
-   __typename?: 'bids';
+  __typename?: 'bids';
   acceptedPrice?: Maybe<Scalars['Int']>;
   bidStatus: Scalars['String'];
   createdAt?: Maybe<Scalars['timestamp']>;
@@ -72,14 +74,14 @@ export type Bids = {
 
 /** aggregated selection of "bids" */
 export type Bids_Aggregate = {
-   __typename?: 'bids_aggregate';
+  __typename?: 'bids_aggregate';
   aggregate?: Maybe<Bids_Aggregate_Fields>;
   nodes: Array<Bids>;
 };
 
 /** aggregate fields of "bids" */
 export type Bids_Aggregate_Fields = {
-   __typename?: 'bids_aggregate_fields';
+  __typename?: 'bids_aggregate_fields';
   avg?: Maybe<Bids_Avg_Fields>;
   count?: Maybe<Scalars['Int']>;
   max?: Maybe<Bids_Max_Fields>;
@@ -123,7 +125,7 @@ export type Bids_Arr_Rel_Insert_Input = {
 
 /** aggregate avg on columns */
 export type Bids_Avg_Fields = {
-   __typename?: 'bids_avg_fields';
+  __typename?: 'bids_avg_fields';
   acceptedPrice?: Maybe<Scalars['Float']>;
   offerPrice?: Maybe<Scalars['Float']>;
 };
@@ -179,7 +181,7 @@ export type Bids_Insert_Input = {
 
 /** aggregate max on columns */
 export type Bids_Max_Fields = {
-   __typename?: 'bids_max_fields';
+  __typename?: 'bids_max_fields';
   acceptedPrice?: Maybe<Scalars['Int']>;
   bidStatus?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['timestamp']>;
@@ -208,7 +210,7 @@ export type Bids_Max_Order_By = {
 
 /** aggregate min on columns */
 export type Bids_Min_Fields = {
-   __typename?: 'bids_min_fields';
+  __typename?: 'bids_min_fields';
   acceptedPrice?: Maybe<Scalars['Int']>;
   bidStatus?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['timestamp']>;
@@ -237,7 +239,7 @@ export type Bids_Min_Order_By = {
 
 /** response of any mutation on the table "bids" */
 export type Bids_Mutation_Response = {
-   __typename?: 'bids_mutation_response';
+  __typename?: 'bids_mutation_response';
   /** number of affected rows by the mutation */
   affected_rows: Scalars['Int'];
   /** data of the affected rows by the mutation */
@@ -316,7 +318,7 @@ export type Bids_Set_Input = {
 
 /** aggregate stddev on columns */
 export type Bids_Stddev_Fields = {
-   __typename?: 'bids_stddev_fields';
+  __typename?: 'bids_stddev_fields';
   acceptedPrice?: Maybe<Scalars['Float']>;
   offerPrice?: Maybe<Scalars['Float']>;
 };
@@ -329,7 +331,7 @@ export type Bids_Stddev_Order_By = {
 
 /** aggregate stddev_pop on columns */
 export type Bids_Stddev_Pop_Fields = {
-   __typename?: 'bids_stddev_pop_fields';
+  __typename?: 'bids_stddev_pop_fields';
   acceptedPrice?: Maybe<Scalars['Float']>;
   offerPrice?: Maybe<Scalars['Float']>;
 };
@@ -342,7 +344,7 @@ export type Bids_Stddev_Pop_Order_By = {
 
 /** aggregate stddev_samp on columns */
 export type Bids_Stddev_Samp_Fields = {
-   __typename?: 'bids_stddev_samp_fields';
+  __typename?: 'bids_stddev_samp_fields';
   acceptedPrice?: Maybe<Scalars['Float']>;
   offerPrice?: Maybe<Scalars['Float']>;
 };
@@ -355,7 +357,7 @@ export type Bids_Stddev_Samp_Order_By = {
 
 /** aggregate sum on columns */
 export type Bids_Sum_Fields = {
-   __typename?: 'bids_sum_fields';
+  __typename?: 'bids_sum_fields';
   acceptedPrice?: Maybe<Scalars['Int']>;
   offerPrice?: Maybe<Scalars['Int']>;
 };
@@ -392,7 +394,7 @@ export enum Bids_Update_Column {
 
 /** aggregate var_pop on columns */
 export type Bids_Var_Pop_Fields = {
-   __typename?: 'bids_var_pop_fields';
+  __typename?: 'bids_var_pop_fields';
   acceptedPrice?: Maybe<Scalars['Float']>;
   offerPrice?: Maybe<Scalars['Float']>;
 };
@@ -405,7 +407,7 @@ export type Bids_Var_Pop_Order_By = {
 
 /** aggregate var_samp on columns */
 export type Bids_Var_Samp_Fields = {
-   __typename?: 'bids_var_samp_fields';
+  __typename?: 'bids_var_samp_fields';
   acceptedPrice?: Maybe<Scalars['Float']>;
   offerPrice?: Maybe<Scalars['Float']>;
 };
@@ -418,7 +420,7 @@ export type Bids_Var_Samp_Order_By = {
 
 /** aggregate variance on columns */
 export type Bids_Variance_Fields = {
-   __typename?: 'bids_variance_fields';
+  __typename?: 'bids_variance_fields';
   acceptedPrice?: Maybe<Scalars['Float']>;
   offerPrice?: Maybe<Scalars['Float']>;
 };
@@ -460,7 +462,7 @@ export type Bigint_Comparison_Exp = {
 
 /** Mutation result that doesn't need to give anything back. */
 export type BlankMutationResponse = {
-   __typename?: 'BlankMutationResponse';
+  __typename?: 'BlankMutationResponse';
   /** Should always be true if you get this result instead of a MutationErrorSummary - mainly here to allow gql to build */
   success: Scalars['Boolean'];
   status?: Maybe<Scalars['JSON']>;
@@ -481,7 +483,7 @@ export type Boolean_Comparison_Exp = {
 
 /** columns and relationships of "categories" */
 export type Categories = {
-   __typename?: 'categories';
+  __typename?: 'categories';
   /** An object relationship */
   bannerImage?: Maybe<Image_Parents>;
   bannerImageId?: Maybe<Scalars['String']>;
@@ -499,14 +501,14 @@ export type Categories = {
 
 /** aggregated selection of "categories" */
 export type Categories_Aggregate = {
-   __typename?: 'categories_aggregate';
+  __typename?: 'categories_aggregate';
   aggregate?: Maybe<Categories_Aggregate_Fields>;
   nodes: Array<Categories>;
 };
 
 /** aggregate fields of "categories" */
 export type Categories_Aggregate_Fields = {
-   __typename?: 'categories_aggregate_fields';
+  __typename?: 'categories_aggregate_fields';
   count?: Maybe<Scalars['Int']>;
   max?: Maybe<Categories_Max_Fields>;
   min?: Maybe<Categories_Min_Fields>;
@@ -573,7 +575,7 @@ export type Categories_Insert_Input = {
 
 /** aggregate max on columns */
 export type Categories_Max_Fields = {
-   __typename?: 'categories_max_fields';
+  __typename?: 'categories_max_fields';
   bannerImageId?: Maybe<Scalars['String']>;
   blurb?: Maybe<Scalars['String']>;
   categoryGroup?: Maybe<Scalars['String']>;
@@ -600,7 +602,7 @@ export type Categories_Max_Order_By = {
 
 /** aggregate min on columns */
 export type Categories_Min_Fields = {
-   __typename?: 'categories_min_fields';
+  __typename?: 'categories_min_fields';
   bannerImageId?: Maybe<Scalars['String']>;
   blurb?: Maybe<Scalars['String']>;
   categoryGroup?: Maybe<Scalars['String']>;
@@ -627,7 +629,7 @@ export type Categories_Min_Order_By = {
 
 /** response of any mutation on the table "categories" */
 export type Categories_Mutation_Response = {
-   __typename?: 'categories_mutation_response';
+  __typename?: 'categories_mutation_response';
   /** number of affected rows by the mutation */
   affected_rows: Scalars['Int'];
   /** data of the affected rows by the mutation */
@@ -726,7 +728,7 @@ export enum Categories_Update_Column {
 
 /** columns and relationships of "chat_messages" */
 export type Chat_Messages = {
-   __typename?: 'chat_messages';
+  __typename?: 'chat_messages';
   /** An object relationship */
   bid?: Maybe<Bids>;
   bidId?: Maybe<Scalars['String']>;
@@ -746,14 +748,14 @@ export type Chat_Messages = {
 
 /** aggregated selection of "chat_messages" */
 export type Chat_Messages_Aggregate = {
-   __typename?: 'chat_messages_aggregate';
+  __typename?: 'chat_messages_aggregate';
   aggregate?: Maybe<Chat_Messages_Aggregate_Fields>;
   nodes: Array<Chat_Messages>;
 };
 
 /** aggregate fields of "chat_messages" */
 export type Chat_Messages_Aggregate_Fields = {
-   __typename?: 'chat_messages_aggregate_fields';
+  __typename?: 'chat_messages_aggregate_fields';
   count?: Maybe<Scalars['Int']>;
   max?: Maybe<Chat_Messages_Max_Fields>;
   min?: Maybe<Chat_Messages_Min_Fields>;
@@ -822,7 +824,7 @@ export type Chat_Messages_Insert_Input = {
 
 /** aggregate max on columns */
 export type Chat_Messages_Max_Fields = {
-   __typename?: 'chat_messages_max_fields';
+  __typename?: 'chat_messages_max_fields';
   bidId?: Maybe<Scalars['String']>;
   chatRoomId?: Maybe<Scalars['String']>;
   content?: Maybe<Scalars['String']>;
@@ -849,7 +851,7 @@ export type Chat_Messages_Max_Order_By = {
 
 /** aggregate min on columns */
 export type Chat_Messages_Min_Fields = {
-   __typename?: 'chat_messages_min_fields';
+  __typename?: 'chat_messages_min_fields';
   bidId?: Maybe<Scalars['String']>;
   chatRoomId?: Maybe<Scalars['String']>;
   content?: Maybe<Scalars['String']>;
@@ -876,7 +878,7 @@ export type Chat_Messages_Min_Order_By = {
 
 /** response of any mutation on the table "chat_messages" */
 export type Chat_Messages_Mutation_Response = {
-   __typename?: 'chat_messages_mutation_response';
+  __typename?: 'chat_messages_mutation_response';
   /** number of affected rows by the mutation */
   affected_rows: Scalars['Int'];
   /** data of the affected rows by the mutation */
@@ -976,7 +978,7 @@ export enum Chat_Messages_Update_Column {
 
 /** columns and relationships of "chat_rooms" */
 export type Chat_Rooms = {
-   __typename?: 'chat_rooms';
+  __typename?: 'chat_rooms';
   createdAt: Scalars['timestamptz'];
   id: Scalars['String'];
   /** An array relationship */
@@ -1039,14 +1041,14 @@ export type Chat_RoomsParticipants_AggregateArgs = {
 
 /** aggregated selection of "chat_rooms" */
 export type Chat_Rooms_Aggregate = {
-   __typename?: 'chat_rooms_aggregate';
+  __typename?: 'chat_rooms_aggregate';
   aggregate?: Maybe<Chat_Rooms_Aggregate_Fields>;
   nodes: Array<Chat_Rooms>;
 };
 
 /** aggregate fields of "chat_rooms" */
 export type Chat_Rooms_Aggregate_Fields = {
-   __typename?: 'chat_rooms_aggregate_fields';
+  __typename?: 'chat_rooms_aggregate_fields';
   count?: Maybe<Scalars['Int']>;
   max?: Maybe<Chat_Rooms_Max_Fields>;
   min?: Maybe<Chat_Rooms_Min_Fields>;
@@ -1111,7 +1113,7 @@ export type Chat_Rooms_Insert_Input = {
 
 /** aggregate max on columns */
 export type Chat_Rooms_Max_Fields = {
-   __typename?: 'chat_rooms_max_fields';
+  __typename?: 'chat_rooms_max_fields';
   createdAt?: Maybe<Scalars['timestamptz']>;
   id?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
@@ -1132,7 +1134,7 @@ export type Chat_Rooms_Max_Order_By = {
 
 /** aggregate min on columns */
 export type Chat_Rooms_Min_Fields = {
-   __typename?: 'chat_rooms_min_fields';
+  __typename?: 'chat_rooms_min_fields';
   createdAt?: Maybe<Scalars['timestamptz']>;
   id?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
@@ -1153,7 +1155,7 @@ export type Chat_Rooms_Min_Order_By = {
 
 /** response of any mutation on the table "chat_rooms" */
 export type Chat_Rooms_Mutation_Response = {
-   __typename?: 'chat_rooms_mutation_response';
+  __typename?: 'chat_rooms_mutation_response';
   /** number of affected rows by the mutation */
   affected_rows: Scalars['Int'];
   /** data of the affected rows by the mutation */
@@ -1236,7 +1238,7 @@ export enum Chat_Rooms_Update_Column {
 
 /** columns and relationships of "chat_users" */
 export type Chat_Users = {
-   __typename?: 'chat_users';
+  __typename?: 'chat_users';
   /** An object relationship */
   chatRoom?: Maybe<Chat_Rooms>;
   chatRoomId: Scalars['String'];
@@ -1247,14 +1249,14 @@ export type Chat_Users = {
 
 /** aggregated selection of "chat_users" */
 export type Chat_Users_Aggregate = {
-   __typename?: 'chat_users_aggregate';
+  __typename?: 'chat_users_aggregate';
   aggregate?: Maybe<Chat_Users_Aggregate_Fields>;
   nodes: Array<Chat_Users>;
 };
 
 /** aggregate fields of "chat_users" */
 export type Chat_Users_Aggregate_Fields = {
-   __typename?: 'chat_users_aggregate_fields';
+  __typename?: 'chat_users_aggregate_fields';
   count?: Maybe<Scalars['Int']>;
   max?: Maybe<Chat_Users_Max_Fields>;
   min?: Maybe<Chat_Users_Min_Fields>;
@@ -1307,7 +1309,7 @@ export type Chat_Users_Insert_Input = {
 
 /** aggregate max on columns */
 export type Chat_Users_Max_Fields = {
-   __typename?: 'chat_users_max_fields';
+  __typename?: 'chat_users_max_fields';
   chatRoomId?: Maybe<Scalars['String']>;
   userId?: Maybe<Scalars['String']>;
 };
@@ -1320,7 +1322,7 @@ export type Chat_Users_Max_Order_By = {
 
 /** aggregate min on columns */
 export type Chat_Users_Min_Fields = {
-   __typename?: 'chat_users_min_fields';
+  __typename?: 'chat_users_min_fields';
   chatRoomId?: Maybe<Scalars['String']>;
   userId?: Maybe<Scalars['String']>;
 };
@@ -1333,7 +1335,7 @@ export type Chat_Users_Min_Order_By = {
 
 /** response of any mutation on the table "chat_users" */
 export type Chat_Users_Mutation_Response = {
-   __typename?: 'chat_users_mutation_response';
+  __typename?: 'chat_users_mutation_response';
   /** number of affected rows by the mutation */
   affected_rows: Scalars['Int'];
   /** data of the affected rows by the mutation */
@@ -1390,7 +1392,7 @@ export enum Chat_Users_Update_Column {
 }
 
 export type ChatRoom = {
-   __typename?: 'ChatRoom';
+  __typename?: 'ChatRoom';
   id?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['Date']>;
@@ -1415,7 +1417,7 @@ export enum ChatRoomStatus {
 }
 
 export type CoinbaseExchangeRates = {
-   __typename?: 'CoinbaseExchangeRates';
+  __typename?: 'CoinbaseExchangeRates';
   currency?: Maybe<Scalars['String']>;
   rates?: Maybe<Scalars['JSON']>;
 };
@@ -1443,7 +1445,7 @@ export type ConnectionQueryOrders = {
 };
 
 export type Conversation = {
-   __typename?: 'Conversation';
+  __typename?: 'Conversation';
   userId?: Maybe<Scalars['String']>;
   user?: Maybe<BasicUser>;
   chatRoomId?: Maybe<Scalars['String']>;
@@ -1462,7 +1464,7 @@ export type CreateProductsConfig = {
 
 /** columns and relationships of "dealers" */
 export type Dealer = {
-   __typename?: 'Dealer';
+  __typename?: 'Dealer';
   id: Scalars['String'];
   address?: Maybe<Scalars['String']>;
   city?: Maybe<Scalars['String']>;
@@ -1476,14 +1478,14 @@ export type Dealer = {
 };
 
 export type DealerMutationResponse = {
-   __typename?: 'DealerMutationResponse';
+  __typename?: 'DealerMutationResponse';
   status: Scalars['String'];
   dealer?: Maybe<Dealer>;
 };
 
 /** columns and relationships of "dealers" */
 export type Dealers = {
-   __typename?: 'dealers';
+  __typename?: 'dealers';
   address?: Maybe<Scalars['String']>;
   city?: Maybe<Scalars['String']>;
   createdAt: Scalars['timestamptz'];
@@ -1498,14 +1500,14 @@ export type Dealers = {
 
 /** aggregated selection of "dealers" */
 export type Dealers_Aggregate = {
-   __typename?: 'dealers_aggregate';
+  __typename?: 'dealers_aggregate';
   aggregate?: Maybe<Dealers_Aggregate_Fields>;
   nodes: Array<Dealers>;
 };
 
 /** aggregate fields of "dealers" */
 export type Dealers_Aggregate_Fields = {
-   __typename?: 'dealers_aggregate_fields';
+  __typename?: 'dealers_aggregate_fields';
   count?: Maybe<Scalars['Int']>;
   max?: Maybe<Dealers_Max_Fields>;
   min?: Maybe<Dealers_Min_Fields>;
@@ -1570,7 +1572,7 @@ export type Dealers_Insert_Input = {
 
 /** aggregate max on columns */
 export type Dealers_Max_Fields = {
-   __typename?: 'dealers_max_fields';
+  __typename?: 'dealers_max_fields';
   address?: Maybe<Scalars['String']>;
   city?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['timestamptz']>;
@@ -1595,7 +1597,7 @@ export type Dealers_Max_Order_By = {
 
 /** aggregate min on columns */
 export type Dealers_Min_Fields = {
-   __typename?: 'dealers_min_fields';
+  __typename?: 'dealers_min_fields';
   address?: Maybe<Scalars['String']>;
   city?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['timestamptz']>;
@@ -1620,7 +1622,7 @@ export type Dealers_Min_Order_By = {
 
 /** response of any mutation on the table "dealers" */
 export type Dealers_Mutation_Response = {
-   __typename?: 'dealers_mutation_response';
+  __typename?: 'dealers_mutation_response';
   /** number of affected rows by the mutation */
   affected_rows: Scalars['Int'];
   /** data of the affected rows by the mutation */
@@ -1718,7 +1720,7 @@ export type EditUserPhoneNumberInput = {
 
 /** columns and relationships of "email_subscriptions" */
 export type Email_Subscriptions = {
-   __typename?: 'email_subscriptions';
+  __typename?: 'email_subscriptions';
   id: Scalars['String'];
   subject_: Scalars['String'];
   subscribers: Scalars['String'];
@@ -1726,14 +1728,14 @@ export type Email_Subscriptions = {
 
 /** aggregated selection of "email_subscriptions" */
 export type Email_Subscriptions_Aggregate = {
-   __typename?: 'email_subscriptions_aggregate';
+  __typename?: 'email_subscriptions_aggregate';
   aggregate?: Maybe<Email_Subscriptions_Aggregate_Fields>;
   nodes: Array<Email_Subscriptions>;
 };
 
 /** aggregate fields of "email_subscriptions" */
 export type Email_Subscriptions_Aggregate_Fields = {
-   __typename?: 'email_subscriptions_aggregate_fields';
+  __typename?: 'email_subscriptions_aggregate_fields';
   count?: Maybe<Scalars['Int']>;
   max?: Maybe<Email_Subscriptions_Max_Fields>;
   min?: Maybe<Email_Subscriptions_Min_Fields>;
@@ -1784,7 +1786,7 @@ export type Email_Subscriptions_Insert_Input = {
 
 /** aggregate max on columns */
 export type Email_Subscriptions_Max_Fields = {
-   __typename?: 'email_subscriptions_max_fields';
+  __typename?: 'email_subscriptions_max_fields';
   id?: Maybe<Scalars['String']>;
   subject_?: Maybe<Scalars['String']>;
   subscribers?: Maybe<Scalars['String']>;
@@ -1799,7 +1801,7 @@ export type Email_Subscriptions_Max_Order_By = {
 
 /** aggregate min on columns */
 export type Email_Subscriptions_Min_Fields = {
-   __typename?: 'email_subscriptions_min_fields';
+  __typename?: 'email_subscriptions_min_fields';
   id?: Maybe<Scalars['String']>;
   subject_?: Maybe<Scalars['String']>;
   subscribers?: Maybe<Scalars['String']>;
@@ -1814,7 +1816,7 @@ export type Email_Subscriptions_Min_Order_By = {
 
 /** response of any mutation on the table "email_subscriptions" */
 export type Email_Subscriptions_Mutation_Response = {
-   __typename?: 'email_subscriptions_mutation_response';
+  __typename?: 'email_subscriptions_mutation_response';
   /** number of affected rows by the mutation */
   affected_rows: Scalars['Int'];
   /** data of the affected rows by the mutation */
@@ -1875,7 +1877,7 @@ export enum Email_Subscriptions_Update_Column {
 
 /** columns and relationships of "emails" */
 export type Emails = {
-   __typename?: 'emails';
+  __typename?: 'emails';
   createdAt: Scalars['timestamp'];
   emailType: Scalars['String'];
   from_: Scalars['String'];
@@ -1886,14 +1888,14 @@ export type Emails = {
 
 /** aggregated selection of "emails" */
 export type Emails_Aggregate = {
-   __typename?: 'emails_aggregate';
+  __typename?: 'emails_aggregate';
   aggregate?: Maybe<Emails_Aggregate_Fields>;
   nodes: Array<Emails>;
 };
 
 /** aggregate fields of "emails" */
 export type Emails_Aggregate_Fields = {
-   __typename?: 'emails_aggregate_fields';
+  __typename?: 'emails_aggregate_fields';
   count?: Maybe<Scalars['Int']>;
   max?: Maybe<Emails_Max_Fields>;
   min?: Maybe<Emails_Min_Fields>;
@@ -1950,7 +1952,7 @@ export type Emails_Insert_Input = {
 
 /** aggregate max on columns */
 export type Emails_Max_Fields = {
-   __typename?: 'emails_max_fields';
+  __typename?: 'emails_max_fields';
   createdAt?: Maybe<Scalars['timestamp']>;
   emailType?: Maybe<Scalars['String']>;
   from_?: Maybe<Scalars['String']>;
@@ -1971,7 +1973,7 @@ export type Emails_Max_Order_By = {
 
 /** aggregate min on columns */
 export type Emails_Min_Fields = {
-   __typename?: 'emails_min_fields';
+  __typename?: 'emails_min_fields';
   createdAt?: Maybe<Scalars['timestamp']>;
   emailType?: Maybe<Scalars['String']>;
   from_?: Maybe<Scalars['String']>;
@@ -1992,7 +1994,7 @@ export type Emails_Min_Order_By = {
 
 /** response of any mutation on the table "emails" */
 export type Emails_Mutation_Response = {
-   __typename?: 'emails_mutation_response';
+  __typename?: 'emails_mutation_response';
   /** number of affected rows by the mutation */
   affected_rows: Scalars['Int'];
   /** data of the affected rows by the mutation */
@@ -2078,7 +2080,7 @@ export enum FacetAttributes {
 }
 
 export type FacetsDistributionObject = {
-   __typename?: 'FacetsDistributionObject';
+  __typename?: 'FacetsDistributionObject';
   /** make a JSON type, keys are arbitrary category names */
   categoryNames?: Maybe<Scalars['JSON']>;
   categorySlugs?: Maybe<Scalars['JSON']>;
@@ -2088,41 +2090,41 @@ export type FacetsDistributionObject = {
 };
 
 export type FollowedStore = {
-   __typename?: 'FollowedStore';
+  __typename?: 'FollowedStore';
   createdAt?: Maybe<Scalars['Date']>;
   lastVisited?: Maybe<Scalars['Date']>;
   store?: Maybe<StorePublic>;
 };
 
 export type FollowingStoresConnection = {
-   __typename?: 'FollowingStoresConnection';
+  __typename?: 'FollowingStoresConnection';
   totalCount?: Maybe<Scalars['Int']>;
   pageInfo: PageInfo;
   edges: Array<FollowingStoresEdge>;
 };
 
 export type FollowingStoresEdge = {
-   __typename?: 'FollowingStoresEdge';
+  __typename?: 'FollowingStoresEdge';
   node: FollowedStore;
 };
 
 /** columns and relationships of "image_owners" */
 export type Image_Owners = {
-   __typename?: 'image_owners';
+  __typename?: 'image_owners';
   imageId: Scalars['String'];
   ownerId: Scalars['String'];
 };
 
 /** aggregated selection of "image_owners" */
 export type Image_Owners_Aggregate = {
-   __typename?: 'image_owners_aggregate';
+  __typename?: 'image_owners_aggregate';
   aggregate?: Maybe<Image_Owners_Aggregate_Fields>;
   nodes: Array<Image_Owners>;
 };
 
 /** aggregate fields of "image_owners" */
 export type Image_Owners_Aggregate_Fields = {
-   __typename?: 'image_owners_aggregate_fields';
+  __typename?: 'image_owners_aggregate_fields';
   count?: Maybe<Scalars['Int']>;
   max?: Maybe<Image_Owners_Max_Fields>;
   min?: Maybe<Image_Owners_Min_Fields>;
@@ -2171,7 +2173,7 @@ export type Image_Owners_Insert_Input = {
 
 /** aggregate max on columns */
 export type Image_Owners_Max_Fields = {
-   __typename?: 'image_owners_max_fields';
+  __typename?: 'image_owners_max_fields';
   imageId?: Maybe<Scalars['String']>;
   ownerId?: Maybe<Scalars['String']>;
 };
@@ -2184,7 +2186,7 @@ export type Image_Owners_Max_Order_By = {
 
 /** aggregate min on columns */
 export type Image_Owners_Min_Fields = {
-   __typename?: 'image_owners_min_fields';
+  __typename?: 'image_owners_min_fields';
   imageId?: Maybe<Scalars['String']>;
   ownerId?: Maybe<Scalars['String']>;
 };
@@ -2197,7 +2199,7 @@ export type Image_Owners_Min_Order_By = {
 
 /** response of any mutation on the table "image_owners" */
 export type Image_Owners_Mutation_Response = {
-   __typename?: 'image_owners_mutation_response';
+  __typename?: 'image_owners_mutation_response';
   /** number of affected rows by the mutation */
   affected_rows: Scalars['Int'];
   /** data of the affected rows by the mutation */
@@ -2252,7 +2254,7 @@ export enum Image_Owners_Update_Column {
 
 /** columns and relationships of "image_parents" */
 export type Image_Parents = {
-   __typename?: 'image_parents';
+  __typename?: 'image_parents';
   createdAt: Scalars['timestamptz'];
   description?: Maybe<Scalars['String']>;
   id: Scalars['String'];
@@ -2288,14 +2290,14 @@ export type Image_ParentsVariants_AggregateArgs = {
 
 /** aggregated selection of "image_parents" */
 export type Image_Parents_Aggregate = {
-   __typename?: 'image_parents_aggregate';
+  __typename?: 'image_parents_aggregate';
   aggregate?: Maybe<Image_Parents_Aggregate_Fields>;
   nodes: Array<Image_Parents>;
 };
 
 /** aggregate fields of "image_parents" */
 export type Image_Parents_Aggregate_Fields = {
-   __typename?: 'image_parents_aggregate_fields';
+  __typename?: 'image_parents_aggregate_fields';
   count?: Maybe<Scalars['Int']>;
   max?: Maybe<Image_Parents_Max_Fields>;
   min?: Maybe<Image_Parents_Min_Fields>;
@@ -2354,7 +2356,7 @@ export type Image_Parents_Insert_Input = {
 
 /** aggregate max on columns */
 export type Image_Parents_Max_Fields = {
-   __typename?: 'image_parents_max_fields';
+  __typename?: 'image_parents_max_fields';
   createdAt?: Maybe<Scalars['timestamptz']>;
   description?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
@@ -2373,7 +2375,7 @@ export type Image_Parents_Max_Order_By = {
 
 /** aggregate min on columns */
 export type Image_Parents_Min_Fields = {
-   __typename?: 'image_parents_min_fields';
+  __typename?: 'image_parents_min_fields';
   createdAt?: Maybe<Scalars['timestamptz']>;
   description?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
@@ -2392,7 +2394,7 @@ export type Image_Parents_Min_Order_By = {
 
 /** response of any mutation on the table "image_parents" */
 export type Image_Parents_Mutation_Response = {
-   __typename?: 'image_parents_mutation_response';
+  __typename?: 'image_parents_mutation_response';
   /** number of affected rows by the mutation */
   affected_rows: Scalars['Int'];
   /** data of the affected rows by the mutation */
@@ -2467,7 +2469,7 @@ export enum Image_Parents_Update_Column {
 
 /** columns and relationships of "image_variants" */
 export type Image_Variants = {
-   __typename?: 'image_variants';
+  __typename?: 'image_variants';
   heightInPixels: Scalars['Int'];
   id: Scalars['String'];
   mimeType: Scalars['String'];
@@ -2479,14 +2481,14 @@ export type Image_Variants = {
 
 /** aggregated selection of "image_variants" */
 export type Image_Variants_Aggregate = {
-   __typename?: 'image_variants_aggregate';
+  __typename?: 'image_variants_aggregate';
   aggregate?: Maybe<Image_Variants_Aggregate_Fields>;
   nodes: Array<Image_Variants>;
 };
 
 /** aggregate fields of "image_variants" */
 export type Image_Variants_Aggregate_Fields = {
-   __typename?: 'image_variants_aggregate_fields';
+  __typename?: 'image_variants_aggregate_fields';
   avg?: Maybe<Image_Variants_Avg_Fields>;
   count?: Maybe<Scalars['Int']>;
   max?: Maybe<Image_Variants_Max_Fields>;
@@ -2530,7 +2532,7 @@ export type Image_Variants_Arr_Rel_Insert_Input = {
 
 /** aggregate avg on columns */
 export type Image_Variants_Avg_Fields = {
-   __typename?: 'image_variants_avg_fields';
+  __typename?: 'image_variants_avg_fields';
   heightInPixels?: Maybe<Scalars['Float']>;
   sizeInBytes?: Maybe<Scalars['Float']>;
   widthInPixels?: Maybe<Scalars['Float']>;
@@ -2583,7 +2585,7 @@ export type Image_Variants_Insert_Input = {
 
 /** aggregate max on columns */
 export type Image_Variants_Max_Fields = {
-   __typename?: 'image_variants_max_fields';
+  __typename?: 'image_variants_max_fields';
   heightInPixels?: Maybe<Scalars['Int']>;
   id?: Maybe<Scalars['String']>;
   mimeType?: Maybe<Scalars['String']>;
@@ -2606,7 +2608,7 @@ export type Image_Variants_Max_Order_By = {
 
 /** aggregate min on columns */
 export type Image_Variants_Min_Fields = {
-   __typename?: 'image_variants_min_fields';
+  __typename?: 'image_variants_min_fields';
   heightInPixels?: Maybe<Scalars['Int']>;
   id?: Maybe<Scalars['String']>;
   mimeType?: Maybe<Scalars['String']>;
@@ -2629,7 +2631,7 @@ export type Image_Variants_Min_Order_By = {
 
 /** response of any mutation on the table "image_variants" */
 export type Image_Variants_Mutation_Response = {
-   __typename?: 'image_variants_mutation_response';
+  __typename?: 'image_variants_mutation_response';
   /** number of affected rows by the mutation */
   affected_rows: Scalars['Int'];
   /** data of the affected rows by the mutation */
@@ -2696,7 +2698,7 @@ export type Image_Variants_Set_Input = {
 
 /** aggregate stddev on columns */
 export type Image_Variants_Stddev_Fields = {
-   __typename?: 'image_variants_stddev_fields';
+  __typename?: 'image_variants_stddev_fields';
   heightInPixels?: Maybe<Scalars['Float']>;
   sizeInBytes?: Maybe<Scalars['Float']>;
   widthInPixels?: Maybe<Scalars['Float']>;
@@ -2711,7 +2713,7 @@ export type Image_Variants_Stddev_Order_By = {
 
 /** aggregate stddev_pop on columns */
 export type Image_Variants_Stddev_Pop_Fields = {
-   __typename?: 'image_variants_stddev_pop_fields';
+  __typename?: 'image_variants_stddev_pop_fields';
   heightInPixels?: Maybe<Scalars['Float']>;
   sizeInBytes?: Maybe<Scalars['Float']>;
   widthInPixels?: Maybe<Scalars['Float']>;
@@ -2726,7 +2728,7 @@ export type Image_Variants_Stddev_Pop_Order_By = {
 
 /** aggregate stddev_samp on columns */
 export type Image_Variants_Stddev_Samp_Fields = {
-   __typename?: 'image_variants_stddev_samp_fields';
+  __typename?: 'image_variants_stddev_samp_fields';
   heightInPixels?: Maybe<Scalars['Float']>;
   sizeInBytes?: Maybe<Scalars['Float']>;
   widthInPixels?: Maybe<Scalars['Float']>;
@@ -2741,7 +2743,7 @@ export type Image_Variants_Stddev_Samp_Order_By = {
 
 /** aggregate sum on columns */
 export type Image_Variants_Sum_Fields = {
-   __typename?: 'image_variants_sum_fields';
+  __typename?: 'image_variants_sum_fields';
   heightInPixels?: Maybe<Scalars['Int']>;
   sizeInBytes?: Maybe<Scalars['Int']>;
   widthInPixels?: Maybe<Scalars['Int']>;
@@ -2774,7 +2776,7 @@ export enum Image_Variants_Update_Column {
 
 /** aggregate var_pop on columns */
 export type Image_Variants_Var_Pop_Fields = {
-   __typename?: 'image_variants_var_pop_fields';
+  __typename?: 'image_variants_var_pop_fields';
   heightInPixels?: Maybe<Scalars['Float']>;
   sizeInBytes?: Maybe<Scalars['Float']>;
   widthInPixels?: Maybe<Scalars['Float']>;
@@ -2789,7 +2791,7 @@ export type Image_Variants_Var_Pop_Order_By = {
 
 /** aggregate var_samp on columns */
 export type Image_Variants_Var_Samp_Fields = {
-   __typename?: 'image_variants_var_samp_fields';
+  __typename?: 'image_variants_var_samp_fields';
   heightInPixels?: Maybe<Scalars['Float']>;
   sizeInBytes?: Maybe<Scalars['Float']>;
   widthInPixels?: Maybe<Scalars['Float']>;
@@ -2804,7 +2806,7 @@ export type Image_Variants_Var_Samp_Order_By = {
 
 /** aggregate variance on columns */
 export type Image_Variants_Variance_Fields = {
-   __typename?: 'image_variants_variance_fields';
+  __typename?: 'image_variants_variance_fields';
   heightInPixels?: Maybe<Scalars['Float']>;
   sizeInBytes?: Maybe<Scalars['Float']>;
   widthInPixels?: Maybe<Scalars['Float']>;
@@ -2818,7 +2820,7 @@ export type Image_Variants_Variance_Order_By = {
 };
 
 export type ImageUrl = {
-   __typename?: 'ImageUrl';
+  __typename?: 'ImageUrl';
   url: Scalars['String'];
 };
 
@@ -2851,7 +2853,7 @@ export type List_Products_Random_Args = {
 };
 
 export type Login2Response = {
-   __typename?: 'Login2Response';
+  __typename?: 'Login2Response';
   email?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
 };
@@ -2862,19 +2864,19 @@ export type LoginDetails = {
 };
 
 export type LoginMutationResponse = {
-   __typename?: 'LoginMutationResponse';
+  __typename?: 'LoginMutationResponse';
   user: UserPrivate;
   jwt?: Maybe<Scalars['String']>;
   setCookie?: Maybe<Scalars['String']>;
 };
 
 export type MarkPayoutsAsPaidMutationResponse = {
-   __typename?: 'MarkPayoutsAsPaidMutationResponse';
+  __typename?: 'MarkPayoutsAsPaidMutationResponse';
   orders: Array<Maybe<Order>>;
 };
 
 export type Message = {
-   __typename?: 'Message';
+  __typename?: 'Message';
   id?: Maybe<Scalars['String']>;
   chatRoomId?: Maybe<Scalars['String']>;
   senderId?: Maybe<Scalars['String']>;
@@ -2893,7 +2895,7 @@ export type Message = {
 
 /** columns and relationships of "migrations" */
 export type Migrations = {
-   __typename?: 'migrations';
+  __typename?: 'migrations';
   datetime?: Maybe<Scalars['timestamptz']>;
   id: Scalars['Int'];
   name?: Maybe<Scalars['String']>;
@@ -2901,14 +2903,14 @@ export type Migrations = {
 
 /** aggregated selection of "migrations" */
 export type Migrations_Aggregate = {
-   __typename?: 'migrations_aggregate';
+  __typename?: 'migrations_aggregate';
   aggregate?: Maybe<Migrations_Aggregate_Fields>;
   nodes: Array<Migrations>;
 };
 
 /** aggregate fields of "migrations" */
 export type Migrations_Aggregate_Fields = {
-   __typename?: 'migrations_aggregate_fields';
+  __typename?: 'migrations_aggregate_fields';
   avg?: Maybe<Migrations_Avg_Fields>;
   count?: Maybe<Scalars['Int']>;
   max?: Maybe<Migrations_Max_Fields>;
@@ -2952,7 +2954,7 @@ export type Migrations_Arr_Rel_Insert_Input = {
 
 /** aggregate avg on columns */
 export type Migrations_Avg_Fields = {
-   __typename?: 'migrations_avg_fields';
+  __typename?: 'migrations_avg_fields';
   id?: Maybe<Scalars['Float']>;
 };
 
@@ -2991,7 +2993,7 @@ export type Migrations_Insert_Input = {
 
 /** aggregate max on columns */
 export type Migrations_Max_Fields = {
-   __typename?: 'migrations_max_fields';
+  __typename?: 'migrations_max_fields';
   datetime?: Maybe<Scalars['timestamptz']>;
   id?: Maybe<Scalars['Int']>;
   name?: Maybe<Scalars['String']>;
@@ -3006,7 +3008,7 @@ export type Migrations_Max_Order_By = {
 
 /** aggregate min on columns */
 export type Migrations_Min_Fields = {
-   __typename?: 'migrations_min_fields';
+  __typename?: 'migrations_min_fields';
   datetime?: Maybe<Scalars['timestamptz']>;
   id?: Maybe<Scalars['Int']>;
   name?: Maybe<Scalars['String']>;
@@ -3021,7 +3023,7 @@ export type Migrations_Min_Order_By = {
 
 /** response of any mutation on the table "migrations" */
 export type Migrations_Mutation_Response = {
-   __typename?: 'migrations_mutation_response';
+  __typename?: 'migrations_mutation_response';
   /** number of affected rows by the mutation */
   affected_rows: Scalars['Int'];
   /** data of the affected rows by the mutation */
@@ -3072,7 +3074,7 @@ export type Migrations_Set_Input = {
 
 /** aggregate stddev on columns */
 export type Migrations_Stddev_Fields = {
-   __typename?: 'migrations_stddev_fields';
+  __typename?: 'migrations_stddev_fields';
   id?: Maybe<Scalars['Float']>;
 };
 
@@ -3083,7 +3085,7 @@ export type Migrations_Stddev_Order_By = {
 
 /** aggregate stddev_pop on columns */
 export type Migrations_Stddev_Pop_Fields = {
-   __typename?: 'migrations_stddev_pop_fields';
+  __typename?: 'migrations_stddev_pop_fields';
   id?: Maybe<Scalars['Float']>;
 };
 
@@ -3094,7 +3096,7 @@ export type Migrations_Stddev_Pop_Order_By = {
 
 /** aggregate stddev_samp on columns */
 export type Migrations_Stddev_Samp_Fields = {
-   __typename?: 'migrations_stddev_samp_fields';
+  __typename?: 'migrations_stddev_samp_fields';
   id?: Maybe<Scalars['Float']>;
 };
 
@@ -3105,7 +3107,7 @@ export type Migrations_Stddev_Samp_Order_By = {
 
 /** aggregate sum on columns */
 export type Migrations_Sum_Fields = {
-   __typename?: 'migrations_sum_fields';
+  __typename?: 'migrations_sum_fields';
   id?: Maybe<Scalars['Int']>;
 };
 
@@ -3126,7 +3128,7 @@ export enum Migrations_Update_Column {
 
 /** aggregate var_pop on columns */
 export type Migrations_Var_Pop_Fields = {
-   __typename?: 'migrations_var_pop_fields';
+  __typename?: 'migrations_var_pop_fields';
   id?: Maybe<Scalars['Float']>;
 };
 
@@ -3137,7 +3139,7 @@ export type Migrations_Var_Pop_Order_By = {
 
 /** aggregate var_samp on columns */
 export type Migrations_Var_Samp_Fields = {
-   __typename?: 'migrations_var_samp_fields';
+  __typename?: 'migrations_var_samp_fields';
   id?: Maybe<Scalars['Float']>;
 };
 
@@ -3148,7 +3150,7 @@ export type Migrations_Var_Samp_Order_By = {
 
 /** aggregate variance on columns */
 export type Migrations_Variance_Fields = {
-   __typename?: 'migrations_variance_fields';
+  __typename?: 'migrations_variance_fields';
   id?: Maybe<Scalars['Float']>;
 };
 
@@ -3158,7 +3160,7 @@ export type Migrations_Variance_Order_By = {
 };
 
 export type Mutation = {
-   __typename?: 'Mutation';
+  __typename?: 'Mutation';
   /** delete data from the table: "bids" */
   delete_bids?: Maybe<Bids_Mutation_Response>;
   /** delete single row from the table: "bids" */
@@ -3279,6 +3281,10 @@ export type Mutation = {
   delete_refunds?: Maybe<Refunds_Mutation_Response>;
   /** delete single row from the table: "refunds" */
   delete_refunds_by_pk?: Maybe<Refunds>;
+  /** delete data from the table: "signup_emails" */
+  delete_signup_emails?: Maybe<Signup_Emails_Mutation_Response>;
+  /** delete single row from the table: "signup_emails" */
+  delete_signup_emails_by_pk?: Maybe<Signup_Emails>;
   /** delete data from the table: "stores" */
   delete_stores?: Maybe<Stores_Mutation_Response>;
   /** delete single row from the table: "stores" */
@@ -3415,6 +3421,10 @@ export type Mutation = {
   insert_refunds?: Maybe<Refunds_Mutation_Response>;
   /** insert a single row into the table: "refunds" */
   insert_refunds_one?: Maybe<Refunds>;
+  /** insert data into the table: "signup_emails" */
+  insert_signup_emails?: Maybe<Signup_Emails_Mutation_Response>;
+  /** insert a single row into the table: "signup_emails" */
+  insert_signup_emails_one?: Maybe<Signup_Emails>;
   /** insert data into the table: "stores" */
   insert_stores?: Maybe<Stores_Mutation_Response>;
   /** insert a single row into the table: "stores" */
@@ -3551,6 +3561,10 @@ export type Mutation = {
   update_refunds?: Maybe<Refunds_Mutation_Response>;
   /** update single row of the table: "refunds" */
   update_refunds_by_pk?: Maybe<Refunds>;
+  /** update data of the table: "signup_emails" */
+  update_signup_emails?: Maybe<Signup_Emails_Mutation_Response>;
+  /** update single row of the table: "signup_emails" */
+  update_signup_emails_by_pk?: Maybe<Signup_Emails>;
   /** update data of the table: "stores" */
   update_stores?: Maybe<Stores_Mutation_Response>;
   /** update single row of the table: "stores" */
@@ -3611,25 +3625,25 @@ export type Mutation = {
   adminApproveUserLicense: UserMutationResponse;
   /**
    * Delete the account associated with the logged-in user.
-   * 
+   *
    * AccessRule – LOGGED_IN
    */
   deleteAccount: BlankMutationResponse;
   /**
    * Delete a specific user account.
-   * 
+   *
    * AccessRule – PLATFORM_ADMIN
    */
   adminDeleteAccount: BlankMutationResponse;
   /**
    * Request to upload a piece of content.
    * This is the first stage of uploading - registration.
-   * 
+   *
    * How uploading works:
    * 1. Register the upload and receive the upload ID and PUT URL.
    * 2. Use the PUT URL received in this response to actually upload the file.
    * 3. Then use uploadSave to make it official – your uploaded file will be validated.
-   * 
+   *
    * AccessRule – LOGGED_IN
    */
   uploadRegister: UploadRegisterMutationResponse;
@@ -3642,63 +3656,63 @@ export type Mutation = {
   uploadSaveFile: UploadSaveFileMutationResponse;
   /**
    * Follow a store.
-   * 
+   *
    * AccessRule – LOGGED_IN
    */
   followStore: FollowingStoresConnection;
   /**
    * Unfollow a store
-   * 
+   *
    * AccessRule – LOGGED_IN
    */
   unfollowStore: FollowingStoresConnection;
   /**
    * Add a product to the wishlist.
-   * 
+   *
    * AccessRule – LOGGED_IN
    */
   addProductToWishlist: BlankMutationResponse;
   /**
    * Remove a product from the wishlist.
-   * 
+   *
    * AccessRule – LOGGED_IN
    */
   removeProductFromWishlist: BlankMutationResponse;
   /**
    * Create the store profile for the logged-in user.
-   * 
+   *
    * AccessRule – LOGGED_IN
    */
   createStore?: Maybe<StoreMutationResponse>;
   /**
    * Edit the store profile for the logged-in user.
-   * 
+   *
    * AccessRule – LOGGED_IN
    */
   editStoreProfile?: Maybe<StoreMutationResponse>;
   /**
    * Delete the store associated with the logged-in user.
-   * 
+   *
    * AccessRule – LOGGED_IN
    */
   deleteStore: StoreMutationResponse;
   /**
    * Delete a specific store.
-   * 
+   *
    * AccessRule – PLATFORM_ADMIN
    */
   adminDeleteStore: StoreMutationResponse;
   /**
    * Create a product for the logged-in user's store.
-   * 
+   *
    * AccessRule – LOGGED_IN
    */
   createProduct: ProductMutationResponse;
   /**
    * Create a product for the logged-in user's store.
-   * 
+   *
    * If a platform admin has suspended the product, changing isPublished will not be able to override that.
-   * 
+   *
    * AccessRule – LOGGED_IN
    */
   editProduct: ProductMutationResponse;
@@ -3706,13 +3720,13 @@ export type Mutation = {
   unpublishProduct: ProductMutationResponse;
   /**
    * Delete a product from the logged-in user's store.
-   * 
+   *
    * AccessRule – OWNER
    */
   deleteProduct?: Maybe<ProductsMutationResponse>;
   /**
    * Delete a specific product.
-   * 
+   *
    * AccessRule – PLATFORM_ADMIN
    */
   adminDeleteProduct?: Maybe<ProductsMutationResponse>;
@@ -3721,93 +3735,78 @@ export type Mutation = {
    * This will have a number of side effects:
    * - User will be logged out
    * - User will be unable to log back in
-   * - If they are a store owner, their store will disappear
-   * 
+   *
    * AccessRule – PLATFORM_ADMIN
    */
   suspendUser: BlankMutationResponse;
   /**
    * Reinstate a suspended user's account.
    * This will reverse the number of side effects of suspension.
-   * 
+   *
    * AccessRule – PLATFORM_ADMIN
    */
   unsuspendUser: BlankMutationResponse;
   /**
    * Suspend a product.
    * This will force the product to become unavailable for purchase or downloading.
-   * 
+   *
    * AccessRule – PLATFORM_ADMIN
    */
-  suspendProduct?: Maybe<ProductMutationResponse>;
-  /**
-   * Reinstate a suspended product.
-   * This will reverse the number of side effects of suspension.
-   * 
-   * AccessRule – PLATFORM_ADMIN
-   */
-  unsuspendProduct?: Maybe<ProductMutationResponse>;
+  suspendUnsuspendProduct?: Maybe<ProductMutationResponse>;
   /**
    * Exclude a product from any search results.
    * The only way to find the product will be through direct link, or
    * having it show up in an automatic or promoted list.
-   * 
+   *
    * AccessRule – PLATFORM_ADMIN
    */
   excludeProductFromSearch?: Maybe<ProductMutationResponse>;
   /**
    * Re-include a product that was being excluded from search results.
-   * 
+   *
    * AccessRule – PLATFORM_ADMIN
    */
   includeProductInSearch?: Maybe<ProductMutationResponse>;
   /**
    * Suspend a store.
    * This will force the store and its products to become hidden for everyone except the store owner.
-   * 
+   *
    * AccessRule – PLATFORM_ADMIN
    */
-  suspendStore?: Maybe<StoreMutationResponse>;
-  /**
-   * Reinstate a suspended store.
-   * This will reverse the number of side effects of suspension.
-   * 
-   * AccessRule – PLATFORM_ADMIN
-   */
-  unsuspendStore?: Maybe<StoreMutationResponse>;
+  suspendUnsuspendStore?: Maybe<StoreMutationResponse>;
   /**
    * Set the default payment method for a user (credit cards)
-   * 
+   *
    * AccessRule – LOGGED_IN
    */
   setDefaultPaymentMethod: AddRemovePaymentMethodResponse;
   /**
    * Add a payment method to a user's profile
-   * 
+   *
    * AccessRule – LOGGED_IN
    */
   addPaymentMethod: AddRemovePaymentMethodResponse;
   /**
    * Remove a payment method from a user's profile
-   * 
+   *
    * AccessRule – LOGGED_IN
    */
   removePaymentMethod: AddRemovePaymentMethodResponse;
   /**
    * Create a PayoutSplit for a seller
-   * 
+   *
    * AccessRule – PLATFORM_ADMIN
    */
   createPayoutSplit: PayoutSplit;
   /**
    * Create a new promoted list.
-   * 
+   *
    * AccessRule – PLATFORM_ADMIN
    */
   createPromotedList: PromotedListMutationResponse;
   /**
    * Delete a promoted list.
-   * 
+   *
    * AccessRule – PLATFORM_ADMIN
    */
   deletePromotedList: BlankMutationResponse;
@@ -3903,6 +3902,7 @@ export type Mutation = {
   updateChatStatus?: Maybe<Array<Maybe<ChatRoom>>>;
   createNewChat?: Maybe<Array<Maybe<ChatRoom>>>;
   saySomething?: Maybe<Scalars['String']>;
+  signupToWaitlist?: Maybe<Signup_Emails>;
 };
 
 
@@ -4203,6 +4203,16 @@ export type MutationDelete_RefundsArgs = {
 
 
 export type MutationDelete_Refunds_By_PkArgs = {
+  id: Scalars['String'];
+};
+
+
+export type MutationDelete_Signup_EmailsArgs = {
+  where: Signup_Emails_Bool_Exp;
+};
+
+
+export type MutationDelete_Signup_Emails_By_PkArgs = {
   id: Scalars['String'];
 };
 
@@ -4604,6 +4614,18 @@ export type MutationInsert_RefundsArgs = {
 export type MutationInsert_Refunds_OneArgs = {
   object: Refunds_Insert_Input;
   on_conflict?: Maybe<Refunds_On_Conflict>;
+};
+
+
+export type MutationInsert_Signup_EmailsArgs = {
+  objects: Array<Signup_Emails_Insert_Input>;
+  on_conflict?: Maybe<Signup_Emails_On_Conflict>;
+};
+
+
+export type MutationInsert_Signup_Emails_OneArgs = {
+  object: Signup_Emails_Insert_Input;
+  on_conflict?: Maybe<Signup_Emails_On_Conflict>;
 };
 
 
@@ -5041,6 +5063,18 @@ export type MutationUpdate_Refunds_By_PkArgs = {
 };
 
 
+export type MutationUpdate_Signup_EmailsArgs = {
+  _set?: Maybe<Signup_Emails_Set_Input>;
+  where: Signup_Emails_Bool_Exp;
+};
+
+
+export type MutationUpdate_Signup_Emails_By_PkArgs = {
+  _set?: Maybe<Signup_Emails_Set_Input>;
+  pk_columns: Signup_Emails_Pk_Columns_Input;
+};
+
+
 export type MutationUpdate_StoresArgs = {
   _set?: Maybe<Stores_Set_Input>;
   where: Stores_Bool_Exp;
@@ -5287,13 +5321,9 @@ export type MutationUnsuspendUserArgs = {
 };
 
 
-export type MutationSuspendProductArgs = {
+export type MutationSuspendUnsuspendProductArgs = {
   productId: Scalars['String'];
-};
-
-
-export type MutationUnsuspendProductArgs = {
-  productId: Scalars['String'];
+  isSuspended: Scalars['Boolean'];
 };
 
 
@@ -5307,13 +5337,9 @@ export type MutationIncludeProductInSearchArgs = {
 };
 
 
-export type MutationSuspendStoreArgs = {
+export type MutationSuspendUnsuspendStoreArgs = {
   storeId: Scalars['String'];
-};
-
-
-export type MutationUnsuspendStoreArgs = {
-  storeId: Scalars['String'];
+  isSuspended: Scalars['Boolean'];
 };
 
 
@@ -5639,9 +5665,14 @@ export type MutationSaySomethingArgs = {
   message?: Maybe<Scalars['String']>;
 };
 
+
+export type MutationSignupToWaitlistArgs = {
+  email: Scalars['String'];
+};
+
 /** Something that went wrong during a mutation. */
 export type MutationError = {
-   __typename?: 'MutationError';
+  __typename?: 'MutationError';
   /** Identifier of the issue, so a client app can know how to communicate the problem to the user. */
   code: Scalars['String'];
   /** message for a user to understand what went wrong. */
@@ -5652,7 +5683,7 @@ export type MutationError = {
 
 /** Collection of one or more problems that happened during a mutation. */
 export type MutationErrorSummary = {
-   __typename?: 'MutationErrorSummary';
+  __typename?: 'MutationErrorSummary';
   /** The error or errors that were encountered trying to process the request. */
   errors?: Maybe<Array<Maybe<MutationError>>>;
   /** Indication of whether or not the problem could be overcome by retrying. */
@@ -5703,7 +5734,7 @@ export enum Order_By {
 
 /** columns and relationships of "order_snapshots" */
 export type Order_Snapshots = {
-   __typename?: 'order_snapshots';
+  __typename?: 'order_snapshots';
   /** An object relationship */
   adminApprover?: Maybe<Users>;
   adminApproverId?: Maybe<Scalars['String']>;
@@ -5727,14 +5758,14 @@ export type Order_Snapshots = {
 
 /** aggregated selection of "order_snapshots" */
 export type Order_Snapshots_Aggregate = {
-   __typename?: 'order_snapshots_aggregate';
+  __typename?: 'order_snapshots_aggregate';
   aggregate?: Maybe<Order_Snapshots_Aggregate_Fields>;
   nodes: Array<Order_Snapshots>;
 };
 
 /** aggregate fields of "order_snapshots" */
 export type Order_Snapshots_Aggregate_Fields = {
-   __typename?: 'order_snapshots_aggregate_fields';
+  __typename?: 'order_snapshots_aggregate_fields';
   count?: Maybe<Scalars['Int']>;
   max?: Maybe<Order_Snapshots_Max_Fields>;
   min?: Maybe<Order_Snapshots_Min_Fields>;
@@ -5807,7 +5838,7 @@ export type Order_Snapshots_Insert_Input = {
 
 /** aggregate max on columns */
 export type Order_Snapshots_Max_Fields = {
-   __typename?: 'order_snapshots_max_fields';
+  __typename?: 'order_snapshots_max_fields';
   adminApproverId?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['timestamp']>;
   form10FileId?: Maybe<Scalars['String']>;
@@ -5834,7 +5865,7 @@ export type Order_Snapshots_Max_Order_By = {
 
 /** aggregate min on columns */
 export type Order_Snapshots_Min_Fields = {
-   __typename?: 'order_snapshots_min_fields';
+  __typename?: 'order_snapshots_min_fields';
   adminApproverId?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['timestamp']>;
   form10FileId?: Maybe<Scalars['String']>;
@@ -5861,7 +5892,7 @@ export type Order_Snapshots_Min_Order_By = {
 
 /** response of any mutation on the table "order_snapshots" */
 export type Order_Snapshots_Mutation_Response = {
-   __typename?: 'order_snapshots_mutation_response';
+  __typename?: 'order_snapshots_mutation_response';
   /** number of affected rows by the mutation */
   affected_rows: Scalars['Int'];
   /** data of the affected rows by the mutation */
@@ -5962,7 +5993,7 @@ export enum Order_Snapshots_Update_Column {
 }
 
 export type OrderAdmin = Order & {
-   __typename?: 'OrderAdmin';
+  __typename?: 'OrderAdmin';
   bid?: Maybe<Bid>;
   bidId?: Maybe<Scalars['String']>;
   buyer?: Maybe<UserPrivate>;
@@ -5998,13 +6029,13 @@ export enum OrderBy {
 }
 
 export type OrderCreateMutationResponse = {
-   __typename?: 'OrderCreateMutationResponse';
+  __typename?: 'OrderCreateMutationResponse';
   unconfirmedOrder: Order;
   stripePaymentIntent: Scalars['String'];
 };
 
 export type OrderDealer = Order & {
-   __typename?: 'OrderDealer';
+  __typename?: 'OrderDealer';
   bid?: Maybe<Bid>;
   bidId?: Maybe<Scalars['String']>;
   buyer?: Maybe<BasicUser>;
@@ -6032,12 +6063,12 @@ export type OrderDealer = Order & {
 };
 
 export type OrderMutationResponse = {
-   __typename?: 'OrderMutationResponse';
+  __typename?: 'OrderMutationResponse';
   order: Order;
 };
 
 export type OrderPublic = Order & {
-   __typename?: 'OrderPublic';
+  __typename?: 'OrderPublic';
   bid?: Maybe<Bid>;
   bidId?: Maybe<Scalars['String']>;
   buyer?: Maybe<BasicUser>;
@@ -6065,7 +6096,7 @@ export type OrderPublic = Order & {
 
 /** columns and relationships of "orders" */
 export type Orders = {
-   __typename?: 'orders';
+  __typename?: 'orders';
   /** An object relationship */
   bid?: Maybe<Bids>;
   bidId?: Maybe<Scalars['String']>;
@@ -6091,6 +6122,7 @@ export type Orders = {
   product: Products;
   productId: Scalars['String'];
   productSnapshotId: Scalars['String'];
+  reminderCount?: Maybe<Scalars['Int']>;
   /** An object relationship */
   sellerStore?: Maybe<Stores>;
   sellerStoreId: Scalars['String'];
@@ -6142,14 +6174,14 @@ export type OrdersPayoutItems_AggregateArgs = {
 
 /** aggregated selection of "orders" */
 export type Orders_Aggregate = {
-   __typename?: 'orders_aggregate';
+  __typename?: 'orders_aggregate';
   aggregate?: Maybe<Orders_Aggregate_Fields>;
   nodes: Array<Orders>;
 };
 
 /** aggregate fields of "orders" */
 export type Orders_Aggregate_Fields = {
-   __typename?: 'orders_aggregate_fields';
+  __typename?: 'orders_aggregate_fields';
   avg?: Maybe<Orders_Avg_Fields>;
   count?: Maybe<Scalars['Int']>;
   max?: Maybe<Orders_Max_Fields>;
@@ -6193,12 +6225,14 @@ export type Orders_Arr_Rel_Insert_Input = {
 
 /** aggregate avg on columns */
 export type Orders_Avg_Fields = {
-   __typename?: 'orders_avg_fields';
+  __typename?: 'orders_avg_fields';
+  reminderCount?: Maybe<Scalars['Float']>;
   total?: Maybe<Scalars['Float']>;
 };
 
 /** order by avg() on columns of table "orders" */
 export type Orders_Avg_Order_By = {
+  reminderCount?: Maybe<Order_By>;
   total?: Maybe<Order_By>;
 };
 
@@ -6222,6 +6256,7 @@ export type Orders_Bool_Exp = {
   product?: Maybe<Products_Bool_Exp>;
   productId?: Maybe<String_Comparison_Exp>;
   productSnapshotId?: Maybe<String_Comparison_Exp>;
+  reminderCount?: Maybe<Int_Comparison_Exp>;
   sellerStore?: Maybe<Stores_Bool_Exp>;
   sellerStoreId?: Maybe<String_Comparison_Exp>;
   total?: Maybe<Int_Comparison_Exp>;
@@ -6240,6 +6275,7 @@ export enum Orders_Constraint {
 
 /** input type for incrementing integer column in table "orders" */
 export type Orders_Inc_Input = {
+  reminderCount?: Maybe<Scalars['Int']>;
   total?: Maybe<Scalars['Int']>;
 };
 
@@ -6260,6 +6296,7 @@ export type Orders_Insert_Input = {
   product?: Maybe<Products_Obj_Rel_Insert_Input>;
   productId?: Maybe<Scalars['String']>;
   productSnapshotId?: Maybe<Scalars['String']>;
+  reminderCount?: Maybe<Scalars['Int']>;
   sellerStore?: Maybe<Stores_Obj_Rel_Insert_Input>;
   sellerStoreId?: Maybe<Scalars['String']>;
   total?: Maybe<Scalars['Int']>;
@@ -6270,7 +6307,7 @@ export type Orders_Insert_Input = {
 
 /** aggregate max on columns */
 export type Orders_Max_Fields = {
-   __typename?: 'orders_max_fields';
+  __typename?: 'orders_max_fields';
   bidId?: Maybe<Scalars['String']>;
   buyerId?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['timestamp']>;
@@ -6280,6 +6317,7 @@ export type Orders_Max_Fields = {
   paymentIntentId?: Maybe<Scalars['String']>;
   productId?: Maybe<Scalars['String']>;
   productSnapshotId?: Maybe<Scalars['String']>;
+  reminderCount?: Maybe<Scalars['Int']>;
   sellerStoreId?: Maybe<Scalars['String']>;
   total?: Maybe<Scalars['Int']>;
   updatedAt?: Maybe<Scalars['timestamp']>;
@@ -6298,6 +6336,7 @@ export type Orders_Max_Order_By = {
   paymentIntentId?: Maybe<Order_By>;
   productId?: Maybe<Order_By>;
   productSnapshotId?: Maybe<Order_By>;
+  reminderCount?: Maybe<Order_By>;
   sellerStoreId?: Maybe<Order_By>;
   total?: Maybe<Order_By>;
   updatedAt?: Maybe<Order_By>;
@@ -6307,7 +6346,7 @@ export type Orders_Max_Order_By = {
 
 /** aggregate min on columns */
 export type Orders_Min_Fields = {
-   __typename?: 'orders_min_fields';
+  __typename?: 'orders_min_fields';
   bidId?: Maybe<Scalars['String']>;
   buyerId?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['timestamp']>;
@@ -6317,6 +6356,7 @@ export type Orders_Min_Fields = {
   paymentIntentId?: Maybe<Scalars['String']>;
   productId?: Maybe<Scalars['String']>;
   productSnapshotId?: Maybe<Scalars['String']>;
+  reminderCount?: Maybe<Scalars['Int']>;
   sellerStoreId?: Maybe<Scalars['String']>;
   total?: Maybe<Scalars['Int']>;
   updatedAt?: Maybe<Scalars['timestamp']>;
@@ -6335,6 +6375,7 @@ export type Orders_Min_Order_By = {
   paymentIntentId?: Maybe<Order_By>;
   productId?: Maybe<Order_By>;
   productSnapshotId?: Maybe<Order_By>;
+  reminderCount?: Maybe<Order_By>;
   sellerStoreId?: Maybe<Order_By>;
   total?: Maybe<Order_By>;
   updatedAt?: Maybe<Order_By>;
@@ -6344,7 +6385,7 @@ export type Orders_Min_Order_By = {
 
 /** response of any mutation on the table "orders" */
 export type Orders_Mutation_Response = {
-   __typename?: 'orders_mutation_response';
+  __typename?: 'orders_mutation_response';
   /** number of affected rows by the mutation */
   affected_rows: Scalars['Int'];
   /** data of the affected rows by the mutation */
@@ -6381,6 +6422,7 @@ export type Orders_Order_By = {
   product?: Maybe<Products_Order_By>;
   productId?: Maybe<Order_By>;
   productSnapshotId?: Maybe<Order_By>;
+  reminderCount?: Maybe<Order_By>;
   sellerStore?: Maybe<Stores_Order_By>;
   sellerStoreId?: Maybe<Order_By>;
   total?: Maybe<Order_By>;
@@ -6415,6 +6457,8 @@ export enum Orders_Select_Column {
   /** column name */
   PRODUCTSNAPSHOTID = 'productSnapshotId',
   /** column name */
+  REMINDERCOUNT = 'reminderCount',
+  /** column name */
   SELLERSTOREID = 'sellerStoreId',
   /** column name */
   TOTAL = 'total',
@@ -6437,6 +6481,7 @@ export type Orders_Set_Input = {
   paymentIntentId?: Maybe<Scalars['String']>;
   productId?: Maybe<Scalars['String']>;
   productSnapshotId?: Maybe<Scalars['String']>;
+  reminderCount?: Maybe<Scalars['Int']>;
   sellerStoreId?: Maybe<Scalars['String']>;
   total?: Maybe<Scalars['Int']>;
   updatedAt?: Maybe<Scalars['timestamp']>;
@@ -6446,45 +6491,53 @@ export type Orders_Set_Input = {
 
 /** aggregate stddev on columns */
 export type Orders_Stddev_Fields = {
-   __typename?: 'orders_stddev_fields';
+  __typename?: 'orders_stddev_fields';
+  reminderCount?: Maybe<Scalars['Float']>;
   total?: Maybe<Scalars['Float']>;
 };
 
 /** order by stddev() on columns of table "orders" */
 export type Orders_Stddev_Order_By = {
+  reminderCount?: Maybe<Order_By>;
   total?: Maybe<Order_By>;
 };
 
 /** aggregate stddev_pop on columns */
 export type Orders_Stddev_Pop_Fields = {
-   __typename?: 'orders_stddev_pop_fields';
+  __typename?: 'orders_stddev_pop_fields';
+  reminderCount?: Maybe<Scalars['Float']>;
   total?: Maybe<Scalars['Float']>;
 };
 
 /** order by stddev_pop() on columns of table "orders" */
 export type Orders_Stddev_Pop_Order_By = {
+  reminderCount?: Maybe<Order_By>;
   total?: Maybe<Order_By>;
 };
 
 /** aggregate stddev_samp on columns */
 export type Orders_Stddev_Samp_Fields = {
-   __typename?: 'orders_stddev_samp_fields';
+  __typename?: 'orders_stddev_samp_fields';
+  reminderCount?: Maybe<Scalars['Float']>;
   total?: Maybe<Scalars['Float']>;
 };
 
 /** order by stddev_samp() on columns of table "orders" */
 export type Orders_Stddev_Samp_Order_By = {
+  reminderCount?: Maybe<Order_By>;
   total?: Maybe<Order_By>;
 };
 
 /** aggregate sum on columns */
 export type Orders_Sum_Fields = {
-   __typename?: 'orders_sum_fields';
+  __typename?: 'orders_sum_fields';
+  reminderCount?: Maybe<Scalars['Int']>;
   total?: Maybe<Scalars['Int']>;
 };
 
 /** order by sum() on columns of table "orders" */
 export type Orders_Sum_Order_By = {
+  reminderCount?: Maybe<Order_By>;
   total?: Maybe<Order_By>;
 };
 
@@ -6509,6 +6562,8 @@ export enum Orders_Update_Column {
   /** column name */
   PRODUCTSNAPSHOTID = 'productSnapshotId',
   /** column name */
+  REMINDERCOUNT = 'reminderCount',
+  /** column name */
   SELLERSTOREID = 'sellerStoreId',
   /** column name */
   TOTAL = 'total',
@@ -6522,51 +6577,57 @@ export enum Orders_Update_Column {
 
 /** aggregate var_pop on columns */
 export type Orders_Var_Pop_Fields = {
-   __typename?: 'orders_var_pop_fields';
+  __typename?: 'orders_var_pop_fields';
+  reminderCount?: Maybe<Scalars['Float']>;
   total?: Maybe<Scalars['Float']>;
 };
 
 /** order by var_pop() on columns of table "orders" */
 export type Orders_Var_Pop_Order_By = {
+  reminderCount?: Maybe<Order_By>;
   total?: Maybe<Order_By>;
 };
 
 /** aggregate var_samp on columns */
 export type Orders_Var_Samp_Fields = {
-   __typename?: 'orders_var_samp_fields';
+  __typename?: 'orders_var_samp_fields';
+  reminderCount?: Maybe<Scalars['Float']>;
   total?: Maybe<Scalars['Float']>;
 };
 
 /** order by var_samp() on columns of table "orders" */
 export type Orders_Var_Samp_Order_By = {
+  reminderCount?: Maybe<Order_By>;
   total?: Maybe<Order_By>;
 };
 
 /** aggregate variance on columns */
 export type Orders_Variance_Fields = {
-   __typename?: 'orders_variance_fields';
+  __typename?: 'orders_variance_fields';
+  reminderCount?: Maybe<Scalars['Float']>;
   total?: Maybe<Scalars['Float']>;
 };
 
 /** order by variance() on columns of table "orders" */
 export type Orders_Variance_Order_By = {
+  reminderCount?: Maybe<Order_By>;
   total?: Maybe<Order_By>;
 };
 
 export type OrdersConnection = Connection & {
-   __typename?: 'OrdersConnection';
+  __typename?: 'OrdersConnection';
   totalCount?: Maybe<Scalars['Int']>;
   pageInfo: PageInfo;
   edges: Array<OrdersEdge>;
 };
 
 export type OrdersEdge = {
-   __typename?: 'OrdersEdge';
+  __typename?: 'OrdersEdge';
   node: Order;
 };
 
 export type OrderSnapshot = {
-   __typename?: 'OrderSnapshot';
+  __typename?: 'OrderSnapshot';
   /** An object relationship */
   adminApprover?: Maybe<UserForDealers>;
   adminApproverId?: Maybe<Scalars['String']>;
@@ -6611,7 +6672,7 @@ export enum OrderStatus {
 
 /** columns and relationships of "page_config_sections" */
 export type Page_Config_Sections = {
-   __typename?: 'page_config_sections';
+  __typename?: 'page_config_sections';
   hideViewAll: Scalars['Boolean'];
   id: Scalars['String'];
   isNewestList?: Maybe<Scalars['Boolean']>;
@@ -6626,14 +6687,14 @@ export type Page_Config_Sections = {
 
 /** aggregated selection of "page_config_sections" */
 export type Page_Config_Sections_Aggregate = {
-   __typename?: 'page_config_sections_aggregate';
+  __typename?: 'page_config_sections_aggregate';
   aggregate?: Maybe<Page_Config_Sections_Aggregate_Fields>;
   nodes: Array<Page_Config_Sections>;
 };
 
 /** aggregate fields of "page_config_sections" */
 export type Page_Config_Sections_Aggregate_Fields = {
-   __typename?: 'page_config_sections_aggregate_fields';
+  __typename?: 'page_config_sections_aggregate_fields';
   avg?: Maybe<Page_Config_Sections_Avg_Fields>;
   count?: Maybe<Scalars['Int']>;
   max?: Maybe<Page_Config_Sections_Max_Fields>;
@@ -6677,7 +6738,7 @@ export type Page_Config_Sections_Arr_Rel_Insert_Input = {
 
 /** aggregate avg on columns */
 export type Page_Config_Sections_Avg_Fields = {
-   __typename?: 'page_config_sections_avg_fields';
+  __typename?: 'page_config_sections_avg_fields';
   position?: Maybe<Scalars['Float']>;
 };
 
@@ -6728,7 +6789,7 @@ export type Page_Config_Sections_Insert_Input = {
 
 /** aggregate max on columns */
 export type Page_Config_Sections_Max_Fields = {
-   __typename?: 'page_config_sections_max_fields';
+  __typename?: 'page_config_sections_max_fields';
   id?: Maybe<Scalars['String']>;
   pageConfigId?: Maybe<Scalars['String']>;
   position?: Maybe<Scalars['Int']>;
@@ -6749,7 +6810,7 @@ export type Page_Config_Sections_Max_Order_By = {
 
 /** aggregate min on columns */
 export type Page_Config_Sections_Min_Fields = {
-   __typename?: 'page_config_sections_min_fields';
+  __typename?: 'page_config_sections_min_fields';
   id?: Maybe<Scalars['String']>;
   pageConfigId?: Maybe<Scalars['String']>;
   position?: Maybe<Scalars['Int']>;
@@ -6770,7 +6831,7 @@ export type Page_Config_Sections_Min_Order_By = {
 
 /** response of any mutation on the table "page_config_sections" */
 export type Page_Config_Sections_Mutation_Response = {
-   __typename?: 'page_config_sections_mutation_response';
+  __typename?: 'page_config_sections_mutation_response';
   /** number of affected rows by the mutation */
   affected_rows: Scalars['Int'];
   /** data of the affected rows by the mutation */
@@ -6842,7 +6903,7 @@ export type Page_Config_Sections_Set_Input = {
 
 /** aggregate stddev on columns */
 export type Page_Config_Sections_Stddev_Fields = {
-   __typename?: 'page_config_sections_stddev_fields';
+  __typename?: 'page_config_sections_stddev_fields';
   position?: Maybe<Scalars['Float']>;
 };
 
@@ -6853,7 +6914,7 @@ export type Page_Config_Sections_Stddev_Order_By = {
 
 /** aggregate stddev_pop on columns */
 export type Page_Config_Sections_Stddev_Pop_Fields = {
-   __typename?: 'page_config_sections_stddev_pop_fields';
+  __typename?: 'page_config_sections_stddev_pop_fields';
   position?: Maybe<Scalars['Float']>;
 };
 
@@ -6864,7 +6925,7 @@ export type Page_Config_Sections_Stddev_Pop_Order_By = {
 
 /** aggregate stddev_samp on columns */
 export type Page_Config_Sections_Stddev_Samp_Fields = {
-   __typename?: 'page_config_sections_stddev_samp_fields';
+  __typename?: 'page_config_sections_stddev_samp_fields';
   position?: Maybe<Scalars['Float']>;
 };
 
@@ -6875,7 +6936,7 @@ export type Page_Config_Sections_Stddev_Samp_Order_By = {
 
 /** aggregate sum on columns */
 export type Page_Config_Sections_Sum_Fields = {
-   __typename?: 'page_config_sections_sum_fields';
+  __typename?: 'page_config_sections_sum_fields';
   position?: Maybe<Scalars['Int']>;
 };
 
@@ -6906,7 +6967,7 @@ export enum Page_Config_Sections_Update_Column {
 
 /** aggregate var_pop on columns */
 export type Page_Config_Sections_Var_Pop_Fields = {
-   __typename?: 'page_config_sections_var_pop_fields';
+  __typename?: 'page_config_sections_var_pop_fields';
   position?: Maybe<Scalars['Float']>;
 };
 
@@ -6917,7 +6978,7 @@ export type Page_Config_Sections_Var_Pop_Order_By = {
 
 /** aggregate var_samp on columns */
 export type Page_Config_Sections_Var_Samp_Fields = {
-   __typename?: 'page_config_sections_var_samp_fields';
+  __typename?: 'page_config_sections_var_samp_fields';
   position?: Maybe<Scalars['Float']>;
 };
 
@@ -6928,7 +6989,7 @@ export type Page_Config_Sections_Var_Samp_Order_By = {
 
 /** aggregate variance on columns */
 export type Page_Config_Sections_Variance_Fields = {
-   __typename?: 'page_config_sections_variance_fields';
+  __typename?: 'page_config_sections_variance_fields';
   position?: Maybe<Scalars['Float']>;
 };
 
@@ -6939,7 +7000,7 @@ export type Page_Config_Sections_Variance_Order_By = {
 
 /** columns and relationships of "page_configs" */
 export type Page_Configs = {
-   __typename?: 'page_configs';
+  __typename?: 'page_configs';
   id: Scalars['String'];
   name?: Maybe<Scalars['String']>;
   /** An array relationship */
@@ -6971,14 +7032,14 @@ export type Page_ConfigsPageConfigSections_AggregateArgs = {
 
 /** aggregated selection of "page_configs" */
 export type Page_Configs_Aggregate = {
-   __typename?: 'page_configs_aggregate';
+  __typename?: 'page_configs_aggregate';
   aggregate?: Maybe<Page_Configs_Aggregate_Fields>;
   nodes: Array<Page_Configs>;
 };
 
 /** aggregate fields of "page_configs" */
 export type Page_Configs_Aggregate_Fields = {
-   __typename?: 'page_configs_aggregate_fields';
+  __typename?: 'page_configs_aggregate_fields';
   count?: Maybe<Scalars['Int']>;
   max?: Maybe<Page_Configs_Max_Fields>;
   min?: Maybe<Page_Configs_Min_Fields>;
@@ -7033,7 +7094,7 @@ export type Page_Configs_Insert_Input = {
 
 /** aggregate max on columns */
 export type Page_Configs_Max_Fields = {
-   __typename?: 'page_configs_max_fields';
+  __typename?: 'page_configs_max_fields';
   id?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   urlPath?: Maybe<Scalars['String']>;
@@ -7048,7 +7109,7 @@ export type Page_Configs_Max_Order_By = {
 
 /** aggregate min on columns */
 export type Page_Configs_Min_Fields = {
-   __typename?: 'page_configs_min_fields';
+  __typename?: 'page_configs_min_fields';
   id?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   urlPath?: Maybe<Scalars['String']>;
@@ -7063,7 +7124,7 @@ export type Page_Configs_Min_Order_By = {
 
 /** response of any mutation on the table "page_configs" */
 export type Page_Configs_Mutation_Response = {
-   __typename?: 'page_configs_mutation_response';
+  __typename?: 'page_configs_mutation_response';
   /** number of affected rows by the mutation */
   affected_rows: Scalars['Int'];
   /** data of the affected rows by the mutation */
@@ -7124,7 +7185,7 @@ export enum Page_Configs_Update_Column {
 }
 
 export type PageConfig = {
-   __typename?: 'PageConfig';
+  __typename?: 'PageConfig';
   id?: Maybe<Scalars['ID']>;
   name?: Maybe<Scalars['String']>;
   urlPath?: Maybe<Scalars['String']>;
@@ -7132,7 +7193,7 @@ export type PageConfig = {
 };
 
 export type PageConfigSection = {
-   __typename?: 'PageConfigSection';
+  __typename?: 'PageConfigSection';
   id: Scalars['ID'];
   pageConfigId: Scalars['ID'];
   viewAllPath: Scalars['String'];
@@ -7144,7 +7205,7 @@ export type PageConfigSection = {
 };
 
 export type PageInfo = {
-   __typename?: 'PageInfo';
+  __typename?: 'PageInfo';
   isLastPage: Scalars['Boolean'];
   totalPages?: Maybe<Scalars['Int']>;
 };
@@ -7160,7 +7221,7 @@ export enum PayeeType {
 
 /** columns and relationships of "payment_methods" */
 export type Payment_Methods = {
-   __typename?: 'payment_methods';
+  __typename?: 'payment_methods';
   createdAt: Scalars['timestamptz'];
   customerId?: Maybe<Scalars['String']>;
   details?: Maybe<Scalars['String']>;
@@ -7178,14 +7239,14 @@ export type Payment_Methods = {
 
 /** aggregated selection of "payment_methods" */
 export type Payment_Methods_Aggregate = {
-   __typename?: 'payment_methods_aggregate';
+  __typename?: 'payment_methods_aggregate';
   aggregate?: Maybe<Payment_Methods_Aggregate_Fields>;
   nodes: Array<Payment_Methods>;
 };
 
 /** aggregate fields of "payment_methods" */
 export type Payment_Methods_Aggregate_Fields = {
-   __typename?: 'payment_methods_aggregate_fields';
+  __typename?: 'payment_methods_aggregate_fields';
   avg?: Maybe<Payment_Methods_Avg_Fields>;
   count?: Maybe<Scalars['Int']>;
   max?: Maybe<Payment_Methods_Max_Fields>;
@@ -7229,7 +7290,7 @@ export type Payment_Methods_Arr_Rel_Insert_Input = {
 
 /** aggregate avg on columns */
 export type Payment_Methods_Avg_Fields = {
-   __typename?: 'payment_methods_avg_fields';
+  __typename?: 'payment_methods_avg_fields';
   expMonth?: Maybe<Scalars['Float']>;
   expYear?: Maybe<Scalars['Float']>;
 };
@@ -7291,7 +7352,7 @@ export type Payment_Methods_Insert_Input = {
 
 /** aggregate max on columns */
 export type Payment_Methods_Max_Fields = {
-   __typename?: 'payment_methods_max_fields';
+  __typename?: 'payment_methods_max_fields';
   createdAt?: Maybe<Scalars['timestamptz']>;
   customerId?: Maybe<Scalars['String']>;
   details?: Maybe<Scalars['String']>;
@@ -7326,7 +7387,7 @@ export type Payment_Methods_Max_Order_By = {
 
 /** aggregate min on columns */
 export type Payment_Methods_Min_Fields = {
-   __typename?: 'payment_methods_min_fields';
+  __typename?: 'payment_methods_min_fields';
   createdAt?: Maybe<Scalars['timestamptz']>;
   customerId?: Maybe<Scalars['String']>;
   details?: Maybe<Scalars['String']>;
@@ -7361,7 +7422,7 @@ export type Payment_Methods_Min_Order_By = {
 
 /** response of any mutation on the table "payment_methods" */
 export type Payment_Methods_Mutation_Response = {
-   __typename?: 'payment_methods_mutation_response';
+  __typename?: 'payment_methods_mutation_response';
   /** number of affected rows by the mutation */
   affected_rows: Scalars['Int'];
   /** data of the affected rows by the mutation */
@@ -7452,7 +7513,7 @@ export type Payment_Methods_Set_Input = {
 
 /** aggregate stddev on columns */
 export type Payment_Methods_Stddev_Fields = {
-   __typename?: 'payment_methods_stddev_fields';
+  __typename?: 'payment_methods_stddev_fields';
   expMonth?: Maybe<Scalars['Float']>;
   expYear?: Maybe<Scalars['Float']>;
 };
@@ -7465,7 +7526,7 @@ export type Payment_Methods_Stddev_Order_By = {
 
 /** aggregate stddev_pop on columns */
 export type Payment_Methods_Stddev_Pop_Fields = {
-   __typename?: 'payment_methods_stddev_pop_fields';
+  __typename?: 'payment_methods_stddev_pop_fields';
   expMonth?: Maybe<Scalars['Float']>;
   expYear?: Maybe<Scalars['Float']>;
 };
@@ -7478,7 +7539,7 @@ export type Payment_Methods_Stddev_Pop_Order_By = {
 
 /** aggregate stddev_samp on columns */
 export type Payment_Methods_Stddev_Samp_Fields = {
-   __typename?: 'payment_methods_stddev_samp_fields';
+  __typename?: 'payment_methods_stddev_samp_fields';
   expMonth?: Maybe<Scalars['Float']>;
   expYear?: Maybe<Scalars['Float']>;
 };
@@ -7491,7 +7552,7 @@ export type Payment_Methods_Stddev_Samp_Order_By = {
 
 /** aggregate sum on columns */
 export type Payment_Methods_Sum_Fields = {
-   __typename?: 'payment_methods_sum_fields';
+  __typename?: 'payment_methods_sum_fields';
   expMonth?: Maybe<Scalars['Int']>;
   expYear?: Maybe<Scalars['Int']>;
 };
@@ -7534,7 +7595,7 @@ export enum Payment_Methods_Update_Column {
 
 /** aggregate var_pop on columns */
 export type Payment_Methods_Var_Pop_Fields = {
-   __typename?: 'payment_methods_var_pop_fields';
+  __typename?: 'payment_methods_var_pop_fields';
   expMonth?: Maybe<Scalars['Float']>;
   expYear?: Maybe<Scalars['Float']>;
 };
@@ -7547,7 +7608,7 @@ export type Payment_Methods_Var_Pop_Order_By = {
 
 /** aggregate var_samp on columns */
 export type Payment_Methods_Var_Samp_Fields = {
-   __typename?: 'payment_methods_var_samp_fields';
+  __typename?: 'payment_methods_var_samp_fields';
   expMonth?: Maybe<Scalars['Float']>;
   expYear?: Maybe<Scalars['Float']>;
 };
@@ -7560,7 +7621,7 @@ export type Payment_Methods_Var_Samp_Order_By = {
 
 /** aggregate variance on columns */
 export type Payment_Methods_Variance_Fields = {
-   __typename?: 'payment_methods_variance_fields';
+  __typename?: 'payment_methods_variance_fields';
   expMonth?: Maybe<Scalars['Float']>;
   expYear?: Maybe<Scalars['Float']>;
 };
@@ -7572,7 +7633,7 @@ export type Payment_Methods_Variance_Order_By = {
 };
 
 export type PaymentIntent = {
-   __typename?: 'PaymentIntent';
+  __typename?: 'PaymentIntent';
   id?: Maybe<Scalars['String']>;
   amount?: Maybe<Scalars['Int']>;
   amountCapturable?: Maybe<Scalars['Int']>;
@@ -7596,7 +7657,7 @@ export enum PaymentProcessor {
 
 /** columns and relationships of "payout_items" */
 export type Payout_Items = {
-   __typename?: 'payout_items';
+  __typename?: 'payout_items';
   amount: Scalars['Int'];
   createdAt: Scalars['timestamp'];
   currency: Scalars['String'];
@@ -7613,14 +7674,14 @@ export type Payout_Items = {
 
 /** aggregated selection of "payout_items" */
 export type Payout_Items_Aggregate = {
-   __typename?: 'payout_items_aggregate';
+  __typename?: 'payout_items_aggregate';
   aggregate?: Maybe<Payout_Items_Aggregate_Fields>;
   nodes: Array<Payout_Items>;
 };
 
 /** aggregate fields of "payout_items" */
 export type Payout_Items_Aggregate_Fields = {
-   __typename?: 'payout_items_aggregate_fields';
+  __typename?: 'payout_items_aggregate_fields';
   avg?: Maybe<Payout_Items_Avg_Fields>;
   count?: Maybe<Scalars['Int']>;
   max?: Maybe<Payout_Items_Max_Fields>;
@@ -7664,7 +7725,7 @@ export type Payout_Items_Arr_Rel_Insert_Input = {
 
 /** aggregate avg on columns */
 export type Payout_Items_Avg_Fields = {
-   __typename?: 'payout_items_avg_fields';
+  __typename?: 'payout_items_avg_fields';
   amount?: Maybe<Scalars['Float']>;
   paymentProcessingFee?: Maybe<Scalars['Float']>;
   taxes?: Maybe<Scalars['Float']>;
@@ -7727,7 +7788,7 @@ export type Payout_Items_Insert_Input = {
 
 /** aggregate max on columns */
 export type Payout_Items_Max_Fields = {
-   __typename?: 'payout_items_max_fields';
+  __typename?: 'payout_items_max_fields';
   amount?: Maybe<Scalars['Int']>;
   createdAt?: Maybe<Scalars['timestamp']>;
   currency?: Maybe<Scalars['String']>;
@@ -7760,7 +7821,7 @@ export type Payout_Items_Max_Order_By = {
 
 /** aggregate min on columns */
 export type Payout_Items_Min_Fields = {
-   __typename?: 'payout_items_min_fields';
+  __typename?: 'payout_items_min_fields';
   amount?: Maybe<Scalars['Int']>;
   createdAt?: Maybe<Scalars['timestamp']>;
   currency?: Maybe<Scalars['String']>;
@@ -7793,7 +7854,7 @@ export type Payout_Items_Min_Order_By = {
 
 /** response of any mutation on the table "payout_items" */
 export type Payout_Items_Mutation_Response = {
-   __typename?: 'payout_items_mutation_response';
+  __typename?: 'payout_items_mutation_response';
   /** number of affected rows by the mutation */
   affected_rows: Scalars['Int'];
   /** data of the affected rows by the mutation */
@@ -7880,7 +7941,7 @@ export type Payout_Items_Set_Input = {
 
 /** aggregate stddev on columns */
 export type Payout_Items_Stddev_Fields = {
-   __typename?: 'payout_items_stddev_fields';
+  __typename?: 'payout_items_stddev_fields';
   amount?: Maybe<Scalars['Float']>;
   paymentProcessingFee?: Maybe<Scalars['Float']>;
   taxes?: Maybe<Scalars['Float']>;
@@ -7895,7 +7956,7 @@ export type Payout_Items_Stddev_Order_By = {
 
 /** aggregate stddev_pop on columns */
 export type Payout_Items_Stddev_Pop_Fields = {
-   __typename?: 'payout_items_stddev_pop_fields';
+  __typename?: 'payout_items_stddev_pop_fields';
   amount?: Maybe<Scalars['Float']>;
   paymentProcessingFee?: Maybe<Scalars['Float']>;
   taxes?: Maybe<Scalars['Float']>;
@@ -7910,7 +7971,7 @@ export type Payout_Items_Stddev_Pop_Order_By = {
 
 /** aggregate stddev_samp on columns */
 export type Payout_Items_Stddev_Samp_Fields = {
-   __typename?: 'payout_items_stddev_samp_fields';
+  __typename?: 'payout_items_stddev_samp_fields';
   amount?: Maybe<Scalars['Float']>;
   paymentProcessingFee?: Maybe<Scalars['Float']>;
   taxes?: Maybe<Scalars['Float']>;
@@ -7925,7 +7986,7 @@ export type Payout_Items_Stddev_Samp_Order_By = {
 
 /** aggregate sum on columns */
 export type Payout_Items_Sum_Fields = {
-   __typename?: 'payout_items_sum_fields';
+  __typename?: 'payout_items_sum_fields';
   amount?: Maybe<Scalars['Int']>;
   paymentProcessingFee?: Maybe<Scalars['Int']>;
   taxes?: Maybe<Scalars['Int']>;
@@ -7968,7 +8029,7 @@ export enum Payout_Items_Update_Column {
 
 /** aggregate var_pop on columns */
 export type Payout_Items_Var_Pop_Fields = {
-   __typename?: 'payout_items_var_pop_fields';
+  __typename?: 'payout_items_var_pop_fields';
   amount?: Maybe<Scalars['Float']>;
   paymentProcessingFee?: Maybe<Scalars['Float']>;
   taxes?: Maybe<Scalars['Float']>;
@@ -7983,7 +8044,7 @@ export type Payout_Items_Var_Pop_Order_By = {
 
 /** aggregate var_samp on columns */
 export type Payout_Items_Var_Samp_Fields = {
-   __typename?: 'payout_items_var_samp_fields';
+  __typename?: 'payout_items_var_samp_fields';
   amount?: Maybe<Scalars['Float']>;
   paymentProcessingFee?: Maybe<Scalars['Float']>;
   taxes?: Maybe<Scalars['Float']>;
@@ -7998,7 +8059,7 @@ export type Payout_Items_Var_Samp_Order_By = {
 
 /** aggregate variance on columns */
 export type Payout_Items_Variance_Fields = {
-   __typename?: 'payout_items_variance_fields';
+  __typename?: 'payout_items_variance_fields';
   amount?: Maybe<Scalars['Float']>;
   paymentProcessingFee?: Maybe<Scalars['Float']>;
   taxes?: Maybe<Scalars['Float']>;
@@ -8013,7 +8074,7 @@ export type Payout_Items_Variance_Order_By = {
 
 /** columns and relationships of "payout_methods" */
 export type Payout_Methods = {
-   __typename?: 'payout_methods';
+  __typename?: 'payout_methods';
   accountName?: Maybe<Scalars['String']>;
   accountNumber?: Maybe<Scalars['String']>;
   bsb?: Maybe<Scalars['String']>;
@@ -8026,14 +8087,14 @@ export type Payout_Methods = {
 
 /** aggregated selection of "payout_methods" */
 export type Payout_Methods_Aggregate = {
-   __typename?: 'payout_methods_aggregate';
+  __typename?: 'payout_methods_aggregate';
   aggregate?: Maybe<Payout_Methods_Aggregate_Fields>;
   nodes: Array<Payout_Methods>;
 };
 
 /** aggregate fields of "payout_methods" */
 export type Payout_Methods_Aggregate_Fields = {
-   __typename?: 'payout_methods_aggregate_fields';
+  __typename?: 'payout_methods_aggregate_fields';
   count?: Maybe<Scalars['Int']>;
   max?: Maybe<Payout_Methods_Max_Fields>;
   min?: Maybe<Payout_Methods_Min_Fields>;
@@ -8094,7 +8155,7 @@ export type Payout_Methods_Insert_Input = {
 
 /** aggregate max on columns */
 export type Payout_Methods_Max_Fields = {
-   __typename?: 'payout_methods_max_fields';
+  __typename?: 'payout_methods_max_fields';
   accountName?: Maybe<Scalars['String']>;
   accountNumber?: Maybe<Scalars['String']>;
   bsb?: Maybe<Scalars['String']>;
@@ -8119,7 +8180,7 @@ export type Payout_Methods_Max_Order_By = {
 
 /** aggregate min on columns */
 export type Payout_Methods_Min_Fields = {
-   __typename?: 'payout_methods_min_fields';
+  __typename?: 'payout_methods_min_fields';
   accountName?: Maybe<Scalars['String']>;
   accountNumber?: Maybe<Scalars['String']>;
   bsb?: Maybe<Scalars['String']>;
@@ -8144,7 +8205,7 @@ export type Payout_Methods_Min_Order_By = {
 
 /** response of any mutation on the table "payout_methods" */
 export type Payout_Methods_Mutation_Response = {
-   __typename?: 'payout_methods_mutation_response';
+  __typename?: 'payout_methods_mutation_response';
   /** number of affected rows by the mutation */
   affected_rows: Scalars['Int'];
   /** data of the affected rows by the mutation */
@@ -8247,7 +8308,7 @@ export enum PayoutDealType {
 }
 
 export type PayoutItem = {
-   __typename?: 'PayoutItem';
+  __typename?: 'PayoutItem';
   id: Scalars['ID'];
   storeId: Scalars['ID'];
   payeeType: PayeeType;
@@ -8265,20 +8326,20 @@ export type PayoutItem = {
 };
 
 export type PayoutItemsConnection = {
-   __typename?: 'PayoutItemsConnection';
+  __typename?: 'PayoutItemsConnection';
   totalCount?: Maybe<Scalars['Int']>;
   pageInfo: PageInfo;
   edges: Array<Payout_Items>;
 };
 
 export type PayoutMethodMutationResponse = {
-   __typename?: 'PayoutMethodMutationResponse';
+  __typename?: 'PayoutMethodMutationResponse';
   payoutMethod: Payout_Methods;
 };
 
 /** PayoutSplit */
 export type PayoutSplit = {
-   __typename?: 'PayoutSplit';
+  __typename?: 'PayoutSplit';
   id: Scalars['ID'];
   storeOrUserId: Scalars['ID'];
   createdAt: Scalars['Date'];
@@ -8311,7 +8372,7 @@ export enum PayoutStatus {
 
 /** columns and relationships of "phone_numbers" */
 export type Phone_Numbers = {
-   __typename?: 'phone_numbers';
+  __typename?: 'phone_numbers';
   areaCode?: Maybe<Scalars['String']>;
   countryCode: Scalars['String'];
   created_at?: Maybe<Scalars['timestamptz']>;
@@ -8322,14 +8383,14 @@ export type Phone_Numbers = {
 
 /** aggregated selection of "phone_numbers" */
 export type Phone_Numbers_Aggregate = {
-   __typename?: 'phone_numbers_aggregate';
+  __typename?: 'phone_numbers_aggregate';
   aggregate?: Maybe<Phone_Numbers_Aggregate_Fields>;
   nodes: Array<Phone_Numbers>;
 };
 
 /** aggregate fields of "phone_numbers" */
 export type Phone_Numbers_Aggregate_Fields = {
-   __typename?: 'phone_numbers_aggregate_fields';
+  __typename?: 'phone_numbers_aggregate_fields';
   count?: Maybe<Scalars['Int']>;
   max?: Maybe<Phone_Numbers_Max_Fields>;
   min?: Maybe<Phone_Numbers_Min_Fields>;
@@ -8386,7 +8447,7 @@ export type Phone_Numbers_Insert_Input = {
 
 /** aggregate max on columns */
 export type Phone_Numbers_Max_Fields = {
-   __typename?: 'phone_numbers_max_fields';
+  __typename?: 'phone_numbers_max_fields';
   areaCode?: Maybe<Scalars['String']>;
   countryCode?: Maybe<Scalars['String']>;
   created_at?: Maybe<Scalars['timestamptz']>;
@@ -8407,7 +8468,7 @@ export type Phone_Numbers_Max_Order_By = {
 
 /** aggregate min on columns */
 export type Phone_Numbers_Min_Fields = {
-   __typename?: 'phone_numbers_min_fields';
+  __typename?: 'phone_numbers_min_fields';
   areaCode?: Maybe<Scalars['String']>;
   countryCode?: Maybe<Scalars['String']>;
   created_at?: Maybe<Scalars['timestamptz']>;
@@ -8428,7 +8489,7 @@ export type Phone_Numbers_Min_Order_By = {
 
 /** response of any mutation on the table "phone_numbers" */
 export type Phone_Numbers_Mutation_Response = {
-   __typename?: 'phone_numbers_mutation_response';
+  __typename?: 'phone_numbers_mutation_response';
   /** number of affected rows by the mutation */
   affected_rows: Scalars['Int'];
   /** data of the affected rows by the mutation */
@@ -8536,21 +8597,21 @@ export type Product = {
 
 /** columns and relationships of "product_file_owners" */
 export type Product_File_Owners = {
-   __typename?: 'product_file_owners';
+  __typename?: 'product_file_owners';
   fileId: Scalars['String'];
   ownerId: Scalars['String'];
 };
 
 /** aggregated selection of "product_file_owners" */
 export type Product_File_Owners_Aggregate = {
-   __typename?: 'product_file_owners_aggregate';
+  __typename?: 'product_file_owners_aggregate';
   aggregate?: Maybe<Product_File_Owners_Aggregate_Fields>;
   nodes: Array<Product_File_Owners>;
 };
 
 /** aggregate fields of "product_file_owners" */
 export type Product_File_Owners_Aggregate_Fields = {
-   __typename?: 'product_file_owners_aggregate_fields';
+  __typename?: 'product_file_owners_aggregate_fields';
   count?: Maybe<Scalars['Int']>;
   max?: Maybe<Product_File_Owners_Max_Fields>;
   min?: Maybe<Product_File_Owners_Min_Fields>;
@@ -8599,7 +8660,7 @@ export type Product_File_Owners_Insert_Input = {
 
 /** aggregate max on columns */
 export type Product_File_Owners_Max_Fields = {
-   __typename?: 'product_file_owners_max_fields';
+  __typename?: 'product_file_owners_max_fields';
   fileId?: Maybe<Scalars['String']>;
   ownerId?: Maybe<Scalars['String']>;
 };
@@ -8612,7 +8673,7 @@ export type Product_File_Owners_Max_Order_By = {
 
 /** aggregate min on columns */
 export type Product_File_Owners_Min_Fields = {
-   __typename?: 'product_file_owners_min_fields';
+  __typename?: 'product_file_owners_min_fields';
   fileId?: Maybe<Scalars['String']>;
   ownerId?: Maybe<Scalars['String']>;
 };
@@ -8625,7 +8686,7 @@ export type Product_File_Owners_Min_Order_By = {
 
 /** response of any mutation on the table "product_file_owners" */
 export type Product_File_Owners_Mutation_Response = {
-   __typename?: 'product_file_owners_mutation_response';
+  __typename?: 'product_file_owners_mutation_response';
   /** number of affected rows by the mutation */
   affected_rows: Scalars['Int'];
   /** data of the affected rows by the mutation */
@@ -8680,7 +8741,7 @@ export enum Product_File_Owners_Update_Column {
 
 /** columns and relationships of "product_files" */
 export type Product_Files = {
-   __typename?: 'product_files';
+  __typename?: 'product_files';
   createdAt: Scalars['timestamptz'];
   fileName: Scalars['String'];
   id: Scalars['String'];
@@ -8690,14 +8751,14 @@ export type Product_Files = {
 
 /** aggregated selection of "product_files" */
 export type Product_Files_Aggregate = {
-   __typename?: 'product_files_aggregate';
+  __typename?: 'product_files_aggregate';
   aggregate?: Maybe<Product_Files_Aggregate_Fields>;
   nodes: Array<Product_Files>;
 };
 
 /** aggregate fields of "product_files" */
 export type Product_Files_Aggregate_Fields = {
-   __typename?: 'product_files_aggregate_fields';
+  __typename?: 'product_files_aggregate_fields';
   avg?: Maybe<Product_Files_Avg_Fields>;
   count?: Maybe<Scalars['Int']>;
   max?: Maybe<Product_Files_Max_Fields>;
@@ -8741,7 +8802,7 @@ export type Product_Files_Arr_Rel_Insert_Input = {
 
 /** aggregate avg on columns */
 export type Product_Files_Avg_Fields = {
-   __typename?: 'product_files_avg_fields';
+  __typename?: 'product_files_avg_fields';
   sizeInBytes?: Maybe<Scalars['Float']>;
 };
 
@@ -8784,7 +8845,7 @@ export type Product_Files_Insert_Input = {
 
 /** aggregate max on columns */
 export type Product_Files_Max_Fields = {
-   __typename?: 'product_files_max_fields';
+  __typename?: 'product_files_max_fields';
   createdAt?: Maybe<Scalars['timestamptz']>;
   fileName?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
@@ -8803,7 +8864,7 @@ export type Product_Files_Max_Order_By = {
 
 /** aggregate min on columns */
 export type Product_Files_Min_Fields = {
-   __typename?: 'product_files_min_fields';
+  __typename?: 'product_files_min_fields';
   createdAt?: Maybe<Scalars['timestamptz']>;
   fileName?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
@@ -8822,7 +8883,7 @@ export type Product_Files_Min_Order_By = {
 
 /** response of any mutation on the table "product_files" */
 export type Product_Files_Mutation_Response = {
-   __typename?: 'product_files_mutation_response';
+  __typename?: 'product_files_mutation_response';
   /** number of affected rows by the mutation */
   affected_rows: Scalars['Int'];
   /** data of the affected rows by the mutation */
@@ -8881,7 +8942,7 @@ export type Product_Files_Set_Input = {
 
 /** aggregate stddev on columns */
 export type Product_Files_Stddev_Fields = {
-   __typename?: 'product_files_stddev_fields';
+  __typename?: 'product_files_stddev_fields';
   sizeInBytes?: Maybe<Scalars['Float']>;
 };
 
@@ -8892,7 +8953,7 @@ export type Product_Files_Stddev_Order_By = {
 
 /** aggregate stddev_pop on columns */
 export type Product_Files_Stddev_Pop_Fields = {
-   __typename?: 'product_files_stddev_pop_fields';
+  __typename?: 'product_files_stddev_pop_fields';
   sizeInBytes?: Maybe<Scalars['Float']>;
 };
 
@@ -8903,7 +8964,7 @@ export type Product_Files_Stddev_Pop_Order_By = {
 
 /** aggregate stddev_samp on columns */
 export type Product_Files_Stddev_Samp_Fields = {
-   __typename?: 'product_files_stddev_samp_fields';
+  __typename?: 'product_files_stddev_samp_fields';
   sizeInBytes?: Maybe<Scalars['Float']>;
 };
 
@@ -8914,7 +8975,7 @@ export type Product_Files_Stddev_Samp_Order_By = {
 
 /** aggregate sum on columns */
 export type Product_Files_Sum_Fields = {
-   __typename?: 'product_files_sum_fields';
+  __typename?: 'product_files_sum_fields';
   sizeInBytes?: Maybe<Scalars['bigint']>;
 };
 
@@ -8939,7 +9000,7 @@ export enum Product_Files_Update_Column {
 
 /** aggregate var_pop on columns */
 export type Product_Files_Var_Pop_Fields = {
-   __typename?: 'product_files_var_pop_fields';
+  __typename?: 'product_files_var_pop_fields';
   sizeInBytes?: Maybe<Scalars['Float']>;
 };
 
@@ -8950,7 +9011,7 @@ export type Product_Files_Var_Pop_Order_By = {
 
 /** aggregate var_samp on columns */
 export type Product_Files_Var_Samp_Fields = {
-   __typename?: 'product_files_var_samp_fields';
+  __typename?: 'product_files_var_samp_fields';
   sizeInBytes?: Maybe<Scalars['Float']>;
 };
 
@@ -8961,7 +9022,7 @@ export type Product_Files_Var_Samp_Order_By = {
 
 /** aggregate variance on columns */
 export type Product_Files_Variance_Fields = {
-   __typename?: 'product_files_variance_fields';
+  __typename?: 'product_files_variance_fields';
   sizeInBytes?: Maybe<Scalars['Float']>;
 };
 
@@ -8972,7 +9033,7 @@ export type Product_Files_Variance_Order_By = {
 
 /** columns and relationships of "product_preview_items" */
 export type Product_Preview_Items = {
-   __typename?: 'product_preview_items';
+  __typename?: 'product_preview_items';
   id: Scalars['String'];
   /** An object relationship */
   image?: Maybe<Image_Parents>;
@@ -8984,14 +9045,14 @@ export type Product_Preview_Items = {
 
 /** aggregated selection of "product_preview_items" */
 export type Product_Preview_Items_Aggregate = {
-   __typename?: 'product_preview_items_aggregate';
+  __typename?: 'product_preview_items_aggregate';
   aggregate?: Maybe<Product_Preview_Items_Aggregate_Fields>;
   nodes: Array<Product_Preview_Items>;
 };
 
 /** aggregate fields of "product_preview_items" */
 export type Product_Preview_Items_Aggregate_Fields = {
-   __typename?: 'product_preview_items_aggregate_fields';
+  __typename?: 'product_preview_items_aggregate_fields';
   avg?: Maybe<Product_Preview_Items_Avg_Fields>;
   count?: Maybe<Scalars['Int']>;
   max?: Maybe<Product_Preview_Items_Max_Fields>;
@@ -9035,7 +9096,7 @@ export type Product_Preview_Items_Arr_Rel_Insert_Input = {
 
 /** aggregate avg on columns */
 export type Product_Preview_Items_Avg_Fields = {
-   __typename?: 'product_preview_items_avg_fields';
+  __typename?: 'product_preview_items_avg_fields';
   position?: Maybe<Scalars['Float']>;
 };
 
@@ -9080,7 +9141,7 @@ export type Product_Preview_Items_Insert_Input = {
 
 /** aggregate max on columns */
 export type Product_Preview_Items_Max_Fields = {
-   __typename?: 'product_preview_items_max_fields';
+  __typename?: 'product_preview_items_max_fields';
   id?: Maybe<Scalars['String']>;
   imageId?: Maybe<Scalars['String']>;
   position?: Maybe<Scalars['Int']>;
@@ -9099,7 +9160,7 @@ export type Product_Preview_Items_Max_Order_By = {
 
 /** aggregate min on columns */
 export type Product_Preview_Items_Min_Fields = {
-   __typename?: 'product_preview_items_min_fields';
+  __typename?: 'product_preview_items_min_fields';
   id?: Maybe<Scalars['String']>;
   imageId?: Maybe<Scalars['String']>;
   position?: Maybe<Scalars['Int']>;
@@ -9118,7 +9179,7 @@ export type Product_Preview_Items_Min_Order_By = {
 
 /** response of any mutation on the table "product_preview_items" */
 export type Product_Preview_Items_Mutation_Response = {
-   __typename?: 'product_preview_items_mutation_response';
+  __typename?: 'product_preview_items_mutation_response';
   /** number of affected rows by the mutation */
   affected_rows: Scalars['Int'];
   /** data of the affected rows by the mutation */
@@ -9178,7 +9239,7 @@ export type Product_Preview_Items_Set_Input = {
 
 /** aggregate stddev on columns */
 export type Product_Preview_Items_Stddev_Fields = {
-   __typename?: 'product_preview_items_stddev_fields';
+  __typename?: 'product_preview_items_stddev_fields';
   position?: Maybe<Scalars['Float']>;
 };
 
@@ -9189,7 +9250,7 @@ export type Product_Preview_Items_Stddev_Order_By = {
 
 /** aggregate stddev_pop on columns */
 export type Product_Preview_Items_Stddev_Pop_Fields = {
-   __typename?: 'product_preview_items_stddev_pop_fields';
+  __typename?: 'product_preview_items_stddev_pop_fields';
   position?: Maybe<Scalars['Float']>;
 };
 
@@ -9200,7 +9261,7 @@ export type Product_Preview_Items_Stddev_Pop_Order_By = {
 
 /** aggregate stddev_samp on columns */
 export type Product_Preview_Items_Stddev_Samp_Fields = {
-   __typename?: 'product_preview_items_stddev_samp_fields';
+  __typename?: 'product_preview_items_stddev_samp_fields';
   position?: Maybe<Scalars['Float']>;
 };
 
@@ -9211,7 +9272,7 @@ export type Product_Preview_Items_Stddev_Samp_Order_By = {
 
 /** aggregate sum on columns */
 export type Product_Preview_Items_Sum_Fields = {
-   __typename?: 'product_preview_items_sum_fields';
+  __typename?: 'product_preview_items_sum_fields';
   position?: Maybe<Scalars['Int']>;
 };
 
@@ -9236,7 +9297,7 @@ export enum Product_Preview_Items_Update_Column {
 
 /** aggregate var_pop on columns */
 export type Product_Preview_Items_Var_Pop_Fields = {
-   __typename?: 'product_preview_items_var_pop_fields';
+  __typename?: 'product_preview_items_var_pop_fields';
   position?: Maybe<Scalars['Float']>;
 };
 
@@ -9247,7 +9308,7 @@ export type Product_Preview_Items_Var_Pop_Order_By = {
 
 /** aggregate var_samp on columns */
 export type Product_Preview_Items_Var_Samp_Fields = {
-   __typename?: 'product_preview_items_var_samp_fields';
+  __typename?: 'product_preview_items_var_samp_fields';
   position?: Maybe<Scalars['Float']>;
 };
 
@@ -9258,7 +9319,7 @@ export type Product_Preview_Items_Var_Samp_Order_By = {
 
 /** aggregate variance on columns */
 export type Product_Preview_Items_Variance_Fields = {
-   __typename?: 'product_preview_items_variance_fields';
+  __typename?: 'product_preview_items_variance_fields';
   position?: Maybe<Scalars['Float']>;
 };
 
@@ -9269,7 +9330,7 @@ export type Product_Preview_Items_Variance_Order_By = {
 
 /** columns and relationships of "product_snapshots" */
 export type Product_Snapshots = {
-   __typename?: 'product_snapshots';
+  __typename?: 'product_snapshots';
   actionType: Scalars['String'];
   ammoType?: Maybe<Scalars['String']>;
   barrelLength?: Maybe<Scalars['String']>;
@@ -9340,14 +9401,14 @@ export type Product_SnapshotsProducts_AggregateArgs = {
 
 /** aggregated selection of "product_snapshots" */
 export type Product_Snapshots_Aggregate = {
-   __typename?: 'product_snapshots_aggregate';
+  __typename?: 'product_snapshots_aggregate';
   aggregate?: Maybe<Product_Snapshots_Aggregate_Fields>;
   nodes: Array<Product_Snapshots>;
 };
 
 /** aggregate fields of "product_snapshots" */
 export type Product_Snapshots_Aggregate_Fields = {
-   __typename?: 'product_snapshots_aggregate_fields';
+  __typename?: 'product_snapshots_aggregate_fields';
   count?: Maybe<Scalars['Int']>;
   max?: Maybe<Product_Snapshots_Max_Fields>;
   min?: Maybe<Product_Snapshots_Min_Fields>;
@@ -9430,7 +9491,7 @@ export type Product_Snapshots_Insert_Input = {
 
 /** aggregate max on columns */
 export type Product_Snapshots_Max_Fields = {
-   __typename?: 'product_snapshots_max_fields';
+  __typename?: 'product_snapshots_max_fields';
   actionType?: Maybe<Scalars['String']>;
   ammoType?: Maybe<Scalars['String']>;
   barrelLength?: Maybe<Scalars['String']>;
@@ -9471,7 +9532,7 @@ export type Product_Snapshots_Max_Order_By = {
 
 /** aggregate min on columns */
 export type Product_Snapshots_Min_Fields = {
-   __typename?: 'product_snapshots_min_fields';
+  __typename?: 'product_snapshots_min_fields';
   actionType?: Maybe<Scalars['String']>;
   ammoType?: Maybe<Scalars['String']>;
   barrelLength?: Maybe<Scalars['String']>;
@@ -9512,7 +9573,7 @@ export type Product_Snapshots_Min_Order_By = {
 
 /** response of any mutation on the table "product_snapshots" */
 export type Product_Snapshots_Mutation_Response = {
-   __typename?: 'product_snapshots_mutation_response';
+  __typename?: 'product_snapshots_mutation_response';
   /** number of affected rows by the mutation */
   affected_rows: Scalars['Int'];
   /** data of the affected rows by the mutation */
@@ -9654,7 +9715,7 @@ export enum Product_Snapshots_Update_Column {
 
 /** columns and relationships of "product_variants" */
 export type Product_Variants = {
-   __typename?: 'product_variants';
+  __typename?: 'product_variants';
   createdAt: Scalars['timestamptz'];
   currency?: Maybe<Scalars['String']>;
   isDefault: Scalars['Boolean'];
@@ -9696,14 +9757,14 @@ export type Product_VariantsPreviewItems_AggregateArgs = {
 
 /** aggregated selection of "product_variants" */
 export type Product_Variants_Aggregate = {
-   __typename?: 'product_variants_aggregate';
+  __typename?: 'product_variants_aggregate';
   aggregate?: Maybe<Product_Variants_Aggregate_Fields>;
   nodes: Array<Product_Variants>;
 };
 
 /** aggregate fields of "product_variants" */
 export type Product_Variants_Aggregate_Fields = {
-   __typename?: 'product_variants_aggregate_fields';
+  __typename?: 'product_variants_aggregate_fields';
   avg?: Maybe<Product_Variants_Avg_Fields>;
   count?: Maybe<Scalars['Int']>;
   max?: Maybe<Product_Variants_Max_Fields>;
@@ -9747,7 +9808,7 @@ export type Product_Variants_Arr_Rel_Insert_Input = {
 
 /** aggregate avg on columns */
 export type Product_Variants_Avg_Fields = {
-   __typename?: 'product_variants_avg_fields';
+  __typename?: 'product_variants_avg_fields';
   position?: Maybe<Scalars['Float']>;
   price?: Maybe<Scalars['Float']>;
   priceWas?: Maybe<Scalars['Float']>;
@@ -9814,7 +9875,7 @@ export type Product_Variants_Insert_Input = {
 
 /** aggregate max on columns */
 export type Product_Variants_Max_Fields = {
-   __typename?: 'product_variants_max_fields';
+  __typename?: 'product_variants_max_fields';
   createdAt?: Maybe<Scalars['timestamptz']>;
   currency?: Maybe<Scalars['String']>;
   position?: Maybe<Scalars['Int']>;
@@ -9847,7 +9908,7 @@ export type Product_Variants_Max_Order_By = {
 
 /** aggregate min on columns */
 export type Product_Variants_Min_Fields = {
-   __typename?: 'product_variants_min_fields';
+  __typename?: 'product_variants_min_fields';
   createdAt?: Maybe<Scalars['timestamptz']>;
   currency?: Maybe<Scalars['String']>;
   position?: Maybe<Scalars['Int']>;
@@ -9880,7 +9941,7 @@ export type Product_Variants_Min_Order_By = {
 
 /** response of any mutation on the table "product_variants" */
 export type Product_Variants_Mutation_Response = {
-   __typename?: 'product_variants_mutation_response';
+  __typename?: 'product_variants_mutation_response';
   /** number of affected rows by the mutation */
   affected_rows: Scalars['Int'];
   /** data of the affected rows by the mutation */
@@ -9972,7 +10033,7 @@ export type Product_Variants_Set_Input = {
 
 /** aggregate stddev on columns */
 export type Product_Variants_Stddev_Fields = {
-   __typename?: 'product_variants_stddev_fields';
+  __typename?: 'product_variants_stddev_fields';
   position?: Maybe<Scalars['Float']>;
   price?: Maybe<Scalars['Float']>;
   priceWas?: Maybe<Scalars['Float']>;
@@ -9987,7 +10048,7 @@ export type Product_Variants_Stddev_Order_By = {
 
 /** aggregate stddev_pop on columns */
 export type Product_Variants_Stddev_Pop_Fields = {
-   __typename?: 'product_variants_stddev_pop_fields';
+  __typename?: 'product_variants_stddev_pop_fields';
   position?: Maybe<Scalars['Float']>;
   price?: Maybe<Scalars['Float']>;
   priceWas?: Maybe<Scalars['Float']>;
@@ -10002,7 +10063,7 @@ export type Product_Variants_Stddev_Pop_Order_By = {
 
 /** aggregate stddev_samp on columns */
 export type Product_Variants_Stddev_Samp_Fields = {
-   __typename?: 'product_variants_stddev_samp_fields';
+  __typename?: 'product_variants_stddev_samp_fields';
   position?: Maybe<Scalars['Float']>;
   price?: Maybe<Scalars['Float']>;
   priceWas?: Maybe<Scalars['Float']>;
@@ -10017,7 +10078,7 @@ export type Product_Variants_Stddev_Samp_Order_By = {
 
 /** aggregate sum on columns */
 export type Product_Variants_Sum_Fields = {
-   __typename?: 'product_variants_sum_fields';
+  __typename?: 'product_variants_sum_fields';
   position?: Maybe<Scalars['Int']>;
   price?: Maybe<Scalars['Int']>;
   priceWas?: Maybe<Scalars['Int']>;
@@ -10062,7 +10123,7 @@ export enum Product_Variants_Update_Column {
 
 /** aggregate var_pop on columns */
 export type Product_Variants_Var_Pop_Fields = {
-   __typename?: 'product_variants_var_pop_fields';
+  __typename?: 'product_variants_var_pop_fields';
   position?: Maybe<Scalars['Float']>;
   price?: Maybe<Scalars['Float']>;
   priceWas?: Maybe<Scalars['Float']>;
@@ -10077,7 +10138,7 @@ export type Product_Variants_Var_Pop_Order_By = {
 
 /** aggregate var_samp on columns */
 export type Product_Variants_Var_Samp_Fields = {
-   __typename?: 'product_variants_var_samp_fields';
+  __typename?: 'product_variants_var_samp_fields';
   position?: Maybe<Scalars['Float']>;
   price?: Maybe<Scalars['Float']>;
   priceWas?: Maybe<Scalars['Float']>;
@@ -10092,7 +10153,7 @@ export type Product_Variants_Var_Samp_Order_By = {
 
 /** aggregate variance on columns */
 export type Product_Variants_Variance_Fields = {
-   __typename?: 'product_variants_variance_fields';
+  __typename?: 'product_variants_variance_fields';
   position?: Maybe<Scalars['Float']>;
   price?: Maybe<Scalars['Float']>;
   priceWas?: Maybe<Scalars['Float']>;
@@ -10167,7 +10228,7 @@ export type ProductEditInput = {
 
 /** Critical information about a file within a product */
 export type ProductFile = {
-   __typename?: 'ProductFile';
+  __typename?: 'ProductFile';
   id: Scalars['ID'];
   fileName?: Maybe<Scalars['String']>;
   createdAt: Scalars['Date'];
@@ -10177,20 +10238,20 @@ export type ProductFile = {
 
 /** Wrapping of temporary download link for a product file */
 export type ProductFileDownloadLink = {
-   __typename?: 'ProductFileDownloadLink';
+  __typename?: 'ProductFileDownloadLink';
   productFileId: Scalars['ID'];
   url: Scalars['String'];
   expiresAt: Scalars['Date'];
 };
 
 export type ProductMutationResponse = {
-   __typename?: 'ProductMutationResponse';
+  __typename?: 'ProductMutationResponse';
   product: Product;
 };
 
 /** An item that shows off the product (image, YouTube link, hosted videos to come) */
 export type ProductPreviewItem = {
-   __typename?: 'ProductPreviewItem';
+  __typename?: 'ProductPreviewItem';
   id: Scalars['ID'];
   imageId?: Maybe<Scalars['ID']>;
   image?: Maybe<Image_Parents>;
@@ -10205,7 +10266,7 @@ export type ProductPreviewItemInput = {
 
 /** Private information about something that can be bought */
 export type ProductPrivate = Product & {
-   __typename?: 'ProductPrivate';
+  __typename?: 'ProductPrivate';
   /** Metadata */
   id: Scalars['ID'];
   createdAt?: Maybe<Scalars['Date']>;
@@ -10240,7 +10301,7 @@ export type ProductProductVariantId = {
 
 /** Public information about something that can be bought */
 export type ProductPublic = Product & {
-   __typename?: 'ProductPublic';
+  __typename?: 'ProductPublic';
   /** Metadata */
   id: Scalars['ID'];
   createdAt?: Maybe<Scalars['Date']>;
@@ -10269,7 +10330,7 @@ export type ProductPublic = Product & {
 
 /** columns and relationships of "products" */
 export type Products = {
-   __typename?: 'products';
+  __typename?: 'products';
   /** An object relationship */
   category?: Maybe<Categories>;
   categoryId: Scalars['String'];
@@ -10317,14 +10378,14 @@ export type ProductsProductVariants_AggregateArgs = {
 
 /** aggregated selection of "products" */
 export type Products_Aggregate = {
-   __typename?: 'products_aggregate';
+  __typename?: 'products_aggregate';
   aggregate?: Maybe<Products_Aggregate_Fields>;
   nodes: Array<Products>;
 };
 
 /** aggregate fields of "products" */
 export type Products_Aggregate_Fields = {
-   __typename?: 'products_aggregate_fields';
+  __typename?: 'products_aggregate_fields';
   count?: Maybe<Scalars['Int']>;
   max?: Maybe<Products_Max_Fields>;
   min?: Maybe<Products_Min_Fields>;
@@ -10403,7 +10464,7 @@ export type Products_Insert_Input = {
 
 /** aggregate max on columns */
 export type Products_Max_Fields = {
-   __typename?: 'products_max_fields';
+  __typename?: 'products_max_fields';
   categoryId?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['timestamptz']>;
   currentSnapshotId?: Maybe<Scalars['String']>;
@@ -10428,7 +10489,7 @@ export type Products_Max_Order_By = {
 
 /** aggregate min on columns */
 export type Products_Min_Fields = {
-   __typename?: 'products_min_fields';
+  __typename?: 'products_min_fields';
   categoryId?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['timestamptz']>;
   currentSnapshotId?: Maybe<Scalars['String']>;
@@ -10453,7 +10514,7 @@ export type Products_Min_Order_By = {
 
 /** response of any mutation on the table "products" */
 export type Products_Mutation_Response = {
-   __typename?: 'products_mutation_response';
+  __typename?: 'products_mutation_response';
   /** number of affected rows by the mutation */
   affected_rows: Scalars['Int'];
   /** data of the affected rows by the mutation */
@@ -10577,7 +10638,7 @@ export enum Products_Update_Column {
 }
 
 export type ProductsConnection = Connection & {
-   __typename?: 'ProductsConnection';
+  __typename?: 'ProductsConnection';
   totalCount?: Maybe<Scalars['Int']>;
   pageInfo: PageInfo;
   edges: Array<ProductsEdge>;
@@ -10585,12 +10646,12 @@ export type ProductsConnection = Connection & {
 };
 
 export type ProductsEdge = {
-   __typename?: 'ProductsEdge';
+  __typename?: 'ProductsEdge';
   node: Product;
 };
 
 export type ProductsMutationResponse = {
-   __typename?: 'ProductsMutationResponse';
+  __typename?: 'ProductsMutationResponse';
   products: Array<Product>;
 };
 
@@ -10646,7 +10707,7 @@ export type ProductVariantInput = {
 
 /** columns and relationships of "promoted_list_items" */
 export type Promoted_List_Items = {
-   __typename?: 'promoted_list_items';
+  __typename?: 'promoted_list_items';
   createdAt: Scalars['timestamptz'];
   expiresAt?: Maybe<Scalars['timestamptz']>;
   id: Scalars['String'];
@@ -10662,14 +10723,14 @@ export type Promoted_List_Items = {
 
 /** aggregated selection of "promoted_list_items" */
 export type Promoted_List_Items_Aggregate = {
-   __typename?: 'promoted_list_items_aggregate';
+  __typename?: 'promoted_list_items_aggregate';
   aggregate?: Maybe<Promoted_List_Items_Aggregate_Fields>;
   nodes: Array<Promoted_List_Items>;
 };
 
 /** aggregate fields of "promoted_list_items" */
 export type Promoted_List_Items_Aggregate_Fields = {
-   __typename?: 'promoted_list_items_aggregate_fields';
+  __typename?: 'promoted_list_items_aggregate_fields';
   avg?: Maybe<Promoted_List_Items_Avg_Fields>;
   count?: Maybe<Scalars['Int']>;
   max?: Maybe<Promoted_List_Items_Max_Fields>;
@@ -10713,7 +10774,7 @@ export type Promoted_List_Items_Arr_Rel_Insert_Input = {
 
 /** aggregate avg on columns */
 export type Promoted_List_Items_Avg_Fields = {
-   __typename?: 'promoted_list_items_avg_fields';
+  __typename?: 'promoted_list_items_avg_fields';
   position?: Maybe<Scalars['Float']>;
   reservePrice?: Maybe<Scalars['Float']>;
 };
@@ -10769,7 +10830,7 @@ export type Promoted_List_Items_Insert_Input = {
 
 /** aggregate max on columns */
 export type Promoted_List_Items_Max_Fields = {
-   __typename?: 'promoted_list_items_max_fields';
+  __typename?: 'promoted_list_items_max_fields';
   createdAt?: Maybe<Scalars['timestamptz']>;
   expiresAt?: Maybe<Scalars['timestamptz']>;
   id?: Maybe<Scalars['String']>;
@@ -10794,7 +10855,7 @@ export type Promoted_List_Items_Max_Order_By = {
 
 /** aggregate min on columns */
 export type Promoted_List_Items_Min_Fields = {
-   __typename?: 'promoted_list_items_min_fields';
+  __typename?: 'promoted_list_items_min_fields';
   createdAt?: Maybe<Scalars['timestamptz']>;
   expiresAt?: Maybe<Scalars['timestamptz']>;
   id?: Maybe<Scalars['String']>;
@@ -10819,7 +10880,7 @@ export type Promoted_List_Items_Min_Order_By = {
 
 /** response of any mutation on the table "promoted_list_items" */
 export type Promoted_List_Items_Mutation_Response = {
-   __typename?: 'promoted_list_items_mutation_response';
+  __typename?: 'promoted_list_items_mutation_response';
   /** number of affected rows by the mutation */
   affected_rows: Scalars['Int'];
   /** data of the affected rows by the mutation */
@@ -10895,7 +10956,7 @@ export type Promoted_List_Items_Set_Input = {
 
 /** aggregate stddev on columns */
 export type Promoted_List_Items_Stddev_Fields = {
-   __typename?: 'promoted_list_items_stddev_fields';
+  __typename?: 'promoted_list_items_stddev_fields';
   position?: Maybe<Scalars['Float']>;
   reservePrice?: Maybe<Scalars['Float']>;
 };
@@ -10908,7 +10969,7 @@ export type Promoted_List_Items_Stddev_Order_By = {
 
 /** aggregate stddev_pop on columns */
 export type Promoted_List_Items_Stddev_Pop_Fields = {
-   __typename?: 'promoted_list_items_stddev_pop_fields';
+  __typename?: 'promoted_list_items_stddev_pop_fields';
   position?: Maybe<Scalars['Float']>;
   reservePrice?: Maybe<Scalars['Float']>;
 };
@@ -10921,7 +10982,7 @@ export type Promoted_List_Items_Stddev_Pop_Order_By = {
 
 /** aggregate stddev_samp on columns */
 export type Promoted_List_Items_Stddev_Samp_Fields = {
-   __typename?: 'promoted_list_items_stddev_samp_fields';
+  __typename?: 'promoted_list_items_stddev_samp_fields';
   position?: Maybe<Scalars['Float']>;
   reservePrice?: Maybe<Scalars['Float']>;
 };
@@ -10934,7 +10995,7 @@ export type Promoted_List_Items_Stddev_Samp_Order_By = {
 
 /** aggregate sum on columns */
 export type Promoted_List_Items_Sum_Fields = {
-   __typename?: 'promoted_list_items_sum_fields';
+  __typename?: 'promoted_list_items_sum_fields';
   position?: Maybe<Scalars['Int']>;
   reservePrice?: Maybe<Scalars['Int']>;
 };
@@ -10969,7 +11030,7 @@ export enum Promoted_List_Items_Update_Column {
 
 /** aggregate var_pop on columns */
 export type Promoted_List_Items_Var_Pop_Fields = {
-   __typename?: 'promoted_list_items_var_pop_fields';
+  __typename?: 'promoted_list_items_var_pop_fields';
   position?: Maybe<Scalars['Float']>;
   reservePrice?: Maybe<Scalars['Float']>;
 };
@@ -10982,7 +11043,7 @@ export type Promoted_List_Items_Var_Pop_Order_By = {
 
 /** aggregate var_samp on columns */
 export type Promoted_List_Items_Var_Samp_Fields = {
-   __typename?: 'promoted_list_items_var_samp_fields';
+  __typename?: 'promoted_list_items_var_samp_fields';
   position?: Maybe<Scalars['Float']>;
   reservePrice?: Maybe<Scalars['Float']>;
 };
@@ -10995,7 +11056,7 @@ export type Promoted_List_Items_Var_Samp_Order_By = {
 
 /** aggregate variance on columns */
 export type Promoted_List_Items_Variance_Fields = {
-   __typename?: 'promoted_list_items_variance_fields';
+  __typename?: 'promoted_list_items_variance_fields';
   position?: Maybe<Scalars['Float']>;
   reservePrice?: Maybe<Scalars['Float']>;
 };
@@ -11008,7 +11069,7 @@ export type Promoted_List_Items_Variance_Order_By = {
 
 /** columns and relationships of "promoted_lists" */
 export type Promoted_Lists = {
-   __typename?: 'promoted_lists';
+  __typename?: 'promoted_lists';
   cardsPerRow?: Maybe<Scalars['Int']>;
   categoryFilterSlug?: Maybe<Scalars['String']>;
   createdAt: Scalars['timestamptz'];
@@ -11043,14 +11104,14 @@ export type Promoted_ListsPromotedListItems_AggregateArgs = {
 
 /** aggregated selection of "promoted_lists" */
 export type Promoted_Lists_Aggregate = {
-   __typename?: 'promoted_lists_aggregate';
+  __typename?: 'promoted_lists_aggregate';
   aggregate?: Maybe<Promoted_Lists_Aggregate_Fields>;
   nodes: Array<Promoted_Lists>;
 };
 
 /** aggregate fields of "promoted_lists" */
 export type Promoted_Lists_Aggregate_Fields = {
-   __typename?: 'promoted_lists_aggregate_fields';
+  __typename?: 'promoted_lists_aggregate_fields';
   avg?: Maybe<Promoted_Lists_Avg_Fields>;
   count?: Maybe<Scalars['Int']>;
   max?: Maybe<Promoted_Lists_Max_Fields>;
@@ -11094,7 +11155,7 @@ export type Promoted_Lists_Arr_Rel_Insert_Input = {
 
 /** aggregate avg on columns */
 export type Promoted_Lists_Avg_Fields = {
-   __typename?: 'promoted_lists_avg_fields';
+  __typename?: 'promoted_lists_avg_fields';
   cardsPerRow?: Maybe<Scalars['Float']>;
   numberOfSlots?: Maybe<Scalars['Float']>;
 };
@@ -11144,7 +11205,7 @@ export type Promoted_Lists_Insert_Input = {
 
 /** aggregate max on columns */
 export type Promoted_Lists_Max_Fields = {
-   __typename?: 'promoted_lists_max_fields';
+  __typename?: 'promoted_lists_max_fields';
   cardsPerRow?: Maybe<Scalars['Int']>;
   categoryFilterSlug?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['timestamptz']>;
@@ -11165,7 +11226,7 @@ export type Promoted_Lists_Max_Order_By = {
 
 /** aggregate min on columns */
 export type Promoted_Lists_Min_Fields = {
-   __typename?: 'promoted_lists_min_fields';
+  __typename?: 'promoted_lists_min_fields';
   cardsPerRow?: Maybe<Scalars['Int']>;
   categoryFilterSlug?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['timestamptz']>;
@@ -11186,7 +11247,7 @@ export type Promoted_Lists_Min_Order_By = {
 
 /** response of any mutation on the table "promoted_lists" */
 export type Promoted_Lists_Mutation_Response = {
-   __typename?: 'promoted_lists_mutation_response';
+  __typename?: 'promoted_lists_mutation_response';
   /** number of affected rows by the mutation */
   affected_rows: Scalars['Int'];
   /** data of the affected rows by the mutation */
@@ -11250,7 +11311,7 @@ export type Promoted_Lists_Set_Input = {
 
 /** aggregate stddev on columns */
 export type Promoted_Lists_Stddev_Fields = {
-   __typename?: 'promoted_lists_stddev_fields';
+  __typename?: 'promoted_lists_stddev_fields';
   cardsPerRow?: Maybe<Scalars['Float']>;
   numberOfSlots?: Maybe<Scalars['Float']>;
 };
@@ -11263,7 +11324,7 @@ export type Promoted_Lists_Stddev_Order_By = {
 
 /** aggregate stddev_pop on columns */
 export type Promoted_Lists_Stddev_Pop_Fields = {
-   __typename?: 'promoted_lists_stddev_pop_fields';
+  __typename?: 'promoted_lists_stddev_pop_fields';
   cardsPerRow?: Maybe<Scalars['Float']>;
   numberOfSlots?: Maybe<Scalars['Float']>;
 };
@@ -11276,7 +11337,7 @@ export type Promoted_Lists_Stddev_Pop_Order_By = {
 
 /** aggregate stddev_samp on columns */
 export type Promoted_Lists_Stddev_Samp_Fields = {
-   __typename?: 'promoted_lists_stddev_samp_fields';
+  __typename?: 'promoted_lists_stddev_samp_fields';
   cardsPerRow?: Maybe<Scalars['Float']>;
   numberOfSlots?: Maybe<Scalars['Float']>;
 };
@@ -11289,7 +11350,7 @@ export type Promoted_Lists_Stddev_Samp_Order_By = {
 
 /** aggregate sum on columns */
 export type Promoted_Lists_Sum_Fields = {
-   __typename?: 'promoted_lists_sum_fields';
+  __typename?: 'promoted_lists_sum_fields';
   cardsPerRow?: Maybe<Scalars['Int']>;
   numberOfSlots?: Maybe<Scalars['Int']>;
 };
@@ -11318,7 +11379,7 @@ export enum Promoted_Lists_Update_Column {
 
 /** aggregate var_pop on columns */
 export type Promoted_Lists_Var_Pop_Fields = {
-   __typename?: 'promoted_lists_var_pop_fields';
+  __typename?: 'promoted_lists_var_pop_fields';
   cardsPerRow?: Maybe<Scalars['Float']>;
   numberOfSlots?: Maybe<Scalars['Float']>;
 };
@@ -11331,7 +11392,7 @@ export type Promoted_Lists_Var_Pop_Order_By = {
 
 /** aggregate var_samp on columns */
 export type Promoted_Lists_Var_Samp_Fields = {
-   __typename?: 'promoted_lists_var_samp_fields';
+  __typename?: 'promoted_lists_var_samp_fields';
   cardsPerRow?: Maybe<Scalars['Float']>;
   numberOfSlots?: Maybe<Scalars['Float']>;
 };
@@ -11344,7 +11405,7 @@ export type Promoted_Lists_Var_Samp_Order_By = {
 
 /** aggregate variance on columns */
 export type Promoted_Lists_Variance_Fields = {
-   __typename?: 'promoted_lists_variance_fields';
+  __typename?: 'promoted_lists_variance_fields';
   cardsPerRow?: Maybe<Scalars['Float']>;
   numberOfSlots?: Maybe<Scalars['Float']>;
 };
@@ -11356,7 +11417,7 @@ export type Promoted_Lists_Variance_Order_By = {
 };
 
 export type PromotedList = {
-   __typename?: 'PromotedList';
+  __typename?: 'PromotedList';
   id: Scalars['ID'];
   createdAt: Scalars['Date'];
   updatedAt?: Maybe<Scalars['Date']>;
@@ -11368,7 +11429,7 @@ export type PromotedList = {
 };
 
 export type PromotedListItem = {
-   __typename?: 'PromotedListItem';
+  __typename?: 'PromotedListItem';
   id: Scalars['ID'];
   createdAt: Scalars['Date'];
   promotedListId: Scalars['ID'];
@@ -11383,30 +11444,30 @@ export type PromotedListItem = {
 };
 
 export type PromotedListItemMutationResponse = {
-   __typename?: 'PromotedListItemMutationResponse';
+  __typename?: 'PromotedListItemMutationResponse';
   promotedListItem: PromotedListItem;
 };
 
 export type PromotedListItemsConnection = {
-   __typename?: 'PromotedListItemsConnection';
+  __typename?: 'PromotedListItemsConnection';
   totalCount?: Maybe<Scalars['Int']>;
   pageInfo: PageInfo;
   edges: Array<PromotedListItemsEdge>;
 };
 
 export type PromotedListItemsEdge = {
-   __typename?: 'PromotedListItemsEdge';
+  __typename?: 'PromotedListItemsEdge';
   node: PromotedListItem;
 };
 
 export type PromotedListMutationResponse = {
-   __typename?: 'PromotedListMutationResponse';
+  __typename?: 'PromotedListMutationResponse';
   promotedList: PromotedList;
 };
 
 /** columns and relationships of "promotion_purchases" */
 export type Promotion_Purchases = {
-   __typename?: 'promotion_purchases';
+  __typename?: 'promotion_purchases';
   buyerId: Scalars['String'];
   createdAt: Scalars['timestamptz'];
   currency: Scalars['String'];
@@ -11421,14 +11482,14 @@ export type Promotion_Purchases = {
 
 /** aggregated selection of "promotion_purchases" */
 export type Promotion_Purchases_Aggregate = {
-   __typename?: 'promotion_purchases_aggregate';
+  __typename?: 'promotion_purchases_aggregate';
   aggregate?: Maybe<Promotion_Purchases_Aggregate_Fields>;
   nodes: Array<Promotion_Purchases>;
 };
 
 /** aggregate fields of "promotion_purchases" */
 export type Promotion_Purchases_Aggregate_Fields = {
-   __typename?: 'promotion_purchases_aggregate_fields';
+  __typename?: 'promotion_purchases_aggregate_fields';
   avg?: Maybe<Promotion_Purchases_Avg_Fields>;
   count?: Maybe<Scalars['Int']>;
   max?: Maybe<Promotion_Purchases_Max_Fields>;
@@ -11472,7 +11533,7 @@ export type Promotion_Purchases_Arr_Rel_Insert_Input = {
 
 /** aggregate avg on columns */
 export type Promotion_Purchases_Avg_Fields = {
-   __typename?: 'promotion_purchases_avg_fields';
+  __typename?: 'promotion_purchases_avg_fields';
   fees?: Maybe<Scalars['Float']>;
   total?: Maybe<Scalars['Float']>;
 };
@@ -11528,7 +11589,7 @@ export type Promotion_Purchases_Insert_Input = {
 
 /** aggregate max on columns */
 export type Promotion_Purchases_Max_Fields = {
-   __typename?: 'promotion_purchases_max_fields';
+  __typename?: 'promotion_purchases_max_fields';
   buyerId?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['timestamptz']>;
   currency?: Maybe<Scalars['String']>;
@@ -11557,7 +11618,7 @@ export type Promotion_Purchases_Max_Order_By = {
 
 /** aggregate min on columns */
 export type Promotion_Purchases_Min_Fields = {
-   __typename?: 'promotion_purchases_min_fields';
+  __typename?: 'promotion_purchases_min_fields';
   buyerId?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['timestamptz']>;
   currency?: Maybe<Scalars['String']>;
@@ -11586,7 +11647,7 @@ export type Promotion_Purchases_Min_Order_By = {
 
 /** response of any mutation on the table "promotion_purchases" */
 export type Promotion_Purchases_Mutation_Response = {
-   __typename?: 'promotion_purchases_mutation_response';
+  __typename?: 'promotion_purchases_mutation_response';
   /** number of affected rows by the mutation */
   affected_rows: Scalars['Int'];
   /** data of the affected rows by the mutation */
@@ -11665,7 +11726,7 @@ export type Promotion_Purchases_Set_Input = {
 
 /** aggregate stddev on columns */
 export type Promotion_Purchases_Stddev_Fields = {
-   __typename?: 'promotion_purchases_stddev_fields';
+  __typename?: 'promotion_purchases_stddev_fields';
   fees?: Maybe<Scalars['Float']>;
   total?: Maybe<Scalars['Float']>;
 };
@@ -11678,7 +11739,7 @@ export type Promotion_Purchases_Stddev_Order_By = {
 
 /** aggregate stddev_pop on columns */
 export type Promotion_Purchases_Stddev_Pop_Fields = {
-   __typename?: 'promotion_purchases_stddev_pop_fields';
+  __typename?: 'promotion_purchases_stddev_pop_fields';
   fees?: Maybe<Scalars['Float']>;
   total?: Maybe<Scalars['Float']>;
 };
@@ -11691,7 +11752,7 @@ export type Promotion_Purchases_Stddev_Pop_Order_By = {
 
 /** aggregate stddev_samp on columns */
 export type Promotion_Purchases_Stddev_Samp_Fields = {
-   __typename?: 'promotion_purchases_stddev_samp_fields';
+  __typename?: 'promotion_purchases_stddev_samp_fields';
   fees?: Maybe<Scalars['Float']>;
   total?: Maybe<Scalars['Float']>;
 };
@@ -11704,7 +11765,7 @@ export type Promotion_Purchases_Stddev_Samp_Order_By = {
 
 /** aggregate sum on columns */
 export type Promotion_Purchases_Sum_Fields = {
-   __typename?: 'promotion_purchases_sum_fields';
+  __typename?: 'promotion_purchases_sum_fields';
   fees?: Maybe<Scalars['Int']>;
   total?: Maybe<Scalars['Int']>;
 };
@@ -11741,7 +11802,7 @@ export enum Promotion_Purchases_Update_Column {
 
 /** aggregate var_pop on columns */
 export type Promotion_Purchases_Var_Pop_Fields = {
-   __typename?: 'promotion_purchases_var_pop_fields';
+  __typename?: 'promotion_purchases_var_pop_fields';
   fees?: Maybe<Scalars['Float']>;
   total?: Maybe<Scalars['Float']>;
 };
@@ -11754,7 +11815,7 @@ export type Promotion_Purchases_Var_Pop_Order_By = {
 
 /** aggregate var_samp on columns */
 export type Promotion_Purchases_Var_Samp_Fields = {
-   __typename?: 'promotion_purchases_var_samp_fields';
+  __typename?: 'promotion_purchases_var_samp_fields';
   fees?: Maybe<Scalars['Float']>;
   total?: Maybe<Scalars['Float']>;
 };
@@ -11767,7 +11828,7 @@ export type Promotion_Purchases_Var_Samp_Order_By = {
 
 /** aggregate variance on columns */
 export type Promotion_Purchases_Variance_Fields = {
-   __typename?: 'promotion_purchases_variance_fields';
+  __typename?: 'promotion_purchases_variance_fields';
   fees?: Maybe<Scalars['Float']>;
   total?: Maybe<Scalars['Float']>;
 };
@@ -11779,14 +11840,14 @@ export type Promotion_Purchases_Variance_Order_By = {
 };
 
 export type PromotionPurchaseMutationResponse = {
-   __typename?: 'PromotionPurchaseMutationResponse';
+  __typename?: 'PromotionPurchaseMutationResponse';
   promotionPurchase: Promotion_Purchases;
   promotedListItem: PromotedListItem;
   stripePaymentIntent: Scalars['String'];
 };
 
 export type Query = {
-   __typename?: 'Query';
+  __typename?: 'Query';
   /** fetch data from the table: "bids" */
   bids: Array<Bids>;
   /** fetch aggregated fields from the table: "bids" */
@@ -11971,6 +12032,12 @@ export type Query = {
   refunds_aggregate: Refunds_Aggregate;
   /** fetch data from the table: "refunds" using primary key columns */
   refunds_by_pk?: Maybe<Refunds>;
+  /** fetch data from the table: "signup_emails" */
+  signup_emails: Array<Signup_Emails>;
+  /** fetch aggregated fields from the table: "signup_emails" */
+  signup_emails_aggregate: Signup_Emails_Aggregate;
+  /** fetch data from the table: "signup_emails" using primary key columns */
+  signup_emails_by_pk?: Maybe<Signup_Emails>;
   /** fetch data from the table: "stores" */
   stores: Array<Stores>;
   /** fetch aggregated fields from the table: "stores" */
@@ -12005,46 +12072,48 @@ export type Query = {
   users_typing_aggregate: Users_Typing_Aggregate;
   /**
    * Get the user who is currently logged in.
-   * 
+   *
    * AccessRule – LOGGED_IN
    */
   loggedInUser: UserPrivate;
   /**
    * Lookup public information about a user.
    * If the requested user is also the logged-in user, UserPrivate fields will be available.
-   * 
+   *
    * AccessRule – PUBLIC
    */
   user?: Maybe<BasicUser>;
   /**
    * Lookup private information about a user using their ID or email address.
-   * 
+   *
    * AccessRule – PLATFORM_ADMIN
    */
   userByEmailOrIdAdminOnly?: Maybe<BasicUser>;
   /**
    * Get recent users who just signed up, a helper function for Admin dashboard
    * to verify users
-   * 
+   *
    * AccessRule – PLATFORM_ADMIN
    */
   getRecentUsers: Array<BasicUser>;
+  /** AccessRule – PLATFORM_ADMIN */
+  getRecentProducts: Array<Product>;
   /**
    * Query the list of products that are recommended for the logged-in user.
    * If nobody is logged in, a general list of recommendations is still returned.
-   * 
+   *
    * AccessRule – PUBLIC
    */
   getRecommendedProductsConnection: ProductsConnection;
   /**
    * Retrieve all of the products on the platform that can be purchased.
-   * 
+   *
    * AccessRule – PUBLIC
    */
   productsAllConnection: ProductsConnection;
   /**
    * Search all of the products on the platform that can be purchased.
-   * 
+   *
    * AccessRule – PUBLIC
    */
   search: ProductsConnection;
@@ -12055,26 +12124,26 @@ export type Query = {
   productsByCategoryConnection?: Maybe<ProductsConnection>;
   /**
    * Get a product by its ID.
-   * 
+   *
    * AccessRule – PUBLIC
    */
   product?: Maybe<Product>;
   /**
    * Get a store by its ID.
-   * 
+   *
    * AccessRule – PUBLIC
    */
   store?: Maybe<Store>;
   /**
    * Get the full list of product categories.
    * TODO: The maximum expected number of categories is X
-   * 
+   *
    * AccessRule – PUBLIC
    */
   getProductCategories: Array<Categories>;
   /**
    * Get a category by its ID.
-   * 
+   *
    * AccessRule – PUBLIC
    */
   category?: Maybe<Categories>;
@@ -12175,7 +12244,7 @@ export type Query = {
   /**
    * Get a promoted list by its ID.
    * returns promotedList.promotedListItemsConnection
-   * 
+   *
    * AccessRule – PUBLIC
    */
   promotedList?: Maybe<PromotedList>;
@@ -12202,6 +12271,7 @@ export type Query = {
   dashboardProductsConnection: ProductsConnection;
   getCoinbaseExchangeRates?: Maybe<CoinbaseExchangeRates>;
   getUserBidsForProduct?: Maybe<ChatRoom>;
+  getSignupWaitlist: Array<Signup_Emails>;
 };
 
 
@@ -12916,6 +12986,29 @@ export type QueryRefunds_By_PkArgs = {
 };
 
 
+export type QuerySignup_EmailsArgs = {
+  distinct_on?: Maybe<Array<Signup_Emails_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Signup_Emails_Order_By>>;
+  where?: Maybe<Signup_Emails_Bool_Exp>;
+};
+
+
+export type QuerySignup_Emails_AggregateArgs = {
+  distinct_on?: Maybe<Array<Signup_Emails_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Signup_Emails_Order_By>>;
+  where?: Maybe<Signup_Emails_Bool_Exp>;
+};
+
+
+export type QuerySignup_Emails_By_PkArgs = {
+  id: Scalars['String'];
+};
+
+
 export type QueryStoresArgs = {
   distinct_on?: Maybe<Array<Stores_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -13055,6 +13148,12 @@ export type QueryUserByEmailOrIdAdminOnlyArgs = {
 
 
 export type QueryGetRecentUsersArgs = {
+  limit: Scalars['Int'];
+  offset: Scalars['Int'];
+};
+
+
+export type QueryGetRecentProductsArgs = {
   limit: Scalars['Int'];
   offset: Scalars['Int'];
 };
@@ -13238,9 +13337,14 @@ export type QueryGetUserBidsForProductArgs = {
   productId: Scalars['String'];
 };
 
+
+export type QueryGetSignupWaitlistArgs = {
+  limit: Scalars['Int'];
+};
+
 /** columns and relationships of "refunds" */
 export type Refunds = {
-   __typename?: 'refunds';
+  __typename?: 'refunds';
   createdAt: Scalars['timestamp'];
   id: Scalars['String'];
   orderId: Scalars['String'];
@@ -13252,14 +13356,14 @@ export type Refunds = {
 
 /** aggregated selection of "refunds" */
 export type Refunds_Aggregate = {
-   __typename?: 'refunds_aggregate';
+  __typename?: 'refunds_aggregate';
   aggregate?: Maybe<Refunds_Aggregate_Fields>;
   nodes: Array<Refunds>;
 };
 
 /** aggregate fields of "refunds" */
 export type Refunds_Aggregate_Fields = {
-   __typename?: 'refunds_aggregate_fields';
+  __typename?: 'refunds_aggregate_fields';
   count?: Maybe<Scalars['Int']>;
   max?: Maybe<Refunds_Max_Fields>;
   min?: Maybe<Refunds_Min_Fields>;
@@ -13318,7 +13422,7 @@ export type Refunds_Insert_Input = {
 
 /** aggregate max on columns */
 export type Refunds_Max_Fields = {
-   __typename?: 'refunds_max_fields';
+  __typename?: 'refunds_max_fields';
   createdAt?: Maybe<Scalars['timestamp']>;
   id?: Maybe<Scalars['String']>;
   orderId?: Maybe<Scalars['String']>;
@@ -13341,7 +13445,7 @@ export type Refunds_Max_Order_By = {
 
 /** aggregate min on columns */
 export type Refunds_Min_Fields = {
-   __typename?: 'refunds_min_fields';
+  __typename?: 'refunds_min_fields';
   createdAt?: Maybe<Scalars['timestamp']>;
   id?: Maybe<Scalars['String']>;
   orderId?: Maybe<Scalars['String']>;
@@ -13364,7 +13468,7 @@ export type Refunds_Min_Order_By = {
 
 /** response of any mutation on the table "refunds" */
 export type Refunds_Mutation_Response = {
-   __typename?: 'refunds_mutation_response';
+  __typename?: 'refunds_mutation_response';
   /** number of affected rows by the mutation */
   affected_rows: Scalars['Int'];
   /** data of the affected rows by the mutation */
@@ -13448,7 +13552,7 @@ export enum Refunds_Update_Column {
 }
 
 export type ResetPasswordResponse = {
-   __typename?: 'ResetPasswordResponse';
+  __typename?: 'ResetPasswordResponse';
   email?: Maybe<Scalars['String']>;
   expiresAt?: Maybe<Scalars['Date']>;
   resetId?: Maybe<Scalars['String']>;
@@ -13465,14 +13569,171 @@ export enum Role {
 
 
 export type SendResetPasswordResponse = {
-   __typename?: 'SendResetPasswordResponse';
+  __typename?: 'SendResetPasswordResponse';
   resetId?: Maybe<Scalars['String']>;
   emailSentTo?: Maybe<Scalars['String']>;
   status?: Maybe<Scalars['JSON']>;
 };
 
+/** columns and relationships of "signup_emails" */
+export type Signup_Emails = {
+  __typename?: 'signup_emails';
+  createdAt: Scalars['timestamptz'];
+  email: Scalars['String'];
+  id: Scalars['String'];
+};
+
+/** aggregated selection of "signup_emails" */
+export type Signup_Emails_Aggregate = {
+  __typename?: 'signup_emails_aggregate';
+  aggregate?: Maybe<Signup_Emails_Aggregate_Fields>;
+  nodes: Array<Signup_Emails>;
+};
+
+/** aggregate fields of "signup_emails" */
+export type Signup_Emails_Aggregate_Fields = {
+  __typename?: 'signup_emails_aggregate_fields';
+  count?: Maybe<Scalars['Int']>;
+  max?: Maybe<Signup_Emails_Max_Fields>;
+  min?: Maybe<Signup_Emails_Min_Fields>;
+};
+
+
+/** aggregate fields of "signup_emails" */
+export type Signup_Emails_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<Signup_Emails_Select_Column>>;
+  distinct?: Maybe<Scalars['Boolean']>;
+};
+
+/** order by aggregate values of table "signup_emails" */
+export type Signup_Emails_Aggregate_Order_By = {
+  count?: Maybe<Order_By>;
+  max?: Maybe<Signup_Emails_Max_Order_By>;
+  min?: Maybe<Signup_Emails_Min_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "signup_emails" */
+export type Signup_Emails_Arr_Rel_Insert_Input = {
+  data: Array<Signup_Emails_Insert_Input>;
+  on_conflict?: Maybe<Signup_Emails_On_Conflict>;
+};
+
+/** Boolean expression to filter rows from the table "signup_emails". All fields are combined with a logical 'AND'. */
+export type Signup_Emails_Bool_Exp = {
+  _and?: Maybe<Array<Maybe<Signup_Emails_Bool_Exp>>>;
+  _not?: Maybe<Signup_Emails_Bool_Exp>;
+  _or?: Maybe<Array<Maybe<Signup_Emails_Bool_Exp>>>;
+  createdAt?: Maybe<Timestamptz_Comparison_Exp>;
+  email?: Maybe<String_Comparison_Exp>;
+  id?: Maybe<String_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "signup_emails" */
+export enum Signup_Emails_Constraint {
+  /** unique or primary key constraint */
+  SIGNUP_EMAILS_PKEY = 'signup_emails_pkey'
+}
+
+/** input type for inserting data into table "signup_emails" */
+export type Signup_Emails_Insert_Input = {
+  createdAt?: Maybe<Scalars['timestamptz']>;
+  email?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+};
+
+/** aggregate max on columns */
+export type Signup_Emails_Max_Fields = {
+  __typename?: 'signup_emails_max_fields';
+  createdAt?: Maybe<Scalars['timestamptz']>;
+  email?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+};
+
+/** order by max() on columns of table "signup_emails" */
+export type Signup_Emails_Max_Order_By = {
+  createdAt?: Maybe<Order_By>;
+  email?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type Signup_Emails_Min_Fields = {
+  __typename?: 'signup_emails_min_fields';
+  createdAt?: Maybe<Scalars['timestamptz']>;
+  email?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+};
+
+/** order by min() on columns of table "signup_emails" */
+export type Signup_Emails_Min_Order_By = {
+  createdAt?: Maybe<Order_By>;
+  email?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+};
+
+/** response of any mutation on the table "signup_emails" */
+export type Signup_Emails_Mutation_Response = {
+  __typename?: 'signup_emails_mutation_response';
+  /** number of affected rows by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data of the affected rows by the mutation */
+  returning: Array<Signup_Emails>;
+};
+
+/** input type for inserting object relation for remote table "signup_emails" */
+export type Signup_Emails_Obj_Rel_Insert_Input = {
+  data: Signup_Emails_Insert_Input;
+  on_conflict?: Maybe<Signup_Emails_On_Conflict>;
+};
+
+/** on conflict condition type for table "signup_emails" */
+export type Signup_Emails_On_Conflict = {
+  constraint: Signup_Emails_Constraint;
+  update_columns: Array<Signup_Emails_Update_Column>;
+  where?: Maybe<Signup_Emails_Bool_Exp>;
+};
+
+/** ordering options when selecting data from "signup_emails" */
+export type Signup_Emails_Order_By = {
+  createdAt?: Maybe<Order_By>;
+  email?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+};
+
+/** primary key columns input for table: "signup_emails" */
+export type Signup_Emails_Pk_Columns_Input = {
+  id: Scalars['String'];
+};
+
+/** select columns of table "signup_emails" */
+export enum Signup_Emails_Select_Column {
+  /** column name */
+  CREATEDAT = 'createdAt',
+  /** column name */
+  EMAIL = 'email',
+  /** column name */
+  ID = 'id'
+}
+
+/** input type for updating data in table "signup_emails" */
+export type Signup_Emails_Set_Input = {
+  createdAt?: Maybe<Scalars['timestamptz']>;
+  email?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+};
+
+/** update columns of table "signup_emails" */
+export enum Signup_Emails_Update_Column {
+  /** column name */
+  CREATEDAT = 'createdAt',
+  /** column name */
+  EMAIL = 'email',
+  /** column name */
+  ID = 'id'
+}
+
 export type SignUpMutationResponse = {
-   __typename?: 'SignUpMutationResponse';
+  __typename?: 'SignUpMutationResponse';
   user: UserPrivate;
 };
 
@@ -13490,7 +13751,7 @@ export type Store = {
   updatedAt?: Maybe<Scalars['Date']>;
   userId: Scalars['ID'];
   user?: Maybe<BasicUser>;
-  name: Scalars['String'];
+  name?: Maybe<Scalars['String']>;
   profileId?: Maybe<Scalars['ID']>;
   profile?: Maybe<Image_Parents>;
   coverId?: Maybe<Scalars['ID']>;
@@ -13512,19 +13773,19 @@ export type StoreProductsForSaleConnectionArgs = {
 };
 
 export type StoreMutationResponse = {
-   __typename?: 'StoreMutationResponse';
+  __typename?: 'StoreMutationResponse';
   store: StorePrivate;
 };
 
 /** Private store info */
 export type StorePrivate = Store & {
-   __typename?: 'StorePrivate';
+  __typename?: 'StorePrivate';
   id: Scalars['ID'];
   createdAt: Scalars['Date'];
   updatedAt?: Maybe<Scalars['Date']>;
   userId: Scalars['ID'];
   user?: Maybe<UserPrivate>;
-  name: Scalars['String'];
+  name?: Maybe<Scalars['String']>;
   profileId?: Maybe<Scalars['ID']>;
   profile?: Maybe<Image_Parents>;
   coverId?: Maybe<Scalars['ID']>;
@@ -13557,13 +13818,13 @@ export type StorePrivateDashboardProductsConnectionArgs = {
 
 /** Public store info */
 export type StorePublic = Store & {
-   __typename?: 'StorePublic';
+  __typename?: 'StorePublic';
   id: Scalars['ID'];
   createdAt: Scalars['Date'];
   updatedAt?: Maybe<Scalars['Date']>;
   userId: Scalars['ID'];
   user?: Maybe<BasicUser>;
-  name: Scalars['String'];
+  name?: Maybe<Scalars['String']>;
   profileId?: Maybe<Scalars['ID']>;
   profile?: Maybe<Image_Parents>;
   coverId?: Maybe<Scalars['ID']>;
@@ -13586,7 +13847,7 @@ export type StorePublicProductsForSaleConnectionArgs = {
 
 /** columns and relationships of "stores" */
 export type Stores = {
-   __typename?: 'stores';
+  __typename?: 'stores';
   bio?: Maybe<Scalars['String']>;
   /** An object relationship */
   cover?: Maybe<Image_Parents>;
@@ -13595,7 +13856,7 @@ export type Stores = {
   id: Scalars['String'];
   isDeleted: Scalars['Boolean'];
   isSuspended: Scalars['Boolean'];
-  name: Scalars['String'];
+  name?: Maybe<Scalars['String']>;
   /** An array relationship */
   products: Array<Products>;
   /** An aggregated array relationship */
@@ -13632,14 +13893,14 @@ export type StoresProducts_AggregateArgs = {
 
 /** aggregated selection of "stores" */
 export type Stores_Aggregate = {
-   __typename?: 'stores_aggregate';
+  __typename?: 'stores_aggregate';
   aggregate?: Maybe<Stores_Aggregate_Fields>;
   nodes: Array<Stores>;
 };
 
 /** aggregate fields of "stores" */
 export type Stores_Aggregate_Fields = {
-   __typename?: 'stores_aggregate_fields';
+  __typename?: 'stores_aggregate_fields';
   count?: Maybe<Scalars['Int']>;
   max?: Maybe<Stores_Max_Fields>;
   min?: Maybe<Stores_Min_Fields>;
@@ -13716,7 +13977,7 @@ export type Stores_Insert_Input = {
 
 /** aggregate max on columns */
 export type Stores_Max_Fields = {
-   __typename?: 'stores_max_fields';
+  __typename?: 'stores_max_fields';
   bio?: Maybe<Scalars['String']>;
   coverId?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['timestamp']>;
@@ -13743,7 +14004,7 @@ export type Stores_Max_Order_By = {
 
 /** aggregate min on columns */
 export type Stores_Min_Fields = {
-   __typename?: 'stores_min_fields';
+  __typename?: 'stores_min_fields';
   bio?: Maybe<Scalars['String']>;
   coverId?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['timestamp']>;
@@ -13770,7 +14031,7 @@ export type Stores_Min_Order_By = {
 
 /** response of any mutation on the table "stores" */
 export type Stores_Mutation_Response = {
-   __typename?: 'stores_mutation_response';
+  __typename?: 'stores_mutation_response';
   /** number of affected rows by the mutation */
   affected_rows: Scalars['Int'];
   /** data of the affected rows by the mutation */
@@ -13882,14 +14143,14 @@ export enum Stores_Update_Column {
 }
 
 export type StoresConnection = {
-   __typename?: 'StoresConnection';
+  __typename?: 'StoresConnection';
   totalCount?: Maybe<Scalars['Int']>;
   pageInfo: PageInfo;
   edges: Array<StoresEdge>;
 };
 
 export type StoresEdge = {
-   __typename?: 'StoresEdge';
+  __typename?: 'StoresEdge';
   node: Store;
 };
 
@@ -13913,7 +14174,7 @@ export type String_Comparison_Exp = {
 };
 
 export type Subscription = {
-   __typename?: 'Subscription';
+  __typename?: 'Subscription';
   /** fetch data from the table: "bids" */
   bids: Array<Bids>;
   /** fetch aggregated fields from the table: "bids" */
@@ -14098,6 +14359,12 @@ export type Subscription = {
   refunds_aggregate: Refunds_Aggregate;
   /** fetch data from the table: "refunds" using primary key columns */
   refunds_by_pk?: Maybe<Refunds>;
+  /** fetch data from the table: "signup_emails" */
+  signup_emails: Array<Signup_Emails>;
+  /** fetch aggregated fields from the table: "signup_emails" */
+  signup_emails_aggregate: Signup_Emails_Aggregate;
+  /** fetch data from the table: "signup_emails" using primary key columns */
+  signup_emails_by_pk?: Maybe<Signup_Emails>;
   /** fetch data from the table: "stores" */
   stores: Array<Stores>;
   /** fetch aggregated fields from the table: "stores" */
@@ -14848,6 +15115,29 @@ export type SubscriptionRefunds_By_PkArgs = {
 };
 
 
+export type SubscriptionSignup_EmailsArgs = {
+  distinct_on?: Maybe<Array<Signup_Emails_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Signup_Emails_Order_By>>;
+  where?: Maybe<Signup_Emails_Bool_Exp>;
+};
+
+
+export type SubscriptionSignup_Emails_AggregateArgs = {
+  distinct_on?: Maybe<Array<Signup_Emails_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Signup_Emails_Order_By>>;
+  where?: Maybe<Signup_Emails_Bool_Exp>;
+};
+
+
+export type SubscriptionSignup_Emails_By_PkArgs = {
+  id: Scalars['String'];
+};
+
+
 export type SubscriptionStoresArgs = {
   distinct_on?: Maybe<Array<Stores_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -15010,7 +15300,7 @@ export type Timestamptz_Comparison_Exp = {
 
 /** columns and relationships of "transactions" */
 export type Transactions = {
-   __typename?: 'transactions';
+  __typename?: 'transactions';
   createdAt: Scalars['timestamp'];
   currency?: Maybe<Scalars['String']>;
   customerId?: Maybe<Scalars['String']>;
@@ -15057,14 +15347,14 @@ export type TransactionsPayoutItems_AggregateArgs = {
 
 /** aggregated selection of "transactions" */
 export type Transactions_Aggregate = {
-   __typename?: 'transactions_aggregate';
+  __typename?: 'transactions_aggregate';
   aggregate?: Maybe<Transactions_Aggregate_Fields>;
   nodes: Array<Transactions>;
 };
 
 /** aggregate fields of "transactions" */
 export type Transactions_Aggregate_Fields = {
-   __typename?: 'transactions_aggregate_fields';
+  __typename?: 'transactions_aggregate_fields';
   avg?: Maybe<Transactions_Avg_Fields>;
   count?: Maybe<Scalars['Int']>;
   max?: Maybe<Transactions_Max_Fields>;
@@ -15108,7 +15398,7 @@ export type Transactions_Arr_Rel_Insert_Input = {
 
 /** aggregate avg on columns */
 export type Transactions_Avg_Fields = {
-   __typename?: 'transactions_avg_fields';
+  __typename?: 'transactions_avg_fields';
   total?: Maybe<Scalars['Float']>;
 };
 
@@ -15173,7 +15463,7 @@ export type Transactions_Insert_Input = {
 
 /** aggregate max on columns */
 export type Transactions_Max_Fields = {
-   __typename?: 'transactions_max_fields';
+  __typename?: 'transactions_max_fields';
   createdAt?: Maybe<Scalars['timestamp']>;
   currency?: Maybe<Scalars['String']>;
   customerId?: Maybe<Scalars['String']>;
@@ -15206,7 +15496,7 @@ export type Transactions_Max_Order_By = {
 
 /** aggregate min on columns */
 export type Transactions_Min_Fields = {
-   __typename?: 'transactions_min_fields';
+  __typename?: 'transactions_min_fields';
   createdAt?: Maybe<Scalars['timestamp']>;
   currency?: Maybe<Scalars['String']>;
   customerId?: Maybe<Scalars['String']>;
@@ -15239,7 +15529,7 @@ export type Transactions_Min_Order_By = {
 
 /** response of any mutation on the table "transactions" */
 export type Transactions_Mutation_Response = {
-   __typename?: 'transactions_mutation_response';
+  __typename?: 'transactions_mutation_response';
   /** number of affected rows by the mutation */
   affected_rows: Scalars['Int'];
   /** data of the affected rows by the mutation */
@@ -15330,7 +15620,7 @@ export type Transactions_Set_Input = {
 
 /** aggregate stddev on columns */
 export type Transactions_Stddev_Fields = {
-   __typename?: 'transactions_stddev_fields';
+  __typename?: 'transactions_stddev_fields';
   total?: Maybe<Scalars['Float']>;
 };
 
@@ -15341,7 +15631,7 @@ export type Transactions_Stddev_Order_By = {
 
 /** aggregate stddev_pop on columns */
 export type Transactions_Stddev_Pop_Fields = {
-   __typename?: 'transactions_stddev_pop_fields';
+  __typename?: 'transactions_stddev_pop_fields';
   total?: Maybe<Scalars['Float']>;
 };
 
@@ -15352,7 +15642,7 @@ export type Transactions_Stddev_Pop_Order_By = {
 
 /** aggregate stddev_samp on columns */
 export type Transactions_Stddev_Samp_Fields = {
-   __typename?: 'transactions_stddev_samp_fields';
+  __typename?: 'transactions_stddev_samp_fields';
   total?: Maybe<Scalars['Float']>;
 };
 
@@ -15363,7 +15653,7 @@ export type Transactions_Stddev_Samp_Order_By = {
 
 /** aggregate sum on columns */
 export type Transactions_Sum_Fields = {
-   __typename?: 'transactions_sum_fields';
+  __typename?: 'transactions_sum_fields';
   total?: Maybe<Scalars['Int']>;
 };
 
@@ -15402,7 +15692,7 @@ export enum Transactions_Update_Column {
 
 /** aggregate var_pop on columns */
 export type Transactions_Var_Pop_Fields = {
-   __typename?: 'transactions_var_pop_fields';
+  __typename?: 'transactions_var_pop_fields';
   total?: Maybe<Scalars['Float']>;
 };
 
@@ -15413,7 +15703,7 @@ export type Transactions_Var_Pop_Order_By = {
 
 /** aggregate var_samp on columns */
 export type Transactions_Var_Samp_Fields = {
-   __typename?: 'transactions_var_samp_fields';
+  __typename?: 'transactions_var_samp_fields';
   total?: Maybe<Scalars['Float']>;
 };
 
@@ -15424,7 +15714,7 @@ export type Transactions_Var_Samp_Order_By = {
 
 /** aggregate variance on columns */
 export type Transactions_Variance_Fields = {
-   __typename?: 'transactions_variance_fields';
+  __typename?: 'transactions_variance_fields';
   total?: Maybe<Scalars['Float']>;
 };
 
@@ -15434,25 +15724,25 @@ export type Transactions_Variance_Order_By = {
 };
 
 export type TransactionsConnection = {
-   __typename?: 'TransactionsConnection';
+  __typename?: 'TransactionsConnection';
   totalCount?: Maybe<Scalars['Int']>;
   pageInfo: PageInfo;
   edges: Array<Transactions>;
 };
 
 export type UploadRegisterMutationResponse = {
-   __typename?: 'UploadRegisterMutationResponse';
+  __typename?: 'UploadRegisterMutationResponse';
   uploadId: Scalars['ID'];
   putUrl: Scalars['String'];
 };
 
 export type UploadSaveFileMutationResponse = {
-   __typename?: 'UploadSaveFileMutationResponse';
+  __typename?: 'UploadSaveFileMutationResponse';
   fileId: Scalars['ID'];
 };
 
 export type UploadSaveImageMutationResponse = {
-   __typename?: 'UploadSaveImageMutationResponse';
+  __typename?: 'UploadSaveImageMutationResponse';
   image: Image_Parents;
 };
 
@@ -15464,7 +15754,7 @@ export enum UploadType {
 
 /** columns and relationships of "user_licenses" */
 export type User_Licenses = {
-   __typename?: 'user_licenses';
+  __typename?: 'user_licenses';
   id: Scalars['String'];
   licenseCategory?: Maybe<Scalars['String']>;
   licenseExpiry: Scalars['timestamp'];
@@ -15475,14 +15765,14 @@ export type User_Licenses = {
 
 /** aggregated selection of "user_licenses" */
 export type User_Licenses_Aggregate = {
-   __typename?: 'user_licenses_aggregate';
+  __typename?: 'user_licenses_aggregate';
   aggregate?: Maybe<User_Licenses_Aggregate_Fields>;
   nodes: Array<User_Licenses>;
 };
 
 /** aggregate fields of "user_licenses" */
 export type User_Licenses_Aggregate_Fields = {
-   __typename?: 'user_licenses_aggregate_fields';
+  __typename?: 'user_licenses_aggregate_fields';
   count?: Maybe<Scalars['Int']>;
   max?: Maybe<User_Licenses_Max_Fields>;
   min?: Maybe<User_Licenses_Min_Fields>;
@@ -15539,7 +15829,7 @@ export type User_Licenses_Insert_Input = {
 
 /** aggregate max on columns */
 export type User_Licenses_Max_Fields = {
-   __typename?: 'user_licenses_max_fields';
+  __typename?: 'user_licenses_max_fields';
   id?: Maybe<Scalars['String']>;
   licenseCategory?: Maybe<Scalars['String']>;
   licenseExpiry?: Maybe<Scalars['timestamp']>;
@@ -15558,7 +15848,7 @@ export type User_Licenses_Max_Order_By = {
 
 /** aggregate min on columns */
 export type User_Licenses_Min_Fields = {
-   __typename?: 'user_licenses_min_fields';
+  __typename?: 'user_licenses_min_fields';
   id?: Maybe<Scalars['String']>;
   licenseCategory?: Maybe<Scalars['String']>;
   licenseExpiry?: Maybe<Scalars['timestamp']>;
@@ -15577,7 +15867,7 @@ export type User_Licenses_Min_Order_By = {
 
 /** response of any mutation on the table "user_licenses" */
 export type User_Licenses_Mutation_Response = {
-   __typename?: 'user_licenses_mutation_response';
+  __typename?: 'user_licenses_mutation_response';
   /** number of affected rows by the mutation */
   affected_rows: Scalars['Int'];
   /** data of the affected rows by the mutation */
@@ -15655,7 +15945,7 @@ export enum User_Licenses_Update_Column {
 }
 
 export type UserForDealers = BasicUser & {
-   __typename?: 'UserForDealers';
+  __typename?: 'UserForDealers';
   id: Scalars['ID'];
   createdAt?: Maybe<Scalars['Date']>;
   firstName?: Maybe<Scalars['String']>;
@@ -15671,13 +15961,13 @@ export type UserForDealers = BasicUser & {
 };
 
 export type UserMutationResponse = {
-   __typename?: 'UserMutationResponse';
+  __typename?: 'UserMutationResponse';
   user: UserPrivate;
 };
 
 /** Private user info */
 export type UserPrivate = BasicUser & {
-   __typename?: 'UserPrivate';
+  __typename?: 'UserPrivate';
   id: Scalars['ID'];
   createdAt?: Maybe<Scalars['Date']>;
   firstName?: Maybe<Scalars['String']>;
@@ -15743,7 +16033,7 @@ export type UserPrivateFollowingStoresArgs = {
 
 /** Public user info */
 export type UserPublic = BasicUser & {
-   __typename?: 'UserPublic';
+  __typename?: 'UserPublic';
   id: Scalars['ID'];
   createdAt?: Maybe<Scalars['Date']>;
   firstName?: Maybe<Scalars['String']>;
@@ -15760,7 +16050,7 @@ export type UserPublic = BasicUser & {
 
 /** columns and relationships of "users" */
 export type Users = {
-   __typename?: 'users';
+  __typename?: 'users';
   cartId?: Maybe<Scalars['String']>;
   /** An array relationship */
   conversations: Array<Chat_Users>;
@@ -15824,14 +16114,14 @@ export type UsersConversations_AggregateArgs = {
 
 /** aggregated selection of "users" */
 export type Users_Aggregate = {
-   __typename?: 'users_aggregate';
+  __typename?: 'users_aggregate';
   aggregate?: Maybe<Users_Aggregate_Fields>;
   nodes: Array<Users>;
 };
 
 /** aggregate fields of "users" */
 export type Users_Aggregate_Fields = {
-   __typename?: 'users_aggregate_fields';
+  __typename?: 'users_aggregate_fields';
   count?: Maybe<Scalars['Int']>;
   max?: Maybe<Users_Max_Fields>;
   min?: Maybe<Users_Min_Fields>;
@@ -15940,7 +16230,7 @@ export type Users_Insert_Input = {
 
 /** aggregate max on columns */
 export type Users_Max_Fields = {
-   __typename?: 'users_max_fields';
+  __typename?: 'users_max_fields';
   cartId?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['timestamptz']>;
   dealerId?: Maybe<Scalars['String']>;
@@ -15989,7 +16279,7 @@ export type Users_Max_Order_By = {
 
 /** aggregate min on columns */
 export type Users_Min_Fields = {
-   __typename?: 'users_min_fields';
+  __typename?: 'users_min_fields';
   cartId?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['timestamptz']>;
   dealerId?: Maybe<Scalars['String']>;
@@ -16038,7 +16328,7 @@ export type Users_Min_Order_By = {
 
 /** response of any mutation on the table "users" */
 export type Users_Mutation_Response = {
-   __typename?: 'users_mutation_response';
+  __typename?: 'users_mutation_response';
   /** number of affected rows by the mutation */
   affected_rows: Scalars['Int'];
   /** data of the affected rows by the mutation */
@@ -16060,7 +16350,7 @@ export type Users_On_Conflict = {
 
 /** columns and relationships of "users_online" */
 export type Users_Online = {
-   __typename?: 'users_online';
+  __typename?: 'users_online';
   email?: Maybe<Scalars['String']>;
   firstName?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
@@ -16073,14 +16363,14 @@ export type Users_Online = {
 
 /** aggregated selection of "users_online" */
 export type Users_Online_Aggregate = {
-   __typename?: 'users_online_aggregate';
+  __typename?: 'users_online_aggregate';
   aggregate?: Maybe<Users_Online_Aggregate_Fields>;
   nodes: Array<Users_Online>;
 };
 
 /** aggregate fields of "users_online" */
 export type Users_Online_Aggregate_Fields = {
-   __typename?: 'users_online_aggregate_fields';
+  __typename?: 'users_online_aggregate_fields';
   count?: Maybe<Scalars['Int']>;
   max?: Maybe<Users_Online_Max_Fields>;
   min?: Maybe<Users_Online_Min_Fields>;
@@ -16117,7 +16407,7 @@ export type Users_Online_Bool_Exp = {
 
 /** aggregate max on columns */
 export type Users_Online_Max_Fields = {
-   __typename?: 'users_online_max_fields';
+  __typename?: 'users_online_max_fields';
   email?: Maybe<Scalars['String']>;
   firstName?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
@@ -16142,7 +16432,7 @@ export type Users_Online_Max_Order_By = {
 
 /** aggregate min on columns */
 export type Users_Online_Min_Fields = {
-   __typename?: 'users_online_min_fields';
+  __typename?: 'users_online_min_fields';
   email?: Maybe<Scalars['String']>;
   firstName?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
@@ -16315,7 +16605,7 @@ export type Users_Set_Input = {
 
 /** columns and relationships of "users_typing" */
 export type Users_Typing = {
-   __typename?: 'users_typing';
+  __typename?: 'users_typing';
   email?: Maybe<Scalars['String']>;
   firstName?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
@@ -16328,14 +16618,14 @@ export type Users_Typing = {
 
 /** aggregated selection of "users_typing" */
 export type Users_Typing_Aggregate = {
-   __typename?: 'users_typing_aggregate';
+  __typename?: 'users_typing_aggregate';
   aggregate?: Maybe<Users_Typing_Aggregate_Fields>;
   nodes: Array<Users_Typing>;
 };
 
 /** aggregate fields of "users_typing" */
 export type Users_Typing_Aggregate_Fields = {
-   __typename?: 'users_typing_aggregate_fields';
+  __typename?: 'users_typing_aggregate_fields';
   count?: Maybe<Scalars['Int']>;
   max?: Maybe<Users_Typing_Max_Fields>;
   min?: Maybe<Users_Typing_Min_Fields>;
@@ -16372,7 +16662,7 @@ export type Users_Typing_Bool_Exp = {
 
 /** aggregate max on columns */
 export type Users_Typing_Max_Fields = {
-   __typename?: 'users_typing_max_fields';
+  __typename?: 'users_typing_max_fields';
   email?: Maybe<Scalars['String']>;
   firstName?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
@@ -16395,7 +16685,7 @@ export type Users_Typing_Max_Order_By = {
 
 /** aggregate min on columns */
 export type Users_Typing_Min_Fields = {
-   __typename?: 'users_typing_min_fields';
+  __typename?: 'users_typing_min_fields';
   email?: Maybe<Scalars['String']>;
   firstName?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
@@ -16499,7 +16789,7 @@ export enum Users_Update_Column {
 }
 
 export type UserWithRole = BasicUser & {
-   __typename?: 'UserWithRole';
+  __typename?: 'UserWithRole';
   id: Scalars['ID'];
   createdAt?: Maybe<Scalars['Date']>;
   firstName?: Maybe<Scalars['String']>;
@@ -16514,26 +16804,23 @@ export type UserWithRole = BasicUser & {
 
 /** An individual item in a wishlist */
 export type WishlistItem = {
-   __typename?: 'WishlistItem';
+  __typename?: 'WishlistItem';
   ownerUserId: Scalars['ID'];
   addedAt: Scalars['Date'];
   product: Product;
 };
 
 export type WishlistItemsConnection = {
-   __typename?: 'WishlistItemsConnection';
+  __typename?: 'WishlistItemsConnection';
   totalCount?: Maybe<Scalars['Int']>;
   pageInfo: PageInfo;
   edges: Array<WishlistItemsEdge>;
 };
 
 export type WishlistItemsEdge = {
-   __typename?: 'WishlistItemsEdge';
+  __typename?: 'WishlistItemsEdge';
   node: WishlistItem;
 };
-
-
-
 
 export type RegisterUploadMutationVariables = Exact<{
   uploadType: UploadType;
@@ -16548,7 +16835,7 @@ export type SaveImageUploadMutationVariables = Exact<{
   uploadId: Scalars['String'];
   description?: Maybe<Scalars['String']>;
   tags?: Maybe<Scalars['String']>;
-  ownerIds?: Maybe<Array<Maybe<Scalars['String']>>>;
+  ownerIds?: Maybe<Array<Maybe<Scalars['String']>> | Maybe<Scalars['String']>>;
 }>;
 
 
@@ -16560,7 +16847,7 @@ export type SaveImageUploadMutation = { __typename?: 'Mutation', uploadSaveImage
 export type UploadSaveFileMutationVariables = Exact<{
   uploadId: Scalars['String'];
   fileName: Scalars['String'];
-  ownerIds?: Maybe<Array<Maybe<Scalars['String']>>>;
+  ownerIds?: Maybe<Array<Maybe<Scalars['String']>> | Maybe<Scalars['String']>>;
 }>;
 
 
@@ -16587,7 +16874,7 @@ type ProductFragment_ProductPrivate_ = { __typename?: 'ProductPrivate', id: stri
   ), featuredVariant: (
     { __typename?: 'product_variants' }
     & ProductVariantsFragment
-  ), store?: Maybe<{ __typename?: 'StorePrivate', id: string, name: string, user?: Maybe<{ __typename?: 'UserPrivate', id: string, license?: Maybe<(
+  ), store?: Maybe<{ __typename?: 'StorePrivate', id: string, name?: Maybe<string>, isSuspended: boolean, user?: Maybe<{ __typename?: 'UserPrivate', id: string, license?: Maybe<(
         { __typename?: 'user_licenses' }
         & UserLicenseFragment
       )> }> }>, category?: Maybe<{ __typename?: 'categories', id: string, name: string, slug?: Maybe<string>, categoryGroup: string }> };
@@ -16598,10 +16885,10 @@ type ProductFragment_ProductPublic_ = { __typename?: 'ProductPublic', id: string
   ), featuredVariant: (
     { __typename?: 'product_variants' }
     & ProductVariantsFragment
-  ), store?: Maybe<{ __typename?: 'StorePrivate', id: string, name: string, user?: Maybe<{ __typename?: 'UserPrivate', id: string, license?: Maybe<(
+  ), store?: Maybe<{ __typename?: 'StorePrivate', id: string, name?: Maybe<string>, isSuspended: boolean, user?: Maybe<{ __typename?: 'UserPrivate', id: string, license?: Maybe<(
         { __typename?: 'user_licenses' }
         & UserLicenseFragment
-      )> }> } | { __typename?: 'StorePublic', id: string, name: string, user?: Maybe<{ __typename?: 'UserPrivate', id: string, license?: Maybe<(
+      )> }> } | { __typename?: 'StorePublic', id: string, name?: Maybe<string>, isSuspended: boolean, user?: Maybe<{ __typename?: 'UserPrivate', id: string, license?: Maybe<(
         { __typename?: 'user_licenses' }
         & UserLicenseFragment
       )> } | { __typename?: 'UserForDealers', id: string, license?: Maybe<(
@@ -16617,7 +16904,7 @@ type ProductFragment_ProductPublic_ = { __typename?: 'ProductPublic', id: string
 
 export type ProductFragment = ProductFragment_ProductPrivate_ | ProductFragment_ProductPublic_;
 
-type StoresFragment_StorePrivate_ = { __typename?: 'StorePrivate', id: string, createdAt: any, name: string, bio?: Maybe<string>, website?: Maybe<string>, coverId?: Maybe<string>, profileId?: Maybe<string>, user?: Maybe<{ __typename?: 'UserPrivate' }>, cover?: Maybe<(
+type StoresFragment_StorePrivate_ = { __typename?: 'StorePrivate', id: string, createdAt: any, name?: Maybe<string>, bio?: Maybe<string>, website?: Maybe<string>, coverId?: Maybe<string>, profileId?: Maybe<string>, user?: Maybe<{ __typename?: 'UserPrivate' }>, cover?: Maybe<(
     { __typename?: 'image_parents' }
     & ImageFragment
   )>, profile?: Maybe<(
@@ -16625,7 +16912,7 @@ type StoresFragment_StorePrivate_ = { __typename?: 'StorePrivate', id: string, c
     & ImageFragment
   )> };
 
-type StoresFragment_StorePublic_ = { __typename?: 'StorePublic', id: string, createdAt: any, name: string, bio?: Maybe<string>, website?: Maybe<string>, coverId?: Maybe<string>, profileId?: Maybe<string>, user?: Maybe<{ __typename?: 'UserPrivate' } | { __typename?: 'UserForDealers' } | { __typename?: 'UserPublic', id: string } | { __typename?: 'UserWithRole' }>, cover?: Maybe<(
+type StoresFragment_StorePublic_ = { __typename?: 'StorePublic', id: string, createdAt: any, name?: Maybe<string>, bio?: Maybe<string>, website?: Maybe<string>, coverId?: Maybe<string>, profileId?: Maybe<string>, user?: Maybe<{ __typename?: 'UserPrivate' } | { __typename?: 'UserForDealers' } | { __typename?: 'UserPublic', id: string } | { __typename?: 'UserWithRole' }>, cover?: Maybe<(
     { __typename?: 'image_parents' }
     & ImageFragment
   )>, profile?: Maybe<(
@@ -16643,7 +16930,7 @@ export type UsersFragment = { __typename?: 'UserPrivate', id: string, email: str
     & UserLicenseFragment
   )> };
 
-export type BidFragment = { __typename?: 'Bid', id?: Maybe<string>, productId?: Maybe<string>, productSnapshotId?: Maybe<string>, variantId?: Maybe<string>, offerPrice?: Maybe<number>, acceptedPrice?: Maybe<number>, orderId?: Maybe<string>, bidStatus?: Maybe<string>, createdAt?: Maybe<any>, updatedAt?: Maybe<any> };
+export type BidFragment = { __typename?: 'Bid', id?: Maybe<string>, productId?: Maybe<string>, productSnapshotId?: Maybe<string>, variantId?: Maybe<string>, offerPrice?: Maybe<number>, acceptedPrice?: Maybe<number>, orderId?: Maybe<string>, bidStatus?: Maybe<BidStatus>, createdAt?: Maybe<any>, updatedAt?: Maybe<any> };
 
 export type MessageFragment = { __typename?: 'Message', id?: Maybe<string>, chatRoomId?: Maybe<string>, createdAt?: Maybe<any>, content?: Maybe<string>, sender?: Maybe<{ __typename?: 'UserPrivate', firstName?: Maybe<string>, lastName?: Maybe<string>, email: string, id: string, license?: Maybe<(
       { __typename?: 'user_licenses' }
@@ -16674,34 +16961,16 @@ export type OrderSnapshotFragment = { __typename?: 'OrderSnapshot', id: string, 
     & ProductFileFragment
   )> };
 
-type OrdersFragment_OrderPublic_ = { __typename?: 'OrderPublic', id?: Maybe<string>, createdAt?: Maybe<any>, updatedAt?: Maybe<any>, bidId?: Maybe<string>, total?: Maybe<number>, currency?: Maybe<string>, buyerId?: Maybe<string>, sellerStoreId?: Maybe<string>, productId?: Maybe<string>, paymentIntentId?: Maybe<string>, bid?: Maybe<(
+type OrdersFragment_OrderAdmin_ = { __typename?: 'OrderAdmin', id?: Maybe<string>, createdAt?: Maybe<any>, updatedAt?: Maybe<any>, bidId?: Maybe<string>, total?: Maybe<number>, currency?: Maybe<string>, buyerId?: Maybe<string>, sellerStoreId?: Maybe<string>, productId?: Maybe<string>, paymentIntentId?: Maybe<string>, bid?: Maybe<(
     { __typename?: 'Bid' }
     & BidFragment
   )>, buyer?: Maybe<{ __typename?: 'UserPrivate', firstName?: Maybe<string>, lastName?: Maybe<string>, email: string, id: string, phoneNumber?: Maybe<{ __typename?: 'phone_numbers', id: string, areaCode?: Maybe<string>, countryCode: string, number: string }>, license?: Maybe<(
       { __typename?: 'user_licenses' }
       & UserLicenseFragment
-    )> } | { __typename?: 'UserForDealers', firstName?: Maybe<string>, lastName?: Maybe<string>, email: string, id: string, phoneNumber?: Maybe<{ __typename?: 'phone_numbers', id: string, areaCode?: Maybe<string>, countryCode: string, number: string }>, license?: Maybe<(
-      { __typename?: 'user_licenses' }
-      & UserLicenseFragment
-    )> } | { __typename?: 'UserPublic', id: string, license?: Maybe<(
-      { __typename?: 'user_licenses' }
-      & UserLicenseFragment
-    )> } | { __typename?: 'UserWithRole', id: string, license?: Maybe<(
-      { __typename?: 'user_licenses' }
-      & UserLicenseFragment
-    )> }>, sellerStore?: Maybe<{ __typename?: 'StorePrivate', id: string, name: string, website?: Maybe<string>, createdAt: any, updatedAt?: Maybe<any>, userId: string, user?: Maybe<{ __typename?: 'UserPrivate', firstName?: Maybe<string>, lastName?: Maybe<string>, email: string, id: string, license?: Maybe<(
+    )> }>, sellerStore?: Maybe<{ __typename?: 'StorePrivate', id: string, name?: Maybe<string>, website?: Maybe<string>, createdAt: any, updatedAt?: Maybe<any>, userId: string, user?: Maybe<{ __typename?: 'UserPrivate', firstName?: Maybe<string>, lastName?: Maybe<string>, email: string, id: string, license?: Maybe<(
         { __typename?: 'user_licenses' }
         & UserLicenseFragment
-      )>, payoutMethod?: Maybe<{ __typename?: 'payout_methods', id: string, createdAt: any, updatedAt?: Maybe<any>, payoutType?: Maybe<string>, bsb?: Maybe<string>, accountNumber?: Maybe<string>, accountName?: Maybe<string> }>, phoneNumber?: Maybe<{ __typename?: 'phone_numbers', id: string, areaCode?: Maybe<string>, countryCode: string, number: string }> }> } | { __typename?: 'StorePublic', id: string, name: string, website?: Maybe<string>, createdAt: any, updatedAt?: Maybe<any>, userId: string, user?: Maybe<{ __typename?: 'UserPrivate', firstName?: Maybe<string>, lastName?: Maybe<string>, email: string, id: string, license?: Maybe<(
-        { __typename?: 'user_licenses' }
-        & UserLicenseFragment
-      )>, payoutMethod?: Maybe<{ __typename?: 'payout_methods', id: string, createdAt: any, updatedAt?: Maybe<any>, payoutType?: Maybe<string>, bsb?: Maybe<string>, accountNumber?: Maybe<string>, accountName?: Maybe<string> }>, phoneNumber?: Maybe<{ __typename?: 'phone_numbers', id: string, areaCode?: Maybe<string>, countryCode: string, number: string }> } | { __typename?: 'UserForDealers', firstName?: Maybe<string>, lastName?: Maybe<string>, email: string, id: string, license?: Maybe<(
-        { __typename?: 'user_licenses' }
-        & UserLicenseFragment
-      )>, phoneNumber?: Maybe<{ __typename?: 'phone_numbers', id: string, areaCode?: Maybe<string>, countryCode: string, number: string }> } | { __typename?: 'UserPublic', id: string, license?: Maybe<(
-        { __typename?: 'user_licenses' }
-        & UserLicenseFragment
-      )> } | { __typename?: 'UserWithRole', id: string }> }>, currentSnapshot?: Maybe<(
+      )>, payoutMethod?: Maybe<{ __typename?: 'payout_methods', id: string, createdAt: any, updatedAt?: Maybe<any>, payoutType?: Maybe<string>, bsb?: Maybe<string>, accountNumber?: Maybe<string>, accountName?: Maybe<string> }>, phoneNumber?: Maybe<{ __typename?: 'phone_numbers', id: string, areaCode?: Maybe<string>, countryCode: string, number: string }> }> }>, currentSnapshot?: Maybe<(
     { __typename?: 'OrderSnapshot', transaction?: Maybe<(
       { __typename?: 'transactions' }
       & TransactionFragment
@@ -16716,13 +16985,7 @@ type OrdersFragment_OrderPublic_ = { __typename?: 'OrderPublic', id?: Maybe<stri
     ), featuredVariant: (
       { __typename?: 'product_variants' }
       & ProductVariantsFragment
-    ), category?: Maybe<{ __typename?: 'categories', id: string, name: string, slug?: Maybe<string>, categoryGroup: string }>, store?: Maybe<{ __typename?: 'StorePrivate', id: string, name: string, userId: string, user?: Maybe<{ __typename?: 'UserPrivate', id: string }> }> } | { __typename?: 'ProductPublic', id: string, createdAt?: Maybe<any>, updatedAt?: Maybe<any>, isPublished: boolean, isSuspended: boolean, isDeleted: boolean, isExcludedFromRecommendations: boolean, storeId: string, soldOutStatus: string, currentSnapshot: (
-      { __typename?: 'product_snapshots' }
-      & ProductSnapshotsFragment
-    ), featuredVariant: (
-      { __typename?: 'product_variants' }
-      & ProductVariantsFragment
-    ), category?: Maybe<{ __typename?: 'categories', id: string, name: string, slug?: Maybe<string>, categoryGroup: string }>, store?: Maybe<{ __typename?: 'StorePrivate', id: string, name: string, userId: string, user?: Maybe<{ __typename?: 'UserPrivate', id: string }> } | { __typename?: 'StorePublic', id: string, name: string, userId: string, user?: Maybe<{ __typename?: 'UserPrivate', id: string } | { __typename?: 'UserForDealers', id: string } | { __typename?: 'UserPublic', id: string } | { __typename?: 'UserWithRole', id: string }> }> }>, payoutItems?: Maybe<Array<Maybe<(
+    ), category?: Maybe<{ __typename?: 'categories', id: string, name: string, slug?: Maybe<string>, categoryGroup: string }>, store?: Maybe<{ __typename?: 'StorePrivate', id: string, name?: Maybe<string>, userId: string, user?: Maybe<{ __typename?: 'UserPrivate', id: string }> }> }>, payoutItems?: Maybe<Array<Maybe<(
     { __typename?: 'payout_items' }
     & PayoutItemFragment
   )>>> };
@@ -16742,10 +17005,10 @@ type OrdersFragment_OrderDealer_ = { __typename?: 'OrderDealer', id?: Maybe<stri
     )> } | { __typename?: 'UserWithRole', id: string, license?: Maybe<(
       { __typename?: 'user_licenses' }
       & UserLicenseFragment
-    )> }>, sellerStore?: Maybe<{ __typename?: 'StorePrivate', id: string, name: string, website?: Maybe<string>, createdAt: any, updatedAt?: Maybe<any>, userId: string, user?: Maybe<{ __typename?: 'UserPrivate', firstName?: Maybe<string>, lastName?: Maybe<string>, email: string, id: string, license?: Maybe<(
+    )> }>, sellerStore?: Maybe<{ __typename?: 'StorePrivate', id: string, name?: Maybe<string>, website?: Maybe<string>, createdAt: any, updatedAt?: Maybe<any>, userId: string, user?: Maybe<{ __typename?: 'UserPrivate', firstName?: Maybe<string>, lastName?: Maybe<string>, email: string, id: string, license?: Maybe<(
         { __typename?: 'user_licenses' }
         & UserLicenseFragment
-      )>, payoutMethod?: Maybe<{ __typename?: 'payout_methods', id: string, createdAt: any, updatedAt?: Maybe<any>, payoutType?: Maybe<string>, bsb?: Maybe<string>, accountNumber?: Maybe<string>, accountName?: Maybe<string> }>, phoneNumber?: Maybe<{ __typename?: 'phone_numbers', id: string, areaCode?: Maybe<string>, countryCode: string, number: string }> }> } | { __typename?: 'StorePublic', id: string, name: string, website?: Maybe<string>, createdAt: any, updatedAt?: Maybe<any>, userId: string, user?: Maybe<{ __typename?: 'UserPrivate', firstName?: Maybe<string>, lastName?: Maybe<string>, email: string, id: string, license?: Maybe<(
+      )>, payoutMethod?: Maybe<{ __typename?: 'payout_methods', id: string, createdAt: any, updatedAt?: Maybe<any>, payoutType?: Maybe<string>, bsb?: Maybe<string>, accountNumber?: Maybe<string>, accountName?: Maybe<string> }>, phoneNumber?: Maybe<{ __typename?: 'phone_numbers', id: string, areaCode?: Maybe<string>, countryCode: string, number: string }> }> } | { __typename?: 'StorePublic', id: string, name?: Maybe<string>, website?: Maybe<string>, createdAt: any, updatedAt?: Maybe<any>, userId: string, user?: Maybe<{ __typename?: 'UserPrivate', firstName?: Maybe<string>, lastName?: Maybe<string>, email: string, id: string, license?: Maybe<(
         { __typename?: 'user_licenses' }
         & UserLicenseFragment
       )>, payoutMethod?: Maybe<{ __typename?: 'payout_methods', id: string, createdAt: any, updatedAt?: Maybe<any>, payoutType?: Maybe<string>, bsb?: Maybe<string>, accountNumber?: Maybe<string>, accountName?: Maybe<string> }>, phoneNumber?: Maybe<{ __typename?: 'phone_numbers', id: string, areaCode?: Maybe<string>, countryCode: string, number: string }> } | { __typename?: 'UserForDealers', firstName?: Maybe<string>, lastName?: Maybe<string>, email: string, id: string, license?: Maybe<(
@@ -16769,21 +17032,39 @@ type OrdersFragment_OrderDealer_ = { __typename?: 'OrderDealer', id?: Maybe<stri
     ), featuredVariant: (
       { __typename?: 'product_variants' }
       & ProductVariantsFragment
-    ), category?: Maybe<{ __typename?: 'categories', id: string, name: string, slug?: Maybe<string>, categoryGroup: string }>, store?: Maybe<{ __typename?: 'StorePrivate', id: string, name: string, userId: string, user?: Maybe<{ __typename?: 'UserPrivate', id: string }> }> }>, payoutItems?: Maybe<Array<Maybe<(
+    ), category?: Maybe<{ __typename?: 'categories', id: string, name: string, slug?: Maybe<string>, categoryGroup: string }>, store?: Maybe<{ __typename?: 'StorePrivate', id: string, name?: Maybe<string>, userId: string, user?: Maybe<{ __typename?: 'UserPrivate', id: string }> }> }>, payoutItems?: Maybe<Array<Maybe<(
     { __typename?: 'payout_items' }
     & PayoutItemFragment
   )>>> };
 
-type OrdersFragment_OrderAdmin_ = { __typename?: 'OrderAdmin', id?: Maybe<string>, createdAt?: Maybe<any>, updatedAt?: Maybe<any>, bidId?: Maybe<string>, total?: Maybe<number>, currency?: Maybe<string>, buyerId?: Maybe<string>, sellerStoreId?: Maybe<string>, productId?: Maybe<string>, paymentIntentId?: Maybe<string>, bid?: Maybe<(
+type OrdersFragment_OrderPublic_ = { __typename?: 'OrderPublic', id?: Maybe<string>, createdAt?: Maybe<any>, updatedAt?: Maybe<any>, bidId?: Maybe<string>, total?: Maybe<number>, currency?: Maybe<string>, buyerId?: Maybe<string>, sellerStoreId?: Maybe<string>, productId?: Maybe<string>, paymentIntentId?: Maybe<string>, bid?: Maybe<(
     { __typename?: 'Bid' }
     & BidFragment
   )>, buyer?: Maybe<{ __typename?: 'UserPrivate', firstName?: Maybe<string>, lastName?: Maybe<string>, email: string, id: string, phoneNumber?: Maybe<{ __typename?: 'phone_numbers', id: string, areaCode?: Maybe<string>, countryCode: string, number: string }>, license?: Maybe<(
       { __typename?: 'user_licenses' }
       & UserLicenseFragment
-    )> }>, sellerStore?: Maybe<{ __typename?: 'StorePrivate', id: string, name: string, website?: Maybe<string>, createdAt: any, updatedAt?: Maybe<any>, userId: string, user?: Maybe<{ __typename?: 'UserPrivate', firstName?: Maybe<string>, lastName?: Maybe<string>, email: string, id: string, license?: Maybe<(
+    )> } | { __typename?: 'UserForDealers', firstName?: Maybe<string>, lastName?: Maybe<string>, email: string, id: string, phoneNumber?: Maybe<{ __typename?: 'phone_numbers', id: string, areaCode?: Maybe<string>, countryCode: string, number: string }>, license?: Maybe<(
+      { __typename?: 'user_licenses' }
+      & UserLicenseFragment
+    )> } | { __typename?: 'UserPublic', id: string, license?: Maybe<(
+      { __typename?: 'user_licenses' }
+      & UserLicenseFragment
+    )> } | { __typename?: 'UserWithRole', id: string, license?: Maybe<(
+      { __typename?: 'user_licenses' }
+      & UserLicenseFragment
+    )> }>, sellerStore?: Maybe<{ __typename?: 'StorePrivate', id: string, name?: Maybe<string>, website?: Maybe<string>, createdAt: any, updatedAt?: Maybe<any>, userId: string, user?: Maybe<{ __typename?: 'UserPrivate', firstName?: Maybe<string>, lastName?: Maybe<string>, email: string, id: string, license?: Maybe<(
         { __typename?: 'user_licenses' }
         & UserLicenseFragment
-      )>, payoutMethod?: Maybe<{ __typename?: 'payout_methods', id: string, createdAt: any, updatedAt?: Maybe<any>, payoutType?: Maybe<string>, bsb?: Maybe<string>, accountNumber?: Maybe<string>, accountName?: Maybe<string> }>, phoneNumber?: Maybe<{ __typename?: 'phone_numbers', id: string, areaCode?: Maybe<string>, countryCode: string, number: string }> }> }>, currentSnapshot?: Maybe<(
+      )>, payoutMethod?: Maybe<{ __typename?: 'payout_methods', id: string, createdAt: any, updatedAt?: Maybe<any>, payoutType?: Maybe<string>, bsb?: Maybe<string>, accountNumber?: Maybe<string>, accountName?: Maybe<string> }>, phoneNumber?: Maybe<{ __typename?: 'phone_numbers', id: string, areaCode?: Maybe<string>, countryCode: string, number: string }> }> } | { __typename?: 'StorePublic', id: string, name?: Maybe<string>, website?: Maybe<string>, createdAt: any, updatedAt?: Maybe<any>, userId: string, user?: Maybe<{ __typename?: 'UserPrivate', firstName?: Maybe<string>, lastName?: Maybe<string>, email: string, id: string, license?: Maybe<(
+        { __typename?: 'user_licenses' }
+        & UserLicenseFragment
+      )>, payoutMethod?: Maybe<{ __typename?: 'payout_methods', id: string, createdAt: any, updatedAt?: Maybe<any>, payoutType?: Maybe<string>, bsb?: Maybe<string>, accountNumber?: Maybe<string>, accountName?: Maybe<string> }>, phoneNumber?: Maybe<{ __typename?: 'phone_numbers', id: string, areaCode?: Maybe<string>, countryCode: string, number: string }> } | { __typename?: 'UserForDealers', firstName?: Maybe<string>, lastName?: Maybe<string>, email: string, id: string, license?: Maybe<(
+        { __typename?: 'user_licenses' }
+        & UserLicenseFragment
+      )>, phoneNumber?: Maybe<{ __typename?: 'phone_numbers', id: string, areaCode?: Maybe<string>, countryCode: string, number: string }> } | { __typename?: 'UserPublic', id: string, license?: Maybe<(
+        { __typename?: 'user_licenses' }
+        & UserLicenseFragment
+      )> } | { __typename?: 'UserWithRole', id: string }> }>, currentSnapshot?: Maybe<(
     { __typename?: 'OrderSnapshot', transaction?: Maybe<(
       { __typename?: 'transactions' }
       & TransactionFragment
@@ -16798,14 +17079,20 @@ type OrdersFragment_OrderAdmin_ = { __typename?: 'OrderAdmin', id?: Maybe<string
     ), featuredVariant: (
       { __typename?: 'product_variants' }
       & ProductVariantsFragment
-    ), category?: Maybe<{ __typename?: 'categories', id: string, name: string, slug?: Maybe<string>, categoryGroup: string }>, store?: Maybe<{ __typename?: 'StorePrivate', id: string, name: string, userId: string, user?: Maybe<{ __typename?: 'UserPrivate', id: string }> }> }>, payoutItems?: Maybe<Array<Maybe<(
+    ), category?: Maybe<{ __typename?: 'categories', id: string, name: string, slug?: Maybe<string>, categoryGroup: string }>, store?: Maybe<{ __typename?: 'StorePrivate', id: string, name?: Maybe<string>, userId: string, user?: Maybe<{ __typename?: 'UserPrivate', id: string }> }> } | { __typename?: 'ProductPublic', id: string, createdAt?: Maybe<any>, updatedAt?: Maybe<any>, isPublished: boolean, isSuspended: boolean, isDeleted: boolean, isExcludedFromRecommendations: boolean, storeId: string, soldOutStatus: string, currentSnapshot: (
+      { __typename?: 'product_snapshots' }
+      & ProductSnapshotsFragment
+    ), featuredVariant: (
+      { __typename?: 'product_variants' }
+      & ProductVariantsFragment
+    ), category?: Maybe<{ __typename?: 'categories', id: string, name: string, slug?: Maybe<string>, categoryGroup: string }>, store?: Maybe<{ __typename?: 'StorePrivate', id: string, name?: Maybe<string>, userId: string, user?: Maybe<{ __typename?: 'UserPrivate', id: string }> } | { __typename?: 'StorePublic', id: string, name?: Maybe<string>, userId: string, user?: Maybe<{ __typename?: 'UserPrivate', id: string } | { __typename?: 'UserForDealers', id: string } | { __typename?: 'UserPublic', id: string } | { __typename?: 'UserWithRole', id: string }> }> }>, payoutItems?: Maybe<Array<Maybe<(
     { __typename?: 'payout_items' }
     & PayoutItemFragment
   )>>> };
 
-export type OrdersFragment = OrdersFragment_OrderPublic_ | OrdersFragment_OrderDealer_ | OrdersFragment_OrderAdmin_;
+export type OrdersFragment = OrdersFragment_OrderAdmin_ | OrdersFragment_OrderDealer_ | OrdersFragment_OrderPublic_;
 
-type StorePublicFragment_StorePrivate_ = { __typename?: 'StorePrivate', id: string, createdAt: any, updatedAt?: Maybe<any>, name: string, bio?: Maybe<string>, website?: Maybe<string>, userId: string, cover?: Maybe<(
+type StorePublicFragment_StorePrivate_ = { __typename?: 'StorePrivate', id: string, createdAt: any, updatedAt?: Maybe<any>, name?: Maybe<string>, bio?: Maybe<string>, website?: Maybe<string>, userId: string, cover?: Maybe<(
     { __typename?: 'image_parents' }
     & ImageFragment
   )>, profile?: Maybe<(
@@ -16819,7 +17106,7 @@ type StorePublicFragment_StorePrivate_ = { __typename?: 'StorePrivate', id: stri
         & ProductFragment_ProductPublic_
       ) }>, pageInfo: { __typename?: 'PageInfo', isLastPage: boolean } } };
 
-type StorePublicFragment_StorePublic_ = { __typename?: 'StorePublic', id: string, createdAt: any, updatedAt?: Maybe<any>, name: string, bio?: Maybe<string>, website?: Maybe<string>, userId: string, cover?: Maybe<(
+type StorePublicFragment_StorePublic_ = { __typename?: 'StorePublic', id: string, createdAt: any, updatedAt?: Maybe<any>, name?: Maybe<string>, bio?: Maybe<string>, website?: Maybe<string>, userId: string, cover?: Maybe<(
     { __typename?: 'image_parents' }
     & ImageFragment
   )>, profile?: Maybe<(
@@ -16835,7 +17122,7 @@ type StorePublicFragment_StorePublic_ = { __typename?: 'StorePublic', id: string
 
 export type StorePublicFragment = StorePublicFragment_StorePrivate_ | StorePublicFragment_StorePublic_;
 
-export type StorePrivateFragment = { __typename?: 'StorePrivate', id: string, name: string, createdAt: any, updatedAt?: Maybe<any>, website?: Maybe<string>, bio?: Maybe<string>, coverId?: Maybe<string>, profileId?: Maybe<string>, cover?: Maybe<(
+export type StorePrivateFragment = { __typename?: 'StorePrivate', id: string, name?: Maybe<string>, createdAt: any, updatedAt?: Maybe<any>, website?: Maybe<string>, bio?: Maybe<string>, coverId?: Maybe<string>, profileId?: Maybe<string>, cover?: Maybe<(
     { __typename?: 'image_parents' }
     & ImageFragment
   )>, profile?: Maybe<(
@@ -17359,6 +17646,7 @@ export const ProductFragmentFragmentDoc = gql`
   store {
     id
     name
+    isSuspended
     user {
       id
       license {
@@ -17551,4 +17839,3 @@ export type EditStoreProfileMutationResult = ApolloReactCommon.MutationResult<Ed
 export type EditStoreProfileMutationOptions = ApolloReactCommon.BaseMutationOptions<EditStoreProfileMutation, EditStoreProfileMutationVariables>;
 export type ID = Scalars["ID"]
 export type Price = Scalars["Price"]
-export type Exact<T extends { [key: string]: any }> = { [K in keyof T]: T[K] }

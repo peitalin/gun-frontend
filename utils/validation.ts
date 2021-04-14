@@ -327,7 +327,6 @@ export const validationSchemas = {
     Yup.object().shape({
       userId: Yup.string()
         .required('A userId is needed!'),
-      storeId: Yup.string(),
       name: Yup.string()
         .nullable()
         .max(maxLengthStoreName)
@@ -412,14 +411,11 @@ export const validationSchemas = {
     }),
 
   // Sign Up
-  SignUp:
+  SignupEmail:
     Yup.object().shape({
       email: Yup.string()
         .email("Not a valid email")
         .required('An email is needed'),
-      password: Yup.string()
-        .min(minLengthPassword, `Must be more than ${minLengthPassword} letters!`)
-        .required('password is needed'),
     }),
 
   // Edit UserProfile form
@@ -516,16 +512,6 @@ export const validationSchemas = {
         }),
     }),
 
-  // Signup
-  Signup:
-    Yup.object().shape({
-      email: Yup.string()
-        .email("Not a valid email")
-        .required('An email is needed!'),
-      password: Yup.string()
-        .required('Password required!')
-        .min(minLengthPassword, `Must be more than ${minLengthPassword} letters!`),
-    }),
 
   // Change Payout  email
   ChangePayoutMethod:

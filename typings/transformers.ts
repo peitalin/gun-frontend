@@ -273,5 +273,3 @@ export const formConnectionOrders = (
   }
 }
 
-
-export type Exact<T extends { [key: string]: any }> = { [K in keyof T]: T[K] };

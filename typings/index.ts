@@ -44,7 +44,6 @@ export interface GenericConnection<T> {
 
 export interface CreateStoreInput {
   userId: ID;
-  storeId: ID;
   name: string;
   profileId: ID;
   coverId: ID | undefined;

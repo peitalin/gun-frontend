@@ -15,7 +15,6 @@ import fetch from 'isomorphic-unfetch'
 import withApollo from 'next-with-apollo';
 import { DocumentNode } from "graphql"
 import https from "https";
-import { oc as option } from "ts-optchain";
 
 // /////////// Environment Variables in .env
 const URI = process.env.GATEWAY_GRAPHQL_URL;
@@ -75,7 +74,7 @@ const splitQueryOrSubscriptions = ({
         headers: {
           // "x-hasura-admin-secret": "",
           "content-type": "application/json",
-          cookie: option(ctx).req.headers.cookie(),
+          cookie: ctx?.req?.headers?.cookie,
         },
       }),
     }
@@ -124,7 +123,7 @@ export default withApollo(
               },
               headers: {
                 'content-type': 'application/json',
-                cookie: option(ctx).req.headers.cookie(),
+                cookie: ctx?.req?.headers?.cookie,
                 // authorization: token ? `Bearer ${token}` : "",
                 ...headers,
               },
@@ -165,7 +164,7 @@ export const serverApolloClient = (ctx) => {
     //     },
     //     headers: {
     //       'content-type': 'application/json',
-    //       cookie: option(ctx).req.headers.cookie()
+    //       cookie: ctx?.req?.headers?.cookie
     //     },
     //     // Don't add all req headers, will request itself instead of gateway.
     //     // https://github.com/apollographql/apollo-client/issues/4193
@@ -187,7 +186,7 @@ export const serverApolloClient = (ctx) => {
             },
             headers: {
               'content-type': 'application/json',
-              cookie: option(ctx).req.headers.cookie(),
+              cookie: ctx?.req?.headers?.cookie,
               // authorization: token ? `Bearer ${token}` : "",
             },
             credentials: 'include',

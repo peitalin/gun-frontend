@@ -172,3 +172,4 @@ export const EDIT_USER_LICENSE = gql`
   }
   ${UserPrivateFragment}
 `;
+
