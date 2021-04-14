@@ -380,28 +380,28 @@ export const fontFam = [
 
 export const notifyStyles = (theme: Theme) => createStyles({
   variantSuccess: {
-    backgroundColor: Colors.blue,
+    backgroundColor: `${Colors.blue} !important`,
     color: Colors.cream,
     "& > div > span > svg": {
       fill: `${Colors.cream}`,
     },
   },
   variantError: {
-    backgroundColor: Colors.red,
+    backgroundColor: `${Colors.lightRed} !important`,
     color: Colors.cream,
     "& > div > span > svg": {
       fill: `${Colors.cream}`,
     },
   },
   variantInfo: {
-    backgroundColor: Colors.lighterBlack,
+    backgroundColor: `${Colors.lighterBlack} !important`,
     color: Colors.cream,
     "& > div > span > svg": {
       fill: `${Colors.cream}`,
     }
   },
   variantWarning: {
-    backgroundColor: Colors.magenta,
+    backgroundColor: `${Colors.yellow} !important`,
     color: Colors.cream,
     "& > div > span > svg": {
       fill: `${Colors.cream}`,
@@ -571,7 +571,7 @@ export const createAppTheme = (darkModeStr: "dark"|"light"): ThemeOptions =>  {
         root: {
           height: '1.25rem',
           width: '1.25rem',
-          fill: darkMode ? Colors.uniswapLightestGrey : Colors.black,
+          // fill: darkMode ? Colors.uniswapLightestGrey : Colors.black,
         }
       },
       MuiBadge: {

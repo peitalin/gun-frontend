@@ -76,7 +76,7 @@ const Footer: React.FC<ReactProps> = (props) => {
                 mdDown ? classes.textAlignCenter : null,
               )}>
                 <LogoCircle
-                  color={isDarkMode ? Colors.cream : Colors.black}
+                  color={isDarkMode ? Colors.cream : Colors.slateGreyLightBlack}
                 />
               </div>
               {/* <Typography variant="body2"
@@ -100,7 +100,7 @@ const Footer: React.FC<ReactProps> = (props) => {
                     </Typography>
                   </a>
                 </Link>
-                <Link href={"/contact-us"} prefetch={false}>
+                <Link href={"https://discord.gg/umAdYtsa9v"} prefetch={false}>
                   <a className={classes.link}>
                     <Typography variant="body2" className={classes.linkText}>
                       Contact Us
@@ -274,14 +274,14 @@ const styles = (theme: Theme) => createStyles({
   title: {
     color: theme.palette.type === 'dark'
       ? Colors.cream
-      : Colors.black,
+      : Colors.slateGreyLightBlack,
     fontWeight: 400,
     marginBottom: '0.5rem',
   },
   subtitle: {
     color: theme.palette.type === 'dark'
       ? Colors.cream
-      : Colors.black,
+      : Colors.slateGreyLightBlack,
     fontWeight: 400,
     fontSize: '0.9rem',
   },
@@ -367,7 +367,7 @@ const styles = (theme: Theme) => createStyles({
     //   : `1px solid ${Colors.slateGrey}`,
     color: theme.palette.type === 'dark'
       ? Colors.mediumGrey
-      : Colors.slateGreyBlack,
+      : Colors.slateGreyLightBlack,
     display: 'flex',
     flexDirection: "row",
     flexWrap: 'wrap',
@@ -401,7 +401,7 @@ const styles = (theme: Theme) => createStyles({
     lineHeight: '1rem',
     color: theme.palette.type === 'dark'
       ? Colors.uniswapLightestGrey
-      : Colors.black,
+      : Colors.slateGreyLightBlack,
     textDecoration: 'none',
     '&:hover': {
       color: Colors.secondaryBright,
@@ -443,7 +443,7 @@ const styles = (theme: Theme) => createStyles({
     lineHeight: '1rem',
     color: theme.palette.type === 'dark'
       ? Colors.uniswapLighterGrey
-      : Colors.slateGreyLightestBlack,
+      : Colors.slateGreyLightBlack,
     textDecoration: 'none',
   },
 })

@@ -47,7 +47,7 @@ const MainBar = (props: ReactProps) => {
   }));
   // console.log("router.pathname: ", router.pathname)
 
-  const color = router.pathname === '/' || router.pathname === '/sell'
+  const color = isMainPages(router)
     ? Colors.cream
     : darkMode === 'dark'
       ? Colors.slateGrey
@@ -126,6 +126,9 @@ export const isMainPages = (router: NextRouter) => {
     return true
   }
   if (router.pathname === '/sell') {
+    return true
+  }
+  if (router.pathname === '/start') {
     return true
   }
   return false
