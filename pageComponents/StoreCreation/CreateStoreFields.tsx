@@ -300,7 +300,6 @@ interface FormikFields {
 
 interface ReactProps extends WithStyles<typeof styles> {
   title?: string;
-  storeId?: string;
 }
 
 

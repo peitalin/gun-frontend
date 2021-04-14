@@ -41,9 +41,7 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
 // store deleted
 import { isStoreDeleted, storeDoesNotExist } from "utils/store";
-import { ApolloRefetch } from "layout/GetUser";
-// uuidv4
-import { v4 as uuidv4 } from "uuid"
+
 
 
 
@@ -61,11 +59,9 @@ const CreateStoreForm: React.FC<ReactProps> = (props) => {
 
   const {
     userRedux,
-    userRefetch,
   } = useSelector<GrandReduxState, ReduxState>(s => {
     return {
       userRedux: s.reduxLogin.user,
-      userRefetch: s.reduxRefetch.refetchUser,
     }
   })
 
@@ -127,7 +123,6 @@ const CreateStoreForm: React.FC<ReactProps> = (props) => {
       // 1. feed product data to edit into formik state.
       initialValues={{
         userId: userRedux?.id,
-        storeId: `store_${uuidv4()}`, // generate new storeId
         name: "",
         bio: "",
         website: "",
@@ -144,7 +139,6 @@ const CreateStoreForm: React.FC<ReactProps> = (props) => {
         // Dispatch Apollo Mutation after validation
         storeCreate({
           variables: {
-            storeId: values.storeId,
             userId: values.userId,
             name: values.name,
             bio: values.bio,
@@ -327,7 +321,6 @@ interface FormWrapperProps extends WithStyles<typeof styles> {
 
 interface ReduxState {
   userRedux: UserPrivate;
-  userRefetch: ApolloRefetch;
 }
 interface MutationData {
   createStore: { store: StorePrivate };

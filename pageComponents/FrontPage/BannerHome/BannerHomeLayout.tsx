@@ -1,6 +1,5 @@
 import React from "react";
 import clsx from "clsx";
-import { oc as option } from "ts-optchain";
 import { styles } from "./styles";
 // styles
 import { withStyles, WithStyles, createStyles, Theme, fade } from "@material-ui/core/styles";
@@ -77,15 +76,15 @@ const BannerHomeLayout: NextPage<ReactProps> = (props) => {
         </Typography>
 
         <div className={clsx(classes.buttonsFlexRow, 'fadeInFast')}>
-          {/* {
-            !option(user).id()
+          {
+            !user?.id
             ? <Login
                 initialTabIndex={1}
-                titleSignup={"Create Free Account"}
-                buttonText={"Create Free Account"}
+                titleSignup={"Create Account"}
+                buttonText={"Get Started"}
                 buttonProps={{
                   className: clsx(
-                    classes.buttonCreateAccount,
+                    classes.buttonBecomeASeller,
                     classes.minWidth184,
                     classes.buttonHeightDesktop,
                     classes.buttonFontSizeDesktop,
@@ -96,18 +95,18 @@ const BannerHomeLayout: NextPage<ReactProps> = (props) => {
                   }
                 }}
               />
-            : <Link href={"/"}>
-                <a style={{ marginRight: '1rem' }}>
+            : <Link href={"/sell"}>
+                <a>
                   <Button
                     className={
                       mdDown
                       ? clsx(
-                          classes.buttonBrowseCategories,
-                          classes.minWidth160,
+                          classes.buttonBecomeASeller,
+                          classes.minWidth184,
                           classes.buttonHeightMobile
                         )
                       : clsx(
-                          classes.buttonBrowseCategories,
+                          classes.buttonBecomeASeller,
                           classes.minWidth184,
                           classes.buttonHeightDesktop,
                         )
@@ -118,39 +117,12 @@ const BannerHomeLayout: NextPage<ReactProps> = (props) => {
                       root: classes.buttonRoot,
                       label: classes.buttonFontSizeDesktop,
                     }}
-                    >
-                      Browse Products
+                  >
+                    Sell
                   </Button>
                 </a>
               </Link>
-          } */}
-          <Link href={"/sell"}>
-            <a>
-              <Button
-                className={
-                  mdDown
-                  ? clsx(
-                      classes.buttonBecomeASeller,
-                      classes.minWidth184,
-                      classes.buttonHeightMobile
-                    )
-                  : clsx(
-                      classes.buttonBecomeASeller,
-                      classes.minWidth184,
-                      classes.buttonHeightDesktop,
-                    )
-                }
-                variant="text"
-                color="primary"
-                classes={{
-                  root: classes.buttonRoot,
-                  label: classes.buttonFontSizeDesktop,
-                }}
-              >
-                Sell
-              </Button>
-            </a>
-          </Link>
+          }
         </div>
       </div>
 

@@ -2,7 +2,7 @@ import React from "react";
 import clsx from "clsx";
 // SSR
 import { NextPage, NextPageContext } from 'next';
-import BannerHomeLayout from "./BannerHomeLayout";
+import BannerLandingPageLayout from "./BannerLandingPageLayout";
 // CSS
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
@@ -15,7 +15,7 @@ import { Colors, Gradients } from "layout/AppTheme";
 
 
 
-const BannerHome: NextPage<ReactProps> = (props) => {
+const BannerLandingPage: NextPage<ReactProps> = (props) => {
 
   const bannerImageUrl = "/img/banner5.jpg"
   const bannerMobileImageUrl = "/img/banner5-portrait.jpg"
@@ -29,7 +29,7 @@ const BannerHome: NextPage<ReactProps> = (props) => {
     <>
       {/* Mobile  */}
       <Hidden only={["lg", "xl"]} implementation="css">
-        <BannerHomeLayout
+        <BannerLandingPageLayout
           height={660}
           mdDown={true}
           bannerImageUrl={bannerMobileImageUrl}
@@ -39,7 +39,7 @@ const BannerHome: NextPage<ReactProps> = (props) => {
       </Hidden>
       {/* Desktop  */}
       <Hidden only={["xs", "sm", "md"]} implementation="css">
-        <BannerHomeLayout
+        <BannerLandingPageLayout
           height={540}
           mdDown={false}
           bannerImageUrl={bannerImageUrl}
@@ -60,7 +60,7 @@ export const styles = (theme: Theme) => createStyles({
   },
 })
 
-export default withStyles(styles)(BannerHome);
+export default withStyles(styles)(BannerLandingPage);
 
 
 
