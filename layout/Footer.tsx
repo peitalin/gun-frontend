@@ -73,7 +73,7 @@ const Footer: React.FC<ReactProps> = (props) => {
             )}>
               <div className={clsx(
                 classes.title,
-                mdDown ? classes.textAlignCenter : null,
+                mdDown ? classes.textAlignCenter : classes.desktopLeftMargin,
               )}>
                 <LogoCircle
                   color={isDarkMode ? Colors.cream : Colors.slateGreyLightBlack}
@@ -164,7 +164,8 @@ const Footer: React.FC<ReactProps> = (props) => {
             )}>
               <Typography variant="body2" className={clsx(
                 classes.linkText,
-                classes.fontSize09,
+                classes.allRightsReservedText,
+                !mdDown && classes.desktopLeftMargin,
               )}>
                 { `© ${year} Gunmarketplace. All rights reserved.` }
               </Typography>
@@ -277,6 +278,9 @@ const styles = (theme: Theme) => createStyles({
       : Colors.slateGreyLightBlack,
     fontWeight: 400,
     marginBottom: '0.5rem',
+  },
+  desktopLeftMargin: {
+    marginLeft: '2rem',
   },
   subtitle: {
     color: theme.palette.type === 'dark'
@@ -414,7 +418,7 @@ const styles = (theme: Theme) => createStyles({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  fontSize09: {
+  allRightsReservedText: {
     fontSize: '0.9rem',
     marginBottom: '0.5rem',
   },
