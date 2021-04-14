@@ -25,13 +25,13 @@ import Link from "next/link";
 
 
 
-const CovidBanner = (props) => {
+const BetaTestingBanner = (props) => {
 
   const {
     classes,
   } = props;
 
-  const [showCovidBanner, setShowCovidBanner] = React.useState(true);
+  const [showBetaTesting, setShowBetaTesting] = React.useState(true);
 
   const theme = useTheme();
   const smDown = useMediaQuery(theme.breakpoints.down("sm"))
@@ -44,7 +44,7 @@ const CovidBanner = (props) => {
     ? Gradients.gradientUniswapFluro.color1
     : Gradients.gradientUniswapBlueGreen.color1
 
-  if (!showCovidBanner) {
+  if (!showBetaTesting) {
     return <div></div>
   }
 
@@ -53,7 +53,7 @@ const CovidBanner = (props) => {
       className={clsx(
         smDown ? classes.padding05 : classes.padding2,
         classes.cookiesAgreementRoot,
-        !showCovidBanner && classes.hideBanner
+        !showBetaTesting && classes.hideBanner
       )}
       style={{
         background: isDarkMode
@@ -64,11 +64,11 @@ const CovidBanner = (props) => {
       }}
     >
       {
-        (smDown && showCovidBanner) &&
+        (smDown && showBetaTesting) &&
         <Typography variant="subtitle1"
           className={clsx(
             smDown ? classes.maxWidthSm : classes.maxWidthLg,
-            classes.purchaseSuccessText
+            classes.betaTestBannerText
           )}
         >
           <Tick className={classes.tick}
@@ -78,20 +78,21 @@ const CovidBanner = (props) => {
             innerCircleColor={colorBg}
           />
           <span>
-            We're currently in beta testing. Please join our Discord
-            for more updates on our launch &thinsp;
+            { "We're currently in beta testing. For updates on our launch, " }
             <Link href={"https://discord.gg/umAdYtsa9v"}>
-              <a style={{ textDecoration: 'underline', color: Colors.white }}>here.</a>
+              <a style={{ textDecoration: 'underline', color: Colors.white }}>
+                {"please join our Discord."}
+              </a>
             </Link>
           </span>
         </Typography>
       }
       {
-        (!smDown && showCovidBanner) &&
+        (!smDown && showBetaTesting) &&
         <Typography variant="subtitle1"
           className={clsx(
             smDown ? classes.maxWidthSm : classes.maxWidthLg,
-            classes.purchaseSuccessText
+            classes.betaTestBannerText
           )}
         >
           <Tick
@@ -102,18 +103,19 @@ const CovidBanner = (props) => {
             innerCircleColor={colorBg}
           />
           <span>
-            We're currently in beta testing. Please join our Discord
-            for more updates on our launch &thinsp;
+            { "We're currently in beta testing. For updates on our launch, " }
             <Link href={"https://discord.gg/umAdYtsa9v"}>
-              <a style={{ textDecoration: 'underline', color: Colors.white }}>here.</a>
+              <a style={{ textDecoration: 'underline', color: Colors.white }}>
+                {"please join our Discord here."}
+              </a>
             </Link>
           </span>
         </Typography>
       }
       {
-        showCovidBanner &&
+        showBetaTesting &&
         <IconButtonCancel
-          onClick={() => setShowCovidBanner(false)}
+          onClick={() => setShowBetaTesting(false)}
         />
       }
     </div>
@@ -122,7 +124,6 @@ const CovidBanner = (props) => {
 
 
 interface ReactProps extends WithStyles<typeof styles> {
-  covid?: boolean;
 }
 
 const styles = (theme: Theme) => createStyles({
@@ -137,7 +138,7 @@ const styles = (theme: Theme) => createStyles({
     marginBottom: '2rem',
     marginTop: '2rem',
   },
-  purchaseSuccessText: {
+  betaTestBannerText: {
     color: Colors.cream,
     display: 'flex',
     justifyContent: 'center',
@@ -156,7 +157,7 @@ const styles = (theme: Theme) => createStyles({
     }),
   },
   padding05: {
-    padding: '0.75rem',
+    padding: '1rem',
     transition: theme.transitions.create('padding', {
       easing: theme.transitions.easing.sharp,
       duration: "400ms",
@@ -171,7 +172,7 @@ const styles = (theme: Theme) => createStyles({
     lineHeight: '1.33rem',
   },
   tick: {
-    marginRight: '0.5rem',
+    marginRight: '1rem',
   },
   hideBanner: {
     padding: 0,
@@ -184,4 +185,4 @@ const styles = (theme: Theme) => createStyles({
 });
 
 
-export default withStyles(styles)(CovidBanner);
+export default withStyles(styles)(BetaTestingBanner);

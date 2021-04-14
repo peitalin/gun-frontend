@@ -14,11 +14,6 @@ import { ProductPreviewItemInput, ProductPreviewItem } from "typings/gqlTypes";
 import { ReducerName } from "typings/dropzone";
 // Components
 import TextInput from "components/Fields/TextInput";
-// Carousel
-import AirCarousel from "components/AirCarousel";
-import AirItemWide from "components/AirCarousel/AirItemWide";
-// Draggable
-import { SortableContainer, SortableElement } from 'react-sortable-hoc';
 import { isYouTubeVimeoLink } from "utils/links";
 
 

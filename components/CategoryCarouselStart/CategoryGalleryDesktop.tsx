@@ -61,7 +61,10 @@ const CategoryGalleryDesktop = (props: ReactProps) => {
   }
 
   return (
-    <div className={smDown ? classes.innerRootSm : classes.innerRoot}>
+    <div
+      className={smDown ? classes.innerRootSm : classes.innerRoot}
+      style={props.style}
+    >
       {
         (categories ?? []).map((c, i) => {
 
@@ -96,7 +99,10 @@ const CategoryGalleryDesktop = (props: ReactProps) => {
                     classes={{ media: classes.categoryImage }}
                     src={imageUrl}
                   />
-                  <Typography variant="body1" className={classes.cardText}>
+                  <Typography variant="body1"
+                    className={classes.cardText}
+                    style={props.cardTextStyle}
+                  >
                     {c?.name}
                   </Typography>
                 </a>
@@ -113,6 +119,7 @@ const CategoryGalleryDesktop = (props: ReactProps) => {
 
 interface ReactProps extends WithStyles<typeof styles> {
   style?: any;
+  cardTextStyle?: any;
   categories: Categories[]
   initialNumItems?: number
 }

@@ -139,7 +139,10 @@ const CategoryCarouselMobile = (props: ReactProps) => {
                             />
                           : <div className={classes.emptyImage}/>
                         }
-                        <Typography variant="body1" className={classes.cardText}>
+                        <Typography variant="body1"
+                          className={classes.cardText}
+                          style={props.cardTextStyle}
+                        >
                           {c?.name}
                         </Typography>
                       </div>
@@ -158,6 +161,7 @@ const CategoryCarouselMobile = (props: ReactProps) => {
 
 interface ReactProps extends WithStyles<typeof styles> {
   style?: any;
+  cardTextStyle?: any;
   categories: Categories[]
   initialNumItems?: number
 }

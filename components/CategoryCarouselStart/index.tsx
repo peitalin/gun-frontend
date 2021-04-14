@@ -70,6 +70,7 @@ const CategoryCarouselStart = (props: ReactProps) => {
         {/* IMPLEMENTATION must be JS or scroll won't work */}
         <CategoryGalleryDesktop
           style={props.style}
+          cardTextStyle={props.cardTextStyle}
           categories={props.categories}
           initialNumItems={8}
         />
@@ -78,6 +79,7 @@ const CategoryCarouselStart = (props: ReactProps) => {
       <Hidden only={["xs", "sm", "md", "xl"]} implementation="css">
         <CategoryGalleryDesktop
           style={props.style}
+          cardTextStyle={props.cardTextStyle}
           categories={props.categories}
           initialNumItems={6}
         />
@@ -86,6 +88,7 @@ const CategoryCarouselStart = (props: ReactProps) => {
       <Hidden only={["xs", "sm", "lg", "xl"]} implementation="css">
         <CategoryGalleryDesktop
           style={props.style}
+          cardTextStyle={props.cardTextStyle}
           categories={props.categories}
           initialNumItems={4}
         />
@@ -94,6 +97,7 @@ const CategoryCarouselStart = (props: ReactProps) => {
       <Hidden only={["xs", "md", "lg", "xl"]} implementation="css">
         <CategoryCarouselMobile
           style={props.style}
+          cardTextStyle={props.cardTextStyle}
           categories={props.categories}
           initialNumItems={4}
         />
@@ -102,6 +106,7 @@ const CategoryCarouselStart = (props: ReactProps) => {
       <Hidden only={["sm", "md", "lg", "xl"]} implementation="css">
         <CategoryCarouselMobile
           style={props.style}
+          cardTextStyle={props.cardTextStyle}
           categories={props.categories}
           initialNumItems={4}
         />
@@ -115,6 +120,7 @@ const CategoryCarouselStart = (props: ReactProps) => {
 interface ReactProps extends WithStyles<typeof styles> {
   title?: string;
   style?: any;
+  cardTextStyle?: any;
   disableTitle?: boolean;
   categories: Categories[];
 }
