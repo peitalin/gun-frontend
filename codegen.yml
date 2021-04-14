@@ -37,9 +37,9 @@ generates:
       - add:
           placement: "append"
           content: "export type Price = Scalars[\"Price\"]"
-      - add:
-          placement: "append"
-          content: "export type Exact<T extends { [key: string]: any }> = { [K in keyof T]: T[K] }"
+      # - add:
+      #     placement: "append"
+      #     content: "export type Exact<T extends { [key: string]: any }> = { [K in keyof T]: T[K] }"
       - typescript-operations:
           preResolveTypes: true
           dedupeOperationSuffix: true
