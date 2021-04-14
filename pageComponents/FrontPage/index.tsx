@@ -12,6 +12,7 @@ import FeaturedProducts from "pageComponents/FrontPage/FeaturedProducts";
 import CategoryProducts from "pageComponents/FrontPage/CategoryProducts";
 import BannerHome from "pageComponents/FrontPage/BannerHome";
 import BannerPromotionsLink from "pageComponents/FrontPage/BannerPromotionsLink";
+import CovidBanner from "components/CovidBanner";
 
 // GraphQL
 import { useQuery, useApolloClient } from "@apollo/client";
@@ -46,6 +47,7 @@ const FrontPage: React.FC<ReactProps> = (props) => {
     <div className={classes.frontPageRoot}>
 
       <BannerHome />
+      <CovidBanner />
 
       <AlignCenterLayout
         maxWidth={MAX_WIDTH_GRID || 1160}

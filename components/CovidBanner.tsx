@@ -36,7 +36,13 @@ const CovidBanner = (props) => {
   const theme = useTheme();
   const smDown = useMediaQuery(theme.breakpoints.down("sm"))
 
-  const colorBg = Gradients.gradientUniswapFluro.color1
+  const isDarkMode = useSelector<GrandReduxState, boolean>(
+    s => s.reduxLogin.darkMode === 'dark'
+  );
+
+  const colorBg = isDarkMode
+    ? Gradients.gradientUniswapFluro.color1
+    : Gradients.gradientUniswapBlueGreen.color1
 
   if (!showCovidBanner) {
     return <div></div>
@@ -50,7 +56,9 @@ const CovidBanner = (props) => {
         !showCovidBanner && classes.hideBanner
       )}
       style={{
-        background: Gradients.gradientUniswapFluro.background,
+        background: isDarkMode
+          ? Gradients.gradientUniswapFluro.background
+          : Gradients.gradientUniswapBlueGreen.background,
         position: "relative",
         zIndex: 1,
       }}
@@ -70,9 +78,9 @@ const CovidBanner = (props) => {
             innerCircleColor={colorBg}
           />
           <span>
-            Impacted by Covid-19? Find connection and resources
-            for creators &thinsp;
-            <Link href={"/sell"}>
+            We're currently in beta testing. Please join our Discord
+            for more updates on our launch.
+            <Link href={"https://discord.gg/umAdYtsa9v"}>
               <a style={{ textDecoration: 'underline', color: Colors.white }}>here.</a>
             </Link>
           </span>
@@ -94,10 +102,9 @@ const CovidBanner = (props) => {
             innerCircleColor={colorBg}
           />
           <span>
-            Impacted by Covid-19?
-            We're in this with you.
-            Find connection and resources for creators &thinsp;
-            <Link href={"/sell"}>
+            We're currently in beta testing. Please join our Discord
+            for more updates on our launch.
+            <Link href={"https://discord.gg/umAdYtsa9v"}>
               <a style={{ textDecoration: 'underline', color: Colors.white }}>here.</a>
             </Link>
           </span>
