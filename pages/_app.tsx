@@ -141,7 +141,7 @@ class MyApp extends App<AppProps> {
                   dark={false}
                 />
               )}
-              dense
+              // dense
               maxSnack={4}
             >
               <CssBaseline />
