@@ -580,12 +580,6 @@ export const styles = (theme: Theme) => createStyles({
     backgroundColor: theme.palette.type === 'dark'
       ? theme.colors.uniswapDarkNavy
       : Colors.cream,
-    boxShadow: theme.palette.type === 'dark'
-      ? BoxShadows.shadow1.boxShadow
-      : 'unset',
-    border: theme.palette.type === 'dark'
-      ? `1px solid ${Colors.uniswapLightNavy}`
-      : `1px solid ${Colors.slateGreyDark}`,
     width: '100%',
     padding: '3rem',
   },

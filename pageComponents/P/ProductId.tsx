@@ -289,6 +289,7 @@ const Products: React.FC<ReactProps> = (props) => {
               .filter(bid => bid.bidStatus === BidStatus.ACCEPTED)
               .map(bid =>
                 <StickyDetailsBids
+                  key={bid?.id}
                   userBid={bid}
                   selectedBid={selectedBid}
                   setSelectedBid={setSelectedBid}

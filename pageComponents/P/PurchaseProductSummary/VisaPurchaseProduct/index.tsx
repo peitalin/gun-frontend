@@ -256,8 +256,9 @@ const VisaPurchaseProduct = (props: ReactProps) => {
       billing_details: { email: props.user?.email }
     })
     if (error) {
+      console.warn("error: ", error)
       snackbar.enqueueSnackbar(
-        `createNewPaymentMethod error: ${error}`,
+        `createNewPaymentMethod error: ${JSON.stringify(error)}`,
         { variant: "error"}
       )
     }

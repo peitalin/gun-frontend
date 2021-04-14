@@ -156,17 +156,19 @@ const Layout: React.FC<ReactProps> = (props) => {
   }
 
 
+  let showChatWoot = (
+    router.pathname === "/"
+    || router.pathname.startsWith("/p/")
+    || router.pathname === "/sell"
+    || router.pathname === "/orders"
+  ) ? true : false
+
+  // console.log("showChatWood: ", showChatWoot)
+
   return (
     <StripeProvider>
       <Header
-        showChatwoot={
-          (
-            router.pathname === "/"
-            || router.pathname.startsWith("/p/")
-            || router.pathname === "/sell"
-            || router.pathname === "/orders"
-          ) ? true : false
-        }
+        showChatwoot={showChatWoot}
       />
       <NavBarMain/>
       <GetUser/>

@@ -113,33 +113,36 @@ const StickyDetailsBid = (props: ReactProps) => {
             }
           </div>
 
-          <ButtonLoading
-            onClick={() => {
-              if (thisBidIsSelected) {
-                props.setSelectedBid(undefined)
-              } else {
-                props.setSelectedBid(userBid)
-              }
-            }}
-            loadingIconColor={Colors.blue}
-            replaceTextWhenLoading={true}
-            // loading={loading}
-            disabled={disabledButton}
-            variant="contained"
-            color="secondary"
-            className={classes.buyButton}
-            style={{
-              height: "38px",
-            }}
-          >
-            <span style={{ marginLeft: '0.25rem' }}>
-              {
-                thisBidIsSelected
-                ? "Cancel"
-                : "Select Bid"
-              }
-            </span>
-          </ButtonLoading>
+          <div className={classes.bidButtonContainer}>
+            <ButtonLoading
+              onClick={() => {
+                if (thisBidIsSelected) {
+                  props.setSelectedBid(undefined)
+                } else {
+                  props.setSelectedBid(userBid)
+                }
+              }}
+              loadingIconColor={Colors.blue}
+              replaceTextWhenLoading={true}
+              // loading={loading}
+              disabled={disabledButton}
+              variant="contained"
+              color="secondary"
+              className={classes.buyButton}
+              style={{
+                height: "38px",
+              }}
+            >
+              <span style={{ marginLeft: '0.25rem' }}>
+                {
+                  thisBidIsSelected
+                  ? "Cancel"
+                  : "Select Bid"
+                }
+              </span>
+            </ButtonLoading>
+          </div>
+
         </div>
       </div>
     </div>
@@ -247,9 +250,11 @@ const styles = (theme: Theme) => createStyles({
       : Colors.slateGreyBlack,
   },
   bidButtonContainer: {
-    position: 'absolute',
-    bottom: '1rem',
-    right: '1rem',
+    width: "100%",
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
   },
   bidStatus: {
     position: 'absolute',
@@ -304,6 +309,7 @@ const styles = (theme: Theme) => createStyles({
       backgroundColor: Colors.greenCool,
     },
     width: "100%",
+    maxWidth: 340,
     borderRadius: BorderRadius,
   },
 });

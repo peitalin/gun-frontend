@@ -55,6 +55,20 @@ export const Textbox: React.FC<ReactProps> = (props) => {
       // variables: { }, // add later in sendMessage()
       onCompleted: (data) => {
         console.log(data)
+        setDisplayedPrice('')
+        setOfferPrice(0)
+        snackbar.enqueueSnackbar(
+          `Bid placed successfully.`,
+          { variant: "success" }
+        )
+      },
+      onError: (err) => {
+        snackbar.enqueueSnackbar(
+          `${err?.graphQLErrors?.[0]?.message}`,
+          { variant: "error" }
+        )
+      },
+      update: (cache, { data: { sendBidMessage }}) => {
       },
     }
   )
@@ -98,7 +112,7 @@ export const Textbox: React.FC<ReactProps> = (props) => {
               console.log("chatRoomId: ", props.chatRoomId)
 
               snackbar.enqueueSnackbar(
-                `sending a bid.`,
+                `Placing a bid.`,
                 { variant: "info" }
               )
 
@@ -116,12 +130,6 @@ export const Textbox: React.FC<ReactProps> = (props) => {
               }).then(res => {
                 // fprops.resetForm()
                 fprops.setFieldValue("description", "")
-                setDisplayedPrice('')
-                setOfferPrice(0)
-                snackbar.enqueueSnackbar(
-                  `Bid placed successfully.`,
-                  { variant: "success" }
-                )
               });
           }}>
             <div className={classes.textboxWrapper}>
