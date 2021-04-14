@@ -1,6 +1,7 @@
 import gql from "graphql-tag";
 import { ImageFragment, ProductFragment } from "./fragments";
 
+
 export const CREATE_PRODUCT = gql`
   mutation createProduct($productCreateInput: ProductCreateInput) {
     createProduct(productCreateInput: $productCreateInput) {

@@ -86,3 +86,13 @@ export const GET_PRODUCTS_BY_CATEGORY = gql`
   }
   ${ProductFragment}
 `;
+
+
+export const GET_RECENT_PRODUCTS = gql`
+  query getRecentProducts($limit: Int!, $offset: Int!) {
+    getRecentProducts(limit: $limit, offset: $offset) {
+      ...ProductFragment
+    }
+  }
+  ${ProductFragment}
+`;

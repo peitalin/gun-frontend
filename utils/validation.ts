@@ -569,6 +569,23 @@ export const validationSchemas = {
       verified: Yup.boolean(),
     }),
 
+  // Suspend and unsuspend products
+  SuspendUnsuspendProduct:
+    Yup.object().shape({
+      productId: Yup.string()
+        .required('productId required'),
+      isSuspended: Yup.boolean(),
+    }),
+
+  // Suspend and unsuspend store
+  SuspendUnsuspendStore:
+    Yup.object().shape({
+      storeId: Yup.string()
+        .required('storeId required'),
+      isSuspended: Yup.boolean(),
+    }),
+
+
   // Creating Zendesk Support Ticket
   CreateSupportTicket:
     Yup.object().shape({

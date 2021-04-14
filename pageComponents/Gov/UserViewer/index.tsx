@@ -10,9 +10,6 @@ import { Colors, BorderRadius, BoxShadows } from "layout/AppTheme";
 // Typings
 import {
   UserPrivate,
-  ID,
-  Order,
-  UserMutationResponse,
 } from "typings/gqlTypes";
 // Material UI
 import Typography from "@material-ui/core/Typography";
@@ -33,12 +30,6 @@ import {
   USER_BY_EMAIL_OR_ID_ADMIN_ONLY,
   ADMIN_APPROVE_USER_LICENSE,
 } from "queries/user-admin-queries-mutations";
-import {
-  CANCEL_ORDER_AND_PAYMENT,
-} from "queries/refunds-mutations";
-// Validation
-import { Formik } from 'formik';
-import { validationSchemas } from "utils/validation";
 // Snackbar
 import { useSnackbar } from "notistack";
 // router

@@ -5,10 +5,6 @@ import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/s
 import { NextPage, NextPageContext } from 'next';
 // GraphQL
 import { serverApolloClient } from "utils/apollo";
-// Redux
-import { useSelector } from 'react-redux';
-import { GrandReduxState } from 'reduxStore/grand-reducer';
-import { UserPrivate } from "typings/gqlTypes";
 import { useApolloClient, ApolloClient } from "@apollo/client";
 import LoadingBarSSR from "components/LoadingBarSSR";
 // SSR disable
@@ -18,21 +14,17 @@ const AdminProfileWrapper = dynamic(() => import("layout/GetUser/AdminProfileWra
   loading: () => <LoadingBarSSR/>,
   ssr: false,
 })
-import UserViewerPage from "pageComponents/Gov/UserViewer";
+import ProductViewerPage from "pageComponents/Gov/ProductViewer";
 
 
 
-const GovUsersPage: NextPage<ReactProps> = (props) => {
-
-  const admin = useSelector<GrandReduxState, UserPrivate>(
-    state => state.reduxLogin.user
-  );
+const GovProductsPage: NextPage<ReactProps> = (props) => {
 
   return (
     <AdminProfileWrapper>
       {({ data, loading, error }: AdminProfileProps) => {
         return (
-          <UserViewerPage
+          <ProductViewerPage
             onSubmit={undefined}
             onClickDebugPrint={undefined}
           />
@@ -56,7 +48,7 @@ interface Context extends NextPageContext {
   apolloClient: ApolloClient<any>;
 }
 
-GovUsersPage.getInitialProps = async (ctx: Context) => {
+GovProductsPage.getInitialProps = async (ctx: Context) => {
 
   // Will trigger this getInitialProps when requesting route /pages/ProductGallery
   // otherwise initialProps may be fed via /pages/index.tsx's getInitialProps
@@ -89,7 +81,7 @@ GovUsersPage.getInitialProps = async (ctx: Context) => {
 }
 
 
-export default withStyles(styles)( GovUsersPage );
+export default withStyles(styles)( GovProductsPage );
 
 
 

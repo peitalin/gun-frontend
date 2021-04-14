@@ -1,5 +1,4 @@
 import React from "react";
-import { oc as option } from "ts-optchain";
 import clsx from "clsx";
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 import { Colors, BorderRadius, BoxShadows } from "layout/AppTheme";
@@ -219,7 +218,7 @@ const ProductRow = (props: ReactProps) => {
   );
   let productName = product?.currentSnapshot?.title
 
-  if (!option(product).featuredVariant()) {
+  if (!product?.featuredVariant) {
     return <Loading />
   } else {
     return (

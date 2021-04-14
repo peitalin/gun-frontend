@@ -14,6 +14,7 @@ import {
   PayeeType,
   Connection,
   OrdersConnection,
+  OrderBy,
 } from "typings/gqlTypes";
 // Utils Components
 import ErrorBounds from "components/ErrorBounds";
@@ -107,17 +108,17 @@ const PayoutsCompletedList = (props: ReactProps) => {
         query: {
           limit: limit,
           offset: offset,
+          orderBy: { createdAt: OrderBy.DESC }
         },
       },
       fetchPolicy: "no-cache",
     }
   )
 
-  const connection = option(data).getOrdersPayoutCompleteConnection();
-  const orderIds = option(connection).edges([]).map(({ node }) => node.id)
+  const connection = data?.getOrdersPayoutCompleteConnection;
+  const orderIds = connection?.edges?.map(({ node }) => node.id)
 
-  let noPayoutsToBePaid = !loading &&
-    option(connection).edges([]).length === 0
+  let noPayoutsToBePaid = !loading && connection?.edges?.length === 0
 
 
   return (

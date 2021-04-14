@@ -7,7 +7,7 @@ import { SoldOutStatus, Chat_Rooms } from "typings/gqlTypes";
 // GraphQL
 import { useQuery, useLazyQuery } from "@apollo/client";
 // Typings
-import { Product, UserPrivate, Product_Variants, BidStatus } from "typings/gqlTypes";
+import { Product, UserPrivate, Product_Variants, BidStatus, Role } from "typings/gqlTypes";
 import {
   GET_PRODUCT,
 } from "queries/products-queries";
@@ -73,6 +73,8 @@ const Products: React.FC<ReactProps> = (props) => {
   const user = useSelector<GrandReduxState, UserPrivate>(s =>
     s.reduxLogin.user
   )
+
+  const isAdmin = user.userRole === Role.PLATFORM_ADMIN
 
   ///////// DATA
 
@@ -159,13 +161,16 @@ const Products: React.FC<ReactProps> = (props) => {
   }, [loading])
 
 
-  if (product && product.isSuspended) {
+  if (product?.store?.isSuspended && !isAdmin) {
+    return <ErrorPage statusCode={400} message={"Store has been suspended"}/>
+  }
+  if (product?.isSuspended && !isAdmin) {
     return <ErrorPage statusCode={400} message={"Product has been suspended"}/>
   }
-  if (product && product.isDeleted) {
+  if (product?.isDeleted && !isAdmin) {
     return <ErrorPage statusCode={400} message={"Product has been deleted"}/>
   }
-  if (product && !product.isPublished) {
+  if (!product?.isPublished && !isAdmin) {
     return <ErrorPage statusCode={400} message={"Product is not available"}/>
   }
   if (error) {
