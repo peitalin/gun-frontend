@@ -79,7 +79,7 @@ const CovidBanner = (props) => {
           />
           <span>
             We're currently in beta testing. Please join our Discord
-            for more updates on our launch.
+            for more updates on our launch &thinsp;
             <Link href={"https://discord.gg/umAdYtsa9v"}>
               <a style={{ textDecoration: 'underline', color: Colors.white }}>here.</a>
             </Link>
@@ -103,7 +103,7 @@ const CovidBanner = (props) => {
           />
           <span>
             We're currently in beta testing. Please join our Discord
-            for more updates on our launch.
+            for more updates on our launch &thinsp;
             <Link href={"https://discord.gg/umAdYtsa9v"}>
               <a style={{ textDecoration: 'underline', color: Colors.white }}>here.</a>
             </Link>
