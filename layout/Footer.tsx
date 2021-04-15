@@ -76,7 +76,7 @@ const Footer: React.FC<ReactProps> = (props) => {
                 mdDown ? classes.textAlignCenter : classes.desktopLeftMargin,
               )}>
                 <LogoCircle
-                  color={isDarkMode ? Colors.cream : Colors.slateGreyLightBlack}
+                  color={isDarkMode ? Colors.cream : Colors.slateGreyDarkest}
                 />
               </div>
               {/* <Typography variant="body2"
@@ -275,7 +275,7 @@ const styles = (theme: Theme) => createStyles({
   title: {
     color: theme.palette.type === 'dark'
       ? Colors.cream
-      : Colors.slateGreyLightBlack,
+      : Colors.slateGreyDarkest,
     fontWeight: 400,
     marginBottom: '0.5rem',
   },
@@ -285,7 +285,7 @@ const styles = (theme: Theme) => createStyles({
   subtitle: {
     color: theme.palette.type === 'dark'
       ? Colors.cream
-      : Colors.slateGreyLightBlack,
+      : Colors.slateGreyDarkest,
     fontWeight: 400,
     fontSize: '0.9rem',
   },
@@ -371,7 +371,7 @@ const styles = (theme: Theme) => createStyles({
     //   : `1px solid ${Colors.slateGrey}`,
     color: theme.palette.type === 'dark'
       ? Colors.mediumGrey
-      : Colors.slateGreyLightBlack,
+      : Colors.slateGreyDarkest,
     display: 'flex',
     flexDirection: "row",
     flexWrap: 'wrap',
@@ -405,7 +405,7 @@ const styles = (theme: Theme) => createStyles({
     lineHeight: '1rem',
     color: theme.palette.type === 'dark'
       ? Colors.uniswapLightestGrey
-      : Colors.slateGreyLightBlack,
+      : Colors.slateGreyDarkest,
     textDecoration: 'none',
     '&:hover': {
       color: Colors.secondaryBright,
@@ -447,7 +447,7 @@ const styles = (theme: Theme) => createStyles({
     lineHeight: '1rem',
     color: theme.palette.type === 'dark'
       ? Colors.uniswapLighterGrey
-      : Colors.slateGreyLightBlack,
+      : Colors.slateGreyDarkest,
     textDecoration: 'none',
   },
 })

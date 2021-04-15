@@ -126,6 +126,7 @@ class MyApp extends App<AppProps> {
         <ApolloProvider client={apollo}>
           <ThemeProviderDarkMode>
             <SnackbarProvider
+              // @ts-ignore
               ref={notistackRef}
               autoHideDuration={4000}
               preventDuplicate
