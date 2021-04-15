@@ -49,21 +49,21 @@ interface ReactProps extends WithStyles<typeof styles> {
 const styles = (theme: Theme) => createStyles({
   iconButtonRoot: {
     "&:hover": {
-      backgroundColor: "rgba(250, 250, 250, 0.14)",
+      backgroundColor: "rgba(210, 210, 210, 0.24)",
     }
   },
   iconButtonRootDark: {
     "&:hover": {
-      backgroundColor: "rgba(25, 25, 25, 0.14)",
+      backgroundColor: "rgba(25, 25, 25, 0.24)",
     }
   },
   iconButtonSvg: {
-    fill: "#eaeaea",
+    fill: Colors.slateGreyLightBlack,
     height: '1.5rem',
     width: '1.5rem',
   },
   iconButtonSvgDark: {
-    fill: "#444444",
+    fill: Colors.uniswapLighterGrey,
     height: '1.5rem',
     width: '1.5rem',
   },

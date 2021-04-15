@@ -32,7 +32,7 @@ const DropdownInput = (props: ReactProps) => {
     creatable = false,
     isMulti = false,
     isSearchable = true,
-    isClearable = true,
+    isClearable = false,
     height = 40,
     limit,
     classes,
@@ -185,6 +185,11 @@ const DropdownInput = (props: ReactProps) => {
               }),
               singleValue: styles => ({
                 color: isDarkMode ? Colors.uniswapLighterGrey : Colors.charcoal,
+                overflow: 'hidden',
+                whiteSpace: 'nowrap',
+                width: '100%',
+                textOverflow: 'ellipsis',
+                maxWidth: '250px',
               }),
               indicatorSeparator: styles => ({
                 ...styles,

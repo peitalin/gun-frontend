@@ -35,6 +35,8 @@ import ButtonLoading from "components/ButtonLoading";
 import ProductEditFormLayout from "./ProductEditFormLayout";
 import Title from "pageComponents/ProductCreate/TitleSerialNumber";
 import DisplaySnackBars from "pageComponents/ProductCreate/ProductCreatePage/DisplaySnackBars";
+import BackTo from "components/BackTo";
+import Typography from "@material-ui/core/Typography";
 // Subcomponents
 import TitleSerialNumber from "pageComponents/ProductCreate/TitleSerialNumber";
 import GunAttributes from "pageComponents/ProductCreate/GunAttributes";
@@ -255,6 +257,13 @@ const ProductEditPage = (props: ReactProps) => {
             closeModal={closeModal}
             onSubmit={handleSubmit} // dispatches to <Formik onSubmit={}/>
           >
+            <Typography className={classes.title} variant="h2">
+              Edit Product
+            </Typography>
+            <BackTo
+              textLink={true}
+              title={"Back to Products"}
+            />
             <SectionBorder>
               <TitleSerialNumber {...fprops} />
               <SelectCategories
@@ -399,9 +408,14 @@ const printValidationErrors = (
 ): string => {
   // watch out for nested objects which may not be strings
   // if using Object.values()
-  let priceError = errors?.currentVariants?.[0].price;
-  let priceWasError = errors?.currentVariants?.[0].priceWas;
-  let previewItemsError = errors?.currentVariants?.[0].previewItems;
+  console.log("errors:", errors)
+  // let priceError = errors?.currentVariants?.[0]?.price;
+  // let priceWasError = errors?.currentVariants?.[0]?.priceWas;
+  // let previewItemsError = errors?.currentVariants?.[0]?.previewItems;
+
+  let priceError = errors?.currentVariants?.[0];
+  let priceWasError = errors?.currentVariants?.[0];
+  let previewItemsError = errors?.currentVariants?.[0];
 
   let { currentVariants, ...filterErrors }: any = errors
 

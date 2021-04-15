@@ -79,7 +79,7 @@ class ErrorDisplay extends React.Component<ReactProps, any> {
                   <span>Unable to connect to server.</span>
                 </div>
                 <div className={classes.errLine}>
-                  <span>Gunmarketplace's backend server has a bug:</span>
+                  <span>Gun Marketplace's backend server has a bug:</span>
                 </div>
               </div>
           }

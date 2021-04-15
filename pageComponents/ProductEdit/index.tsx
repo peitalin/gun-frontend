@@ -1,7 +1,7 @@
 import React from "react";
-import { useState } from "react";
 // Styles
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
+import clsx from "clsx";
 // Material UI
 import Dialog from "@material-ui/core/Dialog";
 // Redux
@@ -10,15 +10,23 @@ import { GrandReduxState } from "reduxStore/grand-reducer";
 import { Actions } from "reduxStore/actions";
 // Components
 import ProductEditPage from "./ProductEditPage";
+import ErrorBounds from 'components/ErrorBounds';
+import BackTo from "components/BackTo";
+import Typography from "@material-ui/core/Typography";
 // Typings
 import { Product, ID } from "typings/gqlTypes";
+import { useTheme } from "@material-ui/core/styles";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 
 
 const ProductEditModal: React.FC<ReactProps> = (props) => {
 
-  const [fadeOut, setFadeOut] = useState(false);
+  const [fadeOut, setFadeOut] = React.useState(false);
   const { classes, asModal, product } = props;
+
+  const theme = useTheme();
+  const mdDown = useMediaQuery(theme.breakpoints.down('md'));
 
   const dispatch = useDispatch();
   const productEditModalOpen = useSelector<GrandReduxState, boolean>(
@@ -35,15 +43,20 @@ const ProductEditModal: React.FC<ReactProps> = (props) => {
 
   if (!asModal) {
     return (
-      <div className={classes.outerContainer}>
-        <div className={classes.flexRowInner}>
-          <ProductEditPage
-            asModal={false}
-            closeModal={closeModal}
-            product={product}
-          />
+      <ErrorBounds className={clsx(
+        classes.pageRoot,
+        mdDown ? classes.paddingMobile : classes.paddingDesktop,
+      )}>
+        <div className={classes.outerContainer}>
+          <div className={classes.flexRowInner}>
+            <ProductEditPage
+              asModal={false}
+              closeModal={closeModal}
+              product={product}
+            />
+          </div>
         </div>
-      </div>
+      </ErrorBounds>
     )
   } else {
     return (
@@ -77,6 +90,18 @@ interface ReactProps extends WithStyles<typeof styles> {
 }
 
 const styles = (theme: Theme) => createStyles({
+  pageRoot: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  paddingDesktop: {
+    padding: '2rem 2rem 2rem 2rem',
+  },
+  paddingMobile: {
+    padding: '2rem 0.5rem 2rem 0.5rem',
+  },
   modalBackdrop: {
     backgroundColor: "rgba(47, 57, 65, .85)",
   },
@@ -106,6 +131,8 @@ const styles = (theme: Theme) => createStyles({
     flexGrow: 1,
     minWidth: 280,
     maxWidth: 400,
+  },
+  title: {
   },
 });
 

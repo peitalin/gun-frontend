@@ -19,11 +19,6 @@ export const styles = (theme: Theme) => createStyles({
     flexDirection: 'row',
     justifyContent: 'center',
     paddingBottom: '4rem',
-    border: `1px solid ${Colors.mediumLightGrey}`,
-    backgroundColor: Colors.foregroundColor,
-    boxShadow: BoxShadows.shadow4.boxShadow,
-    padding: "2rem 1rem 1rem 1rem",
-    borderRadius: `4px`,
   },
   maxWidth: {
     maxWidth: 600,
@@ -175,6 +170,7 @@ export const styles = (theme: Theme) => createStyles({
     justifyContent: "space-between",
     flexWrap: "wrap",
     width: '100%',
+    marginTop: "2rem",
   },
   flexButtonItem: {
     marginBottom: '1rem',

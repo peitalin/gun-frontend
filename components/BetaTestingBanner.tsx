@@ -32,6 +32,7 @@ const BetaTestingBanner = (props) => {
   } = props;
 
   const [showBetaTesting, setShowBetaTesting] = React.useState(true);
+  const [hover, setHover] = React.useState(false);
 
   const theme = useTheme();
   const smDown = useMediaQuery(theme.breakpoints.down("sm"))
@@ -52,13 +53,14 @@ const BetaTestingBanner = (props) => {
     <div
       className={clsx(
         smDown ? classes.padding05 : classes.padding2,
-        classes.cookiesAgreementRoot,
+        classes.betaTestBannerRoot,
         !showBetaTesting && classes.hideBanner
       )}
+      id={"gradient-border-1"}
       style={{
         background: isDarkMode
-          ? Gradients.gradientUniswapFluro.background
-          : Gradients.gradientUniswapBlueGreen.background,
+          ? Colors.uniswapDarkNavy
+          : Colors.slateGrey,
         position: "relative",
         zIndex: 1,
       }}
@@ -70,6 +72,8 @@ const BetaTestingBanner = (props) => {
             smDown ? classes.maxWidthSm : classes.maxWidthLg,
             classes.betaTestBannerText
           )}
+          onMouseEnter={() => setHover(true)}
+          onMouseLeave={() => setHover(false)}
         >
           <Tick className={classes.tick}
             size={30}
@@ -80,7 +84,7 @@ const BetaTestingBanner = (props) => {
           <span>
             { "We're currently in beta testing. For updates on our launch, " }
             <Link href={"https://discord.gg/umAdYtsa9v"}>
-              <a style={{ textDecoration: 'underline', color: Colors.white }}>
+              <a className={hover ? classes.discordLink : null}>
                 {"please join our Discord."}
               </a>
             </Link>
@@ -94,6 +98,8 @@ const BetaTestingBanner = (props) => {
             smDown ? classes.maxWidthSm : classes.maxWidthLg,
             classes.betaTestBannerText
           )}
+          onMouseEnter={() => setHover(true)}
+          onMouseLeave={() => setHover(false)}
         >
           <Tick
             className={classes.tick}
@@ -105,7 +111,7 @@ const BetaTestingBanner = (props) => {
           <span>
             { "We're currently in beta testing. For updates on our launch, " }
             <Link href={"https://discord.gg/umAdYtsa9v"}>
-              <a style={{ textDecoration: 'underline', color: Colors.white }}>
+              <a className={hover ? classes.discordLink : null}>
                 {"please join our Discord here."}
               </a>
             </Link>
@@ -115,6 +121,7 @@ const BetaTestingBanner = (props) => {
       {
         showBetaTesting &&
         <IconButtonCancel
+          dark={isDarkMode}
           onClick={() => setShowBetaTesting(false)}
         />
       }
@@ -127,18 +134,35 @@ interface ReactProps extends WithStyles<typeof styles> {
 }
 
 const styles = (theme: Theme) => createStyles({
-  cookiesAgreementRoot: {
+  betaTestBannerRoot: {
     width: '100%',
     display: 'flex',
     justifyContent: 'center',
     flexDirection: 'row',
     alignItems: 'center',
+    borderTop: theme.palette.type === 'dark'
+      ? `2px solid ${Colors.uniswapLightNavy}`
+      : `2px solid ${Colors.slateGreyDark}`,
+    borderBottom: theme.palette.type === 'dark'
+      ? `2px solid ${Colors.uniswapLightNavy}`
+      : `2px solid ${Colors.slateGreyDark}`,
+    // borderBottom: '2px solid',
+    // borderImageSlice: 1,
+    // borderImageSource: theme.palette.type === 'dark'
+    //   ? `linear-gradient(90deg, rgb(206, 69, 197) 0%, rgb(85, 146, 232) 100%)`
+    //   : `linear-gradient(90deg, rgb(206, 69, 197) 0%, rgb(85, 146, 232) 100%)`,
   },
   title: {
     marginBottom: '2rem',
     marginTop: '2rem',
   },
   betaTestBannerText: {
+    "-webkit-text-fill-color": 'transparent',
+    "-webkit-background-clip": 'text',
+    // background: theme.palette.type === 'dark'
+    //   ? Gradients.gradientUniswapFluro.background
+    //   : Gradients.gradientUniswapBlueGreen.background,
+    background: `linear-gradient(90deg, rgb(206, 69, 197) 0%, rgb(85, 146, 232) 100%)`,
     color: Colors.cream,
     display: 'flex',
     justifyContent: 'center',
@@ -148,6 +172,14 @@ const styles = (theme: Theme) => createStyles({
       easing: theme.transitions.easing.sharp,
       duration: "400ms",
     }),
+  },
+  discordLink: {
+    // background: `linear-gradient(90deg, rgb(85, 146, 232) 0%, rgb(206, 69, 197) 100%)`,
+    "-webkit-text-fill-color": 'transparent',
+    "-webkit-background-clip": 'text',
+    background: theme.palette.type === 'dark'
+      ? Colors.ultramarineBlue
+      : Colors.ultramarineBlue,
   },
   padding2: {
     padding: '2rem',
