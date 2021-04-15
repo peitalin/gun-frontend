@@ -88,7 +88,7 @@ const StartSellingPricing = (props: ReactProps) => {
                   <li className={
                     mdDown ? classes.paymentItemsMobile : classes.paymentItemsDesktop
                   }>
-                    1.75% Gun Markpletace fee
+                    1.75% Gun Marketplace fee
                   </li>
                   <li className={
                     mdDown ? classes.paymentItemsMobile : classes.paymentItemsDesktop
