@@ -34,31 +34,42 @@ const BannerEnd: NextPage<ReactProps> = (props) => {
     //   : Gradients.gradientGrey3.background,
     background: props.isDarkMode
     ? `linear-gradient(60deg , ${Colors.uniswapDarkNavy} 48%, rgba(255, 255, 255, 0) 55%)`
-    : `linear-gradient(60deg , ${Colors.slateGrey} 48%, rgba(255, 255, 255, 0) 55%)`,
+    : `linear-gradient(60deg , ${Colors.cream} 48%, rgba(255, 255, 255, 0) 55%)`,
   }
 
-  ///// https://codepen.io/danichk/pen/YyVeXa
-  // const bannerContainerStyle = {
-  //   // polkadot
-  //   background: `${Colors.uniswapDarkNavy}`,
-  //   backgroundImage:`radial-gradient(${Colors.uniswapMediumNavy} 10%, transparent 0), radial-gradient(${Colors.uniswapMediumNavy} 10%, transparent 0)`,
-  //   backgroundSize: "40px 40px",
-  //   backgroundPosition: "0 0, 20px 20px",
-  // }
+  const ditherStyleMobile = {
+    // background: props.isDarkMode
+    //   ? Colors.uniswapDarkNavy
+    //   : Gradients.gradientGrey3.background,
+    // background: props.isDarkMode
+    // ? `linear-gradient(60deg , ${Colors.uniswapDarkNavy} 48%, rgba(255, 255, 255, 0) 55%)`
+    // : `linear-gradient(60deg , ${Colors.slateGrey} 48%, rgba(255, 255, 255, 0) 55%)`,
+    background: props.isDarkMode
+    ? `linear-gradient(0deg , ${Colors.uniswapDarkNavy} 30%, rgba(5, 5, 5, 0.4) 38%, rgba(5, 5, 5, 0) 90%)`
+    : `linear-gradient(0deg , ${Colors.cream} 30%, rgba(255, 255, 255, 0.4) 38%, rgba(5, 5, 5, 0) 90%)`
+  }
 
   const bannerContainerStyle = {
-    // polkadot
-    // background: `${Colors.uniswapDarkNavy}`,
     backgroundImage:`url(/img/start/hero1.png)`,
     backgroundRepeat: 'no-repeat',
-    backgroundSize: 'auto', //stretch to fit
-    // backgroundSize: '600px 300px',
+    backgroundSize: "cover",
+    backgroundPosition: "left",
+    // backgroundSize: 'auto', //stretch to fit for hero3.png
+  }
+
+  const bannerContainerStyleMobile = {
+    // backgroundImage:`url(/img/start/hero3.png)`,
+    backgroundRepeat: 'no-repeat',
+    backgroundPosition: "left",
+    backgroundSize: "cover",
+    // backgroundSize: "100%",
+    // backgroundSize: 'auto', //stretch to fit for hero3.png
   }
 
   return (
     <>
       {/* Desktop */}
-      <Hidden smDown implementation="css" className={classes.width100}>
+      <Hidden mdDown implementation="css" className={classes.width100}>
         <BannerEndDesktop
           height={680}
           portraitMode={true}
@@ -70,12 +81,12 @@ const BannerEnd: NextPage<ReactProps> = (props) => {
         />
       </Hidden>
       {/* Mobile */}
-      <Hidden mdUp implementation='css' className={classes.width100}>
+      <Hidden lgUp implementation='css' className={classes.width100}>
         <BannerEndMobile
           // height={660}
           // portraitMode={true}
-          ditherStyle={ditherStyle}
-          bannerContainerStyle={bannerContainerStyle}
+          ditherStyle={ditherStyleMobile}
+          bannerContainerStyle={bannerContainerStyleMobile}
           bannerForegroundImageUrlDark={bannerForegroundImageUrlDark}
           bannerForegroundImageUrlLight={bannerForegroundImageUrlLight}
           isDarkMode={props.isDarkMode}

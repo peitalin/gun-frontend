@@ -156,6 +156,9 @@ export const styles = (theme: Theme) => createStyles({
     paddingTop: '1rem',
     paddingBottom: '4rem',
     width: '100%',
+    backgroundColor: theme.palette.type === 'dark'
+      ? `${Colors.uniswapDarkNavy}`
+      : `${Colors.cream}`,
   },
   section4: {
     paddingBottom: '2rem',

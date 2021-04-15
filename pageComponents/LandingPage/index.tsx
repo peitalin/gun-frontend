@@ -13,6 +13,7 @@ import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 // GraphQL
 import { useQuery, useApolloClient } from "@apollo/client";
+import { useRouter } from "next/router";
 
 import AlignCenterLayout from "components/AlignCenterLayout";
 export const MAX_WIDTH_GRID: number = 1160;
@@ -22,7 +23,6 @@ export const MAX_WIDTH_GRID: number = 1160;
 import CategoryCarouselStart2 from "./StartSelling2/CategoryCarouselStart2";
 // import CategoryCarouselStart from "components/CategoryCarouselStart";
 // Components
-import BannerGetStarted from "pageComponents/LandingPage/BannerGetStarted";
 import BetaTestingBanner from "components/BetaTestingBanner";
 import BannerStart from "./BannerStart";
 import StartSelling2 from "./StartSelling2"
@@ -41,6 +41,7 @@ const LandingPage: React.FC<ReactProps> = (props) => {
   } = props;
 
   const aClient = useApolloClient();
+  const router = useRouter();
 
   const theme = useTheme();
   const xlUp = useMediaQuery(theme.breakpoints.up('xl'));
@@ -50,6 +51,8 @@ const LandingPage: React.FC<ReactProps> = (props) => {
   let isDarkMode = useSelector<GrandReduxState, boolean>(
     s => s.reduxLogin.darkMode === 'dark'
   );
+
+
   let cPadding = 2 // category carousel padding
 
   return (
@@ -68,7 +71,6 @@ const LandingPage: React.FC<ReactProps> = (props) => {
         <StartSelling3 isDarkMode={isDarkMode}/>
         <StartSelling4 isDarkMode={isDarkMode}/>
         <StartSellingPricing isDarkMode={isDarkMode}/>
-
         <BannerEnd isDarkMode={isDarkMode}/>
 
       </AlignCenterLayout>

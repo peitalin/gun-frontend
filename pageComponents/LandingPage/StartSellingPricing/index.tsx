@@ -62,7 +62,7 @@ const StartSellingPricing = (props: ReactProps) => {
               </svg>
             </div>
             <h3 className={
-              mdDown ? classes.titleMobile : classes.titleDesktop
+              mdDown ? classes.headingMobile : classes.headingDesktop
             }>
               Pricing
             </h3>
@@ -74,7 +74,7 @@ const StartSellingPricing = (props: ReactProps) => {
                 <div className={
                   mdDown ? classes.subtitleMobile : classes.subtitleDesktop
                 }>
-                  A flat 3.5% fee for each successful transfer
+                  A flat 3.5% fee only on successful orders
                 </div>
 
                 <ul className={
@@ -126,12 +126,12 @@ interface ReactProps extends WithStyles<typeof styles> {
 export const styles = (theme: Theme) => createStyles({
   section6Root: {
     width: '100%',
-    borderTop: theme.palette.type === 'dark'
-      ? `1px solid ${Colors.uniswapGrey}`
-      : `1px solid ${Colors.slateGreyDarkest}`,
-    borderBottom: theme.palette.type === 'dark'
-      ? `1px solid ${Colors.uniswapGrey}`
-      : `1px solid ${Colors.slateGreyDarkest}`,
+    // borderTop: theme.palette.type === 'dark'
+    //   ? `1px solid ${Colors.uniswapGrey}`
+    //   : `1px solid ${Colors.slateGreyDarkest}`,
+    // borderBottom: theme.palette.type === 'dark'
+    //   ? `1px solid ${Colors.uniswapGrey}`
+    //   : `1px solid ${Colors.slateGreyDarkest}`,
     backgroundColor: theme.palette.type === 'dark'
       ? `${Colors.uniswapDarkNavy}`
       : `${Colors.slateGrey}`,
@@ -166,6 +166,28 @@ export const styles = (theme: Theme) => createStyles({
       : Colors.slateGreyBlack,
   },
   titleMobile: {
+    fontSize: "1.5rem",
+    fontWeight: 700,
+    textAlign: "center",
+    marginTop: "2rem",
+    marginBottom: "0rem",
+    padding: "0rem 1.5rem",
+    color: theme.palette.type === 'dark'
+      ? Colors.uniswapLightestGrey
+      : Colors.slateGreyBlack,
+  },
+  headingDesktop: {
+    fontSize: "2rem",
+    fontWeight: 700,
+    textAlign: "center",
+    marginTop: "2rem",
+    marginBottom: "2rem",
+    padding: "0rem 1rem",
+    color: theme.palette.type === 'dark'
+      ? Colors.uniswapLightestGrey
+      : Colors.slateGreyBlack,
+  },
+  headingMobile: {
     fontSize: "1.5rem",
     fontWeight: 700,
     textAlign: "center",

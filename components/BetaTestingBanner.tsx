@@ -41,10 +41,6 @@ const BetaTestingBanner = (props) => {
     s => s.reduxLogin.darkMode === 'dark'
   );
 
-  const colorBg = isDarkMode
-    ? Gradients.gradientUniswapFluro.color1
-    : Gradients.gradientUniswapBlueGreen.color1
-
   if (!showBetaTesting) {
     return <div></div>
   }
@@ -77,9 +73,15 @@ const BetaTestingBanner = (props) => {
         >
           <Tick className={classes.tick}
             size={30}
-            color={Colors.cream}
-            outerCircleColor={Colors.cream}
-            innerCircleColor={colorBg}
+            color={
+              isDarkMode ? Colors.purple : Colors.purple
+            }
+            outerCircleColor={
+              isDarkMode ? Colors.purple : Colors.purple
+            }
+            innerCircleColor={
+              isDarkMode ? Colors.uniswapDarkNavy : Colors.cream
+            }
           />
           <span>
             { "We're currently in beta testing. For updates on our launch, " }
@@ -104,9 +106,15 @@ const BetaTestingBanner = (props) => {
           <Tick
             className={classes.tick}
             size={30}
-            color={Colors.cream}
-            outerCircleColor={Colors.cream}
-            innerCircleColor={colorBg}
+            color={
+              isDarkMode ? Colors.purple : Colors.purple
+            }
+            outerCircleColor={
+              isDarkMode ? Colors.purple : Colors.purple
+            }
+            innerCircleColor={
+              isDarkMode ? Colors.uniswapDarkNavy : Colors.cream
+            }
           />
           <span>
             { "We're currently in beta testing. For updates on our launch, " }

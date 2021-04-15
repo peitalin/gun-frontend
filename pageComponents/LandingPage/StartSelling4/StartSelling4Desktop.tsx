@@ -161,15 +161,15 @@ export const styles = (theme: Theme) => createStyles({
     paddingTop: '6rem',
     paddingBottom: '6rem',
     width: '100%',
-    borderTop: theme.palette.type === 'dark'
-      ? `1px solid ${Colors.uniswapGrey}`
-      : `1px solid ${Colors.slateGreyDarkest}`,
+    // borderTop: theme.palette.type === 'dark'
+    //   ? `1px solid ${Colors.uniswapGrey}`
+    //   : `1px solid ${Colors.slateGreyDarkest}`,
     // borderBottom: theme.palette.type === 'dark'
     //   ? `1px solid ${Colors.uniswapGrey}`
     //   : `1px solid ${Colors.slateGreyDarkest}`,
     backgroundColor: theme.palette.type === 'dark'
       ? `${Colors.uniswapDarkNavy}`
-      : `${Colors.slateGrey}`,
+      : `${Colors.cream}`,
   },
   section4: {
     paddingBottom: '2rem',

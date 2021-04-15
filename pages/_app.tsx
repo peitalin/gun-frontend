@@ -17,6 +17,7 @@ import { ThemeOptions } from "@material-ui/core/styles";
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import { withStyles, WithStyles } from '@material-ui/core/styles';
+import { useRouter } from 'next/router';
 // Next
 import App from "next/app";
 // Apollo Graphql
@@ -126,7 +127,7 @@ class MyApp extends App<AppProps> {
         <ApolloProvider client={apollo}>
           <ThemeProviderDarkMode>
             <SnackbarProvider
-              // @ts-ignore
+            // @ts-ignore
               ref={notistackRef}
               autoHideDuration={4000}
               preventDuplicate
@@ -164,6 +165,7 @@ const ThemeProviderDarkMode = (props) => {
     return s.reduxLogin.darkMode
   })
   let dispatch = useDispatch()
+  let router = useRouter()
 
 
   React.useEffect(() => {
@@ -174,7 +176,11 @@ const ThemeProviderDarkMode = (props) => {
       localStorageDarkMode = window?.localStorage?.getItem('gmDarkMode') as any;
     }
 
-    if (localStorageDarkMode !== undefined) {
+    if (router?.query?.dark === 'true' || router?.query?.dark === '1') {
+      dispatch(Actions.reduxLogin.SET_DARK_MODE())
+    } else if (router?.query?.dark === 'false' || router?.query?.dark === '0') {
+      dispatch(Actions.reduxLogin.SET_LIGHT_MODE())
+    } else if (localStorageDarkMode !== undefined) {
       // first check if browser has dark mode preferences initially
       if (localStorageDarkMode === "dark") {
         dispatch(Actions.reduxLogin.SET_DARK_MODE())

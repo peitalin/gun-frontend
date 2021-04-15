@@ -15,6 +15,9 @@ import { UserPrivate } from "typings/gqlTypes";
 // components
 import BannerStartDesktop from "./BannerStartDesktop";
 import BannerStartMobile from "./BannerStartMobile";
+// CSS
+import { useTheme } from "@material-ui/core/styles";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 
 
@@ -25,14 +28,13 @@ const BannerStart: NextPage<ReactProps> = (props) => {
     classes,
   } = props;
 
-  // const bannerForegroundImageUrl = isDarkMode
-  //   ? `/img/start/screen1-dark.jpg`
-  //   : `/img/start/screen1-light.jpg`
-
-
   const bannerForegroundImageUrlDark = `/img/start/screen1-dark.jpg`
   const bannerForegroundImageUrlLight = `/img/start/screen1-light.jpg`
 
+  const theme = useTheme();
+  const smDown = useMediaQuery(theme.breakpoints.down("sm"))
+  const mdDown = useMediaQuery(theme.breakpoints.down("md"))
+  const lgDown = useMediaQuery(theme.breakpoints.down("lg"))
 
   const ditherStyle = {
     // background: isDarkMode
@@ -40,7 +42,19 @@ const BannerStart: NextPage<ReactProps> = (props) => {
     //   : Gradients.gradientGrey3.background,
     background: props.isDarkMode
     ? `linear-gradient(60deg , ${Colors.uniswapDarkNavy} 48%, rgba(255, 255, 255, 0) 55%)`
-    : `linear-gradient(60deg , ${Colors.slateGrey} 48%, rgba(255, 255, 255, 0) 55%)`,
+    : `linear-gradient(60deg , ${Colors.cream} 48%, rgba(250, 250, 250, 0.1) 55%,  rgba(255, 255, 255, 0) 70%)`,
+  }
+
+  const ditherStyleMobile = {
+    // background: props.isDarkMode
+    //   ? Colors.uniswapDarkNavy
+    //   : Gradients.gradientGrey3.background,
+    // background: props.isDarkMode
+    // ? `linear-gradient(60deg , ${Colors.uniswapDarkNavy} 48%, rgba(255, 255, 255, 0) 55%)`
+    // : `linear-gradient(60deg , ${Colors.slateGrey} 48%, rgba(255, 255, 255, 0) 55%)`,
+    background: props.isDarkMode
+    ? `linear-gradient(0deg , ${Colors.uniswapDarkNavy} 32%, rgba(5, 5, 5, 0.2) 44%, rgba(5, 5, 5, 0) 90%)`
+    : `linear-gradient(0deg , ${Colors.cream} 32%, rgba(255, 255, 255, 0.2) 44%, rgba(5, 5, 5, 0) 90%)`
   }
 
   ///// https://codepen.io/danichk/pen/YyVeXa
@@ -53,20 +67,31 @@ const BannerStart: NextPage<ReactProps> = (props) => {
   // }
 
   const bannerContainerStyle = {
-    // polkadot
-    // background: `${Colors.uniswapDarkNavy}`,
     backgroundImage:`url(/img/start/hero4.jpg)`,
+    // backgroundImage:`url(/img/start/hero1.png)`,
     backgroundRepeat: 'no-repeat',
-    backgroundSize: '100%',
+    backgroundSize: "cover",
+    backgroundPosition: "right",
+    // backgroundSize: 'auto', //stretch to fit for hero3.png
+  }
+
+  const bannerContainerStyleMobile = {
+    // backgroundImage:`url(/img/start/hero2.jpg)`,
+    backgroundImage:`url(/img/start/hero1.png)`,
+    // backgroundImage:`url(/img/start/hero4.jpg)`,
+    backgroundRepeat: 'no-repeat',
+    backgroundPosition: "left",
+    backgroundSize: "cover",
+    // backgroundSize: "100%",
     // backgroundSize: 'auto', //stretch to fit for hero3.png
   }
 
   return (
     <>
       {/* Desktop */}
-      <Hidden smDown implementation="css" className={classes.width100}>
+      <Hidden mdDown implementation="css" className={classes.width100}>
         <BannerStartDesktop
-          height={680}
+          height={640}
           portraitMode={true}
           ditherStyle={ditherStyle}
           bannerContainerStyle={bannerContainerStyle}
@@ -76,12 +101,12 @@ const BannerStart: NextPage<ReactProps> = (props) => {
         />
       </Hidden>
       {/* Mobile */}
-      <Hidden mdUp implementation='css' className={classes.width100}>
+      <Hidden lgUp implementation='css' className={classes.width100}>
         <BannerStartMobile
           // height={660}
           // portraitMode={true}
-          ditherStyle={ditherStyle}
-          bannerContainerStyle={bannerContainerStyle}
+          ditherStyle={ditherStyleMobile}
+          bannerContainerStyle={bannerContainerStyleMobile}
           bannerForegroundImageUrlDark={bannerForegroundImageUrlDark}
           bannerForegroundImageUrlLight={bannerForegroundImageUrlLight}
           isDarkMode={props.isDarkMode}

@@ -1,6 +1,5 @@
 import React from "react";
 import clsx from "clsx";
-import { oc as option } from "ts-optchain";
 // styles
 import { withStyles, WithStyles, createStyles, Theme, fade } from "@material-ui/core/styles";
 import { BorderRadius, Colors, Gradients, BorderRadius2x, BoxShadows } from "layout/AppTheme";
@@ -10,7 +9,7 @@ import Typography from "@material-ui/core/Typography";
 import Button from '@material-ui/core/Button';
 import TextInput from "components/Fields/TextInput";
 // SSR
-import { NextPage, NextPageContext } from 'next';
+import { NextPage } from 'next';
 // CSS
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
@@ -18,7 +17,6 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { UserPrivate, Signup_Emails } from "typings/gqlTypes";
 import Link from "next/link";
 import CardMedia from "@material-ui/core/CardMedia";
-import Tooltip from '@material-ui/core/Tooltip';
 
 
 import { useFormik } from 'formik';
@@ -121,15 +119,15 @@ const BannerHomeDesktop: NextPage<ReactProps> = (props) => {
 
       <div className={clsx(
         classes.bannerInnerBoxLeft,
-        mdDown ? classes.minWidth360 : classes.minWidth500
+        classes.minWidth500,
       )}>
         <div className={classes.mainTitleContainer}>
 
-          <Typography className={mdDown ? classes.mainTitleSm : classes.mainTitle}>
+          <Typography className={classes.mainTitle}>
             Buy and sell firearms simply and safely
           </Typography>
           <Typography variant={"subtitle2"}
-            className={mdDown ? classes.subline1Sm : classes.subline1}
+            className={classes.subline1}
           >
             Featuring a secure payment system
             that protects you
@@ -158,9 +156,7 @@ const BannerHomeDesktop: NextPage<ReactProps> = (props) => {
                 type="submit"
                 className={clsx(
                   classes.buttonSignupEmail,
-                  classes.minWidth2,
-                  classes.buttonFontSizeDesktop,
-                  classes.marginLeft1,
+                  classes.buttonSignupDesktop,
                 )}
                 onClick={() => {
                 }}
@@ -169,12 +165,12 @@ const BannerHomeDesktop: NextPage<ReactProps> = (props) => {
               </StyledButton>
             </div>
           </form>
-            </div>
+        </div>
       </div>
 
       <div className={clsx(
         classes.bannerInnerBoxRight,
-        mdDown ? classes.minWidth160 : classes.minWidth360,
+        classes.minWidth220,
       )}>
         {
           props.isDarkMode
@@ -250,14 +246,11 @@ export const styles = (theme: Theme) => createStyles({
     maxWidth: 480,
     flexBasis: '60%',
   },
-  minWidth360: {
-    minWidth: 360,
+  minWidth220: {
+    minWidth: 220,
   },
   minWidth500: {
     minWidth: 500,
-  },
-  minWidth160: {
-    minWidth: 160,
   },
   mainTitleContainer: {
     display: 'flex',
@@ -270,15 +263,6 @@ export const styles = (theme: Theme) => createStyles({
     marginRight: '1rem',
     marginBottom: '1rem',
   },
-  mainTitleContainerSm: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: '100%',
-    position: "relative",
-    marginBottom: '1rem',
-  },
   mainTitle: {
     fontWeight: 600,
     fontFamily: fontFam,
@@ -289,20 +273,9 @@ export const styles = (theme: Theme) => createStyles({
     fontSize: '2.25rem',
     maxWidth: 400,
   },
-  mainTitleSm: {
-    fontWeight: 600,
-    fontFamily: fontFam,
-    color: theme.palette.type === 'dark'
-      ? Colors.lightestGrey
-      : Colors.slateGreyBlack,
-    lineHeight: '2rem',
-    fontSize: '1.75rem',
-    marginBottom: "0.25rem",
-    textAlign: "center",
-  },
   subline1: {
     color: theme.palette.type === 'dark'
-      ? Colors.lightGrey
+      ? Colors.uniswapLightGrey
       : Colors.slateGreyLightBlack,
     fontFamily: fontFam,
     marginTop: "0.5rem",
@@ -310,16 +283,6 @@ export const styles = (theme: Theme) => createStyles({
     fontWeight: 500,
     fontSize: '1.25rem',
     maxWidth: 450,
-  },
-  subline1Sm: {
-    color: theme.palette.type === 'dark'
-      ? Colors.lightGrey
-      : Colors.slateGreyLightBlack,
-    fontFamily: fontFam,
-    lineHeight: "1.5",
-    fontWeight: 500,
-    fontSize: '1.125rem', // 20px
-    textAlign: "center",
   },
   categoryImage: {
     display: "flex",
@@ -363,37 +326,15 @@ export const styles = (theme: Theme) => createStyles({
       backgroundPosition: '-75px',
     }
   },
-  minWidth2: {
-    minWidth: 120,
-  },
-  buttonFontSizeDesktop: {
+  buttonSignupDesktop: {
     fontSize: '1rem',
-  },
-  marginLeft1: {
+    minWidth: 120,
     marginLeft: '0.5rem',
   },
 
-  linkContainer: {
-    width: '100%',
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    flexWrap: "wrap",
-    "& span": {
-      fontSize: 16,
-      letterSpacing: -0.3,
-    },
-  },
   linkInput: {
     width: '100%',
     minWidth: "300px",
-  },
-  copyLink: {
-    color: fade(Colors.blue, 1),
-    "&:hover": {
-      color: fade(Colors.blue, 0.7),
-      cursor: "pointer",
-    },
   },
   textInputSmall: {
     fontSize: '16px',

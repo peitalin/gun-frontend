@@ -121,7 +121,7 @@ const BannerEndDesktop: NextPage<ReactProps> = (props) => {
 
       <div className={clsx(
         classes.bannerInnerBoxLeft,
-        mdDown ? classes.minWidth360 : classes.minWidth500
+        mdDown ? classes.minWidth260 : classes.minWidth500
       )}>
         <div className={classes.mainTitleContainer}>
 
@@ -173,7 +173,7 @@ const BannerEndDesktop: NextPage<ReactProps> = (props) => {
 
       <div className={clsx(
         classes.bannerInnerBoxRight,
-        mdDown ? classes.minWidth160 : classes.minWidth360,
+        mdDown ? classes.minWidth160 : classes.minWidth260,
       )}>
         {
           props.isDarkMode
@@ -278,8 +278,8 @@ export const styles = (theme: Theme) => createStyles({
     maxWidth: 480,
     flexBasis: '60%',
   },
-  minWidth360: {
-    minWidth: 360,
+  minWidth260: {
+    minWidth: 260,
   },
   minWidth500: {
     minWidth: 500,

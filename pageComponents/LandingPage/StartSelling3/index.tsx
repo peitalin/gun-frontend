@@ -131,20 +131,19 @@ interface ReactProps extends WithStyles<typeof styles> {
 export const styles = (theme: Theme) => createStyles({
   section3Root: {
     paddingTop: '4rem',
-    paddingBottom: '4rem',
+    // paddingBottom: '4rem',
     width: '100%',
-    borderTop: theme.palette.type === 'dark'
-      ? `1px solid ${Colors.uniswapGrey}`
-      : `1px solid ${Colors.slateGreyDarkest}`,
+    // borderTop: theme.palette.type === 'dark'
+    //   ? `1px solid ${Colors.uniswapMediumNavy}`
+    //   : `1px solid ${Colors.slateGreyDarkest}`,
     // borderBottom: theme.palette.type === 'dark'
     //   ? `1px solid ${Colors.uniswapGrey}`
     //   : `1px solid ${Colors.slateGreyDarkest}`,
     backgroundColor: theme.palette.type === 'dark'
       ? `${Colors.uniswapDarkNavy}`
-      : `${Colors.slateGrey}`,
+      : `${Colors.cream}`,
   },
   section3: {
-    paddingBottom: '2rem',
     maxWidth: 1180,
   },
   title: {
@@ -238,7 +237,9 @@ export const styles = (theme: Theme) => createStyles({
     color: Colors.cream,
     fontSize: "1.125rem",
     fontWeight: 600,
-    background: Colors.green,
+    background: theme.palette.type === 'dark'
+      ? Colors.purple
+      : Colors.blue,
     marginRight: '1rem',
   },
 })

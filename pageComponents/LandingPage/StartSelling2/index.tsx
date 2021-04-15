@@ -28,24 +28,11 @@ const StartSelling2 = (props: ReactProps) => {
 
   return (
     <div className={classes.section2Root}>
-      <div className={classes.categoryTitleBox}>
-        <div className={classes.categoryTitleText}>
-          Choose from a selection of brands
-        </div>
+      <div className={classes.categoryTitleText}>
+        Choose from a selection of brands
       </div>
-      <div className={classes.categoryTitleBox}>
-        <div
-          className={classes.polkadotBackground}
-          style={
-            xlUp
-            ? {
-                width: `calc(100% - ${cPadding*2}rem)`,
-              }
-            : {
-                width: `calc(100% - ${cPadding}rem)`,
-              }
-          }
-        ></div>
+      <div className={clsx(classes.categoryTitleBox)}>
+        <div className={classes.polkadotBackground} ></div>
         <div className={classes.categoryBrands}>
           <div className={classes.imageBox}>
             <CardMedia
@@ -97,10 +84,8 @@ const StartSelling2 = (props: ReactProps) => {
           </div>
         </div>
       </div>
-      <div className={classes.categoryTitleBox}>
-        <div className={classes.categoryTitleText}>
-          Across multiple categories
-        </div>
+      <div className={classes.categoryTitleText}>
+        Across multiple categories
       </div>
       <CategoryCarouselStart2
         style={{
@@ -170,11 +155,11 @@ let categoryPreviewCards = [
 
 export const styles = (theme: Theme) => createStyles({
   section2Root: {
-    paddingTop: '4rem',
-    paddingBottom: '8rem',
-    borderTop: theme.palette.type === 'dark'
-      ? `1px solid ${Colors.uniswapGrey}`
-      : `1px solid ${Colors.slateGreyDarkest}`,
+    paddingTop: '6rem',
+    paddingBottom: '6rem',
+    // borderTop: theme.palette.type === 'dark'
+    //   ? `1px solid ${Colors.uniswapGrey}`
+    //   : `1px solid ${Colors.slateGreyDarkest}`,
     // borderBottom: theme.palette.type === 'dark'
     //   ? `1px solid ${Colors.uniswapGrey}`
     //   : `1px solid ${Colors.slateGreyDarkest}`,
@@ -188,20 +173,25 @@ export const styles = (theme: Theme) => createStyles({
     flexDirection: "column",
     justifyContent: 'center',
     alignItems: 'center',
-    height: 72,
+    height: 64,
     fontSize: '1rem',
+    marginTop: '1rem',
+    marginBottom: '1rem',
   },
   categoryTitleText: {
     display: 'flex',
+    width: '100%',
+    textAlign: 'center',
     flexDirection: "column",
     justifyContent: 'center',
-    maxWidth: 500,
     textTransform: "uppercase",
     fontSize: '0.8rem',
     fontWeight: 600,
     color: theme.palette.type === 'dark'
-      ? Colors.uniswapLighterGrey
-      : Colors.slateGreyDarkest,
+      ? Colors.uniswapLightestGrey
+      : Colors.black1A,
+    marginTop: '2rem',
+    marginBottom: '2rem',
   },
   categoryBrands: {
     display: 'flex',
@@ -212,10 +202,19 @@ export const styles = (theme: Theme) => createStyles({
     marginBottom: '1rem',
   },
   polkadotBackground: {
-    background: `url(/img/bg-with-dotted.svg) no-repeat center/contain`,
+    // background: `url(/img/bg-with-dotted.svg) no-repeat center/contain`,
     width: '100%',
     height: '100%',
     position: 'absolute',
+    // polkadot
+    background: theme.palette.type === 'dark'
+      ? `${Colors.uniswapDarkNavy}`
+      : `${Colors.slateGrey}`,
+    backgroundImage: theme.palette.type === 'dark'
+    ? `radial-gradient(${Colors.uniswapMediumNavy} 10%, transparent 0), radial-gradient(${Colors.uniswapMediumNavy} 10%, transparent 0)`
+    : `radial-gradient(${Colors.slateGreyDarker} 10%, transparent 0), radial-gradient(${Colors.slateGreyDarker} 10%, transparent 0)`,
+    backgroundSize: "30px 30px",
+    backgroundPosition: "0px 5px, 15px 20px",
   },
   imageBox: {
     height: '100%',
