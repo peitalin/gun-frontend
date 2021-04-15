@@ -165,7 +165,7 @@ export const styles = (theme: Theme) => createStyles({
     //   : `1px solid ${Colors.slateGreyDarkest}`,
     backgroundColor: theme.palette.type === 'dark'
       ? `${Colors.uniswapDarkNavy}`
-      : `${Colors.slateGrey}`,
+      : `${Colors.cream}`,
   },
   categoryTitleBox: {
     position: 'relative',
@@ -173,10 +173,8 @@ export const styles = (theme: Theme) => createStyles({
     flexDirection: "column",
     justifyContent: 'center',
     alignItems: 'center',
-    height: 64,
+    height: 100,
     fontSize: '1rem',
-    marginTop: '1rem',
-    marginBottom: '1rem',
   },
   categoryTitleText: {
     display: 'flex',
@@ -190,8 +188,8 @@ export const styles = (theme: Theme) => createStyles({
     color: theme.palette.type === 'dark'
       ? Colors.uniswapLightestGrey
       : Colors.black1A,
-    marginTop: '2rem',
-    marginBottom: '2rem',
+    marginTop: '1.5rem',
+    marginBottom: '1.5rem',
   },
   categoryBrands: {
     display: 'flex',
@@ -209,10 +207,10 @@ export const styles = (theme: Theme) => createStyles({
     // polkadot
     background: theme.palette.type === 'dark'
       ? `${Colors.uniswapDarkNavy}`
-      : `${Colors.slateGrey}`,
+      : `${Colors.cream}`,
     backgroundImage: theme.palette.type === 'dark'
     ? `radial-gradient(${Colors.uniswapMediumNavy} 10%, transparent 0), radial-gradient(${Colors.uniswapMediumNavy} 10%, transparent 0)`
-    : `radial-gradient(${Colors.slateGreyDarker} 10%, transparent 0), radial-gradient(${Colors.slateGreyDarker} 10%, transparent 0)`,
+    : `radial-gradient(${Colors.slateGrey} 10%, transparent 0), radial-gradient(${Colors.slateGrey} 10%, transparent 0)`,
     backgroundSize: "30px 30px",
     backgroundPosition: "0px 5px, 15px 20px",
   },
