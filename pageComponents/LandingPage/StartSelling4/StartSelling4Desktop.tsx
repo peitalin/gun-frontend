@@ -12,13 +12,11 @@ import { Colors, BoxShadows } from "layout/AppTheme";
 import {} from "typings/gqlTypes";
 // components
 import Typography from "@material-ui/core/Typography";
-import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import CardMedia from "@material-ui/core/CardMedia";
-import Hidden from "components/HiddenFix";
 import Tick from "components/Icons/Tick";
+import TickPoint from "./TickPoint";
 
 
 
@@ -129,27 +127,6 @@ const StartSelling4 = (props: ReactProps) => {
     </div>
   );
 };
-
-const TickPoint = ({ text, classes, isDarkMode }) => {
-  return (
-    <div className={classes.flexRow}>
-      <Tick
-        className={classes.tick}
-        size={40}
-        color={Colors.cream}
-        outerCircleColor={
-          isDarkMode ? Colors.uniswapNavy : Colors.cream
-        }
-        innerCircleColor={
-          isDarkMode ? Colors.purple : Colors.blue
-        }
-      />
-      <Typography className={classes.tickPointText}>
-        {text}
-      </Typography>
-    </div>
-  )
-}
 
 
 interface ReactProps extends WithStyles<typeof styles> {

@@ -12,13 +12,10 @@ import { Colors, BoxShadows } from "layout/AppTheme";
 import {} from "typings/gqlTypes";
 // components
 import Typography from "@material-ui/core/Typography";
-import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import CardMedia from "@material-ui/core/CardMedia";
-import Hidden from "components/HiddenFix";
-import Tick from "components/Icons/Tick";
+import TickPoint from "./TickPoint";
 
 
 
@@ -56,6 +53,7 @@ const StartSelling4 = (props: ReactProps) => {
                 return (
                   <div className={classes.flexItemTickRow}>
                     <TickPoint key={i}
+                      isDarkMode={props.isDarkMode}
                       classes={classes}
                       text={text}
                     />
@@ -98,6 +96,7 @@ const StartSelling4 = (props: ReactProps) => {
                 return (
                   <div className={classes.flexItemTickRow}>
                     <TickPoint key={i}
+                      isDarkMode={props.isDarkMode}
                       classes={classes}
                       text={text}
                     />
@@ -129,22 +128,6 @@ const StartSelling4 = (props: ReactProps) => {
   );
 };
 
-const TickPoint = ({ text, classes }) => {
-  return (
-    <div className={classes.flexRow}>
-      <Tick
-        className={classes.tick}
-        size={32}
-        color={Colors.cream}
-        outerCircleColor={Colors.cream}
-        innerCircleColor={Colors.blue}
-      />
-      <Typography className={classes.tickPointText}>
-        {text}
-      </Typography>
-    </div>
-  )
-}
 
 
 interface ReactProps extends WithStyles<typeof styles> {
@@ -235,9 +218,11 @@ export const styles = (theme: Theme) => createStyles({
   imageContainer: {
   },
   tickPointText: {
-    fontWeight: 600,
-    fontSize: '1rem',
+    fontWeight: 500,
+    fontSize: '1.125rem',
     marginLeft: '0.5rem',
+    marginTop: "0.25rem",
+    marginBottom: "0.25rem",
   },
   tick: {
   },

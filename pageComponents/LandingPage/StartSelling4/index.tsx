@@ -31,7 +31,7 @@ const StartSelling4 = (props: ReactProps) => {
       <Hidden lgDown implementation="css" className={classes.startSelling4Root}>
         <StartSelling4Desktop
           isDarkMode={props.isDarkMode}
-        />
+          />
       </Hidden>
       <Hidden xlUp implementation="css" className={classes.startSelling4Root}>
         <StartSelling4Mobile

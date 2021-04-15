@@ -214,11 +214,11 @@ export const styles = (theme: Theme) => createStyles({
   },
   reason: {
     fontSize: '1.3rem',
-    fontWeight: 600,
+    fontWeight: 500,
   },
   reasonMobile: {
     fontSize: '1.125rem',
-    fontWeight: 600,
+    fontWeight: 500,
   },
   bulletSize: {
     minWidth: 40,
