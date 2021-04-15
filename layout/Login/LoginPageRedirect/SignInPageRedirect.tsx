@@ -43,7 +43,9 @@ const SignInClaimDownload = (props: ReactProps) => {
 
   React.useEffect(() => {
     let d = document.getElementById(emailInputId)
-    d?.focus()
+    // d?.focus()
+    // autofocus does not put focus styles in automatically,
+    // so hard to see it
   }, [])
 
   return (

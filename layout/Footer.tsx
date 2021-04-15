@@ -167,7 +167,7 @@ const Footer: React.FC<ReactProps> = (props) => {
                 classes.allRightsReservedText,
                 !mdDown && classes.desktopLeftMargin,
               )}>
-                { `© ${year} Gunmarketplace. All rights reserved.` }
+                { `© ${year} Gun Marketplace. All rights reserved.` }
               </Typography>
               <PaymentIcons/>
             </div>
@@ -265,10 +265,10 @@ const styles = (theme: Theme) => createStyles({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
-    // backgroundColor: Colors.mediumBlack,
-    background: theme.palette.type === 'dark'
-      ? Gradients.gradientBlack.background
-      : Gradients.gradientGrey2Rotated.background,
+    backgroundColor: Colors.mediumBlack,
+    // background: theme.palette.type === 'dark'
+    //   ? Gradients.gradientBlack.background
+    //   : Gradients.gradientGrey2Rotated.background,
     paddingTop: "6rem",
     color: Colors.cream,
   },
