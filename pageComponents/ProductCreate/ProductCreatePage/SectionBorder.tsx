@@ -82,9 +82,9 @@ const styles = (theme: Theme) => createStyles({
     marginBottom: '1rem',
   },
   sectionBorderMobile: {
-    borderRadius: '0px',
-    padding: '1rem',
-    marginBottom: '0rem',
+    borderRadius: BorderRadius2x,
+    padding: '1rem 0.75rem 1rem 0.75rem',
+    marginBottom: '1rem',
   },
   formOuterContainer: {
     // background: "transparent",
