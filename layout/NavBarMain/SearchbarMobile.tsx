@@ -23,7 +23,7 @@ const Searchbar = (props: SearchbarProps) => {
 
   const handleClickSearch = (e) => {
     if (value.length > 0) {
-      router.push(`/search?q=${encodeURIComponent(value)}`)
+      router.push(`/categories/all?q=${encodeURIComponent(value)}`)
       setValue("");
     } else {
       if (!expand) {
@@ -84,7 +84,7 @@ const Searchbar = (props: SearchbarProps) => {
             }}
             onKeyPress={event => {
               if (event.key === "Enter") {
-                router.push(`/search?q=${encodeURIComponent(value)}`)
+                router.push(`/categories/all?q=${encodeURIComponent(value)}`)
                 setValue("");
               }
             }}
