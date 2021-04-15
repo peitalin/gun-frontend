@@ -36,11 +36,11 @@ const CreateStorePageSSR = (props: ReactProps) => {
         title="Add seller details"
         ogTitle="Add seller details"
         description={`
-          Start selling your registered firearms with Gunmarketplace.
+          Start selling your registered firearms with Gun Marketplace.
           Create a free account and upload your product.
         `}
         ogDescription={`
-          Start selling your registered firearms with Gunmarketplace.
+          Start selling your registered firearms with Gun Marketplace.
           Create a free account and upload your product.
         `}
         // ogImage={

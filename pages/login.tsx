@@ -48,8 +48,8 @@ const LoginPage: NextPage<ReactProps> = (props) => {
   return (
     <div className={classes.root}>
       <MetaHeadersPage
-        title="Log In - Gunmarketplace.com.au"
-        ogTitle="Log In - Gunmarketplace.com.au"
+        title="Log In - gunmarketplace.com.au"
+        ogTitle="Log In - gunmarketplace.com.au"
         description={`
           Log in or create an account for free.
         `}

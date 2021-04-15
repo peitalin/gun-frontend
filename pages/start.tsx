@@ -20,13 +20,13 @@ const LandingPageSSR: NextPage<ReactProps> = (props) => {
   return (
     <>
       <MetaHeadersPage
-        title="Gunmarketplace.com.au - Buy and sell firearms safely"
-        ogTitle="Gunmarketplace.com.au - Buy and sell firearms safely"
+        title="gunmarketplace.com.au - Buy and sell firearms securely"
+        ogTitle="gunmarketplace.com.au - Buy and sell firearms securely"
         description={`
-          Gunmarketplace is a marketplace for buying and selling firearms
+          Gun Marketplace is a marketplace for buying and selling firearms
         `}
         ogDescription={`
-          Gunmarketplace is a marketplace for buying and selling firearms
+          Gun Marketplace is a marketplace for buying and selling firearms
         `}
       />
       <LandingPage

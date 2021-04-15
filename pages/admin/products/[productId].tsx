@@ -36,7 +36,6 @@ const SellerProfileWrapper = dynamic(() => import("layout/GetUser/SellerProfileW
   loading: () => <LoadingBarSSR/>,
   ssr: false,
 })
-import BackTo from "components/BackTo";
 // Meta headers
 import MetaHeadersPage from "layout/MetaHeadersPage";
 import { useTheme } from "@material-ui/core/styles";
@@ -101,22 +100,10 @@ const ProductEditPage = (props: ReactProps) => {
           return (
             <div className={classes.contentContainer}>
               <div className={classes.rootOuter}>
-                <Typography className={classes.title} variant="h2">
-                  Edit Product
-                </Typography>
-                <BackTo
-                  textLink={true}
-                  title={"Back to Products"}
+                <ProductEdit
+                  asModal={false}
+                  product={data.getProductById}
                 />
-                <ErrorBounds className={clsx(
-                  classes.pageRoot,
-                  smDown ? classes.paddingMobile : classes.paddingMobile,
-                )}>
-                  <ProductEdit
-                    asModal={false}
-                    product={data.getProductById}
-                  />
-                </ErrorBounds>
               </div>
             </div>
           )
@@ -148,18 +135,6 @@ interface QueryVar {
 }
 
 export const styles = (theme: Theme) => createStyles({
-  pageRoot: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  paddingDesktop: {
-    padding: '2rem 2rem 2rem 2rem',
-  },
-  paddingMobile: {
-    padding: '2rem 0rem 2rem 0rem',
-  },
   rootOuter: {
     // backgroundColor: Colors.foregroundColor,
   },
@@ -170,50 +145,8 @@ export const styles = (theme: Theme) => createStyles({
     flexDirection: 'column',
     justifyContent: 'flex-start',
     maxWidth: 800,
-    marginTop: '2rem',
-    padding: '0rem 1rem 2rem 1rem',
-  },
-  iconButton: {
-    fontWeight: 600,
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginRight: '0.5rem',
-    transition: theme.transitions.create('color', {
-      easing: theme.transitions.easing.easeIn,
-      duration: "100ms",
-    }),
-    "&:hover": {
-      cursor: "pointer",
-      color: Colors.red,
-      transition: theme.transitions.create('color', {
-        easing: theme.transitions.easing.easeIn,
-        duration: "100ms",
-      }),
-    },
-  },
-  pad1rem: {
-    padding: '1rem',
-    width: '100%',
-    textAlign: 'center',
-  },
-  flexRow: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    flexWrap: 'wrap',
-  },
-  spaceTop: {
-    marginTop: '2rem',
-  },
-  spaceBetween: {
-    justifyContent: 'space-between',
-  },
-  subtitle: {
-    marginTop: "2rem",
-  },
-  title: {
+    // marginTop: '2rem',
+    // padding: '0rem 1rem 2rem 1rem',
   },
 });
 
