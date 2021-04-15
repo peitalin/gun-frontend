@@ -225,6 +225,7 @@ export const styles = (theme: Theme) => createStyles({
   },
   imgCard: {
     height: '100%',
+    minHeight: 68,
     width: "100%",
     objectFit: "contain",
   },
