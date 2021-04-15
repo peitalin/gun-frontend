@@ -19,7 +19,9 @@ import StartSelling4Mobile from "./StartSelling4Mobile";
 
 
 
-const StartSelling4 = ({ classes }: ReactProps) => {
+const StartSelling4 = (props: ReactProps) => {
+
+  const { classes } = props;
 
   const theme = useTheme();
   const mdDown = useMediaQuery(theme.breakpoints.down("md"));
@@ -27,17 +29,23 @@ const StartSelling4 = ({ classes }: ReactProps) => {
   return (
     <>
       <Hidden lgDown implementation="css" className={classes.startSelling4Root}>
-        <StartSelling4Desktop/>
+        <StartSelling4Desktop
+          isDarkMode={props.isDarkMode}
+        />
       </Hidden>
       <Hidden xlUp implementation="css" className={classes.startSelling4Root}>
-        <StartSelling4Mobile/>
+        <StartSelling4Mobile
+          isDarkMode={props.isDarkMode}
+        />
       </Hidden>
     </>
   );
 };
 
 
-interface ReactProps extends WithStyles<typeof styles> {}
+interface ReactProps extends WithStyles<typeof styles> {
+  isDarkMode: boolean
+}
 
 export const styles = (theme: Theme) => createStyles({
   startSelling4Root: {

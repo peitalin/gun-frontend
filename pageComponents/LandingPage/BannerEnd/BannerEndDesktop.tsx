@@ -33,7 +33,7 @@ import {
 
 
 
-const BannerHomeDesktop: NextPage<ReactProps> = (props) => {
+const BannerEndDesktop: NextPage<ReactProps> = (props) => {
 
   const {
     classes,
@@ -126,14 +126,13 @@ const BannerHomeDesktop: NextPage<ReactProps> = (props) => {
         <div className={classes.mainTitleContainer}>
 
           <Typography className={mdDown ? classes.mainTitleSm : classes.mainTitle}>
-            Buy and sell firearms simply and safely
+            Get Launch Updates
           </Typography>
           <Typography variant={"subtitle2"}
             className={mdDown ? classes.subline1Sm : classes.subline1}
           >
-            Featuring a secure payment system
-            that protects you
-            every step of the transfer process.
+            We are currently in beta testing and
+            will launch soon. Please sign up for more details
           </Typography>
 
           <form onSubmit={formik.handleSubmit}>
@@ -142,7 +141,7 @@ const BannerHomeDesktop: NextPage<ReactProps> = (props) => {
                 variant="outlined"
                 name="email"
                 type="email"
-                placeholder="Enter email for launch updates"
+                placeholder="Enter email for updates"
                 onChange={formik.handleChange}
                 value={formik.values.email}
                 className={classes.linkInput}
@@ -178,18 +177,47 @@ const BannerHomeDesktop: NextPage<ReactProps> = (props) => {
       )}>
         {
           props.isDarkMode
-          ? <CardMedia
-              component="img"
-              className={"fadeIn"}
-              classes={{ media: classes.categoryImage }}
-              src={props.bannerForegroundImageUrlDark}
-            />
-          : <CardMedia
-              component="img"
-              className={"fadeIn"}
-              classes={{ media: classes.categoryImage }}
-              src={props.bannerForegroundImageUrlLight}
-            />
+          ?
+            <div className={classes.clickableCard}>
+              <CardMedia
+                component="img"
+                className={"fadeIn"}
+                classes={{ media: classes.categoryImage }}
+                src={props.bannerForegroundImageUrlDark}
+              />
+              <Link href={"/"}>
+                <a className={classes.linkToApp}>
+                  <Button
+                    className={classes.linkToAppButton}
+                    classes={{
+                      label: classes.linkToAppButtonText
+                    }}
+                  >
+                    Explore the beta
+                  </Button>
+                </a>
+              </Link>
+            </div>
+          : <div className={classes.clickableCard}>
+              <CardMedia
+                component="img"
+                className={"fadeIn"}
+                classes={{ media: classes.categoryImage }}
+                src={props.bannerForegroundImageUrlLight}
+              />
+              <Link href={"/"}>
+                <a className={classes.linkToApp}>
+                  <Button
+                    className={classes.linkToAppButton}
+                    classes={{
+                      label: classes.linkToAppButtonText
+                    }}
+                  >
+                    Explore the beta
+                  </Button>
+                </a>
+              </Link>
+            </div>
         }
       </div>
     </Banner>
@@ -330,8 +358,11 @@ export const styles = (theme: Theme) => createStyles({
     borderRadius: BorderRadius2x,
     width: '100%',
     height: '100%',
-    // maxWidth: 400,
     boxShadow: BoxShadows.shadow4.boxShadow,
+    // border: theme.palette.type === 'dark'
+    //   ? `1px solid ${Colors.uniswapLightestGrey}`
+    //   : `1px solid ${Colors.slateGreyBlack}`,
+    // maxWidth: 400,
     minWidth: 400,
   },
   buttonsFlexRow: {
@@ -425,9 +456,50 @@ export const styles = (theme: Theme) => createStyles({
     backgroundRepeat: 'no-repeat',
     backgroundSize: '100%',
   },
+  clickableCard: {
+    position: "relative",
+    justifyContent: 'center',
+    flexDirection: 'column',
+    height: '100%',
+  },
+  linkToApp: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    height: '100%',
+    width: '100%',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  linkToAppButtonText: {
+    fontSize: '1.15rem',
+  },
+  linkToAppButton: {
+    backgroundColor: Colors.ultramarineBlue,
+    color: Colors.cream,
+    width: '100%',
+    cursor: "pointer",
+    height: 50,
+    borderRadius: BorderRadius,
+    maxWidth: 200,
+    // border: `0px solid ${Colors.charcoal}`,
+    transition: theme.transitions.create(['color', 'backgroundColor', 'border'], {
+      easing: theme.transitions.easing.easeIn,
+      duration: '100ms',
+    }),
+    "&:hover": {
+      color: Colors.cream,
+      backgroundColor: Colors.lightBlue,
+      transition: theme.transitions.create(['color', 'backgroundColor', 'border'], {
+        easing: theme.transitions.easing.easeIn,
+        duration: '100ms',
+      })
+    },
+  },
 })
 
-export default withStyles(styles)( BannerHomeDesktop );
+export default withStyles(styles)( BannerEndDesktop );
 
 
 

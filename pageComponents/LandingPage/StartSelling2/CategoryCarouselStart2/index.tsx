@@ -23,35 +23,9 @@ const CategoryCarouselStart = (props: ReactProps) => {
 
   const { classes } = props
 
-  //////// Remember, the <Hidden/> CSS components,
-  /////// initialNumItems should match this:
-  /////// so that SSR loading carousel will have same dimensions
-  ////// as the carousel once its fully loaded
-  // const getScrollItemsForScreenSize = () => {
-  //   if (xs) {
-  //     return 2.5
-  //   }
-  //   if (sm) {
-  //     return 2.5
-  //   }
-  //   if (md) {
-  //     return 3
-  //   }
-  //   if (lg) {
-  //     return 5
-  //   }
-  //   if (xl) {
-  //     return 7
-  //   } else {
-  //     // SSR loading
-  //     return -1
-  //   }
-  // }
-
   const theme = useTheme();
   const smDown = useMediaQuery(theme.breakpoints.down("sm"))
   const mdDown = useMediaQuery(theme.breakpoints.down("md"))
-
 
   return (
     <div className={classes.categoryCarouselRoot}>

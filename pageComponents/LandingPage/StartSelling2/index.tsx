@@ -7,90 +7,102 @@ import {
   WithStyles,
   Theme,
 } from "@material-ui/core/styles";
-import { Colors, BoxShadows } from "layout/AppTheme";
-// Typings
-import { CategoryPreviewCard } from "./CategoryCarouselStart";
+import { Colors, BoxShadows, BorderRadius3x } from "layout/AppTheme";
 // components
-import Typography from "@material-ui/core/Typography";
-import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
+import CategoryCarouselStart2 from "./CategoryCarouselStart2";
 import CardMedia from "@material-ui/core/CardMedia";
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import Hidden from "components/HiddenFix";
-import { PaymentIcons } from "layout/Footer";
-import CategoryCarouselStart from "../StartSelling2/CategoryCarouselStart";
-import { shuffle } from "utils/misc";
 
 
-const StartSelling2 = ({ classes }: ReactProps) => {
+
+const StartSelling2 = (props: ReactProps) => {
+
+  const { classes, isDarkMode } = props;
 
   const theme = useTheme();
-  const smDown = useMediaQuery(theme.breakpoints.down("sm"));
   const mdDown = useMediaQuery(theme.breakpoints.down("md"));
+  const xlUp = useMediaQuery(theme.breakpoints.up("xl"));
 
-  let categoryPreviewCards = [
-    {
-      name: 'Patterns',
-      imageUrl: "/img/categories-banner/combinations.jpg"
-    },
-    {
-      name: 'Social Media',
-      imageUrl: "/img/categories-banner/handguns.jpg"
-    },
-    {
-      name: 'Overlays',
-      imageUrl: "/img/categories-banner/rifles.jpg"
-    },
-    {
-      name: 'Video LUTs',
-      imageUrl: "/img/categories-banner/shotguns.jpg"
-    },
-    {
-      name: 'Lightroom Presets',
-      imageUrl: "/img/categories-banner/combinations.jpg"
-    },
-    {
-      name: 'Design Templates',
-      imageUrl: "/img/categories-banner/handguns.jpg"
-    },
-    {
-      name: 'Graphics',
-      imageUrl: "/img/categories-banner/rifles.jpg"
-    },
-    {
-      name: 'Fonts',
-      imageUrl: "/img/categories-banner/shotguns.jpg"
-    },
-    {
-      name: 'Backgrounds',
-      imageUrl: "/img/categories-banner/combinations.jpg"
-    },
-  ]
+  let cPadding = 2 // category carousel padding
 
   return (
-    <div className={clsx(
-      mdDown ? classes.section2RootMobile : classes.section2Root
-    )}>
-
-      <div className={
-        smDown ? classes.titleBox : classes.titleBoxDesktop
-      }>
-        <Typography variant="h3"
-          className={mdDown ? classes.titleMobile : classes.title}
-        >
-          Upload and earn money doing what you love.
-        </Typography>
-        <Typography variant="h3"
-          className={mdDown ? classes.titleMobile : classes.title}
-        >
-          It's free and easy to use.
-        </Typography>
+    <div className={classes.section2Root}>
+      <div className={classes.categoryTitleBox}>
+        <div className={classes.categoryTitleText}>
+          Choose from a selection of brands
+        </div>
       </div>
-
-
-      <CategoryCarouselStart
+      <div className={classes.categoryTitleBox}>
+        <div
+          className={classes.polkadotBackground}
+          style={
+            xlUp
+            ? {
+                width: `calc(100% - ${cPadding*2}rem)`,
+              }
+            : {
+                width: `calc(100% - ${cPadding}rem)`,
+              }
+          }
+        ></div>
+        <div className={classes.categoryBrands}>
+          <div className={classes.imageBox}>
+            <CardMedia
+              component="img"
+              // className={classes.sxImage1}
+              classes={{ media: classes.imgCard }}
+              src={
+                props.isDarkMode
+                  ? "/img/start/brand-1-dark.png"
+                  : "/img/start/brand-1-light.png"
+              }
+            />
+          </div>
+          <div className={classes.imageBox}>
+            <CardMedia
+              component="img"
+              // className={classes.sxImage1}
+              classes={{ media: classes.imgCard }}
+              src={
+                props.isDarkMode
+                  ? "/img/start/brand-2-dark.png"
+                  : "/img/start/brand-2-light.png"
+              }
+            />
+          </div>
+          <div className={classes.imageBox}>
+            <CardMedia
+              component="img"
+              // className={classes.sxImage1}
+              classes={{ media: classes.imgCard }}
+              src={
+                props.isDarkMode
+                  ? "/img/start/brand-3-dark.png"
+                  : "/img/start/brand-3-light.png"
+              }
+            />
+          </div>
+          <div className={classes.imageBox}>
+            <CardMedia
+              component="img"
+              // className={classes.sxImage1}
+              classes={{ media: classes.imgCard }}
+              src={
+                props.isDarkMode
+                  ? "/img/start/brand-4-dark.png"
+                  : "/img/start/brand-4-light.png"
+              }
+            />
+          </div>
+        </div>
+      </div>
+      <div className={classes.categoryTitleBox}>
+        <div className={classes.categoryTitleText}>
+          Across multiple categories
+        </div>
+      </div>
+      <CategoryCarouselStart2
         style={{
           marginTop: '2rem',
           marginBottom: '2rem',
@@ -115,57 +127,111 @@ const StartSelling2 = ({ classes }: ReactProps) => {
 };
 
 
-interface ReactProps extends WithStyles<typeof styles> {}
+interface ReactProps extends WithStyles<typeof styles> {
+  isDarkMode: boolean
+}
+
+let categoryPreviewCards = [
+  {
+    name: 'Handguns',
+    imageUrl: "/img/categories-banner/handguns.jpg"
+  },
+  {
+    name: 'Rifles',
+    imageUrl: "/img/categories-banner/rifles.jpg"
+  },
+  {
+    name: 'Shotguns',
+    imageUrl: "/img/categories-banner/shotguns.jpg"
+  },
+  {
+    name: 'Combinations',
+    imageUrl: "/img/categories-banner/combinations.jpg"
+  },
+  {
+    name: 'Pistols',
+    imageUrl: "/img/categories-banner/handguns.jpg"
+  },
+  {
+    name: 'Rifles',
+    imageUrl: "/img/categories-banner/rifles.jpg"
+  },
+  {
+    name: 'Shotguns',
+    imageUrl: "/img/categories-banner/shotguns.jpg"
+  },
+  {
+    name: 'Combinations',
+    imageUrl: "/img/categories-banner/combinations.jpg"
+  },
+]
+
+
 
 export const styles = (theme: Theme) => createStyles({
-  // section 2
   section2Root: {
     paddingTop: '4rem',
-    paddingBottom: '6rem',
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
-    width: "100%",
-    background: Colors.white,
-    textAlign: "center",
+    paddingBottom: '8rem',
+    borderTop: theme.palette.type === 'dark'
+      ? `1px solid ${Colors.uniswapGrey}`
+      : `1px solid ${Colors.slateGreyDarkest}`,
+    // borderBottom: theme.palette.type === 'dark'
+    //   ? `1px solid ${Colors.uniswapGrey}`
+    //   : `1px solid ${Colors.slateGreyDarkest}`,
+    backgroundColor: theme.palette.type === 'dark'
+      ? `${Colors.uniswapDarkNavy}`
+      : `${Colors.slateGrey}`,
+  },
+  categoryTitleBox: {
     position: 'relative',
-  },
-  section2RootMobile: {
-    paddingTop: '1rem',
-    paddingBottom: '4rem',
-    display: "flex",
+    display: 'flex',
     flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 72,
+    fontSize: '1rem',
+  },
+  categoryTitleText: {
+    display: 'flex',
+    flexDirection: "column",
+    justifyContent: 'center',
+    maxWidth: 500,
+    textTransform: "uppercase",
+    fontSize: '0.8rem',
+    fontWeight: 600,
+    color: theme.palette.type === 'dark'
+      ? Colors.uniswapLighterGrey
+      : Colors.slateGreyDarkest,
+  },
+  categoryBrands: {
+    display: 'flex',
+    flexDirection: "row",
+    justifyContent: 'center',
+    width: '100%',
+    marginTop: '1rem',
+    marginBottom: '1rem',
+  },
+  polkadotBackground: {
+    background: `url(/img/bg-with-dotted.svg) no-repeat center/contain`,
+    width: '100%',
+    height: '100%',
+    position: 'absolute',
+  },
+  imageBox: {
+    height: '100%',
     width: "100%",
-    background: Colors.white,
-    textAlign: "center",
-    position: 'relative',
-  },
-  titleBox: {
-    marginTop: '1rem',
-    marginLeft: '0.5rem',
-    marginBottom: '3rem',
-    transform: 'translateY(1rem)',
-  },
-  titleBoxDesktop: {
-    marginTop: '1rem',
+    flexBasis: '20%',
+    maxWidth: 120,
     marginLeft: '1rem',
-    marginBottom: '5rem',
-    transform: 'translateY(1rem)',
+    marginRight: '1rem',
+    filter: 'grayscale(1)',
   },
-  title: {
-    fontWeight: 700,
-    fontSize: '2.25rem',
-    lineHeight: '3rem',
-  },
-  titleMobile: {
-    fontWeight: 700,
-    fontSize: "1.75rem",
-    lineHeight: '2.25rem',
-    padding: '0rem 1rem',
+  imgCard: {
+    height: '100%',
+    width: "100%",
+    objectFit: "contain",
   },
 })
+
 
 export default withStyles(styles)(StartSelling2);

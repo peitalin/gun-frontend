@@ -8,29 +8,29 @@ import { Categories, PageConfig } from "typings/gqlTypes";
 // redux
 import { useSelector } from "react-redux";
 import { GrandReduxState } from "reduxStore/grand-reducer";
-
-// Components
-import BannerHome from "pageComponents/LandingPage/BannerLandingPage";
-import BannerGetStarted from "pageComponents/LandingPage/BannerGetStarted";
-import BetaTestingBanner from "components/BetaTestingBanner";
-
+// styles
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
-
 // GraphQL
 import { useQuery, useApolloClient } from "@apollo/client";
-import CategoryCarouselStart from "components/CategoryCarouselStart";
 
 import AlignCenterLayout from "components/AlignCenterLayout";
 export const MAX_WIDTH_GRID: number = 1160;
 // show exactly 4 product cards in carousel + 1rem padding on left
 // 270px each card (including margin of 16px) = 290
+
+import CategoryCarouselStart2 from "./StartSelling2/CategoryCarouselStart2";
+// import CategoryCarouselStart from "components/CategoryCarouselStart";
+// Components
+import BannerGetStarted from "pageComponents/LandingPage/BannerGetStarted";
+import BetaTestingBanner from "components/BetaTestingBanner";
 import BannerStart from "./BannerStart";
 import StartSelling2 from "./StartSelling2"
 import StartSelling3 from "./StartSelling3"
 import StartSelling4 from "./StartSelling4"
-import StartSelling6 from "./StartSelling6"
-import StartSelling12 from "./StartSelling12"
+// import StartSellingTestimonials from "./StartSellingTestimonials"
+import StartSellingPricing from "./StartSellingPricing"
+import BannerEnd from "./BannerEnd"
 
 
 
@@ -44,7 +44,7 @@ const LandingPage: React.FC<ReactProps> = (props) => {
 
   const theme = useTheme();
   const xlUp = useMediaQuery(theme.breakpoints.up('xl'));
-  // const mdDown = useMediaQuery(theme.breakpoints.down('md'));
+  const mdDown = useMediaQuery(theme.breakpoints.down('md'));
   // const smDown = useMediaQuery(theme.breakpoints.down('sm'));
 
   let isDarkMode = useSelector<GrandReduxState, boolean>(
@@ -56,7 +56,7 @@ const LandingPage: React.FC<ReactProps> = (props) => {
     <div className={classes.landingPageRoot}>
 
       {/* <BannerHome /> */}
-      <BannerStart />
+      <BannerStart isDarkMode={isDarkMode}/>
       <BetaTestingBanner />
 
       <AlignCenterLayout
@@ -64,67 +64,12 @@ const LandingPage: React.FC<ReactProps> = (props) => {
         withRecommendations={false}
       >
 
-        <div className={classes.categoryCarouselLandingPageBox}
-          style={{
-            // filter: "grayscale(1)",
-          }}
-        >
-          <div className={classes.categoryTitleBox}>
-            <div className={classes.categoryTitleText}>
-              Choose from a selection of brands
-            </div>
-          </div>
-          <div className={classes.categoryTitleBox}>
-            <div
-              className={classes.polkadotBackground}
-              style={
-                xlUp
-                ? {
-                    width: `calc(100% - ${cPadding*2}rem)`,
-                  }
-                : {
-                    width: `calc(100% - ${cPadding}rem)`,
-                  }
-              }
-            ></div>
-            <div className={classes.categoryBrands}>
-              <div className={classes.imageBox}>Ruger</div>
-              <div className={classes.imageBox}>Mauser</div>
-              <div className={classes.imageBox}>HandK</div>
-              <div className={classes.imageBox}>Mossberg</div>
-            </div>
-          </div>
-          <div className={classes.categoryTitleBox}>
-            <div className={classes.categoryTitleText}>
-              Across these categories
-            </div>
-          </div>
-          <CategoryCarouselStart
-            // title={"Explore Categories"}
-            disableTitle={true}
-            categories={props.initialCategories}
-            style={
-              xlUp
-              ? {
-                  width: `calc(100% - ${cPadding*2}rem)`,
-                  marginLeft: `${cPadding}rem`,
-                  marginRight: `${cPadding}rem`,
-                }
-              : {}
-            }
-            cardTextStyle={{
-              color: isDarkMode
-                ? Colors.uniswapLighterGrey
-                : Colors.slateGreyDarkest,
-            }}
-          />
-        </div>
+        <StartSelling2 isDarkMode={isDarkMode}/>
+        <StartSelling3 isDarkMode={isDarkMode}/>
+        <StartSelling4 isDarkMode={isDarkMode}/>
+        <StartSellingPricing isDarkMode={isDarkMode}/>
 
-        <StartSelling2/>
-        <StartSelling3/>
-        <StartSelling4/>
-        <StartSelling6/>
-        <StartSelling12/>
+        <BannerEnd isDarkMode={isDarkMode}/>
 
       </AlignCenterLayout>
     </div>
@@ -143,48 +88,6 @@ const styles = (theme: Theme) => createStyles({
     display: 'flex',
     flexDirection: "column",
     justifyContent: 'center',
-  },
-  categoryCarouselLandingPageBox: {
-    marginTop: '3rem',
-    marginBottom: '3rem',
-  },
-  categoryTitleBox: {
-    position: 'relative',
-    display: 'flex',
-    flexDirection: "column",
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: 72,
-    fontSize: '1rem',
-  },
-  categoryTitleText: {
-    display: 'flex',
-    flexDirection: "column",
-    justifyContent: 'center',
-    maxWidth: 500,
-    textTransform: "uppercase",
-    fontSize: '0.8rem',
-    fontWeight: 600,
-    color: theme.palette.type === 'dark'
-      ? Colors.uniswapLighterGrey
-      : Colors.slateGreyDarkest,
-  },
-  categoryBrands: {
-    display: 'flex',
-    flexDirection: "row",
-    justifyContent: 'space-between',
-    width: '100%',
-    maxWidth: 500,
-    marginTop: '1rem',
-    marginBottom: '1rem',
-  },
-  polkadotBackground: {
-    background: `url(/img/bg-with-dotted.svg) no-repeat center/contain`,
-    width: '100%',
-    height: '100%',
-    position: 'absolute',
-  },
-  imageBox: {
   },
   fullMaxHeight: {
     maxHeight: "100%",

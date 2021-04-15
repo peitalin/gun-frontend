@@ -23,7 +23,7 @@ import StoreOrLogin from "pageComponents/ProductCreate/StoreOrLogin";
 
 
 
-const BannerHomeMobile: NextPage<ReactProps> = (props) => {
+const BannerEndMobile: NextPage<ReactProps> = (props) => {
 
   const {
     classes,
@@ -192,7 +192,7 @@ export const styles = (theme: Theme) => createStyles({
   },
 })
 
-export default withStyles(styles)( BannerHomeMobile );
+export default withStyles(styles)( BannerEndMobile );
 
 
 

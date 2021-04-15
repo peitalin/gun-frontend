@@ -7,7 +7,7 @@ import {
   WithStyles,
   Theme,
 } from "@material-ui/core/styles";
-import { Colors, BoxShadows, combineStyles, BorderRadius3x } from "layout/AppTheme";
+import { Colors, BoxShadows, BorderRadius3x } from "layout/AppTheme";
 // components
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
@@ -20,8 +20,9 @@ import Tick from "components/Icons/Tick";
 
 
 
-const StartSelling3 = ({ classes }: ReactProps) => {
+const StartSelling3 = (props: ReactProps) => {
 
+  const { classes } = props;
   const theme = useTheme();
   const mdDown = useMediaQuery(theme.breakpoints.down("md"));
 
@@ -30,7 +31,7 @@ const StartSelling3 = ({ classes }: ReactProps) => {
 
       <div className={clsx(classes.section3)}>
         <Typography className={mdDown ? classes.titleMobile : classes.title}>
-          How to start in 3 steps
+          Buy and Sell in 5 steps
         </Typography>
 
         <div className={clsx(
@@ -51,7 +52,7 @@ const StartSelling3 = ({ classes }: ReactProps) => {
                   1
                 </div>
                 <Typography className={mdDown ? classes.reasonMobile : classes.reason}>
-                  Create a shop for free
+                  Buyer makes payment into a secure escrow account for the firearm
                 </Typography>
               </div>
               <div className={clsx(classes.flexRow, classes.reasonRow)}>
@@ -62,7 +63,7 @@ const StartSelling3 = ({ classes }: ReactProps) => {
                   2
                 </div>
                 <Typography className={mdDown ? classes.reasonMobile : classes.reason}>
-                  Upload products instantly
+                  When payment arrives, seller is notified to dispose the firearm
                 </Typography>
               </div>
               <div className={clsx(classes.flexRow, classes.reasonRow)}>
@@ -73,7 +74,29 @@ const StartSelling3 = ({ classes }: ReactProps) => {
                   3
                 </div>
                 <Typography className={mdDown ? classes.reasonMobile : classes.reason}>
-                  Get paid automatically
+                  Transferring dealer gives seller a receipt to upload on the platform
+                </Typography>
+              </div>
+              <div className={clsx(classes.flexRow, classes.reasonRow)}>
+                <div className={clsx(
+                  classes.numberBullet,
+                  mdDown ? classes.bulletSizeMobile : classes.bulletSize
+                )}>
+                  4
+                </div>
+                <Typography className={mdDown ? classes.reasonMobile : classes.reason}>
+                  Once the receipt is approved, payout is scheduled automatically.
+                </Typography>
+              </div>
+              <div className={clsx(classes.flexRow, classes.reasonRow)}>
+                <div className={clsx(
+                  classes.numberBullet,
+                  mdDown ? classes.bulletSizeMobile : classes.bulletSize
+                )}>
+                  5
+                </div>
+                <Typography className={mdDown ? classes.reasonMobile : classes.reason}>
+                  Buyer is notified to pickup the firearm.
                 </Typography>
               </div>
             </div>
@@ -86,7 +109,11 @@ const StartSelling3 = ({ classes }: ReactProps) => {
               component="img"
               // className={classes.sxImage1}
               classes={{ media: classes.imgShadow }}
-              src={"/img/start-new/1_marketplace.png"}
+              src={
+                props.isDarkMode
+                  ? "/img/start/screen2-dark.jpg"
+                  : "/img/start/screen2-light.jpg"
+              }
             />
           </div>
         </div>
@@ -97,14 +124,24 @@ const StartSelling3 = ({ classes }: ReactProps) => {
 };
 
 
-interface ReactProps extends WithStyles<typeof styles> {}
+interface ReactProps extends WithStyles<typeof styles> {
+  isDarkMode: boolean
+}
 
 export const styles = (theme: Theme) => createStyles({
   section3Root: {
     paddingTop: '4rem',
     paddingBottom: '4rem',
-    backgroundColor: Colors.coolGrey,
     width: '100%',
+    borderTop: theme.palette.type === 'dark'
+      ? `1px solid ${Colors.uniswapGrey}`
+      : `1px solid ${Colors.slateGreyDarkest}`,
+    // borderBottom: theme.palette.type === 'dark'
+    //   ? `1px solid ${Colors.uniswapGrey}`
+    //   : `1px solid ${Colors.slateGreyDarkest}`,
+    backgroundColor: theme.palette.type === 'dark'
+      ? `${Colors.uniswapDarkNavy}`
+      : `${Colors.slateGrey}`,
   },
   section3: {
     paddingBottom: '2rem',
@@ -177,20 +214,20 @@ export const styles = (theme: Theme) => createStyles({
     marginBottom: '2rem',
   },
   reason: {
-    fontSize: '1.5rem',
+    fontSize: '1.3rem',
     fontWeight: 600,
   },
   reasonMobile: {
-    fontSize: '1.25rem',
+    fontSize: '1.125rem',
     fontWeight: 600,
   },
   bulletSize: {
-    width: 40,
-    height: 40,
+    minWidth: 40,
+    minHeight: 40,
   },
   bulletSizeMobile: {
-    width: 32,
-    height: 32,
+    minWidth: 32,
+    minHeight: 32,
   },
   numberBullet: {
     display: "flex",

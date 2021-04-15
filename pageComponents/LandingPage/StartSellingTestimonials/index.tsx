@@ -22,7 +22,9 @@ import AspectRatioConstraint from "components/AspectRatioConstraint";
 
 
 
-const StartSelling6 = ({ classes }: ReactProps) => {
+const StartSelling6 = (props: ReactProps) => {
+
+  const { classes } = props;
 
   const theme = useTheme();
   const mdDown = useMediaQuery(theme.breakpoints.down("md"));
@@ -92,7 +94,7 @@ const StartSelling6 = ({ classes }: ReactProps) => {
             <CardMedia
               component="img"
               className={clsx(mdDown ? classes.s11ImageMobile : classes.s11Image)}
-              src={"/img/start-new/4_portrait.png"}
+              src={"/img/start/4_portrait.png"}
             />
           </div>
           <div className={clsx(
@@ -120,7 +122,9 @@ const StartSelling6 = ({ classes }: ReactProps) => {
 };
 
 
-interface ReactProps extends WithStyles<typeof styles> {}
+interface ReactProps extends WithStyles<typeof styles> {
+  isDarkMode: boolean
+}
 
 export const styles = (theme: Theme) => createStyles({
   section6Root: {

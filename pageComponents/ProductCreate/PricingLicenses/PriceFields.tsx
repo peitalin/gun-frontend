@@ -114,8 +114,8 @@ const PriceFields = (props: ReactProps & FormikProps<FormikFields>) => {
                   onBlur={handleBlur}
                   inputProps={{ style: { width: '100%', marginLeft: '0.25rem' }}}
                   errorMessage={
-                    errors?.currentVariants?.[position]?.price
-                    ? errors.currentVariants[position].price
+                    errors?.currentVariants?.[position]
+                    ? errors.currentVariants[position]
                     : null
                   }
                   touched={touched?.currentVariants?.[position]?.price}

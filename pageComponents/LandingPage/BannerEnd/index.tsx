@@ -13,26 +13,20 @@ import { useSelector, useDispatch } from "react-redux";
 import { GrandReduxState, Actions } from "reduxStore/grand-reducer";
 import { UserPrivate } from "typings/gqlTypes";
 // components
-import BannerStartDesktop from "./BannerStartDesktop";
-import BannerStartMobile from "./BannerStartMobile";
+import BannerEndDesktop from "./BannerEndDesktop";
+import BannerEndMobile from "./BannerEndMobile";
 
 
 
 
-const BannerStart: NextPage<ReactProps> = (props) => {
+const BannerEnd: NextPage<ReactProps> = (props) => {
 
   const {
     classes,
   } = props;
 
-  // const bannerForegroundImageUrl = isDarkMode
-  //   ? `/img/start/screen1-dark.jpg`
-  //   : `/img/start/screen1-light.jpg`
-
-
   const bannerForegroundImageUrlDark = `/img/start/screen1-dark.jpg`
   const bannerForegroundImageUrlLight = `/img/start/screen1-light.jpg`
-
 
   const ditherStyle = {
     // background: isDarkMode
@@ -55,17 +49,17 @@ const BannerStart: NextPage<ReactProps> = (props) => {
   const bannerContainerStyle = {
     // polkadot
     // background: `${Colors.uniswapDarkNavy}`,
-    backgroundImage:`url(/img/start/hero4.jpg)`,
+    backgroundImage:`url(/img/start/hero1.png)`,
     backgroundRepeat: 'no-repeat',
-    backgroundSize: '100%',
-    // backgroundSize: 'auto', //stretch to fit for hero3.png
+    backgroundSize: 'auto', //stretch to fit
+    // backgroundSize: '600px 300px',
   }
 
   return (
     <>
       {/* Desktop */}
       <Hidden smDown implementation="css" className={classes.width100}>
-        <BannerStartDesktop
+        <BannerEndDesktop
           height={680}
           portraitMode={true}
           ditherStyle={ditherStyle}
@@ -77,7 +71,7 @@ const BannerStart: NextPage<ReactProps> = (props) => {
       </Hidden>
       {/* Mobile */}
       <Hidden mdUp implementation='css' className={classes.width100}>
-        <BannerStartMobile
+        <BannerEndMobile
           // height={660}
           // portraitMode={true}
           ditherStyle={ditherStyle}
@@ -104,7 +98,7 @@ export const styles = (theme: Theme) => createStyles({
   },
 })
 
-export default withStyles(styles)( BannerStart );
+export default withStyles(styles)( BannerEnd );
 
 
 

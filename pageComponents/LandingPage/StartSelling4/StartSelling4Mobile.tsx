@@ -7,7 +7,7 @@ import {
   WithStyles,
   Theme,
 } from "@material-ui/core/styles";
-import { Colors, BoxShadows, combineStyles } from "layout/AppTheme";
+import { Colors, BoxShadows } from "layout/AppTheme";
 // Typings
 import {} from "typings/gqlTypes";
 // components
@@ -22,7 +22,9 @@ import Tick from "components/Icons/Tick";
 
 
 
-const StartSelling4 = ({ classes }: ReactProps) => {
+const StartSelling4 = (props: ReactProps) => {
+
+  const { classes } = props;
 
   const theme = useTheme();
   const xs = useMediaQuery(theme.breakpoints.only("xs"));
@@ -45,11 +47,11 @@ const StartSelling4 = ({ classes }: ReactProps) => {
           )}>
             {
               [
-                "Create a passive income stream instantly",
-                "Choose your own custom shop link",
                 "List unlimited products for free",
+                "Create and manage product listings easily",
+                "Choose and edit product photos and details",
                 "Set your own prices",
-                "Receive payouts automatically every month",
+                "Payments secured before you dispose your firearm",
               ].map(( text, i ) => {
                 return (
                   <div className={classes.flexItemTickRow}>
@@ -71,7 +73,11 @@ const StartSelling4 = ({ classes }: ReactProps) => {
               component="img"
               // className={classes.sxImage1}
               classes={{ media: classes.imgShadow }}
-              src={"/img/start-new/2_store_page.png"}
+              src={
+                props.isDarkMode
+                  ? "/img/start/screen3-dark.jpg"
+                  : "/img/start/screen3-light.jpg"
+              }
             />
           </div>
         </div>
@@ -84,11 +90,10 @@ const StartSelling4 = ({ classes }: ReactProps) => {
           )}>
             {
               [
-                "Get access to your own seller dashboard",
-                "No exclusivity required",
-                "Instant product delivery to customers",
-                "Build your email list",
-                "Apple Pay, Google Pay, Paypal built-in",
+                "View and track order's progress",
+                "Manage disposal receipts in one place",
+                "Real-time notifications for order progress",
+                "Direct payment to your bank account. No questions asked.",
               ].map(( text, i ) => {
                 return (
                   <div className={classes.flexItemTickRow}>
@@ -109,7 +114,11 @@ const StartSelling4 = ({ classes }: ReactProps) => {
               component="img"
               // className={classes.sxImage1}
               classes={{ media: classes.imgShadow }}
-              src={"/img/start-new/3_product_page.png"}
+              src={
+                props.isDarkMode
+                  ? "/img/start/screen4-dark.jpg"
+                  : "/img/start/screen4-light.jpg"
+              }
             />
           </div>
 
@@ -138,7 +147,9 @@ const TickPoint = ({ text, classes }) => {
 }
 
 
-interface ReactProps extends WithStyles<typeof styles> {}
+interface ReactProps extends WithStyles<typeof styles> {
+  isDarkMode: boolean
+}
 
 export const styles = (theme: Theme) => createStyles({
   section4Root: {
