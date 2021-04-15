@@ -137,7 +137,7 @@ const BannerEndMobile: NextPage<ReactProps> = (props) => {
                 variant="outlined"
                 name="email"
                 type="email"
-                placeholder="Enter email"
+                placeholder="Enter email for updates"
                 onChange={formik.handleChange}
                 value={formik.values.email}
                 className={classes.linkInput}
