@@ -83,7 +83,7 @@ const styles = (theme: Theme) => createStyles({
     fontSize: "1rem",
   },
   productDescription: {
-    maxHeight: "33vh",
+    // maxHeight: "33vh",
     overflowY: 'hidden',
     color: theme.palette.type === 'dark'
       ? Colors.uniswapLighterGrey

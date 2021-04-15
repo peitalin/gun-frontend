@@ -1,30 +1,25 @@
 import React from "react";
 import clsx from "clsx";
+import { oc as option } from "ts-optchain";
 // styles
 import { withStyles, WithStyles, createStyles, Theme, fade } from "@material-ui/core/styles";
-import { BorderRadius, Colors, Gradients } from "layout/AppTheme";
+import { BorderRadius, Colors, Gradients, BorderRadius2x } from "layout/AppTheme";
 // components
 import Banner from "components/Banner";
 import Typography from "@material-ui/core/Typography";
 import Button from '@material-ui/core/Button';
-// import TextField from "@material-ui/core/TextField";
 import TextInput from "components/Fields/TextInput";
-// Router
-import { useRouter } from 'next/router';
 // SSR
 import { NextPage, NextPageContext } from 'next';
-import Login from "layout/Login";
-import Hidden from 'components/HiddenFix';
-
 // CSS
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
-// Redux
-import { useSelector, useDispatch } from "react-redux";
-import { GrandReduxState } from "reduxStore/grand-reducer";
-import { Actions } from "reduxStore/actions";
+// typings
 import { UserPrivate, Signup_Emails } from "typings/gqlTypes";
 import Link from "next/link";
+import CardMedia from "@material-ui/core/CardMedia";
+import Tooltip from '@material-ui/core/Tooltip';
+
 
 import { useFormik } from 'formik';
 import { validationSchemas } from "utils/validation";
@@ -38,22 +33,23 @@ import {
 
 
 
-
-const BannerLandingPageLayout: NextPage<ReactProps> = (props) => {
+const BannerHomeDesktop: NextPage<ReactProps> = (props) => {
 
   const {
     classes,
-    bannerImageUrl,
-    bannerDither,
-    mdDown,
-    height = 480,
+    user,
+    height,
+    ditherStyle,
+    bannerContainerStyle,
+    bannerForegroundImageUrl,
   } = props;
 
   const snackbar = useSnackbar();
 
-  const user = useSelector<GrandReduxState, UserPrivate>(
-    s => s.reduxLogin.user
-  )
+  const theme = useTheme();
+  const smDown = useMediaQuery(theme.breakpoints.down("sm"))
+  const mdDown = useMediaQuery(theme.breakpoints.down("md"))
+  const lgDown = useMediaQuery(theme.breakpoints.down("lg"))
 
   const [
     signupToWaitlist,
@@ -106,123 +102,86 @@ const BannerLandingPageLayout: NextPage<ReactProps> = (props) => {
   return (
     <Banner
       // in /public/img
-      src={bannerImageUrl}
+      // src={bannerImageUrl}
       titleStyle={{
-        justifyContent: "flex-end",
+        flexDirection: 'row',
+        paddingLeft: '1rem',
+        paddingTop: '4rem',
       }}
-      height={height}
       ditherStyle={{
-        background: bannerDither
+        ...ditherStyle,
+      }}
+      bannerContainerStyles={{
+        ...bannerContainerStyle
       }}
       dither={true}
+      height={height}
       portraitMode={props.portraitMode}
     >
+      <div className={clsx(
+        classes.bannerInnerBoxLeft,
+        mdDown ? classes.minWidth360 : classes.minWidth440
+      )}>
+        <div className={classes.mainTitleContainer}>
 
-      {/* <div className={classes.searchContainer}>
-      </div> */}
+          <Typography className={mdDown ? classes.mainTitleSm : classes.mainTitle}>
+            Buy and sell firearms simply and safely
+          </Typography>
+          <Typography variant={"subtitle2"}
+            className={mdDown ? classes.subline1Sm : classes.subline1}
+          >
+            Featuring a secure payment system
+            that protects you
+            every step of the transfer process.
+          </Typography>
 
-
-      <div className={
-        mdDown
-        ? classes.mainTitleContainerSm
-        : classes.mainTitleContainer
-      }>
-        <Typography className={mdDown ? classes.mainTitleSm : classes.mainTitle}>
-          Buy and sell firearms simply and safely
-        </Typography>
-        <Typography variant={"subtitle2"}
-          className={mdDown ? classes.subline1Sm : classes.subline1}
-        >
-          Featuring a secure payment system
-          that protects you
-          every step of the transfer process.
-        </Typography>
-
-        <form onSubmit={formik.handleSubmit}>
-          <div className={clsx(classes.buttonsFlexRow, 'fadeInFast')}>
-            <TextInput
-              variant="outlined"
-              name="email"
-              type="email"
-              placeholder="Enter email"
-              onChange={formik.handleChange}
-              value={formik.values.email}
-              className={classes.linkInput}
-              classes={{
-                root: classes.textInputSmallRoot
-              }}
-              inputProps={{
-                className: classes.textInputSmall
-              }}
-            />
-            <StyledButton
-              variant="contained"
-              type="submit"
-              className={clsx(
-                classes.buttonSignupEmail,
-                classes.minWidth2,
-                classes.buttonFontSizeDesktop,
-                classes.marginLeft1,
-              )}
-              onClick={() => {
-              }}
-            >
-              Signup for Launch
-            </StyledButton>
-          </div>
-        </form>
-
-
-        {/* <div className={clsx(classes.buttonsFlexRow, 'fadeInFast')}>
-          {
-            !user?.id
-            ? <Login
-                initialTabIndex={1}
-                titleSignup={"Create an Account"}
-                buttonText={"Create an Account"}
-                buttonProps={{
-                  className: clsx(
-                    classes.buttonSignupEmail,
-                    classes.minWidth2,
-                    classes.buttonHeightDesktop,
-                    classes.buttonFontSizeDesktop,
-                  ),
-                  classes: {
-                    label: classes.buttonFontSizeDesktop,
-                  }
+          <form onSubmit={formik.handleSubmit}>
+            <div className={clsx(classes.buttonsFlexRow, 'fadeInFast')}>
+              <TextInput
+                variant="outlined"
+                name="email"
+                type="email"
+                placeholder="Enter email for launch updates"
+                onChange={formik.handleChange}
+                value={formik.values.email}
+                className={classes.linkInput}
+                classes={{
+                  root: classes.textInputSmallRoot
+                }}
+                inputProps={{
+                  className: classes.textInputSmall
                 }}
               />
-            : <Link href={"/sell"}>
-                <a>
-                  <Button
-                    className={
-                      mdDown
-                      ? clsx(
-                          classes.buttonSignupEmail,
-                          classes.minWidth184,
-                          classes.buttonHeightMobile
-                        )
-                      : clsx(
-                          classes.buttonSignupEmail,
-                          classes.minWidth184,
-                          classes.buttonHeightDesktop,
-                        )
-                    }
-                    variant="text"
-                    color="primary"
-                    classes={{
-                      label: classes.buttonFontSizeDesktop,
-                    }}
-                  >
-                    I'm Selling
-                  </Button>
-                </a>
-              </Link>
-          }
-        </div> */}
-
+              <StyledButton
+                variant="contained"
+                type="submit"
+                className={clsx(
+                  classes.buttonSignupEmail,
+                  classes.minWidth2,
+                  classes.buttonFontSizeDesktop,
+                  classes.marginLeft1,
+                )}
+                onClick={() => {
+                }}
+              >
+                Sign up
+              </StyledButton>
+            </div>
+          </form>
+            </div>
       </div>
 
+      <div className={clsx(
+        classes.bannerInnerBoxRight,
+        mdDown ? classes.minWidth160 : classes.minWidth360,
+      )}>
+        <CardMedia
+          component="img"
+          className={"fadeIn"}
+          classes={{ media: classes.categoryImage }}
+          src={bannerForegroundImageUrl}
+        />
+      </div>
     </Banner>
   )
 }
@@ -250,12 +209,14 @@ const StyledButton = withStyles({
 })(Button);
 
 
+
 ///////////////// TYPINGS ///////////////////
 interface ReactProps extends WithStyles<typeof styles> {
   height?: number
-  mdDown: boolean
-  bannerImageUrl: string
-  bannerDither: string
+  ditherStyle?: any
+  bannerContainerStyle: any
+  bannerForegroundImageUrl: string
+  user: UserPrivate
   portraitMode?: boolean;
 }
 
@@ -263,9 +224,29 @@ interface ReactProps extends WithStyles<typeof styles> {
 const fontFam = 'Helvetica Neue, Arial';
 
 export const styles = (theme: Theme) => createStyles({
-  root: {
-    // backgroundColor: "#fefefe",
-    width: "100%",
+  bannerInnerBoxLeft: {
+    display: 'flex',
+    justifyContent: 'center',
+    flexDirection: 'column',
+    height: '100%',
+    flexGrow: 0.4,
+  },
+  bannerInnerBoxRight: {
+    display: 'flex',
+    justifyContent: 'center',
+    flexDirection: 'column',
+    // height: '100%',
+    maxWidth: 500,
+    flexBasis: '60%',
+  },
+  minWidth360: {
+    minWidth: 360,
+  },
+  minWidth440: {
+    minWidth: 440,
+  },
+  minWidth160: {
+    minWidth: 160,
   },
   mainTitleContainer: {
     display: 'flex',
@@ -274,8 +255,8 @@ export const styles = (theme: Theme) => createStyles({
     alignItems: 'flex-start',
     width: '100%',
     position: "relative",
-    marginLeft: '7rem',
-    marginBottom: '3rem',
+    marginLeft: '1rem',
+    marginBottom: '1rem',
   },
   mainTitleContainerSm: {
     display: 'flex',
@@ -284,12 +265,14 @@ export const styles = (theme: Theme) => createStyles({
     alignItems: 'center',
     width: '100%',
     position: "relative",
-    marginBottom: '3rem',
+    marginBottom: '1rem',
   },
   mainTitle: {
     fontWeight: 600,
     fontFamily: fontFam,
-    color: Colors.lightestGrey,
+    color: theme.palette.type === 'dark'
+      ? Colors.lightestGrey
+      : Colors.slateGreyBlack,
     lineHeight: '2.5rem',
     fontSize: '2.25rem',
     maxWidth: 400,
@@ -297,14 +280,18 @@ export const styles = (theme: Theme) => createStyles({
   mainTitleSm: {
     fontWeight: 600,
     fontFamily: fontFam,
-    color: Colors.lightestGrey,
+    color: theme.palette.type === 'dark'
+      ? Colors.lightestGrey
+      : Colors.slateGreyBlack,
     lineHeight: '2rem',
     fontSize: '1.75rem',
     marginBottom: "0.25rem",
     textAlign: "center",
   },
   subline1: {
-    color: Colors.lightGrey,
+    color: theme.palette.type === 'dark'
+      ? Colors.lightGrey
+      : Colors.slateGreyLightBlack,
     fontFamily: fontFam,
     marginTop: "0.5rem",
     lineHeight: "1.5",
@@ -313,12 +300,26 @@ export const styles = (theme: Theme) => createStyles({
     maxWidth: 450,
   },
   subline1Sm: {
-    color: Colors.lightGrey,
+    color: theme.palette.type === 'dark'
+      ? Colors.lightGrey
+      : Colors.slateGreyLightBlack,
     fontFamily: fontFam,
     lineHeight: "1.5",
     fontWeight: 500,
     fontSize: '1.125rem', // 20px
     textAlign: "center",
+  },
+  categoryImage: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "row",
+    textAlign: 'center',
+    borderRadius: BorderRadius2x,
+    width: '100%',
+    height: '100%',
+    // maxWidth: 400,
+    minWidth: 400,
   },
   buttonsFlexRow: {
     display: "flex",
@@ -352,15 +353,6 @@ export const styles = (theme: Theme) => createStyles({
   minWidth2: {
     minWidth: 120,
   },
-  minWidth184: {
-    minWidth: 184,
-  },
-  buttonHeightMobile: {
-    height: 44,
-  },
-  buttonHeightDesktop: {
-    height: 44,
-  },
   buttonFontSizeDesktop: {
     fontSize: '1rem',
   },
@@ -368,18 +360,6 @@ export const styles = (theme: Theme) => createStyles({
     marginLeft: '0.5rem',
   },
 
-  /// Email form
-  emailForm: {
-  },
-  searchContainer: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    width: '100%',
-    padding: '1rem',
-    marginTop: "8rem",
-    marginBottom: '4rem',
-  },
   linkContainer: {
     width: '100%',
     display: "flex",
@@ -426,12 +406,7 @@ export const styles = (theme: Theme) => createStyles({
   },
 })
 
-
-
-
-
-
-export default withStyles(styles)( BannerLandingPageLayout );
+export default withStyles(styles)( BannerHomeDesktop );
 
 
 

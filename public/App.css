@@ -538,6 +538,28 @@ textarea {
 }
 
 
+#gradient-border-1 {
+  --angle: 0deg;
+  /* border-top: 2px solid; */
+  border-bottom: 2px solid;
+  border-image: conic-gradient(from var(--angle), rgb(85, 146, 232), rgb(206, 69, 197), rgb(85, 146, 232)) 1;
+  animation: 6s rotate linear infinite;
+}
+
+@keyframes rotate {
+  to {
+    --angle: 360deg;
+  }
+}
+
+@property --angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+
+
 progress[value]::-webkit-progress-bar {
   background-color: #aaaaee;
   color: #eaeaea;

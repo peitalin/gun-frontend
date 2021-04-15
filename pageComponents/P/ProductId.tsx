@@ -74,7 +74,7 @@ const Products: React.FC<ReactProps> = (props) => {
     s.reduxLogin.user
   )
 
-  const isAdmin = user.userRole === Role.PLATFORM_ADMIN
+  const isAdmin = user?.userRole === Role.PLATFORM_ADMIN
 
   ///////// DATA
 
@@ -161,16 +161,16 @@ const Products: React.FC<ReactProps> = (props) => {
   }, [loading])
 
 
-  if (product?.store?.isSuspended && !isAdmin) {
+  if (product?.store?.isSuspended === true && !isAdmin) {
     return <ErrorPage statusCode={400} message={"Store has been suspended"}/>
   }
-  if (product?.isSuspended && !isAdmin) {
+  if (product?.isSuspended === true && !isAdmin) {
     return <ErrorPage statusCode={400} message={"Product has been suspended"}/>
   }
-  if (product?.isDeleted && !isAdmin) {
+  if (product?.isDeleted === true && !isAdmin) {
     return <ErrorPage statusCode={400} message={"Product has been deleted"}/>
   }
-  if (!product?.isPublished && !isAdmin) {
+  if (!product?.isPublished === true && !isAdmin) {
     return <ErrorPage statusCode={400} message={"Product is not available"}/>
   }
   if (error) {

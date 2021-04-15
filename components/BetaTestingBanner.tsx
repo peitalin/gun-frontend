@@ -60,7 +60,7 @@ const BetaTestingBanner = (props) => {
       style={{
         background: isDarkMode
           ? Colors.uniswapDarkNavy
-          : Colors.slateGrey,
+          : Colors.mediumBlack,
         position: "relative",
         zIndex: 1,
       }}

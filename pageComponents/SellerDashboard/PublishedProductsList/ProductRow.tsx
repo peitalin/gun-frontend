@@ -303,7 +303,9 @@ const ProductRow = (props: ReactProps) => {
               )}
             >
               {
-                (loadingPublish)
+                product.isSuspended
+                ? "SUSPENDED"
+                : (loadingPublish)
                   ? "PENDING"
                   : product.isPublished
                     ? "PUBLISHED"

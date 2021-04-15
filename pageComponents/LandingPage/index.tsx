@@ -25,6 +25,12 @@ import AlignCenterLayout from "components/AlignCenterLayout";
 export const MAX_WIDTH_GRID: number = 1160;
 // show exactly 4 product cards in carousel + 1rem padding on left
 // 270px each card (including margin of 16px) = 290
+import BannerStart from "./BannerStart";
+import StartSelling2 from "./StartSelling2"
+import StartSelling3 from "./StartSelling3"
+import StartSelling4 from "./StartSelling4"
+import StartSelling6 from "./StartSelling6"
+import StartSelling12 from "./StartSelling12"
 
 
 
@@ -49,11 +55,12 @@ const LandingPage: React.FC<ReactProps> = (props) => {
   return (
     <div className={classes.landingPageRoot}>
 
-      <BannerHome />
+      {/* <BannerHome /> */}
+      <BannerStart />
       <BetaTestingBanner />
 
       <AlignCenterLayout
-        maxWidth={MAX_WIDTH_GRID || 1160}
+        maxWidth={'unset'}
         withRecommendations={false}
       >
 
@@ -112,6 +119,12 @@ const LandingPage: React.FC<ReactProps> = (props) => {
             }}
           />
         </div>
+
+        <StartSelling2/>
+        <StartSelling3/>
+        <StartSelling4/>
+        <StartSelling6/>
+        <StartSelling12/>
 
       </AlignCenterLayout>
     </div>
