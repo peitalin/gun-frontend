@@ -52,7 +52,7 @@ const BetaTestingBanner = (props) => {
         classes.betaTestBannerRoot,
         !showBetaTesting && classes.hideBanner
       )}
-      id={"gradient-border-1"}
+      // id={"gradient-border-1"}
       style={{
         background: isDarkMode
           ? Colors.uniswapDarkNavy
@@ -61,12 +61,16 @@ const BetaTestingBanner = (props) => {
         zIndex: 1,
       }}
     >
+
+      <div className={clsx(classes.rainbowBorder, classes.borderTop)}></div>
+      <div className={clsx(classes.rainbowBorder, classes.borderBottom)}></div>
+
       {
         (smDown && showBetaTesting) &&
         <Typography variant="subtitle1"
           className={clsx(
             smDown ? classes.maxWidthSm : classes.maxWidthLg,
-            classes.betaTestBannerText
+            classes.bannerTextBox,
           )}
           onMouseEnter={() => setHover(true)}
           onMouseLeave={() => setHover(false)}
@@ -83,7 +87,7 @@ const BetaTestingBanner = (props) => {
               isDarkMode ? Colors.uniswapDarkNavy : Colors.cream
             }
           />
-          <span>
+          <span className={classes.betaTestBannerText}>
             { "We're currently in beta testing. For updates on our launch, " }
             <Link href={"https://discord.gg/umAdYtsa9v"}>
               <a className={hover ? classes.discordLink : null}>
@@ -98,7 +102,7 @@ const BetaTestingBanner = (props) => {
         <Typography variant="subtitle1"
           className={clsx(
             smDown ? classes.maxWidthSm : classes.maxWidthLg,
-            classes.betaTestBannerText
+            classes.bannerTextBox,
           )}
           onMouseEnter={() => setHover(true)}
           onMouseLeave={() => setHover(false)}
@@ -116,7 +120,7 @@ const BetaTestingBanner = (props) => {
               isDarkMode ? Colors.uniswapDarkNavy : Colors.cream
             }
           />
-          <span>
+          <span className={classes.betaTestBannerText}>
             { "We're currently in beta testing. For updates on our launch, " }
             <Link href={"https://discord.gg/umAdYtsa9v"}>
               <a className={hover ? classes.discordLink : null}>
@@ -148,12 +152,13 @@ const styles = (theme: Theme) => createStyles({
     justifyContent: 'center',
     flexDirection: 'row',
     alignItems: 'center',
-    borderTop: theme.palette.type === 'dark'
-      ? `2px solid ${Colors.uniswapLightNavy}`
-      : `2px solid ${Colors.slateGreyDark}`,
-    borderBottom: theme.palette.type === 'dark'
-      ? `2px solid ${Colors.uniswapLightNavy}`
-      : `2px solid ${Colors.slateGreyDark}`,
+    // borderTop: theme.palette.type === 'dark'
+    //   ? `2px solid ${Colors.uniswapLightNavy}`
+    //   : `2px solid ${Colors.slateGreyDark}`,
+    // borderBottom: theme.palette.type === 'dark'
+    //   ? `2px solid ${Colors.uniswapLightNavy}`
+    //   : `2px solid ${Colors.slateGreyDark}`,
+    // background: `linear-gradient(90deg, rgb(206, 69, 197) 0%, rgb(85, 146, 232) 100%)`,
     // borderBottom: '2px solid',
     // borderImageSlice: 1,
     // borderImageSource: theme.palette.type === 'dark'
@@ -164,6 +169,12 @@ const styles = (theme: Theme) => createStyles({
     marginBottom: '2rem',
     marginTop: '2rem',
   },
+  bannerTextBox: {
+    display: "flex",
+    justifyContent: 'center',
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
   betaTestBannerText: {
     "-webkit-text-fill-color": 'transparent',
     "-webkit-background-clip": 'text',
@@ -171,11 +182,7 @@ const styles = (theme: Theme) => createStyles({
     //   ? Gradients.gradientUniswapFluro.background
     //   : Gradients.gradientUniswapBlueGreen.background,
     background: `linear-gradient(90deg, rgb(206, 69, 197) 0%, rgb(85, 146, 232) 100%)`,
-    color: Colors.cream,
-    display: 'flex',
-    justifyContent: 'center',
-    flexDirection: 'row',
-    alignItems: 'center',
+    display: "block", // gradient text does not work with safari when display: flex
     transition: theme.transitions.create('height', {
       easing: theme.transitions.easing.sharp,
       duration: "400ms",
@@ -188,6 +195,20 @@ const styles = (theme: Theme) => createStyles({
     background: theme.palette.type === 'dark'
       ? Colors.ultramarineBlue
       : Colors.ultramarineBlue,
+  },
+  rainbowBorder:{
+    position: 'absolute',
+    background: `linear-gradient(90deg, rgb(206, 69, 197) 0%, rgb(85, 146, 232) 100%)`,
+    height: 2,
+    width: '100%',
+  },
+  borderTop:{
+    position: 'absolute',
+    top: 0,
+  },
+  borderBottom:{
+    position: 'absolute',
+    bottom: 0,
   },
   padding2: {
     padding: '2rem',

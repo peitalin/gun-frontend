@@ -33,7 +33,7 @@ const BannerEnd: NextPage<ReactProps> = (props) => {
     //   ? Gradients.gradientUniswapDark.background
     //   : Gradients.gradientGrey3.background,
     background: props.isDarkMode
-    ? `linear-gradient(60deg , ${Colors.uniswapDarkNavy} 48%, rgba(255, 255, 255, 0) 55%)`
+    ? `linear-gradient(60deg , ${Colors.uniswapDarkNavy} 48%, rgba(25, 25, 25, 0) 55%)`
     : `linear-gradient(60deg , ${Colors.cream} 48%, rgba(255, 255, 255, 0) 55%)`,
   }
 

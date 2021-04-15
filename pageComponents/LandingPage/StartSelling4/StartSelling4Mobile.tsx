@@ -54,7 +54,6 @@ const StartSelling4 = (props: ReactProps) => {
                   <div className={classes.flexItemTickRow}>
                     <TickPoint key={i}
                       isDarkMode={props.isDarkMode}
-                      classes={classes}
                       text={text}
                     />
                   </div>
@@ -97,7 +96,6 @@ const StartSelling4 = (props: ReactProps) => {
                   <div className={classes.flexItemTickRow}>
                     <TickPoint key={i}
                       isDarkMode={props.isDarkMode}
-                      classes={classes}
                       text={text}
                     />
                   </div>

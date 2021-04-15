@@ -185,7 +185,7 @@ const BannerEndDesktop: NextPage<ReactProps> = (props) => {
                 classes={{ media: classes.categoryImage }}
                 src={props.bannerForegroundImageUrlDark}
               />
-              <Link href={"/"}>
+              {/* <Link href={"/"}>
                 <a className={classes.linkToApp}>
                   <Button
                     className={classes.linkToAppButton}
@@ -196,7 +196,7 @@ const BannerEndDesktop: NextPage<ReactProps> = (props) => {
                     Explore the beta
                   </Button>
                 </a>
-              </Link>
+              </Link> */}
             </div>
           : <div className={classes.clickableCard}>
               <CardMedia
@@ -205,7 +205,7 @@ const BannerEndDesktop: NextPage<ReactProps> = (props) => {
                 classes={{ media: classes.categoryImage }}
                 src={props.bannerForegroundImageUrlLight}
               />
-              <Link href={"/"}>
+              {/* <Link href={"/"}>
                 <a className={classes.linkToApp}>
                   <Button
                     className={classes.linkToAppButton}
@@ -216,7 +216,7 @@ const BannerEndDesktop: NextPage<ReactProps> = (props) => {
                     Explore the beta
                   </Button>
                 </a>
-              </Link>
+              </Link> */}
             </div>
         }
       </div>

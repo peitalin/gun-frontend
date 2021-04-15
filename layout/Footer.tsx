@@ -107,7 +107,7 @@ const Footer: React.FC<ReactProps> = (props) => {
                     </Typography>
                   </a>
                 </Link>
-                <a
+                {/* <a
                   className={classes.link}
                   // href='https://help.relay.shop/hc/en-us'
                   target="_blank"
@@ -115,7 +115,7 @@ const Footer: React.FC<ReactProps> = (props) => {
                   <Typography variant="body2" className={classes.linkText}>
                     FAQ
                   </Typography>
-                </a>
+                </a> */}
               </div>
 
               <div className={classes.flexColItem}>
@@ -126,7 +126,7 @@ const Footer: React.FC<ReactProps> = (props) => {
                   // onClick={() => analyticsEvent("View.RefundPolicy")}
                 >
                   <Typography variant="body2" className={classes.linkText}>
-                    Refund Policy
+                    Firearm registries
                   </Typography>
                 </a>
                 <a
