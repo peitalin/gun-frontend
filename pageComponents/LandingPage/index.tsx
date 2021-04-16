@@ -47,13 +47,7 @@ const LandingPage: React.FC<ReactProps> = (props) => {
   const xlUp = useMediaQuery(theme.breakpoints.up('xl'));
   const mdDown = useMediaQuery(theme.breakpoints.down('md'));
   // const smDown = useMediaQuery(theme.breakpoints.down('sm'));
-
-  let isDarkMode = useSelector<GrandReduxState, boolean>(
-    s => s.reduxLogin.darkMode === 'dark'
-  );
-
-
-  let cPadding = 2 // category carousel padding
+  let isDarkMode = theme.palette.type === 'dark'
 
   return (
     <div className={classes.landingPageRoot}>

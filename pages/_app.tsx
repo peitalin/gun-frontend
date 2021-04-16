@@ -73,7 +73,7 @@ declare global {
 
 
 
-class MyApp extends App<AppProps> {
+class MainApp extends App<AppProps> {
 
   static async getInitialProps(initialProps) {
 
@@ -84,8 +84,15 @@ class MyApp extends App<AppProps> {
       ? await Component.getInitialProps(ctx)
       : {};
 
+    const darkMode = (ctx.query.dark === "true" || ctx.query.dark === "1")
+      ? "dark"
+      : "light"
+
     return {
-      pageProps: pageProps,
+      pageProps: {
+        ...pageProps,
+        initialDarkMode: darkMode,
+      }
     };
   }
 
@@ -120,12 +127,12 @@ class MyApp extends App<AppProps> {
     const onClickDismiss = key => () => {
         (notistackRef.current as ProviderContext).closeSnackbar(key);
     }
-
+    // console.log("pageProps: ", pageProps)
 
     return (
       <Provider store={store}>
         <ApolloProvider client={apollo}>
-          <ThemeProviderDarkMode>
+          <ThemeProviderDarkMode initialDarkMode={pageProps.initialDarkMode}>
             <SnackbarProvider
             // @ts-ignore
               ref={notistackRef}
@@ -159,7 +166,7 @@ class MyApp extends App<AppProps> {
 }
 
 
-const ThemeProviderDarkMode = (props) => {
+const ThemeProviderDarkMode = ({ initialDarkMode, children }) => {
 
   let darkMode = useSelector<GrandReduxState, "dark"|"light">(s => {
     return s.reduxLogin.darkMode
@@ -176,7 +183,9 @@ const ThemeProviderDarkMode = (props) => {
       localStorageDarkMode = window?.localStorage?.getItem('gmDarkMode') as any;
     }
 
-    if (router?.query?.dark === 'true' || router?.query?.dark === '1') {
+    if (initialDarkMode === 'dark') {
+      dispatch(Actions.reduxLogin.SET_DARK_MODE())
+    } else if (router?.query?.dark === 'true' || router?.query?.dark === '1') {
       dispatch(Actions.reduxLogin.SET_DARK_MODE())
     } else if (router?.query?.dark === 'false' || router?.query?.dark === '0') {
       dispatch(Actions.reduxLogin.SET_LIGHT_MODE())
@@ -199,10 +208,11 @@ const ThemeProviderDarkMode = (props) => {
   }, [])
 
   let darkModeTheme: PaletteOptions = {
-    type: darkMode,
+    type: initialDarkMode ?? darkMode,
   }
   // // console.log("darkMode: ", darkMode)
   // console.log("darkModeTheme: ", darkModeTheme)
+  // console.log("initialDarkMode: ", initialDarkMode)
 
   let appTheme: ThemeOptions = createAppTheme(darkMode);
 
@@ -220,7 +230,7 @@ const ThemeProviderDarkMode = (props) => {
   );
   return (
     <ThemeProvider theme={theme}>
-      {props.children}
+      {children}
     </ThemeProvider>
   )
 
@@ -239,6 +249,6 @@ interface Context extends NextPageContext {
 export default
 withStyles(notifyStyles)(
   withRedux(makeStore)(
-    withApollo(MyApp)
+    withApollo(MainApp)
   )
 );

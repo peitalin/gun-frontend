@@ -179,6 +179,9 @@ export const styles = (theme: Theme) => createStyles({
     marginBottom: "1rem",
     maxWidth: 500,
     padding: '1rem',
+    color: theme.palette.type === 'dark'
+      ? `${Colors.uniswapLightGrey}`
+      : `${Colors.slateGreyBlack}`,
   },
   flexRow:{
     display: "flex",

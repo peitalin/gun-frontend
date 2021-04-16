@@ -15,6 +15,7 @@ import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import CardMedia from "@material-ui/core/CardMedia";
 import Hidden from "components/HiddenFix";
+import ShowOnMobileOrDesktopSSR from "components/ShowOnMobileOrDesktopSSR";
 import Tick from "components/Icons/Tick";
 
 
@@ -27,97 +28,170 @@ const StartSelling3 = (props: ReactProps) => {
 
   return (
     <div className={clsx(classes.section3Root, classes.flexRow)}>
-
       <div className={clsx(classes.section3)}>
-        <Typography className={mdDown ? classes.titleMobile : classes.title}>
-          Buy and Sell in 5 steps
-        </Typography>
 
-        <div className={clsx(
-          mdDown ? classes.flexCol : classes.flexRow,
-          classes.flexWrap
-        )}>
-          <div className={clsx(
-            classes.flexItem,
-            mdDown ? classes.flexRowMobile : classes.flexRow,
-            mdDown ? classes.minWidthMobile : classes.minWidth
-          )}>
-            <div className={classes.reasonContainer}>
-              <div className={clsx(classes.flexRow, classes.reasonRow)}>
-                <div className={clsx(
-                  classes.numberBullet,
-                  mdDown ? classes.bulletSizeMobile : classes.bulletSize
-                )}>
-                  1
+        <ShowOnMobileOrDesktopSSR desktop>
+          <Typography className={classes.title}>
+            Buy and Sell in 5 steps
+          </Typography>
+        </ShowOnMobileOrDesktopSSR>
+        <ShowOnMobileOrDesktopSSR mobile>
+          <Typography className={classes.titleMobile}>
+            Buy and Sell in 5 steps
+          </Typography>
+        </ShowOnMobileOrDesktopSSR>
+
+        <ShowOnMobileOrDesktopSSR desktop>
+          <div className={clsx(classes.flexRow, classes.flexWrap)}>
+            <div className={clsx(
+              classes.flexItem,
+              classes.flexRow,
+              classes.minWidth
+            )}>
+              <div className={classes.reasonContainer}>
+                <div className={clsx(classes.flexRow, classes.reasonRow)}>
+                  <div className={clsx(
+                    classes.numberBullet,
+                    classes.bulletSize
+                  )}>
+                    1
+                  </div>
+                  <Typography className={classes.reason}>
+                    Buyer makes payment into a secure escrow account for the firearm
+                  </Typography>
                 </div>
-                <Typography className={mdDown ? classes.reasonMobile : classes.reason}>
-                  Buyer makes payment into a secure escrow account for the firearm
-                </Typography>
-              </div>
-              <div className={clsx(classes.flexRow, classes.reasonRow)}>
-                <div className={clsx(
-                  classes.numberBullet,
-                  mdDown ? classes.bulletSizeMobile : classes.bulletSize
-                )}>
-                  2
+                <div className={clsx(classes.flexRow, classes.reasonRow)}>
+                  <div className={clsx(
+                    classes.numberBullet,
+                    mdDown ? classes.bulletSizeMobile : classes.bulletSize
+                  )}>
+                    2
+                  </div>
+                  <Typography className={classes.reason}>
+                    When payment arrives, seller is notified to dispose the firearm
+                  </Typography>
                 </div>
-                <Typography className={mdDown ? classes.reasonMobile : classes.reason}>
-                  When payment arrives, seller is notified to dispose the firearm
-                </Typography>
-              </div>
-              <div className={clsx(classes.flexRow, classes.reasonRow)}>
-                <div className={clsx(
-                  classes.numberBullet,
-                  mdDown ? classes.bulletSizeMobile : classes.bulletSize
-                )}>
-                  3
+                <div className={clsx(classes.flexRow, classes.reasonRow)}>
+                  <div className={clsx(
+                    classes.numberBullet,
+                    mdDown ? classes.bulletSizeMobile : classes.bulletSize
+                  )}>
+                    3
+                  </div>
+                  <Typography className={classes.reason}>
+                    Transferring dealer gives seller a receipt to upload on the platform
+                  </Typography>
                 </div>
-                <Typography className={mdDown ? classes.reasonMobile : classes.reason}>
-                  Transferring dealer gives seller a receipt to upload on the platform
-                </Typography>
-              </div>
-              <div className={clsx(classes.flexRow, classes.reasonRow)}>
-                <div className={clsx(
-                  classes.numberBullet,
-                  mdDown ? classes.bulletSizeMobile : classes.bulletSize
-                )}>
-                  4
+                <div className={clsx(classes.flexRow, classes.reasonRow)}>
+                  <div className={clsx(
+                    classes.numberBullet,
+                    mdDown ? classes.bulletSizeMobile : classes.bulletSize
+                  )}>
+                    4
+                  </div>
+                  <Typography className={classes.reason}>
+                    Once the receipt is approved, payout is scheduled automatically.
+                  </Typography>
                 </div>
-                <Typography className={mdDown ? classes.reasonMobile : classes.reason}>
-                  Once the receipt is approved, payout is scheduled automatically.
-                </Typography>
-              </div>
-              <div className={clsx(classes.flexRow, classes.reasonRow)}>
-                <div className={clsx(
-                  classes.numberBullet,
-                  mdDown ? classes.bulletSizeMobile : classes.bulletSize
-                )}>
-                  5
+                <div className={clsx(classes.flexRow, classes.reasonRow)}>
+                  <div className={clsx(
+                    classes.numberBullet,
+                    mdDown ? classes.bulletSizeMobile : classes.bulletSize
+                  )}>
+                    5
+                  </div>
+                  <Typography className={classes.reason}>
+                    Buyer is notified to pickup the firearm.
+                  </Typography>
                 </div>
-                <Typography className={mdDown ? classes.reasonMobile : classes.reason}>
-                  Buyer is notified to pickup the firearm.
-                </Typography>
               </div>
             </div>
+            <div className={clsx(
+              classes.flexItem,
+              classes.imageContainer,
+            )}>
+              <CardMedia
+                component="img"
+                // className={classes.sxImage1}
+                classes={{ media: classes.imgShadow }}
+                src={
+                  props.isDarkMode
+                    ? "/img/start/screen2-dark.jpg"
+                    : "/img/start/screen2-light.jpg"
+                }
+              />
+            </div>
           </div>
-          <div className={clsx(
-            classes.flexItem,
-            mdDown ? classes.imageContainerMobile : classes.imageContainer,
-          )}>
-            <CardMedia
-              component="img"
-              // className={classes.sxImage1}
-              classes={{ media: classes.imgShadow }}
-              src={
-                props.isDarkMode
-                  ? "/img/start/screen2-dark.jpg"
-                  : "/img/start/screen2-light.jpg"
-              }
-            />
+        </ShowOnMobileOrDesktopSSR>
+        <ShowOnMobileOrDesktopSSR mobile>
+          <div className={clsx(classes.flexCol, classes.flexWrap)}>
+            <div className={clsx(
+              classes.flexItem,
+              classes.flexRowMobile,
+              classes.minWidthMobile
+            )}>
+              <div className={classes.reasonContainer}>
+                <div className={clsx(classes.flexRow, classes.reasonRow)}>
+                  <div className={clsx(classes.numberBullet, classes.bulletSizeMobile)}>
+                    1
+                  </div>
+                  <Typography className={classes.reasonMobile}>
+                    Buyer makes payment into a secure escrow account for the firearm
+                  </Typography>
+                </div>
+                <div className={clsx(classes.flexRow, classes.reasonRow)}>
+                  <div className={clsx(classes.numberBullet, classes.bulletSizeMobile)}>
+                    2
+                  </div>
+                  <Typography className={classes.reasonMobile}>
+                    When payment arrives, seller is notified to dispose the firearm
+                  </Typography>
+                </div>
+                <div className={clsx(classes.flexRow, classes.reasonRow)}>
+                  <div className={clsx(classes.numberBullet, classes.bulletSizeMobile)}>
+                    3
+                  </div>
+                  <Typography className={classes.reasonMobile}>
+                    Transferring dealer gives seller a receipt to upload on the platform
+                  </Typography>
+                </div>
+                <div className={clsx(classes.flexRow, classes.reasonRow)}>
+                  <div className={clsx(classes.numberBullet, classes.bulletSizeMobile)}>
+                    4
+                  </div>
+                  <Typography className={classes.reasonMobile}>
+                    Once the receipt is approved, payout is scheduled automatically.
+                  </Typography>
+                </div>
+                <div className={clsx(classes.flexRow, classes.reasonRow)}>
+                  <div className={clsx(classes.numberBullet, classes.bulletSizeMobile)}>
+                    5
+                  </div>
+                  <Typography className={classes.reasonMobile}>
+                    Buyer is notified to pickup the firearm.
+                  </Typography>
+                </div>
+              </div>
+            </div>
+            <div className={clsx(
+              classes.flexItem,
+              classes.imageContainerMobile,
+            )}>
+              <CardMedia
+                component="img"
+                // className={classes.sxImage1}
+                classes={{ media: classes.imgShadow }}
+                src={
+                  props.isDarkMode
+                    ? "/img/start/screen2-dark.jpg"
+                    : "/img/start/screen2-light.jpg"
+                }
+              />
+            </div>
           </div>
-        </div>
-      </div>
+        </ShowOnMobileOrDesktopSSR>
 
+      </div>
     </div>
   );
 };
@@ -151,6 +225,9 @@ export const styles = (theme: Theme) => createStyles({
     textAlign: "center",
     marginTop: "4rem",
     marginBottom: "2rem",
+    color: theme.palette.type === 'dark'
+      ? `${Colors.uniswapLightGrey}`
+      : `${Colors.slateGreyBlack}`,
   },
   titleMobile: {
     fontSize: "1.75rem",
@@ -159,6 +236,9 @@ export const styles = (theme: Theme) => createStyles({
     marginTop: "2rem",
     marginBottom: "2rem",
     padding: '0rem 1rem',
+    color: theme.palette.type === 'dark'
+      ? `${Colors.uniswapLightGrey}`
+      : `${Colors.slateGreyBlack}`,
   },
   flexRow:{
     display: "flex",
@@ -214,10 +294,16 @@ export const styles = (theme: Theme) => createStyles({
   reason: {
     fontSize: '1.125rem',
     fontWeight: 500,
+    color: theme.palette.type === 'dark'
+      ? `${Colors.uniswapLightestGrey}`
+      : `${Colors.slateGreyBlack}`,
   },
   reasonMobile: {
     fontSize: '1.125rem',
     fontWeight: 500,
+    color: theme.palette.type === 'dark'
+      ? `${Colors.uniswapLightestGrey}`
+      : `${Colors.slateGreyBlack}`,
   },
   bulletSize: {
     minWidth: 32,

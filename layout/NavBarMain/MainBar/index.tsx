@@ -14,6 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Link from "next/link";
 import { useRouter, NextRouter } from "next/router";
 import Hidden from 'components/HiddenFix';
+import ShowOnMobileOrDesktopSSR from "components/ShowOnMobileOrDesktopSSR";
 // media query
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
@@ -38,17 +39,17 @@ const MainBar = (props: ReactProps) => {
   const lgDown = useMediaQuery(theme.breakpoints.down('lg'));
 
   const {
-    darkMode,
     loggedIn,
   } = useSelector<GrandReduxState, ReduxProps>(state => ({
-    darkMode: state?.reduxLogin?.darkMode,
     loggedIn: !!state?.reduxLogin?.user?.id,
   }));
   // console.log("router.pathname: ", router.pathname)
 
+  const isDarkMode = theme.palette.type === 'dark'
+
   const color = isMainPages(router)
     ? Colors.cream
-    : darkMode === 'dark'
+    : isDarkMode
       ? Colors.slateGrey
       : Colors.black
 
@@ -58,26 +59,18 @@ const MainBar = (props: ReactProps) => {
     classes,
     endRoute,
     loggedIn,
-    isDarkMode: darkMode === 'dark',
+    isDarkMode,
     color,
   };
 
-  let isHomePage = isMainPages(router)
+  let isMainSpecialPage = isMainPages(router)
 
   return (
-    <nav className={
-      isHomePage
-      ? clsx(
-          classes.baseBarHomePage,
-          smDown
-            ? classes.baseBarDitherSm
-            : classes.baseBarDither
-        )
-      : clsx(
-          classes.baseBarDashboard,
-          classes.baseBarBorderBottom
-        )
-    }>
+    <MainBarSSRWrapper
+      classes={classes}
+      isMainSpecialPage={isMainSpecialPage}
+      // for special fatter navbar on these routes
+    >
 
       {/* MOBILE */}
       <Hidden className={classes.width100} mdUp implementation="css">
@@ -114,10 +107,38 @@ const MainBar = (props: ReactProps) => {
         />
       </Hidden> */}
 
-    </nav>
+    </MainBarSSRWrapper>
   );
 };
 
+
+const MainBarSSRWrapper: React.FC<MainBarSSRWrapperProps> = (props) => {
+
+  let { classes } = props;
+
+  return (
+    <>
+      <ShowOnMobileOrDesktopSSR desktop>
+        <nav className={
+          props.isMainSpecialPage
+          ? clsx( classes.baseBarHomePage, classes.baseBarDither)
+          : clsx( classes.baseBarDashboard, classes.baseBarBorderBottom)
+        }>
+          {props.children}
+        </nav>
+      </ShowOnMobileOrDesktopSSR>
+      <ShowOnMobileOrDesktopSSR mobile>
+        <nav className={
+          props.isMainSpecialPage
+          ? clsx( classes.baseBarHomePage, classes.baseBarDitherSm)
+          : clsx( classes.baseBarDashboard, classes.baseBarBorderBottom)
+        }>
+          {props.children}
+        </nav>
+      </ShowOnMobileOrDesktopSSR>
+    </>
+  );
+};
 
 
 export const isMainPages = (router: NextRouter) => {
@@ -137,10 +158,12 @@ interface ReactProps extends WithStyles<typeof styles> {
   mobileMenuOpen: boolean;
   setMobileMenuOpen(f: (s: boolean) => boolean): void;
 }
+interface MainBarSSRWrapperProps extends WithStyles<typeof styles> {
+  isMainSpecialPage: boolean
+}
 
 interface ReduxProps {
   loggedIn: boolean;
-  darkMode: "dark"|"light";
 }
 
 

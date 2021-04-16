@@ -16,16 +16,16 @@ const BannerProductCreate: React.FC<ReactProps> = (props) => {
 
   return (
     <>
-     <BannerProductCreateDesktop
-        bannerImageUrl={bannerImageUrl}
-        bannerDitherMobile={bannerDitherMobile}
-        bannerDither={bannerDither}
-     />
-     <BannerProductCreateMobile
-        bannerImageUrl={bannerImageUrl}
-        bannerDitherMobile={bannerDitherMobile}
-        bannerDither={bannerDither}
-     />
+      <BannerProductCreateDesktop
+          bannerImageUrl={bannerImageUrl}
+          bannerDitherMobile={bannerDitherMobile}
+          bannerDither={bannerDither}
+      />
+      <BannerProductCreateMobile
+          bannerImageUrl={bannerImageUrl}
+          bannerDitherMobile={bannerDitherMobile}
+          bannerDither={bannerDither}
+      />
     </>
   )
 }

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import clsx from "clsx";
 import {
   withStyles,
@@ -17,13 +17,11 @@ import CardMedia from "@material-ui/core/CardMedia";
 
 const StartSelling2 = (props: ReactProps) => {
 
-  const { classes, isDarkMode } = props;
+  const { classes, } = props;
 
   const theme = useTheme();
   const mdDown = useMediaQuery(theme.breakpoints.down("md"));
   const xlUp = useMediaQuery(theme.breakpoints.up("xl"));
-
-  let cPadding = 2 // category carousel padding
 
   return (
     <div className={classes.section2Root}>

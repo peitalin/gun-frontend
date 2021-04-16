@@ -13,6 +13,7 @@ import {} from "typings/gqlTypes";
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import Hidden from "components/HiddenFix";
+import ShowOnMobileOrDesktopSSR from "components/ShowOnMobileOrDesktopSSR";
 
 import StartSelling4Desktop from "./StartSelling4Desktop";
 import StartSelling4Mobile from "./StartSelling4Mobile";
@@ -28,16 +29,16 @@ const StartSelling4 = (props: ReactProps) => {
 
   return (
     <>
-      <Hidden lgDown implementation="css" className={classes.startSelling4Root}>
+      <ShowOnMobileOrDesktopSSR desktop>
         <StartSelling4Desktop
           isDarkMode={props.isDarkMode}
-          />
-      </Hidden>
-      <Hidden xlUp implementation="css" className={classes.startSelling4Root}>
+        />
+      </ShowOnMobileOrDesktopSSR>
+      <ShowOnMobileOrDesktopSSR mobile>
         <StartSelling4Mobile
           isDarkMode={props.isDarkMode}
         />
-      </Hidden>
+      </ShowOnMobileOrDesktopSSR>
     </>
   );
 };
@@ -48,9 +49,6 @@ interface ReactProps extends WithStyles<typeof styles> {
 }
 
 export const styles = (theme: Theme) => createStyles({
-  startSelling4Root: {
-    width: '100%',
-  },
 })
 
 export default withStyles(styles)(StartSelling4);

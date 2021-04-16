@@ -34,6 +34,7 @@ const HomePage: NextPage<ReactProps> = (props) => {
       <FrontPage
         pageConfig={props.pageConfig}
         initialCategories={props.initialCategories}
+        // initialDarkMode={props.initialDarkMode}
       />
     </>
   )
@@ -47,6 +48,7 @@ const styles = (theme: Theme) => createStyles({
 ///////////////// TYPINGS ///////////////////
 interface ReactProps extends WithStyles<typeof styles> {
   initialCategories: Categories[];
+  // initialDarkMode: "dark" | "light";
   pageConfig: PageConfig;
 }
 interface QueryData1 {
@@ -75,7 +77,7 @@ HomePage.getInitialProps = async (ctx: Context) => {
         urlPath: "/"
       }
     })
-    // console.log("pageConfig: ", data?.getPageConfig)
+    console.log("2pageConfig: ", data?.getPageConfig)
 
     // let initialCategories = data?.getProductCategories ?? categoryPreviewsBackup as any;
     let initialCategories: Categories[] = categoryPreviewsBackup as any;

@@ -48,7 +48,7 @@ const CategoryCarouselMainDesktop = (props: ReactProps) => {
 
 
   return (
-    <div className={smDown ? classes.innerRootSm : classes.innerRoot}>
+    <div className={classes.innerRoot}>
       {
         categoriesPreviewCard.map((c, i) => {
 
@@ -94,15 +94,6 @@ export const styles = (theme: Theme) => createStyles({
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
   },
-  innerRootSm: {
-    transform: 'translate(-110px, 0px)',
-    width: 'calc(100% - 0rem)',
-    paddingLeft: '0.25rem',
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    alignItems: 'flex-start',
-  },
   title: {
     marginBottom: '0.5rem',
   },
@@ -122,6 +113,9 @@ export const styles = (theme: Theme) => createStyles({
     fontWeight: 700,
     fontSize: '1rem',
     textAlign: 'start',
+    color: theme.palette.type === 'dark'
+      ? Colors.uniswapLightGrey
+      : Colors.slateGreyBlack,
   },
   imagePosition: {
     // position: 'relative',

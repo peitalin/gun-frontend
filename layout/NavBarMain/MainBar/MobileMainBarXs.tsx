@@ -59,7 +59,7 @@ const MobileMainBar = (props: MobileMainBarProps) => {
       </div>
 
 
-      {/* <div className={clsx(
+      <div className={clsx(
         "fadeIn",
         hide ? classes.mainBarInnerHide : classes.mainBarInner,
       )}>
@@ -84,7 +84,7 @@ const MobileMainBar = (props: MobileMainBarProps) => {
             Sell
           </span>
         </Button>
-      </div> */}
+      </div>
 
       {
         !hide &&
@@ -102,7 +102,7 @@ const MobileMainBar = (props: MobileMainBarProps) => {
         </Link>
       }
 
-      {/* <div style={{ marginLeft: '0.5rem' }} className={
+      <div style={{ marginLeft: '0.5rem' }} className={
         !hide ? "fadeIn" : null
       }>
         <SearchbarMobile
@@ -111,7 +111,7 @@ const MobileMainBar = (props: MobileMainBarProps) => {
           setMobileMenuOpen={props.setMobileMenuOpen}
           setHideMenuItems={setHide}
         />
-      </div> */}
+      </div>
 
 
       <div className={clsx(

@@ -51,6 +51,9 @@ export const styles = (theme: Theme) => createStyles({
     marginLeft: '0.5rem',
     marginTop: "0.25rem",
     marginBottom: "0.25rem",
+    color: theme.palette.type === 'dark'
+      ? `${Colors.uniswapLightestGrey}`
+      : `${Colors.slateGreyBlack}`,
   },
   tick: {
   },

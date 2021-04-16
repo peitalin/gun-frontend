@@ -6,7 +6,6 @@ import { Colors, Gradients } from "layout/AppTheme";
 
 // redux
 import { GrandReduxState } from "reduxStore/grand-reducer";
-import { Actions } from "reduxStore/actions";
 import { useSelector, useDispatch } from "react-redux";
 
 // Utils Components
@@ -16,29 +15,19 @@ import Typography from "@material-ui/core/Typography";
 // Subcomponents
 import { UserPrivate } from "typings/gqlTypes";
 import IconButtonCancel from "components/IconButtonCancel";
-// CSS
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
-export const MY_DOWNLOADS_PAGINATION_COUNT = 10;
 import Link from "next/link";
 
 
 
-const BetaTestingBanner = (props) => {
+const BetaTestingBannerDesktop: React.FC<ReactProps> = (props) => {
 
   const {
     classes,
+    isDarkMode,
   } = props;
 
   const [showBetaTesting, setShowBetaTesting] = React.useState(true);
   const [hover, setHover] = React.useState(false);
-
-  const theme = useTheme();
-  const smDown = useMediaQuery(theme.breakpoints.down("sm"))
-
-  const isDarkMode = useSelector<GrandReduxState, boolean>(
-    s => s.reduxLogin.darkMode === 'dark'
-  );
 
   if (!showBetaTesting) {
     return <div></div>
@@ -47,60 +36,20 @@ const BetaTestingBanner = (props) => {
   return (
     <div
       className={clsx(
-        smDown ? classes.padding05 : classes.padding2,
         classes.betaTestBannerRoot,
+        classes.padding2,
         !showBetaTesting && classes.hideBanner
       )}
-      // id={"gradient-border-1"}
-      style={{
-        background: isDarkMode
-          ? Colors.uniswapDarkNavy
-          : Colors.cream,
-        position: "relative",
-        zIndex: 1,
-      }}
     >
 
       <div className={clsx(classes.rainbowBorder, classes.borderTop)}></div>
       <div className={clsx(classes.rainbowBorder, classes.borderBottom)}></div>
 
       {
-        (smDown && showBetaTesting) &&
+        showBetaTesting &&
         <Typography variant="subtitle1"
           className={clsx(
-            smDown ? classes.maxWidthSm : classes.maxWidthLg,
-            classes.bannerTextBox,
-          )}
-          onMouseEnter={() => setHover(true)}
-          onMouseLeave={() => setHover(false)}
-        >
-          <Tick className={classes.tick}
-            size={30}
-            color={
-              isDarkMode ? Colors.purple : Colors.purple
-            }
-            outerCircleColor={
-              isDarkMode ? Colors.purple : Colors.purple
-            }
-            innerCircleColor={
-              isDarkMode ? Colors.uniswapDarkNavy : Colors.cream
-            }
-          />
-          <span className={classes.betaTestBannerText}>
-            { "We're currently in beta testing. For updates on our launch, " }
-            <Link href={"https://discord.gg/umAdYtsa9v"}>
-              <a className={hover ? classes.discordLink : null}>
-                {"please join our Discord."}
-              </a>
-            </Link>
-          </span>
-        </Typography>
-      }
-      {
-        (!smDown && showBetaTesting) &&
-        <Typography variant="subtitle1"
-          className={clsx(
-            smDown ? classes.maxWidthSm : classes.maxWidthLg,
+            classes.maxWidthLg,
             classes.bannerTextBox,
           )}
           onMouseEnter={() => setHover(true)}
@@ -109,12 +58,8 @@ const BetaTestingBanner = (props) => {
           <Tick
             className={classes.tick}
             size={30}
-            color={
-              isDarkMode ? Colors.purple : Colors.purple
-            }
-            outerCircleColor={
-              isDarkMode ? Colors.purple : Colors.purple
-            }
+            color={Colors.purple}
+            outerCircleColor={Colors.purple}
             innerCircleColor={
               isDarkMode ? Colors.uniswapDarkNavy : Colors.cream
             }
@@ -142,15 +87,20 @@ const BetaTestingBanner = (props) => {
 
 
 interface ReactProps extends WithStyles<typeof styles> {
+  isDarkMode: boolean
 }
 
 const styles = (theme: Theme) => createStyles({
   betaTestBannerRoot: {
+    position: "relative",
     width: '100%',
     display: 'flex',
     justifyContent: 'center',
     flexDirection: 'row',
     alignItems: 'center',
+    background: theme.palette.type === "dark"
+      ? Colors.uniswapDarkNavy
+      : Colors.cream,
     // borderTop: theme.palette.type === 'dark'
     //   ? `2px solid ${Colors.uniswapLightNavy}`
     //   : `2px solid ${Colors.slateGreyDark}`,
@@ -245,4 +195,4 @@ const styles = (theme: Theme) => createStyles({
 });
 
 
-export default withStyles(styles)(BetaTestingBanner);
+export default withStyles(styles)(BetaTestingBannerDesktop);
