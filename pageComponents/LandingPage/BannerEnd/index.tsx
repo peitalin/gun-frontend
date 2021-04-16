@@ -32,8 +32,8 @@ const BannerEnd: NextPage<ReactProps> = (props) => {
     //   ? Gradients.gradientUniswapDark.background
     //   : Gradients.gradientGrey3.background,
     background: props.isDarkMode
-    ? `linear-gradient(60deg , ${Colors.uniswapDarkNavy} 48%, rgba(25, 25, 25, 0) 55%)`
-    : `linear-gradient(60deg , ${Colors.cream} 48%, rgba(255, 255, 255, 0) 55%)`,
+    ? `linear-gradient(60deg , ${Colors.uniswapDarkNavy} 48%, ${Colors.uniswapLightNavy} 48.1%, ${Colors.uniswapLightNavy} 49%, rgba(255, 255, 255, 0) 49.1%)`
+    : `linear-gradient(60deg , ${Colors.cream} 48%, ${Colors.slateGreyDark} 48.1%, ${Colors.slateGreyDark} 49%, rgba(255, 255, 255, 0) 49.1%)`,
   }
 
   const ditherStyleMobile = {
@@ -44,8 +44,12 @@ const BannerEnd: NextPage<ReactProps> = (props) => {
     // ? `linear-gradient(60deg , ${Colors.uniswapDarkNavy} 48%, rgba(255, 255, 255, 0) 55%)`
     // : `linear-gradient(60deg , ${Colors.slateGrey} 48%, rgba(255, 255, 255, 0) 55%)`,
     background: props.isDarkMode
-    ? `linear-gradient(180deg , ${Colors.uniswapDarkNavy} 30%, ${Colors.uniswapNavy} 90%)`
-    : `linear-gradient(0deg , ${Colors.cream} 30%, rgba(255, 255, 255, 0.4) 38%, rgba(5, 5, 5, 0) 90%)`
+    ? `
+      linear-gradient(10deg , ${Colors.uniswapDarkNavy} 45%, ${Colors.uniswapLightNavy} 45.1%, ${Colors.uniswapLightNavy} 47%, rgba(255, 255, 255, 0) 47.1%),
+      `
+    : `
+      linear-gradient(10deg , ${Colors.cream} 45%, ${Colors.slateGreyDark} 45.1%, ${Colors.slateGreyDark} 47%, rgba(255, 255, 255, 0) 47.1%),
+    `,
   }
 
   const bannerContainerStyle = {
