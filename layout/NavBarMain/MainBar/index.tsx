@@ -27,6 +27,7 @@ import MobileMainBarXs from "./MobileMainBarXs";
 
 
 
+
 const MainBar = (props: ReactProps) => {
 
   const { classes } = props;
@@ -63,12 +64,14 @@ const MainBar = (props: ReactProps) => {
     color,
   };
 
-  let isMainSpecialPage = isMainPages(router)
+  let isMainPages2 = isMainPages(router)
+  let isStartPage2 = isStartPage(router)
 
   return (
     <MainBarSSRWrapper
       classes={classes}
-      isMainSpecialPage={isMainSpecialPage}
+      mainPage={isMainPages2}
+      startPage={isStartPage2}
       // for special fatter navbar on these routes
     >
 
@@ -120,18 +123,22 @@ const MainBarSSRWrapper: React.FC<MainBarSSRWrapperProps> = (props) => {
     <>
       <ShowOnMobileOrDesktopSSR desktop>
         <nav className={
-          props.isMainSpecialPage
+          props.mainPage
           ? clsx( classes.baseBarHomePage, classes.baseBarDither)
-          : clsx( classes.baseBarDashboard, classes.baseBarBorderBottom)
+          : props.startPage
+            ? clsx( classes.baseBarHomePage, classes.baseBarDitherNone)
+            : clsx( classes.baseBarDashboard, classes.baseBarBorderBottom)
         }>
           {props.children}
         </nav>
       </ShowOnMobileOrDesktopSSR>
       <ShowOnMobileOrDesktopSSR mobile>
         <nav className={
-          props.isMainSpecialPage
+          props.mainPage
           ? clsx( classes.baseBarHomePage, classes.baseBarDitherSm)
-          : clsx( classes.baseBarDashboard, classes.baseBarBorderBottom)
+          : props.startPage
+            ? clsx( classes.baseBarHomePage, classes.baseBarDitherNoneSm)
+            : clsx( classes.baseBarDashboard, classes.baseBarBorderBottom)
         }>
           {props.children}
         </nav>
@@ -140,7 +147,6 @@ const MainBarSSRWrapper: React.FC<MainBarSSRWrapperProps> = (props) => {
   );
 };
 
-
 export const isMainPages = (router: NextRouter) => {
   if (router.pathname === '/') {
     return true
@@ -148,18 +154,27 @@ export const isMainPages = (router: NextRouter) => {
   if (router.pathname === '/sell') {
     return true
   }
+  // if (router.pathname === '/start') {
+  //   return true
+  // }
+  return false
+}
+export const isStartPage = (router: NextRouter) => {
   if (router.pathname === '/start') {
     return true
   }
   return false
 }
 
+
+
 interface ReactProps extends WithStyles<typeof styles> {
   mobileMenuOpen: boolean;
   setMobileMenuOpen(f: (s: boolean) => boolean): void;
 }
 interface MainBarSSRWrapperProps extends WithStyles<typeof styles> {
-  isMainSpecialPage: boolean
+  mainPage: boolean
+  startPage: boolean
 }
 
 interface ReduxProps {

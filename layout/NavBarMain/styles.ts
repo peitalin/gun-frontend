@@ -1,5 +1,13 @@
-import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
-import { Colors, Gradients, BoxShadows, BorderRadius2x, BorderRadius3x } from "layout/AppTheme";
+import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
+import {
+  Colors,
+  Gradients,
+  BoxShadows,
+  BorderRadius2x,
+  BorderRadius3x,
+  BorderRadius4x,
+  BorderRadius,
+} from "layout/AppTheme";
 
 
 /////////////// STYLES /////////////////////
@@ -55,6 +63,18 @@ export const styles = (theme: Theme) => createStyles({
   },
   baseBarDitherSm: {
     background: Gradients.gradientBlackDitherDown.background,
+    padding: '0rem',
+    paddingTop: '1rem',
+    top: `${NewsBarHeight}px`,
+  },
+  baseBarDitherNone: {
+    // background: Gradients.gradientBlackDitherDown.background,
+    padding: '2rem',
+    paddingTop: '2rem',
+    top: `${NewsBarHeight}px`,
+  },
+  baseBarDitherNoneSm: {
+    // background: Gradients.gradientBlackDitherDown.background,
     padding: '0rem',
     paddingTop: '1rem',
     top: `${NewsBarHeight}px`,
@@ -118,6 +138,15 @@ export const styles = (theme: Theme) => createStyles({
   navbarButton: {
     marginRight: "0.5rem",
     minWidth: '60px',
+    background: theme.palette.type === 'dark'
+      ? fade(Colors.uniswapDarkNavy, 0.3)
+      : fade(Colors.cream, 0.3),
+    "&:hover": {
+      background: theme.palette.type === 'dark'
+        ? fade(Colors.uniswapDarkNavy, 0.7)
+        : fade(Colors.cream, 0.7),
+    },
+    borderRadius: BorderRadius3x,
   },
   navbarButtonSelected: {
     color: Colors.secondaryBright,

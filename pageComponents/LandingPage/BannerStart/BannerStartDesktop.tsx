@@ -31,7 +31,7 @@ import {
 
 
 
-const BannerHomeDesktop: NextPage<ReactProps> = (props) => {
+const BannerStartDesktop: NextPage<ReactProps> = (props) => {
 
   const {
     classes,
@@ -267,7 +267,7 @@ export const styles = (theme: Theme) => createStyles({
     fontFamily: fontFam,
     color: theme.palette.type === 'dark'
       ? Colors.lightestGrey
-      : Colors.slateGreyBlack,
+      : Colors.black,
     lineHeight: '2.5rem',
     fontSize: '2.25rem',
     maxWidth: 400,
@@ -367,7 +367,7 @@ export const styles = (theme: Theme) => createStyles({
   },
 })
 
-export default withStyles(styles)( BannerHomeDesktop );
+export default withStyles(styles)( BannerStartDesktop );
 
 
 

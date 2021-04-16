@@ -40,8 +40,8 @@ const BannerStart: NextPage<ReactProps> = (props) => {
     //   ? Gradients.gradientUniswapDark.background
     //   : Gradients.gradientGrey3.background,
     background: props.isDarkMode
-    ? `linear-gradient(60deg , ${Colors.uniswapDarkNavy} 48%, rgba(25, 25, 25, 0) 55%)`
-    : `linear-gradient(60deg , ${Colors.cream} 48%, rgba(250, 250, 250, 0.1) 55%,  rgba(255, 255, 255, 0) 70%)`,
+    ? `linear-gradient(60deg , ${Colors.uniswapDarkNavy} 48%, ${Colors.uniswapLightNavy} 48.1%, ${Colors.uniswapLightNavy} 49%, rgba(255, 255, 255, 0) 49.1%)`
+    : `linear-gradient(60deg , ${Colors.cream} 48%, ${Colors.slateGreyDark} 48.1%, ${Colors.slateGreyDark} 49%, rgba(255, 255, 255, 0) 49.1%)`,
   }
 
   const ditherStyleMobile = {
@@ -51,9 +51,18 @@ const BannerStart: NextPage<ReactProps> = (props) => {
     // background: props.isDarkMode
     // ? `linear-gradient(60deg , ${Colors.uniswapDarkNavy} 48%, rgba(255, 255, 255, 0) 55%)`
     // : `linear-gradient(60deg , ${Colors.slateGrey} 48%, rgba(255, 255, 255, 0) 55%)`,
+    // background: props.isDarkMode
+    // ? `linear-gradient(0deg , ${Colors.uniswapDarkNavy} 32%, rgba(5, 5, 5, 0.2) 44%, rgba(5, 5, 5, 0) 90%)`
+    // : `linear-gradient(0deg , ${Colors.cream} 32%, rgba(255, 255, 255, 0.2) 44%, rgba(5, 5, 5, 0) 90%)`
     background: props.isDarkMode
-    ? `linear-gradient(0deg , ${Colors.uniswapDarkNavy} 32%, rgba(5, 5, 5, 0.2) 44%, rgba(5, 5, 5, 0) 90%)`
-    : `linear-gradient(0deg , ${Colors.cream} 32%, rgba(255, 255, 255, 0.2) 44%, rgba(5, 5, 5, 0) 90%)`
+    ? `
+      linear-gradient(10deg , ${Colors.uniswapDarkNavy} 45%, ${Colors.uniswapLightNavy} 45.1%, ${Colors.uniswapLightNavy} 47%, rgba(255, 255, 255, 0) 47.1%),
+      linear-gradient(180deg , rgba(5, 5, 5, 0.6) 0%, rgba(5, 5, 5, 0.3) 10%, rgba(5, 5, 5, 0) 20%)
+      `
+    : `
+      linear-gradient(10deg , ${Colors.cream} 45%, ${Colors.slateGreyDark} 45.1%, ${Colors.slateGreyDark} 47%, rgba(255, 255, 255, 0) 47.1%),
+      linear-gradient(180deg , rgba(5, 5, 5, 0.2) 0%, rgba(5, 5, 5, 0.1) 8%, rgba(5, 5, 5, 0) 15%)
+    `,
   }
 
   ///// https://codepen.io/danichk/pen/YyVeXa

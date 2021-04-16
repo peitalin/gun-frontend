@@ -46,6 +46,9 @@ const styles = (theme: Theme) => createStyles({
   },
   loginButton: {
     // cursor: 'pointer',
+    "&:hover": {
+      background: fade(Colors.cream, 0.4),
+    },
   },
   marginRightHalf: {
     marginRight: '0.5rem',
