@@ -211,6 +211,8 @@ const ThemeProviderDarkMode = ({ initialDarkMode, children }) => {
         `${urlPath}`,
         { shallow: true }
       )
+    } else {
+      dispatch(Actions.reduxLogin.SET_LIGHT_MODE())
     }
   }, [])
 
