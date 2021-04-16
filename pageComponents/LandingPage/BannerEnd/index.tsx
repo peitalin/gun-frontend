@@ -44,12 +44,8 @@ const BannerEnd: NextPage<ReactProps> = (props) => {
     // ? `linear-gradient(60deg , ${Colors.uniswapDarkNavy} 48%, rgba(255, 255, 255, 0) 55%)`
     // : `linear-gradient(60deg , ${Colors.slateGrey} 48%, rgba(255, 255, 255, 0) 55%)`,
     background: props.isDarkMode
-    ? `
-      linear-gradient(10deg , ${Colors.uniswapDarkNavy} 45%, ${Colors.uniswapLightNavy} 45.1%, ${Colors.uniswapLightNavy} 47%, rgba(255, 255, 255, 0) 47.1%),
-      `
-    : `
-      linear-gradient(10deg , ${Colors.cream} 45%, ${Colors.slateGreyDark} 45.1%, ${Colors.slateGreyDark} 47%, rgba(255, 255, 255, 0) 47.1%),
-    `,
+    ? `linear-gradient(180deg , ${Colors.uniswapDarkNavy} 30%, ${Colors.uniswapNavy} 90%)`
+    : `linear-gradient(0deg , ${Colors.slateGreyDarker} 30%, rgba(255, 255, 255, 0.4) 60%, rgba(5, 5, 5, 0) 90%)`
   }
 
   const bannerContainerStyle = {
