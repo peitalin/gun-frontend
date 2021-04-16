@@ -47,68 +47,70 @@ const BannerPromotionsLink: NextPage<ReactProps> = (props) => {
   const lgDown = useMediaQuery(theme.breakpoints.down("lg"))
 
   return (
-    <Banner
-      // in /public/img
-      src={bannerBackgroundImageUrl}
-      titleStyle={{
-        color: Colors.cream,
-        alignItems: 'flex-start',
-        paddingLeft: '3rem',
-        flexDirection: 'row',
-      }}
-      ditherStyle={{
-        background: bannerDither
-      }}
-      bannerContainerStyles={{
-        borderRadius: BorderRadius3x,
-        border: isDarkMode
-          ? `1px solid ${Colors.uniswapLightNavy}`
-          : `1px solid ${Colors.slateGreyBlack}`
-      }}
-      dither={true}
-      height={mdDown ? 240 : 300 }
-    >
-      <div className={clsx(
-        classes.bannerInnerBoxLeft,
-        classes.minWidth300,
-      )}>
-        <div className={classes.mainTitleContainer}>
-          <Typography variant={"h1"} className={classes.mainTitle}>
-            Promote your products
+    <div className={classes.rootDesktop}>
+      <Banner
+        // in /public/img
+        src={bannerBackgroundImageUrl}
+        titleStyle={{
+          color: Colors.cream,
+          alignItems: 'flex-start',
+          paddingLeft: '3rem',
+          flexDirection: 'row',
+        }}
+        ditherStyle={{
+          background: bannerDither
+        }}
+        bannerContainerStyles={{
+          borderRadius: BorderRadius3x,
+          border: isDarkMode
+            ? `1px solid ${Colors.uniswapLightNavy}`
+            : `1px solid ${Colors.slateGreyBlack}`
+        }}
+        dither={true}
+        height={mdDown ? 240 : 300 }
+      >
+        <div className={clsx(
+          classes.bannerInnerBoxLeft,
+          classes.minWidth300,
+        )}>
+          <div className={classes.mainTitleContainer}>
+            <Typography variant={"h1"} className={classes.mainTitle}>
+              Promote your products
+            </Typography>
+          </div>
+          <Typography variant={"subtitle2"} className={classes.subline1}>
+            Feature your product on the front page.
           </Typography>
+          <div className={classes.buttonBox}>
+            <Link href={"/promote-listings"}>
+              <a>
+                <Button
+                  className={
+                    clsx(
+                      classes.buttonGoToPromotions,
+                      classes.minWidth184,
+                      classes.buttonHeightDesktop,
+                    )
+                  }
+                  variant="text"
+                  color="primary"
+                  classes={{
+                    root: classes.buttonRoot,
+                    label: classes.buttonFontSizeDesktop,
+                  }}
+                >
+                  Go now
+                </Button>
+              </a>
+            </Link>
+          </div>
         </div>
-        <Typography variant={"subtitle2"} className={classes.subline1}>
-          Feature your product on the front page.
-        </Typography>
-        <div className={classes.buttonBox}>
-          <Link href={"/promote-listings"}>
-            <a>
-              <Button
-                className={
-                  clsx(
-                    classes.buttonBecomeASeller,
-                    classes.minWidth184,
-                    classes.buttonHeightDesktop,
-                  )
-                }
-                variant="text"
-                color="primary"
-                classes={{
-                  root: classes.buttonRoot,
-                  label: classes.buttonFontSizeDesktop,
-                }}
-              >
-                Go now
-              </Button>
-            </a>
-          </Link>
+        <div className={clsx(
+          classes.bannerInnerBoxRight,
+        )}>
         </div>
-      </div>
-      <div className={clsx(
-        classes.bannerInnerBoxRight,
-      )}>
-      </div>
     </Banner>
+    </div>
   )
 }
 

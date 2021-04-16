@@ -13,6 +13,7 @@ import {
 // Paginator hooks
 import { ConnectionQueryProps } from "components/Paginators/usePaginatePagedQueryHook";
 import usePaginateQueryHook from "components/Paginators/usePaginatePagedQueryHook";
+import LoadingCards from "pageComponents/FrontPage/LoadingCards";
 // redux
 import { useSelector } from "react-redux";
 import { GrandReduxState } from "reduxStore/grand-reducer";
@@ -26,7 +27,7 @@ import AirCarousel from "components/AirCarousel";
 
 
 
-const FeaturedProductsMobile = (props: ReactProps) => {
+const FeaturedProductsMobileCarousel = (props: ReactProps) => {
 
   const {
     classes,
@@ -42,7 +43,7 @@ const FeaturedProductsMobile = (props: ReactProps) => {
 
 
   const products = connection?.edges?.map(
-    promotedItem => promotedItem.node.product
+    promotedItem => promotedItem?.node?.product
   )
 
   return (
@@ -59,16 +60,33 @@ const FeaturedProductsMobile = (props: ReactProps) => {
         scrollSnapType={"x proximity"}
       >
         {
-          products?.filter(p => !!p).map((product, i) =>
-            <div key={i} style={{
-              marginLeft: '0.5rem',
-            }}>
-              <ProductCardResponsive
-                product={product}
-                cardsPerRow={cardsPerRow}
-              />
-            </div>
-          )
+          !products?.length
+          ? [...Array(1).keys()].map(i =>
+              <AirCarousel
+                key={`featured-products-carousel-main-${i}`}
+                id={`featured-products-carousel-main-${i}`}
+                // handleClickLeft={getPrevPage}
+                // handleClickRight={getNextPage}
+                disableButtons={false}
+                scrollSnapType={"x proximity"}
+              >
+                <LoadingCards
+                  count={4}
+                  flexWrapItems={false}
+                  cardsPerRow={cardsPerRow}
+                />
+              </AirCarousel>
+            )
+          : products?.filter(p => !!p).map((product, i) =>
+              <div key={i} style={{
+                marginLeft: '0.5rem',
+              }}>
+                <ProductCardResponsive
+                  product={product}
+                  cardsPerRow={cardsPerRow}
+                />
+              </div>
+            )
         }
       </AirCarousel>
     </main>
@@ -110,7 +128,10 @@ const styles = (theme: Theme) => createStyles({
     paddingLeft: '0.5rem', // subtract 1rem for carousel buttons: 1rem on both sides
     fontWeight: 600,
     marginBottom: "0.5rem",
-    marginTop: "2rem",
+    marginTop: "1rem",
+    color: theme.palette.type === 'dark'
+      ? Colors.uniswapLightestGrey
+      : Colors.black,
   },
   flexCol: {
     display: 'flex',
@@ -157,7 +178,7 @@ const styles = (theme: Theme) => createStyles({
 });
 
 
-export default withStyles(styles)( FeaturedProductsMobile );
+export default withStyles(styles)( FeaturedProductsMobileCarousel );
 
 
 

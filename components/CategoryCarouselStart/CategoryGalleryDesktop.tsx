@@ -133,7 +133,7 @@ export const styles = (theme: Theme) => createStyles({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    flexWrap: 'wrap',
+    // flexWrap: 'wrap',
     padding: '0rem 0.5rem', // offset flexItem 0.5rem gutters
   },
   innerRootSm: {

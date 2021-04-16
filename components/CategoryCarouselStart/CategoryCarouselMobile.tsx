@@ -65,11 +65,11 @@ const CategoryCarouselMobile = (props: ReactProps) => {
     ? props.initialNumItems
     : getScrollItemsForScreenSize()
 
-  // let categoryGroups = splitArrayIntoGrid(categoriesMetadata, numItems)
+  // console.log("initialNumItems", props.initialNumItems)
 
   return (
     <ErrorBounds className={classes.root} style={props.style}>
-      <div className={smDown ? classes.innerRootSm : classes.innerRoot}>
+      <div className={classes.innerRootSm}>
         <AirCarousel
           id={`category-linkImages-carousel`}
           handleClickLeft={() => {
@@ -78,14 +78,14 @@ const CategoryCarouselMobile = (props: ReactProps) => {
           handleClickRight={() => {
             console.log('clicked right')
           }}
-          disableButtons={smDown ? true : false}
+          disableButtons={true}
           scrollItemsPerClick={numItems - 1}
           onlyShowButtonsOnMouseOver={false}
           scrollSnapType={"x proximity"}
           innerCarouselStyle={{
             width: smDown ? 'calc(100% - 0rem)' : 'calc(100% - 1.5rem)',
             marginLeft: smDown ? '0rem' : '0.75rem',
-            borderRadius: BorderRadius2x,
+            borderRadius: BorderRadius,
           }}
           buttonLeftStyle={{
             left: '0.25rem',
@@ -172,7 +172,6 @@ export const styles = (theme: Theme) => createStyles({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: '8px',
     width: '100%',
   },
   innerRoot: {

@@ -4,8 +4,13 @@ import { Colors, BorderRadius2x, fontFam } from "layout/AppTheme";
 
 
 export const styles = (theme: Theme) => createStyles({
-  root: {
-    // backgroundColor: "#fefefe",
+  rootDesktop: {
+    marginTop: "1rem",
+    padding: '0rem 1rem',
+  },
+  rootMobile: {
+    marginTop: "1rem",
+    padding: '0rem 0rem',
   },
   bannerInnerBoxLeft: {
     display: 'flex',
@@ -43,8 +48,7 @@ export const styles = (theme: Theme) => createStyles({
     // transform: 'translateY(20%)',
     padding: '1rem',
   },
-  bannerInnerBoxRightBlur: {
-    backdropFilter: 'blur(1px)',
+  bannerInnerBoxRightMobile: {
     padding: '0rem',
   },
   minWidth300: {
@@ -86,10 +90,11 @@ export const styles = (theme: Theme) => createStyles({
     whitespace: 'pre-line',
     maxWidth: 480,
   },
-  buttonBecomeASeller: {
+  buttonGoToPromotions: {
     backgroundColor: Colors.secondary,
     color: Colors.cream,
     width: '100%',
+    maxWidth: 180,
     // border: `0px solid ${Colors.charcoal}`,
     transition: theme.transitions.create(['color', 'backgroundColor', 'border'], {
       easing: theme.transitions.easing.easeIn,

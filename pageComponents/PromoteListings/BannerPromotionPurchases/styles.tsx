@@ -45,7 +45,6 @@ export const styles = (theme: Theme) => createStyles({
     padding: '1rem',
   },
   bannerInnerBoxRightBlur: {
-    backdropFilter: 'blur(1px)',
     padding: '0rem',
   },
   minWidth400: {

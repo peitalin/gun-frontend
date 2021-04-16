@@ -43,7 +43,7 @@ const LoadingCards = (props: ReactProps) => {
       .map(i =>
         <div className={classes.loadingProductCardRoot} key={i}>
           {/* Desktop Loading Cards */}
-          <Hidden xsDown implementation="css">
+          <Hidden smDown implementation="css">
             <div className={classes.productImage}>
               <div className={clsx(
                 classes.flexItem,
@@ -57,7 +57,7 @@ const LoadingCards = (props: ReactProps) => {
             </div>
           </Hidden>
           {/* Mobile Loading Cards */}
-          <Hidden smUp implementation="css">
+          <Hidden mdUp implementation="css">
             <div className={
               !flexWrapItems
                 ? classes.descriptionLoadingNoFlexWrap
@@ -102,14 +102,12 @@ const styles = (theme: Theme) => createStyles({
     flexWrap: 'wrap',
     alignItems: 'center',
     justifyContent: 'flex-start',
-    marginBottom: '4px',
   },
   rootNoFlexWrap: {
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'flex-start',
-    marginBottom: '4px',
   },
   rootFlexCenter: {
     display: 'flex',
@@ -117,7 +115,6 @@ const styles = (theme: Theme) => createStyles({
     flexWrap: 'wrap',
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: '4px',
   },
   paddingRight: {
     paddingRight: '1rem',
@@ -133,6 +130,7 @@ const styles = (theme: Theme) => createStyles({
     // borderBottom: "1px solid #f7f7f7",
     borderRadius: `${BorderRadius}px ${BorderRadius}px 0px 0px`,
     position: 'relative',
+    marginBottom: '1rem',
   },
   flexItemHover: {
     "&:hover": {
@@ -144,14 +142,12 @@ const styles = (theme: Theme) => createStyles({
     }
   },
   loadingProductCardRoot: {
-    marginBottom: '1rem',
   },
   descriptionLoading: {
     display: 'flex',
     flexDirection: 'row',
     flexWrap: 'wrap',
     marginRight: '0rem',
-    marginBottom: '1rem',
     paddingBottom: '1rem',
     paddingTop: 0,
   },
@@ -162,7 +158,6 @@ const styles = (theme: Theme) => createStyles({
     flexWrap: 'wrap',
     marginRight: '0.5rem',
     marginLeft: '0.5rem',
-    marginBottom: '1rem',
     paddingBottom: '1rem',
     paddingTop: 0,
   },

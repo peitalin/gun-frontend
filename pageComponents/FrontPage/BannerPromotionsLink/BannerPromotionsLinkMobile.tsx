@@ -33,69 +33,68 @@ const BannerPromotionsLinkMobile: NextPage<ReactProps> = (props) => {
     bannerDither,
   } = props;
 
-  const user = useSelector<GrandReduxState, UserPrivate>(
-    s => s.reduxLogin.user
-  )
-
   const theme = useTheme();
 
   return (
-    <Banner
-      // in /public/img
-      bannerContainerStyles={{
-        marginBottom: "1rem",
-      }}
-      src={bannerBackgroundImageUrl}
-      titleStyle={{
-        position: 'absolute',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'flex-start',
-        alignItems: 'center',
-        maxWidth: 'calc(100vw - 0rem)',
-        top: '0px',
-        color: "#181818",
-      }}
-      ditherStyle={{
-        background: bannerDither
-      }}
-      height={140}
-      dither={true}
-    >
-      <div className={classes.bannerInnerBoxLeftSm}>
-      </div>
+    <div className={classes.rootMobile}>
+      <Banner
+        // in /public/img
+        bannerContainerStyles={{
+          marginBottom: "1rem",
+        }}
+        src={bannerBackgroundImageUrl}
+        titleStyle={{
+          position: 'absolute',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+          maxWidth: 'calc(100vw - 0rem)',
+          top: '0px',
+        }}
+        ditherStyle={{
+          background: bannerDither
+        }}
+        height={240}
+        dither={true}
+      >
+        <div className={classes.bannerInnerBoxLeftSm}>
+        </div>
 
-      <div className={classes.bannerInnerBoxRightSm}>
-        <div className={classes.bannerInnerBoxRightBlur}>
-          <div className={classes.mainTitleContainerMobile}>
-            <Typography variant={"h2"} className={classes.mainTitleXs}>
-              Promote product listings
-            </Typography>
+        <div className={classes.bannerInnerBoxRightSm}>
+          <div className={classes.bannerInnerBoxRightMobile}>
+            <div className={classes.mainTitleContainerMobile}>
+              <Typography variant={"h2"} className={classes.mainTitleXs}>
+                Promote product listings
+              </Typography>
+            </div>
+          </div>
+          <div className={classes.bannerInnerBoxRightMobile}>
+            <Link href={"/promote-listings"}>
+              <a>
+                <Button
+                  className={
+                      clsx(
+                        classes.buttonGoToPromotions,
+                        classes.minWidth184,
+                        classes.buttonHeightMobile
+                      )
+                  }
+                  variant="text"
+                  color="primary"
+                  classes={{
+                    root: classes.buttonRoot,
+                    label: classes.buttonFontSizeDesktop,
+                  }}
+                >
+                  Go
+                </Button>
+              </a>
+            </Link>
           </div>
         </div>
-      </div>
-        <Link href={"/promote-listings"}>
-          <a>
-            <Button
-              className={
-                  clsx(
-                    classes.buttonBecomeASeller,
-                    classes.minWidth184,
-                    classes.buttonHeightMobile
-                  )
-              }
-              variant="text"
-              color="primary"
-              classes={{
-                root: classes.buttonRoot,
-                label: classes.buttonFontSizeDesktop,
-              }}
-            >
-              Go
-            </Button>
-          </a>
-        </Link>
-    </Banner>
+      </Banner>
+    </div>
   )
 }
 

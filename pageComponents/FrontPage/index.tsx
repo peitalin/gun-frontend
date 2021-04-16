@@ -21,6 +21,7 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useQuery, useApolloClient } from "@apollo/client";
 import CategoryCarouselStart from "components/CategoryCarouselStart";
 // import SaySomethingSubscriptionTest from "./SaySomethingSubscriptionTest";
+import ShowOnMobileOrDesktopSSR from "components/ShowOnMobileOrDesktopSSR";
 
 import AlignCenterLayout from "components/AlignCenterLayout";
 export const MAX_WIDTH_GRID: number = 1160;
@@ -65,20 +66,26 @@ const FrontPage: React.FC<ReactProps> = (props) => {
             </div>
           </div>
           <div className={clsx(classes.categoryTitleBox, classes.marginBox)}>
-            <CategoryCarouselStart
-              // title={"Explore Categories"}
-              disableTitle={true}
-              categories={props.initialCategories}
-              style={
-                xlUp
-                ? {
-                    width: `calc(100% - ${cPadding*2}rem)`,
-                    marginLeft: `${cPadding}rem`,
-                    marginRight: `${cPadding}rem`,
-                  }
-                : {}
-              }
-            />
+            <ShowOnMobileOrDesktopSSR desktop>
+              <CategoryCarouselStart
+                // title={"Explore Categories"}
+                disableTitle={true}
+                categories={props.initialCategories}
+                style={{
+                  width: `calc(100% - ${cPadding*2}rem)`,
+                  marginLeft: `${cPadding}rem`,
+                  marginRight: `${cPadding}rem`,
+                }}
+              />
+            </ShowOnMobileOrDesktopSSR>
+            <ShowOnMobileOrDesktopSSR mobile>
+              <CategoryCarouselStart
+                // title={"Explore Categories"}
+                disableTitle={true}
+                categories={props.initialCategories}
+                style={{}}
+              />
+            </ShowOnMobileOrDesktopSSR>
           </div>
         </div>
 
@@ -114,11 +121,9 @@ const FrontPage: React.FC<ReactProps> = (props) => {
           })
         }
 
-        <div className={classes.bannerPromotionsPadding}>
-          <BannerPromotionsLink
-            disableMetaHeader={true}
-          />
-        </div>
+        <BannerPromotionsLink
+          disableMetaHeader={true}
+        />
 
         {
           pageConfig?.pageConfigSections?.slice(2)?.map(section => {
@@ -232,10 +237,6 @@ const styles = (theme: Theme) => createStyles({
   },
   maxWidth: {
     maxWidth: '1160px', // 4 products per row
-  },
-  bannerPromotionsPadding: {
-    marginTop: "1rem",
-    padding: '0rem 1rem',
   },
 });
 

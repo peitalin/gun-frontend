@@ -65,7 +65,7 @@ const FeaturedProductsDesktop = (props: ReactProps) => {
           products?.length > 0
           ? products?.filter(p => !!p).map((product, i) =>
               <div key={product?.id + `_${i}`}
-                className={xsDown ? classes.productCardWrapperXs : classes.productCardWrapper}
+                className={classes.productCardWrapper}
               >
                 <div className={clsx(
                   smDown ? classes.flexItemMobile : classes.flexItem,
@@ -150,6 +150,9 @@ const styles = (theme: Theme) => createStyles({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'flex-start',
+    color: theme.palette.type === 'dark'
+      ? Colors.uniswapLightestGrey
+      : Colors.black,
   },
   flexCol: {
     display: 'flex',

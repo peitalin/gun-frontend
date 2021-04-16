@@ -15,7 +15,6 @@ import {
 
 import FeaturedProductsMobileCarousel from "pageComponents/FrontPage/FeaturedProducts/FeaturedProductsMobileCarousel";
 import FeaturedProductsDesktop from "pageComponents/FrontPage/FeaturedProducts/FeaturedProductsDesktop";
-import FeaturedProductsLoading from "pageComponents/FrontPage/FeaturedProducts/FeaturedProductsLoading";
 import Hidden from 'components/HiddenFix';
 
 // useMediaQuery
@@ -62,14 +61,14 @@ const FeaturedProducts = (props: ReactProps) => {
 
   let connection = data?.promotedList?.promotedListItemsConnection
 
-  if (loading) {
-    return (
-      <FeaturedProductsLoading
-        cardsPerRow={cardsPerRow}
-        numRows={3}
-      />
-    )
-  }
+  // if (loading) {
+  //   return (
+  //     <FeaturedProductsLoading
+  //       cardsPerRow={cardsPerRow}
+  //       numRows={2}
+  //     />
+  //   )
+  // }
 
   return (
     <>
