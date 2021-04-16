@@ -88,18 +88,25 @@ const ProductRowMedium = (props: ReactProps) => {
                   as={`/p/${product?.id}`}
                 >
                   <a>
-                    <Typography className={classes.name} variant="body1">
+                    <Typography className={classes.title} variant="body1">
                       {product?.currentSnapshot?.title}
                     </Typography>
                   </a>
                 </Link>
 
-                <Typography className={classes.tagline} variant="body1">
-                  {product?.currentSnapshot?.model}
-                </Typography>
+                <Link
+                  href="/p/[productIdOrSlug]"
+                  as={`/p/${product?.id}`}
+                >
+                  <a>
+                    <Typography className={classes.modelMake} variant="body1">
+                      {`${product?.currentSnapshot?.model} ${product?.currentSnapshot?.make}`}
+                    </Typography>
+                  </a>
+                </Link>
 
-                <Typography className={classes.storeName} variant="body1">
-                  {product?.store?.user?.license?.id}
+                <Typography className={classes.dealerState} variant="body1">
+                  {product?.currentSnapshot?.dealer?.state}
                 </Typography>
 
                 <div className={classes.priceContainer}>
@@ -137,10 +144,10 @@ const styles = (theme: Theme) => createStyles({
     justifyContent: 'space-between',
   },
   flexColPadding: {
-    padding: '1rem 0rem 1rem 1rem',
+    padding: '0.5rem 0rem 0.5rem 1rem',
   },
   flexColPaddingSm: {
-    padding: '1rem 0rem 1rem 0rem',
+    padding: '0.5rem 0rem 0.5rem 0rem',
   },
   flexColInner60: {
     flexBasis: '60%',
@@ -188,37 +195,41 @@ const styles = (theme: Theme) => createStyles({
   },
   category: {
     fontWeight: 600,
-    color: Colors.grey,
+    color: theme.palette.type === 'dark'
+      ? Colors.uniswapLighterGrey
+      : Colors.slateGreyDarkest,
     textTransform: "uppercase",
     fontSize: '0.8rem',
-    "&:hover": {
-      color: Colors.blue,
-    },
   },
-  name: {
+  title: {
     fontWeight: 600,
     fontSize: '1rem',
-    color: Colors.charcoal,
+    color: theme.palette.type === 'dark'
+      ? Colors.uniswapLightGrey
+      : Colors.slateGreyBlack,
     lineHeight: '1rem',
     margin: '0.25rem 0rem',
     "&:hover": {
-      color: Colors.blue,
+      color: theme.palette.type === 'dark'
+        ? Colors.purple
+        : Colors.blue,
     },
   },
-  tagline: {
+  modelMake: {
     fontWeight: 600,
-    color: Colors.darkGrey,
+    color: theme.palette.type === 'dark'
+      ? Colors.uniswapLightestGrey
+      : Colors.slateGreyDarkest,
     lineHeight: '0.9rem',
     fontSize: '0.8rem',
     marginBottom: '0.25rem',
   },
-  storeName: {
+  dealerState: {
     fontWeight: 600,
-    color: Colors.ghostGrey,
+    color: theme.palette.type === 'dark'
+      ? Colors.uniswapLighterGrey
+      : Colors.slateGreyLightBlack,
     fontSize: '0.8rem',
-    "&:hover": {
-      color: Colors.blue,
-    },
   },
   variant: {
     fontWeight: 600,

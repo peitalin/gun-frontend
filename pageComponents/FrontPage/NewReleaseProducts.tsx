@@ -64,7 +64,6 @@ const NewReleaseProducts = (props: ReactProps) => {
     setSearchTerm(searchTermUi)
   }, 100);
 
-  const inputRefEl = React.useRef(null);
 
   const theme = useTheme();
   // jumboXL preview card on sm screen size only, remove right margin
@@ -106,11 +105,53 @@ const NewReleaseProducts = (props: ReactProps) => {
     ssr: true,
   })
 
+  let cardsPerRow = {
+    xs: 1.5,
+    sm: 1.5,
+    md: 1.5, // redundant, since mobile is sm only
+    lg: 1.5,
+    xl: 1.5,
+  }
+
   let products = data?.productsAllConnection
+
+  if (loading) {
+    return (
+      <main className={classes.root}>
+        <div className={clsx(classes.flexRow, classes.maxWidth100vw)}>
+          <Typography variant="h3"
+            className={clsx(classes.title)}
+            gutterBottom
+          >
+            {title}
+          </Typography>
+          <ProductCardResponsive
+            product={undefined}
+            xsCardRow={true}
+            refetch={undefined}
+          />
+          <ProductCardResponsive
+            product={undefined}
+            xsCardRow={true}
+            refetch={undefined}
+          />
+          <ProductCardResponsive
+            product={undefined}
+            xsCardRow={true}
+            refetch={undefined}
+          />
+          <ProductCardResponsive
+            product={undefined}
+            xsCardRow={true}
+            refetch={undefined}
+          />
+        </div>
+      </main>
+    )
+  }
 
   return (
     <main className={classes.root}>
-
 
       <div className={clsx(classes.flexRow, classes.maxWidth100vw)}>
         <Typography variant="h3"
@@ -121,61 +162,6 @@ const NewReleaseProducts = (props: ReactProps) => {
         </Typography>
       </div>
 
-      {/* <div className={clsx(classes.flexRowFlexEnd, classes.maxWidth100vw)}>
-        <div className={clsx(classes.searchbar)}>
-          <InputBase
-            value={searchTermUi}
-            placeholder="Search for products…"
-            inputRef={inputRefEl}
-            classes={{
-              root: classes.inputRoot,
-              input: classes.inputInput,
-            }}
-            onBlur={
-              () => setTimeout(() => {
-                // setExpand(false)
-                // setSearchTerm("");
-                // props.setHideMenuItems(false)
-                // props.setMobileMenuOpen(s => false)
-              }, 100)
-              // 100ms animation before unmount
-              // delay to dispatch search before setExpand(false)
-            }
-            onChange={(e) => {
-              setSearchTermUi(e.target.value);
-              setTimeout(() => {
-                debounceUpdateSearchTerm(searchTermUi)
-              }, 0)
-            }}
-            // onKeyPress={event => {
-            //   if (event.key === "Enter") {
-            //     // router.push(`/search?q=${encodeURIComponent(value)}`)
-            //     // setSearchTermUi("");
-            //     debounceUpdateSearchTerm(searchTermUi)
-            //   }
-            // }}
-          />
-        </div>
-        <DropdownInput
-          className={classes.orderByDropdown}
-          stateShape={
-            orderByOptions[0]
-            // initial stateShape
-            // { label: "Design Templates", value: "category_123123"}
-          }
-          onChange={({ label, value }: SelectOption) =>
-            setTimeout(() => {
-              setOrderBy({ label, value })
-            }, 0)
-            // let UI update first for menu to close
-          }
-          options={orderByOptions}
-          placeholder={"Select a category"}
-          // className={classes.optionValues}
-        />
-      </div> */}
-
-
       <div className={clsx(
         classes.carouselContainer,
         classes.maxWidth100vw,
@@ -184,34 +170,37 @@ const NewReleaseProducts = (props: ReactProps) => {
           : classes.carouselContainerPaddingLeft,
       )}>
         {
-          ((products?.edges ?? []).length === 0 && loading)
-          ? <LoadingCards count={8} />
-          : ((products?.edges ?? []).length === 0)
-            ? <LoadingCards count={8} />
-            : products.edges.map(({ node: product }, i) => {
-                // console.log("p: ",product)
-                return (
-                  <div key={product.id}
-                    className={
-                      xsDown
-                      ? classes.productCardXs
-                      : sm
-                        ? classes.productCardSm
-                        : classes.productCard
-                    }
-                  >
-                    <div className={clsx(
-                      sm ? classes.flexItemMobile : classes.flexItem,
-                      classes.flexItemHover,
-                    )}>
-                      <ProductCardResponsive
-                        product={product}
-                        refetch={undefined}
-                      />
-                    </div>
+          (products?.edges ?? []).length === 0
+          ? <LoadingCards
+              count={8}
+              cardsPerRow={cardsPerRow}
+              xsCardRow={true}
+            />
+          : products.edges.map(({ node: product }, i) => {
+              // console.log("p: ",product)
+              return (
+                <div key={product.id}
+                  className={
+                    xsDown
+                    ? classes.productCardXs
+                    : sm
+                      ? classes.productCardSm
+                      : classes.productCard
+                  }
+                >
+                  <div className={clsx(
+                    sm ? classes.flexItemMobile : classes.flexItem,
+                    classes.flexItemHover,
+                  )}>
+                    <ProductCardResponsive
+                      product={product}
+                      xsCardRow={true}
+                      refetch={undefined}
+                    />
                   </div>
-                )
-            })
+                </div>
+              )
+          })
         }
       </div>
     </main>
@@ -243,6 +232,7 @@ interface SelectOption {
 export const cardCornerRadius = 4;
 const styles = (theme: Theme) => createStyles({
   root: {
+    marginTop: '2rem',
   },
   maxWidth100vw: {
     maxWidth: '1160px',

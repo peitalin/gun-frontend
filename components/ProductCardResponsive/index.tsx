@@ -9,6 +9,7 @@ import Hidden from "components/HiddenFix";
 // components
 import ProductCardRC from "./ProductCardRC";
 import ProductCardAsRow from "components/ProductCardAsRow"
+import ProductRowMedium from "components/ProductRowMedium"
 
 
 
@@ -66,9 +67,13 @@ const ProductCardResponsive: React.FC<ProductCardResponsiveProps> = (props) => {
       <Hidden only={["md", "lg", "xl"]} implementation="css">
         {
           xsCardRow
-          ? <ProductCardAsRow
+          ? <ProductRowMedium
+              loading={props.loading}
               product={product}
             />
+          // ? <ProductCardAsRow
+          //     product={product}
+          //   />
           : <ProductCardRC
               product={product}
               {...commonPreviewCardProps}
@@ -180,6 +185,7 @@ interface ProductCardResponsiveProps {
   previewImageEmptyMessage?: React.ReactNode;
   onClick?(a: any): void;
   disableLoadingAnimation?: boolean;
+  loading?: boolean;
 }
 
 

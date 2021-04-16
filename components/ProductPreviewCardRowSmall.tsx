@@ -43,8 +43,6 @@ const ProductPreviewCardRowSmall = (props: ReactProps) => {
             title={props.title}
             className={clsx(
               classes.imagePreview,
-              // (previewLoaded > 0) ? classes.imagePreview : classes.imagePreviewPlaceholder,
-              // (previewLoaded > 0) ? "fadeIn" : null,
             )}
             classes={{
               media: (previewItem.image.original.heightInPixels
@@ -71,8 +69,6 @@ const ProductPreviewCardRowSmall = (props: ReactProps) => {
               component="img"
               className={clsx(
                 classes.imagePreview,
-                // previewLoaded ? classes.imagePreview : classes.imagePreviewPlaceholder,
-                // previewLoaded ? "fadeIn" : "hidden",
               )}
               classes={{
                 media: classes.cardMedia
@@ -89,8 +85,6 @@ const ProductPreviewCardRowSmall = (props: ReactProps) => {
           : <div
               className={clsx(
                 classes.imagePreview,
-                // previewLoaded ? classes.imagePreview : classes.imagePreviewPlaceholder,
-                // previewLoaded ? "fadeIn" : "hidden",
               )}
               style={{
                 ...props.style,
@@ -147,6 +141,9 @@ const styles = (theme: Theme) => createStyles({
     boxShadow: 'none',
     height: CARD_HEIGHT,
     width: CARD_WIDTH,
+    backgroundColor: theme.palette.type === 'dark'
+      ? Colors.uniswapDarkNavy
+      : Colors.slateGreyDark,
   },
   cardActionArea: {
     // background: Colors.lightestGrey,

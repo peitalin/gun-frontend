@@ -83,8 +83,8 @@ const CategoryCarouselMobile = (props: ReactProps) => {
           onlyShowButtonsOnMouseOver={false}
           scrollSnapType={"x proximity"}
           innerCarouselStyle={{
-            width: smDown ? 'calc(100% - 0rem)' : 'calc(100% - 1.5rem)',
-            marginLeft: smDown ? '0rem' : '0.75rem',
+            width: 'calc(100% - 0rem)',
+            marginLeft: '0rem',
             borderRadius: BorderRadius,
           }}
           buttonLeftStyle={{

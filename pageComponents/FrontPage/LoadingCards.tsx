@@ -39,8 +39,7 @@ const LoadingCards = (props: ReactProps) => {
           : classes.rootFlexStart
     }>
     {
-      [...Array(count).keys()]
-      .map(i =>
+      [...Array(count).keys()].map(i =>
         <div className={classes.loadingProductCardRoot} key={i}>
           {/* Desktop Loading Cards */}
           <Hidden smDown implementation="css">
@@ -66,6 +65,7 @@ const LoadingCards = (props: ReactProps) => {
               <ProductCardResponsive
                 product={productLoading as any}
                 cardsPerRow={cardsPerRow}
+                xsCardRow={props.xsCardRow}
               />
             </div>
           </Hidden>
@@ -91,6 +91,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   };
   alignCenter?: boolean;
   flexWrapItems?: boolean;
+  xsCardRow?: boolean;
 }
 
 /////////// Styles //////////////
