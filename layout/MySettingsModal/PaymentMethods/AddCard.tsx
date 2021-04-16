@@ -1,6 +1,5 @@
 import React from "react";
 import clsx from "clsx";
-import { oc as option } from "ts-optchain";
 // Graphql Queries
 import { useApolloClient, useMutation } from "@apollo/client";
 import { GET_USER } from "queries/user-queries";
@@ -101,22 +100,6 @@ const AddCard = (props: ReactProps) => {
               }}
             />
           </form>
-        </div>
-        <div className={classes.container}>
-          {/* {
-            option(props).user()
-            && process.browser
-            ? <form className={classes.creditCardInputContainer}>
-                <CardElement
-                  options={{
-                    hidePostalCode: true,
-                  }}
-                />
-              </form>
-            : <Typography variant="subtitle1">
-                No PaymentMethod data. Network error
-              </Typography>
-          } */}
         </div>
         <div className={classes.buttonContainer}>
           <Button

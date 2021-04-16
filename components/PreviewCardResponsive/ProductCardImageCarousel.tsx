@@ -1,6 +1,5 @@
 import React from "react";
 import clsx from "clsx";
-import { oc as option } from "ts-optchain";
 
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
 import { Colors, BoxShadows, BorderRadius } from "layout/AppTheme";
@@ -95,7 +94,7 @@ const ProductCardImageCarousel = (props: ReactProps) => {
 
   const previewItems = isMobile
     ? product?.featuredVariant?.previewItems ?? []
-    : option(product).featuredVariant.previewItems([]).slice(0,8);
+    : (product?.featuredVariant?.previewItems ?? []).slice(0,8);
     // load only N preview items for mobile
 
   const numPreviews = previewItems.length;
@@ -179,13 +178,10 @@ const ProductCardImageCarousel = (props: ReactProps) => {
           (previewItemsInSwiper.length > 0) &&
           previewItemsInSwiper.map((previewItem, i) => {
 
-            const image =  option(previewItem).image();
-            // let img600 = option(image).variants([]).filter(v => v.widthInPixels === 600)[0];
+            const image =  previewItem?.image
             let youTubeVimeoPreview = getYouTubeVimeoImagePreview(
-              option(previewItem).youTubeEmbedLink()
+              previewItem?.youTubeEmbedLink
             );
-
-            // console.log("IMAGE: ", image)
 
             return (
               <AspectCarouselItemLink key={i}
@@ -197,7 +193,7 @@ const ProductCardImageCarousel = (props: ReactProps) => {
                 product={product}
               >
               {
-                option(image).original.url()
+                image?.original?.url
                 ? <CardMedia
                     title={title}
                     component="img"
@@ -211,7 +207,7 @@ const ProductCardImageCarousel = (props: ReactProps) => {
                     //   }, 16)
                     // }}
                     onClick={props.onClick}
-                    src={option(image).original.url()}
+                    src={image?.original?.url}
                     srcSet={genSrcSet(image)}
                     sizes={genImgBreakpoints(imgSizesSrcSet)}
                   />

@@ -1,5 +1,4 @@
 import React from "react";
-import { oc as option } from "ts-optchain";
 // Redux
 import { GrandReduxState } from "reduxStore/grand-reducer";
 import { Actions } from "reduxStore/actions";
@@ -39,7 +38,7 @@ const AddSellerProfileButton = (props: ReactProps) => {
     state => state.reduxModals.storeCreateModalOpen
   );
   const store = useSelector<GrandReduxState, StorePrivate>(
-    state => option(state).reduxLogin.user.store()
+    state => state?.reduxLogin?.user?.store
   );
 
   const theme = useTheme();
@@ -75,7 +74,7 @@ const AddSellerProfileButton = (props: ReactProps) => {
         scroll={'body'}
       >
         {
-          (!option(store).id() || store.name === "Deleted Store")
+          (!store?.id || store.name === "Deleted Store")
           ? <CreateStoreForm asModal={true} />
           : <AccountCreated asModal={true} />
         }

@@ -1,5 +1,4 @@
 import React from "react";
-import { oc as option } from "ts-optchain";
 // styles
 import clsx from 'clsx';
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
@@ -85,7 +84,7 @@ const WishlistButtonBig: React.FC<ReactProps> = (props) => {
           color="secondary"
           onClick={() => {
             // let user know they are not logged in and item won't be saved
-            if (!option(user).id()) {
+            if (!user?.id) {
               setShowSnackbar(true)
             } else {
               dispatch(Actions.reduxWishlist.REMOVE_WISHLIST_ITEM(wishlistItemId))
@@ -97,7 +96,7 @@ const WishlistButtonBig: React.FC<ReactProps> = (props) => {
         </Button>
         <Portal>
           <SnackBarA
-            open={!option(user).id() && showSnackbar}
+            open={!user?.id && showSnackbar}
             closeSnackbar={() => setShowSnackbar(false)}
             message={"Login to remember this item"}
             variant={"info"}
@@ -117,7 +116,7 @@ const WishlistButtonBig: React.FC<ReactProps> = (props) => {
           color="primary"
           onClick={() => {
             // let user know they are not logged in and item won't be saved
-            if (!option(user).id()) {
+            if (!user?.id) {
               setShowSnackbar(true)
             } else {
               dispatch(Actions.reduxWishlist.ADD_WISHLIST_ITEM(wishlistItemId))
@@ -129,7 +128,7 @@ const WishlistButtonBig: React.FC<ReactProps> = (props) => {
         </Button>
         <Portal>
           <SnackBarA
-            open={!option(user).id() && showSnackbar}
+            open={!user?.id && showSnackbar}
             closeSnackbar={() => setShowSnackbar(false)}
             message={"Login to remember this item"}
             variant={"info"}

@@ -1,6 +1,5 @@
 import React from "react";
 import clsx from "clsx";
-import { oc as option } from "ts-optchain";
 // Styles
 import { Colors, BorderRadius, BorderRadius2x, BoxShadows } from "layout/AppTheme";
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
@@ -40,10 +39,10 @@ const EditSellerProfile = (props: ReactProps) => {
   // redux
   const dispatch = useDispatch();
   const sellerProfileEditModalOpen = useSelector<GrandReduxState, boolean>(
-    state => option(state).reduxModals.sellerProfileEditModalOpen()
+    state => state?.reduxModals?.sellerProfileEditModalOpen
   );
   const storePrivate = useSelector<GrandReduxState, StorePrivate>(
-    state => option(state).reduxLogin.user.store()
+    state => state?.reduxLogin?.user?.store
   );
 
   const closeEditStoreModal = () => {

@@ -1,5 +1,4 @@
 import React from "react";
-import { oc as option } from "ts-optchain";
 import { useState, useEffect, useRef } from 'react';
 // lodash
 const throttle = require('lodash.throttle');
@@ -170,13 +169,13 @@ export const useFocus = (ref, defaultState = false) => {
   useEffect(() => {
     const onFocus = () => setState(true);
     const onBlur = () => setState(false);
-    if (option(ref).current.addEventListener()) {
+    if (ref?.current?.addEventListener) {
       ref.current.addEventListener("focus", onFocus);
       ref.current.addEventListener("blur", onBlur);
     }
 
     return () => {
-      if (option(ref).current.addEventListener()) {
+      if (ref?.current?.addEventListener) {
         ref.current.removeEventListener("focus", onFocus);
         ref.current.removeEventListener("blur", onBlur);
       }
@@ -249,7 +248,7 @@ export const useScrollXPosition = (
 ) => {
   // id: resets scroll if id changes
 
-  let [scrollLeft, setScrollLeft] = React.useState(option(el).scrollLeft(0));
+  let [scrollLeft, setScrollLeft] = React.useState(el?.scrollLeft ?? 0);
 
   const { scrollWidth, clientWidth } = el
     ? el
@@ -257,7 +256,7 @@ export const useScrollXPosition = (
 
 
   const updateScrollLeft = () => {
-    setScrollLeft(option(el).scrollLeft(0));
+    setScrollLeft(el?.scrollLeft ?? 0);
   }
 
   const resetScrollLeft = () => {
@@ -274,7 +273,7 @@ export const useScrollXPosition = (
         el.removeEventListener("scroll", updateScrollLeft)
       }
     }
-  }, [option(el).scrollLeft(), id])
+  }, [el?.scrollLeft, id])
 
   // initial update, or reset scroll left when element changes
   React.useEffect(() => {

@@ -1,6 +1,5 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { oc as option } from "ts-optchain";
 // Graphql
 import { UserPrivate, StorePrivate, ID } from "typings/gqlTypes";
 // Styles
@@ -37,15 +36,13 @@ const UserCompactProfile: React.FC<ReactProps> = (props) => {
         <div className={classes.flexCol}>
           <Typography variant="body1" className={classes.profileTitle}>
             {
-              (option(user).firstName() && option(user).lastName())
+              (user?.firstName && user?.lastName)
                 ? `${user.firstName} ${user.lastName}`
-                : option(user).firstName()
-                  ? user.firstName
-                  : "Your Profile"
+                : user?.firstName ?? "Your Profile"
             }
           </Typography>
           <Typography variant="caption" className={classes.profileEmail}>
-            {option(user).email()}
+            {user?.email}
           </Typography>
         </div>
       </div>

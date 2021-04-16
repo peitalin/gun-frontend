@@ -1,5 +1,4 @@
 import React from "react";
-import {oc as option} from "ts-optchain";
 import clsx from "clsx";
 // Redux
 import { useSelector } from "react-redux";
@@ -168,13 +167,12 @@ const OrderViewer: React.FC<ReactProps> = (props) => {
   }
 
   const user = useSelector<GrandReduxState, UserPrivate>(
-    state => option(state).reduxLogin.user()
+    state => state?.reduxLogin?.user
   );
 
   let canOrderBeCancelled = canBeCancelled(order?.currentSnapshot?.orderStatus)
 
-  // if (!option(order).currentSnapshot.transaction.chargeId()) {
-  if (!option(order).currentSnapshot.id()) {
+  if (!order?.currentSnapshot?.id) {
     return (
       <>
         <OrderSearch
@@ -247,10 +245,8 @@ const OrderViewer: React.FC<ReactProps> = (props) => {
           } = fprops;
 
           // order details
-          // const tx = option(order).currentSnapshot.transaction();
-          const total = option(order).total(0);
+          const total = order?.total ?? 0
           const subtotal = 0
-          // const subtotal = option(tx).subtotal(0);
 
           console.log('values', values)
 

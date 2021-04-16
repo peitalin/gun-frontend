@@ -1,5 +1,4 @@
 import React from "react";
-import { oc as option } from "ts-optchain";
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
 import { GrandReduxState, Actions } from 'reduxStore/grand-reducer';
@@ -140,7 +139,7 @@ export const UserMenu: React.FC<ReactProps> = (props) => {
 
           <MenuItem className={classes.menuItem} onClick={handleCloseMenu}>
             {
-              option(user).store.id()
+              user?.store?.id
               ? <Link href="/admin/products">
                   <a className={classes.menuLink}>
                     <StorefrontIcon className={classes.menuIcon}/>

@@ -1,5 +1,4 @@
 import React from "react";
-import {oc as option} from "ts-optchain";
 import clsx from "clsx";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
@@ -130,7 +129,7 @@ const PayoutsApprovedList = (props: ReactProps) => {
         break
       }
 
-      let newOrdersEdges = option(data).getOrdersAdminApprovedConnection.edges([])
+      let newOrdersEdges = data?.getOrdersAdminApprovedConnection?.edges ?? []
 
       if (newOrdersEdges.length > 0) {
 

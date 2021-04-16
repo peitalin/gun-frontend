@@ -1,6 +1,5 @@
 import React from 'react';
 import { withStyles, WithStyles } from "@material-ui/core/styles";
-import { oc as option } from "ts-optchain";
 import { Colors } from "layout/AppTheme";
 
 import FormControl from '@material-ui/core/FormControl';
@@ -148,7 +147,7 @@ const SignUp: React.FC<ReactProps> = (props) => {
               value={state.firstName}
               onChange={(e) => {
                 e.persist(); // for persisting synthetic events
-                setState(s => ({ ...s, firstName: option(e).target.value() }))
+                setState(s => ({ ...s, firstName: e?.target?.value }))
               }}
             />
           </FormControl>
@@ -160,7 +159,7 @@ const SignUp: React.FC<ReactProps> = (props) => {
               value={state.lastName}
               onChange={(e) => {
                 e.persist(); // for persisting synthetic events
-                setState(s => ({ ...s, lastName: option(e).target.value() }))
+                setState(s => ({ ...s, lastName: e?.target?.value }))
               }}
             />
           </FormControl>
@@ -173,7 +172,7 @@ const SignUp: React.FC<ReactProps> = (props) => {
               value={state.licenseNumber}
               onChange={(e) => {
                 e.persist(); // for persisting synthetic events
-                setState(s => ({ ...s, licenseNumber: option(e).target.value() }))
+                setState(s => ({ ...s, licenseNumber: e?.target?.value }))
               }}
             />
           </FormControl>
@@ -260,7 +259,7 @@ const SignUp: React.FC<ReactProps> = (props) => {
               value={state.email}
               onChange={(e) => {
                 e.persist(); // for persisting synthetic events
-                setState(s => ({ ...s, email: option(e).target.value() }))
+                setState(s => ({ ...s, email: e?.target?.value }))
               }}
             />
           </FormControl>
@@ -274,7 +273,7 @@ const SignUp: React.FC<ReactProps> = (props) => {
               type="password"
               onChange={(e) => {
                 e.persist(); // for persisting synthetic events
-                setState(s => ({ ...s, password: option(e).target.value() }))
+                setState(s => ({ ...s, password: e?.target?.value }))
               }}
             />
           </FormControl>

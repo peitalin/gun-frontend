@@ -1,5 +1,4 @@
 import React from "react";
-import { oc as option } from "ts-optchain";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 import { Colors } from "layout/AppTheme";
@@ -17,7 +16,6 @@ import ProductRecommendationRow from "./ProductRecommendationRow";
 // CSS
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
-import { shuffle } from "utils/misc";
 
 
 
@@ -35,7 +33,7 @@ const RenderProductRecommendations: React.FC<ReactProps> = (props) => {
   const theme = useTheme();
   const mdDown = useMediaQuery(theme.breakpoints.down('md'));
 
-  const itemsExist = !!option(products).edges([]).length;
+  const itemsExist = !!products?.edges?.length;
 
   if (!itemsExist && error) {
     return (
@@ -81,10 +79,10 @@ const RenderProductRecommendations: React.FC<ReactProps> = (props) => {
           products.edges.map(({ node: product }) => {
 
             let { featuredVariant } = product;
-            let previewItem = option(product).featuredVariant.previewItems[0]();
+            let previewItem = product?.featuredVariant?.previewItems?.[0]
 
             return (
-              <div key={option(featuredVariant).variantId()}
+              <div key={featuredVariant?.variantId}
                 className={clsx(
                   classes.flexItem,
                   classes.positionRelative,

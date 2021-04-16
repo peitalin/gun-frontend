@@ -1,6 +1,5 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { oc as option } from "ts-optchain";
 // Graphql
 import { Store, StorePrivate, UserPrivate, ID } from "typings/gqlTypes";
 
@@ -38,7 +37,7 @@ const StoreProfile: React.FC<ReactProps> = (props) => {
             classes.avatar,
             avatarImgLoaded ? "fadeInFast" : "hidden",
           )}
-          src={option(store).profile.original.url()}
+          src={store?.profile?.original?.url}
           onLoad={() => setAvatarImgLoaded(true)}
         />
         <div className={classes.flexCol}>

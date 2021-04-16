@@ -1,7 +1,6 @@
 import { ActionType } from './actions'
 import { reduxWishlistActions as A } from "./wishlist-actions";
 import { WishlistItem, ID, Connection, WishlistItemsConnection } from "typings/gqlTypes";
-import { oc as option } from "ts-optchain";
 
 
 ////// Wishlist state reducer //////////
@@ -36,10 +35,10 @@ export const reduxReducerWishlist = (
     case A.SET_WISHLIST().type: {
       const wishlist: WishlistItemsConnection = action.payload;
       return {
-        wishlistIds: option(wishlist).edges([]).map(w => {
+        wishlistIds: (wishlist?.edges ?? []).map(w => {
           return {
-            productId: option(w).node.product.id(),
-            variantId: option(w).node.product.featuredVariant.variantId()
+            productId: w?.node?.product?.id,
+            variantId: w?.node?.product?.featuredVariant?.variantId
           }
         })
       }

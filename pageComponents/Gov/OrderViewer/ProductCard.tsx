@@ -1,5 +1,4 @@
 import React from "react";
-import { oc as option } from "ts-optchain";
 import clsx from "clsx";
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 // Typings
@@ -17,7 +16,7 @@ import ErrorBounds from "components/ErrorBounds";
 import Typography from "@material-ui/core/Typography";
 import Loading from "components/Loading";
 // Components
-import ProductPreviewCardRow from "components/ProductPreviewCardRow";
+import ProductPreviewCardRowSmall from "components/ProductPreviewCardRowSmall";
 // helpers
 import { Colors } from "layout/AppTheme";
 // validation
@@ -43,7 +42,6 @@ const ProductCard = (props: ReactProps & FormikProps<FormikFields>) => {
   const isRefunded = order?.currentSnapshot?.orderStatus === OrderStatus.REFUNDED;
   const isCancelled = order?.currentSnapshot?.orderStatus === OrderStatus.CANCELLED;
   const isPaid = false
-  // const isPaid = option(orderItem).payoutItems[0].payoutStatus() !== PayoutStatus.UNPAID;
   // if payoutStatus is not UNPAID. Refund not allowed in any state other than "UNPAID"
 
   // data not exists
@@ -73,7 +71,7 @@ const ProductCard = (props: ReactProps & FormikProps<FormikFields>) => {
         <div className={clsx(classes.flexCol, classes.marginRight1)}>
           {
             !!featuredPreview &&
-            <ProductPreviewCardRow
+            <ProductPreviewCardRowSmall
               previewItem={featuredPreview}
             />
           }

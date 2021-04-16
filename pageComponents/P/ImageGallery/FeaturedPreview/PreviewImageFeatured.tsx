@@ -1,6 +1,5 @@
 import React from "react";
 import clsx from "clsx";
-import { oc as option } from "ts-optchain";
 import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
 import { Colors, BorderRadius } from "layout/AppTheme";
 // Typings
@@ -31,7 +30,7 @@ const PreviewImageFeatured: React.FC<ReactProps> = (props) => {
     showLoadingBar = false,
   } = props;
 
-  const image = option(previewItem).image();
+  const image = previewItem?.image;
 
   const theme = useTheme();
   const xsDown = useMediaQuery(theme.breakpoints.down("xs"));
@@ -43,7 +42,7 @@ const PreviewImageFeatured: React.FC<ReactProps> = (props) => {
   React.useEffect(() => {
     // React BUG: all event fired before hydration are lost.
     // https://github.com/facebook/react/issues/15446
-    if (option(image).original.url() && imgLoaded === 0) {
+    if (image?.original?.url && imgLoaded === 0) {
       setTimeout(() => {
         setImgLoaded(1)
         setImgLoaded2(1)
@@ -77,9 +76,9 @@ const PreviewImageFeatured: React.FC<ReactProps> = (props) => {
     }
   }
 
-  let urlSrc = option(image).original.url();
+  let urlSrc = image?.original?.url;
 
-  let srcSet = (option(image).variants([]).length > 0)
+  let srcSet = (image?.variants?.length > 0)
       ? genSrcSet(image)
       : null;
 

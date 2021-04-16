@@ -1,6 +1,4 @@
 import React from "react";
-import clsx from "clsx";
-import { oc as option } from "ts-optchain";
 import { SoldOutStatus } from "typings/gqlTypes";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";

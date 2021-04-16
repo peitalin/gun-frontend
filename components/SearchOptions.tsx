@@ -1,5 +1,4 @@
 import React from "react";
-import { oc as option } from "ts-optchain";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
 import { Colors, BorderRadius, BoxShadows, fontFam } from "layout/AppTheme";
@@ -104,7 +103,7 @@ const SearchOptions: React.FC<ReactProps> = (props) => {
   // for actual gql dispatch for pagination page
   const [debounceSetPageParam, cancel, callPending] = useDebouncedCallback(
     (page: number) => {
-      if (option(paginationParams).setPageParam()) {
+      if (paginationParams?.setPageParam) {
         paginationParams.setPageParam(page)
       }
     },
@@ -118,8 +117,8 @@ const SearchOptions: React.FC<ReactProps> = (props) => {
   ) // debounce by 540ms
 
   const sortAlphabetically = (c1: Categories, c2: Categories): number => {
-    let c1name = option(c1).name() ? c1.name.toLowerCase() : ""
-    let c2name = option(c2).name() ? c2.name.toLowerCase() : ""
+    let c1name = c1?.name ? c1.name.toLowerCase() : ""
+    let c2name = c2?.name ? c2.name.toLowerCase() : ""
     return (c1name > c2name) ? 1 : -1
   }
 
@@ -140,7 +139,7 @@ const SearchOptions: React.FC<ReactProps> = (props) => {
     // pageUI needs to be synced to
     // index (as the number of pages can shrink to 1)
     setPageUi(index+1)
-    if (option(paginationParams).setPageParam()) {
+    if (paginationParams?.setPageParam) {
       paginationParams.setPageParam(index+1)
     }
   }, [index])

@@ -1,7 +1,5 @@
 import { ActionType } from './actions'
 import { reduxRefetchActions as A } from "./refetch-actions";
-import { ID } from "typings/gqlTypes";
-import { oc as option } from "ts-optchain";
 import { ApolloRefetch } from "layout/GetUser";
 
 

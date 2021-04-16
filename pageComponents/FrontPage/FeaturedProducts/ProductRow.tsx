@@ -1,5 +1,4 @@
 import React from "react";
-import { oc as option } from "ts-optchain";
 import clsx from "clsx";
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 import { Colors } from "layout/AppTheme";
@@ -11,7 +10,7 @@ import { Product } from "typings/gqlTypes";
 // Utils
 import ErrorBounds from "components/ErrorBounds";
 // Material UI
-import ProductPreviewCardRow from "components/ProductPreviewCardRow";
+import ProductPreviewCardRowSmall from "components/ProductPreviewCardRowSmall";
 import Typography from "@material-ui/core/Typography";
 import PriceDisplayMain from "components/PriceDisplayMain";
 import DescriptionLoading from "components/ProductCardResponsive/DescriptionLoading";
@@ -29,7 +28,7 @@ const ProductRow = (props: ReactProps) => {
 
   const { classes, product } = props;
 
-  const featuredVariant = option(product).featuredVariant();
+  const featuredVariant = product?.featuredVariant;
   const dispatch = useDispatch();
 
   const cardWidthStyle = {
@@ -57,8 +56,8 @@ const ProductRow = (props: ReactProps) => {
             <a className={classes.flexRowLink}>
               <div className={classes.flexCol}>
                 {
-                  option(product).featuredVariant.previewItems[0]() &&
-                  <ProductPreviewCardRow
+                  product?.featuredVariant?.previewItems?.[0] &&
+                  <ProductPreviewCardRowSmall
                     previewItem={product.featuredVariant.previewItems[0]}
                     className={classes.previewCard}
                     height={75}
@@ -71,12 +70,12 @@ const ProductRow = (props: ReactProps) => {
                   <Typography
                     className={clsx(
                       classes.category,
-                      !option(product).category.name() ? "pulse" : null
+                      !product?.category?.name ? "pulse" : null
                     )}
                     variant="body1"
                     component="div"
                   >
-                    {option(product).category.name()}
+                    {product?.category?.name}
                   </Typography>
                   <Typography
                     className={clsx(

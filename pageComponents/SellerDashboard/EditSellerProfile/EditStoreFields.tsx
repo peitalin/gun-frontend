@@ -1,5 +1,4 @@
 import React from "react";
-import { oc as option } from "ts-optchain";
 import { useState } from "react";
 import clsx from "clsx";
 // Redux
@@ -129,25 +128,6 @@ const EditStoreFields: React.FC<ReactProps & FormikProps<FormikFields>> = (props
   return (
     <div className={classes.root}>
       <div className={classes.innerRoot}>
-
-        {/* <div className={clsx(classes.flexCol, classes.width100)}>
-          <StoreEditProfilePic
-            storeId={option(props).storeId()}
-            profileImage={storePrivate.profile}
-            setProfileImage={handleUpdateProfile}
-            errorMessage={errors.profileId}
-            {...fprops}
-          />
-          <div className={classes.avatarErrorMsg}>
-            <Typography variant="subtitle1" className={classes.subtitle1}>
-            {
-              errors.profileId
-              ? <span className={classes.redText}>{`Profile pic required`}</span>
-              : <span className={classes.greyText}></span>
-            }
-            </Typography>
-          </div>
-        </div> */}
 
         <Typography variant="subtitle1" className={classes.subtitle1}>
           Your Seller Name

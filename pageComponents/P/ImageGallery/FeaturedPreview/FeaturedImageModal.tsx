@@ -1,6 +1,5 @@
 import React from "react";
 import clsx from "clsx";
-import { oc as option } from "ts-optchain";
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 import { styles } from "./styles";
 import { Colors } from "layout/AppTheme";
@@ -49,17 +48,17 @@ const FeaturedImageModal = (props: ReactProps) => {
     isMobile = false,
   } = props;
 
-  const imageId = option(previewItem).image.original.id()
-  const imageUrl = option(previewItem).image.original.url()
+  const imageId = previewItem?.image?.original?.id
+  const imageUrl = previewItem?.image?.original?.url
 
   const isDarkMode = useSelector<GrandReduxState, boolean>(s => {
     return s.reduxLogin.darkMode === 'dark'
   })
 
-  const previewItems = option(props).product.featuredVariant.previewItems([])
+  const previewItems = (props?.product?.featuredVariant?.previewItems ?? [])
     .filter(p =>
-      option(p).image.original.id() !== undefined ||
-      option(p).youTubeEmbedLink() !== undefined
+      p?.image?.original?.id !== undefined ||
+      p?.youTubeEmbedLink !== undefined
     )
   const numPreviews = previewItems.length
 
@@ -135,7 +134,7 @@ const FeaturedImageModal = (props: ReactProps) => {
         {
           !isMobile &&
           <Dialog
-            open={option(openedModals)([]).includes(imageId)}
+            open={openedModals?.includes(imageId)}
             onClose={(event: object, reason: string) => {
               if (
                 reason === "backdropClick" ||

@@ -1,5 +1,4 @@
 import React from "react";
-import { oc as option } from "ts-optchain";
 import clsx from "clsx";
 // Styles
 import {
@@ -50,7 +49,7 @@ const StoreOrLogin = (props: StoreOrLoginProps) => {
     signup: false,
   });
 
-  const storeExists = !storeDoesNotExist(option(user).store())
+  const storeExists = !storeDoesNotExist(user?.store)
   const dispatch = useDispatch();
 
   const theme = useTheme();
@@ -79,7 +78,7 @@ const StoreOrLogin = (props: StoreOrLoginProps) => {
     }
   } else {
     // user profile exists, but no valid store
-    if (option(user).id()) {
+    if (user?.id) {
       return (
         <div className={clsx(classes.storeLogin2)}
           style={props.style}

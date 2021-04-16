@@ -1,5 +1,4 @@
 import React from "react";
-import { oc as option } from "ts-optchain";
 // styles
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
 // Utils Components
@@ -26,7 +25,7 @@ const OffersPage: NextPage<ReactProps> = (props) => {
   const user = useSelector<GrandReduxState, UserPrivate>(
     state => state.reduxLogin.user
   );
-  const userId = option(user).id()
+  const userId = user?.id
 
   return (
     <div>

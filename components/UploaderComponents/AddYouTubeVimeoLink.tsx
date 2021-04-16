@@ -1,5 +1,4 @@
 import React from "react";
-import { oc as option } from "ts-optchain";
 import { v4 as uuidv4 } from "uuid"
 // Redux
 import { useDispatch, useSelector } from "react-redux";
@@ -32,7 +31,7 @@ const AddYouTubeVimeoLink: React.FC<AddYouTubeVimeoProps> = (props) => {
     youTubeVimeoLinks,
   } = useSelector<GrandReduxState, ReduxState>(state => {
     return {
-      youTubeVimeoLinks: option(state)[reducerName].dzuPreviewItems([])
+      youTubeVimeoLinks: (state?.[reducerName]?.dzuPreviewItems ?? [])
         .filter(p => !!p.youTubeVimeoEmbedLink),
     }
   })

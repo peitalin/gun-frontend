@@ -3,7 +3,6 @@ import { NextPage, NextPageContext } from 'next';
 import Link from 'next/link';
 
 import Typography from "@material-ui/core/Typography";
-import { oc as option } from "ts-optchain";
 // styles
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
 import { BorderRadius, BoxShadows, Colors } from "layout/AppTheme";
@@ -40,8 +39,8 @@ const GovFeaturedProducts = (props: ReactProps) => {
     <AdminProfileWrapper>
       {({ data, loading, error }: AdminProfileProps) => {
 
-        const user = option(data).user();
-        const disabled = option(user).userRole() !== Role.PLATFORM_ADMIN;
+        const user = data?.user;
+        const disabled = user?.userRole !== Role.PLATFORM_ADMIN;
 
         return (
           <div className={classes.govHomePageSSR}>

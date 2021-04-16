@@ -1,6 +1,5 @@
 import React from "react";
 import { ReactElement } from "react";
-import { oc as option } from "ts-optchain";
 // Redux
 import { useDispatch, useSelector } from "react-redux";
 import { GrandReduxState } from "reduxStore/grand-reducer";
@@ -66,8 +65,8 @@ const UploadLayoutPreviews: React.FC<ILayoutProps & ReactProps> = (props) => {
     dzuPreviewOrder,
   } = useSelector<GrandReduxState, ReduxState>(state => {
     return {
-      dzuPreviewItems: option(state)[reducerName].dzuPreviewItems([]),
-      dzuPreviewOrder: option(state)[reducerName].dzuPreviewOrder([]),
+      dzuPreviewItems: state?.[reducerName]?.dzuPreviewItems ?? [],
+      dzuPreviewOrder: state?.[reducerName]?.dzuPreviewOrder ?? [],
     }
   })
 
@@ -109,7 +108,6 @@ const UploadLayoutPreviews: React.FC<ILayoutProps & ReactProps> = (props) => {
     }
   }
 
-  // console.log("percent", option(previews[0] as ReactElement).props.meta.percent())
   // console.log('dzuPreviewItems', dzuPreviewItems)
   // console.log('dzuPreviewOrder', dzuPreviewOrder)
 
@@ -171,13 +169,13 @@ const UploadLayoutPreviews: React.FC<ILayoutProps & ReactProps> = (props) => {
               let preview = (previews as ReactElement<IPreviewProps>[])
                 .find(p => p.key === order.id);
 
-              let percent = option(preview).props.meta.percent(100);
+              let percent = preview?.props?.meta?.percent ?? 100;
               // console.log("percent", percent)
               // console.log("dzuPreview", dzuPreview)
 
               if (
-                option(dzuPreview).id() &&
-                option(dzuPreview).previewUrl()
+                dzuPreview?.id &&
+                dzuPreview?.previewUrl
               ) {
                 return (
                   <ImagePreview
@@ -188,7 +186,7 @@ const UploadLayoutPreviews: React.FC<ILayoutProps & ReactProps> = (props) => {
                     percent={percent}
                   />
                 )
-              } else if (!!option(dzuPreview).youTubeVimeoEmbedLink()) {
+              } else if (!!dzuPreview?.youTubeVimeoEmbedLink) {
                 return (
                   <VideoPreview
                     key={dzuPreview.id}
@@ -205,7 +203,7 @@ const UploadLayoutPreviews: React.FC<ILayoutProps & ReactProps> = (props) => {
           }
         </Grid>
       </div>
-      {option(files)([]).length > 0 && submitButton}
+      {files?.length > 0 && submitButton}
     </>
   )
 }
@@ -220,10 +218,3 @@ interface ReduxState {
 }
 
 export default UploadLayoutPreviews;
-
-// export default React.memo(
-//   (props: ILayoutProps & ReactProps) => <UploadLayout {...props}/>,
-//   // (prevProps, nextProps) => {
-//   //   return false
-//   // },
-// );

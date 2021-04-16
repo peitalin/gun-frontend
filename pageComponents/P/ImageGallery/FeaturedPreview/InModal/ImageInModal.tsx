@@ -1,6 +1,5 @@
 import React from "react";
 import clsx from "clsx";
-import { oc as option } from "ts-optchain";
 import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
 import { Colors } from "layout/AppTheme";
 // Typings
@@ -35,7 +34,7 @@ const ImageInModal: React.FC<ReactProps> = (props) => {
   React.useEffect(() => {
     // React BUG: all event fired before hydration are lost.
     // https://github.com/facebook/react/issues/15446
-    if (option(image).original.url() && imgLoaded === 0) {
+    if (image?.original?.url && imgLoaded === 0) {
       setImgLoaded(1)
     }
     return () => {}
@@ -44,9 +43,9 @@ const ImageInModal: React.FC<ReactProps> = (props) => {
 
   let image = previewItem?.image;
 
-  let urlSrc = option(image).original.url();
+  let urlSrc = image?.original?.url;
 
-  let srcSet = (option(image).variants([]).length > 0)
+  let srcSet = (image?.variants?.length > 0)
       ? genSrcSet(image)
       : null;
 
@@ -66,7 +65,7 @@ const ImageInModal: React.FC<ReactProps> = (props) => {
         )}
       >
         {
-          option(image).original.url() &&
+          image?.original?.url &&
           <img
             // component="img"
             className={clsx(
@@ -75,11 +74,11 @@ const ImageInModal: React.FC<ReactProps> = (props) => {
             )}
             onLoad={() => setImgLoaded(s => s + 1)}
             srcSet={
-              (option(image).variants([]).length > 0)
+              (image?.variants?.length > 0)
                 ? genSrcSet(image)
                 : null
             }
-            src={option(image).original.url()}
+            src={image?.original?.url}
             sizes={genImgBreakpoints({
               xs: 400,
               sm: 400,

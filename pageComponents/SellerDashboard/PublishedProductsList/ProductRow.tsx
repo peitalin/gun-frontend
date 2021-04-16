@@ -12,7 +12,7 @@ import Link from "next/link";
 import { Product, ProductEditInput, ProductPrivate } from "typings/gqlTypes";
 // Material UI
 import ErrorBounds from "components/ErrorBounds";
-import ProductPreviewCardRow from "components/ProductPreviewCardRow";
+import ProductPreviewCardRowSmall from "components/ProductPreviewCardRowSmall";
 import Typography from "@material-ui/core/Typography";
 import PriceDisplayProductEdit from "components/PriceDisplayProductEdit";
 import Loading from "components/Loading";
@@ -237,7 +237,7 @@ const ProductRow = (props: ReactProps) => {
               >
                 <Tooltip title="Edit Product" placement="top-start">
                   <a className={classes.hoverOpacity}>
-                    <ProductPreviewCardRow
+                    <ProductPreviewCardRowSmall
                       previewItem={product.featuredVariant.previewItems[0]}
                       height={
                         mdDown

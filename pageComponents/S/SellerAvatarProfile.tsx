@@ -1,6 +1,5 @@
 import React from "react";
 import { useState } from "react";
-import {oc as option} from "ts-optchain";
 import { Colors } from "layout/AppTheme";
 import clsx from "clsx";
 // Styles
@@ -27,7 +26,7 @@ const SellerAvatarProfile = (props: ReactProps) => {
     store
   } = props;
 
-  const image = option(store).profile();
+  const image = store?.profile
   // imgloaded
   const [avatarImgLoaded, setAvatarImgLoaded] = useState(false);
   const refetchUser = useSelector<GrandReduxState, () => void>(s => {
@@ -41,7 +40,7 @@ const SellerAvatarProfile = (props: ReactProps) => {
           <div className={classes.avatarBorder} style={{ ...avatarBorderStyle }}>
             <Avatar className={classes.avatar}>
               <img
-                src={option(image).original.url()}
+                src={image?.original?.url}
                 srcSet={genSrcSet(image)}
                 sizes={genImgBreakpoints({
                   xs: 100,
@@ -72,14 +71,14 @@ const SellerAvatarProfile = (props: ReactProps) => {
         </Typography>
 
         {
-          option(store).bio() &&
+          store?.bio &&
           <Typography className={classes.bio} variant="body2">
-            {store && store.bio}
+            {store.bio}
           </Typography>
         }
 
         {
-          option(store).website() &&
+          store?.website &&
           <Typography variant="body2" className={classes.website}>
             <a href={store.website.startsWith("http") ? store.website : `https://${store.website}`}
               className={classes.websiteURL}

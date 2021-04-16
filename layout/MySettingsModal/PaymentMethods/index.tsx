@@ -1,5 +1,4 @@
-import * as React from "react";
-import { oc as option } from "ts-optchain";
+import React from "react";
 // Graphql Queries
 import { useQuery, useApolloClient } from "@apollo/client";
 import { GET_USER } from "queries/user-queries";
@@ -106,7 +105,7 @@ const PaymentMethods = (props: ReactProps) => {
       </ErrorBounds>
     )
   } else {
-    let defaultPaymentMethodId = option(data).user.defaultPaymentMethod.id();
+    let defaultPaymentMethodId = data?.user?.defaultPaymentMethod?.id
     return (
       <ErrorBounds className={classes.root}>
         <Typography className={classes.subtitle} variant="h4">
@@ -114,7 +113,7 @@ const PaymentMethods = (props: ReactProps) => {
         </Typography>
         <div className={classes.flexCol}>
           {
-            option(data).user.paymentMethods() &&
+            data?.user?.paymentMethods &&
             data.user.paymentMethods.map(pm => {
               return (
                 <CreditCard

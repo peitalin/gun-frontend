@@ -1,6 +1,5 @@
 import React from "react";
 import { ReactElement } from "react";
-import { oc as option } from "ts-optchain";
 import { Colors } from "layout/AppTheme";
 // Styles
 import { ILayoutProps } from "components/DropzoneUploader/Dropzone";
@@ -25,7 +24,7 @@ const UploadLayout: React.FC<ILayoutProps & ReactProps> = (props) => {
     <div className={props.classes.uploadButtonContainer}>
       <div {...dropzoneProps}>
         {
-          option(files)([]).length < maxFiles &&
+          files?.length < maxFiles &&
           <UploadInput {...props}/>
         }
       </div>

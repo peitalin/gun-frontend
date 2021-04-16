@@ -1,5 +1,4 @@
 import React from "react";
-import { oc as option } from "ts-optchain";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
 import clsx from "clsx";
@@ -30,8 +29,8 @@ const MobileMenuUserProfile: React.FC<ReactProps> = (props) => {
   }
   const { loggedIn, user } = useSelector<GrandReduxState, SelectorProps>(
     state => ({
-      loggedIn: !!option(state).reduxLogin.user.id(),
-      user: option(state).reduxLogin.user(),
+      loggedIn: !!state?.reduxLogin?.user?.id,
+      user: state?.reduxLogin?.user,
     })
   );
 

@@ -13,8 +13,7 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 // MUI
 import PermIdentityIcon from '@material-ui/icons/PermIdentity';
 import Typography from "@material-ui/core/Typography";
-import ProductPreviewCardRow from "components/ProductPreviewCardRow";
-import PreviewCardWide from "components/PreviewCardWide";
+import ProductPreviewCardRowSmall from "components/ProductPreviewCardRowSmall";
 // UI components
 import ButtonLoading from "components/ButtonLoading";
 // money
@@ -108,21 +107,12 @@ const ProductPanel: React.FC<ReactProps> = (props) => {
                 `Seller: ${seller?.license?.licenseNumber}`
               }
             </Typography>
-            <PreviewCardWide
+            <ProductPreviewCardRowSmall
               previewItem={previewItem as any}
               title={product.currentSnapshot.title}
-              tagline={product.currentSnapshot.model}
-              category={product.category as any}
-              price={featuredVariant?.price}
-              // fit?: boolean; // object-fit the image
-              // title: string;
-              // tagline: string;
-              // category: Categories;
-              // price: number;
-              // priceWas: number;
-              // quantityAvailable?: number;
-              // soldOutStatus?: boolean;
-              // topHalfFraction?: number;
+              // model={product.currentSnapshot.model}
+              // category={product.category as any}
+              // price={featuredVariant?.price}
             />
             <div className={classes.buttonContainer}>
               <ButtonLoading

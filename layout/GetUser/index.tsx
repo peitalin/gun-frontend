@@ -1,6 +1,5 @@
 import React from "react";
 import { NextPage, NextPageContext } from 'next';
-import { oc as option } from "ts-optchain";
 // Redux
 import { Actions } from "reduxStore/actions";
 import { GrandReduxState } from "reduxStore/grand-reducer";
@@ -31,7 +30,7 @@ const GetUser = (props: ReactProps) => {
 
   const { user } = useSelector<GrandReduxState, { user: UserPrivate }>(state => {
     return {
-      user: option(state).reduxLogin.user()
+      user: state?.reduxLogin?.user
     }
   })
 
@@ -98,7 +97,7 @@ export const setUserOnCompleted =
 
   // console.log("update redux user with data: ", data)
   // update Redux user state on initial page load
-  if (option(data).user.id() && refetch) {
+  if (data?.user?.id && refetch) {
     // set User profile, and userRefetch in REDUX
     dispatch(reduxBatchUpdate.userStore(data, refetch))
   } else {
@@ -116,10 +115,10 @@ export const reduxBatchUpdate = {
       dispatch(Actions.reduxLogin.SET_USER(data.user));
 
       dispatch(Actions.reduxWishlist.SET_WISHLIST(
-        option(data).user.wishlistItemsConnection()
+        data?.user?.wishlistItemsConnection
       ));
       dispatch(Actions.reduxFollowingStores.SET_FOLLOWING_STORES(
-        option(data).user.followingStores.edges([])
+        (data?.user?.followingStores?.edges ?? [])
           .map(({ node }) => node.store.id)
       ));
 
@@ -141,41 +140,41 @@ interface Context extends NextPageContext {
   store: Store<GrandReduxState>;
 }
 
-GetUser.getInitialProps = async (ctx: Context) => {
+// GetUser.getInitialProps = async (ctx: Context) => {
 
-  console.log('getting InitialProps for GetUser.tsx');
-  console.log('GetUser req headers:\n', option(ctx).req.headers.cookie());
+//   console.log('getting InitialProps for GetUser.tsx');
+//   console.log('GetUser req headers:\n', ctx?.req?.headers?.cookie);
 
-  const cookie = option(ctx).req.headers.cookie();
-  let userResponse: { data?: { user?: UserPrivate } } = { data: undefined };
-  const dispatch = ctx.store.dispatch;
+//   const cookie = ctx?.req?.headers?.cookie;
+//   let userResponse: { data?: { user?: UserPrivate } } = { data: undefined };
+//   const dispatch = ctx.store.dispatch;
 
-  if (cookie && /efc-auth=/.exec(cookie)) {
-    try {
+//   if (cookie && /gun-auth=/.exec(cookie)) {
+//     try {
 
-      userResponse = await ctx.apolloClient.query<QueryData>({
-        query: GET_USER,
-      });
+//       userResponse = await ctx.apolloClient.query<QueryData>({
+//         query: GET_USER,
+//       });
 
-      console.log("initial GetUser response:", userResponse)
-      if (option(userResponse).data.user.store()) {
-        dispatch(Actions.reduxProductCreate.UPDATE_STORE_ID(userResponse.data.user.store.id));
-      }
-      if (option(userResponse).data.user()) {
-        dispatch(Actions.reduxLogin.SET_USER(userResponse.data.user));
-      }
-    } catch(e) {
-      //   console.log(e)
-    }
-  }
+//       console.log("initial GetUser response:", userResponse)
+//       if (userResponse?.data?.user?.store) {
+//         dispatch(Actions.reduxProductCreate.UPDATE_STORE_ID(userResponse.data.user.store.id));
+//       }
+//       if (userResponse?.data?.user) {
+//         dispatch(Actions.reduxLogin.SET_USER(userResponse.data.user));
+//       }
+//     } catch(e) {
+//       //   console.log(e)
+//     }
+//   }
 
-  return {
-    user: userResponse.data
-      ? userResponse.data.user
-      : {},
-  };
+//   return {
+//     user: userResponse.data
+//       ? userResponse.data.user
+//       : {},
+//   };
 
-}
+// }
 
 export default GetUser;
 

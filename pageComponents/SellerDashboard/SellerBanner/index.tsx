@@ -1,6 +1,5 @@
-import * as React from "react";
+import React from "react";
 import { useState } from "react";
-import {oc as option} from "ts-optchain";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 import { styles } from "../styles";
@@ -26,9 +25,7 @@ const SellerBanner = (props: ReactProps) => {
       dither={true}
       ditherDark={false}
       color={'#242424'}
-      // ditherDark={!!option(store).cover.id()}
-      // color={!!option(store).cover.id() ? "#eaeaea" : '#333333'}
-      src={bannerImgUrl || option(storePrivate).cover.original.url()}
+      src={bannerImgUrl}
     >
       <div className={classes.cornerButtonContainer}>
         <Button

@@ -1,5 +1,4 @@
 import React from "react";
-import { oc as option } from "ts-optchain";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 import { Colors, BorderRadius } from "layout/AppTheme";
@@ -70,8 +69,8 @@ const CategoryProducts = (props: ReactProps) => {
 
   const [loadCarouselPics, setLoadCarouselPics] = React.useState({});
 
-  const connection = option(data).productsByCategoryConnectionPageBased(initialProducts);
-  const numProducts = option(connection).edges([]).length;
+  const connection = data?.productsByCategoryConnectionPageBased ?? initialProducts
+  const numProducts = connection?.edges?.length;
 
   const theme = useTheme();
   // jumboXL preview card on sm screen size only, remove right margin

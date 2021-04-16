@@ -1,5 +1,4 @@
 import React from "react";
-import {oc as option} from "ts-optchain";
 import clsx from "clsx";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
@@ -56,8 +55,8 @@ const StoresId: React.FC<ReactProps> = (props) => {
 
   const { classes, initialStore } = props;
   const router = useRouter();
-  const storeIdOrSlug: string = option(router).query.storeIdOrSlug() as any;
-  const storeId: string = option(router).query.storeId() as any || storeIdOrSlug;
+  const storeIdOrSlug: string = router?.query?.storeIdOrSlug as any;
+  const storeId: string = router?.query?.storeId as any || storeIdOrSlug;
 
   const theme = useTheme();
   const mdDown = useMediaQuery(theme.breakpoints.down("md"))
@@ -126,12 +125,12 @@ const StoresId: React.FC<ReactProps> = (props) => {
   });
 
   // products connection
-  const store = option(storeResponse).data.store() || initialStore;
+  const store = storeResponse?.data?.store || initialStore;
   let productsForSaleConnection = data?.getStoreProductsForSaleConnection;
 
   let totalItemsInFacet = totalItemsInCategoriesFacets({
     facets: facets,
-    facetsDistribution: option(productsForSaleConnection).facetsDistribution(),
+    facetsDistribution: productsForSaleConnection?.facetsDistribution,
     productsConnection: productsForSaleConnection,
     totalCount: totalCount,
     searchTerm: searchTerm,

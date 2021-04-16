@@ -1,5 +1,4 @@
 import React from "react";
-import {oc as option} from "ts-optchain";
 import clsx from "clsx";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
@@ -133,7 +132,7 @@ const PayoutsCompletedList = (props: ReactProps) => {
             Payouts Completed List
           </Typography>
           <Typography variant="body1" className={classes.emailCountCaption}>
-            { `${option(connection).totalCount(0)} completed payouts` }
+            { `${connection?.totalCount ?? 0} completed payouts` }
           </Typography>
         </div>
       </div>

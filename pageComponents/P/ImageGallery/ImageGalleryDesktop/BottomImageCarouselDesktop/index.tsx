@@ -1,5 +1,4 @@
 import React from "react";
-import { oc as option } from "ts-optchain";
 import clsx from "clsx";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
@@ -35,18 +34,16 @@ const BottomImageCarouselDesktop: React.FC<ReactProps> = (props) => {
     props.setFeaturedPreviewItem(previewItem)
   }
 
-  const previewItems = option(product)
-    .featuredVariant
-    .previewItems([])
+  const previewItems = (product?.featuredVariant?.previewItems ?? [])
     .filter(p =>
-      option(p).image.original.id() !== undefined ||
-      option(p).youTubeEmbedLink() !== undefined
+      p?.image?.original?.id !== undefined ||
+      p?.youTubeEmbedLink !== undefined
     );
 
   return (
     <div className={classes.carouselContainerPP}>
       <AirCarousel
-        id={`air-cara-${option(product).id()}`}
+        id={`air-cara-${product?.id}`}
         // product.id to re-render carousel position when product changes
         disableButtons={previewItems.length <= 9}
       >
@@ -71,7 +68,7 @@ const BottomImageCarouselDesktop: React.FC<ReactProps> = (props) => {
             return (
               <AirItemWide key={i}
                 showNumItems={numberOfItemsWide}
-                title={option(previewItem).image.description()}
+                title={previewItem?.image?.description}
                 disableDither={true}
                 borderGutter={"0.25rem"}
               >
@@ -82,7 +79,7 @@ const BottomImageCarouselDesktop: React.FC<ReactProps> = (props) => {
                   width: '100%',
                 }}>
                   {
-                    option(previewItem).image.original.url()
+                    previewItem?.image?.original?.url
                     ? <ThumbnailImage
                         previewItem={previewItem}
                         carouselSize={true}
@@ -95,7 +92,7 @@ const BottomImageCarouselDesktop: React.FC<ReactProps> = (props) => {
                         }}
                       />
                     : <ThumbnailVideo
-                        videoUrl={option(previewItem).youTubeEmbedLink()}
+                        videoUrl={previewItem?.youTubeEmbedLink}
                         onClick={() => {
                           handleImageClick(previewItem)
                           setIndex(i)

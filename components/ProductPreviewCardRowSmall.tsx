@@ -16,7 +16,7 @@ import { getYouTubeVimeoImagePreview } from "utils/links";
 
 
 
-const ProductPreviewCardRow = (props: ReactProps) => {
+const ProductPreviewCardRowSmall = (props: ReactProps) => {
 
   // const [previewLoaded, setPreviewLoaded] = React.useState(0);
   const { classes } = props;
@@ -172,4 +172,4 @@ const styles = (theme: Theme) => createStyles({
 });
 
 
-export default withStyles(styles)(ProductPreviewCardRow);
+export default withStyles(styles)(ProductPreviewCardRowSmall);

@@ -1,6 +1,5 @@
 import React from "react";
 import clsx from "clsx";
-import { oc as option } from "ts-optchain";
 import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
 import { Colors } from "layout/AppTheme";
 // Typings
@@ -26,7 +25,7 @@ const VideoInModal: React.FC<ReactProps> = (props) => {
   } = props;
 
   let videoUrl = generateYouTubeVimeoEmbedLink(
-    option(previewItem).youTubeEmbedLink("")
+    previewItem?.youTubeEmbedLink ?? ""
   );
 
   const theme = useTheme();

@@ -1,5 +1,4 @@
 import React from "react";
-import {oc as option} from "ts-optchain";
 import clsx from "clsx";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
@@ -32,9 +31,6 @@ const DisplayOrderReceipt: React.FC<ReactProps> = (props) => {
   //   order.currentSnapshot.subtotal +
   //   order.currentSnapshot.automaticSavings +
   //   order.currentSnapshot.promoCodeSavings;
-
-  // const paymentMethod = option(order).currentSnapshot.transaction.paymentMethod();
-  // const paymentMethodId = option(order).currentSnapshot.transaction.paymentMethodId();
 
   console.log("order", order)
 

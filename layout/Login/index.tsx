@@ -1,6 +1,5 @@
 import React from "react";
 import { withStyles, WithStyles, Theme, createStyles } from "@material-ui/core/styles";
-import { oc as option } from "ts-optchain";
 import { BorderRadius2x } from "layout/AppTheme";
 // Redux
 import { connect, useSelector, useDispatch } from "react-redux"
@@ -92,9 +91,8 @@ const Login: React.FC<ReactProps> = (props) => {
     }
 
     if (data && data.logInUsingEmail || data && data.signUpUsingEmail) {
-      // optional chaining
-      let user = option(data.logInUsingEmail).user()
-              || option(data.signUpUsingEmail).user();
+      let user = data?.logInUsingEmail?.user
+              || data?.signUpUsingEmail?.user;
 
       // if login/signup succeeded, and there is a redirect...
       handleRedirect()
@@ -276,7 +274,7 @@ const Login: React.FC<ReactProps> = (props) => {
       handleGqlError(errors)
     }
 
-    if (option(data).sendResetPasswordEmail()) {
+    if (data?.sendResetPasswordEmail) {
       console.log(data.sendResetPasswordEmail)
       snackbar.enqueueSnackbar(`Sent to: ${email}`, {
         variant: "success",

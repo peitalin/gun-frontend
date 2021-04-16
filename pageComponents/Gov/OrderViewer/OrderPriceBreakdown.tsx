@@ -1,5 +1,4 @@
 import React from "react";
-import {oc as option} from "ts-optchain";
 import clsx from "clsx";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
@@ -29,13 +28,9 @@ const OrderPriceBreakdown = (props: ReactProps & FormikProps<FormikFields>) => {
   const { classes, order, ...fprops } = props;
 
   // // order details
-  // const tx = option(order).currentSnapshot.transaction();
 
-  const osnap = option(order).currentSnapshot();
+  const osnap = order?.currentSnapshot;
   const total = order.total;
-  // const subtotal = option(osnap).subtotal(0);
-  // const paymentProcessingFee = option(osnap).paymentProcessingFee(0);
-  // const taxes = option(osnap).taxes(0);
 
   // Formik props
   const {

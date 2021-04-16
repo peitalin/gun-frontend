@@ -1,5 +1,4 @@
 import React from "react";
-import {oc as option} from "ts-optchain";
 import clsx from "clsx";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
@@ -49,8 +48,8 @@ const PayoutOrderRow = (props: ReactProps) => {
     return a.slice(0,2) + '-' + a.slice(2,5) + '-' + a.slice(5)
   }
 
-  let orderId = option(order).id();
-  let totalAmount = c(option(order).total(0));
+  let orderId = order?.id;
+  let totalAmount = c(order?.total ?? 0);
 
   return (
     <MenuItem

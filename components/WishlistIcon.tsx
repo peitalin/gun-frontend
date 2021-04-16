@@ -1,5 +1,4 @@
 import React from "react";
-import { oc as option } from "ts-optchain";
 // styles
 import clsx from 'clsx';
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
@@ -82,7 +81,7 @@ const WishlistIcon: React.FC<ReactProps> = (props) => {
         // prevent click-through to underlying product card
         e.stopPropagation();
         // let user know they are not logged in and item won't be saved
-        if (!option(user).id()) {
+        if (!user?.id) {
           setShowSnackbar(true)
         } else {
           // if user is logged in, add or remove to redux
@@ -114,7 +113,7 @@ const WishlistIcon: React.FC<ReactProps> = (props) => {
       }
       <Portal>
         <SnackBarA
-          open={!option(user).id() && showSnackbar}
+          open={!user?.id && showSnackbar}
           closeSnackbar={() => setShowSnackbar(false)}
           message={"Login to remember this item"}
           variant={"info"}

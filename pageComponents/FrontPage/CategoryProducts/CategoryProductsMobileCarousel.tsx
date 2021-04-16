@@ -1,5 +1,4 @@
 import React from "react";
-import { oc as option } from "ts-optchain";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 import { Colors, BorderRadius } from "layout/AppTheme";
@@ -65,7 +64,7 @@ const CategoryProductsMobile = (props: ReactProps) => {
     ssr: true, // must be true cause Apollo is stupid
   });
 
-  const connection = option(data).productsByCategoryConnectionPageBased(initialProducts);
+  const connection = data?.productsByCategoryConnectionPageBased ?? initialProducts
   // // wishlist refetch
   // const wishlistConnectionResponse = usePaginateQueryHook(QueryWishlistHookArgs);
 

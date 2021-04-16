@@ -1,5 +1,4 @@
 import React from "react";
-import {oc as option} from "ts-optchain";
 import clsx from "clsx";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
@@ -22,7 +21,7 @@ const OrderStatusStepperCancelled: React.FC<ReactProps> = (props) => {
 
   const stepsLabels = getSteps();
 
-  const orderStatus = option(order).currentSnapshot.orderStatus()
+  const orderStatus = order?.currentSnapshot?.orderStatus
 
   const activeStep = getActiveStepFromOrderStatus(orderStatus)
 

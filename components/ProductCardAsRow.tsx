@@ -1,5 +1,4 @@
 import React from "react";
-import { oc as option } from "ts-optchain";
 import clsx from "clsx";
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 import { Colors, BorderRadius } from "layout/AppTheme";
@@ -11,7 +10,7 @@ import { Product, SoldOutStatus } from "typings/gqlTypes";
 // Utils
 import ErrorBounds from "components/ErrorBounds";
 // Material UI
-import ProductPreviewCardRow from "components/ProductPreviewCardRow";
+import ProductPreviewCardRowSmall from "components/ProductPreviewCardRowSmall";
 import Typography from "@material-ui/core/Typography";
 import PriceDisplayMain from "components/PriceDisplayMain";
 import DescriptionLoading from "components/ProductCardResponsive/DescriptionLoading";
@@ -72,7 +71,7 @@ const ProductCardAsRow = (props: ReactProps) => {
               <div className={classes.flexCol}>
                 {
                   product?.featuredVariant?.previewItems?.[0] &&
-                  <ProductPreviewCardRow
+                  <ProductPreviewCardRowSmall
                     previewItem={product.featuredVariant.previewItems[0]}
                     className={classes.previewCard}
                     height={50}

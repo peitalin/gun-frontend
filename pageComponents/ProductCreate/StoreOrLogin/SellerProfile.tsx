@@ -1,5 +1,4 @@
 import React from "react";
-import { oc as option } from "ts-optchain";
 import { Colors, Gradients } from "layout/AppTheme";
 // Graphql
 import { Store, StorePrivate, UserPrivate, ID } from "typings/gqlTypes";
@@ -28,21 +27,8 @@ const SellerProfile: React.FC<StoreProps> = (props) => {
 
   return (
     <ErrorBounds className={clsx(classes.container)}>
-      {/* <Typography variant="subtitle1" className={classes.title}>
-        Your Seller Profile
-      </Typography> */}
       <div className={classes.flexContainer}>
         <div className={classes.flexRow}>
-          {/* <div className={classes.avatarBorder} style={{ ...avatarBorderStyle }}>
-            <Avatar
-              className={clsx(
-                classes.avatar,
-                // avatarImgLoaded ? "fadeInFast" : "hidden",
-              )}
-              src={option(store).profile.original.url()}
-              onLoad={() => setAvatarImgLoaded(true)}
-            />
-          </div> */}
           <div className={classes.flexCol}>
             <Typography variant="body1" className={classes.name}>
               {"Private Seller"}

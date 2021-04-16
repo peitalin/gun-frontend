@@ -1,5 +1,4 @@
 import React from "react";
-import {oc as option} from "ts-optchain";
 import clsx from "clsx";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
@@ -40,8 +39,8 @@ const CancelledOrderRow = (props: ReactProps) => {
 
   const c = (s) => currency(s/100, { formatWithSymbol: true }).format()
 
-  let orderId = option(order).id();
-  let totalAmount = c(option(order).total(0));
+  let orderId = order?.id;
+  let totalAmount = c(order?.total ?? 0);
 
   return (
     <MenuItem

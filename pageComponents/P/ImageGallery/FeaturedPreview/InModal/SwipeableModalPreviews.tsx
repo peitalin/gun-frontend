@@ -1,6 +1,5 @@
 import React from "react";
 import clsx from "clsx";
-import { oc as option } from "ts-optchain";
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 import { styles } from "../styles";
 import { Colors } from "layout/AppTheme";
@@ -35,10 +34,10 @@ const SwipeableModalPreviews = (props: ReactProps) => {
     isMobile = false,
   } = props;
 
-  const previewItems = option(props).product.featuredVariant.previewItems([])
+  const previewItems = (props?.product?.featuredVariant?.previewItems ?? [])
     .filter(p =>
-      option(p).image.original.id() !== undefined ||
-      option(p).youTubeEmbedLink() !== undefined
+      p?.image?.original?.id !== undefined ||
+      p?.youTubeEmbedLink !== undefined
     )
   const numPreviews = previewItems.length
 

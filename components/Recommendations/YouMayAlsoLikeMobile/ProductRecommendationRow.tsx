@@ -1,5 +1,4 @@
 import React from "react";
-import { oc as option } from "ts-optchain";
 import clsx from "clsx";
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 import { Colors } from "layout/AppTheme";
@@ -14,7 +13,7 @@ import { Product, SoldOutStatus } from "typings/gqlTypes";
 import ErrorBounds from "components/ErrorBounds";
 // Material UI
 import Button from "@material-ui/core/Button";
-import ProductPreviewCardRow from "components/ProductPreviewCardRow";
+import ProductPreviewCardRowSmall from "components/ProductPreviewCardRowSmall";
 import Typography from "@material-ui/core/Typography";
 import PriceDisplay4 from "components/PriceDisplay4";
 // helpers
@@ -47,14 +46,14 @@ const ProductRecommendationRow = (props: ReactProps) => {
       >
         <div className={classes.flexCol}>
         {
-          option(product).featuredVariant.previewItems[0]()
-          ? <ProductPreviewCardRow
+          product?.featuredVariant?.previewItems?.[0]
+          ? <ProductPreviewCardRowSmall
               previewItem={product.featuredVariant.previewItems[0]}
               height={80}
               width={128}
               className={classes.previewCard}
             />
-          : <ProductPreviewCardRow
+          : <ProductPreviewCardRowSmall
               previewItem={undefined}
               height={80}
               width={128}
@@ -67,12 +66,12 @@ const ProductRecommendationRow = (props: ReactProps) => {
           <Typography
             className={clsx(
               classes.category,
-              !option(product).category.name() ? "pulse" : null
+              !product?.category?.name ? "pulse" : null
             )}
             variant="body1"
             component="div"
           >
-            {option(product).category.name("")}
+            {product?.category?.name ?? ""}
           </Typography>
           <Typography
             className={clsx(

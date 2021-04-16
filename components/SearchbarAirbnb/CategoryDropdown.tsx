@@ -1,5 +1,4 @@
 import React from "react";
-import { oc as option } from "ts-optchain";
 // Styles
 import clsx from "clsx";
 import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";

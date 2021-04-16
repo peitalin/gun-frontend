@@ -70,7 +70,6 @@
     "rifm": "^0.11.0",
     "smoothscroll-polyfill": "^0.4.4",
     "subscriptions-transport-ws": "^0.9.16",
-    "ts-optchain": "^0.1.8",
     "use-debounce": "^3.4.1",
     "uuid": "^8.3.0",
     "yup": "^0.27.0"

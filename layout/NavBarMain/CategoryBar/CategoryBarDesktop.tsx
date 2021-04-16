@@ -1,5 +1,4 @@
 import React from "react";
-import { oc as option } from "ts-optchain";
 import { Categories, Product } from "typings/gqlTypes";
 // Styles
 import clsx from "clsx";
@@ -74,7 +73,7 @@ const CategoryBar: React.FC<ReactProps> = (props) => {
           </Link>
 
           {
-            option(props).staticCategories([]).map(category => {
+            (props?.staticCategories ?? []).map(category => {
               // console.log("cateogyr: ", category)
               return (
                 <Link key={category}

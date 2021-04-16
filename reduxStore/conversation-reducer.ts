@@ -1,7 +1,6 @@
 import { ActionType } from './actions'
 import { reduxConversationActions as A } from "./conversation-actions";
 import { Chat_Users } from "typings/gqlTypes";
-import { oc as option } from "ts-optchain";
 
 
 ////// Conversation state reducer //////////

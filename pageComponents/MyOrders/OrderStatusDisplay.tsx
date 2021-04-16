@@ -1,5 +1,4 @@
 import React from "react";
-import { oc as option } from "ts-optchain";
 import { useState, useEffect, useCallback } from "react";
 
 import clsx from "clsx";
@@ -44,7 +43,7 @@ const OrderStatusDisplay: React.FC<ReactProps> = (props) => {
           <div className={classes.flexItemOrderStatusTranslation}>
             <Typography variant="subtitle2" className={classes.orderStatusText}>
               <b>Status:</b> &nbsp;
-              {translateOrderStatus(option(order).currentSnapshot.orderStatus())}
+              {translateOrderStatus(order?.currentSnapshot?.orderStatus)}
             </Typography>
           </div>
         </div>

@@ -10,7 +10,7 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 // Components
 import ErrorBounds from "components/ErrorBounds";
-import ProductPreviewCardRow from "components/ProductPreviewCardRow";
+import ProductPreviewCardRowSmall from "components/ProductPreviewCardRowSmall";
 import OrderDetailsModal from "./OrderDetailsModal";
 // File requests
 import Link from "next/link";
@@ -59,7 +59,7 @@ const OrderRowSellers: React.FC<ReactProps> = (props) => {
               height={'100%'}
             />
           : <div className={clsx(classes.flexColItem, classes.minWidth150)}>
-              <ProductPreviewCardRow
+              <ProductPreviewCardRowSmall
                 previewItem={previewItem}
                 height={55}
                 width={88}

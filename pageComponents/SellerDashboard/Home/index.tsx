@@ -1,5 +1,4 @@
 import React from "react";
-import {oc as option} from "ts-optchain";
 // Styles
 import { withStyles, WithStyles, Theme, createStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
@@ -42,26 +41,6 @@ const SellerDashboardHome = (props: ReactProps) => {
 
   const theme = useTheme();
   const xsDown = useMediaQuery(theme.breakpoints.down('xs'));
-  const router = useRouter();
-  const snackbar = useSnackbar();
-
-  // const { data, loading, error } = useQuery<QueryData, QueryVar>(
-  //   GET_DASHBOARD_PRODUCTS_CONNECTION, {
-  //   variables: {
-  //     query: {
-  //       limit: 1,
-  //       offset: 0,
-  //     }
-  //   },
-  //   errorPolicy: "all",
-  // });
-
-
-  // const connection: ProductsConnection =
-  //   option(data).user.store.dashboardProductsConnection()
-
-  // const hasNoProducts = option(connection).edges([]).length === 0;
-
 
   return (
     <div className={

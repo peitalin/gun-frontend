@@ -2,7 +2,6 @@ import { Categories } from "typings/gqlTypes";
 import { createSelector } from "reselect";
 import { GrandReduxState } from "reduxStore/grand-reducer";
 import { centsToDollars } from "./prices";
-import { oc as option } from "ts-optchain";
 
 
 export const youTubeLinksSelector = createSelector(

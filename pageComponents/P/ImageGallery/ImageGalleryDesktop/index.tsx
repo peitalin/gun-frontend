@@ -1,6 +1,5 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { oc as option } from "ts-optchain";
 import clsx from "clsx";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
@@ -26,16 +25,16 @@ import BottomImageCarouselDesktop from "./BottomImageCarouselDesktop";
 const ImageGalleryDesktop: React.FC<ReactProps> = (props) => {
 
   const [featuredPreviewItem, setFeaturedPreviewItem] = useState(
-    option(props).product.featuredVariant.previewItems[0]()
+    props?.product?.featuredVariant?.previewItems?.[0]
   );
   const [openedModals, setOpenedModals] = useState([]);
 
   useEffect(() => {
-    let pitem = option(props).product.featuredVariant.previewItems[0]();
+    let pitem = props?.product?.featuredVariant?.previewItems?.[0]
     if (pitem) {
       setFeaturedPreviewItem(pitem)
     }
-  }, [option(props).product.featuredVariant()])
+  }, [props?.product?.featuredVariant])
 
   const {
     classes,

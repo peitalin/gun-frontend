@@ -1,5 +1,4 @@
 import React from "react";
-import { oc as option } from "ts-optchain";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
 import { Colors, BoxShadows } from "layout/AppTheme";
@@ -47,8 +46,8 @@ const SearchOptionsCategoryFilter: React.FC<ReactProps> = (props) => {
   } = props;
 
   const sortAlphabetically = (c1: Categories, c2: Categories): number => {
-    let c1name = option(c1).name() ? c1.name.toLowerCase() : ""
-    let c2name = option(c2).name() ? c2.name.toLowerCase() : ""
+    let c1name = c1?.name ? c1.name.toLowerCase() : ""
+    let c2name = c2?.name ? c2.name.toLowerCase() : ""
     return (c1name > c2name) ? 1 : -1
   }
 
@@ -59,7 +58,7 @@ const SearchOptionsCategoryFilter: React.FC<ReactProps> = (props) => {
 
     let categoryOptions = [
       { label: "All Categories", value: undefined },
-      ...option(currentCategories)([])
+      ...(currentCategories ?? [])
         .filter(c => !!c.name)
         .sort(sortAlphabetically)
         .map((category, i) => {
@@ -146,7 +145,7 @@ const SearchOptionsCategoryFilter: React.FC<ReactProps> = (props) => {
         <AccordionDetails>
           <div className={classes.facetSection}>
             {
-              option(currentCategories)([])
+              (currentCategories ?? [])
               .filter(c => !!c.name)
               .sort(sortAlphabetically)
               .map((category, i) => {
@@ -168,7 +167,7 @@ const SearchOptionsCategoryFilter: React.FC<ReactProps> = (props) => {
               })
             }
             {
-              (option(currentCategories)([]).length > 0) &&
+              (currentCategories ?? []).length > 0 &&
               <Button
                 classes={{ root: classes.buttonRoot }}
                 variant="outlined"

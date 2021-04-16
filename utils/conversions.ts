@@ -4,7 +4,6 @@ import {
   ProductVariantEditInput,
   Product_Preview_Items,
 } from "typings/gqlTypes";
-import { oc as option } from "ts-optchain";
 import { DzuPreviewItem } from "typings/dropzone";
 
 
@@ -50,7 +49,7 @@ export const productToProductEditInput = (
         isDefault: product.featuredVariant?.isDefault,
         previewItems: (product.featuredVariant?.previewItems ?? [])
           .map((p, index) => ({
-            imageId: option(p).image.id(),
+            imageId: p?.image?.id,
             youTubeEmbedLink: p.youTubeEmbedLink,
           }))
       } as ProductVariantEditInput

@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { oc as option } from "ts-optchain";
 import clsx from "clsx";
 import { Colors } from "layout/AppTheme";
 // // Redux
@@ -138,17 +137,17 @@ const EditStoreForm: React.FC<ReactProps> = (props) => {
     <Formik
       // 1. feed product data to edit into formik state.
       initialValues={{
-        storeId: option(storePrivate).id(),
-        userId: option(storePrivate).userId(),
-        name: option(storePrivate).name(),
-        bio: option(storePrivate).bio(),
-        website: option(storePrivate).website(),
-        coverId: option(storePrivate).coverId(),
-        profileId: option(storePrivate).profileId(),
+        storeId: storePrivate?.id,
+        userId: storePrivate?.userId,
+        name: storePrivate?.name,
+        bio: storePrivate?.bio,
+        website: storePrivate?.website,
+        coverId: storePrivate?.coverId,
+        profileId: storePrivate?.profileId,
         // payout method
-        bsb: option(userRedux).payoutMethod.bsb(),
-        accountNumber: option(userRedux).payoutMethod.accountNumber(),
-        accountName: option(userRedux).payoutMethod.accountName(),
+        bsb: userRedux?.payoutMethod?.bsb,
+        accountNumber: userRedux?.payoutMethod?.accountNumber,
+        accountName: userRedux?.payoutMethod?.accountName,
       }}
       validationSchema={validationSchemas.EditStore}
       onSubmit={(values, { setSubmitting }) => {

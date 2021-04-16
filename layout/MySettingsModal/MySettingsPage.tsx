@@ -1,5 +1,4 @@
 import React from "react";
-import { oc as option } from "ts-optchain";
 import clsx from "clsx";
 // Graphql Queries
 import { UserPrivate } from "typings/gqlTypes";
@@ -90,7 +89,7 @@ const MySettings = (props: ReactProps & ReduxProps) => {
       </div>
 
       {
-        option(user).store() &&
+        user?.store &&
         <div className={classes.section}>
           <ChangePayoutMethod/>
         </div >

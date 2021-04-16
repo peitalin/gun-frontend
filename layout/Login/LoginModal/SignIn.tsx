@@ -1,6 +1,5 @@
 import React from 'react';
 import { withStyles, WithStyles } from "@material-ui/core/styles";
-import { oc as option } from "ts-optchain";
 import { Colors } from "layout/AppTheme";
 
 import FormControl from '@material-ui/core/FormControl';

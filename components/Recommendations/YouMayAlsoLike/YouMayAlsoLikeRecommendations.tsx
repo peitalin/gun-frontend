@@ -1,5 +1,4 @@
 import React from "react";
-import { oc as option } from "ts-optchain";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 import { Colors, BorderRadius } from "layout/AppTheme";
@@ -54,7 +53,7 @@ const YouMayAlsoLikeRecommendations = (props: ReactProps) => {
     ssr: true,
   });
 
-  const connection = option(data).getRecommendedProductsConnection();
+  const connection = data?.getRecommendedProductsConnection;
 
   const theme = useTheme();
   // jumboXL preview card on sm screen size only, remove right margin
@@ -64,7 +63,7 @@ const YouMayAlsoLikeRecommendations = (props: ReactProps) => {
   const xsDown = useMediaQuery(theme.breakpoints.only("xs"))
 
 
-  let productsExist = option(connection).edges([]).length > 0;
+  let productsExist = connection?.edges?.length > 0;
   // console.log("recommmmmmm", data)
 
   if (!productsExist && !loading) {

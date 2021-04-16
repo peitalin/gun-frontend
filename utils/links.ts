@@ -1,5 +1,4 @@
 import { Product, Store } from "typings/gqlTypes";
-import { oc as option } from "ts-optchain";
 
 
 export const isYouTubeVimeoLink = (link: string) => {

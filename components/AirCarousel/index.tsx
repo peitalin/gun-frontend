@@ -1,5 +1,4 @@
 import React from "react";
-import { oc as option } from "ts-optchain";
 import clsx from "clsx";
 // utils
 import { smoothScroll } from "./carouselUtils";
@@ -52,8 +51,8 @@ const AirCarousel: React.FC<ReactProps> = (props) => {
     : [];
 
   // number of airItems above 3, multiply by width of each item
-  // const maxCursor = (airItems.length - 3) * option(airItems)[0].clientWidth(0);
-  let cardWidth = option(airItems)[0].clientWidth(0);
+  // const maxCursor = (airItems.length - 3) * airItems?.[0].clientWidth ?? 0
+  let cardWidth = airItems?.[0]?.clientWidth ?? 0;
   const maxCursor = (airItems.length - 1) * cardWidth;
 
   React.useEffect(() => {
@@ -105,7 +104,7 @@ const AirCarousel: React.FC<ReactProps> = (props) => {
               className={showButtons ? "fadeInFast" : "hidden"}
               onClick={() => {
                 console.log('clicked left button')
-                let newCursor = (cursor - option(airItems)[0].clientWidth(0) * scrollItemsPerClick);
+                let newCursor = (cursor - (airItems?.[0]?.clientWidth ?? 0) * scrollItemsPerClick);
                 // smScroll((newCursor < 0) ? 0 : newCursor)
                 smScroll(0)
                 setCursor((newCursor <= 0) ? 0 : newCursor)
@@ -124,7 +123,7 @@ const AirCarousel: React.FC<ReactProps> = (props) => {
             <AirButtonRight
               className={showButtons ? "fadeInFast" : "hidden"}
               onClick={() => {
-                let newCursor = (cursor + option(airItems)[0].clientWidth(0)) * scrollItemsPerClick;
+                let newCursor = (cursor + (airItems?.[0]?.clientWidth ?? 0)) * scrollItemsPerClick;
                 // console.log("newCursor: ", airItems[0])
                 // console.log("airItems: ", newCursor)
                 smScroll((newCursor > maxCursor) ? maxCursor : newCursor)

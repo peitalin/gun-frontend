@@ -1,6 +1,5 @@
 import React from "react";
 import clsx from "clsx";
-import { oc as option } from "ts-optchain";
 import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
 import { Colors, BorderRadius } from "layout/AppTheme";
 // Typings
@@ -28,10 +27,8 @@ const ThumbnailImage: React.FC<ReactProps> = (props) => {
     carouselSize = false,
     showLoadingBar = false,
   } = props;
-  const image = option(previewItem).image();
+  const image = previewItem?.image;
 
-  // const portraitMode = option(image).original.heightInPixels()
-  //                     > option(image).original.widthInPixels()
 
   const theme = useTheme();
   const xsDown = useMediaQuery(theme.breakpoints.down("xs"));
@@ -44,7 +41,7 @@ const ThumbnailImage: React.FC<ReactProps> = (props) => {
   React.useEffect(() => {
     // React BUG: all event fired before hydration are lost.
     // https://github.com/facebook/react/issues/15446
-    if (option(image).original.url() && imgLoaded === 0) {
+    if (image?.original?.url && imgLoaded === 0) {
       setImgLoaded(1)
     }
     return () => {}
@@ -64,7 +61,7 @@ const ThumbnailImage: React.FC<ReactProps> = (props) => {
         }}
       >
         {
-          option(image).original.url() &&
+          image?.original?.url &&
           <CardMedia
             component="img"
             // className={loading ? 'shimmer' : null}
@@ -83,9 +80,9 @@ const ThumbnailImage: React.FC<ReactProps> = (props) => {
 
             }}
             onLoad={() => setImgLoaded(s => s + 1)}
-            src={option(image).original.url()}
+            src={image?.original?.url}
             srcSet={
-              (option(image).variants([]).length > 0)
+              (image?.variants?.length > 0)
                 ? genSrcSet(image)
                 : null
             }

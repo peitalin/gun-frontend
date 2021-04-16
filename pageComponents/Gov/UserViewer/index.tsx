@@ -1,5 +1,4 @@
 import React from "react";
-import {oc as option} from "ts-optchain";
 import clsx from "clsx";
 // Redux
 import { useSelector } from "react-redux";
@@ -115,7 +114,7 @@ const UserViewer: React.FC<ReactProps> = (props) => {
   }
 
   const admin = useSelector<GrandReduxState, UserPrivate>(
-    state => option(state).reduxLogin.user()
+    state => state?.reduxLogin?.user
   );
 
   if (!user?.id) {

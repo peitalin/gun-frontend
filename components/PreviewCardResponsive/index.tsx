@@ -1,6 +1,5 @@
 import React from "react";
 import clsx from "clsx";
-import { oc as option } from "ts-optchain";
 // Typings
 import { Product } from "typings/gqlTypes";
 // Responsiveness
@@ -38,7 +37,7 @@ const PreviewCardResponsive: React.FC<PreviewCardResponsiveProps> = (props) => {
   const noMediaQuery = [xl, lg, md, sm, xs].every(s => !s);
   // if no media query applies
 
-  const featuredPreviewItem = option(product).featuredVariant.previewItems[0]();
+  const featuredPreviewItem = product?.featuredVariant?.previewItems?.[0]
 
   const commonPreviewCardProps = {
     listName: props.listName,
@@ -51,8 +50,8 @@ const PreviewCardResponsive: React.FC<PreviewCardResponsiveProps> = (props) => {
     maxWidthOfRow: maxWidthOfRow,
     hidePrice: hidePrice,
     previewImageEmptyMessage: props.previewImageEmptyMessage,
-    fit: option(featuredPreviewItem).image.original.heightInPixels() >
-        option(featuredPreviewItem).image.original.widthInPixels(),
+    fit: featuredPreviewItem?.image?.original?.heightInPixels >
+        featuredPreviewItem?.image?.original?.widthInPixels,
     onClick: props.onClick,
   }
 
