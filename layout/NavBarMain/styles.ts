@@ -139,8 +139,8 @@ export const styles = (theme: Theme) => createStyles({
     marginRight: "0.5rem",
     minWidth: '60px',
     background: theme.palette.type === 'dark'
-      ? fade(Colors.uniswapDarkNavy, 0.3)
-      : fade(Colors.cream, 0.3),
+      ? fade(Colors.uniswapDarkNavy, 0.1)
+      : fade(Colors.cream, 0.1),
     "&:hover": {
       background: theme.palette.type === 'dark'
         ? fade(Colors.uniswapDarkNavy, 0.7)
