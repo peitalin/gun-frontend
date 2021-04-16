@@ -168,28 +168,20 @@ class MainApp extends App<AppProps> {
 
 const ThemeProviderDarkMode = ({ initialDarkMode, children }) => {
 
-  let darkMode = useSelector<GrandReduxState, "dark"|"light">(s => {
+  let darkModeRedux = useSelector<GrandReduxState, "dark"|"light">(s => {
     return s.reduxLogin.darkMode
   })
   let dispatch = useDispatch()
   let router = useRouter()
 
-
   React.useEffect(() => {
 
-    // do this only once per page load
     let localStorageDarkMode: "dark" | "light" = undefined;
     if (process.browser && !!window) {
       localStorageDarkMode = window?.localStorage?.getItem('gmDarkMode') as any;
     }
 
-    if (initialDarkMode === 'dark') {
-      dispatch(Actions.reduxLogin.SET_DARK_MODE())
-    } else if (router?.query?.dark === 'true' || router?.query?.dark === '1') {
-      dispatch(Actions.reduxLogin.SET_DARK_MODE())
-    } else if (router?.query?.dark === 'false' || router?.query?.dark === '0') {
-      dispatch(Actions.reduxLogin.SET_LIGHT_MODE())
-    } else if (localStorageDarkMode !== undefined) {
+    if (localStorageDarkMode !== undefined) {
       // first check if browser has dark mode preferences initially
       if (localStorageDarkMode === "dark") {
         dispatch(Actions.reduxLogin.SET_DARK_MODE())
@@ -205,16 +197,32 @@ const ThemeProviderDarkMode = ({ initialDarkMode, children }) => {
         dispatch(Actions.reduxLogin.SET_LIGHT_MODE())
       }
     }
+  }, [darkModeRedux])
+
+
+
+  React.useEffect(() => {
+    if (initialDarkMode === 'dark') {
+      dispatch(Actions.reduxLogin.SET_DARK_MODE())
+      let urlPath = router.asPath.split('?')[0]
+      // remove dark=true query param after setting initial dark mode
+      router.push(
+        `${router.pathname}`,
+        `${urlPath}`,
+        { shallow: true }
+      )
+    }
   }, [])
 
   let darkModeTheme: PaletteOptions = {
-    type: initialDarkMode ?? darkMode,
-  }
-  // // console.log("darkMode: ", darkMode)
-  // console.log("darkModeTheme: ", darkModeTheme)
-  // console.log("initialDarkMode: ", initialDarkMode)
+    type: darkModeRedux ?? initialDarkMode
+  };
 
-  let appTheme: ThemeOptions = createAppTheme(darkMode);
+  console.log("darkModeRedux: ", darkModeRedux)
+  console.log("initialDarkMode: ", initialDarkMode)
+  console.log("darkModeTheme: ", darkModeTheme)
+
+  let appTheme: ThemeOptions = createAppTheme(darkModeRedux);
 
   const theme = React.useMemo(
     () =>
@@ -226,7 +234,7 @@ const ThemeProviderDarkMode = ({ initialDarkMode, children }) => {
         }
       }),
 
-    [darkMode],
+    [darkModeRedux],
   );
   return (
     <ThemeProvider theme={theme}>

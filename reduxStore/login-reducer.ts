@@ -7,14 +7,14 @@ import { UserPrivate, StorePrivate } from "typings/gqlTypes";
 export interface ReduxStateLogin {
   user?: UserPrivate;
   loggedIn?: boolean;
-  darkMode?: "dark" | "light";
+  darkMode?: "dark" | "light" | undefined;
 }
 
 
 const initialLoginState: ReduxStateLogin = {
   user: undefined,
   loggedIn: false,
-  darkMode: "light",
+  darkMode: undefined,
 }
 
 export const reduxReducerLogin = (

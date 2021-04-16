@@ -50,7 +50,7 @@ const StartSelling4 = (props: ReactProps) => {
                 "Payments secured before you dispose your firearm",
               ].map(( text, i ) => {
                 return (
-                  <div className={classes.flexItemTickRow}>
+                  <div key={i} className={classes.flexItemTickRow}>
                     <TickPoint key={i}
                       isDarkMode={props.isDarkMode}
                       text={text}
@@ -92,7 +92,7 @@ const StartSelling4 = (props: ReactProps) => {
                 "Direct payment to your bank account. No questions asked.",
               ].map(( text, i ) => {
                 return (
-                  <div className={classes.flexItemTickRow}>
+                  <div key={i} className={classes.flexItemTickRow}>
                     <TickPoint key={i}
                       isDarkMode={props.isDarkMode}
                       text={text}
