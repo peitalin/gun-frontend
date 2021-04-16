@@ -114,8 +114,8 @@ const PriceFields = (props: ReactProps & FormikProps<FormikFields>) => {
                   onBlur={handleBlur}
                   inputProps={{ style: { width: '100%', marginLeft: '0.25rem' }}}
                   errorMessage={
-                    errors?.currentVariants?.[position]
-                    ? errors.currentVariants[position]
+                    (errors?.currentVariants?.[position] as any)?.price
+                    ? (errors.currentVariants[position] as any)?.price
                     : null
                   }
                   touched={touched?.currentVariants?.[position]?.price}
@@ -132,10 +132,10 @@ const PriceFields = (props: ReactProps & FormikProps<FormikFields>) => {
         Price will be displayed as:
       </div>
       <div className={classes.container}>
-        <PriceDisplayProductPage
+        {/* <PriceDisplayProductPage
           price={currentVariants?.[position]?.price}
           priceWas={currentVariants?.[position]?.priceWas}
-        />
+        /> */}
       </div>
     </ErrorBounds>
   )

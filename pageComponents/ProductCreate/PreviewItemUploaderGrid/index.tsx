@@ -276,7 +276,7 @@ const PreviewItemUploaderGrid = (props: ReactProps & FormikProps<FormikFields>) 
       <ValidationErrorMsg
         touched={fprops?.touched?.currentVariants?.[0]?.previewItems}
         focused={focused}
-        errorMessage={fprops?.errors?.currentVariants?.[0]}
+        errorMessage={(fprops?.errors?.currentVariants?.[0] as any)?.previewItems}
         disableInitialValidationMessage={true}
         style={{
           bottom: '-0.75rem',
