@@ -91,7 +91,7 @@ class MainApp extends App<AppProps> {
     return {
       pageProps: {
         ...pageProps,
-        initialDarkMode: darkMode,
+        initialDarkModeSSR: darkMode,
       }
     };
   }
@@ -132,7 +132,7 @@ class MainApp extends App<AppProps> {
     return (
       <Provider store={store}>
         <ApolloProvider client={apollo}>
-          <ThemeProviderDarkMode initialDarkMode={pageProps.initialDarkMode}>
+          <ThemeProviderDarkMode initialDarkModeSSR={pageProps.initialDarkModeSSR}>
             <SnackbarProvider
             // @ts-ignore
               ref={notistackRef}
@@ -166,7 +166,7 @@ class MainApp extends App<AppProps> {
 }
 
 
-const ThemeProviderDarkMode = ({ initialDarkMode, children }) => {
+const ThemeProviderDarkMode = ({ initialDarkModeSSR, children }) => {
 
   let darkModeRedux = useSelector<GrandReduxState, "dark"|"light">(s => {
     return s.reduxLogin.darkMode
@@ -202,27 +202,31 @@ const ThemeProviderDarkMode = ({ initialDarkMode, children }) => {
 
 
   React.useEffect(() => {
-    if (initialDarkMode === 'dark') {
+    if (initialDarkModeSSR === 'dark') {
       dispatch(Actions.reduxLogin.SET_DARK_MODE())
-      let urlPath = router.asPath.split('?')[0]
-      // remove dark=true query param after setting initial dark mode
-      router.push(
-        `${router.pathname}`,
-        `${urlPath}`,
-        { shallow: true }
-      )
+      //// remove dark=true query param after setting initial dark mode
+      // let urlPath = router.asPath.split('?')[0]
+      // router.push(
+      //   `${router.pathname}`,
+      //   `${urlPath}`,
+      //   { shallow: true }
+      // )
     } else {
       dispatch(Actions.reduxLogin.SET_LIGHT_MODE())
     }
   }, [])
 
   let darkModeTheme: PaletteOptions = {
-    type: darkModeRedux ?? initialDarkMode
+    type: darkModeRedux ?? initialDarkModeSSR
   };
+  // darkModeRedux is initially undefined on server-side
+  // so initialDarkModeSSR (determined by ?dark=1) will make the app render
+  // in dark mode on server-side initially
+  // Then client-side, darkModeRedux takes over dark mode toggle
 
-  console.log("darkModeRedux: ", darkModeRedux)
-  console.log("initialDarkMode: ", initialDarkMode)
-  console.log("darkModeTheme: ", darkModeTheme)
+  // console.log("darkModeRedux: ", darkModeRedux)
+  // console.log("initialDarkModeSSR: ", initialDarkModeSSR)
+  // console.log("darkModeTheme: ", darkModeTheme)
 
   let appTheme: ThemeOptions = createAppTheme(darkModeRedux);
 
