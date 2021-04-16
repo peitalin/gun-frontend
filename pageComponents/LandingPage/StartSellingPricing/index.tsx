@@ -17,6 +17,7 @@ import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import CardMedia from "@material-ui/core/CardMedia";
 import Hidden from "components/HiddenFix";
+import ShowOnMobileOrDesktopSSR from "components/ShowOnMobileOrDesktopSSR";
 import AspectRatioConstraint from "components/AspectRatioConstraint";
 
 
@@ -30,94 +31,140 @@ const StartSellingPricing = (props: ReactProps) => {
   const lgDown = useMediaQuery(theme.breakpoints.down("lg"));
 
   return (
-    <div className={clsx(
-      classes.section6Root,
-      mdDown ? classes.paddingRootMobile : classes.paddingRoot,
-    )}>
-      <div className={clsx(classes.section6, classes.flexCol)}>
+    <>
+      <ShowOnMobileOrDesktopSSR desktop>
+        <div className={clsx(classes.section6Root, classes.paddingRoot)}>
+          <div className={clsx(classes.section6, classes.flexCol)}>
 
-        <Typography className={
-          mdDown ? classes.titleMobile : classes.titleDesktop
-        }>
-          A fee model that puts gun collectors first
-        </Typography>
+            <Typography className={classes.titleDesktop}>
+              A fee model that puts gun collectors first
+            </Typography>
 
-        <div className={classes.paymentCard}>
+            <div className={classes.paymentCard}>
 
-          <div className={classes.paymentCardTitleBox}>
-            <div className={classes.productCardIcon}>
-              <svg viewBox="0 0 48 48">
-                <path fill={isDarkMode ? Colors.purple : Colors.ultramarineBlue}
-                  className="hover-fillLight"
-                  d="M24 0c13.255 0 24 10.745 24 24S37.255 48 24 48 0 37.255 0 24 10.745 0 24 0z"
-                />
-                <path fill={isDarkMode ? Colors.lightPurple : Colors.lightBlue}
-                  d="M39.558 30.977c-6.23 6.225-16.304 6.194-22.535-.03l13.975-13.962c-6.232-6.224-16.335-6.224-22.567 0-4.043 4.04-5.456 9.712-4.247 14.896l-.654.174a21.89 21.89 0 0 1-1.536-8.61c.284-11.806 10.003-21.35 21.823-21.446 6.15-.05 11.72 2.42 15.744 6.438 6.23 6.226 6.23 16.318 0 22.542z"
-                />
-                <path fill={isDarkMode ? Colors.uniswapNavy : Colors.cream}
-                  className="hover-fillDark"
-                  d="M33.653 21.413c1.43 5.336-1.735 10.82-7.068 12.25-5.332 1.43-10.814-1.736-12.242-7.072-1.43-5.334 1.735-10.82 7.068-12.25 5.334-1.43 10.815 1.738 12.244 7.074z"
-                />
-              </svg>
-            </div>
-            <h3 className={
-              mdDown ? classes.headingMobile : classes.headingDesktop
-            }>
-              Pricing
-            </h3>
-          </div>
-
-          <div className="product-card-content">
-            <div className="product-card-split">
-              <div>
-                <div className={
-                  mdDown ? classes.subtitleMobile : classes.subtitleDesktop
-                }>
-                  {"A flat 3.5% fee "}
-                  <span style={{ textDecoration: "underline" }}>
-                    only
-                  </span>
-                  {" on successful orders"}
+              <div className={classes.paymentCardTitleBox}>
+                <div className={classes.productCardIcon}>
+                  <svg viewBox="0 0 48 48">
+                    <path fill={isDarkMode ? Colors.purple : Colors.ultramarineBlue}
+                      className="hover-fillLight"
+                      d="M24 0c13.255 0 24 10.745 24 24S37.255 48 24 48 0 37.255 0 24 10.745 0 24 0z"
+                    />
+                    <path fill={isDarkMode ? Colors.lightPurple : Colors.lightBlue}
+                      d="M39.558 30.977c-6.23 6.225-16.304 6.194-22.535-.03l13.975-13.962c-6.232-6.224-16.335-6.224-22.567 0-4.043 4.04-5.456 9.712-4.247 14.896l-.654.174a21.89 21.89 0 0 1-1.536-8.61c.284-11.806 10.003-21.35 21.823-21.446 6.15-.05 11.72 2.42 15.744 6.438 6.23 6.226 6.23 16.318 0 22.542z"
+                    />
+                    <path fill={isDarkMode ? Colors.uniswapNavy : Colors.cream}
+                      className="hover-fillDark"
+                      d="M33.653 21.413c1.43 5.336-1.735 10.82-7.068 12.25-5.332 1.43-10.814-1.736-12.242-7.072-1.43-5.334 1.735-10.82 7.068-12.25 5.334-1.43 10.815 1.738 12.244 7.074z"
+                    />
+                  </svg>
                 </div>
-
-                <ul className={
-                  mdDown ? classes.paymentListMobile : classes.paymentListDesktop
-                }>
-                  <li className={
-                    mdDown ? classes.paymentItemsMobile : classes.paymentItemsDesktop
-                  }>
-                    1.75% fee for credit card processing
-                  </li>
-                  <li className={
-                    mdDown ? classes.paymentItemsMobile : classes.paymentItemsDesktop
-                  }>
-                    1.75% Gun Marketplace fee
-                  </li>
-                  <li className={
-                    mdDown ? classes.paymentItemsMobile : classes.paymentItemsDesktop
-                  }>
-                    No additional bank transfer fees
-                  </li>
-                  <li className={
-                    mdDown ? classes.paymentItemsMobile : classes.paymentItemsDesktop
-                  }>
-                    No fees for creating user accounts
-                  </li>
-                  <li className={
-                    mdDown ? classes.paymentItemsMobile : classes.paymentItemsDesktop
-                  }>
-                    No fees for creating listings
-                  </li>
-                </ul>
+                <h3 className={ classes.headingDesktop }>
+                  Pricing
+                </h3>
               </div>
 
+              <div className="product-card-content">
+                <div className="product-card-split">
+                  <div>
+                    <div className={ classes.subtitleDesktop }>
+                      {"A flat 3.5% fee "}
+                      <span style={{ textDecoration: "underline" }}>
+                        only
+                      </span>
+                      {" on successful orders"}
+                    </div>
+
+                    <ul className={ classes.paymentListDesktop }>
+                      <li className={classes.paymentItemsDesktop}>
+                        1.75% fee for credit card processing
+                      </li>
+                      <li className={classes.paymentItemsDesktop}>
+                        1.75% Gun Marketplace fee
+                      </li>
+                      <li className={classes.paymentItemsDesktop}>
+                        No additional bank transfer fees
+                      </li>
+                      <li className={classes.paymentItemsDesktop}>
+                        No fees for creating user accounts
+                      </li>
+                      <li className={classes.paymentItemsDesktop}>
+                        No fees for creating listings
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
+      </ShowOnMobileOrDesktopSSR>
+      <ShowOnMobileOrDesktopSSR mobile>
+        <div className={clsx(classes.section6Root, classes.paddingRootMobile)}>
+          <div className={clsx(classes.section6, classes.flexCol)}>
 
+            <Typography className={classes.titleMobile}>
+              A fee model that puts gun collectors first
+            </Typography>
 
-      </div>
-    </div>
+            <div className={classes.paymentCard}>
+
+              <div className={classes.paymentCardTitleBox}>
+                <div className={classes.productCardIcon}>
+                  <svg viewBox="0 0 48 48">
+                    <path fill={isDarkMode ? Colors.purple : Colors.ultramarineBlue}
+                      className="hover-fillLight"
+                      d="M24 0c13.255 0 24 10.745 24 24S37.255 48 24 48 0 37.255 0 24 10.745 0 24 0z"
+                    />
+                    <path fill={isDarkMode ? Colors.lightPurple : Colors.lightBlue}
+                      d="M39.558 30.977c-6.23 6.225-16.304 6.194-22.535-.03l13.975-13.962c-6.232-6.224-16.335-6.224-22.567 0-4.043 4.04-5.456 9.712-4.247 14.896l-.654.174a21.89 21.89 0 0 1-1.536-8.61c.284-11.806 10.003-21.35 21.823-21.446 6.15-.05 11.72 2.42 15.744 6.438 6.23 6.226 6.23 16.318 0 22.542z"
+                    />
+                    <path fill={isDarkMode ? Colors.uniswapNavy : Colors.cream}
+                      className="hover-fillDark"
+                      d="M33.653 21.413c1.43 5.336-1.735 10.82-7.068 12.25-5.332 1.43-10.814-1.736-12.242-7.072-1.43-5.334 1.735-10.82 7.068-12.25 5.334-1.43 10.815 1.738 12.244 7.074z"
+                    />
+                  </svg>
+                </div>
+                <h3 className={classes.headingMobile}>
+                  Pricing
+                </h3>
+              </div>
+
+              <div className="product-card-content">
+                <div className="product-card-split">
+                  <div>
+                    <div className={classes.subtitleMobile}>
+                      {"A flat 3.5% fee "}
+                      <span style={{ textDecoration: "underline" }}>
+                        only
+                      </span>
+                      {" on successful orders"}
+                    </div>
+
+                    <ul className={classes.paymentListMobile}>
+                      <li className={classes.paymentItemsMobile}>
+                        1.75% fee for credit card processing
+                      </li>
+                      <li className={classes.paymentItemsMobile}>
+                        1.75% Gun Marketplace fee
+                      </li>
+                      <li className={classes.paymentItemsMobile}>
+                        No additional bank transfer fees
+                      </li>
+                      <li className={classes.paymentItemsMobile}>
+                        No fees for creating user accounts
+                      </li>
+                      <li className={classes.paymentItemsMobile}>
+                        No fees for creating listings
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ShowOnMobileOrDesktopSSR>
+    </>
   );
 };
 
