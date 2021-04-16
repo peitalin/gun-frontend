@@ -1,8 +1,7 @@
 // styles
 import { createStyles, Theme, fade, lighten } from "@material-ui/core/styles";
-import { Colors, BorderRadius2x } from "layout/AppTheme";
+import { Colors, BorderRadius2x, fontFam } from "layout/AppTheme";
 
-const fontFam = 'Helvetica Neue, Arial';
 
 export const styles = (theme: Theme) => createStyles({
   root: {

@@ -1,9 +1,8 @@
 // styles
 import { createStyles, Theme, fade } from "@material-ui/core/styles";
-import { Colors, Gradients } from "layout/AppTheme";
+import { Colors, Gradients, fontFam } from "layout/AppTheme";
 
 
-const fontFam = 'Helvetica Neue, Arial';
 
 export const styles = (theme: Theme) => createStyles({
   root: {

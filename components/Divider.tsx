@@ -1,6 +1,6 @@
-import * as React from "react";
+import React from "react";
 import { createStyles, Theme, withStyles, WithStyles } from "@material-ui/core/styles";
-import { Colors } from "layout/AppTheme";
+import { Colors, fontFam } from "layout/AppTheme";
 
 
 const Divider = (props: ReactProps) => {
@@ -43,8 +43,7 @@ const styles = (theme: Theme) => createStyles({
     fontWeight: 400,
     fontSize: '0.9rem',
     fontStyle: "italic",
-    // fontFamily: '"Segoe UI","Helvetica Neue",Arial,sans-serif',
-    fontFamily: 'times new roman',
+    fontFamily: fontFam,
   },
 })
 

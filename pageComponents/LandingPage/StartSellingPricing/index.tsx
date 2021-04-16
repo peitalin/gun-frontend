@@ -74,7 +74,11 @@ const StartSellingPricing = (props: ReactProps) => {
                 <div className={
                   mdDown ? classes.subtitleMobile : classes.subtitleDesktop
                 }>
-                  A flat 3.5% fee only on successful orders
+                  {"A flat 3.5% fee "}
+                  <span style={{ textDecoration: "underline" }}>
+                    only
+                  </span>
+                  {" on successful orders"}
                 </div>
 
                 <ul className={

@@ -1,7 +1,7 @@
 import React from "react";
 import clsx from "clsx";
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
-import { BorderRadius } from "layout/AppTheme";
+import { BorderRadius, fontFam } from "layout/AppTheme";
 // Material UI
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
@@ -119,7 +119,6 @@ const AirTitle = (props) => {
     }}>
       <div className="air-title-text" style={{
         overflowWrap: "break-word",
-        fontFamily: `"Segoe UI", -apple-system, Roboto, "Helvetica Neue", sans-serif`,
         fontSize: "14px",
         fontWeight: 400,
         lineHeight: "1.44444em",

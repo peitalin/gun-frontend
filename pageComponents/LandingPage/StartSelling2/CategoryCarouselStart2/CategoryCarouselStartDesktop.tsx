@@ -55,7 +55,7 @@ const CategoryCarouselMainDesktop = (props: ReactProps) => {
           let imageUrl = c?.imageUrl
 
           return (
-            <div className={classes.imagePosition}>
+            <div key={i} className={classes.imagePosition}>
               {
                 (!!imageUrl) &&
                 <CardMedia

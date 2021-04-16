@@ -137,7 +137,7 @@ export const styles = (theme: Theme) => createStyles({
   optionValues: {
     flexBasis: '100%',
     marginRight: '0rem',
-    fontFamily: '"Helvetica Neue",Arial,sans-serif',
+    fontFamily: fontFam,
     fontSize: '0.9rem',
     fontWeight: 400,
   },
@@ -276,7 +276,7 @@ export const styles = (theme: Theme) => createStyles({
   },
   countText: {
     fontSize: "0.8rem",
-    fontFamily: '"Helvetica Neue",Arial,sans-serif',
+    fontFamily: fontFam,
     opacity: 0.25,
     position: 'absolute',
     right: '0.25rem',

@@ -1,16 +1,22 @@
 import React from "react";
 import clsx from "clsx";
-import { oc as option } from "ts-optchain";
 // styles
 import { withStyles, WithStyles, createStyles, Theme, fade } from "@material-ui/core/styles";
-import { BorderRadius, Colors, Gradients, BorderRadius2x, BoxShadows } from "layout/AppTheme";
+import {
+  BorderRadius,
+  Colors,
+  Gradients,
+  BorderRadius2x,
+  BoxShadows,
+  fontFam,
+} from "layout/AppTheme";
 // components
 import Banner from "components/Banner";
 import Typography from "@material-ui/core/Typography";
 import Button from '@material-ui/core/Button';
 import TextInput from "components/Fields/TextInput";
 // SSR
-import { NextPage, NextPageContext } from 'next';
+import { NextPage } from 'next';
 // CSS
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
@@ -260,7 +266,6 @@ interface ReactProps extends WithStyles<typeof styles> {
 }
 
 
-const fontFam = 'Helvetica Neue, Arial';
 
 export const styles = (theme: Theme) => createStyles({
   bannerInnerBoxLeft: {

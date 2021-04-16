@@ -2,7 +2,7 @@ import React from "react";
 import { oc as option } from "ts-optchain";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
-import { Colors, BorderRadius, BoxShadows } from "layout/AppTheme";
+import { Colors, BorderRadius, BoxShadows, fontFam } from "layout/AppTheme";
 import clsx from "clsx";
 // Material UI
 import Typography from "@material-ui/core/Typography";
@@ -366,7 +366,7 @@ export const selectStyles = ({ width }: { width?: any }) => ({
       border: 'none',
     },
     borderRadius: '4px',
-    fontFamily: '"Helvetica Neue",Arial,sans-serif',
+    fontFamily: fontFam,
     fontSize: '0.9rem',
     color: Colors.darkGrey,
     // fontSize: '1rem',
@@ -386,7 +386,7 @@ export const selectStyles = ({ width }: { width?: any }) => ({
         : isFocused
           ? Colors.lightGrey
           : Colors.dropDownGrey,
-      fontFamily: '"Helvetica Neue",Arial,sans-serif',
+      fontFamily: fontFam,
       fontSize: '1rem',
       cursor: isDisabled ? 'not-allowed' : 'pointer',
       "&:hover": {

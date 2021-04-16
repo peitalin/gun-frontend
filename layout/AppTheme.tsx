@@ -371,7 +371,7 @@ export const BorderRadius3x = 24;
 export const BorderRadius4x = 32;
 
 export const fontFam = [
-  // "Roobert TRIAL",
+  "Roobert TRIAL",
   '"Helvetica Neue"',
   'Arial',
   'sans-serif',

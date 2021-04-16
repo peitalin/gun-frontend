@@ -2,7 +2,7 @@ import React from "react";
 import clsx from "clsx";
 // styles
 import { withStyles, WithStyles, createStyles, Theme, fade } from "@material-ui/core/styles";
-import { BorderRadius, Colors, Gradients, BorderRadius2x, BoxShadows } from "layout/AppTheme";
+import { BorderRadius, Colors, Gradients, BorderRadius2x, BoxShadows, fontFam } from "layout/AppTheme";
 // components
 import Banner from "components/Banner";
 import Typography from "@material-ui/core/Typography";
@@ -228,7 +228,6 @@ interface ReactProps extends WithStyles<typeof styles> {
 }
 
 
-const fontFam = 'Helvetica Neue, Arial';
 
 export const styles = (theme: Theme) => createStyles({
   bannerInnerBoxLeft: {

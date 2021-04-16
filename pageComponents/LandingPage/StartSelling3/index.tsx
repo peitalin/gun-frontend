@@ -213,7 +213,7 @@ export const styles = (theme: Theme) => createStyles({
     marginBottom: '2rem',
   },
   reason: {
-    fontSize: '1.3rem',
+    fontSize: '1.125rem',
     fontWeight: 500,
   },
   reasonMobile: {
@@ -221,8 +221,8 @@ export const styles = (theme: Theme) => createStyles({
     fontWeight: 500,
   },
   bulletSize: {
-    minWidth: 40,
-    minHeight: 40,
+    minWidth: 32,
+    minHeight: 32,
   },
   bulletSizeMobile: {
     minWidth: 32,
@@ -235,11 +235,14 @@ export const styles = (theme: Theme) => createStyles({
     textAlign: "center",
     borderRadius: "50%",
     color: Colors.cream,
-    fontSize: "1.125rem",
+    fontSize: "1rem",
     fontWeight: 600,
     background: theme.palette.type === 'dark'
       ? Colors.purple
       : Colors.blue,
+    border: theme.palette.type === 'dark'
+      ? `3px solid ${Colors.uniswapNavy}`
+      : `3px solid ${Colors.slateGrey}`,
     marginRight: '1rem',
   },
 })
