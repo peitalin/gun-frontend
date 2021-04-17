@@ -71,6 +71,7 @@ const MainBar = (props: ReactProps) => {
       classes={classes}
       isMainPage={_isMainPages}
       isStartPage={_isStartPage}
+      isMobile={mdDown}
       // for special fatter navbar on these routes
     >
 
@@ -122,7 +123,7 @@ const MainBarSSRWrapper: React.FC<MainBarSSRWrapperProps> = (props) => {
     <>
       <ShowOnMobileOrDesktopSSR desktop>
         <nav className={
-          props.isMainPage
+          (props.isMainPage || props.isMobile)
           ? clsx( classes.baseBarHomePage, classes.baseBarDither)
           : props.isStartPage
             ? clsx( classes.baseBarHomePage, classes.baseBarDitherNone)
@@ -133,7 +134,7 @@ const MainBarSSRWrapper: React.FC<MainBarSSRWrapperProps> = (props) => {
       </ShowOnMobileOrDesktopSSR>
       <ShowOnMobileOrDesktopSSR mobile>
         <nav className={
-          props.isMainPage
+          (props.isMainPage || props.isMobile)
           ? clsx( classes.baseBarHomePage, classes.baseBarDitherSm)
           : props.isStartPage
             ? clsx( classes.baseBarHomePage, classes.baseBarDitherNoneSm)
@@ -174,6 +175,7 @@ interface ReactProps extends WithStyles<typeof styles> {
 interface MainBarSSRWrapperProps extends WithStyles<typeof styles> {
   isMainPage: boolean
   isStartPage: boolean
+  isMobile: boolean
 }
 
 interface ReduxProps {

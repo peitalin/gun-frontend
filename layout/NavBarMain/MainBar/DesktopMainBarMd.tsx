@@ -58,10 +58,7 @@ const DesktopMainBarMd = (props: ReactProps) => {
       <div className={!hide ? "fadeIn" : "hidden"}>
         <Link href="/">
           <a className={classes.buttonLink}>
-            <Logo fillColor={
-                // override logo color for desktop /start page
-                (isStartPage && !props.isDarkMode) ? Colors.black : color
-              }
+            <Logo fillColor={color}
               disableLogo={true}
             />
           </a>

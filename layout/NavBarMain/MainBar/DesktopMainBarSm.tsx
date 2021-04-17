@@ -59,10 +59,7 @@ const DesktopMainBarSm = (props: ReactProps) => {
 
       <Link href="/">
         <a className={classes.buttonLink}>
-          <Logo fillColor={
-              // override logo color for desktop /start page
-              (isStartPage && !props.isDarkMode) ? Colors.black : color
-            }
+          <Logo fillColor={color}
             disableLogo={true}
           />
         </a>

@@ -58,14 +58,8 @@ const BannerStart: NextPage<ReactProps> = (props) => {
     // top row: solid background
     // bottom row: navbar dither
     background: props.isDarkMode
-    ? `
-      linear-gradient(10deg , ${Colors.uniswapDarkNavy} 45%, ${Colors.uniswapLightNavy} 45.1%, ${Colors.uniswapLightNavy} 47%, rgba(255, 255, 255, 0) 47.1%),
-      linear-gradient(180deg , rgba(5, 5, 5, 0.6) 0%, rgba(5, 5, 5, 0.3) 10%, rgba(5, 5, 5, 0) 20%)
-      `
-    : `
-      linear-gradient(10deg , ${Colors.cream} 45%, ${Colors.slateGreyDark} 45.1%, ${Colors.slateGreyDark} 47%, rgba(255, 255, 255, 0) 47.1%),
-      linear-gradient(180deg , rgba(5, 5, 5, 0.6) 0%, rgba(5, 5, 5, 0.3) 10%, rgba(5, 5, 5, 0) 20%)
-    `,
+    ? `linear-gradient(10deg , ${Colors.uniswapDarkNavy} 45%, ${Colors.uniswapLightNavy} 45.1%, ${Colors.uniswapLightNavy} 47%, rgba(255, 255, 255, 0) 47.1%)`
+    : `linear-gradient(10deg , ${Colors.cream} 45%, ${Colors.slateGreyDark} 45.1%, ${Colors.slateGreyDark} 47%, rgba(255, 255, 255, 0) 47.1%)`,
   }
 
   ///// https://codepen.io/danichk/pen/YyVeXa

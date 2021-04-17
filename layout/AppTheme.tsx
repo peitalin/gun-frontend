@@ -241,7 +241,7 @@ export const Gradients = {
     color2: Colors.black,
   },
   gradientBlackDitherDown:  {
-    background: `linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%)`,
+    background: `linear-gradient(180deg, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0) 100%)`,
     color1: Colors.black,
     color2: 'rgba(0,0,0,0)',
   },
