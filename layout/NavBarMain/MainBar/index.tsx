@@ -123,7 +123,7 @@ const MainBarSSRWrapper: React.FC<MainBarSSRWrapperProps> = (props) => {
     <>
       <ShowOnMobileOrDesktopSSR desktop>
         <nav className={
-          (props.isMainPage || props.isMobile)
+          props.isMainPage
           ? clsx( classes.baseBarHomePage, classes.baseBarDither)
           : props.isStartPage
             ? clsx( classes.baseBarHomePage, classes.baseBarDitherNone)
@@ -134,7 +134,7 @@ const MainBarSSRWrapper: React.FC<MainBarSSRWrapperProps> = (props) => {
       </ShowOnMobileOrDesktopSSR>
       <ShowOnMobileOrDesktopSSR mobile>
         <nav className={
-          (props.isMainPage || props.isMobile)
+          (props.isMainPage || (props.isStartPage && props.isMobile))
           ? clsx( classes.baseBarHomePage, classes.baseBarDitherSm)
           : props.isStartPage
             ? clsx( classes.baseBarHomePage, classes.baseBarDitherNoneSm)
