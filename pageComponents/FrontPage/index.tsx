@@ -66,7 +66,7 @@ const FrontPage: React.FC<ReactProps> = (props) => {
             </div>
           </div>
           <div className={clsx(classes.categoryTitleBox, classes.marginBox)}>
-            <ShowOnMobileOrDesktopSSR desktop>
+            <ShowOnMobileOrDesktopSSR desktop className={classes.width100}>
               <CategoryCarouselStart
                 // title={"Explore Categories"}
                 disableTitle={true}
@@ -78,7 +78,7 @@ const FrontPage: React.FC<ReactProps> = (props) => {
                 }}
               />
             </ShowOnMobileOrDesktopSSR>
-            <ShowOnMobileOrDesktopSSR mobile>
+            <ShowOnMobileOrDesktopSSR mobile className={classes.width100}>
               <CategoryCarouselStart
                 // title={"Explore Categories"}
                 disableTitle={true}
@@ -237,6 +237,9 @@ const styles = (theme: Theme) => createStyles({
   },
   maxWidth: {
     maxWidth: '1160px', // 4 products per row
+  },
+  width100: {
+    width: '100%',
   },
 });
 
