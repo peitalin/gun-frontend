@@ -50,6 +50,7 @@ const MobileMenuUserProfile: React.FC<ReactProps> = (props) => {
               closeMobileMenu()
             }}
           />
+          <div className={classes.spacing}></div>
           <Login
             initialTabIndex={0}
             buttonText={"Login"}
@@ -135,21 +136,8 @@ const styles = (theme: Theme) => createStyles({
       backgroundPosition: '75px',
     }
   },
-  buttonUploadProduct: {
-    backgroundImage: Gradients.gradientUniswapBlueGreen.background,
-    border: `1px solid ${Colors.gradientUniswapBlue1}`,
-    fontSize: '0.7rem',
-    color: Colors.cream,
-    minWidth: "150px",
-    "&:hover": {
-      backgroundImage: Gradients.gradientUniswapBlueGreen2.background,
-      border: `1px solid ${Colors.gradientUniswapGreen}`,
-      transition: theme.transitions.create(['color', 'border', 'background'], {
-        easing: theme.transitions.easing.easeInOut,
-        duration: "200ms",
-      }),
-      backgroundPosition: '-75px',
-    }
+  spacing: {
+    width: '0.75rem',
   },
 });
 

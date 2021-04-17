@@ -131,7 +131,7 @@ const BannerStartDesktop: NextPage<ReactProps> = (props) => {
           >
             Featuring a secure payment system
             that protects you
-            every step of the transfer process.
+            every step of the transfer process
           </Typography>
 
           <form onSubmit={formik.handleSubmit}>
@@ -281,7 +281,7 @@ export const styles = (theme: Theme) => createStyles({
     lineHeight: "1.5",
     fontWeight: 500,
     fontSize: '1.25rem',
-    maxWidth: 450,
+    maxWidth: 440,
   },
   categoryImage: {
     display: "flex",

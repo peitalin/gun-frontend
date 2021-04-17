@@ -143,7 +143,7 @@ const BannerStartMobile: NextPage<ReactProps> = (props) => {
             className={classes.subline1Sm}
           >
             A secure payment system
-            that protects you every step of the transfer.
+            that protects you every step of the transfer
           </Typography>
 
           <form onSubmit={formik.handleSubmit}>
@@ -258,7 +258,7 @@ export const styles = (theme: Theme) => createStyles({
     fontWeight: 500,
     fontSize: '1.125rem', // 20px
     textAlign: "center",
-    maxWidth: 360,
+    maxWidth: 318,
   },
   categoryImage: {
     display: "flex",
