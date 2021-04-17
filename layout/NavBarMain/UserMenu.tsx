@@ -60,179 +60,177 @@ export const UserMenu: React.FC<ReactProps> = (props) => {
   const apolloClient = useApolloClient();
 
 
-  if (!props.loggedIn) {
-    return <div className="not-loggedin-no-user-menu"></div>
-  } else {
-    return (
-      <>
-        <Hidden smDown implementation="css">
-          <Button
-            onClick={handleClickMenu}
-            aria-controls="user-menu"
-            aria-haspopup="true"
-          >
-            <span className={classes.iconText}
-              style={{ color: color }}
-            >
-              {user?.firstName ?? "Menu"}
-            </span>
-            <MenuIcon style={{ fill: color }}/>
-          </Button>
-        </Hidden>
-        <Hidden mdUp implementation="css">
-          <Button
-            onClick={handleClickMenu}
-            aria-controls="user-menu"
-            aria-haspopup="true"
-          >
-            <MenuIcon/>
-          </Button>
-        </Hidden>
-
-        <Menu
-          classes={{
-            paper: classes.menu,
-          }}
-          style={{
-            zIndex: 5005, // to be above modals
-          }}
-          id="user-menu"
-          anchorEl={anchorEl}
-          // anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
-          // anchorPosition={{ top: 80, left: 1200 }}
-          keepMounted
-          open={Boolean(anchorEl)}
-          onClose={handleCloseMenu}
+  return (
+    <>
+      <Hidden smDown implementation="css">
+        <Button
+          className={props.className}
+          onClick={handleClickMenu}
+          aria-controls="user-menu"
+          aria-haspopup="true"
         >
+          <span className={classes.iconText}
+            style={{ color: color }}
+          >
+            {user?.firstName ?? "Menu"}
+          </span>
+          <MenuIcon style={{ fill: color }}/>
+        </Button>
+      </Hidden>
+      <Hidden mdUp implementation="css">
+        <Button
+          className={props.className}
+          onClick={handleClickMenu}
+          aria-controls="user-menu"
+          aria-haspopup="true"
+        >
+          <MenuIcon/>
+        </Button>
+      </Hidden>
+
+      <Menu
+        classes={{
+          paper: classes.menu,
+        }}
+        style={{
+          zIndex: 5005, // to be above modals
+        }}
+        id="user-menu"
+        anchorEl={anchorEl}
+        // anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
+        // anchorPosition={{ top: 80, left: 1200 }}
+        keepMounted
+        open={Boolean(anchorEl)}
+        onClose={handleCloseMenu}
+      >
+        {
+          user.userRole === Role.PLATFORM_ADMIN &&
+          <MenuItem className={classes.menuItem} onClick={handleCloseMenu}>
+            {/* <Link href="/gov/random-products"> */}
+            <Link href="/gov/escrow/pending-approval">
+              <a className={classes.menuLink}>
+                <LibraryBooks className={classes.menuIcon}/>
+                <span className={classes.menuText}>
+                  Governance Dashboard
+                </span>
+              </a>
+            </Link>
+          </MenuItem>
+        }
+
+        {
+          (user.userRole === Role.PLATFORM_ADMIN ||
+          user.userRole === Role.DEALER) &&
+          <MenuItem className={classes.menuItem} onClick={handleCloseMenu}>
+            {/* <Link href="/gov/random-products"> */}
+            <Link href="/dealers">
+              <a className={classes.menuLink}>
+                <LibraryBooks className={classes.menuIcon}/>
+                <span className={classes.menuText}>
+                  Dealer Dashboard
+                </span>
+              </a>
+            </Link>
+          </MenuItem>
+        }
+
+        <Divider/>
+
+        <MenuItem className={classes.menuItem} onClick={handleCloseMenu}>
           {
-            user.userRole === Role.PLATFORM_ADMIN &&
-            <MenuItem className={classes.menuItem} onClick={handleCloseMenu}>
-              {/* <Link href="/gov/random-products"> */}
-              <Link href="/gov/escrow/pending-approval">
+            user?.store?.id
+            ? <Link href="/admin/products">
                 <a className={classes.menuLink}>
-                  <LibraryBooks className={classes.menuIcon}/>
-                  <span className={classes.menuText}>
-                    Governance Dashboard
-                  </span>
+                  <StorefrontIcon className={classes.menuIcon}/>
+                  <span className={classes.menuText}> Seller Dashboard </span>
                 </a>
               </Link>
-            </MenuItem>
-          }
-
-          {
-            (user.userRole === Role.PLATFORM_ADMIN ||
-            user.userRole === Role.DEALER) &&
-            <MenuItem className={classes.menuItem} onClick={handleCloseMenu}>
-              {/* <Link href="/gov/random-products"> */}
-              <Link href="/dealers">
+            : <Link href="/create-store">
                 <a className={classes.menuLink}>
-                  <LibraryBooks className={classes.menuIcon}/>
-                  <span className={classes.menuText}>
-                    Dealer Dashboard
-                  </span>
+                  <MonetizationOnIcon className={classes.menuIcon}/>
+                  <span className={classes.menuText}> Become a Seller </span>
                 </a>
               </Link>
-            </MenuItem>
           }
+        </MenuItem>
 
-          <Divider/>
-
-          <MenuItem className={classes.menuItem} onClick={handleCloseMenu}>
-            {
-              user?.store?.id
-              ? <Link href="/admin/products">
-                  <a className={classes.menuLink}>
-                    <StorefrontIcon className={classes.menuIcon}/>
-                    <span className={classes.menuText}> Seller Dashboard </span>
-                  </a>
-                </Link>
-              : <Link href="/create-store">
-                  <a className={classes.menuLink}>
-                    <MonetizationOnIcon className={classes.menuIcon}/>
-                    <span className={classes.menuText}> Become a Seller </span>
-                  </a>
-                </Link>
-            }
-          </MenuItem>
-
-          <MenuItem className={classes.menuItem} onClick={handleCloseMenu}>
-            <Link href="/orders">
-              <a className={classes.menuLink}>
-                <ShoppingCartIcon className={classes.menuIcon}/>
-                <span className={classes.menuText}> My Orders </span>
-              </a>
-            </Link>
-          </MenuItem>
-
-          {/* <MenuItem  className={classes.menuItem} onClick={handleCloseMenu}>
-            <Link href="/my-list">
-              <a className={classes.menuLink}>
-                <CardGiftcard className={classes.menuIcon}/>
-                <span className={classes.menuText}> Wishlist </span>
-              </a>
-            </Link>
-          </MenuItem  className={classes.menuItem}> */}
-
-          <MenuItem className={classes.menuItem} onClick={handleCloseMenu}>
-            <Link href="/settings">
-              <a className={classes.menuLink}>
-                <ShoppingCartIcon className={classes.menuIcon}/>
-                <span className={classes.menuText}> My Settings </span>
-              </a>
-            </Link>
-          </MenuItem>
-          {/* <MenuItem className={classes.menuItem} onClick={() => {
-            handleCloseMenu();
-            goToModal.mySettings()
-          }}>
+        <MenuItem className={classes.menuItem} onClick={handleCloseMenu}>
+          <Link href="/orders">
             <a className={classes.menuLink}>
-              <PermIdentityIcon className={classes.menuIcon}/>
+              <ShoppingCartIcon className={classes.menuIcon}/>
+              <span className={classes.menuText}> My Orders </span>
+            </a>
+          </Link>
+        </MenuItem>
+
+        {/* <MenuItem  className={classes.menuItem} onClick={handleCloseMenu}>
+          <Link href="/my-list">
+            <a className={classes.menuLink}>
+              <CardGiftcard className={classes.menuIcon}/>
+              <span className={classes.menuText}> Wishlist </span>
+            </a>
+          </Link>
+        </MenuItem  className={classes.menuItem}> */}
+
+        <MenuItem className={classes.menuItem} onClick={handleCloseMenu}>
+          <Link href="/settings">
+            <a className={classes.menuLink}>
+              <ShoppingCartIcon className={classes.menuIcon}/>
               <span className={classes.menuText}> My Settings </span>
             </a>
-          </MenuItem> */}
+          </Link>
+        </MenuItem>
+        {/* <MenuItem className={classes.menuItem} onClick={() => {
+          handleCloseMenu();
+          goToModal.mySettings()
+        }}>
+          <a className={classes.menuLink}>
+            <PermIdentityIcon className={classes.menuIcon}/>
+            <span className={classes.menuText}> My Settings </span>
+          </a>
+        </MenuItem> */}
 
-          <Divider/>
+        <Divider/>
 
-          <MenuItem className={classes.menuItem} onClick={handleCloseMenu}>
-            <Link href="/faq">
-              <a className={classes.menuLink}>
-                <QAIcon className={classes.menuIcon}/>
-                <span className={classes.menuText}> FAQ </span>
-              </a>
-            </Link>
-          </MenuItem>
-
-          <MenuItem className={classes.menuItem} onClick={() => {
-            handleCloseMenu();
-            goToModal.contactUs()
-          }}>
+        <MenuItem className={classes.menuItem} onClick={handleCloseMenu}>
+          <Link href="/faq">
             <a className={classes.menuLink}>
-              <ContactSupportIcon className={classes.menuIcon}/>
-              <span className={classes.menuText}> Contact Us </span>
+              <QAIcon className={classes.menuIcon}/>
+              <span className={classes.menuText}> FAQ </span>
             </a>
-          </MenuItem>
+          </Link>
+        </MenuItem>
 
-          <MenuItem className={classes.menuItem} onClick={() => {
-            handleCloseMenu()
-            logout(apolloClient, dispatch)('/')
-          }}>
-            <a className={classes.menuLink}>
-              <QAIcon className={classes.menuIcon} />
-              <span className={classes.menuText}> Logout </span>
-            </a>
-          </MenuItem>
+        <MenuItem className={classes.menuItem} onClick={() => {
+          handleCloseMenu();
+          goToModal.contactUs()
+        }}>
+          <a className={classes.menuLink}>
+            <ContactSupportIcon className={classes.menuIcon}/>
+            <span className={classes.menuText}> Contact Us </span>
+          </a>
+        </MenuItem>
 
-        </Menu>
-      </>
-    );
-  }
+        <MenuItem className={classes.menuItem} onClick={() => {
+          handleCloseMenu()
+          logout(apolloClient, dispatch)('/')
+        }}>
+          <a className={classes.menuLink}>
+            <QAIcon className={classes.menuIcon} />
+            <span className={classes.menuText}> Logout </span>
+          </a>
+        </MenuItem>
+
+      </Menu>
+    </>
+  )
 }
 
 
 
 interface ReactProps extends WithStyles<typeof styles> {
-  loggedIn: boolean;
   color?: string;
+  className?: any;
 }
 interface ReduxProps {
   user: UserPrivate;

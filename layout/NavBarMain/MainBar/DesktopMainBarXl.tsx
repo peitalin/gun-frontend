@@ -3,11 +3,12 @@ import React from "react";
 import clsx from 'clsx';
 import { withStyles, WithStyles } from "@material-ui/core/styles";
 import { styles } from "../styles";
+import { Colors } from "layout/AppTheme";
 // Components
 import Login from "layout/Login";
 import Logo from "components/Icons/Logo";
 import Badge from '@material-ui/core/Badge';
-import Searchbar from "layout/NavBarMain/Searchbar";
+import Searchbar from "layout/NavBarMain/SearchbarDesktop";
 // MUI
 import UserMenu from "layout/NavBarMain/UserMenu";
 import Button from "@material-ui/core/Button";
@@ -21,7 +22,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { asCurrency as c } from "utils/prices";
-import { isMainPages } from "."
+import { isMainPagesFn, isStartPageFn } from "."
 import ToggleDarkMode from "layout/NavBarMain/ToggleDarkMode";
 
 
@@ -38,7 +39,8 @@ const DesktopMainBarXl = (props: DesktopMainBarProps) => {
   const dispatch = useDispatch();
   const router = useRouter()
 
-  let isHomePage = isMainPages(router)
+  let isHomePage = isMainPagesFn(router)
+  let isStartPage = isStartPageFn(router)
 
   return (
     <div className={
@@ -51,7 +53,10 @@ const DesktopMainBarXl = (props: DesktopMainBarProps) => {
 
       <Link href="/">
         <a className={classes.buttonLinkLogo}>
-          <Logo fillColor={color}/>
+          <Logo fillColor={
+            // override logo color for desktop /start page light mode
+            (isStartPage && !props.isDarkMode) ? Colors.black : color
+          }/>
         </a>
       </Link>
 
@@ -82,22 +87,23 @@ const DesktopMainBarXl = (props: DesktopMainBarProps) => {
         ? <Link href="/orders">
             <a className={classes.buttonLink}>
               <Button
-                  className={classes.navbarButton}
-                  variant={"text"}
-                  color="primary"
-                >
-                  <div>
-                    <span className={
-                      endRoute === '/orders' ? classes.selectedRouteText : null
-                    } style={{ color: color }}>
-                      Orders
-                    </span>
-                  </div>
-                </Button>
+                className={classes.navbarButton}
+                variant={"text"}
+                color="primary"
+              >
+                <div>
+                  <span className={
+                    endRoute === '/orders' ? classes.selectedRouteText : null
+                  } style={{ color: color }}>
+                    Orders
+                  </span>
+                </div>
+              </Button>
             </a>
           </Link>
-        : <div className={classes.buttonMarginRight}>
+        : <div className={classes.marginRight}>
             <Login
+              className={classes.navbarButton}
               buttonText={"Orders"}
               titleLogin={"Login to continue"}
               buttonProps={{
@@ -107,65 +113,19 @@ const DesktopMainBarXl = (props: DesktopMainBarProps) => {
           </div>
       }
 
-      {/* {
+      {
         loggedIn
-        ? <Link href="/admin/offers">
-            <a className={classes.buttonLink}>
-              <Button
-                  className={classes.navbarButton}
-                  variant={"text"}
-                  color="primary"
-                >
-                  <div>
-                    <span className={
-                      endRoute === '/admin/offers' ? classes.selectedRouteText : null
-                    } style={{ color: color }}>
-                      Offers
-                    </span>
-                  </div>
-                </Button>
-            </a>
-          </Link>
-        : <div className={classes.buttonMarginRight}>
+        ? <UserMenu className={classes.navbarButton} color={color} />
+        : <div className={classes.marginRight}>
             <Login
-              buttonText={"Offers"}
-              titleLogin={"Login to continue"}
+              className={classes.navbarButton}
               buttonProps={{
                 style: { color: color }
               }}
             />
           </div>
-      } */}
+      }
 
-      {/* <Button
-        className={classes.navbarButton}
-        variant="text"
-        color="primary"
-        onClick={() => goToModal.checkout()}
-      >
-        <Badge
-          badgeContent={cartCount}
-          classes={{ colorSecondary: classes.badge }}
-          color="secondary"
-        >
-          <ShoppingCartIcon className={classes.icons}/>
-        </Badge>
-        <span className={classes.cartText}>
-          {c(subtotal)}
-        </span>
-      </Button> */}
-
-      <div className={classes.navbarButton}>
-        <UserMenu loggedIn={loggedIn} color={color} />
-        {
-          !loggedIn &&
-          <Login
-            buttonProps={{
-              style: { color: color }
-            }}
-          />
-        }
-      </div>
     </div>
   )
 }

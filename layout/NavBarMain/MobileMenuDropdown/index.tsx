@@ -1,7 +1,7 @@
 import React from "react";
+import clsx from "clsx";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
-import clsx from "clsx";
 import { Colors, BorderRadius, Gradients } from "layout/AppTheme";
 import { NewsBarHeight, MainBarHeightDashboard, NavBarHeight } from "layout/NavBarMain/styles";
 // Redux
@@ -44,6 +44,7 @@ export const MobileMenuDropdown: React.FC<ReactProps> = (props) => {
   return (
     <menu className={classes.root}>
       <Button
+        className={props.className}
         onClick={toggleMenuOpen}
         aria-controls="user-menu"
         aria-haspopup="true"
@@ -94,6 +95,7 @@ const MobileMenuExpander: React.FC<MobileMenuExpanderProps> = (props) => {
 
 
 interface ReactProps extends WithStyles<typeof styles> {
+  className?: any;
   loggedIn: boolean;
   color?: string;
   mobileMenuOpen: boolean;
@@ -112,6 +114,7 @@ const styles = (theme: Theme) => createStyles({
     padding: 0,
     marginTop: 0,
     marginBottom: 0,
+    borderRadius: BorderRadius,
   },
   mobileMenuExpanderRoot: {
     zIndex: 2,

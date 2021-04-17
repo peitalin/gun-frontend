@@ -321,6 +321,7 @@ const Login: React.FC<ReactProps> = (props) => {
     })
   }, [])
 
+
   return (
     <>
       {
@@ -331,8 +332,10 @@ const Login: React.FC<ReactProps> = (props) => {
               loggedIn={reduxLogin.loggedIn}
               tabIndex={state.tabIndex}
               setTabIndex={setTabIndex}
+              // title props
               titleLogin={titleLogin}
               titleSignup={titleSignup}
+              // dispatch props
               dispatchLogin={dispatchLogin}
               dispatchCreateUser={dispatchCreateUser}
               dispatchResetPassword={dispatchResetPassword}
@@ -340,16 +343,19 @@ const Login: React.FC<ReactProps> = (props) => {
           : <LoginModal
               className={props.className}
               buttonLoading={state.buttonLoading}
-              buttonText={buttonText}
               loggedIn={reduxLogin.loggedIn}
               tabIndex={state.tabIndex}
               setTabIndex={setTabIndex}
+              // title props
               titleLogin={titleLogin}
               titleSignup={titleSignup}
+              // dispatch props
               dispatchLogin={dispatchLogin}
               dispatchCreateUser={dispatchCreateUser}
-              openModal={state.openModal}
               dispatchResetPassword={dispatchResetPassword}
+              // Modal specific props
+              buttonText={buttonText}
+              openModal={state.openModal}
               handleToggleModal={handleToggleModal}
               buttonProps={props.buttonProps}
               numUnclaimedOrders={props.numUnclaimedOrders}

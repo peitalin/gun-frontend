@@ -1,5 +1,6 @@
 import React from "react";
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
+import { buttonHoverDark, buttonHoverLight } from "./styles";
 // MUI
 import SearchIcon from '@material-ui/icons/Search';
 import InputBase from '@material-ui/core/InputBase';
@@ -71,12 +72,9 @@ let styles = (theme: Theme) => createStyles({
     position: 'relative',
     // border: `1px solid ${Colors.uniswapDarkNavy}`,
     borderRadius: BorderRadius3x,
-    // backgroundColor: "rgba(152,152,152,0.1)",
-    backgroundColor: "rgba(152,152,152,0.5)",
-    '&:hover': {
-      // backgroundColor: "rgba(152,152,152,0.15)",
-      backgroundColor: "rgba(152,152,152,0.9)",
-    },
+    backgroundColor: theme.palette.type === "dark"
+      ? Colors.uniswapDarkNavy
+      : Colors.slateGreyDark,
     marginLeft: 0,
     width: '100%',
     [theme.breakpoints.up('sm')]: {
@@ -95,18 +93,19 @@ let styles = (theme: Theme) => createStyles({
     justifyContent: 'center',
   },
   inputRoot: {
-    color: 'inherit',
+    color: Colors.black,
     width: '100%',
     fontSize: '0.9rem',
   },
   inputInput: {
-    color: Colors.cream,
+    // color: Colors.cream,
     paddingTop: theme.spacing(1),
     paddingRight: theme.spacing(1),
     paddingBottom: theme.spacing(1),
     paddingLeft: theme.spacing(6),
     transition: theme.transitions.create('width'),
     width: '100%',
+    color: Colors.black,
     [theme.breakpoints.up('sm')]: {
       width: 120,
       '&:focus': {

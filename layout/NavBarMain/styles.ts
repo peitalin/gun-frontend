@@ -28,6 +28,12 @@ const categoryLinkColor2 = Colors.darkGrey
 const categoryLinkColorHover2 = Colors.secondaryBright
 
 
+/// hover colors for menu buttons
+export const buttonHoverDark = fade(Colors.uniswapDarkNavy, 0.7)
+export const buttonHoverLight = fade(Colors.cream, 0.2)
+
+
+
 export const styles = (theme: Theme) => createStyles({
   baseBarHomePage: {
     zIndex: 5,
@@ -143,8 +149,8 @@ export const styles = (theme: Theme) => createStyles({
       : fade(Colors.cream, 0.1),
     "&:hover": {
       background: theme.palette.type === 'dark'
-        ? fade(Colors.uniswapDarkNavy, 0.7)
-        : fade(Colors.cream, 0.7),
+        ? buttonHoverDark
+        : buttonHoverLight,
     },
     borderRadius: BorderRadius3x,
   },
@@ -437,6 +443,11 @@ export const styles = (theme: Theme) => createStyles({
   navbarButtonMobile: {
     marginRight: "0.25rem",
     minWidth: 50,
+    "&:hover": {
+      background: theme.palette.type === 'dark'
+        ? buttonHoverDark
+        : buttonHoverLight,
+    },
   },
   baseBarInnerMobile: {
     zIndex: 3,

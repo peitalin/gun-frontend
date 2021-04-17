@@ -1,8 +1,10 @@
 import React from "react";
 import clsx from "clsx";
-import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
-import ErrorBounds from "components/ErrorBounds";
+import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
+import { buttonHoverDark, buttonHoverLight } from "./styles";
+
 // MUI
+import ErrorBounds from "components/ErrorBounds";
 import SearchIcon from '@material-ui/icons/Search';
 import ClearIcon from '@material-ui/icons/Clear';
 import InputBase from '@material-ui/core/InputBase';
@@ -48,7 +50,7 @@ const Searchbar = (props: SearchbarProps) => {
         )}>
           <Button
             className={clsx(
-              classes.button,
+              classes.searchButton,
               "fadeIn"
             )}
             variant="text"
@@ -66,8 +68,8 @@ const Searchbar = (props: SearchbarProps) => {
             placeholder="Search for products…"
             inputRef={inputRefEl}
             classes={{
-              root: expand ? classes.inputRootExpand : classes.inputRoot,
-              input: classes.inputInput,
+              root: expand ? classes.inputRootMobileExpand : classes.inputRootMobile,
+              input: classes.inputMobileInput,
             }}
             onBlur={
               () => setTimeout(() => {
@@ -117,7 +119,12 @@ let styles = (theme: Theme) => createStyles({
   grow: {
     flexGrow: 1,
   },
-  button: {
+  searchButton: {
+    "&:hover": {
+      background: theme.palette.type === 'dark'
+        ? buttonHoverDark
+        : buttonHoverLight,
+    },
   },
   searchbar: {
     display: "flex",
@@ -135,13 +142,14 @@ let styles = (theme: Theme) => createStyles({
     },
   },
   searchbarExpanded: {
-    backgroundColor: "rgba(152,152,152,0.1)",
-    '&:hover': {
-      backgroundColor: "rgba(152,152,152,0.15)",
-    },
+    backgroundColor: theme.palette.type === "dark"
+      ? Colors.uniswapDarkNavy
+      : Colors.uniswapDarkNavy,
   },
   searchIconOuter: {
-    fill: Colors.uniswapLighterGrey,
+    fill: theme.palette.type === "dark"
+      ? Colors.uniswapLightGrey
+      : Colors.uniswapDarkNavy,
   },
   searchIconInner: {
     width: theme.spacing(6),
@@ -152,17 +160,21 @@ let styles = (theme: Theme) => createStyles({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  inputRoot: {
-    color: Colors.uniswapLightestGrey,
+  inputRootMobile: {
+    color: theme.palette.type === "dark"
+      ? Colors.uniswapLightGrey
+      : Colors.uniswapLightGrey,
     width: '0',
     fontSize: '0.9rem',
   },
-  inputRootExpand: {
-    color: Colors.uniswapLightestGrey,
+  inputRootMobileExpand: {
+    color: theme.palette.type === "dark"
+      ? Colors.uniswapLightGrey
+      : Colors.uniswapLightGrey,
     width: 'calc(100% - 3rem)',
     fontSize: '0.9rem',
   },
-  inputInput: {
+  inputMobileInput: {
     padding: 0,
     fontSize: '16px', // above 16px so mobile web doesn't zoom
     transition: theme.transitions.create('width', {

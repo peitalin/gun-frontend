@@ -6,6 +6,7 @@ import { Actions } from 'reduxStore/actions';
 import clsx from 'clsx';
 import { withStyles, WithStyles } from "@material-ui/core/styles";
 import { styles } from "../styles";
+import { Colors } from "layout/AppTheme";
 // Components
 import Login from "layout/Login";
 import Logo from "components/Icons/Logo";
@@ -25,11 +26,11 @@ import { useRouter } from "next/router";
 // Router
 import Link from "next/link";
 import { asCurrency as c } from "utils/prices";
-import { isMainPages } from "."
+import { isMainPagesFn, isStartPageFn } from "."
 
 
 
-const DesktopMainBarSm = (props: ReactProps & DesktopMainBarProps) => {
+const DesktopMainBarSm = (props: ReactProps) => {
 
   const {
     classes,
@@ -47,7 +48,8 @@ const DesktopMainBarSm = (props: ReactProps & DesktopMainBarProps) => {
     router.push('/sell')
   }
 
-  let isHomePage = isMainPages(router)
+  let isHomePage = isMainPagesFn(router)
+  let isStartPage = isStartPageFn(router)
 
   return (
     <div className={
@@ -60,7 +62,12 @@ const DesktopMainBarSm = (props: ReactProps & DesktopMainBarProps) => {
 
       <Link href="/">
         <a className={classes.buttonLink}>
-          <Logo fillColor={color} disableLogo={true}/>
+          <Logo fillColor={
+              // override logo color for desktop /start page
+              (isStartPage && !props.isDarkMode) ? Colors.black : color
+            }
+            disableLogo={true}
+          />
         </a>
       </Link>
 
@@ -116,8 +123,9 @@ const DesktopMainBarSm = (props: ReactProps & DesktopMainBarProps) => {
                   </Button>
               </a>
             </Link>
-          : <div className={classes.buttonMarginRight}>
+          : <div>
               <Login
+                className={classes.navbarButton}
                 buttonText={"Orders"}
                 titleLogin={"Login to continue"}
                 buttonProps={{
@@ -128,17 +136,20 @@ const DesktopMainBarSm = (props: ReactProps & DesktopMainBarProps) => {
         }
 
 
-        <div className={classes.navbarButton}>
-          <UserMenu loggedIn={loggedIn} color={color} />
-          {
-            !loggedIn &&
-            <Login
-              buttonProps={{
-                style: { color: color }
-              }}
-            />
-          }
-        </div>
+        {
+          loggedIn
+          ? <UserMenu className={classes.navbarButton} color={color} />
+          : <div className={classes.marginRight}>
+              <Login
+                className={classes.navbarButton}
+                buttonProps={{
+                  style: { color: color }
+                }}
+              />
+            </div>
+        }
+
+
       </div>
 
     </div>
@@ -149,22 +160,12 @@ const DesktopMainBarSm = (props: ReactProps & DesktopMainBarProps) => {
 interface ReactProps extends WithStyles<typeof styles> {
   mobileMenuOpen: boolean;
   setMobileMenuOpen(f: (s: boolean) => boolean): void;
-}
-interface DesktopMainBarProps extends WithStyles<typeof styles> {
   endRoute: string;
-  cartCount: number;
   loggedIn: boolean;
   color: string;
-  subtotal: number;
-}
-interface MobileMainBarProps extends DesktopMainBarProps {
-  mobileMenuOpen: boolean;
-  setMobileMenuOpen(f: (s: boolean) => boolean): void;
+  isDarkMode: boolean;
 }
 
-interface ReduxProps {
-  loggedIn: boolean;
-}
 
 
 export default withStyles(styles)( DesktopMainBarSm );

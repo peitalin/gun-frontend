@@ -48,14 +48,13 @@ const MobileMainBar = (props: MobileMainBarProps) => {
         "fadeIn",
         hide ? classes.mainBarInnerHide : classes.mainBarInner,
       )}>
-        <div className={classes.navbarButtonMobile}>
-          <MobileMenuDropdown
-            loggedIn={loggedIn}
-            color={color}
-            mobileMenuOpen={props.mobileMenuOpen}
-            setMobileMenuOpen={props.setMobileMenuOpen}
-          />
-        </div>
+        <MobileMenuDropdown
+          className={classes.navbarButtonMobile}
+          loggedIn={loggedIn}
+          color={color}
+          mobileMenuOpen={props.mobileMenuOpen}
+          setMobileMenuOpen={props.setMobileMenuOpen}
+        />
       </div>
 
 
@@ -140,10 +139,10 @@ const MobileMainBar = (props: MobileMainBarProps) => {
                   Store
                 </span>
               </div>
-              {/* <StorefrontIcon className={classes.icons}/> */}
             </Button>
           : <div className={classes.buttonMarginRight}>
               <Login
+                className={classes.navbarButtonMobile}
                 buttonText={"Store"}
                 titleLogin={"Login to continue"}
                 buttonProps={{

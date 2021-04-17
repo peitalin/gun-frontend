@@ -34,10 +34,8 @@ const MainBar = (props: ReactProps) => {
   const router = useRouter()
 
   const theme = useTheme();
-  const xsDown = useMediaQuery(theme.breakpoints.down('xs'));
-  const smDown = useMediaQuery(theme.breakpoints.down('sm'));
   const mdDown = useMediaQuery(theme.breakpoints.down('md'));
-  const lgDown = useMediaQuery(theme.breakpoints.down('lg'));
+  const lgUp = useMediaQuery(theme.breakpoints.up('lg'));
 
   const {
     loggedIn,
@@ -48,11 +46,15 @@ const MainBar = (props: ReactProps) => {
 
   const isDarkMode = theme.palette.type === 'dark'
 
-  const color = isMainPages(router)
+  let _isMainPages = isMainPagesFn(router)
+  let _isStartPage = isStartPageFn(router)
+
+  let color = _isMainPages || _isStartPage
     ? Colors.cream
     : isDarkMode
       ? Colors.slateGrey
       : Colors.black
+
 
   const endRoute = router.pathname.split('/').pop();
 
@@ -64,14 +66,11 @@ const MainBar = (props: ReactProps) => {
     color,
   };
 
-  let isMainPages2 = isMainPages(router)
-  let isStartPage2 = isStartPage(router)
-
   return (
     <MainBarSSRWrapper
       classes={classes}
-      mainPage={isMainPages2}
-      startPage={isStartPage2}
+      isMainPage={_isMainPages}
+      isStartPage={_isStartPage}
       // for special fatter navbar on these routes
     >
 
@@ -123,9 +122,9 @@ const MainBarSSRWrapper: React.FC<MainBarSSRWrapperProps> = (props) => {
     <>
       <ShowOnMobileOrDesktopSSR desktop>
         <nav className={
-          props.mainPage
+          props.isMainPage
           ? clsx( classes.baseBarHomePage, classes.baseBarDither)
-          : props.startPage
+          : props.isStartPage
             ? clsx( classes.baseBarHomePage, classes.baseBarDitherNone)
             : clsx( classes.baseBarDashboard, classes.baseBarBorderBottom)
         }>
@@ -134,9 +133,9 @@ const MainBarSSRWrapper: React.FC<MainBarSSRWrapperProps> = (props) => {
       </ShowOnMobileOrDesktopSSR>
       <ShowOnMobileOrDesktopSSR mobile>
         <nav className={
-          props.mainPage
+          props.isMainPage
           ? clsx( classes.baseBarHomePage, classes.baseBarDitherSm)
-          : props.startPage
+          : props.isStartPage
             ? clsx( classes.baseBarHomePage, classes.baseBarDitherNoneSm)
             : clsx( classes.baseBarDashboard, classes.baseBarBorderBottom)
         }>
@@ -147,7 +146,7 @@ const MainBarSSRWrapper: React.FC<MainBarSSRWrapperProps> = (props) => {
   );
 };
 
-export const isMainPages = (router: NextRouter) => {
+export const isMainPagesFn = (router: NextRouter) => {
   if (router.pathname === '/') {
     return true
   }
@@ -159,7 +158,7 @@ export const isMainPages = (router: NextRouter) => {
   // }
   return false
 }
-export const isStartPage = (router: NextRouter) => {
+export const isStartPageFn = (router: NextRouter) => {
   if (router.pathname === '/start') {
     return true
   }
@@ -173,8 +172,8 @@ interface ReactProps extends WithStyles<typeof styles> {
   setMobileMenuOpen(f: (s: boolean) => boolean): void;
 }
 interface MainBarSSRWrapperProps extends WithStyles<typeof styles> {
-  mainPage: boolean
-  startPage: boolean
+  isMainPage: boolean
+  isStartPage: boolean
 }
 
 interface ReduxProps {

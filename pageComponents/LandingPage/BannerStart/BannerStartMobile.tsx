@@ -242,7 +242,7 @@ export const styles = (theme: Theme) => createStyles({
     fontFamily: fontFam,
     color: theme.palette.type === 'dark'
       ? Colors.lightestGrey
-      : Colors.slateGreyBlack,
+      : Colors.black,
     lineHeight: '2rem',
     fontSize: '1.75rem',
     marginBottom: "0.25rem",

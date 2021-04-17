@@ -113,7 +113,11 @@ const LoginPageModal: React.FC<ReactProps> = (props) => {
         <Button
           variant="text"
           color="secondary"
-          className={classes.loginButton}
+          className={clsx(
+            classes.loginButton,
+            classes.maxWidthEmailPrefillButton,
+            props.className,
+          )}
           onClick={props.handleToggleModal}
           {...props.buttonProps}
         >
@@ -137,7 +141,8 @@ const LoginPageModal: React.FC<ReactProps> = (props) => {
         <MenuItem
           className={clsx(
             classes.mobileMenuFlexitem,
-            classes.mobileMenuItemRoot
+            classes.mobileMenuItemRoot,
+            props.className,
           )}
           onClick={() => {
             props.handleToggleModal()
@@ -179,11 +184,12 @@ const LoginPageModal: React.FC<ReactProps> = (props) => {
           <Button
             variant="text"
             color="secondary"
+            onClick={props.handleToggleModal}
             className={clsx(
               classes.loginButton,
-              classes.maxWidthEmailPrefillButton
+              classes.maxWidthEmailPrefillButton,
+              props.className,
             )}
-            onClick={props.handleToggleModal}
             {...props.buttonProps}
           >
             {
@@ -206,7 +212,7 @@ const LoginPageModal: React.FC<ReactProps> = (props) => {
   }
 
   return (
-    <ErrorBounds className={clsx(classes.loginRoot, props.className)}>
+    <ErrorBounds className={clsx(classes.loginRoot)}>
       <div className={classes.cssMediaQuery}>
         <Dialog
           open={props.openModal}
@@ -237,26 +243,6 @@ const LoginPageModal: React.FC<ReactProps> = (props) => {
   )
 }
 
-const StyledButton = withStyles({
-  root: {
-    background: Colors.secondary,
-    borderRadius: 4,
-    height: 44,
-    width: '100%',
-    maxWidth: 330,
-    paddingLeft: '1rem',
-    paddingRight: '1rem',
-    cursor: "pointer",
-    "&:hover": {
-      background: fade(Colors.secondary, 0.9),
-    },
-    padding: 0,
-  },
-  label: {
-    textTransform: "capitalize",
-    color: "#fff",
-  },
-})(Button);
 
 
 interface ReactProps extends WithStyles<typeof styles> {

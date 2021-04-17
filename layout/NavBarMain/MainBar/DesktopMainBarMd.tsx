@@ -3,6 +3,7 @@ import React from "react";
 import clsx from 'clsx';
 import { withStyles, WithStyles } from "@material-ui/core/styles";
 import { styles } from "../styles";
+import { Colors } from "layout/AppTheme";
 // Components
 import Login from "layout/Login";
 import Logo from "components/Icons/Logo";
@@ -18,12 +19,12 @@ import { useDispatch, useSelector } from "react-redux";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { asCurrency as c } from "utils/prices";
-import { isMainPages } from "."
+import { isMainPagesFn, isStartPageFn } from "."
 import ToggleDarkMode from "layout/NavBarMain/ToggleDarkMode";
 
 
 
-const DesktopMainBarMd = (props: ReactProps & DesktopMainBarProps) => {
+const DesktopMainBarMd = (props: ReactProps) => {
 
   const {
     classes,
@@ -42,7 +43,8 @@ const DesktopMainBarMd = (props: ReactProps & DesktopMainBarProps) => {
     router.push('/sell')
   }
 
-  let isHomePage = isMainPages(router)
+  let isHomePage = isMainPagesFn(router)
+  let isStartPage = isStartPageFn(router)
 
   return (
     <div className={
@@ -56,7 +58,12 @@ const DesktopMainBarMd = (props: ReactProps & DesktopMainBarProps) => {
       <div className={!hide ? "fadeIn" : "hidden"}>
         <Link href="/">
           <a className={classes.buttonLink}>
-            <Logo fillColor={color} disableLogo={true}/>
+            <Logo fillColor={
+                // override logo color for desktop /start page
+                (isStartPage && !props.isDarkMode) ? Colors.black : color
+              }
+              disableLogo={true}
+            />
           </a>
         </Link>
       </div>
@@ -108,8 +115,9 @@ const DesktopMainBarMd = (props: ReactProps & DesktopMainBarProps) => {
                   </Button>
               </a>
             </Link>
-          : <div className={classes.buttonMarginRight}>
+          : <div className={classes.marginRight}>
               <Login
+                className={classes.navbarButton}
                 buttonText={"Orders"}
                 titleLogin={"Login to continue"}
                 buttonProps={{
@@ -119,48 +127,19 @@ const DesktopMainBarMd = (props: ReactProps & DesktopMainBarProps) => {
             </div>
         }
 
-        {/* {
+        {
           loggedIn
-          ? <Link href="/admin/offers">
-              <a className={classes.buttonLink}>
-                <Button
-                    className={classes.navbarButton}
-                    variant={"text"}
-                    color="primary"
-                  >
-                    <div>
-                      <span className={
-                        endRoute === '/admin/offers' ? classes.selectedRouteText : null
-                      } style={{ color: color }}>
-                        Offers
-                      </span>
-                    </div>
-                  </Button>
-              </a>
-            </Link>
-          : <div className={classes.buttonMarginRight}>
+          ? <UserMenu className={classes.navbarButton} color={color} />
+          : <div className={classes.marginRight}>
               <Login
-                buttonText={"Offers"}
-                titleLogin={"Login to continue"}
+                className={classes.navbarButton}
                 buttonProps={{
                   style: { color: color }
                 }}
               />
             </div>
-        } */}
+        }
 
-
-        <div className={classes.navbarButton}>
-          <UserMenu loggedIn={loggedIn} color={color} />
-          {
-            !loggedIn &&
-            <Login
-              buttonProps={{
-                style: { color: color }
-              }}
-            />
-          }
-        </div>
       </div>
 
     </div>
@@ -171,19 +150,10 @@ const DesktopMainBarMd = (props: ReactProps & DesktopMainBarProps) => {
 interface ReactProps extends WithStyles<typeof styles> {
   mobileMenuOpen: boolean;
   setMobileMenuOpen(f: (s: boolean) => boolean): void;
-}
-interface DesktopMainBarProps extends WithStyles<typeof styles> {
+  isDarkMode: boolean;
   endRoute: string;
   loggedIn: boolean;
   color: string;
-}
-interface MobileMainBarProps extends DesktopMainBarProps {
-  mobileMenuOpen: boolean;
-  setMobileMenuOpen(f: (s: boolean) => boolean): void;
-}
-
-interface ReduxProps {
-  loggedIn: boolean;
 }
 
 
