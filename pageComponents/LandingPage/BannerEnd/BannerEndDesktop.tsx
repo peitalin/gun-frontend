@@ -127,15 +127,15 @@ const BannerEndDesktop: NextPage<ReactProps> = (props) => {
 
       <div className={clsx(
         classes.bannerInnerBoxLeft,
-        mdDown ? classes.minWidth260 : classes.minWidth500
+        classes.minWidth500,
       )}>
         <div className={classes.mainTitleContainer}>
 
-          <Typography className={mdDown ? classes.mainTitleSm : classes.mainTitle}>
+          <Typography className={classes.mainTitle}>
             Get Launch Updates
           </Typography>
           <Typography variant={"subtitle2"}
-            className={mdDown ? classes.subline1Sm : classes.subline1}
+            className={classes.subline1}
           >
             We are currently in beta testing and
             will launch soon. Please sign up for more details
@@ -179,7 +179,7 @@ const BannerEndDesktop: NextPage<ReactProps> = (props) => {
 
       <div className={clsx(
         classes.bannerInnerBoxRight,
-        mdDown ? classes.minWidth160 : classes.minWidth260,
+        classes.minWidth260,
       )}>
         {
           props.isDarkMode
@@ -303,15 +303,6 @@ export const styles = (theme: Theme) => createStyles({
     marginRight: '1rem',
     marginBottom: '1rem',
   },
-  mainTitleContainerSm: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: '100%',
-    position: "relative",
-    marginBottom: '1rem',
-  },
   mainTitle: {
     fontWeight: 600,
     fontFamily: fontFam,
@@ -321,17 +312,6 @@ export const styles = (theme: Theme) => createStyles({
     lineHeight: '2.5rem',
     fontSize: '2.25rem',
     maxWidth: 400,
-  },
-  mainTitleSm: {
-    fontWeight: 600,
-    fontFamily: fontFam,
-    color: theme.palette.type === 'dark'
-      ? Colors.lightestGrey
-      : Colors.slateGreyBlack,
-    lineHeight: '2rem',
-    fontSize: '1.75rem',
-    marginBottom: "0.25rem",
-    textAlign: "center",
   },
   subline1: {
     color: theme.palette.type === 'dark'
@@ -343,16 +323,6 @@ export const styles = (theme: Theme) => createStyles({
     fontWeight: 500,
     fontSize: '1.25rem',
     maxWidth: 450,
-  },
-  subline1Sm: {
-    color: theme.palette.type === 'dark'
-      ? Colors.lightGrey
-      : Colors.slateGreyLightBlack,
-    fontFamily: fontFam,
-    lineHeight: "1.5",
-    fontWeight: 500,
-    fontSize: '1.125rem', // 20px
-    textAlign: "center",
   },
   categoryImage: {
     display: "flex",

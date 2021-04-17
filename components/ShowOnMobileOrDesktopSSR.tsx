@@ -26,7 +26,9 @@ const ShowOnMobileOrDesktopSSR: React.FC<ReactProps> = (props) => {
     // default to mobile
     return (
       <Hidden
-        className={clsx(classes.width100, props.className)}
+        className={clsx(
+          props.className
+        )}
         lgUp
         implementation="css"
       >
@@ -36,7 +38,9 @@ const ShowOnMobileOrDesktopSSR: React.FC<ReactProps> = (props) => {
   } else if (mobile) {
     return (
       <Hidden
-        className={clsx(classes.width100, props.className)}
+        className={clsx(
+          props.className
+        )}
         lgUp
         implementation="css"
       >
@@ -46,7 +50,9 @@ const ShowOnMobileOrDesktopSSR: React.FC<ReactProps> = (props) => {
   } else if (desktop) {
     return (
       <Hidden
-        className={clsx(classes.width100, props.className)}
+        className={clsx(
+          props.className
+        )}
         mdDown
         implementation="css"
       >
@@ -57,7 +63,9 @@ const ShowOnMobileOrDesktopSSR: React.FC<ReactProps> = (props) => {
     // is nothing supplied default to desktop
     return (
       <Hidden
-        className={clsx(classes.width100, props.className)}
+        className={clsx(
+          props.className
+        )}
         mdDown
         implementation="css"
       >

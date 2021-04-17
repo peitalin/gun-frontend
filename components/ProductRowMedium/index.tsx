@@ -26,6 +26,7 @@ import { asCurrency as c } from "utils/prices";
 // CSS
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
+import ShowOnMobileOrDesktopSSR from "components/ShowOnMobileOrDesktopSSR";
 
 
 
@@ -37,36 +38,66 @@ const ProductRowMedium = (props: ReactProps) => {
   const theme = useTheme();
   const smDown = useMediaQuery(theme.breakpoints.down("sm"))
 
+
   return (
     <ErrorBounds className={clsx(
       classes.productRowRoot,
       classes.flexRow,
     )}>
-        <div className={clsx(
-          classes.flexColOuter,
-          smDown ? classes.flexColPaddingSm : classes.flexColPadding
-        )}>
-          {
-            product?.featuredVariant?.previewItems?.[0]
-            ? <Link
-                href="/p/[productIdOrSlug]"
-                as={`/p/${product?.id}`}
-              >
-                <a>
-                  <ProductPreviewCardRowSmall
-                    previewItem={product.featuredVariant.previewItems[0]}
-                    width={smDown ? 88 : 144}
-                    height={smDown ? 55 : 90}
-                  />
-                </a>
-              </Link>
-            : <ProductPreviewCardRowSmall
-                previewItem={undefined}
-                width={smDown ? 88 : 144}
-                height={smDown ? 55 : 90}
-              />
-          }
-        </div>
+        <ShowOnMobileOrDesktopSSR desktop>
+          <div className={clsx(
+            classes.flexColOuter,
+            classes.flexColPadding,
+          )}>
+            {
+              featuredVariant?.previewItems?.[0]
+              ? <Link
+                  href="/p/[productIdOrSlug]"
+                  as={`/p/${product?.id}`}
+                >
+                  <a>
+                    <ProductPreviewCardRowSmall
+                      previewItem={featuredVariant.previewItems[0]}
+                      width={144}
+                      height={90}
+                    />
+                  </a>
+                </Link>
+              : <ProductPreviewCardRowSmall
+                  previewItem={undefined}
+                  width={144}
+                  height={90}
+                />
+            }
+          </div>
+        </ShowOnMobileOrDesktopSSR>
+        <ShowOnMobileOrDesktopSSR mobile>
+          <div className={clsx(
+            classes.flexColOuter,
+            classes.flexColPaddingSm,
+          )}>
+            {
+              featuredVariant?.previewItems?.[0]
+              ? <Link
+                  href="/p/[productIdOrSlug]"
+                  as={`/p/${product?.id}`}
+                >
+                  <a>
+                    <ProductPreviewCardRowSmall
+                      previewItem={featuredVariant.previewItems[0]}
+                      width={88}
+                      height={55}
+                    />
+                  </a>
+                </Link>
+              : <ProductPreviewCardRowSmall
+                  previewItem={undefined}
+                  width={88}
+                  height={55}
+                />
+            }
+          </div>
+        </ShowOnMobileOrDesktopSSR>
 
         <div className={clsx(
           classes.flexRowWrapOuter,
@@ -258,10 +289,4 @@ const styles = (theme: Theme) => createStyles({
 
 
 
-export default withStyles(styles)(React.memo(
-  (props: ReactProps) => <ProductRowMedium {...props}/>,
-  // (prevProps, nextProps) => {
-  //   // return prevProps.product === nextProps.product
-  //   return true
-  // }
-));
+export default withStyles(styles)(ProductRowMedium)

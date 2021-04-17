@@ -31,6 +31,7 @@ import AlignCenterLayout from "components/AlignCenterLayout";
 import Switch from '@material-ui/core/Switch';
 import ProductCardResponsive from "components/ProductCardResponsive";
 import ProductCardAsRow from "components/ProductCardAsRow";
+import ProductRowMedium from "components/ProductRowMedium";
 import IconButton from "@material-ui/core/IconButton";
 // import ListIcon from "@material-ui/icons/ViewList";
 import ListIcon from "@material-ui/icons/List";
@@ -108,7 +109,17 @@ const CategoryId: React.FC<ReactProps> = (props) => {
       ? [props.initialRouteCategory?.slug]
       : []
   )
-  const [rowMode, setRowMode] = React.useState(false)
+
+  // rowMode by default on mobile
+  const [rowMode, setRowMode] = React.useState(undefined)
+
+  React.useEffect(() => {
+    if (mdDown) {
+      setRowMode(true)
+    } else {
+      setRowMode(true)
+    }
+  }, [])
 
 
   const { data, loading, error } = useQuery<QueryData1, QueryVar1>(
@@ -315,7 +326,9 @@ const CategoryId: React.FC<ReactProps> = (props) => {
                 >
                   {
                     rowMode
-                    ? <ProductCardAsRow product={product}/>
+                    ? mdDown
+                      ? <ProductRowMedium product={product}/>
+                      : <ProductCardAsRow product={product}/>
                     : <ProductCardResponsive
                         product={product}
                       />
