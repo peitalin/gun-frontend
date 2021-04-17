@@ -1,11 +1,9 @@
 import React from "react";
-// Redux
-import { GrandReduxState } from 'reduxStore/grand-reducer';
-import { Actions } from 'reduxStore/actions';
 // Styles
 import clsx from 'clsx';
 import { withStyles, WithStyles } from "@material-ui/core/styles";
 import { styles } from "../styles";
+import { Colors } from "layout/AppTheme";
 // Components
 import Logo from "components/Icons/Logo";
 import Badge from '@material-ui/core/Badge';
@@ -24,6 +22,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { navbarRoutes } from "./navbarRoutes";
+import { isMainPagesFn, isStartPageFn } from "."
 
 
 
@@ -40,6 +39,9 @@ const MobileMainBar = (props: MobileMainBarProps) => {
   const goToModal = goToModalConnect(dispatch);
   const router = useRouter()
   const [hide, setHide] = React.useState(false)
+
+  let isHomePage = isMainPagesFn(router)
+  let isStartPage = isStartPageFn(router)
 
   return (
     <div className={classes.baseBarInnerMobile}>
@@ -106,6 +108,10 @@ const MobileMainBar = (props: MobileMainBarProps) => {
       }>
         <SearchbarMobile
           color={color}
+          // inside icon when searchbar opens
+          expandedIconColor={
+            (isStartPage && !props.isDarkMode) ? Colors.black : color
+          }
           mobileMenuOpen={props.mobileMenuOpen}
           setMobileMenuOpen={props.setMobileMenuOpen}
           setHideMenuItems={setHide}
@@ -166,6 +172,7 @@ interface MobileMainBarProps extends ReactProps {
   loggedIn: boolean;
   color: string;
   numUnclaimedOrders?: number;
+  isDarkMode: boolean;
 }
 
 

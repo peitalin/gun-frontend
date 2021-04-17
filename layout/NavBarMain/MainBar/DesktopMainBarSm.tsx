@@ -1,7 +1,4 @@
 import React from "react";
-// Redux
-import { GrandReduxState } from 'reduxStore/grand-reducer';
-import { Actions } from 'reduxStore/actions';
 // Styles
 import clsx from 'clsx';
 import { withStyles, WithStyles } from "@material-ui/core/styles";

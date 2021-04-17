@@ -60,7 +60,9 @@ const Searchbar = (props: SearchbarProps) => {
           >
             <SearchIcon
               className={classes.searchIconOuter}
-              style={{ fill: color }}
+              style={{
+                fill: expand ? props.expandedIconColor : color
+              }}
             />
           </Button>
           <InputBase
@@ -105,6 +107,7 @@ export const SearchExpander = (props) => {
 
 interface SearchbarProps extends WithStyles<typeof styles> {
   color?: string;
+  expandedIconColor?: string;
   mobileMenuOpen: boolean;
   setMobileMenuOpen(f: (s: boolean) => boolean): void;
   setHideMenuItems(f: any): void;
@@ -144,12 +147,12 @@ let styles = (theme: Theme) => createStyles({
   searchbarExpanded: {
     backgroundColor: theme.palette.type === "dark"
       ? Colors.uniswapDarkNavy
-      : Colors.uniswapDarkNavy,
+      : Colors.slateGrey,
   },
   searchIconOuter: {
     fill: theme.palette.type === "dark"
       ? Colors.uniswapLightGrey
-      : Colors.uniswapDarkNavy,
+      : Colors.black,
   },
   searchIconInner: {
     width: theme.spacing(6),
@@ -163,14 +166,14 @@ let styles = (theme: Theme) => createStyles({
   inputRootMobile: {
     color: theme.palette.type === "dark"
       ? Colors.uniswapLightGrey
-      : Colors.uniswapLightGrey,
+      : Colors.black,
     width: '0',
     fontSize: '0.9rem',
   },
   inputRootMobileExpand: {
     color: theme.palette.type === "dark"
       ? Colors.uniswapLightGrey
-      : Colors.uniswapLightGrey,
+      : Colors.black,
     width: 'calc(100% - 3rem)',
     fontSize: '0.9rem',
   },
