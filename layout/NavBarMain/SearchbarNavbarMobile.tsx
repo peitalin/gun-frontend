@@ -14,7 +14,7 @@ import { Colors, BorderRadius3x } from "layout/AppTheme";
 
 
 
-const Searchbar = (props: SearchbarProps) => {
+const SearchbarNavbarMobile = (props: SearchbarNavbarMobileProps) => {
 
   let { classes, color } = props;
   const [expand, setExpand] = React.useState(false);
@@ -39,6 +39,42 @@ const Searchbar = (props: SearchbarProps) => {
       }
     }
   }
+
+  // const onEnterSearch = (event) => {
+  //   // Desktop only
+  //   if (event.key === "Enter") {
+  //     if (mdDown) {
+  //       snackbar.enqueueSnackbar(
+  //         `Click search button`,
+  //         { variant: "info" }
+  //       )
+  //     } else {
+  //       let url
+  //       if ((currentCategories ?? []).length > 0) {
+  //         url = `/categories/${currentCategories?.[0]?.slug}`
+  //       } else {
+  //         url = `/categories/all`
+  //       }
+  //       if (searchTerm) {
+  //         url += `?q=${encodeURIComponent(searchTerm)}`
+  //       }
+  //       router.push(url)
+  //     }
+  //   }
+  // }
+
+  // const onClickSearch = (event) => {
+  //   let url
+  //   if ((currentCategories ?? []).length > 0) {
+  //     url = `/categories/${currentCategories?.[0]?.slug}`
+  //   } else {
+  //     url = `/categories/all`
+  //   }
+  //   if (searchTerm) {
+  //     url += `?q=${encodeURIComponent(searchTerm)}`
+  //   }
+  //   router.push(url)
+  // }
 
 
   return (
@@ -105,7 +141,7 @@ export const SearchExpander = (props) => {
 }
 
 
-interface SearchbarProps extends WithStyles<typeof styles> {
+interface SearchbarNavbarMobileProps extends WithStyles<typeof styles> {
   color?: string;
   expandedIconColor?: string;
   mobileMenuOpen: boolean;
@@ -221,4 +257,4 @@ let styles = (theme: Theme) => createStyles({
 });
 
 
-export default withStyles(styles)( Searchbar );
+export default withStyles(styles)( SearchbarNavbarMobile );

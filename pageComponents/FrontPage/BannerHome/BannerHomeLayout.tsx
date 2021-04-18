@@ -4,6 +4,8 @@ import { styles } from "./styles";
 // styles
 import { withStyles, WithStyles, createStyles, Theme, fade } from "@material-ui/core/styles";
 import { Colors, Gradients } from "layout/AppTheme";
+// typings
+import { Categories } from "typings/gqlTypes";
 // components
 import Banner from "components/Banner";
 import Typography from "@material-ui/core/Typography";
@@ -15,6 +17,7 @@ import { useRouter } from 'next/router';
 import { NextPage, NextPageContext } from 'next';
 import Login from "layout/Login";
 import Hidden from 'components/HiddenFix';
+import ShowOnMobileOrDesktopSSR from "components/ShowOnMobileOrDesktopSSR";
 
 // CSS
 import { useTheme } from "@material-ui/core/styles";
@@ -59,9 +62,18 @@ const BannerHomeLayout: NextPage<ReactProps> = (props) => {
     >
 
       <div className={classes.searchContainer}>
-        <Hidden className={"fadeIn"}>
-          <SearchbarMain color={Colors.slateGrey}/>
-        </Hidden>
+        <ShowOnMobileOrDesktopSSR desktop>
+          <SearchbarMain
+            isMobile={false}
+            initialDropdownCategories={props.initialCategories}
+          />
+        </ShowOnMobileOrDesktopSSR>
+        <ShowOnMobileOrDesktopSSR mobile>
+          <SearchbarMain
+            isMobile={true}
+            initialDropdownCategories={props.initialCategories}
+          />
+        </ShowOnMobileOrDesktopSSR>
       </div>
 
 
@@ -137,6 +149,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   bannerImageUrl: string
   bannerDither: string
   portraitMode?: boolean;
+  initialCategories: Categories[];
 }
 
 export default withStyles(styles)( BannerHomeLayout );

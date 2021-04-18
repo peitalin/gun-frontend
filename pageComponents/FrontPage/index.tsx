@@ -38,8 +38,6 @@ const FrontPage: React.FC<ReactProps> = (props) => {
     initialFeaturedProducts,
   } = props;
 
-  const aClient = useApolloClient();
-
   const theme = useTheme();
   const xlUp = useMediaQuery(theme.breakpoints.up('xl'));
   // const mdDown = useMediaQuery(theme.breakpoints.down('md'));
@@ -51,7 +49,9 @@ const FrontPage: React.FC<ReactProps> = (props) => {
   return (
     <div className={classes.frontPageRoot}>
 
-      <BannerHome />
+      <BannerHome
+        initialCategories={props.initialCategories}
+      />
       <BetaTestingBanner />
 
       <AlignCenterLayout
@@ -70,7 +70,7 @@ const FrontPage: React.FC<ReactProps> = (props) => {
               <CategoryCarouselStart
                 // title={"Explore Categories"}
                 disableTitle={true}
-                categories={props.initialCategories}
+                initialCategories={props.initialCategories}
                 style={{
                   width: `calc(100% - ${cPadding*2}rem)`,
                   marginLeft: `${cPadding}rem`,
@@ -82,7 +82,7 @@ const FrontPage: React.FC<ReactProps> = (props) => {
               <CategoryCarouselStart
                 // title={"Explore Categories"}
                 disableTitle={true}
-                categories={props.initialCategories}
+                initialCategories={props.initialCategories}
                 style={{}}
               />
             </ShowOnMobileOrDesktopSSR>

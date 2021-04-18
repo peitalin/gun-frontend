@@ -16,17 +16,17 @@ import {
 } from "typings/gqlTypes";
 // Select Component
 import dynamic from "next/dynamic";
-const DropdownInput = dynamic(() => import("components/Fields/DropdownInput"), {
-  loading: () => <div style={{
-    height: 50,
-    width: 250,
-    border: `1px solid ${Colors.lightGrey}`,
-    background: Colors.white,
-    borderRadius: '4px',
-  }}/>,
-  ssr: false,
-})
-// import DropdownInput from "components/Fields/DropdownInput";
+// const DropdownInput = dynamic(() => import("components/Fields/DropdownInput"), {
+//   loading: () => <div style={{
+//     height: 50,
+//     width: 250,
+//     border: `1px solid ${Colors.lightGrey}`,
+//     background: Colors.white,
+//     borderRadius: '4px',
+//   }}/>,
+//   ssr: false,
+// })
+import DropdownInput from "components/Fields/DropdownInput";
 import SearchOptionsPriceFilter from "./SearchOptionsPriceFilter";
 import CategoryDropdown from './CategoryDropdown';
 import SearchIcon from '@material-ui/icons/Search';
@@ -62,11 +62,8 @@ const SearchOptionsAirbnb: React.FC<ReactProps> = (props) => {
     disablePriceFilter = false,
     disableSortby = false,
     disablePaginators = false,
+    isMobile = false,
   } = props;
-
-  const theme = useTheme();
-  const smDown = useMediaQuery(theme.breakpoints.down("sm"))
-  const mdDown = useMediaQuery(theme.breakpoints.down("md"))
 
   const router = useRouter();
   const snackbar = useSnackbar();
@@ -113,7 +110,7 @@ const SearchOptionsAirbnb: React.FC<ReactProps> = (props) => {
 
 
   const focusSearchOnMobile = (b: boolean) => {
-    if (mdDown) {
+    if (isMobile) {
       // clickaway listerner for mobile only
       setMobileFocused(b)
       if (props.setFocusedOuter) {
@@ -166,6 +163,7 @@ const SearchOptionsAirbnb: React.FC<ReactProps> = (props) => {
     GET_PRODUCT_CATEGORIES,
   )
   let categories = categoryData?.data?.getProductCategories ?? []
+  // console.log("getProductCategories: ", categories)
 
 
   const searchRef = React.useRef(null)
@@ -178,41 +176,44 @@ const SearchOptionsAirbnb: React.FC<ReactProps> = (props) => {
 
   // console.log('focused: ', focused)
   // console.log('mobileFocused: ', mobileFocused)
-  // console.log(`mdDown && !focused: ${mdDown && !focused}`)
+  // console.log(`isMobile && !focused: ${isMobile && !focused}`)
   // console.log('totalCount: ', totalCount)
 
   return (
     <div className={clsx(
-      mdDown ? classes.searchRootMobile : classes.searchRoot,
+      isMobile ? classes.searchRootMobile : classes.searchRoot,
     )}>
       <div
         className={clsx(
-          mdDown
+          isMobile
             ? classes.searchOptionsRootMobile
             : classes.searchOptionsRoot,
-          (mdDown && focused) && classes.searchMobileExpanded,
-          (mdDown && !focused) && classes.searchMobileNotExpanded,
+          (isMobile && focused) && classes.searchMobileExpanded,
+          (isMobile && !focused) && classes.searchMobileNotExpanded,
           props.className,
         )}
         style={{ ...props.style }}
       >
 
-        <div className={classes.clickBackgroundLayer}
-          onClick={() => focusSearchOnMobile(false)}
-          id={clickBackgroundId}
-        />
+        {
+          isMobile && focused &&
+          <div className={classes.clickBackgroundLayer}
+            onClick={() => focusSearchOnMobile(false)}
+            id={clickBackgroundId}
+          />
+        }
 
         <div className={classes.topSection}
           onClick={(event) => {
             // console.log('CLICKED stopPropagation')
-            event.stopPropagation()
+            // event.stopPropagation()
           }}
           style={props.topSectionStyles}
         >
 
           <div className={clsx(classes.filterSection, classes.maxWidth100vw)}
             style={{
-              flexDirection: mdDown ? "column" : "row",
+              flexDirection: isMobile ? "column" : "row",
               ...props.filterSectionStyles
             }}
           >
@@ -268,7 +269,8 @@ const SearchOptionsAirbnb: React.FC<ReactProps> = (props) => {
               <CategoryDropdown
                 className={clsx(
                   focused ? classes.height65 : classes.height50,
-                  (mdDown && !focused) && classes.displayNoneDelayed,
+                  isMobile ? classes.searchFilterButtonMobile : classes.searchFilterButtonDesktop,
+                  (isMobile && !focused) && classes.displayNoneDelayed,
                   // hide on mobile when not focused
                   categoryFocused && classes.boxShadow,
                 )}
@@ -285,14 +287,14 @@ const SearchOptionsAirbnb: React.FC<ReactProps> = (props) => {
                 }}
                 dropDownItems={
                   syncUrlToCategory
-                  ? [ ...(categories ?? []) ]
+                  ? [ ...(props.initialDropdownCategories ?? []) ]
                   : [
                       {
                         id: undefined,
                         slug: 'all',
                         name: "All Categories",
                       },
-                      ...(categories ?? []),
+                      ...(props.initialDropdownCategories ?? []),
                     ]
                 }
               />
@@ -303,7 +305,7 @@ const SearchOptionsAirbnb: React.FC<ReactProps> = (props) => {
               !disablePriceFilter &&
               <div className={clsx(
                 classes.marginRight05,
-                (mdDown && !focused) && classes.displayNoneDelayed,
+                (isMobile && !focused) && classes.displayNoneDelayed,
                 // hide on mobile when not focused
               )}>
                 <SearchOptionsPriceFilter
@@ -322,7 +324,7 @@ const SearchOptionsAirbnb: React.FC<ReactProps> = (props) => {
                     classes.dropdownContainer,
                     classes.marginRight05,
                     classes.marginLeft05,
-                    !(mdDown && focused) && classes.displayNoneDelayed,
+                    !(isMobile && focused) && classes.displayNoneDelayed,
                     // hide on mobile when not focused
                   )}
                   style={{ ...props.dropdownContainerStyles }}
@@ -363,7 +365,8 @@ const SearchOptionsAirbnb: React.FC<ReactProps> = (props) => {
             <Button
               className={clsx(
                 classes.searchButtonBluePurple,
-                (mdDown && !focused) && classes.displayNoneDelayed,
+                isMobile ? classes.searchButtonMobile : classes.searchButtonDesktop,
+                (isMobile && !focused) && classes.displayNoneDelayed,
                 // hide on mobile when not focused
                 focused ? classes.searchButtonShort : classes.searchButtonWide,
                 focused ? classes.height55 : classes.height40,
@@ -391,14 +394,14 @@ const SearchOptionsAirbnb: React.FC<ReactProps> = (props) => {
           classes.arrowContainer,
           classes.height50,
           // focused ? classes.height65 : classes.height50,
-          mdDown && classes.marginTop,
-          (mdDown && focused) && classes.displayNoneDelayed,
+          isMobile && classes.marginTop,
+          (isMobile && focused) && classes.displayNoneDelayed,
           // hide on mobile when menu is focused/expanded
         )}
           style={props.paginatorStyles}
         >
           <Pagination
-            // size={mdDown ? "small" : "medium"}
+            // size={isMobile ? "small" : "medium"}
             size={"medium"}
             classes={{
               root: classes.paginationPage,
@@ -557,14 +560,14 @@ interface ReactProps extends WithStyles<typeof styles> {
   setPriceRange?(a?: any): void;
   paginationParams: {
     limit: number
+    offset?: number
+    overfetchBy: number
     pageParam: number
     setPageParam?(a?: any): void;
     totalCount: number
-    overfetchBy: number
     index: number
     setIndex(a?: any): void;
-    onPrevPage?(a?: any): void;
-    onNextPage?(a?: any): void;
+    debounceSetIndex?(a?: any): void;
   };
   setFocusedOuter?(b: boolean): void;
   onClickSearch(event?: any): void;
@@ -590,6 +593,8 @@ interface ReactProps extends WithStyles<typeof styles> {
   placeholder?: string;
   className?: any;
   style?: any;
+  isMobile?: boolean;
+  initialDropdownCategories: Categories[];
 }
 export interface SelectOption {
   label: string;
@@ -615,12 +620,13 @@ const styles = (theme: Theme) => createStyles({
     flexDirection: "column",
     justifyContent: "center",
     alignItems: 'center',
-    position: 'relative',
   },
   clickBackgroundLayer: {
     position: 'absolute',
     height: '100%',
     width: '100%',
+    top: 0,
+    left: 0,
   },
   searchOptionsRoot: {
     display: "flex",
@@ -646,9 +652,12 @@ const styles = (theme: Theme) => createStyles({
     zIndex: 1,
   },
   searchMobileExpanded: {
-    height: '100vh',
-    width: '100vw',
-    position: 'fixed',
+    // height: '100vh',
+    // width: '100vw',
+    // position: 'fixed',
+    height: '100%',
+    width: '100%',
+    position: 'absolute',
     top: 0,
     left: 0,
     transition:  theme.transitions.create(['height', 'width', 'border'], {
@@ -781,7 +790,6 @@ const styles = (theme: Theme) => createStyles({
     flexDirection: 'row',
   },
 
-
   searchbar: {
     position: 'relative',
     cursor: 'pointer',
@@ -883,13 +891,21 @@ const styles = (theme: Theme) => createStyles({
       : Colors.black,
     transition: theme.transitions.create('width'),
   },
-  searchButton: {
-    padding: '8px'
+  searchFilterButtonDesktop: {
+    margin: '0rem',
+  },
+  searchFilterButtonMobile: {
+    margin: '0.5rem',
+  },
+  searchButtonDesktop: {
+    margin: '5px',
+  },
+  searchButtonMobile: {
+    margin: '0px',
   },
   searchButtonBluePurple: {
     color: Colors.cream,
     padding: '8px',
-    margin: '5px',
     borderRadius: '2rem',
     // backgroundColor: Colors.secondary,
     backgroundColor: theme.palette.type === 'dark'

@@ -102,11 +102,14 @@ const CategoryCarouselMobile = (props: ReactProps) => {
               let imageUrl
               let lastImage = (c?.thumbImage?.variants ?? [])?.[0]
 
-              if (c?.thumbImage?.variants?.length > 3) {
-                imageUrl = c?.thumbImage?.variants?.[3]?.url
-              } else {
-                imageUrl = lastImage?.url
-              }
+              // if (c?.thumbImage?.variants?.length > 3) {
+              //   imageUrl = c?.thumbImage?.variants?.[3]?.url
+              // } else {
+              //   imageUrl = lastImage?.url
+              // }
+
+              /// Use front-end images for now, easier to work with
+              imageUrl = categories.find(backup => backup.slug === c.slug)?.thumbImage?.variants?.[0]?.url
 
               // if (!imageUrl) {
               //   imageUrl = categoryPreviewsBackup

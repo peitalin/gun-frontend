@@ -233,6 +233,9 @@ export const useFacetSearchOptions = ({
     // facet filters
     facets: facets,
     setFacets,
+    // category filters
+    currentCategories,
+    setCurrentCategories,
     // pagination
     paginationParams: {
       limit,
@@ -241,17 +244,15 @@ export const useFacetSearchOptions = ({
       setPageParam,
       totalCount,
       setTotalCount,
+      // swipeable-views index
+      index,
+      setIndex,
+      debounceSetIndex,
     },
-    currentCategories,
-    setCurrentCategories,
-    // swipeable-views index
-    index,
-    setIndex,
-    debounceSetIndex,
   }
 }
 
-interface FacetSearchParams {
+export interface FacetSearchParams {
   orderBy: SelectOption;
   setOrderBy(a: any): void;
   priceRange: number[];
@@ -260,19 +261,21 @@ interface FacetSearchParams {
   setSearchTerm(a: any): void;
   facets: string[];
   setFacets(a: any): void;
+  currentCategories: Categories[],
+  setCurrentCategories: React.Dispatch<React.SetStateAction<Categories[]>>
   paginationParams: {
-    limit: number; // 2 + 2 = 4
+    limit: number; //
     offset: number;
+    overfetchBy?: number;
     totalCount: number;
     setTotalCount(a: any): void;
     pageParam: number;
     setPageParam(a: any): void;
+    // swipeable-views index
+    index: number;
+    setIndex(a?: any): void;
+    debounceSetIndex(a?: any): void;
   };
-  currentCategories: Categories[],
-  setCurrentCategories: React.Dispatch<React.SetStateAction<Categories[]>>
-  index: number;
-  setIndex(a?: any): void;
-  debounceSetIndex(a?: any): void;
 }
 
 

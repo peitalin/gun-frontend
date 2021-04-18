@@ -14,7 +14,7 @@ import {
 } from "layout/AppTheme";
 
 
-const Searchbar = (props: SearchbarProps) => {
+const SearchbarNavbarDesktop = (props: SearchbarNavbarDesktopProps) => {
 
   let { classes, color } = props;
   const [value, setValue] = React.useState("");
@@ -50,7 +50,7 @@ const Searchbar = (props: SearchbarProps) => {
 }
 
 
-interface SearchbarProps extends WithStyles<typeof styles> {
+interface SearchbarNavbarDesktopProps extends WithStyles<typeof styles> {
   color?: string;
 }
 
@@ -134,4 +134,4 @@ let styles = (theme: Theme) => createStyles({
 });
 
 
-export default withStyles(styles)( Searchbar );
+export default withStyles(styles)( SearchbarNavbarDesktop );

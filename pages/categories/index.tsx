@@ -23,7 +23,6 @@ import { categoryPreviewsBackup } from "components/CategoryCarouselStart/utils";
 
 const CategoriesPage: NextPage<ReactProps> = (props) => {
 
-  console.log('initialCategories', props.initialCategories)
   return (
     <ErrorBounds className={props.classes.root}>
       <MetaHeadersPage
@@ -75,9 +74,11 @@ interface Context extends NextPageContext {
 CategoriesPage.getInitialProps = async (ctx: Context) => {
 
   try {
-    // const { data } = await serverApolloClient(ctx).query<QueryData1, QueryVar1>({
-    //   query: GET_PRODUCT_CATEGORIES,
-    // })
+    const { data } = await serverApolloClient(ctx).query<QueryData1, QueryVar1>({
+      query: GET_PRODUCT_CATEGORIES,
+    })
+    // console.log("data.getProductCategories:", data?.getProductCategories)
+    // console.log("local categories", categoryPreviewsBackup)
     // let initialCategories = data?.getProductCategories ?? categoryPreviewsBackup as any;
     let initialCategories: Categories[] = categoryPreviewsBackup as any;
 

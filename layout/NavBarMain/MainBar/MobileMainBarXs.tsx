@@ -12,7 +12,7 @@ import MobileMenuDropdown from "layout/NavBarMain/MobileMenuDropdown";
 import Button from "@material-ui/core/Button";
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import SettingsIcon from '@material-ui/icons/Settings';
-import SearchbarMobile from "layout/NavBarMain/SearchbarMobile";
+import SearchbarNavbarMobile from "layout/NavBarMain/SearchbarNavbarMobile";
 import StorefrontIcon from "@material-ui/icons/Storefront";
 import Login from "layout/Login";
 // Modals
@@ -106,11 +106,13 @@ const MobileMainBar = (props: MobileMainBarProps) => {
       <div style={{ marginLeft: '0.5rem' }} className={
         !hide ? "fadeIn" : null
       }>
-        <SearchbarMobile
+        <SearchbarNavbarMobile
           color={color}
           // inside icon when searchbar opens
           expandedIconColor={
-            (isStartPage && !props.isDarkMode) ? Colors.black : color
+            (
+              (isStartPage || isHomePage) && !props.isDarkMode
+            ) ? Colors.black : color
           }
           mobileMenuOpen={props.mobileMenuOpen}
           setMobileMenuOpen={props.setMobileMenuOpen}

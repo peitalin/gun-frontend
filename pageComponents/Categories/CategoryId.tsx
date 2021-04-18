@@ -38,6 +38,8 @@ import ListIcon from "@material-ui/icons/List";
 import GridIcon from "@material-ui/icons/ViewModule";
 // Search Component
 import SearchOptionsAirbnb from "components/SearchbarAirbnb/SearchOptionsAirbnb";
+import ShowOnMobileOrDesktopSSR from "components/ShowOnMobileOrDesktopSSR";
+import CategorySearchbar from "./CategorySearchBar";
 import {
   useFacetSearchOptions,
   totalItemsInCategoriesFacets,
@@ -82,6 +84,8 @@ const CategoryId: React.FC<ReactProps> = (props) => {
     setSearchTerm,
     facets,
     setFacets,
+    currentCategories,
+    setCurrentCategories,
     paginationParams: {
       limit,
       offset,
@@ -89,11 +93,10 @@ const CategoryId: React.FC<ReactProps> = (props) => {
       setTotalCount,
       pageParam,
       setPageParam,
+      index,
+      setIndex,
+      debounceSetIndex,
     },
-    currentCategories,
-    setCurrentCategories,
-    index,
-    setIndex,
   } = useFacetSearchOptions({
     limit: numItemsPerPage * overfetchBy,
     overfetchBy: overfetchBy,
@@ -226,35 +229,33 @@ const CategoryId: React.FC<ReactProps> = (props) => {
               ? classes.searchContainerInnerMobile
               : classes.searchContainerInner
           }>
-            <SearchOptionsAirbnb
+            <CategorySearchbar
               searchTerm={searchTerm}
               setSearchTerm={setSearchTerm}
-              onClickSearch={onClickSearch}
-              onEnterSearch={onEnterSearch}
-              // facets={facets}
-              // setCategoryFacets={setCategoryFacets({ facets, setFacets })}
-              setCurrentCategories={setCurrentCategories}
-              currentCategories={currentCategories}
-              // this turns on category-page specific searchbar syncing
-              syncUrlToCategory={false}
+              facets={facets}
+              setFacets={setFacets}
+              orderBy={orderBy}
               setOrderBy={setOrderBy}
+              priceRange={priceRange}
               setPriceRange={setPriceRange}
-              placeholder={"Search for products..."}
+              currentCategories={currentCategories}
+              setCurrentCategories={setCurrentCategories}
               paginationParams={{
-                totalCount: Math.ceil(totalItemsInFacet / numItemsPerPage),
-                overfetchBy: overfetchBy,
                 limit: limit,
+                offset: offset,
+                overfetchBy: overfetchBy,
+                totalCount: Math.ceil(totalItemsInFacet / numItemsPerPage),
+                setTotalCount: setTotalCount,
                 pageParam: pageParam,
                 setPageParam: setPageParam,
                 index: index,
                 setIndex: setIndex,
+                debounceSetIndex: debounceSetIndex,
               }}
-              updateSetPageDelay={0}
-              // disableSearchFilter
-              disableSortby
-              disablePriceFilter
-              // disableCategories
-              maxCategoryInputWidth={250}
+              // Category Page specific callbacks
+              setCategorySlugsForGql={setCategorySlugsForGql}
+              setSearchTermForGql={setSearchTermForGql}
+              initialDropdownCategories={props.initialDropdownCategories}
             />
           </div>
         </div>
@@ -358,6 +359,7 @@ const CategoryId: React.FC<ReactProps> = (props) => {
 interface ReactProps extends WithStyles<typeof styles> {
   initialProducts: ProductsConnection;
   initialRouteCategory: Categories;
+  initialDropdownCategories: Categories[];
   disableBreadcrumbs?: boolean;
   disableMetaHeader?: boolean;
 }

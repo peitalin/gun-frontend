@@ -5,6 +5,7 @@ import { Colors } from "layout/AppTheme";
 // CSS
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
+import ShowOnMobileOrDesktopSSR from "components/ShowOnMobileOrDesktopSSR";
 
 
 
@@ -22,12 +23,24 @@ const Banner: React.FC<ReactProps> = (props) => {
         ...props.bannerContainerStyles,
       }}
     >
-      <BackgroundImage
-        classes={classes}
-        src={props.src}
-        portraitMode={props.portraitMode}
-        height={props.height ? props.height : bannerHeight}
-      />
+      <ShowOnMobileOrDesktopSSR desktop>
+        <BackgroundImage
+          classes={classes}
+          src={props.src}
+          portraitMode={props.portraitMode}
+          height={props.height ? props.height : bannerHeight}
+          isMobile={false}
+        />
+      </ShowOnMobileOrDesktopSSR>
+      <ShowOnMobileOrDesktopSSR mobile>
+        <BackgroundImage
+          classes={classes}
+          src={props.src}
+          portraitMode={props.portraitMode}
+          height={props.height ? props.height : bannerHeight}
+          isMobile={true}
+        />
+      </ShowOnMobileOrDesktopSSR>
       {
         props.dither &&
         <Dither
@@ -56,11 +69,8 @@ const Banner: React.FC<ReactProps> = (props) => {
 }
 
 const BackgroundImage = (
-  { classes, src, height, portraitMode }: BackgroundImageProps
+  { classes, src, height, portraitMode, isMobile }: BackgroundImageProps
 ) => {
-
-  const theme = useTheme();
-  const mdDown = useMediaQuery(theme.breakpoints.down("md"));
 
   if (src) {
     return (
@@ -70,7 +80,9 @@ const BackgroundImage = (
           height: height ? height : bannerHeight,
           width: portraitMode ? '100%' : 'unset',
           // image to always fill screen on desktop
-          minWidth: mdDown ? "unset" : 1160,
+          minWidth: isMobile ? "unset" : 1160,
+          top: 0,
+          left: 0,
         }}
         // onLoad={() => setImgLoaded(s => s + 1)}
         src={src}
@@ -81,14 +93,16 @@ const BackgroundImage = (
       <div
         className={classes.bannerBackground}
         style={{
-          height: mdDown
+          height: isMobile
             ? 'unset'
             : height
               ? height
               : bannerHeight,
-          width: mdDown ? '100%' : 'unset',
+          width: isMobile ? '100%' : 'unset',
           // image to always fill screen on desktop
-          minWidth: mdDown ? "unset" : 1160,
+          minWidth: isMobile ? "unset" : 1160,
+          top: 0,
+          left: 0,
         }}
       />
     )
@@ -123,9 +137,10 @@ const Dither = ({ classes, imgLoaded, ditherDark, ditherStyle }: DitherProps) =>
 }
 
 interface BackgroundImageProps extends WithStyles<typeof styles> {
-  src?: string;
-  portraitMode?: boolean;
-  height?: string | number;
+  src: string;
+  portraitMode: boolean;
+  height: string | number;
+  isMobile: boolean;
 }
 interface DitherProps extends WithStyles<typeof styles> {
   imgLoaded?: boolean;

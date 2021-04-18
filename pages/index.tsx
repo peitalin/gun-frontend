@@ -3,6 +3,7 @@ import React from "react";
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
 // GQL
 import { GET_PAGE_CONFIG_BY_PATH } from "queries/page_configs-queries";
+import { GET_PRODUCT_CATEGORIES } from "queries/categories-queries";
 // Typings
 import { PageConfig, Categories } from "typings/gqlTypes";
 // SSR
@@ -58,6 +59,13 @@ interface QueryVar1 {
   urlPath: string;
 }
 
+interface QueryData2 {
+  getProductCategories: Categories[];
+}
+interface QueryVar2 {
+  slug?: string;
+}
+
 ////////// SSR ///////////
 interface Context extends NextPageContext {
   apolloClient: ApolloClient<any>;
@@ -77,10 +85,15 @@ HomePage.getInitialProps = async (ctx: Context) => {
         urlPath: "/"
       }
     })
-    console.log("2pageConfig: ", data?.getPageConfig)
 
-    // let initialCategories = data?.getProductCategories ?? categoryPreviewsBackup as any;
-    let initialCategories: Categories[] = categoryPreviewsBackup as any;
+    const { data: data2 } = await serverApolloClient(ctx).query<QueryData2, QueryVar2>({
+      query: GET_PRODUCT_CATEGORIES,
+    })
+    // console.log("2pageConfig: ", data?.getPageConfig)
+    // console.log("getProductCategories ssr: ", data2?.getProductCategories)
+
+    let initialCategories = data2?.getProductCategories;
+    // let initialCategories: Categories[] = categoryPreviewsBackup as any;
 
     return {
       initialCategories: initialCategories,

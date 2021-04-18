@@ -51,12 +51,13 @@ const CategoryDropdown: React.FC<ReactProps> = (props) => {
   };
 
   const handleClickAway = () => {
+    // console.log("clicked away")
     setOpen(false);
     props.setFocused(false)
   };
 
   let selectedCategory = props.currentCategories?.[0]
-  // console.log("dropDownItems: ", dropDownItems)
+  console.log("dropDownItems: ", dropDownItems)
   // console.log("currentCategories: ", props.currentCategories)
   // console.log('selectedCategory: ', selectedCategory)
 
@@ -103,7 +104,7 @@ const CategoryDropdown: React.FC<ReactProps> = (props) => {
                             }}
                             variant="outlined"
                             onClick={() => {
-                              console.log("setting: ", category)
+                              // console.log("setting: ", category)
                               props.setCurrentCategories([category as any])
                               // if (category.slug) {
                               // } else {
@@ -132,6 +133,7 @@ const CategoryDropdown: React.FC<ReactProps> = (props) => {
                         }}
                         variant="outlined"
                         onClick={() => {
+                          console.log("setting: ", category)
                           if (category.slug) {
                             props.setCurrentCategories([category as any])
                           } else {

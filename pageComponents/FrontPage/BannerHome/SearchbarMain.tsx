@@ -26,7 +26,10 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 const SearchbarMain = (props: SearchbarProps) => {
 
-  let { classes, color } = props;
+  let {
+    classes,
+    isMobile = false,
+  } = props;
 
   const router = useRouter();
   const snackbar = useSnackbar();
@@ -48,6 +51,8 @@ const SearchbarMain = (props: SearchbarProps) => {
     setSearchTerm,
     facets,
     setFacets,
+    currentCategories,
+    setCurrentCategories,
     paginationParams: {
       limit,
       offset,
@@ -55,11 +60,9 @@ const SearchbarMain = (props: SearchbarProps) => {
       setTotalCount,
       pageParam,
       setPageParam,
+      index,
+      setIndex,
     },
-    currentCategories,
-    setCurrentCategories,
-    index,
-    setIndex,
   } = useFacetSearchOptions({
     limit: numItemsPerPage * overfetchBy,
     overfetchBy: overfetchBy,
@@ -111,6 +114,8 @@ const SearchbarMain = (props: SearchbarProps) => {
     router.push(url)
   }
 
+  console.log("categories", currentCategories)
+
   return (
     <SearchOptionsAirbnb
       searchTerm={searchTerm}
@@ -119,8 +124,8 @@ const SearchbarMain = (props: SearchbarProps) => {
       onEnterSearch={onEnterSearch}
       // facets={facets}
       // setCategoryFacets={setCategoryFacets({ facets, setFacets })}
-      setCurrentCategories={setCurrentCategories as any}
-      currentCategories={currentCategories as any}
+      setCurrentCategories={setCurrentCategories}
+      currentCategories={currentCategories}
       setOrderBy={setOrderBy}
       setPriceRange={setPriceRange}
       placeholder={"Search for products..."}
@@ -148,6 +153,8 @@ const SearchbarMain = (props: SearchbarProps) => {
       topSectionStyles={props.topSectionStyles}
       bottomSectionStyles={props.bottomSectionStyles}
       paginatorStyles={props.paginatorStyles}
+      isMobile={isMobile}
+      initialDropdownCategories={props.initialDropdownCategories}
     />
   )
 }
@@ -155,7 +162,6 @@ const SearchbarMain = (props: SearchbarProps) => {
 
 
 interface SearchbarProps extends WithStyles<typeof styles> {
-  color?: string;
   initialRouteCategory?: Categories;
   setFocusedOuter?(b: boolean): void;
   style?: any;
@@ -167,6 +173,8 @@ interface SearchbarProps extends WithStyles<typeof styles> {
   // for bottom section, where the child components + paginators are
   bottomSectionStyles?: any;
   paginatorStyles?: any;
+  isMobile: boolean;
+  initialDropdownCategories: Categories[];
 }
 
 let styles = (theme: Theme) => createStyles({

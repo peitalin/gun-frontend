@@ -217,11 +217,6 @@ const cacheOptions = {
     ProductPrivate: {
       keyFields: ["id"],
       fields: {
-        category: {
-          merge: (existing, incoming, opts) => {
-            return opts.mergeObjects(existing, incoming)
-          }
-        },
         store: {
           merge: (existing, incoming, opts) => {
             return opts.mergeObjects(existing, incoming)
@@ -245,11 +240,6 @@ const cacheOptions = {
     ProductPublic: {
       keyFields: ["id"],
       fields: {
-        category: {
-          merge: (existing, incoming, opts) => {
-            return opts.mergeObjects(existing, incoming)
-          }
-        },
         store: {
           merge: (existing, incoming, opts) => {
             return opts.mergeObjects(existing, incoming)

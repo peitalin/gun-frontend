@@ -54,6 +54,7 @@ const CategoryCarouselStart = (props: ReactProps) => {
   const theme = useTheme();
   const smDown = useMediaQuery(theme.breakpoints.down("sm"))
   const mdDown = useMediaQuery(theme.breakpoints.down("md"))
+  console.log("INITIAL CATEGORIES", props.initialCategories)
 
 
   return (
@@ -72,7 +73,7 @@ const CategoryCarouselStart = (props: ReactProps) => {
         <CategoryGalleryDesktop
           style={props.style}
           cardTextStyle={props.cardTextStyle}
-          categories={props.categories}
+          categories={props.initialCategories}
           initialNumItems={8}
         />
       </Hidden>
@@ -82,7 +83,7 @@ const CategoryCarouselStart = (props: ReactProps) => {
         <CategoryGalleryDesktop
           style={props.style}
           cardTextStyle={props.cardTextStyle}
-          categories={props.categories}
+          categories={props.initialCategories}
           initialNumItems={6}
         />
       </Hidden>
@@ -92,7 +93,7 @@ const CategoryCarouselStart = (props: ReactProps) => {
         <CategoryGalleryDesktop
           style={props.style}
           cardTextStyle={props.cardTextStyle}
-          categories={props.categories}
+          categories={props.initialCategories}
           initialNumItems={4}
         />
       </Hidden>
@@ -102,7 +103,7 @@ const CategoryCarouselStart = (props: ReactProps) => {
         <CategoryCarouselMobile
           style={props.style}
           cardTextStyle={props.cardTextStyle}
-          categories={props.categories}
+          categories={props.initialCategories}
           initialNumItems={2.5}
         />
       </Hidden>
@@ -112,7 +113,7 @@ const CategoryCarouselStart = (props: ReactProps) => {
         <CategoryCarouselMobile
           style={props.style}
           cardTextStyle={props.cardTextStyle}
-          categories={props.categories}
+            categories={props.initialCategories}
           initialNumItems={2.5}
         />
       </Hidden>
@@ -127,7 +128,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   style?: any;
   cardTextStyle?: any;
   disableTitle?: boolean;
-  categories: Categories[];
+  initialCategories: Categories[];
 }
 export interface CategoryPreviewCard {
   imageUrl: string,

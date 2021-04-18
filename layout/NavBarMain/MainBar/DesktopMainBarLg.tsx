@@ -9,7 +9,7 @@ import { Colors } from "layout/AppTheme";
 import Login from "layout/Login";
 import Logo from "components/Icons/Logo";
 import Badge from '@material-ui/core/Badge';
-import Searchbar from "layout/NavBarMain/SearchbarDesktop";
+import SearchbarNavbarDesktop from "layout/NavBarMain/SearchbarNavbarDesktop";
 // MUI
 import UserMenu from "layout/NavBarMain/UserMenu";
 import Button from "@material-ui/core/Button";

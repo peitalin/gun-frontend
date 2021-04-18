@@ -3,11 +3,11 @@ import clsx from "clsx";
 // SSR
 import { NextPage, NextPageContext } from 'next';
 import BannerHomeLayout from "./BannerHomeLayout";
+import { Categories } from "typings/gqlTypes";
 // CSS
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import Hidden from "components/HiddenFix";
-import classes from "*.module.css";
 // styles
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
 import { Colors, Gradients } from "layout/AppTheme";
@@ -35,6 +35,7 @@ const BannerHome: NextPage<ReactProps> = (props) => {
           bannerImageUrl={bannerMobileImageUrl}
           bannerDither={bannerDither}
           portraitMode={true}
+          initialCategories={props.initialCategories}
         />
       </Hidden>
       {/* Desktop  */}
@@ -45,6 +46,7 @@ const BannerHome: NextPage<ReactProps> = (props) => {
           bannerImageUrl={bannerImageUrl}
           bannerDither={bannerDither}
           portraitMode={false}
+          initialCategories={props.initialCategories}
         />
       </Hidden>
     </>
@@ -52,6 +54,7 @@ const BannerHome: NextPage<ReactProps> = (props) => {
 }
 ///////////////// TYPINGS ///////////////////
 interface ReactProps extends WithStyles<typeof styles> {
+  initialCategories: Categories[];
 }
 
 export const styles = (theme: Theme) => createStyles({
