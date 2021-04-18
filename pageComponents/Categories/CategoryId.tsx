@@ -37,7 +37,7 @@ import ListIcon from "@material-ui/icons/List";
 import GridIcon from "@material-ui/icons/ViewModule";
 // Search Component
 import ShowOnMobileOrDesktopSSR from "components/ShowOnMobileOrDesktopSSR";
-import CategorySearchbar from "./CategorySearchBar";
+import CategorySearchbar from "./CategorySearchbar";
 import {
   useFacetSearchOptions,
   totalItemsInCategoriesFacets,
