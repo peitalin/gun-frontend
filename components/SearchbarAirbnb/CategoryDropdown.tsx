@@ -57,7 +57,7 @@ const CategoryDropdown: React.FC<ReactProps> = (props) => {
   };
 
   let selectedCategory = props.currentCategories?.[0]
-  console.log("dropDownItems: ", dropDownItems)
+  // console.log("dropDownItems: ", dropDownItems)
   // console.log("currentCategories: ", props.currentCategories)
   // console.log('selectedCategory: ', selectedCategory)
 
@@ -187,10 +187,13 @@ export const styles = (theme: Theme) => createStyles({
     justifyContent: "center",
     alignItems: "center",
     cursor: 'pointer',
+    background: theme.palette.type === 'dark'
+      ? Colors.uniswapDarkNavy
+      : Colors.cream,
     "&:hover": {
       background: theme.palette.type === 'dark'
         ? Colors.uniswapGreyNavy
-        : Colors.slateGreyDarker,
+        : Colors.slateGreyDark,
       // borderBottom: '3px solid',
       "& > div > span": {
         color: theme.palette.type === 'dark'

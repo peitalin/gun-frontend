@@ -71,23 +71,23 @@ const BannerProductCreate: React.FC<ReactProps> = (props) => {
 
       {/* Mobile */}
       <Hidden mdUp implementation='css' className={classes.width100}>
-      <BannerCategoryMobile
-        categoryName={selectedCategoryName}
-        blurb={selectedCategoryBlurb ?? ""}
-        bannerForegroundImageUrl={bannerImageUrl}
-        bannerBackgroundImageUrl={bannerImageUrl}
-        bannerDither={bannerDitherMobile}
-      />
+        <BannerCategoryMobile
+          categoryName={selectedCategoryName}
+          blurb={selectedCategoryBlurb ?? ""}
+          bannerForegroundImageUrl={bannerImageUrl}
+          bannerBackgroundImageUrl={bannerImageUrl}
+          bannerDither={bannerDitherMobile}
+        />
       </Hidden>
       {/* Desktop */}
       <Hidden smDown implementation="css" className={classes.width100}>
-      <BannerCategoryDesktop
-        categoryName={selectedCategoryName}
-        blurb={selectedCategoryBlurb ?? ""}
-        bannerForegroundImageUrl={undefined}
-        bannerBackgroundImageUrl={bannerImageUrl}
-        bannerDither={bannerDither}
-      />
+        <BannerCategoryDesktop
+          categoryName={selectedCategoryName}
+          blurb={selectedCategoryBlurb ?? ""}
+          bannerForegroundImageUrl={undefined}
+          bannerBackgroundImageUrl={bannerImageUrl}
+          bannerDither={bannerDither}
+        />
       </Hidden>
     </>
   )

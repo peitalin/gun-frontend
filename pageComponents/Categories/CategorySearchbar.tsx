@@ -67,6 +67,7 @@ const CategorySearchbar: React.FC<ReactProps & FacetSearchParams> = (props) => {
     )
   }
 
+  console.log(`isMobile --- ${props.isMobile}`)
 
   return (
     <SearchOptionsAirbnb
@@ -99,6 +100,7 @@ const CategorySearchbar: React.FC<ReactProps & FacetSearchParams> = (props) => {
       disablePriceFilter
       // disableCategories
       maxCategoryInputWidth={250}
+      isMobile={props.isMobile}
       initialDropdownCategories={props.initialDropdownCategories}
     />
   );
@@ -108,6 +110,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   setSearchTermForGql(s: string): void
   setCategorySlugsForGql(c: string[]): void
   initialDropdownCategories: Categories[];
+  isMobile: boolean;
 }
 
 

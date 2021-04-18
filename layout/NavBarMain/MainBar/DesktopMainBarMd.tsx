@@ -8,7 +8,7 @@ import { Colors } from "layout/AppTheme";
 import Login from "layout/Login";
 import Logo from "components/Icons/Logo";
 import Badge from '@material-ui/core/Badge';
-import SearchbarMobile from "layout/NavBarMain/SearchbarMobile";
+import SearchbarNavbarMobile from "layout/NavBarMain/SearchbarNavbarMobile";
 // MUI
 import UserMenu from "layout/NavBarMain/UserMenu";
 import Button from "@material-ui/core/Button";
@@ -67,6 +67,16 @@ const DesktopMainBarMd = (props: ReactProps) => {
 
       <div style={{ flexGrow: 1 }}></div>
 
+      <div className={
+        !hide ? "fadeIn" : null
+      }>
+        <SearchbarNavbarMobile
+          color={color}
+          mobileMenuOpen={props.mobileMenuOpen}
+          setMobileMenuOpen={props.setMobileMenuOpen}
+          setHideMenuItems={setHide}
+        />
+      </div>
 
       <div className={clsx(
         classes.mainBarInner,

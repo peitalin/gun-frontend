@@ -8,7 +8,6 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import ClearIcon from '@material-ui/icons/Clear';
 import Pagination from '@material-ui/lab/Pagination';
-import { useDebouncedCallback } from 'use-debounce';
 // GraphQL Typings
 import {
   Order_By,
@@ -55,6 +54,7 @@ const SearchOptionsAirbnb: React.FC<ReactProps> = (props) => {
     setOrderBy,
     setCategoryFacets,
     paginationParams,
+    isMobile,
     syncUrlToCategory = false,
     updateSetPageDelay = 128,
     disableCategories = false,
@@ -62,7 +62,6 @@ const SearchOptionsAirbnb: React.FC<ReactProps> = (props) => {
     disablePriceFilter = false,
     disableSortby = false,
     disablePaginators = false,
-    isMobile = false,
   } = props;
 
   const router = useRouter();
@@ -177,6 +176,7 @@ const SearchOptionsAirbnb: React.FC<ReactProps> = (props) => {
   // console.log('focused: ', focused)
   // console.log('mobileFocused: ', mobileFocused)
   // console.log(`isMobile && !focused: ${isMobile && !focused}`)
+  console.log(`isMobile>>> ${isMobile}`)
   // console.log('totalCount: ', totalCount)
 
   return (
@@ -593,7 +593,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   placeholder?: string;
   className?: any;
   style?: any;
-  isMobile?: boolean;
+  isMobile: boolean;
   initialDropdownCategories: Categories[];
 }
 export interface SelectOption {
@@ -640,6 +640,7 @@ const styles = (theme: Theme) => createStyles({
       : Colors.cream,
     borderRadius: BorderRadius4x,
   },
+
   searchOptionsRootMobile: {
     display: "flex",
     opacity: 0.99,

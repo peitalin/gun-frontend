@@ -33,11 +33,9 @@ import ProductCardResponsive from "components/ProductCardResponsive";
 import ProductCardAsRow from "components/ProductCardAsRow";
 import ProductRowMedium from "components/ProductRowMedium";
 import IconButton from "@material-ui/core/IconButton";
-// import ListIcon from "@material-ui/icons/ViewList";
 import ListIcon from "@material-ui/icons/List";
 import GridIcon from "@material-ui/icons/ViewModule";
 // Search Component
-import SearchOptionsAirbnb from "components/SearchbarAirbnb/SearchOptionsAirbnb";
 import ShowOnMobileOrDesktopSSR from "components/ShowOnMobileOrDesktopSSR";
 import CategorySearchbar from "./CategorySearchBar";
 import {
@@ -48,7 +46,6 @@ import BannerCategory from "./BannerCategory";
 // Grid Components
 import GridPaginatorGeneric from "components/GridPaginatorGeneric";
 import GridPreviewCardLight from "components/GridPreviewCardLight";
-// import BannerCategory from "components/Banners/BannerCategory";
 import { useSnackbar } from "notistack";
 
 
@@ -211,54 +208,101 @@ const CategoryId: React.FC<ReactProps> = (props) => {
       )}>
 
 
-        <div className={
-          smDown
-            ? classes.bannerContainerSm
-            : classes.bannerContainer
-        }>
-          <BannerCategory
-            disableMetaHeader={disableMetaHeader}
-            currentCategories={currentCategories}
-          />
-        </div>
 
 
-        <div className={classes.searchContainer}>
-          <div className={
-            mdDown
-              ? classes.searchContainerInnerMobile
-              : classes.searchContainerInner
-          }>
-            <CategorySearchbar
-              searchTerm={searchTerm}
-              setSearchTerm={setSearchTerm}
-              facets={facets}
-              setFacets={setFacets}
-              orderBy={orderBy}
-              setOrderBy={setOrderBy}
-              priceRange={priceRange}
-              setPriceRange={setPriceRange}
-              currentCategories={currentCategories}
-              setCurrentCategories={setCurrentCategories}
-              paginationParams={{
-                limit: limit,
-                offset: offset,
-                overfetchBy: overfetchBy,
-                totalCount: Math.ceil(totalItemsInFacet / numItemsPerPage),
-                setTotalCount: setTotalCount,
-                pageParam: pageParam,
-                setPageParam: setPageParam,
-                index: index,
-                setIndex: setIndex,
-                debounceSetIndex: debounceSetIndex,
-              }}
-              // Category Page specific callbacks
-              setCategorySlugsForGql={setCategorySlugsForGql}
-              setSearchTermForGql={setSearchTermForGql}
-              initialDropdownCategories={props.initialDropdownCategories}
-            />
-          </div>
-        </div>
+
+        <ShowOnMobileOrDesktopSSR desktop className={classes.width100}>
+          <>
+            <div className={classes.bannerContainer}>
+              <BannerCategory
+                disableMetaHeader={disableMetaHeader}
+                currentCategories={currentCategories}
+              />
+            </div>
+            <div className={classes.searchContainer}>
+              <div className={
+                mdDown
+                  ? classes.searchContainerInnerMobile
+                  : classes.searchContainerInner
+              }>
+                <CategorySearchbar
+                  searchTerm={searchTerm}
+                  setSearchTerm={setSearchTerm}
+                  facets={facets}
+                  setFacets={setFacets}
+                  orderBy={orderBy}
+                  setOrderBy={setOrderBy}
+                  priceRange={priceRange}
+                  setPriceRange={setPriceRange}
+                  currentCategories={currentCategories}
+                  setCurrentCategories={setCurrentCategories}
+                  paginationParams={{
+                    limit: limit,
+                    offset: offset,
+                    overfetchBy: overfetchBy,
+                    totalCount: Math.ceil(totalItemsInFacet / numItemsPerPage),
+                    setTotalCount: setTotalCount,
+                    pageParam: pageParam,
+                    setPageParam: setPageParam,
+                    index: index,
+                    setIndex: setIndex,
+                    debounceSetIndex: debounceSetIndex,
+                  }}
+                  // Category Page specific callbacks
+                  setCategorySlugsForGql={setCategorySlugsForGql}
+                  setSearchTermForGql={setSearchTermForGql}
+                  initialDropdownCategories={props.initialDropdownCategories}
+                  isMobile={false}
+                />
+              </div>
+            </div>
+          </>
+        </ShowOnMobileOrDesktopSSR>
+
+        <ShowOnMobileOrDesktopSSR mobile className={classes.width100}>
+          <>
+            <div className={classes.bannerContainerSm}>
+              <BannerCategory
+                disableMetaHeader={disableMetaHeader}
+                currentCategories={currentCategories}
+              />
+            </div>
+            <div className={classes.searchContainer}>
+              <div className={classes.searchContainerInnerMobile}>
+                <CategorySearchbar
+                  searchTerm={searchTerm}
+                  setSearchTerm={setSearchTerm}
+                  facets={facets}
+                  setFacets={setFacets}
+                  orderBy={orderBy}
+                  setOrderBy={setOrderBy}
+                  priceRange={priceRange}
+                  setPriceRange={setPriceRange}
+                  currentCategories={currentCategories}
+                  setCurrentCategories={setCurrentCategories}
+                  paginationParams={{
+                    limit: limit,
+                    offset: offset,
+                    overfetchBy: overfetchBy,
+                    totalCount: Math.ceil(totalItemsInFacet / numItemsPerPage),
+                    setTotalCount: setTotalCount,
+                    pageParam: pageParam,
+                    setPageParam: setPageParam,
+                    index: index,
+                    setIndex: setIndex,
+                    debounceSetIndex: debounceSetIndex,
+                  }}
+                  // Category Page specific callbacks
+                  setCategorySlugsForGql={setCategorySlugsForGql}
+                  setSearchTermForGql={setSearchTermForGql}
+                  initialDropdownCategories={props.initialDropdownCategories}
+                  isMobile={true}
+                />
+              </div>
+            </div>
+          </>
+        </ShowOnMobileOrDesktopSSR>
+
 
         <div className={
           mdDown ? classes.rowToggleContainerMobile : classes.rowToggleContainerDesktop
