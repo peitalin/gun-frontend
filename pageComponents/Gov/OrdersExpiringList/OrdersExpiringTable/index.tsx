@@ -73,11 +73,11 @@ const OrdersExpiringTable: NextPage<ReactProps> = (props) => {
       // setTotalCount,
       pageParam: ordersExpiringPageParam,
       setPageParam: ordersExpiringSetPageParam,
+      index: ordersExpiringIndex,
+      setIndex: ordersExpiringSetIndex,
     },
     // currentCategories,
     // setCurrentCategories,
-    index: ordersExpiringIndex,
-    setIndex: ordersExpiringSetIndex,
   } = useFacetSearchOptions({
     limit: numItemsPerPage * overfetchBy,
     overfetchBy: overfetchBy,

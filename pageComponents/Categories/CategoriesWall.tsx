@@ -26,7 +26,7 @@ const CategoriesWall: React.FC<ReactProps> = (props) => {
       <div className={classes.categoryInnerContainer}>
         <CategoryCarouselStart
           disableTitle={true}
-          categories={props.categories}
+          initialCategories={props.categories}
         />
         {/* {
           props.categories &&

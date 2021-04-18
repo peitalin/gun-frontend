@@ -74,11 +74,11 @@ const SearchResults = (props: ReactProps) => {
       setTotalCount,
       pageParam,
       setPageParam,
+      index,
+      setIndex,
     },
     currentCategories,
     setCurrentCategories,
-    index,
-    setIndex,
   } = useFacetSearchOptions({
     limit: numItemsPerPage * overfetchBy,
     overfetchBy: overfetchBy,
@@ -185,9 +185,10 @@ const SearchResults = (props: ReactProps) => {
               </div>
             }
             <SearchbarMain
-              color={Colors.slateGrey}
               setFocusedOuter={setFocusedOuter}
               initialRouteCategory={props.initialRouteCategory}
+              isMobile={true}
+              initialDropdownCategories={props.initialCategories}
             />
           </div>
 
@@ -248,6 +249,7 @@ const SearchResults = (props: ReactProps) => {
 interface ReactProps extends WithStyles<typeof styles> {
   initialSearch?: ProductsConnection;
   initialRouteCategory?: Categories;
+  initialCategories: Categories[];
 }
 interface QueryData {
   search: ProductsConnection;

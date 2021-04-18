@@ -79,11 +79,11 @@ const PayoutsApprovedTable: NextPage<ReactProps> = (props) => {
       setTotalCount,
       pageParam: pageParam,
       setPageParam: setPageParam,
+      index: index,
+      setIndex: setIndex,
     },
     // currentCategories,
     // setCurrentCategories,
-    index: index,
-    setIndex: setIndex,
   } = useFacetSearchOptions({
     limit: numItemsPerPage * overfetchBy,
     overfetchBy: overfetchBy,

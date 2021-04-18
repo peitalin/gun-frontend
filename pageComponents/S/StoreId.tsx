@@ -83,11 +83,11 @@ const StoresId: React.FC<ReactProps> = (props) => {
       setTotalCount,
       pageParam,
       setPageParam,
+      index,
+      setIndex,
     },
     currentCategories,
     setCurrentCategories,
-    index,
-    setIndex,
   } = useFacetSearchOptions({
     limit: numItemsPerPage * overfetchBy,
     overfetchBy: overfetchBy,
