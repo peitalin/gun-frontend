@@ -1,6 +1,6 @@
 // styles
 import { createStyles, Theme, fade, lighten } from "@material-ui/core/styles";
-import { Colors, BorderRadius2x, fontFam } from "layout/AppTheme";
+import { Colors, BorderRadius2x, fontFam, BorderRadius } from "layout/AppTheme";
 
 
 export const styles = (theme: Theme) => createStyles({
@@ -91,10 +91,14 @@ export const styles = (theme: Theme) => createStyles({
     maxWidth: 480,
   },
   buttonGoToPromotions: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
     backgroundColor: Colors.secondary,
     color: Colors.cream,
     width: '100%',
     maxWidth: 180,
+    // borderRadius: BorderRadius,
     // border: `0px solid ${Colors.charcoal}`,
     transition: theme.transitions.create(['color', 'backgroundColor', 'border'], {
       easing: theme.transitions.easing.easeIn,

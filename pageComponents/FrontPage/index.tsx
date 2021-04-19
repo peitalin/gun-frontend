@@ -126,6 +126,7 @@ const FrontPage: React.FC<ReactProps> = (props) => {
         />
 
         {
+          process.browser &&
           pageConfig?.pageConfigSections?.slice(2)?.map(section => {
 
             if (section?.promotedListId) {

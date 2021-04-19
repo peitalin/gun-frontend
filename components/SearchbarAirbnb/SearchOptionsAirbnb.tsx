@@ -243,7 +243,7 @@ const SearchOptionsAirbnb: React.FC<ReactProps> = (props) => {
                   // @ts-ignore */}
                 <InputBase
                   value={props.searchTerm}
-                  innerRef={searchRef}
+                  ref={searchRef}
                   // inputRef={input => {
                   // }}
                   id={searchBlurId}

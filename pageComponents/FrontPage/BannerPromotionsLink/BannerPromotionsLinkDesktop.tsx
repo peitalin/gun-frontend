@@ -13,18 +13,17 @@ import { useRouter } from 'next/router';
 // SSR
 import { NextPage, NextPageContext } from 'next';
 import Login from "layout/Login";
-import Hidden from '@material-ui/core/Hidden';
 // CSS
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 // Redux
 import { useSelector, useDispatch } from "react-redux";
 import { GrandReduxState } from "reduxStore/grand-reducer";
-import { Actions } from "reduxStore/actions";
 import { UserPrivate } from "typings/gqlTypes";
 import Link from "next/link";
 import CardMedia from "@material-ui/core/CardMedia";
 import Tooltip from '@material-ui/core/Tooltip';
+import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 
 
 
@@ -99,7 +98,7 @@ const BannerPromotionsLink: NextPage<ReactProps> = (props) => {
                     label: classes.buttonFontSizeDesktop,
                   }}
                 >
-                  Go now
+                  {"Go Now "} <ArrowForwardIcon/>
                 </Button>
               </a>
             </Link>
