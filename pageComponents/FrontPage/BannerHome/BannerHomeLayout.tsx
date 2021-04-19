@@ -67,12 +67,12 @@ const BannerHomeLayout: NextPage<ReactProps> = (props) => {
 
       <div className={classes.mainTitleContainer}>
         <Typography className={mdDown ? classes.mainTitleSm : classes.mainTitle}>
-          List and exchange guns
+          Buy and sell firearms
         </Typography>
         <Typography variant={"subtitle2"}
           className={mdDown ? classes.subline1Sm : classes.subline1}
         >
-          Support independent gun owners
+          Free to list. Simple and Safe.
         </Typography>
 
         <div className={clsx(classes.buttonsFlexRow, 'fadeInFast')}>
