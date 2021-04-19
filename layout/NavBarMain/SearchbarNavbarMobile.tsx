@@ -23,9 +23,9 @@ const SearchbarNavbarMobile = (props: SearchbarNavbarMobileProps) => {
 
   const inputRefEl = React.useRef(null);
 
-  const handleClickSearch = (e) => {
-    if (value.length > 0) {
-      router.push(`/categories/all?q=${encodeURIComponent(value)}`)
+  const handleClickSearch = (searchTerm) => {
+    if (searchTerm.length > 0) {
+      router.push(`/categories/all?q=${encodeURIComponent(searchTerm)}&refetch=1`)
       setValue("");
     } else {
       if (!expand) {
@@ -40,28 +40,18 @@ const SearchbarNavbarMobile = (props: SearchbarNavbarMobileProps) => {
     }
   }
 
-  // const onEnterSearch = (event) => {
-  //   // Desktop only
-  //   if (event.key === "Enter") {
-  //     if (mdDown) {
-  //       snackbar.enqueueSnackbar(
-  //         `Click search button`,
-  //         { variant: "info" }
-  //       )
-  //     } else {
-  //       let url
-  //       if ((currentCategories ?? []).length > 0) {
-  //         url = `/categories/${currentCategories?.[0]?.slug}`
-  //       } else {
-  //         url = `/categories/all`
-  //       }
-  //       if (searchTerm) {
-  //         url += `?q=${encodeURIComponent(searchTerm)}`
-  //       }
-  //       router.push(url)
-  //     }
-  //   }
-  // }
+  const handleEnterSearch = (event, searchTerm) => {
+    // Desktop only
+    if (event.key === "Enter") {
+      let url
+      url = `/categories/all`
+      if (searchTerm) {
+        url += `?q=${encodeURIComponent(searchTerm)}&refetch=1`
+      }
+                setValue("");
+      router.push(url)
+    }
+  }
 
   // const onClickSearch = (event) => {
   //   let url
@@ -122,11 +112,8 @@ const SearchbarNavbarMobile = (props: SearchbarNavbarMobileProps) => {
             onChange={e => {
               setValue(e.target.value);
             }}
-            onKeyPress={event => {
-              if (event.key === "Enter") {
-                router.push(`/categories/all?q=${encodeURIComponent(value)}`)
-                setValue("");
-              }
+            onKeyPress={(event) => {
+              handleEnterSearch(event, value)
             }}
           />
         </div>

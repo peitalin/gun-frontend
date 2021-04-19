@@ -170,13 +170,13 @@ export const useFacetSearchOptions = ({
       // Sync facetHooks params to the url
       if (searchTerm !== undefined && searchTerm !== "") {
         if (params.map(p => p.includes('q=')).every(b => b === false)) {
-          // search query doesnt yet exist, add facetSearch param
+          // search query doesnt yet exist, add q param
           params = [`q=${searchTerm}`, ...params]
         }
       }
       if (pageParam > 1) {
         if (!params.some(p => p.includes('page='))) {
-          // page query doesnt yet exist, add facetSearch param
+          // page query doesnt yet exist, add page param
           params = [`page=${pageParam}`, ...params]
         } else {
           // page query exists, modify it

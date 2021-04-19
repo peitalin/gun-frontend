@@ -10,7 +10,6 @@ import { Categories } from "typings/gqlTypes";
 import Banner from "components/Banner";
 import Typography from "@material-ui/core/Typography";
 import Button from '@material-ui/core/Button';
-import SearchbarMain from "./SearchbarMain";
 // Router
 import { useRouter } from 'next/router';
 // SSR
@@ -62,18 +61,7 @@ const BannerHomeLayout: NextPage<ReactProps> = (props) => {
     >
 
       <div className={classes.searchContainer}>
-        <ShowOnMobileOrDesktopSSR desktop>
-          <SearchbarMain
-            isMobile={false}
-            initialDropdownCategories={props.initialCategories}
-          />
-        </ShowOnMobileOrDesktopSSR>
-        <ShowOnMobileOrDesktopSSR mobile>
-          <SearchbarMain
-            isMobile={true}
-            initialDropdownCategories={props.initialCategories}
-          />
-        </ShowOnMobileOrDesktopSSR>
+        {props.children}
       </div>
 
 

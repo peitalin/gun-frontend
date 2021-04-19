@@ -118,7 +118,6 @@ const SearchOptionsAirbnb: React.FC<ReactProps> = (props) => {
   }
 
   const handleClickSearch = (searchTerm) => {
-    console.log("clicked search event: ", event)
     if (props.onClickSearch) {
       props.onClickSearch(searchTerm)
     }
@@ -136,6 +135,13 @@ const SearchOptionsAirbnb: React.FC<ReactProps> = (props) => {
     }
   }
 
+
+  React.useEffect(() => {
+    console.log("router.query", router.query)
+    if (router.query?.refetch) {
+      handleClickSearch(searchTerm)
+    }
+  }, [router.query])
 
 
   React.useEffect(() => {
@@ -170,7 +176,6 @@ const SearchOptionsAirbnb: React.FC<ReactProps> = (props) => {
 
 
   const searchRef = React.useRef(null)
-  const searchButtonIdForEnter = 'search-button-to-unfocus-on-enter-${id}'
   const searchBlurId = `search-input-to-blur-on-enter-${id}`
 
   const [searchFocused, setSearchFocused] = React.useState(false)
@@ -184,6 +189,7 @@ const SearchOptionsAirbnb: React.FC<ReactProps> = (props) => {
   // console.log(`isMobile && !focused: ${isMobile && !focused}`)
   // console.log(`isMobile>>> ${isMobile}`)
   // console.log('totalCount: ', totalCount)
+  console.log('searchTerm: ', searchTerm)
 
   return (
     <div className={clsx(
@@ -378,7 +384,6 @@ const SearchOptionsAirbnb: React.FC<ReactProps> = (props) => {
                 focused ? classes.searchButtonShort : classes.searchButtonWide,
                 focused ? classes.height55 : classes.height40,
               )}
-              id={searchButtonIdForEnter}
               classes={{
                 label: classes.buttonLabel
               }}

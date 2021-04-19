@@ -57,8 +57,6 @@ const CategorySearchbar: React.FC<ReactProps & FacetSearchParams> = (props) => {
     )
   }
 
-  console.log("focusedOuter: ", props.focusedOuter)
-
   return (
     <div className={classes.searchContainer}>
       <div className={
@@ -79,7 +77,7 @@ const CategorySearchbar: React.FC<ReactProps & FacetSearchParams> = (props) => {
         }
       >
         <SearchOptionsAirbnb
-          id={"category-search-1"}
+          id={props.id}
           searchTerm={searchTerm}
           setSearchTerm={setSearchTerm}
           onClickSearch={onClickSearch}
@@ -118,6 +116,7 @@ const CategorySearchbar: React.FC<ReactProps & FacetSearchParams> = (props) => {
 }
 
 interface ReactProps extends WithStyles<typeof styles> {
+  id: string;
   setSearchTermForGql(s: string): void
   setCategorySlugsForGql(c: string[]): void
   initialDropdownCategories: Categories[];

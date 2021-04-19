@@ -95,7 +95,7 @@ const SearchbarMain = (props: SearchbarProps) => {
 
   return (
     <SearchOptionsAirbnb
-      id={'front-page-1'}
+      id={props.id}
       searchTerm={searchTerm}
       setSearchTerm={setSearchTerm}
       onClickSearch={onClickSearch}
@@ -139,6 +139,7 @@ const SearchbarMain = (props: SearchbarProps) => {
 
 
 interface SearchbarProps extends WithStyles<typeof styles> {
+  id: string;
   initialRouteCategory?: Categories;
   setFocusedOuter?(b: boolean): void;
   style?: any;

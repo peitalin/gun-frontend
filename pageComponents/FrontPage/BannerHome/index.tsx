@@ -11,6 +11,8 @@ import Hidden from "components/HiddenFix";
 // styles
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
 import { Colors, Gradients } from "layout/AppTheme";
+import ShowOnMobileOrDesktopSSR from "components/ShowOnMobileOrDesktopSSR";
+import SearchbarMain from "./SearchbarMain";
 
 
 
@@ -28,7 +30,7 @@ const BannerHome: NextPage<ReactProps> = (props) => {
   return (
     <>
       {/* Mobile  */}
-      <Hidden only={["lg", "xl"]} implementation="css">
+      <ShowOnMobileOrDesktopSSR mobile>
         <BannerHomeLayout
           height={660}
           mdDown={true}
@@ -36,10 +38,16 @@ const BannerHome: NextPage<ReactProps> = (props) => {
           bannerDither={bannerDither}
           portraitMode={true}
           initialCategories={props.initialCategories}
-        />
-      </Hidden>
+        >
+          <SearchbarMain
+            id={"frontpage-1-mobile"}
+            isMobile={false}
+            initialDropdownCategories={props.initialCategories}
+          />
+        </BannerHomeLayout>
+      </ShowOnMobileOrDesktopSSR>
       {/* Desktop  */}
-      <Hidden only={["xs", "sm", "md"]} implementation="css">
+      <ShowOnMobileOrDesktopSSR desktop>
         <BannerHomeLayout
           height={540}
           mdDown={false}
@@ -47,8 +55,14 @@ const BannerHome: NextPage<ReactProps> = (props) => {
           bannerDither={bannerDither}
           portraitMode={false}
           initialCategories={props.initialCategories}
-        />
-      </Hidden>
+        >
+          <SearchbarMain
+            id={"frontpage-2-desktop"}
+            isMobile={false}
+            initialDropdownCategories={props.initialCategories}
+          />
+        </BannerHomeLayout>
+      </ShowOnMobileOrDesktopSSR>
     </>
   )
 }

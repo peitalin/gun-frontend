@@ -119,6 +119,7 @@ const BannerCategoryPage = (props: ReactProps & FacetSearchParams) => {
           isExpanded={focusedOuter}
         >
           <CategorySearchbar
+            id={"category-search-1-mobile"}
             searchTerm={searchTerm}
             setSearchTerm={setSearchTerm}
             facets={facets}
@@ -166,6 +167,7 @@ const BannerCategoryPage = (props: ReactProps & FacetSearchParams) => {
           bannerDither={bannerDither}
         >
           <CategorySearchbar
+            id={"category-search-2-desktop"}
             searchTerm={searchTerm}
             setSearchTerm={setSearchTerm}
             facets={facets}
