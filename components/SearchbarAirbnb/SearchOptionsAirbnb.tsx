@@ -137,11 +137,11 @@ const SearchOptionsAirbnb: React.FC<ReactProps> = (props) => {
 
 
   React.useEffect(() => {
-    // console.log("router.query", router.query)
+    console.log("router.query", router.query)
     if (router.query?.refetch) {
       handleClickSearch(searchTerm)
     }
-  }, [router.query])
+  }, [router.query, searchTerm])
 
 
   React.useEffect(() => {
