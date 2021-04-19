@@ -47,6 +47,7 @@ import { useQuery } from '@apollo/client';
 const SearchOptionsAirbnb: React.FC<ReactProps> = (props) => {
 
   const {
+    id,
     classes,
     facets,
     searchTerm,
@@ -76,8 +77,6 @@ const SearchOptionsAirbnb: React.FC<ReactProps> = (props) => {
     limit
   } = paginationParams;
 
-  // for fast UI updates.
-  const [searchTermUi, setSearchTermUi] = React.useState("");
   // for fast UI updates
   const [pageUi, setPageUi] = React.useState(1);
 
@@ -118,20 +117,22 @@ const SearchOptionsAirbnb: React.FC<ReactProps> = (props) => {
     }
   }
 
-  const handleClickSearch = (event) => {
-    console.log("clicked search")
+  const handleClickSearch = (searchTerm) => {
+    console.log("clicked search event: ", event)
     if (props.onClickSearch) {
-      props.onClickSearch(event)
+      props.onClickSearch(searchTerm)
     }
     focusSearchOnMobile(false)
   }
 
   const handleEnterSearch = (event) => {
     if (event.key === "Enter") {
-      if (props.onEnterSearch) {
-        props.onEnterSearch(event)
-      }
-      focusSearchOnMobile(false)
+      // programmatically blur input
+      // don't programmatically click, pass searchTerm to the function directly
+      // or searchTerm will be undefined
+      let f = document.getElementById(searchBlurId)
+      f.blur()
+      handleClickSearch(searchTerm)
     }
   }
 
@@ -169,6 +170,8 @@ const SearchOptionsAirbnb: React.FC<ReactProps> = (props) => {
 
 
   const searchRef = React.useRef(null)
+  const searchButtonIdForEnter = 'search-button-to-unfocus-on-enter-${id}'
+  const searchBlurId = `search-input-to-blur-on-enter-${id}`
 
   const [searchFocused, setSearchFocused] = React.useState(false)
   const [categoryFocused, setCategoryFocused] = React.useState(false)
@@ -234,9 +237,10 @@ const SearchOptionsAirbnb: React.FC<ReactProps> = (props) => {
                   // @ts-ignore */}
                 <InputBase
                   value={props.searchTerm}
-                  ref={searchRef}
+                  innerRef={searchRef}
                   // inputRef={input => {
                   // }}
+                  id={searchBlurId}
                   placeholder="Search for firearms in…"
                   classes={{
                     root: clsx(
@@ -374,12 +378,13 @@ const SearchOptionsAirbnb: React.FC<ReactProps> = (props) => {
                 focused ? classes.searchButtonShort : classes.searchButtonWide,
                 focused ? classes.height55 : classes.height40,
               )}
+              id={searchButtonIdForEnter}
               classes={{
                 label: classes.buttonLabel
               }}
               variant="text"
               color="primary"
-              onClick={handleClickSearch}
+              onClick={() => handleClickSearch(searchTerm)}
             >
               <SearchIcon className={classes.iconOuter}/>
               Search
@@ -549,6 +554,7 @@ export const selectStyles = ({ width }: { width?: any }) => ({
 /////////// Typings //////////////
 
 interface ReactProps extends WithStyles<typeof styles> {
+  id: string;
   // order
   setOrderBy?(a?: SelectOption): void;
   // search term
@@ -573,8 +579,7 @@ interface ReactProps extends WithStyles<typeof styles> {
     debounceSetIndex?(a?: any): void;
   };
   setFocusedOuter?(b: boolean): void;
-  onClickSearch(event?: any): void;
-  onEnterSearch(event?: any): void;
+  onClickSearch(searchTerm?: any): void;
   // styles overrrides
   styles?: any;
   filterSectionStyles?: any;

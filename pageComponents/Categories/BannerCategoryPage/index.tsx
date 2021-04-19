@@ -59,27 +59,6 @@ const BannerCategoryPage = (props: ReactProps & FacetSearchParams) => {
   // -> CategorySearchbar -> SearchbarAirbnb
   const [focusedOuter, setFocusedOuter] = React.useState(false)
 
-  const onEnterSearch = (event) => {
-    // Desktop only
-    if (event.key === "Enter") {
-      setPageParam(1) // reset to page 1 every time you hit search button
-      setSearchTermForGql(searchTerm)
-      setCategorySlugsForGql(
-        currentCategories.map(c => c.slug)
-      )
-    }
-  }
-
-  const onClickSearch = (event) => {
-    setPageParam(1) // reset to page 1 every time you hit search button
-    setSearchTermForGql(searchTerm)
-    setCategorySlugsForGql(
-      currentCategories.map(c => c.slug)
-    )
-  }
-
-
-
 
   const getBannerImageUrl = (slug) => {
     switch (slug) {

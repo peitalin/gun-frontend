@@ -78,30 +78,8 @@ const SearchbarMain = (props: SearchbarProps) => {
   }, [props.initialRouteCategory])
 
 
-  const onEnterSearch = (event) => {
-    // Desktop only
-    if (event.key === "Enter") {
-      if (mdDown) {
-        snackbar.enqueueSnackbar(
-          `Click search button`,
-          { variant: "info" }
-        )
-      } else {
-        let url
-        if ((currentCategories ?? []).length > 0) {
-          url = `/categories/${currentCategories?.[0]?.slug}`
-        } else {
-          url = `/categories/all`
-        }
-        if (searchTerm) {
-          url += `?q=${encodeURIComponent(searchTerm)}`
-        }
-        router.push(url)
-      }
-    }
-  }
 
-  const onClickSearch = (event) => {
+  const onClickSearch = (searchTerm) => {
     let url
     if ((currentCategories ?? []).length > 0) {
       url = `/categories/${currentCategories?.[0]?.slug}`
@@ -114,14 +92,13 @@ const SearchbarMain = (props: SearchbarProps) => {
     router.push(url)
   }
 
-  console.log("categories", currentCategories)
 
   return (
     <SearchOptionsAirbnb
+      id={'front-page-1'}
       searchTerm={searchTerm}
       setSearchTerm={setSearchTerm}
       onClickSearch={onClickSearch}
-      onEnterSearch={onEnterSearch}
       // facets={facets}
       // setCategoryFacets={setCategoryFacets({ facets, setFacets })}
       setCurrentCategories={setCurrentCategories}

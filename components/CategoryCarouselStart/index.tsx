@@ -54,7 +54,7 @@ const CategoryCarouselStart = (props: ReactProps) => {
   const theme = useTheme();
   const smDown = useMediaQuery(theme.breakpoints.down("sm"))
   const mdDown = useMediaQuery(theme.breakpoints.down("md"))
-  console.log("INITIAL CATEGORIES", props.initialCategories)
+  // console.log("INITIAL CATEGORIES", props.initialCategories)
 
 
   return (

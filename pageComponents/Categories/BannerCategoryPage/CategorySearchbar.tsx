@@ -47,28 +47,17 @@ const CategorySearchbar: React.FC<ReactProps & FacetSearchParams> = (props) => {
   } = facetSearchParams;
 
 
-  const onEnterSearch = (event) => {
-    // Desktop only
-    if (event.key === "Enter") {
-      setPageParam(1) // reset to page 1 every time you hit search button
-      props.setSearchTermForGql(searchTerm)
-      props.setCategorySlugsForGql(
-        currentCategories.map(c => c.slug)
-      )
-    }
-  }
-
   const onClickSearch = (event) => {
     // THIS IS HAVING SOME ISSUES WHEN CLICKING NOT DISPATCHING
     // SEARCH
     setPageParam(1) // reset to page 1 every time you hit search button
-    console.log("setting search for GQL")
     props.setSearchTermForGql(searchTerm)
     props.setCategorySlugsForGql(
       currentCategories.map(c => c.slug)
     )
   }
 
+  console.log("focusedOuter: ", props.focusedOuter)
 
   return (
     <div className={classes.searchContainer}>
@@ -90,10 +79,10 @@ const CategorySearchbar: React.FC<ReactProps & FacetSearchParams> = (props) => {
         }
       >
         <SearchOptionsAirbnb
+          id={"category-search-1"}
           searchTerm={searchTerm}
           setSearchTerm={setSearchTerm}
           onClickSearch={onClickSearch}
-          onEnterSearch={onEnterSearch}
           // facets={facets}
           // setCategoryFacets={setCategoryFacets({ facets, setFacets })}
           setCurrentCategories={setCurrentCategories}
