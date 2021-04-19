@@ -40,56 +40,61 @@ const BannerCategoryMobile: NextPage<ReactProps> = (props) => {
     s => s.reduxLogin.user
   )
 
-  const theme = useTheme();
-
   return (
-    <Banner
-      // in /public/img
-      bannerContainerStyles={{
-        marginBottom: "1rem",
-      }}
-      src={bannerBackgroundImageUrl}
-      titleStyle={{
-        position: 'absolute',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'flex-start',
-        alignItems: 'center',
-        maxWidth: 'calc(100vw - 0rem)',
-        top: '0px',
-        color: "#181818",
-      }}
-      ditherStyle={{
-        background: bannerDither
-      }}
-      height={
-        !!props.blurb ? 210 : 140
-      }
-      dither={true}
-    >
-      <div className={classes.bannerInnerBoxLeftSm}>
-        {/* <CardMedia
-          component="img"
-          // className={classes.image}
-          classes={{ media: classes.categoryImageMd }}
-          src={bannerForegroundImageUrl}
-          alt={categorySlug}
-        /> */}
-      </div>
+    <div className={
+      props.isExpanded
+      ? classes.rootMobileExpanded
+      : classes.rootMobile
+    }>
+      <Banner
+        // in /public/img
+        bannerContainerStyles={{
+          marginBottom: "1rem",
+        }}
+        src={bannerBackgroundImageUrl}
+        titleStyle={{
+          // position: 'absolute',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'flex-start',
+          alignItems: 'center',
+          maxWidth: 'calc(100vw - 0rem)',
+          top: '0px',
+        }}
+        ditherStyle={{
+          background: bannerDither
+        }}
+        height={
+          210
+        }
+        dither={true}
+      >
+        <div className={classes.bannerInnerBoxLeftSm}>
+          {/* <CardMedia
+            component="img"
+            // className={classes.image}
+            classes={{ media: classes.categoryImageMd }}
+            src={bannerForegroundImageUrl}
+            alt={categorySlug}
+          /> */}
+        </div>
 
-      <div className={classes.bannerInnerBoxRightSm}>
-        <div className={classes.bannerInnerBoxRightBlur}>
-          <div className={classes.mainTitleContainerMobile}>
-            <Typography variant={"h2"} className={classes.mainTitleXs}>
-              {props.categoryName}
+        <div className={classes.bannerInnerBoxRightSm}>
+          <div className={classes.bannerInnerBoxRightBlur}>
+            <div className={classes.mainTitleContainerMobile}>
+              <Typography variant={"h2"} className={classes.mainTitleXs}>
+                {props.categoryName}
+              </Typography>
+            </div>
+            <Typography variant={"body2"} className={classes.subline1Xs}>
+              {props.blurb}
             </Typography>
           </div>
-          <Typography variant={"body2"} className={classes.subline1Xs}>
-            {props.blurb}
-          </Typography>
         </div>
-      </div>
-    </Banner>
+
+      </Banner>
+      {props.children}
+    </div>
   )
 }
 
@@ -101,6 +106,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   categorySlug?: string
   bannerForegroundImageUrl: string
   bannerBackgroundImageUrl: string
+  isExpanded: boolean
 }
 
 export default withStyles(styles)( BannerCategoryMobile );

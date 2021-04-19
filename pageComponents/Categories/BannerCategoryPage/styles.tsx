@@ -4,8 +4,17 @@ import { Colors, BorderRadius2x, fontFam } from "layout/AppTheme";
 
 
 export const styles = (theme: Theme) => createStyles({
-  root: {
-    // backgroundColor: "#fefefe",
+  rootDesktop: {
+    position: 'relative',
+    marginBottom: '4rem',
+  },
+  rootMobile: {
+    position: 'relative',
+    marginBottom: '4rem',
+  },
+  rootMobileExpanded: {
+    position: 'relative',
+    marginBottom: '1rem',
   },
   bannerInnerBoxLeft: {
     display: 'flex',

@@ -20,7 +20,7 @@ import { useRouter } from "next/router";
 
 
 const AdminProfileWrapper = (
-  props: ReactProps & { children?: any }
+  props: ReactProps
 ) => {
 
   const {
@@ -126,6 +126,7 @@ export interface AdminProfileProps {
 export interface ReactProps extends WithStyles<typeof styles> {
   disableAdminBorder?: boolean
   disablePadding?: boolean
+  children?(args: any): React.ReactNode;
 }
 
 

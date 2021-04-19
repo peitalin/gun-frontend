@@ -176,7 +176,7 @@ const SearchOptionsAirbnb: React.FC<ReactProps> = (props) => {
   // console.log('focused: ', focused)
   // console.log('mobileFocused: ', mobileFocused)
   // console.log(`isMobile && !focused: ${isMobile && !focused}`)
-  console.log(`isMobile>>> ${isMobile}`)
+  // console.log(`isMobile>>> ${isMobile}`)
   // console.log('totalCount: ', totalCount)
 
   return (

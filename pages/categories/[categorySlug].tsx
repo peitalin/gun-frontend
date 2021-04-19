@@ -80,7 +80,7 @@ interface Context extends NextPageContext {
 CategorySlugSSR.getInitialProps = async (ctx: Context) => {
 
   const categorySlug: string = ctx.query.categorySlug as any;
-  // console.log('categorySlug', categorySlug)
+
 
   if (categorySlug) {
 

@@ -109,7 +109,7 @@ const CategoryCarouselMobile = (props: ReactProps) => {
               // }
 
               /// Use front-end images for now, easier to work with
-              imageUrl = categories.find(backup => backup.slug === c.slug)?.thumbImage?.variants?.[0]?.url
+              imageUrl = categoryPreviewsBackup.find(backup => backup.slug === c.slug)?.thumbImage?.variants?.[0]?.url
 
               // if (!imageUrl) {
               //   imageUrl = categoryPreviewsBackup

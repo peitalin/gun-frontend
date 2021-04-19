@@ -48,57 +48,63 @@ const BannerCategory: NextPage<ReactProps> = (props) => {
   const lgDown = useMediaQuery(theme.breakpoints.down("lg"))
 
   return (
-    <Banner
-      // in /public/img
-      src={bannerBackgroundImageUrl}
-      titleStyle={{
-        color: Colors.cream,
-        alignItems: 'flex-start',
-        paddingLeft: '3rem',
-        flexDirection: 'row',
-      }}
-      ditherStyle={{
-        background: bannerDither
-      }}
-      bannerContainerStyles={{
-        borderRadius: BorderRadius3x,
-        border: isDarkMode
-          ? `1px solid ${Colors.uniswapLightNavy}`
-          : `1px solid ${Colors.slateGreyBlack}`
-      }}
-      dither={true}
-      height={mdDown ? 240 : 300 }
-    >
-      <div className={clsx(
-        classes.bannerInnerBoxLeft,
-        classes.minWidth300,
-      )}>
-        <div className={classes.mainTitleContainer}>
-          <Typography variant={"h1"} className={classes.mainTitle}>
-            {props.categoryName}
+    <div className={classes.rootDesktop}>
+      <Banner
+        // in /public/img
+        src={bannerBackgroundImageUrl}
+        titleStyle={{
+          color: Colors.cream,
+          alignItems: 'flex-start',
+          paddingLeft: '3rem',
+          flexDirection: 'row',
+        }}
+        ditherStyle={{
+          background: bannerDither
+        }}
+        bannerContainerStyles={{
+          margin: '1rem',
+          maxWidth: '1160px',
+          borderRadius: BorderRadius3x,
+          border: isDarkMode
+            ? `1px solid ${Colors.uniswapLightNavy}`
+            : `1px solid ${Colors.slateGreyBlack}`
+        }}
+        dither={true}
+        height={mdDown ? 240 : 300 }
+      >
+        <div className={clsx(
+          classes.bannerInnerBoxLeft,
+          classes.minWidth300,
+        )}>
+          <div className={classes.mainTitleContainer}>
+            <Typography variant={"h1"} className={classes.mainTitle}>
+              {props.categoryName}
+            </Typography>
+          </div>
+
+          <Typography variant={"subtitle2"} className={classes.subline1}>
+            {props.blurb}
           </Typography>
         </div>
+        <div className={clsx(
+          classes.bannerInnerBoxRight,
+          // mdDown ? classes.minWidth300 : classes.minWidth400,
+        )}>
+          {
+            !!bannerForegroundImageUrl &&
+            <CardMedia
+              component="img"
+              // className={classes.image}
+              classes={{ media: classes.categoryImage }}
+              src={bannerForegroundImageUrl}
+              alt={categorySlug}
+            />
+          }
+        </div>
 
-        <Typography variant={"subtitle2"} className={classes.subline1}>
-          {props.blurb}
-        </Typography>
-      </div>
-      <div className={clsx(
-        classes.bannerInnerBoxRight,
-        // mdDown ? classes.minWidth300 : classes.minWidth400,
-      )}>
-        {
-          !!bannerForegroundImageUrl &&
-          <CardMedia
-            component="img"
-            // className={classes.image}
-            classes={{ media: classes.categoryImage }}
-            src={bannerForegroundImageUrl}
-            alt={categorySlug}
-          />
-        }
-      </div>
     </Banner>
+      {props.children}
+    </div>
   )
 }
 

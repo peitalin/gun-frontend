@@ -177,7 +177,7 @@ const LoadingBar: React.FC<ReactProps> = (props) => {
     return <span className={classes.placeholder}/>;
   } else {
     return (
-      <div className={selectLoaderStyle(props)}>
+      <div className={selectLoaderStyle(props)} style={props.style}>
         <div className={classes.loadingHeight}>
           {
             delay
@@ -212,6 +212,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   color?: string;
   height: string | number;
   width: string | number;
+  style?: any;
 }
 
 const styles = (theme: Theme) => createStyles({
