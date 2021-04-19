@@ -109,7 +109,7 @@ const BannerCategoryPage = (props: ReactProps & FacetSearchParams) => {
       }
 
       {/* Mobile */}
-      <Hidden mdUp implementation='css' className={classes.width100}>
+      <Hidden lgUp implementation='css' className={classes.width100}>
         <BannerCategoryMobile
           categoryName={selectedCategoryName}
           blurb={selectedCategoryBlurb ?? ""}
@@ -157,7 +157,7 @@ const BannerCategoryPage = (props: ReactProps & FacetSearchParams) => {
         </BannerCategoryMobile>
       </Hidden>
       {/* Desktop */}
-      <Hidden smDown implementation="css" className={classes.width100}>
+      <Hidden mdDown implementation="css" className={classes.width100}>
         <BannerCategoryDesktop
           categoryName={selectedCategoryName}
           blurb={selectedCategoryBlurb ?? ""}

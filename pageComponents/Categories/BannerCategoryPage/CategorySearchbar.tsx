@@ -140,7 +140,6 @@ export const styles = (theme: Theme) => createStyles({
   searchContainerInner: {
     height: '3.5rem',
     marginTop: "-1rem",
-    marginBottom: "2.5rem",
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
