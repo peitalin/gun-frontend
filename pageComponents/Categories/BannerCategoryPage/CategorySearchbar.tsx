@@ -53,7 +53,7 @@ const CategorySearchbar: React.FC<ReactProps & FacetSearchParams> = (props) => {
     setPageParam(1) // reset to page 1 every time you hit search button
     props.setSearchTermForGql(searchTerm)
     props.setCategorySlugsForGql(
-      currentCategories.map(c => c.slug)
+      currentCategories?.map(c => c.slug) ?? ["all"]
     )
   }
 

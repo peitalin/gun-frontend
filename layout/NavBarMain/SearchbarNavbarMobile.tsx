@@ -48,7 +48,7 @@ const SearchbarNavbarMobile = (props: SearchbarNavbarMobileProps) => {
       if (searchTerm) {
         url += `?q=${encodeURIComponent(searchTerm)}&refetch=1`
       }
-                setValue("");
+      setValue("");
       router.push(url)
     }
   }

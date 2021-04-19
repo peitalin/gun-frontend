@@ -132,7 +132,7 @@ export const useFacetSearchOptions = ({
 
       let urlPath = router.asPath.split('?')[0]
       let params: string[];
-      // console.log("router.query:", router?.query)
+      console.log("router.query:", router?.query)
       // console.log("urlPath:", urlPath)
       // console.log("params1: ", params)
       // console.log("currentCategories: ", currentCategories)
@@ -169,11 +169,12 @@ export const useFacetSearchOptions = ({
 
       // Sync facetHooks params to the url
       if (searchTerm !== undefined && searchTerm !== "") {
-        if (params.map(p => p.includes('q=')).every(b => b === false)) {
+        if (params.every(p => !p.includes("q="))) {
           // search query doesnt yet exist, add q param
           params = [`q=${searchTerm}`, ...params]
         }
       }
+      // Sync page params if larger than page 1
       if (pageParam > 1) {
         if (!params.some(p => p.includes('page='))) {
           // page query doesnt yet exist, add page param
@@ -193,9 +194,17 @@ export const useFacetSearchOptions = ({
         params = params.filter(param => !param.includes("page="))
       }
 
-      // console.log("params before join: ", params)
+      // Sync force refetch for navbar mobile search
+      if (router?.query?.refetch) {
+        if (params.every(p => !p.includes("refetch="))) {
+          // search query doesnt yet exist, add q param
+          params = [...params, `refetch=1` ]
+        }
+      }
+
+      console.log("params before join: ", params)
       let params_str: string = params.join('&')
-      // console.log("params_str after join: ", params_str)
+      console.log("params_str after join: ", params_str)
       if (params_str) {
         params_str = `?${params_str}`
       }
