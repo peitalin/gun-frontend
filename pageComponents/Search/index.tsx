@@ -185,6 +185,7 @@ const SearchResults = (props: ReactProps) => {
               </div>
             }
             <SearchbarMain
+              id={"search-page-1"}
               setFocusedOuter={setFocusedOuter}
               initialRouteCategory={props.initialRouteCategory}
               isMobile={true}
