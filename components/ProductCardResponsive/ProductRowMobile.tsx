@@ -1,7 +1,7 @@
 import React from "react";
 import clsx from "clsx";
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
-import { Colors } from "layout/AppTheme";
+import { Colors, isThemeDark } from "layout/AppTheme";
 // Redux
 import { useDispatch, useSelector } from "react-redux";
 // Typings
@@ -148,13 +148,6 @@ const styles = (theme: Theme) => createStyles({
     marginBottom: '1rem',
     paddingBottom: '1rem',
     paddingTop: 0,
-    borderBottom: `1px solid ${Colors.lightestGrey}`,
-    "&:hover": {
-      borderBottom: `1px solid ${Colors.lightestGrey}`,
-      transition: theme.transitions.create('border', {
-        easing: theme.transitions.easing.easeIn,
-      })
-    },
   },
   marginLeft: {
     marginLeft: "1rem",
