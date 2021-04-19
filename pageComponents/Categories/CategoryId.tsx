@@ -3,7 +3,7 @@ import React from "react";
 import clsx from "clsx";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
-import { BorderRadius3x, Colors } from "layout/AppTheme";
+import { BorderRadius3x, Colors, isThemeDark } from "layout/AppTheme";
 // Typings
 import {
   ID,
@@ -30,7 +30,7 @@ import Typography from "@material-ui/core/Typography";
 import AlignCenterLayout from "components/AlignCenterLayout";
 import Switch from '@material-ui/core/Switch';
 import ProductCardResponsive from "components/ProductCardResponsive";
-import ProductCardAsRow from "components/ProductCardAsRow";
+import ProductRowMobileLoading from "components/ProductCardResponsive/ProductRowMobileLoading";
 import ProductRowMedium from "components/ProductRowMedium";
 import LoadingBar from "components/LoadingBar";
 import IconButton from "@material-ui/core/IconButton";
@@ -109,7 +109,11 @@ const CategoryId: React.FC<ReactProps> = (props) => {
   )
 
   // rowMode by default on mobile
-  const [rowMode, setRowMode] = React.useState(undefined)
+  const [rowMode, setRowMode] = React.useState(mdDown)
+
+  React.useEffect(() => {
+    setRowMode(mdDown)
+  }, [mdDown])
 
 
   const { data, loading, error } = useQuery<QueryData1, QueryVar1>(
@@ -173,7 +177,11 @@ const CategoryId: React.FC<ReactProps> = (props) => {
 
       <LoadingBar
         absoluteTop
-        color={Colors.ultramarineBlue}
+        color={
+          isThemeDark(theme)
+            ? Colors.purple
+            : Colors.ultramarineBlue
+        }
         height={4}
         width={'100vw'}
         loading={loading}
@@ -242,12 +250,27 @@ const CategoryId: React.FC<ReactProps> = (props) => {
             overfetchBy={overfetchBy}
             disableAnimation
             loading={loading}
+              // rowMode is initially undefined on SSR render
+              // so this is the SRR initial paint for mobile and desktop.
+              // after rowMode is set (with the toggle) we choose between the
+              // types of product cards
+            loadingComponent={
+              <>
+                <ShowOnMobileOrDesktopSSR desktop>
+                  <ProductCardResponsive product={undefined} />
+                </ShowOnMobileOrDesktopSSR>
+                <ShowOnMobileOrDesktopSSR mobile>
+                  <ProductRowMobileLoading/>
+                </ShowOnMobileOrDesktopSSR>
+              </>
+            }
             containerStyle={{ minHeight: 284*2 }}
             gridItemClassName={
               rowMode ? classes.gridItemRow : classes.gridItemCard
             }
           >
             {({ node: product }) => {
+
               return (
                 <div key={product.id}
                   className={clsx(
@@ -257,17 +280,8 @@ const CategoryId: React.FC<ReactProps> = (props) => {
                 >
                   {
                     rowMode
-                    ? <>
-                        <ShowOnMobileOrDesktopSSR desktop>
-                          <ProductCardAsRow product={product}/>
-                        </ShowOnMobileOrDesktopSSR>
-                        <ShowOnMobileOrDesktopSSR mobile>
-                          <ProductRowMedium product={product}/>
-                        </ShowOnMobileOrDesktopSSR>
-                      </>
-                    : <ProductCardResponsive
-                        product={product}
-                      />
+                      ? <ProductRowMedium product={product}/>
+                      : <ProductCardResponsive product={product} />
                   }
                 </div>
               )

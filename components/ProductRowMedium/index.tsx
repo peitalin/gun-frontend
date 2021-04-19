@@ -111,7 +111,8 @@ const ProductRowMedium = (props: ReactProps) => {
               </div>
             : <div className={classes.flexColInner60}>
                 <Typography className={classes.category} variant="body1">
-                  {product?.category?.name}
+                  {/* {product?.category?.name} */}
+                  {`${product?.currentSnapshot?.model} ${product?.currentSnapshot?.make}`}
                 </Typography>
 
                 <Link
@@ -121,17 +122,6 @@ const ProductRowMedium = (props: ReactProps) => {
                   <a>
                     <Typography className={classes.title} variant="body1">
                       {product?.currentSnapshot?.title}
-                    </Typography>
-                  </a>
-                </Link>
-
-                <Link
-                  href="/p/[productIdOrSlug]"
-                  as={`/p/${product?.id}`}
-                >
-                  <a>
-                    <Typography className={classes.modelMake} variant="body1">
-                      {`${product?.currentSnapshot?.model} ${product?.currentSnapshot?.make}`}
                     </Typography>
                   </a>
                 </Link>
@@ -185,7 +175,7 @@ const styles = (theme: Theme) => createStyles({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'flex-start',
-    paddingRight: "1rem",
+    paddingRight: "0.5rem",
     flexGrow: 1,
   },
   flexColInner30: {
@@ -213,7 +203,7 @@ const styles = (theme: Theme) => createStyles({
     display: 'flex',
     flexDirection: 'row',
     flexWrap: 'wrap',
-    padding: '1rem 0rem 1rem 1rem',
+    padding: '0rem 0rem 1rem 1rem',
   },
   flexGrow: {
     flexGrow: 1,
@@ -222,7 +212,7 @@ const styles = (theme: Theme) => createStyles({
     marginLeft: "1rem",
   },
   priceContainer: {
-    marginTop: '0.5rem',
+    marginTop: '0.25rem',
   },
   category: {
     fontWeight: 600,

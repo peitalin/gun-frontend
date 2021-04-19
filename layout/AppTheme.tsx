@@ -103,6 +103,9 @@ declare module '@material-ui/core/styles/createMuiTheme' {
 }
 
 
+export const isThemeDark = (theme: Theme) => {
+  return theme.palette.type === 'dark'
+}
 
 // Ultramarine blue
 const secondary = "#2484FF"

@@ -137,7 +137,7 @@ const SearchOptionsAirbnb: React.FC<ReactProps> = (props) => {
 
 
   React.useEffect(() => {
-    console.log("router.query", router.query)
+    // console.log("router.query", router.query)
     if (router.query?.refetch) {
       handleClickSearch(searchTerm)
     }
@@ -189,7 +189,7 @@ const SearchOptionsAirbnb: React.FC<ReactProps> = (props) => {
   // console.log(`isMobile && !focused: ${isMobile && !focused}`)
   // console.log(`isMobile>>> ${isMobile}`)
   // console.log('totalCount: ', totalCount)
-  console.log('searchTerm: ', searchTerm)
+  // console.log('searchTerm: ', searchTerm)
 
   return (
     <div className={clsx(
