@@ -163,26 +163,6 @@ const CategoryId: React.FC<ReactProps> = (props) => {
   // console.log("index: ", index)
   // console.log("offset: ", offset)
 
-  const onEnterSearch = (event) => {
-    // Desktop only
-    if (event.key === "Enter") {
-      setPageParam(1) // reset to page 1 every time you hit search button
-      setSearchTermForGql(searchTerm)
-      setCategorySlugsForGql(
-        currentCategories.map(c => c.slug)
-      )
-    }
-  }
-
-  const onClickSearch = (event) => {
-    setPageParam(1) // reset to page 1 every time you hit search button
-    setSearchTermForGql(searchTerm)
-    setCategorySlugsForGql(
-      currentCategories.map(c => c.slug)
-    )
-  }
-
-
   return (
     <AlignCenterLayout
       maxWidth={1160}

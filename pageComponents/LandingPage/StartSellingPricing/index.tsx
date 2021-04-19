@@ -182,9 +182,10 @@ export const styles = (theme: Theme) => createStyles({
     // borderBottom: theme.palette.type === 'dark'
     //   ? `1px solid ${Colors.uniswapGrey}`
     //   : `1px solid ${Colors.slateGreyDarkest}`,
-    backgroundColor: theme.palette.type === 'dark'
+    background: theme.palette.type === 'dark'
       ? `${Colors.uniswapDarkNavy}`
       : `${Colors.slateGrey}`,
+      // : `linear-gradient(180deg , ${Colors.slateGrey} 30%, rgba(255, 255, 255, 0.4) 60%, rgba(5, 5, 5, 0) 90%)`,
   },
   section6: {
     width: '100%',

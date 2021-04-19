@@ -118,18 +118,21 @@ const SearchOptionsAirbnb: React.FC<ReactProps> = (props) => {
     }
   }
 
-  const onClickSearch = (event) => {
+  const handleClickSearch = (event) => {
+    console.log("clicked search")
     if (props.onClickSearch) {
       props.onClickSearch(event)
     }
     focusSearchOnMobile(false)
   }
 
-  const onEnterSearch = (event) => {
-    if (props.onEnterSearch) {
-      props.onEnterSearch(event)
+  const handleEnterSearch = (event) => {
+    if (event.key === "Enter") {
+      if (props.onEnterSearch) {
+        props.onEnterSearch(event)
+      }
+      focusSearchOnMobile(false)
     }
-    focusSearchOnMobile(false)
   }
 
 
@@ -251,8 +254,8 @@ const SearchOptionsAirbnb: React.FC<ReactProps> = (props) => {
                     // console.log('onBlur:', e)
                     setSearchFocused(false)
                   }}
-                  onChange={e => props.setSearchTerm(e.target.value)}
-                  onKeyPress={onEnterSearch}
+                  onChange={e => setSearchTerm(e.target.value)}
+                  onKeyPress={handleEnterSearch}
                   startAdornment={
                     <div className={classes.searchAdornIcon}
                       onClick={() => searchRef.current.focus()}
@@ -376,7 +379,7 @@ const SearchOptionsAirbnb: React.FC<ReactProps> = (props) => {
               }}
               variant="text"
               color="primary"
-              onClick={onClickSearch}
+              onClick={handleClickSearch}
             >
               <SearchIcon className={classes.iconOuter}/>
               Search

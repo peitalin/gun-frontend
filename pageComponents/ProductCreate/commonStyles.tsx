@@ -47,7 +47,7 @@ export const styles = (theme: Theme) => createStyles({
     justifyContent: 'flex-end',
   },
   maxWidth: {
-    maxWidth: 600,
+    maxWidth: 540,
     width: '100%',
   },
   pageMargin: {
@@ -323,7 +323,6 @@ export const styles = (theme: Theme) => createStyles({
     // display: 'flex',
     // flexDirection: 'column',
     padding: '0px',
-    width: '100%'
   },
   buttonRoot: {
     margin: '0.1rem',

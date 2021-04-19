@@ -166,6 +166,7 @@ const styles = (theme: Theme) => createStyles({
     flexDirection: 'row',
     flexWrap: 'wrap',
     maxWidth: 1160,
+    // width: '100%',
   },
   stickyNavbar: {
     width: '100%',

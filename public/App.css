@@ -246,10 +246,10 @@ textarea {
 }
 
 .slideFromTop {
-  -webkit-animation: slideFromTop 0.2s ease-in-out;
-  animation: slideFromTop 0.2s ease-in-out;
-  -webkit-animation-delay: 0.02s;
-  animation-delay: 0.02s;
+  -webkit-animation: slideFromTop 0.4s ease-in-out;
+  animation: slideFromTop 0.4s ease-in-out;
+  -webkit-animation-delay: 0.0s;
+  animation-delay: 0.0s;
 }
 
 .barloaderLong {
@@ -469,8 +469,8 @@ textarea {
 @keyframes slideFromTop {
   from {
     opacity: 1;
-    -webkit-transform: translate3d(0%, -120%, 0);
-    transform: translate3d(0%, -120%, 0);
+    -webkit-transform: translate3d(0%, -50%, 0);
+    transform: translate3d(0%, -50%, 0);
   }
 }
 

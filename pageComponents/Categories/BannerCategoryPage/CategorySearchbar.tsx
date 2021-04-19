@@ -59,7 +59,10 @@ const CategorySearchbar: React.FC<ReactProps & FacetSearchParams> = (props) => {
   }
 
   const onClickSearch = (event) => {
+    // THIS IS HAVING SOME ISSUES WHEN CLICKING NOT DISPATCHING
+    // SEARCH
     setPageParam(1) // reset to page 1 every time you hit search button
+    console.log("setting search for GQL")
     props.setSearchTermForGql(searchTerm)
     props.setCategorySlugsForGql(
       currentCategories.map(c => c.slug)
@@ -71,13 +74,19 @@ const CategorySearchbar: React.FC<ReactProps & FacetSearchParams> = (props) => {
     <div className={classes.searchContainer}>
       <div className={
           props.isMobile
-          ? classes.searchContainerInnerMobile
+          ? props.focusedOuter
+            ? clsx(
+              classes.searchContainerInnerMobile,
+              classes.searchMobileHeightFocused,
+              "fadeIn",
+            )
+            : clsx(
+              classes.searchContainerInnerMobile,
+              classes.searchMobileHeight,
+              "fadeIn",
+              "slideFromTop",
+            )
           : classes.searchContainerInner
-        }
-        style={
-          props.isMobile ? {
-            height: props.focusedOuter ? 300 : null,
-          } : {}
         }
       >
         <SearchOptionsAirbnb
@@ -148,11 +157,24 @@ export const styles = (theme: Theme) => createStyles({
   searchContainerInnerMobile: {
     marginTop: "-0.5rem",
     marginBottom: "1.5rem",
-    height: '2rem',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     paddingLeft: '1rem', // offset gridOrList buttons padding Right
+  },
+  searchMobileHeight: {
+    height: '2rem',
+    transition: theme.transitions.create('height', {
+      easing: theme.transitions.easing.easeInOut,
+      duration: "350ms",
+    }),
+  },
+  searchMobileHeightFocused: {
+    height: 300,
+    transition: theme.transitions.create('height', {
+      easing: theme.transitions.easing.easeInOut,
+      duration: "350ms",
+    }),
   },
 });
 
