@@ -41,7 +41,7 @@ const BannerHome: NextPage<ReactProps> = (props) => {
         >
           <SearchbarMain
             id={"frontpage-1-mobile"}
-            isMobile={false}
+            isMobile={true}
             initialDropdownCategories={props.initialCategories}
           />
         </BannerHomeLayout>
