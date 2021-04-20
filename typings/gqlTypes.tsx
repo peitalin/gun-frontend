@@ -30,6 +30,11 @@ export type AddRemovePaymentMethodResponse = {
   user: UserPrivate;
 };
 
+export type Aggregate = {
+  __typename?: 'Aggregate';
+  sum?: Maybe<PayoutSum>;
+};
+
 /** Information about a person on the platform */
 export type BasicUser = {
   id: Scalars['ID'];
@@ -8370,6 +8375,19 @@ export enum PayoutStatus {
   REFUNDED = 'REFUNDED'
 }
 
+export type PayoutSum = {
+  __typename?: 'PayoutSum';
+  amount?: Maybe<Scalars['Int']>;
+  paymentProcessingFee?: Maybe<Scalars['Int']>;
+  taxes?: Maybe<Scalars['Int']>;
+};
+
+export type PayoutSummary = {
+  __typename?: 'PayoutSummary';
+  nodes?: Maybe<Array<Maybe<Payout_Items>>>;
+  aggregate?: Maybe<Aggregate>;
+};
+
 /** columns and relationships of "phone_numbers" */
 export type Phone_Numbers = {
   __typename?: 'phone_numbers';
@@ -12172,6 +12190,11 @@ export type Query = {
    * AccessRule – OWNER
    */
   getOrder?: Maybe<Order>;
+  /**
+   * Get payoutItems and payout summary for ADMIN_APPROVED orders
+   * AccessRule – PLATFORM_ADMIN
+   */
+  getAdminApprovedPayoutSummary: PayoutSummary;
   /**
    * List payoutItems between startDate and endDate.
    * AccessRule – PLATFORM_ADMIN

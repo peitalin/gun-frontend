@@ -93,6 +93,41 @@ export const GET_ORDERS_ADMIN_APPROVED_CONNECTION = gql`
   ${OrdersFragment}
 `;
 
+export const GET_ADMIN_APPROVED_PAYOUT_SUMMARY = gql`
+  query {
+    getAdminApprovedPayoutSummary {
+      nodes {
+        id
+        createdAt
+        storeId
+        payeeType
+        amount
+        paymentProcessingFee
+        taxes
+        payoutStatus
+        currency
+        txnId
+        payoutId
+        orderId
+        order {
+          id
+          currentSnapshot {
+            orderStatus
+          }
+        }
+      }
+      aggregate {
+        sum {
+          amount
+          paymentProcessingFee
+          taxes
+        }
+      }
+    }
+  }
+`;
+
+
 
 export const GET_ORDERS_PAYOUTS_COMPLETE_CONNECTION = gql`
   query($query: ConnectionQueryOrders!) {

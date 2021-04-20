@@ -2,24 +2,20 @@ import React from "react";
 import clsx from "clsx";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
-import { Colors, BoxShadows, BorderRadius } from "layout/AppTheme";
+import { Colors, BoxShadows, BorderRadius, isThemeDark } from "layout/AppTheme";
 // Typings
 import {
   UserPrivate,
-  Order,
   OrderAdmin,
-  OrderStatus,
   ConnectionQuery,
-  PayeeType,
-  Connection,
+  PayoutSummary,
   OrdersConnection,
 } from "typings/gqlTypes";
 // Utils Components
 import ErrorBounds from "components/ErrorBounds";
-import MenuItem from "@material-ui/core/MenuItem";
 import DownloadIcon from "components/Icons/DownloadIcon";
 import LoadingBar from "components/LoadingBar";
-import PayoutOrderRow from "./PayoutOrderRow";
+import PayoutSummaryTable from "./PayoutSummaryTable";
 import ButtonLoading from "components/ButtonLoading";
 // Material UI
 import Typography from "@material-ui/core/Typography";
@@ -36,10 +32,10 @@ import { useSnackbar, ProviderContext } from "notistack";
 import { useApolloClient } from "@apollo/client";
 import {
   GET_ORDERS_ADMIN_APPROVED_CONNECTION,
+  GET_ADMIN_APPROVED_PAYOUT_SUMMARY,
 } from "queries/orders-admin-queries";
 import { MARK_PAYOUTS_AS_PAID } from "queries/orders-mutations";
 import { useMutation } from "@apollo/client";
-import { DocumentNode } from "graphql";
 // Search Component
 import SearchOptions, { SelectOption, setCategoryFacets } from "components/SearchOptions";
 import {
@@ -89,15 +85,18 @@ const PayoutsApprovedList = (props: ReactProps) => {
     markPayoutsAsPaid,
     markPayoutsAsPaidResponse
   ] = useMutation<MutData2, MutVar2>(
-    MARK_PAYOUTS_AS_PAID,
-    {
-      onCompleted: () => {
-        snackbar.enqueueSnackbar(`Payouts marked complete.`, { variant: "info" })
-        router.push("/gov/escrow/complete")
-      },
-    }
-  );
+    MARK_PAYOUTS_AS_PAID, {
+    onCompleted: () => {
+      snackbar.enqueueSnackbar(`Payouts marked complete.`, { variant: "info" })
+      router.push("/gov/escrow/complete")
+    },
+  });
 
+  const { data, loading } = useQuery<QData2, QVar2>(
+    GET_ADMIN_APPROVED_PAYOUT_SUMMARY, {
+    onCompleted: () => {
+    },
+  });
 
   //////////////// BEGIN CSV DOWNLOAD FUNCTION ///////////////
   const handleDownloadPayoutList = async() => {
@@ -140,11 +139,6 @@ const PayoutsApprovedList = (props: ReactProps) => {
             return !found
           })
           .map(order => {
-            let bsb = order.sellerStore?.user?.payoutMethod?.bsb
-            let accountNumber = order.sellerStore?.user?.payoutMethod?.accountNumber
-            let accountName = order?.sellerStore?.user?.payoutMethod?.accountName
-            let id = order.id
-            let amount = order.total / 100
             // map to csv headers
             return {
               bsb: order.sellerStore?.user?.payoutMethod?.bsb,
@@ -153,13 +147,6 @@ const PayoutsApprovedList = (props: ReactProps) => {
               id: order.id,
               amount: order.total / 100,
             }
-            // return [
-            //   bsb,
-            //   accountNumber,
-            //   accountName,
-            //   id,
-            //   amount,
-            // ]
           })
 
         console.log('newOrders: ', newOrders)
@@ -202,13 +189,26 @@ const PayoutsApprovedList = (props: ReactProps) => {
   const [orderIds, setOrderIds] = React.useState([])
   const [totalCountCsv, setTotalCountCsv] = React.useState(0)
 
-  console.log("totalCountCsv", totalCountCsv)
+  console.log("data::::", data)
 
   return (
     <ErrorBounds className={clsx(
       classes.root,
       xsDown && classes.rootMobile,
     )}>
+
+      <LoadingBar
+        absoluteTop
+        color={
+          isThemeDark(theme)
+            ? Colors.purple
+            : Colors.ultramarineBlue
+        }
+        height={4}
+        width={'100vw'}
+        loading={loading}
+        style={{ zIndex: 1 }}
+      />
 
       <div className={classes.flexRowSpaceBetween}>
         <div className={classes.flexColRightBottom}>
@@ -312,6 +312,11 @@ const PayoutsApprovedList = (props: ReactProps) => {
         setOrderIds={setOrderIds}
       />
 
+      <PayoutSummaryTable
+        payoutSummary={data?.getAdminApprovedPayoutSummary}
+        loading={loading}
+      />
+
     </ErrorBounds>
   );
 }
@@ -326,6 +331,12 @@ interface QueryVar {
 }
 interface QueryData {
   getOrdersAdminApprovedConnection: OrdersConnection
+}
+// payout summary
+interface QVar2 {
+}
+interface QData2 {
+  getAdminApprovedPayoutSummary: PayoutSummary
 }
 
 interface MutData2 {
