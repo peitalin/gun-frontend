@@ -30,12 +30,11 @@ import Typography from "@material-ui/core/Typography";
 import AlignCenterLayout from "components/AlignCenterLayout";
 import Switch from '@material-ui/core/Switch';
 import ProductCardResponsive from "components/ProductCardResponsive";
-import ProductRowMobileLoading from "components/ProductCardResponsive/ProductRowMobileLoading";
 import ProductRowMedium from "components/ProductRowMedium";
+// Loading product cards
+import ProductRowMobileLoading from "components/ProductCardResponsive/ProductRowMobileLoading";
 import LoadingBar from "components/LoadingBar";
-import IconButton from "@material-ui/core/IconButton";
-import ListIcon from "@material-ui/icons/List";
-import GridIcon from "@material-ui/icons/ViewModule";
+import LoadingCards from "pageComponents/FrontPage/LoadingCards";
 import {
   useFacetSearchOptions,
   totalItemsInCategoriesFacets,
@@ -257,7 +256,7 @@ const CategoryId: React.FC<ReactProps> = (props) => {
             loadingComponent={
               <>
                 <ShowOnMobileOrDesktopSSR desktop>
-                  <ProductCardResponsive product={undefined} />
+                  <LoadingCards count={1}/>
                 </ShowOnMobileOrDesktopSSR>
                 <ShowOnMobileOrDesktopSSR mobile>
                   <ProductRowMobileLoading/>
