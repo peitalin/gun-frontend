@@ -1,7 +1,7 @@
 /// Limits that users may or may not bump into:
 export const minLengthUsername = 2;
 export const minLengthPassword = 6;
-export const minPrice = 100;
+export const minPrice = 100; // $20
 export const promoCodeMaxLength = 20;
 export const promoCodeMinLength = 3;
 export const minLengthStoreName = 3;

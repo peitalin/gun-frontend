@@ -469,8 +469,8 @@ textarea {
 @keyframes slideFromTop {
   from {
     opacity: 1;
-    -webkit-transform: translate3d(0%, -10%, 0);
-    transform: translate3d(0%, -10%, 0);
+    -webkit-transform: translate3d(0%, -12%, 0);
+    transform: translate3d(0%, -12%, 0);
   }
 }
 

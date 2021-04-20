@@ -243,6 +243,8 @@ const SearchOptionsAirbnb: React.FC<ReactProps> = (props) => {
                 <InputBase
                   value={props.searchTerm}
                   ref={searchRef}
+                  type={"text"}
+                  autoComplete={"new-password"} // this disables autofill
                   // inputRef={input => {
                   // }}
                   id={searchBlurId}
