@@ -119,10 +119,12 @@ const PayoutsApprovedTable: NextPage<ReactProps> = (props) => {
   let noPayoutsToBePaid = !loading && ordersConnection?.edges?.length === 0
 
   React.useEffect(() => {
+    let incomingTotalCount = data?.getOrdersAdminApprovedConnection?.totalCount
     if (typeof props.setTotalCountCsv === 'function') {
-      props.setTotalCountCsv(totalCount)
+      props.setTotalCountCsv(incomingTotalCount)
+      setTotalCount(incomingTotalCount)
     }
-  }, [totalCount])
+  }, [data])
 
   React.useEffect(() => {
     if (typeof props.setOrderIds === 'function') {
@@ -207,7 +209,7 @@ const PayoutsApprovedTable: NextPage<ReactProps> = (props) => {
             {({ node }) => {
 
               let order = node as OrderAdmin;
-              console.log("order>>>>>>: ", order)
+              // console.log("order>>>>>>: ", order)
 
               return (
                 <RowExpander

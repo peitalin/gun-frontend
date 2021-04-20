@@ -202,6 +202,7 @@ const PayoutsApprovedList = (props: ReactProps) => {
   const [orderIds, setOrderIds] = React.useState([])
   const [totalCountCsv, setTotalCountCsv] = React.useState(0)
 
+  console.log("totalCountCsv", totalCountCsv)
 
   return (
     <ErrorBounds className={clsx(
@@ -226,7 +227,7 @@ const PayoutsApprovedList = (props: ReactProps) => {
               onClick={
                 totalCountCsv
                   ? handleDownloadPayoutList
-                  : () => alert('loading...')
+                  : () => alert('totalCount is 0...')
               }
             >
               <DownloadIcon
