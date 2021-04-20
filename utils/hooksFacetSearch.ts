@@ -194,14 +194,6 @@ export const useFacetSearchOptions = ({
         params = params.filter(param => !param.includes("page="))
       }
 
-      // Sync force refetch for navbar mobile search
-      if (router?.query?.refetch) {
-        if (params.every(p => !p.includes("refetch="))) {
-          // search query doesnt yet exist, add q param
-          params = [...params, `refetch=1` ]
-        }
-      }
-
       // console.log("params before join: ", params)
       let params_str: string = params.join('&')
       // console.log("params_str after join: ", params_str)

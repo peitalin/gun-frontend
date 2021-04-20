@@ -140,6 +140,7 @@ const SearchOptionsAirbnb: React.FC<ReactProps> = (props) => {
     if (router.query.refetch) {
       handleClickSearch(searchTerm)
     }
+    // refetch=1 param is taken away after render
   }, [router.query, searchTerm])
 
 
