@@ -4,12 +4,8 @@ import clsx from "clsx";
 // Redux
 import { useDispatch, useSelector } from "react-redux";
 import { GrandReduxState } from "reduxStore/grand-reducer";
-import { Actions } from "reduxStore/actions";
-/// Debounce
-import { useDebouncedCallback } from 'use-debounce';
 // Styles
 import { withStyles, WithStyles, Theme, createStyles } from "@material-ui/core/styles";
-// import { styles } from "./styles";
 import { styles } from "./styles";
 // Material UI
 import Typography from "@material-ui/core/Typography";
@@ -19,7 +15,7 @@ import Button from "@material-ui/core/Button";
 // router
 import { useRouter } from "next/router";
 // Typings
-import { UserPrivate, Dealers } from "typings/gqlTypes";
+import { UserPrivate, Dealer } from "typings/gqlTypes";
 import { HtmlEvent, EditStoreInput } from "typings";
 // Validation
 import { FormikProps } from 'formik';
@@ -263,7 +259,7 @@ interface FormikFields {
 
 interface ReactProps extends WithStyles<typeof styles> {
   title?: string;
-  dealer: Dealers;
+  dealer: Dealer;
 }
 
 

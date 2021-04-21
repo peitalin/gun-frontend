@@ -4,7 +4,7 @@ import clsx from "clsx";
 import { Colors, BorderRadius, BorderRadius2x, BoxShadows } from "layout/AppTheme";
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 // Typings
-import { Dealers, UserPrivate } from "typings/gqlTypes";
+import { UserPrivate, Dealer } from "typings/gqlTypes";
 // Material UI
 import Button from "@material-ui/core/Button";
 // Utils Components
@@ -23,8 +23,10 @@ const EditDealerProfile = (props: ReactProps) => {
 
   const {
     classes,
-    user,
+    dealer,
+    editAsAdmin = false,
   } = props;
+
   // CSS
   const theme = useTheme();
   const smDown = useMediaQuery(theme.breakpoints.down('sm'))
@@ -42,13 +44,11 @@ const EditDealerProfile = (props: ReactProps) => {
       !smDown && classes.minWidth500,
     )}>
       <div className={classes.dealerEditMenu}>
-
-
         <EditDealerForm
-          dealer={user?.dealer as any}
+          dealer={dealer}
+          editAsAdmin={editAsAdmin}
           closeEditDealerModal={undefined}
         />
-
       </div>
     </ErrorBounds>
   );
@@ -56,7 +56,8 @@ const EditDealerProfile = (props: ReactProps) => {
 
 
 interface ReactProps extends WithStyles<typeof styles> {
-  user: UserPrivate
+  dealer: Dealer
+  editAsAdmin?: boolean
 }
 
 const styles = (theme: Theme) => createStyles({

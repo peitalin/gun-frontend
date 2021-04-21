@@ -11,10 +11,10 @@ import { withStyles, WithStyles } from "@material-ui/core/styles";
 import { styles } from './styles';
 // Graphql
 import { useMutation } from "@apollo/client";
-import { EDIT_DEALER } from "queries/dealers-mutations";
+import { EDIT_DEALER, EDIT_DEALER_AS_ADMIN } from "queries/dealers-mutations";
 // Typings
-import { Dealers, UserMutationResponse, UserPrivate } from "typings/gqlTypes";
-import { EditDealerInput } from "typings"
+import { Dealer, UserMutationResponse, UserPrivate } from "typings/gqlTypes";
+import { EditDealerInput, EditDealerAsAdminInput } from "typings"
 // Components
 import Loading from "components/Loading";
 import EditDealerFields from "./EditDealerFields";
@@ -29,15 +29,23 @@ import { validationSchemas } from "utils/validation";
 // Icons
 import IconButton from "@material-ui/core/IconButton";
 import ClearIcon from "@material-ui/icons/Clear";
+import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
 // media query
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
+// router
+import { useRouter } from "next/router";
 
 
 
 const EditDealerForm: React.FC<ReactProps> = (props) => {
 
-  const { classes, dealer } = props;
+  const {
+    classes,
+    dealer,
+    editAsAdmin = false,
+  } = props;
+
   const dispatch = useDispatch();
   const snackbar = useSnackbar();
 
@@ -45,7 +53,26 @@ const EditDealerForm: React.FC<ReactProps> = (props) => {
     s => s.reduxLogin.user
   )
 
-  const [dealerEdit, { data, loading, error }] =
+  const [dealerEditAsAdmin, { loading: loading2 }] =
+  useMutation<MutationData2, EditDealerAsAdminInput>(
+    EDIT_DEALER_AS_ADMIN, {
+    variables: {} as any,
+    onCompleted: (data) => {
+      // console.log('onCompleted dealer edit response ', data)
+      snackbar.enqueueSnackbar(
+        `Success! Edited dealer ${data?.editDealerAsAdmin?.id}.`,
+        { variant: "success" }
+      )
+    },
+    onError: (error) => {
+      snackbar.enqueueSnackbar(
+        `Uh... ${JSON.stringify(error)}`,
+        { variant: "error" }
+      )
+    }
+  })
+
+  const [dealerEdit, { loading }] =
   useMutation<MutationData, EditDealerInput>(
     EDIT_DEALER, {
     variables: {} as any,
@@ -84,21 +111,38 @@ const EditDealerForm: React.FC<ReactProps> = (props) => {
       onSubmit={(values, { setSubmitting }) => {
         console.log('formik values...: ', values);
         // Dispatch Apollo Mutation after validation
-
-        dealerEdit({
-          variables: {
-            name: values.name,
-            address: values.address,
-            city: values.city,
-            postCode: values.postCode,
-            state: values.state,
-            licenseNumber: values.licenseNumber,
-          }
-        }).then(res => {
-          if (props.closeEditDealerModal) {
-            props.closeEditDealerModal()
-          }
-        })
+        if (editAsAdmin) {
+          dealerEditAsAdmin({
+            variables: {
+              dealerId: dealer.id,
+              name: values.name,
+              address: values.address,
+              city: values.city,
+              postCode: values.postCode,
+              state: values.state,
+              licenseNumber: values.licenseNumber,
+            }
+          }).then(res => {
+            if (props.closeEditDealerModal) {
+              props.closeEditDealerModal()
+            }
+          })
+        } else {
+          dealerEdit({
+            variables: {
+              name: values.name,
+              address: values.address,
+              city: values.city,
+              postCode: values.postCode,
+              state: values.state,
+              licenseNumber: values.licenseNumber,
+            }
+          }).then(res => {
+            if (props.closeEditDealerModal) {
+              props.closeEditDealerModal()
+            }
+          })
+        }
 
       }}
     >
@@ -124,14 +168,18 @@ const EditDealerForm: React.FC<ReactProps> = (props) => {
             onSubmit={handleSubmit}
             asModal={props.asModal}
             closeEditDealerModal={props.closeEditDealerModal}
-            loading={loading}
+            loading={loading || loading2}
+            editAsAdmin={editAsAdmin}
           >
             <EditDealerFields
               title={props.title}
               dealer={dealer}
               {...fprops}
             />
-            { loading && <Loading fixed loading={loading} delay={"200ms"}/>}
+            {
+              (loading || loading2) &&
+              <Loading fixed loading={loading} delay={"200ms"}/>
+            }
           </EditDealerFormWrapper>
         )
       }}
@@ -146,9 +194,12 @@ const EditDealerFormWrapper: React.FC<FormWrapperProps> = (props) => {
   const {
     classes,
     onSubmit,
+    editAsAdmin,
     loading = false,
   } = props;
+
   // const dispatch = useDispatch();
+  const router = useRouter();
   const theme = useTheme();
   const smUp = useMediaQuery(theme.breakpoints.up('sm'));
 
@@ -158,12 +209,6 @@ const EditDealerFormWrapper: React.FC<FormWrapperProps> = (props) => {
       smUp ? classes.formBordersDesktop : classes.formBordersMobile
     )}>
       <div className={smUp ? classes.paperMarginDesktop : classes.paperMarginMobile}>
-        <div className={classes.flexColMargin}>
-          <Typography color={"primary"} variant="h3">
-            Edit Your Dealer Profile
-          </Typography>
-          <br/>
-        </div>
 
         {
           props.closeEditDealerModal &&
@@ -174,6 +219,26 @@ const EditDealerFormWrapper: React.FC<FormWrapperProps> = (props) => {
             <ClearIcon/>
           </IconButton>
         }
+
+        {
+          editAsAdmin &&
+          <div className={classes.backButton}>
+            <IconButton onClick={() => router.back()}>
+              <KeyboardArrowLeft/>
+            </IconButton>
+            <Typography className={classes.goBackText} variant="subtitle2">
+              Go Back
+            </Typography>
+          </div>
+        }
+
+
+        <div className={classes.flexColMargin}>
+          <Typography color={"primary"} variant="h3">
+            Edit Your Dealer Profile
+          </Typography>
+          <br/>
+        </div>
 
         <form onSubmit={onSubmit}>
 
@@ -206,26 +271,30 @@ const EditDealerFormWrapper: React.FC<FormWrapperProps> = (props) => {
   )
 }
 
+interface ReactProps extends WithStyles<typeof styles> {
+  data?: any;
+  asModal?: boolean;
+  title?: string;
+  dealer: Dealer;
+  closeEditDealerModal?(): void;
+  editAsAdmin?: boolean;
+}
+
 interface FormWrapperProps extends WithStyles<typeof styles> {
   onSubmit(e: React.FormEvent<HTMLFormElement>): void;
   asModal?: boolean;
   title?: string;
   closeEditDealerModal?(): void;
   loading?: boolean;
+  editAsAdmin: boolean;
 }
 
 interface MutationData {
   editDealer: UserMutationResponse
 }
-
-interface ReactProps extends WithStyles<typeof styles> {
-  data?: any;
-  asModal?: boolean;
-  title?: string;
-  dealer: Dealers;
-  closeEditDealerModal?(): void;
+interface MutationData2 {
+  editDealerAsAdmin: Dealer
 }
-
 
 export default withStyles(styles)( EditDealerForm );
 
