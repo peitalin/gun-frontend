@@ -8,6 +8,7 @@ import { UserPrivate } from "typings/gqlTypes";
 // Components
 import Loading from "components/Loading";
 import LoadingBarSSR from "components/LoadingBarSSR";
+import Button from "@material-ui/core/Button";
 // next
 // SSR disable
 import dynamic from "next/dynamic";
@@ -39,6 +40,7 @@ const CreateDealerHomepage = (props: ReactProps) => {
 
   // state
   const { classes } = props;
+  const [menuOpen, setMenuOpen] = React.useState(false)
 
   return (
     <>
@@ -50,8 +52,27 @@ const CreateDealerHomepage = (props: ReactProps) => {
       {({ data, loading, error }: AdminProfileProps) => {
         return (
           <div className={classes.contentContainer}>
-            <CreateDealerProfile user={data?.user}/>
-            <div style={{ margin: '2rem' }}></div>
+            {
+              menuOpen
+              ? <div className={clsx(classes.flexRow, classes.width100)}>
+                  <CreateDealerProfile
+                    setMenuOpen={setMenuOpen}
+                    user={data?.user}
+                  />
+                </div>
+              : <div className={clsx(classes.flexRow, classes.width100)}>
+                  <Button
+                    className={classes.openCreateDealerButton}
+                    classes={{
+                      label: classes.openCreateDealerButtonLabel
+                    }}
+                    onClick={() => setMenuOpen(s => !s)}
+                  >
+                    Create New Dealer
+                  </Button>
+                </div>
+            }
+            <div style={{ margin: '1rem' }}></div>
             <DealerViewer />
           </div>
         );

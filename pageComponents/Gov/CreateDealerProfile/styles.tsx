@@ -258,36 +258,6 @@ export const styles = (theme: Theme) => createStyles({
     width: '100%',
     position: 'relative',
   },
-  // avatar image
-  avatarErrorMsg: {
-    position: "absolute", // nested under width100 position: relative
-    bottom: '1rem',
-  },
-  // avatar outline circle
-  avatar: {
-    width: 90,
-    height: 90,
-    border: "1px solid #fafafa",
-    boxShadow: "0px 0px 1px 1px rgba(0,0,0,0.5)",
-    marginTop: '1rem',
-    marginBottom: '0.5rem',
-  },
-  avatarEdit: {
-    transform: "scale(1.2)",
-    transition: theme.transitions.create('transform, border', {
-      easing: theme.transitions.easing.easeIn,
-      duration: "100ms",
-    }),
-    border: "3px solid #fafafa",
-    marginBottom: "1.5rem",
-    "&:hover": {
-      border: "3px solid #24A4FF",
-      transition: theme.transitions.create('border', {
-        easing: theme.transitions.easing.easeIn,
-        duration: "100ms",
-      }),
-    }
-  },
   flexCol: {
     display: "flex",
     flexDirection: "column",
@@ -316,45 +286,10 @@ export const styles = (theme: Theme) => createStyles({
     color: Colors.lightRed,
     maxHeight: '1rem',
   },
-  addItemButtonLi: {
-    marginBottom: '1rem',
-  },
-  addItemButton: {
-    padding: "0.5rem 1rem",
-    marginBottom: "0.25rem",
-  },
-  addItemButtonText: {
-    textAlign: 'center',
-  },
-  storeNameCopyContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    marginBottom: '1rem',
-    width: '100%',
-    maxWidth: 400,
-  },
-  storeNameCopyButton: {
-    borderRadius: '0px 4px 4px 0px',
-    borderTop: '1px solid rgba(36, 132, 255, 0.7)',
-    borderRight: '1px solid rgba(36, 132, 255, 0.7)',
-    borderBottom: '1px solid rgba(36, 132, 255, 0.7)',
-    borderLeft: '1px solid rgba(36, 132, 255, 0.7)',
-    color: "rgba(36, 132, 255, 0.8)",
-    backgroundColor: "rgba(36, 132, 255, 0.1)",
-  },
-  storeNameCopy: {
-    width: '100%',
-    height: 35,
-    fontSize: '0.9rem',
-    color: Colors.grey,
-    border: '1px solid #ced4da',
-    borderRight: '0px solid rgba(36, 132, 255, 0.7)',
-    borderRadius: '4px 0px 0px 4px',
-    padding: '0rem 0.5rem',
-    outline: 'none',
-  },
   marginBottomHalf: {
     marginBottom: '0.5rem',
+  },
+  backButton: {
   },
 })
 

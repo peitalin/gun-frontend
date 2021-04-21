@@ -1,6 +1,6 @@
 // Styles
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
-import { Colors } from "layout/AppTheme";
+import { BorderRadius, Colors } from "layout/AppTheme";
 import { NavBarHeight, CategoryBarHeightMobile, CategoryBarHeight } from "layout/NavBarMain/styles";
 
 
@@ -120,5 +120,25 @@ export const styles = (theme: Theme) => createStyles({
   rootMobile: {
     padding: '0.5rem',
     paddingTop: '2rem',
+  },
+  width100: {
+    width: "100%",
+  },
+  openCreateDealerButton: {
+    height: 55,
+    width: '100%',
+    maxWidth: 200,
+    borderRadius: BorderRadius,
+    marginTop: '1rem',
+    paddingLeft: '1rem',
+    paddingRight: '1rem',
+    color: Colors.cream,
+    background: Colors.ultramarineBlue,
+    "&:hover": {
+      background: Colors.ultramarineBlueLight,
+    },
+  },
+  openCreateDealerButtonLabel: {
+    fontSize: '1.1rem',
   },
 });

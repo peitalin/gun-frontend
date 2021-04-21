@@ -21,6 +21,7 @@ import CreateDealerFields from "./CreateDealerFields";
 // Snackbar
 import { useSnackbar } from "notistack";
 // Material UI
+import CloseIcon from '@material-ui/icons/Close';
 import Typography from "@material-ui/core/Typography";
 import ButtonLoading from "components/ButtonLoading";
 // Validation
@@ -116,6 +117,7 @@ const CreateDealerForm: React.FC<ReactProps> = (props) => {
             onSubmit={handleSubmit}
             asModal={props.asModal}
             loading={loading}
+            setMenuOpen={props.setMenuOpen}
           >
             <CreateDealerFields
               title={props.title}
@@ -137,6 +139,7 @@ const CreateDealerFormWrapper: React.FC<FormWrapperProps> = (props) => {
   const {
     classes,
     onSubmit,
+    setMenuOpen,
     loading = false,
   } = props;
   // const dispatch = useDispatch();
@@ -150,6 +153,13 @@ const CreateDealerFormWrapper: React.FC<FormWrapperProps> = (props) => {
       mdUp ? classes.formBordersDesktop : classes.formBordersMobile
     )}>
       <div className={mdUp ? classes.paperMarginDesktop : classes.paperMarginMobile}>
+
+        <div className={classes.backButton}>
+          <IconButton onClick={() => setMenuOpen(s => !s)}>
+            <CloseIcon/>
+          </IconButton>
+        </div>
+
         <div className={classes.flexColMargin}>
           <Typography color={"primary"} variant="h3">
             Create a Dealer Profile
@@ -188,22 +198,24 @@ const CreateDealerFormWrapper: React.FC<FormWrapperProps> = (props) => {
   )
 }
 
-interface FormWrapperProps extends WithStyles<typeof styles> {
-  onSubmit(e: React.FormEvent<HTMLFormElement>): void;
-  asModal?: boolean;
-  title?: string;
-  loading?: boolean;
-}
-
-interface MutationData {
-  createNewDealer: DealerMutationResponse
-}
 
 interface ReactProps extends WithStyles<typeof styles> {
   data?: any;
   asModal?: boolean;
   title?: string;
   dealer: Dealer;
+  setMenuOpen(b?: any): void;
+}
+interface FormWrapperProps extends WithStyles<typeof styles> {
+  onSubmit(e: React.FormEvent<HTMLFormElement>): void;
+  asModal?: boolean;
+  title?: string;
+  loading?: boolean;
+  setMenuOpen(b?: any): void;
+}
+
+interface MutationData {
+  createNewDealer: DealerMutationResponse
 }
 
 

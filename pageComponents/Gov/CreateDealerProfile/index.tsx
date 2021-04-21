@@ -7,6 +7,9 @@ import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/s
 import { Dealers, UserPrivate } from "typings/gqlTypes";
 // Material UI
 import Button from "@material-ui/core/Button";
+import Typography from "@material-ui/core/Typography";
+import IconButton from "@material-ui/core/IconButton";
+import CloseIcon from '@material-ui/icons/Close';
 // Utils Components
 import ErrorBounds from "components/ErrorBounds";
 import CreateDealerForm from "./CreateDealerForm";
@@ -42,7 +45,10 @@ const CreateDealerProfile = (props: ReactProps) => {
       !smDown && classes.minWidthA,
     )}>
       <div className={classes.dealerEditMenu}>
-        <CreateDealerForm dealer={user?.dealer} />
+        <CreateDealerForm
+          dealer={user?.dealer}
+          setMenuOpen={props.setMenuOpen}
+        />
       </div>
     </ErrorBounds>
   );
@@ -51,6 +57,7 @@ const CreateDealerProfile = (props: ReactProps) => {
 
 interface ReactProps extends WithStyles<typeof styles> {
   user: UserPrivate
+  setMenuOpen(b: boolean): void;
 }
 
 const styles = (theme: Theme) => createStyles({
@@ -62,6 +69,7 @@ const styles = (theme: Theme) => createStyles({
     justifyContent: "center",
     marginBottom: '1rem',
     padding: '0.5rem',
+    width: '100%',
   },
   asPage: {
     display: 'flex',
