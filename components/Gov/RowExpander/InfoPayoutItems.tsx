@@ -126,7 +126,7 @@ const InfoPayoutItems = (props: ReactProps) => {
           Stripe Fee
         </Typography>
         <Typography className={classes.detailsInfoBold} variant="body1">
-          {c(payoutSeller.paymentProcessingFee)}
+          {`${c(payoutSeller.paymentProcessingFee)} + ${c(payoutPlatform.paymentProcessingFee)}`}
         </Typography>
       </div>
       <div className={classes.userDetailsRow}>
