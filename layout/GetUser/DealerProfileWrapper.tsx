@@ -51,8 +51,8 @@ export const DealerProfileWrapper = (props) => {
           />
   }
   if (!dealerExists(data2?.user) && process.browser) {
-    // just for reference, not used for navgiation, we use router.back()
-    let from = router.pathname.replace(/[/]/g, '-').slice(1)
+    // remove leading /
+    let from = router.pathname.slice(1)
     return (
       <Redirect
         message={"Registered Dealers access only."}

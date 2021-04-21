@@ -5,14 +5,14 @@ import clsx from "clsx";
 // import ContactUsModal from "components/ContactUsModal";
 import MySettingsModal from "layout/MySettingsModal";
 // Chat
-import ChatCenterModal from "pageComponents/ChatCenter";
+import BiddingRoom from "pageComponents/BiddingRoom";
 
 
 const GlobalModals: React.FC<any> = (props) => {
   return (
     <>
       <MySettingsModal/>
-      <ChatCenterModal asModal/>
+      {/* <ChatCenterModal asModal/> */}
       {/* <CheckoutModal/> */}
       {/* <ContactUsModal/> */}
     </>

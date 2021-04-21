@@ -69,7 +69,7 @@ const SignInClaimDownload = (props: ReactProps) => {
           className={classes.textInput}
           required
           type={"email"}
-          autoFocus={true}
+          // autoFocus={true} // bug with grayed out text initially
           autoComplete="email"
           placeholder="Email"
           value={email}

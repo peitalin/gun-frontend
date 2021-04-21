@@ -96,13 +96,13 @@ export const validateEmail = (value) => {
 }
 
 export const translateErrorMsg = (msg: string) => {
-  if (msg.includes('Authentication is required')) {
+  if (msg?.includes('Authentication is required')) {
     return "Incorrect password"
   }
-  if (msg.includes('NotFound')) {
+  if (msg?.includes('NotFound')) {
     return "That email is not a user"
   }
-  if (msg.includes('duplicate')) {
+  if (msg?.includes('duplicate')) {
     return "Email has already been taken"
   }
   return `An unexpected login error occurred: ${msg}`

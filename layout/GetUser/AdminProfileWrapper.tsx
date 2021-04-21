@@ -63,8 +63,8 @@ const AdminProfileWrapper = (
           />
   }
   if (error && !data?.user?.id) {
-    // just for reference, not used for navgiation, we use router.back()
-    let from = router.pathname.replace(/[/]/g, '-').slice(1)
+    // remove leading /
+    let from = router.pathname.slice(1)
     return (
       <Redirect
         message={"Admin login required. Redirecting..."}

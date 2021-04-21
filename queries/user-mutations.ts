@@ -1,7 +1,7 @@
 import gql from "graphql-tag";
 import { UserPrivateFragment, StorePrivateFragment } from "./fragments";
 
-export const CREATE_USER = gql`
+export const SIGN_UP_USING_EMAIL = gql`
   mutation signUpUsingEmail(
     $email: String!
     $password: String!

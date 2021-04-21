@@ -1,5 +1,5 @@
 import { withStyles, createStyles, Theme } from "@material-ui/core/styles";
-import { Colors } from "layout/AppTheme";
+import { Colors, isThemeDark } from "layout/AppTheme";
 
 const styles = (theme: Theme) => createStyles({
   loginRoot: {
@@ -30,6 +30,9 @@ const styles = (theme: Theme) => createStyles({
   textInput: {
     width: "100%",
     marginBottom: '0.75rem',
+    color: isThemeDark(theme)
+      ? Colors.uniswapLightestGrey
+      : Colors.slateGreyBlack,
   },
   outerContainer: {
     minWidth: 330,

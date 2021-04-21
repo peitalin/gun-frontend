@@ -77,8 +77,8 @@ export const SellerProfileWrapper = (props) => {
     let redirectCondition = !data2?.user?.id && process.browser;
     // console.log("redirectCondition: ", redirectCondition)
 
-    // just for reference, not used for navgiation, we use router.back()
-    let from = router.pathname.replace(/[/]/g, '-').slice(1)
+    // remove leading /
+    let from = router.pathname.slice(1)
 
     return (
       <Redirect

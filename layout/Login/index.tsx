@@ -7,16 +7,20 @@ import { GrandReduxState } from 'reduxStore/grand-reducer';
 import { ReduxStateLogin } from 'reduxStore/login-reducer';
 import { Actions } from 'reduxStore/actions';
 // Graphql
-import { CREATE_USER } from "queries/user-mutations";
-import { LOGIN, GET_USER } from "queries/user-queries";
+import { SIGN_UP_USING_EMAIL } from "queries/user-mutations";
+import { LOG_IN_USING_EMAIL, GET_USER } from "queries/user-queries";
 import { SEND_RESET_PASSWORD_EMAIL } from "queries/emails-mutations";
 import { UserPrivate } from "typings/gqlTypes";
 import { SendPasswordResetResponse } from "typings";
+import {
+  LoginMutationResponse,
+  SignUpMutationResponse,
+} from "typings/gqlTypes";
 
 import LoginModal from "./LoginModal";
 import LoginPageRedirect from "./LoginPageRedirect";
 
-import { useApolloClient } from "@apollo/client";
+import { useApolloClient, useMutation, ApolloError } from "@apollo/client";
 import { logout } from "queries/requests";
 import {
   runOnLoginExpiration,
@@ -34,6 +38,7 @@ import {
 import { reduxBatchUpdate } from "layout/GetUser";
 import { useSnackbar, ProviderContext } from "notistack";
 import { ApolloRefetch, refetchUser } from "layout/GetUser";
+import login from "pages/login";
 
 /////////////////////////////////////////
 //////// Login Modal Component //////////
@@ -44,7 +49,6 @@ const Login: React.FC<ReactProps> = (props) => {
 
   const [state, setState] = React.useState({
     openModal: false,
-    buttonLoading: false,
     tabIndex: props.initialTabIndex || 0,
   })
   const setTabIndex = (value: number) => setState(s => ({ ...s, tabIndex: value }));
@@ -64,6 +68,86 @@ const Login: React.FC<ReactProps> = (props) => {
 
   const snackbar = useSnackbar();
 
+  let [logInUsingEmail, logInUsingEmailResponse] = useMutation<MData1, MVar1>(
+    LOG_IN_USING_EMAIL, {
+    variables: {
+      email: undefined,
+      password: undefined
+    },
+    onCompleted: (data) => {
+      let user = data?.logInUsingEmail?.user
+      // Update redux user and cart state and refetch
+      dispatch(reduxBatchUpdate.userStore({ user: user }))
+      handleUpdateLoginState(user)
+      // if login/signup succeeded, and there is a redirect...
+      handleRedirect()
+      handleCallback()
+    },
+    onError: (error) => {
+      handleGqlError(error)
+    },
+    fetchPolicy: "no-cache", // always do a network request, no caches
+    errorPolicy: "all", // propagate errors from backend to Snackbar
+  });
+
+  let [signUpUsingEmail, signUpUsingEmailResponse] = useMutation<MData2, MVar2>(
+    SIGN_UP_USING_EMAIL, {
+    variables: {
+      email: undefined,
+      password: undefined,
+      firstName: undefined,
+      lastName: undefined,
+      licenseNumber: undefined,
+      licenseExpiry: undefined,
+      licenseState: undefined,
+      phoneNumber: undefined,
+      countryCode: undefined,
+    },
+    onCompleted: (data) => {
+      let user = data?.signUpUsingEmail?.user;
+      // Update redux user and cart state and refetch
+      dispatch(reduxBatchUpdate.userStore({ user: user }))
+      handleUpdateLoginState(user)
+      // if login/signup succeeded, and there is a redirect...
+      handleRedirect()
+      handleCallback()
+    },
+    onError: (error) => {
+      handleGqlError(error)
+    },
+    update: (cache, { data: { signUpUsingEmail } }) => { },
+    errorPolicy: "all", // propagate errors from backend to Snackbar
+  })
+
+  let [
+    sendResetPasswordEmail,
+    sendResetPasswordEmailResponse
+  ] = useMutation<MData3, MVar3>(
+    SEND_RESET_PASSWORD_EMAIL, {
+    variables: {
+      email: undefined,
+    },
+    onCompleted: ({ sendResetPasswordEmail }) => {
+      let emailSentTo = sendResetPasswordEmail?.emailSentTo
+      snackbar.enqueueSnackbar(`Sent to: ${emailSentTo}`, {
+        variant: "success",
+        autoHideDuration: 5000,
+      })
+
+      setTimeout(() => {
+        setState(s => ({
+          ...s,
+          tabIndex: 3 // check email page
+        }))
+      }, 900);
+    },
+    onError: (error) => {
+      handleGqlError(error)
+    },
+    fetchPolicy: "no-cache", // always do a network request, no caches
+    errorPolicy: "all", // propagate errors from backend to Snackbar
+  });
+
 
   const handleToggleModal = () => {
     if (state.openModal) {
@@ -79,31 +163,6 @@ const Login: React.FC<ReactProps> = (props) => {
   /////////////////////////////////////////////////
   /////////////////////////////////////////////////
 
-  const handleGraphQLResponse = ({ data, loading, errors, refetch }: Aprops) => {
-
-    setState(s => ({ ...s, buttonLoading: false }))
-
-    if (errors !== undefined) {
-      handleGqlError(errors)
-    }
-    if (!data) {
-      console.log("No data")
-    }
-
-    if (data && data.logInUsingEmail || data && data.signUpUsingEmail) {
-      let user = data?.logInUsingEmail?.user
-              || data?.signUpUsingEmail?.user;
-
-      // if login/signup succeeded, and there is a redirect...
-      handleRedirect()
-      handleCallback()
-      // Update redux user and cart state and refetch
-      // console.log("saving user and userRefetch to redux: ", refetch)
-      dispatch(reduxBatchUpdate.userStore({ user: user }, refetch))
-      handleUpdateLoginState(user, loading, errors)
-    }
-  }
-
   const handleCallback = () => {
     if (props.callbackOnComplete) {
       props.callbackOnComplete()
@@ -116,19 +175,27 @@ const Login: React.FC<ReactProps> = (props) => {
       !(props.redirectOnComplete === 'none')
     ) {
       console.log("redirecting...")
-      router.push(props.redirectOnComplete);
+      router.replace(props.redirectOnComplete);
     }
   }
 
-  const handleGqlError = (errors) => {
-    setState(s => ({ ...s, buttonLoading: false }))
-    snackbar.enqueueSnackbar(
-      translateErrorMsg(JSON.stringify(errors[0].message)),
-      { variant: "error" }
-    )
+  const handleGqlError = (error: ApolloError) => {
+    if (error?.networkError) {
+      snackbar.enqueueSnackbar(
+        `Server is down. StatusCode: ${(error?.networkError as any)?.statusCode}`,
+        { variant: "error" }
+      )
+      return
+    }
+    if (error?.graphQLErrors) {
+      snackbar.enqueueSnackbar(
+        translateErrorMsg(error?.[0]?.message),
+        { variant: "error" }
+      )
+    }
   }
 
-  const handleUpdateLoginState = (user: UserPrivate, loading: boolean, errors: any) => {
+  const handleUpdateLoginState = (user: UserPrivate) => {
     // Update login UI state
     dispatch(Actions.reduxLogin.UPDATE_LOGIN_STATE({
       user: user,
@@ -161,24 +228,18 @@ const Login: React.FC<ReactProps> = (props) => {
     if (!isLoginInputOk(snackbar)({ email, password })) {
       return null
     } else {
-      setState(s => ({ ...s, buttonLoading: true }))
       snackbar.enqueueSnackbar("Logging you in...", {
         variant: "info",
         autoHideDuration: 2000,
       })
     }
 
-    let { data, loading, errors, refetch }: Aprops = await apolloClient.mutate({
-      mutation: LOGIN,
+    logInUsingEmail({
       variables: {
         email: email.trim(),
         password: password,
-      },
-      fetchPolicy: "no-cache", // always do a network request, no caches
-      errorPolicy: "all", // propagate errors from backend to Snackbar
-    });
-
-    handleGraphQLResponse({ data, loading, errors, refetch });
+      }
+    })
   }
 
   /////////////////////////////////////////////////
@@ -197,7 +258,6 @@ const Login: React.FC<ReactProps> = (props) => {
   }) => {
 
     let licenseExpiry2 = new Date(licenseExpiry)
-    console.log("licenseSExpiiirrreee:", licenseExpiry2)
 
     if (!isSignUpInputOk(snackbar)({
       email,
@@ -210,18 +270,15 @@ const Login: React.FC<ReactProps> = (props) => {
       firstName,
       lastName
     })) {
-      setState(s => ({ ...s, buttonLoading: false }))
       return null
     } else {
-      setState(s => ({ ...s, buttonLoading: true }))
       snackbar.enqueueSnackbar("Creating an account...", {
         variant: "info",
         autoHideDuration: 2000,
       })
     }
 
-    let { data, errors } = await apolloClient.mutate({
-      mutation: CREATE_USER,
+    signUpUsingEmail({
       variables: {
         email: email,
         password: password,
@@ -232,21 +289,8 @@ const Login: React.FC<ReactProps> = (props) => {
         licenseState: licenseState,
         phoneNumber: phoneNumber,
         countryCode: countryCode,
-      },
-      update: (cache, { data: { createUser } }) => {
-        setState(s => ({ ...s, buttonLoading: false }))
-      },
-      errorPolicy: "all", // propagate errors from backend to Snackbar
-    });
-
-    const refetch = refetchUser(apolloClient);
-
-    handleGraphQLResponse({
-      data,
-      loading: state.buttonLoading,
-      errors,
-      refetch: refetch,
-    });
+      }
+    })
   }
 
   /////////////////////////////////////////////////
@@ -256,40 +300,13 @@ const Login: React.FC<ReactProps> = (props) => {
     if (!email) {
       snackbar.enqueueSnackbar("Email is missing!", { variant: "error" })
       return null
-    } else {
-      setState(s => ({ ...s, buttonLoading: true }))
     }
 
-    let { data, loading, errors }: Aprops = await apolloClient.query({
-      query: SEND_RESET_PASSWORD_EMAIL,
+    sendResetPasswordEmail({
       variables: {
         email: email.trim(),
-      },
-      fetchPolicy: "no-cache", // always do a network request, no caches
-      errorPolicy: "all", // propagate errors from backend to Snackbar
-    });
-
-    if (errors !== undefined) {
-      console.log("errors: ", errors)
-      handleGqlError(errors)
-    }
-
-    if (data?.sendResetPasswordEmail) {
-      console.log(data.sendResetPasswordEmail)
-      snackbar.enqueueSnackbar(`Sent to: ${email}`, {
-        variant: "success",
-        autoHideDuration: 5000,
-      })
-
-      setTimeout(() => {
-        setState(s => ({
-          ...s,
-          tabIndex: 3 // check email page
-        }))
-      }, 900);
-    }
-
-    setState(s => ({ ...s, buttonLoading: false }))
+      }
+    })
   }
 
   /////////////////////////////////////////////////
@@ -322,13 +339,17 @@ const Login: React.FC<ReactProps> = (props) => {
   }, [])
 
 
+  let buttonLoading = logInUsingEmailResponse.loading
+    || signUpUsingEmailResponse.loading
+    || sendResetPasswordEmailResponse.loading
+
   return (
     <>
       {
         props.asFormLayout
           ? <LoginPageRedirect
               className={props.className}
-              buttonLoading={state.buttonLoading}
+              buttonLoading={buttonLoading}
               loggedIn={reduxLogin.loggedIn}
               tabIndex={state.tabIndex}
               setTabIndex={setTabIndex}
@@ -342,7 +363,7 @@ const Login: React.FC<ReactProps> = (props) => {
             />
           : <LoginModal
               className={props.className}
-              buttonLoading={state.buttonLoading}
+              buttonLoading={buttonLoading}
               loggedIn={reduxLogin.loggedIn}
               tabIndex={state.tabIndex}
               setTabIndex={setTabIndex}
@@ -385,18 +406,32 @@ interface ReactProps extends WithStyles<typeof styles> {
   buttonType?: "menuItem" | "textField" | "default";
   menuItemTextClassName?: any;
 }
-interface Aprops {
-  data?: {
-    logInUsingEmail?: { user: UserPrivate };
-    signUpUsingEmail?: { user: UserPrivate };
-    sendResetPasswordEmail?: SendPasswordResetResponse;
-  };
-  loading?: boolean;
-  errors?: any;
-  refetch?: ApolloRefetch;
+interface MVar1 {
+  email: string,
+  password: string
 }
-interface QueryData {
-  user: UserPrivate; errors?: any;
+interface MVar2 {
+  email: string,
+  password: string,
+  firstName: string,
+  lastName: string,
+  licenseNumber: string,
+  licenseExpiry: Date,
+  licenseState: string,
+  phoneNumber: string,
+  countryCode: string,
+}
+interface MVar3 {
+  email: string,
+}
+interface MData1 {
+  logInUsingEmail: LoginMutationResponse;
+}
+interface MData2 {
+  signUpUsingEmail: SignUpMutationResponse;
+}
+interface MData3 {
+  sendResetPasswordEmail: SendPasswordResetResponse;
 }
 
 

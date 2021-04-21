@@ -122,9 +122,12 @@ export const UNLINK_USERS_FOR_DEALER = gql`
 
 
 export const DELETE_DEALER = gql`
-  mutation deleteDealer($dealerId: String!) {
-    deleteDealer(dealerId: $dealerId) {
-      ...DealerFragment
+  mutation deleteDealerAsAdmin($dealerId: String!) {
+    deleteDealerAsAdmin(dealerId: $dealerId) {
+      status
+      dealer {
+        ...DealerFragment
+      }
     }
   }
   ${DealerFragment}
