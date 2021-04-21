@@ -25,17 +25,22 @@ import ViewParagraph from "../ViewerParagraph";
 import SetDealerForUser from "./SetDealerForUser";
 
 // Graphql
-import { useQuery, useApolloClient } from "@apollo/client";
+import { useMutation, useApolloClient } from "@apollo/client";
 import {
   DELETE_DEALER,
   SET_DEALER_ID_FOR_USER,
   UNLINK_USERS_FOR_DEALER,
 } from "queries/dealers-mutations";
+import {
+  GET_ALL_DEALERS,
+} from "queries/dealers-queries";
 // Validation
 import { Formik } from 'formik';
 import { validationSchemas } from "utils/validation";
 // Snackbar
 import { useSnackbar } from "notistack";
+import { useRouter } from "next/router";
+import { CameraEnhance } from "@material-ui/icons";
 
 
 
@@ -48,29 +53,41 @@ const DealerProfileForm: React.FC<ReactProps> = (props) => {
 
   const aClient = useApolloClient();
   const snackbar = useSnackbar();
+  const router = useRouter();
 
  // state
   const [loading, setLoading] = React.useState(false);
 
 
-  const deleteDealerMutation = async({ dealerId }: { dealerId: string }) => {
-    console.log("deleting dealerId:", dealerId);
-    const { errors, data } = await aClient.mutate<MutData3, MutVar3>({
-      mutation: DELETE_DEALER,
-      variables: {
-        dealerId: dealerId,
+  const [
+    deleteDealerMutation,
+    deleteDealerMutationResponse
+  ] = useMutation<MutData3, MutVar3>(
+    DELETE_DEALER, {
+    variables: {
+      dealerId: undefined,
+    },
+    onCompleted: (data) => {
+      console.log("dealer deletion response:", data);
+      alert(JSON.stringify({ DELETED: data?.deleteDealerAsAdmin }));
+      props.setDealer(undefined)
+      router.replace("/gov/dealers")
+    },
+    update: (cache, { data }) => {
+      let dealerToRemove = data?.deleteDealerAsAdmin?.dealer;
+      if (props.setAllDealers) {
+        props.setAllDealers([
+          ...props.allDealers.filter(d => d?.id !== dealerToRemove?.id)
+        ])
       }
-    });
-    console.log("dealer deletion response:", data);
-    alert(JSON.stringify({ DELETED: data?.deleteDealerAsAdmin }));
-    if (errors) {
+    },
+    onError: (error) => {
       snackbar.enqueueSnackbar(
-        `Dealer deletion failed with msg: ${errors}`,
+        `Dealer deletion failed with msg: ${error}`,
         { variant: "error" }
       )
-    }
-    return data;
-  }
+    },
+  })
 
 
   const setDealerForUser = async({ dealerUserIdOrEmail, dealerId }: {
@@ -114,16 +131,11 @@ const DealerProfileForm: React.FC<ReactProps> = (props) => {
         onSubmit={(values, { setSubmitting }) => {
           console.log("not implemented")
           console.log('formik values: ', values);
-          deleteDealerMutation({ dealerId: dealer?.id })
-            .then(res => {
-              console.log(res)
-              setLoading(false)
-              props.searchDealerAsAdmin(values.dealerId)
-            })
-            .catch(e => {
-              console.log(e)
-              setLoading(false)
-            })
+          deleteDealerMutation({
+            variables: {
+              dealerId: dealer?.id
+            }
+          })
         }}
       >
         {(fprops) => {
@@ -191,6 +203,8 @@ const DealerProfileForm: React.FC<ReactProps> = (props) => {
 interface ReactProps extends WithStyles<typeof styles> {
   dealer: Dealer;
   setDealer(a: any): void;
+  setAllDealers(d: Dealer[]): void
+  allDealers: Dealer[]
   searchDealerAsAdmin(dealerId: string): void;
 }
 

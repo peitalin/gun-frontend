@@ -1,7 +1,7 @@
 import React from "react";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
-import { Colors, BorderRadius } from "layout/AppTheme";
+import { Colors, BorderRadius, isThemeDark } from "layout/AppTheme";
 // Typings
 import {
   Dealer,
@@ -24,11 +24,18 @@ const DisplayAllDealers = (props: ReactProps) => {
           allDealers
           .map(dealer => {
             return (
-              <div key={dealer.id}
-                className={classes.allDealersId}
-                onClick={() => setDealerIdOrLicenseNumber(dealer.id)}
-              >
-                {`${dealer.id} #${dealer.licenseNumber}`}
+              <div key={dealer.id} className={classes.allDealersRow}>
+                <div className={classes.allDealersName}
+                  onClick={() => setDealerIdOrLicenseNumber(dealer.id)}
+                >
+                  {`${dealer.name}`}
+                </div>
+                <div key={dealer.id}
+                  className={classes.allDealersId}
+                  onClick={() => setDealerIdOrLicenseNumber(dealer.id)}
+                >
+                  {`${dealer.id} - #${dealer.licenseNumber}`}
+                </div>
               </div>
             )
           })
@@ -50,24 +57,48 @@ const styles = (theme: Theme) => createStyles({
     marginBottom: '1rem',
     display: 'flex',
     flexDirection: "column",
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     alignItems: 'center',
     textAlign: 'start',
+    maxHeight: 400,
+    overflow: "scroll",
+    paddingTop: '1rem',
+    paddingBottom: '1rem',
+    background: isThemeDark(theme)
+      ? Colors.uniswapNavy
+      : Colors.slateGrey,
+    borderRadius: BorderRadius,
   },
   allDealersInner: {
     maxWidth: 400,
   },
-  allDealersId: {
-    fontFamily: "courier",
-    fontWeight: 600,
-    cursor: 'pointer',
+  allDealersRow: {
     color: theme.colors.uniswapLighterGrey,
     "&:hover": {
       color: theme.colors.blue,
     },
-    margin: '0.1rem',
+    margin: '0.5rem',
+  },
+  allDealersName: {
+    fontWeight: 600,
+    lineHeight: '1rem',
+    cursor: 'pointer',
+    fontSize: '0.9rem',
+  },
+  allDealersId: {
+    fontSize: '0.9rem',
+    lineHeight: '1rem',
+    letterSpacing: '-1px',
+    fontFamily: "courier",
+    fontWeight: 600,
+    cursor: 'pointer',
   },
   heading: {
+    fontWeight: 600,
+    color: isThemeDark(theme)
+      ? Colors.uniswapLightGrey
+      : Colors.slateGreyBlack,
+    marginTop: '0.25rem',
     marginBottom: '0.25rem',
   },
 });

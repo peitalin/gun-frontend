@@ -34,7 +34,7 @@ const DeleteDealerFormWrapper = (
       {props.children}
       <div className={clsx(classes.flexCol, classes.section1)}>
         <Button
-          className={confirmDelete && classes.buttonRed}
+          className={confirmDelete ? classes.buttonRed : null}
           type="submit" // this sets off Form submit
           variant={"outlined"}
           color={"primary"}

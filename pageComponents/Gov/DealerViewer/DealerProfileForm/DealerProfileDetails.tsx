@@ -16,6 +16,8 @@ import { formatDate } from "utils/dates";
 import { Colors } from "layout/AppTheme";
 // validation
 import { FormikProps } from 'formik';
+import Link from "next/link";
+import Tooltip from '@material-ui/core/Tooltip';
 
 
 
@@ -58,9 +60,23 @@ const DealerProfileDetails = (props: ReactProps & FormikProps<FormikFields>) => 
               <Typography className={classes.fieldKey} variant="subtitle1">
                 Dealer ID:
               </Typography>
-              <Typography className={classes.fieldInfo} variant="subtitle1">
-                {dealer?.id}
-              </Typography>
+              <Link href="/gov/dealers/[dealerId]"
+                as={`/gov/dealers/${dealer?.id}`} // as
+              >
+                <a>
+                  <Tooltip placement="top" title={"Edit Dealer Profile"}>
+                    <Typography
+                      className={clsx(
+                        classes.fieldInfo,
+                        classes.dealerEditLink,
+                      )}
+                      variant="subtitle1"
+                    >
+                      {dealer?.id}
+                    </Typography>
+                  </Tooltip>
+                </a>
+              </Link>
             </div>
             <div className={classes.flexRow}>
               <Typography className={classes.fieldKey} variant="subtitle1">
@@ -274,6 +290,15 @@ const styles = (theme: Theme) => createStyles({
       ? Colors.uniswapLighterGrey
       : Colors.black,
     marginBottom: "0.5rem",
+  },
+  dealerEditLink: {
+    color: Colors.ultramarineBlue,
+    fontSize: '0.9rem',
+    fontWeight: 500,
+    marginBottom: "0.5rem",
+    "&:hover": {
+      color: Colors.ultramarineBlueLight
+    },
   },
   fieldKeyBold: {
     fontWeight: 700,

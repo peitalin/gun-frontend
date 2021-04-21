@@ -45,7 +45,7 @@ const DealerViewer: React.FC<ReactProps> = (props) => {
   const [loading, setLoading] = React.useState(false);
   const [dealerIdOrLicenseNumber, setDealerIdOrLicenseNumber] = React.useState(undefined);
   const [dealer, setDealer] = React.useState<Dealer>(
-    router?.query?.dealerIdOrLicenseNumber as any
+    router?.query?.dealerIdOrLicenseNumber as any ?? ""
   );
   const [allDealers, setAllDealers] = React.useState<Dealer[]>([]);
 
@@ -53,58 +53,61 @@ const DealerViewer: React.FC<ReactProps> = (props) => {
 
 
   const searchDealerAsAdmin = async(dealerIdOrLicenseNumber: string) => {
-    try {
-      const { loading, errors, data } = await aClient.query<QueryData, QueryVar>({
-        query: SEARCH_DEALER_AS_ADMIN,
-        variables: {
-          dealerIdOrLicenseNumber: dealerIdOrLicenseNumber
-        },
-        fetchPolicy: "no-cache", // always do a network request, no caches
-      })
-      if (data.searchDealerAsAdmin) {
+    const { loading, errors, data } = await aClient.query<QueryData, QueryVar>({
+      query: SEARCH_DEALER_AS_ADMIN,
+      variables: {
+        dealerIdOrLicenseNumber: dealerIdOrLicenseNumber
+      },
+      fetchPolicy: "no-cache", // always do a network request, no caches
+    })
+    if (data.searchDealerAsAdmin) {
 
-        setDealer(data.searchDealerAsAdmin)
+      setDealer(data.searchDealerAsAdmin)
 
-        let urlPath = router.asPath.split('?')[0]
-        router.push(
-          `${router.pathname}?dealerIdOrLicenseNumber=${dealerIdOrLicenseNumber}`,
-          `${urlPath}?dealerIdOrLicenseNumber=${dealerIdOrLicenseNumber}`,
-          { shallow: true }
-        )
-      }
-    } catch(e) {
+      let urlPath = router.asPath.split('?')[0]
+      router.push(
+        `${router.pathname}?dealerIdOrLicenseNumber=${dealerIdOrLicenseNumber}`,
+        `${urlPath}?dealerIdOrLicenseNumber=${dealerIdOrLicenseNumber}`,
+        { shallow: true }
+      )
+    } else {
       snackbar.enqueueSnackbar(
         `dealerId ${dealerIdOrLicenseNumber} does not exist`,
         { variant: "error" }
       )
     }
+    if (errors) {
+      snackbar.enqueueSnackbar(
+        `Error finding dealer ${dealerIdOrLicenseNumber}: ${errors?.[0]?.message}`,
+        { variant: "error" }
+      )
+    }
   }
 
-  const getAllDealers = async(limit: number, offset = 0) => {
-    try {
-      const { loading, errors, data } = await aClient.query<QueryData2, QueryVar2>({
-        query: GET_ALL_DEALERS,
-        variables: {
-        },
-      })
-      if (data.getAllDealers) {
-        console.log("recent dealers: ", data.getAllDealers);
-        setAllDealers(data.getAllDealers)
-      }
-    } catch(e) {
+  const getAllDealers = async() => {
+    const { loading, errors, data } = await aClient.query<QueryData2, QueryVar2>({
+      query: GET_ALL_DEALERS,
+      variables: { },
+    })
+    if (data.getAllDealers) {
+      console.log("recent dealers: ", data.getAllDealers);
+      setAllDealers(data.getAllDealers)
+    }
+    if (errors) {
       snackbar.enqueueSnackbar(`recent dealers do not exist`, { variant: "error" })
     }
   }
 
 
   React.useEffect(() => {
-    getAllDealers(6, 0)
+    getAllDealers()
     if (!!router?.query?.dealerIdOrLicenseNumber) {
       let dealerIdOrLicenseNumber: string = router?.query?.dealerIdOrLicenseNumber as any
       setDealerIdOrLicenseNumber(dealerIdOrLicenseNumber)
       searchDealerAsAdmin(dealerIdOrLicenseNumber)
     }
   }, [])
+
 
   if (dealer) {
     console.log("incoming dealer: ", dealer)
@@ -155,6 +158,8 @@ const DealerViewer: React.FC<ReactProps> = (props) => {
         <DealerProfileForm
           dealer={dealer}
           setDealer={setDealer}
+          setAllDealers={setAllDealers}
+          allDealers={allDealers}
           searchDealerAsAdmin={searchDealerAsAdmin}
         />
       </div>
