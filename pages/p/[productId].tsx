@@ -73,7 +73,7 @@ interface Context extends NextPageContext {
 
 ProductPage.getInitialProps = async (ctx: Context) => {
 
-  const productId: string = ctx.query.productId || ctx.query.productIdOrSlug as any;
+  const productId: string = ctx.query.productId as any;
   console.log('getInitialProps ctx: ', ctx.query);
 
   if (!productId) {

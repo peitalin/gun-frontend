@@ -70,6 +70,16 @@ export interface EditDealerInput {
   licenseNumber: string | undefined;
 }
 
+export interface EditDealerAsAdminInput {
+  dealerId: string
+  name: string | undefined;
+  address: string | undefined;
+  city: string | undefined;
+  state: string | undefined;
+  postCode: string | undefined;
+  licenseNumber: string | undefined;
+}
+
 export enum PayoutType {
   PAYPAL = "PAYPAL",
   BANK = "BANK"

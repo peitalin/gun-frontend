@@ -63,9 +63,6 @@ Stores.getInitialProps = async (ctx: Context) => {
   const storeId: string = ctx.query.storeId as any;
   // console.log('getInitialProps ctx: ', ctx.query);
   console.log('getInitialProps storeId: ', storeId);
-  // // for blocking sleep.
-  // const child_process = require("child_process");
-  // const sleep = (seconds) => child_process.execSync(`sleep ${seconds}`);
 
   if (!storeId) {
     return {
@@ -84,9 +81,6 @@ Stores.getInitialProps = async (ctx: Context) => {
     //     }
     //   },
     // })
-    // // let seconds = 1
-    // // console.log(`sleeping for ${seconds} secs`);
-    // // sleep(seconds)
     // let initialStore = data.getStoreByStoreIdOrSlug;
     // console.log('getInitialStore SSR: ', initialStore);
 

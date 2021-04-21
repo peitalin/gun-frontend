@@ -85,6 +85,31 @@ export const EDIT_DEALER = gql`
   ${UserPrivateFragment}
 `;
 
+export const EDIT_DEALER_AS_ADMIN = gql`
+  mutation editDealerAsAdmin(
+    $dealerId: String!
+    $name: String
+    $address: String
+    $city: String
+    $state: String
+    $postCode: String
+    $licenseNumber: String!
+  ) {
+    editDealerAsAdmin(
+      dealerId: $dealerId
+      name: $name
+      address: $address
+      city: $city
+      state: $state
+      postCode: $postCode
+      licenseNumber: $licenseNumber
+    ) {
+      ...DealerFragment
+    }
+  }
+  ${DealerFragment}
+`;
+
 export const SET_DEALER_ID_FOR_USER = gql`
   mutation setDealerIdForUser(
     $dealerUserIdOrEmail: String!
