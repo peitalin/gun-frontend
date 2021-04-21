@@ -9,7 +9,7 @@ import { useSubscription } from '@apollo/client';
 import { useApolloClient } from "@apollo/client";
 // components
 import Typography from '@material-ui/core/Typography';
-import ChatLayout from './BiddingRoomLayout';
+import BiddingRoomLayout from './BiddingRoomLayout';
 // Redux
 import { useSelector, useDispatch } from 'react-redux';
 import { GrandReduxState, Actions } from 'reduxStore/grand-reducer';
@@ -68,7 +68,7 @@ const CreateBidForm: React.FC<ReactProps> = (props) => {
         <div className={clsx(classes.chatContainer, classes.flexRow)}>
           {
             userId &&
-            <ChatLayout
+            <BiddingRoomLayout
               user={user}
               refetch={state.refetch}
               setRefetch={setRefetch}

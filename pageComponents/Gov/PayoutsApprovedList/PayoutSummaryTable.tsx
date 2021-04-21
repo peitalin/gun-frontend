@@ -213,6 +213,7 @@ const styles = (theme: Theme) => createStyles({
     whiteSpace: 'nowrap',
     overflow: 'hidden',
     marginBottom: "0.25rem",
+    textAlign: "end",
     width: '100%', // 20vw, max 150px
     // need to set width in VW for ellipsis
   },
