@@ -37,6 +37,7 @@ const InfoPayoutItems = (props: ReactProps) => {
   let totalAmount = payoutSeller.amount
     + payoutPlatform.amount
     + payoutSeller.paymentProcessingFee
+    + payoutPlatform.paymentProcessingFee
 
   const formatBsb = (a: string): string => {
     if (!a) { return "" }
