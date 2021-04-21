@@ -8,7 +8,6 @@ import { withStyles, WithStyles, createStyles, Theme, fade } from "@material-ui/
 import { Chat_Rooms, Chat_Messages } from "typings/gqlTypes";
 // components
 import Typography from '@material-ui/core/Typography';
-import ChatLayout from './ChatLayout';
 // Redux
 import { useSelector, useDispatch } from 'react-redux';
 import { GrandReduxState, Actions } from 'reduxStore/grand-reducer';
@@ -43,35 +42,21 @@ const OpenChatButton: React.FC<ReactProps> = (props) => {
     }, 0)
   }
 
-  if (props.asModal) {
-    return (
-      <Button
-        className={classes.chatButton}
-        variant="text"
-        color={"primary"}
-        onClick={() => openModal()}
-        {...props.buttonProps}
-      >
-        { props.title ? props.title : "Offers" }
-      </Button>
-    )
-  } else {
-    return (
-      <Link href={"/offers"}>
-        <a>
-          <Button
-            className={classes.chatButton}
-            variant="text"
-            color={"primary"}
-            // onClick={() => openModal()}
-            {...props.buttonProps}
-          >
-            { props.title ? props.title : "Offers" }
-          </Button>
-        </a>
-      </Link>
-    )
-  }
+  return (
+    <Link href={"/offers"}>
+      <a>
+        <Button
+          className={classes.chatButton}
+          variant="text"
+          color={"primary"}
+          // onClick={() => openModal()}
+          {...props.buttonProps}
+        >
+          { props.title ? props.title : "Offers" }
+        </Button>
+      </a>
+    </Link>
+  )
 };
 
 interface ReactProps extends WithStyles<typeof styles> {

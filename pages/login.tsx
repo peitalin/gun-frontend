@@ -38,12 +38,10 @@ const LoginPage: NextPage<ReactProps> = (props) => {
         fieldName: "user"
       })
       // console.log("CACHE: ", aClient.cache)
-    } else if (user?.id) {
-      if (router?.query?.from) {
-        router.back()
-      }
     }
   }, [user])
+
+  let from = "/" + (router.query.from as string)
 
   return (
     <div className={classes.root}>
@@ -59,7 +57,7 @@ const LoginPage: NextPage<ReactProps> = (props) => {
       />
       <div className={classes.maxWidth}>
         <Login
-          redirectOnComplete={"/"}
+          redirectOnComplete={from ?? "/"}
           initialTabIndex={0} // set initial tab to login page
           asFormLayout={true} // form, not modal
         />

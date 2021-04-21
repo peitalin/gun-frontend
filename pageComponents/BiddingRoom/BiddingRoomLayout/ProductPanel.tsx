@@ -16,8 +16,6 @@ import Typography from "@material-ui/core/Typography";
 import ProductPreviewCardRowSmall from "components/ProductPreviewCardRowSmall";
 // UI components
 import ButtonLoading from "components/ButtonLoading";
-// money
-import currency from "currency.js";
 
 
 
@@ -120,16 +118,13 @@ const ProductPanel: React.FC<ReactProps> = (props) => {
                 loading={loading}
                 disabled={loading}
                 loadingIconColor={Colors.lightestGrey}
+                className={clsx(
+                  classes.archiveProductButton,
+                  currentConversation?.chatRoom?.status === ChatRoomStatus.ARCHIVED
+                    ? classes.blueButton
+                    : classes.redButton,
+                )}
                 style={{
-                  width: "100%",
-                  height: "40px",
-                  fontWeight: 500,
-                  color: Colors.darkWhite,
-                  marginBottom: '0.35rem', // paypal button annoying extra space
-                  // border: `1px solid ${Colors.red}`,
-                  background: currentConversation?.chatRoom?.status === ChatRoomStatus.ARCHIVED
-                    ? Colors.blue
-                    : Colors.red,
                 }}
                 onClick={() => {
                   updateChatStatus({
@@ -171,21 +166,6 @@ let listItemColor = Colors.charcoal;
 const styles = (theme: Theme) => createStyles({
   productPanelRoot: {
   },
-  productPanelRootMobile: {
-  },
-  wd75: {
-    width: '25%',
-    minWidth: 200,
-  },
-  userList: {
-    marginTop: 0,
-    marginBottom: 0,
-    padding: 0,
-  },
-  userListLi: {
-    borderBottom: '1px solid #444',
-    color: headingColor,
-  },
   heading: {
     fontWeight: 600,
     padding: '15px 10px',
@@ -202,38 +182,6 @@ const styles = (theme: Theme) => createStyles({
     fontWeight: 600,
     marginBottom: 0,
     padding: '5px',
-  },
-  mobileHeadingI: {
-    marginLeft: '10px',
-  },
-  mobileview: {
-    position: "absolute",
-    right: "0px",
-    bottom: "152px",
-    width: "50%",
-  },
-  mobileUserList: {
-    backgroundColor: theme.palette.type === 'dark'
-      ? Colors.uniswapGrey
-      : Colors.uniswapLighterGrey,
-    paddingInlineStart: '0px',
-    marginBottom: 0,
-  },
-  onlineUserItem: {
-    listStyle: "none",
-  },
-  menuLink: {
-  },
-  menuIcon: {
-    color: listItemColor,
-  },
-  menuIconHighlighted: {
-    color: Colors.blue,
-  },
-  menuText: {
-    color: listItemColor,
-    fontSize: '0.9rem',
-    margin: '0.25rem',
   },
   productContainerCol: {
     display: 'flex',
@@ -254,6 +202,27 @@ const styles = (theme: Theme) => createStyles({
     justifyContent: "center",
     alignItems: "center",
     borderRadius: BorderRadius,
+  },
+  archiveProductButton: {
+    width: "100%",
+    height: "40px",
+    fontWeight: 500,
+    color: Colors.darkWhite,
+    marginBottom: '0.35rem', // paypal button annoying extra space
+    // border: `1px solid ${Colors.red}`,
+    borderRadius: BorderRadius,
+  },
+  redButton: {
+    background: Colors.red,
+    "&:hover": {
+      background: Colors.lightRed,
+    },
+  },
+  blueButton: {
+    background: Colors.ultramarineBlue,
+    "&:hover": {
+      background: Colors.ultramarineBlueLight,
+    },
   },
 })
 

@@ -62,10 +62,10 @@ const DealerProfileForm: React.FC<ReactProps> = (props) => {
       }
     });
     console.log("dealer deletion response:", data);
-    alert(JSON.stringify({ DELETED: data?.deleteDealer }));
+    alert(JSON.stringify({ DELETED: data?.deleteDealerAsAdmin }));
     if (errors) {
       snackbar.enqueueSnackbar(
-        `Dealer deleteion failed with msg: ${errors}`,
+        `Dealer deletion failed with msg: ${errors}`,
         { variant: "error" }
       )
     }
@@ -203,7 +203,7 @@ interface MutVar2 {
 }
 
 interface MutData3 {
-  deleteDealer: DealerMutationResponse;
+  deleteDealerAsAdmin: DealerMutationResponse;
 }
 interface MutVar3 {
   dealerId: string;

@@ -11,8 +11,8 @@ import { Actions } from "reduxStore/actions";
 import { SUBSCRIBE_USER_CONVERSATIONS } from "queries/chat-subscriptions";
 import { useSubscription } from '@apollo/client';
 
-import CreateChatButton from "pageComponents/ChatCenter/CreateChatButton";
-import OpenChatButton from "pageComponents/ChatCenter/OpenChatButton";
+import CreateChatButton from "pageComponents/BiddingRoom/CreateChatButton";
+import OpenChatButton from "pageComponents/BiddingRoom/OpenChatButton";
 
 
 
@@ -31,12 +31,12 @@ const CreateOfferSubscription = (props: ReactProps) => {
     }
   );
 
-  React.useEffect(() => {
-    // set initial conversation on mount + data response
-    if ((data?.myConversations ?? []).length > 0) {
-      dispatch(Actions.reduxConversation.SET_CONVERSATIONS(data.myConversations))
-    }
-  }, [data, loading])
+  // React.useEffect(() => {
+  //   // set initial conversation on mount + data response
+  //   if ((data?.myConversations ?? []).length > 0) {
+  //     dispatch(Actions.reduxConversation.SET_CONVERSATIONS(data.myConversations))
+  //   }
+  // }, [data, loading])
 
   const existingChatsProductIds = (data?.myConversations ?? []).map(c => {
     return {
@@ -60,37 +60,29 @@ const CreateOfferSubscription = (props: ReactProps) => {
 
   return (
     <div className={classes.createOfferRoot}>
-
       {
-        (userId && !alreadyChattingAboutProduct) &&
-        <CreateChatButton
-          title={"Suggest a price"}
-          buyerUserId={userId}
-          sellerUserId={
-            // if storeId, backend won't looks up the user.id for the store
-            // make sure its the store's user.id
-            props?.product?.store?.userId
-          }
-          disabled={buyerIsSeller}
-          // disabled={true}
-          productId={props?.product?.id}
-          openChatAfterwards={true}
-        />
+        (userId && !buyerIsSeller) &&
+        alreadyChattingAboutProduct
+        ? <OpenChatButton
+            title={"View Offers"}
+            productId={alreadyChattingAboutProduct?.productId}
+            chatRoomId={alreadyChattingAboutProduct?.chatRoomId}
+          />
+        : <CreateChatButton
+            title={"Suggest a price"}
+            buyerUserId={userId}
+            sellerUserId={
+              // if storeId, backend won't looks up the user.id for the store
+              // make sure its the store's user.id
+              props?.product?.store?.userId
+            }
+            disabled={buyerIsSeller}
+            // disabled={true}
+            productId={props?.product?.id}
+            openChatAfterwards={true}
+          />
       }
 
-      {
-        (
-          userId &&
-          alreadyChattingAboutProduct?.productId &&
-          alreadyChattingAboutProduct?.chatRoomId &&
-          !buyerIsSeller
-        ) &&
-        <OpenChatButton
-          title={"View Offers"}
-          productId={alreadyChattingAboutProduct?.productId}
-          chatRoomId={alreadyChattingAboutProduct?.chatRoomId}
-        />
-      }
     </div>
   )
 }

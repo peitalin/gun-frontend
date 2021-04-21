@@ -79,11 +79,11 @@ const UserViewer: React.FC<ReactProps> = (props) => {
         },
       })
       if (data.getRecentProducts) {
-        console.log("recent users: ", data.getRecentProducts);
+        console.log("recent products: ", data.getRecentProducts);
         setRecentProducts(data.getRecentProducts)
       }
     } catch(e) {
-      snackbar.enqueueSnackbar(`recent users do not exist`, { variant: "error" })
+      snackbar.enqueueSnackbar(`recent products do not exist`, { variant: "error" })
     }
   }
 

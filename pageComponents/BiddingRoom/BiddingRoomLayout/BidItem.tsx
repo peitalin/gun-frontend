@@ -16,56 +16,7 @@ import currency from 'currency.js';
 
 
 
-
-
-export const MessageList: React.FC<ReactProps> = (props) => {
-
-  const {
-    classes,
-    userId,
-    userName,
-    isNew,
-  } = props;
-
-  return (
-    <div className={
-      isNew
-      ? classes.messageWrapperNew
-      : classes.messageWrapperNew
-    }>
-      {
-        (props.messages ?? []).map((message, i) => {
-          const isMe = message?.sender?.id === userId
-          return (
-            <MessageItem key={message?.id}
-              classes={classes}
-              isMe={isMe}
-              message={message}
-            />
-          );
-        })
-      }
-      <div
-        style={{ "height": 0 }}
-        id="lastMessage" // anchor to scroll back to
-      >
-      </div>
-    </div>
-  );
-};
-
-
-
-
-
-
-
-
-
-
-
-
-const MessageItem = (props: MessageItemProps) => {
+const BidItem = (props: BidProps) => {
 
   const { classes, isMe } = props;
   const m = props.message;
@@ -114,16 +65,9 @@ const MessageItem = (props: MessageItemProps) => {
             <i>{formatDate(m.createdAt)}</i>
           </div>
         </div>
-        <div className={classes.myMessageText}>
-          <span dangerouslySetInnerHTML={{
-            __html: String(m?.content ?? "")
-          }}/>
-        </div>
         {
-          m.bid &&
-          m.bid.id &&
+          m?.bid?.id &&
           <div className={classes.messageText}>
-            {`Offer: ${c(m.bid.offerPrice)}`}
             <ButtonLoading
               className={clsx(
                 classes.bidMsgButton,
@@ -148,8 +92,8 @@ const MessageItem = (props: MessageItemProps) => {
             >
               {
                 bidDisabled
-                ? `Offer ${bid.bidStatus}`
-                : "Cancel offer"
+                ? `${c(m?.bid?.offerPrice)} bid ${bid?.bidStatus}`
+                : `Cancel ${c(m?.bid?.offerPrice)} bid`
               }
             </ButtonLoading>
           </div>
@@ -171,15 +115,9 @@ const MessageItem = (props: MessageItemProps) => {
             <i>{formatDate(m.createdAt)}</i>
           </div>
         </div>
-        <div className={classes.messageText}>
-          <span dangerouslySetInnerHTML={{
-            __html: String(m?.content ?? "")
-          }}/>
-        </div>
         {
           m?.bid?.id &&
           <div className={classes.messageText}>
-            {`Offer: ${c(m?.bid?.offerPrice)}`}
             <ButtonLoading
               className={clsx(
                 classes.bidMsgButton,
@@ -202,8 +140,8 @@ const MessageItem = (props: MessageItemProps) => {
             >
               {
                 bidDisabled
-                ? `Offer ${bid?.bidStatus}`
-                : "Accept"
+                ? `${c(m?.bid?.offerPrice)} bid ${bid?.bidStatus}`
+                : `Accept ${c(m?.bid?.offerPrice)}`
               }
             </ButtonLoading>
             {
@@ -239,13 +177,8 @@ const MessageItem = (props: MessageItemProps) => {
   }
 }
 
-interface ReactProps extends WithStyles<typeof styles> {
-  isNew?: boolean;
-  userName?: string;
-  userId: string;
-  messages: Message[];
-}
-interface MessageItemProps extends WithStyles<typeof styles> {
+
+interface BidProps extends WithStyles<typeof styles> {
   isMe?: boolean;
   message: Message;
 }
@@ -261,16 +194,15 @@ interface MutVars {
 }
 
 const styles = (theme: Theme) => createStyles({
-  messageWrapperNew: {
-  },
-  // your messages styles
   yourMessage: {
     fontSize: "16px",
     backgroundColor: Colors.white,
     margin: '1rem',
-    borderRadius: '4px',
-    width: '75%',
+    borderRadius: BorderRadius,
     padding: '0.5rem',
+    border: theme.palette.type === 'dark'
+      ? `1px solid ${Colors.uniswapLightNavy}`
+      : `1px solid ${Colors.slateGreyDarker}`,
   },
   messageTime: {
     textAlign: 'right',
@@ -292,17 +224,14 @@ const styles = (theme: Theme) => createStyles({
   // my messages styles
   myMessage: {
     fontSize: "16px",
-    backgroundColor: "#E1F7CB",
+    backgroundColor: Colors.lightYellow,
     margin: '1rem',
     borderRadius: BorderRadius2x,
-    width: '75%',
-    // stick to right side
-    marginLeft: 'calc(25% - 1rem)',
     padding: '0.5rem',
   },
   myMessageTime: {
     textAlign: 'right',
-    paddingRight: '5px',
+    paddingRight: '4px',
     fontSize: '12px',
     color: Colors.greenCool,
   },
@@ -353,4 +282,4 @@ const styles = (theme: Theme) => createStyles({
 })
 
 
-export default withStyles(styles)( MessageList );
+export default withStyles(styles)(BidItem)

@@ -9,7 +9,7 @@ import { NextPage, NextPageContext } from 'next';
 import dynamic from "next/dynamic";
 // GraphQL
 import { serverApolloClient } from "utils/apollo";
-import ChatCenter from "pageComponents/ChatCenter";
+import BiddingRoom from "pageComponents/BiddingRoom";
 // Redux
 import { useSelector } from 'react-redux';
 import { GrandReduxState } from 'reduxStore/grand-reducer';
@@ -29,7 +29,7 @@ const OffersPage: NextPage<ReactProps> = (props) => {
 
   return (
     <div>
-      <ChatCenter asModal={false} />
+      <BiddingRoom asModal={false} />
     </div>
   )
 }

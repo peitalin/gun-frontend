@@ -26,7 +26,7 @@ import ResponsivePadding from "pageComponents/SellerDashboard/ResponsivePadding"
 
 
 
-const ChatCenter: React.FC<ReactProps> = (props) => {
+const BiddingRoom: React.FC<ReactProps> = (props) => {
 
   const {
     classes,
@@ -64,24 +64,22 @@ const ChatCenter: React.FC<ReactProps> = (props) => {
     dispatch(Actions.reduxModals.TOGGLE_CHAT_CENTER_MODAL(false))
   }
 
-
-  // React.useEffect(() => {
-  //   // Emit and event saying the user is online every 3 seconds
-  //   let onlineEventIntervalId = setInterval(async () => {
-  //     if (userId) {
-  //       await apolloClient.mutate({
-  //         mutation: EMIT_ONLINE_EVENT,
-  //         variables: {
-  //           senderId: userId
-  //         }
-  //       });
-  //     }
-  //   }, 3000);
-
-  //   // clear interval when component unmounts
-  //   () => clearInterval(onlineEventIntervalId)
-  // }, [])
-
+  return (
+    <ResponsivePadding>
+      <div className={classes.root}>
+        <div className={clsx(classes.chatContainer, classes.flexRow)}>
+          {
+            userId &&
+            <ChatLayout
+              user={user}
+              refetch={state.refetch}
+              setRefetch={setRefetch}
+            />
+          }
+        </div>
+      </div>
+    </ResponsivePadding>
+  )
 
   if (!asModal) {
     return (
@@ -193,4 +191,4 @@ const styles = (theme: Theme) => createStyles({
 });
 
 
-export default withStyles(styles)( ChatCenter );
+export default withStyles(styles)( BiddingRoom );

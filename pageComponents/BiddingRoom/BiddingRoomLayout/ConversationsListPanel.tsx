@@ -29,25 +29,6 @@ const ConversationsListPanel: React.FC<ReactProps> = (props) => {
   const theme = useTheme();
   const smDown = useMediaQuery(theme.breakpoints.down('sm'));
 
-  // const { data, loading, error } = useSubscription<QueryData>(
-  //   FETCH_ONLINE_USERS_SUBSCRIPTION, {
-  //     variables: {}
-  //   }
-  // );
-
-  // const renderOnlineUsers = () => {
-  //   return (
-  //     <p className={ classes.userListHeading }>
-  //       {
-  //         error
-  //         ? "Error loading online users"
-  //         : loading
-  //           ? null
-  //           : `Online Users ${(data?.users_online ?? []).length}`
-  //       }
-  //     </p>
-  //   )
-  // }
 
   const archivedConvos = (props.conversations ?? [])
     .filter(c =>

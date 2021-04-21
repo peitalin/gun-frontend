@@ -73,7 +73,10 @@ const DealerViewer: React.FC<ReactProps> = (props) => {
         )
       }
     } catch(e) {
-      snackbar.enqueueSnackbar(`dealerIdOrLicenseNumber does not exist`, { variant: "error" })
+      snackbar.enqueueSnackbar(
+        `dealerId ${dealerIdOrLicenseNumber} does not exist`,
+        { variant: "error" }
+      )
     }
   }
 
@@ -85,11 +88,11 @@ const DealerViewer: React.FC<ReactProps> = (props) => {
         },
       })
       if (data.getAllDealers) {
-        console.log("recent users: ", data.getAllDealers);
+        console.log("recent dealers: ", data.getAllDealers);
         setAllDealers(data.getAllDealers)
       }
     } catch(e) {
-      snackbar.enqueueSnackbar(`recent users do not exist`, { variant: "error" })
+      snackbar.enqueueSnackbar(`recent dealers do not exist`, { variant: "error" })
     }
   }
 

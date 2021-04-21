@@ -14,10 +14,10 @@ const SellerProfileWrapper = dynamic(() => import("layout/GetUser/SellerProfileW
   ssr: false,
 })
 // Chat
-import OpenChatButton from "pageComponents/ChatCenter/OpenChatButton";
+import OpenChatButton from "pageComponents/BiddingRoom/OpenChatButton";
 // Meta headers
 import MetaHeadersPage from "layout/MetaHeadersPage";
-import ChatCenter from "pageComponents/ChatCenter";
+import BiddingRoom from "pageComponents/BiddingRoom";
 
 
 const OffersAdminPage = (props: ReactProps) => {
@@ -37,7 +37,7 @@ const OffersAdminPage = (props: ReactProps) => {
           <div className={classes.contentContainer}>
             {
               data && data.user && data.user.store &&
-              <ChatCenter asModal={false} />
+              <BiddingRoom asModal={false} />
             }
           </div>
         );

@@ -8,7 +8,7 @@ import Loading from "components/Loading";
 import { NextPage, NextPageContext } from 'next';
 // GraphQL
 import { serverApolloClient } from "utils/apollo";
-import ChatCenter from "pageComponents/ChatCenter";
+import BiddingRoom from "pageComponents/BiddingRoom";
 // Redux
 import { useSelector } from 'react-redux';
 import { GrandReduxState } from 'reduxStore/grand-reducer';
