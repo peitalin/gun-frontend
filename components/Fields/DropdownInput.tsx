@@ -5,7 +5,8 @@ import { withStyles, WithStyles, fade } from "@material-ui/core/styles";
 import Select from "react-select";
 import CreatableSelect from "react-select/creatable";
 
-import { Colors, Gradients, fontFam, BorderRadius } from "layout/AppTheme";
+import { Colors, Gradients, fontFam, BorderRadius, isThemeDark } from "layout/AppTheme";
+import { useTheme } from "@material-ui/core/styles";
 import { useFocus } from "utils/hooks";
 import { styles } from "components/Fields/styles";
 import ValidationErrorMsg from "./ValidationErrorMsg";
@@ -22,6 +23,8 @@ const DropdownInput = (props: ReactProps) => {
   const isDarkMode = useSelector<GrandReduxState, boolean>(s => {
     return s.reduxLogin.darkMode === 'dark'
   })
+
+  const theme = useTheme();
 
   const {
     // Formik
@@ -73,6 +76,12 @@ const DropdownInput = (props: ReactProps) => {
             isSearchable={isSearchable}
             isClearable={isClearable}
             isLoading={props.loading}
+            menuPortalTarget={document?.body} // solves z-index problems
+            autoComplete={
+              props.disableAutocomplete
+              ? "new-password"
+              : undefined
+            } // this disables autofill
             className={classes.optionValues}
             classes={{
               input: clsx(
@@ -106,7 +115,11 @@ const DropdownInput = (props: ReactProps) => {
               ? props.styles
               : {
                   input: styles => ({
-                    color: props.hideCursor ? 'transparent' : Colors.black
+                    color: props.hideCursor
+                      ? 'transparent'
+                      : isThemeDark(theme)
+                        ? Colors.uniswapLightGrey
+                        : Colors.slateGreyBlack
                   }),
                   placeholder: styles => ({
                     ...styles,
@@ -144,6 +157,12 @@ const DropdownInput = (props: ReactProps) => {
             isSearchable={isSearchable}
             isClearable={isClearable}
             isLoading={props.loading}
+            menuPortalTarget={document?.body} // solves z-index problems
+            autoComplete={
+              props.disableAutocomplete
+              ? "new-password"
+              : undefined
+            } // this disables autofill
             className={classes.optionValues}
             classes={{
               input: clsx(
@@ -175,7 +194,9 @@ const DropdownInput = (props: ReactProps) => {
               input: styles => ({
                 color: props.hideCursor
                   ? 'transparent'
-                  : Colors.uniswapLightestGrey,
+                  : isThemeDark(theme)
+                    ? Colors.uniswapLightGrey
+                    : Colors.slateGreyBlack
               }),
               placeholder: styles => ({
                 ...styles,
@@ -307,6 +328,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   theme?: any;
   height?: any;
   loading?: boolean;
+  disableAutocomplete?: boolean;
   [key: string]: any;
 }
 export interface SelectOption {

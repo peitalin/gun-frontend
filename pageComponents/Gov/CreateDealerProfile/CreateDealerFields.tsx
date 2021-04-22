@@ -9,6 +9,7 @@ import { styles } from "./styles";
 // Material UI
 import Typography from "@material-ui/core/Typography";
 import TextInput from "components/Fields/TextInput";
+import DropdownInput from "components/Fields/DropdownInput";
 // router
 import { useRouter } from "next/router";
 // Typings
@@ -16,6 +17,7 @@ import { UserPrivate, Dealer } from "typings/gqlTypes";
 import { HtmlEvent, EditStoreInput } from "typings";
 // Validation
 import { FormikProps } from 'formik';
+import { Label } from "@material-ui/icons";
 
 
 
@@ -48,6 +50,9 @@ const CreateDealerFields: React.FC<ReactProps & FormikProps<FormikFields>> = (pr
   const userRedux = useSelector<GrandReduxState, UserPrivate>(
     s => s.reduxLogin.user
   )
+
+  let stateOptions = createStateOptions()
+  const [selectedState, setSelectedState] = React.useState(stateOptions[0])
 
 
   const handleUpdateName = (e: HtmlEvent) => {
@@ -89,12 +94,16 @@ const CreateDealerFields: React.FC<ReactProps & FormikProps<FormikFields>> = (pr
     }
   };
 
-  const handleUpdateState = (e: HtmlEvent) => {
-    let c = e.target.value;
-    if (!c) {
+  const handleUpdateState = (option: { label: string, value: string }) => {
+    if (!option.value) {
       fprops.setFieldValue('state', "")
+      setSelectedState(undefined)
     } else {
-      fprops.setFieldValue('state', c)
+      fprops.setFieldValue('state', option.value)
+      setSelectedState({
+        value: option.value,
+        label: option.label,
+      })
     }
   };
 
@@ -108,21 +117,20 @@ const CreateDealerFields: React.FC<ReactProps & FormikProps<FormikFields>> = (pr
     }
   };
 
-
   return (
     <div className={classes.root}>
       <div className={classes.innerRoot}>
 
-
-        <Typography variant="subtitle1" className={classes.subtitle1}>
-          Dealership Name
-          {
-            errors.name
-            ? <span className={classes.redText}>{` - ${errors.name}`}</span>
-            : <span className={classes.greyText}> - public</span>
-          }
-        </Typography>
         <div className={clsx(classes.formContainer, "fadeInFast")}>
+
+          <Typography variant="subtitle1" className={classes.subtitle1}>
+            Dealership Name
+            {
+              errors.name
+              ? <span className={classes.redText}>{` - ${errors.name}`}</span>
+              : <span className={classes.greyText}> - public</span>
+            }
+          </Typography>
           <TextInput
             placeholder="Name"
             className={classes.textField}
@@ -133,17 +141,15 @@ const CreateDealerFields: React.FC<ReactProps & FormikProps<FormikFields>> = (pr
             touched={touched.name}
           />
           <div style={{ marginTop: '0.25rem' }}></div>
-        </div>
 
-        <Typography variant="subtitle1" className={classes.subtitle1}>
-          License Number
-          {
-            errors.licenseNumber
-            ? <span className={classes.redText}>{` - ${errors.licenseNumber}`}</span>
-            : <span className={classes.greyText}> - public</span>
-          }
-        </Typography>
-        <div className={clsx(classes.formContainer, "fadeInFast")}>
+          <Typography variant="subtitle1" className={classes.subtitle1}>
+            License Number
+            {
+              errors.licenseNumber
+              ? <span className={classes.redText}>{` - ${errors.licenseNumber}`}</span>
+              : <span className={classes.greyText}> - public</span>
+            }
+          </Typography>
           <TextInput
             placeholder="License Number"
             className={classes.textField}
@@ -154,17 +160,15 @@ const CreateDealerFields: React.FC<ReactProps & FormikProps<FormikFields>> = (pr
             touched={touched.licenseNumber}
           />
           <div style={{ marginTop: '0.25rem' }}></div>
-        </div>
 
-        <Typography variant="subtitle1" className={classes.subtitle1}>
-          Postcode
-          {
-            errors.postCode
-            ? <span className={classes.redText}>{` - ${errors.postCode}`}</span>
-            : <span className={classes.greyText}> - public</span>
-          }
-        </Typography>
-        <div className={clsx(classes.formContainer, "fadeInFast")}>
+          <Typography variant="subtitle1" className={classes.subtitle1}>
+            Postcode
+            {
+              errors.postCode
+              ? <span className={classes.redText}>{` - ${errors.postCode}`}</span>
+              : <span className={classes.greyText}> - public</span>
+            }
+          </Typography>
           <TextInput
             placeholder="Post Code"
             className={classes.textField}
@@ -175,17 +179,15 @@ const CreateDealerFields: React.FC<ReactProps & FormikProps<FormikFields>> = (pr
             touched={touched.postCode}
           />
           <div style={{ marginTop: '0.25rem' }}></div>
-        </div>
 
-        <Typography variant="subtitle1" className={classes.subtitle1}>
-          City
-          {
-            errors.city
-            ? <span className={classes.redText}>{` - ${errors.city}`}</span>
-            : <span className={classes.greyText}> - public</span>
-          }
-        </Typography>
-        <div className={clsx(classes.formContainer, "fadeInFast")}>
+          <Typography variant="subtitle1" className={classes.subtitle1}>
+            City
+            {
+              errors.city
+              ? <span className={classes.redText}>{` - ${errors.city}`}</span>
+              : <span className={classes.greyText}> - public</span>
+            }
+          </Typography>
           <TextInput
             placeholder="City"
             className={classes.textField}
@@ -196,18 +198,25 @@ const CreateDealerFields: React.FC<ReactProps & FormikProps<FormikFields>> = (pr
             touched={touched.city}
           />
           <div style={{ marginTop: '0.25rem' }}></div>
-        </div>
 
-        <Typography variant="subtitle1" className={classes.subtitle1}>
-          State
-          {
-            errors.state
-            ? <span className={classes.redText}>{` - ${errors.state}`}</span>
-            : <span className={classes.greyText}> - public</span>
-          }
-        </Typography>
-        <div className={clsx(classes.formContainer, "fadeInFast")}>
-          <TextInput
+          <Typography variant="subtitle1" className={classes.subtitle1}>
+            State
+            {
+              errors.state
+              ? <span className={classes.redText}>{` - ${errors.state}`}</span>
+              : <span className={classes.greyText}> - public</span>
+            }
+          </Typography>
+          <DropdownInput
+            className={classes.dropDown}
+            stateShape={stateOptions[0]}
+            onChange={(option: { value: string, label: string }) =>
+              handleUpdateState(option)
+            }
+            options={stateOptions}
+            placeholder={stateOptions[0]?.label}
+          />
+          {/* <TextInput
             placeholder="State"
             className={classes.textField}
             value={values.state}
@@ -215,19 +224,17 @@ const CreateDealerFields: React.FC<ReactProps & FormikProps<FormikFields>> = (pr
             inputProps={{ style: { width: '100%' }}}
             errorMessage={errors.state}
             touched={touched.state}
-          />
+          /> */}
           <div style={{ marginTop: '0.25rem' }}></div>
-        </div>
 
-        <Typography variant="subtitle1" className={classes.subtitle1}>
-          Address
-          {
-            errors.address
-            ? <span className={classes.redText}>{` - ${errors.address}`}</span>
-            : <span className={classes.greyText}> - public</span>
-          }
-        </Typography>
-        <div className={clsx(classes.formContainer, "fadeInFast")}>
+          <Typography variant="subtitle1" className={classes.subtitle1}>
+            Address
+            {
+              errors.address
+              ? <span className={classes.redText}>{` - ${errors.address}`}</span>
+              : <span className={classes.greyText}> - public</span>
+            }
+          </Typography>
           <TextInput
             placeholder="State"
             className={classes.textField}
@@ -243,6 +250,19 @@ const CreateDealerFields: React.FC<ReactProps & FormikProps<FormikFields>> = (pr
       </div>
     </div>
   )
+}
+
+const createStateOptions = () => {
+  return [
+    { label: "ACT", value: "ACT" },
+    { label: "NSW", value: "NSW" },
+    { label: "NT", value: "NT" },
+    { label: "QLD", value: "QLD" },
+    { label: "SA", value: "SA" },
+    { label: "TAS", value: "TAS" },
+    { label: "VIC", value: "VIC" },
+    { label: "WA", value: "WA" },
+  ]
 }
 
 interface FormikFields {

@@ -171,8 +171,11 @@ const RowExpander = (props: RowExpanderProps) => {
                     query: GET_ORDERS_PENDING_APPROVAL_CONNECTION,
                     variables: initialVariables,
                   });
+                  console.log("CACHE: ", cache)
+                  console.log("CACHE DATA: ", cacheData)
 
                   let ordersConnection = cacheData?.getOrdersPendingApprovalConnectionAdmin
+                  console.log("ordersConnection: ", ordersConnection)
 
                   cache.writeQuery({
                     query: GET_ORDERS_PENDING_APPROVAL_CONNECTION,

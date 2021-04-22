@@ -1,10 +1,6 @@
 import React from "react";
 import { createStyles, Theme } from "@material-ui/core/styles";
 import { Colors } from "layout/AppTheme";
-
-// Graphql
-import { GET_ALL_DEALERS } from "queries/dealers-queries";
-import { useQuery } from '@apollo/client';
 // Typings
 import { Dealers } from "typings/gqlTypes";
 // Styles
@@ -13,7 +9,7 @@ import { withStyles, WithStyles } from "@material-ui/core/styles";
 import DropdownInput from "components/Fields/DropdownInput";
 // Util components
 import ValidationErrorMsg from "components/Fields/ValidationErrorMsg";
-import { Formik, Form, FormikProps, ErrorMessage } from 'formik';
+import { FormikProps } from 'formik';
 
 
 
@@ -35,7 +31,7 @@ const ChooseDealerDropdown = (props: ReactProps & FormikProps<FormikFields>) => 
 
   let dealerOptions = createDealerSuggestions(props.dealers)
   // initial stateShape
-  let initialDealer = dealerOptions.find(d => d.value === fprops.values.dealerId)
+  let initialDealer = undefined
 
   // console.log("dealerOptions: ", dealerOptions)
   // console.log("initialDealer: ", initialDealer)
@@ -45,6 +41,7 @@ const ChooseDealerDropdown = (props: ReactProps & FormikProps<FormikFields>) => 
       <DropdownInput
         className={classes.dealerDropdown}
         stateShape={initialDealer}
+        disableAutocomplete={true}
         onChange={(option: SelectOption) =>
           setDealerId({
             label: option?.label,
@@ -72,12 +69,78 @@ const ChooseDealerDropdown = (props: ReactProps & FormikProps<FormikFields>) => 
 }
 
 
-const createDealerSuggestions = (dealers: Dealers[]): SelectOption[] => {
+const createDealerSuggestions = (dealers: Dealers[]): GroupedSelectOption[] => {
+
   if (!dealers) {
     return []
   }
-  return dealers.map(dealer => createDealerOption(dealer))
+
+  // return dealers.map(dealer => createDealerOption(dealer))
+
+
+  // 8 states
+  let ACTdealers = dealers.filter(d => d.state === "ACT")
+  let NSWdealers = dealers.filter(d => d.state === "NSW")
+  let NTdealers = dealers.filter(d => d.state === "NT")
+  let QLDdealers = dealers.filter(d => d.state === "QLD")
+  let SAdealers = dealers.filter(d => d.state === "SA")
+  let TASdealers = dealers.filter(d => d.state === "TAS")
+  let VICdealers = dealers.filter(d => d.state === "VIC")
+  let WAdealers = dealers.filter(d => d.state === "WA")
+
+
+  return [
+    {
+      label: "ACT",
+      options: [
+        ...ACTdealers.map(d => createDealerOption(d))
+      ],
+    },
+    {
+      label: "NSW",
+      options: [
+        ...NSWdealers.map(d => createDealerOption(d))
+      ],
+    },
+    {
+      label: "NT",
+      options: [
+        ...NTdealers.map(d => createDealerOption(d))
+      ],
+    },
+    {
+      label: "QLD",
+      options: [
+        ...QLDdealers.map(d => createDealerOption(d))
+      ],
+    },
+    {
+      label: "SA",
+      options: [
+        ...SAdealers.map(d => createDealerOption(d))
+      ],
+    },
+    {
+      label: "TAS",
+      options: [
+        ...TASdealers.map(d => createDealerOption(d))
+      ],
+    },
+    {
+      label: "VIC",
+      options: [
+        ...VICdealers.map(d => createDealerOption(d))
+      ],
+    },
+    {
+      label: "WA",
+      options: [
+        ...WAdealers.map(d => createDealerOption(d))
+      ],
+    },
+  ]
 }
+
 
 const createDealerOption = (dealer: Dealers) => {
   return {
@@ -90,6 +153,12 @@ export interface SelectOption {
   label: string;
   value: string | any;
 }
+export interface GroupedSelectOption {
+  label: string;
+  options: SelectOption[]
+}
+
+
 interface ReactProps extends WithStyles<typeof styles> {
   defaultExpanded?: boolean
   dealers: Dealers[]

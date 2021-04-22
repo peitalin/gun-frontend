@@ -54,10 +54,18 @@ const InfoBuyerSellerDealer = (props: ReactProps) => {
         </div>
         <div className={classes.userDetailsRow}>
           <Typography className={classes.userDetailsHeader} variant="body1">
-            Email:
+            License Number:
           </Typography>
           <Typography className={classes.userDetailsInfo} variant="body1">
-            {sellerStore?.user?.email}
+            {sellerStore?.user?.license?.licenseNumber}
+          </Typography>
+        </div>
+        <div className={classes.userDetailsRow}>
+          <Typography className={classes.userDetailsHeader} variant="body1">
+            State:
+          </Typography>
+          <Typography className={classes.userDetailsInfo} variant="body1">
+            {sellerStore?.user?.license?.licenseState}
           </Typography>
         </div>
         <div className={classes.userDetailsRow}>
@@ -66,6 +74,14 @@ const InfoBuyerSellerDealer = (props: ReactProps) => {
           </Typography>
           <Typography className={classes.userDetailsInfo} variant="body1">
             {sellerPhoneNumber}
+          </Typography>
+        </div>
+        <div className={classes.userDetailsRow}>
+          <Typography className={classes.userDetailsHeader} variant="body1">
+            Email:
+          </Typography>
+          <Typography className={classes.userDetailsInfo} variant="body1">
+            {sellerStore?.user?.email}
           </Typography>
         </div>
       </div>
@@ -84,10 +100,18 @@ const InfoBuyerSellerDealer = (props: ReactProps) => {
         </div>
         <div className={classes.userDetailsRow}>
           <Typography className={classes.userDetailsHeader} variant="body1">
-            Email:
+            License Number:
           </Typography>
           <Typography className={classes.userDetailsInfo} variant="body1">
-            {buyer?.email ?? "-"}
+            {buyer?.license?.licenseNumber}
+          </Typography>
+        </div>
+        <div className={classes.userDetailsRow}>
+          <Typography className={classes.userDetailsHeader} variant="body1">
+            State:
+          </Typography>
+          <Typography className={classes.userDetailsInfo} variant="body1">
+            {buyer?.license?.licenseState}
           </Typography>
         </div>
         <div className={classes.userDetailsRow}>
@@ -96,6 +120,14 @@ const InfoBuyerSellerDealer = (props: ReactProps) => {
           </Typography>
           <Typography className={classes.userDetailsInfo} variant="body1">
             {buyerPhoneNumber}
+          </Typography>
+        </div>
+        <div className={classes.userDetailsRow}>
+          <Typography className={classes.userDetailsHeader} variant="body1">
+            Email:
+          </Typography>
+          <Typography className={classes.userDetailsInfo} variant="body1">
+            {buyer?.email ?? "-"}
           </Typography>
         </div>
       </div>
@@ -114,10 +146,18 @@ const InfoBuyerSellerDealer = (props: ReactProps) => {
         </div>
         <div className={classes.userDetailsRow}>
           <Typography className={classes.userDetailsHeader} variant="body1">
-            Email:
+            Dealer License:
           </Typography>
           <Typography className={classes.userDetailsInfo} variant="body1">
-            {dealerUser?.email ?? "-"}
+            {dealer?.licenseNumber}
+          </Typography>
+        </div>
+        <div className={classes.userDetailsRow}>
+          <Typography className={classes.userDetailsHeader} variant="body1">
+            State:
+          </Typography>
+          <Typography className={classes.userDetailsInfo} variant="body1">
+            {dealer?.state}
           </Typography>
         </div>
         <div className={classes.userDetailsRow}>
@@ -126,6 +166,14 @@ const InfoBuyerSellerDealer = (props: ReactProps) => {
           </Typography>
           <Typography className={classes.userDetailsInfo} variant="body1">
             {dealerPhoneNumber}
+          </Typography>
+        </div>
+        <div className={classes.userDetailsRow}>
+          <Typography className={classes.userDetailsHeader} variant="body1">
+            Email:
+          </Typography>
+          <Typography className={classes.userDetailsInfo} variant="body1">
+            {dealerUser?.email ?? "-"}
           </Typography>
         </div>
       </div>
@@ -177,7 +225,7 @@ const styles = (theme: Theme) => createStyles({
     justifyContent: 'flex-start',
   },
   userDetailsHeader: {
-    width: '70px',
+    width: '114px',
     fontWeight: 400,
     fontSize: "14px",
   },

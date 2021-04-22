@@ -196,6 +196,9 @@ const ProductCreatePage = (props: ReactProps) => {
         query: GET_ALL_NEW_PRODUCTS,
         variables: initialVariables,
       });
+      console.log("cache: ", cache)
+      console.log("cacheData: ", cacheData)
+      console.log("initialVariables: ", initialVariables)
 
       /// Update front page new releases products
       if (cacheData?.productsAllConnection?.edges) {

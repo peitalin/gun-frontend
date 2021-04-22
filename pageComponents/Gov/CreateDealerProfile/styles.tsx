@@ -101,6 +101,13 @@ export const styles = (theme: Theme) => createStyles({
     padding: '1rem',
     width: '100%',
   },
+  dropDown: {
+    zIndex: 1,
+    width: "100%",
+    "&:focus-within": {
+      color: '#24A4FF',
+    },
+  },
   textField: {
     width: "100%",
     "&:focus-within": {
