@@ -167,6 +167,7 @@ const RowExpander = (props: RowExpanderProps) => {
                     getOrdersPendingApprovalConnectionAdmin?: OrdersConnection
                   }
 
+
                   const cacheData = cache.readQuery<MData, any>({
                     query: GET_ORDERS_PENDING_APPROVAL_CONNECTION,
                     variables: initialVariables,

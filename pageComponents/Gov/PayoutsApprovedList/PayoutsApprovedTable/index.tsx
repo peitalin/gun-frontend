@@ -1,13 +1,10 @@
 import React from "react";
 import clsx from "clsx";
 // SSR
-import { NextPage, NextPageContext } from 'next';
+import { NextPage } from 'next';
 // Styles
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
-import { Colors, BorderRadius } from "layout/AppTheme";
-// Redux
-import { useSelector, useDispatch } from "react-redux";
-import { GrandReduxState } from 'reduxStore/grand-reducer';
+import { Colors, BorderRadius, isThemeDark } from "layout/AppTheme";
 // MUI
 import Typography from "@material-ui/core/Typography";
 // Typings
@@ -21,6 +18,7 @@ import {
 } from "typings/gqlTypes";
 import {
   GET_ORDERS_ADMIN_APPROVED_CONNECTION,
+  GET_ORDERS_ADMIN_APPROVED_BY_IDS_CONNECTION,
 } from "queries/orders-admin-queries";
 // Pagination
 import { ConnectionQueryProps } from "components/Paginators/usePaginatePagedQueryHook";
@@ -31,6 +29,7 @@ import { useMutation, useQuery, useLazyQuery } from "@apollo/client";
 
 import RowExpander from "./RowExpander";
 import { useRouter } from "next/router";
+import { useTheme } from "@material-ui/core";
 
 // Search Component
 import SearchOptions, { SelectOption, setCategoryFacets } from "components/SearchOptions";
@@ -51,10 +50,7 @@ const PayoutsApprovedTable: NextPage<ReactProps> = (props) => {
     classes,
   } = props;
 
-  const isDarkMode = useSelector<GrandReduxState, boolean>(s => {
-    return s.reduxLogin.darkMode === 'dark'
-  })
-
+  let theme = useTheme()
   let router = useRouter();
 
   /////////////////////////////////// paginator
@@ -91,12 +87,11 @@ const PayoutsApprovedTable: NextPage<ReactProps> = (props) => {
 
 
   const { data, loading, error } = useQuery<QueryData, QueryVar>(
-    GET_ORDERS_ADMIN_APPROVED_CONNECTION, {
+    GET_ORDERS_ADMIN_APPROVED_BY_IDS_CONNECTION, {
       variables: {
-        query: {
-          limit: limit,
-          offset: offset,
-        },
+        orderIds: props.orderIds,
+        limit: limit,
+        offset: offset,
       },
       fetchPolicy: "no-cache",
     }
@@ -105,9 +100,10 @@ const PayoutsApprovedTable: NextPage<ReactProps> = (props) => {
 
   let refetchQueriesParams = [
     {
-      query: GET_ORDERS_ADMIN_APPROVED_CONNECTION,
+      query: GET_ORDERS_ADMIN_APPROVED_BY_IDS_CONNECTION,
       variables: {
         query: {
+          orderIds: props.orderIds,
           limit: limit,
           offset: offset,
         }
@@ -115,24 +111,7 @@ const PayoutsApprovedTable: NextPage<ReactProps> = (props) => {
     },
   ]
 
-  const ordersConnection = data?.getOrdersAdminApprovedConnection
-  let noPayoutsToBePaid = !loading && ordersConnection?.edges?.length === 0
-
-  React.useEffect(() => {
-    let incomingTotalCount = data?.getOrdersAdminApprovedConnection?.totalCount
-    if (typeof props.setTotalCountCsv === 'function') {
-      props.setTotalCountCsv(incomingTotalCount)
-      setTotalCount(incomingTotalCount)
-    }
-  }, [data])
-
-  React.useEffect(() => {
-    if (typeof props.setOrderIds === 'function') {
-      props.setOrderIds(
-        ordersConnection?.edges?.map(({ node }) => node.id)
-      )
-    }
-  }, [ordersConnection])
+  const ordersConnection = data?.getOrdersAdminApprovedByIdsConnection
 
 
   if (loading) {
@@ -148,10 +127,6 @@ const PayoutsApprovedTable: NextPage<ReactProps> = (props) => {
   } else if (data) {
     return (
       <main className={classes.root}>
-
-        <Typography variant="h4" className={classes.subtitle1}>
-          Payouts Approved
-        </Typography>
         <SearchOptions
           // facets={facets}
           // setCategoryFacets={setCategoryFacets({ facets, setFacets })}
@@ -180,13 +155,14 @@ const PayoutsApprovedTable: NextPage<ReactProps> = (props) => {
             alignItems: 'flex-end',
             display: 'flex',
             flexDirection: 'column',
-            marginTop: '1rem',
             paddingRight: '1rem',
           }}
           bottomSectionStyles={{
             marginBottom: '1rem',
-            backgroundColor: isDarkMode ? Colors.uniswapDarkNavy : Colors.cream,
-            border: isDarkMode
+            backgroundColor: isThemeDark(theme)
+              ? Colors.uniswapDarkNavy
+              : Colors.cream,
+            border: isThemeDark(theme)
               ? `1px solid ${Colors.uniswapNavy}`
               : `1px solid ${Colors.slateGreyDarker}`,
             borderRadius: BorderRadius,
@@ -252,7 +228,7 @@ const TitleRows = (props: TitleRowsProps) => {
       </div>
       <div className={clsx(classes.flexItem, classes.flexItemMaxWidth120)}>
         <Typography variant="subtitle1" className={classes.subtitle}>
-          Total Amount
+          Seller Payout
         </Typography>
       </div>
       <div className={classes.flexItem}>
@@ -281,18 +257,20 @@ const TitleRows = (props: TitleRowsProps) => {
 
 interface ReactProps extends WithStyles<typeof styles> {
   admin?: UserPrivate;
-  setTotalCountCsv?(totalCount: number): void;
-  setOrderIds?(orderIds: string[]): void;
+  day?: Date;
+  orderIds: string[];
 }
 interface TitleRowsProps extends WithStyles<typeof styles> {
   loading?: boolean;
 }
 
 interface QueryData {
-  getOrdersAdminApprovedConnection?: OrdersConnection
+  getOrdersAdminApprovedByIdsConnection: OrdersConnection
 }
 interface QueryVar {
-  query?: ConnectionQuery
+  orderIds: string[]
+  limit: number
+  offset: number
 }
 
 

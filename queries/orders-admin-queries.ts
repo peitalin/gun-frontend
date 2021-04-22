@@ -65,6 +65,53 @@ export const GET_ORDERS_PENDING_APPROVAL_CONNECTION = gql`
 `;
 
 
+export const GET_ADMIN_APPROVED_ORDER_IDS_GROUPED_BY_DAY = gql`
+  query {
+    getAdminApprovedOrderIdsGroupedByDay {
+      day
+      orderIds
+    }
+  }
+`;
+
+export const GET_ORDERS_ADMIN_APPROVED_BY_IDS_CONNECTION = gql`
+  query(
+    $orderIds: [String!]!
+    $limit: Int!
+    $offset: Int!
+  ) {
+    getOrdersAdminApprovedByIdsConnection(
+      orderIds: $orderIds
+      limit: $limit
+      offset: $offset
+    ) {
+      edges {
+        node {
+          ...OrdersFragment
+          # Already captured, no need to spam Stripe for status
+          # ...on OrderAdmin {
+          #   paymentIntent {
+          #     id
+          #     amount
+          #     amountCapturable
+          #     amountReceived
+          #     captureMethod
+          #     createdAt
+          #     currency
+          #     liveMode
+          #     status
+          #   }
+          # }
+        }
+      }
+      totalCount
+    }
+  }
+  ${OrdersFragment}
+`;
+
+
+
 export const GET_ORDERS_ADMIN_APPROVED_CONNECTION = gql`
   query($query: ConnectionQueryOrders!) {
     getOrdersAdminApprovedConnection(query: $query) {
@@ -94,8 +141,8 @@ export const GET_ORDERS_ADMIN_APPROVED_CONNECTION = gql`
 `;
 
 export const GET_ADMIN_APPROVED_PAYOUT_SUMMARY = gql`
-  query {
-    getAdminApprovedPayoutSummary {
+  query($orderIds: [String!]!) {
+    getAdminApprovedPayoutSummary(orderIds: $orderIds) {
       nodes {
         id
         createdAt

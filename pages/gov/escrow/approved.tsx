@@ -3,9 +3,20 @@ import React from "react";
 import { withStyles, WithStyles } from "@material-ui/core/styles";
 import { styles } from "pageComponents/SellerDashboard/styles";
 import clsx from "clsx";
+// SSR
+import { NextPage, NextPageContext } from 'next';
+import { ApolloClient } from "@apollo/client";
+import { serverApolloClient } from "utils/apollo";
 // Components
 import LoadingBarSSR from "components/LoadingBarSSR";
 import ApprovedPayoutsList from "pageComponents/Gov/PayoutsApprovedList";
+import {
+  OrdersGroupedByDay,
+} from "typings/gqlTypes";
+import {
+  GET_ADMIN_APPROVED_ORDER_IDS_GROUPED_BY_DAY,
+  GET_ORDERS_ADMIN_APPROVED_BY_IDS_CONNECTION,
+} from "queries/orders-admin-queries";
 // next
 // SSR disable
 import dynamic from "next/dynamic";
@@ -33,6 +44,7 @@ const ApprovedPayoutsListPage = (props: ReactProps) => {
           <div className={classes.contentContainer}>
             <ApprovedPayoutsList
               admin={data?.user}
+              orderIdsGroupedByDay={props.orderIdsGroupedByDay}
             />
           </div>
         )
@@ -42,6 +54,33 @@ const ApprovedPayoutsListPage = (props: ReactProps) => {
 }
 
 interface ReactProps extends WithStyles<typeof styles> {
+  orderIdsGroupedByDay
+}
+
+////////// SSR ///////////
+interface Context extends NextPageContext {
+  apolloClient: ApolloClient<object>;
+}
+
+interface QData {
+  getAdminApprovedOrderIdsGroupedByDay: OrdersGroupedByDay[]
+}
+interface QVar {
+}
+
+
+ApprovedPayoutsListPage.getInitialProps = async (ctx: Context) => {
+
+  const { data } = await serverApolloClient(ctx).query<QData, QVar>({
+    query: GET_ADMIN_APPROVED_ORDER_IDS_GROUPED_BY_DAY,
+    variables: { },
+  })
+  let initialOrderIdsGroupedByDay = data.getAdminApprovedOrderIdsGroupedByDay;
+  console.log('initialOrderIdsGroupedByDay SSR: ', initialOrderIdsGroupedByDay);
+
+  return {
+    orderIdsGroupedByDay: initialOrderIdsGroupedByDay,
+  };
 }
 
 export default withStyles(styles)( ApprovedPayoutsListPage );

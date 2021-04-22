@@ -31,9 +31,16 @@ const GovSearch = (props: ReactProps) => {
 
   const [reindexSearchIndex, response] = useMutation<MutData, {}>(
     REINDEX_SEARCH_INDEX_ADMIN, {
-      variables: {}
+    variables: {},
+    onCompleted: (data) => {
+      snackbar.enqueueSnackbar(
+        `Reindexing call complete: ${JSON.stringify(
+          data?.reindexSearchIndex?.success
+        )}`,
+        { variant: "info", persist: true }
+      )
     }
-  );
+  });
 
   return (
     <AdminProfileWrapper>
@@ -68,9 +75,7 @@ const GovSearch = (props: ReactProps) => {
                 await reindexSearchIndex()
                 console.log("response: ", response?.data)
                 snackbar.enqueueSnackbar(
-                  `Search engine reindexing: ${JSON.stringify(
-                    response?.data?.reindexSearchIndex?.success
-                  )}`,
+                  `Search engine reindexing...`,
                   { variant: "info", persist: true }
                 )
               }}

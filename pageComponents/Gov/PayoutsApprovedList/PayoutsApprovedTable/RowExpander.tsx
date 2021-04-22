@@ -69,8 +69,7 @@ const RowExpander = (props: RowExpanderProps) => {
 
   let payoutSeller = order?.payoutItems?.find(p => p.payeeType === PayeeType.STORE)
   let payoutPlatform = order?.payoutItems?.find(p => p.payeeType === PayeeType.PLATFORM)
-  let totalAmountToBank = payoutSeller.amount + payoutPlatform.amount
-  // less Stripe Fee
+  let sellerPayment = payoutSeller.amount
 
   return (
     <>
@@ -91,7 +90,7 @@ const RowExpander = (props: RowExpanderProps) => {
         </div>
         <div className={clsx(classes.flexItem, classes.flexItemMaxWidth120)}>
           <Typography variant="body2" className={classes.rowText}>
-            {c(totalAmountToBank)}
+            {c(sellerPayment)}
           </Typography>
         </div>
         <div className={classes.flexItem}>

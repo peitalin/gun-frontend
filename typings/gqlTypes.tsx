@@ -15,6 +15,7 @@ export type Scalars = {
   timestamptz: any;
   seed_float: any;
   bigint: any;
+  _text: any;
   /** Standard date string */
   Date: Date;
   /** The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf). */
@@ -23,6 +24,20 @@ export type Scalars = {
   Price: number;
   /** The `JSONObject` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf). */
   JSONObject: any;
+};
+
+
+/** expression to compare columns of type _text. All fields are combined with logical 'AND'. */
+export type _Text_Comparison_Exp = {
+  _eq?: Maybe<Scalars['_text']>;
+  _gt?: Maybe<Scalars['_text']>;
+  _gte?: Maybe<Scalars['_text']>;
+  _in?: Maybe<Array<Scalars['_text']>>;
+  _is_null?: Maybe<Scalars['Boolean']>;
+  _lt?: Maybe<Scalars['_text']>;
+  _lte?: Maybe<Scalars['_text']>;
+  _neq?: Maybe<Scalars['_text']>;
+  _nin?: Maybe<Array<Scalars['_text']>>;
 };
 
 export type AddRemovePaymentMethodResponse = {
@@ -1247,6 +1262,7 @@ export type Chat_Users = {
   /** An object relationship */
   chatRoom?: Maybe<Chat_Rooms>;
   chatRoomId: Scalars['String'];
+  created_at?: Maybe<Scalars['timestamptz']>;
   /** An object relationship */
   user: Users;
   userId: Scalars['String'];
@@ -1294,6 +1310,7 @@ export type Chat_Users_Bool_Exp = {
   _or?: Maybe<Array<Maybe<Chat_Users_Bool_Exp>>>;
   chatRoom?: Maybe<Chat_Rooms_Bool_Exp>;
   chatRoomId?: Maybe<String_Comparison_Exp>;
+  created_at?: Maybe<Timestamptz_Comparison_Exp>;
   user?: Maybe<Users_Bool_Exp>;
   userId?: Maybe<String_Comparison_Exp>;
 };
@@ -1308,6 +1325,7 @@ export enum Chat_Users_Constraint {
 export type Chat_Users_Insert_Input = {
   chatRoom?: Maybe<Chat_Rooms_Obj_Rel_Insert_Input>;
   chatRoomId?: Maybe<Scalars['String']>;
+  created_at?: Maybe<Scalars['timestamptz']>;
   user?: Maybe<Users_Obj_Rel_Insert_Input>;
   userId?: Maybe<Scalars['String']>;
 };
@@ -1316,12 +1334,14 @@ export type Chat_Users_Insert_Input = {
 export type Chat_Users_Max_Fields = {
   __typename?: 'chat_users_max_fields';
   chatRoomId?: Maybe<Scalars['String']>;
+  created_at?: Maybe<Scalars['timestamptz']>;
   userId?: Maybe<Scalars['String']>;
 };
 
 /** order by max() on columns of table "chat_users" */
 export type Chat_Users_Max_Order_By = {
   chatRoomId?: Maybe<Order_By>;
+  created_at?: Maybe<Order_By>;
   userId?: Maybe<Order_By>;
 };
 
@@ -1329,12 +1349,14 @@ export type Chat_Users_Max_Order_By = {
 export type Chat_Users_Min_Fields = {
   __typename?: 'chat_users_min_fields';
   chatRoomId?: Maybe<Scalars['String']>;
+  created_at?: Maybe<Scalars['timestamptz']>;
   userId?: Maybe<Scalars['String']>;
 };
 
 /** order by min() on columns of table "chat_users" */
 export type Chat_Users_Min_Order_By = {
   chatRoomId?: Maybe<Order_By>;
+  created_at?: Maybe<Order_By>;
   userId?: Maybe<Order_By>;
 };
 
@@ -1364,6 +1386,7 @@ export type Chat_Users_On_Conflict = {
 export type Chat_Users_Order_By = {
   chatRoom?: Maybe<Chat_Rooms_Order_By>;
   chatRoomId?: Maybe<Order_By>;
+  created_at?: Maybe<Order_By>;
   user?: Maybe<Users_Order_By>;
   userId?: Maybe<Order_By>;
 };
@@ -1379,12 +1402,15 @@ export enum Chat_Users_Select_Column {
   /** column name */
   CHATROOMID = 'chatRoomId',
   /** column name */
+  CREATED_AT = 'created_at',
+  /** column name */
   USERID = 'userId'
 }
 
 /** input type for updating data in table "chat_users" */
 export type Chat_Users_Set_Input = {
   chatRoomId?: Maybe<Scalars['String']>;
+  created_at?: Maybe<Scalars['timestamptz']>;
   userId?: Maybe<Scalars['String']>;
 };
 
@@ -1392,6 +1418,8 @@ export type Chat_Users_Set_Input = {
 export enum Chat_Users_Update_Column {
   /** column name */
   CHATROOMID = 'chatRoomId',
+  /** column name */
+  CREATED_AT = 'created_at',
   /** column name */
   USERID = 'userId'
 }
@@ -6241,6 +6269,90 @@ export type Orders_Aggregate_Order_By = {
   variance?: Maybe<Orders_Variance_Order_By>;
 };
 
+/** columns and relationships of "orders_approved_grouped_by_day" */
+export type Orders_Approved_Grouped_By_Day = {
+  __typename?: 'orders_approved_grouped_by_day';
+  day?: Maybe<Scalars['timestamp']>;
+  order_ids?: Maybe<Scalars['_text']>;
+};
+
+/** aggregated selection of "orders_approved_grouped_by_day" */
+export type Orders_Approved_Grouped_By_Day_Aggregate = {
+  __typename?: 'orders_approved_grouped_by_day_aggregate';
+  aggregate?: Maybe<Orders_Approved_Grouped_By_Day_Aggregate_Fields>;
+  nodes: Array<Orders_Approved_Grouped_By_Day>;
+};
+
+/** aggregate fields of "orders_approved_grouped_by_day" */
+export type Orders_Approved_Grouped_By_Day_Aggregate_Fields = {
+  __typename?: 'orders_approved_grouped_by_day_aggregate_fields';
+  count?: Maybe<Scalars['Int']>;
+  max?: Maybe<Orders_Approved_Grouped_By_Day_Max_Fields>;
+  min?: Maybe<Orders_Approved_Grouped_By_Day_Min_Fields>;
+};
+
+
+/** aggregate fields of "orders_approved_grouped_by_day" */
+export type Orders_Approved_Grouped_By_Day_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<Orders_Approved_Grouped_By_Day_Select_Column>>;
+  distinct?: Maybe<Scalars['Boolean']>;
+};
+
+/** order by aggregate values of table "orders_approved_grouped_by_day" */
+export type Orders_Approved_Grouped_By_Day_Aggregate_Order_By = {
+  count?: Maybe<Order_By>;
+  max?: Maybe<Orders_Approved_Grouped_By_Day_Max_Order_By>;
+  min?: Maybe<Orders_Approved_Grouped_By_Day_Min_Order_By>;
+};
+
+/**
+ * Boolean expression to filter rows from the table
+ * "orders_approved_grouped_by_day". All fields are combined with a logical 'AND'.
+ */
+export type Orders_Approved_Grouped_By_Day_Bool_Exp = {
+  _and?: Maybe<Array<Maybe<Orders_Approved_Grouped_By_Day_Bool_Exp>>>;
+  _not?: Maybe<Orders_Approved_Grouped_By_Day_Bool_Exp>;
+  _or?: Maybe<Array<Maybe<Orders_Approved_Grouped_By_Day_Bool_Exp>>>;
+  day?: Maybe<Timestamp_Comparison_Exp>;
+  order_ids?: Maybe<_Text_Comparison_Exp>;
+};
+
+/** aggregate max on columns */
+export type Orders_Approved_Grouped_By_Day_Max_Fields = {
+  __typename?: 'orders_approved_grouped_by_day_max_fields';
+  day?: Maybe<Scalars['timestamp']>;
+};
+
+/** order by max() on columns of table "orders_approved_grouped_by_day" */
+export type Orders_Approved_Grouped_By_Day_Max_Order_By = {
+  day?: Maybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type Orders_Approved_Grouped_By_Day_Min_Fields = {
+  __typename?: 'orders_approved_grouped_by_day_min_fields';
+  day?: Maybe<Scalars['timestamp']>;
+};
+
+/** order by min() on columns of table "orders_approved_grouped_by_day" */
+export type Orders_Approved_Grouped_By_Day_Min_Order_By = {
+  day?: Maybe<Order_By>;
+};
+
+/** ordering options when selecting data from "orders_approved_grouped_by_day" */
+export type Orders_Approved_Grouped_By_Day_Order_By = {
+  day?: Maybe<Order_By>;
+  order_ids?: Maybe<Order_By>;
+};
+
+/** select columns of table "orders_approved_grouped_by_day" */
+export enum Orders_Approved_Grouped_By_Day_Select_Column {
+  /** column name */
+  DAY = 'day',
+  /** column name */
+  ORDER_IDS = 'order_ids'
+}
+
 /** input type for inserting array relation for remote table "orders" */
 export type Orders_Arr_Rel_Insert_Input = {
   data: Array<Orders_Insert_Input>;
@@ -6648,6 +6760,12 @@ export type OrdersConnection = Connection & {
 export type OrdersEdge = {
   __typename?: 'OrdersEdge';
   node: Order;
+};
+
+export type OrdersGroupedByDay = {
+  __typename?: 'OrdersGroupedByDay';
+  day?: Maybe<Scalars['Date']>;
+  orderIds: Array<Scalars['String']>;
 };
 
 export type OrderSnapshot = {
@@ -11976,6 +12094,10 @@ export type Query = {
   orders: Array<Orders>;
   /** fetch aggregated fields from the table: "orders" */
   orders_aggregate: Orders_Aggregate;
+  /** fetch data from the table: "orders_approved_grouped_by_day" */
+  orders_approved_grouped_by_day: Array<Orders_Approved_Grouped_By_Day>;
+  /** fetch aggregated fields from the table: "orders_approved_grouped_by_day" */
+  orders_approved_grouped_by_day_aggregate: Orders_Approved_Grouped_By_Day_Aggregate;
   /** fetch data from the table: "orders" using primary key columns */
   orders_by_pk?: Maybe<Orders>;
   /** fetch data from the table: "page_config_sections" */
@@ -12234,6 +12356,18 @@ export type Query = {
    * AccessRule – PLATFORM_ADMIN
    */
   getOrdersPendingApprovalConnectionAdmin: OrdersConnection;
+  /**
+   * Get orderIds grouped by day of approval, so we can group and aggregate payouts
+   * in sync with Stripe's daily payouts.
+   * AccessRule – PLATFORM_ADMIN
+   */
+  getAdminApprovedOrderIdsGroupedByDay: Array<OrdersGroupedByDay>;
+  /**
+   * Works in conjunnction with getAdminApprovedOrderIdsGroupedByDay()
+   * Get orders by orderIds in orderConnection form
+   * AccessRule – PLATFORM_ADMIN
+   */
+  getOrdersAdminApprovedByIdsConnection: OrdersConnection;
   /**
    * List orders that have been approved by admin, and are ready to be paid
    * AccessRule – PLATFORM_ADMIN
@@ -12657,6 +12791,24 @@ export type QueryOrders_AggregateArgs = {
   offset?: Maybe<Scalars['Int']>;
   order_by?: Maybe<Array<Orders_Order_By>>;
   where?: Maybe<Orders_Bool_Exp>;
+};
+
+
+export type QueryOrders_Approved_Grouped_By_DayArgs = {
+  distinct_on?: Maybe<Array<Orders_Approved_Grouped_By_Day_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Orders_Approved_Grouped_By_Day_Order_By>>;
+  where?: Maybe<Orders_Approved_Grouped_By_Day_Bool_Exp>;
+};
+
+
+export type QueryOrders_Approved_Grouped_By_Day_AggregateArgs = {
+  distinct_on?: Maybe<Array<Orders_Approved_Grouped_By_Day_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Orders_Approved_Grouped_By_Day_Order_By>>;
+  where?: Maybe<Orders_Approved_Grouped_By_Day_Bool_Exp>;
 };
 
 
@@ -13270,6 +13422,11 @@ export type QueryGetOrderArgs = {
 };
 
 
+export type QueryGetAdminApprovedPayoutSummaryArgs = {
+  orderIds: Array<Scalars['String']>;
+};
+
+
 export type QueryGetPayoutItemsInPeriodAdminArgs = {
   month?: Maybe<Scalars['Int']>;
   year?: Maybe<Scalars['Int']>;
@@ -13285,6 +13442,13 @@ export type QueryGetOrdersCreatedConnectionAdminArgs = {
 
 export type QueryGetOrdersPendingApprovalConnectionAdminArgs = {
   query: ConnectionQueryOrders;
+};
+
+
+export type QueryGetOrdersAdminApprovedByIdsConnectionArgs = {
+  orderIds: Array<Scalars['String']>;
+  limit: Scalars['Int'];
+  offset: Scalars['Int'];
 };
 
 
@@ -14310,6 +14474,10 @@ export type Subscription = {
   orders: Array<Orders>;
   /** fetch aggregated fields from the table: "orders" */
   orders_aggregate: Orders_Aggregate;
+  /** fetch data from the table: "orders_approved_grouped_by_day" */
+  orders_approved_grouped_by_day: Array<Orders_Approved_Grouped_By_Day>;
+  /** fetch aggregated fields from the table: "orders_approved_grouped_by_day" */
+  orders_approved_grouped_by_day_aggregate: Orders_Approved_Grouped_By_Day_Aggregate;
   /** fetch data from the table: "orders" using primary key columns */
   orders_by_pk?: Maybe<Orders>;
   /** fetch data from the table: "page_config_sections" */
@@ -14788,6 +14956,24 @@ export type SubscriptionOrders_AggregateArgs = {
   offset?: Maybe<Scalars['Int']>;
   order_by?: Maybe<Array<Orders_Order_By>>;
   where?: Maybe<Orders_Bool_Exp>;
+};
+
+
+export type SubscriptionOrders_Approved_Grouped_By_DayArgs = {
+  distinct_on?: Maybe<Array<Orders_Approved_Grouped_By_Day_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Orders_Approved_Grouped_By_Day_Order_By>>;
+  where?: Maybe<Orders_Approved_Grouped_By_Day_Bool_Exp>;
+};
+
+
+export type SubscriptionOrders_Approved_Grouped_By_Day_AggregateArgs = {
+  distinct_on?: Maybe<Array<Orders_Approved_Grouped_By_Day_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Orders_Approved_Grouped_By_Day_Order_By>>;
+  where?: Maybe<Orders_Approved_Grouped_By_Day_Bool_Exp>;
 };
 
 

@@ -14,6 +14,7 @@ import { useMutation } from "@apollo/client";
 import LoadingBarSSR from "components/LoadingBarSSR";
 import ButtonLoading from "components/ButtonLoading";
 import { useSnackbar } from "notistack";
+import { useRouter} from "next/router";
 // SSR disable
 import dynamic from "next/dynamic";
 import { AdminProfileProps } from "layout/GetUser/AdminProfileWrapper";
@@ -28,12 +29,7 @@ const GovFeaturedProducts = (props: ReactProps) => {
 
   const { classes } = props;
   const snackbar = useSnackbar();
-
-  const [reindexSearchIndex, response] = useMutation<MutData, {}>(
-    REINDEX_SEARCH_INDEX_ADMIN, {
-      variables: {}
-    }
-  );
+  const router = useRouter();
 
   return (
     <AdminProfileWrapper>
@@ -43,7 +39,7 @@ const GovFeaturedProducts = (props: ReactProps) => {
         const disabled = user?.userRole !== Role.PLATFORM_ADMIN;
 
         return (
-          <div className={classes.govHomePageSSR}>
+          <div className={classes.govPromotedProducts}>
             {
               user && !disabled &&
               <div className={classes.homeHeading}>
@@ -65,17 +61,14 @@ const GovFeaturedProducts = (props: ReactProps) => {
               className={classes.reindexButton}
               style={{ }}
               onClick={async () => {
-                await reindexSearchIndex()
-                console.log("response: ", response?.data)
+                router.push("/promote-listings")
                 snackbar.enqueueSnackbar(
-                  `Search engine reindexing: ${JSON.stringify(
-                    response?.data?.reindexSearchIndex?.success
-                  )}`,
-                  { variant: "info", persist: true }
+                  `Going to promoted items page`,
+                  { variant: "info" }
                 )
               }}
             >
-              Set featured products
+              Go to Promoted Products
             </ButtonLoading>
           </div>
         )
@@ -90,12 +83,8 @@ interface ReactProps extends WithStyles<typeof styles> {
   apolloClient: ApolloClient<any>;
 }
 
-interface MutData {
-  reindexSearchIndex: BlankMutationResponse
-}
-
 const styles = (theme: Theme) => createStyles({
-  govHomePageSSR: {
+  govPromotedProducts: {
     display: "flex",
     flexDirection: "column",
     justifyContent: "flex-start",

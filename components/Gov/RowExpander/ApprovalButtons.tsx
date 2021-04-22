@@ -31,6 +31,18 @@ const ApprovalButtons = (props: ReactProps) => {
   const [approveForm10, { data, loading, error }] = useMutation<MutData, MutVar>(
     APPROVE_FORM_10, {
     update: props.handleMutationUpdate,
+    onCompleted: (data) => {
+      snackbar.enqueueSnackbar(
+        `Order ${data?.approveForm10?.order?.id} approved`,
+        { variant: 'success' }
+      )
+    },
+    onError: (err) => {
+      snackbar.enqueueSnackbar(
+        `${err?.graphQLErrors?.[0]?.message}`,
+        { variant: 'error' }
+      )
+    },
     refetchQueries: props.refetchQueriesParams,
     awaitRefetchQueries: true,
   });
@@ -39,6 +51,18 @@ const ApprovalButtons = (props: ReactProps) => {
     REVISE_AND_RESUBMIT_FORM_10, {
     update: props.handleMutationUpdate,
     refetchQueries: props.refetchQueriesParams,
+    onCompleted: (data) => {
+      snackbar.enqueueSnackbar(
+        `Order ${data?.approveForm10?.order?.id} rejected`,
+        { variant: 'warning' }
+      )
+    },
+    onError: (err) => {
+      snackbar.enqueueSnackbar(
+        `${err?.graphQLErrors?.[0]?.message}`,
+        { variant: 'error' }
+      )
+    },
     awaitRefetchQueries: true,
   });
 
