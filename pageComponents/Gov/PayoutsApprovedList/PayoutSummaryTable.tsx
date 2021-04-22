@@ -118,8 +118,9 @@ const PayoutSummaryTable = (props: ReactProps) => {
                   </Typography>
                 </div>
                 <div className={classes.flexItem}>
-                  <Typography variant="body2" className={classes.id}>
-                    GM Fees
+                  <Typography variant="body2"
+                    className={clsx(classes.id, classes.indent, classes.red)}>
+                    - GM Fees
                   </Typography>
                 </div>
                 <div className={clsx(classes.flexItem, classes.topLine)}>
@@ -170,7 +171,8 @@ const PayoutSummaryTable = (props: ReactProps) => {
                   </Typography>
                 </div>
                 <div className={classes.flexItem}>
-                  <Typography variant="body2" className={classes.idMono}>
+                  <Typography variant="body2"
+                    className={clsx(classes.idMono, classes.red)}>
                     {c(platformEarnings)}
                   </Typography>
                 </div>
@@ -283,7 +285,7 @@ const styles = (theme: Theme) => createStyles({
     marginLeft: '0.5rem',
   },
   red: {
-    color: Colors.lightRed,
+    color: Colors.lighterRed,
   },
   blue: {
     color: Colors.ultramarineBlue,
