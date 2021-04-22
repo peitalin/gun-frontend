@@ -69,8 +69,8 @@ export const reduxModalsActions = {
     payload: payload
   }),
 
-  TOGGLE_CHAT_CENTER_MODAL: (payload?: boolean): ActionType<boolean> => ({
-    type: "TOGGLE_CHAT_CENTER_MODAL",
+  TOGGLE_BIDDING_ROOM_MODAL: (payload?: boolean): ActionType<boolean> => ({
+    type: "TOGGLE_BIDDING_ROOM_MODAL",
     payload: payload
   }),
 

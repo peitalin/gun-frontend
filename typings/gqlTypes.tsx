@@ -1404,7 +1404,7 @@ export type ChatRoom = {
   ownerId?: Maybe<Scalars['String']>;
   productId?: Maybe<Scalars['String']>;
   owner?: Maybe<BasicUser>;
-  status?: Maybe<Scalars['String']>;
+  status?: Maybe<ChatRoomStatus>;
   product?: Maybe<Product>;
   participants?: Maybe<Array<Maybe<Conversation>>>;
   messages?: Maybe<Array<Maybe<Message>>>;
@@ -2078,10 +2078,11 @@ export enum Emails_Update_Column {
 
 export enum FacetAttributes {
   _CATEGORYSLUGFACET = '_categorySlugFacet',
-  _CATEGORYNAMEFACET = '_categoryNameFacet',
-  _CATEGORYGROUPFACET = '_categoryGroupFacet',
   _STOREIDFACET = '_storeIdFacet',
-  _ISPUBLISHEDFACET = '_isPublishedFacet'
+  _ISPUBLISHEDFACET = '_isPublishedFacet',
+  _ACTIONTYPEFACET = '_actionTypeFacet',
+  _CALIBERFACET = '_caliberFacet',
+  _DEALERSTATEFACET = '_dealerStateFacet'
 }
 
 export type FacetsDistributionObject = {
@@ -2092,6 +2093,9 @@ export type FacetsDistributionObject = {
   isPublished?: Maybe<Scalars['JSON']>;
   /** categoryGroups: JSON */
   stores?: Maybe<Scalars['JSON']>;
+  actionTypes?: Maybe<Scalars['JSON']>;
+  calibers?: Maybe<Scalars['JSON']>;
+  dealerStates?: Maybe<Scalars['JSON']>;
 };
 
 export type FollowedStore = {
@@ -3894,6 +3898,7 @@ export type Mutation = {
   sendPayoutCompleteSellerEmail: BlankMutationResponse;
   sendReviewRepublishOrRemoveSellerEmail: BlankMutationResponse;
   editDealer?: Maybe<UserMutationResponse>;
+  editDealerAsAdmin?: Maybe<Dealer>;
   createNewDealer?: Maybe<DealerMutationResponse>;
   createDealerForUser?: Maybe<UserMutationResponse>;
   setDealerIdForUser?: Maybe<UserMutationResponse>;
@@ -3905,7 +3910,7 @@ export type Mutation = {
   sendBidMessage?: Maybe<Array<Maybe<Message>>>;
   updateBid?: Maybe<Array<Maybe<Bid>>>;
   updateChatStatus?: Maybe<Array<Maybe<ChatRoom>>>;
-  createNewChat?: Maybe<Array<Maybe<ChatRoom>>>;
+  createInitialBid?: Maybe<ChatRoom>;
   saySomething?: Maybe<Scalars['String']>;
   signupToWaitlist?: Maybe<Signup_Emails>;
 };
@@ -5585,6 +5590,17 @@ export type MutationEditDealerArgs = {
 };
 
 
+export type MutationEditDealerAsAdminArgs = {
+  dealerId: Scalars['String'];
+  name?: Maybe<Scalars['String']>;
+  address?: Maybe<Scalars['String']>;
+  city?: Maybe<Scalars['String']>;
+  postCode?: Maybe<Scalars['String']>;
+  state?: Maybe<Scalars['String']>;
+  licenseNumber?: Maybe<Scalars['String']>;
+};
+
+
 export type MutationCreateNewDealerArgs = {
   name: Scalars['String'];
   address?: Maybe<Scalars['String']>;
@@ -5659,10 +5675,13 @@ export type MutationUpdateChatStatusArgs = {
 };
 
 
-export type MutationCreateNewChatArgs = {
+export type MutationCreateInitialBidArgs = {
   productId: Scalars['String'];
   name?: Maybe<Scalars['String']>;
   messageLimit?: Maybe<Scalars['Int']>;
+  productSnapshotId: Scalars['String'];
+  variantId: Scalars['String'];
+  offerPrice: Scalars['Int'];
 };
 
 
@@ -7667,6 +7686,8 @@ export type Payout_Items = {
   createdAt: Scalars['timestamp'];
   currency: Scalars['String'];
   id: Scalars['String'];
+  /** An object relationship */
+  order?: Maybe<Orders>;
   orderId: Scalars['String'];
   payeeType: Scalars['String'];
   paymentProcessingFee: Scalars['Int'];
@@ -7752,6 +7773,7 @@ export type Payout_Items_Bool_Exp = {
   createdAt?: Maybe<Timestamp_Comparison_Exp>;
   currency?: Maybe<String_Comparison_Exp>;
   id?: Maybe<String_Comparison_Exp>;
+  order?: Maybe<Orders_Bool_Exp>;
   orderId?: Maybe<String_Comparison_Exp>;
   payeeType?: Maybe<String_Comparison_Exp>;
   paymentProcessingFee?: Maybe<Int_Comparison_Exp>;
@@ -7781,6 +7803,7 @@ export type Payout_Items_Insert_Input = {
   createdAt?: Maybe<Scalars['timestamp']>;
   currency?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
+  order?: Maybe<Orders_Obj_Rel_Insert_Input>;
   orderId?: Maybe<Scalars['String']>;
   payeeType?: Maybe<Scalars['String']>;
   paymentProcessingFee?: Maybe<Scalars['Int']>;
@@ -7885,6 +7908,7 @@ export type Payout_Items_Order_By = {
   createdAt?: Maybe<Order_By>;
   currency?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
+  order?: Maybe<Orders_Order_By>;
   orderId?: Maybe<Order_By>;
   payeeType?: Maybe<Order_By>;
   paymentProcessingFee?: Maybe<Order_By>;
@@ -13653,6 +13677,8 @@ export type Signup_Emails_Bool_Exp = {
 
 /** unique or primary key constraints on table "signup_emails" */
 export enum Signup_Emails_Constraint {
+  /** unique or primary key constraint */
+  SIGNUP_EMAILS_EMAIL_KEY = 'signup_emails_email_key',
   /** unique or primary key constraint */
   SIGNUP_EMAILS_PKEY = 'signup_emails_pkey'
 }

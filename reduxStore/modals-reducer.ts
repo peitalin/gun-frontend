@@ -99,7 +99,7 @@ export const reduxReducerModals = (
       return { ...state, storePromoCodeCreate: action.payload }
     }
 
-    case A.TOGGLE_CHAT_CENTER_MODAL().type: {
+    case A.TOGGLE_BIDDING_ROOM_MODAL().type: {
       return { ...state, chatCenterOpen: action.payload }
     }
 

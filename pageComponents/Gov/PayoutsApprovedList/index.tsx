@@ -10,6 +10,7 @@ import {
   ConnectionQuery,
   PayoutSummary,
   OrdersConnection,
+  PayeeType,
 } from "typings/gqlTypes";
 // Utils Components
 import ErrorBounds from "components/ErrorBounds";
@@ -139,13 +140,18 @@ const PayoutsApprovedList = (props: ReactProps) => {
             return !found
           })
           .map(order => {
+
+            let sellerPayoutItem = order.payoutItems.find(p => {
+              return p.payeeType === PayeeType.STORE
+            });
+
             // map to csv headers
             return {
               bsb: order.sellerStore?.user?.payoutMethod?.bsb,
               accountNumber: order.sellerStore?.user?.payoutMethod?.accountNumber,
               accountName: order?.sellerStore?.user?.payoutMethod?.accountName,
-              id: order.id,
-              amount: order.total / 100,
+              description: `Order: ${order.id}`,
+              amount: sellerPayoutItem.amount / 100,
             }
           })
 

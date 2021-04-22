@@ -18,8 +18,8 @@ import { useApolloClient, ApolloClient } from "@apollo/client";
 import LoadingBarSSR from "components/LoadingBarSSR";
 // SSR disable
 import dynamic from "next/dynamic";
-import { AdminProfileProps } from "layout/GetUser/AdminProfileWrapper";
-const AdminProfileWrapper = dynamic(() => import("layout/GetUser/AdminProfileWrapper"), {
+import { UserProfileProps } from "layout/GetUser/UserProfileWrapper";
+const UserProfileWrapper = dynamic(() => import("layout/GetUser/UserProfileWrapper"), {
   loading: () => <LoadingBarSSR/>,
   ssr: false,
 })
@@ -34,8 +34,8 @@ const GovOrdersPage: NextPage<ReactProps> = (props) => {
   );
 
   return (
-    <AdminProfileWrapper>
-      {({ data, loading, error }: AdminProfileProps) => {
+    <UserProfileWrapper>
+      {({ data, loading, error }: UserProfileProps) => {
         return (
           <OrderViewerPage
             onSubmit={undefined}
@@ -44,7 +44,7 @@ const GovOrdersPage: NextPage<ReactProps> = (props) => {
           />
         )
       }}
-    </AdminProfileWrapper>
+    </UserProfileWrapper>
   )
 }
 

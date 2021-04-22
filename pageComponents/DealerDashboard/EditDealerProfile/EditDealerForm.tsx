@@ -209,7 +209,6 @@ const EditDealerFormWrapper: React.FC<FormWrapperProps> = (props) => {
       smUp ? classes.formBordersDesktop : classes.formBordersMobile
     )}>
       <div className={smUp ? classes.paperMarginDesktop : classes.paperMarginMobile}>
-
         {
           props.closeEditDealerModal &&
           <IconButton
@@ -231,7 +230,6 @@ const EditDealerFormWrapper: React.FC<FormWrapperProps> = (props) => {
             </Typography>
           </div>
         }
-
 
         <div className={classes.flexColMargin}>
           <Typography color={"primary"} variant="h3">

@@ -11,7 +11,7 @@ import { Actions } from "reduxStore/actions";
 import { SUBSCRIBE_USER_CONVERSATIONS } from "queries/chat-subscriptions";
 import { useSubscription } from '@apollo/client';
 
-import CreateChatButton from "pageComponents/BiddingRoom/CreateChatButton";
+import CreateBidFormButton from "pageComponents/BiddingRoom/CreateBidFormButton";
 import OpenChatButton from "pageComponents/BiddingRoom/OpenChatButton";
 
 
@@ -68,9 +68,8 @@ const CreateOfferSubscription = (props: ReactProps) => {
             productId={alreadyChattingAboutProduct?.productId}
             chatRoomId={alreadyChattingAboutProduct?.chatRoomId}
           />
-        : <CreateChatButton
+        : <CreateBidFormButton
             title={"Suggest a price"}
-            buyerUserId={userId}
             sellerUserId={
               // if storeId, backend won't looks up the user.id for the store
               // make sure its the store's user.id
@@ -78,7 +77,7 @@ const CreateOfferSubscription = (props: ReactProps) => {
             }
             disabled={buyerIsSeller}
             // disabled={true}
-            productId={props?.product?.id}
+            product={props?.product}
             openChatAfterwards={true}
           />
       }

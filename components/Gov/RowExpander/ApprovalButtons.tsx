@@ -8,7 +8,7 @@ import ButtonLoading from "components/ButtonLoading";
 import { useSnackbar } from "notistack";
 // graphql
 import { OrderStatus, OrderAdmin } from "typings/gqlTypes";
-import { useMutation } from "@apollo/client";
+import { useMutation, ApolloCache } from "@apollo/client";
 import { DocumentNode } from "graphql";
 import {
   APPROVE_FORM_10,
@@ -29,20 +29,18 @@ const ApprovalButtons = (props: ReactProps) => {
   const snackbar = useSnackbar();
 
   const [approveForm10, { data, loading, error }] = useMutation<MutData, MutVar>(
-    APPROVE_FORM_10,
-    {
-      refetchQueries: props.refetchQueriesParams,
-      awaitRefetchQueries: true,
-    }
-  );
+    APPROVE_FORM_10, {
+    update: props.handleMutationUpdate,
+    refetchQueries: props.refetchQueriesParams,
+    awaitRefetchQueries: true,
+  });
 
   const [reviseAndResubmit, reviseAndResubmitResponse] = useMutation<MutData, MutVar>(
-    REVISE_AND_RESUBMIT_FORM_10,
-    {
-      refetchQueries: props.refetchQueriesParams,
-      awaitRefetchQueries: true,
-    },
-  );
+    REVISE_AND_RESUBMIT_FORM_10, {
+    update: props.handleMutationUpdate,
+    refetchQueries: props.refetchQueriesParams,
+    awaitRefetchQueries: true,
+  });
 
   let readyForApproval = orderStatus === OrderStatus.FORM_10_SUBMITTED
   let alreadyApproved = orderStatus === OrderStatus.ADMIN_APPROVED
@@ -115,9 +113,15 @@ interface ReactProps extends WithStyles<typeof styles> {
       offset?: number
     },
   }[];
+  handleMutationUpdate?(
+    cache: ApolloCache<MutData>,
+    response: { data: MutData },
+  ): void
 }
 
 interface MutData {
+  approveForm10?: { order: OrderAdmin }
+  reviseAndResubmitForm10?: { order: OrderAdmin }
 }
 interface MutVar {
   orderId: string; // row.id => order.id

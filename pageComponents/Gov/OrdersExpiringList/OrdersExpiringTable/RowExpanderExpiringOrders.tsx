@@ -28,10 +28,6 @@ import { UserPrivate, OrderStatus, OrderAdmin, OrderMutationResponse } from "typ
 import { useMutation, useApolloClient } from "@apollo/client";
 import { DocumentNode } from "graphql";
 import {
-  APPROVE_FORM_10,
-  REVISE_AND_RESUBMIT_FORM_10,
-} from "queries/orders-mutations";
-import {
   CANCEL_ORDER_AND_PAYMENT,
 } from "queries/refunds-mutations";
 import {
@@ -70,22 +66,6 @@ const RowExpanderExpiringOrders = (props: RowExpanderProps) => {
     paymentIntentStatus: order?.paymentIntent?.status,
     paymentIntentId: order?.paymentIntent?.id,
   })
-
-  const [approveForm10, approveForm10Response] = useMutation<MutData, MutVar>(
-    APPROVE_FORM_10,
-    {
-      refetchQueries: props.refetchQueriesParams,
-      awaitRefetchQueries: true,
-    }
-  );
-
-  const [reviseAndResubmit, reviseAndResubmitResponse] = useMutation<MutData, MutVar>(
-    REVISE_AND_RESUBMIT_FORM_10,
-    {
-      refetchQueries: props.refetchQueriesParams,
-      awaitRefetchQueries: true,
-    },
-  );
 
 
   const aClient = useApolloClient();
@@ -135,12 +115,6 @@ const RowExpanderExpiringOrders = (props: RowExpanderProps) => {
     expiryDate: expiryDate
   })
 
-  // console.log(">>>>NOW: ", formatDate(new Date()))
-
-  // console.log(">>>>>!!!!!createdAt: ", new Date(row.createdAt))
-  // console.log("expiresAt: ", expiryDate)
-  // console.log("expiresAt2: ", formatDate(expiryDate))
-  // console.log("countdown: ", countDown)
 
   return (
     <>

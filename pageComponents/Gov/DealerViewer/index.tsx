@@ -109,11 +109,6 @@ const DealerViewer: React.FC<ReactProps> = (props) => {
   }, [])
 
 
-  if (dealer) {
-    console.log("incoming dealer: ", dealer)
-    console.log("dealer :", dealer)
-  }
-
   const admin = useSelector<GrandReduxState, UserPrivate>(
     state => state?.reduxLogin?.user
   );

@@ -44,6 +44,10 @@ import {
 import GridPaginatorGeneric from "components/GridPaginatorGeneric";
 
 
+export const numItemsPerPage = 5;
+export const overfetchBy = 1;
+export const initialLimit = numItemsPerPage * overfetchBy
+// overfetch by 1x pages
 
 
 const OrdersPendingApprovalTable: NextPage<ReactProps> = (props) => {
@@ -51,10 +55,6 @@ const OrdersPendingApprovalTable: NextPage<ReactProps> = (props) => {
   //
   const {
     classes,
-    month = 10,
-    year = 2019,
-    // setRefetchPayoutItems: undefined,
-    // refetchAll: undefined,
   } = props;
 
   const isDarkMode = useSelector<GrandReduxState, boolean>(s => {
@@ -64,9 +64,6 @@ const OrdersPendingApprovalTable: NextPage<ReactProps> = (props) => {
   let router = useRouter();
 
   /////////////////////////////////// paginator
-  let numItemsPerPage = 5;
-  let overfetchBy = 1;
-  // overfetch by 1x pages
 
   //// Orders Created Paginator Hooks
   let {
@@ -91,7 +88,7 @@ const OrdersPendingApprovalTable: NextPage<ReactProps> = (props) => {
     // currentCategories,
     // setCurrentCategories,
   } = useFacetSearchOptions({
-    limit: numItemsPerPage * overfetchBy,
+    limit: initialLimit,
     overfetchBy: overfetchBy,
   })
 
@@ -106,7 +103,7 @@ const OrdersPendingApprovalTable: NextPage<ReactProps> = (props) => {
       setIndex: ordersPASetIndex,
     },
   } = useFacetSearchOptions({
-    limit: numItemsPerPage * overfetchBy,
+    limit: initialLimit,
     overfetchBy: overfetchBy,
   })
 
@@ -121,7 +118,7 @@ const OrdersPendingApprovalTable: NextPage<ReactProps> = (props) => {
       setIndex: ordersAASetIndex,
     },
   } = useFacetSearchOptions({
-    limit: numItemsPerPage * overfetchBy,
+    limit: initialLimit,
     overfetchBy: overfetchBy,
   })
 

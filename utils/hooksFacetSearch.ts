@@ -194,6 +194,7 @@ export const useFacetSearchOptions = ({
         params = params.filter(param => !param.includes("page="))
       }
 
+
       // console.log("params before join: ", params)
       let params_str: string = params.join('&')
       // console.log("params_str after join: ", params_str)

@@ -572,20 +572,12 @@ export const validationSchemas = {
     }),
 
 
-  // Creating Zendesk Support Ticket
-  CreateSupportTicket:
+  CreateInitialBid:
     Yup.object().shape({
-      name: Yup.string()
-        .nullable(),
-      lastName: Yup.string()
-        .nullable(),
-      email: Yup.string()
-        .email("Not a valid email")
-        .required('An email is needed'),
-      subject: Yup.string()
-        .required('Subject is needed'),
-      message: Yup.string()
-        .required('A message is needed'),
+      offerPrice: Yup.number().nullable()
+        .min(minPrice, "Minimum price: $1")
+        .max(maxPrice, "Max price: $10,000")
+        .required('Add a price'),
     }),
 
 

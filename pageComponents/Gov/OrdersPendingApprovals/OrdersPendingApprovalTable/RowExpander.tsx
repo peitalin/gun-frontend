@@ -13,6 +13,13 @@ import ApprovalButtons from "components/Gov/RowExpander/ApprovalButtons";
 import EscrowHistoryTable from "components/Gov/RowExpander/EscrowHistoryTable";
 import InfoBuyerSellerDealer from "components/Gov/RowExpander/InfoBuyerSellerDealer";
 
+import { OrdersConnection } from "typings/gqlTypes";
+import {
+  GET_ORDERS_CREATED_CONNECTION,
+  GET_ORDERS_PENDING_APPROVAL_CONNECTION,
+  GET_ORDERS_ADMIN_APPROVED_CONNECTION,
+} from "queries/orders-admin-queries";
+import { initialLimit } from ".";
 // router
 import Link from "next/link";
 import Typography from "@material-ui/core/Typography";
@@ -26,11 +33,6 @@ import currency from 'currency.js';
 import { UserPrivate, OrderStatus, OrderAdmin } from "typings/gqlTypes";
 import { useMutation } from "@apollo/client";
 import { DocumentNode } from "graphql";
-import {
-  APPROVE_FORM_10,
-  UNAPPROVE_FORM_10,
-  REVISE_AND_RESUBMIT_FORM_10,
-} from "queries/orders-mutations";
 
 
 
@@ -64,49 +66,9 @@ const RowExpander = (props: RowExpanderProps) => {
     paymentIntentId: order?.paymentIntent?.id,
   })
 
-  const [approveForm10, { data, loading, error }] = useMutation<MutData, MutVar>(
-    APPROVE_FORM_10,
-    {
-      refetchQueries: props.refetchQueriesParams,
-      awaitRefetchQueries: true,
-    }
-  );
-
-  const [reviseAndResubmit, reviseAndResubmitResponse] = useMutation<MutData, MutVar>(
-    REVISE_AND_RESUBMIT_FORM_10,
-    {
-      refetchQueries: props.refetchQueriesParams,
-      awaitRefetchQueries: true,
-    },
-  );
-
   const [open, setOpen] = React.useState(initialOpen);
-  const [openImage, setOpenImage] = React.useState(false);
 
   const c = (s) => currency(s/100, { formatWithSymbol: true }).format()
-
-  let form10 = row?.form10;
-  let form10Exists = !!form10;
-
-  let readyForApproval = row.orderStatus === OrderStatus.FORM_10_SUBMITTED
-  let alreadyApproved = (row.orderStatus as string) === OrderStatus.ADMIN_APPROVED
-
-  let isEvenRow = index % 2 === 0
-
-  let sellerPhoneNumber = !!row?.sellerStore?.user?.phoneNumber?.number
-    ? `${row?.sellerStore?.user?.phoneNumber?.countryCode} ${row?.sellerStore?.user?.phoneNumber?.number}`
-    : "-"
-
-  let buyerPhoneNumber = !!row?.buyer?.phoneNumber?.number
-    ? `${row?.buyer?.phoneNumber?.countryCode} ${row?.sellerStore?.user?.phoneNumber?.number}`
-    : "-"
-
-  let dealer = row?.product?.currentSnapshot?.dealer;
-
-  let dealerPhoneNumber = !!dealer?.user?.phoneNumber?.number
-    ? `${dealer?.user?.phoneNumber?.countryCode} ${dealer?.user?.phoneNumber?.number}`
-    : "-"
-  // console.log("admin: ", admin)
 
   return (
     <>
@@ -189,6 +151,44 @@ const RowExpander = (props: RowExpanderProps) => {
               orderId={props.order?.id}
               orderStatus={row?.orderStatus}
               refetchQueriesParams={props.refetchQueriesParams}
+              handleMutationUpdate={
+                (cache, { data }) => {
+
+                  let newOrder = data?.approveForm10?.order || data?.reviseAndResubmitForm10?.order
+
+                  let initialVariables = {
+                    query: {
+                      limit: initialLimit,
+                      offset: 0,
+                    }
+                  }
+
+                  interface MData {
+                    getOrdersPendingApprovalConnectionAdmin?: OrdersConnection
+                  }
+
+                  const cacheData = cache.readQuery<MData, any>({
+                    query: GET_ORDERS_PENDING_APPROVAL_CONNECTION,
+                    variables: initialVariables,
+                  });
+
+                  let ordersConnection = cacheData?.getOrdersPendingApprovalConnectionAdmin
+
+                  cache.writeQuery({
+                    query: GET_ORDERS_PENDING_APPROVAL_CONNECTION,
+                    variables: initialVariables,
+                    data: {
+                      getOrdersPendingApprovalConnectionAdmin: {
+                        ...ordersConnection,
+                        // remove approved order from the "pending approval" list
+                        edges: (ordersConnection?.edges ?? [])
+                          .filter(edge => edge?.node?.id !== newOrder?.id),
+                        totalCount: (ordersConnection?.edges?.length ?? 1) - 1,
+                      }
+                    },
+                  });
+                }
+              }
             />
           }
         </div>
@@ -217,11 +217,6 @@ interface RowExpanderProps extends WithStyles<typeof styles> {
   showApprovalButtons?: boolean;
 }
 
-interface MutData {
-}
-interface MutVar {
-  orderId: string; // row.id => order.id
-}
 
 const styles = (theme: Theme) => createStyles({
   marginBox: {

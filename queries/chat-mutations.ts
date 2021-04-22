@@ -63,17 +63,25 @@ export const UPDATE_CHAT_STATUS = gql`
   ${ChatRoomFragment}
 `
 
-export const CREATE_NEW_CHAT = gql`
-  # create chat room between buyer and seller
-  mutation createNewChat(
+export const CREATE_INITIAL_BID = gql`
+  # create chat room between buyer and seller and initial bid
+  mutation createInitialBid(
+    # chatRoom
     $productId: String!
     $name: String
     $messageLimit: Int # used for ChatRoom fragment on backend
+    # bid
+    $productSnapshotId: String!
+    $variantId: String!
+    $offerPrice: Int!
   ) {
-    createNewChat(
+    createInitialBid(
       productId: $productId,
       name: $name,
       messageLimit: $messageLimit
+      productSnapshotId: $productSnapshotId
+      variantId: $variantId
+      offerPrice: $offerPrice
     ) {
       ...ChatRoomFragment
     }
