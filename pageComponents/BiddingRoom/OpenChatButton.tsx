@@ -26,22 +26,6 @@ const OpenChatButton: React.FC<ReactProps> = (props) => {
     classes,
   } = props
 
-  const user = useSelector<GrandReduxState, UserPrivate>(
-    state => state.reduxLogin.user
-  );
-  const dispatch = useDispatch();
-
-  const closeModal = () => {
-    dispatch(Actions.reduxModals.TOGGLE_CHAT_CENTER_MODAL(false))
-  }
-
-  const openModal = () => {
-    dispatch(Actions.reduxConversation.SET_CURRENT_CONVERSATION_ID(props.chatRoomId))
-    setTimeout(() => {
-      dispatch(Actions.reduxModals.TOGGLE_CHAT_CENTER_MODAL(true))
-    }, 0)
-  }
-
   return (
     <Link href={"/offers"}>
       <a>
@@ -49,7 +33,6 @@ const OpenChatButton: React.FC<ReactProps> = (props) => {
           className={classes.chatButton}
           variant="text"
           color={"primary"}
-          // onClick={() => openModal()}
           {...props.buttonProps}
         >
           { props.title ? props.title : "Offers" }

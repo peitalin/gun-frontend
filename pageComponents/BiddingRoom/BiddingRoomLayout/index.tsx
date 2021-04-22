@@ -61,7 +61,7 @@ export const BiddingRoomLayout: React.FC<ReactProps> = (props) => {
 
             // all bidding convos about this product
             // pick just the first one for product info
-            let allConvos = data?.myConversations.filter(c => c.chatRoom.product?.id === pid)
+            let allConvos = data?.myConversations.filter(c => c?.chatRoom?.product?.id === pid)
             let convo = allConvos?.[0]
 
             return (
@@ -95,8 +95,6 @@ export const BiddingRoomLayout: React.FC<ReactProps> = (props) => {
 
 interface ReactProps extends WithStyles<typeof styles> {
   user: UserPrivate;
-  refetch?(a?: any): void;
-  setRefetch?(a?: any): void;
 }
 
 interface QueryData {

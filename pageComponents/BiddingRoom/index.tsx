@@ -32,10 +32,6 @@ const CreateBidForm: React.FC<ReactProps> = (props) => {
     asModal = false,
   } = props
 
-  const [state, setState] = React.useState({
-    refetch: null,
-  })
-
   const apolloClient = useApolloClient()
   const user = useSelector<GrandReduxState, UserPrivate>(
     state => state.reduxLogin.user
@@ -43,24 +39,13 @@ const CreateBidForm: React.FC<ReactProps> = (props) => {
   const userId = user?.id
 
 
-  const setRefetch = (refetch: () => {}) => {
-    setState(s => ({ ...s, refetch: refetch }))
-  }
-
   const dispatch = useDispatch();
 
-  const chatCenterOpen = useSelector<GrandReduxState, boolean>(
-    state => state.reduxModals.chatCenterOpen
-  );
 
   const theme = useTheme();
   const lgDown = useMediaQuery(theme.breakpoints.down('lg'));
   const mdDown = useMediaQuery(theme.breakpoints.down('md'));
   const smDown = useMediaQuery(theme.breakpoints.down('sm'));
-
-  const closeModal = () => {
-    dispatch(Actions.reduxModals.TOGGLE_CHAT_CENTER_MODAL(false))
-  }
 
   return (
     <ResponsivePadding>
@@ -70,8 +55,6 @@ const CreateBidForm: React.FC<ReactProps> = (props) => {
             userId &&
             <BiddingRoomLayout
               user={user}
-              refetch={state.refetch}
-              setRefetch={setRefetch}
             />
           }
         </div>
