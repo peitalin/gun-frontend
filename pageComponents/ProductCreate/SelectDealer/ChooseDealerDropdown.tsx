@@ -42,6 +42,7 @@ const ChooseDealerDropdown = (props: ReactProps & FormikProps<FormikFields>) => 
         className={classes.dealerDropdown}
         stateShape={initialDealer}
         disableAutocomplete={true}
+        menuPortalTarget={document?.body} // solves z-index problems
         onChange={(option: SelectOption) =>
           setDealerId({
             label: option?.label,

@@ -50,7 +50,7 @@ interface ReactProps extends WithStyles<typeof styles> {
 
 const styles = (theme: Theme) => createStyles({
   bidListRoot: {
-    flexBasis: '50%',
+    flexBasis: '100%',
   },
 })
 

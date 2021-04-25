@@ -76,11 +76,11 @@ export const BiddingRoomLayout: React.FC<ReactProps> = (props) => {
                         userId={convo2?.userId}
                         messages={convo2?.chatRoom?.messages}
                       />
-                      <SendBidInput
+                      {/* <SendBidInput
                         userId={convo?.userId}
                         chatRoomId={convo?.chatRoom?.id}
                         product={convo?.chatRoom?.product}
-                      />
+                      /> */}
                     </>
                   )
                 }

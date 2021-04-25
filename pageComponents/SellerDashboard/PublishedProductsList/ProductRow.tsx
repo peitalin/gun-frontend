@@ -45,7 +45,7 @@ import { useApolloClient, useMutation, gql } from "@apollo/client";
 import { ProductFragment } from "queries/fragments";
 // product edit
 import { productToProductEditInput } from "utils/conversions";
-import ConfirmDeleteModal from "components/ConfirmDeleteModal";
+import ConfirmDeleteModal from "components/ConfirmActionModal";
 // Copy
 import copy from "clipboard-copy";
 import { cacheUpdateDeleteProduct, cacheUpdateEditProduct } from "pageComponents/ProductEdit/cacheUpdateEditProduct";

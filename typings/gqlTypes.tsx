@@ -84,6 +84,8 @@ export type Bids = {
   bidStatus: Scalars['String'];
   createdAt?: Maybe<Scalars['timestamp']>;
   id: Scalars['String'];
+  /** An object relationship */
+  message?: Maybe<Chat_Messages>;
   offerPrice: Scalars['Int'];
   orderId?: Maybe<Scalars['String']>;
   productId: Scalars['String'];
@@ -165,6 +167,7 @@ export type Bids_Bool_Exp = {
   bidStatus?: Maybe<String_Comparison_Exp>;
   createdAt?: Maybe<Timestamp_Comparison_Exp>;
   id?: Maybe<String_Comparison_Exp>;
+  message?: Maybe<Chat_Messages_Bool_Exp>;
   offerPrice?: Maybe<Int_Comparison_Exp>;
   orderId?: Maybe<String_Comparison_Exp>;
   productId?: Maybe<String_Comparison_Exp>;
@@ -191,6 +194,7 @@ export type Bids_Insert_Input = {
   bidStatus?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['timestamp']>;
   id?: Maybe<Scalars['String']>;
+  message?: Maybe<Chat_Messages_Obj_Rel_Insert_Input>;
   offerPrice?: Maybe<Scalars['Int']>;
   orderId?: Maybe<Scalars['String']>;
   productId?: Maybe<Scalars['String']>;
@@ -285,6 +289,7 @@ export type Bids_Order_By = {
   bidStatus?: Maybe<Order_By>;
   createdAt?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
+  message?: Maybe<Chat_Messages_Order_By>;
   offerPrice?: Maybe<Order_By>;
   orderId?: Maybe<Order_By>;
   productId?: Maybe<Order_By>;

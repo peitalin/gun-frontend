@@ -70,6 +70,14 @@ export const formatDate = (d: Date) => {
   return dayjs.utc(d).local().format("DD-MM-YYYY hh:mm A")
 }
 
+export const formatNiceDate = (d: Date) => {
+  return dayjs.utc(d).local().format("MMMM DD, YYYY [at] hh:mm A")
+}
+
+export const formatTimestamp = (d: Date) => {
+  return dayjs.utc(d).local().format("DD-MM-YYYYTHH:mm:ss")
+}
+
 export const showDate = (d: Date) => {
   return dayjs.utc(d).local().format("DD-MM-YYYY")
 }
