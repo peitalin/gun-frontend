@@ -76,7 +76,7 @@ const DropdownInput = (props: ReactProps) => {
             isSearchable={isSearchable}
             isClearable={isClearable}
             isLoading={props.loading}
-            menuPortalTarget={document?.body} // solves z-index problems
+            menuPortalTarget={props.menuPortalTarget}
             autoComplete={
               props.disableAutocomplete
               ? "new-password"
@@ -157,7 +157,7 @@ const DropdownInput = (props: ReactProps) => {
             isSearchable={isSearchable}
             isClearable={isClearable}
             isLoading={props.loading}
-            menuPortalTarget={document?.body} // solves z-index problems
+            menuPortalTarget={props.menuPortalTarget}
             autoComplete={
               props.disableAutocomplete
               ? "new-password"
@@ -329,6 +329,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   height?: any;
   loading?: boolean;
   disableAutocomplete?: boolean;
+  menuPortalTarget?: any;
   [key: string]: any;
 }
 export interface SelectOption {

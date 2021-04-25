@@ -8,12 +8,13 @@ import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 
 
-const ConfirmDeleteModal = ({
+const ConfirmActionModal = ({
   classes,
   title,
   showModal,
   setShowModal,
   onConfirmFunction,
+  className,
 }: ReactProps) => {
   return (
     <Dialog
@@ -31,7 +32,7 @@ const ConfirmDeleteModal = ({
       }}
     >
       <div className={classes.flexColModal}>
-        <Typography variant="h5">
+        <Typography variant="h5" className={className ?? classes.title}>
           {
             title
               ? title
@@ -69,11 +70,15 @@ interface ReactProps extends WithStyles<typeof styles> {
   showModal: boolean;
   setShowModal(payload: boolean): void;
   onConfirmFunction(): void;
+  className?: any;
 }
 
 export const styles = (theme: Theme) => createStyles({
   saveVisaButton: {
     minWidth: 150,
+  },
+  title: {
+    textAlign: "center",
   },
   modalBackdrop: {
     backgroundColor: "rgba(47, 57, 65, .85)",
@@ -97,4 +102,4 @@ export const styles = (theme: Theme) => createStyles({
   },
 })
 
-export default withStyles(styles)( ConfirmDeleteModal );
+export default withStyles(styles)( ConfirmActionModal );
