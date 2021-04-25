@@ -68,25 +68,25 @@ export const BiddingRoomLayout: React.FC<ReactProps> = (props) => {
             let iOwnThisProduct = sellerId === userRedux.id
 
             return (
-              <div className={classes.flexRow}>
-                <ProductPanel
-                  currentChatRoom={convo?.chatRoom}
-                  iOwnThisProduct={iOwnThisProduct}
-                  user={userRedux}
-                />
-                {
-                  allConvos.map(convo2 => {
-                    return (
-                      <BidList
-                        userId={convo2?.userId}
-                        iOwnThisProduct={iOwnThisProduct}
-                        messages={convo2?.chatRoom?.messages}
-                        product={convo2?.chatRoom?.product}
-                      />
-                    )
-                  })
-                }
-              </div>
+                <div className={classes.flexItem}>
+                  <ProductPanel
+                    currentChatRoom={convo?.chatRoom}
+                    iOwnThisProduct={iOwnThisProduct}
+                    user={userRedux}
+                  />
+                  {
+                    allConvos.map(convo2 => {
+                      return (
+                        <BidList
+                          userId={convo2?.userId}
+                          iOwnThisProduct={iOwnThisProduct}
+                          messages={convo2?.chatRoom?.messages}
+                          product={convo2?.chatRoom?.product}
+                        />
+                      )
+                    })
+                  }
+                </div>
             )
           })
         }
@@ -118,26 +118,28 @@ const styles = (theme: Theme) => createStyles({
     display: "flex",
     flexDirection: "column",
   },
-  flexRow: {
+  productList: {
+    display: "flex",
+    flexDirection: "row",
+    flexWrap: "wrap",
+  },
+  flexItem: {
     display: "flex",
     flexDirection: "row",
     flexBasis: '100%',
+    flexGrow: 1,
+    width: '100%',
     backgroundColor: theme.palette.type === 'dark'
       ? Colors.uniswapDarkNavy
       : Colors.cream,
     border: theme.palette.type === 'dark'
-      ? `1px solid ${Colors.uniswapLightNavy}`
+      ? `unset`
       : `1px solid ${Colors.slateGreyDarker}`,
     boxShadow: theme.palette.type === 'dark'
       ? BoxShadows.shadow1.boxShadow
       : 'unset',
     marginBottom: '1rem',
     borderRadius: BorderRadius,
-  },
-  productList: {
-    display: "flex",
-    flexDirection: "row",
-    flexWrap: "wrap",
   }
 })
 

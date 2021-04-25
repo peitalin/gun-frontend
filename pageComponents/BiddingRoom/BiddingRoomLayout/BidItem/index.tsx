@@ -49,7 +49,10 @@ const BidItem = (props: BidProps) => {
 
   let bidDisabled = isBidDisabled(message.bid)
 
-  if (iOwnThisProduct && isMe) {
+  if (
+    iOwnThisProduct && isMe // you are the seller of the product
+    || (!iOwnThisProduct && !isMe)
+  ) {
     return (
       <CounterBid
         isMe={isMe}

@@ -47,7 +47,11 @@ const CounterBid = (props: BidProps) => {
 
       <div className={clsx(classes.flexCol, classes.columnUser)}>
         <div className={classes.userAndTime}>
-          You made a counter offer
+          {
+            props.isMe
+              ? "You made a counter offer"
+              : "Seller's counter offer"
+          }
         </div>
         <div className={classes.messageTime}>
           {formatNiceDate(m.createdAt)}

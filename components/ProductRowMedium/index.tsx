@@ -36,7 +36,7 @@ const ProductRowMedium = (props: ReactProps) => {
   const featuredVariant = product?.featuredVariant;
 
   const theme = useTheme();
-  const smDown = useMediaQuery(theme.breakpoints.down("sm"))
+  const mdDown = useMediaQuery(theme.breakpoints.down("md"))
 
 
   return (
@@ -58,15 +58,15 @@ const ProductRowMedium = (props: ReactProps) => {
                   <a>
                     <ProductPreviewCardRowSmall
                       previewItem={featuredVariant.previewItems[0]}
-                      width={144}
-                      height={90}
+                      width={props.imageSize?.desktop?.width ?? 135}
+                      height={props.imageSize?.desktop?.height ?? 90}
                     />
                   </a>
                 </Link>
               : <ProductPreviewCardRowSmall
                   previewItem={undefined}
-                  width={144}
-                  height={90}
+                  width={props.imageSize?.desktop?.width ?? 135}
+                  height={props.imageSize?.desktop?.height ?? 90}
                 />
             }
           </div>
@@ -85,15 +85,15 @@ const ProductRowMedium = (props: ReactProps) => {
                   <a>
                     <ProductPreviewCardRowSmall
                       previewItem={featuredVariant.previewItems[0]}
-                      width={88}
-                      height={55}
+                      width={props.imageSize?.mobile?.width ?? 82.5}
+                      height={props.imageSize?.mobile?.height ?? 55}
                     />
                   </a>
                 </Link>
               : <ProductPreviewCardRowSmall
                   previewItem={undefined}
-                  width={88}
-                  height={55}
+                  width={props.imageSize?.mobile?.width ?? 82.5}
+                  height={props.imageSize?.mobile?.height ?? 55}
                 />
             }
           </div>
@@ -151,6 +151,16 @@ interface ReactProps extends WithStyles<typeof styles> {
   product: Product;
   loading?: boolean;
   refetch?(): void; // apollo refetch
+  imageSize?: {
+    mobile: {
+      height: any
+      width: any
+    },
+    desktop: {
+      height: any
+      width: any
+    },
+  }
 }
 
 const styles = (theme: Theme) => createStyles({

@@ -5715,8 +5715,8 @@ export type MutationUpdateBidArgs = {
 
 export type MutationUpdateChatStatusArgs = {
   chatRoomId: Scalars['String'];
-  buyerChatStatus?: Maybe<Scalars['String']>;
-  sellerChatStatus?: Maybe<Scalars['String']>;
+  chatStatus: Scalars['String'];
+  isSeller: Scalars['Boolean'];
   messageLimit?: Maybe<Scalars['Int']>;
 };
 
@@ -17127,7 +17127,7 @@ type ProductFragment_ProductPrivate_ = { __typename?: 'ProductPrivate', id: stri
   ), featuredVariant: (
     { __typename?: 'product_variants' }
     & ProductVariantsFragment
-  ), store?: Maybe<{ __typename?: 'StorePrivate', id: string, name?: Maybe<string>, isSuspended: boolean, user?: Maybe<{ __typename?: 'UserPrivate', id: string, license?: Maybe<(
+  ), store?: Maybe<{ __typename?: 'StorePrivate', id: string, name?: Maybe<string>, isSuspended: boolean, userId: string, user?: Maybe<{ __typename?: 'UserPrivate', id: string, license?: Maybe<(
         { __typename?: 'user_licenses' }
         & UserLicenseFragment
       )> }> }>, category?: Maybe<{ __typename?: 'categories', id: string, name: string, slug?: Maybe<string>, categoryGroup: string }> };
@@ -17138,10 +17138,10 @@ type ProductFragment_ProductPublic_ = { __typename?: 'ProductPublic', id: string
   ), featuredVariant: (
     { __typename?: 'product_variants' }
     & ProductVariantsFragment
-  ), store?: Maybe<{ __typename?: 'StorePrivate', id: string, name?: Maybe<string>, isSuspended: boolean, user?: Maybe<{ __typename?: 'UserPrivate', id: string, license?: Maybe<(
+  ), store?: Maybe<{ __typename?: 'StorePrivate', id: string, name?: Maybe<string>, isSuspended: boolean, userId: string, user?: Maybe<{ __typename?: 'UserPrivate', id: string, license?: Maybe<(
         { __typename?: 'user_licenses' }
         & UserLicenseFragment
-      )> }> } | { __typename?: 'StorePublic', id: string, name?: Maybe<string>, isSuspended: boolean, user?: Maybe<{ __typename?: 'UserPrivate', id: string, license?: Maybe<(
+      )> }> } | { __typename?: 'StorePublic', id: string, name?: Maybe<string>, isSuspended: boolean, userId: string, user?: Maybe<{ __typename?: 'UserPrivate', id: string, license?: Maybe<(
         { __typename?: 'user_licenses' }
         & UserLicenseFragment
       )> } | { __typename?: 'UserForDealers', id: string, license?: Maybe<(
@@ -17900,6 +17900,7 @@ export const ProductFragmentFragmentDoc = gql`
     id
     name
     isSuspended
+    userId
     user {
       id
       license {

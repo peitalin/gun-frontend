@@ -2,11 +2,11 @@ import React from 'react';
 // Styles
 import clsx from "clsx";
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
-import { Colors, BorderRadius } from "layout/AppTheme";
+import { Colors, BorderRadius, isThemeDark } from "layout/AppTheme";
 // Apollo
 import { useMutation } from '@apollo/client';
 import { UPDATE_CHAT_STATUS } from "queries/chat-mutations";
-import { Conversation, ChatRoomStatus, ChatRoom, UserPrivate } from "typings/gqlTypes";
+import { ChatRoomStatus, ChatRoom, UserPrivate } from "typings/gqlTypes";
 // css
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
@@ -16,6 +16,7 @@ import Typography from "@material-ui/core/Typography";
 import ProductPreviewCardRowSmall from "components/ProductPreviewCardRowSmall";
 // UI components
 import ButtonLoading from "components/ButtonLoading";
+import ProductRowMedium from "components/ProductRowMedium";
 
 
 
@@ -98,58 +99,75 @@ const ProductPanel: React.FC<ReactProps> = (props) => {
 
   return (
     <div className={classes.productPanelRoot}>
-      <div>
-        {
-          chatRoom &&
-          product &&
-          <div className={classes.productContainerCol}>
-            <Typography variant="h4" className={classes.productTitle}>
-              {
-                `Seller: ${seller?.license?.licenseNumber}`
-              }
-            </Typography>
-            <ProductPreviewCardRowSmall
-              previewItem={previewItem as any}
-              title={product.currentSnapshot.title}
-              // model={product.currentSnapshot.model}
-              // category={product.category as any}
-              // price={featuredVariant?.price}
-            />
-            <div className={classes.buttonContainer}>
-              <ButtonLoading
-                replaceTextWhenLoading={true}
+      {
+        chatRoom &&
+        product &&
+        <div className={classes.productBidsContainer}>
+          <div className={classes.productCardBox}>
+            <div className={classes.marginOffset}>
+              <ProductRowMedium
+                product={product}
                 loading={loading}
-                disabled={loading}
-                loadingIconColor={Colors.lightestGrey}
-                className={clsx(
-                  classes.archiveProductButton,
-                  props.iOwnThisProduct
-                  ? chatRoom?.sellerChatStatus === ChatRoomStatus.ARCHIVED
-                    ? classes.blueButton
-                    : classes.redButton
-                  : chatRoom?.buyerChatStatus === ChatRoomStatus.ARCHIVED
-                    ? classes.blueButton
-                    : classes.redButton
-                )}
-                style={{
+                imageSize={{
+                  mobile: {
+                    width: 82.5,
+                    height: 50,
+                  },
+                  desktop: {
+                    width: 108,
+                    height: 72,
+                  },
                 }}
-                onClick={() => {
-                  updateChatStatus({
-                    variables: {
-                      chatRoomId: chatRoomId,
-                      chatStatus: getNextChatStatus(chatStatus),
-                      isSeller: props.iOwnThisProduct,
-                      messageLimit: 40,
-                    }
-                  })
-                }}
-              >
-                {getNextChatStatusAction(chatStatus)}
-              </ButtonLoading>
+              />
             </div>
+            <Typography variant="h4" className={classes.productTitle}>
+              { `Seller License: ${seller?.license?.licenseNumber}` }
+            </Typography>
           </div>
-        }
-      </div>
+
+          <div className={classes.buttonContainer}>
+            <ButtonLoading
+              replaceTextWhenLoading={true}
+              loading={loading}
+              // disabled={loading}
+              loadingIconColor={
+                props.iOwnThisProduct
+                ? chatRoom?.sellerChatStatus === ChatRoomStatus.ARCHIVED
+                  ? Colors.ultramarineBlueLight
+                  : Colors.yellow
+                : chatRoom?.buyerChatStatus === ChatRoomStatus.ARCHIVED
+                  ? Colors.ultramarineBlueLight
+                  : Colors.yellow
+              }
+              variant="outlined"
+              className={clsx(
+                classes.archiveProductButton,
+                props.iOwnThisProduct
+                ? chatRoom?.sellerChatStatus === ChatRoomStatus.ARCHIVED
+                  ? classes.blueButton
+                  : classes.yellowButton
+                : chatRoom?.buyerChatStatus === ChatRoomStatus.ARCHIVED
+                  ? classes.blueButton
+                  : classes.yellowButton
+              )}
+              style={{
+              }}
+              onClick={() => {
+                updateChatStatus({
+                  variables: {
+                    chatRoomId: chatRoomId,
+                    chatStatus: getNextChatStatus(chatStatus),
+                    isSeller: props.iOwnThisProduct,
+                    messageLimit: 40,
+                  }
+                })
+              }}
+            >
+              {getNextChatStatusAction(chatStatus)}
+            </ButtonLoading>
+          </div>
+        </div>
+      }
     </div>
   );
 };
@@ -172,69 +190,81 @@ interface QueryVar {
 }
 
 
-let headingColor = Colors.charcoal;
-let listItemColor = Colors.charcoal;
-
 const styles = (theme: Theme) => createStyles({
   productPanelRoot: {
+    minWidth: 320,
   },
-  heading: {
-    fontWeight: 600,
-    padding: '15px 10px',
-    marginTop: 0,
-    marginBottom: 0,
-    backgroundColor: Colors.blue,
-    color: headingColor,
-    borderBottom: `4px solid ${Colors.white}`,
-  },
-  mobileHeading: {
-    fontSize: '14px',
-    backgroundColor: '#222',
-    color: headingColor,
-    fontWeight: 600,
-    marginBottom: 0,
-    padding: '5px',
-  },
-  productContainerCol: {
+  productBidsContainer: {
     display: 'flex',
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
     padding: '1rem',
   },
+  productCardBox: {
+    display: 'flex',
+    flexDirection: "column",
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
+    width: '100%',
+    marginLeft: '1rem',
+  },
   productTitle: {
-    marginBottom: '1rem',
+    fontSize: "0.9rem",
+    color: isThemeDark(theme)
+      ? Colors.uniswapLightestGrey
+      : Colors.slateGreyBlack,
     textAlign: "center",
+    marginBottom: '0.25rem',
   },
   buttonContainer: {
     width: '100%',
     marginTop: '0.5rem',
     display: 'flex',
     flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
     borderRadius: BorderRadius,
   },
   archiveProductButton: {
     width: "100%",
+    maxWidth: 150,
     height: "40px",
     fontWeight: 500,
     color: Colors.darkWhite,
     marginBottom: '0.35rem', // paypal button annoying extra space
-    // border: `1px solid ${Colors.red}`,
     borderRadius: BorderRadius,
-  },
-  redButton: {
-    background: Colors.red,
+    marginLeft: '0.5rem',
+    background: 'unset',
     "&:hover": {
-      background: Colors.lightRed,
+      background: 'unset',
+    },
+  },
+  yellowButton: {
+    color: isThemeDark(theme)
+      ? Colors.uniswapMediumGrey
+      : Colors.black,
+    border: `1px solid ${Colors.charcoal}`,
+    "&:hover": {
+      color: isThemeDark(theme)
+        ? Colors.uniswapLightGrey
+        : Colors.slateGreyLightBlack,
+      border: `1px solid ${Colors.charcoal}`,
     },
   },
   blueButton: {
-    background: Colors.ultramarineBlue,
+    color: Colors.ultramarineBlue,
+    border: `1px solid ${Colors.ultramarineBlue}`,
     "&:hover": {
-      background: Colors.ultramarineBlueLight,
+      color: Colors.ultramarineBlueLight,
+      border: `1px solid ${Colors.ultramarineBlueLight}`,
     },
+  },
+  width100: {
+    width: '100%',
+  },
+  marginOffset: {
+    marginLeft: '-1rem',
   },
 })
 
