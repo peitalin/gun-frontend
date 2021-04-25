@@ -1004,6 +1004,7 @@ export enum Chat_Messages_Update_Column {
 /** columns and relationships of "chat_rooms" */
 export type Chat_Rooms = {
   __typename?: 'chat_rooms';
+  buyerChatStatus?: Maybe<Scalars['String']>;
   createdAt: Scalars['timestamptz'];
   id: Scalars['String'];
   /** An array relationship */
@@ -1021,7 +1022,7 @@ export type Chat_Rooms = {
   /** An object relationship */
   product: Products;
   productId: Scalars['String'];
-  status: Scalars['String'];
+  sellerChatStatus?: Maybe<Scalars['String']>;
 };
 
 
@@ -1104,6 +1105,7 @@ export type Chat_Rooms_Bool_Exp = {
   _and?: Maybe<Array<Maybe<Chat_Rooms_Bool_Exp>>>;
   _not?: Maybe<Chat_Rooms_Bool_Exp>;
   _or?: Maybe<Array<Maybe<Chat_Rooms_Bool_Exp>>>;
+  buyerChatStatus?: Maybe<String_Comparison_Exp>;
   createdAt?: Maybe<Timestamptz_Comparison_Exp>;
   id?: Maybe<String_Comparison_Exp>;
   messages?: Maybe<Chat_Messages_Bool_Exp>;
@@ -1113,7 +1115,7 @@ export type Chat_Rooms_Bool_Exp = {
   participants?: Maybe<Chat_Users_Bool_Exp>;
   product?: Maybe<Products_Bool_Exp>;
   productId?: Maybe<String_Comparison_Exp>;
-  status?: Maybe<String_Comparison_Exp>;
+  sellerChatStatus?: Maybe<String_Comparison_Exp>;
 };
 
 /** unique or primary key constraints on table "chat_rooms" */
@@ -1124,6 +1126,7 @@ export enum Chat_Rooms_Constraint {
 
 /** input type for inserting data into table "chat_rooms" */
 export type Chat_Rooms_Insert_Input = {
+  buyerChatStatus?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['timestamptz']>;
   id?: Maybe<Scalars['String']>;
   messages?: Maybe<Chat_Messages_Arr_Rel_Insert_Input>;
@@ -1133,49 +1136,53 @@ export type Chat_Rooms_Insert_Input = {
   participants?: Maybe<Chat_Users_Arr_Rel_Insert_Input>;
   product?: Maybe<Products_Obj_Rel_Insert_Input>;
   productId?: Maybe<Scalars['String']>;
-  status?: Maybe<Scalars['String']>;
+  sellerChatStatus?: Maybe<Scalars['String']>;
 };
 
 /** aggregate max on columns */
 export type Chat_Rooms_Max_Fields = {
   __typename?: 'chat_rooms_max_fields';
+  buyerChatStatus?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['timestamptz']>;
   id?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   ownerId?: Maybe<Scalars['String']>;
   productId?: Maybe<Scalars['String']>;
-  status?: Maybe<Scalars['String']>;
+  sellerChatStatus?: Maybe<Scalars['String']>;
 };
 
 /** order by max() on columns of table "chat_rooms" */
 export type Chat_Rooms_Max_Order_By = {
+  buyerChatStatus?: Maybe<Order_By>;
   createdAt?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   name?: Maybe<Order_By>;
   ownerId?: Maybe<Order_By>;
   productId?: Maybe<Order_By>;
-  status?: Maybe<Order_By>;
+  sellerChatStatus?: Maybe<Order_By>;
 };
 
 /** aggregate min on columns */
 export type Chat_Rooms_Min_Fields = {
   __typename?: 'chat_rooms_min_fields';
+  buyerChatStatus?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['timestamptz']>;
   id?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   ownerId?: Maybe<Scalars['String']>;
   productId?: Maybe<Scalars['String']>;
-  status?: Maybe<Scalars['String']>;
+  sellerChatStatus?: Maybe<Scalars['String']>;
 };
 
 /** order by min() on columns of table "chat_rooms" */
 export type Chat_Rooms_Min_Order_By = {
+  buyerChatStatus?: Maybe<Order_By>;
   createdAt?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   name?: Maybe<Order_By>;
   ownerId?: Maybe<Order_By>;
   productId?: Maybe<Order_By>;
-  status?: Maybe<Order_By>;
+  sellerChatStatus?: Maybe<Order_By>;
 };
 
 /** response of any mutation on the table "chat_rooms" */
@@ -1202,6 +1209,7 @@ export type Chat_Rooms_On_Conflict = {
 
 /** ordering options when selecting data from "chat_rooms" */
 export type Chat_Rooms_Order_By = {
+  buyerChatStatus?: Maybe<Order_By>;
   createdAt?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   messages_aggregate?: Maybe<Chat_Messages_Aggregate_Order_By>;
@@ -1211,7 +1219,7 @@ export type Chat_Rooms_Order_By = {
   participants_aggregate?: Maybe<Chat_Users_Aggregate_Order_By>;
   product?: Maybe<Products_Order_By>;
   productId?: Maybe<Order_By>;
-  status?: Maybe<Order_By>;
+  sellerChatStatus?: Maybe<Order_By>;
 };
 
 /** primary key columns input for table: "chat_rooms" */
@@ -1222,6 +1230,8 @@ export type Chat_Rooms_Pk_Columns_Input = {
 /** select columns of table "chat_rooms" */
 export enum Chat_Rooms_Select_Column {
   /** column name */
+  BUYERCHATSTATUS = 'buyerChatStatus',
+  /** column name */
   CREATEDAT = 'createdAt',
   /** column name */
   ID = 'id',
@@ -1232,21 +1242,24 @@ export enum Chat_Rooms_Select_Column {
   /** column name */
   PRODUCTID = 'productId',
   /** column name */
-  STATUS = 'status'
+  SELLERCHATSTATUS = 'sellerChatStatus'
 }
 
 /** input type for updating data in table "chat_rooms" */
 export type Chat_Rooms_Set_Input = {
+  buyerChatStatus?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['timestamptz']>;
   id?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   ownerId?: Maybe<Scalars['String']>;
   productId?: Maybe<Scalars['String']>;
-  status?: Maybe<Scalars['String']>;
+  sellerChatStatus?: Maybe<Scalars['String']>;
 };
 
 /** update columns of table "chat_rooms" */
 export enum Chat_Rooms_Update_Column {
+  /** column name */
+  BUYERCHATSTATUS = 'buyerChatStatus',
   /** column name */
   CREATEDAT = 'createdAt',
   /** column name */
@@ -1258,7 +1271,7 @@ export enum Chat_Rooms_Update_Column {
   /** column name */
   PRODUCTID = 'productId',
   /** column name */
-  STATUS = 'status'
+  SELLERCHATSTATUS = 'sellerChatStatus'
 }
 
 /** columns and relationships of "chat_users" */
@@ -1437,10 +1450,11 @@ export type ChatRoom = {
   ownerId?: Maybe<Scalars['String']>;
   productId?: Maybe<Scalars['String']>;
   owner?: Maybe<BasicUser>;
-  status?: Maybe<ChatRoomStatus>;
   product?: Maybe<Product>;
   participants?: Maybe<Array<Maybe<Conversation>>>;
   messages?: Maybe<Array<Maybe<Message>>>;
+  buyerChatStatus?: Maybe<ChatRoomStatus>;
+  sellerChatStatus?: Maybe<ChatRoomStatus>;
 };
 
 
@@ -5686,12 +5700,10 @@ export type MutationEmitTypingEventArgs = {
 
 export type MutationSendBidMessageArgs = {
   chatRoomId: Scalars['String'];
-  content: Scalars['String'];
   productId: Scalars['String'];
   productSnapshotId: Scalars['String'];
   variantId: Scalars['String'];
   offerPrice: Scalars['Int'];
-  bidStatus: Scalars['String'];
 };
 
 
@@ -5703,7 +5715,8 @@ export type MutationUpdateBidArgs = {
 
 export type MutationUpdateChatStatusArgs = {
   chatRoomId: Scalars['String'];
-  chatStatus: Scalars['String'];
+  buyerChatStatus?: Maybe<Scalars['String']>;
+  sellerChatStatus?: Maybe<Scalars['String']>;
   messageLimit?: Maybe<Scalars['Int']>;
 };
 

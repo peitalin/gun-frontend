@@ -182,6 +182,7 @@ export const ProductFragment = gql`
       id
       name
       isSuspended
+      userId
       user {
         id
         license {

@@ -7,21 +7,17 @@ import { BidFragment, MessageFragment } from "./fragments";
 export const SEND_BID_MESSAGE = gql`
   mutation sendBidMessage(
     $chatRoomId: String!
-    $content: String!
     $productId: String!
     $productSnapshotId: String!
     $variantId: String!
     $offerPrice: Int!
-    $bidStatus: String!
   ) {
     sendBidMessage(
       chatRoomId: $chatRoomId,
-      content: $content,
       productId: $productId,
       productSnapshotId: $productSnapshotId,
       variantId: $variantId,
       offerPrice: $offerPrice,
-      bidStatus: $bidStatus
     ) {
       ...MessageFragment
     }
@@ -50,11 +46,13 @@ export const UPDATE_CHAT_STATUS = gql`
   mutation(
     $chatRoomId: String!
     $chatStatus: String!
+    $isSeller: Boolean!
     $messageLimit: Int # used for ChatRoom fragment on backend
   ) {
     updateChatStatus(
       chatRoomId: $chatRoomId
       chatStatus: $chatStatus
+      isSeller: $isSeller
       messageLimit: $messageLimit
     ) {
       ...ChatRoomFragment

@@ -23,9 +23,6 @@ import App from "next/app";
 // Apollo Graphql
 import { ApolloProvider, ApolloClient } from '@apollo/client';
 import withApollo from 'utils/apollo';
-// queries
-import { GET_USER } from "queries/user-queries";
-
 // css
 // all css must be imported here
 import "../public/App.css";
@@ -34,12 +31,6 @@ import "components/DropzoneUploader/styles.css";
 
 import { SnackbarProvider, ProviderContext } from 'notistack';
 import IconButtonCancel from "components/IconButtonCancel";
-// Typings
-import { UserPrivate } from 'typings/gqlTypes';
-import { serverApolloClient } from "utils/apollo";
-// Payment Clients
-import { PaypalClient } from "typings/typings-paypal";
-// import { WestpacQuickstreamClient } from "typings/typings-westpac";
 
 import dayjs from 'dayjs'
 import utc from "dayjs/plugin/utc"
@@ -49,7 +40,6 @@ dayjs.extend(utc)
 declare global {
   interface Window {
     App: any;
-    paypal: PaypalClient
     analytics: any;
     ClassicEditor: any
     chatwootSDK: {
@@ -146,7 +136,7 @@ class MainApp extends App<AppProps> {
               action={(key) => (
                 <IconButtonCancel
                   onClick={onClickDismiss(key)}
-                  dark={false}
+                  dark={true} // light colored close icon
                 />
               )}
               // dense
@@ -171,7 +161,6 @@ const ThemeProviderDarkMode = ({ initialDarkModeSSR, children }) => {
     return s.reduxLogin.darkMode
   })
   let dispatch = useDispatch()
-  let router = useRouter()
 
   React.useEffect(() => {
 

@@ -41,7 +41,7 @@ const ConfirmActionModal = ({
         </Typography>
         <div className={classes.flexRowModal}>
           <Button
-            className={classes.saveVisaButton}
+            className={classes.modalButtons}
             variant={"outlined"}
             color={"secondary"}
             onClick={() => {
@@ -52,7 +52,7 @@ const ConfirmActionModal = ({
             Yes
           </Button>
           <Button
-            className={classes.saveVisaButton}
+            className={classes.modalButtons}
             variant={"outlined"}
             color={"primary"}
             onClick={() => setShowModal(false)}
@@ -74,7 +74,7 @@ interface ReactProps extends WithStyles<typeof styles> {
 }
 
 export const styles = (theme: Theme) => createStyles({
-  saveVisaButton: {
+  modalButtons: {
     minWidth: 150,
   },
   title: {

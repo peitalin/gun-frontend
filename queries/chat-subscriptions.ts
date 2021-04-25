@@ -35,7 +35,6 @@ export const ChatRoomFragment = gql`
   fragment ChatRoomFragment on ChatRoom {
     id
     name
-    status
     owner {
       id
       ...on UserPrivate {
@@ -60,6 +59,8 @@ export const ChatRoomFragment = gql`
     messages {
       ...MessageFragment
     }
+    buyerChatStatus
+    sellerChatStatus
   }
   ${ProductFragment}
   ${UserLicenseFragment}

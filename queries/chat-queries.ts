@@ -6,7 +6,6 @@ export const GET_USER_BIDS_FOR_PRODUCT = gql`
   query getUserBidsForProduct($productId: String!) {
     getUserBidsForProduct(productId: $productId) {
       name
-      status
       createdAt
       participants {
         userId
@@ -23,6 +22,8 @@ export const GET_USER_BIDS_FOR_PRODUCT = gql`
           createdAt
         }
       }
+      buyerChatStatus
+      sellerChatStatus
     }
   }
 `;

@@ -69,19 +69,18 @@ const CreateOfferSubscription = (props: ReactProps) => {
             chatRoomId={alreadyChattingAboutProduct?.chatRoomId}
           />
         : <CreateBidFormButton
-            title={"Suggest a price"}
+            title={loading ? "Loading" : "Suggest a price"}
             sellerUserId={
               // if storeId, backend won't looks up the user.id for the store
               // make sure its the store's user.id
               props?.product?.store?.userId
             }
-            disabled={buyerIsSeller}
+            disabled={buyerIsSeller || loading}
             // disabled={true}
             product={props?.product}
             openChatAfterwards={true}
           />
       }
-
     </div>
   )
 }

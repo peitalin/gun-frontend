@@ -233,7 +233,7 @@ const Products: React.FC<ReactProps> = (props) => {
                 />
                 {
                   userBids
-                  .filter(bid => bid.bidStatus === BidStatus.ACCEPTED)
+                  .filter(bid => bid?.bidStatus === BidStatus.ACCEPTED)
                   .map(bid =>
                     <StickyDetailsBids
                       userBid={bid}
@@ -291,7 +291,7 @@ const Products: React.FC<ReactProps> = (props) => {
             />
             {
               userBids
-              .filter(bid => bid.bidStatus === BidStatus.ACCEPTED)
+              .filter(bid => bid?.bidStatus === BidStatus.ACCEPTED)
               .map(bid =>
                 <StickyDetailsBids
                   key={bid?.id}

@@ -39,7 +39,6 @@ import { useFormik } from 'formik';
 
 
 
-
 const CreateInitialBidForm: React.FC<ReactProps> = (props) => {
 
   const { classes } = props;
@@ -96,7 +95,7 @@ const CreateInitialBidForm: React.FC<ReactProps> = (props) => {
       console.log("formik onSubmit. OfferPrice: ", values.offerPrice)
       await createInitialBid({
         variables: {
-          productId: props.product.id,
+          productId: props.product?.id,
           name: props.name,
           offerPrice: values.offerPrice,
           productSnapshotId: props.product?.currentSnapshot?.id,
@@ -165,7 +164,6 @@ const CreateInitialBidForm: React.FC<ReactProps> = (props) => {
           )}
         </Rifm>
       </div>
-
 
       <ButtonLoading
         type="submit" // submits formik
