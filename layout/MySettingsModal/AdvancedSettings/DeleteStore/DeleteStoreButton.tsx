@@ -14,7 +14,7 @@ import Loading from "components/Loading";
 import ErrorDisplay, { GraphQLErrors } from "components/Error";
 import ErrorBounds from "components/ErrorBounds";
 import SnackBarA from "components/Snackbars/SnackbarA";
-import ConfirmDeleteModal from "components/ConfirmDeleteModal";
+import ConfirmDeleteModal from "components/ConfirmActionModal";
 // Redux
 import { GrandReduxState } from "reduxStore/grand-reducer";
 import { Actions } from "reduxStore/actions";

@@ -42,7 +42,19 @@ const DatePicker = dynamic(() => import("react-datepicker"), {
   ssr: false,
 })
 import Button from '@material-ui/core/Button';
-import { showDate } from "utils/dates";
+import { formatTimestamp } from "utils/dates";
+
+// import 'date-fns';
+// import DateFnsUtils from '@date-io/date-fns';
+import dayjs from 'dayjs'
+import DateFnsUtils from '@date-io/dayjs';
+
+import {
+  MuiPickersUtilsProvider,
+  KeyboardTimePicker,
+  KeyboardDatePicker,
+} from '@material-ui/pickers';
+
 
 
 
@@ -106,17 +118,29 @@ const SignUp: React.FC<ReactProps> = (props) => {
     }))
   };
 
+  const [selectedDate, setSelectedDate] = React.useState<Date>(
+    new Date()
+  );
+
+  const handleDateChange = (date) => {
+    // console.log("incoming date:", date)
+    setSelectedDate(date)
+    let expiryDate = new Date(date)
+    expiryDate.setHours(0)
+    expiryDate.setSeconds(0)
+    expiryDate.setMinutes(0)
+    setState(s => ({ ...s, licenseExpiry: expiryDate }))
+  };
+
   const { classes } = props;
 
-  const [isBackspace, setIsBackspace] = React.useState(false)
 
   let licenseStateOptions = createLicenseStateSuggestions()
   // initial stateShape
-  let initialStateLicense = licenseStateOptions
-    .find(d => d.value === state.licenseState)
+  let initialStateLicense = undefined
   const [licenseState, setLicenseState] = React.useState(initialStateLicense)
 
-  console.log("licenseState: ", state)
+    console.log("state", state)
 
   return (
     <ErrorBounds className={classes.outerContainer}>
@@ -180,7 +204,22 @@ const SignUp: React.FC<ReactProps> = (props) => {
             <Typography className={classes.miniTitle}>
               License Expiry
             </Typography>
-            <DatePicker
+            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+              <KeyboardDatePicker
+                disableToolbar
+                variant="inline"
+                format="D/M/YYYY"
+                // margin="normal"
+                id="date-picker-inline"
+                // label="License Expiry"
+                value={selectedDate}
+                onChange={handleDateChange}
+                KeyboardButtonProps={{
+                  'aria-label': 'change date',
+                }}
+              />
+            </MuiPickersUtilsProvider>
+            {/* <DatePicker
               selected={
                 state.licenseExpiry
                 ? new Date(state.licenseExpiry)
@@ -207,7 +246,7 @@ const SignUp: React.FC<ReactProps> = (props) => {
                 </Button>
               }
               popperPlacement="top"
-            />
+            /> */}
           </FormControl>
 
           <FormControl margin="dense" required fullWidth>
@@ -217,6 +256,7 @@ const SignUp: React.FC<ReactProps> = (props) => {
             <DropdownInput
               stateShape={initialStateLicense}
               onChange={({ label, value }: SelectOption) => {
+                console.log("label: ", label)
                 // set dropdown object
                 setLicenseState({ label, value })
                 // then set it in state
@@ -271,6 +311,7 @@ const SignUp: React.FC<ReactProps> = (props) => {
             <Input
               name="sign-up-password"
               type="password"
+              autoComplete={"new-password"} // this disables autofill
               onChange={(e) => {
                 e.persist(); // for persisting synthetic events
                 setState(s => ({ ...s, password: e?.target?.value }))

@@ -16,7 +16,7 @@ import ErrorDisplay, { ErrorMessageRust, GraphQLErrors } from "components/Error"
 import ErrorBounds from "components/ErrorBounds";
 import SnackBarA from "components/Snackbars/SnackbarA";
 import { logout } from "queries/requests";
-import ConfirmDeleteModal from "components/ConfirmDeleteModal";
+import ConfirmDeleteModal from "components/ConfirmActionModal";
 import { useDispatch } from "react-redux";
 import { refetchUser, setUserOnCompleted } from "layout/GetUser";
 

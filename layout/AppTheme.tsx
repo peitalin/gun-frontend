@@ -166,8 +166,13 @@ export const Colors = {
   greenCool: "#419677",
   greenCoolLight:'#6CBAA3',
   // blue
+  ultramarineBlueDarkest: '#005ed7',
+  ultramarineBlueDarker: '#0069f0',
+  ultramarineBlueDark: '#0b76ff',
   ultramarineBlue: secondary,
-  ultramarineBlueLight: fade(secondary, 0.9),
+  ultramarineBlueLight: '#3e92ff',
+  ultramarineBlueLighter: '#3e92ff',
+  ultramarineBlueLightest: '#71afff',
   blue: "#1DA1F3",
   lightBlue: '#479FF4',
   blueLightNavy: "#6087A1",
@@ -347,7 +352,10 @@ export const BoxShadows = {
   },
   shadowInset: {
     boxShadow: 'inset 3.53813px 3.53813px 7.07626px rgba(70,77,85,.4), inset -2.35875px -2.35875px 7.07626px #15171a',
-  }
+  },
+  shadowWhite: {
+    boxShadow: `rgb(245 245 245 / 10%) 0px 4px 12px` // airbnb shadows
+  },
 }
 
 export const breakpoints: Breakpoints = {
