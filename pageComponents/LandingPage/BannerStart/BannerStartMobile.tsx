@@ -171,6 +171,12 @@ const BannerStartMobile: NextPage<ReactProps> = (props) => {
                   classes.buttonSignupDesktop,
                 )}
                 onClick={() => {
+                  if (!formik.values?.email) {
+                    snackbar.enqueueSnackbar(
+                      `Please enter an email`,
+                      { variant: "info" }
+                    )
+                  }
                 }}
               >
                 Sign up

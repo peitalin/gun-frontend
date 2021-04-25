@@ -168,6 +168,12 @@ const BannerEndDesktop: NextPage<ReactProps> = (props) => {
                   classes.marginLeft1,
                 )}
                 onClick={() => {
+                  if (!formik.values?.email) {
+                    snackbar.enqueueSnackbar(
+                      `Please enter an email`,
+                      { variant: "info" }
+                    )
+                  }
                 }}
               >
                 Sign up
