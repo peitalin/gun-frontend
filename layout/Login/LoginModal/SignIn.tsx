@@ -117,7 +117,7 @@ const SignIn = (props: ReactProps) => {
             color="secondary"
             className={classes.submit}
             onClick={(event) => handleClick(event)}
-            loadingIconColor={Colors.blue}
+            loadingIconColor={Colors.cream}
             replaceTextWhenLoading={true}
             loading={props.buttonLoading}
             disabled={props.buttonLoading}

@@ -1,5 +1,5 @@
 import { withStyles, createStyles, Theme, fade } from "@material-ui/core/styles";
-import { BorderRadius4x, BorderRadius, Colors } from "layout/AppTheme";
+import { BorderRadius4x, BorderRadius, Colors, isThemeDark } from "layout/AppTheme";
 
 const emailInputMaxWidth = 350;
 
@@ -222,6 +222,18 @@ const styles = (theme: Theme) => createStyles({
       : Colors.slateGreyBlack,
     marginBottom: '0.5rem',
     marginTop: '0.5rem',
+  },
+  dateLabel: {
+    "& button > span > svg": {
+      fill: isThemeDark(theme)
+        ? Colors.uniswapLightGrey
+        : Colors.slateGreyBlack,
+      "&:hover": {
+        fill: isThemeDark(theme)
+          ? Colors.ultramarineBlue
+          : Colors.ultramarineBlue,
+      }
+    }
   },
 });
 

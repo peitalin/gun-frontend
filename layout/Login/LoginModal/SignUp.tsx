@@ -35,20 +35,8 @@ const MuiPhoneNumber = dynamic(() => import("material-ui-phone-number"), {
 })
 import { formatPhoneNumber } from "layout/Login/utils";
 
-// import in _app.tsx
-// import "components/DatePicker/react-datepicker.css";
-const DatePicker = dynamic(() => import("react-datepicker"), {
-  loading: () => <Loading/>,
-  ssr: false,
-})
-import Button from '@material-ui/core/Button';
-import { formatTimestamp } from "utils/dates";
-
-// import 'date-fns';
-// import DateFnsUtils from '@date-io/date-fns';
 import dayjs from 'dayjs'
 import DateFnsUtils from '@date-io/dayjs';
-
 import {
   MuiPickersUtilsProvider,
   KeyboardTimePicker,
@@ -207,12 +195,16 @@ const SignUp: React.FC<ReactProps> = (props) => {
             <MuiPickersUtilsProvider utils={DateFnsUtils}>
               <KeyboardDatePicker
                 disableToolbar
+                InputAdornmentProps={{
+                  classes: { root: classes.dateLabel }
+                }}
                 variant="inline"
-                format="D/M/YYYY"
+                format="DD/MM/YYYY"
                 // margin="normal"
                 id="date-picker-inline"
                 // label="License Expiry"
                 value={selectedDate}
+                maxDate={new Date("1/1/3000")}
                 onChange={handleDateChange}
                 KeyboardButtonProps={{
                   'aria-label': 'change date',

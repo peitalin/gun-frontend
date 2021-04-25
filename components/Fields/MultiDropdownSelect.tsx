@@ -33,6 +33,7 @@ const MultiDropdownSelect = (props: ReactProps) => {
 
   const {
     errorMessage,
+    height = 40,
     touched = false,
     disabled = false,
     disableInitialValidationMessage = false,
@@ -136,6 +137,14 @@ const MultiDropdownSelect = (props: ReactProps) => {
             color: isDarkMode ? Colors.uniswapLighterGrey : Colors.charcoal,
             cursor: "pointer",
           }),
+          container: styles => ({
+            ...styles,
+            height: height,
+            borderRadius: BorderRadius,
+            // border: isDarkMode
+            //   ? `1px solid ${Colors.uniswapLighterGrey}`
+            //   : `1px solid ${Colors.slateGreyDarker}`,
+          }),
           menu: styles => ({
             ...styles,
             zIndex: 10,
@@ -144,6 +153,7 @@ const MultiDropdownSelect = (props: ReactProps) => {
             "&:hover": {
               cursor: "pointer",
             },
+            color: isDarkMode ? Colors.uniswapLightestGrey : Colors.charcoal,
             background: isDarkMode
               ? Colors.uniswapDarkNavy
               : Colors.slateGrey,
@@ -156,16 +166,9 @@ const MultiDropdownSelect = (props: ReactProps) => {
             // // match with the menu
             borderRadius: BorderRadius,
             cursor: "pointer",
-            // // Overwrittes the different states of border
-            border: `0px solid ${Colors.uniswapLighterGrey}`,
-            // // borderColor: state.isFocused ? Colors.gradientUniswapBlue1 : "unset",
-            // // Removes weird border around container
-            // boxShadow: state.isFocused ? null : null,
-            // "&:hover": {
-            //   // Overwrittes the different states of border
-            //   // borderColor: state.isFocused ? "red" : "blue"
-            //   borderColors: Colors.gradientUniswapFluro1,
-            // }
+            border: isDarkMode
+              ? `1px solid ${Colors.uniswapLighterGrey}`
+              : `1px solid ${Colors.slateGreyDarker}`,
           }),
         }}
       />
@@ -231,6 +234,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   touched?: boolean; // sets error colors as grey if not-touched, red if so
   disabled?: boolean;
   placeholder?: string;
+  height?: any;
   disableInitialValidationMessage?: boolean;
   validationErrorMsgStyle?: any;
   limit?: { count: number, max: number };

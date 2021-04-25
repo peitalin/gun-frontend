@@ -137,7 +137,10 @@ const DropdownInput = (props: ReactProps) => {
                     "&:hover": {
                       cursor: "pointer",
                     },
-                    color: isDarkMode ? Colors.uniswapLighterGrey : Colors.charcoal,
+                    color: isDarkMode ? Colors.uniswapLightestGrey : Colors.charcoal,
+                    background: isDarkMode
+                      ? Colors.uniswapDarkNavy
+                      : Colors.slateGrey,
                   })
                 }
             }
@@ -225,9 +228,6 @@ const DropdownInput = (props: ReactProps) => {
                 ...styles,
                 height: height,
                 borderRadius: BorderRadius,
-                border: isDarkMode
-                  ? `1px solid ${Colors.uniswapLighterGrey}`
-                  : `1px solid ${Colors.slateGreyDarker}`,
               }),
               menu: styles => ({
                 ...styles,
@@ -239,7 +239,7 @@ const DropdownInput = (props: ReactProps) => {
                 },
                 color: isDarkMode ? Colors.uniswapLightestGrey : Colors.charcoal,
                 background: isDarkMode
-                  ? Colors.uniswapNavy
+                  ? Colors.uniswapDarkNavy
                   : Colors.slateGrey,
               }),
               control: (base, state) => ({
@@ -250,18 +250,9 @@ const DropdownInput = (props: ReactProps) => {
                 // // match with the menu
                 borderRadius: BorderRadius,
                 height: '100%',
-                // // Overwrittes the different states of border
                 border: isDarkMode
-                  ? `0px solid ${Colors.uniswapLighterGrey}`
-                  : `0px solid ${Colors.slateGrey}`,
-                // // borderColor: state.isFocused ? Colors.gradientUniswapBlue1 : "unset",
-                // // Removes weird border around container
-                // boxShadow: state.isFocused ? null : null,
-                // "&:hover": {
-                //   // Overwrittes the different states of border
-                //   // borderColor: state.isFocused ? "red" : "blue"
-                //   borderColors: Colors.gradientUniswapFluro1,
-                // }
+                  ? `1px solid ${Colors.uniswapLighterGrey}`
+                  : `1px solid ${Colors.slateGreyDarker}`,
               }),
             }}
             inputRef={ref}

@@ -76,12 +76,14 @@ const Login: React.FC<ReactProps> = (props) => {
     },
     onCompleted: (data) => {
       let user = data?.logInUsingEmail?.user
-      // Update redux user and cart state and refetch
-      dispatch(reduxBatchUpdate.userStore({ user: user }))
-      handleUpdateLoginState(user)
-      // if login/signup succeeded, and there is a redirect...
-      handleRedirect()
-      handleCallback()
+      if (user) {
+        // Update redux user and cart state and refetch
+        dispatch(reduxBatchUpdate.userStore({ user: user }))
+        handleUpdateLoginState(user)
+        // if login/signup succeeded, and there is a redirect...
+        handleRedirect()
+        handleCallback()
+      }
     },
     onError: (error) => {
       handleGqlError(error)
@@ -89,6 +91,7 @@ const Login: React.FC<ReactProps> = (props) => {
     fetchPolicy: "no-cache", // always do a network request, no caches
     errorPolicy: "all", // propagate errors from backend to Snackbar
   });
+
 
   let [signUpUsingEmail, signUpUsingEmailResponse] = useMutation<MData2, MVar2>(
     SIGN_UP_USING_EMAIL, {
@@ -180,6 +183,7 @@ const Login: React.FC<ReactProps> = (props) => {
   }
 
   const handleGqlError = (error: ApolloError) => {
+    // console.log("logIn error:", JSON.stringify(error))
     if (error?.networkError) {
       snackbar.enqueueSnackbar(
         `Server is down. StatusCode: ${(error?.networkError as any)?.statusCode}`,
@@ -189,7 +193,12 @@ const Login: React.FC<ReactProps> = (props) => {
     }
     if (error?.graphQLErrors) {
       snackbar.enqueueSnackbar(
-        translateErrorMsg(error?.[0]?.message),
+        translateErrorMsg(error?.graphQLErrors?.[0]?.message),
+        { variant: "error" }
+      )
+    } else {
+      snackbar.enqueueSnackbar(
+        error,
         { variant: "error" }
       )
     }

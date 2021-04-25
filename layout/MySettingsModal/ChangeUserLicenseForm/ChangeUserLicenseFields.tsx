@@ -1,6 +1,6 @@
 import React from "react";
 import clsx from "clsx";
-import { Colors } from "layout/AppTheme";
+import { Colors, isThemeDark } from "layout/AppTheme";
 // Styles
 import { withStyles, WithStyles, Theme, createStyles } from "@material-ui/core/styles";
 // Material UI
@@ -15,13 +15,6 @@ import Button from '@material-ui/core/Button';
 import Loading from 'components/Loading';
 import dynamic from "next/dynamic";
 
-// import in _app.tsx
-// import "components/DatePicker/react-datepicker.css";
-const DatePicker = dynamic(() => import("react-datepicker"), {
-  loading: () => <Loading/>,
-  ssr: false,
-})
-import { formatDate, showDate } from "utils/dates";
 
 import {
   createLicenseCategorySuggestions,
@@ -35,6 +28,15 @@ const MultiDropdownSelect = dynamic(() => import('components/Fields/MultiDropdow
   ssr: false
 })
 import { createOption } from "components/Fields/MultiDropdownSelect";
+
+import dayjs from 'dayjs'
+import DateFnsUtils from '@date-io/dayjs';
+import {
+  MuiPickersUtilsProvider,
+  KeyboardTimePicker,
+  KeyboardDatePicker,
+} from '@material-ui/pickers';
+
 
 
 
@@ -75,6 +77,18 @@ const ChangeUserLicenseFields: React.FC<ReactProps & FormikProps<FormikFields>> 
     fprops.setFieldTouched("licenseCategory", true)
     props.validateForm()
   }
+
+  const [selectedDate, setSelectedDate] = React.useState<Date>(
+    new Date()
+  );
+
+  const handleDateChange = (date) => {
+    // console.log("incoming date:", date)
+    setSelectedDate(date)
+    let expiryDate = new Date(date)
+    // setState(s => ({ ...s, licenseExpiry: expiryDate }))
+    fprops.setFieldValue("licenseExpiry", expiryDate)
+  };
 
   // console.log("licenseExpiry: ", values.licenseExpiry)
 
@@ -118,31 +132,25 @@ const ChangeUserLicenseFields: React.FC<ReactProps & FormikProps<FormikFields>> 
       </Typography>
       {
         values.licenseExpiry !== undefined &&
-        <DatePicker
-          // selected={values.licenseExpiry}
-          // selected={
-          //   values.licenseExpiry || new Date()
-          // }
-          selected={new Date(values.licenseExpiry)}
-          onChange={expiryDate => {
-            // fprops.setFieldValue("licenseExpiry", date)
-            handleSetLicenseExpiry(expiryDate)
-          }}
-          showTimeSelect={false}
-          timeFormat="HH:mm"
-          timeIntervals={10}
-          timeCaption="time"
-          dateFormat="MMMM d, yyyy h:mm aa"
-          customInput={
-            <Button className={classes.datePickButton}
-              variant="outlined"
-              color="primary"
-            >
-              { showDate(values.licenseExpiry) }
-            </Button>
-          }
-          popperPlacement="top"
-        />
+            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+              <KeyboardDatePicker
+                disableToolbar={true}
+                InputAdornmentProps={{
+                  classes: { root: classes.dateLabel }
+                }}
+                variant="inline"
+                format="DD/MM/YYYY"
+                // margin="normal"
+                id="date-picker-inline"
+                // label="License Expiry"
+                value={selectedDate}
+                onChange={handleDateChange}
+                maxDate={new Date("1/1/3000")}
+                KeyboardButtonProps={{
+                  'aria-label': 'change date',
+                }}
+              />
+            </MuiPickersUtilsProvider>
       }
 
       <Typography variant="body1" className={classes.fieldHeading}>
@@ -257,6 +265,18 @@ const styles = (theme: Theme) => createStyles({
   saveButton: {
     width: 200,
     height: 40,
+  },
+  dateLabel: {
+    "& button > span > svg": {
+      fill: isThemeDark(theme)
+        ? Colors.uniswapLightGrey
+        : Colors.slateGreyBlack,
+      "&:hover": {
+        fill: isThemeDark(theme)
+          ? Colors.ultramarineBlue
+          : Colors.ultramarineBlue,
+      }
+    }
   },
 });
 

@@ -29,7 +29,6 @@ import { GET_USER } from "queries/user-queries";
 // css
 // all css must be imported here
 import "../public/App.css";
-import "react-datepicker/dist/react-datepicker.css";
 import "components/TextEditorCK/ckStyles.css";
 import "components/DropzoneUploader/styles.css";
 
