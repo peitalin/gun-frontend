@@ -6,7 +6,7 @@ import { Colors, BorderRadius } from "layout/AppTheme";
 // Apollo
 import { useMutation } from '@apollo/client';
 import { UPDATE_CHAT_STATUS } from "queries/chat-mutations";
-import { Conversation, ChatRoomStatus, ChatRoom } from "typings/gqlTypes";
+import { Conversation, ChatRoomStatus, ChatRoom, UserPrivate } from "typings/gqlTypes";
 // css
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
@@ -21,18 +21,15 @@ import ButtonLoading from "components/ButtonLoading";
 
 const ProductPanel: React.FC<ReactProps> = (props) => {
 
-  const [state, setState] = React.useState({
-    time: new Date(),
-    refetch: null,
-  })
 
   const {
     classes,
-    currentConversation,
+    user,
+    currentChatRoom: chatRoom,
   } = props;
 
-  const getNextChatStatus = (chatRoom: ChatRoom): string => {
-    switch (chatRoom?.status) {
+  const getNextChatStatus = (chatRoomStatus: ChatRoomStatus): string => {
+    switch (chatRoomStatus) {
       case ChatRoomStatus.ARCHIVED: {
         return ChatRoomStatus.ACTIVE
       }
@@ -45,16 +42,19 @@ const ProductPanel: React.FC<ReactProps> = (props) => {
     }
   }
 
-  const getNextChatStatusAction = (chatRoom: ChatRoom): string => {
-    switch (chatRoom?.status) {
+  const getNextChatStatusAction = (chatRoomStatus: ChatRoomStatus): string => {
+    switch (chatRoomStatus) {
       case ChatRoomStatus.ARCHIVED: {
         return "Activate Offer"
       }
       case ChatRoomStatus.ACTIVE: {
         return "Archive Offer"
       }
+      case ChatRoomStatus.COMPLETED: {
+        return "Purchase Complete"
+      }
       default: {
-        return "Deal Complete"
+        return "Purchase Complete"
       }
     }
   }
@@ -62,12 +62,20 @@ const ProductPanel: React.FC<ReactProps> = (props) => {
   const theme = useTheme();
   const xsDown = useMediaQuery(theme.breakpoints.down('xs'));
 
-  const chatRoom = currentConversation?.chatRoom
   const chatRoomId = chatRoom?.id
   const product = chatRoom?.product
   const featuredVariant = product?.featuredVariant
   const previewItem = featuredVariant?.previewItems?.[0]
 
+
+  const buyer = chatRoom?.owner;
+  const _seller = (chatRoom?.participants ?? [])
+    .find(u => u.userId !== buyer?.id)
+  const seller = _seller?.user;
+  // chat may be archived for either buyer or seller (depending on their settings)
+  const chatStatus = user?.id === seller?.id
+    ? chatRoom?.sellerChatStatus
+    : chatRoom?.buyerChatStatus
 
   const [
     updateChatStatus,
@@ -76,7 +84,8 @@ const ProductPanel: React.FC<ReactProps> = (props) => {
     UPDATE_CHAT_STATUS, {
       variables: {
         chatRoomId: chatRoomId,
-        chatStatus: getNextChatStatus(currentConversation?.chatRoom),
+        chatStatus: undefined,
+        isSeller: undefined,
         messageLimit: 40,
       }
     }
@@ -85,20 +94,14 @@ const ProductPanel: React.FC<ReactProps> = (props) => {
   // console.log("currentConversation: ", currentConversation)
   // console.log("product:::::", product)
   // console.log("previewItem:::::", previewItem)
-
-  const buyer = chatRoom?.owner;
-  const _seller = (currentConversation?.chatRoom?.participants ?? [])
-    .find(u => u.userId !== buyer.id)
-
-  const seller = _seller?.user;
-
-  console.log("archiving offer:::::", data)
+  // console.log("archiving offer:::::", data)
 
   return (
     <div className={classes.productPanelRoot}>
       <div>
         {
-          currentConversation &&
+          chatRoom &&
+          product &&
           <div className={classes.productContainerCol}>
             <Typography variant="h4" className={classes.productTitle}>
               {
@@ -120,9 +123,13 @@ const ProductPanel: React.FC<ReactProps> = (props) => {
                 loadingIconColor={Colors.lightestGrey}
                 className={clsx(
                   classes.archiveProductButton,
-                  currentConversation?.chatRoom?.status === ChatRoomStatus.ARCHIVED
+                  props.iOwnThisProduct
+                  ? chatRoom?.sellerChatStatus === ChatRoomStatus.ARCHIVED
                     ? classes.blueButton
-                    : classes.redButton,
+                    : classes.redButton
+                  : chatRoom?.buyerChatStatus === ChatRoomStatus.ARCHIVED
+                    ? classes.blueButton
+                    : classes.redButton
                 )}
                 style={{
                 }}
@@ -130,13 +137,14 @@ const ProductPanel: React.FC<ReactProps> = (props) => {
                   updateChatStatus({
                     variables: {
                       chatRoomId: chatRoomId,
-                      chatStatus: getNextChatStatus(currentConversation?.chatRoom),
+                      chatStatus: getNextChatStatus(chatStatus),
+                      isSeller: props.iOwnThisProduct,
                       messageLimit: 40,
                     }
                   })
                 }}
               >
-                {getNextChatStatusAction(currentConversation.chatRoom)}
+                {getNextChatStatusAction(chatStatus)}
               </ButtonLoading>
             </div>
           </div>
@@ -148,14 +156,18 @@ const ProductPanel: React.FC<ReactProps> = (props) => {
 
 
 interface ReactProps extends WithStyles<typeof styles> {
-  currentConversation?: Conversation
+  user: UserPrivate
+  currentChatRoom: ChatRoom
+  iOwnThisProduct: boolean
 }
+
 interface QueryData {
   updateChatStatus: ChatRoom
 }
 interface QueryVar {
   chatRoomId: string
   chatStatus: string
+  isSeller: boolean
   messageLimit: number
 }
 

@@ -2,9 +2,7 @@ import React from 'react';
 // components
 import dynamic from "next/dynamic";
 
-
 import SendBidInput from './SendBidInput'
-import ConversationsListPanel from './ConversationsListPanel';
 import ProductPanel from './ProductPanel';
 // typings
 import { UserPrivate, Conversation, SoldOutStatus } from "typings/gqlTypes";
@@ -31,7 +29,7 @@ export const BiddingRoomLayout: React.FC<ReactProps> = (props) => {
 
   const {
     classes,
-    user,
+    user: userRedux,
   } = props;
 
   const dispatch = useDispatch()
@@ -48,7 +46,6 @@ export const BiddingRoomLayout: React.FC<ReactProps> = (props) => {
 
   console.log("subscription data: ", data)
 
-
   let productIds = data?.myConversations?.map(c => c?.chatRoom?.product?.id)
 
 
@@ -61,28 +58,33 @@ export const BiddingRoomLayout: React.FC<ReactProps> = (props) => {
 
             // all bidding convos about this product
             // pick just the first one for product info
+            // let convo = data?.myConversations?.find(c => {
+            //   c?.chatRoom?.product?.id === pid
+            // })
+
             let allConvos = data?.myConversations.filter(c => c?.chatRoom?.product?.id === pid)
             let convo = allConvos?.[0]
+            let sellerId = convo?.chatRoom?.product?.store?.user?.id
+            let iOwnThisProduct = sellerId === userRedux.id
 
             return (
               <div className={classes.flexRow}>
                 <ProductPanel
-                  currentConversation={convo}
+                  currentChatRoom={convo?.chatRoom}
+                  iOwnThisProduct={iOwnThisProduct}
+                  user={userRedux}
                 />
                 {
-                  allConvos.map(convo2 =>
-                    <>
+                  allConvos.map(convo2 => {
+                    return (
                       <BidList
                         userId={convo2?.userId}
+                        iOwnThisProduct={iOwnThisProduct}
                         messages={convo2?.chatRoom?.messages}
+                        product={convo2?.chatRoom?.product}
                       />
-                      {/* <SendBidInput
-                        userId={convo?.userId}
-                        chatRoomId={convo?.chatRoom?.id}
-                        product={convo?.chatRoom?.product}
-                      /> */}
-                    </>
-                  )
+                    )
+                  })
                 }
               </div>
             )

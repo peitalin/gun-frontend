@@ -102,12 +102,11 @@ export const SendBidInput: React.FC<ReactProps> = (props) => {
                 variables: {
                   chatRoomId: props.chatRoomId,
                   senderId: props.userId,
-                  content: description,
+                  // content: description,
                   productId: props.product.id,
                   productSnapshotId: props.product?.currentSnapshot?.id,
                   variantId: props.product?.featuredVariant?.variantId,
                   offerPrice: offerPrice,
-                  bidStatus: BidStatus.CREATED,
                 }
               }).then(res => {
                 // fprops.resetForm()
@@ -185,13 +184,10 @@ interface MutData {
 interface MutVarsBid {
   chatRoomId: string
   senderId: string
-  content: string
-  // previewItemId?: string
   productId: string
   productSnapshotId: string
   variantId: string
   offerPrice: number
-  bidStatus: string
 }
 
 const styles = (theme: Theme) => createStyles({

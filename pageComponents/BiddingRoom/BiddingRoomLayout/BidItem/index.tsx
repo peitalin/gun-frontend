@@ -2,12 +2,15 @@ import React from 'react';
 // Styles
 import clsx from "clsx";
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
-import { Message, Bid, BidStatus } from "typings/gqlTypes";
+import { Message, Bid, BidStatus, Product } from "typings/gqlTypes";
 // Styles
 import { Colors, BorderRadius } from "layout/AppTheme";
+// gql
+import { useMutation } from "@apollo/client";
+import { UPDATE_BID_MESSAGE } from "queries/chat-mutations";
 
 import CounterBid from "./CounterBid";
-import TheirBid from "./TheirBid";
+import NormalBid from "./NormalBid";
 
 
 
@@ -17,6 +20,7 @@ const BidItem = (props: BidProps) => {
 
   const {
     isMe,
+    iOwnThisProduct,
     message
   } = props;
 
@@ -30,20 +34,39 @@ const BidItem = (props: BidProps) => {
     }
   }
 
+  const [updateBidMessage, updateBidMessageResponse] = useMutation<MutData, MutVars>(
+    UPDATE_BID_MESSAGE, {
+      variables: {
+        bidId: undefined,
+        bidStatus: undefined,
+      },
+      onCompleted: (data) => {
+        console.log(data)
+      },
+    }
+  )
+
+
   let bidDisabled = isBidDisabled(message.bid)
 
-  if (isMe) {
+  if (iOwnThisProduct && isMe) {
     return (
       <CounterBid
+        isMe={isMe}
         message={message}
         bidDisabled={bidDisabled}
+        product={props.product}
+        updateBidMessage={updateBidMessage}
       />
     )
   } else {
     return (
-      <TheirBid
+      <NormalBid
+        isMe={isMe}
         message={message}
         bidDisabled={bidDisabled}
+        product={props.product}
+        updateBidMessage={updateBidMessage}
       />
     )
   }
@@ -51,8 +74,10 @@ const BidItem = (props: BidProps) => {
 
 
 interface BidProps extends WithStyles<typeof styles> {
-  isMe?: boolean;
+  isMe: boolean;
+  iOwnThisProduct: boolean;
   message: Message;
+  product: Product;
 }
 
 interface MutData {
@@ -62,6 +87,7 @@ interface MutVars {
   bidId: string
   bidStatus: string
 }
+
 
 const styles = (theme: Theme) => createStyles({
 })
