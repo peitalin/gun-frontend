@@ -14,7 +14,7 @@ import {
   isThemeDark,
 } from "layout/AppTheme";
 // format
-import { useTheme } from "@material-ui/core";
+import { Typography, useTheme } from "@material-ui/core";
 
 import ConfirmActionModal from "components/ConfirmActionModal";
 import CounterBidModal from "./CounterBidModal";
@@ -28,6 +28,8 @@ import BlockIcon from '@material-ui/icons/Block';
 import CheckIcon from '@material-ui/icons/Check';
 import ClearIcon from '@material-ui/icons/Clear';
 import ReplyIcon from '@material-ui/icons/Reply';
+import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
+import Link from "next/link";
 
 
 
@@ -38,7 +40,10 @@ const BidActionsByUser = (props: BidProps) => {
   const {
     classes,
     isMe,
+    iOwnThisProduct,
     bidDisabled,
+    bidAccepted,
+    product,
     updateBidMessage,
   } = props;
 
@@ -50,6 +55,44 @@ const BidActionsByUser = (props: BidProps) => {
   const [openWithdrawBidModal, setOpenWithdrawBidModal] = React.useState(false)
 
   const name = `${props.product?.currentSnapshot?.model} - ${props.product?.currentSnapshot?.make}`
+
+  if (bidAccepted) {
+    if (iOwnThisProduct) {
+      return (
+        <div className={clsx(classes.flexRow, classes.columnBidActions)}>
+          <Typography variant="body1" className={classes.acceptedBidCheckoutText}>
+            Pending Checkout
+          </Typography>
+        </div>
+      )
+    } else {
+      return (
+        <div className={clsx(classes.flexRow, classes.columnBidActions)}>
+          <Typography variant="body1" className={classes.acceptedBidCheckoutText}>
+            Checkout
+          </Typography>
+          <Tooltip placement={"top"}
+            title={"Purchase Item"}
+          >
+            <span>
+              <Link
+                href="/p/[productIdOrSlug]"
+                as={`/p/${product?.id}`}
+              >
+                <a>
+                  <IconButton className={classes.bidMsgButton}>
+                    <ArrowForwardIcon
+                      className={classes.acceptedBidCheckoutIcon}
+                    />
+                  </IconButton>
+                </a>
+              </Link>
+            </span>
+          </Tooltip>
+        </div>
+      )
+    }
+  }
 
 
   if (isMe) {
@@ -135,24 +178,6 @@ const BidActionsByUser = (props: BidProps) => {
           product={props.product}
           name={name}
         />
-        {/* <Tooltip placement={"top"}
-          title={bidDisabled ? "Disabled" : "Counter Offer"}
-        >
-          <span>
-            <IconButton
-              className={clsx(
-                classes.bidMsgButton,
-                bidDisabled ? classes.bidMsgDisabled : classes.bidMsgPurple,
-              )}
-              onClick={() => setOpenCounterBidModal(true)}
-              disabled={bidDisabled}
-            >
-              <ReplyIcon
-                className={bidDisabled ? null : classes.bidMsgPurple}
-              />
-          </IconButton>
-          </span>
-        </Tooltip> */}
 
 
         <ConfirmActionModal
@@ -181,14 +206,6 @@ const BidActionsByUser = (props: BidProps) => {
             })
           }}
         />
-        <ConfirmActionModal
-          title={"Make a counter offer to this bid"}
-          showModal={openCounterBidModal}
-          setShowModal={() => setOpenCounterBidModal(s => !s)}
-          onConfirmFunction={() => {
-            console.log("COUNTER!")
-          }}
-        />
       </div>
     )
   }
@@ -197,8 +214,10 @@ const BidActionsByUser = (props: BidProps) => {
 
 interface BidProps extends WithStyles<typeof styles> {
   isMe: boolean;
+  iOwnThisProduct: boolean;
   bidId: string;
   bidDisabled: boolean;
+  bidAccepted: boolean;
   chatRoomId: string;
   product: Product;
   updateBidMessage({
@@ -229,6 +248,7 @@ const styles = (theme: Theme) => createStyles({
   },
   bidMsgButton: {
     color: Colors.cream,
+    padding: '0rem', // safari alignment bug
     height: 36,
     width: 36,
   },
@@ -263,6 +283,16 @@ const styles = (theme: Theme) => createStyles({
     },
   },
   bidMsgDisabled: {
+  },
+  acceptedBidCheckoutText:{
+    fontSize: "0.8rem",
+    textTransform: "uppercase",
+    fontWeight: 600,
+    color: Colors.ultramarineBlue,
+    marginRight: '0.25rem',
+  },
+  acceptedBidCheckoutIcon: {
+    fill: Colors.ultramarineBlue
   },
 })
 

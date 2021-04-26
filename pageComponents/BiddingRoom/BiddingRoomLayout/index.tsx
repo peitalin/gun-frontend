@@ -39,7 +39,7 @@ export const BiddingRoomLayout: React.FC<ReactProps> = (props) => {
   const { data, loading, error } = useSubscription<QueryData, QueryVar>(
     SUBSCRIBE_USER_CONVERSATIONS, {
       variables: {
-        messageLimit: 5
+        messageLimit: 10
       }
     }
   );
@@ -62,7 +62,9 @@ export const BiddingRoomLayout: React.FC<ReactProps> = (props) => {
             //   c?.chatRoom?.product?.id === pid
             // })
 
-            let allConvos = data?.myConversations.filter(c => c?.chatRoom?.product?.id === pid)
+            let allConvos = (data?.myConversations ?? [])
+              .filter(c => c?.chatRoom?.product?.id === pid)
+
             let convo = allConvos?.[0]
             let sellerId = convo?.chatRoom?.product?.store?.user?.id
             let iOwnThisProduct = sellerId === userRedux.id
@@ -80,6 +82,7 @@ export const BiddingRoomLayout: React.FC<ReactProps> = (props) => {
                         <BidList
                           userId={convo2?.userId}
                           iOwnThisProduct={iOwnThisProduct}
+                          sellerId={sellerId}
                           messages={convo2?.chatRoom?.messages}
                           product={convo2?.chatRoom?.product}
                         />
@@ -128,6 +131,7 @@ const styles = (theme: Theme) => createStyles({
     flexDirection: "row",
     flexBasis: '100%',
     flexGrow: 1,
+    flexWrap: "wrap",
     width: '100%',
     backgroundColor: theme.palette.type === 'dark'
       ? Colors.uniswapDarkNavy
@@ -140,7 +144,7 @@ const styles = (theme: Theme) => createStyles({
       : 'unset',
     marginBottom: '1rem',
     borderRadius: BorderRadius,
-  }
+  },
 })
 
 

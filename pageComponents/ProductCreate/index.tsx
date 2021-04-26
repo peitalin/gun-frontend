@@ -182,7 +182,7 @@ const styles = (theme: Theme) => createStyles({
       ? Colors.uniswapDarkNavy
       : Colors.slateGrey,
     boxShadow: theme.palette.type === 'dark'
-      ? BoxShadows.shadow2.boxShadow
+      ? BoxShadows.shadow3.boxShadow
       : 'unset',
       // : BoxShadows.shadow3.boxShadow,
     display: "flex",

@@ -272,7 +272,7 @@ const IOSSlider = withStyles((theme: Theme) => createStyles({
     marginTop: -18,
     marginLeft: -18,
     '&:focus, &:hover, &$active': {
-      boxShadow: BoxShadows.shadow2.boxShadow,
+      boxShadow: BoxShadows.shadow3.boxShadow,
       // Reset on touch devices, it doesn't add specificity
       '@media (hover: none)': {
         boxShadow: BoxShadows.shadow1.boxShadow,

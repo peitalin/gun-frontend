@@ -81,7 +81,7 @@ const CounterBidModal: React.FC<ReactProps> = (props) => {
       onError: (e) => {
         snackbar.enqueueSnackbar(
           `${e}`,
-          { variant: "error" }
+          { variant: "error", autoHideDuration: 8000 }
         )
       },
   })
@@ -254,7 +254,7 @@ const styles = (theme: Theme) => createStyles({
     minWidth: 330,
     borderRadius: BorderRadius4x,
     background: isThemeDark(theme)
-      ? Gradients.gradientUniswapDark.background
+      ? Colors.uniswapDarkNavy
       : Gradients.gradientGrey.background,
   },
   modalBackdrop: {
@@ -264,6 +264,7 @@ const styles = (theme: Theme) => createStyles({
     maxHeight: "calc(100% - 32px)",
     maxWidth: '400px',
     width: '100%',
+    borderRadius: BorderRadius4x,
   },
   flexRow: {
     display: 'flex',
@@ -308,6 +309,7 @@ const styles = (theme: Theme) => createStyles({
   },
   bidMsgButton: {
     color: Colors.cream,
+    padding: '0rem', // safari alignment bug
     height: 36,
     width: 36,
   },

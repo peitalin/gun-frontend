@@ -25,13 +25,14 @@ const BidItem = (props: BidProps) => {
   } = props;
 
   const isBidDisabled = (b: Bid) => {
-    if (b?.bidStatus !== undefined) {
-      return b.bidStatus === BidStatus.WITHDRAWN
-          || b.bidStatus === BidStatus.DECLINED
-          || b.bidStatus === BidStatus.ACCEPTED
-    } else {
-      return true
-    }
+    return b?.bidStatus === BidStatus.WITHDRAWN
+        || b?.bidStatus === BidStatus.DECLINED
+        || b?.bidStatus === BidStatus.EXPIRED
+        || b?.bidStatus === BidStatus.SPENT
+  }
+
+  const isBidAccepted = (b: Bid) => {
+    return b?.bidStatus === BidStatus.ACCEPTED
   }
 
   const [updateBidMessage, updateBidMessageResponse] = useMutation<MutData, MutVars>(
@@ -48,6 +49,7 @@ const BidItem = (props: BidProps) => {
 
 
   let bidDisabled = isBidDisabled(message.bid)
+  let bidAccepted = isBidAccepted(message.bid)
 
   if (
     iOwnThisProduct && isMe // you are the seller of the product
@@ -56,8 +58,10 @@ const BidItem = (props: BidProps) => {
     return (
       <CounterBid
         isMe={isMe}
+        iOwnThisProduct={iOwnThisProduct}
         message={message}
         bidDisabled={bidDisabled}
+        bidAccepted={bidAccepted}
         product={props.product}
         updateBidMessage={updateBidMessage}
       />
@@ -66,8 +70,10 @@ const BidItem = (props: BidProps) => {
     return (
       <NormalBid
         isMe={isMe}
+        iOwnThisProduct={iOwnThisProduct}
         message={message}
         bidDisabled={bidDisabled}
+        bidAccepted={bidAccepted}
         product={props.product}
         updateBidMessage={updateBidMessage}
       />

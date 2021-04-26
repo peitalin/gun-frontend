@@ -133,12 +133,14 @@ class MainApp extends App<AppProps> {
                 variantInfo: classes.variantInfo,
                 variantWarning: classes.variantWarning,
               }}
-              action={(key) => (
-                <IconButtonCancel
-                  onClick={onClickDismiss(key)}
-                  dark={true} // light colored close icon
-                />
-              )}
+              action={(key) => {
+                return (
+                  <IconButtonCancel
+                    onClick={onClickDismiss(key)}
+                    dark={true} // light colored close icon
+                  />
+                )
+              }}
               // dense
               maxSnack={4}
             >

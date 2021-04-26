@@ -106,9 +106,7 @@ const SignUp: React.FC<ReactProps> = (props) => {
     }))
   };
 
-  const [selectedDate, setSelectedDate] = React.useState<Date>(
-    new Date()
-  );
+  const [selectedDate, setSelectedDate] = React.useState<Date>(undefined);
 
   const handleDateChange = (date) => {
     // console.log("incoming date:", date)

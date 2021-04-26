@@ -86,8 +86,6 @@ const ChangeUserProfileForm = (props: ReactProps) => {
               areaCode: values.areaCode,
             },
           }
-        }).then(r => {
-          resetForm()
         })
       }}
     >

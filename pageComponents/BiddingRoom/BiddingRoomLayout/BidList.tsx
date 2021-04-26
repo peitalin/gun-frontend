@@ -15,8 +15,8 @@ export const BidList: React.FC<ReactProps> = (props) => {
 
   const {
     classes,
-    product,
     userId,
+    sellerId,
   } = props;
 
   return (
@@ -43,6 +43,7 @@ export const BidList: React.FC<ReactProps> = (props) => {
 
 interface ReactProps extends WithStyles<typeof styles> {
   userId: string;
+  sellerId: string;
   iOwnThisProduct: boolean;
   messages: Message[];
   product: Product;
@@ -50,6 +51,9 @@ interface ReactProps extends WithStyles<typeof styles> {
 
 const styles = (theme: Theme) => createStyles({
   bidListRoot: {
+    marginTop: '0.5rem',
+    marginBottom: '0.5rem',
+    marginLeft: '1rem',
     flexBasis: '100%',
   },
 })

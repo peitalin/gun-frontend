@@ -21,6 +21,7 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 import Dialog from "@material-ui/core/Dialog";
 import Button from "@material-ui/core/Button";
 import ResponsivePadding from "pageComponents/SellerDashboard/ResponsivePadding";
+import AlignCenterLayout from "components/AlignCenterLayout";
 
 
 
@@ -48,18 +49,22 @@ const CreateBidForm: React.FC<ReactProps> = (props) => {
   const smDown = useMediaQuery(theme.breakpoints.down('sm'));
 
   return (
-    <ResponsivePadding>
-      <div className={classes.root}>
-        <div className={clsx(classes.chatContainer, classes.flexRow)}>
-          {
-            userId &&
-            <BiddingRoomLayout
-              user={user}
-            />
-          }
+    <AlignCenterLayout
+      withRecommendations={false}
+    >
+      <ResponsivePadding>
+        <div className={classes.root}>
+          <div className={clsx(classes.chatContainer, classes.flexRow)}>
+            {
+              userId &&
+              <BiddingRoomLayout
+                user={user}
+              />
+            }
+          </div>
         </div>
-      </div>
-    </ResponsivePadding>
+      </ResponsivePadding>
+    </AlignCenterLayout>
   )
 };
 

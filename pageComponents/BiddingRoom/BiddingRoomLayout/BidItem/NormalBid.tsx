@@ -31,7 +31,9 @@ const NormalBid = (props: BidProps) => {
   const {
     classes,
     isMe,
+    iOwnThisProduct,
     bidDisabled,
+    bidAccepted,
     message: m,
   } = props;
 
@@ -41,12 +43,17 @@ const NormalBid = (props: BidProps) => {
   return (
     <div className={clsx(
       classes.messageRoot,
-      bidDisabled && classes.disabled
+      isMe ? classes.isMeBorder : classes.isNotMeBorder,
+      bidDisabled && classes.disabledMsg,
+      bidAccepted && classes.acceptedMsg,
     )}>
 
       {/* <ArrowDownwardIcon /> */}
       <CallReceivedIcon
-        className={classes.icon1}
+        className={clsx(
+          classes.icon1,
+          bidDisabled && classes.disabledIcon,
+        )}
       />
 
       <div className={clsx(classes.flexCol, classes.columnUser)}>
@@ -79,14 +86,20 @@ const NormalBid = (props: BidProps) => {
         </div>
       </div>
 
-      <BidActionsByUser
-        isMe={isMe}
-        bidId={m?.bid?.id}
-        bidDisabled={bidDisabled}
-        chatRoomId={m?.chatRoomId}
-        updateBidMessage={props.updateBidMessage}
-        product={props.product}
-      />
+      {
+        props.bidDisabled
+        ? <div className={classes.buttonsPlaceholder}></div>
+        : <BidActionsByUser
+            isMe={isMe}
+            iOwnThisProduct={iOwnThisProduct}
+            bidId={m?.bid?.id}
+            bidDisabled={bidDisabled}
+            bidAccepted={bidAccepted}
+            chatRoomId={m?.chatRoomId}
+            updateBidMessage={props.updateBidMessage}
+            product={props.product}
+          />
+      }
 
     </div>
   )
@@ -95,8 +108,10 @@ const NormalBid = (props: BidProps) => {
 
 interface BidProps extends WithStyles<typeof styles> {
   isMe: boolean;
+  iOwnThisProduct: boolean;
   message: Message;
   bidDisabled: boolean;
+  bidAccepted: boolean;
   product: Product;
   updateBidMessage({
     variables: {
@@ -107,13 +122,6 @@ interface BidProps extends WithStyles<typeof styles> {
 }
 
 
-interface MutData {
-  updateBid: Bid[]
-}
-interface MutVars {
-  bidId: string
-  bidStatus: string
-}
 
 const styles = (theme: Theme) => createStyles({
   messageRoot: {
@@ -121,21 +129,45 @@ const styles = (theme: Theme) => createStyles({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "flex-start",
-    margin: '1rem',
+    marginTop: '0.5rem',
+    marginRight: '1rem',
+    marginBottom: '0.5rem',
     padding: '0.5rem',
     background: isThemeDark(theme)
       ? Colors.uniswapDarkNavy
-      : Gradients.gradientGrey.background,
-    border: isThemeDark(theme)
-      ? `1px solid ${Colors.uniswapNavy}`
-      : `1px solid ${Colors.slateGreyDarker}`,
+      : Colors.cream,
     borderRadius: BorderRadius,
     boxShadow: isThemeDark(theme)
       ? BoxShadows.shadowWhite.boxShadow
-      : BoxShadows.shadow4.boxShadow,
+      : BoxShadows.shadow3.boxShadow,
   },
-  disabled: {
-    opacity: '0.6',
+  isMeBorder: {
+    border: `1px solid ${Colors.purple}`,
+  },
+  isNotMeBorder: {
+    border: `1px solid ${Colors.gradientUniswapFluro1}`,
+  },
+  disabledMsg: {
+    "& > div": {
+      opacity: '0.5',
+    },
+    border: isThemeDark(theme)
+      ? `1px solid ${Colors.uniswapNavy}`
+      : `1px solid ${Colors.slateGreyDarkest}`,
+    boxShadow: 'unset',
+  },
+  disabledIcon: {
+    opacity: 0.5,
+  },
+  acceptedMsg: {
+    // "& > div": {
+    //   opacity: '0.5',
+    // },
+    border: isThemeDark(theme)
+      ? `1px solid ${Colors.ultramarineBlueLight}`
+      : `1px solid ${Colors.ultramarineBlueLight}`,
+    // marginTop: "1rem",
+    marginBottom: "1.5rem",
   },
   flexCol: {
     display: "flex",
@@ -199,6 +231,9 @@ const styles = (theme: Theme) => createStyles({
     color: isThemeDark(theme)
       ? Colors.uniswapMediumGrey
       : Colors.slateGreyDarkest,
+  },
+  buttonsPlaceholder: {
+    minWidth: 110,
   },
 })
 

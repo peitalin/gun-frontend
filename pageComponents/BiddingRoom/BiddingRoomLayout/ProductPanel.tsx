@@ -193,6 +193,7 @@ interface QueryVar {
 const styles = (theme: Theme) => createStyles({
   productPanelRoot: {
     minWidth: 320,
+    width: 360,
   },
   productBidsContainer: {
     display: 'flex',

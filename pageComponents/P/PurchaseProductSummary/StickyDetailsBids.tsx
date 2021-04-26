@@ -98,14 +98,20 @@ const StickyDetailsBid = (props: ReactProps) => {
               </div>
             }
             {
-              (userBid?.bidStatus === BidStatus.CREATED) &&
+              (
+                userBid?.bidStatus === BidStatus.ACTIVE
+                || userBid?.bidStatus === "CREATED"
+              ) &&
               <div className={clsx(classes.bidStatus, classes.bidGrey)}>
                 Pending Acceptance
               </div>
             }
             {
-              (userBid?.bidStatus !== BidStatus.CREATED &&
-              userBid?.bidStatus !== BidStatus.ACCEPTED) &&
+              (
+                userBid?.bidStatus !== BidStatus.ACTIVE &&
+                userBid?.bidStatus !== "CREATED" &&
+                userBid?.bidStatus !== BidStatus.ACCEPTED
+              ) &&
               <div className={clsx(classes.bidStatus, classes.bidRed)}>
                 {userBid?.bidStatus}
               </div>

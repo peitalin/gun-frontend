@@ -458,7 +458,7 @@ export type Bids_Variance_Order_By = {
 
 export enum BidStatus {
   /** created by buyer or seller */
-  CREATED = 'CREATED',
+  ACTIVE = 'ACTIVE',
   /** accepted and ready for buyer to create an order based on this bid */
   ACCEPTED = 'ACCEPTED',
   /** declined by the seller and no actions/steps further are available */
@@ -757,6 +757,8 @@ export type Chat_Messages = {
   /** An object relationship */
   bid?: Maybe<Bids>;
   bidId?: Maybe<Scalars['String']>;
+  /** An object relationship */
+  chatRoom?: Maybe<Chat_Rooms>;
   chatRoomId: Scalars['String'];
   content?: Maybe<Scalars['String']>;
   createdAt: Scalars['timestamp'];
@@ -813,6 +815,7 @@ export type Chat_Messages_Bool_Exp = {
   _or?: Maybe<Array<Maybe<Chat_Messages_Bool_Exp>>>;
   bid?: Maybe<Bids_Bool_Exp>;
   bidId?: Maybe<String_Comparison_Exp>;
+  chatRoom?: Maybe<Chat_Rooms_Bool_Exp>;
   chatRoomId?: Maybe<String_Comparison_Exp>;
   content?: Maybe<String_Comparison_Exp>;
   createdAt?: Maybe<Timestamp_Comparison_Exp>;
@@ -835,6 +838,7 @@ export enum Chat_Messages_Constraint {
 export type Chat_Messages_Insert_Input = {
   bid?: Maybe<Bids_Obj_Rel_Insert_Input>;
   bidId?: Maybe<Scalars['String']>;
+  chatRoom?: Maybe<Chat_Rooms_Obj_Rel_Insert_Input>;
   chatRoomId?: Maybe<Scalars['String']>;
   content?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['timestamp']>;
@@ -927,6 +931,7 @@ export type Chat_Messages_On_Conflict = {
 export type Chat_Messages_Order_By = {
   bid?: Maybe<Bids_Order_By>;
   bidId?: Maybe<Order_By>;
+  chatRoom?: Maybe<Chat_Rooms_Order_By>;
   chatRoomId?: Maybe<Order_By>;
   content?: Maybe<Order_By>;
   createdAt?: Maybe<Order_By>;

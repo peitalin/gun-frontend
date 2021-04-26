@@ -63,7 +63,7 @@ const styles = (theme: Theme) => createStyles({
     width: '1.5rem',
   },
   iconButtonSvgDark: {
-    fill: Colors.uniswapLighterGrey,
+    fill: Colors.uniswapLightGrey,
     height: '1.5rem',
     width: '1.5rem',
   },
