@@ -16,10 +16,11 @@ import {
 import { useMutation } from "@apollo/client";
 import { UPDATE_BID_MESSAGE } from "queries/chat-mutations";
 // format
-import { useTheme } from "@material-ui/core";
+import { useMediaQuery, useTheme } from "@material-ui/core";
 import { formatNiceDate } from "utils/dates";
 import { asCurrency as c } from "utils/prices";
 
+import DoneIcon from '@material-ui/icons/Done';
 import CallReceivedIcon from '@material-ui/icons/CallReceived';
 import BidActionsByUser from "./BidActionsByUser";
 
@@ -38,28 +39,48 @@ const NormalBid = (props: BidProps) => {
   } = props;
 
   const theme = useTheme()
+  const mdDown = useMediaQuery(theme.breakpoints.down("md"))
 
 
   return (
     <div className={clsx(
       classes.messageRoot,
+      mdDown && classes.messageRootMobile,
       isMe ? classes.isMeBorder : classes.isNotMeBorder,
       bidDisabled && classes.disabledMsg,
       bidAccepted && classes.acceptedMsg,
     )}>
 
-      {/* <ArrowDownwardIcon /> */}
-      <CallReceivedIcon
-        className={clsx(
-          classes.icon1,
-          bidDisabled && classes.disabledIcon,
-        )}
-      />
+      <div className={clsx(
+        mdDown ? classes.flexColMobile : classes.flexCol,
+        mdDown && classes.marginMobile,
+      )}>
+      {
+        bidAccepted
+        ? <DoneIcon className={classes.iconDone} />
+        : <CallReceivedIcon
+            className={clsx(
+              classes.icon1,
+              bidDisabled && classes.disabledIcon,
+            )}
+          />
+      }
+      </div>
 
-      <div className={clsx(classes.flexCol, classes.columnUser)}>
+      <div className={clsx(
+        classes.columnUser,
+        mdDown ? classes.flexColMobile : classes.flexCol,
+        mdDown && classes.marginMobile,
+      )}>
         <div className={classes.userAndTime}>
           {
-            isMe ? "You made a bid" : "Bid by user"
+            bidAccepted
+            ? props.isMe
+              ? "Your bid was accepted"
+              : "Accepted bid from user"
+            : props.isMe
+              ? "You made a bid"
+              : "Bid by user"
           }
           {
             !isMe &&
@@ -77,7 +98,11 @@ const NormalBid = (props: BidProps) => {
         </div>
       </div>
 
-      <div className={clsx(classes.flexCol, classes.columnBid)}>
+      <div className={clsx(
+        classes.columnBid,
+        mdDown ? classes.flexColMobile : classes.flexCol,
+        mdDown && classes.marginMobile,
+      )}>
         <div>
           {`${c(m?.bid?.offerPrice)}`}
         </div>
@@ -86,6 +111,11 @@ const NormalBid = (props: BidProps) => {
         </div>
       </div>
 
+      <div className={clsx(
+        classes.columnBidActions,
+        mdDown ? classes.flexColMobile : classes.flexCol,
+        mdDown && classes.marginMobile,
+      )}>
       {
         props.bidDisabled
         ? <div className={classes.buttonsPlaceholder}></div>
@@ -100,6 +130,7 @@ const NormalBid = (props: BidProps) => {
             product={props.product}
           />
       }
+      </div>
 
     </div>
   )
@@ -133,6 +164,8 @@ const styles = (theme: Theme) => createStyles({
     marginRight: '1rem',
     marginBottom: '0.5rem',
     padding: '0.5rem',
+    width: 'calc(100% - 2.5rem)',
+    maxWidth: 540,
     background: isThemeDark(theme)
       ? Colors.uniswapDarkNavy
       : Colors.cream,
@@ -141,11 +174,16 @@ const styles = (theme: Theme) => createStyles({
       ? BoxShadows.shadowWhite.boxShadow
       : BoxShadows.shadow3.boxShadow,
   },
+  messageRootMobile: {
+    flexDirection: "column",
+  },
   isMeBorder: {
     border: `1px solid ${Colors.purple}`,
   },
   isNotMeBorder: {
-    border: `1px solid ${Colors.gradientUniswapFluro1}`,
+    // border: `1px solid ${Colors.gradientUniswapFluro1}`,
+    // border: `1px solid ${Colors.green}`,
+    border: `1px solid ${Colors.ultramarineBlueLight}`,
   },
   disabledMsg: {
     "& > div": {
@@ -160,19 +198,21 @@ const styles = (theme: Theme) => createStyles({
     opacity: 0.5,
   },
   acceptedMsg: {
-    // "& > div": {
-    //   opacity: '0.5',
-    // },
     border: isThemeDark(theme)
-      ? `1px solid ${Colors.ultramarineBlueLight}`
-      : `1px solid ${Colors.ultramarineBlueLight}`,
-    // marginTop: "1rem",
-    marginBottom: "1.5rem",
+      ? `1px solid ${Colors.green}`
+      : `1px solid ${Colors.green}`,
+    // marginBottom: "1.5rem",
   },
   flexCol: {
     display: "flex",
     flexDirection: "column",
     alignItems: "flex-start",
+    justifyContent: "center",
+  },
+  flexColMobile: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
     justifyContent: "center",
   },
   flexRow: {
@@ -196,6 +236,13 @@ const styles = (theme: Theme) => createStyles({
       ? Colors.uniswapLightGrey
       : Colors.slateGreyBlack,
   },
+  columnBidActions: {
+    minWidth: 110,
+    color: isThemeDark(theme)
+      ? Colors.uniswapLightGrey
+      : Colors.slateGreyBlack,
+    justifyContent: "flex-end",
+  },
   userAndTime: {
     lineHeight: '1.125rem',
     fontSize: '0.9rem',
@@ -218,6 +265,11 @@ const styles = (theme: Theme) => createStyles({
       ? Colors.uniswapLightGrey
       : Colors.slateGreyBlack
   },
+  iconDone: {
+    marginLeft: '0.25rem',
+    marginRight: '0.75rem',
+    fill: Colors.green,
+  },
   messageTime: {
     textAlign: 'right',
     paddingRight: '5px',
@@ -234,6 +286,10 @@ const styles = (theme: Theme) => createStyles({
   },
   buttonsPlaceholder: {
     minWidth: 110,
+  },
+  marginMobile: {
+    marginTop: '0.25rem',
+    marginBottom: '0.25rem',
   },
 })
 

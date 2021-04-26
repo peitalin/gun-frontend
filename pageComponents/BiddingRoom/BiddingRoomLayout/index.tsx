@@ -80,6 +80,7 @@ export const BiddingRoomLayout: React.FC<ReactProps> = (props) => {
                     allConvos.map(convo2 => {
                       return (
                         <BidList
+                          key={convo2.chatRoomId}
                           userId={convo2?.userId}
                           iOwnThisProduct={iOwnThisProduct}
                           sellerId={sellerId}

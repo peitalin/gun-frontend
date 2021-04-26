@@ -2,7 +2,7 @@ import React from 'react';
 // Styles
 import clsx from "clsx";
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
-import { Message, Bid, Product } from "typings/gqlTypes";
+import { Message, Bid, Product, BidStatus } from "typings/gqlTypes";
 // Styles
 import { Colors, BoxShadows, BorderRadius } from "layout/AppTheme";
 
@@ -22,7 +22,18 @@ export const BidList: React.FC<ReactProps> = (props) => {
   return (
     <div className={classes.bidListRoot}>
       {
-        (props.messages ?? []).map((message, i) => {
+        (props.messages ?? [])
+        .filter(message => !!message?.bid?.id)
+        .filter(( message, i ) => {
+          if (i === 0) {
+            // allow first bid no matter what bid status
+            return true
+          }
+          return message.bid.bidStatus === BidStatus.ACTIVE
+              || message.bid.bidStatus === BidStatus.ACCEPTED
+              || message.bid.bidStatus === BidStatus.DECLINED
+        })
+        .map((message, i) => {
           const isMe = message?.sender?.id === userId
           return (
             <BidItem key={message?.id}

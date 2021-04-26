@@ -53,6 +53,9 @@ const CounterBidModal: React.FC<ReactProps> = (props) => {
   const snackbar = useSnackbar();
   const router = useRouter();
 
+  const theme = useTheme()
+  const mdDown = useMediaQuery(theme.breakpoints.down("md"))
+
   // RIFM - masking currency values
   const [displayedPrice, setDisplayedPrice] = React.useState('');
   const [offerPrice, setOfferPrice] = React.useState(undefined)
@@ -208,7 +211,7 @@ const CounterBidModal: React.FC<ReactProps> = (props) => {
           <IconButton
             type="submit"
             className={clsx(
-              classes.bidMsgButton,
+              mdDown ? classes.bidMsgButtonMobile : classes.bidMsgButton,
               bidDisabled ? classes.bidMsgDisabled : classes.bidMsgPurple,
             )}
             onClick={() => setShowModal(true)}
@@ -313,25 +316,13 @@ const styles = (theme: Theme) => createStyles({
     height: 36,
     width: 36,
   },
-  bidMsgRed: {
-    fill: isThemeDark(theme)
-      ? Colors.uniswapLightGrey
-      : Colors.slateGreyBlack,
-    "&:hover": {
-      "& > span > svg": {
-        fill: Colors.lightRed,
-      }
-    },
-  },
-  bidMsgBlue: {
-    fill: isThemeDark(theme)
-      ? Colors.uniswapLightGrey
-      : Colors.slateGreyBlack,
-    "&:hover": {
-      "& > span > svg": {
-        fill: Colors.ultramarineBlueLight,
-      }
-    },
+  bidMsgButtonMobile: {
+    color: Colors.cream,
+    padding: '0rem', // safari alignment bug
+    marginLeft: '0.25rem',
+    marginRight: '0.25rem',
+    height: 36,
+    width: 36,
   },
   bidMsgPurple: {
     fill: isThemeDark(theme)

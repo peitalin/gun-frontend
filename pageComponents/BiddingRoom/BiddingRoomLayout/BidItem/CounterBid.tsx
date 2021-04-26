@@ -14,10 +14,11 @@ import {
   Gradients,
 } from "layout/AppTheme";
 // format
-import { useTheme } from "@material-ui/core";
+import { useMediaQuery, useTheme } from "@material-ui/core";
 import { formatNiceDate } from "utils/dates";
 import { asCurrency as c } from "utils/prices";
 
+import DoneIcon from '@material-ui/icons/Done';
 import CallMissedIcon from '@material-ui/icons/CallMissed';
 import BidActionsByUser from "./BidActionsByUser";
 
@@ -35,29 +36,48 @@ const CounterBid = (props: BidProps) => {
   } = props;
 
   const theme = useTheme()
+  const mdDown = useMediaQuery(theme.breakpoints.down("md"))
 
 
   return (
     <div className={clsx(
       classes.messageRoot,
+      mdDown && classes.messageRootMobile,
       isMe ? classes.isMeBorder : classes.isNotMeBorder,
       bidDisabled && classes.disabledMsg,
       bidAccepted && classes.acceptedMsg,
     )}>
 
-      <CallMissedIcon
-        className={clsx(
-          classes.icon1,
-          bidDisabled && classes.disabledIcon,
-        )}
-      />
+      <div className={clsx(
+        mdDown ? classes.flexColMobile : classes.flexCol,
+        mdDown && classes.marginMobile,
+      )}>
+      {
+        bidAccepted
+        ? <DoneIcon className={classes.iconDone} />
+        : <CallMissedIcon
+            className={clsx(
+              classes.icon1,
+              bidDisabled && classes.disabledIcon,
+            )}
+          />
+      }
+      </div>
 
-      <div className={clsx(classes.flexCol, classes.columnUser)}>
+      <div className={clsx(
+        classes.columnUser,
+        mdDown ? classes.flexColMobile : classes.flexCol,
+        mdDown && classes.marginMobile,
+      )}>
         <div className={classes.userAndTime}>
           {
-            props.isMe
-              ? "You made a counter offer"
-              : "Seller's counter offer"
+            bidAccepted
+            ? props.isMe
+              ? "Your bid was accepted"
+              : "You accepted seller's bid"
+            : props.isMe
+                ? "You made a counter offer"
+                : "Seller's counter offer"
           }
         </div>
         <div className={classes.messageTime}>
@@ -74,6 +94,7 @@ const CounterBid = (props: BidProps) => {
         </div>
       </div>
 
+      <div className={classes.columnBidActions}>
       {
         props.bidDisabled
         ? <div className={classes.buttonsPlaceholder}></div>
@@ -88,6 +109,7 @@ const CounterBid = (props: BidProps) => {
             product={props.product}
           />
       }
+      </div>
 
     </div>
     )
@@ -113,14 +135,16 @@ interface BidProps extends WithStyles<typeof styles> {
 
 const styles = (theme: Theme) => createStyles({
   messageRoot: {
-    transform: "translate(1rem, -1rem)",
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "flex-start",
     margin: '0.5rem',
+    transform: "translate(1rem, -1rem)",
+    marginBottom: '-1rem', // offset transform
     padding: '0.5rem',
-    width: 'calc(100% - 4rem)',
+    width: 'calc(100% - 2.5rem)',
+    maxWidth: 540,
     background: isThemeDark(theme)
       ? Colors.uniswapDarkNavy
       : Colors.cream,
@@ -129,11 +153,15 @@ const styles = (theme: Theme) => createStyles({
       ? BoxShadows.shadowWhite.boxShadow
       : BoxShadows.shadow5.boxShadow,
   },
+  messageRootMobile: {
+    flexDirection: "column",
+  },
   isMeBorder: {
     border: `1px solid ${Colors.purple}`,
   },
   isNotMeBorder: {
-    border: `1px solid ${Colors.gradientUniswapFluro1}`,
+    // border: `1px solid ${Colors.gradientUniswapFluro1}`,
+    border: `1px solid ${Colors.ultramarineBlueLight}`,
   },
   disabledMsg: {
     "& > div": {
@@ -152,8 +180,8 @@ const styles = (theme: Theme) => createStyles({
     //   opacity: '0.5',
     // },
     border: isThemeDark(theme)
-      ? `1px solid ${Colors.ultramarineBlueLight}`
-      : `1px solid ${Colors.ultramarineBlueLight}`,
+      ? `1px solid ${Colors.green}`
+      : `1px solid ${Colors.green}`,
     // marginTop: "1rem",
     marginBottom: "1.5rem",
   },
@@ -161,6 +189,12 @@ const styles = (theme: Theme) => createStyles({
     display: "flex",
     flexDirection: "column",
     alignItems: "flex-start",
+    justifyContent: "center",
+  },
+  flexColMobile: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
     justifyContent: "center",
   },
   flexRow: {
@@ -185,9 +219,11 @@ const styles = (theme: Theme) => createStyles({
       : Colors.slateGreyBlack,
   },
   columnBidActions: {
+    minWidth: 110,
     color: isThemeDark(theme)
       ? Colors.uniswapLightGrey
       : Colors.slateGreyBlack,
+    justifyContent: "flex-end",
   },
   userAndTime: {
     lineHeight: '1.125rem',
@@ -211,6 +247,11 @@ const styles = (theme: Theme) => createStyles({
       ? Colors.uniswapLightGrey
       : Colors.slateGreyBlack
   },
+  iconDone: {
+    marginLeft: '0.25rem',
+    marginRight: '0.75rem',
+    fill: Colors.green,
+  },
   messageTime: {
     textAlign: 'right',
     paddingRight: '4px',
@@ -225,45 +266,12 @@ const styles = (theme: Theme) => createStyles({
       ? Colors.uniswapMediumGrey
       : Colors.slateGreyDarkest,
   },
-  bidMsgButton: {
-    color: Colors.cream,
-    height: 36,
-    width: 36,
-  },
-  bidMsgRed: {
-    fill: isThemeDark(theme)
-      ? Colors.uniswapLightGrey
-      : Colors.slateGreyBlack,
-    "&:hover": {
-      "& > span > svg": {
-        fill: Colors.lightRed,
-      }
-    },
-  },
-  bidMsgBlue: {
-    fill: isThemeDark(theme)
-      ? Colors.uniswapLightGrey
-      : Colors.slateGreyBlack,
-    "&:hover": {
-      "& > span > svg": {
-        fill: Colors.ultramarineBlueLight,
-      }
-    },
-  },
-  bidMsgPurple: {
-    fill: isThemeDark(theme)
-      ? Colors.uniswapLightGrey
-      : Colors.slateGreyBlack,
-    "&:hover": {
-      "& > span > svg": {
-        fill: Colors.purple,
-      }
-    },
-  },
-  bidMsgDisabled: {
-  },
   buttonsPlaceholder: {
     minWidth: 110,
+  },
+  marginMobile: {
+    marginTop: '0.5rem',
+    marginBottom: '0.5rem',
   },
 })
 

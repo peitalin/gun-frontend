@@ -14,11 +14,12 @@ import {
   isThemeDark,
 } from "layout/AppTheme";
 // format
-import { Typography, useTheme } from "@material-ui/core";
+import { useMediaQuery, useTheme } from "@material-ui/core";
 
 import ConfirmActionModal from "components/ConfirmActionModal";
 import CounterBidModal from "./CounterBidModal";
 
+import Typography from "@material-ui/core/Typography";
 import Tooltip from "@material-ui/core/Tooltip";
 import IconButton from "@material-ui/core/IconButton";
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
@@ -48,6 +49,7 @@ const BidActionsByUser = (props: BidProps) => {
   } = props;
 
   const theme = useTheme()
+  const mdDown = useMediaQuery(theme.breakpoints.down("md"))
 
   const [openDeclineModal, setOpenDeclineModal] = React.useState(false)
   const [openAcceptModal, setOpenAcceptModal] = React.useState(false)
@@ -59,7 +61,7 @@ const BidActionsByUser = (props: BidProps) => {
   if (bidAccepted) {
     if (iOwnThisProduct) {
       return (
-        <div className={clsx(classes.flexRow, classes.columnBidActions)}>
+        <div className={clsx(classes.flexRow)}>
           <Typography variant="body1" className={classes.acceptedBidCheckoutText}>
             Pending Checkout
           </Typography>
@@ -67,7 +69,7 @@ const BidActionsByUser = (props: BidProps) => {
       )
     } else {
       return (
-        <div className={clsx(classes.flexRow, classes.columnBidActions)}>
+        <div className={clsx(classes.flexRow)}>
           <Typography variant="body1" className={classes.acceptedBidCheckoutText}>
             Checkout
           </Typography>
@@ -80,7 +82,9 @@ const BidActionsByUser = (props: BidProps) => {
                 as={`/p/${product?.id}`}
               >
                 <a>
-                  <IconButton className={classes.bidMsgButton}>
+                  <IconButton className={
+                    mdDown ? classes.bidMsgButtonMobile : classes.bidMsgButton
+                  }>
                     <ArrowForwardIcon
                       className={classes.acceptedBidCheckoutIcon}
                     />
@@ -97,14 +101,14 @@ const BidActionsByUser = (props: BidProps) => {
 
   if (isMe) {
     return (
-      <div className={clsx(classes.flexRow, classes.columnBidActions)}>
+      <div className={clsx(classes.flexRow)}>
         <Tooltip placement={"top"}
           title={bidDisabled ? "Disabled" : "Withdraw Bid"}
         >
           <span>
             <IconButton
               className={clsx(
-                classes.bidMsgButton,
+                mdDown ? classes.bidMsgButtonMobile : classes.bidMsgButton,
                 bidDisabled ? classes.bidMsgDisabled : classes.bidMsgRed,
               )}
               onClick={() => setOpenWithdrawBidModal(true)}
@@ -133,14 +137,14 @@ const BidActionsByUser = (props: BidProps) => {
     )
   } else {
     return (
-      <div className={clsx(classes.flexRow, classes.columnBidActions)}>
+      <div className={clsx(classes.flexRow)}>
         <Tooltip placement={"top"}
           title={bidDisabled ? "Disabled" : "Accept Bid"}
         >
           <span>
             <IconButton
               className={clsx(
-                classes.bidMsgButton,
+                mdDown ? classes.bidMsgButtonMobile : classes.bidMsgButton,
                 bidDisabled ? classes.bidMsgDisabled : classes.bidMsgBlue,
               )}
               onClick={() => setOpenAcceptModal(true)}
@@ -159,7 +163,7 @@ const BidActionsByUser = (props: BidProps) => {
           <span>
             <IconButton
               className={clsx(
-                classes.bidMsgButton,
+                mdDown ? classes.bidMsgButtonMobile : classes.bidMsgButton,
                 bidDisabled ? classes.bidMsgDisabled : classes.bidMsgRed,
               )}
               onClick={() => setOpenDeclineModal(true)}
@@ -252,13 +256,21 @@ const styles = (theme: Theme) => createStyles({
     height: 36,
     width: 36,
   },
+  bidMsgButtonMobile: {
+    color: Colors.cream,
+    padding: '0rem', // safari alignment bug
+    marginLeft: '0.25rem',
+    marginRight: '0.25rem',
+    height: 36,
+    width: 36,
+  },
   bidMsgRed: {
     fill: isThemeDark(theme)
       ? Colors.uniswapLightGrey
       : Colors.slateGreyBlack,
     "&:hover": {
       "& > span > svg": {
-        fill: Colors.lightRed,
+        fill: Colors.magenta,
       }
     },
   },
@@ -272,27 +284,17 @@ const styles = (theme: Theme) => createStyles({
       }
     },
   },
-  bidMsgPurple: {
-    fill: isThemeDark(theme)
-      ? Colors.uniswapLightGrey
-      : Colors.slateGreyBlack,
-    "&:hover": {
-      "& > span > svg": {
-        fill: Colors.purple,
-      }
-    },
-  },
   bidMsgDisabled: {
   },
   acceptedBidCheckoutText:{
     fontSize: "0.8rem",
     textTransform: "uppercase",
     fontWeight: 600,
-    color: Colors.ultramarineBlue,
+    color: Colors.green,
     marginRight: '0.25rem',
   },
   acceptedBidCheckoutIcon: {
-    fill: Colors.ultramarineBlue
+    fill: Colors.green,
   },
 })
 

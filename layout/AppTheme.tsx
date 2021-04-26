@@ -361,7 +361,8 @@ export const BoxShadows = {
     boxShadow: 'inset 3.53813px 3.53813px 7.07626px rgba(70,77,85,.4), inset -2.35875px -2.35875px 7.07626px #15171a',
   },
   shadowWhite: {
-    boxShadow: `rgb(245 245 245 / 10%) 0px 4px 12px` // airbnb shadows
+    // boxShadow: `rgb(245, 245, 245, 0.10) 0px 4px 6px`, // airbnb shadows
+    boxShadow: '0 2px 4px rgba(250,250,250,0.15), 0 4px 8px rgba(250,250,250,0.1), 0 0 0 2px rgba(250,250,250,0.05)',
   },
 }
 
