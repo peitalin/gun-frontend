@@ -54,7 +54,6 @@ const BidActionsByUser = (props: BidProps) => {
 
   const [openDeclineModal, setOpenDeclineModal] = React.useState(false)
   const [openAcceptModal, setOpenAcceptModal] = React.useState(false)
-  const [openCounterBidModal, setOpenCounterBidModal] = React.useState(false)
   const [openWithdrawBidModal, setOpenWithdrawBidModal] = React.useState(false)
 
   const name = `${props.product?.currentSnapshot?.model} - ${props.product?.currentSnapshot?.make}`
@@ -80,7 +79,7 @@ const BidActionsByUser = (props: BidProps) => {
             <span>
               <Link
                 href="/p/[productIdOrSlug]"
-                as={`/p/${product?.id}`}
+                as={`/p/${product?.id}?bidId=${props.bidId}`}
               >
                 <a>
                   <IconButton className={

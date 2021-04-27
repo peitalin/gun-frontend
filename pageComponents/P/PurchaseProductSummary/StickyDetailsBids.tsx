@@ -1,26 +1,22 @@
 import React from "react";
 import clsx from "clsx";
 import { Colors, BoxShadows, BorderRadius, Gradients, isThemeDark } from "layout/AppTheme";
-// Router
-import Link from "next/link";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
+import { useTheme } from "@material-ui/core";
 // Typings
 import { Product, UserPublic, Bids, BidStatus } from "typings/gqlTypes";
 // Material UI
 import Typography from "@material-ui/core/Typography";
 import ButtonLoading from "components/ButtonLoading";
-// Copy
-import copy from "clipboard-copy";
 // Snackbar
 import { useSnackbar } from "notistack";
-import ArrowDownwardIcon from '@material-ui/icons/Forward';
+// router
+import { useRouter } from "next/router"
+
 import Tick from "components/Icons/Tick"
-// redux
-import { GrandReduxState } from "reduxStore/grand-reducer";
-import { useSelector } from "react-redux";
 import { formatDate } from "utils/dates";
-import currency from 'currency.js';
+import { asCurrency as c } from "utils/prices";
 
 
 
@@ -33,23 +29,32 @@ const StickyDetailsBid = (props: ReactProps) => {
     userBid,
   } = props;
 
-  const snackbar = useSnackbar();
+  const router = useRouter()
+  const snackbar = useSnackbar()
+  const theme = useTheme()
+  const isDarkMode = isThemeDark(theme)
 
-  const isDarkMode = useSelector<GrandReduxState, boolean>(s => {
-    return s.reduxLogin.darkMode === 'dark'
-  })
-
-  const handleCopy = async (text) => {
-    await copy(text);
-    console.log("Copied!");
-  };
-
-  const c = (s) => currency(s/100, { formatWithSymbol: false }).format()
 
   console.log("bid: ", userBid)
+  let offerPrice = c(userBid.offerPrice)
 
   let disabledButton = userBid?.bidStatus !== BidStatus.ACCEPTED
   let thisBidIsSelected = props.userBid?.id === props.selectedBid?.id
+
+
+  React.useEffect(() => {
+    if (router.query?.bidId) {
+      // console.log("bidId: ", router.query.bidId)
+      // console.log("bid: ", userBid)
+      if (router.query.bidId === userBid?.id) {
+        props.setSelectedBid(userBid)
+        snackbar.enqueueSnackbar(
+          `Seller accepts your bid of ${offerPrice}`,
+          { variant: "success" }
+        )
+      }
+    }
+  }, [])
 
   return (
     <div className={clsx(
@@ -98,10 +103,7 @@ const StickyDetailsBid = (props: ReactProps) => {
               </div>
             }
             {
-              (
-                userBid?.bidStatus === BidStatus.ACTIVE
-                || userBid?.bidStatus === "CREATED"
-              ) &&
+              userBid?.bidStatus === BidStatus.ACTIVE &&
               <div className={clsx(classes.bidStatus, classes.bidGrey)}>
                 Pending Acceptance
               </div>
@@ -109,7 +111,6 @@ const StickyDetailsBid = (props: ReactProps) => {
             {
               (
                 userBid?.bidStatus !== BidStatus.ACTIVE &&
-                userBid?.bidStatus !== "CREATED" &&
                 userBid?.bidStatus !== BidStatus.ACCEPTED
               ) &&
               <div className={clsx(classes.bidStatus, classes.bidRed)}>
@@ -118,7 +119,9 @@ const StickyDetailsBid = (props: ReactProps) => {
             }
           </div>
 
-          <div className={classes.bidButtonContainer}>
+          <div className={clsx(
+            classes.bidButtonContainer,
+          )}>
             <ButtonLoading
               onClick={() => {
                 if (thisBidIsSelected) {
@@ -127,13 +130,17 @@ const StickyDetailsBid = (props: ReactProps) => {
                   props.setSelectedBid(userBid)
                 }
               }}
-              loadingIconColor={Colors.blue}
+              loadingIconColor={Colors.cream}
               replaceTextWhenLoading={true}
               // loading={loading}
               disabled={disabledButton}
-              variant="contained"
+              variant="outlined"
               color="secondary"
-              className={classes.buyButton}
+              className={
+                thisBidIsSelected
+                ? classes.cancelButton
+                : classes.buyButton
+              }
               style={{
                 height: "38px",
               }}
@@ -312,8 +319,34 @@ const styles = (theme: Theme) => createStyles({
   buyButton: {
     marginTop: "0.5rem",
     backgroundColor: Colors.green,
+    color: Colors.cream,
+    border: `1px solid ${Colors.green}`,
     "&:hover": {
-      backgroundColor: Colors.greenCool,
+      backgroundColor: fade(Colors.green, 0.9),
+      border: `1px solid ${fade(Colors.green, 0.9)}`,
+    },
+    width: "100%",
+    maxWidth: 340,
+    borderRadius: BorderRadius,
+  },
+  cancelButton: {
+    marginTop: "0.5rem",
+    color: isThemeDark(theme)
+      ? Colors.uniswapLighterGrey
+      : Colors.slateGreyLightBlack,
+    backgroundColor: isThemeDark(theme)
+      ? Colors.uniswapMediumNavy
+      : Colors.slateGrey,
+    border: isThemeDark(theme)
+      ? `1px solid ${Colors.uniswapGrey}`
+      : `1px solid ${Colors.slateGreyDarker}`,
+    "&:hover": {
+      backgroundColor: isThemeDark(theme)
+        ? Colors.uniswapNavy
+        : Colors.slateGreyDark,
+      border: isThemeDark(theme)
+        ? `1px solid ${Colors.uniswapGrey}`
+        : `1px solid ${Colors.slateGreyDarker}`,
     },
     width: "100%",
     maxWidth: 340,
