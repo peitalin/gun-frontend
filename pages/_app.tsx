@@ -73,9 +73,12 @@ class MainApp extends App<AppProps> {
       ? await Component.getInitialProps(ctx)
       : {};
 
-    const darkMode = (ctx.query.dark === "true" || ctx.query.dark === "1")
+    let darkMode = (ctx.query.dark === "true" || ctx.query.dark === "1")
       ? "dark"
-      : "light"
+      : (ctx.query.light === "true" || ctx.query.light === "1")
+        ? "light"
+        : undefined
+      // when undefined, localStorage determines darkmode
 
     return {
       pageProps: {
@@ -170,6 +173,7 @@ const ThemeProviderDarkMode = ({ initialDarkModeSSR, children }) => {
     if (process.browser && !!window) {
       localStorageDarkMode = window?.localStorage?.getItem('gmDarkMode') as any;
     }
+    console.log("localStorageDarkMode: ", localStorageDarkMode)
 
     if (localStorageDarkMode !== undefined) {
       // first check if browser has dark mode preferences initially
@@ -191,6 +195,7 @@ const ThemeProviderDarkMode = ({ initialDarkModeSSR, children }) => {
 
 
 
+  // console.log("localStorageDarkMode: ", localStorageDarkMode)
   React.useEffect(() => {
     if (initialDarkModeSSR === 'dark') {
       dispatch(Actions.reduxLogin.SET_DARK_MODE())
@@ -201,7 +206,8 @@ const ThemeProviderDarkMode = ({ initialDarkModeSSR, children }) => {
       //   `${urlPath}`,
       //   { shallow: true }
       // )
-    } else {
+    }
+    if (initialDarkModeSSR === 'light') {
       dispatch(Actions.reduxLogin.SET_LIGHT_MODE())
     }
   }, [])
