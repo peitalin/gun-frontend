@@ -32,16 +32,18 @@ const CounterBid = (props: BidProps) => {
     bidAccepted,
     isMe,
     iOwnThisProduct,
+    precedingBidMessage,
     message: m,
   } = props;
 
   const theme = useTheme()
   const mdDown = useMediaQuery(theme.breakpoints.down("md"))
 
-
   return (
     <div className={clsx(
       classes.messageRoot,
+      (precedingBidMessage?.sender?.id === m.sender?.id) && classes.counterBidMarginTop,
+      // extra top margin if successive counter bids
       mdDown && classes.messageRootMobile,
       isMe ? classes.isMeBorder : classes.isNotMeBorder,
       bidDisabled && classes.disabledMsg,
@@ -51,6 +53,7 @@ const CounterBid = (props: BidProps) => {
       <div className={clsx(
         mdDown ? classes.flexColMobile : classes.flexCol,
         mdDown && classes.marginMobile,
+        mdDown && classes.mobileIcon,
       )}>
       {
         bidAccepted
@@ -68,6 +71,7 @@ const CounterBid = (props: BidProps) => {
         classes.columnUser,
         mdDown ? classes.flexColMobile : classes.flexCol,
         mdDown && classes.marginMobile,
+        bidDisabled && classes.disabledCol,
       )}>
         <div className={classes.userAndTime}>
           {
@@ -85,7 +89,12 @@ const CounterBid = (props: BidProps) => {
         </div>
       </div>
 
-      <div className={clsx(classes.flexCol, classes.columnBid)}>
+      <div className={clsx(
+        classes.columnBid,
+        mdDown ? classes.flexColMobile : classes.flexCol,
+        mdDown && classes.marginMobile,
+        bidDisabled && classes.disabledCol,
+      )}>
         <div>
           {`${c(m?.bid?.offerPrice)}`}
         </div>
@@ -94,21 +103,26 @@ const CounterBid = (props: BidProps) => {
         </div>
       </div>
 
-      <div className={classes.columnBidActions}>
-      {
-        props.bidDisabled
-        ? <div className={classes.buttonsPlaceholder}></div>
-        : <BidActionsByUser
-            isMe={isMe}
-            iOwnThisProduct={iOwnThisProduct}
-            bidId={m?.bid?.id}
-            bidDisabled={bidDisabled}
-            bidAccepted={bidAccepted}
-            chatRoomId={m?.chatRoomId}
-            updateBidMessage={props.updateBidMessage}
-            product={props.product}
-          />
-      }
+      <div className={clsx(
+        classes.columnBidActions,
+        mdDown ? classes.flexColMobile : classes.flexCol,
+        mdDown && classes.marginMobile,
+        mdDown && classes.mobileIcon,
+      )}>
+        {
+          (props.bidDisabled)
+          ? <div className={classes.buttonsPlaceholder}></div>
+          : <BidActionsByUser
+              isMe={isMe}
+              iOwnThisProduct={iOwnThisProduct}
+              bidId={m?.bid?.id}
+              bidDisabled={bidDisabled}
+              bidAccepted={bidAccepted}
+              chatRoomId={m?.chatRoomId}
+              updateBidMessage={props.updateBidMessage}
+              product={props.product}
+            />
+        }
       </div>
 
     </div>
@@ -128,13 +142,16 @@ interface BidProps extends WithStyles<typeof styles> {
       bidId: string,
       bidStatus: BidStatus,
     }
-  })
+  });
+  precedingBidMessage: Message;
 }
 
 
+const opacity = 0.6
 
 const styles = (theme: Theme) => createStyles({
   messageRoot: {
+    position: "relative",
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
@@ -164,16 +181,16 @@ const styles = (theme: Theme) => createStyles({
     border: `1px solid ${Colors.ultramarineBlueLight}`,
   },
   disabledMsg: {
-    "& > div": {
-      opacity: '0.5',
-    },
     border: isThemeDark(theme)
       ? `1px solid ${Colors.uniswapNavy}`
       : `1px solid ${Colors.slateGreyDarkest}`,
     boxShadow: 'unset',
   },
+  disabledCol: {
+    opacity: opacity,
+  },
   disabledIcon: {
-    opacity: 0.5,
+    opacity: opacity,
   },
   acceptedMsg: {
     // "& > div": {
@@ -270,8 +287,16 @@ const styles = (theme: Theme) => createStyles({
     minWidth: 110,
   },
   marginMobile: {
-    marginTop: '0.5rem',
-    marginBottom: '0.5rem',
+    marginTop: '0.1rem',
+    marginBottom: '0.1rem',
+  },
+  counterBidMarginTop: {
+    marginTop: "1.5rem",
+  },
+  mobileIcon: {
+    position: 'absolute',
+    top: 'calc(50% - 0.5rem)',
+    left: '1rem',
   },
 })
 

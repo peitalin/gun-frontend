@@ -33,20 +33,11 @@ const CreateBidForm: React.FC<ReactProps> = (props) => {
     asModal = false,
   } = props
 
-  const apolloClient = useApolloClient()
   const user = useSelector<GrandReduxState, UserPrivate>(
     state => state.reduxLogin.user
   );
   const userId = user?.id
-
-
-  const dispatch = useDispatch();
-
-
   const theme = useTheme();
-  const lgDown = useMediaQuery(theme.breakpoints.down('lg'));
-  const mdDown = useMediaQuery(theme.breakpoints.down('md'));
-  const smDown = useMediaQuery(theme.breakpoints.down('sm'));
 
   return (
     <AlignCenterLayout

@@ -1,6 +1,6 @@
 import React from "react";
 import clsx from "clsx";
-import { Colors, BoxShadows, BorderRadius, Gradients } from "layout/AppTheme";
+import { Colors, BoxShadows, BorderRadius, Gradients, isThemeDark } from "layout/AppTheme";
 // Router
 import Link from "next/link";
 // Styles
@@ -191,7 +191,9 @@ const styles = (theme: Theme) => createStyles({
     border: theme.palette.type === 'dark'
       ? `1px solid ${theme.colors.uniswapGrey}`
       : `1px solid ${Colors.slateGreyDarker}`,
-    boxShadow: BoxShadows.shadow4.boxShadow,
+    boxShadow: isThemeDark(theme)
+      ? BoxShadows.shadow1.boxShadow
+      : BoxShadows.shadow5.boxShadow,
   },
   positionStickyBox: {
     borderRadius: BorderRadius,

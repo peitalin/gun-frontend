@@ -5,7 +5,8 @@ import {
   isThemeDark,
   Gradients,
   BorderRadius,
-  BorderRadius4x
+  BorderRadius4x,
+  BoxShadows,
 } from "layout/AppTheme";
 import clsx from "clsx";
 import { withStyles, WithStyles, createStyles, Theme, fade } from "@material-ui/core/styles";
@@ -116,7 +117,7 @@ const CreateInitialBidForm: React.FC<ReactProps> = (props) => {
     >
       <div className={classes.flexRow}>
         <Typography variant="h4" className={classes.title}>
-          Suggest a Price
+          { props.title ?? "Suggest a Price"}
         </Typography>
       </div>
 
@@ -171,7 +172,7 @@ const CreateInitialBidForm: React.FC<ReactProps> = (props) => {
         style={{ }}
         variant={"outlined"}
         color={"primary"}
-        loadingIconColor={Colors.blue}
+        loadingIconColor={Colors.cream}
         replaceTextWhenLoading={true}
         loading={loading}
         disabled={!process.browser || props.disabled}
@@ -189,7 +190,8 @@ interface ReactProps extends WithStyles<typeof styles> {
   sellerUserId: string
   buyerUserId: string
   product: Product
-  name?: string
+  title?: string // title shown on modal
+  name?: string // name of the chatroom for backend
   disabled?: boolean
 }
 
@@ -220,6 +222,9 @@ const styles = (theme: Theme) => createStyles({
     background: isThemeDark(theme)
       ? Gradients.gradientUniswapDark.background
       : Gradients.gradientGrey.background,
+    border: isThemeDark(theme)
+      ? `1px solid ${Colors.uniswapDarkNavy}`
+      : `1px solid ${Colors.slateGreyDarker}`,
   },
   flexRow: {
     display: 'flex',

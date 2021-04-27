@@ -29,7 +29,8 @@ import CsvDownloaderButton from "./CsvDownloaderButton";
 import MarkPayoutCompleteButton from "./MarkPayoutCompleteButton";
 import { showDate } from "utils/dates";
 import { useRouter } from "next/router";
-
+import copy from "clipboard-copy";
+import { useSnackbar } from "notistack";
 
 
 
@@ -37,6 +38,7 @@ const PayoutsApprovedList = (props: ReactProps) => {
 
   const { classes } = props;
 
+  const snackbar = useSnackbar()
   const theme = useTheme();
   const mdDown = useMediaQuery(theme.breakpoints.down('md'));
 
@@ -74,9 +76,17 @@ const PayoutsApprovedList = (props: ReactProps) => {
           return (
             <>
               <div className={classes.flexRow}>
+                <span onClick={() => {
+                  snackbar.enqueueSnackbar(
+                    `Copied "Payouts for ${showDate(oGroup.day)}"`,
+                    { variant: "info" }
+                  )
+                  copy(`Payouts for ${showDate(oGroup.day)}`)
+                }}>
                 <Typography className={classes.dateTitle}>
                   {`Payouts for ${showDate(oGroup.day)}`}
                 </Typography>
+                </span>
                 <Typography className={classes.dateTitle2}>
                   {'- Estimated 2 days unbonding'}
                 </Typography>
@@ -173,6 +183,10 @@ const styles = (theme: Theme) => createStyles({
       : Colors.slateGreyBlack,
     marginTop: '1rem',
     marginBottom: '1rem',
+    "&:hover": {
+      color: Colors.ultramarineBlue,
+      cursor: "pointer",
+    },
   },
   dateTitle2: {
     marginLeft: '0.3rem',

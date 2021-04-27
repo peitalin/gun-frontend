@@ -8,13 +8,22 @@ import {
   NavBarHeight,
 } from "layout/NavBarMain/styles";
 
+export const routeMappings = {
+  '': "Home",
+  'edit-store': "Edit Store",
+  'products': "Products",
+  'orders': "Orders",
+  'offers': "Offers",
+}
+
 
 const dashboardLinkColorHover = Colors.secondaryBright
 
 const dashboardLinkColor2 = Colors.darkGrey
 const dashboardLinkColorHover2 = Colors.secondaryBright
 
-const dashboardMenuHeight = 50 * 4
+// let numRoutes = Object.keys(routeMappings)
+const dashboardMenuHeight = 50 * 5
 // 4 items, 50px each
 
 

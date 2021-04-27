@@ -2,7 +2,7 @@ import React from "react";
 import clsx from "clsx";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
-import { Colors, BoxShadows, BorderRadius } from "layout/AppTheme";
+import { Colors, BoxShadows, BorderRadius, isThemeDark } from "layout/AppTheme";
 // Typings
 import {
   Product, ID, Product_Variants, UserPrivate, ProductPreviewItem,
@@ -197,15 +197,15 @@ const styles = (theme: Theme) => createStyles({
     alignItems: 'center',
     padding: '1rem 1rem',
     borderRadius: BorderRadius,
-    background: theme.palette.type === 'dark'
+    background: isThemeDark(theme)
       ? Colors.uniswapDarkNavy
       : Colors.cream,
-    border: theme.palette.type === 'dark'
+    border: isThemeDark(theme)
       ? `1px solid ${theme.colors.uniswapGrey}`
       : `1px solid ${Colors.slateGreyDarker}`,
-    boxShadow: theme.palette.type === 'dark'
+    boxShadow: isThemeDark(theme)
       ? BoxShadows.shadow1.boxShadow
-      : BoxShadows.shadow4.boxShadow,
+      : BoxShadows.shadow5.boxShadow,
     width: '100%',
     // maxWidth: '600px',
   },
@@ -318,7 +318,7 @@ const styles = (theme: Theme) => createStyles({
     marginTop: "0.45rem",
   },
   soldOutStatusMessage: {
-    color: theme.palette.type === 'dark'
+    color: isThemeDark(theme)
       ? Colors.uniswapMediumGrey
       : Colors.slateGreyDarkest
   },

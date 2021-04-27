@@ -2,7 +2,7 @@
 import ButtonLoading from "components/ButtonLoading";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
-import { Colors, BoxShadows, BorderRadius } from "layout/AppTheme";
+import { Colors, BoxShadows, BorderRadius, isThemeDark } from "layout/AppTheme";
 
 
 const VisaButtonLoading = (props: ReactProps) => {
@@ -49,10 +49,10 @@ const styles = (theme: Theme) => createStyles({
     width: "100%",
     height: "38px",
     fontWeight: 500,
-    backgroundColor: theme.palette.type === 'dark'
+    backgroundColor: isThemeDark(theme)
       ? Colors.uniswapDarkNavy
       : Colors.slateGrey,
-    border: theme.palette.type === 'dark'
+    border: isThemeDark(theme)
       ? `1px solid ${Colors.uniswapNavy}`
       : `1px solid ${Colors.lightGrey}`,
   },

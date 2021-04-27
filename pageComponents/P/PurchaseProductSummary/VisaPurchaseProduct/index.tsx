@@ -3,7 +3,7 @@ import React from 'react';
 import clsx from "clsx";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
-import { Colors, BorderRadius, BorderRadius3x, Gradients } from "layout/AppTheme";
+import { Colors, BorderRadius, BorderRadius3x, Gradients, isThemeDark } from "layout/AppTheme";
 // Stripe
 import {
   CardElement,
@@ -443,10 +443,10 @@ const styles = (theme: Theme) => createStyles({
   creditCardContainer: {
     margin: "0px",
     height: 40,
-    backgroundColor: theme.palette.type === 'dark'
+    backgroundColor: isThemeDark(theme)
       ? Colors.uniswapMediumNavy
       : Colors.cream,
-    // color: theme.palette.type === 'dark'
+    // color: isThemeDark(theme)
     //   ? Colors.uniswapLightestGrey
     //   : Colors.black,
     border: `1px solid rgba(170, 170, 170, 0.4)`,

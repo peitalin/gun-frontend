@@ -54,6 +54,7 @@ const NormalBid = (props: BidProps) => {
       <div className={clsx(
         mdDown ? classes.flexColMobile : classes.flexCol,
         mdDown && classes.marginMobile,
+        mdDown && classes.mobileIcon,
       )}>
       {
         bidAccepted
@@ -71,6 +72,7 @@ const NormalBid = (props: BidProps) => {
         classes.columnUser,
         mdDown ? classes.flexColMobile : classes.flexCol,
         mdDown && classes.marginMobile,
+        bidDisabled && classes.disabledCol,
       )}>
         <div className={classes.userAndTime}>
           {
@@ -102,6 +104,7 @@ const NormalBid = (props: BidProps) => {
         classes.columnBid,
         mdDown ? classes.flexColMobile : classes.flexCol,
         mdDown && classes.marginMobile,
+        bidDisabled && classes.disabledCol,
       )}>
         <div>
           {`${c(m?.bid?.offerPrice)}`}
@@ -116,20 +119,20 @@ const NormalBid = (props: BidProps) => {
         mdDown ? classes.flexColMobile : classes.flexCol,
         mdDown && classes.marginMobile,
       )}>
-      {
-        props.bidDisabled
-        ? <div className={classes.buttonsPlaceholder}></div>
-        : <BidActionsByUser
-            isMe={isMe}
-            iOwnThisProduct={iOwnThisProduct}
-            bidId={m?.bid?.id}
-            bidDisabled={bidDisabled}
-            bidAccepted={bidAccepted}
-            chatRoomId={m?.chatRoomId}
-            updateBidMessage={props.updateBidMessage}
-            product={props.product}
-          />
-      }
+        {
+          (props.bidDisabled)
+          ? <div className={classes.buttonsPlaceholder}></div>
+          : <BidActionsByUser
+              isMe={isMe}
+              iOwnThisProduct={iOwnThisProduct}
+              bidId={m?.bid?.id}
+              bidDisabled={bidDisabled}
+              bidAccepted={bidAccepted}
+              chatRoomId={m?.chatRoomId}
+              updateBidMessage={props.updateBidMessage}
+              product={props.product}
+            />
+        }
       </div>
 
     </div>
@@ -153,9 +156,11 @@ interface BidProps extends WithStyles<typeof styles> {
 }
 
 
+const opacity = 0.6
 
 const styles = (theme: Theme) => createStyles({
   messageRoot: {
+    position: "relative",
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
@@ -186,16 +191,16 @@ const styles = (theme: Theme) => createStyles({
     border: `1px solid ${Colors.ultramarineBlueLight}`,
   },
   disabledMsg: {
-    "& > div": {
-      opacity: '0.5',
-    },
     border: isThemeDark(theme)
       ? `1px solid ${Colors.uniswapNavy}`
       : `1px solid ${Colors.slateGreyDarkest}`,
     boxShadow: 'unset',
   },
+  disabledCol: {
+    opacity: opacity,
+  },
   disabledIcon: {
-    opacity: 0.5,
+    opacity: opacity,
   },
   acceptedMsg: {
     border: isThemeDark(theme)
@@ -288,8 +293,13 @@ const styles = (theme: Theme) => createStyles({
     minWidth: 110,
   },
   marginMobile: {
-    marginTop: '0.25rem',
-    marginBottom: '0.25rem',
+    marginTop: '0.1rem',
+    marginBottom: '0.1rem',
+  },
+  mobileIcon: {
+    position: 'absolute',
+    top: 'calc(50% - 0.5rem)',
+    left: '1rem',
   },
 })
 

@@ -64,6 +64,8 @@ const BidItem = (props: BidProps) => {
         bidAccepted={bidAccepted}
         product={props.product}
         updateBidMessage={updateBidMessage}
+        precedingBidMessage={props.precedingBidMessage}
+        // if preceding bid is also a seller's counter bid, make bigger margins
       />
     )
   } else {
@@ -87,6 +89,7 @@ interface BidProps extends WithStyles<typeof styles> {
   iOwnThisProduct: boolean;
   message: Message;
   product: Product;
+  precedingBidMessage: Message;
 }
 
 interface MutData {

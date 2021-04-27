@@ -6,17 +6,17 @@ import { Colors, BorderRadius, isThemeDark } from "layout/AppTheme";
 // Apollo
 import { useMutation } from '@apollo/client';
 import { UPDATE_CHAT_STATUS } from "queries/chat-mutations";
-import { ChatRoomStatus, ChatRoom, UserPrivate } from "typings/gqlTypes";
+import { ChatRoomStatus, ChatRoom, UserPrivate, BidStatus } from "typings/gqlTypes";
 // css
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 // MUI
-import PermIdentityIcon from '@material-ui/icons/PermIdentity';
 import Typography from "@material-ui/core/Typography";
 import ProductPreviewCardRowSmall from "components/ProductPreviewCardRowSmall";
 // UI components
 import ButtonLoading from "components/ButtonLoading";
 import ProductRowMedium from "components/ProductRowMedium";
+import CreateBidFormButton from "../CreateBidFormButton";
 
 
 
@@ -77,6 +77,14 @@ const ProductPanel: React.FC<ReactProps> = (props) => {
   const chatStatus = user?.id === seller?.id
     ? chatRoom?.sellerChatStatus
     : chatRoom?.buyerChatStatus
+
+  const showCreateInitialBid = user.id === buyer.id
+    && chatRoom?.messages?.every(msg => {
+      return msg.bid?.bidStatus === BidStatus.WITHDRAWN
+          || msg.bid?.bidStatus === BidStatus.DECLINED
+    })
+  // if every bid has been either WITHDRAWN or DECLINED
+  // then let the bidder create a new initial bid
 
   const [
     updateChatStatus,
@@ -165,6 +173,23 @@ const ProductPanel: React.FC<ReactProps> = (props) => {
             >
               {getNextChatStatusAction(chatStatus)}
             </ButtonLoading>
+
+            {
+              showCreateInitialBid &&
+              <CreateBidFormButton
+                title={loading ? "Loading" : "Place another bid"}
+                titleText={"Place another bid"}
+                sellerUserId={
+                  // if storeId, backend won't looks up the user.id for the store
+                  // make sure its the store's user.id
+                  product?.store?.userId
+                }
+                disabled={loading}
+                // disabled={true}
+                product={product}
+                openChatAfterwards={true}
+              />
+            }
           </div>
         </div>
       }
@@ -222,14 +247,15 @@ const styles = (theme: Theme) => createStyles({
     width: '100%',
     marginTop: '0.5rem',
     display: 'flex',
-    flexDirection: "column",
-    justifyContent: "flex-start",
+    flexDirection: "row",
+    justifyContent: "space-between",
     alignItems: "flex-start",
     borderRadius: BorderRadius,
   },
   archiveProductButton: {
     width: "100%",
-    maxWidth: 150,
+    maxWidth: 160,
+    marginRight: '0.5rem',
     height: "40px",
     fontWeight: 500,
     color: Colors.darkWhite,

@@ -1,6 +1,6 @@
 import React from "react";
 import clsx from "clsx";
-import { Colors, BoxShadows, BorderRadius, Gradients } from "layout/AppTheme";
+import { Colors, BoxShadows, BorderRadius, Gradients, isThemeDark } from "layout/AppTheme";
 // Router
 import Link from "next/link";
 // Styles
@@ -147,13 +147,15 @@ const styles = (theme: Theme) => createStyles({
     minHeight: '130px',
     width: '100%',
     // maxWidth: "600px",
-    background: theme.palette.type === 'dark'
+    background: isThemeDark(theme)
       ? Colors.uniswapDarkNavy
       : Colors.cream,
-    border: theme.palette.type === 'dark'
+    border: isThemeDark(theme)
       ? `1px solid ${theme.colors.uniswapGrey}`
       : `1px solid ${Colors.slateGreyDarker}`,
-    boxShadow: BoxShadows.shadow4.boxShadow,
+    boxShadow: isThemeDark(theme)
+      ? BoxShadows.shadow1.boxShadow
+      : BoxShadows.shadow5.boxShadow,
   },
   positionStickyBox: {
     borderRadius: BorderRadius,
@@ -186,20 +188,20 @@ const styles = (theme: Theme) => createStyles({
     fontSize: '0.9rem',
     fontWeight: 500,
     marginBottom: "0.5rem",
-    color: theme.palette.type === 'dark'
+    color: isThemeDark(theme)
       ? Colors.uniswapLightestGrey
       : Colors.black,
   },
   caption: {
     fontSize: '0.875rem',
-    color: theme.palette.type === 'dark'
+    color: isThemeDark(theme)
       ? Colors.uniswapLighterGrey
       : Colors.darkGrey,
   },
   captionSmall: {
     fontSize: '0.8rem',
     paddingLeft: '1rem',
-    color: theme.palette.type === 'dark'
+    color: isThemeDark(theme)
       ? Colors.uniswapLightGrey
       : Colors.slateGreyDarkest,
   },
@@ -212,7 +214,7 @@ const styles = (theme: Theme) => createStyles({
     width: '3rem',
     height: '3rem',
     transform: 'rotate(90deg)',
-    fill: theme.palette.type === 'dark'
+    fill: isThemeDark(theme)
       ? Colors.uniswapLighterGrey
       : Colors.slateGreyBlack,
   },
@@ -227,13 +229,13 @@ const styles = (theme: Theme) => createStyles({
     right: "0.75rem",
     borderRadius: '4px',
     fontSize: '0.875rem',
-    background: theme.palette.type === 'dark'
+    background: isThemeDark(theme)
       ? Gradients.gradientUniswapDark.background
       : Gradients.gradientGrey2.background,
-    color: theme.palette.type === 'dark'
+    color: isThemeDark(theme)
       ? Colors.purple
       : Colors.blue,
-    border: theme.palette.type === 'dark'
+    border: isThemeDark(theme)
       ? `1px solid ${Colors.purple}`
       : `1px solid ${Colors.blue}`,
     padding: '0.3rem 0.6rem',

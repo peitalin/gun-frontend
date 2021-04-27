@@ -24,15 +24,15 @@ export const BidList: React.FC<ReactProps> = (props) => {
       {
         (props.messages ?? [])
         .filter(message => !!message?.bid?.id)
-        .filter(( message, i ) => {
-          if (i === 0) {
-            // allow first bid no matter what bid status
-            return true
-          }
-          return message.bid.bidStatus === BidStatus.ACTIVE
-              || message.bid.bidStatus === BidStatus.ACCEPTED
-              || message.bid.bidStatus === BidStatus.DECLINED
-        })
+        // .filter(( message, i ) => {
+        //   if (i === 0) {
+        //     // allow first bid no matter what bid status
+        //     return true
+        //   }
+        //   return message.bid.bidStatus === BidStatus.ACTIVE
+        //       || message.bid.bidStatus === BidStatus.ACCEPTED
+        //       || message.bid.bidStatus === BidStatus.DECLINED
+        // })
         .map((message, i) => {
           const isMe = message?.sender?.id === userId
           return (
@@ -41,6 +41,7 @@ export const BidList: React.FC<ReactProps> = (props) => {
               iOwnThisProduct={props.iOwnThisProduct}
               message={message}
               product={props.product}
+              precedingBidMessage={props.messages?.[i-1]}
             />
           );
         })

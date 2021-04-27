@@ -18,6 +18,7 @@ import { useMediaQuery, useTheme } from "@material-ui/core";
 
 import ConfirmActionModal from "components/ConfirmActionModal";
 import CounterBidModal from "./CounterBidModal";
+import TooltipToggle from "./TooltipToggle";
 
 import Typography from "@material-ui/core/Typography";
 import Tooltip from "@material-ui/core/Tooltip";
@@ -102,8 +103,10 @@ const BidActionsByUser = (props: BidProps) => {
   if (isMe) {
     return (
       <div className={clsx(classes.flexRow)}>
-        <Tooltip placement={"top"}
+        <TooltipToggle
+          placement={"top"}
           title={bidDisabled ? "Disabled" : "Withdraw Bid"}
+          disabled={bidDisabled}
         >
           <span>
             <IconButton
@@ -119,7 +122,7 @@ const BidActionsByUser = (props: BidProps) => {
               />
             </IconButton>
           </span>
-        </Tooltip>
+        </TooltipToggle>
         <ConfirmActionModal
           title={"Do you wish to withdraw this bid?"}
           showModal={openWithdrawBidModal}
@@ -138,8 +141,10 @@ const BidActionsByUser = (props: BidProps) => {
   } else {
     return (
       <div className={clsx(classes.flexRow)}>
-        <Tooltip placement={"top"}
+        <TooltipToggle
+          placement={"top"}
           title={bidDisabled ? "Disabled" : "Accept Bid"}
+          disabled={bidDisabled}
         >
           <span>
             <IconButton
@@ -155,10 +160,12 @@ const BidActionsByUser = (props: BidProps) => {
               />
             </IconButton>
           </span>
-        </Tooltip>
+        </TooltipToggle>
 
-        <Tooltip placement={"top"}
+        <TooltipToggle
+          placement={"top"}
           title={bidDisabled ? "Disabled" : "Decline Bid"}
+          disabled={bidDisabled}
         >
           <span>
             <IconButton
@@ -174,7 +181,7 @@ const BidActionsByUser = (props: BidProps) => {
               />
             </IconButton>
           </span>
-        </Tooltip>
+        </TooltipToggle>
 
         <CounterBidModal
           bidDisabled={bidDisabled}
@@ -214,7 +221,6 @@ const BidActionsByUser = (props: BidProps) => {
     )
   }
 }
-
 
 interface BidProps extends WithStyles<typeof styles> {
   isMe: boolean;

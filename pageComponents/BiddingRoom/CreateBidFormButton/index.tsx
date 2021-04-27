@@ -84,9 +84,9 @@ const BiddingRoom: React.FC<ReactProps> = (props) => {
           buyerUserId={userId}
           product={props.product}
           name={user?.license?.licenseNumber}
+          title={props.titleText}
           disabled={!user.id}
         />
-
       </Dialog>
       <ButtonLoading
         type="submit"
@@ -96,16 +96,14 @@ const BiddingRoom: React.FC<ReactProps> = (props) => {
         }}
         variant={"outlined"}
         color={"primary"}
-        loadingIconColor={Colors.blue}
+        loadingIconColor={Colors.cream}
         replaceTextWhenLoading={true}
         // loading={loading}
         disabled={!process.browser || props.disabled}
         // disabled={disabled}
         onClick={() => {
           // createChat()
-
           setModalOpen(s => !s)
-
         }}
       >
         { props.title ? props.title : 'Suggest a price' }
@@ -116,7 +114,8 @@ const BiddingRoom: React.FC<ReactProps> = (props) => {
 
 interface ReactProps extends WithStyles<typeof styles> {
   asModal?: boolean
-  title: string
+  title?: string
+  titleText?: string
   sellerUserId: string
   product: Product
   name?: string

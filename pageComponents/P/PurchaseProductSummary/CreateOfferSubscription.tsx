@@ -31,12 +31,6 @@ const CreateOfferSubscription = (props: ReactProps) => {
     }
   );
 
-  // React.useEffect(() => {
-  //   // set initial conversation on mount + data response
-  //   if ((data?.myConversations ?? []).length > 0) {
-  //     dispatch(Actions.reduxConversation.SET_CONVERSATIONS(data.myConversations))
-  //   }
-  // }, [data, loading])
 
   const existingChatsProductIds = (data?.myConversations ?? []).map(c => {
     return {

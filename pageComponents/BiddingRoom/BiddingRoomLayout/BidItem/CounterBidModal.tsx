@@ -33,7 +33,7 @@ import { asCurrency as c } from "utils/prices";
 import { validationSchemas } from "utils/validation";
 import { useFormik } from 'formik';
 
-import Tooltip from "@material-ui/core/Tooltip";
+import TooltipToggle from "./TooltipToggle";
 import IconButton from "@material-ui/core/IconButton";
 import ReplyIcon from '@material-ui/icons/Reply';
 // Material UI
@@ -63,7 +63,7 @@ const CounterBidModal: React.FC<ReactProps> = (props) => {
 
 
 
-  const [sendBid, sendBidResponse] = useMutation<MData, MVar>(
+  const [sendCounterBid, sendCounterBidResponse] = useMutation<MData, MVar>(
     SEND_BID_MESSAGE, {
       variables: {
         chatRoomId: props.chatRoomId,
@@ -84,7 +84,7 @@ const CounterBidModal: React.FC<ReactProps> = (props) => {
       onError: (e) => {
         snackbar.enqueueSnackbar(
           `${e}`,
-          { variant: "error", autoHideDuration: 8000 }
+          { variant: "error", autoHideDuration: 9000 }
         )
       },
   })
@@ -94,7 +94,7 @@ const CounterBidModal: React.FC<ReactProps> = (props) => {
     initialValues: {
       offerPrice: 0,
     },
-    validationSchema: validationSchemas.CreateInitialBid,
+    validationSchema: validationSchemas.SendBid,
     onSubmit: async (values) => {
       // createChat()
       snackbar.enqueueSnackbar(
@@ -102,7 +102,7 @@ const CounterBidModal: React.FC<ReactProps> = (props) => {
         { variant: "info" }
       )
       console.log("formik onSubmit. OfferPrice: ", values.offerPrice)
-      await sendBid({
+      await sendCounterBid({
         variables: {
           chatRoomId: props.chatRoomId,
           productId: props.product?.id,
@@ -166,6 +166,8 @@ const CounterBidModal: React.FC<ReactProps> = (props) => {
                   startAdornment={"$ "}
                   name={'bid'}
                   type="currency"
+                  autoFocus="autofocus"
+                  autoComplete={"new-password"}
                   // placeholder="0.00"
                   placeholder={"Enter a bid"}
                   className={classes.inputField}
@@ -189,7 +191,7 @@ const CounterBidModal: React.FC<ReactProps> = (props) => {
               variant={"outlined"}
               color={"secondary"}
               onClick={() => {}}
-              // submit dispatches formik and then sendBid()
+              // submit dispatches formik and then sendCounterBid()
             >
               Place Bid
             </Button>
@@ -204,25 +206,28 @@ const CounterBidModal: React.FC<ReactProps> = (props) => {
           </div>
         </form>
       </Dialog>
-      <Tooltip placement={"top"}
-        title={bidDisabled ? "Disabled" : "Counter Offer"}
+      <TooltipToggle placement={"top"}
+        title={"Counter Offer"}
+        disabled={bidDisabled}
       >
         <span>
           <IconButton
             type="submit"
             className={clsx(
               mdDown ? classes.bidMsgButtonMobile : classes.bidMsgButton,
+              // classes.bidMsgPurple,
               bidDisabled ? classes.bidMsgDisabled : classes.bidMsgPurple,
             )}
             onClick={() => setShowModal(true)}
             disabled={bidDisabled}
           >
             <ReplyIcon
+              // className={classes.bidMsgPurple}
               className={bidDisabled ? null : classes.bidMsgPurple}
             />
           </IconButton>
         </span>
-      </Tooltip>
+      </TooltipToggle>
     </>
   )
 }

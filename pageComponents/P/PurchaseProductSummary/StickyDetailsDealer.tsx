@@ -1,6 +1,6 @@
 import React from "react";
 import clsx from "clsx";
-import { Colors, BoxShadows, BorderRadius } from "layout/AppTheme";
+import { Colors, BoxShadows, BorderRadius, isThemeDark } from "layout/AppTheme";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
 // Typings
@@ -118,13 +118,15 @@ const styles = (theme: Theme) => createStyles({
   dealerDetailsInnerContainer: {
     padding: '1rem',
     // maxWidth: "600px",
-    background: theme.palette.type === 'dark'
+    background: isThemeDark(theme)
       ? Colors.uniswapDarkNavy
       : Colors.cream,
-    border: theme.palette.type === 'dark'
+    border: isThemeDark(theme)
       ? `1px solid ${theme.colors.uniswapGrey}`
       : `1px solid ${Colors.slateGreyDarker}`,
-    boxShadow: BoxShadows.shadow4.boxShadow,
+    boxShadow: isThemeDark(theme)
+      ? BoxShadows.shadow1.boxShadow
+      : BoxShadows.shadow5.boxShadow,
   },
   positionStickyBox: {
     borderRadius: BorderRadius,
@@ -156,13 +158,13 @@ const styles = (theme: Theme) => createStyles({
     fontSize: '0.9rem',
     fontWeight: 500,
     marginBottom: "0.5rem",
-    color: theme.palette.type === 'dark'
+    color: isThemeDark(theme)
       ? Colors.uniswapLightestGrey
       : Colors.black,
   },
   caption: {
     fontSize: '0.875rem',
-    color: theme.palette.type === 'dark'
+    color: isThemeDark(theme)
       ? Colors.uniswapLighterGrey
       : Colors.darkGrey,
   },
