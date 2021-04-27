@@ -130,11 +130,13 @@ class MainApp extends App<AppProps> {
               ref={notistackRef}
               autoHideDuration={4000}
               preventDuplicate
+              hideIconVariant
               classes={{
                 variantSuccess: classes.variantSuccess,
                 variantError: classes.variantError,
                 variantInfo: classes.variantInfo,
                 variantWarning: classes.variantWarning,
+                containerRoot: classes.containerRoot,
               }}
               action={(key) => {
                 return (

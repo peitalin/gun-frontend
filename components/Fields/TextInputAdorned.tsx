@@ -185,7 +185,9 @@ export const styles = (theme: Theme) => createStyles({
       boxShadow: `${fade('#50B5F5', 0.2)} 0 0 0 2px`,
       borderColor: Colors.blue,
       // color: Colors.blue,
-      color: Colors.charcoal,
+      color: theme.palette.type === "dark"
+        ? Colors.uniswapLightestGrey
+        : Colors.black,
     },
     // '&:invalid': {
     //   boxShadow: `${fade(theme.palette.error.light, 0.2)} 0 0 0 1px`,
@@ -196,15 +198,24 @@ export const styles = (theme: Theme) => createStyles({
     border: `1px solid ${Colors.mediumLightGrey}`,
     '&:focus': {
       boxShadow: `${fade(Colors.lightGrey, 0.2)} 0 0 0 2px`,
+      color: theme.palette.type === "dark"
+        ? Colors.uniswapLightestGrey
+        : Colors.black,
     },
   },
   errorInputUntouched: {
     // border: `1px solid ${Colors.mediumLightGrey}`,
     '&:focus': {
-      boxShadow: `${fade(Colors.grey, 0.2)} 0 0 0 2px`,
+      // boxShadow: `${fade(Colors.grey, 0.2)} 0 0 0 2px`,
+      color: theme.palette.type === "dark"
+        ? Colors.uniswapLightestGrey
+        : Colors.black,
     },
     "&:focus-within": {
-      color: `${fade(Colors.grey, 0.1)}`,
+      // color: `${fade(Colors.grey, 0.1)}`,
+      color: theme.palette.type === "dark"
+        ? Colors.uniswapLightestGrey
+        : Colors.black,
     },
   },
   errorInput: {
@@ -241,7 +252,9 @@ export const styles = (theme: Theme) => createStyles({
     right: '0.25rem',
     fontSize: '12px',
     fontFamily: fontFam,
-    color: `${fade(Colors.grey, 0.7)}`,
+    color: theme.palette.type === "dark"
+      ? Colors.uniswapLightestGrey
+      : Colors.black,
     transition: theme.transitions.create('color', {
       easing: theme.transitions.easing.easeIn,
       duration: "100ms",

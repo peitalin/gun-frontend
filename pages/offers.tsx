@@ -21,16 +21,12 @@ import { useApolloClient, ApolloClient } from "@apollo/client";
 
 const OffersPage: NextPage<ReactProps> = (props) => {
 
-  const apolloClient = useApolloClient()
   const user = useSelector<GrandReduxState, UserPrivate>(
     state => state.reduxLogin.user
   );
-  const userId = user?.id
 
   return (
-    <div>
-      <BiddingRoom asModal={false} />
-    </div>
+    <BiddingRoom asModal={false} />
   )
 }
 
@@ -52,32 +48,13 @@ OffersPage.getInitialProps = async (ctx: Context) => {
 
   // Will trigger this getInitialProps when requesting route /pages/ProductGallery
   // otherwise initialProps may be fed via /pages/index.tsx's getInitialProps
-  const aClient = serverApolloClient(ctx);
-  const emptyConnection = { pageInfo: {}, edges: [] };
 
-  try {
+  // const aClient = serverApolloClient(ctx);
+  // const emptyConnection = { pageInfo: {}, edges: [] };
 
-    // const req3 = aClient.query({
-    //   query: GET_LIMITED_RELEASE_PRODUCTS,
-    //   variables: {
-    //     query: {
-    //       count: 5,
-    //       cursor: null,
-    //       pageBackwards: false,
-    //       sortAscending: false,
-    //     }
-    //   }
-    // });
-
-    return {
-      classes: undefined,
-    } as any;
-
-  } catch(e) {
-    return {
-      classes: undefined,
-    };
-  }
+  return {
+    classes: undefined,
+  } as any;
 }
 
 

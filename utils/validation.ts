@@ -581,6 +581,24 @@ export const validationSchemas = {
     }),
 
 
+  SendBid:
+    Yup.object().shape({
+      offerPrice: Yup.number().nullable()
+        .min(minPrice, "Minimum price: $1")
+        .max(maxPrice, "Max price: $10,000")
+        .required('Add a price'),
+      /// Graphql validates this, not frontend
+      // chatRoomId: Yup.string()
+      //   .required('chatRoomId missing'),
+      // productId: Yup.string()
+      //   .required('productId missing'),
+      // productSnapshotId: Yup.string()
+      //   .required('productSnapshotId missing'),
+      // variantId: Yup.string()
+      //   .required('variantId missing'),
+    }),
+
+
   // Create Random Products
   RandomProductsConfig:
     Yup.object().shape({

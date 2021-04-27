@@ -401,6 +401,9 @@ export const notifyStyles = (theme: Theme) => createStyles({
   variantSuccess: {
     backgroundColor: `${Colors.blue} !important`,
     color: Colors.cream,
+    // "& > div": {
+    //   maxWidth: 'calc(100% - 2.75rem)',
+    // },
     "& > div > span > svg": {
       fill: `${Colors.cream}`,
     },
@@ -408,6 +411,9 @@ export const notifyStyles = (theme: Theme) => createStyles({
   variantError: {
     backgroundColor: `${Colors.lightRed} !important`,
     color: Colors.cream,
+    // "& > div": {
+    //   maxWidth: 'calc(100% - 2.75rem)',
+    // },
     "& > div > span > svg": {
       fill: `${Colors.cream}`,
     },
@@ -415,6 +421,9 @@ export const notifyStyles = (theme: Theme) => createStyles({
   variantInfo: {
     backgroundColor: `${Colors.lighterBlack} !important`,
     color: Colors.cream,
+    // "& > div": {
+    //   maxWidth: 'calc(100% - 2.75rem)',
+    // },
     "& > div > span > svg": {
       fill: `${Colors.cream}`,
     }
@@ -422,9 +431,14 @@ export const notifyStyles = (theme: Theme) => createStyles({
   variantWarning: {
     backgroundColor: `${Colors.yellow} !important`,
     color: Colors.cream,
+    // "& > div": {
+    //   maxWidth: 'calc(100% - 2.75rem)',
+    // },
     "& > div > span > svg": {
       fill: `${Colors.cream}`,
     },
+  },
+  containerRoot: {
   },
 });
 
