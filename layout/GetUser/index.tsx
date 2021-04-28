@@ -64,6 +64,7 @@ const GetUser = (props: ReactProps) => {
     }
   }, [router.pathname])
 
+
   return <div className="get-user"></div>;
 };
 

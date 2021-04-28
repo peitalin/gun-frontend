@@ -1,5 +1,8 @@
 import React from "react";
 import { NextPage, NextPageContext } from 'next';
+import { NextComponentType } from "next"
+import { AppContext, AppInitialProps, AppProps } from "next/app";
+
 // Redux
 import { Dispatch, Store } from "redux";
 import { Provider, useDispatch, useSelector } from "react-redux";
@@ -22,7 +25,7 @@ import { useRouter } from 'next/router';
 import App from "next/app";
 // Apollo Graphql
 import { ApolloProvider, ApolloClient } from '@apollo/client';
-import withApollo from 'utils/apollo';
+import { useWsRenewableApolloClient } from "utils/apollo";
 // css
 // all css must be imported here
 import "../public/App.css";
@@ -62,103 +65,80 @@ declare global {
 
 
 
-class MainApp extends App<AppProps> {
+const MainApp: NextComponentType<AppContext, AppInitialProps, AppProps & AppHOCProps> = (props) => {
 
-  static async getInitialProps(initialProps) {
+  const {
+    Component,
+    pageProps,
+    store,
+    router,
+    classes, // from notifyStyles
+  } = props;
 
-    const { Component } = initialProps;
-    const { ctx }: { ctx: Context } = initialProps;
-
-    const pageProps = Component.getInitialProps
-      ? await Component.getInitialProps(ctx)
-      : {};
-
-    let darkMode = (ctx.query.dark === "true" || ctx.query.dark === "1")
-      ? "dark"
-      : (ctx.query.light === "true" || ctx.query.light === "1")
-        ? "light"
-        : undefined
-      // when undefined, localStorage determines darkmode
-
-    return {
-      pageProps: {
-        ...pageProps,
-        initialDarkModeSSR: darkMode,
-      }
-    };
+  // add action to all snackbars
+  const notistackRef = React.createRef();
+  const onClickDismiss = key => () => {
+      (notistackRef.current as ProviderContext).closeSnackbar(key);
   }
+  // console.log("pageProps: ", pageProps)
 
-  state = {
-    dataProvider: null,
-  }
-
-  componentDidMount() {
+  React.useEffect(() => {
     // Remove the server-side injected CSS.
     const jssStyles = document.querySelector('#jss-server-side');
     if (jssStyles) {
       jssStyles.parentNode.removeChild(jssStyles);
     }
-  }
+  })
 
-  componentWillUnmount () {
-  }
+  let state = store.getState()
+  let userId = state.reduxLogin.user?.id
+  console.log("MainApp userId: ", userId)
 
-  render() {
+  // This client has hooks that force websockets to reconnect after auth
+  //
+  // userId is initially undefined, instantiates fresh Apollo client the first time
+  // on login, userId exists and websocket is re-instantiated with a new http connection
+  // that has gun-auth credentials
+  let apollo = useWsRenewableApolloClient(userId)
 
-    const {
-      Component,
-      pageProps,
-      store,
-      apollo,
-      router,
-      classes, // from notifyStyles
-    } = this.props;
 
-    // add action to all snackbars
-    const notistackRef = React.createRef();
-    const onClickDismiss = key => () => {
-        (notistackRef.current as ProviderContext).closeSnackbar(key);
-    }
-    // console.log("pageProps: ", pageProps)
-
-    return (
-      <Provider store={store}>
-        <ApolloProvider client={apollo}>
-          <ThemeProviderDarkMode initialDarkModeSSR={pageProps.initialDarkModeSSR}>
-            <SnackbarProvider
-            // @ts-ignore
-              ref={notistackRef}
-              autoHideDuration={4000}
-              preventDuplicate
-              hideIconVariant
-              classes={{
-                variantSuccess: classes.variantSuccess,
-                variantError: classes.variantError,
-                variantInfo: classes.variantInfo,
-                variantWarning: classes.variantWarning,
-                containerRoot: classes.containerRoot,
-              }}
-              action={(key) => {
-                return (
-                  <IconButtonCancel
-                    onClick={onClickDismiss(key)}
-                    dark={true} // light colored close icon
-                  />
-                )
-              }}
-              // dense
-              maxSnack={4}
-            >
-              <CssBaseline />
-              <Layout>
-                <Component {...pageProps} key={router.route} />
-              </Layout>
-            </SnackbarProvider>
-          </ThemeProviderDarkMode>
-        </ApolloProvider>
-      </Provider>
-    );
-  }
+  return (
+    <Provider store={store}>
+      <ApolloProvider client={apollo}>
+        <ThemeProviderDarkMode initialDarkModeSSR={pageProps.initialDarkModeSSR}>
+          <SnackbarProvider
+          // @ts-ignore
+            ref={notistackRef}
+            autoHideDuration={4000}
+            preventDuplicate
+            hideIconVariant
+            classes={{
+              variantSuccess: classes.variantSuccess,
+              variantError: classes.variantError,
+              variantInfo: classes.variantInfo,
+              variantWarning: classes.variantWarning,
+              containerRoot: classes.containerRoot,
+            }}
+            action={(key) => {
+              return (
+                <IconButtonCancel
+                  onClick={onClickDismiss(key)}
+                  dark={true} // light colored close icon
+                />
+              )
+            }}
+            // dense
+            maxSnack={4}
+          >
+            <CssBaseline />
+            <Layout>
+              <Component {...pageProps} key={router.route} />
+            </Layout>
+          </SnackbarProvider>
+        </ThemeProviderDarkMode>
+      </ApolloProvider>
+    </Provider>
+  );
 }
 
 
@@ -249,18 +229,35 @@ const ThemeProviderDarkMode = ({ initialDarkModeSSR, children }) => {
 }
 
 
-interface AppProps extends WithStyles<typeof notifyStyles> {
-  apollo: ApolloClient<any>;
+interface AppHOCProps extends WithStyles<typeof notifyStyles> {
   store: Store<GrandReduxState>;
 }
-interface Context extends NextPageContext {
-  apolloClient: ApolloClient<any>
-  store: Store<GrandReduxState>;
+
+
+MainApp.getInitialProps = async (appContext) => {
+
+    const appProps = await App.getInitialProps(appContext)
+    let ctx = appContext.ctx;
+
+    let darkMode = (ctx.query?.dark === "true" || ctx.query?.dark === "1")
+      ? "dark"
+      : (ctx.query?.light === "true" || ctx.query?.light === "1")
+        ? "light"
+        : undefined
+      // when undefined, localStorage determines darkmode
+
+    return {
+      ...appProps,
+      initialDarkModeSSR: darkMode,
+      pageProps: {
+        initialDarkModeSSR: darkMode,
+      }
+    }
 }
 
 export default
 withStyles(notifyStyles)(
   withRedux(makeStore)(
-    withApollo(MainApp)
+    MainApp
   )
 );
