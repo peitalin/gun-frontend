@@ -1,38 +1,61 @@
 import React from "react";
 // styles
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
-// Utils Components
-import ErrorBounds from 'components/ErrorBounds';
-import Loading from "components/Loading";
 // SSR
 import { NextPage, NextPageContext } from 'next';
-import dynamic from "next/dynamic";
 // GraphQL
 import { serverApolloClient } from "utils/apollo";
-import BiddingRoom from "pageComponents/BiddingRoom";
-// Redux
-import { useSelector } from 'react-redux';
-import { GrandReduxState } from 'reduxStore/grand-reducer';
-import { UserPrivate } from "typings/gqlTypes";
 import gql from 'graphql-tag'
 import { useApolloClient, ApolloClient } from "@apollo/client";
+// Components
+import LoadingBarSSR from "components/LoadingBarSSR";
+import BiddingRoom from "pageComponents/BiddingRoom";
 
+// next
+import dynamic from "next/dynamic";
+import { UserProfileProps } from "layout/GetUser/UserProfileWrapper";
+const UserProfileWrapper = dynamic(() => import("layout/GetUser/UserProfileWrapper"), {
+  loading: () => <LoadingBarSSR/>,
+  ssr: false,
+})
+// Meta headers
+import MetaHeadersPage from "layout/MetaHeadersPage";
 
 
 const OffersPage: NextPage<ReactProps> = (props) => {
 
-  const user = useSelector<GrandReduxState, UserPrivate>(
-    state => state.reduxLogin.user
-  );
+  const {
+    classes
+  } = props;
 
   return (
-    <BiddingRoom asModal={false} />
+    <>
+      <MetaHeadersPage
+        title="Offers"
+        robots="noindex"
+      />
+      <UserProfileWrapper>
+      {(dataUser: UserProfileProps) => {
+        return (
+          <div className={classes.contentContainerPublicPage}>
+            <BiddingRoom asModal={false} />
+          </div>
+        )
+      }}
+      </UserProfileWrapper>
+    </>
   )
 }
 
 
 const styles = (theme: Theme) => createStyles({
-  root: {},
+  contentContainerPublicPage: {
+    flexGrow: 1,
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    marginBottom: '1rem',
+  },
 })
 
 ///////////////// TYPINGS ///////////////////

@@ -19,7 +19,7 @@ import MetaHeadersPage from "layout/MetaHeadersPage";
 
 
 const MyOrdersHistoryPage = (props: ReactProps) => {
-  // state
+
   const {
     classes
   } = props;
