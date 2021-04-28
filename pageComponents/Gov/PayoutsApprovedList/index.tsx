@@ -2,7 +2,7 @@ import React from "react";
 import clsx from "clsx";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
-import { Colors, BoxShadows, BorderRadius, isThemeDark } from "layout/AppTheme";
+import { Colors, BoxShadows, BorderRadius, isThemeDark, BorderRadius2x } from "layout/AppTheme";
 // Typings
 import {
   UserPrivate,
@@ -69,7 +69,18 @@ const PayoutsApprovedList = (props: ReactProps) => {
       <Typography variant={"h2"} className={classes.title}>
         Approved Payouts
       </Typography>
+      {
 
+        ((props.orderIdsGroupedByDay ?? []).length === 0) &&
+        <div className={clsx(
+          classes.noApprovedPayoutsBox,
+          classes.flexCol,
+        )}>
+          <Typography variant="h5">
+            No approved payouts currently
+          </Typography>
+        </div>
+      }
       {
         (props.orderIdsGroupedByDay ?? []).map(oGroup => {
           console.log("oGroup: ", oGroup)
@@ -196,6 +207,16 @@ const styles = (theme: Theme) => createStyles({
       : Colors.slateGreyDarkest,
     marginTop: '1rem',
     marginBottom: '1rem',
+  },
+  noApprovedPayoutsBox: {
+    background: isThemeDark(theme)
+      ? Colors.uniswapDarkNavy
+      : Colors.slateGrey,
+    padding: '1rem',
+    borderRadius: BorderRadius2x,
+    minHeight: 400,
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
 
