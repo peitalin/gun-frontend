@@ -85,7 +85,7 @@ const BiddingRoom: React.FC<ReactProps> = (props) => {
           product={props.product}
           name={user?.license?.licenseNumber}
           title={props.titleText}
-          disabled={!user.id}
+          disabled={!user?.id}
         />
       </Dialog>
       <ButtonLoading

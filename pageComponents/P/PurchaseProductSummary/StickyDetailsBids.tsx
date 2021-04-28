@@ -36,7 +36,7 @@ const StickyDetailsBid = (props: ReactProps) => {
 
 
   console.log("bid: ", userBid)
-  let offerPrice = c(userBid.offerPrice)
+  let offerPrice = c(userBid?.offerPrice)
 
   let disabledButton = userBid?.bidStatus !== BidStatus.ACCEPTED
   let thisBidIsSelected = props.userBid?.id === props.selectedBid?.id
