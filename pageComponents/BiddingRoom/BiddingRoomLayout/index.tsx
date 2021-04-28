@@ -1,26 +1,26 @@
 import React from 'react';
-// components
-import dynamic from "next/dynamic";
-
-import SendBidInput from './SendBidInput'
-import ProductPanel from './ProductPanel';
-// typings
-import { UserPrivate, Conversation, SoldOutStatus } from "typings/gqlTypes";
 // Styles
-import { Colors, BoxShadows, BorderRadius2x, BorderRadius } from "layout/AppTheme";
 import clsx from "clsx";
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
+import { Colors, BoxShadows, BorderRadius2x, BorderRadius } from "layout/AppTheme";
+// typings
+import { UserPrivate, Conversation, SoldOutStatus } from "typings/gqlTypes";
 // css
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 // graphql
-import { useSubscription } from '@apollo/client';
+import { useSubscription, useApolloClient } from '@apollo/client';
 import gql from 'graphql-tag'
 import { SUBSCRIBE_USER_CONVERSATIONS } from "queries/chat-subscriptions";
 // Redux
 import { useSelector, useDispatch } from 'react-redux';
 import { GrandReduxState, Actions } from 'reduxStore/grand-reducer';
+// Components
 import BidList from "./BidList";
+import SendBidInput from './SendBidInput'
+import ProductPanel from './ProductPanel';
+import LoadingBar from "components/LoadingBar";
+import Typography from "@material-ui/core/Typography";
 
 
 
@@ -32,19 +32,44 @@ export const BiddingRoomLayout: React.FC<ReactProps> = (props) => {
     user: userRedux,
   } = props;
 
-  const dispatch = useDispatch()
+  const aClient = useApolloClient();
   const theme = useTheme();
   const mdDown = useMediaQuery(theme.breakpoints.down('md'));
 
-  const { data, loading, error } = useSubscription<QueryData, QueryVar>(
-    SUBSCRIBE_USER_CONVERSATIONS, {
-      variables: {
-        messageLimit: 20
-      }
-    },
-  );
+  // const { data, loading, error } = useSubscription<QueryData, QueryVar>(
+  //   SUBSCRIBE_USER_CONVERSATIONS, {
+  //     variables: {
+  //       messageLimit: userRedux?.id ? 20 : 5,
+  //       // login-logOut updates userRedux which prompots resubscribes
+  //     },
+  //     shouldResubscribe: true,
+  //     onSubscriptionData: ({ client, subscriptionData: { data }}) => {
+  //       console.log('bidding subscriptionData:', data)
+  //     },
+  //     onSubscriptionComplete: () => {
+  //       console.log('bidding subscriptions complete.')
+  //     },
+  //   },
+  // );
 
-  console.log("subscription data: ", data)
+  const [data, setData] = React.useState<QueryData>(undefined)
+
+  React.useEffect(() => {
+    const observer = aClient.subscribe<QueryData, QueryVar>({
+      query: SUBSCRIBE_USER_CONVERSATIONS,
+      variables: {
+        messageLimit: 20,
+      },
+    })
+    const subscription = observer.subscribe(({ data }) => {
+      // console.log('SUBSCRIBE received', data)
+      setData(data);
+    })
+
+    return () => subscription.unsubscribe()
+  }, [userRedux])
+  // login-logOut updates userRedux which prompots resubscribes
+
 
   let productIds = [
     ...new Set(data?.myConversations?.map(c => c?.chatRoom?.product?.id))
@@ -52,7 +77,23 @@ export const BiddingRoomLayout: React.FC<ReactProps> = (props) => {
 
 
   return (
-    <main className={classes.rootLayout}>
+    <main className={classes.biddingRoomInnerLayout}>
+
+      {/* <LoadingBar
+        absoluteTop
+        color={Colors.ultramarineBlue}
+        height={4}
+        width={'100vw'}
+        loading={loading}
+      /> */}
+
+      <Typography variant="h2" className={classes.title}>
+        Offers
+      </Typography>
+
+      <Typography variant="h4" className={classes.subtitle}>
+        Your Products
+      </Typography>
       <div className={classes.productList}>
         {
           productIds &&
@@ -112,7 +153,7 @@ interface QueryVar {
 }
 
 const styles = (theme: Theme) => createStyles({
-  rootLayout: {
+  biddingRoomInnerLayout: {
     display: 'flex',
     width: '100%',
     flexDirection: "column",
@@ -126,6 +167,13 @@ const styles = (theme: Theme) => createStyles({
     display: "flex",
     flexDirection: "row",
     flexWrap: "wrap",
+  },
+  title: {
+    marginTop: '1rem',
+    marginBottom: '1rem',
+  },
+  subtitle: {
+    marginBottom: '1rem',
   },
   flexItem: {
     display: "flex",

@@ -12,9 +12,6 @@ import { useApolloClient, useLazyQuery } from "@apollo/client";
 import { ApolloClient, ApolloError, ApolloQueryResult } from "@apollo/client";
 // Typings
 import { UserPrivate } from 'typings/gqlTypes';
-import Loading from "components/Loading";
-import ErrorDisplay from "components/Error";
-// import { analyticsUser } from "utils/analytics";
 import { logout } from "queries/requests";
 import { useRouter } from "next/router";
 

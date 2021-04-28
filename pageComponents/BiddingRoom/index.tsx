@@ -41,19 +41,16 @@ const CreateBidForm: React.FC<ReactProps> = (props) => {
 
   return (
     <AlignCenterLayout
+      className={classes.biddingRoomRoot}
       withRecommendations={false}
     >
       <ResponsivePadding>
-        <div className={classes.root}>
-          <div className={clsx(classes.chatContainer, classes.flexRow)}>
-            {
-              userId &&
-              <BiddingRoomLayout
-                user={user}
-              />
-            }
-          </div>
-        </div>
+        {
+          userId &&
+          <BiddingRoomLayout
+            user={user}
+          />
+        }
       </ResponsivePadding>
     </AlignCenterLayout>
   )
@@ -65,10 +62,10 @@ interface ReactProps extends WithStyles<typeof styles> {
 
 
 const styles = (theme: Theme) => createStyles({
-  root: {
-    paddingTop: '1rem',
+  biddingRoomRoot: {
     width: '100%',
     display: 'flex',
+    paddingTop: '2rem',
     flexDirection: "column",
     justifyContent: 'center',
     background: 'transparent',

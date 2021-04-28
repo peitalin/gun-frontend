@@ -22,8 +22,6 @@ export const MY_DOWNLOADS_PAGINATION_COUNT = 10;
 import dynamic from "next/dynamic";
 // router
 import { useRouter } from "next/router";
-// Analytics
-import { useAnalytics } from "utils/analytics";
 
 
 

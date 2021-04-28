@@ -13,8 +13,6 @@ import { SelectedVariantProps } from "pageComponents/P/ProductId";
 // Components
 import FeaturedPreview from "../FeaturedPreview";
 import FeaturedPreviewButtonsDesktop from "./FeaturedPreviewButtonsDesktop";
-// Analytics
-import { useAnalytics, analyticsEvent } from "utils/analytics";
 // Media Query
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";

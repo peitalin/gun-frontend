@@ -27,8 +27,6 @@ import Link from "next/link";
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import AlignCenterLayout from "components/AlignCenterLayout";
-// // Analytics
-// import { analyticsEvent } from "utils/analytics";
 
 // for printing testing only
 const URI = process.env.GATEWAY_GRAPHQL_URL;
@@ -120,30 +118,24 @@ const Footer: React.FC<ReactProps> = (props) => {
 
               <div className={classes.flexColItem}>
                 <a
-                  // href={'https://help.relay.shop/hc/en-us/articles/360036185952-Refund-Policy'}
                   className={classes.link}
                   target={"_blank"}
-                  // onClick={() => analyticsEvent("View.RefundPolicy")}
                 >
                   <Typography variant="body2" className={classes.linkText}>
                     Firearm registries
                   </Typography>
                 </a>
                 <a
-                  // href={'https://help.relay.shop/hc/en-us/articles/360038530771-Terms-of-Service'}
                   className={classes.link}
                   target={"_blank"}
-                  // onClick={() => analyticsEvent("View.Terms")}
                 >
                   <Typography variant="body2" className={classes.linkText}>
                     Terms of Service
                   </Typography>
                 </a>
                 <a
-                  // href={'https://help.relay.shop/hc/en-us/articles/360038152632-Privacy-Policy'}
                   className={classes.link}
                   target={"_blank"}
-                  // onClick={() => analyticsEvent("View.Privacy")}
                 >
                   <Typography variant="body2" className={classes.linkText}>
                     Privacy Policy

@@ -39,7 +39,7 @@ const onErrorHandler = onError(({ graphQLErrors, networkError }) => {
       console.log(
         `[GraphQL error]: Message:
         ${message},
-        Location: ${locations},
+        Location: ${JSON.stringify(locations)},
         Path: ${path}`,
       ),
     );
@@ -48,6 +48,8 @@ const onErrorHandler = onError(({ graphQLErrors, networkError }) => {
     console.log(`[Network error]: ${JSON.stringify(networkError)}`);
   }
 })
+
+
 
 const splitQueryOrSubscriptions = ({
   httpLink,
@@ -74,7 +76,6 @@ const splitQueryOrSubscriptions = ({
         headers: {
           // "x-hasura-admin-secret": "",
           "content-type": "application/json",
-          cookie: ctx?.req?.headers?.cookie,
         },
       }),
     }
@@ -95,7 +96,17 @@ const splitQueryOrSubscriptions = ({
   )
 }
 
+const authMiddleware = new ApolloLink((operation, forward) => {
+  // add the authorization to the headers
+  operation.setContext(({ headers = {} }) => ({
+    headers: {
+      ...headers,
+      authorization: 'AUTHO',
+    }
+  }));
 
+  return forward(operation);
+})
 
 
 // SSR Apollo. Function to return a new instance of ApolloClient
@@ -104,31 +115,31 @@ const splitQueryOrSubscriptions = ({
 export default withApollo(
   ({ ctx, headers, initialState }) => {
 
-    // let authCookie = ctx.req.headers["set-cookie"] || [ctx.req.headers["cookie"]];
-    // get the authentication token from local storage if it exists
-    let token = undefined
+    // console.log("headers: ", headers)
+    // console.log("initialState: ", initialState)
 
     return new ApolloClient({
       link: ApolloLink.from([
         onErrorHandler,
+        authMiddleware,
         splitQueryOrSubscriptions({
           useWebsockets: !!process.browser,
           ctx: ctx,
-          httpLink:
-            new HttpLink({
-              uri: URI,
-              fetch: fetch,
-              fetchOptions: {
-                agent: new https.Agent({ rejectUnauthorized: false })
-              },
-              headers: {
-                'content-type': 'application/json',
-                cookie: ctx?.req?.headers?.cookie,
-                // authorization: token ? `Bearer ${token}` : "",
-                ...headers,
-              },
+          httpLink: new HttpLink({
+            uri: URI,
+            fetch: fetch,
+            fetchOptions: {
+              agent: new https.Agent({ rejectUnauthorized: false }),
               credentials: 'include',
-            }),
+            },
+            headers: {
+              'content-type': 'application/json',
+              cookie: ctx?.req?.headers?.cookie,
+              // authorization: token ? `Bearer ${token}` : "",
+              ...headers,
+            },
+            credentials: 'include',
+          }),
         })
       ]),
 

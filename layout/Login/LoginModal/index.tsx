@@ -82,30 +82,6 @@ const LoginPageModal: React.FC<ReactProps> = (props) => {
     }
   }
 
-  // React.useEffect(() => {
-  //   if (props.openModal) {
-  //     if (tabIndex === 0) {
-  //       analyticsEvent("View.Login")
-  //     }
-  //     if (tabIndex === 1) {
-  //       analyticsEvent("View.CreateAccount")
-  //     }
-  //     if (tabIndex === 2) {
-  //       analyticsEvent("View.PasswordReset")
-  //     }
-  //   }
-  // }, [props.openModal, tabIndex])
-
-  // React.useEffect(() => {
-  //   if (props.numUnclaimedOrders) {
-  //     if (tabIndex === 0) {
-  //       analyticsEvent("View.OrderClaim.Signup")
-  //     } else {
-  //       analyticsEvent("View.OrderClaim.Login")
-  //     }
-  //   }
-  // }, [])
-
 
   const renderButton = () => {
     if (!buttonType || buttonType === 'default') {

@@ -163,14 +163,14 @@ export const UserMenu: React.FC<ReactProps> = (props) => {
           </Link>
         </MenuItem>
 
-        {/* <MenuItem  className={classes.menuItem} onClick={handleCloseMenu}>
-          <Link href="/my-list">
+        <MenuItem  className={classes.menuItem} onClick={handleCloseMenu}>
+          <Link href="/offers">
             <a className={classes.menuLink}>
               <CardGiftcard className={classes.menuIcon}/>
-              <span className={classes.menuText}> Wishlist </span>
+              <span className={classes.menuText}> My Offers </span>
             </a>
           </Link>
-        </MenuItem  className={classes.menuItem}> */}
+        </MenuItem>
 
         <MenuItem className={classes.menuItem} onClick={handleCloseMenu}>
           <Link href="/settings">
@@ -199,16 +199,6 @@ export const UserMenu: React.FC<ReactProps> = (props) => {
               <span className={classes.menuText}> FAQ </span>
             </a>
           </Link>
-        </MenuItem>
-
-        <MenuItem className={classes.menuItem} onClick={() => {
-          handleCloseMenu();
-          goToModal.contactUs()
-        }}>
-          <a className={classes.menuLink}>
-            <ContactSupportIcon className={classes.menuIcon}/>
-            <span className={classes.menuText}> Contact Us </span>
-          </a>
         </MenuItem>
 
         <MenuItem className={classes.menuItem} onClick={() => {

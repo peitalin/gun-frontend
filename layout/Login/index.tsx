@@ -81,7 +81,7 @@ const Login: React.FC<ReactProps> = (props) => {
         dispatch(reduxBatchUpdate.userStore({ user: user }))
         handleUpdateLoginState(user)
         // if login/signup succeeded, and there is a redirect...
-        handleRedirect()
+        handleRedirect({ delay: props.redirectDelay ?? 0 })
         handleCallback()
       }
     },
@@ -112,7 +112,7 @@ const Login: React.FC<ReactProps> = (props) => {
       dispatch(reduxBatchUpdate.userStore({ user: user }))
       handleUpdateLoginState(user)
       // if login/signup succeeded, and there is a redirect...
-      handleRedirect()
+      handleRedirect({ delay: props.redirectDelay ?? 0 })
       handleCallback()
     },
     onError: (error) => {
@@ -172,13 +172,15 @@ const Login: React.FC<ReactProps> = (props) => {
     }
   }
 
-  const handleRedirect = () => {
+  const handleRedirect = ({ delay }) => {
     if (
       props.redirectOnComplete &&
       !(props.redirectOnComplete === 'none')
     ) {
       console.log("redirecting...")
-      router.replace(props.redirectOnComplete);
+      setTimeout(() => {
+        router.replace(props.redirectOnComplete);
+      }, delay)
     }
   }
 
@@ -402,6 +404,7 @@ const Login: React.FC<ReactProps> = (props) => {
 interface ReactProps extends WithStyles<typeof styles> {
   compact?: boolean;
   redirectOnComplete?: string;
+  redirectDelay?: number
   asFormLayout?: boolean;
   buttonProps?: any;
   buttonText?: string;

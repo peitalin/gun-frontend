@@ -58,6 +58,7 @@ const LoginPage: NextPage<ReactProps> = (props) => {
       <div className={classes.maxWidth}>
         <Login
           redirectOnComplete={from ?? "/"}
+          redirectDelay={500}
           initialTabIndex={0} // set initial tab to login page
           asFormLayout={true} // form, not modal
         />

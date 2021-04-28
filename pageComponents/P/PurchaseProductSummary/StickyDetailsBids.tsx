@@ -46,7 +46,7 @@ const StickyDetailsBid = (props: ReactProps) => {
     if (router.query?.bidId) {
       // console.log("bidId: ", router.query.bidId)
       // console.log("bid: ", userBid)
-      if (router.query.bidId === userBid?.id) {
+      if (router.query?.bidId === userBid?.id) {
         props.setSelectedBid(userBid)
         snackbar.enqueueSnackbar(
           `Seller accepts your bid of ${offerPrice}`,
@@ -54,7 +54,7 @@ const StickyDetailsBid = (props: ReactProps) => {
         )
       }
     }
-  }, [])
+  }, [userBid])
 
   return (
     <div className={clsx(

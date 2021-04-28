@@ -135,8 +135,6 @@ const ProductPanel: React.FC<ReactProps> = (props) => {
 
           <div className={clsx(
             classes.buttonContainer,
-            'aos-animate',
-            'glow-button',
           )}>
             <ButtonLoading
               replaceTextWhenLoading={true}
@@ -161,8 +159,6 @@ const ProductPanel: React.FC<ReactProps> = (props) => {
                 : chatRoom?.buyerChatStatus === ChatRoomStatus.ARCHIVED
                   ? classes.blueButton
                   : classes.yellowButton,
-                'aos-animate',
-                "glow-button",
               )}
               style={{
               }}

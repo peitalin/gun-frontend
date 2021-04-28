@@ -13,8 +13,6 @@ import CardActionArea from "@material-ui/core/CardActionArea";
 import CardMedia from "@material-ui/core/CardMedia";
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
-// Analytics
-import { useAnalytics, analyticsEvent } from "utils/analytics";
 
 
 

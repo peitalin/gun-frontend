@@ -27,8 +27,6 @@ import AlignCenterLayout from "components/AlignCenterLayout";
 // Router
 import { useRouter } from "next/router";
 import Suspended from "./Suspended";
-// Analytics
-import { useAnalytics } from "utils/analytics";
 // pagination
 import { useQuery } from "@apollo/client";
 import {

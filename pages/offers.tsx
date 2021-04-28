@@ -50,6 +50,7 @@ const OffersPage: NextPage<ReactProps> = (props) => {
 
 const styles = (theme: Theme) => createStyles({
   contentContainerPublicPage: {
+    position: "relative",
     flexGrow: 1,
     display: 'flex',
     flexDirection: 'column',

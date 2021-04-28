@@ -13,8 +13,6 @@ import ThumbnailImage from "./ThumbnailImage";
 import ThumbnailVideo from "./ThumbnailVideo";
 import AirCarousel from "components/AirCarousel";
 import AirItemWide from "components/AirCarousel/AirItemWide";
-// Analytics
-import { useAnalytics, analyticsEvent } from "utils/analytics";
 
 
 
@@ -86,9 +84,6 @@ const BottomImageCarouselDesktop: React.FC<ReactProps> = (props) => {
                         onClick={() => {
                           handleImageClick(previewItem)
                           setIndex(i)
-                          analyticsEvent("Product.Preview.Pressed", {
-                            previewIndex: i
-                          })
                         }}
                       />
                     : <ThumbnailVideo
@@ -96,9 +91,6 @@ const BottomImageCarouselDesktop: React.FC<ReactProps> = (props) => {
                         onClick={() => {
                           handleImageClick(previewItem)
                           setIndex(i)
-                          analyticsEvent("Product.Preview.Pressed", {
-                            previewIndex: i
-                          })
                         }}
                       />
                   }

@@ -26,7 +26,7 @@ const ProductPage: NextPage<ReactProps> = (props) => {
   const previewItem = p?.featuredVariant?.previewItems?.pop();
   const img = previewItem?.image
   const imgVariant = img?.variants?.find(v => v.widthInPixels === 400)
-  console.log("IMG: ", img)
+  // console.log("IMG: ", img)
 
   return (
     <>

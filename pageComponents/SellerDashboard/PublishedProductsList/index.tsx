@@ -39,8 +39,6 @@ import EmptyProductList from "pageComponents/SellerDashboard/PublishedProductsLi
 import PaginateButtons from "components/Paginators/PaginateButtons";
 import { useQuery, useLazyQuery, DocumentNode } from "@apollo/client";
 import { DASHBOARD_PRODUCTS_CONNECTION } from "queries/store-queries";
-// Analytics
-import { useAnalytics } from "utils/analytics";
 // Search Component
 import SearchOptions, { SelectOption, setCategoryFacets } from "components/SearchOptions";
 import {

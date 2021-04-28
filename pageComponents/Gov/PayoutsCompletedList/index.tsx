@@ -27,8 +27,6 @@ import Typography from "@material-ui/core/Typography";
 // Media query
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
-// Analytics
-import { useAnalytics } from "utils/analytics";
 // Graphql
 import { useQuery, useLazyQuery } from "@apollo/client";
 // snackbar
