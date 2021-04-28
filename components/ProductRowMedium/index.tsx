@@ -213,7 +213,7 @@ const styles = (theme: Theme) => createStyles({
     display: 'flex',
     flexDirection: 'row',
     flexWrap: 'wrap',
-    padding: '0rem 0rem 1rem 1rem',
+    padding: '0.5rem 0rem 0.5rem 1rem',
   },
   flexGrow: {
     flexGrow: 1,

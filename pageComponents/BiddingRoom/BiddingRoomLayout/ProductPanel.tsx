@@ -61,7 +61,7 @@ const ProductPanel: React.FC<ReactProps> = (props) => {
   }
 
   const theme = useTheme();
-  const xsDown = useMediaQuery(theme.breakpoints.down('xs'));
+  const mdDown = useMediaQuery(theme.breakpoints.down('md'));
 
   const chatRoomId = chatRoom?.id
   const product = chatRoom?.product
@@ -112,14 +112,14 @@ const ProductPanel: React.FC<ReactProps> = (props) => {
         product &&
         <div className={classes.productBidsContainer}>
           <div className={classes.productCardBox}>
-            <div className={classes.marginOffset}>
+            <div className={mdDown ? null : classes.marginOffset}>
               <ProductRowMedium
                 product={product}
                 loading={loading}
                 imageSize={{
                   mobile: {
-                    width: 82.5,
-                    height: 50,
+                    width: 90,
+                    height: 60,
                   },
                   desktop: {
                     width: 108,
@@ -133,7 +133,11 @@ const ProductPanel: React.FC<ReactProps> = (props) => {
             </Typography>
           </div>
 
-          <div className={classes.buttonContainer}>
+          <div className={clsx(
+            classes.buttonContainer,
+            'aos-animate',
+            'glow-button',
+          )}>
             <ButtonLoading
               replaceTextWhenLoading={true}
               loading={loading}
@@ -156,7 +160,9 @@ const ProductPanel: React.FC<ReactProps> = (props) => {
                   : classes.yellowButton
                 : chatRoom?.buyerChatStatus === ChatRoomStatus.ARCHIVED
                   ? classes.blueButton
-                  : classes.yellowButton
+                  : classes.yellowButton,
+                'aos-animate',
+                "glow-button",
               )}
               style={{
               }}
