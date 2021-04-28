@@ -10,6 +10,9 @@ import { onError } from '@apollo/link-error';
 import { WebSocketLink } from '@apollo/link-ws';
 import { getMainDefinition } from '@apollo/client/utilities';
 
+import * as React from "react";
+import { SubscriptionClient } from "subscriptions-transport-ws";
+
 // Switches between unfetch & node-fetch for client & server.
 import fetch from 'isomorphic-unfetch'
 import withApollo from 'next-with-apollo';
@@ -28,8 +31,6 @@ if (process.env.NODE_ENV === "development") {
   console.log("Graphql SERVER_URI: ", SERVER_URI)
   console.log("NODE_ENV: ", process.env.NODE_ENV)
 }
-
-import { NextPageContext } from 'next';
 
 
 
@@ -54,33 +55,20 @@ const onErrorHandler = onError(({ graphQLErrors, networkError }) => {
 const splitQueryOrSubscriptions = ({
   httpLink,
   useWebsockets,
-  ctx,
-}: { httpLink: HttpLink, useWebsockets: boolean, ctx: NextPageContext }) => {
+  wsLink,
+}: { httpLink: HttpLink, useWebsockets: boolean, wsLink: WebSocketLink }) => {
 
   if (!useWebsockets) {
     // if server-side (ssr), return normal httpLink
     return httpLink
   }
+  // client-side only, errors if you instantiate wsLink on the server.
+  // https://github.com/apollographql/subscriptions-transport-ws/issues/333#issuecomment-359261024
+
   // splits requests based on operation type:
   // - subscriptions => websockets
   // - queries/mutations => http
   // https://www.apollographql.com/docs/react/data/subscriptions/
-
-  // client-side only, errors if you instantiate wsLink on the server.
-  // https://github.com/apollographql/subscriptions-transport-ws/issues/333#issuecomment-359261024
-  const wsLink = new WebSocketLink({
-    uri: WS_URI,
-    options: {
-      reconnect: true,
-      connectionParams: () => ({
-        headers: {
-          // "x-hasura-admin-secret": "",
-          "content-type": "application/json",
-        },
-      }),
-    }
-  })
-
   const isSubscriptionQuery = ({ query }: { query: DocumentNode }) => {
     const definition = getMainDefinition(query);
     return (
@@ -96,124 +84,6 @@ const splitQueryOrSubscriptions = ({
   )
 }
 
-const authMiddleware = new ApolloLink((operation, forward) => {
-  // add the authorization to the headers
-  operation.setContext(({ headers = {} }) => ({
-    headers: {
-      ...headers,
-      authorization: 'AUTHO',
-    }
-  }));
-
-  return forward(operation);
-})
-
-
-// SSR Apollo. Function to return a new instance of ApolloClient
-// with every request.
-// For Client side
-export default withApollo(
-  ({ ctx, headers, initialState }) => {
-
-    // console.log("headers: ", headers)
-    // console.log("initialState: ", initialState)
-
-    return new ApolloClient({
-      link: ApolloLink.from([
-        onErrorHandler,
-        authMiddleware,
-        splitQueryOrSubscriptions({
-          useWebsockets: !!process.browser,
-          ctx: ctx,
-          httpLink: new HttpLink({
-            uri: URI,
-            fetch: fetch,
-            fetchOptions: {
-              agent: new https.Agent({ rejectUnauthorized: false }),
-              credentials: 'include',
-            },
-            headers: {
-              'content-type': 'application/json',
-              cookie: ctx?.req?.headers?.cookie,
-              // authorization: token ? `Bearer ${token}` : "",
-              ...headers,
-            },
-            credentials: 'include',
-          }),
-        })
-      ]),
-
-      ssrMode: true,
-
-      cache: new InMemoryCache(cacheOptions),
-      // cache: new InMemoryCache(),
-
-    })
-  }
-)
-
-
-
-
-
-
-///////////////////////////////////////////
-///// For Server side only (within docker)
-///////////////////////////////////////////
-
-// process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'
-export const serverApolloClient = (ctx) => {
-
-  return new ApolloClient({
-    // link: ApolloLink.from([
-    //   onErrorHandler,
-    //   new HttpLink({
-    //     uri: SERVER_URI,
-    //     fetch: fetch,
-    //     fetchOptions: {
-    //       agent: new https.Agent({ rejectUnauthorized: false })
-    //     },
-    //     headers: {
-    //       'content-type': 'application/json',
-    //       cookie: ctx?.req?.headers?.cookie
-    //     },
-    //     // Don't add all req headers, will request itself instead of gateway.
-    //     // https://github.com/apollographql/apollo-client/issues/4193
-    //     credentials: 'include',
-    //   })
-    // ]),
-
-    link: ApolloLink.from([
-      onErrorHandler,
-      splitQueryOrSubscriptions({
-        useWebsockets: !!process.browser,
-        ctx: ctx,
-        httpLink:
-          new HttpLink({
-            uri: URI,
-            fetch: fetch,
-            fetchOptions: {
-              agent: new https.Agent({ rejectUnauthorized: false })
-            },
-            headers: {
-              'content-type': 'application/json',
-              cookie: ctx?.req?.headers?.cookie,
-              // authorization: token ? `Bearer ${token}` : "",
-            },
-            credentials: 'include',
-          }),
-      })
-    ]),
-
-    ssrMode: true,
-
-    cache: new InMemoryCache(cacheOptions),
-    // cache: new InMemoryCache(),
-
-    defaultOptions: defaultOptions,
-
-  })
-}
 
 const cacheOptions = {
   addTypename: true,
@@ -346,18 +216,144 @@ const defaultOptions: DefaultOptions = {
   },
 }
 
-let _authCookie: string | undefined = undefined;
-
-export const constructCookie = (): string => {
-  let cookie = "";
-  if (_authCookie) {
-    cookie = `gun-auth=${_authCookie}`;
+const wsLinkOptions = {
+  uri: WS_URI,
+  options: {
+    reconnect: true,
+    connectionParams: () => ({
+      headers: {
+        // "x-hasura-admin-secret": "",
+        "content-type": "application/json",
+      },
+    }),
   }
-  console.log("cookie going out:",cookie)
-  return cookie;
-};
+}
+
+const httpLinkOptions = {
+  uri: URI ,
+  fetch: fetch,
+  fetchOptions: {
+    agent: new https.Agent({ rejectUnauthorized: false }),
+  },
+  headers: {
+    'content-type': 'application/json',
+  },
+  credentials: 'include',
+}
 
 
-export const storeToken = (token: string): void => {
-  _authCookie = token;
-};
+const aClient = new ApolloClient({
+  link: ApolloLink.from([
+    onErrorHandler,
+    splitQueryOrSubscriptions({
+      useWebsockets: !!process.browser,
+      wsLink: !!process.browser
+        ? new WebSocketLink(wsLinkOptions)
+        : undefined,
+      httpLink: new HttpLink(httpLinkOptions),
+    })
+  ]),
+
+  ssrMode: true,
+
+  cache: new InMemoryCache(cacheOptions),
+  // cache: new InMemoryCache(),
+})
+
+
+
+
+export const useWsRenewableApolloClient = (userId: string) => {
+
+  const subscriptionClient = React.useRef<SubscriptionClient>(null);
+
+  React.useEffect(() => {
+    console.log("hook detectec new userId:" , userId)
+    if (userId) {
+      if (subscriptionClient.current) {
+        subscriptionClient.current.close();
+      }
+      subscriptionClient.current = new SubscriptionClient(
+        WS_URI,
+        {
+          reconnect: true,
+          connectionParams: () => ({
+            headers: {
+              userId: userId,
+              // "x-hasura-admin-secret": "",
+              "content-type": "application/json",
+            },
+          }),
+        }
+      );
+    }
+  }, [userId]);
+
+  const splitLink = React.useMemo(() => {
+    const httpLink = new HttpLink(httpLinkOptions);
+
+    if (userId && subscriptionClient.current) {
+      const websocketLink = new WebSocketLink(subscriptionClient.current);
+
+      return splitQueryOrSubscriptions({
+        useWebsockets: !!process.browser,
+        wsLink: websocketLink,
+        httpLink: httpLink,
+      })
+    }
+    // return httpLink;
+    return splitQueryOrSubscriptions({
+      useWebsockets: !!process.browser,
+      wsLink: !!process.browser
+        ? new WebSocketLink(wsLinkOptions)
+        : undefined,
+      httpLink: httpLink,
+    })
+  }, [userId]);
+
+  React.useEffect(() => {
+    aClient.setLink(splitLink);
+  }, [splitLink]);
+
+  return aClient;
+}
+
+
+
+
+
+///////////////////////////////////////////
+///// For Server side only (within docker)
+///////////////////////////////////////////
+
+export const serverApolloClient = (ctx) => {
+  return new ApolloClient({
+    link: ApolloLink.from([
+      onErrorHandler,
+      splitQueryOrSubscriptions({
+        useWebsockets: false, // server has no websocket
+        wsLink: undefined,
+        httpLink:
+          new HttpLink({
+            uri: URI,
+            fetch: fetch,
+            fetchOptions: {
+              agent: new https.Agent({ rejectUnauthorized: false })
+            },
+            headers: {
+              'content-type': 'application/json',
+              cookie: ctx?.req?.headers?.cookie,
+              // authorization: token ? `Bearer ${token}` : "",
+            },
+            credentials: 'include',
+          }),
+      })
+    ]),
+
+    ssrMode: true,
+
+    cache: new InMemoryCache(cacheOptions),
+
+    defaultOptions: defaultOptions,
+  })
+}
