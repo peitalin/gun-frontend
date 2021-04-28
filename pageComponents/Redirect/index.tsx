@@ -14,6 +14,7 @@ import SnackbarA from "components/Snackbars/SnackbarA";
 // Components
 import { Colors } from "layout/AppTheme";
 import { useRouter } from "next/router";
+import { useSnackbar } from "notistack";
 
 
 
@@ -22,6 +23,7 @@ const Redirect = (props: ReactProps) => {
 
   const { classes, message } = props;
   const router = useRouter();
+  const snackbar = useSnackbar()
 
   React.useEffect(() => {
     if (props.redirectCondition) {
@@ -29,6 +31,10 @@ const Redirect = (props: ReactProps) => {
         router.push(props.redirectRoute)
       }, props.redirectDelay || 1000)
     }
+    snackbar.enqueueSnackbar(
+      props.snackBarMessage || "Redirecting to login...",
+      { variant: "info" }
+    );
   })
 
   return (
@@ -37,13 +43,6 @@ const Redirect = (props: ReactProps) => {
         <Typography variant="h4">
           <span>{props.message}</span>
         </Typography>
-        <SnackbarA
-          open={true}
-          closeSnackbar={() => {}}
-          message={props.snackBarMessage || "Redirecting..."}
-          variant={"info"}
-          autoHideDuration={9000}
-        />
       </div>
     </div>
   );
