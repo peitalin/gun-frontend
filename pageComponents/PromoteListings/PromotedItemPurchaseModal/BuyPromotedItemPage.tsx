@@ -168,9 +168,13 @@ const BuyPromotedItemPage = (props: ReactProps) => {
   // console.log("selectedProductOption: ", selectedProductOption)
   // console.log("selectedProduct: ", selectedProduct)
 
-  let expiresAt = dayjs(props?.promotedListItem?.expiresAt)
+  let expiresAt = !!props?.promotedListItem?.expiresAt
+    ? dayjs(props?.promotedListItem?.expiresAt)
+    : undefined
   let now = dayjs(new Date())
-  let notExpiredYet = now.unix() < expiresAt.unix()
+  let notExpiredYet = expiresAt !== undefined
+    ? now.unix() < expiresAt.unix()
+    : false
 
 
   let anotherUserOwnsSlot =
@@ -188,11 +192,11 @@ const BuyPromotedItemPage = (props: ReactProps) => {
   // console.log("userId:", user?.id)
   // console.log("anotherUserOwnsSlot:", anotherUserOwnsSlot)
   // console.log("anotherUserOwnsSlotNow:", anotherUserOwnsSlotNow)
-  // console.log("userOwnsSlot: ", userOwnsSlot)
-  // console.log("userOwnsSlotNow: ", userOwnsSlotNow)
+  console.log("userOwnsSlot: ", userOwnsSlot)
+  console.log("userOwnsSlotNow: ", userOwnsSlotNow)
 
   // console.log("slotIsFreeToPurchase: ", slotIsFreeToPurchase)
-  // console.log("expiresAt: ", expiresAt)
+  console.log("expiresAt: ", expiresAt)
   // console.log("now: ", now)
   // console.log("not expired yet: ", now.unix() < expiresAt.unix())
 
@@ -258,18 +262,21 @@ const BuyPromotedItemPage = (props: ReactProps) => {
           {
             userOwnsSlot
             ? "You own this slot."
-            : "Another user owns this slot."
+            : anotherUserOwnsSlotNow
+              ? "Another user owns this slot."
+              : "Slot free for purchase."
           }
         </div>
         <div>
           {
             // if someone currently owns slot
-            (expiresAt !== undefined)
-            && (userOwnsSlotNow || anotherUserOwnsSlotNow)
-              // and he currently owns the slot
-              ? `Ownership expires: ${expiresAt.format("YYYY-MM-DD HH:mm a")}`
-              // or he no longer owns it
-              : `Ownership expired: ${expiresAt.format("YYYY-MM-DD HH:mm a")}`
+            (expiresAt === undefined)
+              ? ``
+              : (userOwnsSlotNow || anotherUserOwnsSlotNow)
+                // and he currently owns the slot
+                ? `Ownership expires: ${expiresAt?.format("YYYY-MM-DD HH:mm a")}`
+                // or he no longer owns it
+                : `Ownership expired: ${expiresAt?.format("YYYY-MM-DD HH:mm a")}`
           }
         </div>
         <div className={classes.boldSubtitle}>

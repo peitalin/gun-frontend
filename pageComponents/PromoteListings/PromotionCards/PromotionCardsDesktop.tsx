@@ -80,60 +80,73 @@ const PromotionCardsDesktop = (props: ReactProps) => {
 
       <div className={classes.carouselContainer}>
         {
-          promotedItemsEdges?.map((promotedItemEdge, i) =>
-            <div key={promotedItemEdge?.node?.id + `_${i}`}
-              className={xsDown ? classes.productCardWrapperXs : classes.productCardWrapper}
-            >
-              <div className={clsx(
-                smDown ? classes.flexItemMobile : classes.flexItem,
-                !promotedItemEdge.node?.isAvailableForPurchase && classes.grayedOut,
-                "staggerFadeIn",
-                classes.flexItemHover,
-              )}>
-                <ProductCardResponsive
-                  product={
-                    // random generated products won't have productId
-                    // and will have isRandomFiller === true
-                    !promotedItemEdge?.node?.isRandomFiller
-                      ? promotedItemEdge?.node?.product
-                      : undefined
-                  }
-                  cardsPerRow={cardsPerRow}
-                  onClick={async(e) => {
-                    if (
-                      !promotedItemEdge?.node?.isAvailableForPurchase
-                      && props.user?.userRole !== Role.PLATFORM_ADMIN
-                    ) {
-                      snackbar.enqueueSnackbar(
-                        "Slot reserved for admins",
-                        { variant: "info" }
-                      )
-                      return
+          promotedItemsEdges?.map((promotedItemEdge, i) => {
+            return (
+              <div key={promotedItemEdge?.node?.id + `_${i}`}
+                className={xsDown ? classes.productCardWrapperXs : classes.productCardWrapper}
+              >
+                <div className={clsx(
+                  smDown ? classes.flexItemMobile : classes.flexItem,
+                  !promotedItemEdge.node?.isAvailableForPurchase && classes.grayedOut,
+                  "staggerFadeIn",
+                  classes.flexItemHover,
+                )}>
+                  <ProductCardResponsive
+                    product={
+                      // random generated products won't have productId
+                      // and will have isRandomFiller === true
+                      !promotedItemEdge?.node?.isRandomFiller
+                        ? promotedItemEdge?.node?.product
+                        : undefined
                     }
-                    props.onClick(e)
-                    if (props?.setPosition) {
-                      props.setPosition(i);
-                    }
-                    if (props?.setCurrentPromotedListItem) {
-                      props.setCurrentPromotedListItem(promotedItemEdge.node);
-                    }
-                  }}
-                  disableLoadingAnimation={true}
-                  previewImageEmptyMessage={
-                    // random generated products won't have productId
-                    // and will have isRandomFiller === true
-                    !promotedItemEdge?.node?.isRandomFiller &&
-                    promotedItemEdge?.node?.productId
-                      ? <div></div>
-                      : <div className={classes.previewImageEmptyMessageText}>
-                          {"Buy this slot for 2 days"} <br/>
-                          {`${c(promotedItemEdge?.node?.reservePrice ?? 500)}`}
+                    cardsPerRow={cardsPerRow}
+                    onClick={async(e) => {
+                      if (promotedItemEdge?.node?.isRandomFiller) {
+                        snackbar.enqueueSnackbar(
+                          "Slot has yet to be marked for sale by admins.",
+                          { variant: "info" }
+                        )
+                        return
+                      }
+                      if (
+                        !promotedItemEdge?.node?.isAvailableForPurchase
+                        && props.user?.userRole !== Role.PLATFORM_ADMIN
+                      ) {
+                        snackbar.enqueueSnackbar(
+                          "Slot reserved for admins",
+                          { variant: "info" }
+                        )
+                        return
+                      }
+                      props.onClick(e)
+                      if (props?.setPosition) {
+                        props.setPosition(i);
+                      }
+                      if (props?.setCurrentPromotedListItem) {
+                        props.setCurrentPromotedListItem(promotedItemEdge.node);
+                      }
+                    }}
+                    disableLoadingAnimation={true}
+                    previewImageEmptyMessage={
+                      // random generated products won't have productId
+                      // and will have isRandomFiller === true
+
+                      promotedItemEdge?.node?.isRandomFiller
+                      ? <div className={classes.previewImageEmptyMessageText}>
+                          {'Slot has not been made available for public sale by admins yet'}
                         </div>
-                  }
-                />
-              </div>
+                      : promotedItemEdge?.node?.productId
+                        ? <div></div>
+                        : <div className={classes.previewImageEmptyMessageText}>
+                            {"Buy this slot for 2 days"} <br/>
+                            {`${c(promotedItemEdge?.node?.reservePrice)}`}
+                          </div>
+                    }
+                  />
+                </div>
             </div>
-          )
+            )
+          })
         }
       </div>
     </main>
@@ -248,6 +261,8 @@ const styles = (theme: Theme) => createStyles({
     justifyContent: 'center',
     alignItems: 'center',
     textAlign: 'center',
+    marginLeft: "1rem",
+    marginRight: "1rem",
   },
   grayedOut: {
     // filter: "grayscale(1) blur(1px)",

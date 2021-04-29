@@ -308,12 +308,7 @@ interface MData3 {
   purchasePromotion: PromotionPurchaseMutationResponse
 }
 
-interface MVar4 {
-  promotionPurchaseId: string
-}
-interface MData4 {
-  capturePaymentForPromotionPurchase: PromotionPurchaseMutationResponse
-}
+
 
 /////////////// Styles /////////////
 const styles = (theme: Theme) => createStyles({

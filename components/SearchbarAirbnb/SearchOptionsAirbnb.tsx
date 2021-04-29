@@ -888,7 +888,7 @@ const styles = (theme: Theme) => createStyles({
     }),
   },
   searchShort: {
-    width: 250,
+    width: 260,
     transition: theme.transitions.create(['width', 'height'], {
       easing: theme.transitions.easing.sharp,
       duration: "200ms",
@@ -903,7 +903,7 @@ const styles = (theme: Theme) => createStyles({
     }),
   },
   searchButtonShort: {
-    width: 150,
+    width: 160,
     transition: theme.transitions.create(['width', 'height'], {
       easing: theme.transitions.easing.sharp,
       duration: "0ms",
