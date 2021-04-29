@@ -13,6 +13,7 @@ import {
   FacetsDistributionObject,
   FacetAttributes,
   Categories,
+  DealerState,
 } from "typings/gqlTypes";
 import {
   splitArrayIntoGrid,
@@ -89,6 +90,21 @@ export const useFacetSearchOptions = ({
     currentCategories,
     setCurrentCategories
   ] = React.useState<Categories[]>(undefined)
+
+  const [
+    dealerStates,
+    setDealerStates
+  ] = React.useState<DealerState[]>(undefined)
+
+  const [
+    calibers,
+    setCalibers
+  ] = React.useState<string[]>(undefined)
+
+  const [
+    actionTypes,
+    setActionTypes
+  ] = React.useState<string[]>(undefined)
 
   // for paging through swipeable-views
   const [index, setIndex] = React.useState(0);
@@ -238,6 +254,15 @@ export const useFacetSearchOptions = ({
     // category filters
     currentCategories,
     setCurrentCategories,
+    // dealer state filters
+    dealerStates,
+    setDealerStates,
+    // calibers filters
+    calibers,
+    setCalibers,
+    // actionType filters
+    actionTypes,
+    setActionTypes,
     // pagination
     paginationParams: {
       limit,
@@ -265,6 +290,12 @@ export interface FacetSearchParams {
   setFacets(a: any): void;
   currentCategories: Categories[],
   setCurrentCategories: React.Dispatch<React.SetStateAction<Categories[]>>
+  dealerStates: DealerState[],
+  setDealerStates: React.Dispatch<React.SetStateAction<DealerState[]>>
+  calibers: string[],
+  setCalibers: React.Dispatch<React.SetStateAction<string[]>>
+  actionTypes: string[],
+  setActionTypes: React.Dispatch<React.SetStateAction<string[]>>
   paginationParams: {
     limit: number; //
     offset: number;

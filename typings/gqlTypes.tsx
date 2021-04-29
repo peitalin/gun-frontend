@@ -1769,6 +1769,17 @@ export enum Dealers_Update_Column {
   STATE = 'state'
 }
 
+export enum DealerState {
+  ACT = 'ACT',
+  NSW = 'NSW',
+  NT = 'NT',
+  QLD = 'QLD',
+  SA = 'SA',
+  TAS = 'TAS',
+  VIC = 'VIC',
+  WA = 'WA'
+}
+
 export type EditUserPhoneNumberInput = {
   phoneNumber: Scalars['String'];
   areaCode?: Maybe<Scalars['String']>;
@@ -13399,9 +13410,12 @@ export type QuerySearchArgs = {
 
 
 export type QueryProductsByCategoryConnectionArgs = {
-  categorySlugs: Array<Maybe<Scalars['String']>>;
-  searchTerm?: Maybe<Scalars['String']>;
   query: ConnectionQuery;
+  categorySlugs: Array<Maybe<Scalars['String']>>;
+  dealerStates?: Maybe<Array<Maybe<Scalars['String']>>>;
+  calibers?: Maybe<Array<Maybe<Scalars['String']>>>;
+  actionTypes?: Maybe<Array<Maybe<Scalars['String']>>>;
+  searchTerm?: Maybe<Scalars['String']>;
 };
 
 

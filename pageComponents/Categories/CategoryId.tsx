@@ -80,6 +80,12 @@ const CategoryId: React.FC<ReactProps> = (props) => {
     setFacets,
     currentCategories,
     setCurrentCategories,
+    dealerStates,
+    setDealerStates,
+    calibers,
+    setCalibers,
+    actionTypes,
+    setActionTypes,
     paginationParams: {
       limit,
       offset,
@@ -106,6 +112,9 @@ const CategoryId: React.FC<ReactProps> = (props) => {
       ? [props.initialRouteCategory?.slug]
       : []
   )
+  const [dealerStatesForGql, setDealerStatesForGql] = React.useState([])
+  const [calibersForGql, setCalibersForGql] = React.useState([])
+  const [actionTypesForGql, setActionTypesForGql] = React.useState([])
 
   // rowMode by default on mobile
   const [rowMode, setRowMode] = React.useState(mdDown)
@@ -120,12 +129,14 @@ const CategoryId: React.FC<ReactProps> = (props) => {
     variables: {
       query: {
         limit: limit,
-        offset: offset
+        offset: offset,
       },
-      // categorySlug: props.initialRouteCategory?.slug
-      //   ?? (router?.query?.categorySlug as any),
+      // categorySlug: props.initialRouteCategory?.slug ?? (router?.query?.categorySlug as any),
       categorySlugs: categorySlugsForGql,
       // require button click to change search
+      dealerStates: dealerStates,
+      calibers: calibers,
+      actionTypes: actionTypes,
       searchTerm: searchTermForGql || "*",
       // require button click to change search
     },
@@ -156,6 +167,7 @@ const CategoryId: React.FC<ReactProps> = (props) => {
     totalCount: totalCount,
     searchTerm: searchTermForGql,
   })
+  console.log("productsConnection: ", productsConnection)
   // console.log("totalItemsInFacet: ", totalItemsInFacet)
   // console.log("initialRouteCategory: ", props.initialRouteCategory)
   // console.log("categorySlug: ", categorySlug)
@@ -200,12 +212,18 @@ const CategoryId: React.FC<ReactProps> = (props) => {
           setSearchTerm={setSearchTerm}
           facets={facets}
           setFacets={setFacets}
-          setCurrentCategories={setCurrentCategories}
-          currentCategories={currentCategories}
           orderBy={orderBy}
           setOrderBy={setOrderBy}
           priceRange={priceRange}
           setPriceRange={setPriceRange}
+          setCurrentCategories={setCurrentCategories}
+          currentCategories={currentCategories}
+          dealerStates={dealerStates}
+          setDealerStates={setDealerStates}
+          calibers={calibers}
+          setCalibers={setCalibers}
+          actionTypes={actionTypes}
+          setActionTypes={setActionTypes}
           paginationParams={{
             limit: limit,
             offset: offset,
@@ -306,6 +324,9 @@ interface QueryData1 {
 interface QueryVar1 {
   query: ConnectionQuery;
   categorySlugs?: string[];
+  dealerStates?: string[];
+  calibers?: string[];
+  actionTypes?: string[];
   searchTerm?: string;
 }
 

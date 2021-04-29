@@ -2,7 +2,7 @@ import React from "react";
 import { createStyles, Theme } from "@material-ui/core/styles";
 import { Colors } from "layout/AppTheme";
 // Typings
-import { Dealers } from "typings/gqlTypes";
+import { Dealers, DealerState } from "typings/gqlTypes";
 // Styles
 import { withStyles, WithStyles } from "@material-ui/core/styles";
 // Select Component
@@ -80,14 +80,14 @@ const createDealerSuggestions = (dealers: Dealers[]): GroupedSelectOption[] => {
 
 
   // 8 states
-  let ACTdealers = dealers.filter(d => d.state === "ACT")
-  let NSWdealers = dealers.filter(d => d.state === "NSW")
-  let NTdealers = dealers.filter(d => d.state === "NT")
-  let QLDdealers = dealers.filter(d => d.state === "QLD")
-  let SAdealers = dealers.filter(d => d.state === "SA")
-  let TASdealers = dealers.filter(d => d.state === "TAS")
-  let VICdealers = dealers.filter(d => d.state === "VIC")
-  let WAdealers = dealers.filter(d => d.state === "WA")
+  let ACTdealers = dealers.filter(d => d.state === DealerState.ACT)
+  let NSWdealers = dealers.filter(d => d.state === DealerState.NSW)
+  let NTdealers = dealers.filter(d => d.state === DealerState.NT)
+  let QLDdealers = dealers.filter(d => d.state === DealerState.QLD)
+  let SAdealers = dealers.filter(d => d.state === DealerState.SA)
+  let TASdealers = dealers.filter(d => d.state === DealerState.TAS)
+  let VICdealers = dealers.filter(d => d.state === DealerState.VIC)
+  let WAdealers = dealers.filter(d => d.state === DealerState.WA)
 
 
   return [

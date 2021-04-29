@@ -13,11 +13,10 @@ import DropdownInput from "components/Fields/DropdownInput";
 // router
 import { useRouter } from "next/router";
 // Typings
-import { UserPrivate, Dealer } from "typings/gqlTypes";
+import { UserPrivate, Dealer, DealerState } from "typings/gqlTypes";
 import { HtmlEvent, EditStoreInput } from "typings";
 // Validation
 import { FormikProps } from 'formik';
-import { Label } from "@material-ui/icons";
 
 
 
@@ -254,14 +253,14 @@ const CreateDealerFields: React.FC<ReactProps & FormikProps<FormikFields>> = (pr
 
 const createStateOptions = () => {
   return [
-    { label: "ACT", value: "ACT" },
-    { label: "NSW", value: "NSW" },
-    { label: "NT", value: "NT" },
-    { label: "QLD", value: "QLD" },
-    { label: "SA", value: "SA" },
-    { label: "TAS", value: "TAS" },
-    { label: "VIC", value: "VIC" },
-    { label: "WA", value: "WA" },
+    { label: "ACT", value: DealerState.ACT },
+    { label: "NSW", value: DealerState.NSW },
+    { label: "NT",  value: DealerState.NT },
+    { label: "QLD", value: DealerState.QLD },
+    { label: "SA",  value: DealerState.SA },
+    { label: "TAS", value: DealerState.TAS },
+    { label: "VIC", value: DealerState.VIC },
+    { label: "WA",  value: DealerState.WA },
   ]
 }
 

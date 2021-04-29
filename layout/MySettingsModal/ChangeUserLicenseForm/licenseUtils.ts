@@ -1,3 +1,4 @@
+import { DealerState } from "typings/gqlTypes";
 
 export interface SelectOption {
   label: string;
@@ -23,14 +24,14 @@ export const createLicenseCategorySuggestions = (): SelectOption[] => {
 
 export const createLicenseStateSuggestions = (): SelectOption[] => {
   return [
-    "ACT",
-    "NSW",
-    "NT",
-    "QLD",
-    "SA",
-    "TAS",
-    "VIC",
-    "WA",
+    DealerState.ACT,
+    DealerState.NSW,
+    DealerState.NT,
+    DealerState.QLD,
+    DealerState.SA,
+    DealerState.TAS,
+    DealerState.VIC,
+    DealerState.WA,
   ].map(c => {
     return {
       label: c,

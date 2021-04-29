@@ -291,12 +291,12 @@ const BuyPromotedItemPage = (props: ReactProps) => {
           product={selectedProduct}
           promotedListItem={props.promotedListItem}
           refetch={props.refetch}
-          title={`Buy for ${c(500)} AUD`}
+          title={`Buy for ${c(props.promotedListItem?.reservePrice)} AUD`}
           showIcon={true}
           display={true}
+          // selectedBid={props.selectedBid} // disabled, in future we may conduct auctions for slots
           // disableButton={!slotIsFreeToPurchase && isAdmin}
           // buttonHeight={xsDown ? '40px' : '40px'}
-          // selectedBid={props.selectedBid}
           handlePostPurchase={
             (p: PromotionPurchaseMutationResponse) => {
               // router.push("/orders")

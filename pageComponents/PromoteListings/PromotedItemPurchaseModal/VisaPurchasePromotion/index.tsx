@@ -123,7 +123,11 @@ const VisaPurchaseProduct = (props: ReactProps) => {
     let { paymentMethod, error } = await stripe.createPaymentMethod({
       type: 'card',
       card: elements.getElement(CardElement),
-      billing_details: { email: buyer?.email }
+      billing_details: {
+        email: buyer?.email,
+        // name: `${buyer?.firstName} ${buyer.lastName}`,
+        // phone: `${buyer?.phoneNumber?.countryCode} ${buyer?.phoneNumber?.number}`,
+      }
     })
     if (error) {
       snackbar.enqueueSnackbar(

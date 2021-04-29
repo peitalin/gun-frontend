@@ -32,6 +32,12 @@ const CategorySearchbar: React.FC<ReactProps & FacetSearchParams> = (props) => {
     setFacets,
     currentCategories,
     setCurrentCategories,
+    dealerStates,
+    setDealerStates,
+    calibers,
+    setCalibers,
+    actionTypes,
+    setActionTypes,
     paginationParams: {
       limit,
       offset,
@@ -81,14 +87,21 @@ const CategorySearchbar: React.FC<ReactProps & FacetSearchParams> = (props) => {
           searchTerm={searchTerm}
           setSearchTerm={setSearchTerm}
           onClickSearch={onClickSearch}
+          setOrderBy={setOrderBy}
+          setPriceRange={setPriceRange}
+          // facets
           // facets={facets}
           // setCategoryFacets={setCategoryFacets({ facets, setFacets })}
           setCurrentCategories={setCurrentCategories}
           currentCategories={currentCategories}
-          // this turns on category-page specific searchbar syncing
-          syncUrlToCategory={false}
-          setOrderBy={setOrderBy}
-          setPriceRange={setPriceRange}
+          syncUrlToCategory={false} // this turns on category-page specific searchbar syncing
+          dealerStates={dealerStates}
+          setDealerStates={setDealerStates}
+          calibers={calibers}
+          setCalibers={setCalibers}
+          actionTypes={actionTypes}
+          setActionTypes={setActionTypes}
+          // end facets
           placeholder={"Search for products..."}
           paginationParams={{
             totalCount: totalCount,

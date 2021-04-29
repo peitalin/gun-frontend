@@ -64,13 +64,19 @@ export const GET_PRODUCT = gql`
 
 export const GET_PRODUCTS_BY_CATEGORY = gql`
   query productsByCategoryConnection(
-    $categorySlugs: [String]!
     $query: ConnectionQuery!
+    $categorySlugs: [String]!
+    $dealerStates: [String]
+    $calibers: [String]
+    $actionTypes: [String]
     $searchTerm: String
   ) {
     productsByCategoryConnection(
-      categorySlugs: $categorySlugs
       query: $query
+      categorySlugs: $categorySlugs
+      dealerStates: $dealerStates
+      calibers: $calibers
+      actionTypes: $actionTypes
       searchTerm: $searchTerm
     ) {
       totalCount

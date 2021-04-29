@@ -40,6 +40,12 @@ const BannerCategoryPage = (props: ReactProps & FacetSearchParams) => {
     setFacets,
     currentCategories,
     setCurrentCategories,
+    dealerStates,
+    setDealerStates,
+    calibers,
+    setCalibers,
+    actionTypes,
+    setActionTypes,
     paginationParams: {
       limit,
       offset,
@@ -130,6 +136,12 @@ const BannerCategoryPage = (props: ReactProps & FacetSearchParams) => {
             setPriceRange={setPriceRange}
             currentCategories={currentCategories}
             setCurrentCategories={setCurrentCategories}
+            dealerStates={dealerStates}
+            setDealerStates={setDealerStates}
+            calibers={calibers}
+            setCalibers={setCalibers}
+            actionTypes={actionTypes}
+            setActionTypes={setActionTypes}
             paginationParams={{
               limit: limit,
               offset: offset,
@@ -178,6 +190,12 @@ const BannerCategoryPage = (props: ReactProps & FacetSearchParams) => {
             setPriceRange={setPriceRange}
             currentCategories={currentCategories}
             setCurrentCategories={setCurrentCategories}
+            dealerStates={dealerStates}
+            setDealerStates={setDealerStates}
+            calibers={calibers}
+            setCalibers={setCalibers}
+            actionTypes={actionTypes}
+            setActionTypes={setActionTypes}
             paginationParams={{
               limit: limit,
               offset: offset,
