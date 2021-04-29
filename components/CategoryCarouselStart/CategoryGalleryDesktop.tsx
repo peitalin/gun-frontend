@@ -26,30 +26,21 @@ const CategoryGalleryDesktop = (props: ReactProps) => {
     categories,
   } = props;
 
-  const theme = useTheme();
-  const xs = useMediaQuery(theme.breakpoints.only("xs"));
-  const sm = useMediaQuery(theme.breakpoints.only("sm"));
-  const md = useMediaQuery(theme.breakpoints.only("md"));
-  const lg = useMediaQuery(theme.breakpoints.only("lg"));
-  const xlUp = useMediaQuery(theme.breakpoints.up("xl"));
-
-  const smDown = useMediaQuery(theme.breakpoints.down("sm"));
 
   const getImgSizes = () => {
-
-    if (xlUp) {
+    if (props.screenSize === 'xl') {
       return {
         flexBasis: '25%',
       }
-    } else if (lg) {
+    } else if (props.screenSize === 'lg') {
       return {
         flexBasis: '50%',
       }
-    } else if (md) {
+    } else if (props.screenSize === 'md') {
       return {
         flexBasis: '50%',
       }
-    } else if (sm) {
+    } else if (props.screenSize === 'sm') {
       return {
         flexBasis: '50%',
       }
@@ -61,10 +52,7 @@ const CategoryGalleryDesktop = (props: ReactProps) => {
   }
 
   return (
-    <div
-      className={smDown ? classes.innerRootSm : classes.innerRoot}
-      style={props.style}
-    >
+    <div className={classes.innerRoot} style={props.style}>
       {
         (categories ?? []).map((c, i) => {
 
@@ -91,25 +79,25 @@ const CategoryGalleryDesktop = (props: ReactProps) => {
               style={getImgSizes()}
             >
               <AspectRatioConstraint>
-              <Link key={i}
-                href="/categories/[categorySlug]"
-                as={`/categories/${c?.slug}`}
-              >
-                <a className={classes.linkImage}>
-                  <CardMedia
-                    component="img"
-                    // className={classes.image}
-                    classes={{ media: classes.categoryImage }}
-                    src={imageUrl}
-                  />
-                  <Typography variant="body1"
-                    className={classes.cardText}
-                    style={props.cardTextStyle}
-                  >
-                    {c?.name}
-                  </Typography>
-                </a>
-              </Link>
+                <Link key={i}
+                  href="/categories/[categorySlug]"
+                  as={`/categories/${c?.slug}`}
+                >
+                  <a className={classes.linkImage}>
+                    <CardMedia
+                      component="img"
+                      // className={classes.image}
+                      classes={{ media: classes.categoryImage }}
+                      src={imageUrl}
+                    />
+                    <Typography variant="body1"
+                      className={classes.cardText}
+                      style={props.cardTextStyle}
+                    >
+                      {c?.name}
+                    </Typography>
+                  </a>
+                </Link>
               </AspectRatioConstraint>
             </div>
           )
@@ -125,6 +113,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   cardTextStyle?: any;
   categories: Categories[]
   initialNumItems?: number
+  screenSize: "xs" | "sm" | "md" | "lg" | "xl"
 }
 
 

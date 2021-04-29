@@ -30,42 +30,27 @@ const CategoryCarouselMobile = (props: ReactProps) => {
     categories,
   } = props;
 
-  const theme = useTheme();
-  const xs = useMediaQuery(theme.breakpoints.only("xs"));
-  const sm = useMediaQuery(theme.breakpoints.only("sm"));
-  const md = useMediaQuery(theme.breakpoints.only("md"));
-  const lg = useMediaQuery(theme.breakpoints.only("lg"));
-  const xl = useMediaQuery(theme.breakpoints.only("xl"));
-
-  const smDown = useMediaQuery(theme.breakpoints.down("sm"));
-
-
   const getScrollItemsForScreenSize = () => {
-    if (xs) {
+    if (props.screenSize === 'xs') {
       return 2.5
     }
-    if (sm) {
+    if (props.screenSize === 'sm') {
       return 2.5
     }
-    if (md) {
+    if (props.screenSize === 'md') {
       return 3
     }
-    if (lg) {
+    if (props.screenSize === 'lg') {
       return 4
     }
-    if (xl) {
+    if (props.screenSize === 'xl') {
       return 4
     } else {
-      // SSR loading
-      return -1
+      return 4
     }
   }
 
-  let numItems = getScrollItemsForScreenSize() === -1
-    ? props.initialNumItems
-    : getScrollItemsForScreenSize()
-
-  // console.log("initialNumItems", props.initialNumItems)
+  let numItems = getScrollItemsForScreenSize()
 
   return (
     <ErrorBounds className={classes.root} style={props.style}>
@@ -165,7 +150,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   style?: any;
   cardTextStyle?: any;
   categories: Categories[]
-  initialNumItems?: number
+  screenSize: "xs" | "sm" | "md" | "lg" | "xl"
 }
 
 
@@ -176,6 +161,7 @@ export const styles = (theme: Theme) => createStyles({
     justifyContent: 'center',
     alignItems: 'center',
     width: '100%',
+    maxWidth: '100vw',
   },
   innerRoot: {
     width: 'calc(100% - 0rem)',

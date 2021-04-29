@@ -15,7 +15,6 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 import Hidden from 'components/HiddenFix';
 import CategoryGalleryDesktop from "./CategoryGalleryDesktop";
 import CategoryCarouselMobile from "./CategoryCarouselMobile";
-import { shuffle } from "utils/misc";
 
 
 
@@ -51,11 +50,6 @@ const CategoryCarouselStart = (props: ReactProps) => {
   //   }
   // }
 
-  const theme = useTheme();
-  const smDown = useMediaQuery(theme.breakpoints.down("sm"))
-  const mdDown = useMediaQuery(theme.breakpoints.down("md"))
-  // console.log("INITIAL CATEGORIES", props.initialCategories)
-
 
   return (
     <div className={classes.categoryCarouselRoot}>
@@ -74,7 +68,7 @@ const CategoryCarouselStart = (props: ReactProps) => {
           style={props.style}
           cardTextStyle={props.cardTextStyle}
           categories={props.initialCategories}
-          initialNumItems={8}
+          screenSize={"xl"}
         />
       </Hidden>
 
@@ -84,17 +78,17 @@ const CategoryCarouselStart = (props: ReactProps) => {
           style={props.style}
           cardTextStyle={props.cardTextStyle}
           categories={props.initialCategories}
-          initialNumItems={6}
+          screenSize={"lg"}
         />
       </Hidden>
 
-      {/* mg */}
+      {/* md */}
       <Hidden only={["xs", "sm", "lg", "xl"]} implementation="css">
         <CategoryGalleryDesktop
           style={props.style}
           cardTextStyle={props.cardTextStyle}
           categories={props.initialCategories}
-          initialNumItems={4}
+          screenSize={"md"}
         />
       </Hidden>
 
@@ -104,7 +98,7 @@ const CategoryCarouselStart = (props: ReactProps) => {
           style={props.style}
           cardTextStyle={props.cardTextStyle}
           categories={props.initialCategories}
-          initialNumItems={2.5}
+          screenSize={"sm"}
         />
       </Hidden>
 
@@ -113,8 +107,8 @@ const CategoryCarouselStart = (props: ReactProps) => {
         <CategoryCarouselMobile
           style={props.style}
           cardTextStyle={props.cardTextStyle}
-            categories={props.initialCategories}
-          initialNumItems={2.5}
+          categories={props.initialCategories}
+          screenSize={"xs"}
         />
       </Hidden>
 
@@ -140,6 +134,7 @@ export interface CategoryPreviewCard {
 export const styles = (theme: Theme) => createStyles({
   categoryCarouselRoot: {
     width: '100%',
+    // maxWidth: '100vw',
   },
   title: {
     fontSize: '1.5rem',
