@@ -39,9 +39,16 @@ const FrontPage: React.FC<ReactProps> = (props) => {
   } = props;
 
   const theme = useTheme();
-  const xlUp = useMediaQuery(theme.breakpoints.up('xl'));
-  // const mdDown = useMediaQuery(theme.breakpoints.down('md'));
-  // const smDown = useMediaQuery(theme.breakpoints.down('sm'));
+  const mdDown = useMediaQuery(theme.breakpoints.down('md'));
+
+  const [showBelowFold, setShowBelowFold] = React.useState(false);
+
+  React.useEffect(() => {
+    if (process?.browser) {
+      setShowBelowFold(true)
+    }
+    // SSR reydrating issues if process.browser is not used in hook
+  }, [])
 
   // console.log("pageConfig => ", pageConfig)
   let cPadding = 2 // category carousel padding
@@ -121,12 +128,14 @@ const FrontPage: React.FC<ReactProps> = (props) => {
           })
         }
 
-        <BannerPromotionsLink
-          disableMetaHeader={true}
-        />
+        <div className={classes.bannerPromotionsContainer}>
+          <BannerPromotionsLink
+            disableMetaHeader={true}
+          />
+        </div>
 
         {
-          process.browser &&
+          showBelowFold &&
           pageConfig?.pageConfigSections?.slice(2)?.map(section => {
 
             if (section?.promotedListId) {
@@ -241,6 +250,10 @@ const styles = (theme: Theme) => createStyles({
   },
   width100: {
     width: '100%',
+  },
+  bannerPromotionsContainer: {
+    marginTop: '1rem',
+    marginBottom: '1rem',
   },
 });
 

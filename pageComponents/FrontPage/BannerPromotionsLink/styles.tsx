@@ -5,11 +5,9 @@ import { Colors, BorderRadius2x, fontFam, BorderRadius } from "layout/AppTheme";
 
 export const styles = (theme: Theme) => createStyles({
   rootDesktop: {
-    marginTop: "1rem",
     padding: '0rem 1rem',
   },
   rootMobile: {
-    marginTop: "1rem",
     padding: '0rem 0rem',
   },
   bannerInnerBoxLeft: {

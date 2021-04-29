@@ -42,7 +42,6 @@ const FeaturedProductsDesktop = (props: ReactProps) => {
   const theme = useTheme();
   // jumboXL preview card on sm screen size only, remove right margin
   const smDown = useMediaQuery(theme.breakpoints.down("sm"))
-  const xsDown = useMediaQuery(theme.breakpoints.down("xs"))
 
   const products = connection?.edges?.map(
     promotedItem => promotedItem.node.product

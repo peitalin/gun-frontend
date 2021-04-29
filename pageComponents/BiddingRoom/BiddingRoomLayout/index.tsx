@@ -36,38 +36,21 @@ export const BiddingRoomLayout: React.FC<ReactProps> = (props) => {
   const theme = useTheme();
   const mdDown = useMediaQuery(theme.breakpoints.down('md'));
 
-  // const { data, loading, error } = useSubscription<QueryData, QueryVar>(
-  //   SUBSCRIBE_USER_CONVERSATIONS, {
-  //     variables: {
-  //       messageLimit: userRedux?.id ? 20 : 5,
-  //       // login-logOut updates userRedux which prompots resubscribes
-  //     },
-  //     shouldResubscribe: true,
-  //     onSubscriptionData: ({ client, subscriptionData: { data }}) => {
-  //       console.log('bidding subscriptionData:', data)
-  //     },
-  //     onSubscriptionComplete: () => {
-  //       console.log('bidding subscriptions complete.')
-  //     },
-  //   },
-  // );
-
-  const [data, setData] = React.useState<QueryData>(undefined)
-
-  React.useEffect(() => {
-    const observer = aClient.subscribe<QueryData, QueryVar>({
-      query: SUBSCRIBE_USER_CONVERSATIONS,
+  const { data, loading, error } = useSubscription<QueryData, QueryVar>(
+    SUBSCRIBE_USER_CONVERSATIONS, {
       variables: {
-        messageLimit: 20,
+        messageLimit: userRedux?.id ? 20 : 5,
+        // login-logOut updates userRedux which prompots resubscribes
       },
-    })
-    const subscription = observer.subscribe(({ data }) => {
-      // console.log('SUBSCRIBE received', data)
-      setData(data);
-    })
-
-    return () => subscription.unsubscribe()
-  }, [userRedux])
+      shouldResubscribe: true,
+      onSubscriptionData: ({ client, subscriptionData: { data }}) => {
+        console.log('bidding subscriptionData:', data)
+      },
+      onSubscriptionComplete: () => {
+        console.log('bidding subscriptions complete.')
+      },
+    },
+  );
   // login-logOut updates userRedux which prompots resubscribes
 
 
@@ -79,13 +62,13 @@ export const BiddingRoomLayout: React.FC<ReactProps> = (props) => {
   return (
     <main className={classes.biddingRoomInnerLayout}>
 
-      {/* <LoadingBar
+      <LoadingBar
         absoluteTop
         color={Colors.ultramarineBlue}
         height={4}
         width={'100vw'}
         loading={loading}
-      /> */}
+      />
 
       <Typography variant="h2" className={classes.title}>
         Offers
