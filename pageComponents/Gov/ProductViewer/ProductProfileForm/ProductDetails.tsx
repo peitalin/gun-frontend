@@ -162,7 +162,7 @@ const ProductDetails = (props: ReactProps & FormikProps<FormikFields>) => {
                 excludedFromRecommends
               </Typography>
               <Typography className={classes.fieldInfo} variant="subtitle1">
-                {`${product?.isExcludedFromRecommendations ?? "-"}`}
+                {`${product?.isSoldElsewhere ?? "-"}`}
               </Typography>
             </div>
 

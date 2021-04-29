@@ -404,7 +404,7 @@ const createProductSuggestions = (p: Product[]): GroupedSelectOption[] => {
       && p.soldOutStatus === SoldOutStatus.AVAILABLE
       && !p.isSuspended
       && !p.isDeleted
-      && !p.isExcludedFromRecommendations
+      && !p.isSoldElsewhere
     )
   }
 

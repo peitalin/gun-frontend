@@ -167,7 +167,7 @@ export const ProductFragment = gql`
     isPublished
     isSuspended
     isDeleted
-    isExcludedFromRecommendations
+    isSoldElsewhere
     storeId
     soldOutStatus
 
@@ -493,7 +493,7 @@ export const OrdersFragment = gql`
       isPublished
       isSuspended
       isDeleted
-      isExcludedFromRecommendations
+      isSoldElsewhere
       storeId
       soldOutStatus
       currentSnapshot {

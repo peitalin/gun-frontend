@@ -6435,6 +6435,90 @@ export type Orders_Bool_Exp = {
   variantSnapshotId?: Maybe<String_Comparison_Exp>;
 };
 
+/** columns and relationships of "orders_complete_grouped_by_day" */
+export type Orders_Complete_Grouped_By_Day = {
+  __typename?: 'orders_complete_grouped_by_day';
+  day?: Maybe<Scalars['timestamp']>;
+  order_ids?: Maybe<Scalars['_text']>;
+};
+
+/** aggregated selection of "orders_complete_grouped_by_day" */
+export type Orders_Complete_Grouped_By_Day_Aggregate = {
+  __typename?: 'orders_complete_grouped_by_day_aggregate';
+  aggregate?: Maybe<Orders_Complete_Grouped_By_Day_Aggregate_Fields>;
+  nodes: Array<Orders_Complete_Grouped_By_Day>;
+};
+
+/** aggregate fields of "orders_complete_grouped_by_day" */
+export type Orders_Complete_Grouped_By_Day_Aggregate_Fields = {
+  __typename?: 'orders_complete_grouped_by_day_aggregate_fields';
+  count?: Maybe<Scalars['Int']>;
+  max?: Maybe<Orders_Complete_Grouped_By_Day_Max_Fields>;
+  min?: Maybe<Orders_Complete_Grouped_By_Day_Min_Fields>;
+};
+
+
+/** aggregate fields of "orders_complete_grouped_by_day" */
+export type Orders_Complete_Grouped_By_Day_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<Orders_Complete_Grouped_By_Day_Select_Column>>;
+  distinct?: Maybe<Scalars['Boolean']>;
+};
+
+/** order by aggregate values of table "orders_complete_grouped_by_day" */
+export type Orders_Complete_Grouped_By_Day_Aggregate_Order_By = {
+  count?: Maybe<Order_By>;
+  max?: Maybe<Orders_Complete_Grouped_By_Day_Max_Order_By>;
+  min?: Maybe<Orders_Complete_Grouped_By_Day_Min_Order_By>;
+};
+
+/**
+ * Boolean expression to filter rows from the table
+ * "orders_complete_grouped_by_day". All fields are combined with a logical 'AND'.
+ */
+export type Orders_Complete_Grouped_By_Day_Bool_Exp = {
+  _and?: Maybe<Array<Maybe<Orders_Complete_Grouped_By_Day_Bool_Exp>>>;
+  _not?: Maybe<Orders_Complete_Grouped_By_Day_Bool_Exp>;
+  _or?: Maybe<Array<Maybe<Orders_Complete_Grouped_By_Day_Bool_Exp>>>;
+  day?: Maybe<Timestamp_Comparison_Exp>;
+  order_ids?: Maybe<_Text_Comparison_Exp>;
+};
+
+/** aggregate max on columns */
+export type Orders_Complete_Grouped_By_Day_Max_Fields = {
+  __typename?: 'orders_complete_grouped_by_day_max_fields';
+  day?: Maybe<Scalars['timestamp']>;
+};
+
+/** order by max() on columns of table "orders_complete_grouped_by_day" */
+export type Orders_Complete_Grouped_By_Day_Max_Order_By = {
+  day?: Maybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type Orders_Complete_Grouped_By_Day_Min_Fields = {
+  __typename?: 'orders_complete_grouped_by_day_min_fields';
+  day?: Maybe<Scalars['timestamp']>;
+};
+
+/** order by min() on columns of table "orders_complete_grouped_by_day" */
+export type Orders_Complete_Grouped_By_Day_Min_Order_By = {
+  day?: Maybe<Order_By>;
+};
+
+/** ordering options when selecting data from "orders_complete_grouped_by_day" */
+export type Orders_Complete_Grouped_By_Day_Order_By = {
+  day?: Maybe<Order_By>;
+  order_ids?: Maybe<Order_By>;
+};
+
+/** select columns of table "orders_complete_grouped_by_day" */
+export enum Orders_Complete_Grouped_By_Day_Select_Column {
+  /** column name */
+  DAY = 'day',
+  /** column name */
+  ORDER_IDS = 'order_ids'
+}
+
 /** unique or primary key constraints on table "orders" */
 export enum Orders_Constraint {
   /** unique or primary key constraint */
@@ -8778,7 +8862,7 @@ export type Product = {
   /** Whether or not it has been deleted */
   isDeleted: Scalars['Boolean'];
   /** Whether or not a platform admin has hidden it from automatic lists */
-  isExcludedFromRecommendations: Scalars['Boolean'];
+  isSoldElsewhere: Scalars['Boolean'];
   /** Whether or not a platform admin has hidden it from search results */
   isExcludedFromSearch: Scalars['Boolean'];
   /** Whether or not it has been sold */
@@ -10476,7 +10560,7 @@ export type ProductPrivate = Product & {
   /** Whether or not it has been deleted */
   isDeleted: Scalars['Boolean'];
   /** Whether or not a platform admin has hidden it from automatic lists */
-  isExcludedFromRecommendations: Scalars['Boolean'];
+  isSoldElsewhere: Scalars['Boolean'];
   /** Whether or not a platform admin has hidden it from search results */
   isExcludedFromSearch: Scalars['Boolean'];
   /** Whether or not it has been sold */
@@ -10511,7 +10595,7 @@ export type ProductPublic = Product & {
   /** Whether or not it has been deleted */
   isDeleted: Scalars['Boolean'];
   /** Whether or not a platform admin has hidden it from automatic lists */
-  isExcludedFromRecommendations: Scalars['Boolean'];
+  isSoldElsewhere: Scalars['Boolean'];
   /** Whether or not a platform admin has hidden it from search results */
   isExcludedFromSearch: Scalars['Boolean'];
   /** Whether or not it has been sold */
@@ -10534,9 +10618,9 @@ export type Products = {
   currentSnapshotId: Scalars['String'];
   id: Scalars['String'];
   isDeleted: Scalars['Boolean'];
-  isExcludedFromRecommendations: Scalars['Boolean'];
   isExcludedFromSearch: Scalars['Boolean'];
   isPublished: Scalars['Boolean'];
+  isSoldElsewhere: Scalars['Boolean'];
   isSuspended: Scalars['Boolean'];
   lastPerformanceReview?: Maybe<Scalars['timestamptz']>;
   /** An array relationship */
@@ -10617,9 +10701,9 @@ export type Products_Bool_Exp = {
   currentSnapshotId?: Maybe<String_Comparison_Exp>;
   id?: Maybe<String_Comparison_Exp>;
   isDeleted?: Maybe<Boolean_Comparison_Exp>;
-  isExcludedFromRecommendations?: Maybe<Boolean_Comparison_Exp>;
   isExcludedFromSearch?: Maybe<Boolean_Comparison_Exp>;
   isPublished?: Maybe<Boolean_Comparison_Exp>;
+  isSoldElsewhere?: Maybe<Boolean_Comparison_Exp>;
   isSuspended?: Maybe<Boolean_Comparison_Exp>;
   lastPerformanceReview?: Maybe<Timestamptz_Comparison_Exp>;
   productVariants?: Maybe<Product_Variants_Bool_Exp>;
@@ -10644,9 +10728,9 @@ export type Products_Insert_Input = {
   currentSnapshotId?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
   isDeleted?: Maybe<Scalars['Boolean']>;
-  isExcludedFromRecommendations?: Maybe<Scalars['Boolean']>;
   isExcludedFromSearch?: Maybe<Scalars['Boolean']>;
   isPublished?: Maybe<Scalars['Boolean']>;
+  isSoldElsewhere?: Maybe<Scalars['Boolean']>;
   isSuspended?: Maybe<Scalars['Boolean']>;
   lastPerformanceReview?: Maybe<Scalars['timestamptz']>;
   productVariants?: Maybe<Product_Variants_Arr_Rel_Insert_Input>;
@@ -10737,9 +10821,9 @@ export type Products_Order_By = {
   currentSnapshotId?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   isDeleted?: Maybe<Order_By>;
-  isExcludedFromRecommendations?: Maybe<Order_By>;
   isExcludedFromSearch?: Maybe<Order_By>;
   isPublished?: Maybe<Order_By>;
+  isSoldElsewhere?: Maybe<Order_By>;
   isSuspended?: Maybe<Order_By>;
   lastPerformanceReview?: Maybe<Order_By>;
   productVariants_aggregate?: Maybe<Product_Variants_Aggregate_Order_By>;
@@ -10767,11 +10851,11 @@ export enum Products_Select_Column {
   /** column name */
   ISDELETED = 'isDeleted',
   /** column name */
-  ISEXCLUDEDFROMRECOMMENDATIONS = 'isExcludedFromRecommendations',
-  /** column name */
   ISEXCLUDEDFROMSEARCH = 'isExcludedFromSearch',
   /** column name */
   ISPUBLISHED = 'isPublished',
+  /** column name */
+  ISSOLDELSEWHERE = 'isSoldElsewhere',
   /** column name */
   ISSUSPENDED = 'isSuspended',
   /** column name */
@@ -10791,9 +10875,9 @@ export type Products_Set_Input = {
   currentSnapshotId?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
   isDeleted?: Maybe<Scalars['Boolean']>;
-  isExcludedFromRecommendations?: Maybe<Scalars['Boolean']>;
   isExcludedFromSearch?: Maybe<Scalars['Boolean']>;
   isPublished?: Maybe<Scalars['Boolean']>;
+  isSoldElsewhere?: Maybe<Scalars['Boolean']>;
   isSuspended?: Maybe<Scalars['Boolean']>;
   lastPerformanceReview?: Maybe<Scalars['timestamptz']>;
   soldOutStatus?: Maybe<Scalars['String']>;
@@ -10814,11 +10898,11 @@ export enum Products_Update_Column {
   /** column name */
   ISDELETED = 'isDeleted',
   /** column name */
-  ISEXCLUDEDFROMRECOMMENDATIONS = 'isExcludedFromRecommendations',
-  /** column name */
   ISEXCLUDEDFROMSEARCH = 'isExcludedFromSearch',
   /** column name */
   ISPUBLISHED = 'isPublished',
+  /** column name */
+  ISSOLDELSEWHERE = 'isSoldElsewhere',
   /** column name */
   ISSUSPENDED = 'isSuspended',
   /** column name */
@@ -12134,6 +12218,10 @@ export type Query = {
   orders_approved_grouped_by_day_aggregate: Orders_Approved_Grouped_By_Day_Aggregate;
   /** fetch data from the table: "orders" using primary key columns */
   orders_by_pk?: Maybe<Orders>;
+  /** fetch data from the table: "orders_complete_grouped_by_day" */
+  orders_complete_grouped_by_day: Array<Orders_Complete_Grouped_By_Day>;
+  /** fetch aggregated fields from the table: "orders_complete_grouped_by_day" */
+  orders_complete_grouped_by_day_aggregate: Orders_Complete_Grouped_By_Day_Aggregate;
   /** fetch data from the table: "page_config_sections" */
   page_config_sections: Array<Page_Config_Sections>;
   /** fetch aggregated fields from the table: "page_config_sections" */
@@ -12848,6 +12936,24 @@ export type QueryOrders_Approved_Grouped_By_Day_AggregateArgs = {
 
 export type QueryOrders_By_PkArgs = {
   id: Scalars['String'];
+};
+
+
+export type QueryOrders_Complete_Grouped_By_DayArgs = {
+  distinct_on?: Maybe<Array<Orders_Complete_Grouped_By_Day_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Orders_Complete_Grouped_By_Day_Order_By>>;
+  where?: Maybe<Orders_Complete_Grouped_By_Day_Bool_Exp>;
+};
+
+
+export type QueryOrders_Complete_Grouped_By_Day_AggregateArgs = {
+  distinct_on?: Maybe<Array<Orders_Complete_Grouped_By_Day_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Orders_Complete_Grouped_By_Day_Order_By>>;
+  where?: Maybe<Orders_Complete_Grouped_By_Day_Bool_Exp>;
 };
 
 
@@ -14517,6 +14623,10 @@ export type Subscription = {
   orders_approved_grouped_by_day_aggregate: Orders_Approved_Grouped_By_Day_Aggregate;
   /** fetch data from the table: "orders" using primary key columns */
   orders_by_pk?: Maybe<Orders>;
+  /** fetch data from the table: "orders_complete_grouped_by_day" */
+  orders_complete_grouped_by_day: Array<Orders_Complete_Grouped_By_Day>;
+  /** fetch aggregated fields from the table: "orders_complete_grouped_by_day" */
+  orders_complete_grouped_by_day_aggregate: Orders_Complete_Grouped_By_Day_Aggregate;
   /** fetch data from the table: "page_config_sections" */
   page_config_sections: Array<Page_Config_Sections>;
   /** fetch aggregated fields from the table: "page_config_sections" */
@@ -15016,6 +15126,24 @@ export type SubscriptionOrders_Approved_Grouped_By_Day_AggregateArgs = {
 
 export type SubscriptionOrders_By_PkArgs = {
   id: Scalars['String'];
+};
+
+
+export type SubscriptionOrders_Complete_Grouped_By_DayArgs = {
+  distinct_on?: Maybe<Array<Orders_Complete_Grouped_By_Day_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Orders_Complete_Grouped_By_Day_Order_By>>;
+  where?: Maybe<Orders_Complete_Grouped_By_Day_Bool_Exp>;
+};
+
+
+export type SubscriptionOrders_Complete_Grouped_By_Day_AggregateArgs = {
+  distinct_on?: Maybe<Array<Orders_Complete_Grouped_By_Day_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Orders_Complete_Grouped_By_Day_Order_By>>;
+  where?: Maybe<Orders_Complete_Grouped_By_Day_Bool_Exp>;
 };
 
 
@@ -17140,7 +17268,7 @@ export type ProductVariantsFragment = { __typename?: 'product_variants', variant
 
 export type UserLicenseFragment = { __typename?: 'user_licenses', id: string, licenseNumber: string, licenseCategory?: Maybe<string>, licenseExpiry: any, licenseState?: Maybe<string>, verified: boolean };
 
-type ProductFragment_ProductPrivate_ = { __typename?: 'ProductPrivate', id: string, createdAt?: Maybe<any>, updatedAt?: Maybe<any>, isPublished: boolean, isSuspended: boolean, isDeleted: boolean, isExcludedFromRecommendations: boolean, storeId: string, soldOutStatus: string, currentSnapshot: (
+type ProductFragment_ProductPrivate_ = { __typename?: 'ProductPrivate', id: string, createdAt?: Maybe<any>, updatedAt?: Maybe<any>, isPublished: boolean, isSuspended: boolean, isDeleted: boolean, isSoldElsewhere: boolean, storeId: string, soldOutStatus: string, currentSnapshot: (
     { __typename?: 'product_snapshots' }
     & ProductSnapshotsFragment
   ), featuredVariant: (
@@ -17151,7 +17279,7 @@ type ProductFragment_ProductPrivate_ = { __typename?: 'ProductPrivate', id: stri
         & UserLicenseFragment
       )> }> }>, category?: Maybe<{ __typename?: 'categories', id: string, name: string, slug?: Maybe<string>, categoryGroup: string }> };
 
-type ProductFragment_ProductPublic_ = { __typename?: 'ProductPublic', id: string, createdAt?: Maybe<any>, updatedAt?: Maybe<any>, isPublished: boolean, isSuspended: boolean, isDeleted: boolean, isExcludedFromRecommendations: boolean, storeId: string, soldOutStatus: string, currentSnapshot: (
+type ProductFragment_ProductPublic_ = { __typename?: 'ProductPublic', id: string, createdAt?: Maybe<any>, updatedAt?: Maybe<any>, isPublished: boolean, isSuspended: boolean, isDeleted: boolean, isSoldElsewhere: boolean, storeId: string, soldOutStatus: string, currentSnapshot: (
     { __typename?: 'product_snapshots' }
     & ProductSnapshotsFragment
   ), featuredVariant: (
@@ -17251,7 +17379,7 @@ type OrdersFragment_OrderAdmin_ = { __typename?: 'OrderAdmin', id?: Maybe<string
   )>, orderSnapshots?: Maybe<Array<Maybe<(
     { __typename?: 'OrderSnapshot' }
     & OrderSnapshotFragment
-  )>>>, product?: Maybe<{ __typename?: 'ProductPrivate', id: string, createdAt?: Maybe<any>, updatedAt?: Maybe<any>, isPublished: boolean, isSuspended: boolean, isDeleted: boolean, isExcludedFromRecommendations: boolean, storeId: string, soldOutStatus: string, currentSnapshot: (
+  )>>>, product?: Maybe<{ __typename?: 'ProductPrivate', id: string, createdAt?: Maybe<any>, updatedAt?: Maybe<any>, isPublished: boolean, isSuspended: boolean, isDeleted: boolean, isSoldElsewhere: boolean, storeId: string, soldOutStatus: string, currentSnapshot: (
       { __typename?: 'product_snapshots' }
       & ProductSnapshotsFragment
     ), featuredVariant: (
@@ -17298,7 +17426,7 @@ type OrdersFragment_OrderDealer_ = { __typename?: 'OrderDealer', id?: Maybe<stri
   )>, orderSnapshots?: Maybe<Array<Maybe<(
     { __typename?: 'OrderSnapshot' }
     & OrderSnapshotFragment
-  )>>>, product?: Maybe<{ __typename?: 'ProductPrivate', id: string, createdAt?: Maybe<any>, updatedAt?: Maybe<any>, isPublished: boolean, isSuspended: boolean, isDeleted: boolean, isExcludedFromRecommendations: boolean, storeId: string, soldOutStatus: string, currentSnapshot: (
+  )>>>, product?: Maybe<{ __typename?: 'ProductPrivate', id: string, createdAt?: Maybe<any>, updatedAt?: Maybe<any>, isPublished: boolean, isSuspended: boolean, isDeleted: boolean, isSoldElsewhere: boolean, storeId: string, soldOutStatus: string, currentSnapshot: (
       { __typename?: 'product_snapshots' }
       & ProductSnapshotsFragment
     ), featuredVariant: (
@@ -17345,13 +17473,13 @@ type OrdersFragment_OrderPublic_ = { __typename?: 'OrderPublic', id?: Maybe<stri
   )>, orderSnapshots?: Maybe<Array<Maybe<(
     { __typename?: 'OrderSnapshot' }
     & OrderSnapshotFragment
-  )>>>, product?: Maybe<{ __typename?: 'ProductPrivate', id: string, createdAt?: Maybe<any>, updatedAt?: Maybe<any>, isPublished: boolean, isSuspended: boolean, isDeleted: boolean, isExcludedFromRecommendations: boolean, storeId: string, soldOutStatus: string, currentSnapshot: (
+  )>>>, product?: Maybe<{ __typename?: 'ProductPrivate', id: string, createdAt?: Maybe<any>, updatedAt?: Maybe<any>, isPublished: boolean, isSuspended: boolean, isDeleted: boolean, isSoldElsewhere: boolean, storeId: string, soldOutStatus: string, currentSnapshot: (
       { __typename?: 'product_snapshots' }
       & ProductSnapshotsFragment
     ), featuredVariant: (
       { __typename?: 'product_variants' }
       & ProductVariantsFragment
-    ), category?: Maybe<{ __typename?: 'categories', id: string, name: string, slug?: Maybe<string>, categoryGroup: string }>, store?: Maybe<{ __typename?: 'StorePrivate', id: string, name?: Maybe<string>, userId: string, user?: Maybe<{ __typename?: 'UserPrivate', id: string }> }> } | { __typename?: 'ProductPublic', id: string, createdAt?: Maybe<any>, updatedAt?: Maybe<any>, isPublished: boolean, isSuspended: boolean, isDeleted: boolean, isExcludedFromRecommendations: boolean, storeId: string, soldOutStatus: string, currentSnapshot: (
+    ), category?: Maybe<{ __typename?: 'categories', id: string, name: string, slug?: Maybe<string>, categoryGroup: string }>, store?: Maybe<{ __typename?: 'StorePrivate', id: string, name?: Maybe<string>, userId: string, user?: Maybe<{ __typename?: 'UserPrivate', id: string }> }> } | { __typename?: 'ProductPublic', id: string, createdAt?: Maybe<any>, updatedAt?: Maybe<any>, isPublished: boolean, isSuspended: boolean, isDeleted: boolean, isSoldElsewhere: boolean, storeId: string, soldOutStatus: string, currentSnapshot: (
       { __typename?: 'product_snapshots' }
       & ProductSnapshotsFragment
     ), featuredVariant: (
@@ -17852,7 +17980,7 @@ export const OrdersFragmentFragmentDoc = gql`
     isPublished
     isSuspended
     isDeleted
-    isExcludedFromRecommendations
+    isSoldElsewhere
     storeId
     soldOutStatus
     currentSnapshot {
@@ -17906,7 +18034,7 @@ export const ProductFragmentFragmentDoc = gql`
   isPublished
   isSuspended
   isDeleted
-  isExcludedFromRecommendations
+  isSoldElsewhere
   storeId
   soldOutStatus
   currentSnapshot {
