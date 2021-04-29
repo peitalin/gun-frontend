@@ -83,18 +83,24 @@ ProductPage.getInitialProps = async (ctx: Context) => {
     };
   }
 
-  const { data } = await serverApolloClient(ctx).query<QueryData, QueryVar>({
-    query: GET_PRODUCT,
-    variables: {
-      productId: productId
-    },
-  })
-
-  // console.log('getInitialProps ProductPage: ', data);
-  return {
-    initialProduct: data?.getProductById,
-    classes: null,
-  };
+  try {
+    const { data } = await serverApolloClient(ctx).query<QueryData, QueryVar>({
+      query: GET_PRODUCT,
+      variables: {
+        productId: productId
+      },
+    })
+    // console.log('getInitialProps ProductPage: ', data);
+    return {
+      initialProduct: data?.getProductById,
+      classes: null,
+    };
+  } catch(e) {
+    return {
+      initialProduct: null,
+      classes: null,
+    };
+  }
 }
 
 export default ProductPage;

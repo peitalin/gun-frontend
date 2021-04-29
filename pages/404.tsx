@@ -2,6 +2,7 @@ import React from "react";
 import clsx from "clsx";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
+import { isThemeDark } from "layout/AppTheme";
 // Utils
 import ErrorBounds from "components/ErrorBounds";
 import Loading from "components/Loading";
@@ -38,17 +39,17 @@ const Error404Page = (props: ReactProps) => {
           The link you used may be broken,
         </Typography>
         <Typography>
-          or product listing may not exist.
+          or product listing may not be available.
         </Typography>
         {
           message &&
-          <Typography>
+          <Typography className={classes.message}>
             {message}
           </Typography>
         }
         {
           statusCode &&
-          <Typography>
+          <Typography className={classes.statusCode}>
             {`Status: ${statusCode}`}
           </Typography>
         }
@@ -106,22 +107,33 @@ const styles = (theme: Theme) => createStyles({
   title: {
     marginBottom: '1rem',
   },
+  message: {
+    fontWeight: 600,
+    marginTop: '0.5rem',
+    color: Colors.red,
+    // color: isThemeDark(theme)
+    //   ? Colors.uniswapLightestGrey
+    //   : Colors.slateGreyBlack,
+  },
+  statusCode: {
+    marginTop: '0.5rem',
+    color: isThemeDark(theme)
+      ? Colors.uniswapLightestGrey
+      : Colors.slateGreyBlack,
+  },
   link: {
     color: Colors.blue,
     "&:hover": {
       color: Colors.secondaryBright,
     }
   },
-  pageRecommendationsBox: {
-    marginTop: '2rem',
-    padding: '1rem',
-  },
   callToActionButton: {
-    backgroundColor: Colors.red,
+    backgroundColor: Colors.secondary,
     border: '0px solid #222',
     color: Colors.cream,
+    height: 40,
     "&:hover": {
-      backgroundColor: fade(Colors.red, 0.9),
+      backgroundColor: fade(Colors.secondary, 0.9),
       border: '0px solid #222',
       color: Colors.cream,
       transition: theme.transitions.create('backgroundColor', {
