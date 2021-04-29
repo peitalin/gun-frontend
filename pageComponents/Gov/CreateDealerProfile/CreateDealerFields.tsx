@@ -93,14 +93,14 @@ const CreateDealerFields: React.FC<ReactProps & FormikProps<FormikFields>> = (pr
     }
   };
 
-  const handleUpdateState = (option: { label: string, value: string }) => {
+  const handleUpdateState = (option: { label: string, value: string|DealerState }) => {
     if (!option.value) {
       fprops.setFieldValue('state', "")
       setSelectedState(undefined)
     } else {
       fprops.setFieldValue('state', option.value)
       setSelectedState({
-        value: option.value,
+        value: option.value as DealerState,
         label: option.label,
       })
     }
@@ -209,7 +209,7 @@ const CreateDealerFields: React.FC<ReactProps & FormikProps<FormikFields>> = (pr
           <DropdownInput
             className={classes.dropDown}
             stateShape={stateOptions[0]}
-            onChange={(option: { value: string, label: string }) =>
+            onChange={(option: { value: string, label: string|DealerState }) =>
               handleUpdateState(option)
             }
             options={stateOptions}

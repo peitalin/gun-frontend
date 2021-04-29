@@ -53,6 +53,12 @@ const SearchbarMain = (props: SearchbarProps) => {
     setFacets,
     currentCategories,
     setCurrentCategories,
+    dealerStates,
+    setDealerStates,
+    calibers,
+    setCalibers,
+    actionTypes,
+    setActionTypes,
     paginationParams: {
       limit,
       offset,
@@ -101,10 +107,17 @@ const SearchbarMain = (props: SearchbarProps) => {
       onClickSearch={onClickSearch}
       // facets={facets}
       // setCategoryFacets={setCategoryFacets({ facets, setFacets })}
-      setCurrentCategories={setCurrentCategories}
-      currentCategories={currentCategories}
       setOrderBy={setOrderBy}
       setPriceRange={setPriceRange}
+      setCurrentCategories={setCurrentCategories}
+      currentCategories={currentCategories}
+      dealerStates={dealerStates}
+      setDealerStates={setDealerStates}
+      calibers={calibers}
+      setCalibers={setCalibers}
+      actionTypes={actionTypes}
+      setActionTypes={setActionTypes}
+      // end facets
       placeholder={"Search for products..."}
       paginationParams={{
         totalCount: totalCount,
