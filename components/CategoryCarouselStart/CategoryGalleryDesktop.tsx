@@ -112,7 +112,6 @@ interface ReactProps extends WithStyles<typeof styles> {
   style?: any;
   cardTextStyle?: any;
   categories: Categories[]
-  initialNumItems?: number
   screenSize: "xs" | "sm" | "md" | "lg" | "xl"
 }
 
@@ -127,19 +126,6 @@ export const styles = (theme: Theme) => createStyles({
     alignItems: 'center',
     // flexWrap: 'wrap',
     padding: '0rem 0.5rem', // offset flexItem 0.5rem gutters
-  },
-  innerRootSm: {
-    // transform: 'translate(-10px, 0px)',
-    width: 'calc(100% - 0rem)',
-    paddingLeft: '0.25rem',
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    alignItems: 'flex-start',
-    padding: '0rem 0.5rem', // offset flexItem 0.5rem gutters
-  },
-  title: {
-    marginBottom: '0.5rem',
   },
   categoryImage: {
     display: "flex",

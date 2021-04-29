@@ -12,31 +12,18 @@ import Pagination from '@material-ui/lab/Pagination';
 import {
   Order_By,
   Categories,
+  DealerState,
 } from "typings/gqlTypes";
 // Select Component
-import dynamic from "next/dynamic";
-// const DropdownInput = dynamic(() => import("components/Fields/DropdownInput"), {
-//   loading: () => <div style={{
-//     height: 50,
-//     width: 250,
-//     border: `1px solid ${Colors.lightGrey}`,
-//     background: Colors.white,
-//     borderRadius: '4px',
-//   }}/>,
-//   ssr: false,
-// })
 import DropdownInput from "components/Fields/DropdownInput";
 import SearchOptionsPriceFilter from "./SearchOptionsPriceFilter";
 import CategoryDropdown from './CategoryDropdown';
+import DealerStateDropdown from './DealerStateDropdown';
 import SearchIcon from '@material-ui/icons/Search';
 import InputBase from '@material-ui/core/InputBase';
 
 import { useRouter } from "next/router";
 import { useSnackbar } from "notistack";
-
-// Responsiveness
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
 // Graphql
 import { GET_PRODUCT_CATEGORIES } from "queries/categories-queries";
 import { useQuery } from '@apollo/client';
@@ -59,6 +46,7 @@ const SearchOptionsAirbnb: React.FC<ReactProps> = (props) => {
     syncUrlToCategory = false,
     updateSetPageDelay = 128,
     disableCategories = false,
+    disableDealerStates = false,
     disableSearchFilter = false,
     disablePriceFilter = false,
     disableSortby = false,
@@ -180,9 +168,15 @@ const SearchOptionsAirbnb: React.FC<ReactProps> = (props) => {
 
   const [searchFocused, setSearchFocused] = React.useState(false)
   const [categoryFocused, setCategoryFocused] = React.useState(false)
+  const [dealerStateFocused, setDealerStateFocused] = React.useState(false)
+  const [caliberFocused, setCaliberFocused] = React.useState(false)
   const [mobileFocused, setMobileFocused] = React.useState(false)
 
-  const focused = searchFocused || categoryFocused || mobileFocused
+  const focused = searchFocused
+    || categoryFocused
+    || dealerStateFocused
+    || caliberFocused
+    || mobileFocused
 
   // console.log('focused: ', focused)
   // console.log('mobileFocused: ', mobileFocused)
@@ -312,6 +306,39 @@ const SearchOptionsAirbnb: React.FC<ReactProps> = (props) => {
                       ...(props.initialDropdownCategories ?? []),
                     ]
                 }
+              />
+            }
+
+            {
+              !disableDealerStates &&
+              <DealerStateDropdown
+                className={clsx(
+                  focused ? classes.height65 : classes.height50,
+                  isMobile ? classes.searchFilterButtonMobile2 : classes.searchFilterButtonDesktop,
+                  (isMobile && !focused) && classes.displayNoneDelayed,
+                  // hide on mobile when not focused
+                  dealerStateFocused && classes.boxShadow,
+                )}
+                dealerStates={props.dealerStates}
+                setDealerStates={(d) => {
+                  props.setDealerStates(d)
+                }}
+                setMobileFocused={(b: boolean) => {
+                  focusSearchOnMobile(true)
+                }}
+                setFocused={(b: boolean) => {
+                  setDealerStateFocused(b)
+                }}
+                dropDownItems={[
+                  DealerState.ACT,
+                  DealerState.NSW,
+                  DealerState.NT,
+                  DealerState.QLD,
+                  DealerState.SA,
+                  DealerState.TAS,
+                  DealerState.VIC,
+                  DealerState.WA,
+                ]}
               />
             }
 
@@ -562,18 +589,24 @@ export const selectStyles = ({ width }: { width?: any }) => ({
 
 interface ReactProps extends WithStyles<typeof styles> {
   id: string;
-  // order
-  setOrderBy?(a?: SelectOption): void;
   // search term
   searchTerm: string;
   setSearchTerm?(searchTerm?: string): void;
+  // order
+  setOrderBy?(a?: SelectOption): void;
+  // price range
+  setPriceRange?(a?: any): void;
   // Category Facets
   setCategoryFacets?(args: { categoryName?: string, clearFacets?: boolean }): void;
   facets?: string[];
   currentCategories?: Categories[];
   setCurrentCategories: React.Dispatch<React.SetStateAction<Categories[]>>
-  // price range
-  setPriceRange?(a?: any): void;
+  dealerStates: DealerState[],
+  setDealerStates: React.Dispatch<React.SetStateAction<DealerState[]>>
+  calibers: string[],
+  setCalibers: React.Dispatch<React.SetStateAction<string[]>>
+  actionTypes: string[],
+  setActionTypes: React.Dispatch<React.SetStateAction<string[]>>
   paginationParams: {
     limit: number
     offset?: number
@@ -599,6 +632,8 @@ interface ReactProps extends WithStyles<typeof styles> {
   paginatorStyles?: any;
   syncUrlToCategory?: boolean;
   disableCategories?: boolean;
+  disableDealerStates?: boolean;
+  disableCalibers?: boolean;
   disableSearchFilter?: boolean;
   disablePriceFilter?: boolean;
   disableSortby?: boolean;
@@ -853,7 +888,7 @@ const styles = (theme: Theme) => createStyles({
     }),
   },
   searchShort: {
-    width: 240,
+    width: 250,
     transition: theme.transitions.create(['width', 'height'], {
       easing: theme.transitions.easing.sharp,
       duration: "200ms",
@@ -868,7 +903,7 @@ const styles = (theme: Theme) => createStyles({
     }),
   },
   searchButtonShort: {
-    width: 140,
+    width: 150,
     transition: theme.transitions.create(['width', 'height'], {
       easing: theme.transitions.easing.sharp,
       duration: "0ms",
@@ -912,6 +947,9 @@ const styles = (theme: Theme) => createStyles({
   },
   searchFilterButtonMobile: {
     margin: '0.5rem',
+  },
+  searchFilterButtonMobile2: {
+    margin: '0rem 0.5rem 0.5rem 0.5rem',
   },
   searchButtonDesktop: {
     margin: '5px',
