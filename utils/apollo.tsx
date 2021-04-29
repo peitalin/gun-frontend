@@ -268,7 +268,7 @@ export const useWsRenewableApolloClient = (userId: string) => {
   const subscriptionClient = React.useRef<SubscriptionClient>(null);
 
   React.useEffect(() => {
-    console.log("hook detectec new userId:" , userId)
+    console.log("hook detected userId:" , userId)
     if (userId) {
       if (subscriptionClient.current) {
         subscriptionClient.current.close();

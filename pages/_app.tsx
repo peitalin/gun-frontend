@@ -93,6 +93,7 @@ const MainApp: NextComponentType<AppContext, AppInitialProps, AppProps & AppHOCP
   let state = store.getState()
   let userId = state.reduxLogin.user?.id
   console.log("MainApp userId: ", userId)
+  // console.log("_app pageProps: ", pageProps)
 
   // This client has hooks that force websockets to reconnect after auth
   //
@@ -105,7 +106,7 @@ const MainApp: NextComponentType<AppContext, AppInitialProps, AppProps & AppHOCP
   return (
     <Provider store={store}>
       <ApolloProvider client={apollo}>
-        <ThemeProviderDarkMode initialDarkModeSSR={pageProps.initialDarkModeSSR}>
+        <ThemeProviderDarkMode initialDarkModeSSR={pageProps?.initialDarkModeSSR}>
           <SnackbarProvider
           // @ts-ignore
             ref={notistackRef}
@@ -237,6 +238,7 @@ interface AppHOCProps extends WithStyles<typeof notifyStyles> {
 MainApp.getInitialProps = async (appContext) => {
 
     const appProps = await App.getInitialProps(appContext)
+    console.log("appProps: ", appProps)
     let ctx = appContext.ctx;
 
     let darkMode = (ctx.query?.dark === "true" || ctx.query?.dark === "1")
@@ -249,9 +251,6 @@ MainApp.getInitialProps = async (appContext) => {
     return {
       ...appProps,
       initialDarkModeSSR: darkMode,
-      pageProps: {
-        initialDarkModeSSR: darkMode,
-      }
     }
 }
 

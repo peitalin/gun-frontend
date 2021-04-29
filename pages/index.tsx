@@ -77,37 +77,27 @@ HomePage.getInitialProps = async (ctx: Context) => {
   // otherwise initialProps may be fed via /pages/index.tsx's getInitialProps
   const aClient = serverApolloClient(ctx);
 
-  try {
+  const { data } = await aClient.query<QueryData1, QueryVar1>({
+    query: GET_PAGE_CONFIG_BY_PATH,
+    variables: {
+      urlPath: "/"
+    }
+  })
 
-    const { data } = await aClient.query<QueryData1, QueryVar1>({
-      query: GET_PAGE_CONFIG_BY_PATH,
-      variables: {
-        urlPath: "/"
-      }
-    })
+  const { data: data2 } = await serverApolloClient(ctx).query<QueryData2, QueryVar2>({
+    query: GET_PRODUCT_CATEGORIES,
+  })
+  // console.log("getPageConfig: ", data?.getPageConfig)
+  // console.log("getProductCategories ssr: ", data2?.getProductCategories)
 
-    const { data: data2 } = await serverApolloClient(ctx).query<QueryData2, QueryVar2>({
-      query: GET_PRODUCT_CATEGORIES,
-    })
-    // console.log("2pageConfig: ", data?.getPageConfig)
-    // console.log("getProductCategories ssr: ", data2?.getProductCategories)
+  let initialCategories = data2?.getProductCategories ?? [];
+  // let initialCategories: Categories[] = categoryPreviewsBackup as any;
 
-    let initialCategories = data2?.getProductCategories;
-    // let initialCategories: Categories[] = categoryPreviewsBackup as any;
-
-    return {
-      initialCategories: initialCategories,
-      pageConfig: data?.getPageConfig,
-      classes: undefined,
-    };
-
-  } catch(e) {
-    return {
-      initialCategories: [],
-      pageConfig: undefined,
-      classes: undefined,
-    };
-  }
+  return {
+    initialCategories: initialCategories,
+    pageConfig: data?.getPageConfig,
+    classes: undefined,
+  };
 }
 
 
