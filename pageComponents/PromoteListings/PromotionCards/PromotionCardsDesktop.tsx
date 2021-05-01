@@ -101,7 +101,7 @@ const PromotionCardsDesktop = (props: ReactProps) => {
                     }
                     cardsPerRow={cardsPerRow}
                     onClick={async(e) => {
-                      if (promotedItemEdge?.node?.isRandomFiller) {
+                      if (!promotedItemEdge?.node?.isAvailableForPurchase) {
                         snackbar.enqueueSnackbar(
                           "Slot has yet to be marked for sale by admins.",
                           { variant: "info" }
@@ -131,7 +131,7 @@ const PromotionCardsDesktop = (props: ReactProps) => {
                       // random generated products won't have productId
                       // and will have isRandomFiller === true
 
-                      promotedItemEdge?.node?.isRandomFiller
+                      !promotedItemEdge?.node?.isAvailableForPurchase
                       ? <div className={classes.previewImageEmptyMessageText}>
                           {'Slot has not been made available for public sale by admins yet'}
                         </div>

@@ -3870,12 +3870,14 @@ export type Mutation = {
    * AccessRule – PLATFORM_ADMIN
    */
   createPayoutSplit: PayoutSplit;
+  initiatePageConfig?: Maybe<PageConfig>;
+  initiateCategories: Array<Categories>;
   /**
-   * Create a new promoted list.
+   * Create a new promoted list, or replace existing one if promoted_list_id clashes
    *
    * AccessRule – PLATFORM_ADMIN
    */
-  createPromotedList: PromotedListMutationResponse;
+  insertOrReplacePromotedList: PromotedListMutationResponse;
   /**
    * Delete a promoted list.
    *
@@ -5443,7 +5445,7 @@ export type MutationCreatePayoutSplitArgs = {
 };
 
 
-export type MutationCreatePromotedListArgs = {
+export type MutationInsertOrReplacePromotedListArgs = {
   name: Scalars['String'];
 };
 
@@ -5476,6 +5478,7 @@ export type MutationPurchasePromotionArgs = {
   stripeAuthorizePaymentData: Scalars['String'];
   currency?: Maybe<Scalars['String']>;
   bidId?: Maybe<Scalars['String']>;
+  durationInHours?: Maybe<Scalars['Int']>;
 };
 
 
@@ -11749,6 +11752,7 @@ export type Promotion_Purchases = {
   buyerId: Scalars['String'];
   createdAt: Scalars['timestamptz'];
   currency: Scalars['String'];
+  durationInHours?: Maybe<Scalars['Int']>;
   fees: Scalars['Int'];
   id: Scalars['String'];
   paymentIntentId: Scalars['String'];
@@ -11812,12 +11816,14 @@ export type Promotion_Purchases_Arr_Rel_Insert_Input = {
 /** aggregate avg on columns */
 export type Promotion_Purchases_Avg_Fields = {
   __typename?: 'promotion_purchases_avg_fields';
+  durationInHours?: Maybe<Scalars['Float']>;
   fees?: Maybe<Scalars['Float']>;
   total?: Maybe<Scalars['Float']>;
 };
 
 /** order by avg() on columns of table "promotion_purchases" */
 export type Promotion_Purchases_Avg_Order_By = {
+  durationInHours?: Maybe<Order_By>;
   fees?: Maybe<Order_By>;
   total?: Maybe<Order_By>;
 };
@@ -11830,6 +11836,7 @@ export type Promotion_Purchases_Bool_Exp = {
   buyerId?: Maybe<String_Comparison_Exp>;
   createdAt?: Maybe<Timestamptz_Comparison_Exp>;
   currency?: Maybe<String_Comparison_Exp>;
+  durationInHours?: Maybe<Int_Comparison_Exp>;
   fees?: Maybe<Int_Comparison_Exp>;
   id?: Maybe<String_Comparison_Exp>;
   paymentIntentId?: Maybe<String_Comparison_Exp>;
@@ -11847,6 +11854,7 @@ export enum Promotion_Purchases_Constraint {
 
 /** input type for incrementing integer column in table "promotion_purchases" */
 export type Promotion_Purchases_Inc_Input = {
+  durationInHours?: Maybe<Scalars['Int']>;
   fees?: Maybe<Scalars['Int']>;
   total?: Maybe<Scalars['Int']>;
 };
@@ -11856,6 +11864,7 @@ export type Promotion_Purchases_Insert_Input = {
   buyerId?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['timestamptz']>;
   currency?: Maybe<Scalars['String']>;
+  durationInHours?: Maybe<Scalars['Int']>;
   fees?: Maybe<Scalars['Int']>;
   id?: Maybe<Scalars['String']>;
   paymentIntentId?: Maybe<Scalars['String']>;
@@ -11871,6 +11880,7 @@ export type Promotion_Purchases_Max_Fields = {
   buyerId?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['timestamptz']>;
   currency?: Maybe<Scalars['String']>;
+  durationInHours?: Maybe<Scalars['Int']>;
   fees?: Maybe<Scalars['Int']>;
   id?: Maybe<Scalars['String']>;
   paymentIntentId?: Maybe<Scalars['String']>;
@@ -11885,6 +11895,7 @@ export type Promotion_Purchases_Max_Order_By = {
   buyerId?: Maybe<Order_By>;
   createdAt?: Maybe<Order_By>;
   currency?: Maybe<Order_By>;
+  durationInHours?: Maybe<Order_By>;
   fees?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   paymentIntentId?: Maybe<Order_By>;
@@ -11900,6 +11911,7 @@ export type Promotion_Purchases_Min_Fields = {
   buyerId?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['timestamptz']>;
   currency?: Maybe<Scalars['String']>;
+  durationInHours?: Maybe<Scalars['Int']>;
   fees?: Maybe<Scalars['Int']>;
   id?: Maybe<Scalars['String']>;
   paymentIntentId?: Maybe<Scalars['String']>;
@@ -11914,6 +11926,7 @@ export type Promotion_Purchases_Min_Order_By = {
   buyerId?: Maybe<Order_By>;
   createdAt?: Maybe<Order_By>;
   currency?: Maybe<Order_By>;
+  durationInHours?: Maybe<Order_By>;
   fees?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   paymentIntentId?: Maybe<Order_By>;
@@ -11950,6 +11963,7 @@ export type Promotion_Purchases_Order_By = {
   buyerId?: Maybe<Order_By>;
   createdAt?: Maybe<Order_By>;
   currency?: Maybe<Order_By>;
+  durationInHours?: Maybe<Order_By>;
   fees?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   paymentIntentId?: Maybe<Order_By>;
@@ -11973,6 +11987,8 @@ export enum Promotion_Purchases_Select_Column {
   /** column name */
   CURRENCY = 'currency',
   /** column name */
+  DURATIONINHOURS = 'durationInHours',
+  /** column name */
   FEES = 'fees',
   /** column name */
   ID = 'id',
@@ -11993,6 +12009,7 @@ export type Promotion_Purchases_Set_Input = {
   buyerId?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['timestamptz']>;
   currency?: Maybe<Scalars['String']>;
+  durationInHours?: Maybe<Scalars['Int']>;
   fees?: Maybe<Scalars['Int']>;
   id?: Maybe<Scalars['String']>;
   paymentIntentId?: Maybe<Scalars['String']>;
@@ -12005,12 +12022,14 @@ export type Promotion_Purchases_Set_Input = {
 /** aggregate stddev on columns */
 export type Promotion_Purchases_Stddev_Fields = {
   __typename?: 'promotion_purchases_stddev_fields';
+  durationInHours?: Maybe<Scalars['Float']>;
   fees?: Maybe<Scalars['Float']>;
   total?: Maybe<Scalars['Float']>;
 };
 
 /** order by stddev() on columns of table "promotion_purchases" */
 export type Promotion_Purchases_Stddev_Order_By = {
+  durationInHours?: Maybe<Order_By>;
   fees?: Maybe<Order_By>;
   total?: Maybe<Order_By>;
 };
@@ -12018,12 +12037,14 @@ export type Promotion_Purchases_Stddev_Order_By = {
 /** aggregate stddev_pop on columns */
 export type Promotion_Purchases_Stddev_Pop_Fields = {
   __typename?: 'promotion_purchases_stddev_pop_fields';
+  durationInHours?: Maybe<Scalars['Float']>;
   fees?: Maybe<Scalars['Float']>;
   total?: Maybe<Scalars['Float']>;
 };
 
 /** order by stddev_pop() on columns of table "promotion_purchases" */
 export type Promotion_Purchases_Stddev_Pop_Order_By = {
+  durationInHours?: Maybe<Order_By>;
   fees?: Maybe<Order_By>;
   total?: Maybe<Order_By>;
 };
@@ -12031,12 +12052,14 @@ export type Promotion_Purchases_Stddev_Pop_Order_By = {
 /** aggregate stddev_samp on columns */
 export type Promotion_Purchases_Stddev_Samp_Fields = {
   __typename?: 'promotion_purchases_stddev_samp_fields';
+  durationInHours?: Maybe<Scalars['Float']>;
   fees?: Maybe<Scalars['Float']>;
   total?: Maybe<Scalars['Float']>;
 };
 
 /** order by stddev_samp() on columns of table "promotion_purchases" */
 export type Promotion_Purchases_Stddev_Samp_Order_By = {
+  durationInHours?: Maybe<Order_By>;
   fees?: Maybe<Order_By>;
   total?: Maybe<Order_By>;
 };
@@ -12044,12 +12067,14 @@ export type Promotion_Purchases_Stddev_Samp_Order_By = {
 /** aggregate sum on columns */
 export type Promotion_Purchases_Sum_Fields = {
   __typename?: 'promotion_purchases_sum_fields';
+  durationInHours?: Maybe<Scalars['Int']>;
   fees?: Maybe<Scalars['Int']>;
   total?: Maybe<Scalars['Int']>;
 };
 
 /** order by sum() on columns of table "promotion_purchases" */
 export type Promotion_Purchases_Sum_Order_By = {
+  durationInHours?: Maybe<Order_By>;
   fees?: Maybe<Order_By>;
   total?: Maybe<Order_By>;
 };
@@ -12062,6 +12087,8 @@ export enum Promotion_Purchases_Update_Column {
   CREATEDAT = 'createdAt',
   /** column name */
   CURRENCY = 'currency',
+  /** column name */
+  DURATIONINHOURS = 'durationInHours',
   /** column name */
   FEES = 'fees',
   /** column name */
@@ -12081,12 +12108,14 @@ export enum Promotion_Purchases_Update_Column {
 /** aggregate var_pop on columns */
 export type Promotion_Purchases_Var_Pop_Fields = {
   __typename?: 'promotion_purchases_var_pop_fields';
+  durationInHours?: Maybe<Scalars['Float']>;
   fees?: Maybe<Scalars['Float']>;
   total?: Maybe<Scalars['Float']>;
 };
 
 /** order by var_pop() on columns of table "promotion_purchases" */
 export type Promotion_Purchases_Var_Pop_Order_By = {
+  durationInHours?: Maybe<Order_By>;
   fees?: Maybe<Order_By>;
   total?: Maybe<Order_By>;
 };
@@ -12094,12 +12123,14 @@ export type Promotion_Purchases_Var_Pop_Order_By = {
 /** aggregate var_samp on columns */
 export type Promotion_Purchases_Var_Samp_Fields = {
   __typename?: 'promotion_purchases_var_samp_fields';
+  durationInHours?: Maybe<Scalars['Float']>;
   fees?: Maybe<Scalars['Float']>;
   total?: Maybe<Scalars['Float']>;
 };
 
 /** order by var_samp() on columns of table "promotion_purchases" */
 export type Promotion_Purchases_Var_Samp_Order_By = {
+  durationInHours?: Maybe<Order_By>;
   fees?: Maybe<Order_By>;
   total?: Maybe<Order_By>;
 };
@@ -12107,12 +12138,14 @@ export type Promotion_Purchases_Var_Samp_Order_By = {
 /** aggregate variance on columns */
 export type Promotion_Purchases_Variance_Fields = {
   __typename?: 'promotion_purchases_variance_fields';
+  durationInHours?: Maybe<Scalars['Float']>;
   fees?: Maybe<Scalars['Float']>;
   total?: Maybe<Scalars['Float']>;
 };
 
 /** order by variance() on columns of table "promotion_purchases" */
 export type Promotion_Purchases_Variance_Order_By = {
+  durationInHours?: Maybe<Order_By>;
   fees?: Maybe<Order_By>;
   total?: Maybe<Order_By>;
 };
@@ -12490,6 +12523,17 @@ export type Query = {
    * AccessRule – PLATFORM_ADMIN
    */
   getOrdersAdminApprovedByIdsConnection: OrdersConnection;
+  /**
+   * Get completed orders grouped by day of approval
+   * AccessRule – PLATFORM_ADMIN
+   */
+  getCompleteOrderIdsGroupedByDay: Array<OrdersGroupedByDay>;
+  /**
+   * Works in conjunnction with getCompleteOrderIdsGroupedByDay()
+   * Get orders by orderIds in orderConnection form
+   * AccessRule – PLATFORM_ADMIN
+   */
+  getOrdersCompleteByIdsConnection: OrdersConnection;
   /**
    * List orders that have been approved by admin, and are ready to be paid
    * AccessRule – PLATFORM_ADMIN
@@ -13589,6 +13633,13 @@ export type QueryGetOrdersPendingApprovalConnectionAdminArgs = {
 
 
 export type QueryGetOrdersAdminApprovedByIdsConnectionArgs = {
+  orderIds: Array<Scalars['String']>;
+  limit: Scalars['Int'];
+  offset: Scalars['Int'];
+};
+
+
+export type QueryGetOrdersCompleteByIdsConnectionArgs = {
   orderIds: Array<Scalars['String']>;
   limit: Scalars['Int'];
   offset: Scalars['Int'];

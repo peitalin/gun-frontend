@@ -258,7 +258,7 @@ const BuyPromotedItemPage = (props: ReactProps) => {
       />
 
       <div className={classes.helpMessages}>
-        <div>
+        <div className={classes.helpMessage1}>
           {
             userOwnsSlot
             ? "You own this slot."
@@ -267,22 +267,32 @@ const BuyPromotedItemPage = (props: ReactProps) => {
               : "Slot free for purchase."
           }
         </div>
-        <div>
+        <div className={classes.helpMessage2}>
           {
             // if someone currently owns slot
             (expiresAt === undefined)
               ? ``
               : (userOwnsSlotNow || anotherUserOwnsSlotNow)
                 // and he currently owns the slot
-                ? `Ownership expires: ${expiresAt?.format("YYYY-MM-DD HH:mm a")}`
+                ? <>
+                    <span> Ownership valid until: </span>
+                    <span className={classes.time}>
+                      {`${expiresAt?.format("YYYY-MM-DD HH:mm a")}`}
+                    </span>
+                  </>
                 // or he no longer owns it
-                : `Ownership expired: ${expiresAt?.format("YYYY-MM-DD HH:mm a")}`
+                : <>
+                    <span> Ownership expired: </span>
+                    <span className={classes.timeExpired}>
+                      {`${expiresAt?.format("YYYY-MM-DD HH:mm a")}`}
+                    </span>
+                  </>
           }
         </div>
         <div className={classes.boldSubtitle}>
           {
             // if no one currently owns slot
-            (expiresAt !== undefined || !(userOwnsSlotNow || anotherUserOwnsSlotNow))
+            !(userOwnsSlotNow || anotherUserOwnsSlotNow)
             && "2. Purchase slot for your product"
           }
         </div>
@@ -557,6 +567,20 @@ const styles = (theme: Theme) => createStyles({
     flexDirection: "column",
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
+  },
+  helpMessage1: {
+    color: Colors.blue,
+  },
+  helpMessage2: {
+    color: Colors.blue,
+  },
+  time: {
+    color: Colors.green,
+    fontWeight: 600,
+  },
+  timeExpired: {
+    color: Colors.red,
+    fontWeight: 600,
   },
   boldSubtitle: {
     marginTop: "1rem",

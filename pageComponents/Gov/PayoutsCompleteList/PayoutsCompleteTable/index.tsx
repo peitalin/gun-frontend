@@ -17,8 +17,7 @@ import {
   ConnectionQuery
 } from "typings/gqlTypes";
 import {
-  GET_ORDERS_ADMIN_APPROVED_CONNECTION,
-  GET_ORDERS_ADMIN_APPROVED_BY_IDS_CONNECTION,
+  GET_ORDERS_COMPLETE_BY_IDS_CONNECTION,
 } from "queries/orders-admin-queries";
 // Pagination
 import { ConnectionQueryProps } from "components/Paginators/usePaginatePagedQueryHook";
@@ -46,7 +45,7 @@ import GridPaginatorGeneric from "components/GridPaginatorGeneric";
 
 
 
-const PayoutsApprovedTable: NextPage<ReactProps> = (props) => {
+const PayoutsCompleteTable: NextPage<ReactProps> = (props) => {
 
   //
   const {
@@ -91,7 +90,7 @@ const PayoutsApprovedTable: NextPage<ReactProps> = (props) => {
 
 
   const { data, loading, error } = useQuery<QueryData, QueryVar>(
-    GET_ORDERS_ADMIN_APPROVED_BY_IDS_CONNECTION, {
+    GET_ORDERS_COMPLETE_BY_IDS_CONNECTION, {
       variables: {
         orderIds: props.orderIds,
         limit: limit,
@@ -104,7 +103,7 @@ const PayoutsApprovedTable: NextPage<ReactProps> = (props) => {
 
   let refetchQueriesParams = [
     {
-      query: GET_ORDERS_ADMIN_APPROVED_BY_IDS_CONNECTION,
+      query: GET_ORDERS_COMPLETE_BY_IDS_CONNECTION,
       variables: {
         query: {
           orderIds: props.orderIds,
@@ -115,7 +114,7 @@ const PayoutsApprovedTable: NextPage<ReactProps> = (props) => {
     },
   ]
 
-  const ordersConnection = data?.getOrdersAdminApprovedByIdsConnection
+  const ordersConnection = data?.getOrdersCompleteByIdsConnection
 
 
   if (loading) {
@@ -134,22 +133,17 @@ const PayoutsApprovedTable: NextPage<ReactProps> = (props) => {
         <div className={classes.flexRow}>
           {
             !loading &&
-            <>
-              <span onClick={() => {
-                snackbar.enqueueSnackbar(
-                  `Copied "Payout ${showDate(props.day)}"`,
-                  { variant: "info" }
-                )
-                copy(`Payout ${showDate(props.day)}`)
-              }}>
-                <Typography className={classes.dateTitle}>
-                  {`Payouts for ${showDate(props.day)}`}
-                </Typography>
-              </span>
-              <Typography className={classes.dateTitle2}>
-                {'- Estimated 2 days unbonding'}
+            <span onClick={() => {
+              snackbar.enqueueSnackbar(
+                `Copied "Payout ${showDate(props.day)}"`,
+                { variant: "info" }
+              )
+              copy(`Payout ${showDate(props.day)}`)
+            }}>
+              <Typography className={classes.dateTitle}>
+                {`Payouts for ${showDate(props.day)}`}
               </Typography>
-            </>
+            </span>
           }
         </div>
         <SearchOptions
@@ -284,14 +278,13 @@ interface ReactProps extends WithStyles<typeof styles> {
   admin?: UserPrivate;
   day?: Date;
   orderIds: string[];
-  setLoading(a?: boolean): void;
 }
 interface TitleRowsProps extends WithStyles<typeof styles> {
   loading?: boolean;
 }
 
 interface QueryData {
-  getOrdersAdminApprovedByIdsConnection: OrdersConnection
+  getOrdersCompleteByIdsConnection: OrdersConnection
 }
 interface QueryVar {
   orderIds: string[]
@@ -407,4 +400,4 @@ const styles = (theme: Theme) => createStyles({
   },
 });
 
-export default withStyles(styles)( PayoutsApprovedTable );
+export default withStyles(styles)( PayoutsCompleteTable );

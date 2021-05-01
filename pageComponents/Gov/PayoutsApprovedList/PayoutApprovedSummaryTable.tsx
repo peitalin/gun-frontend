@@ -28,7 +28,7 @@ import { asCurrency as c } from "utils/prices";
 
 
 
-const PayoutSummaryTable = (props: ReactProps) => {
+const PayoutApprovedSummaryTable = (props: ReactProps) => {
 
   const {
     classes,
@@ -306,7 +306,7 @@ const styles = (theme: Theme) => createStyles({
   },
 });
 
-export default withStyles(styles)( PayoutSummaryTable );
+export default withStyles(styles)( PayoutApprovedSummaryTable );
 
 
 

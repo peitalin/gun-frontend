@@ -16,7 +16,7 @@ import {
 // Utils Components
 import ErrorBounds from "components/ErrorBounds";
 import LoadingBar from "components/LoadingBar";
-import PayoutSummaryTable from "./PayoutSummaryTable";
+import PayoutApprovedSummaryTable from "./PayoutApprovedSummaryTable";
 import ButtonLoading from "components/ButtonLoading";
 // Material UI
 import Typography from "@material-ui/core/Typography";
@@ -86,26 +86,11 @@ const PayoutsApprovedList = (props: ReactProps) => {
           console.log("oGroup: ", oGroup)
           return (
             <>
-              <div className={classes.flexRow}>
-                <span onClick={() => {
-                  snackbar.enqueueSnackbar(
-                    `Copied "Payouts for ${showDate(oGroup.day)}"`,
-                    { variant: "info" }
-                  )
-                  copy(`Payouts for ${showDate(oGroup.day)}`)
-                }}>
-                <Typography className={classes.dateTitle}>
-                  {`Payouts for ${showDate(oGroup.day)}`}
-                </Typography>
-                </span>
-                <Typography className={classes.dateTitle2}>
-                  {'- Estimated 2 days unbonding'}
-                </Typography>
-              </div>
               <PayoutsApprovedTable
                 admin={props.admin}
                 day={oGroup.day}
                 orderIds={oGroup.orderIds}
+                setLoading={setLoading}
               />
 
               <div className={classes.flexRow}>
@@ -123,7 +108,7 @@ const PayoutsApprovedList = (props: ReactProps) => {
                   />
                 </div>
                 <div className={classes.flexCol}>
-                  <PayoutSummaryTable
+                  <PayoutApprovedSummaryTable
                     orderIds={oGroup.orderIds}
                     loading={loading}
                     setLoading={setLoading}
@@ -185,27 +170,6 @@ const styles = (theme: Theme) => createStyles({
       ? Colors.uniswapLightestGrey
       : Colors.slateGreyBlack,
     marginTop: '2rem',
-    marginBottom: '1rem',
-  },
-  dateTitle: {
-    fontWeight: 600,
-    color: isThemeDark(theme)
-      ? Colors.uniswapLightestGrey
-      : Colors.slateGreyBlack,
-    marginTop: '1rem',
-    marginBottom: '1rem',
-    "&:hover": {
-      color: Colors.ultramarineBlue,
-      cursor: "pointer",
-    },
-  },
-  dateTitle2: {
-    marginLeft: '0.3rem',
-    fontWeight: 500,
-    color: isThemeDark(theme)
-      ? Colors.uniswapMediumGrey
-      : Colors.slateGreyDarkest,
-    marginTop: '1rem',
     marginBottom: '1rem',
   },
   noApprovedPayoutsBox: {

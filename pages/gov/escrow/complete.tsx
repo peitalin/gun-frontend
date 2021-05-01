@@ -3,9 +3,16 @@ import React from "react";
 import { withStyles, WithStyles } from "@material-ui/core/styles";
 import { styles } from "pageComponents/SellerDashboard/styles";
 import clsx from "clsx";
+// SSR
+import { NextPage, NextPageContext } from 'next';
+import { ApolloClient, useQuery } from "@apollo/client";
+import { serverApolloClient } from "utils/apollo";
 // Components
 import LoadingBarSSR from "components/LoadingBarSSR";
-import PayoutsCompletedList from "pageComponents/Gov/PayoutsCompletedList";
+import PayoutsCompleteList from "pageComponents/Gov/PayoutsCompleteList";
+import {
+  OrdersGroupedByDay,
+} from "typings/gqlTypes";
 // SSR disable
 import dynamic from "next/dynamic";
 import { AdminProfileProps } from "layout/GetUser/AdminProfileWrapper";
@@ -16,7 +23,8 @@ const AdminProfileWrapper = dynamic(() => import("layout/GetUser/AdminProfileWra
 
 
 
-const PayoutsCompletedListPage = (props: ReactProps) => {
+
+const PayoutsCompleteListPage = (props: ReactProps) => {
   // state
   const {
     classes
@@ -27,10 +35,13 @@ const PayoutsCompletedListPage = (props: ReactProps) => {
       disablePadding
       disableAdminBorder
     >
-      {(spp: AdminProfileProps) => {
+      {({ data, loading, error }: AdminProfileProps) => {
         return (
           <div className={classes.contentContainer}>
-            <PayoutsCompletedList />
+            <PayoutsCompleteList
+              admin={data.user}
+              // orderIdsGroupedByDay={orderIdsGroupedByDay}
+            />
           </div>
         )
       }}
@@ -38,9 +49,42 @@ const PayoutsCompletedListPage = (props: ReactProps) => {
   );
 }
 
+
 interface ReactProps extends WithStyles<typeof styles> {
+  // orderIdsGroupedByDay: OrdersGroupedByDay[]
 }
 
-export default withStyles(styles)( PayoutsCompletedListPage );
+////////// SSR ///////////
+interface Context extends NextPageContext {
+  apolloClient: ApolloClient<object>;
+}
+
+// interface QData {
+//   getCompleteOrderIdsGroupedByDay: OrdersGroupedByDay[]
+// }
+// interface QVar {
+//   before: Date
+//   after: Date
+// }
+
+
+// PayoutsCompleteListPage.getInitialProps = async (ctx: Context) => {
+
+//   const { data } = await serverApolloClient(ctx).query<QData, QVar>({
+//     query: GET_COMPLETE_ORDER_IDS_GROUPED_BY_DAY,
+//     variables: { },
+//   })
+//   let initialOrderIdsGroupedByDay = data.getCompleteOrderIdsGroupedByDay;
+//   console.log('initialOrderIdsGroupedByDay SSR: ', initialOrderIdsGroupedByDay);
+
+//   return {
+//     orderIdsGroupedByDay: initialOrderIdsGroupedByDay,
+//   };
+// }
+
+export default withStyles(styles)( PayoutsCompleteListPage );
+
+
+
 
 

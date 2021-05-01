@@ -8,11 +8,14 @@ import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/s
 import { BorderRadius, BoxShadows, Colors } from "layout/AppTheme";
 // Graphql
 import { useQuery, ApolloClient, useApolloClient } from "@apollo/client";
-import { REINDEX_SEARCH_INDEX_ADMIN } from "queries/search-queries";
-import { UserPrivate, Role, BlankMutationResponse } from 'typings/gqlTypes';
+import { INITIATE_PAGE_CONFIG } from "queries/page_configs-queries";
 import { useMutation } from "@apollo/client";
+// typings
+import { UserPrivate, Role, BlankMutationResponse } from 'typings/gqlTypes';
+//components
 import LoadingBarSSR from "components/LoadingBarSSR";
 import ButtonLoading from "components/ButtonLoading";
+// router and snackbars
 import { useSnackbar } from "notistack";
 import { useRouter} from "next/router";
 // SSR disable
@@ -30,6 +33,25 @@ const GovFeaturedProducts = (props: ReactProps) => {
   const { classes } = props;
   const snackbar = useSnackbar();
   const router = useRouter();
+
+  const [initiatePageConfig, response] = useMutation(
+    INITIATE_PAGE_CONFIG, {
+    variables: {},
+    onCompleted: (data) => {
+      snackbar.enqueueSnackbar(
+        "initiated page configs",
+        { variant: "success"}
+      )
+      console.log("data: ", data)
+      alert(JSON.stringify(data))
+    },
+    onError: (err) => {
+      snackbar.enqueueSnackbar(
+        `error initiating page configs: ${err}`,
+        { variant: "error"}
+      )
+    }
+  })
 
   return (
     <AdminProfileWrapper>
@@ -61,15 +83,14 @@ const GovFeaturedProducts = (props: ReactProps) => {
               className={classes.reindexButton}
               style={{ }}
               onClick={async () => {
-                router.push("/promote-listings")
-                snackbar.enqueueSnackbar(
-                  `Going to promoted items page`,
-                  { variant: "info" }
-                )
+                initiatePageConfig()
               }}
             >
-              Go to Promoted Products
+              Initiate Page Configs
             </ButtonLoading>
+            <Typography variant="h4" className={classes.warning}>
+              This resets front page configs and promoted lists to defaults
+            </Typography>
           </div>
         )
       }}
@@ -110,6 +131,9 @@ const styles = (theme: Theme) => createStyles({
     alignItems: "center",
   },
   reindexButton: {
+  },
+  warning: {
+    marginTop: "1rem",
   },
 })
 

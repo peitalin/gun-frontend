@@ -111,6 +111,58 @@ export const GET_ORDERS_ADMIN_APPROVED_BY_IDS_CONNECTION = gql`
 `;
 
 
+export const GET_COMPLETE_ORDER_IDS_GROUPED_BY_DAY = gql`
+  query(
+    $before: Date
+    $after: Date
+  ) {
+    getCompleteOrderIdsGroupedByDay(
+      before: $before
+      after: $after
+    ) {
+      day
+      orderIds
+    }
+  }
+`;
+
+export const GET_ORDERS_COMPLETE_BY_IDS_CONNECTION = gql`
+  query(
+    $orderIds: [String!]!
+    $limit: Int!
+    $offset: Int!
+  ) {
+    getOrdersCompleteByIdsConnection(
+      orderIds: $orderIds
+      limit: $limit
+      offset: $offset
+    ) {
+      edges {
+        node {
+          ...OrdersFragment
+          # Already captured, no need to spam Stripe for status
+          # ...on OrderAdmin {
+          #   paymentIntent {
+          #     id
+          #     amount
+          #     amountCapturable
+          #     amountReceived
+          #     captureMethod
+          #     createdAt
+          #     currency
+          #     liveMode
+          #     status
+          #   }
+          # }
+        }
+      }
+      totalCount
+    }
+  }
+  ${OrdersFragment}
+`;
+
+
 
 export const GET_ORDERS_ADMIN_APPROVED_CONNECTION = gql`
   query($query: ConnectionQueryOrders!) {
@@ -173,6 +225,41 @@ export const GET_ADMIN_APPROVED_PAYOUT_SUMMARY = gql`
     }
   }
 `;
+
+export const GET_COMPLETE_ORDERS_PAYOUT_SUMMARY = gql`
+  query($orderIds: [String!]!) {
+    getCompleteOrdersPayoutSummary(orderIds: $orderIds) {
+      nodes {
+        id
+        createdAt
+        storeId
+        payeeType
+        amount
+        paymentProcessingFee
+        taxes
+        payoutStatus
+        currency
+        txnId
+        payoutId
+        orderId
+        order {
+          id
+          currentSnapshot {
+            orderStatus
+          }
+        }
+      }
+      aggregate {
+        sum {
+          amount
+          paymentProcessingFee
+          taxes
+        }
+      }
+    }
+  }
+`;
+
 
 
 

@@ -49,6 +49,7 @@ import ConfirmDeleteModal from "components/ConfirmActionModal";
 // Copy
 import copy from "clipboard-copy";
 import { cacheUpdateDeleteProduct, cacheUpdateEditProduct } from "pageComponents/ProductEdit/cacheUpdateEditProduct";
+import products from "pages/admin/products";
 
 
 
@@ -65,10 +66,6 @@ const ProductRow = (props: ReactProps) => {
     hideViewButton = false,
     hideShareLinkButton = false,
   } = props;
-
-  const dispatch = useDispatch();
-  const router = useRouter();
-  const apolloClient = useApolloClient();
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [openDeleteModal, setOpenDeleteModal] = React.useState(false);
@@ -212,11 +209,35 @@ const ProductRow = (props: ReactProps) => {
   };
 
 
-
-  let user = useSelector<GrandReduxState, UserPrivate>(s =>
-    s.reduxLogin.user
-  );
   let productName = product?.currentSnapshot?.title
+
+
+  const displayProductStatus = () => {
+    if (product.isSuspended) {
+      return "SUSPENDED"
+    }
+    if (
+      product.soldOutStatus === SoldOutStatus.SOLD_OUT
+      || product.isSoldElsewhere
+    ) {
+      return "SOLD"
+    }
+    if (product.soldOutStatus === SoldOutStatus.ABANDONED) {
+      return "ABANDONED"
+    }
+    if (product.isDeleted) {
+      return "DELETED"
+    }
+    if (loadingPublish) {
+      return "PENDING"
+    }
+    if (product.isPublished) {
+      return "PUBLISHED"
+    } else {
+      return "UNPUBLISHED"
+    }
+  }
+
 
   if (!product?.featuredVariant) {
     return <Loading />
@@ -302,15 +323,7 @@ const ProductRow = (props: ReactProps) => {
                 (loadingPublish) && "pulseFast",
               )}
             >
-              {
-                product.isSuspended
-                ? "SUSPENDED"
-                : (loadingPublish)
-                  ? "PENDING"
-                  : product.isPublished
-                    ? "PUBLISHED"
-                    : "UNPUBLISHED"
-              }
+              { displayProductStatus() }
             </Typography>
           </div>
 

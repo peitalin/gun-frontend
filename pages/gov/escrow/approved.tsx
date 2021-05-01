@@ -54,7 +54,7 @@ const ApprovedPayoutsListPage = (props: ReactProps) => {
 }
 
 interface ReactProps extends WithStyles<typeof styles> {
-  orderIdsGroupedByDay
+  orderIdsGroupedByDay: OrdersGroupedByDay[]
 }
 
 ////////// SSR ///////////
