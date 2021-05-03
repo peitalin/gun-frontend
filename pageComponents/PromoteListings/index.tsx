@@ -51,7 +51,9 @@ const PromoteListings: React.FC<ReactProps> = (props) => {
         />
 
         {
-          pageConfig?.pageConfigSections?.map(( section, i ) => {
+          (pageConfig?.pageConfigSections ?? [])
+          .filter(section => !section.isNewestList)
+          .map(( section, i ) => {
 
             if (section?.promotedListId) {
               return (

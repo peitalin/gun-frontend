@@ -58,6 +58,7 @@ import { useQuery, useMutation } from "@apollo/client";
 import { useSnackbar } from "notistack";
 import { formatDate } from "utils/dates";
 import dayjs from 'dayjs';
+import { Router } from "next/router";
 
 
 
@@ -116,7 +117,10 @@ const BuyPromotedItemPage = (props: ReactProps) => {
       ownerId: user?.id,
       position: undefined,
     },
-    onError: React.useCallback((e) => { console.log(e) }, []),
+    onError: React.useCallback((e) => {
+      console.log(e)
+      snackbar.enqueueSnackbar(`${e}`, { variant: "error" })
+    }, []),
     onCompleted: React.useCallback(async (data) => {
       // console.log(data)
       if (typeof props.refetch === "function") {
@@ -138,7 +142,10 @@ const BuyPromotedItemPage = (props: ReactProps) => {
       promotedListItemId: undefined,
       promotedListId: undefined,
     },
-    onError: React.useCallback((e) => { console.log(e) }, []),
+    onError: React.useCallback((e) => {
+      console.log(e)
+      snackbar.enqueueSnackbar(`${e}`, { variant: "error" })
+    }, []),
     onCompleted: React.useCallback(async (data) => {
       console.log(data)
       if (typeof props.refetch === "function") {
@@ -223,20 +230,23 @@ const BuyPromotedItemPage = (props: ReactProps) => {
       <div className={classes.boldSubtitle}>
         1. Pick a product to assign to slot. Must be published.
       </div>
-      <TextInput
-        name="product.id"
-        placeholder="Product ID"
-        className={classes.textField}
-        value={selectedProductId ?? ""}
-        onChange={(e) => {
-          setSelectedProductOption({
-            label: e.target.value,
-            value: e.target.value,
-          })
-        }}
-        inputProps={{ style: { width: '100%' }}}
-        disableInitialValidationMessage={true}
-      />
+      {
+        user.userRole === Role.PLATFORM_ADMIN &&
+        <TextInput
+          name="product.id"
+          placeholder="Product ID"
+          className={classes.textField}
+          value={selectedProductId ?? ""}
+          onChange={(e) => {
+            setSelectedProductOption({
+              label: e.target.value,
+              value: e.target.value,
+            })
+          }}
+          inputProps={{ style: { width: '100%' }}}
+          disableInitialValidationMessage={true}
+        />
+      }
       <DropdownInput
         className={classes.dropdownProducts}
         stateShape={

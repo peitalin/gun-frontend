@@ -132,12 +132,15 @@ const PromotionCardsDesktop = (props: ReactProps) => {
                       // and will have isRandomFiller === true
 
                       !promotedItemEdge?.node?.isAvailableForPurchase
-                      ? <div className={classes.previewImageEmptyMessageText}>
+                      ? <div className={classes.previewImageMessageText}>
                           {'Slot has not been made available for public sale by admins yet'}
                         </div>
-                      : promotedItemEdge?.node?.productId
-                        ? <div></div>
-                        : <div className={classes.previewImageEmptyMessageText}>
+                      : promotedItemEdge?.node?.ownerId === props.user?.id
+                        ? <div className={classes.previewImageMessageText}>
+                            {"You own this slot"} <br/>
+                            {"Add a product"}
+                          </div>
+                        : <div className={classes.previewImageMessageText}>
                             {"Buy this slot for 2 days"} <br/>
                             {`${c(promotedItemEdge?.node?.reservePrice)}`}
                           </div>
@@ -255,7 +258,7 @@ const styles = (theme: Theme) => createStyles({
       }),
     }
   },
-  previewImageEmptyMessageText: {
+  previewImageMessageText: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center',

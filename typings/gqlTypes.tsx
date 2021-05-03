@@ -12497,6 +12497,11 @@ export type Query = {
    */
   getAdminApprovedPayoutSummary: PayoutSummary;
   /**
+   * Get payoutItems and payout summary for COMPLETE orders
+   * AccessRule – PLATFORM_ADMIN
+   */
+  getCompleteOrdersPayoutSummary: PayoutSummary;
+  /**
    * List payoutItems between startDate and endDate.
    * AccessRule – PLATFORM_ADMIN
    */
@@ -13614,6 +13619,11 @@ export type QueryGetAdminApprovedPayoutSummaryArgs = {
 };
 
 
+export type QueryGetCompleteOrdersPayoutSummaryArgs = {
+  orderIds: Array<Scalars['String']>;
+};
+
+
 export type QueryGetPayoutItemsInPeriodAdminArgs = {
   month?: Maybe<Scalars['Int']>;
   year?: Maybe<Scalars['Int']>;
@@ -13636,6 +13646,12 @@ export type QueryGetOrdersAdminApprovedByIdsConnectionArgs = {
   orderIds: Array<Scalars['String']>;
   limit: Scalars['Int'];
   offset: Scalars['Int'];
+};
+
+
+export type QueryGetCompleteOrderIdsGroupedByDayArgs = {
+  before?: Maybe<Scalars['Date']>;
+  after?: Maybe<Scalars['Date']>;
 };
 
 
