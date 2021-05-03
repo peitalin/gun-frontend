@@ -24,7 +24,7 @@ const routeMappings = {
   'escrow/cancelled': "Escrow  -  Cancelled",
 
   'search': "Products  -  Search Index",
-  'featured': "Products  -  Set Featured Products",
+  'page-configs': "Configs  -  Initial Page Configs",
   'test-emails': "Test Tools  -  Test Emails",
   'random-products': "Test Tools  -  Random Products",
 }

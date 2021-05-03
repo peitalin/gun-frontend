@@ -4061,6 +4061,7 @@ export type Mutation = {
   createPayoutSplit: PayoutSplit;
   initiatePageConfig?: Maybe<PageConfig>;
   initiateCategories: Array<Categories>;
+  initiateCalibers: Array<Calibers>;
   /**
    * Create a new promoted list, or replace existing one if promoted_list_id clashes
    *
@@ -12697,14 +12698,16 @@ export type Query = {
   store?: Maybe<Store>;
   /**
    * Get the full list of product categories.
-   * TODO: The maximum expected number of categories is X
-   *
    * AccessRule – PUBLIC
    */
   getProductCategories: Array<Categories>;
   /**
+   * Get the full list of calibers
+   * AccessRule – PUBLIC
+   */
+  getCalibers: Array<Calibers>;
+  /**
    * Get a category by its ID.
-   *
    * AccessRule – PUBLIC
    */
   category?: Maybe<Categories>;

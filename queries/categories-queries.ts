@@ -23,3 +23,31 @@ export const GET_PRODUCT_CATEGORIES = gql`
   }
   ${ImageFragment}
 `;
+
+
+export const INITIATE_CATEGORIES = gql`
+  mutation initiateCategories {
+    initiateCategories {
+      id
+      name
+      createdAt
+      updatedAt
+      categoryGroup
+      slug
+      thumbImageId
+      bannerImageId
+      blurb
+    }
+  }
+`;
+
+
+export const INITIATE_CALIBERS = gql`
+  mutation initiateCalibers {
+    initiateCalibers {
+      id
+      name
+      group
+    }
+  }
+`;

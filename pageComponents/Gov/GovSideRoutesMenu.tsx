@@ -206,20 +206,20 @@ const GovSideRoutesMenu: React.FC<ReactProps> = (props) => {
 
         <li className={classes.listSpacer}>
           <Typography variant="subtitle1" className={classes.routeListItemTitle}>
-            Featured Products
+            Page Configs
           </Typography>
         </li>
 
         <li>
-          <Link href={"/gov/featured"} scroll={false}>
+          <Link href={"/gov/page-configs"} scroll={false}>
             <a>
               <div className={
-                isSelectedRoute("featured")
+                isSelectedRoute("page-configs")
                   ? classes.routeListItemSelected
                   : classes.routeListItem
               }>
                 <Typography variant="subtitle1" className={classes.routeListItemText}>
-                  Set Featured Products
+                  Page Configs
                 </Typography>
               </div>
             </a>
