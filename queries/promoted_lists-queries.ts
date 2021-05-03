@@ -18,7 +18,7 @@ export const GET_PROMOTED_LIST = gql`
       numberOfSlots
       categoryFilterSlug
       cardsPerRow
-      promotedListItemsConnection {
+      promotedSlotsConnection {
         pageInfo {
           isLastPage
         }
@@ -48,18 +48,18 @@ export const GET_PROMOTED_LIST = gql`
 
 export const ADD_PRODUCT_TO_PROMOTED_LIST = gql`
   mutation(
-    $promotedListItemId: String!
+    $promotedSlotId: String!
     $promotedListId: String!
     $productId: String!
     $ownerId: String
   ) {
     addProductToPromotedList(
-      promotedListItemId: $promotedListItemId
+      promotedSlotId: $promotedSlotId
       promotedListId: $promotedListId
       productId: $productId
       ownerId: $ownerId
     ) {
-      promotedListItem {
+      promotedSlot {
         id
         createdAt
         promotedListId
@@ -82,11 +82,11 @@ export const ADD_PRODUCT_TO_PROMOTED_LIST = gql`
 
 export const REMOVE_PRODUCT_FROM_PROMOTED_LIST = gql`
   mutation(
-    $promotedListItemId: String!
+    $promotedSlotId: String!
     $promotedListId: String!
   ) {
     removeProductFromPromotedList(
-      promotedListItemId: $promotedListItemId
+      promotedSlotId: $promotedSlotId
       promotedListId: $promotedListId
     ) {
       promotedList {
@@ -96,7 +96,7 @@ export const REMOVE_PRODUCT_FROM_PROMOTED_LIST = gql`
         numberOfSlots
         categoryFilterSlug
         cardsPerRow
-        promotedListItemsConnection {
+        promotedSlotsConnection {
           pageInfo {
             isLastPage
           }

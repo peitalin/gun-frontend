@@ -58,7 +58,7 @@ export const styles = (theme: Theme) => createStyles({
   },
   baseBarBorderBottom: {
     borderBottom: theme.palette.type === 'dark'
-      ? `1px solid ${Colors.uniswapLightNavy}`
+      ? `1px solid ${Colors.uniswapDarkNavy}`
       : `1px solid ${Colors.slateGreyDarker}`,
   },
   baseBarDither: {

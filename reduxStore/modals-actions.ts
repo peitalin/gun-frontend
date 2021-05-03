@@ -74,8 +74,8 @@ export const reduxModalsActions = {
     payload: payload
   }),
 
-  TOGGLE_PROMOTED_ITEM_PURCHASE_MODAL: (payload?: boolean): ActionType<boolean> => ({
-    type: "TOGGLE_PROMOTED_ITEM_PURCHASE_MODAL",
+  TOGGLE_PROMOTED_SLOT_PURCHASE_MODAL: (payload?: boolean): ActionType<boolean> => ({
+    type: "TOGGLE_PROMOTED_SLOT_PURCHASE_MODAL",
     payload: payload
   }),
 

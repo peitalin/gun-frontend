@@ -7,7 +7,7 @@ import { ProductFragment } from "./fragments";
 
 export const PURCHASE_PROMOTION = gql`
   mutation purchasePromotion(
-    $promotedListItemId: String!
+    $promotedSlotId: String!
     $productId: String!
     $total: Int!
     $buyerId: String!
@@ -16,7 +16,7 @@ export const PURCHASE_PROMOTION = gql`
     $bidId: String
   ) {
     purchasePromotion(
-      promotedListItemId: $promotedListItemId
+      promotedSlotId: $promotedSlotId
       productId: $productId
       total: $total
       buyerId: $buyerId
@@ -29,14 +29,14 @@ export const PURCHASE_PROMOTION = gql`
         productId
         buyerId
         promotedListId
-        promotedListItemId
+        promotedSlotId
         createdAt
         total
         fees
         currency
         paymentIntentId
       }
-      promotedListItem {
+      promotedSlot {
         id
         createdAt
         promotedListId
@@ -71,7 +71,7 @@ export const PURCHASE_PROMOTION = gql`
 //         productId
 //         buyerId
 //         promotedListId
-//         promotedListItemId
+//         promotedSlotId
 //         createdAt
 //         total
 //         fees

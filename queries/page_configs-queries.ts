@@ -21,7 +21,7 @@ export const INITIATE_PAGE_CONFIG = gql`
         #   numberOfSlots
         #   categoryFilterSlug
         #   cardsPerRow
-        #   promotedListItems {
+        #   promotedSlotsConnection {
         #     id
         #   }
         # }
@@ -55,7 +55,7 @@ export const GET_PAGE_CONFIG_BY_PATH = gql`
         #   numberOfSlots
         #   categoryFilterSlug
         #   cardsPerRow
-        #   promotedListItems {
+        #   promotedSlotsConnection {
         #     id
         #   }
         # }

@@ -103,7 +103,7 @@ export const reduxReducerModals = (
       return { ...state, chatCenterOpen: action.payload }
     }
 
-    case A.TOGGLE_PROMOTED_ITEM_PURCHASE_MODAL().type: {
+    case A.TOGGLE_PROMOTED_SLOT_PURCHASE_MODAL().type: {
       return { ...state, promotedItemPurchaseModalOpen: action.payload }
     }
 

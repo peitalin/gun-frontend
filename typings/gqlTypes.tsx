@@ -506,6 +506,183 @@ export type Boolean_Comparison_Exp = {
   _nin?: Maybe<Array<Scalars['Boolean']>>;
 };
 
+/** Calibers grouped by AmmoType */
+export enum CaliberGroup {
+  SHOTSHELL = 'SHOTSHELL',
+  PROJECTILE = 'PROJECTILE',
+  RIMFIRE_CENTERFIRE = 'RIMFIRE_CENTERFIRE'
+}
+
+/** columns and relationships of "calibers" */
+export type Calibers = {
+  __typename?: 'calibers';
+  group: Scalars['String'];
+  id: Scalars['String'];
+  name: Scalars['String'];
+  size: Scalars['String'];
+};
+
+/** aggregated selection of "calibers" */
+export type Calibers_Aggregate = {
+  __typename?: 'calibers_aggregate';
+  aggregate?: Maybe<Calibers_Aggregate_Fields>;
+  nodes: Array<Calibers>;
+};
+
+/** aggregate fields of "calibers" */
+export type Calibers_Aggregate_Fields = {
+  __typename?: 'calibers_aggregate_fields';
+  count?: Maybe<Scalars['Int']>;
+  max?: Maybe<Calibers_Max_Fields>;
+  min?: Maybe<Calibers_Min_Fields>;
+};
+
+
+/** aggregate fields of "calibers" */
+export type Calibers_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<Calibers_Select_Column>>;
+  distinct?: Maybe<Scalars['Boolean']>;
+};
+
+/** order by aggregate values of table "calibers" */
+export type Calibers_Aggregate_Order_By = {
+  count?: Maybe<Order_By>;
+  max?: Maybe<Calibers_Max_Order_By>;
+  min?: Maybe<Calibers_Min_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "calibers" */
+export type Calibers_Arr_Rel_Insert_Input = {
+  data: Array<Calibers_Insert_Input>;
+  on_conflict?: Maybe<Calibers_On_Conflict>;
+};
+
+/** Boolean expression to filter rows from the table "calibers". All fields are combined with a logical 'AND'. */
+export type Calibers_Bool_Exp = {
+  _and?: Maybe<Array<Maybe<Calibers_Bool_Exp>>>;
+  _not?: Maybe<Calibers_Bool_Exp>;
+  _or?: Maybe<Array<Maybe<Calibers_Bool_Exp>>>;
+  group?: Maybe<String_Comparison_Exp>;
+  id?: Maybe<String_Comparison_Exp>;
+  name?: Maybe<String_Comparison_Exp>;
+  size?: Maybe<String_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "calibers" */
+export enum Calibers_Constraint {
+  /** unique or primary key constraint */
+  CALIBERS_PKEY = 'calibers_pkey'
+}
+
+/** input type for inserting data into table "calibers" */
+export type Calibers_Insert_Input = {
+  group?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  size?: Maybe<Scalars['String']>;
+};
+
+/** aggregate max on columns */
+export type Calibers_Max_Fields = {
+  __typename?: 'calibers_max_fields';
+  group?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  size?: Maybe<Scalars['String']>;
+};
+
+/** order by max() on columns of table "calibers" */
+export type Calibers_Max_Order_By = {
+  group?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  name?: Maybe<Order_By>;
+  size?: Maybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type Calibers_Min_Fields = {
+  __typename?: 'calibers_min_fields';
+  group?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  size?: Maybe<Scalars['String']>;
+};
+
+/** order by min() on columns of table "calibers" */
+export type Calibers_Min_Order_By = {
+  group?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  name?: Maybe<Order_By>;
+  size?: Maybe<Order_By>;
+};
+
+/** response of any mutation on the table "calibers" */
+export type Calibers_Mutation_Response = {
+  __typename?: 'calibers_mutation_response';
+  /** number of affected rows by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data of the affected rows by the mutation */
+  returning: Array<Calibers>;
+};
+
+/** input type for inserting object relation for remote table "calibers" */
+export type Calibers_Obj_Rel_Insert_Input = {
+  data: Calibers_Insert_Input;
+  on_conflict?: Maybe<Calibers_On_Conflict>;
+};
+
+/** on conflict condition type for table "calibers" */
+export type Calibers_On_Conflict = {
+  constraint: Calibers_Constraint;
+  update_columns: Array<Calibers_Update_Column>;
+  where?: Maybe<Calibers_Bool_Exp>;
+};
+
+/** ordering options when selecting data from "calibers" */
+export type Calibers_Order_By = {
+  group?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  name?: Maybe<Order_By>;
+  size?: Maybe<Order_By>;
+};
+
+/** primary key columns input for table: "calibers" */
+export type Calibers_Pk_Columns_Input = {
+  id: Scalars['String'];
+};
+
+/** select columns of table "calibers" */
+export enum Calibers_Select_Column {
+  /** column name */
+  GROUP = 'group',
+  /** column name */
+  ID = 'id',
+  /** column name */
+  NAME = 'name',
+  /** column name */
+  SIZE = 'size'
+}
+
+/** input type for updating data in table "calibers" */
+export type Calibers_Set_Input = {
+  group?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  size?: Maybe<Scalars['String']>;
+};
+
+/** update columns of table "calibers" */
+export enum Calibers_Update_Column {
+  /** column name */
+  GROUP = 'group',
+  /** column name */
+  ID = 'id',
+  /** column name */
+  NAME = 'name',
+  /** column name */
+  SIZE = 'size'
+}
+
 /** columns and relationships of "categories" */
 export type Categories = {
   __typename?: 'categories';
@@ -3237,6 +3414,10 @@ export type Mutation = {
   delete_bids?: Maybe<Bids_Mutation_Response>;
   /** delete single row from the table: "bids" */
   delete_bids_by_pk?: Maybe<Bids>;
+  /** delete data from the table: "calibers" */
+  delete_calibers?: Maybe<Calibers_Mutation_Response>;
+  /** delete single row from the table: "calibers" */
+  delete_calibers_by_pk?: Maybe<Calibers>;
   /** delete data from the table: "categories" */
   delete_categories?: Maybe<Categories_Mutation_Response>;
   /** delete single row from the table: "categories" */
@@ -3337,14 +3518,14 @@ export type Mutation = {
   delete_products?: Maybe<Products_Mutation_Response>;
   /** delete single row from the table: "products" */
   delete_products_by_pk?: Maybe<Products>;
-  /** delete data from the table: "promoted_list_items" */
-  delete_promoted_list_items?: Maybe<Promoted_List_Items_Mutation_Response>;
-  /** delete single row from the table: "promoted_list_items" */
-  delete_promoted_list_items_by_pk?: Maybe<Promoted_List_Items>;
   /** delete data from the table: "promoted_lists" */
   delete_promoted_lists?: Maybe<Promoted_Lists_Mutation_Response>;
   /** delete single row from the table: "promoted_lists" */
   delete_promoted_lists_by_pk?: Maybe<Promoted_Lists>;
+  /** delete data from the table: "promoted_slots" */
+  delete_promoted_slots?: Maybe<Promoted_Slots_Mutation_Response>;
+  /** delete single row from the table: "promoted_slots" */
+  delete_promoted_slots_by_pk?: Maybe<Promoted_Slots>;
   /** delete data from the table: "promotion_purchases" */
   delete_promotion_purchases?: Maybe<Promotion_Purchases_Mutation_Response>;
   /** delete single row from the table: "promotion_purchases" */
@@ -3377,6 +3558,10 @@ export type Mutation = {
   insert_bids?: Maybe<Bids_Mutation_Response>;
   /** insert a single row into the table: "bids" */
   insert_bids_one?: Maybe<Bids>;
+  /** insert data into the table: "calibers" */
+  insert_calibers?: Maybe<Calibers_Mutation_Response>;
+  /** insert a single row into the table: "calibers" */
+  insert_calibers_one?: Maybe<Calibers>;
   /** insert data into the table: "categories" */
   insert_categories?: Maybe<Categories_Mutation_Response>;
   /** insert a single row into the table: "categories" */
@@ -3477,14 +3662,14 @@ export type Mutation = {
   insert_products?: Maybe<Products_Mutation_Response>;
   /** insert a single row into the table: "products" */
   insert_products_one?: Maybe<Products>;
-  /** insert data into the table: "promoted_list_items" */
-  insert_promoted_list_items?: Maybe<Promoted_List_Items_Mutation_Response>;
-  /** insert a single row into the table: "promoted_list_items" */
-  insert_promoted_list_items_one?: Maybe<Promoted_List_Items>;
   /** insert data into the table: "promoted_lists" */
   insert_promoted_lists?: Maybe<Promoted_Lists_Mutation_Response>;
   /** insert a single row into the table: "promoted_lists" */
   insert_promoted_lists_one?: Maybe<Promoted_Lists>;
+  /** insert data into the table: "promoted_slots" */
+  insert_promoted_slots?: Maybe<Promoted_Slots_Mutation_Response>;
+  /** insert a single row into the table: "promoted_slots" */
+  insert_promoted_slots_one?: Maybe<Promoted_Slots>;
   /** insert data into the table: "promotion_purchases" */
   insert_promotion_purchases?: Maybe<Promotion_Purchases_Mutation_Response>;
   /** insert a single row into the table: "promotion_purchases" */
@@ -3517,6 +3702,10 @@ export type Mutation = {
   update_bids?: Maybe<Bids_Mutation_Response>;
   /** update single row of the table: "bids" */
   update_bids_by_pk?: Maybe<Bids>;
+  /** update data of the table: "calibers" */
+  update_calibers?: Maybe<Calibers_Mutation_Response>;
+  /** update single row of the table: "calibers" */
+  update_calibers_by_pk?: Maybe<Calibers>;
   /** update data of the table: "categories" */
   update_categories?: Maybe<Categories_Mutation_Response>;
   /** update single row of the table: "categories" */
@@ -3617,14 +3806,14 @@ export type Mutation = {
   update_products?: Maybe<Products_Mutation_Response>;
   /** update single row of the table: "products" */
   update_products_by_pk?: Maybe<Products>;
-  /** update data of the table: "promoted_list_items" */
-  update_promoted_list_items?: Maybe<Promoted_List_Items_Mutation_Response>;
-  /** update single row of the table: "promoted_list_items" */
-  update_promoted_list_items_by_pk?: Maybe<Promoted_List_Items>;
   /** update data of the table: "promoted_lists" */
   update_promoted_lists?: Maybe<Promoted_Lists_Mutation_Response>;
   /** update single row of the table: "promoted_lists" */
   update_promoted_lists_by_pk?: Maybe<Promoted_Lists>;
+  /** update data of the table: "promoted_slots" */
+  update_promoted_slots?: Maybe<Promoted_Slots_Mutation_Response>;
+  /** update single row of the table: "promoted_slots" */
+  update_promoted_slots_by_pk?: Maybe<Promoted_Slots>;
   /** update data of the table: "promotion_purchases" */
   update_promotion_purchases?: Maybe<Promotion_Purchases_Mutation_Response>;
   /** update single row of the table: "promotion_purchases" */
@@ -3888,7 +4077,7 @@ export type Mutation = {
    * Add a product to a promoted list.
    * AccessRule – PLATFORM_ADMIN
    */
-  addProductToPromotedList: PromotedListItemMutationResponse;
+  addProductToPromotedList: PromotedSlotMutationResponse;
   /**
    * Remove an item in a promoted list.
    * AccessRule – PLATFORM_ADMIN
@@ -3987,6 +4176,16 @@ export type MutationDelete_BidsArgs = {
 
 
 export type MutationDelete_Bids_By_PkArgs = {
+  id: Scalars['String'];
+};
+
+
+export type MutationDelete_CalibersArgs = {
+  where: Calibers_Bool_Exp;
+};
+
+
+export type MutationDelete_Calibers_By_PkArgs = {
   id: Scalars['String'];
 };
 
@@ -4242,22 +4441,22 @@ export type MutationDelete_Products_By_PkArgs = {
 };
 
 
-export type MutationDelete_Promoted_List_ItemsArgs = {
-  where: Promoted_List_Items_Bool_Exp;
-};
-
-
-export type MutationDelete_Promoted_List_Items_By_PkArgs = {
-  id: Scalars['String'];
-};
-
-
 export type MutationDelete_Promoted_ListsArgs = {
   where: Promoted_Lists_Bool_Exp;
 };
 
 
 export type MutationDelete_Promoted_Lists_By_PkArgs = {
+  id: Scalars['String'];
+};
+
+
+export type MutationDelete_Promoted_SlotsArgs = {
+  where: Promoted_Slots_Bool_Exp;
+};
+
+
+export type MutationDelete_Promoted_Slots_By_PkArgs = {
   id: Scalars['String'];
 };
 
@@ -4341,6 +4540,18 @@ export type MutationInsert_BidsArgs = {
 export type MutationInsert_Bids_OneArgs = {
   object: Bids_Insert_Input;
   on_conflict?: Maybe<Bids_On_Conflict>;
+};
+
+
+export type MutationInsert_CalibersArgs = {
+  objects: Array<Calibers_Insert_Input>;
+  on_conflict?: Maybe<Calibers_On_Conflict>;
+};
+
+
+export type MutationInsert_Calibers_OneArgs = {
+  object: Calibers_Insert_Input;
+  on_conflict?: Maybe<Calibers_On_Conflict>;
 };
 
 
@@ -4644,18 +4855,6 @@ export type MutationInsert_Products_OneArgs = {
 };
 
 
-export type MutationInsert_Promoted_List_ItemsArgs = {
-  objects: Array<Promoted_List_Items_Insert_Input>;
-  on_conflict?: Maybe<Promoted_List_Items_On_Conflict>;
-};
-
-
-export type MutationInsert_Promoted_List_Items_OneArgs = {
-  object: Promoted_List_Items_Insert_Input;
-  on_conflict?: Maybe<Promoted_List_Items_On_Conflict>;
-};
-
-
 export type MutationInsert_Promoted_ListsArgs = {
   objects: Array<Promoted_Lists_Insert_Input>;
   on_conflict?: Maybe<Promoted_Lists_On_Conflict>;
@@ -4665,6 +4864,18 @@ export type MutationInsert_Promoted_ListsArgs = {
 export type MutationInsert_Promoted_Lists_OneArgs = {
   object: Promoted_Lists_Insert_Input;
   on_conflict?: Maybe<Promoted_Lists_On_Conflict>;
+};
+
+
+export type MutationInsert_Promoted_SlotsArgs = {
+  objects: Array<Promoted_Slots_Insert_Input>;
+  on_conflict?: Maybe<Promoted_Slots_On_Conflict>;
+};
+
+
+export type MutationInsert_Promoted_Slots_OneArgs = {
+  object: Promoted_Slots_Insert_Input;
+  on_conflict?: Maybe<Promoted_Slots_On_Conflict>;
 };
 
 
@@ -4763,6 +4974,18 @@ export type MutationUpdate_Bids_By_PkArgs = {
   _inc?: Maybe<Bids_Inc_Input>;
   _set?: Maybe<Bids_Set_Input>;
   pk_columns: Bids_Pk_Columns_Input;
+};
+
+
+export type MutationUpdate_CalibersArgs = {
+  _set?: Maybe<Calibers_Set_Input>;
+  where: Calibers_Bool_Exp;
+};
+
+
+export type MutationUpdate_Calibers_By_PkArgs = {
+  _set?: Maybe<Calibers_Set_Input>;
+  pk_columns: Calibers_Pk_Columns_Input;
 };
 
 
@@ -5084,20 +5307,6 @@ export type MutationUpdate_Products_By_PkArgs = {
 };
 
 
-export type MutationUpdate_Promoted_List_ItemsArgs = {
-  _inc?: Maybe<Promoted_List_Items_Inc_Input>;
-  _set?: Maybe<Promoted_List_Items_Set_Input>;
-  where: Promoted_List_Items_Bool_Exp;
-};
-
-
-export type MutationUpdate_Promoted_List_Items_By_PkArgs = {
-  _inc?: Maybe<Promoted_List_Items_Inc_Input>;
-  _set?: Maybe<Promoted_List_Items_Set_Input>;
-  pk_columns: Promoted_List_Items_Pk_Columns_Input;
-};
-
-
 export type MutationUpdate_Promoted_ListsArgs = {
   _inc?: Maybe<Promoted_Lists_Inc_Input>;
   _set?: Maybe<Promoted_Lists_Set_Input>;
@@ -5109,6 +5318,20 @@ export type MutationUpdate_Promoted_Lists_By_PkArgs = {
   _inc?: Maybe<Promoted_Lists_Inc_Input>;
   _set?: Maybe<Promoted_Lists_Set_Input>;
   pk_columns: Promoted_Lists_Pk_Columns_Input;
+};
+
+
+export type MutationUpdate_Promoted_SlotsArgs = {
+  _inc?: Maybe<Promoted_Slots_Inc_Input>;
+  _set?: Maybe<Promoted_Slots_Set_Input>;
+  where: Promoted_Slots_Bool_Exp;
+};
+
+
+export type MutationUpdate_Promoted_Slots_By_PkArgs = {
+  _inc?: Maybe<Promoted_Slots_Inc_Input>;
+  _set?: Maybe<Promoted_Slots_Set_Input>;
+  pk_columns: Promoted_Slots_Pk_Columns_Input;
 };
 
 
@@ -5456,7 +5679,7 @@ export type MutationDeletePromotedListArgs = {
 
 
 export type MutationAddProductToPromotedListArgs = {
-  promotedListItemId: Scalars['String'];
+  promotedSlotId: Scalars['String'];
   promotedListId: Scalars['String'];
   productId: Scalars['String'];
   ownerId?: Maybe<Scalars['String']>;
@@ -5466,12 +5689,12 @@ export type MutationAddProductToPromotedListArgs = {
 
 export type MutationRemoveProductFromPromotedListArgs = {
   promotedListId: Scalars['String'];
-  promotedListItemId: Scalars['String'];
+  promotedSlotId: Scalars['String'];
 };
 
 
 export type MutationPurchasePromotionArgs = {
-  promotedListItemId: Scalars['String'];
+  promotedSlotId: Scalars['String'];
   productId: Scalars['String'];
   total: Scalars['Int'];
   buyerId: Scalars['String'];
@@ -7029,7 +7252,7 @@ export type Page_Config_Sections_Bool_Exp = {
 /** unique or primary key constraints on table "page_config_sections" */
 export enum Page_Config_Sections_Constraint {
   /** unique or primary key constraint */
-  PAGE_CONFIG_ITEMS_PKEY = 'page_config_items_pkey'
+  PAGE_CONFIG_SECTIONS_PKEY = 'page_config_sections_pkey'
 }
 
 /** input type for incrementing integer column in table "page_config_sections" */
@@ -10986,368 +11209,6 @@ export type ProductVariantInput = {
   quantityAvailable?: Maybe<Scalars['Int']>;
 };
 
-/** columns and relationships of "promoted_list_items" */
-export type Promoted_List_Items = {
-  __typename?: 'promoted_list_items';
-  createdAt: Scalars['timestamptz'];
-  expiresAt?: Maybe<Scalars['timestamptz']>;
-  id: Scalars['String'];
-  isAvailableForPurchase: Scalars['Boolean'];
-  ownerId?: Maybe<Scalars['String']>;
-  position?: Maybe<Scalars['Int']>;
-  /** An object relationship */
-  product?: Maybe<Products>;
-  productId?: Maybe<Scalars['String']>;
-  promotedListId: Scalars['String'];
-  reservePrice?: Maybe<Scalars['Int']>;
-};
-
-/** aggregated selection of "promoted_list_items" */
-export type Promoted_List_Items_Aggregate = {
-  __typename?: 'promoted_list_items_aggregate';
-  aggregate?: Maybe<Promoted_List_Items_Aggregate_Fields>;
-  nodes: Array<Promoted_List_Items>;
-};
-
-/** aggregate fields of "promoted_list_items" */
-export type Promoted_List_Items_Aggregate_Fields = {
-  __typename?: 'promoted_list_items_aggregate_fields';
-  avg?: Maybe<Promoted_List_Items_Avg_Fields>;
-  count?: Maybe<Scalars['Int']>;
-  max?: Maybe<Promoted_List_Items_Max_Fields>;
-  min?: Maybe<Promoted_List_Items_Min_Fields>;
-  stddev?: Maybe<Promoted_List_Items_Stddev_Fields>;
-  stddev_pop?: Maybe<Promoted_List_Items_Stddev_Pop_Fields>;
-  stddev_samp?: Maybe<Promoted_List_Items_Stddev_Samp_Fields>;
-  sum?: Maybe<Promoted_List_Items_Sum_Fields>;
-  var_pop?: Maybe<Promoted_List_Items_Var_Pop_Fields>;
-  var_samp?: Maybe<Promoted_List_Items_Var_Samp_Fields>;
-  variance?: Maybe<Promoted_List_Items_Variance_Fields>;
-};
-
-
-/** aggregate fields of "promoted_list_items" */
-export type Promoted_List_Items_Aggregate_FieldsCountArgs = {
-  columns?: Maybe<Array<Promoted_List_Items_Select_Column>>;
-  distinct?: Maybe<Scalars['Boolean']>;
-};
-
-/** order by aggregate values of table "promoted_list_items" */
-export type Promoted_List_Items_Aggregate_Order_By = {
-  avg?: Maybe<Promoted_List_Items_Avg_Order_By>;
-  count?: Maybe<Order_By>;
-  max?: Maybe<Promoted_List_Items_Max_Order_By>;
-  min?: Maybe<Promoted_List_Items_Min_Order_By>;
-  stddev?: Maybe<Promoted_List_Items_Stddev_Order_By>;
-  stddev_pop?: Maybe<Promoted_List_Items_Stddev_Pop_Order_By>;
-  stddev_samp?: Maybe<Promoted_List_Items_Stddev_Samp_Order_By>;
-  sum?: Maybe<Promoted_List_Items_Sum_Order_By>;
-  var_pop?: Maybe<Promoted_List_Items_Var_Pop_Order_By>;
-  var_samp?: Maybe<Promoted_List_Items_Var_Samp_Order_By>;
-  variance?: Maybe<Promoted_List_Items_Variance_Order_By>;
-};
-
-/** input type for inserting array relation for remote table "promoted_list_items" */
-export type Promoted_List_Items_Arr_Rel_Insert_Input = {
-  data: Array<Promoted_List_Items_Insert_Input>;
-  on_conflict?: Maybe<Promoted_List_Items_On_Conflict>;
-};
-
-/** aggregate avg on columns */
-export type Promoted_List_Items_Avg_Fields = {
-  __typename?: 'promoted_list_items_avg_fields';
-  position?: Maybe<Scalars['Float']>;
-  reservePrice?: Maybe<Scalars['Float']>;
-};
-
-/** order by avg() on columns of table "promoted_list_items" */
-export type Promoted_List_Items_Avg_Order_By = {
-  position?: Maybe<Order_By>;
-  reservePrice?: Maybe<Order_By>;
-};
-
-/** Boolean expression to filter rows from the table "promoted_list_items". All fields are combined with a logical 'AND'. */
-export type Promoted_List_Items_Bool_Exp = {
-  _and?: Maybe<Array<Maybe<Promoted_List_Items_Bool_Exp>>>;
-  _not?: Maybe<Promoted_List_Items_Bool_Exp>;
-  _or?: Maybe<Array<Maybe<Promoted_List_Items_Bool_Exp>>>;
-  createdAt?: Maybe<Timestamptz_Comparison_Exp>;
-  expiresAt?: Maybe<Timestamptz_Comparison_Exp>;
-  id?: Maybe<String_Comparison_Exp>;
-  isAvailableForPurchase?: Maybe<Boolean_Comparison_Exp>;
-  ownerId?: Maybe<String_Comparison_Exp>;
-  position?: Maybe<Int_Comparison_Exp>;
-  product?: Maybe<Products_Bool_Exp>;
-  productId?: Maybe<String_Comparison_Exp>;
-  promotedListId?: Maybe<String_Comparison_Exp>;
-  reservePrice?: Maybe<Int_Comparison_Exp>;
-};
-
-/** unique or primary key constraints on table "promoted_list_items" */
-export enum Promoted_List_Items_Constraint {
-  /** unique or primary key constraint */
-  PROMOTED_LIST_ITEMS_PKEY = 'promoted_list_items_pkey'
-}
-
-/** input type for incrementing integer column in table "promoted_list_items" */
-export type Promoted_List_Items_Inc_Input = {
-  position?: Maybe<Scalars['Int']>;
-  reservePrice?: Maybe<Scalars['Int']>;
-};
-
-/** input type for inserting data into table "promoted_list_items" */
-export type Promoted_List_Items_Insert_Input = {
-  createdAt?: Maybe<Scalars['timestamptz']>;
-  expiresAt?: Maybe<Scalars['timestamptz']>;
-  id?: Maybe<Scalars['String']>;
-  isAvailableForPurchase?: Maybe<Scalars['Boolean']>;
-  ownerId?: Maybe<Scalars['String']>;
-  position?: Maybe<Scalars['Int']>;
-  product?: Maybe<Products_Obj_Rel_Insert_Input>;
-  productId?: Maybe<Scalars['String']>;
-  promotedListId?: Maybe<Scalars['String']>;
-  reservePrice?: Maybe<Scalars['Int']>;
-};
-
-/** aggregate max on columns */
-export type Promoted_List_Items_Max_Fields = {
-  __typename?: 'promoted_list_items_max_fields';
-  createdAt?: Maybe<Scalars['timestamptz']>;
-  expiresAt?: Maybe<Scalars['timestamptz']>;
-  id?: Maybe<Scalars['String']>;
-  ownerId?: Maybe<Scalars['String']>;
-  position?: Maybe<Scalars['Int']>;
-  productId?: Maybe<Scalars['String']>;
-  promotedListId?: Maybe<Scalars['String']>;
-  reservePrice?: Maybe<Scalars['Int']>;
-};
-
-/** order by max() on columns of table "promoted_list_items" */
-export type Promoted_List_Items_Max_Order_By = {
-  createdAt?: Maybe<Order_By>;
-  expiresAt?: Maybe<Order_By>;
-  id?: Maybe<Order_By>;
-  ownerId?: Maybe<Order_By>;
-  position?: Maybe<Order_By>;
-  productId?: Maybe<Order_By>;
-  promotedListId?: Maybe<Order_By>;
-  reservePrice?: Maybe<Order_By>;
-};
-
-/** aggregate min on columns */
-export type Promoted_List_Items_Min_Fields = {
-  __typename?: 'promoted_list_items_min_fields';
-  createdAt?: Maybe<Scalars['timestamptz']>;
-  expiresAt?: Maybe<Scalars['timestamptz']>;
-  id?: Maybe<Scalars['String']>;
-  ownerId?: Maybe<Scalars['String']>;
-  position?: Maybe<Scalars['Int']>;
-  productId?: Maybe<Scalars['String']>;
-  promotedListId?: Maybe<Scalars['String']>;
-  reservePrice?: Maybe<Scalars['Int']>;
-};
-
-/** order by min() on columns of table "promoted_list_items" */
-export type Promoted_List_Items_Min_Order_By = {
-  createdAt?: Maybe<Order_By>;
-  expiresAt?: Maybe<Order_By>;
-  id?: Maybe<Order_By>;
-  ownerId?: Maybe<Order_By>;
-  position?: Maybe<Order_By>;
-  productId?: Maybe<Order_By>;
-  promotedListId?: Maybe<Order_By>;
-  reservePrice?: Maybe<Order_By>;
-};
-
-/** response of any mutation on the table "promoted_list_items" */
-export type Promoted_List_Items_Mutation_Response = {
-  __typename?: 'promoted_list_items_mutation_response';
-  /** number of affected rows by the mutation */
-  affected_rows: Scalars['Int'];
-  /** data of the affected rows by the mutation */
-  returning: Array<Promoted_List_Items>;
-};
-
-/** input type for inserting object relation for remote table "promoted_list_items" */
-export type Promoted_List_Items_Obj_Rel_Insert_Input = {
-  data: Promoted_List_Items_Insert_Input;
-  on_conflict?: Maybe<Promoted_List_Items_On_Conflict>;
-};
-
-/** on conflict condition type for table "promoted_list_items" */
-export type Promoted_List_Items_On_Conflict = {
-  constraint: Promoted_List_Items_Constraint;
-  update_columns: Array<Promoted_List_Items_Update_Column>;
-  where?: Maybe<Promoted_List_Items_Bool_Exp>;
-};
-
-/** ordering options when selecting data from "promoted_list_items" */
-export type Promoted_List_Items_Order_By = {
-  createdAt?: Maybe<Order_By>;
-  expiresAt?: Maybe<Order_By>;
-  id?: Maybe<Order_By>;
-  isAvailableForPurchase?: Maybe<Order_By>;
-  ownerId?: Maybe<Order_By>;
-  position?: Maybe<Order_By>;
-  product?: Maybe<Products_Order_By>;
-  productId?: Maybe<Order_By>;
-  promotedListId?: Maybe<Order_By>;
-  reservePrice?: Maybe<Order_By>;
-};
-
-/** primary key columns input for table: "promoted_list_items" */
-export type Promoted_List_Items_Pk_Columns_Input = {
-  id: Scalars['String'];
-};
-
-/** select columns of table "promoted_list_items" */
-export enum Promoted_List_Items_Select_Column {
-  /** column name */
-  CREATEDAT = 'createdAt',
-  /** column name */
-  EXPIRESAT = 'expiresAt',
-  /** column name */
-  ID = 'id',
-  /** column name */
-  ISAVAILABLEFORPURCHASE = 'isAvailableForPurchase',
-  /** column name */
-  OWNERID = 'ownerId',
-  /** column name */
-  POSITION = 'position',
-  /** column name */
-  PRODUCTID = 'productId',
-  /** column name */
-  PROMOTEDLISTID = 'promotedListId',
-  /** column name */
-  RESERVEPRICE = 'reservePrice'
-}
-
-/** input type for updating data in table "promoted_list_items" */
-export type Promoted_List_Items_Set_Input = {
-  createdAt?: Maybe<Scalars['timestamptz']>;
-  expiresAt?: Maybe<Scalars['timestamptz']>;
-  id?: Maybe<Scalars['String']>;
-  isAvailableForPurchase?: Maybe<Scalars['Boolean']>;
-  ownerId?: Maybe<Scalars['String']>;
-  position?: Maybe<Scalars['Int']>;
-  productId?: Maybe<Scalars['String']>;
-  promotedListId?: Maybe<Scalars['String']>;
-  reservePrice?: Maybe<Scalars['Int']>;
-};
-
-/** aggregate stddev on columns */
-export type Promoted_List_Items_Stddev_Fields = {
-  __typename?: 'promoted_list_items_stddev_fields';
-  position?: Maybe<Scalars['Float']>;
-  reservePrice?: Maybe<Scalars['Float']>;
-};
-
-/** order by stddev() on columns of table "promoted_list_items" */
-export type Promoted_List_Items_Stddev_Order_By = {
-  position?: Maybe<Order_By>;
-  reservePrice?: Maybe<Order_By>;
-};
-
-/** aggregate stddev_pop on columns */
-export type Promoted_List_Items_Stddev_Pop_Fields = {
-  __typename?: 'promoted_list_items_stddev_pop_fields';
-  position?: Maybe<Scalars['Float']>;
-  reservePrice?: Maybe<Scalars['Float']>;
-};
-
-/** order by stddev_pop() on columns of table "promoted_list_items" */
-export type Promoted_List_Items_Stddev_Pop_Order_By = {
-  position?: Maybe<Order_By>;
-  reservePrice?: Maybe<Order_By>;
-};
-
-/** aggregate stddev_samp on columns */
-export type Promoted_List_Items_Stddev_Samp_Fields = {
-  __typename?: 'promoted_list_items_stddev_samp_fields';
-  position?: Maybe<Scalars['Float']>;
-  reservePrice?: Maybe<Scalars['Float']>;
-};
-
-/** order by stddev_samp() on columns of table "promoted_list_items" */
-export type Promoted_List_Items_Stddev_Samp_Order_By = {
-  position?: Maybe<Order_By>;
-  reservePrice?: Maybe<Order_By>;
-};
-
-/** aggregate sum on columns */
-export type Promoted_List_Items_Sum_Fields = {
-  __typename?: 'promoted_list_items_sum_fields';
-  position?: Maybe<Scalars['Int']>;
-  reservePrice?: Maybe<Scalars['Int']>;
-};
-
-/** order by sum() on columns of table "promoted_list_items" */
-export type Promoted_List_Items_Sum_Order_By = {
-  position?: Maybe<Order_By>;
-  reservePrice?: Maybe<Order_By>;
-};
-
-/** update columns of table "promoted_list_items" */
-export enum Promoted_List_Items_Update_Column {
-  /** column name */
-  CREATEDAT = 'createdAt',
-  /** column name */
-  EXPIRESAT = 'expiresAt',
-  /** column name */
-  ID = 'id',
-  /** column name */
-  ISAVAILABLEFORPURCHASE = 'isAvailableForPurchase',
-  /** column name */
-  OWNERID = 'ownerId',
-  /** column name */
-  POSITION = 'position',
-  /** column name */
-  PRODUCTID = 'productId',
-  /** column name */
-  PROMOTEDLISTID = 'promotedListId',
-  /** column name */
-  RESERVEPRICE = 'reservePrice'
-}
-
-/** aggregate var_pop on columns */
-export type Promoted_List_Items_Var_Pop_Fields = {
-  __typename?: 'promoted_list_items_var_pop_fields';
-  position?: Maybe<Scalars['Float']>;
-  reservePrice?: Maybe<Scalars['Float']>;
-};
-
-/** order by var_pop() on columns of table "promoted_list_items" */
-export type Promoted_List_Items_Var_Pop_Order_By = {
-  position?: Maybe<Order_By>;
-  reservePrice?: Maybe<Order_By>;
-};
-
-/** aggregate var_samp on columns */
-export type Promoted_List_Items_Var_Samp_Fields = {
-  __typename?: 'promoted_list_items_var_samp_fields';
-  position?: Maybe<Scalars['Float']>;
-  reservePrice?: Maybe<Scalars['Float']>;
-};
-
-/** order by var_samp() on columns of table "promoted_list_items" */
-export type Promoted_List_Items_Var_Samp_Order_By = {
-  position?: Maybe<Order_By>;
-  reservePrice?: Maybe<Order_By>;
-};
-
-/** aggregate variance on columns */
-export type Promoted_List_Items_Variance_Fields = {
-  __typename?: 'promoted_list_items_variance_fields';
-  position?: Maybe<Scalars['Float']>;
-  reservePrice?: Maybe<Scalars['Float']>;
-};
-
-/** order by variance() on columns of table "promoted_list_items" */
-export type Promoted_List_Items_Variance_Order_By = {
-  position?: Maybe<Order_By>;
-  reservePrice?: Maybe<Order_By>;
-};
-
 /** columns and relationships of "promoted_lists" */
 export type Promoted_Lists = {
   __typename?: 'promoted_lists';
@@ -11357,30 +11218,30 @@ export type Promoted_Lists = {
   id: Scalars['String'];
   numberOfSlots: Scalars['Int'];
   /** An array relationship */
-  promotedListItems: Array<Promoted_List_Items>;
+  promotedSlots: Array<Promoted_Slots>;
   /** An aggregated array relationship */
-  promotedListItems_aggregate: Promoted_List_Items_Aggregate;
+  promotedSlots_aggregate: Promoted_Slots_Aggregate;
   updatedAt: Scalars['timestamptz'];
 };
 
 
 /** columns and relationships of "promoted_lists" */
-export type Promoted_ListsPromotedListItemsArgs = {
-  distinct_on?: Maybe<Array<Promoted_List_Items_Select_Column>>;
+export type Promoted_ListsPromotedSlotsArgs = {
+  distinct_on?: Maybe<Array<Promoted_Slots_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
   offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Promoted_List_Items_Order_By>>;
-  where?: Maybe<Promoted_List_Items_Bool_Exp>;
+  order_by?: Maybe<Array<Promoted_Slots_Order_By>>;
+  where?: Maybe<Promoted_Slots_Bool_Exp>;
 };
 
 
 /** columns and relationships of "promoted_lists" */
-export type Promoted_ListsPromotedListItems_AggregateArgs = {
-  distinct_on?: Maybe<Array<Promoted_List_Items_Select_Column>>;
+export type Promoted_ListsPromotedSlots_AggregateArgs = {
+  distinct_on?: Maybe<Array<Promoted_Slots_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
   offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Promoted_List_Items_Order_By>>;
-  where?: Maybe<Promoted_List_Items_Bool_Exp>;
+  order_by?: Maybe<Array<Promoted_Slots_Order_By>>;
+  where?: Maybe<Promoted_Slots_Bool_Exp>;
 };
 
 /** aggregated selection of "promoted_lists" */
@@ -11457,14 +11318,14 @@ export type Promoted_Lists_Bool_Exp = {
   createdAt?: Maybe<Timestamptz_Comparison_Exp>;
   id?: Maybe<String_Comparison_Exp>;
   numberOfSlots?: Maybe<Int_Comparison_Exp>;
-  promotedListItems?: Maybe<Promoted_List_Items_Bool_Exp>;
+  promotedSlots?: Maybe<Promoted_Slots_Bool_Exp>;
   updatedAt?: Maybe<Timestamptz_Comparison_Exp>;
 };
 
 /** unique or primary key constraints on table "promoted_lists" */
 export enum Promoted_Lists_Constraint {
   /** unique or primary key constraint */
-  PROMOTED_LIST_PKEY = 'promoted_list_pkey'
+  PROMOTED_LISTS_PKEY = 'promoted_lists_pkey'
 }
 
 /** input type for incrementing integer column in table "promoted_lists" */
@@ -11480,7 +11341,7 @@ export type Promoted_Lists_Insert_Input = {
   createdAt?: Maybe<Scalars['timestamptz']>;
   id?: Maybe<Scalars['String']>;
   numberOfSlots?: Maybe<Scalars['Int']>;
-  promotedListItems?: Maybe<Promoted_List_Items_Arr_Rel_Insert_Input>;
+  promotedSlots?: Maybe<Promoted_Slots_Arr_Rel_Insert_Input>;
   updatedAt?: Maybe<Scalars['timestamptz']>;
 };
 
@@ -11555,7 +11416,7 @@ export type Promoted_Lists_Order_By = {
   createdAt?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   numberOfSlots?: Maybe<Order_By>;
-  promotedListItems_aggregate?: Maybe<Promoted_List_Items_Aggregate_Order_By>;
+  promotedSlots_aggregate?: Maybe<Promoted_Slots_Aggregate_Order_By>;
   updatedAt?: Maybe<Order_By>;
 };
 
@@ -11697,6 +11558,381 @@ export type Promoted_Lists_Variance_Order_By = {
   numberOfSlots?: Maybe<Order_By>;
 };
 
+/** columns and relationships of "promoted_slots" */
+export type Promoted_Slots = {
+  __typename?: 'promoted_slots';
+  createdAt: Scalars['timestamptz'];
+  expiresAt?: Maybe<Scalars['timestamptz']>;
+  id: Scalars['String'];
+  isAvailableForPurchase: Scalars['Boolean'];
+  ownerId?: Maybe<Scalars['String']>;
+  position?: Maybe<Scalars['Int']>;
+  /** An object relationship */
+  product?: Maybe<Products>;
+  productId?: Maybe<Scalars['String']>;
+  promotedListId: Scalars['String'];
+  reservePrice?: Maybe<Scalars['Int']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** aggregated selection of "promoted_slots" */
+export type Promoted_Slots_Aggregate = {
+  __typename?: 'promoted_slots_aggregate';
+  aggregate?: Maybe<Promoted_Slots_Aggregate_Fields>;
+  nodes: Array<Promoted_Slots>;
+};
+
+/** aggregate fields of "promoted_slots" */
+export type Promoted_Slots_Aggregate_Fields = {
+  __typename?: 'promoted_slots_aggregate_fields';
+  avg?: Maybe<Promoted_Slots_Avg_Fields>;
+  count?: Maybe<Scalars['Int']>;
+  max?: Maybe<Promoted_Slots_Max_Fields>;
+  min?: Maybe<Promoted_Slots_Min_Fields>;
+  stddev?: Maybe<Promoted_Slots_Stddev_Fields>;
+  stddev_pop?: Maybe<Promoted_Slots_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<Promoted_Slots_Stddev_Samp_Fields>;
+  sum?: Maybe<Promoted_Slots_Sum_Fields>;
+  var_pop?: Maybe<Promoted_Slots_Var_Pop_Fields>;
+  var_samp?: Maybe<Promoted_Slots_Var_Samp_Fields>;
+  variance?: Maybe<Promoted_Slots_Variance_Fields>;
+};
+
+
+/** aggregate fields of "promoted_slots" */
+export type Promoted_Slots_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<Promoted_Slots_Select_Column>>;
+  distinct?: Maybe<Scalars['Boolean']>;
+};
+
+/** order by aggregate values of table "promoted_slots" */
+export type Promoted_Slots_Aggregate_Order_By = {
+  avg?: Maybe<Promoted_Slots_Avg_Order_By>;
+  count?: Maybe<Order_By>;
+  max?: Maybe<Promoted_Slots_Max_Order_By>;
+  min?: Maybe<Promoted_Slots_Min_Order_By>;
+  stddev?: Maybe<Promoted_Slots_Stddev_Order_By>;
+  stddev_pop?: Maybe<Promoted_Slots_Stddev_Pop_Order_By>;
+  stddev_samp?: Maybe<Promoted_Slots_Stddev_Samp_Order_By>;
+  sum?: Maybe<Promoted_Slots_Sum_Order_By>;
+  var_pop?: Maybe<Promoted_Slots_Var_Pop_Order_By>;
+  var_samp?: Maybe<Promoted_Slots_Var_Samp_Order_By>;
+  variance?: Maybe<Promoted_Slots_Variance_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "promoted_slots" */
+export type Promoted_Slots_Arr_Rel_Insert_Input = {
+  data: Array<Promoted_Slots_Insert_Input>;
+  on_conflict?: Maybe<Promoted_Slots_On_Conflict>;
+};
+
+/** aggregate avg on columns */
+export type Promoted_Slots_Avg_Fields = {
+  __typename?: 'promoted_slots_avg_fields';
+  position?: Maybe<Scalars['Float']>;
+  reservePrice?: Maybe<Scalars['Float']>;
+};
+
+/** order by avg() on columns of table "promoted_slots" */
+export type Promoted_Slots_Avg_Order_By = {
+  position?: Maybe<Order_By>;
+  reservePrice?: Maybe<Order_By>;
+};
+
+/** Boolean expression to filter rows from the table "promoted_slots". All fields are combined with a logical 'AND'. */
+export type Promoted_Slots_Bool_Exp = {
+  _and?: Maybe<Array<Maybe<Promoted_Slots_Bool_Exp>>>;
+  _not?: Maybe<Promoted_Slots_Bool_Exp>;
+  _or?: Maybe<Array<Maybe<Promoted_Slots_Bool_Exp>>>;
+  createdAt?: Maybe<Timestamptz_Comparison_Exp>;
+  expiresAt?: Maybe<Timestamptz_Comparison_Exp>;
+  id?: Maybe<String_Comparison_Exp>;
+  isAvailableForPurchase?: Maybe<Boolean_Comparison_Exp>;
+  ownerId?: Maybe<String_Comparison_Exp>;
+  position?: Maybe<Int_Comparison_Exp>;
+  product?: Maybe<Products_Bool_Exp>;
+  productId?: Maybe<String_Comparison_Exp>;
+  promotedListId?: Maybe<String_Comparison_Exp>;
+  reservePrice?: Maybe<Int_Comparison_Exp>;
+  updated_at?: Maybe<Timestamptz_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "promoted_slots" */
+export enum Promoted_Slots_Constraint {
+  /** unique or primary key constraint */
+  PROMOTED_SLOTS_PKEY = 'promoted_slots_pkey'
+}
+
+/** input type for incrementing integer column in table "promoted_slots" */
+export type Promoted_Slots_Inc_Input = {
+  position?: Maybe<Scalars['Int']>;
+  reservePrice?: Maybe<Scalars['Int']>;
+};
+
+/** input type for inserting data into table "promoted_slots" */
+export type Promoted_Slots_Insert_Input = {
+  createdAt?: Maybe<Scalars['timestamptz']>;
+  expiresAt?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['String']>;
+  isAvailableForPurchase?: Maybe<Scalars['Boolean']>;
+  ownerId?: Maybe<Scalars['String']>;
+  position?: Maybe<Scalars['Int']>;
+  product?: Maybe<Products_Obj_Rel_Insert_Input>;
+  productId?: Maybe<Scalars['String']>;
+  promotedListId?: Maybe<Scalars['String']>;
+  reservePrice?: Maybe<Scalars['Int']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** aggregate max on columns */
+export type Promoted_Slots_Max_Fields = {
+  __typename?: 'promoted_slots_max_fields';
+  createdAt?: Maybe<Scalars['timestamptz']>;
+  expiresAt?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['String']>;
+  ownerId?: Maybe<Scalars['String']>;
+  position?: Maybe<Scalars['Int']>;
+  productId?: Maybe<Scalars['String']>;
+  promotedListId?: Maybe<Scalars['String']>;
+  reservePrice?: Maybe<Scalars['Int']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** order by max() on columns of table "promoted_slots" */
+export type Promoted_Slots_Max_Order_By = {
+  createdAt?: Maybe<Order_By>;
+  expiresAt?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  ownerId?: Maybe<Order_By>;
+  position?: Maybe<Order_By>;
+  productId?: Maybe<Order_By>;
+  promotedListId?: Maybe<Order_By>;
+  reservePrice?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type Promoted_Slots_Min_Fields = {
+  __typename?: 'promoted_slots_min_fields';
+  createdAt?: Maybe<Scalars['timestamptz']>;
+  expiresAt?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['String']>;
+  ownerId?: Maybe<Scalars['String']>;
+  position?: Maybe<Scalars['Int']>;
+  productId?: Maybe<Scalars['String']>;
+  promotedListId?: Maybe<Scalars['String']>;
+  reservePrice?: Maybe<Scalars['Int']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** order by min() on columns of table "promoted_slots" */
+export type Promoted_Slots_Min_Order_By = {
+  createdAt?: Maybe<Order_By>;
+  expiresAt?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  ownerId?: Maybe<Order_By>;
+  position?: Maybe<Order_By>;
+  productId?: Maybe<Order_By>;
+  promotedListId?: Maybe<Order_By>;
+  reservePrice?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
+};
+
+/** response of any mutation on the table "promoted_slots" */
+export type Promoted_Slots_Mutation_Response = {
+  __typename?: 'promoted_slots_mutation_response';
+  /** number of affected rows by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data of the affected rows by the mutation */
+  returning: Array<Promoted_Slots>;
+};
+
+/** input type for inserting object relation for remote table "promoted_slots" */
+export type Promoted_Slots_Obj_Rel_Insert_Input = {
+  data: Promoted_Slots_Insert_Input;
+  on_conflict?: Maybe<Promoted_Slots_On_Conflict>;
+};
+
+/** on conflict condition type for table "promoted_slots" */
+export type Promoted_Slots_On_Conflict = {
+  constraint: Promoted_Slots_Constraint;
+  update_columns: Array<Promoted_Slots_Update_Column>;
+  where?: Maybe<Promoted_Slots_Bool_Exp>;
+};
+
+/** ordering options when selecting data from "promoted_slots" */
+export type Promoted_Slots_Order_By = {
+  createdAt?: Maybe<Order_By>;
+  expiresAt?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  isAvailableForPurchase?: Maybe<Order_By>;
+  ownerId?: Maybe<Order_By>;
+  position?: Maybe<Order_By>;
+  product?: Maybe<Products_Order_By>;
+  productId?: Maybe<Order_By>;
+  promotedListId?: Maybe<Order_By>;
+  reservePrice?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
+};
+
+/** primary key columns input for table: "promoted_slots" */
+export type Promoted_Slots_Pk_Columns_Input = {
+  id: Scalars['String'];
+};
+
+/** select columns of table "promoted_slots" */
+export enum Promoted_Slots_Select_Column {
+  /** column name */
+  CREATEDAT = 'createdAt',
+  /** column name */
+  EXPIRESAT = 'expiresAt',
+  /** column name */
+  ID = 'id',
+  /** column name */
+  ISAVAILABLEFORPURCHASE = 'isAvailableForPurchase',
+  /** column name */
+  OWNERID = 'ownerId',
+  /** column name */
+  POSITION = 'position',
+  /** column name */
+  PRODUCTID = 'productId',
+  /** column name */
+  PROMOTEDLISTID = 'promotedListId',
+  /** column name */
+  RESERVEPRICE = 'reservePrice',
+  /** column name */
+  UPDATED_AT = 'updated_at'
+}
+
+/** input type for updating data in table "promoted_slots" */
+export type Promoted_Slots_Set_Input = {
+  createdAt?: Maybe<Scalars['timestamptz']>;
+  expiresAt?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['String']>;
+  isAvailableForPurchase?: Maybe<Scalars['Boolean']>;
+  ownerId?: Maybe<Scalars['String']>;
+  position?: Maybe<Scalars['Int']>;
+  productId?: Maybe<Scalars['String']>;
+  promotedListId?: Maybe<Scalars['String']>;
+  reservePrice?: Maybe<Scalars['Int']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** aggregate stddev on columns */
+export type Promoted_Slots_Stddev_Fields = {
+  __typename?: 'promoted_slots_stddev_fields';
+  position?: Maybe<Scalars['Float']>;
+  reservePrice?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev() on columns of table "promoted_slots" */
+export type Promoted_Slots_Stddev_Order_By = {
+  position?: Maybe<Order_By>;
+  reservePrice?: Maybe<Order_By>;
+};
+
+/** aggregate stddev_pop on columns */
+export type Promoted_Slots_Stddev_Pop_Fields = {
+  __typename?: 'promoted_slots_stddev_pop_fields';
+  position?: Maybe<Scalars['Float']>;
+  reservePrice?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev_pop() on columns of table "promoted_slots" */
+export type Promoted_Slots_Stddev_Pop_Order_By = {
+  position?: Maybe<Order_By>;
+  reservePrice?: Maybe<Order_By>;
+};
+
+/** aggregate stddev_samp on columns */
+export type Promoted_Slots_Stddev_Samp_Fields = {
+  __typename?: 'promoted_slots_stddev_samp_fields';
+  position?: Maybe<Scalars['Float']>;
+  reservePrice?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev_samp() on columns of table "promoted_slots" */
+export type Promoted_Slots_Stddev_Samp_Order_By = {
+  position?: Maybe<Order_By>;
+  reservePrice?: Maybe<Order_By>;
+};
+
+/** aggregate sum on columns */
+export type Promoted_Slots_Sum_Fields = {
+  __typename?: 'promoted_slots_sum_fields';
+  position?: Maybe<Scalars['Int']>;
+  reservePrice?: Maybe<Scalars['Int']>;
+};
+
+/** order by sum() on columns of table "promoted_slots" */
+export type Promoted_Slots_Sum_Order_By = {
+  position?: Maybe<Order_By>;
+  reservePrice?: Maybe<Order_By>;
+};
+
+/** update columns of table "promoted_slots" */
+export enum Promoted_Slots_Update_Column {
+  /** column name */
+  CREATEDAT = 'createdAt',
+  /** column name */
+  EXPIRESAT = 'expiresAt',
+  /** column name */
+  ID = 'id',
+  /** column name */
+  ISAVAILABLEFORPURCHASE = 'isAvailableForPurchase',
+  /** column name */
+  OWNERID = 'ownerId',
+  /** column name */
+  POSITION = 'position',
+  /** column name */
+  PRODUCTID = 'productId',
+  /** column name */
+  PROMOTEDLISTID = 'promotedListId',
+  /** column name */
+  RESERVEPRICE = 'reservePrice',
+  /** column name */
+  UPDATED_AT = 'updated_at'
+}
+
+/** aggregate var_pop on columns */
+export type Promoted_Slots_Var_Pop_Fields = {
+  __typename?: 'promoted_slots_var_pop_fields';
+  position?: Maybe<Scalars['Float']>;
+  reservePrice?: Maybe<Scalars['Float']>;
+};
+
+/** order by var_pop() on columns of table "promoted_slots" */
+export type Promoted_Slots_Var_Pop_Order_By = {
+  position?: Maybe<Order_By>;
+  reservePrice?: Maybe<Order_By>;
+};
+
+/** aggregate var_samp on columns */
+export type Promoted_Slots_Var_Samp_Fields = {
+  __typename?: 'promoted_slots_var_samp_fields';
+  position?: Maybe<Scalars['Float']>;
+  reservePrice?: Maybe<Scalars['Float']>;
+};
+
+/** order by var_samp() on columns of table "promoted_slots" */
+export type Promoted_Slots_Var_Samp_Order_By = {
+  position?: Maybe<Order_By>;
+  reservePrice?: Maybe<Order_By>;
+};
+
+/** aggregate variance on columns */
+export type Promoted_Slots_Variance_Fields = {
+  __typename?: 'promoted_slots_variance_fields';
+  position?: Maybe<Scalars['Float']>;
+  reservePrice?: Maybe<Scalars['Float']>;
+};
+
+/** order by variance() on columns of table "promoted_slots" */
+export type Promoted_Slots_Variance_Order_By = {
+  position?: Maybe<Order_By>;
+  reservePrice?: Maybe<Order_By>;
+};
+
 export type PromotedList = {
   __typename?: 'PromotedList';
   id: Scalars['ID'];
@@ -11704,13 +11940,18 @@ export type PromotedList = {
   updatedAt?: Maybe<Scalars['Date']>;
   numberOfSlots?: Maybe<Scalars['Int']>;
   categoryFilterSlug?: Maybe<Scalars['String']>;
-  /** promotedListItems: [PromotedListItem] */
-  promotedListItemsConnection?: Maybe<PromotedListItemsConnection>;
+  /** promotedSlots: [PromotedSlot] */
+  promotedSlotsConnection?: Maybe<PromotedSlotsConnection>;
   cardsPerRow?: Maybe<Scalars['Int']>;
 };
 
-export type PromotedListItem = {
-  __typename?: 'PromotedListItem';
+export type PromotedListMutationResponse = {
+  __typename?: 'PromotedListMutationResponse';
+  promotedList: PromotedList;
+};
+
+export type PromotedSlot = {
+  __typename?: 'PromotedSlot';
   id: Scalars['ID'];
   createdAt: Scalars['Date'];
   promotedListId: Scalars['ID'];
@@ -11724,26 +11965,21 @@ export type PromotedListItem = {
   isRandomFiller?: Maybe<Scalars['Boolean']>;
 };
 
-export type PromotedListItemMutationResponse = {
-  __typename?: 'PromotedListItemMutationResponse';
-  promotedListItem: PromotedListItem;
+export type PromotedSlotMutationResponse = {
+  __typename?: 'PromotedSlotMutationResponse';
+  promotedSlot: PromotedSlot;
 };
 
-export type PromotedListItemsConnection = {
-  __typename?: 'PromotedListItemsConnection';
+export type PromotedSlotsConnection = {
+  __typename?: 'PromotedSlotsConnection';
   totalCount?: Maybe<Scalars['Int']>;
   pageInfo: PageInfo;
-  edges: Array<PromotedListItemsEdge>;
+  edges: Array<PromotedSlotsEdge>;
 };
 
-export type PromotedListItemsEdge = {
-  __typename?: 'PromotedListItemsEdge';
-  node: PromotedListItem;
-};
-
-export type PromotedListMutationResponse = {
-  __typename?: 'PromotedListMutationResponse';
-  promotedList: PromotedList;
+export type PromotedSlotsEdge = {
+  __typename?: 'PromotedSlotsEdge';
+  node: PromotedSlot;
 };
 
 /** columns and relationships of "promotion_purchases" */
@@ -11758,7 +11994,7 @@ export type Promotion_Purchases = {
   paymentIntentId: Scalars['String'];
   productId?: Maybe<Scalars['String']>;
   promotedListId: Scalars['String'];
-  promotedListItemId: Scalars['String'];
+  promotedSlotId: Scalars['String'];
   total: Scalars['Int'];
 };
 
@@ -11842,7 +12078,7 @@ export type Promotion_Purchases_Bool_Exp = {
   paymentIntentId?: Maybe<String_Comparison_Exp>;
   productId?: Maybe<String_Comparison_Exp>;
   promotedListId?: Maybe<String_Comparison_Exp>;
-  promotedListItemId?: Maybe<String_Comparison_Exp>;
+  promotedSlotId?: Maybe<String_Comparison_Exp>;
   total?: Maybe<Int_Comparison_Exp>;
 };
 
@@ -11870,7 +12106,7 @@ export type Promotion_Purchases_Insert_Input = {
   paymentIntentId?: Maybe<Scalars['String']>;
   productId?: Maybe<Scalars['String']>;
   promotedListId?: Maybe<Scalars['String']>;
-  promotedListItemId?: Maybe<Scalars['String']>;
+  promotedSlotId?: Maybe<Scalars['String']>;
   total?: Maybe<Scalars['Int']>;
 };
 
@@ -11886,7 +12122,7 @@ export type Promotion_Purchases_Max_Fields = {
   paymentIntentId?: Maybe<Scalars['String']>;
   productId?: Maybe<Scalars['String']>;
   promotedListId?: Maybe<Scalars['String']>;
-  promotedListItemId?: Maybe<Scalars['String']>;
+  promotedSlotId?: Maybe<Scalars['String']>;
   total?: Maybe<Scalars['Int']>;
 };
 
@@ -11901,7 +12137,7 @@ export type Promotion_Purchases_Max_Order_By = {
   paymentIntentId?: Maybe<Order_By>;
   productId?: Maybe<Order_By>;
   promotedListId?: Maybe<Order_By>;
-  promotedListItemId?: Maybe<Order_By>;
+  promotedSlotId?: Maybe<Order_By>;
   total?: Maybe<Order_By>;
 };
 
@@ -11917,7 +12153,7 @@ export type Promotion_Purchases_Min_Fields = {
   paymentIntentId?: Maybe<Scalars['String']>;
   productId?: Maybe<Scalars['String']>;
   promotedListId?: Maybe<Scalars['String']>;
-  promotedListItemId?: Maybe<Scalars['String']>;
+  promotedSlotId?: Maybe<Scalars['String']>;
   total?: Maybe<Scalars['Int']>;
 };
 
@@ -11932,7 +12168,7 @@ export type Promotion_Purchases_Min_Order_By = {
   paymentIntentId?: Maybe<Order_By>;
   productId?: Maybe<Order_By>;
   promotedListId?: Maybe<Order_By>;
-  promotedListItemId?: Maybe<Order_By>;
+  promotedSlotId?: Maybe<Order_By>;
   total?: Maybe<Order_By>;
 };
 
@@ -11969,7 +12205,7 @@ export type Promotion_Purchases_Order_By = {
   paymentIntentId?: Maybe<Order_By>;
   productId?: Maybe<Order_By>;
   promotedListId?: Maybe<Order_By>;
-  promotedListItemId?: Maybe<Order_By>;
+  promotedSlotId?: Maybe<Order_By>;
   total?: Maybe<Order_By>;
 };
 
@@ -11999,7 +12235,7 @@ export enum Promotion_Purchases_Select_Column {
   /** column name */
   PROMOTEDLISTID = 'promotedListId',
   /** column name */
-  PROMOTEDLISTITEMID = 'promotedListItemId',
+  PROMOTEDSLOTID = 'promotedSlotId',
   /** column name */
   TOTAL = 'total'
 }
@@ -12015,7 +12251,7 @@ export type Promotion_Purchases_Set_Input = {
   paymentIntentId?: Maybe<Scalars['String']>;
   productId?: Maybe<Scalars['String']>;
   promotedListId?: Maybe<Scalars['String']>;
-  promotedListItemId?: Maybe<Scalars['String']>;
+  promotedSlotId?: Maybe<Scalars['String']>;
   total?: Maybe<Scalars['Int']>;
 };
 
@@ -12100,7 +12336,7 @@ export enum Promotion_Purchases_Update_Column {
   /** column name */
   PROMOTEDLISTID = 'promotedListId',
   /** column name */
-  PROMOTEDLISTITEMID = 'promotedListItemId',
+  PROMOTEDSLOTID = 'promotedSlotId',
   /** column name */
   TOTAL = 'total'
 }
@@ -12153,7 +12389,7 @@ export type Promotion_Purchases_Variance_Order_By = {
 export type PromotionPurchaseMutationResponse = {
   __typename?: 'PromotionPurchaseMutationResponse';
   promotionPurchase: Promotion_Purchases;
-  promotedListItem: PromotedListItem;
+  promotedSlot: PromotedSlot;
   stripePaymentIntent: Scalars['String'];
 };
 
@@ -12165,6 +12401,12 @@ export type Query = {
   bids_aggregate: Bids_Aggregate;
   /** fetch data from the table: "bids" using primary key columns */
   bids_by_pk?: Maybe<Bids>;
+  /** fetch data from the table: "calibers" */
+  calibers: Array<Calibers>;
+  /** fetch aggregated fields from the table: "calibers" */
+  calibers_aggregate: Calibers_Aggregate;
+  /** fetch data from the table: "calibers" using primary key columns */
+  calibers_by_pk?: Maybe<Calibers>;
   /** fetch data from the table: "categories" */
   categories: Array<Categories>;
   /** fetch aggregated fields from the table: "categories" */
@@ -12327,18 +12569,18 @@ export type Query = {
   products_aggregate: Products_Aggregate;
   /** fetch data from the table: "products" using primary key columns */
   products_by_pk?: Maybe<Products>;
-  /** fetch data from the table: "promoted_list_items" */
-  promoted_list_items: Array<Promoted_List_Items>;
-  /** fetch aggregated fields from the table: "promoted_list_items" */
-  promoted_list_items_aggregate: Promoted_List_Items_Aggregate;
-  /** fetch data from the table: "promoted_list_items" using primary key columns */
-  promoted_list_items_by_pk?: Maybe<Promoted_List_Items>;
   /** fetch data from the table: "promoted_lists" */
   promoted_lists: Array<Promoted_Lists>;
   /** fetch aggregated fields from the table: "promoted_lists" */
   promoted_lists_aggregate: Promoted_Lists_Aggregate;
   /** fetch data from the table: "promoted_lists" using primary key columns */
   promoted_lists_by_pk?: Maybe<Promoted_Lists>;
+  /** fetch data from the table: "promoted_slots" */
+  promoted_slots: Array<Promoted_Slots>;
+  /** fetch aggregated fields from the table: "promoted_slots" */
+  promoted_slots_aggregate: Promoted_Slots_Aggregate;
+  /** fetch data from the table: "promoted_slots" using primary key columns */
+  promoted_slots_by_pk?: Maybe<Promoted_Slots>;
   /** fetch data from the table: "promotion_purchases" */
   promotion_purchases: Array<Promotion_Purchases>;
   /** fetch aggregated fields from the table: "promotion_purchases" */
@@ -12595,7 +12837,7 @@ export type Query = {
   wishlistItemsConnection: WishlistItemsConnection;
   /**
    * Get a promoted list by its ID.
-   * returns promotedList.promotedListItemsConnection
+   * returns promotedList.promotedSlotsConnection
    *
    * AccessRule – PUBLIC
    */
@@ -12646,6 +12888,29 @@ export type QueryBids_AggregateArgs = {
 
 
 export type QueryBids_By_PkArgs = {
+  id: Scalars['String'];
+};
+
+
+export type QueryCalibersArgs = {
+  distinct_on?: Maybe<Array<Calibers_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Calibers_Order_By>>;
+  where?: Maybe<Calibers_Bool_Exp>;
+};
+
+
+export type QueryCalibers_AggregateArgs = {
+  distinct_on?: Maybe<Array<Calibers_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Calibers_Order_By>>;
+  where?: Maybe<Calibers_Bool_Exp>;
+};
+
+
+export type QueryCalibers_By_PkArgs = {
   id: Scalars['String'];
 };
 
@@ -13282,29 +13547,6 @@ export type QueryProducts_By_PkArgs = {
 };
 
 
-export type QueryPromoted_List_ItemsArgs = {
-  distinct_on?: Maybe<Array<Promoted_List_Items_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Promoted_List_Items_Order_By>>;
-  where?: Maybe<Promoted_List_Items_Bool_Exp>;
-};
-
-
-export type QueryPromoted_List_Items_AggregateArgs = {
-  distinct_on?: Maybe<Array<Promoted_List_Items_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Promoted_List_Items_Order_By>>;
-  where?: Maybe<Promoted_List_Items_Bool_Exp>;
-};
-
-
-export type QueryPromoted_List_Items_By_PkArgs = {
-  id: Scalars['String'];
-};
-
-
 export type QueryPromoted_ListsArgs = {
   distinct_on?: Maybe<Array<Promoted_Lists_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -13324,6 +13566,29 @@ export type QueryPromoted_Lists_AggregateArgs = {
 
 
 export type QueryPromoted_Lists_By_PkArgs = {
+  id: Scalars['String'];
+};
+
+
+export type QueryPromoted_SlotsArgs = {
+  distinct_on?: Maybe<Array<Promoted_Slots_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Promoted_Slots_Order_By>>;
+  where?: Maybe<Promoted_Slots_Bool_Exp>;
+};
+
+
+export type QueryPromoted_Slots_AggregateArgs = {
+  distinct_on?: Maybe<Array<Promoted_Slots_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Promoted_Slots_Order_By>>;
+  where?: Maybe<Promoted_Slots_Bool_Exp>;
+};
+
+
+export type QueryPromoted_Slots_By_PkArgs = {
   id: Scalars['String'];
 };
 
@@ -14604,6 +14869,12 @@ export type Subscription = {
   bids_aggregate: Bids_Aggregate;
   /** fetch data from the table: "bids" using primary key columns */
   bids_by_pk?: Maybe<Bids>;
+  /** fetch data from the table: "calibers" */
+  calibers: Array<Calibers>;
+  /** fetch aggregated fields from the table: "calibers" */
+  calibers_aggregate: Calibers_Aggregate;
+  /** fetch data from the table: "calibers" using primary key columns */
+  calibers_by_pk?: Maybe<Calibers>;
   /** fetch data from the table: "categories" */
   categories: Array<Categories>;
   /** fetch aggregated fields from the table: "categories" */
@@ -14766,18 +15037,18 @@ export type Subscription = {
   products_aggregate: Products_Aggregate;
   /** fetch data from the table: "products" using primary key columns */
   products_by_pk?: Maybe<Products>;
-  /** fetch data from the table: "promoted_list_items" */
-  promoted_list_items: Array<Promoted_List_Items>;
-  /** fetch aggregated fields from the table: "promoted_list_items" */
-  promoted_list_items_aggregate: Promoted_List_Items_Aggregate;
-  /** fetch data from the table: "promoted_list_items" using primary key columns */
-  promoted_list_items_by_pk?: Maybe<Promoted_List_Items>;
   /** fetch data from the table: "promoted_lists" */
   promoted_lists: Array<Promoted_Lists>;
   /** fetch aggregated fields from the table: "promoted_lists" */
   promoted_lists_aggregate: Promoted_Lists_Aggregate;
   /** fetch data from the table: "promoted_lists" using primary key columns */
   promoted_lists_by_pk?: Maybe<Promoted_Lists>;
+  /** fetch data from the table: "promoted_slots" */
+  promoted_slots: Array<Promoted_Slots>;
+  /** fetch aggregated fields from the table: "promoted_slots" */
+  promoted_slots_aggregate: Promoted_Slots_Aggregate;
+  /** fetch data from the table: "promoted_slots" using primary key columns */
+  promoted_slots_by_pk?: Maybe<Promoted_Slots>;
   /** fetch data from the table: "promotion_purchases" */
   promotion_purchases: Array<Promotion_Purchases>;
   /** fetch aggregated fields from the table: "promotion_purchases" */
@@ -14854,6 +15125,29 @@ export type SubscriptionBids_AggregateArgs = {
 
 
 export type SubscriptionBids_By_PkArgs = {
+  id: Scalars['String'];
+};
+
+
+export type SubscriptionCalibersArgs = {
+  distinct_on?: Maybe<Array<Calibers_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Calibers_Order_By>>;
+  where?: Maybe<Calibers_Bool_Exp>;
+};
+
+
+export type SubscriptionCalibers_AggregateArgs = {
+  distinct_on?: Maybe<Array<Calibers_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Calibers_Order_By>>;
+  where?: Maybe<Calibers_Bool_Exp>;
+};
+
+
+export type SubscriptionCalibers_By_PkArgs = {
   id: Scalars['String'];
 };
 
@@ -15490,29 +15784,6 @@ export type SubscriptionProducts_By_PkArgs = {
 };
 
 
-export type SubscriptionPromoted_List_ItemsArgs = {
-  distinct_on?: Maybe<Array<Promoted_List_Items_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Promoted_List_Items_Order_By>>;
-  where?: Maybe<Promoted_List_Items_Bool_Exp>;
-};
-
-
-export type SubscriptionPromoted_List_Items_AggregateArgs = {
-  distinct_on?: Maybe<Array<Promoted_List_Items_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Promoted_List_Items_Order_By>>;
-  where?: Maybe<Promoted_List_Items_Bool_Exp>;
-};
-
-
-export type SubscriptionPromoted_List_Items_By_PkArgs = {
-  id: Scalars['String'];
-};
-
-
 export type SubscriptionPromoted_ListsArgs = {
   distinct_on?: Maybe<Array<Promoted_Lists_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -15532,6 +15803,29 @@ export type SubscriptionPromoted_Lists_AggregateArgs = {
 
 
 export type SubscriptionPromoted_Lists_By_PkArgs = {
+  id: Scalars['String'];
+};
+
+
+export type SubscriptionPromoted_SlotsArgs = {
+  distinct_on?: Maybe<Array<Promoted_Slots_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Promoted_Slots_Order_By>>;
+  where?: Maybe<Promoted_Slots_Bool_Exp>;
+};
+
+
+export type SubscriptionPromoted_Slots_AggregateArgs = {
+  distinct_on?: Maybe<Array<Promoted_Slots_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Promoted_Slots_Order_By>>;
+  where?: Maybe<Promoted_Slots_Bool_Exp>;
+};
+
+
+export type SubscriptionPromoted_Slots_By_PkArgs = {
   id: Scalars['String'];
 };
 
