@@ -216,7 +216,7 @@ const BuyPromotedSlotPage = (props: ReactProps) => {
     )}>
       <div className={classes.titleRow}>
         <Typography variant="h2" className={classes.title}>
-          Buy This Promoted Item Slot
+          {`Buy Promoted Item Slot #${props.position + 1}`}
         </Typography>
         {
           asModal &&
@@ -314,10 +314,8 @@ const BuyPromotedSlotPage = (props: ReactProps) => {
       {
         // if no one currently owns slot
         !(userOwnsSlotNow || anotherUserOwnsSlotNow) &&
-        <div className={classes.helpMessages}>
-          <div className={classes.boldSubtitle}>
-              { "2. Purchase slot for your product" }
-          </div>
+        <div className={classes.boldSubtitle}>
+          { "2. Purchase slot for your product" }
         </div>
       }
 
@@ -552,7 +550,6 @@ const styles = (theme: Theme) => createStyles({
     justifyContent: 'space-between',
   },
   title: {
-    marginBottom: "1rem",
     width: '100%',
     textAlign: 'center',
   },
@@ -566,14 +563,13 @@ const styles = (theme: Theme) => createStyles({
   },
   dropdownProducts: {
     marginTop: "0.5rem",
-    marginBottom: "2.5rem",
+    marginBottom: "0.5rem",
   },
   buttonsBox: {
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
-    marginTop: '2rem',
   },
   buttonBlue: {
     marginTop: "0.5rem",
@@ -595,12 +591,12 @@ const styles = (theme: Theme) => createStyles({
     },
   },
   helpMessages: {
-    marginTop: "1rem",
-    marginBottom: "1rem",
     display: 'flex',
     flexDirection: "column",
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
+    marginTop: '2.5rem',
+    marginBottom: '2.5rem',
   },
   helpMessage1: {
     color: Colors.blue,
