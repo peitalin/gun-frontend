@@ -16,7 +16,7 @@ import GridPreviewCardLight from "components/GridPreviewCardLight";
 import {
   Product,
   Order_By,
-  PromotedListItemsConnection,
+  PromotedSlotsConnection,
 } from "typings/gqlTypes";
 // useMediaQuery
 import { useTheme } from "@material-ui/core/styles";
@@ -97,7 +97,7 @@ interface ReactProps extends WithStyles<typeof styles> {
     lg?: number;
     xl?: number;
   };
-  connection: PromotedListItemsConnection;
+  connection: PromotedSlotsConnection;
   // sortAscending: boolean; // must be top-level
   // cause Desktop and Mobile share the same queries. Possible clash in variables
   // don't want Desktop's sortAscend: true, while Mobile is false,

@@ -8,17 +8,12 @@ import Typography from "@material-ui/core/Typography";
 // Typings
 import {
   Product,
-  PromotedListItemsConnection,
-  PromotedListItem,
+  PromotedSlotsConnection,
+  PromotedSlot,
   UserPrivate,
-  Role,
 } from "typings/gqlTypes";
-// redux
-import { useSelector } from "react-redux";
-import { GrandReduxState } from "reduxStore/grand-reducer";
-// Wishlist
-import ProductCardResponsive from "components/ProductCardResponsive";
 
+import PromotedSlotCard from "./PromotedSlotCard";
 import AirCarousel from "components/AirCarousel";
 import { useSnackbar } from "notistack";
 
@@ -42,7 +37,7 @@ const PromotionCardsMobile = (props: ReactProps) => {
 
 
   const snackbar = useSnackbar();
-  const promotedItemsEdges = connection?.edges
+  const promotedSlotsEdges = connection?.edges
 
   return (
     <main className={classes.root}>
@@ -58,35 +53,21 @@ const PromotionCardsMobile = (props: ReactProps) => {
         scrollSnapType={"x proximity"}
       >
         {
-          promotedItemsEdges?.map((promotedItemEdge, i) =>
+          promotedSlotsEdges?.map((promotedSlotEdge, i) =>
             <div key={i}
               className={clsx(
                 classes.marginLeft,
-                !promotedItemEdge.node?.isAvailableForPurchase && classes.grayedOut,
+                !promotedSlotEdge.node?.isAvailableForPurchase && classes.grayedOut,
               )}
             >
-              <ProductCardResponsive
-                product={promotedItemEdge?.node?.product}
+              <PromotedSlotCard
                 cardsPerRow={cardsPerRow}
-                onClick={async(e) => {
-                  if (
-                    !promotedItemEdge?.node?.isAvailableForPurchase
-                    && props.user?.userRole !== Role.PLATFORM_ADMIN
-                  ) {
-                    snackbar.enqueueSnackbar(
-                      "Slot reserved for admins",
-                      { variant: "info" }
-                    )
-                    return
-                  }
-                  props.onClick(e)
-                  if (props?.setPosition) {
-                    props.setPosition(i);
-                  }
-                  if (props?.setCurrentPromotedListItem) {
-                    props.setCurrentPromotedListItem(promotedItemEdge.node);
-                  }
-                }}
+                onClick={props.onClick}
+                user={props.user}
+                promotedSlot={promotedSlotEdge?.node}
+                setCurrentPromotedSlot={props.setCurrentPromotedSlot}
+                position={i}
+                setPosition={props.setPosition}
               />
             </div>
           )
@@ -98,11 +79,9 @@ const PromotionCardsMobile = (props: ReactProps) => {
 
 
 
-
-
 interface ReactProps extends WithStyles<typeof styles> {
   title?: string;
-  connection: PromotedListItemsConnection;
+  connection: PromotedSlotsConnection;
   cardsPerRow?: {
     xs?: number;
     sm?: number;
@@ -114,7 +93,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   // don't want Desktop's sortAscend: true, while Mobile is false,
   // as both queries will be sent and returned data conflicts
   onClick(e?: any): void;
-  setCurrentPromotedListItem(p: PromotedListItem): void;
+  setCurrentPromotedSlot(p: PromotedSlot): void;
   setPosition(p: number): void;
   user: UserPrivate;
 }
@@ -125,6 +104,7 @@ const styles = (theme: Theme) => createStyles({
     // paddingRight: '1rem', // subtract 1rem for carousel buttons: 1rem on both sides
     // paddingLeft: '1rem', // subtract 1rem for carousel buttons: 1rem on both sides
     width: '100%',
+    marginBottom: '1rem',
   },
   flexRowLink: {
     display: 'flex',
@@ -181,6 +161,15 @@ const styles = (theme: Theme) => createStyles({
   // },
   marginLeft: {
     marginLeft: '0.5rem',
+  },
+  previewImageMessageText: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    textAlign: 'center',
+    marginLeft: "1rem",
+    marginRight: "1rem",
   },
   grayedOut: {
     // filter: "grayscale(1) blur(1px)",

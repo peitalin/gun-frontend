@@ -9,7 +9,7 @@ import { ProductsConnection, PageConfig, PromotedList } from "typings/gqlTypes";
 import PromotionCards from "pageComponents/PromoteListings/PromotionCards";
 import BannerPromotionPurchases from "./BannerPromotionPurchases"
 import AlignCenterLayout from "components/AlignCenterLayout";
-import PromotedItemPurchaseModal from "./PromotedItemPurchaseModal";
+import PromotedSlotPurchaseModal from "./PromotedSlotPurchaseModal";
 
 export const MAX_WIDTH_GRID: number = 1160;
 
@@ -25,8 +25,8 @@ const PromoteListings: React.FC<ReactProps> = (props) => {
   // const theme = useTheme();
   // const mdDown = useMediaQuery(theme.breakpoints.down('md'));
   const [
-    currentPromotedListItem,
-    setCurrentPromotedListItem
+    currentPromotedSlot,
+    setCurrentPromotedSlot
   ] = React.useState(undefined)
 
   const [ position, setPosition ] = React.useState(0)
@@ -39,13 +39,12 @@ const PromoteListings: React.FC<ReactProps> = (props) => {
         maxWidth={MAX_WIDTH_GRID || 1160}
         withRecommendations={false}
       >
-        <div className={classes.bannerPadding}>
-          <BannerPromotionPurchases />
-        </div>
 
-        <PromotedItemPurchaseModal
+        <BannerPromotionPurchases />
+
+        <PromotedSlotPurchaseModal
           asModal={true}
-          currentPromotedListItem={currentPromotedListItem}
+          currentPromotedSlot={currentPromotedSlot}
           position={position}
           refetch={refetch}
         />
@@ -61,7 +60,7 @@ const PromoteListings: React.FC<ReactProps> = (props) => {
                   key={section?.id}
                   title={section?.title}
                   promotedListId={section?.promotedListId}
-                  setCurrentPromotedListItem={setCurrentPromotedListItem}
+                  setCurrentPromotedSlot={setCurrentPromotedSlot}
                   setPosition={setPosition}
                   setRefetch={setRefetch}
                   cardsPerRow={{
@@ -94,9 +93,6 @@ const styles = (theme: Theme) => createStyles({
     display: 'flex',
     flexDirection: "column",
     justifyContent: 'center',
-  },
-  bannerPadding: {
-    padding: '1rem 1rem 0rem 1rem',
   },
 });
 

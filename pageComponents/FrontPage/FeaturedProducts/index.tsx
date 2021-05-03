@@ -59,7 +59,7 @@ const FeaturedProducts = (props: ReactProps) => {
     ssr: true,
   })
 
-  let connection = data?.promotedList?.promotedListItemsConnection
+  let connection = data?.promotedList?.promotedSlotsConnection
 
   // if (loading) {
   //   return (

@@ -41,6 +41,13 @@ const BannerPromotionPurchases: NextPage<ReactProps> = (props) => {
     <Banner
       // in /public/img
       src={bannerBackgroundImageUrl}
+      bannerContainerStyles={{
+        borderRadius: BorderRadius3x,
+        margin: "1rem",
+        border: isDarkMode
+          ? `1px solid ${Colors.uniswapDarkNavy}`
+          : `1px solid ${Colors.slateGreyBlack}`
+      }}
       titleStyle={{
         color: Colors.cream,
         alignItems: 'flex-start',
@@ -49,12 +56,6 @@ const BannerPromotionPurchases: NextPage<ReactProps> = (props) => {
       }}
       ditherStyle={{
         background: bannerDither
-      }}
-      bannerContainerStyles={{
-        borderRadius: BorderRadius3x,
-        border: isDarkMode
-          ? `1px solid ${Colors.uniswapLightNavy}`
-          : `1px solid ${Colors.slateGreyBlack}`
       }}
       dither={true}
       height={mdDown ? 240 : 300 }

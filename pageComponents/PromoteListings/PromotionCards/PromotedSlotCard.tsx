@@ -3,11 +3,10 @@ import React from "react";
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 import { Colors, BorderRadius } from "layout/AppTheme";
 import clsx from "clsx";
-import Link from "next/link";
-// Material UI
-import Typography from "@material-ui/core/Typography";
 // Components
-import PromotedSlotCard from "./PromotedSlotCard";
+// import PreviewCardResponsive from "pageComponents/FrontPage/PreviewCardResponsive";
+import ProductCardResponsive from "components/ProductCardResponsive";
+import PromotedSlotMessage from "./PromotedSlotMessage";
 // GraphQL Typings
 import {
   Product,
@@ -25,80 +24,61 @@ import { useSnackbar } from "notistack";
 
 
 
-const PromotionCardsDesktop = (props: ReactProps) => {
+const PromotedSlotCard = (props: ReactProps) => {
 
   const {
-    classes,
-    connection,
-    cardsPerRow = {
-      xs: 1,
-      sm: 1,
-      md: 2,
-      lg: 3,
-      xl: 4,
-    },
+    cardsPerRow,
+    promotedSlot,
   } = props;
 
   const snackbar = useSnackbar();
-  const theme = useTheme();
-
-  const promotedSlotsEdges = (connection?.edges ?? [])
-    .map(promotedItem => {
-      if (promotedItem?.node?.id?.startsWith("random")) {
-        return {
-          ...promotedItem,
-          node: {
-            ...promotedItem?.node,
-            product: undefined,
-            productId: undefined,
-          }
-        }
-      } else {
-        return promotedItem
-      }
-    })
 
   return (
-    <main className={classes.root}>
-
-      <div className={classes.flexRow}>
-        <Typography variant="h3"
-          className={clsx(classes.title, classes.maxWidth)}
-          gutterBottom
-        >
-          {props.title || "Featured"}
-        </Typography>
-      </div>
-
-      <div className={classes.carouselContainer}>
-        {
-          promotedSlotsEdges?.map((promotedSlotEdge, i) => {
-            return (
-              <div key={promotedSlotEdge?.node?.id + `_${i}`}
-                className={classes.productCardWrapper}
-              >
-                <div className={clsx(
-                  classes.flexItem,
-                  !promotedSlotEdge.node?.isAvailableForPurchase && classes.grayedOut,
-                  "staggerFadeIn",
-                  classes.flexItemHover,
-                )}>
-                  <PromotedSlotCard
-                    cardsPerRow={cardsPerRow}
-                    onClick={props.onClick}
-                    user={props.user}
-                    promotedSlot={promotedSlotEdge?.node}
-                    setCurrentPromotedSlot={props.setCurrentPromotedSlot}
-                    position={i}
-                    setPosition={props.setPosition}
-                  />
-                </div>
-            </div>
-            )
-          })
+    <ProductCardResponsive
+      product={
+        // random generated products won't have productId
+        // and will have isRandomFiller === true
+        !promotedSlot?.isRandomFiller
+          ? promotedSlot?.product
+          : undefined
+      }
+      cardsPerRow={cardsPerRow}
+      onClick={async(e) => {
+        if (!promotedSlot?.isAvailableForPurchase) {
+          snackbar.enqueueSnackbar(
+            "Slot has yet to be marked for sale by admins.",
+            { variant: "info" }
+          )
+          return
         }
-      </div>
-    </main>
+        if (
+          !promotedSlot?.isAvailableForPurchase
+          && props.user?.userRole !== Role.PLATFORM_ADMIN
+        ) {
+          snackbar.enqueueSnackbar(
+            "Slot reserved for admins",
+            { variant: "info" }
+          )
+          return
+        }
+        props.onClick(e)
+        if (props?.setPosition) {
+          props.setPosition(props.position);
+        }
+        if (props?.setCurrentPromotedSlot) {
+          props.setCurrentPromotedSlot(promotedSlot);
+        }
+      }}
+      disableLoadingAnimation={true}
+      previewImageEmptyMessage={
+        // random generated products won't have productId
+        // and will have isRandomFiller === true
+        <PromotedSlotMessage
+          promotedSlot={promotedSlot}
+          user={props.user}
+        />
+      }
+    />
   )
 }
 
@@ -106,7 +86,8 @@ const PromotionCardsDesktop = (props: ReactProps) => {
 /////////// Typings //////////////
 
 interface ReactProps extends WithStyles<typeof styles> {
-  title?: string;
+  user: UserPrivate;
+  promotedSlot: PromotedSlot
   cardsPerRow?: {
     xs?: number;
     sm?: number;
@@ -114,15 +95,10 @@ interface ReactProps extends WithStyles<typeof styles> {
     lg?: number;
     xl?: number;
   };
-  connection: PromotedSlotsConnection;
-  // sortAscending: boolean; // must be top-level
-  // cause Desktop and Mobile share the same queries. Possible clash in variables
-  // don't want Desktop's sortAscend: true, while Mobile is false,
-  // as both queries will be sent and returned data conflicts
   onClick(e?: any): void;
   setCurrentPromotedSlot(p: PromotedSlot): void;
+  position: number;
   setPosition(p: number): void;
-  user: UserPrivate;
 }
 
 
@@ -155,7 +131,7 @@ const styles = (theme: Theme) => createStyles({
     marginRight: '1rem',
     marginBottom: '1rem',
   },
-  productCardWrapperMobile: {
+  productCardWrapperXs: {
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
@@ -220,7 +196,7 @@ const styles = (theme: Theme) => createStyles({
 });
 
 
-export default withStyles(styles)( PromotionCardsDesktop );
+export default withStyles(styles)( PromotedSlotCard );
 
 
 

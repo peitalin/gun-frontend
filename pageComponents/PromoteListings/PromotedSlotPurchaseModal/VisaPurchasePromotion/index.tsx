@@ -32,7 +32,7 @@ import {
   OrderCreateMutationResponse,
   Bids,
   PromotionPurchaseMutationResponse,
-  PromotedListItem,
+  PromotedSlot,
 } from 'typings/gqlTypes';
 // Components
 import ErrorBounds from 'components/ErrorBounds';
@@ -63,7 +63,7 @@ const VisaPurchaseProduct = (props: ReactProps) => {
   const product = props.product;
   const featuredVariant = props.product?.featuredVariant;
   const purchasePrice = props.selectedBid?.offerPrice
-    || props.promotedListItem?.reservePrice
+    || props.promotedSlot?.reservePrice
 
   console.log("purchasePirce: ", purchasePrice)
 
@@ -88,7 +88,7 @@ const VisaPurchaseProduct = (props: ReactProps) => {
   ] = useMutation<MData3, MVar3>(
     PURCHASE_PROMOTION, {
     variables: {
-      promotedListItemId: undefined,
+      promotedSlotId: undefined,
       productId: undefined,
       total: undefined,
       buyerId: buyer?.id,
@@ -112,7 +112,7 @@ const VisaPurchaseProduct = (props: ReactProps) => {
 
   const createNewPaymentMethod = async(): Promise<PaymentMethod> => {
 
-    if (!props.promotedListItem.isAvailableForPurchase) {
+    if (!props.promotedSlot.isAvailableForPurchase) {
       snackbar.enqueueSnackbar(
         "This slot can't be bought",
         { variant: "info" }
@@ -160,7 +160,7 @@ const VisaPurchaseProduct = (props: ReactProps) => {
     // 1. Create Order + create stripe payment intent in the backend
     return await purchasePromotion({
       variables: {
-        promotedListItemId: props.promotedListItem?.id,
+        promotedSlotId: props.promotedSlot?.id,
         productId: product.id,
         total: purchasePrice,
         buyerId: buyer.id,
@@ -290,13 +290,13 @@ interface ReactProps extends WithStyles<typeof styles> {
   showIcon?: boolean;
   handlePostPurchase(p: any): void;
   product: Product;
-  promotedListItem: PromotedListItem;
+  promotedSlot: PromotedSlot;
   refetch?(): void;
   selectedBid?: Bids;
 }
 
 interface MVar3 {
-  promotedListItemId: string
+  promotedSlotId: string
   productId: string
   total: number
   buyerId: string

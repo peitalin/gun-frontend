@@ -2,7 +2,7 @@ import React from "react";
 import clsx from "clsx";
 // styles
 import { withStyles, WithStyles, createStyles, Theme, fade } from "@material-ui/core/styles";
-import { Colors } from "layout/AppTheme";
+    import { Colors, isThemeDark } from "layout/AppTheme";
 import { styles } from "./styles";
 // components
 import Banner from "components/Banner";
@@ -40,6 +40,9 @@ const BannerPromotionPurchasesMobile: NextPage<ReactProps> = (props) => {
       // in /public/img
       bannerContainerStyles={{
         marginBottom: "1rem",
+        borderBottom: isThemeDark(theme)
+          ? `2px solid ${Colors.uniswapDarkNavy}`
+          : `2px solid ${Colors.slateGreyBlack}`,
       }}
       src={bannerBackgroundImageUrl}
       titleStyle={{
@@ -55,7 +58,7 @@ const BannerPromotionPurchasesMobile: NextPage<ReactProps> = (props) => {
       ditherStyle={{
         background: bannerDither
       }}
-      height={140}
+      height={160}
       dither={true}
     >
       <div className={classes.bannerInnerBoxLeftSm}>

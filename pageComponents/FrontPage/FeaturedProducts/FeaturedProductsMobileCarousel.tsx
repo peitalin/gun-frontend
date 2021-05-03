@@ -8,7 +8,7 @@ import Typography from "@material-ui/core/Typography";
 // Typings
 import {
   Product,
-  PromotedListItemsConnection,
+  PromotedSlotsConnection,
 } from "typings/gqlTypes";
 // Paginator hooks
 import { ConnectionQueryProps } from "components/Paginators/usePaginatePagedQueryHook";
@@ -99,7 +99,7 @@ const FeaturedProductsMobileCarousel = (props: ReactProps) => {
 
 interface ReactProps extends WithStyles<typeof styles> {
   title?: string;
-  connection: PromotedListItemsConnection;
+  connection: PromotedSlotsConnection;
   cardsPerRow?: {
     xs?: number;
     sm?: number;

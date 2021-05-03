@@ -2,7 +2,7 @@ import React from "react";
 // Styles
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
 import { Colors, BorderRadius2x, Gradients, BorderRadius } from "layout/AppTheme";
-import { PromotedListItem } from "typings/gqlTypes";
+import { PromotedSlot } from "typings/gqlTypes";
 // Material UI
 import Dialog from "@material-ui/core/Dialog";
 // Redux
@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { GrandReduxState } from "reduxStore/grand-reducer";
 import { Actions } from "reduxStore/actions";
 // Components
-import BuyPromotedItemPage from "./BuyPromotedItemPage";
+import BuyPromotedSlotPage from "./BuyPromotedSlotPage";
 /// CSS
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
@@ -19,7 +19,7 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 
 
-const PromotedItemPurchaseModal: React.FC<ReactProps> = (props) => {
+const PromotedSlotPurchaseModal: React.FC<ReactProps> = (props) => {
 
   const {
     classes,
@@ -34,20 +34,20 @@ const PromotedItemPurchaseModal: React.FC<ReactProps> = (props) => {
 
   const closeModal = () => {
     // unload Stripe card component first, then shut the modal
-    dispatch(Actions.reduxModals.TOGGLE_PROMOTED_ITEM_PURCHASE_MODAL(false))
+    dispatch(Actions.reduxModals.TOGGLE_PROMOTED_SLOT_PURCHASE_MODAL(false))
   }
 
   const theme = useTheme();
   const mdUp = useMediaQuery(theme.breakpoints.up("md"))
 
-  console.log("currentPromotedListItem: ", props.currentPromotedListItem)
+  console.log("currentPromotedSlot: ", props.currentPromotedSlot)
 
   if (!asModal && process.browser) {
     return (
-      <BuyPromotedItemPage
+      <BuyPromotedSlotPage
         closeModal={closeModal}
         asModal={asModal}
-        promotedListItem={props.currentPromotedListItem}
+        promotedSlot={props.currentPromotedSlot}
         position={props.position}
         refetch={props.refetch}
       />
@@ -76,8 +76,8 @@ const PromotedItemPurchaseModal: React.FC<ReactProps> = (props) => {
           }}
           scroll="body"
         >
-          <BuyPromotedItemPage
-            promotedListItem={props.currentPromotedListItem}
+          <BuyPromotedSlotPage
+            promotedSlot={props.currentPromotedSlot}
             position={props.position}
             closeModal={closeModal}
             refetch={props.refetch}
@@ -90,7 +90,7 @@ const PromotedItemPurchaseModal: React.FC<ReactProps> = (props) => {
 
 interface ReactProps extends WithStyles<typeof styles> {
   asModal?: boolean;
-  currentPromotedListItem: PromotedListItem
+  currentPromotedSlot: PromotedSlot
   position: number;
   refetch?(): void;
 }
@@ -117,4 +117,4 @@ const styles = (theme: Theme) => createStyles({
 });
 
 
-export default withStyles(styles)( PromotedItemPurchaseModal );
+export default withStyles(styles)( PromotedSlotPurchaseModal );

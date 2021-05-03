@@ -7,8 +7,8 @@ import clsx from "clsx";
 // Typings
 import {
   PromotedList,
-  PromotedListItem,
-  PromotedListItemsConnection,
+  PromotedSlot,
+  PromotedSlotsConnection,
   UserPrivate,
 } from "typings/gqlTypes";
 
@@ -68,12 +68,12 @@ const PromotionCards = (props: ReactProps) => {
     ssr: true,
   })
 
-  let connection = data?.promotedList?.promotedListItemsConnection
+  let connection = data?.promotedList?.promotedSlotsConnection
 
 
-  const openPromotedItemPurchaseModal = () => {
+  const openPromotedSlotPurchaseModal = () => {
     if (user?.id) {
-      dispatch(Actions.reduxModals.TOGGLE_PROMOTED_ITEM_PURCHASE_MODAL(true))
+      dispatch(Actions.reduxModals.TOGGLE_PROMOTED_SLOT_PURCHASE_MODAL(true))
     } else {
       snackbar.enqueueSnackbar(
         "Login to purchase this slot",
@@ -98,8 +98,8 @@ const PromotionCards = (props: ReactProps) => {
           title={props.title}
           connection={connection}
           cardsPerRow={cardsPerRow}
-          onClick={openPromotedItemPurchaseModal}
-          setCurrentPromotedListItem={props.setCurrentPromotedListItem}
+          onClick={openPromotedSlotPurchaseModal}
+          setCurrentPromotedSlot={props.setCurrentPromotedSlot}
           setPosition={props.setPosition}
           user={user}
         />
@@ -109,8 +109,8 @@ const PromotionCards = (props: ReactProps) => {
           title={props.title}
           connection={connection}
           cardsPerRow={cardsPerRow}
-          onClick={openPromotedItemPurchaseModal}
-          setCurrentPromotedListItem={props.setCurrentPromotedListItem}
+          onClick={openPromotedSlotPurchaseModal}
+          setCurrentPromotedSlot={props.setCurrentPromotedSlot}
           setPosition={props.setPosition}
           user={user}
         />
@@ -134,7 +134,7 @@ interface ReactProps extends WithStyles<typeof styles> {
     lg?: number;
     xl?: number;
   };
-  setCurrentPromotedListItem(p: PromotedListItem): void;
+  setCurrentPromotedSlot(p: PromotedSlot): void;
   setPosition(p: number): void;
   setRefetch(p: any): void;
 }

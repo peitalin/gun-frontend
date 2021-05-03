@@ -5,7 +5,7 @@ import {
   UserPrivate,
   ConnectionQuery,
   ProductsConnection,
-  PromotedListItem,
+  PromotedSlot,
   PromotedList,
   Role,
   Product,
@@ -37,8 +37,8 @@ import currency from 'currency.js';
 import VisaButtonLoading from "pageComponents/P/PurchaseProductSummary/VisaButtonLoadingSSR";
 import dynamic from "next/dynamic";
 
-import VisaPurchasePromotion from "pageComponents/PromoteListings/PromotedItemPurchaseModal/VisaPurchasePromotion"
-// const VisaPurchasePromotion = dynamic(() => import("pageComponents/PromoteListings/PromotedItemPurchaseModal/VisaPurchasePromotion"), {
+import VisaPurchasePromotion from "pageComponents/PromoteListings/PromotedSlotPurchaseModal/VisaPurchasePromotion"
+// const VisaPurchasePromotion = dynamic(() => import("pageComponents/PromoteListings/PromotedSlotPurchaseModal/VisaPurchasePromotion"), {
 //   loading: (props) => <VisaButtonLoading/>,
 //   ssr: false,
 // });
@@ -63,7 +63,7 @@ import { Router } from "next/router";
 
 
 
-const BuyPromotedItemPage = (props: ReactProps) => {
+const BuyPromotedSlotPage = (props: ReactProps) => {
 
   const {
     classes,
@@ -111,7 +111,7 @@ const BuyPromotedItemPage = (props: ReactProps) => {
   ] = useMutation<MData1, MVar1>(
     ADD_PRODUCT_TO_PROMOTED_LIST, {
     variables: {
-      promotedListItemId: undefined,
+      promotedSlotId: undefined,
       promotedListId: undefined,
       productId: undefined,
       ownerId: user?.id,
@@ -139,7 +139,7 @@ const BuyPromotedItemPage = (props: ReactProps) => {
   ] = useMutation<MData2, MVar2>(
     REMOVE_PRODUCT_FROM_PROMOTED_LIST, {
     variables: {
-      promotedListItemId: undefined,
+      promotedSlotId: undefined,
       promotedListId: undefined,
     },
     onError: React.useCallback((e) => {
@@ -175,8 +175,8 @@ const BuyPromotedItemPage = (props: ReactProps) => {
   // console.log("selectedProductOption: ", selectedProductOption)
   // console.log("selectedProduct: ", selectedProduct)
 
-  let expiresAt = !!props?.promotedListItem?.expiresAt
-    ? dayjs(props?.promotedListItem?.expiresAt)
+  let expiresAt = !!props?.promotedSlot?.expiresAt
+    ? dayjs(props?.promotedSlot?.expiresAt)
     : undefined
   let now = dayjs(new Date())
   let notExpiredYet = expiresAt !== undefined
@@ -185,25 +185,25 @@ const BuyPromotedItemPage = (props: ReactProps) => {
 
 
   let anotherUserOwnsSlot =
-    !!props.promotedListItem?.ownerId // owner exists
-    && props.promotedListItem?.ownerId !== user?.id // owner is not you
+    !!props.promotedSlot?.ownerId // owner exists
+    && props.promotedSlot?.ownerId !== user?.id // owner is not you
   let anotherUserOwnsSlotNow = anotherUserOwnsSlot && notExpiredYet
 
-  let userOwnsSlot = props.promotedListItem?.ownerId === user?.id
+  let userOwnsSlot = props.promotedSlot?.ownerId === user?.id
   let userOwnsSlotNow = userOwnsSlot && notExpiredYet
 
   let slotIsFreeToPurchase = !anotherUserOwnsSlotNow && !userOwnsSlotNow
 
-  // // console.log("promotedListItem", props.promotedListItem)
-  // console.log("promotedListItem.ownerId:", props.promotedListItem?.ownerId)
+  // console.log("promotedSlot", props.promotedSlot)
+  // console.log("promotedSlot.ownerId:", props.promotedSlot?.ownerId)
   // console.log("userId:", user?.id)
   // console.log("anotherUserOwnsSlot:", anotherUserOwnsSlot)
   // console.log("anotherUserOwnsSlotNow:", anotherUserOwnsSlotNow)
-  console.log("userOwnsSlot: ", userOwnsSlot)
-  console.log("userOwnsSlotNow: ", userOwnsSlotNow)
+  // console.log("userOwnsSlot: ", userOwnsSlot)
+  // console.log("userOwnsSlotNow: ", userOwnsSlotNow)
 
   // console.log("slotIsFreeToPurchase: ", slotIsFreeToPurchase)
-  console.log("expiresAt: ", expiresAt)
+  // console.log("expiresAt: ", expiresAt)
   // console.log("now: ", now)
   // console.log("not expired yet: ", now.unix() < expiresAt.unix())
 
@@ -311,14 +311,14 @@ const BuyPromotedItemPage = (props: ReactProps) => {
 
       {
         selectedProductId &&
-        props.promotedListItem?.id &&
+        props.promotedSlot?.id &&
         (slotIsFreeToPurchase) &&
         <VisaPurchasePromotion
           // className={"fadeIn"}
           product={selectedProduct}
-          promotedListItem={props.promotedListItem}
+          promotedSlot={props.promotedSlot}
           refetch={props.refetch}
-          title={`Buy for ${c(props.promotedListItem?.reservePrice)} AUD`}
+          title={`Buy for ${c(props.promotedSlot?.reservePrice)} AUD`}
           showIcon={true}
           display={true}
           // selectedBid={props.selectedBid} // disabled, in future we may conduct auctions for slots
@@ -327,6 +327,9 @@ const BuyPromotedItemPage = (props: ReactProps) => {
           handlePostPurchase={
             (p: PromotionPurchaseMutationResponse) => {
               // router.push("/orders")
+              if (typeof props.closeModal === 'function') {
+                props.closeModal()
+              }
             }
           }
         />
@@ -352,11 +355,11 @@ const BuyPromotedItemPage = (props: ReactProps) => {
               ) {
                 await addProductToPromotedList({
                   variables: {
-                    promotedListItemId: props.promotedListItem?.id,
-                    promotedListId: props.promotedListItem?.promotedListId,
+                    promotedSlotId: props.promotedSlot?.id,
+                    promotedListId: props.promotedSlot?.promotedListId,
                     productId: selectedProductId,
                     ownerId: user?.id,
-                    position: props.promotedListItem?.position ?? props.position,
+                    position: props.promotedSlot?.position ?? props.position,
                   }
                 })
               } else {
@@ -366,10 +369,13 @@ const BuyPromotedItemPage = (props: ReactProps) => {
                 )
               }
             }}
-            loadingIconColor={Colors.blue}
+            loadingIconColor={Colors.cream}
             replaceTextWhenLoading={true}
             loading={addProductToPromotedListResponse?.loading}
-            disabled={anotherUserOwnsSlotNow}
+            disabled={
+              anotherUserOwnsSlotNow
+              || !selectedProductId
+            }
             variant="contained"
             color="secondary"
             // style={{ height: "40px" }}
@@ -385,8 +391,8 @@ const BuyPromotedItemPage = (props: ReactProps) => {
               if (userOwnsSlot) {
                 await removeProductFromPromotedList({
                   variables: {
-                    promotedListItemId: props.promotedListItem?.id,
-                    promotedListId: props.promotedListItem?.promotedListId,
+                    promotedSlotId: props.promotedSlot?.id,
+                    promotedListId: props.promotedSlot?.promotedListId,
                   }
                 })
               } else if (isAdmin) {
@@ -397,12 +403,12 @@ const BuyPromotedItemPage = (props: ReactProps) => {
               } else {
               }
             }}
-            loadingIconColor={Colors.blue}
+            loadingIconColor={Colors.cream}
             replaceTextWhenLoading={true}
             loading={removeProductFromPromotedListResponse?.loading}
             disabled={
               removeProductFromPromotedListResponse?.loading
-              || !props.promotedListItem?.productId
+              || !props.promotedSlot?.productId
             }
             variant="contained"
             color="secondary"
@@ -477,7 +483,7 @@ export interface GroupedSelectOption {
 interface ReactProps extends WithStyles<typeof styles> {
   closeModal(): void;
   asModal?: boolean;
-  promotedListItem: PromotedListItem
+  promotedSlot: PromotedSlot
   position: number
   refetch?(): void;
 }
@@ -490,17 +496,17 @@ interface QueryData {
   dashboardProductsConnection: ProductsConnection;
 }
 interface MVar1 {
-  promotedListItemId: string
+  promotedSlotId: string
   promotedListId: string
   productId: string
   ownerId?: string
   position?: number
 }
 interface MData1 {
-  promotedListItem: PromotedListItem
+  promotedSlot: PromotedSlot
 }
 interface MVar2 {
-  promotedListItemId: string
+  promotedSlotId: string
   promotedListId: string
 }
 interface MData2 {
@@ -522,9 +528,11 @@ const styles = (theme: Theme) => createStyles({
   },
   rootPaddingDesktop: {
     padding: "2rem",
+    paddingTop: "4rem",
   },
   rootPaddingMobile: {
     padding: "1rem",
+    paddingTop: "4rem",
   },
   titleRow: {
     display: 'flex',
@@ -598,5 +606,5 @@ const styles = (theme: Theme) => createStyles({
   },
 });
 
-export default withStyles(styles)( BuyPromotedItemPage );
+export default withStyles(styles)( BuyPromotedSlotPage );
 
