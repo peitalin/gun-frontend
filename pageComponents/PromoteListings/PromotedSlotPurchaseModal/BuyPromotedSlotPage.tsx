@@ -194,6 +194,8 @@ const BuyPromotedSlotPage = (props: ReactProps) => {
 
   let slotIsFreeToPurchase = !anotherUserOwnsSlotNow && !userOwnsSlotNow
 
+  let showProductPickerDropdown = userOwnsSlotNow || slotIsFreeToPurchase
+
   // console.log("promotedSlot", props.promotedSlot)
   // console.log("promotedSlot.ownerId:", props.promotedSlot?.ownerId)
   // console.log("userId:", user?.id)
@@ -214,7 +216,7 @@ const BuyPromotedSlotPage = (props: ReactProps) => {
     )}>
       <div className={classes.titleRow}>
         <Typography variant="h2" className={classes.title}>
-          Buy this promoted item slot
+          Buy This Promoted Item Slot
         </Typography>
         {
           asModal &&
@@ -227,10 +229,15 @@ const BuyPromotedSlotPage = (props: ReactProps) => {
         }
       </div>
 
-      <div className={classes.boldSubtitle}>
-        1. Pick a product to assign to slot. Must be published.
-      </div>
       {
+        showProductPickerDropdown &&
+        <div className={classes.boldSubtitle}>
+          1. Pick a product to assign to slot. Must be published.
+        </div>
+      }
+
+      {
+        showProductPickerDropdown &&
         user.userRole === Role.PLATFORM_ADMIN &&
         <TextInput
           name="product.id"
@@ -247,25 +254,28 @@ const BuyPromotedSlotPage = (props: ReactProps) => {
           disableInitialValidationMessage={true}
         />
       }
-      <DropdownInput
-        className={classes.dropdownProducts}
-        stateShape={
-          selectedProductId
-            ? selectedProductOption
-            : undefined
-        }
-        loading={getYourProductsResponse.loading}
-        onChange={(option: SelectOption) => {
-          setSelectedProductOption({
-            label: option?.label,
-            value: option?.value,
-          })
-        }}
-        height={45}
-        isClearable={true}
-        options={productOptions}
-        placeholder={"Choose a Product"}
-      />
+      {
+        showProductPickerDropdown &&
+        <DropdownInput
+          className={classes.dropdownProducts}
+          stateShape={
+            selectedProductId
+              ? selectedProductOption
+              : undefined
+          }
+          loading={getYourProductsResponse.loading}
+          onChange={(option: SelectOption) => {
+            setSelectedProductOption({
+              label: option?.label,
+              value: option?.value,
+            })
+          }}
+          height={45}
+          isClearable={true}
+          options={productOptions}
+          placeholder={"Choose a Product"}
+        />
+      }
 
       <div className={classes.helpMessages}>
         <div className={classes.helpMessage1}>
@@ -273,8 +283,8 @@ const BuyPromotedSlotPage = (props: ReactProps) => {
             userOwnsSlot
             ? "You own this slot."
             : anotherUserOwnsSlotNow
-              ? "Another user owns this slot."
-              : "Slot free for purchase."
+              ? "Another user currently owns this slot."
+              : "This slot can be purchased."
           }
         </div>
         <div className={classes.helpMessage2}>
@@ -299,15 +309,17 @@ const BuyPromotedSlotPage = (props: ReactProps) => {
                   </>
           }
         </div>
-        <div className={classes.boldSubtitle}>
-          {
-            // if no one currently owns slot
-            !(userOwnsSlotNow || anotherUserOwnsSlotNow)
-            && "2. Purchase slot for your product"
-          }
-        </div>
       </div>
 
+      {
+        // if no one currently owns slot
+        !(userOwnsSlotNow || anotherUserOwnsSlotNow) &&
+        <div className={classes.helpMessages}>
+          <div className={classes.boldSubtitle}>
+              { "2. Purchase slot for your product" }
+          </div>
+        </div>
+      }
 
       {
         selectedProductId &&
@@ -375,6 +387,7 @@ const BuyPromotedSlotPage = (props: ReactProps) => {
             disabled={
               anotherUserOwnsSlotNow
               || !selectedProductId
+              || addProductToPromotedListResponse?.loading
             }
             variant="contained"
             color="secondary"
@@ -407,8 +420,8 @@ const BuyPromotedSlotPage = (props: ReactProps) => {
             replaceTextWhenLoading={true}
             loading={removeProductFromPromotedListResponse?.loading}
             disabled={
-              removeProductFromPromotedListResponse?.loading
-              || !props.promotedSlot?.productId
+              anotherUserOwnsSlotNow
+              || removeProductFromPromotedListResponse?.loading
             }
             variant="contained"
             color="secondary"
@@ -540,6 +553,8 @@ const styles = (theme: Theme) => createStyles({
   },
   title: {
     marginBottom: "1rem",
+    width: '100%',
+    textAlign: 'center',
   },
   closeButton: {
     position: "absolute",
@@ -551,13 +566,14 @@ const styles = (theme: Theme) => createStyles({
   },
   dropdownProducts: {
     marginTop: "0.5rem",
-    marginBottom: "0.5rem",
+    marginBottom: "2.5rem",
   },
   buttonsBox: {
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
+    marginTop: '2rem',
   },
   buttonBlue: {
     marginTop: "0.5rem",
@@ -579,8 +595,8 @@ const styles = (theme: Theme) => createStyles({
     },
   },
   helpMessages: {
-    marginTop: "0.5rem",
-    marginBottom: "0.5rem",
+    marginTop: "1rem",
+    marginBottom: "1rem",
     display: 'flex',
     flexDirection: "column",
     justifyContent: 'flex-start',
@@ -588,9 +604,13 @@ const styles = (theme: Theme) => createStyles({
   },
   helpMessage1: {
     color: Colors.blue,
+    width: '100%',
+    textAlign: 'center',
   },
   helpMessage2: {
     color: Colors.blue,
+    width: '100%',
+    textAlign: 'center',
   },
   time: {
     color: Colors.green,
@@ -601,7 +621,7 @@ const styles = (theme: Theme) => createStyles({
     fontWeight: 600,
   },
   boldSubtitle: {
-    marginTop: "1rem",
+    marginTop: '1rem',
     fontWeight: 600,
   },
 });
