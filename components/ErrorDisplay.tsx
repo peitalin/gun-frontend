@@ -8,7 +8,7 @@ import Typography from "@material-ui/core/Typography";
 import red from "@material-ui/core/colors/red";
 import grey from "@material-ui/core/colors/grey";
 // Components
-import SnackbarA from "components/Snackbars/SnackbarA";
+
 
 
 class ErrorDisplay extends React.Component<ReactProps, any> {
@@ -89,14 +89,6 @@ class ErrorDisplay extends React.Component<ReactProps, any> {
               </div>
             ))
           }
-          <SnackbarA
-            open={props?.error?.message && this.state.displayErr === true}
-            closeSnackbar={() => this.setState({ displayErr: false })}
-            message={props?.error?.message ||
-              props?.error?.networkError?.message}
-            variant={"error"}
-            autoHideDuration={20000}
-          />
         </div>
       </Paper>
     )

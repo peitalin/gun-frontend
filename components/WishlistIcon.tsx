@@ -18,15 +18,14 @@ import { WishlistItemId } from "reduxStore/wishlist-reducer";
 import { Actions } from "reduxStore/actions";
 import { GrandReduxState } from "reduxStore/grand-reducer";
 // snackbar
-import SnackbarA from "components/Snackbars/SnackbarA";
-import Portal from "@material-ui/core/Portal";
+import { useSnackbar } from "notistack";
 
 
 
 const WishlistIcon: React.FC<ReactProps> = (props) => {
 
   const dispatch = useDispatch();
-  const [showSnackbar, setShowSnackbar] = React.useState(false)
+  const snackbar = useSnackbar()
 
   const { wishlistItemIds, user } = useSelector<GrandReduxState, ReduxState>(
     s => ({
@@ -82,7 +81,10 @@ const WishlistIcon: React.FC<ReactProps> = (props) => {
         e.stopPropagation();
         // let user know they are not logged in and item won't be saved
         if (!user?.id) {
-          setShowSnackbar(true)
+          snackbar.enqueueSnackbar(
+            "Login to remember this item",
+            { variant: "info"}
+          )
         } else {
           // if user is logged in, add or remove to redux
           if (added) {
@@ -111,15 +113,6 @@ const WishlistIcon: React.FC<ReactProps> = (props) => {
             root: classes.favoriteRoot,
           }}/>
       }
-      <Portal>
-        <SnackbarA
-          open={!user?.id && showSnackbar}
-          closeSnackbar={() => setShowSnackbar(false)}
-          message={"Login to remember this item"}
-          variant={"info"}
-          autoHideDuration={3000}
-        />
-      </Portal>
     </IconButton>
   )
 }

@@ -10,7 +10,6 @@ import Button from '@material-ui/core/Button';
 import red from '@material-ui/core/colors/red';
 import grey from '@material-ui/core/colors/grey';
 
-import SnackbarA from "./Snackbars/SnackbarA";
 
 // Error boundaries wraps around a component,
 // preventing errors from leaking into parent
@@ -65,17 +64,6 @@ class ErrorBounds extends React.Component<ReduxProps & ReactProps, any> {
           <Typography className={classes.errLine}>
             {this.state.errorInfo.componentStack.trim().split('\n')[0]}
           </Typography>
-          {
-            this.state.error &&
-            <SnackbarA
-              open={this.state.error && this.state.displayErr === true}
-              closeSnackbar={() => this.setState({ displayErr: false })}
-              message={`${this.state.errorInfo.componentStack.trim().split('\n')[0]}`}
-              variant={"error"}
-              autoHideDuration={20000}
-            >
-            </SnackbarA>
-          }
         </div>
       );
     } else {

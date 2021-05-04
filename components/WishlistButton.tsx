@@ -15,8 +15,7 @@ import { WishlistItemId } from "reduxStore/wishlist-reducer";
 import { Actions } from "reduxStore/actions";
 import { GrandReduxState } from "reduxStore/grand-reducer";
 // snackbar
-import SnackbarA from "components/Snackbars/SnackbarA";
-import Portal from "@material-ui/core/Portal";
+import { useSnackbar } from "notistack";
 
 
 
@@ -25,6 +24,7 @@ import Portal from "@material-ui/core/Portal";
 const WishlistButtonBig: React.FC<ReactProps> = (props) => {
 
   const dispatch = useDispatch();
+  const snackbar = useSnackbar()
   const [showSnackbar, setShowSnackbar] = React.useState(false)
 
   const { wishlistItemIds, user } = useSelector<GrandReduxState, ReduxState>(
@@ -75,67 +75,51 @@ const WishlistButtonBig: React.FC<ReactProps> = (props) => {
   const added = isInWishlist()
   if (added) {
     return (
-      <>
-        <Button
-          classes={{
-            root: classes.removeButton
-          }}
-          variant="outlined"
-          color="secondary"
-          onClick={() => {
-            // let user know they are not logged in and item won't be saved
-            if (!user?.id) {
-              setShowSnackbar(true)
-            } else {
-              dispatch(Actions.reduxWishlist.REMOVE_WISHLIST_ITEM(wishlistItemId))
-              removeProductFromWishlist()
-            }
-          }}
-        >
-          Remove from Wishlist
-        </Button>
-        <Portal>
-          <SnackbarA
-            open={!user?.id && showSnackbar}
-            closeSnackbar={() => setShowSnackbar(false)}
-            message={"Login to remember this item"}
-            variant={"info"}
-            autoHideDuration={3000}
-          />
-        </Portal>
-      </>
+      <Button
+        classes={{
+          root: classes.removeButton
+        }}
+        variant="outlined"
+        color="secondary"
+        onClick={() => {
+          // let user know they are not logged in and item won't be saved
+          if (!user?.id) {
+            snackbar.enqueueSnackbar(
+              "Login to remember this item",
+              { variant: "info"}
+            )
+          } else {
+            dispatch(Actions.reduxWishlist.REMOVE_WISHLIST_ITEM(wishlistItemId))
+            removeProductFromWishlist()
+          }
+        }}
+      >
+        Remove from Wishlist
+      </Button>
     )
   } else {
     return (
-      <>
-        <Button
-          classes={{
-            root: classes.removeButton
-          }}
-          variant="outlined"
-          color="primary"
-          onClick={() => {
-            // let user know they are not logged in and item won't be saved
-            if (!user?.id) {
-              setShowSnackbar(true)
-            } else {
-              dispatch(Actions.reduxWishlist.ADD_WISHLIST_ITEM(wishlistItemId))
-              addProductToWishlist()
-            }
-          }}
-        >
-          Add to Wishlist
-        </Button>
-        <Portal>
-          <SnackbarA
-            open={!user?.id && showSnackbar}
-            closeSnackbar={() => setShowSnackbar(false)}
-            message={"Login to remember this item"}
-            variant={"info"}
-            autoHideDuration={3000}
-          />
-        </Portal>
-      </>
+      <Button
+        classes={{
+          root: classes.removeButton
+        }}
+        variant="outlined"
+        color="primary"
+        onClick={() => {
+          // let user know they are not logged in and item won't be saved
+          if (!user?.id) {
+            snackbar.enqueueSnackbar(
+              "Login to remember this item",
+              { variant: "info"}
+            )
+          } else {
+            dispatch(Actions.reduxWishlist.ADD_WISHLIST_ITEM(wishlistItemId))
+            addProductToWishlist()
+          }
+        }}
+      >
+        Add to Wishlist
+      </Button>
     )
   }
 }
