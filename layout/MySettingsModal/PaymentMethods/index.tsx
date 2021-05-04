@@ -19,7 +19,7 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 // Components
 import Loading from "components/Loading";
-import ErrorDisplay, { GraphQLErrors } from "components/Error";
+import ErrorDisplay, { GraphQLErrors } from "components/ErrorDisplay";
 import ErrorBounds from "components/ErrorBounds";
 import CreditCard from "./CreditCard";
 import AddCard from "./AddCard";

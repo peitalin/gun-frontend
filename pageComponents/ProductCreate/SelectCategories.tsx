@@ -22,7 +22,7 @@ import DropdownInput from "components/Fields/DropdownInput";
 import { sortCategoriesByName } from "layout/NavBarMain/CategoryBar/categoryHooks";
 // Util components
 import Loading from "components/Loading";
-import ErrorDisplay from "components/Error";
+import ErrorDisplay from "components/ErrorDisplay";
 import ErrorBounds from 'components/ErrorBounds';
 import ValidationErrorMsg from "components/Fields/ValidationErrorMsg";
 import { Formik, Form, FormikProps, ErrorMessage } from 'formik';

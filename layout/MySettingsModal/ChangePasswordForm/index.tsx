@@ -4,14 +4,9 @@ import clsx from "clsx";
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
 // Material UI
 import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
-// Components
-import Loading from "components/Loading";
-import ErrorDisplay, { GraphQLErrors } from "components/Error";
 import ErrorBounds from "components/ErrorBounds";
-import SnackBarA from "components/Snackbars/SnackbarA";
-// Typings
-import { HtmlEvent } from "typings";
+// snackbar
+import { useSnackbar } from "notistack";
 // Validation
 import { Formik, FormikProps } from 'formik';
 import { validationSchemas } from "utils/validation";
@@ -19,8 +14,7 @@ import ChangePasswordFields from "./ChangePasswordFields";
 // Graphql Queries
 import { useMutation } from "@apollo/client";
 import { CHANGE_PASSWORD } from "queries/user-mutations";
-// import { UserPrivate } from "typings/gqlTypes";
-type UserPrivate = any;
+import { UserPrivate } from "typings/gqlTypes";
 
 
 
@@ -28,9 +22,8 @@ type UserPrivate = any;
 const ChangePasswordForm = (props: ReactProps) => {
 
   const { classes } = props;
+  const snackbar = useSnackbar()
 
-  const [displayErr, setDisplayErr] = React.useState(true);
-  const [displaySuccess, setDisplaySuccess] = React.useState(true);
   const [showPasswordChanger, setShowPasswordChanger] = React.useState(false);
 
   // passwords
@@ -46,10 +39,20 @@ const ChangePasswordForm = (props: ReactProps) => {
         newPassword: ""
       },
       onCompleted: () => {
+        snackbar.enqueueSnackbar(
+          `Successfully updated your password.`,
+          { variant: "success" }
+        )
         setTimeout(() => {
           togglePasswordChange()
         }, 800)
-      }
+      },
+      onError: (err) => {
+        snackbar.enqueueSnackbar(
+          "Incorrect password!",
+          { variant: "error" }
+        )
+      },
     },
   );
 
@@ -64,17 +67,6 @@ const ChangePasswordForm = (props: ReactProps) => {
     setNewPasswordAgain("");
   };
 
-  // re-use snackbars for multiple reset retries
-  React.useEffect(() => {
-    if (error) {
-      setDisplayErr(true)
-    }
-    if (data) {
-      setDisplaySuccess(true)
-    }
-
-    return () => {}
-  }, [data, error])
 
 
   return (
@@ -151,9 +143,7 @@ const ChangePasswordForm = (props: ReactProps) => {
                   ? classes.displaySomePasswordForm
                   : classes.displayNone,
               )}>
-
                 <form onSubmit={ handleSubmit }>
-
                   <ChangePasswordFields
                     currentPassword={currentPassword}
                     newPassword={newPassword}
@@ -163,20 +153,6 @@ const ChangePasswordForm = (props: ReactProps) => {
                     setNewPasswordAgain={ setNewPasswordAgain }
                     loading={loading}
                     {...fprops}
-                  />
-                  <SnackBarA
-                    open={data !== undefined && displaySuccess}
-                    closeSnackbar={() => setDisplaySuccess(false)}
-                    message={`Successfully updated your password.`}
-                    variant={"success"}
-                    autoHideDuration={3000}
-                  />
-                  <SnackBarA
-                    open={error !== undefined && displayErr}
-                    closeSnackbar={() => setDisplayErr(false)}
-                    message={`Incorrect password!`}
-                    variant={"error"}
-                    autoHideDuration={3000}
                   />
                 </form>
               </div>
@@ -188,11 +164,6 @@ const ChangePasswordForm = (props: ReactProps) => {
 }
 
 interface ReactProps extends WithStyles<typeof styles> {
-}
-interface Aprops {
-  data?: { changePassword: { user: UserPrivate }},
-  loading?: boolean,
-  error?: GraphQLErrors,
 }
 
 interface MutationData {

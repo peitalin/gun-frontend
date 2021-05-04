@@ -34,7 +34,7 @@ import {
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 // Utils Component
-import ErrorDisplay from "components/Error";
+import ErrorDisplay from "components/ErrorDisplay";
 import AlignCenterLayout from "components/AlignCenterLayout";
 // Analytics
 import { useRouter } from "next/router";

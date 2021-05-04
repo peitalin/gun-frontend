@@ -2,31 +2,30 @@ import React from "react";
 // Styles
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
 // Graphql Queries
-import { useMutation, useApolloClient } from "@apollo/client";
+import { useMutation, useApolloClient, ApolloError } from "@apollo/client";
 import { DELETE_STORE, DELETE_ACCOUNT } from "queries/deletions-mutations";
-// import { UserPrivate } from "typings/gqlTypes";
-type UserPrivate = any;
+import { UserPrivate } from "typings/gqlTypes";
 
 // Material UI
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 // Utility Components
 import Loading from "components/Loading";
-import ErrorDisplay, { ErrorMessageRust, GraphQLErrors } from "components/Error";
 import ErrorBounds from "components/ErrorBounds";
-import SnackBarA from "components/Snackbars/SnackbarA";
 import { logout } from "queries/requests";
 import ConfirmDeleteModal from "components/ConfirmActionModal";
 import { useDispatch } from "react-redux";
 import { refetchUser, setUserOnCompleted } from "layout/GetUser";
+// snackbar
+import { useSnackbar } from "notistack";
 
 
 const DeleteAccountButton = (props: ReactProps) => {
 
-  const [displayErr, setDisplayErr] = React.useState(true);
-  const [displaySuccess, setDisplaySuccess] = React.useState(true);
   const [openDeleteModal, setOpenDeleteModal] = React.useState(false)
+
   const dispatch = useDispatch();
+  const snackbar = useSnackbar()
 
   const [deleteAccount, {loading, data, error}] =
   useMutation<MutationData, MutationVar>(
@@ -38,9 +37,16 @@ const DeleteAccountButton = (props: ReactProps) => {
         let { data } = await refetchUser(apolloClient)()
         setUserOnCompleted(dispatch)(data)
         // logout(apolloClient, dispatch)("/")
+        snackbar.enqueueSnackbar(
+          `Successfully deleted your profile.`,
+          { variant: "success" }
+        )
       },
       onError: (e) => {
-        console.log(e)
+        snackbar.enqueueSnackbar(
+          formatError(error),
+          { variant: "error" }
+        )
       },
     }
   );
@@ -51,13 +57,10 @@ const DeleteAccountButton = (props: ReactProps) => {
     deleteAccount();
   }
 
-  const handleErrorMsg = (e: ErrorMessageRust) => {
-    if (e.message.includes("Wrong password")) {
-      return "Wrong password!"
-    } else {
-      return JSON.stringify(e.message)
-    }
+  const formatError = (error: ApolloError) => {
+    return error?.graphQLErrors?.[0]?.message ?? JSON.stringify(error)
   }
+
 
   if (loading) {
     return <Loading inline loading={true} delay={"400ms"} />;
@@ -80,20 +83,6 @@ const DeleteAccountButton = (props: ReactProps) => {
           onConfirmFunction={handleDelete}
         />
 
-        <SnackBarA
-          open={data !== undefined && displaySuccess}
-          closeSnackbar={() => setDisplaySuccess(false)}
-          message={`Successfully deleted your account.`}
-          variant={"success"}
-          autoHideDuration={3000}
-        />
-        <SnackBarA
-          open={error !== undefined && displayErr}
-          closeSnackbar={() => setDisplayErr(false)}
-          message={error ? handleErrorMsg(error) : ""}
-          variant={"error"}
-          autoHideDuration={3000}
-        />
       </ErrorBounds>
     );
   }

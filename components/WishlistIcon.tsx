@@ -18,7 +18,7 @@ import { WishlistItemId } from "reduxStore/wishlist-reducer";
 import { Actions } from "reduxStore/actions";
 import { GrandReduxState } from "reduxStore/grand-reducer";
 // snackbar
-import SnackBarA from "components/Snackbars/SnackbarA";
+import SnackbarA from "components/Snackbars/SnackbarA";
 import Portal from "@material-ui/core/Portal";
 
 
@@ -112,7 +112,7 @@ const WishlistIcon: React.FC<ReactProps> = (props) => {
           }}/>
       }
       <Portal>
-        <SnackBarA
+        <SnackbarA
           open={!user?.id && showSnackbar}
           closeSnackbar={() => setShowSnackbar(false)}
           message={"Login to remember this item"}

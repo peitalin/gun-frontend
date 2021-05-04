@@ -15,11 +15,6 @@ import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
-// Utils Components
-import ErrorDisplay from "components/Error";
-import ErrorBounds from "components/ErrorBounds";
-import Loading from "components/Loading";
-import Button from "@material-ui/core/Button";
 // Typings
 import { Connection } from "typings/gqlTypes";
 // Paginator hooks

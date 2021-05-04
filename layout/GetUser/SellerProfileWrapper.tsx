@@ -10,13 +10,9 @@ import { Colors } from "layout/AppTheme";
 import { useQuery } from "@apollo/client";
 import { GET_USER } from "queries/user-queries";
 import { GET_STORE_PRIVATE } from "queries/store-queries";
-import { useApolloClient } from "@apollo/client";
-import { ApolloClient } from "@apollo/client";
 // Typings
 import { UserPrivate } from 'typings/gqlTypes';
 import LoadingBar from "components/LoadingBar";
-import ErrorDisplay from "components/Error";
-import SnackbarsSuccessErrors from "components/Snackbars/SnackbarsSuccessErrors";
 import Redirect from "pageComponents/Redirect";
 // store deleted
 import { isStoreDeleted, storeDoesNotExist } from "utils/store";

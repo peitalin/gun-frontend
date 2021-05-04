@@ -1,13 +1,7 @@
 import React from "react";
 import clsx from "clsx";
 // Redux
-import { useDispatch, useSelector } from "react-redux";
-import { Actions } from "reduxStore/actions";
-import { GrandReduxState } from "reduxStore/grand-reducer";
-// Typings
-import { Categories } from "typings/gqlTypes";
 import { ActionTypes, ActionType } from "typings";
-import { ReducerName } from "typings/dropzone";
 // Styles
 import { withStyles, WithStyles } from "@material-ui/core/styles";
 import { styles } from './commonStyles';
@@ -19,8 +13,6 @@ import Button from '@material-ui/core/Button';
 import DropdownInput from "components/Fields/DropdownInput";
 import { sortActionTypeByName } from "layout/NavBarMain/CategoryBar/categoryHooks";
 // Util components
-import Loading from "components/Loading";
-import ErrorDisplay from "components/Error";
 import ErrorBounds from 'components/ErrorBounds';
 import ValidationErrorMsg from "components/Fields/ValidationErrorMsg";
 import { Formik, Form, FormikProps, ErrorMessage } from 'formik';

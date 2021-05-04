@@ -13,11 +13,8 @@ import {
   FacetsDistributionObject,
   ProductsConnection,
 } from "typings/gqlTypes";
-// Utils
-import Typography from "@material-ui/core/Typography";
-import Pagination from '@material-ui/lab/Pagination';
 
-import ErrorDisplay from "components/Error";
+import ErrorDisplay from "components/ErrorDisplay";
 import ErrorBounds from "components/ErrorBounds";
 import LoadingBar from "components/LoadingBar";
 // Components

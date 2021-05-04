@@ -1,5 +1,4 @@
 import React from "react";
-import clsx from "classnames";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 import { Colors } from "layout/AppTheme";
@@ -28,7 +27,7 @@ const OrdersPendingApprovals: React.FC<ReactProps> = (props) => {
 
   return (
     <div className={classes.root}>
-      <div className={clsx(classes.spaceBetween)}>
+      <div className={classes.spaceBetween}>
         <OrdersPendingApprovalTable
           month={month}
           year={year}

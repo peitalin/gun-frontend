@@ -15,7 +15,7 @@ import {
 } from "typings/gqlTypes";
 import { SEARCH_ALL_PRODUCTS } from "queries/search-queries";
 // Utils
-import ErrorDisplay from "components/Error";
+import ErrorDisplay from "components/ErrorDisplay";
 import ErrorBounds from "components/ErrorBounds";
 import Loading from "components/Loading";
 import Typography from "@material-ui/core/Typography";

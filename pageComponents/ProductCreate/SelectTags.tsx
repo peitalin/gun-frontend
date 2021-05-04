@@ -3,12 +3,6 @@ import clsx from "clsx";
 // Redux
 import { useDispatch, useSelector } from "react-redux";
 import { Actions } from "reduxStore/actions";
-import { GrandReduxState } from "reduxStore/grand-reducer";
-// Graphql
-import { GET_PRODUCT_CATEGORIES } from "queries/categories-queries";
-import { useQuery } from '@apollo/client';
-// Typings
-import { Categories } from "typings/gqlTypes";
 import { ReducerName } from "typings/dropzone";
 // Styles
 import { withStyles, WithStyles } from "@material-ui/core/styles";
@@ -26,9 +20,6 @@ const KeywordDropdownInput = dynamic(() => import('components/Fields/KeywordDrop
   ssr: false
 })
 import { createOption } from "components/Fields/KeywordDropdownInput";
-// Util components
-import Loading from "components/Loading";
-import ErrorDisplay from "components/Error";
 import ErrorBounds from 'components/ErrorBounds';
 import { Formik, Form, FormikProps, ErrorMessage } from 'formik';
 

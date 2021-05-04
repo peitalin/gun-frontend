@@ -50,7 +50,6 @@ import {
 // Validation
 import { Formik } from 'formik';
 import { validationSchemas } from "utils/validation";
-import SnackBarA from "components/Snackbars/SnackbarA";
 // Snackbar
 import { useSnackbar } from "notistack";
 import currency from "currency.js";
@@ -64,6 +63,9 @@ const OrderViewer: React.FC<ReactProps> = (props) => {
 
   const { classes } = props;
   const aClient = useApolloClient();
+  const snackbar = useSnackbar();
+  const router = useRouter();
+
  // state
   const [errorMsg, setErrorMsg] = React.useState(undefined);
   const [cancelledPaymentMsg, setCancelMsg] = React.useState(undefined);
@@ -73,8 +75,6 @@ const OrderViewer: React.FC<ReactProps> = (props) => {
   const [order, setOrder] = React.useState<OrderAdmin>(undefined);
   const [recentTx, setRecentTx] = React.useState<Transactions[]>([]);
 
-  const snackbar = useSnackbar();
-  const router = useRouter();
 
   const [
     cancelOrderAndPayment,

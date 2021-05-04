@@ -4,17 +4,17 @@ import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/s
 // Graphql Queries
 import { useMutation, useApolloClient, ApolloError } from "@apollo/client";
 import { DELETE_STORE, DELETE_ACCOUNT } from "queries/deletions-mutations";
-// import { UserPrivate } from "typings/gqlTypes";
-type UserPrivate = any;
+import { UserPrivate } from "typings/gqlTypes";
 // Material UI
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 // Utility Components
 import Loading from "components/Loading";
-import ErrorDisplay, { GraphQLErrors } from "components/Error";
+import ErrorDisplay, { GraphQLErrors } from "components/ErrorDisplay";
 import ErrorBounds from "components/ErrorBounds";
-import SnackBarA from "components/Snackbars/SnackbarA";
 import ConfirmDeleteModal from "components/ConfirmActionModal";
+// snackbar
+import { useSnackbar } from "notistack";
 // Redux
 import { GrandReduxState } from "reduxStore/grand-reducer";
 import { Actions } from "reduxStore/actions";
@@ -25,12 +25,11 @@ import { refetchUser, setUserOnCompleted } from "layout/GetUser";
 
 const DeleteAccountButton = (props: ReactProps) => {
 
-  const [displayErr, setDisplayErr] = React.useState(true);
-  const [displaySuccess, setDisplaySuccess] = React.useState(true);
   const [openDeleteModal, setOpenDeleteModal] = React.useState(false)
 
   const dispatch = useDispatch();
   const apolloClient = useApolloClient();
+  const snackbar = useSnackbar()
 
   const [deleteStore, {loading, data, error}] =
   useMutation<MutationData, MutationVar>(
@@ -44,9 +43,16 @@ const DeleteAccountButton = (props: ReactProps) => {
         setOpenDeleteModal(false)
         dispatch(Actions.reduxModals.TOGGLE_STORE_CREATE_MODAL(false))
         // logout(apolloClient, dispatch)("/")
+        snackbar.enqueueSnackbar(
+          `Successfully deleted your store.`,
+          { variant: "success" }
+        )
       },
-      onError: (e) => {
-        console.log(e)
+      onError: (err) => {
+        snackbar.enqueueSnackbar(
+          formatError(error),
+          { variant: "error" }
+        )
       },
     }
   );
@@ -90,20 +96,6 @@ const DeleteAccountButton = (props: ReactProps) => {
           onConfirmFunction={handleDelete}
         />
 
-        <SnackBarA
-          open={data !== undefined && displaySuccess}
-          closeSnackbar={() => setDisplaySuccess(false)}
-          message={`Successfully deleted your store.`}
-          variant={"success"}
-          autoHideDuration={3000}
-        />
-        <SnackBarA
-          open={error !== undefined && displayErr}
-          closeSnackbar={() => setDisplayErr(false)}
-          message={formatError(error)}
-          variant={"error"}
-          autoHideDuration={3000}
-        />
       </ErrorBounds>
     );
   }

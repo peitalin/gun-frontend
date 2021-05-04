@@ -1,11 +1,9 @@
 import React from 'react';
 // Styles
 import { withStyles, createStyles, WithStyles } from '@material-ui/core/styles';
-import classNames from 'classnames';
 // Snackbar components
 import Snackbar from '@material-ui/core/Snackbar';
 import MessageWrapper from "./MessageWrapper";
-import variantIcon from "./variantIcon";
 
 
 class SnackbarA extends React.Component<ReactProps, any> {

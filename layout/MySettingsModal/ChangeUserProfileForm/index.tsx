@@ -3,29 +3,24 @@ import clsx from "clsx";
 // Styles
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
 import { Colors } from "layout/AppTheme";
-// Material UI
-import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
 // Components
 import ErrorBounds from "components/ErrorBounds";
-import SnackbarsSuccessErrors from "components/Snackbars/SnackbarsSuccessErrors"
 import ButtonLoading from "components/ButtonLoading";
-// Typings
-import { HtmlEvent } from "typings";
 // Validation
 import { Formik, FormikProps } from 'formik';
 import { validationSchemas } from "utils/validation";
 import ChangeUserProfileFields from "./ChangeUserProfileFields";
 // Graphql Queries
-import { useMutation } from "@apollo/client";
+import { useMutation, ApolloError } from "@apollo/client";
 import { GET_USER } from "queries/user-queries";
 import { UPDATE_USER } from "queries/user-mutations";
-
 // Redux
 import { useSelector, useDispatch } from "react-redux";
 import { GrandReduxState } from "reduxStore/grand-reducer";
 import { Actions } from "reduxStore/actions";
 import { UserPrivate, MutationEditUserProfileArgs } from "typings/gqlTypes";
+// snackbar
+import { useSnackbar } from "notistack";
 
 
 
@@ -34,6 +29,7 @@ const ChangeUserProfileForm = (props: ReactProps) => {
 
   const { classes } = props;
   const dispatch = useDispatch();
+  const snackbar = useSnackbar();
 
   const reduxUser = useSelector<GrandReduxState, UserPrivate>(
     state => state.reduxLogin.user
@@ -52,13 +48,27 @@ const ChangeUserProfileForm = (props: ReactProps) => {
         countryCode: reduxUser?.phoneNumber?.countryCode,
       },
     },
-    onError: (err) => console.log(err),
-    onCompleted: () => {},
     update: (cache, { data: { editUserProfile: { user } } }) => {
       dispatch(Actions.reduxLogin.SET_USER({ ...reduxUser, ...user }))
     },
+    onCompleted: (data) => {
+      snackbar.enqueueSnackbar(
+        "Successfully updated your profile",
+        { variant: "success" }
+      )
+    },
+    onError: (err) => {
+      snackbar.enqueueSnackbar(
+        `Error updating your profile email ${formatError(err)}`,
+        { variant: "error" }
+      )
+    },
   })
 
+  const formatError = (error: ApolloError) => {
+    let errMsg = error?.graphQLErrors?.[0]?.message ?? JSON.stringify(error)
+    return errMsg
+  }
 
   return (
     <Formik
@@ -130,13 +140,6 @@ const ChangeUserProfileForm = (props: ReactProps) => {
                 </ButtonLoading>
               </ErrorBounds>
 
-              <SnackbarsSuccessErrors
-                data={data}
-                error={error}
-                successMessage={"Successfully updated your profile"}
-                errorMessage={"Error updating your profile email"}
-                autoHideDuration={3000}
-              />
             </form>
           </div>
         )

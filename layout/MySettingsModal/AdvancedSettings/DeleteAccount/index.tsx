@@ -6,8 +6,6 @@ import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/s
 // Material UI
 import Typography from "@material-ui/core/Typography";
 // Components
-import Loading from "components/Loading";
-import ErrorDisplay, { GraphQLErrors } from "components/Error";
 import ErrorBounds from "components/ErrorBounds";
 import TextInput from "components/Fields/TextInput";
 import DeleteAccountButton from "./DeleteAccountButton";

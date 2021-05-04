@@ -17,7 +17,6 @@ import Typography from "@material-ui/core/Typography";
 import ErrorBounds from "components/ErrorBounds";
 import TextInput from "components/Fields/TextInput";
 import ButtonLoading from "components/ButtonLoading";
-import SnackBarA from "components/Snackbars/SnackbarA";
 import { useSnackbar } from "notistack";
 // Typings
 import { UserPrivate } from "typings/gqlTypes";
@@ -34,18 +33,16 @@ const ChangePayoutMethod = (props: ReactProps & ReduxProps) => {
   const { classes } = props;
   const [showPayoutBankChanger, setShowPayoutBankChanger] = React.useState(false);
 
-  let [displayErr, setDisplayErr] = React.useState(true);
-  let [displaySuccess, setDisplaySuccess] = React.useState(true);
-
   const aClient = useApolloClient();
   const dispatch = useDispatch();
   const snackbar = useSnackbar();
 
 
-  const [setPayoutMethod, { loading, data, error }] =
-  useMutation<MutationData, MutationVars>(
+  const [
+    setPayoutMethod,
+    { loading, data, error }
+  ] = useMutation<MutationData, MutationVars>(
     SET_PAYOUT_METHOD, {
-
     update: (cache, { data: { setPayoutMethod }}: { data: MutationData }) => {
 
       setShowPayoutBankChanger(false)
@@ -63,6 +60,18 @@ const ChangePayoutMethod = (props: ReactProps & ReduxProps) => {
           }
         },
       });
+    },
+    onCompleted: () => {
+      snackbar.enqueueSnackbar(
+        `Successfully updated your profile.`,
+        { variant: "success" }
+      )
+    },
+    onError: (err) => {
+      snackbar.enqueueSnackbar(
+        formatError(error),
+        { variant: "error" }
+      )
     },
     // variables: {}, // set later using formik values
   })
@@ -91,8 +100,6 @@ const ChangePayoutMethod = (props: ReactProps & ReduxProps) => {
             accountNumber: values.accountNumber,
             accountName: values.accountName,
           }
-        }).then(r => {
-          resetForm()
         })
 
       }}
@@ -139,13 +146,13 @@ const ChangePayoutMethod = (props: ReactProps & ReduxProps) => {
                       className={clsx('fadeIn', classes.showPayoutChanger)}
                       variant="subtitle2"
                     >
-                      {"Change bank account"}
+                      Change bank account
                     </Typography>
                   : <Typography
                       className={clsx('fadeIn', classes.showPayoutChanger)}
                       variant="subtitle2"
                     >
-                      {"Cancel"}
+                      Cancel
                     </Typography>
                 }
               </a>
@@ -272,21 +279,6 @@ const ChangePayoutMethod = (props: ReactProps & ReduxProps) => {
                 >
                   Save changes
                 </ButtonLoading>
-
-                <SnackBarA
-                  open={data !== undefined && displaySuccess}
-                  closeSnackbar={() => setDisplaySuccess(false)}
-                  message={`Successfully updated your profile.`}
-                  variant={"success"}
-                  autoHideDuration={3000}
-                />
-                <SnackBarA
-                  open={error !== undefined && displayErr}
-                  closeSnackbar={() => setDisplayErr(false)}
-                  message={formatError(error)}
-                  variant={"error"}
-                  autoHideDuration={3000}
-                />
               </div>
             </div>
           </form>

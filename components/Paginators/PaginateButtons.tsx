@@ -1,7 +1,7 @@
 
 import React from "react";
 // Utils Components
-import ErrorDisplay from "components/Error";
+import ErrorDisplay from "components/ErrorDisplay";
 import ErrorBounds from "components/ErrorBounds";
 import Loading from "components/Loading";
 import Button from "@material-ui/core/Button";

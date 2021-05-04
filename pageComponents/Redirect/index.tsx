@@ -1,16 +1,8 @@
 import React from "react";
-import clsx from "clsx";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
-// Typings
-import { Product } from "typings/gqlTypes";
 // Utils
-import ErrorBounds from "components/ErrorBounds";
-import Loading from "components/Loading";
 import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
-import Divider from "components/Divider";
-import SnackbarA from "components/Snackbars/SnackbarA";
 // Components
 import { Colors } from "layout/AppTheme";
 import { useRouter } from "next/router";

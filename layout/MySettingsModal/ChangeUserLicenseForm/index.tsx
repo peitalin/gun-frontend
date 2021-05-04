@@ -8,7 +8,6 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 // Components
 import ErrorBounds from "components/ErrorBounds";
-import SnackbarsSuccessErrors from "components/Snackbars/SnackbarsSuccessErrors"
 import ButtonLoading from "components/ButtonLoading";
 // Typings
 import { HtmlEvent } from "typings";
@@ -17,9 +16,10 @@ import { Formik, FormikProps } from 'formik';
 import { validationSchemas } from "utils/validation";
 import ChangeUserLicenseFields from "./ChangeUserLicenseFields";
 // Graphql Queries
-import { useMutation } from "@apollo/client";
+import { useMutation, ApolloError } from "@apollo/client";
 import { EDIT_USER_LICENSE } from "queries/user-mutations";
-
+// snackbar
+import { useSnackbar } from "notistack";
 // Redux
 import { useSelector, useDispatch } from "react-redux";
 import { GrandReduxState } from "reduxStore/grand-reducer";
@@ -31,8 +31,10 @@ import { UserPrivate } from "typings/gqlTypes";
 
 const ChangeUserLicenseForm = (props: ReactProps) => {
 
+
   const { classes } = props;
   const dispatch = useDispatch();
+  const snackbar = useSnackbar();
 
   const [showLicenseChanger, setShowLicenseChanger] = React.useState(false);
 
@@ -60,14 +62,28 @@ const ChangeUserLicenseForm = (props: ReactProps) => {
       licenseCategory: reduxUser?.license?.licenseCategory,
       licenseState: reduxUser?.license?.licenseState,
     },
-    onError: (err) => console.log(err),
-    onCompleted: () => {},
     update: (cache, { data }) => {
       let user = data.editUserLicense?.user;
       dispatch(Actions.reduxLogin.SET_USER({ ...reduxUser, ...user }))
     },
+    onCompleted: (data) => {
+      snackbar.enqueueSnackbar(
+        "Successfully updated your gun license",
+        { variant: "success" }
+      )
+    },
+    onError: (err) => {
+      snackbar.enqueueSnackbar(
+        `Error updating your gun license ${formatError(err)}`,
+        { variant: "error" }
+      )
+    },
   })
 
+  const formatError = (error: ApolloError) => {
+    let errMsg = error?.graphQLErrors?.[0]?.message ?? JSON.stringify(error)
+    return errMsg
+  }
 
   return (
     <ErrorBounds className={classes.changeUserLicenseRoot}>
@@ -116,8 +132,6 @@ const ChangeUserLicenseForm = (props: ReactProps) => {
               licenseCategory: values.licenseCategory.join(','),
               licenseState: values.licenseState,
             }
-          }).then(r => {
-            resetForm()
           })
         }}
       >
@@ -165,14 +179,6 @@ const ChangeUserLicenseForm = (props: ReactProps) => {
                       Save Changes
                     </ButtonLoading>
                   </ErrorBounds>
-
-                  <SnackbarsSuccessErrors
-                    data={data}
-                    error={error}
-                    successMessage={"Successfully updated your gun license"}
-                    errorMessage={"Error updating your gun license"}
-                    autoHideDuration={3000}
-                  />
 
                 </div>
               </form>

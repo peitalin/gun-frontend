@@ -8,14 +8,13 @@ import { GET_USER } from "queries/user-queries";
 import { UPDATE_USER, SET_PAYOUT_METHOD } from "queries/user-mutations";
 import { UserPrivate, ID } from "typings/gqlTypes";
 // Material UI
-import Button from "@material-ui/core/Button";
 import ButtonLoading from "components/ButtonLoading";
-import Typography from "@material-ui/core/Typography";
 // Utility Components
 import Loading from "components/Loading";
-import ErrorDisplay, { GraphQLErrors } from "components/Error";
+import ErrorDisplay, { GraphQLErrors } from "components/ErrorDisplay";
 import ErrorBounds from "components/ErrorBounds";
-import SnackBarA from "components/Snackbars/SnackbarA";
+// snackbar
+import { useSnackbar } from "notistack";
 // Redux
 import { useDispatch, useSelector } from "react-redux";
 import { GrandReduxState } from "reduxStore/grand-reducer";
@@ -25,15 +24,13 @@ import { Actions } from "reduxStore/actions";
 
 const ChangePayoutMethodButton = (props: ReactProps) => {
 
-  let [displayErr, setDisplayErr] = React.useState(true);
-  let [displaySuccess, setDisplaySuccess] = React.useState(true);
-
   let {
     newBsb,
     newAccountNumber,
     newAccountName,
   } = props;
 
+  const snackbar = useSnackbar()
   const aClient = useApolloClient();
   const dispatch = useDispatch();
 
@@ -42,10 +39,11 @@ const ChangePayoutMethodButton = (props: ReactProps) => {
     return errMsg
   }
 
-  const [setPayoutMethod, { loading, data, error }] =
-  useMutation<MutationData, MutationVars>(
+  const [
+    setPayoutMethod,
+    { loading, data, error }
+  ] = useMutation<MutationData, MutationVars>(
     SET_PAYOUT_METHOD, {
-
     update: (cache, { data: { setPayoutMethod }}: { data: MutationData }) => {
 
       props.resetPayoutMethodEmail();
@@ -61,6 +59,18 @@ const ChangePayoutMethodButton = (props: ReactProps) => {
         },
       });
     },
+    onCompleted: () => {
+      snackbar.enqueueSnackbar(
+        `Successfully updated your profile.`,
+        { variant: "success" }
+      )
+    },
+    onError: (err) => {
+      snackbar.enqueueSnackbar(
+        formatError(error),
+        { variant: "error" }
+      )
+    },
     refetchQueries: (result) => {
       return [{ query: GET_USER, variables: {} }]
     },
@@ -72,6 +82,7 @@ const ChangePayoutMethodButton = (props: ReactProps) => {
       accountName: newAccountName,
     },
   })
+
 
   if (loading) {
     return <Loading inline loading={loading} delay={"400ms"} />;
@@ -96,20 +107,6 @@ const ChangePayoutMethodButton = (props: ReactProps) => {
         >
           Save changes
         </ButtonLoading>
-        <SnackBarA
-          open={data !== undefined && displaySuccess}
-          closeSnackbar={() => setDisplaySuccess(false)}
-          message={`Successfully updated your profile.`}
-          variant={"success"}
-          autoHideDuration={3000}
-        />
-        <SnackBarA
-          open={error !== undefined && displayErr}
-          closeSnackbar={() => setDisplayErr(false)}
-          message={formatError(error)}
-          variant={"error"}
-          autoHideDuration={3000}
-        />
       </ErrorBounds>
     );
   }

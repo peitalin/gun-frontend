@@ -21,7 +21,7 @@ import {
 } from "queries/orders-admin-queries";
 // Pagination
 import { ConnectionQueryProps } from "components/Paginators/usePaginatePagedQueryHook";
-import ErrorDisplay from "components/Error";
+import ErrorDisplay from "components/ErrorDisplay";
 import LoadingBar from "components/LoadingBar";
 // graphl
 import { useMutation, useQuery, useLazyQuery } from "@apollo/client";

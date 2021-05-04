@@ -25,7 +25,7 @@ import {
 } from "queries/orders-dealer-queries";
 // Pagination
 import { ConnectionQueryProps } from "components/Paginators/usePaginatePagedQueryHook";
-import ErrorDisplay from "components/Error";
+import ErrorDisplay from "components/ErrorDisplay";
 import LoadingBar from "components/LoadingBar";
 // formatters
 import { formatDate } from "utils/dates";

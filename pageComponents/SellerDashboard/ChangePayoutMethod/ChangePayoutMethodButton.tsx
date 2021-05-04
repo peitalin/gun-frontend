@@ -11,9 +11,10 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 // Utility Components
 import Loading from "components/Loading";
-import ErrorDisplay, { GraphQLErrors } from "components/Error";
+import ErrorDisplay, { GraphQLErrors } from "components/ErrorDisplay";
 import ErrorBounds from "components/ErrorBounds";
-import SnackBarA from "components/Snackbars/SnackbarA";
+// snackbar
+import { useSnackbar } from "notistack";
 // redux
 import { useDispatch } from "react-redux";
 import { Actions } from "reduxStore/actions";
@@ -23,19 +24,25 @@ import { Actions } from "reduxStore/actions";
 
 const ChangePayoutMethodButton = (props: ReactProps) => {
 
-  let [displayErr, setDisplayErr] = React.useState(true);
-  let [displaySuccess, setDisplaySuccess] = React.useState(true);
   let {
     newBsb,
     newAccountNumber,
     newAccountName,
   } = props;
+
   const aClient = useApolloClient();
   const dispatch = useDispatch();
+  const snackbar = useSnackbar();
 
   const [setPayoutMethod, { loading, data, error }] =
   useMutation<MutationData, MutationVars>(
     SET_PAYOUT_METHOD, {
+    variables: {
+      payoutType: "BANK",
+      bsb: newBsb,
+      accountNumber: newAccountNumber,
+      accountName: newAccountName,
+    },
     update: (cache, { data: { setPayoutMethod: { user } } }) => {
 
       props.resetPayoutMethod();
@@ -57,12 +64,18 @@ const ChangePayoutMethodButton = (props: ReactProps) => {
         console.log(error)
       }
     },
-    variables: {
-      payoutType: "BANK",
-      bsb: newBsb,
-      accountNumber: newAccountNumber,
-      accountName: newAccountName,
-    }
+    onCompleted: () => {
+      snackbar.enqueueSnackbar(
+        `Successfully updated your profile.`,
+        { variant: "success" }
+      )
+    },
+    onError: (err) => {
+      snackbar.enqueueSnackbar(
+        formatError(error),
+        { variant: "error" }
+      )
+    },
   })
 
   const formatError = (error: ApolloError) => {
@@ -83,20 +96,6 @@ const ChangePayoutMethodButton = (props: ReactProps) => {
         >
           Save changes
         </Button>
-        <SnackBarA
-          open={data !== undefined && displaySuccess}
-          closeSnackbar={() => setDisplaySuccess(false)}
-          message={`Successfully updated your profile.`}
-          variant={"success"}
-          autoHideDuration={3000}
-        />
-        <SnackBarA
-          open={error !== undefined && displayErr}
-          closeSnackbar={() => setDisplayErr(false)}
-          message={formatError(error)}
-          variant={"error"}
-          autoHideDuration={3000}
-        />
       </ErrorBounds>
     );
   }
