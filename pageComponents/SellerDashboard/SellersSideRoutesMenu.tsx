@@ -13,16 +13,15 @@ import { ID, UserPrivate, Dealers } from "typings/gqlTypes";
 // Material UI
 import Typography from "@material-ui/core/Typography";
 import Tooltip from '@material-ui/core/Tooltip';
-
 import { useRouter } from "next/router";
-import Router from 'next/router'
-
 
 
 const SellersSideRoutesMenu: React.FC<ReactProps> = (props) => {
 
+  const router = useRouter()
+
   const isSelectedRoute = (path: string): boolean => {
-    return Router.pathname.split('/').pop() === path.split('/').pop()
+    return router.pathname.split('/').pop() === path.split('/').pop()
   }
 
   const { classes, user } = props;
@@ -188,7 +187,7 @@ const styles = (theme: Theme) => createStyles({
     color: Colors.darkGrey,
     fontSize: '0.9rem',
     fontWeight: 500,
-    borderRight: '4px solid rgba(0,0,0,0)',
+    borderRight: '2px solid rgba(0,0,0,0)',
     borderRadius: BorderRadius,
     "&:hover": {
       background: theme.palette.type === 'dark'

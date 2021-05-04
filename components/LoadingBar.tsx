@@ -2,6 +2,8 @@ import React from "react";
 import clsx from 'clsx';
 import Fade from '@material-ui/core/Fade';
 import { withStyles, WithStyles, createStyles, Theme, fade } from '@material-ui/core/styles';
+import { isThemeDark, Colors } from "layout/AppTheme";
+import { useTheme } from '@material-ui/core';
 
 
 // NOTE: This LoadingBar has position: 'absolute'
@@ -140,7 +142,11 @@ const LoadingBar: React.FC<ReactProps> = (props) => {
     delay,
     loading = true,
   } = props;
-  const color = props.color || "#242424";
+
+  let theme = useTheme()
+
+  const color = props.color
+    || isThemeDark(theme) ? Colors.purple : Colors.ultramarineBlue
 
   const style = (i: number): React.CSSProperties => {
     const { height } = props;

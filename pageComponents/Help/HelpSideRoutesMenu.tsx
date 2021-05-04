@@ -5,106 +5,56 @@ import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/
 import { Colors, Gradients, BorderRadius } from "layout/AppTheme";
 // Router
 import Link from "next/link";
-// Redux
-import { useSelector, useDispatch } from "react-redux";
-import { GrandReduxState, Actions } from 'reduxStore/grand-reducer';
-// Utils
-import { ID, UserPrivate, Dealers } from "typings/gqlTypes";
 // Material UI
 import Typography from "@material-ui/core/Typography";
-import Tooltip from '@material-ui/core/Tooltip';
-
 import { useRouter } from "next/router";
 
 
 
-const DealersSideRoutesMenu: React.FC<ReactProps> = (props) => {
+const HelpSideRoutesMenu: React.FC<ReactProps> = (props) => {
 
-  const router = useRouter()
+  let router = useRouter()
 
   const isSelectedRoute = (path: string): boolean => {
     return router.pathname.split('/').pop() === path.split('/').pop()
   }
 
-  const { classes, user } = props;
-  // console.log("dealer.user :", user)
+  const { classes } = props;
 
   return (
     <div className={classes.routeMenu}>
 
-      <div className={classes.routeProfile}>
-        <div className={classes.dealerProfile}>
-
-          <Link
-            href="/dealers/[dealerId]"
-            as={`/dealers/${user?.dealer?.id}`}
-            scroll={false}
-          >
-            <Typography className={classes.title} variant="h6">
-              {user?.dealer?.name}
-            </Typography>
-          </Link>
-          <Typography className={classes.subtitle} variant="h6">
-            {user?.dealer?.licenseNumber}
-          </Typography>
-          {
-            user?.dealer?.city &&
-            <Typography className={classes.subtitle} variant="h6">
-              {user?.dealer?.city}
-            </Typography>
-          }
-          {
-            user?.dealer?.state &&
-            user?.dealer?.postCode &&
-            <Typography className={classes.subtitle} variant="h6">
-              {`${user?.dealer?.postCode}, ${user?.dealer?.state}`}
-            </Typography>
-          }
-
-        </div>
-      </div>
-
       <ul className={classes.routeMenuList}>
-
         <li>
-          <Typography variant="subtitle1" className={classes.routeListItemTitle}>
-            Dealer Dashboard
-          </Typography>
-        </li>
-
-        <li>
-          <Link href={"/dealers"} scroll={false}>
+          <Link href={"/help/privacy"} scroll={false}>
             <a>
               <div className={
-                isSelectedRoute("/dealers")
+                isSelectedRoute("/help/privacy")
                   ? classes.routeListItemSelected
                   : classes.routeListItem
               }>
                 <Typography variant="subtitle1" className={classes.routeListItemText}>
-                  Edit Dealer Profile
+                  Privacy Policy
                 </Typography>
               </div>
             </a>
           </Link>
         </li>
-
-
         <li>
-          <Link href={"/dealers/escrow/orders"} scroll={false}>
+          <Link href={"/help/terms"} scroll={false}>
             <a>
               <div className={
-                isSelectedRoute("/orders")
+                isSelectedRoute("/help/terms")
                   ? classes.routeListItemSelected
                   : classes.routeListItem
               }>
                 <Typography variant="subtitle1" className={classes.routeListItemText}>
-                  Arriving Orders
+                  Terms of Use
                 </Typography>
               </div>
             </a>
           </Link>
         </li>
-
 
       </ul>
     </div>
@@ -113,7 +63,6 @@ const DealersSideRoutesMenu: React.FC<ReactProps> = (props) => {
 
 
 interface ReactProps extends WithStyles<typeof styles> {
-  user: UserPrivate;
 }
 
 
@@ -123,12 +72,13 @@ const styles = (theme: Theme) => createStyles({
   },
   title: {
     fontSize: '1.25rem',
-    lineHeight: '1.5rem',
     fontWeight: 600,
     color: theme.palette.type === 'dark'
       ? Colors.uniswapLightestGrey
       : Colors.black,
-    marginBottom: '0.5rem',
+    "&:hover": {
+      color: Colors.secondary,
+    },
   },
   subtitle: {
     fontSize: '0.9rem',
@@ -196,67 +146,11 @@ const styles = (theme: Theme) => createStyles({
       }),
     }
   },
-  routeListItemTitle: {
-    textAlign: "start",
-    fontSize: '1.15rem',
-    marginTop: "1rem",
-    marginBottom: "1rem",
-  },
   routeListItemText: {
     textAlign: "start",
     fontSize: '0.9rem',
   },
-  flexCol: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-  },
-  dealerProfile: {
-    display: "flex",
-    position: "relative",
-    alignItems: "center",
-    flexDirection: "column",
-    justifyContent: "center",
-    margin: "1rem 0rem 2rem 1rem",
-    maxWidth: 300,
-    width: "100%",
-  },
-  // avatar outline circle
-  avatarBorder: {
-    marginBottom: "0.5rem",
-    height: '106px',
-    width: '106px',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: '100%',
-    // background: Gradients.gradientPurple.background,
-    // background: Gradients.gradientUniswapFluro.background,
-    background: Gradients.gradientUniswapFluro.background,
-  },
-  avatar: {
-    width: 100,
-    height: 100,
-    marginTop: '1rem',
-    marginBottom: '1rem',
-    border: `4px solid ${Colors.uniswapNavy}`,
-    background: Colors.uniswapNavy,
-  },
-  // avatar image
-  avatarImg: {
-    // make a little bigger to fit avatar
-    // objectFit: 'cover',
-    height: "104%",
-    width: "104%",
-    transition: theme.transitions.create('filter', {
-      easing: theme.transitions.easing.easeIn,
-      duration: "200ms",
-    }),
-  },
-  viewStoreLink: {
-    margin: '0.5rem 0rem',
-  },
 });
 
 
-export default withStyles(styles)( DealersSideRoutesMenu );
+export default withStyles(styles)( HelpSideRoutesMenu );

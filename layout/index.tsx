@@ -21,6 +21,9 @@ import GovDashboardMobileMenu from "pageComponents/Gov/GovDashboardMobileMenu";
 
 import DealersSideRoutesMenu from "pageComponents/DealerDashboard/DealersSideRoutesMenu";
 import DealerDashboardMobileMenu from "pageComponents/DealerDashboard/DealerDashboardMobileMenu";
+
+import HelpSideRoutesMenu from "pageComponents/Help/HelpSideRoutesMenu";
+import HelpDashboardMobileMenu from "pageComponents/Help/HelpDashboardMobileMenu";
 // Router
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
@@ -51,6 +54,8 @@ const Layout: React.FC<ReactProps> = (props) => {
   const isGovernanceRoute = !!router.pathname.startsWith('/gov')
 
   const isDealerRoute = !!router.pathname.startsWith('/dealers')
+
+  const isHelpRoute = !!router.pathname.startsWith('/help')
 
   //////////// Render Layout
 
@@ -142,6 +147,37 @@ const Layout: React.FC<ReactProps> = (props) => {
               {
                 // mobile, seller dashboard menu
                 lgDown && <DealerDashboardMobileMenu user={user} />
+              }
+              {props.children}
+            </div>
+          </ErrorBounds>
+        )
+      }
+
+    } else if (isHelpRoute) {
+
+      if (!lgDown) {
+        // desktop size
+        return (
+          <ErrorBounds className={classes.flexJustify}>
+            <div className={clsx(classes.dashboardContainer, "fadeIn")}>
+              <div className={classes.minWidth240}>
+                <HelpSideRoutesMenu/>
+              </div>
+              <div className={classes.flex75}>
+                {props.children}
+              </div>
+            </div>
+          </ErrorBounds>
+        )
+      } else {
+        // mobile size
+        return (
+          <ErrorBounds className={clsx(classes.dashboardContainer, "fadeIn")}>
+            <div className={classes.dashboardInnerContainerMobile}>
+              {
+                // mobile, help dashboard menu
+                lgDown && <HelpDashboardMobileMenu />
               }
               {props.children}
             </div>

@@ -1,5 +1,4 @@
 import React from "react";
-import { Product } from "typings/gqlTypes";
 // Styles
 import clsx from "clsx";
 import { withStyles, WithStyles } from "@material-ui/core/styles";
@@ -11,20 +10,16 @@ import KeyboardArrowDown from "@material-ui/icons/KeyboardArrowDown"
 import Link from "next/link";
 import { useRouter } from "next/router";
 import MenuItem from "@material-ui/core/MenuItem";
-import Button from "@material-ui/core/Button";
 
 
 const routeMappings = {
-  '': "Home",
-  'edit-store': "Edit Store",
-  'products': "Products",
-  'orders': "Orders",
-  'offers': "Offers",
+  'privacy': "Privacy Policy",
+  'terms': "Terms of Service",
 }
 
 
 
-const SellerDropdownMenu: React.FC<ReactProps> = (props) => {
+const HelpDropdownMenu: React.FC<ReactProps> = (props) => {
 
   const { classes } = props;
   const router = useRouter();
@@ -35,16 +30,9 @@ const SellerDropdownMenu: React.FC<ReactProps> = (props) => {
     const lastPath = router.pathname.split("/").pop()
     const secondLastPath = router.pathname.split("/").slice(-2,-1)[0]
 
-    if (lastPath === "admin" || lastPath === "") {
-      return "Home"
+    if (lastPath === "help" || lastPath === "") {
+      return "Help Home"
     } else {
-      // if p123123 id in route, take 2nd last part of route
-      if (lastPath.startsWith('p') || lastPath.startsWith('[productId]')) {
-        return "Edit Product"
-      }
-      if (lastPath.startsWith('order') || lastPath.startsWith('[orderItemId]')) {
-        return "View Order Details"
-      }
       // otherwise return last part of route
       return lastPath.split('-').map(m => {
         //  otherwise change hyphens to spaces and capitalize
@@ -102,10 +90,10 @@ const MenuExpanded = (
             <div className={classes.dashboardInnerContainer}>
               {
                 Object.keys(routeMappings).map(k => {
-                  let defaultRoute = '/admin/products'
+                  let defaultRoute = '/help/privacy'
                   return (
                     <div key={k} className={classes.mobileMenuFlexitem}>
-                      <Link href={k.length ? `/admin/${k}` : defaultRoute}>
+                      <Link href={k.length ? `/help/${k}` : defaultRoute}>
                         <a className={classes.menuLink}>
                           <MenuItem
                             className={clsx(
@@ -147,6 +135,7 @@ const MenuDither = (props: ReactProps & MenuExpandedProps) => (
 )
 
 
+
 interface ReactProps extends WithStyles<typeof styles> {
 }
 
@@ -155,4 +144,4 @@ interface MenuExpandedProps {
   hideExpandMenu(): void;
 }
 
-export default withStyles(styles)( SellerDropdownMenu );
+export default withStyles(styles)( HelpDropdownMenu );

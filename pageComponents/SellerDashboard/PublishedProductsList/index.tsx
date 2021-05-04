@@ -279,7 +279,6 @@ const PublishedProductsList = (props: ReactProps) => {
               }
               <LoadingBar
                 absoluteBottom
-                color={Colors.gradientUniswapBlue1}
                 height={4}
                 width={'100%'}
                 loading={getProductsResponse.loading}

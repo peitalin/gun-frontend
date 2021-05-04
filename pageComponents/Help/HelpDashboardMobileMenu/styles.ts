@@ -14,9 +14,8 @@ const dashboardLinkColorHover = Colors.secondaryBright
 const dashboardLinkColor2 = Colors.darkGrey
 const dashboardLinkColorHover2 = Colors.secondaryBright
 
-// let numRoutes = Object.keys(routeMappings)
-const dashboardMenuHeight = 50 * 5
-// 4 items, 50px each
+const dashboardMenuHeight = 50 * 2
+// 2 items, 50px each
 
 
 export const styles = (theme: Theme) => createStyles({

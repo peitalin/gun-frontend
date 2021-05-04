@@ -333,7 +333,7 @@ const styles = (theme: Theme) => createStyles({
     //   ? Colors.uniswapDarkNavy
     //   : 'transparent',
     background: "transparent",
-    border: '1px solid rgba(0,0,0,0)',
+    border: '2px solid rgba(0,0,0,0)',
     "&:hover": {
       background: theme.palette.type === 'dark'
         ? fade(Colors.lightGrey, 0.1)
@@ -351,8 +351,8 @@ const styles = (theme: Theme) => createStyles({
     fontSize: '0.9rem',
     fontWeight: 500,
     border: theme.palette.type === 'dark'
-      ? `1px solid ${Colors.uniswapMediumGrey}`
-      : `1px solid ${Colors.slateGreyLightBlack}`,
+      ? `2px solid ${Colors.uniswapMediumGrey}`
+      : `2px solid ${Colors.slateGreyLightBlack}`,
     background: theme.palette.type === 'dark'
       ? Colors.uniswapDarkNavy
       : Colors.darkWhite,

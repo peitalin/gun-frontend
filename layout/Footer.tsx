@@ -125,17 +125,14 @@ const Footer: React.FC<ReactProps> = (props) => {
                     Firearm registries
                   </Typography>
                 </a>
-                <Link href={'/terms'} prefetch={false}>
-                  <a
-                    className={classes.link}
-                    target={"_blank"}
-                  >
+                <Link href={'/help/terms'} prefetch={false}>
+                  <a className={classes.link} >
                     <Typography variant="body2" className={classes.linkText}>
                       Terms of Service
                     </Typography>
                   </a>
                 </Link>
-                <Link href={'/privacy'} prefetch={false}>
+                <Link href={'/help/privacy'} prefetch={false}>
                   <a className={classes.link}>
                     <Typography variant="body2" className={classes.linkText}>
                       Privacy Policy
