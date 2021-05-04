@@ -31,6 +31,7 @@ import AlignCenterLayout from "components/AlignCenterLayout";
 import Switch from '@material-ui/core/Switch';
 import ProductCardResponsive from "components/ProductCardResponsive";
 import ProductRowMedium from "components/ProductRowMedium";
+import ProductCardAsRow from "components/ProductCardAsRow";
 // Loading product cards
 import ProductRowMobileLoading from "components/ProductCardResponsive/ProductRowMobileLoading";
 import LoadingBar from "components/LoadingBar";
@@ -297,7 +298,7 @@ const CategoryId: React.FC<ReactProps> = (props) => {
                 >
                   {
                     rowMode
-                      ? <ProductRowMedium product={product}/>
+                      ? <ProductCardAsRow product={product}/>
                       : <ProductCardResponsive product={product} />
                   }
                 </div>

@@ -40,14 +40,3 @@ export const INITIATE_CATEGORIES = gql`
     }
   }
 `;
-
-
-export const INITIATE_CALIBERS = gql`
-  mutation initiateCalibers {
-    initiateCalibers {
-      id
-      name
-      group
-    }
-  }
-`;

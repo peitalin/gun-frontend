@@ -4,8 +4,9 @@ import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/s
 // GQL
 import { GET_PAGE_CONFIG_BY_PATH } from "queries/page_configs-queries";
 import { GET_PRODUCT_CATEGORIES } from "queries/categories-queries";
+import { GET_CALIBERS } from "queries/calibers-queries";
 // Typings
-import { PageConfig, Categories } from "typings/gqlTypes";
+import { PageConfig, Categories, Calibers } from "typings/gqlTypes";
 // SSR
 import { NextPage, NextPageContext } from 'next';
 import dynamic from "next/dynamic";
@@ -35,7 +36,6 @@ const HomePage: NextPage<ReactProps> = (props) => {
       <FrontPage
         pageConfig={props.pageConfig}
         initialCategories={props.initialCategories}
-        // initialDarkMode={props.initialDarkMode}
       />
     </>
   )
@@ -49,20 +49,19 @@ const styles = (theme: Theme) => createStyles({
 ///////////////// TYPINGS ///////////////////
 interface ReactProps extends WithStyles<typeof styles> {
   initialCategories: Categories[];
-  // initialDarkMode: "dark" | "light";
   pageConfig: PageConfig;
 }
-interface QueryData1 {
+interface QData1 {
   getPageConfig: PageConfig;
 }
-interface QueryVar1 {
+interface QVar1 {
   urlPath: string;
 }
 
-interface QueryData2 {
+interface QData2 {
   getProductCategories: Categories[];
 }
-interface QueryVar2 {
+interface QVar2 {
   slug?: string;
 }
 
@@ -77,16 +76,17 @@ HomePage.getInitialProps = async (ctx: Context) => {
   // otherwise initialProps may be fed via /pages/index.tsx's getInitialProps
   const aClient = serverApolloClient(ctx);
 
-  const { data } = await aClient.query<QueryData1, QueryVar1>({
+  const { data } = await aClient.query<QData1, QVar1>({
     query: GET_PAGE_CONFIG_BY_PATH,
     variables: {
       urlPath: "/"
     }
   })
 
-  const { data: data2 } = await serverApolloClient(ctx).query<QueryData2, QueryVar2>({
+  const { data: data2 } = await serverApolloClient(ctx).query<QData2, QVar2>({
     query: GET_PRODUCT_CATEGORIES,
   })
+
   // console.log("getPageConfig: ", data?.getPageConfig)
   // console.log("getProductCategories ssr: ", data2?.getProductCategories)
 

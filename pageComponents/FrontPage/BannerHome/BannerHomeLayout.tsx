@@ -137,7 +137,6 @@ interface ReactProps extends WithStyles<typeof styles> {
   bannerImageUrl: string
   bannerDither: string
   portraitMode?: boolean;
-  initialCategories: Categories[];
 }
 
 export default withStyles(styles)( BannerHomeLayout );

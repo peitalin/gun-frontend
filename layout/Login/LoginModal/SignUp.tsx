@@ -192,6 +192,7 @@ const SignUp: React.FC<ReactProps> = (props) => {
             </Typography>
             <MuiPickersUtilsProvider utils={DateFnsUtils}>
               <KeyboardDatePicker
+                autoOk={true}
                 disableToolbar
                 InputAdornmentProps={{
                   classes: { root: classes.dateLabel }

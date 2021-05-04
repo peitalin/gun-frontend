@@ -1,15 +1,12 @@
 import React from "react";
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
-import { Colors, BorderRadius4x } from "layout/AppTheme";
+import { Colors } from "layout/AppTheme";
 // MUI
-import SearchIcon from '@material-ui/icons/Search';
-import InputBase from '@material-ui/core/InputBase';
-import Button from "@material-ui/core/Button";
 import { useRouter } from "next/router";
 import { useSnackbar } from "notistack";
 
 // Search Component
-import { Categories } from "typings/gqlTypes";
+import { Categories, Calibers } from "typings/gqlTypes";
 import SearchOptionsAirbnb from "components/SearchbarAirbnb/SearchOptionsAirbnb";
 import {
   useFacetSearchOptions,
@@ -144,7 +141,6 @@ const SearchbarMain = (props: SearchbarProps) => {
       bottomSectionStyles={props.bottomSectionStyles}
       paginatorStyles={props.paginatorStyles}
       isMobile={isMobile}
-      initialDropdownCategories={props.initialDropdownCategories}
     />
   )
 }

@@ -24,25 +24,33 @@ import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import Link from "next/link";
 import { SelectOption } from "typings";
 import {
-  DealerState
+  Calibers
 } from "typings/gqlTypes";
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 
+import { GET_CALIBERS } from "queries/calibers-queries";
+import { useQuery } from "@apollo/client";
 
 
 
-const DealerStateDropdown: React.FC<ReactProps> = (props) => {
+
+const CaliberDropdown: React.FC<ReactProps> = (props) => {
 
   const {
     classes,
-    dropDownItems,
   } = props;
 
   const theme = useTheme();
   const smDown = useMediaQuery(theme.breakpoints.down("sm"));
 
   const [open, setOpen] = React.useState(false);
+
+  const { data } = useQuery<QData3, QVar3>(
+    GET_CALIBERS, {
+  })
+
+  let dropdownCalibers = data?.getCalibers ?? [];
 
   const handleClick = () => {
     setOpen((prev) => !prev);
@@ -56,9 +64,18 @@ const DealerStateDropdown: React.FC<ReactProps> = (props) => {
     props.setFocused(false)
   };
 
-  let selectedDealerState = props.dealerStates?.[0]
+  let dropDownItems = [
+    {
+      id: undefined,
+      name: "All Calibers",
+      group: undefined,
+    },
+    ...(dropdownCalibers ?? []),
+  ]
+
+  let selectedCaliber = props.calibers?.[0]
   // console.log("dropDownItems: ", dropDownItems)
-  // console.log('selectedDealerState: ', selectedDealerState)
+  // console.log('selectedCaliber: ', selectedCaliber)
 
   return (
     <ClickAwayListener onClickAway={handleClickAway}>
@@ -71,7 +88,7 @@ const DealerStateDropdown: React.FC<ReactProps> = (props) => {
 
         <div className={classes.dealerStateTitleText}>
           <span className={classes.iconText}>
-            { selectedDealerState || "Select State" }
+            { selectedCaliber || "Caliber" }
           </span>
           <KeyboardArrowDown className={classes.dropdownArrow}/>
         </div>
@@ -88,7 +105,7 @@ const DealerStateDropdown: React.FC<ReactProps> = (props) => {
                       classes={{
                         root: clsx(
                           classes.buttonRoot,
-                          props.dealerStates?.includes(d)
+                          props.calibers?.includes(d?.name)
                             ? classes.buttonSelected
                             : null,
                         )
@@ -96,10 +113,15 @@ const DealerStateDropdown: React.FC<ReactProps> = (props) => {
                       variant="outlined"
                       onClick={() => {
                         console.log("setting: ", d)
-                        props.setDealerStates([d])
+                        if (!d.id) {
+                          // null -> All Calibers
+                          props.setCalibers([])
+                        } else {
+                          props.setCalibers([d?.name])
+                        }
                       }}
                     >
-                      {d}
+                      {d?.name}
                     </Button>
                   )
                 })
@@ -117,14 +139,19 @@ const DealerStateDropdown: React.FC<ReactProps> = (props) => {
 
 
 interface ReactProps extends WithStyles<typeof styles> {
-  dropDownItems: DealerState[];
   className?: any;
   setFocused?(a: boolean): void;
   setMobileFocused?(a: boolean): void;
-  dealerStates?: DealerState[];
-  setDealerStates(c: DealerState[]): void;
+  calibers?: string[];
+  setCalibers(c: string[]): void;
 }
 
+
+interface QData3 {
+  getCalibers: Calibers[];
+}
+interface QVar3 {
+}
 
 
 /////////////// STYLES /////////////////////
@@ -171,7 +198,7 @@ export const styles = (theme: Theme) => createStyles({
     color: theme.palette.type === 'dark'
       ? Colors.uniswapLightestGrey
       : Colors.slateGreyBlack,
-    minWidth: '140px',
+    minWidth: 120,
     whiteSpace: 'nowrap',
     fontSize: '1rem',
     fontWeight: 500,
@@ -190,7 +217,7 @@ export const styles = (theme: Theme) => createStyles({
     position: 'absolute',
     top: '3.5rem',
     padding: '1rem',
-    minWidth: '300px',
+    minWidth: 300,
     display: "flex",
     flexDirection: "row",
     justifyContent: "flex-start",
@@ -275,4 +302,4 @@ export const styles = (theme: Theme) => createStyles({
   },
 });
 
-export default withStyles(styles)( DealerStateDropdown );
+export default withStyles(styles)( CaliberDropdown );

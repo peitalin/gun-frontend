@@ -1,3 +1,4 @@
+
 import React from "react";
 import clsx from "clsx";
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
@@ -25,7 +26,6 @@ const ProductCardAsRow = (props: ReactProps) => {
   const {
     classes,
     product,
-    soldOutStatus = SoldOutStatus.AVAILABLE,
   } = props;
 
   const title = product?.currentSnapshot?.title
@@ -34,6 +34,7 @@ const ProductCardAsRow = (props: ReactProps) => {
   const featuredVariant = product?.featuredVariant;
   const price = featuredVariant?.price;
   const priceWas = featuredVariant?.priceWas;
+  const soldOutStatus = product?.soldOutStatus;
 
   const dispatch = useDispatch();
 
@@ -43,13 +44,6 @@ const ProductCardAsRow = (props: ReactProps) => {
     // getCardMaxWidth(cardsPerRow)
   };
 
-  if (soldOutStatus !== SoldOutStatus.AVAILABLE) {
-    return (
-      <Typography className={classes.price} variant="body1">
-        {convertSoldOutStatus(soldOutStatus)}
-      </Typography>
-    )
-  }
 
   return (
     <ErrorBounds className={clsx(
@@ -153,7 +147,6 @@ const ProductCardAsRow = (props: ReactProps) => {
 
 interface ReactProps extends WithStyles<typeof styles> {
   product: Product;
-  soldOutStatus?: string;
 }
 
 const styles = (theme: Theme) => createStyles({

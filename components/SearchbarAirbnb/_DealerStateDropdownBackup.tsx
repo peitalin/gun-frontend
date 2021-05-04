@@ -14,17 +14,15 @@ import {
 // MUI
 import Typography from "@material-ui/core/Typography";
 import KeyboardArrowDown from "@material-ui/icons/KeyboardArrowDown"
-import MenuItem from '@material-ui/core/MenuItem';
-import Menu from '@material-ui/core/Menu';
-import MenuIcon from "@material-ui/icons/Menu";
 import Button from "@material-ui/core/Button";
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
+import Portal from "@material-ui/core/Portal";
 
 // hooks
 import Link from "next/link";
 import { SelectOption } from "typings";
 import {
-  Categories,
+  DealerState,
 } from "typings/gqlTypes";
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
@@ -32,11 +30,10 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 
 
-const CategoryDropdown: React.FC<ReactProps> = (props) => {
+const DealerStateDropdown: React.FC<ReactProps> = (props) => {
 
   const {
     classes,
-    dropDownItems,
   } = props;
 
   const theme = useTheme();
@@ -56,96 +53,69 @@ const CategoryDropdown: React.FC<ReactProps> = (props) => {
     props.setFocused(false)
   };
 
-  let selectedCategory = props.currentCategories?.[0]
+  let selectedDealerState = props.dealerStates?.[0]
   // console.log("dropDownItems: ", dropDownItems)
-  // console.log("currentCategories: ", props.currentCategories)
-  // console.log('selectedCategory: ', selectedCategory)
+  // console.log('selectedDealerState: ', selectedDealerState)
+
+  let dropDownItems = [
+    DealerState.ALL_STATES,
+    DealerState.ACT,
+    DealerState.NSW,
+    DealerState.NT,
+    DealerState.QLD,
+    DealerState.SA,
+    DealerState.TAS,
+    DealerState.VIC,
+    DealerState.WA,
+  ]
 
   return (
     <ClickAwayListener onClickAway={handleClickAway}>
       <div className={clsx(
-          classes.categoryDropdownRoot,
+          classes.dealerStateDropdownRoot,
           props.className,
         )}
         onClick={handleClick}
       >
 
-        <div className={classes.categoryTitleText}>
+        <div className={classes.dealerStateTitleText}>
           <span className={classes.iconText}>
-            { selectedCategory?.name || "Category" }
+            { selectedDealerState || "State" }
           </span>
           <KeyboardArrowDown className={classes.dropdownArrow}/>
         </div>
 
         {
           open &&
-          <div className={classes.categoryDropdownContainer}>
-            <div className={classes.categoryButtonsContainer}>
+          <div className={classes.dealerStateDropdownContainer}>
+            <div className={classes.dealerStateButtonsContainer}>
               {
-                props.syncUrlToCategory
-                ? dropDownItems.map((category, i) => {
-                    // a category change triggers a route change
-                    // if we enable syncUrlToCategory
-                    return (
-                      <Link key={category.name + `${i}`}
-                        href="/categories/[categorySlug]"
-                        as={`/categories/${category?.slug}`}
-                      >
-                        <a>
-                          <Button
-                            key={category.name + `${i}`}
-                            classes={{
-                              root: clsx(
-                                classes.buttonRoot,
-                                (props.currentCategories ?? []).find(c => category?.id === c?.id)
-                                  ? classes.buttonSelected
-                                  : null,
-                              )
-                            }}
-                            variant="outlined"
-                            onClick={() => {
-                              // console.log("setting: ", category)
-                              props.setCurrentCategories([category as any])
-                              // if (category.slug) {
-                              // } else {
-                              //   // all-categories, empty category filters
-                              //   props.setCurrentCategories([])
-                              // }
-                            }}
-                          >
-                            {category.name}
-                          </Button>
-                        </a>
-                      </Link>
-                    )
-                  })
-                : dropDownItems.map((category, i) => {
-                    return (
-                      <Button
-                        key={category.name + `${i}`}
-                        classes={{
-                          root: clsx(
-                            classes.buttonRoot,
-                            (props.currentCategories ?? []).find(c => category?.id === c?.id)
-                              ? classes.buttonSelected
-                              : null,
-                          )
-                        }}
-                        variant="outlined"
-                        onClick={() => {
-                          console.log("setting: ", category)
-                          if (category.slug) {
-                            props.setCurrentCategories([category as any])
-                          } else {
-                            // all-categories, empty category filters
-                            props.setCurrentCategories([])
-                          }
-                        }}
-                      >
-                        {category.name}
-                      </Button>
-                    )
-                  })
+                dropDownItems.map((d, i) => {
+                  return (
+                    <Button
+                      key={d + `${i}`}
+                      classes={{
+                        root: clsx(
+                          classes.buttonRoot,
+                          props.dealerStates?.includes(d)
+                            ? classes.buttonSelected
+                            : null,
+                        )
+                      }}
+                      variant="outlined"
+                      onClick={() => {
+                        console.log("setting: ", d)
+                        if (d === DealerState.ALL_STATES) {
+                          props.setDealerStates([])
+                        } else {
+                          props.setDealerStates([d])
+                        }
+                      }}
+                    >
+                      {d}
+                    </Button>
+                  )
+                })
               }
             </div>
           </div>
@@ -160,17 +130,11 @@ const CategoryDropdown: React.FC<ReactProps> = (props) => {
 
 
 interface ReactProps extends WithStyles<typeof styles> {
-  dropDownItems: {
-    name?: string
-    id?: string
-    slug?: string
-  }[];
   className?: any;
   setFocused?(a: boolean): void;
   setMobileFocused?(a: boolean): void;
-  currentCategories?: Categories[];
-  setCurrentCategories(c: Categories[]): void;
-  syncUrlToCategory?: boolean;
+  dealerStates?: DealerState[];
+  setDealerStates(c: DealerState[]): void;
 }
 
 
@@ -179,7 +143,7 @@ interface ReactProps extends WithStyles<typeof styles> {
 
 
 export const styles = (theme: Theme) => createStyles({
-  categoryDropdownRoot: {
+  dealerStateDropdownRoot: {
     position: "relative",
     borderRadius: BorderRadius4x,
     padding: '0rem 1rem',
@@ -215,7 +179,7 @@ export const styles = (theme: Theme) => createStyles({
       },
     },
   },
-  categoryTitleText: {
+  dealerStateTitleText: {
     color: theme.palette.type === 'dark'
       ? Colors.uniswapLightestGrey
       : Colors.slateGreyBlack,
@@ -233,7 +197,7 @@ export const styles = (theme: Theme) => createStyles({
       duration: '100ms',
     }),
   },
-  categoryDropdownContainer: {
+  dealerStateDropdownContainer: {
     zIndex: 1,
     position: 'absolute',
     top: '3.5rem',
@@ -250,12 +214,13 @@ export const styles = (theme: Theme) => createStyles({
   },
   iconText: {
   },
-  categoryButtonsContainer: {
+  dealerStateButtonsContainer: {
     display: "flex",
     flexDirection: "column",
     // flexWrap: "wrap",
     padding: '1rem',
     width: '100%',
+    minWidth: 300,
     border: theme.palette.type === 'dark'
       ? `1px solid ${Colors.uniswapLightNavy}`
       : `1px solid ${Colors.slateGreyDarker}`,
@@ -322,4 +287,4 @@ export const styles = (theme: Theme) => createStyles({
   },
 });
 
-export default withStyles(styles)( CategoryDropdown );
+export default withStyles(styles)( DealerStateDropdown );

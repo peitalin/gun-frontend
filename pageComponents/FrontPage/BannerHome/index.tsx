@@ -3,7 +3,7 @@ import clsx from "clsx";
 // SSR
 import { NextPage, NextPageContext } from 'next';
 import BannerHomeLayout from "./BannerHomeLayout";
-import { Categories } from "typings/gqlTypes";
+import { Categories, Calibers } from "typings/gqlTypes";
 // CSS
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
@@ -37,7 +37,6 @@ const BannerHome: NextPage<ReactProps> = (props) => {
           bannerImageUrl={bannerMobileImageUrl}
           bannerDither={bannerDither}
           portraitMode={true}
-          initialCategories={props.initialCategories}
         >
           <SearchbarMain
             id={"frontpage-1-mobile"}
@@ -54,7 +53,6 @@ const BannerHome: NextPage<ReactProps> = (props) => {
           bannerImageUrl={bannerImageUrl}
           bannerDither={bannerDither}
           portraitMode={false}
-          initialCategories={props.initialCategories}
         >
           <SearchbarMain
             id={"frontpage-2-desktop"}

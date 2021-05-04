@@ -519,7 +519,6 @@ export type Calibers = {
   group: Scalars['String'];
   id: Scalars['String'];
   name: Scalars['String'];
-  size: Scalars['String'];
 };
 
 /** aggregated selection of "calibers" */
@@ -565,7 +564,6 @@ export type Calibers_Bool_Exp = {
   group?: Maybe<String_Comparison_Exp>;
   id?: Maybe<String_Comparison_Exp>;
   name?: Maybe<String_Comparison_Exp>;
-  size?: Maybe<String_Comparison_Exp>;
 };
 
 /** unique or primary key constraints on table "calibers" */
@@ -579,7 +577,6 @@ export type Calibers_Insert_Input = {
   group?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
-  size?: Maybe<Scalars['String']>;
 };
 
 /** aggregate max on columns */
@@ -588,7 +585,6 @@ export type Calibers_Max_Fields = {
   group?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
-  size?: Maybe<Scalars['String']>;
 };
 
 /** order by max() on columns of table "calibers" */
@@ -596,7 +592,6 @@ export type Calibers_Max_Order_By = {
   group?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   name?: Maybe<Order_By>;
-  size?: Maybe<Order_By>;
 };
 
 /** aggregate min on columns */
@@ -605,7 +600,6 @@ export type Calibers_Min_Fields = {
   group?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
-  size?: Maybe<Scalars['String']>;
 };
 
 /** order by min() on columns of table "calibers" */
@@ -613,7 +607,6 @@ export type Calibers_Min_Order_By = {
   group?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   name?: Maybe<Order_By>;
-  size?: Maybe<Order_By>;
 };
 
 /** response of any mutation on the table "calibers" */
@@ -643,7 +636,6 @@ export type Calibers_Order_By = {
   group?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   name?: Maybe<Order_By>;
-  size?: Maybe<Order_By>;
 };
 
 /** primary key columns input for table: "calibers" */
@@ -658,9 +650,7 @@ export enum Calibers_Select_Column {
   /** column name */
   ID = 'id',
   /** column name */
-  NAME = 'name',
-  /** column name */
-  SIZE = 'size'
+  NAME = 'name'
 }
 
 /** input type for updating data in table "calibers" */
@@ -668,7 +658,6 @@ export type Calibers_Set_Input = {
   group?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
-  size?: Maybe<Scalars['String']>;
 };
 
 /** update columns of table "calibers" */
@@ -678,9 +667,7 @@ export enum Calibers_Update_Column {
   /** column name */
   ID = 'id',
   /** column name */
-  NAME = 'name',
-  /** column name */
-  SIZE = 'size'
+  NAME = 'name'
 }
 
 /** columns and relationships of "categories" */
@@ -690,11 +677,11 @@ export type Categories = {
   bannerImage?: Maybe<Image_Parents>;
   bannerImageId?: Maybe<Scalars['String']>;
   blurb?: Maybe<Scalars['String']>;
-  categoryGroup: Scalars['String'];
+  categoryGroup?: Maybe<Scalars['String']>;
   createdAt: Scalars['timestamp'];
   id: Scalars['String'];
   name: Scalars['String'];
-  slug?: Maybe<Scalars['String']>;
+  slug: Scalars['String'];
   /** An object relationship */
   thumbImage?: Maybe<Image_Parents>;
   thumbImageId?: Maybe<Scalars['String']>;
@@ -1947,6 +1934,7 @@ export enum Dealers_Update_Column {
 }
 
 export enum DealerState {
+  ALL_STATES = 'ALL_STATES',
   ACT = 'ACT',
   NSW = 'NSW',
   NT = 'NT',
@@ -17641,7 +17629,7 @@ type ProductFragment_ProductPrivate_ = { __typename?: 'ProductPrivate', id: stri
   ), store?: Maybe<{ __typename?: 'StorePrivate', id: string, name?: Maybe<string>, isSuspended: boolean, userId: string, user?: Maybe<{ __typename?: 'UserPrivate', id: string, license?: Maybe<(
         { __typename?: 'user_licenses' }
         & UserLicenseFragment
-      )> }> }>, category?: Maybe<{ __typename?: 'categories', id: string, name: string, slug?: Maybe<string>, categoryGroup: string }> };
+      )> }> }>, category?: Maybe<{ __typename?: 'categories', id: string, name: string, slug: string, categoryGroup?: Maybe<string> }> };
 
 type ProductFragment_ProductPublic_ = { __typename?: 'ProductPublic', id: string, createdAt?: Maybe<any>, updatedAt?: Maybe<any>, isPublished: boolean, isSuspended: boolean, isDeleted: boolean, isSoldElsewhere: boolean, storeId: string, soldOutStatus: string, currentSnapshot: (
     { __typename?: 'product_snapshots' }
@@ -17664,7 +17652,7 @@ type ProductFragment_ProductPublic_ = { __typename?: 'ProductPublic', id: string
       )> } | { __typename?: 'UserWithRole', id: string, license?: Maybe<(
         { __typename?: 'user_licenses' }
         & UserLicenseFragment
-      )> }> }>, category?: Maybe<{ __typename?: 'categories', id: string, name: string, slug?: Maybe<string>, categoryGroup: string }> };
+      )> }> }>, category?: Maybe<{ __typename?: 'categories', id: string, name: string, slug: string, categoryGroup?: Maybe<string> }> };
 
 export type ProductFragment = ProductFragment_ProductPrivate_ | ProductFragment_ProductPublic_;
 
@@ -17749,7 +17737,7 @@ type OrdersFragment_OrderAdmin_ = { __typename?: 'OrderAdmin', id?: Maybe<string
     ), featuredVariant: (
       { __typename?: 'product_variants' }
       & ProductVariantsFragment
-    ), category?: Maybe<{ __typename?: 'categories', id: string, name: string, slug?: Maybe<string>, categoryGroup: string }>, store?: Maybe<{ __typename?: 'StorePrivate', id: string, name?: Maybe<string>, userId: string, user?: Maybe<{ __typename?: 'UserPrivate', id: string }> }> }>, payoutItems?: Maybe<Array<Maybe<(
+    ), category?: Maybe<{ __typename?: 'categories', id: string, name: string, slug: string, categoryGroup?: Maybe<string> }>, store?: Maybe<{ __typename?: 'StorePrivate', id: string, name?: Maybe<string>, userId: string, user?: Maybe<{ __typename?: 'UserPrivate', id: string }> }> }>, payoutItems?: Maybe<Array<Maybe<(
     { __typename?: 'payout_items' }
     & PayoutItemFragment
   )>>> };
@@ -17796,7 +17784,7 @@ type OrdersFragment_OrderDealer_ = { __typename?: 'OrderDealer', id?: Maybe<stri
     ), featuredVariant: (
       { __typename?: 'product_variants' }
       & ProductVariantsFragment
-    ), category?: Maybe<{ __typename?: 'categories', id: string, name: string, slug?: Maybe<string>, categoryGroup: string }>, store?: Maybe<{ __typename?: 'StorePrivate', id: string, name?: Maybe<string>, userId: string, user?: Maybe<{ __typename?: 'UserPrivate', id: string }> }> }>, payoutItems?: Maybe<Array<Maybe<(
+    ), category?: Maybe<{ __typename?: 'categories', id: string, name: string, slug: string, categoryGroup?: Maybe<string> }>, store?: Maybe<{ __typename?: 'StorePrivate', id: string, name?: Maybe<string>, userId: string, user?: Maybe<{ __typename?: 'UserPrivate', id: string }> }> }>, payoutItems?: Maybe<Array<Maybe<(
     { __typename?: 'payout_items' }
     & PayoutItemFragment
   )>>> };
@@ -17843,13 +17831,13 @@ type OrdersFragment_OrderPublic_ = { __typename?: 'OrderPublic', id?: Maybe<stri
     ), featuredVariant: (
       { __typename?: 'product_variants' }
       & ProductVariantsFragment
-    ), category?: Maybe<{ __typename?: 'categories', id: string, name: string, slug?: Maybe<string>, categoryGroup: string }>, store?: Maybe<{ __typename?: 'StorePrivate', id: string, name?: Maybe<string>, userId: string, user?: Maybe<{ __typename?: 'UserPrivate', id: string }> }> } | { __typename?: 'ProductPublic', id: string, createdAt?: Maybe<any>, updatedAt?: Maybe<any>, isPublished: boolean, isSuspended: boolean, isDeleted: boolean, isSoldElsewhere: boolean, storeId: string, soldOutStatus: string, currentSnapshot: (
+    ), category?: Maybe<{ __typename?: 'categories', id: string, name: string, slug: string, categoryGroup?: Maybe<string> }>, store?: Maybe<{ __typename?: 'StorePrivate', id: string, name?: Maybe<string>, userId: string, user?: Maybe<{ __typename?: 'UserPrivate', id: string }> }> } | { __typename?: 'ProductPublic', id: string, createdAt?: Maybe<any>, updatedAt?: Maybe<any>, isPublished: boolean, isSuspended: boolean, isDeleted: boolean, isSoldElsewhere: boolean, storeId: string, soldOutStatus: string, currentSnapshot: (
       { __typename?: 'product_snapshots' }
       & ProductSnapshotsFragment
     ), featuredVariant: (
       { __typename?: 'product_variants' }
       & ProductVariantsFragment
-    ), category?: Maybe<{ __typename?: 'categories', id: string, name: string, slug?: Maybe<string>, categoryGroup: string }>, store?: Maybe<{ __typename?: 'StorePrivate', id: string, name?: Maybe<string>, userId: string, user?: Maybe<{ __typename?: 'UserPrivate', id: string }> } | { __typename?: 'StorePublic', id: string, name?: Maybe<string>, userId: string, user?: Maybe<{ __typename?: 'UserPrivate', id: string } | { __typename?: 'UserForDealers', id: string } | { __typename?: 'UserPublic', id: string } | { __typename?: 'UserWithRole', id: string }> }> }>, payoutItems?: Maybe<Array<Maybe<(
+    ), category?: Maybe<{ __typename?: 'categories', id: string, name: string, slug: string, categoryGroup?: Maybe<string> }>, store?: Maybe<{ __typename?: 'StorePrivate', id: string, name?: Maybe<string>, userId: string, user?: Maybe<{ __typename?: 'UserPrivate', id: string }> } | { __typename?: 'StorePublic', id: string, name?: Maybe<string>, userId: string, user?: Maybe<{ __typename?: 'UserPrivate', id: string } | { __typename?: 'UserForDealers', id: string } | { __typename?: 'UserPublic', id: string } | { __typename?: 'UserWithRole', id: string }> }> }>, payoutItems?: Maybe<Array<Maybe<(
     { __typename?: 'payout_items' }
     & PayoutItemFragment
   )>>> };

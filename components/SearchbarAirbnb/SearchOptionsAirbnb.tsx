@@ -13,12 +13,13 @@ import {
   Order_By,
   Categories,
   DealerState,
+  Calibers,
 } from "typings/gqlTypes";
 // Select Component
 import DropdownInput from "components/Fields/DropdownInput";
 import SearchOptionsPriceFilter from "./SearchOptionsPriceFilter";
 import CategoryDropdown from './CategoryDropdown';
-import DealerStateDropdown from './DealerStateDropdown';
+import AdvancedSearchDropdown from './AdvancedSearchDropdown';
 import SearchIcon from '@material-ui/icons/Search';
 import InputBase from '@material-ui/core/InputBase';
 
@@ -36,17 +37,16 @@ const SearchOptionsAirbnb: React.FC<ReactProps> = (props) => {
   const {
     id,
     classes,
-    facets,
     searchTerm,
     setSearchTerm,
     setOrderBy,
-    setCategoryFacets,
     paginationParams,
     isMobile,
     syncUrlToCategory = false,
     updateSetPageDelay = 128,
     disableCategories = false,
-    disableDealerStates = false,
+    disableAdvancedSearch = false,
+    disableCalibers = false,
     disableSearchFilter = false,
     disablePriceFilter = false,
     disableSortby = false,
@@ -159,8 +159,7 @@ const SearchOptionsAirbnb: React.FC<ReactProps> = (props) => {
   const categoryData = useQuery<{ getProductCategories: Categories[] }, null>(
     GET_PRODUCT_CATEGORIES,
   )
-  let categories = categoryData?.data?.getProductCategories ?? []
-  // console.log("getProductCategories: ", categories)
+  let categoriesDropdownItems = categoryData?.data?.getProductCategories ?? []
 
 
   const searchRef = React.useRef(null)
@@ -168,17 +167,16 @@ const SearchOptionsAirbnb: React.FC<ReactProps> = (props) => {
 
   const [searchFocused, setSearchFocused] = React.useState(false)
   const [categoryFocused, setCategoryFocused] = React.useState(false)
-  const [dealerStateFocused, setDealerStateFocused] = React.useState(false)
-  const [caliberFocused, setCaliberFocused] = React.useState(false)
+  const [advancedSearchFocused, setAdvancedSearchFocused] = React.useState(false)
   const [mobileFocused, setMobileFocused] = React.useState(false)
 
   const focused = searchFocused
     || categoryFocused
-    || dealerStateFocused
-    || caliberFocused
+    || advancedSearchFocused
     || mobileFocused
 
-  // console.log('focused: ', focused)
+  console.log('focused: ', focused)
+  console.log('advancedSearchFocused: ', advancedSearchFocused)
   // console.log('mobileFocused: ', mobileFocused)
   // console.log(`isMobile && !focused: ${isMobile && !focused}`)
   // console.log(`isMobile>>> ${isMobile}`)
@@ -296,51 +294,46 @@ const SearchOptionsAirbnb: React.FC<ReactProps> = (props) => {
                 }}
                 dropDownItems={
                   syncUrlToCategory
-                  ? [ ...(props.initialDropdownCategories ?? []) ]
+                  ? [ ...(categoriesDropdownItems ?? []) ]
                   : [
                       {
                         id: undefined,
                         slug: 'all',
                         name: "All Categories",
                       },
-                      ...(props.initialDropdownCategories ?? []),
+                      ...(categoriesDropdownItems ?? []),
                     ]
                 }
               />
             }
 
             {
-              !disableDealerStates &&
-              <DealerStateDropdown
+              !disableAdvancedSearch &&
+              <AdvancedSearchDropdown
                 className={clsx(
                   focused ? classes.height65 : classes.height50,
                   isMobile ? classes.searchFilterButtonMobile2 : classes.searchFilterButtonDesktop,
                   (isMobile && !focused) && classes.displayNoneDelayed,
                   // hide on mobile when not focused
-                  dealerStateFocused && classes.boxShadow,
+                  advancedSearchFocused && classes.boxShadow,
                 )}
                 dealerStates={props.dealerStates}
                 setDealerStates={(d) => {
                   props.setDealerStates(d)
                 }}
+                calibers={props.calibers}
+                setCalibers={(d) => {
+                  props.setCalibers(d)
+                }}
                 setMobileFocused={(b: boolean) => {
                   focusSearchOnMobile(true)
                 }}
                 setFocused={(b: boolean) => {
-                  setDealerStateFocused(b)
+                  setAdvancedSearchFocused(b)
                 }}
-                dropDownItems={[
-                  DealerState.ACT,
-                  DealerState.NSW,
-                  DealerState.NT,
-                  DealerState.QLD,
-                  DealerState.SA,
-                  DealerState.TAS,
-                  DealerState.VIC,
-                  DealerState.WA,
-                ]}
               />
             }
+
 
             {
               props.setPriceRange &&
@@ -475,46 +468,6 @@ const SearchOptionsAirbnb: React.FC<ReactProps> = (props) => {
 
 
 
-export const setCategoryFacets = (
-  { facets, setFacets }: {
-    facets: string[],
-    setFacets: React.Dispatch<React.SetStateAction<string[]>>
-  }
-) => (
-  { categoryName, clearFacets, singleCategory }: {
-    categoryName: string,
-    clearFacets: boolean,
-    singleCategory?: boolean
-  }
-) => {
-
-  if (clearFacets) {
-    setFacets([])
-  } else {
-
-    let categoryFacet = `_categoryNameFacet:${categoryName}`
-    let facetIndex = facets.findIndex(f => f === categoryFacet)
-
-    if (singleCategory) {
-      // single category facet at a time
-      setFacets([categoryFacet])
-    } else {
-      // accumulate category facets, filter by groups of categories
-      if (facetIndex >= 0) {
-        // remove facetIndex from group
-        setFacets([
-          ...facets.slice(0, facetIndex),
-          ...facets.slice(facetIndex + 1),
-        ])
-      } else {
-        // add facetIndex to group
-        setFacets([...facets, categoryFacet])
-      }
-    }
-
-  }
-}
-
 
 
 export const selectStyles = ({ width }: { width?: any }) => ({
@@ -596,9 +549,6 @@ interface ReactProps extends WithStyles<typeof styles> {
   setOrderBy?(a?: SelectOption): void;
   // price range
   setPriceRange?(a?: any): void;
-  // Category Facets
-  setCategoryFacets?(args: { categoryName?: string, clearFacets?: boolean }): void;
-  facets?: string[];
   currentCategories?: Categories[];
   setCurrentCategories: React.Dispatch<React.SetStateAction<Categories[]>>
   dealerStates: DealerState[],
@@ -632,7 +582,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   paginatorStyles?: any;
   syncUrlToCategory?: boolean;
   disableCategories?: boolean;
-  disableDealerStates?: boolean;
+  disableAdvancedSearch?: boolean;
   disableCalibers?: boolean;
   disableSearchFilter?: boolean;
   disablePriceFilter?: boolean;
@@ -644,7 +594,6 @@ interface ReactProps extends WithStyles<typeof styles> {
   className?: any;
   style?: any;
   isMobile: boolean;
-  initialDropdownCategories: Categories[];
 }
 export interface SelectOption {
   label: string;
@@ -711,7 +660,7 @@ const styles = (theme: Theme) => createStyles({
     position: 'absolute',
     top: 0,
     left: 0,
-    transition:  theme.transitions.create(['height', 'width', 'border'], {
+    transition:  theme.transitions.create(['height', 'width'], {
       easing: theme.transitions.easing.easeIn,
       duration: 0,
     }),
@@ -719,11 +668,11 @@ const styles = (theme: Theme) => createStyles({
   },
   searchMobileNotExpanded: {
     height: '52px', // height of the SearchInput plus 2px border
-    width: '242px', // width of the SearchInput plus 2px border
-    transition:  theme.transitions.create(['height', 'width', 'border'], {
+    width: '262px', // width of the SearchInput plus 2px border
+    transition:  theme.transitions.create(['height', 'width'], {
       easing: theme.transitions.easing.easeIn,
-      delay: 0,
-      duration: 0,
+      delay: 300,
+      duration: 300,
     }),
     border: theme.palette.type === 'dark'
       ? `1px solid ${Colors.uniswapLightNavy}`

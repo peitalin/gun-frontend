@@ -4,7 +4,7 @@ import clsx from "clsx";
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
 import { Colors, Gradients } from "layout/AppTheme";
 // Typings
-import { ProductsConnection, ConnectionQuery, Categories, PageConfig } from "typings/gqlTypes";
+import { ProductsConnection, Calibers, Categories, PageConfig } from "typings/gqlTypes";
 
 // Components
 import NewReleaseProducts from "pageComponents/FrontPage/NewReleaseProducts";

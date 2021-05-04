@@ -9,7 +9,8 @@ import { BorderRadius, BoxShadows, Colors } from "layout/AppTheme";
 // Graphql
 import { useQuery, ApolloClient, useApolloClient } from "@apollo/client";
 import { INITIATE_PAGE_CONFIG } from "queries/page_configs-queries";
-import { INITIATE_CATEGORIES, INITIATE_CALIBERS } from "queries/categories-queries";
+import { INITIATE_CATEGORIES } from "queries/categories-queries";
+import { INITIATE_CALIBERS } from "queries/calibers-queries";
 import { useMutation } from "@apollo/client";
 // typings
 import { UserPrivate, Role, BlankMutationResponse } from 'typings/gqlTypes';
