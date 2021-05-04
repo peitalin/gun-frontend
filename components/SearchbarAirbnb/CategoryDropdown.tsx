@@ -234,7 +234,7 @@ export const styles = (theme: Theme) => createStyles({
     }),
   },
   categoryDropdownContainer: {
-    zIndex: 1,
+    zIndex: 2, // above advancedSearch button
     position: 'absolute',
     top: '3.5rem',
     padding: '1rem',
