@@ -175,22 +175,14 @@ const BuyPromotedSlotPage = (props: ReactProps) => {
   // console.log("selectedProductOption: ", selectedProductOption)
   // console.log("selectedProduct: ", selectedProduct)
 
-  let expiresAt = !!props?.promotedSlot?.expiresAt
-    ? dayjs(props?.promotedSlot?.expiresAt)
-    : undefined
-  let now = dayjs(new Date())
-  let notExpiredYet = expiresAt !== undefined
-    ? now.unix() < expiresAt.unix()
-    : false
-
-
-  let anotherUserOwnsSlot =
-    !!props.promotedSlot?.ownerId // owner exists
-    && props.promotedSlot?.ownerId !== user?.id // owner is not you
-  let anotherUserOwnsSlotNow = anotherUserOwnsSlot && notExpiredYet
-
-  let userOwnsSlot = props.promotedSlot?.ownerId === user?.id
-  let userOwnsSlotNow = userOwnsSlot && notExpiredYet
+  let {
+    isExpired,
+    expiresAt,
+    anotherUserOwnsSlot,
+    anotherUserOwnsSlotNow,
+    userOwnsSlot,
+    userOwnsSlotNow,
+  } = isSlotExpiredYet(props.promotedSlot, user)
 
   let slotIsFreeToPurchase = !anotherUserOwnsSlotNow && !userOwnsSlotNow
 
@@ -481,6 +473,44 @@ const createProductOption = (p: Product) => {
     value: p?.id,
   }
 }
+
+export const isSlotExpiredYet = (
+  promotedSlot: PromotedSlot,
+  user: UserPrivate,
+) => {
+
+  let _expiresAt = !!promotedSlot?.expiresAt
+    ? dayjs(promotedSlot?.expiresAt)
+    : undefined
+
+  let now = dayjs(new Date())
+
+  let isExpired = _expiresAt !== undefined
+    ? now.unix() > _expiresAt.unix()
+    : false
+
+  let notExpiredYet = !isExpired
+
+  let anotherUserOwnsSlot =
+    !!promotedSlot?.ownerId // owner exists
+    && promotedSlot?.ownerId !== user?.id // owner is not you
+
+  let anotherUserOwnsSlotNow = anotherUserOwnsSlot && notExpiredYet
+
+  let userOwnsSlot = promotedSlot?.ownerId === user?.id
+  let userOwnsSlotNow = userOwnsSlot && notExpiredYet
+
+  return {
+    isExpired: isExpired,
+    expiresAt: _expiresAt,
+    userOwnsSlot: userOwnsSlot,
+    userOwnsSlotNow: userOwnsSlotNow,
+    anotherUserOwnsSlot: anotherUserOwnsSlot,
+    anotherUserOwnsSlotNow: anotherUserOwnsSlotNow,
+  }
+}
+
+
 
 export interface SelectOption {
   label: string;

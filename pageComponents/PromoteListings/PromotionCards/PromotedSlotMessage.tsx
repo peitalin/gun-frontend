@@ -14,6 +14,7 @@ import {
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { asCurrency as c } from "utils/prices";
+import { isSlotExpiredYet } from "../PromotedSlotPurchaseModal/BuyPromotedSlotPage";
 
 
 
@@ -28,6 +29,17 @@ const PromotedSlotMessage = (props: ReactProps) => {
     user,
   } = props
 
+
+  let {
+    isExpired,
+    expiresAt,
+    anotherUserOwnsSlot,
+    anotherUserOwnsSlotNow,
+    userOwnsSlot,
+    userOwnsSlotNow,
+  } = isSlotExpiredYet(props.promotedSlot, user)
+
+
   if (!promotedSlot?.isAvailableForPurchase) {
     return (
       <div className={classes.previewImageMessageText}>
@@ -35,7 +47,13 @@ const PromotedSlotMessage = (props: ReactProps) => {
       </div>
     )
   } else {
-    if (promotedSlot?.ownerId === user?.id) {
+    if (anotherUserOwnsSlotNow) {
+      return (
+        <div className={classes.previewImageMessageText}>
+          {"Another user currently owns this slot"}
+        </div>
+      )
+    } else if (userOwnsSlotNow) {
       return (
         <div className={classes.previewImageMessageText}>
           {"You own this slot"} <br/>
