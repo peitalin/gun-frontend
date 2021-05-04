@@ -1,5 +1,4 @@
 import React from "react";
-import classNames from "classnames";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 // Redux

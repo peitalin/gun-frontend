@@ -13,8 +13,6 @@ import {
 // Components
 import Loading from "components/Loading";
 import LoadingBarSSR from "components/LoadingBarSSR";
-import ErrorBounds from 'components/ErrorBounds';
-import ErrorDisplay from "components/Error";
 import ProductEdit from "pageComponents/ProductEdit";
 // Material UI
 import Typography from "@material-ui/core/Typography";

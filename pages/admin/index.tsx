@@ -6,26 +6,10 @@ import clsx from "clsx";
 // Typings
 import {
   Product,
-  ProductEditInput,
   ID,
-  StorePrivate,
 } from "typings/gqlTypes";
 // Components
-import Loading from "components/Loading";
 import LoadingBarSSR from "components/LoadingBarSSR";
-import ErrorBounds from 'components/ErrorBounds';
-import ErrorDisplay from "components/Error";
-import ProductEdit from "pageComponents/ProductEdit";
-// Material UI
-import Typography from "@material-ui/core/Typography";
-import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
-// redux
-import { GrandReduxState } from "reduxStore/grand-reducer";
-import { useDispatch } from "react-redux";
-import { seedProductEditDataAction } from "pageComponents/ProductEdit/seedEditData";
-// Graphql
-import { useQuery } from "@apollo/client";
-import { GET_PRODUCT } from "queries/products-queries";
 // router
 import { useRouter } from "next/router";
 import Redirect from "pageComponents/Redirect";

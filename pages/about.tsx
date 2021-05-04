@@ -10,7 +10,7 @@ function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
-      <MuiLink color="inherit" href="https://fileworks.net/">
+      <MuiLink color="inherit" href="https://gunmarketplace.com.au">
         gunmarketplace.com.au
       </MuiLink>{' '}
       {new Date().getFullYear()}
