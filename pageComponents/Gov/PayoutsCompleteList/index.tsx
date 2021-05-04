@@ -56,13 +56,16 @@ const PayoutsCompleteList = (props: ReactProps) => {
   const theme = useTheme();
   const mdDown = useMediaQuery(theme.breakpoints.down('md'));
 
-  const [loading, setLoading] = React.useState(false)
 
   let defaultBefore = new Date() // now
   let defaultAfter = getDateWithOffset(7) // 7 days ago
 
   const [beforeDate, setBeforeDate] = React.useState<Date>(defaultBefore)
   const [afterDate, setAfterDate] = React.useState<Date>(defaultAfter)
+  // button click required to dispatch GQL call
+  const [beforeDateGql, setBeforeDateGql] = React.useState<Date>(defaultBefore)
+  const [afterDateGql, setAfterDateGql] = React.useState<Date>(defaultAfter)
+
 
   const handleBeforeDateChange = (date) => {
     // console.log("incoming date:", date)
@@ -84,11 +87,11 @@ const PayoutsCompleteList = (props: ReactProps) => {
   };
 
 
-  const { data, loading: apolloLoading } = useQuery<QData, QVar>(
+  const { data, loading } = useQuery<QData, QVar>(
     GET_COMPLETE_ORDER_IDS_GROUPED_BY_DAY, {
     variables: {
-      before: beforeDate,
-      after: afterDate,
+      before: beforeDateGql,
+      after: afterDateGql,
     },
   })
 
@@ -100,7 +103,6 @@ const PayoutsCompleteList = (props: ReactProps) => {
       classes.root,
       mdDown && classes.rootMobile,
     )}>
-
 
       <LoadingBar
         absoluteTop
@@ -129,6 +131,7 @@ const PayoutsCompleteList = (props: ReactProps) => {
               Start
             </Typography>
             <KeyboardDatePicker
+              autoOk={true}
               disableToolbar
               InputAdornmentProps={{
                 classes: { root: classes.dateLabel }
@@ -151,6 +154,7 @@ const PayoutsCompleteList = (props: ReactProps) => {
               End
             </Typography>
             <KeyboardDatePicker
+              autoOk={true}
               disableToolbar
               InputAdornmentProps={{
                 classes: { root: classes.dateLabel }
@@ -169,11 +173,24 @@ const PayoutsCompleteList = (props: ReactProps) => {
             />
           </div>
         </MuiPickersUtilsProvider>
+        <ButtonLoading
+          className={classes.searchButton}
+          loading={loading}
+          loadingIconColor={Colors.cream}
+          replaceTextWhenLoading={true}
+          onClick={() => {
+            setAfterDateGql(afterDate)
+            setBeforeDateGql(beforeDate)
+          }}
+        >
+          Search Payouts
+        </ButtonLoading>
       </div>
 
       {
 
         ((orderIdsGroupedByDay ?? []).length === 0) &&
+        !loading &&
         <div className={clsx(
           classes.noApprovedPayoutsBox,
           classes.flexCol,
@@ -193,15 +210,16 @@ const PayoutsCompleteList = (props: ReactProps) => {
                 day={oGroup.day}
                 orderIds={oGroup.orderIds}
               />
-              <div className={classes.flexRow}>
-                <div className={classes.flexCol}>
-                  <PayoutCompleteSummaryTable
-                    orderIds={oGroup.orderIds}
-                    loading={loading}
-                    setLoading={setLoading}
-                  />
+              {
+                !loading &&
+                <div className={classes.flexRow}>
+                  <div className={classes.flexCol}>
+                    <PayoutCompleteSummaryTable
+                      orderIds={oGroup.orderIds}
+                    />
+                  </div>
                 </div>
-              </div>
+              }
             </>
           )
         })
@@ -312,6 +330,15 @@ const styles = (theme: Theme) => createStyles({
           : Colors.ultramarineBlue,
       }
     }
+  },
+  searchButton: {
+    maxWidth: 250,
+    marginTop: "1rem",
+    color: Colors.cream,
+    backgroundColor: Colors.ultramarineBlue,
+    "&:hover": {
+      backgroundColor: Colors.ultramarineBlueLight,
+    },
   },
 });
 

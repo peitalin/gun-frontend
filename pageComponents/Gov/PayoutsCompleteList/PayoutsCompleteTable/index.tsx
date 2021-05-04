@@ -88,8 +88,9 @@ const PayoutsCompleteTable: NextPage<ReactProps> = (props) => {
     overfetchBy: overfetchBy,
   })
 
+  // let loading= true
 
-  const { data, loading, error } = useQuery<QueryData, QueryVar>(
+  const { data, loading } = useQuery<QueryData, QueryVar>(
     GET_ORDERS_COMPLETE_BY_IDS_CONNECTION, {
       variables: {
         orderIds: props.orderIds,
@@ -117,23 +118,24 @@ const PayoutsCompleteTable: NextPage<ReactProps> = (props) => {
   const ordersConnection = data?.getOrdersCompleteByIdsConnection
 
 
-  if (loading) {
-    return (
-      <LoadingBar
-        absoluteTop
-        color={Colors.gradientUniswapBlue1}
-        height={4}
-        width={'100vw'}
-        loading={true}
-      />
-    )
-  } else if (data) {
-    return (
-      <main className={classes.root}>
-        <div className={classes.flexRow}>
-          {
-            !loading &&
-            <span onClick={() => {
+  return (
+    <main className={classes.root}>
+      {
+        loading &&
+        <LoadingBar
+          absoluteTop
+          height={4}
+          width={'100vw'}
+          loading={true}
+        />
+      }
+      <div className={classes.flexRow}>
+        {
+          loading
+          ? <Typography className={classes.dateTitle}>
+              Loading...
+            </Typography>
+          : <span onClick={() => {
               snackbar.enqueueSnackbar(
                 `Copied "Payout ${showDate(props.day)}"`,
                 { variant: "info" }
@@ -144,87 +146,86 @@ const PayoutsCompleteTable: NextPage<ReactProps> = (props) => {
                 {`Payouts for ${showDate(props.day)}`}
               </Typography>
             </span>
-          }
-        </div>
-        <SearchOptions
-          // facets={facets}
-          // setCategoryFacets={setCategoryFacets({ facets, setFacets })}
-          // currentCategories={currentCategories}
-          // setSearchTerm={setSearchTerm}
-          // setOrderBy={setOrderBy}
-          // setPriceRange={setPriceRange}
-          // placeholder={"Search for orders..."}
-          paginationParams={{
-            totalCount: totalCount,
-            overfetchBy: overfetchBy,
-            limit: limit,
-            pageParam: pageParam,
-            setPageParam: setPageParam,
-            index: index,
-            setIndex: setIndex,
-          }}
-          updateSetPageDelay={0}
-          disableSearchFilter
-          disableSortby
-          disablePriceFilter
-          disableCategories
-          maxCategoryInputWidth={250}
-          topSectionStyles={{
-            justifyContent: 'flex-end',
-            alignItems: 'flex-end',
-            display: 'flex',
-            flexDirection: 'column',
-            paddingRight: '1rem',
-          }}
-          bottomSectionStyles={{
-            marginBottom: '1rem',
-            backgroundColor: isThemeDark(theme)
-              ? Colors.uniswapDarkNavy
-              : Colors.cream,
-            border: isThemeDark(theme)
-              ? `1px solid ${Colors.uniswapNavy}`
-              : `1px solid ${Colors.slateGreyDarker}`,
-            borderRadius: BorderRadius,
-            paddingBottom: '0.5rem',
-          }}
+        }
+      </div>
+      <SearchOptions
+        // facets={facets}
+        // setCategoryFacets={setCategoryFacets({ facets, setFacets })}
+        // currentCategories={currentCategories}
+        // setSearchTerm={setSearchTerm}
+        // setOrderBy={setOrderBy}
+        // setPriceRange={setPriceRange}
+        // placeholder={"Search for orders..."}
+        paginationParams={{
+          totalCount: totalCount,
+          overfetchBy: overfetchBy,
+          limit: limit,
+          pageParam: pageParam,
+          setPageParam: setPageParam,
+          index: index,
+          setIndex: setIndex,
+        }}
+        updateSetPageDelay={0}
+        disableSearchFilter
+        disableSortby
+        disablePriceFilter
+        disableCategories
+        maxCategoryInputWidth={250}
+        topSectionStyles={{
+          justifyContent: 'flex-end',
+          alignItems: 'flex-end',
+          display: 'flex',
+          flexDirection: 'column',
+          paddingRight: '1rem',
+        }}
+        bottomSectionStyles={{
+          marginBottom: '1rem',
+          backgroundColor: isThemeDark(theme)
+            ? Colors.uniswapDarkNavy
+            : Colors.cream,
+          border: isThemeDark(theme)
+            ? `1px solid ${Colors.uniswapNavy}`
+            : `1px solid ${Colors.slateGreyDarker}`,
+          borderRadius: BorderRadius,
+          paddingBottom: '0.5rem',
+        }}
+      >
+        <TitleRows
+          classes={classes}
+          loading={loading}
+        />
+        <GridPaginatorGeneric<Order>
+          index={index}
+          connection={ordersConnection}
+          totalCount={totalCount ?? 0}
+          // setTotalCount={setTotalCount}
+          numItemsPerPage={numItemsPerPage}
+          className={classes.rowContainer}
+          classNameRoot={classes.gridRoot}
+          loading={loading}
+          loadingComponent={ <div></div> }
         >
-          <TitleRows
-            classes={classes}
-            loading={loading}
-          />
-          <GridPaginatorGeneric<Order>
-            index={index}
-            connection={ordersConnection}
-            totalCount={totalCount ?? 0}
-            // setTotalCount={setTotalCount}
-            numItemsPerPage={numItemsPerPage}
-            className={classes.rowContainer}
-            classNameRoot={classes.gridRoot}
-          >
-            {({ node }) => {
+          {({ node }) => {
 
-              let order = node as OrderAdmin;
-              // console.log("order>>>>>>: ", order)
+            let order = node as OrderAdmin;
+            // console.log("order>>>>>>: ", order)
 
-              return (
-                <RowExpander
-                  key={order.id}
-                  order={order}
-                  admin={props.admin}
-                  index={index}
-                  initialOpen={router?.query?.orderId === order?.id}
-                  refetchQueriesParams={refetchQueriesParams}
-                />
-              )
-            }}
-          </GridPaginatorGeneric>
-        </SearchOptions>
+            return (
+              <RowExpander
+                key={order.id}
+                order={order}
+                admin={props.admin}
+                index={index}
+                initialOpen={router?.query?.orderId === order?.id}
+                refetchQueriesParams={refetchQueriesParams}
+              />
+            )
+          }}
+        </GridPaginatorGeneric>
+      </SearchOptions>
 
-      </main>
-    )
-  } else {
-    return <ErrorDisplay title={"Payouts Approved Connections error"} />
-  }
+    </main>
+  )
 }
 
 

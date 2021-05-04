@@ -194,8 +194,6 @@ const PayoutCompleteSummaryTable = (props: ReactProps) => {
 
 interface ReactProps extends WithStyles<typeof styles> {
   orderIds: string[]
-  loading: boolean
-  setLoading(a?: any): void;
 }
 
 // payout summary
