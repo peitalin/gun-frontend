@@ -9,7 +9,7 @@ import {
   Categories
 } from "typings/gqlTypes";
 // Search Component
-import SearchOptionsAirbnb from "components/SearchbarAirbnb/SearchOptionsAirbnb";
+import SearchbarAirbnb from "components/SearchbarAirbnb";
 import ShowOnMobileOrDesktopSSR from "components/ShowOnMobileOrDesktopSSR";
 import { FacetSearchParams } from "utils/hooksFacetSearch";
 
@@ -82,7 +82,7 @@ const CategorySearchbar: React.FC<ReactProps & FacetSearchParams> = (props) => {
           : classes.searchContainerInner
         }
       >
-        <SearchOptionsAirbnb
+        <SearchbarAirbnb
           id={props.id}
           searchTerm={searchTerm}
           setSearchTerm={setSearchTerm}
@@ -114,14 +114,12 @@ const CategorySearchbar: React.FC<ReactProps & FacetSearchParams> = (props) => {
             debounceSetIndex: debounceSetIndex,
           }}
           setFocusedOuter={props.setFocusedOuter}
-          updateSetPageDelay={0}
           // disableSearchFilter
           disableSortby
           disablePriceFilter
           // disableCategories
           maxCategoryInputWidth={250}
           isMobile={props.isMobile}
-          initialDropdownCategories={props.initialDropdownCategories}
         />
       </div>
     </div>

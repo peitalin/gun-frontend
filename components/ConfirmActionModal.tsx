@@ -2,6 +2,7 @@
 import React from "react";
 // Styles
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
+import { Colors } from "layout/AppTheme";
 // Material UI
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
@@ -81,7 +82,7 @@ export const styles = (theme: Theme) => createStyles({
     textAlign: "center",
   },
   modalBackdrop: {
-    backgroundColor: "rgba(47, 57, 65, .85)",
+    backgroundColor: Colors.modalBackground,
   },
   modalPaperScrollPaper: {
     maxHeight: "calc(100% - 32px)",

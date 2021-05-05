@@ -50,7 +50,7 @@ export const styles = (theme: Theme) => createStyles({
     width: '100%',
   },
   modalBackdrop: {
-    backgroundColor: "rgba(47, 57, 65, .85)",
+    backgroundColor: Colors.modalBackground,
   },
   modalPaperScrollPaperSm: {
   },

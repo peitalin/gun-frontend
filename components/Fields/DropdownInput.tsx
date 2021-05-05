@@ -70,6 +70,7 @@ const DropdownInput = (props: ReactProps) => {
               setState(e)
               onChange(e)
             }}
+            menuIsOpen={props.menuIsOpen}
             options={options}
             placeholder={placeholder}
             isMulti={isMulti}
@@ -139,7 +140,7 @@ const DropdownInput = (props: ReactProps) => {
                     },
                     color: isDarkMode ? Colors.uniswapLightestGrey : Colors.charcoal,
                     background: isDarkMode
-                      ? Colors.uniswapDarkNavy
+                      ? Colors.uniswapMediumNavy
                       : Colors.slateGrey,
                   })
                 }
@@ -154,6 +155,7 @@ const DropdownInput = (props: ReactProps) => {
               setState(e)
               onChange(e)
             }}
+            menuIsOpen={props.menuIsOpen}
             options={options}
             placeholder={placeholder}
             isMulti={isMulti}
@@ -218,11 +220,13 @@ const DropdownInput = (props: ReactProps) => {
               indicatorSeparator: styles => ({
                 ...styles,
                 backgroundColor: isDarkMode ? Colors.uniswapLighterGrey : Colors.slateGreyDarker,
+                display: props.hideButton ? "none" : "inherit",
               }),
               indicatorsContainer: styles => ({
                 ...styles,
                 color: isDarkMode ? Colors.uniswapLighterGrey : Colors.charcoal,
                 cursor: "pointer",
+                display: props.hideButton ? "none" : "inherit",
               }),
               container: styles => ({
                 ...styles,
@@ -239,7 +243,7 @@ const DropdownInput = (props: ReactProps) => {
                 },
                 color: isDarkMode ? Colors.uniswapLightestGrey : Colors.charcoal,
                 background: isDarkMode
-                  ? Colors.uniswapDarkNavy
+                  ? Colors.uniswapMediumNavy
                   : Colors.slateGrey,
               }),
               control: (base, state) => ({
@@ -248,6 +252,7 @@ const DropdownInput = (props: ReactProps) => {
                   ? Colors.uniswapLightNavy
                   : Colors.slateGrey,
                 // // match with the menu
+                cursor: "text",
                 borderRadius: BorderRadius,
                 height: '100%',
                 border: isDarkMode
@@ -321,6 +326,8 @@ interface ReactProps extends WithStyles<typeof styles> {
   loading?: boolean;
   disableAutocomplete?: boolean;
   menuPortalTarget?: any;
+  menuIsOpen?: any;
+  hideButton?: boolean;
   [key: string]: any;
 }
 export interface SelectOption {

@@ -56,7 +56,7 @@ interface ReactProps extends WithStyles<typeof styles> {
 
 const styles = (theme: Theme) => createStyles({
   modalBackdrop: {
-    backgroundColor: "rgba(47, 57, 65, .85)",
+    backgroundColor: Colors.modalBackground,
   },
   modalPaperScrollPaper: {
     maxHeight: "calc(100% - 1rem)",

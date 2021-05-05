@@ -32,7 +32,7 @@ import { useQuery } from '@apollo/client';
 
 
 
-const SearchOptionsAirbnb: React.FC<ReactProps> = (props) => {
+const SearchbarAirbnb: React.FC<ReactProps> = (props) => {
 
   const {
     id,
@@ -43,7 +43,6 @@ const SearchOptionsAirbnb: React.FC<ReactProps> = (props) => {
     paginationParams,
     isMobile,
     syncUrlToCategory = false,
-    updateSetPageDelay = 128,
     disableCategories = false,
     disableAdvancedSearch = false,
     disableCalibers = false,
@@ -69,30 +68,6 @@ const SearchOptionsAirbnb: React.FC<ReactProps> = (props) => {
   const [pageUi, setPageUi] = React.useState(1);
 
   const clickBackgroundId = `search-background-${router.pathname}`
-
-  // // for actual gql dispatch for pagination page
-  // const [debounceSetPageParam, cancel, callPending] = useDebouncedCallback(
-  //   (page: number) => {
-  //     console.log("debounce: ", page)
-  //     if (paginationParams?.setPageParam) {
-  //       paginationParams.setPageParam(page)
-  //     }
-  //   },
-  //   updateSetPageDelay
-  // ) // debounce by 540ms
-
-  // const [debounceSetIndex] = useDebouncedCallback((index: number) => {
-  //     setIndex(index)
-  //   },
-  //   updateSetPageDelay
-  // ) // debounce by 540ms
-
-  const orderByOptions = [
-    { label: "Newest", value: { createdAt: Order_By.DESC }},
-    { label: "Oldest", value: { createdAt: Order_By.ASC }},
-    { label: "Highest Price", value: { price: Order_By.DESC }},
-    { label: "Lowest Price", value: { price: Order_By.ASC }},
-  ];
 
 
   const focusSearchOnMobile = (b: boolean) => {
@@ -131,12 +106,6 @@ const SearchOptionsAirbnb: React.FC<ReactProps> = (props) => {
     // refetch=1 param is taken away after render
   }, [router.query, searchTerm])
 
-
-  React.useEffect(() => {
-    if (setOrderBy) {
-      setOrderBy(orderByOptions[0])
-    }
-  }, [])
 
   React.useEffect(() => {
     // usually, index is updated in response to pageUi changes
@@ -207,14 +176,7 @@ const SearchOptionsAirbnb: React.FC<ReactProps> = (props) => {
           />
         }
 
-        <div className={classes.topSection}
-          onClick={(event) => {
-            // console.log('CLICKED stopPropagation')
-            // event.stopPropagation()
-          }}
-          style={props.topSectionStyles}
-        >
-
+        <div className={classes.topSection} style={props.topSectionStyles}>
           <div className={clsx(classes.filterSection, classes.maxWidth100vw)}
             style={{
               flexDirection: isMobile ? "column" : "row",
@@ -350,52 +312,6 @@ const SearchOptionsAirbnb: React.FC<ReactProps> = (props) => {
             }
 
             {props.children}
-
-            {
-              !disableSortby &&
-              <>
-                <div className="search-expander" style={{ flexGrow: 1 }}/>
-                <div className={clsx(
-                    classes.dropdownContainer,
-                    classes.marginRight05,
-                    classes.marginLeft05,
-                    !(isMobile && focused) && classes.displayNoneDelayed,
-                    // hide on mobile when not focused
-                  )}
-                  style={{ ...props.dropdownContainerStyles }}
-                >
-                  <DropdownInput
-                    stateShape={
-                      orderByOptions[0]
-                      // initial stateShape
-                      // { label: "Design Templates", value: "category_123123"}
-                    }
-                    isSearchable={false}
-                    hideCursor={true}
-                    onChange={({ label, value }: SelectOption) =>
-                      setTimeout(() => {
-                        setOrderBy({ label, value })
-                      }, 0)
-                      // let UI update first for menu to close
-                    }
-                    options={orderByOptions}
-                    placeholder={"Select a category"}
-                    styles={selectStyles({ width: 200 })}
-                    theme={theme => ({
-                      ...theme,
-                      // width: '100%',
-                      maxWidth: '200px',
-                      borderRadius: 0,
-                      colors: {
-                        ...theme.colors,
-                        primary25: '#e2e2e2',
-                        primary: '#333333',
-                      }
-                    })}
-                  />
-                </div>
-              </>
-            }
 
             <Button
               className={clsx(
@@ -574,7 +490,6 @@ interface ReactProps extends WithStyles<typeof styles> {
   styles?: any;
   filterSectionStyles?: any;
   categorySectionStyles?: any;
-  dropdownContainerStyles?: any;
   // for top section with search options + facets
   topSectionStyles?: any;
   // for bottom section, where the child components + paginators are
@@ -589,7 +504,6 @@ interface ReactProps extends WithStyles<typeof styles> {
   disableSortby?: boolean;
   disablePaginators?: boolean;
   maxCategoryInputWidth?: any;
-  updateSetPageDelay?: number;
   placeholder?: string;
   className?: any;
   style?: any;
@@ -964,4 +878,4 @@ const styles = (theme: Theme) => createStyles({
 });
 
 
-export default withStyles(styles)( SearchOptionsAirbnb );
+export default withStyles(styles)( SearchbarAirbnb );

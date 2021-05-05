@@ -73,7 +73,7 @@ const styles = (theme: Theme) => createStyles({
   },
   // modal classes
   modalBackdrop: {
-    backgroundColor: "rgba(47, 57, 65, .85)",
+    backgroundColor: Colors.modalBackground,
   },
   modalPaperScrollPaper: {
     // maxHeight: "calc(100% - 32px)",

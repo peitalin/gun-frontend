@@ -210,6 +210,8 @@ export const Colors = {
   gradientUniswapBlue1: "#3773DE",
   gradientUniswapGreen: "#57BC7A",
   gradientUniswapBlueGreen: '#568DB3',
+  modalBackground: 'rgba(62, 62, 82, .85)',
+  // modalBackground: "rgba(47, 57, 65, .85)",
 };
 
 export const Gradients = {

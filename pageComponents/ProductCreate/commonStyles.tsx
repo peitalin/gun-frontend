@@ -463,7 +463,7 @@ export const styles = (theme: Theme) => createStyles({
   },
   // Product Preview Page Modal
   modalBackdrop: {
-    backgroundColor: "rgba(47, 57, 65, .85)",
+    backgroundColor: Colors.modalBackground,
   },
   modalPaperScrollPaper: {
     maxHeight: "calc(100% - 4rem)",

@@ -7,7 +7,7 @@ import { useSnackbar } from "notistack";
 
 // Search Component
 import { Categories, Calibers } from "typings/gqlTypes";
-import SearchOptionsAirbnb from "components/SearchbarAirbnb/SearchOptionsAirbnb";
+import SearchbarAirbnb from "components/SearchbarAirbnb";
 import {
   useFacetSearchOptions,
   totalItemsInCategoriesFacets,
@@ -97,7 +97,7 @@ const SearchbarMain = (props: SearchbarProps) => {
 
 
   return (
-    <SearchOptionsAirbnb
+    <SearchbarAirbnb
       id={props.id}
       searchTerm={searchTerm}
       setSearchTerm={setSearchTerm}
@@ -125,7 +125,6 @@ const SearchbarMain = (props: SearchbarProps) => {
         index: index,
         setIndex: setIndex,
       }}
-      updateSetPageDelay={0}
       // disableSearchFilter
       disableSortby
       disablePriceFilter
@@ -136,7 +135,6 @@ const SearchbarMain = (props: SearchbarProps) => {
       style={props.style}
       filterSectionStyles={props.filterSectionStyles}
       categorySectionStyles={props.categorySectionStyles}
-      dropdownContainerStyles={props.dropdownContainerStyles}
       topSectionStyles={props.topSectionStyles}
       bottomSectionStyles={props.bottomSectionStyles}
       paginatorStyles={props.paginatorStyles}

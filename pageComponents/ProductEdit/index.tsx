@@ -2,6 +2,7 @@ import React from "react";
 // Styles
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
 import clsx from "clsx";
+import { Colors } from "layout/AppTheme";
 // Material UI
 import Dialog from "@material-ui/core/Dialog";
 // Redux
@@ -103,7 +104,7 @@ const styles = (theme: Theme) => createStyles({
     padding: '2rem 0.5rem 2rem 0.5rem',
   },
   modalBackdrop: {
-    backgroundColor: "rgba(47, 57, 65, .85)",
+    backgroundColor: Colors.modalBackground,
   },
   modalPaperScrollPaper: {
     maxHeight: "calc(100% - 32px)",

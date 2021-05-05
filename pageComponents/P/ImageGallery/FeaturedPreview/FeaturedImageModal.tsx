@@ -146,6 +146,7 @@ const FeaturedImageModal = (props: ReactProps) => {
             // full height
             fullScreen={false}
             fullWidth={false}
+            scroll="body"
             maxWidth={"xl"}
             BackdropProps={{
               classes: { root: classes.modalBackdrop }
@@ -157,7 +158,6 @@ const FeaturedImageModal = (props: ReactProps) => {
                   : classes.modalPaperScrollPaperSm
               }
             }}
-            scroll="body"
           >
             <div className={classes.modalContainer}>
               <div className={clsx(classes.paper, classes.paperLoaded)}>

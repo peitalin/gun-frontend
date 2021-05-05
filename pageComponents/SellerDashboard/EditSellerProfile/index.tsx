@@ -157,7 +157,7 @@ const styles = (theme: Theme) => createStyles({
     alignItems: "flex-start",
   },
   modalBackdrop: {
-    backgroundColor: "rgba(47, 57, 65, .85)",
+    backgroundColor: Colors.modalBackground,
   },
   modalPaperScrollPaper: {
     margin: 0,
