@@ -2,7 +2,7 @@ import React from "react";
 // Apollo
 import { Categories } from "typings/gqlTypes";
 import { ActionType } from "typings";
-import { GET_PRODUCT_CATEGORIES } from "queries/categories-queries";
+import { GET_CATEGORIES } from "queries/categories-queries";
 import { useApolloClient } from "@apollo/client";
 
 
@@ -22,7 +22,7 @@ export const useCategoriesList = () => {
   React.useEffect(() => {
     if (categories.length < 1) {
       aClient.query<QueryData>({
-        query: GET_PRODUCT_CATEGORIES
+        query: GET_CATEGORIES
       }).then(({ data }: { data?: QueryData }) => {
         if (data && data.categories) {
           setCategories(

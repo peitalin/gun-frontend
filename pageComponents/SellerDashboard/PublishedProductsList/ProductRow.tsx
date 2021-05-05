@@ -307,6 +307,7 @@ const ProductRow = (props: ReactProps) => {
               <PriceDisplayProductEdit
                 price={product.featuredVariant.price}
                 soldOutStatus={product.soldOutStatus}
+                isSuspended={product.isSuspended}
               />
             </div>
           </div>

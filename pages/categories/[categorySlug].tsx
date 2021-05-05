@@ -2,7 +2,7 @@ import React from "react";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 // GraphQL
-import { GET_PRODUCT_CATEGORIES } from "queries/categories-queries";
+import { GET_CATEGORIES } from "queries/categories-queries";
 // Typings
 import {
   ProductsConnection,
@@ -66,7 +66,7 @@ interface ReactProps {
 }
 
 interface QueryData1 {
-  getProductCategories: Categories[];
+  getCategories: Categories[];
 }
 interface QueryVar1 {
   slug?: string;
@@ -85,7 +85,7 @@ CategorySlugSSR.getInitialProps = async (ctx: Context) => {
   if (categorySlug) {
 
     const { data } = await serverApolloClient(ctx).query<QueryData1, QueryVar1>({
-      query: GET_PRODUCT_CATEGORIES,
+      query: GET_CATEGORIES,
     })
 
     // "all" category slug is filtered out on the backend and ignored
@@ -96,7 +96,7 @@ CategorySlugSSR.getInitialProps = async (ctx: Context) => {
       name: "All Categories"
     } as any
 
-    let selectedCategory = [ ...data?.getProductCategories, defaultCategory ]
+    let selectedCategory = [ ...data?.getCategories, defaultCategory ]
       .find(s => s.slug === categorySlug)
 
     let categoryName = selectedCategory?.name
@@ -104,7 +104,7 @@ CategorySlugSSR.getInitialProps = async (ctx: Context) => {
     // return props
     return {
       initialProducts: undefined,
-      initialCategories: data?.getProductCategories,
+      initialCategories: data?.getCategories,
       categoryName: categoryName,
       selectedCategory: selectedCategory,
     };

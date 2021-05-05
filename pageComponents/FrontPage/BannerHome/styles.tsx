@@ -133,7 +133,7 @@ export const styles = (theme: Theme) => createStyles({
   buttonBecomeASeller: {
     backgroundImage: theme.palette.type === 'dark'
       ? Gradients.gradientUniswapFluro.background
-      : Gradients.gradientUniswapBlueGreen.background,
+      : Gradients.gradientUniswapBlue.background,
     // border: theme.palette.type === 'dark'
     //   ? `1px solid ${Colors.gradientUniswapFluro1}`
     //   : `1px solid ${Colors.gradientUniswapBlue1}`,
@@ -142,7 +142,7 @@ export const styles = (theme: Theme) => createStyles({
     "&:hover": {
       backgroundImage: theme.palette.type === 'dark'
         ? Gradients.gradientUniswapFluro2.background
-        : Gradients.gradientUniswapBlueGreen2.background,
+        : Gradients.gradientUniswapBlue.background,
       // border: theme.palette.type === 'dark'
       //   ? `1px solid ${Colors.gradientUniswapFluro2}`
       //   : `1px solid ${Colors.gradientUniswapBlueGreen}`,

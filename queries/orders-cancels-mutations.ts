@@ -18,3 +18,17 @@ export const CANCEL_ORDER_AND_PAYMENT = gql`
   }
   ${OrdersFragment}
 `;
+
+
+export const CANCEL_PAYMENT_INTENT_3DS_FAILURE = gql`
+  mutation cancelPaymentIntent3dsFailure(
+    $paymentIntentId: String!
+  ) {
+    cancelPaymentIntent3dsFailure(
+      paymentIntentId: $paymentIntentId,
+    ) {
+      status
+      success
+    }
+  }
+`;

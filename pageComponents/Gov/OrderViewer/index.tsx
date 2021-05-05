@@ -46,7 +46,7 @@ import {
 } from "queries/orders-admin-queries";
 import {
   CANCEL_ORDER_AND_PAYMENT,
-} from "queries/refunds-mutations";
+} from "queries/orders-cancels-mutations";
 // Validation
 import { Formik } from 'formik';
 import { validationSchemas } from "utils/validation";

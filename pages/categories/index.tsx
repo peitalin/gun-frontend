@@ -10,7 +10,7 @@ import ErrorBounds from 'components/ErrorBounds';
 import CategoriesComponent from "pageComponents/Categories";
 import CategoriesWall from "pageComponents/Categories/CategoriesWall";
 // GQL
-import { GET_PRODUCT_CATEGORIES } from "queries/categories-queries";
+import { GET_CATEGORIES } from "queries/categories-queries";
 // SSR
 import { NextPage, NextPageContext } from 'next';
 import { ApolloClient } from "@apollo/client";
@@ -60,7 +60,7 @@ interface ReactProps extends WithStyles<typeof styles> {
 }
 
 interface QueryData1 {
-  getProductCategories: Categories[];
+  getCategories: Categories[];
 }
 interface QueryVar1 {
   slug?: string;
@@ -75,11 +75,11 @@ CategoriesPage.getInitialProps = async (ctx: Context) => {
 
   try {
     const { data } = await serverApolloClient(ctx).query<QueryData1, QueryVar1>({
-      query: GET_PRODUCT_CATEGORIES,
+      query: GET_CATEGORIES,
     })
-    // console.log("data.getProductCategories:", data?.getProductCategories)
+    // console.log("data.getCategories:", data?.getCategories)
     // console.log("local categories", categoryPreviewsBackup)
-    // let initialCategories = data?.getProductCategories ?? categoryPreviewsBackup as any;
+    // let initialCategories = data?.getCategories ?? categoryPreviewsBackup as any;
     let initialCategories: Categories[] = categoryPreviewsBackup as any;
 
     // return props

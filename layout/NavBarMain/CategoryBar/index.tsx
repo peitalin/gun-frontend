@@ -4,13 +4,6 @@ import { Categories, Product } from "typings/gqlTypes";
 import clsx from "clsx";
 import { withStyles, WithStyles } from "@material-ui/core/styles";
 import { styles } from "../styles";
-// Apollo
-import { GET_PRODUCT_CATEGORIES } from "queries/categories-queries";
-import { useQuery, useApolloClient } from "@apollo/client";
-import { categorySelectors } from "utils/selectors";
-// MUI
-import Typography from "@material-ui/core/Typography";
-import KeyboardArrowDown from "@material-ui/icons/KeyboardArrowDown"
 import Hidden from "components/HiddenFix";
 // hooks
 import Link from "next/link";

@@ -308,9 +308,6 @@ export const styles = (theme: Theme) => createStyles({
     marginTop: '1rem',
   },
   buttonSignupEmail: {
-    // backgroundImage: theme.palette.type === "dark"
-    //   ? Gradients.gradientUniswapFluro.background
-    //   : Gradients.gradientUniswapBlueGreen.background,
     background: theme.palette.type === "dark"
       ? Colors.purple
       : Colors.ultramarineBlue,
@@ -318,9 +315,6 @@ export const styles = (theme: Theme) => createStyles({
     color: Colors.cream,
     minWidth: "150px",
     "&:hover": {
-      // backgroundImage: theme.palette.type === "dark"
-      //   ? Gradients.gradientUniswapFluro2.background
-      //   : Gradients.gradientUniswapBlueGreen2.background,
       background: theme.palette.type === "dark"
         ? fade(Colors.purple, 0.9)
         : fade(Colors.ultramarineBlue, 0.9),

@@ -1,9 +1,9 @@
 import gql from "graphql-tag";
 import { ImageFragment } from "./fragments";
 
-export const GET_PRODUCT_CATEGORIES = gql`
-  query getProductCategories {
-    getProductCategories {
+export const GET_CATEGORIES = gql`
+  query getCategories {
+    getCategories {
       id
       name
       createdAt

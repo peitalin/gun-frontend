@@ -63,7 +63,7 @@ const PreviewItemUploader = dynamic(() => import("../PreviewItemUploaderGrid"), 
   ssr: false,
 })
 // Graphql
-import { GET_PRODUCT_CATEGORIES } from "queries/categories-queries";
+import { GET_CATEGORIES } from "queries/categories-queries";
 import { useQuery } from '@apollo/client';
 import { useMutation, useApolloClient } from "@apollo/client";
 import { CREATE_PRODUCT } from "queries/products-mutations";
@@ -244,7 +244,7 @@ const ProductCreatePage = (props: ReactProps) => {
 
   // Apollo Graphql
   const categoryData = useQuery<{ categories: Categories[] }, null>(
-    GET_PRODUCT_CATEGORIES
+    GET_CATEGORIES
   )
 
   const categories = (categoryData?.data?.categories ?? []);

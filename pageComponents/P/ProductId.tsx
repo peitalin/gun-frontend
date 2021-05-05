@@ -161,16 +161,16 @@ const Products: React.FC<ReactProps> = (props) => {
   }, [loading])
 
 
-  if (product?.store?.isSuspended === true && !isAdmin) {
+  if (product?.store?.isSuspended === true) {
     return <ErrorPage statusCode={400} message={"Store has been suspended"}/>
   }
-  if (product?.isSuspended === true && !isAdmin) {
+  if (product?.isSuspended === true) {
     return <ErrorPage statusCode={400} message={"Product has been suspended"}/>
   }
-  if (product?.isDeleted === true && !isAdmin) {
+  if (product?.isDeleted === true) {
     return <ErrorPage statusCode={400} message={"Product has been deleted"}/>
   }
-  if (!product?.isPublished === true && !isAdmin) {
+  if (!product?.isPublished === true) {
     return <ErrorPage statusCode={400} message={"Product is not available"}/>
   }
   if (error) {

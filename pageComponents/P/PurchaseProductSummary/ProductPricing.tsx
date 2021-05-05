@@ -27,7 +27,8 @@ const ProductPricing = (props: ReactProps) => {
           <PriceDisplayProductPage
             price={purchasePrice}
             // priceWas={props?.featuredVariant?.priceWas}
-            soldOutStatus={props?.soldOutStatus}
+            soldOutStatus={props.soldOutStatus}
+            isSuspended={props.isSuspended}
           />
         }
       </div>
@@ -39,6 +40,7 @@ const ProductPricing = (props: ReactProps) => {
 interface ReactProps extends WithStyles<typeof styles> {
   featuredVariant: Product_Variants;
   soldOutStatus: string;
+  isSuspended: boolean;
   selectedBid?: Bids
 }
 

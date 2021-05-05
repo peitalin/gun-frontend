@@ -65,7 +65,7 @@ LandingPageSSR.getInitialProps = async (ctx: Context) => {
 
   try {
 
-    // let initialCategories = data?.getProductCategories ?? categoryPreviewsBackup as any;
+    // let initialCategories = data?.getCategories ?? categoryPreviewsBackup as any;
     let initialCategories: Categories[] = categoryPreviewsBackup as any;
 
     return {

@@ -96,6 +96,7 @@ const ProductRow = (props: ReactProps) => {
                       price={product?.featuredVariant?.price}
                       priceWas={product?.featuredVariant?.priceWas}
                       soldOutStatus={product?.soldOutStatus}
+                      isSuspended={product?.isSuspended}
                     />
                   </div>
                 </div>

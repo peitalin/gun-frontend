@@ -3,7 +3,7 @@ import React from "react";
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
 // GQL
 import { GET_PAGE_CONFIG_BY_PATH } from "queries/page_configs-queries";
-import { GET_PRODUCT_CATEGORIES } from "queries/categories-queries";
+import { GET_CATEGORIES } from "queries/categories-queries";
 import { GET_CALIBERS } from "queries/calibers-queries";
 // Typings
 import { PageConfig, Categories, Calibers } from "typings/gqlTypes";
@@ -59,7 +59,7 @@ interface QVar1 {
 }
 
 interface QData2 {
-  getProductCategories: Categories[];
+  getCategories: Categories[];
 }
 interface QVar2 {
   slug?: string;
@@ -84,13 +84,13 @@ HomePage.getInitialProps = async (ctx: Context) => {
   })
 
   const { data: data2 } = await serverApolloClient(ctx).query<QData2, QVar2>({
-    query: GET_PRODUCT_CATEGORIES,
+    query: GET_CATEGORIES,
   })
 
   // console.log("getPageConfig: ", data?.getPageConfig)
-  // console.log("getProductCategories ssr: ", data2?.getProductCategories)
+  // console.log("getCategories ssr: ", data2?.getCategories)
 
-  let initialCategories = data2?.getProductCategories ?? [];
+  let initialCategories = data2?.getCategories ?? [];
   // let initialCategories: Categories[] = categoryPreviewsBackup as any;
 
   return {

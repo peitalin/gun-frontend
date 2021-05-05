@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Actions } from "reduxStore/actions";
 import { GrandReduxState } from "reduxStore/grand-reducer";
 // Graphql
-import { GET_PRODUCT_CATEGORIES } from "queries/categories-queries";
+import { GET_CATEGORIES } from "queries/categories-queries";
 import { useQuery } from '@apollo/client';
 // Typings
 import { Categories } from "typings/gqlTypes";
@@ -57,10 +57,10 @@ const SelectCategories = (props: ReactProps & FormikProps<FormikFields>) => {
     loading,
     error,
     data
-  } = useQuery<QueryData, null>(GET_PRODUCT_CATEGORIES)
+  } = useQuery<QueryData, null>(GET_CATEGORIES)
 
 
-  const categories = (data?.getProductCategories ?? [])
+  const categories = (data?.getCategories ?? [])
       .filter(c => !!c && !!c.name)
       .sort(sortCategoriesByName)
 
@@ -202,7 +202,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   defaultExpanded?: boolean
 }
 interface QueryData {
-  getProductCategories: Categories[]
+  getCategories: Categories[]
 }
 interface FormikFields {
   categoryId: string;

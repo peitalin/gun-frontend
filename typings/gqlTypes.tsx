@@ -50,6 +50,11 @@ export type Aggregate = {
   sum?: Maybe<PayoutSum>;
 };
 
+export type AuthorizePaymentMutationResponse = {
+  __typename?: 'AuthorizePaymentMutationResponse';
+  stripePaymentIntent: Scalars['String'];
+};
+
 /** Information about a person on the platform */
 export type BasicUser = {
   id: Scalars['ID'];
@@ -4079,12 +4084,18 @@ export type Mutation = {
   purchasePromotion: PromotionPurchaseMutationResponse;
   /**
    * AccessRule – LOGGED_IN
-   * For a buyer to create an order
+   * For a buyer to create a payment authorizeation before confirming an order
    */
-  createOrder: OrderCreateMutationResponse;
+  authorizePayment: AuthorizePaymentMutationResponse;
   /**
    * AccessRule – LOGGED_IN
-   * For a buyer to make payment and confirm an order.
+   * For a buyer to create an order after authorizing a payment
+   */
+  confirmOrder: OrderConfirmMutationResponse;
+  cancelPaymentIntent3dsFailure?: Maybe<BlankMutationResponse>;
+  /**
+   * AccessRule – LOGGED_IN
+   * For admins to capture payment after order is created
    */
   capturePaymentForOrder: OrderMutationResponse;
   /**
@@ -4118,8 +4129,6 @@ export type Mutation = {
    * After funds have been transferred to sellers
    */
   markPayoutsAsPaid: MarkPayoutsAsPaidMutationResponse;
-  /** AccessRule – PLATFORM_ADMIN */
-  refundOrder: OrderMutationResponse;
   /** AccessRule – PLATFORM_ADMIN */
   cancelOrderAndPayment: OrderMutationResponse;
   createMockPreviewItems: Product_Preview_Items_Mutation_Response;
@@ -5694,16 +5703,26 @@ export type MutationPurchasePromotionArgs = {
 };
 
 
-export type MutationCreateOrderArgs = {
+export type MutationAuthorizePaymentArgs = {
   productId: Scalars['String'];
-  productSnapshotId: Scalars['String'];
-  variantId: Scalars['String'];
-  variantSnapshotId: Scalars['String'];
+  total: Scalars['Int'];
+  stripeAuthorizePaymentData: Scalars['String'];
+  bidId?: Maybe<Scalars['String']>;
+};
+
+
+export type MutationConfirmOrderArgs = {
+  productId: Scalars['String'];
   total: Scalars['Int'];
   buyerId: Scalars['String'];
   sellerStoreId: Scalars['String'];
-  stripeAuthorizePaymentData: Scalars['String'];
+  paymentIntentId: Scalars['String'];
   bidId?: Maybe<Scalars['String']>;
+};
+
+
+export type MutationCancelPaymentIntent3dsFailureArgs = {
+  paymentIntentId: Scalars['String'];
 };
 
 
@@ -5741,13 +5760,6 @@ export type MutationReviseAndResubmitForm10Args = {
 export type MutationMarkPayoutsAsPaidArgs = {
   orderIds: Array<Scalars['String']>;
   payoutId: Scalars['String'];
-};
-
-
-export type MutationRefundOrderArgs = {
-  orderId: Scalars['String'];
-  reason?: Maybe<Scalars['String']>;
-  reasonDetails?: Maybe<Scalars['String']>;
 };
 
 
@@ -6329,10 +6341,9 @@ export enum OrderBy {
   DESC = 'desc'
 }
 
-export type OrderCreateMutationResponse = {
-  __typename?: 'OrderCreateMutationResponse';
-  unconfirmedOrder: Order;
-  stripePaymentIntent: Scalars['String'];
+export type OrderConfirmMutationResponse = {
+  __typename?: 'OrderConfirmMutationResponse';
+  confirmedOrder: Order;
 };
 
 export type OrderDealer = Order & {
@@ -12688,7 +12699,7 @@ export type Query = {
    * Get the full list of product categories.
    * AccessRule – PUBLIC
    */
-  getProductCategories: Array<Categories>;
+  getCategories: Array<Categories>;
   /**
    * Get the full list of calibers
    * AccessRule – PUBLIC

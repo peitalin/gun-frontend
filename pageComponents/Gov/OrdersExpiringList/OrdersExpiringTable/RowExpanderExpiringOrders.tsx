@@ -29,7 +29,7 @@ import { useMutation, useApolloClient } from "@apollo/client";
 import { DocumentNode } from "graphql";
 import {
   CANCEL_ORDER_AND_PAYMENT,
-} from "queries/refunds-mutations";
+} from "queries/orders-cancels-mutations";
 import {
   getDateWithOffset,
   get7DaysFromDate,

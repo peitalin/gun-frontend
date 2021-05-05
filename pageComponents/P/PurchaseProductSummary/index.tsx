@@ -109,6 +109,7 @@ const PurchaseProductSummary: React.FC<ReactProps> = (props) => {
                   featuredVariant={featuredVariant}
                   selectedBid={props.selectedBid}
                   soldOutStatus={props.product.soldOutStatus}
+                  isSuspended={props.product.isSuspended}
                 />
               </>
             : <div className={classes.loadingBarContainer}>

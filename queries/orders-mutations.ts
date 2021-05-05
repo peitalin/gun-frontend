@@ -3,33 +3,45 @@ import {
   OrdersFragment,
 } from "./fragments";
 
-export const CREATE_ORDER = gql`
-  mutation createOrder(
+
+export const AUTHORIZE_PAYMENT = gql`
+  mutation authorizePayment(
     $productId: String!
-    $productSnapshotId: String!
-    $variantId: String!
-    $variantSnapshotId: String!
     $total: Int!
-    $buyerId: String!
-    $sellerStoreId: String!
     $stripeAuthorizePaymentData: String!
     $bidId: String
   ) {
-    createOrder(
+    authorizePayment(
       productId: $productId
-      productSnapshotId: $productSnapshotId
-      variantId: $variantId
-      variantSnapshotId: $variantSnapshotId
       total: $total
-      buyerId: $buyerId
-      sellerStoreId: $sellerStoreId
       stripeAuthorizePaymentData: $stripeAuthorizePaymentData
       bidId: $bidId
     ) {
-      unconfirmedOrder {
+      stripePaymentIntent
+    }
+  }
+`;
+
+export const CONFIRM_ORDER = gql`
+  mutation confirmOrder(
+    $productId: String!
+    $total: Int!
+    $buyerId: String!
+    $sellerStoreId: String!
+    $paymentIntentId: String!
+    $bidId: String
+  ) {
+    confirmOrder(
+      productId: $productId
+      total: $total
+      buyerId: $buyerId
+      sellerStoreId: $sellerStoreId
+      paymentIntentId: $paymentIntentId
+      bidId: $bidId
+    ) {
+      confirmedOrder {
         ...OrdersFragment
       }
-      stripePaymentIntent
     }
   }
   ${OrdersFragment}

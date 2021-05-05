@@ -29,7 +29,6 @@ import {
   Orders,
   Product,
   OrderMutationResponse,
-  OrderCreateMutationResponse,
   Bids,
   PromotionPurchaseMutationResponse,
   PromotedSlot,
