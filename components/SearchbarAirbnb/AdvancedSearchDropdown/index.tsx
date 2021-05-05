@@ -61,7 +61,7 @@ const AdvancedSearchDropdown: React.FC<ReactProps> = (props) => {
       >
         <div className={classes.advancedSearchButtonText}>
           <span className={classes.iconText}>
-            Search Options
+            Filter By
           </span>
           <KeyboardArrowDown className={classes.dropdownArrow}/>
         </div>
@@ -71,6 +71,7 @@ const AdvancedSearchDropdown: React.FC<ReactProps> = (props) => {
         open={showModal}
         onClose={() => closeModal()}
         scroll="body"
+        fullWidth={true}
         BackdropProps={{ classes: { root: classes.modalBackdrop } }}
         PaperProps={{ classes: { root: classes.modalPaperScrollPaper } }}
       >
@@ -236,9 +237,9 @@ export const styles = (theme: Theme) => createStyles({
     backgroundColor: Colors.modalBackground,
   },
   modalPaperScrollPaper: {
-    maxWidth: '960px',
+    maxWidth: '960px !important',
     maxHeight: 'calc(100% - 2rem)',
-    // width: '100%',
+    width: '100%',
     // height: '100%',
     overflow: "visible",
     boxShadow: 'unset',
