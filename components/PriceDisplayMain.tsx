@@ -39,6 +39,19 @@ const PriceDisplayMain = (props: ReactProps) => {
       </div>
     )
   }
+  if (props.isSuspended) {
+    return (
+      <div className={classes.priceOuterContainer}>
+        <div className={classes.innerContainerSpread}>
+          <div className={classes.priceInnerContainer}>
+            <Typography className={classes.price} variant="body1">
+              Suspended
+            </Typography>
+          </div>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className={classes.priceOuterContainer}>
@@ -57,6 +70,7 @@ const PriceDisplayMain = (props: ReactProps) => {
 
 interface ReactProps extends WithStyles<typeof styles> {
   soldOutStatus?: string;
+  isSuspended: boolean;
   price: number;
   priceWas?: number;
 }

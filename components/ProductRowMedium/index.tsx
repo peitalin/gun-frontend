@@ -136,6 +136,7 @@ const ProductRowMedium = (props: ReactProps) => {
                     <PriceDisplayMainMobile
                       price={product?.featuredVariant?.price}
                       soldOutStatus={product?.soldOutStatus}
+                      isSuspended={product?.isSuspended}
                     />
                   }
                 </div>

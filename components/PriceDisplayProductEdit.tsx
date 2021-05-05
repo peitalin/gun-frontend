@@ -31,6 +31,14 @@ const PriceDisplayProductEdit = (props: ReactProps) => {
     )
   }
 
+  if (props.isSuspended) {
+    return (
+      <Typography className={classes.price} variant="body1">
+        Suspended
+      </Typography>
+    )
+  }
+
   return (
     <div className={classes.priceOuterContainer}>
       <>
@@ -48,6 +56,7 @@ const PriceDisplayProductEdit = (props: ReactProps) => {
 
 interface ReactProps extends WithStyles<typeof styles> {
   soldOutStatus?: string;
+  isSuspended: boolean;
   price: number;
   priceWas?: number;
 }

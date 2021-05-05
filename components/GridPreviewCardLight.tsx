@@ -265,6 +265,7 @@ const GridPreviewCardLight = (props: ReactProps) => {
                       price={price}
                       priceWas={priceWas}
                       soldOutStatus={product.soldOutStatus}
+                      isSuspended={product.isSuspended}
                     />
                   }
                 </div>

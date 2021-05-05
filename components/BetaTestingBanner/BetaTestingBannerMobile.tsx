@@ -126,9 +126,6 @@ const styles = (theme: Theme) => createStyles({
   betaTestBannerText: {
     "-webkit-text-fill-color": 'transparent',
     "-webkit-background-clip": 'text',
-    // background: theme.palette.type === 'dark'
-    //   ? Gradients.gradientUniswapFluro.background
-    //   : Gradients.gradientUniswapBlueGreen.background,
     background: `linear-gradient(90deg, rgb(206, 69, 197) 0%, rgb(85, 146, 232) 100%)`,
     display: "block", // gradient text does not work with safari when display: flex
     transition: theme.transitions.create('height', {

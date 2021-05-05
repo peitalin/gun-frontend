@@ -238,6 +238,7 @@ const ProductCardRC = (props: ReactProps) => {
                     <PriceDisplayMain
                       price={price}
                       priceWas={priceWas}
+                      isSuspended={product.isSuspended}
                       soldOutStatus={product.soldOutStatus}
                     />
                   }

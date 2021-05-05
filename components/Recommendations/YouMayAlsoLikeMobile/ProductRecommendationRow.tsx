@@ -93,6 +93,7 @@ const ProductRecommendationRow = (props: ReactProps) => {
               ? <PriceDisplay4
                   price={price}
                   soldOutStatus={soldOutStatus}
+                  isSuspended={product?.isSuspended}
                 />
               : <span style={{ color: Colors.grey }}></span>
             }

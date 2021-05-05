@@ -132,6 +132,7 @@ const ProductCardAsRow = (props: ReactProps) => {
                           price={price}
                           priceWas={priceWas}
                           soldOutStatus={soldOutStatus}
+                          isSuspended={product?.isSuspended}
                         />
                       : <span style={{ color: Colors.grey }}></span>
                     }

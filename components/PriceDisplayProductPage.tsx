@@ -24,19 +24,21 @@ const PriceDisplayProductPage = (props: ReactProps) => {
 
   const actualPrice = props.price ?? 0;
   const basePrice = props.priceWas;
-
   const price = currency(actualPrice/100, { formatWithSymbol: false })
-  // const priceWas = currency(basePrice/100, { formatWithSymbol: true })
-  // const savings = (actualPrice >= basePrice)
-  //   ?  currency(0, { formatWithSymbol: true })
-  //   :  currency((basePrice - actualPrice)/100, { formatWithSymbol: true })
 
-  // const savingsPercent = Math.round((basePrice - actualPrice)/basePrice * 100);
 
   if (soldOutStatus !== SoldOutStatus.AVAILABLE) {
     return (
       <Typography className={classes.price} variant="body1">
         {convertSoldOutStatus(soldOutStatus)}
+      </Typography>
+    )
+  }
+
+  if (props.isSuspended) {
+    return (
+      <Typography className={classes.price} variant="body1">
+        Suspended
       </Typography>
     )
   }
@@ -58,6 +60,7 @@ const PriceDisplayProductPage = (props: ReactProps) => {
 
 interface ReactProps extends WithStyles<typeof styles> {
   soldOutStatus?: string;
+  isSuspended: boolean;
   price: number;
   priceWas?: number;
 }

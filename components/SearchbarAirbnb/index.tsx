@@ -26,7 +26,7 @@ import InputBase from '@material-ui/core/InputBase';
 import { useRouter } from "next/router";
 import { useSnackbar } from "notistack";
 // Graphql
-import { GET_PRODUCT_CATEGORIES } from "queries/categories-queries";
+import { GET_CATEGORIES } from "queries/categories-queries";
 import { useQuery } from '@apollo/client';
 
 
@@ -125,10 +125,10 @@ const SearchbarAirbnb: React.FC<ReactProps> = (props) => {
   }, [pageParam])
 
   // Apollo Graphql
-  const categoryData = useQuery<{ getProductCategories: Categories[] }, null>(
-    GET_PRODUCT_CATEGORIES,
+  const categoryData = useQuery<{ getCategories: Categories[] }, null>(
+    GET_CATEGORIES,
   )
-  let categoriesDropdownItems = categoryData?.data?.getProductCategories ?? []
+  let categoriesDropdownItems = categoryData?.data?.getCategories ?? []
 
 
   const searchRef = React.useRef(null)
