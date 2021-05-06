@@ -99,22 +99,22 @@ const FrontPage: React.FC<ReactProps> = (props) => {
         {
           pageConfig?.pageConfigSections?.slice(0,2)?.map(section => {
 
-            // if (section?.promotedListId) {
-            //   return (
-            //     <FeaturedProducts
-            //       key={section?.id}
-            //       title={section?.title}
-            //       promotedListId={section.promotedListId}
-            //       cardsPerRow={{
-            //         xs: 1.5,
-            //         sm: 1.5,
-            //         md: 2,
-            //         lg: 3,
-            //         xl: 4,
-            //       }}
-            //     />
-            //   )
-            // }
+            if (section?.promotedListId) {
+              return (
+                <FeaturedProducts
+                  key={section?.id}
+                  title={section?.title}
+                  promotedListId={section.promotedListId}
+                  cardsPerRow={{
+                    xs: 1.5,
+                    sm: 1.5,
+                    md: 2,
+                    lg: 3,
+                    xl: 4,
+                  }}
+                />
+              )
+            }
 
             if (section?.isNewestList) {
               return (
@@ -127,32 +127,32 @@ const FrontPage: React.FC<ReactProps> = (props) => {
           })
         }
 
-        {/* <div className={classes.bannerPromotionsContainer}>
+        <div className={classes.bannerPromotionsContainer}>
           <BannerPromotionsLink
             disableMetaHeader={true}
           />
-        </div> */}
+        </div>
 
         {
           showBelowFold &&
           pageConfig?.pageConfigSections?.slice(2)?.map(section => {
 
-            // if (section?.promotedListId) {
-            //   return (
-            //     <FeaturedProducts
-            //       key={section?.id}
-            //       title={section?.title}
-            //       promotedListId={section.promotedListId}
-            //       cardsPerRow={{
-            //         xs: 1.5,
-            //         sm: 1.5,
-            //         md: 2,
-            //         lg: 3,
-            //         xl: 4,
-            //       }}
-            //     />
-            //   )
-            // }
+            if (section?.promotedListId) {
+              return (
+                <FeaturedProducts
+                  key={section?.id}
+                  title={section?.title}
+                  promotedListId={section.promotedListId}
+                  cardsPerRow={{
+                    xs: 1.5,
+                    sm: 1.5,
+                    md: 2,
+                    lg: 3,
+                    xl: 4,
+                  }}
+                />
+              )
+            }
 
             if (section?.isNewestList) {
               return (

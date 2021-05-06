@@ -369,11 +369,17 @@ export const useEffectUpdateGridAccum = <T>({
         let gridPageFirstItemId = gridAccum[k]?.[0] as any
         // console.log("gridPageFirstItemId: ", gridPageFirstItemId)
         // if any pages match, then no need to update
+        if (!objectIds?.[0]) {
+          // need to empty gridPage if incoming data is []
+          return false
+        }
         return gridPageFirstItemId === objectIds?.[0]
       })
 
     // console.log("skipUpdate", skipUpdate)
-    // console.log("loading", loading)
+    // // console.log("loading", loading)
+    // console.log("incoming objectIds: ", objectIds)
+    // console.log("gridAccum: ", gridAccum)
 
     if (!skipUpdate)  {
       // console.log("instantiating grid...")
@@ -410,7 +416,6 @@ export const useEffectUpdateGridAccum = <T>({
         ...gridAccum,
       }))
     }
-    // console.log("gridAccum: ", gridAccum)
 
     // console.log("totalCount>", totalCount)
     if (connection && !totalCount) {

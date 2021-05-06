@@ -144,8 +144,8 @@ const SearchbarAirbnb: React.FC<ReactProps> = (props) => {
     || advancedSearchFocused
     || mobileFocused
 
-  console.log('focused: ', focused)
-  console.log('advancedSearchFocused: ', advancedSearchFocused)
+  // console.log('focused: ', focused)
+  // console.log('advancedSearchFocused: ', advancedSearchFocused)
   // console.log('mobileFocused: ', mobileFocused)
   // console.log(`isMobile && !focused: ${isMobile && !focused}`)
   // console.log(`isMobile>>> ${isMobile}`)

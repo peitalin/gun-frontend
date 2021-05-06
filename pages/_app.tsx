@@ -93,7 +93,7 @@ const MainApp: NextComponentType<AppContext, AppInitialProps, AppProps & AppHOCP
   let state = store.getState()
   let userId = state.reduxLogin.user?.id
   // console.log("MainApp userId: ", userId)
-  console.log("_app pageProps: ", pageProps)
+  // console.log("_app pageProps: ", pageProps)
 
   // This client has hooks that force websockets to reconnect after auth
   //
@@ -156,7 +156,7 @@ const ThemeProviderDarkMode = ({ initialDarkModeSSR, children }) => {
     if (process.browser && !!window) {
       localStorageDarkMode = window?.localStorage?.getItem('gmDarkMode') as any;
     }
-    console.log("localStorageDarkMode: ", localStorageDarkMode)
+    // console.log("localStorageDarkMode: ", localStorageDarkMode)
 
     if (localStorageDarkMode !== undefined) {
       // first check if browser has dark mode preferences initially

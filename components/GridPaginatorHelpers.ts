@@ -13,7 +13,7 @@ export const splitArrayIntoGrid = <T>(
   let n = numItemsPerPage;
   let nRowArray = [...new Array(n).keys()];
 
-  let grid: T[][] = objects.reduce((acc, product, i) =>
+  let grid: T[][] = (objects ?? []).reduce((acc, product, i) =>
     // for every nth item, group objects into nRowArray
     (i % n === 0)
       ? [...acc, nRowArray.map((_,j) => objects[i+j])]

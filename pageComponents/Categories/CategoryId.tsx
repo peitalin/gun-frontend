@@ -168,7 +168,7 @@ const CategoryId: React.FC<ReactProps> = (props) => {
     totalCount: totalCount,
     searchTerm: searchTermForGql,
   })
-  console.log("productsConnection: ", productsConnection)
+  // console.log("productsConnection: ", productsConnection)
   // console.log("totalItemsInFacet: ", totalItemsInFacet)
   // console.log("initialRouteCategory: ", props.initialRouteCategory)
   // console.log("categorySlug: ", categorySlug)
@@ -395,6 +395,7 @@ export const styles = (theme: Theme) => createStyles({
   },
   noProductsForSale: {
     height: 480,
+    marginBottom: '2rem',
   },
   noProductsText: {
     color: Colors.darkGrey,

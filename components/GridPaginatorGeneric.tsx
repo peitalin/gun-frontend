@@ -86,6 +86,7 @@ function GridPaginatorGeneric<T>(props: ReactProps<T> & ReactChildren<T>) {
   let objectIdGroups: string[][] = Object.values(objectIdsGroupedInGrids)
 
   // console.log("hashmap", hashmap)
+  // console.log("connection.edges", connection?.edges)
   // console.log("objectIdsGroupsInGrids", objectIdGroups)
 
   return (
