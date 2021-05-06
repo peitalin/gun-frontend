@@ -296,6 +296,7 @@ const OrderViewer: React.FC<ReactProps> = (props) => {
                         admin={undefined}
                         index={0}
                         refetchQueriesParams={undefined}
+                        variables={undefined}
                         showApprovalButtons={false}
                       />
                     </Table>

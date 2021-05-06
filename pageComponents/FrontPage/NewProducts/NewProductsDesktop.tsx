@@ -3,10 +3,9 @@ import React from "react";
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 import { Colors, BorderRadius } from "layout/AppTheme";
 import clsx from "clsx";
-import { styles } from "./stylesDesktop";
+import { styles } from "../FeaturedProducts/stylesDesktop";
 // Material UI
 import Typography from "@material-ui/core/Typography";
-import Link from "next/link";
 // Components
 // import PreviewCardResponsive from "pageComponents/FrontPage/PreviewCardResponsive";
 import ProductCardResponsive from "components/ProductCardResponsive";
@@ -16,6 +15,7 @@ import {
   Product,
   Order_By,
   PromotedSlotsConnection,
+  ProductsConnection,
 } from "typings/gqlTypes";
 // useMediaQuery
 import { useTheme } from "@material-ui/core/styles";
@@ -24,7 +24,7 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 
 
-const FeaturedProductsDesktop = (props: ReactProps) => {
+const NewProductsDesktop = (props: ReactProps) => {
 
   const {
     classes,
@@ -36,9 +36,6 @@ const FeaturedProductsDesktop = (props: ReactProps) => {
       lg: 3,
       xl: 4,
     },
-    loading,
-    hideViewAll = true,
-    viewAllPath = "/categories",
   } = props;
 
   const theme = useTheme();
@@ -46,7 +43,7 @@ const FeaturedProductsDesktop = (props: ReactProps) => {
   const smDown = useMediaQuery(theme.breakpoints.down("sm"))
 
   const products = connection?.edges?.map(
-    promotedItem => promotedItem.node.product
+    edge => edge.node
   )
 
   return (
@@ -82,19 +79,6 @@ const FeaturedProductsDesktop = (props: ReactProps) => {
             )
           : <LoadingCards count={4} />
         }
-        {
-          !hideViewAll &&
-          !loading &&
-          connection?.edges?.length > 0 &&
-          <div className={classes.seeAllLinkContainer}>
-            <Link href={viewAllPath}>
-              <a className={classes.seeAllLinkBorder}>
-                See all
-                {/* <ArrowRight/> */}
-              </a>
-            </Link>
-          </div>
-        }
       </div>
     </main>
   )
@@ -112,22 +96,14 @@ interface ReactProps extends WithStyles<typeof styles> {
     lg?: number;
     xl?: number;
   };
-  connection: PromotedSlotsConnection;
+  connection: ProductsConnection;
   // sortAscending: boolean; // must be top-level
   // cause Desktop and Mobile share the same queries. Possible clash in variables
   // don't want Desktop's sortAscend: true, while Mobile is false,
   // as both queries will be sent and returned data conflicts
-  loading?: boolean;
-  hideViewAll?: boolean;
-  viewAllPath?: string
 }
 
-
-/////////// Styles //////////////
-
-
-
-export default withStyles(styles)( FeaturedProductsDesktop );
+export default withStyles(styles)( NewProductsDesktop );
 
 
 

@@ -108,47 +108,32 @@ const NewReleaseProducts = (props: ReactProps) => {
   let cardsPerRow = {
     xs: 1.5,
     sm: 1.5,
-    md: 1.5, // redundant, since mobile is sm only
-    lg: 1.5,
-    xl: 1.5,
+    md: 2,
+    lg: 2,
+    xl: 4,
   }
 
   let products = data?.productsAllConnection
 
-  if (loading) {
-    return (
-      <main className={classes.root}>
-        <div className={clsx(classes.flexRow, classes.maxWidth100vw)}>
-          <Typography variant="h3"
-            className={clsx(classes.title)}
-            gutterBottom
-          >
-            {title}
-          </Typography>
-          <ProductCardResponsive
-            product={undefined}
-            xsCardRow={true}
-            refetch={undefined}
-          />
-          <ProductCardResponsive
-            product={undefined}
-            xsCardRow={true}
-            refetch={undefined}
-          />
-          <ProductCardResponsive
-            product={undefined}
-            xsCardRow={true}
-            refetch={undefined}
-          />
-          <ProductCardResponsive
-            product={undefined}
-            xsCardRow={true}
-            refetch={undefined}
-          />
-        </div>
-      </main>
-    )
-  }
+  // if (true) {
+  //   return (
+  //     <main className={classes.root}>
+  //       <div className={clsx(classes.flexRow, classes.maxWidth100vw)}>
+  //         <Typography variant="h3"
+  //           className={clsx(classes.title)}
+  //           gutterBottom
+  //         >
+  //           {title}
+  //         </Typography>
+  //         <div className={classes.marginLeft1}>
+  //           <LoadingCards
+  //             xsCardRow={false}
+  //           />
+  //         </div>
+  //       </div>
+  //     </main>
+  //   )
+  // }
 
   return (
     <main className={classes.root}>
@@ -170,11 +155,12 @@ const NewReleaseProducts = (props: ReactProps) => {
           : classes.carouselContainerPaddingLeft,
       )}>
         {
-          (products?.edges ?? []).length === 0
+          // (products?.edges ?? []).length === 0
+          true
           ? <LoadingCards
               count={8}
               cardsPerRow={cardsPerRow}
-              xsCardRow={true}
+              // xsCardRow={true}
             />
           : products.edges.map(({ node: product }, i) => {
               // console.log("p: ",product)
@@ -288,26 +274,11 @@ const styles = (theme: Theme) => createStyles({
     flexBasis: '50%',
     fontSize: "1.5rem",
   },
-  flexCol: {
-    display: 'flex',
-    justifyContent: 'space-around',
-    flexWrap: 'wrap',
-    flexDirection: 'column',
-  },
   flexRow: {
     display: 'flex',
     justifyContent: 'flex-start',
     flexWrap: 'wrap',
     flexDirection: 'row',
-  },
-  flexRowFlexEnd: {
-    display: 'flex',
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-    marginBottom: '0.5rem',
-    flexWrap: 'wrap',
-    flexDirection: 'row',
-    width: '100%',
   },
   flexItemMobile: {
     flexGrow: 1,
@@ -330,14 +301,8 @@ const styles = (theme: Theme) => createStyles({
       }),
     }
   },
-  flexItemHoverNull: {
-    "&:hover": {
-      // borderBottom: `1px solid ${Colors.lightGrey}`,
-      transition: theme.transitions.create('border', {
-        easing: theme.transitions.easing.easeIn,
-        duration: "200ms",
-      }),
-    }
+  marginLeft1: {
+    marginLeft: '1rem',
   },
   paginateEndMessage: {
     width: '100%',

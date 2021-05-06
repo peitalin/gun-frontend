@@ -3,7 +3,7 @@ import React from "react";
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 import { Colors, BorderRadius } from "layout/AppTheme";
 import clsx from "clsx";
-import { styles } from "./stylesLoading";
+import { styles } from "../FeaturedProducts/stylesLoading";
 // Material UI
 import Typography from "@material-ui/core/Typography";
 import LoadingCards from "pageComponents/FrontPage/LoadingCards";
@@ -14,7 +14,7 @@ import AirCarousel from "components/AirCarousel";
 
 
 
-const FeaturedProductsLoading = (props: ReactProps) => {
+const NewProductsLoading = (props: ReactProps) => {
 
   const {
     classes,
@@ -36,8 +36,8 @@ const FeaturedProductsLoading = (props: ReactProps) => {
       {
         [...Array(numRows).keys()].map(i =>
           <AirCarousel
-            key={`featured-products-carousel-main-${i}`}
-            id={`featured-products-carousel-main-${i}`}
+            key={`new-products-carousel-main-${i}`}
+            id={`new-products-carousel-main-${i}`}
             // handleClickLeft={getPrevPage}
             // handleClickRight={getNextPage}
             disableButtons={false}
@@ -75,7 +75,8 @@ interface ReactProps extends WithStyles<typeof styles> {
 }
 
 
-export default withStyles(styles)( FeaturedProductsLoading );
+
+export default withStyles(styles)( NewProductsLoading );
 
 
 

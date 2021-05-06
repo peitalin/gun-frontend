@@ -3,21 +3,16 @@ import React from "react";
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 import { Colors, BorderRadius } from "layout/AppTheme";
 import clsx from "clsx";
+import { styles } from "./stylesMobile";
 // Material UI
 import Typography from "@material-ui/core/Typography";
+import Link from "next/link";
 // Typings
 import {
   Product,
   PromotedSlotsConnection,
 } from "typings/gqlTypes";
-// Paginator hooks
-import { ConnectionQueryProps } from "components/Paginators/usePaginatePagedQueryHook";
-import usePaginateQueryHook from "components/Paginators/usePaginatePagedQueryHook";
 import LoadingCards from "pageComponents/FrontPage/LoadingCards";
-// redux
-import { useSelector } from "react-redux";
-import { GrandReduxState } from "reduxStore/grand-reducer";
-import { WishlistItemId } from "reduxStore/wishlist-reducer";
 // Wishlist
 import ProductCardResponsive from "components/ProductCardResponsive";
 import AirCarousel from "components/AirCarousel";
@@ -39,6 +34,9 @@ const FeaturedProductsMobileCarousel = (props: ReactProps) => {
       lg: 1.5,
       xl: 1.5,
     },
+    loading,
+    hideViewAll = true,
+    viewAllPath = "/categories",
   } = props;
 
 
@@ -89,6 +87,19 @@ const FeaturedProductsMobileCarousel = (props: ReactProps) => {
             )
         }
       </AirCarousel>
+      {
+        !hideViewAll &&
+        !loading &&
+        connection?.edges?.length > 0 &&
+        <div className={classes.seeAllLinkContainer}>
+          <Link href={viewAllPath}>
+            <a className={classes.seeAllLinkBorder}>
+              See all
+              {/* <ArrowRight/> */}
+            </a>
+          </Link>
+        </div>
+      }
     </main>
   )
 }
@@ -110,72 +121,11 @@ interface ReactProps extends WithStyles<typeof styles> {
   // cause Desktop and Mobile share the same queries. Possible clash in variables
   // don't want Desktop's sortAscend: true, while Mobile is false,
   // as both queries will be sent and returned data conflicts
+  loading?: boolean;
+  hideViewAll?: boolean;
+  viewAllPath?: string
 }
 
-const styles = (theme: Theme) => createStyles({
-  root: {
-    margin: "0rem 0rem",
-    // paddingRight: '1rem', // subtract 1rem for carousel buttons: 1rem on both sides
-    // paddingLeft: '1rem', // subtract 1rem for carousel buttons: 1rem on both sides
-    width: '100%',
-  },
-  flexRowLink: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  title: {
-    paddingLeft: '0.5rem', // subtract 1rem for carousel buttons: 1rem on both sides
-    fontWeight: 600,
-    marginBottom: "0.5rem",
-    marginTop: "1rem",
-    color: theme.palette.type === 'dark'
-      ? Colors.uniswapLightestGrey
-      : Colors.black,
-  },
-  flexCol: {
-    display: 'flex',
-    justifyContent: 'space-around',
-    flexWrap: 'wrap',
-    flexDirection: 'column',
-  },
-  flexRow: {
-    display: 'flex',
-    justifyContent: 'flex-start',
-    flexWrap: 'wrap',
-    flexDirection: 'row',
-  },
-  flexItem: {
-    borderRadius: `${BorderRadius}px`,
-    position: 'relative',
-  },
-  flexItemHoverNull: {
-    "&:hover": {
-      borderBottom: `2px solid ${Colors.lightGrey}`,
-      transition: theme.transitions.create('border', {
-        easing: theme.transitions.easing.easeIn,
-        duration: "200ms",
-      }),
-    }
-  },
-  paginateButtonContainer: {
-    width: '100%',
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  minWidth: {
-    minWidth: 'calc(100vw - 2rem)',
-  },
-  divider: {
-    marginTop: '1rem',
-    marginBottom: '1rem',
-  },
-  // dividerFeaturedProduct: {
-  //   border: `2px solid ${Colors.lightGrey}`,
-  // },
-});
 
 
 export default withStyles(styles)( FeaturedProductsMobileCarousel );

@@ -7,9 +7,9 @@ import { Colors, Gradients } from "layout/AppTheme";
 import { ProductsConnection, Calibers, Categories, PageConfig } from "typings/gqlTypes";
 
 // Components
-import NewReleaseProducts from "pageComponents/FrontPage/NewReleaseProducts";
+// import NewReleaseProducts from "pageComponents/FrontPage/NewReleaseProducts";
+import NewProducts from "pageComponents/FrontPage/NewProducts";
 import FeaturedProducts from "pageComponents/FrontPage/FeaturedProducts";
-import CategoryProducts from "pageComponents/FrontPage/CategoryProducts";
 import BannerHome from "pageComponents/FrontPage/BannerHome";
 import BannerPromotionsLink from "pageComponents/FrontPage/BannerPromotionsLink";
 import BetaTestingBanner from "components/BetaTestingBanner";
@@ -99,28 +99,27 @@ const FrontPage: React.FC<ReactProps> = (props) => {
         {
           pageConfig?.pageConfigSections?.slice(0,2)?.map(section => {
 
-            if (section?.promotedListId) {
-              return (
-                <FeaturedProducts
-                  key={section?.id}
-                  title={section?.title}
-                  promotedListId={section.promotedListId}
-                  cardsPerRow={{
-                    xs: 1.5,
-                    sm: 1.5,
-                    md: 2,
-                    lg: 3,
-                    xl: 4,
-                  }}
-                />
-              )
-            }
+            // if (section?.promotedListId) {
+            //   return (
+            //     <FeaturedProducts
+            //       key={section?.id}
+            //       title={section?.title}
+            //       promotedListId={section.promotedListId}
+            //       cardsPerRow={{
+            //         xs: 1.5,
+            //         sm: 1.5,
+            //         md: 2,
+            //         lg: 3,
+            //         xl: 4,
+            //       }}
+            //     />
+            //   )
+            // }
 
             if (section?.isNewestList) {
               return (
-                <NewReleaseProducts
+                <NewProducts
                   key={section?.id}
-                  initialProducts={undefined}
                   title={section?.title}
                 />
               )
@@ -157,9 +156,8 @@ const FrontPage: React.FC<ReactProps> = (props) => {
 
             if (section?.isNewestList) {
               return (
-                <NewReleaseProducts
+                <NewProducts
                   key={section?.id}
-                  initialProducts={undefined}
                   title={section?.title}
                 />
               )
