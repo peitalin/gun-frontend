@@ -240,6 +240,16 @@ export const Gradients = {
     color1: Colors.gradientGrey1,
     color2: Colors.gradientGrey2,
   },
+  gradientFeaturedDark:  {
+    background: `linear-gradient(110deg, ${Colors.uniswapDarkNavy} 25%, ${Colors.uniswapNavy} 80%)`,
+    color1: Colors.uniswapDarkNavy,
+    color2: Colors.uniswapNavy,
+  },
+  gradientFeaturedLight:  {
+    background: `linear-gradient(110deg, ${Colors.slateGreyDark} 25%, ${Colors.white} 80%)`,
+    color1: Colors.slateGreyDark,
+    color2: Colors.white,
+  },
   gradientFlamingo:  {
     background: `linear-gradient(120deg, ${Colors.gradientFlamingo1} 0%, ${Colors.gradientFlamingo2} 100%)`,
     color1: Colors.gradientFlamingo1,
@@ -251,9 +261,10 @@ export const Gradients = {
     color2: Colors.black,
   },
   gradientLightBlack:  {
-    background: `linear-gradient(120deg, ${Colors.black} 0%, ${Colors.slateGreyDarker} 90%)`,
+    // background: `linear-gradient(120deg, ${Colors.black} 0%, ${Colors.slateGreyLightBlack} 90%)`,
+    background: `linear-gradient(120deg, ${Colors.slateGreyDarker} 0%, ${Colors.slateGreyDark} 90%)`,
     color1: Colors.black,
-    color2: Colors.slateGreyDarker,
+    color2: Colors.slateGreyLightBlack,
   },
   gradientBlackDitherDown:  {
     background: `linear-gradient(180deg, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0) 100%)`,
@@ -368,8 +379,10 @@ export const BoxShadows = {
     boxShadow: 'inset 3.53813px 3.53813px 7.07626px rgba(70,77,85,.4), inset -2.35875px -2.35875px 7.07626px #15171a',
   },
   shadowWhite: {
-    // boxShadow: `rgb(245, 245, 245, 0.10) 0px 4px 6px`, // airbnb shadows
     boxShadow: '0 2px 4px rgba(250,250,250,0.15), 0 4px 8px rgba(250,250,250,0.1), 0 0 0 2px rgba(250,250,250,0.05)',
+  },
+  shadowWhite2: {
+    boxShadow: `rgba(245, 245, 245, 0.10) 0px 16px 32px, rgba(245, 245, 245, 0.1) 0px 3px 8px`,
   },
 }
 
@@ -657,9 +670,12 @@ export const createAppTheme = (darkModeStr: "dark"|"light"): ThemeOptions =>  {
       MuiSwitch: {
         thumb: {
           // backgroundColor: darkMode ? Colors.uniswapLightNavy : Colors.darkWhite,
-          backgroundColor: darkMode ? Colors.uniswapLightNavy : Colors.uniswapLightNavy,
+          backgroundColor: darkMode ? Colors.uniswapLightNavy : Colors.slateGrey,
         },
         track: {
+          backgroundColor: darkMode
+            ? Colors.mediumGrey
+            : Colors.slateGreyDark,
           "$checked$checked + &": {
             opacity: 1.0,
             // backgroundColor: "rgb(129, 171, 134)" // Light green, aka #74d77f

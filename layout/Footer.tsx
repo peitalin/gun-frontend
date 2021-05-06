@@ -255,7 +255,7 @@ const styles = (theme: Theme) => createStyles({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
-    backgroundColor: Colors.mediumBlack,
+    backgroundColor: Colors.black1A,
     // background: theme.palette.type === 'dark'
     //   ? Gradients.gradientBlack.background
     //   : Gradients.gradientGrey2Rotated.background,

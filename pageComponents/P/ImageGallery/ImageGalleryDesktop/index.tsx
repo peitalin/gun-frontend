@@ -62,6 +62,7 @@ const ImageGalleryDesktop: React.FC<ReactProps> = (props) => {
         loading={props.loading}
         index={index}
         setIndex={setIndex}
+        isPromoted={props.isPromoted}
       />
 
       <BottomImageCarouselDesktop
@@ -86,6 +87,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   numberOfItemsWide?: number;
   index: number;
   setIndex(a?: any): void;
+  isPromoted: boolean;
 }
 
 const styles = (theme: Theme) => createStyles({
@@ -95,18 +97,7 @@ const styles = (theme: Theme) => createStyles({
     paddingRight: '1rem',
     // height: '100%',
   },
-  carouselContainerPP: {
-    left: 0,
-    width: '100%',
-    marginTop: '0.5rem',
-    marginBottom: '0.5rem',
-  },
 });
-
-
-// const ImageGalleryDesktopMemo = React.memo(
-//   (props: ReactProps) => <ImageGalleryDesktop {...props}/>,
-// );
 
 export default withStyles(styles)( ImageGalleryDesktop );
 

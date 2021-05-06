@@ -38,6 +38,7 @@ const FeaturedPreview: React.FC<ReactProps> = (props) => {
         product={props.product}
         index={props.index}
         setIndex={props.setIndex}
+        isPromoted={props.isPromoted}
       />
     )
   }
@@ -49,6 +50,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   product: Product;
   index: number;
   setIndex(a?: any): void;
+  isPromoted: boolean;
 }
 
 

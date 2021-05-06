@@ -16,6 +16,7 @@ import LoadingCards from "pageComponents/FrontPage/LoadingCards";
 // Wishlist
 import ProductCardResponsive from "components/ProductCardResponsive";
 import AirCarousel from "components/AirCarousel";
+import ArrowRight from "@material-ui/icons/ArrowRight";
 
 
 
@@ -40,6 +41,9 @@ const FeaturedProductsMobileCarousel = (props: ReactProps) => {
   } = props;
 
 
+  const promotedSlots = connection?.edges?.map(
+    promotedItem => promotedItem.node
+  );
   const products = connection?.edges?.map(
     promotedItem => promotedItem?.node?.product
   )
@@ -58,7 +62,7 @@ const FeaturedProductsMobileCarousel = (props: ReactProps) => {
         scrollSnapType={"x proximity"}
       >
         {
-          !products?.length
+          !promotedSlots?.length
           ? [...Array(1).keys()].map(i =>
               <AirCarousel
                 key={`featured-products-carousel-main-${i}`}
@@ -75,20 +79,25 @@ const FeaturedProductsMobileCarousel = (props: ReactProps) => {
                 />
               </AirCarousel>
             )
-          : products?.filter(p => !!p).map((product, i) =>
+          : promotedSlots?.filter(p => !!p.product).map((promotedSlot, i) =>
               <div key={i} style={{
                 marginLeft: '0.5rem',
               }}>
                 <ProductCardResponsive
-                  product={product}
+                  product={promotedSlot.product}
                   cardsPerRow={cardsPerRow}
+                  promotedSlotId={
+                    promotedSlot.isRandomFiller
+                    ? undefined
+                    : promotedSlot?.id
+                  }
                 />
               </div>
             )
         }
       </AirCarousel>
       {
-        !showSeeMore &&
+        showSeeMore &&
         !loading &&
         connection?.edges?.length > 0 &&
         <div className={classes.seeAllLinkContainer}>
@@ -98,7 +107,7 @@ const FeaturedProductsMobileCarousel = (props: ReactProps) => {
           >
             <a className={classes.seeAllLinkBorder}>
               See more
-              {/* <ArrowRight/> */}
+              <ArrowRight/>
             </a>
           </Link>
         </div>

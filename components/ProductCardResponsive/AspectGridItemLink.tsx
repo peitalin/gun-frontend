@@ -15,7 +15,7 @@ import LinkLoading from "components/LinkLoading";
 
 
 
-const AspectCarouselItemLink: React.FC<CarouselItemLinkProps> = (props) => {
+const AspectCarouselItemLink: React.FC<ReactProps> = (props) => {
 
   const {
     classes,
@@ -29,24 +29,37 @@ const AspectCarouselItemLink: React.FC<CarouselItemLinkProps> = (props) => {
         className={classes.card}
         classes={{ root: classes.cardRoot }}
       >
-        <LinkLoading
-          href={"/p/[productId]"}
-          as={`/p/${product?.id}`}
-          disable={disable}
-        >
-          <CardActionArea classes={{ root: classes.cardActionArea }}>
-            {props.children}
-          </CardActionArea>
-        </LinkLoading>
+        {
+          props.promotedSlotId
+          ? <LinkLoading
+              href={"/f/[promotedSlotId]"}
+              as={`/f/${props.promotedSlotId}`}
+              disable={disable}
+            >
+              <CardActionArea classes={{ root: classes.cardActionArea }}>
+                {props.children}
+              </CardActionArea>
+            </LinkLoading>
+          : <LinkLoading
+              href={"/p/[productId]"}
+              as={`/p/${product?.id}`}
+              disable={disable}
+            >
+              <CardActionArea classes={{ root: classes.cardActionArea }}>
+                {props.children}
+              </CardActionArea>
+            </LinkLoading>
+        }
       </Card>
     </AspectRatioConstraint>
   )
 }
 
 
-interface CarouselItemLinkProps extends WithStyles<typeof styles> {
+interface ReactProps extends WithStyles<typeof styles> {
   product: Product;
   disable?: boolean;
+  promotedSlotId?: string
 }
 
 

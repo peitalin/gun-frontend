@@ -7,20 +7,19 @@ import { SoldOutStatus, Chat_Rooms } from "typings/gqlTypes";
 // GraphQL
 import { useQuery, useLazyQuery } from "@apollo/client";
 // Typings
-import { Product, UserPrivate, Product_Variants, BidStatus, Role } from "typings/gqlTypes";
+import { PromotedSlot, UserPrivate, Product_Variants, BidStatus, Role } from "typings/gqlTypes";
 import {
-  GET_PRODUCT,
-} from "queries/products-queries";
+  GET_PROMOTED_SLOT
+} from "queries/promoted_lists-queries";
 import {
   GET_USER_BIDS_FOR_PRODUCT
 } from "queries/chat-queries";
-import CategoryBreadcrumbs from "./ProductPageLayouts/CategoryBreadcrumbs";
-import { FlexBasis33, FlexBasis66 } from "./ProductPageLayouts/FlexBasis";
+import { FlexBasis33, FlexBasis66 } from "pageComponents/P/ProductPageLayouts/FlexBasis";
 import ProductPageContainer from "./ProductPageLayouts/ProductPageContainer";
-import ProductColumnSection from "./ProductPageLayouts/ProductColumnSection";
-import StickyDetailsBids from "./PurchaseProductSummary/StickyDetailsBids";
-import StickyDetailsSeller from "./PurchaseProductSummary/StickyDetailsSeller";
-import StickyDetailsDealer from "./PurchaseProductSummary/StickyDetailsDealer";
+import HeroImageSection from "./ProductPageLayouts/HeroImageSection";
+import StickyDetailsBids from "pageComponents/P/PurchaseProductSummary/StickyDetailsBids";
+import StickyDetailsSeller from "pageComponents/P/PurchaseProductSummary/StickyDetailsSeller";
+import StickyDetailsDealer from "pageComponents/P/PurchaseProductSummary/StickyDetailsDealer";
 // Redux
 import { useSelector } from "react-redux";
 import { GrandReduxState, Actions } from "reduxStore/grand-reducer";
@@ -35,7 +34,8 @@ import { useRouter } from "next/router";
 // media query
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
-import { below1024Query, col2MinWidth } from "./common";
+import ShowOnMobileOrDesktopSSR from "components/ShowOnMobileOrDesktopSSR";
+import { below1024Query, col2MinWidth } from "pageComponents/P/common";
 // Meta headers
 import MetaHeadersPage from "layout/MetaHeadersPage";
 // SSR
@@ -52,7 +52,7 @@ import dynamic from "next/dynamic";
 
 
 
-const Products: React.FC<ReactProps> = (props) => {
+const PromotedSlotId: React.FC<ReactProps> = (props) => {
 
   const { classes } = props;
 
@@ -67,7 +67,7 @@ const Products: React.FC<ReactProps> = (props) => {
   const [selectedBid, setSelectedBid] = React.useState(undefined);
 
   const router = useRouter();
-  const productId: string = router?.query?.productId as any;
+  const promotedSlotId: string = router?.query?.promotedSlotId as any;
 
   const user = useSelector<GrandReduxState, UserPrivate>(s =>
     s.reduxLogin.user
@@ -83,7 +83,7 @@ const Products: React.FC<ReactProps> = (props) => {
   ] = useLazyQuery<QueryData2, QueryVar>(
     GET_USER_BIDS_FOR_PRODUCT, {
     variables: {
-      productId: productId
+      promotedSlotId: promotedSlotId
     },
     ssr: true,
   })
@@ -93,13 +93,14 @@ const Products: React.FC<ReactProps> = (props) => {
   // console.log("userBids: ", userBids)
 
   const { loading, error, data, refetch } = useQuery<QueryData, QueryVar>(
-    GET_PRODUCT, {
+    GET_PROMOTED_SLOT, {
     variables: {
-      productId: productId
+      promotedSlotId: promotedSlotId
     },
     ssr: true,
   })
-  const product = data?.getProductById || props.initialProduct;
+  const promotedSlot = data?.getPromotedSlotById || props.initialPromotedSlot;
+  const product = promotedSlot?.product
 
   ////////// VARIANTS
   const [
@@ -108,7 +109,7 @@ const Products: React.FC<ReactProps> = (props) => {
   ] = React.useState<SelectedVariantProps>({
     label: "variant",
     value: product?.featuredVariant || {
-      productId: undefined,
+      promotedSlotId: undefined,
       variantId: undefined,
       snapshotId: undefined,
       variantSnapshotId: undefined,
@@ -180,38 +181,73 @@ const Products: React.FC<ReactProps> = (props) => {
   return (
     <ProductPageContainer product={product} loading={loading}>
 
-      <ProductColumnSection isMobileRow>
-        <ImageGalleryMobile
-          product={product}
-          loading={loading && !product}
-          index={index}
-          setIndex={setIndex}
-          selectedOption={selectedOption}
-        />
-      </ProductColumnSection>
-
-      <FlexBasis66
+      {/* <FlexBasis100
         // flexGrow={mdDown} // do not add flexGrow, messes
         // up responsive imageGallery + floating purchaseSummary
         implementation="css"
       >
-        <ProductColumnSection>
-          {
-            !xsDown &&
-            <ImageGalleryDesktop
-              product={product}
-              selectedOption={selectedOption}
-              // product={undefined}
-              //// sometimes SSR preload looks off when product is undefined
-              //// replicate by setting product = undefined
-              loading={loading && !product}
-              numberOfItemsTall={16}
-              numberOfItemsWide={8}
-              index={index}
-              setIndex={setIndex}
-            />
-          }
+        <>
+          <ShowOnMobileOrDesktopSSR mobile className={classes.width100}>
+            <HeroImageSection isMobile={true}>
+              <ImageGalleryMobile
+                product={product}
+                loading={loading && !product}
+                index={index}
+                setIndex={setIndex}
+                selectedOption={selectedOption}
+              />
+            </HeroImageSection>
+          </ShowOnMobileOrDesktopSSR>
+          <ShowOnMobileOrDesktopSSR desktop className={classes.width100}>
+            <HeroImageSection isMobile={false}>
+              <ImageGalleryDesktop
+                product={product}
+                selectedOption={selectedOption}
+                // product={undefined}
+                //// sometimes SSR preload looks off when product is undefined
+                //// replicate by setting product = undefined
+                loading={loading && !product}
+                numberOfItemsTall={16}
+                numberOfItemsWide={8}
+                index={index}
+                setIndex={setIndex}
+              />
+            </HeroImageSection>
+          </ShowOnMobileOrDesktopSSR>
+        </>
+      </FlexBasis100> */}
 
+      <HeroImageSection isMobile={false}>
+        <ImageGalleryDesktop
+          product={product}
+          selectedOption={selectedOption}
+          // product={undefined}
+          //// sometimes SSR preload looks off when product is undefined
+          //// replicate by setting product = undefined
+          loading={loading && !product}
+          numberOfItemsTall={16}
+          numberOfItemsWide={8}
+          index={index}
+          setIndex={setIndex}
+          isPromoted={true}
+        />
+      </HeroImageSection>
+
+
+      <div style={{
+        maxWidth: 1024,
+        width: '100%',
+        display: 'flex',
+        flexWrap: 'wrap',
+        flexDirection: 'row',
+        justifyContent: 'center',
+      }}>
+        <FlexBasis66
+          // flexGrow={mdDown} // do not add flexGrow, messes
+          // up responsive imageGallery + floating purchaseSummary
+          implementation="css"
+        >
+          <>
           {
             // !lgDown && below1024 &&
             below1024 &&
@@ -256,7 +292,6 @@ const Products: React.FC<ReactProps> = (props) => {
               </>
             </FlexBasis33>
           }
-
           {
             product &&
             <ProductDetails
@@ -268,53 +303,54 @@ const Products: React.FC<ReactProps> = (props) => {
               // }
             />
           }
-        </ProductColumnSection>
-      </FlexBasis66>
-
-      {
-        !below1024 &&
-        <FlexBasis33 className={clsx(
-          below1024 ? classes.positionLgDown : classes.positionSticky,
-          (!lgDown && below1024) && classes.minWidth440,
-          // between 720px and 1024px, expand purchase card to minWidth 440px
-          // to force position: sticky to position: relative
-        )}>
-          <>
-            <PurchaseProductSummary
-              product={product}
-              selectedOption={selectedOption}
-              refetchProduct={refetch}
-              variantOptions={variantOptions}
-              handleChangeVariantOption={handleChangeVariantOption}
-              selectedBid={selectedBid}
-            />
-            {
-              userBids
-              .filter(bid => bid?.bidStatus === BidStatus.ACCEPTED)
-              .map(bid =>
-                <StickyDetailsBids
-                  key={bid?.id}
-                  userBid={bid}
-                  selectedBid={selectedBid}
-                  setSelectedBid={setSelectedBid}
-                  below1024={below1024}
-                />
-              )
-            }
-            <StickyDetailsSeller
-              seller={product?.store?.user}
-              buyerId={user?.id}
-              product={product}
-              storeName={product?.store?.name}
-              below1024={below1024}
-            />
-            <StickyDetailsDealer
-              dealer={product?.currentSnapshot?.dealer}
-              below1024={below1024}
-            />
           </>
-        </FlexBasis33>
-      }
+        </FlexBasis66>
+
+        {
+          !below1024 &&
+          <FlexBasis33 className={clsx(
+            below1024 ? classes.positionLgDown : classes.positionSticky,
+            (!lgDown && below1024) && classes.minWidth440,
+            // between 720px and 1024px, expand purchase card to minWidth 440px
+            // to force position: sticky to position: relative
+          )}>
+            <>
+              <PurchaseProductSummary
+                product={product}
+                selectedOption={selectedOption}
+                refetchProduct={refetch}
+                variantOptions={variantOptions}
+                handleChangeVariantOption={handleChangeVariantOption}
+                selectedBid={selectedBid}
+              />
+              {
+                userBids
+                .filter(bid => bid?.bidStatus === BidStatus.ACCEPTED)
+                .map(bid =>
+                  <StickyDetailsBids
+                    key={bid?.id}
+                    userBid={bid}
+                    selectedBid={selectedBid}
+                    setSelectedBid={setSelectedBid}
+                    below1024={below1024}
+                  />
+                )
+              }
+              <StickyDetailsSeller
+                seller={product?.store?.user}
+                buyerId={user?.id}
+                product={product}
+                storeName={product?.store?.name}
+                below1024={below1024}
+              />
+              <StickyDetailsDealer
+                dealer={product?.currentSnapshot?.dealer}
+                below1024={below1024}
+              />
+            </>
+          </FlexBasis33>
+        }
+      </div>
 
     </ProductPageContainer>
   );
@@ -324,13 +360,13 @@ const Products: React.FC<ReactProps> = (props) => {
 
 
 interface ReactProps extends WithStyles<typeof styles> {
-  initialProduct: Product;
+  initialPromotedSlot: PromotedSlot;
 }
 interface QueryData {
-  getProductById: Product;
+  getPromotedSlotById: PromotedSlot;
 }
 interface QueryVar {
-  productId: string;
+  promotedSlotId: string;
 }
 interface QueryData2 {
   getUserBidsForProduct: Chat_Rooms;
@@ -354,12 +390,13 @@ const styles = (theme: Theme) => createStyles({
   positionSticky: {
     position: "sticky",
     top: "1rem",
+    marginTop: "1rem",
     paddingRight: '1rem',
     //
     height: "100%",
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     alignItems: 'center',
   },
   minWidth440: {
@@ -379,7 +416,10 @@ const styles = (theme: Theme) => createStyles({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  width100: {
+    width: '100%',
+  },
 });
 
 
-export default withStyles(styles)( Products );
+export default withStyles(styles)( PromotedSlotId );

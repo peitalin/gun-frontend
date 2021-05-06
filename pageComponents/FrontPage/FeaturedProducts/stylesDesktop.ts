@@ -5,6 +5,7 @@ import { Colors, BorderRadius } from "layout/AppTheme";
 
 export const styles = (theme: Theme) => createStyles({
   root: {
+    position: "relative",
     marginTop: '1rem',
   },
   maxWidth: {
@@ -110,8 +111,8 @@ export const styles = (theme: Theme) => createStyles({
     justifyContent: 'flex-end',
     alignItems: 'center',
     position: 'absolute',
-    top: 0,
-    right: 0,
+    top: '0.5rem',
+    right: '0.5rem',
   },
   seeAllLinkBorder: {
     fontSize: '0.8rem',

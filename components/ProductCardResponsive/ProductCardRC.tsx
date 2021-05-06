@@ -106,6 +106,7 @@ const ProductCardRC = (props: ReactProps) => {
         (previewItems.length === 0) &&
         <AspectGridItemLink
           product={product}
+          promotedSlotId={props.promotedSlotId}
           disable={
             !props.product?.storeId ||
             typeof props.onClick === 'function'
@@ -123,6 +124,7 @@ const ProductCardRC = (props: ReactProps) => {
         firstPreview &&
         <AspectGridItemLink
           product={product}
+          promotedSlotId={props.promotedSlotId}
           disable={
             !props.product?.storeId ||
             typeof props.onClick === 'function'
@@ -174,8 +176,12 @@ const ProductCardRC = (props: ReactProps) => {
           />
         } */}
         <LinkLoading
-          href={"/p/[productId]"}
-          as={`/p/${props.product?.id}`}
+          href={
+            props.promotedSlotId ? "/f/[promotedSlotId]" : "/p/[productId]"
+          }
+          as={
+            props.promotedSlotId ? `/f/${props.promotedSlotId}` : `/p/${props.product?.id}`
+          }
           disable={
             !props.product?.storeId ||
             typeof props.onClick === 'function'
@@ -270,6 +276,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   onClick?(a: any): void;
   hideActionType?: boolean;
   disableLoadingAnimation?: boolean;
+  promotedSlotId?: string
 }
 
 

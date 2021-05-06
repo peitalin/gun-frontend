@@ -259,52 +259,55 @@ const CategoryId: React.FC<ReactProps> = (props) => {
               </Typography>
             </div>
           }
-          <GridPaginatorGeneric<Product>
-            index={index}
-            connection={productsConnection}
-            totalCount={totalCount}
-            setTotalCount={setTotalCount}
-            numItemsPerPage={numItemsPerPage}
-            overfetchBy={overfetchBy}
-            disableAnimation
-            loading={loading}
-              // rowMode is initially undefined on SSR render
-              // so this is the SRR initial paint for mobile and desktop.
-              // after rowMode is set (with the toggle) we choose between the
-              // types of product cards
-            loadingComponent={
-              <>
-                <ShowOnMobileOrDesktopSSR desktop>
-                  <LoadingCards count={1}/>
-                </ShowOnMobileOrDesktopSSR>
-                <ShowOnMobileOrDesktopSSR mobile>
-                  <ProductRowMobileLoading/>
-                </ShowOnMobileOrDesktopSSR>
-              </>
-            }
-            containerStyle={{ minHeight: 284*2 }}
-            gridItemClassName={
-              rowMode ? classes.gridItemRow : classes.gridItemCard
-            }
-          >
-            {({ node: product }) => {
+          {
 
-              return (
-                <div key={product.id}
-                  className={clsx(
-                    rowMode ? classes.flexItemRows : classes.flexItemCards,
-                    classes.marginRight1,
-                  )}
-                >
-                  {
-                    rowMode
-                      ? <ProductCardAsRow product={product}/>
-                      : <ProductCardResponsive product={product} />
-                  }
-                </div>
-              )
-            }}
-          </GridPaginatorGeneric>
+            (productsConnection?.edges ?? []).length > 0 &&
+            <GridPaginatorGeneric<Product>
+              index={index}
+              connection={productsConnection}
+              totalCount={totalCount}
+              setTotalCount={setTotalCount}
+              numItemsPerPage={numItemsPerPage}
+              overfetchBy={overfetchBy}
+              disableAnimation
+              loading={loading}
+                // rowMode is initially undefined on SSR render
+                // so this is the SRR initial paint for mobile and desktop.
+                // after rowMode is set (with the toggle) we choose between the
+                // types of product cards
+              loadingComponent={
+                <>
+                  <ShowOnMobileOrDesktopSSR desktop>
+                    <LoadingCards count={1}/>
+                  </ShowOnMobileOrDesktopSSR>
+                  <ShowOnMobileOrDesktopSSR mobile>
+                    <ProductRowMobileLoading/>
+                  </ShowOnMobileOrDesktopSSR>
+                </>
+              }
+              containerStyle={{ minHeight: 284*2 }}
+              gridItemClassName={
+                rowMode ? classes.gridItemRow : classes.gridItemCard
+              }
+            >
+              {({ node: product }) => {
+                return (
+                  <div key={product.id}
+                    className={clsx(
+                      rowMode ? classes.flexItemRows : classes.flexItemCards,
+                      classes.marginRight1,
+                    )}
+                  >
+                    {
+                      rowMode
+                        ? <ProductCardAsRow product={product}/>
+                        : <ProductCardResponsive product={product} />
+                    }
+                  </div>
+                )
+              }}
+            </GridPaginatorGeneric>
+          }
 
         </div>
       </div>

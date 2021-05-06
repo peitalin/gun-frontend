@@ -12851,6 +12851,11 @@ export type Query = {
    */
   getProductById?: Maybe<Product>;
   /**
+   * Get the promoted product by its slot id
+   * AccessRule – PUBLIC
+   */
+  getPromotedSlotById?: Maybe<PromotedSlot>;
+  /**
    * Get the store by storeIdOrSlug
    * AccessRule – PUBLIC
    */
@@ -13995,6 +14000,11 @@ export type QueryGetPageConfigArgs = {
 
 export type QueryGetProductByIdArgs = {
   productId: Scalars['String'];
+};
+
+
+export type QueryGetPromotedSlotByIdArgs = {
+  promotedSlotId: Scalars['String'];
 };
 
 

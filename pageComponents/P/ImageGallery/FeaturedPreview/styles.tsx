@@ -1,5 +1,10 @@
 import { createStyles, Theme, fade } from "@material-ui/core/styles";
-import { fontFam, Colors, BorderRadius } from "layout/AppTheme";
+import {
+  Colors,
+  BorderRadius,
+  isThemeDark,
+  BoxShadows,
+} from "layout/AppTheme";
 
 
 export const styles = (theme: Theme) => createStyles({
@@ -14,6 +19,14 @@ export const styles = (theme: Theme) => createStyles({
     backgroundColor: theme.palette.type === 'dark'
       ? Colors.black
       : Colors.lightestGrey,
+  },
+  featuredImageRootPromoted: {
+    border: isThemeDark(theme)
+      ? `1px solid ${Colors.purple}`
+      : "unset",
+    boxShadow: isThemeDark(theme)
+      ? BoxShadows.shadowWhite.boxShadow
+      : BoxShadows.shadow2.boxShadow,
   },
   // featuredImageRootXSDown: {
   //   position: 'absolute',

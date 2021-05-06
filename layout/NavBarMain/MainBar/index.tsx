@@ -48,6 +48,7 @@ const MainBar = (props: ReactProps) => {
 
   let _isMainPages = isMainPagesFn(router)
   let _isStartPage = isStartPageFn(router)
+  let _isFeaturedPage = isFeaturedPageFn(router)
 
   let color = _isMainPages || _isStartPage
     ? Colors.cream
@@ -71,6 +72,7 @@ const MainBar = (props: ReactProps) => {
       classes={classes}
       isMainPage={_isMainPages}
       isStartPage={_isStartPage}
+      isFeaturedPage={_isFeaturedPage}
       isMobile={mdDown}
       // for special fatter navbar on these routes
     >
@@ -125,7 +127,7 @@ const MainBarSSRWrapper: React.FC<MainBarSSRWrapperProps> = (props) => {
         <nav className={
           props.isMainPage
           ? clsx( classes.baseBarHomePage, classes.baseBarDither)
-          : props.isStartPage
+          : props.isStartPage || props.isFeaturedPage
             ? clsx( classes.baseBarHomePage, classes.baseBarDitherNone)
             : clsx( classes.baseBarDashboard, classes.baseBarBorderBottom)
         }>
@@ -136,7 +138,7 @@ const MainBarSSRWrapper: React.FC<MainBarSSRWrapperProps> = (props) => {
         <nav className={
           (props.isMainPage || (props.isStartPage && props.isMobile))
           ? clsx( classes.baseBarHomePage, classes.baseBarDitherSm)
-          : props.isStartPage
+          : props.isStartPage || props.isFeaturedPage
             ? clsx( classes.baseBarHomePage, classes.baseBarDitherNoneSm)
             : clsx( classes.baseBarDashboard, classes.baseBarBorderBottom)
         }>
@@ -165,6 +167,12 @@ export const isStartPageFn = (router: NextRouter) => {
   }
   return false
 }
+export const isFeaturedPageFn = (router: NextRouter) => {
+  if (router.pathname.startsWith('/f/')) {
+    return true
+  }
+  return false
+}
 
 
 
@@ -175,6 +183,7 @@ interface ReactProps extends WithStyles<typeof styles> {
 interface MainBarSSRWrapperProps extends WithStyles<typeof styles> {
   isMainPage: boolean
   isStartPage: boolean
+  isFeaturedPage: boolean
   isMobile: boolean
 }
 

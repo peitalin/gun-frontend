@@ -20,6 +20,7 @@ import {
 // useMediaQuery
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
+import ArrowRight from "@material-ui/icons/ArrowRight";
 
 
 
@@ -43,9 +44,9 @@ const FeaturedProductsDesktop = (props: ReactProps) => {
 
   const theme = useTheme();
 
-  const products = connection?.edges?.map(
-    promotedItem => promotedItem.node.product
-  )
+  const promotedSlots = connection?.edges?.map(
+    promotedItem => promotedItem.node
+  );
 
   return (
     <main className={classes.root}>
@@ -61,9 +62,9 @@ const FeaturedProductsDesktop = (props: ReactProps) => {
 
       <div className={classes.carouselContainer}>
         {
-          products?.length > 0
-          ? products?.filter(p => !!p).map((product, i) =>
-              <div key={product?.id + `_${i}`}
+          promotedSlots?.length > 0
+          ? promotedSlots?.filter(p => !!p?.product).map((promotedSlot, i) =>
+              <div key={promotedSlot?.id + `_${i}`}
                 className={classes.productCardWrapper}
               >
                 <div className={clsx(
@@ -72,8 +73,13 @@ const FeaturedProductsDesktop = (props: ReactProps) => {
                   classes.flexItemHover,
                 )}>
                   <ProductCardResponsive
-                    product={product}
+                    product={promotedSlot?.product}
                     cardsPerRow={cardsPerRow}
+                    promotedSlotId={
+                      promotedSlot.isRandomFiller
+                      ? undefined
+                      : promotedSlot?.id
+                    }
                   />
                 </div>
               </div>
@@ -81,7 +87,7 @@ const FeaturedProductsDesktop = (props: ReactProps) => {
           : <LoadingCards count={4} />
         }
         {
-          !showSeeMore &&
+          showSeeMore &&
           !loading &&
           connection?.edges?.length > 0 &&
           <div className={classes.seeAllLinkContainer}>
@@ -91,7 +97,7 @@ const FeaturedProductsDesktop = (props: ReactProps) => {
             >
               <a className={classes.seeAllLinkBorder}>
                 See more
-                {/* <ArrowRight/> */}
+                <ArrowRight/>
               </a>
             </Link>
           </div>

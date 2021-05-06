@@ -53,6 +53,7 @@ const ProductCardResponsive: React.FC<ProductCardResponsiveProps> = (props) => {
     // hideActionType: xs || sm || md
     hideActionType: product?.soldOutStatus !== SoldOutStatus.AVAILABLE,
     disableLoadingAnimation: props.disableLoadingAnimation,
+    promotedSlotId: props.promotedSlotId,
   }
 
 
@@ -186,6 +187,7 @@ interface ProductCardResponsiveProps {
   onClick?(a: any): void;
   disableLoadingAnimation?: boolean;
   loading?: boolean;
+  promotedSlotId?: string;
 }
 
 

@@ -11,7 +11,7 @@ import {
 
 
 /////////////// STYLES /////////////////////
-export const MainBarHeightHomePage = 120;
+export const MainBarHeightHomePage = 100;
 export const MainBarHeightDashboard = 55;
 
 export const NewsBarHeight = 8;
@@ -75,8 +75,13 @@ export const styles = (theme: Theme) => createStyles({
   },
   baseBarDitherNone: {
     // background: Gradients.gradientBlackDitherDown.background,
-    padding: '2rem',
-    paddingTop: '2rem',
+    // opacity: 0.8,
+    '&:hover': {
+      // opacity: 1,
+    },
+    padding: '0.5rem',
+    paddingTop: '1.5rem',
+    paddingBottom: '1.5rem',
     top: `${NewsBarHeight}px`,
   },
   baseBarDitherNoneSm: {

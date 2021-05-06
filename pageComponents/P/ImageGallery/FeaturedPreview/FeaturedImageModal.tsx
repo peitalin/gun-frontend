@@ -66,6 +66,7 @@ const FeaturedImageModal = (props: ReactProps) => {
     <AspectRatioConstraint>
       <div className={clsx(
         classes.featuredImageRoot,
+        props.isPromoted && classes.featuredImageRootPromoted,
         xsDown ? classes.featuredImageRootXSDown : null
       )}>
         {
@@ -189,6 +190,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   product?: Product;
   index?: number;
   setIndex?(a?: any): void;
+  isPromoted: boolean;
 }
 
 export default withStyles(styles)( FeaturedImageModal );

@@ -127,6 +127,7 @@ const styles = (theme: Theme) => createStyles({
     width: '100%',
     marginTop: '0.5rem',
     marginBottom: '0.5rem',
+    marginLeft: '-0.25rem',
   },
 });
 

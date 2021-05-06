@@ -124,3 +124,27 @@ export const REMOVE_PRODUCT_FROM_PROMOTED_LIST = gql`
   }
   ${ProductFragment}
 `;
+
+
+
+export const GET_PROMOTED_SLOT = gql`
+  query($promotedSlotId: String!) {
+    getPromotedSlotById(
+      promotedSlotId: $promotedSlotId
+    ) {
+      id
+      createdAt
+      promotedListId
+      productId
+      product {
+        ...ProductFragment
+      }
+      ownerId
+      reservePrice
+      isAvailableForPurchase
+      expiresAt
+      position
+    }
+  }
+  ${ProductFragment}
+`;
