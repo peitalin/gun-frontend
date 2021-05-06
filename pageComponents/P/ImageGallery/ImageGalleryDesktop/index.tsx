@@ -87,7 +87,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   numberOfItemsWide?: number;
   index: number;
   setIndex(a?: any): void;
-  isPromoted: boolean;
+  isPromoted?: boolean;
 }
 
 const styles = (theme: Theme) => createStyles({
