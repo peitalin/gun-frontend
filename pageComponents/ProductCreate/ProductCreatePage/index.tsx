@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { GrandReduxState } from "reduxStore/grand-reducer";
 import { Actions } from "reduxStore/actions";
 import { ReduxStateProductCreate } from "reduxStore/product_create-reducer";
+import { PaginatorVariables } from "reduxStore/paginator-variables-actions";
 // Styles
 import { withStyles, WithStyles } from "@material-ui/core/styles";
 import { styles } from '../commonStyles';
@@ -71,7 +72,7 @@ import { CREATE_PRODUCT } from "queries/products-mutations";
 // CACHE UPDATES
 // update New Release connection in cache after product creation
 import { GET_ALL_NEW_PRODUCTS } from "queries/products-queries";
-import { initialVariables, QueryDataNewReleases } from "pageComponents/FrontPage/NewReleaseProducts";
+import { QueryData as QueryDataNewProducts } from "pageComponents/FrontPage/NewProducts";
 import { DASHBOARD_PRODUCTS_CONNECTION } from "queries/store-queries";
 // Warning: these are determined inside the facet hook, may get out of sync
 // if you change the defaults in that hook
@@ -90,6 +91,7 @@ import {
   ProductVariantInput,
   StorePrivate,
   ProductsEdge,
+  ProductsConnection,
 } from "typings/gqlTypes";
 import {
   ProductCreateInputFrontEnd,
@@ -153,7 +155,8 @@ const ProductCreatePage = (props: ReactProps) => {
     dzuPreviewOrder,
     dzuPreviewItems,
     user,
-    storeId
+    storeId,
+    newProductsVariables,
   } = useSelector<GrandReduxState, ReduxState>(state => {
     return {
       reduxProductCreate: state[reducerName],
@@ -161,8 +164,10 @@ const ProductCreatePage = (props: ReactProps) => {
       dzuPreviewItems: state[reducerName]?.dzuPreviewItems,
       user: state?.reduxLogin?.user,
       storeId: state?.reduxLogin?.user?.store?.id,
+      newProductsVariables: state.reduxPaginatorVariables.newProductsVariables
     }
   });
+
 
   const productCreateInput = reduxProductCreate.productCreateInput;
   const currentVariants = reduxProductCreate.productCreateInput.currentVariants;
@@ -172,7 +177,9 @@ const ProductCreatePage = (props: ReactProps) => {
     productCreate,
     { loading, error, data }
   ] = useMutation<MutationData, MutationVar>(CREATE_PRODUCT, {
-    variables: { productCreateInput: { ...productCreateInput } },
+    variables: {
+      productCreateInput: { ...productCreateInput }
+    },
     onError: (err) => console.log(err),
     onCompleted: async(data: MutationData) => {
       // transition to product creation success page
@@ -192,37 +199,37 @@ const ProductCreatePage = (props: ReactProps) => {
       let newProduct = createProduct?.product;
       console.log("new product: ", newProduct)
 
-      const cacheData = cache.readQuery<QueryDataNewReleases, any>({
+      const cacheData = cache.readQuery<QueryDataNewProducts, any>({
         query: GET_ALL_NEW_PRODUCTS,
-        variables: initialVariables,
+        variables: newProductsVariables,
       });
-      console.log("cache: ", cache)
       console.log("cacheData: ", cacheData)
-      console.log("initialVariables: ", initialVariables)
+      console.log("newProductsVariables: ", newProductsVariables)
 
       /// Update front page new releases products
       if (cacheData?.productsAllConnection?.edges) {
         cache.writeQuery({
           query: GET_ALL_NEW_PRODUCTS,
-          variables: initialVariables,
+          variables: newProductsVariables,
           data: {
             productsAllConnection: {
+              ...cacheData?.productsAllConnection,
               edges: [
-                { node: newProduct },
+                { node: newProduct, __typename: "ProductsEdge" } as ProductsEdge,
                 ...(cacheData?.productsAllConnection?.edges ?? []),
               ],
               totalCount: (cacheData?.productsAllConnection?.edges?.length ?? 0) + 1,
-            }
+            } as ProductsConnection
           },
         });
       }
+      console.log("cache after: ", cache)
 
       /// Update dashboard products
       const cacheData2 = cache.readQuery<QueryDataDashboardProducts, any>({
         query: DASHBOARD_PRODUCTS_CONNECTION,
         variables: initialDashboardVariables,
       });
-      console.log("cache2: ", cacheData)
       if (cacheData2?.dashboardProductsConnection?.edges) {
         cache.writeQuery({
           query: DASHBOARD_PRODUCTS_CONNECTION,
@@ -231,11 +238,11 @@ const ProductCreatePage = (props: ReactProps) => {
             dashboardProductsConnection: {
               ...cacheData2.dashboardProductsConnection,
               edges: [
-                { node: newProduct },
+                { node: newProduct, __typename: "ProductsEdge" } as ProductsEdge,
                 ...(cacheData2?.dashboardProductsConnection?.edges ?? []),
               ],
               totalCount: (cacheData2?.dashboardProductsConnection?.edges?.length ?? 0) + 1,
-            }
+            } as ProductsConnection
           },
         });
       }
@@ -633,6 +640,7 @@ interface ReduxState {
   dzuPreviewItems: DzuPreviewItem[];
   storeId: ID;
   user: UserPrivate;
+  newProductsVariables: PaginatorVariables;
 }
 
 export interface MutationData {

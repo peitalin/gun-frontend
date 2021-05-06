@@ -35,8 +35,8 @@ const FeaturedProductsMobileCarousel = (props: ReactProps) => {
       xl: 1.5,
     },
     loading,
-    hideViewAll = true,
-    viewAllPath = "/categories",
+    categorySlug,
+    showSeeMore = true,
   } = props;
 
 
@@ -88,13 +88,16 @@ const FeaturedProductsMobileCarousel = (props: ReactProps) => {
         }
       </AirCarousel>
       {
-        !hideViewAll &&
+        !showSeeMore &&
         !loading &&
         connection?.edges?.length > 0 &&
         <div className={classes.seeAllLinkContainer}>
-          <Link href={viewAllPath}>
+          <Link
+            href={`categories/${categorySlug}`}
+            as={"categories/[categorySlug"}
+          >
             <a className={classes.seeAllLinkBorder}>
-              See all
+              See more
               {/* <ArrowRight/> */}
             </a>
           </Link>
@@ -122,8 +125,8 @@ interface ReactProps extends WithStyles<typeof styles> {
   // don't want Desktop's sortAscend: true, while Mobile is false,
   // as both queries will be sent and returned data conflicts
   loading?: boolean;
-  hideViewAll?: boolean;
-  viewAllPath?: string
+  showSeeMore?: boolean;
+  categorySlug?: string
 }
 
 

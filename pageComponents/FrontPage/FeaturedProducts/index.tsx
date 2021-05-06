@@ -59,16 +59,9 @@ const FeaturedProducts = (props: ReactProps) => {
     ssr: true,
   })
 
+  let promotedList = data?.promotedList
+  let categorySlug = promotedList?.categoryFilterSlug
   let connection = data?.promotedList?.promotedSlotsConnection
-
-  // if (loading) {
-  //   return (
-  //     <FeaturedProductsLoading
-  //       cardsPerRow={cardsPerRow}
-  //       numRows={2}
-  //     />
-  //   )
-  // }
 
   return (
     <>
@@ -77,6 +70,8 @@ const FeaturedProducts = (props: ReactProps) => {
           title={props.title}
           connection={connection}
           cardsPerRow={cardsPerRow}
+          showSeeMore={!!categorySlug}
+          categorySlug={categorySlug}
         />
       </Hidden>
       <Hidden mdUp implementation="css">
@@ -84,6 +79,8 @@ const FeaturedProducts = (props: ReactProps) => {
           title={props.title}
           connection={connection}
           cardsPerRow={cardsPerRow}
+          showSeeMore={!!categorySlug}
+          categorySlug={categorySlug}
         />
       </Hidden>
     </>

@@ -17,13 +17,15 @@ import {
 import NewProductsMobileCarousel from "pageComponents/FrontPage/NewProducts/NewProductsMobileCarousel";
 import NewProductsDesktop from "pageComponents/FrontPage/NewProducts/NewProductsDesktop";
 import Hidden from 'components/HiddenFix';
+import { useSelector } from "react-redux";
+import { GrandReduxState, Actions} from "reduxStore/grand-reducer";
+import { PaginatorVariables } from "reduxStore/paginator-variables-actions";
 
 // useMediaQuery
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 // Graphql
 import { useQuery, useApolloClient } from "@apollo/client";
-import { GET_PROMOTED_LIST } from "queries/promoted_lists-queries";
 import { GET_ALL_NEW_PRODUCTS } from "queries/products-queries";
 
 
@@ -44,36 +46,18 @@ const NewProducts = (props: ReactProps) => {
     },
   } = props;
 
-
-  const orderByOptions = [
-    { label: "Newest", value: { createdAt: Order_By.DESC }},
-    { label: "Oldest", value: { createdAt: Order_By.ASC }},
-    { label: "Highest Price", value: { price: Order_By.DESC }},
-    { label: "Lowest Price", value: { price: Order_By.ASC }},
-  ];
-
-  const initialVariables = {
-    searchTerm: "",
-    query: {
-      limit: 12,
-      offset: 0,
-      orderBy: orderByOptions[0],
-    },
-  }
-
-  const [orderBy, setOrderBy] = React.useState(initialVariables?.query?.orderBy);
-  const [expand, setExpand] = React.useState(false);
-  const [searchTermUi, setSearchTermUi] = React.useState("");
-  const [searchTerm, setSearchTerm] = React.useState(initialVariables?.searchTerm);
+  const variables = useSelector<GrandReduxState, PaginatorVariables>(
+    s => s.reduxPaginatorVariables.newProductsVariables
+  )
 
   const { loading, error, data } = useQuery<QueryData, QueryVar>(
     GET_ALL_NEW_PRODUCTS, {
     variables: {
-      searchTerm: searchTerm,
+      searchTerm: variables.searchTerm,
       query: {
-        limit: 12,
-        offset: 0,
-        orderBy: orderBy.value as any,
+        limit: variables.query.limit,
+        offset: variables.query.offset,
+        orderBy: variables.query.orderBy,
         // orderBy: {
         //   // price: OrderBy.ASC,
         //   // price: OrderBy.DESC

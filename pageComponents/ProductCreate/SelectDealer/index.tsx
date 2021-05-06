@@ -40,7 +40,7 @@ const SelectDealers = (props: ReactProps & FormikProps<FormikFields>) => {
   const dealers = (data?.getAllDealers ?? [])
       .filter(c => !!c && !!c.name)
 
-  console.log("dealerId: ", fprops.values.dealerId)
+  // console.log("dealerId: ", fprops.values.dealerId)
   // console.log("dealer: ", fprops.values.dealer)
 
   return (

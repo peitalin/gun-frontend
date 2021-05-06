@@ -11,6 +11,7 @@ import { ReduxStateWishlist } from './wishlist-reducer';
 import { ReduxStateFollowingStores } from './following-stores-reducer';
 import { ReduxStateRefetch } from './refetch-reducer';
 import { ReduxStateConversation } from './conversation-reducer';
+import { ReduxStatePaginatorVariables } from './paginator-variables-reducer';
 // Reducers
 import { reduxReducerLogin } from "./login-reducer";
 import { reduxReducerModals } from "./modals-reducer";
@@ -20,6 +21,7 @@ import { reduxReducerWishlist } from "./wishlist-reducer";
 import { reduxReducerFollowingStores } from "./following-stores-reducer";
 import { reduxReducerRefetch } from "./refetch-reducer";
 import { reduxReducerConversation } from "./conversation-reducer";
+import { reduxReducerPaginatorVariables } from "./paginator-variables-reducer";
 
 import { Actions } from "./actions";
 export { Actions }
@@ -36,6 +38,7 @@ export const makeStore = (initialState, options) => {
         reduxFollowingStores: reduxReducerFollowingStores,
         reduxRefetch: reduxReducerRefetch,
         reduxConversation: reduxReducerConversation,
+        reduxPaginatorVariables: reduxReducerPaginatorVariables,
       }),
       initialState,
       applyMiddleware(thunk),
@@ -52,5 +55,6 @@ export interface GrandReduxState {
   reduxFollowingStores: ReduxStateFollowingStores;
   reduxRefetch: ReduxStateRefetch;
   reduxConversation: ReduxStateConversation;
+  reduxPaginatorVariables: ReduxStatePaginatorVariables;
 }
 

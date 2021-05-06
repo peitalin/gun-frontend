@@ -37,13 +37,11 @@ const FeaturedProductsDesktop = (props: ReactProps) => {
       xl: 4,
     },
     loading,
-    hideViewAll = true,
-    viewAllPath = "/categories",
+    categorySlug,
+    showSeeMore = true,
   } = props;
 
   const theme = useTheme();
-  // jumboXL preview card on sm screen size only, remove right margin
-  const smDown = useMediaQuery(theme.breakpoints.down("sm"))
 
   const products = connection?.edges?.map(
     promotedItem => promotedItem.node.product
@@ -69,7 +67,7 @@ const FeaturedProductsDesktop = (props: ReactProps) => {
                 className={classes.productCardWrapper}
               >
                 <div className={clsx(
-                  smDown ? classes.flexItemMobile : classes.flexItem,
+                  classes.flexItem,
                   "staggerFadeIn",
                   classes.flexItemHover,
                 )}>
@@ -83,13 +81,16 @@ const FeaturedProductsDesktop = (props: ReactProps) => {
           : <LoadingCards count={4} />
         }
         {
-          !hideViewAll &&
+          !showSeeMore &&
           !loading &&
           connection?.edges?.length > 0 &&
           <div className={classes.seeAllLinkContainer}>
-            <Link href={viewAllPath}>
+            <Link
+              href={`categories/${categorySlug}`}
+              as={"categories/[categorySlug"}
+            >
               <a className={classes.seeAllLinkBorder}>
-                See all
+                See more
                 {/* <ArrowRight/> */}
               </a>
             </Link>
@@ -118,8 +119,8 @@ interface ReactProps extends WithStyles<typeof styles> {
   // don't want Desktop's sortAscend: true, while Mobile is false,
   // as both queries will be sent and returned data conflicts
   loading?: boolean;
-  hideViewAll?: boolean;
-  viewAllPath?: string
+  showSeeMore?: boolean;
+  categorySlug?: string
 }
 
 
