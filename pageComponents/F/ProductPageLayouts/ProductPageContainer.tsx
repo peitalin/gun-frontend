@@ -6,10 +6,7 @@ import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/s
 import { Product } from "typings/gqlTypes";
 // Utils Components
 import ErrorBounds from "components/ErrorBounds";
-import Loading from "components/Loading";
-import CategoryBreadcrumbs from "./CategoryBreadcrumbs";
-// Next
-import Hidden from "components/HiddenFix";
+// import CategoryBreadcrumbs from "pageComponents/P/ProductPageLayouts/CategoryBreadcrumbs";
 // Meta headers
 import MetaHeadersPage from "layout/MetaHeadersPage";
 import { Gradients, isThemeDark } from "layout/AppTheme";
