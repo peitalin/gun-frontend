@@ -83,7 +83,7 @@ const VisaPurchaseProduct = (props: ReactProps) => {
 
   const [
     purchasePromotion,
-    purchasePromotionResponse
+    { data, loading: loading1, error}
   ] = useMutation<MData3, MVar3>(
     PURCHASE_PROMOTION, {
     variables: {
@@ -182,6 +182,16 @@ const VisaPurchaseProduct = (props: ReactProps) => {
   }
 
 
+  React.useEffect(() => {
+    if (error) {
+      console.warn("error: ", error)
+      snackbar.enqueueSnackbar(
+        `Payment cancelled, please try an Australian card`,
+        { variant: "info" }
+      )
+    }
+  }, [error])
+
 
 
   return (
@@ -259,7 +269,7 @@ const VisaPurchaseProduct = (props: ReactProps) => {
               }
               loadingIconColor={Colors.blue}
               replaceTextWhenLoading={true}
-              loading={loading}
+              loading={loading || loading1}
               disabled={loading || disableButton}
               variant="contained"
               color="secondary"

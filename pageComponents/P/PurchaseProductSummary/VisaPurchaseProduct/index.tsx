@@ -76,6 +76,8 @@ const VisaPurchaseProduct = (props: ReactProps) => {
 
   const { classes, disableButton } = props;
 
+  const [loading, setLoading] = React.useState(false)
+
   const product = props.product;
   const featuredVariant = props.product.featuredVariant;
   const purchasePrice = props.selectedBid?.offerPrice
@@ -289,7 +291,7 @@ const VisaPurchaseProduct = (props: ReactProps) => {
     onCompleted: (data) => {
       console.log("data: ", data)
       snackbar.enqueueSnackbar(
-        `Cancelled payment, please try a card that supports "3D Secure payments"`,
+        `Payment cancelled, please try a card that supports "3D Secure payments"`,
         { variant: "info", autoHideDuration: 8000 }
       )
     },
@@ -331,6 +333,7 @@ const VisaPurchaseProduct = (props: ReactProps) => {
         error: undefined
       }
     }
+    setLoading(true)
 
     const stripeAuthorizePaymentData: StripeAuthorizePaymentData = {
       paymentMethod: paymentMethodId,
@@ -376,9 +379,9 @@ const VisaPurchaseProduct = (props: ReactProps) => {
     // this can return an error, insufficient funds, card rejected, etc
     console.log("3DS confirm response", stripe3dsResponse)
     if (stripe3dsResponse?.error?.code) {
-      // console.log("3DS Error: ", stripe3dsResponse.error)
+      console.log("3DS Error: ", stripe3dsResponse?.error?.message)
       snackbar.enqueueSnackbar(
-        `Your card does not support 3D Secure verification!`,
+        `Your card failed 3D Secure verification`,
         { variant: "error" }
       )
       await cancelPaymentIntent3dsFailure({
@@ -400,7 +403,7 @@ const VisaPurchaseProduct = (props: ReactProps) => {
   }
 
 
-
+  let loadingGql = loading1 || loading2 || loading3
 
   return (
     <ErrorBounds name="Visa Checkout" className={props.className}>
@@ -472,11 +475,12 @@ const VisaPurchaseProduct = (props: ReactProps) => {
                       })
                     }
                   })
+                  .finally(() => setLoading(false))
               }}
               loadingIconColor={Colors.blue}
               replaceTextWhenLoading={true}
-              loading={loading1 || loading2}
-              disabled={loading1 || loading2 || disableButton}
+              loading={loading}
+              disabled={loading || disableButton}
               variant="contained"
               color="secondary"
               className={classes.buyButton}
