@@ -371,35 +371,44 @@ export const useEffectUpdateGridAccum = <T>({
         // if any pages match, then no need to update
         return gridPageFirstItemId === objectIds?.[0]
       })
+
     // console.log("skipUpdate", skipUpdate)
     // console.log("loading", loading)
 
-    // create/update the index with the products from that index-page-request
-    if (objectIds) {
-      if (!skipUpdate)  {
-        // console.log("instantiating grid...")
-        // gridAccum[index] is empty and needs to be updated
+    if (!skipUpdate)  {
+      // console.log("instantiating grid...")
+      // gridAccum[index] is empty and needs to be updated
 
-        // split incoming products from request into groups
-        // this may be from the 5th page onwards...5th and 6th pages incoming
-        let objectIdGroups = splitArrayIntoGrid(objectIds, numItemsPerPage)
-        // console.log("productGroups: ", productGroups)
-        // when overfetching, there will be 2+ groups, allocate products to
-        // the jth over-fetched group of products
+      // split incoming products from request into groups
+      // this may be from the 5th page onwards...5th and 6th pages incoming
+      let objectIdGroups = splitArrayIntoGrid(objectIds, numItemsPerPage)
+      // console.log("objectIdGroups: ", objectIdGroups)
+      // when overfetching, there will be 2+ groups, allocate products to
+      // the jth over-fetched group of products
+
+      if (objectIdGroups?.length === 0) {
+        // page-i returned no items, so set gridAccum[index] as []
+        gridAccum[index] = []
+      } else {
         objectIdGroups.forEach((objectIdSubgroup, k) => {
           // if 1st item on page-i is not the same as 1st item on objectSubgroup-i
           // then replace it
-          if (
-            (gridAccum[index+k]?.[0] as any)?.id !== objectIdSubgroup?.[0]
-          ) {
+          let gridPage: any[] = gridAccum[index+k]
+          let gridPageFirstId = gridPage?.[0]?.id
+          // console.log("index: ", index)
+          // console.log("k: ", k)
+          // console.log("objectIdSubgroup: ", objectIdSubgroup)
+          if (gridPageFirstId !== objectIdSubgroup?.[0]) {
             gridAccum[index+k] = objectIdSubgroup
+            // index + k becuase we're forward fetching k pages from index onwards
           }
         })
-
-        setGridAccum(s => ({
-          ...gridAccum,
-        }))
       }
+
+
+      setGridAccum(s => ({
+        ...gridAccum,
+      }))
     }
     // console.log("gridAccum: ", gridAccum)
 

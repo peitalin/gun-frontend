@@ -250,6 +250,11 @@ export const Gradients = {
     color1: Colors.lighterBlack,
     color2: Colors.black,
   },
+  gradientLightBlack:  {
+    background: `linear-gradient(120deg, ${Colors.black} 0%, ${Colors.slateGreyDarker} 90%)`,
+    color1: Colors.black,
+    color2: Colors.slateGreyDarker,
+  },
   gradientBlackDitherDown:  {
     background: `linear-gradient(180deg, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0) 100%)`,
     color1: Colors.black,

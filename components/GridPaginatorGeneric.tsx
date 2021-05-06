@@ -53,7 +53,6 @@ function GridPaginatorGeneric<T>(props: ReactProps<T> & ReactChildren<T>) {
 
   // accumulate incoming objects in a hashamp to lookup with the gridPaginator
   React.useEffect(() => {
-    let hashmapKeys = Object.keys(hashmap)
     let newHashmap = {}
     connection?.edges?.forEach(({ node }: { node: any }) => {
       // let uid = `${node.__typename}:{"id":"${node?.id}"}`

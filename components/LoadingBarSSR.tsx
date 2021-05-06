@@ -17,7 +17,6 @@ const LoadingBarSSR = (props) => {
   return (
     <LoadingBar
       absoluteTop
-      color={Colors.secondary}
       height={4}
       width={'100vw'}
       loading={true}

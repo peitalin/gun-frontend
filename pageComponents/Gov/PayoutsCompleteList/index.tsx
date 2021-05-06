@@ -106,11 +106,6 @@ const PayoutsCompleteList = (props: ReactProps) => {
 
       <LoadingBar
         absoluteTop
-        color={
-          isThemeDark(theme)
-            ? Colors.purple
-            : Colors.ultramarineBlue
-        }
         height={4}
         width={'100vw'}
         loading={loading}

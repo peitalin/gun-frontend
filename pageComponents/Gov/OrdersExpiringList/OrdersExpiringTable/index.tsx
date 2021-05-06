@@ -104,7 +104,6 @@ const OrdersExpiringTable: NextPage<ReactProps> = (props) => {
     <main className={classes.root}>
       <LoadingBar
         absoluteTop
-        color={Colors.gradientUniswapBlue1}
         height={4}
         width={'100vw'}
         loading={_ordersExpiring.loading}

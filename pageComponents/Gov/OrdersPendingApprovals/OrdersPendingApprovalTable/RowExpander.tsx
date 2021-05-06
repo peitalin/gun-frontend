@@ -19,7 +19,6 @@ import {
   GET_ORDERS_PENDING_APPROVAL_CONNECTION,
   GET_ORDERS_ADMIN_APPROVED_CONNECTION,
 } from "queries/orders-admin-queries";
-import { initialLimit } from ".";
 // router
 import Link from "next/link";
 import Typography from "@material-ui/core/Typography";
@@ -154,43 +153,42 @@ const RowExpander = (props: RowExpanderProps) => {
               handleMutationUpdate={
                 (cache, { data }) => {
 
-                  let newOrder = data?.approveForm10?.order || data?.reviseAndResubmitForm10?.order
+                  let newOrder = data?.approveForm10?.order
 
-                  let initialVariables = {
-                    query: {
-                      limit: initialLimit,
-                      offset: 0,
+                  if (newOrder) {
+
+                    interface MData {
+                      getOrdersPendingApprovalConnectionAdmin?: OrdersConnection
                     }
+
+                    let vars = props.variables
+
+                    const cacheData = cache.readQuery<MData, any>({
+                      query: GET_ORDERS_PENDING_APPROVAL_CONNECTION,
+                      variables: vars.ordersPendingApproval,
+                    });
+                    // console.log("CACHE DATA: ", cacheData)
+
+                    let ordersConnection = cacheData?.getOrdersPendingApprovalConnectionAdmin
+                    // console.log("ordersConnection: ", ordersConnection)
+                    let newEdges = (ordersConnection?.edges ?? [])
+                        .filter(edge => edge?.node?.id !== newOrder?.id)
+                    // console.log("newEdges: ", newEdges)
+
+                    cache.writeQuery({
+                      query: GET_ORDERS_PENDING_APPROVAL_CONNECTION,
+                      variables: vars.ordersPendingApproval,
+                      data: {
+                        getOrdersPendingApprovalConnectionAdmin: {
+                          ...ordersConnection,
+                          // remove approved order from the "pending approval" list
+                          edges: newEdges,
+                          totalCount: (ordersConnection?.edges?.length ?? 1) - 1,
+                        }
+                      },
+                    });
+                    // console.log("CACHE AFTER: ", cache)
                   }
-
-                  interface MData {
-                    getOrdersPendingApprovalConnectionAdmin?: OrdersConnection
-                  }
-
-
-                  const cacheData = cache.readQuery<MData, any>({
-                    query: GET_ORDERS_PENDING_APPROVAL_CONNECTION,
-                    variables: initialVariables,
-                  });
-                  console.log("CACHE: ", cache)
-                  console.log("CACHE DATA: ", cacheData)
-
-                  let ordersConnection = cacheData?.getOrdersPendingApprovalConnectionAdmin
-                  console.log("ordersConnection: ", ordersConnection)
-
-                  cache.writeQuery({
-                    query: GET_ORDERS_PENDING_APPROVAL_CONNECTION,
-                    variables: initialVariables,
-                    data: {
-                      getOrdersPendingApprovalConnectionAdmin: {
-                        ...ordersConnection,
-                        // remove approved order from the "pending approval" list
-                        edges: (ordersConnection?.edges ?? [])
-                          .filter(edge => edge?.node?.id !== newOrder?.id),
-                        totalCount: (ordersConnection?.edges?.length ?? 1) - 1,
-                      }
-                    },
-                  });
                 }
               }
             />
@@ -219,6 +217,26 @@ interface RowExpanderProps extends WithStyles<typeof styles> {
   }[];
   initialOpen?: boolean;
   showApprovalButtons?: boolean;
+  variables: {
+    ordersCreated: {
+      query: {
+        limit: number
+        offset: number
+      }
+    }
+    ordersPendingApproval: {
+      query: {
+        limit: number
+        offset: number
+      }
+    }
+    ordersAdminApproved: {
+      query: {
+        limit: number
+        offset: number
+      }
+    }
+  }
 }
 
 

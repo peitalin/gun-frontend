@@ -4,7 +4,8 @@ import clsx from "clsx";
 import { NextPage, NextPageContext } from 'next';
 // Styles
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
-import { Colors, BorderRadius } from "layout/AppTheme";
+import { Colors, BorderRadius, isThemeDark } from "layout/AppTheme";
+import { useTheme } from "@material-ui/core";
 // Redux
 import { useSelector, useDispatch } from "react-redux";
 import { GrandReduxState } from 'reduxStore/grand-reducer';
@@ -44,26 +45,24 @@ import {
 import GridPaginatorGeneric from "components/GridPaginatorGeneric";
 
 
-export const numItemsPerPage = 5;
-export const overfetchBy = 1;
-export const initialLimit = numItemsPerPage * overfetchBy
-// overfetch by 1x pages
 
 
 const OrdersPendingApprovalTable: NextPage<ReactProps> = (props) => {
 
-  //
   const {
     classes,
   } = props;
 
-  const isDarkMode = useSelector<GrandReduxState, boolean>(s => {
-    return s.reduxLogin.darkMode === 'dark'
-  })
-
-  let router = useRouter();
+  let router = useRouter()
+  let theme = useTheme()
+  const isDarkMode = isThemeDark(theme);
 
   /////////////////////////////////// paginator
+
+  const numItemsPerPage = 5;
+  const overfetchBy = 1;
+  const initialLimit = numItemsPerPage * overfetchBy
+  // overfetch by 1x pages
 
   //// Orders Created Paginator Hooks
   let {
@@ -123,124 +122,65 @@ const OrdersPendingApprovalTable: NextPage<ReactProps> = (props) => {
   })
 
 
+  // needs to be passed down for approveForm to update cache
+  const variables = {
+    ordersCreated: {
+      query: {
+        limit: ordersCreatedLimit,
+        offset: ordersCreatedOffset,
+      }
+    },
+    ordersPendingApproval: {
+      query: {
+        limit: ordersPALimit,
+        offset: ordersPAOffset,
+      }
+    },
+    ordersAdminApproved: {
+      query: {
+        limit: ordersAALimit,
+        offset: ordersAAOffset,
+      }
+    },
+  }
 
-
-  const [
-    getOrdersCreated,
-    _ordersCreated
-  ] = useLazyQuery<QueryData, QueryVar>(
-    GET_ORDERS_CREATED_CONNECTION, {
-      variables: {
-        query: {
-          limit: ordersCreatedLimit,
-          offset: ordersCreatedOffset,
-        }
-      },
-      fetchPolicy: "cache-and-network",
-    }
-  );
-
-  const [
-    getOrdersPendingApproval,
-    _ordersPendingApproval
-  ] = useLazyQuery<QueryData, QueryVar>(
-    GET_ORDERS_PENDING_APPROVAL_CONNECTION, {
-      variables: {
-        query: {
-          limit: ordersPALimit,
-          offset: ordersPAOffset,
-        }
-      },
-      fetchPolicy: "cache-and-network",
-    }
-  );
-
-  const [
-    getOrdersAdminApproved,
-    _ordersAdminApproved,
-  ] = useLazyQuery<QueryData, QueryVar>(
-    GET_ORDERS_ADMIN_APPROVED_CONNECTION, {
-      variables: {
-        query: {
-          limit: ordersAALimit,
-          offset: ordersAAOffset,
-        }
-      },
-      fetchPolicy: "cache-and-network",
-    }
-  );
-
-  let refetchQueriesParams = [
+  const  refetchQueriesParams = [
     {
       query: GET_ORDERS_CREATED_CONNECTION,
-      variables: {
-        query: {
-          limit: ordersCreatedLimit,
-          offset: ordersCreatedOffset,
-        }
-      },
+      variables: variables.ordersCreated,
     },
     {
       query: GET_ORDERS_PENDING_APPROVAL_CONNECTION,
-      variables: {
-        query: {
-          limit: ordersPALimit,
-          offset: ordersPAOffset,
-        }
-      },
+      variables: variables.ordersPendingApproval,
     },
     {
       query: GET_ORDERS_ADMIN_APPROVED_CONNECTION ,
-      variables: {
-        query: {
-          limit: ordersAALimit,
-          offset: ordersAAOffset,
-        }
-      },
+      variables: variables.ordersPendingApproval,
     },
   ]
 
 
 
-  const refetchTheOrders = async () => {
-    if (
-      _ordersCreated &&
-      typeof _ordersCreated.refetch === 'function'
-    ) {
-      await _ordersCreated.refetch()
+  const _ordersCreated = useQuery<QueryData, QueryVar>(
+    GET_ORDERS_CREATED_CONNECTION, {
+      variables: variables.ordersCreated,
+      fetchPolicy: "cache-and-network",
     }
-    if (
-      _ordersPendingApproval &&
-      typeof _ordersPendingApproval.refetch === 'function'
-    ) {
-      await _ordersPendingApproval.refetch()
+  );
+
+  const _ordersPendingApproval = useQuery<QueryData, QueryVar>(
+    GET_ORDERS_PENDING_APPROVAL_CONNECTION, {
+      variables: variables.ordersPendingApproval,
+      fetchPolicy: "cache-and-network",
     }
-    if (
-      _ordersAdminApproved &&
-      typeof _ordersAdminApproved.refetch === 'function'
-    ) {
-      await _ordersAdminApproved.refetch()
+  );
+
+  const _ordersAdminApproved = useQuery<QueryData, QueryVar>(
+    GET_ORDERS_ADMIN_APPROVED_CONNECTION, {
+      variables: variables.ordersAdminApproved,
+      fetchPolicy: "cache-and-network",
     }
-  }
-
-  const refetchOrders = React.useCallback(() => {
-    // apollo devs are retards
-    // https://github.com/apollographql/react-apollo/issues/3862
-    console.log('force refetching orders..')
-    setTimeout(() => refetchTheOrders(), 0)
-  }, [refetchTheOrders])
-
-
-  React.useEffect(() => {
-
-    getOrdersCreated()
-    getOrdersPendingApproval()
-    getOrdersAdminApproved()
-
-    refetchOrders()
-
-  }, [_ordersCreated?.data])
-
+  );
 
 
   const ordersCreatedConnection =
@@ -254,13 +194,12 @@ const OrdersPendingApprovalTable: NextPage<ReactProps> = (props) => {
 
 
   // console.log("ordersCreatedConnection:",ordersCreatedConnection)
-  // console.log("ordersPendingApprovalConnection:",ordersPendingApprovalConnection)
+  console.log("ordersPendingApprovalConnection:",ordersPendingApprovalConnection)
 
   if (_ordersAdminApproved.loading || _ordersPendingApproval.loading) {
     return (
       <LoadingBar
         absoluteTop
-        color={Colors.gradientUniswapBlue1}
         height={4}
         width={'100vw'}
         loading={true}
@@ -269,7 +208,6 @@ const OrdersPendingApprovalTable: NextPage<ReactProps> = (props) => {
   } else if (_ordersPendingApproval && _ordersAdminApproved) {
     return (
       <main className={classes.root}>
-
 
         <Typography variant="h4" className={classes.subtitle1}>
           Created Orders
@@ -338,6 +276,7 @@ const OrdersPendingApprovalTable: NextPage<ReactProps> = (props) => {
                   index={ordersCreatedIndex}
                   initialOpen={router?.query?.orderId === order?.id}
                   refetchQueriesParams={refetchQueriesParams}
+                  variables={variables}
                   showApprovalButtons={false}
                 />
               )
@@ -413,6 +352,7 @@ const OrdersPendingApprovalTable: NextPage<ReactProps> = (props) => {
                   index={ordersPAIndex}
                   initialOpen={router?.query?.orderId === order?.id}
                   refetchQueriesParams={refetchQueriesParams}
+                  variables={variables}
                   showApprovalButtons={true}
                 />
               )
@@ -482,6 +422,7 @@ const OrdersPendingApprovalTable: NextPage<ReactProps> = (props) => {
                   index={ordersAAIndex}
                   initialOpen={router?.query?.orderId === order?.id}
                   refetchQueriesParams={refetchQueriesParams}
+                  variables={variables}
                   showApprovalButtons={true}
                 />
               )
@@ -569,7 +510,7 @@ const styles = (theme: Theme) => createStyles({
     flexBasis: "33%",
   },
   subtitle1: {
-    color: theme.palette.type === 'dark'
+    color: isThemeDark(theme)
       ? Colors.uniswapLightGrey
       : Colors.black,
     marginTop: '2rem',
@@ -579,15 +520,15 @@ const styles = (theme: Theme) => createStyles({
     width: '100%',
   },
   flexRowTitle: {
-    backgroundColor: theme.palette.type === 'dark'
+    backgroundColor: isThemeDark(theme)
       ? Colors.uniswapDarkNavy
       : Colors.cream,
     borderRadius: `${BorderRadius}px ${BorderRadius}px 0px 0px`,
     border: 'unset',
-    // border: theme.palette.type === 'dark'
+    // border: isThemeDark(theme)
     //   ? `unset`
     //   : `1px solid ${Colors.slateGreyDark}`,
-    // borderBottom: theme.palette.type === 'dark'
+    // borderBottom: isThemeDark(theme)
     //   ? `1px solid ${Colors.uniswapGrey}`
     //   : `1px solid ${Colors.slateGreyDark}`,
     position: "relative", // for <LoadingBar/> absolute position
@@ -633,8 +574,9 @@ const styles = (theme: Theme) => createStyles({
     width: 44,
   },
   gridRoot: {
-    backgroundColor: theme.palette.type === 'dark'
-      ? Colors.uniswapDarkNavy : Colors.cream,
+    backgroundColor: isThemeDark(theme)
+      ? Colors.uniswapDarkNavy
+      : Colors.cream,
     borderRadius: `0px 0px ${BorderRadius}px ${BorderRadius}px`,
     paddingBottom: '0.25rem',
   },

@@ -402,7 +402,7 @@ export const styles = (theme: Theme) => createStyles({
     // background: Gradients.gradientBlack.background,
     background: theme.palette.type === 'dark'
       ? Gradients.gradientUniswapFluro.background
-      : Gradients.gradientBlack.background,
+      : Gradients.gradientLightBlack.background,
     height: `${NewsBarHeight}px`,
     zIndex: 5,
     position: "relative",

@@ -260,7 +260,7 @@ const VisaPurchaseProduct = (props: ReactProps) => {
     onCompleted: (data) => {
       console.log("confirmOrder response: ", data?.confirmOrder)
       snackbar.enqueueSnackbar(
-        `Success order placed: ${data?.confirmOrder?.confirmedOrder?.id}`,
+        `Successful order placed: ${data?.confirmOrder?.confirmedOrder?.id}`,
         { variant: "success" }
       )
       if (typeof props.handleOrderPostPurchase === "function") {
