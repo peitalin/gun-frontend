@@ -395,7 +395,7 @@ export const styles = (theme: Theme) => createStyles({
   },
   noProductsForSale: {
     height: 480,
-    marginBottom: '2rem',
+    marginBottom: '1rem',
   },
   noProductsText: {
     color: Colors.darkGrey,
