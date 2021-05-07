@@ -436,48 +436,48 @@ export const notifyStyles = (theme: Theme) => createStyles({
   variantSuccess: {
     borderRadius: BorderRadius4x,
     // border: `2px solid ${Colors.ultramarineBlue}`,
-    border: `2px solid ${Colors.cream}`,
+    border: `2px solid ${Colors.slateGrey}`,
     background: `${Gradients.gradientSnackBlueMagenta.background} !important`,
-    color: `${Colors.cream} !important`,
+    color: `${Colors.slateGrey} !important`,
     '& > [class*="SnackbarItem-action"]': {
       "& > button > span > svg": {
-        fill: `${Colors.cream} !important`,
+        fill: `${Colors.slateGrey} !important`,
       }
     },
   },
   variantError: {
     borderRadius: BorderRadius4x,
     // border: `2px solid ${Colors.lightRed}`,
-    border: `2px solid ${Colors.cream}`,
+    border: `2px solid ${Colors.slateGrey}`,
     background: `${Gradients.gradientSnackRedMagenta.background} !important`,
-    color: `${Colors.cream} !important`,
+    color: `${Colors.slateGrey} !important`,
     '& > [class*="SnackbarItem-action"]': {
       "& > button > span > svg": {
-        fill: `${Colors.cream} !important`,
+        fill: `${Colors.slateGrey} !important`,
       }
     },
   },
   variantInfo: {
     borderRadius: BorderRadius4x,
     // border: `2px solid ${Colors.black}`,
-    border: `2px solid ${Colors.cream}`,
+    border: `2px solid ${Colors.slateGrey}`,
     background: `${Gradients.gradientSnackBlack.background} !important`,
-    color: `${Colors.cream} !important`,
+    color: `${Colors.slateGrey} !important`,
     '& > [class*="SnackbarItem-action"]': {
       "& > button > span > svg": {
-        fill: `${Colors.cream} !important`,
+        fill: `${Colors.slateGrey} !important`,
       }
     },
   },
   variantWarning: {
     borderRadius: BorderRadius4x,
     // border: `2px solid ${Colors.yellow}`,
-    border: `2px solid ${Colors.cream}`,
+    border: `2px solid ${Colors.slateGrey}`,
     backgroundColor: `${Colors.yellow} !important`,
-    color: `${Colors.cream} !important`,
+    color: `${Colors.slateGrey} !important`,
     '& > [class*="SnackbarItem-action"]': {
       "& > button > span > svg": {
-        fill: `${Colors.cream} !important`,
+        fill: `${Colors.slateGrey} !important`,
       }
     },
   },
