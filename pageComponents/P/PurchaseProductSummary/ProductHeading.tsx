@@ -20,7 +20,8 @@ const ProductHeading = (props: ReactProps) => {
     <ErrorBounds className={classes.headingRoot}>
       <div className={classes.greyBorder}>
         <Typography variant="subtitle1" className={classes.productTitle}>
-          {product?.currentSnapshot?.title}
+          Escrow Checkout
+          {/* {product?.currentSnapshot?.title} */}
         </Typography>
       </div>
       <Typography variant="body1" className={classes.subInfo}>

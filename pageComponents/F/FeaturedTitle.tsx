@@ -16,33 +16,37 @@ import { Colors } from "layout/AppTheme";
 
 const FeaturedTitle = (props: ReactProps) => {
 
-  const { classes, product } = props;
+  const {
+    classes,
+    product,
+    isMobile,
+  } = props;
 
   return (
     <div className={clsx(
       classes.featuredTitleRoot,
     )}>
-      {
-        process.browser &&
-        <div className={classes.flexCol}>
-          <div className={classes.flexItemWide}>
-            <span className={classes.titleMake} >
-              {product?.currentSnapshot?.make}
-            </span>
-            <span className={classes.collabX} >
-              x
-            </span>
-            <span className={classes.titleModel}>
-              {product?.currentSnapshot?.model}
-            </span>
-          </div>
-          <div className={classes.flexItemWide}>
-            <span className={classes.subtitle} >
-              {product?.currentSnapshot?.title}
-            </span>
-          </div>
+      <div className={classes.flexCol}>
+        <div className={classes.flexItemWide}>
+          <span className={isMobile ? classes.titleMakeMobile : classes.titleMake} >
+            {product?.currentSnapshot?.make}
+          </span>
+          <span className={clsx(
+            classes.collabX,
+            isMobile ? classes.collabXMobile : classes.collabXDesktop,
+          )} >
+            x
+          </span>
+          <span className={isMobile ? classes.titleModelMobile : classes.titleModel}>
+            {product?.currentSnapshot?.model}
+          </span>
         </div>
-      }
+        <div className={classes.flexItemWide}>
+          <span className={isMobile ? classes.subtitleMobile : classes.subtitle} >
+            {product?.currentSnapshot?.title}
+          </span>
+        </div>
+      </div>
     </div>
   );
 }
@@ -51,6 +55,7 @@ const FeaturedTitle = (props: ReactProps) => {
 
 interface ReactProps extends WithStyles<typeof styles> {
   product: Product;
+  isMobile: boolean;
 }
 
 
@@ -83,8 +88,15 @@ const styles = (theme: Theme) => createStyles({
       ? Colors.uniswapLightGrey
       : Colors.black1A,
   },
+  titleMakeMobile: {
+    fontSize: '1.75rem',
+    lineHeight: '2.5rem',
+    fontWeight: 700,
+    color: isThemeDark(theme)
+      ? Colors.uniswapLightGrey
+      : Colors.black1A,
+  },
   collabX: {
-    fontSize: '2rem',
     fontWeight: 700,
     textAlign: 'center',
     display: 'flex',
@@ -97,6 +109,12 @@ const styles = (theme: Theme) => createStyles({
       ? Colors.uniswapLightGrey
       : Colors.black1A,
   },
+  collabXDesktop: {
+    fontSize: '2rem',
+  },
+  collabXMobile: {
+    fontSize: '1.5rem',
+  },
   titleModel: {
     fontSize: '2.5rem',
     fontWeight: 700,
@@ -105,8 +123,23 @@ const styles = (theme: Theme) => createStyles({
       : Colors.black1A,
     lineHeight: '2.5rem',
   },
+  titleModelMobile: {
+    fontSize: '1.75rem',
+    fontWeight: 700,
+    color: isThemeDark(theme)
+      ? Colors.uniswapLightGrey
+      : Colors.black1A,
+    lineHeight: '2.5rem',
+  },
   subtitle: {
     fontSize: '1.5rem',
+    fontWeight: 400,
+    color: isThemeDark(theme)
+      ? Colors.uniswapLighterGrey
+      : Colors.black1A,
+  },
+  subtitleMobile: {
+    fontSize: '1.125rem',
     fontWeight: 400,
     color: isThemeDark(theme)
       ? Colors.uniswapLighterGrey

@@ -28,8 +28,10 @@ import { GrandReduxState, Actions } from "reduxStore/grand-reducer";
 import ImageGalleryDesktop from "pageComponents/P/ImageGallery/ImageGalleryDesktop";
 import ImageGalleryMobile from "pageComponents/P/ImageGallery/ImageGalleryMobile";
 import PurchaseProductSummary from "pageComponents/P/PurchaseProductSummary";
-import FeaturedTitle from "pageComponents/F/FeaturedTitle";
 import ErrorPage from "pages/_error";
+//
+import FeaturedTitle from "pageComponents/F/FeaturedTitle";
+import ShowOnMobileOrDesktopSSR from "components/ShowOnMobileOrDesktopSSR";
 // Router
 import { useRouter } from "next/router";
 // media query
@@ -238,9 +240,18 @@ const FeaturedProductId: React.FC<ReactProps> = (props) => {
           implementation="css"
         >
           <>
-            <FeaturedTitle
-              product={product}
-            />
+            <ShowOnMobileOrDesktopSSR desktop>
+              <FeaturedTitle
+                product={product}
+                isMobile={false}
+              />
+            </ShowOnMobileOrDesktopSSR>
+            <ShowOnMobileOrDesktopSSR mobile>
+              <FeaturedTitle
+                product={product}
+                isMobile={true}
+              />
+            </ShowOnMobileOrDesktopSSR>
             {
               // !lgDown && below1024 &&
               below1024 &&
