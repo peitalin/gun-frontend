@@ -118,13 +118,13 @@ const MainApp: NextComponentType<AppContext, AppInitialProps, AppProps & AppHOCP
               variantError: classes.variantError,
               variantInfo: classes.variantInfo,
               variantWarning: classes.variantWarning,
-              containerRoot: classes.containerRoot,
+              // containerRoot: classes.containerRoot,
             }}
             action={(key) => {
               return (
                 <IconButtonCancel
                   onClick={onClickDismiss(key)}
-                  dark={true} // light colored close icon
+                  dark={false} // light colored close icon
                 />
               )
             }}

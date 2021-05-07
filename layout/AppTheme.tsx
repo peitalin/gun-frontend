@@ -301,6 +301,21 @@ export const Gradients = {
     color1: Colors.gradientUniswapFluro1,
     color2: Colors.gradientUniswapFluro2,
   },
+  gradientSnackBlueMagenta:  {
+    background: `linear-gradient(90deg, ${Colors.gradientUniswapBlue1} 50%, rgb(146, 89, 240, 0.8) 100%)`,
+    color1: Colors.blue,
+    color2: "rgb(146, 89, 240, 0.8)",
+  },
+  gradientSnackRedMagenta:  {
+    background: `linear-gradient(90deg, ${Colors.red} 50%, rgb(206, 69, 88, 0.8)  100%)`,
+    color1: Colors.red,
+    color2: 'rgb(206, 69, 88, 0.8)',
+  },
+  gradientSnackBlack:  {
+    background: `linear-gradient(110deg, ${Colors.uniswapDarkNavy} 50%, rgb(40, 50, 80, 0.8) 100%)`,
+    color1: Colors.uniswapDarkNavy,
+    color2: 'rgb(40, 50, 80, 0.8)',
+  },
   gradientUniswapBlue:  {
     background: `linear-gradient(140deg, ${Colors.gradientUniswapBlue1} 20%, ${Colors.gradientUniswapFluro2} 80%)`,
     color1: Colors.gradientUniswapBlue1,
@@ -419,47 +434,59 @@ export const fontFam = [
 
 export const notifyStyles = (theme: Theme) => createStyles({
   variantSuccess: {
-    backgroundColor: `${Colors.blue} !important`,
-    color: Colors.cream,
-    // "& > div": {
-    //   maxWidth: 'calc(100% - 2.75rem)',
-    // },
-    "& > div > span > svg": {
-      fill: `${Colors.cream}`,
+    borderRadius: BorderRadius4x,
+    // border: `2px solid ${Colors.ultramarineBlue}`,
+    border: `2px solid ${Colors.cream}`,
+    background: `${Gradients.gradientSnackBlueMagenta.background} !important`,
+    color: `${Colors.cream} !important`,
+    '& > [class*="SnackbarItem-action"]': {
+      "& > button > span > svg": {
+        fill: `${Colors.cream} !important`,
+      }
     },
   },
   variantError: {
-    backgroundColor: `${Colors.lightRed} !important`,
-    color: Colors.cream,
-    // "& > div": {
-    //   maxWidth: 'calc(100% - 2.75rem)',
-    // },
-    "& > div > span > svg": {
-      fill: `${Colors.cream}`,
+    borderRadius: BorderRadius4x,
+    // border: `2px solid ${Colors.lightRed}`,
+    border: `2px solid ${Colors.cream}`,
+    background: `${Gradients.gradientSnackRedMagenta.background} !important`,
+    color: `${Colors.cream} !important`,
+    '& > [class*="SnackbarItem-action"]': {
+      "& > button > span > svg": {
+        fill: `${Colors.cream} !important`,
+      }
     },
   },
   variantInfo: {
-    backgroundColor: `${Colors.lighterBlack} !important`,
-    color: Colors.cream,
-    // "& > div": {
-    //   maxWidth: 'calc(100% - 2.75rem)',
-    // },
-    "& > div > span > svg": {
-      fill: `${Colors.cream}`,
-    }
-  },
-  variantWarning: {
-    backgroundColor: `${Colors.yellow} !important`,
-    color: Colors.cream,
-    // "& > div": {
-    //   maxWidth: 'calc(100% - 2.75rem)',
-    // },
-    "& > div > span > svg": {
-      fill: `${Colors.cream}`,
+    borderRadius: BorderRadius4x,
+    // border: `2px solid ${Colors.black}`,
+    border: `2px solid ${Colors.cream}`,
+    background: `${Gradients.gradientSnackBlack.background} !important`,
+    color: `${Colors.cream} !important`,
+    '& > [class*="SnackbarItem-action"]': {
+      "& > button > span > svg": {
+        fill: `${Colors.cream} !important`,
+      }
     },
   },
-  containerRoot: {
+  variantWarning: {
+    borderRadius: BorderRadius4x,
+    // border: `2px solid ${Colors.yellow}`,
+    border: `2px solid ${Colors.cream}`,
+    backgroundColor: `${Colors.yellow} !important`,
+    color: `${Colors.cream} !important`,
+    '& > [class*="SnackbarItem-action"]': {
+      "& > button > span > svg": {
+        fill: `${Colors.cream} !important`,
+      }
+    },
   },
+  // Styles applied to Snackbar's root element.
+  // root: {
+  // },
+  // Styles applied to SnackbarContainer's root element.
+  // containerRoot: {
+  // },
 });
 
 /// To be used in: createMuiTheme(AppTheme)

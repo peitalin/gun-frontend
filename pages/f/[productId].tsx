@@ -27,6 +27,9 @@ import {
 } from "pageComponents/PromoteListings/PromotedSlotPurchaseModal/BuyPromotedSlotPage"
 
 
+import {useSnackbar} from "notistack";
+import { Snackbar } from "@material-ui/core";
+
 
 
 const FeaturedProductPage: NextPage<ReactProps> = (props) => {
@@ -52,8 +55,22 @@ const FeaturedProductPage: NextPage<ReactProps> = (props) => {
     anotherUserOwnsSlotNow,
   } = isSlotExpiredYet(promotedSlot, user)
 
+  const snackbar = useSnackbar()
+
 
   React.useEffect(() => {
+    // snackbar.enqueueSnackbar(
+    //   'success test',
+    //   { variant: "success", persist: true }
+    // )
+    // snackbar.enqueueSnackbar(
+    //   'error test',
+    //   { variant: "error", persist: true }
+    // )
+    // snackbar.enqueueSnackbar(
+    //   'info test',
+    //   { variant: "info", persist: true }
+    // )
     // only for promoted products
     if (!promotedSlot?.productId) {
       router.replace(
