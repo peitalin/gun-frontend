@@ -218,7 +218,7 @@ const styles = (theme: Theme) => createStyles({
     transform: 'rotate(90deg)',
     fill: isThemeDark(theme)
       ? Colors.uniswapLighterGrey
-      : Colors.slateGreyBlack,
+      : Colors.slateGreyDarkest,
   },
   bidButtonContainer: {
     position: 'absolute',

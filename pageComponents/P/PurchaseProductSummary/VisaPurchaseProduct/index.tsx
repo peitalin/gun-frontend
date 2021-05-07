@@ -311,9 +311,15 @@ const VisaPurchaseProduct = (props: ReactProps) => {
     if (error) {
       console.warn("error: ", error)
       snackbar.enqueueSnackbar(
-        `createNewPaymentMethod error: ${JSON.stringify(error)}`,
+        `${error?.message}`,
         { variant: "error"}
       )
+      throw new Error(`${error?.message}`)
+      // snackbar.enqueueSnackbar(
+      //   `createNewPaymentMethod error: ${JSON.stringify(error)}`,
+      //   { variant: "error"}
+      // )
+      return
     }
     return paymentMethod
   }
@@ -454,10 +460,12 @@ const VisaPurchaseProduct = (props: ReactProps) => {
               onClick={() => {
                 createNewPaymentMethod()
                   .then(newPaymentMethod => {
-                    return authorizePaymentFirst({
-                      paymentMethodId: newPaymentMethod.id,
-                      stripeCustomerId: props?.user?.stripeCustomerId,
-                    });
+                    if (newPaymentMethod?.id) {
+                      return authorizePaymentFirst({
+                        paymentMethodId: newPaymentMethod.id,
+                        stripeCustomerId: props?.user?.stripeCustomerId,
+                      });
+                    }
                   })
                   .then(({ paymentIntentId, error }) => {
                     // Confirms an order on the backend, and places a hold on the users card
@@ -475,6 +483,7 @@ const VisaPurchaseProduct = (props: ReactProps) => {
                       })
                     }
                   })
+                  .catch(err => err)
                   .finally(() => setLoading(false))
               }}
               loadingIconColor={Colors.blue}

@@ -4,7 +4,7 @@ import clsx from "clsx";
 import Link from "next/link";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
-import { BorderRadius, BoxShadows } from "layout/AppTheme";
+import { BorderRadius, BoxShadows, isThemeDark } from "layout/AppTheme";
 // Typings
 import { Product } from "typings/gqlTypes";
 // Material UI
@@ -79,7 +79,7 @@ const styles = (theme: Theme) => createStyles({
     fontSize: '2.5rem',
     lineHeight: '2.5rem',
     fontWeight: 700,
-    color: theme.palette.type === 'dark'
+    color: isThemeDark(theme)
       ? Colors.uniswapLightGrey
       : Colors.black1A,
   },
@@ -93,11 +93,14 @@ const styles = (theme: Theme) => createStyles({
     marginLeft: "0.5rem",
     marginRight: "0.5rem",
     lineHeight: '2.5rem',
+    color: isThemeDark(theme)
+      ? Colors.uniswapLightGrey
+      : Colors.black1A,
   },
   titleModel: {
     fontSize: '2.5rem',
     fontWeight: 700,
-    color: theme.palette.type === 'dark'
+    color: isThemeDark(theme)
       ? Colors.uniswapLightGrey
       : Colors.black1A,
     lineHeight: '2.5rem',
@@ -105,7 +108,7 @@ const styles = (theme: Theme) => createStyles({
   subtitle: {
     fontSize: '1.5rem',
     fontWeight: 400,
-    color: theme.palette.type === 'dark'
+    color: isThemeDark(theme)
       ? Colors.uniswapLighterGrey
       : Colors.black1A,
   },
