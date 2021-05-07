@@ -28,19 +28,17 @@ import { GrandReduxState, Actions } from "reduxStore/grand-reducer";
 import ImageGalleryDesktop from "pageComponents/P/ImageGallery/ImageGalleryDesktop";
 import ImageGalleryMobile from "pageComponents/P/ImageGallery/ImageGalleryMobile";
 import PurchaseProductSummary from "pageComponents/P/PurchaseProductSummary";
+import FeaturedTitle from "pageComponents/F/FeaturedTitle";
 import ErrorPage from "pages/_error";
 // Router
 import { useRouter } from "next/router";
 // media query
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
-import ShowOnMobileOrDesktopSSR from "components/ShowOnMobileOrDesktopSSR";
 import { below1024Query, col2MinWidth } from "pageComponents/P/common";
-// Meta headers
-import MetaHeadersPage from "layout/MetaHeadersPage";
 // SSR
 import ProductDetails from "pageComponents/P/ProductDetails";
-import dynamic from "next/dynamic";
+// import dynamic from "next/dynamic";
 // const ProductDetails = dynamic(() => import("pageComponents/P/ProductDetails"), {
 //   loading: () => <Loading/>,
 //   ssr: false,
@@ -233,75 +231,71 @@ const FeaturedProductId: React.FC<ReactProps> = (props) => {
       </HeroImageSection>
 
 
-      <div style={{
-        maxWidth: 1024,
-        width: '100%',
-        display: 'flex',
-        flexWrap: 'wrap',
-        flexDirection: 'row',
-        justifyContent: 'center',
-      }}>
+      <div className={classes.lowerHalfContainer}>
         <FlexBasis66
           // flexGrow={mdDown} // do not add flexGrow, messes
           // up responsive imageGallery + floating purchaseSummary
           implementation="css"
         >
           <>
-          {
-            // !lgDown && below1024 &&
-            below1024 &&
-            <FlexBasis33 className={clsx(
-              below1024 ? classes.positionLgDown : classes.positionSticky,
-              (!lgDown && below1024) && classes.minWidth440,
-              // between 720px and 1024px, expand purchase card to minWidth 440px
-              // to force position: sticky to position: relative
-            )}>
-              <>
-                <PurchaseProductSummary
-                  product={product}
-                  selectedOption={selectedOption}
-                  refetchProduct={refetch}
-                  variantOptions={variantOptions}
-                  handleChangeVariantOption={handleChangeVariantOption}
-                  selectedBid={selectedBid}
-                />
-                {
-                  userBids
-                  .filter(bid => bid?.bidStatus === BidStatus.ACCEPTED)
-                  .map(bid =>
-                    <StickyDetailsBids
-                      userBid={bid}
-                      selectedBid={selectedBid}
-                      setSelectedBid={setSelectedBid}
-                      below1024={below1024}
-                    />
-                  )
-                }
-                <StickyDetailsSeller
-                  seller={product?.store?.user}
-                  buyerId={user?.id}
-                  product={product}
-                  storeName={product?.store?.name}
-                  below1024={below1024}
-                />
-                <StickyDetailsDealer
-                  dealer={product?.currentSnapshot?.dealer}
-                  below1024={below1024}
-                />
-              </>
-            </FlexBasis33>
-          }
-          {
-            product &&
-            <ProductDetails
+            <FeaturedTitle
               product={product}
-              selectedOption={selectedOption}
-              // showProductId={
-              //   user?.userRole === Role.PLATFORM_ADMIN ||
-              //   user?.userRole === Role.PLATFORM_EDITOR
-              // }
             />
-          }
+            {
+              // !lgDown && below1024 &&
+              below1024 &&
+              <FlexBasis33 className={clsx(
+                below1024 ? classes.positionLgDown : classes.positionSticky,
+                (!lgDown && below1024) && classes.minWidth440,
+                // between 720px and 1024px, expand purchase card to minWidth 440px
+                // to force position: sticky to position: relative
+              )}>
+                <>
+                  <PurchaseProductSummary
+                    product={product}
+                    selectedOption={selectedOption}
+                    refetchProduct={refetch}
+                    variantOptions={variantOptions}
+                    handleChangeVariantOption={handleChangeVariantOption}
+                    selectedBid={selectedBid}
+                  />
+                  {
+                    userBids
+                    .filter(bid => bid?.bidStatus === BidStatus.ACCEPTED)
+                    .map(bid =>
+                      <StickyDetailsBids
+                        userBid={bid}
+                        selectedBid={selectedBid}
+                        setSelectedBid={setSelectedBid}
+                        below1024={below1024}
+                      />
+                    )
+                  }
+                  <StickyDetailsSeller
+                    seller={product?.store?.user}
+                    buyerId={user?.id}
+                    product={product}
+                    storeName={product?.store?.name}
+                    below1024={below1024}
+                  />
+                  <StickyDetailsDealer
+                    dealer={product?.currentSnapshot?.dealer}
+                    below1024={below1024}
+                  />
+                </>
+              </FlexBasis33>
+            }
+            {
+              product &&
+              <ProductDetails
+                product={product}
+                selectedOption={selectedOption}
+                // showProductId={
+                //   user?.userRole === Role.PLATFORM_ADMIN ||
+                //   user?.userRole === Role.PLATFORM_EDITOR
+                // }
+              />
+            }
           </>
         </FlexBasis66>
 
@@ -397,6 +391,15 @@ const styles = (theme: Theme) => createStyles({
     flexDirection: 'column',
     justifyContent: 'flex-start',
     alignItems: 'center',
+  },
+  lowerHalfContainer: {
+    position: "relative",
+    maxWidth: 1024,
+    width: '100%',
+    display: 'flex',
+    flexWrap: 'wrap',
+    flexDirection: 'row',
+    justifyContent: 'center',
   },
   minWidth440: {
     // expand product purchase card to 400px when near 1024px, to

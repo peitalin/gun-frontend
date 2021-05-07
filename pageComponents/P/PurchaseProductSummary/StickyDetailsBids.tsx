@@ -3,6 +3,7 @@ import clsx from "clsx";
 import { Colors, BoxShadows, BorderRadius, Gradients, isThemeDark } from "layout/AppTheme";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
+import { commonBorderStyle } from "../common";
 import { useTheme } from "@material-ui/core";
 // Typings
 import { Product, UserPublic, Bids, BidStatus } from "typings/gqlTypes";
@@ -59,8 +60,8 @@ const StickyDetailsBid = (props: ReactProps) => {
   return (
     <div className={clsx(
       classes.bidDetailsProductPageRoot,
-      process.browser && classes.borderBrowser,
       props.below1024 ? classes.relativeMenu : classes.stickyMenu,
+      process.browser && classes.borderBrowser,
     )}>
       <div className={clsx(
         classes.bidDetailsInnerContainer,
@@ -181,13 +182,15 @@ const styles = (theme: Theme) => createStyles({
     // position: 'absolute',
     // bottom: '-7rem',
     width: '100%',
+    borderRadius: BorderRadius,
   },
   relativeMenu: {
     position: 'relative',
     display: "flex",
     justifyContent: "center",
     width: '100%',
-    borderRadius: "0px",
+    borderRadius: BorderRadius,
+    // borderRadius: "0px",
   },
   bidDetailsInnerContainer: {
     padding: '1rem',
@@ -197,14 +200,7 @@ const styles = (theme: Theme) => createStyles({
       ? Colors.uniswapDarkNavy
       : Colors.cream,
   },
-  borderBrowser: {
-    border: isThemeDark(theme)
-      ? `1px solid ${theme.colors.uniswapGrey}`
-      : `1px solid ${Colors.slateGreyDarker}`,
-    boxShadow: isThemeDark(theme)
-      ? BoxShadows.shadow1.boxShadow
-      : BoxShadows.shadow5.boxShadow,
-  },
+  borderBrowser: commonBorderStyle(theme),
   positionStickyBox: {
     borderRadius: BorderRadius,
   },

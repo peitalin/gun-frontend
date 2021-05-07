@@ -5,6 +5,7 @@ import { Colors, BoxShadows, BorderRadius, Gradients, isThemeDark } from "layout
 import Link from "next/link";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
+import { commonBorderStyle } from "../common";
 // Typings
 import { Product, UserPublic } from "typings/gqlTypes";
 // Material UI
@@ -134,6 +135,7 @@ const styles = (theme: Theme) => createStyles({
     // FeaturedImgage and ProductDetails when ProductPurchaseCard is too tall
     // position: 'absolute',
     // bottom: '-7rem',
+    borderRadius: BorderRadius,
     width: '100%',
   },
   relativeMenu: {
@@ -141,7 +143,8 @@ const styles = (theme: Theme) => createStyles({
     display: "flex",
     justifyContent: "center",
     width: '100%',
-    borderRadius: "0px",
+    borderRadius: BorderRadius,
+    // borderRadius: "0px",
   },
   storeDetailsInnerContainer: {
     padding: '1rem',
@@ -152,14 +155,7 @@ const styles = (theme: Theme) => createStyles({
       ? Colors.uniswapDarkNavy
       : Colors.cream,
   },
-  borderBrowser: {
-    border: isThemeDark(theme)
-      ? `1px solid ${theme.colors.uniswapGrey}`
-      : `1px solid ${Colors.slateGreyDarker}`,
-    boxShadow: isThemeDark(theme)
-      ? BoxShadows.shadow1.boxShadow
-      : BoxShadows.shadow5.boxShadow,
-  },
+  borderBrowser: commonBorderStyle(theme),
   positionStickyBox: {
     borderRadius: BorderRadius,
   },

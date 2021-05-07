@@ -5,6 +5,7 @@ import Link from "next/link";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 import { BorderRadius, BoxShadows } from "layout/AppTheme";
+import { commonBorderStyle } from "../common";
 // Typings
 import { Product } from "typings/gqlTypes";
 // Material UI
@@ -152,14 +153,7 @@ const styles = (theme: Theme) => createStyles({
       ? Colors.uniswapDarkNavy
       : Colors.cream,
   },
-  modelMakerBorder: {
-    border: theme.palette.type === 'dark'
-      ? `1px solid ${theme.colors.uniswapGrey}`
-      : `1px solid ${Colors.slateGreyDarker}`,
-    boxShadow: theme.palette.type === 'dark'
-      ? BoxShadows.shadow3.boxShadow
-      : 'unset',
-  },
+  modelMakerBorder: commonBorderStyle(theme),
   flexCol: {
     display: 'flex',
     flexDirection: 'column',
@@ -179,28 +173,6 @@ const styles = (theme: Theme) => createStyles({
   flexItemWide: {
     display: 'flex',
     flexBasis: '66%',
-  },
-  avatar: {
-    height: 30,
-    width: 30,
-    fontSize: '0.8rem',
-    marginRight: '0.5rem',
-    // backgroundImage: `url("data:image/svg+xml,%3Csvg width='30' height='30' viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 20.5V18H0v-2h20v-2H0v-2h20v-2H0V8h20V6H0V4h20V2H0V0h22v20h2V0h2v20h2V0h2v20h2V0h2v20h2V0h2v20h2v2H20v-1.5zM0 20h2v20H0V20zm4 0h2v20H4V20zm4 0h2v20H8V20zm4 0h2v20h-2V20zm4 0h2v20h-2V20zm4 4h20v2H20v-2zm0 4h20v2H20v-2zm0 4h20v2H20v-2zm0 4h20v2H20v-2z' fill='%23aaaaaa' fill-opacity='0.3' fill-rule='evenodd'/%3E%3C/svg%3E")`,
-    backgroundColor: `${theme.colors.uniswapGrey}`,
-    color: `${theme.palette.primary.light}`,
-    border: `1px solid ${theme.colors.uniswapLighterGrey}`,
-    transition: theme.transitions.create(['border','color'], {
-      easing: theme.transitions.easing.easeIn,
-      duration: "100ms",
-    }),
-    "&:hover": {
-      color: `${theme.palette.secondary.light}`,
-      textDecoration: 'none',
-      transition: theme.transitions.create(['border', 'color'], {
-        easing: theme.transitions.easing.easeIn,
-        duration: "100ms",
-      })
-    }
   },
   title: {
     fontWeight: 600,

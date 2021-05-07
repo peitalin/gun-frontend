@@ -3,6 +3,7 @@ import clsx from "clsx";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
 import { Colors, BoxShadows, BorderRadius, isThemeDark } from "layout/AppTheme";
+import { commonBorderStyle } from "../common";
 // Typings
 import {
   Product, ID, Product_Variants, UserPrivate, ProductPreviewItem,
@@ -211,14 +212,7 @@ const styles = (theme: Theme) => createStyles({
       // opacity: 0,
     }
   },
-  purchaseCheckoutSummaryBorder: {
-    border: isThemeDark(theme)
-      ? `1px solid ${theme.colors.uniswapGrey}`
-      : `1px solid ${Colors.slateGreyDarker}`,
-    boxShadow: isThemeDark(theme)
-      ? BoxShadows.shadow1.boxShadow
-      : BoxShadows.shadow5.boxShadow,
-  },
+  purchaseCheckoutSummaryBorder: commonBorderStyle(theme),
   flexCol: {
     display: 'flex',
     flexDirection: 'column',
@@ -342,9 +336,14 @@ const styles = (theme: Theme) => createStyles({
     position: "fixed",
     zIndex: 10,
     bottom: '1rem',
-    left: '1rem',
-    color: Colors.secondary,
+    left: 'calc(75%)',
+    color: Colors.slateGreyBlack,
     cursor: "pointer",
+    opacity: 0.2,
+    "&:hover": {
+      color: Colors.secondary,
+      opacity: 1,
+    },
   },
 });
 

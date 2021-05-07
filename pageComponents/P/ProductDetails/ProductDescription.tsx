@@ -2,6 +2,7 @@ import React from "react";
 import clsx from "clsx";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
+import { commonBorderStyle } from "../common";
 // GraphQL
 import { Product } from "typings/gqlTypes";
 import { Colors, BorderRadius, BoxShadows } from "layout/AppTheme";
@@ -77,14 +78,7 @@ const styles = (theme: Theme) => createStyles({
       ? Colors.uniswapDarkNavy
       : Colors.cream,
   },
-  descriptionBorder: {
-    border: theme.palette.type === 'dark'
-      ? `1px solid ${theme.colors.uniswapGrey}`
-      : `1px solid ${Colors.slateGreyDarker}`,
-    boxShadow: theme.palette.type === 'dark'
-      ? BoxShadows.shadow3.boxShadow
-      : 'unset',
-  },
+  descriptionBorder: commonBorderStyle(theme),
   title: {
     marginTop: '0.5rem',
     fontWeight: 600,

@@ -3,6 +3,7 @@ import clsx from "clsx";
 import { Colors, BoxShadows, BorderRadius, isThemeDark } from "layout/AppTheme";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
+import { commonBorderStyle } from "../common";
 // Typings
 import { Dealers } from "typings/gqlTypes";
 // Material UI
@@ -103,10 +104,7 @@ const styles = (theme: Theme) => createStyles({
     marginTop: '1rem',
   },
   stickyMenu: {
-    /// Need to do position: absolute, otherwise gap appears between
-    // FeaturedImgage and ProductDetails when ProductPurchaseCard is too tall
-    // position: 'absolute',
-    // bottom: '-7rem',
+    borderRadius: BorderRadius,
     width: '100%',
   },
   normalMenu: {
@@ -114,7 +112,8 @@ const styles = (theme: Theme) => createStyles({
     justifyContent: "center",
     width: '100%',
     marginBottom: "1rem",
-    borderRadius: "0px",
+    borderRadius: BorderRadius,
+    // borderRadius: "0px",
   },
   dealerDetailsInnerContainer: {
     padding: '1rem',
@@ -123,14 +122,7 @@ const styles = (theme: Theme) => createStyles({
       ? Colors.uniswapDarkNavy
       : Colors.cream,
   },
-  borderBrowser: {
-    border: isThemeDark(theme)
-      ? `1px solid ${theme.colors.uniswapGrey}`
-      : `1px solid ${Colors.slateGreyDarker}`,
-    boxShadow: isThemeDark(theme)
-      ? BoxShadows.shadow1.boxShadow
-      : BoxShadows.shadow5.boxShadow,
-  },
+  borderBrowser: commonBorderStyle(theme),
   positionStickyBox: {
     borderRadius: BorderRadius,
   },

@@ -32,7 +32,7 @@ const FeaturedImagePlaceholder = (props: ReactProps) => {
       )}>
         <PreviewImageFeatured
           previewItem={undefined}
-          showLoadingBar={true}
+          showLoadingBar={false}
           transitioning={props.transitioning}
         />
       </div>
