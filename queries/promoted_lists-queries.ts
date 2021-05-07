@@ -7,7 +7,7 @@ export const GET_PROMOTED_LIST = gql`
     $limit: Int
     $offset: Int
   ) {
-    promotedList(
+    getPromotedList(
       promotedListId: $promotedListId
       limit: $limit
       offset: $offset
@@ -131,6 +131,31 @@ export const GET_PROMOTED_SLOT = gql`
   query($promotedSlotId: String!) {
     getPromotedSlotById(
       promotedSlotId: $promotedSlotId
+    ) {
+      id
+      createdAt
+      promotedListId
+      productId
+      product {
+        ...ProductFragment
+      }
+      ownerId
+      reservePrice
+      isAvailableForPurchase
+      expiresAt
+      position
+    }
+  }
+  ${ProductFragment}
+`;
+
+export const GET_PROMOTED_SLOT_BY_PRODUCT_ID = gql`
+  query(
+    $productId: String!
+    # $promotedListId: String # narrows down a unique slot if supplied
+  ) {
+    getPromotedSlotByProductId(
+      productId: $productId
     ) {
       id
       createdAt

@@ -28,7 +28,7 @@ import {
   OrderStatus,
   Orders,
   Product,
-  OrderMutationResponse,
+  BlankMutationResponse,
   Bids,
   PromotionPurchaseMutationResponse,
   PromotedSlot,
@@ -47,8 +47,6 @@ import { useSnackbar } from "notistack";
 import {
   PURCHASE_PROMOTION
 } from "queries/promoted_lists-mutations";
-
-
 
 
 const VisaPurchaseProduct = (props: ReactProps) => {
@@ -84,7 +82,7 @@ const VisaPurchaseProduct = (props: ReactProps) => {
   const [
     purchasePromotion,
     { data, loading: loading1, error}
-  ] = useMutation<MData3, MVar3>(
+  ] = useMutation<MData1, MVar1>(
     PURCHASE_PROMOTION, {
     variables: {
       promotedSlotId: undefined,
@@ -95,9 +93,21 @@ const VisaPurchaseProduct = (props: ReactProps) => {
       currency: "AUD",
       bidId: undefined,
     },
-    onError: React.useCallback((err) => {
-      console.warn(err)
-      snackbar.enqueueSnackbar(`${err}`, { variant: "error" })
+    onError: React.useCallback((e) => {
+      console.warn(e)
+      if (e?.message?.includes("duplicate")) {
+        // promoted_slots_promoted_list_id_product_id_key
+        snackbar.enqueueSnackbar(
+          `This list already has that product. Payment cancelled.`,
+          { variant: "error" }
+        )
+      } else {
+        snackbar.enqueueSnackbar(`${e}`, { variant: "error" })
+        snackbar.enqueueSnackbar(
+          `Payment cancelled, please try an Australian card`,
+          { variant: "info" }
+        )
+      }
     }, []),
     onCompleted: React.useCallback(async (data) => {
       console.log(data)
@@ -165,7 +175,7 @@ const VisaPurchaseProduct = (props: ReactProps) => {
         buyerId: buyer.id,
         stripeAuthorizePaymentData: JSON.stringify(stripeAuthorizePaymentData),
         currency: "AUD",
-        bidId: props.selectedBid?.id,
+        // bidId: props.selectedBid?.id,
       }
     })
     .then(response => {
@@ -180,17 +190,6 @@ const VisaPurchaseProduct = (props: ReactProps) => {
       setLoading(false)
     })
   }
-
-
-  React.useEffect(() => {
-    if (error) {
-      console.warn("error: ", error)
-      snackbar.enqueueSnackbar(
-        `Payment cancelled, please try an Australian card`,
-        { variant: "info" }
-      )
-    }
-  }, [error])
 
 
 
@@ -304,7 +303,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   selectedBid?: Bids;
 }
 
-interface MVar3 {
+interface MVar1 {
   promotedSlotId: string
   productId: string
   total: number
@@ -313,8 +312,15 @@ interface MVar3 {
   currency?: string
   bidId?: string
 }
-interface MData3 {
+interface MData1 {
   purchasePromotion: PromotionPurchaseMutationResponse
+}
+
+interface Mdata3 {
+  cancelPaymentIntentFailure: BlankMutationResponse;
+}
+interface Mvar3 {
+  paymentIntentId: string
 }
 
 

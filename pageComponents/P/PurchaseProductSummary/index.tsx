@@ -81,6 +81,9 @@ const PurchaseProductSummary: React.FC<ReactProps> = (props) => {
   return (
     <div className={clsx(
       classes.purchaseCheckoutSummaryRoot,
+      process.browser
+        ? classes.purchaseCheckoutSummaryBorder
+        : classes.purchaseCheckoutSummaryServer,
     )}>
 
       {
@@ -115,7 +118,6 @@ const PurchaseProductSummary: React.FC<ReactProps> = (props) => {
             : <div className={classes.loadingBarContainer}>
                 <LoadingBar
                   absoluteTop
-                  color={Colors.gradientUniswapBlue1}
                   height={4}
                   width={'100%'}
                   loading={true}
@@ -201,14 +203,21 @@ const styles = (theme: Theme) => createStyles({
     background: isThemeDark(theme)
       ? Colors.uniswapDarkNavy
       : Colors.cream,
+    width: '100%',
+    // maxWidth: '600px',
+  },
+  purchaseCheckoutSummaryServer: {
+    "& > div": {
+      // opacity: 0,
+    }
+  },
+  purchaseCheckoutSummaryBorder: {
     border: isThemeDark(theme)
       ? `1px solid ${theme.colors.uniswapGrey}`
       : `1px solid ${Colors.slateGreyDarker}`,
     boxShadow: isThemeDark(theme)
       ? BoxShadows.shadow1.boxShadow
       : BoxShadows.shadow5.boxShadow,
-    width: '100%',
-    // maxWidth: '600px',
   },
   flexCol: {
     display: 'flex',

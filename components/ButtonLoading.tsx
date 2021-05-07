@@ -3,7 +3,7 @@ import React from 'react';
 import {
   withStyles, WithStyles, createStyles, Theme
 } from '@material-ui/core/styles';
-import { Colors } from "layout/AppTheme";
+import { Colors, isThemeDark } from "layout/AppTheme";
 import Loading from "components/Loading"
 import Button from '@material-ui/core/Button';
 import { ButtonProps } from '@material-ui/core/Button';
@@ -31,6 +31,9 @@ const ButtonLoading: React.FC<ReactProps & ButtonProps> = (props) => {
           width: "100%",
           height: "40px",
           fontWeight: 500,
+        }}
+        classes={{
+          root: props.classes.root
         }}
         // override default props
         {...ButtonProps}
@@ -73,6 +76,9 @@ const ButtonLoading: React.FC<ReactProps & ButtonProps> = (props) => {
           width: "100%",
           height: "40px",
           fontWeight: 500,
+        }}
+        classes={{
+          root: props.classes.root
         }}
         // override default props
         {...ButtonProps}
@@ -120,6 +126,11 @@ interface ReactProps {
 }
 
 const styles = (theme: Theme) => createStyles({
+  // root: {
+  //   backgroundColor: isThemeDark(theme)
+  //     ? `${Colors.uniswapDarkNavy} !important`
+  //     : `${Colors.slateGreyDarkest} !imporntant`,
+  // }
 });
 
 export default withStyles(styles)(ButtonLoading);

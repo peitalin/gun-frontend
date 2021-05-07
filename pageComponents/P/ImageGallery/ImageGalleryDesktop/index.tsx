@@ -12,7 +12,7 @@ import {
 import { SelectedVariantProps } from "pageComponents/P/ProductId";
 // Components
 import FeaturedPreview from "../FeaturedPreview";
-import FeaturedPreviewButtonsDesktop from "./FeaturedPreviewButtonsDesktop";
+// import FeaturedPreviewButtonsDesktop from "./FeaturedPreviewButtonsDesktop";
 // Media Query
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
@@ -46,20 +46,15 @@ const ImageGalleryDesktop: React.FC<ReactProps> = (props) => {
 
   const theme = useTheme();
   // const xsDown = useMediaQuery(theme.breakpoints.down('xs'));
+  // console.log("loading::::::::::::", props.loading)
 
   return (
     <div className={classes.root}>
 
-      <FeaturedPreviewButtonsDesktop
-        product={product}
-        featuredPreviewItem={featuredPreviewItem}
-        selectedOption={props.selectedOption}
-      />
-
       <FeaturedPreview
         featuredPreviewItem={featuredPreviewItem}
         product={product}
-        loading={props.loading}
+        loading={props.loading || !process.browser} // for SSR
         index={index}
         setIndex={setIndex}
         isPromoted={props.isPromoted}
@@ -68,7 +63,7 @@ const ImageGalleryDesktop: React.FC<ReactProps> = (props) => {
       <BottomImageCarouselDesktop
         setFeaturedPreviewItem={setFeaturedPreviewItem}
         product={product}
-        loading={props.loading}
+        loading={props.loading || !process.browser} // for SSR
         index={index}
         setIndex={setIndex}
         numberOfItemsWide={numberOfItemsWide}
@@ -82,7 +77,7 @@ const ImageGalleryDesktop: React.FC<ReactProps> = (props) => {
 interface ReactProps extends WithStyles<typeof styles> {
   product: Product;
   selectedOption: SelectedVariantProps;
-  loading?: boolean;
+  loading: boolean;
   numberOfItemsTall?: number;
   numberOfItemsWide?: number;
   index: number;

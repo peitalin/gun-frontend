@@ -24,30 +24,36 @@ const ProductDescription = (props: ReactProps) => {
   return (
     <div className={clsx(
         classes.descriptionContainer,
+        process.browser && classes.descriptionBorder,
       )}
       style={props.containerStyle}
     >
-      <Typography variant="subtitle2"
-        className={classes.title}
-        style={props.titleStyle}
-      >
-        { "Description" }
-      </Typography>
-      <Typography
-        variant="body1"
-        className={clsx(
-          classes.productDescription,
-        )}
-      >
-        <span
-          // style={{
-          //   whiteSpace: WHITE_SPACE_FOR_P_TAGS
-          // }}
-          dangerouslySetInnerHTML={{
-            __html: String(props.productDescription ?? "")
-          }}
-        />
-      </Typography>
+      {
+        process.browser &&
+        <>
+          <Typography variant="subtitle2"
+            className={classes.title}
+            style={props.titleStyle}
+          >
+            { "Description" }
+          </Typography>
+          <Typography
+            variant="body1"
+            className={clsx(
+              classes.productDescription,
+            )}
+          >
+            <span
+              // style={{
+              //   whiteSpace: WHITE_SPACE_FOR_P_TAGS
+              // }}
+              dangerouslySetInnerHTML={{
+                __html: String(props.productDescription ?? "")
+              }}
+            />
+          </Typography>
+        </>
+      }
     </div>
   )
 }
@@ -65,13 +71,16 @@ const styles = (theme: Theme) => createStyles({
     wordWrap: 'break-word',
     marginTop: '1rem',
     padding: '1rem',
-    border: theme.palette.type === 'dark'
-      ? `1px solid ${theme.colors.uniswapGrey}`
-      : `1px solid ${Colors.slateGreyDarker}`,
+    minHeight: 190, // for SSR
     borderRadius: BorderRadius,
     background: theme.palette.type === 'dark'
       ? Colors.uniswapDarkNavy
       : Colors.cream,
+  },
+  descriptionBorder: {
+    border: theme.palette.type === 'dark'
+      ? `1px solid ${theme.colors.uniswapGrey}`
+      : `1px solid ${Colors.slateGreyDarker}`,
     boxShadow: theme.palette.type === 'dark'
       ? BoxShadows.shadow3.boxShadow
       : 'unset',

@@ -238,16 +238,17 @@ const styles = (theme: Theme) => createStyles({
   },
 });
 
-export default withStyles(styles)(React.memo(
-  (props: ReactProps) => <AirItemWide {...props}/>,
-  // (prevProps, nextProps) => {
-  //   // return true // prevent re-render after item loads
-  //   return prevProps.materialStyle === nextProps.materialStyle
-  //       && prevProps.disableBackground === nextProps.disableBackground
-  //       && prevProps.disableDither === nextProps.disableDither
-  //       && prevProps.disableSnap === nextProps.disableSnap
-  //       && prevProps.style === nextProps.style
-  //       && prevProps.title === nextProps.title
-  //       && prevProps.showNumItems === nextProps.showNumItems
-  // }
-));
+// export default withStyles(styles)(React.memo(
+//   (props: ReactProps) => <AirItemWide {...props}/>,
+//   // (prevProps, nextProps) => {
+//   //   // return true // prevent re-render after item loads
+//   //   return prevProps.materialStyle === nextProps.materialStyle
+//   //       && prevProps.disableBackground === nextProps.disableBackground
+//   //       && prevProps.disableDither === nextProps.disableDither
+//   //       && prevProps.disableSnap === nextProps.disableSnap
+//   //       && prevProps.style === nextProps.style
+//   //       && prevProps.title === nextProps.title
+//   //       && prevProps.showNumItems === nextProps.showNumItems
+//   // }
+// ));
+export default withStyles(styles)(AirItemWide)

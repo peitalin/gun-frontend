@@ -25,7 +25,7 @@ const HeroImageSection: React.FC<ReactProps> = (props) => {
     return (
       <div className={classes.heroLandscapeContainer}>
         <AlignCenterLayout
-          maxWidth={600}
+          maxWidth={720}
           withRecommendations={false}
         >
           {props.children}

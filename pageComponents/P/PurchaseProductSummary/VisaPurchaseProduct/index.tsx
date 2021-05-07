@@ -54,7 +54,7 @@ import {
   CONFIRM_ORDER,
 } from "queries/orders-mutations";
 import {
-  CANCEL_PAYMENT_INTENT_3DS_FAILURE,
+  CANCEL_PAYMENT_INTENT_FAILURE,
 } from "queries/orders-cancels-mutations";
 // Graphql Queries to update after order
 import {
@@ -275,14 +275,14 @@ const VisaPurchaseProduct = (props: ReactProps) => {
 
 
   const [
-    cancelPaymentIntent3dsFailure,
+    cancelPaymentIntentFailure,
     { loading: loading3 }
   ] = useMutation<Mdata3, Mvar3>(
-    CANCEL_PAYMENT_INTENT_3DS_FAILURE, {
+    CANCEL_PAYMENT_INTENT_FAILURE, {
     variables: {
       paymentIntentId: undefined,
     },
-    update: (cache, { data: { cancelPaymentIntent3dsFailure } }) => {
+    update: (cache, { data: { cancelPaymentIntentFailure } }) => {
     },
     onError: (err) => {
       let errMsg = err?.graphQLErrors?.[0]?.message ?? JSON.stringify(err)
@@ -384,7 +384,7 @@ const VisaPurchaseProduct = (props: ReactProps) => {
         `Your card failed 3D Secure verification`,
         { variant: "error" }
       )
-      await cancelPaymentIntent3dsFailure({
+      await cancelPaymentIntentFailure({
         variables: {
           paymentIntentId: paymentIntent.id,
         }
@@ -550,7 +550,7 @@ interface Mvar2 {
 }
 
 interface Mdata3 {
-  cancelPaymentIntent3dsFailure: BlankMutationResponse;
+  cancelPaymentIntentFailure: BlankMutationResponse;
 }
 interface Mvar3 {
   paymentIntentId: string

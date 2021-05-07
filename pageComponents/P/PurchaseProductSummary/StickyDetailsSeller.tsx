@@ -47,6 +47,7 @@ const StickyDetailsSeller = (props: ReactProps) => {
   return (
     <div className={clsx(
       classes.storeDetailsProductPageRoot,
+      process.browser && classes.borderBrowser,
       props.below1024 ? classes.relativeMenu : classes.stickyMenu,
     )}>
       <div className={clsx(
@@ -150,6 +151,8 @@ const styles = (theme: Theme) => createStyles({
     background: isThemeDark(theme)
       ? Colors.uniswapDarkNavy
       : Colors.cream,
+  },
+  borderBrowser: {
     border: isThemeDark(theme)
       ? `1px solid ${theme.colors.uniswapGrey}`
       : `1px solid ${Colors.slateGreyDarker}`,
@@ -183,6 +186,9 @@ const styles = (theme: Theme) => createStyles({
     fontSize: '1rem',
     marginTop: "0.5rem",
     marginBottom: "0.5rem",
+    color: isThemeDark(theme)
+      ? Colors.uniswapLightGrey
+      : Colors.slateGreyBlack,
   },
   subtitle: {
     fontSize: '0.9rem',

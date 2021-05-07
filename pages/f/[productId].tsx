@@ -1,34 +1,70 @@
 import React from "react";
 // Typings
-import { PromotedSlot, ID } from "typings/gqlTypes";
-import { GET_PROMOTED_SLOT } from "queries/promoted_lists-queries";
+import { Product, PromotedSlot, ID, UserPrivate } from "typings/gqlTypes";
+import { GET_PROMOTED_SLOT_BY_PRODUCT_ID } from "queries/promoted_lists-queries";
 // SSR
 import { NextPage, NextPageContext } from 'next';
 import { serverApolloClient } from "utils/apollo";
 import { ApolloClient } from "@apollo/client";
+// Router
+import { useRouter } from "next/router";
 // Components
-import Loading from "components/Loading";
+import LoadingBarSSR from "components/LoadingBarSSR";
 // Meta headers
 import MetaHeadersPage from "layout/MetaHeadersPage";
-// import ProductId from "pageComponents/P/ProductId";
 // Dynamic
 import dynamic from "next/dynamic";
-const PromotedSlotId = dynamic(() => import("pageComponents/F/PromotedSlotId"), {
-  loading: () => <Loading/>,
-  ssr: false,
-})
+// const FeaturedProductId = dynamic(() => import("pageComponents/F/FeaturedProductId"), {
+//   loading: () => <LoadingBarSSR/>,
+//   ssr: false,
+// })
+import FeaturedProductId from "pageComponents/F/FeaturedProductId"
+// redux
+import { useSelector } from "react-redux";
+import { GrandReduxState } from "reduxStore/grand-reducer";
+import {
+  isSlotExpiredYet,
+} from "pageComponents/PromoteListings/PromotedSlotPurchaseModal/BuyPromotedSlotPage"
+
 
 
 
 const FeaturedProductPage: NextPage<ReactProps> = (props) => {
-  // MetaHeaders in ProductId as it needs product name
-  const { initialPromotedSlot } = props
 
-  const p = initialPromotedSlot?.product;
+  const router = useRouter()
+  // MetaHeaders in FeaturedProductId as it needs product name
+  const { initialPromotedSlot: promotedSlot } = props
+
+  const p = promotedSlot?.product
   const previewItem = p?.featuredVariant?.previewItems?.pop();
   const img = previewItem?.image
   const imgVariant = img?.variants?.find(v => v.widthInPixels === 400)
   // console.log("IMG: ", img)
+
+  const user = useSelector<GrandReduxState, UserPrivate>(
+    s => s.reduxLogin.user
+  );
+
+
+  let {
+    isExpired,
+    userOwnsSlotNow,
+    anotherUserOwnsSlotNow,
+  } = isSlotExpiredYet(promotedSlot, user)
+
+
+  React.useEffect(() => {
+    // only for promoted products
+    if (!promotedSlot?.productId) {
+      router.replace(
+        "/p/[productId]",
+        `/p/${p.id}`
+      )
+    }
+    // can make it so only non-expired products get featured page
+    // OR allow expired ones to continue having this page until it is replaced
+    // by the admins (promotedSlot.productId is overridden by admins)
+  }, [promotedSlot, isExpired])
 
   return (
     <>
@@ -48,9 +84,13 @@ const FeaturedProductPage: NextPage<ReactProps> = (props) => {
           : `https://www..gunmarketplace.com.au/p/${p?.id}`
         }
       />
-      <PromotedSlotId
-        initialPromotedSlot={props.initialPromotedSlot}
-      />
+      {
+        // only for promoted products
+        promotedSlot.product?.id &&
+        <FeaturedProductId
+          initialProduct={p}
+        />
+      }
     </>
   )
 }
@@ -60,10 +100,11 @@ interface ReactProps {
   initialPromotedSlot: PromotedSlot;
 }
 interface QueryData {
-  getPromotedSlotById: PromotedSlot;
+  getPromotedSlotByProductId: PromotedSlot;
 }
 interface QueryVar {
-  promotedSlotId: ID;
+  productId: ID;
+  promotedListId?: ID;
 }
 
 ////////// SSR ///////////
@@ -75,10 +116,11 @@ interface Context extends NextPageContext {
 
 FeaturedProductPage.getInitialProps = async (ctx: Context) => {
 
-  const promotedSlotId: string = ctx.query.promotedSlotId as any;
+  const productId: string = ctx.query.productId as any;
+  const promotedListId: string = ctx.query.promotedListId as any; // optional
   console.log('getInitialProps ctx: ', ctx.query);
 
-  if (!promotedSlotId) {
+  if (!productId) {
     return {
       initialPromotedSlot: null,
       classes: null,
@@ -87,14 +129,15 @@ FeaturedProductPage.getInitialProps = async (ctx: Context) => {
 
   try {
     const { data } = await serverApolloClient(ctx).query<QueryData, QueryVar>({
-      query: GET_PROMOTED_SLOT,
+      query: GET_PROMOTED_SLOT_BY_PRODUCT_ID,
       variables: {
-        promotedSlotId: promotedSlotId
+        productId: productId,
+        promotedListId: promotedListId, // optional
       },
     })
     // console.log('getInitialProps FeaturedProductPage: ', data);
     return {
-      initialPromotedSlot: data?.getPromotedSlotById,
+      initialPromotedSlot: data?.getPromotedSlotByProductId,
       classes: null,
     };
   } catch(e) {

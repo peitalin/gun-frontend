@@ -180,7 +180,7 @@ const ProductCardRC = (props: ReactProps) => {
             props.promotedSlotId ? "/f/[promotedSlotId]" : "/p/[productId]"
           }
           as={
-            props.promotedSlotId ? `/f/${props.promotedSlotId}` : `/p/${props.product?.id}`
+            props.promotedSlotId ? `/f/${props.product?.id}` : `/p/${props.product?.id}`
           }
           disable={
             !props.product?.storeId ||

@@ -20,74 +20,82 @@ const ProductModelMake = (props: ReactProps) => {
   const { classes, product } = props;
 
   return (
-    <div className={classes.modelMakerRoot}>
-      <Typography
-        className={classes.title}
-        color={"primary"}
-        variant="subtitle1"
-      >
-        {product?.currentSnapshot?.title}
-      </Typography>
+    <div className={clsx(
+      classes.modelMakerRoot,
+      process.browser && classes.modelMakerBorder,
+    )}>
+      {
+        process.browser &&
+        <>
+          <Typography
+            className={classes.title}
+            color={"primary"}
+            variant="subtitle1"
+          >
+            {product?.currentSnapshot?.title}
+          </Typography>
 
-      <ModelRow
-        classes={classes}
-        title={"Make:"}
-        value={product?.currentSnapshot?.make}
-      />
-      <ModelRow
-        classes={classes}
-        title={"Model:"}
-        value={product?.currentSnapshot?.model}
-      />
-      {
-        product?.currentSnapshot?.caliber !== undefined &&
-        <ModelRow
-          classes={classes}
-          title={"Caliber:"}
-          value={product?.currentSnapshot?.caliber}
-        />
-      }
-      {
-        product?.currentSnapshot?.actionType &&
-        <ModelRow
-          classes={classes}
-          title={"Action type:"}
-          value={product?.currentSnapshot?.actionType}
-        />
-      }
-      {
-        product?.currentSnapshot?.barrelLength &&
-        <ModelRow
-          classes={classes}
-          title={"Barrel Length:"}
-          value={product?.currentSnapshot?.barrelLength}
-        />
-      }
-      {/* {
-        product?.currentSnapshot?.magazineCapacity &&
-        <ModelRow
-          classes={classes}
-          title={"Magazine Capacity:"}
-          value={product?.currentSnapshot?.magazineCapacity}
-        />
-      } */}
-      <ModelRow
-        classes={classes}
-        title={"Condition:"}
-        value={product?.currentSnapshot?.condition}
-      />
-      <ModelRow
-        classes={classes}
-        title={"Serial Number:"}
-        value={product?.currentSnapshot?.serialNumber}
-      />
-      {
-        product?.currentSnapshot?.ammoType &&
-        <ModelRow
-          classes={classes}
-          title={"Ammo type:"}
-          value={product?.currentSnapshot?.ammoType}
-        />
+          <ModelRow
+            classes={classes}
+            title={"Make:"}
+            value={product?.currentSnapshot?.make}
+          />
+          <ModelRow
+            classes={classes}
+            title={"Model:"}
+            value={product?.currentSnapshot?.model}
+          />
+          {
+            product?.currentSnapshot?.caliber !== undefined &&
+            <ModelRow
+              classes={classes}
+              title={"Caliber:"}
+              value={product?.currentSnapshot?.caliber}
+            />
+          }
+          {
+            product?.currentSnapshot?.actionType &&
+            <ModelRow
+              classes={classes}
+              title={"Action type:"}
+              value={product?.currentSnapshot?.actionType}
+            />
+          }
+          {
+            product?.currentSnapshot?.barrelLength &&
+            <ModelRow
+              classes={classes}
+              title={"Barrel Length:"}
+              value={product?.currentSnapshot?.barrelLength}
+            />
+          }
+          {/* {
+            product?.currentSnapshot?.magazineCapacity &&
+            <ModelRow
+              classes={classes}
+              title={"Magazine Capacity:"}
+              value={product?.currentSnapshot?.magazineCapacity}
+            />
+          } */}
+          <ModelRow
+            classes={classes}
+            title={"Condition:"}
+            value={product?.currentSnapshot?.condition}
+          />
+          <ModelRow
+            classes={classes}
+            title={"Serial Number:"}
+            value={product?.currentSnapshot?.serialNumber}
+          />
+          {
+            product?.currentSnapshot?.ammoType &&
+            <ModelRow
+              classes={classes}
+              title={"Ammo type:"}
+              value={product?.currentSnapshot?.ammoType}
+            />
+          }
+        </>
       }
     </div>
   );
@@ -137,14 +145,17 @@ interface ModelRowProps extends WithStyles<typeof styles> {
 const styles = (theme: Theme) => createStyles({
   modelMakerRoot: {
     marginTop: '1rem',
+    minHeight: 190, // for SSR
     padding: '1.5rem 1rem 1rem 1rem',
-    border: theme.palette.type === 'dark'
-      ? `1px solid ${theme.colors.uniswapGrey}`
-      : `1px solid ${Colors.slateGreyDarker}`,
     borderRadius: BorderRadius,
     background: theme.palette.type === 'dark'
       ? Colors.uniswapDarkNavy
       : Colors.cream,
+  },
+  modelMakerBorder: {
+    border: theme.palette.type === 'dark'
+      ? `1px solid ${theme.colors.uniswapGrey}`
+      : `1px solid ${Colors.slateGreyDarker}`,
     boxShadow: theme.palette.type === 'dark'
       ? BoxShadows.shadow3.boxShadow
       : 'unset',

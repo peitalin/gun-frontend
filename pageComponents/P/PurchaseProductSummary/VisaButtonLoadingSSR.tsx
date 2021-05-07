@@ -3,11 +3,13 @@ import ButtonLoading from "components/ButtonLoading";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
 import { Colors, BoxShadows, BorderRadius, isThemeDark } from "layout/AppTheme";
+import { useTheme } from "@material-ui/core";
 
 
 const VisaButtonLoading = (props: ReactProps) => {
 
   const { classes } = props;
+  const theme = useTheme()
 
   return (
     <div className={classes.visaButtonRoot}>
@@ -17,7 +19,7 @@ const VisaButtonLoading = (props: ReactProps) => {
         loading={true}
         disabled={true}
         loadingIconColor={
-          Colors.lightestGrey
+          Colors.cream
         }
       />
       <div className={classes.visaSpacing}></div>
@@ -26,7 +28,9 @@ const VisaButtonLoading = (props: ReactProps) => {
         replaceTextWhenLoading={true}
         loading={true}
         disabled={true}
-        loadingIconColor={Colors.lightestGrey}
+        loadingIconColor={
+          Colors.cream
+        }
       />
     </div>
   )

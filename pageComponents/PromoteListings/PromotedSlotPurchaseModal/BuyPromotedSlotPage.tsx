@@ -52,7 +52,6 @@ import { DASHBOARD_PRODUCTS_CONNECTION } from "queries/store-queries";
 import {
   ADD_PRODUCT_TO_PROMOTED_LIST,
   REMOVE_PRODUCT_FROM_PROMOTED_LIST,
-  GET_PROMOTED_LIST,
 } from "queries/promoted_lists-queries";
 import { useQuery, useMutation } from "@apollo/client";
 import { useSnackbar } from "notistack";
@@ -119,7 +118,15 @@ const BuyPromotedSlotPage = (props: ReactProps) => {
     },
     onError: React.useCallback((e) => {
       console.log(e)
-      snackbar.enqueueSnackbar(`${e}`, { variant: "error" })
+      if (e?.message?.includes("duplicate")) {
+        // promoted_slots_promoted_list_id_product_id_key
+        snackbar.enqueueSnackbar(
+          `This list already has that product`,
+          { variant: "error" }
+        )
+      } else {
+        snackbar.enqueueSnackbar(`${e}`, { variant: "error" })
+      }
     }, []),
     onCompleted: React.useCallback(async (data) => {
       // console.log(data)

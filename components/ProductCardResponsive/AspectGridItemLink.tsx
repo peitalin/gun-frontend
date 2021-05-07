@@ -32,8 +32,8 @@ const AspectCarouselItemLink: React.FC<ReactProps> = (props) => {
         {
           props.promotedSlotId
           ? <LinkLoading
-              href={"/f/[promotedSlotId]"}
-              as={`/f/${props.promotedSlotId}`}
+              href={"/f/[productId]"}
+              as={`/f/${product?.id}`}
               disable={disable}
             >
               <CardActionArea classes={{ root: classes.cardActionArea }}>

@@ -59,6 +59,7 @@ const StickyDetailsBid = (props: ReactProps) => {
   return (
     <div className={clsx(
       classes.bidDetailsProductPageRoot,
+      process.browser && classes.borderBrowser,
       props.below1024 ? classes.relativeMenu : classes.stickyMenu,
     )}>
       <div className={clsx(
@@ -195,7 +196,9 @@ const styles = (theme: Theme) => createStyles({
     background: theme.palette.type === 'dark'
       ? Colors.uniswapDarkNavy
       : Colors.cream,
-    border: theme.palette.type === 'dark'
+  },
+  borderBrowser: {
+    border: isThemeDark(theme)
       ? `1px solid ${theme.colors.uniswapGrey}`
       : `1px solid ${Colors.slateGreyDarker}`,
     boxShadow: isThemeDark(theme)
@@ -228,6 +231,9 @@ const styles = (theme: Theme) => createStyles({
     fontSize: '1rem',
     marginTop: "0.5rem",
     marginBottom: "0.5rem",
+    color: isThemeDark(theme)
+      ? Colors.uniswapLightGrey
+      : Colors.slateGreyBlack,
   },
   subtitle: {
     fontSize: '0.9rem',

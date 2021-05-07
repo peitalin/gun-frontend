@@ -16,14 +16,14 @@ import { useSelector, useDispatch } from "react-redux";
 import { GrandReduxState } from "reduxStore/grand-reducer";
 import { Actions } from "reduxStore/actions";
 
-// import ProductDescription from "./ProductDescription";
+import ProductDescription from "./ProductDescription";
 import dynamic from "next/dynamic";
-const ProductDescription = dynamic(
-  () => import("pageComponents/P/ProductDetails/ProductDescription"), {
-    loading: () => <Loading inline/>,
-    ssr: false,
-  }
-)
+// const ProductDescription = dynamic(
+//   () => import("pageComponents/P/ProductDetails/ProductDescription"), {
+//     loading: () => <Loading inline/>,
+//     ssr: false,
+//   }
+// )
 
 
 

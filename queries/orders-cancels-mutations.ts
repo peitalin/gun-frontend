@@ -20,11 +20,11 @@ export const CANCEL_ORDER_AND_PAYMENT = gql`
 `;
 
 
-export const CANCEL_PAYMENT_INTENT_3DS_FAILURE = gql`
-  mutation cancelPaymentIntent3dsFailure(
+export const CANCEL_PAYMENT_INTENT_FAILURE = gql`
+  mutation cancelPaymentIntentFailure(
     $paymentIntentId: String!
   ) {
-    cancelPaymentIntent3dsFailure(
+    cancelPaymentIntentFailure(
       paymentIntentId: $paymentIntentId,
     ) {
       status

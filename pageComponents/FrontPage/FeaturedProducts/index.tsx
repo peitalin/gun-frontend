@@ -38,7 +38,7 @@ const FeaturedProducts = (props: ReactProps) => {
 
   const {
     classes,
-    count = 16,
+    count = 4,
     cardsPerRow = {
       xs: 1.5,
       sm: 1.5,
@@ -56,12 +56,11 @@ const FeaturedProducts = (props: ReactProps) => {
       limit: count,
       offset: 0,
     },
-    ssr: true,
   })
 
-  let promotedList = data?.promotedList
+  let promotedList = data?.getPromotedList
   let categorySlug = promotedList?.categoryFilterSlug
-  let connection = data?.promotedList?.promotedSlotsConnection
+  let connection = promotedList?.promotedSlotsConnection
 
   return (
     <>
@@ -104,7 +103,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   };
 }
 interface QueryData {
-  promotedList?: PromotedList;
+  getPromotedList: PromotedList;
 }
 interface QueryVar {
 }

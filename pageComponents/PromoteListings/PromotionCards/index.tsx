@@ -68,7 +68,7 @@ const PromotionCards = (props: ReactProps) => {
     ssr: true,
   })
 
-  let connection = data?.promotedList?.promotedSlotsConnection
+  let connection = data?.getPromotedList?.promotedSlotsConnection
 
 
   const openPromotedSlotPurchaseModal = () => {
@@ -139,7 +139,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   setRefetch(p: any): void;
 }
 interface QueryData {
-  promotedList?: PromotedList;
+  getPromotedList: PromotedList;
 }
 interface QueryVar {
   promotedListId: string,

@@ -2,6 +2,7 @@ import { createStyles, Theme, fade } from "@material-ui/core/styles";
 import {
   Colors,
   BorderRadius,
+  BorderRadius2x,
   isThemeDark,
   BoxShadows,
 } from "layout/AppTheme";
@@ -21,6 +22,7 @@ export const styles = (theme: Theme) => createStyles({
       : Colors.lightestGrey,
   },
   featuredImageRootPromoted: {
+    borderRadius: BorderRadius2x,
     border: isThemeDark(theme)
       ? `1px solid ${Colors.purple}`
       : "unset",

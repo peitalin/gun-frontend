@@ -7,7 +7,7 @@ import Typography from "@material-ui/core/Typography";
 import ErrorBounds from "components/ErrorBounds";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
-import { Colors } from "layout/AppTheme";
+import { Colors, isThemeDark } from "layout/AppTheme";
 
 
 
@@ -53,12 +53,17 @@ const styles = (theme: Theme) => createStyles({
     fontSize: '1.25rem',
     lineHeight: "1.5rem",
     fontWeight: 700,
+    color: isThemeDark(theme)
+      ? Colors.uniswapLightGrey
+      : Colors.slateGreyBlack,
     // marginBottom: '0.5rem',
   },
   subInfo: {
-    color: Colors.darkerGrey,
+    color: isThemeDark(theme)
+      ? Colors.uniswapLighterGrey
+      : Colors.slateGreyLightBlack,
     fontSize: '0.9rem',
-    fontWeight: 400,
+    fontWeight: 500,
   },
   ratings: {
     display: "flex",

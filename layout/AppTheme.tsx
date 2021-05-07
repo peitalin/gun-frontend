@@ -561,6 +561,14 @@ export const createAppTheme = (darkModeStr: "dark"|"light"): ThemeOptions =>  {
               : `rgba(200, 200, 200, 0.20)`,
           },
         },
+        contained: {
+          '&$disabled': {
+            // backgroundColor:
+            // backgroundColor: darkMode
+            //   ? Colors.uniswapMediumGrey
+            //   : Colors.slateGreyDarkest
+          },
+        },
         containedPrimary: {
           "&:hover": {
             color: "#fafafa",

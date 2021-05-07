@@ -7,10 +7,10 @@ import { SoldOutStatus, Chat_Rooms } from "typings/gqlTypes";
 // GraphQL
 import { useQuery, useLazyQuery } from "@apollo/client";
 // Typings
-import { PromotedSlot, UserPrivate, Product_Variants, BidStatus, Role } from "typings/gqlTypes";
+import { Product, UserPrivate, Product_Variants, BidStatus, Role } from "typings/gqlTypes";
 import {
-  GET_PROMOTED_SLOT
-} from "queries/promoted_lists-queries";
+  GET_PRODUCT
+} from "queries/products-queries";
 import {
   GET_USER_BIDS_FOR_PRODUCT
 } from "queries/chat-queries";
@@ -52,7 +52,7 @@ import dynamic from "next/dynamic";
 
 
 
-const PromotedSlotId: React.FC<ReactProps> = (props) => {
+const FeaturedProductId: React.FC<ReactProps> = (props) => {
 
   const { classes } = props;
 
@@ -67,7 +67,7 @@ const PromotedSlotId: React.FC<ReactProps> = (props) => {
   const [selectedBid, setSelectedBid] = React.useState(undefined);
 
   const router = useRouter();
-  const promotedSlotId: string = router?.query?.promotedSlotId as any;
+  const productId: string = router?.query?.productId as any;
 
   const user = useSelector<GrandReduxState, UserPrivate>(s =>
     s.reduxLogin.user
@@ -83,7 +83,7 @@ const PromotedSlotId: React.FC<ReactProps> = (props) => {
   ] = useLazyQuery<QueryData2, QueryVar>(
     GET_USER_BIDS_FOR_PRODUCT, {
     variables: {
-      promotedSlotId: promotedSlotId
+      productId: productId
     },
     ssr: true,
   })
@@ -93,14 +93,13 @@ const PromotedSlotId: React.FC<ReactProps> = (props) => {
   // console.log("userBids: ", userBids)
 
   const { loading, error, data, refetch } = useQuery<QueryData, QueryVar>(
-    GET_PROMOTED_SLOT, {
+    GET_PRODUCT, {
     variables: {
-      promotedSlotId: promotedSlotId
+      productId: productId
     },
     ssr: true,
   })
-  const promotedSlot = data?.getPromotedSlotById || props.initialPromotedSlot;
-  const product = promotedSlot?.product
+  const product = data?.getProductById || props.initialProduct;
 
   ////////// VARIANTS
   const [
@@ -109,7 +108,7 @@ const PromotedSlotId: React.FC<ReactProps> = (props) => {
   ] = React.useState<SelectedVariantProps>({
     label: "variant",
     value: product?.featuredVariant || {
-      promotedSlotId: undefined,
+      productId: undefined,
       variantId: undefined,
       snapshotId: undefined,
       variantSnapshotId: undefined,
@@ -224,7 +223,7 @@ const PromotedSlotId: React.FC<ReactProps> = (props) => {
           // product={undefined}
           //// sometimes SSR preload looks off when product is undefined
           //// replicate by setting product = undefined
-          loading={loading && !product}
+          loading={loading}
           numberOfItemsTall={16}
           numberOfItemsWide={8}
           index={index}
@@ -360,13 +359,13 @@ const PromotedSlotId: React.FC<ReactProps> = (props) => {
 
 
 interface ReactProps extends WithStyles<typeof styles> {
-  initialPromotedSlot: PromotedSlot;
+  initialProduct: Product;
 }
 interface QueryData {
-  getPromotedSlotById: PromotedSlot;
+  getProductById: Product;
 }
 interface QueryVar {
-  promotedSlotId: string;
+  productId: string;
 }
 interface QueryData2 {
   getUserBidsForProduct: Chat_Rooms;
@@ -422,4 +421,4 @@ const styles = (theme: Theme) => createStyles({
 });
 
 
-export default withStyles(styles)( PromotedSlotId );
+export default withStyles(styles)( FeaturedProductId );

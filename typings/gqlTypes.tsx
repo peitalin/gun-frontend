@@ -4092,7 +4092,7 @@ export type Mutation = {
    * For a buyer to create an order after authorizing a payment
    */
   confirmOrder: OrderConfirmMutationResponse;
-  cancelPaymentIntent3dsFailure?: Maybe<BlankMutationResponse>;
+  cancelPaymentIntentFailure?: Maybe<BlankMutationResponse>;
   /**
    * AccessRule – LOGGED_IN
    * For admins to capture payment after order is created
@@ -5721,7 +5721,7 @@ export type MutationConfirmOrderArgs = {
 };
 
 
-export type MutationCancelPaymentIntent3dsFailureArgs = {
+export type MutationCancelPaymentIntentFailureArgs = {
   paymentIntentId: Scalars['String'];
 };
 
@@ -10853,6 +10853,8 @@ export type Products = {
   productVariants: Array<Product_Variants>;
   /** An aggregated array relationship */
   productVariants_aggregate: Product_Variants_Aggregate;
+  /** An object relationship */
+  promotedSlot?: Maybe<Promoted_Slots>;
   soldOutStatus: Scalars['String'];
   /** An object relationship */
   store?: Maybe<Stores>;
@@ -10933,6 +10935,7 @@ export type Products_Bool_Exp = {
   isSuspended?: Maybe<Boolean_Comparison_Exp>;
   lastPerformanceReview?: Maybe<Timestamptz_Comparison_Exp>;
   productVariants?: Maybe<Product_Variants_Bool_Exp>;
+  promotedSlot?: Maybe<Promoted_Slots_Bool_Exp>;
   soldOutStatus?: Maybe<String_Comparison_Exp>;
   store?: Maybe<Stores_Bool_Exp>;
   storeId?: Maybe<String_Comparison_Exp>;
@@ -10960,6 +10963,7 @@ export type Products_Insert_Input = {
   isSuspended?: Maybe<Scalars['Boolean']>;
   lastPerformanceReview?: Maybe<Scalars['timestamptz']>;
   productVariants?: Maybe<Product_Variants_Arr_Rel_Insert_Input>;
+  promotedSlot?: Maybe<Promoted_Slots_Obj_Rel_Insert_Input>;
   soldOutStatus?: Maybe<Scalars['String']>;
   store?: Maybe<Stores_Obj_Rel_Insert_Input>;
   storeId?: Maybe<Scalars['String']>;
@@ -11053,6 +11057,7 @@ export type Products_Order_By = {
   isSuspended?: Maybe<Order_By>;
   lastPerformanceReview?: Maybe<Order_By>;
   productVariants_aggregate?: Maybe<Product_Variants_Aggregate_Order_By>;
+  promotedSlot?: Maybe<Promoted_Slots_Order_By>;
   soldOutStatus?: Maybe<Order_By>;
   store?: Maybe<Stores_Order_By>;
   storeId?: Maybe<Order_By>;
@@ -11660,7 +11665,9 @@ export type Promoted_Slots_Bool_Exp = {
 /** unique or primary key constraints on table "promoted_slots" */
 export enum Promoted_Slots_Constraint {
   /** unique or primary key constraint */
-  PROMOTED_SLOTS_PKEY = 'promoted_slots_pkey'
+  PROMOTED_SLOTS_PKEY = 'promoted_slots_pkey',
+  /** unique or primary key constraint */
+  PROMOTED_SLOTS_PROMOTED_LIST_ID_PRODUCT_ID_KEY = 'promoted_slots_promoted_list_id_product_id_key'
 }
 
 /** input type for incrementing integer column in table "promoted_slots" */
@@ -12843,7 +12850,8 @@ export type Query = {
    *
    * AccessRule – PUBLIC
    */
-  promotedList?: Maybe<PromotedList>;
+  getPromotedList?: Maybe<PromotedList>;
+  getPromotedSlotByProductId?: Maybe<PromotedSlot>;
   getPageConfig?: Maybe<PageConfig>;
   /**
    * Get the product by productId
@@ -13986,10 +13994,16 @@ export type QueryWishlistItemsConnectionArgs = {
 };
 
 
-export type QueryPromotedListArgs = {
+export type QueryGetPromotedListArgs = {
   promotedListId: Scalars['String'];
   limit?: Maybe<Scalars['Int']>;
   offset?: Maybe<Scalars['Int']>;
+};
+
+
+export type QueryGetPromotedSlotByProductIdArgs = {
+  productId: Scalars['String'];
+  promotedListId?: Maybe<Scalars['String']>;
 };
 
 
