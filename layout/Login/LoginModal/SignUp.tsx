@@ -83,8 +83,8 @@ const SignUp: React.FC<ReactProps> = (props) => {
     props.dispatchCreateUser({
       email: state.email,
       password: state.password,
-      firstName: state.firstName,
-      lastName: state.lastName,
+      firstName: state?.firstName,
+      lastName: state?.lastName,
       licenseNumber: state.licenseNumber,
       licenseExpiry: state.licenseExpiry,
       licenseState: state.licenseState,
@@ -154,7 +154,7 @@ const SignUp: React.FC<ReactProps> = (props) => {
             <Input
               name="first-name"
               autoComplete="given-name"
-              value={state.firstName}
+              value={state?.firstName}
               onChange={(e) => {
                 e.persist(); // for persisting synthetic events
                 setState(s => ({ ...s, firstName: e?.target?.value }))
@@ -166,7 +166,7 @@ const SignUp: React.FC<ReactProps> = (props) => {
             <Input
               name="last-name"
               autoComplete="family-name"
-              value={state.lastName}
+              value={state?.lastName}
               onChange={(e) => {
                 e.persist(); // for persisting synthetic events
                 setState(s => ({ ...s, lastName: e?.target?.value }))
@@ -201,7 +201,7 @@ const SignUp: React.FC<ReactProps> = (props) => {
                 format="DD/MM/YYYY"
                 // margin="normal"
                 id="date-picker-inline"
-                // label="License Expiry"
+                label="License Expiry"
                 value={selectedDate}
                 maxDate={new Date("1/1/3000")}
                 onChange={handleDateChange}

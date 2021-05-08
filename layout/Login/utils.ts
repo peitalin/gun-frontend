@@ -86,6 +86,22 @@ export const isSignUpInputOk =
   }
 }
 
+export const isResetPasswordInputOk =
+(snackbar: ProviderContext) =>
+({ email }) => {
+  if (!email) {
+    snackbar.enqueueSnackbar("Email is missing!", { variant: "error" })
+    return false
+  } else {
+    if (validateEmail(email)) {
+      return true
+    } else {
+      snackbar.enqueueSnackbar("Invalid email!", { variant: "error" })
+      return false
+    }
+  }
+}
+
 export const validateEmail = (value) => {
   console.log('input email', value)
   if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)) {
@@ -102,6 +118,7 @@ export const translateErrorMsg = (msg: string) => {
   if (msg?.includes('NotFound')) {
     return "That email is not a user"
   }
+  console.log("MMMMMMMSG", msg)
   if (msg?.includes('duplicate')) {
     return "Email has already been taken"
   }

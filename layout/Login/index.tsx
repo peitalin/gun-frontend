@@ -33,12 +33,16 @@ import {
   validateEmail,
   translateErrorMsg,
   isLoginInputOk,
-  isSignUpInputOk
+  isSignUpInputOk,
+  isResetPasswordInputOk,
 } from "./utils";
 import { reduxBatchUpdate } from "layout/GetUser";
 import { useSnackbar, ProviderContext } from "notistack";
 import { ApolloRefetch, refetchUser } from "layout/GetUser";
 import login from "pages/login";
+
+import { useFormik } from 'formik';
+import { validationSchemas } from "utils/validation";
 
 /////////////////////////////////////////
 //////// Login Modal Component //////////
@@ -66,6 +70,21 @@ const Login: React.FC<ReactProps> = (props) => {
     }
   })
 
+  // const formik = useFormik({
+  //   initialValues: {
+  //     email: '',
+  //   },
+  //   validationSchema: validationSchemas.SignupEmail,
+  //   onSubmit: async (values) => {
+  //     // await signupToWaitlist({
+  //     //   variables: {
+  //     //     email: values?.email,
+  //     //   }
+  //     // })
+  //     formik.resetForm();
+  //   },
+  // });
+
   const snackbar = useSnackbar();
 
   let [logInUsingEmail, logInUsingEmailResponse] = useMutation<MData1, MVar1>(
@@ -84,9 +103,6 @@ const Login: React.FC<ReactProps> = (props) => {
         handleRedirect({ delay: props.redirectDelay ?? 0 })
         handleCallback()
       }
-    },
-    onError: (error) => {
-      handleGqlError(error)
     },
     fetchPolicy: "no-cache", // always do a network request, no caches
     errorPolicy: "all", // propagate errors from backend to Snackbar
@@ -108,15 +124,14 @@ const Login: React.FC<ReactProps> = (props) => {
     },
     onCompleted: (data) => {
       let user = data?.signUpUsingEmail?.user;
-      // Update redux user and cart state and refetch
-      dispatch(reduxBatchUpdate.userStore({ user: user }))
-      handleUpdateLoginState(user)
-      // if login/signup succeeded, and there is a redirect...
-      handleRedirect({ delay: props.redirectDelay ?? 0 })
-      handleCallback()
-    },
-    onError: (error) => {
-      handleGqlError(error)
+      if (user) {
+        // Update redux user and cart state and refetch
+        dispatch(reduxBatchUpdate.userStore({ user: user }))
+        handleUpdateLoginState(user)
+        // if login/signup succeeded, and there is a redirect...
+        handleRedirect({ delay: props.redirectDelay ?? 0 })
+        handleCallback()
+      }
     },
     update: (cache, { data: { signUpUsingEmail } }) => { },
     errorPolicy: "all", // propagate errors from backend to Snackbar
@@ -130,23 +145,24 @@ const Login: React.FC<ReactProps> = (props) => {
     variables: {
       email: undefined,
     },
-    onCompleted: ({ sendResetPasswordEmail }) => {
-      let emailSentTo = sendResetPasswordEmail?.emailSentTo
-      snackbar.enqueueSnackbar(`Sent to: ${emailSentTo}`, {
-        variant: "success",
-        autoHideDuration: 5000,
-      })
+    onCompleted: (data) => {
+      console.log('data,', data)
+      let emailSentTo = data?.sendResetPasswordEmail?.emailSentTo
+      if (emailSentTo) {
+        snackbar.enqueueSnackbar(`Sent to: ${emailSentTo}`, {
+          variant: "success",
+          autoHideDuration: 5000,
+        })
 
-      setTimeout(() => {
-        setState(s => ({
-          ...s,
-          tabIndex: 3 // check email page
-        }))
-      }, 900);
+        setTimeout(() => {
+          setState(s => ({
+            ...s,
+            tabIndex: 3 // check email page
+          }))
+        }, 900);
+      }
     },
-    onError: (error) => {
-      handleGqlError(error)
-    },
+    onError: (err) => { },
     fetchPolicy: "no-cache", // always do a network request, no caches
     errorPolicy: "all", // propagate errors from backend to Snackbar
   });
@@ -200,7 +216,7 @@ const Login: React.FC<ReactProps> = (props) => {
       )
     } else {
       snackbar.enqueueSnackbar(
-        error,
+        error?.message,
         { variant: "error" }
       )
     }
@@ -308,14 +324,16 @@ const Login: React.FC<ReactProps> = (props) => {
   //// 3. Password reset Call
   /////////////////////////////////////////////////
   const dispatchResetPassword = async({ email }: { email: string }) => {
-    if (!email) {
-      snackbar.enqueueSnackbar("Email is missing!", { variant: "error" })
+    if (!isResetPasswordInputOk(snackbar)({ email })) {
+      // snackbar.enqueueSnackbar("Creating an account...", {
+      //   variant: "info",
+      //   autoHideDuration: 2000,
+      // })
       return null
     }
-
     sendResetPasswordEmail({
       variables: {
-        email: email.trim(),
+        email: email,
       }
     })
   }
@@ -334,6 +352,24 @@ const Login: React.FC<ReactProps> = (props) => {
   /////////////////////////////////////////////////
   //// Effects
   /////////////////////////////////////////////////
+
+  React.useEffect(() => {
+    if (logInUsingEmailResponse?.error) {
+      handleGqlError(logInUsingEmailResponse?.error)
+    }
+  }, [logInUsingEmailResponse])
+
+  React.useEffect(() => {
+    if (signUpUsingEmailResponse?.error) {
+      handleGqlError(signUpUsingEmailResponse?.error)
+    }
+  }, [signUpUsingEmailResponse])
+
+  React.useEffect(() => {
+    if (sendResetPasswordEmailResponse?.error) {
+      handleGqlError(sendResetPasswordEmailResponse?.error)
+    }
+  }, [sendResetPasswordEmailResponse])
 
   /// Not currently used, user-service does not have an expiry on
   /// efc-auth session-cookie. But if it did, this hook will auto-logout
