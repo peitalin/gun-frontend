@@ -110,7 +110,7 @@ const BannerStartMobile: NextPage<ReactProps> = (props) => {
         ...ditherStyle
       }}
       bannerContainerStyles={{
-        ...commonStyles(theme).border1,
+        // ...commonStyles(theme).border1,
         ...bannerContainerStyle,
       }}
       dither={true}

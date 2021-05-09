@@ -49,7 +49,7 @@ const BannerEnd: NextPage<ReactProps> = (props) => {
   }
 
   const bannerContainerStyle = {
-    backgroundImage:`url(/img/start/hero1.png)`,
+    backgroundImage:`url(/img/start/hero-mobile.png)`,
     backgroundRepeat: 'no-repeat',
     backgroundSize: "cover",
     backgroundPosition: "left",
@@ -57,7 +57,7 @@ const BannerEnd: NextPage<ReactProps> = (props) => {
   }
 
   const bannerContainerStyleMobile = {
-    // backgroundImage:`url(/img/start/hero3.png)`,
+    backgroundImage:`url(/img/start/hero-mobile.png)`,
     backgroundColor: props.isDarkMode
       ? Colors.uniswapDarkNavy
       : Colors.slateGrey,

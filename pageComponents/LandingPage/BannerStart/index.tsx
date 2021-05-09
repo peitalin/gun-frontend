@@ -2,7 +2,7 @@ import React from "react";
 import clsx from "clsx";
 // styles
 import { withStyles, WithStyles, createStyles, Theme, fade } from "@material-ui/core/styles";
-import { Colors, Gradients } from "layout/AppTheme";
+import { Colors, Gradients, isThemeDark } from "layout/AppTheme";
 // SSR
 import { NextPage, NextPageContext } from 'next';
 import Login from "layout/Login";
@@ -31,9 +31,7 @@ const BannerStart: NextPage<ReactProps> = (props) => {
   const bannerForegroundImageUrlLight = `/img/start/screen1-light.jpg`
 
   const theme = useTheme();
-  const smDown = useMediaQuery(theme.breakpoints.down("sm"))
   const mdDown = useMediaQuery(theme.breakpoints.down("md"))
-  const lgDown = useMediaQuery(theme.breakpoints.down("lg"))
 
   const ditherStyle = {
     // background: isDarkMode
@@ -49,8 +47,8 @@ const BannerStart: NextPage<ReactProps> = (props) => {
     // bottom row: navbar dither
 
     background: props.isDarkMode
-      ? `linear-gradient(0deg , ${Colors.black1A} 10%, rgba(25, 25, 25, 0.1) 66%)`
-      : `linear-gradient(0deg , ${Colors.black1A} 10%, rgba(25, 25, 25, 0.1) 66%)`,
+      ? `linear-gradient(0deg , ${Colors.black1A} 20%, rgba(25, 25, 25, 0.1) 76%)`
+      : `linear-gradient(0deg , ${Colors.black1A} 20%, rgba(25, 25, 25, 0.1) 76%)`,
   }
 
   ///// https://codepen.io/danichk/pen/YyVeXa
@@ -73,7 +71,12 @@ const BannerStart: NextPage<ReactProps> = (props) => {
 
   const bannerContainerStyleMobile = {
     // backgroundImage:`url(/img/start/hero2.jpg)`,
-    backgroundImage:`url(/img/start/hero1.png)`,
+    backgroundColor: isThemeDark(theme)
+      ? Colors.black1A
+      : Colors.black1A,
+    backgroundImage: isThemeDark(theme)
+      ? `url(/img/start/gun-collage-light.png)`
+      : `url(/img/start/gun-collage-light.png)`,
     // backgroundImage:`url(/img/start/hero4.jpg)`,
     backgroundRepeat: 'no-repeat',
     backgroundPosition: "left",

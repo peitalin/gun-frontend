@@ -89,8 +89,8 @@ const styles = (theme: Theme) => createStyles({
     flexDirection: "column",
     justifyContent: 'center',
     background: isThemeDark(theme)
-    ? Colors.black1A
-    : Colors.black1A,
+      ? Colors.black1A
+      : Colors.black1A,
   },
   betaTestingBannerBox: {
     overflow: 'hidden',
