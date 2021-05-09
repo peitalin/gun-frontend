@@ -107,7 +107,7 @@ const FeaturedProductsMobileCarousel = (props: ReactProps) => {
           >
             <a className={classes.seeAllLinkBorder}>
               See more
-              <ArrowRight/>
+              <ArrowRight className={classes.sellAllIcon}/>
             </a>
           </Link>
         </div>

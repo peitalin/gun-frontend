@@ -124,7 +124,7 @@ const MainApp: NextComponentType<AppContext, AppInitialProps, AppProps & AppHOCP
               return (
                 <IconButtonCancel
                   onClick={onClickDismiss(key)}
-                  dark={false} // light colored close icon
+                  dark={true} // light colored close icon
                 />
               )
             }}

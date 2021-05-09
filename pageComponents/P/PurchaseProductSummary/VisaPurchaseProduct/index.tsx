@@ -371,6 +371,25 @@ const VisaPurchaseProduct = (props: ReactProps) => {
     let paymentIntent: PaymentIntent = JSON.parse(stripePaymentIntent)
     console.log("incoming paymentIntent: ", paymentIntent)
 
+    // if (paymentIntent?.next_action?.type === 'redirect_to_url') {
+    //   window.location.assign(
+    //     paymentIntent?.next_action?.redirect_to_url?.url
+    //   )
+    // }
+    /////// Not needed. automatic confirmation means this is not needed
+    // if (paymentIntent.next_action) {
+    //   let cardActionResponse = stripe.handleCardAction(
+    //     paymentIntent.client_secret
+    //   ).then(result => {
+    //     console.log("result: ", result)
+    //     if (result?.error) {
+    //       console.log("result.error: ", result?.error)
+    //     } else {
+    //     }
+    //   })
+    //   console.log("stripe.handleCardAction: ", cardActionResponse)
+    // }
+
     // 2. now prompt user for 3DS confirmation to complete the payment authorization
     // A 3DS should pop-up if enabled on stripe dashboard settings.
     let stripe3dsResponse: StripeConfirmResponse = await stripe.confirmCardPayment(
@@ -382,6 +401,7 @@ const VisaPurchaseProduct = (props: ReactProps) => {
         }
       } as ConfirmCardPaymentData
     );
+
     // this can return an error, insufficient funds, card rejected, etc
     console.log("3DS confirm response", stripe3dsResponse)
     if (stripe3dsResponse?.error?.code) {

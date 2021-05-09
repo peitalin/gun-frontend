@@ -16,15 +16,17 @@ import MenuIcon from "@material-ui/icons/Menu";
 import Button from "@material-ui/core/Button";
 import Divider from "@material-ui/core/Divider";
 // Icons
-import ContactSupportIcon from "@material-ui/icons/ContactSupport";
-import PermIdentityIcon from "@material-ui/icons/PermIdentity";
+import GavelIcon from '@material-ui/icons/Gavel';
 import StorefrontIcon from "@material-ui/icons/Storefront";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import DownloadIcon from "@material-ui/icons/SaveAlt";
 import MonetizationOnIcon from "@material-ui/icons/MonetizationOn";
 import CardGiftcard from "@material-ui/icons/CardGiftcard";
-import LibraryBooks from "@material-ui/icons/LibraryBooks";
-import QAIcon from "@material-ui/icons/QuestionAnswer";
+import HelpOutlineIcon from "@material-ui/icons/HelpOutline";
+import PowerSettingsNewIcon from '@material-ui/icons/PowerSettingsNew';
+import SettingsIcon from '@material-ui/icons/Settings';
+import HowToVoteIcon from '@material-ui/icons/HowToVote';
+
 // Router
 import Link from "next/link";
 import Hidden from "@material-ui/core/Hidden";
@@ -109,7 +111,7 @@ export const UserMenu: React.FC<ReactProps> = (props) => {
             {/* <Link href="/gov/random-products"> */}
             <Link href="/gov/escrow/pending-approval">
               <a className={classes.menuLink}>
-                <LibraryBooks className={classes.menuIcon}/>
+                <GavelIcon className={classes.menuIcon}/>
                 <span className={classes.menuText}>
                   Governance Dashboard
                 </span>
@@ -125,7 +127,8 @@ export const UserMenu: React.FC<ReactProps> = (props) => {
             {/* <Link href="/gov/random-products"> */}
             <Link href="/dealers">
               <a className={classes.menuLink}>
-                <LibraryBooks className={classes.menuIcon}/>
+                <GavelIcon className={classes.menuIcon}
+                  style={{}}/>
                 <span className={classes.menuText}>
                   Dealer Dashboard
                 </span>
@@ -166,7 +169,7 @@ export const UserMenu: React.FC<ReactProps> = (props) => {
         <MenuItem  className={classes.menuItem} onClick={handleCloseMenu}>
           <Link href="/offers">
             <a className={classes.menuLink}>
-              <CardGiftcard className={classes.menuIcon}/>
+              <HowToVoteIcon className={classes.menuIcon}/>
               <span className={classes.menuText}> My Offers </span>
             </a>
           </Link>
@@ -175,7 +178,7 @@ export const UserMenu: React.FC<ReactProps> = (props) => {
         <MenuItem className={classes.menuItem} onClick={handleCloseMenu}>
           <Link href="/settings">
             <a className={classes.menuLink}>
-              <ShoppingCartIcon className={classes.menuIcon}/>
+              <SettingsIcon className={classes.menuIcon}/>
               <span className={classes.menuText}> My Settings </span>
             </a>
           </Link>
@@ -193,9 +196,9 @@ export const UserMenu: React.FC<ReactProps> = (props) => {
         <Divider/>
 
         <MenuItem className={classes.menuItem} onClick={handleCloseMenu}>
-          <Link href="/faq">
+          <Link href="/help/faq">
             <a className={classes.menuLink}>
-              <QAIcon className={classes.menuIcon}/>
+              <HelpOutlineIcon className={classes.menuIcon}/>
               <span className={classes.menuText}> FAQ </span>
             </a>
           </Link>
@@ -206,7 +209,7 @@ export const UserMenu: React.FC<ReactProps> = (props) => {
           logout(apolloClient, dispatch)('/')
         }}>
           <a className={classes.menuLink}>
-            <QAIcon className={classes.menuIcon} />
+            <PowerSettingsNewIcon className={classes.menuIcon} />
             <span className={classes.menuText}> Logout </span>
           </a>
         </MenuItem>

@@ -1,6 +1,6 @@
 // Styles
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
-import { Colors, BorderRadius } from "layout/AppTheme";
+import { Colors, BorderRadius, isThemeDark } from "layout/AppTheme";
 
 
 export const styles = (theme: Theme) => createStyles({
@@ -103,6 +103,9 @@ export const styles = (theme: Theme) => createStyles({
     marginLeft: '20%',
     marginRight: '20%',
   },
+  sellAllIcon: {
+    width: '1rem',
+  },
   seeAllLinkContainer: {
     marginRight: '1.25rem',
     marginTop: '1.25rem',
@@ -118,7 +121,9 @@ export const styles = (theme: Theme) => createStyles({
     fontSize: '0.8rem',
     color: Colors.blue,
     // borderBottom: `2px solid ${Colors.charcoal}`,
-    borderBottom: `2px solid ${Colors.white}`,
+    borderBottom: isThemeDark(theme)
+      ? `2px solid ${Colors.uniswapDarkNavy}`
+      : `2px solid ${Colors.slateGrey}`,
     // borderRadius: '2px',
     // paddingLeft: '0.25rem',
     display: 'flex',

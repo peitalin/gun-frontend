@@ -9,6 +9,16 @@ export const styles = (theme: Theme) => createStyles({
     // backgroundColor: "#fefefe",
     width: "100%",
   },
+  searchContainer: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    width: '100%',
+    padding: '1rem',
+    marginTop: "10rem",
+    marginBottom: '2rem',
+    height: '5rem', // so search expansion doesnt move title heading
+  },
   mainTitleContainer: {
     display: 'flex',
     flexDirection: 'column',
@@ -226,15 +236,6 @@ export const styles = (theme: Theme) => createStyles({
     fontWeight: 600,
     padding: '.5rem 1.5rem',
     lineHeight: '1.75rem',
-  },
-  searchContainer: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    width: '100%',
-    padding: '1rem',
-    marginTop: "8rem",
-    marginBottom: '4rem',
   },
 })
 

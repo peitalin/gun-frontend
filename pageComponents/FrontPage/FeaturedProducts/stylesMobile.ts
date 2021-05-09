@@ -66,6 +66,9 @@ export const styles = (theme: Theme) => createStyles({
   // dividerFeaturedProduct: {
   //   border: `2px solid ${Colors.lightGrey}`,
   // },
+  sellAllIcon: {
+    width: '1rem',
+  },
   seeAllLinkContainer: {
     marginRight: '0.25rem',
     marginTop: '0.25rem',

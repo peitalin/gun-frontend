@@ -26,6 +26,21 @@ const HelpSideRoutesMenu: React.FC<ReactProps> = (props) => {
 
       <ul className={classes.routeMenuList}>
         <li>
+          <Link href={"/help/faq"} scroll={false}>
+            <a>
+              <div className={
+                isSelectedRoute("/help/faq")
+                  ? classes.routeListItemSelected
+                  : classes.routeListItem
+              }>
+                <Typography variant="subtitle1" className={classes.routeListItemText}>
+                  FAQ
+                </Typography>
+              </div>
+            </a>
+          </Link>
+        </li>
+        <li>
           <Link href={"/help/privacy"} scroll={false}>
             <a>
               <div className={
