@@ -7,12 +7,11 @@ import {
   Theme,
 } from "@material-ui/core/styles";
 import { Colors, BoxShadows, BorderRadius, BorderRadius2x } from "layout/AppTheme";
+import { commonStyles } from "../commonStyles";
 // Typings
 import {} from "typings/gqlTypes";
 // components
 import Typography from "@material-ui/core/Typography";
-import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import CardMedia from "@material-ui/core/CardMedia";
@@ -128,6 +127,7 @@ interface ReactProps extends WithStyles<typeof styles> {
 export const styles = (theme: Theme) => createStyles({
   section6Root: {
     width: '100%',
+    ...commonStyles(theme).border1,
   },
   section6: {
     width: '100%',

@@ -7,6 +7,7 @@ import {
   Theme,
 } from "@material-ui/core/styles";
 import { Colors, BoxShadows, BorderRadius3x } from "layout/AppTheme";
+import { commonStyles } from "../commonStyles";
 // components
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
@@ -204,17 +205,9 @@ interface ReactProps extends WithStyles<typeof styles> {
 export const styles = (theme: Theme) => createStyles({
   section3Root: {
     paddingTop: '4rem',
-    // paddingBottom: '4rem',
+    paddingBottom: '6rem',
     width: '100%',
-    // borderTop: theme.palette.type === 'dark'
-    //   ? `1px solid ${Colors.uniswapMediumNavy}`
-    //   : `1px solid ${Colors.slateGreyDarkest}`,
-    // borderBottom: theme.palette.type === 'dark'
-    //   ? `1px solid ${Colors.uniswapGrey}`
-    //   : `1px solid ${Colors.slateGreyDarkest}`,
-    backgroundColor: theme.palette.type === 'dark'
-      ? `${Colors.uniswapDarkNavy}`
-      : `${Colors.cream}`,
+    ...commonStyles(theme).border2,
   },
   section3: {
     maxWidth: 1180,

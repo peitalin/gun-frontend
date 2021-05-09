@@ -8,8 +8,10 @@ import {
   Gradients,
   BorderRadius2x,
   BoxShadows,
+  isThemeDark,
   fontFam,
 } from "layout/AppTheme";
+import { commonStyles } from "../commonStyles";
 // components
 import Banner from "components/Banner";
 import Typography from "@material-ui/core/Typography";
@@ -51,9 +53,6 @@ const BannerEndDesktop: NextPage<ReactProps> = (props) => {
   const snackbar = useSnackbar();
 
   const theme = useTheme();
-  const smDown = useMediaQuery(theme.breakpoints.down("sm"))
-  const mdDown = useMediaQuery(theme.breakpoints.down("md"))
-  const lgDown = useMediaQuery(theme.breakpoints.down("lg"))
 
   const [
     signupToWaitlist,
@@ -116,7 +115,8 @@ const BannerEndDesktop: NextPage<ReactProps> = (props) => {
         ...ditherStyle,
       }}
       bannerContainerStyles={{
-        ...bannerContainerStyle
+        ...commonStyles(theme).border1,
+        ...bannerContainerStyle,
       }}
       dither={true}
       height={height}
@@ -352,14 +352,14 @@ export const styles = (theme: Theme) => createStyles({
     marginTop: '1rem',
   },
   buttonSignupEmail: {
-    background: theme.palette.type === "dark"
+    background: isThemeDark(theme)
       ? Colors.purple
       : Colors.ultramarineBlue,
     fontSize: '0.7rem',
     color: Colors.cream,
     minWidth: "150px",
     "&:hover": {
-      background: theme.palette.type === "dark"
+      background: isThemeDark(theme)
         ? fade(Colors.purple, 0.9)
         : fade(Colors.ultramarineBlue, 0.9),
       transition: theme.transitions.create(['color', 'border', 'background'], {

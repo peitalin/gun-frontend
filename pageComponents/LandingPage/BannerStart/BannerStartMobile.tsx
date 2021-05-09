@@ -3,6 +3,7 @@ import clsx from "clsx";
 // styles
 import { withStyles, WithStyles, createStyles, Theme, fade } from "@material-ui/core/styles";
 import { BorderRadius2x, BorderRadius, Colors, fontFam } from "layout/AppTheme";
+import { commonStyles } from "../commonStyles";
 // components
 import Banner from "components/Banner";
 import Typography from "@material-ui/core/Typography";
@@ -43,10 +44,7 @@ const BannerStartMobile: NextPage<ReactProps> = (props) => {
   const snackbar = useSnackbar();
 
   const theme = useTheme();
-  const xsDown = useMediaQuery(theme.breakpoints.down("xs"))
-  const smDown = useMediaQuery(theme.breakpoints.down("sm"))
   const mdDown = useMediaQuery(theme.breakpoints.down("md"))
-  const lgDown = useMediaQuery(theme.breakpoints.down("lg"))
 
   const [
     signupToWaitlist,
@@ -105,12 +103,15 @@ const BannerStartMobile: NextPage<ReactProps> = (props) => {
         justifyContent: 'center',
         alignItems: 'flex-start',
         paddingTop: '4rem',
+        marginBottom: "4rem",
+        height: 'unset',
       }}
       ditherStyle={{
         ...ditherStyle
       }}
       bannerContainerStyles={{
-        ...bannerContainerStyle
+        ...commonStyles(theme).border1,
+        ...bannerContainerStyle,
       }}
       dither={true}
       height={620}
@@ -118,7 +119,7 @@ const BannerStartMobile: NextPage<ReactProps> = (props) => {
 
       <div className={classes.flexCol}>
 
-        {
+        {/* {
           props.isDarkMode
           ? <CardMedia
               component="img"
@@ -132,7 +133,7 @@ const BannerStartMobile: NextPage<ReactProps> = (props) => {
               classes={{ media: classes.categoryImage }}
               src={props.bannerForegroundImageUrlLight}
             />
-        }
+        } */}
 
 
         <div className={classes.mainTitleContainerMobile}>
@@ -168,7 +169,7 @@ const BannerStartMobile: NextPage<ReactProps> = (props) => {
                 type="submit"
                 className={clsx(
                   classes.buttonSignupEmail,
-                  classes.buttonSignupDesktop,
+                  classes.buttonSignupMobile,
                 )}
                 onClick={() => {
                   if (!formik.values?.email) {
@@ -248,7 +249,7 @@ export const styles = (theme: Theme) => createStyles({
     fontFamily: fontFam,
     color: theme.palette.type === 'dark'
       ? Colors.lightestGrey
-      : Colors.black,
+      : Colors.cream,
     lineHeight: '2rem',
     fontSize: '1.75rem',
     marginBottom: "0.25rem",
@@ -258,7 +259,7 @@ export const styles = (theme: Theme) => createStyles({
   subline1Sm: {
     color: theme.palette.type === 'dark'
       ? Colors.uniswapLightGrey
-      : Colors.slateGreyLightBlack,
+      : Colors.slateGreyDarkest,
     fontFamily: fontFam,
     lineHeight: "1.5",
     fontWeight: 500,
@@ -303,9 +304,9 @@ export const styles = (theme: Theme) => createStyles({
       backgroundPosition: '-75px',
     }
   },
-  buttonSignupDesktop: {
+  buttonSignupMobile: {
     fontSize: '1rem',
-    minWidth: 100,
+    minWidth: 60,
     marginLeft: '0.5rem',
   },
   linkInput: {

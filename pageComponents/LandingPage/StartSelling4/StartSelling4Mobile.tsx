@@ -6,7 +6,8 @@ import {
   WithStyles,
   Theme,
 } from "@material-ui/core/styles";
-import { Colors, BoxShadows } from "layout/AppTheme";
+import { Colors, BoxShadows, isThemeDark, Gradients } from "layout/AppTheme";
+import { commonStyles } from "../commonStyles";
 // Typings
 import {} from "typings/gqlTypes";
 // components
@@ -15,6 +16,7 @@ import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import CardMedia from "@material-ui/core/CardMedia";
 import TickPoint from "./TickPoint";
+import { Gradient } from "@material-ui/icons";
 
 
 
@@ -136,9 +138,7 @@ export const styles = (theme: Theme) => createStyles({
     paddingTop: '1rem',
     paddingBottom: '4rem',
     width: '100%',
-    backgroundColor: theme.palette.type === 'dark'
-      ? `${Colors.uniswapDarkNavy}`
-      : `${Colors.cream}`,
+    ...commonStyles(theme).border1,
   },
   section4: {
     paddingBottom: '2rem',

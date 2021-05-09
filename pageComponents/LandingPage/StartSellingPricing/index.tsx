@@ -6,7 +6,15 @@ import {
   WithStyles,
   Theme,
 } from "@material-ui/core/styles";
-import { Colors, BoxShadows, BorderRadius, BorderRadius2x } from "layout/AppTheme";
+import {
+  Colors,
+  Gradients,
+  BoxShadows,
+  BorderRadius,
+  BorderRadius2x,
+  isThemeDark
+} from "layout/AppTheme";
+import { commonStyles } from "../commonStyles";
 // Typings
 import {} from "typings/gqlTypes";
 // components
@@ -176,16 +184,10 @@ interface ReactProps extends WithStyles<typeof styles> {
 export const styles = (theme: Theme) => createStyles({
   section6Root: {
     width: '100%',
-    // borderTop: theme.palette.type === 'dark'
-    //   ? `1px solid ${Colors.uniswapGrey}`
-    //   : `1px solid ${Colors.slateGreyDarkest}`,
-    // borderBottom: theme.palette.type === 'dark'
-    //   ? `1px solid ${Colors.uniswapGrey}`
-    //   : `1px solid ${Colors.slateGreyDarkest}`,
-    background: theme.palette.type === 'dark'
-      ? `${Colors.uniswapDarkNavy}`
-      : `${Colors.slateGrey}`,
-      // : `linear-gradient(180deg , ${Colors.slateGrey} 30%, rgba(255, 255, 255, 0.4) 60%, rgba(5, 5, 5, 0) 90%)`,
+    ...commonStyles(theme).border2,
+    background: isThemeDark(theme)
+      ? Gradients.gradientUniswapDark2.background
+      : Colors.cream,
   },
   section6: {
     width: '100%',
@@ -291,6 +293,8 @@ export const styles = (theme: Theme) => createStyles({
     fontSize: "1.125rem",
     fontWeight: 600,
     marginBottom: '1rem',
+    padding: '0rem 0.5rem',
+    textAlign: 'center',
   },
   productCardIcon: {
     height: 40,
@@ -309,6 +313,7 @@ export const styles = (theme: Theme) => createStyles({
     marginBottom: "0.5rem",
     fontSize: '1.1rem',
     lineHeight: '1.75rem',
+    paddingLeft: '2rem',
   },
   paymentItemsMobile: {
     color: theme.palette.type === 'dark'

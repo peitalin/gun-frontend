@@ -2,7 +2,8 @@ import React from "react";
 // Styles
 import clsx from "clsx";
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
-import { Colors, Gradients } from "layout/AppTheme";
+import { BorderRadius2x, BorderRadius, Colors, Gradients, isThemeDark } from "layout/AppTheme";
+import { commonStyles } from "./commonStyles";
 // Typings
 import { Categories, PageConfig } from "typings/gqlTypes";
 // redux
@@ -54,7 +55,10 @@ const LandingPage: React.FC<ReactProps> = (props) => {
 
       {/* <BannerHome /> */}
       <BannerStart isDarkMode={isDarkMode}/>
-      <BetaTestingBanner />
+
+      {/* <div className={classes.betaTestingBannerBox}>
+        <BetaTestingBanner />
+      </div> */}
 
       <AlignCenterLayout
         maxWidth={'unset'}
@@ -84,6 +88,14 @@ const styles = (theme: Theme) => createStyles({
     display: 'flex',
     flexDirection: "column",
     justifyContent: 'center',
+    background: isThemeDark(theme)
+    ? Colors.black1A
+    : Colors.black1A,
+  },
+  betaTestingBannerBox: {
+    overflow: 'hidden',
+    ...commonStyles(theme).border1,
+    borderRadius: BorderRadius,
   },
   fullMaxHeight: {
     maxHeight: "100%",

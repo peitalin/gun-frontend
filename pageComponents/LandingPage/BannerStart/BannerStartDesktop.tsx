@@ -3,6 +3,7 @@ import clsx from "clsx";
 // styles
 import { withStyles, WithStyles, createStyles, Theme, fade } from "@material-ui/core/styles";
 import { BorderRadius, Colors, Gradients, BorderRadius2x, BoxShadows, fontFam } from "layout/AppTheme";
+import { commonStyles } from "../commonStyles";
 // components
 import Banner from "components/Banner";
 import Typography from "@material-ui/core/Typography";
@@ -108,6 +109,7 @@ const BannerStartDesktop: NextPage<ReactProps> = (props) => {
         ...ditherStyle,
       }}
       bannerContainerStyles={{
+        ...commonStyles(theme).border1,
         ...bannerContainerStyle
       }}
       dither={true}
@@ -178,7 +180,7 @@ const BannerStartDesktop: NextPage<ReactProps> = (props) => {
         classes.bannerInnerBoxRight,
         classes.minWidth220,
       )}>
-        {
+        {/* {
           props.isDarkMode
           ? <CardMedia
               component="img"
@@ -192,7 +194,7 @@ const BannerStartDesktop: NextPage<ReactProps> = (props) => {
               classes={{ media: classes.categoryImage }}
               src={props.bannerForegroundImageUrlLight}
             />
-        }
+        } */}
       </div>
     </Banner>
   )

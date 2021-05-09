@@ -2,7 +2,7 @@ import React from "react";
 import clsx from "clsx";
 // styles
 import { withStyles, WithStyles, createStyles, Theme, fade } from "@material-ui/core/styles";
-import { Colors, Gradients } from "layout/AppTheme";
+import { Colors, Gradients, isThemeDark } from "layout/AppTheme";
 // SSR
 import { NextPage, NextPageContext } from 'next';
 import Login from "layout/Login";
@@ -32,8 +32,8 @@ const BannerEnd: NextPage<ReactProps> = (props) => {
     //   ? Gradients.gradientUniswapDark.background
     //   : Gradients.gradientGrey3.background,
     background: props.isDarkMode
-    ? `linear-gradient(60deg , ${Colors.uniswapDarkNavy} 48%, ${Colors.uniswapLightNavy} 48.1%, ${Colors.uniswapLightNavy} 49%, rgba(255, 255, 255, 0) 49.1%)`
-    : `linear-gradient(60deg , ${Colors.cream} 48%, ${Colors.slateGreyDark} 48.1%, ${Colors.slateGreyDark} 49%, rgba(255, 255, 255, 0) 49.1%)`,
+    ? `linear-gradient(60deg , ${Colors.uniswapDarkNavy} 48%, ${Colors.uniswapMediumNavy} 48%, ${Colors.uniswapMediumNavy} 50%, rgba(255, 255, 255, 0) 50%)`
+    : `linear-gradient(60deg , ${Colors.cream} 48%, ${Colors.slateGreyDark} 48%, ${Colors.slateGreyDark} 50%, rgba(255, 255, 255, 0) 50%)`,
   }
 
   const ditherStyleMobile = {
@@ -58,6 +58,9 @@ const BannerEnd: NextPage<ReactProps> = (props) => {
 
   const bannerContainerStyleMobile = {
     // backgroundImage:`url(/img/start/hero3.png)`,
+    backgroundColor: props.isDarkMode
+      ? Colors.uniswapDarkNavy
+      : Colors.slateGrey,
     backgroundRepeat: 'no-repeat',
     backgroundPosition: "left",
     backgroundSize: "cover",

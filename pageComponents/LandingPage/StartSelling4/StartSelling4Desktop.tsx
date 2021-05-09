@@ -7,6 +7,7 @@ import {
   Theme,
 } from "@material-ui/core/styles";
 import { Colors, BoxShadows } from "layout/AppTheme";
+import { commonStyles } from "../commonStyles";
 // Typings
 import {} from "typings/gqlTypes";
 // components
@@ -135,15 +136,7 @@ export const styles = (theme: Theme) => createStyles({
     paddingTop: '6rem',
     paddingBottom: '6rem',
     width: '100%',
-    // borderTop: theme.palette.type === 'dark'
-    //   ? `1px solid ${Colors.uniswapGrey}`
-    //   : `1px solid ${Colors.slateGreyDarkest}`,
-    // borderBottom: theme.palette.type === 'dark'
-    //   ? `1px solid ${Colors.uniswapGrey}`
-    //   : `1px solid ${Colors.slateGreyDarkest}`,
-    backgroundColor: theme.palette.type === 'dark'
-      ? `${Colors.uniswapDarkNavy}`
-      : `${Colors.cream}`,
+    ...commonStyles(theme).border1,
   },
   section4: {
     paddingBottom: '2rem',

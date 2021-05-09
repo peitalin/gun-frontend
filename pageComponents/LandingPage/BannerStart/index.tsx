@@ -40,26 +40,17 @@ const BannerStart: NextPage<ReactProps> = (props) => {
     //   ? Gradients.gradientUniswapDark.background
     //   : Gradients.gradientGrey3.background,
     background: props.isDarkMode
-    ? `linear-gradient(60deg , ${Colors.uniswapDarkNavy} 48%, ${Colors.uniswapLightNavy} 48.1%, ${Colors.uniswapLightNavy} 49%, rgba(255, 255, 255, 0) 49.1%)`
-    : `linear-gradient(60deg , ${Colors.cream} 48%, ${Colors.slateGreyDark} 48.1%, ${Colors.slateGreyDark} 49%, rgba(255, 255, 255, 0) 49.1%)`,
+    ? `linear-gradient(60deg , ${Colors.uniswapDarkNavy} 48%, ${Colors.uniswapMediumNavy} 48%, ${Colors.uniswapMediumNavy} 50%, rgba(255, 255, 255, 0) 50%)`
+    : `linear-gradient(60deg , ${Colors.cream} 48%, ${Colors.slateGreyDark} 48%, ${Colors.slateGreyDark} 50%, rgba(255, 255, 255, 0) 50%)`,
   }
 
   const ditherStyleMobile = {
-    // background: props.isDarkMode
-    //   ? Colors.uniswapDarkNavy
-    //   : Gradients.gradientGrey3.background,
-    // background: props.isDarkMode
-    // ? `linear-gradient(60deg , ${Colors.uniswapDarkNavy} 48%, rgba(255, 255, 255, 0) 55%)`
-    // : `linear-gradient(60deg , ${Colors.slateGrey} 48%, rgba(255, 255, 255, 0) 55%)`,
-    // background: props.isDarkMode
-    // ? `linear-gradient(0deg , ${Colors.uniswapDarkNavy} 32%, rgba(5, 5, 5, 0.2) 44%, rgba(5, 5, 5, 0) 90%)`
-    // : `linear-gradient(0deg , ${Colors.cream} 32%, rgba(255, 255, 255, 0.2) 44%, rgba(5, 5, 5, 0) 90%)`
-
     // top row: solid background
     // bottom row: navbar dither
+
     background: props.isDarkMode
-    ? `linear-gradient(10deg , ${Colors.uniswapDarkNavy} 45%, ${Colors.uniswapLightNavy} 45.1%, ${Colors.uniswapLightNavy} 47%, rgba(255, 255, 255, 0) 47.1%)`
-    : `linear-gradient(10deg , ${Colors.cream} 45%, ${Colors.slateGreyDark} 45.1%, ${Colors.slateGreyDark} 47%, rgba(255, 255, 255, 0) 47.1%)`,
+      ? `linear-gradient(0deg , ${Colors.black1A} 10%, rgba(25, 25, 25, 0.1) 66%)`
+      : `linear-gradient(0deg , ${Colors.black1A} 10%, rgba(25, 25, 25, 0.1) 66%)`,
   }
 
   ///// https://codepen.io/danichk/pen/YyVeXa
@@ -87,12 +78,13 @@ const BannerStart: NextPage<ReactProps> = (props) => {
     backgroundRepeat: 'no-repeat',
     backgroundPosition: "left",
     backgroundSize: "cover",
+    justifyContent: "flex-end",
     // backgroundSize: "100%",
     // backgroundSize: 'auto', //stretch to fit for hero3.png
   }
 
   return (
-    <>
+    <div className={classes.root}>
       {/* Desktop */}
       <Hidden mdDown implementation="css" className={classes.width100}>
         <BannerStartDesktop
@@ -117,7 +109,7 @@ const BannerStart: NextPage<ReactProps> = (props) => {
           isDarkMode={props.isDarkMode}
         />
       </Hidden>
-    </>
+    </div>
   )
 }
 
@@ -128,6 +120,7 @@ interface ReactProps extends WithStyles<typeof styles> {
 
 export const styles = (theme: Theme) => createStyles({
   root: {
+    // ...commonStyles(theme).border1,
   },
   width100: {
     width: '100%',

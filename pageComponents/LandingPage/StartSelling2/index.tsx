@@ -6,13 +6,14 @@ import {
   WithStyles,
   Theme,
 } from "@material-ui/core/styles";
-import { Colors, BoxShadows, BorderRadius3x } from "layout/AppTheme";
+import { Colors, BoxShadows, Gradients, BorderRadius2x, isThemeDark } from "layout/AppTheme";
 // components
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import CategoryCarouselStart2 from "./CategoryCarouselStart2";
 import CardMedia from "@material-ui/core/CardMedia";
-
+import { commonStyles } from "../commonStyles";
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 
 const StartSelling2 = (props: ReactProps) => {
@@ -24,9 +25,39 @@ const StartSelling2 = (props: ReactProps) => {
   const xlUp = useMediaQuery(theme.breakpoints.up("xl"));
 
   return (
-    <div className={classes.section2Root}>
+    <div className={mdDown ? classes.section2RootMobile : classes.section2Root}>
+      <div className={classes.heresHowItWorksText}
+        onClick={() => window.scrollTo({ top: 600, behavior: "smooth" })}
+      >
+        <span>
+          Here's how it works
+        </span>
+        <ExpandMoreIcon/>
+      </div>
+
+      <div className={classes.screenShotTitle}>
+        Browse and filter firearms
+      </div>
+      <div className={clsx(classes.screenShotBox)}>
+        {
+          props.isDarkMode
+          ? <CardMedia
+              component="img"
+              className={"fadeIn"}
+              classes={{ media: classes.screenShotImage }}
+              src={`/img/start/screen1-dark.jpg`}
+            />
+          : <CardMedia
+              component="img"
+              className={"fadeIn"}
+              classes={{ media: classes.screenShotImage }}
+              src={`/img/start/screen1-light.jpg`}
+            />
+        }
+      </div>
+
       <div className={classes.categoryTitleText}>
-        Choose from a selection of brands
+        From a selection of brands
       </div>
       <div className={clsx(classes.categoryTitleBox)}>
         <div className={classes.polkadotBackground} ></div>
@@ -81,7 +112,7 @@ const StartSelling2 = (props: ReactProps) => {
           </div>
         </div>
       </div>
-      <div className={classes.categoryTitleText}>
+      {/* <div className={classes.categoryTitleText}>
         Across multiple categories
       </div>
       <CategoryCarouselStart2
@@ -103,7 +134,7 @@ const StartSelling2 = (props: ReactProps) => {
               // duplicate a few times over for large screens
             ]
         }
-      />
+      /> */}
     </div>
   );
 };
@@ -154,15 +185,23 @@ export const styles = (theme: Theme) => createStyles({
   section2Root: {
     paddingTop: '6rem',
     paddingBottom: '6rem',
-    // borderTop: theme.palette.type === 'dark'
-    //   ? `1px solid ${Colors.uniswapGrey}`
-    //   : `1px solid ${Colors.slateGreyDarkest}`,
-    // borderBottom: theme.palette.type === 'dark'
-    //   ? `1px solid ${Colors.uniswapGrey}`
-    //   : `1px solid ${Colors.slateGreyDarkest}`,
-    backgroundColor: theme.palette.type === 'dark'
-      ? `${Colors.uniswapDarkNavy}`
-      : `${Colors.cream}`,
+    position: 'relative',
+    ...commonStyles(theme).border1,
+    background: isThemeDark(theme)
+      ? Gradients.gradientUniswapDark2.background
+      : Colors.cream,
+  },
+  section2RootMobile: {
+    paddingTop: '6rem',
+    paddingBottom: '6rem',
+    position: 'relative',
+    // backgroundColor: isThemeDark(theme)
+    //   ? Colors.uniswapDarkNavy
+    //   : Colors.cream,
+    ...commonStyles(theme).border1,
+    background: isThemeDark(theme)
+      ? Gradients.gradientUniswapDark2.background
+      : Colors.cream,
   },
   categoryTitleBox: {
     position: 'relative',
@@ -186,7 +225,25 @@ export const styles = (theme: Theme) => createStyles({
       ? Colors.uniswapLightestGrey
       : Colors.black1A,
     marginTop: '1.5rem',
-    marginBottom: '1.5rem',
+    marginBottom: '0rem',
+  },
+  heresHowItWorksText: {
+    position: 'absolute',
+    "&:hover": {
+      cursor: "pointer",
+      color: Colors.ultramarineBlue
+    },
+    top: '1.5rem',
+    display: 'flex',
+    flexDirection: "row",
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+    fontWeight: 700,
+    fontSize: '1rem',
+    color: theme.palette.type === 'dark'
+      ? Colors.cream
+      : Colors.black1A,
   },
   categoryBrands: {
     display: 'flex',
@@ -202,12 +259,12 @@ export const styles = (theme: Theme) => createStyles({
     height: '100%',
     position: 'absolute',
     // polkadot
-    background: theme.palette.type === 'dark'
-      ? `${Colors.uniswapDarkNavy}`
-      : `${Colors.cream}`,
-    backgroundImage: theme.palette.type === 'dark'
-    ? `radial-gradient(${Colors.uniswapMediumNavy} 10%, transparent 0), radial-gradient(${Colors.uniswapMediumNavy} 10%, transparent 0)`
-    : `radial-gradient(${Colors.slateGrey} 10%, transparent 0), radial-gradient(${Colors.slateGrey} 10%, transparent 0)`,
+    // background: theme.palette.type === 'dark'
+    //   ? `${Colors.uniswapDarkNavy}`
+    //   : `${Colors.cream}`,
+    // backgroundImage: theme.palette.type === 'dark'
+    // ? `radial-gradient(${Colors.uniswapMediumNavy} 10%, transparent 0), radial-gradient(${Colors.uniswapMediumNavy} 10%, transparent 0)`
+    // : `radial-gradient(${Colors.slateGrey} 10%, transparent 0), radial-gradient(${Colors.slateGrey} 10%, transparent 0)`,
     backgroundSize: "30px 30px",
     backgroundPosition: "0px 5px, 15px 20px",
   },
@@ -225,6 +282,43 @@ export const styles = (theme: Theme) => createStyles({
     minHeight: 68,
     width: "100%",
     objectFit: "contain",
+  },
+  screenShotBox: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "row",
+    width: '100%',
+  },
+  screenShotTitle: {
+    display: 'flex',
+    width: '100%',
+    textAlign: 'center',
+    flexDirection: "column",
+    justifyContent: 'center',
+    textTransform: "uppercase",
+    fontSize: '0.8rem',
+    fontWeight: 600,
+    color: theme.palette.type === 'dark'
+      ? Colors.uniswapLightestGrey
+      : Colors.black1A,
+    marginTop: '1.5rem',
+    marginBottom: '1.5rem',
+  },
+  screenShotImage: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "row",
+    textAlign: 'center',
+    borderRadius: BorderRadius2x,
+    width: '90%',
+    height: '100%',
+    maxWidth: 600,
+    minWidth: 320,
+    marginTop: '0rem',
+    marginBottom: '1rem',
+    boxShadow: BoxShadows.shadowStart.boxShadow,
   },
 })
 

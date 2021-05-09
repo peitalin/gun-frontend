@@ -286,6 +286,11 @@ export const Gradients = {
     color1: Colors.gradientUniswapDark1,
     color2: Colors.gradientUniswapDark2,
   },
+  gradientUniswapDark2:  {
+    background: `linear-gradient(180deg , ${Colors.uniswapDarkNavy} 30%, ${Colors.uniswapNavy} 90%)`,
+    color1: Colors.uniswapDarkNavy,
+    color2: Colors.uniswapNavy,
+  },
   gradientUniswapDarkRotated:  {
     background: `linear-gradient(240deg, ${Colors.gradientUniswapDark1} 20%, ${Colors.gradientUniswapDark2} 80%)`,
     color1: Colors.gradientUniswapDark1,
@@ -423,6 +428,8 @@ export const BorderRadius = 8;
 export const BorderRadius2x = 16;
 export const BorderRadius3x = 24;
 export const BorderRadius4x = 32;
+export const BorderRadius5x = 48;
+
 
 export const fontFam = [
   "Roobert TRIAL",

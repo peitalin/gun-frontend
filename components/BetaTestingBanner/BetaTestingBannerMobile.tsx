@@ -144,7 +144,7 @@ const styles = (theme: Theme) => createStyles({
   rainbowBorder:{
     position: 'absolute',
     background: `linear-gradient(90deg, rgb(206, 69, 197) 0%, rgb(85, 146, 232) 100%)`,
-    height: 2,
+    height: 4,
     width: '100%',
   },
   borderTop:{

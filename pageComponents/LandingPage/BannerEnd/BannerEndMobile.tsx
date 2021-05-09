@@ -3,6 +3,7 @@ import clsx from "clsx";
 // styles
 import { withStyles, WithStyles, createStyles, Theme, fade } from "@material-ui/core/styles";
 import { BorderRadius2x, BorderRadius, Colors, fontFam } from "layout/AppTheme";
+import { commonStyles } from "../commonStyles";
 // components
 import Banner from "components/Banner";
 import Typography from "@material-ui/core/Typography";
@@ -44,10 +45,7 @@ const BannerEndMobile: NextPage<ReactProps> = (props) => {
   const snackbar = useSnackbar();
 
   const theme = useTheme();
-  const xsDown = useMediaQuery(theme.breakpoints.down("xs"))
-  const smDown = useMediaQuery(theme.breakpoints.down("sm"))
   const mdDown = useMediaQuery(theme.breakpoints.down("md"))
-  const lgDown = useMediaQuery(theme.breakpoints.down("lg"))
 
   const [
     signupToWaitlist,
@@ -111,7 +109,8 @@ const BannerEndMobile: NextPage<ReactProps> = (props) => {
         ...ditherStyle
       }}
       bannerContainerStyles={{
-        ...bannerContainerStyle
+        ...bannerContainerStyle,
+        ...commonStyles(theme).borderLast,
       }}
       dither={true}
       height={620}
@@ -153,7 +152,7 @@ const BannerEndMobile: NextPage<ReactProps> = (props) => {
                 type="submit"
                 className={clsx(
                   classes.buttonSignupEmail,
-                  classes.buttonSignupDesktop,
+                  classes.buttonSignupMobile,
                 )}
                 onClick={() => {
                   if (!formik.values?.email) {
@@ -321,7 +320,7 @@ export const styles = (theme: Theme) => createStyles({
       : Colors.ultramarineBlue,
     fontSize: '0.7rem',
     color: Colors.cream,
-    minWidth: "150px",
+    minWidth: "140px",
     "&:hover": {
       background: theme.palette.type === "dark"
         ? fade(Colors.purple, 0.9)
@@ -333,9 +332,9 @@ export const styles = (theme: Theme) => createStyles({
       backgroundPosition: '-75px',
     }
   },
-  buttonSignupDesktop: {
+  buttonSignupMobile: {
     fontSize: '1rem',
-    minWidth: 100,
+    minWidth: 60,
     marginLeft: '0.5rem',
   },
   linkInput: {
