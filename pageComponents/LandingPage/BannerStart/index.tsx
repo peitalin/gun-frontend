@@ -47,8 +47,8 @@ const BannerStart: NextPage<ReactProps> = (props) => {
     // bottom row: navbar dither
 
     background: props.isDarkMode
-      ? `linear-gradient(0deg , ${Colors.black1A} 20%, rgba(25, 25, 25, 0.1) 76%)`
-      : `linear-gradient(0deg , ${Colors.black1A} 20%, rgba(25, 25, 25, 0.1) 76%)`,
+      ? `linear-gradient(0deg , ${Colors.black1A} 25%, rgba(25, 25, 25, 0.1) 70%)`
+      : `linear-gradient(0deg , ${Colors.black1A} 25%, rgba(25, 25, 25, 0.1) 70%)`,
   }
 
   ///// https://codepen.io/danichk/pen/YyVeXa
@@ -68,6 +68,18 @@ const BannerStart: NextPage<ReactProps> = (props) => {
     backgroundPosition: "right",
     // backgroundSize: 'auto', //stretch to fit for hero3.png
   }
+
+  // // collage
+  // const bannerContainerStyle = {
+  //   backgroundImage:`url(/img/start/gun-collage-5.png)`,
+  //   backgroundPositionY: "2rem",
+  //   backgroundRepeat: 'repeat',
+  //   backgroundSize: "contain",
+  //   // backgroundRepeat: 'no-repeat',
+  //   // backgroundSize: "cover",
+  //   backgroundPosition: "left",
+  //   // backgroundSize: 'auto', //stretch to fit for hero3.png
+  // }
 
   const bannerContainerStyleMobile = {
     // backgroundImage:`url(/img/start/hero2.jpg)`,

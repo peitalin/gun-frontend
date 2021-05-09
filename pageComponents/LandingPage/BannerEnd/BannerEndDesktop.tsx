@@ -339,7 +339,7 @@ export const styles = (theme: Theme) => createStyles({
     borderRadius: BorderRadius2x,
     width: '100%',
     height: '100%',
-    boxShadow: BoxShadows.shadow4.boxShadow,
+    boxShadow: BoxShadows.shadow2.boxShadow,
     // border: theme.palette.type === 'dark'
     //   ? `1px solid ${Colors.uniswapLightestGrey}`
     //   : `1px solid ${Colors.slateGreyBlack}`,

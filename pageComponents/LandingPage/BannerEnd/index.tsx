@@ -32,8 +32,8 @@ const BannerEnd: NextPage<ReactProps> = (props) => {
     //   ? Gradients.gradientUniswapDark.background
     //   : Gradients.gradientGrey3.background,
     background: props.isDarkMode
-    ? `linear-gradient(60deg , ${Colors.uniswapDarkNavy} 48%, ${Colors.uniswapMediumNavy} 48%, ${Colors.uniswapMediumNavy} 50%, rgba(255, 255, 255, 0) 50%)`
-    : `linear-gradient(60deg , ${Colors.cream} 48%, ${Colors.slateGreyDark} 48%, ${Colors.slateGreyDark} 50%, rgba(255, 255, 255, 0) 50%)`,
+    ? `linear-gradient(60deg , ${Colors.uniswapDarkNavy} 48%, ${Colors.uniswapMediumNavy} 48%, ${Colors.uniswapMediumNavy} 49%, rgba(25, 25, 25, 0.2) 49.1%, rgba(25, 25, 25, 0.1) 100%)`
+    : `linear-gradient(60deg , ${Colors.cream} 48%, ${Colors.slateGreyDark} 48%, ${Colors.slateGreyDark} 49%, rgba(25, 25, 25, 0.05) 49.1%, rgba(25, 25, 25, 0.05) 100%)`,
   }
 
   const ditherStyleMobile = {
@@ -49,15 +49,18 @@ const BannerEnd: NextPage<ReactProps> = (props) => {
   }
 
   const bannerContainerStyle = {
-    backgroundImage:`url(/img/start/hero-mobile.png)`,
-    backgroundRepeat: 'no-repeat',
-    backgroundSize: "cover",
+    backgroundImage:`url(/img/start/gun-collage-5.png)`,
+    backgroundPositionY: "2rem",
+    backgroundRepeat: 'repeat',
+    backgroundSize: "contain",
+    // backgroundRepeat: 'no-repeat',
+    // backgroundSize: "cover",
     backgroundPosition: "left",
     // backgroundSize: 'auto', //stretch to fit for hero3.png
   }
 
   const bannerContainerStyleMobile = {
-    backgroundImage:`url(/img/start/hero-mobile.png)`,
+    backgroundImage:`url(/img/start/gun-collage-5.png)`,
     backgroundColor: props.isDarkMode
       ? Colors.uniswapDarkNavy
       : Colors.slateGrey,
