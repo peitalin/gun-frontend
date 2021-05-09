@@ -2,7 +2,7 @@ import React from "react";
 import clsx from "clsx";
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 import { styles } from "./styles";
-import { Colors } from "layout/AppTheme";
+import { Colors, isThemeDark } from "layout/AppTheme";
 // Typings
 import { Product_Preview_Items, Product } from "typings/gqlTypes";
 // Image Modal
@@ -45,15 +45,13 @@ const FeaturedImageModal = (props: ReactProps) => {
     openedModals,
     openModal,
     closeModal,
-    isMobile = false,
+    disableModalPopup = false,
   } = props;
 
   const imageId = previewItem?.image?.original?.id
   const imageUrl = previewItem?.image?.original?.url
 
-  const isDarkMode = useSelector<GrandReduxState, boolean>(s => {
-    return s.reduxLogin.darkMode === 'dark'
-  })
+  const isDarkMode = isThemeDark(theme)
 
   const previewItems = (props?.product?.featuredVariant?.previewItems ?? [])
     .filter(p =>
@@ -70,17 +68,17 @@ const FeaturedImageModal = (props: ReactProps) => {
         xsDown ? classes.featuredImageRootXSDown : null
       )}>
         {
-          isMobile
+          disableModalPopup
           ? <PreviewImageFeatured
               previewItem={previewItem}
-              onClick={() => openModal(imageId)}
+              // onClick={() => openModal(imageId)}
               showLoadingBar={false}
             />
           : <BindKeyboardSwipeableViews
               enableMouseEvents={false}
               index={props.index}
               onChangeIndex={(indexNew, indexLatest) => {
-                if (!isMobile && props.setIndex) {
+                if (!disableModalPopup && props.setIndex) {
                   props.setIndex(indexNew)
                 }
               }}
@@ -133,7 +131,7 @@ const FeaturedImageModal = (props: ReactProps) => {
 
 
         {
-          !isMobile &&
+          !disableModalPopup &&
           <Dialog
             open={openedModals?.includes(imageId)}
             onClose={(event: object, reason: string) => {
@@ -186,7 +184,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   openModal?(id: string): void;
   closeModal?(id: string): void;
   onClick?(a: any): void;
-  isMobile?: boolean;
+  disableModalPopup?: boolean;
   product?: Product;
   index?: number;
   setIndex?(a?: any): void;

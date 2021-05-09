@@ -180,43 +180,9 @@ const FeaturedProductId: React.FC<ReactProps> = (props) => {
   return (
     <ProductPageContainer product={product} loading={loading}>
 
-      {/* <FlexBasis100
-        // flexGrow={mdDown} // do not add flexGrow, messes
-        // up responsive imageGallery + floating purchaseSummary
-        implementation="css"
-      >
-        <>
-          <ShowOnMobileOrDesktopSSR mobile className={classes.width100}>
-            <HeroImageSection isMobile={true}>
-              <ImageGalleryMobile
-                product={product}
-                loading={loading && !product}
-                index={index}
-                setIndex={setIndex}
-                selectedOption={selectedOption}
-              />
-            </HeroImageSection>
-          </ShowOnMobileOrDesktopSSR>
-          <ShowOnMobileOrDesktopSSR desktop className={classes.width100}>
-            <HeroImageSection isMobile={false}>
-              <ImageGalleryDesktop
-                product={product}
-                selectedOption={selectedOption}
-                // product={undefined}
-                //// sometimes SSR preload looks off when product is undefined
-                //// replicate by setting product = undefined
-                loading={loading && !product}
-                numberOfItemsTall={16}
-                numberOfItemsWide={8}
-                index={index}
-                setIndex={setIndex}
-              />
-            </HeroImageSection>
-          </ShowOnMobileOrDesktopSSR>
-        </>
-      </FlexBasis100> */}
 
-      <HeroImageSection isMobile={false}>
+      <HeroImageSection isMobile={mdDown}>
+        {/* use this for both mobile and desktop */}
         <ImageGalleryDesktop
           product={product}
           selectedOption={selectedOption}
@@ -229,6 +195,7 @@ const FeaturedProductId: React.FC<ReactProps> = (props) => {
           index={index}
           setIndex={setIndex}
           isPromoted={true}
+          disableModalPopup={mdDown}
         />
       </HeroImageSection>
 

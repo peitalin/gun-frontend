@@ -12,27 +12,19 @@ const HeroImageSection: React.FC<ReactProps> = (props) => {
 
   const { classes } = props;
 
-  // implementation="css" made images render
-  // wasn't hiding this component on sm, md, lg, xl screen sizes
-  // switch to javascript xsDown check
-  if (props.isMobile) {
-    return (
-      <div className={classes.heroLandscapeContainerMobile}>
+  return (
+    <div className={clsx(
+      classes.heroLandscapeContainer,
+      props.isMobile && classes.heroLandscapeContainerMobile,
+    )}>
+      <AlignCenterLayout
+        maxWidth={720}
+        withRecommendations={false}
+      >
         {props.children}
-      </div>
-    )
-  } else {
-    return (
-      <div className={classes.heroLandscapeContainer}>
-        <AlignCenterLayout
-          maxWidth={720}
-          withRecommendations={false}
-        >
-          {props.children}
-        </AlignCenterLayout>
-      </div>
-    )
-  }
+      </AlignCenterLayout>
+    </div>
+  )
 }
 
 
@@ -42,12 +34,6 @@ interface ReactProps extends WithStyles<typeof styles> {
 
 
 const styles = (theme: Theme) => createStyles({
-  heroLandscapeContainerMobile: {
-    padding: '0rem',
-    flexBasis: '60vw',
-    flexGrow: 1,
-  },
-  //
   heroLandscapeContainer: {
     position: "relative",
     height: '100%',
@@ -63,6 +49,9 @@ const styles = (theme: Theme) => createStyles({
     marginBottom: '6rem',
     // outlineOffset: '-2px',
     // outline: '2px dashed #28A',
+  },
+  heroLandscapeContainerMobile: {
+    marginBottom: '8rem',
   },
 });
 

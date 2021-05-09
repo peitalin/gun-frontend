@@ -39,6 +39,7 @@ const FeaturedPreview: React.FC<ReactProps> = (props) => {
         index={props.index}
         setIndex={props.setIndex}
         isPromoted={props.isPromoted}
+        disableModalPopup={props.disableModalPopup}
       />
     )
   }
@@ -51,6 +52,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   index: number;
   setIndex(a?: any): void;
   isPromoted: boolean;
+  disableModalPopup?: boolean;
 }
 
 

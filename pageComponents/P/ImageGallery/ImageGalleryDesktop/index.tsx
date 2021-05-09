@@ -58,6 +58,7 @@ const ImageGalleryDesktop: React.FC<ReactProps> = (props) => {
         index={index}
         setIndex={setIndex}
         isPromoted={props.isPromoted}
+        disableModalPopup={props.disableModalPopup}
       />
 
       <BottomImageCarouselDesktop
@@ -83,6 +84,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   index: number;
   setIndex(a?: any): void;
   isPromoted?: boolean;
+  disableModalPopup?: boolean;
 }
 
 const styles = (theme: Theme) => createStyles({
