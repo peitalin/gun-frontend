@@ -151,7 +151,7 @@ const ImageGalleryMobile: React.FC<ReactProps> = (props) => {
                                 product={product}
                                 index={index}
                                 setIndex={setIndex}
-                                isMobile={true}
+                                disableModalPopup={true}
                               />
                             : pitem?.youTubeEmbedLink
                               ? <FeaturedVideoMobile previewItem={pitem} />
