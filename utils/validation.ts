@@ -294,33 +294,6 @@ export const validationSchemas = {
         .matches(productIdRegex)
     }),
 
-  // Create Store Promo Code
-  CreateStorePromoCode:
-    Yup.object().shape({
-      promoCode: Yup.string()
-        .min(3, 'Promo Code should be longer than 2 chars')
-        .required('Promo Code needs a name'),
-      valuePercentageOff: Yup.number().nullable()
-        .min(0, 'percentage off cannot be negative')
-        .max(100, 'percentage off cannot exceed 100%'),
-      valueDollarsOff: Yup.number().nullable()
-        .min(0, 'dollars off cannot be negative'),
-      specificProductId: Yup.string().nullable()
-        .test("specificProductId", "Invalid productId.", function(value) {
-          if (!!value && typeof value === 'string') {
-            return value.startsWith("prod")
-          } else {
-            return true
-          }
-        }),
-      specificProductVariantId: Yup.string().nullable(),
-      minimumPurchaseAmount: Yup.number().nullable(),
-      minimumQuantity: Yup.number().nullable(),
-      start: Yup.date().nullable(),
-      end: Yup.date().nullable(),
-      isDisabled: Yup.boolean()
-        .required(),
-    }),
 
   // Create Store
   CreateStore:
@@ -328,9 +301,9 @@ export const validationSchemas = {
       userId: Yup.string()
         .required('A userId is needed!'),
       name: Yup.string()
-        .nullable()
-        .max(maxLengthStoreName)
-        .min(minLengthStoreName, "Must be more than 3 letters!"),
+        .nullable(),
+        // .max(maxLengthStoreName)
+        // .min(minLengthStoreName, "Must be more than 3 letters!"),
       bio: Yup.string().nullable(),
       website: Yup.string().nullable(),
       profileId: Yup.string().nullable(),
@@ -350,9 +323,9 @@ export const validationSchemas = {
   // Edit Store
   EditStore:
     Yup.object().shape({
-      name: Yup.string().nullable()
-        .required("Can't be empty")
-        .min(3, "Must be more than 3 letters!"),
+      name: Yup.string().nullable(),
+        // .required("Can't be empty")
+        // .min(3, "Must be more than 3 letters!"),
       bio: Yup.string().nullable(),
       website: Yup.string().nullable(),
       profileId: Yup.string().nullable(),

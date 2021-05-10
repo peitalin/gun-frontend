@@ -129,7 +129,7 @@ const EditStoreFields: React.FC<ReactProps & FormikProps<FormikFields>> = (props
     <div className={classes.root}>
       <div className={classes.innerRoot}>
 
-        <Typography variant="subtitle1" className={classes.subtitle1}>
+        {/* <Typography variant="subtitle1" className={classes.subtitle1}>
           Your Seller Name
           {
             errors.name
@@ -148,50 +148,6 @@ const EditStoreFields: React.FC<ReactProps & FormikProps<FormikFields>> = (props
             touched={touched.name}
           />
           <div style={{ marginTop: '0.25rem' }}></div>
-        </div>
-
-        {/* <div className={classes.margin1}>
-          <div className={clsx(classes.flexRow, classes.spaceBetween)}>
-            <Typography variant="subtitle1" className={classes.subtitle1}>
-              Bio<span className={classes.greyText}> - optional</span>
-            </Typography>
-          </div>
-          <div className={clsx(
-            classes.formContainer,
-            "fadeInFast",
-          )}>
-            <TextInput
-              placeholder="Bio"
-              className={classes.textField}
-              value={values.bio ? values.bio : ""}
-              onChange={handleUpdateBio}
-              inputProps={{ style: { width: '100%' }}}
-              multiline
-              rows="4"
-            />
-            {
-              values.bio && values.bio.length &&
-              <div className={classes.bioLength}>{`${values.bio.length}/200`}</div>
-            }
-          </div>
-        </div>
-
-        <div className={classes.margin1}>
-          <div className={clsx(classes.flexRow, classes.spaceBetween)}>
-            <Typography variant="subtitle1" className={classes.subtitle1}>
-              Website
-              <span className={classes.greyText}> - optional</span>
-            </Typography>
-          </div>
-          <div className={clsx(classes.formContainer, "fadeInFast")}>
-            <TextInput
-              placeholder="Website"
-              className={classes.textField}
-              value={values.website ? values.website : ""}
-              onChange={handleUpdateWebsite}
-              inputProps={{ style: { width: '100%' }}}
-            />
-          </div>
         </div> */}
 
 

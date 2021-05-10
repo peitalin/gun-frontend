@@ -42,14 +42,12 @@ const CreateStorePageSSR = (props: ReactProps) => {
           Create a free account and upload your product.
         `}
         // ogImage={
-        //   process.env.NODE_ENV === "development"
-        //   ? "https://image-content.fileworks.net/og-img-relay-start.png"
-        //   : "https://image-content.relaydownloads.com/og-img-relay-start.png"
+        //   "https://image-content.gunmarketplace.com.au/og-img-gm-start.png"
         // }
         // ogUrl={
         //   process.env.NODE_ENV === "development"
-        //   ? "https://fileworks.net/create-store"
-        //   : "https://relaydownloads.com/create-store"
+        //   ? "https://dev.gunmarketplace.com.au/create-store"
+        //   : "https://www.gumarketplace.com.au/create-store"
         // }
       />
       <div className={classes.flexCol}>

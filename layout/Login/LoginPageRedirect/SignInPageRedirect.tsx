@@ -14,7 +14,7 @@ import Or from "components/Or";
 import ButtonLoading from "components/ButtonLoading";
 
 
-const SignInClaimDownload = (props: ReactProps) => {
+const SignInPageRedirect = (props: ReactProps) => {
 
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
@@ -55,7 +55,7 @@ const SignInClaimDownload = (props: ReactProps) => {
         {
           props.title
           ? props.title
-          : "Login to save the files to your account"
+          : "Login to access your account"
         }
       </Typography>
 
@@ -138,4 +138,4 @@ interface ReactProps extends WithStyles<typeof styles> {
   buttonLoading?: boolean;
 }
 
-export default withStyles(styles)(SignInClaimDownload);
+export default withStyles(styles)(SignInPageRedirect);

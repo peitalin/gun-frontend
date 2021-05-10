@@ -65,17 +65,21 @@ const CreateStoreForm: React.FC<ReactProps> = (props) => {
     }
   })
 
-  const [storeCreate, { data, loading, error }] =
-  useMutation<MutationData, CreateStoreInput>(
+  const [
+    storeCreate,
+    { data, loading, error }
+  ] = useMutation<MutationData, CreateStoreInput>(
     CREATE_STORE, {
-    onError: (e) => console.log(e),
     update: (cache, { data }: { data: MutationData }) => {
     },
     onCompleted: async (dataCreateStore: MutationData) => {
-      // const { createStore: { store } } = dataCreateStore;
+      const { createStore: { store } } = dataCreateStore;
       // console.log("createStore.store", store)
-      // dispatch(Actions.reduxLogin.SET_USER_STORE(store))
-    }
+      dispatch(Actions.reduxLogin.SET_USER_STORE(store))
+    },
+    onError: (error) => {
+      snackbar.enqueueSnackbar(formatError(error), { variant: "error" })
+    },
   })
 
   const [setPayoutMethod, mutationResponse] =
@@ -92,37 +96,63 @@ const CreateStoreForm: React.FC<ReactProps> = (props) => {
     onCompleted: ({ setPayoutMethod: { user }}) => {
       // props.resetPayoutMethodEmail();
       // WARN: SET_USER may be batched with the SET_USER redux call above
-      // dispatch(Actions.reduxLogin.SET_USER({
-      //   ...userRedux,
-      //   ...user
-      // }))
-    }
-  })
-
-  React.useEffect(() => {
-    if (data) {
       snackbar.enqueueSnackbar(
-        `Successfully created your store`,
+        `Created your payout account`,
         { variant: "success" }
       )
-    }
-  }, [data])
+      dispatch(Actions.reduxLogin.SET_USER({
+        ...userRedux,
+        ...user
+      }))
+    },
+    onError: (error) => {
+      snackbar.enqueueSnackbar(formatError(error), { variant: "error" })
+    },
+  })
+
 
   React.useEffect(() => {
-    if (error) {
-      snackbar.enqueueSnackbar(
-        formatError(error),
-        { variant: "error" }
-      )
+    if (!storeDoesNotExist(userRedux?.store)) {
+      setTimeout(() => {
+        router.replace("/admin/products")
+      }, 0)
     }
-  }, [error])
+  }, [userRedux])
 
 
+  if (!userRedux?.id) {
+    return (
+      <div className={classes.loginContainer}>
+        <Login
+          redirectOnComplete={"none"}
+          asFormLayout={true}
+        />
+      </div>
+    )
+  }
+  if (!storeDoesNotExist(userRedux?.store)) {
+    // if store does not exist, or is deleted
+    return (
+      <div className={classes.loginContainer}>
+        <Typography variant="h4" className={classes.storeExists}>
+          Your store was created.
+        </Typography>
+        <Button
+          variant="outlined"
+          onClick={() => {
+            router.push("/admin")
+          }}
+        >
+          View Seller Dashboard
+        </Button>
+      </div>
+    )
+  }
   return (
     <Formik
       // 1. feed product data to edit into formik state.
       initialValues={{
-        userId: userRedux?.id,
+        userId: userRedux.id,
         name: "",
         bio: "",
         website: "",
@@ -139,7 +169,7 @@ const CreateStoreForm: React.FC<ReactProps> = (props) => {
         // Dispatch Apollo Mutation after validation
         storeCreate({
           variables: {
-            userId: values.userId,
+            userId: userRedux?.id,
             name: values.name,
             bio: values.bio,
             website: values.website,
@@ -183,37 +213,6 @@ const CreateStoreForm: React.FC<ReactProps> = (props) => {
           validateField,
           validateForm,
         } = fprops;
-
-
-        if (!storeDoesNotExist(userRedux?.store)) {
-          // if store does not exist, or is deleted
-          return (
-            <div className={classes.loginContainer}>
-              <Typography variant="h4" className={classes.storeExists}>
-                Your store was created.
-              </Typography>
-              <Button
-                variant="outlined"
-                onClick={() => {
-                  router.push("/admin")
-                }}
-              >
-                View Seller Dashboard
-              </Button>
-            </div>
-          )
-        }
-
-        if (!userRedux?.id) {
-          return (
-            <div className={classes.loginContainer}>
-              <Login
-                redirectOnComplete={"none"}
-                asFormLayout={true}
-              />
-            </div>
-          )
-        }
 
         return (
           <CreateStoreFormWrapper
@@ -260,7 +259,7 @@ const CreateStoreFormWrapper: React.FC<FormWrapperProps> = (props) => {
         }>
           <div className={classes.flexColMargin}>
             <Typography color={"primary"} variant="h3">
-              Create Store
+              Create a Payout Account
             </Typography>
             <br/>
           </div>

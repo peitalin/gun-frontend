@@ -1,5 +1,5 @@
 import { createStyles, Theme } from "@material-ui/core/styles";
-import { Colors } from "layout/AppTheme";
+import { Colors, isThemeDark } from "layout/AppTheme";
 
 
 export const styles = (theme: Theme) => createStyles({
@@ -35,30 +35,38 @@ export const styles = (theme: Theme) => createStyles({
     fontWeight: 600,
   },
   subtitle1: {
-    fontSize: "0.9rem",
+    fontSize: "1rem",
     fontWeight: 600,
-    marginBottom: '0.25rem',
-    color: Colors.charcoal,
+    marginBottom: '1rem',
+    color: isThemeDark(theme)
+      ? Colors.uniswapLightGrey
+      : Colors.slateGreyBlack,
   },
   subtitle2: {
-    fontSize: "0.8rem",
+    fontSize: "0.9rem",
     fontWeight: 500,
     marginBottom: '0.25rem',
-    color: Colors.charcoal,
+    color: isThemeDark(theme)
+    ? Colors.uniswapLighterGrey
+    : Colors.slateGreyLightBlack,
     marginTop: "0.25rem",
   },
   subtitle3: {
-    fontSize: "0.7rem",
+    fontSize: "0.9rem",
     fontWeight: 500,
     marginBottom: '0.5rem',
-    color: Colors.grey,
+    color: isThemeDark(theme)
+    ? Colors.uniswapLighterGrey
+    : Colors.slateGreyLightBlack,
     marginTop: "0.5rem",
   },
   subtitle4: {
-    fontSize: "0.7rem",
+    fontSize: "0.9rem",
     fontWeight: 500,
     marginBottom: '0.5rem',
-    color: Colors.darkGrey,
+    color: isThemeDark(theme)
+    ? Colors.uniswapLighterGrey
+    : Colors.slateGreyLightBlack,
     marginTop: "0.5rem",
   },
   formGroup: {
@@ -77,6 +85,13 @@ export const styles = (theme: Theme) => createStyles({
   },
   textField: {
     width: "100%",
+    "&:focus-within": {
+      color: '#24A4FF',
+    },
+  },
+  textField2: {
+    width: "100%",
+    marginBottom: '0.5rem',
     "&:focus-within": {
       color: '#24A4FF',
     },
@@ -171,7 +186,7 @@ export const styles = (theme: Theme) => createStyles({
     height: 'unset',
   },
   loginContainer: {
-    paddingTop: '4rem',
+    paddingTop: '2rem',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',

@@ -9,7 +9,10 @@ import styles from './commonStylesPageRedirect';
 import ErrorBounds from "components/ErrorBounds";
 import Or from "components/Or";
 import ButtonLoading from "components/ButtonLoading";
-import { formatGunLicenseExpiry } from "../utils";
+import FormControl from '@material-ui/core/FormControl';
+import Input from '@material-ui/core/Input';
+import InputLabel from '@material-ui/core/InputLabel';
+import LockIcon from "@material-ui/icons/Lock";
 //
 import {
   createLicenseCategorySuggestions,
@@ -26,9 +29,18 @@ const MuiPhoneNumber = dynamic(() => import("material-ui-phone-number"), {
 })
 import { formatPhoneNumber } from "layout/Login/utils";
 
+import dayjs from 'dayjs'
+import DateFnsUtils from '@date-io/dayjs';
+import {
+  MuiPickersUtilsProvider,
+  KeyboardTimePicker,
+  KeyboardDatePicker,
+} from '@material-ui/pickers';
 
 
-const SignUp: React.FC<ReactProps> = (props) => {
+
+
+const SignUpPageRedirect: React.FC<ReactProps> = (props) => {
 
 
   const [state, setState] = React.useState({
@@ -90,7 +102,17 @@ const SignUp: React.FC<ReactProps> = (props) => {
 
   const { classes } = props;
 
-  const [isBackspace, setIsBackspace] = React.useState(false)
+  const [selectedDate, setSelectedDate] = React.useState<Date>(undefined);
+
+  const handleDateChange = (date) => {
+    // console.log("incoming date:", date)
+    setSelectedDate(date)
+    let expiryDate = new Date(date)
+    expiryDate.setHours(0)
+    expiryDate.setSeconds(0)
+    expiryDate.setMinutes(0)
+    setState(s => ({ ...s, licenseExpiry: expiryDate }))
+  };
 
   let licenseStateOptions = createLicenseStateSuggestions()
   // initial stateShape
@@ -98,7 +120,6 @@ const SignUp: React.FC<ReactProps> = (props) => {
     .find(d => d.value === state.licenseState)
   const [licenseState, setLicenseState] = React.useState(initialStateLicense)
 
-  console.log("licenseState2: ", state)
 
   return (
   <ErrorBounds className={classes.outerContainer}>
@@ -113,111 +134,95 @@ const SignUp: React.FC<ReactProps> = (props) => {
 
     <form className={classes.form}>
 
-      <Typography className={classes.subtitle} variant={"body1"}>
-        First Name
-      </Typography>
-      <TextInput
-        className={classes.textInput}
-        required
-        type={"text"}
-        placeholder="Name"
-        autoComplete="given-name"
-        value={state.firstName}
-        onChange={(e) => {
-          e.persist(); // for persisting synthetic events
-          let value = e.target.value
-          setState(s => ({ ...s, firstName: value }))
-        }}
-        inputProps={{ style: { width: '100%' }}}
-      />
+      <FormControl margin="dense" fullWidth>
+        <InputLabel htmlFor="name">First Name</InputLabel>
+        <Input
+          name="first-name"
+          autoComplete="given-name"
+          value={state?.firstName}
+          onChange={(e) => {
+            e.persist(); // for persisting synthetic events
+            setState(s => ({ ...s, firstName: e?.target?.value }))
+          }}
+        />
+      </FormControl>
 
-      <Typography className={classes.subtitle} variant={"body1"}>
-        Surname
-      </Typography>
-      <TextInput
-        className={classes.textInput}
-        required
-        type={"text"}
-        placeholder="Surname"
-        autoComplete="family-name"
-        value={state.lastName}
-        onChange={(e) => {
-          e.persist(); // for persisting synthetic events
-          let value = e.target.value
-          setState(s => ({ ...s, lastName: value }))
-        }}
-        inputProps={{ style: { width: '100%' }}}
-      />
-
-      <Typography className={classes.subtitle} variant={"body1"}>
-        Gun License Number
-      </Typography>
-      <TextInput
-        className={classes.textInput}
-        required
-        placeholder="Gun License Number"
-        type={"string"}
-        autoComplete="license-number"
-        value={state.licenseNumber}
-        onChange={(e) => {
-          e.persist(); // for persisting synthetic events
-          let value = e.target.value
-          setState(s => ({ ...s, licenseNumber: value }))
-        }}
-        inputProps={{ style: { width: '100%' }}}
-      />
-      <Typography className={classes.subtitle} variant={"body1"}>
-        Gun License Expiry
-      </Typography>
-      <TextInput
-        className={classes.textInput}
-        required
-        placeholder="Expiry: DD/MM/YYYY"
-        type={"string"}
-        autoComplete="license-expiry"
-        value={state.licenseExpiry}
-        onKeyDown={(e) => {
-          e.persist()
-          if (e.keyCode === 8) {
-              // if key is backspace
-            // console.log("onKeyDown backspace: ", e.keyCode)
-            setIsBackspace(true)
-          } else {
-            setIsBackspace(false)
-          }
-        }}
-        onChange={(e) => {
-          e.persist(); // for persisting synthetic events
-          let value = e.target.value
-          let expiry = formatGunLicenseExpiry(e.target.value)
-          setState(s => ({ ...s, licenseExpiry: expiry }))
-        }}
-        inputProps={{ style: { width: '100%' }}}
-      />
-
-      <Typography variant="body1" className={classes.fieldHeading}>
-        License State
-      </Typography>
-      <DropdownInput
-        className={classes.textInput}
-        stateShape={initialStateLicense}
-        onChange={({ label, value }: SelectOption) => {
-          // set dropdown object
-          setLicenseState({ label, value })
-          // then set it in state
-          setState(s => ({ ...s, licenseState: value }))
-        }}
-        value={licenseState}
-        options={licenseStateOptions}
-        placeholder={"Gun License State"}
-        label="" // remove moving label
-        inputProps={{ style: { width: '100%' }}}
-      />
-
-      <div className={classes.phoneNumberContainer}>
-        <Typography variant="body1" className={classes.fieldHeading}>
-          Phone Number
+      <FormControl margin="dense" fullWidth>
+        <InputLabel htmlFor="last-name">Last Name</InputLabel>
+        <Input
+          name="last-name"
+          autoComplete="family-name"
+          value={state?.lastName}
+          onChange={(e) => {
+            e.persist(); // for persisting synthetic events
+            setState(s => ({ ...s, lastName: e?.target?.value }))
+          }}
+        />
+      </FormControl>
+      <FormControl margin="dense" required fullWidth>
+        <InputLabel htmlFor="sign-up-email">Gun License Number</InputLabel>
+        <Input
+          name="gun-license-number"
+          type={"string"}
+          autoComplete="license-number"
+          value={state.licenseNumber}
+          onChange={(e) => {
+            e.persist(); // for persisting synthetic events
+            setState(s => ({ ...s, licenseNumber: e?.target?.value }))
+          }}
+        />
+      </FormControl>
+      <FormControl margin="dense" required fullWidth>
+        <Typography className={classes.miniTitle} variant={"body1"}>
+          License Expiry
         </Typography>
+        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+          <KeyboardDatePicker
+            autoOk={true}
+            disableToolbar
+            InputAdornmentProps={{
+              classes: { root: classes.dateLabel }
+            }}
+            variant="inline"
+            format="DD/MM/YYYY"
+            // margin="normal"
+            id="date-picker-inline"
+            label="License Expiry"
+            value={selectedDate}
+            maxDate={new Date("1/1/3000")}
+            onChange={handleDateChange}
+            KeyboardButtonProps={{
+              'aria-label': 'change date',
+            }}
+          />
+      </MuiPickersUtilsProvider>
+      </FormControl>
+
+      <FormControl margin="dense" required fullWidth>
+        <Typography className={classes.miniTitle}>
+          License State
+        </Typography>
+        <DropdownInput
+          stateShape={initialStateLicense}
+          onChange={({ label, value }: SelectOption) => {
+            console.log("label: ", label)
+            // set dropdown object
+            setLicenseState({ label, value })
+            // then set it in state
+            setState(s => ({ ...s, licenseState: value }))
+          }}
+          value={licenseState}
+          options={licenseStateOptions}
+          placeholder={"Gun License State"}
+          label="" // remove moving label
+          className={classes.textField}
+          inputProps={{ style: { width: '100%' }}}
+          // errorMessage={errors.licenseState}
+          // touched={touched.licenseState}
+        />
+      </FormControl>
+
+      <FormControl margin="dense" required fullWidth>
         <MuiPhoneNumber
           //@ts-ignore
           name={"phone"}
@@ -232,42 +237,37 @@ const SignUp: React.FC<ReactProps> = (props) => {
           value={`${state.countryCode} ${state.phoneNumber}`}
           onChange={handleSetPhoneNumber}
         />
-      </div>
+      </FormControl>
 
-      <Typography className={classes.subtitle} variant={"body1"}>
-        Email
-      </Typography>
-      <TextInput
-        className={classes.textInput}
-        required
-        type={"email"}
-        placeholder="Email"
-        autoComplete="email"
-        value={state.email}
-        onChange={(e) => {
-          e.persist(); // for persisting synthetic events
-          let value = e.target.value
-          setState(s => ({ ...s, email: value }))
-        }}
-        inputProps={{ style: { width: '100%' }}}
-      />
+      <FormControl margin="dense" required fullWidth>
+        <InputLabel htmlFor="sign-up-email">Email Address</InputLabel>
+        <Input
+          name="sign-up-email"
+          type={"email"}
+          autoComplete="email"
+          value={state.email}
+          onChange={(e) => {
+            e.persist(); // for persisting synthetic events
+            setState(s => ({ ...s, email: e?.target?.value }))
+          }}
+        />
+      </FormControl>
+      <FormControl margin="dense" required fullWidth>
+        <InputLabel htmlFor="password">
+          Password
+          <LockIcon className={classes.secureCheckoutIcon}/>
+        </InputLabel>
+        <Input
+          name="sign-up-password"
+          type="password"
+          autoComplete={"new-password"} // this disables autofill
+          onChange={(e) => {
+            e.persist(); // for persisting synthetic events
+            setState(s => ({ ...s, password: e?.target?.value }))
+          }}
+        />
+      </FormControl>
 
-      <Typography className={classes.subtitle} variant={"body1"}>
-        Password
-      </Typography>
-      <TextInput
-        className={classes.textInput}
-        required
-        type={"password"}
-        placeholder="Password"
-        value={state.password}
-        onChange={(e) => {
-          e.persist(); // for persisting synthetic events
-          let value = e.target.value // set to value, since setState is async
-          setState(s => ({ ...s, password: value }))
-        }}
-        inputProps={{ style: { width: '100%' }}}
-      />
       <ButtonLoading
         type="submit"
         variant="contained"
@@ -322,4 +322,4 @@ interface ReactProps extends WithStyles<typeof styles> {
   buttonLoading?: boolean;
 }
 
-export default withStyles(styles)(SignUp);
+export default withStyles(styles)(SignUpPageRedirect);

@@ -7,13 +7,11 @@ import { Colors } from "layout/AppTheme";
 // Redux
 import { useSelector } from "react-redux";
 import { GrandReduxState } from "reduxStore/grand-reducer";
-/// Debounce
-import { useDebouncedCallback } from 'use-debounce';
 // Material UI
 import Typography from "@material-ui/core/Typography";
 import TextInput from "components/Fields/TextInput";
 import Divider from "components/Divider";
-import Button from "@material-ui/core/Button";
+import Link from "next/link";
 // router
 import { useRouter } from "next/router";
 // Typings
@@ -47,30 +45,12 @@ const CreateStoreFields: React.FC<ReactProps & FormikProps<FormikFields>> = (pro
     handleReset,
   } = fprops;
 
-  const userId = useSelector<GrandReduxState, string>(
-    s => s.reduxLogin.user.id
-  )
-
   // state
   const [profileImage, setProfileImage] = React.useState(undefined);
-  const [showAbout, setShowAbout] = React.useState(false);
-  const [showWebsite, setShowWebsite] = React.useState(false);
-
 
   const handleUpdateName = (e: HtmlEvent) => {
     let name = e.target.value;
     fprops.setFieldValue('name', name)
-  };
-
-  const handleUpdateBio = (e: HtmlEvent) => {
-    let bio: string = e.target.value;
-    // 200 chars limit
-    fprops.setFieldValue('bio', bio.slice(0,200))
-  };
-
-  const handleUpdateWebsite = (e: HtmlEvent) => {
-    let website: string = e.target.value;
-    fprops.setFieldValue('website', website)
   };
 
   const handleSetNewBsb = (e: HtmlEvent) => {
@@ -94,10 +74,12 @@ const CreateStoreFields: React.FC<ReactProps & FormikProps<FormikFields>> = (pro
     fprops.setFieldValue('accountName', accName)
   };
 
-  const handleUpdateProfile = (image: Image_Parents) => {
-    setProfileImage(image);
-    fprops.setFieldValue('profileId', image.id)
-  };
+  // const handleUpdateProfile = (image: Image_Parents) => {
+  //   setProfileImage(image);
+  //   fprops.setFieldValue('profileId', image.id)
+  // };
+
+  console.log("fprops values: ", fprops.values)
 
 
   return (
@@ -124,17 +106,12 @@ const CreateStoreFields: React.FC<ReactProps & FormikProps<FormikFields>> = (pro
           </div>
         </div> */}
 
-        <Typography variant="subtitle1" className={classes.subtitle1}>
+        {/* <Typography variant="subtitle1" className={classes.subtitle1}>
           Your store name
           {
             errors.name
             && <span className={classes.redText}>*</span>
           }
-          {/* {
-            errors.name
-            ? <span className={classes.redText}>{` - ${errors.name}`}</span>
-            : <span className={classes.greyText}> - public</span>
-          } */}
         </Typography>
         <div className={clsx(classes.formContainer, "fadeInFast")}>
           <TextInput
@@ -147,86 +124,13 @@ const CreateStoreFields: React.FC<ReactProps & FormikProps<FormikFields>> = (pro
             touched={touched.name}
           />
           <div style={{ marginTop: '0.25rem' }}></div>
-        </div>
-
-        {/* <div className={classes.margin1}>
-
-          <div className={clsx(classes.flexRow, classes.spaceBetween)}>
-            <Typography variant="subtitle1" className={classes.subtitle1}>
-              Bio<span className={classes.greyText}> - optional</span>
-            </Typography>
-            <Typography variant="subtitle1" className={classes.subtitle1}>
-              <a className={classes.link}
-                onClick={() => setShowAbout(s => !s)}
-              >
-                {
-                  showAbout
-                  ? "Cancel"
-                  : "Add bio"
-                }
-              </a>
-            </Typography>
-          </div>
-          {
-            showAbout &&
-            <div className={clsx(
-              classes.formContainer,
-              "fadeInFast",
-            )}>
-              <TextInput
-                placeholder="Bio"
-                className={classes.textField}
-                value={values.bio}
-                onChange={handleUpdateBio}
-                inputProps={{ style: { width: '100%' }}}
-                multiline
-                rows="4"
-              />
-              {
-                values?.bio?.length > 0 &&
-                <div className={classes.bioLength}>{`${values.bio.length}/200`}</div>
-              }
-            </div>
-          }
-        </div>
-
-        <div className={classes.margin1}>
-          <div className={clsx(classes.flexRow, classes.spaceBetween)}>
-            <Typography variant="subtitle1" className={classes.subtitle1}>
-              Website
-              <span className={classes.greyText}> - optional</span>
-            </Typography>
-            <Typography variant="subtitle1" className={classes.subtitle1}>
-              <a className={classes.link}
-                onClick={() => setShowWebsite(s => !s)}
-              >
-                {
-                  showWebsite
-                  ? "Cancel"
-                  : "Add website"
-                }
-              </a>
-            </Typography>
-          </div>
-          {
-            showWebsite &&
-            <div className={clsx(classes.formContainer, "fadeInFast")}>
-              <TextInput
-                placeholder="Website"
-                className={classes.textField}
-                value={values.website}
-                onChange={handleUpdateWebsite}
-                inputProps={{ style: { width: '100%' }}}
-              />
-            </div>
-          }
         </div> */}
 
 
         <div className={classes.margin1}>
           <div className={clsx(classes.flexRow, classes.width100)}>
             <Typography variant="subtitle1" className={classes.subtitle1}>
-              Where should we send your earnings?
+              Where should we send your funds?
             </Typography>
             {
               errors.bsb
@@ -235,34 +139,43 @@ const CreateStoreFields: React.FC<ReactProps & FormikProps<FormikFields>> = (pro
           </div>
           <div className={clsx(classes.formContainer, "fadeInFast")}>
             <TextInput
-              placeholder={"Enter your BSB number"}
-              className={classes.textField}
+              placeholder={"BSB number"}
+              className={classes.textField2}
               value={values.bsb}
               onChange={handleSetNewBsb}
               inputProps={{ style: { width: '100%' }}}
+              validationErrorMsgStyle={{
+                marginBottom: "0.75rem"
+              }}
               errorMessage={errors.bsb}
               touched={touched.bsb}
             />
             <TextInput
-              placeholder={"Enter your bank account number"}
-              className={classes.textField}
+              placeholder={"Bank account number"}
+              className={classes.textField2}
               value={values.accountNumber}
               onChange={handleSetNewAccountNumber}
               inputProps={{ style: { width: '100%' }}}
+              validationErrorMsgStyle={{
+                marginBottom: "0.75rem"
+              }}
               errorMessage={errors.accountNumber}
               touched={touched.accountNumber}
             />
             <TextInput
-              placeholder={"Enter your account name"}
-              className={classes.textField}
+              placeholder={"Account name"}
+              className={classes.textField2}
               value={values.accountName}
               onChange={handleSetNewAccountName}
               inputProps={{ style: { width: '100%' }}}
+              validationErrorMsgStyle={{
+                marginBottom: "0.75rem"
+              }}
               errorMessage={errors.accountName}
               touched={touched.accountName}
             />
             <Typography variant="body1" className={classes.subtitle3}>
-              We will send your funds automatically to this Bank account
+              We will send your funds to this bank account
               after your order has been settled and approved,
               typically in 5 business days.
             </Typography>
@@ -270,12 +183,11 @@ const CreateStoreFields: React.FC<ReactProps & FormikProps<FormikFields>> = (pro
             <Divider/>
             <Typography variant="body1" className={classes.subtitle4}>
               By signing up, you agree to comply with gunmarketplace.com.au’s Terms of Service.
-              <a className={classes.link}
-                href={'https://help.gunmarketplace.com/hc/en-us/articles/360038530771-Terms-of-Service'}
-                style={{ marginLeft: '0.25rem' }}
-              >
+              <Link href={"/help/terms"}>
+                <a className={classes.link} style={{ marginLeft: '0.25rem' }} >
                   Learn more
-              </a>
+                </a>
+              </Link>
             </Typography>
           </div>
         </div>

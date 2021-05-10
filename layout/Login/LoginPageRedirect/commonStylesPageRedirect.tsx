@@ -40,6 +40,7 @@ const styles = (theme: Theme) => createStyles({
     flexDirection: 'column',
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
+    marginBottom: '2rem',
   },
   preHeader: {
     display: 'flex',
@@ -87,7 +88,7 @@ const styles = (theme: Theme) => createStyles({
   },
   form: {
     width: '100%',
-    padding: '1rem 1rem 0rem 1rem',
+    // padding: '1rem 1rem 0rem 1rem',
     display: 'flex',
     flexDirection: "column",
     justifyContent: 'flex-end',
@@ -135,6 +136,33 @@ const styles = (theme: Theme) => createStyles({
     marginBottom: "0.75rem",
     "& > div": {
       width: '100%',
+    }
+  },
+  textField: {
+    width: "100%",
+    "&:focus-within": {
+      color: '#24A4FF',
+    },
+  },
+  miniTitle: {
+    fontSize: '0.825rem',
+    fontWeight: 400,
+    color: theme.palette.type === 'dark'
+      ? Colors.uniswapLightestGrey
+      : Colors.slateGreyBlack,
+    marginBottom: '0.5rem',
+    marginTop: '0.5rem',
+  },
+  dateLabel: {
+    "& button > span > svg": {
+      fill: isThemeDark(theme)
+        ? Colors.uniswapLightGrey
+        : Colors.slateGreyBlack,
+      "&:hover": {
+        fill: isThemeDark(theme)
+          ? Colors.ultramarineBlue
+          : Colors.ultramarineBlue,
+      }
     }
   },
 });

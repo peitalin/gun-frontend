@@ -34,7 +34,6 @@ import ResponsivePadding from "../ResponsivePadding";
 // media query
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
-import EmptyProductList from "pageComponents/SellerDashboard/PublishedProductsList/EmptyProductList";
 // pagination
 import PaginateButtons from "components/Paginators/PaginateButtons";
 import { useQuery, useLazyQuery, DocumentNode } from "@apollo/client";
@@ -47,6 +46,7 @@ import {
 } from "utils/hooksFacetSearch";
 // Grid Components
 import GridPaginatorGeneric from "components/GridPaginatorGeneric";
+import Link from "next/link";
 
 
 
@@ -62,6 +62,8 @@ export let initialDashboardVariables: {
   },
 } = undefined
 // this is set later in the body of the React component
+
+
 
 
 const PublishedProductsList = (props: ReactProps) => {
@@ -243,9 +245,6 @@ const PublishedProductsList = (props: ReactProps) => {
             border: isDarkMode
               ? `1px solid ${Colors.uniswapNavy}`
               : `1px solid ${Colors.slateGreyDarker}`,
-            // boxShadow: isDarkMode
-            //   ? 'unset'
-            //   : BoxShadows.shadow3.boxShadow,
             borderRadius: BorderRadius2x,
           }}
           bottomSectionStyles={{
@@ -255,9 +254,6 @@ const PublishedProductsList = (props: ReactProps) => {
             border: isDarkMode
               ? `1px solid ${Colors.uniswapNavy}`
               : `1px solid ${Colors.slateGreyDarker}`,
-            // boxShadow: isDarkMode
-            //   ? 'unset'
-            //   : BoxShadows.shadow3.boxShadow,
             borderRadius: BorderRadius,
           }}
         >
@@ -296,11 +292,13 @@ const PublishedProductsList = (props: ReactProps) => {
                       Your product listings will appear here
                       after your first upload.
                     </Typography>
-                    <Button variant="outlined" color="primary"
-                      onClick={() => router.push(`/sell`)}
-                    >
-                      Browse Products
-                    </Button>
+                    <Link href={"/sell"}>
+                      <a>
+                        <Button variant="outlined" color="primary">
+                          Upload Product
+                        </Button>
+                      </a>
+                    </Link>
                   </div>
                 : <GridPaginatorGeneric<Product>
                     index={index}

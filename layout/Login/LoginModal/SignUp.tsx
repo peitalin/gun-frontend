@@ -3,12 +3,8 @@ import { withStyles, WithStyles } from "@material-ui/core/styles";
 import { Colors } from "layout/AppTheme";
 
 import FormControl from '@material-ui/core/FormControl';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
-import PersonAdd from '@material-ui/icons/PersonAdd';
-import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 // Typings
 import styles from './commonStyles';
@@ -126,7 +122,6 @@ const SignUp: React.FC<ReactProps> = (props) => {
   let initialStateLicense = undefined
   const [licenseState, setLicenseState] = React.useState(initialStateLicense)
 
-    console.log("state", state)
 
   return (
     <ErrorBounds className={classes.outerContainer}>
@@ -210,34 +205,6 @@ const SignUp: React.FC<ReactProps> = (props) => {
                 }}
               />
             </MuiPickersUtilsProvider>
-            {/* <DatePicker
-              selected={
-                state.licenseExpiry
-                ? new Date(state.licenseExpiry)
-                : new Date()
-              }
-              onChange={(expiryDate: Date) => {
-                setState(s => ({ ...s, licenseExpiry: expiryDate }))
-              }}
-              showTimeSelect={false}
-              timeFormat="HH:mm"
-              timeIntervals={10}
-              timeCaption="time"
-              dateFormat="MMMM d, yyyy h:mm aa"
-              customInput={
-                <Button className={classes.datePickButton}
-                  variant="outlined"
-                  color="primary"
-                >
-                  {
-                    state.licenseExpiry
-                      ? showDate(state.licenseExpiry)
-                      : "Select License Expiry"
-                  }
-                </Button>
-              }
-              popperPlacement="top"
-            /> */}
           </FormControl>
 
           <FormControl margin="dense" required fullWidth>
