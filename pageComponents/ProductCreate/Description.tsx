@@ -3,7 +3,8 @@ import clsx from "clsx";
 // Redux
 import { useSelector, useDispatch } from "react-redux";
 import { GrandReduxState } from "reduxStore/grand-reducer";
-import { Colors } from "layout/AppTheme";
+import { Colors, isThemeDark } from "layout/AppTheme";
+import { useTheme } from "@material-ui/core";
 // Styles
 import { withStyles, WithStyles } from "@material-ui/core/styles";
 import { styles } from "./commonStyles";
@@ -39,6 +40,7 @@ const Description = (props: ReactProps & FormikProps<FormikFields>) => {
     ...fprops
   } = props;
 
+  const theme = useTheme()
 
   // Formik props
   const {
@@ -94,12 +96,21 @@ const Description = (props: ReactProps & FormikProps<FormikFields>) => {
           productDescription={values.description}
           titleStyle={{
             marginBottom: '0rem',
-            color: Colors.slateGreyDarkest
+            color: isThemeDark(theme)
+            ? Colors.slateGreyBlack
+            : Colors.slateGreyBlack,
           }}
           containerStyle={{
             paddingTop: '1rem',
             paddingBottom: '1rem',
             marginTop: '1rem',
+            border: isThemeDark(theme)
+              ? `1px solid ${Colors.uniswapGrey}`
+              : `1px solid ${Colors.slateGreyDarkest}`,
+            backgroundColor: isThemeDark(theme)
+              ? Colors.cream
+              : Colors.white,
+            boxShadow: "unset",
           }}
         />
 
