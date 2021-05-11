@@ -6,7 +6,7 @@ import { Colors } from "layout/AppTheme";
 import { Product_Preview_Items, Product } from "typings/gqlTypes";
 import { SelectedVariantProps } from "pageComponents/P/ProductId";
 // Components
-import WishlistIcon from "components/WishlistIcon";
+import WatchlistIcon from "components/WatchlistIcon";
 // import AdminEditProductIcon from "components/AdminEditProductIcon";
 // Media Query
 import { useTheme } from "@material-ui/core/styles";
@@ -29,10 +29,10 @@ const FeaturedPreviewButtons: React.FC<ReactProps> = (props) => {
   if (featuredPreviewItem?.image?.original?.id) {
     return (
       <div>
-        {/* <WishlistIcon
+        {/* <WatchlistIcon
           productId={product?.id}
           variantId={product?.featuredVariant?.variantId}
-          // refetch={wishlistConnectionResponse.refetch}
+          // refetch={watchListConnectionResponse.refetch}
           style={{
             top: '0.5rem',
             right: '1.75rem',

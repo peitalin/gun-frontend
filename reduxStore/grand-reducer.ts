@@ -7,7 +7,7 @@ import { ReduxStateLogin } from './login-reducer';
 import { ReduxStateModals } from './modals-reducer';
 import { ReduxStateProductCreate } from './product_create-reducer';
 import { ReduxStateProductEdit } from './product_edit-reducer';
-import { ReduxStateWishlist } from './wishlist-reducer';
+import { ReduxStateWatchlist } from './watchlist-reducer';
 import { ReduxStateFollowingStores } from './following-stores-reducer';
 import { ReduxStateRefetch } from './refetch-reducer';
 import { ReduxStateConversation } from './conversation-reducer';
@@ -17,7 +17,7 @@ import { reduxReducerLogin } from "./login-reducer";
 import { reduxReducerModals } from "./modals-reducer";
 import { reduxReducerProductCreate } from "./product_create-reducer";
 import { reduxReducerProductEdit } from "./product_edit-reducer";
-import { reduxReducerWishlist } from "./wishlist-reducer";
+import { reduxReducerWatchlist } from "./watchlist-reducer";
 import { reduxReducerFollowingStores } from "./following-stores-reducer";
 import { reduxReducerRefetch } from "./refetch-reducer";
 import { reduxReducerConversation } from "./conversation-reducer";
@@ -34,7 +34,7 @@ export const makeStore = (initialState, options) => {
         reduxModals: reduxReducerModals,
         reduxProductCreate: reduxReducerProductCreate,
         reduxProductEdit: reduxReducerProductEdit,
-        reduxWishlist: reduxReducerWishlist,
+        reduxWatchlist: reduxReducerWatchlist,
         reduxFollowingStores: reduxReducerFollowingStores,
         reduxRefetch: reduxReducerRefetch,
         reduxConversation: reduxReducerConversation,
@@ -51,7 +51,7 @@ export interface GrandReduxState {
   reduxModals: ReduxStateModals;
   reduxProductCreate: ReduxStateProductCreate;
   reduxProductEdit: ReduxStateProductEdit,
-  reduxWishlist: ReduxStateWishlist;
+  reduxWatchlist: ReduxStateWatchlist;
   reduxFollowingStores: ReduxStateFollowingStores;
   reduxRefetch: ReduxStateRefetch;
   reduxConversation: ReduxStateConversation;

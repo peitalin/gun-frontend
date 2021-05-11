@@ -11,10 +11,10 @@ import Favourite from "@material-ui/icons/Favorite"
 import IconButton from "@material-ui/core/IconButton";
 // Graphql
 import { useMutation } from "@apollo/client";
-import { ADD_PRODUCT_TO_WISHLIST, REMOVE_PRODUCT_FROM_WISHLIST } from "queries/wishlist-mutations";
+import { ADD_PRODUCT_TO_WATCHLIST, REMOVE_PRODUCT_FROM_WATCHLIST } from "queries/watchlist-mutations";
 // redux
 import { useDispatch, useSelector } from "react-redux";
-import { WishlistItemId } from "reduxStore/wishlist-reducer";
+import { WatchlistItemId } from "reduxStore/watchlist-reducer";
 import { Actions } from "reduxStore/actions";
 import { GrandReduxState } from "reduxStore/grand-reducer";
 // snackbar
@@ -22,14 +22,14 @@ import { useSnackbar } from "notistack";
 
 
 
-const WishlistIcon: React.FC<ReactProps> = (props) => {
+const WatchlistIcon: React.FC<ReactProps> = (props) => {
 
   const dispatch = useDispatch();
   const snackbar = useSnackbar()
 
-  const { wishlistItemIds, user } = useSelector<GrandReduxState, ReduxState>(
+  const { watchlistItemIds, user } = useSelector<GrandReduxState, ReduxState>(
     s => ({
-      wishlistItemIds: s.reduxWishlist.wishlistIds,
+      watchlistItemIds: s.reduxWatchlist.watchlistIds,
       user: s.reduxLogin.user
     })
   );
@@ -38,21 +38,21 @@ const WishlistIcon: React.FC<ReactProps> = (props) => {
     classes,
   } = props;
 
-  const wishlistItemId = {
+  const watchlistItemId = {
     productId: props.productId,
     variantId: props.variantId
   };
 
-  const isInWishlist = (): boolean => {
-    return !!wishlistItemIds.find(w => {
-      return w.productId == wishlistItemId.productId
-          && w.variantId === wishlistItemId.variantId
+  const isInWatchlist = (): boolean => {
+    return !!watchlistItemIds.find(w => {
+      return w.productId == watchlistItemId.productId
+          && w.variantId === watchlistItemId.variantId
     })
   }
 
-  const [addProductToWishlist, response1] =
-  useMutation<MutationData1, MutationVar1>(ADD_PRODUCT_TO_WISHLIST, {
-    variables: { ...wishlistItemId },
+  const [addProductToWatchlist, response1] =
+  useMutation<MutationData1, MutationVar1>(ADD_PRODUCT_TO_WATCHLIST, {
+    variables: { ...watchlistItemId },
     onCompleted: (data) => {
       if (props.refetch) {
         props.refetch()
@@ -61,9 +61,9 @@ const WishlistIcon: React.FC<ReactProps> = (props) => {
     onError: () => {},
   })
 
-  const [removeProductFromWishlist, response2] =
-  useMutation<MutationData1, MutationVar1>(REMOVE_PRODUCT_FROM_WISHLIST, {
-    variables: { ...wishlistItemId },
+  const [removeProductFromWatchlist, response2] =
+  useMutation<MutationData1, MutationVar1>(REMOVE_PRODUCT_FROM_WATCHLIST, {
+    variables: { ...watchlistItemId },
     onCompleted: (data) => {
       if (props.refetch) {
         props.refetch()
@@ -72,7 +72,7 @@ const WishlistIcon: React.FC<ReactProps> = (props) => {
     onError: () => {},
   })
 
-  const added = isInWishlist()
+  const added = isInWatchlist()
 
   return (
     <IconButton
@@ -88,15 +88,15 @@ const WishlistIcon: React.FC<ReactProps> = (props) => {
         } else {
           // if user is logged in, add or remove to redux
           if (added) {
-            dispatch(Actions.reduxWishlist.REMOVE_WISHLIST_ITEM(wishlistItemId))
-            removeProductFromWishlist()
+            dispatch(Actions.reduxWatchlist.REMOVE_WATCHLIST_ITEM(watchlistItemId))
+            removeProductFromWatchlist()
           } else {
-            dispatch(Actions.reduxWishlist.ADD_WISHLIST_ITEM(wishlistItemId))
-            addProductToWishlist()
+            dispatch(Actions.reduxWatchlist.ADD_WATCHLIST_ITEM(watchlistItemId))
+            addProductToWatchlist()
           }
         }
       }}
-      className={classes.wishlistRoot}
+      className={classes.watchlistRoot}
       style={{
         top: 'calc(50% - 16px)',
         padding: '.25rem', // determines button radius size
@@ -122,10 +122,10 @@ interface ReactProps extends WithStyles<typeof styles> {
   style?: any;
   productId: string;
   variantId: string;
-  refetch?(): void; // apollo refetch wishlist
+  refetch?(): void; // apollo refetch watchlist
 }
 interface ReduxState {
-  wishlistItemIds: WishlistItemId[];
+  watchlistItemIds: WatchlistItemId[];
   user: UserPrivate;
 }
 
@@ -137,7 +137,7 @@ interface MutationVar1 {
 
 
 const styles = (theme: Theme) => createStyles({
-  wishlistRoot: {
+  watchlistRoot: {
     position: 'absolute',
     zIndex: 1,
     right: '1rem',
@@ -166,4 +166,4 @@ const styles = (theme: Theme) => createStyles({
 });
 
 
-export default withStyles(styles)( WishlistIcon );
+export default withStyles(styles)( WatchlistIcon );

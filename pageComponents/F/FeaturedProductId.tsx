@@ -5,11 +5,12 @@ import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/s
 import { Colors } from "layout/AppTheme";
 import { SoldOutStatus, Chat_Rooms } from "typings/gqlTypes";
 // GraphQL
-import { useQuery, useLazyQuery } from "@apollo/client";
+import { useQuery, useLazyQuery, useMutation } from "@apollo/client";
 // Typings
-import { Product, UserPrivate, Product_Variants, BidStatus, Role } from "typings/gqlTypes";
+import { Product, UserPrivate, Product_Variants, BidStatus, Role, Unique_Product_Views } from "typings/gqlTypes";
 import {
-  GET_PRODUCT
+  GET_PRODUCT,
+  INSERT_UNIQUE_PRODUCT_VIEW,
 } from "queries/products-queries";
 import {
   GET_USER_BIDS_FOR_PRODUCT
@@ -88,6 +89,20 @@ const FeaturedProductId: React.FC<ReactProps> = (props) => {
     ssr: true,
   })
 
+  const [
+    insertUniqueProductView,
+    uniqueProductViewResponse
+  ] = useMutation<MData3, MVar3>(
+    INSERT_UNIQUE_PRODUCT_VIEW, {
+    variables: {
+      productId: productId,
+      userId: user?.id,
+      // sellerUserId: product?.store?.user?.id
+      sellerUserId: undefined
+    },
+  })
+
+
   let userBids = (getUserBidsForProductResponse?.data?.getUserBidsForProduct?.messages ?? [])
     .map(m => m?.bid)
   // console.log("userBids: ", userBids)
@@ -130,16 +145,23 @@ const FeaturedProductId: React.FC<ReactProps> = (props) => {
     if (user?.id) {
       getUserBidsForProduct()
     }
-  }, [user])
-
-  React.useEffect(() => {
     if (!!product?.featuredVariant?.variantId) {
       setSelectedOption({
         label: "variant",
         value: product?.featuredVariant
       })
+      if (user?.id && product?.store?.user?.id) {
+        insertUniqueProductView({
+          variables: {
+            productId: productId,
+            userId: user.id,
+            sellerUserId: product.store.user.id
+          }
+        })
+      }
     }
-  }, [product])
+  }, [user, product])
+
 
   const variantOptions = (product?.currentSnapshot?.currentVariants ?? [])
     .map(v => ({ label: v.variantName, value: v }))
@@ -342,6 +364,16 @@ interface QueryVar {
 interface QueryData2 {
   getUserBidsForProduct: Chat_Rooms;
 }
+
+interface MVar3 {
+  productId: string;
+  userId: string;
+  sellerUserId: string;
+}
+interface MData3 {
+  insertUniqueProductViews: Unique_Product_Views;
+}
+
 export interface SelectedVariantProps {
   label: string;
   value: Product_Variants;

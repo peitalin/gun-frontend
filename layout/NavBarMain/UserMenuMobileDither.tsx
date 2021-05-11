@@ -39,7 +39,7 @@ const styles = (theme: Theme) => createStyles({
   mobileMenuDitherRoot: {
     height: '100vh',
     width: '100vw',
-    zIndex: 3, // above wishlist button which has zIndex: 1
+    zIndex: 3, // above watchlist button which has zIndex: 1
     // 3: above email inputs
     position: 'fixed',
     top: 0,

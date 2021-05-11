@@ -9,7 +9,7 @@ import CardActionArea from "@material-ui/core/CardActionArea";
 import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
 import Link from "next/link";
-import WishlistIcon from "components/WishlistIcon";
+import WatchlistIcon from "components/WatchlistIcon";
 import DiscountBadge from "components/DiscountBadge";
 // Typings
 import { ProductPreviewItem, Product, ID } from "typings/gqlTypes";
@@ -40,8 +40,8 @@ import {
 const GridPreviewCardLight = (props: ReactProps) => {
   /// NOTE:
   /// There are 2 <Link> tags, one of the image, one for the description container
-  /// This is to prevent the wishlist button from being inside the <Link> tag
-  /// so that clicking wishlist buttons don't navigate to the product page.
+  /// This is to prevent the watchlist button from being inside the <Link> tag
+  /// so that clicking watchlist buttons don't navigate to the product page.
 
   const [previewLoaded, setPreviewLoaded] = React.useState(0);
 
@@ -51,7 +51,7 @@ const GridPreviewCardLight = (props: ReactProps) => {
     refetch,
     cardsPerRow = 1,
     maxWidthOfRow = 1160,
-    showWishListButton = true,
+    showWatchlistButton = true,
     listName = "",
   } = props;
 
@@ -201,9 +201,9 @@ const GridPreviewCardLight = (props: ReactProps) => {
 
       <div className={classes.descriptionContainerOuter}>
         {/* {
-          showWishListButton &&
+          showWatchlistButton &&
           productId &&
-          <WishlistIcon
+          <WatchlistIcon
             productId={productId}
             variantId={productVariantId}
             refetch={refetch}
@@ -330,7 +330,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   product: Product;
   cardsPerRow: number;
   maxWidthOfRow: number;
-  showWishListButton?: boolean;
+  showWatchlistButton?: boolean;
   listName?: string;
   refetch?(): void;
   // carousels

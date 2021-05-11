@@ -196,12 +196,65 @@ export const ProductFragment = gql`
       slug
       categoryGroup
     }
+    ... on ProductPrivate {
+      uniqueProductViews {
+        aggregate {
+          count
+        }
+      }
+    }
   }
   ${UserLicenseFragment}
   ${ProductVariantsFragment}
   ${ProductSnapshotsFragment}
 `;
 
+export const ProductLiteFragment = gql`
+  fragment ProductLiteFragment on Product {
+    id
+    createdAt
+    updatedAt
+    isPublished
+    isSuspended
+    isDeleted
+    isSoldElsewhere
+    storeId
+    soldOutStatus
+    currentSnapshot {
+      ...ProductSnapshotsFragment
+    }
+    featuredVariant {
+      ...ProductVariantsFragment
+    }
+    # store {
+    #   id
+    #   name
+    #   isSuspended
+    #   userId
+    #   user {
+    #     id
+    #     license {
+    #       ...UserLicenseFragment
+    #     }
+    #   }
+    # }
+    category {
+      id
+      name
+      slug
+      categoryGroup
+    }
+    # ... on ProductPrivate {
+    #   uniqueProductViews {
+    #     aggregate {
+    #       count
+    #     }
+    #   }
+    # }
+  }
+  ${ProductVariantsFragment}
+  ${ProductSnapshotsFragment}
+`;
 
 
 export const StoresFragment = gql`
@@ -697,7 +750,7 @@ export const UserPrivateFragment = gql`
       accountNumber
       accountName
     }
-    # wishlistItemsConnection(query: {}) {
+    # watchListItemsConnection(query: {}) {
     #   edges {
     #     node {
     #       addedAt
@@ -713,3 +766,16 @@ export const UserPrivateFragment = gql`
 // # ${ProductFragment}
 // ${OrderFragment}
 // ${PaymentMethodFragment}
+
+
+export const SavedSearchFragment = gql`
+  fragment SavedSearchFragment on saved_searches {
+    id
+    userId
+    searchTerm
+    categorySlug
+    caliber
+    dealerState
+    createdAt
+  }
+`;

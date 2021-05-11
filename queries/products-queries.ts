@@ -102,3 +102,22 @@ export const GET_RECENT_PRODUCTS = gql`
   }
   ${ProductFragment}
 `;
+
+
+export const INSERT_UNIQUE_PRODUCT_VIEW = gql`
+  mutation insertUniqueProductView(
+    $userId: String!
+    $productId: String!
+    $sellerUserId: String!
+  ) {
+    insertUniqueProductView(
+      userId: $userId
+      productId: $productId
+      sellerUserId: $sellerUserId
+    ) {
+      userId
+      productId
+      sellerUserId
+    }
+  }
+`;

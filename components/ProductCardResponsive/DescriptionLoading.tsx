@@ -100,7 +100,7 @@ export const styles = (theme: Theme) => createStyles({
     padding: '1rem 0.5rem 0.5rem 0.5rem',
     // height: "136px", // ensure all cards descriptions are same height
     cursor: 'pointer',
-    position: 'relative', // for wishlist Button position: absolute
+    position: 'relative', // for watchList Button position: absolute
   },
   loadingDescription: {
     color: theme.palette.type === "dark"
@@ -158,7 +158,7 @@ export const styles = (theme: Theme) => createStyles({
     // height: "136px", // ensure all cards descriptions are same height
     height: "112px", // ensure all cards descriptions are same height
     cursor: 'pointer',
-    position: 'relative', // for wishlist Button position: absolute
+    position: 'relative', // for watchList Button position: absolute
   },
   loadingDescriptionPic: {
     color: theme.colors.uniswapLightNavy,

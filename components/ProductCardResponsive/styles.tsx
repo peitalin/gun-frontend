@@ -50,9 +50,9 @@ export const styles = (theme: Theme) => createStyles({
     height: '100%',
     width: '100%',
   },
-  // Need and outer and inner descriptionContainer for wishlist absolutee button
+  // Need and outer and inner descriptionContainer for watchList absolutee button
   descriptionContainerOuter: {
-    position: 'relative', // for wishlist Button position: absolute
+    position: 'relative', // for watchList Button position: absolute
     width: '100%',
     borderRadius: `2px 2px ${BorderRadius}px ${BorderRadius}px`,
     backgroundColor: theme.palette.type === 'dark'
@@ -64,7 +64,7 @@ export const styles = (theme: Theme) => createStyles({
     margin: '0.75rem',
     height: DESCRIPTION_HEIGHT, // ensure all cards descriptions are same height
     // cursor: 'pointer',
-    position: 'relative', // for wishlist Button position: absolute
+    position: 'relative', // for watchList Button position: absolute
     display: 'flex',
     flexDirection: "column",
     justifyContent: "space-between",

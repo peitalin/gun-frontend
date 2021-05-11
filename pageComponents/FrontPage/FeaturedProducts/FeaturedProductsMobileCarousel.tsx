@@ -13,7 +13,7 @@ import {
   PromotedSlotsConnection,
 } from "typings/gqlTypes";
 import LoadingCards from "pageComponents/FrontPage/LoadingCards";
-// Wishlist
+// Watchlist
 import ProductCardResponsive from "components/ProductCardResponsive";
 import AirCarousel from "components/AirCarousel";
 import ArrowRight from "@material-ui/icons/ArrowRight";

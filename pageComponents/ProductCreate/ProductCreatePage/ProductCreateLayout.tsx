@@ -94,7 +94,7 @@ const ProductCreateLayout: React.FC<ProductCreateFormProps> = (props) => {
                 product={props.productPreviewSticky}
                 // cardsPerRowLayout={4}
                 // boxShadow={true}
-                // refetch={wishlistConnectionResponse.refetch}
+                // refetch={watchListConnectionResponse.refetch}
                 previewImageEmptyMessage={"Preview Listing"}
                 // onClick={() => setOpenPreviewPage(true)}
               />

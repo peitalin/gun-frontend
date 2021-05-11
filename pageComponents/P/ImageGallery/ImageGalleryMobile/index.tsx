@@ -177,7 +177,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   loading?: boolean;
   numberOfItemsTall?: number;
   numberOfItemsWide?: number;
-  wishlistOffset?: any;
+  watchListOffset?: any;
   index: number;
   setIndex(a?: any): void;
   selectedOption?: SelectedVariantProps;

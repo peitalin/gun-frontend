@@ -3539,6 +3539,10 @@ export type Mutation = {
   delete_transactions?: Maybe<Transactions_Mutation_Response>;
   /** delete single row from the table: "transactions" */
   delete_transactions_by_pk?: Maybe<Transactions>;
+  /** delete data from the table: "unique_product_views" */
+  delete_unique_product_views?: Maybe<Unique_Product_Views_Mutation_Response>;
+  /** delete single row from the table: "unique_product_views" */
+  delete_unique_product_views_by_pk?: Maybe<Unique_Product_Views>;
   /** delete data from the table: "user_licenses" */
   delete_user_licenses?: Maybe<User_Licenses_Mutation_Response>;
   /** delete single row from the table: "user_licenses" */
@@ -3683,6 +3687,10 @@ export type Mutation = {
   insert_transactions?: Maybe<Transactions_Mutation_Response>;
   /** insert a single row into the table: "transactions" */
   insert_transactions_one?: Maybe<Transactions>;
+  /** insert data into the table: "unique_product_views" */
+  insert_unique_product_views?: Maybe<Unique_Product_Views_Mutation_Response>;
+  /** insert a single row into the table: "unique_product_views" */
+  insert_unique_product_views_one?: Maybe<Unique_Product_Views>;
   /** insert data into the table: "user_licenses" */
   insert_user_licenses?: Maybe<User_Licenses_Mutation_Response>;
   /** insert a single row into the table: "user_licenses" */
@@ -3827,6 +3835,10 @@ export type Mutation = {
   update_transactions?: Maybe<Transactions_Mutation_Response>;
   /** update single row of the table: "transactions" */
   update_transactions_by_pk?: Maybe<Transactions>;
+  /** update data of the table: "unique_product_views" */
+  update_unique_product_views?: Maybe<Unique_Product_Views_Mutation_Response>;
+  /** update single row of the table: "unique_product_views" */
+  update_unique_product_views_by_pk?: Maybe<Unique_Product_Views>;
   /** update data of the table: "user_licenses" */
   update_user_licenses?: Maybe<User_Licenses_Mutation_Response>;
   /** update single row of the table: "user_licenses" */
@@ -3921,17 +3933,17 @@ export type Mutation = {
    */
   unfollowStore: FollowingStoresConnection;
   /**
-   * Add a product to the wishlist.
+   * Add a product to the watchlist.
    *
    * AccessRule – LOGGED_IN
    */
-  addProductToWishlist: BlankMutationResponse;
+  addProductToWatchlist: BlankMutationResponse;
   /**
-   * Remove a product from the wishlist.
+   * Remove a product from the watchlist.
    *
    * AccessRule – LOGGED_IN
    */
-  removeProductFromWishlist: BlankMutationResponse;
+  removeProductFromWatchlist: BlankMutationResponse;
   /**
    * Create the store profile for the logged-in user.
    *
@@ -4165,6 +4177,7 @@ export type Mutation = {
   createInitialBid?: Maybe<ChatRoom>;
   saySomething?: Maybe<Scalars['String']>;
   signupToWaitlist?: Maybe<Signup_Emails>;
+  insertUniqueProductView?: Maybe<Unique_Product_Views>;
 };
 
 
@@ -4506,6 +4519,17 @@ export type MutationDelete_TransactionsArgs = {
 
 export type MutationDelete_Transactions_By_PkArgs = {
   id: Scalars['String'];
+};
+
+
+export type MutationDelete_Unique_Product_ViewsArgs = {
+  where: Unique_Product_Views_Bool_Exp;
+};
+
+
+export type MutationDelete_Unique_Product_Views_By_PkArgs = {
+  productId: Scalars['String'];
+  userId: Scalars['String'];
 };
 
 
@@ -4934,6 +4958,18 @@ export type MutationInsert_TransactionsArgs = {
 export type MutationInsert_Transactions_OneArgs = {
   object: Transactions_Insert_Input;
   on_conflict?: Maybe<Transactions_On_Conflict>;
+};
+
+
+export type MutationInsert_Unique_Product_ViewsArgs = {
+  objects: Array<Unique_Product_Views_Insert_Input>;
+  on_conflict?: Maybe<Unique_Product_Views_On_Conflict>;
+};
+
+
+export type MutationInsert_Unique_Product_Views_OneArgs = {
+  object: Unique_Product_Views_Insert_Input;
+  on_conflict?: Maybe<Unique_Product_Views_On_Conflict>;
 };
 
 
@@ -5397,6 +5433,18 @@ export type MutationUpdate_Transactions_By_PkArgs = {
 };
 
 
+export type MutationUpdate_Unique_Product_ViewsArgs = {
+  _set?: Maybe<Unique_Product_Views_Set_Input>;
+  where: Unique_Product_Views_Bool_Exp;
+};
+
+
+export type MutationUpdate_Unique_Product_Views_By_PkArgs = {
+  _set?: Maybe<Unique_Product_Views_Set_Input>;
+  pk_columns: Unique_Product_Views_Pk_Columns_Input;
+};
+
+
 export type MutationUpdate_User_LicensesArgs = {
   _set?: Maybe<User_Licenses_Set_Input>;
   where: User_Licenses_Bool_Exp;
@@ -5537,13 +5585,13 @@ export type MutationUnfollowStoreArgs = {
 };
 
 
-export type MutationAddProductToWishlistArgs = {
+export type MutationAddProductToWatchlistArgs = {
   productId: Scalars['String'];
   variantId: Scalars['String'];
 };
 
 
-export type MutationRemoveProductFromWishlistArgs = {
+export type MutationRemoveProductFromWatchlistArgs = {
   productId: Scalars['String'];
   variantId: Scalars['String'];
 };
@@ -5981,6 +6029,13 @@ export type MutationSaySomethingArgs = {
 
 export type MutationSignupToWaitlistArgs = {
   email: Scalars['String'];
+};
+
+
+export type MutationInsertUniqueProductViewArgs = {
+  productId: Scalars['String'];
+  userId: Scalars['String'];
+  sellerUserId: Scalars['String'];
 };
 
 /** Something that went wrong during a mutation. */
@@ -10795,6 +10850,7 @@ export type ProductPrivate = Product & {
   currentSnapshotId: Scalars['String'];
   currentSnapshot: Product_Snapshots;
   featuredVariant: Product_Variants;
+  uniqueProductViews?: Maybe<Unique_Product_Views_Aggregate>;
 };
 
 export type ProductProductVariantId = {
@@ -12618,6 +12674,12 @@ export type Query = {
   transactions_aggregate: Transactions_Aggregate;
   /** fetch data from the table: "transactions" using primary key columns */
   transactions_by_pk?: Maybe<Transactions>;
+  /** fetch data from the table: "unique_product_views" */
+  unique_product_views: Array<Unique_Product_Views>;
+  /** fetch aggregated fields from the table: "unique_product_views" */
+  unique_product_views_aggregate: Unique_Product_Views_Aggregate;
+  /** fetch data from the table: "unique_product_views" using primary key columns */
+  unique_product_views_by_pk?: Maybe<Unique_Product_Views>;
   /** fetch data from the table: "user_licenses" */
   user_licenses: Array<User_Licenses>;
   /** fetch aggregated fields from the table: "user_licenses" */
@@ -12728,7 +12790,7 @@ export type Query = {
    */
   getPaymentMethod?: Maybe<Payment_Methods>;
   /**
-   * Get transaction details of an order from efc-payment service
+   * Get transaction details of an order from gun-payment service
    * AccessRule – LOGGED_IN
    */
   getTransaction?: Maybe<Transactions>;
@@ -12843,7 +12905,7 @@ export type Query = {
    * Collection of products the user has saved for maybe purchasing later.
    * AccessRule – LOGGED_IN
    */
-  wishlistItemsConnection: WishlistItemsConnection;
+  watchlistItemsConnection: WatchlistItemsConnection;
   /**
    * Get a promoted list by its ID.
    * returns promotedList.promotedSlotsConnection
@@ -13723,6 +13785,30 @@ export type QueryTransactions_By_PkArgs = {
 };
 
 
+export type QueryUnique_Product_ViewsArgs = {
+  distinct_on?: Maybe<Array<Unique_Product_Views_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Unique_Product_Views_Order_By>>;
+  where?: Maybe<Unique_Product_Views_Bool_Exp>;
+};
+
+
+export type QueryUnique_Product_Views_AggregateArgs = {
+  distinct_on?: Maybe<Array<Unique_Product_Views_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Unique_Product_Views_Order_By>>;
+  where?: Maybe<Unique_Product_Views_Bool_Exp>;
+};
+
+
+export type QueryUnique_Product_Views_By_PkArgs = {
+  productId: Scalars['String'];
+  userId: Scalars['String'];
+};
+
+
 export type QueryUser_LicensesArgs = {
   distinct_on?: Maybe<Array<User_Licenses_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -13989,7 +14075,7 @@ export type QueryGetRecentTransactionsArgs = {
 };
 
 
-export type QueryWishlistItemsConnectionArgs = {
+export type QueryWatchlistItemsConnectionArgs = {
   query?: Maybe<ConnectionQuery>;
 };
 
@@ -15105,6 +15191,12 @@ export type Subscription = {
   transactions_aggregate: Transactions_Aggregate;
   /** fetch data from the table: "transactions" using primary key columns */
   transactions_by_pk?: Maybe<Transactions>;
+  /** fetch data from the table: "unique_product_views" */
+  unique_product_views: Array<Unique_Product_Views>;
+  /** fetch aggregated fields from the table: "unique_product_views" */
+  unique_product_views_aggregate: Unique_Product_Views_Aggregate;
+  /** fetch data from the table: "unique_product_views" using primary key columns */
+  unique_product_views_by_pk?: Maybe<Unique_Product_Views>;
   /** fetch data from the table: "user_licenses" */
   user_licenses: Array<User_Licenses>;
   /** fetch aggregated fields from the table: "user_licenses" */
@@ -15971,6 +16063,30 @@ export type SubscriptionTransactions_By_PkArgs = {
 };
 
 
+export type SubscriptionUnique_Product_ViewsArgs = {
+  distinct_on?: Maybe<Array<Unique_Product_Views_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Unique_Product_Views_Order_By>>;
+  where?: Maybe<Unique_Product_Views_Bool_Exp>;
+};
+
+
+export type SubscriptionUnique_Product_Views_AggregateArgs = {
+  distinct_on?: Maybe<Array<Unique_Product_Views_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Unique_Product_Views_Order_By>>;
+  where?: Maybe<Unique_Product_Views_Bool_Exp>;
+};
+
+
+export type SubscriptionUnique_Product_Views_By_PkArgs = {
+  productId: Scalars['String'];
+  userId: Scalars['String'];
+};
+
+
 export type SubscriptionUser_LicensesArgs = {
   distinct_on?: Maybe<Array<User_Licenses_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -16517,6 +16633,177 @@ export type TransactionsConnection = {
   edges: Array<Transactions>;
 };
 
+/** columns and relationships of "unique_product_views" */
+export type Unique_Product_Views = {
+  __typename?: 'unique_product_views';
+  createdAt?: Maybe<Scalars['timestamptz']>;
+  productId: Scalars['String'];
+  sellerUserId: Scalars['String'];
+  userId: Scalars['String'];
+};
+
+/** aggregated selection of "unique_product_views" */
+export type Unique_Product_Views_Aggregate = {
+  __typename?: 'unique_product_views_aggregate';
+  aggregate?: Maybe<Unique_Product_Views_Aggregate_Fields>;
+  nodes: Array<Unique_Product_Views>;
+};
+
+/** aggregate fields of "unique_product_views" */
+export type Unique_Product_Views_Aggregate_Fields = {
+  __typename?: 'unique_product_views_aggregate_fields';
+  count?: Maybe<Scalars['Int']>;
+  max?: Maybe<Unique_Product_Views_Max_Fields>;
+  min?: Maybe<Unique_Product_Views_Min_Fields>;
+};
+
+
+/** aggregate fields of "unique_product_views" */
+export type Unique_Product_Views_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<Unique_Product_Views_Select_Column>>;
+  distinct?: Maybe<Scalars['Boolean']>;
+};
+
+/** order by aggregate values of table "unique_product_views" */
+export type Unique_Product_Views_Aggregate_Order_By = {
+  count?: Maybe<Order_By>;
+  max?: Maybe<Unique_Product_Views_Max_Order_By>;
+  min?: Maybe<Unique_Product_Views_Min_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "unique_product_views" */
+export type Unique_Product_Views_Arr_Rel_Insert_Input = {
+  data: Array<Unique_Product_Views_Insert_Input>;
+  on_conflict?: Maybe<Unique_Product_Views_On_Conflict>;
+};
+
+/** Boolean expression to filter rows from the table "unique_product_views". All fields are combined with a logical 'AND'. */
+export type Unique_Product_Views_Bool_Exp = {
+  _and?: Maybe<Array<Maybe<Unique_Product_Views_Bool_Exp>>>;
+  _not?: Maybe<Unique_Product_Views_Bool_Exp>;
+  _or?: Maybe<Array<Maybe<Unique_Product_Views_Bool_Exp>>>;
+  createdAt?: Maybe<Timestamptz_Comparison_Exp>;
+  productId?: Maybe<String_Comparison_Exp>;
+  sellerUserId?: Maybe<String_Comparison_Exp>;
+  userId?: Maybe<String_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "unique_product_views" */
+export enum Unique_Product_Views_Constraint {
+  /** unique or primary key constraint */
+  UNIQUE_PRODUCT_VIEWS_PKEY = 'unique_product_views_pkey'
+}
+
+/** input type for inserting data into table "unique_product_views" */
+export type Unique_Product_Views_Insert_Input = {
+  createdAt?: Maybe<Scalars['timestamptz']>;
+  productId?: Maybe<Scalars['String']>;
+  sellerUserId?: Maybe<Scalars['String']>;
+  userId?: Maybe<Scalars['String']>;
+};
+
+/** aggregate max on columns */
+export type Unique_Product_Views_Max_Fields = {
+  __typename?: 'unique_product_views_max_fields';
+  createdAt?: Maybe<Scalars['timestamptz']>;
+  productId?: Maybe<Scalars['String']>;
+  sellerUserId?: Maybe<Scalars['String']>;
+  userId?: Maybe<Scalars['String']>;
+};
+
+/** order by max() on columns of table "unique_product_views" */
+export type Unique_Product_Views_Max_Order_By = {
+  createdAt?: Maybe<Order_By>;
+  productId?: Maybe<Order_By>;
+  sellerUserId?: Maybe<Order_By>;
+  userId?: Maybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type Unique_Product_Views_Min_Fields = {
+  __typename?: 'unique_product_views_min_fields';
+  createdAt?: Maybe<Scalars['timestamptz']>;
+  productId?: Maybe<Scalars['String']>;
+  sellerUserId?: Maybe<Scalars['String']>;
+  userId?: Maybe<Scalars['String']>;
+};
+
+/** order by min() on columns of table "unique_product_views" */
+export type Unique_Product_Views_Min_Order_By = {
+  createdAt?: Maybe<Order_By>;
+  productId?: Maybe<Order_By>;
+  sellerUserId?: Maybe<Order_By>;
+  userId?: Maybe<Order_By>;
+};
+
+/** response of any mutation on the table "unique_product_views" */
+export type Unique_Product_Views_Mutation_Response = {
+  __typename?: 'unique_product_views_mutation_response';
+  /** number of affected rows by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data of the affected rows by the mutation */
+  returning: Array<Unique_Product_Views>;
+};
+
+/** input type for inserting object relation for remote table "unique_product_views" */
+export type Unique_Product_Views_Obj_Rel_Insert_Input = {
+  data: Unique_Product_Views_Insert_Input;
+  on_conflict?: Maybe<Unique_Product_Views_On_Conflict>;
+};
+
+/** on conflict condition type for table "unique_product_views" */
+export type Unique_Product_Views_On_Conflict = {
+  constraint: Unique_Product_Views_Constraint;
+  update_columns: Array<Unique_Product_Views_Update_Column>;
+  where?: Maybe<Unique_Product_Views_Bool_Exp>;
+};
+
+/** ordering options when selecting data from "unique_product_views" */
+export type Unique_Product_Views_Order_By = {
+  createdAt?: Maybe<Order_By>;
+  productId?: Maybe<Order_By>;
+  sellerUserId?: Maybe<Order_By>;
+  userId?: Maybe<Order_By>;
+};
+
+/** primary key columns input for table: "unique_product_views" */
+export type Unique_Product_Views_Pk_Columns_Input = {
+  productId: Scalars['String'];
+  userId: Scalars['String'];
+};
+
+/** select columns of table "unique_product_views" */
+export enum Unique_Product_Views_Select_Column {
+  /** column name */
+  CREATEDAT = 'createdAt',
+  /** column name */
+  PRODUCTID = 'productId',
+  /** column name */
+  SELLERUSERID = 'sellerUserId',
+  /** column name */
+  USERID = 'userId'
+}
+
+/** input type for updating data in table "unique_product_views" */
+export type Unique_Product_Views_Set_Input = {
+  createdAt?: Maybe<Scalars['timestamptz']>;
+  productId?: Maybe<Scalars['String']>;
+  sellerUserId?: Maybe<Scalars['String']>;
+  userId?: Maybe<Scalars['String']>;
+};
+
+/** update columns of table "unique_product_views" */
+export enum Unique_Product_Views_Update_Column {
+  /** column name */
+  CREATEDAT = 'createdAt',
+  /** column name */
+  PRODUCTID = 'productId',
+  /** column name */
+  SELLERUSERID = 'sellerUserId',
+  /** column name */
+  USERID = 'userId'
+}
+
 export type UploadRegisterMutationResponse = {
   __typename?: 'UploadRegisterMutationResponse';
   uploadId: Scalars['ID'];
@@ -16778,7 +17065,7 @@ export type UserPrivate = BasicUser & {
   store?: Maybe<StorePrivate>;
   payoutMethodId?: Maybe<Scalars['ID']>;
   payoutMethod?: Maybe<Payout_Methods>;
-  wishlistItemsConnection?: Maybe<WishlistItemsConnection>;
+  watchlistItemsConnection?: Maybe<WatchlistItemsConnection>;
   followingStores?: Maybe<FollowingStoresConnection>;
   licenseId?: Maybe<Scalars['String']>;
   license?: Maybe<User_Licenses>;
@@ -16808,7 +17095,7 @@ export type UserPrivateSellerOrdersActionItemsConnectionArgs = {
 
 
 /** Private user info */
-export type UserPrivateWishlistItemsConnectionArgs = {
+export type UserPrivateWatchlistItemsConnectionArgs = {
   query?: Maybe<ConnectionQuery>;
 };
 
@@ -17589,24 +17876,24 @@ export type UserWithRole = BasicUser & {
   dealer?: Maybe<Dealer>;
 };
 
-/** An individual item in a wishlist */
-export type WishlistItem = {
-  __typename?: 'WishlistItem';
+/** An individual item in a watchlist */
+export type WatchlistItem = {
+  __typename?: 'WatchlistItem';
   ownerUserId: Scalars['ID'];
   addedAt: Scalars['Date'];
   product: Product;
 };
 
-export type WishlistItemsConnection = {
-  __typename?: 'WishlistItemsConnection';
+export type WatchlistItemsConnection = {
+  __typename?: 'WatchlistItemsConnection';
   totalCount?: Maybe<Scalars['Int']>;
   pageInfo: PageInfo;
-  edges: Array<WishlistItemsEdge>;
+  edges: Array<WatchlistItemsEdge>;
 };
 
-export type WishlistItemsEdge = {
-  __typename?: 'WishlistItemsEdge';
-  node: WishlistItem;
+export type WatchlistItemsEdge = {
+  __typename?: 'WatchlistItemsEdge';
+  node: WatchlistItem;
 };
 
 export type RegisterUploadMutationVariables = Exact<{
@@ -17655,7 +17942,7 @@ export type ProductVariantsFragment = { __typename?: 'product_variants', variant
 
 export type UserLicenseFragment = { __typename?: 'user_licenses', id: string, licenseNumber: string, licenseCategory?: Maybe<string>, licenseExpiry: any, licenseState?: Maybe<string>, verified: boolean };
 
-type ProductFragment_ProductPrivate_ = { __typename?: 'ProductPrivate', id: string, createdAt?: Maybe<any>, updatedAt?: Maybe<any>, isPublished: boolean, isSuspended: boolean, isDeleted: boolean, isSoldElsewhere: boolean, storeId: string, soldOutStatus: string, currentSnapshot: (
+type ProductFragment_ProductPrivate_ = { __typename?: 'ProductPrivate', id: string, createdAt?: Maybe<any>, updatedAt?: Maybe<any>, isPublished: boolean, isSuspended: boolean, isDeleted: boolean, isSoldElsewhere: boolean, storeId: string, soldOutStatus: string, uniqueProductViews?: Maybe<{ __typename?: 'unique_product_views_aggregate', aggregate?: Maybe<{ __typename?: 'unique_product_views_aggregate_fields', count?: Maybe<number> }> }>, currentSnapshot: (
     { __typename?: 'product_snapshots' }
     & ProductSnapshotsFragment
   ), featuredVariant: (
@@ -17690,6 +17977,24 @@ type ProductFragment_ProductPublic_ = { __typename?: 'ProductPublic', id: string
       )> }> }>, category?: Maybe<{ __typename?: 'categories', id: string, name: string, slug: string, categoryGroup?: Maybe<string> }> };
 
 export type ProductFragment = ProductFragment_ProductPrivate_ | ProductFragment_ProductPublic_;
+
+type ProductLiteFragment_ProductPrivate_ = { __typename?: 'ProductPrivate', id: string, createdAt?: Maybe<any>, updatedAt?: Maybe<any>, isPublished: boolean, isSuspended: boolean, isDeleted: boolean, isSoldElsewhere: boolean, storeId: string, soldOutStatus: string, currentSnapshot: (
+    { __typename?: 'product_snapshots' }
+    & ProductSnapshotsFragment
+  ), featuredVariant: (
+    { __typename?: 'product_variants' }
+    & ProductVariantsFragment
+  ), category?: Maybe<{ __typename?: 'categories', id: string, name: string, slug: string, categoryGroup?: Maybe<string> }> };
+
+type ProductLiteFragment_ProductPublic_ = { __typename?: 'ProductPublic', id: string, createdAt?: Maybe<any>, updatedAt?: Maybe<any>, isPublished: boolean, isSuspended: boolean, isDeleted: boolean, isSoldElsewhere: boolean, storeId: string, soldOutStatus: string, currentSnapshot: (
+    { __typename?: 'product_snapshots' }
+    & ProductSnapshotsFragment
+  ), featuredVariant: (
+    { __typename?: 'product_variants' }
+    & ProductVariantsFragment
+  ), category?: Maybe<{ __typename?: 'categories', id: string, name: string, slug: string, categoryGroup?: Maybe<string> }> };
+
+export type ProductLiteFragment = ProductLiteFragment_ProductPrivate_ | ProductLiteFragment_ProductPublic_;
 
 type StoresFragment_StorePrivate_ = { __typename?: 'StorePrivate', id: string, createdAt: any, name?: Maybe<string>, bio?: Maybe<string>, website?: Maybe<string>, coverId?: Maybe<string>, profileId?: Maybe<string>, user?: Maybe<{ __typename?: 'UserPrivate' }>, cover?: Maybe<(
     { __typename?: 'image_parents' }
@@ -17989,6 +18294,48 @@ export const DealerFragmentFragmentDoc = gql`
   }
 }
     `;
+export const ProductSnapshotsFragmentFragmentDoc = gql`
+    fragment ProductSnapshotsFragment on product_snapshots {
+  id
+  createdAt
+  productId
+  title
+  description
+  condition
+  make
+  model
+  ammoType
+  actionType
+  caliber
+  serialNumber
+  location
+  magazineCapacity
+  barrelLength
+  dealer {
+    id
+    name
+    address
+    city
+    state
+    postCode
+    licenseNumber
+    createdAt
+    user {
+      id
+      firstName
+      lastName
+      email
+      userRole
+      licenseId
+      phoneNumberId
+      phoneNumber {
+        countryCode
+        number
+      }
+    }
+  }
+}
+    `;
 export const ImageFragmentFragmentDoc = gql`
     fragment ImageFragment on image_parents {
   id
@@ -18013,6 +18360,58 @@ export const ImageFragmentFragmentDoc = gql`
   description
 }
     `;
+export const ProductVariantsFragmentFragmentDoc = gql`
+    fragment ProductVariantsFragment on product_variants {
+  variantSnapshotId
+  variantId
+  snapshotId
+  productId
+  storeId
+  createdAt
+  variantName
+  variantDescription
+  isDefault
+  position
+  price
+  priceWas
+  previewItems {
+    id
+    imageId
+    position
+    youTubeEmbedLink
+    variantSnapshotId
+    image {
+      ...ImageFragment
+    }
+  }
+}
+    ${ImageFragmentFragmentDoc}`;
+export const ProductLiteFragmentFragmentDoc = gql`
+    fragment ProductLiteFragment on Product {
+  id
+  createdAt
+  updatedAt
+  isPublished
+  isSuspended
+  isDeleted
+  isSoldElsewhere
+  storeId
+  soldOutStatus
+  currentSnapshot {
+    ...ProductSnapshotsFragment
+  }
+  featuredVariant {
+    ...ProductVariantsFragment
+  }
+  category {
+    id
+    name
+    slug
+    categoryGroup
+  }
+}
+    ${ProductSnapshotsFragmentFragmentDoc}
+${ProductVariantsFragmentFragmentDoc}`;
 export const StoresFragmentFragmentDoc = gql`
     fragment StoresFragment on Store {
   id
@@ -18172,74 +18571,6 @@ export const TransactionFragmentFragmentDoc = gql`
   }
 }
     `;
-export const ProductSnapshotsFragmentFragmentDoc = gql`
-    fragment ProductSnapshotsFragment on product_snapshots {
-  id
-  createdAt
-  productId
-  title
-  description
-  condition
-  make
-  model
-  ammoType
-  actionType
-  caliber
-  serialNumber
-  location
-  magazineCapacity
-  barrelLength
-  dealer {
-    id
-    name
-    address
-    city
-    state
-    postCode
-    licenseNumber
-    createdAt
-    user {
-      id
-      firstName
-      lastName
-      email
-      userRole
-      licenseId
-      phoneNumberId
-      phoneNumber {
-        countryCode
-        number
-      }
-    }
-  }
-}
-    `;
-export const ProductVariantsFragmentFragmentDoc = gql`
-    fragment ProductVariantsFragment on product_variants {
-  variantSnapshotId
-  variantId
-  snapshotId
-  productId
-  storeId
-  createdAt
-  variantName
-  variantDescription
-  isDefault
-  position
-  price
-  priceWas
-  previewItems {
-    id
-    imageId
-    position
-    youTubeEmbedLink
-    variantSnapshotId
-    image {
-      ...ImageFragment
-    }
-  }
-}
-    ${ImageFragmentFragmentDoc}`;
 export const PayoutItemFragmentFragmentDoc = gql`
     fragment PayoutItemFragment on payout_items {
   id
@@ -18447,6 +18778,13 @@ export const ProductFragmentFragmentDoc = gql`
     name
     slug
     categoryGroup
+  }
+  ... on ProductPrivate {
+    uniqueProductViews {
+      aggregate {
+        count
+      }
+    }
   }
 }
     ${ProductSnapshotsFragmentFragmentDoc}

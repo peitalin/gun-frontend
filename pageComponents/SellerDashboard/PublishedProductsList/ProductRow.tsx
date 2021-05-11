@@ -210,6 +210,7 @@ const ProductRow = (props: ReactProps) => {
 
 
   let productName = product?.currentSnapshot?.title
+  let viewCount = (product as ProductPrivate)?.uniqueProductViews?.aggregate?.count ?? 0
 
 
   const displayProductStatus = () => {
@@ -277,33 +278,31 @@ const ProductRow = (props: ReactProps) => {
             }
             <div className={clsx(classes.flexCol, classes.marginLeft)}>
 
-                <Link href="/admin/products/[productId]"
-                  as={`/admin/products/${product.id}`}
-                >
-                  <a className={classes.copyLink}>
-                    <Tooltip title="Edit Product" placement="top-start">
-                      <Typography className={classes.name} variant="subtitle1">
-                        {
-                          (productName.length > 45 && xsDown)
-                          ? productName.slice(0, 45 - 3) + '...'
-                          : productName
-                        }
-                      </Typography>
-                    </Tooltip>
-                  </a>
-                </Link>
-
-              {/* <Tooltip title="Copy Link">
-                <a className={classes.copyLink} onClick={handleCopy}>
-                  <Typography className={classes.affiliateLink} variant="body1">
-                    {
-                      (affiliateLink.length > 72 && xsDown)
-                      ? affiliateLink.slice(0,72 - 3) + '...'
-                      : affiliateLink
-                    }
-                  </Typography>
+              <Link href="/admin/products/[productId]"
+                as={`/admin/products/${product.id}`}
+              >
+                <a className={classes.copyLink}>
+                  <Tooltip title="Edit Product" placement="top-start">
+                    <Typography className={classes.name} variant="subtitle1">
+                      {
+                        (productName.length > 45 && xsDown)
+                        ? productName.slice(0, 45 - 3) + '...'
+                        : productName
+                      }
+                    </Typography>
+                  </Tooltip>
                 </a>
-              </Tooltip> */}
+              </Link>
+
+              {
+                viewCount &&
+                <Tooltip title="Views from registered buyers">
+                  <Typography className={classes.viewsByBuyers} variant="body1">
+                    { `Views: ${viewCount}` }
+                  </Typography>
+                </Tooltip>
+              }
+
               <PriceDisplayProductEdit
                 price={product.featuredVariant.price}
                 soldOutStatus={product.soldOutStatus}
@@ -599,6 +598,7 @@ const styles = (theme: Theme) => createStyles({
     textOverflow: 'ellipsis',
     // whiteSpace: 'nowrap',
     overflow: 'hidden',
+    height: '100%',
     width: '100%', // must set width for textOverflow
     maxWidth: 300,
 
@@ -610,7 +610,7 @@ const styles = (theme: Theme) => createStyles({
       color: Colors.blue,
     },
   },
-  affiliateLink: {
+  viewsByBuyers: {
     fontWeight: 600,
     fontSize: "0.8rem",
     color: Colors.grey,
@@ -618,9 +618,9 @@ const styles = (theme: Theme) => createStyles({
     // textOverflow: 'ellipsis',
     // overflow: 'hidden',
     // width: '100%', // must set width for textOverflow
-    "&:hover": {
-      color: Colors.blue,
-    },
+    // "&:hover": {
+    //   color: Colors.blue,
+    // },
   },
   published: {
     fontWeight: 500,
@@ -710,12 +710,5 @@ const styles = (theme: Theme) => createStyles({
 const ITEM_HEIGHT = 48;
 
 
-// export default withStyles(styles)(React.memo(
-//   (props: ReactProps) => <ProductRow {...props}/>,
-//   // (prevProps, nextProps) => {
-//   //   // return prevProps.product === nextProps.product
-//   //   return true
-//   // }
-// ));
 
 export default withStyles(styles)( ProductRow )

@@ -6,7 +6,7 @@ import { Colors, BoxShadows, BorderRadius } from "layout/AppTheme";
 // Material UI
 import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
-import WishlistIcon from "components/WishlistIcon";
+import WatchlistIcon from "components/WatchlistIcon";
 import DiscountBadge from "components/DiscountBadge";
 // Typings
 import { Categories, Product, Product_Preview_Items, SoldOutStatus } from "typings/gqlTypes";
@@ -39,8 +39,8 @@ import {
 const ProductCardImageCarousel = (props: ReactProps) => {
   /// NOTE:
   /// There are 2 <Link> tags, one of the image, one for the description container
-  /// This is to prevent the wishlist button from being inside the <Link> tag
-  /// so that clicking wishlist buttons don't navigate to the product page.
+  /// This is to prevent the watchList button from being inside the <Link> tag
+  /// so that clicking watchList buttons don't navigate to the product page.
 
   const {
     classes,
@@ -49,7 +49,7 @@ const ProductCardImageCarousel = (props: ReactProps) => {
     fit = false,
     cardsPerRow = 1,
     maxWidthOfRow = 1160,
-    showWishListButton = true,
+    showWatchlistButton = true,
     listName = "",
     isMobile = false,
     hidePrice = false,
@@ -231,9 +231,9 @@ const ProductCardImageCarousel = (props: ReactProps) => {
 
       <div className={classes.descriptionContainerOuter}>
         {/* {
-          showWishListButton &&
+          showWatchlistButton &&
           productId &&
-          <WishlistIcon
+          <WatchlistIcon
             productId={productId}
             variantId={productVariantId}
             refetch={refetch}
@@ -330,7 +330,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   fit?: boolean; // object-fit the image
   cardsPerRow: number;
   maxWidthOfRow: number;
-  showWishListButton?: boolean;
+  showWatchlistButton?: boolean;
   listName?: string;
   isMobile?: boolean;
   refetch?(): void;

@@ -2,7 +2,7 @@ import { reduxLoginActions } from "./login-actions";
 import { reduxModalsActions } from "./modals-actions";
 import { reduxProductCreateActions } from "./product_create-actions";
 import { reduxProductEditActions } from "./product_edit-actions";
-import { reduxWishlistActions } from "./wishlist-actions";
+import { reduxWatchlistActions } from "./watchlist-actions";
 import { reduxFollowingStoresActions } from "./following-stores-actions";
 import { reduxRefetchActions } from "./refetch-actions";
 import { reduxConversationActions } from "./conversation-actions";
@@ -17,7 +17,7 @@ export const Actions = {
   reduxModals: reduxModalsActions,
   reduxProductCreate: reduxProductCreateActions,
   reduxProductEdit: reduxProductEditActions,
-  reduxWishlist: reduxWishlistActions,
+  reduxWatchlist: reduxWatchlistActions,
   reduxFollowingStores: reduxFollowingStoresActions,
   reduxRefetch: reduxRefetchActions,
   reduxConversation: reduxConversationActions,

@@ -163,7 +163,7 @@ const PreviewCardResponsive: React.FC<PreviewCardResponsiveProps> = (props) => {
 interface PreviewCardResponsiveProps {
   product: Product;
   refetch?(): void;
-  showWishListButton?: boolean;
+  showWatchlistButton?: boolean;
   cardsPerRow?: {
     xs?: number;
     sm?: number;

@@ -94,7 +94,7 @@ export interface EditUserProfileInput {
   // downloads?: ID[];
   // referredUsers?: ID[];
   subscribedNewsletters?: ID[];
-  // wishlist?: Wishlist;
+  // watchList?: Watchlist;
   // cart?: Cart;
   paymentMethods?: PaymentMethod[];
   defaultPaymentMethod?: PaymentMethod | null;

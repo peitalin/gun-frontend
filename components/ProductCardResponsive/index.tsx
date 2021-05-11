@@ -170,7 +170,7 @@ const ProductCardResponsive: React.FC<ProductCardResponsiveProps> = (props) => {
 interface ProductCardResponsiveProps {
   product: Product;
   refetch?(): void;
-  showWishListButton?: boolean;
+  showWatchlistButton?: boolean;
   cardsPerRow?: {
     xs?: number;
     sm?: number;

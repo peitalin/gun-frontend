@@ -1,28 +1,6 @@
 import { gql } from "@apollo/client";
-import { ProductFragment } from "./fragments";
+import { ProductFragment, SavedSearchFragment } from "./fragments";
 
-
-export const SEARCH = gql`
-  query search($searchTerm: String!, $pageNumber: Int!) {
-    search(
-      searchTerm: $searchTerm,
-      query: { pageNumber: $pageNumber }
-    ) {
-      totalCount
-      edges {
-        node {
-          ...on ProductPublic {
-            ...ProductFragment
-          }
-          ...on ProductPrivate {
-            ...ProductFragment
-          }
-        }
-      }
-    }
-  }
-  ${ProductFragment}
-`;
 
 
 export const SEARCH_ALL_PRODUCTS = gql`
@@ -56,3 +34,40 @@ export const REINDEX_SEARCH_INDEX_ADMIN = gql`
     }
   }
 `;
+
+
+export const GET_SAVED_SEARCHES = gql`
+  query getSavedSearches(
+    $limit: Int
+    $offset: Int
+  ) {
+    getSavedSearches(
+      limit: $limit
+      offset: $offset
+    ) {
+      nodes {
+        ...SavedSearchFragment
+      }
+      aggregate {
+        count
+      }
+    }
+  }
+  ${SavedSearchFragment}
+`;
+
+
+export const INSERT_SAVED_SEARCH = gql`
+  mutation insertSavedSearch(
+    $searchTerm: String!
+    $categorySlug: String
+    $caliber: String
+    $dealerState: String
+  ) {
+    insertSavedSearch {
+      ...SavedSearchFragment
+    }
+  }
+  ${SavedSearchFragment}
+`;
+

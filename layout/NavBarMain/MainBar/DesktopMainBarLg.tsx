@@ -45,7 +45,7 @@ const DesktopMainBarLg = (props: DesktopMainBarProps) => {
     router.push('/sell')
   }
 
-  const goToMyWishlist = () => {
+  const goToMyWatchlist = () => {
     router.push('/my-list')
   }
 

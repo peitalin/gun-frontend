@@ -18,7 +18,7 @@ import ProductPreviewCardRowSmall from "components/ProductPreviewCardRowSmall";
 import Typography from "@material-ui/core/Typography";
 import PriceDisplayMainMobile from "components/PriceDisplayMainMobile";
 // import AddCartItemButton from "components/AddCartItemButton";
-// import WishlistButton from "components/WishlistButton";
+// import WatchlistButton from "components/WatchlistButton";
 import DescriptionLoadingText from "./DescriptionLoadingText";
 // helpers
 import { useRouter } from "next/router";

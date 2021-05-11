@@ -105,7 +105,7 @@ const YouMayAlsoLikeRecommendations = (props: ReactProps) => {
                 )}>
                   <ProductCardResponse
                     product={product}
-                    // refetch={wishlistConnectionResponse.refetch}
+                    // refetch={watchListConnectionResponse.refetch}
                     style={{
                       marginBottom: '1rem',
                     }}

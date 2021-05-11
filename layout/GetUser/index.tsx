@@ -112,8 +112,8 @@ export const reduxBatchUpdate = {
       // console.log("setting user.store in redux: ", data.user.store)
       dispatch(Actions.reduxLogin.SET_USER(data.user));
 
-      dispatch(Actions.reduxWishlist.SET_WISHLIST(
-        data?.user?.wishlistItemsConnection
+      dispatch(Actions.reduxWatchlist.SET_WATCHLIST(
+        data?.user?.watchlistItemsConnection
       ));
       dispatch(Actions.reduxFollowingStores.SET_FOLLOWING_STORES(
         (data?.user?.followingStores?.edges ?? [])

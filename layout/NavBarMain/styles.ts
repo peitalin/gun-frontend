@@ -383,7 +383,7 @@ export const styles = (theme: Theme) => createStyles({
   categoriesMenuDither: {
     height: '100vh',
     width: '100vw',
-    zIndex: 2, // above wishlist button which has zIndex: 1
+    zIndex: 2, // above watchList button which has zIndex: 1
     position: 'fixed',
     bottom: 0,
     backgroundColor: "rgba(47, 57, 65, .85)",

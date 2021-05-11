@@ -8,7 +8,7 @@ import { Colors } from "layout/AppTheme";
 import { ProductPreviewItem, Product } from "typings/gqlTypes";
 import { SelectedVariantProps } from "pageComponents/P/ProductId";
 // Components
-import WishlistIcon from "components/WishlistIcon";
+import WatchlistIcon from "components/WatchlistIcon";
 // import AdminEditProductIcon from "components/AdminEditProductIcon";
 // Media Query
 import { useTheme } from "@material-ui/core/styles";
@@ -28,7 +28,7 @@ const FeaturedPreviewButtons: React.FC<ReactProps> = (props) => {
   if (showButtons) {
     return (
       <div>
-        {/* <WishlistIcon
+        {/* <WatchlistIcon
           productId={product?.id}
           variantId={product?.featuredVariant?.variantId}
           style={{
