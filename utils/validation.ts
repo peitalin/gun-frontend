@@ -609,4 +609,14 @@ export const validationSchemas = {
           .nullable(),
         }),
     }),
+
+
+  SaveSearch:
+    Yup.object().shape({
+      searchTerm: Yup.string()
+        .required('storeId required'),
+      categorySlug: Yup.string().nullable(),
+      caliber: Yup.string().nullable(),
+      dealerState: Yup.string().nullable(),
+    }),
 }

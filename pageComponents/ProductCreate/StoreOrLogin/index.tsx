@@ -228,13 +228,13 @@ export const styles = (theme: Theme) => createStyles({
   // Buttons
   buttonCreateAccount: {
     // marginRight: '0.5rem',
-    backgroundColor: Colors.red,
-    border: `1px solid ${Colors.red}`,
+    backgroundColor: Colors.ultramarineBlue,
+    border: `1px solid ${Colors.ultramarineBlue}`,
     color: Colors.cream,
     width: '100%',
     "&:hover": {
-      backgroundColor: fade(Colors.lightRed, 1),
-      border: `1px solid ${Colors.lightRed}`,
+      backgroundColor: fade(Colors.ultramarineBlueDark, 1),
+      border: `1px solid ${Colors.ultramarineBlueDark}`,
       transition: theme.transitions.create(['color', 'border'], {
         easing: theme.transitions.easing.easeIn,
         duration: "100ms",
@@ -248,13 +248,13 @@ export const styles = (theme: Theme) => createStyles({
     maxWidth: 260,
   },
   productCreateLinkButton: {
-    backgroundColor: Colors.red,
-    border: `1px solid ${Colors.red}`,
+    backgroundColor: Colors.ultramarineBlue,
+    border: `1px solid ${Colors.ultramarineBlue}`,
     color: Colors.cream,
     width: 240,
     "&:hover": {
-      backgroundColor: fade(Colors.lightRed, 1),
-      border: `1px solid ${Colors.lightRed}`,
+      backgroundColor: fade(Colors.ultramarineBlueDark, 1),
+      border: `1px solid ${Colors.ultramarineBlueDark}`,
       transition: theme.transitions.create(['color', 'border'], {
         easing: theme.transitions.easing.easeIn,
         duration: "100ms",

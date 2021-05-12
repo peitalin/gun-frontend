@@ -64,7 +64,23 @@ export const INSERT_SAVED_SEARCH = gql`
     $caliber: String
     $dealerState: String
   ) {
-    insertSavedSearch {
+    insertSavedSearch(
+      searchTerm: $searchTerm
+      categorySlug: $categorySlug
+      caliber: $caliber
+      dealerState: $dealerState
+    ) {
+      ...SavedSearchFragment
+    }
+  }
+  ${SavedSearchFragment}
+`;
+
+
+
+export const DELETE_SAVED_SEARCH = gql`
+  mutation deleteSavedSearch($savedSearchId: String!) {
+    deleteSavedSearch(savedSearchId: $savedSearchId) {
       ...SavedSearchFragment
     }
   }

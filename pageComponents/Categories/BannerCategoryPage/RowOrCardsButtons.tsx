@@ -83,7 +83,7 @@ export const styles = (theme: Theme) => createStyles({
     width: '100%',
     padding: '0rem 1rem',
     marginBottom: '0.5rem',
-    marginTop: '-1.1rem',
+    marginTop: '-1.4rem',
   },
   listOrGridContainer: {
     display: "flex",
@@ -92,6 +92,8 @@ export const styles = (theme: Theme) => createStyles({
     justifyContent: "flex-end",
   },
   listOrGridButtonLeft: {
+    height: 48,
+    width: 48,
     borderRadius: `${BorderRadius3x}px 0px 0px ${BorderRadius3x}px`,
     background: theme.palette.type === 'dark'
       ? `${Colors.uniswapDarkNavy}`
@@ -112,6 +114,8 @@ export const styles = (theme: Theme) => createStyles({
       : `1px solid ${Colors.slateGreyDarker}`,
   },
   listOrGridButtonRight: {
+    height: 48,
+    width: 48,
     // borderRadius: BorderRadius3x,
     borderRadius: `0px ${BorderRadius3x}px ${BorderRadius3x}px 0px`,
     background: theme.palette.type === 'dark'

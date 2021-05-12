@@ -12,6 +12,7 @@ import {
 import SearchbarAirbnb from "components/SearchbarAirbnb";
 import ShowOnMobileOrDesktopSSR from "components/ShowOnMobileOrDesktopSSR";
 import { FacetSearchParams } from "utils/hooksFacetSearch";
+import SaveSearchModal from './SaveSearchModal';
 
 
 const CategorySearchbar: React.FC<ReactProps & FacetSearchParams> = (props) => {
@@ -64,6 +65,17 @@ const CategorySearchbar: React.FC<ReactProps & FacetSearchParams> = (props) => {
 
   return (
     <div className={classes.searchContainer}>
+      <SaveSearchModal
+        searchTerm={searchTerm}
+        categorySlug={currentCategories?.[0]?.slug}
+        caliber={calibers?.[0]}
+        dealerState={dealerStates?.[0]}
+        buttonStyle={{
+          position: 'absolute',
+          top: props.isMobile ? '4rem' : '1rem',
+          right: props.isMobile ? '0.5rem' : '2rem',
+        }}
+      />
       <div className={
           props.isMobile
           ? props.focusedOuter
