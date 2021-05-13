@@ -50,8 +50,8 @@ export const DealerFragment = gql`
     createdAt
     user {
       id
-      licenseId
-      license {
+      defaultLicenseId
+      defaultLicense {
         id
         licenseNumber
         licenseExpiry
@@ -108,7 +108,7 @@ export const ProductSnapshotsFragment = gql`
         lastName
         email
         userRole
-        licenseId
+        defaultLicenseId
         phoneNumberId
         phoneNumber {
           countryCode
@@ -155,6 +155,8 @@ export const UserLicenseFragment = gql`
     licenseExpiry
     licenseState
     verified
+    userId
+    createdAt
   }
 `;
 
@@ -185,7 +187,7 @@ export const ProductFragment = gql`
       userId
       user {
         id
-        license {
+        defaultLicense {
           ...UserLicenseFragment
         }
       }
@@ -233,7 +235,7 @@ export const ProductLiteFragment = gql`
     #   userId
     #   user {
     #     id
-    #     license {
+    #     defaultLicense {
     #       ...UserLicenseFragment
     #     }
     #   }
@@ -311,8 +313,8 @@ export const UsersFragment = gql`
     isDeleted
     isSuspended
     lastSeen
-    licenseId
-    license {
+    defaultLicenseId
+    defaultLicense {
       ...UserLicenseFragment
     }
   }
@@ -349,7 +351,7 @@ export const MessageFragment = gql`
         lastName
         email
       }
-      license {
+      defaultLicense {
         ...UserLicenseFragment
       }
     }
@@ -445,7 +447,7 @@ export const OrdersFragment = gql`
     buyerId
     buyer {
       id
-      license {
+      defaultLicense {
         ...UserLicenseFragment
       }
       # Only viewable by dealers
@@ -484,7 +486,7 @@ export const OrdersFragment = gql`
       user {
         id
         ...on UserPublic {
-          license {
+          defaultLicense {
             ...UserLicenseFragment
           }
         }
@@ -493,7 +495,7 @@ export const OrdersFragment = gql`
           firstName
           lastName
           email
-          license {
+          defaultLicense {
             ...UserLicenseFragment
           }
           phoneNumber {
@@ -508,7 +510,7 @@ export const OrdersFragment = gql`
           firstName
           lastName
           email
-          license {
+          defaultLicense {
             ...UserLicenseFragment
           }
           payoutMethod {
@@ -696,13 +698,15 @@ export const UserPrivateFragment = gql`
     emailVerified
     userRole
     isSuspended
-    license {
+    defaultLicense {
       id
       licenseNumber
       licenseCategory
       licenseExpiry
       licenseState
       verified
+      userId
+      createdAt
     }
     phoneNumber {
       id

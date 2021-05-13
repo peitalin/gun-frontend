@@ -65,7 +65,7 @@ const SaveSearchPage: React.FC<ReactProps> = (props) => {
         const cacheData = cache.readQuery<QData, QVar>({
           query: GET_SAVED_SEARCHES,
           variables: {},
-        });
+        })
         // console.log("CACHE DATA: ", cacheData)
 
         cache.writeQuery({
@@ -81,7 +81,7 @@ const SaveSearchPage: React.FC<ReactProps> = (props) => {
               ]
             }
           },
-        });
+        })
       },
       onCompleted: () => {
         snackbar.enqueueSnackbar(
