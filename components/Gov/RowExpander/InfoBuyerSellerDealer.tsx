@@ -18,6 +18,7 @@ const InfoBuyerSellerDealer = (props: ReactProps) => {
     sellerStore,
     buyer,
     dealer,
+    // order,
     classes,
   } = props;
 
@@ -38,6 +39,8 @@ const InfoBuyerSellerDealer = (props: ReactProps) => {
     ? `${dealerUser?.phoneNumber?.countryCode} ${dealerUser?.phoneNumber?.number}`
     : "-"
 
+  // let buyerLicense = order
+
   return (
     <>
       <div className={classes.userDetailsBox}>
@@ -57,7 +60,7 @@ const InfoBuyerSellerDealer = (props: ReactProps) => {
             License Number:
           </Typography>
           <Typography className={classes.userDetailsInfo} variant="body1">
-            {sellerStore?.user?.license?.licenseNumber}
+            {sellerStore?.user?.defaultLicense?.licenseNumber}
           </Typography>
         </div>
         <div className={classes.userDetailsRow}>
@@ -65,7 +68,7 @@ const InfoBuyerSellerDealer = (props: ReactProps) => {
             State:
           </Typography>
           <Typography className={classes.userDetailsInfo} variant="body1">
-            {sellerStore?.user?.license?.licenseState}
+            {sellerStore?.user?.defaultLicense?.licenseState}
           </Typography>
         </div>
         <div className={classes.userDetailsRow}>
@@ -103,7 +106,7 @@ const InfoBuyerSellerDealer = (props: ReactProps) => {
             License Number:
           </Typography>
           <Typography className={classes.userDetailsInfo} variant="body1">
-            {buyer?.license?.licenseNumber}
+            {buyer?.defaultLicense?.licenseNumber}
           </Typography>
         </div>
         <div className={classes.userDetailsRow}>
@@ -111,7 +114,7 @@ const InfoBuyerSellerDealer = (props: ReactProps) => {
             State:
           </Typography>
           <Typography className={classes.userDetailsInfo} variant="body1">
-            {buyer?.license?.licenseState}
+            {buyer?.defaultLicense?.licenseState}
           </Typography>
         </div>
         <div className={classes.userDetailsRow}>

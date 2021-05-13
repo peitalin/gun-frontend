@@ -28,6 +28,7 @@ const TextInputUnderline = (props: ReactProps) => {
   } = props;
 
   let errorInputColor = selectErrorColor(errorMessage, touched, focused)
+  console.log("touched: ", touched)
 
   // for YouTube Link, any input with a submit button next to it.
   if (props.onSubmit) {
@@ -42,6 +43,9 @@ const TextInputUnderline = (props: ReactProps) => {
           classes={{
             root: clsx(
               classes.inputUnderline,
+              (focused)
+                ? classes.inputUnderlineErrorFocused
+                : null,
               errorInputColor === "red" ? classes.errorInput : null,
               errorInputColor === "grey" ? classes.errorInputUntouched : null,
             ),
@@ -111,6 +115,9 @@ const TextInputUnderline = (props: ReactProps) => {
           classes={{
             root: clsx(
               classes.inputUnderline,
+              (focused)
+                ? classes.inputUnderlineErrorFocused
+                : null,
               errorInputColor === "red" ? classes.errorInputUnderline : null,
               errorInputColor === "grey" ? classes.errorInputUntouched : null,
             ),

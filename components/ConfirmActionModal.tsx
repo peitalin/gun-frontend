@@ -2,21 +2,24 @@
 import React from "react";
 // Styles
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
-import { Colors } from "layout/AppTheme";
+import { BorderRadius4x, Colors } from "layout/AppTheme";
 // Material UI
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 
 
-const ConfirmActionModal = ({
-  classes,
-  title,
-  showModal,
-  setShowModal,
-  onConfirmFunction,
-  className,
-}: ReactProps) => {
+const ConfirmActionModal: React.FC<ReactProps> = (props) => {
+
+  const {
+    classes,
+    title,
+    showModal,
+    setShowModal,
+    onConfirmFunction,
+    className,
+  } = props;
+
   return (
     <Dialog
       open={showModal}
@@ -40,6 +43,7 @@ const ConfirmActionModal = ({
               : "Do you really want to do this?"
           }
         </Typography>
+        {props.children}
         <div className={classes.flexRowModal}>
           <Button
             className={classes.modalButtons}
@@ -88,6 +92,7 @@ export const styles = (theme: Theme) => createStyles({
     maxHeight: "calc(100% - 32px)",
     maxWidth: '400px',
     width: '100%',
+    borderRadius: BorderRadius4x,
   },
   flexColModal: {
     display: 'flex',

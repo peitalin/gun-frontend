@@ -356,6 +356,13 @@ export const styles = (theme: Theme) => createStyles({
     //   borderColor: theme.palette.error.main,
     // },
   },
+  inputUnderlineErrorFocused: {
+    '& > [class*="Mui-error"]': {
+      "&:after": {
+        borderBottomColor: Colors.blue,
+      }
+    }
+  }
 })
 
 
