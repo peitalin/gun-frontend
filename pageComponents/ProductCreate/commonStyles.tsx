@@ -5,7 +5,8 @@ import {
   BorderRadius,
   BorderRadius2x,
   BoxShadows,
-  Gradients
+  Gradients,
+  isThemeDark
 } from "layout/AppTheme";
 
 
@@ -328,17 +329,16 @@ export const styles = (theme: Theme) => createStyles({
     margin: '0.1rem',
     color: theme.palette.type === 'dark'
       ? Colors.uniswapLightestGrey
-      : Colors.charcoal,
+      : Colors.slateGreyBlack,
     border: theme.palette.type === 'dark'
       ? `1px solid ${Colors.uniswapLighterGrey}`
-      : `1px solid ${Colors.charcoal}`,
+      : `1px solid ${Colors.slateGreyBlack}`,
     borderRadius: '2rem',
     flexGrow: 1,
     "&:hover": {
       "& > span": {
         color: Colors.gradientUniswapBlue1,
       },
-      border: `1px solid ${Colors.gradientUniswapBlue1}`,
       transition: theme.transitions.create(['color', 'border', 'background'], {
         easing: theme.transitions.easing.easeInOut,
         duration: "200ms",
@@ -347,7 +347,9 @@ export const styles = (theme: Theme) => createStyles({
   },
   buttonSelected: {
     backgroundImage: Gradients.gradientUniswapBlue.background,
-    border: `1px solid ${Colors.gradientUniswapBlue1}`,
+    border: theme.palette.type === 'dark'
+      ? `1px solid ${Colors.uniswapLighterGrey}`
+      : `1px solid ${Colors.slateGreyBlack}`,
     fontSize: '0.7rem',
     color: Colors.cream,
     "& > span": {
@@ -358,7 +360,6 @@ export const styles = (theme: Theme) => createStyles({
         color: Colors.cream,
       },
       backgroundImage: Gradients.gradientUniswapBlue2.background,
-      border: `1px solid ${Colors.gradientUniswapFluro2}`,
       transition: theme.transitions.create(['color', 'border', 'background'], {
         easing: theme.transitions.easing.easeInOut,
         duration: "200ms",
@@ -531,6 +532,21 @@ export const styles = (theme: Theme) => createStyles({
       cursor: "pointer",
       color: Colors.gradientUniswapBlue1,
     }
+  },
+  width100: {
+    width: '100%',
+  },
+  licenseButtonNumber: {
+    color: isThemeDark(theme)
+      ? Colors.uniswapLightGrey
+      : Colors.slateGreyBlack,
+    fontWeight: 600,
+  },
+  licenseButtonCategory: {
+    color: isThemeDark(theme)
+      ? Colors.uniswapLightestGrey
+      : Colors.slateGreyLightBlack,
+    fontWeight: 500,
   },
 })
 

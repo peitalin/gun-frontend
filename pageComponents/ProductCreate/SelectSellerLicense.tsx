@@ -136,15 +136,20 @@ const SelectSellerLicense = (props: ReactProps & FormikProps<FormikFields>) => {
                 <div className={classes.categoryButtonsContainer}>
                   {
                     (user?.licenses ?? []).map((license, i) => {
+                      let categories = license.licenseCategory?.replace("Category", "")
                       return (
                         <Button
                           key={license.id + `${i}`}
                           classes={{
                             root: clsx(
                               classes.buttonRoot,
+                              classes.width100,
                               (license.id === fprops.values.sellerLicenseId)
                                 ? classes.buttonSelected
                                 : null,
+                            ),
+                            label: clsx(
+                              classes.flexCol,
                             )
                           }}
                           variant="outlined"
@@ -157,7 +162,12 @@ const SelectSellerLicense = (props: ReactProps & FormikProps<FormikFields>) => {
                             setOpenExpander(s => !s)
                           }}
                         >
-                          {`License ${license.licenseNumber} Category: ${license.licenseCategory}`}
+                          <div className={classes.licenseButtonNumber}>
+                            {`License: ${license.licenseNumber}`}
+                          </div>
+                          <div className={classes.licenseButtonCategory}>
+                            {`Category: ${categories}`}
+                          </div>
                         </Button>
                       )
                     })

@@ -9476,7 +9476,7 @@ export type Product = {
   currentSnapshot: Product_Snapshots;
   featuredVariant: Product_Variants;
   uniqueProductViews?: Maybe<Unique_Product_Views_Aggregate>;
-  sellerLicenseId: Scalars['String'];
+  sellerLicenseId?: Maybe<Scalars['String']>;
   sellerLicense?: Maybe<User_Licenses>;
 };
 
@@ -11187,7 +11187,7 @@ export type ProductPrivate = Product & {
   currentSnapshot: Product_Snapshots;
   featuredVariant: Product_Variants;
   uniqueProductViews?: Maybe<Unique_Product_Views_Aggregate>;
-  sellerLicenseId: Scalars['String'];
+  sellerLicenseId?: Maybe<Scalars['String']>;
   sellerLicense?: Maybe<User_Licenses>;
 };
 
@@ -11225,7 +11225,7 @@ export type ProductPublic = Product & {
   currentSnapshot: Product_Snapshots;
   featuredVariant: Product_Variants;
   uniqueProductViews?: Maybe<Unique_Product_Views_Aggregate>;
-  sellerLicenseId: Scalars['String'];
+  sellerLicenseId?: Maybe<Scalars['String']>;
   sellerLicense?: Maybe<User_Licenses>;
 };
 
@@ -19330,7 +19330,7 @@ export type ProductVariantsFragment = { __typename?: 'product_variants', variant
 
 export type UserLicenseFragment = { __typename?: 'user_licenses', id: string, licenseNumber: string, licenseCategory?: Maybe<string>, licenseExpiry: any, licenseState?: Maybe<string>, verified: boolean, userId?: Maybe<string>, createdAt?: Maybe<any> };
 
-type ProductFragment_ProductPrivate_ = { __typename?: 'ProductPrivate', id: string, createdAt?: Maybe<any>, updatedAt?: Maybe<any>, isPublished: boolean, isSuspended: boolean, isDeleted: boolean, isSoldElsewhere: boolean, storeId: string, soldOutStatus: string, uniqueProductViews?: Maybe<{ __typename?: 'unique_product_views_aggregate', aggregate?: Maybe<{ __typename?: 'unique_product_views_aggregate_fields', count?: Maybe<number> }> }>, currentSnapshot: (
+type ProductFragment_ProductPrivate_ = { __typename?: 'ProductPrivate', id: string, createdAt?: Maybe<any>, updatedAt?: Maybe<any>, isPublished: boolean, isSuspended: boolean, isDeleted: boolean, isSoldElsewhere: boolean, storeId: string, soldOutStatus: string, sellerLicenseId?: Maybe<string>, uniqueProductViews?: Maybe<{ __typename?: 'unique_product_views_aggregate', aggregate?: Maybe<{ __typename?: 'unique_product_views_aggregate_fields', count?: Maybe<number> }> }>, currentSnapshot: (
     { __typename?: 'product_snapshots' }
     & ProductSnapshotsFragment
   ), featuredVariant: (
@@ -19339,9 +19339,12 @@ type ProductFragment_ProductPrivate_ = { __typename?: 'ProductPrivate', id: stri
   ), store?: Maybe<{ __typename?: 'StorePrivate', id: string, name?: Maybe<string>, isSuspended: boolean, userId: string, user?: Maybe<{ __typename?: 'UserPrivate', id: string, defaultLicense?: Maybe<(
         { __typename?: 'user_licenses' }
         & UserLicenseFragment
-      )> }> }>, category?: Maybe<{ __typename?: 'categories', id: string, name: string, slug: string, categoryGroup?: Maybe<string> }> };
+      )> }> }>, category?: Maybe<{ __typename?: 'categories', id: string, name: string, slug: string, categoryGroup?: Maybe<string> }>, sellerLicense?: Maybe<(
+    { __typename?: 'user_licenses' }
+    & UserLicenseFragment
+  )> };
 
-type ProductFragment_ProductPublic_ = { __typename?: 'ProductPublic', id: string, createdAt?: Maybe<any>, updatedAt?: Maybe<any>, isPublished: boolean, isSuspended: boolean, isDeleted: boolean, isSoldElsewhere: boolean, storeId: string, soldOutStatus: string, currentSnapshot: (
+type ProductFragment_ProductPublic_ = { __typename?: 'ProductPublic', id: string, createdAt?: Maybe<any>, updatedAt?: Maybe<any>, isPublished: boolean, isSuspended: boolean, isDeleted: boolean, isSoldElsewhere: boolean, storeId: string, soldOutStatus: string, sellerLicenseId?: Maybe<string>, currentSnapshot: (
     { __typename?: 'product_snapshots' }
     & ProductSnapshotsFragment
   ), featuredVariant: (
@@ -19362,7 +19365,10 @@ type ProductFragment_ProductPublic_ = { __typename?: 'ProductPublic', id: string
       )> } | { __typename?: 'UserWithRole', id: string, defaultLicense?: Maybe<(
         { __typename?: 'user_licenses' }
         & UserLicenseFragment
-      )> }> }>, category?: Maybe<{ __typename?: 'categories', id: string, name: string, slug: string, categoryGroup?: Maybe<string> }> };
+      )> }> }>, category?: Maybe<{ __typename?: 'categories', id: string, name: string, slug: string, categoryGroup?: Maybe<string> }>, sellerLicense?: Maybe<(
+    { __typename?: 'user_licenses' }
+    & UserLicenseFragment
+  )> };
 
 export type ProductFragment = ProductFragment_ProductPrivate_ | ProductFragment_ProductPublic_;
 
@@ -20139,6 +20145,10 @@ export const ProductFragmentFragmentDoc = gql`
         count
       }
     }
+  }
+  sellerLicenseId
+  sellerLicense {
+    ...UserLicenseFragment
   }
 }
     ${ProductSnapshotsFragmentFragmentDoc}
