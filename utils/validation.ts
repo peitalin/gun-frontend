@@ -157,6 +157,8 @@ export const validationSchemas = {
       //   }),
       categoryId: Yup.string()
         .required("Pick a category"),
+      sellerLicenseId: Yup.string()
+        .required("Pick a license"),
       currentVariants: Yup.array().of(Yup.object({
           price: Yup.number().nullable()
             .min(minPrice, "Minimum price: $1")
@@ -409,15 +411,15 @@ export const validationSchemas = {
         .nullable(),
     }),
 
-  // Edit UserLicense form
-  EditUserLicense:
+  // Add or Edit UserLicense form
+  AddOrEditUserLicense:
     Yup.object().shape({
       licenseNumber: Yup.string()
         .min(5, "Must be at least 5 digits!")
         .max(15, "Must be less than 15 digits!")
-        .required(),
+        .required("required"),
       licenseExpiry: Yup.date()
-        .required(),
+        .required("required"),
       licenseCategory: Yup.array().of(Yup.string())
         .nullable(),
       licenseState: Yup.string()

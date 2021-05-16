@@ -28,9 +28,9 @@ export const productToProductEditInput = (
       serialNumber: "",
       location: "",
       dealerId: "",
-      dealer: undefined,
       magazineCapacity: "",
       barrelLength: "",
+      sellerLicenseId: "",
     }
   }
 
@@ -66,6 +66,7 @@ export const productToProductEditInput = (
     dealerId: product.currentSnapshot.dealer.id,
     magazineCapacity: product.currentSnapshot.magazineCapacity,
     barrelLength: product.currentSnapshot.barrelLength,
+    sellerLicenseId: product.sellerLicenseId,
   };
 }
 
