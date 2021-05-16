@@ -19,11 +19,8 @@ import ShowOnMobileOrDesktopSSR from "components/ShowOnMobileOrDesktopSSR";
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 // DesktopMainBars
-import DesktopMainBarXl from "./DesktopMainBarXl";
-import DesktopMainBarLg from "./DesktopMainBarLg";
-import DesktopMainBarMd from "./DesktopMainBarMd";
-import DesktopMainBarSm from "./DesktopMainBarSm";
-import MobileMainBarXs from "./MobileMainBarXs";
+import DesktopMainBar from "./DesktopMainBar";
+import MobileMainBar from "./MobileMainBar";
 
 
 
@@ -79,7 +76,7 @@ const MainBar = (props: ReactProps) => {
 
       {/* MOBILE */}
       <Hidden className={classes.width100} mdUp implementation="css">
-        <MobileMainBarXs
+        <MobileMainBar
           // Dither
           mobileMenuOpen={props.mobileMenuOpen}
           setMobileMenuOpen={props.setMobileMenuOpen}
@@ -88,29 +85,11 @@ const MainBar = (props: ReactProps) => {
       </Hidden>
 
       {/* Desktop */}
-      <Hidden className={classes.width100} lgDown implementation="css">
-        <DesktopMainBarXl
+      <Hidden className={classes.width100} only={["xs", "sm"]} implementation="css">
+        <DesktopMainBar
           {...navBarProps}
         />
       </Hidden>
-      <Hidden className={classes.width100} only={["xs", "sm", "md", "xl"]} implementation="css">
-        <DesktopMainBarLg
-          {...navBarProps}
-        />
-      </Hidden>
-      <Hidden className={classes.width100} only={["xs", "sm", "lg", "xl"]} implementation="css">
-        <DesktopMainBarMd
-          mobileMenuOpen={props.mobileMenuOpen}
-          setMobileMenuOpen={props.setMobileMenuOpen}
-          {...navBarProps}
-        />
-      </Hidden>
-      {/* <Hidden className={classes.width100} only={["xs", "md", "lg", "xl"]} implementation="css"> <DesktopMainBarSm
-          mobileMenuOpen={props.mobileMenuOpen}
-          setMobileMenuOpen={props.setMobileMenuOpen}
-          {...navBarProps}
-        />
-      </Hidden> */}
 
     </MainBarSSRWrapper>
   );

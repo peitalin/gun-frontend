@@ -7,8 +7,6 @@ import { Colors } from "layout/AppTheme";
 // Components
 import Login from "layout/Login";
 import Logo from "components/Icons/Logo";
-import Badge from '@material-ui/core/Badge';
-import SearchbarNavbarDesktop from "layout/NavBarMain/SearchbarNavbarDesktop";
 // MUI
 import UserMenu from "layout/NavBarMain/UserMenu";
 import Button from "@material-ui/core/Button";
@@ -27,7 +25,7 @@ import ToggleDarkMode from "layout/NavBarMain/ToggleDarkMode";
 
 
 
-const DesktopMainBarXl = (props: DesktopMainBarProps) => {
+const DesktopMainBar = (props: DesktopMainBarProps) => {
 
   const {
     classes,
@@ -137,4 +135,4 @@ interface DesktopMainBarProps extends WithStyles<typeof styles> {
   isDarkMode: boolean;
 }
 
-export default withStyles(styles)( DesktopMainBarXl );
+export default withStyles(styles)( DesktopMainBar );
