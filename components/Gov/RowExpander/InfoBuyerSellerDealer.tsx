@@ -20,6 +20,7 @@ const InfoBuyerSellerDealer = (props: ReactProps) => {
     dealer,
     // order,
     classes,
+    hideOrderDetails = false,
   } = props;
 
 
@@ -181,25 +182,30 @@ const InfoBuyerSellerDealer = (props: ReactProps) => {
         </div>
       </div>
 
-      <Typography variant="h6" gutterBottom component="div">
-        Order Details
-      </Typography>
-      <div className={classes.userDetailsRow}>
-        <Typography className={classes.orderDetailsHeader} variant="body1">
-          Stripe Payment Intent Status:
-        </Typography>
-        <Typography className={classes.orderDetailsInfo} variant="body1">
-          {props.paymentIntentStatus}
-        </Typography>
-      </div>
-      <div className={classes.userDetailsRow}>
-        <Typography className={classes.orderDetailsHeader} variant="body1">
-          Stripe Payment Intent ID:
-        </Typography>
-        <Typography className={classes.orderDetailsInfoBottom} variant="body1">
-          {props.paymentIntentId}
-        </Typography>
-      </div>
+      {
+        !hideOrderDetails &&
+        <>
+          <Typography variant="h6" gutterBottom component="div">
+            Order Details
+          </Typography>
+          <div className={classes.userDetailsRow}>
+            <Typography className={classes.orderDetailsHeader} variant="body1">
+              Stripe Payment Intent Status:
+            </Typography>
+            <Typography className={classes.orderDetailsInfo} variant="body1">
+              {props.paymentIntentStatus}
+            </Typography>
+          </div>
+          <div className={classes.userDetailsRow}>
+            <Typography className={classes.orderDetailsHeader} variant="body1">
+              Stripe Payment Intent ID:
+            </Typography>
+            <Typography className={classes.orderDetailsInfoBottom} variant="body1">
+              {props.paymentIntentId}
+            </Typography>
+          </div>
+        </>
+      }
 
     </>
   );
@@ -212,6 +218,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   buyer: UserPrivate
   paymentIntentStatus: string
   paymentIntentId: string
+  hideOrderDetails?: boolean
 }
 
 

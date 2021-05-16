@@ -105,6 +105,22 @@ const DealersSideRoutesMenu: React.FC<ReactProps> = (props) => {
           </Link>
         </li>
 
+        <li>
+          <Link href={"/dealers/escrow/orders-completing"} scroll={false}>
+            <a>
+              <div className={
+                isSelectedRoute("/orders-completing")
+                  ? classes.routeListItemSelected
+                  : classes.routeListItem
+              }>
+                <Typography variant="subtitle1" className={classes.routeListItemText}>
+                  Completing Orders
+                </Typography>
+              </div>
+            </a>
+          </Link>
+        </li>
+
 
       </ul>
     </div>

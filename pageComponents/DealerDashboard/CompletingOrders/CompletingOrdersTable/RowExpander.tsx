@@ -4,7 +4,7 @@ import { Colors, BoxShadows } from 'layout/AppTheme';
 import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles';
 
 import Typography from '@material-ui/core/Typography';
-import { createDataForArrivingOrdersTable } from "./createData";
+import { createDataForCompletingOrdersTable } from "./createData";
 
 import Form10PreviewCard from "pageComponents/MyOrders/Form10FileUploader/Form10PreviewCard";
 import RowExpanderTitle from "components/Gov/RowExpander/RowExpanderTitle";
@@ -23,8 +23,6 @@ import currency from 'currency.js';
 import { UserPrivate, OrderStatus, OrderAdmin } from "typings/gqlTypes";
 import { useMutation } from "@apollo/client";
 import { DocumentNode } from "graphql";
-import { generatePDF } from "./generateForm10";
-import products from 'pages/admin/products';
 
 
 
@@ -41,7 +39,7 @@ const RowExpander = (props: RowExpanderProps) => {
 
   const snackbar = useSnackbar();
 
-  const row = createDataForArrivingOrdersTable({
+  const row = createDataForCompletingOrdersTable({
     id: order.id,
     total: order.total,
     createdAt: order.createdAt,
@@ -95,10 +93,6 @@ const RowExpander = (props: RowExpanderProps) => {
             hideOrderDetails={true}
           />
 
-          <Typography className={classes.generateForm10Text}
-            variant="h6" gutterBottom component="div">
-            Generate Form-10 for Seller
-          </Typography>
           {
             props.order?.id &&
             <Form10PreviewCard
@@ -107,18 +101,9 @@ const RowExpander = (props: RowExpanderProps) => {
               inAdminDashboard={false}
               onMouseDown={() => {
                 snackbar.enqueueSnackbar(
-                  `Generating Form-10 for seller`,
+                  `Order status: ${row.orderStatus}`,
                   { variant: "info", autoHideDuration: 3000 }
                 )
-
-                generatePDF({
-                  buyer: row?.buyer,
-                  sellerStore: row?.sellerStore,
-                  sellerLicense: row?.sellerLicense,
-                  dealer: row?.dealer,
-                  order: order,
-                })
-
               }}
             />
           }

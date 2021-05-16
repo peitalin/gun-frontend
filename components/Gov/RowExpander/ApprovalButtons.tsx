@@ -155,14 +155,21 @@ const styles = (theme: Theme) => createStyles({
   approveButton: {
     height: '36px',
     margin: "0.5rem 0.5rem 0.5rem 0.5rem",
+    background: "transparent",
+    "&:hover": {
+      backgroundColor: Colors.ultramarineBlueLight,
+      border: `1px solid ${Colors.ultramarineBlueDark}`,
+      color: Colors.cream,
+    },
   },
   unapproveButton: {
     height: '36px',
     margin: "0.5rem 0.5rem 0.5rem 0rem",
     border: `1px solid ${Colors.red}`,
+    background: "transparent",
     color: Colors.red,
     "&:hover": {
-      backgroundColor: Colors.pink,
+      backgroundColor: Colors.red,
       border: `1px solid ${Colors.darkerRed}`,
       color: Colors.cream,
     },
