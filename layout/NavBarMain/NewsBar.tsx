@@ -20,21 +20,6 @@ const NewsBar = (props: NewsBarProps) => {
       classes.newsBar,
     )}>
       <div className={classes.baseBarInnerDashboard}>
-        <Hidden mdDown>
-          {/* <BreadcrumbRoutes/> */}
-          <div className={classes.newsBarInner}>
-            {/* <Typography className={classes.newsBarHeadline} variant="caption">
-              GatSwap
-            </Typography> */}
-          </div>
-        </Hidden>
-        <Hidden lgUp>
-          <div className={classes.newsBarInner}>
-            {/* <Typography className={classes.newsBarHeadline} variant="caption">
-              GatSwap
-            </Typography> */}
-          </div>
-        </Hidden>
       </div>
     </nav>
   );

@@ -259,6 +259,7 @@ const styles = (theme: Theme) => createStyles({
     // offset 140px for navbar
   },
   pageInnerContainer: {
+    position: 'relative',
     minHeight: `calc(100vh - ${NavBarHeight}px)`,
     // offset for navbar
     maxWidth: '100%',

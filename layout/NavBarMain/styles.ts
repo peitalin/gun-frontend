@@ -7,6 +7,7 @@ import {
   BorderRadius3x,
   BorderRadius4x,
   BorderRadius,
+  isThemeDark,
 } from "layout/AppTheme";
 
 
@@ -44,9 +45,9 @@ export const styles = (theme: Theme) => createStyles({
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
-    position: "absolute",
+    // position: "absolute",
     width: '100%',
-    // position: 'relative',
+    position: 'fixed',
   },
   baseBarInnerHomePage: {
     // width: '100vw',
@@ -56,16 +57,20 @@ export const styles = (theme: Theme) => createStyles({
     justifyContent: 'center',
     alignItems: "center",
   },
-  baseBarBorderBottom: {
-    borderBottom: theme.palette.type === 'dark'
-      ? `1px solid ${Colors.uniswapDarkNavy}`
-      : `1px solid ${Colors.slateGreyDarker}`,
-  },
   baseBarDither: {
     background: Gradients.gradientBlackDitherDown.background,
+    // filter: 'blur(8px)',
+    // transition: theme.transitions.create(['filter'], {
+    //   easing: theme.transitions.easing.easeIn,
+    //   duration: '300ms',
+    // }),
+    // "&:hover": {
+    //   filter: 'blur(0px)',
+    // },
     padding: '2rem',
     paddingTop: '2rem',
-    top: `${NewsBarHeight}px`,
+    // top: `${NewsBarHeight}px`,
+    top: 0,
   },
   baseBarDitherSm: {
     background: Gradients.gradientBlackDitherDown.background,
@@ -96,17 +101,20 @@ export const styles = (theme: Theme) => createStyles({
 
   baseBarDashboard: {
     zIndex: 5,
-    background: theme.palette.type === 'dark'
-      ? Gradients.gradientUniswapDarkRotated.background
-      : Gradients.gradientGrey2.background,
+    position: 'fixed',
+    top: 0,
+    right: 0,
+    // background: theme.palette.type === 'dark'
+    //   ? Gradients.gradientUniswapDarkRotated.background
+    //   : Gradients.gradientGrey2.background,
     // background: Colors.uniswapDarkNavy,
-    height: `${MainBarHeightDashboard - 1}px`, // 1px for borderBottom
+    paddingTop: NewsBarHeight,
+    height: `${MainBarHeightDashboard + NewsBarHeight}px`, // 1px for borderBottom
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
     width: '100%',
-    position: 'relative',
   },
   baseBarInnerDashboard: {
     // width: '100vw',
@@ -409,8 +417,9 @@ export const styles = (theme: Theme) => createStyles({
       ? Gradients.gradientUniswapFluro.background
       : Gradients.gradientLightBlack.background,
     height: `${NewsBarHeight}px`,
-    zIndex: 5,
+    zIndex: 6,
     position: "relative",
+    marginBottom: MainBarHeightDashboard,
   },
   newsBarInner: {
     display: "flex",
@@ -471,5 +480,19 @@ export const styles = (theme: Theme) => createStyles({
     fontWeight: 500,
     // transform: 'scale(0.9)',
     color: Colors.charcoal,
+  },
+  blurBackground: {
+    position: "absolute",
+    height: '100%',
+    width: '100%',
+    backdropFilter: "blur(6px)",
+    background: isThemeDark(theme)
+      ? 'rgba(18, 18, 29, 0.3)'
+      : 'rgba(245, 245, 255, 0.5)',
+    top: 0,
+    right: 0,
+    borderBottom: isThemeDark(theme)
+      ? `1px solid ${Colors.uniswapDarkNavy}`
+      : `1px solid ${Colors.slateGreyDarker}`
   },
 });
