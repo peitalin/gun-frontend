@@ -3913,6 +3913,7 @@ export type Mutation = {
    * AccessRule – LOGGED_IN
    */
   editUserProfile: UserMutationResponse;
+  addUserLicense: UserMutationResponse;
   editUserLicense: UserMutationResponse;
   deleteUserLicense: UserMutationResponse;
   setDefaultLicenseId: UserMutationResponse;
@@ -5629,6 +5630,14 @@ export type MutationEditUserProfileArgs = {
 };
 
 
+export type MutationAddUserLicenseArgs = {
+  licenseNumber: Scalars['String'];
+  licenseExpiry: Scalars['Date'];
+  licenseCategory?: Maybe<Scalars['String']>;
+  licenseState?: Maybe<Scalars['String']>;
+};
+
+
 export type MutationEditUserLicenseArgs = {
   licenseNumber: Scalars['String'];
   licenseExpiry: Scalars['Date'];
@@ -5639,13 +5648,11 @@ export type MutationEditUserLicenseArgs = {
 
 export type MutationDeleteUserLicenseArgs = {
   licenseId: Scalars['String'];
-  userId: Scalars['String'];
 };
 
 
 export type MutationSetDefaultLicenseIdArgs = {
   licenseId: Scalars['String'];
-  userId: Scalars['String'];
 };
 
 
@@ -5868,6 +5875,7 @@ export type MutationPurchasePromotionArgs = {
 export type MutationAuthorizePaymentArgs = {
   productId: Scalars['String'];
   total: Scalars['Int'];
+  buyerLicenseId: Scalars['String'];
   stripeAuthorizePaymentData: Scalars['String'];
   bidId?: Maybe<Scalars['String']>;
 };
@@ -5877,6 +5885,7 @@ export type MutationConfirmOrderArgs = {
   productId: Scalars['String'];
   total: Scalars['Int'];
   buyerId: Scalars['String'];
+  buyerLicenseId: Scalars['String'];
   sellerStoreId: Scalars['String'];
   paymentIntentId: Scalars['String'];
   bidId?: Maybe<Scalars['String']>;
@@ -6223,6 +6232,8 @@ export type Order = {
   updatedAt?: Maybe<Scalars['Date']>;
   variantId?: Maybe<Scalars['String']>;
   variantSnapshotId?: Maybe<Scalars['String']>;
+  buyerLicenseId?: Maybe<Scalars['String']>;
+  buyerLicense?: Maybe<User_Licenses>;
 };
 
 /** column ordering options */
@@ -6679,6 +6690,8 @@ export type OrderAdmin = Order & {
   updatedAt?: Maybe<Scalars['Date']>;
   variantId?: Maybe<Scalars['String']>;
   variantSnapshotId?: Maybe<Scalars['String']>;
+  buyerLicenseId?: Maybe<Scalars['String']>;
+  buyerLicense?: Maybe<User_Licenses>;
 };
 
 /** column ordering options */
@@ -6720,6 +6733,8 @@ export type OrderDealer = Order & {
   updatedAt?: Maybe<Scalars['Date']>;
   variantId?: Maybe<Scalars['String']>;
   variantSnapshotId?: Maybe<Scalars['String']>;
+  buyerLicenseId?: Maybe<Scalars['String']>;
+  buyerLicense?: Maybe<User_Licenses>;
 };
 
 export type OrderMutationResponse = {
@@ -6752,6 +6767,8 @@ export type OrderPublic = Order & {
   updatedAt?: Maybe<Scalars['Date']>;
   variantId?: Maybe<Scalars['String']>;
   variantSnapshotId?: Maybe<Scalars['String']>;
+  buyerLicenseId?: Maybe<Scalars['String']>;
+  buyerLicense?: Maybe<User_Licenses>;
 };
 
 /** columns and relationships of "orders" */
@@ -9458,6 +9475,9 @@ export type Product = {
   currentSnapshotId: Scalars['String'];
   currentSnapshot: Product_Snapshots;
   featuredVariant: Product_Variants;
+  uniqueProductViews?: Maybe<Unique_Product_Views_Aggregate>;
+  sellerLicenseId: Scalars['String'];
+  sellerLicense?: Maybe<User_Licenses>;
 };
 
 /** columns and relationships of "product_file_owners" */
@@ -11032,6 +11052,11 @@ export type Product_Variants_Variance_Order_By = {
 };
 
 export type ProductCreateInput = {
+  /**
+   * ID of the seller's firearm license to file the product under.
+   * Gun has to match the right firearm license when the seller disposese the gun
+   */
+  sellerLicenseId: Scalars['ID'];
   /** ID of the category to file the product under. */
   categoryId: Scalars['ID'];
   /**
@@ -11054,8 +11079,8 @@ export type ProductCreateInput = {
   caliber?: Maybe<Scalars['String']>;
   serialNumber: Scalars['String'];
   location: Scalars['String'];
-  dealerId?: Maybe<Scalars['String']>;
-  dealer?: Maybe<InsertDealerInput>;
+  dealerId: Scalars['String'];
+  /** dealer: InsertDealerInput */
   magazineCapacity?: Maybe<Scalars['String']>;
   barrelLength?: Maybe<Scalars['String']>;
 };
@@ -11063,6 +11088,11 @@ export type ProductCreateInput = {
 export type ProductEditInput = {
   /** Identifier of the product to edit. */
   productId: Scalars['ID'];
+  /**
+   * ID of the seller's firearm license to file the product under.
+   * Gun has to match the right firearm license when the seller disposese the gun
+   */
+  sellerLicenseId: Scalars['ID'];
   /** ID of the category to file the product under. */
   categoryId: Scalars['ID'];
   /**
@@ -11085,8 +11115,8 @@ export type ProductEditInput = {
   caliber: Scalars['String'];
   serialNumber: Scalars['String'];
   location: Scalars['String'];
-  dealerId?: Maybe<Scalars['String']>;
-  dealer?: Maybe<InsertDealerInput>;
+  dealerId: Scalars['String'];
+  /** dealer: InsertDealerInput */
   magazineCapacity?: Maybe<Scalars['String']>;
   barrelLength?: Maybe<Scalars['String']>;
 };
@@ -11157,6 +11187,8 @@ export type ProductPrivate = Product & {
   currentSnapshot: Product_Snapshots;
   featuredVariant: Product_Variants;
   uniqueProductViews?: Maybe<Unique_Product_Views_Aggregate>;
+  sellerLicenseId: Scalars['String'];
+  sellerLicense?: Maybe<User_Licenses>;
 };
 
 export type ProductProductVariantId = {
@@ -11192,6 +11224,9 @@ export type ProductPublic = Product & {
   currentSnapshotId: Scalars['String'];
   currentSnapshot: Product_Snapshots;
   featuredVariant: Product_Variants;
+  uniqueProductViews?: Maybe<Unique_Product_Views_Aggregate>;
+  sellerLicenseId: Scalars['String'];
+  sellerLicense?: Maybe<User_Licenses>;
 };
 
 /** columns and relationships of "products" */
@@ -17831,6 +17866,7 @@ export type User_Licenses = {
   __typename?: 'user_licenses';
   createdAt?: Maybe<Scalars['timestamptz']>;
   id: Scalars['String'];
+  isDeleted?: Maybe<Scalars['Boolean']>;
   licenseCategory?: Maybe<Scalars['String']>;
   licenseExpiry: Scalars['timestamp'];
   licenseNumber: Scalars['String'];
@@ -17881,6 +17917,7 @@ export type User_Licenses_Bool_Exp = {
   _or?: Maybe<Array<Maybe<User_Licenses_Bool_Exp>>>;
   createdAt?: Maybe<Timestamptz_Comparison_Exp>;
   id?: Maybe<String_Comparison_Exp>;
+  isDeleted?: Maybe<Boolean_Comparison_Exp>;
   licenseCategory?: Maybe<String_Comparison_Exp>;
   licenseExpiry?: Maybe<Timestamp_Comparison_Exp>;
   licenseNumber?: Maybe<String_Comparison_Exp>;
@@ -17899,6 +17936,7 @@ export enum User_Licenses_Constraint {
 export type User_Licenses_Insert_Input = {
   createdAt?: Maybe<Scalars['timestamptz']>;
   id?: Maybe<Scalars['String']>;
+  isDeleted?: Maybe<Scalars['Boolean']>;
   licenseCategory?: Maybe<Scalars['String']>;
   licenseExpiry?: Maybe<Scalars['timestamp']>;
   licenseNumber?: Maybe<Scalars['String']>;
@@ -17979,6 +18017,7 @@ export type User_Licenses_On_Conflict = {
 export type User_Licenses_Order_By = {
   createdAt?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
+  isDeleted?: Maybe<Order_By>;
   licenseCategory?: Maybe<Order_By>;
   licenseExpiry?: Maybe<Order_By>;
   licenseNumber?: Maybe<Order_By>;
@@ -17999,6 +18038,8 @@ export enum User_Licenses_Select_Column {
   /** column name */
   ID = 'id',
   /** column name */
+  ISDELETED = 'isDeleted',
+  /** column name */
   LICENSECATEGORY = 'licenseCategory',
   /** column name */
   LICENSEEXPIRY = 'licenseExpiry',
@@ -18016,6 +18057,7 @@ export enum User_Licenses_Select_Column {
 export type User_Licenses_Set_Input = {
   createdAt?: Maybe<Scalars['timestamptz']>;
   id?: Maybe<Scalars['String']>;
+  isDeleted?: Maybe<Scalars['Boolean']>;
   licenseCategory?: Maybe<Scalars['String']>;
   licenseExpiry?: Maybe<Scalars['timestamp']>;
   licenseNumber?: Maybe<Scalars['String']>;
@@ -18030,6 +18072,8 @@ export enum User_Licenses_Update_Column {
   CREATEDAT = 'createdAt',
   /** column name */
   ID = 'id',
+  /** column name */
+  ISDELETED = 'isDeleted',
   /** column name */
   LICENSECATEGORY = 'licenseCategory',
   /** column name */
@@ -19358,14 +19402,6 @@ type StoresFragment_StorePublic_ = { __typename?: 'StorePublic', id: string, cre
 
 export type StoresFragment = StoresFragment_StorePrivate_ | StoresFragment_StorePublic_;
 
-export type UsersFragment = { __typename?: 'UserPrivate', id: string, email: string, username?: Maybe<string>, userRole: Role, createdAt?: Maybe<any>, updatedAt?: Maybe<any>, firstName?: Maybe<string>, lastName?: Maybe<string>, emailVerified?: Maybe<boolean>, storeId?: Maybe<string>, payoutMethodId?: Maybe<string>, isDeleted: boolean, isSuspended: boolean, lastSeen?: Maybe<any>, defaultLicenseId?: Maybe<string>, store?: Maybe<(
-    { __typename?: 'StorePrivate' }
-    & StoresFragment_StorePrivate_
-  )>, payoutMethod?: Maybe<{ __typename?: 'payout_methods', id: string, storeId: string, createdAt: any, updatedAt?: Maybe<any>, payoutType?: Maybe<string>, bsb?: Maybe<string>, accountNumber?: Maybe<string>, accountName?: Maybe<string> }>, defaultLicense?: Maybe<(
-    { __typename?: 'user_licenses' }
-    & UserLicenseFragment
-  )> };
-
 export type BidFragment = { __typename?: 'Bid', id?: Maybe<string>, productId?: Maybe<string>, productSnapshotId?: Maybe<string>, variantId?: Maybe<string>, offerPrice?: Maybe<number>, acceptedPrice?: Maybe<number>, orderId?: Maybe<string>, bidStatus?: Maybe<BidStatus>, createdAt?: Maybe<any>, updatedAt?: Maybe<any> };
 
 export type MessageFragment = { __typename?: 'Message', id?: Maybe<string>, chatRoomId?: Maybe<string>, createdAt?: Maybe<any>, content?: Maybe<string>, sender?: Maybe<{ __typename?: 'UserPrivate', firstName?: Maybe<string>, lastName?: Maybe<string>, email: string, id: string, defaultLicense?: Maybe<(
@@ -19568,7 +19604,13 @@ export type StorePrivateFragment = { __typename?: 'StorePrivate', id: string, na
 
 export type PaymentMethodFragment = { __typename?: 'payment_methods', id: string, userId: string, createdAt: any, updatedAt?: Maybe<any>, customerId?: Maybe<string>, paymentProcessor?: Maybe<string>, paymentMethodTypes?: Maybe<string>, last4?: Maybe<string>, expMonth?: Maybe<number>, expYear?: Maybe<number>, email?: Maybe<string>, name?: Maybe<string>, details?: Maybe<string> };
 
-export type UserPrivateFragment = { __typename?: 'UserPrivate', id: string, firstName?: Maybe<string>, lastName?: Maybe<string>, email: string, emailVerified?: Maybe<boolean>, userRole: Role, isSuspended: boolean, storeId?: Maybe<string>, dealerId?: Maybe<string>, defaultLicense?: Maybe<{ __typename?: 'user_licenses', id: string, licenseNumber: string, licenseCategory?: Maybe<string>, licenseExpiry: any, licenseState?: Maybe<string>, verified: boolean, userId?: Maybe<string>, createdAt?: Maybe<any> }>, phoneNumber?: Maybe<{ __typename?: 'phone_numbers', id: string, areaCode?: Maybe<string>, countryCode: string, number: string }>, store?: Maybe<(
+export type UserPrivateFragment = { __typename?: 'UserPrivate', id: string, firstName?: Maybe<string>, lastName?: Maybe<string>, email: string, emailVerified?: Maybe<boolean>, userRole: Role, isSuspended: boolean, defaultLicenseId?: Maybe<string>, storeId?: Maybe<string>, dealerId?: Maybe<string>, defaultLicense?: Maybe<(
+    { __typename?: 'user_licenses' }
+    & UserLicenseFragment
+  )>, licenses?: Maybe<Array<Maybe<(
+    { __typename?: 'user_licenses' }
+    & UserLicenseFragment
+  )>>>, phoneNumber?: Maybe<{ __typename?: 'phone_numbers', id: string, areaCode?: Maybe<string>, countryCode: string, number: string }>, store?: Maybe<(
     { __typename?: 'StorePrivate' }
     & StorePrivateFragment
   )>, dealer?: Maybe<{ __typename?: 'Dealer', id: string, name?: Maybe<string>, address?: Maybe<string>, state?: Maybe<string>, city?: Maybe<string>, postCode?: Maybe<string>, licenseNumber: string, createdAt?: Maybe<any> }>, payoutMethod?: Maybe<{ __typename?: 'payout_methods', id: string, payoutType?: Maybe<string>, bsb?: Maybe<string>, accountNumber?: Maybe<string>, accountName?: Maybe<string> }> };
@@ -19792,42 +19834,6 @@ export const UserLicenseFragmentFragmentDoc = gql`
   createdAt
 }
     `;
-export const UsersFragmentFragmentDoc = gql`
-    fragment UsersFragment on UserPrivate {
-  store {
-    ...StoresFragment
-  }
-  id
-  email
-  username
-  userRole
-  createdAt
-  updatedAt
-  firstName
-  lastName
-  emailVerified
-  storeId
-  payoutMethod {
-    id
-    storeId
-    createdAt
-    updatedAt
-    payoutType
-    bsb
-    accountNumber
-    accountName
-  }
-  payoutMethodId
-  isDeleted
-  isSuspended
-  lastSeen
-  defaultLicenseId
-  defaultLicense {
-    ...UserLicenseFragment
-  }
-}
-    ${StoresFragmentFragmentDoc}
-${UserLicenseFragmentFragmentDoc}`;
 export const BidFragmentFragmentDoc = gql`
     fragment BidFragment on Bid {
   id
@@ -20211,15 +20217,12 @@ export const UserPrivateFragmentFragmentDoc = gql`
   emailVerified
   userRole
   isSuspended
+  defaultLicenseId
   defaultLicense {
-    id
-    licenseNumber
-    licenseCategory
-    licenseExpiry
-    licenseState
-    verified
-    userId
-    createdAt
+    ...UserLicenseFragment
+  }
+  licenses {
+    ...UserLicenseFragment
   }
   phoneNumber {
     id
@@ -20250,7 +20253,8 @@ export const UserPrivateFragmentFragmentDoc = gql`
     accountName
   }
 }
-    ${StorePrivateFragmentFragmentDoc}`;
+    ${UserLicenseFragmentFragmentDoc}
+${StorePrivateFragmentFragmentDoc}`;
 export const SavedSearchFragmentFragmentDoc = gql`
     fragment SavedSearchFragment on saved_searches {
   id

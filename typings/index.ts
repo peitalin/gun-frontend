@@ -117,16 +117,17 @@ export interface ProductCreateEditCommonInput {
   location: string;
   magazineCapacity?: string;
   barrelLength?: string;
-  dealerId?: string;
-  dealer?: {
-    licenseNumber?: string;
-    name?: string;
-    postCode?: string;
-    address?: string;
-    state?: string;
-    city?: string;
-  };
+  dealerId: string;
+  // dealer?: {
+  //   licenseNumber?: string;
+  //   name?: string;
+  //   postCode?: string;
+  //   address?: string;
+  //   state?: string;
+  //   city?: string;
+  // };
   isPublished: boolean;
+  sellerLicenseId: string;
   productId?: ID;
   currentVariants: ProductVariantInput[] | ProductVariantEditInput[];
 }

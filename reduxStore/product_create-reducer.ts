@@ -45,7 +45,7 @@ export const initialProductCreateState: ReduxStateProductCreate = {
     magazineCapacity: "",
     barrelLength: "",
     dealerId: "",
-    dealer: undefined,
+    // dealer: undefined,
     currentVariants: [
       {
         variantName: "Regular License",
@@ -57,6 +57,7 @@ export const initialProductCreateState: ReduxStateProductCreate = {
         quantityAvailable: null,
       }
     ],
+    sellerLicenseId: "",
     isPublished: false,
   },
   dzuPreviewItems: [],

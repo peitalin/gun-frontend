@@ -45,7 +45,6 @@ const initialProductEditState: ReduxStateProductEdit = {
     magazineCapacity: "",
     barrelLength: "",
     dealerId: "",
-    dealer: undefined,
     currentVariants: [
       {
         variantId: "variant_id",
@@ -59,6 +58,7 @@ const initialProductEditState: ReduxStateProductEdit = {
       }
     ],
     isPublished: false,
+    sellerLicenseId: "",
   },
   dzuPreviewItems: [],
   dzuPreviewOrder: [],
