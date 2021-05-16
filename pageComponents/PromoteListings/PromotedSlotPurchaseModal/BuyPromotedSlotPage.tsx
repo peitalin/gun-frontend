@@ -55,7 +55,7 @@ import {
 } from "queries/promoted_lists-queries";
 import { useQuery, useMutation } from "@apollo/client";
 import { useSnackbar } from "notistack";
-import { formatDate } from "utils/dates";
+import { formatDateTime } from "utils/dates";
 import dayjs from 'dayjs';
 import { Router } from "next/router";
 

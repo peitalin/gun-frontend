@@ -28,7 +28,13 @@ const StartSelling3 = (props: ReactProps) => {
   const mdDown = useMediaQuery(theme.breakpoints.down("md"));
 
   return (
-    <div className={clsx(classes.section3Root, classes.flexRow)}>
+    <div className={clsx(
+      props.isDarkMode
+        ? "background-uniswap-dark"
+        : "background-slate-grey",
+      classes.section3Root,
+      classes.flexRow
+    )}>
       <div className={clsx(classes.section3)}>
 
         <ShowOnMobileOrDesktopSSR desktop>

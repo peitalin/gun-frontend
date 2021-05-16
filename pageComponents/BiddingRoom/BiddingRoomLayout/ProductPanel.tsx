@@ -85,6 +85,7 @@ const ProductPanel: React.FC<ReactProps> = (props) => {
     })
   // if every bid has been either WITHDRAWN or DECLINED
   // then let the bidder create a new initial bid
+  const sellerLicense = product?.sellerLicense
 
   const [
     updateChatStatus,
@@ -129,7 +130,7 @@ const ProductPanel: React.FC<ReactProps> = (props) => {
               />
             </div>
             <Typography variant="h4" className={classes.productTitle}>
-              { `Seller License: ${seller?.license?.licenseNumber}` }
+              { `Seller License: ${sellerLicense?.licenseNumber}` }
             </Typography>
           </div>
 

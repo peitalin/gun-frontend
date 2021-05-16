@@ -88,8 +88,8 @@ const NormalBid = (props: BidProps) => {
             !isMe &&
             <span className={classes.userId}>
               {
-                m?.sender?.license?.licenseNumber
-                ? `${m.sender?.license?.licenseNumber}`
+                m?.sender?.id
+                ? `${m.sender?.id}`
                 : `${m.sender?.id?.slice(-12)}`
               }
             </span>

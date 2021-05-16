@@ -16,7 +16,7 @@ import InfoBuyerSellerDealer from "components/Gov/RowExpander/InfoBuyerSellerDea
 // Snackbar
 import { useSnackbar } from "notistack";
 
-import { formatDate } from "utils/dates";
+import { formatDateTime } from "utils/dates";
 import currency from 'currency.js';
 
 // graphql
@@ -24,6 +24,7 @@ import { UserPrivate, OrderStatus, OrderAdmin } from "typings/gqlTypes";
 import { useMutation } from "@apollo/client";
 import { DocumentNode } from "graphql";
 import { generatePDF } from "./generateForm10";
+import products from 'pages/admin/products';
 
 
 
@@ -67,7 +68,7 @@ const RowExpander = (props: RowExpanderProps) => {
         setOpen={setOpen}
       >
         <div className={classes.flexItemTiny}> {row.id} </div>
-        <div className={classes.flexItemSlim}> {formatDate(row.createdAt)} </div>
+        <div className={classes.flexItemSlim}> {formatDateTime(row.createdAt)} </div>
         <div className={classes.flexItemTiny}> {c(row.total)} </div>
         <div className={classes.flexItemSlim}>
           {
@@ -112,6 +113,7 @@ const RowExpander = (props: RowExpanderProps) => {
                 generatePDF({
                   buyer: row?.buyer,
                   sellerStore: row?.sellerStore,
+                  sellerLicense: row?.sellerLicense,
                   dealer: row?.dealer,
                   order: order,
                 })

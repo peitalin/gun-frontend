@@ -273,7 +273,6 @@ const FeaturedProductId: React.FC<ReactProps> = (props) => {
                   }
                   <StickyDetailsSeller
                     seller={product?.store?.user}
-                    buyerId={user?.id}
                     product={product}
                     storeName={product?.store?.name}
                     below1024={below1024}
@@ -331,7 +330,6 @@ const FeaturedProductId: React.FC<ReactProps> = (props) => {
               }
               <StickyDetailsSeller
                 seller={product?.store?.user}
-                buyerId={user?.id}
                 product={product}
                 storeName={product?.store?.name}
                 below1024={below1024}

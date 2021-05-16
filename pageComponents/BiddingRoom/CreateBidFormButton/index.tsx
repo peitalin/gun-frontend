@@ -83,7 +83,7 @@ const BiddingRoom: React.FC<ReactProps> = (props) => {
           sellerUserId={props.sellerUserId}
           buyerUserId={userId}
           product={props.product}
-          name={user?.license?.licenseNumber}
+          name={user?.defaultLicense?.licenseNumber}
           title={props.titleText}
           disabled={!userId}
         />

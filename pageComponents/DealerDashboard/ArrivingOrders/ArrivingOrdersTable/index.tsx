@@ -28,7 +28,7 @@ import { ConnectionQueryProps } from "components/Paginators/usePaginatePagedQuer
 import ErrorDisplay from "components/ErrorDisplay";
 import LoadingBar from "components/LoadingBar";
 // formatters
-import { formatDate } from "utils/dates";
+import { formatDateTime } from "utils/dates";
 import currency from "currency.js";
 // graphl
 import { useMutation, useQuery } from "@apollo/client";

@@ -1,4 +1,4 @@
-import { UserPrivate, StorePrivate, Dealers, Order} from "typings/gqlTypes";
+import { UserPrivate, StorePrivate, Dealers, Order, User_Licenses} from "typings/gqlTypes";
 import { jsPDF } from "jspdf";
 import 'jspdf-autotable'
 
@@ -22,11 +22,13 @@ const toBase64 = file => new Promise((resolve, reject) => {
 export const generatePDF = async ({
   buyer,
   sellerStore,
+  sellerLicense,
   dealer,
   order,
 }: {
   buyer: UserPrivate,
   sellerStore: StorePrivate,
+  sellerLicense: User_Licenses,
   dealer: Dealers,
   order: Order,
 }) => {
@@ -212,7 +214,7 @@ export const generatePDF = async ({
         },
       ],
       ["Phone No.", sellerPhoneNumber],
-      ["License No.", `${sellerStore?.user?.license?.licenseNumber}`],
+      ["License No.", `${sellerLicense?.licenseNumber}`],
       ["Address", sellerStore?.website || "-"],
     ],
   })

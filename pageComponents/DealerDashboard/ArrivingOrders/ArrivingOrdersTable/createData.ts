@@ -8,6 +8,7 @@ import {
   StorePrivate,
   Store,
   OrderStatus,
+  User_Licenses,
 } from "typings/gqlTypes";
 import { getUserWhoActionedOrderStatus } from "components/Gov/createDataUtils";
 
@@ -47,6 +48,7 @@ export const createDataForArrivingOrdersTable = ({
     orderStatus: currentOrderSnapshot?.orderStatus,
     form10: currentOrderSnapshot?.form10File ?? currentOrderSnapshot?.form10Image,
     sellerStore: sellerStore,
+    sellerLicense: product?.sellerLicense,
     buyer: buyer,
     dealer: product?.currentSnapshot?.dealer,
     product: product,
