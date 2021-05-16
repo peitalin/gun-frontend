@@ -58,7 +58,10 @@ const MultiDropdownSelect = (props: ReactProps) => {
   }, [])
 
   return (
-    <>
+    <div className={clsx(
+      classes.root,
+      props.className && props.className,
+    )}>
       <Select
         defaultValue={props.initialTags}
         isMulti
@@ -66,6 +69,7 @@ const MultiDropdownSelect = (props: ReactProps) => {
         options={options}
         classNamePrefix="select"
 
+        menuPlacement="auto"
         inputRef={ref}
         isClearable={false} // remove "x" button which clears all keywords
         placeholder={props.placeholder || "Enter license categories"}
@@ -125,8 +129,20 @@ const MultiDropdownSelect = (props: ReactProps) => {
             color: Colors.grey,
           }),
           singleValue: styles => ({
-            color: isDarkMode ? Colors.uniswapLighterGrey : Colors.charcoal,
+            color: isDarkMode ? Colors.uniswapLightGrey : Colors.slateGreyBlack,
             cursor: "pointer",
+          }),
+          multiValue: styles => ({
+            ...styles,
+            backgroundColor: isDarkMode ? Colors.uniswapDarkNavy : Colors.slateGreyDarker,
+          }),
+          multiValueLabel: styles => ({
+            ...styles,
+            color: isDarkMode ? Colors.uniswapLighterGrey : Colors.slateGreyBlack,
+          }),
+          label: styles => ({
+            ...styles,
+            color: isDarkMode ? Colors.uniswapLightGrey : Colors.slateGreyBlack,
           }),
           indicatorSeparator: styles => ({
             ...styles,
@@ -189,7 +205,7 @@ const MultiDropdownSelect = (props: ReactProps) => {
           </span>
         </div>
       }
-    </>
+    </div>
   )
 }
 
@@ -238,11 +254,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   disableInitialValidationMessage?: boolean;
   validationErrorMsgStyle?: any;
   limit?: { count: number, max: number };
-}
-interface ReactState {
-  inputValue: string;
-  options: SelectOption[];
-  value: SelectOption[];
+  className?: any;
 }
 
 export default withStyles(styles)( MultiDropdownSelect );

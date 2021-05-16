@@ -71,6 +71,7 @@ const DropdownInput = (props: ReactProps) => {
               onChange(e)
             }}
             menuIsOpen={props.menuIsOpen}
+            menuPlacement="auto"
             options={options}
             placeholder={placeholder}
             isMulti={isMulti}
@@ -92,6 +93,7 @@ const DropdownInput = (props: ReactProps) => {
               ),
               multiline: classes.selectMultiline,
             }}
+            components={props.components}
             theme={
               props.theme
               ? props.theme
@@ -156,6 +158,7 @@ const DropdownInput = (props: ReactProps) => {
               onChange(e)
             }}
             menuIsOpen={props.menuIsOpen}
+            menuPlacement="auto"
             options={options}
             placeholder={placeholder}
             isMulti={isMulti}
@@ -177,6 +180,7 @@ const DropdownInput = (props: ReactProps) => {
               ),
               multiline: classes.selectMultiline,
             }}
+            components={props.components}
             theme={
               props.theme
               ? props.theme
@@ -249,14 +253,14 @@ const DropdownInput = (props: ReactProps) => {
               control: (base, state) => ({
                 ...base,
                 background: isDarkMode
-                  ? Colors.uniswapLightNavy
+                  ? Colors.uniswapMediumNavy
                   : Colors.slateGrey,
                 // // match with the menu
                 cursor: "text",
                 borderRadius: BorderRadius,
                 height: '100%',
                 border: isDarkMode
-                  ? `1px solid ${Colors.uniswapLighterGrey}`
+                  ? `1px solid ${Colors.uniswapMediumGrey}`
                   : `1px solid ${Colors.slateGreyDarker}`,
               }),
             }}
@@ -328,6 +332,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   menuPortalTarget?: any;
   menuIsOpen?: any;
   hideButton?: boolean;
+  components?: any;
   [key: string]: any;
 }
 export interface SelectOption {
