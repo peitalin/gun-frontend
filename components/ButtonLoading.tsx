@@ -1,7 +1,8 @@
 
 import React from 'react';
+import clsx from "clsx";
 import {
-  withStyles, WithStyles, createStyles, Theme
+  withStyles, createStyles, Theme, fade
 } from '@material-ui/core/styles';
 import { Colors, isThemeDark } from "layout/AppTheme";
 import Loading from "components/Loading"
@@ -27,13 +28,11 @@ const ButtonLoading: React.FC<ReactProps & ButtonProps> = (props) => {
       <Button
         // default props
         variant={props.variant ? props.variant : "contained"}
-        style={{
-          width: "100%",
-          height: "40px",
-          fontWeight: 500,
-        }}
         classes={{
-          root: props.classes.root
+          root: clsx(
+            props.classes.root,
+            props.className,
+          )
         }}
         // override default props
         {...ButtonProps}
@@ -72,13 +71,11 @@ const ButtonLoading: React.FC<ReactProps & ButtonProps> = (props) => {
       <Button
         // default props
         variant={props.variant ? props.variant : "contained"}
-        style={{
-          width: "100%",
-          height: "40px",
-          fontWeight: 500,
-        }}
         classes={{
-          root: props.classes.root
+          root: clsx(
+            props.classes.root,
+            props.className,
+          )
         }}
         // override default props
         {...ButtonProps}
@@ -126,11 +123,16 @@ interface ReactProps {
 }
 
 const styles = (theme: Theme) => createStyles({
-  // root: {
-  //   backgroundColor: isThemeDark(theme)
-  //     ? `${Colors.uniswapDarkNavy} !important`
-  //     : `${Colors.slateGreyDarkest} !imporntant`,
-  // }
+  root: {
+    width: "100%",
+    // maxWidth: 200,
+    height: "40px",
+    fontWeight: 500,
+    backgroundColor: Colors.ultramarineBlue,
+    "&:hover": {
+      backgroundColor: fade(Colors.ultramarineBlue, 0.9),
+    },
+  }
 });
 
 export default withStyles(styles)(ButtonLoading);

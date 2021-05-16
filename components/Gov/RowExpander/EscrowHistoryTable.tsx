@@ -2,7 +2,7 @@ import React from 'react';
 import clsx from 'clsx';
 import { Colors, BoxShadows } from 'layout/AppTheme';
 import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles';
-import { formatDate } from "utils/dates";
+import { formatDateTime } from "utils/dates";
 // graphql
 
 
@@ -36,7 +36,7 @@ const EscrowHistoryTable = (props: ReactProps) => {
                   : classes.backOdd,
               )}>
                 <div className={classes.bodyCell1}>
-                  {formatDate(historyRow.date)}
+                  {formatDateTime(historyRow.date)}
                 </div>
                 <div className={classes.bodyCell2}>
                   {historyRow.approverEmail}

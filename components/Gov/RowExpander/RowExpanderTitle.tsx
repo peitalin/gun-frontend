@@ -10,7 +10,7 @@ import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import { useSnackbar } from "notistack";
 // router
 import Link from "next/link";
-import { formatDate } from "utils/dates";
+import { formatDateTime } from "utils/dates";
 import currency from 'currency.js';
 
 

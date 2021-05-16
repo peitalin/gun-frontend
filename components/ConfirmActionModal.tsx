@@ -71,7 +71,7 @@ const ConfirmActionModal: React.FC<ReactProps> = (props) => {
 }
 
 interface ReactProps extends WithStyles<typeof styles> {
-  title?: string;
+  title?: React.ReactNode;
   showModal: boolean;
   setShowModal(payload: boolean): void;
   onConfirmFunction(): void;
