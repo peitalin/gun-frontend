@@ -61,10 +61,10 @@ const SellersSideRoutesMenu: React.FC<ReactProps> = (props) => {
             </a>
           </Link>
           <Typography className={classes.subtitle} variant="h6">
-            {user?.license?.licenseNumber}
+            {user?.defaultLicense?.licenseNumber}
           </Typography>
           <Typography className={classes.subtitle} variant="h6">
-            {user?.license?.licenseState}
+            {user?.defaultLicense?.licenseState}
           </Typography>
 
         </div>

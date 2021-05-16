@@ -295,7 +295,7 @@ const ProductRow = (props: ReactProps) => {
               </Link>
 
               {
-                viewCount &&
+                (viewCount > 0) &&
                 <Tooltip title="Views from registered buyers">
                   <Typography className={classes.viewsByBuyers} variant="body1">
                     { `Views: ${viewCount}` }
