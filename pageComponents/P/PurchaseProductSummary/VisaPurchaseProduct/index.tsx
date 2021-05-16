@@ -35,6 +35,7 @@ import {
   AuthorizePaymentMutationResponse,
   Bids,
   BlankMutationResponse,
+  User_Licenses,
 } from 'typings/gqlTypes';
 // Components
 import ErrorBounds from 'components/ErrorBounds';
@@ -44,7 +45,7 @@ import CreateOfferSubscription from "../CreateOfferSubscription";
 import { useSelector } from "react-redux";
 import { GrandReduxState, Actions } from "reduxStore/grand-reducer";
 // Graphql
-import { useApolloClient, useMutation } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 // Snackbar
 import { useSnackbar } from "notistack";
 import { useTheme } from "@material-ui/core";
@@ -64,6 +65,12 @@ import {
 } from "queries/orders-queries";
 // initial variables for updating apollo cache
 import { initialVariables } from "pageComponents/MyOrders";
+// license components
+import DropdownInput from "components/Fields/DropdownInput";
+import OptionLicense from "./OptionLicense";
+import {
+  SelectOption,
+} from "layout/MySettingsModal/UserLicenses/EditUserLicenseForm/licenseUtils";
 
 
 
@@ -74,9 +81,15 @@ const VisaPurchaseProduct = (props: ReactProps) => {
   const snackbar = useSnackbar();
   const theme = useTheme();
 
-  const { classes, disableButton } = props;
+  const {
+    classes,
+    disableButton,
+  } = props;
 
   const [loading, setLoading] = React.useState(false)
+
+  const [chosenLicenseId, setChosenLicenseId] = React.useState<string>(undefined)
+  const [chosenLicense, setChosenLicense] = React.useState<SelectOptionLicense>(undefined)
 
   const product = props.product;
   const featuredVariant = props.product.featuredVariant;
@@ -107,6 +120,7 @@ const VisaPurchaseProduct = (props: ReactProps) => {
     variables: {
       productId: undefined,
       total: undefined,
+      chosenLicenseId: chosenLicenseId,
       stripeAuthorizePaymentData: undefined,
       bidId: undefined,
     },
@@ -137,6 +151,7 @@ const VisaPurchaseProduct = (props: ReactProps) => {
       productId: undefined,
       total: undefined,
       buyerId: undefined,
+      chosenLicenseId: undefined,
       sellerStoreId: undefined,
       paymentIntentId: undefined,
       bidId: undefined,
@@ -351,6 +366,7 @@ const VisaPurchaseProduct = (props: ReactProps) => {
       variables: {
         productId: product.id,
         total: purchasePrice,
+        chosenLicenseId: chosenLicenseId,
         stripeAuthorizePaymentData: JSON.stringify(stripeAuthorizePaymentData),
         bidId: props.selectedBid?.id,
       },
@@ -428,8 +444,23 @@ const VisaPurchaseProduct = (props: ReactProps) => {
     }
   }
 
-
+  let licenseOptions = createLicenseOptions(props.user?.licenses)
   let loadingGql = loading1 || loading2 || loading3
+
+  React.useEffect(() => {
+    // set defaultLicense as the initial license for the drodown
+    if (licenseOptions?.length > 0) {
+      let defaultLicense = licenseOptions.find(
+        l => props.user.defaultLicenseId === (l.value as User_Licenses).id
+      )
+      setChosenLicense(defaultLicense)
+      setChosenLicenseId(props.user.defaultLicenseId)
+    }
+  }, [props.user.defaultLicenseId])
+
+  // console.log("licenseOptions", licenseOptions)
+  // console.log("chosenLicenseId", chosenLicenseId)
+  console.log("chosenLicense", chosenLicense)
 
   return (
     <ErrorBounds name="Visa Checkout" className={props.className}>
@@ -439,6 +470,33 @@ const VisaPurchaseProduct = (props: ReactProps) => {
           // showStripeElement ? "fadeInFast" : "hidden",
         )}>
           <div className={clsx(classes.flexCol)}>
+
+            <div className={classes.dropdownContainer}>
+              {
+                chosenLicense?.value?.id &&
+                <DropdownInput
+                  stateShape={chosenLicense}
+                  onChange={({ label, value }: SelectOption) => {
+                    setChosenLicense({ label, value })
+                  }}
+                  value={chosenLicense}
+                  // disableAutocomplete={true}
+                  // menuPortalTarget={document?.body} // solves z-index problems
+                  // menuIsOpen={true}
+                  disable={!props.user?.id}
+                  components={{
+                    Option: OptionLicense
+                  }}
+                  options={licenseOptions}
+                  placeholder={"Select a License"}
+                  label="" // remove moving label
+                  inputProps={{ style: { width: '100%' }}}
+                  // errorMessage={formik.errors.licenseState}
+                  // touched={formik.touched.licenseState}
+                />
+              }
+            </div>
+
             <div className={clsx(classes.creditCardContainer)}>
               <CardElement
                 options={{
@@ -496,6 +554,7 @@ const VisaPurchaseProduct = (props: ReactProps) => {
                           productId: product.id,
                           total: purchasePrice,
                           buyerId: props.user.id,
+                          chosenLicenseId: chosenLicenseId,
                           sellerStoreId: product.store.id,
                           paymentIntentId: paymentIntentId,
                           bidId: props.selectedBid?.id,
@@ -509,7 +568,11 @@ const VisaPurchaseProduct = (props: ReactProps) => {
               loadingIconColor={Colors.blue}
               replaceTextWhenLoading={true}
               loading={loading}
-              disabled={loading || disableButton}
+              disabled={
+                loading
+                || disableButton
+                || !props.user?.id
+              }
               variant="contained"
               color="secondary"
               className={classes.buyButton}
@@ -518,7 +581,13 @@ const VisaPurchaseProduct = (props: ReactProps) => {
               }}
             >
               <span style={{ marginLeft: '0.25rem' }}>
-                { props.title ? props.title : "Buy Instantly" }
+                {
+                  !props.user?.id
+                  ? "Log in to Purchase"
+                  : props.title
+                      ? props.title
+                      : "Buy Now"
+                }
               </span>
             </ButtonLoading>
           </div>
@@ -543,6 +612,27 @@ const VisaPurchaseProduct = (props: ReactProps) => {
   );
 };
 
+
+
+
+
+const createLicenseOptions = (licenses: User_Licenses[]): SelectOptionLicense[] => {
+  return (licenses ?? []).map(c => {
+    return {
+      label: `License ${c.licenseNumber}`,
+      value: c,
+    }
+  })
+}
+
+interface SelectOptionLicense {
+  label: string;
+  value: User_Licenses;
+}
+
+
+
+
 interface ReactProps extends WithStyles<typeof styles> {
   display: boolean;
   disableButton?: boolean;
@@ -563,6 +653,7 @@ interface Mdata1 {
 interface Mvar1 {
   productId: string
   total: number
+  chosenLicenseId: string
   stripeAuthorizePaymentData: string
   bidId?: string
 }
@@ -573,6 +664,7 @@ interface Mvar2 {
   productId: string
   total: number
   buyerId: string
+  chosenLicenseId: string
   sellerStoreId: string
   paymentIntentId: string
   bidId?: string
@@ -602,7 +694,7 @@ const styles = (theme: Theme) => createStyles({
     height: 40,
     backgroundColor: isThemeDark(theme)
       ? Colors.uniswapMediumNavy
-      : Colors.cream,
+      : Colors.slateGrey,
     // color: isThemeDark(theme)
     //   ? Colors.uniswapLightestGrey
     //   : Colors.black,

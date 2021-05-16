@@ -16,7 +16,7 @@ import { useSnackbar } from "notistack";
 import { useRouter } from "next/router"
 
 import Tick from "components/Icons/Tick"
-import { formatDate } from "utils/dates";
+import { formatDateTime } from "utils/dates";
 import { asCurrency as c } from "utils/prices";
 
 
@@ -90,7 +90,7 @@ const StickyDetailsBid = (props: ReactProps) => {
               {userBid?.id}
             </Typography>
             <Typography className={classes.caption} variant="body1">
-              {formatDate(userBid?.createdAt)}
+              {formatDateTime(userBid?.createdAt)}
             </Typography>
             {
               (userBid?.bidStatus === BidStatus.ACCEPTED) &&

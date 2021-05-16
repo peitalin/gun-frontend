@@ -30,7 +30,6 @@ const StickyDetailsSeller = (props: ReactProps) => {
     classes,
     storeName,
     product,
-    buyerId,
     seller,
   } = props;
 
@@ -44,6 +43,8 @@ const StickyDetailsSeller = (props: ReactProps) => {
     await copy(text);
     console.log("Copied!");
   };
+
+  const sellerLicense = product.sellerLicense
 
   return (
     <div className={clsx(
@@ -79,10 +80,10 @@ const StickyDetailsSeller = (props: ReactProps) => {
 
           <div className={clsx(classes.flexCol)}>
             <Typography className={classes.caption} variant="body1">
-              {`${seller?.license?.licenseNumber ?? "-"}`}
+              {`${sellerLicense?.licenseNumber ?? "-"}`}
             </Typography>
             <Typography className={classes.caption} variant="body1">
-              {`${seller?.license?.licenseState ?? "-"}`}
+              {`${sellerLicense?.licenseState ?? "-"}`}
             </Typography>
             {/* {
               seller?.license?.licenseExpiry &&
@@ -119,9 +120,8 @@ const StickyDetailsSeller = (props: ReactProps) => {
 
 interface ReactProps extends WithStyles<typeof styles> {
   seller: UserPublic
-  buyerId: string
   product: Product
-  storeName: string
+  storeName?: string
   below1024: boolean
 }
 
