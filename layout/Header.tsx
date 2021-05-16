@@ -58,17 +58,17 @@ const Header: React.FC<ReactProps> = (props) => {
         <script>
           {`
             (function(d,t) {
-              var BASE_URL="https://app.chatwoot.com";
+              var BASE_URL=\"https://app.chatwoot.com\";
               var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
-              g.src=BASE_URL+"/packs/js/sdk.js";
+              g.src=BASE_URL+\"/packs/js/sdk.js\";
               s.parentNode.insertBefore(g,s);
               g.onload=function(){
                 window.chatwootSDK.run({
-                  websiteToken: '4n8FMavPqFoYYLCABTDzXkvK',
+                  websiteToken: \"2SKqt7sF9HKnCGZv9fRm24iS\",
                   baseUrl: BASE_URL
                 })
               }
-            })(document,"script");
+            })(document,\"script\");
           `}
         </script>
       }
@@ -78,17 +78,17 @@ const Header: React.FC<ReactProps> = (props) => {
         <script>
           {`
             (function(d,t) {
-              var BASE_URL="https://app.chatwoot.com";
+              var BASE_URL=\"https://app.chatwoot.com\";
               var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
-              g.src=BASE_URL+"/packs/js/sdk.js";
+              g.src=BASE_URL+\"/packs/js/sdk.js\";
               s.parentNode.insertBefore(g,s);
               g.onload=function(){
                 window.chatwootSDK.run({
-                  websiteToken: '2SKqt7sF9HKnCGZv9fRm24iS',
+                  websiteToken: \"2SKqt7sF9HKnCGZv9fRm24iS\",
                   baseUrl: BASE_URL
                 })
               }
-            })(document,"script");
+            })(document,\"script\");
           `}
         </script>
       }

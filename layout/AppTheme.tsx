@@ -202,6 +202,7 @@ export const Colors = {
   uniswapMediumNavy: '#2D2F36',
   uniswapGreyNavy: '#282A31',
   uniswapDarkNavy: "#222429",
+  uniswapBrown: '#2A232C',
   gradientUniswapDark1: "#2E3545",
   gradientUniswapDark2: "#2D2F36",
   gradientUniswapFluro1: "#DC3078",
@@ -641,6 +642,7 @@ export const createAppTheme = (darkModeStr: "dark"|"light"): ThemeOptions =>  {
             borderBottom: darkMode
               ? `1px solid ${Colors.uniswapGrey}`
               : `1px solid ${Colors.uniswapLightestGrey}`,
+            // borderBottomColor: `${Colors.red} !important`,
           },
         },
       },

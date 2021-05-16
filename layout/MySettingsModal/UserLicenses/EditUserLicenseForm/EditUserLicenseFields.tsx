@@ -20,7 +20,7 @@ import {
   createLicenseCategorySuggestions,
   createLicenseStateSuggestions,
   SelectOption,
-} from "layout/MySettingsModal/ChangeUserLicenseForm/licenseUtils";
+} from "layout/MySettingsModal/UserLicenses/EditUserLicenseForm/licenseUtils";
 import DropdownInput from "components/Fields/DropdownInput";
 import SelectTagsPlaceholder from 'pageComponents/ProductCreate/SSR/SelectTagsPlaceholder';
 const MultiDropdownSelect = dynamic(() => import('components/Fields/MultiDropdownSelect'), {
@@ -41,7 +41,7 @@ import {
 
 
 
-const ChangeUserLicenseFields: React.FC<ReactProps & FormikProps<FormikFields>> = (props) => {
+const EditUserLicenseFields: React.FC<ReactProps & FormikProps<FormikFields>> = (props) => {
 
   const {
     classes,
@@ -92,7 +92,7 @@ const ChangeUserLicenseFields: React.FC<ReactProps & FormikProps<FormikFields>> 
 
   // console.log("licenseExpiry: ", values.licenseExpiry)
 
-  let licenseCategoryOptions = createLicenseCategorySuggestions()
+  let licenseCategoryOptions = createLicenseCategorySuggestions(fprops.values.licenseState)
   // initial stateShape
   let initialCategoryLicense = licenseCategoryOptions
     .find(d => d.value === fprops.values.licenseCategory)
@@ -130,28 +130,25 @@ const ChangeUserLicenseFields: React.FC<ReactProps & FormikProps<FormikFields>> 
       <Typography variant="body1" className={classes.fieldHeading}>
         License Expiry
       </Typography>
-      {
-        values.licenseExpiry !== undefined &&
-            <MuiPickersUtilsProvider utils={DateFnsUtils}>
-              <KeyboardDatePicker
-                disableToolbar={true}
-                InputAdornmentProps={{
-                  classes: { root: classes.dateLabel }
-                }}
-                variant="inline"
-                format="DD/MM/YYYY"
-                // margin="normal"
-                id="date-picker-inline"
-                // label="License Expiry"
-                value={selectedDate}
-                onChange={handleDateChange}
-                maxDate={new Date("1/1/3000")}
-                KeyboardButtonProps={{
-                  'aria-label': 'change date',
-                }}
-              />
-            </MuiPickersUtilsProvider>
-      }
+      <MuiPickersUtilsProvider utils={DateFnsUtils}>
+        <KeyboardDatePicker
+          disableToolbar={true}
+          InputAdornmentProps={{
+            classes: { root: classes.dateLabel }
+          }}
+          variant="inline"
+          format="DD/MM/YYYY"
+          // margin="normal"
+          id="date-picker-inline"
+          // label="License Expiry"
+          value={selectedDate}
+          onChange={handleDateChange}
+          maxDate={new Date("1/1/3000")}
+          KeyboardButtonProps={{
+            'aria-label': 'change date',
+          }}
+        />
+      </MuiPickersUtilsProvider>
 
       <Typography variant="body1" className={classes.fieldHeading}>
         License Category
@@ -281,5 +278,5 @@ const styles = (theme: Theme) => createStyles({
 });
 
 
-export default withStyles(styles)( ChangeUserLicenseFields );
+export default withStyles(styles)( EditUserLicenseFields );
 

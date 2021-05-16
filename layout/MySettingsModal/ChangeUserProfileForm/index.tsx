@@ -1,8 +1,8 @@
 import React from "react";
 import clsx from "clsx";
 // Styles
-import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
-import { Colors } from "layout/AppTheme";
+import { withStyles, WithStyles, createStyles, Theme, useTheme } from "@material-ui/core/styles";
+import { Colors, isThemeDark } from "layout/AppTheme";
 // Components
 import ErrorBounds from "components/ErrorBounds";
 import ButtonLoading from "components/ButtonLoading";
@@ -30,6 +30,7 @@ const ChangeUserProfileForm = (props: ReactProps) => {
   const { classes } = props;
   const dispatch = useDispatch();
   const snackbar = useSnackbar();
+  const theme = useTheme()
 
   const reduxUser = useSelector<GrandReduxState, UserPrivate>(
     state => state.reduxLogin.user
@@ -128,7 +129,9 @@ const ChangeUserProfileForm = (props: ReactProps) => {
               <ErrorBounds className={classes.buttonContainer}>
                 <ButtonLoading
                   type="submit" // this sets off Form submit
-                  className={classes.saveButton}
+                  style={{
+                    width: 150,
+                  }}
                   variant={"contained"}
                   color={"secondary"}
                   replaceTextWhenLoading={true}
@@ -136,7 +139,7 @@ const ChangeUserProfileForm = (props: ReactProps) => {
                   loadingIconColor={Colors.cream}
                   disabled={Object.keys(errors).length > 0 || loading}
                 >
-                  Save Your Changes
+                  Save Changes
                 </ButtonLoading>
               </ErrorBounds>
 
@@ -168,7 +171,6 @@ const styles = (theme: Theme) => createStyles({
   },
   formContainer: {
     padding: "0",
-    marginTop: '1rem',
     marginBottom: '1rem',
   },
   textField: {

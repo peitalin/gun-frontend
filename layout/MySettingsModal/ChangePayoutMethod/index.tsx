@@ -2,11 +2,10 @@ import React from "react";
 import clsx from "clsx";
 // Styles
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
-import { Colors } from "layout/AppTheme";
+import { Colors, isThemeDark } from "layout/AppTheme";
 // Redux
-import { connect, useDispatch, useSelector } from "react-redux";
-import { GrandReduxState } from "reduxStore/grand-reducer";
-import { Actions } from "reduxStore/actions";
+import { useDispatch, useSelector } from "react-redux";
+import { GrandReduxState, Actions } from "reduxStore/grand-reducer";
 // Graphql Queries
 import { useMutation, useApolloClient, ApolloError } from "@apollo/client";
 import { GET_USER } from "queries/user-queries";
@@ -28,13 +27,15 @@ import { validationSchemas } from "utils/validation";
 
 
 
-const ChangePayoutMethod = (props: ReactProps & ReduxProps) => {
+const ChangePayoutMethod = (props: ReactProps) => {
 
   const { classes } = props;
   const [showPayoutBankChanger, setShowPayoutBankChanger] = React.useState(false);
 
-  const aClient = useApolloClient();
   const dispatch = useDispatch();
+  const user = useSelector<GrandReduxState, UserPrivate>(
+    s => s.reduxLogin.user
+  )
   const snackbar = useSnackbar();
 
 
@@ -47,7 +48,7 @@ const ChangePayoutMethod = (props: ReactProps & ReduxProps) => {
 
       setShowPayoutBankChanger(false)
       dispatch(Actions.reduxLogin.SET_USER({
-        ...props.user,
+        ...user,
         payoutMethod: setPayoutMethod.user.payoutMethod,
       }))
 
@@ -55,7 +56,7 @@ const ChangePayoutMethod = (props: ReactProps & ReduxProps) => {
         query: GET_USER,
         data: {
           user: {
-            ...props.user,
+            ...user,
             ...setPayoutMethod.user
           }
         },
@@ -85,9 +86,9 @@ const ChangePayoutMethod = (props: ReactProps & ReduxProps) => {
     <Formik
       // 1. feed product data to edit into formik state.
       initialValues={{
-        bsb: props.user?.payoutMethod?.bsb,
-        accountNumber: props.user?.payoutMethod?.accountNumber,
-        accountName: props.user?.payoutMethod?.accountName,
+        bsb: user?.payoutMethod?.bsb,
+        accountNumber: user?.payoutMethod?.accountNumber,
+        accountName: user?.payoutMethod?.accountName,
       }}
       validationSchema={validationSchemas.ChangePayoutMethod}
       onSubmit={(values, { setSubmitting, resetForm }) => {
@@ -120,14 +121,14 @@ const ChangePayoutMethod = (props: ReactProps & ReduxProps) => {
           validateForm,
         } = fprops;
 
-        let bsb1 = props.user?.payoutMethod?.bsb.slice(0,3)
-        let bsb2 = props.user?.payoutMethod?.bsb.slice(3)
+        let bsb1 = user?.payoutMethod?.bsb.slice(0,3)
+        let bsb2 = user?.payoutMethod?.bsb.slice(3)
 
-        let accountNumber1 = props.user?.payoutMethod?.accountNumber.slice(0,2)
-        let accountNumber2 = props.user?.payoutMethod?.accountNumber.slice(2,5)
-        let accountNumber3 = props.user?.payoutMethod?.accountNumber.slice(5)
+        let accountNumber1 = user?.payoutMethod?.accountNumber.slice(0,2)
+        let accountNumber2 = user?.payoutMethod?.accountNumber.slice(2,5)
+        let accountNumber3 = user?.payoutMethod?.accountNumber.slice(5)
 
-        let accountName = props.user?.payoutMethod?.accountName
+        let accountName = user?.payoutMethod?.accountName
         console.log("errors:", fprops.errors)
 
         return (
@@ -209,7 +210,7 @@ const ChangePayoutMethod = (props: ReactProps & ReduxProps) => {
                   : classes.displayNone,
               )}>
                 <Typography variant="body1" className={classes.boldTitle}>
-                  Enter a new Bank BSB number for payouts:
+                  Edit Bank Account for payouts:
                 </Typography>
 
                 <TextInput
@@ -273,8 +274,7 @@ const ChangePayoutMethod = (props: ReactProps & ReduxProps) => {
                   disabled={loading}
                   loadingIconColor={Colors.blue}
                   style={{
-                    height: '40px',
-                    width: '100%',
+                    width: 150,
                   }}
                 >
                   Save changes
@@ -306,25 +306,6 @@ interface MutationVars {
   accountName: string;
 }
 
-
-//////////////// REDUX /////////////////////
-const mapStateToProps = ( state: GrandReduxState ) => {
-  return {
-    user: state.reduxLogin.user
-  }
-}
-const mapDispatchToProps = ( dispatch ) => {
-  return {
-    updateUserProfile: (payload: UserPrivate) => dispatch(
-      Actions.reduxLogin.SET_USER(payload)
-    ),
-  }
-}
-
-const ChangePayoutMethodRedux = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)( ChangePayoutMethod )
 
 const styles = (theme: Theme) => createStyles({
   root: {
@@ -369,16 +350,22 @@ const styles = (theme: Theme) => createStyles({
   },
   boldTitle: {
     fontWeight: 600,
+    width: '100%',
+    paddingLeft: '0.5rem',
     marginTop: '1rem',
     marginRight: '0.5rem',
     marginBottom: '0.5rem',
   },
   bankDetailsHeading: {
-    color: Colors.uniswapLightestGrey,
+    color: isThemeDark(theme)
+      ? Colors.uniswapLightestGrey
+      : Colors.slateGreyBlack,
     minWidth: 100,
   },
   bankDetailsInfoText: {
-    color: Colors.uniswapLighterGrey,
+    color: isThemeDark(theme)
+      ? Colors.purple
+      : Colors.ultramarineBlue,
   },
   currentBankDetails: {
     marginTop: '2rem',
@@ -392,6 +379,10 @@ const styles = (theme: Theme) => createStyles({
   displaySomePayoutMenu: {
     height: 280, // card form is 280px high.
     // must define set height for height animation
+    display: 'flex',
+    flexDirection: "column",
+    justifyContent: 'center',
+    alignItems: 'flex-end',
     opacity: 1,
     transition: theme.transitions.create(['height', 'opacity'], {
       easing: theme.transitions.easing.easeIn,
@@ -412,5 +403,5 @@ const styles = (theme: Theme) => createStyles({
   },
 });
 
-export default withStyles(styles)( ChangePayoutMethodRedux );
+export default withStyles(styles)( ChangePayoutMethod );
 

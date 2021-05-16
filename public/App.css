@@ -506,17 +506,58 @@ textarea {
 
 .shimmer {
   background-color: #f3f3f3;
-  background: linear-gradient(to right,#f3f3f3 5%,#eee 30%,#f3f3f3 45%);
-  animation: shimmer 2s linear 0s infinite normal forwards;
+  background-image: linear-gradient(to right, #f6f7f8 0%, #edeef1 20%, #f6f7f8 40%, #f6f7f8 100%);
+  animation: shimmer 20s linear 0s infinite normal forwards;
+}
+.shimmer-dark {
+  background-color: #f3f3f3;
+  background-image: linear-gradient(to right, #222429  0%, #2D2F36 20%, #222429  40%, #222429 100%);
+  /* background-image: linear-gradient(to right, #2D2F36 0%, #222429 20%, #2D2F36 40%, #2D2F36 100%); */
+  animation: shimmer 20s linear 0s infinite normal forwards;
+}
+.shimmer-dark2 {
+  background-color: #f3f3f3;
+  /* background-image: linear-gradient(to right, #222429  0%, #2D2F36 20%, #222429  40%, #222429 100%); */
+  background-image: linear-gradient(to right, #2D2F36 0%, #222429 20%, #2D2F36 40%, #2D2F36 100%);
+  animation: shimmer 20s linear 0s infinite normal forwards;
 }
 
 @keyframes shimmer {
   0% {
-    background-position: -100vw 0;
+    background-position: -300vw 0;
   }
   100% {
-    background-position: 100vw 0;
+    background-position: 300vw 0;
   }
+}
+
+.background-neon {
+    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+    background-size: 400% 400%;
+    animation: background-gradient 15s ease infinite;
+}
+.background-uniswap-dark {
+    background: linear-gradient(-45deg, #222429, #222429, #2E3443, #3A3F4A);
+    background-size: 400% 400%;
+    animation: background-gradient 15s ease infinite;
+}
+.background-slate-grey {
+    background: linear-gradient(-45deg, #f4f4f4, #EDF0F2, #D0D5DF, #B0B5BF);
+    background-size: 400% 400%;
+    animation: background-gradient 15s ease infinite;
+}
+
+
+@keyframes background-gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
 }
 
 @keyframes pulse {

@@ -14,7 +14,7 @@ import { HtmlEvent } from "typings";
 // Validation
 import { Formik, FormikProps } from 'formik';
 import { validationSchemas } from "utils/validation";
-import ChangeUserLicenseFields from "./ChangeUserLicenseFields";
+import EditUserLicenseFields from "./EditUserLicenseFields";
 // Graphql Queries
 import { useMutation, ApolloError } from "@apollo/client";
 import { EDIT_USER_LICENSE } from "queries/user-mutations";
@@ -57,10 +57,10 @@ const ChangeUserLicenseForm = (props: ReactProps) => {
   useMutation<MutationData, EditUserLicenseArgsInput>(
     EDIT_USER_LICENSE, {
     variables: {
-      licenseNumber: reduxUser?.license?.licenseNumber,
-      licenseExpiry: reduxUser?.license?.licenseExpiry,
-      licenseCategory: reduxUser?.license?.licenseCategory,
-      licenseState: reduxUser?.license?.licenseState,
+      licenseNumber: undefined,
+      licenseExpiry: undefined,
+      licenseCategory: undefined,
+      licenseState: undefined,
     },
     update: (cache, { data }) => {
       let user = data.editUserLicense?.user;
@@ -114,14 +114,14 @@ const ChangeUserLicenseForm = (props: ReactProps) => {
       <Formik
         // 1. feed product data to edit into formik state.
         initialValues={{
-          licenseNumber: reduxUser?.license?.licenseNumber,
-          licenseExpiry: reduxUser?.license?.licenseExpiry,
-          licenseCategory: reduxUser?.license?.licenseCategory
-            ? reduxUser?.license?.licenseCategory?.split(',')
+          licenseNumber: reduxUser?.defaultLicense?.licenseNumber,
+          licenseExpiry: reduxUser?.defaultLicense?.licenseExpiry,
+          licenseCategory: reduxUser?.defaultLicense?.licenseCategory
+            ? reduxUser?.defaultLicense?.licenseCategory?.split(',')
             : [],
-          licenseState: reduxUser?.license?.licenseState,
+          licenseState: reduxUser?.defaultLicense?.licenseState,
         }}
-        validationSchema={validationSchemas.EditUserLicense}
+        validationSchema={validationSchemas.AddOrEditUserLicense}
         onSubmit={(values, { setSubmitting, resetForm }) => {
           // Dispatch Apollo Mutation after validation
           console.log("values::::::", values)
@@ -161,7 +161,7 @@ const ChangeUserLicenseForm = (props: ReactProps) => {
               <form onSubmit={ handleSubmit }>
                 <div className={classes.formContainerInner}>
 
-                  <ChangeUserLicenseFields
+                  <EditUserLicenseFields
                     {...fprops}
                   />
 

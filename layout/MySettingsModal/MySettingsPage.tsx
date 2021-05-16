@@ -4,7 +4,7 @@ import clsx from "clsx";
 import { UserPrivate } from "typings/gqlTypes";
 // Styles
 import { withStyles, WithStyles, createStyles, Theme, fade } from "@material-ui/core/styles";
-import { Colors, BorderRadius, Gradients } from "layout/AppTheme";
+import { Colors, BorderRadius, Gradients, isThemeDark, BorderRadius2x } from "layout/AppTheme";
 // Material UI
 import Typography from "@material-ui/core/Typography";
 import ClearIcon from "@material-ui/icons/Clear";
@@ -20,7 +20,8 @@ import PaymentMethods from "./PaymentMethods";
 import ChangePasswordForm from "./ChangePasswordForm";
 import ChangePayoutMethod from "./ChangePayoutMethod";
 import ChangeUserProfileForm from "./ChangeUserProfileForm";
-import ChangeUserLicenseForm from "./ChangeUserLicenseForm";
+import EditUserLicenseForm from "./UserLicenses/EditUserLicenseForm";
+import UserLicenses from "./UserLicenses";
 import AdvancedSettings from "./AdvancedSettings";
 // // Next
 // import dynamic from 'next/dynamic'
@@ -83,9 +84,10 @@ const MySettings = (props: ReactProps & ReduxProps) => {
       </div>
 
       <div className={classes.section}>
-        <ChangeUserLicenseForm
-          goBack={props.goBack}
-        />
+        {
+          user &&
+          <UserLicenses user={user} />
+        }
       </div>
 
       {
@@ -109,9 +111,6 @@ const MySettings = (props: ReactProps & ReduxProps) => {
 interface ReactProps extends WithStyles<typeof styles> {
   goBack(): void;
   asModal?: boolean;
-}
-interface QueryData {
-  user: UserPrivate;
 }
 interface ReduxProps {
 }
@@ -147,11 +146,18 @@ const styles = (theme: Theme) => createStyles({
     marginBottom: '0.5rem',
   },
   section: {
-    paddingBottom: '0.5rem',
-    marginBottom: '2rem',
-    borderBottom: theme.palette.type === 'dark'
+    padding: '2rem',
+    margin: '1rem 0rem',
+    borderRadius: BorderRadius2x,
+    // borderBottom: isThemeDark(theme)
+    //   ? `1px solid ${Colors.uniswapMediumNavy}`
+    //   : `1px solid ${Colors.slateGrey}`,
+    border: isThemeDark(theme)
       ? `1px solid ${Colors.uniswapMediumNavy}`
       : `1px solid ${Colors.slateGrey}`,
+    background: isThemeDark(theme)
+      ? Colors.uniswapDarkNavy
+      : Colors.cream,
   },
   sectionLast: {
     paddingBottom: '0.5rem',

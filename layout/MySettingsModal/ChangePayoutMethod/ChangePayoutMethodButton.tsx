@@ -100,10 +100,9 @@ const ChangePayoutMethodButton = (props: ReactProps) => {
           loading={loading}
           disabled={loading}
           loadingIconColor={Colors.blue}
-          // style={{
-          //   height: '40px',
-          //   width: '100%',
-          // }}
+          style={{
+            width: 150,
+          }}
         >
           Save changes
         </ButtonLoading>

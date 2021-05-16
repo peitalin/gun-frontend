@@ -133,6 +133,9 @@ const ChangePasswordFields: React.FC<ReactProps & FormikProps<FormikFields>> = (
           type="submit" // this sets off Form submit
           variant={"contained"}
           color={"secondary"}
+          style={{
+            width: 150,
+          }}
           replaceTextWhenLoading={true}
           loading={props.loading}
           loadingIconColor={Colors.cream}
