@@ -7,7 +7,6 @@ import { withStyles, WithStyles, Theme, createStyles } from "@material-ui/core/s
 import clsx from "clsx";
 // Material UI
 import Typography from "@material-ui/core/Typography";
-import Avatar from '@material-ui/core/Avatar';
 // Components
 import Loading from "components/Loading";
 import ErrorBounds from 'components/ErrorBounds';
@@ -34,10 +33,10 @@ const SellerProfile: React.FC<StoreProps> = (props) => {
               {"Private Seller"}
             </Typography>
             <Typography variant="body1" className={classes.licenseInfo}>
-              {user?.license?.licenseNumber}
+              {user?.defaultLicense?.licenseNumber}
             </Typography>
             <Typography variant="body1" className={classes.licenseInfo}>
-              {user?.license?.licenseState}
+              {user?.defaultLicense?.licenseState}
             </Typography>
           </div>
         </div>

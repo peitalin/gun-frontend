@@ -1,56 +1,54 @@
 import React from "react";
 // icon
-import UploadIcon from "components/Icons/UploadIcon";
 import Typography from "@material-ui/core/Typography";
-import { Colors } from "layout/AppTheme";
+import { Colors, BorderRadius } from "layout/AppTheme";
 import { useSelector } from "react-redux"
 import { GrandReduxState } from "reduxStore/grand-reducer";
 
 
 
-const SelectTagsPlaceholder = (props) => {
+const SelectTagsPlaceholder = (props: ReactProps) => {
 
   const isDarkMode = useSelector<GrandReduxState>(s => {
     return s.reduxLogin.darkMode === 'dark'
   })
 
+  let borderRad = BorderRadius
+
   return (
-    <div style={{
-      marginBottom: '1rem',
-    }}>
-      <Typography variant="body1" gutterBottom>
-        Tags
-      </Typography>
-      <div style={{
-        border: "1px solid rgb(221, 221, 221)",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        padding: "1rem",
-        backgroundColor: "rgb(254, 254, 254)",
-        borderRadius: '4px',
-      }}>
+      <div
+        className={isDarkMode ? "shimmer-dark" : 'shimmer'}
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          borderRadius: borderRad,
+          border: isDarkMode
+            ? `1px solid ${Colors.uniswapMediumGrey}`
+            : `1px solid ${Colors.slateGreyDarker}`,
+          ...props.style
+        }
+      }>
         <div
           style={{
-            border: isDarkMode
-              ? `1px solid ${Colors.uniswapGrey}`
-              : `1px solid ${Colors.slateGreyDarker}`,
-            background: isDarkMode
-              ? Colors.uniswapMediumNavy
-              : Colors.slateGrey,
+            // background: isDarkMode
+            //   ? Colors.uniswapMediumNavy
+            //   : Colors.slateGrey,
+            borderRadius: borderRad,
             height: 40,
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
             padding: '0.5rem 2rem',
-            borderRadius: '4px',
-            marginBottom: '0.5rem',
           }}
         >
         </div>
       </div>
-    </div>
   )
+}
+
+interface ReactProps {
+  style?: any
 }
 
 export default SelectTagsPlaceholder;

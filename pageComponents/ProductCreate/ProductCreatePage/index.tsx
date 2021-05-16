@@ -35,6 +35,10 @@ const SelectCategories = dynamic(() => import("../SelectCategories"), {
   loading: () => <SelectFieldPlaceholder title={"Category"}/>,
   ssr: false,
 })
+const SelectSellerLicense = dynamic(() => import("../SelectSellerLicense"), {
+  loading: () => <SelectFieldPlaceholder title={"License"}/>,
+  ssr: false,
+})
 const SelectActionType = dynamic(() => import("../SelectActionType"), {
   loading: () => <SelectFieldPlaceholder title={"Action Type"}/>,
   ssr: false,
@@ -131,19 +135,15 @@ const ProductCreatePage = (props: ReactProps) => {
   const [state, setState] = React.useState<{ loading: boolean }>({
     loading: false,
   });
-  const [showBeforeAfterPreviews, setShowBeforeAfterPreviews] = React.useState(false);
   const [loadCarouselPics, setLoadCarouselPics] = React.useState({});
   const [openPreviewPage, setOpenPreviewPage] = React.useState(false);
 
   // CSS media queries
   const theme = useTheme();
-  const xsDown = useMediaQuery(theme.breakpoints.down('xs'));
-  const smDown = useMediaQuery(theme.breakpoints.down('sm'));
   const mdDown = useMediaQuery(theme.breakpoints.down('md'));
   const router = useRouter();
 
   // Redux
-  const aClient = useApolloClient();
   const reducerName: ReducerName = ReducerName.reduxProductCreate;
   const actions = Actions[reducerName];
   const dispatch = useDispatch();
@@ -276,10 +276,10 @@ const ProductCreatePage = (props: ReactProps) => {
           magazineCapacity: values.magazineCapacity,
           barrelLength: values.barrelLength,
           dealerId: values.dealerId,
-          dealer: values.dealer,
           categoryId: values.categoryId,
           isPublished: values.isPublished,
           currentVariants: values.currentVariants,
+          sellerLicenseId: values.sellerLicenseId,
         }
       },
     }).then(res => {
@@ -389,10 +389,18 @@ const ProductCreatePage = (props: ReactProps) => {
               >
 
                 <SectionBorder>
-                  <TitleSerialNumber {...fprops} />
                   <SelectCategories
                     {...fprops}
                   />
+                  <SelectSellerLicense
+                    user={user}
+                    sellerLicenseId={undefined} // only for product edit
+                    {...fprops}
+                  />
+                </SectionBorder>
+
+                <SectionBorder>
+                  <TitleSerialNumber {...fprops} />
                   <SelectActionType
                     {...fprops}
                   />
