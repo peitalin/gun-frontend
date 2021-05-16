@@ -13,7 +13,7 @@ import { OrderAdmin, OrderStatus, UserPrivate } from "typings/gqlTypes";
 import Row from "./Row";
 // formatters
 import Loading from "components/Loading";
-import { formatDate } from "utils/dates";
+import { formatDateTime } from "utils/dates";
 
 
 
@@ -38,7 +38,7 @@ const OrderSummary = (props: ReactProps) => {
             `${buyer?.firstName} ${buyer?.lastName} – ${buyer?.email}`
           }
         />
-        <Row fieldName={"Created At:"} fieldValue={formatDate(order?.createdAt)} />
+        <Row fieldName={"Created At:"} fieldValue={formatDateTime(order?.createdAt)} />
         <Row
           fieldName={"Order Status:"}
           fieldValue={`${orderStatusHumanFriendly(order)} (${

@@ -21,7 +21,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import copy from "clipboard-copy";
 import currency from 'currency.js';
 import { useRouter } from "next/router"
-import { formatDate } from "utils/dates";
+import { formatDateTime } from "utils/dates";
 
 
 
@@ -76,7 +76,7 @@ const PayoutOrderRow = (props: ReactProps) => {
         </div>
         <div className={classes.flexItemWide}>
           <Typography variant="body2" className={classes.id}>
-            {formatDate(order.createdAt)}
+            {formatDateTime(order.createdAt)}
           </Typography>
         </div>
         <div className={classes.flexItem}>

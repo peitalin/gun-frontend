@@ -20,7 +20,7 @@ import InfoBuyerSellerDealer from "components/Gov/RowExpander/InfoBuyerSellerDea
 // router
 import Link from "next/link";
 
-import { formatDate } from "utils/dates";
+import { formatDateTime } from "utils/dates";
 import currency from 'currency.js';
 
 // graphql
@@ -124,7 +124,7 @@ const RowExpanderExpiringOrders = (props: RowExpanderProps) => {
         setOpen={setOpen}
       >
         <div className={classes.flexItemTiny}>{row.id}</div>
-        <div className={classes.flexItemSlim}>{formatDate(createdAt)}</div>
+        <div className={classes.flexItemSlim}>{formatDateTime(createdAt)}</div>
         <div className={clsx(
           classes.flexItemSlim,
           isExpired && classes.redText,

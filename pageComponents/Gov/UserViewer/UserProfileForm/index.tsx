@@ -82,7 +82,7 @@ const UserProfileForm: React.FC<ReactProps> = (props) => {
     <Formik
       initialValues={{
         userId: user?.id,
-        verified: !user?.license?.verified,
+        verified: !user?.defaultLicense?.verified,
       }}
       validationSchema={validationSchemas.ApproveUnapproveUserLicense}
       onSubmit={(values, { setSubmitting }) => {
@@ -90,7 +90,7 @@ const UserProfileForm: React.FC<ReactProps> = (props) => {
         console.log('formik values: ', values);
         toggleApproveUserLicense({
           userId: user?.id,
-          verified: !user?.license?.verified,
+          verified: !user?.defaultLicense?.verified,
         }).then(res => {
           console.log(res)
           setLoading(false)
@@ -120,7 +120,7 @@ const UserProfileForm: React.FC<ReactProps> = (props) => {
         return (
           <ApproveUserFormWrapper
             handleSubmit={handleSubmit}
-            licenseVerified={user?.license?.verified}
+            licenseVerified={user?.defaultLicense?.verified}
             onClickDebugPrint={() => {
               console.log("fprops.errors:", fprops.errors)
               setLoading(false)
@@ -156,12 +156,6 @@ interface ReactProps extends WithStyles<typeof styles> {
   searchUser(userId: string): void;
 }
 
-interface QueryData {
-  userByEmailOrIdAdminOnly: UserPrivate;
-}
-interface QueryVar {
-  userIdOrEmail: string;
-}
 interface MutData3 {
   adminApproveUserLicense: UserMutationResponse;
 }

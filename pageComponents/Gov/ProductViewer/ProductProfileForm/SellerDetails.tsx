@@ -13,7 +13,7 @@ import Typography from "@material-ui/core/Typography";
 import Loading from "components/Loading";
 import Link from "next/link";
 // helpers
-import { formatDate } from "utils/dates";
+import { formatDateTime } from "utils/dates";
 import { Colors } from "layout/AppTheme";
 import currency from 'currency.js';
 // validation
@@ -90,10 +90,10 @@ const SellerDetails = (props: ReactProps & FormikProps<FormikFields>) => {
             </div>
             <div className={classes.flexRow}>
               <Typography className={classes.fieldKey} variant="subtitle1">
-                License ID:
+                License Number:
               </Typography>
               <Typography className={classes.fieldInfo} variant="subtitle1">
-                {product?.store?.user?.license?.id}
+                {product?.sellerLicense?.licenseNumber}
               </Typography>
             </div>
 

@@ -23,7 +23,7 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 // snackbar
 import { useSnackbar, ProviderContext } from "notistack";
 // Copy and tooltip for ids when on mobile
-import { formatDate } from "utils/dates";
+import { formatDateTime } from "utils/dates";
 import { asCurrency as c } from "utils/prices";
 
 

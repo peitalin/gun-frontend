@@ -13,7 +13,7 @@ import Typography from "@material-ui/core/Typography";
 import SetDealerForm from "./SetDealerForm";
 // helpers
 import { Colors } from "layout/AppTheme";
-import { formatDate } from "utils/dates";
+import { formatDateTime } from "utils/dates";
 
 
 
@@ -79,7 +79,7 @@ const DealerProfileCard = (props: ReactProps) => {
             <Typography className={classes.fieldInfo} variant="subtitle1">
               {
                 user?.dealer?.createdAt
-                  ? formatDate(user?.dealer?.createdAt)
+                  ? formatDateTime(user?.dealer?.createdAt)
                   : "-"
               }
             </Typography>

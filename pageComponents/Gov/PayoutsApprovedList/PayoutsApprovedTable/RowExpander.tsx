@@ -17,7 +17,7 @@ import Typography from "@material-ui/core/Typography";
 // Snackbar
 import { useSnackbar } from "notistack";
 
-import { formatDate } from "utils/dates";
+import { formatDateTime } from "utils/dates";
 import currency from 'currency.js';
 
 // graphql
@@ -85,7 +85,7 @@ const RowExpander = (props: RowExpanderProps) => {
         </div>
         <div className={classes.flexItem}>
           <Typography variant="body2" className={classes.rowText}>
-            {formatDate(row.createdAt)}
+            {formatDateTime(row.createdAt)}
           </Typography>
         </div>
         <div className={clsx(classes.flexItem, classes.flexItemMaxWidth120)}>

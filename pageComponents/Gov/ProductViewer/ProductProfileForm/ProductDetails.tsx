@@ -14,7 +14,7 @@ import Loading from "components/Loading";
 import Link from "next/link";
 import ProductCardResponsive from "components/ProductCardResponsive";
 // helpers
-import { formatDate } from "utils/dates";
+import { formatDateTime } from "utils/dates";
 import { Colors } from "layout/AppTheme";
 import currency from 'currency.js';
 // validation
@@ -90,7 +90,7 @@ const ProductDetails = (props: ReactProps & FormikProps<FormikFields>) => {
                 Created At
               </Typography>
               <Typography className={classes.fieldInfo} variant="subtitle1">
-                {formatDate(product?.createdAt)}
+                {formatDateTime(product?.createdAt)}
               </Typography>
             </div>
             <div className={classes.flexRow}>
@@ -98,7 +98,7 @@ const ProductDetails = (props: ReactProps & FormikProps<FormikFields>) => {
                 Last Updated
               </Typography>
               <Typography className={classes.fieldInfo} variant="subtitle1">
-                {formatDate(product?.updatedAt)}
+                {formatDateTime(product?.updatedAt)}
               </Typography>
             </div>
 
@@ -184,10 +184,10 @@ const ProductDetails = (props: ReactProps & FormikProps<FormikFields>) => {
             </div>
             <div className={classes.flexRow}>
               <Typography className={classes.fieldKey} variant="subtitle1">
-                License ID:
+                License Number:
               </Typography>
               <Typography className={classes.fieldInfo} variant="subtitle1">
-                {product?.store?.user?.license?.id}
+                {product?.sellerLicense?.licenseNumber}
               </Typography>
             </div>
 

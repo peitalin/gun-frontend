@@ -12,10 +12,11 @@ import ErrorBounds from "components/ErrorBounds";
 import Typography from "@material-ui/core/Typography";
 import Loading from "components/Loading";
 // helpers
-import { formatDate } from "utils/dates";
+import { formatDateTime } from "utils/dates";
 import { Colors } from "layout/AppTheme";
 // validation
 import { FormikProps } from 'formik';
+import UserLicenseRowCard from "layout/MySettingsModal/UserLicenses/UserLicenseRowCard";
 
 
 
@@ -38,7 +39,7 @@ const UserProfileDetails = (props: ReactProps & FormikProps<FormikFields>) => {
 
   React.useEffect(() => {
     fprops.setFieldValue("userId", user?.id)
-    fprops.setFieldValue("verified", user?.license?.verified)
+    fprops.setFieldValue("verified", user?.defaultLicense?.verified)
   }, [user])
 
   return (
@@ -83,7 +84,7 @@ const UserProfileDetails = (props: ReactProps & FormikProps<FormikFields>) => {
                 Created At
               </Typography>
               <Typography className={classes.fieldInfo} variant="subtitle1">
-                {formatDate(user?.createdAt)}
+                {formatDateTime(user?.createdAt)}
               </Typography>
             </div>
 
@@ -102,12 +103,13 @@ const UserProfileDetails = (props: ReactProps & FormikProps<FormikFields>) => {
             <Typography className={classes.fieldTitle} variant="subtitle1">
               User Licence
             </Typography>
+
             <div className={classes.flexRow}>
               <Typography className={classes.fieldKey} variant="subtitle1">
                 License Number:
               </Typography>
               <Typography className={classes.fieldInfo} variant="subtitle1">
-                {user?.license?.licenseNumber}
+                {user?.defaultLicense?.licenseNumber}
               </Typography>
             </div>
             <div className={classes.flexRow}>
@@ -115,7 +117,7 @@ const UserProfileDetails = (props: ReactProps & FormikProps<FormikFields>) => {
                 License State:
               </Typography>
               <Typography className={classes.fieldInfo} variant="subtitle1">
-                {user?.license?.licenseState ?? "NA"}
+                {user?.defaultLicense?.licenseState ?? "NA"}
               </Typography>
             </div>
             <div className={classes.flexRow}>
@@ -123,7 +125,7 @@ const UserProfileDetails = (props: ReactProps & FormikProps<FormikFields>) => {
                 License Expiry:
               </Typography>
               <Typography className={classes.fieldInfo} variant="subtitle1">
-                {formatDate(user?.license?.licenseExpiry)}
+                {formatDateTime(user?.defaultLicense?.licenseExpiry)}
               </Typography>
             </div>
             <div className={classes.flexRow}>
@@ -131,23 +133,35 @@ const UserProfileDetails = (props: ReactProps & FormikProps<FormikFields>) => {
                 License Category:
               </Typography>
               <Typography className={classes.fieldInfo} variant="subtitle1">
-                {user?.license?.licenseCategory ?? "NA"}
+                {user?.defaultLicense?.licenseCategory ?? "NA"}
               </Typography>
             </div>
             <div className={classes.flexRow}>
               <Typography className={clsx(
                 classes.fieldKeyBold,
-                user?.license?.verified ? classes.blue : classes.red
+                user?.defaultLicense?.verified ? classes.blue : classes.red
               )} variant="subtitle1">
                 License Verified:
               </Typography>
               <Typography className={clsx(
                 classes.fieldInfoBold,
-                user?.license?.verified ? classes.blue : classes.red
+                user?.defaultLicense?.verified ? classes.blue : classes.red
               )} variant="subtitle1">
-                {`${user?.license?.verified}`}
+                {`${user?.defaultLicense?.verified}`}
               </Typography>
             </div>
+
+            {
+              (user?.licenses ?? []).map(license => {
+                return (
+                  <UserLicenseRowCard
+                    isHighlighted={false}
+                    user={user}
+                    license={license}
+                  />
+                )
+              })
+            }
 
             <Typography className={classes.fieldTitle} variant="subtitle1">
               Store

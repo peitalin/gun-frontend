@@ -12,7 +12,7 @@ import ErrorBounds from "components/ErrorBounds";
 import Typography from "@material-ui/core/Typography";
 import Loading from "components/Loading";
 // helpers
-import { formatDate } from "utils/dates";
+import { formatDateTime } from "utils/dates";
 import { Colors } from "layout/AppTheme";
 // validation
 import { FormikProps } from 'formik';
@@ -131,7 +131,7 @@ const DealerProfileDetails = (props: ReactProps & FormikProps<FormikFields>) => 
                 Created At
               </Typography>
               <Typography className={classes.fieldInfo} variant="subtitle1">
-                {formatDate(dealer?.createdAt)}
+                {formatDateTime(dealer?.createdAt)}
               </Typography>
             </div>
 
@@ -171,7 +171,7 @@ const DealerProfileDetails = (props: ReactProps & FormikProps<FormikFields>) => 
                 License Number:
               </Typography>
               <Typography className={classes.fieldInfo} variant="subtitle1">
-                {user?.license?.licenseNumber ?? "-"}
+                {user?.defaultLicense?.licenseNumber ?? "-"}
               </Typography>
             </div>
             <div className={classes.flexRow}>
@@ -179,7 +179,7 @@ const DealerProfileDetails = (props: ReactProps & FormikProps<FormikFields>) => 
                 License State:
               </Typography>
               <Typography className={classes.fieldInfo} variant="subtitle1">
-                {user?.license?.licenseState ?? "-"}
+                {user?.defaultLicense?.licenseState ?? "-"}
               </Typography>
             </div>
             <div className={classes.flexRow}>
@@ -188,8 +188,8 @@ const DealerProfileDetails = (props: ReactProps & FormikProps<FormikFields>) => 
               </Typography>
               <Typography className={classes.fieldInfo} variant="subtitle1">
                 {
-                  user?.license?.licenseExpiry
-                  ? formatDate(user?.license?.licenseExpiry)
+                  user?.defaultLicense?.licenseExpiry
+                  ? formatDateTime(user?.defaultLicense?.licenseExpiry)
                   : "-"
                 }
               </Typography>
@@ -199,21 +199,21 @@ const DealerProfileDetails = (props: ReactProps & FormikProps<FormikFields>) => 
                 License Category:
               </Typography>
               <Typography className={classes.fieldInfo} variant="subtitle1">
-                {user?.license?.licenseCategory ?? "-"}
+                {user?.defaultLicense?.licenseCategory ?? "-"}
               </Typography>
             </div>
             <div className={classes.flexRow}>
               <Typography className={clsx(
                 classes.fieldKeyBold,
-                user?.license?.verified ? classes.blue : classes.red
+                user?.defaultLicense?.verified ? classes.blue : classes.red
               )} variant="subtitle1">
                 License Verified:
               </Typography>
               <Typography className={clsx(
                 classes.fieldInfoBold,
-                user?.license?.verified ? classes.blue : classes.red
+                user?.defaultLicense?.verified ? classes.blue : classes.red
               )} variant="subtitle1">
-                {`${user?.license?.verified}`}
+                {`${user?.defaultLicense?.verified}`}
               </Typography>
             </div>
 

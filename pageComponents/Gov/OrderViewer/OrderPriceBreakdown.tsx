@@ -11,7 +11,7 @@ import {
 // Material UI
 import Typography from "@material-ui/core/Typography";
 // helpers
-import { formatDate } from "utils/dates";
+import { formatDateTime } from "utils/dates";
 import currency from "currency.js";
 // validation
 import { FormikProps } from 'formik';

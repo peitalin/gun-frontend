@@ -21,7 +21,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import copy from "clipboard-copy";
 import currency from 'currency.js';
 import { useRouter } from "next/router"
-import { formatDate } from "utils/dates";
+import { formatDateTime } from "utils/dates";
 
 
 const CancelledOrderRow = (props: ReactProps) => {
@@ -62,7 +62,7 @@ const CancelledOrderRow = (props: ReactProps) => {
       </Tooltip>
       <div className={classes.flexItemWide}>
         <Typography variant="body2" className={classes.id}>
-          {formatDate(order?.currentSnapshot?.createdAt)}
+          {formatDateTime(order?.currentSnapshot?.createdAt)}
         </Typography>
       </div>
       <div className={classes.flexItem}>
