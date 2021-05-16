@@ -88,7 +88,6 @@ const VisaPurchaseProduct = (props: ReactProps) => {
 
   const [loading, setLoading] = React.useState(false)
 
-  const [chosenLicenseId, setChosenLicenseId] = React.useState<string>(undefined)
   const [chosenLicense, setChosenLicense] = React.useState<SelectOptionLicense>(undefined)
 
   const product = props.product;
@@ -120,7 +119,7 @@ const VisaPurchaseProduct = (props: ReactProps) => {
     variables: {
       productId: undefined,
       total: undefined,
-      chosenLicenseId: chosenLicenseId,
+      buyerLicenseId: chosenLicense?.value?.id,
       stripeAuthorizePaymentData: undefined,
       bidId: undefined,
     },
@@ -151,7 +150,7 @@ const VisaPurchaseProduct = (props: ReactProps) => {
       productId: undefined,
       total: undefined,
       buyerId: undefined,
-      chosenLicenseId: undefined,
+      buyerLicenseId: undefined,
       sellerStoreId: undefined,
       paymentIntentId: undefined,
       bidId: undefined,
@@ -330,11 +329,6 @@ const VisaPurchaseProduct = (props: ReactProps) => {
         { variant: "error"}
       )
       throw new Error(`${error?.message}`)
-      // snackbar.enqueueSnackbar(
-      //   `createNewPaymentMethod error: ${JSON.stringify(error)}`,
-      //   { variant: "error"}
-      // )
-      return
     }
     return paymentMethod
   }
@@ -366,7 +360,7 @@ const VisaPurchaseProduct = (props: ReactProps) => {
       variables: {
         productId: product.id,
         total: purchasePrice,
-        chosenLicenseId: chosenLicenseId,
+        buyerLicenseId: chosenLicense?.value?.id,
         stripeAuthorizePaymentData: JSON.stringify(stripeAuthorizePaymentData),
         bidId: props.selectedBid?.id,
       },
@@ -454,7 +448,6 @@ const VisaPurchaseProduct = (props: ReactProps) => {
         l => props.user.defaultLicenseId === (l.value as User_Licenses).id
       )
       setChosenLicense(defaultLicense)
-      setChosenLicenseId(props.user.defaultLicenseId)
     }
   }, [props.user.defaultLicenseId])
 
@@ -554,11 +547,17 @@ const VisaPurchaseProduct = (props: ReactProps) => {
                           productId: product.id,
                           total: purchasePrice,
                           buyerId: props.user.id,
-                          chosenLicenseId: chosenLicenseId,
+                          buyerLicenseId: chosenLicense?.value?.id,
                           sellerStoreId: product.store.id,
                           paymentIntentId: paymentIntentId,
                           bidId: props.selectedBid?.id,
                         },
+                      }).catch(err => {
+                        cancelPaymentIntentFailure({
+                          variables: {
+                            paymentIntentId: paymentIntentId,
+                          }
+                        })
                       })
                     }
                   })
@@ -653,7 +652,7 @@ interface Mdata1 {
 interface Mvar1 {
   productId: string
   total: number
-  chosenLicenseId: string
+  buyerLicenseId: string
   stripeAuthorizePaymentData: string
   bidId?: string
 }
@@ -664,7 +663,7 @@ interface Mvar2 {
   productId: string
   total: number
   buyerId: string
-  chosenLicenseId: string
+  buyerLicenseId: string
   sellerStoreId: string
   paymentIntentId: string
   bidId?: string

@@ -7,14 +7,14 @@ import { NextPage, NextPageContext } from 'next';
 import { serverApolloClient } from "utils/apollo";
 import { ApolloClient } from "@apollo/client";
 // Components
-import Loading from "components/Loading";
+import LoadingBarSSR from "components/LoadingBarSSR";
 // Meta headers
 import MetaHeadersPage from "layout/MetaHeadersPage";
 // import ProductId from "pageComponents/P/ProductId";
 // Dynamic
 import dynamic from "next/dynamic";
 const ProductId = dynamic(() => import("pageComponents/P/ProductId"), {
-  loading: () => <Loading/>,
+  loading: () => <LoadingBarSSR/>,
   ssr: false,
 })
 

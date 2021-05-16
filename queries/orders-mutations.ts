@@ -15,7 +15,7 @@ export const AUTHORIZE_PAYMENT = gql`
     authorizePayment(
       productId: $productId
       total: $total
-      buyerLicenseId: $buyerLicenseid
+      buyerLicenseId: $buyerLicenseId
       stripeAuthorizePaymentData: $stripeAuthorizePaymentData
       bidId: $bidId
     ) {
@@ -38,7 +38,7 @@ export const CONFIRM_ORDER = gql`
       productId: $productId
       total: $total
       buyerId: $buyerId
-      buyerLicenseId: $buyerLicenseid
+      buyerLicenseId: $buyerLicenseId
       sellerStoreId: $sellerStoreId
       paymentIntentId: $paymentIntentId
       bidId: $bidId
