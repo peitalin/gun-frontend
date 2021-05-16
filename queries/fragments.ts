@@ -205,6 +205,10 @@ export const ProductFragment = gql`
         }
       }
     }
+    sellerLicenseId
+    sellerLicense {
+      ...UserLicenseFragment
+    }
   }
   ${UserLicenseFragment}
   ${ProductVariantsFragment}
@@ -281,45 +285,6 @@ export const StoresFragment = gql`
     }
   }
   ${ImageFragment}
-`;
-
-
-export const UsersFragment = gql`
-  fragment UsersFragment on UserPrivate {
-    store {
-      ...StoresFragment
-    }
-    id
-    email
-    username
-    userRole
-    createdAt
-    updatedAt
-    firstName
-    lastName
-    emailVerified
-    storeId
-    payoutMethod {
-      id
-      storeId
-      createdAt
-      updatedAt
-      payoutType
-      bsb
-      accountNumber
-      accountName
-    }
-    payoutMethodId
-    isDeleted
-    isSuspended
-    lastSeen
-    defaultLicenseId
-    defaultLicense {
-      ...UserLicenseFragment
-    }
-  }
-  ${StoresFragment}
-  ${UserLicenseFragment}
 `;
 
 
@@ -698,15 +663,12 @@ export const UserPrivateFragment = gql`
     emailVerified
     userRole
     isSuspended
+    defaultLicenseId
     defaultLicense {
-      id
-      licenseNumber
-      licenseCategory
-      licenseExpiry
-      licenseState
-      verified
-      userId
-      createdAt
+      ...UserLicenseFragment
+    }
+    licenses {
+      ...UserLicenseFragment
     }
     phoneNumber {
       id
@@ -766,6 +728,7 @@ export const UserPrivateFragment = gql`
     # }
   }
   ${StorePrivateFragment}
+  ${UserLicenseFragment}
 `;
 // # ${ProductFragment}
 // ${OrderFragment}

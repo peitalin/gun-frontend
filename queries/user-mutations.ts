@@ -145,6 +145,36 @@ export const CONFIRM_RESET_PASSWORD = gql`
 // # userId: $userId,
 // NOTE: userID is extracted from the auth-cookie automatically server-side
 // It is attached automatically if you are logged in.
+export const ADD_USER_LICENSE = gql`
+  mutation addUserLicense(
+    $licenseNumber: String!
+    $licenseExpiry: Date!
+    $licenseCategory: String
+    $licenseState: String
+  ) {
+    addUserLicense(
+      licenseNumber: $licenseNumber
+      licenseExpiry: $licenseExpiry
+      licenseCategory: $licenseCategory
+      licenseState: $licenseState
+    ) {
+      user {
+        id
+        lastName
+        firstName
+        username
+        email
+        ... on UserPrivate {
+          ...UserPrivateFragment
+        }
+      }
+    }
+  }
+  ${UserPrivateFragment}
+`;
+
+
+
 export const EDIT_USER_LICENSE = gql`
   mutation editUserLicense(
     $licenseNumber: String!
@@ -173,3 +203,48 @@ export const EDIT_USER_LICENSE = gql`
   ${UserPrivateFragment}
 `;
 
+
+export const DELETE_USER_LICENSE = gql`
+  mutation deleteUserLicense(
+    $licenseId: String!
+  ) {
+    deleteUserLicense(
+      licenseId: $licenseId
+    ) {
+      user {
+        id
+        lastName
+        firstName
+        username
+        email
+        ... on UserPrivate {
+          ...UserPrivateFragment
+        }
+      }
+    }
+  }
+  ${UserPrivateFragment}
+`;
+
+
+export const SET_DEFAULT_LICENSE_ID = gql`
+  mutation setDefaultLicenseId(
+    $licenseId: String!
+  ) {
+    setDefaultLicenseId(
+      licenseId: $licenseId
+    ) {
+      user {
+        id
+        lastName
+        firstName
+        username
+        email
+        ... on UserPrivate {
+          ...UserPrivateFragment
+        }
+      }
+    }
+  }
+  ${UserPrivateFragment}
+`;
