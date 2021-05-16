@@ -39,6 +39,7 @@ export const isSignUpInputOk =
   password,
   licenseNumber,
   licenseExpiry,
+  licenseCategory,
   licenseState,
   phoneNumber,
   countryCode,
@@ -62,10 +63,13 @@ export const isSignUpInputOk =
     snackbar.enqueueSnackbar("Mobile number (country code) missing!", { variant: "error" })
     return false
   } else if (!licenseNumber) {
-    snackbar.enqueueSnackbar("Gun owner license number missing!", { variant: "error" })
+    snackbar.enqueueSnackbar("Gun license number missing!", { variant: "error" })
     return false
   } else if (!licenseExpiry) {
     snackbar.enqueueSnackbar("License expiry date missing!", { variant: "error" })
+    return false
+  } else if (!licenseCategory) {
+    snackbar.enqueueSnackbar("License category missing!", { variant: "error" })
     return false
   } else if (!licenseState) {
     snackbar.enqueueSnackbar("License state missing!", { variant: "error" })

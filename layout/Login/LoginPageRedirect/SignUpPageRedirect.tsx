@@ -18,8 +18,14 @@ import {
   createLicenseCategorySuggestions,
   createLicenseStateSuggestions,
   SelectOption,
-} from "layout/MySettingsModal/ChangeUserLicenseForm/licenseUtils";
+} from "layout/MySettingsModal/UserLicenses/EditUserLicenseForm/licenseUtils";
 import DropdownInput from "components/Fields/DropdownInput";
+import SelectTagsPlaceholder from 'pageComponents/ProductCreate/SSR/SelectTagsPlaceholder';
+const MultiDropdownSelect = dynamic(() => import('components/Fields/MultiDropdownSelect'), {
+  loading: () => <SelectTagsPlaceholder />,
+  ssr: false
+})
+import { createOption } from "components/Fields/MultiDropdownSelect";
 
 import dynamic from "next/dynamic";
 import Loading from 'components/Loading';
@@ -50,6 +56,7 @@ const SignUpPageRedirect: React.FC<ReactProps> = (props) => {
     lastName: "",
     licenseNumber: "",
     licenseExpiry: undefined,
+    licenseCategory: [],
     licenseState: undefined,
     phoneNumber: "",
     countryCode: "",
@@ -65,6 +72,7 @@ const SignUpPageRedirect: React.FC<ReactProps> = (props) => {
       lastName: "",
       licenseNumber: "",
       licenseExpiry: undefined,
+      licenseCategory: [] as string[],
       licenseState: undefined,
       phoneNumber: "",
       countryCode: "",
@@ -80,6 +88,7 @@ const SignUpPageRedirect: React.FC<ReactProps> = (props) => {
       lastName: state.lastName,
       licenseNumber: state.licenseNumber,
       licenseExpiry: state.licenseExpiry,
+      licenseCategory: state.licenseCategory.join(", "),
       licenseState: state.licenseState,
       phoneNumber: state.phoneNumber,
       countryCode: state.countryCode,
@@ -102,7 +111,8 @@ const SignUpPageRedirect: React.FC<ReactProps> = (props) => {
 
   const { classes } = props;
 
-  const [selectedDate, setSelectedDate] = React.useState<Date>(undefined);
+  const [selectedDate, setSelectedDate] = React.useState<Date>(null);
+  // must be null so initial date is empty
 
   const handleDateChange = (date) => {
     // console.log("incoming date:", date)
@@ -115,11 +125,17 @@ const SignUpPageRedirect: React.FC<ReactProps> = (props) => {
   };
 
   let licenseStateOptions = createLicenseStateSuggestions()
-  // initial stateShape
   let initialStateLicense = licenseStateOptions
     .find(d => d.value === state.licenseState)
   const [licenseState, setLicenseState] = React.useState(initialStateLicense)
 
+  let licenseCategoryOptions = createLicenseCategorySuggestions(state.licenseState)
+
+  const handleSetLicenseCategory = (options: SelectOption[]) => {
+    let newCategories = (options ?? []).map(t => t.value)
+    // Formik
+    setState(s => ({ ...s, licenseCategory: newCategories }))
+  }
 
   return (
   <ErrorBounds className={classes.outerContainer}>
@@ -223,6 +239,21 @@ const SignUpPageRedirect: React.FC<ReactProps> = (props) => {
       </FormControl>
 
       <FormControl margin="dense" required fullWidth>
+        <MultiDropdownSelect
+          // disabled={loading}
+          // loading={loading}
+          initialTags={
+            (state.licenseCategory ?? []).map(t => createOption(t))
+          }
+          options={licenseCategoryOptions}
+          setTags={handleSetLicenseCategory}
+          disableInitialValidationMessage={true}
+          // errorMessage={formik.errors?.licenseCategory?.[0]}
+          // touched={formik.touched?.licenseCategory?.[0]}
+        />
+      </FormControl>
+
+      <FormControl margin="dense" required fullWidth>
         <MuiPhoneNumber
           //@ts-ignore
           name={"phone"}
@@ -311,6 +342,7 @@ interface ReactProps extends WithStyles<typeof styles> {
     lastName?: string
     licenseNumber: string,
     licenseExpiry: Date,
+    licenseCategory: string,
     licenseState: string,
     phoneNumber?: string,
     countryCode?: string,
