@@ -10,6 +10,7 @@ import {
   Product,
   ProductEditInput,
   ProductVariantInput,
+  UserPrivate,
   ID,
 } from "typings/gqlTypes";
 import { Colors } from "layout/AppTheme";
@@ -52,6 +53,10 @@ import SelectFieldPlaceholder from "pageComponents/ProductCreate/SSR/SelectField
 // import SelectCategories from "pageComponents/ProductCreate/SelectCategories"
 const SelectCategories = dynamic(() => import("pageComponents/ProductCreate/SelectCategories"), {
   loading: () => <SelectFieldPlaceholder title={"Category"}/>,
+  ssr: false,
+})
+const SelectSellerLicense = dynamic(() => import("pageComponents/ProductCreate/SelectSellerLicense"), {
+  loading: () => <SelectFieldPlaceholder title={"License"}/>,
   ssr: false,
 })
 // import SelectActionType from "pageComponents/ProductCreate/SelectFieldPlaceholder"
@@ -134,11 +139,13 @@ const ProductEditPage = (props: ReactProps) => {
     reduxProductEdit, // Seeded product edit data from redux
     dzuPreviewOrder,
     dzuPreviewItems,
+    user,
   } = useSelector<GrandReduxState, ReduxState>(state => {
     return {
       reduxProductEdit: state[reducerName],
       dzuPreviewOrder: state[reducerName]?.dzuPreviewOrder,
       dzuPreviewItems: state[reducerName]?.dzuPreviewItems,
+      user: state.reduxLogin.user,
     }
   });
 
@@ -181,6 +188,8 @@ const ProductEditPage = (props: ReactProps) => {
     }
   })
 
+  console.log("prodductEDIT:  ", product)
+
 
   return (
   <div
@@ -221,9 +230,9 @@ const ProductEditPage = (props: ReactProps) => {
               isPublished: values.isPublished,
               productId: values.productId,
               dealerId: values.dealerId,
-              dealer: values.dealer,
               magazineCapacity: values.magazineCapacity,
               barrelLength: values.barrelLength,
+              sellerLicenseId: values.sellerLicenseId,
             }
           },
         }).finally(() => {
@@ -267,6 +276,11 @@ const ProductEditPage = (props: ReactProps) => {
             <SectionBorder>
               <TitleSerialNumber {...fprops} />
               <SelectCategories
+                {...fprops}
+              />
+              <SelectSellerLicense
+                user={user}
+                sellerLicenseId={product?.sellerLicenseId} // only for product edit
                 {...fprops}
               />
               <SelectActionType
@@ -342,7 +356,7 @@ const ProductEditPage = (props: ReactProps) => {
                     width: '150px',
                     height: 40,
                   }}
-                  loadingIconColor={Colors.secondary}
+                  loadingIconColor={Colors.cream}
                   replaceTextWhenLoading={true}
                   loading={state.loading || apolloLoading}
                   disabled={!process.browser || apolloLoading}
@@ -443,6 +457,7 @@ interface ReduxState {
   reduxProductEdit: ReduxStateProductEdit;
   dzuPreviewOrder: DzuPreviewOrder[];
   dzuPreviewItems: DzuPreviewItem[];
+  user: UserPrivate
 }
 
 export interface MutationData {

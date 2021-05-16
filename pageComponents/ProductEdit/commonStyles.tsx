@@ -55,6 +55,7 @@ export const styles = (theme: Theme) => createStyles({
   },
   button: {
     margin: 0,
+    color: Colors.cream,
   },
   formContainer: {
     position: 'relative',
