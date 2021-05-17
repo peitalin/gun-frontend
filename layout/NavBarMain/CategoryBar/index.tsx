@@ -3,7 +3,7 @@ import { Categories, Product } from "typings/gqlTypes";
 // Styles
 import clsx from "clsx";
 import { withStyles, WithStyles } from "@material-ui/core/styles";
-import { styles } from "../styles";
+import { styles } from "./styles";
 import Hidden from "components/HiddenFix";
 // hooks
 import Link from "next/link";

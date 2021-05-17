@@ -49,80 +49,88 @@ const DesktopMainBar = (props: DesktopMainBarProps) => {
 
       <div style={{ flexBasis: '0.5rem' }}></div>
 
-      <Link href="/">
-        <a className={classes.buttonLinkLogo}>
-          <Logo fillColor={
-            // override logo color for desktop /start page light mode
-            (isStartPage && !props.isDarkMode) ? Colors.black : color
-          }/>
-        </a>
-      </Link>
+      <div className={classes.menuButtonsContainer}>
+        <Link href="/">
+          <a className={classes.buttonLinkLogo}>
+            <Logo fillColor={
+              // override logo color for desktop /start page light mode
+              (isStartPage && !props.isDarkMode) ? Colors.black : color
+            }/>
+          </a>
+        </Link>
+        {/* <div className={classes.blurBackground}/> */}
+      </div>
 
       <div style={{ flexGrow: 1}}/>
 
-      <ToggleDarkMode/>
 
-      <Link href="/sell">
-        <a className={classes.buttonLink}>
-          <Button
-              className={classes.navbarButton}
-              variant={"text"}
-              color="primary"
-            >
-              <div>
-                <span className={
-                  endRoute === 'sell' ? classes.selectedRouteText : null
-                } style={{ color: color }}>
-                  Sell
-                </span>
-              </div>
-            </Button>
-        </a>
-      </Link>
 
-      {
-        loggedIn
-        ? <Link href="/orders">
-            <a className={classes.buttonLink}>
-              <Button
+      <div className={classes.menuButtonsContainer}>
+
+        <div className={classes.blurBackground}/>
+
+        <ToggleDarkMode/>
+
+        <Link href="/sell">
+          <a className={classes.buttonLink}>
+            <Button
                 className={classes.navbarButton}
                 variant={"text"}
                 color="primary"
               >
                 <div>
                   <span className={
-                    endRoute === '/orders' ? classes.selectedRouteText : null
+                    endRoute === 'sell' ? classes.selectedRouteText : null
                   } style={{ color: color }}>
-                    Orders
+                    Sell
                   </span>
                 </div>
               </Button>
-            </a>
-          </Link>
-        : <div className={classes.marginRight}>
-            <Login
-              className={classes.navbarButton}
-              buttonText={"Orders"}
-              titleLogin={"Login to continue"}
-              buttonProps={{
-                style: { color: color }
-              }}
-            />
-          </div>
-      }
+          </a>
+        </Link>
 
-      {
-        loggedIn
-        ? <UserMenu className={classes.navbarButton} color={color} />
-        : <div className={classes.marginRight}>
-            <Login
+        {
+          loggedIn
+          ? <Link href="/orders">
+              <a className={classes.buttonLink}>
+                <Button
+                  className={classes.navbarButton}
+                  variant={"text"}
+                  color="primary"
+                >
+                  <div>
+                    <span className={
+                      endRoute === '/orders' ? classes.selectedRouteText : null
+                    } style={{ color: color }}>
+                      Orders
+                    </span>
+                  </div>
+                </Button>
+              </a>
+            </Link>
+          : <div className={classes.marginRight}>
+              <Login
+                className={classes.navbarButton}
+                buttonText={"Orders"}
+                titleLogin={"Login to continue"}
+                buttonProps={{
+                  style: { color: color }
+                }}
+              />
+            </div>
+        }
+
+        {
+          loggedIn
+          ? <UserMenu className={classes.navbarButton} color={color} />
+          : <Login
               className={classes.navbarButton}
               buttonProps={{
                 style: { color: color }
               }}
             />
-          </div>
-      }
+        }
+      </div>
 
     </div>
   )

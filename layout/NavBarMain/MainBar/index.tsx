@@ -47,11 +47,9 @@ const MainBar = (props: ReactProps) => {
   let _isStartPage = isStartPageFn(router)
   let _isFeaturedPage = isFeaturedPageFn(router)
 
-  let color = _isMainPages || _isStartPage
-    ? Colors.cream
-    : isDarkMode
-      ? Colors.slateGrey
-      : Colors.black
+  let color = isDarkMode
+    ? Colors.slateGrey
+    : Colors.black
 
 
   const endRoute = router.pathname.split('/').pop();
@@ -110,7 +108,6 @@ const MainBarSSRWrapper: React.FC<MainBarSSRWrapperProps> = (props) => {
             ? clsx( classes.baseBarHomePage, classes.baseBarDitherNone)
             : clsx( classes.baseBarDashboard)
         }>
-          <div className={classes.blurBackground}></div>
           {props.children}
         </nav>
       </ShowOnMobileOrDesktopSSR>

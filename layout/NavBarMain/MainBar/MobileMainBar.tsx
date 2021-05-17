@@ -46,6 +46,8 @@ const MobileMainBar = (props: MobileMainBarProps) => {
   return (
     <div className={classes.baseBarInnerMobile}>
 
+      <div className={classes.blurBackgroundMobile}/>
+
       <div className={clsx(
         "fadeIn",
         hide ? classes.mainBarInnerHide : classes.mainBarInner,

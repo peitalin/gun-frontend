@@ -119,7 +119,7 @@ const styles = (theme: Theme) => createStyles({
   mobileMenuExpanderRoot: {
     zIndex: 2,
     position: "absolute", // relative to MainBar, which is under NewsBar
-    top: `calc(${MainBarHeightDashboard}px + 1rem - 1px)`, // 1px tucked under navbar
+    top: `calc(${MainBarHeightDashboard}px + 1.5rem - 1px)`, // 1px tucked under navbar
     left: '0.5rem',
     width: 'calc(100% - 1rem)',
     borderRadius: BorderRadius,

@@ -83,27 +83,6 @@ const styles = (theme: Theme) => createStyles({
     alignItems: 'center',
     padding: '1rem',
   },
-  mobileMenuExpanderRoot: {
-    zIndex: 2,
-    position: "absolute", // relative to MainBar, which is under NewsBar
-    top: MainBarHeightDashboard - 1, // 1px tucked under navbar
-    left: 0,
-    width: '100%',
-    background: Colors.uniswapDarkNavy,
-    borderTop: `1px solid ${Colors.uniswapLightNavy}`,
-    // transform: "translateY(-150%)",
-    // transitionDuration: '100ms',
-    // transition: theme.transitions.create(['all'], {
-    //   easing: theme.transitions.easing.easeIn,
-    //   duration: "100ms",
-    // })
-  },
-  mobileMenuOuterContainer: {
-    justifyContent: 'center',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
   buttonCreateAccount: {
     marginRight: '0.5rem',
     backgroundImage: Gradients.gradientUniswapFluro.background,

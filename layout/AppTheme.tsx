@@ -263,13 +263,14 @@ export const Gradients = {
     color2: Colors.black,
   },
   gradientLightBlack:  {
-    // background: `linear-gradient(120deg, ${Colors.black} 0%, ${Colors.slateGreyLightBlack} 90%)`,
-    background: `linear-gradient(120deg, ${Colors.slateGreyDarker} 0%, ${Colors.slateGreyDark} 90%)`,
+    background: `linear-gradient(120deg, ${Colors.black} 0%, ${Colors.slateGreyBlack} 90%)`,
+    // background: `linear-gradient(120deg, ${Colors.slateGreyDarker} 0%, ${Colors.slateGreyDark} 90%)`,
     color1: Colors.black,
-    color2: Colors.slateGreyLightBlack,
+    color2: Colors.slateGreyBlack,
   },
   gradientBlackDitherDown:  {
-    background: `linear-gradient(180deg, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0) 100%)`,
+    background: `linear-gradient(180deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 80%,  rgba(0,0,0,0) 100%)`,
+    // background: `linear-gradient(180deg, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0) 100%)`,
     color1: Colors.black,
     color2: 'rgba(0,0,0,0)',
   },
@@ -686,6 +687,9 @@ export const createAppTheme = (darkModeStr: "dark"|"light"): ThemeOptions =>  {
         },
         paperWidthMd: {
           maxWidth: '100%',
+        },
+        container: {
+          backdropFilter: "blur(2px)",
         },
       },
       MuiTouchRipple: {

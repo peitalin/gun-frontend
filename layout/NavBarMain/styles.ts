@@ -21,13 +21,6 @@ export const CategoryBarHeightMobile = 30;
 // export const NavBarHeight = MainBarHeight + NewsBarHeight + CategoryBarHeight;
 export const NavBarHeight = MainBarHeightHomePage + NewsBarHeight;
 
-const categoryBarColor = Colors.black
-const categoryLinkColor = Colors.slateGrey
-const categoryLinkColorHover = Colors.gradientUniswapBlue1
-
-const categoryLinkColor2 = Colors.darkGrey
-const categoryLinkColorHover2 = Colors.secondaryBright
-
 
 /// hover colors for menu buttons
 export const buttonHoverDark = fade(Colors.uniswapDarkNavy, 0.7)
@@ -58,7 +51,9 @@ export const styles = (theme: Theme) => createStyles({
     alignItems: "center",
   },
   baseBarDither: {
-    background: Gradients.gradientBlackDitherDown.background,
+    background: isThemeDark(theme)
+      ? Gradients.gradientBlackDitherDown.background
+      : 'unset',
     // filter: 'blur(8px)',
     // transition: theme.transitions.create(['filter'], {
     //   easing: theme.transitions.easing.easeIn,
@@ -67,16 +62,19 @@ export const styles = (theme: Theme) => createStyles({
     // "&:hover": {
     //   filter: 'blur(0px)',
     // },
-    padding: '2rem',
-    paddingTop: '2rem',
+    padding: '0.5rem',
+    paddingTop: '1rem',
     // top: `${NewsBarHeight}px`,
     top: 0,
   },
   baseBarDitherSm: {
-    background: Gradients.gradientBlackDitherDown.background,
+    background: isThemeDark(theme)
+      ? Gradients.gradientBlackDitherDown.background
+      : 'unset',
     padding: '0rem',
-    paddingTop: '1rem',
-    top: `${NewsBarHeight}px`,
+    paddingTop: '0rem',
+    // top: `${NewsBarHeight}px`,
+    top: 0,
   },
   baseBarDitherNone: {
     // background: Gradients.gradientBlackDitherDown.background,
@@ -85,8 +83,8 @@ export const styles = (theme: Theme) => createStyles({
       // opacity: 1,
     },
     padding: '0.5rem',
-    paddingTop: '1.5rem',
-    paddingBottom: '1.5rem',
+    paddingTop: '0.5rem',
+    paddingBottom: '1rem',
     top: `${NewsBarHeight}px`,
   },
   baseBarDitherNoneSm: {
@@ -127,6 +125,41 @@ export const styles = (theme: Theme) => createStyles({
   width100: {
     width: '100%',
   },
+  menuButtonsContainer: {
+    display: 'flex',
+    position: 'relative',
+    padding: '0.5rem',
+  },
+  blurBackground: {
+    position: "absolute",
+    height: '100%',
+    width: '100%',
+    backdropFilter: "blur(6px)",
+    background: isThemeDark(theme)
+      ? 'rgba(18, 18, 29, 0.3)'
+      : 'rgba(245, 245, 255, 0.4)',
+    top: 0,
+    right: 0,
+    border: isThemeDark(theme)
+      ? `1px solid ${Colors.uniswapDarkNavy}`
+      : `1px solid ${Colors.slateGreyDark}`,
+    borderRadius: BorderRadius4x,
+  },
+  blurBackgroundMobile: {
+    position: "absolute",
+    height: '100%',
+    width: '100%',
+    backdropFilter: "blur(6px)",
+    background: isThemeDark(theme)
+      ? 'rgba(18, 18, 29, 0.3)'
+      : 'rgba(245, 245, 255, 0.66)',
+    top: 0,
+    right: 0,
+    borderBottom: isThemeDark(theme)
+      ? `1px solid ${Colors.uniswapDarkNavy}`
+      : `1px solid ${Colors.slateGreyDark}`,
+    // borderRadius: BorderRadius4x,
+  },
 
   // Main Bar
   mainBarInner: {
@@ -157,9 +190,9 @@ export const styles = (theme: Theme) => createStyles({
   navbarButton: {
     marginRight: "0.5rem",
     minWidth: '60px',
-    background: theme.palette.type === 'dark'
-      ? fade(Colors.uniswapDarkNavy, 0.1)
-      : fade(Colors.cream, 0.1),
+    // background: theme.palette.type === 'dark'
+    //   ? fade(Colors.uniswapDarkNavy, 0.1)
+    //   : fade(Colors.cream, 0.1),
     "&:hover": {
       background: theme.palette.type === 'dark'
         ? buttonHoverDark
@@ -212,6 +245,7 @@ export const styles = (theme: Theme) => createStyles({
   buttonLinkLogo: {
     marginLeft: "1rem",
     marginRight: "1rem",
+    zIndex: 1,
   },
   menuButton: {
   },
@@ -223,203 +257,16 @@ export const styles = (theme: Theme) => createStyles({
     marginRight: '0.5rem',
   },
 
-  // Category Bar
-  categoryBar: {
-    height: `${CategoryBarHeight - 1}px`, // 1px for borderBottom
-    // background: categoryBarColor,
-    background: theme.palette.type === 'dark'
-      ? Gradients.gradientUniswapDark.background
-      : Gradients.gradientGrey2.background,
-    border: '0px solid',
-    // boxShadow: "1px 1px 1px 1px rgba(22,22,22,0.2)"
-    boxShadow: "0px 1px 2px 0px rgba(40,40,40,0.3)",
-  },
-  categoryBarMobile: {
-    height: 30,
-  },
-  categoryBarInner: {
-    zIndex: 3,
-    width: '100%',
-    display: "flex",
-    justifyContent: 'space-between',
-    maxWidth: "720px",
-    alignItems: "center",
-    padding: '0rem 1rem',
-  },
-  categoryBarInnerMobile: {
-    zIndex: 3,
-    width: '100%',
-    display: "flex",
-    justifyContent: 'space-between',
-    maxWidth: "720px",
-    alignItems: "center",
-    overflow: 'scroll',
-    padding: '0rem 1rem',
-  },
-  categoryHeading: {
-    marginBottom: "0.5rem",
-  },
-  categoryLinkGroups: {
-    marginRight: '1rem',
-  },
-  categoryLink: {
-  },
-  categoryLinkAllMain: {
-    color: categoryLinkColor,
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    minWidth: '50px',
-    whiteSpace: 'nowrap',
-    fontSize: '0.8rem',
-    marginRight: '1rem',
-    borderBottom: '2px solid rgba(0,0,0,0)',
-    transition: theme.transitions.create(['border', 'color'], {
-      easing: theme.transitions.easing.easeIn,
-      duration: '100ms',
-    }),
-    "&:hover": {
-      color: categoryLinkColorHover,
-      borderBottom: '2px solid',
-      transition: theme.transitions.create(['border', 'color'], {
-        easing: theme.transitions.easing.easeIn,
-        duration: '100ms',
-      })
-    },
-  },
-  categoryLinkTextMain: {
-    color: categoryLinkColor,
-    minWidth: '50px',
-    whiteSpace: 'nowrap',
-    fontSize: '0.8rem',
-    // bottom border
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderBottom: '2px solid rgba(0,0,0,0)',
-    transition: theme.transitions.create(['border', 'color'], {
-      easing: theme.transitions.easing.easeIn,
-      duration: '100ms',
-    }),
-    "&:hover": {
-      borderBottom: '2px solid',
-      color: categoryLinkColorHover,
-      transition: theme.transitions.create(['border', 'color'], {
-        easing: theme.transitions.easing.easeIn,
-        duration: '100ms',
-      })
-    },
-  },
-  categoryLinkTextMainHeight: {
-    height: CategoryBarHeight,
-  },
-  categoryLinkTextMainHeightMobile: {
-    height: CategoryBarHeightMobile,
-  },
-  categoryLinkAll: {
-    color: categoryLinkColor2,
-    "&:hover": {
-      color: categoryLinkColorHover2,
-    },
-    minWidth: '50px',
-    whiteSpace: 'nowrap',
-    fontSize: '0.8rem',
-    marginRight: '0.5rem',
-    marginBottom: '0.5rem',
-  },
-  categoryLinkText: {
-    color: categoryLinkColor2,
-    "&:hover": {
-      color: categoryLinkColorHover2,
-    },
-    marginBottom: '0.25rem',
-    minWidth: '50px',
-    whiteSpace: 'nowrap',
-    fontSize: '0.8rem',
-  },
-  showAllCategoriesButton: {
-    display: 'flex',
-    flexDirection: 'row',
-    marginRight: '1rem',
-    cursor: 'pointer',
-    color: categoryLinkColor,
-    "&:hover": {
-      color: categoryLinkColorHover,
-    },
-    // color: categoryLinkColor2,
-    // "&:hover": {
-    //   color: categoryLinkColorHover2,
-    // },
-  },
-  categoriesMenu: {
-    height: '100px',
-    width: "100%",
-    zIndex: 3,
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    // background: categoryBarColor,
-    background: Gradients.gradientUniswapDark.background,
-    position: 'absolute',
-    transform: 'translateY(-200%)',
-    opacity: 0,
-    transition: theme.transitions.create(['transform', 'opacity'], {
-      easing: theme.transitions.easing.easeInOut,
-      duration: "200ms",
-    }),
-  },
-  expandCategories: {
-    zIndex: 3,
-    transform: 'translateY(0%)',
-    opacity: 1,
-    transition: theme.transitions.create(['transform','opacity'], {
-      easing: theme.transitions.easing.easeInOut,
-      duration: "200ms",
-    }),
-    height: 200,
-  },
-  expandMenu: {
-    zIndex: 3,
-    transform: 'translateY(0%)',
-    opacity: 1,
-    transition: theme.transitions.create(['transform','opacity'], {
-      easing: theme.transitions.easing.easeInOut,
-      duration: "200ms",
-    }),
-    height: 200,
-  },
-  categoriesMenuDither: {
-    height: '100vh',
-    width: '100vw',
-    zIndex: 2, // above watchList button which has zIndex: 1
-    position: 'fixed',
-    bottom: 0,
-    backgroundColor: "rgba(47, 57, 65, .85)",
-  },
-  categoryOuterContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: '100%',
-    padding: '2rem',
-    maxWidth: '720px',
-  },
-  categoryInnerContainer: {
-    flexDirection: 'column',
-    flexWrap: 'wrap',
-  },
-
-
   // News Bar
   newsBar: {
     // background: Gradients.gradientBlack.background,
     background: theme.palette.type === 'dark'
       ? Gradients.gradientUniswapFluro.background
-      : Gradients.gradientLightBlack.background,
+      : Gradients.gradientBlack.background,
     height: `${NewsBarHeight}px`,
     zIndex: 6,
     position: "relative",
-    marginBottom: MainBarHeightDashboard,
+    // marginBottom: MainBarHeightDashboard,
   },
   newsBarInner: {
     display: "flex",
@@ -467,8 +314,9 @@ export const styles = (theme: Theme) => createStyles({
     zIndex: 3,
     paddingLeft: '0.5rem',
     paddingRight: '0.5rem',
+    paddingTop: '0.5rem',
     width: '100vw',
-    height: MainBarHeightDashboard,
+    height: MainBarHeightDashboard + 16,
     display: "flex",
     position: "relative",
     justifyContent: 'space-between',
@@ -480,19 +328,5 @@ export const styles = (theme: Theme) => createStyles({
     fontWeight: 500,
     // transform: 'scale(0.9)',
     color: Colors.charcoal,
-  },
-  blurBackground: {
-    position: "absolute",
-    height: '100%',
-    width: '100%',
-    backdropFilter: "blur(6px)",
-    background: isThemeDark(theme)
-      ? 'rgba(18, 18, 29, 0.3)'
-      : 'rgba(245, 245, 255, 0.5)',
-    top: 0,
-    right: 0,
-    borderBottom: isThemeDark(theme)
-      ? `1px solid ${Colors.uniswapDarkNavy}`
-      : `1px solid ${Colors.slateGreyDarker}`
   },
 });

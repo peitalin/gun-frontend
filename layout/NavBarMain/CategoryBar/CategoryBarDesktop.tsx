@@ -3,7 +3,7 @@ import { Categories, Product } from "typings/gqlTypes";
 // Styles
 import clsx from "clsx";
 import { withStyles, WithStyles } from "@material-ui/core/styles";
-import { styles } from "../styles";
+import { styles } from "./styles";
 // MUI
 import Typography from "@material-ui/core/Typography";
 import KeyboardArrowDown from "@material-ui/icons/KeyboardArrowDown"
