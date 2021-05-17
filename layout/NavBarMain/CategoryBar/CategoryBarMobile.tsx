@@ -3,18 +3,17 @@ import { Categories, Product } from "typings/gqlTypes";
 // Styles
 import clsx from "clsx";
 import { withStyles, WithStyles } from "@material-ui/core/styles";
-import { styles } from "../styles";
+import { styles } from "./styles";
 // MUI
 import Typography from "@material-ui/core/Typography";
 import KeyboardArrowDown from "@material-ui/icons/KeyboardArrowDown"
 // hooks
-import { categorySelectors } from "utils/selectors";
 import Link from "next/link";
 
 
 
 
-const CategoryBar: React.FC<ReactProps> = (props) => {
+const CategoryBarMobile: React.FC<ReactProps> = (props) => {
 
   const { classes } = props;
 
@@ -102,4 +101,4 @@ interface ReactProps extends WithStyles<typeof styles> {
   staticCategories: string[];
 }
 
-export default withStyles(styles)( CategoryBar );
+export default withStyles(styles)( CategoryBarMobile );

@@ -17,7 +17,6 @@ import { useCategoriesList } from "./categoryHooks";
 const CategoryBar: React.FC<ReactProps> = (props) => {
 
   const { classes } = props;
-  // const [expandCategories, setExpandCategories] = React.useState(false)
   let { categories, staticCategories } = useCategoriesList()
 
   return (

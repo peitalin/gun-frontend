@@ -14,7 +14,7 @@ import { categorySelectors } from "utils/selectors";
 
 
 
-const CategoryBar: React.FC<ReactProps> = (props) => {
+const CategoryBarDesktop: React.FC<ReactProps> = (props) => {
 
   const { classes } = props;
 
@@ -110,4 +110,4 @@ interface CategoriesExpandedProps {
   hideExpandCategories(): void;
 }
 
-export default withStyles(styles)( CategoryBar );
+export default withStyles(styles)( CategoryBarDesktop );
