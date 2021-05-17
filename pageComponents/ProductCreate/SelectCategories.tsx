@@ -80,7 +80,11 @@ const SelectCategories = (props: ReactProps & FormikProps<FormikFields>) => {
           <Accordion
             defaultExpanded={defaultExpanded}
             classes={{
-              root: classes.expansionPanelRoot,
+              root: clsx(
+                classes.expansionPanelRoot,
+                (fprops.errors?.categoryId && fprops.touched?.categoryId) &&
+                classes.expansionPanelError,
+              ),
               expanded: classes.expansionPanelExpanded,
             }}
             expanded={openExpander}

@@ -85,7 +85,7 @@ const RowExpander = (props: RowExpanderProps) => {
         </div>
         <div className={classes.flexItem}>
           <Typography variant="body2" className={classes.rowText}>
-            {formatDateTimeTime(row.createdAt)}
+            {formatDateTime(row.createdAt)}
           </Typography>
         </div>
         <div className={clsx(classes.flexItem, classes.flexItemMaxWidth120)}>

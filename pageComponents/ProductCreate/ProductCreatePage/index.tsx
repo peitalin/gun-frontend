@@ -14,9 +14,6 @@ import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
 // Components
 import ErrorBounds from 'components/ErrorBounds';
-import Loading from "components/Loading";
-import DisplaySnackBars from "./DisplaySnackBars";
-import Switch from '@material-ui/core/Switch';
 // Snackbar
 import { useSnackbar, ProviderContext } from "notistack";
 // Subcomponents
@@ -55,10 +52,11 @@ const SelectDealer = dynamic(() => import("../SelectDealer"), {
 import ProductCreateButton from "./ProductCreateButton";
 import ProductCreateForm from "./ProductCreateForm";
 import ProductCreateLayout from "./ProductCreateLayout";
-import StoreOrLoginContainer from "./StoreOrLoginContainer";
+import PreventDragDropContainer from "./PreventDragDropContainer";
 import SectionBorder from "./SectionBorder";
 // Product Preview Page
 import Tooltip from '@material-ui/core/Tooltip';
+import ButtonLoading from 'components/ButtonLoading';
 
 // SSR Subcomponents
 import dynamic from 'next/dynamic'
@@ -107,7 +105,7 @@ import {
   DzuPreviewItem,
 } from "typings/dropzone";
 // Validation
-import { Formik, FormikErrors } from 'formik';
+import { FormikErrors, useFormik } from 'formik';
 import { validationSchemas } from "utils/validation";
 // router
 import { useRouter } from "next/router";
@@ -116,6 +114,7 @@ import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 
+import ProductCreateStepper from "./ProductCreateStepper";
 
 
 
@@ -131,12 +130,10 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 const ProductCreatePage = (props: ReactProps) => {
 
   // Props + State
-  const { classes, asModal, closeModal } = props;
+  const { classes } = props;
   const [state, setState] = React.useState<{ loading: boolean }>({
     loading: false,
   });
-  const [loadCarouselPics, setLoadCarouselPics] = React.useState({});
-  const [openPreviewPage, setOpenPreviewPage] = React.useState(false);
 
   // CSS media queries
   const theme = useTheme();
@@ -168,9 +165,7 @@ const ProductCreatePage = (props: ReactProps) => {
     }
   });
 
-
   const productCreateInput = reduxProductCreate.productCreateInput;
-  const currentVariants = reduxProductCreate.productCreateInput.currentVariants;
 
   // Apollo Mutation
   const [
@@ -180,10 +175,22 @@ const ProductCreatePage = (props: ReactProps) => {
     variables: {
       productCreateInput: { ...productCreateInput }
     },
-    onError: (err) => console.log(err),
+    onError: (err) => {
+      let errMsg = error?.graphQLErrors?.[0]?.message ?? JSON.stringify(error)
+      if (errMsg) {
+        snackbar.enqueueSnackbar(
+          `${errMsg}`,
+          { variant: "error", autoHideDuration: 6000 }
+        )
+      }
+    },
     onCompleted: async(data: MutationData) => {
       // transition to product creation success page
-      setTimeout(() => closeModal(), 200)
+      let createProductTitle = data?.createProduct?.product?.currentSnapshot?.title;
+      snackbar.enqueueSnackbar(
+        `Successfully created listing: ${createProductTitle}`,
+        { variant: "success", autoHideDuration: 3000 }
+      )
       // reset redux form
       setTimeout(() => {
         let pid = data?.createProduct?.product?.id
@@ -249,6 +256,48 @@ const ProductCreatePage = (props: ReactProps) => {
     },
   })
 
+
+
+  const formik = useFormik({
+    initialValues: {
+      ...productCreateInput
+    },
+    validationSchema: validationSchemas.ProductCreate,
+    onSubmit: (values, { setSubmitting, resetForm }) => {
+      console.log("dispatching productCreate with values: ", values)
+      // let htmlDescription = serializeHtml(values.description)
+      // Apollo Mutation
+      productCreate({
+        variables: {
+          productCreateInput: {
+            title: values.title,
+            description: values.description,
+            condition: values.condition,
+            make: values.make,
+            model: values.model,
+            ammoType: values.ammoType,
+            actionType: values.actionType,
+            caliber: values.caliber,
+            serialNumber: values.serialNumber,
+            location: values.location,
+            magazineCapacity: values.magazineCapacity,
+            barrelLength: values.barrelLength,
+            dealerId: values.dealerId,
+            categoryId: values.categoryId,
+            isPublished: values.isPublished,
+            currentVariants: values.currentVariants,
+            sellerLicenseId: values.sellerLicenseId,
+          }
+        },
+      }).then(res => {
+        setTimeout(() => {
+          resetForm()
+          // wait 500ms for page transition before trying to reset form
+        }, 200)
+      })
+    }
+  });
+
   // Apollo Graphql
   const categoryData = useQuery<{ categories: Categories[] }, null>(
     GET_CATEGORIES
@@ -256,228 +305,287 @@ const ProductCreatePage = (props: ReactProps) => {
 
   const categories = (categoryData?.data?.categories ?? []);
 
-  const onSubmitFormik = (values, { setSubmitting, resetForm }) => {
-    console.log("dispatching productCreate with values: ", values)
-    // let htmlDescription = serializeHtml(values.description)
-    // Apollo Mutation
-    productCreate({
-      variables: {
-        productCreateInput: {
-          title: values.title,
-          description: values.description,
-          condition: values.condition,
-          make: values.make,
-          model: values.model,
-          ammoType: values.ammoType,
-          actionType: values.actionType,
-          caliber: values.caliber,
-          serialNumber: values.serialNumber,
-          location: values.location,
-          magazineCapacity: values.magazineCapacity,
-          barrelLength: values.barrelLength,
-          dealerId: values.dealerId,
-          categoryId: values.categoryId,
-          isPublished: values.isPublished,
-          currentVariants: values.currentVariants,
-          sellerLicenseId: values.sellerLicenseId,
-        }
-      },
-    }).then(res => {
-      setTimeout(() => {
-        resetForm()
-        // wait 500ms for page transition before trying to reset form
-      }, 200)
-    })
-  }
-
   const disableForm =
       (!user?.id || // no user
       !user?.store?.id || // or no store
       user?.store?.isDeleted)  // or deleted store
 
+  const currentVariantsInput = reduxToFormikCurrentVariants(
+    productCreateInput,
+    dzuPreviewItems,
+    dzuPreviewOrder,
+  )
+
+  const processProductData = ({ publishNow }: { publishNow: boolean }) => {
+    snackbar.enqueueSnackbar(
+      `Creating escrow for order...`,
+      { variant: "info" }
+    )
+    formik.setFieldValue("isPublished", publishNow);
+    // update formik with redux currentVariants
+    formik.setFieldValue("currentVariants", currentVariantsInput);
+    setTimeout(() => {
+      // need to await formikCurrentVariants update
+      if (isFormikDisabled(formik.errors)) {
+        snackbar.enqueueSnackbar(
+          printValidationErrors(formik.errors),
+          { variant: "error", autoHideDuration: 5000 }
+        )
+        setState(s => ({ ...s, loading: false }))
+      } else {
+        setState(s => ({ ...s, loading: true }))
+      }
+    }, 0)
+  }
+
+  // console.log('values: ', values);
+  // console.log('values.currentVariants: ', values.currentVariants);
+  const [activeStep, setActiveStep] = React.useState(0);
+
+  const errors = formik.errors
+  const touched = formik.touched
+  // console.log('activeStep: ', activeStep);
+  // console.log('touched: ', touched);
 
   return (
-    <Formik
-      initialValues={productCreateInput}
-      validationSchema={validationSchemas.ProductCreate}
-      onSubmit={onSubmitFormik}
+    <ProductCreateLayout
+      productPreviewSticky={productCreateInputToProduct(
+        formik.values,
+        categories,
+        currentVariantsInput,
+        user?.store,
+      )}
+      activeStep={activeStep}
+      setActiveStep={setActiveStep}
     >
-      {(fprops) => {
 
-        const {
-          values,
-          touched,
-          errors,
-          dirty,
-          isSubmitting,
-          handleChange,
-          handleBlur,
-          handleSubmit,
-          handleReset,
-          validateField,
-          validateForm,
-        } = fprops;
+      <PreventDragDropContainer>
+        <StoreOrLogin
+          user={user}
+          disableLoginButton={true}
+          buttonText={"Create Store"}
+        />
+      </PreventDragDropContainer>
 
-        let currentVariantsInput = reduxToFormikCurrentVariants(
-          productCreateInput,
-          dzuPreviewItems,
-          dzuPreviewOrder,
-        )
 
-        const processProductData = ({ publishNow }: { publishNow: boolean }) => {
-          snackbar.enqueueSnackbar(
-            `Creating escrow for order...`,
-            { variant: "info" }
-          )
-          fprops.setFieldValue("isPublished", publishNow);
-          // update formik with redux currentVariants
-          fprops.setFieldValue("currentVariants", currentVariantsInput);
-          setTimeout(() => {
-            // need to await formikCurrentVariants update
-            if (isFormikDisabled(errors)) {
-              snackbar.enqueueSnackbar(
-                printValidationErrors(errors),
-                { variant: "error", autoHideDuration: 5000 }
-              )
-              setState(s => ({ ...s, loading: false }))
-            } else {
-              setState(s => ({ ...s, loading: true }))
-            }
-          }, 0)
-          // console.log('order: ', dzuPreviewOrder);
-          // console.log('fileIds: ', dzuFiles);
-          // console.log('dzuPreviewItems: ', reduxProductCreate.dzuPreviewItems);
-          // console.log('values: ', values);
-          // console.log('values.currentVariants: ', values.currentVariants);
-          // console.log('errors', errors);
-          //// ProductCreateButton has prop: type="submit"
-          //// which will then call form onSubmit={onSubmitFormik}
-        }
+      <ProductCreateForm
+        onSubmit={formik.handleSubmit} // dispatches to <Formik onSubmit={}/>
+        disableForm={disableForm}
+      >
 
-        // console.log('values: ', values);
-        // console.log('values.currentVariants: ', values.currentVariants);
-
-        return (
-          <ProductCreateLayout
-            productPreviewSticky={productCreateInputToProduct(
-              fprops.values,
-              categories,
-              currentVariantsInput,
-              user?.store,
-            )}
-            loadCarouselPics={loadCarouselPics}
-            setLoadCarouselPics={setLoadCarouselPics}
-            asModal={asModal}
-            closeModal={closeModal}
-          >
-              <DisplaySnackBars error={error} data={data}/>
-
-              <StoreOrLoginContainer>
-                <StoreOrLogin
-                  user={user}
-                  disableLoginButton={true}
-                  buttonText={"Create Store"}
-                />
-              </StoreOrLoginContainer>
-
-              <ProductCreateForm
-                classes={classes}
-                asModal={asModal}
-                closeModal={closeModal}
-                onSubmit={handleSubmit} // dispatches to <Formik onSubmit={}/>
-                disableForm={disableForm}
-              >
-
-                <SectionBorder>
-                  <SelectCategories
-                    {...fprops}
-                  />
-                  <SelectSellerLicense
-                    user={user}
-                    sellerLicenseId={undefined} // only for product edit
-                    {...fprops}
-                  />
-                </SectionBorder>
-
-                <SectionBorder>
-                  <TitleSerialNumber {...fprops} />
-                  <SelectActionType
-                    {...fprops}
-                  />
-                </SectionBorder>
-
-                <SectionBorder>
-                  <SelectDealer
-                    {...fprops}
-                  />
-                </SectionBorder>
-
-                <SectionBorder style={{ paddingBottom: '1rem' }}>
-                  <GunAttributes {...fprops} />
-                  <SelectCondition
-                    {...fprops}
-                  />
-                </SectionBorder>
-
-                <SectionBorder>
-                  <Description
-                    {...fprops}
-                  />
-                </SectionBorder>
-
-                <SectionBorder>
-                  <PreviewItemUploader
-                    reducerName={reducerName}
-                    productInput={productCreateInput}
-                    storeId={storeId}
-                    dzuPreviewItems={dzuPreviewItems}
-                    dzuPreviewOrder={dzuPreviewOrder}
-                    {...fprops}
-                  />
-                </SectionBorder>
-
-                <SectionBorder>
-                  <PricingLicenses
-                    reducerName={reducerName}
-                    currentVariants={productCreateInput.currentVariants}
-                    {...fprops}
-                  />
-                </SectionBorder>
-
-                <ProductCreateButtonWrapper {...props}>
-                  {
-                    process.browser &&
-                    <>
-                      <ProductCreateButton
-                        // Save Draft Button
-                        classes={classes}
-                        onClick={() => processProductData({ publishNow: false }) }
-                        postInstantly={false}
-                        loading={state.loading}
-                        errors={errors}
-                        disabled={isFormikDisabled(errors) || state.loading}
-                      />
-                      <div className={classes.flexButtonSpacer}/>
-                      <ProductCreateButton
-                        // Post Instantly Button
-                        classes={classes}
-                        onClick={() => processProductData({ publishNow: true }) }
-                        postInstantly={true}
-                        loading={state.loading}
-                        errors={errors}
-                        disabled={isFormikDisabled(errors) || state.loading}
-                      />
-                    </>
+        <SectionBorder>
+          <ProductCreateStepper
+            activeStep={activeStep}
+            setActiveStep={setActiveStep}
+            stepIndexes={[0, 1, 2]}
+            stepAfterLastStep={3}
+            setFieldTouched={formik.setFieldTouched}
+            errorIndex={
+              // match index with components
+              (index: number) => {
+                switch(index) {
+                  case 0: {
+                    return [
+                      errors?.categoryId && touched.categoryId,
+                      errors?.sellerLicenseId && touched.sellerLicenseId,
+                    ].some(s => s)
                   }
-                </ProductCreateButtonWrapper>
+                  case 1: {
+                    return [
+                      errors?.title && touched.title,
+                      errors?.actionType && touched.actionType,
+                    ].some(s => s)
+                  }
+                  case 2: {
+                    return [
+                      errors?.dealerId && touched.dealerId,
+                    ].some(s => s)
+                  }
+                  default: {
+                    return false
+                  }
+                }
+              }
+            }
+          >
+            {
+              (activeStep === 0) &&
+              <>
+                <Typography>
+                  For each ad campaign that you create, you can control how much
+                  you're willing to spend on clicks and conversions, which networks
+                  and geographical locations you want your ads to show on, and more.
+                </Typography>
+                <SelectCategories
+                  {...formik}
+                />
+                <SelectSellerLicense
+                  user={user}
+                  sellerLicenseId={undefined} // only for product edit
+                  {...formik}
+                />
+              </>
+            }
+            {
+              (activeStep === 1) &&
+              <>
+                <Typography>
+                  An ad group contains one or more ads which target a shared
+                  set of keywords.
+                </Typography>
+                <TitleSerialNumber {...formik} />
+                <SelectActionType
+                  {...formik}
+                />
+              </>
+            }
+            {
+              (activeStep === 2) &&
+              <>
+                <Typography>
+                  Try out different ad text to see what brings in the most customers,
+                  and learn how to enhance your ads using features like ad extensions.
+                  If you run into any problems with your ads, find out how to tell if
+                  they're running and how to resolve approval issues.
+                </Typography>
+                <SelectDealer {...formik} />
+              </>
+            }
+          </ProductCreateStepper>
+        </SectionBorder>
 
-              </ProductCreateForm>
-          </ProductCreateLayout>
-        );
-      }}
-    </Formik>
-  )
+        <SectionBorder>
+          <ProductCreateStepper
+            activeStep={activeStep}
+            setActiveStep={setActiveStep}
+            stepIndexes={[3, 4, 5]}
+            stepAfterLastStep={5}
+            setFieldTouched={formik.setFieldTouched}
+            errorIndex={
+              // match index with components
+              (index: number) => {
+                switch(index) {
+                  case 3: {
+                    return [
+                      errors?.make && touched.make,
+                      errors?.model && touched.model,
+                      errors?.caliber && touched.caliber,
+                      errors?.magazineCapacity && touched.magazineCapacity,
+                      errors?.barrelLength && touched.barrelLength,
+                    ].some(s => s)
+                  }
+                  case 4: {
+                    return [
+                      errors?.condition && touched.condition,
+                    ].some(s => s)
+                  }
+                  case 5: {
+                    return [
+                      errors?.description && touched.description,
+                    ].some(s => s)
+                  }
+                  default: {
+                    return false
+                  }
+                }
+              }
+            }
+          >
+            {
+              (activeStep === 3) &&
+              <>
+                <Typography>
+                  Try out different ad text to see what brings in the most customers,
+                  and learn how to enhance your ads using features like ad extensions.
+                  If you run into any problems with your ads, find out how to tell if
+                  they're running and how to resolve approval issues.
+                </Typography>
+                <GunAttributes {...formik} />
+              </>
+            }
+            {
+              (activeStep === 4) &&
+              <>
+                <Typography>
+                  Try out different ad text to see what brings in the most customers,
+                  and learn how to enhance your ads using features like ad extensions.
+                  If you run into any problems with your ads, find out how to tell if
+                  they're running and how to resolve approval issues.
+                </Typography>
+                <SelectCondition {...formik} />
+              </>
+            }
+            {
+              (activeStep === 5) &&
+              <>
+                <Typography>
+                  Try out different ad text to see what brings in the most customers,
+                  and learn how to enhance your ads using features like ad extensions.
+                  If you run into any problems with your ads, find out how to tell if
+                  they're running and how to resolve approval issues.
+                </Typography>
+                <Description {...formik} />
+              </>
+            }
+          </ProductCreateStepper>
+        </SectionBorder>
+
+
+        <SectionBorder thickPadding>
+          <PreviewItemUploader
+            reducerName={reducerName}
+            productInput={productCreateInput}
+            storeId={storeId}
+            dzuPreviewItems={dzuPreviewItems}
+            dzuPreviewOrder={dzuPreviewOrder}
+            {...formik}
+          />
+        </SectionBorder>
+
+        <SectionBorder thickPadding>
+          <PricingLicenses
+            reducerName={reducerName}
+            currentVariants={productCreateInput.currentVariants}
+            {...formik}
+          />
+        </SectionBorder>
+
+        <ProductCreateButtonWrapper {...props}>
+          {
+            process.browser &&
+            <>
+              <ProductCreateButton
+                // Save Draft Button
+                onClick={() => processProductData({ publishNow: false }) }
+                postInstantly={false}
+                loading={state.loading}
+                errors={formik.errors}
+                disabled={state.loading}
+                // disabled={isFormikDisabled(formik.errors) || state.loading}
+              />
+              <div className={classes.flexButtonSpacer}/>
+              <ProductCreateButton
+                // Post Instantly Button
+                onClick={() => processProductData({ publishNow: true }) }
+                postInstantly={true}
+                loading={state.loading}
+                errors={formik.errors}
+                disabled={state.loading}
+                // disabled={isFormikDisabled(formik.errors) || state.loading}
+              />
+            </>
+          }
+        </ProductCreateButtonWrapper>
+
+      </ProductCreateForm>
+    </ProductCreateLayout>
+  );
 }
+
+
+
+
+
 
 const productCreateInputToProduct = (
   p: ProductCreateInput,
@@ -529,9 +637,6 @@ const productCreateInputToProduct = (
     id: "product_preview",
     createdAt: new Date(),
     category: categories.find(c => c.id === p.categoryId),
-    // description: p?.description
-    //   ? serializeHtml(p.description)
-    //   : p.description,
     description: p.description,
     storeId: null, // <LinkLoading disable={!product.storeId}>
     store: store,
@@ -626,7 +731,7 @@ const ProductCreateButtonWrapper: React.FC<ReactProps> = (props) => {
         {props.children}
       </ErrorBounds>
       <Typography color={"primary"} variant="caption" className={classes.policy}>
-        By posting, you confirm that this listing complies with GM's
+        By posting, you confirm that this listing complies with Gun Marketplace's
         terms of service and applicable laws.
       </Typography>
       <Divider/>
@@ -635,11 +740,9 @@ const ProductCreateButtonWrapper: React.FC<ReactProps> = (props) => {
 }
 
 
-
 interface ReactProps extends WithStyles<typeof styles> {
-  asModal?: boolean;
-  closeModal(): void;
 }
+
 
 interface ReduxState {
   reduxProductCreate: ReduxStateProductCreate;

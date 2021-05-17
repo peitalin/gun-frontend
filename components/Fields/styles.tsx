@@ -62,10 +62,6 @@ export const styles = (theme: Theme) => createStyles({
       borderColor: Colors.blue,
       color: Colors.blue,
     },
-    // '&:invalid': {
-    //   boxShadow: `${fade(theme.palette.error.light, 0.2)} 0 0 0 1px`,
-    //   borderColor: theme.palette.error.main,
-    // },
   },
   emptyInput: {
     // border: `1px solid ${Colors.uniswapLightNavy}`,
@@ -83,7 +79,7 @@ export const styles = (theme: Theme) => createStyles({
     },
   },
   errorInput: {
-    border: `1px solid ${fade(theme.palette.error.light, 0.4)}`,
+    border: `1px solid ${fade(theme.palette.error.light, 0.8)}`,
     '&:focus': {
       border: `1px solid ${theme.palette.error.light}`,
       boxShadow: `${fade(theme.palette.error.light, 0.2)} 0 0 0 2px`,
@@ -113,7 +109,7 @@ export const styles = (theme: Theme) => createStyles({
     //   easing: theme.transitions.easing.easeIn,
     //   duration: "100ms",
     // }),
-    color: `${fade(theme.palette.error.light, 0.7)}`,
+    color: `${fade(theme.palette.error.light, 0.8)}`,
     transition: theme.transitions.create(['opacity', 'color'], {
       easing: theme.transitions.easing.easeIn,
       duration: "150ms",

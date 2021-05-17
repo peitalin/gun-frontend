@@ -28,8 +28,7 @@ import Link from "next/link";
 // media query
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
-
-
+import StoreOrLoginContainer from "./StoreOrLoginContainer";
 
 
 
@@ -58,112 +57,122 @@ const StoreOrLogin = (props: StoreOrLoginProps) => {
   if (storeExists) {
     if (showProductCreateButtonIfLoggedIn) {
       return (
-        <Link href={"/sell"}><a>
-          <Button
-            className={classes.productCreateLinkButton}
-            classes={{
-              label: classes.productCreateLinkButtonText
-            }}
-            variant="text"
-            color="primary"
-          >
-            Upload a Product
-          </Button>
-        </a></Link>
+        <StoreOrLoginContainer>
+          <Link href={"/sell"}>
+            <a>
+              <Button
+                className={classes.productCreateLinkButton}
+                classes={{
+                  label: classes.productCreateLinkButtonText
+                }}
+                variant="text"
+                color="primary"
+              >
+                Upload a Product
+              </Button>
+            </a>
+          </Link>
+        </StoreOrLoginContainer>
       )
     } else {
       return (
-        <SellerProfile user={user} />
+        <StoreOrLoginContainer>
+          <SellerProfile user={user} />
+        </StoreOrLoginContainer>
       )
     }
   } else {
     // user profile exists, but no valid store
     if (user?.id) {
       return (
-        <div className={clsx(classes.storeLogin2)}
-          style={props.style}
-        >
-          {
-            !props.disableSubtitle &&
-            <Typography variant="h4" className={classes.loginTitle}>
-              Don't have a store yet?
-            </Typography>
-          }
-          <div className={classes.createStoreButtonContainer}>
-            <AddSellerProfileModalButton
-              title={"Create Seller Profile"}
-              // biggerButtons={biggerButtons}
-            />
+        <StoreOrLoginContainer>
+          <div className={clsx(classes.storeLogin2)}
+            style={props.style}
+          >
+            {
+              !props.disableSubtitle &&
+              <Typography variant="h4" className={classes.loginTitle}>
+                Don't have a store yet?
+              </Typography>
+            }
+            <div className={classes.createStoreButtonContainer}>
+              <AddSellerProfileModalButton
+                title={"Create Seller Profile"}
+                // biggerButtons={biggerButtons}
+              />
+            </div>
           </div>
-        </div>
+        </StoreOrLoginContainer>
       )
     } else {
       // no user profile yet
       return (
-        <div className={clsx(classes.flexRow, classes.createAccountLoginBox)}>
-          {
-            !props.disableSubtitle &&
-            <Typography variant="h4" className={classes.loginTitle}>
-              Don't have a store yet?
-            </Typography>
-          }
-          {
-            !showLogin.login &&
-            !showLogin.signup &&
-            <div className={clsx(classes.storeLogin)}
-              style={props.style}
-            >
-              <div className={classes.maxWidthButton}>
-                <Login
-                  buttonText={
-                    props.buttonText
-                      ? props.buttonText
-                      : "Create your account for free"
-                  }
-                  titleLogin={"Login"}
-                  titleSignup={"Create Account"}
-                  initialTabIndex={1}
-                  buttonType={props.buttonType}
-                  buttonProps={{
-                    classes: {
-                      root: clsx(
-                        classes.buttonCreateAccount,
-                        classes.buttonCreateAccountMaxWidth,
-                      ),
-                      label: biggerButtons ? classes.biggerButtons : null
-                      // label: classes.biggerButtons
-                    },
-                  }}
-                  // callbackOnComplete={() => {
-                  //   dispatch(Actions.reduxModals.TOGGLE_STORE_CREATE_MODAL(true))
-                  // }}
-                  redirectOnComplete={"/create-store"}
-                />
-              </div>
-              {
-                !props.disableLoginButton &&
+        <StoreOrLoginContainer>
+          <div className={clsx(classes.flexRow, classes.createAccountLoginBox)}>
+            {
+              !props.disableSubtitle &&
+              <Typography variant="h4" className={classes.loginTitle}>
+                Don't have a store yet?
+              </Typography>
+            }
+            {
+              !showLogin.login &&
+              !showLogin.signup &&
+              <div className={clsx(classes.storeLogin)}
+                style={props.style}
+              >
                 <div className={classes.maxWidthButton}>
                   <Login
-                    buttonText={"Log In"}
-                    titleLogin={"Log In"}
+                    buttonText={
+                      props.buttonText
+                        ? props.buttonText
+                        : "Create your account for free"
+                    }
+                    titleLogin={"Login"}
                     titleSignup={"Create Account"}
-                    initialTabIndex={0}
-                    buttonProps={{
-                      classes: { root: classes.buttonLogin }
-                    }}
+                    initialTabIndex={1}
                     buttonType={props.buttonType}
-                    callbackOnComplete={() => {
-                      // only dispatches if user.store does not exist.
-                      // is user.store exists, this component unmounts
-                      // and reduxAction to open model is never dispatched
-                      dispatch(Actions.reduxModals.TOGGLE_STORE_CREATE_MODAL(true))
+                    buttonProps={{
+                      classes: {
+                        root: clsx(
+                          classes.buttonCreateAccount,
+                          classes.buttonCreateAccountMaxWidth,
+                        ),
+                        label: biggerButtons ? classes.biggerButtons : null
+                        // label: classes.biggerButtons
+                      },
                     }}
+                    // callbackOnComplete={() => {
+                    //   dispatch(Actions.reduxModals.TOGGLE_STORE_CREATE_MODAL(true))
+                    // }}
+                    redirectOnComplete={"/create-store"}
                   />
                 </div>
-              }
-            </div>
-          }
-        </div>
+                {
+                  !props.disableLoginButton &&
+                  <div className={classes.maxWidthButton}>
+                    <Login
+                      buttonText={"Log In"}
+                      titleLogin={"Log In"}
+                      titleSignup={"Create Account"}
+                      initialTabIndex={0}
+                      buttonProps={{
+                        classes: { root: classes.buttonLogin }
+                      }}
+                      buttonType={props.buttonType}
+                      callbackOnComplete={() => {
+                        // only dispatches if user.store does not exist.
+                        // is user.store exists, this component unmounts
+                        // and reduxAction to open model is never dispatched
+                        dispatch(Actions.reduxModals.TOGGLE_STORE_CREATE_MODAL(true))
+                      }}
+                    />
+                  </div>
+                }
+              </div>
+            }
+          </div>
+        </StoreOrLoginContainer>
       )
     }
   }

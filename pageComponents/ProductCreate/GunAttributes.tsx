@@ -168,7 +168,7 @@ interface ReactProps extends WithStyles<typeof styles> {
 interface FormikFields {
   make: string;
   model: string;
-  caliber: string;
+  caliber?: string;
   magazineCapacity?: string;
   barrelLength?: string;
 }

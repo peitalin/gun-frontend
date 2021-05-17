@@ -35,7 +35,6 @@ import ButtonLoading from "components/ButtonLoading";
 // Subcomponents
 import ProductEditFormLayout from "./ProductEditFormLayout";
 import Title from "pageComponents/ProductCreate/TitleSerialNumber";
-import DisplaySnackBars from "pageComponents/ProductCreate/ProductCreatePage/DisplaySnackBars";
 import BackTo from "components/BackTo";
 import Typography from "@material-ui/core/Typography";
 // Subcomponents
@@ -87,20 +86,15 @@ const PreviewItemUploaderGrid = dynamic(() => import("pageComponents/ProductCrea
   loading: () => <UploadPreviewPlaceholder/>,
   ssr: false,
 })
-// Product Preview Card
-import ProductCardResponsive from "components/ProductCardResponsive";
 
 // Validation
-import { Formik, FormikErrors } from 'formik';
+import { FormikErrors, useFormik } from 'formik';
 import { validationSchemas } from "utils/validation";
 // Graphql
 import { useQuery, useMutation, useApolloClient } from "@apollo/client";
 import { EDIT_PRODUCT } from "queries/products-mutations";
-import { GET_RECOMMENDED_PRODUCTS, GET_PRODUCT } from "queries/products-queries";
-import { GET_STORE_PRIVATE } from "queries/store-queries";
 import { productToProductEditInput } from "utils/conversions";
 import { useRouter } from "next/router";
-import { createOption } from "components/Fields/KeywordDropdownInput";
 // Snackbar
 import { useSnackbar, ProviderContext } from "notistack";
 import { seedProductEditDataAction } from "pageComponents/ProductEdit/seedEditData";
@@ -151,14 +145,11 @@ const ProductEditPage = (props: ReactProps) => {
 
   const productEditInput = reduxProductEdit.productEditInput;
 
-
   // Effects
   React.useEffect(() => {
     dispatch(actions.UPDATE_PRODUCT_ID(productEditInput.productId))
   }, [productEditInput.productId])
 
-  // Apollo
-  const aClient = useApolloClient();
 
   const [
     productEdit,
@@ -167,10 +158,24 @@ const ProductEditPage = (props: ReactProps) => {
     variables: {
       productEditInput: undefined
     },
-    onError: (err) => console.log(err),
+    onError: (err) => {
+      let errMsg = error?.graphQLErrors?.[0]?.message ?? JSON.stringify(error)
+      if (errMsg) {
+        snackbar.enqueueSnackbar(
+          `${errMsg}`,
+          { variant: "error", autoHideDuration: 6000 }
+        )
+      }
+    },
     onCompleted: async(data: MutationData) => {
 
       dispatch(Actions.reduxModals.TOGGLE_PRODUCT_EDIT_MODAL(false))
+
+      let editProductTitle = data?.editProduct?.product?.currentSnapshot?.title;
+      snackbar.enqueueSnackbar(
+        `Successfully edited listing: ${editProductTitle}`,
+        { variant: "success", autoHideDuration: 3000 }
+      )
       // router.back()
       router.push("/admin/products")
       setState(s => ({ ...s, loading: false }))
@@ -190,6 +195,44 @@ const ProductEditPage = (props: ReactProps) => {
 
   console.log("prodductEDIT:  ", product)
 
+  const formik = useFormik({
+    initialValues: {
+      ...productToProductEditInput(product)
+    },
+    validationSchema: validationSchemas.ProductEdit,
+    onSubmit: (values, { setSubmitting, resetForm }) => {
+      console.log("dispatching productEdit with values: ", values)
+      // // Dispatch Apollo Mutation after validation
+      productEdit({
+        variables: {
+          productEditInput: {
+            title: values.title,
+            description: values.description,
+            condition: values.condition,
+            make: values.make,
+            model: values.model,
+            ammoType: values.ammoType,
+            actionType: values.actionType,
+            caliber: values.caliber,
+            serialNumber: values.serialNumber,
+            location: values.location,
+            categoryId: values.categoryId,
+            currentVariants: values.currentVariants,
+            isPublished: values.isPublished,
+            productId: values.productId,
+            dealerId: values.dealerId,
+            magazineCapacity: values.magazineCapacity,
+            barrelLength: values.barrelLength,
+            sellerLicenseId: values.sellerLicenseId,
+          }
+        },
+      }).finally(() => {
+        setState(s => ({ ...s, loading: false }))
+      })
+    }
+  });
+
+
 
   return (
   <div
@@ -203,208 +246,139 @@ const ProductEditPage = (props: ReactProps) => {
       e.preventDefault()
     }}
   >
-    <Formik
-      // 1. feed product data to edit into formik state.
-      initialValues={{
-        ...productToProductEditInput(product)
-      }}
-      validationSchema={validationSchemas.ProductEdit}
-      onSubmit={(values, { setSubmitting }) => {
-        console.log('formik values: ', values);
-        // // Dispatch Apollo Mutation after validation
-        productEdit({
-          variables: {
-            productEditInput: {
-              title: values.title,
-              description: values.description,
-              condition: values.condition,
-              make: values.make,
-              model: values.model,
-              ammoType: values.ammoType,
-              actionType: values.actionType,
-              caliber: values.caliber,
-              serialNumber: values.serialNumber,
-              location: values.location,
-              categoryId: values.categoryId,
-              currentVariants: values.currentVariants,
-              isPublished: values.isPublished,
-              productId: values.productId,
-              dealerId: values.dealerId,
-              magazineCapacity: values.magazineCapacity,
-              barrelLength: values.barrelLength,
-              sellerLicenseId: values.sellerLicenseId,
-            }
-          },
-        }).finally(() => {
-          setState(s => ({ ...s, loading: false }))
-        })
-      }}
+    <ProductEditFormLayout
+      classes={classes}
+      asModal={asModal}
+      closeModal={closeModal}
+      onSubmit={formik.handleSubmit} // dispatches to <Formik onSubmit={}/>
     >
-      {(fprops) => {
+      <Typography className={classes.title} variant="h2">
+        Edit Product
+      </Typography>
+      <BackTo
+        textLink={true}
+        title={"Back to Products"}
+      />
+      <SectionBorder>
+        <TitleSerialNumber {...formik} />
+        <SelectCategories
+          {...formik}
+        />
+        <SelectSellerLicense
+          user={user}
+          sellerLicenseId={product?.sellerLicenseId} // only for product edit
+          {...formik}
+        />
+        <SelectActionType
+          {...formik}
+        />
+      </SectionBorder>
 
-        const {
-          values,
-          touched,
-          errors,
-          dirty,
-          isSubmitting,
-          handleChange,
-          handleBlur,
-          handleSubmit,
-          handleReset,
-          validateField,
-          validateForm,
-        } = fprops;
+      <SectionBorder>
+        <SelectDealer
+          {...formik}
+        />
+      </SectionBorder>
 
-        // console.log("fprops", fprops.values.description)
-        // console.info("fprops.values: ", fprops.values)
+      <SectionBorder style={{ paddingBottom: '1rem' }}>
+        <GunAttributes {...formik} />
+        <SelectCondition
+          {...formik}
+        />
+      </SectionBorder>
 
-        return (
-          <ProductEditFormLayout
-            classes={classes}
-            asModal={asModal}
-            closeModal={closeModal}
-            onSubmit={handleSubmit} // dispatches to <Formik onSubmit={}/>
+      <SectionBorder>
+        <Description
+          {...formik}
+        />
+      </SectionBorder>
+
+      <SectionBorder>
+        <PreviewItemUploaderGrid
+          reducerName={reducerName}
+          productInput={productEditInput}
+          storeId={product.store.id}
+          productId={product.id}
+          dzuPreviewItems={dzuPreviewItems}
+          dzuPreviewOrder={dzuPreviewOrder}
+          {...formik}
+        />
+      </SectionBorder>
+
+      <SectionBorder>
+        <PricingLicenses
+          reducerName={reducerName}
+          currentVariants={formik.values.currentVariants}
+          {...formik}
+        />
+      </SectionBorder>
+
+      <ErrorBounds className={classes.flexButtons}>
+        <div className={classes.flexButtonItem}>
+          <Button
+            style={{ width: 150 }}
+            variant={"outlined"}
+            color={"primary"}
+            onClick={() => router.back()}
+            className={props.classes.button}
           >
-            <Typography className={classes.title} variant="h2">
-              Edit Product
-            </Typography>
-            <BackTo
-              textLink={true}
-              title={"Back to Products"}
-            />
-            <SectionBorder>
-              <TitleSerialNumber {...fprops} />
-              <SelectCategories
-                {...fprops}
-              />
-              <SelectSellerLicense
-                user={user}
-                sellerLicenseId={product?.sellerLicenseId} // only for product edit
-                {...fprops}
-              />
-              <SelectActionType
-                {...fprops}
-              />
-            </SectionBorder>
+            Back to Listings
+          </Button>
+        </div>
 
-            <SectionBorder>
-              <SelectDealer
-                {...fprops}
-              />
-            </SectionBorder>
+        <div className={classes.flexButtonSpacer}/>
+        <div className={classes.flexButtonSpacer}/>
+        <div className={classes.flexButtonItem}>
+          <ButtonLoading
+            type="submit" // this sets off Form submit
+            className={props.classes.button}
+            variant={"outlined"}
+            color={"secondary"}
+            style={{
+              width: '150px',
+              height: 40,
+            }}
+            loadingIconColor={Colors.cream}
+            replaceTextWhenLoading={true}
+            loading={state.loading || apolloLoading}
+            disabled={!process.browser || apolloLoading}
+            // disable during apolloDispatch, not when state.loading = true
+            // state.loading comes first, don't disable the form accidentally
+            onClick={() => {
 
-            <SectionBorder style={{ paddingBottom: '1rem' }}>
-              <GunAttributes {...fprops} />
-              <SelectCondition
-                {...fprops}
-              />
-            </SectionBorder>
+              setState(s => ({ ...s, loading: true }))
+              formik.setFieldValue("productId", productEditInput.productId);
+              formik.setFieldValue(
+                "currentVariants",
+                reduxToFormikCurrentVariants(
+                  productEditInput,
+                  dzuPreviewItems,
+                  dzuPreviewOrder,
+                )
+              );
 
-            <SectionBorder>
-              <Description
-                {...fprops}
-              />
-              {/* <SelectTags
-                reducerName={reducerName}
-                {...fprops}
-              /> */}
-            </SectionBorder>
+              setTimeout(() => {
+                // need to await formikCurrentVariants update
+                if (isFormikDisabled(formik.errors)) {
+                  snackbar.enqueueSnackbar(
+                    printValidationErrors(formik.errors),
+                    { variant: "error", autoHideDuration: 5000 }
+                  )
+                  setState(s => ({ ...s, loading: false }))
+                } else {
+                  setState(s => ({ ...s, loading: true }))
+                }
+              }, 0)
 
-            <SectionBorder>
-              <PreviewItemUploaderGrid
-                reducerName={reducerName}
-                productInput={productEditInput}
-                storeId={product.store.id}
-                productId={product.id}
-                dzuPreviewItems={dzuPreviewItems}
-                dzuPreviewOrder={dzuPreviewOrder}
-                {...fprops}
-              />
-            </SectionBorder>
-
-            <SectionBorder>
-              <PricingLicenses
-                reducerName={reducerName}
-                currentVariants={values.currentVariants}
-                {...fprops}
-              />
-            </SectionBorder>
-
-            <ErrorBounds className={classes.flexButtons}>
-              <div className={classes.flexButtonItem}>
-                <Button
-                  style={{ width: 150 }}
-                  variant={"outlined"}
-                  color={"primary"}
-                  onClick={() => router.back()}
-                  className={props.classes.button}
-                >
-                  Back to Listings
-                </Button>
-              </div>
-
-              <div className={classes.flexButtonSpacer}/>
-              <div className={classes.flexButtonSpacer}/>
-              <div className={classes.flexButtonItem}>
-                <ButtonLoading
-                  type="submit" // this sets off Form submit
-                  className={props.classes.button}
-                  variant={"outlined"}
-                  color={"secondary"}
-                  style={{
-                    width: '150px',
-                    height: 40,
-                  }}
-                  loadingIconColor={Colors.cream}
-                  replaceTextWhenLoading={true}
-                  loading={state.loading || apolloLoading}
-                  disabled={!process.browser || apolloLoading}
-                  // disable during apolloDispatch, not when state.loading = true
-                  // state.loading comes first, don't disable the form accidentally
-                  onClick={() => {
-
-                    setState(s => ({ ...s, loading: true }))
-                    fprops.setFieldValue("productId", productEditInput.productId);
-                    fprops.setFieldValue(
-                      "currentVariants",
-                      reduxToFormikCurrentVariants(
-                        productEditInput,
-                        dzuPreviewItems,
-                        dzuPreviewOrder,
-                      )
-                    );
-
-
-                    setTimeout(() => {
-                      // need to await formikCurrentVariants update
-                      if (isFormikDisabled(errors)) {
-                        snackbar.enqueueSnackbar(
-                          printValidationErrors(errors),
-                          { variant: "error", autoHideDuration: 5000 }
-                        )
-                        setState(s => ({ ...s, loading: false }))
-                      } else {
-                        setState(s => ({ ...s, loading: true }))
-                      }
-                    }, 0)
-
-                    console.log('errors: ', errors);
-                    console.log('values: ', values);
-                  }}
-                >
-                  Save Changes
-                </ButtonLoading>
-              </div>
-              <DisplaySnackBars
-                error={error}
-                data={data}
-              />
-            </ErrorBounds>
-          </ProductEditFormLayout>
-        )
-      }}
-    </Formik>
+              console.log('errors: ', formik.errors);
+              console.log('values: ', formik.values);
+            }}
+          >
+            Save Changes
+          </ButtonLoading>
+        </div>
+      </ErrorBounds>
+    </ProductEditFormLayout>
   </div>
   )
 }

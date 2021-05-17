@@ -1,64 +1,49 @@
 import React from "react";
-import { Colors, BorderRadius, BoxShadows, BorderRadius2x } from "layout/AppTheme";
-import clsx from "clsx";
+import { Colors, BorderRadius2x, BoxShadows } from "layout/AppTheme";
+// Graphql
+import { Store, StorePrivate, UserPrivate, ID } from "typings/gqlTypes";
 // Styles
-import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
-// CSS
+import { withStyles, WithStyles, Theme, createStyles } from "@material-ui/core/styles";
+import clsx from "clsx";
+// Material UI
+import Typography from "@material-ui/core/Typography";
+// Components
+import Loading from "components/Loading";
+import ErrorBounds from 'components/ErrorBounds';
+// media query
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 
 
-
-
-const StoreOrLoginContainer: React.FC<StoreOrLoginContainerProps> = (props) => {
+const StoreOrLoginContainer: React.FC<StoreProps> = (props) => {
 
   const { classes, children } = props;
-  // CSS media queries
-  const theme = useTheme();
+  const theme = useTheme()
   const smDown = useMediaQuery(theme.breakpoints.down('sm'));
 
   return (
-    <div
-      className={clsx(
-        classes.storeOrLoginContainer,
-        "prevent-accidental-drag-drop-product-create-form"
-      )}
-      onDragOver={(e) => {
-        e.preventDefault()
-      }}
-      onDrop={(e) => {
-        console.log("ahh! you missed the dropzone")
-        e.preventDefault()
-      }}
-    >
+    <div className={clsx(
+      classes.maxWidth,
+      !smDown && classes.pagePadding1,
+    )}>
       <div className={clsx(
-        classes.maxWidth,
-        !smDown && classes.pagePadding1,
+        classes.storeOrLoginInnerContainer,
+        smDown ? classes.pagePaddingSm : classes.pagePadding2
       )}>
-        <div className={clsx(
-          classes.storeOrLoginInnerContainer,
-          smDown ? classes.pagePaddingSm : classes.pagePadding2
-        )}>
-          {children}
-        </div>
+        {children}
       </div>
     </div>
   )
 }
 
+type StoreProps = ReactProps;
 
-
-interface StoreOrLoginContainerProps extends WithStyles<typeof styles> {
+interface ReactProps extends WithStyles<typeof styles> {
 }
 
-export const styles = (theme: Theme) => createStyles({
-  storeOrLoginContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    flexWrap: "wrap",
-  },
+
+const styles = (theme: Theme) => createStyles({
   storeOrLoginInnerContainer: {
     display: 'flex',
     flexDirection: 'row',
@@ -76,7 +61,6 @@ export const styles = (theme: Theme) => createStyles({
       : `1px solid ${Colors.slateGrey}`,
   },
   maxWidth: {
-    maxWidth: 600,
     width: '100%',
   },
   pagePadding1: {
@@ -96,13 +80,6 @@ export const styles = (theme: Theme) => createStyles({
     padding: '1rem',
     borderRadius: '0px',
   },
-})
-
-
-
-
-
-
-
+});
 
 export default withStyles(styles)( StoreOrLoginContainer );

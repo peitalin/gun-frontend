@@ -18,6 +18,7 @@ const SectionBorder: React.FC<ReactProps> = ({
   onSubmit,
   type,
   style,
+  thickPadding,
   children
 }) => {
 
@@ -47,6 +48,7 @@ const SectionBorder: React.FC<ReactProps> = ({
     <div
       className={clsx(
         classes.sectionBorder,
+        thickPadding ? classes.thickPaddingDesktop : classes.thinPaddingDesktop,
         smDown ? classes.sectionBorderMobile : classes.sectionBorderDesktop
       )}
       style={style}
@@ -61,6 +63,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   disableForm?: boolean;
   type?: "form" | "div";
   style?: any;
+  thickPadding?: boolean
 }
 
 const styles = (theme: Theme) => createStyles({
@@ -78,8 +81,13 @@ const styles = (theme: Theme) => createStyles({
   },
   sectionBorderDesktop: {
     borderRadius: BorderRadius2x,
-    padding: '2rem',
     marginBottom: '1rem',
+  },
+  thickPaddingDesktop: {
+    padding: '2rem',
+  },
+  thinPaddingDesktop: {
+    padding: '0.5rem',
   },
   sectionBorderMobile: {
     borderRadius: BorderRadius2x,

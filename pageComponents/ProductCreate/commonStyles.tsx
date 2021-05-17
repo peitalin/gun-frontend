@@ -11,37 +11,6 @@ import {
 
 
 export const styles = (theme: Theme) => createStyles({
-  root: {
-    flexGrow: 1,
-    minHeight: 'calc(100vh - 32px)',
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'center',
-  },
-  productColumn60: {
-    flexBasis: '62%',
-    flexGrow: 1,
-    minWidth: 360,
-  },
-  productColumn40: {
-    // flexBasis: '40%',
-    flexGrow: 1,
-    minWidth: 280,
-  },
-  coverGrey: {
-    height: '100%',
-    opacity: 0,
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    width: '100%',
-    zIndex: 1,
-    backgroundColor: "#222",
-    borderRadius: BorderRadius,
-  },
-  disableForm: {
-    opacity: 0.5
-  },
   topButtonContainer: {
     display: 'flex',
     flexDirection: 'row',
@@ -50,20 +19,6 @@ export const styles = (theme: Theme) => createStyles({
   maxWidth: {
     maxWidth: 540,
     width: '100%',
-  },
-  pageMargin: {
-    margin: '0rem',
-    paddingTop: '1rem',
-    paddingBottom: '1rem',
-    paddingLeft: '1rem',
-    paddingRight: '1rem',
-  },
-  pageMarginSm: {
-    margin: '0rem',
-    paddingTop: '0rem',
-    paddingBottom: '2rem',
-    paddingLeft: '0rem',
-    paddingRight: '0rem',
   },
   marginSm: {
     marginLeft: '1rem',
@@ -74,19 +29,6 @@ export const styles = (theme: Theme) => createStyles({
     paddingBottom: '3rem',
     paddingLeft: '2rem',
     paddingRight: '2rem',
-  },
-  formOuterContainer: {
-    // background: "transparent",
-    // border: `1px solid ${Colors.lightGrey}`,
-    borderRadius: BorderRadius2x,
-    // padding: '2rem',
-    position: 'relative', // needed for coverGrey, position: absolute
-  },
-  formOuterContainerSm: {
-    // background: "transparent",
-    borderRadius: BorderRadius2x,
-    padding: '1rem 0rem 1rem 0rem',
-    position: 'relative', // needed for coverGrey, position: absolute
   },
   sectionBorder: {
     // border: `1px solid ${Colors.mediumLightGrey}`,
@@ -139,9 +81,6 @@ export const styles = (theme: Theme) => createStyles({
   },
   marginBottom1: {
     marginBottom: "1rem",
-  },
-  button: {
-    margin: 0,
   },
   formContainer: {
     position: 'relative',
@@ -199,12 +138,6 @@ export const styles = (theme: Theme) => createStyles({
     justifyContent: 'center',
     flexDirection: 'column',
   },
-  flexRowCenter: {
-    display: 'flex',
-    justifyContent: 'center',
-    flexDirection: 'row',
-    flexWrap: "wrap",
-  },
   flexCol50: {
     flexBasis: '40%',
     flexGrow: 1,
@@ -254,15 +187,6 @@ export const styles = (theme: Theme) => createStyles({
     flexWrap: "wrap",
     width: 'calc(100% - 2rem)',
   },
-  flexButtonItem: {
-    marginBottom: '1rem',
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    flexGrow: 1,
-    flexBasis: '30%',
-    maxWidth: '150px',
-  },
   flexButtonSpacer: {
     marginBottom: '1rem',
     justifyContent: 'center',
@@ -288,10 +212,6 @@ export const styles = (theme: Theme) => createStyles({
     color: Colors.grey,
     lineHeight: '1rem',
     textAlign: 'center',
-  },
-  createProductButtonContainer: {
-    display: "flex",
-    flexDirection: "column",
   },
   greyedOut: {
     color: Colors.grey,
@@ -400,6 +320,9 @@ export const styles = (theme: Theme) => createStyles({
       color: Colors.blue,
     },
   },
+  expansionPanelError: {
+    border: `1px solid ${Colors.fadedRed}`,
+  },
   expanderRoot: {
   },
   expandIcon: {
@@ -450,17 +373,6 @@ export const styles = (theme: Theme) => createStyles({
   },
   titleDim: {
     color: Colors.darkGrey,
-  },
-  stickyProductPreviewContainer: {
-    position: 'sticky',
-    top: '4rem',
-    marginBottom: '1rem',
-    marginLeft: '1rem',
-    cursor: "pointer",
-    // from SellingTips to product card preview
-    // display: 'flex',
-    // flexDirection: 'row',
-    // justifyContent: 'center',
   },
   // Product Preview Page Modal
   modalBackdrop: {

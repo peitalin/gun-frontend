@@ -35,6 +35,9 @@ const BannerProductCreateDesktop: NextPage<ReactProps> = (props) => {
           // marginLeft: '1.5rem',
           marginTop: '7rem',
         }}
+        bannerContainerStyles={{
+          marginTop: "-3.5rem",
+        }}
         height={480}
         ditherStyle={{
           background: bannerDither

@@ -23,18 +23,17 @@ const ChooseDealerDropdown = (props: ReactProps & FormikProps<FormikFields>) => 
 
   const setDealerId = (newCat: SelectOption) => {
     fprops.setFieldValue("dealerId", newCat?.value)
-    // if (!!newCat?.value) {
-    //   fprops.setFieldValue("dealerId", newCat?.value)
-    // } else {
-    // }
   }
 
   let dealerOptions = createDealerSuggestions(props.dealers)
   // initial stateShape
-  let initialDealer = undefined
+  let initialDealer = createDealerOption(
+    (props.dealers ?? []).find(d => d.id === fprops.values?.dealerId)
+  )
 
   // console.log("dealerOptions: ", dealerOptions)
-  // console.log("initialDealer: ", initialDealer)
+  console.log("initialDealer: ", initialDealer)
+  console.log("fprops.values.dealerId: ", fprops.values?.dealerId)
 
   return (
     <>
@@ -144,9 +143,13 @@ const createDealerSuggestions = (dealers: Dealers[]): GroupedSelectOption[] => {
 
 
 const createDealerOption = (dealer: Dealers) => {
-  return {
-    label: `${dealer.name}, ${dealer.postCode} #${dealer.licenseNumber}`,
-    value: dealer.id,
+  if (!dealer) {
+    return undefined
+  } else {
+    return {
+      label: `${dealer?.name}, ${dealer?.postCode} #${dealer?.licenseNumber}`,
+      value: dealer?.id,
+    }
   }
 }
 

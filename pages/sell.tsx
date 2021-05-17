@@ -1,22 +1,9 @@
 import React from "react";
-import { useState } from "react";
 // Styles
 import clsx from "clsx";
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
-// Material UI
-import Dialog from "@material-ui/core/Dialog";
-// Redux
-import { useSelector, useDispatch } from "react-redux";
-import { GrandReduxState } from "reduxStore/grand-reducer";
-import { Actions } from "reduxStore/actions";
-// Typings
-import { ID, ProductCreateInput, Product, Connection } from "typings/gqlTypes";
 // Components
 import ProductCreatePage from "pageComponents/ProductCreate";
-import BannerProductCreate from "components/BannerProductCreate";
-// Router
-import { useWindowWidth } from "utils/hooks";
-import { Colors } from "layout/AppTheme";
 // Meta headers
 import MetaHeadersPage from "layout/MetaHeadersPage";
 
@@ -31,23 +18,7 @@ const SellPageSSR: React.FC<ProductCreateProps> = (props) => {
         title="Sell Used Guns - List for Free | Gun Marketplace"
         description="List and sell guns online"
       />
-      {/* <BannerProductCreate/> */}
-      <ProductCreatePage
-        asModal={false}
-      />
-      {/* <div className={classes.outerContainer}>
-        <div className={classes.bannerOuter}>
-          <BannerProductCreate/>
-        </div>
-        <div className={classes.flexRow}>
-          <div className={classes.flexRowInner}>
-            <ProductCreatePage
-              asModal={false}
-              closeModal={closeModal}
-            />
-          </div>
-        </div>
-      </div> */}
+      <ProductCreatePage />
     </>
   )
 }

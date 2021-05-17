@@ -128,10 +128,10 @@ const styles = (theme: Theme) => createStyles({
     // maxWidth: 200,
     height: "40px",
     fontWeight: 500,
-    backgroundColor: Colors.ultramarineBlue,
-    "&:hover": {
-      backgroundColor: fade(Colors.ultramarineBlue, 0.9),
-    },
+    // backgroundColor: Colors.ultramarineBlue,
+    // "&:hover": {
+    //   backgroundColor: fade(Colors.ultramarineBlue, 0.9),
+    // },
   }
 });
 

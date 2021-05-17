@@ -1,8 +1,7 @@
 import React from "react";
 // Styles
-import { withStyles, WithStyles } from "@material-ui/core/styles";
+import { withStyles, WithStyles, createStyles, Theme, fade } from "@material-ui/core/styles";
 import { Colors } from "layout/AppTheme";
-import { styles } from '../commonStyles';
 import clsx from "clsx";
 // Typings
 import { Product, Connection, ProductCreateInput } from "typings/gqlTypes";
@@ -64,6 +63,25 @@ interface ReactProps extends WithStyles<typeof styles> {
   onClick?(e: any): void;
 }
 
-export default ProductCreateButton;
+const styles = (theme: Theme) => createStyles({
+  createProductButtonContainer: {
+    display: "flex",
+    flexDirection: "column",
+  },
+  flexButtonItem: {
+    marginBottom: '1rem',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    flexGrow: 1,
+    flexBasis: '30%',
+    maxWidth: '150px',
+  },
+  button: {
+    margin: 0,
+  },
+})
+
+export default withStyles(styles)(ProductCreateButton);
 
 
