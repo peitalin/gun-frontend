@@ -78,10 +78,10 @@ export const styles = (theme: Theme) => createStyles({
     alignItems: "center",
     // backgroundColor: fade(Colors.black, 0.15),
     borderRadius: `${BorderRadius}px`,
-    border: `0px solid ${fade(Colors.black, 0)}`,
-    // "&:hover": {
-    //   backgroundColor: fade(Colors.blue, 0.4),
-    // }
+    "&:hover": {
+      cursor: "grab",
+      // backgroundColor: fade(Colors.blue, 0.4),
+    }
   },
 })
 

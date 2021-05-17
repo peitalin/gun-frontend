@@ -16,6 +16,7 @@ const Banner: React.FC<ReactProps> = (props) => {
   return (
     <div className={clsx(
       classes.bannerContainer,
+      props.className,
       // "fadeInFast"
     )}
       style={{
@@ -77,8 +78,8 @@ const BackgroundImage = (
       <img
         className={classes.bannerBackground}
         style={{
-          height: height ? height : bannerHeight,
           width: portraitMode ? '100%' : 'unset',
+          height: isMobile ? "unset" : "100%",
           // image to always fill screen on desktop
           minWidth: isMobile ? "unset" : 1160,
           top: 0,
@@ -148,6 +149,7 @@ interface DitherProps extends WithStyles<typeof styles> {
   ditherStyle?: any;
 }
 interface ReactProps extends WithStyles<typeof styles> {
+  className?: any;
   titleStyle?: any;
   ditherStyle?: any;
   portraitMode?: boolean;
