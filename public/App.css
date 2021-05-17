@@ -397,38 +397,7 @@ textarea {
   animation: fadeIn 1s cubic-bezier(0.6, 0.2, 0.4, 1.1) both;
   animation-delay: 1s;
 }
-.staggerFadeIn > div:nth-child(33) {
-  animation: fadeIn 1s cubic-bezier(0.6, 0.2, 0.4, 1.1) both;
-  animation-delay: 1s;
-}
-.staggerFadeIn > div:nth-child(34) {
-  animation: fadeIn 1s cubic-bezier(0.6, 0.2, 0.4, 1.1) both;
-  animation-delay: 1s;
-}
-.staggerFadeIn > div:nth-child(35) {
-  animation: fadeIn 1s cubic-bezier(0.6, 0.2, 0.4, 1.1) both;
-  animation-delay: 1s;
-}
-.staggerFadeIn > div:nth-child(36) {
-  animation: fadeIn 1s cubic-bezier(0.6, 0.2, 0.4, 1.1) both;
-  animation-delay: 1s;
-}
-.staggerFadeIn > div:nth-child(37) {
-  animation: fadeIn 1s cubic-bezier(0.6, 0.2, 0.4, 1.1) both;
-  animation-delay: 1s;
-}
-.staggerFadeIn > div:nth-child(38) {
-  animation: fadeIn 1s cubic-bezier(0.6, 0.2, 0.4, 1.1) both;
-  animation-delay: 1s;
-}
-.staggerFadeIn > div:nth-child(39) {
-  animation: fadeIn 1s cubic-bezier(0.6, 0.2, 0.4, 1.1) both;
-  animation-delay: 1s;
-}
-.staggerFadeIn > div:nth-child(40) {
-  animation: fadeIn 1s cubic-bezier(0.6, 0.2, 0.4, 1.1) both;
-  animation-delay: 1s;
-}
+
 
 
 @keyframes fadeIn {
@@ -537,12 +506,12 @@ textarea {
     animation: background-gradient 15s ease infinite;
 }
 .background-uniswap-dark {
-    background: linear-gradient(-45deg, #222429, #222429, #2E3443, #3A3F4A);
+    background: linear-gradient(-45deg, #222429, #2e3139, #384052, #424957);
     background-size: 400% 400%;
     animation: background-gradient 15s ease infinite;
 }
 .background-slate-grey {
-    background: linear-gradient(-45deg, #f4f4f4, #EDF0F2, #D0D5DF, #B0B5BF);
+    background: linear-gradient(-45deg, #fefefe, #edf7ff, #f3d4ec, #bcdef0);
     background-size: 400% 400%;
     animation: background-gradient 15s ease infinite;
 }

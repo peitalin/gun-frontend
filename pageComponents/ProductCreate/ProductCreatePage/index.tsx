@@ -373,13 +373,14 @@ const ProductCreatePage = (props: ReactProps) => {
         disableForm={disableForm}
       >
 
-        <SectionBorder>
+        <SectionBorder thickPadding={false}>
           <ProductCreateStepper
             activeStep={activeStep}
             setActiveStep={setActiveStep}
             stepIndexes={[0, 1, 2]}
             stepAfterLastStep={3}
             setFieldTouched={formik.setFieldTouched}
+            touched={formik.touched}
             errorIndex={
               // match index with components
               (index: number) => {
@@ -393,6 +394,7 @@ const ProductCreatePage = (props: ReactProps) => {
                   case 1: {
                     return [
                       errors?.title && touched.title,
+                      errors?.serialNumber && touched.serialNumber,
                       errors?.actionType && touched.actionType,
                     ].some(s => s)
                   }
@@ -411,7 +413,7 @@ const ProductCreatePage = (props: ReactProps) => {
             {
               (activeStep === 0) &&
               <>
-                <Typography>
+                <Typography className={classes.stepperSectionTitle}>
                   For each ad campaign that you create, you can control how much
                   you're willing to spend on clicks and conversions, which networks
                   and geographical locations you want your ads to show on, and more.
@@ -429,7 +431,7 @@ const ProductCreatePage = (props: ReactProps) => {
             {
               (activeStep === 1) &&
               <>
-                <Typography>
+                <Typography className={classes.stepperSectionTitle}>
                   An ad group contains one or more ads which target a shared
                   set of keywords.
                 </Typography>
@@ -442,7 +444,7 @@ const ProductCreatePage = (props: ReactProps) => {
             {
               (activeStep === 2) &&
               <>
-                <Typography>
+                <Typography className={classes.stepperSectionTitle}>
                   Try out different ad text to see what brings in the most customers,
                   and learn how to enhance your ads using features like ad extensions.
                   If you run into any problems with your ads, find out how to tell if
@@ -454,13 +456,14 @@ const ProductCreatePage = (props: ReactProps) => {
           </ProductCreateStepper>
         </SectionBorder>
 
-        <SectionBorder>
+        <SectionBorder thickPadding={false}>
           <ProductCreateStepper
             activeStep={activeStep}
             setActiveStep={setActiveStep}
             stepIndexes={[3, 4, 5]}
             stepAfterLastStep={5}
             setFieldTouched={formik.setFieldTouched}
+            touched={formik.touched}
             errorIndex={
               // match index with components
               (index: number) => {
@@ -494,7 +497,7 @@ const ProductCreatePage = (props: ReactProps) => {
             {
               (activeStep === 3) &&
               <>
-                <Typography>
+                <Typography className={classes.stepperSectionTitle}>
                   Try out different ad text to see what brings in the most customers,
                   and learn how to enhance your ads using features like ad extensions.
                   If you run into any problems with your ads, find out how to tell if
@@ -506,7 +509,7 @@ const ProductCreatePage = (props: ReactProps) => {
             {
               (activeStep === 4) &&
               <>
-                <Typography>
+                <Typography className={classes.stepperSectionTitle}>
                   Try out different ad text to see what brings in the most customers,
                   and learn how to enhance your ads using features like ad extensions.
                   If you run into any problems with your ads, find out how to tell if
@@ -518,7 +521,7 @@ const ProductCreatePage = (props: ReactProps) => {
             {
               (activeStep === 5) &&
               <>
-                <Typography>
+                <Typography className={classes.stepperSectionTitle}>
                   Try out different ad text to see what brings in the most customers,
                   and learn how to enhance your ads using features like ad extensions.
                   If you run into any problems with your ads, find out how to tell if
@@ -531,7 +534,7 @@ const ProductCreatePage = (props: ReactProps) => {
         </SectionBorder>
 
 
-        <SectionBorder thickPadding>
+        <SectionBorder thickPadding={true}>
           <PreviewItemUploader
             reducerName={reducerName}
             productInput={productCreateInput}
@@ -542,7 +545,7 @@ const ProductCreatePage = (props: ReactProps) => {
           />
         </SectionBorder>
 
-        <SectionBorder thickPadding>
+        <SectionBorder thickPadding={true}>
           <PricingLicenses
             reducerName={reducerName}
             currentVariants={productCreateInput.currentVariants}

@@ -17,7 +17,10 @@ const PreventDragDropContainer: React.FC<PreventDragDropContainerProps> = (props
 
   return (
     <div
-      className={classes.preventDragDropContainer}
+      className={clsx(
+        classes.preventDragDropContainer,
+        props.className,
+      )}
       onDragOver={(e) => {
         e.preventDefault()
       }}
@@ -34,6 +37,7 @@ const PreventDragDropContainer: React.FC<PreventDragDropContainerProps> = (props
 
 
 interface PreventDragDropContainerProps extends WithStyles<typeof styles> {
+  className?: any;
 }
 
 export const styles = (theme: Theme) => createStyles({

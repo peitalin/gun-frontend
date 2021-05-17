@@ -449,16 +449,13 @@ export const styles = (theme: Theme) => createStyles({
     width: '100%',
   },
   licenseButtonNumber: {
-    color: isThemeDark(theme)
-      ? Colors.uniswapLightGrey
-      : Colors.slateGreyBlack,
     fontWeight: 600,
   },
   licenseButtonCategory: {
-    color: isThemeDark(theme)
-      ? Colors.uniswapLightestGrey
-      : Colors.slateGreyLightBlack,
     fontWeight: 500,
+  },
+  stepperSectionTitle: {
+    marginBottom: '1rem',
   },
 })
 

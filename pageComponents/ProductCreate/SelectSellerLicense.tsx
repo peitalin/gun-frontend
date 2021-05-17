@@ -81,7 +81,11 @@ const SelectSellerLicense = (props: ReactProps & FormikProps<FormikFields>) => {
           <Accordion
             defaultExpanded={defaultExpanded}
             classes={{
-              root: classes.expansionPanelRoot,
+              root: clsx(
+                classes.expansionPanelRoot,
+                (fprops.errors?.sellerLicenseId && fprops.touched?.sellerLicenseId) &&
+                classes.expansionPanelError,
+              ),
               expanded: classes.expansionPanelExpanded,
             }}
             expanded={openExpander}
@@ -94,9 +98,9 @@ const SelectSellerLicense = (props: ReactProps & FormikProps<FormikFields>) => {
             elevation={0} // remove box-shadow
             TransitionProps={{
               timeout: {
-                appear: 200,
-                enter: 200,
-                exit: 200,
+                appear: 50,
+                enter: 50,
+                exit: 50,
               }
             }}
           >

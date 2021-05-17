@@ -58,7 +58,6 @@ const UploadLayoutPreviews: React.FC<ILayoutProps & ReactProps> = (props) => {
   const sm = useMediaQuery(theme.breakpoints.only("sm"));
   const md = useMediaQuery(theme.breakpoints.only("md"));
   const lg = useMediaQuery(theme.breakpoints.only("lg"));
-  const xl = useMediaQuery(theme.breakpoints.only("xl"));
 
   const {
     dzuPreviewItems,

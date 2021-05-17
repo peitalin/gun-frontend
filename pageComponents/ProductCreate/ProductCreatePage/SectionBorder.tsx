@@ -48,8 +48,9 @@ const SectionBorder: React.FC<ReactProps> = ({
     <div
       className={clsx(
         classes.sectionBorder,
-        thickPadding ? classes.thickPaddingDesktop : classes.thinPaddingDesktop,
-        smDown ? classes.sectionBorderMobile : classes.sectionBorderDesktop
+        !smDown
+        ? thickPadding ? classes.thickPaddingDesktop : classes.thinPaddingDesktop
+        : thickPadding ? classes.thickPaddingMobile : classes.thinPaddingMobile
       )}
       style={style}
     >
@@ -79,19 +80,23 @@ const styles = (theme: Theme) => createStyles({
       ? 'unset'
       : `1px solid ${Colors.slateGrey}`,
   },
-  sectionBorderDesktop: {
+  thickPaddingDesktop: {
     borderRadius: BorderRadius2x,
     marginBottom: '1rem',
-  },
-  thickPaddingDesktop: {
     padding: '2rem',
   },
   thinPaddingDesktop: {
+    borderRadius: BorderRadius2x,
+    marginBottom: '1rem',
     padding: '0.5rem',
   },
-  sectionBorderMobile: {
-    borderRadius: BorderRadius2x,
-    padding: '1rem 0.75rem 1rem 0.75rem',
+  thickPaddingMobile: {
+    // borderRadius: BorderRadius2x,
+    padding: '1rem 1rem 1rem 1rem',
+    marginBottom: '1rem',
+  },
+  thinPaddingMobile: {
+    padding: '0.5rem 0rem 0.5rem 0rem',
     marginBottom: '1rem',
   },
   formOuterContainer: {

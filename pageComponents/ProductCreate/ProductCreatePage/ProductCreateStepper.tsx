@@ -16,6 +16,7 @@ import { Colors, isThemeDark } from "layout/AppTheme";
 import StepperTick from "components/Icons/StepperTick";
 import StepperCircle from "components/Icons/StepperCircle";
 import StepperInfo from "components/Icons/StepperInfo";
+import { FormikTouched } from "formik"
 
 
 
@@ -29,6 +30,7 @@ const getStepTitles = () => {
     'Description',
   ];
 }
+
 const activeStepTouched = {
   0: [
     "categoryId",
@@ -36,6 +38,7 @@ const activeStepTouched = {
   ],
   1: [
     "title",
+    "serialNumber",
     "actionType",
   ],
   2: [
@@ -56,7 +59,6 @@ const activeStepTouched = {
   ],
   6: [],
   7: [],
-  8: [],
 }
 
 
@@ -68,6 +70,7 @@ const ProductCreateStepper: React.FC<StepperProps> = ({
   stepIndexes,
   stepAfterLastStep,
   setFieldTouched,
+  touched,
   children,
 }) => {
 
@@ -99,17 +102,31 @@ const ProductCreateStepper: React.FC<StepperProps> = ({
 
 
   React.useEffect(() => {
-    let formikFields = activeStepTouched[activeStep]
-    if (formikFields) {
-      formikFields.forEach(field => {
-        setFieldTouched(field, true)
-      })
-    }
+
+    Object.keys(activeStepTouched).map(index => {
+      // if we skip past a section, mark all previous sections as touched
+      if (activeStep > parseInt(index)) {
+        let formikFields = activeStepTouched[index]
+        if (formikFields?.length > 0) {
+          formikFields.forEach(field => {
+            if (!touched?.[field]) {
+              // console.log("setting formikFields:", formikFields)
+              setFieldTouched(field, true)
+            }
+          })
+        }
+      }
+    })
+
   }, [activeStep])
 
 
   return (
-    <Stepper activeStep={activeStep - stepIndexes?.[0]} orientation="vertical">
+    <Stepper
+      activeStep={activeStep - stepIndexes?.[0]}
+      orientation="vertical"
+      className={classes.stepperRoot}
+    >
       {
         stepIndexes.map(index => {
 
@@ -158,14 +175,15 @@ const ProductCreateStepper: React.FC<StepperProps> = ({
                     disabled={activeStep === 0}
                     onClick={handleBack}
                     className={classes.stepperButtonBack}
+                    variant={"outlined"}
                   >
                     Back
                   </ButtonLoading>
                   <ButtonLoading
-                    variant="contained"
                     color="primary"
                     onClick={handleNext}
                     className={classes.stepperButtonNext}
+                    variant={"outlined"}
                   >
                     {activeStep === stepTitles.length - 1 ? 'Finish' : 'Next'}
                   </ButtonLoading>
@@ -186,13 +204,32 @@ interface StepperProps extends WithStyles<typeof styles> {
   stepIndexes: number[]
   stepAfterLastStep: number
   setFieldTouched(field: string, b: boolean): void
+  touched: FormikTouched<{
+    title: string,
+    description: string,
+    condition: string,
+    make: string,
+    model: string,
+    ammoType: string,
+    actionType: string,
+    caliber: string,
+    serialNumber: string,
+    location: string,
+    magazineCapacity: string,
+    barrelLength: string,
+    dealerId: string,
+    categoryId: string,
+    isPublished: boolean,
+    currentVariants: any[],
+    sellerLicenseId: string,
+  }>;
 }
 
-interface FormikFields {
-  categoryId: string
-}
 
 const styles = (theme: Theme) => createStyles({
+  stepperRoot: {
+    padding: '1rem',
+  },
   buttonContainer: {
     display: "flex",
     flexDirection: "row",
@@ -201,6 +238,17 @@ const styles = (theme: Theme) => createStyles({
   stepperButtonBack: {
     flexBasis: '50%',
     margin: '1rem',
+    backgroundColor: isThemeDark(theme)
+      ? Colors.uniswapMediumNavy
+      : Colors.slateGreyDark,
+    color: isThemeDark(theme)
+      ? Colors.uniswapLightGrey
+      : Colors.slateGreyBlack,
+    "&:hover": {
+      backgroundColor: isThemeDark(theme)
+        ? Colors.uniswapLightNavy
+        : Colors.slateGreyDarker,
+    },
   },
   stepperButtonNext: {
     flexBasis: '50%',

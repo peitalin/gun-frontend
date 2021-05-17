@@ -65,7 +65,6 @@ const SelectCategories = (props: ReactProps & FormikProps<FormikFields>) => {
       .sort(sortCategoriesByName)
 
   const chosenCategory = categories.find(c => c.id === fprops.values.categoryId)
-  // const categorySuggestions = createCategorySuggestions(categories);
 
   return (
     <ErrorBounds className={classes.positionRelative}>
@@ -97,9 +96,9 @@ const SelectCategories = (props: ReactProps & FormikProps<FormikFields>) => {
             elevation={0} // remove box-shadow
             TransitionProps={{
               timeout: {
-                appear: 200,
-                enter: 200,
-                exit: 200,
+                appear: 50,
+                enter: 50,
+                exit: 50,
               }
             }}
           >
@@ -189,14 +188,6 @@ const SelectCategories = (props: ReactProps & FormikProps<FormikFields>) => {
 }
 
 
-const createCategorySuggestions = (categories: Categories[]) => {
-  return categories.sort().map(category => {
-    return {
-      label: `${category.name}`,
-      value: category.id,
-    }
-  })
-}
 
 export interface SelectOption {
   label: string;

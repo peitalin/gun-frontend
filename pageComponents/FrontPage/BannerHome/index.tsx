@@ -19,8 +19,8 @@ import SearchbarMain from "./SearchbarMain";
 
 const BannerHome: NextPage<ReactProps> = (props) => {
 
-  const bannerImageUrl = "/img/banner5.jpg"
-  const bannerMobileImageUrl = "/img/banner5-portrait.jpg"
+  const bannerImageUrl = "/img/banner10.jpg"
+  const bannerMobileImageUrl = "/img/banner10-portrait.jpg"
   const bannerDither = 'linear-gradient(30deg, rgba(25,25,25,0.7) 10%, rgba(25,25,25,0.4) 60%)'
   // const bannerDither = 'linear-gradient(180deg, rgba(25, 25, 25, 0.1) 25%, rgba(25, 25, 25, 1) 75%)'
 

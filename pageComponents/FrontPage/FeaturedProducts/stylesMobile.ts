@@ -1,6 +1,6 @@
 // Styles
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
-import { Colors, BorderRadius } from "layout/AppTheme";
+import { Colors, BorderRadius, isThemeDark } from "layout/AppTheme";
 
 
 export const styles = (theme: Theme) => createStyles({
@@ -9,6 +9,7 @@ export const styles = (theme: Theme) => createStyles({
     // paddingRight: '1rem', // subtract 1rem for carousel buttons: 1rem on both sides
     // paddingLeft: '1rem', // subtract 1rem for carousel buttons: 1rem on both sides
     width: '100%',
+    position: "relative",
   },
   flexRowLink: {
     display: 'flex',
@@ -84,7 +85,9 @@ export const styles = (theme: Theme) => createStyles({
     fontSize: '0.8rem',
     color: Colors.blue,
     // borderBottom: `2px solid ${Colors.charcoal}`,
-    borderBottom: `2px solid ${Colors.white}`,
+    borderBottom: isThemeDark(theme)
+      ? `2px solid ${Colors.uniswapMediumNavy}`
+      : `2px solid ${Colors.slateGrey}`,
     // borderRadius: '2px',
     paddingLeft: '0.25rem',
     display: 'flex',

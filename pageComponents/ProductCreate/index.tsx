@@ -3,19 +3,14 @@ import React from "react";
 import clsx from "clsx";
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
 import { Gradients, Colors, BoxShadows } from "layout/AppTheme";
-// Material UI
-import Dialog from "@material-ui/core/Dialog";
-// Redux
-import { useSelector, useDispatch } from "react-redux";
-import { GrandReduxState } from "reduxStore/grand-reducer";
-import { Actions } from "reduxStore/actions";
 // Components
 import ProductCreatePage from "./ProductCreatePage";
-import BannerProductCreate from "components/BannerProductCreate";
+import BannerCreateProduct from "./BannerCreateProduct";
 import { useScrollYPosition } from "utils/hooks";
 // Router
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
+import AlignCenterLayout from "components/AlignCenterLayout";
 
 
 
@@ -23,18 +18,20 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 const ProductCreate: React.FC<ReactProps> = (props) => {
 
   const { classes, children } = props;
-
-  const theme = useTheme();
-  const mdDown = useMediaQuery(theme.breakpoints.down('md'));
+  // const theme = useTheme();
 
   return (
     <div className={classes.outerContainer}>
       <div className={classes.bannerOuter}>
-        <BannerProductCreate/>
+        <BannerCreateProduct/>
       </div>
-      <div className={classes.flexRowInner}>
+      <AlignCenterLayout
+        className={classes.justifyCenter}
+        withRecommendations={false}
+        maxWidth={1200}
+      >
         <ProductCreatePage />
-      </div>
+      </AlignCenterLayout>
     </div>
   )
 }
@@ -54,17 +51,8 @@ const styles = (theme: Theme) => createStyles({
     position: 'relative',
     width: '100%',
   },
-  flexRow: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'center',
-  },
-  flexRowInner: {
-    display: 'flex',
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    maxWidth: 1160,
-    // width: '100%',
+  justifyCenter: {
+    justifyContent: "center",
   },
 });
 

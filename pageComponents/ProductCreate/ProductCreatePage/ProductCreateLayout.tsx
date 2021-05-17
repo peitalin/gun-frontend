@@ -1,8 +1,18 @@
 import React from "react";
 import clsx from "clsx";
-import { createStyles, Theme, fade } from "@material-ui/core/styles";
+import {
+  createStyles,
+  Theme,
+  fade,
+  withStyles,
+  WithStyles
+} from "@material-ui/core/styles";
+import {
+  Colors,
+  BorderRadius2x,
+  BorderRadius,
+} from "layout/AppTheme";
 // Styles
-import { withStyles, WithStyles } from "@material-ui/core/styles";
 // Icons
 import ClearIcon from "@material-ui/icons/Clear";
 import IconButton from "@material-ui/core/IconButton";
@@ -11,18 +21,17 @@ import IconButton from "@material-ui/core/IconButton";
 import ProductCardResponsive from "components/ProductCardResponsive";
 import PreventDragDropContainer from "./PreventDragDropContainer";
 import Tooltip from '@material-ui/core/Tooltip';
+import Typography from "@material-ui/core/Typography";
 import {
   ID,
-  ProductCreateInput,
   Product,
-  Categories,
-  UserPrivate,
-  ProductVariantInput,
-  StorePrivate,
 } from "typings/gqlTypes";
+import RenderInstructions from "./Instructions";
 // CSS
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { isThemeDark } from "layout/AppTheme";
+import { useScrollYPosition } from "utils/hooks";
 
 
 // NOTES:
@@ -44,45 +53,52 @@ const ProductCreateLayout: React.FC<ProductCreateFormProps> = (props) => {
   const smDown = useMediaQuery(theme.breakpoints.down('sm'));
   const mdDown = useMediaQuery(theme.breakpoints.down('md'));
 
+  let y = useScrollYPosition()
+
+  React.useEffect(() => {
+    if (y > 1190 && props.activeStep !== 7) {
+      props.setActiveStep(7)
+    }
+  }, [y])
+
+
   return (
-    <div
+    <PreventDragDropContainer
       className={clsx(
         classes.root,
-        classes.flexRowCenter,
         smDown ? classes.pageMarginSm : classes.pageMargin,
-        "prevent-accidental-drag-drop-product-create-form"
       )}
-      onDragOver={(e) => e.preventDefault()}
-      onDrop={(e) => {
-        console.log("ahh! you missed the dropzone")
-        e.preventDefault()
-      }}
     >
-
       <div className={clsx(classes.productColumn60)}>
         {children}
       </div>
 
       <div className={clsx(classes.productColumn40, 'fadeIn')}>
-        {
-          !mdDown &&
-          <Tooltip title="Preview the Product Page" placement="bottom-start">
-            <div className={clsx(
-              classes.stickyProductPreviewContainer,
-              'fadeIn',
-            )}>
-              <ProductCardResponsive
-                product={props.productPreviewSticky}
-                // cardsPerRowLayout={4}
-                // boxShadow={true}
-                previewImageEmptyMessage={`Step: ${props.activeStep + 1}`}
-                // onClick={() => setOpenPreviewPage(true)}
-              />
-            </div>
-          </Tooltip>
-        }
+      {
+        !mdDown &&
+        <>
+          {
+            (props.activeStep < 6)
+            ? <div className={classes.instructionsContainer}>
+                <Typography className={classes.instructionTitle}>
+                  {`Step: ${props.activeStep}`}
+                </Typography>
+                <RenderInstructions activeStep={props.activeStep}/>
+              </div>
+            : <Tooltip title="Product Preview" placement="bottom-start">
+                <div className={clsx(classes.stickyProductPreviewContainer, 'fadeIn')}>
+                  <ProductCardResponsive
+                    product={props.productPreviewSticky}
+                    previewImageEmptyMessage={`Preview Image: Step ${props.activeStep + 1}`}
+                    // previewImageEmptyMessage={`Preview Image`}
+                  />
+                </div>
+              </Tooltip>
+          }
+        </>
+      }
       </div>
-    </div>
+    </PreventDragDropContainer>
   )
 }
 
@@ -101,6 +117,7 @@ export const styles = (theme: Theme) => createStyles({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center',
+    flexWrap: "wrap",
   },
   productColumn60: {
     flexBasis: '60%',
@@ -114,7 +131,7 @@ export const styles = (theme: Theme) => createStyles({
   },
   stickyProductPreviewContainer: {
     position: 'sticky',
-    top: '7rem',
+    top: '5rem',
     marginBottom: '1rem',
     marginLeft: '1rem',
     cursor: "pointer",
@@ -123,15 +140,9 @@ export const styles = (theme: Theme) => createStyles({
     // flexDirection: 'row',
     // justifyContent: 'center',
   },
-  flexRowCenter: {
-    display: 'flex',
-    justifyContent: 'center',
-    flexDirection: 'row',
-    flexWrap: "wrap",
-  },
   pageMargin: {
     margin: '0rem',
-    paddingTop: '1rem',
+    paddingTop: '0rem',
     paddingBottom: '1rem',
     paddingLeft: '1rem',
     paddingRight: '1rem',
@@ -142,6 +153,22 @@ export const styles = (theme: Theme) => createStyles({
     paddingBottom: '2rem',
     paddingLeft: '0rem',
     paddingRight: '0rem',
+  },
+  instructionsContainer: {
+    position: 'sticky',
+    top: '5.5rem',
+    marginBottom: '1rem',
+    marginLeft: '1rem',
+    cursor: "pointer",
+    padding: '1rem',
+    borderRadius: BorderRadius2x,
+    backgroundColor: isThemeDark(theme)
+      ? Colors.uniswapLightNavy
+      : Colors.slateGrey,
+  },
+  instructionTitle: {
+    fontWeight: 600,
+    fontSize: '1.125rem',
   },
 })
 

@@ -57,7 +57,7 @@ const styles = (theme: Theme) => createStyles({
       ? BoxShadows.shadow4.boxShadow
       : 'unset',
     border: theme.palette.type === 'dark'
-      ? 'unset'
+      ? `1px solid ${Colors.uniswapMediumNavy}`
       : `1px solid ${Colors.slateGrey}`,
   },
   maxWidth: {
@@ -73,10 +73,10 @@ const styles = (theme: Theme) => createStyles({
     background: theme.palette.type === 'dark'
       ? Colors.uniswapDarkNavy
       : Colors.cream,
-    border: theme.palette.type === 'dark'
-      ? "unset"
-      : `1px solid ${Colors.slateGreyDark}`,
-    margin: '1rem 0rem 0rem 0rem',
+    borderTop: theme.palette.type === 'dark'
+      ? `0px solid ${Colors.uniswapMediumNavy}`
+      : `0px solid ${Colors.slateGrey}`,
+    // margin: '1rem 0rem 0rem 0rem',
     padding: '1rem',
     borderRadius: '0px',
   },

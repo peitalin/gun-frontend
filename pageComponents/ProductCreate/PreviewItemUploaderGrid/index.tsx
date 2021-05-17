@@ -5,7 +5,8 @@ import { GrandReduxState, Actions } from "reduxStore/grand-reducer";
 // Styles
 import { withStyles, WithStyles, fade } from "@material-ui/core/styles";
 import { styles } from './styles';
-import { Colors } from "layout/AppTheme";
+import { Colors, isThemeDark } from "layout/AppTheme";
+import { useTheme } from "@material-ui/core";
 // Material UI
 import Typography from "@material-ui/core/Typography";
 // Media uploader
@@ -179,9 +180,6 @@ const PreviewItemUploaderGrid = (props: ReactProps & FormikProps<FormikFields>) 
   const [googleUploads, setGoogleUploads] = React.useState<GoogleUpload[]>([]);
   const [loading, setLoading] = React.useState(false);
 
-  const isDarkMode = useSelector<GrandReduxState, boolean>(s => {
-    return s.reduxLogin.darkMode === 'dark'
-  })
 
   //// Effects ////
 
@@ -204,6 +202,9 @@ const PreviewItemUploaderGrid = (props: ReactProps & FormikProps<FormikFields>) 
     return () => {}
   }, [props.dzuPreviewItems, props.dzuPreviewOrder])
 
+  let errorMessage = (fprops?.errors?.currentVariants?.[0] as any)?.previewItems
+  let touched = fprops.touched?.currentVariants?.[0]?.previewItems
+  const theme = useTheme()
 
   return (
     <ErrorBounds className={classes.uploaderRoot}>
@@ -251,10 +252,12 @@ const PreviewItemUploaderGrid = (props: ReactProps & FormikProps<FormikFields>) 
             backgroundColor: '#DAA'
           },
           dropzone: {
-            border: isDarkMode
-              ? `2px dashed ${Colors.uniswapLighterGrey}`
-              : `2px dashed ${Colors.slateGreyDarker}`,
-            backgroundColor: isDarkMode
+            border: (errorMessage && touched)
+              ? `2px dashed ${Colors.fadedRed}`
+              : isThemeDark(theme)
+                  ? `2px dashed ${Colors.uniswapLighterGrey}`
+                  : `2px dashed ${Colors.slateGreyDarker}`,
+            backgroundColor: isThemeDark(theme)
               ? Colors.uniswapGreyNavy
               : Colors.darkWhite,
             display: "flex",
@@ -276,7 +279,7 @@ const PreviewItemUploaderGrid = (props: ReactProps & FormikProps<FormikFields>) 
       <ValidationErrorMsg
         touched={fprops?.touched?.currentVariants?.[0]?.previewItems}
         focused={focused}
-        errorMessage={(fprops?.errors?.currentVariants?.[0] as any)?.previewItems}
+        errorMessage={errorMessage}
         disableInitialValidationMessage={true}
         style={{
           bottom: '-0.75rem',

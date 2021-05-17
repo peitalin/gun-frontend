@@ -1,5 +1,5 @@
 import { createStyles, Theme, fade } from "@material-ui/core/styles";
-import { fontFam, Colors } from "layout/AppTheme";
+import { Colors } from "layout/AppTheme";
 
 export const styles = (theme: Theme) => createStyles({
   uploaderRoot: {
@@ -12,20 +12,10 @@ export const styles = (theme: Theme) => createStyles({
     right: '0.25rem',
     fontSize: '0.8rem',
     color: `${fade(theme.palette.error.light, 0.6)}`,
-    fontFamily: fontFam,
     transition: theme.transitions.create('color', {
       easing: theme.transitions.easing.easeIn,
       duration: "200ms",
     }),
-  },
-  uploadLayout: {
-    border: "2px dashed rgb(221, 221, 221)",
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    marginBottom: '0.5rem',
-    padding: "1rem",
-    backgroundColor: "#fefefe",
   },
   iconButton: {
     background: Colors.darkGrey,
