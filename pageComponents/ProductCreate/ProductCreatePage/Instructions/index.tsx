@@ -126,6 +126,7 @@ interface ReactProps extends WithStyles<typeof styles> {
 }
 
 
+
 const styles = (theme: Theme) => createStyles({
   root: {
     padding: '1rem',

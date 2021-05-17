@@ -22,6 +22,7 @@ import { useRouter } from "next/router";
 import { asCurrency as c } from "utils/prices";
 import { isMainPagesFn, isStartPageFn } from "."
 import ToggleDarkMode from "layout/NavBarMain/ToggleDarkMode";
+import Tooltip from '@material-ui/core/Tooltip';
 
 
 
@@ -34,7 +35,6 @@ const DesktopMainBar = (props: DesktopMainBarProps) => {
     color,
   } = props;
 
-  const dispatch = useDispatch();
   const router = useRouter()
 
   let isHomePage = isMainPagesFn(router)
@@ -49,17 +49,23 @@ const DesktopMainBar = (props: DesktopMainBarProps) => {
 
       <div style={{ flexBasis: '0.5rem' }}></div>
 
-      <div className={classes.menuButtonsContainer}>
-        <Link href="/">
-          <a className={classes.buttonLinkLogo}>
-            <Logo fillColor={
-              // override logo color for desktop /start page light mode
-              (isStartPage && !props.isDarkMode) ? Colors.black : color
-            }/>
-          </a>
-        </Link>
-        {/* <div className={classes.blurBackground}/> */}
-      </div>
+      <Tooltip title="Go home" placement="bottom">
+        <div className={classes.menuButtonsContainer}>
+          <Link href="/">
+            <a className={classes.buttonLinkLogo}>
+              <Logo fillColor={
+                // override logo color for desktop /start page light mode
+                (isStartPage && !props.isDarkMode)
+                ? Colors.black
+                : (isHomePage && !props.isDarkMode)
+                  ? Colors.slateGrey
+                  : color
+              }/>
+            </a>
+          </Link>
+          {/* <div className={classes.blurBackground}/> */}
+        </div>
+      </Tooltip>
 
       <div style={{ flexGrow: 1}}/>
 

@@ -237,7 +237,7 @@ const styles = (theme: Theme) => createStyles({
   },
   menu: {
     padding: 0,
-    top: "3rem",
+    top: "4rem !important",
     right: 0,
     width: theme.spacing(32),
     borderRadius: BorderRadius2x,

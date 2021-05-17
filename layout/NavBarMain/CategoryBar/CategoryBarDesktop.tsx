@@ -9,8 +9,6 @@ import Typography from "@material-ui/core/Typography";
 import KeyboardArrowDown from "@material-ui/icons/KeyboardArrowDown"
 // hooks
 import Link from "next/link";
-import { categorySelectors } from "utils/selectors";
-
 
 
 
@@ -27,6 +25,7 @@ const CategoryBarDesktop: React.FC<ReactProps> = (props) => {
         <div className={classes.categoryBarInner}>
 
           <Link href={`/sale`}>
+
             <a className={classes.categoryLink}>
               <Typography className={clsx(
                 classes.categoryLinkTextMain,
