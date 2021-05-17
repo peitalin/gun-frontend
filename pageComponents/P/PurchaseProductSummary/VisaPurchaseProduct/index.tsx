@@ -445,11 +445,11 @@ const VisaPurchaseProduct = (props: ReactProps) => {
     // set defaultLicense as the initial license for the drodown
     if (licenseOptions?.length > 0) {
       let defaultLicense = licenseOptions.find(
-        l => props.user.defaultLicenseId === (l.value as User_Licenses).id
+        l => props.user?.defaultLicenseId === (l.value as User_Licenses).id
       )
       setChosenLicense(defaultLicense)
     }
-  }, [props.user.defaultLicenseId])
+  }, [props.user?.defaultLicenseId])
 
   // console.log("licenseOptions", licenseOptions)
   // console.log("chosenLicenseId", chosenLicenseId)
