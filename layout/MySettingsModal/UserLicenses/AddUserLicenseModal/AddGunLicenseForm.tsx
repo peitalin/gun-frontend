@@ -133,6 +133,7 @@ const AddGunLicenseForm: React.FC<ReactProps> = (props) => {
           `License saved successfully.`,
           { variant: "success" }
         )
+        props.closeModal()
       },
       onError: (e) => {
         snackbar.enqueueSnackbar(
@@ -306,6 +307,7 @@ const AddGunLicenseForm: React.FC<ReactProps> = (props) => {
 
 interface ReactProps extends WithStyles<typeof styles> {
   disabled?: boolean;
+  closeModal(): void
 }
 
 interface MData {

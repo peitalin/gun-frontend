@@ -67,7 +67,9 @@ const AddUserLicenseModal: React.FC<ReactProps> = (props) => {
         }}
         scroll={"paper"}
       >
-        <AddGunLicenseForm />
+        <AddGunLicenseForm
+          closeModal={() => setModalOpen(false)}
+        />
       </Dialog>
       <ButtonLoading
         type="submit"
