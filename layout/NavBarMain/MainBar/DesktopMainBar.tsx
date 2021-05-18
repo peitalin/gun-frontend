@@ -17,7 +17,6 @@ import { asCurrency as c } from "utils/prices";
 import { isMainPagesFn, isStartPageFn, isFeaturedPageFn } from "."
 import ToggleDarkMode from "layout/NavBarMain/ToggleDarkMode";
 import Tooltip from '@material-ui/core/Tooltip';
-import { useScrollYPosition } from "utils/hooks";
 
 
 
@@ -35,7 +34,6 @@ const DesktopMainBar = (props: DesktopMainBarProps) => {
   let isHomePage = isMainPagesFn(router)
   let isStartPage = isStartPageFn(router)
   let isFeaturedPage = isFeaturedPageFn(router)
-  let y = useScrollYPosition()
 
   return (
     <div className={
@@ -52,9 +50,11 @@ const DesktopMainBar = (props: DesktopMainBarProps) => {
             <a className={classes.buttonLinkLogo}>
               <Logo fillColor={
                 // override logo color for desktop /start page light mode
-                (isStartPage && !props.isDarkMode)
-                ? Colors.black
-                : color
+                (isHomePage && !props.isDarkMode)
+                ? Colors.cream
+                : (isStartPage && !props.isDarkMode)
+                  ? Colors.black
+                  : color
               }/>
             </a>
           </Link>
