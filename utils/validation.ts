@@ -197,6 +197,8 @@ export const validationSchemas = {
             )
             .min(1, "Must have at least 1 file attached"),
         })),
+      allowBids: Yup.boolean()
+        .required("Must set allowBids"),
       isPublished: Yup.boolean()
         .required("Must set isPublished"),
     }),
@@ -289,6 +291,8 @@ export const validationSchemas = {
               .nullable(), // null -> creates a variantId on the backend
           })
         ),
+      allowBids: Yup.boolean()
+        .required("Must set allowBids"),
       isPublished: Yup.boolean()
         .required("Must choose yes or no"),
       productId: Yup.string()

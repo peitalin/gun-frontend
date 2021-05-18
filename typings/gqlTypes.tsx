@@ -4173,7 +4173,6 @@ export type Mutation = {
   /** AccessRule – PLATFORM_ADMIN */
   cancelOrderAndPayment: OrderMutationResponse;
   createMockPreviewItems: Product_Preview_Items_Mutation_Response;
-  generateRandomProducts: Array<Maybe<ProductPrivate>>;
   sendWelcomeEmail: BlankMutationResponse;
   sendTestPasswordChangedEmail: BlankMutationResponse;
   sendPayoutDetailsChangedEmail: BlankMutationResponse;
@@ -5944,11 +5943,6 @@ export type MutationCreateMockPreviewItemsArgs = {
   productPreviewItemInputs: Array<ProductPreviewItemInput>;
   variantId: Scalars['ID'];
   snapshotId: Scalars['ID'];
-};
-
-
-export type MutationGenerateRandomProductsArgs = {
-  config?: Maybe<CreateProductsConfig>;
 };
 
 
@@ -9478,6 +9472,8 @@ export type Product = {
   uniqueProductViews?: Maybe<Unique_Product_Views_Aggregate>;
   sellerLicenseId?: Maybe<Scalars['String']>;
   sellerLicense?: Maybe<User_Licenses>;
+  /** Allow bidding on this product */
+  allowBids?: Maybe<Scalars['Boolean']>;
 };
 
 /** columns and relationships of "product_file_owners" */
@@ -11083,6 +11079,7 @@ export type ProductCreateInput = {
   /** dealer: InsertDealerInput */
   magazineCapacity?: Maybe<Scalars['String']>;
   barrelLength?: Maybe<Scalars['String']>;
+  allowBids: Scalars['Boolean'];
 };
 
 export type ProductEditInput = {
@@ -11119,6 +11116,7 @@ export type ProductEditInput = {
   /** dealer: InsertDealerInput */
   magazineCapacity?: Maybe<Scalars['String']>;
   barrelLength?: Maybe<Scalars['String']>;
+  allowBids?: Maybe<Scalars['Boolean']>;
 };
 
 /** Critical information about a file within a product */
@@ -11189,6 +11187,8 @@ export type ProductPrivate = Product & {
   uniqueProductViews?: Maybe<Unique_Product_Views_Aggregate>;
   sellerLicenseId?: Maybe<Scalars['String']>;
   sellerLicense?: Maybe<User_Licenses>;
+  /** Allow bidding on this product */
+  allowBids?: Maybe<Scalars['Boolean']>;
 };
 
 export type ProductProductVariantId = {
@@ -11227,11 +11227,14 @@ export type ProductPublic = Product & {
   uniqueProductViews?: Maybe<Unique_Product_Views_Aggregate>;
   sellerLicenseId?: Maybe<Scalars['String']>;
   sellerLicense?: Maybe<User_Licenses>;
+  /** Allow bidding on this product */
+  allowBids?: Maybe<Scalars['Boolean']>;
 };
 
 /** columns and relationships of "products" */
 export type Products = {
   __typename?: 'products';
+  allowBids?: Maybe<Scalars['Boolean']>;
   /** An object relationship */
   category?: Maybe<Categories>;
   categoryId: Scalars['String'];
@@ -11320,6 +11323,7 @@ export type Products_Bool_Exp = {
   _and?: Maybe<Array<Maybe<Products_Bool_Exp>>>;
   _not?: Maybe<Products_Bool_Exp>;
   _or?: Maybe<Array<Maybe<Products_Bool_Exp>>>;
+  allowBids?: Maybe<Boolean_Comparison_Exp>;
   category?: Maybe<Categories_Bool_Exp>;
   categoryId?: Maybe<String_Comparison_Exp>;
   createdAt?: Maybe<Timestamptz_Comparison_Exp>;
@@ -11349,6 +11353,7 @@ export enum Products_Constraint {
 
 /** input type for inserting data into table "products" */
 export type Products_Insert_Input = {
+  allowBids?: Maybe<Scalars['Boolean']>;
   category?: Maybe<Categories_Obj_Rel_Insert_Input>;
   categoryId?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['timestamptz']>;
@@ -11448,6 +11453,7 @@ export type Products_On_Conflict = {
 
 /** ordering options when selecting data from "products" */
 export type Products_Order_By = {
+  allowBids?: Maybe<Order_By>;
   category?: Maybe<Categories_Order_By>;
   categoryId?: Maybe<Order_By>;
   createdAt?: Maybe<Order_By>;
@@ -11476,6 +11482,8 @@ export type Products_Pk_Columns_Input = {
 
 /** select columns of table "products" */
 export enum Products_Select_Column {
+  /** column name */
+  ALLOWBIDS = 'allowBids',
   /** column name */
   CATEGORYID = 'categoryId',
   /** column name */
@@ -11508,6 +11516,7 @@ export enum Products_Select_Column {
 
 /** input type for updating data in table "products" */
 export type Products_Set_Input = {
+  allowBids?: Maybe<Scalars['Boolean']>;
   categoryId?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['timestamptz']>;
   currentSnapshotId?: Maybe<Scalars['String']>;
@@ -11526,6 +11535,8 @@ export type Products_Set_Input = {
 
 /** update columns of table "products" */
 export enum Products_Update_Column {
+  /** column name */
+  ALLOWBIDS = 'allowBids',
   /** column name */
   CATEGORYID = 'categoryId',
   /** column name */
@@ -19330,7 +19341,7 @@ export type ProductVariantsFragment = { __typename?: 'product_variants', variant
 
 export type UserLicenseFragment = { __typename?: 'user_licenses', id: string, licenseNumber: string, licenseCategory?: Maybe<string>, licenseExpiry: any, licenseState?: Maybe<string>, verified: boolean, userId?: Maybe<string>, createdAt?: Maybe<any> };
 
-type ProductFragment_ProductPrivate_ = { __typename?: 'ProductPrivate', id: string, createdAt?: Maybe<any>, updatedAt?: Maybe<any>, isPublished: boolean, isSuspended: boolean, isDeleted: boolean, isSoldElsewhere: boolean, storeId: string, soldOutStatus: string, sellerLicenseId?: Maybe<string>, uniqueProductViews?: Maybe<{ __typename?: 'unique_product_views_aggregate', aggregate?: Maybe<{ __typename?: 'unique_product_views_aggregate_fields', count?: Maybe<number> }> }>, currentSnapshot: (
+type ProductFragment_ProductPrivate_ = { __typename?: 'ProductPrivate', id: string, createdAt?: Maybe<any>, updatedAt?: Maybe<any>, isPublished: boolean, isSuspended: boolean, isDeleted: boolean, isSoldElsewhere: boolean, allowBids?: Maybe<boolean>, storeId: string, soldOutStatus: string, sellerLicenseId?: Maybe<string>, uniqueProductViews?: Maybe<{ __typename?: 'unique_product_views_aggregate', aggregate?: Maybe<{ __typename?: 'unique_product_views_aggregate_fields', count?: Maybe<number> }> }>, currentSnapshot: (
     { __typename?: 'product_snapshots' }
     & ProductSnapshotsFragment
   ), featuredVariant: (
@@ -19344,7 +19355,7 @@ type ProductFragment_ProductPrivate_ = { __typename?: 'ProductPrivate', id: stri
     & UserLicenseFragment
   )> };
 
-type ProductFragment_ProductPublic_ = { __typename?: 'ProductPublic', id: string, createdAt?: Maybe<any>, updatedAt?: Maybe<any>, isPublished: boolean, isSuspended: boolean, isDeleted: boolean, isSoldElsewhere: boolean, storeId: string, soldOutStatus: string, sellerLicenseId?: Maybe<string>, currentSnapshot: (
+type ProductFragment_ProductPublic_ = { __typename?: 'ProductPublic', id: string, createdAt?: Maybe<any>, updatedAt?: Maybe<any>, isPublished: boolean, isSuspended: boolean, isDeleted: boolean, isSoldElsewhere: boolean, allowBids?: Maybe<boolean>, storeId: string, soldOutStatus: string, sellerLicenseId?: Maybe<string>, currentSnapshot: (
     { __typename?: 'product_snapshots' }
     & ProductSnapshotsFragment
   ), featuredVariant: (
@@ -20113,6 +20124,7 @@ export const ProductFragmentFragmentDoc = gql`
   isSuspended
   isDeleted
   isSoldElsewhere
+  allowBids
   storeId
   soldOutStatus
   currentSnapshot {

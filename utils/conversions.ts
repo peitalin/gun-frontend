@@ -19,6 +19,7 @@ export const productToProductEditInput = (
       description: "<p></p>",
       currentVariants: [],
       isPublished: false,
+      allowBids: true,
       condition: "",
       make: "",
       model: "",
@@ -55,6 +56,7 @@ export const productToProductEditInput = (
       } as ProductVariantEditInput
     ],
     isPublished: product.isPublished,
+    allowBids: product.allowBids,
     condition: product.currentSnapshot.condition,
     make: product.currentSnapshot.make,
     model: product.currentSnapshot.model,

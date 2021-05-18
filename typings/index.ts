@@ -127,6 +127,7 @@ export interface ProductCreateEditCommonInput {
   //   city?: string;
   // };
   isPublished: boolean;
+  allowBids: boolean;
   sellerLicenseId: string;
   productId?: ID;
   currentVariants: ProductVariantInput[] | ProductVariantEditInput[];

@@ -59,6 +59,7 @@ export const initialProductCreateState: ReduxStateProductCreate = {
     ],
     sellerLicenseId: "",
     isPublished: false,
+    allowBids: true,
   },
   dzuPreviewItems: [],
   dzuPreviewOrder: [],

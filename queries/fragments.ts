@@ -170,6 +170,7 @@ export const ProductFragment = gql`
     isSuspended
     isDeleted
     isSoldElsewhere
+    allowBids
     storeId
     soldOutStatus
 

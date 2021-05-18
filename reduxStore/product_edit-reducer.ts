@@ -58,6 +58,7 @@ const initialProductEditState: ReduxStateProductEdit = {
       }
     ],
     isPublished: false,
+    allowBids: true,
     sellerLicenseId: "",
   },
   dzuPreviewItems: [],
