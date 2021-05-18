@@ -10,19 +10,14 @@ import Logo from "components/Icons/Logo";
 // MUI
 import UserMenu from "layout/NavBarMain/UserMenu";
 import Button from "@material-ui/core/Button";
-import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
-import CloudUploadIcon from '@material-ui/icons/CloudUpload';
-import SearchIcon from '@material-ui/icons/Search';
-// Modals
-import { goToModalConnect } from "utils/modals";
-import { useDispatch, useSelector } from "react-redux";
 // Router
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { asCurrency as c } from "utils/prices";
-import { isMainPagesFn, isStartPageFn } from "."
+import { isMainPagesFn, isStartPageFn, isFeaturedPageFn } from "."
 import ToggleDarkMode from "layout/NavBarMain/ToggleDarkMode";
 import Tooltip from '@material-ui/core/Tooltip';
+import { useScrollYPosition } from "utils/hooks";
 
 
 
@@ -39,10 +34,12 @@ const DesktopMainBar = (props: DesktopMainBarProps) => {
 
   let isHomePage = isMainPagesFn(router)
   let isStartPage = isStartPageFn(router)
+  let isFeaturedPage = isFeaturedPageFn(router)
+  let y = useScrollYPosition()
 
   return (
     <div className={
-      isHomePage
+      (isHomePage || isStartPage || isFeaturedPage)
         ? classes.baseBarInnerHomePage
         : classes.baseBarInnerDashboard
     }>
@@ -68,10 +65,17 @@ const DesktopMainBar = (props: DesktopMainBarProps) => {
       <div style={{ flexGrow: 1}}/>
 
 
+      {
+        props.showBlurWide &&
+        <div className={classes.blurBackgroundWide}/>
+      }
 
       <div className={classes.menuButtonsContainer}>
 
-        <div className={classes.blurBackground}/>
+        {
+          !props.showBlurWide &&
+          <div className={classes.blurBackground}/>
+        }
 
         <ToggleDarkMode/>
 
@@ -145,6 +149,7 @@ interface DesktopMainBarProps extends WithStyles<typeof styles> {
   loggedIn: boolean;
   color: string;
   isDarkMode: boolean;
+  showBlurWide: boolean;
 }
 
 export default withStyles(styles)( DesktopMainBar );

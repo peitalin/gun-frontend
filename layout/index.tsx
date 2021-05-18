@@ -200,9 +200,10 @@ const Layout: React.FC<ReactProps> = (props) => {
     || router.pathname === "/orders"
   ) ? true : false
 
-  let needsNavbarPadding = router.pathname !== "/"
-    && router.pathname !== "/start"
-    && router.pathname !== "/sell"
+  let noNavbarPadding = router.pathname === "/"
+    || router.pathname === "/start"
+    || router.pathname === "/sell"
+    || router.pathname.startsWith("/f/")
 
   // console.log("showChatWood: ", showChatWoot)
 
@@ -216,7 +217,7 @@ const Layout: React.FC<ReactProps> = (props) => {
       <GlobalModals/>
       <PageContainer
         classes={props.classes}
-        needsNavbarPadding={needsNavbarPadding}
+        needsNavbarPadding={!noNavbarPadding}
       >
         { renderLayout() }
       </PageContainer>
@@ -271,7 +272,7 @@ const styles = (theme: Theme) => createStyles({
     // offset 140px for navbar
   },
   navbarPaddingTop: {
-    paddingTop: MainBarHeightDashboard,
+    paddingTop: MainBarHeightDashboard + NewsBarHeight,
   },
   pageInnerContainer: {
     position: 'relative',

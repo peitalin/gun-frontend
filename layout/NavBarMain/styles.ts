@@ -85,13 +85,12 @@ export const styles = (theme: Theme) => createStyles({
     padding: '0.5rem',
     paddingTop: '0.5rem',
     paddingBottom: '1rem',
-    top: `${NewsBarHeight}px`,
+    // top: `${NewsBarHeight}px`,
   },
   baseBarDitherNoneSm: {
     // background: Gradients.gradientBlackDitherDown.background,
     padding: '0rem',
     paddingTop: '1rem',
-    top: `${NewsBarHeight}px`,
   },
   baseBarBoxShadow: {
     boxShadow: BoxShadows.shadow1.boxShadow,
@@ -105,11 +104,6 @@ export const styles = (theme: Theme) => createStyles({
     position: 'fixed',
     top: 0,
     right: 0,
-    // background: theme.palette.type === 'dark'
-    //   ? Gradients.gradientUniswapDarkRotated.background
-    //   : Gradients.gradientGrey2.background,
-    // background: Colors.uniswapDarkNavy,
-    paddingTop: NewsBarHeight,
     height: `${MainBarHeightDashboard + NewsBarHeight}px`, // 1px for borderBottom
     display: 'flex',
     flexDirection: 'row',
@@ -124,6 +118,7 @@ export const styles = (theme: Theme) => createStyles({
     position: "relative",
     justifyContent: 'center',
     alignItems: "center",
+    height: `${MainBarHeightDashboard + NewsBarHeight}px`, // 1px for borderBottom
   },
   width100: {
     width: '100%',
@@ -145,8 +140,22 @@ export const styles = (theme: Theme) => createStyles({
     right: 0,
     border: isThemeDark(theme)
       ? `1px solid ${Colors.uniswapDarkNavy}`
-      : `1px solid ${Colors.slateGreyDark}`,
+      : `1px solid ${Colors.slateGreyDarker}`,
     borderRadius: BorderRadius4x,
+  },
+  blurBackgroundWide: {
+    position: "absolute",
+    height: '100%',
+    width: '100%',
+    backdropFilter: "blur(6px)",
+    background: isThemeDark(theme)
+      ? 'rgba(18, 18, 29, 0.3)'
+      : 'rgba(245, 245, 255, 0.4)',
+    top: 0,
+    right: 0,
+    borderBottom: isThemeDark(theme)
+      ? `1px solid ${Colors.uniswapDarkNavy}`
+      : `1px solid ${Colors.slateGreyDarker}`,
   },
   blurBackgroundMobile: {
     position: "absolute",
@@ -160,7 +169,7 @@ export const styles = (theme: Theme) => createStyles({
     right: 0,
     borderBottom: isThemeDark(theme)
       ? `1px solid ${Colors.uniswapDarkNavy}`
-      : `1px solid ${Colors.slateGreyDark}`,
+      : `1px solid ${Colors.slateGreyDarker}`,
     // borderRadius: BorderRadius4x,
   },
 
@@ -320,7 +329,7 @@ export const styles = (theme: Theme) => createStyles({
     paddingRight: '0.5rem',
     paddingTop: '0.5rem',
     width: '100vw',
-    height: MainBarHeightDashboard + 16,
+    height: MainBarHeightDashboard + 8,
     display: "flex",
     position: "relative",
     justifyContent: 'space-between',

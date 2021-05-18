@@ -11,7 +11,7 @@ const NavBar: React.FC<ReactProps> = (props) => {
 
   return (
     <>
-      <NewsBar/>
+      {/* <NewsBar/> */}
       <MainBar
         mobileMenuOpen={mobileMenuOpen}
         setMobileMenuOpen={setMobileMenuOpen}

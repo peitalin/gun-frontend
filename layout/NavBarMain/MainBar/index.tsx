@@ -51,6 +51,7 @@ const MainBar = (props: ReactProps) => {
     ? Colors.slateGrey
     : Colors.black
 
+  const showBlurWide = !_isMainPages && !_isFeaturedPage && !_isStartPage
 
   const endRoute = router.pathname.split('/').pop();
 
@@ -85,6 +86,7 @@ const MainBar = (props: ReactProps) => {
       {/* Desktop */}
       <Hidden className={classes.width100} only={["xs", "sm"]} implementation="css">
         <DesktopMainBar
+          showBlurWide={showBlurWide }
           {...navBarProps}
         />
       </Hidden>
@@ -106,7 +108,7 @@ const MainBarSSRWrapper: React.FC<MainBarSSRWrapperProps> = (props) => {
           ? clsx( classes.baseBarHomePage, classes.baseBarDither)
           : props.isStartPage || props.isFeaturedPage
             ? clsx( classes.baseBarHomePage, classes.baseBarDitherNone)
-            : clsx( classes.baseBarDashboard )
+            : clsx(classes.baseBarDashboard)
         }>
           {props.children}
         </nav>
@@ -114,10 +116,10 @@ const MainBarSSRWrapper: React.FC<MainBarSSRWrapperProps> = (props) => {
       <ShowOnMobileOrDesktopSSR mobile>
         <nav className={
           (props.isMainPage || (props.isStartPage && props.isMobile))
-          ? clsx( classes.baseBarHomePage, classes.baseBarDitherSm)
+          ? clsx(classes.baseBarHomePage, classes.baseBarDitherSm)
           : props.isStartPage || props.isFeaturedPage
-            ? clsx( classes.baseBarHomePage, classes.baseBarDitherNoneSm)
-            : clsx( classes.baseBarDashboard )
+            ? clsx(classes.baseBarHomePage, classes.baseBarDitherNoneSm)
+            : clsx(classes.baseBarDashboard)
         }>
           {props.children}
         </nav>
