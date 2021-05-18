@@ -26,7 +26,6 @@ const routeMappings = {
   'search': "Products  -  Search Index",
   'page-configs': "Configs  -  Initial Page Configs",
   'test-emails': "Test Tools  -  Test Emails",
-  'random-products': "Test Tools  -  Random Products",
 }
 
 

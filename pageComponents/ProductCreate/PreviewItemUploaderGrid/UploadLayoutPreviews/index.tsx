@@ -80,8 +80,10 @@ const UploadLayoutPreviews: React.FC<ILayoutProps & ReactProps> = (props) => {
     actions,
     dzuPreviewOrder,
     callback: () => {
-      console.log("uploader touched, setActiveStep(7)")
-      props.setActiveStep(7)
+      if (typeof props.setActiveStep === 'function') {
+        console.log("uploader touched, setActiveStep(7)")
+        props.setActiveStep(7)
+      }
     }
   });
 
@@ -186,7 +188,7 @@ const UploadLayoutPreviews: React.FC<ILayoutProps & ReactProps> = (props) => {
 interface ReactProps {
   reducerName: ReducerName;
   // stepper
-  activeStep: number
+  activeStep?: number
   setActiveStep?(a?: any): void
 }
 interface ReduxState {

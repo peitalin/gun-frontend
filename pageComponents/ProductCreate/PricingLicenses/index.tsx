@@ -90,7 +90,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   reducerName: ReducerName;
   currentVariants: ProductVariantInput[];
   // stepper
-  activeStep: number
+  activeStep?: number
   setActiveStep?(a?: any): void
 }
 interface variantNameArgs {
@@ -155,18 +155,6 @@ export const styles = (theme: Theme) => createStyles({
     flexDirection: 'column',
     alignItems: 'flex-start',
   },
-  container: {
-    marginBottom: "1rem",
-  },
-  textField: {
-    width: "100%",
-  },
-  flexContainer: {
-    display: 'flex',
-    justifyContent: 'space-around',
-    flexWrap: 'wrap',
-    flexDirection: 'column',
-  },
   flexRow: {
     display: 'flex',
     justifyContent: 'space-between',
@@ -174,44 +162,8 @@ export const styles = (theme: Theme) => createStyles({
     flexDirection: 'row',
     width: '100%',
   },
-  flexCol: {
-    display: 'flex',
-    justifyContent: 'center',
-    flexDirection: 'column',
-  },
-  label: {
-    width: '100%',
-  },
-  optionName: {
-    flexBasis: '33%',
-    margin: '0px',
-    marginRight: '1rem'
-  },
-  optionValues: {
-    flexBasis: '66%',
-    marginRight: '1rem'
-  },
-  buttonContainer: {
-    width: '100%',
-    display: 'flex',
-    justifyContent: 'center',
-  },
-  addLicenseButton: {
-    border: `0px solid ${Colors.lightPurple}`,
-    color: Colors.purple,
-    height: 35,
-    "&:hover": {
-      backgroundColor: Colors.lightPurple,
-      color: Colors.backgroundColor,
-    }
-  },
   title: {
     fontWeight: 500,
-  },
-  switchContainer: {
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
   },
   positionRelative: {
     position: 'relative',

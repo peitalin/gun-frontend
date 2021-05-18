@@ -219,6 +219,7 @@ const ProductEditPage = (props: ReactProps) => {
             categoryId: values.categoryId,
             currentVariants: values.currentVariants,
             isPublished: values.isPublished,
+            allowBids: values.allowBids,
             productId: values.productId,
             dealerId: values.dealerId,
             magazineCapacity: values.magazineCapacity,
@@ -259,7 +260,7 @@ const ProductEditPage = (props: ReactProps) => {
         textLink={true}
         title={"Back to Products"}
       />
-      <SectionBorder>
+      <SectionBorder thickPadding={true}>
         <TitleSerialNumber {...formik} />
         <SelectCategories
           {...formik}
@@ -274,26 +275,26 @@ const ProductEditPage = (props: ReactProps) => {
         />
       </SectionBorder>
 
-      <SectionBorder>
+      <SectionBorder thickPadding={true}>
         <SelectDealer
           {...formik}
         />
       </SectionBorder>
 
-      <SectionBorder style={{ paddingBottom: '1rem' }}>
+      <SectionBorder thickPadding={true}>
         <GunAttributes {...formik} />
         <SelectCondition
           {...formik}
         />
       </SectionBorder>
 
-      <SectionBorder>
+      <SectionBorder thickPadding={true}>
         <Description
           {...formik}
         />
       </SectionBorder>
 
-      <SectionBorder>
+      <SectionBorder thickPadding={true}>
         <PreviewItemUploaderGrid
           reducerName={reducerName}
           productInput={productEditInput}
@@ -305,7 +306,7 @@ const ProductEditPage = (props: ReactProps) => {
         />
       </SectionBorder>
 
-      <SectionBorder>
+      <SectionBorder thickPadding={true}>
         <PricingLicenses
           reducerName={reducerName}
           currentVariants={formik.values.currentVariants}

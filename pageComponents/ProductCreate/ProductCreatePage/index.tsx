@@ -285,6 +285,7 @@ const ProductCreatePage = (props: ReactProps) => {
             dealerId: values.dealerId,
             categoryId: values.categoryId,
             isPublished: values.isPublished,
+            allowBids: values.allowBids,
             currentVariants: values.currentVariants,
             sellerLicenseId: values.sellerLicenseId,
           }

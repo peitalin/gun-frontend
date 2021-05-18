@@ -264,21 +264,6 @@ const GovSideRoutesMenu: React.FC<ReactProps> = (props) => {
           </Link>
         </li>
 
-        <li>
-          <Link href={"/gov/random-products"} scroll={false}>
-            <a>
-              <div className={
-                isSelectedRoute("random-products")
-                  ? classes.routeListItemSelected
-                  : classes.routeListItem
-              }>
-                <Typography variant="subtitle1" className={classes.routeListItemText}>
-                  Test Random Products
-                </Typography>
-              </div>
-            </a>
-          </Link>
-        </li>
 
       </ul>
     </div>

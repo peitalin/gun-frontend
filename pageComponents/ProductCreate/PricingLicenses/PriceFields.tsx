@@ -112,7 +112,9 @@ const PriceFields = (props: ReactProps & FormikProps<FormikFields>) => {
                     onChange(e)
                   }}
                   onFocus={() => {
-                    props.setActiveStep(7)
+                    if (typeof props.setActiveStep === 'function') {
+                      props.setActiveStep(7)
+                    }
                   }}
                   onBlur={handleBlur}
                   inputProps={{ style: { width: '100%', marginLeft: '0.25rem' }}}
@@ -149,7 +151,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   position: number;
   reducerName: ReducerName;
   // stepper
-  activeStep: number
+  activeStep?: number
   setActiveStep?(a?: any): void
 }
 interface FormikFields {
