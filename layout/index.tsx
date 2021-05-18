@@ -32,6 +32,7 @@ import { GrandReduxState } from "reduxStore/grand-reducer";
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import StripeProvider from "layout/StripeProvider";
+import { NewsBarHeight, MainBarHeightDashboard } from "./NavBarMain/styles";
 
 
 
@@ -252,6 +253,7 @@ const styles = (theme: Theme) => createStyles({
     width: "100%",
     minWidth: '320px',
     minHeight: `calc(100vh - 140px)`,
+    paddingTop: MainBarHeightDashboard,
     // background: theme.gradients.gradientUniswapDark.background,
     background: theme.palette.type === "dark"
       ? theme.gradients.gradientUniswapDark.background

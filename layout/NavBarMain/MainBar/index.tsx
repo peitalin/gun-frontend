@@ -106,7 +106,7 @@ const MainBarSSRWrapper: React.FC<MainBarSSRWrapperProps> = (props) => {
           ? clsx( classes.baseBarHomePage, classes.baseBarDither)
           : props.isStartPage || props.isFeaturedPage
             ? clsx( classes.baseBarHomePage, classes.baseBarDitherNone)
-            : clsx( classes.baseBarDashboard)
+            : clsx( classes.baseBarDashboard )
         }>
           {props.children}
         </nav>
@@ -117,7 +117,7 @@ const MainBarSSRWrapper: React.FC<MainBarSSRWrapperProps> = (props) => {
           ? clsx( classes.baseBarHomePage, classes.baseBarDitherSm)
           : props.isStartPage || props.isFeaturedPage
             ? clsx( classes.baseBarHomePage, classes.baseBarDitherNoneSm)
-            : clsx( classes.baseBarDashboard)
+            : clsx( classes.baseBarDashboard )
         }>
           {props.children}
         </nav>

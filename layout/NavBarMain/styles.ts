@@ -97,6 +97,9 @@ export const styles = (theme: Theme) => createStyles({
     boxShadow: BoxShadows.shadow1.boxShadow,
   },
 
+  baseBarDashboardPlaceholder: {
+    height: `${MainBarHeightDashboard + NewsBarHeight}px`, // 1px for borderBottom
+  },
   baseBarDashboard: {
     zIndex: 5,
     position: 'fixed',
