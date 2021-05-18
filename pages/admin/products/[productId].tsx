@@ -67,13 +67,6 @@ const ProductEditPage = (props: ReactProps) => {
     },
   )
 
-  React.useEffect(() => {
-    if (data && data.getProductById) {
-      console.log("seeding product edit data")
-      dispatch(seedProductEditDataAction(data.getProductById))
-    }
-  }, [data])
-
   return (
     <>
       <MetaHeadersPage
@@ -84,7 +77,7 @@ const ProductEditPage = (props: ReactProps) => {
       {(dataUser: SellerProfileProps) => {
 
         if (loading) {
-          return <Loading fixed loading={loading} delay={"200ms"}/>
+          return <LoadingBarSSR/>
         } else if (error) {
           return (
             <Redirect

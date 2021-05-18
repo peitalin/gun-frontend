@@ -202,6 +202,7 @@ const Layout: React.FC<ReactProps> = (props) => {
 
   let needsNavbarPadding = router.pathname !== "/"
     && router.pathname !== "/start"
+    && router.pathname !== "/sell"
 
   // console.log("showChatWood: ", showChatWoot)
 
