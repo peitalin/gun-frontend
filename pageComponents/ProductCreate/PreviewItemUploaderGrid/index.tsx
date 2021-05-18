@@ -232,11 +232,15 @@ const PreviewItemUploaderGrid = (props: ReactProps & FormikProps<FormikFields>) 
         LayoutComponent={React.memo((layProps) =>
           <UploadLayoutPreviews
             reducerName={props.reducerName}
+            activeStep={props.activeStep}
+            setActiveStep={props.setActiveStep}
             {...layProps}
           />
         )}
         setTouched={() => {
           fprops.setFieldTouched('currentVariants[0].previewItems', true)
+          console.log("uploader touched, setActiveStep(7)")
+          props.setActiveStep(7)
         }}
         reducerName={props.reducerName}
         // InputComponent={UploadInput as any}
@@ -298,6 +302,9 @@ interface ReactProps extends WithStyles<typeof styles> {
   productId?: ID;
   dzuPreviewItems: DzuPreviewItem[];
   dzuPreviewOrder: DzuPreviewOrder[],
+  // stepper
+  activeStep: number
+  setActiveStep?(a?: any): void
 }
 interface FormikFields {
   currentVariants: {

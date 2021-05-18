@@ -67,9 +67,11 @@ interface OnSortEndInput {
   dispatch: Dispatch<ActionType<DzuPreviewOrder[]>>;
   actions: typeof Actions.reduxProductCreate | typeof Actions.reduxProductEdit;
   dzuPreviewOrder: DzuPreviewOrder[];
+  callback?(): void
 }
 
-export const makeOnSortEndHandler = ({ dispatch, actions, dzuPreviewOrder }: OnSortEndInput) =>
+export const makeOnSortEndHandler =
+({ dispatch, actions, dzuPreviewOrder, callback }: OnSortEndInput) =>
 ({ oldIndex, newIndex }) => {
   // create new order from existing previews
   // console.log("oldIndex", oldIndex)
@@ -79,6 +81,7 @@ export const makeOnSortEndHandler = ({ dispatch, actions, dzuPreviewOrder }: OnS
   // console.log("newDzuOrder", newDzuOrder)
   // then sort the arrays by position
   dispatch(actions.REORDER_DZU_PREVIEW_ORDER(newDzuOrder))
+  callback()
 };
 
 interface HandleRemoveInput {

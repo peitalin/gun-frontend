@@ -176,10 +176,6 @@ export const Colors = {
   ultramarineBlueLightest: '#71afff',
   blue: "#1DA1F3",
   lightBlue: '#479FF4',
-  blueLightNavy: "#6087A1",
-  blueMinNavy: "#265371",
-  blueDarkNavy: "#10334C",
-  blueDarkerNavy: "#232830",
   // yellow
   lightYellow: '#FADD8F',
   paleYellow: "#FCE8A6",
@@ -274,7 +270,7 @@ export const Gradients = {
     color2: Colors.slateGreyDark,
   },
   gradientBlackDitherDown:  {
-    background: `linear-gradient(180deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 80%,  rgba(0,0,0,0) 100%)`,
+    background: `linear-gradient(180deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 5%,  rgba(0,0,0,0) 100%)`,
     // background: `linear-gradient(180deg, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0) 100%)`,
     color1: Colors.black,
     color2: 'rgba(0,0,0,0)',

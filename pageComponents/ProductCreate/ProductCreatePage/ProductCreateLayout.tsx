@@ -53,13 +53,13 @@ const ProductCreateLayout: React.FC<ProductCreateFormProps> = (props) => {
   const smDown = useMediaQuery(theme.breakpoints.down('sm'));
   const mdDown = useMediaQuery(theme.breakpoints.down('md'));
 
-  let y = useScrollYPosition()
+  // let y = useScrollYPosition()
 
-  React.useEffect(() => {
-    if (y > 1190 && props.activeStep !== 7) {
-      props.setActiveStep(7)
-    }
-  }, [y])
+  // React.useEffect(() => {
+  //   if (y > 1190 && props.activeStep !== 7) {
+  //     props.setActiveStep(7)
+  //   }
+  // }, [y])
 
 
   return (
@@ -85,11 +85,11 @@ const ProductCreateLayout: React.FC<ProductCreateFormProps> = (props) => {
                 </Typography>
                 <RenderInstructions activeStep={props.activeStep}/>
               </div>
-            : <Tooltip title="Product Preview" placement="bottom-start">
+            : <Tooltip title="Preview" placement="bottom-start">
                 <div className={clsx(classes.stickyProductPreviewContainer, 'fadeIn')}>
                   <ProductCardResponsive
                     product={props.productPreviewSticky}
-                    previewImageEmptyMessage={`Preview Image: Step ${props.activeStep + 1}`}
+                    previewImageEmptyMessage={`Step ${props.activeStep + 1}: Upload Images`}
                     // previewImageEmptyMessage={`Preview Image`}
                   />
                 </div>

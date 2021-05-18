@@ -12,7 +12,7 @@ import {
 
 
 /////////////// STYLES /////////////////////
-export const MainBarHeightHomePage = 100;
+export const MainBarHeightHomePage = 75;
 export const MainBarHeightDashboard = 55;
 
 export const NewsBarHeight = 8;
@@ -53,7 +53,7 @@ export const styles = (theme: Theme) => createStyles({
   baseBarDither: {
     background: isThemeDark(theme)
       ? Gradients.gradientBlackDitherDown.background
-      : 'unset',
+      : Gradients.gradientBlackDitherDown.background,
     // filter: 'blur(8px)',
     // transition: theme.transitions.create(['filter'], {
     //   easing: theme.transitions.easing.easeIn,
@@ -70,7 +70,7 @@ export const styles = (theme: Theme) => createStyles({
   baseBarDitherSm: {
     background: isThemeDark(theme)
       ? Gradients.gradientBlackDitherDown.background
-      : 'unset',
+      : Gradients.gradientBlackDitherDown.background,
     padding: '0rem',
     paddingTop: '0rem',
     // top: `${NewsBarHeight}px`,

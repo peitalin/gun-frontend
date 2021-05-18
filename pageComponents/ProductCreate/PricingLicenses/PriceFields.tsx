@@ -111,6 +111,9 @@ const PriceFields = (props: ReactProps & FormikProps<FormikFields>) => {
                     e.persist()
                     onChange(e)
                   }}
+                  onFocus={() => {
+                    props.setActiveStep(7)
+                  }}
                   onBlur={handleBlur}
                   inputProps={{ style: { width: '100%', marginLeft: '0.25rem' }}}
                   errorMessage={
@@ -132,10 +135,11 @@ const PriceFields = (props: ReactProps & FormikProps<FormikFields>) => {
         Price will be displayed as:
       </div>
       <div className={classes.container}>
-        {/* <PriceDisplayProductPage
+        <PriceDisplayProductPage
           price={currentVariants?.[position]?.price}
           priceWas={currentVariants?.[position]?.priceWas}
-        /> */}
+          isSuspended={false}
+        />
       </div>
     </ErrorBounds>
   )
@@ -144,6 +148,9 @@ const PriceFields = (props: ReactProps & FormikProps<FormikFields>) => {
 interface ReactProps extends WithStyles<typeof styles> {
   position: number;
   reducerName: ReducerName;
+  // stepper
+  activeStep: number
+  setActiveStep?(a?: any): void
 }
 interface FormikFields {
   currentVariants: {

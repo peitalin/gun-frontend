@@ -57,9 +57,7 @@ const DesktopMainBar = (props: DesktopMainBarProps) => {
                 // override logo color for desktop /start page light mode
                 (isStartPage && !props.isDarkMode)
                 ? Colors.black
-                : (isHomePage && !props.isDarkMode)
-                  ? Colors.slateGrey
-                  : color
+                : color
               }/>
             </a>
           </Link>

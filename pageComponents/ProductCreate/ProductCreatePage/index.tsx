@@ -541,6 +541,8 @@ const ProductCreatePage = (props: ReactProps) => {
             storeId={storeId}
             dzuPreviewItems={dzuPreviewItems}
             dzuPreviewOrder={dzuPreviewOrder}
+            activeStep={activeStep}
+            setActiveStep={setActiveStep}
             {...formik}
           />
         </SectionBorder>
@@ -549,6 +551,8 @@ const ProductCreatePage = (props: ReactProps) => {
           <PricingLicenses
             reducerName={reducerName}
             currentVariants={productCreateInput.currentVariants}
+            activeStep={activeStep}
+            setActiveStep={setActiveStep}
             {...formik}
           />
         </SectionBorder>

@@ -19,11 +19,10 @@ import Button from '@material-ui/core/Button';
 import FormGroup from '@material-ui/core/FormGroup';
 import Switch from '@material-ui/core/Switch';
 import RefLink, { refLinks } from "../RefLink";
-// Components
-import Or from "components/Or";
-import License from "./License";
 // Validation
 import { FormikProps } from 'formik';
+// Components
+import PriceFields from "./PriceFields";
 
 
 
@@ -31,8 +30,8 @@ const PricingLicenses = (props: ReactProps & FormikProps<FormikFields>) => {
 
   // props and state
   const { classes, reducerName, currentVariants, ...fprops } = props;
-  const dispatch = useDispatch();
-  const actions = createActions(reducerName);
+  // const dispatch = useDispatch();
+  // const actions = createActions(reducerName);
 
   React.useEffect(() => {
     fprops.setFieldValue("currentVariants", [
@@ -57,15 +56,19 @@ const PricingLicenses = (props: ReactProps & FormikProps<FormikFields>) => {
       {
         currentVariants.map((variant, position) => {
           return (
-            <License
-              key={position}
-              variant={variant}
-              position={position}
-              reducerName={reducerName}
-              // bind position to functions first
-              // removeVariant={() => removeVariant(position)}
-              {...fprops}
-            />
+            <div className={classes.rootLicense}>
+              <div className={classes.fieldsContainer}>
+                <div className={classes.flexRowLicense}>
+                  <PriceFields
+                    position={position}
+                    reducerName={reducerName}
+                    activeStep={props.activeStep}
+                    setActiveStep={props.setActiveStep}
+                    {...fprops}
+                  />
+                </div>
+              </div>
+            </div>
           )
         })
       }
@@ -86,6 +89,9 @@ const initialVariant: AddVariantInput = {
 interface ReactProps extends WithStyles<typeof styles> {
   reducerName: ReducerName;
   currentVariants: ProductVariantInput[];
+  // stepper
+  activeStep: number
+  setActiveStep?(a?: any): void
 }
 interface variantNameArgs {
   variantName: string;
@@ -209,6 +215,24 @@ export const styles = (theme: Theme) => createStyles({
   },
   positionRelative: {
     position: 'relative',
+  },
+  rootLicense: {
+    padding: '0rem',
+    borderRadius: '4px',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'flex-end',
+    width: '100%',
+  },
+  fieldsContainer: {
+    width: '100%',
+  },
+  flexRowLicense: {
+    display: 'flex',
+    justifyContent: 'flex-start',
+    flexWrap: 'wrap',
+    flexDirection: 'row',
   },
 })
 

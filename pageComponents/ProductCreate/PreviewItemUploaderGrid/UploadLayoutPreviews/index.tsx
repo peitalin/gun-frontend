@@ -79,6 +79,10 @@ const UploadLayoutPreviews: React.FC<ILayoutProps & ReactProps> = (props) => {
     dispatch,
     actions,
     dzuPreviewOrder,
+    callback: () => {
+      console.log("uploader touched, setActiveStep(7)")
+      props.setActiveStep(7)
+    }
   });
 
   const handleRemove = makeHandleRemoveHandler({
@@ -114,35 +118,6 @@ const UploadLayoutPreviews: React.FC<ILayoutProps & ReactProps> = (props) => {
     <>
 
       {/* Imported direct via /components/ReactDropzone/Dropzone.tsx */}
-      {/* <div {...dropzoneProps}>
-        {
-          files.length < maxFiles &&
-          UploadInput &&
-          <UploadInput
-            // Imported direct via /components/ReactDropzone/Dropzone.tsx
-          />
-        }
-
-        <Typography variant="body2" style={{
-          fontSize: "0.8rem",
-          fontWeight: 500,
-          marginTop: '1rem',
-          marginBottom: '0.25rem',
-          color: Colors.darkGrey,
-          width: '100%',
-        }}>
-          Add a YouTube link
-          <span style={{
-            color: Colors.mediumGrey,
-            marginLeft: '0.25rem',
-          }}>
-            - optional
-          </span>
-        </Typography>
-        <AddYouTubeVimeoLink
-          reducerName={reducerName}
-        />
-      </div> */}
 
       <div className={"upload-grid-container"} style={{
         display: 'flex',
@@ -210,6 +185,9 @@ const UploadLayoutPreviews: React.FC<ILayoutProps & ReactProps> = (props) => {
 
 interface ReactProps {
   reducerName: ReducerName;
+  // stepper
+  activeStep: number
+  setActiveStep?(a?: any): void
 }
 interface ReduxState {
   dzuPreviewItems: DzuPreviewItem[];

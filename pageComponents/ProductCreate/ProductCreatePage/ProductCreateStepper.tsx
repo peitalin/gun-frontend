@@ -203,7 +203,7 @@ interface StepperProps extends WithStyles<typeof styles> {
   setActiveStep?(a?: any): void
   errorIndex(index: number): boolean
   stepIndexes: number[]
-  stepAfterLastStep: number
+  stepAfterLastStep: number // where to navigate to after last step
   setFieldTouched(field: string, b: boolean): void
   touched: FormikTouched<{
     title: string,
