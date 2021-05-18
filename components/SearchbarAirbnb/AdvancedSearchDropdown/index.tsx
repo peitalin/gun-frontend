@@ -14,6 +14,7 @@ import {
 } from "layout/AppTheme";
 // MUI
 import Typography from "@material-ui/core/Typography";
+import Button from "@material-ui/core/Button";
 import KeyboardArrowDown from "@material-ui/icons/KeyboardArrowDown"
 import Dialog from "@material-ui/core/Dialog";
 import DropdownInput from "components/Fields/DropdownInput";
@@ -102,6 +103,13 @@ const AdvancedSearchDropdown: React.FC<ReactProps> = (props) => {
                 setCalibers={props.setCalibers}
               />
             </div>
+            <Button
+              variant={"outlined"}
+              className={classes.buttonConfirm}
+              onClick={closeModal}
+            >
+              Done
+            </Button>
           </div>
         </div>
       </Dialog>
@@ -174,7 +182,7 @@ export const styles = (theme: Theme) => createStyles({
     display: "flex",
     flexDirection: "row",
     flexWrap: "wrap",
-    justifyContent: "flex-start",
+    justifyContent: "center",
     alignItems: "flex-start",
     padding: '1rem',
     paddingTop: "2rem",
@@ -265,6 +273,16 @@ export const styles = (theme: Theme) => createStyles({
       background: theme.palette.type === 'dark'
         ? Colors.uniswapMediumGrey
         : Colors.slateGreyDarkest,
+    },
+  },
+  buttonConfirm: {
+    minWidth: 150,
+    marginTop: "0.5rem",
+    marginBottom: "0.5rem",
+    border: `1px solid ${Colors.ultramarineBlue}`,
+    color: Colors.ultramarineBlue,
+    "&:hover": {
+      border: `1px solid ${Colors.ultramarineBlueLight}`,
     },
   },
 });

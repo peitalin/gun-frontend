@@ -23,6 +23,8 @@ const BannerCategoryPage = (props: ReactProps & FacetSearchParams) => {
     disableMetaHeader,
     setCategorySlugsForGql,
     setSearchTermForGql,
+    setCalibersForGql,
+    setDealerStatesForGql,
     rowMode,
     setRowMode,
     ...facetSearchParams
@@ -157,6 +159,8 @@ const BannerCategoryPage = (props: ReactProps & FacetSearchParams) => {
             // Category Page specific callbacks
             setCategorySlugsForGql={setCategorySlugsForGql}
             setSearchTermForGql={setSearchTermForGql}
+            setCalibersForGql={setCalibersForGql}
+            setDealerStatesForGql={setDealerStatesForGql}
             initialDropdownCategories={props.initialDropdownCategories}
             isMobile={true}
             setFocusedOuter={setFocusedOuter}
@@ -211,6 +215,8 @@ const BannerCategoryPage = (props: ReactProps & FacetSearchParams) => {
             // Category Page specific callbacks
             setCategorySlugsForGql={setCategorySlugsForGql}
             setSearchTermForGql={setSearchTermForGql}
+            setCalibersForGql={setCalibersForGql}
+            setDealerStatesForGql={setDealerStatesForGql}
             initialDropdownCategories={props.initialDropdownCategories}
             isMobile={false}
             setFocusedOuter={setFocusedOuter}
@@ -234,6 +240,10 @@ interface ReactProps extends WithStyles<typeof styles> {
   // Searchbar params
   setSearchTermForGql(s: string): void
   setCategorySlugsForGql(c: string[]): void
+
+  setCalibersForGql(c: string[]): void
+  setDealerStatesForGql(c: string[]): void
+
   initialDropdownCategories: Categories[];
   // row or cards toggle
   rowMode: boolean

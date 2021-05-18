@@ -58,6 +58,8 @@ const CategorySearchbar: React.FC<ReactProps & FacetSearchParams> = (props) => {
     // THIS IS HAVING SOME ISSUES WHEN CLICKING NOT DISPATCHING
     setPageParam(1) // reset to page 1 every time you hit search button
     props.setSearchTermForGql(searchTerm)
+    props.setDealerStatesForGql(dealerStates)
+    props.setCalibersForGql(calibers)
     props.setCategorySlugsForGql(
       currentCategories?.map(c => c.slug) ?? ["all"]
     )
@@ -141,6 +143,10 @@ interface ReactProps extends WithStyles<typeof styles> {
   id: string;
   setSearchTermForGql(s: string): void
   setCategorySlugsForGql(c: string[]): void
+
+  setCalibersForGql(c: string[]): void
+  setDealerStatesForGql(c: string[]): void
+
   initialDropdownCategories: Categories[];
   isMobile: boolean;
   focusedOuter: boolean

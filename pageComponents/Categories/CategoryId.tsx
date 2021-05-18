@@ -11,6 +11,7 @@ import {
   ProductsConnection,
   Categories,
   ConnectionQuery,
+  DealerState,
 } from "typings/gqlTypes";
 // Router
 import { useRouter } from "next/router";
@@ -113,9 +114,9 @@ const CategoryId: React.FC<ReactProps> = (props) => {
       ? [props.initialRouteCategory?.slug]
       : []
   )
-  const [dealerStatesForGql, setDealerStatesForGql] = React.useState([])
-  const [calibersForGql, setCalibersForGql] = React.useState([])
-  const [actionTypesForGql, setActionTypesForGql] = React.useState([])
+  const [dealerStatesForGql, setDealerStatesForGql] = React.useState<string[]>([])
+  const [calibersForGql, setCalibersForGql] = React.useState<string[]>([])
+  const [actionTypesForGql, setActionTypesForGql] = React.useState<string[]>([])
 
   // rowMode by default on mobile
   const [rowMode, setRowMode] = React.useState(mdDown)
@@ -135,9 +136,9 @@ const CategoryId: React.FC<ReactProps> = (props) => {
       // categorySlug: props.initialRouteCategory?.slug ?? (router?.query?.categorySlug as any),
       categorySlugs: categorySlugsForGql,
       // require button click to change search
-      dealerStates: dealerStates,
-      calibers: calibers,
-      actionTypes: actionTypes,
+      dealerStates: dealerStatesForGql,
+      calibers: calibersForGql,
+      actionTypes: actionTypesForGql,
       searchTerm: searchTermForGql || "*",
       // require button click to change search
     },
@@ -239,6 +240,8 @@ const CategoryId: React.FC<ReactProps> = (props) => {
           }}
           setCategorySlugsForGql={setCategorySlugsForGql}
           setSearchTermForGql={setSearchTermForGql}
+          setCalibersForGql={setCalibersForGql}
+          setDealerStatesForGql={setDealerStatesForGql}
           initialDropdownCategories={props.initialDropdownCategories}
           rowMode={rowMode}
           setRowMode={setRowMode}
