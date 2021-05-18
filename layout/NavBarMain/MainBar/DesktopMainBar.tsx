@@ -14,7 +14,7 @@ import Button from "@material-ui/core/Button";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { asCurrency as c } from "utils/prices";
-import { isMainPagesFn, isStartPageFn, isFeaturedPageFn } from "."
+import { isMainPageFn, isStartPageFn, isFeaturedPageFn, isSellPageFn } from "."
 import ToggleDarkMode from "layout/NavBarMain/ToggleDarkMode";
 import Tooltip from '@material-ui/core/Tooltip';
 
@@ -31,13 +31,14 @@ const DesktopMainBar = (props: DesktopMainBarProps) => {
 
   const router = useRouter()
 
-  let isHomePage = isMainPagesFn(router)
+  let isHomePage = isMainPageFn(router)
+  let isSellPage = isSellPageFn(router)
   let isStartPage = isStartPageFn(router)
   let isFeaturedPage = isFeaturedPageFn(router)
 
   return (
     <div className={
-      (isHomePage || isStartPage || isFeaturedPage)
+      (isHomePage || isStartPage || isFeaturedPage || isSellPage)
         ? classes.baseBarInnerHomePage
         : classes.baseBarInnerDashboard
     }>

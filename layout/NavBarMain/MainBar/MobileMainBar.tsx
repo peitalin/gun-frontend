@@ -10,10 +10,7 @@ import Badge from '@material-ui/core/Badge';
 // MUI
 import MobileMenuDropdown from "layout/NavBarMain/MobileMenuDropdown";
 import Button from "@material-ui/core/Button";
-import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
-import SettingsIcon from '@material-ui/icons/Settings';
 import SearchbarNavbarMobile from "layout/NavBarMain/SearchbarNavbarMobile";
-import StorefrontIcon from "@material-ui/icons/Storefront";
 import Login from "layout/Login";
 // Modals
 import { goToModalConnect } from "utils/modals";
@@ -22,7 +19,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { navbarRoutes } from "./navbarRoutes";
-import { isMainPagesFn, isStartPageFn } from "."
+import { isMainPageFn, isStartPageFn } from "."
 
 
 
@@ -40,7 +37,7 @@ const MobileMainBar = (props: MobileMainBarProps) => {
   const router = useRouter()
   const [hide, setHide] = React.useState(false)
 
-  let isHomePage = isMainPagesFn(router)
+  let isHomePage = isMainPageFn(router)
   let isStartPage = isStartPageFn(router)
 
   return (

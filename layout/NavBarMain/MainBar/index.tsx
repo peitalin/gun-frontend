@@ -43,7 +43,8 @@ const MainBar = (props: ReactProps) => {
 
   const isDarkMode = theme.palette.type === 'dark'
 
-  let _isMainPages = isMainPagesFn(router)
+  let _isMainPage = isMainPageFn(router)
+  let _isSellPage = isSellPageFn(router)
   let _isStartPage = isStartPageFn(router)
   let _isFeaturedPage = isFeaturedPageFn(router)
 
@@ -51,7 +52,7 @@ const MainBar = (props: ReactProps) => {
     ? Colors.slateGrey
     : Colors.black
 
-  const showBlurWide = !_isMainPages && !_isFeaturedPage && !_isStartPage
+  const showBlurWide = !_isMainPage && !_isFeaturedPage && !_isStartPage && !_isSellPage
 
   const endRoute = router.pathname.split('/').pop();
 
@@ -66,8 +67,9 @@ const MainBar = (props: ReactProps) => {
   return (
     <MainBarSSRWrapper
       classes={classes}
-      isMainPage={_isMainPages}
+      isMainPage={_isMainPage}
       isStartPage={_isStartPage}
+      isSellPage={_isSellPage}
       isFeaturedPage={_isFeaturedPage}
       isMobile={mdDown}
       // for special fatter navbar on these routes
@@ -128,16 +130,19 @@ const MainBarSSRWrapper: React.FC<MainBarSSRWrapperProps> = (props) => {
   );
 };
 
-export const isMainPagesFn = (router: NextRouter) => {
+export const isMainPageFn = (router: NextRouter) => {
   if (router.pathname === '/') {
-    return true
-  }
-  if (router.pathname === '/sell') {
     return true
   }
   // if (router.pathname === '/start') {
   //   return true
   // }
+  return false
+}
+export const isSellPageFn = (router: NextRouter) => {
+  if (router.pathname === '/sell') {
+    return true
+  }
   return false
 }
 export const isStartPageFn = (router: NextRouter) => {
@@ -162,6 +167,7 @@ interface ReactProps extends WithStyles<typeof styles> {
 interface MainBarSSRWrapperProps extends WithStyles<typeof styles> {
   isMainPage: boolean
   isStartPage: boolean
+  isSellPage: boolean
   isFeaturedPage: boolean
   isMobile: boolean
 }
