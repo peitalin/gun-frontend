@@ -206,7 +206,7 @@ const PublishedProductsList = (props: ReactProps) => {
   // console.log("connection", connection)
   // console.log("gridAccum", gridAccum)
   // console.log("index", index)
-  console.log("pageParam", pageParam)
+  // console.log("pageParam", pageParam)
   // console.log("totalCountInFacet", totalCountInFacet)
 
 

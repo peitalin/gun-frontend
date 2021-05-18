@@ -110,6 +110,7 @@ const BannerStartDesktop: NextPage<ReactProps> = (props) => {
       }}
       bannerContainerStyles={{
         ...commonStyles(theme).border1,
+        marginTop: '0.6rem',
         ...bannerContainerStyle
       }}
       dither={true}

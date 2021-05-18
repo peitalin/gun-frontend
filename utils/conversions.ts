@@ -56,7 +56,7 @@ export const productToProductEditInput = (
       } as ProductVariantEditInput
     ],
     isPublished: product.isPublished,
-    allowBids: product.allowBids,
+    allowBids: product.allowBids ?? true,
     condition: product.currentSnapshot.condition,
     make: product.currentSnapshot.make,
     model: product.currentSnapshot.model,

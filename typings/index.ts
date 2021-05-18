@@ -111,7 +111,7 @@ export interface ProductCreateEditCommonInput {
   make: string;
   model: string;
   ammoType?: string;
-  actionType: string;
+  actionType?: string;
   caliber?: string;
   serialNumber: string;
   location: string;
@@ -127,7 +127,7 @@ export interface ProductCreateEditCommonInput {
   //   city?: string;
   // };
   isPublished: boolean;
-  allowBids: boolean;
+  allowBids?: boolean;
   sellerLicenseId: string;
   productId?: ID;
   currentVariants: ProductVariantInput[] | ProductVariantEditInput[];

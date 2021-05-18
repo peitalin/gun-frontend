@@ -11079,7 +11079,7 @@ export type ProductCreateInput = {
   /** dealer: InsertDealerInput */
   magazineCapacity?: Maybe<Scalars['String']>;
   barrelLength?: Maybe<Scalars['String']>;
-  allowBids: Scalars['Boolean'];
+  allowBids?: Maybe<Scalars['Boolean']>;
 };
 
 export type ProductEditInput = {

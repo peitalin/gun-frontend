@@ -32,8 +32,8 @@ const ChooseDealerDropdown = (props: ReactProps & FormikProps<FormikFields>) => 
   )
 
   // console.log("dealerOptions: ", dealerOptions)
-  console.log("initialDealer: ", initialDealer)
-  console.log("fprops.values.dealerId: ", fprops.values?.dealerId)
+  // console.log("initialDealer: ", initialDealer)
+  // console.log("fprops.values.dealerId: ", fprops.values?.dealerId)
 
   return (
     <>

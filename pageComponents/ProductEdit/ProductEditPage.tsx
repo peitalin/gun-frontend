@@ -42,8 +42,8 @@ import TitleSerialNumber from "pageComponents/ProductCreate/TitleSerialNumber";
 import GunAttributes from "pageComponents/ProductCreate/GunAttributes";
 import Description from "pageComponents/ProductCreate/Description";
 import PricingLicenses from "pageComponents/ProductCreate/PricingLicenses";
+import PreventDragDropContainer from "pageComponents/ProductCreate/ProductCreatePage/PreventDragDropContainer";
 
-import SelectTags from "pageComponents/ProductCreate/SelectTags";
 import SelectFieldPlaceholder from "pageComponents/ProductCreate/SSR/SelectFieldPlaceholder";
 // const SelectTags = dynamic(() => import("pageComponents/ProductCreate/SelectTags"), {
 //   loading: () => <SelectTagsPlaceholder/>,
@@ -115,7 +115,6 @@ const ProductEditPage = (props: ReactProps) => {
     classes,
     asModal,
     closeModal,
-    product
   } = props;
   const router = useRouter();
 
@@ -143,28 +142,23 @@ const ProductEditPage = (props: ReactProps) => {
     }
   });
 
-  const productEditInput = reduxProductEdit.productEditInput;
-
-  // Effects
-  React.useEffect(() => {
-    dispatch(actions.UPDATE_PRODUCT_ID(productEditInput.productId))
-  }, [productEditInput.productId])
-
 
   const [
     productEdit,
-    { data, loading: apolloLoading, error }
-  ] = useMutation<MutationData, MutationVar>(EDIT_PRODUCT, {
+    { data, loading: apolloLoading }
+  ] = useMutation<MutationData, MutationVar>(
+    EDIT_PRODUCT, {
     variables: {
       productEditInput: undefined
     },
     onError: (err) => {
-      let errMsg = error?.graphQLErrors?.[0]?.message ?? JSON.stringify(error)
+      let errMsg = err?.graphQLErrors?.[0]?.message ?? JSON.stringify(err)
       if (errMsg) {
         snackbar.enqueueSnackbar(
           `${errMsg}`,
           { variant: "error", autoHideDuration: 6000 }
         )
+        formik.resetForm()
       }
     },
     onCompleted: async(data: MutationData) => {
@@ -193,11 +187,11 @@ const ProductEditPage = (props: ReactProps) => {
     }
   })
 
-  console.log("prodductEDIT:  ", product)
+  const productEditInput = productToProductEditInput(props.product)
 
   const formik = useFormik({
     initialValues: {
-      ...productToProductEditInput(product)
+      ...productEditInput
     },
     validationSchema: validationSchemas.ProductEdit,
     onSubmit: (values, { setSubmitting, resetForm }) => {
@@ -231,134 +225,140 @@ const ProductEditPage = (props: ReactProps) => {
         setState(s => ({ ...s, loading: false }))
       })
     }
-  });
+  })
 
 
+  React.useEffect(() => {
+    console.log("seeding product edit data")
+    dispatch(seedProductEditDataAction(props.product))
+  }, [props.product])
+
+  // // Effects
+  // React.useEffect(() => {
+  //   dispatch(actions.UPDATE_PRODUCT_ID(productEditInput.productId))
+  // }, [productEditInput.productId])
+
+  React.useEffect(() => {
+    if (
+      productEditInput?.productId
+      && dzuPreviewItems?.[0]?.id
+      && dzuPreviewOrder?.[0]?.id
+    ) {
+      formik.setFieldValue(
+        "currentVariants",
+        reduxToFormikCurrentVariants(
+          productEditInput,
+          dzuPreviewItems,
+          dzuPreviewOrder,
+        )
+      );
+    }
+  }, [productEditInput, dzuPreviewItems, dzuPreviewOrder])
+
+  // console.log("formik.values", formik.values)
+  // console.log("formik.errors", formik.errors)
 
   return (
-  <div
-    className={"prevent-accidental-drag-drop"}
-    onDragOver={(e) => {
-      console.log("ahh! you tried to drop on the wrong neighbourhood")
-      e.preventDefault()
-    }}
-    onDrop={(e) => {
-      console.log("ahh! you tried to drop on the wrong neighbourhood")
-      e.preventDefault()
-    }}
-  >
-    <ProductEditFormLayout
-      classes={classes}
-      asModal={asModal}
-      closeModal={closeModal}
-      onSubmit={formik.handleSubmit} // dispatches to <Formik onSubmit={}/>
-    >
-      <Typography className={classes.title} variant="h2">
-        Edit Product
-      </Typography>
-      <BackTo
-        textLink={true}
-        title={"Back to Products"}
-      />
-      <SectionBorder thickPadding={true}>
-        <TitleSerialNumber {...formik} />
-        <SelectCategories
-          {...formik}
+    <PreventDragDropContainer>
+      <ProductEditFormLayout
+        classes={classes}
+        asModal={asModal}
+        closeModal={closeModal}
+        onSubmit={formik.handleSubmit} // dispatches to <Formik onSubmit={}/>
+      >
+        <Typography className={classes.title} variant="h2">
+          Edit Product
+        </Typography>
+        <BackTo
+          textLink={true}
+          title={"Back to Products"}
         />
-        <SelectSellerLicense
-          user={user}
-          sellerLicenseId={product?.sellerLicenseId} // only for product edit
-          {...formik}
-        />
-        <SelectActionType
-          {...formik}
-        />
-      </SectionBorder>
+        <SectionBorder thickPadding={true}>
+          <TitleSerialNumber {...formik} />
+          <SelectCategories
+            {...formik}
+          />
+          <SelectSellerLicense
+            user={user}
+            sellerLicenseId={props.product?.sellerLicenseId} // only for product edit
+            {...formik}
+          />
+          <SelectActionType
+            {...formik}
+          />
+        </SectionBorder>
 
-      <SectionBorder thickPadding={true}>
-        <SelectDealer
-          {...formik}
-        />
-      </SectionBorder>
+        <SectionBorder thickPadding={true}>
+          <SelectDealer
+            {...formik}
+          />
+        </SectionBorder>
 
-      <SectionBorder thickPadding={true}>
-        <GunAttributes {...formik} />
-        <SelectCondition
-          {...formik}
-        />
-      </SectionBorder>
+        <SectionBorder thickPadding={true}>
+          <GunAttributes {...formik} />
+          <SelectCondition
+            {...formik}
+          />
+        </SectionBorder>
 
-      <SectionBorder thickPadding={true}>
-        <Description
-          {...formik}
-        />
-      </SectionBorder>
+        <SectionBorder thickPadding={true}>
+          <Description
+            {...formik}
+          />
+        </SectionBorder>
 
-      <SectionBorder thickPadding={true}>
-        <PreviewItemUploaderGrid
-          reducerName={reducerName}
-          productInput={productEditInput}
-          storeId={product.store.id}
-          productId={product.id}
-          dzuPreviewItems={dzuPreviewItems}
-          dzuPreviewOrder={dzuPreviewOrder}
-          {...formik}
-        />
-      </SectionBorder>
+        <SectionBorder thickPadding={true}>
+          <PreviewItemUploaderGrid
+            reducerName={reducerName}
+            productInput={productEditInput}
+            storeId={props.product.store.id}
+            productId={props.product.id}
+            dzuPreviewItems={dzuPreviewItems}
+            dzuPreviewOrder={dzuPreviewOrder}
+            {...formik}
+          />
+        </SectionBorder>
 
-      <SectionBorder thickPadding={true}>
-        <PricingLicenses
-          reducerName={reducerName}
-          currentVariants={formik.values.currentVariants}
-          {...formik}
-        />
-      </SectionBorder>
+        <SectionBorder thickPadding={true}>
+          <PricingLicenses
+            reducerName={reducerName}
+            currentVariants={formik.values.currentVariants}
+            {...formik}
+          />
+        </SectionBorder>
 
-      <ErrorBounds className={classes.flexButtons}>
-        <div className={classes.flexButtonItem}>
-          <Button
-            style={{ width: 150 }}
-            variant={"outlined"}
-            color={"primary"}
-            onClick={() => router.back()}
-            className={props.classes.button}
-          >
-            Back to Listings
-          </Button>
-        </div>
+        <ErrorBounds className={classes.flexButtons}>
+          <div className={classes.flexButtonItem}>
+            <Button
+              style={{ width: 150 }}
+              variant={"outlined"}
+              color={"primary"}
+              onClick={() => router.back()}
+              className={props.classes.backButton}
+            >
+              Back to Listings
+            </Button>
+          </div>
 
-        <div className={classes.flexButtonSpacer}/>
-        <div className={classes.flexButtonSpacer}/>
-        <div className={classes.flexButtonItem}>
-          <ButtonLoading
-            type="submit" // this sets off Form submit
-            className={props.classes.button}
-            variant={"outlined"}
-            color={"secondary"}
-            style={{
-              width: '150px',
-              height: 40,
-            }}
-            loadingIconColor={Colors.cream}
-            replaceTextWhenLoading={true}
-            loading={state.loading || apolloLoading}
-            disabled={!process.browser || apolloLoading}
-            // disable during apolloDispatch, not when state.loading = true
-            // state.loading comes first, don't disable the form accidentally
-            onClick={() => {
-
-              setState(s => ({ ...s, loading: true }))
-              formik.setFieldValue("productId", productEditInput.productId);
-              formik.setFieldValue(
-                "currentVariants",
-                reduxToFormikCurrentVariants(
-                  productEditInput,
-                  dzuPreviewItems,
-                  dzuPreviewOrder,
-                )
-              );
-
-              setTimeout(() => {
+          <div className={classes.flexButtonSpacer}/>
+          <div className={classes.flexButtonSpacer}/>
+          <div className={classes.flexButtonItem}>
+            <ButtonLoading
+              type="submit" // this sets off Form submit
+              className={props.classes.editButton}
+              variant={"outlined"}
+              color={"secondary"}
+              style={{
+                width: '150px',
+                height: 40,
+              }}
+              loadingIconColor={Colors.ultramarineBlue}
+              replaceTextWhenLoading={true}
+              loading={state.loading || apolloLoading}
+              disabled={!process.browser || apolloLoading}
+              // disable during apolloDispatch, not when state.loading = true
+              // state.loading comes first, don't disable the form accidentally
+              onClick={() => {
                 // need to await formikCurrentVariants update
                 if (isFormikDisabled(formik.errors)) {
                   snackbar.enqueueSnackbar(
@@ -369,18 +369,16 @@ const ProductEditPage = (props: ReactProps) => {
                 } else {
                   setState(s => ({ ...s, loading: true }))
                 }
-              }, 0)
-
-              console.log('errors: ', formik.errors);
-              console.log('values: ', formik.values);
-            }}
-          >
-            Save Changes
-          </ButtonLoading>
-        </div>
-      </ErrorBounds>
-    </ProductEditFormLayout>
-  </div>
+                console.log('errors: ', formik.errors);
+                console.log('values: ', formik.values);
+              }}
+            >
+              Save Changes
+            </ButtonLoading>
+          </div>
+        </ErrorBounds>
+      </ProductEditFormLayout>
+    </PreventDragDropContainer>
   )
 }
 

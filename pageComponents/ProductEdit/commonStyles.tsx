@@ -1,5 +1,5 @@
 import { createStyles, Theme, fade } from "@material-ui/core/styles";
-import { fontFam, Colors, BoxShadows, BorderRadius } from "layout/AppTheme";
+import { Colors, isThemeDark, BorderRadius } from "layout/AppTheme";
 
 
 export const styles = (theme: Theme) => createStyles({
@@ -53,9 +53,15 @@ export const styles = (theme: Theme) => createStyles({
   spaceBetween: {
     justifyContent: 'space-between',
   },
-  button: {
+  backButton: {
     margin: 0,
-    color: Colors.cream,
+    color: isThemeDark(theme)
+      ? Colors.uniswapLightGrey
+      : Colors.slateGreyBlack,
+  },
+  editButton: {
+    margin: 0,
+    color: Colors.ultramarineBlue,
   },
   formContainer: {
     position: 'relative',
@@ -129,7 +135,6 @@ export const styles = (theme: Theme) => createStyles({
   optionValues: {
     flexBasis: '100%',
     marginRight: '0rem',
-    fontFamily: '"Segoe UI","Helvetica Neue",Arial,sans-serif',
     marginTop: '0.5rem',
   },
   errorMessage: {
@@ -138,7 +143,6 @@ export const styles = (theme: Theme) => createStyles({
     right: 0,
     fontSize: '0.8rem',
     color: `${fade(theme.palette.error.light, 0.6)}`,
-    fontFamily: fontFam,
     transition: theme.transitions.create('color', {
       easing: theme.transitions.easing.easeIn,
       duration: "200ms",

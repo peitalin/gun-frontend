@@ -54,13 +54,13 @@ const PricingLicenses = (props: ReactProps & FormikProps<FormikFields>) => {
         </Typography>
       </div>
       {
-        currentVariants.map((variant, position) => {
+        currentVariants.map((variant, i) => {
           return (
-            <div className={classes.rootLicense}>
+            <div key={i} className={classes.rootLicense}>
               <div className={classes.fieldsContainer}>
                 <div className={classes.flexRowLicense}>
                   <PriceFields
-                    position={position}
+                    position={i}
                     reducerName={reducerName}
                     activeStep={props.activeStep}
                     setActiveStep={props.setActiveStep}

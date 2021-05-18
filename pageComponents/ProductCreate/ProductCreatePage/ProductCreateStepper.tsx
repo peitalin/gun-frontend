@@ -257,11 +257,17 @@ const styles = (theme: Theme) => createStyles({
     backgroundColor: isThemeDark(theme)
       ? Colors.ultramarineBlue
       : Colors.ultramarineBlue,
+    border: isThemeDark(theme)
+      ? `1px solid ${Colors.uniswapMediumGrey}`
+      : `1px solid ${Colors.slateGreyDark}`,
     color: Colors.cream,
     "&:hover": {
       backgroundColor: isThemeDark(theme)
         ? Colors.ultramarineBlueLighter
         : Colors.ultramarineBlueLighter,
+      border: isThemeDark(theme)
+        ? `1px solid ${Colors.uniswapMediumGrey}`
+        : `1px solid ${Colors.slateGreyDark}`,
     },
   },
   stepTitleLabelActive: {

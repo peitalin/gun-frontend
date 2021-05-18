@@ -200,6 +200,9 @@ const Layout: React.FC<ReactProps> = (props) => {
     || router.pathname === "/orders"
   ) ? true : false
 
+  let needsNavbarPadding = router.pathname !== "/"
+    && router.pathname !== "/start"
+
   // console.log("showChatWood: ", showChatWoot)
 
   return (
@@ -210,7 +213,10 @@ const Layout: React.FC<ReactProps> = (props) => {
       <NavBarMain/>
       <GetUser/>
       <GlobalModals/>
-      <PageContainer classes={props.classes}>
+      <PageContainer
+        classes={props.classes}
+        needsNavbarPadding={needsNavbarPadding}
+      >
         { renderLayout() }
       </PageContainer>
       <Footer/>
@@ -221,7 +227,10 @@ const Layout: React.FC<ReactProps> = (props) => {
 
 const PageContainer: React.FC<PageContainerProps> = (props) => {
   return (
-    <div className={props.classes.pageOuterContainer}>
+    <div className={clsx(
+      props.classes.pageOuterContainer,
+      props.needsNavbarPadding && props.classes.navbarPaddingTop,
+    )}>
       <div className={props.classes.pageInnerContainer}>
         {props.children}
       </div>
@@ -233,6 +242,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   // user: UserPrivate;
 }
 interface PageContainerProps extends WithStyles<typeof styles> {
+  needsNavbarPadding: boolean
 }
 
 const styles = (theme: Theme) => createStyles({
@@ -253,12 +263,14 @@ const styles = (theme: Theme) => createStyles({
     width: "100%",
     minWidth: '320px',
     minHeight: `calc(100vh - 140px)`,
-    paddingTop: MainBarHeightDashboard,
     // background: theme.gradients.gradientUniswapDark.background,
     background: theme.palette.type === "dark"
       ? theme.gradients.gradientUniswapDark.background
       : theme.gradients.gradientGrey3.background,
     // offset 140px for navbar
+  },
+  navbarPaddingTop: {
+    paddingTop: MainBarHeightDashboard,
   },
   pageInnerContainer: {
     position: 'relative',

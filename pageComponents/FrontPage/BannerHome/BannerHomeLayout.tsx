@@ -53,6 +53,9 @@ const BannerHomeLayout: NextPage<ReactProps> = (props) => {
         color: "#181818",
       }}
       height={height}
+      bannerContainerStyles={{
+        marginTop: "-4rem", // for fixed floating navbar offset
+      }}
       ditherStyle={{
         background: bannerDither
       }}
