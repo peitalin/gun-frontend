@@ -38,8 +38,8 @@ export const styles = (theme: Theme) => createStyles({
       ? `1px solid ${Colors.uniswapLightNavy}`
       : `1px solid ${Colors.slateGreyDarker}`,
     borderRadius: BorderRadius,
-    flexGrow: 1,
-    flexBasis: '40%',
+    // flexGrow: 1,
+    flexBasis: '48%',
     "&:hover": {
       "& > span": {
         color: theme.palette.type === 'dark'

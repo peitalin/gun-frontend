@@ -33,6 +33,8 @@ const DealerStatesMenu: React.FC<ReactProps> = (props) => {
     DealerState.ALL_STATES,
   ]
 
+  console.log("props.dealerStates", props.dealerStates)
+
   return (
     <div className={clsx(classes.innerColumn, classes.innerColumnFlexRow)}>
       {
@@ -41,15 +43,17 @@ const DealerStatesMenu: React.FC<ReactProps> = (props) => {
           let isDisabled = d !== DealerState.QLD
                 && d !== DealerState.ALL_STATES
 
+          let allStates = d === DealerState.ALL_STATES
+            && props.dealerStates?.length === 0
+
           return (
             <Button
               key={d + `${i}`}
               classes={{
                 root: clsx(
                   classes.buttonRoot,
-                  props.dealerStates?.includes(d)
-                    ? classes.buttonSelected
-                    : null,
+                  (props.dealerStates?.includes(d) || allStates)
+                    && classes.buttonSelected,
                   !isDisabled && classes.activeButton,
                 )
               }}
@@ -75,7 +79,7 @@ const DealerStatesMenu: React.FC<ReactProps> = (props) => {
 
 
 const DealerStatesLabels = {
-  [DealerState.ALL_STATES]: "Cancel",
+  [DealerState.ALL_STATES]: "All States",
   [DealerState.ACT]: "ACT",
   [DealerState.NSW]: "NSW",
   [DealerState.NT]: "NT",

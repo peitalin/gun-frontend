@@ -22,6 +22,7 @@ const CaliberMenu: React.FC<ReactProps> = (props) => {
 
   const {
     classes,
+    calibers,
   } = props
 
   const { data } = useQuery<QData3, QVar3>(
@@ -29,13 +30,17 @@ const CaliberMenu: React.FC<ReactProps> = (props) => {
   })
 
   const caliberOptionGroups = createCaliberOptionGroups(data?.getCalibers)
+  const initialCaliber = {
+    label: calibers?.[0],
+    value: calibers?.[0],
+  }
 
   return (
     <div className={clsx(classes.innerColumn, classes.innerColumnFlexCol)}>
       <DropdownInput
         // className={classes.dealerDropdown}
         menuIsOpen={true}
-        stateShape={undefined}
+        stateShape={initialCaliber}
         onChange={(option: SelectOption) => {
           if (!option.value) {
             // null -> All states
@@ -45,7 +50,7 @@ const CaliberMenu: React.FC<ReactProps> = (props) => {
           }
         }}
         options={caliberOptionGroups}
-        // placeholder={initialDealerState?.label}
+        placeholder={initialCaliber}
       />
     </div>
   );
