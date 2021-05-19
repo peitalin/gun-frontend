@@ -26,9 +26,6 @@ import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 // Snackbar
 import { useSnackbar } from "notistack";
-// Redux
-import { useSelector, useDispatch } from 'react-redux';
-import { GrandReduxState, Actions } from 'reduxStore/grand-reducer';
 import SaveSearchPage from './SaveSearchPage';
 
 
@@ -42,13 +39,13 @@ const SavedSearchModal: React.FC<ReactProps> = (props) => {
   const [modalOpen, setModalOpen] = React.useState(false)
 
   const theme = useTheme();
-  const snackbar = useSnackbar()
+  // const snackbar = useSnackbar()
   const mdDown = useMediaQuery(theme.breakpoints.down('md'));
-  const smDown = useMediaQuery(theme.breakpoints.down('sm'));
+  // const smDown = useMediaQuery(theme.breakpoints.down('sm'));
 
-  const user = useSelector<GrandReduxState, UserPrivate>(
-    state => state.reduxLogin.user
-  );
+  // const user = useSelector<GrandReduxState, UserPrivate>(
+  //   state => state.reduxLogin.user
+  // );
 
 
   return (

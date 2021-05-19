@@ -57,8 +57,13 @@ const GunAttributes = (props: ReactProps & FormikProps<FormikFields>) => {
         onChange={(e) => {
           if (e.target.value.length <= maxLengthTitle) {
             fprops.setFieldValue("make", e.target.value)
+            fprops.setFieldValue(
+              "title",
+              `${e.target.value} ${fprops.values.model}`
+            )
           }
           fprops.setFieldTouched('make', true)
+          fprops.setFieldTouched('title', true)
         }}
         inputProps={{ style: { width: '100%' }}}
         errorMessage={props.errors.make}
@@ -81,6 +86,10 @@ const GunAttributes = (props: ReactProps & FormikProps<FormikFields>) => {
         onChange={(e) => {
           if (e.target.value.length <= maxLengthTitle) {
             fprops.setFieldValue("model", e.target.value)
+            fprops.setFieldValue(
+              "title",
+              `${e.target.value} ${fprops.values.model}`
+            )
           }
           fprops.setFieldTouched('model', true)
         }}
@@ -103,7 +112,9 @@ const GunAttributes = (props: ReactProps & FormikProps<FormikFields>) => {
         className={classes.textField}
         value={values.caliber}
         onChange={(e) => {
-          fprops.setFieldValue("caliber", e.target.value)
+          if (e.target.value.length <= maxLengthTitle) {
+            fprops.setFieldValue("caliber", e.target.value)
+          }
           fprops.setFieldTouched('caliber', true)
         }}
         inputProps={{ style: { width: '100%' }}}
@@ -171,6 +182,7 @@ interface FormikFields {
   caliber?: string;
   magazineCapacity?: string;
   barrelLength?: string;
+  title?: string
 }
 
 

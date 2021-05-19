@@ -57,7 +57,7 @@ const TitleSerialNumber = (props: ReactProps & FormikProps<FormikFields>) => {
 
       <RefLink refId={refLinks.title}/>
 
-      <Typography
+      {/* <Typography
         color={"primary"}
         variant="subtitle1"
         gutterBottom
@@ -84,7 +84,7 @@ const TitleSerialNumber = (props: ReactProps & FormikProps<FormikFields>) => {
           max: maxLengthTitle,
           count: title.length
         }}
-      />
+      /> */}
 
       <Typography color={"primary"} variant="subtitle1" gutterBottom>
         Serial Number

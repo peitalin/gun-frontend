@@ -30,7 +30,7 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 // Snackbar
 import { useSnackbar } from "notistack";
 import {
-  GET_SAVED_SEARCHES,
+  GET_SAVED_SEARCHES_BY_USER,
   INSERT_SAVED_SEARCH,
   DELETE_SAVED_SEARCH,
 } from "queries/search-queries";
@@ -63,20 +63,20 @@ const SaveSearchPage: React.FC<ReactProps> = (props) => {
       update: (cache, { data: { insertSavedSearch }}) => {
 
         const cacheData = cache.readQuery<QData, QVar>({
-          query: GET_SAVED_SEARCHES,
+          query: GET_SAVED_SEARCHES_BY_USER,
           variables: {},
         })
         // console.log("CACHE DATA: ", cacheData)
 
         cache.writeQuery({
-          query: GET_SAVED_SEARCHES,
+          query: GET_SAVED_SEARCHES_BY_USER,
           variables: {},
           data: {
-            getSavedSearches: {
-              __typename: cacheData?.getSavedSearches?.__typename,
-              aggregate: cacheData?.getSavedSearches?.aggregate,
+            getSavedSearchesByUser: {
+              __typename: cacheData?.getSavedSearchesByUser?.__typename,
+              aggregate: cacheData?.getSavedSearchesByUser?.aggregate,
               nodes: [
-                ...cacheData?.getSavedSearches?.nodes,
+                ...cacheData?.getSavedSearchesByUser?.nodes,
                 insertSavedSearch
               ]
             }
@@ -105,19 +105,19 @@ const SaveSearchPage: React.FC<ReactProps> = (props) => {
       update: (cache, { data: { deleteSavedSearch }}) => {
 
         const cacheData = cache.readQuery<QData, QVar>({
-          query: GET_SAVED_SEARCHES,
+          query: GET_SAVED_SEARCHES_BY_USER,
           variables: {},
         });
         // console.log("CACHE DATA: ", cacheData)
 
         cache.writeQuery({
-          query: GET_SAVED_SEARCHES,
+          query: GET_SAVED_SEARCHES_BY_USER,
           variables: {},
           data: {
-            getSavedSearches: {
-              __typename: cacheData?.getSavedSearches?.__typename,
-              aggregate: cacheData?.getSavedSearches?.aggregate,
-              nodes: cacheData?.getSavedSearches?.nodes.filter(
+            getSavedSearchesByUser: {
+              __typename: cacheData?.getSavedSearchesByUser?.__typename,
+              aggregate: cacheData?.getSavedSearchesByUser?.aggregate,
+              nodes: cacheData?.getSavedSearchesByUser?.nodes.filter(
                 node => node.id !== deleteSavedSearch?.id
               ),
             }
@@ -139,11 +139,11 @@ const SaveSearchPage: React.FC<ReactProps> = (props) => {
   })
 
   const { data, loading, error } = useQuery<QData, QVar>(
-    GET_SAVED_SEARCHES, {
+    GET_SAVED_SEARCHES_BY_USER, {
       variables: { },
       onCompleted: (data) => {
         // snackbar.enqueueSnackbar(
-        //   `Retreived ${data?.getSavedSearches?.aggregate?.count} searches`,
+        //   `Retreived ${data?.getSavedSearchesByUser?.aggregate?.count} searches`,
         //   { variant: "success" }
         // )
       },
@@ -184,6 +184,7 @@ const SaveSearchPage: React.FC<ReactProps> = (props) => {
     },
   });
 
+      console.log("dealerState: ", props.dealerState)
 
   return (
     <form
@@ -233,7 +234,7 @@ const SaveSearchPage: React.FC<ReactProps> = (props) => {
           Existing Saved Searches:
         </Typography>
         {
-          data?.getSavedSearches?.nodes?.map(savedSearch => {
+          data?.getSavedSearchesByUser?.nodes?.map(savedSearch => {
             return (
               <SavedSearchItem
                 classes={classes}
@@ -293,28 +294,19 @@ const SavedSearchItem = (props: SavedSearchItemProps) => {
         mdDown ? classes.savedSearchItemMobile : classes.savedSearchItemDesktop
       }>
         <span className={classes.boldText}>Category</span>
-        {
-          categorySlug &&
-          <span className={classes.italicText}>{categorySlug}</span>
-        }
+        <span className={classes.italicText}>{categorySlug ?? "All"}</span>
       </div>
       <div className={
         mdDown ? classes.savedSearchItemMobile : classes.savedSearchItemDesktop
       }>
         <span className={classes.boldText}>Caliber</span>
-        {
-          caliber &&
-          <span className={classes.italicText}>{caliber}</span>
-        }
+        <span className={classes.italicText}>{caliber ?? "All"}</span>
       </div>
       <div className={
         mdDown ? classes.savedSearchItemMobile : classes.savedSearchItemDesktop
       }>
         <span className={classes.boldText}>Dealer State</span>
-        {
-          dealerState &&
-          <span className={classes.italicText}>{dealerState}</span>
-        }
+        <span className={classes.italicText}>{dealerState ?? "All"}</span>
       </div>
       <div className={classes.savedSearchItem5}>
         {
@@ -361,7 +353,7 @@ interface MVar {
   dealerState?: string
 }
 interface QData {
-  getSavedSearches: Saved_Searches_Aggregate
+  getSavedSearchesByUser: Saved_Searches_Aggregate
 }
 interface QVar {
   limit?: number
