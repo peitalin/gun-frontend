@@ -246,6 +246,7 @@ const styles = (theme: Theme) => createStyles({
     alignItems: "center",
   },
   reindexButton: {
+    maxWidth: 250,
   },
   warning: {
     marginTop: "1rem",

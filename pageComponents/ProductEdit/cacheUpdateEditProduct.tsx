@@ -32,48 +32,40 @@ export const cacheUpdateEditProduct = <T extends {}>({
       variables: initialDashboardVariables,
     });
 
-    let newEdges = existingData.dashboardProductsConnection.edges.map(edge => {
-      if (editProduct.product.id !== edge.node.id) {
-        return edge
-      } else {
-        console.log(`found product ${edge.node.id}!, replacing`)
-        return {
-          __typename: "ProductsEdge",
-          node: {
-            __typename: "ProductPrivate",
-            ...editProduct.product,
-          },
-        } as ProductsEdge
-      }
-    })
-
-    // cache.evict({
-    //   id: "ROOT_QUERY",
-    //   fieldName: "dashboardProductsConnection"
-    // })
-
-    cache.writeQuery({
-      query: DASHBOARD_PRODUCTS_CONNECTION,
-      variables: initialDashboardVariables,
-      data: {
-        dashboardProductsConnection: {
-          ...existingData.dashboardProductsConnection,
-          edges: newEdges
-        }
-      },
-    });
-
-    cache.modify({
-      fields: {
-        dashboardProductsConnection(existingConnection: ProductsConnection) {
-          console.log("cache.modify: ", existingConnection)
+    if (existingData?.dashboardProductsConnection) {
+      let newEdges = existingData?.dashboardProductsConnection.edges.map(edge => {
+        if (editProduct.product.id !== edge.node.id) {
+          return edge
+        } else {
+          console.log(`found product ${edge.node.id}!, replacing`)
           return {
-            ...existingConnection,
+            __typename: "ProductsEdge",
+            node: {
+              __typename: "ProductPrivate",
+              ...editProduct.product,
+            },
+          } as ProductsEdge
+        }
+      })
+
+      // cache.evict({
+      //   id: "ROOT_QUERY",
+      //   fieldName: "dashboardProductsConnection"
+      // })
+
+      cache.writeQuery({
+        query: DASHBOARD_PRODUCTS_CONNECTION,
+        variables: initialDashboardVariables,
+        data: {
+          dashboardProductsConnection: {
+            ...existingData.dashboardProductsConnection,
             edges: newEdges
           }
-        }
-      }
-    });
+        },
+      });
+
+    }
+
 }
 
 

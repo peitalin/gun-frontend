@@ -241,17 +241,6 @@ const ProductEditPage = (props: ReactProps) => {
       let dzuPreviewItemInputs = previewsToDzuPreviews(
         props.product?.featuredVariant?.previewItems ?? []
       );
-      let dzuPreviewOrderInputs = dzuPreviewItemInputs
-          .map((p, i) => ({ id: p.id, index: i }))
-
-      formik.setFieldValue(
-        "currentVariants",
-        reduxToFormikCurrentVariants(
-          productEditInput,
-          dzuPreviewItemInputs,
-          dzuPreviewOrderInputs,
-        )
-      );
 
       batch(() => {
         dispatch(actions.UPDATE_PRODUCT_EDIT(productEditInput))
@@ -261,6 +250,17 @@ const ProductEditPage = (props: ReactProps) => {
   }, [props.product])
 
 
+  React.useEffect(() => {
+    console.log("updating formik.currentVariants")
+    formik.setFieldValue(
+      "currentVariants",
+      reduxToFormikCurrentVariants(
+        productEditInput,
+        dzuPreviewItems,
+        dzuPreviewOrder,
+      )
+    );
+  }, [dzuPreviewItems])
   // console.log("formik.values", formik.values)
   // console.log("formik.errors", formik.errors)
 

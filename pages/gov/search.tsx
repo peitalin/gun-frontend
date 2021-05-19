@@ -126,6 +126,7 @@ const styles = (theme: Theme) => createStyles({
     alignItems: "center",
   },
   reindexButton: {
+    maxWidth: 250,
   },
 })
 
