@@ -13324,7 +13324,7 @@ export type Query = {
   getCoinbaseExchangeRates?: Maybe<CoinbaseExchangeRates>;
   getUserBidsForProduct?: Maybe<ChatRoom>;
   getSignupWaitlist: Array<Signup_Emails>;
-  getSavedSearches?: Maybe<Saved_Searches_Aggregate>;
+  getSavedSearchesByUser?: Maybe<Saved_Searches_Aggregate>;
 };
 
 
@@ -14587,7 +14587,7 @@ export type QueryGetSignupWaitlistArgs = {
 };
 
 
-export type QueryGetSavedSearchesArgs = {
+export type QueryGetSavedSearchesByUserArgs = {
   limit?: Maybe<Scalars['Int']>;
   offset?: Maybe<Scalars['Int']>;
 };

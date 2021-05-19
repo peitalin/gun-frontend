@@ -36,12 +36,12 @@ export const REINDEX_SEARCH_INDEX_ADMIN = gql`
 `;
 
 
-export const GET_SAVED_SEARCHES = gql`
-  query getSavedSearches(
+export const GET_SAVED_SEARCHES_BY_USER = gql`
+  query getSavedSearchesByUser(
     $limit: Int
     $offset: Int
   ) {
-    getSavedSearches(
+    getSavedSearchesByUser(
       limit: $limit
       offset: $offset
     ) {

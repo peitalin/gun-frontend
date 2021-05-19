@@ -23,7 +23,7 @@ export const maxCountTags = 10;
 export const minLengthTag = 1;
 export const maxLengthTag = 50;
 export const minLengthTitle = 1;
-export const maxLengthTitle = 50;
+export const maxLengthTitle = 20; // 20 * 3, title = make model + caliber
 export const minLengthProductName = 1;
 export const maxLengthProductName = 50;
 export const minLengthProductTagline = 1;
