@@ -11,16 +11,8 @@ import {
   StorePrivate,
 } from "typings/gqlTypes";
 // Components
-import Loading from "components/Loading";
 import LoadingBarSSR from "components/LoadingBarSSR";
 import ProductEdit from "pageComponents/ProductEdit";
-// Material UI
-import Typography from "@material-ui/core/Typography";
-import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
-// redux
-import { GrandReduxState } from "reduxStore/grand-reducer";
-import { useDispatch } from "react-redux";
-import { seedProductEditDataAction } from "pageComponents/ProductEdit/seedEditData";
 // Graphql
 import { useQuery } from "@apollo/client";
 import { GET_PRODUCT } from "queries/products-queries";
@@ -48,9 +40,8 @@ const ProductEditPage = (props: ReactProps) => {
   } = props;
 
   const router = useRouter();
-  const dispatch = useDispatch();
-  const theme = useTheme();
-  const smDown = useMediaQuery(theme.breakpoints.down('sm'));
+  // const theme = useTheme();
+  // const smDown = useMediaQuery(theme.breakpoints.down('sm'));
 
   ///// Use this instead of passing product via router
   //// extra request, but won't fail/error as easily
@@ -60,7 +51,6 @@ const ProductEditPage = (props: ReactProps) => {
         productId: router?.query?.productId as any
       },
       onCompleted: (data: QueryData) => {
-        dispatch(seedProductEditDataAction(data.getProductById))
       },
       onError: (err) => console.log(err),
       ssr: true,

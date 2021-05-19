@@ -1,10 +1,15 @@
 import React from "react";
 import clsx from "clsx";
 // Redux
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector, batch } from "react-redux";
 import { GrandReduxState } from "reduxStore/grand-reducer";
 import { Actions } from "reduxStore/actions";
 import { ReduxStateProductEdit } from "reduxStore/product_edit-reducer";
+import {
+  productToProductEditInput,
+  previewsToDzuPreviews,
+} from "utils/conversions";
+
 // Typings
 import {
   Product,
@@ -93,7 +98,6 @@ import { validationSchemas } from "utils/validation";
 // Graphql
 import { useQuery, useMutation, useApolloClient } from "@apollo/client";
 import { EDIT_PRODUCT } from "queries/products-mutations";
-import { productToProductEditInput } from "utils/conversions";
 import { useRouter } from "next/router";
 // Snackbar
 import { useSnackbar, ProviderContext } from "notistack";
@@ -229,31 +233,33 @@ const ProductEditPage = (props: ReactProps) => {
 
 
   React.useEffect(() => {
-    console.log("seeding product edit data")
-    dispatch(seedProductEditDataAction(props.product))
-  }, [props.product])
+    if (productEditInput?.productId) {
 
-  // // Effects
-  // React.useEffect(() => {
-  //   dispatch(actions.UPDATE_PRODUCT_ID(productEditInput.productId))
-  // }, [productEditInput.productId])
+      console.log("seeding product edit data")
+      const actions = Actions.reduxProductEdit;
 
-  React.useEffect(() => {
-    if (
-      productEditInput?.productId
-      && dzuPreviewItems?.[0]?.id
-      && dzuPreviewOrder?.[0]?.id
-    ) {
+      let dzuPreviewItemInputs = previewsToDzuPreviews(
+        props.product?.featuredVariant?.previewItems ?? []
+      );
+      let dzuPreviewOrderInputs = dzuPreviewItemInputs
+          .map((p, i) => ({ id: p.id, index: i }))
+
       formik.setFieldValue(
         "currentVariants",
         reduxToFormikCurrentVariants(
           productEditInput,
-          dzuPreviewItems,
-          dzuPreviewOrder,
+          dzuPreviewItemInputs,
+          dzuPreviewOrderInputs,
         )
       );
+
+      batch(() => {
+        dispatch(actions.UPDATE_PRODUCT_EDIT(productEditInput))
+        dispatch(actions.SET_PREVIEW_ITEMS(dzuPreviewItemInputs))
+      })
     }
-  }, [productEditInput, dzuPreviewItems, dzuPreviewOrder])
+  }, [props.product])
+
 
   // console.log("formik.values", formik.values)
   // console.log("formik.errors", formik.errors)

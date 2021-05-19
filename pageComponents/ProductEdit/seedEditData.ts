@@ -1,4 +1,4 @@
-import { Product } from "typings/gqlTypes";
+import { ProductEditInput } from "typings/gqlTypes";
 import {
   productToProductEditInput,
   previewsToDzuPreviews,
@@ -11,13 +11,10 @@ import { Actions } from "reduxStore/actions";
 
 
 
-export const seedProductEditDataAction = (product: Product) =>
+export const seedProductEditDataAction = (productEditInput: ProductEditInput) =>
 (dispatch: Dispatch<any>) => {
 
   const actions = Actions.reduxProductEdit;
-  // console.log("converting product", product)
-  const productEditInput = productToProductEditInput(product);
-  // console.log("seeding productedit data into redux", productEditInput)
 
   batch(() => {
     dispatch(actions.UPDATE_PRODUCT_EDIT(productEditInput))
