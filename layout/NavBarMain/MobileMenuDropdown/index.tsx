@@ -41,6 +41,12 @@ export const MobileMenuDropdown: React.FC<ReactProps> = (props) => {
 
   const dispatch = useDispatch();
 
+  const closeMobileMenuWithDelay = () => {
+    setTimeout(() => {
+      setMobileMenuOpen(s => false)
+    }, 0)
+  }
+
   return (
     <menu className={classes.root}>
       <Button
@@ -60,11 +66,11 @@ export const MobileMenuDropdown: React.FC<ReactProps> = (props) => {
       >
         <MobileMenuRoutes
           mobileMenuOpen={mobileMenuOpen}
-          closeMobileMenu={() => setMobileMenuOpen(s => false)}
+          closeMobileMenu={closeMobileMenuWithDelay}
         />
         <Divider style={{ width: "90%" }}/>
         <MobileMenuUserProfile
-          closeMobileMenu={() => setMobileMenuOpen(s => false)}
+          closeMobileMenu={closeMobileMenuWithDelay}
         />
       </MobileMenuExpander>
     </menu>
@@ -119,7 +125,7 @@ const styles = (theme: Theme) => createStyles({
   mobileMenuExpanderRoot: {
     zIndex: 2,
     position: "absolute", // relative to MainBar, which is under NewsBar
-    top: `calc(${MainBarHeightDashboard}px + 1.5rem - 1px)`, // 1px tucked under navbar
+    top: `calc(${MainBarHeightDashboard}px + 1rem - 1px)`, // 1px tucked under navbar
     left: '0.5rem',
     width: 'calc(100% - 1rem)',
     borderRadius: BorderRadius,

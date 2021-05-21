@@ -55,7 +55,7 @@ const NewProductsMobileCarousel = (props: ReactProps) => {
         scrollSnapType={"x proximity"}
       >
         {
-          !products1?.length
+          !(products1?.length > 0)
           ? [...Array(1).keys()].map(i =>
               <AirCarousel
                 key={`featured-products-carousel-main-1-${i}`}
@@ -87,7 +87,7 @@ const NewProductsMobileCarousel = (props: ReactProps) => {
 
 
       {
-        products2?.length &&
+        (products2?.length > 0) &&
         <>
           <div style={{ marginTop: '1rem' }}></div>
           <AirCarousel
@@ -98,7 +98,7 @@ const NewProductsMobileCarousel = (props: ReactProps) => {
             scrollSnapType={"x proximity"}
           >
             {
-              !products2?.length
+              !(products2?.length > 0)
               ? [...Array(1).keys()].map(i =>
                   <AirCarousel
                     key={`featured-products-carousel-main-2-${i}`}
@@ -131,7 +131,7 @@ const NewProductsMobileCarousel = (props: ReactProps) => {
       }
 
       {
-        products3?.length &&
+        (products3?.length > 0) &&
         <>
           <div style={{ marginTop: '1rem' }}></div>
           <AirCarousel
@@ -142,7 +142,7 @@ const NewProductsMobileCarousel = (props: ReactProps) => {
             scrollSnapType={"x proximity"}
           >
             {
-              !products3?.length
+              !(products3?.length > 0)
               ? [...Array(1).keys()].map(i =>
                   <AirCarousel
                     key={`featured-products-carousel-main-3-${i}`}

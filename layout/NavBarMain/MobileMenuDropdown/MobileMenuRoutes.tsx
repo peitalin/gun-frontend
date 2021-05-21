@@ -174,7 +174,7 @@ const MobileMenuRoutes = (props: ReactProps) => {
       </div>
 
       <div className={classes.mobileMenuFlexitem}>
-        <Link href="/faq">
+        <Link href="/help/faq">
           <a className={classes.menuLink}>
             <MenuItem
               className={clsx(

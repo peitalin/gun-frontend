@@ -8,6 +8,7 @@ export const styles = (theme: Theme) => createStyles({
     margin: "0rem 0rem",
     // paddingRight: '1rem', // subtract 1rem for carousel buttons: 1rem on both sides
     // paddingLeft: '1rem', // subtract 1rem for carousel buttons: 1rem on both sides
+    marginBottom: '1rem',
     width: '100%',
     position: "relative",
   },

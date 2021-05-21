@@ -54,7 +54,7 @@ const NewProductsDesktop = (props: ReactProps) => {
           className={clsx(classes.title, classes.maxWidth)}
           gutterBottom
         >
-          {props.title || "Featured"}
+          {props.title || "New Products"}
         </Typography>
       </div>
 
