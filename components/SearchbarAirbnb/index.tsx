@@ -124,12 +124,6 @@ const SearchbarAirbnb: React.FC<ReactProps> = (props) => {
     setPageUi(pageParam)
   }, [pageParam])
 
-  // Apollo Graphql
-  const categoryData = useQuery<{ getCategories: Categories[] }, null>(
-    GET_CATEGORIES,
-  )
-  let categoriesDropdownItems = categoryData?.data?.getCategories ?? []
-
 
   const searchRef = React.useRef(null)
   const searchBlurId = `search-input-to-blur-on-enter-${id}`
@@ -254,18 +248,6 @@ const SearchbarAirbnb: React.FC<ReactProps> = (props) => {
                 setFocused={(b: boolean) => {
                   setCategoryFocused(b)
                 }}
-                dropDownItems={
-                  syncUrlToCategory
-                  ? [ ...(categoriesDropdownItems ?? []) ]
-                  : [
-                      {
-                        id: undefined,
-                        slug: 'all',
-                        name: "All Categories",
-                      },
-                      ...(categoriesDropdownItems ?? []),
-                    ]
-                }
               />
             }
 

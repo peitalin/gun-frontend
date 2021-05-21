@@ -50,6 +50,7 @@ const TextInputUnderline = (props: ReactProps) => {
             ),
           }}
           disabled={disabled}
+          autoComplete={props.autoComplete}
           inputRef={ref}
           error={!!props.errorMessage}
           style={{
@@ -123,6 +124,7 @@ const TextInputUnderline = (props: ReactProps) => {
           }}
           disabled={disabled}
           inputRef={ref}
+          autoComplete={props.autoComplete}
           error={!!props.errorMessage}
           style={{
             borderRadius: BorderRadius,
@@ -185,6 +187,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   buttonWidth?: any;
   disableInitialValidationMessage?: boolean;
   validationErrorMsgStyle?: any;
+  autoComplete?: any;
   [key: string]: any;
 }
 

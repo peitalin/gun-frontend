@@ -11,23 +11,20 @@ import {
   Gradients,
   BoxShadows
 } from "layout/AppTheme";
+// theme
+import { useTheme } from "@material-ui/core/styles";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
 // MUI
 import Typography from "@material-ui/core/Typography";
 import KeyboardArrowDown from "@material-ui/icons/KeyboardArrowDown"
-import MenuItem from '@material-ui/core/MenuItem';
-import Menu from '@material-ui/core/Menu';
-import MenuIcon from "@material-ui/icons/Menu";
 import Button from "@material-ui/core/Button";
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
-
-// hooks
 import Link from "next/link";
-import { SelectOption } from "typings";
-import {
-  Categories,
-} from "typings/gqlTypes";
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+// Graphql
+import { useQuery } from '@apollo/client';
+// Categories
+import { Categories } from "typings/gqlTypes";
+import { GET_CATEGORIES } from "queries/categories-queries";
 
 
 
@@ -36,11 +33,22 @@ const CategoryDropdown: React.FC<ReactProps> = (props) => {
 
   const {
     classes,
-    dropDownItems,
   } = props;
 
   const theme = useTheme();
   const smDown = useMediaQuery(theme.breakpoints.down("sm"));
+
+  // Apollo Graphql
+  const categoryData = useQuery<{ getCategories: Categories[] }, null>(
+    GET_CATEGORIES,
+  )
+
+  let categoriesDropdownItems = props.syncUrlToCategory
+    ? [ ...(categoryData?.data?.getCategories ?? []) ]
+    : [
+        { id: undefined, slug: 'all', name: "All Categories" },
+        ...(categoryData?.data?.getCategories ?? []),
+      ]
 
   const [open, setOpen] = React.useState(false);
 
@@ -83,7 +91,7 @@ const CategoryDropdown: React.FC<ReactProps> = (props) => {
             <div className={classes.categoryButtonsContainer}>
               {
                 props.syncUrlToCategory
-                ? dropDownItems.map((category, i) => {
+                ? categoriesDropdownItems.map((category, i) => {
                     // a category change triggers a route change
                     // if we enable syncUrlToCategory
                     return (
@@ -119,7 +127,7 @@ const CategoryDropdown: React.FC<ReactProps> = (props) => {
                       </Link>
                     )
                   })
-                : dropDownItems.map((category, i) => {
+                : categoriesDropdownItems.map((category, i) => {
                     return (
                       <Button
                         key={category.name + `${i}`}
@@ -160,11 +168,6 @@ const CategoryDropdown: React.FC<ReactProps> = (props) => {
 
 
 interface ReactProps extends WithStyles<typeof styles> {
-  dropDownItems: {
-    name?: string
-    id?: string
-    slug?: string
-  }[];
   className?: any;
   setFocused?(a: boolean): void;
   setMobileFocused?(a: boolean): void;

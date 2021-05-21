@@ -21,17 +21,6 @@ const DealerStatesMenu: React.FC<ReactProps> = (props) => {
     classes,
   } = props;
 
-  let dealerStatesDropdownItems = [
-    DealerState.ACT,
-    DealerState.NSW,
-    DealerState.NT,
-    DealerState.QLD,
-    DealerState.SA,
-    DealerState.TAS,
-    DealerState.VIC,
-    DealerState.WA,
-    DealerState.ALL_STATES,
-  ]
 
   console.log("props.dealerStates", props.dealerStates)
 
@@ -40,8 +29,7 @@ const DealerStatesMenu: React.FC<ReactProps> = (props) => {
       {
         dealerStatesDropdownItems.map((d, i) => {
 
-          let isDisabled = d !== DealerState.QLD
-                && d !== DealerState.ALL_STATES
+          let isDisabled = !availableDealerStates.includes(d)
 
           let allStates = d === DealerState.ALL_STATES
             && props.dealerStates?.length === 0
@@ -77,8 +65,12 @@ const DealerStatesMenu: React.FC<ReactProps> = (props) => {
   );
 };
 
+export const availableDealerStates = [
+  DealerState.ALL_STATES,
+  DealerState.QLD,
+]
 
-const DealerStatesLabels = {
+export const DealerStatesLabels = {
   [DealerState.ALL_STATES]: "All States",
   [DealerState.ACT]: "ACT",
   [DealerState.NSW]: "NSW",
@@ -89,6 +81,17 @@ const DealerStatesLabels = {
   [DealerState.VIC]: "VIC",
   [DealerState.WA]: "WS",
 }
+export const dealerStatesDropdownItems = [
+  DealerState.ACT,
+  DealerState.NSW,
+  DealerState.NT,
+  DealerState.QLD,
+  DealerState.SA,
+  DealerState.TAS,
+  DealerState.VIC,
+  DealerState.WA,
+  DealerState.ALL_STATES,
+]
 
 
 interface ReactProps extends WithStyles<typeof styles> {

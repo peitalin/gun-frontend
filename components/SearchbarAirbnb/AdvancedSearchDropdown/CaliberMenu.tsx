@@ -57,14 +57,14 @@ const CaliberMenu: React.FC<ReactProps> = (props) => {
 };
 
 
-const createCaliberOption = (c: Calibers): SelectOption => {
+export const createCaliberOption = (c: Calibers): SelectOption => {
   return {
     label: c.name,
     value: c.name,
   }
 }
 
-const createCaliberOptionGroups = (calibers: Calibers[]): GroupedSelectOption[] => {
+export const createCaliberOptionGroups = (calibers: Calibers[]): GroupedSelectOption[] => {
   if (!calibers) {
     return []
   }
