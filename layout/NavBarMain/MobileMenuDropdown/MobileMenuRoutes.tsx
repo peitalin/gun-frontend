@@ -174,7 +174,7 @@ const MobileMenuRoutes = (props: ReactProps) => {
       </div>
 
       <div className={classes.mobileMenuFlexitem}>
-        <Link href="/contact-us">
+        <Link href="/faq">
           <a className={classes.menuLink}>
             <MenuItem
               className={clsx(
@@ -184,7 +184,7 @@ const MobileMenuRoutes = (props: ReactProps) => {
               onClick={() => props.closeMobileMenu()}
             >
               <Typography className={classes.mobileMenuItemText}>
-                Contact Us
+                FAQ
               </Typography>
             </MenuItem>
           </a>
@@ -209,6 +209,28 @@ const MobileMenuRoutes = (props: ReactProps) => {
         <ToggleDarkMode/>
       </MenuItem>
 
+      {
+        loggedIn &&
+        <div className={classes.mobileMenuFlexitem}>
+          <Link href="/saved-searches">
+            <a className={classes.menuLink}>
+              <MenuItem
+                className={clsx(
+                  classes.mobileMenuFlexitem,
+                  classes.mobileMenuItemRoot
+                )}
+                onClick={() => {
+                  props.closeMobileMenu()
+                }}
+              >
+                <Typography className={classes.mobileMenuItemText}>
+                  Saved Searches
+                </Typography>
+              </MenuItem>
+            </a>
+          </Link>
+        </div>
+      }
 
 
       {

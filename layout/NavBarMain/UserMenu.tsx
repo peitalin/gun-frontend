@@ -22,6 +22,7 @@ import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import DownloadIcon from "@material-ui/icons/SaveAlt";
 import MonetizationOnIcon from "@material-ui/icons/MonetizationOn";
 import CardGiftcard from "@material-ui/icons/CardGiftcard";
+import SearchIcon from "@material-ui/icons/Search";
 import HelpOutlineIcon from "@material-ui/icons/HelpOutline";
 import PowerSettingsNewIcon from '@material-ui/icons/PowerSettingsNew';
 import SettingsIcon from '@material-ui/icons/Settings';
@@ -171,6 +172,15 @@ export const UserMenu: React.FC<ReactProps> = (props) => {
             <a className={classes.menuLink}>
               <HowToVoteIcon className={classes.menuIcon}/>
               <span className={classes.menuText}> My Offers </span>
+            </a>
+          </Link>
+        </MenuItem>
+
+        <MenuItem  className={classes.menuItem} onClick={handleCloseMenu}>
+          <Link href="/saved-searches">
+            <a className={classes.menuLink}>
+              <SearchIcon className={classes.menuIcon}/>
+              <span className={classes.menuText}> Saved Searches </span>
             </a>
           </Link>
         </MenuItem>

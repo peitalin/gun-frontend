@@ -57,33 +57,3 @@ export const GET_SAVED_SEARCHES_BY_USER = gql`
 `;
 
 
-export const INSERT_SAVED_SEARCH = gql`
-  mutation insertSavedSearch(
-    $searchTerm: String!
-    $categorySlug: String
-    $caliber: String
-    $dealerState: String
-  ) {
-    insertSavedSearch(
-      searchTerm: $searchTerm
-      categorySlug: $categorySlug
-      caliber: $caliber
-      dealerState: $dealerState
-    ) {
-      ...SavedSearchFragment
-    }
-  }
-  ${SavedSearchFragment}
-`;
-
-
-
-export const DELETE_SAVED_SEARCH = gql`
-  mutation deleteSavedSearch($savedSearchId: String!) {
-    deleteSavedSearch(savedSearchId: $savedSearchId) {
-      ...SavedSearchFragment
-    }
-  }
-  ${SavedSearchFragment}
-`;
-

@@ -3533,6 +3533,10 @@ export type Mutation = {
   delete_refunds?: Maybe<Refunds_Mutation_Response>;
   /** delete single row from the table: "refunds" */
   delete_refunds_by_pk?: Maybe<Refunds>;
+  /** delete data from the table: "saved_search_hits" */
+  delete_saved_search_hits?: Maybe<Saved_Search_Hits_Mutation_Response>;
+  /** delete single row from the table: "saved_search_hits" */
+  delete_saved_search_hits_by_pk?: Maybe<Saved_Search_Hits>;
   /** delete data from the table: "saved_searches" */
   delete_saved_searches?: Maybe<Saved_Searches_Mutation_Response>;
   /** delete single row from the table: "saved_searches" */
@@ -3689,6 +3693,10 @@ export type Mutation = {
   insert_refunds?: Maybe<Refunds_Mutation_Response>;
   /** insert a single row into the table: "refunds" */
   insert_refunds_one?: Maybe<Refunds>;
+  /** insert data into the table: "saved_search_hits" */
+  insert_saved_search_hits?: Maybe<Saved_Search_Hits_Mutation_Response>;
+  /** insert a single row into the table: "saved_search_hits" */
+  insert_saved_search_hits_one?: Maybe<Saved_Search_Hits>;
   /** insert data into the table: "saved_searches" */
   insert_saved_searches?: Maybe<Saved_Searches_Mutation_Response>;
   /** insert a single row into the table: "saved_searches" */
@@ -3845,6 +3853,10 @@ export type Mutation = {
   update_refunds?: Maybe<Refunds_Mutation_Response>;
   /** update single row of the table: "refunds" */
   update_refunds_by_pk?: Maybe<Refunds>;
+  /** update data of the table: "saved_search_hits" */
+  update_saved_search_hits?: Maybe<Saved_Search_Hits_Mutation_Response>;
+  /** update single row of the table: "saved_search_hits" */
+  update_saved_search_hits_by_pk?: Maybe<Saved_Search_Hits>;
   /** update data of the table: "saved_searches" */
   update_saved_searches?: Maybe<Saved_Searches_Mutation_Response>;
   /** update single row of the table: "saved_searches" */
@@ -4208,6 +4220,7 @@ export type Mutation = {
   insertUniqueProductView?: Maybe<Unique_Product_Views>;
   insertSavedSearch?: Maybe<Saved_Searches>;
   deleteSavedSearch?: Maybe<Saved_Searches>;
+  markSavedSearchHitsAsSeen: Array<Saved_Search_Hits>;
 };
 
 
@@ -4528,6 +4541,16 @@ export type MutationDelete_RefundsArgs = {
 
 
 export type MutationDelete_Refunds_By_PkArgs = {
+  id: Scalars['String'];
+};
+
+
+export type MutationDelete_Saved_Search_HitsArgs = {
+  where: Saved_Search_Hits_Bool_Exp;
+};
+
+
+export type MutationDelete_Saved_Search_Hits_By_PkArgs = {
   id: Scalars['String'];
 };
 
@@ -4984,6 +5007,18 @@ export type MutationInsert_RefundsArgs = {
 export type MutationInsert_Refunds_OneArgs = {
   object: Refunds_Insert_Input;
   on_conflict?: Maybe<Refunds_On_Conflict>;
+};
+
+
+export type MutationInsert_Saved_Search_HitsArgs = {
+  objects: Array<Saved_Search_Hits_Insert_Input>;
+  on_conflict?: Maybe<Saved_Search_Hits_On_Conflict>;
+};
+
+
+export type MutationInsert_Saved_Search_Hits_OneArgs = {
+  object: Saved_Search_Hits_Insert_Input;
+  on_conflict?: Maybe<Saved_Search_Hits_On_Conflict>;
 };
 
 
@@ -5482,6 +5517,18 @@ export type MutationUpdate_RefundsArgs = {
 export type MutationUpdate_Refunds_By_PkArgs = {
   _set?: Maybe<Refunds_Set_Input>;
   pk_columns: Refunds_Pk_Columns_Input;
+};
+
+
+export type MutationUpdate_Saved_Search_HitsArgs = {
+  _set?: Maybe<Saved_Search_Hits_Set_Input>;
+  where: Saved_Search_Hits_Bool_Exp;
+};
+
+
+export type MutationUpdate_Saved_Search_Hits_By_PkArgs = {
+  _set?: Maybe<Saved_Search_Hits_Set_Input>;
+  pk_columns: Saved_Search_Hits_Pk_Columns_Input;
 };
 
 
@@ -6166,6 +6213,11 @@ export type MutationInsertSavedSearchArgs = {
 
 export type MutationDeleteSavedSearchArgs = {
   savedSearchId: Scalars['String'];
+};
+
+
+export type MutationMarkSavedSearchHitsAsSeenArgs = {
+  savedSearchHitsIds: Array<Scalars['String']>;
 };
 
 /** Something that went wrong during a mutation. */
@@ -13027,6 +13079,12 @@ export type Query = {
   refunds_aggregate: Refunds_Aggregate;
   /** fetch data from the table: "refunds" using primary key columns */
   refunds_by_pk?: Maybe<Refunds>;
+  /** fetch data from the table: "saved_search_hits" */
+  saved_search_hits: Array<Saved_Search_Hits>;
+  /** fetch aggregated fields from the table: "saved_search_hits" */
+  saved_search_hits_aggregate: Saved_Search_Hits_Aggregate;
+  /** fetch data from the table: "saved_search_hits" using primary key columns */
+  saved_search_hits_by_pk?: Maybe<Saved_Search_Hits>;
   /** fetch data from the table: "saved_searches" */
   saved_searches: Array<Saved_Searches>;
   /** fetch aggregated fields from the table: "saved_searches" */
@@ -13324,7 +13382,13 @@ export type Query = {
   getCoinbaseExchangeRates?: Maybe<CoinbaseExchangeRates>;
   getUserBidsForProduct?: Maybe<ChatRoom>;
   getSignupWaitlist: Array<Signup_Emails>;
+  /** These are the user's saved searches */
   getSavedSearchesByUser?: Maybe<Saved_Searches_Aggregate>;
+  /**
+   * These notifications for when a users's saved search had a match
+   * when a product was listed
+   */
+  getSavedSearchHitsByUser?: Maybe<Saved_Search_Hits_Aggregate>;
 };
 
 
@@ -14121,6 +14185,29 @@ export type QueryRefunds_By_PkArgs = {
 };
 
 
+export type QuerySaved_Search_HitsArgs = {
+  distinct_on?: Maybe<Array<Saved_Search_Hits_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Saved_Search_Hits_Order_By>>;
+  where?: Maybe<Saved_Search_Hits_Bool_Exp>;
+};
+
+
+export type QuerySaved_Search_Hits_AggregateArgs = {
+  distinct_on?: Maybe<Array<Saved_Search_Hits_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Saved_Search_Hits_Order_By>>;
+  where?: Maybe<Saved_Search_Hits_Bool_Exp>;
+};
+
+
+export type QuerySaved_Search_Hits_By_PkArgs = {
+  id: Scalars['String'];
+};
+
+
 export type QuerySaved_SearchesArgs = {
   distinct_on?: Maybe<Array<Saved_Searches_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -14592,10 +14679,16 @@ export type QueryGetSavedSearchesByUserArgs = {
   offset?: Maybe<Scalars['Int']>;
 };
 
+
+export type QueryGetSavedSearchHitsByUserArgs = {
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+};
+
 /** columns and relationships of "ratings" */
 export type Ratings = {
   __typename?: 'ratings';
-  createdAt?: Maybe<Scalars['timestamptz']>;
+  createdAt: Scalars['timestamptz'];
   id: Scalars['String'];
   orderId?: Maybe<Scalars['String']>;
   rateeId: Scalars['String'];
@@ -15122,6 +15215,208 @@ export enum Role {
   SYSTEM = 'SYSTEM'
 }
 
+/** columns and relationships of "saved_search_hits" */
+export type Saved_Search_Hits = {
+  __typename?: 'saved_search_hits';
+  created_at: Scalars['timestamptz'];
+  id: Scalars['String'];
+  product_title: Scalars['String'];
+  /** An object relationship */
+  savedSearch?: Maybe<Saved_Searches>;
+  saved_search_id: Scalars['String'];
+  seen?: Maybe<Scalars['Boolean']>;
+  /** An object relationship */
+  user?: Maybe<Users>;
+  user_id: Scalars['String'];
+};
+
+/** aggregated selection of "saved_search_hits" */
+export type Saved_Search_Hits_Aggregate = {
+  __typename?: 'saved_search_hits_aggregate';
+  aggregate?: Maybe<Saved_Search_Hits_Aggregate_Fields>;
+  nodes: Array<Saved_Search_Hits>;
+};
+
+/** aggregate fields of "saved_search_hits" */
+export type Saved_Search_Hits_Aggregate_Fields = {
+  __typename?: 'saved_search_hits_aggregate_fields';
+  count?: Maybe<Scalars['Int']>;
+  max?: Maybe<Saved_Search_Hits_Max_Fields>;
+  min?: Maybe<Saved_Search_Hits_Min_Fields>;
+};
+
+
+/** aggregate fields of "saved_search_hits" */
+export type Saved_Search_Hits_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<Saved_Search_Hits_Select_Column>>;
+  distinct?: Maybe<Scalars['Boolean']>;
+};
+
+/** order by aggregate values of table "saved_search_hits" */
+export type Saved_Search_Hits_Aggregate_Order_By = {
+  count?: Maybe<Order_By>;
+  max?: Maybe<Saved_Search_Hits_Max_Order_By>;
+  min?: Maybe<Saved_Search_Hits_Min_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "saved_search_hits" */
+export type Saved_Search_Hits_Arr_Rel_Insert_Input = {
+  data: Array<Saved_Search_Hits_Insert_Input>;
+  on_conflict?: Maybe<Saved_Search_Hits_On_Conflict>;
+};
+
+/** Boolean expression to filter rows from the table "saved_search_hits". All fields are combined with a logical 'AND'. */
+export type Saved_Search_Hits_Bool_Exp = {
+  _and?: Maybe<Array<Maybe<Saved_Search_Hits_Bool_Exp>>>;
+  _not?: Maybe<Saved_Search_Hits_Bool_Exp>;
+  _or?: Maybe<Array<Maybe<Saved_Search_Hits_Bool_Exp>>>;
+  created_at?: Maybe<Timestamptz_Comparison_Exp>;
+  id?: Maybe<String_Comparison_Exp>;
+  product_title?: Maybe<String_Comparison_Exp>;
+  savedSearch?: Maybe<Saved_Searches_Bool_Exp>;
+  saved_search_id?: Maybe<String_Comparison_Exp>;
+  seen?: Maybe<Boolean_Comparison_Exp>;
+  user?: Maybe<Users_Bool_Exp>;
+  user_id?: Maybe<String_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "saved_search_hits" */
+export enum Saved_Search_Hits_Constraint {
+  /** unique or primary key constraint */
+  SAVED_SEARCH_HITS_PKEY = 'saved_search_hits_pkey'
+}
+
+/** input type for inserting data into table "saved_search_hits" */
+export type Saved_Search_Hits_Insert_Input = {
+  created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['String']>;
+  product_title?: Maybe<Scalars['String']>;
+  savedSearch?: Maybe<Saved_Searches_Obj_Rel_Insert_Input>;
+  saved_search_id?: Maybe<Scalars['String']>;
+  seen?: Maybe<Scalars['Boolean']>;
+  user?: Maybe<Users_Obj_Rel_Insert_Input>;
+  user_id?: Maybe<Scalars['String']>;
+};
+
+/** aggregate max on columns */
+export type Saved_Search_Hits_Max_Fields = {
+  __typename?: 'saved_search_hits_max_fields';
+  created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['String']>;
+  product_title?: Maybe<Scalars['String']>;
+  saved_search_id?: Maybe<Scalars['String']>;
+  user_id?: Maybe<Scalars['String']>;
+};
+
+/** order by max() on columns of table "saved_search_hits" */
+export type Saved_Search_Hits_Max_Order_By = {
+  created_at?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  product_title?: Maybe<Order_By>;
+  saved_search_id?: Maybe<Order_By>;
+  user_id?: Maybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type Saved_Search_Hits_Min_Fields = {
+  __typename?: 'saved_search_hits_min_fields';
+  created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['String']>;
+  product_title?: Maybe<Scalars['String']>;
+  saved_search_id?: Maybe<Scalars['String']>;
+  user_id?: Maybe<Scalars['String']>;
+};
+
+/** order by min() on columns of table "saved_search_hits" */
+export type Saved_Search_Hits_Min_Order_By = {
+  created_at?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  product_title?: Maybe<Order_By>;
+  saved_search_id?: Maybe<Order_By>;
+  user_id?: Maybe<Order_By>;
+};
+
+/** response of any mutation on the table "saved_search_hits" */
+export type Saved_Search_Hits_Mutation_Response = {
+  __typename?: 'saved_search_hits_mutation_response';
+  /** number of affected rows by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data of the affected rows by the mutation */
+  returning: Array<Saved_Search_Hits>;
+};
+
+/** input type for inserting object relation for remote table "saved_search_hits" */
+export type Saved_Search_Hits_Obj_Rel_Insert_Input = {
+  data: Saved_Search_Hits_Insert_Input;
+  on_conflict?: Maybe<Saved_Search_Hits_On_Conflict>;
+};
+
+/** on conflict condition type for table "saved_search_hits" */
+export type Saved_Search_Hits_On_Conflict = {
+  constraint: Saved_Search_Hits_Constraint;
+  update_columns: Array<Saved_Search_Hits_Update_Column>;
+  where?: Maybe<Saved_Search_Hits_Bool_Exp>;
+};
+
+/** ordering options when selecting data from "saved_search_hits" */
+export type Saved_Search_Hits_Order_By = {
+  created_at?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  product_title?: Maybe<Order_By>;
+  savedSearch?: Maybe<Saved_Searches_Order_By>;
+  saved_search_id?: Maybe<Order_By>;
+  seen?: Maybe<Order_By>;
+  user?: Maybe<Users_Order_By>;
+  user_id?: Maybe<Order_By>;
+};
+
+/** primary key columns input for table: "saved_search_hits" */
+export type Saved_Search_Hits_Pk_Columns_Input = {
+  id: Scalars['String'];
+};
+
+/** select columns of table "saved_search_hits" */
+export enum Saved_Search_Hits_Select_Column {
+  /** column name */
+  CREATED_AT = 'created_at',
+  /** column name */
+  ID = 'id',
+  /** column name */
+  PRODUCT_TITLE = 'product_title',
+  /** column name */
+  SAVED_SEARCH_ID = 'saved_search_id',
+  /** column name */
+  SEEN = 'seen',
+  /** column name */
+  USER_ID = 'user_id'
+}
+
+/** input type for updating data in table "saved_search_hits" */
+export type Saved_Search_Hits_Set_Input = {
+  created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['String']>;
+  product_title?: Maybe<Scalars['String']>;
+  saved_search_id?: Maybe<Scalars['String']>;
+  seen?: Maybe<Scalars['Boolean']>;
+  user_id?: Maybe<Scalars['String']>;
+};
+
+/** update columns of table "saved_search_hits" */
+export enum Saved_Search_Hits_Update_Column {
+  /** column name */
+  CREATED_AT = 'created_at',
+  /** column name */
+  ID = 'id',
+  /** column name */
+  PRODUCT_TITLE = 'product_title',
+  /** column name */
+  SAVED_SEARCH_ID = 'saved_search_id',
+  /** column name */
+  SEEN = 'seen',
+  /** column name */
+  USER_ID = 'user_id'
+}
+
 /** columns and relationships of "saved_searches" */
 export type Saved_Searches = {
   __typename?: 'saved_searches';
@@ -15131,6 +15426,8 @@ export type Saved_Searches = {
   dealerState?: Maybe<Scalars['String']>;
   id: Scalars['String'];
   searchTerm: Scalars['String'];
+  /** An object relationship */
+  user?: Maybe<Users>;
   userId: Scalars['String'];
 };
 
@@ -15180,6 +15477,7 @@ export type Saved_Searches_Bool_Exp = {
   dealerState?: Maybe<String_Comparison_Exp>;
   id?: Maybe<String_Comparison_Exp>;
   searchTerm?: Maybe<String_Comparison_Exp>;
+  user?: Maybe<Users_Bool_Exp>;
   userId?: Maybe<String_Comparison_Exp>;
 };
 
@@ -15197,6 +15495,7 @@ export type Saved_Searches_Insert_Input = {
   dealerState?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
   searchTerm?: Maybe<Scalars['String']>;
+  user?: Maybe<Users_Obj_Rel_Insert_Input>;
   userId?: Maybe<Scalars['String']>;
 };
 
@@ -15276,6 +15575,7 @@ export type Saved_Searches_Order_By = {
   dealerState?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   searchTerm?: Maybe<Order_By>;
+  user?: Maybe<Users_Order_By>;
   userId?: Maybe<Order_By>;
 };
 
@@ -15330,6 +15630,18 @@ export enum Saved_Searches_Update_Column {
   /** column name */
   USERID = 'userId'
 }
+
+export type SavedSearchesConnection = {
+  __typename?: 'SavedSearchesConnection';
+  totalCount?: Maybe<Scalars['Int']>;
+  pageInfo: PageInfo;
+  edges: Array<SavedSearchesEdge>;
+};
+
+export type SavedSearchesEdge = {
+  __typename?: 'SavedSearchesEdge';
+  node: Saved_Searches;
+};
 
 
 export type SendResetPasswordResponse = {
@@ -16145,6 +16457,12 @@ export type Subscription = {
   refunds_aggregate: Refunds_Aggregate;
   /** fetch data from the table: "refunds" using primary key columns */
   refunds_by_pk?: Maybe<Refunds>;
+  /** fetch data from the table: "saved_search_hits" */
+  saved_search_hits: Array<Saved_Search_Hits>;
+  /** fetch aggregated fields from the table: "saved_search_hits" */
+  saved_search_hits_aggregate: Saved_Search_Hits_Aggregate;
+  /** fetch data from the table: "saved_search_hits" using primary key columns */
+  saved_search_hits_by_pk?: Maybe<Saved_Search_Hits>;
   /** fetch data from the table: "saved_searches" */
   saved_searches: Array<Saved_Searches>;
   /** fetch aggregated fields from the table: "saved_searches" */
@@ -16999,6 +17317,29 @@ export type SubscriptionRefunds_By_PkArgs = {
 };
 
 
+export type SubscriptionSaved_Search_HitsArgs = {
+  distinct_on?: Maybe<Array<Saved_Search_Hits_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Saved_Search_Hits_Order_By>>;
+  where?: Maybe<Saved_Search_Hits_Bool_Exp>;
+};
+
+
+export type SubscriptionSaved_Search_Hits_AggregateArgs = {
+  distinct_on?: Maybe<Array<Saved_Search_Hits_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Saved_Search_Hits_Order_By>>;
+  where?: Maybe<Saved_Search_Hits_Bool_Exp>;
+};
+
+
+export type SubscriptionSaved_Search_Hits_By_PkArgs = {
+  id: Scalars['String'];
+};
+
+
 export type SubscriptionSaved_SearchesArgs = {
   distinct_on?: Maybe<Array<Saved_Searches_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -17682,7 +18023,7 @@ export type TransactionsConnection = {
 /** columns and relationships of "unique_product_views" */
 export type Unique_Product_Views = {
   __typename?: 'unique_product_views';
-  createdAt?: Maybe<Scalars['timestamptz']>;
+  createdAt: Scalars['timestamptz'];
   productId: Scalars['String'];
   sellerUserId: Scalars['String'];
   userId: Scalars['String'];
