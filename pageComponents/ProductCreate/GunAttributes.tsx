@@ -88,7 +88,7 @@ const GunAttributes = (props: ReactProps & FormikProps<FormikFields>) => {
             fprops.setFieldValue("model", e.target.value)
             fprops.setFieldValue(
               "title",
-              `${e.target.value} ${fprops.values.model}`
+              `${fprops.values.make} ${e.target.value}`
             )
           }
           fprops.setFieldTouched('model', true)

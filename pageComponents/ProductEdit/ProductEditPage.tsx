@@ -101,7 +101,6 @@ import { EDIT_PRODUCT } from "queries/products-mutations";
 import { useRouter } from "next/router";
 // Snackbar
 import { useSnackbar, ProviderContext } from "notistack";
-import { seedProductEditDataAction } from "pageComponents/ProductEdit/seedEditData";
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import {

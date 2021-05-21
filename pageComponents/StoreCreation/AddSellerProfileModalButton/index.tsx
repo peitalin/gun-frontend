@@ -52,7 +52,7 @@ const AddSellerProfileButton = (props: ReactProps) => {
         color="secondary"
         onClick={() => goToModal.storeCreate()}
       >
-        {props.title ? props.title : "Create a Store"}
+        {props.title ? props.title : "Create an account"}
       </Button>
       <Dialog
         open={storeCreateModalOpen}

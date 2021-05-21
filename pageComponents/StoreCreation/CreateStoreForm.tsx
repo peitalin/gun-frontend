@@ -135,7 +135,7 @@ const CreateStoreForm: React.FC<ReactProps> = (props) => {
     return (
       <div className={classes.loginContainer}>
         <Typography variant="h4" className={classes.storeExists}>
-          Your store was created.
+          Your payout account was created.
         </Typography>
         <Button
           variant="outlined"
@@ -299,7 +299,7 @@ const CreateStoreFormWrapper: React.FC<FormWrapperProps> = (props) => {
                     //  type="submit" sets off the obSubmit handler above
                   }}
                 >
-                  Create Store
+                  Create Payout Account
                 </ButtonLoading>
               </div>
             </div>

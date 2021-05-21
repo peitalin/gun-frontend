@@ -6,7 +6,6 @@ import { Gradients, Colors, BoxShadows } from "layout/AppTheme";
 // Components
 import ProductCreatePage from "./ProductCreatePage";
 import BannerCreateProduct from "./BannerCreateProduct";
-import { useScrollYPosition } from "utils/hooks";
 // Router
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";

@@ -12,6 +12,7 @@ import {
   isThemeDark,
   BorderRadius4x,
 } from "layout/AppTheme";
+import { useSelector } from "react-redux";
 // components
 import { UserPrivate, Product } from "typings/gqlTypes";
 // Material UI
@@ -27,6 +28,7 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 // Snackbar
 import { useSnackbar } from "notistack";
 import SaveSearchPage from './SaveSearchPage';
+import { GrandReduxState } from 'reduxStore/grand-reducer';
 
 
 
@@ -39,14 +41,11 @@ const SavedSearchModal: React.FC<ReactProps> = (props) => {
   const [modalOpen, setModalOpen] = React.useState(false)
 
   const theme = useTheme();
+  const user = useSelector<GrandReduxState, UserPrivate>(
+    s => s.reduxLogin.user
+  )
   // const snackbar = useSnackbar()
   const mdDown = useMediaQuery(theme.breakpoints.down('md'));
-  // const smDown = useMediaQuery(theme.breakpoints.down('sm'));
-
-  // const user = useSelector<GrandReduxState, UserPrivate>(
-  //   state => state.reduxLogin.user
-  // );
-
 
   return (
     <>
@@ -81,14 +80,17 @@ const SavedSearchModal: React.FC<ReactProps> = (props) => {
         type="submit"
         className={props.classes.saveSearchModalButton}
         style={{
-          // width: '150px',
           ...props.buttonStyle,
         }}
         variant={"contained"}
         loadingIconColor={Colors.cream}
         replaceTextWhenLoading={true}
         // loading={loading}
-        disabled={!process.browser || !props.searchTerm}
+        disabled={
+          !process.browser
+          || !props.searchTerm
+          || !user.id
+        }
         // disabled={disabled}
         onClick={() => {
           setModalOpen(s => !s)
