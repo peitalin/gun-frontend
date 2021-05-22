@@ -81,8 +81,8 @@ const UploadLayoutPreviews: React.FC<ILayoutProps & ReactProps> = (props) => {
     dzuPreviewOrder,
     callback: () => {
       if (typeof props.setActiveStep === 'function') {
-        console.log("uploader touched, setActiveStep(7)")
-        props.setActiveStep(7)
+        console.log("uploader touched, setActiveStep(6)")
+        props.setActiveStep(6)
       }
     }
   });

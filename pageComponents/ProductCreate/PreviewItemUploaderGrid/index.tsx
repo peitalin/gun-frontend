@@ -239,9 +239,9 @@ const PreviewItemUploaderGrid = (props: ReactProps & FormikProps<FormikFields>) 
         )}
         setTouched={() => {
           fprops.setFieldTouched('currentVariants[0].previewItems', true)
-          console.log("uploader touched, setActiveStep(7)")
+          console.log("uploader touched, setActiveStep(6)")
           if (typeof props.setActiveStep === 'function') {
-            props.setActiveStep(7)
+            props.setActiveStep(6)
           }
         }}
         reducerName={props.reducerName}

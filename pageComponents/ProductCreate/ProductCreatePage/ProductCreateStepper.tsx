@@ -22,12 +22,12 @@ import { FormikTouched } from "formik"
 
 const getStepTitles = () => {
   return [
-    'Select Category and License',
-    'Title, Serial Number, and Action Type',
+    'Select a category and your license',
     'Choose a transferring dealer',
-    'Gun Attributes',
-    'Condition',
+    'Serial number, make, model and condition',
+    'Caliber and gun attributes',
     'Description',
+    // 'Description',
   ];
 }
 
@@ -37,26 +37,25 @@ const activeStepTouched = {
     "sellerLicenseId",
   ],
   1: [
-    "title",
-    "serialNumber",
-    "actionType",
-  ],
-  2: [
     "dealerId",
   ],
-  3: [
+  2: [
+    "serialNumber",
     "make",
     "model",
+    "condition",
+  ],
+  3: [
     "caliber",
+    "actionType",
     "magazineCapacity",
     "barrelLength",
   ],
   4: [
-    "condition",
-  ],
-  5: [
+    "title",
     "description"
   ],
+  5: [],
   6: [],
   7: [],
 }

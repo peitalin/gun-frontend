@@ -78,7 +78,7 @@ const ProductCreateLayout: React.FC<ProductCreateFormProps> = (props) => {
         !mdDown &&
         <>
           {
-            (props.activeStep < 6)
+            (props.activeStep < 5)
             ? <div className={classes.instructionsContainer}>
                 <Typography className={classes.instructionTitle}>
                   {`Step: ${props.activeStep + 1}`}

@@ -16,12 +16,16 @@ import {
 import RefLink, { refLinks } from "./RefLink";
 
 
-const GunAttributes = (props: ReactProps & FormikProps<FormikFields>) => {
+const MakeModel = (props: ReactProps & FormikProps<FormikFields>) => {
 
   const {
     classes,
     ...fprops
   } = props;
+
+  // local React state for smooth UI
+  // const [make, setMake] = React.useState(fprops.values.make)
+  // const [model, setModel] = React.useState(fprops.values.model)
 
   // Formik props
   const {
@@ -40,71 +44,62 @@ const GunAttributes = (props: ReactProps & FormikProps<FormikFields>) => {
   return (
     <ErrorBounds className={classes.positionRelative}>
 
+      <RefLink refId={refLinks.model}/>
+
       <Typography color={"primary"} variant="subtitle1" gutterBottom>
-        Caliber
+        Make
       </Typography>
       <TextInput
-        name="caliber"
-        placeholder="Caliber"
+        name="make"
+        placeholder="Make"
         className={classes.textField}
-        value={values.caliber}
+        value={values.make}
         onChange={(e) => {
           if (e.target.value.length <= maxLengthTitle) {
-            fprops.setFieldValue("caliber", e.target.value)
+            fprops.setFieldValue("make", e.target.value)
+            fprops.setFieldValue(
+              "title",
+              `${e.target.value} ${fprops.values.model}`
+            )
           }
-          fprops.setFieldTouched('caliber', true)
+          fprops.setFieldTouched('make', true)
+          fprops.setFieldTouched('title', true)
         }}
         inputProps={{ style: { width: '100%' }}}
-        errorMessage={props.errors.caliber}
-        touched={!!touched.caliber}
+        errorMessage={props.errors.make}
+        touched={!!touched.make}
         disableInitialValidationMessage={true}
         limit={{
           max: maxLengthTitle,
-          count: values?.caliber?.length
+          count: values.make.length
         }}
       />
 
       <Typography color={"primary"} variant="subtitle1" gutterBottom>
-        Magazine Capacity
+        Model
       </Typography>
       <TextInput
-        name="magazine-capacity"
-        placeholder="Magazine Capacity"
+        name="model"
+        placeholder="Model"
         className={classes.textField}
-        value={values.magazineCapacity}
+        value={values.model}
         onChange={(e) => {
-          fprops.setFieldValue("magazineCapacity", e.target.value)
-          fprops.setFieldTouched('magazineCapacity', true)
+          if (e.target.value.length <= maxLengthTitle) {
+            fprops.setFieldValue("model", e.target.value)
+            fprops.setFieldValue(
+              "title",
+              `${fprops.values.make} ${e.target.value}`
+            )
+          }
+          fprops.setFieldTouched('model', true)
         }}
         inputProps={{ style: { width: '100%' }}}
-        errorMessage={props.errors.magazineCapacity}
-        touched={!!touched.magazineCapacity}
+        errorMessage={props.errors.model}
+        touched={!!touched.model}
         disableInitialValidationMessage={true}
         limit={{
           max: maxLengthTitle,
-          count: values?.magazineCapacity?.length
-        }}
-      />
-
-      <Typography color={"primary"} variant="subtitle1" gutterBottom>
-        Barrel Length
-      </Typography>
-      <TextInput
-        name="barrel-length"
-        placeholder="Barrel Length"
-        className={classes.textField}
-        value={values.barrelLength}
-        onChange={(e) => {
-          fprops.setFieldValue("barrelLength", e.target.value)
-          fprops.setFieldTouched('barrelLength', true)
-        }}
-        inputProps={{ style: { width: '100%' }}}
-        errorMessage={props.errors.barrelLength}
-        touched={!!touched.barrelLength}
-        disableInitialValidationMessage={true}
-        limit={{
-          max: maxLengthTitle,
-          count: values?.barrelLength?.length
+          count: values.model.length
         }}
       />
     </ErrorBounds>
@@ -114,10 +109,9 @@ const GunAttributes = (props: ReactProps & FormikProps<FormikFields>) => {
 interface ReactProps extends WithStyles<typeof styles> {
 }
 interface FormikFields {
-  caliber?: string;
-  magazineCapacity?: string;
-  barrelLength?: string;
+  make: string;
+  model: string;
 }
 
 
-export default withStyles(styles)(GunAttributes)
+export default withStyles(styles)(MakeModel)

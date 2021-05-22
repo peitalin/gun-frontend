@@ -69,7 +69,7 @@ const RenderInstructions = (props: ReactProps) => {
     return (
       <div className={classes.root}>
         <Typography>
-          Title, Serial Number, and Action Type
+          Choose a transferring dealer
         </Typography>
       </div>
     )
@@ -78,7 +78,7 @@ const RenderInstructions = (props: ReactProps) => {
     return (
       <div className={classes.root}>
         <Typography>
-          Choose a transferring dealer
+          Serial Number, Model, Make, Condition
         </Typography>
       </div>
     )
@@ -93,15 +93,6 @@ const RenderInstructions = (props: ReactProps) => {
     )
   }
   if (activeStep === 4) {
-    return (
-      <div className={classes.root}>
-        <Typography>
-          Condition
-        </Typography>
-      </div>
-    )
-  }
-  if (activeStep === 5) {
     return (
       <div className={classes.root}>
         <Typography>

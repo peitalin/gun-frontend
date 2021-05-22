@@ -13,6 +13,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 
 
 const routeMappings = {
+  'faq': "FAQ",
   'privacy': "Privacy Policy",
   'terms': "Terms of Service",
 }

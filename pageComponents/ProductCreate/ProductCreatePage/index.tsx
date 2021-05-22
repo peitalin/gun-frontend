@@ -19,6 +19,7 @@ import { useSnackbar, ProviderContext } from "notistack";
 // Subcomponents
 import TitleSerialNumber from "../TitleSerialNumber";
 import GunAttributes from "../GunAttributes";
+import MakeModel from "../MakeModel";
 import Description from "../Description";
 import PricingLicenses from "../PricingLicenses";
 import StoreOrLogin from "../StoreOrLogin";
@@ -364,7 +365,7 @@ const ProductCreatePage = (props: ReactProps) => {
         <StoreOrLogin
           user={user}
           disableLoginButton={true}
-          buttonText={"Create Store"}
+          buttonText={"Create Account"}
         />
       </PreventDragDropContainer>
 
@@ -394,14 +395,15 @@ const ProductCreatePage = (props: ReactProps) => {
                   }
                   case 1: {
                     return [
-                      errors?.title && touched.title,
-                      errors?.serialNumber && touched.serialNumber,
-                      errors?.actionType && touched.actionType,
+                      errors?.dealerId && touched.dealerId,
                     ].some(s => s)
                   }
                   case 2: {
                     return [
-                      errors?.dealerId && touched.dealerId,
+                      errors?.serialNumber && touched.serialNumber,
+                      errors?.make && touched.make,
+                      errors?.model && touched.model,
+                      errors?.condition && touched.condition,
                     ].some(s => s)
                   }
                   default: {
@@ -436,10 +438,7 @@ const ProductCreatePage = (props: ReactProps) => {
                   An ad group contains one or more ads which target a shared
                   set of keywords.
                 </Typography>
-                <TitleSerialNumber {...formik} />
-                <SelectActionType
-                  {...formik}
-                />
+                <SelectDealer {...formik} />
               </>
             }
             {
@@ -451,7 +450,9 @@ const ProductCreatePage = (props: ReactProps) => {
                   If you run into any problems with your ads, find out how to tell if
                   they're running and how to resolve approval issues.
                 </Typography>
-                <SelectDealer {...formik} />
+                <TitleSerialNumber {...formik} />
+                <MakeModel {...formik} />
+                <SelectCondition {...formik} />
               </>
             }
           </ProductCreateStepper>
@@ -461,7 +462,7 @@ const ProductCreatePage = (props: ReactProps) => {
           <ProductCreateStepper
             activeStep={activeStep}
             setActiveStep={setActiveStep}
-            stepIndexes={[3, 4, 5]}
+            stepIndexes={[3, 4]}
             stepAfterLastStep={5}
             setFieldTouched={formik.setFieldTouched}
             touched={formik.touched}
@@ -471,8 +472,7 @@ const ProductCreatePage = (props: ReactProps) => {
                 switch(index) {
                   case 3: {
                     return [
-                      errors?.make && touched.make,
-                      errors?.model && touched.model,
+                      errors?.actionType && touched.actionType,
                       errors?.caliber && touched.caliber,
                       errors?.magazineCapacity && touched.magazineCapacity,
                       errors?.barrelLength && touched.barrelLength,
@@ -480,11 +480,7 @@ const ProductCreatePage = (props: ReactProps) => {
                   }
                   case 4: {
                     return [
-                      errors?.condition && touched.condition,
-                    ].some(s => s)
-                  }
-                  case 5: {
-                    return [
+                      errors?.title && touched.title,
                       errors?.description && touched.description,
                     ].some(s => s)
                   }
@@ -504,23 +500,14 @@ const ProductCreatePage = (props: ReactProps) => {
                   If you run into any problems with your ads, find out how to tell if
                   they're running and how to resolve approval issues.
                 </Typography>
+                <SelectActionType
+                  {...formik}
+                />
                 <GunAttributes {...formik} />
               </>
             }
             {
               (activeStep === 4) &&
-              <>
-                <Typography className={classes.stepperSectionTitle}>
-                  Try out different ad text to see what brings in the most customers,
-                  and learn how to enhance your ads using features like ad extensions.
-                  If you run into any problems with your ads, find out how to tell if
-                  they're running and how to resolve approval issues.
-                </Typography>
-                <SelectCondition {...formik} />
-              </>
-            }
-            {
-              (activeStep === 5) &&
               <>
                 <Typography className={classes.stepperSectionTitle}>
                   Try out different ad text to see what brings in the most customers,
