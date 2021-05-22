@@ -15,7 +15,7 @@ import { withStyles, WithStyles, createStyles, Theme, fade } from "@material-ui/
 import { useMutation, useQuery } from '@apollo/client';
 // typings
 import {
-  Saved_Searches_Aggregate,
+  SavedSearchesConnection,
   Saved_Searches,
   BlankMutationResponse,
 } from "typings/gqlTypes";
@@ -26,7 +26,6 @@ import ButtonLoading from "components/ButtonLoading";
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import SavedSearchItem from './SavedSearchItem';
-import ExistingSavedSearches from "./ExistingSavedSearches";
 // Snackbar
 import { useSnackbar } from "notistack";
 import {
@@ -38,9 +37,8 @@ import {
 } from "queries/saved-search-queries";
 // Category
 import { Categories, Calibers, DealerState } from "typings/gqlTypes";
-// router
-import { useRouter } from "next/router";
-import AlignCenterLayout from "components/AlignCenterLayout";
+import IconButton from "@material-ui/core/IconButton";
+import ClearIcon from "@material-ui/icons/Clear";
 // Validation
 import { validationSchemas } from "utils/validation";
 import { useFormik } from 'formik';
@@ -58,14 +56,6 @@ import {
 } from "components/SearchbarAirbnb/AdvancedSearchDropdown/CaliberMenu"
 
 
-export interface SelectOption<T=string> {
-  label: string;
-  value: T
-}
-// export interface SelectOptionGroup {
-//   label: string;
-//   value: T
-// }
 
 
 const ManageSaveSearchPage: React.FC<ReactProps> = (props) => {
@@ -116,10 +106,10 @@ const ManageSaveSearchPage: React.FC<ReactProps> = (props) => {
         data: {
           getSavedSearchesByUser: {
             __typename: cacheData?.getSavedSearchesByUser?.__typename,
-            aggregate: cacheData?.getSavedSearchesByUser?.aggregate,
-            nodes: [
-              ...cacheData?.getSavedSearchesByUser?.nodes,
-              insertSavedSearch
+            totalCount: cacheData?.getSavedSearchesByUser?.totalCount,
+            edges: [
+              ...cacheData?.getSavedSearchesByUser?.edges,
+              { node: insertSavedSearch }
             ]
           }
         },
@@ -130,12 +120,18 @@ const ManageSaveSearchPage: React.FC<ReactProps> = (props) => {
         `Search saved successfully.`,
         { variant: "success" }
       )
+      if (props.closeModal) {
+        props.closeModal()
+      }
     },
     onError: (e) => {
       snackbar.enqueueSnackbar(
         `${e}`,
         { variant: "error" }
       )
+      if (props.closeModal) {
+        props.closeModal()
+      }
     },
   })
 
@@ -177,137 +173,139 @@ const ManageSaveSearchPage: React.FC<ReactProps> = (props) => {
   // console.log("formik.errors: ", formik.errors)
 
   return (
-    <AlignCenterLayout maxWidth={720} withRecommendations={false}>
-      <form
-        onSubmit={formik.handleSubmit}
-        className={clsx(classes.saveSearchContainer)}
+    <form onSubmit={formik.handleSubmit} className={classes.formContainer}>
+
+      <IconButton
+        className={classes.closeIcon}
+        onClick={props.closeModal}
+        size={"medium"}
       >
-        <div className={classes.flexCol}>
-          <Typography variant="h4" className={classes.title}>
-            Your Saved Searches
-          </Typography>
-          <Typography variant="subtitle1" className={classes.subtitle}>
-            Get notified when a new product matches your saved search
-          </Typography>
-        </div>
+        <ClearIcon/>
+      </IconButton>
 
-
-        {
-          initialCaliber?.label &&
-          <div className={classes.dropdownContainer}>
-
-            <TextInputUnderline
-              variant="outlined"
-              value={formik.values.searchTerm}
-              label={"Search Term"} // remove moving label
-              autoComplete={"new-password"} // turn off
-              onChange={(e) => {
-                let s = e.target.value
-                formik.setFieldValue("searchTerm", s)
-              }}
-              placeholder={"Enter a search term"}
-              classes={{
-                root: classes.textInputRoot,
-              }}
-              inputProps={{
-                className: classes.textInputInput,
-                focused: classes.textFocused,
-              }}
-            />
-
-            <DropdownInput
-              className={classes.dropdownComponent}
-              stateShape={initialCategory}
-              onChange={(option: SelectOption) => {
-                if (!option.value) {
-                  setCategorySlugGql(undefined)
-                } else {
-                  setCategorySlugGql(option)
-                }
-              }}
-              options={categoriesDropdownOptions}
-            />
-
-            <DropdownInput
-              className={classes.dropdownComponent}
-              // menuIsOpen={true}
-              stateShape={initialCaliber}
-              onChange={(option: SelectOption) => {
-                console.log("SELECT CALIBER OPTION: ", option)
-                if (!option?.value) {
-                  setCaliberGql(undefined)
-                } else {
-                  setCaliberGql(option)
-                }
-              }}
-              options={caliberOptionGroups}
-              placeholder={initialCaliber}
-            />
-
-            <DropdownInput
-              className={classes.dropdownComponent}
-              stateShape={initialDealerState}
-              onChange={(option: SelectOption) => {
-                if (!option.value) {
-                  setDealerStateGql(undefined)
-                } else {
-                  setDealerStateGql(option)
-                }
-              }}
-              options={dealerStatesOptions}
-            />
-
-          </div>
-        }
-
-
-        <div className={classes.flexCol}>
-          <Typography variant="subtitle1" className={classes.subtitle}>
-            Current Search Query
-          </Typography>
-          <SavedSearchItem
-            onClickDelete={undefined}
-            isHighlighted={true}
-            searchTerm={formik.values.searchTerm}
-            categorySlug={categorySlugGql?.value}
-            caliber={caliberGql?.value}
-            dealerState={dealerStateGql?.value}
-          />
-        </div>
-
-        <ButtonLoading
-          type="submit" // submits formik
-          className={classes.insertSaveSearchButton}
-          style={{ }}
-          variant={"contained"}
-          loadingIconColor={Colors.cream}
-          replaceTextWhenLoading={true}
-          loading={insertSavedSearchResponse?.loading}
-          disabled={!process.browser || !formik.values?.searchTerm}
-          onClick={() => {
-
-            if (formik.errors?.searchTerm) {
-              let errMsg = formik.errors?.searchTerm
-              snackbar.enqueueSnackbar(
-                `${errMsg}`,
-                { variant: "error" }
-              )
-            }
-          }}
-        >
-          { 'Save this Search' }
-        </ButtonLoading>
-      </form>
-
-      <div className={classes.saveSearchContainer}>
-        <ExistingSavedSearches/>
+      <div className={classes.flexCol}>
+        <Typography variant="h4" className={classes.title}>
+          Create a Saved Search
+        </Typography>
+        <Typography variant="subtitle1" className={classes.subtitle}>
+          Get notified when a new product matches your search
+        </Typography>
       </div>
 
-    </AlignCenterLayout>
+      {
+        initialCaliber?.label &&
+        <div className={classes.dropdownContainer}>
+          <TextInputUnderline
+            variant="outlined"
+            value={formik.values.searchTerm}
+            label={"Search Term"} // remove moving label
+            autoComplete={"new-password"} // turn off
+            onChange={(e) => {
+              let s = e.target.value
+              formik.setFieldValue("searchTerm", s)
+            }}
+            placeholder={"Enter a search term"}
+            classes={{
+              root: classes.textInputRoot,
+            }}
+            inputProps={{
+              className: classes.textInputInput,
+              focused: classes.textFocused,
+            }}
+          />
+
+          <DropdownInput
+            className={classes.dropdownComponent}
+            stateShape={initialCategory}
+            onChange={(option: SelectOption) => {
+              if (!option.value) {
+                setCategorySlugGql(undefined)
+              } else {
+                setCategorySlugGql(option)
+              }
+            }}
+            options={categoriesDropdownOptions}
+          />
+
+          <DropdownInput
+            className={classes.dropdownComponent}
+            // menuIsOpen={true}
+            stateShape={initialCaliber}
+            onChange={(option: SelectOption) => {
+              console.log("SELECT CALIBER OPTION: ", option)
+              if (!option?.value) {
+                setCaliberGql(undefined)
+              } else {
+                setCaliberGql(option)
+              }
+            }}
+            options={caliberOptionGroups}
+            placeholder={initialCaliber}
+          />
+
+          <DropdownInput
+            className={classes.dropdownComponent}
+            stateShape={initialDealerState}
+            onChange={(option: SelectOption) => {
+              if (!option.value) {
+                setDealerStateGql(undefined)
+              } else {
+                setDealerStateGql(option)
+              }
+            }}
+            options={dealerStatesOptions}
+          />
+        </div>
+      }
+
+
+      <div className={classes.flexCol}>
+        <Typography variant="body1" className={classes.body1}>
+          You'll see products on this page
+          if an uploaded product matches your search
+        </Typography>
+        <SavedSearchItem
+          onClickDelete={undefined}
+          isHighlighted={true}
+          searchTerm={formik.values.searchTerm}
+          categorySlug={categorySlugGql?.value}
+          caliber={caliberGql?.value}
+          dealerState={dealerStateGql?.value}
+          loading={insertSavedSearchResponse?.loading}
+        />
+      </div>
+
+      <ButtonLoading
+        type="submit" // submits formik
+        className={classes.insertSaveSearchButton}
+        style={{ }}
+        variant={"contained"}
+        loadingIconColor={Colors.cream}
+        replaceTextWhenLoading={true}
+        loading={insertSavedSearchResponse?.loading}
+        disabled={!process.browser || !formik.values?.searchTerm}
+        onClick={() => {
+
+          if (formik.errors?.searchTerm) {
+            let errMsg = formik.errors?.searchTerm
+            snackbar.enqueueSnackbar(
+              `${errMsg}`,
+              { variant: "error" }
+            )
+          }
+        }}
+      >
+        { 'Save this Search' }
+      </ButtonLoading>
+    </form>
   )
 }
 
 
+export interface SelectOption<T=string> {
+  label: string;
+  value: T
+}
 export const createCategoryOption = (c: {
   id: string,
   slug: string,
@@ -320,8 +318,6 @@ export const createCategoryOption = (c: {
 }
 export const createDealerStateOption = (d: DealerState): SelectOption => {
   return {
-    // label: d,
-    // value: d,
     label: DealerStatesLabels[d],
     value: d,
   }
@@ -333,6 +329,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   calibers: Calibers[]
   categories: Categories[]
   dealerStates: DealerState[]
+  closeModal(): void;
 }
 
 interface MData {
@@ -345,7 +342,7 @@ interface MVar {
   dealerState?: string
 }
 interface QData {
-  getSavedSearchesByUser: Saved_Searches_Aggregate
+  getSavedSearchesByUser: SavedSearchesConnection
 }
 interface QVar {
   limit?: number
@@ -355,27 +352,18 @@ interface QVar {
 
 
 const styles = (theme: Theme) => createStyles({
-  saveSearchContainer: {
-    width: '100%',
+  formContainer: {
+    position: "relative",
     display: 'flex',
-    flexDirection: "column",
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: '2rem',
-    minWidth: 330,
-    marginTop: '2rem',
-    marginBottom: '2rem',
-    borderRadius: BorderRadius4x,
-    background: isThemeDark(theme)
-      ? Colors.uniswapDarkNavy
-      : Gradients.gradientGrey.background,
-    border: isThemeDark(theme)
-      ? `1px solid ${Colors.uniswapDarkNavy}`
-      : `1px solid ${Colors.slateGreyDarker}`,
+    flexDirection: 'column',
+    justifyContent: "center",
+    alignItems: "center",
   },
   flexCol: {
     display: 'flex',
     flexDirection: 'column',
+    justifyContent: "center",
+    alignItems: "center",
     marginBottom: '0.5rem',
     width: '100%',
   },
@@ -431,13 +419,23 @@ const styles = (theme: Theme) => createStyles({
     backgroundColor: isThemeDark(theme)
       ? Colors.uniswapDarkNavy
       : Colors.slateGrey,
-    borderRadius: '4px',
+    borderRadius: BorderRadius2x,
     // marginLeft: '0.5rem',
     // marginRight: '0.5rem',
     width: '100%',
     maxWidth: 300,
     marginBottom: "1rem",
     // height: 40,
+  },
+  closeIcon: {
+    position: "absolute",
+    top: '0rem',
+    right: '0rem',
+  },
+  body1: {
+    fontSize: '1rem',
+    maxWidth: 300,
+    textAlign: "center",
   },
   textInputInput: {
     backgroundColor: isThemeDark(theme)

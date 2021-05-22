@@ -44,7 +44,6 @@ const SavedSearchModal: React.FC<ReactProps> = (props) => {
   const user = useSelector<GrandReduxState, UserPrivate>(
     s => s.reduxLogin.user
   )
-  // const snackbar = useSnackbar()
   const mdDown = useMediaQuery(theme.breakpoints.down('md'));
 
   return (

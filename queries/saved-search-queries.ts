@@ -11,11 +11,11 @@ export const GET_SAVED_SEARCHES_BY_USER = gql`
       limit: $limit
       offset: $offset
     ) {
-      nodes {
-        ...SavedSearchFragment
-      }
-      aggregate {
-        count
+      totalCount
+      edges {
+        node {
+          ...SavedSearchFragment
+        }
       }
     }
   }
@@ -32,24 +32,28 @@ export const GET_SAVED_SEARCH_HITS_BY_USER = gql`
       limit: $limit
       offset: $offset
     ) {
-      id
-      createdAt
-      productTitle
-      seen
-      userId
-      user {
-        id
-        firstName
-        lastName
-        email
-      }
-      savedSearchId
-      savedSearch {
-        ...SavedSearchFragment
+      totalCount
+      edges {
+        node {
+          id
+          createdAt
+          productTitle
+          seen
+          userId
+          savedSearchId
+          savedSearch {
+            ...SavedSearchFragment
+          }
+          productId
+          product {
+            ...ProductFragment
+          }
+        }
       }
     }
   }
   ${SavedSearchFragment}
+  ${ProductFragment}
 `;
 
 

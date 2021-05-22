@@ -15,7 +15,7 @@ import { withStyles, WithStyles, createStyles, Theme, fade } from "@material-ui/
 import { useMutation, useQuery } from '@apollo/client';
 // typings
 import {
-  Saved_Searches_Aggregate,
+  SavedSearchesConnection,
   Saved_Searches,
 } from "typings/gqlTypes";
 // components
@@ -73,10 +73,10 @@ const SaveSearchPage: React.FC<ReactProps> = (props) => {
           data: {
             getSavedSearchesByUser: {
               __typename: cacheData?.getSavedSearchesByUser?.__typename,
-              aggregate: cacheData?.getSavedSearchesByUser?.aggregate,
-              nodes: [
-                ...cacheData?.getSavedSearchesByUser?.nodes,
-                insertSavedSearch
+              totalCount: cacheData?.getSavedSearchesByUser?.totalCount,
+              edges: [
+                ...cacheData?.getSavedSearchesByUser?.edges,
+                { node: insertSavedSearch }
               ]
             }
           },
@@ -194,7 +194,7 @@ interface MVar {
   dealerState?: string
 }
 interface QData {
-  getSavedSearchesByUser: Saved_Searches_Aggregate
+  getSavedSearchesByUser: SavedSearchesConnection
 }
 interface QVar {
   limit?: number

@@ -2,7 +2,7 @@ import React from "react";
 import clsx from "clsx";
 // styles
 import { withStyles, WithStyles, createStyles, Theme, fade } from "@material-ui/core/styles";
-import { BorderRadius3x, Colors } from "layout/AppTheme";
+import { BorderRadius3x, Colors, isThemeDark } from "layout/AppTheme";
 import { styles } from "./styles";
 // components
 import Banner from "components/Banner";
@@ -38,14 +38,9 @@ const BannerCategory: NextPage<ReactProps> = (props) => {
     categorySlug,
   } = props;
 
-  const isDarkMode = useSelector<GrandReduxState, boolean>(
-    s => s.reduxLogin.darkMode === 'dark'
-  )
 
   const theme = useTheme();
-  const smDown = useMediaQuery(theme.breakpoints.down("sm"))
   const mdDown = useMediaQuery(theme.breakpoints.down("md"))
-  const lgDown = useMediaQuery(theme.breakpoints.down("lg"))
 
   return (
     <div className={classes.rootDesktop}>
@@ -65,7 +60,7 @@ const BannerCategory: NextPage<ReactProps> = (props) => {
           margin: '1rem',
           maxWidth: '1160px',
           borderRadius: BorderRadius3x,
-          border: isDarkMode
+          border: isThemeDark(theme)
             ? `1px solid ${Colors.uniswapLightNavy}`
             : `1px solid ${Colors.slateGreyBlack}`
         }}

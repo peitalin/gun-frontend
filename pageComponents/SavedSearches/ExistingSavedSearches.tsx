@@ -15,7 +15,7 @@ import { withStyles, WithStyles, createStyles, Theme, fade } from "@material-ui/
 import { useMutation, useQuery } from '@apollo/client';
 // typings
 import {
-  Saved_Searches_Aggregate,
+  SavedSearchesConnection,
   Saved_Searches,
 } from "typings/gqlTypes";
 // components
@@ -52,6 +52,8 @@ const ExistingSavedSearches: React.FC<ReactProps> = (props) => {
           query: GET_SAVED_SEARCHES_BY_USER,
           variables: {},
         });
+        console.log("cacheData:", cacheData)
+        console.log("deleteSavedSearch:", deleteSavedSearch)
 
         cache.writeQuery({
           query: GET_SAVED_SEARCHES_BY_USER,
@@ -59,9 +61,9 @@ const ExistingSavedSearches: React.FC<ReactProps> = (props) => {
           data: {
             getSavedSearchesByUser: {
               __typename: cacheData?.getSavedSearchesByUser?.__typename,
-              aggregate: cacheData?.getSavedSearchesByUser?.aggregate,
-              nodes: cacheData?.getSavedSearchesByUser?.nodes.filter(
-                node => node.id !== deleteSavedSearch?.id
+              totalCount: cacheData?.getSavedSearchesByUser?.totalCount,
+              edges: cacheData?.getSavedSearchesByUser?.edges.filter(
+                edge => edge.node.id !== deleteSavedSearch?.id
               ),
             }
           },
@@ -100,7 +102,7 @@ const ExistingSavedSearches: React.FC<ReactProps> = (props) => {
         Existing Saved Searches
       </Typography>
       {
-        data?.getSavedSearchesByUser?.nodes?.map(savedSearch => {
+        data?.getSavedSearchesByUser?.edges?.map(({ node: savedSearch }) => {
           return (
             <SavedSearchItem
               key={savedSearch.id}
@@ -116,6 +118,8 @@ const ExistingSavedSearches: React.FC<ReactProps> = (props) => {
               categorySlug={savedSearch.categorySlug}
               caliber={savedSearch.caliber}
               dealerState={savedSearch.dealerState}
+              loading={deleteSavedSearchResponse?.loading}
+              // loading={true}
             />
           )
         })
@@ -131,7 +135,7 @@ interface ReactProps extends WithStyles<typeof styles> {
 }
 
 interface QData {
-  getSavedSearchesByUser: Saved_Searches_Aggregate
+  getSavedSearchesByUser: SavedSearchesConnection
 }
 interface QVar {
   limit?: number

@@ -13,77 +13,128 @@ import clsx from "clsx";
 import { withStyles, WithStyles, createStyles, Theme, fade } from "@material-ui/core/styles";
 // components
 import IconButton from '@material-ui/core/IconButton';
-import ClearIcon from "@material-ui/icons/Clear";
+import CheckIcon from "@material-ui/icons/Check";
+import Link from "next/link";
+import ProductPreviewCardRowSmall from "components/ProductPreviewCardRowSmall";
+import Tooltip from "@material-ui/core/Tooltip";
 import Loading from "components/Loading";
+// typings
+import {
+  Saved_Search_Hits,
+  Product,
+} from "typings/gqlTypes"
+// graphql
+import { useMutation, useQuery } from '@apollo/client';
+import {
+  MARK_SAVED_SEARCH_HITS_AS_SEEN
+} from "queries/saved-search-mutations";
 // css
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useSnackbar } from "notistack"
 
 
 
-const SavedSearchItem = (props: SavedSearchItemProps) => {
+
+const SearchHitsItem = (props: SearchHitsItemProps) => {
 
   const {
     classes,
-    isHighlighted,
+    isSeen,
     searchTerm,
     categorySlug,
-    caliber,
-    dealerState,
   } = props
+
+  const snackbar = useSnackbar()
+
+  const [
+    markSavedSearchAsSeen,
+    { data, loading, error }
+  ] = useMutation<MData, MVar>(
+    MARK_SAVED_SEARCH_HITS_AS_SEEN, {
+      variables: {
+        savedSearchHitsIds: []
+      },
+      onCompleted: (data) => {
+      },
+      onError: (e) => {
+        snackbar.enqueueSnackbar(
+          `Error marking saved search hits as seen: ${e}`,
+          { variant: "error" }
+        )
+      },
+  })
 
   const theme = useTheme()
   const mdDown = useMediaQuery(theme.breakpoints.down('md'));
 
+  const productTitle = props.product?.currentSnapshot?.title
+  const previewItem = props.product?.featuredVariant?.previewItems?.[0]
+
   return (
     <div className={clsx(
       mdDown
-        ? classes.savedSearchContainerMobile
-        : classes.savedSearchContainerDesktop,
-      isHighlighted
+        ? classes.searchHitsContainerMobile
+        : classes.searchHitsContainerDesktop,
+      isSeen
         ? classes.savedSearchBorderHighlight
         : classes.savedSearchBorder,
     )}>
+
+      <Link href={"/p/[productId]"} as={`/p/${props.product?.id}`}>
+        <Tooltip title={"View product"} placement="top">
+          <a className={classes.link}>
+            <ProductPreviewCardRowSmall
+              previewItem={previewItem}
+            />
+          </a>
+        </Tooltip>
+      </Link>
+
+      <div className={
+        mdDown ? classes.savedSearchItemMobile : classes.savedSearchItemDesktop
+      }>
+        <span className={classes.boldText}>Product</span>
+        <Link href={"/p/[productId]"} as={`/p/${props.product?.id}`}>
+          <a className={classes.link}>
+            <span className={classes.italicText}>{productTitle}</span>
+          </a>
+        </Link>
+      </div>
+
       <div className={
         mdDown ? classes.savedSearchItemMobile : classes.savedSearchItemDesktop
       }>
         <span className={classes.boldText}>Search Term</span>
         <span className={classes.italicText}>"{searchTerm}"</span>
       </div>
+
       <div className={
         mdDown ? classes.savedSearchItemMobile : classes.savedSearchItemDesktop
       }>
         <span className={classes.boldText}>Category</span>
         <span className={classes.italicText}>{categorySlug ?? "all"}</span>
       </div>
-      <div className={
-        mdDown ? classes.savedSearchItemMobile : classes.savedSearchItemDesktop
-      }>
-        <span className={classes.boldText}>Caliber</span>
-        <span className={classes.italicText}>{caliber ?? "all"}</span>
-      </div>
-      <div className={
-        mdDown ? classes.savedSearchItemMobile : classes.savedSearchItemDesktop
-      }>
-        <span className={classes.boldText}>Dealer State</span>
-        <span className={classes.italicText}>{dealerState ?? "all"}</span>
-      </div>
       <div className={classes.savedSearchItem5}>
-        {
-          props.onClickDelete &&
+        <Tooltip title={"Mark as seen"} placement="top">
           <IconButton
             className={classes.closeIcon}
-            onClick={props.onClickDelete}
+            onClick={() => {
+              markSavedSearchAsSeen({
+                variables: {
+                  savedSearchHitsIds: [props.searchHitId]
+                }
+              })
+            }}
             size={"small"}
-            disabled={props.loading}
           >
             {
-              props.loading
+              loading
               ? <Loading/>
-              : <ClearIcon/>
+              : <CheckIcon/>
             }
           </IconButton>
-        }
+        </Tooltip>
       </div>
     </div>
   )
@@ -91,38 +142,43 @@ const SavedSearchItem = (props: SavedSearchItemProps) => {
 
 
 
-interface SavedSearchItemProps extends WithStyles<typeof styles> {
-  onClickDelete(): void;
-  isHighlighted: boolean;
+interface SearchHitsItemProps extends WithStyles<typeof styles> {
+  searchHitId: string
+  product: Product
+  isSeen: boolean;
   searchTerm: string
   categorySlug?: string
-  caliber?: string
-  dealerState?: string
-  disabled?: boolean;
-  loading: boolean;
+}
+
+interface MData {
+  markSavedSearchHitsAsSeen: Saved_Search_Hits[]
+}
+interface MVar {
+  savedSearchHitsIds: string[]
 }
 
 
 
+
 const styles = (theme: Theme) => createStyles({
-  savedSearchContainerDesktop: {
+  searchHitsContainerDesktop: {
     position: "relative",
     display: 'flex',
     flexDirection: 'row',
     borderRadius: BorderRadius2x,
-    padding: '0.5rem 1rem',
-    marginTop: '0.5rem',
+    padding: '0.5rem 1rem 0.5rem 0.5rem',
+    marginBottom: '0.5rem',
     backgroundColor: isThemeDark(theme)
       ? Colors.uniswapMediumNavy
       : Colors.slateGrey,
   },
-  savedSearchContainerMobile: {
+  searchHitsContainerMobile: {
     position: "relative",
     display: 'flex',
     flexDirection: 'column',
     borderRadius: BorderRadius2x,
-    padding: '0.5rem 1rem',
-    marginTop: '0.5rem',
+    padding: '0.5rem 1rem 0.5rem 0.5rem',
+    marginBottom: '0.5rem',
     backgroundColor: isThemeDark(theme)
       ? Colors.uniswapMediumNavy
       : Colors.slateGrey,
@@ -175,9 +231,6 @@ const styles = (theme: Theme) => createStyles({
   italicText: {
     fontStyle: 'italic',
     textAlign: "center",
-    color: isThemeDark(theme)
-      ? Colors.uniswapLightestGrey
-      : Colors.slateGreyBlack,
   },
   closeIcon: {
     width: 32,
@@ -191,7 +244,17 @@ const styles = (theme: Theme) => createStyles({
         : Colors.slateGreyDarkest,
     },
   },
+  link: {
+    marginRight: "0.5rem",
+    textAlign: "center",
+    color: isThemeDark(theme)
+      ? Colors.uniswapLightestGrey
+      : Colors.slateGreyBlack,
+    "&:hover": {
+      color: Colors.ultramarineBlue,
+    },
+  },
 });
 
 
-export default withStyles(styles)( SavedSearchItem );
+export default withStyles(styles)( SearchHitsItem );

@@ -563,6 +563,15 @@ export const createAppTheme = (darkModeStr: "dark"|"light"): ThemeOptions =>  {
           },
         }
       },
+      MuiIconButton: {
+        root: {
+          '&$disabled': {
+            backgroundColor: darkMode
+              ? Colors.uniswapLightNavy
+              : Colors.slateGreyDarker,
+          }
+        }
+      },
       MuiButton: {
         // Name of the rule
         root: {
