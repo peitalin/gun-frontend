@@ -3757,7 +3757,7 @@ export type Mutation = {
   insertUniqueProductView?: Maybe<Unique_Product_Views>;
   insertSavedSearch?: Maybe<Saved_Searches>;
   deleteSavedSearch?: Maybe<Saved_Searches>;
-  markSavedSearchHitsAsSeen: Array<Saved_Search_Hits>;
+  markSavedSearchHitsAsSeen: Array<SavedSearchHit>;
 };
 
 
@@ -13921,6 +13921,7 @@ export enum Role {
 export type Saved_Search_Hits = {
   __typename?: 'saved_search_hits';
   createdAt: Scalars['timestamptz'];
+  emailSent?: Maybe<Scalars['Boolean']>;
   id: Scalars['String'];
   /** An object relationship */
   product?: Maybe<Products>;
@@ -13963,6 +13964,7 @@ export type Saved_Search_Hits_Bool_Exp = {
   _not?: Maybe<Saved_Search_Hits_Bool_Exp>;
   _or?: Maybe<Array<Saved_Search_Hits_Bool_Exp>>;
   createdAt?: Maybe<Timestamptz_Comparison_Exp>;
+  emailSent?: Maybe<Boolean_Comparison_Exp>;
   id?: Maybe<String_Comparison_Exp>;
   product?: Maybe<Products_Bool_Exp>;
   productId?: Maybe<String_Comparison_Exp>;
@@ -13983,6 +13985,7 @@ export enum Saved_Search_Hits_Constraint {
 /** input type for inserting data into table "saved_search_hits" */
 export type Saved_Search_Hits_Insert_Input = {
   createdAt?: Maybe<Scalars['timestamptz']>;
+  emailSent?: Maybe<Scalars['Boolean']>;
   id?: Maybe<Scalars['String']>;
   product?: Maybe<Products_Obj_Rel_Insert_Input>;
   productId?: Maybe<Scalars['String']>;
@@ -14035,6 +14038,7 @@ export type Saved_Search_Hits_On_Conflict = {
 /** Ordering options when selecting data from "saved_search_hits". */
 export type Saved_Search_Hits_Order_By = {
   createdAt?: Maybe<Order_By>;
+  emailSent?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   product?: Maybe<Products_Order_By>;
   productId?: Maybe<Order_By>;
@@ -14056,6 +14060,8 @@ export enum Saved_Search_Hits_Select_Column {
   /** column name */
   CREATEDAT = 'createdAt',
   /** column name */
+  EMAILSENT = 'emailSent',
+  /** column name */
   ID = 'id',
   /** column name */
   PRODUCTID = 'productId',
@@ -14072,6 +14078,7 @@ export enum Saved_Search_Hits_Select_Column {
 /** input type for updating data in table "saved_search_hits" */
 export type Saved_Search_Hits_Set_Input = {
   createdAt?: Maybe<Scalars['timestamptz']>;
+  emailSent?: Maybe<Scalars['Boolean']>;
   id?: Maybe<Scalars['String']>;
   productId?: Maybe<Scalars['String']>;
   productTitle?: Maybe<Scalars['String']>;
@@ -14084,6 +14091,8 @@ export type Saved_Search_Hits_Set_Input = {
 export enum Saved_Search_Hits_Update_Column {
   /** column name */
   CREATEDAT = 'createdAt',
+  /** column name */
+  EMAILSENT = 'emailSent',
   /** column name */
   ID = 'id',
   /** column name */
@@ -14299,6 +14308,7 @@ export type SavedSearchHit = {
   productId: Scalars['ID'];
   createdAt: Scalars['Date'];
   seen?: Maybe<Scalars['Boolean']>;
+  user?: Maybe<UserPrivate>;
   product: Product;
   savedSearch?: Maybe<Saved_Searches>;
 };

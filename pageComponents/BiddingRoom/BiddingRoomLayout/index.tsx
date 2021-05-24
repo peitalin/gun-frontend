@@ -21,6 +21,7 @@ import SendBidInput from './SendBidInput'
 import ProductPanel from './ProductPanel';
 import LoadingBar from "components/LoadingBar";
 import Typography from "@material-ui/core/Typography";
+import EmptyBidsMessage from "./EmptyBidsMessage";
 
 
 
@@ -32,9 +33,9 @@ export const BiddingRoomLayout: React.FC<ReactProps> = (props) => {
     user: userRedux,
   } = props;
 
-  const aClient = useApolloClient();
+  // const aClient = useApolloClient();
   const theme = useTheme();
-  const mdDown = useMediaQuery(theme.breakpoints.down('md'));
+  // const mdDown = useMediaQuery(theme.breakpoints.down('md'));
 
   const { data, loading, error } = useSubscription<QueryData, QueryVar>(
     SUBSCRIBE_USER_CONVERSATIONS, {
@@ -74,51 +75,56 @@ export const BiddingRoomLayout: React.FC<ReactProps> = (props) => {
         Offers
       </Typography>
 
-      <Typography variant="h4" className={classes.subtitle}>
-        Your Products
-      </Typography>
-      <div className={classes.productList}>
-        {
-          productIds &&
-          productIds.map(( pid, i ) => {
+      {
+        (productIds.length === 0)
+        ? <EmptyBidsMessage/>
+        : <>
+            <Typography variant="h4" className={classes.subtitle}>
+              Your Products
+            </Typography>
+            <div className={classes.productList}>
+              {
+                productIds.map(( pid, i ) => {
 
-            // all bidding convos about this product
-            // pick just the first one for product info
-            // let convo = data?.myConversations?.find(c => {
-            //   c?.chatRoom?.product?.id === pid
-            // })
+                  // all bidding convos about this product
+                  // pick just the first one for product info
+                  // let convo = data?.myConversations?.find(c => {
+                  //   c?.chatRoom?.product?.id === pid
+                  // })
 
-            let allConvos = (data?.myConversations ?? [])
-              .filter(c => c?.chatRoom?.product?.id === pid)
+                  let allConvos = (data?.myConversations ?? [])
+                    .filter(c => c?.chatRoom?.product?.id === pid)
 
-            let convo1 = allConvos?.[0];
-            let sellerId = convo1?.chatRoom?.product?.store?.user?.id
-            let iOwnThisProduct = sellerId === userRedux.id
+                  let convo1 = allConvos?.[0];
+                  let sellerId = convo1?.chatRoom?.product?.store?.user?.id
+                  let iOwnThisProduct = sellerId === userRedux.id
 
-            return (
-                <div className={classes.flexItem} key={pid}>
-                  <ProductPanel
-                    currentChatRoom={convo1?.chatRoom}
-                    iOwnThisProduct={iOwnThisProduct}
-                    user={userRedux}
-                  />
-                  {
-                    allConvos.map(( convo, j ) =>
-                      <BidList
-                        key={`${convo.chatRoomId}-${j}`}
-                        userId={convo?.userId}
-                        iOwnThisProduct={iOwnThisProduct}
-                        sellerId={sellerId}
-                        messages={convo?.chatRoom?.messages}
-                        product={convo?.chatRoom?.product}
-                      />
-                    )
-                  }
-                </div>
-            )
-          })
-        }
-      </div>
+                  return (
+                      <div className={classes.flexItem} key={pid}>
+                        <ProductPanel
+                          currentChatRoom={convo1?.chatRoom}
+                          iOwnThisProduct={iOwnThisProduct}
+                          user={userRedux}
+                        />
+                        {
+                          allConvos.map(( convo, j ) =>
+                            <BidList
+                              key={`${convo.chatRoomId}-${j}`}
+                              userId={convo?.userId}
+                              iOwnThisProduct={iOwnThisProduct}
+                              sellerId={sellerId}
+                              messages={convo?.chatRoom?.messages}
+                              product={convo?.chatRoom?.product}
+                            />
+                          )
+                        }
+                      </div>
+                  )
+                })
+              }
+            </div>
+          </>
+      }
     </main>
   );
 }

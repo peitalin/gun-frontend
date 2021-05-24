@@ -31,7 +31,7 @@ const SavedSearchesPage: NextPage<ReactProps> = (props) => {
   return (
     <>
       <MetaHeadersPage
-        title="Offers"
+        title="Saved Searches"
         robots="noindex"
       />
       <UserProfileWrapper>
