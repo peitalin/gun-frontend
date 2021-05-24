@@ -39,6 +39,10 @@ const ExistingSavedSearches: React.FC<ReactProps> = (props) => {
   const { classes } = props;
 
   const snackbar = useSnackbar();
+  const [
+    currentDeleteSavedSearchId,
+    currentDeleteSavedSearchIdResponse,
+  ] = React.useState(undefined)
 
 
   const [deleteSavedSearch, deleteSavedSearchResponse] = useMutation<MData3, MVar3>(
@@ -74,12 +78,14 @@ const ExistingSavedSearches: React.FC<ReactProps> = (props) => {
           `Search deleted.`,
           { variant: "success" }
         )
+        currentDeleteSavedSearchIdResponse(undefined)
       },
       onError: (e) => {
         snackbar.enqueueSnackbar(
           `Error deleting search: ${e}`,
           { variant: "error" }
         )
+        currentDeleteSavedSearchIdResponse(undefined)
       },
   })
 
@@ -107,6 +113,7 @@ const ExistingSavedSearches: React.FC<ReactProps> = (props) => {
             <SavedSearchItem
               key={savedSearch.id}
               onClickDelete={() => {
+                currentDeleteSavedSearchIdResponse(savedSearch.id)
                 deleteSavedSearch({
                   variables: {
                     savedSearchId: savedSearch.id
@@ -118,7 +125,10 @@ const ExistingSavedSearches: React.FC<ReactProps> = (props) => {
               categorySlug={savedSearch.categorySlug}
               caliber={savedSearch.caliber}
               dealerState={savedSearch.dealerState}
-              loading={deleteSavedSearchResponse?.loading}
+              loading={
+                deleteSavedSearchResponse?.loading
+                && savedSearch.id === currentDeleteSavedSearchId
+              }
               // loading={true}
             />
           )

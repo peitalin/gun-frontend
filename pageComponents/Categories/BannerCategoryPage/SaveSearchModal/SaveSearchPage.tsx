@@ -144,6 +144,7 @@ const SaveSearchPage: React.FC<ReactProps> = (props) => {
           Current Search Query
         </Typography>
         <SavedSearchItem
+          loading={false}
           onClickDelete={undefined}
           isHighlighted={true}
           searchTerm={props.searchTerm}
