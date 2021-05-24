@@ -20,7 +20,7 @@ import Tooltip from "@material-ui/core/Tooltip";
 import Loading from "components/Loading";
 // typings
 import {
-  Saved_Search_Hits,
+  SavedSearchHit,
   Product,
 } from "typings/gqlTypes"
 // graphql
@@ -28,6 +28,10 @@ import { useMutation, useQuery } from '@apollo/client';
 import {
   MARK_SAVED_SEARCH_HITS_AS_SEEN
 } from "queries/saved-search-mutations";
+import {
+  GET_SAVED_SEARCH_HITS_BY_USER
+} from "queries/saved-search-queries";
+import { SearchHitsQData, SearchHitsQVar } from "./SearchHits";
 // css
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
@@ -54,6 +58,42 @@ const SearchHitsItem = (props: SearchHitsItemProps) => {
     MARK_SAVED_SEARCH_HITS_AS_SEEN, {
       variables: {
         savedSearchHitsIds: []
+      },
+      update: (cache, { data: { markSavedSearchHitsAsSeen } }) => {
+
+        let newHits = markSavedSearchHitsAsSeen;
+
+        const cacheData = cache.readQuery<SearchHitsQData, SearchHitsQVar>({
+          query: GET_SAVED_SEARCH_HITS_BY_USER,
+          variables: {
+            limit: props.limit,
+            offset: props.offset,
+          },
+        });
+
+        let newSearchHits = cacheData.getSavedSearchHitsByUser.edges.map(e => {
+          let matchHit = newHits.find(h => h.id === e.node.id)
+
+          if (matchHit) {
+            return { node: matchHit }
+          } else {
+            return e
+          }
+        })
+
+        cache.writeQuery({
+          query: GET_SAVED_SEARCH_HITS_BY_USER,
+          variables: {
+            limit: props.limit,
+            offset: props.offset,
+          },
+          data: {
+            getSavedSearchHitsByUser: {
+              ...cacheData.getSavedSearchHitsByUser,
+              edges: newSearchHits,
+            }
+          },
+        });
       },
       onCompleted: (data) => {
       },
@@ -116,25 +156,28 @@ const SearchHitsItem = (props: SearchHitsItemProps) => {
         <span className={classes.italicText}>{categorySlug ?? "all"}</span>
       </div>
       <div className={classes.savedSearchItem5}>
-        <Tooltip title={"Mark as seen"} placement="top">
-          <IconButton
-            className={classes.closeIcon}
-            onClick={() => {
-              markSavedSearchAsSeen({
-                variables: {
-                  savedSearchHitsIds: [props.searchHitId]
-                }
-              })
-            }}
-            size={"small"}
-          >
-            {
-              loading
-              ? <Loading/>
-              : <CheckIcon/>
-            }
-          </IconButton>
-        </Tooltip>
+        {
+          isSeen &&
+          <Tooltip title={"Mark as seen"} placement="top">
+            <IconButton
+              className={classes.closeIcon}
+              onClick={() => {
+                markSavedSearchAsSeen({
+                  variables: {
+                    savedSearchHitsIds: [props.searchHitId]
+                  }
+                })
+              }}
+              size={"small"}
+            >
+              {
+                loading
+                ? <Loading/>
+                : <CheckIcon/>
+              }
+            </IconButton>
+          </Tooltip>
+        }
       </div>
     </div>
   )
@@ -148,10 +191,12 @@ interface SearchHitsItemProps extends WithStyles<typeof styles> {
   isSeen: boolean;
   searchTerm: string
   categorySlug?: string
+  limit: number
+  offset: number
 }
 
 interface MData {
-  markSavedSearchHitsAsSeen: Saved_Search_Hits[]
+  markSavedSearchHitsAsSeen: SavedSearchHit[]
 }
 interface MVar {
   savedSearchHitsIds: string[]

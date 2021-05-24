@@ -36,7 +36,7 @@ export const DELETE_SAVED_SEARCH = gql`
 
 export const MARK_SAVED_SEARCH_HITS_AS_SEEN = gql`
   mutation markSavedSearchHitsAsSeen(
-    $savedSearchHitsIds: [String!]
+    $savedSearchHitsIds: [String!]!
   ) {
     markSavedSearchHitsAsSeen(
       savedSearchHitsIds: $savedSearchHitsIds
@@ -52,6 +52,10 @@ export const MARK_SAVED_SEARCH_HITS_AS_SEEN = gql`
         lastName
         email
       }
+      productId
+      product {
+        ...ProductFragment
+      }
       savedSearchId
       savedSearch {
         ...SavedSearchFragment
@@ -59,6 +63,7 @@ export const MARK_SAVED_SEARCH_HITS_AS_SEEN = gql`
     }
   }
   ${SavedSearchFragment}
+  ${ProductFragment}
 `;
 
 

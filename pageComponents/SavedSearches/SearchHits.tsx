@@ -38,6 +38,9 @@ import SearchOptions, { SelectOption, setCategoryFacets } from "components/Searc
 
 
 
+
+
+
 const SearchHits: React.FC<ReactProps> = (props) => {
 
   const { classes } = props;
@@ -45,10 +48,10 @@ const SearchHits: React.FC<ReactProps> = (props) => {
   const snackbar = useSnackbar();
   const theme = useTheme()
 
+  // overfetch by 1x pages
   const numItemsPerPage = 5;
   const overfetchBy = 1;
   const initialLimit = numItemsPerPage * overfetchBy
-  // overfetch by 1x pages
 
   //// Orders Created Paginator Hooks
   let {
@@ -67,7 +70,7 @@ const SearchHits: React.FC<ReactProps> = (props) => {
     overfetchBy: overfetchBy,
   })
 
-  const { data, loading, error } = useQuery<QData, QVar>(
+  const { data, loading, error } = useQuery<SearchHitsQData, SearchHitsQVar>(
     GET_SAVED_SEARCH_HITS_BY_USER, {
       variables: {
         limit: limit,
@@ -140,6 +143,8 @@ const SearchHits: React.FC<ReactProps> = (props) => {
                 searchTerm={savedSearchHit.productTitle}
                 categorySlug={savedSearchHit.savedSearch?.categorySlug}
                 isSeen={!savedSearchHit.seen}
+                limit={limit}
+                offset={offset}
               />
             )
           }}
@@ -155,10 +160,10 @@ const SearchHits: React.FC<ReactProps> = (props) => {
 interface ReactProps extends WithStyles<typeof styles> {
 }
 
-interface QData {
+export interface SearchHitsQData {
   getSavedSearchHitsByUser: SavedSearchHitsConnection
 }
-interface QVar {
+export interface SearchHitsQVar {
   limit?: number
   offset?: number
 }
