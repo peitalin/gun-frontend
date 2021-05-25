@@ -51,7 +51,7 @@ const UserLicenses: React.FC<ReactProps> = (props) => {
         </div>
       </div>
       {
-        (user?.licenses ?? []).map(license => {
+        (user?.licenses ?? []).filter(l => !!l).map(license => {
           let isDefaultLicense = license?.id === props.user?.defaultLicense?.id
           return (
             <UserLicenseRowCard

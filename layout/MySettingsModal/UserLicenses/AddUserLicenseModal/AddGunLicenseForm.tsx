@@ -90,10 +90,10 @@ const AddGunLicenseForm: React.FC<ReactProps> = (props) => {
 
   const formik = useFormik<FormikValues>({
     initialValues: {
-      licenseNumber: undefined,
+      licenseNumber: "",
       licenseExpiry: undefined,
-      licenseCategory: undefined,
-      licenseState: undefined,
+      licenseCategory: [],
+      licenseState: "",
     },
     validationSchema: validationSchemas.AddOrEditUserLicense,
     onSubmit: async (values) => {
