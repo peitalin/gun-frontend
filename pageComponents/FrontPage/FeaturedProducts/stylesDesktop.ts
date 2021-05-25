@@ -121,9 +121,9 @@ export const styles = (theme: Theme) => createStyles({
     fontSize: '0.8rem',
     color: Colors.blue,
     // borderBottom: `2px solid ${Colors.charcoal}`,
-    borderBottom: isThemeDark(theme)
-      ? `2px solid ${Colors.uniswapDarkNavy}`
-      : `2px solid ${Colors.slateGrey}`,
+    // borderBottom: isThemeDark(theme)
+    //   ? `2px solid ${Colors.uniswapMediumNavy}`
+    //   : `2px solid ${Colors.slateGrey}`,
     // borderRadius: '2px',
     // paddingLeft: '0.25rem',
     display: 'flex',
@@ -135,7 +135,7 @@ export const styles = (theme: Theme) => createStyles({
     }),
     "&:hover": {
       color: Colors.secondaryBright,
-      borderBottom: `2px solid ${Colors.secondaryBright}`,
+      // borderBottom: `2px solid ${Colors.secondaryBright}`,
       transition: theme.transitions.create(['border', 'color'], {
         easing: theme.transitions.easing.easeIn,
         duration: '100ms',

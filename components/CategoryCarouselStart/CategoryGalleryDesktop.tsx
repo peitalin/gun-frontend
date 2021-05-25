@@ -2,7 +2,7 @@ import React from "react";
 import clsx from "clsx";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
-import { BorderRadius2x, Colors, BorderRadius, Gradients } from "layout/AppTheme";
+import { BorderRadius2x, Colors, BorderRadius, isThemeDark } from "layout/AppTheme";
 // Components
 import Typography from "@material-ui/core/Typography";
 import CardMedia from "@material-ui/core/CardMedia";
@@ -13,7 +13,7 @@ import { Categories } from "typings/gqlTypes";
 // theme css
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
-import { categoryPreviewsBackup } from "./utils";
+import { renderCategoryIcon } from "./renderCategoryIcons";
 import AspectRatioConstraint from "components/AspectRatioConstraint";
 
 
@@ -26,6 +26,8 @@ const CategoryGalleryDesktop = (props: ReactProps) => {
     categories,
   } = props;
 
+  const theme = useTheme()
+  const isDark = isThemeDark(theme)
 
   const getImgSizes = () => {
     if (props.screenSize === 'xl') {
@@ -34,11 +36,11 @@ const CategoryGalleryDesktop = (props: ReactProps) => {
       }
     } else if (props.screenSize === 'lg') {
       return {
-        flexBasis: '50%',
+        flexBasis: '33%',
       }
     } else if (props.screenSize === 'md') {
       return {
-        flexBasis: '50%',
+        flexBasis: '33%',
       }
     } else if (props.screenSize === 'sm') {
       return {
@@ -51,27 +53,11 @@ const CategoryGalleryDesktop = (props: ReactProps) => {
     }
   }
 
+
   return (
     <div className={classes.innerRoot} style={props.style}>
       {
         (categories ?? []).map((c, i) => {
-
-          let imageUrl
-          let lastImage = (c?.thumbImage?.variants ?? [])?.[0]
-
-          // if (c?.thumbImage?.variants?.length > 3) {
-          //   imageUrl = c?.thumbImage?.variants?.[3]?.url
-          // } else {
-          //   imageUrl = lastImage?.url
-          // }
-
-          /// Use front-end images for now, easier to work with
-          imageUrl = categoryPreviewsBackup.find(backup => backup.slug === c.slug)?.thumbImage?.variants?.[0]?.url
-
-          // if (!imageUrl) {
-          //   imageUrl = categoryPreviewsBackup
-          //     .find(backup => backup.slug === c.slug)?.imageUrl
-          // }
 
           return (
             <div className={classes.imageFlexItem}
@@ -84,12 +70,9 @@ const CategoryGalleryDesktop = (props: ReactProps) => {
                   as={`/categories/${c?.slug}`}
                 >
                   <a className={classes.linkImage}>
-                    <CardMedia
-                      component="img"
-                      // className={classes.image}
-                      classes={{ media: classes.categoryImage }}
-                      src={imageUrl}
-                    />
+                    <div className={classes.categoryImage}>
+                      {renderCategoryIcon(c.slug, isDark)}
+                    </div>
                     <Typography variant="body1"
                       className={classes.cardText}
                       style={props.cardTextStyle}
@@ -127,21 +110,48 @@ export const styles = (theme: Theme) => createStyles({
     // flexWrap: 'wrap',
     padding: '0rem 0.5rem', // offset flexItem 0.5rem gutters
   },
+  linkImage: {
+    position: "relative",
+    "& > p": {
+      color: theme.palette.type === 'dark'
+        ? Colors.uniswapLightestGrey
+        : Colors.black,
+      transition: theme.transitions.create('color', {
+        easing: theme.transitions.easing.sharp,
+        duration: "100ms",
+      }),
+    },
+    "&:hover": {
+      "& > p": {
+        color: Colors.secondaryBright,
+      },
+    },
+    width: '100%',
+    height: '100%',
+  },
   categoryImage: {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
     flexDirection: "row",
     textAlign: 'center',
-    border: theme.palette.type === 'dark'
-      ? `1px solid ${Colors.uniswapNavy}`
-      : `1px solid ${Colors.slateGreyDarker}`,
+    objectFit: 'contain',
+    padding: '1rem',
     borderRadius: BorderRadius2x,
     width: '100%',
     height: '100%',
     background: theme.palette.type === 'dark'
       ? Colors.uniswapDarkNavy
       : Colors.slateGreyDark,
+    "&:hover": {
+      background: theme.palette.type === 'dark'
+        ? Colors.uniswapMediumNavy
+        : Colors.slateGreyDarker,
+    },
+    transition: theme.transitions.create('background', {
+      easing: theme.transitions.easing.sharp,
+      duration: "100ms",
+    }),
   },
   cardText: {
     marginTop: '0.5rem',
@@ -159,21 +169,6 @@ export const styles = (theme: Theme) => createStyles({
     paddingLeft: '0.5rem',
     paddingRight: '0.5rem',
     marginBottom: '2.5rem',
-  },
-  linkImage: {
-    position: "relative",
-    "& > p": {
-      color: theme.palette.type === 'dark'
-        ? Colors.uniswapLightestGrey
-        : Colors.black,
-    },
-    "&:hover": {
-      "& > p": {
-        color: Colors.secondaryBright,
-      },
-    },
-    width: '100%',
-    height: '100%',
   },
 });
 

@@ -516,6 +516,12 @@ textarea {
     animation: background-gradient 15s ease infinite;
 }
 
+.background-slide-loop {
+    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+    background-size: 100% 100%;
+    animation: background-slide-loop 6s linear infinite;
+}
+
 
 @keyframes background-gradient {
     0% {
@@ -528,6 +534,16 @@ textarea {
         background-position: 0% 50%;
     }
 }
+
+@keyframes background-slide-loop {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 0% 150%;
+  }
+}
+
 
 @keyframes pulse {
   0% {

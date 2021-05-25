@@ -1,5 +1,8 @@
 import React from "react";
 import clsx from "clsx";
+// styles
+import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
+import { Colors, Gradients, isThemeDark } from "layout/AppTheme";
 // SSR
 import { NextPage, NextPageContext } from 'next';
 import BannerHomeLayout from "./BannerHomeLayout";
@@ -8,9 +11,6 @@ import { Categories, Calibers } from "typings/gqlTypes";
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import Hidden from "components/HiddenFix";
-// styles
-import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
-import { Colors, Gradients } from "layout/AppTheme";
 import ShowOnMobileOrDesktopSSR from "components/ShowOnMobileOrDesktopSSR";
 import SearchbarMain from "./SearchbarMain";
 
@@ -19,13 +19,38 @@ import SearchbarMain from "./SearchbarMain";
 
 const BannerHome: NextPage<ReactProps> = (props) => {
 
-  const bannerImageUrl = "/img/banner10.jpg"
-  const bannerMobileImageUrl = "/img/banner10-portrait.jpg"
-  const bannerDither = 'linear-gradient(30deg, rgba(25,25,25,0.7) 10%, rgba(25,25,25,0.4) 60%)'
-  // const bannerDither = 'linear-gradient(180deg, rgba(25, 25, 25, 0.1) 25%, rgba(25, 25, 25, 1) 75%)'
+  const theme = useTheme()
+  const isDarkMode = isThemeDark(theme)
 
-  const theme = useTheme();
-  const mdDown = useMediaQuery(theme.breakpoints.down("md"));
+  // const bannerImageUrl = "/img/start/gun-collage-5.png"
+  // const bannerMobileImageUrl = "/img/start/gun-collage-dark.png"
+
+  const bannerContainerStyle = {
+    // backgroundImage:`url(/img/start/gun-collage-5.png)`,
+    backgroundPositionY: "3rem",
+    backgroundRepeat: 'repeat',
+    backgroundSize: "contain",
+    // backgroundRepeat: 'no-repeat',
+    // backgroundSize: "cover",
+    backgroundPosition: "left",
+    // backgroundSize: 'auto', //stretch to fit for hero3.png
+  }
+
+  const bannerContainerStyleMobile = {
+    backgroundColor: isDarkMode
+      ? Colors.uniswapDarkNavy
+      : Colors.slateGrey,
+    backgroundRepeat: 'no-repeat',
+    backgroundPosition: "left",
+    backgroundSize: "cover",
+    // backgroundSize: "100%",
+    // backgroundSize: 'auto', //stretch to fit for hero3.png
+  }
+
+  // const bannerDither = 'linear-gradient(30deg, rgba(25,25,25,0.7) 10%, rgba(25,25,25,0.4) 60%)'
+  // const bannerDither = 'linear-gradient(180deg, rgba(25, 25, 25, 0.1) 25%, rgba(25, 25, 25, 1) 75%)'
+  const bannerDither = 'linear-gradient(180deg, rgba(25,25,25,0.4) 40%, rgba(25,25,25,0.8) 95%)'
+
 
   return (
     <>
@@ -34,7 +59,9 @@ const BannerHome: NextPage<ReactProps> = (props) => {
         <BannerHomeLayout
           height={660}
           mdDown={true}
-          bannerImageUrl={bannerMobileImageUrl}
+          // bannerImageUrl={bannerMobileImageUrl}
+          bannerImageUrl={undefined}
+          bannerContainerStyle={bannerContainerStyleMobile}
           bannerDither={bannerDither}
           portraitMode={true}
         >
@@ -50,7 +77,9 @@ const BannerHome: NextPage<ReactProps> = (props) => {
         <BannerHomeLayout
           height={540}
           mdDown={false}
-          bannerImageUrl={bannerImageUrl}
+          // bannerImageUrl={bannerImageUrl}
+          bannerImageUrl={undefined}
+          bannerContainerStyle={bannerContainerStyle}
           bannerDither={bannerDither}
           portraitMode={false}
         >

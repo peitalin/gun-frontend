@@ -2,7 +2,7 @@ import React from "react";
 import clsx from "clsx";
 // styles
 import { withStyles, WithStyles, createStyles, Theme, fade } from "@material-ui/core/styles";
-import { BorderRadius3x, Colors } from "layout/AppTheme";
+import { BorderRadius3x, Colors, isThemeDark } from "layout/AppTheme";
 import { styles } from "./styles";
 // components
 import Banner from "components/Banner";
@@ -28,25 +28,27 @@ const BannerPromotionPurchases: NextPage<ReactProps> = (props) => {
     bannerDither,
   } = props;
 
-  const isDarkMode = useSelector<GrandReduxState, boolean>(
-    s => s.reduxLogin.darkMode === 'dark'
-  )
 
   const theme = useTheme();
-  const smDown = useMediaQuery(theme.breakpoints.down("sm"))
+  const isDarkMode = isThemeDark(theme)
   const mdDown = useMediaQuery(theme.breakpoints.down("md"))
-  const lgDown = useMediaQuery(theme.breakpoints.down("lg"))
+
 
   return (
     <Banner
       // in /public/img
-      src={bannerBackgroundImageUrl}
+      // src={bannerBackgroundImageUrl}
+      className={
+        isDarkMode
+          ? "background-uniswap-dark"
+          : "background-slate-grey"
+      }
       bannerContainerStyles={{
         borderRadius: BorderRadius3x,
         margin: "1rem",
         border: isDarkMode
-          ? `1px solid ${Colors.uniswapDarkNavy}`
-          : `1px solid ${Colors.slateGreyBlack}`
+          ? `1px solid ${Colors.uniswapMediumNavy}`
+          : `1px solid ${Colors.slateGreyDark}`
       }}
       titleStyle={{
         color: Colors.cream,

@@ -4,7 +4,7 @@ import clsx from "clsx";
 import Link from "next/link";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
-import { BorderRadius2x, Colors, BorderRadius } from "layout/AppTheme";
+import { BorderRadius2x, Colors, BorderRadius, isThemeDark } from "layout/AppTheme";
 // Typings
 import { Categories } from "typings/gqlTypes";
 // Utils Components
@@ -18,7 +18,7 @@ import CardMedia from "@material-ui/core/CardMedia";
 // theme css
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
-import { categoryPreviewsBackup } from "./utils";
+import { renderCategoryIcon } from "./renderCategoryIcons";
 
 
 
@@ -30,6 +30,9 @@ const CategoryCarouselMobile = (props: ReactProps) => {
     categories,
   } = props;
 
+  const theme = useTheme()
+  const isDark = isThemeDark(theme)
+
   const getScrollItemsForScreenSize = () => {
     if (props.screenSize === 'xs') {
       return 2.5
@@ -38,7 +41,7 @@ const CategoryCarouselMobile = (props: ReactProps) => {
       return 2.5
     }
     if (props.screenSize === 'md') {
-      return 3
+      return 3.5
     }
     if (props.screenSize === 'lg') {
       return 4
@@ -84,23 +87,6 @@ const CategoryCarouselMobile = (props: ReactProps) => {
           {
             (categories ?? []).map((c, i) => {
 
-              let imageUrl
-              let lastImage = (c?.thumbImage?.variants ?? [])?.[0]
-
-              // if (c?.thumbImage?.variants?.length > 3) {
-              //   imageUrl = c?.thumbImage?.variants?.[3]?.url
-              // } else {
-              //   imageUrl = lastImage?.url
-              // }
-
-              /// Use front-end images for now, easier to work with
-              imageUrl = categoryPreviewsBackup.find(backup => backup.slug === c.slug)?.thumbImage?.variants?.[0]?.url
-
-              // if (!imageUrl) {
-              //   imageUrl = categoryPreviewsBackup
-              //     .find(backup => backup.slug === c.slug)?.imageUrl
-              // }
-
               return (
                 <AirItemTall key={i}
                   showNumItems={numItems}
@@ -116,16 +102,9 @@ const CategoryCarouselMobile = (props: ReactProps) => {
                   >
                     <a className={classes.linkImage}>
                       <div className={classes.imagePositionRelative}>
-                        {
-                          (!!imageUrl)
-                          ? <CardMedia
-                              component="img"
-                              // className={classes.image}
-                              classes={{ media: classes.categoryImage }}
-                              src={imageUrl}
-                            />
-                          : <div className={classes.emptyImage}/>
-                        }
+                        <div className={classes.categoryImage}>
+                          {renderCategoryIcon(c.slug, isDark)}
+                        </div>
                         <Typography variant="body1"
                           className={classes.cardText}
                           style={props.cardTextStyle}
@@ -183,6 +162,10 @@ export const styles = (theme: Theme) => createStyles({
       color: theme.palette.type === 'dark'
         ? Colors.uniswapLightestGrey
         : Colors.black,
+      transition: theme.transitions.create('color', {
+        easing: theme.transitions.easing.sharp,
+        duration: "100ms",
+      }),
     },
     "&:hover": {
       "& > div > p": {
@@ -200,15 +183,23 @@ export const styles = (theme: Theme) => createStyles({
     width: '100%',
     height: '100%',
     minHeight: 96,
-    background: theme.palette.type === 'dark'
-      ? Colors.uniswapDarkNavy
-      : Colors.slateGreyDark,
+    objectFit: 'contain',
+    padding: '0.75rem',
     position: "absolute",
     top: 0,
     left: 0,
-    border: theme.palette.type === 'dark'
-      ? `1px solid ${Colors.uniswapNavy}`
-      : `1px solid ${Colors.slateGreyDarker}`,
+    background: theme.palette.type === 'dark'
+      ? Colors.uniswapDarkNavy
+      : Colors.slateGreyDark,
+    "&:hover": {
+      background: theme.palette.type === 'dark'
+        ? Colors.uniswapMediumNavy
+        : Colors.slateGreyDarker,
+    },
+    transition: theme.transitions.create('background', {
+      easing: theme.transitions.easing.sharp,
+      duration: "100ms",
+    }),
   },
   cardText: {
     marginTop: '0.25rem',

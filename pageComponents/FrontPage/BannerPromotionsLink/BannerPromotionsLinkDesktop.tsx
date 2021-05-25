@@ -2,7 +2,7 @@ import React from "react";
 import clsx from "clsx";
 // styles
 import { withStyles, WithStyles, createStyles, Theme, fade } from "@material-ui/core/styles";
-import { BorderRadius3x, Colors } from "layout/AppTheme";
+import { BorderRadius3x, Colors, isThemeDark } from "layout/AppTheme";
 import { styles } from "./styles";
 // components
 import Banner from "components/Banner";
@@ -12,7 +12,6 @@ import Button from '@material-ui/core/Button';
 import { useRouter } from 'next/router';
 // SSR
 import { NextPage, NextPageContext } from 'next';
-import Login from "layout/Login";
 // CSS
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
@@ -36,20 +35,20 @@ const BannerPromotionsLink: NextPage<ReactProps> = (props) => {
     bannerDither,
   } = props;
 
-  const isDarkMode = useSelector<GrandReduxState, boolean>(
-    s => s.reduxLogin.darkMode === 'dark'
-  )
-
   const theme = useTheme();
-  const smDown = useMediaQuery(theme.breakpoints.down("sm"))
+  const isDarkMode = isThemeDark(theme)
   const mdDown = useMediaQuery(theme.breakpoints.down("md"))
-  const lgDown = useMediaQuery(theme.breakpoints.down("lg"))
 
   return (
     <div className={classes.rootDesktop}>
       <Banner
         // in /public/img
-        src={bannerBackgroundImageUrl}
+        // src={bannerBackgroundImageUrl}
+        className={
+          isDarkMode
+            ? "background-neon"
+            : "background-neon"
+        }
         titleStyle={{
           color: Colors.cream,
           alignItems: 'flex-start',
@@ -63,7 +62,7 @@ const BannerPromotionsLink: NextPage<ReactProps> = (props) => {
           borderRadius: BorderRadius3x,
           border: isDarkMode
             ? `1px solid ${Colors.uniswapLightNavy}`
-            : `1px solid ${Colors.slateGreyBlack}`
+            : `1px solid ${Colors.slateGrey}`
         }}
         dither={true}
         height={mdDown ? 240 : 300 }

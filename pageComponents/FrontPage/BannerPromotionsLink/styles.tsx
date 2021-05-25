@@ -1,6 +1,6 @@
 // styles
 import { createStyles, Theme, fade, lighten } from "@material-ui/core/styles";
-import { Colors, BorderRadius2x, fontFam, BorderRadius } from "layout/AppTheme";
+import { Colors, BorderRadius2x, fontFam, BorderRadius, isThemeDark } from "layout/AppTheme";
 
 
 export const styles = (theme: Theme) => createStyles({
@@ -68,24 +68,29 @@ export const styles = (theme: Theme) => createStyles({
   mainTitle: {
     fontWeight: 600,
     fontFamily: fontFam,
-    color: Colors.slateGrey,
+    color: isThemeDark(theme)
+      ? Colors.uniswapLightGrey
+      : Colors.black,
     lineHeight: '1.5rem',
   },
   mainTitleXs: {
     fontWeight: 600,
     fontFamily: fontFam,
-    color: Colors.slateGrey,
+    color: isThemeDark(theme)
+      ? Colors.uniswapLightGrey
+      : Colors.black,
     lineHeight: '1.2rem',
     fontSize: '1.5rem',
     // textShadow: '1px 1px 2px #444',
   },
   subline1: {
-    color: Colors.slateGreyDarkest,
+    color: isThemeDark(theme)
+      ? Colors.uniswapLighterGrey
+      : Colors.slateGreyLightBlack,
     fontFamily: fontFam,
     lineHeight: "1.5",
     fontWeight: 500,
-    fontSize: '18px', // 20px
-    whitespace: 'pre-line',
+    fontSize: '18px',
     maxWidth: 480,
   },
   buttonGoToPromotions: {

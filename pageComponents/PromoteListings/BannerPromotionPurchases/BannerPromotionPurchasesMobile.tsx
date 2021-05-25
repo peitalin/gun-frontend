@@ -29,22 +29,24 @@ const BannerPromotionPurchasesMobile: NextPage<ReactProps> = (props) => {
     bannerDither,
   } = props;
 
-  const user = useSelector<GrandReduxState, UserPrivate>(
-    s => s.reduxLogin.user
-  )
-
   const theme = useTheme();
+  const isDarkMode = isThemeDark(theme)
 
   return (
     <Banner
       // in /public/img
       bannerContainerStyles={{
         marginBottom: "1rem",
-        borderBottom: isThemeDark(theme)
-          ? `2px solid ${Colors.uniswapDarkNavy}`
-          : `2px solid ${Colors.slateGreyBlack}`,
+        border: isDarkMode
+          ? `1px solid ${Colors.uniswapMediumNavy}`
+          : `1px solid ${Colors.slateGreyDark}`
       }}
-      src={bannerBackgroundImageUrl}
+      // src={bannerBackgroundImageUrl}
+      className={
+        isDarkMode
+          ? "background-uniswap-dark"
+          : "background-slate-grey"
+      }
       titleStyle={{
         position: 'absolute',
         display: 'flex',
@@ -53,7 +55,6 @@ const BannerPromotionPurchasesMobile: NextPage<ReactProps> = (props) => {
         alignItems: 'center',
         maxWidth: 'calc(100vw - 0rem)',
         top: '0px',
-        color: "#181818",
       }}
       ditherStyle={{
         background: bannerDither

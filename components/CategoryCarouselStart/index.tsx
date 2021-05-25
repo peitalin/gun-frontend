@@ -62,7 +62,7 @@ const CategoryCarouselStart = (props: ReactProps) => {
       }
 
       {/* xl */}
-      <Hidden only={["xs", "sm", "md", "lg"]} implementation="css">
+      <Hidden only={["xs", "sm", "md"]} implementation="css">
         {/* IMPLEMENTATION must be JS or scroll won't work */}
         <CategoryGalleryDesktop
           style={props.style}
@@ -72,19 +72,9 @@ const CategoryCarouselStart = (props: ReactProps) => {
         />
       </Hidden>
 
-      {/* lg */}
-      <Hidden only={["xs", "sm", "md", "xl"]} implementation="css">
-        <CategoryGalleryDesktop
-          style={props.style}
-          cardTextStyle={props.cardTextStyle}
-          categories={props.initialCategories}
-          screenSize={"lg"}
-        />
-      </Hidden>
-
       {/* md */}
       <Hidden only={["xs", "sm", "lg", "xl"]} implementation="css">
-        <CategoryGalleryDesktop
+        <CategoryCarouselMobile
           style={props.style}
           cardTextStyle={props.cardTextStyle}
           categories={props.initialCategories}
@@ -92,18 +82,9 @@ const CategoryCarouselStart = (props: ReactProps) => {
         />
       </Hidden>
 
-      {/* sm */}
-      <Hidden only={["xs", "md", "lg", "xl"]} implementation="css">
-        <CategoryCarouselMobile
-          style={props.style}
-          cardTextStyle={props.cardTextStyle}
-          categories={props.initialCategories}
-          screenSize={"sm"}
-        />
-      </Hidden>
 
       {/* xs */}
-      <Hidden only={["sm", "md", "lg", "xl"]} implementation="css">
+      <Hidden only={["md", "lg", "xl"]} implementation="css">
         <CategoryCarouselMobile
           style={props.style}
           cardTextStyle={props.cardTextStyle}

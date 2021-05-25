@@ -3,7 +3,7 @@ import clsx from "clsx";
 import { styles } from "./styles";
 // styles
 import { withStyles, WithStyles, createStyles, Theme, fade } from "@material-ui/core/styles";
-import { Colors, Gradients } from "layout/AppTheme";
+import { Colors, Gradients, isThemeDark } from "layout/AppTheme";
 // typings
 import { Categories } from "typings/gqlTypes";
 // components
@@ -45,16 +45,28 @@ const BannerHomeLayout: NextPage<ReactProps> = (props) => {
     s => s.reduxLogin.user
   )
 
+  const theme = useTheme()
+  const isDarkMode = isThemeDark(theme)
+
   return (
     <Banner
       // in /public/img
       src={bannerImageUrl}
-      titleStyle={{
-        color: "#181818",
-      }}
+      // className={
+      //   isDarkMode
+      //   ? "background-neon"
+      //   : "background-neon"
+      // }
+      // className={
+      //   isDarkMode
+      //   ? "background-uniswap-dark"
+      //   : "background-slate-grey"
+      // }
+      className={'background-slide-loop'}
       height={height}
       bannerContainerStyles={{
         marginTop: "-4rem", // for fixed floating navbar offset
+        ...props.bannerContainerStyle,
       }}
       ditherStyle={{
         background: bannerDither
@@ -140,6 +152,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   bannerImageUrl: string
   bannerDither: string
   portraitMode?: boolean;
+  bannerContainerStyle: any
 }
 
 export default withStyles(styles)( BannerHomeLayout );

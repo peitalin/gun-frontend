@@ -1,6 +1,6 @@
 // styles
 import { createStyles, Theme, fade, lighten } from "@material-ui/core/styles";
-import { Colors, BorderRadius2x } from "layout/AppTheme";
+import { Colors, BorderRadius2x, isThemeDark } from "layout/AppTheme";
 
 const fontFam = 'Helvetica Neue, Arial';
 
@@ -75,13 +75,17 @@ export const styles = (theme: Theme) => createStyles({
   mainTitle: {
     fontWeight: 600,
     fontFamily: fontFam,
-    color: Colors.slateGrey,
+    color: isThemeDark(theme)
+      ? Colors.uniswapLightGrey
+      : Colors.black,
     lineHeight: '1.5rem',
   },
   mainTitleXs: {
     fontWeight: 600,
     fontFamily: fontFam,
-    color: Colors.slateGrey,
+    color: isThemeDark(theme)
+      ? Colors.uniswapLightGrey
+      : Colors.black,
     lineHeight: '1.2rem',
     fontSize: '1.5rem',
     // textShadow: '1px 1px 2px #444',
@@ -91,25 +95,14 @@ export const styles = (theme: Theme) => createStyles({
     fontFamily: fontFam,
     color: Colors.secondary,
   },
-  downloadIcon: {
-    // fill: Colors.foregroundColor,
-    // height: '1.5rem',
-    // marginRight: '0.5rem',
-    // width: '1.5rem',
-  },
-  downloadIconXs: {
-    // fill: Colors.foregroundColor,
-    // height: '1.2rem',
-    // marginRight: '0.5rem',
-    // width: '1.2rem',
-    width: 'calc(100vw - 3rem)',
-  },
   subTitle: {
     marginTop: "0.25rem",
     fontSize: '0.9rem',
   },
   subline1: {
-    color: Colors.slateGreyDarkest,
+    color: isThemeDark(theme)
+      ? Colors.uniswapLighterGrey
+      : Colors.slateGreyLightBlack,
     fontFamily: fontFam,
     lineHeight: "1.5",
     fontWeight: 500,
@@ -118,20 +111,14 @@ export const styles = (theme: Theme) => createStyles({
     maxWidth: 480,
   },
   subline1Xs: {
-    color: Colors.slateGreyDarkest,
+    color: isThemeDark(theme)
+      ? Colors.uniswapLighterGrey
+      : Colors.slateGreyLightBlack,
     fontFamily: fontFam,
     lineHeight: "1.5",
     // fontWeight: 500,
     fontSize: '0.9rem', // 20px
     textAlign: "start",
-  },
-  subline2: {
-    color: Colors.grey,
-    fontWeight: 400,
-  },
-  subline3: {
-    color: Colors.grey,
-    fontWeight: 500,
   },
   productSectionsContainer: {
     display: 'flex',

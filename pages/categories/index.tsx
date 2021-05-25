@@ -74,9 +74,9 @@ interface Context extends NextPageContext {
 CategoriesPage.getInitialProps = async (ctx: Context) => {
 
   try {
-    const { data } = await serverApolloClient(ctx).query<QueryData1, QueryVar1>({
-      query: GET_CATEGORIES,
-    })
+    // const { data } = await serverApolloClient(ctx).query<QueryData1, QueryVar1>({
+    //   query: GET_CATEGORIES,
+    // })
     // console.log("data.getCategories:", data?.getCategories)
     // console.log("local categories", categoryPreviewsBackup)
     // let initialCategories = data?.getCategories ?? categoryPreviewsBackup as any;

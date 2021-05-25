@@ -83,15 +83,15 @@ HomePage.getInitialProps = async (ctx: Context) => {
     }
   })
 
-  const { data: data2 } = await serverApolloClient(ctx).query<QData2, QVar2>({
-    query: GET_CATEGORIES,
-  })
+  // const { data: data2 } = await serverApolloClient(ctx).query<QData2, QVar2>({
+  //   query: GET_CATEGORIES,
+  // })
 
   // console.log("getPageConfig: ", data?.getPageConfig)
   // console.log("getCategories ssr: ", data2?.getCategories)
 
-  let initialCategories = data2?.getCategories ?? [];
-  // let initialCategories: Categories[] = categoryPreviewsBackup as any;
+  // let initialCategories = data2?.getCategories ?? [];
+  let initialCategories: Categories[] = categoryPreviewsBackup as any;
 
   return {
     initialCategories: initialCategories,

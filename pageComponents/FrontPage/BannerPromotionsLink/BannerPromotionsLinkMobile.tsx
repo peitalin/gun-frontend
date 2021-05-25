@@ -2,7 +2,7 @@ import React from "react";
 import clsx from "clsx";
 // styles
 import { withStyles, WithStyles, createStyles, Theme, fade } from "@material-ui/core/styles";
-import { Colors } from "layout/AppTheme";
+import { Colors, isThemeDark } from "layout/AppTheme";
 import { styles } from "./styles";
 // components
 import Banner from "components/Banner";
@@ -35,6 +35,8 @@ const BannerPromotionsLinkMobile: NextPage<ReactProps> = (props) => {
   } = props;
 
   const theme = useTheme();
+  const isDarkMode = isThemeDark(theme)
+  const mdDown = useMediaQuery(theme.breakpoints.down("md"))
 
   return (
     <div className={classes.rootMobile}>
@@ -43,7 +45,12 @@ const BannerPromotionsLinkMobile: NextPage<ReactProps> = (props) => {
         bannerContainerStyles={{
           marginBottom: "1rem",
         }}
-        src={bannerBackgroundImageUrl}
+        // src={bannerBackgroundImageUrl}
+        className={
+          isDarkMode
+            ? "background-neon"
+            : "background-neon"
+        }
         titleStyle={{
           position: 'absolute',
           display: 'flex',
