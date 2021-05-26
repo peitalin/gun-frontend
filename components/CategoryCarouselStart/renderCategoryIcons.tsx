@@ -16,27 +16,32 @@ export const renderCategoryIcon = (
   switch (slug) {
     case "rifles": {
       return <CategoryRifles color={
-        isDark ?  Colors.uniswapLightGrey : Colors.black
+        Colors.uniswapLightGrey
+        // isDark ?  Colors.uniswapLightestGrey : Colors.slateGreyBlack
       }/>
     }
     case "handguns": {
       return <CategoryHandguns color={
-        isDark ?  Colors.uniswapLightGrey : Colors.black
+        Colors.uniswapLightGrey
+        // isDark ?  Colors.uniswapLightestGrey : Colors.slateGreyBlack
       }/>
     }
     case "shotguns": {
       return <CategoryShotguns color={
-        isDark ?  Colors.uniswapLightGrey : Colors.black
+        Colors.uniswapLightGrey
+        // isDark ?  Colors.uniswapLightestGrey : Colors.slateGreyBlack
       }/>
     }
     case "combinations": {
       return <CategoryCombinations color={
-        isDark ?  Colors.uniswapLightGrey : Colors.black
+        Colors.uniswapLightGrey
+        // isDark ?  Colors.uniswapLightestGrey : Colors.slateGreyBlack
       }/>
     }
     default: {
       return <CategoryRifles color={
-        isDark ?  Colors.uniswapLightGrey : Colors.black
+        Colors.uniswapLightGrey
+        // isDark ?  Colors.uniswapLightGrey : Colors.slateGreyDarkest
       }/>
     }
   }

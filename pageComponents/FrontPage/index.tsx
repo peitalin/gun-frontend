@@ -59,7 +59,7 @@ const FrontPage: React.FC<ReactProps> = (props) => {
       <BannerHome
         initialCategories={props.initialCategories}
       />
-      <BetaTestingBanner />
+      {/* <BetaTestingBanner /> */}
 
       <AlignCenterLayout
         maxWidth={MAX_WIDTH_GRID || 1160}
@@ -185,7 +185,7 @@ const styles = (theme: Theme) => createStyles({
     justifyContent: 'center',
   },
   categoryCarouselFrontPageBox: {
-    marginTop: '3rem',
+    marginTop: '-125px',
     marginBottom: '3rem',
   },
   categoryTitleBox: {
@@ -206,9 +206,10 @@ const styles = (theme: Theme) => createStyles({
     fontWeight: 600,
     marginTop: "1rem",
     marginBottom: "1rem",
-    color: theme.palette.type === 'dark'
-      ? Colors.uniswapLighterGrey
-      : Colors.slateGreyBlack,
+    // color: theme.palette.type === 'dark'
+    //   ? Colors.uniswapLighterGrey
+    //   : Colors.slateGreyBlack,
+    color: Colors.uniswapLighterGrey,
   },
   categoryBrands: {
     display: 'flex',

@@ -35,7 +35,6 @@ const Header: React.FC<ReactProps> = (props) => {
   return (
     <Head>
       <title>Gun Marketplace - gunmarketplace.com.au</title>
-      <link rel='icon' href='/favicon.ico' />
       <meta name="viewport" content="initial-scale=1.0, width=device-width" />
 
       <link rel="icon"
@@ -45,12 +44,30 @@ const Header: React.FC<ReactProps> = (props) => {
       <link rel="icon" type="image/png" sizes="32x32"
           href="/public/favicons/favicon-32x32.png"/>
       <link rel="icon" type="image/png" sizes="16x16"
-          href="/public/favicon.ico/favicon-16x16.png"/>
+          href="/public/favicons/favicon-16x16.png"/>
+
+      <link href='/public/roobert/Roobert-Light.otf'
+        rel='stylesheet'
+        type='text/css'/>
+      <link href='/public/roobert/Roobert-Regular.otf'
+        rel='stylesheet'
+        type='text/css'/>
+      <link href='/public/roobert/Roobert-Medium.otf'
+        rel='stylesheet'
+        type='text/css'/>
+      <link href='/public/roobert/Roobert-SemiBold.otf'
+        rel='stylesheet'
+        type='text/css'/>
+      <link href='/public/roobert/Roobert-Bold.otf'
+        rel='stylesheet'
+        type='text/css'/>
+      <link href='/public/roobert/Roobert-Heavy.otf'
+        rel='stylesheet'
+        type='text/css'/>
 
 
       {/* Manifest.json defined and generated in next.config.js */}
       <link rel="manifest" href="/public/manifest.json"/>
-      {/* <link rel="manifest" href="/manifest.json"/> */}
 
       {
         process.env.NODE_ENV === "development" &&

@@ -140,13 +140,18 @@ export const styles = (theme: Theme) => createStyles({
     borderRadius: BorderRadius2x,
     width: '100%',
     height: '100%',
-    background: theme.palette.type === 'dark'
-      ? Colors.uniswapDarkNavy
-      : Colors.slateGreyDark,
+    border: `1px solid ${Colors.uniswapLightNavy}`,
+    // background: theme.palette.type === 'dark'
+    //   ? Colors.uniswapDarkNavy
+    //   : Colors.slateGreyDark,
+    // "&:hover": {
+    //   background: theme.palette.type === 'dark'
+    //     ? Colors.uniswapMediumNavy
+    //     : Colors.slateGreyDarker,
+    // },
+    background: Colors.uniswapDarkNavy,
     "&:hover": {
-      background: theme.palette.type === 'dark'
-        ? Colors.uniswapMediumNavy
-        : Colors.slateGreyDarker,
+      background: Colors.uniswapMediumNavy
     },
     transition: theme.transitions.create('background', {
       easing: theme.transitions.easing.sharp,

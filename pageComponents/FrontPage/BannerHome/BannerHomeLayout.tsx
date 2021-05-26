@@ -57,19 +57,20 @@ const BannerHomeLayout: NextPage<ReactProps> = (props) => {
       //   ? "background-neon"
       //   : "background-neon"
       // }
-      // className={
-      //   isDarkMode
-      //   ? "background-uniswap-dark"
-      //   : "background-slate-grey"
-      // }
-      className={'background-slide-loop'}
+      className={
+        isDarkMode
+        ? "background-neon"
+        : "background-uniswap-dark"
+      }
+      // className={'background-slide-loop'}
+
       height={height}
       bannerContainerStyles={{
         marginTop: "-4rem", // for fixed floating navbar offset
-        ...props.bannerContainerStyle,
+        ...(props.bannerContainerStyle ?? {}),
       }}
       ditherStyle={{
-        background: bannerDither
+        background: bannerDither,
       }}
       dither={true}
       portraitMode={props.portraitMode}
@@ -152,7 +153,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   bannerImageUrl: string
   bannerDither: string
   portraitMode?: boolean;
-  bannerContainerStyle: any
+  bannerContainerStyle?: any
 }
 
 export default withStyles(styles)( BannerHomeLayout );

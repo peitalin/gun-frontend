@@ -34,12 +34,14 @@ const BannerHome: NextPage<ReactProps> = (props) => {
     // backgroundSize: "cover",
     backgroundPosition: "left",
     // backgroundSize: 'auto', //stretch to fit for hero3.png
+    backgroundColor: Colors.uniswapDarkNavy,
   }
 
   const bannerContainerStyleMobile = {
-    backgroundColor: isDarkMode
-      ? Colors.uniswapDarkNavy
-      : Colors.slateGrey,
+    // backgroundColor: isDarkMode
+    //   ? Colors.uniswapDarkNavy
+    //   : Colors.slateGrey,
+    backgroundColor: Colors.uniswapDarkNavy,
     backgroundRepeat: 'no-repeat',
     backgroundPosition: "left",
     backgroundSize: "cover",
@@ -49,7 +51,9 @@ const BannerHome: NextPage<ReactProps> = (props) => {
 
   // const bannerDither = 'linear-gradient(30deg, rgba(25,25,25,0.7) 10%, rgba(25,25,25,0.4) 60%)'
   // const bannerDither = 'linear-gradient(180deg, rgba(25, 25, 25, 0.1) 25%, rgba(25, 25, 25, 1) 75%)'
-  const bannerDither = 'linear-gradient(180deg, rgba(25,25,25,0.4) 40%, rgba(25,25,25,0.8) 95%)'
+  const bannerDither = isDarkMode
+    ? 'linear-gradient(180deg, rgba(25,25,25,0.2) 20%, rgba(25,25,25,0.9) 100%)'
+    : 'linear-gradient(180deg, rgba(25,25,25,0.1) 20%, rgba(25,25,25,0.2) 100%)'
 
 
   return (
@@ -75,7 +79,7 @@ const BannerHome: NextPage<ReactProps> = (props) => {
       {/* Desktop  */}
       <ShowOnMobileOrDesktopSSR desktop>
         <BannerHomeLayout
-          height={540}
+          height={750}
           mdDown={false}
           // bannerImageUrl={bannerImageUrl}
           bannerImageUrl={undefined}

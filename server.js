@@ -143,22 +143,9 @@ const requestHandler = (req, res) => {
   const parsedUrl = parse(req.url, true);
   const { pathname, query } = parsedUrl;
 
-  // handle GET request to /service-worker.js
-  if (pathname === "/service-worker.js") {
-    console.log("service worker! assemble!");
-    const filePath = path.join(__dirname, ".next", pathname);
-    app.serveStatic(req, res, filePath);
-  } else if (pathname.startsWith("/.well-known")) {
-    // for apple pay
-    const filePath = path.join(__dirname, "public", pathname);
-    app.serveStatic(req, res, filePath);
-  } else if (pathname.startsWith("/public")) {
+  if (pathname.startsWith("/public")) {
     const filePath = path.join(__dirname, pathname);
     // console.log("public!", filePath)
-    app.serveStatic(req, res, filePath);
-  } else if (pathname.startsWith("/data")) {
-    const filePath = path.join(__dirname, pathname);
-    console.log("data!", filePath)
     app.serveStatic(req, res, filePath);
   } else {
     handle(req, res, parsedUrl);

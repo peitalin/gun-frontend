@@ -149,6 +149,7 @@ export const useFacetSearchOptions = ({
       let urlPath = router.asPath.split('?')[0]
       let params: string[];
       // console.log("router.query:", router?.query)
+      console.log("router: ", router)
       // console.log("urlPath:", urlPath)
       // console.log("params1: ", params)
       // console.log("currentCategories: ", currentCategories)

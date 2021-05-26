@@ -88,21 +88,20 @@ const SavedSearchModal: React.FC<ReactProps> = (props) => {
         disabled={
           !process.browser
           || !props.searchTerm
-          || !user.id
+          || !user?.id
         }
         // disabled={disabled}
         onClick={() => {
           setModalOpen(s => !s)
         }}
       >
-        { props.title ? props.title : 'Save search' }
+        { user?.id ? "Login to save search" : 'Save search' }
       </ButtonLoading>
     </>
   )
 };
 
 interface ReactProps extends WithStyles<typeof styles> {
-  title?: string
   disabled?: boolean
   buttonStyle?: any;
   // args

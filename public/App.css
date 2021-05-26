@@ -1,42 +1,5 @@
 /* Global CSS */
 
-@font-face {
-  font-family: 'Roobert TRIAL';
-  src: url('/roobert/Roobert-Light.otf');
-  font-weight: 300;
-  font-style: normal;
-}
-@font-face {
-  font-family: 'Roobert TRIAL';
-  src: url('/roobert/Roobert-Regular.otf');
-  font-weight: 400;
-  font-style: normal;
-}
-@font-face {
-  font-family: 'Roobert TRIAL';
-  src: url('/roobert/Roobert-Medium.otf');
-  font-weight: 500;
-  font-style: normal;
-}
-@font-face {
-  font-family: 'Roobert TRIAL';
-  src: url('/roobert/Roobert-SemiBold.otf');
-  font-weight: 600;
-  font-style: normal;
-}
-@font-face {
-  font-family: 'Roobert TRIAL';
-  src: url('/roobert/Roobert-Bold.otf');
-  font-weight: 700;
-  font-style: normal;
-}
-@font-face {
-  font-family: 'Roobert TRIAL';
-  src: url('/roobert/Roobert-Heavy.otf');
-  font-weight: 800;
-  font-style: normal;
-}
-
 html {
   scrollbar-width: none; /* Firefox */
   scroll-behavior: smooth;
@@ -517,9 +480,10 @@ textarea {
 }
 
 .background-slide-loop {
-    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+    /* background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab); */
+    background: linear-gradient(-45deg, #222429, #2e3139, #384052, #424957);
     background-size: 100% 100%;
-    animation: background-slide-loop 6s linear infinite;
+    animation: background-slide-loop 120s linear infinite;
 }
 
 
@@ -540,7 +504,7 @@ textarea {
     background-position: 0% 50%;
   }
   100% {
-    background-position: 0% 150%;
+    background-position: 100% 150%;
   }
 }
 
