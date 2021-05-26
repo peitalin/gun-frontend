@@ -202,8 +202,8 @@ export const Colors = {
   uniswapBrown: '#2A232C',
   gradientUniswapDark1: "#2E3545",
   gradientUniswapDark2: "#2D2F36",
-  gradientUniswapFluro1: "#DC3078",
-  gradientUniswapFluro2: "#5B4DBA",
+  gradientUniswapFluro1: secondary,
+  gradientUniswapFluro2: "#D23791",
   gradientUniswapPurple: "#8E4995",
   gradientUniswapBlue1: "#3773DE",
   gradientUniswapGreen: "#57BC7A",
@@ -306,7 +306,7 @@ export const Gradients = {
     color2: Colors.gradientUniswapFluro2,
   },
   gradientUniswapFluro2:  {
-    background: `linear-gradient(120deg, ${Colors.gradientUniswapFluro1} 20%, ${Colors.gradientUniswapPurple} 50%, ${Colors.gradientUniswapFluro1} 80%)`,
+    background: `linear-gradient(120deg, ${Colors.gradientUniswapFluro1} 30%, ${Colors.gradientUniswapFluro2} 50%, ${Colors.gradientUniswapFluro1} 70%)`,
     color1: Colors.gradientUniswapFluro1,
     color2: Colors.gradientUniswapFluro2,
   },
@@ -326,9 +326,9 @@ export const Gradients = {
     color2: 'rgb(40, 50, 80, 0.8)',
   },
   gradientUniswapBlue:  {
-    background: `linear-gradient(140deg, ${Colors.gradientUniswapBlue1} 20%, ${Colors.gradientUniswapFluro2} 80%)`,
-    color1: Colors.gradientUniswapBlue1,
-    color2: Colors.gradientUniswapFluro2,
+    background: `linear-gradient(140deg, ${Colors.ultramarineBlue} 20%, ${Colors.ultramarineBlueDark} 80%)`,
+    color1: Colors.ultramarineBlue,
+    color2: Colors.ultramarineBlueDark,
   },
   gradientUniswapBlue2:  {
     background: `linear-gradient(120deg, ${Colors.gradientUniswapBlue1} 20%, ${Colors.gradientUniswapFluro2} 50%, ${Colors.gradientUniswapBlue1} 80%)`,

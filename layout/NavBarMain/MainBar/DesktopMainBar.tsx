@@ -51,9 +51,7 @@ const DesktopMainBar = (props: DesktopMainBarProps) => {
             <a className={classes.buttonLinkLogo}>
               <Logo fillColor={
                 // override logo color for desktop /start page light mode
-                (isHomePage && !props.isDarkMode)
-                ? Colors.cream
-                : (isStartPage && !props.isDarkMode)
+                (isStartPage && !props.isDarkMode)
                   ? Colors.black
                   : color
               }/>

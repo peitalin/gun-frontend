@@ -146,7 +146,6 @@ export const styles = (theme: Theme) => createStyles({
     width: 'calc(100% - 0rem)',
   },
   innerRootSm: {
-    marginBottom: '1rem',
     height: '120px',
     width: 'calc(100% - 0rem)',
     paddingLeft: '0.25rem',
@@ -188,13 +187,21 @@ export const styles = (theme: Theme) => createStyles({
     position: "absolute",
     top: 0,
     left: 0,
-    background: theme.palette.type === 'dark'
-      ? Colors.uniswapDarkNavy
-      : Colors.slateGreyDark,
+    // border: isThemeDark(theme)
+    //   ? `1px solid ${Colors.uniswapLightNavy}`
+    //   : `1px solid ${Colors.slateGreyDark}`,
+    // background: theme.palette.type === 'dark'
+    //   ? Colors.uniswapDarkNavy
+    //   : Colors.slateGreyDark,
+    // "&:hover": {
+    //   background: theme.palette.type === 'dark'
+    //     ? Colors.uniswapMediumNavy
+    //     : Colors.slateGreyDarker,
+    // },
+    border: `1px solid ${Colors.uniswapLightNavy}`,
+    background: Colors.uniswapDarkNavy,
     "&:hover": {
-      background: theme.palette.type === 'dark'
-        ? Colors.uniswapMediumNavy
-        : Colors.slateGreyDarker,
+      background: Colors.uniswapMediumNavy
     },
     transition: theme.transitions.create('background', {
       easing: theme.transitions.easing.sharp,

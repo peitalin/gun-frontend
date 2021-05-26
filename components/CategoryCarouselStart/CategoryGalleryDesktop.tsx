@@ -93,6 +93,7 @@ const CategoryGalleryDesktop = (props: ReactProps) => {
 
 interface ReactProps extends WithStyles<typeof styles> {
   style?: any;
+  containerStyle?: any;
   cardTextStyle?: any;
   categories: Categories[]
   screenSize: "xs" | "sm" | "md" | "lg" | "xl"
@@ -140,7 +141,9 @@ export const styles = (theme: Theme) => createStyles({
     borderRadius: BorderRadius2x,
     width: '100%',
     height: '100%',
-    border: `1px solid ${Colors.uniswapLightNavy}`,
+    // border: isThemeDark(theme)
+    //   ? `1px solid ${Colors.uniswapLightNavy}`
+    //   : `1px solid ${Colors.slateGreyDark}`,
     // background: theme.palette.type === 'dark'
     //   ? Colors.uniswapDarkNavy
     //   : Colors.slateGreyDark,
@@ -149,6 +152,7 @@ export const styles = (theme: Theme) => createStyles({
     //     ? Colors.uniswapMediumNavy
     //     : Colors.slateGreyDarker,
     // },
+    border: `1px solid ${Colors.uniswapLightNavy}`,
     background: Colors.uniswapDarkNavy,
     "&:hover": {
       background: Colors.uniswapMediumNavy

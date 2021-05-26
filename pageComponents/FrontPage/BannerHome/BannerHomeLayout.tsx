@@ -60,9 +60,8 @@ const BannerHomeLayout: NextPage<ReactProps> = (props) => {
       className={
         isDarkMode
         ? "background-neon"
-        : "background-uniswap-dark"
+        : "background-slate-grey"
       }
-      // className={'background-slide-loop'}
 
       height={height}
       bannerContainerStyles={{

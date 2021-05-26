@@ -51,7 +51,7 @@ const FrontPage: React.FC<ReactProps> = (props) => {
   }, [])
 
   // console.log("pageConfig => ", pageConfig)
-  let cPadding = 2 // category carousel padding
+  let cPadding = 4 // category carousel padding
 
   return (
     <div className={classes.frontPageRoot}>
@@ -62,38 +62,32 @@ const FrontPage: React.FC<ReactProps> = (props) => {
       {/* <BetaTestingBanner /> */}
 
       <AlignCenterLayout
+        className={classes.zIndex2}
         maxWidth={MAX_WIDTH_GRID || 1160}
         withRecommendations={false}
       >
 
         <div className={classes.categoryCarouselFrontPageBox}>
-          <div className={classes.categoryTitleBox}>
-            <div className={classes.categoryTitleText}>
-              Browse by category
-            </div>
-          </div>
-          <div className={clsx(classes.categoryTitleBox, classes.marginBox)}>
-            <ShowOnMobileOrDesktopSSR desktop className={classes.width100}>
-              <CategoryCarouselStart
-                // title={"Explore Categories"}
-                disableTitle={true}
-                initialCategories={props.initialCategories}
-                style={{
-                  width: `calc(100% - ${cPadding*2}rem)`,
-                  marginLeft: `${cPadding}rem`,
-                  marginRight: `${cPadding}rem`,
-                }}
-              />
-            </ShowOnMobileOrDesktopSSR>
-            <ShowOnMobileOrDesktopSSR mobile className={classes.width100}>
-              <CategoryCarouselStart
-                // title={"Explore Categories"}
-                disableTitle={true}
-                initialCategories={props.initialCategories}
-                style={{}}
-              />
-            </ShowOnMobileOrDesktopSSR>
-          </div>
+          <ShowOnMobileOrDesktopSSR desktop className={classes.width100CenterBox}>
+            <CategoryCarouselStart
+              title={"Browse by Category"}
+              initialCategories={props.initialCategories}
+              containerStyle={{ marginTop: '-74px' }}
+              style={{
+                width: `calc(100% - ${cPadding*2}rem)`,
+                marginLeft: `${cPadding}rem`,
+                marginRight: `${cPadding}rem`,
+              }}
+            />
+          </ShowOnMobileOrDesktopSSR>
+          <ShowOnMobileOrDesktopSSR mobile className={classes.width100CenterBox}>
+            <CategoryCarouselStart
+              title={"Browse by Category"}
+              initialCategories={props.initialCategories}
+              containerStyle={{ marginTop: '-48px' }}
+              style={{ }}
+            />
+          </ShowOnMobileOrDesktopSSR>
         </div>
 
         {
@@ -184,32 +178,16 @@ const styles = (theme: Theme) => createStyles({
     flexDirection: "column",
     justifyContent: 'center',
   },
+  zIndex2: {
+    zIndex: 2,
+    // so carousel is above search dither popup
+  },
   categoryCarouselFrontPageBox: {
-    marginTop: '-125px',
+    // display: 'flex',
+    // flexDirection: "row",
+    // justifyContent: 'center',
+    // maxWidth: 800,
     marginBottom: '3rem',
-  },
-  categoryTitleBox: {
-    position: 'relative',
-    display: 'flex',
-    flexDirection: "column",
-    justifyContent: 'center',
-    alignItems: 'center',
-    fontSize: '1rem',
-  },
-  categoryTitleText: {
-    display: 'flex',
-    flexDirection: "column",
-    justifyContent: 'center',
-    maxWidth: 500,
-    textTransform: "uppercase",
-    fontSize: '0.8rem',
-    fontWeight: 600,
-    marginTop: "1rem",
-    marginBottom: "1rem",
-    // color: theme.palette.type === 'dark'
-    //   ? Colors.uniswapLighterGrey
-    //   : Colors.slateGreyBlack,
-    color: Colors.uniswapLighterGrey,
   },
   categoryBrands: {
     display: 'flex',
@@ -247,8 +225,9 @@ const styles = (theme: Theme) => createStyles({
   maxWidth: {
     maxWidth: '1160px', // 4 products per row
   },
-  width100: {
+  width100CenterBox: {
     width: '100%',
+    // maxWidth: 800,
   },
   bannerPromotionsContainer: {
     marginTop: '1rem',

@@ -47,7 +47,7 @@ const BannerPromotionPurchasesMobile: NextPage<ReactProps> = (props) => {
       className={
         isThemeDark(theme)
         ? "background-neon"
-        : "background-slate-grey"
+        : "background-pale-rainbow"
       }
       src={bannerBackgroundImageUrl}
       titleStyle={{

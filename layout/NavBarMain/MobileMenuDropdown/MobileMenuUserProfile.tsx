@@ -86,12 +86,10 @@ const styles = (theme: Theme) => createStyles({
   buttonCreateAccount: {
     marginRight: '0.5rem',
     backgroundImage: Gradients.gradientUniswapFluro.background,
-    border: `1px solid ${Colors.gradientUniswapFluro2}`,
     color: Colors.cream,
     minWidth: '150px',
     "&:hover": {
       backgroundImage: Gradients.gradientUniswapFluro2.background,
-      border: `1px solid ${Colors.gradientUniswapFluro1}`,
       transition: theme.transitions.create(['color', 'border', 'background'], {
         easing: theme.transitions.easing.easeInOut,
         duration: "200ms",
@@ -100,19 +98,17 @@ const styles = (theme: Theme) => createStyles({
     }
   },
   buttonLogin: {
-    backgroundImage: Gradients.gradientUniswapBlue.background,
-    border: `1px solid ${Colors.gradientUniswapBlue1}`,
+    backgroundColor: Gradients.gradientUniswapBlue.color1,
     fontSize: '0.7rem',
     color: Colors.cream,
     minWidth: "150px",
     "&:hover": {
-      backgroundImage: Gradients.gradientUniswapBlue2.background,
-      border: `1px solid ${Colors.gradientUniswapFluro2}`,
+      backgroundColor: Gradients.gradientUniswapBlue.color2,
       transition: theme.transitions.create(['color', 'border', 'background'], {
         easing: theme.transitions.easing.easeInOut,
         duration: "200ms",
       }),
-      backgroundPosition: '75px',
+      backgroundPosition: '100%',
     }
   },
   spacing: {

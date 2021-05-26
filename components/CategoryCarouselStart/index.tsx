@@ -52,13 +52,16 @@ const CategoryCarouselStart = (props: ReactProps) => {
 
 
   return (
-    <div className={classes.categoryCarouselRoot}>
-
+    <div className={classes.categoryCarouselRoot}
+      style={props.containerStyle}
+    >
       {
         !disableTitle &&
-        <Typography className={classes.title}>
-          { props.title ?? "Categories" }
-        </Typography>
+        <div className={classes.categoryTitleBox}>
+          <div className={classes.categoryTitleText}>
+            { props.title ?? "Categories" }
+          </div>
+        </div>
       }
 
       {/* xl */}
@@ -92,7 +95,6 @@ const CategoryCarouselStart = (props: ReactProps) => {
           screenSize={"xs"}
         />
       </Hidden>
-
     </div>
   )
 }
@@ -101,6 +103,7 @@ const CategoryCarouselStart = (props: ReactProps) => {
 interface ReactProps extends WithStyles<typeof styles> {
   title?: string;
   style?: any;
+  containerStyle?: any;
   cardTextStyle?: any;
   disableTitle?: boolean;
   initialCategories: Categories[];
@@ -115,6 +118,7 @@ export interface CategoryPreviewCard {
 export const styles = (theme: Theme) => createStyles({
   categoryCarouselRoot: {
     width: '100%',
+    position: "relative",
     // maxWidth: '100vw',
   },
   title: {
@@ -123,6 +127,31 @@ export const styles = (theme: Theme) => createStyles({
     paddingLeft: "1rem",
     marginTop: '2rem',
     marginBottom: '1rem',
+  },
+  categoryTitleText: {
+    display: 'flex',
+    flexDirection: "column",
+    justifyContent: 'center',
+    maxWidth: 500,
+    textTransform: "uppercase",
+    fontSize: '0.8rem',
+    fontWeight: 600,
+    marginTop: "1rem",
+    marginBottom: "1rem",
+    position: "absolute",
+    top: '-3rem',
+    // color: theme.palette.type === 'dark'
+    //   ? Colors.uniswapLighterGrey
+    //   : Colors.slateGreyBlack,
+    color: Colors.uniswapLighterGrey,
+  },
+  categoryTitleBox: {
+    position: 'relative',
+    display: 'flex',
+    flexDirection: "column",
+    justifyContent: 'center',
+    alignItems: 'center',
+    fontSize: '1rem',
   },
 });
 
