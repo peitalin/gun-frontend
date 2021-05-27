@@ -38,6 +38,34 @@ const Header: React.FC<ReactProps> = (props) => {
       <meta name="viewport" content="initial-scale=1.0, width=device-width" />
 
       <link rel="icon"
+          href="/favicons/favicon.ico"/>
+      <link rel="apple-touch-icon" sizes="180x180"
+          href="/favicons/apple-touch-icon.png"/>
+      <link rel="icon" type="image/png" sizes="32x32"
+          href="/favicons/favicon-32x32.png"/>
+      <link rel="icon" type="image/png" sizes="16x16"
+          href="/favicons/favicon-16x16.png"/>
+
+      <link href='/roobert/Roobert-Light.otf'
+        rel='stylesheet'
+        type='text'/>
+      <link href='/roobert/Roobert-Regular.otf'
+        rel='stylesheet'
+        type='text/css'/>
+      <link href='/roobert/Roobert-Medium.otf'
+        rel='stylesheet'
+        type='text/css'/>
+      <link href='/roobert/Roobert-SemiBold.otf'
+        rel='stylesheet'
+        type='text/css'/>
+      <link href='/roobert/Roobert-Bold.otf'
+        rel='stylesheet'
+        type='text/css'/>
+      <link href='/roobert/Roobert-Heavy.otf'
+        rel='stylesheet'
+        type='text/css'/>
+
+      {/* <link rel="icon"
           href="/public/favicons/favicon.ico"/>
       <link rel="apple-touch-icon" sizes="180x180"
           href="/public/favicons/apple-touch-icon.png"/>
@@ -63,8 +91,7 @@ const Header: React.FC<ReactProps> = (props) => {
         type='text/css'/>
       <link href='/public/roobert/Roobert-Heavy.otf'
         rel='stylesheet'
-        type='text/css'/>
-
+        type='text/css'/> */}
 
       {/* Manifest.json defined and generated in next.config.js */}
       <link rel="manifest" href="/public/manifest.json"/>
