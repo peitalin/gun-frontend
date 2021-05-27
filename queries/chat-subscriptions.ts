@@ -18,7 +18,7 @@ export const MessageFragment = gql`
         firstName
         lastName
       }
-      license {
+      defaultLicense {
         ...UserLicenseFragment
       }
     }
