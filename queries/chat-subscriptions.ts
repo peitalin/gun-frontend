@@ -41,7 +41,7 @@ export const ChatRoomFragment = gql`
         firstName
         lastName
       }
-      license {
+      defaultLicense {
         ...UserLicenseFragment
       }
     }
@@ -51,7 +51,7 @@ export const ChatRoomFragment = gql`
     participants {
       user {
         id
-        license {
+        defaultLicense {
           ...UserLicenseFragment
         }
       }
