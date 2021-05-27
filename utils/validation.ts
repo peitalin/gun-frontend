@@ -55,7 +55,8 @@ export const validationSchemas = {
         .required('Needs an action type'),
       caliber: Yup.string()
         .min(0)
-        .max(100),
+        .max(100)
+        .required('Needs a caliber'),
       serialNumber: Yup.string()
         .min(0)
         .max(100)
@@ -232,7 +233,8 @@ export const validationSchemas = {
         .required('Needs an action type'),
       caliber: Yup.string()
         .min(0)
-        .max(100),
+        .max(100)
+        .required('Needs a caliber'),
       serialNumber: Yup.string()
         .min(0)
         .max(100)

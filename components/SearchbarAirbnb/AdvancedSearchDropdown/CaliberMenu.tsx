@@ -64,7 +64,10 @@ export const createCaliberOption = (c: Calibers): SelectOption => {
   }
 }
 
-export const createCaliberOptionGroups = (calibers: Calibers[]): GroupedSelectOption[] => {
+export const createCaliberOptionGroups = (
+  calibers: Calibers[],
+  allCalibersOption: boolean = true
+): GroupedSelectOption[] => {
   if (!calibers) {
     return []
   }
@@ -84,10 +87,13 @@ export const createCaliberOptionGroups = (calibers: Calibers[]): GroupedSelectOp
   return [
     {
       label: "Rimfire / Centerfire",
-      options: [
-        { label: "All Calibers", value: undefined },
-        ...rimfire,
-      ],
+      options: allCalibersOption
+        ? [
+            { label: "All Calibers", value: undefined },
+            ...rimfire,
+          ]
+        : [ ...rimfire ]
+        // All calibers only for filtering search, not for creating products
     },
     {
       label: "Projectile",

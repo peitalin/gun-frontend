@@ -4,7 +4,7 @@
 
 const integerAccept = /\d+/g;
 
-const parseInteger = string => (string.match(integerAccept) || []).join('');
+export const parseInteger = string => (string.match(integerAccept) || []).join('');
 
 const numberAccept = /[\d.]+/g;
 

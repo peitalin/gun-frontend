@@ -55,6 +55,10 @@ import SelectFieldPlaceholder from "pageComponents/ProductCreate/SSR/SelectField
 //   ssr: false,
 // })
 // import SelectCategories from "pageComponents/ProductCreate/SelectCategories"
+const SelectCaliber = dynamic(() => import("pageComponents/ProductCreate/SelectCaliber"), {
+  loading: () => <SelectFieldPlaceholder title={"Caliber"}/>,
+  ssr: false,
+})
 const SelectCategories = dynamic(() => import("pageComponents/ProductCreate/SelectCategories"), {
   loading: () => <SelectFieldPlaceholder title={"Category"}/>,
   ssr: false,
@@ -260,8 +264,9 @@ const ProductEditPage = (props: ReactProps) => {
       )
     );
   }, [dzuPreviewItems])
-  // console.log("formik.values", formik.values)
-  // console.log("formik.errors", formik.errors)
+
+  console.log("formik.values", formik.values)
+  console.log("formik.errors", formik.errors)
 
   return (
     <PreventDragDropContainer>
@@ -300,6 +305,7 @@ const ProductEditPage = (props: ReactProps) => {
         </SectionBorder>
 
         <SectionBorder thickPadding={true}>
+          <SelectCaliber {...formik} />
           <GunAttributes {...formik} />
           <SelectCondition
             {...formik}

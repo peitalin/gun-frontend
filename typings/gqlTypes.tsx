@@ -18024,7 +18024,10 @@ type OrdersFragment_OrderAdmin_ = { __typename?: 'OrderAdmin', id?: Maybe<string
   )>, buyer?: Maybe<{ __typename?: 'UserPrivate', firstName?: Maybe<string>, lastName?: Maybe<string>, email: string, id: string, phoneNumber?: Maybe<{ __typename?: 'phone_numbers', id: string, areaCode?: Maybe<string>, countryCode: string, number: string }>, defaultLicense?: Maybe<(
       { __typename?: 'user_licenses' }
       & UserLicenseFragment
-    )> }>, sellerStore?: Maybe<{ __typename?: 'StorePrivate', id: string, name?: Maybe<string>, website?: Maybe<string>, createdAt: any, updatedAt?: Maybe<any>, userId: string, user?: Maybe<{ __typename?: 'UserPrivate', firstName?: Maybe<string>, lastName?: Maybe<string>, email: string, id: string, defaultLicense?: Maybe<(
+    )> }>, buyerLicense?: Maybe<(
+    { __typename?: 'user_licenses' }
+    & UserLicenseFragment
+  )>, sellerStore?: Maybe<{ __typename?: 'StorePrivate', id: string, name?: Maybe<string>, website?: Maybe<string>, createdAt: any, updatedAt?: Maybe<any>, userId: string, user?: Maybe<{ __typename?: 'UserPrivate', firstName?: Maybe<string>, lastName?: Maybe<string>, email: string, id: string, defaultLicense?: Maybe<(
         { __typename?: 'user_licenses' }
         & UserLicenseFragment
       )>, payoutMethod?: Maybe<{ __typename?: 'payout_methods', id: string, createdAt: any, updatedAt?: Maybe<any>, payoutType?: Maybe<string>, bsb?: Maybe<string>, accountNumber?: Maybe<string>, accountName?: Maybe<string> }>, phoneNumber?: Maybe<{ __typename?: 'phone_numbers', id: string, areaCode?: Maybe<string>, countryCode: string, number: string }> }> }>, currentSnapshot?: Maybe<(
@@ -18036,7 +18039,10 @@ type OrdersFragment_OrderAdmin_ = { __typename?: 'OrderAdmin', id?: Maybe<string
   )>, orderSnapshots?: Maybe<Array<Maybe<(
     { __typename?: 'OrderSnapshot' }
     & OrderSnapshotFragment
-  )>>>, product?: Maybe<{ __typename?: 'ProductPrivate', id: string, createdAt?: Maybe<any>, updatedAt?: Maybe<any>, isPublished: boolean, isSuspended: boolean, isDeleted: boolean, isSoldElsewhere: boolean, storeId: string, soldOutStatus: string, currentSnapshot: (
+  )>>>, product?: Maybe<{ __typename?: 'ProductPrivate', id: string, createdAt?: Maybe<any>, updatedAt?: Maybe<any>, isPublished: boolean, isSuspended: boolean, isDeleted: boolean, isSoldElsewhere: boolean, storeId: string, soldOutStatus: string, sellerLicenseId?: Maybe<string>, sellerLicense?: Maybe<(
+      { __typename?: 'user_licenses' }
+      & UserLicenseFragment
+    )>, currentSnapshot: (
       { __typename?: 'product_snapshots' }
       & ProductSnapshotsFragment
     ), featuredVariant: (
@@ -18062,7 +18068,10 @@ type OrdersFragment_OrderDealer_ = { __typename?: 'OrderDealer', id?: Maybe<stri
     )> } | { __typename?: 'UserWithRole', id: string, defaultLicense?: Maybe<(
       { __typename?: 'user_licenses' }
       & UserLicenseFragment
-    )> }>, sellerStore?: Maybe<{ __typename?: 'StorePrivate', id: string, name?: Maybe<string>, website?: Maybe<string>, createdAt: any, updatedAt?: Maybe<any>, userId: string, user?: Maybe<{ __typename?: 'UserPrivate', firstName?: Maybe<string>, lastName?: Maybe<string>, email: string, id: string, defaultLicense?: Maybe<(
+    )> }>, buyerLicense?: Maybe<(
+    { __typename?: 'user_licenses' }
+    & UserLicenseFragment
+  )>, sellerStore?: Maybe<{ __typename?: 'StorePrivate', id: string, name?: Maybe<string>, website?: Maybe<string>, createdAt: any, updatedAt?: Maybe<any>, userId: string, user?: Maybe<{ __typename?: 'UserPrivate', firstName?: Maybe<string>, lastName?: Maybe<string>, email: string, id: string, defaultLicense?: Maybe<(
         { __typename?: 'user_licenses' }
         & UserLicenseFragment
       )>, payoutMethod?: Maybe<{ __typename?: 'payout_methods', id: string, createdAt: any, updatedAt?: Maybe<any>, payoutType?: Maybe<string>, bsb?: Maybe<string>, accountNumber?: Maybe<string>, accountName?: Maybe<string> }>, phoneNumber?: Maybe<{ __typename?: 'phone_numbers', id: string, areaCode?: Maybe<string>, countryCode: string, number: string }> }> } | { __typename?: 'StorePublic', id: string, name?: Maybe<string>, website?: Maybe<string>, createdAt: any, updatedAt?: Maybe<any>, userId: string, user?: Maybe<{ __typename?: 'UserPrivate', firstName?: Maybe<string>, lastName?: Maybe<string>, email: string, id: string, defaultLicense?: Maybe<(
@@ -18083,7 +18092,10 @@ type OrdersFragment_OrderDealer_ = { __typename?: 'OrderDealer', id?: Maybe<stri
   )>, orderSnapshots?: Maybe<Array<Maybe<(
     { __typename?: 'OrderSnapshot' }
     & OrderSnapshotFragment
-  )>>>, product?: Maybe<{ __typename?: 'ProductPrivate', id: string, createdAt?: Maybe<any>, updatedAt?: Maybe<any>, isPublished: boolean, isSuspended: boolean, isDeleted: boolean, isSoldElsewhere: boolean, storeId: string, soldOutStatus: string, currentSnapshot: (
+  )>>>, product?: Maybe<{ __typename?: 'ProductPrivate', id: string, createdAt?: Maybe<any>, updatedAt?: Maybe<any>, isPublished: boolean, isSuspended: boolean, isDeleted: boolean, isSoldElsewhere: boolean, storeId: string, soldOutStatus: string, sellerLicenseId?: Maybe<string>, sellerLicense?: Maybe<(
+      { __typename?: 'user_licenses' }
+      & UserLicenseFragment
+    )>, currentSnapshot: (
       { __typename?: 'product_snapshots' }
       & ProductSnapshotsFragment
     ), featuredVariant: (
@@ -18109,7 +18121,10 @@ type OrdersFragment_OrderPublic_ = { __typename?: 'OrderPublic', id?: Maybe<stri
     )> } | { __typename?: 'UserWithRole', id: string, defaultLicense?: Maybe<(
       { __typename?: 'user_licenses' }
       & UserLicenseFragment
-    )> }>, sellerStore?: Maybe<{ __typename?: 'StorePrivate', id: string, name?: Maybe<string>, website?: Maybe<string>, createdAt: any, updatedAt?: Maybe<any>, userId: string, user?: Maybe<{ __typename?: 'UserPrivate', firstName?: Maybe<string>, lastName?: Maybe<string>, email: string, id: string, defaultLicense?: Maybe<(
+    )> }>, buyerLicense?: Maybe<(
+    { __typename?: 'user_licenses' }
+    & UserLicenseFragment
+  )>, sellerStore?: Maybe<{ __typename?: 'StorePrivate', id: string, name?: Maybe<string>, website?: Maybe<string>, createdAt: any, updatedAt?: Maybe<any>, userId: string, user?: Maybe<{ __typename?: 'UserPrivate', firstName?: Maybe<string>, lastName?: Maybe<string>, email: string, id: string, defaultLicense?: Maybe<(
         { __typename?: 'user_licenses' }
         & UserLicenseFragment
       )>, payoutMethod?: Maybe<{ __typename?: 'payout_methods', id: string, createdAt: any, updatedAt?: Maybe<any>, payoutType?: Maybe<string>, bsb?: Maybe<string>, accountNumber?: Maybe<string>, accountName?: Maybe<string> }>, phoneNumber?: Maybe<{ __typename?: 'phone_numbers', id: string, areaCode?: Maybe<string>, countryCode: string, number: string }> }> } | { __typename?: 'StorePublic', id: string, name?: Maybe<string>, website?: Maybe<string>, createdAt: any, updatedAt?: Maybe<any>, userId: string, user?: Maybe<{ __typename?: 'UserPrivate', firstName?: Maybe<string>, lastName?: Maybe<string>, email: string, id: string, defaultLicense?: Maybe<(
@@ -18130,13 +18145,19 @@ type OrdersFragment_OrderPublic_ = { __typename?: 'OrderPublic', id?: Maybe<stri
   )>, orderSnapshots?: Maybe<Array<Maybe<(
     { __typename?: 'OrderSnapshot' }
     & OrderSnapshotFragment
-  )>>>, product?: Maybe<{ __typename?: 'ProductPrivate', id: string, createdAt?: Maybe<any>, updatedAt?: Maybe<any>, isPublished: boolean, isSuspended: boolean, isDeleted: boolean, isSoldElsewhere: boolean, storeId: string, soldOutStatus: string, currentSnapshot: (
+  )>>>, product?: Maybe<{ __typename?: 'ProductPrivate', id: string, createdAt?: Maybe<any>, updatedAt?: Maybe<any>, isPublished: boolean, isSuspended: boolean, isDeleted: boolean, isSoldElsewhere: boolean, storeId: string, soldOutStatus: string, sellerLicenseId?: Maybe<string>, sellerLicense?: Maybe<(
+      { __typename?: 'user_licenses' }
+      & UserLicenseFragment
+    )>, currentSnapshot: (
       { __typename?: 'product_snapshots' }
       & ProductSnapshotsFragment
     ), featuredVariant: (
       { __typename?: 'product_variants' }
       & ProductVariantsFragment
-    ), category?: Maybe<{ __typename?: 'categories', id: string, name: string, slug: string, categoryGroup?: Maybe<string> }>, store?: Maybe<{ __typename?: 'StorePrivate', id: string, name?: Maybe<string>, userId: string, user?: Maybe<{ __typename?: 'UserPrivate', id: string }> }> } | { __typename?: 'ProductPublic', id: string, createdAt?: Maybe<any>, updatedAt?: Maybe<any>, isPublished: boolean, isSuspended: boolean, isDeleted: boolean, isSoldElsewhere: boolean, storeId: string, soldOutStatus: string, currentSnapshot: (
+    ), category?: Maybe<{ __typename?: 'categories', id: string, name: string, slug: string, categoryGroup?: Maybe<string> }>, store?: Maybe<{ __typename?: 'StorePrivate', id: string, name?: Maybe<string>, userId: string, user?: Maybe<{ __typename?: 'UserPrivate', id: string }> }> } | { __typename?: 'ProductPublic', id: string, createdAt?: Maybe<any>, updatedAt?: Maybe<any>, isPublished: boolean, isSuspended: boolean, isDeleted: boolean, isSoldElsewhere: boolean, storeId: string, soldOutStatus: string, sellerLicenseId?: Maybe<string>, sellerLicense?: Maybe<(
+      { __typename?: 'user_licenses' }
+      & UserLicenseFragment
+    )>, currentSnapshot: (
       { __typename?: 'product_snapshots' }
       & ProductSnapshotsFragment
     ), featuredVariant: (
@@ -18566,6 +18587,9 @@ export const OrdersFragmentFragmentDoc = gql`
       }
     }
   }
+  buyerLicense {
+    ...UserLicenseFragment
+  }
   sellerStoreId
   sellerStore {
     id
@@ -18640,6 +18664,10 @@ export const OrdersFragmentFragmentDoc = gql`
     isSoldElsewhere
     storeId
     soldOutStatus
+    sellerLicenseId
+    sellerLicense {
+      ...UserLicenseFragment
+    }
     currentSnapshot {
       ...ProductSnapshotsFragment
     }

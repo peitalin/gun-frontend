@@ -29,6 +29,10 @@ import SelectFieldPlaceholder from "../SSR/SelectFieldPlaceholder";
 //   loading: () => <SelectTagsPlaceholder/>,
 //   ssr: false,
 // })
+const SelectCaliber = dynamic(() => import("../SelectCaliber"), {
+  loading: () => <SelectFieldPlaceholder title={"Caliber"}/>,
+  ssr: false,
+})
 const SelectCategories = dynamic(() => import("../SelectCategories"), {
   loading: () => <SelectFieldPlaceholder title={"Category"}/>,
   ssr: false,
@@ -501,6 +505,9 @@ const ProductCreatePage = (props: ReactProps) => {
                   they're running and how to resolve approval issues.
                 </Typography>
                 <SelectActionType
+                  {...formik}
+                />
+                <SelectCaliber
                   {...formik}
                 />
                 <GunAttributes {...formik} />

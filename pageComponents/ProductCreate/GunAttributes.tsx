@@ -5,6 +5,7 @@ import { withStyles, WithStyles } from "@material-ui/core/styles";
 import { styles } from "./commonStyles";
 // Material UI
 import Typography from "@material-ui/core/Typography";
+import TextInputAdorned from "components/Fields/TextInputAdorned";
 import TextInput from "components/Fields/TextInput";
 // Components
 import Loading from "components/Loading";
@@ -14,6 +15,11 @@ import {
   maxLengthTitle,
 } from "utils/limitsAndRules";
 import RefLink, { refLinks } from "./RefLink";
+import Switch from '@material-ui/core/Switch';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import { formatCurrency, parseNumber} from "utils/currencyInput";
+import { number } from "yup";
+
 
 
 const GunAttributes = (props: ReactProps & FormikProps<FormikFields>) => {
@@ -36,85 +42,166 @@ const GunAttributes = (props: ReactProps & FormikProps<FormikFields>) => {
     handleReset,
   } = fprops;
 
+  const [barrelDisplay, setBarrelDisplay] = React.useState({
+    value: fprops.values.barrelLength,
+    unit: BarrelUnit.mm
+  } as { value: string, unit: BarrelUnit })
+  // this will dispaly either millimieteres or inches
+  // but formik will always convert and record barrel lenght in millimeters
+
+  const convertInchesToMilli = (inches: number) => {
+    // multiple inches by 25.4 to get millimeters
+    return inches * 25.4
+  }
+  const convertMilliToInches = (mm: number) => {
+    // divide by 25.4 to get inches
+    return mm / 25.4
+  }
+
+  const toggleMilliToInches = () => {
+    // clear values when switching from mm to inches
+    // ofrce user to re-input the length
+    if (!barrelDisplay.value) {
+      if (barrelDisplay.unit === BarrelUnit.inches) {
+        setBarrelDisplay({ value: "", unit: BarrelUnit.mm })
+      } else {
+        setBarrelDisplay({ value: "", unit: BarrelUnit.inches })
+      }
+    } else {
+      if (barrelDisplay.unit === BarrelUnit.inches) {
+        setBarrelDisplay({ value: "", unit: BarrelUnit.mm })
+        fprops.setFieldValue("barrelLength", undefined)
+      } else {
+        setBarrelDisplay({ value: "", unit: BarrelUnit.inches })
+        fprops.setFieldValue("barrelLength", undefined)
+      }
+    }
+  }
+
+  // console.log("barrelDisplay", barrelDisplay)
+  // console.log("fprops.values.barrelLength: ", fprops.values?.barrelLength)
 
   return (
     <ErrorBounds className={classes.positionRelative}>
 
       <Typography color={"primary"} variant="subtitle1" gutterBottom>
-        Caliber
-      </Typography>
-      <TextInput
-        name="caliber"
-        placeholder="Caliber"
-        className={classes.textField}
-        value={values.caliber}
-        onChange={(e) => {
-          if (e.target.value.length <= maxLengthTitle) {
-            fprops.setFieldValue("caliber", e.target.value)
-          }
-          fprops.setFieldTouched('caliber', true)
-        }}
-        inputProps={{ style: { width: '100%' }}}
-        errorMessage={props.errors.caliber}
-        touched={!!touched.caliber}
-        disableInitialValidationMessage={true}
-        limit={{
-          max: maxLengthTitle,
-          count: values?.caliber?.length
-        }}
-      />
-
-      <Typography color={"primary"} variant="subtitle1" gutterBottom>
         Magazine Capacity
       </Typography>
-      <TextInput
+      <TextInputAdorned
         name="magazine-capacity"
-        placeholder="Magazine Capacity"
-        className={classes.textField}
+        placeholder="Number of bullets"
+        className={classes.textFieldAdorned}
         value={values.magazineCapacity}
         onChange={(e) => {
-          fprops.setFieldValue("magazineCapacity", e.target.value)
+          if (e.target.value.length <= maxLengthTitle) {
+            let n = parseInt(e.target.value ?? 0)
+            if (0 < n && n < 100) {
+              fprops.setFieldValue("magazineCapacity", `${n}`)
+            } else if (n >= 100) {
+              fprops.setFieldValue("magazineCapacity", `${99}`)
+            } else {
+              fprops.setFieldValue("magazineCapacity", "")
+            }
+          }
           fprops.setFieldTouched('magazineCapacity', true)
         }}
+        // endAdornment={
+        //   <InputAdornment position="end">
+        //     {"bullets"}
+        //   </InputAdornment>
+        // }
         inputProps={{ style: { width: '100%' }}}
         errorMessage={props.errors.magazineCapacity}
         touched={!!touched.magazineCapacity}
         disableInitialValidationMessage={true}
-        limit={{
-          max: maxLengthTitle,
-          count: values?.magazineCapacity?.length
-        }}
+        // limit={{
+        //   max: maxLengthTitle,
+        //   count: values?.magazineCapacity?.length
+        // }}
       />
 
-      <Typography color={"primary"} variant="subtitle1" gutterBottom>
-        Barrel Length
-      </Typography>
-      <TextInput
+      <div className={classes.headingContainer}>
+        <Typography color={"primary"} variant="subtitle1" gutterBottom>
+          Barrel Length
+        </Typography>
+        <div className={classes.mmOrInchesContainer}>
+          <span className={clsx(
+            classes.mmOrInchesText,
+            barrelDisplay.unit === BarrelUnit.mm && classes.mmOrInchesTextHighlight,
+          )}>
+            mm
+          </span>
+          <span className={classes.mmOrInchesText}
+            style={{ margin: '0rem 0.2rem'}}
+          >
+            /
+          </span>
+          <span className={clsx(
+            classes.mmOrInchesText,
+            barrelDisplay.unit === BarrelUnit.inches && classes.mmOrInchesTextHighlight,
+          )}>
+            inches
+          </span>
+          <Switch
+            checked={barrelDisplay.unit === BarrelUnit.inches}
+            onChange={toggleMilliToInches}
+            color="secondary"
+            inputProps={{ 'aria-label': 'secondary checkbox' }}
+          />
+        </div>
+      </div>
+      <TextInputAdorned
         name="barrel-length"
         placeholder="Barrel Length"
-        className={classes.textField}
-        value={values.barrelLength}
+        className={classes.textFieldAdorned}
+        value={barrelDisplay.value}
         onChange={(e) => {
-          fprops.setFieldValue("barrelLength", e.target.value)
+          if (e.target.value.length <= maxLengthTitle) {
+            let n = parseNumber(e.target.value ?? 0)
+            console.log("n : ", n)
+            if (n) {
+              if (barrelDisplay.unit === BarrelUnit.inches) {
+                let barrelLengthInMM = convertInchesToMilli(n)
+                setBarrelDisplay({ value: n, unit: BarrelUnit.inches })
+                fprops.setFieldValue("barrelLength", `${barrelLengthInMM}`)
+              } else {
+                setBarrelDisplay({ value: n, unit: BarrelUnit.mm })
+                fprops.setFieldValue("barrelLength", `${n}`)
+              }
+            } else {
+              fprops.setFieldValue("barrelLength", "")
+              setBarrelDisplay({ value: undefined, unit: barrelDisplay.unit })
+            }
+          }
           fprops.setFieldTouched('barrelLength', true)
         }}
+        endAdornment={
+          <InputAdornment position="end">
+            {`${barrelDisplay.unit}`}
+          </InputAdornment>
+        }
         inputProps={{ style: { width: '100%' }}}
         errorMessage={props.errors.barrelLength}
         touched={!!touched.barrelLength}
         disableInitialValidationMessage={true}
-        limit={{
-          max: maxLengthTitle,
-          count: values?.barrelLength?.length
-        }}
+        // limit={{
+        //   max: maxLengthTitle,
+        //   count: values?.barrelLength?.length
+        // }}
       />
     </ErrorBounds>
   )
 }
 
+enum BarrelUnit {
+  mm = "mm",
+  inches = "inches",
+}
+
+
 interface ReactProps extends WithStyles<typeof styles> {
 }
 interface FormikFields {
-  caliber?: string;
   magazineCapacity?: string;
   barrelLength?: string;
 }

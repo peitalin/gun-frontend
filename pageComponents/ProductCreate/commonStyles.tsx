@@ -121,6 +121,13 @@ export const styles = (theme: Theme) => createStyles({
       color: Colors.charcoal,
     },
   },
+  textFieldAdorned: {
+    width: "100%",
+    height: 45,
+    "&:focus-within": {
+      color: Colors.charcoal,
+    },
+  },
   flexContainer: {
     display: 'flex',
     justifyContent: 'space-around',
@@ -424,6 +431,13 @@ export const styles = (theme: Theme) => createStyles({
     // marginLeft: '1rem',
     marginBottom: '0.5rem',
   },
+  caliberDropdown: {
+    flexGrow: 1,
+    minWidth: 200,
+    // marginRight: '1rem',
+    // marginLeft: '1rem',
+    marginBottom: '1rem',
+  },
   dontSeeDealerLink: {
     color: Colors.uniswapLighterGrey,
     textAlign: "center",
@@ -456,6 +470,26 @@ export const styles = (theme: Theme) => createStyles({
   },
   stepperSectionTitle: {
     marginBottom: '1rem',
+  },
+  headingContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginTop: "0.5rem",
+  },
+  mmOrInchesContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  mmOrInchesText: {
+    fontSize: '0.8rem',
+    fontWeight: 500,
+  },
+  mmOrInchesTextHighlight: {
+    color: Colors.ultramarineBlue,
   },
 })
 

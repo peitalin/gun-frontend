@@ -474,7 +474,7 @@ textarea {
     animation: background-gradient 15s ease infinite;
 }
 .background-slate-grey {
-    background: linear-gradient(130deg, #ffffff, #EDF0F2, #E2E8ED);
+    background: linear-gradient(130deg, #FEFEFE, #EDF0F2, #E2E8ED);
     background-size: 400% 400%;
     animation: background-gradient 15s ease infinite;
 }
@@ -488,7 +488,7 @@ textarea {
     /* background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab); */
     background: linear-gradient(-45deg, #222429, #2e3139, #384052, #424957);
     background-size: 100% 100%;
-    animation: background-slide-loop 120s linear infinite;
+    animation: background-slide-loop 20s linear infinite;
 }
 
 
@@ -506,10 +506,12 @@ textarea {
 
 @keyframes background-slide-loop {
   0% {
-    background-position: 0% 50%;
+    /* background-position: 0% 50%; */
+    background-position: top left;
   }
   100% {
-    background-position: 100% 150%;
+    /* background-position: 100% 150%; */
+    background-position: bottom right;
   }
 }
 
