@@ -95,7 +95,7 @@ const SavedSearchModal: React.FC<ReactProps> = (props) => {
           setModalOpen(s => !s)
         }}
       >
-        { user?.id ? "Login to save search" : 'Save search' }
+        { !user?.id ? "Login to Save Search" : 'Save search' }
       </ButtonLoading>
     </>
   )
@@ -152,7 +152,7 @@ const styles = (theme: Theme) => createStyles({
   saveSearchModalButton: {
     height: 40,
     width: '100%',
-    maxWidth: 120,
+    maxWidth: 180,
     borderRadius: BorderRadius3x,
     backgroundColor: theme.palette.type === 'dark'
       ? Colors.purple

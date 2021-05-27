@@ -20,6 +20,16 @@ const ProductModelMake = (props: ReactProps) => {
 
   const { classes, product } = props;
 
+  //// Order
+  // Serial Number:
+  // Make
+  // Model
+  // Condition
+  // Action type
+  // Calibre
+  // Magazine Capacity
+  // Barrel Length
+
   return (
     <div className={clsx(
       classes.modelMakerRoot,
@@ -28,14 +38,11 @@ const ProductModelMake = (props: ReactProps) => {
       {
         process.browser &&
         <>
-          <Typography
-            className={classes.title}
-            color={"primary"}
-            variant="subtitle1"
-          >
-            {product?.currentSnapshot?.title}
-          </Typography>
-
+          <ModelRow
+            classes={classes}
+            title={"Serial Number:"}
+            value={product?.currentSnapshot?.serialNumber}
+          />
           <ModelRow
             classes={classes}
             title={"Make:"}
@@ -46,6 +53,19 @@ const ProductModelMake = (props: ReactProps) => {
             title={"Model:"}
             value={product?.currentSnapshot?.model}
           />
+          <ModelRow
+            classes={classes}
+            title={"Condition:"}
+            value={product?.currentSnapshot?.condition}
+          />
+          {
+            product?.currentSnapshot?.actionType &&
+            <ModelRow
+              classes={classes}
+              title={"Action type:"}
+              value={product?.currentSnapshot?.actionType}
+            />
+          }
           {
             product?.currentSnapshot?.caliber !== undefined &&
             <ModelRow
@@ -55,11 +75,11 @@ const ProductModelMake = (props: ReactProps) => {
             />
           }
           {
-            product?.currentSnapshot?.actionType &&
+            product?.currentSnapshot?.magazineCapacity &&
             <ModelRow
               classes={classes}
-              title={"Action type:"}
-              value={product?.currentSnapshot?.actionType}
+              title={"Magazine Capacity:"}
+              value={product?.currentSnapshot?.magazineCapacity}
             />
           }
           {
@@ -70,24 +90,6 @@ const ProductModelMake = (props: ReactProps) => {
               value={product?.currentSnapshot?.barrelLength}
             />
           }
-          {/* {
-            product?.currentSnapshot?.magazineCapacity &&
-            <ModelRow
-              classes={classes}
-              title={"Magazine Capacity:"}
-              value={product?.currentSnapshot?.magazineCapacity}
-            />
-          } */}
-          <ModelRow
-            classes={classes}
-            title={"Condition:"}
-            value={product?.currentSnapshot?.condition}
-          />
-          <ModelRow
-            classes={classes}
-            title={"Serial Number:"}
-            value={product?.currentSnapshot?.serialNumber}
-          />
           {
             product?.currentSnapshot?.ammoType &&
             <ModelRow

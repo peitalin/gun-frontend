@@ -24,12 +24,9 @@ const StickyDetailsDealer = (props: ReactProps) => {
     dealer
   } = props;
 
-  const snackbar = useSnackbar();
+  // const snackbar = useSnackbar();
 
-  const handleCopy = async (text) => {
-    await copy(text);
-    console.log("Copied!");
-  };
+  // console.log("dealer", dealer)
 
   return (
     <div className={clsx(
@@ -59,31 +56,37 @@ const StickyDetailsDealer = (props: ReactProps) => {
         <div className={classes.flexRow}>
           <div className={clsx(classes.flexCol, classes.fieldKeysCol)}>
             <Typography className={classes.caption} variant="body1">
-              Name:
-            </Typography>
-            <Typography className={classes.caption} variant="body1">
               License Number:
             </Typography>
             <Typography className={classes.caption} variant="body1">
-              State:
+              Name:
             </Typography>
             <Typography className={classes.caption} variant="body1">
               Address:
+            </Typography>
+            <Typography className={classes.caption} variant="body1">
+              City/Suburb:
+            </Typography>
+            <Typography className={classes.caption} variant="body1">
+              State:
             </Typography>
           </div>
 
           <div className={clsx(classes.flexCol)}>
             <Typography className={classes.caption} variant="body1">
-              {`${dealer?.name ?? ""}`}
-            </Typography>
-            <Typography className={classes.caption} variant="body1">
               {`${dealer?.licenseNumber ?? ""}`}
             </Typography>
             <Typography className={classes.caption} variant="body1">
-              {`${dealer?.state ?? ""}`}
+              {`${dealer?.name ?? ""}`}
             </Typography>
             <Typography className={classes.caption} variant="body1">
               {`${dealer?.address ?? ""}`}
+            </Typography>
+            <Typography className={classes.caption} variant="body1">
+              {`${dealer?.city ?? ""}`}
+            </Typography>
+            <Typography className={classes.caption} variant="body1">
+              {`${dealer?.state ?? ""}`}
             </Typography>
           </div>
         </div>

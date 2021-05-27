@@ -7,7 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import currency from 'currency.js';
 
 // graphql
-import { UserPrivate, StorePrivate, Dealers, Users } from "typings/gqlTypes";
+import { UserPrivate, StorePrivate, Dealers, Users, User_Licenses } from "typings/gqlTypes";
 
 
 
@@ -16,7 +16,9 @@ const InfoBuyerSellerDealer = (props: ReactProps) => {
 
   const {
     sellerStore,
+    sellerLicense,
     buyer,
+    buyerLicense,
     dealer,
     // order,
     classes,
@@ -61,7 +63,7 @@ const InfoBuyerSellerDealer = (props: ReactProps) => {
             License Number:
           </Typography>
           <Typography className={classes.userDetailsInfo} variant="body1">
-            {sellerStore?.user?.defaultLicense?.licenseNumber}
+            {sellerLicense?.licenseNumber}
           </Typography>
         </div>
         <div className={classes.userDetailsRow}>
@@ -69,7 +71,7 @@ const InfoBuyerSellerDealer = (props: ReactProps) => {
             State:
           </Typography>
           <Typography className={classes.userDetailsInfo} variant="body1">
-            {sellerStore?.user?.defaultLicense?.licenseState}
+            {sellerLicense?.licenseState}
           </Typography>
         </div>
         <div className={classes.userDetailsRow}>
@@ -107,7 +109,7 @@ const InfoBuyerSellerDealer = (props: ReactProps) => {
             License Number:
           </Typography>
           <Typography className={classes.userDetailsInfo} variant="body1">
-            {buyer?.defaultLicense?.licenseNumber}
+            {buyerLicense?.licenseNumber}
           </Typography>
         </div>
         <div className={classes.userDetailsRow}>
@@ -115,7 +117,7 @@ const InfoBuyerSellerDealer = (props: ReactProps) => {
             State:
           </Typography>
           <Typography className={classes.userDetailsInfo} variant="body1">
-            {buyer?.defaultLicense?.licenseState}
+            {buyerLicense?.licenseState}
           </Typography>
         </div>
         <div className={classes.userDetailsRow}>
@@ -215,7 +217,9 @@ const InfoBuyerSellerDealer = (props: ReactProps) => {
 interface ReactProps extends WithStyles<typeof styles> {
   dealer: Dealers
   sellerStore: StorePrivate
+  sellerLicense: User_Licenses
   buyer: UserPrivate
+  buyerLicense: User_Licenses
   paymentIntentStatus: string
   paymentIntentId: string
   hideOrderDetails?: boolean

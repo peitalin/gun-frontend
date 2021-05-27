@@ -43,6 +43,7 @@ import {
 } from "utils/hooksFacetSearch";
 // Grid Components
 import GridPaginatorGeneric from "components/GridPaginatorGeneric";
+import OrderPriceBreakdown from "pageComponents/Gov/OrderViewer/OrderPriceBreakdown";
 
 
 
@@ -193,8 +194,8 @@ const OrdersPendingApprovalTable: NextPage<ReactProps> = (props) => {
     _ordersAdminApproved?.data?.getOrdersAdminApprovedConnection
 
 
-  // console.log("ordersCreatedConnection:",ordersCreatedConnection)
-  console.log("ordersPendingApprovalConnection:",ordersPendingApprovalConnection)
+  console.log("ordersCreatedConnection:",ordersCreatedConnection)
+  // console.log("ordersPendingApprovalConnection:",ordersPendingApprovalConnection)
 
   if (_ordersAdminApproved.loading || _ordersPendingApproval.loading) {
     return (
@@ -266,7 +267,7 @@ const OrdersPendingApprovalTable: NextPage<ReactProps> = (props) => {
             {({ node }) => {
 
               let order = node as OrderAdmin;
-              // console.log("order>>>>>>: ", order)
+              console.log("order>>>>>>: ", order)
 
               return (
                 <RowExpander

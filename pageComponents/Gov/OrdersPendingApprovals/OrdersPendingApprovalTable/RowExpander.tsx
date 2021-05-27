@@ -56,6 +56,8 @@ const RowExpander = (props: RowExpanderProps) => {
     createdAt: order.createdAt,
     sellerStore: order.sellerStore,
     buyer: order.buyer,
+    buyerLicense: order.buyerLicense,
+    sellerLicense: order.product.sellerLicense,
     currentOrderSnapshot: order.currentSnapshot,
     orderSnapshots: order.orderSnapshots,
     product: order.product,
@@ -111,7 +113,9 @@ const RowExpander = (props: RowExpanderProps) => {
         <div className={classes.marginBox}>
           <InfoBuyerSellerDealer
             buyer={row?.buyer}
+            buyerLicense={row?.buyerLicense}
             sellerStore={row?.sellerStore}
+            sellerLicense={row?.sellerLicense}
             dealer={row?.dealer}
             paymentIntentStatus={row?.paymentIntentStatus}
             paymentIntentId={row?.paymentIntentId}

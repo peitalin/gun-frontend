@@ -19,6 +19,8 @@ export const createDataForCompletingOrdersTable = ({
   total,
   sellerStore,
   buyer,
+  buyerLicense,
+  sellerLicense,
   orderSnapshots,
   product,
   currentOrderSnapshot,
@@ -32,6 +34,8 @@ export const createDataForCompletingOrdersTable = ({
   total: number,
   sellerStore: StorePrivate,
   buyer: UserPrivate,
+  buyerLicense: User_Licenses,
+  sellerLicense: User_Licenses,
   currentOrderSnapshot: OrderSnapshot,
   orderSnapshots?: OrderSnapshot[]
   product?: Product,
@@ -48,8 +52,9 @@ export const createDataForCompletingOrdersTable = ({
     orderStatus: currentOrderSnapshot?.orderStatus,
     form10: currentOrderSnapshot?.form10File ?? currentOrderSnapshot?.form10Image,
     sellerStore: sellerStore,
-    sellerLicense: product?.sellerLicense,
     buyer: buyer,
+    buyerLicense: buyerLicense,
+    sellerLicense: sellerLicense,
     dealer: product?.currentSnapshot?.dealer,
     product: product,
     history: (orderSnapshots ?? [])

@@ -180,7 +180,7 @@ const CreateDealerFields: React.FC<ReactProps & FormikProps<FormikFields>> = (pr
           <div style={{ marginTop: '0.25rem' }}></div>
 
           <Typography variant="subtitle1" className={classes.subtitle1}>
-            City
+            City/Suburb
             {
               errors.city
               ? <span className={classes.redText}>{` - ${errors.city}`}</span>
@@ -188,7 +188,7 @@ const CreateDealerFields: React.FC<ReactProps & FormikProps<FormikFields>> = (pr
             }
           </Typography>
           <TextInput
-            placeholder="City"
+            placeholder="City/Suburb"
             className={classes.textField}
             value={values.city}
             onChange={handleUpdateCity}

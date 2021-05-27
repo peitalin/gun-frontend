@@ -474,7 +474,7 @@ textarea {
     animation: background-gradient 15s ease infinite;
 }
 .background-slate-grey {
-    background: linear-gradient(130deg, #ffffff, #EDF0F2, #B0B5BF);
+    background: linear-gradient(130deg, #ffffff, #EDF0F2, #E2E8ED);
     background-size: 400% 400%;
     animation: background-gradient 15s ease infinite;
 }

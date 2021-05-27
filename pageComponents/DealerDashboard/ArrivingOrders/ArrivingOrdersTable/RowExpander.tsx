@@ -47,6 +47,8 @@ const RowExpander = (props: RowExpanderProps) => {
     createdAt: order.createdAt,
     sellerStore: order.sellerStore,
     buyer: order.buyer,
+    buyerLicense: order.buyerLicense,
+    sellerLicense: order.product.sellerLicense,
     currentOrderSnapshot: order.currentSnapshot,
     orderSnapshots: order.orderSnapshots,
     product: order.product,
@@ -89,6 +91,8 @@ const RowExpander = (props: RowExpanderProps) => {
           <InfoBuyerSellerDealer
             buyer={row?.buyer}
             sellerStore={row?.sellerStore}
+            buyerLicense={row?.buyerLicense}
+            sellerLicense={row?.sellerLicense}
             dealer={row?.dealer}
             paymentIntentStatus={row?.paymentIntentStatus}
             paymentIntentId={row?.paymentIntentId}

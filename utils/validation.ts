@@ -250,6 +250,8 @@ export const validationSchemas = {
         .required('Must choose a dealer'),
       categoryId: Yup.string()
         .required("Pick a category"),
+      sellerLicenseId: Yup.string()
+        .required("Pick a license"),
       currentVariants: Yup.array().of(
           Yup.object({
             price: Yup.number().nullable(true)

@@ -441,6 +441,9 @@ export const OrdersFragment = gql`
         }
       }
     }
+    buyerLicense {
+      ...UserLicenseFragment
+    }
     sellerStoreId
     sellerStore {
       id
@@ -517,6 +520,10 @@ export const OrdersFragment = gql`
       isSoldElsewhere
       storeId
       soldOutStatus
+      sellerLicenseId
+      sellerLicense {
+        ...UserLicenseFragment
+      }
       currentSnapshot {
         ...ProductSnapshotsFragment
       }
