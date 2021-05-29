@@ -61,8 +61,8 @@ const BannerHome: NextPage<ReactProps> = (props) => {
   // const bannerDither = 'linear-gradient(30deg, rgba(25,25,25,0.7) 10%, rgba(25,25,25,0.4) 60%)'
   // const bannerDither = 'linear-gradient(180deg, rgba(25, 25, 25, 0.1) 25%, rgba(25, 25, 25, 1) 75%)'
   const bannerDither = isDarkMode
-    ? 'linear-gradient(180deg, rgba(47, 52, 65, 0.1) 66%, rgba(47, 52, 65, 1) 100%)'
-    : 'linear-gradient(180deg, rgba(248, 249, 249, 0.1) 66%, rgba(248, 249, 249, 1) 100%)'
+    ? 'linear-gradient(180deg, rgba(47, 52, 65, 0.1) 78%, rgba(47, 52, 65, 1) 100%)'
+    : 'linear-gradient(180deg, rgba(248, 249, 249, 0.1) 78%, rgba(248, 249, 249, 1) 100%)'
 
 
   return (
