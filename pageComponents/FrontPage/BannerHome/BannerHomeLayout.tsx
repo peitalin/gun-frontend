@@ -57,11 +57,11 @@ const BannerHomeLayout: NextPage<ReactProps> = (props) => {
       //   ? "background-neon"
       //   : "background-neon"
       // }
-      className={
-        isDarkMode
-        ? "background-neon"
-        : "background-slate-grey"
-      }
+      // className={
+      //   isDarkMode
+      //   ? "background-neon"
+      //   : "background-slate-grey"
+      // }
 
       height={height}
       bannerContainerStyles={{
@@ -74,6 +74,13 @@ const BannerHomeLayout: NextPage<ReactProps> = (props) => {
       dither={true}
       portraitMode={props.portraitMode}
     >
+
+      {/* <div className={clsx(
+        classes.bannerInnerBoxRight,
+        classes.minWidth220,
+      )}>
+        <div className={classes.bannerImage} />
+      </div> */}
 
       <div className={classes.searchContainer}>
         {props.children}
@@ -139,18 +146,6 @@ const BannerHomeLayout: NextPage<ReactProps> = (props) => {
           }
         </div>
       </div>
-
-      {/* <div className={clsx(
-        classes.bannerInnerBoxRight,
-        classes.minWidth220,
-      )}>
-        <CardMedia
-          component="img"
-          className={"fadeIn"}
-          classes={{ media: classes.bannerImage }}
-          src={props.bannerImageUrl}
-        />
-      </div> */}
 
     </Banner>
   )

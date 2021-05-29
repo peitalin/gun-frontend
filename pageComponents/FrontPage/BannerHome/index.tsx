@@ -23,11 +23,14 @@ const BannerHome: NextPage<ReactProps> = (props) => {
   const isDarkMode = isThemeDark(theme)
 
   // const bannerImageUrl = "/img/cdx-50-tremor.png"
+  const bannerImageUrl = "/img/rifles-background.jpg"
   // const bannerMobileImageUrl = "/img/start/gun-collage-dark.png"
 
   const bannerContainerStyle = {
     // backgroundImage:`url(/img/start/gun-collage-5.png)`,
-    // backgroundImage:`url(/img/rifles-background.png)`,
+    backgroundImage: isThemeDark(theme)
+      ? `url(/img/rifles-background2-dark.jpg)`
+      : `url(/img/rifles-background2.png)`,
     backgroundPositionY: "3rem",
     backgroundRepeat: 'repeat',
     backgroundSize: "contain",
@@ -35,10 +38,12 @@ const BannerHome: NextPage<ReactProps> = (props) => {
     // backgroundSize: "cover",
     backgroundPosition: "left",
     // backgroundSize: 'auto', //stretch to fit for hero3.png
-    borderBottom: isThemeDark(theme)
-      ? `1px solid ${Colors.uniswapLightNavy}`
-      : `1px solid ${Colors.slateGreyDark}`,
-    backgroundColor: Colors.cream,
+    // borderBottom: isThemeDark(theme)
+    //   ? `1px solid ${Colors.uniswapLightNavy}`
+    //   : `1px solid ${Colors.slateGreyDark}`,
+    backgroundColor: isThemeDark(theme)
+      ? Colors.uniswapMediumNavy
+      : Colors.slateGrey
   }
 
   const bannerContainerStyleMobile = {
@@ -56,8 +61,8 @@ const BannerHome: NextPage<ReactProps> = (props) => {
   // const bannerDither = 'linear-gradient(30deg, rgba(25,25,25,0.7) 10%, rgba(25,25,25,0.4) 60%)'
   // const bannerDither = 'linear-gradient(180deg, rgba(25, 25, 25, 0.1) 25%, rgba(25, 25, 25, 1) 75%)'
   const bannerDither = isDarkMode
-    ? 'linear-gradient(180deg, rgba(25,25,25,0.2) 20%, rgba(25,25,25,0.9) 100%)'
-    : 'linear-gradient(180deg, rgba(245,245,245,0) 20%, rgba(245,245,245,0) 100%)'
+    ? 'linear-gradient(180deg, rgba(47, 52, 65, 0.1) 66%, rgba(47, 52, 65, 1) 100%)'
+    : 'linear-gradient(180deg, rgba(248, 249, 249, 0.1) 66%, rgba(248, 249, 249, 1) 100%)'
 
 
   return (
@@ -82,11 +87,12 @@ const BannerHome: NextPage<ReactProps> = (props) => {
       </ShowOnMobileOrDesktopSSR>
       {/* Desktop  */}
       <ShowOnMobileOrDesktopSSR desktop>
+
         <BannerHomeLayout
           height={750}
           mdDown={false}
-          // bannerImageUrl={bannerImageUrl}
-          bannerImageUrl={undefined}
+          bannerImageUrl={bannerImageUrl}
+          // bannerImageUrl={undefined}
           bannerContainerStyle={bannerContainerStyle}
           bannerDither={bannerDither}
           portraitMode={false}
