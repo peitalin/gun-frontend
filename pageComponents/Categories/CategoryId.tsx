@@ -114,9 +114,30 @@ const CategoryId: React.FC<ReactProps> = (props) => {
       ? [props.initialRouteCategory?.slug]
       : []
   )
-  const [dealerStatesForGql, setDealerStatesForGql] = React.useState<string[]>([])
-  const [calibersForGql, setCalibersForGql] = React.useState<string[]>([])
-  const [actionTypesForGql, setActionTypesForGql] = React.useState<string[]>([])
+  const [
+    dealerStatesForGql,
+    setDealerStatesForGql
+  ] = React.useState<string[]>(
+    router?.query?.state
+      ? [router.query.state as string]
+      : []
+  )
+  const [
+    calibersForGql,
+    setCalibersForGql
+  ] = React.useState<string[]>(
+    router?.query?.caliber
+      ? [router.query.caliber as string]
+      : []
+  )
+  const [
+    actionTypesForGql,
+    setActionTypesForGql
+  ] = React.useState<string[]>(
+    router?.query?.actionType
+      ? [router.query.actionType as string]
+      : []
+  )
 
   // rowMode by default on mobile
   const [rowMode, setRowMode] = React.useState(mdDown)

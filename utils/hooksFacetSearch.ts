@@ -77,6 +77,14 @@ export const useFacetSearchOptions = ({
     ? parseInt(decodeURIComponent(router?.query?.page as string)) ?? 1
     : 1
 
+  const initialCaliber = !!router?.query?.caliber
+    ? decodeURIComponent(router?.query?.caliber as string)
+    : ""
+
+  const initialState: DealerState = !!router?.query?.state
+    ? decodeURIComponent(router?.query?.state as DealerState)
+    : "" as any
+
   /// Search Terms
   const [searchTerm, setSearchTerm] = React.useState(initialSearchTerm);
 
@@ -90,16 +98,21 @@ export const useFacetSearchOptions = ({
     currentCategories,
     setCurrentCategories
   ] = React.useState<Categories[]>(undefined)
+  // initial category is /categories/[categorySlug]
 
   const [
     dealerStates,
     setDealerStates
-  ] = React.useState<DealerState[]>(undefined)
+  ] = React.useState<DealerState[]>(
+    initialState ? [initialState] : undefined
+  )
 
   const [
     calibers,
     setCalibers
-  ] = React.useState<string[]>(undefined)
+  ] = React.useState<string[]>(
+    initialCaliber ? [initialCaliber] : undefined
+  )
 
   const [
     actionTypes,
@@ -133,6 +146,24 @@ export const useFacetSearchOptions = ({
     setPageParam(initialPageParam)
   }, [initialPageParam])
 
+  React.useEffect(() => {
+    if (initialCaliber) {
+      setCalibers([initialCaliber])
+    } else {
+      setCalibers([])
+      // default empty array for all calibers filter
+    }
+  }, [initialCaliber])
+
+  React.useEffect(() => {
+    if (initialState) {
+      setDealerStates([initialState])
+    } else {
+      setDealerStates([])
+      // default empty array for all states filter
+    }
+  }, [initialState])
+
   ////////////////////////////////////////////////////
   /// query params syncing
   ////////////////////////////////////////////////////
@@ -148,8 +179,8 @@ export const useFacetSearchOptions = ({
 
       let urlPath = router.asPath.split('?')[0]
       let params: string[];
-      // console.log("router.query:", router?.query)
-      console.log("router: ", router)
+      console.log("router.query:", router?.query)
+      // console.log("router: ", router)
       // console.log("urlPath:", urlPath)
       // console.log("params1: ", params)
       // console.log("currentCategories: ", currentCategories)
@@ -169,20 +200,20 @@ export const useFacetSearchOptions = ({
       // it into urls
       if (router?.query) {
         params = Object.keys(router?.query).map(key => {
-          if (urlPath.startsWith('/categories')) {
-            // skip turning [categorySlugs] into query params
-            // when on /categories/[categorySlug] pages
+
+          // skip turning [categorySlugs] into query params
+          // when on /categories/[categorySlug] pages
+          if (urlPath.startsWith('/categories') && key === 'categorySlug') {
             return null
           } else {
             let value = router.query[key]
-            // let param = encodeURIComponent(`${key}=${value}`)
             let param = `${key}=${value}`
             return param
           }
+
         }).filter(p => !!p)
         // console.log("initial params: ", params)
       }
-      // console.log("params 2: ", params)
 
       // Sync facetHooks params to the url
       if (searchTerm !== undefined && searchTerm !== "") {
@@ -191,6 +222,7 @@ export const useFacetSearchOptions = ({
           params = [`q=${searchTerm}`, ...params]
         }
       }
+
       // Sync page params if larger than page 1
       if (pageParam > 1) {
         if (!params.some(p => p.includes('page='))) {

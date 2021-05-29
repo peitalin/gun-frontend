@@ -22,8 +22,6 @@ const DealerStatesMenu: React.FC<ReactProps> = (props) => {
   } = props;
 
 
-  console.log("props.dealerStates", props.dealerStates)
-
   return (
     <div className={clsx(classes.innerColumn, classes.innerColumnFlexRow)}>
       {

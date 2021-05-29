@@ -83,14 +83,22 @@ const SearchbarMain = (props: SearchbarProps) => {
 
 
   const onClickSearch = (searchTerm) => {
+
     let url
+
     if ((currentCategories ?? []).length > 0) {
       url = `/categories/${currentCategories?.[0]?.slug}`
     } else {
       url = `/categories/all`
     }
-    if (searchTerm) {
-      url += `?q=${encodeURIComponent(searchTerm)}`
+
+    url += `?q=${encodeURIComponent(searchTerm)}`
+
+    if (calibers?.length > 0) {
+      url += `&caliber=${encodeURIComponent(calibers?.[0])}`
+    }
+    if (dealerStates?.length > 0) {
+      url += `&state=${encodeURIComponent(dealerStates?.[0])}`
     }
     router.push(url)
   }

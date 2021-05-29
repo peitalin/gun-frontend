@@ -53,7 +53,7 @@ const SearchbarAirbnb: React.FC<ReactProps> = (props) => {
   } = props;
 
   const router = useRouter();
-  const snackbar = useSnackbar();
+  // const snackbar = useSnackbar();
 
   const {
     totalCount,
@@ -104,6 +104,8 @@ const SearchbarAirbnb: React.FC<ReactProps> = (props) => {
       handleClickSearch(searchTerm)
     }
     // refetch=1 param is taken away after render
+    // this is needed to force the mobile search bar to refetch after
+    // param change
   }, [router.query, searchTerm])
 
 

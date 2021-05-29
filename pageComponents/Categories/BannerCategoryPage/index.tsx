@@ -173,6 +173,7 @@ const BannerCategoryPage = (props: ReactProps & FacetSearchParams) => {
           />
         </BannerCategoryMobile>
       </Hidden>
+
       {/* Desktop */}
       <Hidden mdDown implementation="css" className={classes.width100}>
         <BannerCategoryDesktop

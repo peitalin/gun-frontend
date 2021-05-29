@@ -55,7 +55,6 @@ const CategorySearchbar: React.FC<ReactProps & FacetSearchParams> = (props) => {
 
 
   const onClickSearch = (event) => {
-    // THIS IS HAVING SOME ISSUES WHEN CLICKING NOT DISPATCHING
     setPageParam(1) // reset to page 1 every time you hit search button
     props.setSearchTermForGql(searchTerm)
     props.setDealerStatesForGql(dealerStates)

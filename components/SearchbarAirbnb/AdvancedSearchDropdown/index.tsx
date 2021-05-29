@@ -51,6 +51,9 @@ const AdvancedSearchDropdown: React.FC<ReactProps> = (props) => {
     props.setFocused(false)
   };
 
+  // console.log('dealerSttes', props.dealerStates)
+  // console.log('caliberrrrs', props.calibers)
+
   return (
     <>
       <div
@@ -61,9 +64,35 @@ const AdvancedSearchDropdown: React.FC<ReactProps> = (props) => {
         onClick={openModal}
       >
         <div className={classes.advancedSearchButtonText}>
-          <span className={classes.iconText}>
-            Filter By
-          </span>
+          <div className={classes.iconTextContainer}>
+            {
+              (props.calibers?.length > 0) &&
+              <span className={
+                (props.dealerStates?.length === 0)
+                  ? classes.iconText
+                  : classes.iconTextSm
+              }>
+                {`${props.calibers?.[0]}`}
+              </span>
+            }
+            {
+              (props.dealerStates?.length > 0) &&
+              <span className={
+                (props.calibers?.length === 0)
+                  ? classes.iconText
+                  : classes.iconTextSm
+              }>
+                {`${props.dealerStates?.[0]}`}
+              </span>
+            }
+            {
+              (!props.calibers?.length) &&
+              (!props.dealerStates?.length) &&
+              <span className={classes.iconText}>
+                Filter By
+              </span>
+            }
+          </div>
           <KeyboardArrowDown className={classes.dropdownArrow}/>
         </div>
       </div>
@@ -149,7 +178,7 @@ export const styles = (theme: Theme) => createStyles({
         ? Colors.uniswapGreyNavy
         : Colors.slateGreyDark,
       // borderBottom: '3px solid',
-      "& > div > span": {
+      "& > div > div > span": {
         color: theme.palette.type === 'dark'
           ? Colors.purple
           : Colors.blue,
@@ -171,9 +200,6 @@ export const styles = (theme: Theme) => createStyles({
   },
   advancedSearchDropdownMenu: {
     zIndex: 1,
-    // background: theme.palette.type === 'dark'
-    //   ? Colors.uniswapDarkNavy
-    //   : Colors.cream,
     padding: '1.5rem',
     minWidth: 300,
     width: '100%',
@@ -240,6 +266,20 @@ export const styles = (theme: Theme) => createStyles({
       : Colors.black,
   },
   iconText: {
+  },
+  iconTextSm: {
+    fontSize: '0.8rem',
+    fontWeight: 500,
+  },
+  iconTextContainer: {
+    display: "flex",
+    flexDirection: 'column',
+    justifyContent: "center",
+    alignItems: "center",
+    margin: '0rem 0.25rem',
+    // textOverflow: 'ellipsis',
+    // whiteSpace: 'nowrap',
+    // overflow: 'hidden',
   },
   modalBackdrop: {
     backgroundColor: Colors.modalBackground,
