@@ -186,13 +186,13 @@ const BannerStartDesktop: NextPage<ReactProps> = (props) => {
           ? <CardMedia
               component="img"
               className={"fadeIn"}
-              classes={{ media: classes.categoryImage }}
+              classes={{ media: classes.bannerImage }}
               src={props.bannerForegroundImageUrlDark}
             />
           : <CardMedia
               component="img"
               className={"fadeIn"}
-              classes={{ media: classes.categoryImage }}
+              classes={{ media: classes.bannerImage }}
               src={props.bannerForegroundImageUrlLight}
             />
         } */}
@@ -292,7 +292,7 @@ export const styles = (theme: Theme) => createStyles({
     fontSize: '1.25rem',
     maxWidth: 440,
   },
-  categoryImage: {
+  bannerImage: {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",

@@ -1,6 +1,6 @@
 // styles
 import { createStyles, Theme, fade } from "@material-ui/core/styles";
-import { Colors, Gradients, fontFam, isThemeDark } from "layout/AppTheme";
+import { Colors, Gradients, fontFam, isThemeDark, BorderRadius2x } from "layout/AppTheme";
 
 
 
@@ -124,6 +124,32 @@ export const styles = (theme: Theme) => createStyles({
     fontSize: '0.9rem',
   },
   saveAlt: {
+  },
+  bannerInnerBoxRight: {
+    display: 'flex',
+    justifyContent: 'center',
+    flexDirection: 'column',
+    // height: '100%',
+    maxWidth: 480,
+    flexBasis: '60%',
+    position: 'absolute',
+    bottom: 0,
+    right: 0,
+  },
+  minWidth220: {
+    minWidth: 220,
+  },
+  bannerImage: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "row",
+    textAlign: 'center',
+    borderRadius: BorderRadius2x,
+    width: '100%',
+    height: '100%',
+    // maxWidth: 400,
+    // minWidth: 400,
   },
 })
 

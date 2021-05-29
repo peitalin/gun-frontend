@@ -15,8 +15,8 @@ import { useRouter } from 'next/router';
 // SSR
 import { NextPage, NextPageContext } from 'next';
 import Login from "layout/Login";
-import Hidden from 'components/HiddenFix';
 import ShowOnMobileOrDesktopSSR from "components/ShowOnMobileOrDesktopSSR";
+import CardMedia from "@material-ui/core/CardMedia";
 
 // CSS
 import { useTheme } from "@material-ui/core/styles";
@@ -51,7 +51,7 @@ const BannerHomeLayout: NextPage<ReactProps> = (props) => {
   return (
     <Banner
       // in /public/img
-      src={bannerImageUrl}
+      // src={bannerImageUrl}
       // className={
       //   isDarkMode
       //   ? "background-neon"
@@ -78,7 +78,6 @@ const BannerHomeLayout: NextPage<ReactProps> = (props) => {
       <div className={classes.searchContainer}>
         {props.children}
       </div>
-
 
       <div className={classes.mainTitleContainer}>
         <Typography className={mdDown ? classes.mainTitleSm : classes.mainTitle}>
@@ -140,6 +139,18 @@ const BannerHomeLayout: NextPage<ReactProps> = (props) => {
           }
         </div>
       </div>
+
+      {/* <div className={clsx(
+        classes.bannerInnerBoxRight,
+        classes.minWidth220,
+      )}>
+        <CardMedia
+          component="img"
+          className={"fadeIn"}
+          classes={{ media: classes.bannerImage }}
+          src={props.bannerImageUrl}
+        />
+      </div> */}
 
     </Banner>
   )

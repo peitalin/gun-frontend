@@ -22,7 +22,7 @@ const BannerHome: NextPage<ReactProps> = (props) => {
   const theme = useTheme()
   const isDarkMode = isThemeDark(theme)
 
-  // const bannerImageUrl = "/img/start/gun-collage-5.png"
+  // const bannerImageUrl = "/img/cdx-50-tremor.png"
   // const bannerMobileImageUrl = "/img/start/gun-collage-dark.png"
 
   const bannerContainerStyle = {

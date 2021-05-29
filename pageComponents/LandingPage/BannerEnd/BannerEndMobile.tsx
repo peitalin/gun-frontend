@@ -177,7 +177,7 @@ const BannerEndMobile: NextPage<ReactProps> = (props) => {
               <CardMedia
                 component="img"
                 className={"fadeIn"}
-                classes={{ media: classes.categoryImage }}
+                classes={{ media: classes.bannerImage }}
                 src={props.bannerForegroundImageUrlDark}
               />
               {/* <Link href={"/"}>
@@ -197,7 +197,7 @@ const BannerEndMobile: NextPage<ReactProps> = (props) => {
               <CardMedia
                 component="img"
                 className={"fadeIn"}
-                classes={{ media: classes.categoryImage }}
+                classes={{ media: classes.bannerImage }}
                 src={props.bannerForegroundImageUrlLight}
               />
               {/* <Link href={"/"}>
@@ -295,7 +295,7 @@ export const styles = (theme: Theme) => createStyles({
     textAlign: "center",
     maxWidth: 360,
   },
-  categoryImage: {
+  bannerImage: {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
