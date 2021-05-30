@@ -23,13 +23,9 @@ const BannerHome: NextPage<ReactProps> = (props) => {
   const isDarkMode = isThemeDark(theme)
 
   const bannerImageUrl = undefined
-  // const bannerImageUrl = "/img/rifles-background.svg"
 
   const bannerContainerStyle = {
     // backgroundImage:`url(/img/start/gun-collage-5.png)`,
-    // backgroundImage: isThemeDark(theme)
-    //   ? `url(/img/rifles-background.svg)`
-    //   : `url(/img/rifles-background.svg)`,
     backgroundPositionY: "3rem",
     backgroundRepeat: 'repeat',
     backgroundSize: "contain",
@@ -59,11 +55,9 @@ const BannerHome: NextPage<ReactProps> = (props) => {
     // backgroundSize: 'auto', //stretch to fit for hero3.png
   }
 
-  // const bannerDither = 'linear-gradient(30deg, rgba(25,25,25,0.7) 10%, rgba(25,25,25,0.4) 60%)'
-  // const bannerDither = 'linear-gradient(180deg, rgba(25, 25, 25, 0.1) 25%, rgba(25, 25, 25, 1) 75%)'
   const bannerDither = isDarkMode
-    ? 'linear-gradient(180deg, rgba(47, 52, 65, 0.1) 78%, rgba(47, 52, 65, 1) 100%)'
-    : 'linear-gradient(180deg, RGBA(236, 237, 238, 0.1) 78%, RGBA(236, 237, 238, 1) 100%)'
+    ? 'linear-gradient(180deg, rgba(47, 52, 65, 0.1) 72%, rgba(47, 52, 65, 1) 100%)'
+    : 'linear-gradient(180deg, rgba(236, 237, 238, 0.1) 52%, rgba(236, 237, 238, 1) 100%)'
 
 
   return (
