@@ -22,15 +22,14 @@ const BannerHome: NextPage<ReactProps> = (props) => {
   const theme = useTheme()
   const isDarkMode = isThemeDark(theme)
 
-  // const bannerImageUrl = "/img/cdx-50-tremor.png"
-  const bannerImageUrl = "/img/rifles-background.jpg"
-  // const bannerMobileImageUrl = "/img/start/gun-collage-dark.png"
+  const bannerImageUrl = undefined
+  // const bannerImageUrl = "/img/rifles-background.svg"
 
   const bannerContainerStyle = {
     // backgroundImage:`url(/img/start/gun-collage-5.png)`,
-    backgroundImage: isThemeDark(theme)
-      ? `url(/img/rifles-background2-dark.jpg)`
-      : `url(/img/rifles-background2.png)`,
+    // backgroundImage: isThemeDark(theme)
+    //   ? `url(/img/rifles-background.svg)`
+    //   : `url(/img/rifles-background.svg)`,
     backgroundPositionY: "3rem",
     backgroundRepeat: 'repeat',
     backgroundSize: "contain",
@@ -42,7 +41,7 @@ const BannerHome: NextPage<ReactProps> = (props) => {
     //   ? `1px solid ${Colors.uniswapLightNavy}`
     //   : `1px solid ${Colors.slateGreyDark}`,
     backgroundColor: isThemeDark(theme)
-      ? Colors.uniswapMediumNavy
+      ? Colors.uniswapDarkNavy
       : Colors.slateGrey
   }
 
@@ -50,7 +49,9 @@ const BannerHome: NextPage<ReactProps> = (props) => {
     // backgroundColor: isDarkMode
     //   ? Colors.uniswapDarkNavy
     //   : Colors.slateGrey,
-    backgroundColor: Colors.uniswapDarkNavy,
+    backgroundColor: isThemeDark(theme)
+      ? Colors.uniswapDarkNavy
+      : Colors.slateGrey,
     backgroundRepeat: 'no-repeat',
     backgroundPosition: "left",
     backgroundSize: "cover",

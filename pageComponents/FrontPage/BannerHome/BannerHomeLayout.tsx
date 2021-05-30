@@ -27,6 +27,7 @@ import { GrandReduxState } from "reduxStore/grand-reducer";
 import { Actions } from "reduxStore/actions";
 import { UserPrivate } from "typings/gqlTypes";
 import Link from "next/link";
+import RiflesBackground from "components/Icons/RiflesBackground";
 
 
 
@@ -44,6 +45,14 @@ const BannerHomeLayout: NextPage<ReactProps> = (props) => {
   const user = useSelector<GrandReduxState, UserPrivate>(
     s => s.reduxLogin.user
   )
+
+  const renderRiflesBackground = (isDarkMode: boolean) => {
+    if (isDarkMode) {
+      return <RiflesBackground color={fade(Colors.uniswapMediumNavy, 0.4)}/>
+    } else {
+      return <RiflesBackground color={fade(Colors.slateGreyDarker, 0.4)}/>
+    }
+  }
 
   const theme = useTheme()
   const isDarkMode = isThemeDark(theme)
@@ -70,17 +79,31 @@ const BannerHomeLayout: NextPage<ReactProps> = (props) => {
       }}
       ditherStyle={{
         background: bannerDither,
+        zIndex: 1,
       }}
       dither={true}
       portraitMode={props.portraitMode}
     >
 
-      {/* <div className={clsx(
-        classes.bannerInnerBoxRight,
-        classes.minWidth220,
-      )}>
-        <div className={classes.bannerImage} />
-      </div> */}
+      {
+        mdDown
+        ? <div className={clsx(classes.bannerInnerBoxRight)}>
+            <div className={classes.flexRiflesCol}>
+              {renderRiflesBackground(isDarkMode)}
+              {renderRiflesBackground(isDarkMode)}
+            </div>
+          </div>
+        : <div className={clsx(classes.bannerInnerBoxRight)}>
+            <div className={classes.flexRiflesRow}>
+              {renderRiflesBackground(isDarkMode)}
+              {renderRiflesBackground(isDarkMode)}
+            </div>
+            <div className={classes.flexRiflesRow}>
+              {renderRiflesBackground(isDarkMode)}
+              {renderRiflesBackground(isDarkMode)}
+            </div>
+          </div>
+      }
 
       <div className={classes.searchContainer}>
         {props.children}

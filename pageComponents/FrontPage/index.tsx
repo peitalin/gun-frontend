@@ -59,7 +59,6 @@ const FrontPage: React.FC<ReactProps> = (props) => {
       <BannerHome
         initialCategories={props.initialCategories}
       />
-      {/* <BetaTestingBanner /> */}
 
       <AlignCenterLayout
         className={classes.zIndex2}

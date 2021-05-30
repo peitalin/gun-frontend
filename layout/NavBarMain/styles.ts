@@ -139,7 +139,7 @@ export const styles = (theme: Theme) => createStyles({
     top: 0,
     right: 0,
     border: isThemeDark(theme)
-      ? `1px solid ${Colors.uniswapDarkNavy}`
+      ? `1px solid ${Colors.uniswapMediumNavy}`
       : `1px solid ${Colors.slateGreyDarker}`,
     borderRadius: BorderRadius4x,
   },
@@ -154,7 +154,7 @@ export const styles = (theme: Theme) => createStyles({
     top: 0,
     right: 0,
     borderBottom: isThemeDark(theme)
-      ? `1px solid ${Colors.uniswapDarkNavy}`
+      ? `1px solid ${Colors.uniswapMediumNavy}`
       : `1px solid ${Colors.slateGreyDarker}`,
   },
   blurBackgroundMobile: {
@@ -168,7 +168,7 @@ export const styles = (theme: Theme) => createStyles({
     top: 0,
     right: 0,
     borderBottom: isThemeDark(theme)
-      ? `1px solid ${Colors.uniswapDarkNavy}`
+      ? `1px solid ${Colors.uniswapMediumNavy}`
       : `1px solid ${Colors.slateGreyDarker}`,
     // borderRadius: BorderRadius4x,
   },

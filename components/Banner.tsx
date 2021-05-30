@@ -56,7 +56,7 @@ const Banner: React.FC<ReactProps> = (props) => {
       }
       <div className={clsx(
         props.classes.bannerTitlebox,
-        props.classes.maxWidth
+        // props.classes.maxWidth
       )}
         style={{
           ...props.titleStyle,
