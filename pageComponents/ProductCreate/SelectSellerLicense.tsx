@@ -58,12 +58,13 @@ const SelectSellerLicense = (props: ReactProps & FormikProps<FormikFields>) => {
       )
       setSellerLicenseId(chosenLicense)
 
-    // for ProductCreate
     } else if (user?.defaultLicenseId) {
-      let defaultLicense = licenseOptions.find(
-        l => props.user?.defaultLicenseId === (l.value as User_Licenses).id
-      )
-      setSellerLicenseId(defaultLicense)
+      //// for ProductCreate, make the user choose license everytime
+      //// so there is less mistakes
+      // let defaultLicense = licenseOptions.find(
+      //   l => props.user?.defaultLicenseId === (l.value as User_Licenses).id
+      // )
+      // setSellerLicenseId(defaultLicense)
     }
   }, [props.user?.defaultLicenseId])
 

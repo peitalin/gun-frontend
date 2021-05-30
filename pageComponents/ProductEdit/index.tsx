@@ -61,25 +61,23 @@ const ProductEditModal: React.FC<ReactProps> = (props) => {
     )
   } else {
     return (
-      <>
-        <Dialog
-          open={productEditModalOpen}
-          onClose={() => closeModal()}
-          BackdropProps={{
-            classes: { root: classes.modalBackdrop }
-          }}
-          PaperProps={{
-            classes: { root: classes.modalPaperScrollPaper }
-          }}
-          scroll={"body"}
-        >
-          <ProductEditPage
-            asModal={true}
-            closeModal={closeModal}
-            product={product}
-          />
-        </Dialog>
-      </>
+      <Dialog
+        open={productEditModalOpen}
+        onClose={() => closeModal()}
+        BackdropProps={{
+          classes: { root: classes.modalBackdrop }
+        }}
+        PaperProps={{
+          classes: { root: classes.modalPaperScrollPaper }
+        }}
+        scroll={"body"}
+      >
+        <ProductEditPage
+          asModal={true}
+          closeModal={closeModal}
+          product={product}
+        />
+      </Dialog>
     )
   }
 }

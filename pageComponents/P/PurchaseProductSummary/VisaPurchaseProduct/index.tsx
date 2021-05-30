@@ -313,6 +313,11 @@ const VisaPurchaseProduct = (props: ReactProps) => {
 
 
   const createNewPaymentMethod = async(): Promise<PaymentMethod> => {
+
+    if (!chosenLicense?.value?.id) {
+      snackbar.enqueueSnackbar(`Please select a license first`, { variant: "error" })
+      throw new Error(`No license selected`)
+    }
     // Within the context of `Elements`, this call to createPaymentMethod
     // knows from which Element to create the PaymentMethod,
     // See our createPaymentMethod documentation for more:
@@ -441,15 +446,15 @@ const VisaPurchaseProduct = (props: ReactProps) => {
   let licenseOptions = createLicenseOptions(props.user?.licenses)
   let loadingGql = loading1 || loading2 || loading3
 
-  React.useEffect(() => {
-    // set defaultLicense as the initial license for the drodown
-    if (licenseOptions?.length > 0) {
-      let defaultLicense = licenseOptions.find(
-        l => props.user?.defaultLicenseId === (l.value as User_Licenses).id
-      )
-      setChosenLicense(defaultLicense)
-    }
-  }, [props.user?.defaultLicenseId])
+  // React.useEffect(() => {
+  //   // set defaultLicense as the initial license for the drodown
+  //   if (licenseOptions?.length > 0) {
+  //     let defaultLicense = licenseOptions.find(
+  //       l => props.user?.defaultLicenseId === (l.value as User_Licenses).id
+  //     )
+  //     setChosenLicense(defaultLicense)
+  //   }
+  // }, [props.user?.defaultLicenseId])
 
   // console.log("licenseOptions", licenseOptions)
   // console.log("chosenLicenseId", chosenLicenseId)
@@ -465,29 +470,26 @@ const VisaPurchaseProduct = (props: ReactProps) => {
           <div className={clsx(classes.flexCol)}>
 
             <div className={classes.dropdownContainer}>
-              {
-                chosenLicense?.value?.id &&
-                <DropdownInput
-                  stateShape={chosenLicense}
-                  onChange={({ label, value }: SelectOption) => {
-                    setChosenLicense({ label, value })
-                  }}
-                  value={chosenLicense}
-                  // disableAutocomplete={true}
-                  // menuPortalTarget={document?.body} // solves z-index problems
-                  // menuIsOpen={true}
-                  disable={!props.user?.id}
-                  components={{
-                    Option: OptionLicense
-                  }}
-                  options={licenseOptions}
-                  placeholder={"Select a License"}
-                  label="" // remove moving label
-                  inputProps={{ style: { width: '100%' }}}
-                  // errorMessage={formik.errors.licenseState}
-                  // touched={formik.touched.licenseState}
-                />
-              }
+              <DropdownInput
+                stateShape={chosenLicense}
+                onChange={({ label, value }: SelectOption) => {
+                  setChosenLicense({ label, value })
+                }}
+                value={chosenLicense}
+                // disableAutocomplete={true}
+                // menuPortalTarget={document?.body} // solves z-index problems
+                // menuIsOpen={true}
+                disable={!props.user?.id}
+                components={{
+                  Option: OptionLicense
+                }}
+                options={licenseOptions}
+                placeholder={"Select a License"}
+                label="" // remove moving label
+                inputProps={{ style: { width: '100%' }}}
+                // errorMessage={formik.errors.licenseState}
+                // touched={formik.touched.licenseState}
+              />
             </div>
 
             <div className={clsx(classes.creditCardContainer)}>

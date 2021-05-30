@@ -44,6 +44,7 @@ import BackTo from "components/BackTo";
 import Typography from "@material-ui/core/Typography";
 // Subcomponents
 import TitleSerialNumber from "pageComponents/ProductCreate/TitleSerialNumber";
+import MakeModel from "pageComponents/ProductCreate/MakeModel";
 import GunAttributes from "pageComponents/ProductCreate/GunAttributes";
 import Description from "pageComponents/ProductCreate/Description";
 import PricingLicenses from "pageComponents/ProductCreate/PricingLicenses";
@@ -284,16 +285,12 @@ const ProductEditPage = (props: ReactProps) => {
           title={"Back to Products"}
         />
         <SectionBorder thickPadding={true}>
-          <TitleSerialNumber {...formik} />
           <SelectCategories
             {...formik}
           />
           <SelectSellerLicense
             user={user}
             sellerLicenseId={props.product?.sellerLicenseId} // only for product edit
-            {...formik}
-          />
-          <SelectActionType
             {...formik}
           />
         </SectionBorder>
@@ -305,11 +302,19 @@ const ProductEditPage = (props: ReactProps) => {
         </SectionBorder>
 
         <SectionBorder thickPadding={true}>
-          <SelectCaliber {...formik} />
-          <GunAttributes {...formik} />
+          <TitleSerialNumber {...formik} />
+          <MakeModel {...formik} />
           <SelectCondition
             {...formik}
           />
+        </SectionBorder>
+
+        <SectionBorder thickPadding={true}>
+          <SelectActionType
+            {...formik}
+          />
+          <SelectCaliber {...formik} />
+          <GunAttributes {...formik} />
         </SectionBorder>
 
         <SectionBorder thickPadding={true}>
