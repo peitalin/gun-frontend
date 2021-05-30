@@ -43,6 +43,11 @@ const Banner: React.FC<ReactProps> = (props) => {
         />
       </ShowOnMobileOrDesktopSSR>
       {
+        props.renderBackgroundComponent &&
+        props.renderBackgroundComponent()
+      }
+      {
+        // dither is in front of renderBackgroundComponent
         props.dither &&
         <Dither
           classes={classes}
@@ -159,6 +164,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   ditherDark?: boolean;
   height?: number;
   bannerContainerStyles?: any;
+  renderBackgroundComponent?: () => React.ReactNode;
 }
 
 const bannerHeight = 280;
@@ -200,6 +206,7 @@ const styles = (theme: Theme) => createStyles({
     width: '100%',
     // height: bannerHeight,
     background: 'rgba(0,0,0,0.5)',
+    bottom: 0,
   },
   ditherLinearGradient: {
     position: 'absolute',

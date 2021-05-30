@@ -79,31 +79,35 @@ const BannerHomeLayout: NextPage<ReactProps> = (props) => {
       }}
       ditherStyle={{
         background: bannerDither,
-        zIndex: 1,
       }}
       dither={true}
+      renderBackgroundComponent={() => {
+        if (mdDown) {
+          return (
+            <div className={clsx(classes.bannerInnerBoxRight)}>
+              <div className={classes.flexRiflesCol}>
+                {renderRiflesBackground(isDarkMode)}
+                {renderRiflesBackground(isDarkMode)}
+              </div>
+            </div>
+          )
+        } else {
+          return (
+            <div className={clsx(classes.bannerInnerBoxRight)}>
+              <div className={classes.flexRiflesRow}>
+                {renderRiflesBackground(isDarkMode)}
+                {renderRiflesBackground(isDarkMode)}
+              </div>
+              <div className={classes.flexRiflesRow}>
+                {renderRiflesBackground(isDarkMode)}
+                {renderRiflesBackground(isDarkMode)}
+              </div>
+            </div>
+          )
+        }
+      }}
       portraitMode={props.portraitMode}
     >
-
-      {
-        mdDown
-        ? <div className={clsx(classes.bannerInnerBoxRight)}>
-            <div className={classes.flexRiflesCol}>
-              {renderRiflesBackground(isDarkMode)}
-              {renderRiflesBackground(isDarkMode)}
-            </div>
-          </div>
-        : <div className={clsx(classes.bannerInnerBoxRight)}>
-            <div className={classes.flexRiflesRow}>
-              {renderRiflesBackground(isDarkMode)}
-              {renderRiflesBackground(isDarkMode)}
-            </div>
-            <div className={classes.flexRiflesRow}>
-              {renderRiflesBackground(isDarkMode)}
-              {renderRiflesBackground(isDarkMode)}
-            </div>
-          </div>
-      }
 
       <div className={classes.searchContainer}>
         {props.children}
