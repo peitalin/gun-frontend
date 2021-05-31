@@ -1,6 +1,6 @@
 // styles
 import { createStyles, Theme, fade } from "@material-ui/core/styles";
-import { Colors, Gradients, fontFam, isThemeDark, BorderRadius2x } from "layout/AppTheme";
+import { Colors, Gradients, fontFam, isThemeDark, BorderRadius2x, BoxShadows } from "layout/AppTheme";
 
 
 
@@ -13,7 +13,6 @@ export const styles = (theme: Theme) => createStyles({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    width: '100%',
     padding: '1rem',
     marginTop: "8rem",
     marginBottom: '2rem',
@@ -73,27 +72,27 @@ export const styles = (theme: Theme) => createStyles({
     marginTop: '1rem',
   },
   buttonBecomeASeller: {
-    backgroundImage: theme.palette.type === 'dark'
-      ? Gradients.gradientUniswapFluro.background
-      : Gradients.gradientUniswapFluro.background,
-    // border: theme.palette.type === 'dark'
-    //   ? `1px solid ${Colors.gradientUniswapFluro1}`
-    //   : `1px solid ${Colors.gradientUniswapBlue1}`,
+    backgroundImage: Gradients.gradientUniswapFluro.background,
     color: Colors.cream,
     minWidth: '150px',
+    backgroundPosition: '0px',
+    transition: theme.transitions.create(['border', 'box-shadow'], {
+      easing: theme.transitions.easing.easeInOut,
+      duration: "200ms",
+    }),
+    border: isThemeDark(theme)
+      ? `1px solid ${Colors.uniswapDarkNavy}`
+      : `1px solid ${Colors.slateGreyDark}`,
     "&:hover": {
-      backgroundImage: theme.palette.type === 'dark'
-        ? Gradients.gradientUniswapFluro2.background
-        : Gradients.gradientUniswapFluro2.background,
-      // border: theme.palette.type === 'dark'
-      //   ? `1px solid ${Colors.gradientUniswapFluro2}`
-      //   : `1px solid ${Colors.gradientUniswapBlueGreen}`,
-      transition: theme.transitions.create(['color', 'border', 'background'], {
+      transition: theme.transitions.create(['border', 'box-shadow'], {
         easing: theme.transitions.easing.easeInOut,
         duration: "200ms",
       }),
-      backgroundPosition: '95px',
-    }
+      border: `1px solid ${Colors.black}`,
+      boxShadow: isThemeDark(theme)
+        ? BoxShadows.shadowWhite.boxShadow
+        : BoxShadows.shadow1.boxShadow,
+    },
   },
   minWidth160: {
     minWidth: 160,
@@ -146,6 +145,18 @@ export const styles = (theme: Theme) => createStyles({
     flexBasis: '50%',
     flexGrow: 1,
     flexWrap: 'wrap',
+    transition: theme.transitions.create(['filter'], {
+      easing: theme.transitions.easing.easeInOut,
+      duration: "400ms",
+    }),
+    // filter: "blur(1px)",
+  },
+  backgroundBlur: {
+    filter: "blur(6px)",
+    transition: theme.transitions.create(['filter'], {
+      easing: theme.transitions.easing.easeInOut,
+      duration: "400ms",
+    }),
   },
   flexRiflesCol: {
     display: 'flex',

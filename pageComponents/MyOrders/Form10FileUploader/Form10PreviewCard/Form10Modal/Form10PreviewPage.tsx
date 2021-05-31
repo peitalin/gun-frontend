@@ -24,10 +24,7 @@ const OrderDetailsPage: React.FC<ReactProps> = (props) => {
 
   const product = order.product;
   const theme = useTheme();
-  const xsDown = useMediaQuery(theme.breakpoints.down('xs'))
-
-  // const priceSelect = centsToDollarSelector(price);
-  // const priceWasSelect = centsToDollarSelector(priceWas);
+  const mdDown = useMediaQuery(theme.breakpoints.down('md'))
 
   let form10FileId = order?.currentSnapshot?.form10File?.id;
   let form10MimeType = order?.currentSnapshot?.form10File?.mimeType;
@@ -39,7 +36,7 @@ const OrderDetailsPage: React.FC<ReactProps> = (props) => {
 
   return (
     <ErrorBounds className={clsx(
-      xsDown ? classes.rootMobile : classes.root,
+      mdDown ? classes.rootMobile : classes.root,
       "fadeInFast",
     )}>
 

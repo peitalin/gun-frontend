@@ -25,7 +25,6 @@ import {
   GET_ORDERS_COMPLETING_CONNECTION_DEALER,
 } from "queries/orders-dealer-queries";
 // Pagination
-import { ConnectionQueryProps } from "components/Paginators/usePaginatePagedQueryHook";
 import ErrorDisplay from "components/ErrorDisplay";
 import LoadingBar from "components/LoadingBar";
 // formatters

@@ -1,25 +1,5 @@
 import { SoldOutStatus } from "typings/gqlTypes";
 
-export const toCamelCase = (s: string): string => {
-  return s.replace(/(\_\w)/g, (w) => w[1].toUpperCase())
-}
-
-export const objectToCamelCase = <T>(row: T): T => {
-  // Mutates keys to camelCase keys
-  Object.keys(row).map(key => {
-    let camelKey = toCamelCase(key);
-    if (camelKey !== key) {
-      row[camelKey] = row[key];
-      delete row[key];
-    }
-  });
-  return row;
-}
-
-export const rowsToCamelCase = <T>(rows: T[]): T[] => {
-  // Renames all keys in an array of objects as camelCase
-  return rows.map(row => objectToCamelCase(row));
-}
 
 export const setEquals = <T>(set1: Set<T>, set2: Set<T>): boolean => {
   if (set1.size !== set2.size) {

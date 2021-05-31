@@ -15,7 +15,7 @@ import ErrorBounds from "components/ErrorBounds";
 import Button from "@material-ui/core/Button";
 import ProductPreviewCardRowSmall from "components/ProductPreviewCardRowSmall";
 import Typography from "@material-ui/core/Typography";
-import PriceDisplay4 from "components/PriceDisplay4";
+import PriceDisplayMobileRecommendation from "components/PriceDisplayMobileRecommendation";
 // helpers
 import { trimTitle } from "utils/strings";
 
@@ -90,7 +90,7 @@ const ProductRecommendationRow = (props: ReactProps) => {
           )}>
             {
               price
-              ? <PriceDisplay4
+              ? <PriceDisplayMobileRecommendation
                   price={price}
                   soldOutStatus={soldOutStatus}
                   isSuspended={product?.isSuspended}

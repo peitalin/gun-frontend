@@ -42,15 +42,17 @@ const BannerHomeLayout: NextPage<ReactProps> = (props) => {
     height = 480,
   } = props;
 
+  const [hover, setHover] = React.useState(false)
+
   const user = useSelector<GrandReduxState, UserPrivate>(
     s => s.reduxLogin.user
   )
 
   const renderRiflesBackground = (isDarkMode: boolean) => {
     if (isDarkMode) {
-      return <RiflesBackground color={fade(Colors.uniswapMediumNavy, 0.4)}/>
+      return <RiflesBackground color={Colors.uniswapGreyNavy}/>
     } else {
-      return <RiflesBackground color={fade(Colors.slateGreyDarker, 0.4)}/>
+      return <RiflesBackground color={fade(Colors.slateGreyDarker, 0.5)}/>
     }
   }
 
@@ -85,7 +87,10 @@ const BannerHomeLayout: NextPage<ReactProps> = (props) => {
         if (mdDown) {
           return (
             <div className={clsx(classes.bannerInnerBoxRight)}>
-              <div className={classes.flexRiflesCol}>
+              <div className={clsx(
+                classes.flexRiflesCol,
+                hover && classes.backgroundBlur,
+              )}>
                 {renderRiflesBackground(isDarkMode)}
                 {renderRiflesBackground(isDarkMode)}
               </div>
@@ -94,11 +99,17 @@ const BannerHomeLayout: NextPage<ReactProps> = (props) => {
         } else {
           return (
             <div className={clsx(classes.bannerInnerBoxRight)}>
-              <div className={classes.flexRiflesRow}>
+              <div className={clsx(
+                classes.flexRiflesRow,
+                hover && classes.backgroundBlur,
+              )}>
                 {renderRiflesBackground(isDarkMode)}
                 {renderRiflesBackground(isDarkMode)}
               </div>
-              <div className={classes.flexRiflesRow}>
+              <div className={clsx(
+                classes.flexRiflesRow,
+                hover && classes.backgroundBlur,
+              )}>
                 {renderRiflesBackground(isDarkMode)}
                 {renderRiflesBackground(isDarkMode)}
               </div>
@@ -109,7 +120,10 @@ const BannerHomeLayout: NextPage<ReactProps> = (props) => {
       portraitMode={props.portraitMode}
     >
 
-      <div className={classes.searchContainer}>
+      <div className={classes.searchContainer}
+        onMouseEnter={() => setHover(true)}
+        onMouseLeave={() => setHover(false)}
+      >
         {props.children}
       </div>
 
@@ -123,7 +137,10 @@ const BannerHomeLayout: NextPage<ReactProps> = (props) => {
           Free to list. Simple and Safe.
         </Typography>
 
-        <div className={clsx(classes.buttonsFlexRow, 'fadeInFast')}>
+        <div className={clsx(classes.buttonsFlexRow, 'fadeInFast')}
+          onMouseEnter={() => setHover(true)}
+          onMouseLeave={() => setHover(false)}
+        >
           {
             !user?.id
             ? <Login

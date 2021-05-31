@@ -8,7 +8,6 @@ import Typography from "@material-ui/core/Typography";
 import Button from '@material-ui/core/Button';
 // Utils Components
 import ErrorBounds from "components/ErrorBounds";
-import { centsToDollarSelector } from "utils/selectors";
 import { Product } from "typings/gqlTypes";
 import PriceDisplayMain from "components/PriceDisplayMain";
 import { getFeaturedPreviewFromProduct } from "utils/images";

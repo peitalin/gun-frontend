@@ -18,7 +18,6 @@ import DescriptionLoading from "components/ProductCardResponsive/DescriptionLoad
 import { goToModalConnect } from "utils/modals";
 // helpers
 import { useRouter } from "next/router";
-import { trimTitle } from "utils/strings";
 // next
 import Link from "next/link";
 

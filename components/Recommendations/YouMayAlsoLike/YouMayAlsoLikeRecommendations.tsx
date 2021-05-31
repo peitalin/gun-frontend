@@ -22,7 +22,6 @@ import {
 import Link from "next/link";
 // Paginator hooks
 import { useQuery } from "@apollo/client";
-import usePaginateQueryHook from "components/Paginators/usePaginateQueryHook";
 // CSS
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';

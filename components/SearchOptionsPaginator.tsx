@@ -16,10 +16,6 @@ import { useDebouncedCallback } from 'use-debounce';
 
 const SearchOptionsPaginator: React.FC<ReactProps> = (props) => {
 
-  // const isDarkMode = useSelector<GrandReduxState, boolean>(
-  //   s => s.reduxLogin.darkMode === 'dark'
-  // )
-
   const {
     classes,
     paginationParams,

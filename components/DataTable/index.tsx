@@ -17,9 +17,6 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 // Typings
 import { Connection } from "typings/gqlTypes";
-// Paginator hooks
-import usePaginateQueryHook from "components/Paginators/usePaginatePagedQueryHook";
-const usePaginateQuery = usePaginateQueryHook();
 // Subcomponents
 import { useStyles } from "./styles";
 import TableHeadExtended from "./TableHeadExtended";

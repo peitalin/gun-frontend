@@ -323,10 +323,6 @@ const ProductCreatePage = (props: ReactProps) => {
   )
 
   const processProductData = ({ publishNow }: { publishNow: boolean }) => {
-    snackbar.enqueueSnackbar(
-      `Creating escrow for order...`,
-      { variant: "info" }
-    )
     formik.setFieldValue("isPublished", publishNow);
     // update formik with redux currentVariants
     formik.setFieldValue("currentVariants", currentVariantsInput);
@@ -334,11 +330,15 @@ const ProductCreatePage = (props: ReactProps) => {
       // need to await formikCurrentVariants update
       if (isFormikDisabled(formik.errors)) {
         snackbar.enqueueSnackbar(
-          printValidationErrors(formik.errors),
+          printValidationErrors(formik.errors, 3),
           { variant: "error", autoHideDuration: 5000 }
         )
         setState(s => ({ ...s, loading: false }))
       } else {
+        snackbar.enqueueSnackbar(
+          `Creating escrow for order...`,
+          { variant: "info" }
+        )
         setState(s => ({ ...s, loading: true }))
       }
     }, 0)
@@ -667,7 +667,8 @@ const isFormikDisabled = (
 }
 
 const printValidationErrors = (
-  errors: FormikErrors<ProductCreateInput>
+  errors: FormikErrors<ProductCreateInput>,
+  showMaxErrors: number
 ): string => {
 
   // watch out for nested objects which may not be strings
@@ -688,8 +689,14 @@ const printValidationErrors = (
     filterErrors = { ...filterErrors, previewItems: previewItemsError }
   }
 
-  const errorMsg = Object.keys(filterErrors).join(", ")
-  return `Please check: ${errorMsg}`
+  let numExtraErrors = Object.keys(filterErrors).length - showMaxErrors
+
+  const errorMsg = Object.keys(filterErrors).slice(0, showMaxErrors).join(", ")
+  if (numExtraErrors > 0) {
+    return `Please check: ${errorMsg}... and more`
+  } else {
+    return `Please check: ${errorMsg}`
+  }
 }
 
 export const reduxToFormikCurrentVariants = (

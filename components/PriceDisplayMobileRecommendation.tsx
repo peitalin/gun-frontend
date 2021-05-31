@@ -12,7 +12,7 @@ import { convertSoldOutStatus } from "utils/strings";
 
 
 
-const PriceDisplay4 = (props: ReactProps) => {
+const PriceDisplayMobileRecommendation = (props: ReactProps) => {
 
   const {
     classes,
@@ -108,4 +108,4 @@ const styles = (theme: Theme) => createStyles({
   },
 });
 
-export default withStyles(styles)( PriceDisplay4 );
+export default withStyles(styles)( PriceDisplayMobileRecommendation );

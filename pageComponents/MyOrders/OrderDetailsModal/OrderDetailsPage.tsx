@@ -30,14 +30,11 @@ const OrderDetailsPage: React.FC<ReactProps> = (props) => {
 
   const product = order.product;
   const theme = useTheme();
-  const xsDown = useMediaQuery(theme.breakpoints.down('xs'))
-
-  // const priceSelect = centsToDollarSelector(price);
-  // const priceWasSelect = centsToDollarSelector(priceWas);
+  const mdDown = useMediaQuery(theme.breakpoints.down('xs'))
 
   return (
     <ErrorBounds className={clsx(
-      xsDown ? classes.rootMobile : classes.root,
+      mdDown ? classes.rootMobile : classes.root,
       "fadeInFast",
     )}>
 

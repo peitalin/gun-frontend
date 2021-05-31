@@ -306,9 +306,9 @@ export const Gradients = {
     color2: Colors.gradientUniswapFluro2,
   },
   gradientUniswapFluro2:  {
-    background: `linear-gradient(120deg, ${Colors.gradientUniswapFluro1} 30%, ${Colors.gradientUniswapFluro2} 50%, ${Colors.gradientUniswapFluro1} 70%)`,
+    background: `linear-gradient(120deg, ${Colors.gradientUniswapFluro1} 20%, ${Colors.gradientUniswapFluro1} 80%)`,
     color1: Colors.gradientUniswapFluro1,
-    color2: Colors.gradientUniswapFluro2,
+    color2: Colors.gradientUniswapFluro1,
   },
   gradientSnackBlueMagenta:  {
     background: `linear-gradient(90deg, ${Colors.gradientUniswapBlue1} 50%, rgb(146, 89, 240, 0.8) 100%)`,
@@ -699,7 +699,7 @@ export const createAppTheme = (darkModeStr: "dark"|"light"): ThemeOptions =>  {
           maxWidth: '100%',
         },
         container: {
-          backdropFilter: "blur(2px)",
+          backdropFilter: "blur(4px)",
         },
       },
       MuiTouchRipple: {

@@ -8,7 +8,6 @@ import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
 import Link from "next/link";
 import WatchlistIcon from "components/WatchlistIcon";
-import DiscountBadge from "components/DiscountBadge";
 // Typings
 import { Categories, Product, Product_Preview_Items, SoldOutStatus } from "typings/gqlTypes";
 import { genSrcSet, genImgBreakpoints } from "utils/images";

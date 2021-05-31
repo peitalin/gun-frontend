@@ -8,7 +8,6 @@ import { styles } from "./stylesDesktop";
 import Typography from "@material-ui/core/Typography";
 import Link from "next/link";
 // Components
-// import PreviewCardResponsive from "pageComponents/FrontPage/PreviewCardResponsive";
 import ProductCardResponsive from "components/ProductCardResponsive";
 import LoadingCards from "pageComponents/FrontPage/LoadingCards";
 // GraphQL Typings

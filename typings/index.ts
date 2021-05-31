@@ -1,15 +1,8 @@
-
 import {
   ProductVariantInput,
   ProductVariantEditInput,
   ID,
-  Payment_Methods,
-  Payout_Methods,
-  PageInfo,
 } from "typings/gqlTypes";
-
-type PaymentMethod = any;
-type PayoutMethod = any;
 
 
 export interface SendPasswordResetResponse {
@@ -24,12 +17,6 @@ export interface SendPasswordResetResponse {
 export type HtmlEvent = React.ChangeEvent<
   HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
 >;
-
-export interface SubtotalDisplay {
-  subtotalCents: number;
-  subtotalDisplay: string;
-  subtotalPaypal: string;
-}
 
 export interface GenericEdge<T> {
   node: T;
@@ -85,24 +72,6 @@ export enum PayoutType {
   BANK = "BANK"
 }
 
-export interface EditUserProfileInput {
-  email?: string;
-  username?: string;
-  firstName?: string;
-  lastName?: string;
-  // // emailVerified: boolean,
-  // downloads?: ID[];
-  // referredUsers?: ID[];
-  subscribedNewsletters?: ID[];
-  // watchList?: Watchlist;
-  // cart?: Cart;
-  paymentMethods?: PaymentMethod[];
-  defaultPaymentMethod?: PaymentMethod | null;
-  // isSuspended?: boolean;
-  // store?: Store | null;
-  payoutMethod?: PayoutMethod | null;
-}
-
 export interface ProductCreateEditCommonInput {
   categoryId: string;
   title: string;
@@ -118,14 +87,6 @@ export interface ProductCreateEditCommonInput {
   magazineCapacity?: string;
   barrelLength?: string;
   dealerId: string;
-  // dealer?: {
-  //   licenseNumber?: string;
-  //   name?: string;
-  //   postCode?: string;
-  //   address?: string;
-  //   state?: string;
-  //   city?: string;
-  // };
   isPublished: boolean;
   allowBids?: boolean;
   sellerLicenseId: string;

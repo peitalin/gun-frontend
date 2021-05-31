@@ -18,7 +18,7 @@ import {
 import {
   splitArrayIntoGrid,
   GridMap,
-} from "components/GridPaginatorHelpers";
+} from "components/GridPaginatorGeneric/GridPaginatorHelpers";
 import { NextRouter } from "next/router";
 
 

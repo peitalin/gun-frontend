@@ -13,7 +13,7 @@ import Typography from '@material-ui/core/Typography';
 // Components
 import styles from './commonStyles';
 import ErrorBounds from "components/ErrorBounds";
-import Or from "components/Or";
+import Or from "layout/Login/Or";
 // Router
 import LockIcon from "@material-ui/icons/Lock";
 // Clear

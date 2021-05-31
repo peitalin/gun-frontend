@@ -78,11 +78,11 @@ export const validationSchemas = {
         .required("Pick a license"),
       currentVariants: Yup.array().of(Yup.object({
           price: Yup.number().nullable()
-            .min(minPrice, "Minimum price: $1")
+            .min(minPrice, `Minimum price: \$${minPrice/100}`)
             .max(maxPrice, "Max price: $10,000")
             .required('Add a price'),
           priceWas: Yup.number().nullable()
-            .min(minPrice, "Minimum price: $1")
+            .min(minPrice, `Minimum price: \$${minPrice/100}`)
             .max(maxPrice, "Max price: $10,000")
             .test("priceWas", "Must exceed price (now)", function(value) {
               // console.log(">>>>>>>>>>>>", value, this)
@@ -173,11 +173,11 @@ export const validationSchemas = {
       currentVariants: Yup.array().of(
           Yup.object({
             price: Yup.number().nullable(true)
-              .min(minPrice, "Minimum price: $1")
+              .min(minPrice, `Minimum price: \$${minPrice/100}`)
               .max(maxPrice, "Max price: $10,000")
               .required('Add a price'),
             priceWas: Yup.number().nullable(true)
-              .min(minPrice, "Minimum price: $1")
+              .min(minPrice, `Minimum price: \$${minPrice/100}`)
               .max(maxPrice, "Max price: $10,000")
               .test("priceWas", "Must exceed price (now)", function(value) {
                 // this.path: the string path of the current validation
@@ -474,7 +474,7 @@ export const validationSchemas = {
   CreateInitialBid:
     Yup.object().shape({
       offerPrice: Yup.number().nullable()
-        .min(minPrice, "Minimum price: $1")
+        .min(minPrice, `Minimum price: \$${minPrice/100}`)
         .max(maxPrice, "Max price: $10,000")
         .required('Add a price'),
     }),
@@ -483,7 +483,7 @@ export const validationSchemas = {
   SendBid:
     Yup.object().shape({
       offerPrice: Yup.number().nullable()
-        .min(minPrice, "Minimum price: $1")
+        .min(minPrice, `Minimum price: \$${minPrice/100}`)
         .max(maxPrice, "Max price: $10,000")
         .required('Add a price'),
       /// Graphql validates this, not frontend

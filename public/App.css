@@ -96,10 +96,6 @@ textarea {
   flex-basis: 200px;
 }
 
-.app {
-  font-family: "Helvetica Neue", arial, sans-serif;
-}
-
 
 /* //// MUI ////// */
 
@@ -116,11 +112,6 @@ textarea {
 }
 
 /* Override Dropdown menus placeholder text color
- Make it lighter grey */
-.css-1hwfws3 .css-151xaom-placeholder {
-  color: hsl(0, 0, 75%);
-  font-weight: 300;
-}
 /* // React Dropzone Uploader style overrides */
 .dzu-dropzone .dottedContainer {
   border: 3px dashed #ddd;
@@ -135,10 +126,6 @@ textarea {
 .dzu-upload-input:hover {
   opacity: 1;
   transition: opacity 200ms;
-}
-/* // Paypal button */
-#goofBox:hover + #goofProofButton {
-  background-color: rgba(226, 16, 63, 0.08),
 }
 
 /* //////// Animations */
@@ -491,6 +478,36 @@ textarea {
     animation: background-slide-loop 20s linear infinite;
 }
 
+.blue-pulse {
+  display: flex;
+  background-color: rgb(25, 28, 28);
+  border: 1px solid rgb(43, 43, 43);
+  border-radius: 8px;
+  padding: 16px 24px 24px 16px;
+  box-shadow: rgb(36 132 255 / 16%) 4px 8px 80px;
+  margin: 0px 80px;
+  transition: box-shadow 0.25s ease-out 0s;
+  position: relative;
+  height: 100%;
+  perspective: 2000px;
+  animation: 3s ease 0s infinite normal none running bluePulse;
+}
+.blue-pulse:hover {
+    animation: 0s ease 0s 1 normal none running none;
+    box-shadow: rgb(36 132 255 / 40%) 8px 8px 120px;
+}
+@keyframes bluePulse {
+  0% {
+    box-shadow: rgba(36, 132, 255, 0.4) 8px 8px 120px;
+  }
+  50% {
+    box-shadow: rgba(36, 132, 255, 0.16) 8px 8px 120px;
+  }
+  100% {
+    box-shadow: rgba(36, 132, 255, 0.4) 8px 8px 120px;
+  }
+}
+
 
 @keyframes background-gradient {
     0% {
@@ -534,26 +551,6 @@ textarea {
   }
 }
 
-
-#gradient-border-1 {
-  --angle: 0deg;
-  border-top: 2px solid;
-  border-bottom: 2px solid;
-  border-image: conic-gradient(from var(--angle), rgb(85, 146, 232), rgb(206, 69, 197), rgb(85, 146, 232)) 1;
-  animation: 6s rotate linear infinite;
-}
-
-@keyframes rotate {
-  to {
-    --angle: 360deg;
-  }
-}
-
-@property --angle {
-  syntax: '<angle>';
-  initial-value: 0deg;
-  inherits: false;
-}
 
 
 

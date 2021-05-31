@@ -8,9 +8,6 @@ import TableSortLabel from '@material-ui/core/TableSortLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 // Typings
 import { Connection } from "typings/gqlTypes";
-// Paginator hooks
-import usePaginateQueryHook from "components/Paginators/usePaginatePagedQueryHook";
-const usePaginateQuery = usePaginateQueryHook();
 import { useStyles } from "./styles";
 
 

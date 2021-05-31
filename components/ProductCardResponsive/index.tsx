@@ -30,15 +30,7 @@ const ProductCardResponsive: React.FC<ProductCardResponsiveProps> = (props) => {
     maxWidthOfRow = 1160,
   } = props;
 
-  const theme = useTheme();
-  const xl = useMediaQuery(theme.breakpoints.only("xl"))
-  const lg = useMediaQuery(theme.breakpoints.only("lg"))
-  const md = useMediaQuery(theme.breakpoints.only("md"))
-  const sm = useMediaQuery(theme.breakpoints.only("sm"))
-  const xs = useMediaQuery(theme.breakpoints.only("xs"))
-  const noMediaQuery = [xl, lg, md, sm, xs].every(s => !s);
-  // if no media query applies
-
+  // const theme = useTheme();
   const featuredPreviewItem = product?.featuredVariant?.previewItems?.[0];
 
   const commonPreviewCardProps = {
@@ -55,7 +47,6 @@ const ProductCardResponsive: React.FC<ProductCardResponsiveProps> = (props) => {
     disableLoadingAnimation: props.disableLoadingAnimation,
     promotedSlotId: props.promotedSlotId,
   }
-
 
   // Note: use "implementation: css" for proper SSR.
   // otherwise there will be a flash of unstyled content before JS loads
@@ -116,54 +107,6 @@ const ProductCardResponsive: React.FC<ProductCardResponsiveProps> = (props) => {
       </Hidden>
     </>
   )
-
-  // if (xl || noMediaQuery) {
-  //   return (
-  //     <ProductCardRC
-  //       product={product}
-  //       {...commonPreviewCardProps}
-  //       screenSize={"xl"}
-  //       cardsPerRow={cardsPerRow.xl} // 4 default
-  //     />
-  //   )
-  // } else if (lg) {
-  //   return (
-  //     <ProductCardRC
-  //       product={product}
-  //       {...commonPreviewCardProps}
-  //       screenSize={"lg"}
-  //       cardsPerRow={cardsPerRow.lg} // 3 default
-  //     />
-  //   )
-  // } else if (md) {
-  //   return (
-  //     <ProductCardRC
-  //       product={product}
-  //       {...commonPreviewCardProps}
-  //       screenSize={"md"}
-  //       cardsPerRow={cardsPerRow.md} // 2 default
-  //     />
-  //   )
-  // } else if (sm) {
-  //   return (
-  //     <ProductCardRC
-  //       product={product}
-  //       {...commonPreviewCardProps}
-  //       screenSize={"sm"}
-  //       cardsPerRow={cardsPerRow.sm} // 1 default
-  //     />
-  //   )
-  // } else {
-  //   // else if (xs)
-  //   return (
-  //     <ProductCardRC
-  //       product={product}
-  //       {...commonPreviewCardProps}
-  //       screenSize={"sm"}
-  //       cardsPerRow={cardsPerRow.sm} // 1 default
-  //     />
-  //   )
-  // }
 }
 
 
@@ -191,4 +134,7 @@ interface ProductCardResponsiveProps {
 }
 
 
-export default ProductCardResponsive;
+
+export default React.memo(
+  (props: ProductCardResponsiveProps) => <ProductCardResponsive {...props}/>,
+)

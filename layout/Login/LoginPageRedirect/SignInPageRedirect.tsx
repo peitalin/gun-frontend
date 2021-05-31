@@ -10,7 +10,7 @@ import ErrorBounds from "components/ErrorBounds";
 import TextInput from "components/Fields/TextInput";
 // Router
 import LockIcon from "@material-ui/icons/Lock";
-import Or from "components/Or";
+import Or from "layout/Login/Or";
 import ButtonLoading from "components/ButtonLoading";
 
 

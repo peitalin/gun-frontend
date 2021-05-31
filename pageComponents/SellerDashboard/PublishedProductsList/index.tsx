@@ -35,7 +35,6 @@ import ResponsivePadding from "../ResponsivePadding";
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 // pagination
-import PaginateButtons from "components/Paginators/PaginateButtons";
 import { useQuery, useLazyQuery, DocumentNode } from "@apollo/client";
 import { DASHBOARD_PRODUCTS_CONNECTION } from "queries/store-queries";
 // Search Component

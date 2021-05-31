@@ -4,7 +4,6 @@ import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/s
 import { Colors, BorderRadius } from "layout/AppTheme";
 import clsx from "clsx";
 // Components
-// import PreviewCardResponsive from "pageComponents/FrontPage/PreviewCardResponsive";
 import ProductCardResponsive from "components/ProductCardResponsive";
 import PromotedSlotMessage from "./PromotedSlotMessage";
 // GraphQL Typings

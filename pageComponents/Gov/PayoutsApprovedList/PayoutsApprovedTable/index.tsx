@@ -21,7 +21,6 @@ import {
   GET_ORDERS_ADMIN_APPROVED_BY_IDS_CONNECTION,
 } from "queries/orders-admin-queries";
 // Pagination
-import { ConnectionQueryProps } from "components/Paginators/usePaginatePagedQueryHook";
 import ErrorDisplay from "components/ErrorDisplay";
 import LoadingBar from "components/LoadingBar";
 // graphl

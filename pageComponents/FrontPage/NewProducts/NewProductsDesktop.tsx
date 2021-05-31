@@ -7,7 +7,6 @@ import { styles } from "../FeaturedProducts/stylesDesktop";
 // Material UI
 import Typography from "@material-ui/core/Typography";
 // Components
-// import PreviewCardResponsive from "pageComponents/FrontPage/PreviewCardResponsive";
 import ProductCardResponsive from "components/ProductCardResponsive";
 import LoadingCards from "pageComponents/FrontPage/LoadingCards";
 // GraphQL Typings

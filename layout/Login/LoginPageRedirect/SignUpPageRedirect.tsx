@@ -7,7 +7,7 @@ import TextInput from 'components/Fields/TextInput';
 // Typings
 import styles from './commonStylesPageRedirect';
 import ErrorBounds from "components/ErrorBounds";
-import Or from "components/Or";
+import Or from "layout/Login/Or";
 import ButtonLoading from "components/ButtonLoading";
 import FormControl from '@material-ui/core/FormControl';
 import Input from '@material-ui/core/Input';

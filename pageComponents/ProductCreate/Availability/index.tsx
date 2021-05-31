@@ -21,7 +21,6 @@ import Button from '@material-ui/core/Button';
 import FormGroup from '@material-ui/core/FormGroup';
 import Switch from '@material-ui/core/Switch';
 // Components
-import Or from "components/Or";
 import License from "./AvailabilityForm";
 // Validation
 import { FormikProps } from 'formik';

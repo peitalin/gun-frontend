@@ -44,7 +44,6 @@ import {
 import BannerCategoryPage from "./BannerCategoryPage";
 // Grid Components
 import GridPaginatorGeneric from "components/GridPaginatorGeneric";
-import GridPreviewCardLight from "components/GridPreviewCardLight";
 import { useSnackbar } from "notistack";
 import ShowOnMobileOrDesktopSSR from "components/ShowOnMobileOrDesktopSSR";
 

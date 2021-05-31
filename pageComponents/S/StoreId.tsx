@@ -42,7 +42,6 @@ import {
 // Grid Components
 import GridPaginatorGeneric from "components/GridPaginatorGeneric";
 import ProductCardResponsive from "components/ProductCardResponsive";
-import GridPreviewCardLight from "components/GridPreviewCardLight";
 
 
 
@@ -243,22 +242,11 @@ const StoresId: React.FC<ReactProps> = (props) => {
                   productIndex: index,
                   maxWidthOfRow: 1160,
                 }
-                // use GridPreviewCardLight ,its lighter and less to render
-                // for large screen sizes.
-                // should make a light version for smaller screens as well
                 return (
                   <div className={classes.marginRight1}>
-                    {
-                      mdDown
-                      ? <ProductCardResponsive
-                          product={product}
-                        />
-                      : <GridPreviewCardLight
-                          {...commonPreviewCardProps}
-                          product={product}
-                          cardsPerRow={4}
-                        />
-                    }
+                    <ProductCardResponsive
+                      product={product}
+                    />
                   </div>
                 )
               }}

@@ -1,21 +1,12 @@
 /// Limits that users may or may not bump into:
 export const minLengthUsername = 2;
 export const minLengthPassword = 6;
-export const minPrice = 100; // $20
-export const promoCodeMaxLength = 20;
-export const promoCodeMinLength = 3;
+export const minPrice = 1000; // $10
 export const minLengthStoreName = 3;
 export const maxLengthStoreName = 60;
 export const minLengthStoreBio = 1;
 export const maxLengthStoreBio = 200;
-export const minStockQuantity = 0;
-export const minLengthVariantName = 1;
-export const maxLengthVariantName = 250;
-export const minLengthVariantDescription = 1;
-export const maxLengthVariantDescription = 250;
 export const maxCountVariants = 2;
-export const minCountFiles = 1;
-export const maxCountFiles = 20;
 export const minCountPreviews = 1;
 export const maxCountPreviews = 8;
 export const minCountTags = 0;
@@ -99,5 +90,4 @@ export const productListIdRegex = new RegExp(`^${productListIdPrefix}`);
 export const productListItemIdRegex = new RegExp(`^${productListItemIdPrefix}`);
 
 // Other based regex rules
-export const promoCodeRegex = new RegExp(`^[a-zA-Z0-9-]{${promoCodeMinLength},${promoCodeMaxLength}}$`); // only english alphanumeric and dashes
 export const tagRegex = new RegExp(`^[a-zA-Z0-9-]{${minLengthTag},${maxLengthTag}}$`); // only english alphanumeric and dashes

@@ -21,7 +21,6 @@ import ProductHeading from "./ProductHeading";
 import ProductPricing from "./ProductPricing";
 // UI components
 import LoadingBar from "components/LoadingBar";
-import Or from "components/Or";
 // media query
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';

@@ -10,7 +10,7 @@ import SwipeableViews from "components/Swiper/SwipeableViews";
 import { virtualize, bindKeyboard } from 'react-swipeable-views-utils';
 
 const BindKeyboardSwipeableViews = bindKeyboard(SwipeableViews);
-const VirtualizeSwipeableViews = bindKeyboard(virtualize(SwipeableViews));
+// const VirtualizeSwipeableViews = bindKeyboard(virtualize(SwipeableViews));
 import AlignCenterLayout from "components/AlignCenterLayout";
 import LoadingCards from "pageComponents/FrontPage/LoadingCards";
 /// gql
@@ -43,12 +43,8 @@ function GridPaginatorGeneric<T>(props: ReactProps<T> & ReactChildren<T>) {
     disableFadeIn = false,
   } = props;
 
-  // console.log("connection", connection)
-  // console.log("index222: ", props.index)
-  const aClient = useApolloClient();
-
   const classes = useStyles();
-  const theme = useTheme();
+  // const theme = useTheme();
   const [ hashmap, setHashmap ] = React.useState({})
 
   // accumulate incoming objects in a hashamp to lookup with the gridPaginator
@@ -61,14 +57,6 @@ function GridPaginatorGeneric<T>(props: ReactProps<T> & ReactChildren<T>) {
       newHashmap[node?.id] = node
     })
     setHashmap(s => ({ ...hashmap, ...newHashmap }))
-
-    // let ff = aClient.cache.readFragment({
-    //   id: 'ProductPrivate:{"id":"p1qxypvrz"}',
-    //   fragment: ProductFragment,
-    //   fragmentName: "ProductFragment",
-    // })
-    // console.log("cache product: ", ff)
-    // console.log("cache: ", aClient.cache)
 
   }, [connection])
 
@@ -223,6 +211,8 @@ export const useStyles = makeStyles({
 });
 
 
-export default GridPaginatorGeneric;
+export default React.memo(
+  (props) => <GridPaginatorGeneric {...props}/>,
+) as typeof GridPaginatorGeneric
 
 

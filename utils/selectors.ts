@@ -1,21 +1,8 @@
 import { Categories } from "typings/gqlTypes";
 import { createSelector } from "reselect";
 import { GrandReduxState } from "reduxStore/grand-reducer";
-import { centsToDollars } from "./prices";
 
 
-export const youTubeLinksSelector = createSelector(
-  (state: GrandReduxState) => state.reduxProductCreate.dzuPreviewItems,
-  previewItems => previewItems.filter(p =>
-    p.youTubeEmbedLink !== undefined  &&
-    p.youTubeEmbedLink !== ""
-  )
-)
-
-export const centsToDollarSelector = createSelector(
-  (totalCents: number): number => totalCents,
-  totalCents => centsToDollars(totalCents)
-);
 
 interface SplitCategories {
   design: Categories[],

@@ -10,9 +10,6 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
 // Typings
 import { Connection } from "typings/gqlTypes";
-// Paginator hooks
-import usePaginateQueryHook from "components/Paginators/usePaginatePagedQueryHook";
-const usePaginateQuery = usePaginateQueryHook();
 
 
 
