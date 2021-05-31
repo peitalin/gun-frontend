@@ -70,6 +70,21 @@ const HelpSideRoutesMenu: React.FC<ReactProps> = (props) => {
             </a>
           </Link>
         </li>
+        <li>
+          <Link href={"/help/firearm-registries"} scroll={false}>
+            <a>
+              <div className={
+                isSelectedRoute("/help/firearm-registries")
+                  ? classes.routeListItemSelected
+                  : classes.routeListItem
+              }>
+                <Typography variant="subtitle1" className={classes.routeListItemText}>
+                  Firearm Registries
+                </Typography>
+              </div>
+            </a>
+          </Link>
+        </li>
 
       </ul>
     </div>

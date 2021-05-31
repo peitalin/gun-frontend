@@ -117,14 +117,13 @@ const Footer: React.FC<ReactProps> = (props) => {
               </div>
 
               <div className={classes.flexColItem}>
-                <a
-                  className={classes.link}
-                  target={"_blank"}
-                >
-                  <Typography variant="body2" className={classes.linkText}>
-                    Firearm registries
-                  </Typography>
-                </a>
+                <Link href={'/help/firearm-registries'} prefetch={false}>
+                  <a className={classes.link}>
+                    <Typography variant="body2" className={classes.linkText}>
+                      Firearm registries
+                    </Typography>
+                  </a>
+                </Link>
                 <Link href={'/help/terms'} prefetch={false}>
                   <a className={classes.link} >
                     <Typography variant="body2" className={classes.linkText}>

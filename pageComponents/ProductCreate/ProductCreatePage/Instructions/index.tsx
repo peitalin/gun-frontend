@@ -2,13 +2,11 @@ import React from "react";
 import clsx from "clsx";
 // Styles
 import { withStyles, WithStyles, createStyles, Theme, useTheme } from "@material-ui/core/styles";
-// MUI
-import Typography from "@material-ui/core/Typography";
-;
 // Product Preview Page
 import Tooltip from '@material-ui/core/Tooltip';
 import ButtonLoading from 'components/ButtonLoading';
 import { Colors, isThemeDark } from "layout/AppTheme";
+import Link from "next/link";
 
 
 
@@ -20,47 +18,57 @@ const RenderInstructions = (props: ReactProps) => {
   if (activeStep === 0) {
     return (
       <div className={classes.root}>
-        <Typography className={classes.title}>
-          Qld
-        </Typography>
-        <Typography className={classes.title}>
-          Category A
-        </Typography>
-        <Typography className={classes.subtitle}>
-          Rimfire rifles, single or double barrel shotguns, paintball guns, air rifles, and powerheads.
-        </Typography>
-        <Typography className={classes.title}>
-          Category B
-        </Typography>
-        <Typography className={classes.subtitle}>
-          Centre-fire rifles (other than semi-automatic), shotgun/rifle combinations.
-          Lever action shotguns with a magazine capacity of no more than five rounds.
-        </Typography>
-        <Typography className={classes.title}>
-          Category C
-        </Typography>
-        <Typography className={classes.subtitle}>
-          Semi-automatic or pump action shotguns (under 6 rounds) and semi-automatic rimfire rifles (under 11 rounds).
-        </Typography>
-        <Typography className={classes.title}>
-          Category D
-        </Typography>
-        <Typography className={classes.subtitle}>
-          Semi-automatic centre-fire rifles, semi-automatic shotguns (over 5 rounds) and semi-automatic rimfire rifles (over 10 rounds).
-          Lever action shotguns with a magazine capacity of more than five rounds.
-        </Typography>
-        <Typography className={classes.title}>
-          Category H
-        </Typography>
-        <Typography className={classes.subtitle}>
+        <div className={classes.heading}>
+          Step 1: Select a category and your license
+        </div>
+
+        <div className={classes.title}>
+          License
+        </div>
+        <div className={classes.text}>
+          Each state has different licence categories (i.e. A, B, C, D, H)
+          for different categories of firearms.
+          <br/>
+          Please refer to your local
+          <Link href={"/help/firearm-registries"}>
+            <a className={classes.link}>firearm registries</a>
+          </Link>
+          for more info.
+        </div>
+
+        <div className={classes.title}>
+          Categories
+        </div>
+        <div className={classes.subtitle}>
+          Rifles
+        </div>
+        <div className={classes.text}>
+          Rifles includes firearms with rifled barrel
+          (i.e. grooves and lands or ridges on the inside of the barrel).
+        </div>
+        <div className={classes.subtitle}>
+          Shotguns
+        </div>
+        <div className={classes.text}>
+          Shotguns includes firearms that have a smoothbore barrel
+          (i.e. a barrel without rifling – lands and grooves) and fires slugs or pellets.
+        </div>
+        <div className={classes.subtitle}>
           Handguns
-        </Typography>
-        <Typography className={classes.title}>
-          Category M
-        </Typography>
-        <Typography className={classes.subtitle}>
-          Crossbows, certain knives and other hand held items capable of causing bodily harm.
-        </Typography>
+        </div>
+        <div className={classes.text}>
+          Handguns include revolvers and pistols.
+          These firearms are designed to be held in the hand or hands of the shooter,
+          and must not exceed a prescribed dimension.
+        </div>
+        <div className={classes.subtitle}>
+          Combinations
+        </div>
+        <div className={classes.text}>
+          Combinations includes firearms that comprises at least one rifle barrel and
+          one shotgun barrel.
+        </div>
+
       </div>
     )
   }
@@ -68,45 +76,156 @@ const RenderInstructions = (props: ReactProps) => {
   if (activeStep === 1) {
     return (
       <div className={classes.root}>
-        <Typography>
-          Choose a transferring dealer
-        </Typography>
+        <div className={classes.heading}>
+          Step 2: Choose a transferring dealer
+        </div>
+        <div className={classes.text}>
+          The <i>transferring dealer</i> is where you are to dispose
+          the firearm you are selling after a buyer has placed an order.
+          Details of the sale and transfer are forwarded to the dealer for processing.
+        </div>
+        <div className={classes.text}>
+          A receipt of the disposal is required to receive your payout.
+          Receipts can be uploaded in your
+          <Link href={"/orders"}>
+            <a className={classes.link}>
+              orders dashboard.
+            </a>
+          </Link>
+        </div>
+        <div className={classes.text}>
+          As the disposer, please check with your transferring dealer for any
+          private brokerage or transfer fees and charges.
+        </div>
       </div>
     )
   }
   if (activeStep === 2) {
     return (
       <div className={classes.root}>
-        <Typography>
-          Serial Number, Model, Make, Condition
-        </Typography>
+        <div className={classes.heading}>
+          Step 3: Serial Number, Model, Make and Condition
+        </div>
+
+        <div className={classes.title}>
+          Serial Number
+        </div>
+        <div className={classes.text}>
+          Located on the frame of the firearm is a unique serial number.
+          The serial number will consist only of letters and numbers (0-9, A-Z),
+        </div>
+
+        <div className={classes.title}>
+          Make
+        </div>
+        <div className={classes.text}>
+          The manufacturer of the firearm <br/>
+          (e.g. CZ, GLOCK, ADLER, & WARWICK)
+        </div>
+
+        <div className={classes.title}>
+          Model
+        </div>
+        <div className={classes.text}>
+          The model/variant of the firearm <br/>
+          (e.g. SHADOW 2, G19, A110, and WFA1-L)
+        </div>
+
+        <div className={classes.title}>
+          Condition
+        </div>
+        <div className={classes.text}>
+          <span className={classes.bold}>Perfect</span> - New condition.
+        </div>
+        <div className={classes.text}>
+          <span className={classes.bold}>Excellent</span> – Near new condition, little use, no noticeable marring.
+        </div>
+        <div className={classes.text}>
+          <span className={classes.bold}>Good</span> - Perfect working condition, no appreciable wearing on working surfaces, no corrosion or pitting, only minor surface dents or scratches.
+        </div>
+        <div className={classes.text}>
+          <span className={classes.bold}>Fair</span> - Safe working condition, minor wear on surface, no broken parts, no corrosion or pitting that will interfere with functioning.
+        </div>
+        <div className={classes.text}>
+          <span className={classes.bold}>Poor</span> - Safe working condition but well worn, perhaps requiring replacement of minor parts or adjustments.
+        </div>
       </div>
     )
   }
   if (activeStep === 3) {
     return (
       <div className={classes.root}>
-        <Typography>
-          Gun Attributes
-        </Typography>
+        <div className={classes.heading}>
+          Step 4: Caliber and gun attributes
+        </div>
+
+        <div className={classes.title}>
+          Action Type
+        </div>
+        <div className={classes.text}>
+          The action is the functional mechanism of a breech-loading firearm that handles (loads, locks, fires, extracts and ejects) the ammunition cartridges, or the method by which that mechanism works.
+          (e.g. Bolt action, Lever action, Break action & Semi-Automatic)
+        </div>
+
+        <div className={classes.title}>
+          Caliber
+        </div>
+        <div className={classes.text}>
+          Caliber is the diameter of the gun barrel bore.
+          You can check the caliber of the firearm by locating the make and model
+          with the manufacturer's webiste.
+          Shotguns are classed according to gauge.
+          (e.g. .22 LR, .223 REM, & 12 GAUGE)
+        </div>
+
+        <div className={classes.title}>
+          Magazine Capacity
+        </div>
+        <div className={classes.text}>
+          The total amount of ammunition storage for the firearm magazine,
+          either within the gun or externally attached.
+          (e.g. 4, 5, 10, or 15)
+        </div>
+
+        <div className={classes.title}>
+          Barrel Length
+        </div>
+        <div className={classes.text}>
+          The length of the barrel can be presented in either formats of inches or millimeters.
+          (e.g. 4 inches or 101.6 mm)
+        </div>
       </div>
     )
   }
   if (activeStep === 4) {
     return (
       <div className={classes.root}>
-        <Typography>
+        <div className={classes.heading}>
+          Step 5: Description
+        </div>
+
+        <div className={classes.title}>
           Description
-        </Typography>
+        </div>
+        <div className={classes.text}>
+          Provide as much information as you can about the product listing to give buyers more confidence in the decision.
+        </div>
+        <div className={classes.text}>
+          Describe what it was that you enjoyed about this firearm and what made you decide to buy it initially.
+        </div>
+        <div className={classes.text}>
+          As a reminder <b>do not share any personal information</b> such as your name, contact number or email as per our terms of services and privacy policy.
+          This may result in the removal of the product listing.
+        </div>
       </div>
     )
   } else {
     return (
       <div className={classes.root}>
-        <Typography>
+        <div>
           Other unhandled instructions
-        </Typography>
-      </div>
+        </div>
+        </div>
     )
   }
 
@@ -122,17 +241,54 @@ const styles = (theme: Theme) => createStyles({
   root: {
     padding: '1rem',
   },
-  title: {
+  heading: {
     marginTop: "0.5rem",
+    marginBottom: "1rem",
+    fontSize: '1.125rem',
+    lineHeight: '1.25rem',
     fontWeight: 600,
     color: isThemeDark(theme)
       ? Colors.uniswapLightGrey
-      : Colors.slateGreyBlack,
+      : Colors.black,
   },
-  subtitle: {
+  title: {
+    marginTop: "0.5rem",
+    marginBottom: "0.5rem",
+    fontSize: '1rem',
+    fontWeight: 600,
     color: isThemeDark(theme)
       ? Colors.uniswapLightGrey
+      : Colors.black,
+  },
+  subtitle: {
+    fontSize: '0.9rem',
+    fontWeight: 600,
+    lineHeight: '1.125rem',
+    color: isThemeDark(theme)
+      ? Colors.uniswapLighterGrey
       : Colors.slateGreyBlack,
+  },
+  text: {
+    fontSize: '0.9rem',
+    color: isThemeDark(theme)
+      ? Colors.uniswapLighterGrey
+      : Colors.slateGreyBlack,
+    lineHeight: '1.125rem',
+    marginBottom: "0.5rem",
+  },
+  bold: {
+    fontWeight: 500,
+    color: isThemeDark(theme)
+      ? Colors.uniswapLighterGrey
+      : Colors.slateGreyBlack,
+  },
+  link: {
+    marginLeft: '0.25rem',
+    marginRight: '0.25rem',
+    color: Colors.ultramarineBlue,
+    "&:hover": {
+      color: Colors.ultramarineBlueLight,
+    },
   },
 })
 

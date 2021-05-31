@@ -3,7 +3,6 @@ import React from "react";
 import clsx from "clsx";
 import { withStyles, WithStyles } from "@material-ui/core/styles";
 import { styles } from "./styles";
-import { StorePrivate } from "typings/gqlTypes";
 // Components
 import HelpDropdownMenu from "./HelpDropdownMenu";
 

@@ -31,7 +31,6 @@ import RenderInstructions from "./Instructions";
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { isThemeDark } from "layout/AppTheme";
-import { useScrollYPosition } from "utils/hooks";
 
 
 // NOTES:
@@ -53,14 +52,6 @@ const ProductCreateLayout: React.FC<ProductCreateFormProps> = (props) => {
   const smDown = useMediaQuery(theme.breakpoints.down('sm'));
   const mdDown = useMediaQuery(theme.breakpoints.down('md'));
 
-  // let y = useScrollYPosition()
-
-  // React.useEffect(() => {
-  //   if (y > 1190 && props.activeStep !== 7) {
-  //     props.setActiveStep(7)
-  //   }
-  // }, [y])
-
 
   return (
     <PreventDragDropContainer
@@ -80,9 +71,6 @@ const ProductCreateLayout: React.FC<ProductCreateFormProps> = (props) => {
           {
             (props.activeStep < 5)
             ? <div className={classes.instructionsContainer}>
-                <Typography className={classes.instructionTitle}>
-                  {`Step: ${props.activeStep + 1}`}
-                </Typography>
                 <RenderInstructions activeStep={props.activeStep}/>
               </div>
             : <Tooltip title="Preview" placement="bottom-start">
@@ -90,7 +78,6 @@ const ProductCreateLayout: React.FC<ProductCreateFormProps> = (props) => {
                   <ProductCardResponsive
                     product={props.productPreviewSticky}
                     previewImageEmptyMessage={`Step ${props.activeStep + 1}: Upload Images`}
-                    // previewImageEmptyMessage={`Preview Image`}
                   />
                 </div>
               </Tooltip>
@@ -156,7 +143,7 @@ export const styles = (theme: Theme) => createStyles({
   },
   instructionsContainer: {
     position: 'sticky',
-    top: '5.5rem',
+    top: '4rem',
     marginBottom: '1rem',
     marginLeft: '1rem',
     cursor: "pointer",

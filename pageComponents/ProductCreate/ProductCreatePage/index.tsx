@@ -420,11 +420,10 @@ const ProductCreatePage = (props: ReactProps) => {
             {
               (activeStep === 0) &&
               <>
-                <Typography className={classes.stepperSectionTitle}>
-                  For each ad campaign that you create, you can control how much
-                  you're willing to spend on clicks and conversions, which networks
-                  and geographical locations you want your ads to show on, and more.
-                </Typography>
+                <div className={classes.stepperSectionText}>
+                  Choose a category and firearm license for this product listing.
+                  Please check that the license category matches the type of firearm you are selling.
+                </div>
                 <SelectCategories
                   {...formik}
                 />
@@ -438,21 +437,17 @@ const ProductCreatePage = (props: ReactProps) => {
             {
               (activeStep === 1) &&
               <>
-                <Typography className={classes.stepperSectionTitle}>
-                  An ad group contains one or more ads which target a shared
-                  set of keywords.
-                </Typography>
+                <div className={classes.stepperSectionText}>
+                  Select from the list of licensed private firearm brokers to
+                  nominate as your transferring dealer.
+                </div>
                 <SelectDealer {...formik} />
               </>
             }
             {
               (activeStep === 2) &&
               <>
-                <Typography className={classes.stepperSectionTitle}>
-                  Try out different ad text to see what brings in the most customers,
-                  and learn how to enhance your ads using features like ad extensions.
-                  If you run into any problems with your ads, find out how to tell if
-                  they're running and how to resolve approval issues.
+                <Typography className={classes.stepperSectionText}>
                 </Typography>
                 <TitleSerialNumber {...formik} />
                 <MakeModel {...formik} />
@@ -498,7 +493,7 @@ const ProductCreatePage = (props: ReactProps) => {
             {
               (activeStep === 3) &&
               <>
-                <Typography className={classes.stepperSectionTitle}>
+                <Typography className={classes.stepperSectionText}>
                   Try out different ad text to see what brings in the most customers,
                   and learn how to enhance your ads using features like ad extensions.
                   If you run into any problems with your ads, find out how to tell if
@@ -516,11 +511,11 @@ const ProductCreatePage = (props: ReactProps) => {
             {
               (activeStep === 4) &&
               <>
-                <Typography className={classes.stepperSectionTitle}>
-                  Try out different ad text to see what brings in the most customers,
-                  and learn how to enhance your ads using features like ad extensions.
-                  If you run into any problems with your ads, find out how to tell if
-                  they're running and how to resolve approval issues.
+                <Typography className={classes.stepperSectionText}>
+                  Tell us more about the product listing, the history,
+                  any notable features, any included or excluded items.
+                  <br/>
+                  (e.g. scopes, sights, bags, & magazines)
                 </Typography>
                 <Description {...formik} />
               </>

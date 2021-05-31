@@ -233,11 +233,12 @@ const styles = (theme: Theme) => createStyles({
   buttonContainer: {
     display: "flex",
     flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "flex-end",
   },
   stepperButtonBack: {
     flexBasis: '50%',
-    margin: '1rem',
+    maxWidth: 100,
+    margin: '0.5rem',
     backgroundColor: isThemeDark(theme)
       ? Colors.uniswapMediumNavy
       : Colors.slateGreyDark,
@@ -252,7 +253,8 @@ const styles = (theme: Theme) => createStyles({
   },
   stepperButtonNext: {
     flexBasis: '50%',
-    margin: '1rem',
+    maxWidth: 100,
+    margin: '0.5rem',
     backgroundColor: isThemeDark(theme)
       ? Colors.ultramarineBlue
       : Colors.ultramarineBlue,

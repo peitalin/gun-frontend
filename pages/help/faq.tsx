@@ -7,7 +7,7 @@ import Button from '@material-ui/core/Button';
 import AlignCenterLayout from "components/AlignCenterLayout";
 
 
-const PrivacySSR: React.FC<ReactProps> = (props) => {
+const FaqSSR: React.FC<ReactProps> = (props) => {
 
   const { classes } = props;
 
@@ -92,7 +92,7 @@ const styles = (theme: Theme) => createStyles({
 });
 
 
-export default withStyles(styles)( PrivacySSR );
+export default withStyles(styles)( FaqSSR );
 
 
 

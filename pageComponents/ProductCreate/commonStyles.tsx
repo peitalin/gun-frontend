@@ -468,8 +468,11 @@ export const styles = (theme: Theme) => createStyles({
   licenseButtonCategory: {
     fontWeight: 500,
   },
-  stepperSectionTitle: {
+  stepperSectionText: {
     marginBottom: '1rem',
+    color: isThemeDark(theme)
+    ? Colors.uniswapMediumGrey
+    : Colors.slateGreyLightBlack,
   },
   headingContainer: {
     display: 'flex',

@@ -16,6 +16,7 @@ const routeMappings = {
   'faq': "FAQ",
   'privacy': "Privacy Policy",
   'terms': "Terms of Service",
+  'firearm-registries': "Firearm Registries",
 }
 
 
