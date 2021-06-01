@@ -436,7 +436,7 @@ export const styles = (theme: Theme) => createStyles({
     minWidth: 200,
     // marginRight: '1rem',
     // marginLeft: '1rem',
-    marginBottom: '1rem',
+    paddingBottom: '1rem',
   },
   dontSeeDealerLink: {
     color: Colors.uniswapLighterGrey,
