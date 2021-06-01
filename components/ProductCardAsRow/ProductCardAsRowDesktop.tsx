@@ -58,7 +58,7 @@ const ProductCardAsRow = (props: ReactProps) => {
             height={'100%'}
           />
         : <Link
-            href={"/p/[productIdOrSlug]"}
+            href={"/p/[productId]"}
             as={`/p/${product?.id}`}
           >
             <a className={classes.flexRowLink}>

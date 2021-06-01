@@ -78,7 +78,7 @@ const BidActionsByUser = (props: BidProps) => {
           >
             <span>
               <Link
-                href="/p/[productIdOrSlug]"
+                href={`/p/[productId]?bidId=${props.bidId}`}
                 as={`/p/${product?.id}?bidId=${props.bidId}`}
               >
                 <a>

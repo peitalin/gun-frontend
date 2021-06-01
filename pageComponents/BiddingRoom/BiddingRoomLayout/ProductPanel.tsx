@@ -130,7 +130,11 @@ const ProductPanel: React.FC<ReactProps> = (props) => {
               />
             </div>
             <Typography variant="h4" className={classes.productTitle}>
-              { `Seller License: ${sellerLicense?.licenseNumber}` }
+              {
+                user.id === seller.id
+                ? `Your License: ${sellerLicense?.licenseNumber}`
+                : `Seller License: ${sellerLicense?.licenseNumber}`
+              }
             </Typography>
           </div>
 

@@ -52,7 +52,7 @@ const ProductRowMedium = (props: ReactProps) => {
             {
               featuredVariant?.previewItems?.[0]
               ? <Link
-                  href="/p/[productIdOrSlug]"
+                  href="/p/[productId]"
                   as={`/p/${product?.id}`}
                 >
                   <a>
@@ -79,7 +79,7 @@ const ProductRowMedium = (props: ReactProps) => {
             {
               featuredVariant?.previewItems?.[0]
               ? <Link
-                  href="/p/[productIdOrSlug]"
+                  href="/p/[productId]"
                   as={`/p/${product?.id}`}
                 >
                   <a>
@@ -116,7 +116,7 @@ const ProductRowMedium = (props: ReactProps) => {
                 </Typography>
 
                 <Link
-                  href="/p/[productIdOrSlug]"
+                  href="/p/[productId]"
                   as={`/p/${product?.id}`}
                 >
                   <a>

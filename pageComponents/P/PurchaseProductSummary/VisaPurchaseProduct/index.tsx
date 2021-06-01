@@ -458,7 +458,8 @@ const VisaPurchaseProduct = (props: ReactProps) => {
 
   // console.log("licenseOptions", licenseOptions)
   // console.log("chosenLicenseId", chosenLicenseId)
-  console.log("chosenLicense", chosenLicense)
+  // console.log("chosenLicense", chosenLicense)
+  console.log("selectedBid", props.selectedBid)
 
   return (
     <ErrorBounds name="Visa Checkout" className={props.className}>

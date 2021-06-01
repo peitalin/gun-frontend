@@ -76,12 +76,9 @@ export const BiddingRoomLayout: React.FC<ReactProps> = (props) => {
       </Typography>
 
       {
-        (productIds.length === 0)
+        (productIds.length === 0 && !loading)
         ? <EmptyBidsMessage/>
         : <>
-            <Typography variant="h4" className={classes.subtitle}>
-              Your Products
-            </Typography>
             <div className={classes.productList}>
               {
                 productIds.map(( pid, i ) => {

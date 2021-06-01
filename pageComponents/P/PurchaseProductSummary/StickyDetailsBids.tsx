@@ -36,7 +36,8 @@ const StickyDetailsBid = (props: ReactProps) => {
   const isDarkMode = isThemeDark(theme)
 
 
-  console.log("bid: ", userBid)
+  console.log("userBid::: ", userBid)
+  console.log("router: ", router)
   let offerPrice = c(userBid?.offerPrice)
 
   let disabledButton = userBid?.bidStatus !== BidStatus.ACCEPTED
@@ -45,8 +46,7 @@ const StickyDetailsBid = (props: ReactProps) => {
 
   React.useEffect(() => {
     if (router.query?.bidId) {
-      // console.log("bidId: ", router.query.bidId)
-      // console.log("bid: ", userBid)
+      console.log("router.query.bidId: ", router.query.bidId)
       if (router.query?.bidId === userBid?.id) {
         props.setSelectedBid(userBid)
         snackbar.enqueueSnackbar(
