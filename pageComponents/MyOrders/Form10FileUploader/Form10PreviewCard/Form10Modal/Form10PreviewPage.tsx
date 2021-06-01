@@ -28,7 +28,9 @@ const OrderDetailsPage: React.FC<ReactProps> = (props) => {
 
   let form10FileId = order?.currentSnapshot?.form10File?.id;
   let form10MimeType = order?.currentSnapshot?.form10File?.mimeType;
-  let form10Url = `https://storage.googleapis.com/develop-gunmarketplace-files/${form10FileId}`
+  let form10Url = process.env.NODE_ENV === "production"
+    ? `https://storage.googleapis.com/production-gunmarketplace-files/${form10FileId}`
+    : `https://storage.googleapis.com/develop-gunmarketplace-files/${form10FileId}`
 
   // legacy Form10 images
   let form10ImageUrl = order?.currentSnapshot?.form10Image?.original?.url;
