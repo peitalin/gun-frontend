@@ -163,8 +163,10 @@ const RenderInstructions = (props: ReactProps) => {
           Action Type
         </div>
         <div className={classes.text}>
-          The action is the functional mechanism of a breech-loading firearm that handles (loads, locks, fires, extracts and ejects) the ammunition cartridges, or the method by which that mechanism works.
+          The action type refers to how the firearm handles
+          firing, reloading, and ejecting ammunition cartridges.
           (e.g. Bolt action, Lever action, Break action & Semi-Automatic)
+          You can find this information under its model and variant from the manufacturer.
         </div>
 
         <div className={classes.title}>
@@ -172,8 +174,8 @@ const RenderInstructions = (props: ReactProps) => {
         </div>
         <div className={classes.text}>
           Caliber is the diameter of the gun barrel bore.
-          You can check the caliber of the firearm by locating the make and model
-          with the manufacturer's webiste.
+          You can check the caliber of the firearm by locating the model and variant
+          from the manufacturer's website.
           Shotguns are classed according to gauge.
           (e.g. .22 LR, .223 REM, & 12 GAUGE)
         </div>
@@ -191,7 +193,8 @@ const RenderInstructions = (props: ReactProps) => {
           Barrel Length
         </div>
         <div className={classes.text}>
-          The length of the barrel can be presented in either formats of inches or millimeters.
+          The length of the barrel can be presented in either inches or millimeters.
+          You can find more information on this from the manufacturer.
           (e.g. 4 inches or 101.6 mm)
         </div>
       </div>
