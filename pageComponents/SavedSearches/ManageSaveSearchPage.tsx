@@ -216,7 +216,7 @@ const ManageSaveSearchPage: React.FC<ReactProps> = (props) => {
 
           <DropdownInput
             className={classes.dropdownComponent}
-            stateShape={initialCategory}
+            initialState={initialCategory}
             onChange={(option: SelectOption) => {
               if (!option.value) {
                 setCategorySlugGql(undefined)
@@ -230,7 +230,7 @@ const ManageSaveSearchPage: React.FC<ReactProps> = (props) => {
           <DropdownInput
             className={classes.dropdownComponent}
             // menuIsOpen={true}
-            stateShape={initialCaliber}
+            initialState={initialCaliber}
             onChange={(option: SelectOption) => {
               console.log("SELECT CALIBER OPTION: ", option)
               if (!option?.value) {
@@ -245,7 +245,7 @@ const ManageSaveSearchPage: React.FC<ReactProps> = (props) => {
 
           <DropdownInput
             className={classes.dropdownComponent}
-            stateShape={initialDealerState}
+            initialState={initialDealerState}
             onChange={(option: SelectOption) => {
               if (!option.value) {
                 setDealerStateGql(undefined)

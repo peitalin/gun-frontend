@@ -208,7 +208,7 @@ const CreateDealerFields: React.FC<ReactProps & FormikProps<FormikFields>> = (pr
           </Typography>
           <DropdownInput
             className={classes.dropDown}
-            stateShape={stateOptions[0]}
+            initialState={stateOptions[0]}
             onChange={(option: { value: string, label: string|DealerState }) =>
               handleUpdateState(option)
             }

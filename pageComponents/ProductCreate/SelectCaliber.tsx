@@ -13,9 +13,6 @@ import Loading from "components/Loading";
 import ErrorBounds from 'components/ErrorBounds';
 import { Formik, Form, FormikProps, ErrorMessage } from 'formik';
 import {
-  maxLengthTitle,
-} from "utils/limitsAndRules";
-import {
   Calibers,
   CaliberGroup,
 } from "typings/gqlTypes";
@@ -56,13 +53,12 @@ const SelectCaliber = (props: ReactProps & FormikProps<FormikFields>) => {
     GET_CALIBERS, {
   })
 
-  const caliberOptionGroups = createCaliberOptionGroups(data?.getCalibers)
+  const caliberOptionGroups = createCaliberOptionGroups(data?.getCalibers, false)
 
   const initialCaliber = {
-    label: caliberOptionGroups?.[0]?.options?.[0]?.label ?? "All Calibers",
+    label: caliberOptionGroups?.[0]?.options?.[0]?.label,
     value: caliberOptionGroups?.[0]?.options?.[0]?.value,
   }
-
   const [caliberOption, setCaliberOption] = React.useState(initialCaliber)
   console.log("fprops.values.caliber: ", fprops.values?.caliber)
   // console.log("caliberOptionsGRoups", caliberOptionGroups)
@@ -76,7 +72,7 @@ const SelectCaliber = (props: ReactProps & FormikProps<FormikFields>) => {
       <DropdownInput
         className={classes.caliberDropdown}
         // menuIsOpen={true}
-        stateShape={caliberOption}
+        initialState={undefined}
         height={45}
         onChange={(option: SelectOption) => {
           console.log("option: ", option)
@@ -85,7 +81,7 @@ const SelectCaliber = (props: ReactProps & FormikProps<FormikFields>) => {
           fprops.setFieldTouched('caliber', true)
         }}
         options={caliberOptionGroups}
-        placeholder={initialCaliber}
+        placeholder={undefined}
         errorMessage={errors.caliber}
         touched={!!touched.caliber}
         disableInitialValidationMessage={true}

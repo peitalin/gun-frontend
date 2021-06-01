@@ -40,7 +40,7 @@ const CaliberMenu: React.FC<ReactProps> = (props) => {
       <DropdownInput
         // className={classes.dealerDropdown}
         menuIsOpen={true}
-        stateShape={initialCaliber}
+        initialState={initialCaliber}
         onChange={(option: SelectOption) => {
           if (!option.value) {
             // null -> All states

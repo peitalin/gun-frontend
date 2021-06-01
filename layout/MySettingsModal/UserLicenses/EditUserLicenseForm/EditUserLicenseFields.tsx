@@ -93,14 +93,14 @@ const EditUserLicenseFields: React.FC<ReactProps & FormikProps<FormikFields>> = 
   // console.log("licenseExpiry: ", values.licenseExpiry)
 
   let licenseCategoryOptions = createLicenseCategorySuggestions(fprops.values.licenseState)
-  // initial stateShape
+  // initial initialState
   let initialCategoryLicense = licenseCategoryOptions
     .find(d => d.value === fprops.values.licenseCategory)
   const [licenseCategory, setLicenseCategory] = React.useState(initialCategoryLicense)
 
 
   let licenseStateOptions = createLicenseStateSuggestions()
-  // initial stateShape
+  // initial initialState
   let initialStateLicense = licenseStateOptions
     .find(d => d.value === fprops.values.licenseState)
   const [licenseState, setLicenseState] = React.useState(initialStateLicense)
@@ -175,7 +175,7 @@ const EditUserLicenseFields: React.FC<ReactProps & FormikProps<FormikFields>> = 
         License State
       </Typography>
       <DropdownInput
-        stateShape={initialStateLicense}
+        initialState={initialStateLicense}
         onChange={({ label, value }: SelectOption) => {
           setLicenseState({ label, value })
           fprops.setFieldValue("licenseState", value)

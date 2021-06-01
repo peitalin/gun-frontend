@@ -26,7 +26,7 @@ const ChooseDealerDropdown = (props: ReactProps & FormikProps<FormikFields>) => 
   }
 
   let dealerOptions = createDealerSuggestions(props.dealers)
-  // initial stateShape
+  // initial initialState
   let initialDealer = dealerOptions[0]
 
   // console.log("dealerOptions: ", dealerOptions)
@@ -36,7 +36,7 @@ const ChooseDealerDropdown = (props: ReactProps & FormikProps<FormikFields>) => 
     <>
       <DropdownInput
         className={classes.dealerDropdown}
-        stateShape={initialDealer}
+        initialState={initialDealer}
         onChange={(option: SelectOption) =>
           setDealerId({
             label: option?.label,

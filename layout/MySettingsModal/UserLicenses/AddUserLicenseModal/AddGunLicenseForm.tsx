@@ -246,7 +246,7 @@ const AddGunLicenseForm: React.FC<ReactProps> = (props) => {
             License State
           </Typography>
           <DropdownInput
-            stateShape={initialStateLicense}
+            initialState={initialStateLicense}
             onChange={({ label, value }: SelectOption) => {
               setLicenseState({ label, value })
               formik.setFieldValue("licenseState", value)

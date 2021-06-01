@@ -34,6 +34,7 @@ const ButtonLoading: React.FC<ReactProps & ButtonProps> = (props) => {
             props.className,
           )
         }}
+        style={props.style}
         // override default props
         {...ButtonProps}
       >
@@ -77,6 +78,7 @@ const ButtonLoading: React.FC<ReactProps & ButtonProps> = (props) => {
             props.className,
           )
         }}
+        style={props.style}
         // override default props
         {...ButtonProps}
       >
@@ -119,6 +121,7 @@ interface ReactProps {
   loadingIconSize?: number;
   loadingIconColor?: string;
   variant?: "outlined" | "text" | "contained";
+  style?: any;
   [key: string]: any;
 }
 
@@ -132,7 +135,7 @@ const styles = (theme: Theme) => createStyles({
     // "&:hover": {
     //   backgroundColor: fade(Colors.ultramarineBlue, 0.9),
     // },
-  }
+  },
 });
 
 export default withStyles(styles)(ButtonLoading);

@@ -471,7 +471,7 @@ const VisaPurchaseProduct = (props: ReactProps) => {
 
             <div className={classes.dropdownContainer}>
               <DropdownInput
-                stateShape={chosenLicense}
+                initialState={chosenLicense}
                 onChange={({ label, value }: SelectOption) => {
                   setChosenLicense({ label, value })
                 }}

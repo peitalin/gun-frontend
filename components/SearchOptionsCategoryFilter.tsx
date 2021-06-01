@@ -73,9 +73,9 @@ const SearchOptionsCategoryFilter: React.FC<ReactProps> = (props) => {
     return (
       <div className={classes.facetSection}>
         <DropdownInput
-          // stateShape={
+          // initialState={
           //   categoryOptions[0]
-          //   // initial stateShape
+          //   // initial initialState
           //   // { label: "Design Templates", value: "category_123123"}
           // }
           isSearchable={false}

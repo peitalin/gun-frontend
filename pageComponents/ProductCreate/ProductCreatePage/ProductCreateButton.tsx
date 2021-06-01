@@ -40,8 +40,8 @@ const ProductCreateButton = (props: ReactProps) => {
         loadingIconColor={Colors.blue}
         replaceTextWhenLoading={true}
         loading={props.loading}
-        disabled={!process.browser || disabled}
-        // disabled={disabled}
+        // disabled={!process.browser || disabled}
+        disabled={disabled}
         onClick={props.onClick}
         className={props.classes.button}
       >

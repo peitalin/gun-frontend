@@ -203,9 +203,9 @@ const SearchOptions: React.FC<ReactProps> = (props) => {
                 style={{ ...props.dropdownContainerStyle }}
               >
                 <DropdownInput
-                  stateShape={
+                  initialState={
                     orderByOptions[0]
-                    // initial stateShape
+                    // initial initialState
                     // { label: "Design Templates", value: "category_123123"}
                   }
                   isSearchable={false}

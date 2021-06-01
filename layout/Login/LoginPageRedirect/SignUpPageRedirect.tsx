@@ -219,7 +219,7 @@ const SignUpPageRedirect: React.FC<ReactProps> = (props) => {
           License State
         </Typography>
         <DropdownInput
-          stateShape={initialStateLicense}
+          initialState={initialStateLicense}
           onChange={({ label, value }: SelectOption) => {
             console.log("label: ", label)
             // set dropdown object

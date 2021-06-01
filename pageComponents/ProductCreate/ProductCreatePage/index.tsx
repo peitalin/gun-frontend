@@ -54,7 +54,11 @@ const SelectDealer = dynamic(() => import("../SelectDealer"), {
   ssr: false,
 })
 // same dir components
-import ProductCreateButton from "./ProductCreateButton";
+// import ProductCreateButton from "./ProductCreateButton";
+const ProductCreateButton = dynamic(() => import("./ProductCreateButton"), {
+  loading: () => <ButtonLoading loading={true} style={{ width: 150}}/>,
+  ssr: false,
+})
 import ProductCreateForm from "./ProductCreateForm";
 import ProductCreateLayout from "./ProductCreateLayout";
 import PreventDragDropContainer from "./PreventDragDropContainer";
@@ -546,30 +550,25 @@ const ProductCreatePage = (props: ReactProps) => {
         </SectionBorder>
 
         <ProductCreateButtonWrapper {...props}>
-          {
-            process.browser &&
-            <>
-              <ProductCreateButton
-                // Save Draft Button
-                onClick={() => processProductData({ publishNow: false }) }
-                postInstantly={false}
-                loading={state.loading}
-                errors={formik.errors}
-                disabled={state.loading}
-                // disabled={isFormikDisabled(formik.errors) || state.loading}
-              />
-              <div className={classes.flexButtonSpacer}/>
-              <ProductCreateButton
-                // Post Instantly Button
-                onClick={() => processProductData({ publishNow: true }) }
-                postInstantly={true}
-                loading={state.loading}
-                errors={formik.errors}
-                disabled={state.loading}
-                // disabled={isFormikDisabled(formik.errors) || state.loading}
-              />
-            </>
-          }
+          <ProductCreateButton
+            // Save Draft Button
+            onClick={() => processProductData({ publishNow: false }) }
+            postInstantly={false}
+            loading={state.loading}
+            errors={formik.errors}
+            disabled={state.loading}
+            // disabled={isFormikDisabled(formik.errors) || state.loading}
+          />
+          <div className={classes.flexButtonSpacer}/>
+          <ProductCreateButton
+            // Post Instantly Button
+            onClick={() => processProductData({ publishNow: true }) }
+            postInstantly={true}
+            loading={state.loading}
+            errors={formik.errors}
+            disabled={state.loading}
+            // disabled={isFormikDisabled(formik.errors) || state.loading}
+          />
         </ProductCreateButtonWrapper>
 
       </ProductCreateForm>

@@ -257,7 +257,7 @@ const BuyPromotedSlotPage = (props: ReactProps) => {
         showProductPickerDropdown &&
         <DropdownInput
           className={classes.dropdownProducts}
-          stateShape={
+          initialState={
             selectedProductId
               ? selectedProductOption
               : undefined

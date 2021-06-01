@@ -64,9 +64,9 @@ const SortbyMenu: React.FC<ReactProps> = (props) => {
         )}
       >
         <DropdownInput
-          stateShape={
+          initialState={
             orderByOptions[0]
-            // initial stateShape
+            // initial initialState
             // { label: "Design Templates", value: "category_123123"}
           }
           isSearchable={false}

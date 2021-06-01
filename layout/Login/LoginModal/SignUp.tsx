@@ -129,7 +129,7 @@ const SignUp: React.FC<ReactProps> = (props) => {
 
 
   let licenseStateOptions = createLicenseStateSuggestions()
-  // initial stateShape
+  // initial initialState
   let initialStateLicense = undefined
   const [licenseState, setLicenseState] = React.useState(initialStateLicense)
 
@@ -230,7 +230,7 @@ const SignUp: React.FC<ReactProps> = (props) => {
               License State
             </Typography>
             <DropdownInput
-              stateShape={initialStateLicense}
+              initialState={initialStateLicense}
               onChange={({ label, value }: SelectOption) => {
                 console.log("label: ", label)
                 // set dropdown object

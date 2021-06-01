@@ -51,7 +51,7 @@ const DropdownInput = (props: ReactProps) => {
 
   // // Redux State, for UI updates
   // // Keep separate from Redux updates, which have different data structure
-  const [state, setState] = React.useState(props.stateShape)
+  const [state, setState] = React.useState(props.initialState)
 
 
   return (
@@ -309,7 +309,7 @@ const selectErrorColor = (
 interface ReactProps extends WithStyles<typeof styles> {
   errorMessage?: string;
   touched?: boolean; // sets error colors as grey if not-touched, red if so
-  stateShape: any;
+  initialState: any;
   onChange(...args: any): void;
   onMenuOpen(...args: any): void;
   creatable?: boolean;
