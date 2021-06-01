@@ -164,8 +164,8 @@ const RenderInstructions = (props: ReactProps) => {
         </div>
         <div className={classes.text}>
           The action type refers to how the firearm handles
-          firing, reloading, and ejecting ammunition cartridges.
-          (e.g. Bolt action, Lever action, Break action & Semi-Automatic)
+          firing, reloading, and ejecting ammunition cartridges
+          (e.g. Bolt action, Lever action, Break action & Semi-Automatic).
           You can find this information under its model and variant from the manufacturer.
         </div>
 
@@ -176,8 +176,7 @@ const RenderInstructions = (props: ReactProps) => {
           Caliber is the diameter of the gun barrel bore.
           You can check the caliber of the firearm by locating the model and variant
           from the manufacturer's website.
-          Shotguns are classed according to gauge.
-          (e.g. .22 LR, .223 REM, & 12 GAUGE)
+          Shotguns are classed according to gauge (e.g. .22 LR, .223 REM, & 12 GAUGE).
         </div>
 
         <div className={classes.title}>
@@ -185,8 +184,7 @@ const RenderInstructions = (props: ReactProps) => {
         </div>
         <div className={classes.text}>
           The total amount of ammunition storage for the firearm magazine,
-          either within the gun or externally attached.
-          (e.g. 4, 5, 10, or 15)
+          either within the gun or externally attached (e.g. 4, 5, 10, or 15).
         </div>
 
         <div className={classes.title}>
@@ -194,8 +192,7 @@ const RenderInstructions = (props: ReactProps) => {
         </div>
         <div className={classes.text}>
           The length of the barrel can be presented in either inches or millimeters.
-          You can find more information on this from the manufacturer.
-          (e.g. 4 inches or 101.6 mm)
+          You can find more information on this from the manufacturer (e.g. 4 inches or 101.6 mm).
         </div>
       </div>
     )
