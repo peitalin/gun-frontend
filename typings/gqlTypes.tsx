@@ -10327,6 +10327,8 @@ export type Products = {
   productVariants_aggregate: Product_Variants_Aggregate;
   /** An object relationship */
   promotedSlot?: Maybe<Promoted_Slots>;
+  /** An object relationship */
+  sellerLicense?: Maybe<User_Licenses>;
   sellerLicenseId?: Maybe<Scalars['String']>;
   soldOutStatus: Scalars['String'];
   /** An object relationship */
@@ -10411,6 +10413,7 @@ export type Products_Bool_Exp = {
   lastPerformanceReview?: Maybe<Timestamptz_Comparison_Exp>;
   productVariants?: Maybe<Product_Variants_Bool_Exp>;
   promotedSlot?: Maybe<Promoted_Slots_Bool_Exp>;
+  sellerLicense?: Maybe<User_Licenses_Bool_Exp>;
   sellerLicenseId?: Maybe<String_Comparison_Exp>;
   soldOutStatus?: Maybe<String_Comparison_Exp>;
   store?: Maybe<Stores_Bool_Exp>;
@@ -10441,6 +10444,7 @@ export type Products_Insert_Input = {
   lastPerformanceReview?: Maybe<Scalars['timestamptz']>;
   productVariants?: Maybe<Product_Variants_Arr_Rel_Insert_Input>;
   promotedSlot?: Maybe<Promoted_Slots_Obj_Rel_Insert_Input>;
+  sellerLicense?: Maybe<User_Licenses_Obj_Rel_Insert_Input>;
   sellerLicenseId?: Maybe<Scalars['String']>;
   soldOutStatus?: Maybe<Scalars['String']>;
   store?: Maybe<Stores_Obj_Rel_Insert_Input>;
@@ -10542,6 +10546,7 @@ export type Products_Order_By = {
   lastPerformanceReview?: Maybe<Order_By>;
   productVariants_aggregate?: Maybe<Product_Variants_Aggregate_Order_By>;
   promotedSlot?: Maybe<Promoted_Slots_Order_By>;
+  sellerLicense?: Maybe<User_Licenses_Order_By>;
   sellerLicenseId?: Maybe<Order_By>;
   soldOutStatus?: Maybe<Order_By>;
   store?: Maybe<Stores_Order_By>;
