@@ -52,7 +52,6 @@ const PayoutsApprovedList = (props: ReactProps) => {
       mdDown && classes.rootMobile,
     )}>
 
-
       <LoadingBar
         absoluteTop
         height={4}
@@ -77,10 +76,10 @@ const PayoutsApprovedList = (props: ReactProps) => {
         </div>
       }
       {
-        (props.orderIdsGroupedByDay ?? []).map(oGroup => {
+        (props.orderIdsGroupedByDay ?? []).map(( oGroup, i ) => {
           console.log("oGroup: ", oGroup)
           return (
-            <>
+            <div key={i} className={classes.oGroupItem}>
               <PayoutsApprovedTable
                 admin={props.admin}
                 day={oGroup.day}
@@ -110,7 +109,7 @@ const PayoutsApprovedList = (props: ReactProps) => {
                   />
                 </div>
               </div>
-            </>
+            </div>
           )
         })
       }
@@ -158,6 +157,9 @@ const styles = (theme: Theme) => createStyles({
     flexDirection: 'column',
     justifyContent: 'flex-start',
     alignItems: 'center',
+    width: '100%',
+  },
+  oGroupItem: {
     width: '100%',
   },
   title: {

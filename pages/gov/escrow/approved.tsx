@@ -9,7 +9,7 @@ import { ApolloClient } from "@apollo/client";
 import { serverApolloClient } from "utils/apollo";
 // Components
 import LoadingBarSSR from "components/LoadingBarSSR";
-import ApprovedPayoutsList from "pageComponents/Gov/PayoutsApprovedList";
+import PayoutsApprovedList from "pageComponents/Gov/PayoutsApprovedList";
 import {
   OrdersGroupedByDay,
 } from "typings/gqlTypes";
@@ -28,7 +28,7 @@ const AdminProfileWrapper = dynamic(() => import("layout/GetUser/AdminProfileWra
 
 
 
-const ApprovedPayoutsListPage = (props: ReactProps) => {
+const PayoutsApprovedListPage = (props: ReactProps) => {
   // state
   const {
     classes
@@ -42,7 +42,7 @@ const ApprovedPayoutsListPage = (props: ReactProps) => {
       {({ data, loading }: AdminProfileProps) => {
         return (
           <div className={classes.contentContainer}>
-            <ApprovedPayoutsList
+            <PayoutsApprovedList
               admin={data?.user}
               orderIdsGroupedByDay={props.orderIdsGroupedByDay}
             />
@@ -69,7 +69,7 @@ interface QVar {
 }
 
 
-ApprovedPayoutsListPage.getInitialProps = async (ctx: Context) => {
+PayoutsApprovedListPage.getInitialProps = async (ctx: Context) => {
 
   const { data } = await serverApolloClient(ctx).query<QData, QVar>({
     query: GET_ADMIN_APPROVED_ORDER_IDS_GROUPED_BY_DAY,
@@ -83,6 +83,6 @@ ApprovedPayoutsListPage.getInitialProps = async (ctx: Context) => {
   };
 }
 
-export default withStyles(styles)( ApprovedPayoutsListPage );
+export default withStyles(styles)( PayoutsApprovedListPage );
 
 

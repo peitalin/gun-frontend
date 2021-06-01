@@ -87,7 +87,7 @@ const ApprovalButtons = (props: ReactProps) => {
         disabled={!readyForApproval}
         color="secondary"
         style={{
-          width: '150px',
+          width: '160px',
           height: '36px',
         }}
       >

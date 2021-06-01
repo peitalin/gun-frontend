@@ -1,5 +1,5 @@
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
-import { Colors, BoxShadows, BorderRadius, BorderRadius2x, Gradients } from "layout/AppTheme";
+import { Colors, BoxShadows, BorderRadius, BorderRadius2x, Gradients, isThemeDark } from "layout/AppTheme";
 import {
   MainBarHeightDashboard,
   NewsBarHeight,
@@ -14,8 +14,44 @@ const dashboardLinkColorHover = Colors.secondaryBright
 const dashboardLinkColor2 = Colors.darkGrey
 const dashboardLinkColorHover2 = Colors.secondaryBright
 
+const DashboardBarHeight = 48
 const dashboardMenuHeight = 50 * 11
 // 11 items, 50px each
+
+
+export const dashboardBarStyle = (theme: Theme) => ({
+  height: DashboardBarHeight,
+  position: 'fixed',
+  top: `${MainBarHeightDashboard + NewsBarHeight}px`, // 44px for borderBottom
+  backdropFilter: "blur(6px)",
+  background: isThemeDark(theme)
+    ? 'rgba(18, 18, 29, 0.3)'
+    : 'rgba(245, 245, 255, 0.4)',
+  boxShadow: BoxShadows.shadow1.boxShadow,
+  borderBottom: theme.palette.type === 'dark'
+    ? `1px solid ${Colors.uniswapMediumNavy}`
+    : `1px solid ${Colors.slateGreyDarkest}`,
+})
+export const dashboardMenuDitherStyle = (theme: Theme) => ({
+  height: '100vh',
+  width: '100vw',
+  zIndex: 2, // above watchList button which has zIndex: 1
+  position: 'fixed',
+  top: `${MainBarHeightDashboard + NewsBarHeight + DashboardBarHeight}px`, // 44px for borderBottom
+  backgroundColor: "rgba(47, 57, 65, .85)",
+})
+export const expandMenuStyle = (theme: Theme, dashboardMenuHeight) => ({
+  zIndex: 3,
+  height: `calc(${dashboardMenuHeight}px + 1rem)`,
+  transform: 'translateY(0%)',
+  position: 'fixed',
+  top: `${MainBarHeightDashboard + NewsBarHeight + DashboardBarHeight}px`, // 44px for borderBottom
+  opacity: 1,
+  transition: theme.transitions.create(['transform','opacity'], {
+    easing: theme.transitions.easing.easeInOut,
+    duration: "100ms",
+  }),
+})
 
 
 export const styles = (theme: Theme) => createStyles({
@@ -48,18 +84,7 @@ export const styles = (theme: Theme) => createStyles({
 
   // Category Bar
   dashboardBar: {
-    height: '3rem',
-    position: 'absolute',
-    top: "0",
-    background: theme.palette.type === 'dark'
-      ? Gradients.gradientUniswapDarkRotated.background
-      : Gradients.gradientGrey2.background,
-    boxShadow: theme.palette.type === 'dark'
-      ? BoxShadows.shadow3.boxShadow
-      : BoxShadows.shadow3.boxShadow,
-    borderBottom: theme.palette.type === 'dark'
-      ? `1px solid ${Colors.uniswapGrey}`
-      : `1px solid ${Colors.slateGreyDarkest}`,
+    ...dashboardBarStyle(theme) as any
   },
   dashboardBarMobile: {
     height: 30,
@@ -138,22 +163,10 @@ export const styles = (theme: Theme) => createStyles({
     height: dashboardMenuHeight,
   },
   expandMenu: {
-    zIndex: 3,
-    height: `calc(${dashboardMenuHeight}px + 1rem)`,
-    transform: 'translateY(0%)',
-    opacity: 1,
-    transition: theme.transitions.create(['transform','opacity'], {
-      easing: theme.transitions.easing.easeInOut,
-      duration: "100ms",
-    }),
+    ...expandMenuStyle(theme, dashboardMenuHeight) as any
   },
   dashboardMenuDither: {
-    height: '100vh',
-    width: '100vw',
-    zIndex: 2, // above watchList button which has zIndex: 1
-    position: 'fixed',
-    bottom: 0,
-    backgroundColor: "rgba(47, 57, 65, .85)",
+    ...dashboardMenuDitherStyle(theme) as any
   },
   dashboardOuterContainer: {
     display: 'flex',

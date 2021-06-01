@@ -7,6 +7,11 @@ import {
   CategoryBarHeightMobile,
   NavBarHeight,
 } from "layout/NavBarMain/styles";
+import {
+  dashboardMenuDitherStyle,
+  dashboardBarStyle,
+  expandMenuStyle,
+} from "pageComponents/Gov/GovDashboardMobileMenu/styles";
 
 
 const dashboardLinkColorHover = Colors.secondaryBright
@@ -48,18 +53,7 @@ export const styles = (theme: Theme) => createStyles({
 
   // Category Bar
   dashboardBar: {
-    height: '3rem',
-    position: 'absolute',
-    top: "0",
-    background: theme.palette.type === 'dark'
-      ? Gradients.gradientUniswapDarkRotated.background
-      : Gradients.gradientGrey2.background,
-    boxShadow: theme.palette.type === 'dark'
-      ? BoxShadows.shadow3.boxShadow
-      : BoxShadows.shadow3.boxShadow,
-    borderBottom: theme.palette.type === 'dark'
-      ? `1px solid ${Colors.uniswapGrey}`
-      : `1px solid ${Colors.slateGreyDarkest}`,
+    ...dashboardBarStyle(theme) as any
   },
   dashboardBarMobile: {
     height: 30,
@@ -138,22 +132,10 @@ export const styles = (theme: Theme) => createStyles({
     height: dashboardMenuHeight,
   },
   expandMenu: {
-    zIndex: 3,
-    height: `calc(${dashboardMenuHeight}px + 1rem)`,
-    transform: 'translateY(0%)',
-    opacity: 1,
-    transition: theme.transitions.create(['transform','opacity'], {
-      easing: theme.transitions.easing.easeInOut,
-      duration: "100ms",
-    }),
+    ...expandMenuStyle(theme, dashboardMenuHeight) as any
   },
   dashboardMenuDither: {
-    height: '100vh',
-    width: '100vw',
-    zIndex: 2, // above watchList button which has zIndex: 1
-    position: 'fixed',
-    bottom: 0,
-    backgroundColor: "rgba(47, 57, 65, .85)",
+    ...dashboardMenuDitherStyle(theme) as any
   },
   dashboardOuterContainer: {
     display: 'flex',
