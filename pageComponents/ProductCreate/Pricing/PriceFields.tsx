@@ -62,14 +62,9 @@ const PriceFields = (props: ReactProps & FormikProps<FormikFields>) => {
     }
   }, 16);
 
-
   // RIFM - masking currency values
-  const [variablePrice, setVariablePrice] = React.useState(
-    c(currentVariants[position]?.price) || ''
-  );
-  const [variablePriceWas, setVariablePriceWas] = React.useState(
-    c(currentVariants[position]?.priceWas) || ''
-  );
+  const [variablePrice, setVariablePrice] = React.useState("");
+  // initial value of "" will makethe price field start off empty
 
   return (
     <ErrorBounds className={classes.root}>
@@ -77,60 +72,54 @@ const PriceFields = (props: ReactProps & FormikProps<FormikFields>) => {
         <Rifm
           // $ need to be in regexp to prevent cursor jumping on backspace
           accept={/[\d.]/g}
+          value={variablePrice} // value if formatted with formatCurrency
           format={formatCurrency}
-          value={variablePrice}
           onChange={value => {
             // values before currency mask
             // multiple by 100 as formik/graphql takes cents, not dollars
             let dollars = parseNumber(value)
             setVariablePrice(dollars)
             updatePrice(dollars * 100)
-            // multiple by 100 as formik/graphql takes cents, not dollars
+            // multiply by 100 as formik/graphql takes cents, not dollars
           }}
         >
-          {({ value, onChange }) => (
-            <div className={clsx(classes.flexCol50, classes.marginRight)}>
-              {/* <div className={classes.priceFlexRow}>
-                <Typography
-                  className={classes.priceLabel}
-                  variant="subtitle2"
-                >
-                  Now (USD)
-                </Typography>
-              </div> */}
-              <div className={classes.container}>
-                <TextInputAdorned
-                  startAdornment={"$ "}
-                  name={`currentVariants[${position}].price`}
-                  type="currency"
-                  placeholder="0.00"
-                  className={classes.textField}
-                  // use "" to render empty input in textinput, not 0 or undefined.
-                  value={value || ""}
-                  onChange={(e) => {
-                    e.persist()
-                    onChange(e)
-                  }}
-                  onFocus={() => {
-                    if (typeof props.setActiveStep === 'function') {
-                      props.setActiveStep(7)
+          {({ value, onChange }) => {
+            return (
+              <div className={clsx(classes.flexCol50, classes.marginRight)}>
+                <div className={classes.container}>
+                  <TextInputAdorned
+                    startAdornment={"$ "}
+                    name={`currentVariants[${position}].price`}
+                    type="currency"
+                    placeholder="0.00"
+                    className={classes.textField}
+                    // use "" to render empty input in textinput, not 0 or undefined.
+                    value={value || ""}
+                    onChange={(e) => {
+                      e.persist()
+                      onChange(e)
+                    }}
+                    onFocus={() => {
+                      if (typeof props.setActiveStep === 'function') {
+                        props.setActiveStep(7)
+                      }
+                    }}
+                    onBlur={handleBlur}
+                    inputProps={{ style: { width: '100%', marginLeft: '0.25rem' }}}
+                    errorMessage={
+                      (errors?.currentVariants?.[position] as any)?.price
+                      ? (errors.currentVariants[position] as any)?.price
+                      : null
                     }
-                  }}
-                  onBlur={handleBlur}
-                  inputProps={{ style: { width: '100%', marginLeft: '0.25rem' }}}
-                  errorMessage={
-                    (errors?.currentVariants?.[position] as any)?.price
-                    ? (errors.currentVariants[position] as any)?.price
-                    : null
-                  }
-                  touched={touched?.currentVariants?.[position]?.price}
-                  validationErrorMsgStyle={{
-                    bottom: '-1.15rem',
-                  }}
-                />
+                    touched={touched?.currentVariants?.[position]?.price}
+                    validationErrorMsgStyle={{
+                      bottom: '-1.15rem',
+                    }}
+                  />
+                </div>
               </div>
-            </div>
-          )}
+            )
+          }}
         </Rifm>
       </div>
       <div className={classes.container}>
@@ -151,7 +140,6 @@ interface ReactProps extends WithStyles<typeof styles> {
   position: number;
   reducerName: ReducerName;
   // stepper
-  activeStep?: number
   setActiveStep?(a?: any): void
 }
 interface FormikFields {
@@ -227,4 +215,6 @@ export const styles = (theme: Theme) => createStyles({
   },
 })
 
-export default withStyles(styles)( PriceFields );
+export default withStyles(styles)(React.memo(
+  (props: ReactProps & FormikProps<FormikFields>) => <PriceFields {...props} />,
+));

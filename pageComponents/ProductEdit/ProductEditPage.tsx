@@ -47,7 +47,7 @@ import TitleSerialNumber from "pageComponents/ProductCreate/TitleSerialNumber";
 import MakeModel from "pageComponents/ProductCreate/MakeModel";
 import GunAttributes from "pageComponents/ProductCreate/GunAttributes";
 import Description from "pageComponents/ProductCreate/Description";
-import PricingLicenses from "pageComponents/ProductCreate/PricingLicenses";
+import Pricing from "pageComponents/ProductCreate/Pricing";
 import PreventDragDropContainer from "pageComponents/ProductCreate/ProductCreatePage/PreventDragDropContainer";
 
 import SelectFieldPlaceholder from "pageComponents/ProductCreate/SSR/SelectFieldPlaceholder";
@@ -336,7 +336,7 @@ const ProductEditPage = (props: ReactProps) => {
         </SectionBorder>
 
         <SectionBorder thickPadding={true}>
-          <PricingLicenses
+          <Pricing
             reducerName={reducerName}
             currentVariants={formik.values.currentVariants}
             {...formik}

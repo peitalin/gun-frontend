@@ -1,3 +1,4 @@
+import React from "react";
 // From RIFM examples
 // To prevent parseInt overflow you can use `maxLength` on input field
 // or write your own numberFormat.
@@ -46,4 +47,4 @@ const formatFloatingPointNumber = (value, maxDigits) => {
 };
 
 
-export const formatCurrency = string => formatFloatingPointNumber(string, 2);
+export const formatCurrency = string => formatFloatingPointNumber(string, 2)

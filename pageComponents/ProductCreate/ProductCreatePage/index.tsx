@@ -21,7 +21,7 @@ import TitleSerialNumber from "../TitleSerialNumber";
 import GunAttributes from "../GunAttributes";
 import MakeModel from "../MakeModel";
 import Description from "../Description";
-import PricingLicenses from "../PricingLicenses";
+import Pricing from "../Pricing";
 import StoreOrLogin from "../StoreOrLogin";
 
 import SelectFieldPlaceholder from "../SSR/SelectFieldPlaceholder";
@@ -540,7 +540,7 @@ const ProductCreatePage = (props: ReactProps) => {
         </SectionBorder>
 
         <SectionBorder thickPadding={true}>
-          <PricingLicenses
+          <Pricing
             reducerName={reducerName}
             currentVariants={productCreateInput.currentVariants}
             activeStep={activeStep}

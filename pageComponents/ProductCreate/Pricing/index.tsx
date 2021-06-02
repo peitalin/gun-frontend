@@ -1,6 +1,5 @@
 import React from "react";
 // Redux
-import { useSelector, useDispatch } from "react-redux";
 import { GrandReduxState, Actions } from "reduxStore/grand-reducer";
 import { AddVariantInput, EditVariantInput } from "reduxStore/product_create-actions";
 // Styles
@@ -14,10 +13,6 @@ import { ProductVariantInput } from "typings/gqlTypes";
 import { ReducerName } from "typings/dropzone";
 // Material UI
 import Typography from "@material-ui/core/Typography";
-import Checkbox from '@material-ui/core/Checkbox';
-import Button from '@material-ui/core/Button';
-import FormGroup from '@material-ui/core/FormGroup';
-import Switch from '@material-ui/core/Switch';
 import RefLink, { refLinks } from "../RefLink";
 // Validation
 import { FormikProps } from 'formik';
@@ -26,7 +21,7 @@ import PriceFields from "./PriceFields";
 
 
 
-const PricingLicenses = (props: ReactProps & FormikProps<FormikFields>) => {
+const Pricing = (props: ReactProps & FormikProps<FormikFields>) => {
 
   // props and state
   const { classes, reducerName, currentVariants, ...fprops } = props;
@@ -62,7 +57,6 @@ const PricingLicenses = (props: ReactProps & FormikProps<FormikFields>) => {
                   <PriceFields
                     position={i}
                     reducerName={reducerName}
-                    activeStep={props.activeStep}
                     setActiveStep={props.setActiveStep}
                     {...fprops}
                   />
@@ -78,28 +72,12 @@ const PricingLicenses = (props: ReactProps & FormikProps<FormikFields>) => {
 }
 
 
-const initialVariant: AddVariantInput = {
-  variantName: "Extended License",
-  variantDescription: "Extended License For Commercial Purposes",
-  price: 100,
-  priceWas: undefined,
-  isDefault: false,
-}
-
 interface ReactProps extends WithStyles<typeof styles> {
   reducerName: ReducerName;
   currentVariants: ProductVariantInput[];
   // stepper
   activeStep?: number
   setActiveStep?(a?: any): void
-}
-interface variantNameArgs {
-  variantName: string;
-  position: number;
-}
-interface variantDescArgs {
-  variantDescription: string;
-  position: number;
 }
 interface FormikFields {
   currentVariants: {
@@ -111,42 +89,6 @@ interface FormikFields {
 }
 
 
-
-const createActions = (reducerName: ReducerName) => {
-  complainIfMissingReduxActions(reducerName)
-  return {
-    updateVariantName: (payload: variantNameArgs) => {
-      return Actions[reducerName].UPDATE_VARIANT_NAME(payload)
-    },
-    updateVariantDescription: (payload: variantDescArgs) => {
-      return Actions[reducerName].UPDATE_VARIANT_DESCRIPTION(payload)
-    },
-    addVariant: (payload: EditVariantInput[] | AddVariantInput[]) => {
-      if (reducerName === ReducerName.reduxProductCreate) {
-        return Actions[ReducerName.reduxProductCreate]
-          .ADD_VARIANTS(payload as AddVariantInput[])
-      } else {
-        return Actions[ReducerName.reduxProductEdit]
-          .ADD_VARIANTS(payload as EditVariantInput[])
-      }
-    },
-    removeVariant: (payload: number) => {
-      return Actions[reducerName].REMOVE_VARIANT(payload)
-    },
-    setDefaultVariant: (position: number) => {
-      return Actions[reducerName].SET_IS_DEFAULT(position)
-    },
-  }
-}
-
-
-const complainIfMissingReduxActions = (reducerName: string) => {
-  if (!Actions[reducerName]) {
-    console.warn("Actions[reducerName] does not exist for reducer: ", reducerName)
-  } else {
-    // console.log("reducerName", reducerName)
-  }
-}
 
 
 export const styles = (theme: Theme) => createStyles({
@@ -190,7 +132,7 @@ export const styles = (theme: Theme) => createStyles({
 
 
 
-export default withStyles(styles)( PricingLicenses );
+export default withStyles(styles)( Pricing );
 
 
 
