@@ -36,7 +36,7 @@ export const SEND_COUNTER_BID_MESSAGE = gql`
     $offerPrice: Int!
     $counterBidId: String
   ) {
-    sendCounterBidMessage(
+    sendBidMessage(
       chatRoomId: $chatRoomId,
       productId: $productId,
       productSnapshotId: $productSnapshotId,
