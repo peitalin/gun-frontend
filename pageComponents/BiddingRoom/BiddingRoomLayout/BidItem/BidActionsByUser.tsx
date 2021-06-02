@@ -52,7 +52,7 @@ const BidActionsByUser = (props: BidProps) => {
   const theme = useTheme()
   const mdDown = useMediaQuery(theme.breakpoints.down("md"))
 
-  const [openDeclineModal, setOpenDeclineModal] = React.useState(false)
+  // const [openDeclineModal, setOpenDeclineModal] = React.useState(false)
   const [openAcceptModal, setOpenAcceptModal] = React.useState(false)
   const [openWithdrawBidModal, setOpenWithdrawBidModal] = React.useState(false)
 
@@ -161,7 +161,7 @@ const BidActionsByUser = (props: BidProps) => {
           </span>
         </TooltipToggle>
 
-        <TooltipToggle
+        {/* <TooltipToggle
           placement={"top"}
           title={bidDisabled ? "Disabled" : "Decline Bid"}
           disabled={bidDisabled}
@@ -180,13 +180,14 @@ const BidActionsByUser = (props: BidProps) => {
               />
             </IconButton>
           </span>
-        </TooltipToggle>
+        </TooltipToggle> */}
 
         <CounterBidModal
           bidDisabled={bidDisabled}
           chatRoomId={props.chatRoomId}
           product={props.product}
           name={name}
+          counterBidId={props.bidId}
         />
 
 
@@ -203,7 +204,7 @@ const BidActionsByUser = (props: BidProps) => {
             })
           }}
         />
-        <ConfirmActionModal
+        {/* <ConfirmActionModal
           title={"Do you wish to decline this bid?"}
           showModal={openDeclineModal}
           setShowModal={() => setOpenDeclineModal(s => !s)}
@@ -215,7 +216,7 @@ const BidActionsByUser = (props: BidProps) => {
               }
             })
           }}
-        />
+        /> */}
       </div>
     )
   }

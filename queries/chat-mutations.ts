@@ -25,6 +25,31 @@ export const SEND_BID_MESSAGE = gql`
   ${MessageFragment}
 `;
 
+// Same as SEND_BID_MESSAGE but with extra counterBidId to DECLINE
+// a buyer's bid
+export const SEND_COUNTER_BID_MESSAGE = gql`
+  mutation sendBidMessage(
+    $chatRoomId: String!
+    $productId: String!
+    $productSnapshotId: String!
+    $variantId: String!
+    $offerPrice: Int!
+    $counterBidId: String
+  ) {
+    sendCounterBidMessage(
+      chatRoomId: $chatRoomId,
+      productId: $productId,
+      productSnapshotId: $productSnapshotId,
+      variantId: $variantId,
+      offerPrice: $offerPrice,
+      counterBidId: $counterBidId
+    ) {
+      ...MessageFragment
+    }
+  }
+  ${MessageFragment}
+`;
+
 
 export const UPDATE_BID_MESSAGE = gql`
   mutation updateBid(

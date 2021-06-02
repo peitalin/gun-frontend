@@ -2,7 +2,6 @@ import React from "react";
 import { useState, useEffect, useRef } from 'react';
 // lodash
 const throttle = require('lodash.throttle');
-import { useTheme } from '@material-ui/core/styles';
 import smoothscroll from 'smoothscroll-polyfill'
 
 
@@ -46,121 +45,6 @@ export const useWindowWidth = () => {
 
   return windowWidth
 }
-
-////////////////////
-//// RESPONSIVE CAROUSEL HOOKS
-////////////////////
-
-const windowDeterminedCount = (cardWidth?: number, maxWidth?: number) => {
-  let carouselNumItems = 4;
-  if (window.innerWidth) {
-    carouselNumItems = Math.min(window.innerWidth, maxWidth) / cardWidth;
-  }
-  return carouselNumItems
-}
-
-export const useCalcNumItemsFromWindowWidth = (
-  initialNumberOfItems: number,
-  maxWidth: number,
-) => {
-
-  let [count, setCount] = React.useState(
-    initialNumberOfItems || 4
-    // initial values
-  );
-
-  const theme = useTheme();
-
-  React.useEffect(() => {
-    setTimeout(() => {
-      setCount(windowDeterminedCount(240, maxWidth))
-    }, 0)
-    // on componentDidMount, set count to trigger window determined count
-    // otherwise initial size with be determined by initialNumberOfItems
-  }, [])
-
-  React.useEffect(() => {
-    const updateCount = () => {
-      // keep to breakpoints defined in /layout/AppTheme
-      // lg: 840px: theme.breakpoints.values.lg
-      // md: 640px: theme.breakpoints.values.md
-      // sm: 440px: theme.breakpoints.values.sm
-      setCount(windowDeterminedCount(240, maxWidth))
-      // if (window.innerWidth > theme.breakpoints.values.xl) {
-      //   setCount(4);
-      // } else if (window.innerWidth > theme.breakpoints.values.lg) {
-      //   setCount(3);
-      // } else if (window.innerWidth > theme.breakpoints.values.md) {
-      //   setCount(2);
-      // } else if (window.innerWidth > theme.breakpoints.values.sm) {
-      //   setCount(1.5);
-      // } else {
-      //   setCount(1);
-      // }
-    }
-    window.addEventListener("resize", updateCount);
-    return () => window.removeEventListener("resize", updateCount)
-  }, [window.innerWidth])
-
-  return count
-}
-
-
-export const useCardWidthHeightHook = (
-  MAX_WIDTH_CAROUSEL: number,
-  NUMBER_OF_ITEMS?: number,
-) => {
-
-  const getCardWidthHeight = (numberOfItems: number) => {
-    let carouselWidth;
-    if (process.browser) {
-      carouselWidth = Math.min(
-        MAX_WIDTH_CAROUSEL,
-        window.innerWidth - 32
-      )
-    } else {
-      carouselWidth = MAX_WIDTH_CAROUSEL
-    }
-    let cardWidth = (carouselWidth / numberOfItems) - 8;
-    let cardHeight = cardWidth * 1.25 - 2;
-    // 2px border, 1.25 aspect ratio multiplier
-    return  { cardWidth, cardHeight }
-  }
-
-  const updateCardDim = () => {
-    let carouselNumItems = windowDeterminedCount(240, MAX_WIDTH_CAROUSEL)
-    const { cardWidth, cardHeight } = getCardWidthHeight(carouselNumItems)
-    setCardDim({
-      cardWidth: cardWidth,
-      cardHeight: cardHeight,
-    });
-  }
-
-  const [cardDim, setCardDim] = React.useState({
-    cardWidth: 0,
-    cardHeight: 0,
-  })
-
-  React.useEffect(() => {
-    setTimeout(() => {
-      updateCardDim()
-    }, 0)
-    // on componentDidMount, trigger udpateCardDim once
-    // needed when mounting carousels dynamically, to get correct card sizes
-    // otherwise you will need another "resize" event to trigger
-    // updateCardDim() to get the correct card size
-  }, [])
-
-  React.useEffect(() => {
-    window.addEventListener("resize", updateCardDim);
-    return () => window.removeEventListener("resize", updateCardDim)
-  }, [window.innerWidth, window.innerHeight])
-
-  return cardDim
-}
-
-
-
 
 
 export const useFocus = (ref, defaultState = false) => {

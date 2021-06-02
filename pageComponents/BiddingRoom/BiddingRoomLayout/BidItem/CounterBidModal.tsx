@@ -23,7 +23,7 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 // Snackbar
 import { useSnackbar } from "notistack";
 // gql
-import { SEND_BID_MESSAGE } from "queries/chat-mutations"
+import { SEND_COUNTER_BID_MESSAGE } from "queries/chat-mutations"
 // router
 import { useRouter } from "next/router";
 // Formatting
@@ -64,13 +64,14 @@ const CounterBidModal: React.FC<ReactProps> = (props) => {
 
 
   const [sendCounterBid, sendCounterBidResponse] = useMutation<MData, MVar>(
-    SEND_BID_MESSAGE, {
+    SEND_COUNTER_BID_MESSAGE, {
       variables: {
         chatRoomId: props.chatRoomId,
         productId: props.product?.id,
         productSnapshotId: props.product?.currentSnapshot?.id,
         variantId: props.product?.featuredVariant?.variantId,
         offerPrice: offerPrice,
+        counterBidId: props.counterBidId,
       },
       update: (cache, { data: { sendBidMessage }}) => {
       },
@@ -238,6 +239,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   product: Product
   name?: string
   bidDisabled: boolean
+  counterBidId?: string
 }
 
 interface MData {
@@ -249,6 +251,7 @@ interface MVar {
   productSnapshotId: string
   variantId: string
   offerPrice: number
+  counterBidId?: string
 }
 
 const styles = (theme: Theme) => createStyles({
