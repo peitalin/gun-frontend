@@ -131,20 +131,6 @@ const styles = (theme: Theme) => createStyles({
     fontWeight: 600,
     lineHeight: '1.5rem',
   },
-  phoneNumberContainer: {
-    position: "relative",
-    width: '100%',
-    marginTop: "0.5rem",
-    "& > div": {
-      width: '100%',
-    }
-  },
-  helpIcon: {
-    position: "absolute",
-    right: '0rem',
-    top: '0rem',
-    cursor: "pointer"
-  },
   textField: {
     width: "100%",
     "&:focus-within": {
@@ -173,6 +159,23 @@ const styles = (theme: Theme) => createStyles({
   },
   dateInput: {
     fontSize: '0.9rem',
+    color: theme.palette.type === 'dark'
+      ? Colors.uniswapLightestGrey
+      : Colors.slateGreyBlack,
+  },
+  phoneNumberContainer: {
+    position: "relative",
+    width: '100%',
+    marginTop: "0.5rem",
+    "& > div": {
+      width: '100%',
+    }
+  },
+  helpIcon: {
+    position: "absolute",
+    right: '0rem',
+    top: '0rem',
+    cursor: "pointer"
   },
 });
 

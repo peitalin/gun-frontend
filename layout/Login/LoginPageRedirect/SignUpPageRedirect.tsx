@@ -112,9 +112,7 @@ const SignUpPageRedirect: React.FC<ReactProps> = (props) => {
 
   const { classes } = props;
 
-  const [selectedDate, setSelectedDate] = React.useState<Date>(
-    null
-  )
+  const [selectedDate, setSelectedDate] = React.useState<Date>(null)
   // must be null so initial date is empty
 
   const handleDateChange = (date) => {
@@ -257,7 +255,7 @@ const SignUpPageRedirect: React.FC<ReactProps> = (props) => {
       <FormControl margin="dense" required fullWidth>
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
           <KeyboardDatePicker
-            // autoOk={true}
+            autoOk={true}
             disableToolbar
             autoComplete={'new-password'} // disable autoComplete
             InputAdornmentProps={{
@@ -274,7 +272,8 @@ const SignUpPageRedirect: React.FC<ReactProps> = (props) => {
             value={selectedDate}
             maxDate={new Date("1/1/3000")}
             // defaultValue={null}
-            emptyLabel="License expiry *"
+            placeholder={"License expiry *"}
+            // emptyLabel="License expiry *"
             onChange={handleDateChange}
             KeyboardButtonProps={{
               'aria-label': 'change date',
