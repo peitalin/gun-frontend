@@ -140,26 +140,29 @@ const BidActionsByUser = (props: BidProps) => {
   } else {
     return (
       <div className={clsx(classes.flexRow)}>
-        <TooltipToggle
-          placement={"top"}
-          title={bidDisabled ? "Disabled" : "Accept Bid"}
-          disabled={bidDisabled}
-        >
-          <span>
-            <IconButton
-              className={clsx(
-                mdDown ? classes.bidMsgButtonMobile : classes.bidMsgButton,
-                bidDisabled ? classes.bidMsgDisabled : classes.bidMsgBlue,
-              )}
-              onClick={() => setOpenAcceptModal(true)}
-              disabled={bidDisabled}
-            >
-              <CheckIcon
-                className={bidDisabled ? null : classes.bidMsgBlue}
-              />
-            </IconButton>
-          </span>
-        </TooltipToggle>
+        {
+          !bidDisabled &&
+          <TooltipToggle
+            placement={"top"}
+            title={bidDisabled ? "Disabled" : "Accept Bid"}
+            disabled={bidDisabled}
+          >
+            <span>
+              <IconButton
+                className={clsx(
+                  mdDown ? classes.bidMsgButtonMobile : classes.bidMsgButton,
+                  bidDisabled ? classes.bidMsgDisabled : classes.bidMsgBlue,
+                )}
+                onClick={() => setOpenAcceptModal(true)}
+                disabled={bidDisabled}
+              >
+                <CheckIcon
+                  className={bidDisabled ? null : classes.bidMsgBlue}
+                />
+              </IconButton>
+            </span>
+          </TooltipToggle>
+        }
 
         {/* <TooltipToggle
           placement={"top"}
@@ -182,13 +185,20 @@ const BidActionsByUser = (props: BidProps) => {
           </span>
         </TooltipToggle> */}
 
-        <CounterBidModal
-          bidDisabled={bidDisabled}
-          chatRoomId={props.chatRoomId}
-          product={props.product}
-          name={name}
-          counterBidId={props.bidId}
-        />
+        {
+          (props.noActiveBids || !bidDisabled) &&
+          <CounterBidModal
+            bidDisabled={
+              !props.noActiveBids && bidDisabled
+              // allow counterbidding if noActiveBids,
+              // disabled is always false if noActiveBids
+            }
+            chatRoomId={props.chatRoomId}
+            product={props.product}
+            name={name}
+            counterBidId={props.bidId}
+          />
+        }
 
 
         <ConfirmActionModal
@@ -236,6 +246,7 @@ interface BidProps extends WithStyles<typeof styles> {
       bidStatus: BidStatus,
     }
   })
+  noActiveBids: boolean
 }
 
 
@@ -301,6 +312,9 @@ const styles = (theme: Theme) => createStyles({
   },
   acceptedBidCheckoutIcon: {
     fill: Colors.green,
+  },
+  buttonsPlaceholder: {
+    minWidth: 110,
   },
 })
 

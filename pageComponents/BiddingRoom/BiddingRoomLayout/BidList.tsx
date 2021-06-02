@@ -19,6 +19,16 @@ export const BidList: React.FC<ReactProps> = (props) => {
     sellerId,
   } = props;
 
+  const noActiveBids = !props.messages.some(m =>
+    m.bid.bidStatus === BidStatus.ACTIVE ||
+    m.bid.bidStatus === BidStatus.ACCEPTED
+  )
+  const numBids = props.messages.length
+  const otherUserId = props.messages?.[0]?.senderId
+
+  console.log(`noActiveBids in bidder ${otherUserId}'s ${numBids} bids:`, noActiveBids)
+  // console.log("messages", props.messages)
+
   return (
     <div className={classes.bidListRoot}>
       {
@@ -41,6 +51,7 @@ export const BidList: React.FC<ReactProps> = (props) => {
               iOwnThisProduct={props.iOwnThisProduct}
               message={message}
               product={props.product}
+              noActiveBids={noActiveBids}
               precedingBidMessage={props.messages?.[i-1]}
             />
           );

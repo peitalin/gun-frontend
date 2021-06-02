@@ -48,7 +48,6 @@ const BiddingRoom: React.FC<ReactProps> = (props) => {
   const dispatch = useDispatch();
   const theme = useTheme();
   const snackbar = useSnackbar()
-  const lgDown = useMediaQuery(theme.breakpoints.down('lg'));
   const mdDown = useMediaQuery(theme.breakpoints.down('md'));
   const smDown = useMediaQuery(theme.breakpoints.down('sm'));
 

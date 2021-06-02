@@ -35,8 +35,10 @@ import { useRouter } from "next/router";
 import { formatCurrency, parseNumber} from "utils/currencyInput";
 import { asCurrency as c } from "utils/prices";
 // Validation
+import ValidationErrorMsg from "components/Fields/ValidationErrorMsg";
 import { validationSchemas } from "utils/validation";
 import { useFormik } from 'formik';
+import { useFocus } from "utils/hooks";
 
 
 
@@ -45,8 +47,10 @@ const CreateInitialBidForm: React.FC<ReactProps> = (props) => {
   const { classes } = props;
 
   const snackbar = useSnackbar();
-  const dispatch = useDispatch();
   const router = useRouter();
+
+  // const ref = React.useRef(null);
+  // const focused = useFocus(ref);
 
   // RIFM - masking currency values
   const [displayedPrice, setDisplayedPrice] = React.useState('');
@@ -164,6 +168,17 @@ const CreateInitialBidForm: React.FC<ReactProps> = (props) => {
             />
           )}
         </Rifm>
+
+        <ValidationErrorMsg
+          touched={formik.errors?.offerPrice}
+          focused={true}
+          errorMessage={formik.errors?.offerPrice}
+          disableInitialValidationMessage={true}
+          style={{
+            bottom: "0.25rem",
+            right: "0.5rem",
+          }}
+        />
       </div>
 
       <ButtonLoading
@@ -227,6 +242,7 @@ const styles = (theme: Theme) => createStyles({
       : `1px solid ${Colors.slateGreyDarker}`,
   },
   flexRow: {
+    position: "relative",
     display: 'flex',
     flexDirection: 'row',
     flexWrap: 'wrap',

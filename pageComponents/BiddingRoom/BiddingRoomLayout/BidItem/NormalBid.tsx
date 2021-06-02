@@ -116,23 +116,20 @@ const NormalBid = (props: BidProps) => {
 
       <div className={clsx(
         classes.columnBidActions,
-        mdDown ? classes.flexColMobile : classes.flexCol,
+        mdDown ? classes.flexColMobile : classes.flexColFlexEnd,
         mdDown && classes.marginMobile,
       )}>
-        {
-          (props.bidDisabled)
-          ? <div className={classes.buttonsPlaceholder}></div>
-          : <BidActionsByUser
-              isMe={isMe}
-              iOwnThisProduct={iOwnThisProduct}
-              bidId={m?.bid?.id}
-              bidDisabled={bidDisabled}
-              bidAccepted={bidAccepted}
-              chatRoomId={m?.chatRoomId}
-              updateBidMessage={props.updateBidMessage}
-              product={props.product}
-            />
-        }
+        <BidActionsByUser
+          isMe={isMe}
+          iOwnThisProduct={iOwnThisProduct}
+          bidId={m?.bid?.id}
+          bidDisabled={bidDisabled}
+          bidAccepted={bidAccepted}
+          chatRoomId={m?.chatRoomId}
+          updateBidMessage={props.updateBidMessage}
+          product={props.product}
+          noActiveBids={props.noActiveBids}
+        />
       </div>
 
     </div>
@@ -153,6 +150,7 @@ interface BidProps extends WithStyles<typeof styles> {
       bidStatus: BidStatus,
     }
   })
+  noActiveBids: boolean
 }
 
 
@@ -212,6 +210,12 @@ const styles = (theme: Theme) => createStyles({
     display: "flex",
     flexDirection: "column",
     alignItems: "flex-start",
+    justifyContent: "center",
+  },
+  flexColFlexEnd: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "flex-end",
     justifyContent: "center",
   },
   flexColMobile: {
@@ -288,9 +292,6 @@ const styles = (theme: Theme) => createStyles({
     color: isThemeDark(theme)
       ? Colors.uniswapMediumGrey
       : Colors.slateGreyDarkest,
-  },
-  buttonsPlaceholder: {
-    minWidth: 110,
   },
   marginMobile: {
     marginTop: '0.1rem',

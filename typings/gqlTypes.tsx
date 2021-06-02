@@ -5696,6 +5696,7 @@ export type MutationSendBidMessageArgs = {
   productSnapshotId: Scalars['String'];
   variantId: Scalars['String'];
   offerPrice: Scalars['Int'];
+  counterBidId?: Maybe<Scalars['String']>;
 };
 
 

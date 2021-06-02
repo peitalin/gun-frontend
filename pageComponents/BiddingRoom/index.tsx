@@ -37,7 +37,7 @@ const CreateBidForm: React.FC<ReactProps> = (props) => {
     state => state.reduxLogin.user
   );
   const userId = user?.id
-  const theme = useTheme();
+  // const theme = useTheme();
 
   return (
     <AlignCenterLayout

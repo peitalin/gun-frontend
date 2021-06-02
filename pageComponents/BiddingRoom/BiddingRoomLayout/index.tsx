@@ -69,6 +69,7 @@ export const BiddingRoomLayout: React.FC<ReactProps> = (props) => {
         height={4}
         width={'100vw'}
         loading={loading}
+        style={{ top: "-4px" }}
       />
 
       <Typography variant="h2" className={classes.title}>

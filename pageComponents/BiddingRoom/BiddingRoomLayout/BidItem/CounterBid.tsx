@@ -105,9 +105,8 @@ const CounterBid = (props: BidProps) => {
 
       <div className={clsx(
         classes.columnBidActions,
-        mdDown ? classes.flexColMobile : classes.flexCol,
+        mdDown ? classes.flexColMobile : classes.flexColFlexEnd,
         mdDown && classes.marginMobile,
-        mdDown && classes.mobileIcon,
       )}>
         {
           (props.bidDisabled)
@@ -121,6 +120,7 @@ const CounterBid = (props: BidProps) => {
               chatRoomId={m?.chatRoomId}
               updateBidMessage={props.updateBidMessage}
               product={props.product}
+              noActiveBids={props.noActiveBids}
             />
         }
       </div>
@@ -143,6 +143,7 @@ interface BidProps extends WithStyles<typeof styles> {
       bidStatus: BidStatus,
     }
   });
+  noActiveBids: boolean
   precedingBidMessage: Message;
 }
 
@@ -206,6 +207,12 @@ const styles = (theme: Theme) => createStyles({
     display: "flex",
     flexDirection: "column",
     alignItems: "flex-start",
+    justifyContent: "center",
+  },
+  flexColFlexEnd: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "flex-end",
     justifyContent: "center",
   },
   flexColMobile: {
