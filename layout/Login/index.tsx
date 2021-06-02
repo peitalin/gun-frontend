@@ -104,8 +104,11 @@ const Login: React.FC<ReactProps> = (props) => {
         handleCallback()
       }
     },
+    onError: (error) => {
+      handleGqlError(error)
+    },
     fetchPolicy: "no-cache", // always do a network request, no caches
-    errorPolicy: "all", // propagate errors from backend to Snackbar
+    // errorPolicy: "all", // propagate errors from backend to Snackbar
   });
 
 
@@ -135,7 +138,10 @@ const Login: React.FC<ReactProps> = (props) => {
       }
     },
     update: (cache, { data: { signUpUsingEmail } }) => { },
-    errorPolicy: "all", // propagate errors from backend to Snackbar
+    onError: (error) => {
+      handleGqlError(error)
+    },
+    // errorPolicy: "all", // propagate errors from backend to Snackbar
   })
 
   let [
@@ -163,9 +169,11 @@ const Login: React.FC<ReactProps> = (props) => {
         }, 900);
       }
     },
-    onError: (err) => { },
+    onError: (error) => {
+      handleGqlError(error)
+    },
     fetchPolicy: "no-cache", // always do a network request, no caches
-    errorPolicy: "all", // propagate errors from backend to Snackbar
+    // errorPolicy: "all", // propagate errors from backend to Snackbar
   });
 
 
@@ -286,13 +294,12 @@ const Login: React.FC<ReactProps> = (props) => {
     lastName
   }) => {
 
-    let licenseExpiry2 = new Date(licenseExpiry)
 
     if (!isSignUpInputOk(snackbar)({
       email,
       password,
       licenseNumber,
-      licenseExpiry: licenseExpiry2,
+      licenseExpiry,
       licenseCategory,
       licenseState,
       phoneNumber,
@@ -307,6 +314,8 @@ const Login: React.FC<ReactProps> = (props) => {
         autoHideDuration: 2000,
       })
     }
+
+    let licenseExpiry2 = new Date(licenseExpiry)
 
     signUpUsingEmail({
       variables: {
@@ -357,23 +366,23 @@ const Login: React.FC<ReactProps> = (props) => {
   //// Effects
   /////////////////////////////////////////////////
 
-  React.useEffect(() => {
-    if (logInUsingEmailResponse?.error) {
-      handleGqlError(logInUsingEmailResponse?.error)
-    }
-  }, [logInUsingEmailResponse])
+  // React.useEffect(() => {
+  //   if (logInUsingEmailResponse?.error) {
+  //     handleGqlError(logInUsingEmailResponse?.error)
+  //   }
+  // }, [logInUsingEmailResponse])
 
-  React.useEffect(() => {
-    if (signUpUsingEmailResponse?.error) {
-      handleGqlError(signUpUsingEmailResponse?.error)
-    }
-  }, [signUpUsingEmailResponse])
+  // React.useEffect(() => {
+  //   if (signUpUsingEmailResponse?.error) {
+  //     handleGqlError(signUpUsingEmailResponse?.error)
+  //   }
+  // }, [signUpUsingEmailResponse])
 
-  React.useEffect(() => {
-    if (sendResetPasswordEmailResponse?.error) {
-      handleGqlError(sendResetPasswordEmailResponse?.error)
-    }
-  }, [sendResetPasswordEmailResponse])
+  // React.useEffect(() => {
+  //   if (sendResetPasswordEmailResponse?.error) {
+  //     handleGqlError(sendResetPasswordEmailResponse?.error)
+  //   }
+  // }, [sendResetPasswordEmailResponse])
 
   /// Not currently used, user-service does not have an expiry on
   /// efc-auth session-cookie. But if it did, this hook will auto-logout

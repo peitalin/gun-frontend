@@ -35,7 +35,8 @@ const MuiPhoneNumber = dynamic(() => import("material-ui-phone-number"), {
 })
 import { formatPhoneNumber } from "layout/Login/utils";
 
-import dayjs from 'dayjs'
+import HelpIcon from "components/Icons/HelpIcon";
+import Tooltip from "@material-ui/core/Tooltip"
 import DateFnsUtils from '@date-io/dayjs';
 import {
   MuiPickersUtilsProvider,
@@ -111,11 +112,12 @@ const SignUpPageRedirect: React.FC<ReactProps> = (props) => {
 
   const { classes } = props;
 
-  const [selectedDate, setSelectedDate] = React.useState<Date>(null);
+  const [selectedDate, setSelectedDate] = React.useState<Date>(
+    null
+  )
   // must be null so initial date is empty
 
   const handleDateChange = (date) => {
-    // console.log("incoming date:", date)
     setSelectedDate(date)
     let expiryDate = new Date(date)
     expiryDate.setHours(0)
@@ -137,6 +139,8 @@ const SignUpPageRedirect: React.FC<ReactProps> = (props) => {
     setState(s => ({ ...s, licenseCategory: newCategories }))
   }
 
+  // console.log("selectedDate:", selectedDate)
+
   return (
   <ErrorBounds className={classes.outerContainer}>
 
@@ -144,7 +148,7 @@ const SignUpPageRedirect: React.FC<ReactProps> = (props) => {
       {
         props.title
         ? props.title
-        : "Create a GM account to save your files"
+        : "Create a Gunmarketplace account"
       }
     </Typography>
 
@@ -175,6 +179,68 @@ const SignUpPageRedirect: React.FC<ReactProps> = (props) => {
           }}
         />
       </FormControl>
+
+      <FormControl margin="dense" required fullWidth>
+        <InputLabel htmlFor="sign-up-email">Email Address</InputLabel>
+        <Input
+          name="sign-up-email"
+          type={"email"}
+          autoComplete="email"
+          value={state.email}
+          onChange={(e) => {
+            e.persist(); // for persisting synthetic events
+            setState(s => ({ ...s, email: e?.target?.value }))
+          }}
+        />
+      </FormControl>
+      <FormControl margin="dense" required fullWidth>
+        <InputLabel htmlFor="password">
+          Password
+          <LockIcon className={classes.secureCheckoutIcon}/>
+        </InputLabel>
+        <Input
+          name="sign-up-password"
+          type="password"
+          autoComplete={"new-password"} // this disables autofill
+          onChange={(e) => {
+            e.persist(); // for persisting synthetic events
+            setState(s => ({ ...s, password: e?.target?.value }))
+          }}
+        />
+      </FormControl>
+
+      <FormControl margin="dense" required fullWidth>
+        <div className={classes.phoneNumberContainer}>
+          <MuiPhoneNumber
+            //@ts-ignore
+            name={"phone"}
+            label="Mobile number e.g: +61 433 666 777"
+            // label={`${values.countryCode} ${values.phoneNumber}`}
+            data-cy="user-phone"
+            defaultCountry={"au"}
+            onlyCountries={["au"]}
+            // preferredCountries={["au"]}
+            // disableCountryCode={true}
+            // https://github.com/alexplumb/material-ui-phone-number
+            value={`${state.countryCode} ${state.phoneNumber}`}
+            onChange={handleSetPhoneNumber}
+          />
+          <Tooltip title={
+            `We may use this number to contact you about
+            your orders if we cannot reach you via email.`
+          }>
+            <span>
+              <HelpIcon className={classes.helpIcon}/>
+            </span>
+          </Tooltip>
+        </div>
+      </FormControl>
+
+
+      <Typography className={classes.miniTitle} variant={"body1"}>
+        License Details
+      </Typography>
+
       <FormControl margin="dense" required fullWidth>
         <InputLabel htmlFor="sign-up-email">Gun License Number</InputLabel>
         <Input
@@ -189,35 +255,35 @@ const SignUpPageRedirect: React.FC<ReactProps> = (props) => {
         />
       </FormControl>
       <FormControl margin="dense" required fullWidth>
-        <Typography className={classes.miniTitle} variant={"body1"}>
-          License Expiry
-        </Typography>
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
           <KeyboardDatePicker
-            autoOk={true}
+            // autoOk={true}
             disableToolbar
+            autoComplete={'new-password'} // disable autoComplete
             InputAdornmentProps={{
               classes: { root: classes.dateLabel }
+            }}
+            inputProps={{
+              className: classes.dateInput
             }}
             variant="inline"
             format="DD/MM/YYYY"
             // margin="normal"
             id="date-picker-inline"
-            label="License Expiry"
+            // label="License Expiry"
             value={selectedDate}
             maxDate={new Date("1/1/3000")}
+            // defaultValue={null}
+            emptyLabel="License expiry *"
             onChange={handleDateChange}
             KeyboardButtonProps={{
               'aria-label': 'change date',
             }}
           />
-      </MuiPickersUtilsProvider>
+        </MuiPickersUtilsProvider>
       </FormControl>
 
       <FormControl margin="dense" required fullWidth>
-        <Typography className={classes.miniTitle}>
-          License State
-        </Typography>
         <DropdownInput
           initialState={initialStateLicense}
           onChange={({ label, value }: SelectOption) => {
@@ -253,51 +319,6 @@ const SignUpPageRedirect: React.FC<ReactProps> = (props) => {
         />
       </FormControl>
 
-      <FormControl margin="dense" required fullWidth>
-        <MuiPhoneNumber
-          //@ts-ignore
-          name={"phone"}
-          label="Mobile number e.g: +61 433 666 777"
-          // label={`${values.countryCode} ${values.phoneNumber}`}
-          data-cy="user-phone"
-          defaultCountry={"au"}
-          onlyCountries={["au"]}
-          // preferredCountries={["au"]}
-          // disableCountryCode={true}
-          // https://github.com/alexplumb/material-ui-phone-number
-          value={`${state.countryCode} ${state.phoneNumber}`}
-          onChange={handleSetPhoneNumber}
-        />
-      </FormControl>
-
-      <FormControl margin="dense" required fullWidth>
-        <InputLabel htmlFor="sign-up-email">Email Address</InputLabel>
-        <Input
-          name="sign-up-email"
-          type={"email"}
-          autoComplete="email"
-          value={state.email}
-          onChange={(e) => {
-            e.persist(); // for persisting synthetic events
-            setState(s => ({ ...s, email: e?.target?.value }))
-          }}
-        />
-      </FormControl>
-      <FormControl margin="dense" required fullWidth>
-        <InputLabel htmlFor="password">
-          Password
-          <LockIcon className={classes.secureCheckoutIcon}/>
-        </InputLabel>
-        <Input
-          name="sign-up-password"
-          type="password"
-          autoComplete={"new-password"} // this disables autofill
-          onChange={(e) => {
-            e.persist(); // for persisting synthetic events
-            setState(s => ({ ...s, password: e?.target?.value }))
-          }}
-        />
-      </FormControl>
 
       <ButtonLoading
         type="submit"

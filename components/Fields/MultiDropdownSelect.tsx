@@ -171,13 +171,13 @@ const MultiDropdownSelect = (props: ReactProps) => {
             },
             color: isDarkMode ? Colors.uniswapLightestGrey : Colors.charcoal,
             background: isDarkMode
-              ? Colors.uniswapDarkNavy
+              ? Colors.uniswapMediumNavy
               : Colors.slateGrey,
           }),
           control: (base, state) => ({
             ...base,
             background: isDarkMode
-              ? Colors.uniswapLightNavy
+              ? Colors.uniswapMediumNavy
               : Colors.slateGrey,
             // // match with the menu
             borderRadius: BorderRadius,

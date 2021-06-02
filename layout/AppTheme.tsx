@@ -665,11 +665,29 @@ export const createAppTheme = (darkModeStr: "dark"|"light"): ThemeOptions =>  {
       },
       MuiInputBase: {
         root: {
-          color: darkMode ? Colors.uniswapLighterGrey : Colors.black,
+          color: darkMode ? Colors.uniswapLightestGrey : Colors.black,
           // "&:hover": {
           //   borderBottom: `1px solid ${Colors.uniswapGrey}`,
           // },
-        }
+        },
+        input: {
+          // Disable ugly ass chrome autofill yellow background
+          "&:-webkit-autofill": {
+            color: darkMode ? `${Colors.uniswapLightestGrey} !important` : `${Colors.black} !important`,
+            borderRadius: BorderRadius,
+            transition: "background-color 50000s ease-in-out 0s, color 50000s ease-in-out 0s",
+          },
+          "&:-webkit-autofill:focus": {
+            color: darkMode ? `${Colors.uniswapLightestGrey} !important` : `${Colors.black} !important`,
+            borderRadius: BorderRadius,
+            transition: "background-color 50000s ease-in-out 0s, color 50000s ease-in-out 0s",
+          },
+          "&:-webkit-autofill:hover": {
+            color: darkMode ? `${Colors.uniswapLightestGrey} !important` : `${Colors.black} !important`,
+            borderRadius: BorderRadius,
+            transition: "background-color 50000s ease-in-out 0s, color 50000s ease-in-out 0s",
+          },
+        },
       },
       MuiFormLabel: {
         root: {

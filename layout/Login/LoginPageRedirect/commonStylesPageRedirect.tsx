@@ -91,8 +91,8 @@ const styles = (theme: Theme) => createStyles({
     // padding: '1rem 1rem 0rem 1rem',
     display: 'flex',
     flexDirection: "column",
-    justifyContent: 'flex-end',
-    alignItems: 'flex-end',
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
   },
   submit: {
     marginTop: '0.5rem',
@@ -132,11 +132,18 @@ const styles = (theme: Theme) => createStyles({
     lineHeight: '1.5rem',
   },
   phoneNumberContainer: {
+    position: "relative",
     width: '100%',
-    marginBottom: "0.75rem",
+    marginTop: "0.5rem",
     "& > div": {
       width: '100%',
     }
+  },
+  helpIcon: {
+    position: "absolute",
+    right: '0rem',
+    top: '0rem',
+    cursor: "pointer"
   },
   textField: {
     width: "100%",
@@ -145,13 +152,12 @@ const styles = (theme: Theme) => createStyles({
     },
   },
   miniTitle: {
-    fontSize: '0.825rem',
-    fontWeight: 400,
+    fontSize: '1rem',
+    fontWeight: 500,
     color: theme.palette.type === 'dark'
       ? Colors.uniswapLightestGrey
       : Colors.slateGreyBlack,
-    marginBottom: '0.5rem',
-    marginTop: '0.5rem',
+    marginTop: '2rem',
   },
   dateLabel: {
     "& button > span > svg": {
@@ -164,6 +170,9 @@ const styles = (theme: Theme) => createStyles({
           : Colors.ultramarineBlue,
       }
     }
+  },
+  dateInput: {
+    fontSize: '0.9rem',
   },
 });
 

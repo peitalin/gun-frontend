@@ -201,7 +201,7 @@ export const styles = (theme: Theme) => createStyles({
   },
   navbarButton: {
     marginRight: "0.5rem",
-    minWidth: '60px',
+    minWidth: 72,
     // background: theme.palette.type === 'dark'
     //   ? fade(Colors.uniswapDarkNavy, 0.1)
     //   : fade(Colors.cream, 0.1),

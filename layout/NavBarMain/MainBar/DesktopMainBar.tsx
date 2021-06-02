@@ -128,6 +128,27 @@ const DesktopMainBar = (props: DesktopMainBarProps) => {
         }
 
         {
+          !loggedIn &&
+          <Link href="/signup">
+            <a className={classes.buttonLink}>
+              <Button
+                className={classes.navbarButton}
+                variant={"text"}
+                color="primary"
+              >
+                <div>
+                  <span className={
+                    endRoute === '/signup' ? classes.selectedRouteText : null
+                  } style={{ color: color }}>
+                    Sign Up
+                  </span>
+                </div>
+              </Button>
+            </a>
+          </Link>
+        }
+
+        {
           loggedIn
           ? <UserMenu className={classes.navbarButton} color={color} />
           : <Login

@@ -47,6 +47,10 @@ export const isSignUpInputOk =
   lastName
 }) => {
 
+  let licenseExpiry2 = new Date(licenseExpiry)
+  // console.log("licenseExpiry>>>>: ", licenseExpiry)
+  // console.log("licenseExpiry2>>>>: ", licenseExpiry2)
+
   if (!email) {
     snackbar.enqueueSnackbar("Email is missing!", { variant: "error" })
     return false
@@ -67,6 +71,9 @@ export const isSignUpInputOk =
     return false
   } else if (!licenseExpiry) {
     snackbar.enqueueSnackbar("License expiry date missing!", { variant: "error" })
+    return false
+  } else if (licenseExpiry2 instanceof Date && isNaN(licenseExpiry2?.getDate())) {
+    snackbar.enqueueSnackbar("License expiry date invalid!", { variant: "error" })
     return false
   } else if (!licenseCategory) {
     snackbar.enqueueSnackbar("License category missing!", { variant: "error" })
@@ -122,7 +129,6 @@ export const translateErrorMsg = (msg: string) => {
   if (msg?.includes('NotFound')) {
     return "That email is not a user"
   }
-  console.log("MMMMMMMSG", msg)
   if (msg?.includes('duplicate')) {
     return "Email has already been taken"
   }

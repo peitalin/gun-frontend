@@ -71,7 +71,7 @@ const CounterBidModal: React.FC<ReactProps> = (props) => {
         productSnapshotId: props.product?.currentSnapshot?.id,
         variantId: props.product?.featuredVariant?.variantId,
         offerPrice: offerPrice,
-        counterBidId: props.counterBidId,
+        counterBidId: props.counterBidId, // this bid will be DECLINED
       },
       update: (cache, { data: { sendBidMessage }}) => {
       },
