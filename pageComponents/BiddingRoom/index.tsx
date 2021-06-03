@@ -13,7 +13,7 @@ import BiddingRoomLayout from './BiddingRoomLayout';
 // Redux
 import { useSelector, useDispatch } from 'react-redux';
 import { GrandReduxState, Actions } from 'reduxStore/grand-reducer';
-import { UserPrivate } from "typings/gqlTypes";
+import { UserPrivate, ChatRoomStatus } from "typings/gqlTypes";
 // css
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
@@ -64,8 +64,23 @@ const CreateBidForm: React.FC<ReactProps> = (props) => {
         </Tabs>
         {
           userId &&
+          value === 0 &&
           <BiddingRoomLayout
             user={user}
+            chatStatuses={[
+              ChatRoomStatus.ACTIVE
+            ]}
+          />
+        }
+        {
+          userId &&
+          value !== 0 &&
+          <BiddingRoomLayout
+            user={user}
+            chatStatuses={[
+              ChatRoomStatus.ARCHIVED,
+              ChatRoomStatus.COMPLETED
+            ]}
           />
         }
       </ResponsivePadding>

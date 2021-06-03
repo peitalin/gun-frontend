@@ -4,7 +4,7 @@ import clsx from "clsx";
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
 import { Colors, BoxShadows, BorderRadius2x, BorderRadius } from "layout/AppTheme";
 // typings
-import { UserPrivate, ChatRoomStatus, Conversation, SoldOutStatus } from "typings/gqlTypes";
+import { UserPrivate, ChatRoomStatus, Conversation, SoldOutStatus, ChatRoom } from "typings/gqlTypes";
 // css
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
@@ -30,6 +30,7 @@ export const BiddingRoomLayout: React.FC<ReactProps> = (props) => {
 
   const {
     classes,
+    chatStatuses,
     user: userRedux,
   } = props;
 
@@ -40,11 +41,7 @@ export const BiddingRoomLayout: React.FC<ReactProps> = (props) => {
   const { data, loading, error } = useSubscription<QueryData, QueryVar>(
     SUBSCRIBE_USER_CONVERSATIONS, {
       variables: {
-        chatRoomStatuses: [
-          ChatRoomStatus.ACTIVE,
-          ChatRoomStatus.ARCHIVED,
-          ChatRoomStatus.COMPLETED,
-        ],
+        chatRoomStatuses: chatStatuses,
         messageLimit: userRedux?.id ? 20 : 5,
         // login-logOut updates userRedux which prompots resubscribes
       },
@@ -137,6 +134,7 @@ export const BiddingRoomLayout: React.FC<ReactProps> = (props) => {
 
 interface ReactProps extends WithStyles<typeof styles> {
   user: UserPrivate;
+  chatStatuses: ChatRoomStatus[]
 }
 
 interface QueryData {
@@ -145,7 +143,7 @@ interface QueryData {
 interface QueryVar {
   // query: ConnectionQuery
   messageLimit: number
-  chatRoomStatuses: string[]
+  chatRoomStatuses: ChatRoomStatus[]
 }
 
 const styles = (theme: Theme) => createStyles({
