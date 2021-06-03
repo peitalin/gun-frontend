@@ -70,6 +70,8 @@ const SearchHitsItem = (props: SearchHitsItemProps) => {
             offset: props.offset,
           },
         });
+        // console.log("cacheData:", cacheData)
+        // console.log("markSavedSearchHitsAsSeen:", markSavedSearchHitsAsSeen)
 
         let newSearchHits = cacheData.getSavedSearchHitsByUser.edges.map(e => {
           let matchHit = newHits.find(h => h.id === e.node.id)

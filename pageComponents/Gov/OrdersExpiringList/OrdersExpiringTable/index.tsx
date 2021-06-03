@@ -203,7 +203,12 @@ const TitleRows = (props: TitleRowsProps) => {
       </div>
       <div className={classes.flexItemSlim}>
         <Typography variant="subtitle1" className={classes.subtitle}>
-          Expires
+          Expiry Date
+        </Typography>
+      </div>
+      <div className={classes.flexItemSlim}>
+        <Typography variant="subtitle1" className={classes.subtitle}>
+          Expiry ETA
         </Typography>
       </div>
       <div className={classes.flexItemTiny}>
@@ -309,7 +314,7 @@ const styles = (theme: Theme) => createStyles({
     textTransform: "capitalize",
   },
   iconWidth: {
-    width: 44,
+    width: 32,
   },
   gridRoot: {
     background: theme.palette.type === 'dark'

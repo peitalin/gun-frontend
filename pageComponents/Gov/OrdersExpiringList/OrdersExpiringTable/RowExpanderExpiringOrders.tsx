@@ -20,7 +20,7 @@ import InfoBuyerSellerDealer from "components/Gov/RowExpander/InfoBuyerSellerDea
 // router
 import Link from "next/link";
 
-import { formatDateTime } from "utils/dates";
+import { formatDateTime, formatDayJs } from "utils/dates";
 import currency from 'currency.js';
 
 // graphql
@@ -30,6 +30,7 @@ import { DocumentNode } from "graphql";
 import {
   CANCEL_ORDER_AND_PAYMENT,
 } from "queries/orders-cancels-mutations";
+import dayjs from "dayjs";
 import {
   getDateWithOffset,
   get7DaysFromDate,
@@ -111,8 +112,12 @@ const RowExpanderExpiringOrders = (props: RowExpanderProps) => {
 
   let canOrderBeCancelled = canBeCancelled(row.orderStatus)
 
-  let createdAt = new Date(row.createdAt)
-  let expiryDate = get7DaysFromDate(createdAt)
+  // let createdAt = dayjs(row.createdAt).toDate()
+  let createdAt = dayjs.utc(row.createdAt)
+  let expiryDate = createdAt.add(7, 'day')
+
+  // let expiryDate = get7DaysFromDate(createdAt.toDate())
+  // console.log("EXPIRY DATE", expiryDate)
   let { countDown, isExpired } = getCountdownForExpiry({
     expiryDate: expiryDate
   })
@@ -126,7 +131,8 @@ const RowExpanderExpiringOrders = (props: RowExpanderProps) => {
         setOpen={setOpen}
       >
         <div className={classes.flexItemTiny}>{row.id}</div>
-        <div className={classes.flexItemSlim}>{formatDateTime(createdAt)}</div>
+        <div className={classes.flexItemSlim}>{formatDayJs(createdAt)}</div>
+        <div className={classes.flexItemSlim}>{formatDayJs(expiryDate)}</div>
         <div className={clsx(
           classes.flexItemSlim,
           isExpired && classes.redText,

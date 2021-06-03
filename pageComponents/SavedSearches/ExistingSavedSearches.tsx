@@ -56,8 +56,8 @@ const ExistingSavedSearches: React.FC<ReactProps> = (props) => {
           query: GET_SAVED_SEARCHES_BY_USER,
           variables: {},
         });
-        console.log("cacheData:", cacheData)
-        console.log("deleteSavedSearch:", deleteSavedSearch)
+        // console.log("cacheData:", cacheData)
+        // console.log("deleteSavedSearch:", deleteSavedSearch)
 
         cache.writeQuery({
           query: GET_SAVED_SEARCHES_BY_USER,

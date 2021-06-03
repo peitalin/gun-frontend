@@ -1,4 +1,4 @@
-import dayjs from 'dayjs'
+import dayjs, { Dayjs } from 'dayjs'
 
 export const dateForCountdown = (
   { date, ssr }: { date: Date, ssr?: boolean }
@@ -33,14 +33,15 @@ interface CountDownExpiry {
 export const getCountdownForExpiry = ({
   expiryDate,
 }: {
-  expiryDate: Date,
+  expiryDate: Dayjs,
 }): CountDownExpiry => {
+
   const now = new Date().getTime();
-  const then = new Date(expiryDate).getTime();
+  const then = expiryDate.toDate().getTime()
   const diff = then - now;
 
   if (now > then) {
-    let expiryDateFormatted = formatDateTime(expiryDate)
+    let expiryDateFormatted = formatDayJs(expiryDate)
     return {
       countDown: `Expired ${expiryDateFormatted}`,
       isExpired: true
@@ -68,6 +69,9 @@ export const getCountdownForExpiry = ({
 // https://github.com/iamkun/dayjs/blob/dev/docs/en/API-reference.md#format-formatstringwithtokens-string
 export const formatDateTime = (d: Date) => {
   return dayjs.utc(d).local().format("DD-MM-YYYY hh:mm A")
+}
+export const formatDayJs = (d: Dayjs) => {
+  return d.local().format("DD-MM-YYYY hh:mm A")
 }
 
 export const formatNiceDate = (d: Date) => {
