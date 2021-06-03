@@ -6,7 +6,7 @@ import { Colors, BorderRadius, isThemeDark } from "layout/AppTheme";
 // Apollo
 import { useMutation } from '@apollo/client';
 import { UPDATE_CHAT_STATUS } from "queries/chat-mutations";
-import { ChatRoomStatus, ChatRoom, UserPrivate, BidStatus } from "typings/gqlTypes";
+import { ChatRoomStatus, Conversation, ChatRoom, UserPrivate, BidStatus } from "typings/gqlTypes";
 // css
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
@@ -26,8 +26,10 @@ const ProductPanel: React.FC<ReactProps> = (props) => {
   const {
     classes,
     user,
-    currentChatRoom: chatRoom,
+    currentConversation: conversation,
   } = props;
+
+  const chatRoom = conversation.chatRoom
 
   const getNextChatStatus = (chatRoomStatus: ChatRoomStatus): string => {
     switch (chatRoomStatus) {
@@ -74,9 +76,7 @@ const ProductPanel: React.FC<ReactProps> = (props) => {
     .find(u => u.userId !== buyer?.id)
   const seller = _seller?.user;
   // chat may be archived for either buyer or seller (depending on their settings)
-  const chatStatus = user?.id === seller?.id
-    ? chatRoom?.sellerChatStatus
-    : chatRoom?.buyerChatStatus
+  const chatRoomStatus = conversation.chatRoomStatus
 
   const showCreateInitialBid = user.id === buyer.id
     && chatRoom?.messages?.every(msg => {
@@ -94,8 +94,7 @@ const ProductPanel: React.FC<ReactProps> = (props) => {
     UPDATE_CHAT_STATUS, {
       variables: {
         chatRoomId: chatRoomId,
-        chatStatus: undefined,
-        isSeller: undefined,
+        chatRoomStatus: undefined,
         messageLimit: 40,
       }
     }
@@ -146,24 +145,16 @@ const ProductPanel: React.FC<ReactProps> = (props) => {
               loading={loading}
               // disabled={loading}
               loadingIconColor={
-                props.iOwnThisProduct
-                ? chatRoom?.sellerChatStatus === ChatRoomStatus.ARCHIVED
-                  ? Colors.ultramarineBlueLight
-                  : Colors.yellow
-                : chatRoom?.buyerChatStatus === ChatRoomStatus.ARCHIVED
+                chatRoomStatus === ChatRoomStatus.ARCHIVED
                   ? Colors.ultramarineBlueLight
                   : Colors.yellow
               }
               variant="outlined"
               className={clsx(
                 classes.archiveProductButton,
-                props.iOwnThisProduct
-                ? chatRoom?.sellerChatStatus === ChatRoomStatus.ARCHIVED
+                chatRoomStatus === ChatRoomStatus.ARCHIVED
                   ? classes.blueButton
                   : classes.yellowButton
-                : chatRoom?.buyerChatStatus === ChatRoomStatus.ARCHIVED
-                  ? classes.blueButton
-                  : classes.yellowButton,
               )}
               style={{
               }}
@@ -171,14 +162,13 @@ const ProductPanel: React.FC<ReactProps> = (props) => {
                 updateChatStatus({
                   variables: {
                     chatRoomId: chatRoomId,
-                    chatStatus: getNextChatStatus(chatStatus),
-                    isSeller: props.iOwnThisProduct,
+                    chatRoomStatus: getNextChatStatus(chatRoomStatus),
                     messageLimit: 40,
                   }
                 })
               }}
             >
-              {getNextChatStatusAction(chatStatus)}
+              {getNextChatStatusAction(chatRoomStatus)}
             </ButtonLoading>
 
             {
@@ -207,7 +197,7 @@ const ProductPanel: React.FC<ReactProps> = (props) => {
 
 interface ReactProps extends WithStyles<typeof styles> {
   user: UserPrivate
-  currentChatRoom: ChatRoom
+  currentConversation: Conversation
   iOwnThisProduct: boolean
 }
 
@@ -216,8 +206,7 @@ interface QueryData {
 }
 interface QueryVar {
   chatRoomId: string
-  chatStatus: string
-  isSeller: boolean
+  chatRoomStatus: string
   messageLimit: number
 }
 

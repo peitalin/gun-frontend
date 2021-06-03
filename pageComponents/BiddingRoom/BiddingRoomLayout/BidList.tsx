@@ -26,7 +26,7 @@ export const BidList: React.FC<ReactProps> = (props) => {
   const numBids = props.messages.length
   const otherUserId = props.messages?.[0]?.senderId
 
-  console.log(`noActiveBids in bidder ${otherUserId}'s ${numBids} bids:`, noActiveBids)
+  // console.log(`noActiveBids in bidder ${otherUserId}'s ${numBids} bids:`, noActiveBids)
   // console.log("messages", props.messages)
 
   return (

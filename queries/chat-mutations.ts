@@ -70,17 +70,20 @@ export const UPDATE_BID_MESSAGE = gql`
 export const UPDATE_CHAT_STATUS = gql`
   mutation(
     $chatRoomId: String!
-    $chatStatus: String!
-    $isSeller: Boolean!
+    $chatRoomStatus: String!
     $messageLimit: Int # used for ChatRoom fragment on backend
   ) {
     updateChatStatus(
       chatRoomId: $chatRoomId
-      chatStatus: $chatStatus
-      isSeller: $isSeller
+      chatRoomStatus: $chatRoomStatus
       messageLimit: $messageLimit
     ) {
-      ...ChatRoomFragment
+      userId
+      chatRoomId
+      chatRoomStatus
+      chatRoom {
+        ...ChatRoomFragment
+      }
     }
   }
   ${ChatRoomFragment}

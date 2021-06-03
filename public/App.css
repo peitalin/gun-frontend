@@ -342,6 +342,7 @@ textarea {
 
 
 
+
 @keyframes fadeIn {
   from {
     opacity: 0
@@ -414,6 +415,7 @@ textarea {
     right: -8%
   }
 }
+
 
 .shimmer {
   background-color: #f3f3f3;

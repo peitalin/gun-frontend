@@ -22,7 +22,8 @@ import Dialog from "@material-ui/core/Dialog";
 import Button from "@material-ui/core/Button";
 import ResponsivePadding from "pageComponents/SellerDashboard/ResponsivePadding";
 import AlignCenterLayout from "components/AlignCenterLayout";
-
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
 
 
 
@@ -39,12 +40,28 @@ const CreateBidForm: React.FC<ReactProps> = (props) => {
   const userId = user?.id
   // const theme = useTheme();
 
+  const [value, setValue] = React.useState(0);
+
+  const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
+    setValue(newValue);
+  };
+
   return (
     <AlignCenterLayout
       className={classes.biddingRoomRoot}
       withRecommendations={false}
     >
       <ResponsivePadding>
+        <Tabs
+          value={value}
+          onChange={handleChange}
+          indicatorColor="primary"
+          textColor="primary"
+          centered
+        >
+          <Tab label="Active Bids" />
+          <Tab label="Archived Bids" />
+        </Tabs>
         {
           userId &&
           <BiddingRoomLayout

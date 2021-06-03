@@ -20,7 +20,7 @@ export const EmptyBidsMessage: React.FC<ReactProps> = (props) => {
         </Typography>
         <Typography variant="body1" className={classes.body1}>
           You will see offers on your products and be able to counter bid
-          once you upload a product and people bid on them
+          once people have placed bids on your product listings
         </Typography>
       </div>
     </div>

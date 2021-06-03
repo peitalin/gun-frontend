@@ -1015,7 +1015,6 @@ export enum Chat_Messages_Update_Column {
 /** columns and relationships of "chat_rooms" */
 export type Chat_Rooms = {
   __typename?: 'chat_rooms';
-  buyerChatStatus?: Maybe<Scalars['String']>;
   createdAt: Scalars['timestamptz'];
   id: Scalars['String'];
   /** An array relationship */
@@ -1033,7 +1032,6 @@ export type Chat_Rooms = {
   /** An object relationship */
   product: Products;
   productId: Scalars['String'];
-  sellerChatStatus?: Maybe<Scalars['String']>;
 };
 
 
@@ -1103,7 +1101,6 @@ export type Chat_Rooms_Bool_Exp = {
   _and?: Maybe<Array<Chat_Rooms_Bool_Exp>>;
   _not?: Maybe<Chat_Rooms_Bool_Exp>;
   _or?: Maybe<Array<Chat_Rooms_Bool_Exp>>;
-  buyerChatStatus?: Maybe<String_Comparison_Exp>;
   createdAt?: Maybe<Timestamptz_Comparison_Exp>;
   id?: Maybe<String_Comparison_Exp>;
   messages?: Maybe<Chat_Messages_Bool_Exp>;
@@ -1113,7 +1110,6 @@ export type Chat_Rooms_Bool_Exp = {
   participants?: Maybe<Chat_Users_Bool_Exp>;
   product?: Maybe<Products_Bool_Exp>;
   productId?: Maybe<String_Comparison_Exp>;
-  sellerChatStatus?: Maybe<String_Comparison_Exp>;
 };
 
 /** unique or primary key constraints on table "chat_rooms" */
@@ -1124,7 +1120,6 @@ export enum Chat_Rooms_Constraint {
 
 /** input type for inserting data into table "chat_rooms" */
 export type Chat_Rooms_Insert_Input = {
-  buyerChatStatus?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['timestamptz']>;
   id?: Maybe<Scalars['String']>;
   messages?: Maybe<Chat_Messages_Arr_Rel_Insert_Input>;
@@ -1134,31 +1129,26 @@ export type Chat_Rooms_Insert_Input = {
   participants?: Maybe<Chat_Users_Arr_Rel_Insert_Input>;
   product?: Maybe<Products_Obj_Rel_Insert_Input>;
   productId?: Maybe<Scalars['String']>;
-  sellerChatStatus?: Maybe<Scalars['String']>;
 };
 
 /** aggregate max on columns */
 export type Chat_Rooms_Max_Fields = {
   __typename?: 'chat_rooms_max_fields';
-  buyerChatStatus?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['timestamptz']>;
   id?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   ownerId?: Maybe<Scalars['String']>;
   productId?: Maybe<Scalars['String']>;
-  sellerChatStatus?: Maybe<Scalars['String']>;
 };
 
 /** aggregate min on columns */
 export type Chat_Rooms_Min_Fields = {
   __typename?: 'chat_rooms_min_fields';
-  buyerChatStatus?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['timestamptz']>;
   id?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   ownerId?: Maybe<Scalars['String']>;
   productId?: Maybe<Scalars['String']>;
-  sellerChatStatus?: Maybe<Scalars['String']>;
 };
 
 /** response of any mutation on the table "chat_rooms" */
@@ -1186,7 +1176,6 @@ export type Chat_Rooms_On_Conflict = {
 
 /** Ordering options when selecting data from "chat_rooms". */
 export type Chat_Rooms_Order_By = {
-  buyerChatStatus?: Maybe<Order_By>;
   createdAt?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   messages_aggregate?: Maybe<Chat_Messages_Aggregate_Order_By>;
@@ -1196,7 +1185,6 @@ export type Chat_Rooms_Order_By = {
   participants_aggregate?: Maybe<Chat_Users_Aggregate_Order_By>;
   product?: Maybe<Products_Order_By>;
   productId?: Maybe<Order_By>;
-  sellerChatStatus?: Maybe<Order_By>;
 };
 
 /** primary key columns input for table: chat_rooms */
@@ -1207,8 +1195,6 @@ export type Chat_Rooms_Pk_Columns_Input = {
 /** select columns of table "chat_rooms" */
 export enum Chat_Rooms_Select_Column {
   /** column name */
-  BUYERCHATSTATUS = 'buyerChatStatus',
-  /** column name */
   CREATEDAT = 'createdAt',
   /** column name */
   ID = 'id',
@@ -1217,26 +1203,20 @@ export enum Chat_Rooms_Select_Column {
   /** column name */
   OWNERID = 'ownerId',
   /** column name */
-  PRODUCTID = 'productId',
-  /** column name */
-  SELLERCHATSTATUS = 'sellerChatStatus'
+  PRODUCTID = 'productId'
 }
 
 /** input type for updating data in table "chat_rooms" */
 export type Chat_Rooms_Set_Input = {
-  buyerChatStatus?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['timestamptz']>;
   id?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   ownerId?: Maybe<Scalars['String']>;
   productId?: Maybe<Scalars['String']>;
-  sellerChatStatus?: Maybe<Scalars['String']>;
 };
 
 /** update columns of table "chat_rooms" */
 export enum Chat_Rooms_Update_Column {
-  /** column name */
-  BUYERCHATSTATUS = 'buyerChatStatus',
   /** column name */
   CREATEDAT = 'createdAt',
   /** column name */
@@ -1246,9 +1226,7 @@ export enum Chat_Rooms_Update_Column {
   /** column name */
   OWNERID = 'ownerId',
   /** column name */
-  PRODUCTID = 'productId',
-  /** column name */
-  SELLERCHATSTATUS = 'sellerChatStatus'
+  PRODUCTID = 'productId'
 }
 
 /** columns and relationships of "chat_users" */
@@ -1257,6 +1235,7 @@ export type Chat_Users = {
   /** An object relationship */
   chatRoom?: Maybe<Chat_Rooms>;
   chatRoomId: Scalars['String'];
+  chatRoomStatus?: Maybe<Scalars['String']>;
   created_at?: Maybe<Scalars['timestamptz']>;
   /** An object relationship */
   user: Users;
@@ -1306,6 +1285,7 @@ export type Chat_Users_Bool_Exp = {
   _or?: Maybe<Array<Chat_Users_Bool_Exp>>;
   chatRoom?: Maybe<Chat_Rooms_Bool_Exp>;
   chatRoomId?: Maybe<String_Comparison_Exp>;
+  chatRoomStatus?: Maybe<String_Comparison_Exp>;
   created_at?: Maybe<Timestamptz_Comparison_Exp>;
   user?: Maybe<Users_Bool_Exp>;
   userId?: Maybe<String_Comparison_Exp>;
@@ -1321,6 +1301,7 @@ export enum Chat_Users_Constraint {
 export type Chat_Users_Insert_Input = {
   chatRoom?: Maybe<Chat_Rooms_Obj_Rel_Insert_Input>;
   chatRoomId?: Maybe<Scalars['String']>;
+  chatRoomStatus?: Maybe<Scalars['String']>;
   created_at?: Maybe<Scalars['timestamptz']>;
   user?: Maybe<Users_Obj_Rel_Insert_Input>;
   userId?: Maybe<Scalars['String']>;
@@ -1330,6 +1311,7 @@ export type Chat_Users_Insert_Input = {
 export type Chat_Users_Max_Fields = {
   __typename?: 'chat_users_max_fields';
   chatRoomId?: Maybe<Scalars['String']>;
+  chatRoomStatus?: Maybe<Scalars['String']>;
   created_at?: Maybe<Scalars['timestamptz']>;
   userId?: Maybe<Scalars['String']>;
 };
@@ -1337,6 +1319,7 @@ export type Chat_Users_Max_Fields = {
 /** order by max() on columns of table "chat_users" */
 export type Chat_Users_Max_Order_By = {
   chatRoomId?: Maybe<Order_By>;
+  chatRoomStatus?: Maybe<Order_By>;
   created_at?: Maybe<Order_By>;
   userId?: Maybe<Order_By>;
 };
@@ -1345,6 +1328,7 @@ export type Chat_Users_Max_Order_By = {
 export type Chat_Users_Min_Fields = {
   __typename?: 'chat_users_min_fields';
   chatRoomId?: Maybe<Scalars['String']>;
+  chatRoomStatus?: Maybe<Scalars['String']>;
   created_at?: Maybe<Scalars['timestamptz']>;
   userId?: Maybe<Scalars['String']>;
 };
@@ -1352,6 +1336,7 @@ export type Chat_Users_Min_Fields = {
 /** order by min() on columns of table "chat_users" */
 export type Chat_Users_Min_Order_By = {
   chatRoomId?: Maybe<Order_By>;
+  chatRoomStatus?: Maybe<Order_By>;
   created_at?: Maybe<Order_By>;
   userId?: Maybe<Order_By>;
 };
@@ -1376,6 +1361,7 @@ export type Chat_Users_On_Conflict = {
 export type Chat_Users_Order_By = {
   chatRoom?: Maybe<Chat_Rooms_Order_By>;
   chatRoomId?: Maybe<Order_By>;
+  chatRoomStatus?: Maybe<Order_By>;
   created_at?: Maybe<Order_By>;
   user?: Maybe<Users_Order_By>;
   userId?: Maybe<Order_By>;
@@ -1392,6 +1378,8 @@ export enum Chat_Users_Select_Column {
   /** column name */
   CHATROOMID = 'chatRoomId',
   /** column name */
+  CHATROOMSTATUS = 'chatRoomStatus',
+  /** column name */
   CREATED_AT = 'created_at',
   /** column name */
   USERID = 'userId'
@@ -1400,6 +1388,7 @@ export enum Chat_Users_Select_Column {
 /** input type for updating data in table "chat_users" */
 export type Chat_Users_Set_Input = {
   chatRoomId?: Maybe<Scalars['String']>;
+  chatRoomStatus?: Maybe<Scalars['String']>;
   created_at?: Maybe<Scalars['timestamptz']>;
   userId?: Maybe<Scalars['String']>;
 };
@@ -1408,6 +1397,8 @@ export type Chat_Users_Set_Input = {
 export enum Chat_Users_Update_Column {
   /** column name */
   CHATROOMID = 'chatRoomId',
+  /** column name */
+  CHATROOMSTATUS = 'chatRoomStatus',
   /** column name */
   CREATED_AT = 'created_at',
   /** column name */
@@ -1425,8 +1416,6 @@ export type ChatRoom = {
   product?: Maybe<Product>;
   participants?: Maybe<Array<Maybe<Conversation>>>;
   messages?: Maybe<Array<Maybe<Message>>>;
-  buyerChatStatus?: Maybe<ChatRoomStatus>;
-  sellerChatStatus?: Maybe<ChatRoomStatus>;
 };
 
 
@@ -1474,6 +1463,7 @@ export type Conversation = {
   user?: Maybe<BasicUser>;
   chatRoomId?: Maybe<Scalars['String']>;
   chatRoom?: Maybe<ChatRoom>;
+  chatRoomStatus?: Maybe<ChatRoomStatus>;
 };
 
 export type CreateProductsConfig = {
@@ -3750,7 +3740,7 @@ export type Mutation = {
   emitTypingEvent?: Maybe<BlankMutationResponse>;
   sendBidMessage?: Maybe<Array<Maybe<Message>>>;
   updateBid?: Maybe<Array<Maybe<Bid>>>;
-  updateChatStatus?: Maybe<Array<Maybe<ChatRoom>>>;
+  updateChatStatus?: Maybe<Conversation>;
   createInitialBid?: Maybe<ChatRoom>;
   saySomething?: Maybe<Scalars['String']>;
   signupToWaitlist?: Maybe<Signup_Emails>;
@@ -5708,8 +5698,7 @@ export type MutationUpdateBidArgs = {
 
 export type MutationUpdateChatStatusArgs = {
   chatRoomId: Scalars['String'];
-  chatStatus: Scalars['String'];
-  isSeller: Scalars['Boolean'];
+  chatRoomStatus: Scalars['String'];
   messageLimit?: Maybe<Scalars['Int']>;
 };
 

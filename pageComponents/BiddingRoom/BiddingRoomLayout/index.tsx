@@ -4,7 +4,7 @@ import clsx from "clsx";
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
 import { Colors, BoxShadows, BorderRadius2x, BorderRadius } from "layout/AppTheme";
 // typings
-import { UserPrivate, Conversation, SoldOutStatus } from "typings/gqlTypes";
+import { UserPrivate, ChatRoomStatus, Conversation, SoldOutStatus } from "typings/gqlTypes";
 // css
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
@@ -40,6 +40,11 @@ export const BiddingRoomLayout: React.FC<ReactProps> = (props) => {
   const { data, loading, error } = useSubscription<QueryData, QueryVar>(
     SUBSCRIBE_USER_CONVERSATIONS, {
       variables: {
+        chatRoomStatuses: [
+          ChatRoomStatus.ACTIVE,
+          ChatRoomStatus.ARCHIVED,
+          ChatRoomStatus.COMPLETED,
+        ],
         messageLimit: userRedux?.id ? 20 : 5,
         // login-logOut updates userRedux which prompots resubscribes
       },
@@ -97,10 +102,13 @@ export const BiddingRoomLayout: React.FC<ReactProps> = (props) => {
                   let sellerId = convo1?.chatRoom?.product?.store?.user?.id
                   let iOwnThisProduct = sellerId === userRedux.id
 
+                  let chatRoomStatus = convo1.chatRoomStatus
+                  console.log("CHATROOM STATUS: ", chatRoomStatus)
+
                   return (
                       <div className={classes.flexItem} key={pid}>
                         <ProductPanel
-                          currentChatRoom={convo1?.chatRoom}
+                          currentConversation={convo1}
                           iOwnThisProduct={iOwnThisProduct}
                           user={userRedux}
                         />
@@ -137,6 +145,7 @@ interface QueryData {
 interface QueryVar {
   // query: ConnectionQuery
   messageLimit: number
+  chatRoomStatuses: string[]
 }
 
 const styles = (theme: Theme) => createStyles({

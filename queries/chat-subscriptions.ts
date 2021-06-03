@@ -59,8 +59,6 @@ export const ChatRoomFragment = gql`
     messages {
       ...MessageFragment
     }
-    buyerChatStatus
-    sellerChatStatus
   }
   ${ProductFragment}
   ${UserLicenseFragment}
@@ -70,10 +68,17 @@ export const ChatRoomFragment = gql`
 
 
 export const SUBSCRIBE_USER_CONVERSATIONS = gql`
-  subscription($messageLimit: Int) {
-    myConversations(messageLimit: $messageLimit) {
+  subscription(
+    $chatRoomStatuses: [String!]!
+    $messageLimit: Int
+  ) {
+    myConversations(
+      chatRoomStatuses: $chatRoomStatuses
+      messageLimit: $messageLimit
+    ) {
       userId
       chatRoomId
+      chatRoomStatus
       chatRoom {
         ...ChatRoomFragment
       }
