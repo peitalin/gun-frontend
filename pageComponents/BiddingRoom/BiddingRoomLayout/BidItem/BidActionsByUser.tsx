@@ -102,39 +102,44 @@ const BidActionsByUser = (props: BidProps) => {
   if (isMe) {
     return (
       <div className={clsx(classes.flexRow)}>
-        <TooltipToggle
-          placement={"top"}
-          title={bidDisabled ? "Disabled" : "Withdraw Bid"}
-          disabled={bidDisabled}
-        >
-          <span>
-            <IconButton
-              className={clsx(
-                mdDown ? classes.bidMsgButtonMobile : classes.bidMsgButton,
-                bidDisabled ? classes.bidMsgDisabled : classes.bidMsgRed,
-              )}
-              onClick={() => setOpenWithdrawBidModal(true)}
+        {
+          !bidDisabled &&
+          <>
+            <TooltipToggle
+              placement={"top"}
+              title={bidDisabled ? "Disabled" : "Withdraw Bid"}
               disabled={bidDisabled}
             >
-              <BlockIcon
-                className={bidDisabled ? null : classes.bidMsgRed}
-              />
-            </IconButton>
-          </span>
-        </TooltipToggle>
-        <ConfirmActionModal
-          title={"Do you wish to withdraw this bid?"}
-          showModal={openWithdrawBidModal}
-          setShowModal={() => setOpenWithdrawBidModal(s => !s)}
-          onConfirmFunction={async() => {
-            updateBidMessage({
-              variables: {
-                bidId: props.bidId,
-                bidStatus: BidStatus.WITHDRAWN,
-              }
-            })
-          }}
-        />
+              <span>
+                <IconButton
+                  className={clsx(
+                    mdDown ? classes.bidMsgButtonMobile : classes.bidMsgButton,
+                    bidDisabled ? classes.bidMsgDisabled : classes.bidMsgRed,
+                  )}
+                  onClick={() => setOpenWithdrawBidModal(true)}
+                  disabled={bidDisabled}
+                >
+                  <BlockIcon
+                    className={bidDisabled ? null : classes.bidMsgRed}
+                  />
+                </IconButton>
+              </span>
+            </TooltipToggle>
+            <ConfirmActionModal
+              title={"Do you wish to withdraw this bid?"}
+              showModal={openWithdrawBidModal}
+              setShowModal={() => setOpenWithdrawBidModal(s => !s)}
+              onConfirmFunction={async() => {
+                updateBidMessage({
+                  variables: {
+                    bidId: props.bidId,
+                    bidStatus: BidStatus.WITHDRAWN,
+                  }
+                })
+              }}
+            />
+          </>
+        }
       </div>
     )
   } else {
