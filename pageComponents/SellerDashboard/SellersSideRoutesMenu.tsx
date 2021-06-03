@@ -117,15 +117,15 @@ const SellersSideRoutesMenu: React.FC<ReactProps> = (props) => {
           </Link>
         </li>
         <li>
-          <Link href={"/admin/offers"} scroll={false}>
+          <Link href={"/admin/bids"} scroll={false}>
             <a>
               <div className={
-                isSelectedRoute("/admin/offers")
+                isSelectedRoute("/admin/bids")
                   ? classes.routeListItemSelected
                   : classes.routeListItem
               }>
                 <Typography variant="subtitle1" className={classes.routeListItemText}>
-                  Offers
+                  Bids
                 </Typography>
               </div>
             </a>

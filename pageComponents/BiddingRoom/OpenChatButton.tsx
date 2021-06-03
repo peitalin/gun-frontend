@@ -27,7 +27,7 @@ const OpenChatButton: React.FC<ReactProps> = (props) => {
   } = props
 
   return (
-    <Link href={"/offers"}>
+    <Link href={"/bids"}>
       <a>
         <Button
           className={classes.chatButton}
@@ -35,7 +35,7 @@ const OpenChatButton: React.FC<ReactProps> = (props) => {
           color={"primary"}
           {...props.buttonProps}
         >
-          { props.title ? props.title : "Offers" }
+          { props.title ? props.title : "Bids" }
         </Button>
       </a>
     </Link>

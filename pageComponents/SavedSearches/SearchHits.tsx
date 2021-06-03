@@ -197,6 +197,7 @@ const styles = (theme: Theme) => createStyles({
       : Colors.slateGreyLighterBlack,
   },
   itemContainer: {
+    width: '100%',
     marginRight: '1.25rem',
     marginLeft: '1.25rem',
   },

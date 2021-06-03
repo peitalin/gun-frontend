@@ -168,10 +168,10 @@ export const UserMenu: React.FC<ReactProps> = (props) => {
         </MenuItem>
 
         <MenuItem  className={classes.menuItem} onClick={handleCloseMenu}>
-          <Link href="/offers">
+          <Link href="/bids">
             <a className={classes.menuLink}>
               <HowToVoteIcon className={classes.menuIcon}/>
-              <span className={classes.menuText}> My Offers </span>
+              <span className={classes.menuText}> My Bids </span>
             </a>
           </Link>
         </MenuItem>

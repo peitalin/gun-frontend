@@ -62,8 +62,15 @@ const PriceFields = (props: ReactProps & FormikProps<FormikFields>) => {
     }
   }, 16);
 
+  let formikPrice = fprops.values.currentVariants[position]?.price
+  // console.log('formikPrice: ', formikPrice)
+
   // RIFM - masking currency values
-  const [variablePrice, setVariablePrice] = React.useState("");
+  const [variablePrice, setVariablePrice] = React.useState(
+    formikPrice
+      ? c(formikPrice) // product-edit
+      : "" // product-create
+  );
   // initial value of "" will makethe price field start off empty
 
   return (

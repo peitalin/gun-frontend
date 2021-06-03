@@ -75,7 +75,7 @@ const CreateInitialBidForm: React.FC<ReactProps> = (props) => {
           `Bid placed successfully.`,
           { variant: "success" }
         )
-        router.push("/offers")
+        router.push("/bids")
       },
       onError: (e) => {
         snackbar.enqueueSnackbar(

@@ -75,7 +75,7 @@ export const BiddingRoomLayout: React.FC<ReactProps> = (props) => {
       />
 
       <Typography variant="h2" className={classes.title}>
-        Offers
+        Bids
       </Typography>
 
       {
@@ -99,8 +99,8 @@ export const BiddingRoomLayout: React.FC<ReactProps> = (props) => {
                   let sellerId = convo1?.chatRoom?.product?.store?.user?.id
                   let iOwnThisProduct = sellerId === userRedux.id
 
-                  let chatRoomStatus = convo1.chatRoomStatus
-                  console.log("CHATROOM STATUS: ", chatRoomStatus)
+                  // let chatRoomStatus = convo1.chatRoomStatus
+                  // console.log("CHATROOM STATUS: ", chatRoomStatus)
 
                   return (
                       <div className={classes.flexItem} key={pid}>

@@ -22,7 +22,7 @@ const UserProfileWrapper = dynamic(() => import("layout/GetUser/UserProfileWrapp
 import MetaHeadersPage from "layout/MetaHeadersPage";
 
 
-const OffersPage: NextPage<ReactProps> = (props) => {
+const BidsPage: NextPage<ReactProps> = (props) => {
 
   const {
     classes
@@ -68,7 +68,7 @@ interface Context extends NextPageContext {
   apolloClient: ApolloClient<any>;
 }
 
-OffersPage.getInitialProps = async (ctx: Context) => {
+BidsPage.getInitialProps = async (ctx: Context) => {
 
   // Will trigger this getInitialProps when requesting route /pages/ProductGallery
   // otherwise initialProps may be fed via /pages/index.tsx's getInitialProps
@@ -82,7 +82,7 @@ OffersPage.getInitialProps = async (ctx: Context) => {
 }
 
 
-export default withStyles(styles)( OffersPage );
+export default withStyles(styles)( BidsPage );
 
 
 

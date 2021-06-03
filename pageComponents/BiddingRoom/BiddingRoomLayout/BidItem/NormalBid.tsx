@@ -2,7 +2,7 @@ import React from 'react';
 // Styles
 import clsx from "clsx";
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
-import { Message, Bid, Product } from "typings/gqlTypes";
+import { Message, BidStatus, Product } from "typings/gqlTypes";
 // Styles
 import {
   Colors,
@@ -110,7 +110,11 @@ const NormalBid = (props: BidProps) => {
           {`${c(m?.bid?.offerPrice)}`}
         </div>
         <div className={classes.bidStatusText}>
-          {`${m?.bid?.bidStatus}`}
+          {
+            m?.bid?.bidStatus === BidStatus.SPENT
+              ? "PURCHASED"
+              : `${m?.bid?.bidStatus}`
+          }
         </div>
       </div>
 
