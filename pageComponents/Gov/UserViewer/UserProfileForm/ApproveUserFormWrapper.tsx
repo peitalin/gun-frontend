@@ -13,6 +13,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import ErrorBounds from "components/ErrorBounds";
 // validation
 import { FormikProps } from 'formik';
+import { User_Licenses } from "typings/gqlTypes";
 
 
 
@@ -23,9 +24,11 @@ const ApproveUserFormWrapper = (
   const {
     classes,
     handleSubmit,
+    selectedLicense,
     onClickDebugPrint,
     ...fprops
   } = props;
+
 
   return (
     <form className={classes.form} onSubmit={handleSubmit}>
@@ -33,7 +36,7 @@ const ApproveUserFormWrapper = (
       <div className={clsx(classes.flexCol, classes.section1)}>
         <Button
           className={
-            props.licenseVerified
+            selectedLicense?.verified
               ? classes.buttonRed
               : classes.buttonBlue
           }
@@ -41,11 +44,12 @@ const ApproveUserFormWrapper = (
           variant={"outlined"}
           color={"primary"}
           onClick={onClickDebugPrint}
+          disabled={!selectedLicense?.id}
         >
           {
-            props.licenseVerified
-            ? `Unapprove User License`
-            : `Approve User License`
+            selectedLicense?.verified
+            ? `Unapprove License ${selectedLicense?.licenseNumber}`
+            : `Approve License ${selectedLicense?.licenseNumber}`
           }
         </Button>
       </div>
@@ -56,7 +60,7 @@ const ApproveUserFormWrapper = (
 interface ReactProps extends WithStyles<typeof styles> {
   handleSubmit(args: any): void;
   onClickDebugPrint(): void;
-  licenseVerified: boolean;
+  selectedLicense: User_Licenses;
 }
 
 interface FormikFields {

@@ -10,6 +10,7 @@ import { Colors, BorderRadius, BoxShadows } from "layout/AppTheme";
 import {
   UserPrivate,
   UserMutationResponse,
+  User_Licenses,
 } from "typings/gqlTypes";
 // Material UI
 import Typography from "@material-ui/core/Typography";
@@ -49,10 +50,15 @@ const UserProfileForm: React.FC<ReactProps> = (props) => {
 
  // state
   const [loading, setLoading] = React.useState(false);
+  const [
+    selectedLicense,
+    setSelectedLicense
+  ] = React.useState<User_Licenses>(undefined)
 
 
-  const toggleApproveUserLicense = async({ userId, verified }: {
+  const toggleApproveUserLicense = async({ userId, licenseId, verified }: {
     userId: string,
+    licenseId: string
     verified: boolean,
   }) => {
 
@@ -62,6 +68,7 @@ const UserProfileForm: React.FC<ReactProps> = (props) => {
       mutation: ADMIN_APPROVE_USER_LICENSE,
       variables: {
         userId: userId,
+        licenseId: licenseId,
         verified: verified,
       }
     });
@@ -90,7 +97,8 @@ const UserProfileForm: React.FC<ReactProps> = (props) => {
         console.log('formik values: ', values);
         toggleApproveUserLicense({
           userId: user?.id,
-          verified: !user?.defaultLicense?.verified,
+          licenseId: selectedLicense.id,
+          verified: !selectedLicense.verified,
         }).then(res => {
           console.log(res)
           setLoading(false)
@@ -120,7 +128,7 @@ const UserProfileForm: React.FC<ReactProps> = (props) => {
         return (
           <ApproveUserFormWrapper
             handleSubmit={handleSubmit}
-            licenseVerified={user?.defaultLicense?.verified}
+            selectedLicense={selectedLicense}
             onClickDebugPrint={() => {
               console.log("fprops.errors:", fprops.errors)
               setLoading(false)
@@ -137,6 +145,7 @@ const UserProfileForm: React.FC<ReactProps> = (props) => {
             </div>
             <ViewParagraph title={"User Summary"}>
               <UserProfileDetails
+                setSelectedLicense={setSelectedLicense}
                 user={user}
                 {...fprops}
               />
@@ -161,6 +170,7 @@ interface MutData3 {
 }
 interface MutVar3 {
   userId: string;
+  licenseId: string;
   verified: boolean;
 }
 

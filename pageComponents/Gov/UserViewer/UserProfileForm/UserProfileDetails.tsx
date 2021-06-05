@@ -5,6 +5,7 @@ import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/s
 import {
   UserPrivate,
   ID,
+  User_Licenses,
 } from "typings/gqlTypes";
 // Utils
 import ErrorBounds from "components/ErrorBounds";
@@ -17,6 +18,7 @@ import { Colors } from "layout/AppTheme";
 // validation
 import { FormikProps } from 'formik';
 import UserLicenseRowCard from "layout/MySettingsModal/UserLicenses/UserLicenseRowCard";
+import Tooltip from "@material-ui/core/Tooltip";
 
 
 
@@ -41,6 +43,8 @@ const UserProfileDetails = (props: ReactProps & FormikProps<FormikFields>) => {
     fprops.setFieldValue("userId", user?.id)
     fprops.setFieldValue("verified", user?.defaultLicense?.verified)
   }, [user])
+
+  let hasVerifiedLicense = user.licenses?.some(l => l.verified)
 
   return (
     <ErrorBounds className={clsx(
@@ -139,26 +143,40 @@ const UserProfileDetails = (props: ReactProps & FormikProps<FormikFields>) => {
             <div className={classes.flexRow}>
               <Typography className={clsx(
                 classes.fieldKeyBold,
-                user?.defaultLicense?.verified ? classes.blue : classes.red
+                hasVerifiedLicense
+                  ? classes.blue
+                  : classes.red
               )} variant="subtitle1">
-                License Verified:
+                License Verified (at least one):
               </Typography>
               <Typography className={clsx(
                 classes.fieldInfoBold,
-                user?.defaultLicense?.verified ? classes.blue : classes.red
+                hasVerifiedLicense
+                  ? classes.blue
+                  : classes.red
               )} variant="subtitle1">
-                {`${user?.defaultLicense?.verified}`}
+                {`${hasVerifiedLicense}`}
               </Typography>
             </div>
 
             {
               (user?.licenses ?? []).map(license => {
                 return (
-                  <UserLicenseRowCard
-                    isHighlighted={false}
-                    user={user}
-                    license={license}
-                  />
+                  <Tooltip title={"Choose this license to approve"} key={license?.id}>
+                    <div
+                      className={classes.licenseSelector}
+                      onClick={() => {
+                        console.log("setting license: ", license?.id)
+                        props.setSelectedLicense(license)
+                      }}
+                    >
+                      <UserLicenseRowCard
+                        isHighlighted={false}
+                        user={user}
+                        license={license}
+                      />
+                    </div>
+                  </Tooltip>
                 )
               })
             }
@@ -210,6 +228,7 @@ const UserProfileDetails = (props: ReactProps & FormikProps<FormikFields>) => {
 
 interface ReactProps extends WithStyles<typeof styles> {
   user: UserPrivate;
+  setSelectedLicense(a?: User_Licenses): void;
 }
 interface FormikFields {
   userId: ID;
@@ -289,6 +308,11 @@ const styles = (theme: Theme) => createStyles({
   },
   red: {
     color: Colors.red,
+  },
+  licenseSelector: {
+    "&:hover": {
+      cursor: "pointer",
+    },
   },
 });
 
