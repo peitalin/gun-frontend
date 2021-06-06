@@ -1,11 +1,12 @@
 import React from "react";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
-import { Colors, BorderRadius } from "layout/AppTheme";
+import { Colors, BorderRadius, isThemeDark } from "layout/AppTheme";
 import clsx from "clsx";
 // Components
 import ProductCardResponsive from "components/ProductCardResponsive";
 import PromotedSlotMessage from "./PromotedSlotMessage";
+import PromotedSlotMessageAdmin from "./PromotedSlotMessageAdmin";
 // GraphQL Typings
 import {
   Product,
@@ -19,6 +20,7 @@ import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { asCurrency as c } from "utils/prices";
 import { useSnackbar } from "notistack";
+import { isSlotExpiredYet } from "../PromotedSlotPurchaseModal/utils";
 
 
 
@@ -28,58 +30,97 @@ const PromotedSlotCard = (props: ReactProps) => {
   const {
     cardsPerRow,
     promotedSlot,
+    classes,
   } = props;
 
   const snackbar = useSnackbar();
 
+  let isAdmin = props.user?.userRole === Role.PLATFORM_ADMIN
+
+  const [hover, setHover] = React.useState(false)
+
+
+  let {
+    isExpired,
+    expiresAt,
+    anotherUserOwnsSlot,
+    anotherUserOwnsSlotNow,
+    userOwnsSlot,
+    userOwnsSlotNow,
+  } = isSlotExpiredYet(promotedSlot, props.user)
+
+
   return (
-    <ProductCardResponsive
-      product={
-        // random generated products won't have productId
-        // and will have isRandomFiller === true
-        !promotedSlot?.isRandomFiller
-          ? promotedSlot?.product
-          : undefined
+    <div className={classes.promotedSlotRoot}>
+      {
+        isAdmin &&
+        <div className={clsx(
+          classes.messageBox,
+          hover && classes.hoverMessageBox,
+        )}>
+          <div className={clsx(
+            classes.messageBoxDither,
+            hover && classes.hoverDither,
+          )}>
+            <PromotedSlotMessageAdmin
+              promotedSlot={promotedSlot}
+              user={props.user}
+            />
+          </div>
+        </div>
       }
-      cardsPerRow={cardsPerRow}
-      onClick={async(e) => {
-        if (!promotedSlot?.isAvailableForPurchase) {
-          snackbar.enqueueSnackbar(
-            "Slot has yet to be marked for sale by admins.",
-            { variant: "info" }
-          )
-          return
+      <ProductCardResponsive
+        product={
+          // random generated products won't have productId
+          // and will have isRandomFiller === true
+          (promotedSlot?.isRandomFiller || (isExpired && !isAdmin))
+            ? undefined
+            : promotedSlot?.product
+          // When product is expired admin sees the products he picks for the slot
+          // but other buyers will only see a blank buyable slot
         }
-        if (
-          !promotedSlot?.isAvailableForPurchase
-          && props.user?.userRole !== Role.PLATFORM_ADMIN
-        ) {
-          snackbar.enqueueSnackbar(
-            "Slot reserved for admins",
-            { variant: "info" }
-          )
-          return
+        cardsPerRow={cardsPerRow}
+        disableLoadingAnimation={true}
+        onClick={async(e) => {
+          if (
+            !promotedSlot?.isAvailableForPurchase
+            && !isAdmin
+          ) {
+            snackbar.enqueueSnackbar(
+              "Slot is not for sale right now.",
+              { variant: "info" }
+            )
+            if (!isExpired) {
+              snackbar.enqueueSnackbar(
+                "Existing products will still be shown until slot expires",
+                { variant: "info" }
+              )
+            }
+            return
+          }
+          props.onClick(e)
+          if (props?.setPosition) {
+            props.setPosition(props.position);
+          }
+          if (props?.setCurrentPromotedSlot) {
+            props.setCurrentPromotedSlot(promotedSlot);
+          }
+        }}
+        onMouseEnter={() => setHover(true)}
+        onMouseLeave={() => setHover(false)}
+        previewImageEmptyMessage={
+          // random generated products won't have productId
+          // and will have isRandomFiller === true
+          <PromotedSlotMessage
+            promotedSlot={promotedSlot}
+            user={props.user}
+          />
         }
-        props.onClick(e)
-        if (props?.setPosition) {
-          props.setPosition(props.position);
-        }
-        if (props?.setCurrentPromotedSlot) {
-          props.setCurrentPromotedSlot(promotedSlot);
-        }
-      }}
-      disableLoadingAnimation={true}
-      previewImageEmptyMessage={
-        // random generated products won't have productId
-        // and will have isRandomFiller === true
-        <PromotedSlotMessage
-          promotedSlot={promotedSlot}
-          user={props.user}
-        />
-      }
-    />
+      />
+    </div>
   )
 }
+
 
 
 /////////// Typings //////////////
@@ -104,89 +145,60 @@ interface ReactProps extends WithStyles<typeof styles> {
 /////////// Styles //////////////
 
 const styles = (theme: Theme) => createStyles({
-  root: {
-    marginTop: '1rem',
+  promotedSlotRoot: {
+    position: "relative",
   },
   maxWidth: {
     maxWidth: '1160px',
     width: '100%',
   },
-  carouselContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    alignItems: 'center',
-    // justifyContent: 'center',
-    justifyContent: 'flex-start',
-    paddingLeft: '1rem', // balances 1rem margin-right on flexItems
-  },
-  paddingRight: {
-    paddingRight: '1rem',
-  },
-  productCardWrapper: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginRight: '1rem',
-    marginBottom: '1rem',
-  },
-  productCardWrapperXs: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
+  messageBox: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    zIndex: 1,
+    height: '100%',
     width: '100%',
-    paddingRight: '1rem',
-  },
-  title: {
-    fontSize: '1.5rem',
-    marginTop: "1rem",
-    marginBottom: "1rem",
-    marginLeft: '1rem',
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-  },
-  flexCol: {
-    display: 'flex',
-    justifyContent: 'space-around',
-    flexWrap: 'wrap',
-    flexDirection: 'column',
-  },
-  flexRow: {
-    display: 'flex',
-    justifyContent: 'center',
-    flexWrap: 'wrap',
-    flexDirection: 'row',
-  },
-  flexItemMobile: {
-    flexGrow: 1,
-    marginBottom: '1rem',
-    borderRadius: `${BorderRadius}px ${BorderRadius}px 0px 0px`,
-    position: 'relative',
-  },
-  flexItem: {
-    // marginBottom: '1rem',
-    // borderBottom: "1px solid #f7f7f7",
-    borderRadius: `${BorderRadius}px ${BorderRadius}px 0px 0px`,
-    position: 'relative',
-  },
-  flexItemHover: {
-    "&:hover": {
-      // borderBottom: `1px solid ${Colors.purple}`, // purple
-      transition: theme.transitions.create('border', {
-        easing: theme.transitions.easing.easeIn,
-        duration: "200ms",
-      }),
-    }
-  },
-  previewImageMessageText: {
-    display: 'flex',
-    flexDirection: 'row',
+    display: "flex",
     justifyContent: 'center',
     alignItems: 'center',
-    textAlign: 'center',
-    marginLeft: "1rem",
-    marginRight: "1rem",
+    borderRadius: BorderRadius,
+    cursor: "pointer",
+    pointerEvents: "none",
+    color: isThemeDark(theme)
+      ? Colors.uniswapLightestGrey
+      : Colors.slateGreyDark,
+    transition: theme.transitions.create('backdrop-filter', {
+      easing: theme.transitions.easing.easeOut,
+      duration: "400ms",
+    }),
+  },
+  hoverMessageBox: {
+    backdropFilter: "blur(6px)",
+    transition: theme.transitions.create('backdrop-filter', {
+      easing: theme.transitions.easing.easeOut,
+      duration: "400ms",
+    }),
+    "& > div > div ": {
+      color: Colors.ultramarineBlue,
+    },
+  },
+  messageBoxDither: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    zIndex: 1,
+    paddingTop: "1rem",
+    height: '100%',
+    width: '100%',
+    display: "flex",
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: "rgba(22,22,22,0.7)",
+    borderRadius: BorderRadius,
+  },
+  hoverDither: {
+    backgroundColor: "rgba(22,22,22,0.2)",
   },
   grayedOut: {
     // filter: "grayscale(1) blur(1px)",

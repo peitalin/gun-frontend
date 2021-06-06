@@ -3,8 +3,11 @@ import React from "react";
 import clsx from "clsx";
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
 import { Colors, Gradients } from "layout/AppTheme";
+// redux
+import { useSelector } from "react-redux";
+import { GrandReduxState, Actions} from "reduxStore/grand-reducer";
 // Typings
-import { ProductsConnection, PageConfig, PromotedList } from "typings/gqlTypes";
+import { UserPrivate, ProductsConnection, PageConfig, PromotedList } from "typings/gqlTypes";
 // Components
 import PromotionCards from "pageComponents/PromoteListings/PromotionCards";
 import BannerPromotionPurchases from "./BannerPromotionPurchases"
@@ -24,6 +27,9 @@ const PromoteListings: React.FC<ReactProps> = (props) => {
 
   // const theme = useTheme();
   // const mdDown = useMediaQuery(theme.breakpoints.down('md'));
+
+  const user = useSelector<GrandReduxState, UserPrivate>(s => s.reduxLogin.user)
+
   const [
     currentPromotedSlot,
     setCurrentPromotedSlot
@@ -31,7 +37,6 @@ const PromoteListings: React.FC<ReactProps> = (props) => {
 
   const [ position, setPosition ] = React.useState(0)
   const [ refetch, setRefetch ] = React.useState(undefined)
-  // console.log("pageConfig => ", pageConfig)
 
   return (
     <div className={classes.promoteListingsRoot}>
@@ -43,9 +48,8 @@ const PromoteListings: React.FC<ReactProps> = (props) => {
         <BannerPromotionPurchases />
 
         <PromotedSlotPurchaseModal
-          asModal={true}
+          user={user}
           currentPromotedSlot={currentPromotedSlot}
-          position={position}
           refetch={refetch}
         />
 

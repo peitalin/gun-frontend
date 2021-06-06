@@ -2,18 +2,12 @@
 import {
   ID,
   PaymentProcessor,
-  RegisterUploadMutationResult,
-  RegisterUploadMutationVariables,
-  UploadType,
-  RegisterUploadMutation,
-  UploadRegisterMutationResponse,
-  SaveImageUploadMutation,
-  SaveImageUploadMutationVariables,
   UploadSaveFileMutationResponse,
   Product,
   ProductEditInput,
   Image_Parents,
-  BlankMutationResponse
+  BlankMutationResponse,
+  UploadType,
 } from "typings/gqlTypes";
 import { Actions } from "reduxStore/actions";
 import { Dispatch } from "redux";
@@ -21,8 +15,8 @@ import { Dispatch } from "redux";
 import getConfig from 'next/config'
 import { ApolloClient } from "@apollo/client";
 import {
-  REGISTER_UPLOAD,
-  SAVE_IMAGE_UPLOAD,
+  UPLOAD_STEP1_REGISTER_GOOGLE_URL,
+  UPLOAD_SAVE_IMAGE,
   UPLOAD_SAVE_FILE,
 } from "./content-mutations";
 import { EDIT_PRODUCT } from "./products-mutations";
@@ -92,15 +86,27 @@ export const google_storage_register = async (
   aClient: ApolloClient<object>
 ): Promise<GSRegisterResponse> => {
 
-  const response = await aClient.mutate<RegisterUploadMutation, RegisterUploadMutationVariables>({
-    mutation: REGISTER_UPLOAD,
+  interface Mvar {
+    uploadType: UploadType;
+    mimeType: string;
+    fileSize: number;
+  }
+  interface Mdata {
+    uploadRegisterGoogleUrl: {
+      uploadId: string,
+      putUrl: string
+    }
+  }
+
+  const response = await aClient.mutate<Mdata, Mvar>({
+    mutation: UPLOAD_STEP1_REGISTER_GOOGLE_URL,
     variables: {
       uploadType: uploadType,
       mimeType: mimeType,
       fileSize: fileSize
     }
   });
-  const result = response.data.uploadRegister;
+  const result = response.data.uploadRegisterGoogleUrl
   return {
     uploadId: result.uploadId,
     uploadUrl: result.putUrl
@@ -120,8 +126,21 @@ export const google_storage_save_image_to_db = async(
   ownerIds: string[],
   aClient: ApolloClient<object>
 ): Promise<Image_Parents> => {
-  const response = await aClient.mutate<SaveImageUploadMutation, SaveImageUploadMutationVariables>({
-    mutation: SAVE_IMAGE_UPLOAD,
+
+  interface Mvar {
+    uploadId: string;
+    description?: string;
+    tags?: string;
+    ownerIds?: string[]
+  }
+  interface Mdata {
+    uploadSaveImage: {
+      image: Image_Parents
+    }
+  }
+
+  const response = await aClient.mutate<Mdata, Mvar>({
+    mutation: UPLOAD_SAVE_IMAGE,
     variables: {
       uploadId: uploadId,
       description: description,
@@ -131,7 +150,7 @@ export const google_storage_save_image_to_db = async(
   });
   console.log("response ........", response)
   const result = response.data.uploadSaveImage;
-  return result.image as any
+  return result.image
 }
 
 // 3 (file)

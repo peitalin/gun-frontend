@@ -26,8 +26,6 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 // Snackbar
 import { useSnackbar } from "notistack";
 // Redux
-import { useSelector, useDispatch } from 'react-redux';
-import { GrandReduxState, Actions } from 'reduxStore/grand-reducer';
 import { CREATE_INITIAL_BID } from "queries/chat-mutations"
 // router
 import { useRouter } from "next/router";

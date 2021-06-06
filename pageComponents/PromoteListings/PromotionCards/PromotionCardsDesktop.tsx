@@ -39,24 +39,23 @@ const PromotionCardsDesktop = (props: ReactProps) => {
     },
   } = props;
 
-  const snackbar = useSnackbar();
-  const theme = useTheme();
+  // const snackbar = useSnackbar();
+  // const theme = useTheme();
 
-  const promotedSlotsEdges = (connection?.edges ?? [])
-    .map(promotedItem => {
-      if (promotedItem?.node?.id?.startsWith("random")) {
-        return {
-          ...promotedItem,
-          node: {
-            ...promotedItem?.node,
-            product: undefined,
-            productId: undefined,
-          }
+  const promotedSlotsEdges = (connection?.edges ?? []).map(promotedItem => {
+    if (promotedItem?.node?.id?.startsWith("random")) {
+      return {
+        ...promotedItem,
+        node: {
+          ...promotedItem?.node,
+          product: undefined,
+          productId: undefined,
         }
-      } else {
-        return promotedItem
       }
-    })
+    } else {
+      return promotedItem
+    }
+  })
 
   return (
     <main className={classes.root}>

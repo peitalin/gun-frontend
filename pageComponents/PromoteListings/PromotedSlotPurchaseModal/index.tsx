@@ -1,16 +1,18 @@
 import React from "react";
 // Styles
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
-import { Colors, BorderRadius2x, Gradients, BorderRadius } from "layout/AppTheme";
-import { PromotedSlot } from "typings/gqlTypes";
+import { Colors, BorderRadius2x, Gradients, BorderRadius, isThemeDark } from "layout/AppTheme";
+import { PromotedSlot, Role } from "typings/gqlTypes";
 // Material UI
 import Dialog from "@material-ui/core/Dialog";
 // Redux
 import { useDispatch, useSelector } from "react-redux";
-import { GrandReduxState } from "reduxStore/grand-reducer";
-import { Actions } from "reduxStore/actions";
+import { GrandReduxState, Actions } from "reduxStore/grand-reducer";
+// typings
+import { UserPrivate } from "typings/gqlTypes";
 // Components
 import BuyPromotedSlotPage from "./BuyPromotedSlotPage";
+import AdminEditSlot from "./AdminEditSlot";
 /// CSS
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
@@ -23,7 +25,7 @@ const PromotedSlotPurchaseModal: React.FC<ReactProps> = (props) => {
 
   const {
     classes,
-    asModal = true,
+    user,
   } = props;
 
   const dispatch = useDispatch();
@@ -39,59 +41,58 @@ const PromotedSlotPurchaseModal: React.FC<ReactProps> = (props) => {
 
   const theme = useTheme();
   const mdUp = useMediaQuery(theme.breakpoints.up("md"))
+  const isAdmin = user?.userRole === Role.PLATFORM_ADMIN
 
-  console.log("currentPromotedSlot: ", props.currentPromotedSlot)
-
-  if (!asModal && process.browser) {
-    return (
-      <BuyPromotedSlotPage
-        closeModal={closeModal}
-        asModal={asModal}
-        promotedSlot={props.currentPromotedSlot}
-        position={props.position}
-        refetch={props.refetch}
-      />
-    )
-  } else {
-    return (
-      <>
-        <Dialog
-          open={promotedItemPurchaseModalOpen}
-          // full height
-          fullScreen={mdUp ? false : true}
-          fullWidth={mdUp ? false : null}
-          maxWidth={"md"}
-          onClose={() => closeModal()}
-          BackdropProps={{
-            classes: {
-              root: classes.modalBackdrop,
-            }
-          }}
-          PaperProps={{
-            classes: {
-              root: mdUp
-                ? classes.modalPaperScrollPaper
-                : classes.modalPaperScrollPaperSm
-            }
-          }}
-          scroll="body"
-        >
-          <BuyPromotedSlotPage
-            promotedSlot={props.currentPromotedSlot}
-            position={props.position}
-            closeModal={closeModal}
-            refetch={props.refetch}
-          />
-        </Dialog>
-      </>
-    )
-  }
+  return (
+    <>
+      <Dialog
+        open={promotedItemPurchaseModalOpen}
+        // full height
+        fullScreen={mdUp ? false : true}
+        fullWidth={mdUp ? false : null}
+        maxWidth={"md"}
+        onClose={() => closeModal()}
+        BackdropProps={{
+          classes: {
+            root: classes.modalBackdrop,
+          }
+        }}
+        PaperProps={{
+          classes: {
+            root: mdUp
+              ? classes.modalPaperScrollPaper
+              : classes.modalPaperScrollPaperSm
+          }
+        }}
+        scroll="body"
+      >
+        <div className={classes.modalCard}>
+          <div className={classes.modalCardInner}>
+            <BuyPromotedSlotPage
+              promotedSlot={props.currentPromotedSlot}
+              user={user}
+              closeModal={closeModal}
+              refetch={props.refetch}
+            />
+          </div>
+          {
+            isAdmin &&
+            <div className={classes.modalCardInner}>
+              <AdminEditSlot
+                promotedSlot={props.currentPromotedSlot}
+                user={user}
+              />
+            </div>
+          }
+        </div>
+      </Dialog>
+    </>
+  )
 }
 
 interface ReactProps extends WithStyles<typeof styles> {
-  asModal?: boolean;
+  user: UserPrivate;
   currentPromotedSlot: PromotedSlot
-  position: number;
   refetch?(): void;
 }
 
@@ -113,6 +114,15 @@ const styles = (theme: Theme) => createStyles({
       : Colors.slateGreyDark,
     borderRadius: BorderRadius2x,
     overflowY: 'visible', // let dropdown overhang modal
+  },
+  modalCard: {
+  },
+  modalCardInner: {
+    margin: '0.5rem',
+    borderRadius: BorderRadius2x,
+    border: isThemeDark(theme)
+      ? `1px solid ${Colors.uniswapGrey}`
+      : `1px solid ${Colors.slateGreyDark}`,
   },
 });
 

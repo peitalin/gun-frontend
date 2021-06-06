@@ -545,4 +545,13 @@ export const validationSchemas = {
       caliber: Yup.string().nullable(),
       dealerState: Yup.string().nullable(),
     }),
+
+  EditPromotedSlot:
+    Yup.object().shape({
+      promotedSlotId: Yup.string()
+        .required('Promoted Slot ID required'),
+      isAvailableForPurchase: Yup.boolean().nullable(),
+      reservePrice: Yup.number().nullable(),
+      durationInHours: Yup.number().nullable(),
+    }),
 }

@@ -99,6 +99,8 @@ const ProductCardRC = (props: ReactProps) => {
         borderRadius: props.boxShadow ? `${BorderRadius}px` : "",
         ...props.style
       }}
+      onMouseEnter={props.onMouseEnter}
+      onMouseLeave={props.onMouseLeave}
     >
       {
         //  If no PreviewItems
@@ -106,6 +108,7 @@ const ProductCardRC = (props: ReactProps) => {
         <AspectGridItemLink
           product={product}
           promotedSlotId={props.promotedSlotId}
+          style={props.styleInner}
           disable={
             !props.product?.storeId ||
             typeof props.onClick === 'function'
@@ -124,6 +127,7 @@ const ProductCardRC = (props: ReactProps) => {
         <AspectGridItemLink
           product={product}
           promotedSlotId={props.promotedSlotId}
+          style={props.styleInner}
           disable={
             !props.product?.storeId ||
             typeof props.onClick === 'function'
@@ -161,7 +165,9 @@ const ProductCardRC = (props: ReactProps) => {
         </AspectGridItemLink>
       }
 
-      <div className={classes.descriptionContainerOuter}>
+      <div className={classes.descriptionContainerOuter}
+        style={props.styleInner}
+      >
         {/* {
           showWatchlistButton &&
           productId &&
@@ -271,8 +277,11 @@ interface ReactProps extends WithStyles<typeof styles> {
   // carousels
   boxShadow?: boolean;
   style?: any;
+  styleInner?: any;
   previewImageEmptyMessage?: React.ReactNode;
   onClick?(a: any): void;
+  onMouseEnter?(a: any): void;
+  onMouseLeave?(a: any): void;
   hideActionType?: boolean;
   disableLoadingAnimation?: boolean;
   promotedSlotId?: string

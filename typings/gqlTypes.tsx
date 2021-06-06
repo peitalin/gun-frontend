@@ -3470,22 +3470,13 @@ export type Mutation = {
    */
   adminDeleteAccount: BlankMutationResponse;
   /**
-   * Request to upload a piece of content.
-   * This is the first stage of uploading - registration.
-   *
-   * How uploading works:
-   * 1. Register the upload and receive the upload ID and PUT URL.
-   * 2. Use the PUT URL received in this response to actually upload the file.
-   * 3. Then use uploadSave to make it official – your uploaded file will be validated.
-   *
-   * AccessRule – LOGGED_IN
+   * Upload to google bucket using signed urls
+   * 1. Register the upload and return the upload ID and PUT URL to the frontend
+   * 2. Frontend uses the PUT URL to upload the file directly
+   * 3. Front then uses uploadSave to save info to DB. The uploaded file will be validated.
    */
-  uploadRegister: UploadRegisterMutationResponse;
-  /**
-   * Request to save an uploaded image / make it official.
-   * This is the last stage of uploading - saving.
-   * AccessRule – LOGGED_IN
-   */
+  uploadRegisterGoogleUrl: UploadRegisterMutationResponse;
+  /** Request to save an uploaded image / make it official. */
   uploadSaveImage: UploadSaveImageMutationResponse;
   uploadSaveFile: UploadSaveFileMutationResponse;
   /**
@@ -3635,11 +3626,7 @@ export type Mutation = {
   initiatePageConfig?: Maybe<PageConfig>;
   initiateCategories: Array<Categories>;
   initiateCalibers: Array<Calibers>;
-  /**
-   * Create a new promoted list, or replace existing one if promoted_list_id clashes
-   *
-   * AccessRule – PLATFORM_ADMIN
-   */
+  /** Create a new promoted list, or replace existing one if promoted_list_id clashes */
   insertOrReplacePromotedList: PromotedListMutationResponse;
   /**
    * Delete a promoted list.
@@ -3657,6 +3644,7 @@ export type Mutation = {
    * AccessRule – PLATFORM_ADMIN
    */
   removeProductFromPromotedList: PromotedListMutationResponse;
+  editPromotedSlot?: Maybe<PromotedSlot>;
   /**
    * AccessRule – LOGGED_IN
    * For a buyer to purchase a promotion slot
@@ -5212,6 +5200,7 @@ export type MutationAddUserLicenseArgs = {
 
 
 export type MutationEditUserLicenseArgs = {
+  licenseId: Scalars['String'];
   licenseNumber: Scalars['String'];
   licenseExpiry: Scalars['Date'];
   licenseCategory?: Maybe<Scalars['String']>;
@@ -5231,6 +5220,7 @@ export type MutationSetDefaultLicenseIdArgs = {
 
 export type MutationAdminApproveUserLicenseArgs = {
   userId: Scalars['String'];
+  licenseId: Scalars['String'];
   verified: Scalars['Boolean'];
 };
 
@@ -5245,7 +5235,7 @@ export type MutationAdminDeleteAccountArgs = {
 };
 
 
-export type MutationUploadRegisterArgs = {
+export type MutationUploadRegisterGoogleUrlArgs = {
   uploadType: UploadType;
   mimeType: Scalars['String'];
   fileSize: Scalars['Int'];
@@ -5433,6 +5423,14 @@ export type MutationRemoveProductFromPromotedListArgs = {
 };
 
 
+export type MutationEditPromotedSlotArgs = {
+  promotedSlotId: Scalars['String'];
+  isAvailableForPurchase?: Maybe<Scalars['Boolean']>;
+  reservePrice?: Maybe<Scalars['Int']>;
+  durationInHours?: Maybe<Scalars['Int']>;
+};
+
+
 export type MutationPurchasePromotionArgs = {
   promotedSlotId: Scalars['String'];
   productId: Scalars['String'];
@@ -5441,7 +5439,6 @@ export type MutationPurchasePromotionArgs = {
   stripeAuthorizePaymentData: Scalars['String'];
   currency?: Maybe<Scalars['String']>;
   bidId?: Maybe<Scalars['String']>;
-  durationInHours?: Maybe<Scalars['Int']>;
 };
 
 
@@ -10969,6 +10966,7 @@ export type Promoted_Lists_Variance_Fields = {
 export type Promoted_Slots = {
   __typename?: 'promoted_slots';
   createdAt: Scalars['timestamptz'];
+  durationInHours?: Maybe<Scalars['Int']>;
   expiresAt?: Maybe<Scalars['timestamptz']>;
   id: Scalars['String'];
   isAvailableForPurchase: Scalars['Boolean'];
@@ -11037,12 +11035,14 @@ export type Promoted_Slots_Arr_Rel_Insert_Input = {
 /** aggregate avg on columns */
 export type Promoted_Slots_Avg_Fields = {
   __typename?: 'promoted_slots_avg_fields';
+  durationInHours?: Maybe<Scalars['Float']>;
   position?: Maybe<Scalars['Float']>;
   reservePrice?: Maybe<Scalars['Float']>;
 };
 
 /** order by avg() on columns of table "promoted_slots" */
 export type Promoted_Slots_Avg_Order_By = {
+  durationInHours?: Maybe<Order_By>;
   position?: Maybe<Order_By>;
   reservePrice?: Maybe<Order_By>;
 };
@@ -11053,6 +11053,7 @@ export type Promoted_Slots_Bool_Exp = {
   _not?: Maybe<Promoted_Slots_Bool_Exp>;
   _or?: Maybe<Array<Promoted_Slots_Bool_Exp>>;
   createdAt?: Maybe<Timestamptz_Comparison_Exp>;
+  durationInHours?: Maybe<Int_Comparison_Exp>;
   expiresAt?: Maybe<Timestamptz_Comparison_Exp>;
   id?: Maybe<String_Comparison_Exp>;
   isAvailableForPurchase?: Maybe<Boolean_Comparison_Exp>;
@@ -11075,6 +11076,7 @@ export enum Promoted_Slots_Constraint {
 
 /** input type for incrementing numeric columns in table "promoted_slots" */
 export type Promoted_Slots_Inc_Input = {
+  durationInHours?: Maybe<Scalars['Int']>;
   position?: Maybe<Scalars['Int']>;
   reservePrice?: Maybe<Scalars['Int']>;
 };
@@ -11082,6 +11084,7 @@ export type Promoted_Slots_Inc_Input = {
 /** input type for inserting data into table "promoted_slots" */
 export type Promoted_Slots_Insert_Input = {
   createdAt?: Maybe<Scalars['timestamptz']>;
+  durationInHours?: Maybe<Scalars['Int']>;
   expiresAt?: Maybe<Scalars['timestamptz']>;
   id?: Maybe<Scalars['String']>;
   isAvailableForPurchase?: Maybe<Scalars['Boolean']>;
@@ -11098,6 +11101,7 @@ export type Promoted_Slots_Insert_Input = {
 export type Promoted_Slots_Max_Fields = {
   __typename?: 'promoted_slots_max_fields';
   createdAt?: Maybe<Scalars['timestamptz']>;
+  durationInHours?: Maybe<Scalars['Int']>;
   expiresAt?: Maybe<Scalars['timestamptz']>;
   id?: Maybe<Scalars['String']>;
   ownerId?: Maybe<Scalars['String']>;
@@ -11111,6 +11115,7 @@ export type Promoted_Slots_Max_Fields = {
 /** order by max() on columns of table "promoted_slots" */
 export type Promoted_Slots_Max_Order_By = {
   createdAt?: Maybe<Order_By>;
+  durationInHours?: Maybe<Order_By>;
   expiresAt?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   ownerId?: Maybe<Order_By>;
@@ -11125,6 +11130,7 @@ export type Promoted_Slots_Max_Order_By = {
 export type Promoted_Slots_Min_Fields = {
   __typename?: 'promoted_slots_min_fields';
   createdAt?: Maybe<Scalars['timestamptz']>;
+  durationInHours?: Maybe<Scalars['Int']>;
   expiresAt?: Maybe<Scalars['timestamptz']>;
   id?: Maybe<Scalars['String']>;
   ownerId?: Maybe<Scalars['String']>;
@@ -11138,6 +11144,7 @@ export type Promoted_Slots_Min_Fields = {
 /** order by min() on columns of table "promoted_slots" */
 export type Promoted_Slots_Min_Order_By = {
   createdAt?: Maybe<Order_By>;
+  durationInHours?: Maybe<Order_By>;
   expiresAt?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   ownerId?: Maybe<Order_By>;
@@ -11174,6 +11181,7 @@ export type Promoted_Slots_On_Conflict = {
 /** Ordering options when selecting data from "promoted_slots". */
 export type Promoted_Slots_Order_By = {
   createdAt?: Maybe<Order_By>;
+  durationInHours?: Maybe<Order_By>;
   expiresAt?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   isAvailableForPurchase?: Maybe<Order_By>;
@@ -11195,6 +11203,8 @@ export type Promoted_Slots_Pk_Columns_Input = {
 export enum Promoted_Slots_Select_Column {
   /** column name */
   CREATEDAT = 'createdAt',
+  /** column name */
+  DURATIONINHOURS = 'durationInHours',
   /** column name */
   EXPIRESAT = 'expiresAt',
   /** column name */
@@ -11218,6 +11228,7 @@ export enum Promoted_Slots_Select_Column {
 /** input type for updating data in table "promoted_slots" */
 export type Promoted_Slots_Set_Input = {
   createdAt?: Maybe<Scalars['timestamptz']>;
+  durationInHours?: Maybe<Scalars['Int']>;
   expiresAt?: Maybe<Scalars['timestamptz']>;
   id?: Maybe<Scalars['String']>;
   isAvailableForPurchase?: Maybe<Scalars['Boolean']>;
@@ -11232,12 +11243,14 @@ export type Promoted_Slots_Set_Input = {
 /** aggregate stddev on columns */
 export type Promoted_Slots_Stddev_Fields = {
   __typename?: 'promoted_slots_stddev_fields';
+  durationInHours?: Maybe<Scalars['Float']>;
   position?: Maybe<Scalars['Float']>;
   reservePrice?: Maybe<Scalars['Float']>;
 };
 
 /** order by stddev() on columns of table "promoted_slots" */
 export type Promoted_Slots_Stddev_Order_By = {
+  durationInHours?: Maybe<Order_By>;
   position?: Maybe<Order_By>;
   reservePrice?: Maybe<Order_By>;
 };
@@ -11245,12 +11258,14 @@ export type Promoted_Slots_Stddev_Order_By = {
 /** aggregate stddev_pop on columns */
 export type Promoted_Slots_Stddev_Pop_Fields = {
   __typename?: 'promoted_slots_stddev_pop_fields';
+  durationInHours?: Maybe<Scalars['Float']>;
   position?: Maybe<Scalars['Float']>;
   reservePrice?: Maybe<Scalars['Float']>;
 };
 
 /** order by stddev_pop() on columns of table "promoted_slots" */
 export type Promoted_Slots_Stddev_Pop_Order_By = {
+  durationInHours?: Maybe<Order_By>;
   position?: Maybe<Order_By>;
   reservePrice?: Maybe<Order_By>;
 };
@@ -11258,12 +11273,14 @@ export type Promoted_Slots_Stddev_Pop_Order_By = {
 /** aggregate stddev_samp on columns */
 export type Promoted_Slots_Stddev_Samp_Fields = {
   __typename?: 'promoted_slots_stddev_samp_fields';
+  durationInHours?: Maybe<Scalars['Float']>;
   position?: Maybe<Scalars['Float']>;
   reservePrice?: Maybe<Scalars['Float']>;
 };
 
 /** order by stddev_samp() on columns of table "promoted_slots" */
 export type Promoted_Slots_Stddev_Samp_Order_By = {
+  durationInHours?: Maybe<Order_By>;
   position?: Maybe<Order_By>;
   reservePrice?: Maybe<Order_By>;
 };
@@ -11271,12 +11288,14 @@ export type Promoted_Slots_Stddev_Samp_Order_By = {
 /** aggregate sum on columns */
 export type Promoted_Slots_Sum_Fields = {
   __typename?: 'promoted_slots_sum_fields';
+  durationInHours?: Maybe<Scalars['Int']>;
   position?: Maybe<Scalars['Int']>;
   reservePrice?: Maybe<Scalars['Int']>;
 };
 
 /** order by sum() on columns of table "promoted_slots" */
 export type Promoted_Slots_Sum_Order_By = {
+  durationInHours?: Maybe<Order_By>;
   position?: Maybe<Order_By>;
   reservePrice?: Maybe<Order_By>;
 };
@@ -11285,6 +11304,8 @@ export type Promoted_Slots_Sum_Order_By = {
 export enum Promoted_Slots_Update_Column {
   /** column name */
   CREATEDAT = 'createdAt',
+  /** column name */
+  DURATIONINHOURS = 'durationInHours',
   /** column name */
   EXPIRESAT = 'expiresAt',
   /** column name */
@@ -11308,12 +11329,14 @@ export enum Promoted_Slots_Update_Column {
 /** aggregate var_pop on columns */
 export type Promoted_Slots_Var_Pop_Fields = {
   __typename?: 'promoted_slots_var_pop_fields';
+  durationInHours?: Maybe<Scalars['Float']>;
   position?: Maybe<Scalars['Float']>;
   reservePrice?: Maybe<Scalars['Float']>;
 };
 
 /** order by var_pop() on columns of table "promoted_slots" */
 export type Promoted_Slots_Var_Pop_Order_By = {
+  durationInHours?: Maybe<Order_By>;
   position?: Maybe<Order_By>;
   reservePrice?: Maybe<Order_By>;
 };
@@ -11321,12 +11344,14 @@ export type Promoted_Slots_Var_Pop_Order_By = {
 /** aggregate var_samp on columns */
 export type Promoted_Slots_Var_Samp_Fields = {
   __typename?: 'promoted_slots_var_samp_fields';
+  durationInHours?: Maybe<Scalars['Float']>;
   position?: Maybe<Scalars['Float']>;
   reservePrice?: Maybe<Scalars['Float']>;
 };
 
 /** order by var_samp() on columns of table "promoted_slots" */
 export type Promoted_Slots_Var_Samp_Order_By = {
+  durationInHours?: Maybe<Order_By>;
   position?: Maybe<Order_By>;
   reservePrice?: Maybe<Order_By>;
 };
@@ -11334,12 +11359,14 @@ export type Promoted_Slots_Var_Samp_Order_By = {
 /** aggregate variance on columns */
 export type Promoted_Slots_Variance_Fields = {
   __typename?: 'promoted_slots_variance_fields';
+  durationInHours?: Maybe<Scalars['Float']>;
   position?: Maybe<Scalars['Float']>;
   reservePrice?: Maybe<Scalars['Float']>;
 };
 
 /** order by variance() on columns of table "promoted_slots" */
 export type Promoted_Slots_Variance_Order_By = {
+  durationInHours?: Maybe<Order_By>;
   position?: Maybe<Order_By>;
   reservePrice?: Maybe<Order_By>;
 };
@@ -11374,6 +11401,7 @@ export type PromotedSlot = {
   expiresAt?: Maybe<Scalars['Date']>;
   position?: Maybe<Scalars['Int']>;
   isRandomFiller?: Maybe<Scalars['Boolean']>;
+  durationInHours?: Maybe<Scalars['Int']>;
 };
 
 export type PromotedSlotMutationResponse = {
@@ -16177,7 +16205,10 @@ export type SubscriptionUsers_Typing_AggregateArgs = {
 
 
 export type SubscriptionMyConversationsArgs = {
+  chatRoomStatuses: Array<Scalars['String']>;
   messageLimit?: Maybe<Scalars['Int']>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
 };
 
 
@@ -17858,16 +17889,16 @@ export type WatchlistItemsEdge = {
   node: WatchlistItem;
 };
 
-export type RegisterUploadMutationVariables = Exact<{
+export type UploadRegisterGoogleUrlMutationVariables = Exact<{
   uploadType: UploadType;
   mimeType: Scalars['String'];
   fileSize: Scalars['Int'];
 }>;
 
 
-export type RegisterUploadMutation = { __typename?: 'Mutation', uploadRegister: { __typename?: 'UploadRegisterMutationResponse', uploadId: string, putUrl: string } };
+export type UploadRegisterGoogleUrlMutation = { __typename?: 'Mutation', uploadRegisterGoogleUrl: { __typename?: 'UploadRegisterMutationResponse', uploadId: string, putUrl: string } };
 
-export type SaveImageUploadMutationVariables = Exact<{
+export type UploadSaveImageMutationVariables = Exact<{
   uploadId: Scalars['String'];
   description?: Maybe<Scalars['String']>;
   tags?: Maybe<Scalars['String']>;
@@ -17875,7 +17906,7 @@ export type SaveImageUploadMutationVariables = Exact<{
 }>;
 
 
-export type SaveImageUploadMutation = { __typename?: 'Mutation', uploadSaveImage: { __typename?: 'UploadSaveImageMutationResponse', image: (
+export type UploadSaveImageMutation = { __typename?: 'Mutation', uploadSaveImage: { __typename?: 'UploadSaveImageMutationResponse', image: (
       { __typename?: 'image_parents' }
       & ImageFragment
     ) } };
@@ -18879,9 +18910,9 @@ export const SavedSearchFragmentFragmentDoc = gql`
   createdAt
 }
     `;
-export const RegisterUploadDocument = gql`
-    mutation registerUpload($uploadType: UploadType!, $mimeType: String!, $fileSize: Int!) {
-  uploadRegister(uploadType: $uploadType, mimeType: $mimeType, fileSize: $fileSize) {
+export const UploadRegisterGoogleUrlDocument = gql`
+    mutation uploadRegisterGoogleUrl($uploadType: UploadType!, $mimeType: String!, $fileSize: Int!) {
+  uploadRegisterGoogleUrl(uploadType: $uploadType, mimeType: $mimeType, fileSize: $fileSize) {
     ... on UploadRegisterMutationResponse {
       uploadId
       putUrl
@@ -18889,10 +18920,10 @@ export const RegisterUploadDocument = gql`
   }
 }
     `;
-export type RegisterUploadMutationResult = ApolloReactCommon.MutationResult<RegisterUploadMutation>;
-export type RegisterUploadMutationOptions = ApolloReactCommon.BaseMutationOptions<RegisterUploadMutation, RegisterUploadMutationVariables>;
-export const SaveImageUploadDocument = gql`
-    mutation saveImageUpload($uploadId: String!, $description: String, $tags: String, $ownerIds: [String]) {
+export type UploadRegisterGoogleUrlMutationResult = ApolloReactCommon.MutationResult<UploadRegisterGoogleUrlMutation>;
+export type UploadRegisterGoogleUrlMutationOptions = ApolloReactCommon.BaseMutationOptions<UploadRegisterGoogleUrlMutation, UploadRegisterGoogleUrlMutationVariables>;
+export const UploadSaveImageDocument = gql`
+    mutation uploadSaveImage($uploadId: String!, $description: String, $tags: String, $ownerIds: [String]) {
   uploadSaveImage(uploadId: $uploadId, description: $description, tags: $tags, ownerIds: $ownerIds) {
     ... on UploadSaveImageMutationResponse {
       image {
@@ -18902,8 +18933,8 @@ export const SaveImageUploadDocument = gql`
   }
 }
     ${ImageFragmentFragmentDoc}`;
-export type SaveImageUploadMutationResult = ApolloReactCommon.MutationResult<SaveImageUploadMutation>;
-export type SaveImageUploadMutationOptions = ApolloReactCommon.BaseMutationOptions<SaveImageUploadMutation, SaveImageUploadMutationVariables>;
+export type UploadSaveImageMutationResult = ApolloReactCommon.MutationResult<UploadSaveImageMutation>;
+export type UploadSaveImageMutationOptions = ApolloReactCommon.BaseMutationOptions<UploadSaveImageMutation, UploadSaveImageMutationVariables>;
 export const UploadSaveFileDocument = gql`
     mutation uploadSaveFile($uploadId: String!, $fileName: String!, $ownerIds: [String]) {
   uploadSaveFile(uploadId: $uploadId, fileName: $fileName, ownerIds: $ownerIds) {

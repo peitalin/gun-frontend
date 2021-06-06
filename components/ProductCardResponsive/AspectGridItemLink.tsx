@@ -28,6 +28,7 @@ const AspectCarouselItemLink: React.FC<ReactProps> = (props) => {
       <Card
         className={classes.card}
         classes={{ root: classes.cardRoot }}
+        style={props.style}
       >
         {
           props.promotedSlotId
@@ -60,6 +61,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   product: Product;
   disable?: boolean;
   promotedSlotId?: string
+  style?: any;
 }
 
 

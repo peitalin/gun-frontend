@@ -158,7 +158,7 @@ const GunAttributes = (props: ReactProps & FormikProps<FormikFields>) => {
         onChange={(e) => {
           if (e.target.value.length <= maxLengthTitle) {
             let n = parseNumber(e.target.value ?? 0)
-            console.log("n : ", n)
+            // console.log("n : ", n)
             if (n) {
               if (barrelDisplay.unit === BarrelUnit.inches) {
                 let barrelLengthInMM = convertInchesToMilli(n)

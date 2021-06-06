@@ -53,6 +53,7 @@ export const styles = (theme: Theme) => createStyles({
   // Need and outer and inner descriptionContainer for watchList absolutee button
   descriptionContainerOuter: {
     position: 'relative', // for watchList Button position: absolute
+    cursor: "pointer",
     width: '100%',
     borderRadius: `2px 2px ${BorderRadius}px ${BorderRadius}px`,
     backgroundColor: theme.palette.type === 'dark'

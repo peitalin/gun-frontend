@@ -1,23 +1,19 @@
 import React from "react";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
-import { Colors, BorderRadius } from "layout/AppTheme";
+import { Colors, BorderRadius, isThemeDark } from "layout/AppTheme";
 import clsx from "clsx";
 // Components
 import {
   PromotedSlot,
   UserPrivate,
 } from "typings/gqlTypes";
-// useMediaQuery
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
-import { asCurrency as c } from "utils/prices";
 import { isSlotExpiredYet } from "../PromotedSlotPurchaseModal/utils";
 
 
 
 
-const PromotedSlotMessage = (props: ReactProps) => {
+const PromotedSlotMessageAdmin = (props: ReactProps) => {
 
   // random generated products won't have productId
   // and will have isRandomFiller === true
@@ -37,33 +33,38 @@ const PromotedSlotMessage = (props: ReactProps) => {
     userOwnsSlotNow,
   } = isSlotExpiredYet(props.promotedSlot, user)
 
-  const durationInHours = (promotedSlot?.durationInHours ?? 48) / 24
 
   if (!promotedSlot?.isAvailableForPurchase) {
     return (
       <div className={classes.previewImageMessageText}>
-        {'Slot has not been made available for public sale by admins yet'}
+        {"Admin: Edit Slot"}
+        <br/><br/>
+        {'Slot not available yet. Click to edit'}
       </div>
     )
   } else {
     if (anotherUserOwnsSlotNow) {
       return (
         <div className={classes.previewImageMessageText}>
+          {"Admin: Edit Slot"}
+          <br/> <br/>
           {"Another user currently owns this slot"}
         </div>
       )
     } else if (userOwnsSlotNow) {
       return (
         <div className={classes.previewImageMessageText}>
-          {"You own this slot"} <br/>
-          {"Add a product"}
+          {"Admin: Edit Slot"}
+          <br/> <br/>
+          {"You own this slot"}
         </div>
       )
     } else {
       return (
         <div className={classes.previewImageMessageText}>
-          {`Buy this slot for ${durationInHours} days`} <br/>
-          {`${c(promotedSlot?.reservePrice)}`}
+          {"Admin: Edit Slot"}
+          <br/> <br/>
+          {"No user owns this slot now"}
         </div>
       )
     }
@@ -95,7 +96,7 @@ const styles = (theme: Theme) => createStyles({
 });
 
 
-export default withStyles(styles)( PromotedSlotMessage );
+export default withStyles(styles)( PromotedSlotMessageAdmin );
 
 
 

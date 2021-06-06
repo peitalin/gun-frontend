@@ -22,7 +22,6 @@ import { lgUpMediaQuery } from "../../common";
 const PreviewImageFeatured: React.FC<ReactProps> = (props) => {
 
   const [imgLoaded, setImgLoaded] = React.useState(0);
-  const [imgLoaded2, setImgLoaded2] = React.useState(0);
 
   const {
     classes,
@@ -33,23 +32,10 @@ const PreviewImageFeatured: React.FC<ReactProps> = (props) => {
   const image = previewItem?.image;
 
   const theme = useTheme();
-  const xsDown = useMediaQuery(theme.breakpoints.down("xs"));
   const lgDown = useMediaQuery(theme.breakpoints.down("lg"));
   const lgUp = useMediaQuery(lgUpMediaQuery);
 
   let loading = (!imgLoaded || !previewItem);
-
-  React.useEffect(() => {
-    // React BUG: all event fired before hydration are lost.
-    // https://github.com/facebook/react/issues/15446
-    if (image?.original?.url && imgLoaded === 0) {
-      setTimeout(() => {
-        setImgLoaded(1)
-        setImgLoaded2(1)
-      }, 400)
-    }
-    return () => {}
-  }, [])
 
 
   const chooseCardMediaStyle = () => {
@@ -110,14 +96,17 @@ const PreviewImageFeatured: React.FC<ReactProps> = (props) => {
           urlSrc &&
           <CardMedia
             component="img"
-            // className={!loading ? 'shimmer' : null}
+            className={
+              !!imgLoaded ? 'fadeIn' : 'hide'
+            }
             classes={{
-              media: clsx(
-                chooseCardMediaStyle(),
-                !!imgLoaded ? 'fadeIn' : 'hide'
-              )
+              media: chooseCardMediaStyle(),
             }}
-            onLoad={() => setImgLoaded(s => s + 1)}
+            onLoad={() => {
+              if (process.browser) {
+                setImgLoaded(s => s + 1)
+              }
+            }}
             src={urlSrc}
             srcSet={srcSet}
             sizes={imgSizes}

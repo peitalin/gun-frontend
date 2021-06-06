@@ -5,10 +5,12 @@ import { UserPrivateFragment, StorePrivateFragment } from "./fragments";
 export const ADMIN_APPROVE_USER_LICENSE = gql`
   mutation adminApproveUserLicense(
     $userId: String!
+    $licenseId: String!
     $verified: Boolean!
   ) {
     adminApproveUserLicense(
       userId: $userId
+      licenseId: $licenseId
       verified: $verified
     ) {
       ... on UserMutationResponse {

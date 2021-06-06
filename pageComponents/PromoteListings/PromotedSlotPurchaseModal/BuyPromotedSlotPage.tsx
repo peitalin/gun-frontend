@@ -21,43 +21,27 @@ import ClearIcon from "@material-ui/icons/Clear";
 import IconButton from "@material-ui/core/IconButton";
 // Components
 import ErrorBounds from "components/ErrorBounds";
-// Redux
-import { useDispatch, useSelector } from "react-redux";
-import { GrandReduxState } from "reduxStore/grand-reducer";
-import { Actions } from "reduxStore/actions";
 import TextInput from "components/Fields/TextInput";
-import ButtonLoading from "components/ButtonLoading";
 import DropdownInput from "components/Fields/DropdownInput";
-
-// // Next
-// import dynamic from 'next/dynamic'
-// const DynamicPaymentMethods = dynamic(() => import('./PaymentMethods'))
-import currency from 'currency.js';
-
-import VisaButtonLoading from "pageComponents/P/PurchaseProductSummary/VisaButtonLoadingSSR";
-import dynamic from "next/dynamic";
-
+import PromotedSlotStatus from "./PromotedSlotStatus";
 import VisaPurchasePromotion from "pageComponents/PromoteListings/PromotedSlotPurchaseModal/VisaPurchasePromotion"
-// const VisaPurchasePromotion = dynamic(() => import("pageComponents/PromoteListings/PromotedSlotPurchaseModal/VisaPurchasePromotion"), {
-//   loading: (props) => <VisaButtonLoading/>,
-//   ssr: false,
-// });
+import AddRemoveProductButtons from "./AddRemoveProductButtons";
 
-import { useApolloClient, useLazyQuery } from "@apollo/client";
+import { useLazyQuery } from "@apollo/client";
 // media query
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 // gql
 import { DASHBOARD_PRODUCTS_CONNECTION } from "queries/store-queries";
-import {
-  ADD_PRODUCT_TO_PROMOTED_LIST,
-  REMOVE_PRODUCT_FROM_PROMOTED_LIST,
-} from "queries/promoted_lists-queries";
-import { useQuery, useMutation } from "@apollo/client";
 import { useSnackbar } from "notistack";
 import { formatDateTime } from "utils/dates";
-import dayjs from 'dayjs';
-import { Router } from "next/router";
+import { asCurrency as c } from "utils/prices";
+
+import {
+  createProductSuggestions,
+  isSlotExpiredYet,
+  SelectOption,
+} from "./utils";
 
 
 
@@ -66,17 +50,13 @@ const BuyPromotedSlotPage = (props: ReactProps) => {
 
   const {
     classes,
-    asModal = true,
+    promotedSlot,
+    user,
   } = props;
 
   const theme = useTheme();
   const smDown = useMediaQuery(theme.breakpoints.down('sm'));
   const snackbar = useSnackbar();
-  const c = (s) => currency(s/100, { formatWithSymbol: true }).format()
-
-  const user = useSelector<GrandReduxState, UserPrivate>(
-    state => state.reduxLogin.user
-  );
 
   const [selectedProductOption, setSelectedProductOption] = React.useState({
     label: undefined,
@@ -104,63 +84,6 @@ const BuyPromotedSlotPage = (props: ReactProps) => {
   });
 
 
-  const [
-    addProductToPromotedList,
-    addProductToPromotedListResponse
-  ] = useMutation<MData1, MVar1>(
-    ADD_PRODUCT_TO_PROMOTED_LIST, {
-    variables: {
-      promotedSlotId: undefined,
-      promotedListId: undefined,
-      productId: undefined,
-      ownerId: user?.id,
-      position: undefined,
-    },
-    onError: React.useCallback((e) => {
-      console.log(e)
-      if (e?.message?.includes("duplicate")) {
-        // promoted_slots_promoted_list_id_product_id_key
-        snackbar.enqueueSnackbar(
-          `This list already has that product`,
-          { variant: "error" }
-        )
-      } else {
-        snackbar.enqueueSnackbar(`${e}`, { variant: "error" })
-      }
-    }, []),
-    onCompleted: React.useCallback(async (data) => {
-      // console.log(data)
-      if (typeof props.refetch === "function") {
-        props.refetch()
-      }
-      if (typeof props.closeModal === 'function') {
-        props.closeModal()
-      }
-    }, []),
-  });
-
-
-  const [
-    removeProductFromPromotedList,
-    removeProductFromPromotedListResponse
-  ] = useMutation<MData2, MVar2>(
-    REMOVE_PRODUCT_FROM_PROMOTED_LIST, {
-    variables: {
-      promotedSlotId: undefined,
-      promotedListId: undefined,
-    },
-    onError: React.useCallback((e) => {
-      console.log(e)
-      snackbar.enqueueSnackbar(`${e}`, { variant: "error" })
-    }, []),
-    onCompleted: React.useCallback(async (data) => {
-      console.log(data)
-      if (typeof props.refetch === "function") {
-        props.refetch()
-      }
-    }, []),
-  });
-
   React.useEffect(() => {
     getYourProducts()
   }, [user])
@@ -169,8 +92,9 @@ const BuyPromotedSlotPage = (props: ReactProps) => {
   let connection = getYourProductsResponse?.data?.dashboardProductsConnection
   let yourProducts = connection?.edges?.map(({ node }) => node)
 
-  let productOptions = createProductSuggestions(yourProducts)
-  // console.log("productOptions: ", productOptions)
+  let productOptions = React.useMemo(
+    () => createProductSuggestions(yourProducts)
+  , [yourProducts])
 
   let isAdmin = user?.userRole === Role.PLATFORM_ADMIN
 
@@ -178,7 +102,6 @@ const BuyPromotedSlotPage = (props: ReactProps) => {
   let selectedProduct = (yourProducts ?? []).find(p => p.id === selectedProductId);
 
   // console.log("your products: ", getYourProductsResponse?.data)
-  // console.log("position: ", props.position)
   // console.log("selectedProductOption: ", selectedProductOption)
   // console.log("selectedProduct: ", selectedProduct)
 
@@ -195,37 +118,25 @@ const BuyPromotedSlotPage = (props: ReactProps) => {
 
   let showProductPickerDropdown = userOwnsSlotNow || slotIsFreeToPurchase
 
-  // console.log("promotedSlot", props.promotedSlot)
-  // console.log("promotedSlot.ownerId:", props.promotedSlot?.ownerId)
-  // console.log("userId:", user?.id)
-  // console.log("anotherUserOwnsSlot:", anotherUserOwnsSlot)
-  // console.log("anotherUserOwnsSlotNow:", anotherUserOwnsSlotNow)
-  // console.log("userOwnsSlot: ", userOwnsSlot)
-  // console.log("userOwnsSlotNow: ", userOwnsSlotNow)
-
-  // console.log("slotIsFreeToPurchase: ", slotIsFreeToPurchase)
-  // console.log("expiresAt: ", expiresAt)
-  // console.log("now: ", now)
-  // console.log("not expired yet: ", now.unix() < expiresAt.unix())
-
   return (
     <ErrorBounds className={clsx(
-      asModal ? classes.root : classes.rootPage,
+      classes.root,
       smDown ? classes.rootPaddingMobile : classes.rootPaddingDesktop,
     )}>
       <div className={classes.titleRow}>
         <Typography variant="h2" className={classes.title}>
-          {`Buy Promoted Item Slot #${props.position + 1}`}
-        </Typography>
         {
-          asModal &&
-          <IconButton
-            onClick={() => props.closeModal()}
-            className={classes.closeButton}
-          >
-            <ClearIcon/>
-          </IconButton>
+          isAdmin
+          ? `Edit Promoted Slot #${promotedSlot?.position + 1}`
+          : `Buy Promoted Slot #${promotedSlot?.position + 1}`
         }
+        </Typography>
+        <IconButton
+          onClick={() => props.closeModal()}
+          className={classes.closeButton}
+        >
+          <ClearIcon/>
+        </IconButton>
       </div>
 
       {
@@ -237,7 +148,7 @@ const BuyPromotedSlotPage = (props: ReactProps) => {
 
       {
         showProductPickerDropdown &&
-        user.userRole === Role.PLATFORM_ADMIN &&
+        user?.userRole === Role.PLATFORM_ADMIN &&
         <TextInput
           name="product.id"
           placeholder="Product ID"
@@ -276,45 +187,20 @@ const BuyPromotedSlotPage = (props: ReactProps) => {
         />
       }
 
-      <div className={classes.helpMessages}>
-        <div className={classes.helpMessage1}>
-          {
-            userOwnsSlot
-            ? "You own this slot."
-            : anotherUserOwnsSlotNow
-              ? "Another user currently owns this slot."
-              : "This slot can be purchased."
-          }
-        </div>
-        <div className={classes.helpMessage2}>
-          {
-            // if someone currently owns slot
-            (expiresAt === undefined)
-              ? ``
-              : (userOwnsSlotNow || anotherUserOwnsSlotNow)
-                // and he currently owns the slot
-                ? <>
-                    <span> Ownership valid until: </span>
-                    <span className={classes.time}>
-                      {`${expiresAt?.format("YYYY-MM-DD HH:mm a")}`}
-                    </span>
-                  </>
-                // or he no longer owns it
-                : <>
-                    <span> Ownership expired: </span>
-                    <span className={classes.timeExpired}>
-                      {`${expiresAt?.format("YYYY-MM-DD HH:mm a")}`}
-                    </span>
-                  </>
-          }
-        </div>
-      </div>
+      <PromotedSlotStatus
+        user={user}
+        promotedSlot={promotedSlot}
+      />
 
       {
         // if no one currently owns slot
         !(userOwnsSlotNow || anotherUserOwnsSlotNow) &&
         <div className={classes.boldSubtitle}>
-          { "2. Purchase slot for your product" }
+          {
+            isAdmin
+            ? "2. Admin can put a temporary product in this slot"
+            : "2. Purchase slot for your product"
+          }
         </div>
       }
 
@@ -348,87 +234,13 @@ const BuyPromotedSlotPage = (props: ReactProps) => {
         // if user owns this promotion-slot and it hasn't expired
         // or if it's an admin, then allow swapping/clearing promotion slot
         (userOwnsSlot || isAdmin) &&
-        <div className={classes.buttonsBox}>
-          <ButtonLoading
-            className={classes.buttonBlue}
-            onClick={async() => {
-
-              if (anotherUserOwnsSlotNow) {
-                snackbar.enqueueSnackbar(
-                  "Another user currently owns this slot, cannot edit",
-                  { variant: "info" }
-                )
-              } else if (
-                // if you own the slot or you're the admin
-                userOwnsSlotNow || isAdmin
-              ) {
-                await addProductToPromotedList({
-                  variables: {
-                    promotedSlotId: props.promotedSlot?.id,
-                    promotedListId: props.promotedSlot?.promotedListId,
-                    productId: selectedProductId,
-                    ownerId: user?.id,
-                    position: props.promotedSlot?.position ?? props.position,
-                  }
-                })
-              } else {
-                snackbar.enqueueSnackbar(
-                  "Your ownership of this slot expired",
-                  { variant: "info" }
-                )
-              }
-            }}
-            loadingIconColor={Colors.cream}
-            replaceTextWhenLoading={true}
-            loading={addProductToPromotedListResponse?.loading}
-            disabled={
-              anotherUserOwnsSlotNow
-              || !selectedProductId
-              || addProductToPromotedListResponse?.loading
-            }
-            variant="contained"
-            color="secondary"
-            // style={{ height: "40px" }}
-          >
-            <span style={{ marginLeft: '0.25rem' }}>
-              {"Add Product to List"}
-            </span>
-          </ButtonLoading>
-
-          <ButtonLoading
-            className={classes.buttonRed}
-            onClick={async() => {
-              if (userOwnsSlot) {
-                await removeProductFromPromotedList({
-                  variables: {
-                    promotedSlotId: props.promotedSlot?.id,
-                    promotedListId: props.promotedSlot?.promotedListId,
-                  }
-                })
-              } else if (isAdmin) {
-                snackbar.enqueueSnackbar(
-                  "Another user currently owns this slot, cannot clear",
-                  { variant: "info" }
-                )
-              } else {
-              }
-            }}
-            loadingIconColor={Colors.cream}
-            replaceTextWhenLoading={true}
-            loading={removeProductFromPromotedListResponse?.loading}
-            disabled={
-              anotherUserOwnsSlotNow
-              || removeProductFromPromotedListResponse?.loading
-            }
-            variant="contained"
-            color="secondary"
-            // style={{ height: "40px" }}
-          >
-            <span style={{ marginLeft: '0.25rem' }}>
-              {"Clear Slot"}
-            </span>
-          </ButtonLoading>
-        </div>
+        <AddRemoveProductButtons
+          closeModal={props.closeModal}
+          user={user}
+          promotedSlot={props.promotedSlot}
+          refetch={props.refetch}
+          selectedProductId={selectedProduct?.id}
+        />
       }
 
     </ErrorBounds>
@@ -436,103 +248,11 @@ const BuyPromotedSlotPage = (props: ReactProps) => {
 }
 
 
-const createProductSuggestions = (p: Product[]): GroupedSelectOption[] => {
-  if (!p) {
-    return []
-  }
-
-  const isAvailableProduct = (p: Product) => {
-    return (
-      p.isPublished
-      && p.soldOutStatus === SoldOutStatus.AVAILABLE
-      && !p.isSuspended
-      && !p.isDeleted
-      && !p.isSoldElsewhere
-    )
-  }
-
-  let availableProducts = p.filter(p => {
-    return isAvailableProduct(p)
-  })
-  let unavailableProducts = p.filter(p => {
-    return !isAvailableProduct(p)
-  })
-
-  return [
-    {
-      label: "Available Products",
-      options: [
-        ...availableProducts.map(p => createProductOption(p))
-      ],
-    },
-    {
-      label: "Sold, Abandoned, Unpublished Products",
-      options: [
-        ...unavailableProducts.map(p => createProductOption(p))
-      ],
-    },
-  ]
-}
-
-const createProductOption = (p: Product) => {
-  return {
-    label: `${p.currentSnapshot?.title} #${p.currentSnapshot?.serialNumber}`,
-    value: p?.id,
-  }
-}
-
-export const isSlotExpiredYet = (
-  promotedSlot: PromotedSlot,
-  user: UserPrivate,
-) => {
-
-  let _expiresAt = !!promotedSlot?.expiresAt
-    ? dayjs(promotedSlot?.expiresAt)
-    : undefined
-
-  let now = dayjs(new Date())
-
-  let isExpired = _expiresAt !== undefined
-    ? now.unix() > _expiresAt.unix()
-    : false
-
-  let notExpiredYet = !isExpired
-
-  let anotherUserOwnsSlot =
-    !!promotedSlot?.ownerId // owner exists
-    && promotedSlot?.ownerId !== user?.id // owner is not you
-
-  let anotherUserOwnsSlotNow = anotherUserOwnsSlot && notExpiredYet
-
-  let userOwnsSlot = promotedSlot?.ownerId === user?.id
-  let userOwnsSlotNow = userOwnsSlot && notExpiredYet
-
-  return {
-    isExpired: isExpired,
-    expiresAt: _expiresAt,
-    userOwnsSlot: userOwnsSlot,
-    userOwnsSlotNow: userOwnsSlotNow,
-    anotherUserOwnsSlot: anotherUserOwnsSlot,
-    anotherUserOwnsSlotNow: anotherUserOwnsSlotNow,
-  }
-}
-
-
-
-export interface SelectOption {
-  label: string;
-  value: string | any;
-}
-export interface GroupedSelectOption {
-  label: string;
-  options: SelectOption[]
-}
 
 interface ReactProps extends WithStyles<typeof styles> {
   closeModal(): void;
-  asModal?: boolean;
+  user: UserPrivate;
   promotedSlot: PromotedSlot
-  position: number
   refetch?(): void;
 }
 
@@ -626,32 +346,6 @@ const styles = (theme: Theme) => createStyles({
     "&:hover": {
       backgroundColor: Colors.lighterRed,
     },
-  },
-  helpMessages: {
-    display: 'flex',
-    flexDirection: "column",
-    justifyContent: 'flex-start',
-    alignItems: 'flex-start',
-    marginTop: '2.5rem',
-    marginBottom: '2.5rem',
-  },
-  helpMessage1: {
-    color: Colors.blue,
-    width: '100%',
-    textAlign: 'center',
-  },
-  helpMessage2: {
-    color: Colors.blue,
-    width: '100%',
-    textAlign: 'center',
-  },
-  time: {
-    color: Colors.green,
-    fontWeight: 600,
-  },
-  timeExpired: {
-    color: Colors.red,
-    fontWeight: 600,
   },
   boldSubtitle: {
     marginTop: '1rem',

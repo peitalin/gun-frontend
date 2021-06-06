@@ -42,6 +42,8 @@ const ProductCardResponsive: React.FC<ProductCardResponsiveProps> = (props) => {
     fit: featuredPreviewItem?.image?.original?.heightInPixels >
         featuredPreviewItem?.image?.original?.widthInPixels,
     onClick: props.onClick,
+    onMouseEnter: props.onMouseEnter,
+    onMouseLeave: props.onMouseLeave,
     // hideActionType: xs || sm || md
     hideActionType: product?.soldOutStatus !== SoldOutStatus.AVAILABLE,
     disableLoadingAnimation: props.disableLoadingAnimation,
@@ -128,6 +130,8 @@ interface ProductCardResponsiveProps {
   style?: any;
   previewImageEmptyMessage?: React.ReactNode;
   onClick?(a: any): void;
+  onMouseEnter?(a: any): void;
+  onMouseLeave?(a: any): void;
   disableLoadingAnimation?: boolean;
   loading?: boolean;
   promotedSlotId?: string;

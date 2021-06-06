@@ -24,7 +24,7 @@ import { useSelector } from "react-redux";
 import { GrandReduxState } from "reduxStore/grand-reducer";
 import {
   isSlotExpiredYet,
-} from "pageComponents/PromoteListings/PromotedSlotPurchaseModal/BuyPromotedSlotPage"
+} from "pageComponents/PromoteListings/PromotedSlotPurchaseModal/utils"
 
 
 import {useSnackbar} from "notistack";

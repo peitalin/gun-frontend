@@ -87,14 +87,8 @@ const FeaturedImageModal = (props: ReactProps) => {
                   ? Colors.uniswapDarkNavy
                   : Colors.slateGreyDark,
               }}
-              containerStyle={{
-                height: '100%',
-                width: '100%',
-              }}
-              style={{
-                height: '100%',
-                width: '100%',
-              }}
+              containerStyle={{ height: '100%', width: '100%' }}
+              style={{ height: '100%', width: '100%' }}
             >
               {
                 previewItems.map(( previewItem, i ) => {

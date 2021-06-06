@@ -1,7 +1,45 @@
 import gql from "graphql-tag";
 import { ProductFragment } from "./fragments";
 
+export const PromotedSlotFragment = gql`
+  fragment PromotedSlotFragment on PromotedSlot {
+    id
+    createdAt
+    promotedListId
+    productId
+    product {
+      ...ProductFragment
+    }
+    ownerId
+    reservePrice
+    isAvailableForPurchase
+    expiresAt
+    position
+    isRandomFiller
+    durationInHours
+  }
+  ${ProductFragment}
+`;
 
+
+export const EDIT_PROMOTED_SLOT = gql`
+  mutation editPromotedSlot(
+    $promotedSlotId: String!
+    $isAvailableForPurchase: Boolean
+    $reservePrice: Int
+    $durationInHours: Int
+  ) {
+    editPromotedSlot(
+      promotedSlotId: $promotedSlotId
+      isAvailableForPurchase: $isAvailableForPurchase
+      reservePrice: $reservePrice
+      durationInHours: $durationInHours
+    ) {
+      ...PromotedSlotFragment
+    }
+  }
+  ${PromotedSlotFragment}
+`;
 
 
 
@@ -37,24 +75,12 @@ export const PURCHASE_PROMOTION = gql`
         paymentIntentId
       }
       promotedSlot {
-        id
-        createdAt
-        promotedListId
-        productId
-        product {
-          ...ProductFragment
-        }
-        ownerId
-        reservePrice
-        isAvailableForPurchase
-        expiresAt
-        position
-        isRandomFiller
+        ...PromotedSlotFragment
       }
       stripePaymentIntent
     }
   }
-  ${ProductFragment}
+  ${PromotedSlotFragment}
 `;
 
 ////// combined this with CREATE_PROMOTION_PURCHASE
