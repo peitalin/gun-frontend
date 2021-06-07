@@ -75,7 +75,7 @@ PayoutsApprovedListPage.getInitialProps = async (ctx: Context) => {
     query: GET_ADMIN_APPROVED_ORDER_IDS_GROUPED_BY_DAY,
     variables: { },
   })
-  let initialOrderIdsGroupedByDay = data.getAdminApprovedOrderIdsGroupedByDay;
+  let initialOrderIdsGroupedByDay = data?.getAdminApprovedOrderIdsGroupedByDay;
   console.log('initialOrderIdsGroupedByDay SSR: ', initialOrderIdsGroupedByDay);
 
   return {

@@ -67,7 +67,7 @@ const CreateBidForm: React.FC<ReactProps> = (props) => {
           value === 0 &&
           <BiddingRoomLayout
             user={user}
-            chatStatuses={[
+            chatRoomStatuses={[
               ChatRoomStatus.ACTIVE
             ]}
           />
@@ -77,7 +77,7 @@ const CreateBidForm: React.FC<ReactProps> = (props) => {
           value !== 0 &&
           <BiddingRoomLayout
             user={user}
-            chatStatuses={[
+            chatRoomStatuses={[
               ChatRoomStatus.ARCHIVED,
               ChatRoomStatus.COMPLETED
             ]}

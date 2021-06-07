@@ -30,7 +30,7 @@ export const BiddingRoomLayout: React.FC<ReactProps> = (props) => {
 
   const {
     classes,
-    chatStatuses,
+    chatRoomStatuses,
     user: userRedux,
   } = props;
 
@@ -41,7 +41,7 @@ export const BiddingRoomLayout: React.FC<ReactProps> = (props) => {
   const { data, loading, error } = useSubscription<QueryData, QueryVar>(
     SUBSCRIBE_USER_CONVERSATIONS, {
       variables: {
-        chatRoomStatuses: chatStatuses,
+        chatRoomStatuses: chatRoomStatuses,
         messageLimit: userRedux?.id ? 20 : 5,
         // login-logOut updates userRedux which prompots resubscribes
       },
@@ -134,7 +134,7 @@ export const BiddingRoomLayout: React.FC<ReactProps> = (props) => {
 
 interface ReactProps extends WithStyles<typeof styles> {
   user: UserPrivate;
-  chatStatuses: ChatRoomStatus[]
+  chatRoomStatuses: ChatRoomStatus[]
 }
 
 interface QueryData {

@@ -35,12 +35,13 @@ import {
   AuthorizePaymentMutationResponse,
   Bids,
   BlankMutationResponse,
+  ChatRoomStatus,
   User_Licenses,
 } from 'typings/gqlTypes';
 // Components
 import ErrorBounds from 'components/ErrorBounds';
 import ButtonLoading from "components/ButtonLoading";
-import CreateOfferSubscription from "../CreateOfferSubscription";
+import CreateOfferSubscription from "./CreateOfferSubscription";
 // redux
 import { useSelector } from "react-redux";
 import { GrandReduxState, Actions } from "reduxStore/grand-reducer";
@@ -604,7 +605,13 @@ const VisaPurchaseProduct = (props: ReactProps) => {
                 <CreateOfferSubscription
                   userId={buyer?.id}
                   product={product}
+                  chatRoomStatuses={[
+                    ChatRoomStatus.ACTIVE,
+                    ChatRoomStatus.ARCHIVED,
+                    ChatRoomStatus.COMPLETED,
+                  ]}
                 />
+
               </div>
             </div>
           }

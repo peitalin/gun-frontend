@@ -3,7 +3,7 @@ import clsx from "clsx";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 // GraphQL
-import { Product, Conversation } from "typings/gqlTypes";
+import { Product, Conversation, ChatRoomStatus } from "typings/gqlTypes";
 // redux
 import { useDispatch } from "react-redux";
 import { Actions } from "reduxStore/actions";
@@ -21,13 +21,18 @@ const CreateOfferSubscription = (props: ReactProps) => {
   const {
     classes,
     userId,
+    chatRoomStatuses = [ ChatRoomStatus.ACTIVE, ChatRoomStatus.ARCHIVED ]
   } = props;
 
   const dispatch = useDispatch();
 
   const { data, loading, error } = useSubscription<QueryData, QueryVar>(
     SUBSCRIBE_USER_CONVERSATIONS, {
-      variables: { }
+      variables: {
+        chatRoomStatuses: chatRoomStatuses,
+        messageLimit: 20,
+        // login-logOut updates userRedux which prompots resubscribes
+      },
     }
   );
 
@@ -92,12 +97,15 @@ const CreateOfferSubscription = (props: ReactProps) => {
 interface ReactProps extends WithStyles<typeof styles> {
   userId: string;
   product: Product;
+  chatRoomStatuses?: ChatRoomStatus[]
 }
 interface QueryData {
   myConversations: Conversation[]
 }
 interface QueryVar {
   // query: ConnectionQuery
+  chatRoomStatuses: ChatRoomStatus[]
+  messageLimit?: number;
 }
 
 const styles = (theme: Theme) => createStyles({
