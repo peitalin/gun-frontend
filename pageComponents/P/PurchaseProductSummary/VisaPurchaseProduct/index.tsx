@@ -327,6 +327,7 @@ const VisaPurchaseProduct = (props: ReactProps) => {
       card: elements.getElement(CardElement),
       billing_details: { email: props.user?.email }
     })
+
     if (error) {
       console.warn("error: ", error)
       snackbar.enqueueSnackbar(

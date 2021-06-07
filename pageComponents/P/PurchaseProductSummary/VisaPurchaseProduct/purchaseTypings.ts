@@ -14,6 +14,11 @@ export interface StripeAuthorizePaymentData {
   customerId?: string;
 }
 
+export interface StripeCreatePaymentData {
+  paymentMethod: string;
+  customerId?: string;
+}
+
 export interface StripeConfirmPaymentData {
   paymentIntent: any;
   customerId?: string;

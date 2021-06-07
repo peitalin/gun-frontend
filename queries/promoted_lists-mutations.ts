@@ -49,7 +49,7 @@ export const PURCHASE_PROMOTION = gql`
     $productId: String!
     $total: Int!
     $buyerId: String!
-    $stripeAuthorizePaymentData: String!
+    $stripeCreatePaymentData: String!
     $currency: String
     $bidId: String
   ) {
@@ -58,7 +58,7 @@ export const PURCHASE_PROMOTION = gql`
       productId: $productId
       total: $total
       buyerId: $buyerId
-      stripeAuthorizePaymentData: $stripeAuthorizePaymentData
+      stripeCreatePaymentData: $stripeCreatePaymentData
       currency: $currency
       bidId: $bidId
     ) {

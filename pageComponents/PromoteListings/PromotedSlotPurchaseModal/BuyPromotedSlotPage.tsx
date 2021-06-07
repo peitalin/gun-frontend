@@ -198,7 +198,7 @@ const BuyPromotedSlotPage = (props: ReactProps) => {
         <div className={classes.boldSubtitle}>
           {
             isAdmin
-            ? "2. Admin can put a temporary product in this slot"
+            ? "2. Admin can put a temporary product in this slot, or buy it"
             : "2. Purchase slot for your product"
           }
         </div>
@@ -207,7 +207,7 @@ const BuyPromotedSlotPage = (props: ReactProps) => {
       {
         selectedProductId &&
         props.promotedSlot?.id &&
-        (slotIsFreeToPurchase) &&
+        slotIsFreeToPurchase &&
         <VisaPurchasePromotion
           // className={"fadeIn"}
           product={selectedProduct}

@@ -20,7 +20,7 @@ import {
 
 
 import {
-  StripeAuthorizePaymentData,
+  StripeCreatePaymentData,
   StripeConfirmResponse,
 } from "pageComponents/P/PurchaseProductSummary/VisaPurchaseProduct/purchaseTypings";
 import {
@@ -89,7 +89,7 @@ const VisaPurchaseProduct = (props: ReactProps) => {
       productId: undefined,
       total: undefined,
       buyerId: buyer?.id,
-      stripeAuthorizePaymentData: undefined,
+      stripeCreatePaymentData: undefined,
       currency: "AUD",
       bidId: undefined,
     },
@@ -138,6 +138,7 @@ const VisaPurchaseProduct = (props: ReactProps) => {
         // phone: `${buyer?.phoneNumber?.countryCode} ${buyer?.phoneNumber?.number}`,
       }
     })
+    console.log("paymentMethod: ", paymentMethod)
     if (error) {
       snackbar.enqueueSnackbar(
         `createNewPaymentMethod error: ${error}`,
@@ -162,7 +163,7 @@ const VisaPurchaseProduct = (props: ReactProps) => {
       return
     }
 
-    const stripeAuthorizePaymentData: StripeAuthorizePaymentData = {
+    const stripeCreatePaymentData: StripeCreatePaymentData = {
       paymentMethod: paymentMethodId,
     };
 
@@ -173,7 +174,7 @@ const VisaPurchaseProduct = (props: ReactProps) => {
         productId: product.id,
         total: purchasePrice,
         buyerId: buyer.id,
-        stripeAuthorizePaymentData: JSON.stringify(stripeAuthorizePaymentData),
+        stripeCreatePaymentData: JSON.stringify(stripeCreatePaymentData),
         currency: "AUD",
         // bidId: props.selectedBid?.id,
       }
@@ -308,7 +309,7 @@ interface MVar1 {
   productId: string
   total: number
   buyerId: string
-  stripeAuthorizePaymentData: string
+  stripeCreatePaymentData: string
   currency?: string
   bidId?: string
 }
