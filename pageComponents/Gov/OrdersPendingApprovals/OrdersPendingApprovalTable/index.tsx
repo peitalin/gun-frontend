@@ -266,7 +266,7 @@ const OrdersPendingApprovalTable: NextPage<ReactProps> = (props) => {
             {({ node }) => {
 
               let order = node as OrderAdmin;
-              console.log("order>>>>>>: ", order)
+              console.log("order 1>>>>>>: ", order)
 
               return (
                 <RowExpander

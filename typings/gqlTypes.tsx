@@ -5436,7 +5436,7 @@ export type MutationPurchasePromotionArgs = {
   productId: Scalars['String'];
   total: Scalars['Int'];
   buyerId: Scalars['String'];
-  stripeAuthorizePaymentData: Scalars['String'];
+  stripeCreatePaymentData: Scalars['String'];
   currency?: Maybe<Scalars['String']>;
   bidId?: Maybe<Scalars['String']>;
 };

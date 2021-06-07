@@ -247,6 +247,11 @@ const TitleRows = (props: TitleRowsProps) => {
       </div>
       <div className={classes.flexItem}>
         <Typography variant="subtitle1" className={classes.subtitle}>
+          Stripe Payment ID
+        </Typography>
+      </div>
+      <div className={classes.flexItem}>
+        <Typography variant="subtitle1" className={classes.subtitle}>
           Date
         </Typography>
       </div>
@@ -260,11 +265,11 @@ const TitleRows = (props: TitleRowsProps) => {
           Email
         </Typography>
       </div>
-      <div className={classes.flexItem}>
+      {/* <div className={classes.flexItem}>
         <Typography variant="subtitle1" className={classes.subtitle}>
           Account Name
         </Typography>
-      </div>
+      </div> */}
       <LoadingBar
         absoluteBottom
         color={Colors.secondary}

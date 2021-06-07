@@ -54,7 +54,7 @@ const RowExpander = (props: RowExpanderProps) => {
     payoutId: order?.payoutItems?.[0]?.payoutId,
     payoutStatus: order?.payoutItems?.[0]?.payoutStatus,
     paymentIntentStatus: order?.paymentIntent?.status,
-    paymentIntentId: order?.paymentIntent?.id,
+    paymentIntentId: order.paymentIntentId,
     payoutItems: order?.payoutItems ?? [],
   })
 
@@ -85,6 +85,11 @@ const RowExpander = (props: RowExpanderProps) => {
         </div>
         <div className={classes.flexItem}>
           <Typography variant="body2" className={classes.rowText}>
+            {row.paymentIntentId}
+          </Typography>
+        </div>
+        <div className={classes.flexItem}>
+          <Typography variant="body2" className={classes.rowText}>
             {formatDateTime(row.createdAt)}
           </Typography>
         </div>
@@ -98,11 +103,11 @@ const RowExpander = (props: RowExpanderProps) => {
             {row?.sellerStore?.user?.email}
           </Typography>
         </div>
-        <div className={classes.flexItem}>
+        {/* <div className={classes.flexItem}>
           <Typography variant="body2" className={classes.rowText}>
             {accountName}
           </Typography>
-        </div>
+        </div> */}
       </RowExpanderTitle>
 
       <RowExpanderHidden open={open} index={index}>

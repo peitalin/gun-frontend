@@ -28,7 +28,6 @@ import PayoutsApprovedTable from "./PayoutsApprovedTable";
 import CsvDownloaderButton from "./CsvDownloaderButton";
 import MarkPayoutCompleteButton from "./MarkPayoutCompleteButton";
 import { showDate } from "utils/dates";
-import { useRouter } from "next/router";
 import copy from "clipboard-copy";
 import { useSnackbar } from "notistack";
 
@@ -77,9 +76,10 @@ const PayoutsApprovedList = (props: ReactProps) => {
       }
       {
         (props.orderIdsGroupedByDay ?? []).map(( oGroup, i ) => {
-          console.log("oGroup: ", oGroup)
+          // console.log("oGroup: ", oGroup)
           return (
             <div key={i} className={classes.oGroupItem}>
+
               <PayoutsApprovedTable
                 admin={props.admin}
                 day={oGroup.day}
