@@ -371,7 +371,7 @@ export const useEffectUpdateGridAccum = <T>({
     0: [],
   })
 
-  let objectIds = connection?.edges?.map(({ node }: any) => node.id)
+  let objectIds: string[] = connection?.edges?.map(({ node }: any) => node.id)
 
   // instantiate gridAccum data structure with #numPages for swipeable
   React.useEffect(() => {
@@ -399,14 +399,30 @@ export const useEffectUpdateGridAccum = <T>({
         // console.log("index+k", gridAccum[index+k])
         // console.log("gridAccum[k]: ", gridAccum[k])
         // console.log("objectIds[0]", objectIds?.[0])
-        let gridPageFirstItemId = gridAccum[k]?.[0] as any
-        // console.log("gridPageFirstItemId: ", gridPageFirstItemId)
-        // if any pages match, then no need to update
+        let gridPageK: string[] = gridAccum[k]
         if (!objectIds?.[0]) {
           // need to empty gridPage if incoming data is []
           return false
         }
-        return gridPageFirstItemId === objectIds?.[0]
+
+        let gridPageNumItems = gridPageK?.length
+        if (gridPageNumItems !== objectIds.length) {
+          // if existing number of items in gridPage[k] is more or less
+          // than the number of incoming items in the product request, update render
+          return false
+        }
+
+        // if same length, make sure every id in the array is the same
+        return objectIds.every(( oid, i ) => {
+          if (gridPageK?.[i] !== oid) {
+            return false
+          } else {
+            return true
+          }
+        })
+        // instead of just checking whether the id on the first item matches
+        // let gridPageFirstItemId = gridPageK?.[0]
+        // return gridPageFirstItemId === objectIds?.[0]
       })
 
     // console.log("skipUpdate", skipUpdate)

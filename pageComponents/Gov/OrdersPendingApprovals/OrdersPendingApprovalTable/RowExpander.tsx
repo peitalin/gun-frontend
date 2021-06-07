@@ -171,21 +171,13 @@ const RowExpander = (props: RowExpanderProps) => {
                       query: GET_ORDERS_PENDING_APPROVAL_CONNECTION,
                       variables: vars.ordersPendingApproval,
                     });
-                    console.log("CACHE DATA: ", cacheData)
-
+                    // console.log("CACHE DATA: ", cacheData)
 
                     let ordersConnection = cacheData?.getOrdersPendingApprovalConnectionAdmin
-                    console.log("ordersConnection: ", ordersConnection)
+                    // console.log("ordersConnection: ", ordersConnection)
                     let newEdges = (ordersConnection?.edges ?? [])
                         .filter(edge => edge?.node?.id !== newOrder?.id)
-                    console.log("newEdges: ", newEdges)
-
-                    alert(JSON.stringify({
-                      variables: vars.ordersPendingApproval,
-                      cacheData: cacheData,
-                      ordersConnection: ordersConnection,
-                      newEdges: newEdges,
-                    }))
+                    // console.log("newEdges: ", newEdges)
 
                     cache.writeQuery({
                       query: GET_ORDERS_PENDING_APPROVAL_CONNECTION,
@@ -199,7 +191,7 @@ const RowExpander = (props: RowExpanderProps) => {
                         }
                       },
                     });
-                    console.log("CACHE AFTER: ", cache)
+                    // console.log("CACHE AFTER: ", cache)
                   }
                 }
               }

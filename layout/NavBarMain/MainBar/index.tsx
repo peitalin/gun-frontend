@@ -1,17 +1,14 @@
 import React from "react";
 // Redux
 import { GrandReduxState } from 'reduxStore/grand-reducer';
-import { Actions } from 'reduxStore/actions';
 // Styles
 import clsx from 'clsx';
 import { withStyles, WithStyles } from "@material-ui/core/styles";
 import { styles } from "../styles";
 import { Colors } from "layout/AppTheme";
 // Modals
-import { goToModalConnect } from "utils/modals";
 import { useDispatch, useSelector } from "react-redux";
 // Router
-import Link from "next/link";
 import { useRouter, NextRouter } from "next/router";
 import Hidden from 'components/HiddenFix';
 import ShowOnMobileOrDesktopSSR from "components/ShowOnMobileOrDesktopSSR";
@@ -120,7 +117,7 @@ const MainBarSSRWrapper: React.FC<MainBarSSRWrapperProps> = (props) => {
           (props.isMainPage || (props.isStartPage && props.isMobile))
           ? clsx(classes.baseBarHomePage, classes.baseBarDitherSm)
           : props.isStartPage || props.isFeaturedPage
-            ? clsx(classes.baseBarHomePage, classes.baseBarDitherNoneSm)
+            ? clsx(classes.baseBarHomePage)
             : clsx(classes.baseBarDashboard)
         }>
           {props.children}
