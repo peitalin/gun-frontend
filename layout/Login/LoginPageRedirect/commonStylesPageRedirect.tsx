@@ -100,14 +100,19 @@ const styles = (theme: Theme) => createStyles({
     width: '100%',
     height: 40,
   },
-  secureCheckout: {
-    color: "#bbbbbb",
+  labelBox: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
   },
   secureCheckoutIcon: {
-    color: "#bbbbbb",
     height: '0.8rem',
     width: '0.8rem',
     marginRight: "0.1rem",
+    marginLeft: "0.1rem",
+    color: isThemeDark(theme)
+      ? Colors.uniswapLighterGrey
+      : Colors.slateGreyLightBlack,
   },
   passwordResetSubtitle: {
   },

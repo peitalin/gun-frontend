@@ -1,6 +1,7 @@
 import React from 'react';
 import { withStyles, WithStyles } from "@material-ui/core/styles";
-import { Colors } from "layout/AppTheme";
+import { Colors, isThemeDark } from "layout/AppTheme";
+import { useTheme } from "@material-ui/core";
 
 import Typography from '@material-ui/core/Typography';
 import TextInput from 'components/Fields/TextInput';
@@ -138,6 +139,11 @@ const SignUpPageRedirect: React.FC<ReactProps> = (props) => {
   }
 
   // console.log("selectedDate:", selectedDate)
+  let passwordPreview = (state.password.length > 0)
+    ? [...new Array(state?.password?.length - 1).keys()]
+        .map(x => "*")
+        .join("") + state.password.slice(-1)
+    : ""
 
   return (
   <ErrorBounds className={classes.outerContainer}>
@@ -146,39 +152,14 @@ const SignUpPageRedirect: React.FC<ReactProps> = (props) => {
       {
         props.title
         ? props.title
-        : "Create a Gunmarketplace account"
+        : "Create a Gun Marketplace account"
       }
     </Typography>
 
     <form className={classes.form}>
 
-      <FormControl margin="dense" fullWidth>
-        <InputLabel htmlFor="name">First Name</InputLabel>
-        <Input
-          name="first-name"
-          autoComplete="given-name"
-          value={state?.firstName}
-          onChange={(e) => {
-            e.persist(); // for persisting synthetic events
-            setState(s => ({ ...s, firstName: e?.target?.value }))
-          }}
-        />
-      </FormControl>
 
       <FormControl margin="dense" fullWidth>
-        <InputLabel htmlFor="last-name">Last Name</InputLabel>
-        <Input
-          name="last-name"
-          autoComplete="family-name"
-          value={state?.lastName}
-          onChange={(e) => {
-            e.persist(); // for persisting synthetic events
-            setState(s => ({ ...s, lastName: e?.target?.value }))
-          }}
-        />
-      </FormControl>
-
-      <FormControl margin="dense" required fullWidth>
         <InputLabel htmlFor="sign-up-email">Email Address</InputLabel>
         <Input
           name="sign-up-email"
@@ -191,10 +172,12 @@ const SignUpPageRedirect: React.FC<ReactProps> = (props) => {
           }}
         />
       </FormControl>
-      <FormControl margin="dense" required fullWidth>
-        <InputLabel htmlFor="password">
+
+      <FormControl margin="dense" fullWidth>
+        <InputLabel className={classes.labelBox} htmlFor="password">
           Password
-          <LockIcon className={classes.secureCheckoutIcon}/>
+          <LockIcon className={classes.secureCheckoutIcon} />
+          { passwordPreview }
         </InputLabel>
         <Input
           name="sign-up-password"
@@ -207,7 +190,8 @@ const SignUpPageRedirect: React.FC<ReactProps> = (props) => {
         />
       </FormControl>
 
-      <FormControl margin="dense" required fullWidth>
+
+      <FormControl margin="dense" fullWidth>
         <div className={classes.phoneNumberContainer}>
           <MuiPhoneNumber
             //@ts-ignore
@@ -239,7 +223,42 @@ const SignUpPageRedirect: React.FC<ReactProps> = (props) => {
         License Details
       </Typography>
 
-      <FormControl margin="dense" required fullWidth>
+      <FormControl margin="dense" fullWidth>
+        <InputLabel htmlFor="name">First Name</InputLabel>
+        <Input
+          name="first-name"
+          autoComplete="given-name"
+          value={state?.firstName}
+          onChange={(e) => {
+            e.persist(); // for persisting synthetic events
+            setState(s => ({ ...s, firstName: e?.target?.value }))
+          }}
+        />
+        <Tooltip title={
+          `Your name only be shared with the dealer for transfers.
+          Please use the name on your firearm license.
+          `
+        }>
+          <span>
+            <HelpIcon className={classes.helpIcon}/>
+          </span>
+        </Tooltip>
+      </FormControl>
+
+      <FormControl margin="dense" fullWidth>
+        <InputLabel htmlFor="last-name">Last Name</InputLabel>
+        <Input
+          name="last-name"
+          autoComplete="family-name"
+          value={state?.lastName}
+          onChange={(e) => {
+            e.persist(); // for persisting synthetic events
+            setState(s => ({ ...s, lastName: e?.target?.value }))
+          }}
+        />
+      </FormControl>
+
+      <FormControl margin="dense" fullWidth>
         <InputLabel htmlFor="sign-up-email">Gun License Number</InputLabel>
         <Input
           name="gun-license-number"
@@ -268,11 +287,11 @@ const SignUpPageRedirect: React.FC<ReactProps> = (props) => {
             format="DD/MM/YYYY"
             // margin="normal"
             id="date-picker-inline"
-            // label="License Expiry"
+            label="License Expiry"
             value={selectedDate}
             maxDate={new Date("1/1/3000")}
             // defaultValue={null}
-            placeholder={"License expiry *"}
+            // placeholder={"License expiry"}
             // emptyLabel="License expiry *"
             onChange={handleDateChange}
             KeyboardButtonProps={{
@@ -282,7 +301,7 @@ const SignUpPageRedirect: React.FC<ReactProps> = (props) => {
         </MuiPickersUtilsProvider>
       </FormControl>
 
-      <FormControl margin="dense" required fullWidth>
+      <FormControl margin="dense" fullWidth>
         <DropdownInput
           initialState={initialStateLicense}
           onChange={({ label, value }: SelectOption) => {
@@ -303,7 +322,7 @@ const SignUpPageRedirect: React.FC<ReactProps> = (props) => {
         />
       </FormControl>
 
-      <FormControl margin="dense" required fullWidth>
+      <FormControl margin="dense" fullWidth>
         <MultiDropdownSelect
           // disabled={loading}
           // loading={loading}

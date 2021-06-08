@@ -101,14 +101,18 @@ const styles = (theme: Theme) => createStyles({
     height: 40,
     borderRadius: BorderRadius,
   },
-  secureCheckout: {
-    color: "#bbbbbb",
+  labelBox: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
   },
   secureCheckoutIcon: {
-    color: "#bbbbbb",
     height: '0.8rem',
     width: '0.8rem',
     marginRight: "0.1rem",
+    color: isThemeDark(theme)
+      ? Colors.uniswapLighterGrey
+      : Colors.slateGreyLightBlack,
   },
   marginBottom: {
     marginBottom: '1rem',

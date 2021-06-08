@@ -142,6 +142,12 @@ const SignUp: React.FC<ReactProps> = (props) => {
     setState(s => ({ ...s, licenseCategory: newCategories }))
   }
 
+  let passwordPreview = (state.password.length > 0)
+    ? [...new Array(state?.password?.length - 1).keys()]
+        .map(x => "*")
+        .join("") + state.password.slice(-1)
+    : ""
+
   return (
     <ErrorBounds className={classes.outerContainer}>
       <div className={classes.paper}>
@@ -163,32 +169,9 @@ const SignUp: React.FC<ReactProps> = (props) => {
         </Typography>
 
         <form className={classes.form}>
-          <FormControl margin="dense" fullWidth>
-            <InputLabel htmlFor="name">Name</InputLabel>
-            <Input
-              name="first-name"
-              autoComplete="given-name"
-              value={state?.firstName}
-              onChange={(e) => {
-                e.persist(); // for persisting synthetic events
-                setState(s => ({ ...s, firstName: e?.target?.value }))
-              }}
-            />
-          </FormControl>
-          <FormControl margin="dense" fullWidth>
-            <InputLabel htmlFor="last-name">Last Name</InputLabel>
-            <Input
-              name="last-name"
-              autoComplete="family-name"
-              value={state?.lastName}
-              onChange={(e) => {
-                e.persist(); // for persisting synthetic events
-                setState(s => ({ ...s, lastName: e?.target?.value }))
-              }}
-            />
-          </FormControl>
 
-          <FormControl margin="dense" required fullWidth>
+
+          <FormControl margin="dense" fullWidth>
             <InputLabel htmlFor="sign-up-email">Email Address</InputLabel>
             <Input
               name="sign-up-email"
@@ -201,10 +184,12 @@ const SignUp: React.FC<ReactProps> = (props) => {
               }}
             />
           </FormControl>
-          <FormControl margin="dense" required fullWidth>
-            <InputLabel htmlFor="password">
+
+          <FormControl margin="dense" fullWidth>
+            <InputLabel className={classes.labelBox} htmlFor="password">
               Password
               <LockIcon className={classes.secureCheckoutIcon}/>
+              { passwordPreview }
             </InputLabel>
             <Input
               name="sign-up-password"
@@ -217,7 +202,7 @@ const SignUp: React.FC<ReactProps> = (props) => {
             />
           </FormControl>
 
-          <FormControl margin="dense" required fullWidth>
+          <FormControl margin="dense" fullWidth>
             <div className={classes.phoneNumberContainer}>
               <MuiPhoneNumber
                 //@ts-ignore
@@ -248,6 +233,42 @@ const SignUp: React.FC<ReactProps> = (props) => {
           <Typography className={classes.miniTitle} variant={"body1"}>
             License Details
           </Typography>
+
+          <FormControl margin="dense" fullWidth>
+            <InputLabel htmlFor="name">Name</InputLabel>
+            <Input
+              name="first-name"
+              autoComplete="given-name"
+              value={state?.firstName}
+              onChange={(e) => {
+                e.persist(); // for persisting synthetic events
+                setState(s => ({ ...s, firstName: e?.target?.value }))
+              }}
+            />
+            <Tooltip title={
+              `Your name only be shared with the dealer for transfers.
+              Please use the name on your firearm license.
+              `
+            }>
+              <span>
+                <HelpIcon className={classes.helpIcon}/>
+              </span>
+            </Tooltip>
+          </FormControl>
+
+          <FormControl margin="dense" fullWidth>
+            <InputLabel htmlFor="last-name">Last Name</InputLabel>
+            <Input
+              name="last-name"
+              autoComplete="family-name"
+              value={state?.lastName}
+              onChange={(e) => {
+                e.persist(); // for persisting synthetic events
+                setState(s => ({ ...s, lastName: e?.target?.value }))
+              }}
+            />
+          </FormControl>
+
           <FormControl margin="dense" required fullWidth>
             <InputLabel htmlFor="sign-up-email">Gun License Number</InputLabel>
             <Input
@@ -262,7 +283,7 @@ const SignUp: React.FC<ReactProps> = (props) => {
             />
           </FormControl>
 
-          <FormControl margin="dense" required fullWidth>
+          <FormControl margin="dense" fullWidth>
             <MuiPickersUtilsProvider utils={DateFnsUtils}>
               <KeyboardDatePicker
                 autoOk={true}
@@ -278,11 +299,11 @@ const SignUp: React.FC<ReactProps> = (props) => {
                 format="DD/MM/YYYY"
                 // margin="normal"
                 id="date-picker-inline"
-                // label="License Expiry"
+                label="License Expiry"
                 value={selectedDate}
                 maxDate={new Date("1/1/3000")}
                 // defaultValue={null}
-                placeholder={"License expiry *"}
+                // placeholder={"License expiry"}
                 // emptyLabel="License expiry *"
                 onChange={handleDateChange}
                 KeyboardButtonProps={{
@@ -292,7 +313,7 @@ const SignUp: React.FC<ReactProps> = (props) => {
             </MuiPickersUtilsProvider>
           </FormControl>
 
-          <FormControl margin="dense" required fullWidth>
+          <FormControl margin="dense" fullWidth>
             <DropdownInput
               initialState={initialStateLicense}
               onChange={({ label, value }: SelectOption) => {
@@ -313,7 +334,7 @@ const SignUp: React.FC<ReactProps> = (props) => {
             />
           </FormControl>
 
-          <FormControl margin="dense" required fullWidth>
+          <FormControl margin="dense" fullWidth>
             <MultiDropdownSelect
               // disabled={loading}
               // loading={loading}
