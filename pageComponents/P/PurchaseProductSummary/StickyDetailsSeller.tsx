@@ -45,6 +45,7 @@ const StickyDetailsSeller = (props: ReactProps) => {
   };
 
   const sellerLicense = product.sellerLicense
+  console.log("seller, ", seller)
 
   return (
     <div className={clsx(

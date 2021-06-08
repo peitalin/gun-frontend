@@ -460,6 +460,15 @@ export const OrdersFragment = gql`
           defaultLicense {
             ...UserLicenseFragment
           }
+          orderMetrics {
+            id
+            # itemsBought
+            # totalSpend
+            itemsSold
+            totalSales
+            avgDisposalTimeHrs
+            # avgApprovalTimeHrs
+          }
         }
         # Only viewable by dealers
         ...on UserForDealers {
@@ -603,6 +612,37 @@ export const StorePublicFragment = gql`
     bio
     website
     userId
+    user {
+      id
+      ...on UserPublic {
+        defaultLicense {
+          ...UserLicenseFragment
+        }
+        orderMetrics {
+          id
+          # itemsBought
+          # totalSpend
+          itemsSold
+          totalSales
+          avgDisposalTimeHrs
+          # avgApprovalTimeHrs
+        }
+      }
+      ...on UserPrivate {
+        defaultLicense {
+          ...UserLicenseFragment
+        }
+        orderMetrics {
+          id
+          itemsBought
+          totalSpend
+          itemsSold
+          totalSales
+          avgDisposalTimeHrs
+          avgApprovalTimeHrs
+        }
+      }
+    }
     cover {
       ...ImageFragment
     }
