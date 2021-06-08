@@ -306,7 +306,7 @@ const VisaPurchaseProduct = (props: ReactProps) => {
     onCompleted: (data) => {
       console.log("data: ", data)
       snackbar.enqueueSnackbar(
-        `Payment cancelled, please try a card that supports "3D Secure payments"`,
+        `Payment cancelled, please try another card`,
         { variant: "info", autoHideDuration: 8000 }
       )
     },
@@ -424,7 +424,7 @@ const VisaPurchaseProduct = (props: ReactProps) => {
     if (stripe3dsResponse?.error?.code) {
       console.log("3DS Error: ", stripe3dsResponse?.error?.message)
       snackbar.enqueueSnackbar(
-        `Your card failed 3D Secure verification`,
+        `Your card failed 3D Secure verification, or CVS number was wrong`,
         { variant: "error" }
       )
       await cancelPaymentIntentFailure({
