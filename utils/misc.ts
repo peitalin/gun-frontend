@@ -28,3 +28,7 @@ export const shuffle = (arr) => {
 
   return arr;
 }
+
+export const roundTo2Decimals = (num: string) => {
+  return parseFloat(num).toFixed(2)
+}

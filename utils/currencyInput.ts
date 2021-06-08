@@ -9,7 +9,7 @@ export const parseInteger = string => (string.match(integerAccept) || []).join('
 
 const numberAccept = /[\d.]+/g;
 
-export const parseNumber = string => (string.match(numberAccept) || []).join('');
+export const parseNumber = (string): string => (string.match(numberAccept) || []).join('');
 
 
 const formatFloatingPointNumber = (value, maxDigits) => {
