@@ -91,20 +91,36 @@ const FrontPage: React.FC<ReactProps> = (props) => {
 
         {
           pageConfig?.pageConfigSections?.slice(0,2)?.map(section => {
+            // console.log("section: ", section)
 
             if (section?.promotedListId) {
               return (
                 <FeaturedProducts
                   key={section?.id}
+                  count={
+                    section.viewAllPath === "/featured"
+                    ? 3 // 3 products for featured list
+                    : 4
+                  }
                   title={section?.title}
                   promotedListId={section.promotedListId}
-                  cardsPerRow={{
-                    xs: 1.5,
-                    sm: 1.5,
-                    md: 2,
-                    lg: 3,
-                    xl: 4,
-                  }}
+                  cardsPerRow={
+                    section.viewAllPath === "/featured"
+                    ?  {
+                        xs: 1.5,
+                        sm: 1.5,
+                        md: 2,
+                        lg: 3,
+                        xl: 3,
+                      }
+                    : {
+                        xs: 1.5,
+                        sm: 1.5,
+                        md: 2,
+                        lg: 3,
+                        xl: 4,
+                      }
+                  }
                 />
               )
             }
