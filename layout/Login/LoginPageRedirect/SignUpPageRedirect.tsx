@@ -103,11 +103,7 @@ const SignUpPageRedirect: React.FC<ReactProps> = (props) => {
 
 
   const handleSetPhoneNumber = (s: string) => {
-
-    console.log("s:", s)
     let { countryCode, number } = formatPhoneNumber(s)
-    console.log("countryCode:", countryCode)
-    console.log("number:", number)
     setState(s => ({
       ...s,
       phoneNumber: number,

@@ -393,6 +393,8 @@ export const OrderSnapshotFragment = gql`
     form10File {
       ...ProductFileFragment
     }
+    disposalTimeHrs
+    approvalTimeHrs
   }
   ${ImageFragment}
   ${ProductFileFragment}
