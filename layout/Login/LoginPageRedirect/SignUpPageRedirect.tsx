@@ -103,7 +103,11 @@ const SignUpPageRedirect: React.FC<ReactProps> = (props) => {
 
 
   const handleSetPhoneNumber = (s: string) => {
+
+    console.log("s:", s)
     let { countryCode, number } = formatPhoneNumber(s)
+    console.log("countryCode:", countryCode)
+    console.log("number:", number)
     setState(s => ({
       ...s,
       phoneNumber: number,
@@ -138,7 +142,7 @@ const SignUpPageRedirect: React.FC<ReactProps> = (props) => {
     setState(s => ({ ...s, licenseCategory: newCategories }))
   }
 
-  // console.log("selectedDate:", selectedDate)
+
   let passwordPreview = (state.password.length > 0)
     ? [...new Array(state?.password?.length - 1).keys()]
         .map(x => "*")
@@ -198,6 +202,7 @@ const SignUpPageRedirect: React.FC<ReactProps> = (props) => {
             name={"phone"}
             label="Mobile number e.g: +61 433 666 777"
             // label={`${values.countryCode} ${values.phoneNumber}`}
+            countryCodeEditable={false}
             data-cy="user-phone"
             defaultCountry={"au"}
             onlyCountries={["au"]}

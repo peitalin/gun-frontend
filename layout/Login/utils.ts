@@ -292,8 +292,10 @@ const yearBetween2020and2200 = (year) => {
 
 
 export const formatPhoneNumber = (s: string) => {
+
   let countryCode = s.split(" ").slice(0,1)[0]
   let number = s.split(" ").slice(1).join(' ')
+
   return {
     countryCode,
     number

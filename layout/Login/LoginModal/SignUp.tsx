@@ -212,6 +212,7 @@ const SignUp: React.FC<ReactProps> = (props) => {
                 data-cy="user-phone"
                 defaultCountry={"au"}
                 onlyCountries={["au"]}
+                countryCodeEditable={false}
                 // preferredCountries={["au"]}
                 // disableCountryCode={true}
                 // https://github.com/alexplumb/material-ui-phone-number
