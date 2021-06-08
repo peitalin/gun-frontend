@@ -87,7 +87,7 @@ const ProductModelMake = (props: ReactProps) => {
             <ModelRow
               classes={classes}
               title={"Barrel Length:"}
-              value={product?.currentSnapshot?.barrelLength}
+              value={`${product?.currentSnapshot?.barrelLength} mm`}
             />
           }
           {
