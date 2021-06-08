@@ -5,11 +5,11 @@ import React from "react";
 
 const integerAccept = /\d+/g;
 
-export const parseInteger = string => (string.match(integerAccept) || []).join('');
+export const parseInteger = (string): string => (string.match(integerAccept) || []).join('')
 
 const numberAccept = /[\d.]+/g;
 
-export const parseNumber = (string): string => (string.match(numberAccept) || []).join('');
+export const parseNumber = (string): string => (string.match(numberAccept) || []).join('')
 
 
 const formatFloatingPointNumber = (value, maxDigits) => {

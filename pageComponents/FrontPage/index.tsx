@@ -29,6 +29,20 @@ export const MAX_WIDTH_GRID: number = 1160;
 // 270px each card (including margin of 16px) = 290
 
 
+export const featuredSection = {
+  limit: 3,
+  cardsPerRow: {
+    xs: 1.5,
+    sm: 1.5,
+    md: 2,
+    lg: 3,
+    xl: 3,
+  }
+}
+
+
+
+
 
 const FrontPage: React.FC<ReactProps> = (props) => {
 
@@ -99,20 +113,14 @@ const FrontPage: React.FC<ReactProps> = (props) => {
                   key={section?.id}
                   count={
                     section.viewAllPath === "/featured"
-                    ? 3 // 3 products for featured list
+                    ? featuredSection.limit // 3 products for featured list
                     : 4
                   }
                   title={section?.title}
                   promotedListId={section.promotedListId}
                   cardsPerRow={
                     section.viewAllPath === "/featured"
-                    ?  {
-                        xs: 1.5,
-                        sm: 1.5,
-                        md: 2,
-                        lg: 3,
-                        xl: 3,
-                      }
+                    ? featuredSection.cardsPerRow // 3 products for featured list
                     : {
                         xs: 1.5,
                         sm: 1.5,
