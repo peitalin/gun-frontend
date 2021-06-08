@@ -84,8 +84,9 @@ const PriceFields = (props: ReactProps & FormikProps<FormikFields>) => {
           onChange={value => {
             // values before currency mask
             // multiple by 100 as formik/graphql takes cents, not dollars
-            let dollars = parseNumber(value)
-            setVariablePrice(dollars)
+            let displayDollars = parseNumber(value)
+            let dollars = parseFloat(displayDollars)
+            setVariablePrice(displayDollars)
             updatePrice(dollars * 100)
             // multiply by 100 as formik/graphql takes cents, not dollars
           }}

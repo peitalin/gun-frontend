@@ -132,8 +132,9 @@ const CreateInitialBidForm: React.FC<ReactProps> = (props) => {
           onChange={value => {
             // values before currency mask
             // multiple by 100 as formik/graphql takes cents, not dollars
-            let dollars = parseNumber(value)
-            setDisplayedPrice(dollars)
+            let displayDollars = parseNumber(value)
+            let dollars = parseFloat(displayDollars)
+            setDisplayedPrice(displayDollars)
             // console.log("dollars", dollars)
             let cents = Math.round(parseFloat((dollars * 100) as any)) // round: 200.9999 => 201
             // console.log('cents: ', cents)
