@@ -30,6 +30,14 @@ const ProductModelMake = (props: ReactProps) => {
   // Magazine Capacity
   // Barrel Length
 
+  const roundToTwoDigits = (s: string) => {
+    return parseFloat(s).toFixed(2)
+  }
+
+  let barrelLength = product?.currentSnapshot?.barrelLength.includes('mm')
+    ? product?.currentSnapshot?.barrelLength
+    : `${roundToTwoDigits(product?.currentSnapshot?.barrelLength)} mm`
+
   return (
     <div className={clsx(
       classes.modelMakerRoot,
@@ -87,7 +95,7 @@ const ProductModelMake = (props: ReactProps) => {
             <ModelRow
               classes={classes}
               title={"Barrel Length:"}
-              value={`${product?.currentSnapshot?.barrelLength} mm`}
+              value={barrelLength}
             />
           }
           {

@@ -60,7 +60,7 @@ const SelectCaliber = (props: ReactProps & FormikProps<FormikFields>) => {
     value: caliberOptionGroups?.[0]?.options?.[0]?.value,
   }
   const [caliberOption, setCaliberOption] = React.useState(initialCaliber)
-  console.log("fprops.values.caliber: ", fprops.values?.caliber)
+  // console.log("fprops.values.caliber: ", fprops.values?.caliber)
   // console.log("caliberOptionsGRoups", caliberOptionGroups)
 
   return (
