@@ -38,6 +38,7 @@ const PromotionCards = (props: ReactProps) => {
 
   const {
     classes,
+    count = 4,
     cardsPerRow = {
       xs: 1.5,
       sm: 1.5,
@@ -57,7 +58,7 @@ const PromotionCards = (props: ReactProps) => {
     GET_PROMOTED_LIST, {
     variables: {
       promotedListId: props.promotedListId,
-      limit: 4,
+      limit: count,
       offset: 0,
     },
     onCompleted: () => {
