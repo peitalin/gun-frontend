@@ -12,7 +12,7 @@ import NewProducts from "pageComponents/FrontPage/NewProducts";
 import FeaturedProducts from "pageComponents/FrontPage/FeaturedProducts";
 import BannerHome from "pageComponents/FrontPage/BannerHome";
 import BannerPromotionsLink from "pageComponents/FrontPage/BannerPromotionsLink";
-import BetaTestingBanner from "components/BetaTestingBanner";
+// import BetaTestingBanner from "components/BetaTestingBanner";
 
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
@@ -29,7 +29,7 @@ export const MAX_WIDTH_GRID: number = 1160;
 // 270px each card (including margin of 16px) = 290
 
 
-export const featuredSection = {
+export const featuredSectionParams = {
   limit: 3,
   cardsPerRow: {
     xs: 1.5,
@@ -66,6 +66,16 @@ const FrontPage: React.FC<ReactProps> = (props) => {
 
   // console.log("pageConfig => ", pageConfig)
   let cPadding = 4 // category carousel padding
+
+  let featuredSection = pageConfig?.pageConfigSections.filter(
+    s => s.viewAllPath === "/featured"
+  )
+  let advertisedSection = pageConfig?.pageConfigSections.filter(
+    s => s.viewAllPath === "/advertised"
+  )
+  let newSection = pageConfig?.pageConfigSections.filter(
+    s => s.viewAllPath === "/new"
+  )
 
   return (
     <div className={classes.frontPageRoot}>
@@ -104,23 +114,22 @@ const FrontPage: React.FC<ReactProps> = (props) => {
         </div>
 
         {
-          pageConfig?.pageConfigSections?.slice(0,2)?.map(section => {
+          featuredSection.map(section => {
             // console.log("section: ", section)
-
             if (section?.promotedListId) {
               return (
                 <FeaturedProducts
                   key={section?.id}
                   count={
                     section.viewAllPath === "/featured"
-                    ? featuredSection.limit // 3 products for featured list
+                    ? featuredSectionParams.limit // 3 products for featured list
                     : 4
                   }
                   title={section?.title}
                   promotedListId={section.promotedListId}
                   cardsPerRow={
                     section.viewAllPath === "/featured"
-                    ? featuredSection.cardsPerRow // 3 products for featured list
+                    ? featuredSectionParams.cardsPerRow // 3 products for featured list
                     : {
                         xs: 1.5,
                         sm: 1.5,
@@ -132,17 +141,56 @@ const FrontPage: React.FC<ReactProps> = (props) => {
                 />
               )
             }
+          })
+        }
 
+        {
+          newSection.map(section => {
+            // console.log("section: ", section)
             if (section?.isNewestList) {
               return (
                 <NewProducts
                   key={section?.id}
                   title={section?.title}
+                  showSeeMore={true}
                 />
               )
             }
           })
         }
+
+
+        {
+          advertisedSection.map(section => {
+            // console.log("section: ", section)
+            if (section?.promotedListId) {
+              return (
+                <FeaturedProducts
+                  key={section?.id}
+                  count={
+                    section.viewAllPath === "/featured"
+                    ? featuredSectionParams.limit // 3 products for featured list
+                    : 4
+                  }
+                  title={section?.title}
+                  promotedListId={section.promotedListId}
+                  cardsPerRow={
+                    section.viewAllPath === "/featured"
+                    ? featuredSectionParams.cardsPerRow // 3 products for featured list
+                    : {
+                        xs: 1.5,
+                        sm: 1.5,
+                        md: 2,
+                        lg: 3,
+                        xl: 4,
+                      }
+                  }
+                />
+              )
+            }
+          })
+        }
+
 
         <div className={classes.bannerPromotionsContainer}>
           <BannerPromotionsLink

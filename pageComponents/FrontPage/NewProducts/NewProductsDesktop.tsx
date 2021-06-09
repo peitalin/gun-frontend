@@ -19,6 +19,8 @@ import {
 // useMediaQuery
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
+import Link from "next/link";
+import ArrowRight from "@material-ui/icons/ArrowRight";
 
 
 
@@ -35,6 +37,8 @@ const NewProductsDesktop = (props: ReactProps) => {
       lg: 3,
       xl: 4,
     },
+    loading,
+    showSeeMore = true,
   } = props;
 
   const theme = useTheme();
@@ -78,6 +82,19 @@ const NewProductsDesktop = (props: ReactProps) => {
             )
           : <LoadingCards count={4} />
         }
+        {
+          showSeeMore &&
+          !loading &&
+          connection?.edges?.length > 0 &&
+          <div className={classes.seeAllLinkContainer}>
+            <Link href={"/categories/all"}>
+              <a className={classes.seeAllLinkBorder}>
+                See more
+                <ArrowRight className={classes.sellAllIcon}/>
+              </a>
+            </Link>
+          </div>
+        }
       </div>
     </main>
   )
@@ -96,6 +113,9 @@ interface ReactProps extends WithStyles<typeof styles> {
     xl?: number;
   };
   connection: ProductsConnection;
+  loading?: boolean;
+  showSeeMore?: boolean;
+  categorySlug?: string
   // sortAscending: boolean; // must be top-level
   // cause Desktop and Mobile share the same queries. Possible clash in variables
   // don't want Desktop's sortAscend: true, while Mobile is false,

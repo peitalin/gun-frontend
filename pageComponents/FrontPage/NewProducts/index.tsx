@@ -36,7 +36,6 @@ const NewProducts = (props: ReactProps) => {
 
   const {
     classes,
-    count = 16,
     cardsPerRow = {
       xs: 1.5,
       sm: 1.5,
@@ -79,6 +78,8 @@ const NewProducts = (props: ReactProps) => {
           title={props.title}
           connection={connection}
           cardsPerRow={cardsPerRow}
+          loading={loading}
+          showSeeMore={props.showSeeMore}
         />
       </Hidden>
       <Hidden mdUp implementation="css">
@@ -86,6 +87,8 @@ const NewProducts = (props: ReactProps) => {
           title={props.title}
           connection={connection}
           cardsPerRow={cardsPerRow}
+          loading={loading}
+          showSeeMore={props.showSeeMore}
         />
       </Hidden>
     </>
@@ -97,7 +100,6 @@ const NewProducts = (props: ReactProps) => {
 
 
 interface ReactProps extends WithStyles<typeof styles> {
-  count?: number;
   title?: string;
   cardsPerRow?: {
     xs?: number;
@@ -106,6 +108,7 @@ interface ReactProps extends WithStyles<typeof styles> {
     lg?: number;
     xl?: number;
   };
+  showSeeMore?: boolean;
 }
 
 export interface QueryData {

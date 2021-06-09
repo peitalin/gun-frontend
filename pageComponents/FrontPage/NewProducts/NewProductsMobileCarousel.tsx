@@ -15,6 +15,8 @@ import LoadingCards from "pageComponents/FrontPage/LoadingCards";
 // Watchlist
 import ProductCardResponsive from "components/ProductCardResponsive";
 import AirCarousel from "components/AirCarousel";
+import Link from "next/link";
+import ArrowRight from "@material-ui/icons/ArrowRight";
 
 
 
@@ -33,6 +35,8 @@ const NewProductsMobileCarousel = (props: ReactProps) => {
       lg: 1.5,
       xl: 1.5,
     },
+    loading,
+    showSeeMore = true,
   } = props;
 
 
@@ -173,6 +177,19 @@ const NewProductsMobileCarousel = (props: ReactProps) => {
           </AirCarousel>
         </>
       }
+      {
+        showSeeMore &&
+        !loading &&
+        connection?.edges?.length > 0 &&
+        <div className={classes.seeAllLinkContainer}>
+          <Link href={"/categories/all"}>
+            <a className={classes.seeAllLinkBorder}>
+              See more
+              <ArrowRight className={classes.sellAllIcon}/>
+            </a>
+          </Link>
+        </div>
+      }
     </main>
   )
 }
@@ -191,6 +208,8 @@ interface ReactProps extends WithStyles<typeof styles> {
     lg?: number;
     xl?: number;
   };
+  showSeeMore?: boolean;
+  loading?: boolean;
   // cause Desktop and Mobile share the same queries. Possible clash in variables
   // don't want Desktop's sortAscend: true, while Mobile is false,
   // as both queries will be sent and returned data conflicts

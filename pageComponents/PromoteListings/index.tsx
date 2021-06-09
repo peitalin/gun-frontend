@@ -15,7 +15,7 @@ import AlignCenterLayout from "components/AlignCenterLayout";
 import PromotedSlotPurchaseModal from "./PromotedSlotPurchaseModal";
 
 export const MAX_WIDTH_GRID: number = 1160;
-import { featuredSection } from "pageComponents/FrontPage";
+import { featuredSectionParams } from "pageComponents/FrontPage";
 
 
 
@@ -72,12 +72,12 @@ const PromoteListings: React.FC<ReactProps> = (props) => {
                   setRefetch={setRefetch}
                   count={
                     section.viewAllPath === "/featured"
-                    ? featuredSection.limit // 3 products for featured list
+                    ? featuredSectionParams.limit // 3 products for featured list
                     : 4
                   }
                   cardsPerRow={
                     section.viewAllPath === "/featured"
-                    ? featuredSection.cardsPerRow // 3 products for featured list
+                    ? featuredSectionParams.cardsPerRow // 3 products for featured list
                     : {
                         xs: 1.5,
                         sm: 1.5,
