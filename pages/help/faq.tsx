@@ -1,10 +1,10 @@
 import React from 'react';
 // Styles
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
+import { Colors } from "layout/AppTheme";
 // components
 import Button from '@material-ui/core/Button';
 import AlignCenterLayout from "components/AlignCenterLayout";
-import { commonStyles } from "./commonStyles";
 
 
 const FaqSSR: React.FC<ReactProps> = (props) => {
@@ -70,6 +70,33 @@ const styles = (theme: Theme) => createStyles({
   },
 });
 
+export const commonStyles = {
+  title: {
+    fontSize: '1.75rem',
+    marginTop: '2rem',
+    marginBottom: '1rem',
+    fontWeight: 600,
+  },
+  subtitle: {
+    marginTop: '2rem',
+    marginBottom: '0rem',
+    fontSize: '1.125rem',
+    fontWeight: 600,
+  },
+  paragraph: {
+    marginTop: '0.5rem',
+    marginBottom: '0.5rem',
+    fontSize: '1rem',
+  },
+  link: {
+    marginLeft: '0.3rem',
+    marginRight: '0.3rem',
+    color: Colors.ultramarineBlueDarker,
+    "&:hover": {
+      color: Colors.ultramarineBlueLight,
+    },
+  },
+}
 
 export default withStyles(styles)( FaqSSR );
 

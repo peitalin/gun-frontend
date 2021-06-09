@@ -8,7 +8,7 @@ import Tooltip from "@material-ui/core/Tooltip";
 import copy from "clipboard-copy";
 import { useSnackbar } from "notistack";
 import { Colors } from 'layout/AppTheme';
-import { commonStyles } from "./commonStyles";
+import { commonStyles } from "./faq";
 
 
 const FirearmRegistriesSSR: React.FC<ReactProps> = (props) => {

@@ -3,7 +3,7 @@ import React from 'react';
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 // components
 import AlignCenterLayout from "components/AlignCenterLayout";
-import { commonStyles } from "./commonStyles";
+import { commonStyles } from "./faq";
 
 
 const TermsSSR: React.FC<ReactProps> = (props) => {
