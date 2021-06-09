@@ -6,6 +6,7 @@ import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/s
 import NavBarMain from "./NavBarMain";
 import { NavBarHeight } from "layout/NavBarMain/styles";
 import Footer from "./Footer";
+import SocialFloatingBanner from "./SocialFloatingBanner";
 import GetUser from "./GetUser";
 import GlobalModals from "./GlobalModals";
 // Typings
@@ -206,6 +207,10 @@ const Layout: React.FC<ReactProps> = (props) => {
     || router.pathname.startsWith("/f/")
 
   // console.log("showChatWood: ", showChatWoot)
+  let showSocialBanner = router.pathname === '/'
+    || router.pathname.startsWith("/start")
+    || router.pathname.startsWith("/help")
+
 
   return (
     <StripeProvider>
@@ -222,6 +227,10 @@ const Layout: React.FC<ReactProps> = (props) => {
         { renderLayout() }
       </PageContainer>
       <Footer/>
+      {
+        showSocialBanner &&
+        <SocialFloatingBanner/>
+      }
     </StripeProvider>
   )
 };

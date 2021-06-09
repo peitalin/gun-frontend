@@ -13,9 +13,9 @@ export type Scalars = {
   Float: number;
   timestamp: any;
   timestamptz: any;
-  seed_float: any;
   numeric: any;
   bigint: any;
+  seed_float: any;
   _text: any;
   /** Standard date string */
   Date: Date;
@@ -6931,6 +6931,8 @@ export type OrderSnapshot = {
   form10ImageId?: Maybe<Scalars['String']>;
   form10File?: Maybe<Product_Files>;
   form10FileId?: Maybe<Scalars['String']>;
+  disposalTimeHrs?: Maybe<Scalars['numeric']>;
+  approvalTimeHrs?: Maybe<Scalars['numeric']>;
   id: Scalars['String'];
   orderId: Scalars['String'];
   orderStatus: Scalars['String'];
@@ -7469,9 +7471,9 @@ export type PageInfo = {
 export enum PayeeType {
   /** Store */
   STORE = 'STORE',
-  /** Affiliates */
-  AFFILIATE = 'AFFILIATE',
-  /** EFC */
+  /** Dealer */
+  DEALER = 'DEALER',
+  /** Gun Marketplace */
   PLATFORM = 'PLATFORM'
 }
 
@@ -8413,15 +8415,9 @@ export enum Payout_Methods_Update_Column {
 }
 
 export enum PayoutDealType {
-  /**
-   * What a normal seller receives.
-   * Sellers without an entry default to platform default of 5%.
-   */
+  /** What a seller receives. */
   SELLER = 'SELLER',
-  /**
-   * What a dealer seller receives. S
-   * Sellers without an entry default to platform default of 5%.
-   */
+  /** What a dealer seller receives. */
   DEALER = 'DEALER'
 }
 
@@ -8474,18 +8470,8 @@ export enum PayoutStatus {
   MISSING_PAYOUT_METHOD = 'MISSING_PAYOUT_METHOD',
   /** Payout retained by platform */
   RETAINED = 'RETAINED',
-  /** Payout pending another admin's approval before dispatch to payout provider */
-  PENDING_APPROVAL = 'PENDING_APPROVAL',
-  /** Payout sent to payout provider and processing */
-  PROCESSING = 'PROCESSING',
   /** Payout processed and confirmed by payout provider */
-  PAID = 'PAID',
-  /** Payout refunding initial state */
-  REFUNDING = 'REFUNDING',
-  /** Pending refund, while waiting for payout to be approved */
-  PENDING_REFUND = 'PENDING_REFUND',
-  /** Payout refunded, after payout */
-  REFUNDED = 'REFUNDED'
+  PAID = 'PAID'
 }
 
 export type PayoutSum = {
@@ -11401,7 +11387,7 @@ export type PromotedSlot = {
   expiresAt?: Maybe<Scalars['Date']>;
   position?: Maybe<Scalars['Int']>;
   isRandomFiller?: Maybe<Scalars['Boolean']>;
-  durationInHours?: Maybe<Scalars['Int']>;
+  durationInHours?: Maybe<Scalars['numeric']>;
 };
 
 export type PromotedSlotMutationResponse = {
@@ -13463,6 +13449,7 @@ export type QueryGetPromotedListArgs = {
   promotedListId: Scalars['String'];
   limit?: Maybe<Scalars['Int']>;
   offset?: Maybe<Scalars['Int']>;
+  categoryFilterSlug?: Maybe<Scalars['String']>;
 };
 
 
@@ -16945,11 +16932,23 @@ export type UserForDealers = BasicUser & {
   phoneNumber?: Maybe<Phone_Numbers>;
   dealerId?: Maybe<Scalars['String']>;
   dealer?: Maybe<Dealer>;
+  orderMetrics?: Maybe<UserOrderMetrics>;
 };
 
 export type UserMutationResponse = {
   __typename?: 'UserMutationResponse';
   user: UserPrivate;
+};
+
+export type UserOrderMetrics = {
+  __typename?: 'UserOrderMetrics';
+  id?: Maybe<Scalars['ID']>;
+  itemsBought?: Maybe<Scalars['Int']>;
+  totalSpend?: Maybe<Scalars['Int']>;
+  itemsSold?: Maybe<Scalars['Int']>;
+  totalSales?: Maybe<Scalars['Int']>;
+  avgDisposalTimeHrs?: Maybe<Scalars['Int']>;
+  avgApprovalTimeHrs?: Maybe<Scalars['Int']>;
 };
 
 /** Private user info */
@@ -16987,6 +16986,7 @@ export type UserPrivate = BasicUser & {
   phoneNumber?: Maybe<Phone_Numbers>;
   dealerId?: Maybe<Scalars['String']>;
   dealer?: Maybe<Dealer>;
+  orderMetrics?: Maybe<UserOrderMetrics>;
 };
 
 
@@ -17035,6 +17035,7 @@ export type UserPublic = BasicUser & {
   licenses?: Maybe<Array<Maybe<User_Licenses>>>;
   dealerId?: Maybe<Scalars['String']>;
   dealer?: Maybe<Dealer>;
+  orderMetrics?: Maybe<UserOrderMetrics>;
 };
 
 /** columns and relationships of "users" */
@@ -17062,6 +17063,8 @@ export type Users = {
   lastName?: Maybe<Scalars['String']>;
   lastSeen?: Maybe<Scalars['timestamptz']>;
   lastTyped?: Maybe<Scalars['timestamptz']>;
+  /** An object relationship */
+  ordersMetrics?: Maybe<Users_Orders_Metrics>;
   passwordHash: Scalars['String'];
   /** An object relationship */
   payoutMethod?: Maybe<Payout_Methods>;
@@ -17145,6 +17148,7 @@ export type Users_Bool_Exp = {
   lastName?: Maybe<String_Comparison_Exp>;
   lastSeen?: Maybe<Timestamptz_Comparison_Exp>;
   lastTyped?: Maybe<Timestamptz_Comparison_Exp>;
+  ordersMetrics?: Maybe<Users_Orders_Metrics_Bool_Exp>;
   passwordHash?: Maybe<String_Comparison_Exp>;
   payoutMethod?: Maybe<Payout_Methods_Bool_Exp>;
   payoutMethodId?: Maybe<String_Comparison_Exp>;
@@ -17189,6 +17193,7 @@ export type Users_Insert_Input = {
   lastName?: Maybe<Scalars['String']>;
   lastSeen?: Maybe<Scalars['timestamptz']>;
   lastTyped?: Maybe<Scalars['timestamptz']>;
+  ordersMetrics?: Maybe<Users_Orders_Metrics_Obj_Rel_Insert_Input>;
   passwordHash?: Maybe<Scalars['String']>;
   payoutMethod?: Maybe<Payout_Methods_Obj_Rel_Insert_Input>;
   payoutMethodId?: Maybe<Scalars['String']>;
@@ -17404,6 +17409,7 @@ export type Users_Order_By = {
   lastName?: Maybe<Order_By>;
   lastSeen?: Maybe<Order_By>;
   lastTyped?: Maybe<Order_By>;
+  ordersMetrics?: Maybe<Users_Orders_Metrics_Order_By>;
   passwordHash?: Maybe<Order_By>;
   payoutMethod?: Maybe<Payout_Methods_Order_By>;
   payoutMethodId?: Maybe<Order_By>;
@@ -17422,13 +17428,13 @@ export type Users_Order_By = {
 /** columns and relationships of "users_orders_metrics" */
 export type Users_Orders_Metrics = {
   __typename?: 'users_orders_metrics';
-  avg_approval_time_hrs?: Maybe<Scalars['numeric']>;
-  avg_disposal_time_hrs?: Maybe<Scalars['numeric']>;
+  avgApprovalTimeHrs?: Maybe<Scalars['numeric']>;
+  avgDisposalTimeHrs?: Maybe<Scalars['numeric']>;
   id?: Maybe<Scalars['String']>;
-  items_bought?: Maybe<Scalars['bigint']>;
-  items_sold?: Maybe<Scalars['bigint']>;
-  total_sales?: Maybe<Scalars['bigint']>;
-  total_spend?: Maybe<Scalars['bigint']>;
+  itemsBought?: Maybe<Scalars['bigint']>;
+  itemsSold?: Maybe<Scalars['bigint']>;
+  totalSales?: Maybe<Scalars['bigint']>;
+  totalSpend?: Maybe<Scalars['bigint']>;
 };
 
 /** aggregated selection of "users_orders_metrics" */
@@ -17464,12 +17470,12 @@ export type Users_Orders_Metrics_Aggregate_FieldsCountArgs = {
 /** aggregate avg on columns */
 export type Users_Orders_Metrics_Avg_Fields = {
   __typename?: 'users_orders_metrics_avg_fields';
-  avg_approval_time_hrs?: Maybe<Scalars['Float']>;
-  avg_disposal_time_hrs?: Maybe<Scalars['Float']>;
-  items_bought?: Maybe<Scalars['Float']>;
-  items_sold?: Maybe<Scalars['Float']>;
-  total_sales?: Maybe<Scalars['Float']>;
-  total_spend?: Maybe<Scalars['Float']>;
+  avgApprovalTimeHrs?: Maybe<Scalars['Float']>;
+  avgDisposalTimeHrs?: Maybe<Scalars['Float']>;
+  itemsBought?: Maybe<Scalars['Float']>;
+  itemsSold?: Maybe<Scalars['Float']>;
+  totalSales?: Maybe<Scalars['Float']>;
+  totalSpend?: Maybe<Scalars['Float']>;
 };
 
 /** Boolean expression to filter rows from the table "users_orders_metrics". All fields are combined with a logical 'AND'. */
@@ -17477,143 +17483,159 @@ export type Users_Orders_Metrics_Bool_Exp = {
   _and?: Maybe<Array<Users_Orders_Metrics_Bool_Exp>>;
   _not?: Maybe<Users_Orders_Metrics_Bool_Exp>;
   _or?: Maybe<Array<Users_Orders_Metrics_Bool_Exp>>;
-  avg_approval_time_hrs?: Maybe<Numeric_Comparison_Exp>;
-  avg_disposal_time_hrs?: Maybe<Numeric_Comparison_Exp>;
+  avgApprovalTimeHrs?: Maybe<Numeric_Comparison_Exp>;
+  avgDisposalTimeHrs?: Maybe<Numeric_Comparison_Exp>;
   id?: Maybe<String_Comparison_Exp>;
-  items_bought?: Maybe<Bigint_Comparison_Exp>;
-  items_sold?: Maybe<Bigint_Comparison_Exp>;
-  total_sales?: Maybe<Bigint_Comparison_Exp>;
-  total_spend?: Maybe<Bigint_Comparison_Exp>;
+  itemsBought?: Maybe<Bigint_Comparison_Exp>;
+  itemsSold?: Maybe<Bigint_Comparison_Exp>;
+  totalSales?: Maybe<Bigint_Comparison_Exp>;
+  totalSpend?: Maybe<Bigint_Comparison_Exp>;
+};
+
+/** input type for inserting data into table "users_orders_metrics" */
+export type Users_Orders_Metrics_Insert_Input = {
+  avgApprovalTimeHrs?: Maybe<Scalars['numeric']>;
+  avgDisposalTimeHrs?: Maybe<Scalars['numeric']>;
+  id?: Maybe<Scalars['String']>;
+  itemsBought?: Maybe<Scalars['bigint']>;
+  itemsSold?: Maybe<Scalars['bigint']>;
+  totalSales?: Maybe<Scalars['bigint']>;
+  totalSpend?: Maybe<Scalars['bigint']>;
 };
 
 /** aggregate max on columns */
 export type Users_Orders_Metrics_Max_Fields = {
   __typename?: 'users_orders_metrics_max_fields';
-  avg_approval_time_hrs?: Maybe<Scalars['numeric']>;
-  avg_disposal_time_hrs?: Maybe<Scalars['numeric']>;
+  avgApprovalTimeHrs?: Maybe<Scalars['numeric']>;
+  avgDisposalTimeHrs?: Maybe<Scalars['numeric']>;
   id?: Maybe<Scalars['String']>;
-  items_bought?: Maybe<Scalars['bigint']>;
-  items_sold?: Maybe<Scalars['bigint']>;
-  total_sales?: Maybe<Scalars['bigint']>;
-  total_spend?: Maybe<Scalars['bigint']>;
+  itemsBought?: Maybe<Scalars['bigint']>;
+  itemsSold?: Maybe<Scalars['bigint']>;
+  totalSales?: Maybe<Scalars['bigint']>;
+  totalSpend?: Maybe<Scalars['bigint']>;
 };
 
 /** aggregate min on columns */
 export type Users_Orders_Metrics_Min_Fields = {
   __typename?: 'users_orders_metrics_min_fields';
-  avg_approval_time_hrs?: Maybe<Scalars['numeric']>;
-  avg_disposal_time_hrs?: Maybe<Scalars['numeric']>;
+  avgApprovalTimeHrs?: Maybe<Scalars['numeric']>;
+  avgDisposalTimeHrs?: Maybe<Scalars['numeric']>;
   id?: Maybe<Scalars['String']>;
-  items_bought?: Maybe<Scalars['bigint']>;
-  items_sold?: Maybe<Scalars['bigint']>;
-  total_sales?: Maybe<Scalars['bigint']>;
-  total_spend?: Maybe<Scalars['bigint']>;
+  itemsBought?: Maybe<Scalars['bigint']>;
+  itemsSold?: Maybe<Scalars['bigint']>;
+  totalSales?: Maybe<Scalars['bigint']>;
+  totalSpend?: Maybe<Scalars['bigint']>;
+};
+
+/** input type for inserting object relation for remote table "users_orders_metrics" */
+export type Users_Orders_Metrics_Obj_Rel_Insert_Input = {
+  data: Users_Orders_Metrics_Insert_Input;
 };
 
 /** Ordering options when selecting data from "users_orders_metrics". */
 export type Users_Orders_Metrics_Order_By = {
-  avg_approval_time_hrs?: Maybe<Order_By>;
-  avg_disposal_time_hrs?: Maybe<Order_By>;
+  avgApprovalTimeHrs?: Maybe<Order_By>;
+  avgDisposalTimeHrs?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
-  items_bought?: Maybe<Order_By>;
-  items_sold?: Maybe<Order_By>;
-  total_sales?: Maybe<Order_By>;
-  total_spend?: Maybe<Order_By>;
+  itemsBought?: Maybe<Order_By>;
+  itemsSold?: Maybe<Order_By>;
+  totalSales?: Maybe<Order_By>;
+  totalSpend?: Maybe<Order_By>;
 };
 
 /** select columns of table "users_orders_metrics" */
 export enum Users_Orders_Metrics_Select_Column {
   /** column name */
-  AVG_APPROVAL_TIME_HRS = 'avg_approval_time_hrs',
+  AVGAPPROVALTIMEHRS = 'avgApprovalTimeHrs',
   /** column name */
-  AVG_DISPOSAL_TIME_HRS = 'avg_disposal_time_hrs',
+  AVGDISPOSALTIMEHRS = 'avgDisposalTimeHrs',
   /** column name */
   ID = 'id',
   /** column name */
-  ITEMS_BOUGHT = 'items_bought',
+  ITEMSBOUGHT = 'itemsBought',
   /** column name */
-  ITEMS_SOLD = 'items_sold',
+  ITEMSSOLD = 'itemsSold',
   /** column name */
-  TOTAL_SALES = 'total_sales',
+  TOTALSALES = 'totalSales',
   /** column name */
-  TOTAL_SPEND = 'total_spend'
+  TOTALSPEND = 'totalSpend'
 }
 
 /** aggregate stddev on columns */
 export type Users_Orders_Metrics_Stddev_Fields = {
   __typename?: 'users_orders_metrics_stddev_fields';
-  avg_approval_time_hrs?: Maybe<Scalars['Float']>;
-  avg_disposal_time_hrs?: Maybe<Scalars['Float']>;
-  items_bought?: Maybe<Scalars['Float']>;
-  items_sold?: Maybe<Scalars['Float']>;
-  total_sales?: Maybe<Scalars['Float']>;
-  total_spend?: Maybe<Scalars['Float']>;
+  avgApprovalTimeHrs?: Maybe<Scalars['Float']>;
+  avgDisposalTimeHrs?: Maybe<Scalars['Float']>;
+  itemsBought?: Maybe<Scalars['Float']>;
+  itemsSold?: Maybe<Scalars['Float']>;
+  totalSales?: Maybe<Scalars['Float']>;
+  totalSpend?: Maybe<Scalars['Float']>;
 };
 
 /** aggregate stddev_pop on columns */
 export type Users_Orders_Metrics_Stddev_Pop_Fields = {
   __typename?: 'users_orders_metrics_stddev_pop_fields';
-  avg_approval_time_hrs?: Maybe<Scalars['Float']>;
-  avg_disposal_time_hrs?: Maybe<Scalars['Float']>;
-  items_bought?: Maybe<Scalars['Float']>;
-  items_sold?: Maybe<Scalars['Float']>;
-  total_sales?: Maybe<Scalars['Float']>;
-  total_spend?: Maybe<Scalars['Float']>;
+  avgApprovalTimeHrs?: Maybe<Scalars['Float']>;
+  avgDisposalTimeHrs?: Maybe<Scalars['Float']>;
+  itemsBought?: Maybe<Scalars['Float']>;
+  itemsSold?: Maybe<Scalars['Float']>;
+  totalSales?: Maybe<Scalars['Float']>;
+  totalSpend?: Maybe<Scalars['Float']>;
 };
 
 /** aggregate stddev_samp on columns */
 export type Users_Orders_Metrics_Stddev_Samp_Fields = {
   __typename?: 'users_orders_metrics_stddev_samp_fields';
-  avg_approval_time_hrs?: Maybe<Scalars['Float']>;
-  avg_disposal_time_hrs?: Maybe<Scalars['Float']>;
-  items_bought?: Maybe<Scalars['Float']>;
-  items_sold?: Maybe<Scalars['Float']>;
-  total_sales?: Maybe<Scalars['Float']>;
-  total_spend?: Maybe<Scalars['Float']>;
+  avgApprovalTimeHrs?: Maybe<Scalars['Float']>;
+  avgDisposalTimeHrs?: Maybe<Scalars['Float']>;
+  itemsBought?: Maybe<Scalars['Float']>;
+  itemsSold?: Maybe<Scalars['Float']>;
+  totalSales?: Maybe<Scalars['Float']>;
+  totalSpend?: Maybe<Scalars['Float']>;
 };
 
 /** aggregate sum on columns */
 export type Users_Orders_Metrics_Sum_Fields = {
   __typename?: 'users_orders_metrics_sum_fields';
-  avg_approval_time_hrs?: Maybe<Scalars['numeric']>;
-  avg_disposal_time_hrs?: Maybe<Scalars['numeric']>;
-  items_bought?: Maybe<Scalars['bigint']>;
-  items_sold?: Maybe<Scalars['bigint']>;
-  total_sales?: Maybe<Scalars['bigint']>;
-  total_spend?: Maybe<Scalars['bigint']>;
+  avgApprovalTimeHrs?: Maybe<Scalars['numeric']>;
+  avgDisposalTimeHrs?: Maybe<Scalars['numeric']>;
+  itemsBought?: Maybe<Scalars['bigint']>;
+  itemsSold?: Maybe<Scalars['bigint']>;
+  totalSales?: Maybe<Scalars['bigint']>;
+  totalSpend?: Maybe<Scalars['bigint']>;
 };
 
 /** aggregate var_pop on columns */
 export type Users_Orders_Metrics_Var_Pop_Fields = {
   __typename?: 'users_orders_metrics_var_pop_fields';
-  avg_approval_time_hrs?: Maybe<Scalars['Float']>;
-  avg_disposal_time_hrs?: Maybe<Scalars['Float']>;
-  items_bought?: Maybe<Scalars['Float']>;
-  items_sold?: Maybe<Scalars['Float']>;
-  total_sales?: Maybe<Scalars['Float']>;
-  total_spend?: Maybe<Scalars['Float']>;
+  avgApprovalTimeHrs?: Maybe<Scalars['Float']>;
+  avgDisposalTimeHrs?: Maybe<Scalars['Float']>;
+  itemsBought?: Maybe<Scalars['Float']>;
+  itemsSold?: Maybe<Scalars['Float']>;
+  totalSales?: Maybe<Scalars['Float']>;
+  totalSpend?: Maybe<Scalars['Float']>;
 };
 
 /** aggregate var_samp on columns */
 export type Users_Orders_Metrics_Var_Samp_Fields = {
   __typename?: 'users_orders_metrics_var_samp_fields';
-  avg_approval_time_hrs?: Maybe<Scalars['Float']>;
-  avg_disposal_time_hrs?: Maybe<Scalars['Float']>;
-  items_bought?: Maybe<Scalars['Float']>;
-  items_sold?: Maybe<Scalars['Float']>;
-  total_sales?: Maybe<Scalars['Float']>;
-  total_spend?: Maybe<Scalars['Float']>;
+  avgApprovalTimeHrs?: Maybe<Scalars['Float']>;
+  avgDisposalTimeHrs?: Maybe<Scalars['Float']>;
+  itemsBought?: Maybe<Scalars['Float']>;
+  itemsSold?: Maybe<Scalars['Float']>;
+  totalSales?: Maybe<Scalars['Float']>;
+  totalSpend?: Maybe<Scalars['Float']>;
 };
 
 /** aggregate variance on columns */
 export type Users_Orders_Metrics_Variance_Fields = {
   __typename?: 'users_orders_metrics_variance_fields';
-  avg_approval_time_hrs?: Maybe<Scalars['Float']>;
-  avg_disposal_time_hrs?: Maybe<Scalars['Float']>;
-  items_bought?: Maybe<Scalars['Float']>;
-  items_sold?: Maybe<Scalars['Float']>;
-  total_sales?: Maybe<Scalars['Float']>;
-  total_spend?: Maybe<Scalars['Float']>;
+  avgApprovalTimeHrs?: Maybe<Scalars['Float']>;
+  avgDisposalTimeHrs?: Maybe<Scalars['Float']>;
+  itemsBought?: Maybe<Scalars['Float']>;
+  itemsSold?: Maybe<Scalars['Float']>;
+  totalSales?: Maybe<Scalars['Float']>;
+  totalSpend?: Maybe<Scalars['Float']>;
 };
 
 /** primary key columns input for table: users */
@@ -17867,6 +17889,7 @@ export type UserWithRole = BasicUser & {
   licenses?: Maybe<Array<Maybe<User_Licenses>>>;
   dealerId?: Maybe<Scalars['String']>;
   dealer?: Maybe<Dealer>;
+  orderMetrics?: Maybe<UserOrderMetrics>;
 };
 
 /** An individual item in a watchlist */
@@ -18036,7 +18059,7 @@ export type TransactionFragment = { __typename?: 'transactions', id: string, tot
 
 export type PayoutItemFragment = { __typename?: 'payout_items', id: string, storeId: string, payeeType: string, amount: number, paymentProcessingFee: number, createdAt: any, payoutStatus: string, currency: string, orderId: string, txnId: string, payoutId?: Maybe<string>, taxes: number };
 
-export type OrderSnapshotFragment = { __typename?: 'OrderSnapshot', id: string, orderStatus: string, createdAt: any, adminApproverId?: Maybe<string>, adminApprover?: Maybe<{ __typename?: 'UserForDealers', id: string, firstName?: Maybe<string>, lastName?: Maybe<string>, email: string }>, form10Image?: Maybe<(
+export type OrderSnapshotFragment = { __typename?: 'OrderSnapshot', id: string, orderStatus: string, createdAt: any, adminApproverId?: Maybe<string>, disposalTimeHrs?: Maybe<any>, approvalTimeHrs?: Maybe<any>, adminApprover?: Maybe<{ __typename?: 'UserForDealers', id: string, firstName?: Maybe<string>, lastName?: Maybe<string>, email: string }>, form10Image?: Maybe<(
     { __typename?: 'image_parents' }
     & ImageFragment
   )>, form10File?: Maybe<(
@@ -18109,7 +18132,7 @@ type OrdersFragment_OrderDealer_ = { __typename?: 'OrderDealer', id?: Maybe<stri
       )>, phoneNumber?: Maybe<{ __typename?: 'phone_numbers', id: string, areaCode?: Maybe<string>, countryCode: string, number: string }> } | { __typename?: 'UserPublic', id: string, defaultLicense?: Maybe<(
         { __typename?: 'user_licenses' }
         & UserLicenseFragment
-      )> } | { __typename?: 'UserWithRole', id: string }> }>, currentSnapshot?: Maybe<(
+      )>, orderMetrics?: Maybe<{ __typename?: 'UserOrderMetrics', id?: Maybe<string>, itemsSold?: Maybe<number>, totalSales?: Maybe<number>, avgDisposalTimeHrs?: Maybe<number> }> } | { __typename?: 'UserWithRole', id: string }> }>, currentSnapshot?: Maybe<(
     { __typename?: 'OrderSnapshot', transaction?: Maybe<(
       { __typename?: 'transactions' }
       & TransactionFragment
@@ -18162,7 +18185,7 @@ type OrdersFragment_OrderPublic_ = { __typename?: 'OrderPublic', id?: Maybe<stri
       )>, phoneNumber?: Maybe<{ __typename?: 'phone_numbers', id: string, areaCode?: Maybe<string>, countryCode: string, number: string }> } | { __typename?: 'UserPublic', id: string, defaultLicense?: Maybe<(
         { __typename?: 'user_licenses' }
         & UserLicenseFragment
-      )> } | { __typename?: 'UserWithRole', id: string }> }>, currentSnapshot?: Maybe<(
+      )>, orderMetrics?: Maybe<{ __typename?: 'UserOrderMetrics', id?: Maybe<string>, itemsSold?: Maybe<number>, totalSales?: Maybe<number>, avgDisposalTimeHrs?: Maybe<number> }> } | { __typename?: 'UserWithRole', id: string }> }>, currentSnapshot?: Maybe<(
     { __typename?: 'OrderSnapshot', transaction?: Maybe<(
       { __typename?: 'transactions' }
       & TransactionFragment
@@ -18196,7 +18219,10 @@ type OrdersFragment_OrderPublic_ = { __typename?: 'OrderPublic', id?: Maybe<stri
 
 export type OrdersFragment = OrdersFragment_OrderAdmin_ | OrdersFragment_OrderDealer_ | OrdersFragment_OrderPublic_;
 
-type StorePublicFragment_StorePrivate_ = { __typename?: 'StorePrivate', id: string, createdAt: any, updatedAt?: Maybe<any>, name?: Maybe<string>, bio?: Maybe<string>, website?: Maybe<string>, userId: string, cover?: Maybe<(
+type StorePublicFragment_StorePrivate_ = { __typename?: 'StorePrivate', id: string, createdAt: any, updatedAt?: Maybe<any>, name?: Maybe<string>, bio?: Maybe<string>, website?: Maybe<string>, userId: string, user?: Maybe<{ __typename?: 'UserPrivate', id: string, defaultLicense?: Maybe<(
+      { __typename?: 'user_licenses' }
+      & UserLicenseFragment
+    )>, orderMetrics?: Maybe<{ __typename?: 'UserOrderMetrics', id?: Maybe<string>, itemsBought?: Maybe<number>, totalSpend?: Maybe<number>, itemsSold?: Maybe<number>, totalSales?: Maybe<number>, avgDisposalTimeHrs?: Maybe<number>, avgApprovalTimeHrs?: Maybe<number> }> }>, cover?: Maybe<(
     { __typename?: 'image_parents' }
     & ImageFragment
   )>, profile?: Maybe<(
@@ -18210,7 +18236,13 @@ type StorePublicFragment_StorePrivate_ = { __typename?: 'StorePrivate', id: stri
         & ProductFragment_ProductPublic_
       ) }>, pageInfo: { __typename?: 'PageInfo', isLastPage: boolean } } };
 
-type StorePublicFragment_StorePublic_ = { __typename?: 'StorePublic', id: string, createdAt: any, updatedAt?: Maybe<any>, name?: Maybe<string>, bio?: Maybe<string>, website?: Maybe<string>, userId: string, cover?: Maybe<(
+type StorePublicFragment_StorePublic_ = { __typename?: 'StorePublic', id: string, createdAt: any, updatedAt?: Maybe<any>, name?: Maybe<string>, bio?: Maybe<string>, website?: Maybe<string>, userId: string, user?: Maybe<{ __typename?: 'UserPrivate', id: string, defaultLicense?: Maybe<(
+      { __typename?: 'user_licenses' }
+      & UserLicenseFragment
+    )>, orderMetrics?: Maybe<{ __typename?: 'UserOrderMetrics', id?: Maybe<string>, itemsBought?: Maybe<number>, totalSpend?: Maybe<number>, itemsSold?: Maybe<number>, totalSales?: Maybe<number>, avgDisposalTimeHrs?: Maybe<number>, avgApprovalTimeHrs?: Maybe<number> }> } | { __typename?: 'UserForDealers', id: string } | { __typename?: 'UserPublic', id: string, defaultLicense?: Maybe<(
+      { __typename?: 'user_licenses' }
+      & UserLicenseFragment
+    )>, orderMetrics?: Maybe<{ __typename?: 'UserOrderMetrics', id?: Maybe<string>, itemsSold?: Maybe<number>, totalSales?: Maybe<number>, avgDisposalTimeHrs?: Maybe<number> }> } | { __typename?: 'UserWithRole', id: string }>, cover?: Maybe<(
     { __typename?: 'image_parents' }
     & ImageFragment
   )>, profile?: Maybe<(
@@ -18530,6 +18562,8 @@ export const OrderSnapshotFragmentFragmentDoc = gql`
   form10File {
     ...ProductFileFragment
   }
+  disposalTimeHrs
+  approvalTimeHrs
 }
     ${ImageFragmentFragmentDoc}
 ${ProductFileFragmentFragmentDoc}`;
@@ -18629,6 +18663,12 @@ export const OrdersFragmentFragmentDoc = gql`
       ... on UserPublic {
         defaultLicense {
           ...UserLicenseFragment
+        }
+        orderMetrics {
+          id
+          itemsSold
+          totalSales
+          avgDisposalTimeHrs
         }
       }
       ... on UserForDealers {
@@ -18797,6 +18837,34 @@ export const StorePublicFragmentFragmentDoc = gql`
   bio
   website
   userId
+  user {
+    id
+    ... on UserPublic {
+      defaultLicense {
+        ...UserLicenseFragment
+      }
+      orderMetrics {
+        id
+        itemsSold
+        totalSales
+        avgDisposalTimeHrs
+      }
+    }
+    ... on UserPrivate {
+      defaultLicense {
+        ...UserLicenseFragment
+      }
+      orderMetrics {
+        id
+        itemsBought
+        totalSpend
+        itemsSold
+        totalSales
+        avgDisposalTimeHrs
+        avgApprovalTimeHrs
+      }
+    }
+  }
   cover {
     ...ImageFragment
   }
@@ -18815,7 +18883,8 @@ export const StorePublicFragmentFragmentDoc = gql`
     }
   }
 }
-    ${ImageFragmentFragmentDoc}
+    ${UserLicenseFragmentFragmentDoc}
+${ImageFragmentFragmentDoc}
 ${ProductFragmentFragmentDoc}`;
 export const PaymentMethodFragmentFragmentDoc = gql`
     fragment PaymentMethodFragment on payment_methods {

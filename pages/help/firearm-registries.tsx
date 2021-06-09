@@ -3,12 +3,12 @@ import clsx from "clsx";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 // components
-import Typography from '@material-ui/core/Typography';
 import AlignCenterLayout from "components/AlignCenterLayout";
 import Tooltip from "@material-ui/core/Tooltip";
 import copy from "clipboard-copy";
 import { useSnackbar } from "notistack";
 import { Colors } from 'layout/AppTheme';
+import { commonStyles } from "./commonStyles";
 
 
 const FirearmRegistriesSSR: React.FC<ReactProps> = (props) => {
@@ -27,11 +27,11 @@ const FirearmRegistriesSSR: React.FC<ReactProps> = (props) => {
       maxWidth={720}
     >
       <div className={classes.root}>
-        <Typography className={classes.title} variant={"h2"}>
+        <div className={classes.title}>
           FIREARM REGISTRIES
-        </Typography>
+        </div>
 
-        <Typography className={classes.paragraph} variant={"body1"}>
+        <div className={classes.paragraph}>
           <FirearmRegistry classes={classes}
             registry={registries.act}
             copyAndSendSnackbarMsg={copyAndSendSnackbarMsg}
@@ -64,7 +64,7 @@ const FirearmRegistriesSSR: React.FC<ReactProps> = (props) => {
             registry={registries.wa}
             copyAndSendSnackbarMsg={copyAndSendSnackbarMsg}
           />
-        </Typography>
+        </div>
 
       </div>
     </AlignCenterLayout>
@@ -227,22 +227,19 @@ const styles = (theme: Theme) => createStyles({
     marginTop: '2rem',
     marginBottom: '2rem',
   },
-  title: {
-    marginTop: '0.5rem',
-    marginBottom: '0.5rem',
-  },
   registryTitle: {
     fontWeight: 600,
     marginTop: '0.1rem',
     marginBottom: '0.1rem',
   },
+  title: {
+    ...commonStyles.title,
+  },
   subtitle: {
-    marginTop: '0.1rem',
-    marginBottom: '0.1rem',
+    ...commonStyles.subtitle,
   },
   paragraph: {
-    marginTop: '0.5rem',
-    marginBottom: '0.5rem',
+    ...commonStyles.paragraph,
   },
   flexRow: {
     display: "flex",
@@ -259,10 +256,7 @@ const styles = (theme: Theme) => createStyles({
     flexGrow: 1,
   },
   link: {
-    color: Colors.ultramarineBlueDarker,
-    "&:hover": {
-      color: Colors.ultramarineBlueLighter,
-    },
+    ...commonStyles.link,
   },
 });
 
