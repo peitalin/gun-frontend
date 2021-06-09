@@ -1,21 +1,15 @@
 import React from "react";
-import { useState } from "react";
 import clsx from "clsx";
 // Redux
 import { useDispatch, useSelector } from "react-redux";
 import { GrandReduxState } from "reduxStore/grand-reducer";
-import { Actions } from "reduxStore/actions";
-/// Debounce
-import { useDebouncedCallback } from 'use-debounce';
 // Styles
 import { withStyles, WithStyles, Theme, createStyles } from "@material-ui/core/styles";
-// import { styles } from "./styles";
 import { styles } from "./styles";
 // Material UI
 import Typography from "@material-ui/core/Typography";
 import TextInput from "components/Fields/TextInput";
 import Divider from "components/Divider";
-import Button from "@material-ui/core/Button";
 // router
 import { useRouter } from "next/router";
 // Typings
@@ -23,7 +17,8 @@ import { StorePrivate, UserPrivate, Image_Parents } from "typings/gqlTypes";
 import { HtmlEvent, EditStoreInput } from "typings";
 // Validation
 import { FormikProps } from 'formik';
-import StoreEditProfilePic from "pageComponents/SellerDashboard/EditSellerProfile/StoreEditProfilePic";
+// import StoreEditProfilePic from "pageComponents/SellerDashboard/EditSellerProfile/StoreEditProfilePic";
+import Link from "next/link";
 
 
 
@@ -233,13 +228,15 @@ const EditStoreFields: React.FC<ReactProps & FormikProps<FormikFields>> = (props
             <Typography variant="body1" className={classes.subtitle4}>
               By signing up, you agree to comply with GM’s Terms of Service
               and Seller Agreement.
-              <a className={classes.link}
-                href={'https://help.relaydownloads.com/hc/en-us/articles/360038530771-Terms-of-Service'}
-                target="_blank"
-                style={{ marginLeft: '0.25rem' }}
-              >
-                  Learn more
-              </a>
+              <Link href={"/help/faq"}>
+                <a className={classes.link}
+                  // href={'https://docs.gunmarketplace.com.au'}
+                  target="_blank"
+                  style={{ marginLeft: '0.25rem' }}
+                >
+                    Learn more
+                </a>
+              </Link>
             </Typography>
           </div>
         </div>

@@ -105,15 +105,6 @@ const Footer: React.FC<ReactProps> = (props) => {
                     </Typography>
                   </a>
                 </Link>
-                {/* <a
-                  className={classes.link}
-                  // href='https://help.relay.shop/hc/en-us'
-                  target="_blank"
-                >
-                  <Typography variant="body2" className={classes.linkText}>
-                    FAQ
-                  </Typography>
-                </a> */}
               </div>
 
               <div className={classes.flexColItem}>

@@ -44,9 +44,7 @@ const CategorySlugSSR: NextPage<ReactProps> = (props) => {
           Browse gunmarketplace for local firearms to trade
         `}
         // ogImage={
-        //   GUN_ENV === "development"
-        //   ? "https://image-content.gunmarketplace.com.au/og-img-relay-category.png"
-        //   : "https://image-content.gunmarketplace.com.au/og-img-relay-category.png"
+        //   "https://image-content.gunmarketplace.com.au/og-img-category.png"
         // }
       />
       <CategoryId

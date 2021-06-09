@@ -40,6 +40,7 @@ const HelpSideRoutesMenu: React.FC<ReactProps> = (props) => {
             </a>
           </Link>
         </li>
+
         <li>
           <Link href={"/help/privacy"} scroll={false}>
             <a>
@@ -55,6 +56,7 @@ const HelpSideRoutesMenu: React.FC<ReactProps> = (props) => {
             </a>
           </Link>
         </li>
+
         <li>
           <Link href={"/help/terms"} scroll={false}>
             <a>
@@ -70,6 +72,23 @@ const HelpSideRoutesMenu: React.FC<ReactProps> = (props) => {
             </a>
           </Link>
         </li>
+
+        <li>
+          <Link href={"/help/about-us"} scroll={false}>
+            <a>
+              <div className={
+                isSelectedRoute("/help/about-us")
+                  ? classes.routeListItemSelected
+                  : classes.routeListItem
+              }>
+                <Typography variant="subtitle1" className={classes.routeListItemText}>
+                  About Us
+                </Typography>
+              </div>
+            </a>
+          </Link>
+        </li>
+
         <li>
           <Link href={"/help/firearm-registries"} scroll={false}>
             <a>

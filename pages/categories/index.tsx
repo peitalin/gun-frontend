@@ -35,9 +35,7 @@ const CategoriesPage: NextPage<ReactProps> = (props) => {
           Shop gunmarketplace local firearms to trade.
         `}
         // ogImage={
-        //   EFC_ENV === "development"
-        //   ? "https://image-content.fileworks.net/og-img-relay-category.png"
-        //   : "https://image-content.relaydownloads.com/og-img-relay-category.png"
+        //   "https://image-content.gunmarketplace.com.au/og-img-category.png"
         // }
       />
       <CategoriesComponent>

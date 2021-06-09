@@ -19,8 +19,8 @@ const dashboardLinkColorHover = Colors.secondaryBright
 const dashboardLinkColor2 = Colors.darkGrey
 const dashboardLinkColorHover2 = Colors.secondaryBright
 
-const dashboardMenuHeight = 50 * 4
-// 4 items, 50px each
+const dashboardMenuHeight = 50 * 5
+// 5 items, 50px each
 
 
 export const styles = (theme: Theme) => createStyles({

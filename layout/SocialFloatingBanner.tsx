@@ -26,6 +26,7 @@ const SocialFloatingBanner: React.FC<ReactProps> = (props) => {
 
   const theme = useTheme();
   const isDark = isThemeDark(theme)
+  const color = isDark ? Colors.uniswapLightGrey : Colors.slateGreyDarkest
 
   return (
     <div className={classes.rootSocialFloatingBanner}>
@@ -36,7 +37,7 @@ const SocialFloatingBanner: React.FC<ReactProps> = (props) => {
             <a className={classes.link} target={"_blank"}
               href={"https://discord.gg/umAdYtsa9v"}
             >
-              <Discord color={isDark ? Colors.uniswapLightGrey : Colors.slateGreyBlack}/>
+              <Discord color={color}/>
             </a>
           </div>
         </Tooltip>
@@ -46,7 +47,7 @@ const SocialFloatingBanner: React.FC<ReactProps> = (props) => {
             <a className={classes.link} target={"_blank"}
               href={"https://docs.gunmarketplace.com.au"}
             >
-              <Github color={isDark ? Colors.uniswapLightGrey : Colors.slateGreyBlack}/>
+              <Github color={color}/>
             </a>
           </div>
         </Tooltip>
@@ -58,7 +59,7 @@ const SocialFloatingBanner: React.FC<ReactProps> = (props) => {
             >
               <Facebook
                 size={24}
-                color={isDark ? Colors.uniswapLightGrey : Colors.slateGreyBlack}
+                color={color}
               />
             </a>
           </div>
@@ -71,7 +72,7 @@ const SocialFloatingBanner: React.FC<ReactProps> = (props) => {
             >
               <Instagram
                 size={24}
-                color={isDark ? Colors.uniswapLightGrey : Colors.slateGreyBlack}
+                color={color}
               />
             </a>
           </div>
@@ -82,9 +83,7 @@ const SocialFloatingBanner: React.FC<ReactProps> = (props) => {
             <a className={classes.link} target={"_blank"}
               href={"https://twitter.com/gunmarketplace_"}
             >
-              <Twitter
-                color={isDark ? Colors.uniswapLightGrey : Colors.slateGreyBlack}
-              />
+              <Twitter color={color} />
             </a>
           </div>
         </Tooltip>
