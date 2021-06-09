@@ -34,7 +34,7 @@ const Header: React.FC<ReactProps> = (props) => {
 
   return (
     <Head>
-      <title>Gun Marketplace - gunmarketplace.com.au</title>
+      <title>Gun Marketplace Australia - gunmarketplace.com.au</title>
       <meta name="viewport" content="initial-scale=1.0, width=device-width" />
 
       <link rel="icon"

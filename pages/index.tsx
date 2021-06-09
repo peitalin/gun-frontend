@@ -24,13 +24,17 @@ const HomePage: NextPage<ReactProps> = (props) => {
   return (
     <>
       <MetaHeadersPage
-        title="gunmarketplace.com.au - Buy and sell firearms safely"
-        ogTitle="gunmarketplace.com.au - Buy and sell firearms safely"
+        title="Gun Marketplace Australia - Buy and sell firearms safely with escrow"
+        ogTitle="Gun Marketplace Australia - Buy and sell firearms safely with escrow"
         description={`
-          Gun Marketplace is a marketplace for buying and selling firearms
+          Gun Marketplace is a marketplace for buying and selling firearms.
+          Buy and sell used guns and second hand firearms using our escrow checkout.
+          Get started selling your used guns with unlimited free listings
         `}
         ogDescription={`
-          Gun Marketplace is a marketplace for buying and selling firearms
+          Gun Marketplace is a marketplace for buying and selling firearms.
+          Buy and sell used guns and second hand firearms using our escrow checkout.
+          Get started selling your used guns with unlimited free listings
         `}
       />
       <FrontPage
