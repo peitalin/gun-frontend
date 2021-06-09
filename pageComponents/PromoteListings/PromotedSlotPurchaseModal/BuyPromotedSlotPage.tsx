@@ -117,6 +117,7 @@ const BuyPromotedSlotPage = (props: ReactProps) => {
   let slotIsFreeToPurchase = !anotherUserOwnsSlotNow && !userOwnsSlotNow
 
   let showProductPickerDropdown = userOwnsSlotNow || slotIsFreeToPurchase
+  console.log("selectedProductId: ", selectedProductId)
 
   return (
     <ErrorBounds className={clsx(
@@ -239,7 +240,8 @@ const BuyPromotedSlotPage = (props: ReactProps) => {
           user={user}
           promotedSlot={props.promotedSlot}
           refetch={props.refetch}
-          selectedProductId={selectedProduct?.id}
+          selectedProductId={selectedProductId}
+          // must be selectedProductId, not selectedProduct.id
         />
       }
 

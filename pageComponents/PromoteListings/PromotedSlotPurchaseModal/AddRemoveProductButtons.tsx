@@ -110,6 +110,7 @@ const AddRemoveProductButtons = (props: ReactProps) => {
     () => isSlotExpiredYet(props.promotedSlot, user),
     [props.promotedSlot, user]
   )
+  console.log("selectedProductId 2: ", props.selectedProductId)
 
   return (
     <div className={classes.buttonsBox}>
