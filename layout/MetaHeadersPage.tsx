@@ -64,7 +64,7 @@ const HeaderPage: React.FC<HeaderPageProps> = (props) => (
       <meta property="og:site_name" content={props.ogSiteName} />
     }
 
-    <meta property="fb:app_id" content={"240857820473181"} />
+    <meta property="fb:app_id" content={""} />
   </Head>
 )
 

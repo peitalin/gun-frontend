@@ -65,77 +65,27 @@ const Header: React.FC<ReactProps> = (props) => {
         rel='stylesheet'
         type='text/css'/>
 
-      {/* <link rel="icon"
-          href="/public/favicons/favicon.ico"/>
-      <link rel="apple-touch-icon" sizes="180x180"
-          href="/public/favicons/apple-touch-icon.png"/>
-      <link rel="icon" type="image/png" sizes="32x32"
-          href="/public/favicons/favicon-32x32.png"/>
-      <link rel="icon" type="image/png" sizes="16x16"
-          href="/public/favicons/favicon-16x16.png"/>
-
-      <link href='/public/roobert/Roobert-Light.otf'
-        rel='stylesheet'
-        type='text/css'/>
-      <link href='/public/roobert/Roobert-Regular.otf'
-        rel='stylesheet'
-        type='text/css'/>
-      <link href='/public/roobert/Roobert-Medium.otf'
-        rel='stylesheet'
-        type='text/css'/>
-      <link href='/public/roobert/Roobert-SemiBold.otf'
-        rel='stylesheet'
-        type='text/css'/>
-      <link href='/public/roobert/Roobert-Bold.otf'
-        rel='stylesheet'
-        type='text/css'/>
-      <link href='/public/roobert/Roobert-Heavy.otf'
-        rel='stylesheet'
-        type='text/css'/> */}
-
       {/* Manifest.json defined and generated in next.config.js */}
       <link rel="manifest" href="/public/manifest.json"/>
 
-      {
-        process.env.NODE_ENV === "development" &&
-        showChatwoot &&
-        <script>
-          {`
-            (function(d,t) {
-              var BASE_URL=\"https://app.chatwoot.com\";
-              var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
-              g.src=BASE_URL+\"/packs/js/sdk.js\";
-              s.parentNode.insertBefore(g,s);
-              g.onload=function(){
-                window.chatwootSDK.run({
-                  websiteToken: \"2SKqt7sF9HKnCGZv9fRm24iS\",
-                  baseUrl: BASE_URL
-                })
-              }
-            })(document,\"script\");
-          `}
-        </script>
-      }
-      {
-        process.env.NODE_ENV === "production" &&
-        showChatwoot &&
-        <script>
-          {`
-            (function(d,t) {
-              var BASE_URL=\"https://app.chatwoot.com\";
-              var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
-              g.src=BASE_URL+\"/packs/js/sdk.js\";
-              s.parentNode.insertBefore(g,s);
-              g.onload=function(){
-                window.chatwootSDK.run({
-                  websiteToken: \"2SKqt7sF9HKnCGZv9fRm24iS\",
-                  baseUrl: BASE_URL
-                })
-              }
-            })(document,\"script\");
-          `}
-        </script>
-      }
+      <meta name="google-site-verification" content="Rqtqx5V07R9Ps4Ey9VBivC7y8zrRE5U5yWE8a2zba8k" />
+
+      <script>
+        {`
+          (function(d,t) {
+            var BASE_URL=\"https://app.chatwoot.com\";
+            var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+            g.src=BASE_URL+\"/packs/js/sdk.js\";
+            s.parentNode.insertBefore(g,s);
+            g.onload=function(){
+              window.chatwootSDK.run({
+                websiteToken: \"2SKqt7sF9HKnCGZv9fRm24iS\",
+                baseUrl: BASE_URL
+              })
+            }
+          })(document,\"script\");
+        `}
+      </script>
 
     </Head>
   )
