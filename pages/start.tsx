@@ -23,14 +23,14 @@ const LandingPageSSR: NextPage<ReactProps> = (props) => {
         title="Gun Marketplace Australia - Buy and sell firearms safely with escrow"
         ogTitle="Gun Marketplace Australia - Buy and sell firearms safely with escrow"
         description={`
-          Gun Marketplace is a marketplace for buying and selling firearms.
-          Buy and sell used guns and second hand firearms using our escrow checkout.
-          Get started selling your used guns with unlimited free listings
+          Sell used guns online with free listings.
+          Upload and edit unlimited product listings for free.
+          Create a free account and start selling your collection today.
         `}
         ogDescription={`
-          Gun Marketplace is a marketplace for buying and selling firearms.
-          Buy and sell used guns and second hand firearms using our escrow checkout.
-          Get started selling your used guns with unlimited free listings
+          Sell used guns online with free listings.
+          Upload and edit unlimited product listings for free.
+          Create a free account and start selling your collection today.
         `}
       />
       <LandingPage
