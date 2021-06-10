@@ -235,7 +235,7 @@ const CreateDealerFields: React.FC<ReactProps & FormikProps<FormikFields>> = (pr
             }
           </Typography>
           <TextInput
-            placeholder="State"
+            placeholder="Address"
             className={classes.textField}
             value={values.address}
             onChange={handleUpdateAddress}
