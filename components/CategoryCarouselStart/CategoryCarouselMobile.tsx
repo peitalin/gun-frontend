@@ -13,11 +13,9 @@ import ErrorBounds from "components/ErrorBounds";
 import Typography from "@material-ui/core/Typography";
 import AirCarousel from "components/AirCarousel";
 import AirItemTall from "components/AirCarousel/AirItemTall"
-import CardMedia from "@material-ui/core/CardMedia";
 // import Tooltip from '@material-ui/core/Tooltip';
 // theme css
 import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { renderCategoryIcon } from "./renderCategoryIcons";
 
 
@@ -187,17 +185,6 @@ export const styles = (theme: Theme) => createStyles({
     position: "absolute",
     top: 0,
     left: 0,
-    // border: isThemeDark(theme)
-    //   ? `1px solid ${Colors.uniswapLightNavy}`
-    //   : `1px solid ${Colors.slateGreyDark}`,
-    // background: theme.palette.type === 'dark'
-    //   ? Colors.uniswapDarkNavy
-    //   : Colors.slateGreyDark,
-    // "&:hover": {
-    //   background: theme.palette.type === 'dark'
-    //     ? Colors.uniswapMediumNavy
-    //     : Colors.slateGreyDarker,
-    // },
     border: `1px solid ${Colors.uniswapLightNavy}`,
     background: Colors.uniswapDarkNavy,
     "&:hover": {
@@ -216,8 +203,6 @@ export const styles = (theme: Theme) => createStyles({
     left: 0,
   },
   emptyImage: {
-    // height: "100%",
-    // width: "100%",
     height: 96,
     width: "100%",
     borderRadius: BorderRadius2x,

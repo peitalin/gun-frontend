@@ -5,14 +5,12 @@ import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/s
 import { BorderRadius2x, Colors, BorderRadius, isThemeDark } from "layout/AppTheme";
 // Components
 import Typography from "@material-ui/core/Typography";
-import CardMedia from "@material-ui/core/CardMedia";
 // Router
 import Link from "next/link";
 // typings
 import { Categories } from "typings/gqlTypes";
 // theme css
 import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { renderCategoryIcon } from "./renderCategoryIcons";
 import AspectRatioConstraint from "components/AspectRatioConstraint";
 

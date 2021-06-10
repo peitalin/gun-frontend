@@ -39,4 +39,4 @@ const RiflesBackground = ({ color }) => {
     </svg>
   )
 }
-export default RiflesBackground;
+export default React.memo(RiflesBackground);

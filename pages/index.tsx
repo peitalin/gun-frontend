@@ -60,12 +60,6 @@ interface QVar1 {
   urlPath: string;
 }
 
-interface QData2 {
-  getCategories: Categories[];
-}
-interface QVar2 {
-  slug?: string;
-}
 
 ////////// SSR ///////////
 interface Context extends NextPageContext {

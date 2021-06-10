@@ -70,7 +70,7 @@ const Header: React.FC<ReactProps> = (props) => {
 
       <meta name="google-site-verification" content="Rqtqx5V07R9Ps4Ey9VBivC7y8zrRE5U5yWE8a2zba8k" />
 
-      <script>
+      {/* <script>
         {`
           (function(d,t) {
             var BASE_URL=\"https://app.chatwoot.com\";
@@ -85,7 +85,7 @@ const Header: React.FC<ReactProps> = (props) => {
             }
           })(document,\"script\");
         `}
-      </script>
+      </script> */}
 
     </Head>
   )
