@@ -234,27 +234,27 @@ interface AppHOCProps extends WithStyles<typeof notifyStyles> {
 }
 
 
-// MainApp.getInitialProps = async (appContext) => {
+MainApp.getInitialProps = async (appContext) => {
 
-//     const appProps = await App.getInitialProps(appContext)
-//     // console.log("appProps: ", appProps)
-//     let ctx = appContext.ctx;
+    const appProps = await App.getInitialProps(appContext)
+    // console.log("appProps: ", appProps)
+    let ctx = appContext.ctx;
 
-//     let darkMode = (ctx.query?.dark === "true" || ctx.query?.dark === "1")
-//       ? "dark"
-//       : (ctx.query?.light === "true" || ctx.query?.light === "1")
-//         ? "light"
-//         : undefined
-//       // when undefined, localStorage determines darkmode
+    let darkMode = (ctx.query?.dark === "true" || ctx.query?.dark === "1")
+      ? "dark"
+      : (ctx.query?.light === "true" || ctx.query?.light === "1")
+        ? "light"
+        : undefined
+      // when undefined, localStorage determines darkmode
 
-//     return {
-//       ...appProps,
-//       pageProps: {
-//         ...appProps.pageProps,
-//         initialDarkModeSSR: darkMode,
-//       },
-//     }
-// }
+    return {
+      ...appProps,
+      pageProps: {
+        ...appProps.pageProps,
+        initialDarkModeSSR: darkMode,
+      },
+    }
+}
 
 export default
 withStyles(notifyStyles)(
