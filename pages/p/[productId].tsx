@@ -31,13 +31,17 @@ const ProductPage: NextPage<ReactProps> = (props) => {
   return (
     <>
       <MetaHeadersPage
-        title={`${p?.currentSnapshot?.title} - view on Gun Marketplace`}
-        ogTitle={`${p?.currentSnapshot?.title} - view on Gun Marketplace`}
+        title={`${p?.currentSnapshot?.title} ${p?.currentSnapshot?.caliber} - buy on Gun Marketplace Australia`}
+        ogTitle={`${p?.currentSnapshot?.title} ${p?.currentSnapshot?.caliber} - buy on Gun Marketplace Australia`}
         description={
-          `View ${p?.currentSnapshot?.make} - ${p?.currentSnapshot?.model} on Gun Marketplace.`
+          `Buy ${p?.currentSnapshot?.title} ${p?.currentSnapshot?.caliber} on Gun Marketplace Australia.
+          Location: ${p?.currentSnapshot?.dealer?.state}
+          `
         }
         ogDescription={
-          `View ${p?.currentSnapshot?.make} - ${p?.currentSnapshot?.model} on Gun Marketplace.`
+          `Buy ${p?.currentSnapshot?.title} ${p?.currentSnapshot?.caliber} on Gun Marketplace Australia.
+          Location: ${p?.currentSnapshot?.dealer?.state}
+          `
         }
         ogImage={`${imgVariant?.url}`} // must be larger than 200 x 200
         ogUrl={

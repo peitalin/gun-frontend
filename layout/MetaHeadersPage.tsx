@@ -49,9 +49,7 @@ const HeaderPage: React.FC<HeaderPageProps> = (props) => (
       ? <meta property="og:image" content={props.ogImage} />
       : <meta property="og:image"
           // content={
-          //   EFC_ENV === "development"
-          //   ? "https://image-content.fileworks.net/og-img-relay-default.png"
-          //   : "https://image-content.relaydownloads.com/og-img-relay-default.png"
+          //   "https://image-content.gunmarketplace.com.au/og-img-default.png"
           // }
         />
     }
