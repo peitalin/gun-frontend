@@ -47,7 +47,7 @@ const ProductPage: NextPage<ReactProps> = (props) => {
         ogUrl={
           process.env.GUN_ENV === "development"
           ? `https://dev.gunmarketplace.com.au/p/${p?.id}`
-          : `https://www..gunmarketplace.com.au/p/${p?.id}`
+          : `https://www.gunmarketplace.com.au/p/${p?.id}`
         }
       />
       <ProductId
