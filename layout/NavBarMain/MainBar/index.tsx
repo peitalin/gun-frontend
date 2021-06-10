@@ -73,15 +73,14 @@ const MainBar = (props: ReactProps) => {
     >
 
       {/* MOBILE */}
-
-      {/* <Hidden className={classes.width100} mdUp implementation="css">
+      <Hidden className={classes.width100} mdUp implementation="css">
         <MobileMainBar
           // Dither
           mobileMenuOpen={props.mobileMenuOpen}
           setMobileMenuOpen={props.setMobileMenuOpen}
           {...navBarProps}
         />
-      </Hidden> */}
+      </Hidden>
 
       {/* Desktop */}
       <Hidden className={classes.width100} only={["xs", "sm"]} implementation="css">

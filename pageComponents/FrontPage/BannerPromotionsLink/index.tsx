@@ -39,14 +39,6 @@ const BannerPromotionsLink: React.FC<ReactProps> = (props) => {
 
   return (
     <>
-      {
-        !disableMetaHeader &&
-        <MetaHeadersPage
-          title={`Promote Product Listings`}
-          description={`Buy and promote your product listings`}
-        />
-      }
-
       {/* Mobile */}
       <Hidden mdUp implementation='css' className={classes.width100}>
         <BannerPromotionsLinkMobile

@@ -102,6 +102,7 @@ const FrontPage: React.FC<ReactProps> = (props) => {
         </div>
 
         {
+          process.browser &&
           featuredSection.map(section => {
             // console.log("section: ", section)
             if (section?.promotedListId) {
@@ -148,7 +149,6 @@ const FrontPage: React.FC<ReactProps> = (props) => {
           })
         }
 
-
         {
           y > 400 &&
           advertisedSection.map(section => {
@@ -182,11 +182,14 @@ const FrontPage: React.FC<ReactProps> = (props) => {
         }
 
 
-        <div className={classes.bannerPromotionsContainer}>
-          <BannerPromotionsLink
-            disableMetaHeader={true}
-          />
-        </div>
+        {
+          y > 600 &&
+          <div className={classes.bannerPromotionsContainer}>
+            <BannerPromotionsLink
+              disableMetaHeader={true}
+            />
+          </div>
+        }
 
         {
           y > 800 &&

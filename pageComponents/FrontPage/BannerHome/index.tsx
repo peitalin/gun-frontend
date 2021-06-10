@@ -64,7 +64,7 @@ const BannerHome: NextPage<ReactProps> = (props) => {
     <>
       {/* Mobile  */}
 
-      {/* <ShowOnMobileOrDesktopSSR mobile>
+      <ShowOnMobileOrDesktopSSR mobile>
         <BannerHomeLayout
           height={660}
           mdDown={true}
@@ -80,7 +80,7 @@ const BannerHome: NextPage<ReactProps> = (props) => {
             initialDropdownCategories={props.initialCategories}
           />
         </BannerHomeLayout>
-      </ShowOnMobileOrDesktopSSR> */}
+      </ShowOnMobileOrDesktopSSR>
 
       {/* Desktop  */}
       <ShowOnMobileOrDesktopSSR desktop>

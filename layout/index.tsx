@@ -8,7 +8,7 @@ import { NavBarHeight } from "layout/NavBarMain/styles";
 import Footer from "./Footer";
 import SocialFloatingBanner from "./SocialFloatingBanner";
 import GetUser from "./GetUser";
-import GlobalModals from "./GlobalModals";
+// import GlobalModals from "./GlobalModals";
 // Typings
 import { UserPrivate } from "typings/gqlTypes";
 import ErrorBounds from "components/ErrorBounds";
@@ -34,6 +34,7 @@ import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import StripeProvider from "layout/StripeProvider";
 import { NewsBarHeight, MainBarHeightDashboard } from "./NavBarMain/styles";
+import ShowOnMobileOrDesktopSSR from "components/ShowOnMobileOrDesktopSSR";
 
 
 
@@ -214,9 +215,7 @@ const Layout: React.FC<ReactProps> = (props) => {
 
   return (
     <StripeProvider>
-      <Header
-        showChatwoot={showChatWoot}
-      />
+      <Header showChatwoot={showChatWoot} />
       <NavBarMain/>
       {
         process.browser &&
@@ -227,17 +226,14 @@ const Layout: React.FC<ReactProps> = (props) => {
         classes={props.classes}
         needsNavbarPadding={!noNavbarPadding}
       >
-          {/* { renderLayout() } */}
-        <>{props.children}</>
+        { renderLayout() }
       </PageContainer>
-
-      {
-        process.browser &&
-        <Footer/>
-      }
+      <Footer/>
       {
         showSocialBanner &&
-        <SocialFloatingBanner/>
+        <ShowOnMobileOrDesktopSSR desktop>
+          <SocialFloatingBanner/>
+        </ShowOnMobileOrDesktopSSR>
       }
     </StripeProvider>
   )

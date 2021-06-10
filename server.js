@@ -27,7 +27,7 @@ const serverApolloClient = require("./serverApollo");
 
 // SSR Cache
 const cacheManager = cacheableResponse({
-  ttl: 1000 * 120, // 120 seconds
+  ttl: 1000 * 20, // 20 seconds
   get: async ({ req, res }) => {
     const parsedUrl = parse(req.url, true);
     const { pathname, query } = parsedUrl;

@@ -36,7 +36,7 @@ const BannerPromotionsLinkMobile: NextPage<ReactProps> = (props) => {
 
   const theme = useTheme();
   const isDarkMode = isThemeDark(theme)
-  const mdDown = useMediaQuery(theme.breakpoints.down("md"))
+  // const mdDown = useMediaQuery(theme.breakpoints.down("md"))
 
   return (
     <div className={classes.rootMobile}>

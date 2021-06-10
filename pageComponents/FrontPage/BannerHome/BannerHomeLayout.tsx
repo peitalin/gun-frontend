@@ -4,14 +4,10 @@ import { styles } from "./styles";
 // styles
 import { withStyles, WithStyles, createStyles, Theme, fade } from "@material-ui/core/styles";
 import { Colors, Gradients, isThemeDark } from "layout/AppTheme";
-// typings
-import { Categories } from "typings/gqlTypes";
 // components
 import Banner from "components/Banner";
 import Typography from "@material-ui/core/Typography";
 import Button from '@material-ui/core/Button';
-// Router
-import { useRouter } from 'next/router';
 // SSR
 import { NextPage, NextPageContext } from 'next';
 import Login from "layout/Login";
@@ -91,7 +87,7 @@ const BannerHomeLayout: NextPage<ReactProps> = (props) => {
                 classes.flexRiflesCol,
                 hover && classes.backgroundBlur,
               )}>
-                {renderRiflesBackground(isDarkMode)}
+                {/* {renderRiflesBackground(isDarkMode)} */}
               </div>
             </div>
           )
