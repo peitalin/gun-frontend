@@ -10,8 +10,6 @@ import Loading from "components/Loading";
 import CategoryBreadcrumbs from "./CategoryBreadcrumbs";
 // Next
 import Hidden from "components/HiddenFix";
-// Meta headers
-import MetaHeadersPage from "layout/MetaHeadersPage";
 
 
 const ProductPageContainer: React.FC<ProductContainerProps> = (props) => {
