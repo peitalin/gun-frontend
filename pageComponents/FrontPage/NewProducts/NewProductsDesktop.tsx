@@ -87,7 +87,7 @@ const NewProductsDesktop = (props: ReactProps) => {
           !loading &&
           connection?.edges?.length > 0 &&
           <div className={classes.seeAllLinkContainer}>
-            <Link href={"/categories/all"}>
+            <Link href={"/new/all"}>
               <a className={classes.seeAllLinkBorder}>
                 See more
                 <ArrowRight className={classes.sellAllIcon}/>

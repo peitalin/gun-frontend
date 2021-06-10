@@ -203,7 +203,10 @@ export const useFacetSearchOptions = ({
 
           // skip turning [categorySlugs] into query params
           // when on /categories/[categorySlug] pages
-          if (urlPath.startsWith('/categories') && key === 'categorySlug') {
+          if (
+            urlPath.startsWith('/categories') && key === 'categorySlug'
+            || urlPath.startsWith('/new') && key === 'categorySlug'
+          ) {
             return null
           } else {
             let value = router.query[key]

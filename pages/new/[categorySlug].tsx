@@ -43,6 +43,8 @@ const CategorySlugSSR: NextPage<ReactProps> = (props) => {
         initialProducts={props.initialProducts}
         initialRouteCategory={props.selectedCategory}
         initialDropdownCategories={props.initialCategories}
+        bannerTitle={"New Listings"}
+        bannerBlurb={"Browse and search through new listings"}
       />
     </>
   )

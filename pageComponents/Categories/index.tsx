@@ -33,9 +33,7 @@ const Categories: React.FC<ReactProps> = (props) => {
 
   const { classes } = props;
   const theme = useTheme();
-  const sm = useMediaQuery(theme.breakpoints.only("sm"))
   const mdDown = useMediaQuery(theme.breakpoints.down("md"))
-  const smDown = useMediaQuery(theme.breakpoints.down("sm"))
 
   return (
     <div className={clsx(

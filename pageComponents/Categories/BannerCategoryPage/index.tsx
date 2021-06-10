@@ -108,19 +108,11 @@ const BannerCategoryPage = (props: ReactProps & FacetSearchParams) => {
 
   return (
     <>
-      {
-        !disableMetaHeader &&
-        <MetaHeadersPage
-          title={`Categories`}
-          description={`Search categories of firearms`}
-        />
-      }
-
       {/* Mobile */}
       <Hidden lgUp implementation='css' className={classes.width100}>
         <BannerCategoryMobile
-          categoryName={selectedCategoryName}
-          blurb={selectedCategoryBlurb ?? ""}
+          categoryName={props.bannerTitle ?? selectedCategoryName}
+          blurb={props.bannerBlurb ?? selectedCategoryBlurb ?? ""}
           bannerForegroundImageUrl={bannerImageUrl}
           bannerBackgroundImageUrl={bannerImageUrl}
           bannerDither={bannerDitherMobile}
@@ -177,8 +169,8 @@ const BannerCategoryPage = (props: ReactProps & FacetSearchParams) => {
       {/* Desktop */}
       <Hidden mdDown implementation="css" className={classes.width100}>
         <BannerCategoryDesktop
-          categoryName={selectedCategoryName}
-          blurb={selectedCategoryBlurb ?? ""}
+          categoryName={props.bannerTitle ?? selectedCategoryName}
+          blurb={props.bannerBlurb ?? selectedCategoryBlurb ?? ""}
           bannerForegroundImageUrl={undefined}
           bannerBackgroundImageUrl={bannerImageUrl}
           bannerDither={bannerDither}
@@ -249,6 +241,8 @@ interface ReactProps extends WithStyles<typeof styles> {
   // row or cards toggle
   rowMode: boolean
   setRowMode(a: boolean): void
+  bannerTitle?: string;
+  bannerBlurb?: string;
 }
 
 

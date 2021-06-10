@@ -228,6 +228,8 @@ const CategoryId: React.FC<ReactProps> = (props) => {
 
         <BannerCategoryPage
           disableMetaHeader={disableMetaHeader}
+          bannerTitle={props.bannerTitle}
+          bannerBlurb={props.bannerBlurb}
           // searchbar params
           searchTerm={searchTerm}
           setSearchTerm={setSearchTerm}
@@ -343,6 +345,8 @@ interface ReactProps extends WithStyles<typeof styles> {
   initialDropdownCategories: Categories[];
   disableBreadcrumbs?: boolean;
   disableMetaHeader?: boolean;
+  bannerTitle?: string;
+  bannerBlurb?: string;
 }
 interface QueryData1 {
   productsByCategoryConnection: ProductsConnection
