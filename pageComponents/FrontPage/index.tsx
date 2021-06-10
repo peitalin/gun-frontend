@@ -16,6 +16,7 @@ import BannerPromotionsLink from "pageComponents/FrontPage/BannerPromotionsLink"
 
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useScrollYPosition } from "utils/hooks";
 
 // GraphQL
 import { useQuery, useApolloClient } from "@apollo/client";
@@ -53,16 +54,16 @@ const FrontPage: React.FC<ReactProps> = (props) => {
   } = props;
 
   const theme = useTheme();
-  const mdDown = useMediaQuery(theme.breakpoints.down('md'));
+  // const mdDown = useMediaQuery(theme.breakpoints.down('md'));
 
-  const [showBelowFold, setShowBelowFold] = React.useState(false);
+  let y = useScrollYPosition()
 
-  React.useEffect(() => {
-    if (process?.browser) {
-      setShowBelowFold(true)
-    }
-    // SSR reydrating issues if process.browser is not used in hook
-  }, [])
+  // React.useEffect(() => {
+  //   if (process?.browser && y > 400) {
+  //     setShowBelowFold(true)
+  //   }
+  //   // SSR reydrating issues if process.browser is not used in hook
+  // }, [y])
 
   // console.log("pageConfig => ", pageConfig)
   let cPadding = 4 // category carousel padding
@@ -75,6 +76,9 @@ const FrontPage: React.FC<ReactProps> = (props) => {
   )
   let newSection = pageConfig?.pageConfigSections.filter(
     s => s.viewAllPath === "/new"
+  )
+  let categorySections = pageConfig?.pageConfigSections.filter(
+    s => s.viewAllPath.startsWith("/categories")
   )
 
   return (
@@ -145,6 +149,7 @@ const FrontPage: React.FC<ReactProps> = (props) => {
         }
 
         {
+          y > 200 &&
           newSection.map(section => {
             // console.log("section: ", section)
             if (section?.isNewestList) {
@@ -161,6 +166,7 @@ const FrontPage: React.FC<ReactProps> = (props) => {
 
 
         {
+          y > 400 &&
           advertisedSection.map(section => {
             // console.log("section: ", section)
             if (section?.promotedListId) {
@@ -199,8 +205,8 @@ const FrontPage: React.FC<ReactProps> = (props) => {
         </div>
 
         {
-          showBelowFold &&
-          pageConfig?.pageConfigSections?.slice(2)?.map(section => {
+          y > 800 &&
+          categorySections.map(section => {
 
             if (section?.promotedListId) {
               return (
@@ -215,15 +221,6 @@ const FrontPage: React.FC<ReactProps> = (props) => {
                     lg: 3,
                     xl: 4,
                   }}
-                />
-              )
-            }
-
-            if (section?.isNewestList) {
-              return (
-                <NewProducts
-                  key={section?.id}
-                  title={section?.title}
                 />
               )
             }

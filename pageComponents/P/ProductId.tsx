@@ -37,8 +37,6 @@ import { useRouter } from "next/router";
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
 import { below1024Query, col2MinWidth } from "./common";
-// Meta headers
-import MetaHeadersPage from "layout/MetaHeadersPage";
 // SSR
 import ProductDetails from "pageComponents/P/ProductDetails";
 import dynamic from "next/dynamic";

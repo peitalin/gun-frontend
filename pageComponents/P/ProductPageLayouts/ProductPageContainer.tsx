@@ -27,16 +27,6 @@ const ProductPageContainer: React.FC<ProductContainerProps> = (props) => {
       classes.flexCol,
     )}>
 
-      <MetaHeadersPage
-        title={`${product?.currentSnapshot?.title} - ${product?.store?.name} | Gun Marketplace Australia`}
-        description={
-          product?.currentSnapshot?.title
-            ? `${product?.currentSnapshot?.title} — ${product?.currentSnapshot?.description}`
-            : `${product?.currentSnapshot?.description}`
-        }
-        keyword={product?.currentSnapshot?.title}
-      />
-
       <div className={clsx(classes.flexCol, classes.alignItemsCenter)}>
         <Hidden
           className={classes.maxWidth1024}
