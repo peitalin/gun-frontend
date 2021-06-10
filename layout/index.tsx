@@ -218,13 +218,17 @@ const Layout: React.FC<ReactProps> = (props) => {
         showChatwoot={showChatWoot}
       />
       <NavBarMain/>
-      <GetUser/>
+      {
+        process.browser &&
+        <GetUser/>
+      }
       {/* <GlobalModals/> */}
       <PageContainer
         classes={props.classes}
         needsNavbarPadding={!noNavbarPadding}
       >
-        { renderLayout() }
+          {/* { renderLayout() } */}
+        <>{props.children}</>
       </PageContainer>
 
       {

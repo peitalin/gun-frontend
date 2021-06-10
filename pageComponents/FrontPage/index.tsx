@@ -4,22 +4,17 @@ import clsx from "clsx";
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
 import { Colors, Gradients } from "layout/AppTheme";
 // Typings
-import { ProductsConnection, Calibers, Categories, PageConfig } from "typings/gqlTypes";
+import { ProductsConnection, Categories, PageConfig } from "typings/gqlTypes";
 
 // Components
-// import NewReleaseProducts from "pageComponents/FrontPage/NewReleaseProducts";
 import NewProducts from "pageComponents/FrontPage/NewProducts";
 import FeaturedProducts from "pageComponents/FrontPage/FeaturedProducts";
 import BannerHome from "pageComponents/FrontPage/BannerHome";
 import BannerPromotionsLink from "pageComponents/FrontPage/BannerPromotionsLink";
-// import BetaTestingBanner from "components/BetaTestingBanner";
 
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useScrollYPosition } from "utils/hooks";
 
 // GraphQL
-import { useQuery, useApolloClient } from "@apollo/client";
 import CategoryCarouselStart from "components/CategoryCarouselStart";
 // import SaySomethingSubscriptionTest from "./SaySomethingSubscriptionTest";
 import ShowOnMobileOrDesktopSSR from "components/ShowOnMobileOrDesktopSSR";
