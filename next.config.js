@@ -1,6 +1,10 @@
 const {resolve} = require('path');
 const path = require('path');
 const fs = require('fs');
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  enabled: process.env.ANALYZE === 'true',
+})
+
 
 // environment
 const dev = process.env.NODE_ENV !== 'production'
@@ -15,6 +19,7 @@ const withConfig = nextRuntimeDotenv({
 
 
 module.exports =
+  // withBundleAnalyzer(
   withConfig({
 
     webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
@@ -63,3 +68,4 @@ module.exports =
     }
 
   })
+  // )

@@ -217,6 +217,7 @@ const BannerEndDesktop: NextPage<ReactProps> = (props) => {
                 classes={{ media: classes.bannerImage }}
                 src={props.bannerForegroundImageUrlLight}
               />
+
               {/* <Link href={"/"}>
                 <a className={classes.linkToApp}>
                   <Button

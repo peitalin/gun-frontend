@@ -29,7 +29,6 @@ import { useWsRenewableApolloClient } from "utils/apollo";
 // css
 // all css must be imported here
 import "../public/App.css";
-import "components/TextEditorCK/ckStyles.css";
 import "components/DropzoneUploader/styles.css";
 
 import { SnackbarProvider, ProviderContext } from 'notistack';

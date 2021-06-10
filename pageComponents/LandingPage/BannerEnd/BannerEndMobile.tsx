@@ -18,6 +18,7 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { UserPrivate, Signup_Emails } from "typings/gqlTypes";
 import CardMedia from "@material-ui/core/CardMedia";
 import Link from "next/link";
+import Image from 'next/image';
 
 import { useFormik } from 'formik';
 import { validationSchemas } from "utils/validation";
@@ -174,11 +175,11 @@ const BannerEndMobile: NextPage<ReactProps> = (props) => {
           props.isDarkMode
           ?
             <div className={classes.clickableCard}>
-              <CardMedia
-                component="img"
-                className={"fadeIn"}
-                classes={{ media: classes.bannerImage }}
-                src={props.bannerForegroundImageUrlDark}
+              <Image src={props.bannerForegroundImageUrlDark}
+                className={classes.bannerImage}
+                width={"600px"}
+                height={"400px"}
+                alt="Banner Image"
               />
               {/* <Link href={"/"}>
                 <a className={classes.linkToApp}>
@@ -194,11 +195,11 @@ const BannerEndMobile: NextPage<ReactProps> = (props) => {
               </Link> */}
             </div>
           : <div className={classes.clickableCard}>
-              <CardMedia
-                component="img"
-                className={"fadeIn"}
-                classes={{ media: classes.bannerImage }}
-                src={props.bannerForegroundImageUrlLight}
+              <Image src={props.bannerForegroundImageUrlLight}
+                className={classes.bannerImage}
+                width={"600px"}
+                height={"400px"}
+                alt="Banner Image"
               />
               {/* <Link href={"/"}>
                 <a className={classes.linkToApp}>

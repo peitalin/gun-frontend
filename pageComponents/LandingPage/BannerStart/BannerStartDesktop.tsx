@@ -18,6 +18,7 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { UserPrivate, Signup_Emails } from "typings/gqlTypes";
 import Link from "next/link";
 import CardMedia from "@material-ui/core/CardMedia";
+import Image from 'next/image';
 
 
 import { useFormik } from 'formik';

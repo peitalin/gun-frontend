@@ -1,12 +1,8 @@
 import React from "react";
 import clsx from "clsx";
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
-import { Colors } from "layout/AppTheme";
 // CSS
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
 import ShowOnMobileOrDesktopSSR from "components/ShowOnMobileOrDesktopSSR";
-
 
 
 const Banner: React.FC<ReactProps> = (props) => {
