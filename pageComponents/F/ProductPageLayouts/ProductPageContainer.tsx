@@ -7,8 +7,6 @@ import { Product } from "typings/gqlTypes";
 // Utils Components
 import ErrorBounds from "components/ErrorBounds";
 // import CategoryBreadcrumbs from "pageComponents/P/ProductPageLayouts/CategoryBreadcrumbs";
-// Meta headers
-import MetaHeadersPage from "layout/MetaHeadersPage";
 import { Gradients, isThemeDark } from "layout/AppTheme";
 
 
@@ -24,16 +22,6 @@ const ProductPageContainer: React.FC<ProductContainerProps> = (props) => {
       classes.root,
       classes.flexCol,
     )}>
-
-      <MetaHeadersPage
-        title={`${product?.currentSnapshot?.title} - ${product?.store?.name} | Gun Marketplace Australia`}
-        description={
-          product?.currentSnapshot?.title
-            ? `${product?.currentSnapshot?.title} — ${product?.currentSnapshot?.description}`
-            : `${product?.currentSnapshot?.description}`
-        }
-        keyword={product?.currentSnapshot?.title}
-      />
 
       <div className={clsx(classes.flexCol, classes.alignItemsCenter)}>
         {/* <Hidden
