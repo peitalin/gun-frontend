@@ -6,14 +6,12 @@ import { styles } from "../styles";
 import { Colors } from "layout/AppTheme";
 // Components
 import Logo from "components/Icons/Logo";
-import Badge from '@material-ui/core/Badge';
 // MUI
 import MobileMenuDropdown from "layout/NavBarMain/MobileMenuDropdown";
 import Button from "@material-ui/core/Button";
 import SearchbarNavbarMobile from "layout/NavBarMain/SearchbarNavbarMobile";
 import Login from "layout/Login";
 // Modals
-import { goToModalConnect } from "utils/modals";
 import { useDispatch, useSelector } from "react-redux";
 // Router
 import Link from "next/link";
@@ -33,7 +31,6 @@ const MobileMainBar = (props: MobileMainBarProps) => {
   } = props;
 
   const dispatch = useDispatch();
-  const goToModal = goToModalConnect(dispatch);
   const router = useRouter()
   const [hide, setHide] = React.useState(false)
 

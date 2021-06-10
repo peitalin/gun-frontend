@@ -53,19 +53,8 @@ const FrontPage: React.FC<ReactProps> = (props) => {
     initialFeaturedProducts,
   } = props;
 
-  const theme = useTheme();
-  // const mdDown = useMediaQuery(theme.breakpoints.down('md'));
-
   let y = useScrollYPosition()
 
-  // React.useEffect(() => {
-  //   if (process?.browser && y > 400) {
-  //     setShowBelowFold(true)
-  //   }
-  //   // SSR reydrating issues if process.browser is not used in hook
-  // }, [y])
-
-  // console.log("pageConfig => ", pageConfig)
   let cPadding = 4 // category carousel padding
 
   let featuredSection = pageConfig?.pageConfigSections.filter(

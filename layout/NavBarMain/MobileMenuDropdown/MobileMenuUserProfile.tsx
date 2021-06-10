@@ -3,16 +3,11 @@ import React from "react";
 import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
 import clsx from "clsx";
 import { Colors, Gradients } from "layout/AppTheme";
-import { NewsBarHeight, MainBarHeightDashboard, NavBarHeight } from "layout/NavBarMain/styles";
 // Redux
 import { useSelector } from 'react-redux';
 import { GrandReduxState } from 'reduxStore/grand-reducer';
 // typings
-import { UserPrivate, StorePrivate } from "typings/gqlTypes";
-
-// MUI
-import Divider from "components/Divider";
-import Typography from "@material-ui/core/Typography";
+import { UserPrivate } from "typings/gqlTypes";
 // Components
 import Login from "layout/Login"
 import UserCompactProfile from "./UserCompactProfile";

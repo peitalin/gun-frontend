@@ -4,21 +4,12 @@ import clsx from "clsx";
 import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
 import { Colors, BorderRadius, Gradients } from "layout/AppTheme";
 import { NewsBarHeight, MainBarHeightDashboard, NavBarHeight } from "layout/NavBarMain/styles";
-// Redux
-import { useDispatch, useSelector } from 'react-redux';
-import { GrandReduxState } from 'reduxStore/grand-reducer';
-import { Actions } from 'reduxStore/actions';
-// typings
-import { UserPrivate, StorePrivate } from "typings/gqlTypes";
 
 // MUI
-import MenuItem from '@material-ui/core/MenuItem';
-import Menu from '@material-ui/core/Menu';
 import MenuIcon from "@material-ui/icons/Menu";
 import ClearIcon from "@material-ui/icons/Clear";
 import Button from "@material-ui/core/Button";
 import Divider from "components/Divider";
-import Typography from "@material-ui/core/Typography";
 // Components
 import MobileMenuUserProfile from "./MobileMenuUserProfile";
 import MobileMenuRoutes from "./MobileMenuRoutes";
@@ -38,8 +29,6 @@ export const MobileMenuDropdown: React.FC<ReactProps> = (props) => {
   function toggleMenuOpen(event) {
     setMobileMenuOpen(s => !s);
   }
-
-  const dispatch = useDispatch();
 
   const closeMobileMenuWithDelay = () => {
     setTimeout(() => {

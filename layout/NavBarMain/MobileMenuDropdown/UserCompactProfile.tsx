@@ -1,5 +1,4 @@
 import React from "react";
-import { useState, useEffect } from "react";
 // Graphql
 import { UserPrivate, StorePrivate, ID } from "typings/gqlTypes";
 // Styles

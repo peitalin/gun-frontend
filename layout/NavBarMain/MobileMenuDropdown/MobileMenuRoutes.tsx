@@ -6,21 +6,17 @@ import { Colors, BorderRadius, Gradients } from "layout/AppTheme";
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
 import { GrandReduxState } from 'reduxStore/grand-reducer';
-import { Actions } from 'reduxStore/actions';
 // typings
-import { UserPrivate, StorePrivate, Role } from "typings/gqlTypes";
+import { UserPrivate, Role } from "typings/gqlTypes";
 
 // MUI
 import MenuItem from '@material-ui/core/MenuItem';
 import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
 // components
 import Divider from "components/Divider";
 import Login from "layout/Login"
 // Router
-import { useRouter } from "next/router";
 import Link from "next/link";
-import { goToModalConnect } from "utils/modals";
 import ToggleDarkMode from "layout/NavBarMain/ToggleDarkMode";
 
 
@@ -35,7 +31,6 @@ const MobileMenuRoutes = (props: ReactProps) => {
     }
   });
 
-  const goToModal = goToModalConnect(dispatch);
   let loggedIn = !!user?.id;
 
   const dividerStyle = {

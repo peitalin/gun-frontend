@@ -219,14 +219,18 @@ const Layout: React.FC<ReactProps> = (props) => {
       />
       <NavBarMain/>
       <GetUser/>
-      <GlobalModals/>
+      {/* <GlobalModals/> */}
       <PageContainer
         classes={props.classes}
         needsNavbarPadding={!noNavbarPadding}
       >
         { renderLayout() }
       </PageContainer>
-      <Footer/>
+
+      {
+        process.browser &&
+        <Footer/>
+      }
       {
         showSocialBanner &&
         <SocialFloatingBanner/>
