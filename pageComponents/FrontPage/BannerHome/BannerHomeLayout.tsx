@@ -85,7 +85,7 @@ const BannerHomeLayout: NextPage<ReactProps> = (props) => {
             <div className={clsx(classes.bannerInnerBoxRight)}>
               <div className={clsx(
                 classes.flexRiflesCol,
-                hover && classes.backgroundBlur,
+                // hover && classes.backgroundBlur,
               )}>
                 {/* {renderRiflesBackground(isDarkMode)} */}
               </div>
@@ -96,13 +96,13 @@ const BannerHomeLayout: NextPage<ReactProps> = (props) => {
             <div className={clsx(classes.bannerInnerBoxRight)}>
               <div className={clsx(
                 classes.flexRiflesRow,
-                hover && classes.backgroundBlur,
+                // hover && classes.backgroundBlur,
               )}>
                 {/* {renderRiflesBackground(isDarkMode)} */}
               </div>
               <div className={clsx(
                 classes.flexRiflesRow,
-                hover && classes.backgroundBlur,
+                // hover && classes.backgroundBlur,
               )}>
                 {/* {renderRiflesBackground(isDarkMode)} */}
               </div>

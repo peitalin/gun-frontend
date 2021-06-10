@@ -46,7 +46,7 @@ const Header: React.FC<ReactProps> = (props) => {
       <link rel="icon" type="image/png" sizes="16x16"
           href="/favicons/favicon-16x16.png"/>
 
-      <link href='/roobert/Roobert-Light.otf'
+      {/* <link href='/roobert/Roobert-Light.otf'
         rel='stylesheet'
         type='text'/>
       <link href='/roobert/Roobert-Regular.otf'
@@ -63,7 +63,7 @@ const Header: React.FC<ReactProps> = (props) => {
         type='text/css'/>
       <link href='/roobert/Roobert-Heavy.otf'
         rel='stylesheet'
-        type='text/css'/>
+        type='text/css'/> */}
 
       {/* Manifest.json defined and generated in next.config.js */}
       <link rel="manifest" href="/public/manifest.json"/>

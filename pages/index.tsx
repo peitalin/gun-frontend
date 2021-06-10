@@ -13,7 +13,7 @@ import dynamic from "next/dynamic";
 // GraphQL
 import { serverApolloClient } from "utils/apollo";
 import FrontPage from "pageComponents/FrontPage";
-import { useApolloClient, ApolloClient } from "@apollo/client";
+import { useQuery, ApolloClient } from "@apollo/client";
 import { categoryPreviewsBackup } from "components/CategoryCarouselStart/utils";
 // Meta headers
 import MetaHeadersPage from "layout/MetaHeadersPage";
@@ -21,6 +21,25 @@ import MetaHeadersPage from "layout/MetaHeadersPage";
 
 
 const HomePage: NextPage<ReactProps> = (props) => {
+
+  const { data } = useQuery<QData1, QVar1>(
+    GET_PAGE_CONFIG_BY_PATH, {
+    variables: {
+      urlPath: "/"
+    }
+  })
+
+  // const { data: data2 } = await serverApolloClient(ctx).query<QData2, QVar2>({
+  //   query: GET_CATEGORIES,
+  // })
+
+  // console.log("getPageConfig: ", data?.getPageConfig)
+  // console.log("getCategories ssr: ", data2?.getCategories)
+
+  // let initialCategories = data2?.getCategories ?? [];
+  let initialCategories: Categories[] = categoryPreviewsBackup as any;
+
+
   return (
     <>
       <MetaHeadersPage
@@ -35,10 +54,15 @@ const HomePage: NextPage<ReactProps> = (props) => {
           Get started selling your used guns with 100% free listings
         `}
       />
-      <FrontPage
-        pageConfig={props.pageConfig}
-        initialCategories={props.initialCategories}
-      />
+      {
+        data?.getPageConfig &&
+        <FrontPage
+          pageConfig={data?.getPageConfig}
+          initialCategories={initialCategories}
+          // pageConfig={props?.getPageConfig}
+          // initialCategories={props.initialCategories}
+        />
+      }
     </>
   )
 }
@@ -61,40 +85,40 @@ interface QVar1 {
 }
 
 
-////////// SSR ///////////
-interface Context extends NextPageContext {
-  apolloClient: ApolloClient<any>;
-}
+// ////////// SSR ///////////
+// interface Context extends NextPageContext {
+//   apolloClient: ApolloClient<any>;
+// }
 
-HomePage.getInitialProps = async (ctx: Context) => {
+// HomePage.getInitialProps = async (ctx: Context) => {
 
-  // Will trigger this getInitialProps when requesting route /pages/ProductGallery
-  // otherwise initialProps may be fed via /pages/index.tsx's getInitialProps
-  const aClient = serverApolloClient(ctx);
+//   // Will trigger this getInitialProps when requesting route /pages/ProductGallery
+//   // otherwise initialProps may be fed via /pages/index.tsx's getInitialProps
+//   const aClient = serverApolloClient(ctx);
 
-  const { data } = await aClient.query<QData1, QVar1>({
-    query: GET_PAGE_CONFIG_BY_PATH,
-    variables: {
-      urlPath: "/"
-    }
-  })
+//   const { data } = await aClient.query<QData1, QVar1>({
+//     query: GET_PAGE_CONFIG_BY_PATH,
+//     variables: {
+//       urlPath: "/"
+//     }
+//   })
 
-  // const { data: data2 } = await serverApolloClient(ctx).query<QData2, QVar2>({
-  //   query: GET_CATEGORIES,
-  // })
+//   // const { data: data2 } = await serverApolloClient(ctx).query<QData2, QVar2>({
+//   //   query: GET_CATEGORIES,
+//   // })
 
-  // console.log("getPageConfig: ", data?.getPageConfig)
-  // console.log("getCategories ssr: ", data2?.getCategories)
+//   // console.log("getPageConfig: ", data?.getPageConfig)
+//   // console.log("getCategories ssr: ", data2?.getCategories)
 
-  // let initialCategories = data2?.getCategories ?? [];
-  let initialCategories: Categories[] = categoryPreviewsBackup as any;
+//   // let initialCategories = data2?.getCategories ?? [];
+//   let initialCategories: Categories[] = categoryPreviewsBackup as any;
 
-  return {
-    initialCategories: initialCategories,
-    pageConfig: data?.getPageConfig,
-    classes: undefined,
-  };
-}
+//   return {
+//     initialCategories: initialCategories,
+//     pageConfig: data?.getPageConfig,
+//     classes: undefined,
+//   };
+// }
 
 
 export default withStyles(styles)( HomePage );

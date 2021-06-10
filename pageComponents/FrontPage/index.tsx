@@ -49,6 +49,29 @@ const FrontPage: React.FC<ReactProps> = (props) => {
   } = props;
 
   let y = useScrollYPosition()
+  const [showFeatured, setShowFeatured] = React.useState(false)
+  const [showAdvertised, setShowAdvertised] = React.useState(false)
+  const [showPromotedBanner, setShowPromotedBanner] = React.useState(false)
+  const [showNew, setShowNew] = React.useState(false)
+  const [showCategories, setShowCategories] = React.useState(false)
+
+  React.useEffect(() => {
+    if (y > 100 && !showFeatured) {
+      setShowFeatured(true)
+    }
+    if (y > 400 && !showNew) {
+      setShowNew(true)
+    }
+    if (y > 600 && !showNew) {
+      setShowPromotedBanner(true)
+    }
+    if (y > 600 && !showAdvertised) {
+      setShowAdvertised(true)
+    }
+    if (y > 800 && !showCategories) {
+      setShowCategories(true)
+    }
+  }, [y])
 
   let cPadding = 4 // category carousel padding
 
@@ -103,7 +126,7 @@ const FrontPage: React.FC<ReactProps> = (props) => {
 
         {
           process.browser &&
-          featuredSection.map(section => {
+          featuredSection?.map(section => {
             // console.log("section: ", section)
             if (section?.promotedListId) {
               return (
@@ -134,8 +157,8 @@ const FrontPage: React.FC<ReactProps> = (props) => {
         }
 
         {
-          y > 200 &&
-          newSection.map(section => {
+          showNew &&
+          newSection?.map(section => {
             // console.log("section: ", section)
             if (section?.isNewestList) {
               return (
@@ -150,8 +173,8 @@ const FrontPage: React.FC<ReactProps> = (props) => {
         }
 
         {
-          y > 400 &&
-          advertisedSection.map(section => {
+          showAdvertised &&
+          advertisedSection?.map(section => {
             // console.log("section: ", section)
             if (section?.promotedListId) {
               return (
@@ -183,7 +206,7 @@ const FrontPage: React.FC<ReactProps> = (props) => {
 
 
         {
-          y > 600 &&
+          showPromotedBanner &&
           <div className={classes.bannerPromotionsContainer}>
             <BannerPromotionsLink
               disableMetaHeader={true}
@@ -192,8 +215,8 @@ const FrontPage: React.FC<ReactProps> = (props) => {
         }
 
         {
-          y > 800 &&
-          categorySections.map(section => {
+          showCategories &&
+          categorySections?.map(section => {
 
             if (section?.promotedListId) {
               return (
