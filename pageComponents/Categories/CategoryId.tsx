@@ -61,7 +61,6 @@ const CategoryId: React.FC<ReactProps> = (props) => {
   const router = useRouter();
 
   const theme = useTheme();
-  const sm = useMediaQuery(theme.breakpoints.only("sm"))
   const mdDown = useMediaQuery(theme.breakpoints.down("md"))
 
 

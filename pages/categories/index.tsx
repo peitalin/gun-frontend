@@ -26,13 +26,13 @@ const CategoriesPage: NextPage<ReactProps> = (props) => {
   return (
     <ErrorBounds className={props.classes.root}>
       <MetaHeadersPage
-        title={"Browse Categories - gunmarketplace.com.au"}
+        title={"Browse used guns for sale by category | Gun Marketplace Australia"}
         description={`
-          Shop gunmarketplace local firearms to trade.
+          Shop Gun Marketplace and browse local second hand firearms to trade.
         `}
-        ogTitle={"Browse Categories - gunmarketplace.com.au"}
+        ogTitle={"Browse used guns for sale by category | Gun Marketplace Australia"}
         ogDescription={`
-          Shop gunmarketplace local firearms to trade.
+          Shop Gun Marketplace and browse local second hand firearms to trade.
         `}
         // ogImage={
         //   "https://image-content.gunmarketplace.com.au/og-img-category.png"

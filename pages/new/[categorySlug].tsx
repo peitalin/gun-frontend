@@ -27,21 +27,13 @@ const CategorySlugSSR: NextPage<ReactProps> = (props) => {
   return (
     <>
       <MetaHeadersPage
-        title={
-          props.categoryName
-          ? `Browse used guns for sale by ${props.categoryName} | Gun Marketplace Australia`
-          : `Browse used guns for sale by categories | Gun Marketplace Australia`
-        }
+        title={"Browse New Listings - Used Guns - Gun Marketplace Australia"}
         description={`
-          Shop Gun Marketplace and browse local second hand firearms to trade.
+          Shop Gun Marketplace and browse newly listed local firearms to trade.
         `}
-        ogTitle={
-          props.categoryName
-          ? `Browse used guns for sale by ${props.categoryName} | Gun Marketplace Australia`
-          : `Browse used guns for sale by categories | Gun Marketplace Australia`
-        }
+        ogTitle={"Browse New Listings - Used Guns - Gun Marketplace Australia"}
         ogDescription={`
-          Shop Gun Marketplace and browse local second hand firearms to trade.
+          Shop Gun Marketplace and browse newly listed local firearms to trade.
         `}
         // ogImage={
         //   "https://image-content.gunmarketplace.com.au/og-img-category.png"
