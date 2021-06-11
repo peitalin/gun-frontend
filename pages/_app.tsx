@@ -233,7 +233,6 @@ interface AppHOCProps extends WithStyles<typeof notifyStyles> {
   store: Store<GrandReduxState>;
 }
 
-
 // MainApp.getInitialProps = async (appContext) => {
 
 //     const appProps = await App.getInitialProps(appContext)

@@ -309,14 +309,6 @@ const styles = (theme: Theme) => createStyles({
     minWidth: 350,
     // margin: '0rem 0rem 2rem 0rem',
   },
-  flexColApiLinks: {
-    display: 'flex',
-    flexDirection: 'column',
-    flexGrow: 1,
-    flexBasis: '45%',
-    minWidth: 130,
-    margin: '1rem 0rem',
-  },
   narrow: {
     minWidth: "140px",
   },
@@ -404,6 +396,14 @@ const styles = (theme: Theme) => createStyles({
   },
   marginBottom2: {
     marginBottom: '4rem',
+  },
+  flexColApiLinks: {
+    display: 'flex',
+    flexDirection: 'column',
+    flexGrow: 1,
+    flexBasis: '45%',
+    minWidth: 130,
+    margin: '1rem 0rem',
   },
   apiLink: {
     marginBottom: '1rem',

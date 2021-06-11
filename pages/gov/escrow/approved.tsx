@@ -69,7 +69,7 @@ interface QVar {
 }
 
 
-PayoutsApprovedListPage.getInitialProps = async (ctx: Context) => {
+export async function getServerSideProps(ctx: Context) {
 
   const { data } = await serverApolloClient(ctx).query<QData, QVar>({
     query: GET_ADMIN_APPROVED_ORDER_IDS_GROUPED_BY_DAY,
@@ -79,7 +79,9 @@ PayoutsApprovedListPage.getInitialProps = async (ctx: Context) => {
   console.log('initialOrderIdsGroupedByDay SSR: ', initialOrderIdsGroupedByDay);
 
   return {
-    orderIdsGroupedByDay: initialOrderIdsGroupedByDay,
+    props: {
+      orderIdsGroupedByDay: initialOrderIdsGroupedByDay,
+    }
   };
 }
 

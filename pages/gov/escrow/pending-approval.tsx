@@ -48,43 +48,6 @@ const styles = (theme: Theme) => createStyles({
 interface ReactProps extends WithStyles<typeof styles> {
 }
 
-////////// SSR ///////////
-interface Context extends NextPageContext {
-  apolloClient: ApolloClient<any>;
-}
-
-PendingApprovalsPage.getInitialProps = async (ctx: Context) => {
-
-  // Will trigger this getInitialProps when requesting route /pages/ProductGallery
-  // otherwise initialProps may be fed via /pages/index.tsx's getInitialProps
-  const aClient = serverApolloClient(ctx);
-  const emptyConnection = { pageInfo: {}, edges: [] };
-
-  try {
-
-    // const req3 = aClient.query({
-    //   query: GET_LIMITED_RELEASE_PRODUCTS,
-    //   variables: {
-    //     query: {
-    //       count: 5,
-    //       cursor: null,
-    //       pageBackwards: false,
-    //       sortAscending: false,
-    //     }
-    //   }
-    // });
-
-    return {
-      classes: undefined,
-    } as any;
-
-  } catch(e) {
-    return {
-      classes: undefined,
-    };
-  }
-}
-
 
 export default withStyles(styles)( PendingApprovalsPage );
 

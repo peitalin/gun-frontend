@@ -100,6 +100,7 @@ const PayoutsApprovedTable: NextPage<ReactProps> = (props) => {
     }
   )
 
+  console.log("dataaaaaaa222222", data)
 
   let refetchQueriesParams = [
     {

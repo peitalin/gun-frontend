@@ -54,34 +54,6 @@ interface ReactProps extends WithStyles<typeof styles> {
   // orderIdsGroupedByDay: OrdersGroupedByDay[]
 }
 
-////////// SSR ///////////
-interface Context extends NextPageContext {
-  apolloClient: ApolloClient<object>;
-}
-
-// interface QData {
-//   getCompleteOrderIdsGroupedByDay: OrdersGroupedByDay[]
-// }
-// interface QVar {
-//   before: Date
-//   after: Date
-// }
-
-
-// PayoutsCompleteListPage.getInitialProps = async (ctx: Context) => {
-
-//   const { data } = await serverApolloClient(ctx).query<QData, QVar>({
-//     query: GET_COMPLETE_ORDER_IDS_GROUPED_BY_DAY,
-//     variables: { },
-//   })
-//   let initialOrderIdsGroupedByDay = data.getCompleteOrderIdsGroupedByDay;
-//   console.log('initialOrderIdsGroupedByDay SSR: ', initialOrderIdsGroupedByDay);
-
-//   return {
-//     orderIdsGroupedByDay: initialOrderIdsGroupedByDay,
-//   };
-// }
-
 export default withStyles(styles)( PayoutsCompleteListPage );
 
 
