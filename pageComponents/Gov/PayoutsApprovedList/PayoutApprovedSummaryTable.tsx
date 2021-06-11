@@ -47,7 +47,6 @@ const PayoutApprovedSummaryTable = (props: ReactProps) => {
     onCompleted: () => {
     },
   });
-  console.log("dataaaaaaa", data)
 
   const payoutSummary = data?.getAdminApprovedPayoutSummary;
 

@@ -100,8 +100,6 @@ const PayoutsApprovedTable: NextPage<ReactProps> = (props) => {
     }
   )
 
-  console.log("dataaaaaaa222222", data)
-
   let refetchQueriesParams = [
     {
       query: GET_ORDERS_ADMIN_APPROVED_BY_IDS_CONNECTION,

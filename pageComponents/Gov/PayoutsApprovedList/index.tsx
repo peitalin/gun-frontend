@@ -43,7 +43,6 @@ const PayoutsApprovedList = (props: ReactProps) => {
 
   const [loading, setLoading] = React.useState(false)
 
-  console.log("orderIdsGroupedByDay", props.orderIdsGroupedByDay)
 
   return (
     <ErrorBounds className={clsx(

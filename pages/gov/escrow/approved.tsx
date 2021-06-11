@@ -5,7 +5,7 @@ import { styles } from "pageComponents/SellerDashboard/styles";
 import clsx from "clsx";
 // SSR
 import { NextPage, NextPageContext } from 'next';
-import { ApolloClient } from "@apollo/client";
+import { ApolloClient, useQuery } from "@apollo/client";
 import { serverApolloClient } from "utils/apollo";
 // Components
 import LoadingBarSSR from "components/LoadingBarSSR";
@@ -34,6 +34,12 @@ const PayoutsApprovedListPage = (props: ReactProps) => {
     classes
   } = props;
 
+  const { data } = useQuery<QData, QVar>(
+    GET_ADMIN_APPROVED_ORDER_IDS_GROUPED_BY_DAY, {
+    variables: { },
+  })
+  let orderIdsGroupedByDay = data?.getAdminApprovedOrderIdsGroupedByDay;
+
   return (
     <AdminProfileWrapper
       disablePadding
@@ -42,10 +48,13 @@ const PayoutsApprovedListPage = (props: ReactProps) => {
       {({ data, loading }: AdminProfileProps) => {
         return (
           <div className={classes.contentContainer}>
-            <PayoutsApprovedList
-              admin={data?.user}
-              orderIdsGroupedByDay={props.orderIdsGroupedByDay}
-            />
+            {
+              props.orderIdsGroupedByDay &&
+              <PayoutsApprovedList
+                admin={data?.user}
+                orderIdsGroupedByDay={orderIdsGroupedByDay}
+              />
+            }
           </div>
         )
       }}
@@ -69,21 +78,21 @@ interface QVar {
 }
 
 
-export async function getServerSideProps(ctx: Context) {
+// export async function getServerSideProps(ctx: Context) {
 
-  const { data } = await serverApolloClient(ctx).query<QData, QVar>({
-    query: GET_ADMIN_APPROVED_ORDER_IDS_GROUPED_BY_DAY,
-    variables: { },
-  })
-  let initialOrderIdsGroupedByDay = data?.getAdminApprovedOrderIdsGroupedByDay;
-  console.log('initialOrderIdsGroupedByDay SSR: ', initialOrderIdsGroupedByDay);
+//   const { data } = await serverApolloClient(ctx).query<QData, QVar>({
+//     query: GET_ADMIN_APPROVED_ORDER_IDS_GROUPED_BY_DAY,
+//     variables: { },
+//   })
+//   let initialOrderIdsGroupedByDay = data?.getAdminApprovedOrderIdsGroupedByDay;
+//   console.log('initialOrderIdsGroupedByDay SSR: ', initialOrderIdsGroupedByDay);
 
-  return {
-    props: {
-      orderIdsGroupedByDay: initialOrderIdsGroupedByDay,
-    }
-  };
-}
+//   return {
+//     props: {
+//       orderIdsGroupedByDay: initialOrderIdsGroupedByDay,
+//     }
+//   };
+// }
 
 export default withStyles(styles)( PayoutsApprovedListPage );
 
