@@ -49,7 +49,7 @@ const PayoutsApprovedListPage = (props: ReactProps) => {
         return (
           <div className={classes.contentContainer}>
             {
-              props.orderIdsGroupedByDay &&
+              orderIdsGroupedByDay &&
               <PayoutsApprovedList
                 admin={data?.user}
                 orderIdsGroupedByDay={orderIdsGroupedByDay}
