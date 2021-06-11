@@ -86,9 +86,36 @@ interface QVar1 {
 
 
 // ////////// SSR ///////////
-// interface Context extends NextPageContext {
-//   apolloClient: ApolloClient<any>;
-// }
+interface Context extends NextPageContext {
+}
+
+export async function getStaticProps(ctx: Context) {
+
+  const aClient = serverApolloClient(ctx);
+  const { data } = await aClient.query<QData1, QVar1>({
+    query: GET_PAGE_CONFIG_BY_PATH,
+    variables: {
+      urlPath: "/"
+    }
+  })
+
+  // const { data: data2 } = await serverApolloClient(ctx).query<QData2, QVar2>({
+  //   query: GET_CATEGORIES,
+  // })
+
+  // console.log("getPageConfig: ", data?.getPageConfig)
+  // console.log("getCategories ssr: ", data2?.getCategories)
+
+  // let initialCategories = data2?.getCategories ?? [];
+  let initialCategories: Categories[] = categoryPreviewsBackup as any;
+
+  return {
+    props: {
+      initialCategories: initialCategories,
+      pageConfig: data?.getPageConfig,
+    }, // will be passed to the page component as props
+  }
+}
 
 // HomePage.getInitialProps = async (ctx: Context) => {
 

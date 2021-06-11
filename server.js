@@ -87,12 +87,13 @@ app.prepare().then(() => {
 
   // Serve cached responses
   expressServer.get("*", async (req, res) => {
-    if (req.query.noCache) {
-      res.setHeader("X-Cache-Status", "DISABLED");
-      requestHandler(req, res);
-    } else {
-      cacheManager({ req, res });
-    }
+    requestHandler(req, res);
+    // if (req.query.noCache) {
+    //   res.setHeader("X-Cache-Status", "DISABLED");
+    //   requestHandler(req, res);
+    // } else {
+    //   cacheManager({ req, res });
+    // }
   });
 
   // Start server
