@@ -175,8 +175,6 @@ const ThemeProviderDarkMode = ({ initialDarkModeSSR, children }) => {
     }
   }, [darkModeRedux])
 
-
-
   // console.log("localStorageDarkMode: ", localStorageDarkMode)
   React.useEffect(() => {
     if (initialDarkModeSSR === 'dark') {
@@ -220,12 +218,12 @@ const ThemeProviderDarkMode = ({ initialDarkModeSSR, children }) => {
 
     [darkModeRedux],
   );
+
   return (
     <ThemeProvider theme={theme}>
       {children}
     </ThemeProvider>
   )
-
 }
 
 

@@ -44,7 +44,7 @@ const StickyDetailsSeller = (props: ReactProps) => {
     console.log("Copied!");
   };
 
-  const sellerLicense = product.sellerLicense
+  const sellerLicense = product?.sellerLicense
   // console.log("seller, ", seller)
 
   return (
