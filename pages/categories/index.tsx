@@ -69,7 +69,7 @@ interface Context extends NextPageContext {
   apolloClient: ApolloClient<object>;
 }
 
-CategoriesPage.getInitialProps = async (ctx: Context) => {
+export async function getServerSideProps(ctx: Context) {
 
   try {
     // const { data } = await serverApolloClient(ctx).query<QueryData1, QueryVar1>({
@@ -82,14 +82,18 @@ CategoriesPage.getInitialProps = async (ctx: Context) => {
 
     // return props
     return {
-      initialCategories: initialCategories,
-      classes: undefined,
+      props: {
+        initialCategories: initialCategories,
+        classes: undefined,
+      }
     };
 
   } catch(e) {
     return {
-      initialCategories: [],
-      classes: undefined,
+      props: {
+        initialCategories: [],
+        classes: undefined,
+      }
     };
   }
 

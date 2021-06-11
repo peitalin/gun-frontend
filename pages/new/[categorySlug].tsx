@@ -69,7 +69,8 @@ interface Context extends NextPageContext {
   apolloClient: ApolloClient<any>;
 }
 
-CategorySlugSSR.getInitialProps = async (ctx: Context) => {
+export async function getServerSideProps(ctx: Context) {
+// CategorySlugSSR.getInitialProps = async (ctx: Context) => {
 
   const categorySlug: string = ctx.query.categorySlug as any;
 
@@ -95,18 +96,22 @@ CategorySlugSSR.getInitialProps = async (ctx: Context) => {
 
     // return props
     return {
-      initialProducts: undefined,
-      initialCategories: data?.getCategories,
-      categoryName: categoryName,
-      selectedCategory: selectedCategory,
+      props: {
+        initialProducts: undefined,
+        initialCategories: data?.getCategories,
+        categoryName: categoryName,
+        selectedCategory: selectedCategory,
+      }
     };
 
   } else {
     return {
-      initialProducts: undefined,
-      initialCategories: undefined,
-      categoryName: "",
-      selectedCategory: undefined,
+      props: {
+        initialProducts: undefined,
+        initialCategories: undefined,
+        categoryName: "",
+        selectedCategory: undefined,
+      }
     };
   }
 }

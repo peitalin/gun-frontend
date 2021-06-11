@@ -73,41 +73,46 @@ const FeaturedProductPage: NextPage<ReactProps> = (props) => {
     // )
     // only for promoted products
     if (!promotedSlot?.productId) {
-      router.replace(
-        "/p/[productId]",
-        `/p/${p.id}`
-      )
+      // router.replace(
+      //   "/p/[productId]",
+      //   `/p/${p?.id}`
+      // )
     }
     // can make it so only non-expired products get featured page
     // OR allow expired ones to continue having this page until it is replaced
     // by the admins (promotedSlot.productId is overridden by admins)
   }, [promotedSlot, isExpired])
 
+  console.log("promotedSLot", promotedSlot)
+
   return (
     <>
-      <MetaHeadersPage
-        title={`${p?.currentSnapshot?.title} ${p?.currentSnapshot?.caliber} - buy on Gun Marketplace Australia`}
-        ogTitle={`${p?.currentSnapshot?.title} ${p?.currentSnapshot?.caliber} - buy on Gun Marketplace Australia`}
-        description={
-          `Buy ${p?.currentSnapshot?.title} ${p?.currentSnapshot?.caliber} on Gun Marketplace Australia.
-          Location: ${p?.currentSnapshot?.dealer?.state}
-          `
-        }
-        ogDescription={
-          `Buy ${p?.currentSnapshot?.title} ${p?.currentSnapshot?.caliber} on Gun Marketplace Australia.
-          Location: ${p?.currentSnapshot?.dealer?.state}
-          `
-        }
-        ogImage={`${imgVariant?.url}`} // must be larger than 200 x 200
-        ogUrl={
-          process.env.GUN_ENV === "development"
-          ? `https://dev.gunmarketplace.com.au/p/${p?.id}`
-          : `https://www.gunmarketplace.com.au/p/${p?.id}`
-        }
-      />
+      {
+        p?.id &&
+        <MetaHeadersPage
+          title={`${p?.currentSnapshot?.title} ${p?.currentSnapshot?.caliber} - buy on Gun Marketplace Australia`}
+          ogTitle={`${p?.currentSnapshot?.title} ${p?.currentSnapshot?.caliber} - buy on Gun Marketplace Australia`}
+          description={
+            `Buy ${p?.currentSnapshot?.title} ${p?.currentSnapshot?.caliber} on Gun Marketplace Australia.
+            Location: ${p?.currentSnapshot?.dealer?.state}
+            `
+          }
+          ogDescription={
+            `Buy ${p?.currentSnapshot?.title} ${p?.currentSnapshot?.caliber} on Gun Marketplace Australia.
+            Location: ${p?.currentSnapshot?.dealer?.state}
+            `
+          }
+          ogImage={`${imgVariant?.url}`} // must be larger than 200 x 200
+          ogUrl={
+            process.env.GUN_ENV === "development"
+            ? `https://dev.gunmarketplace.com.au/p/${p?.id}`
+            : `https://www.gunmarketplace.com.au/p/${p?.id}`
+          }
+        />
+      }
       {
         // only for promoted products
-        promotedSlot.product?.id &&
+        promotedSlot?.product?.id &&
         <FeaturedProductId
           initialProduct={p}
         />
@@ -133,9 +138,8 @@ interface Context extends NextPageContext {
   apolloClient: ApolloClient<any>;
 }
 
-// export async function getServerSideProps(ctx: Context) {
-
-FeaturedProductPage.getInitialProps = async (ctx: Context) => {
+export async function getServerSideProps(ctx: Context) {
+// FeaturedProductPage.getInitialProps = async (ctx: Context) => {
 
   const productId: string = ctx.query.productId as any;
   const promotedListId: string = ctx.query.promotedListId as any; // optional
@@ -143,8 +147,10 @@ FeaturedProductPage.getInitialProps = async (ctx: Context) => {
 
   if (!productId) {
     return {
-      initialPromotedSlot: null,
-      classes: null,
+      props: {
+        initialPromotedSlot: null,
+        classes: null,
+      }
     };
   }
 
@@ -158,13 +164,17 @@ FeaturedProductPage.getInitialProps = async (ctx: Context) => {
     })
     // console.log('getInitialProps FeaturedProductPage: ', data);
     return {
-      initialPromotedSlot: data?.getPromotedSlotByProductId,
-      classes: null,
+      props: {
+        initialPromotedSlot: data?.getPromotedSlotByProductId,
+        classes: null,
+      }
     };
   } catch(e) {
     return {
-      initialPromotedSlot: null,
-      classes: null,
+      props: {
+        initialPromotedSlot: null,
+        classes: null,
+      }
     };
   }
 }

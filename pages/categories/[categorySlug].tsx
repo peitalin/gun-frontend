@@ -48,7 +48,7 @@ const CategorySlugSSR: NextPage<ReactProps> = (props) => {
         // }
       />
       <CategoryId
-        initialProducts={props.initialProducts}
+        initialProducts={undefined}
         initialRouteCategory={props.selectedCategory}
         initialDropdownCategories={props.initialCategories}
       />
@@ -57,7 +57,6 @@ const CategorySlugSSR: NextPage<ReactProps> = (props) => {
 }
 
 interface ReactProps {
-  initialProducts: ProductsConnection;
   initialCategories: Categories[];
   categoryName?: string;
   selectedCategory: Categories;
@@ -75,10 +74,10 @@ interface Context extends NextPageContext {
   apolloClient: ApolloClient<any>;
 }
 
-CategorySlugSSR.getInitialProps = async (ctx: Context) => {
+// CategorySlugSSR.getInitialProps = async (ctx: Context) => {
+export async function getServerSideProps(ctx: Context) {
 
   const categorySlug: string = ctx.query.categorySlug as any;
-
 
   if (categorySlug) {
 
@@ -101,18 +100,20 @@ CategorySlugSSR.getInitialProps = async (ctx: Context) => {
 
     // return props
     return {
-      initialProducts: undefined,
-      initialCategories: data?.getCategories,
-      categoryName: categoryName,
-      selectedCategory: selectedCategory,
+      props: {
+        initialCategories: data?.getCategories,
+        categoryName: categoryName,
+        selectedCategory: selectedCategory,
+      }
     };
 
   } else {
     return {
-      initialProducts: undefined,
-      initialCategories: undefined,
-      categoryName: "",
-      selectedCategory: undefined,
+      props: {
+        initialCategories: [],
+        categoryName: "",
+        selectedCategory: "",
+      }
     };
   }
 }

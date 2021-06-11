@@ -2,27 +2,8 @@ import React from "react";
 import { useState, useEffect, useRef } from 'react';
 // lodash
 const throttle = require('lodash.throttle');
-import smoothscroll from 'smoothscroll-polyfill'
 
 
-
-export const useForcedSmoothScroll = () => {
-
-  React.useEffect(() => {
-    // smoothscrool polyfill
-    if (typeof window !== 'undefined') {
-      // console.log("smoothscroll.polyfill()")
-      window.__forceSmoothScrollPolyfill__ = true;
-      smoothscroll.polyfill()
-    }
-
-    // remove force smoothscroll on unmount
-    () => {
-      window.__forceSmoothScrollPolyfill__ = false;
-    }
-  }, [])
-
-}
 
 
 export const useWindowWidth = () => {

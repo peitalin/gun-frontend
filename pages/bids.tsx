@@ -63,24 +63,6 @@ const styles = (theme: Theme) => createStyles({
 interface ReactProps extends WithStyles<typeof styles> {
 }
 
-////////// SSR ///////////
-interface Context extends NextPageContext {
-  apolloClient: ApolloClient<any>;
-}
-
-BidsPage.getInitialProps = async (ctx: Context) => {
-
-  // Will trigger this getInitialProps when requesting route /pages/ProductGallery
-  // otherwise initialProps may be fed via /pages/index.tsx's getInitialProps
-
-  // const aClient = serverApolloClient(ctx);
-  // const emptyConnection = { pageInfo: {}, edges: [] };
-
-  return {
-    classes: undefined,
-  } as any;
-}
-
 
 export default withStyles(styles)( BidsPage );
 

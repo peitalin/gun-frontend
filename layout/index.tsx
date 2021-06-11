@@ -217,10 +217,7 @@ const Layout: React.FC<ReactProps> = (props) => {
     <StripeProvider>
       <Header showChatwoot={showChatWoot} />
       <NavBarMain/>
-      {
-        process.browser &&
-        <GetUser/>
-      }
+      <GetUser/>
       {/* <GlobalModals/> */}
       <PageContainer
         classes={props.classes}

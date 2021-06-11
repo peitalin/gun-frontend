@@ -73,17 +73,17 @@ interface Context extends NextPageContext {
   apolloClient: ApolloClient<any>;
 }
 
-// export async function getServerSideProps(ctx: Context) {
-
-ProductPage.getInitialProps = async (ctx: Context) => {
+export async function getServerSideProps(ctx: Context) {
 
   const productId: string = ctx.query.productId as any;
   console.log('getInitialProps ctx: ', ctx.query);
 
   if (!productId) {
     return {
-      initialProduct: null,
-      classes: null,
+      props: {
+        initialProduct: null,
+        classes: null,
+      }
     };
   }
 
@@ -96,13 +96,17 @@ ProductPage.getInitialProps = async (ctx: Context) => {
     })
     // console.log('getInitialProps ProductPage: ', data);
     return {
-      initialProduct: data?.getProductById,
-      classes: null,
+      props: {
+        initialProduct: data?.getProductById,
+        classes: null,
+      }
     };
   } catch(e) {
     return {
-      initialProduct: null,
-      classes: null,
+      props: {
+        initialProduct: null,
+        classes: null,
+      }
     };
   }
 }

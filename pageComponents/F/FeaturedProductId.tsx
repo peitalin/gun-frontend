@@ -58,7 +58,6 @@ const FeaturedProductId: React.FC<ReactProps> = (props) => {
   const { classes } = props;
 
   const theme = useTheme();
-  const xsDown = useMediaQuery(theme.breakpoints.down('xs'));
   const mdDown = useMediaQuery(theme.breakpoints.down('md'));
   const below1024 = useMediaQuery(below1024Query);
   const lgDown = useMediaQuery(theme.breakpoints.down("lg"));
@@ -86,7 +85,6 @@ const FeaturedProductId: React.FC<ReactProps> = (props) => {
     variables: {
       productId: productId
     },
-    ssr: true,
   })
 
   const [
@@ -112,7 +110,6 @@ const FeaturedProductId: React.FC<ReactProps> = (props) => {
     variables: {
       productId: productId
     },
-    ssr: true,
   })
   const product = data?.getProductById || props.initialProduct;
 
@@ -182,16 +179,16 @@ const FeaturedProductId: React.FC<ReactProps> = (props) => {
   }, [loading])
 
 
-  if (product?.store?.isSuspended === true) {
+  if (!loading && product?.store?.isSuspended === true) {
     return <ErrorPage statusCode={400} message={"Store has been suspended"}/>
   }
-  if (product?.isSuspended === true) {
+  if (!loading && product?.isSuspended === true) {
     return <ErrorPage statusCode={400} message={"Product has been suspended"}/>
   }
-  if (product?.isDeleted === true) {
+  if (!loading && product?.isDeleted === true) {
     return <ErrorPage statusCode={400} message={"Product has been deleted"}/>
   }
-  if (!product?.isPublished === true) {
+  if (!loading && !product?.isPublished === true) {
     return <ErrorPage statusCode={400} message={"Product is not available"}/>
   }
   if (error) {

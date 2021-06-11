@@ -47,11 +47,12 @@ const GetUser = (props: ReactProps) => {
         // and clear localStorage timer
       }
     },
-    ssr: true,
   })
 
   React.useEffect(() => {
-    getUser()
+    if (process.browser) {
+      getUser()
+    }
   }, [])
 
   React.useEffect(() => {
