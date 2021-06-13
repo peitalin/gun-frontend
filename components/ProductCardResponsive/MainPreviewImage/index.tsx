@@ -48,6 +48,15 @@ const MainPreviewImage = (props: ReactProps) => {
   //   [ cardsPerRow, props.screenSize]
   // )
 
+  const [loaded, setLoaded] = React.useState(false)
+  const ref = React.useRef<HTMLDivElement>(null)
+  React.useEffect(() => {
+    if ((ref.current?.firstChild?.firstChild as HTMLImageElement | undefined)?.complete) {
+      setLoaded(true)
+    }
+  }, [])
+
+
   let firstPreview = previewItems?.[0]
 
   let youTubeVimeoPreview = React.useMemo(
@@ -68,58 +77,76 @@ const MainPreviewImage = (props: ReactProps) => {
   } else {
     return(
       <AspectGridItemLink product={product}>
+        {/* {
+          firstPreview?.image?.original?.url
+          ? <div ref={ref}>
+              <CardMedia
+                title={title}
+                component="img"
+                className={clsx(
+                  loaded ? "fadeIn" : "hide",
+                  fit ? classes.cardMediaFit : classes.cardMedia,
+                  // (previewLoaded > 0) ? "fadeIn" : 'hidden',
+                )}
+                onClick={props.onClick}
+                src={firstPreview?.image?.original?.url}
+                srcSet={genSrcSet(firstPreview?.image)}
+                sizes={genImgBreakpoints(imgSizesSrcSet)}
+              />
+            </div>
+          : youTubeVimeoPreview
+            ? <div ref={ref}>
+                <CardMedia
+                  component="img"
+                  className={clsx(
+                    loaded ? "fadeIn" : "hide",
+                    fit ? classes.cardMediaFit : classes.cardMedia,
+                  )}
+                  onClick={props.onClick}
+                  src={youTubeVimeoPreview}
+                  title={
+                    youTubeVimeoPreview ? title : "Video thumbnail unavailable"
+                  }
+                />
+              </div>
+            : <PreviewImageEmpty/>
+        } */}
+
         {
           firstPreview?.image?.original?.url
-          ? <Image
-              className={clsx(
-                fit ? classes.cardMediaFit : classes.cardMedia,
-              )}
-              alt={title}
-              layout={"fill"}
-              objectFit={"cover"}
-              onClick={props.onClick}
-              src={firstPreview?.image?.original?.url}
-              // srcSet={genSrcSet(firstPreview?.image)}
-              // sizes={genImgBreakpoints(imgSizesSrcSet)}
-            />
-          // ? <CardMedia
-          //     title={title}
-          //     component="img"
-          //     className={clsx(
-          //       fit ? classes.cardMediaFit : classes.cardMedia,
-          //       // (previewLoaded > 0) ? "fadeIn" : 'hidden',
-          //     )}
-          //     onClick={props.onClick}
-          //     src={firstPreview?.image?.original?.url}
-          //     srcSet={genSrcSet(firstPreview?.image)}
-          //     sizes={genImgBreakpoints(imgSizesSrcSet)}
-          //   />
-          : youTubeVimeoPreview
-            ? <Image
+          ? <div ref={ref}>
+            <Image
                 className={clsx(
+                  loaded ? "fadeIn" : "hidden",
                   fit ? classes.cardMediaFit : classes.cardMedia,
                 )}
                 alt={title}
-                width={500}
-                height={500}
+                layout={"fill"}
+                objectFit={"cover"}
                 onClick={props.onClick}
-                src={youTubeVimeoPreview}
+                src={firstPreview?.image?.original?.url}
                 // srcSet={genSrcSet(firstPreview?.image)}
-                title={
-                  youTubeVimeoPreview ? title : "Video thumbnail unavailable"
-                }
+                // sizes={genImgBreakpoints(imgSizesSrcSet)}
               />
-            // ? <CardMedia
-            //     component="img"
-            //     className={clsx(
-            //       fit ? classes.cardMediaFit : classes.cardMedia,
-            //     )}
-            //     onClick={props.onClick}
-            //     src={youTubeVimeoPreview}
-            //     title={
-            //       youTubeVimeoPreview ? title : "Video thumbnail unavailable"
-            //     }
-            //   />
+            </div>
+          : youTubeVimeoPreview
+            ? <div ref={ref}>
+                <Image
+                  className={clsx(
+                    loaded ? "fadeIn" : "hidden",
+                    fit ? classes.cardMediaFit : classes.cardMedia,
+                  )}
+                  alt={title}
+                  layout={"fill"}
+                  objectFit={"cover"}
+                  onClick={props.onClick}
+                  src={youTubeVimeoPreview}
+                  // srcSet={genSrcSet(firstPreview?.image)}
+                  title={
+                    youTubeVimeoPreview ? title : "Video thumbnail unavailable"
+                  }
+                />
+              </div>
             : <PreviewImageEmpty/>
         }
       </AspectGridItemLink>
