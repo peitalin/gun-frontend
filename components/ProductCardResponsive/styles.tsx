@@ -135,4 +135,7 @@ export const styles = (theme: Theme) => createStyles({
   squishLetters: {
     letterSpacing: '-0.25px',
   },
+  height100: {
+    height: '100%',
+  },
 });

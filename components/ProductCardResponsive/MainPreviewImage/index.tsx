@@ -79,7 +79,7 @@ const MainPreviewImage = (props: ReactProps) => {
       <AspectGridItemLink product={product}>
         {/* {
           firstPreview?.image?.original?.url
-          ? <div ref={ref}>
+          ? <div className={classes.height100} ref={ref}>
               <CardMedia
                 title={title}
                 component="img"
@@ -96,7 +96,7 @@ const MainPreviewImage = (props: ReactProps) => {
               />
             </div>
           : youTubeVimeoPreview
-            ? <div ref={ref}>
+            ? <div className={classes.height100} ref={ref}>
                 <CardMedia
                   component="img"
                   className={clsx(
@@ -116,7 +116,7 @@ const MainPreviewImage = (props: ReactProps) => {
 
         {
           firstPreview?.image?.original?.url
-          ? <div ref={ref}>
+          ? <div className={classes.height100} ref={ref}>
             <Image
                 className={clsx(
                   loaded ? "fadeIn" : "hidden",
@@ -133,7 +133,7 @@ const MainPreviewImage = (props: ReactProps) => {
               />
             </div>
           : youTubeVimeoPreview
-            ? <div ref={ref}>
+            ? <div className={classes.height100} ref={ref}>
                 <Image
                   className={clsx(
                     loaded ? "fadeIn" : "hidden",
