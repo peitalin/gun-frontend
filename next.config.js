@@ -67,6 +67,8 @@ module.exports =
       domains: [
         "img.gunmarketplace.com.au",
         "gunmarketplace.com.au",
+        "dev.gunmarketplace.com.au",
+        "storage.googleapis.com",
         "img.youtube.com",
         "i.vimeocdn.com",
       ],
