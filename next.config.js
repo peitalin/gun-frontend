@@ -8,19 +8,12 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 
 // environment
 const dev = process.env.NODE_ENV !== 'production'
-const nextRuntimeDotenv = require('next-runtime-dotenv')
 require("dotenv").config();
-
-const withConfig = nextRuntimeDotenv({
-  // path: '.env',
-  public: [],
-  server: []
-})
 
 
 module.exports =
   // withBundleAnalyzer(
-  withConfig({
+  {
 
     webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
       // Note: we provide webpack above so you should not `require` it
@@ -65,7 +58,17 @@ module.exports =
       SERVER_GATEWAY_GRAPHQL_URL: process.env.SERVER_GATEWAY_GRAPHQL_URL,
       GATEWAY_GRAPHQL_WS_URL: process.env.GATEWAY_GRAPHQL_WS_URL,
       STRIPE_PUBLIC_KEY: process.env.STRIPE_PUBLIC_KEY,
-    }
+    },
 
-  })
+    publicRuntimeConfig: {
+    },
+
+    images: {
+      domains: [
+        "img.gunmarketplace.com.au",
+        "img.youtube.com",
+        "i.vimeocdn.com",
+      ],
+    },
+  }
   // )

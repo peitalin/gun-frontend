@@ -18,8 +18,7 @@ import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import DescriptionLoading from "./DescriptionLoading";
 // Carousel
-import PreviewImageEmpty from "./PreviewImageEmpty";
-import AspectGridItemLink from "./AspectGridItemLink";
+import MainPreviewImage from "./MainPreviewImage";
 import LinkLoading from "components/LinkLoading";
 import {
   CARD_MAX_WIDTH_XL,
@@ -102,68 +101,15 @@ const ProductCardRC = (props: ReactProps) => {
       onMouseEnter={props.onMouseEnter}
       onMouseLeave={props.onMouseLeave}
     >
-      {
-        //  If no PreviewItems
-        (previewItems.length === 0) &&
-        <AspectGridItemLink
-          product={product}
-          promotedSlotId={props.promotedSlotId}
-          style={props.styleInner}
-          disable={
-            !props.product?.storeId ||
-            typeof props.onClick === 'function'
-            // disable link when onClick is defined
-          }
-        >
-          <PreviewImageEmpty
-            previewImageEmptyMessage={props.previewImageEmptyMessage}
-            onClick={props.onClick}
-          />
-        </AspectGridItemLink>
-      }
 
-      {
-        firstPreview &&
-        <AspectGridItemLink
-          product={product}
-          promotedSlotId={props.promotedSlotId}
-          style={props.styleInner}
-          disable={
-            !props.product?.storeId ||
-            typeof props.onClick === 'function'
-            // disable link when onClick is defined
-          }
-        >
-          {
-            firstPreview?.image?.original?.url
-            ? <CardMedia
-                title={title}
-                component="img"
-                className={clsx(
-                  fit ? classes.cardMediaFit : classes.cardMedia,
-                  // (previewLoaded > 0) ? "fadeIn" : 'hidden',
-                )}
-                onClick={props.onClick}
-                src={firstPreview?.image?.original?.url}
-                srcSet={genSrcSet(firstPreview?.image)}
-                sizes={genImgBreakpoints(imgSizesSrcSet)}
-              />
-            : youTubeVimeoPreview
-              ? <CardMedia
-                  component="img"
-                  className={clsx(
-                    fit ? classes.cardMediaFit : classes.cardMedia,
-                  )}
-                  onClick={props.onClick}
-                  src={youTubeVimeoPreview}
-                  title={
-                    youTubeVimeoPreview ? title : "Video thumbnail unavailable"
-                  }
-                />
-              : <PreviewImageEmpty/>
-          }
-        </AspectGridItemLink>
-      }
+      <MainPreviewImage
+        product={product}
+        screenSize={props.screenSize}
+        fit={fit}
+        cardsPerRow={cardsPerRow}
+        previewImageEmptyMessage={props.previewImageEmptyMessage}
+        onClick={props.onClick}
+      />
 
       <div className={classes.descriptionContainerOuter}
         style={props.styleInner}
