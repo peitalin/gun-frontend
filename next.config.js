@@ -66,6 +66,7 @@ module.exports =
     images: {
       domains: [
         "img.gunmarketplace.com.au",
+        "gunmarketplace.com.au",
         "img.youtube.com",
         "i.vimeocdn.com",
       ],
