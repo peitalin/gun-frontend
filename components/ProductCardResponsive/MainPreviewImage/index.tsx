@@ -89,6 +89,7 @@ const MainPreviewImage = (props: ReactProps) => {
                   // (previewLoaded > 0) ? "fadeIn" : 'hidden',
                 )}
                 onClick={props.onClick}
+                onLoad={() => setLoaded(true)}
                 src={firstPreview?.image?.original?.url}
                 srcSet={genSrcSet(firstPreview?.image)}
                 sizes={genImgBreakpoints(imgSizesSrcSet)}
@@ -103,6 +104,7 @@ const MainPreviewImage = (props: ReactProps) => {
                     fit ? classes.cardMediaFit : classes.cardMedia,
                   )}
                   onClick={props.onClick}
+                  onLoad={() => setLoaded(true)}
                   src={youTubeVimeoPreview}
                   title={
                     youTubeVimeoPreview ? title : "Video thumbnail unavailable"
@@ -124,6 +126,7 @@ const MainPreviewImage = (props: ReactProps) => {
                 layout={"fill"}
                 objectFit={"cover"}
                 onClick={props.onClick}
+                onLoad={() => setLoaded(true)}
                 src={firstPreview?.image?.original?.url}
                 // srcSet={genSrcSet(firstPreview?.image)}
                 // sizes={genImgBreakpoints(imgSizesSrcSet)}
@@ -140,6 +143,7 @@ const MainPreviewImage = (props: ReactProps) => {
                   layout={"fill"}
                   objectFit={"cover"}
                   onClick={props.onClick}
+                  onLoad={() => setLoaded(true)}
                   src={youTubeVimeoPreview}
                   // srcSet={genSrcSet(firstPreview?.image)}
                   title={
