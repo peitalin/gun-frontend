@@ -12,7 +12,7 @@ import {
 } from "typings/gqlTypes";
 import CategoryId from "pageComponents/Categories/CategoryId";
 // SSR
-import { NextPage, NextPageContext } from 'next';
+import { NextPage, NextPageContext, GetStaticProps } from 'next';
 import { ApolloClient } from "@apollo/client";
 import { serverApolloClient } from "utils/apollo";
 // Meta headers
@@ -74,48 +74,55 @@ interface Context extends NextPageContext {
   apolloClient: ApolloClient<any>;
 }
 
-// CategorySlugSSR.getInitialProps = async (ctx: Context) => {
-export async function getServerSideProps(ctx: Context) {
+export const getStaticPaths = async (ctx: Context) => {
 
-  const categorySlug: string = ctx.query.categorySlug as any;
+  const { data } = await serverApolloClient(ctx).query<QueryData1, QueryVar1>({
+    query: GET_CATEGORIES,
+  })
 
-  if (categorySlug) {
+  const initialCategories = data?.getCategories
+  // Get the paths we want to pre-render based on posts
+  const paths = initialCategories.map(category => ({
+    params: {
+      categorySlug: category.slug
+    },
+  }))
 
-    const { data } = await serverApolloClient(ctx).query<QueryData1, QueryVar1>({
-      query: GET_CATEGORIES,
-    })
-
-    // "all" category slug is filtered out on the backend and ignored
-    // no category filter -> all categories
-    let defaultCategory = {
-      id: "",
-      slug: "all",
-      name: "All Categories"
-    } as any
-
-    let selectedCategory = [ ...data?.getCategories, defaultCategory ]
-      .find(s => s.slug === categorySlug)
-
-    let categoryName = selectedCategory?.name
-
-    // return props
-    return {
-      props: {
-        initialCategories: data?.getCategories,
-        categoryName: categoryName,
-        selectedCategory: selectedCategory,
-      }
-    };
-
-  } else {
-    return {
-      props: {
-        initialCategories: [],
-        categoryName: "",
-        selectedCategory: "",
-      }
-    };
+  return {
+    paths: paths,
+    fallback: false,
   }
+}
+
+
+export const getStaticProps: GetStaticProps = async (ctx) => {
+
+  const categorySlug: string = ctx?.params?.categorySlug as any;
+
+  const { data } = await serverApolloClient().query<QueryData1, QueryVar1>({
+    query: GET_CATEGORIES,
+  })
+
+  // "all" category slug is filtered out on the backend and ignored
+  // no category filter -> all categories
+  let defaultCategory = {
+    id: "",
+    slug: "all",
+    name: "All Categories"
+  } as any
+
+  let selectedCategory = [ ...data?.getCategories, defaultCategory ]
+    .find(s => s.slug === categorySlug) ?? ""
+
+  let categoryName = selectedCategory?.name ?? ""
+
+  return {
+    props: {
+      initialCategories: data?.getCategories,
+      categoryName: categoryName,
+      selectedCategory: selectedCategory,
+    }
+  };
 }
 
 export default CategorySlugSSR;

@@ -5,7 +5,6 @@ import clsx from "clsx";
 // Components
 import LoadingBarSSR from "components/LoadingBarSSR";
 import MyOrders from "pageComponents/MyOrders";
-
 // next
 // SSR disable
 import dynamic from "next/dynamic";
@@ -31,13 +30,13 @@ const MyOrdersHistoryPage = (props: ReactProps) => {
         robots="noindex"
       />
       <UserProfileWrapper>
-      {(dataUser: UserProfileProps) => {
-        return (
-          <div className={classes.contentContainerPublicPage}>
-            <MyOrders withRecommendations={false}/>
-          </div>
-        )
-      }}
+        {(dataUser: UserProfileProps) => {
+          return (
+            <div className={classes.contentContainerPublicPage}>
+              <MyOrders withRecommendations={false}/>
+            </div>
+          )
+        }}
       </UserProfileWrapper>
     </>
   );
@@ -55,6 +54,10 @@ const styles = (theme: Theme) => createStyles({
     marginBottom: '1rem',
   },
 })
+
+export const getStaticProps = async (context) => {
+  return { props: { } };
+};
 
 export default withStyles(styles)( MyOrdersHistoryPage );
 

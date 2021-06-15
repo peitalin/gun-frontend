@@ -9,12 +9,18 @@ import copy from "clipboard-copy";
 import { useSnackbar } from "notistack";
 import { Colors } from 'layout/AppTheme';
 import { commonStyles } from "./faq";
+import SocialFloatingBanner from "layout/SocialFloatingBanner";
+import ShowOnMobileOrDesktopSSR from "components/ShowOnMobileOrDesktopSSR";
+import PageDashboardLayout from "layout/GetUser/PageDashboardLayout";
+
 
 
 const FirearmRegistriesSSR: React.FC<ReactProps> = (props) => {
 
   const { classes } = props;
   const snackbar = useSnackbar()
+  let showSocialBanner = true
+    // || router.pathname.startsWith("/help")
 
   const copyAndSendSnackbarMsg = React.useCallback((email: string) => {
     copy(email)
@@ -67,6 +73,12 @@ const FirearmRegistriesSSR: React.FC<ReactProps> = (props) => {
         </div>
 
       </div>
+      {
+        showSocialBanner &&
+        <ShowOnMobileOrDesktopSSR desktop>
+          <SocialFloatingBanner/>
+        </ShowOnMobileOrDesktopSSR>
+      }
     </AlignCenterLayout>
   );
 }
@@ -76,6 +88,7 @@ const FirearmRegistry = (props: RegistryProps) => {
   const { classes, registry, copyAndSendSnackbarMsg } = props;
 
   return (
+  <PageDashboardLayout>
     <div className={classes.registryContainer}>
       <div className={classes.registryTitle}>
         {registry.title}
@@ -125,6 +138,7 @@ const FirearmRegistry = (props: RegistryProps) => {
         </div>
       </div>
     </div>
+  </PageDashboardLayout>
   )
 }
 
@@ -260,6 +274,10 @@ const styles = (theme: Theme) => createStyles({
   },
 });
 
+
+export const getStaticProps = async (context) => {
+  return { props: { } };
+};
 
 export default withStyles(styles)( FirearmRegistriesSSR );
 

@@ -3,15 +3,21 @@ import React from 'react';
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 import { Colors } from "layout/AppTheme";
 // components
-import Button from '@material-ui/core/Button';
 import AlignCenterLayout from "components/AlignCenterLayout";
+import SocialFloatingBanner from "layout/SocialFloatingBanner";
+import ShowOnMobileOrDesktopSSR from "components/ShowOnMobileOrDesktopSSR";
+import PageDashboardLayout from "layout/GetUser/PageDashboardLayout";
 
 
 const AboutUsSSR: React.FC<ReactProps> = (props) => {
 
   const { classes } = props;
 
+  let showSocialBanner = true
+    // || router.pathname.startsWith("/help")
+
   return (
+  <PageDashboardLayout>
     <AlignCenterLayout
       withRecommendations={false}
       maxWidth={720}
@@ -42,7 +48,14 @@ const AboutUsSSR: React.FC<ReactProps> = (props) => {
         </div>
 
       </div>
+      {
+        showSocialBanner &&
+        <ShowOnMobileOrDesktopSSR desktop>
+          <SocialFloatingBanner/>
+        </ShowOnMobileOrDesktopSSR>
+      }
     </AlignCenterLayout>
+  </PageDashboardLayout>
   );
 }
 
@@ -99,6 +112,10 @@ export const commonStyles = {
     },
   },
 }
+
+export const getStaticProps = async (context) => {
+  return { props: { } };
+};
 
 export default withStyles(styles)( AboutUsSSR );
 

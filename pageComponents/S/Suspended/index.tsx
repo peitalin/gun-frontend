@@ -156,9 +156,3 @@ const styles = (theme: Theme) => createStyles({
 
 export default withStyles(styles)( SuspendedPage );
 
-
-
-SuspendedPage.getInitialProps = ({ res, err }) => {
-  const statusCode = res ? res.statusCode : err ? err.statusCode : 404
-  return { statusCode }
-}

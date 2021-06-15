@@ -40,16 +40,16 @@ const EditStoreAdminPage = (props: ReactProps) => {
         robots="noindex"
       />
       <SellerProfileWrapper>
-      {({ data, loading, error }: SellerProfileProps) => {
-        return (
-          <div className={classes.contentContainer}>
-            {
-              data && data.user && data.user.store &&
-              <EditSellerProfile asModal={false} />
-            }
-          </div>
-        );
-      }}
+        {({ data, loading, error }: SellerProfileProps) => {
+          return (
+            <div className={classes.contentContainer}>
+              {
+                data && data.user && data.user.store &&
+                <EditSellerProfile asModal={false} />
+              }
+            </div>
+          );
+        }}
       </SellerProfileWrapper>
     </>
   )
@@ -57,6 +57,10 @@ const EditStoreAdminPage = (props: ReactProps) => {
 
 interface ReactProps extends WithStyles<typeof styles> {
 }
+
+export const getStaticProps = async (context) => {
+  return { props: { } };
+};
 
 export default withStyles(styles)( EditStoreAdminPage );
 

@@ -48,6 +48,9 @@ const styles = (theme: Theme) => createStyles({
 interface ReactProps extends WithStyles<typeof styles> {
 }
 
+export const getStaticProps = async (context) => {
+  return { props: { } };
+};
 
 export default withStyles(styles)( PendingApprovalsPage );
 

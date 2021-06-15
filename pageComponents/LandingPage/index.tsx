@@ -78,7 +78,6 @@ const LandingPage: React.FC<ReactProps> = (props) => {
 
 
 interface ReactProps extends WithStyles<typeof styles> {
-  initialCategories: Categories[]
 }
 
 

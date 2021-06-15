@@ -1,4 +1,5 @@
 import React from 'react';
+import { NextPage, NextPageContext } from 'next';
 import Document, { Html, Head, Main, NextScript } from 'next/document';
 import { ServerStyleSheets } from '@material-ui/core/styles';
 import { Colors } from 'layout/AppTheme';
@@ -23,7 +24,7 @@ export default class MyDocument extends Document {
   }
 }
 
-MyDocument.getInitialProps = async ctx => {
+export async function getServerSideProps(ctx) {
   // Resolution order
   //
   // On the server:

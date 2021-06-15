@@ -1,6 +1,5 @@
 import React from 'react';
 import { NextPage, NextPageContext } from 'next';
-import Link from 'next/link';
 
 import Typography from "@material-ui/core/Typography";
 // styles
@@ -70,12 +69,8 @@ const GovRoot = (props: ReactProps) => {
 }
 
 interface ReactProps extends WithStyles<typeof styles> {
-  user: UserPrivate;
-  apolloClient: ApolloClient<any>;
 }
-interface QueryData {
-  user: UserPrivate;
-}
+
 const styles = (theme: Theme) => createStyles({
   govHomePageSSR: {
     display: "flex",
@@ -105,31 +100,8 @@ const styles = (theme: Theme) => createStyles({
 })
 
 
-////////// SSR ///////////
-interface Context extends NextPageContext {
-  apolloClient: ApolloClient<any>;
-}
-
-GovRoot.getInitialProps = async (ctx: Context) => {
-
-  try {
-    const { data, loading, errors } = await ctx.apolloClient.query<QueryData>({
-      query: GET_USER,
-    });
-    console.log("getInitialProps: ", data)
-    // return props
-    return {
-      user: data.user,
-      apolloClient: ctx.apolloClient,
-    };
-  } catch(e) {
-    return {
-      user: null,
-      apolloClient: ctx.apolloClient,
-    };
-  }
-
-}
-
+export const getStaticProps = async (context) => {
+  return { props: { } };
+};
 
 export default withStyles(styles)( GovRoot );

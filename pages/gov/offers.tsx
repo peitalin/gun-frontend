@@ -8,17 +8,16 @@ import LoadingBarSSR from "components/LoadingBarSSR";
 // next
 // SSR disable
 import dynamic from "next/dynamic";
-import { UserProfileProps } from "layout/GetUser/UserProfileWrapper";
-const UserProfileWrapper = dynamic(() => import("layout/GetUser/UserProfileWrapper"), {
+import { AdminProfileProps } from "layout/GetUser/AdminProfileWrapper";
+const AdminProfileWrapper = dynamic(() => import("layout/GetUser/AdminProfileWrapper"), {
   loading: () => <LoadingBarSSR/>,
   ssr: false,
 })
 // Meta headers
 import MetaHeadersPage from "layout/MetaHeadersPage";
-import BiddingRoom from "pageComponents/BiddingRoom";
 
 
-const OffersBuyerPage = (props: ReactProps) => {
+const OffersAdminViewer = (props: ReactProps) => {
 
   // state
   const { classes } = props;
@@ -26,21 +25,18 @@ const OffersBuyerPage = (props: ReactProps) => {
   return (
     <>
       <MetaHeadersPage
-        title="Offers - View your bids - gunmarketplace.com.au"
+        title="Offers - View bids - gunmarketplace.com.au"
         robots="noindex"
       />
-      <UserProfileWrapper>
-      {({ data, loading, error }: UserProfileProps) => {
-        return (
-          <div className={classes.contentContainer}>
-            {
-              data && data.user && data.user.store &&
-              <BiddingRoom asModal={false} />
-            }
-          </div>
-        );
-      }}
-      </UserProfileWrapper>
+      <AdminProfileWrapper>
+        {({ data, loading, error }: AdminProfileProps) => {
+          return (
+            <div className={classes.contentContainer}>
+              NOT IMPLEMENTED YET. VIEW BIDS AS ADMIN
+            </div>
+          );
+        }}
+      </AdminProfileWrapper>
     </>
   )
 }
@@ -48,6 +44,10 @@ const OffersBuyerPage = (props: ReactProps) => {
 interface ReactProps extends WithStyles<typeof styles> {
 }
 
-export default withStyles(styles)( OffersBuyerPage );
+export const getStaticProps = async (context) => {
+  return { props: { } };
+};
+
+export default withStyles(styles)( OffersAdminViewer );
 
 

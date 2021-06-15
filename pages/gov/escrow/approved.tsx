@@ -66,11 +66,6 @@ interface ReactProps extends WithStyles<typeof styles> {
   orderIdsGroupedByDay: OrdersGroupedByDay[]
 }
 
-////////// SSR ///////////
-interface Context extends NextPageContext {
-  apolloClient: ApolloClient<object>;
-}
-
 interface QData {
   getAdminApprovedOrderIdsGroupedByDay: OrdersGroupedByDay[]
 }
@@ -78,7 +73,7 @@ interface QVar {
 }
 
 
-// export async function getServerSideProps(ctx: Context) {
+// export async function getServerSideProps(ctx: NextPageContext) {
 
 //   const { data } = await serverApolloClient(ctx).query<QData, QVar>({
 //     query: GET_ADMIN_APPROVED_ORDER_IDS_GROUPED_BY_DAY,
@@ -93,6 +88,10 @@ interface QVar {
 //     }
 //   };
 // }
+
+export const getStaticProps = async (context) => {
+  return { props: { } };
+};
 
 export default withStyles(styles)( PayoutsApprovedListPage );
 

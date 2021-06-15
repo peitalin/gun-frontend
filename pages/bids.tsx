@@ -35,13 +35,13 @@ const BidsPage: NextPage<ReactProps> = (props) => {
         robots="noindex"
       />
       <UserProfileWrapper>
-      {(dataUser: UserProfileProps) => {
-        return (
-          <div className={classes.contentContainerPublicPage}>
-            <BiddingRoom asModal={false} />
-          </div>
-        )
-      }}
+        {(dataUser: UserProfileProps) => {
+          return (
+            <div className={classes.contentContainerPublicPage}>
+              <BiddingRoom asModal={false} />
+            </div>
+          )
+        }}
       </UserProfileWrapper>
     </>
   )
@@ -62,6 +62,10 @@ const styles = (theme: Theme) => createStyles({
 ///////////////// TYPINGS ///////////////////
 interface ReactProps extends WithStyles<typeof styles> {
 }
+
+export const getStaticProps = async (context) => {
+  return { props: { } };
+};
 
 
 export default withStyles(styles)( BidsPage );

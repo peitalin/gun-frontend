@@ -58,6 +58,11 @@ const EditDealerHomePage = (props: ReactProps) => {
 interface ReactProps extends WithStyles<typeof styles> {
 }
 
+export const getStaticProps = async (context) => {
+  return { props: { } };
+};
+
+
 export default withStyles(styles)( EditDealerHomePage );
 
 

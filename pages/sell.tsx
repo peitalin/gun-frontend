@@ -9,7 +9,6 @@ import MetaHeadersPage from "layout/MetaHeadersPage";
 
 
 
-
 const SellPageSSR: React.FC<ProductCreateProps> = (props) => {
 
   return (
@@ -73,5 +72,8 @@ const styles = (theme: Theme) => createStyles({
   },
 });
 
+export const getStaticProps = async (context) => {
+  return { props: { } };
+};
 
 export default withStyles(styles)( SellPageSSR );

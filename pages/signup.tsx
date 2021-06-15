@@ -1,18 +1,11 @@
 import React from "react";
-import clsx from "clsx";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 // SSR
 import { NextPage, NextPageContext } from 'next';
-import { ApolloClient, useApolloClient } from "@apollo/client";
-import { UserPrivate } from "typings/gqlTypes";
-// Redux
-import { GrandReduxState } from "reduxStore/grand-reducer";
-import { useSelector } from "react-redux";
 import Login from "layout/Login";
 // Meta headers
 import MetaHeadersPage from "layout/MetaHeadersPage";
-import { useRouter } from "next/router";
 
 
 
@@ -20,11 +13,10 @@ const SignupPage: NextPage<ReactProps> = (props) => {
 
   const {
     classes,
-    query,
   } = props;
 
   return (
-    <div className={classes.root}>
+    <>
       <MetaHeadersPage
         title="Sign Up - gunmarketplace.com.au"
         ogTitle="Sign Up - gunmarketplace.com.au"
@@ -35,35 +27,23 @@ const SignupPage: NextPage<ReactProps> = (props) => {
           Create an account for free.
         `}
       />
-      <div className={classes.maxWidth}>
-        <Login
-          redirectOnComplete={"/"}
-          redirectDelay={500}
-          initialTabIndex={1} // set initial tab to login page
-          asFormLayout={true} // form, not modal
-        />
+      <div className={classes.root}>
+        <div className={classes.maxWidth}>
+          <Login
+            redirectOnComplete={"/"}
+            redirectDelay={500}
+            initialTabIndex={1} // set initial tab to login page
+            asFormLayout={true} // form, not modal
+          />
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 
 
 interface ReactProps extends WithStyles<typeof styles> {
-  query: any;
 }
-
-////////// SSR ///////////
-interface Context extends NextPageContext {
-  apolloClient: ApolloClient<any>;
-}
-
-SignupPage.getInitialProps = async (ctx: Context) => {
-  return {
-    query: ctx.query as any,
-    classes: undefined,
-  };
-}
-
 
 const styles = (theme: Theme) => createStyles({
   root: {
@@ -79,6 +59,10 @@ const styles = (theme: Theme) => createStyles({
     maxWidth: 400,
   },
 });
+
+export const getStaticProps = async (context) => {
+  return { props: { } };
+};
 
 export default withStyles(styles)( SignupPage );
 

@@ -16,7 +16,6 @@ const AdminProfileWrapper = dynamic(() => import("layout/GetUser/AdminProfileWra
 })
 
 
-
 const OrdersExpiringListPage = (props: ReactProps) => {
   // state
   const {
@@ -43,6 +42,10 @@ const OrdersExpiringListPage = (props: ReactProps) => {
 
 interface ReactProps extends WithStyles<typeof styles> {
 }
+
+export const getStaticProps = async (context) => {
+  return { props: { } };
+};
 
 export default withStyles(styles)( OrdersExpiringListPage );
 

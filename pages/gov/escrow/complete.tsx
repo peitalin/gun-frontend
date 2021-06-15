@@ -54,6 +54,10 @@ interface ReactProps extends WithStyles<typeof styles> {
   // orderIdsGroupedByDay: OrdersGroupedByDay[]
 }
 
+export const getStaticProps = async (context) => {
+  return { props: { } };
+};
+
 export default withStyles(styles)( PayoutsCompleteListPage );
 
 

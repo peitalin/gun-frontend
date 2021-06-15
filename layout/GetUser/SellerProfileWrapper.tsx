@@ -18,7 +18,7 @@ import Redirect from "pageComponents/Redirect";
 import { isStoreDeleted, storeDoesNotExist } from "utils/store";
 import { getUserDataFromGqlOrRedux } from "./utils";
 import { useRouter } from "next/router";
-
+import PageDashboardLayout from "layout/GetUser/PageDashboardLayout";
 
 
 
@@ -104,9 +104,9 @@ export const SellerProfileWrapper = (props) => {
     }
 
     return (
-      <>
+      <PageDashboardLayout>
         { props.children(apolloProps) }
-      </>
+      </PageDashboardLayout>
     )
   }
 }

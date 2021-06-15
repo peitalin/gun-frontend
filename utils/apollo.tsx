@@ -15,7 +15,6 @@ import { SubscriptionClient } from "subscriptions-transport-ws";
 
 // Switches between unfetch & node-fetch for client & server.
 import fetch from 'isomorphic-unfetch'
-import withApollo from 'next-with-apollo';
 import { DocumentNode } from "graphql"
 import https from "https";
 
@@ -326,7 +325,7 @@ export const useWsRenewableApolloClient = (userId: string) => {
 ///// For Server side only (within docker)
 ///////////////////////////////////////////
 
-export const serverApolloClient = (ctx) => {
+export const serverApolloClient = (ctx?: any) => {
   return new ApolloClient({
     link: ApolloLink.from([
       onErrorHandler,

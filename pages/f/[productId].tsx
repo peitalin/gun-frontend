@@ -23,6 +23,7 @@ import { GrandReduxState } from "reduxStore/grand-reducer";
 import {
   isSlotExpiredYet,
 } from "pageComponents/PromoteListings/PromotedSlotPurchaseModal/utils"
+import PageWithStripe from "layout/PageWithStripe";
 
 
 
@@ -31,6 +32,11 @@ const FeaturedProductPageSSR: NextPage<ReactProps> = (props) => {
   const router = useRouter()
   const productId: string = router.query.productId as any;
   const promotedListId: string = router.query.promotedListId as any; // optional
+
+  let noNavbarPadding = router.pathname === "/"
+    || router.pathname === "/start"
+    || router.pathname === "/sell"
+    || router.pathname.startsWith("/f/")
 
   // MetaHeaders in FeaturedProductId as it needs product name
   // const { initialPromotedSlot: promotedSlot } = props
@@ -95,7 +101,7 @@ const FeaturedProductPageSSR: NextPage<ReactProps> = (props) => {
     // by the admins (promotedSlot.productId is overridden by admins)
   }, [promotedSlot, isExpired])
 
-  console.log("promotedSLot", promotedSlot)
+  console.log("promotedSlot", promotedSlot)
 
   return (
     <>
@@ -122,13 +128,15 @@ const FeaturedProductPageSSR: NextPage<ReactProps> = (props) => {
           }
         />
       }
-      {
-        // only for promoted products
-        p?.id &&
-        <FeaturedProductId
-          initialProduct={p}
-        />
-      }
+      <PageWithStripe>
+        {
+          // only for promoted products
+          p?.id &&
+          <FeaturedProductId
+            initialProduct={p}
+          />
+        }
+      </PageWithStripe>
     </>
   )
 }
@@ -145,17 +153,10 @@ interface QueryVar {
   promotedListId?: ID;
 }
 
-////////// SSR ///////////
-// interface Context extends NextPageContext {
-//   apolloClient: ApolloClient<any>;
-// }
-
-// export async function getServerSideProps(ctx: Context) {
-// // FeaturedProductPageSSR.getInitialProps = async (ctx: Context) => {
+// export async function getServerSideProps(ctx: NextPageContext) {
 
 //   const productId: string = ctx.query.productId as any;
 //   const promotedListId: string = ctx.query.promotedListId as any; // optional
-//   console.log('getInitialProps ctx: ', ctx.query);
 
 //   if (!productId) {
 //     return {
@@ -174,7 +175,6 @@ interface QueryVar {
 //         promotedListId: promotedListId, // optional
 //       },
 //     })
-//     // console.log('getInitialProps FeaturedProductPageSSR: ', data);
 //     return {
 //       props: {
 //         initialPromotedSlot: data?.getPromotedSlotByProductId,

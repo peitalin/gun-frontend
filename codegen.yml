@@ -11,10 +11,10 @@ schema:
 documents:
   # - ./**/*.graphql
   # - ./queries/*.ts
-  - ./queries/fragments.ts
-  - ./queries/content-mutations.ts
+  # - ./queries/fragments.ts
+  # - ./queries/content-mutations.ts
   # - ./queries/store-queries.ts
-  - ./queries/store-mutations.ts
+  # - ./queries/store-mutations.ts
   # - ./queries/user-queries.ts
   # - ./queries/user-mutations.ts
 

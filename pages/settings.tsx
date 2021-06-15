@@ -11,7 +11,6 @@ import LoadingBarSSR from "components/LoadingBarSSR";
 import MetaHeadersPage from "layout/MetaHeadersPage";
 // SSR disable
 import dynamic from "next/dynamic";
-import GetUser from "layout/GetUser";
 // import MySettings from "layout/MySettingsModal";
 const MySettings = dynamic(() => import("layout/MySettingsModal"), {
   loading: () => <Loading/>,
@@ -22,6 +21,7 @@ const UserProfileWrapper = dynamic(() => import("layout/GetUser/UserProfileWrapp
   loading: () => <LoadingBarSSR/>,
   ssr: false,
 })
+
 
 
 const SettingsPageSSR: NextPage<ReactProps> = (props) => {
@@ -51,20 +51,9 @@ const SettingsPageSSR: NextPage<ReactProps> = (props) => {
 
 
 interface ReactProps extends WithStyles<typeof styles> {
-  query: any;
 }
 
-////////// SSR ///////////
-interface Context extends NextPageContext {
-  apolloClient: ApolloClient<any>;
-}
 
-SettingsPageSSR.getInitialProps = async (ctx: Context) => {
-  return {
-    query: ctx.query as any,
-    classes: undefined,
-  };
-}
 
 
 const styles = (theme: Theme) => createStyles({
@@ -76,6 +65,10 @@ const styles = (theme: Theme) => createStyles({
     maxWidth: 400,
   },
 });
+
+export const getStaticProps = async (context) => {
+  return { props: { } };
+};
 
 export default withStyles(styles)( SettingsPageSSR );
 

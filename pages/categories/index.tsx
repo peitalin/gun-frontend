@@ -64,40 +64,23 @@ interface QueryVar1 {
   slug?: string;
 }
 
-////////// SSR ///////////
-interface Context extends NextPageContext {
-  apolloClient: ApolloClient<object>;
-}
+export const getStaticProps = async (context) => {
 
-export async function getServerSideProps(ctx: Context) {
+  // const { data } = await serverApolloClient(ctx).query<QueryData1, QueryVar1>({
+  //   query: GET_CATEGORIES,
+  // })
+  // console.log("data.getCategories:", data?.getCategories)
+  // console.log("local categories", categoryPreviewsBackup)
+  // let initialCategories = data?.getCategories ?? categoryPreviewsBackup as any;
+  let initialCategories: Categories[] = categoryPreviewsBackup as any;
 
-  try {
-    // const { data } = await serverApolloClient(ctx).query<QueryData1, QueryVar1>({
-    //   query: GET_CATEGORIES,
-    // })
-    // console.log("data.getCategories:", data?.getCategories)
-    // console.log("local categories", categoryPreviewsBackup)
-    // let initialCategories = data?.getCategories ?? categoryPreviewsBackup as any;
-    let initialCategories: Categories[] = categoryPreviewsBackup as any;
-
-    // return props
-    return {
-      props: {
-        initialCategories: initialCategories,
-        classes: undefined,
-      }
-    };
-
-  } catch(e) {
-    return {
-      props: {
-        initialCategories: [],
-        classes: undefined,
-      }
-    };
-  }
-
-}
+  // return props
+  return {
+    props: {
+      initialCategories: initialCategories,
+    }
+  };
+};
 
 
 export default withStyles(styles)( CategoriesPage );

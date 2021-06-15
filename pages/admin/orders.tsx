@@ -32,13 +32,13 @@ const MyOrdersHistoryAdminPage = (props: ReactProps) => {
         robots="noindex"
       />
       <SellerProfileWrapper>
-      {({ data, loading, error }: SellerProfileProps) => {
-        return (
-        <div className={classes.contentContainer}>
-          <MyOrders withRecommendations={false}/>
-        </div>
-        );
-      }}
+        {({ data, loading, error }: SellerProfileProps) => {
+          return (
+          <div className={classes.contentContainer}>
+            <MyOrders withRecommendations={false}/>
+          </div>
+          );
+        }}
       </SellerProfileWrapper>
     </>
   );
@@ -46,6 +46,10 @@ const MyOrdersHistoryAdminPage = (props: ReactProps) => {
 
 interface ReactProps extends WithStyles<typeof styles> {
 }
+
+export const getStaticProps = async (context) => {
+  return { props: { } };
+};
 
 export default withStyles(styles)( MyOrdersHistoryAdminPage );
 

@@ -91,8 +91,6 @@ const GovSearch = (props: ReactProps) => {
 }
 
 interface ReactProps extends WithStyles<typeof styles> {
-  user: UserPrivate;
-  apolloClient: ApolloClient<any>;
 }
 
 interface MutData {
@@ -130,25 +128,8 @@ const styles = (theme: Theme) => createStyles({
   },
 })
 
-
-////////// SSR ///////////
-interface Context extends NextPageContext {
-  apolloClient: ApolloClient<any>;
-}
-
-GovSearch.getInitialProps = async (ctx: Context) => {
-
-  try {
-    return {
-      apolloClient: ctx.apolloClient,
-    };
-  } catch(e) {
-    return {
-      apolloClient: ctx.apolloClient,
-    };
-  }
-
-}
-
+export const getStaticProps = async (context) => {
+  return { props: { } };
+};
 
 export default withStyles(styles)( GovSearch );

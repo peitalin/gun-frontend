@@ -3,10 +3,6 @@ import React from "react";
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
 // SSR
 import { NextPage, NextPageContext } from 'next';
-// GraphQL
-import { serverApolloClient } from "utils/apollo";
-import gql from 'graphql-tag'
-import { useApolloClient, ApolloClient } from "@apollo/client";
 // Components
 import LoadingBarSSR from "components/LoadingBarSSR";
 import SavedSearches from "pageComponents/SavedSearches";
@@ -35,13 +31,13 @@ const SavedSearchesPage: NextPage<ReactProps> = (props) => {
         robots="noindex"
       />
       <UserProfileWrapper>
-      {(dataUser: UserProfileProps) => {
-        return (
-          <div className={classes.contentContainerPublicPage}>
-            <SavedSearches />
-          </div>
-        )
-      }}
+        {(dataUser: UserProfileProps) => {
+          return (
+            <div className={classes.contentContainerPublicPage}>
+              <SavedSearches />
+            </div>
+          )
+        }}
       </UserProfileWrapper>
     </>
   )
@@ -63,6 +59,9 @@ const styles = (theme: Theme) => createStyles({
 interface ReactProps extends WithStyles<typeof styles> {
 }
 
+export const getStaticProps = async (context) => {
+  return { props: { } };
+};
 
 export default withStyles(styles)( SavedSearchesPage );
 

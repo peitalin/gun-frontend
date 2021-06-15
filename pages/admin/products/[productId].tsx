@@ -64,42 +64,40 @@ const ProductEditPage = (props: ReactProps) => {
         robots="noindex"
       />
       <SellerProfileWrapper>
-      {(dataUser: SellerProfileProps) => {
-
-        if (loading) {
-          return <LoadingBarSSR/>
-        } else if (error) {
-          return (
-            <Redirect
-              message={"Error fetching product. Redirecting..."}
-              redirectCondition={!!error}
-              redirectDelay={2000}
-              redirectRoute={"/admin/products"}
-            />
-          )
-        } else if (!!data?.getProductById) {
-          return (
-            <div className={classes.contentContainer}>
-              <div className={classes.rootOuter}>
-                <ProductEdit
-                  asModal={false}
-                  product={data.getProductById}
-                />
+        {(dataUser: SellerProfileProps) => {
+          if (loading) {
+            return <LoadingBarSSR/>
+          } else if (error) {
+            return (
+              <Redirect
+                message={"Error fetching product. Redirecting..."}
+                redirectCondition={!!error}
+                redirectDelay={2000}
+                redirectRoute={"/admin/products"}
+              />
+            )
+          } else if (!!data?.getProductById) {
+            return (
+              <div className={classes.contentContainer}>
+                <div className={classes.rootOuter}>
+                  <ProductEdit
+                    asModal={false}
+                    product={data.getProductById}
+                  />
+                </div>
               </div>
-            </div>
-          )
-        } else {
-          return (
-            <Redirect
-              message={"Product could not be retrieved. Redirecting..."}
-              redirectCondition={!data}
-              redirectDelay={2000}
-              redirectRoute={"/admin/products"}
-            />
-          )
-        }
-
-      }}
+            )
+          } else {
+            return (
+              <Redirect
+                message={"Product could not be retrieved. Redirecting..."}
+                redirectCondition={!data}
+                redirectDelay={2000}
+                redirectRoute={"/admin/products"}
+              />
+            )
+          }
+        }}
       </SellerProfileWrapper>
     </>
   )

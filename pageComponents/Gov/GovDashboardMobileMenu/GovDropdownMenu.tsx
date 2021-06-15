@@ -97,7 +97,6 @@ const MenuExpanded = (
   props: ReactProps & MenuExpandedProps
 ) => {
 
-  const router = useRouter();
   const { classes } = props;
 
   return (

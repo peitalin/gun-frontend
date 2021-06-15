@@ -10,6 +10,7 @@ import { makeStore, GrandReduxState } from "reduxStore/grand-reducer";
 import { Actions } from "reduxStore/actions";
 // Redux SSR Next
 import withRedux from "next-redux-wrapper";
+import App from "next/app";
 // Layout
 import Layout from "layout";
 // MUI
@@ -21,8 +22,6 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import { withStyles, WithStyles } from '@material-ui/core/styles';
 import { useRouter } from 'next/router';
-// Next
-import App from "next/app";
 // Apollo Graphql
 import { ApolloProvider, ApolloClient } from '@apollo/client';
 import { useWsRenewableApolloClient } from "utils/apollo";
@@ -62,6 +61,11 @@ declare global {
 }
 
 
+// import { wrapper } from 'reduxStore/grand-reducer';
+// const _WrappedApp: React.FC<AppProps> = ({Component, pageProps}) => (
+//   <Component {...pageProps} />
+// );
+// const WrappedApp = wrapper.withRedux(_WrappedApp)
 
 
 const MainApp: NextComponentType<AppContext, AppInitialProps, AppProps & AppHOCProps> = (props) => {
@@ -89,10 +93,10 @@ const MainApp: NextComponentType<AppContext, AppInitialProps, AppProps & AppHOCP
     }
   })
 
-  let state = store.getState()
-  let userId = state.reduxLogin.user?.id
+  let state = store?.getState()
+  let userId = state?.reduxLogin?.user?.id
   // console.log("MainApp userId: ", userId)
-  // console.log("_app pageProps: ", pageProps)
+  console.log("_app pageProps: ", pageProps)
 
   // This client has hooks that force websockets to reconnect after auth
   //
@@ -113,10 +117,10 @@ const MainApp: NextComponentType<AppContext, AppInitialProps, AppProps & AppHOCP
             preventDuplicate
             hideIconVariant
             classes={{
-              variantSuccess: classes.variantSuccess,
-              variantError: classes.variantError,
-              variantInfo: classes.variantInfo,
-              variantWarning: classes.variantWarning,
+              variantSuccess: classes?.variantSuccess,
+              variantError: classes?.variantError,
+              variantInfo: classes?.variantInfo,
+              variantWarning: classes?.variantWarning,
               // containerRoot: classes.containerRoot,
             }}
             action={(key) => {
@@ -132,7 +136,7 @@ const MainApp: NextComponentType<AppContext, AppInitialProps, AppProps & AppHOCP
           >
             <CssBaseline />
             <Layout>
-              <Component {...pageProps} key={router.route} />
+              <Component {...pageProps} key={router?.route} />
             </Layout>
           </SnackbarProvider>
         </ThemeProviderDarkMode>
@@ -144,7 +148,7 @@ const MainApp: NextComponentType<AppContext, AppInitialProps, AppProps & AppHOCP
 
 const ThemeProviderDarkMode = ({ initialDarkModeSSR, children }) => {
 
-  let darkModeRedux = useSelector<GrandReduxState, "dark"|"light">(s => {
+  let darkModeRedux = useSelector<any, "dark"|"light">(s => {
     return s.reduxLogin.darkMode
   })
   let dispatch = useDispatch()
@@ -228,30 +232,32 @@ const ThemeProviderDarkMode = ({ initialDarkModeSSR, children }) => {
 
 
 interface AppHOCProps extends WithStyles<typeof notifyStyles> {
-  store: Store<GrandReduxState>;
+  store: Store<any>;
 }
 
-// MainApp.getInitialProps = async (appContext) => {
+MainApp.getInitialProps = async (appContext) => {
 
-//     const appProps = await App.getInitialProps(appContext)
-//     // console.log("appProps: ", appProps)
-//     let ctx = appContext.ctx;
+    const appProps = await App.getInitialProps(appContext)
+    // console.log("appProps: ", appProps)
+    let ctx = appContext.ctx;
 
-//     let darkMode = (ctx.query?.dark === "true" || ctx.query?.dark === "1")
-//       ? "dark"
-//       : (ctx.query?.light === "true" || ctx.query?.light === "1")
-//         ? "light"
-//         : undefined
-//       // when undefined, localStorage determines darkmode
+    let darkMode = (ctx.query?.dark === "true" || ctx.query?.dark === "1")
+      ? "dark"
+      : (ctx.query?.light === "true" || ctx.query?.light === "1")
+        ? "light"
+        : undefined
+      // when undefined, localStorage determines darkmode
 
-//     return {
-//       ...appProps,
-//       pageProps: {
-//         ...appProps.pageProps,
-//         initialDarkModeSSR: darkMode,
-//       },
-//     }
-// }
+    return {
+      ...appProps,
+      pageProps: {
+        ...appProps.pageProps,
+        initialDarkModeSSR: darkMode,
+      },
+    }
+}
+
+
 
 export default
 withStyles(notifyStyles)(
@@ -259,3 +265,4 @@ withStyles(notifyStyles)(
     MainApp
   )
 );
+

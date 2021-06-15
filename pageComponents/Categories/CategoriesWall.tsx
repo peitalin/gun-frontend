@@ -7,7 +7,6 @@ import { withStyles, WithStyles, Theme, createStyles } from "@material-ui/core/s
 import Typography from "@material-ui/core/Typography";
 // hooks
 import Link from "next/link";
-import { categorySelectors } from "utils/selectors";
 import { Colors } from "layout/AppTheme";
 import CategoryCarouselStart from "components/CategoryCarouselStart";
 

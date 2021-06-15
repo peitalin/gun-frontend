@@ -102,17 +102,17 @@ interface Context extends NextPageContext {
 }
 
 
-ThemeProviderDarkMode.getInitialProps = async (ctx: Context) => {
+// ThemeProviderDarkMode.getInitialProps = async (ctx: Context) => {
 
-  const darkMode = (
-    ctx.query.dark === "true" || ctx.query.dark === "1"
-  ) ? "dark" : "light"
+//   const darkMode = (
+//     ctx.query.dark === "true" || ctx.query.dark === "1"
+//   ) ? "dark" : "light"
 
-  console.log('getInitialProps ThemeProviderDarkMode: DARKMODE:', darkMode);
-  return {
-    initialDarkMode: darkMode,
-  };
-}
+//   console.log('getInitialProps ThemeProviderDarkMode: DARKMODE:', darkMode);
+//   return {
+//     initialDarkMode: darkMode,
+//   };
+// }
 
 
 

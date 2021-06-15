@@ -1,12 +1,10 @@
 import React from "react"
-import clsx from "clsx";
-import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
 import Hidden from "components/HiddenFix";
+
 
 const ShowOnMobileOrDesktopSSR: React.FC<ReactProps> = (props) => {
 
   const {
-    classes,
     className,
     mobile,
     desktop,
@@ -26,9 +24,7 @@ const ShowOnMobileOrDesktopSSR: React.FC<ReactProps> = (props) => {
     // default to mobile
     return (
       <Hidden
-        className={clsx(
-          props.className
-        )}
+        className={props.className}
         lgUp
         implementation="css"
       >
@@ -38,9 +34,7 @@ const ShowOnMobileOrDesktopSSR: React.FC<ReactProps> = (props) => {
   } else if (mobile) {
     return (
       <Hidden
-        className={clsx(
-          props.className
-        )}
+        className={props.className}
         lgUp
         implementation="css"
       >
@@ -50,9 +44,7 @@ const ShowOnMobileOrDesktopSSR: React.FC<ReactProps> = (props) => {
   } else if (desktop) {
     return (
       <Hidden
-        className={clsx(
-          props.className
-        )}
+        className={props.className}
         mdDown
         implementation="css"
       >
@@ -63,9 +55,7 @@ const ShowOnMobileOrDesktopSSR: React.FC<ReactProps> = (props) => {
     // is nothing supplied default to desktop
     return (
       <Hidden
-        className={clsx(
-          props.className
-        )}
+        className={props.className}
         mdDown
         implementation="css"
       >
@@ -75,15 +65,12 @@ const ShowOnMobileOrDesktopSSR: React.FC<ReactProps> = (props) => {
   }
 }
 
-interface ReactProps extends WithStyles<typeof styles> {
+interface ReactProps {
   mobile?: boolean
   desktop?: boolean
   className?: any;
 }
 
-const styles = (theme: Theme) => createStyles({
-  width100: { width: '100%' },
-});
 
 
-export default withStyles(styles)( ShowOnMobileOrDesktopSSR );
+export default ShowOnMobileOrDesktopSSR

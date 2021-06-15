@@ -33,15 +33,15 @@ const PublishedProductsPage = (props: ReactProps) => {
         robots="noindex"
       />
       <SellerProfileWrapper>
-      {({ data, loading, error }: SellerProfileProps) => {
-        return (
-          <div className={classes.contentContainer}>
-            <PublishedProductsList
-              store={data?.user?.store}
-            />
-          </div>
-        )
-      }}
+        {({ data, loading, error }: SellerProfileProps) => {
+          return (
+            <div className={classes.contentContainer}>
+              <PublishedProductsList
+                store={data?.user?.store}
+              />
+            </div>
+          )
+        }}
       </SellerProfileWrapper>
     </>
   )
@@ -49,5 +49,9 @@ const PublishedProductsPage = (props: ReactProps) => {
 
 interface ReactProps extends WithStyles<typeof styles> {
 }
+
+export const getStaticProps = async (context) => {
+  return { props: { } };
+};
 
 export default withStyles(styles)( PublishedProductsPage );

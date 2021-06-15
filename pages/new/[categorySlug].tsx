@@ -21,7 +21,6 @@ import MetaHeadersPage from "layout/MetaHeadersPage";
 
 
 
-
 const CategorySlugSSR: NextPage<ReactProps> = (props) => {
 
   return (
@@ -70,7 +69,6 @@ interface Context extends NextPageContext {
 }
 
 export async function getServerSideProps(ctx: Context) {
-// CategorySlugSSR.getInitialProps = async (ctx: Context) => {
 
   const categorySlug: string = ctx.query.categorySlug as any;
 

@@ -21,7 +21,6 @@ import {
  } from "queries/products-queries";
 import { useQuery, useApolloClient } from "@apollo/client";
 // categories
-import { categorySelectors } from "utils/selectors";
 import { useCategoriesList } from "layout/NavBarMain/CategoryBar/categoryHooks";
 // useMediaQuery
 import { useTheme } from "@material-ui/core/styles";

@@ -44,16 +44,16 @@ const AdminDashboardHome = (props: ReactProps) => {
         robots="noindex"
       />
       <SellerProfileWrapper>
-      {(dataUser: SellerProfileProps) => {
-        return (
-          <Redirect
-            message={"Redirecting to products..."}
-            redirectCondition={true}
-            redirectDelay={1000}
-            redirectRoute={"/admin/products"}
-          />
-        )
-      }}
+        {(dataUser: SellerProfileProps) => {
+          return (
+            <Redirect
+              message={"Redirecting to products..."}
+              redirectCondition={true}
+              redirectDelay={1000}
+              redirectRoute={"/admin/products"}
+            />
+          )
+        }}
       </SellerProfileWrapper>
     </>
   )
@@ -138,6 +138,10 @@ export const styles = (theme: Theme) => createStyles({
   title: {
   },
 });
+
+export const getStaticProps = async (context) => {
+  return { props: { } };
+};
 
 export default withStyles(styles)( AdminDashboardHome );
 

@@ -9,7 +9,6 @@ import { GET_CALIBERS } from "queries/calibers-queries";
 import { PageConfig, Categories, Calibers } from "typings/gqlTypes";
 // SSR
 import { NextPage, NextPageContext } from 'next';
-import dynamic from "next/dynamic";
 // GraphQL
 import { serverApolloClient } from "utils/apollo";
 import FrontPage from "pageComponents/FrontPage";
@@ -17,17 +16,20 @@ import { useQuery, ApolloClient } from "@apollo/client";
 import { categoryPreviewsBackup } from "components/CategoryCarouselStart/utils";
 // Meta headers
 import MetaHeadersPage from "layout/MetaHeadersPage";
+import SocialFloatingBanner from "layout/SocialFloatingBanner";
+import ShowOnMobileOrDesktopSSR from "components/ShowOnMobileOrDesktopSSR";
+import { useRouter } from "next/router";
 
 
 
 const HomePage: NextPage<ReactProps> = (props) => {
 
-  const { data } = useQuery<QData1, QVar1>(
-    GET_PAGE_CONFIG_BY_PATH, {
-    variables: {
-      urlPath: "/"
-    }
-  })
+  // const { data } = useQuery<QData1, QVar1>(
+  //   GET_PAGE_CONFIG_BY_PATH, {
+  //   variables: {
+  //     urlPath: "/"
+  //   }
+  // })
 
   // const { data: data2 } = await serverApolloClient(ctx).query<QData2, QVar2>({
   //   query: GET_CATEGORIES,
@@ -37,8 +39,13 @@ const HomePage: NextPage<ReactProps> = (props) => {
   // console.log("getCategories ssr: ", data2?.getCategories)
 
   // let initialCategories = data2?.getCategories ?? [];
-  let initialCategories: Categories[] = categoryPreviewsBackup as any;
+  // let initialCategories: Categories[] = categoryPreviewsBackup as any;
 
+  let router = useRouter()
+
+  let showSocialBanner = router.pathname === '/'
+    || router.pathname.startsWith("/start")
+    || router.pathname.startsWith("/help")
 
   return (
     <>
@@ -54,14 +61,17 @@ const HomePage: NextPage<ReactProps> = (props) => {
           Get started selling your used guns with 100% free listings
         `}
       />
+      <FrontPage
+        // pageConfig={data?.getPageConfig}
+        // initialCategories={initialCategories}
+        pageConfig={props?.getPageConfig}
+        initialCategories={props.initialCategories}
+      />
       {
-        data?.getPageConfig &&
-        <FrontPage
-          pageConfig={data?.getPageConfig}
-          initialCategories={initialCategories}
-          // pageConfig={props?.getPageConfig}
-          // initialCategories={props.initialCategories}
-        />
+        showSocialBanner &&
+        <ShowOnMobileOrDesktopSSR desktop>
+          <SocialFloatingBanner/>
+        </ShowOnMobileOrDesktopSSR>
       }
     </>
   )
@@ -75,7 +85,7 @@ const styles = (theme: Theme) => createStyles({
 ///////////////// TYPINGS ///////////////////
 interface ReactProps extends WithStyles<typeof styles> {
   initialCategories: Categories[];
-  pageConfig: PageConfig;
+  getPageConfig: PageConfig;
 }
 interface QData1 {
   getPageConfig: PageConfig;
@@ -112,40 +122,11 @@ export async function getStaticProps(ctx: Context) {
   return {
     props: {
       initialCategories: initialCategories,
-      pageConfig: data?.getPageConfig,
+      getPageConfig: data?.getPageConfig,
+      revalidate: 600, // 10min
     }, // will be passed to the page component as props
   }
 }
-
-// HomePage.getInitialProps = async (ctx: Context) => {
-
-//   // Will trigger this getInitialProps when requesting route /pages/ProductGallery
-//   // otherwise initialProps may be fed via /pages/index.tsx's getInitialProps
-//   const aClient = serverApolloClient(ctx);
-
-//   const { data } = await aClient.query<QData1, QVar1>({
-//     query: GET_PAGE_CONFIG_BY_PATH,
-//     variables: {
-//       urlPath: "/"
-//     }
-//   })
-
-//   // const { data: data2 } = await serverApolloClient(ctx).query<QData2, QVar2>({
-//   //   query: GET_CATEGORIES,
-//   // })
-
-//   // console.log("getPageConfig: ", data?.getPageConfig)
-//   // console.log("getCategories ssr: ", data2?.getCategories)
-
-//   // let initialCategories = data2?.getCategories ?? [];
-//   let initialCategories: Categories[] = categoryPreviewsBackup as any;
-
-//   return {
-//     initialCategories: initialCategories,
-//     pageConfig: data?.getPageConfig,
-//     classes: undefined,
-//   };
-// }
 
 
 export default withStyles(styles)( HomePage );

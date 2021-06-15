@@ -37,9 +37,7 @@ const PasswordResetPage: NextPage<ReactProps> = (props) => {
   const router = useRouter();
   const snackbar = useSnackbar();
 
-  const {
-    query
-  } = props;
+  const query = router?.query
 
   // const reset_id = query.reset_id;
   // const email = query.email;
@@ -206,32 +204,6 @@ const ResetPasswordForm: React.FC<any> = (props) => {
 }
 
 interface ReactProps extends WithStyles<typeof styles> {
-  query: any;
-}
-interface MutationVar {
-  email: string;
-  expiresAt: Date;
-  resetId: string;
-  url: string;
-  password: string;
-}
-interface MutationData {
-  resetId: string;
-  email: string;
-  url: string;
-}
-
-////////// SSR ///////////
-interface Context extends NextPageContext {
-  apolloClient: ApolloClient<any>;
-}
-
-PasswordResetPage.getInitialProps = async (ctx: Context) => {
-  console.log('query initial', ctx.query)
-  return {
-    query: ctx.query as any,
-    classes: undefined,
-  };
 }
 
 
@@ -280,6 +252,10 @@ const styles = (theme: Theme) => createStyles({
     display: 'flex',
   },
 });
+
+export const getStaticProps = async (context) => {
+  return { props: { } };
+};
 
 export default withStyles(styles)( PasswordResetPage );
 

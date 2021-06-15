@@ -20,7 +20,6 @@ const LoginPage: NextPage<ReactProps> = (props) => {
 
   const {
     classes,
-    query,
   } = props;
 
   const router = useRouter();
@@ -69,21 +68,7 @@ const LoginPage: NextPage<ReactProps> = (props) => {
 
 
 interface ReactProps extends WithStyles<typeof styles> {
-  query: any;
 }
-
-////////// SSR ///////////
-interface Context extends NextPageContext {
-  apolloClient: ApolloClient<any>;
-}
-
-LoginPage.getInitialProps = async (ctx: Context) => {
-  return {
-    query: ctx.query as any,
-    classes: undefined,
-  };
-}
-
 
 const styles = (theme: Theme) => createStyles({
   root: {
@@ -99,6 +84,10 @@ const styles = (theme: Theme) => createStyles({
     maxWidth: 400,
   },
 });
+
+export const getStaticProps = async (context) => {
+  return { props: { } };
+};
 
 export default withStyles(styles)( LoginPage );
 

@@ -35,7 +35,6 @@ const GovFeaturedProducts = (props: ReactProps) => {
 
   const { classes } = props;
   const snackbar = useSnackbar();
-  const router = useRouter();
 
   const [initiatePageConfig, response1] = useMutation(
     INITIATE_PAGE_CONFIG, {
@@ -102,7 +101,7 @@ const GovFeaturedProducts = (props: ReactProps) => {
         const disabled = user?.userRole !== Role.PLATFORM_ADMIN;
 
         return (
-          <div className={classes.govPromotedProducts}>
+          <div className={classes.govPageConfigsRoot}>
             {
               loading &&
               <LoadingBar
@@ -210,16 +209,13 @@ const GovFeaturedProducts = (props: ReactProps) => {
       }}
     </AdminProfileWrapper>
   )
-
 }
 
 interface ReactProps extends WithStyles<typeof styles> {
-  user: UserPrivate;
-  apolloClient: ApolloClient<any>;
 }
 
 const styles = (theme: Theme) => createStyles({
-  govPromotedProducts: {
+  govPageConfigsRoot: {
     display: "flex",
     flexDirection: "column",
     justifyContent: "flex-start",
@@ -259,24 +255,8 @@ const styles = (theme: Theme) => createStyles({
 })
 
 
-////////// SSR ///////////
-interface Context extends NextPageContext {
-  apolloClient: ApolloClient<any>;
-}
-
-GovFeaturedProducts.getInitialProps = async (ctx: Context) => {
-
-  try {
-    return {
-      apolloClient: ctx.apolloClient,
-    };
-  } catch(e) {
-    return {
-      apolloClient: ctx.apolloClient,
-    };
-  }
-
-}
-
+export const getStaticProps = async (context) => {
+  return { props: { } };
+};
 
 export default withStyles(styles)( GovFeaturedProducts );

@@ -1,6 +1,6 @@
 import React from "react";
 // Components
-import NewsBar from "./NewsBar";
+// import NewsBar from "./NewsBar";
 import MainBar from "./MainBar";
 import UserMenuMobileDither from "./UserMenuMobileDither";
 

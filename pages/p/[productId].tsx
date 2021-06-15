@@ -18,6 +18,8 @@ const ProductId = dynamic(() => import("pageComponents/P/ProductId"), {
   loading: () => <LoadingBarSSR/>,
   ssr: false,
 })
+import PageWithStripe from "layout/PageWithStripe";
+
 
 
 
@@ -67,9 +69,11 @@ const ProductPage: NextPage<ReactProps> = (props) => {
           }
         />
       }
-      <ProductId
-        initialProduct={props.initialProduct}
-      />
+      <PageWithStripe>
+        <ProductId
+          initialProduct={props.initialProduct}
+        />
+      </PageWithStripe>
     </>
   )
 }
@@ -93,7 +97,6 @@ interface QueryVar {
 // export async function getServerSideProps(ctx: Context) {
 
 //   const productId: string = ctx.query.productId as any;
-//   console.log('getInitialProps ctx: ', ctx.query);
 
 //   if (!productId) {
 //     return {
@@ -111,7 +114,6 @@ interface QueryVar {
 //         productId: productId
 //       },
 //     })
-//     // console.log('getInitialProps ProductPage: ', data);
 //     return {
 //       props: {
 //         initialProduct: data?.getProductById,
@@ -127,5 +129,23 @@ interface QueryVar {
 //     };
 //   }
 // }
+
+
+// export const getStaticProps = async (context) => {
+
+//   const { data } = useQuery<QueryData, QueryVar>(
+//     GET_PRODUCT, {
+//     variables: {
+//       productId: productId
+//     },
+//   })
+
+//   const p = data?.getProductById;
+//   const previewItem = p?.featuredVariant?.previewItems?.slice(-1)?.[0];
+//   const img = previewItem?.image
+//   const imgVariant = img?.variants?.find(v => v.widthInPixels === 400)
+//   // console.log("IMG: ", img)
+//   return { props: { } };
+// };
 
 export default ProductPage;

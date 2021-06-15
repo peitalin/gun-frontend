@@ -16,7 +16,7 @@ import LoadingBar from "components/LoadingBar";
 import Redirect from "pageComponents/Redirect";
 import { getUserDataFromGqlOrRedux } from "./utils";
 import { useRouter } from "next/router";
-
+import PageDashboardLayout from "layout/GetUser/PageDashboardLayout";
 
 
 const AdminProfileWrapper = (
@@ -76,8 +76,25 @@ const AdminProfileWrapper = (
   } else if (userIsAdmin) {
     if (!disableAdminBorder) {
       return (
-        <div className={props.classes.adminWrapperRoot}>
-          <div className={props.classes.adminInnerContainer}>
+        <PageDashboardLayout>
+          <div className={props.classes.adminWrapperRoot}>
+            <div className={props.classes.adminInnerContainer}>
+              {
+                props.children({
+                  loading,
+                  error,
+                  refetch,
+                  data,
+                })
+              }
+            </div>
+          </div>
+        </PageDashboardLayout>
+      )
+    } else {
+      return (
+        <PageDashboardLayout>
+          <div className={props.classes.adminWrapperRoot}>
             {
               props.children({
                 loading,
@@ -87,20 +104,7 @@ const AdminProfileWrapper = (
               })
             }
           </div>
-        </div>
-      )
-    } else {
-      return (
-        <div className={props.classes.adminWrapperRoot}>
-          {
-            props.children({
-              loading,
-              error,
-              refetch,
-              data,
-            })
-          }
-        </div>
+        </PageDashboardLayout>
       )
     }
   } else {

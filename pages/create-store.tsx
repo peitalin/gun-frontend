@@ -15,9 +15,6 @@ import Button from "@material-ui/core/Button";
 import CreateStoreForm from "pageComponents/StoreCreation/CreateStoreForm";
 // Meta headers
 import MetaHeadersPage from "layout/MetaHeadersPage";
-// ENV variables
-import getConfig from 'next/config'
-
 
 
 
@@ -29,7 +26,7 @@ const CreateStorePageSSR = (props: ReactProps) => {
   );
 
   return (
-    <ErrorBounds className={"fadeIn"}>
+    <ErrorBounds>
       <MetaHeadersPage
         title="Add seller details"
         ogTitle="Add seller details"
@@ -70,6 +67,10 @@ const styles = (theme: Theme) => createStyles({
     margin: '1rem',
   },
 });
+
+export const getStaticProps = async (context) => {
+  return { props: { } };
+};
 
 
 export default withStyles(styles)( CreateStorePageSSR );

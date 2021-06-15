@@ -3,6 +3,7 @@ import clsx from "clsx";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
 import { isThemeDark } from "layout/AppTheme";
+import { NextPage, NextPageContext } from 'next';
 // Typings
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
@@ -148,7 +149,11 @@ export default withStyles(styles)( ErrorPage );
 
 
 
-ErrorPage.getInitialProps = ({ res, err }) => {
-  const statusCode = res ? res.statusCode : err ? err.statusCode : 404
-  return { statusCode }
-}
+/// Error pages cannot have getServerSideProps
+// export async function getServerSideProps(ctx: NextPageContext) {
+// ErrorPage.getInitialProps = (ctx: NextPageContext) => {
+//   let res = ctx?.res;
+//   let err = ctx?.err
+//   const statusCode = res ? res?.statusCode : err ? err?.statusCode : 404
+//   return { statusCode }
+// }

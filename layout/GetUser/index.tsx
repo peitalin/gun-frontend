@@ -130,50 +130,5 @@ export const reduxBatchUpdate = {
 }
 
 
-//////////////////////////
-////////// SSR ///////////
-//////////////////////////
-
-interface Context extends NextPageContext {
-  apolloClient: ApolloClient<any>
-  store: Store<GrandReduxState>;
-}
-
-// GetUser.getInitialProps = async (ctx: Context) => {
-
-//   console.log('getting InitialProps for GetUser.tsx');
-//   console.log('GetUser req headers:\n', ctx?.req?.headers?.cookie);
-
-//   const cookie = ctx?.req?.headers?.cookie;
-//   let userResponse: { data?: { user?: UserPrivate } } = { data: undefined };
-//   const dispatch = ctx.store.dispatch;
-
-//   if (cookie && /gun-auth=/.exec(cookie)) {
-//     try {
-
-//       userResponse = await ctx.apolloClient.query<QueryData>({
-//         query: GET_USER,
-//       });
-
-//       console.log("initial GetUser response:", userResponse)
-//       if (userResponse?.data?.user?.store) {
-//         dispatch(Actions.reduxProductCreate.UPDATE_STORE_ID(userResponse.data.user.store.id));
-//       }
-//       if (userResponse?.data?.user) {
-//         dispatch(Actions.reduxLogin.SET_USER(userResponse.data.user));
-//       }
-//     } catch(e) {
-//       //   console.log(e)
-//     }
-//   }
-
-//   return {
-//     user: userResponse.data
-//       ? userResponse.data.user
-//       : {},
-//   };
-
-// }
-
 export default GetUser;
 

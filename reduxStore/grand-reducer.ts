@@ -1,6 +1,5 @@
-
 // Redux
-import { createStore, applyMiddleware, compose, combineReducers } from "redux";
+import { createStore, applyMiddleware, Store, combineReducers } from "redux";
 import thunk from "redux-thunk";
 // State Typings
 import { ReduxStateLogin } from './login-reducer';
@@ -27,22 +26,22 @@ import { Actions } from "./actions";
 export { Actions }
 
 
-export const makeStore = (initialState, options) => {
-    return createStore(
-      combineReducers({
-        reduxLogin: reduxReducerLogin,
-        reduxModals: reduxReducerModals,
-        reduxProductCreate: reduxReducerProductCreate,
-        reduxProductEdit: reduxReducerProductEdit,
-        reduxWatchlist: reduxReducerWatchlist,
-        reduxFollowingStores: reduxReducerFollowingStores,
-        reduxRefetch: reduxReducerRefetch,
-        reduxConversation: reduxReducerConversation,
-        reduxPaginatorVariables: reduxReducerPaginatorVariables,
-      }),
-      initialState,
-      applyMiddleware(thunk),
-    );
+export const makeStore = (initialState) => {
+  return createStore(
+    combineReducers({
+      reduxLogin: reduxReducerLogin,
+      reduxModals: reduxReducerModals,
+      reduxProductCreate: reduxReducerProductCreate,
+      reduxProductEdit: reduxReducerProductEdit,
+      reduxWatchlist: reduxReducerWatchlist,
+      reduxFollowingStores: reduxReducerFollowingStores,
+      reduxRefetch: reduxReducerRefetch,
+      reduxConversation: reduxReducerConversation,
+      reduxPaginatorVariables: reduxReducerPaginatorVariables,
+    }),
+    initialState,
+    applyMiddleware(thunk),
+  );
 };
 
 
@@ -57,4 +56,11 @@ export interface GrandReduxState {
   reduxConversation: ReduxStateConversation;
   reduxPaginatorVariables: ReduxStatePaginatorVariables;
 }
+
+
+// import { createWrapper, Context, HYDRATE } from 'next-redux-wrapper';
+// // wrapper for next-redux-wrapper
+// // https://github.com/kirill-konshin/next-redux-wrapper#installation
+// export const wrapper = createWrapper<Store<GrandReduxState>>(makeStore, {debug: true});
+
 

@@ -2,19 +2,13 @@ import React from "react";
 import clsx from "clsx";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
-import { isThemeDark } from "layout/AppTheme";
+import { NextPage, NextPageContext } from 'next';
 // Utils
-import ErrorBounds from "components/ErrorBounds";
-import Loading from "components/Loading";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
-import Divider from "components/Divider";
 // Components
-import { Colors } from "layout/AppTheme";
+import { Colors, isThemeDark } from "layout/AppTheme";
 import { useRouter } from "next/router";
-// Next
-import dynamic from "next/dynamic";
-import Hidden from "@material-ui/core/Hidden";
 // Analytics
 import AlignCenterLayout from "components/AlignCenterLayout";
 
@@ -43,13 +37,13 @@ const Error404Page = (props: ReactProps) => {
         </Typography>
         {
           message &&
-          <Typography className={classes.message}>
+          <Typography>
             {message}
           </Typography>
         }
         {
           statusCode &&
-          <Typography className={classes.statusCode}>
+          <Typography>
             {`Status: ${statusCode}`}
           </Typography>
         }
@@ -81,18 +75,6 @@ const styles = (theme: Theme) => createStyles({
   },
   padding2: {
     padding: '2rem',
-  },
-  flexCol: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  flexRow: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    flexWrap: 'wrap',
   },
   noResultsContainer: {
     minHeight: '33vh',
@@ -151,8 +133,10 @@ const styles = (theme: Theme) => createStyles({
 export default withStyles(styles)( Error404Page );
 
 
-
-Error404Page.getInitialProps = ({ res, err }) => {
-  const statusCode = res ? res.statusCode : err ? err.statusCode : 404
-  return { statusCode }
-}
+// export async function getServerSideProps(ctx: NextPageContext) {
+// Error404Page.getInitialProps = (ctx: NextPageContext) => {
+//   let res = ctx?.res;
+//   let err = ctx?.err
+//   const statusCode = res ? res?.statusCode : err ? err?.statusCode : 404
+//   return { statusCode }
+// }
