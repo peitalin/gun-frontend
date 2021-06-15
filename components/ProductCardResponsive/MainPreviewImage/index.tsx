@@ -67,7 +67,7 @@ const MainPreviewImage = (props: ReactProps) => {
 
   if (!firstPreview) {
     return (
-      <AspectGridItemLink product={product}>
+      <AspectGridItemLink product={product} promotedSlotId={props.promotedSlotId}>
         <PreviewImageEmpty
           previewImageEmptyMessage={props.previewImageEmptyMessage}
           onClick={props.onClick}
@@ -76,7 +76,7 @@ const MainPreviewImage = (props: ReactProps) => {
     )
   } else {
     return(
-      <AspectGridItemLink product={product}>
+      <AspectGridItemLink product={product} promotedSlotId={props.promotedSlotId}>
         {/* {
           firstPreview?.image?.original?.url
           ? <div className={classes.height100} ref={ref}>
@@ -168,6 +168,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   cardsPerRow: number;
   previewImageEmptyMessage?: React.ReactNode;
   onClick?(a: any): void;
+  promotedSlotId?: string
 }
 
 

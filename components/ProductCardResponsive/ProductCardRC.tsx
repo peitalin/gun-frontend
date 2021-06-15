@@ -109,6 +109,7 @@ const ProductCardRC = (props: ReactProps) => {
         cardsPerRow={cardsPerRow}
         previewImageEmptyMessage={props.previewImageEmptyMessage}
         onClick={props.onClick}
+        promotedSlotId={props.promotedSlotId}
       />
 
       <div className={classes.descriptionContainerOuter}
