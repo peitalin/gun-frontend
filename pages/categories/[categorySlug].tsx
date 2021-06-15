@@ -79,11 +79,14 @@ export const getStaticPaths = async (ctx: NextPageContext) => {
 
   const initialCategories = data?.getCategories
   // Get the paths we want to pre-render based on posts
-  const paths = initialCategories.map(category => ({
-    params: {
-      categorySlug: category.slug
-    },
-  }))
+  const paths = [
+    { params: { categorySlug: "all" } },
+    ...initialCategories.map(category => ({
+      params: {
+        categorySlug: category.slug
+      },
+    }))
+  ]
 
   return {
     paths: paths,
