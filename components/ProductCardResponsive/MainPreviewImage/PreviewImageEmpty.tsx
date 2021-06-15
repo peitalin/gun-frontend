@@ -2,7 +2,7 @@ import React from "react";
 import clsx from "clsx";
 
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
-import { Colors } from "layout/AppTheme";
+import { Colors, isThemeDark } from "layout/AppTheme";
 
 
 const PreviewImageEmpty: React.FC<ReactProps> = (props) => {
@@ -37,7 +37,9 @@ export const styles = (theme: Theme) => createStyles({
     objectFit: "cover",
     height: '100%',
     border: 'none',
-    backgroundColor: Colors.slateGrey,
+    backgroundColor: isThemeDark(theme)
+      ? Colors.uniswapMediumNavy
+      : Colors.slateGrey,
   },
   emptyYouTubeVimeo: {
     display: 'flex',

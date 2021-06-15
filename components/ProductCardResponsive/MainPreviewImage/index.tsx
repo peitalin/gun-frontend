@@ -117,7 +117,7 @@ const MainPreviewImage = (props: ReactProps) => {
         {
           firstPreview?.image?.original?.url
           ? <div className={classes.height100} ref={ref}>
-            <Image
+              <Image
                 className={clsx(
                   loaded ? "fadeIn" : "hidden",
                   fit ? classes.cardMediaFit : classes.cardMedia,

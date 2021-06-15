@@ -41,6 +41,7 @@ const PromoteListings: React.FC<ReactProps> = (props) => {
   const [ position, setPosition ] = React.useState(0)
   const [ refetch, setRefetch ] = React.useState(undefined)
 
+
   return (
     <div className={classes.promoteListingsRoot}>
       <AlignCenterLayout
@@ -58,38 +59,34 @@ const PromoteListings: React.FC<ReactProps> = (props) => {
 
         {
           (pageConfig?.pageConfigSections ?? [])
-          .filter(section => !section.isNewestList)
+          .filter(section => !!section.promotedListId)
           .map(( section, i ) => {
-
-            if (section?.promotedListId) {
-              return (
-                <PromotionCards
-                  key={section?.id}
-                  title={section?.title}
-                  promotedListId={section?.promotedListId}
-                  setCurrentPromotedSlot={setCurrentPromotedSlot}
-                  setPosition={setPosition}
-                  setRefetch={setRefetch}
-                  count={
-                    section.viewAllPath === "/featured"
-                    ? featuredSectionParams.limit // 3 products for featured list
-                    : 4
-                  }
-                  cardsPerRow={
-                    section.viewAllPath === "/featured"
-                    ? featuredSectionParams.cardsPerRow // 3 products for featured list
-                    : {
-                        xs: 1.5,
-                        sm: 1.5,
-                        md: 2,
-                        lg: 3,
-                        xl: 4,
-                      }
-                  }
-                />
-              )
-            }
-
+            return (
+              <PromotionCards
+                key={section?.id}
+                title={section?.title}
+                promotedListId={section?.promotedListId}
+                setCurrentPromotedSlot={setCurrentPromotedSlot}
+                setPosition={setPosition}
+                setRefetch={setRefetch}
+                count={
+                  section.viewAllPath === "/featured"
+                  ? featuredSectionParams.limit // 3 products for featured list
+                  : 4
+                }
+                cardsPerRow={
+                  section.viewAllPath === "/featured"
+                  ? featuredSectionParams.cardsPerRow // 3 products for featured list
+                  : {
+                      xs: 1.5,
+                      sm: 1.5,
+                      md: 2,
+                      lg: 3,
+                      xl: 4,
+                    }
+                }
+              />
+            )
           })
         }
 

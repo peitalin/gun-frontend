@@ -3,6 +3,7 @@ import clsx from "clsx";
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 // CSS
 import ShowOnMobileOrDesktopSSR from "components/ShowOnMobileOrDesktopSSR";
+import Image from "next/image";
 
 
 const Banner: React.FC<ReactProps> = (props) => {
@@ -71,22 +72,33 @@ const Banner: React.FC<ReactProps> = (props) => {
 }
 
 const BackgroundImage = (
-  { classes, src, height, portraitMode, isMobile }: BackgroundImageProps
+  { classes, src, height, title, isMobile, portraitMode }: BackgroundImageProps
 ) => {
 
   if (src) {
     return (
-      <img
-        className={classes.bannerBackground}
-        style={{
-          width: portraitMode ? '100%' : 'unset',
-          height: isMobile ? "unset" : "100%",
-          // image to always fill screen on desktop
-          minWidth: isMobile ? "unset" : 1160,
-          top: 0,
-          left: 0,
-        }}
-        // onLoad={() => setImgLoaded(s => s + 1)}
+      // <img
+      //   className={classes.bannerBackground}
+      //   style={{
+      //     width: portraitMode ? '100%' : 'unset',
+      //     height: isMobile ? "unset" : "100%",
+      //     // image to always fill screen on desktop
+      //     minWidth: isMobile ? "unset" : 1160,
+      //     top: 0,
+      //     left: 0,
+      //   }}
+      //   // onLoad={() => setImgLoaded(s => s + 1)}
+      //   src={src}
+      // />
+      <Image
+        className={clsx(
+          "fadeIn",
+          classes.bannerBackground
+        )}
+        alt={title}
+        layout={"fill"}
+        objectFit={"cover"}
+        // onLoad={() => setLoaded(true)}
         src={src}
       />
     )
@@ -143,6 +155,7 @@ interface BackgroundImageProps extends WithStyles<typeof styles> {
   portraitMode: boolean;
   height: string | number;
   isMobile: boolean;
+  title?: string;
 }
 interface DitherProps extends WithStyles<typeof styles> {
   imgLoaded?: boolean;
