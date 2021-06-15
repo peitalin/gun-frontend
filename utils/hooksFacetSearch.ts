@@ -257,7 +257,7 @@ export const useFacetSearchOptions = ({
       if (syncUrlParams) {
         // shallow update pagination query params when navigating using buttons
         // https://nextjs.org/docs/routing/shallow-routing
-        router.push(
+        router.replace(
           `${router.pathname}${params_str}`,
           `${urlPath}${params_str}`,
           { shallow: true }
