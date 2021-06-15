@@ -1,19 +1,13 @@
 import React from "react";
-// Styles
-import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 // GraphQL
 import { GET_CATEGORIES } from "queries/categories-queries";
 // Typings
 import {
-  ProductsConnection,
   Categories,
-  // ProductCategoryOrGroup,
-  // PublicProductsConnection
 } from "typings/gqlTypes";
 import CategoryId from "pageComponents/Categories/CategoryId";
 // SSR
-import { NextPage, NextPageContext } from 'next';
-import { ApolloClient } from "@apollo/client";
+import { NextPage, NextPageContext, GetStaticProps } from 'next';
 import { serverApolloClient } from "utils/apollo";
 // Meta headers
 import MetaHeadersPage from "layout/MetaHeadersPage";
@@ -21,7 +15,7 @@ import MetaHeadersPage from "layout/MetaHeadersPage";
 
 
 
-const CategorySlugSSR: NextPage<ReactProps> = (props) => {
+const NewProductsSSR: NextPage<ReactProps> = (props) => {
 
   return (
     <>
@@ -39,7 +33,7 @@ const CategorySlugSSR: NextPage<ReactProps> = (props) => {
         // }
       />
       <CategoryId
-        initialProducts={props.initialProducts}
+        initialProducts={undefined}
         initialRouteCategory={props.selectedCategory}
         initialDropdownCategories={props.initialCategories}
         bannerTitle={"New Listings"}
@@ -50,7 +44,6 @@ const CategorySlugSSR: NextPage<ReactProps> = (props) => {
 }
 
 interface ReactProps {
-  initialProducts: ProductsConnection;
   initialCategories: Categories[];
   categoryName?: string;
   selectedCategory: Categories;
@@ -63,58 +56,60 @@ interface QueryVar1 {
   slug?: string;
 }
 
-////////// SSR ///////////
-interface Context extends NextPageContext {
-  apolloClient: ApolloClient<any>;
-}
 
-export async function getServerSideProps(ctx: Context) {
+export const getStaticPaths = async (ctx: NextPageContext) => {
 
-  const categorySlug: string = ctx.query.categorySlug as any;
+  const { data } = await serverApolloClient(ctx).query<QueryData1, QueryVar1>({
+    query: GET_CATEGORIES,
+  })
 
+  const initialCategories = data?.getCategories
+  // Get the paths we want to pre-render based on posts
+  const paths = initialCategories.map(category => ({
+    params: {
+      categorySlug: category.slug
+    },
+  }))
 
-  if (categorySlug) {
-
-    const { data } = await serverApolloClient(ctx).query<QueryData1, QueryVar1>({
-      query: GET_CATEGORIES,
-    })
-
-    // "all" category slug is filtered out on the backend and ignored
-    // no category filter -> all categories
-    let defaultCategory = {
-      id: "",
-      slug: "all",
-      name: "All Categories"
-    } as any
-
-    let selectedCategory = [ ...data?.getCategories, defaultCategory ]
-      .find(s => s.slug === categorySlug)
-
-    let categoryName = selectedCategory?.name
-
-    // return props
-    return {
-      props: {
-        initialProducts: undefined,
-        initialCategories: data?.getCategories,
-        categoryName: categoryName,
-        selectedCategory: selectedCategory,
-      }
-    };
-
-  } else {
-    return {
-      props: {
-        initialProducts: undefined,
-        initialCategories: undefined,
-        categoryName: "",
-        selectedCategory: undefined,
-      }
-    };
+  return {
+    paths: paths,
+    fallback: false,
   }
 }
 
-export default CategorySlugSSR;
+
+export const getStaticProps: GetStaticProps = async (ctx) => {
+
+  const categorySlug: string = ctx?.params?.categorySlug as any;
+
+  const { data } = await serverApolloClient().query<QueryData1, QueryVar1>({
+    query: GET_CATEGORIES,
+  })
+
+  // "all" category slug is filtered out on the backend and ignored
+  // no category filter -> all categories
+  let defaultCategory = {
+    id: "",
+    slug: "all",
+    name: "All Categories"
+  } as any
+
+  let selectedCategory = [ ...data?.getCategories, defaultCategory ]
+    .find(s => s.slug === categorySlug) ?? ""
+
+  let categoryName = selectedCategory?.name ?? ""
+
+  return {
+    props: {
+      initialCategories: data?.getCategories,
+      categoryName: categoryName,
+      selectedCategory: selectedCategory,
+    }
+  };
+}
+
+
+export default NewProductsSSR;
 
 
 

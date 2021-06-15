@@ -21,8 +21,6 @@ import { lgUpMediaQuery } from "../../common";
 
 const PreviewImageFeatured: React.FC<ReactProps> = (props) => {
 
-  const [imgLoaded, setImgLoaded] = React.useState(0);
-
   const {
     classes,
     previewItem,
@@ -34,8 +32,6 @@ const PreviewImageFeatured: React.FC<ReactProps> = (props) => {
   const theme = useTheme();
   const lgDown = useMediaQuery(theme.breakpoints.down("lg"));
   const lgUp = useMediaQuery(lgUpMediaQuery);
-
-  let loading = (!imgLoaded || !previewItem);
 
 
   const chooseCardMediaStyle = () => {
@@ -76,6 +72,15 @@ const PreviewImageFeatured: React.FC<ReactProps> = (props) => {
       xl: 600,
   })
 
+
+  const [loaded, setLoaded] = React.useState(false)
+  const ref = React.useRef<HTMLDivElement>(null)
+  React.useEffect(() => {
+    if ((ref.current?.firstChild?.firstChild as HTMLImageElement | undefined)?.complete) {
+      setLoaded(true)
+    }
+  }, [])
+
   // console.log("previewItem:", previewItem)
   // console.log("image:", image)
   // console.log("image src:", urlSrc)
@@ -94,26 +99,28 @@ const PreviewImageFeatured: React.FC<ReactProps> = (props) => {
       >
         {
           urlSrc &&
-          <CardMedia
-            component="img"
-            className={
-              !!imgLoaded ? 'fadeIn' : 'hide'
-            }
-            classes={{
-              media: chooseCardMediaStyle(),
-            }}
-            onLoad={() => {
-              if (process.browser) {
-                setImgLoaded(s => s + 1)
+          <div className={classes.width100} ref={ref}>
+            <CardMedia
+              component="img"
+              className={
+                loaded ? 'fadeIn' : 'hidden'
               }
-            }}
-            src={urlSrc}
-            srcSet={srcSet}
-            sizes={imgSizes}
-          />
+              classes={{
+                media: chooseCardMediaStyle(),
+              }}
+              onLoad={() => {
+                if (process.browser) {
+                  setLoaded(true)
+                }
+              }}
+              src={urlSrc}
+              srcSet={srcSet}
+              sizes={imgSizes}
+            />
+          </div>
         }
         {
-          loading &&
+          !loaded &&
           showLoadingBar &&
           <LoadingBar
             absoluteTop
@@ -157,7 +164,7 @@ const styles = (theme: Theme) => createStyles({
     flexWrap: 'wrap',
     justifyContent: 'center',
   },
-  compareSlider: {
+  width100: {
     width: "100%",
   },
   cardActionAreaWide: {
@@ -165,17 +172,6 @@ const styles = (theme: Theme) => createStyles({
     width: '100%',
     display: "flex",
     flexDirection: "row",
-  },
-  cardActionAreaTall: {
-    height: '100%',
-    width: '100%',
-    display: "flex",
-    flexDirection: "row",
-  },
-  cardMediaTall: {
-    height: "100%",
-    width: '100%',
-    objectFit: objectFit1,
   },
   cardMediaWide: {
     height: '100%',

@@ -69,12 +69,9 @@ interface QueryVar1 {
   slug?: string;
 }
 
-////////// SSR ///////////
-interface Context extends NextPageContext {
-  apolloClient: ApolloClient<any>;
-}
 
-export const getStaticPaths = async (ctx: Context) => {
+
+export const getStaticPaths = async (ctx: NextPageContext) => {
 
   const { data } = await serverApolloClient(ctx).query<QueryData1, QueryVar1>({
     query: GET_CATEGORIES,
