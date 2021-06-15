@@ -67,7 +67,11 @@ const MainPreviewImage = (props: ReactProps) => {
 
   if (!firstPreview) {
     return (
-      <AspectGridItemLink product={product} promotedSlotId={props.promotedSlotId}>
+      <AspectGridItemLink
+        product={product}
+        promotedSlotId={props.promotedSlotId}
+        disable={props.disableLink}
+      >
         <PreviewImageEmpty
           previewImageEmptyMessage={props.previewImageEmptyMessage}
           onClick={props.onClick}
@@ -76,7 +80,11 @@ const MainPreviewImage = (props: ReactProps) => {
     )
   } else {
     return(
-      <AspectGridItemLink product={product} promotedSlotId={props.promotedSlotId}>
+      <AspectGridItemLink
+        product={product}
+        promotedSlotId={props.promotedSlotId}
+        disable={props.disableLink}
+      >
         {/* {
           firstPreview?.image?.original?.url
           ? <div className={classes.height100} ref={ref}>
@@ -169,6 +177,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   previewImageEmptyMessage?: React.ReactNode;
   onClick?(a: any): void;
   promotedSlotId?: string
+  disableLink?: boolean;
 }
 
 

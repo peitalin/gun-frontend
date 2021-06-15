@@ -110,6 +110,11 @@ const ProductCardRC = (props: ReactProps) => {
         previewImageEmptyMessage={props.previewImageEmptyMessage}
         onClick={props.onClick}
         promotedSlotId={props.promotedSlotId}
+        disableLink={
+          !props.product?.storeId ||
+          typeof props.onClick === 'function'
+          // disable link when onClick is defined
+        }
       />
 
       <div className={classes.descriptionContainerOuter}
