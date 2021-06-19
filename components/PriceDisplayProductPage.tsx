@@ -19,12 +19,14 @@ const PriceDisplayProductPage = (props: ReactProps) => {
 
   const {
     classes,
+    internationalFee = 0,
     soldOutStatus = SoldOutStatus.AVAILABLE,
   } = props;
 
   const actualPrice = props.price ?? 0;
   const basePrice = props.priceWas;
   const price = currency(actualPrice/100, { formatWithSymbol: false })
+  const intFees = currency(internationalFee/100, { formatWithSymbol: false })
 
 
   if (soldOutStatus !== SoldOutStatus.AVAILABLE) {
@@ -51,6 +53,12 @@ const PriceDisplayProductPage = (props: ReactProps) => {
             <Typography className={classes.price} variant="body1">
               {`${price.format()} AUD`}
             </Typography>
+            {
+              (internationalFee > 0) &&
+              <Typography className={classes.internationalFees} variant="body1">
+                {`+ ${intFees.format()} AUD fees`}
+              </Typography>
+            }
           </div>
         </div>
       </>
@@ -63,6 +71,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   isSuspended: boolean;
   price: number;
   priceWas?: number;
+  internationalFee?: number;
 }
 
 const styles = (theme: Theme) => createStyles({
@@ -106,6 +115,13 @@ const styles = (theme: Theme) => createStyles({
     marginLeft: '0.5rem',
     marginRight: '0.5rem',
     color: Colors.green,
+    fontSize: "0.875rem",
+    fontWeight: 500,
+  },
+  internationalFees: {
+    marginLeft: '0.5rem',
+    marginRight: '0.5rem',
+    color: Colors.lighterRed,
     fontSize: "0.875rem",
     fontWeight: 500,
   },

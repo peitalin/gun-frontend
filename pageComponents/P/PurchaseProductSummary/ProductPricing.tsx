@@ -7,14 +7,17 @@ import ErrorBounds from "components/ErrorBounds";
 import { Product, Product_Variants, Bids } from "typings/gqlTypes";
 import PriceDisplayProductPage from "components/PriceDisplayProductPage";
 import Typography from "@material-ui/core/Typography";
+import { initialProductCreateState } from "reduxStore/product_create-reducer";
 
 
 
 const ProductPricing = (props: ReactProps) => {
 
-  const { classes } = props;
-  const purchasePrice = props.selectedBid?.offerPrice ||
-          props?.featuredVariant?.price
+  const {
+    classes,
+    internationalFee = 0,
+    initialPurchasePrice,
+  } = props;
 
   return (
     <ErrorBounds>
@@ -23,12 +26,12 @@ const ProductPricing = (props: ReactProps) => {
         classes.marginProductPricing,
       )}>
         {
-          purchasePrice !== undefined &&
+          initialPurchasePrice !== undefined &&
           <PriceDisplayProductPage
-            price={purchasePrice}
-            // priceWas={props?.featuredVariant?.priceWas}
+            price={initialPurchasePrice}
             soldOutStatus={props.soldOutStatus}
             isSuspended={props.isSuspended}
+            internationalFee={internationalFee}
           />
         }
       </div>
@@ -38,10 +41,10 @@ const ProductPricing = (props: ReactProps) => {
 
 
 interface ReactProps extends WithStyles<typeof styles> {
-  featuredVariant: Product_Variants;
   soldOutStatus: string;
   isSuspended: boolean;
-  selectedBid?: Bids
+  internationalFee: number
+  initialPurchasePrice: number
 }
 
 const styles = (theme: Theme) => createStyles({

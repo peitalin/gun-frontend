@@ -72,11 +72,12 @@ const PurchaseProductSummary: React.FC<ReactProps> = (props) => {
   const router = useRouter();
 
   const featuredVariant = selectedOption?.value;
-  const productPrice = props.selectedBid?.offerPrice ||
-    featuredVariant?.price
-
   const showProductInfo = featuredVariant?.variantId && props?.product?.id
-  // console.log("featuredVariant", featuredVariant)
+
+  const initialPurchasePrice = props.selectedBid?.offerPrice
+    || featuredVariant.price
+
+  const [internationalFee, setInternationalFee] = React.useState(0)
 
   return (
     <div className={clsx(
@@ -109,10 +110,10 @@ const PurchaseProductSummary: React.FC<ReactProps> = (props) => {
             ? <>
                 <ProductHeading product={props.product} featuredVariant={featuredVariant}/>
                 <ProductPricing
-                  featuredVariant={featuredVariant}
-                  selectedBid={props.selectedBid}
                   soldOutStatus={props.product.soldOutStatus}
                   isSuspended={props.product.isSuspended}
+                  internationalFee={internationalFee}
+                  initialPurchasePrice={initialPurchasePrice}
                 />
               </>
             : <div className={classes.loadingBarContainer}>
@@ -147,11 +148,12 @@ const PurchaseProductSummary: React.FC<ReactProps> = (props) => {
                     // className={"fadeIn"}
                     product={props.product}
                     refetchProduct={props.refetchProduct}
-                    title={`Buy for ${c(productPrice)} AUD`}
-                    showIcon={true}
                     display={true}
                     buttonHeight={xsDown ? '40px' : '40px'}
                     selectedBid={props.selectedBid}
+                    initialPurchasePrice={initialPurchasePrice}
+                    internationalFee={internationalFee}
+                    setInternationalFee={setInternationalFee}
                     handleOrderPostPurchase={
                       (order) => {
                         console.log("routing to /orders")

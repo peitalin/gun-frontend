@@ -72,6 +72,7 @@ import OptionLicense from "./OptionLicense";
 import {
   SelectOption,
 } from "layout/MySettingsModal/UserLicenses/EditUserLicenseForm/licenseUtils";
+import { asCurrency as c } from "utils/prices";
 
 
 
@@ -93,8 +94,12 @@ const VisaPurchaseProduct = (props: ReactProps) => {
 
   const product = props.product;
   const featuredVariant = props.product.featuredVariant;
-  const purchasePrice = props.selectedBid?.offerPrice
-    || featuredVariant.price
+
+  const {
+    initialPurchasePrice,
+    internationalFee = 0,
+    setInternationalFee
+  } = props
 
   // const aClient = useApolloClient();
   // console.log("apollo CACHE::", aClient.cache)
@@ -120,6 +125,7 @@ const VisaPurchaseProduct = (props: ReactProps) => {
     variables: {
       productId: undefined,
       total: undefined,
+      internationalFee: undefined,
       buyerLicenseId: chosenLicense?.value?.id,
       stripeAuthorizePaymentData: undefined,
       bidId: undefined,
@@ -150,6 +156,7 @@ const VisaPurchaseProduct = (props: ReactProps) => {
     variables: {
       productId: undefined,
       total: undefined,
+      internationalFee: undefined,
       buyerId: undefined,
       buyerLicenseId: undefined,
       sellerStoreId: undefined,
@@ -319,6 +326,7 @@ const VisaPurchaseProduct = (props: ReactProps) => {
       snackbar.enqueueSnackbar(`Please select a license first`, { variant: "error" })
       throw new Error(`No license selected`)
     }
+    setLoading(true)
     // Within the context of `Elements`, this call to createPaymentMethod
     // knows from which Element to create the PaymentMethod,
     // See our createPaymentMethod documentation for more:
@@ -328,6 +336,43 @@ const VisaPurchaseProduct = (props: ReactProps) => {
       card: elements.getElement(CardElement),
       billing_details: { email: props.user?.email }
     })
+
+    let acceptInternationalFees;
+    let internationalFeeCalc;
+
+    if (paymentMethod.card?.country !== "AU") {
+      // card is international and will incur %2.9 stripe fees instead of %1.75
+      // %1.15
+      internationalFeeCalc = Math.ceil(0.0115 * initialPurchasePrice)
+      acceptInternationalFees = confirm(
+        `This is not an Australian card.\n` +
+        `Stripe will charge an extra %1.15 international card fee.\n` +
+        `This brings the total to: ${c(internationalFeeCalc + initialPurchasePrice)}.`
+      )
+    } else {
+      // card is Australia and will not incur %2.9 stripe fees
+      acceptInternationalFees = false
+    }
+    console.log("acceptInternationalFees", acceptInternationalFees)
+    console.log("purchasePrice", initialPurchasePrice)
+    console.log("internationalPurchasePrice", internationalFeeCalc + initialPurchasePrice)
+
+    if (acceptInternationalFees && internationalFeeCalc) {
+      // use international card pricing
+      setInternationalFee(internationalFeeCalc)
+      snackbar.enqueueSnackbar(
+        `Updated international pricing to ${c(internationalFeeCalc + initialPurchasePrice)}`,
+        { variant: "info" }
+      )
+      // throw new Error("temp")
+    } else {
+      setInternationalFee(0)
+      snackbar.enqueueSnackbar(
+        `Please use an Australian card, or accept international card fees`,
+        { variant: "error" }
+      )
+      throw new Error("Not and australian card and don't want to pay international fees")
+    }
 
     if (error) {
       console.warn("error: ", error)
@@ -355,7 +400,6 @@ const VisaPurchaseProduct = (props: ReactProps) => {
         error: undefined
       }
     }
-    setLoading(true)
 
     const stripeAuthorizePaymentData: StripeAuthorizePaymentData = {
       paymentMethod: paymentMethodId,
@@ -366,7 +410,8 @@ const VisaPurchaseProduct = (props: ReactProps) => {
     let response = await authorizePayment({
       variables: {
         productId: product.id,
-        total: purchasePrice,
+        total: initialPurchasePrice,
+        internationalFee: internationalFee,
         buyerLicenseId: chosenLicense?.value?.id,
         stripeAuthorizePaymentData: JSON.stringify(stripeAuthorizePaymentData),
         bidId: props.selectedBid?.id,
@@ -461,7 +506,8 @@ const VisaPurchaseProduct = (props: ReactProps) => {
   // console.log("licenseOptions", licenseOptions)
   // console.log("chosenLicenseId", chosenLicenseId)
   // console.log("chosenLicense", chosenLicense)
-  console.log("selectedBid", props.selectedBid)
+  // console.log("selectedBid", props.selectedBid)
+  console.log("initialPurchasePrice", initialPurchasePrice)
 
   return (
     <ErrorBounds name="Visa Checkout" className={props.className}>
@@ -550,7 +596,8 @@ const VisaPurchaseProduct = (props: ReactProps) => {
                       confirmOrder({
                         variables: {
                           productId: product.id,
-                          total: purchasePrice,
+                          total: initialPurchasePrice,
+                          internationalFee: internationalFee,
                           buyerId: props.user.id,
                           buyerLicenseId: chosenLicense?.value?.id,
                           sellerStoreId: product.store.id,
@@ -588,9 +635,7 @@ const VisaPurchaseProduct = (props: ReactProps) => {
                 {
                   !props.user?.id
                   ? "Log in to Purchase"
-                  : props.title
-                      ? props.title
-                      : "Buy Now"
+                  : `Buy for ${c(initialPurchasePrice + internationalFee)} AUD`
                 }
               </span>
             </ButtonLoading>
@@ -649,12 +694,13 @@ interface ReactProps extends WithStyles<typeof styles> {
   user?: UserPrivate;
   className?: string;
   buttonHeight?: any;
-  title?: string;
-  showIcon?: boolean;
   handleOrderPostPurchase(order: any): void;
   product: Product;
   refetchProduct?(): void;
   selectedBid?: Bids;
+  initialPurchasePrice: number
+  internationalFee: number
+  setInternationalFee(p: number): void
 }
 
 interface Mdata1 {
@@ -663,6 +709,7 @@ interface Mdata1 {
 interface Mvar1 {
   productId: string
   total: number
+  internationalFee: number
   buyerLicenseId: string
   stripeAuthorizePaymentData: string
   bidId?: string
@@ -673,6 +720,7 @@ interface Mdata2 {
 interface Mvar2 {
   productId: string
   total: number
+  internationalFee: number
   buyerId: string
   buyerLicenseId: string
   sellerStoreId: string
