@@ -40,21 +40,21 @@ const DisplayOrderId: React.FC<ReactProps> = (props) => {
             </Typography>
           </div>
           {
-            !!product?.store?.id &&
+            !!product?.sellerLicense?.id &&
             <div className={classes.flexItem1}>
               <Typography variant="subtitle2" className={classes.subHeading}>
-                Store name
+                Seller License
               </Typography>
-                <Link
-                  href="/s/[storeId]"
-                  as={`/s/${product?.store?.id}`}
-                >
-                  <a>
-                    <Typography className={classes.storeName} variant="body2">
-                      {product?.store?.name}
-                    </Typography>
-                  </a>
-                </Link>
+              <Link
+                href="/s/[storeId]"
+                as={`/s/${product?.store?.id}`}
+              >
+                <a>
+                  <Typography className={classes.storeName} variant="body2">
+                    {product.sellerLicense.licenseNumber}
+                  </Typography>
+                </a>
+              </Link>
             </div>
           }
         </div>

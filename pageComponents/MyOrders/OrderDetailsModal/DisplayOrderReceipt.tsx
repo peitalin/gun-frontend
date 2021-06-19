@@ -25,6 +25,7 @@ const DisplayOrderReceipt: React.FC<ReactProps> = (props) => {
   // const fees = c(order.paymentProcessingFee);
   // const taxes = c(order.taxes);
   const total = c(order.total);
+  const totalIncludingInternationalFee = c(order.total + order.internationalFee ?? 0)
 
   // Get a modified cart subtotal so that it reflects the subtotal BEFORE discounts (cart is AFTER)
   // const subtotalBeforeDiscounts =
@@ -47,7 +48,7 @@ const DisplayOrderReceipt: React.FC<ReactProps> = (props) => {
         <div className={classes.flexRow}>
           <div className={classes.flexItem1}>
             <Typography variant="body2" className={classes.lineItemText}>
-              Total
+              {`1x ${order.product?.currentSnapshot?.title}`}
             </Typography>
           </div>
           <div className={classes.flexItem2}>
@@ -68,7 +69,7 @@ const DisplayOrderReceipt: React.FC<ReactProps> = (props) => {
                   {c(order.internationalFee)}
                 </Typography>
               </div>
-            </>
+              </>
           }
         </div>
 
@@ -103,7 +104,7 @@ const DisplayOrderReceipt: React.FC<ReactProps> = (props) => {
         <div className={classes.flexRow}>
           <div className={classes.flexItem1}>
             <Typography variant="body2" className={classes.totalPrice}>
-              Total (USD)
+              Total
             </Typography>
           </div>
           <div className={classes.flexItem2}>
@@ -112,7 +113,7 @@ const DisplayOrderReceipt: React.FC<ReactProps> = (props) => {
               classes.totalPriceNumber,
               classes.priceDisplay
             )}>
-              {total}
+              {totalIncludingInternationalFee}
             </Typography>
           </div>
         </div>
