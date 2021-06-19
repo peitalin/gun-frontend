@@ -6,6 +6,7 @@ import { BorderRadius, Colors } from "layout/AppTheme";
 // Typings
 import {
   Order,
+  OrderStatus,
   PayeeType,
 } from "typings/gqlTypes";
 // Material UI
@@ -31,6 +32,7 @@ const OrderPriceBreakdown = (props: ReactProps & FormikProps<FormikFields>) => {
 
   const osnap = order?.currentSnapshot;
   const total = order.total + order.internationalFee;
+  const oStatus = order.currentSnapshot?.orderStatus
 
   // Formik props
   const {
@@ -45,6 +47,11 @@ const OrderPriceBreakdown = (props: ReactProps & FormikProps<FormikFields>) => {
     handleReset,
   } = fprops;
 
+  let sellerPayment = order.total * 0.965 // seller gets 96.5%
+  let platformPayment = order.total * 0.0175
+  let stripePayment = order.total * 0.0175
+  // platform gets 1.75% (minus 30cents)
+  // stripe gets 1.75% (plus 30 cents)
 
   let totalItemCaptured = order.payoutItems
     .filter(p => p.payoutStatus === "UNPAID") // only positive are taxes
@@ -75,6 +82,7 @@ const OrderPriceBreakdown = (props: ReactProps & FormikProps<FormikFields>) => {
     .reduce((acc, pitem) => {
       return acc + pitem.paymentProcessingFee
     }, 0)
+
 
   let totalTaxesCaptured = order.payoutItems
     .filter(p => p.payoutStatus === "UNPAID") // only positive are taxes
@@ -146,35 +154,56 @@ const OrderPriceBreakdown = (props: ReactProps & FormikProps<FormikFields>) => {
           <OrderPriceRow classes={classes}
             fieldName={"Seller Payment"}
             addLess={""}
-            fieldAmount={""}
+            fieldAmount={sellerPayment}
             fieldCaptured={totalItemSellerCaptured}
             fieldPaid={totalItemSellerPaid}
           />
           <OrderPriceRow classes={classes}
             fieldName={"Platform Fee"}
             addLess={""}
-            fieldAmount={""}
+            fieldAmount={platformPayment}
             fieldCaptured={totalItemPlatformCaptured}
             fieldPaid={totalItemPlatformPaid}
           />
           <OrderPriceRow classes={classes}
             fieldName={"Payment Fees"}
             addLess={""}
-            fieldAmount={""}
+            fieldAmount={stripePayment}
             fieldCaptured={totalPaymentFeesCaptured}
             fieldPaid={totalPaymentFeesPaid}
           />
           <OrderPriceRow classes={classes}
+            fieldName={"Int. Card Fees"}
+            addLess={""}
+            fieldAmount={
+              (oStatus === OrderStatus.CONFIRMED_PAYMENT_FORM_10_REQUIRED ||
+              oStatus === OrderStatus.FORM_10_REVISE_AND_RESUBMIT ||
+              oStatus === OrderStatus.FORM_10_SUBMITTED)
+                ? order.internationalFee
+                : ""
+            }
+            fieldCaptured={
+              oStatus === OrderStatus.ADMIN_APPROVED
+                ? order.internationalFee
+                : ""
+            }
+            fieldPaid={
+              oStatus === OrderStatus.COMPLETE
+                ? order.internationalFee
+                : ""
+            }
+          />
+          {/* <OrderPriceRow classes={classes}
             fieldName={"Taxes"}
             addLess={""}
             fieldAmount={""}
             fieldCaptured={totalTaxesCaptured}
             fieldPaid={totalTaxesPaid}
-          />
+          /> */}
           <OrderPriceRowBottom classes={classes}
             fieldName={"Total"}
             addLess={""}
-            fieldAmount={order.total}
+            fieldAmount={order.total + order.internationalFee ?? 0}
             fieldCaptured={totalCaptured}
             fieldPaid={totalPaid}
           />
