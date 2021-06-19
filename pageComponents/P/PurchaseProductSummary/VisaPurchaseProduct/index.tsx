@@ -518,28 +518,31 @@ const VisaPurchaseProduct = (props: ReactProps) => {
         )}>
           <div className={clsx(classes.flexCol)}>
 
-            <div className={classes.dropdownContainer}>
-              <DropdownInput
-                initialState={chosenLicense}
-                onChange={({ label, value }: SelectOption) => {
-                  setChosenLicense({ label, value })
-                }}
-                value={chosenLicense}
-                // disableAutocomplete={true}
-                // menuPortalTarget={document?.body} // solves z-index problems
-                // menuIsOpen={true}
-                disable={!props.user?.id}
-                components={{
-                  Option: OptionLicense
-                }}
-                options={licenseOptions}
-                placeholder={"Select a License"}
-                label="" // remove moving label
-                inputProps={{ style: { width: '100%' }}}
-                // errorMessage={formik.errors.licenseState}
-                // touched={formik.touched.licenseState}
-              />
-            </div>
+            {
+              props.user?.id &&
+              <div className={classes.dropdownContainer}>
+                <DropdownInput
+                  initialState={chosenLicense}
+                  onChange={({ label, value }: SelectOption) => {
+                    setChosenLicense({ label, value })
+                  }}
+                  value={chosenLicense}
+                  // disableAutocomplete={true}
+                  // menuPortalTarget={document?.body} // solves z-index problems
+                  // menuIsOpen={true}
+                  disable={!props.user?.id}
+                  components={{
+                    Option: OptionLicense
+                  }}
+                  options={licenseOptions}
+                  placeholder={"Select a License"}
+                  label="" // remove moving label
+                  inputProps={{ style: { width: '100%' }}}
+                  // errorMessage={formik.errors.licenseState}
+                  // touched={formik.touched.licenseState}
+                />
+              </div>
+            }
 
             <div className={clsx(classes.creditCardContainer)}>
               <CardElement
