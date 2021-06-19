@@ -56,6 +56,7 @@ const RowExpanderExpiringOrders = (props: RowExpanderProps) => {
   const row = createDataForExpiringTable({
     id: order.id,
     total: order.total,
+    internationalFee: order.internationalFee,
     createdAt: order.createdAt,
     sellerStore: order.sellerStore,
     buyer: order.buyer,
@@ -139,7 +140,7 @@ const RowExpanderExpiringOrders = (props: RowExpanderProps) => {
         )}>
           {countDown}
         </div>
-        <div className={classes.flexItemTiny}>{c(row.total)}</div>
+        <div className={classes.flexItemTiny}>{c(row.total + row.internationalFee)}</div>
         <div className={classes.flexItemSlim}>
           {
             row.orderStatus?.length > 22

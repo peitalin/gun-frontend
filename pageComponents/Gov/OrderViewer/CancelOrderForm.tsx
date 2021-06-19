@@ -25,7 +25,7 @@ const CancelOrderForm = (
     onSubmit,
     disableCancelOrderButton,
     onClickDebugPrint,
-    total,
+    totalIncludingInternationalFees,
     loading,
     ...fprops
   } = props;
@@ -48,7 +48,7 @@ const CancelOrderForm = (
             onClick={onClickDebugPrint}
             loading={loading}
           >
-            { `Cancel Order: ${total}` }
+            { `Cancel Order: ${totalIncludingInternationalFees}` }
           </ButtonLoading>
 
           {
@@ -88,7 +88,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   onSubmit(args: any): void;
   disableCancelOrderButton: boolean;
   onClickDebugPrint(): void;
-  total: string;
+  totalIncludingInternationalFees: string;
   loading: boolean;
 }
 

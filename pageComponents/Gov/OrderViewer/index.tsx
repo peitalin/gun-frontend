@@ -245,7 +245,7 @@ const OrderViewer: React.FC<ReactProps> = (props) => {
           } = fprops;
 
           // order details
-          const total = order?.total ?? 0
+          const total = order?.total + order?.internationalFee ?? 0
           const subtotal = 0
 
           console.log('values', values)
@@ -253,7 +253,7 @@ const OrderViewer: React.FC<ReactProps> = (props) => {
           return (
             <CancelOrderForm
               onSubmit={handleSubmit}
-              total={c(total)}
+              totalIncludingInternationalFees={c(total)}
               loading={loading}
               disableCancelOrderButton={
                 !order.id ||

@@ -40,7 +40,7 @@ const CancelledOrderRow = (props: ReactProps) => {
   const c = (s) => currency(s/100, { formatWithSymbol: true }).format()
 
   let orderId = order?.id;
-  let totalAmount = c(order?.total ?? 0);
+  let totalAmount = c(order?.total + order?.internationalFee ?? 0);
 
   return (
     <MenuItem

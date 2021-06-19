@@ -30,7 +30,7 @@ const OrderPriceBreakdown = (props: ReactProps & FormikProps<FormikFields>) => {
   // // order details
 
   const osnap = order?.currentSnapshot;
-  const total = order.total;
+  const total = order.total + order.internationalFee;
 
   // Formik props
   const {

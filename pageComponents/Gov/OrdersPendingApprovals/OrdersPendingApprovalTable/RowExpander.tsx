@@ -53,6 +53,7 @@ const RowExpander = (props: RowExpanderProps) => {
   const row = createDataForPendingApprovalTable({
     id: order.id,
     total: order.total,
+    internationalFee: order.internationalFee,
     createdAt: order.createdAt,
     sellerStore: order.sellerStore,
     buyer: order.buyer,
@@ -90,7 +91,7 @@ const RowExpander = (props: RowExpanderProps) => {
         </div>
         <div className={classes.flexItemTiny}>
           <Typography variant="body2" className={classes.rowText}>
-            {c(row.total)}
+            {c(row.total + row.internationalFee)}
           </Typography>
         </div>
         <div className={classes.flexItemSlim}>

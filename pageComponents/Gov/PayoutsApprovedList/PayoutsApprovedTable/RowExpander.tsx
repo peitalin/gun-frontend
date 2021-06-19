@@ -44,6 +44,7 @@ const RowExpander = (props: RowExpanderProps) => {
   const row = createDataForPayoutsApprovedTable({
     id: order.id,
     total: order.total,
+    internationalFee: order.internationalFee,
     createdAt: order?.currentSnapshot?.createdAt,
     // NOTE this date is different to other dashboard tables
     sellerStore: order.sellerStore,
