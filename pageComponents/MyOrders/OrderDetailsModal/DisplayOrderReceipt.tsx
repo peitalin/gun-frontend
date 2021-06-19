@@ -55,33 +55,48 @@ const DisplayOrderReceipt: React.FC<ReactProps> = (props) => {
               {total}
             </Typography>
           </div>
+          {
+            (order.internationalFee > 0) &&
+            <>
+              <div className={classes.flexItem1}>
+                <Typography variant="body2" className={classes.lineItemText}>
+                  Stripe International Card Fee
+                </Typography>
+              </div>
+              <div className={classes.flexItem2}>
+                <Typography variant="body2" className={classes.priceDisplay}>
+                  {c(order.internationalFee)}
+                </Typography>
+              </div>
+            </>
+          }
         </div>
 
-        <div className={classes.flexRow}>
+        {/* <div className={classes.flexRow}>
           <div className={classes.flexItem1}>
             <Typography variant="body2" className={classes.lineItemText}>
-              Processing fee (GST)
+              Processing fee
             </Typography>
           </div>
           <div className={classes.flexItem2}>
-            {/* <Typography variant="body2" className={classes.priceDisplay}>
+            <Typography variant="body2" className={classes.priceDisplay}>
               {fees}
-            </Typography> */}
+            </Typography>
           </div>
-        </div>
+        </div> */}
 
-        <div className={classes.flexRow}>
+        {/* <div className={classes.flexRow}>
           <div className={classes.flexItem1}>
             <Typography variant="body2" className={classes.lineItemText}>
               Taxes
             </Typography>
           </div>
           <div className={classes.flexItem2}>
-            {/* <Typography variant="body2" className={classes.priceDisplay}>
+            <Typography variant="body2" className={classes.priceDisplay}>
               {taxes}
-            </Typography> */}
+            </Typography>
           </div>
-        </div>
+        </div> */}
 
         <Divider style={{ margin: "0.5rem 0rem" }}/>
 
