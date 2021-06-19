@@ -2,7 +2,7 @@ import React from "react";
 // styles
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
 // SSR
-import { NextPage, NextPageContext } from 'next';
+import { NextPage, GetServerSideProps } from 'next';
 // GraphQL
 import { serverApolloClient } from "utils/apollo";
 import LandingPage from "pageComponents/LandingPage";
@@ -62,8 +62,22 @@ interface ReactProps extends WithStyles<typeof styles> {
 }
 
 
-export const getStaticProps = async (context) => {
-  return { props: { } };
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+
+  // console.log("appProps: ", appProps)
+
+  let darkMode = (ctx.query?.dark === "true" || ctx.query?.dark === "1")
+    ? "dark"
+    : (ctx.query?.light === "true" || ctx.query?.light === "1")
+      ? "light"
+      : undefined
+    // when undefined, localStorage determines darkmode
+
+  return {
+    props: {
+      initialDarkModeSSR: darkMode,
+    },
+  }
 };
 
 export default withStyles(styles)( StartLandingPageSSR );

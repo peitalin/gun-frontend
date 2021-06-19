@@ -8,6 +8,7 @@ export const AUTHORIZE_PAYMENT = gql`
   mutation authorizePayment(
     $productId: String!
     $total: Int!
+    $internationalFee: Int!
     $buyerLicenseId: String!
     $stripeAuthorizePaymentData: String!
     $bidId: String
@@ -15,6 +16,7 @@ export const AUTHORIZE_PAYMENT = gql`
     authorizePayment(
       productId: $productId
       total: $total
+      internationalFee: $internationalFee
       buyerLicenseId: $buyerLicenseId
       stripeAuthorizePaymentData: $stripeAuthorizePaymentData
       bidId: $bidId
@@ -28,6 +30,7 @@ export const CONFIRM_ORDER = gql`
   mutation confirmOrder(
     $productId: String!
     $total: Int!
+    $internationalFee: Int!
     $buyerId: String!
     $buyerLicenseId: String!
     $sellerStoreId: String!
@@ -37,6 +40,7 @@ export const CONFIRM_ORDER = gql`
     confirmOrder(
       productId: $productId
       total: $total
+      internationalFee: $internationalFee
       buyerId: $buyerId
       buyerLicenseId: $buyerLicenseId
       sellerStoreId: $sellerStoreId

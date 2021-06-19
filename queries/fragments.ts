@@ -411,6 +411,7 @@ export const OrdersFragment = gql`
       ...BidFragment
     }
     total
+    internationalFee
     currency
     buyerId
     buyer {

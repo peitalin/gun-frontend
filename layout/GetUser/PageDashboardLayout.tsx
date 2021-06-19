@@ -81,7 +81,7 @@ const PageDashboardLayout: React.FC<ReactProps> = (props) => {
     // desktop
     return (
       <ErrorBounds className={classes.flexJustify}>
-        <div className={clsx(classes.dashboardContainer, "fadeIn")}>
+        <div className={clsx(classes.dashboardContainer)}>
           <div className={classes.minWidth240}>
             { renderRoleMenuDesktop(user) }
           </div>
@@ -94,7 +94,7 @@ const PageDashboardLayout: React.FC<ReactProps> = (props) => {
   } else {
     // mobile
     return (
-      <ErrorBounds className={clsx(classes.dashboardContainer, "fadeIn")}>
+      <ErrorBounds className={clsx(classes.dashboardContainer)}>
         <div className={classes.dashboardInnerContainerMobile}>
           { renderRoleMenuMobile(user) }
           {props.children}
@@ -128,10 +128,6 @@ const styles = (theme: Theme) => createStyles({
     maxWidth: 1200,
     width: '100%',
     opacity: 1,
-    transition: theme.transitions.create('opacity', {
-      easing: theme.transitions.easing.easeIn,
-      duration: "200ms",
-    }),
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'flex-start',

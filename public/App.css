@@ -677,3 +677,17 @@ progress[value] {
 
     --ck-color-link-default: hsl(190, 100%, 75%)!important;
 }
+
+.perspective {
+  transform: rotate3d(0.5,-0.866,0,19deg);
+  box-shadow: 34.3px 62.5px 125px -25px rgba(50,50,93,.5),20.6px 37.5px 75px -37.5px rgba(0,0,0,.6);
+    /* --lighting-angle: 300deg; */
+  -webkit-perspective: 1500px;
+  perspective: 1500px;
+}
+
+.perspective:hover {
+  transform: rotate3d(0.5,-0.866,0,19deg) translateZ(30px);
+  box-shadow: 38.4px 70px 140px -28px rgba(50,50,93,.47),23px 42px 84px -42px rgba(0,0,0,.57);
+}
+
