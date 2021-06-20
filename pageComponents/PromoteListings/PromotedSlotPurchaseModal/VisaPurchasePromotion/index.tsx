@@ -57,6 +57,7 @@ const VisaPurchaseProduct = (props: ReactProps) => {
 
   const { classes, disableButton } = props;
 
+  const [internationalFee, setInternationalFee] = React.useState(0)
   const product = props.product;
   const featuredVariant = props.product?.featuredVariant;
   const purchasePrice = props.selectedBid?.offerPrice
@@ -88,6 +89,7 @@ const VisaPurchaseProduct = (props: ReactProps) => {
       promotedSlotId: undefined,
       productId: undefined,
       total: undefined,
+      internationalFee: undefined,
       buyerId: buyer?.id,
       stripeCreatePaymentData: undefined,
       currency: "AUD",
@@ -138,6 +140,13 @@ const VisaPurchaseProduct = (props: ReactProps) => {
         // phone: `${buyer?.phoneNumber?.countryCode} ${buyer?.phoneNumber?.number}`,
       }
     })
+    if (paymentMethod.card?.country !== "AU") {
+      console.log("non-australian card: ", paymentMethod.card?.country)
+      setInternationalFee(Math.ceil(0.0115 * purchasePrice))
+    } else {
+      setInternationalFee(0)
+    }
+
     console.log("paymentMethod: ", paymentMethod)
     if (error) {
       snackbar.enqueueSnackbar(
@@ -168,28 +177,42 @@ const VisaPurchaseProduct = (props: ReactProps) => {
     };
 
     // 1. Create Order + create stripe payment intent in the backend
-    return await purchasePromotion({
+    let response = await purchasePromotion({
       variables: {
         promotedSlotId: props.promotedSlot?.id,
         productId: product.id,
         total: purchasePrice,
+        internationalFee: internationalFee,
         buyerId: buyer.id,
         stripeCreatePaymentData: JSON.stringify(stripeCreatePaymentData),
         currency: "AUD",
         // bidId: props.selectedBid?.id,
       }
     })
-    .then(response => {
-      let stripePaymentIntent = JSON.parse(
-        response?.data?.purchasePromotion?.stripePaymentIntent ?? "{}"
-      );
-      console.log("pruchasePromotion response: ", response)
-      console.info("stripePaymentIntent", stripePaymentIntent)
-      return response?.data?.purchasePromotion
-    })
-    .finally(() => {
+
+    let stripePaymentIntent = JSON.parse(
+      response?.data?.purchasePromotion?.stripePaymentIntent ?? "{}"
+    );
+    let paymentIntent = stripePaymentIntent?.payment_intent
+    // console.log("purchasePromotion response: ", response)
+    console.info("paymentIntent", paymentIntent)
+
+    if (paymentIntent.next_action) {
+      await stripe.confirmCardPayment(
+        paymentIntent.client_secret
+      ).then(result => {
+        if (result?.error) {
+          console.log("result.error: ", result?.error)
+        } else {
+          console.log("handleCardAction: ", result)
+        }
+      })
       setLoading(false)
-    })
+      return response?.data?.purchasePromotion
+    } else {
+      setLoading(false)
+      return response?.data?.purchasePromotion
+    }
   }
 
 
@@ -308,6 +331,7 @@ interface MVar1 {
   promotedSlotId: string
   productId: string
   total: number
+  internationalFee: number
   buyerId: string
   stripeCreatePaymentData: string
   currency?: string

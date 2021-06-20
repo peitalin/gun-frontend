@@ -48,6 +48,7 @@ export const PURCHASE_PROMOTION = gql`
     $promotedSlotId: String!
     $productId: String!
     $total: Int!
+    $internationalFee: Int!
     $buyerId: String!
     $stripeCreatePaymentData: String!
     $currency: String
@@ -57,6 +58,7 @@ export const PURCHASE_PROMOTION = gql`
       promotedSlotId: $promotedSlotId
       productId: $productId
       total: $total
+      internationalFee: $internationalFee
       buyerId: $buyerId
       stripeCreatePaymentData: $stripeCreatePaymentData
       currency: $currency
