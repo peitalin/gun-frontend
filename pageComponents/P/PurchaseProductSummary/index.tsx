@@ -77,7 +77,7 @@ const PurchaseProductSummary: React.FC<ReactProps> = (props) => {
   const initialPurchasePrice = props.selectedBid?.offerPrice
     || featuredVariant.price
 
-  const [internationalFee, setInternationalFee] = React.useState(0)
+  const [internationalFeeDisplay, setInternationalFeeDisplay] = React.useState(0)
 
   return (
     <div className={clsx(
@@ -112,7 +112,7 @@ const PurchaseProductSummary: React.FC<ReactProps> = (props) => {
                 <ProductPricing
                   soldOutStatus={props.product.soldOutStatus}
                   isSuspended={props.product.isSuspended}
-                  internationalFee={internationalFee}
+                  internationalFeeDisplay={internationalFeeDisplay}
                   initialPurchasePrice={initialPurchasePrice}
                 />
               </>
@@ -152,8 +152,8 @@ const PurchaseProductSummary: React.FC<ReactProps> = (props) => {
                     buttonHeight={xsDown ? '40px' : '40px'}
                     selectedBid={props.selectedBid}
                     initialPurchasePrice={initialPurchasePrice}
-                    internationalFee={internationalFee}
-                    setInternationalFee={setInternationalFee}
+                    internationalFeeDisplay={internationalFeeDisplay}
+                    setInternationalFeeDisplay={setInternationalFeeDisplay}
                     handleOrderPostPurchase={
                       (order) => {
                         console.log("routing to /orders")

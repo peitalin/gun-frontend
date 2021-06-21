@@ -98,8 +98,8 @@ const VisaPurchaseProduct = (props: ReactProps) => {
 
   const {
     initialPurchasePrice,
-    internationalFee,
-    setInternationalFee
+    internationalFeeDisplay,
+    setInternationalFeeDisplay,
   } = props
 
   // const aClient = useApolloClient();
@@ -321,7 +321,7 @@ const VisaPurchaseProduct = (props: ReactProps) => {
   })
 
 
-  const createNewPaymentMethod = async(): Promise<PaymentMethod> => {
+  const createNewPaymentMethod = async(): Promise<CreateNewPaymentMethodResponse> => {
 
     if (!chosenLicense?.value?.id) {
       snackbar.enqueueSnackbar(`Please select a license first`, { variant: "error" })
@@ -338,44 +338,6 @@ const VisaPurchaseProduct = (props: ReactProps) => {
       billing_details: { email: props.user?.email }
     })
 
-    let acceptInternationalFees;
-    let internationalFeeCalc;
-
-    if (paymentMethod.card?.country !== "AU") {
-      // card is international and will incur %2.9 stripe fees instead of %1.75
-      internationalFeeCalc = calculateInternationalFee(initialPurchasePrice)
-      acceptInternationalFees = confirm(
-        `This is not an Australian card.\n` +
-        `Stripe will charge an extra %1.21 international card fee.\n` +
-        `This brings the total to: ${c(internationalFeeCalc + initialPurchasePrice)}.`
-      )
-    } else {
-      // card is Australian and will not incur %2.9 stripe fees
-      acceptInternationalFees = false
-    }
-    console.log("acceptInternationalFees", acceptInternationalFees)
-    console.log("purchasePrice", initialPurchasePrice)
-    console.log("internationalPurchasePrice", internationalFeeCalc + initialPurchasePrice)
-
-    if (acceptInternationalFees && internationalFeeCalc) {
-      // use international card pricing
-      setInternationalFee(internationalFeeCalc)
-      snackbar.enqueueSnackbar(
-        `Updated international pricing to ${c(internationalFeeCalc + initialPurchasePrice)}`,
-        { variant: "info" }
-      )
-      // console.log("internationalFEEEE", internationalFee)
-      // throw new Error("temp")
-    } else {
-      setInternationalFee(0)
-      snackbar.enqueueSnackbar(
-        `Please use an Australian card, or accept international card fees`,
-        { variant: "error" }
-      )
-      throw new Error("Not an australian card and don't want to pay international fees")
-    }
-
-
     if (error) {
       console.warn("error: ", error)
       snackbar.enqueueSnackbar(
@@ -384,12 +346,51 @@ const VisaPurchaseProduct = (props: ReactProps) => {
       )
       throw new Error(`${error?.message}`)
     }
-    return paymentMethod
+
+    let acceptInternationalFees;
+    let _internationalFee;
+
+    if (paymentMethod.card?.country !== "AU") {
+      // card is international and will incur %2.9 stripe fees instead of %1.75
+      _internationalFee = calculateInternationalFee(initialPurchasePrice)
+      acceptInternationalFees = confirm(
+        `This is not an Australian card.\n` +
+        `Stripe will charge an extra %1.21 international card fee.\n` +
+        `This brings the total to: ${c(_internationalFee + initialPurchasePrice)}.`
+      )
+    } else {
+      // card is Australian and will not incur %2.9 stripe fees
+      acceptInternationalFees = false
+    }
+    console.log("acceptInternationalFees", acceptInternationalFees)
+    console.log("purchasePrice", initialPurchasePrice)
+    console.log("internationalPurchasePrice", _internationalFee + initialPurchasePrice)
+
+    if (acceptInternationalFees && _internationalFee) {
+      // use international card pricing
+      await setInternationalFeeDisplay(_internationalFee)
+      snackbar.enqueueSnackbar(
+        `Updated international pricing to ${c(_internationalFee + initialPurchasePrice)}`,
+        { variant: "info" }
+      )
+      return {
+        paymentMethod,
+        _internationalFee: _internationalFee
+      }
+    } else {
+      setInternationalFeeDisplay(0)
+      snackbar.enqueueSnackbar(
+        `Please use an Australian card, or accept international card fees`,
+        { variant: "error" }
+      )
+      throw new Error("Not an australian card and don't want to pay international fees")
+    }
   }
 
 
   const authorizePaymentFirst = async({
     paymentMethodId,
+    internationalFee,
     stripeCustomerId,
   }): Promise<{ paymentIntentId: string, error?: StripeError }> => {
     // creates an order on the backend, and places a hold on the users card
@@ -586,15 +587,21 @@ const VisaPurchaseProduct = (props: ReactProps) => {
             <ButtonLoading
               onClick={() => {
                 createNewPaymentMethod()
-                  .then(newPaymentMethod => {
-                    if (newPaymentMethod?.id) {
-                      return authorizePaymentFirst({
-                        paymentMethodId: newPaymentMethod.id,
+                  .then(async ({ paymentMethod, _internationalFee }) => {
+                    if (paymentMethod?.id) {
+                      let { paymentIntentId, error } = await authorizePaymentFirst({
+                        paymentMethodId: paymentMethod.id,
+                        internationalFee: _internationalFee,
                         stripeCustomerId: props?.user?.stripeCustomerId,
                       });
+                      return {
+                        paymentIntentId,
+                        _internationalFee,
+                        error,
+                      }
                     }
                   })
-                  .then(({ paymentIntentId, error }) => {
+                  .then(({ paymentIntentId, _internationalFee, error }) => {
                     // Confirms an order on the backend, and places a hold on the users card
                     // with a payment authorization (to be captured later)
                     if (paymentIntentId && !error) {
@@ -602,7 +609,7 @@ const VisaPurchaseProduct = (props: ReactProps) => {
                         variables: {
                           productId: product.id,
                           total: initialPurchasePrice,
-                          internationalFee: internationalFee,
+                          internationalFee: _internationalFee,
                           buyerId: props.user.id,
                           buyerLicenseId: chosenLicense?.value?.id,
                           sellerStoreId: product.store.id,
@@ -640,7 +647,7 @@ const VisaPurchaseProduct = (props: ReactProps) => {
                 {
                   !props.user?.id
                   ? "Log in to Purchase"
-                  : `Buy for ${c(initialPurchasePrice + internationalFee)} AUD`
+                  : `Buy for ${c(initialPurchasePrice + internationalFeeDisplay)} AUD`
                 }
               </span>
             </ButtonLoading>
@@ -690,6 +697,11 @@ interface SelectOptionLicense {
   value: User_Licenses;
 }
 
+interface CreateNewPaymentMethodResponse {
+  paymentMethod: PaymentMethod
+  _internationalFee: number
+}
+
 
 
 
@@ -704,8 +716,8 @@ interface ReactProps extends WithStyles<typeof styles> {
   refetchProduct?(): void;
   selectedBid?: Bids;
   initialPurchasePrice: number
-  internationalFee: number
-  setInternationalFee(p: number): void
+  internationalFeeDisplay: number
+  setInternationalFeeDisplay(p: number): void
 }
 
 interface Mdata1 {

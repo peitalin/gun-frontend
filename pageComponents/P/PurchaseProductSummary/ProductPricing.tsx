@@ -15,7 +15,7 @@ const ProductPricing = (props: ReactProps) => {
 
   const {
     classes,
-    internationalFee = 0,
+    internationalFeeDisplay = 0,
     initialPurchasePrice,
   } = props;
 
@@ -31,7 +31,7 @@ const ProductPricing = (props: ReactProps) => {
             price={initialPurchasePrice}
             soldOutStatus={props.soldOutStatus}
             isSuspended={props.isSuspended}
-            internationalFee={internationalFee}
+            internationalFee={internationalFeeDisplay}
           />
         }
       </div>
@@ -43,7 +43,7 @@ const ProductPricing = (props: ReactProps) => {
 interface ReactProps extends WithStyles<typeof styles> {
   soldOutStatus: string;
   isSuspended: boolean;
-  internationalFee: number
+  internationalFeeDisplay: number
   initialPurchasePrice: number
 }
 
