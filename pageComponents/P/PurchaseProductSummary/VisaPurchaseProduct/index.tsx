@@ -372,7 +372,7 @@ const VisaPurchaseProduct = (props: ReactProps) => {
         `Please use an Australian card, or accept international card fees`,
         { variant: "error" }
       )
-      throw new Error("Not and australian card and don't want to pay international fees")
+      throw new Error("Not an australian card and don't want to pay international fees")
     }
 
 
