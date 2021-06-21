@@ -1,6 +1,6 @@
 import React from 'react';
 import Head from 'next/head';
-import ReactGA from 'react-ga'
+import { getAnalyticsHeadScript } from 'utils/analytics'
 
 
 const Header: React.FC<ReactProps> = (props) => {
@@ -8,17 +8,6 @@ const Header: React.FC<ReactProps> = (props) => {
   const {
     showChatwoot = true
   } = props;
-
-  React.useEffect(() => {
-    if (ReactGA) {
-      if (process.env.NODE_ENV === "production") {
-        ReactGA.initialize('G-B2F178EQFD')
-      }
-      if (process.env.NODE_ENV === "development") {
-        ReactGA.initialize('G-80ZCFGLGYY')
-      }
-    }
-  })
 
   React.useEffect(() => {
     if (process.browser && !!window) {
@@ -46,25 +35,6 @@ const Header: React.FC<ReactProps> = (props) => {
       <link rel="icon" type="image/png" sizes="16x16"
           href="/favicons/favicon-16x16.png"/>
 
-      {/* <link href='/roobert/Roobert-Light.otf'
-        rel='stylesheet'
-        type='text'/>
-      <link href='/roobert/Roobert-Regular.otf'
-        rel='stylesheet'
-        type='text/css'/>
-      <link href='/roobert/Roobert-Medium.otf'
-        rel='stylesheet'
-        type='text/css'/>
-      <link href='/roobert/Roobert-SemiBold.otf'
-        rel='stylesheet'
-        type='text/css'/>
-      <link href='/roobert/Roobert-Bold.otf'
-        rel='stylesheet'
-        type='text/css'/>
-      <link href='/roobert/Roobert-Heavy.otf'
-        rel='stylesheet'
-        type='text/css'/> */}
-
       {/* Manifest.json defined and generated in next.config.js */}
       <link rel="manifest" href="/public/manifest.json"/>
 
@@ -87,6 +57,14 @@ const Header: React.FC<ReactProps> = (props) => {
         `}
       </script> */}
 
+      {/* Server-side render these script tags, they will load client-side */}
+      {
+        process.browser &&
+        <script
+          async
+          dangerouslySetInnerHTML={{ __html: getAnalyticsHeadScript() }}
+        />
+      }
     </Head>
   )
 }
