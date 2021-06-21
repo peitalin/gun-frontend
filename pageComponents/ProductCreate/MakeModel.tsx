@@ -56,11 +56,11 @@ const MakeModel = (props: ReactProps & FormikProps<FormikFields>) => {
         value={values.make}
         onChange={(e) => {
           if (e.target.value.length <= maxLengthTitle) {
-            let word = (e.target.value as string).toUpperCase().trim()
+            let word = (e.target.value as string).toUpperCase()
             fprops.setFieldValue("make", word)
             fprops.setFieldValue(
               "title",
-              `${word} ${fprops.values.model}`
+              `${word} ${fprops.values.model}`.trim()
             )
           }
           fprops.setFieldTouched('make', true)
@@ -86,11 +86,11 @@ const MakeModel = (props: ReactProps & FormikProps<FormikFields>) => {
         value={values.model}
         onChange={(e) => {
           if (e.target.value.length <= maxLengthTitle) {
-            let word = (e.target.value as string).toUpperCase().trim()
+            let word = (e.target.value as string).toUpperCase()
             fprops.setFieldValue("model", word)
             fprops.setFieldValue(
               "title",
-              `${fprops.values.make} ${word}`
+              `${fprops.values.make} ${word}`.trim()
             )
           }
           fprops.setFieldTouched('model', true)
