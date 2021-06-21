@@ -194,7 +194,7 @@ const ThemeProviderDarkMode = ({ initialDarkModeSSR, children }) => {
     if (initialDarkModeSSR === 'light') {
       dispatch(Actions.reduxLogin.SET_LIGHT_MODE())
     } else {
-      // set darkMode by default
+      // set darkMode by defaul
       dispatch(Actions.reduxLogin.SET_DARK_MODE())
     }
   }, [])

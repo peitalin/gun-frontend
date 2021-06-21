@@ -57,9 +57,8 @@ const Header: React.FC<ReactProps> = (props) => {
         `}
       </script> */}
 
-      {/* <script async src="https://www.googletagmanager.com/gtag/js?id=G-B2F178EQFD"></script>
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-B2F178EQFD"></script>
       <script
-        id={"g-analytics"}
         async
         dangerouslySetInnerHTML={{
           __html:
@@ -68,20 +67,7 @@ const Header: React.FC<ReactProps> = (props) => {
             gtag('js', new Date());
             gtag('config', 'G-B2F178EQFD');`
         }}
-      /> */}
-
-      <script async src="https://www.googletagmanager.com/gtag/js?id=G-B2F178EQFD"></script>
-      <script>
-        {
-          `
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-
-          gtag('config', 'G-B2F178EQFD');
-          `
-        }
-      </script>
+      />
     </Head>
   )
 }
