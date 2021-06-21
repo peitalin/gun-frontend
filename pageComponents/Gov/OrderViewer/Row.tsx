@@ -17,7 +17,7 @@ const Row = ({ fieldName, fieldValue, styleValue, styleName, classes }: ReactPro
       </Typography>
     </div>
     <div className={clsx(classes.orderCol, classes.largeCol)}>
-      <Typography variant="subtitle2" className={classes.orderHeader}
+      <Typography variant="subtitle2" className={classes.orderText}
         style={styleValue}
       >
         {fieldValue}
@@ -55,6 +55,12 @@ const styles = (theme: Theme) => createStyles({
   orderHeader: {
     lineHeight: '1.25rem',
     textAlign: "end",
+    color: theme.palette.type === 'dark'
+      ? Colors.uniswapLightestGrey
+      : Colors.black,
+  },
+  orderText: {
+    lineHeight: '1.25rem',
     color: theme.palette.type === 'dark'
       ? Colors.uniswapLightestGrey
       : Colors.black,

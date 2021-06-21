@@ -2886,6 +2886,7 @@ export type MutationPurchasePromotionArgs = {
   promotedSlotId: Scalars['String'];
   productId: Scalars['String'];
   total: Scalars['Int'];
+  internationalFee: Scalars['Int'];
   buyerId: Scalars['String'];
   stripeCreatePaymentData: Scalars['String'];
   currency?: Maybe<Scalars['String']>;
@@ -7354,8 +7355,8 @@ export type UserOrderMetrics = {
   totalSpend?: Maybe<Scalars['Int']>;
   itemsSold?: Maybe<Scalars['Int']>;
   totalSales?: Maybe<Scalars['Int']>;
-  avgDisposalTimeHrs?: Maybe<Scalars['Int']>;
-  avgApprovalTimeHrs?: Maybe<Scalars['Int']>;
+  avgDisposalTimeHrs?: Maybe<Scalars['Float']>;
+  avgApprovalTimeHrs?: Maybe<Scalars['Float']>;
 };
 
 /** Private user info */

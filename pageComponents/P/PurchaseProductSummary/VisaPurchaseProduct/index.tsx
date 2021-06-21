@@ -73,6 +73,7 @@ import {
   SelectOption,
 } from "layout/MySettingsModal/UserLicenses/EditUserLicenseForm/licenseUtils";
 import { asCurrency as c } from "utils/prices";
+import { calculateInternationalFee } from "./calculateInternationalFees";
 
 
 
@@ -97,7 +98,7 @@ const VisaPurchaseProduct = (props: ReactProps) => {
 
   const {
     initialPurchasePrice,
-    internationalFee = 0,
+    internationalFee,
     setInternationalFee
   } = props
 
@@ -342,15 +343,14 @@ const VisaPurchaseProduct = (props: ReactProps) => {
 
     if (paymentMethod.card?.country !== "AU") {
       // card is international and will incur %2.9 stripe fees instead of %1.75
-      // %1.15
-      internationalFeeCalc = Math.ceil(0.0115 * initialPurchasePrice)
+      internationalFeeCalc = calculateInternationalFee(initialPurchasePrice)
       acceptInternationalFees = confirm(
         `This is not an Australian card.\n` +
-        `Stripe will charge an extra %1.15 international card fee.\n` +
+        `Stripe will charge an extra %1.21 international card fee.\n` +
         `This brings the total to: ${c(internationalFeeCalc + initialPurchasePrice)}.`
       )
     } else {
-      // card is Australia and will not incur %2.9 stripe fees
+      // card is Australian and will not incur %2.9 stripe fees
       acceptInternationalFees = false
     }
     console.log("acceptInternationalFees", acceptInternationalFees)
@@ -364,6 +364,7 @@ const VisaPurchaseProduct = (props: ReactProps) => {
         `Updated international pricing to ${c(internationalFeeCalc + initialPurchasePrice)}`,
         { variant: "info" }
       )
+      // console.log("internationalFEEEE", internationalFee)
       // throw new Error("temp")
     } else {
       setInternationalFee(0)
@@ -373,6 +374,7 @@ const VisaPurchaseProduct = (props: ReactProps) => {
       )
       throw new Error("Not and australian card and don't want to pay international fees")
     }
+
 
     if (error) {
       console.warn("error: ", error)

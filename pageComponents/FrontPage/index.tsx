@@ -59,10 +59,10 @@ const FrontPage: React.FC<ReactProps> = (props) => {
     if (y > 100 && !showFeatured) {
       setShowFeatured(true)
     }
-    if (y > 400 && !showNew) {
+    if (y > 200 && !showNew) {
       setShowNew(true)
     }
-    if (y > 600 && !showPromotedBanner) {
+    if (y > 400 && !showPromotedBanner) {
       setShowPromotedBanner(true)
     }
     if (y > 600 && !showAdvertised) {
