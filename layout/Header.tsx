@@ -66,6 +66,17 @@ const Header: React.FC<ReactProps> = (props) => {
           dangerouslySetInnerHTML={{ __html: getAnalyticsHeadScript() }}
         />
       }
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-B2F178EQFD"></script>
+      <script
+        id={"ganalytics"}
+        async
+        dangerouslySetInnerHTML={{
+          __html: `window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-B2F178EQFD');`
+        }}
+      />
     </Head>
   )
 }
