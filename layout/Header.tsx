@@ -61,6 +61,7 @@ const Header: React.FC<ReactProps> = (props) => {
       {
         process.browser &&
         <script
+          id={"segment-script"}
           async
           dangerouslySetInnerHTML={{ __html: getAnalyticsHeadScript() }}
         />
