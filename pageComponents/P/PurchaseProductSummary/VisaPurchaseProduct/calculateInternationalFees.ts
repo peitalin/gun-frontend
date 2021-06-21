@@ -21,5 +21,5 @@ const scaleRate = (1 - s1 - g) / (1 - s1 - s2 - g)
 
 export const calculateInternationalFee = (originalPrice: number) => {
 	console.log("%1.206 scaleRate: ", scaleRate)
-	return Math.ceil((scaleRate - 1) * originalPrice)
+	return Math.round((scaleRate - 1) * originalPrice)
 }

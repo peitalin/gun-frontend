@@ -355,7 +355,7 @@ const VisaPurchaseProduct = (props: ReactProps) => {
       _internationalFee = calculateInternationalFee(initialPurchasePrice)
       acceptInternationalFees = confirm(
         `This is not an Australian card.\n` +
-        `Stripe will charge an extra %1.21 international card fee.\n` +
+        `Stripe will charge an extra 1.21% international card fee.\n` +
         `This brings the total to: ${c(_internationalFee + initialPurchasePrice)}.`
       )
     } else {
