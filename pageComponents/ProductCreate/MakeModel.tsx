@@ -60,7 +60,7 @@ const MakeModel = (props: ReactProps & FormikProps<FormikFields>) => {
             fprops.setFieldValue("make", word)
             fprops.setFieldValue(
               "title",
-              `${word} ${fprops.values.model}`.trim()
+              `${word} ${fprops.values.model.trim()}`.trim()
             )
           }
           fprops.setFieldTouched('make', true)
@@ -90,7 +90,7 @@ const MakeModel = (props: ReactProps & FormikProps<FormikFields>) => {
             fprops.setFieldValue("model", word)
             fprops.setFieldValue(
               "title",
-              `${fprops.values.make} ${word}`.trim()
+              `${fprops.values.make} ${word.trim()}`.trim()
             )
           }
           fprops.setFieldTouched('model', true)
