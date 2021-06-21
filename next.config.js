@@ -58,7 +58,7 @@ module.exports =
       SERVER_GATEWAY_GRAPHQL_URL: process.env.SERVER_GATEWAY_GRAPHQL_URL,
       GATEWAY_GRAPHQL_WS_URL: process.env.GATEWAY_GRAPHQL_WS_URL,
       STRIPE_PUBLIC_KEY: process.env.STRIPE_PUBLIC_KEY,
-      SEGMENT_KEY: process.env.SEGMENT_KEY ?? "hWgw3XMWyfX8LUFmDhRlv5VrT6RRJM4z",
+      SEGMENT_KEY: process.env.SEGMENT_KEY || "hWgw3XMWyfX8LUFmDhRlv5VrT6RRJM4z",
     },
 
     publicRuntimeConfig: {
