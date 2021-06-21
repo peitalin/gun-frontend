@@ -123,7 +123,7 @@ export async function getStaticProps(ctx: Context) {
     props: {
       initialCategories: initialCategories,
       getPageConfig: data?.getPageConfig,
-      revalidate: 600, // 10min
+      revalidate: 120, // 2min
     }, // will be passed to the page component as props
   }
 }
