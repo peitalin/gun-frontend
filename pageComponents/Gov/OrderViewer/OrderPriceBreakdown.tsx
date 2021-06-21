@@ -48,9 +48,9 @@ const OrderPriceBreakdown = (props: ReactProps & FormikProps<FormikFields>) => {
   } = fprops;
 
   let sellerPayment = order.total * 0.965 // seller gets 96.5%
-  let platformPayment = order.total * 0.0175
-  let stripePayment = order.total * 0.0175
+  let platformPayment = Math.round(order.total * 0.0175 - 30)
   // platform gets 1.75% (minus 30cents)
+  let stripePayment = Math.round(order.total * 0.0175 + 30)
   // stripe gets 1.75% (plus 30 cents)
 
   let totalItemCaptured = order.payoutItems
