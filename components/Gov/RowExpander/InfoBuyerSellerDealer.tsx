@@ -4,7 +4,7 @@ import { Colors, BoxShadows } from 'layout/AppTheme';
 import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles';
 
 import Typography from '@material-ui/core/Typography';
-import currency from 'currency.js';
+import { asCurrency as c } from 'utils/prices';
 
 // graphql
 import { UserPrivate, StorePrivate, Dealers, Users, User_Licenses } from "typings/gqlTypes";
@@ -26,8 +26,6 @@ const InfoBuyerSellerDealer = (props: ReactProps) => {
   } = props;
 
 
-  const c = (s) => currency(s/100, { formatWithSymbol: true }).format()
-
   let sellerPhoneNumber = !!sellerStore?.user?.phoneNumber?.number
     ? `${sellerStore?.user?.phoneNumber?.countryCode} ${sellerStore?.user?.phoneNumber?.number}`
     : "-"
@@ -43,6 +41,11 @@ const InfoBuyerSellerDealer = (props: ReactProps) => {
     : "-"
 
   // let buyerLicense = order
+  let displayTotal = props.total === undefined
+    ? undefined
+    : !!props.internationalFee
+      ? `${c(props.total)} + ${c(props.internationalFee)} international fee`
+      : `${c(props.total)}`
 
   return (
     <>
@@ -190,6 +193,17 @@ const InfoBuyerSellerDealer = (props: ReactProps) => {
           <Typography variant="h6" gutterBottom component="div">
             Order Details
           </Typography>
+          {
+            displayTotal &&
+            <div className={classes.userDetailsRow}>
+              <Typography className={classes.orderDetailsHeader} variant="body1">
+                Total
+              </Typography>
+              <Typography className={classes.orderDetailsInfo} variant="body1">
+                {displayTotal}
+              </Typography>
+            </div>
+          }
           <div className={classes.userDetailsRow}>
             <Typography className={classes.orderDetailsHeader} variant="body1">
               Stripe Payment Intent Status:
@@ -223,6 +237,8 @@ interface ReactProps extends WithStyles<typeof styles> {
   paymentIntentStatus: string
   paymentIntentId: string
   hideOrderDetails?: boolean
+  total?: number;
+  internationalFee?: number;
 }
 
 

@@ -26,7 +26,7 @@ import Typography from "@material-ui/core/Typography";
 import { useSnackbar } from "notistack";
 
 import { formatDateTime } from "utils/dates";
-import currency from 'currency.js';
+import { asCurrency as c } from 'utils/prices';
 
 // graphql
 import { UserPrivate, OrderStatus, OrderAdmin } from "typings/gqlTypes";
@@ -69,8 +69,6 @@ const RowExpander = (props: RowExpanderProps) => {
   })
 
   const [open, setOpen] = React.useState(initialOpen);
-
-  const c = (s) => currency(s/100, { formatWithSymbol: true }).format()
 
   return (
     <>
@@ -120,6 +118,8 @@ const RowExpander = (props: RowExpanderProps) => {
             dealer={row?.dealer}
             paymentIntentStatus={row?.paymentIntentStatus}
             paymentIntentId={row?.paymentIntentId}
+            total={row.total}
+            internationalFee={row.internationalFee}
           />
 
           {
