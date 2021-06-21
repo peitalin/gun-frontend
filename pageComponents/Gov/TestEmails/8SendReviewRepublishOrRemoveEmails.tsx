@@ -41,10 +41,12 @@ const SendReviewRepublishOrRemoveEmails: React.FC<ReactProps> = (props) => {
   const sendReviewOrRepublishSellerEmail = async() => {
     setLoading(true)
     try {
+      console.log("productID", props.productId)
       const { errors, data } = await aClient.mutate<QueryData, QueryVar>({
         mutation: SEND_REVIEW_REPUBLISH_OR_REMOVE_SELLER_EMAIL,
         variables: {
-          userId: props.seller.id,
+          userId: props.seller?.id ?? "uvhm5dagvrd4x",
+          // admin@gunmarketplace.com.au's useId
           productId: props.productId,
         },
         fetchPolicy: "no-cache", // always do a network request, no caches
@@ -79,7 +81,7 @@ const SendReviewRepublishOrRemoveEmails: React.FC<ReactProps> = (props) => {
           height: '36px',
         }}
       >
-        Payout Complete Seller
+        Review/Republish Seller Email
       </ButtonLoading>
     </div>
   )
