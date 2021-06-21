@@ -1,6 +1,6 @@
 import React from 'react';
 import Head from 'next/head';
-import { getAnalyticsHeadScript } from 'utils/analytics'
+// import { getAnalyticsHeadScript } from 'utils/analytics'
 
 
 const Header: React.FC<ReactProps> = (props) => {
@@ -57,26 +57,31 @@ const Header: React.FC<ReactProps> = (props) => {
         `}
       </script> */}
 
-      {/* Server-side render these script tags, they will load client-side */}
-      {
-        process.browser &&
-        <script
-          id={"segment-script"}
-          async
-          dangerouslySetInnerHTML={{ __html: getAnalyticsHeadScript() }}
-        />
-      }
-      <script async src="https://www.googletagmanager.com/gtag/js?id=G-B2F178EQFD"></script>
+      {/* <script async src="https://www.googletagmanager.com/gtag/js?id=G-B2F178EQFD"></script>
       <script
-        id={"ganalytics"}
+        id={"g-analytics"}
         async
         dangerouslySetInnerHTML={{
-          __html: `window.dataLayer = window.dataLayer || [];
+          __html:
+            `window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-B2F178EQFD');`
+        }}
+      /> */}
+
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-B2F178EQFD"></script>
+      <script>
+        {
+          `
+          window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
-          gtag('config', 'G-B2F178EQFD');`
-        }}
-      />
+
+          gtag('config', 'G-B2F178EQFD');
+          `
+        }
+      </script>
     </Head>
   )
 }
