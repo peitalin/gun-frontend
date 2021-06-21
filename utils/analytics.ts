@@ -1,7 +1,7 @@
 import React from "react";
 import getConfig from "next/config";
 import { UserPrivate } from "typings/gqlTypes";
-const SEGMENT_KEY = process?.env?.SEGMENT_KEY
+const SEGMENT_KEY = process?.env?.SEGMENT_KEY ?? "hWgw3XMWyfX8LUFmDhRlv5VrT6RRJM4z"
 
 
 // Use this to get the script that needs injecting into a <head> script tag
