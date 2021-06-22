@@ -55,7 +55,8 @@ declare global {
       locale?: 'en', // Language to be set
       type?: 'standard' | 'expanded_bubble', // [standard, expanded_bubble]
       launcherTitle?: string // for expanded_bubble
-    }
+    },
+    gtag?(event, action, params): void,
     __forceSmoothScrollPolyfill__: boolean
   }
 }
@@ -74,9 +75,17 @@ const MainApp: NextComponentType<AppContext, AppInitialProps, AppProps & AppHOCP
     Component,
     pageProps,
     store,
-    router,
     classes, // from notifyStyles
   } = props;
+
+  const router = useRouter()
+
+  let initialDarkMode = (router.query?.dark === "true" || router.query?.dark === "1")
+    ? "dark"
+    : (router.query?.light === "true" || router.query?.light === "1")
+      ? "light"
+      : undefined
+    // when undefined, localStorage determines darkmode
 
   // add action to all snackbars
   const notistackRef = React.createRef();
@@ -105,11 +114,25 @@ const MainApp: NextComponentType<AppContext, AppInitialProps, AppProps & AppHOCP
   // that has gun-auth credentials
   let apollo = useWsRenewableApolloClient(userId)
 
+  // React.useEffect(() => {
+  //   const handleRouteChange = (url) => {
+  //     ga.pageview(url)
+  //   }
+  //   //When the component is mounted, subscribe to router changes
+  //   //and log those page views
+  //   router.events.on('routeChangeComplete', handleRouteChange)
+
+  //   // If the component is unmounted, unsubscribe
+  //   // from the event with the `off` method
+  //   return () => {
+  //     router.events.off('routeChangeComplete', handleRouteChange)
+  //   }
+  // }, [router.events])
 
   return (
     <Provider store={store}>
       <ApolloProvider client={apollo}>
-        <ThemeProviderDarkMode initialDarkModeSSR={pageProps?.initialDarkModeSSR}>
+        <ThemeProviderDarkMode initialDarkModeSSR={initialDarkMode}>
           <SnackbarProvider
           // @ts-ignore
             ref={notistackRef}
@@ -193,11 +216,8 @@ const ThemeProviderDarkMode = ({ initialDarkModeSSR, children }) => {
     }
     if (initialDarkModeSSR === 'light') {
       dispatch(Actions.reduxLogin.SET_LIGHT_MODE())
-    } else {
-      // set darkMode by defaul
-      dispatch(Actions.reduxLogin.SET_DARK_MODE())
     }
-  }, [])
+  }, [initialDarkModeSSR])
 
   let darkModeTheme: PaletteOptions = {
     type: darkModeRedux ?? initialDarkModeSSR
@@ -208,7 +228,7 @@ const ThemeProviderDarkMode = ({ initialDarkModeSSR, children }) => {
   // Then client-side, darkModeRedux takes over dark mode toggle
 
   // console.log("darkModeRedux: ", darkModeRedux)
-  // console.log("initialDarkModeSSR: ", initialDarkModeSSR)
+  console.log("initialDarkModeSSR: ", initialDarkModeSSR)
   // console.log("darkModeTheme: ", darkModeTheme)
 
   let appTheme: ThemeOptions = createAppTheme(darkModeRedux);
@@ -241,7 +261,7 @@ interface AppHOCProps extends WithStyles<typeof notifyStyles> {
 // MainApp.getInitialProps = async (appContext) => {
 
 //     const appProps = await App.getInitialProps(appContext)
-//     // console.log("appProps: ", appProps)
+//     console.log("appProps: ", appProps)
 //     let ctx = appContext.ctx;
 
 //     let darkMode = (ctx.query?.dark === "true" || ctx.query?.dark === "1")
