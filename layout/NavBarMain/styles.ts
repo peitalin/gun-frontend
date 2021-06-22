@@ -119,6 +119,7 @@ export const styles = (theme: Theme) => createStyles({
   },
   baseBarInnerDashboard: {
     // width: '100vw',
+    pointerEvents: "all",
     width: '100%',
     display: "flex",
     position: "relative",
