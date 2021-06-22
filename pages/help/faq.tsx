@@ -101,6 +101,11 @@ export const commonStyles = {
     marginBottom: '0.5rem',
     fontSize: '1rem',
   },
+  paragraph2: {
+    marginTop: '0.1rem',
+    marginBottom: '0.1rem',
+    fontSize: '1rem',
+  },
   link: {
     marginLeft: '0.3rem',
     marginRight: '0.3rem',

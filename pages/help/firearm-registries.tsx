@@ -28,58 +28,60 @@ const FirearmRegistriesSSR: React.FC<ReactProps> = (props) => {
   }, [])
 
   return (
-    <AlignCenterLayout
-      withRecommendations={false}
-      maxWidth={720}
-    >
-      <div className={classes.root}>
-        <div className={classes.title}>
-          FIREARM REGISTRIES
-        </div>
+    <PageDashboardLayout>
+      <AlignCenterLayout
+        withRecommendations={false}
+        maxWidth={720}
+      >
+        <div className={classes.root}>
+          <div className={classes.title}>
+            FIREARM REGISTRIES
+          </div>
 
-        <div className={classes.paragraph}>
-          <FirearmRegistry classes={classes}
-            registry={registries.act}
-            copyAndSendSnackbarMsg={copyAndSendSnackbarMsg}
-          />
-          <FirearmRegistry classes={classes}
-            registry={registries.nsw}
-            copyAndSendSnackbarMsg={copyAndSendSnackbarMsg}
-          />
-          <FirearmRegistry classes={classes}
-            registry={registries.nt}
-            copyAndSendSnackbarMsg={copyAndSendSnackbarMsg}
-          />
-          <FirearmRegistry classes={classes}
-            registry={registries.qld}
-            copyAndSendSnackbarMsg={copyAndSendSnackbarMsg}
-          />
-          <FirearmRegistry classes={classes}
-            registry={registries.sa}
-            copyAndSendSnackbarMsg={copyAndSendSnackbarMsg}
-          />
-          <FirearmRegistry classes={classes}
-            registry={registries.tas}
-            copyAndSendSnackbarMsg={copyAndSendSnackbarMsg}
-          />
-          <FirearmRegistry classes={classes}
-            registry={registries.vic}
-            copyAndSendSnackbarMsg={copyAndSendSnackbarMsg}
-          />
-          <FirearmRegistry classes={classes}
-            registry={registries.wa}
-            copyAndSendSnackbarMsg={copyAndSendSnackbarMsg}
-          />
-        </div>
+          <div className={classes.paragraph}>
+            <FirearmRegistry classes={classes}
+              registry={registries.act}
+              copyAndSendSnackbarMsg={copyAndSendSnackbarMsg}
+            />
+            <FirearmRegistry classes={classes}
+              registry={registries.nsw}
+              copyAndSendSnackbarMsg={copyAndSendSnackbarMsg}
+            />
+            <FirearmRegistry classes={classes}
+              registry={registries.nt}
+              copyAndSendSnackbarMsg={copyAndSendSnackbarMsg}
+            />
+            <FirearmRegistry classes={classes}
+              registry={registries.qld}
+              copyAndSendSnackbarMsg={copyAndSendSnackbarMsg}
+            />
+            <FirearmRegistry classes={classes}
+              registry={registries.sa}
+              copyAndSendSnackbarMsg={copyAndSendSnackbarMsg}
+            />
+            <FirearmRegistry classes={classes}
+              registry={registries.tas}
+              copyAndSendSnackbarMsg={copyAndSendSnackbarMsg}
+            />
+            <FirearmRegistry classes={classes}
+              registry={registries.vic}
+              copyAndSendSnackbarMsg={copyAndSendSnackbarMsg}
+            />
+            <FirearmRegistry classes={classes}
+              registry={registries.wa}
+              copyAndSendSnackbarMsg={copyAndSendSnackbarMsg}
+            />
+          </div>
 
-      </div>
-      {
-        showSocialBanner &&
-        <ShowOnMobileOrDesktopSSR desktop>
-          <SocialFloatingBanner/>
-        </ShowOnMobileOrDesktopSSR>
-      }
-    </AlignCenterLayout>
+        </div>
+        {
+          showSocialBanner &&
+          <ShowOnMobileOrDesktopSSR desktop>
+            <SocialFloatingBanner/>
+          </ShowOnMobileOrDesktopSSR>
+        }
+      </AlignCenterLayout>
+  </PageDashboardLayout>
   );
 }
 
@@ -88,31 +90,30 @@ const FirearmRegistry = (props: RegistryProps) => {
   const { classes, registry, copyAndSendSnackbarMsg } = props;
 
   return (
-  <PageDashboardLayout>
     <div className={classes.registryContainer}>
       <div className={classes.registryTitle}>
         {registry.title}
       </div>
       <div className={classes.flexRow}>
         <div className={clsx(classes.flexCol)}>
-          <div className={classes.subtitle}>
+          <div className={classes.paragraph2}>
             email:
           </div>
-          <div className={classes.subtitle}>
+          <div className={classes.paragraph2}>
             phone:
           </div>
-          <div className={classes.subtitle}>
+          <div className={classes.paragraph2}>
             fax:
           </div>
-          <div className={classes.subtitle}>
+          <div className={classes.paragraph2}>
             website:
           </div>
         </div>
         <div className={clsx(classes.flexCol, classes.flexItem)}>
-          <div className={classes.subtitle}>
+          <div className={classes.paragraph2}>
             <Tooltip title={"copy email"}>
               <a
-                className={classes.link}
+                className={classes.linkNoSpace}
                 href={`mailto: ${registry.email}`}
                 onClick={() => copyAndSendSnackbarMsg(registry.email)}
               >
@@ -120,15 +121,15 @@ const FirearmRegistry = (props: RegistryProps) => {
               </a>
             </Tooltip>
           </div>
-          <div className={classes.subtitle}>
+          <div className={classes.paragraph2}>
             {registry.phone}
           </div>
-          <div className={classes.subtitle}>
+          <div className={classes.paragraph2}>
             {registry.fax}
           </div>
-          <div className={classes.subtitle}>
+          <div className={classes.paragraph2}>
             <a
-              className={classes.link}
+              className={classes.linkNoSpace}
               href={registry.website}
               target={"_blank"}
             >
@@ -138,7 +139,6 @@ const FirearmRegistry = (props: RegistryProps) => {
         </div>
       </div>
     </div>
-  </PageDashboardLayout>
   )
 }
 
@@ -255,6 +255,9 @@ const styles = (theme: Theme) => createStyles({
   paragraph: {
     ...commonStyles.paragraph,
   },
+  paragraph2: {
+    ...commonStyles.paragraph2,
+  },
   flexRow: {
     display: "flex",
     flexDirection: "row",
@@ -269,8 +272,10 @@ const styles = (theme: Theme) => createStyles({
   flexItem: {
     flexGrow: 1,
   },
-  link: {
+  linkNoSpace: {
     ...commonStyles.link,
+    marginLeft: '0rem',
+    marginRight: '0rem',
   },
 });
 
