@@ -1,5 +1,4 @@
 import React from "react";
-import { Product } from "typings/gqlTypes";
 // Styles
 import clsx from "clsx";
 import { withStyles, WithStyles } from "@material-ui/core/styles";
@@ -11,7 +10,6 @@ import KeyboardArrowDown from "@material-ui/icons/KeyboardArrowDown"
 import Link from "next/link";
 import { useRouter } from "next/router";
 import MenuItem from "@material-ui/core/MenuItem";
-import Button from "@material-ui/core/Button";
 
 
 const routeMappings = {
