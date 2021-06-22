@@ -76,7 +76,6 @@ const DesktopMainBar = (props: DesktopMainBarProps) => {
           <div className={classes.blurBackground}/>
         }
 
-        <ToggleDarkMode/>
 
         <Link href="/sell">
           <a className={classes.buttonLink}>
@@ -96,7 +95,7 @@ const DesktopMainBar = (props: DesktopMainBarProps) => {
           </a>
         </Link>
 
-        {
+        {/* {
           loggedIn
           ? <Link href="/orders">
               <a className={classes.buttonLink}>
@@ -125,7 +124,7 @@ const DesktopMainBar = (props: DesktopMainBarProps) => {
                 }}
               />
             </div>
-        }
+        } */}
 
         {
           !loggedIn &&

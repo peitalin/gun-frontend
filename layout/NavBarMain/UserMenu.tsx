@@ -27,6 +27,8 @@ import HelpOutlineIcon from "@material-ui/icons/HelpOutline";
 import PowerSettingsNewIcon from '@material-ui/icons/PowerSettingsNew';
 import SettingsIcon from '@material-ui/icons/Settings';
 import HowToVoteIcon from '@material-ui/icons/HowToVote';
+import Brightness4Icon from '@material-ui/icons/Brightness4';
+import ToggleDarkMode from "layout/NavBarMain/ToggleDarkMode";
 
 // Router
 import Link from "next/link";
@@ -206,6 +208,17 @@ export const UserMenu: React.FC<ReactProps> = (props) => {
         <Divider/>
 
         <MenuItem className={classes.menuItem} onClick={handleCloseMenu}>
+          <div className={classes.menuLink}>
+            <Brightness4Icon className={classes.menuIcon}/>
+            <span className={classes.menuText}> Dark Mode </span>
+            <div className={classes.darkModeToggle}>
+              <ToggleDarkMode/>
+            </div>
+          </div>
+        </MenuItem>
+
+
+        <MenuItem className={classes.menuItem} onClick={handleCloseMenu}>
           <Link href="/help/faq">
             <a className={classes.menuLink}>
               <HelpOutlineIcon className={classes.menuIcon}/>
@@ -279,9 +292,15 @@ const styles = (theme: Theme) => createStyles({
     },
   },
   menuLink: {
+    position: 'relative',
     padding: '0.5rem',
     display: 'flex',
     width: '100%',
+  },
+  darkModeToggle: {
+    position: 'absolute',
+    top: 0,
+    right: '1rem',
   },
 });
 

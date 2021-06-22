@@ -41,8 +41,13 @@ export const styles = (theme: Theme) => createStyles({
     // position: "absolute",
     width: '100%',
     position: 'fixed',
+    pointerEvents: "none", // click through
   },
   baseBarInnerHomePage: {
+    pointerEvents: "none", // click through
+    "& > div": {
+      pointerEvents: "all",
+    },
     // width: '100vw',
     width: '100%',
     display: "flex",
@@ -51,6 +56,7 @@ export const styles = (theme: Theme) => createStyles({
     alignItems: "center",
   },
   baseBarDither: {
+    pointerEvents: "none", // click through
     background: isThemeDark(theme)
       ? Gradients.gradientBlackDitherDown.background
       : Gradients.gradientBlackDitherDown.background,
@@ -122,6 +128,7 @@ export const styles = (theme: Theme) => createStyles({
   },
   width100: {
     width: '100%',
+    pointerEvents: "none", // click through
   },
   menuButtonsContainer: {
     display: 'flex',
