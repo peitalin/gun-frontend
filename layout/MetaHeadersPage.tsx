@@ -48,9 +48,9 @@ const HeaderPage: React.FC<HeaderPageProps> = (props) => (
       props.ogImage
       ? <meta property="og:image" content={props.ogImage} />
       : <meta property="og:image"
-          // content={
-          //   "https://image-content.gunmarketplace.com.au/og-img-default.png"
-          // }
+          content={
+            "https://storage.googleapis.com/production-gunmarketplace-images/gun-marketplace-logo.png"
+          }
         />
     }
     {
