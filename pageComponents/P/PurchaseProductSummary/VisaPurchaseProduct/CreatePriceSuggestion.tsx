@@ -16,7 +16,7 @@ import OpenChatButton from "pageComponents/BiddingRoom/OpenChatButton";
 
 
 
-const CreateOfferSubscription = (props: ReactProps) => {
+const CreatePriceSuggestion = (props: ReactProps) => {
 
   const {
     classes,
@@ -128,4 +128,4 @@ const styles = (theme: Theme) => createStyles({
   },
 });
 
-export default withStyles(styles)( CreateOfferSubscription );
+export default withStyles(styles)( CreatePriceSuggestion );

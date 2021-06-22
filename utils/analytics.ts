@@ -1,30 +1,45 @@
-import React from "react";
-import getConfig from "next/config";
-import { UserPrivate } from "typings/gqlTypes";
 const SEGMENT_KEY = process?.env?.SEGMENT_KEY ?? "hWgw3XMWyfX8LUFmDhRlv5VrT6RRJM4z"
 
+// https://mariestarck.com/add-google-analytics-to-your-next-js-application-in-5-easy-steps/
 
-// Use this to get the script that needs injecting into a <head> script tag
-export const getAnalyticsHeadScript = (): string => {
-  if (SEGMENT_KEY) {
-    return `!function(){var analytics=window.analytics=window.analytics||[];if(!analytics.initialize)if(analytics.invoked)window.console&&console.error&&console.error("Segment snippet included twice.");else{analytics.invoked=!0;analytics.methods=["trackSubmit","trackClick","trackLink","trackForm","pageview","identify","reset","group","track","ready","alias","debug","page","once","off","on"];analytics.factory=function(t){return function(){var e=Array.prototype.slice.call(arguments);e.unshift(t);analytics.push(e);return analytics}};for(var t=0;t<analytics.methods.length;t++){var e=analytics.methods[t];analytics[e]=analytics.factory(e)}analytics.load=function(t,e){var n=document.createElement("script");n.type="text/javascript";n.async=!0;n.src="https://cdn.segment.com/analytics.js/v1/"+t+"/analytics.min.js";var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(n,a);analytics._loadOptions=e};analytics.SNIPPET_VERSION="4.1.0";
-    analytics.load("${SEGMENT_KEY}");
-    }}();
-    `;
-  } else {
-    return "";
+// log the pageview with their URL
+export const pageview = (url) => {
+  if (window.gtag) {
+    window.gtag('config', process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS, {
+      page_path: url,
+    })
   }
-};
-
-export const useAnalytics = (name: string, parameters?: object) => {
-  // Record the page view
-  React.useEffect(() => {
-    // only run on client
-    if (process.browser) {
-      // analyticsEvent(name, parameters);
-    }
-  }, [])
 }
+
+// log specific events happening.
+export const event = ({ action, params }) => {
+  if (window.gtag) {
+    window.gtag('event', action, params)
+  }
+}
+
+
+// // Use this to get the script that needs injecting into a <head> script tag
+// export const getAnalyticsHeadScript = (): string => {
+//   if (SEGMENT_KEY) {
+//     return `!function(){var analytics=window.analytics=window.analytics||[];if(!analytics.initialize)if(analytics.invoked)window.console&&console.error&&console.error("Segment snippet included twice.");else{analytics.invoked=!0;analytics.methods=["trackSubmit","trackClick","trackLink","trackForm","pageview","identify","reset","group","track","ready","alias","debug","page","once","off","on"];analytics.factory=function(t){return function(){var e=Array.prototype.slice.call(arguments);e.unshift(t);analytics.push(e);return analytics}};for(var t=0;t<analytics.methods.length;t++){var e=analytics.methods[t];analytics[e]=analytics.factory(e)}analytics.load=function(t,e){var n=document.createElement("script");n.type="text/javascript";n.async=!0;n.src="https://cdn.segment.com/analytics.js/v1/"+t+"/analytics.min.js";var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(n,a);analytics._loadOptions=e};analytics.SNIPPET_VERSION="4.1.0";
+//     analytics.load("${SEGMENT_KEY}");
+//     }}();
+//     `;
+//   } else {
+//     return "";
+//   }
+// };
+
+// export const useAnalytics = (name: string, parameters?: object) => {
+//   // Record the page view
+//   React.useEffect(() => {
+//     // only run on client
+//     if (process.browser) {
+//       // analyticsEvent(name, parameters);
+//     }
+//   }, [])
+// }
 
 // Identify or update the currently logged- in user.
 // This should be called anytime the user becomes known, or when any of the properties we're interested has changed.

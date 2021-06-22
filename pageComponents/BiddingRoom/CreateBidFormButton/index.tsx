@@ -33,6 +33,7 @@ import { useSnackbar } from "notistack";
 import { useSelector, useDispatch } from 'react-redux';
 import { GrandReduxState, Actions } from 'reduxStore/grand-reducer';
 import CreateInitialBidForm from './CreateInitialBidForm';
+import * as ga from "utils/analytics";
 
 
 
@@ -103,6 +104,13 @@ const BiddingRoom: React.FC<ReactProps> = (props) => {
         onClick={() => {
           // createChat()
           setModalOpen(s => !s)
+          ga.event({
+            action: "suggest-price",
+            params: {
+              productId: props.product.id,
+              userId: user?.id,
+            }
+          })
         }}
       >
         { props.title ? props.title : 'Suggest a price' }

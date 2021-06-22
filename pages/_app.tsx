@@ -32,6 +32,7 @@ import "components/DropzoneUploader/styles.css";
 
 import { SnackbarProvider, ProviderContext } from 'notistack';
 import IconButtonCancel from "components/IconButtonCancel";
+import * as ga from "utils/analytics";
 
 import dayjs from 'dayjs'
 import utc from "dayjs/plugin/utc"
@@ -114,20 +115,20 @@ const MainApp: NextComponentType<AppContext, AppInitialProps, AppProps & AppHOCP
   // that has gun-auth credentials
   let apollo = useWsRenewableApolloClient(userId)
 
-  // React.useEffect(() => {
-  //   const handleRouteChange = (url) => {
-  //     ga.pageview(url)
-  //   }
-  //   //When the component is mounted, subscribe to router changes
-  //   //and log those page views
-  //   router.events.on('routeChangeComplete', handleRouteChange)
+  React.useEffect(() => {
+    const handleRouteChange = (url) => {
+      ga.pageview(url)
+    }
+    //When the component is mounted, subscribe to router changes
+    //and log those page views
+    router.events.on('routeChangeComplete', handleRouteChange)
 
-  //   // If the component is unmounted, unsubscribe
-  //   // from the event with the `off` method
-  //   return () => {
-  //     router.events.off('routeChangeComplete', handleRouteChange)
-  //   }
-  // }, [router.events])
+    // If the component is unmounted, unsubscribe
+    // from the event with the `off` method
+    return () => {
+      router.events.off('routeChangeComplete', handleRouteChange)
+    }
+  }, [router.events])
 
   return (
     <Provider store={store}>
