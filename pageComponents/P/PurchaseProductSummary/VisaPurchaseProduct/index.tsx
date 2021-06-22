@@ -41,7 +41,7 @@ import {
 // Components
 import ErrorBounds from 'components/ErrorBounds';
 import ButtonLoading from "components/ButtonLoading";
-import CreateOfferSubscription from "./CreateOfferSubscription";
+import CreatePriceSuggestion from "./CreatePriceSuggestion";
 // redux
 import { useSelector } from "react-redux";
 import { GrandReduxState, Actions } from "reduxStore/grand-reducer";
@@ -658,7 +658,7 @@ const VisaPurchaseProduct = (props: ReactProps) => {
             true &&
             <div className={classes.flexRowCenter}>
               <div className={classes.bidButtonContainer}>
-                <CreateOfferSubscription
+                <CreatePriceSuggestion
                   userId={buyer?.id}
                   product={product}
                   chatRoomStatuses={[
