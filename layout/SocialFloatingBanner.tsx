@@ -32,6 +32,12 @@ const SocialFloatingBanner: React.FC<ReactProps> = (props) => {
     <div className={classes.rootSocialFloatingBanner}>
       <div className={classes.socialInnerBar}>
 
+        <Tooltip title={"Beta Testing Version"} placement={"top"}>
+          <div className={classes.beta}>
+            Beta 1.0
+          </div>
+        </Tooltip>
+
         <Tooltip title={"Join our Discord chat"} placement={"top"}>
           <div className={classes.iconBox}>
             <a className={classes.link} target={"_blank"}
@@ -126,6 +132,12 @@ const styles = (theme: Theme) => createStyles({
     borderRadius: BorderRadius4x,
   },
   link: {
+    fontSize: '1rem',
+  },
+  beta: {
+    color: Colors.uniswapLightestGrey,
+    fontSize: '0.8rem',
+    marginRight: "0.25rem",
   },
   iconBox: {
     width: 24,

@@ -56,13 +56,13 @@ const FrontPage: React.FC<ReactProps> = (props) => {
   const [showCategories, setShowCategories] = React.useState(false)
 
   React.useEffect(() => {
-    if (y > 100 && !showFeatured) {
+    if (y > 0 && !showFeatured) {
       setShowFeatured(true)
     }
-    if (y > 200 && !showNew) {
+    if (y > 100 && !showNew) {
       setShowNew(true)
     }
-    if (y > 400 && !showPromotedBanner) {
+    if (y > 200 && !showPromotedBanner) {
       setShowPromotedBanner(true)
     }
     if (y > 600 && !showAdvertised) {

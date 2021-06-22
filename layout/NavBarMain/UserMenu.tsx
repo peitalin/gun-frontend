@@ -207,12 +207,12 @@ export const UserMenu: React.FC<ReactProps> = (props) => {
 
         <Divider/>
 
-        <MenuItem className={classes.menuItem} onClick={handleCloseMenu}>
+        <MenuItem className={classes.menuItem}>
           <div className={classes.menuLink}>
             <Brightness4Icon className={classes.menuIcon}/>
             <span className={classes.menuText}> Dark Mode </span>
             <div className={classes.darkModeToggle}>
-              <ToggleDarkMode/>
+              <ToggleDarkMode callback={handleCloseMenu}/>
             </div>
           </div>
         </MenuItem>

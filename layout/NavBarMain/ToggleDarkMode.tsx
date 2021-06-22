@@ -14,7 +14,7 @@ import Switch from '@material-ui/core/Switch';
 const ToggleDarkMode = (props: ReactProps) => {
 
   const {
-    classes,
+    callback,
   } = props;
 
   let darkMode = useSelector<GrandReduxState, "dark"|"light">(s => {
@@ -31,6 +31,9 @@ const ToggleDarkMode = (props: ReactProps) => {
         } else {
           dispatch(Actions.reduxLogin.SET_DARK_MODE())
         }
+        if (typeof callback === 'function') {
+          callback()
+        }
       }}
       color="secondary"
       inputProps={{ 'aria-label': 'secondary checkbox' }}
@@ -42,17 +45,18 @@ const ToggleDarkMode = (props: ReactProps) => {
 
 /////////// Typings //////////////
 
-interface ReactProps extends WithStyles<typeof styles> {
+interface ReactProps {
+  callback?(): void
 }
 
 /////////// Styles //////////////
 
-const styles = (theme: Theme) => createStyles({
-  root: {},
-});
+// const styles = (theme: Theme) => createStyles({
+//   root: {},
+// });
 
 
-export default withStyles(styles)( ToggleDarkMode );
+export default ToggleDarkMode
 
 
 
