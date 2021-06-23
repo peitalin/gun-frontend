@@ -158,7 +158,7 @@ export const REVISE_AND_RESUBMIT_FORM_10 = gql`
 
 
 export const MARK_PAYOUTS_AS_PAID = gql`
-  mutation marktPayoutsAsPaid(
+  mutation markPayoutsAsPaid(
     $orderIds: [String!]!
     $payoutId: String!
   ) {

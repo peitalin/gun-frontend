@@ -136,22 +136,18 @@ const PayoutsCompleteTable: NextPage<ReactProps> = (props) => {
           ? <Typography className={classes.dateTitle}>
               Loading...
             </Typography>
-          : <span onClick={() => {
-              snackbar.enqueueSnackbar(
-                `Copied "Payout ${showDate(props.day)}"`,
-                { variant: "info" }
-              )
-              copy(`Payout ${showDate(props.day)}`)
-            }}>
-              <Typography className={classes.dateTitle}>
-                {/* {`Payouts for ${showDate(props.day)}`} */}
+          : <div className={classes.dateTitleBox}>
+              <div className={classes.dateTitle}>
                 {
                   approvalDate
                     ? `Payouts for ${showDate(approvalDate)}`
                     : `Payouts for `
                 }
-              </Typography>
-            </span>
+              </div>
+              <div className={classes.dateTitle2}>
+                { `Completed on ${showDate(props.day)}` }
+              </div>
+            </div>
         }
       </div>
       <SearchOptions
@@ -385,6 +381,9 @@ const styles = (theme: Theme) => createStyles({
     borderRadius: `0px 0px ${BorderRadius}px ${BorderRadius}px`,
     paddingBottom: '0.25rem',
   },
+  dateTitleBox: {
+    display: 'flex',
+  },
   dateTitle: {
     fontWeight: 600,
     color: isThemeDark(theme)
@@ -398,7 +397,7 @@ const styles = (theme: Theme) => createStyles({
     },
   },
   dateTitle2: {
-    marginLeft: '0.3rem',
+    marginLeft: '1rem',
     fontWeight: 500,
     color: isThemeDark(theme)
       ? Colors.uniswapMediumGrey
