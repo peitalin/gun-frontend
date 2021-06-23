@@ -349,8 +349,11 @@ const VisaPurchaseProduct = (props: ReactProps) => {
 
     let acceptInternationalFees;
     let _internationalFee;
+    let notDomesticCard = paymentMethod.card?.country !== "AU"
 
-    if (paymentMethod.card?.country !== "AU") {
+    console.log("purchasePrice", initialPurchasePrice)
+
+    if (notDomesticCard) {
       // card is international and will incur %2.9 stripe fees instead of %1.75
       _internationalFee = calculateInternationalFee(initialPurchasePrice)
       acceptInternationalFees = confirm(
@@ -358,32 +361,35 @@ const VisaPurchaseProduct = (props: ReactProps) => {
         `Stripe will charge an extra 1.21% international card fee.\n` +
         `This brings the total to: ${c(_internationalFee + initialPurchasePrice)}.`
       )
+      console.log("internationalPurchasePrice", _internationalFee + initialPurchasePrice)
+      console.log("acceptInternationalFees", acceptInternationalFees)
+
+      if (acceptInternationalFees) {
+        // use international card pricing
+        await setInternationalFeeDisplay(_internationalFee)
+        snackbar.enqueueSnackbar(
+          `Updated international pricing to ${c(_internationalFee + initialPurchasePrice)}`,
+          { variant: "info" }
+        )
+        return {
+          paymentMethod,
+          _internationalFee: _internationalFee
+        }
+      } else {
+        setInternationalFeeDisplay(0)
+        snackbar.enqueueSnackbar(
+          `Please use an Australian card, or accept international card fees`,
+          { variant: "error" }
+        )
+        throw new Error("Not an australian card and don't want to pay international fees")
+      }
+
     } else {
       // card is Australian and will not incur %2.9 stripe fees
-      acceptInternationalFees = false
-    }
-    console.log("acceptInternationalFees", acceptInternationalFees)
-    console.log("purchasePrice", initialPurchasePrice)
-    console.log("internationalPurchasePrice", _internationalFee + initialPurchasePrice)
-
-    if (acceptInternationalFees && _internationalFee) {
-      // use international card pricing
-      await setInternationalFeeDisplay(_internationalFee)
-      snackbar.enqueueSnackbar(
-        `Updated international pricing to ${c(_internationalFee + initialPurchasePrice)}`,
-        { variant: "info" }
-      )
       return {
         paymentMethod,
         _internationalFee: _internationalFee
       }
-    } else {
-      setInternationalFeeDisplay(0)
-      snackbar.enqueueSnackbar(
-        `Please use an Australian card, or accept international card fees`,
-        { variant: "error" }
-      )
-      throw new Error("Not an australian card and don't want to pay international fees")
     }
   }
 
