@@ -71,11 +71,12 @@ const RowExpander = (props: RowExpanderProps) => {
   const [open, setOpen] = React.useState(initialOpen);
 
   const client = useApolloClient()
-                    const cacheData = client.cache.readQuery({
-                      query: GET_ORDERS_PENDING_APPROVAL_CONNECTION,
-                      variables: props.variables.ordersPendingApproval,
-                    });
-                    console.log("CACHE DATA: ", cacheData)
+
+  const cacheData = client.cache.readQuery({
+    query: GET_ORDERS_PENDING_APPROVAL_CONNECTION,
+    variables: props.variables.ordersPendingApproval,
+  });
+  console.log("CACHE DATA: ", cacheData)
 
   return (
     <>
@@ -181,25 +182,30 @@ const RowExpander = (props: RowExpanderProps) => {
                     });
                     console.log("CACHE DATA: ", cacheData)
 
-                    let ordersConnection = cacheData?.getOrdersPendingApprovalConnectionAdmin
-                    console.log("ordersConnection: ", ordersConnection)
-                    let newEdges = (ordersConnection?.edges ?? [])
-                        .filter(edge => edge?.node?.id !== newOrder?.id)
-                    // console.log("newEdges: ", newEdges)
+                    // only update apollo cache if cache exists
+                    // otherwise no-cache fetch policy shouldn't try update cache
+                    if (cacheData) {
+                      let ordersConnection = cacheData?.getOrdersPendingApprovalConnectionAdmin
+                      console.log("ordersConnection: ", ordersConnection)
+                      let newEdges = (ordersConnection?.edges ?? [])
+                          .filter(edge => edge?.node?.id !== newOrder?.id)
+                      // console.log("newEdges: ", newEdges)
 
-                    cache.writeQuery({
-                      query: GET_ORDERS_PENDING_APPROVAL_CONNECTION,
-                      variables: vars.ordersPendingApproval,
-                      data: {
-                        getOrdersPendingApprovalConnectionAdmin: {
-                          ...ordersConnection,
-                          // remove approved order from the "pending approval" list
-                          edges: newEdges,
-                          totalCount: (ordersConnection?.edges?.length ?? 1) - 1,
-                        }
-                      },
-                    });
-                    // console.log("CACHE AFTER: ", cache)
+                      cache.writeQuery({
+                        query: GET_ORDERS_PENDING_APPROVAL_CONNECTION,
+                        variables: vars.ordersPendingApproval,
+                        data: {
+                          getOrdersPendingApprovalConnectionAdmin: {
+                            ...ordersConnection,
+                            // remove approved order from the "pending approval" list
+                            edges: newEdges,
+                            totalCount: (ordersConnection?.edges?.length ?? 1) - 1,
+                          }
+                        },
+                      });
+                      // console.log("CACHE AFTER: ", cache)
+                    }
+
                   }
                 }
               }

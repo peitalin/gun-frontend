@@ -71,7 +71,7 @@ export const MobileMenuDropdown: React.FC<ReactProps> = (props) => {
 const MobileMenuExpander: React.FC<MobileMenuExpanderProps> = (props) => {
 
   const { classes, open, isDashboardPage } = props;
-  console.log("isDashboardPage", isDashboardPage)
+  // console.log("isDashboardPage", isDashboardPage)
 
   if (open) {
     return (

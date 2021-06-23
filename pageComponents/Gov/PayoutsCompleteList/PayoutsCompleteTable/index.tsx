@@ -25,7 +25,7 @@ import LoadingBar from "components/LoadingBar";
 // graphl
 import { useMutation, useQuery, useLazyQuery } from "@apollo/client";
 
-import RowExpander from "./RowExpander";
+import RowExpanderPayoutsComplete from "./RowExpanderPayoutsComplete";
 import { useRouter } from "next/router";
 import { useTheme } from "@material-ui/core";
 import { showDate } from "utils/dates";
@@ -117,6 +117,7 @@ const PayoutsCompleteTable: NextPage<ReactProps> = (props) => {
   const ordersConnection = data?.getOrdersCompleteByIdsConnection
 
   const [approvalDate, setApprovalDate] = React.useState(undefined)
+  const [payoutId, setPayoutId] = React.useState(undefined)
 
 
   return (
@@ -136,16 +137,25 @@ const PayoutsCompleteTable: NextPage<ReactProps> = (props) => {
           ? <Typography className={classes.dateTitle}>
               Loading...
             </Typography>
-          : <div className={classes.dateTitleBox}>
-              <div className={classes.dateTitle}>
-                {
-                  approvalDate
-                    ? `Payouts for ${showDate(approvalDate)}`
-                    : `Payouts for `
-                }
+          :
+            <div className={classes.dateTitleBox}>
+              <div className={classes.row1}>
+                <div className={classes.dateTitle}>
+                  {
+                    approvalDate
+                      ? `Payouts for ${showDate(approvalDate)}`
+                      : `Payouts for `
+                  }
+                </div>
+                <div className={classes.dateTitle2}>
+                  { `Completed on ${showDate(props.day)}` }
+                </div>
               </div>
-              <div className={classes.dateTitle2}>
-                { `Completed on ${showDate(props.day)}` }
+              <div className={classes.row2}>
+                <span className={classes.greyText}>{`PayoutId: `}</span>
+                <div className={classes.payoutId}>
+                  { `${payoutId}` }
+                </div>
               </div>
             </div>
         }
@@ -213,7 +223,7 @@ const PayoutsCompleteTable: NextPage<ReactProps> = (props) => {
             // console.log("order>>>>>>: ", order)
 
             return (
-              <RowExpander
+              <RowExpanderPayoutsComplete
                 key={order.id}
                 order={order}
                 admin={props.admin}
@@ -221,6 +231,9 @@ const PayoutsCompleteTable: NextPage<ReactProps> = (props) => {
                 initialOpen={router?.query?.orderId === order?.id}
                 refetchQueriesParams={refetchQueriesParams}
                 setApprovalDate={setApprovalDate}
+                approvalDate={approvalDate}
+                setPayoutId={setPayoutId}
+                payoutId={payoutId}
               />
             )
           }}
@@ -383,14 +396,25 @@ const styles = (theme: Theme) => createStyles({
   },
   dateTitleBox: {
     display: 'flex',
+    flexDirection: 'column',
+  },
+  row1: {
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'row',
+    marginTop: '1rem',
+    marginBottom: '0.25rem',
+  },
+  row2: {
+    display: 'flex',
+    flexDirection: 'row',
+    marginBottom: '0.5rem',
   },
   dateTitle: {
     fontWeight: 600,
     color: isThemeDark(theme)
       ? Colors.uniswapLightestGrey
       : Colors.slateGreyBlack,
-    marginTop: '1rem',
-    marginBottom: '1rem',
     "&:hover": {
       color: Colors.ultramarineBlue,
       cursor: "pointer",
@@ -400,10 +424,23 @@ const styles = (theme: Theme) => createStyles({
     marginLeft: '1rem',
     fontWeight: 500,
     color: isThemeDark(theme)
-      ? Colors.uniswapMediumGrey
-      : Colors.slateGreyDarkest,
-    marginTop: '1rem',
-    marginBottom: '1rem',
+      ? Colors.uniswapLighterGrey
+      : Colors.slateGreyLightestBlack,
+  },
+  payoutId: {
+    fontWeight: 500,
+    fontSize: "0.9rem",
+    color: isThemeDark(theme)
+      ? Colors.purple
+      : Colors.ultramarineBlue,
+  },
+  greyText: {
+    fontWeight: 500,
+    marginRight: '0.5rem',
+    fontSize: "0.9rem",
+    color: isThemeDark(theme)
+      ? Colors.uniswapLighterGrey
+      : Colors.slateGreyLightestBlack,
   },
 });
 

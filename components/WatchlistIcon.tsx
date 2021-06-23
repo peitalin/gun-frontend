@@ -2,7 +2,7 @@ import React from "react";
 // styles
 import clsx from 'clsx';
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
-import { Colors, BoxShadows } from "layout/AppTheme";
+import { Colors, BoxShadows, isThemeDark } from "layout/AppTheme";
 // typingsj
 import { UserPrivate } from "typings/gqlTypes";
 // MUI
@@ -160,12 +160,17 @@ const styles = (theme: Theme) => createStyles({
     position: 'absolute',
     zIndex: 1,
     right: '1rem',
-    background: Colors.cream,
+    backgroundColor: isThemeDark(theme)
+      ? Colors.uniswapMediumNavy
+      : Colors.slateGrey,
     // border: `1px solid ${Colors.black}`,
     boxShadow: BoxShadows.shadow3.boxShadow,
+    transform: "scale(1.2)",
     "&:hover": {
-      transform: "scale(1.1)",
-      background: Colors.cream,
+      backgroundColor: isThemeDark(theme)
+        ? Colors.uniswapMediumNavy
+        : Colors.slateGrey,
+      transform: "scale(1.4)",
       "& > span > svg": {
         fill: Colors.ultramarineBlueLight,
       },
@@ -183,7 +188,7 @@ const styles = (theme: Theme) => createStyles({
   favoriteRootAdded: {
     width: '1rem',
     height: '1rem',
-    fill: Colors.black,
+    fill: Colors.lightRed,
   },
 });
 

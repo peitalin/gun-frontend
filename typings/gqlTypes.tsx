@@ -499,6 +499,10 @@ export type Mutation = {
   delete_users?: Maybe<Users_Mutation_Response>;
   /** delete single row from the table: "users" */
   delete_users_by_pk?: Maybe<Users>;
+  /** delete data from the table: "watchlist_items" */
+  delete_watchlist_items?: Maybe<Watchlist_Items_Mutation_Response>;
+  /** delete single row from the table: "watchlist_items" */
+  delete_watchlist_items_by_pk?: Maybe<Watchlist_Items>;
   /** insert data into the table: "bids" */
   insert_bids?: Maybe<Bids_Mutation_Response>;
   /** insert a single row into the table: "bids" */
@@ -663,6 +667,10 @@ export type Mutation = {
   insert_users?: Maybe<Users_Mutation_Response>;
   /** insert a single row into the table: "users" */
   insert_users_one?: Maybe<Users>;
+  /** insert data into the table: "watchlist_items" */
+  insert_watchlist_items?: Maybe<Watchlist_Items_Mutation_Response>;
+  /** insert a single row into the table: "watchlist_items" */
+  insert_watchlist_items_one?: Maybe<Watchlist_Items>;
   /** update data of the table: "bids" */
   update_bids?: Maybe<Bids_Mutation_Response>;
   /** update single row of the table: "bids" */
@@ -827,6 +835,10 @@ export type Mutation = {
   update_users?: Maybe<Users_Mutation_Response>;
   /** update single row of the table: "users" */
   update_users_by_pk?: Maybe<Users>;
+  /** update data of the table: "watchlist_items" */
+  update_watchlist_items?: Maybe<Watchlist_Items_Mutation_Response>;
+  /** update single row of the table: "watchlist_items" */
+  update_watchlist_items_by_pk?: Maybe<Watchlist_Items>;
   /**
    * Create a new account using an email address and password.
    * AccessRule – PUBLIC
@@ -1566,6 +1578,16 @@ export type MutationDelete_Users_By_PkArgs = {
 };
 
 
+export type MutationDelete_Watchlist_ItemsArgs = {
+  where: Watchlist_Items_Bool_Exp;
+};
+
+
+export type MutationDelete_Watchlist_Items_By_PkArgs = {
+  id: Scalars['String'];
+};
+
+
 export type MutationInsert_BidsArgs = {
   objects: Array<Bids_Insert_Input>;
   on_conflict?: Maybe<Bids_On_Conflict>;
@@ -2055,6 +2077,18 @@ export type MutationInsert_UsersArgs = {
 export type MutationInsert_Users_OneArgs = {
   object: Users_Insert_Input;
   on_conflict?: Maybe<Users_On_Conflict>;
+};
+
+
+export type MutationInsert_Watchlist_ItemsArgs = {
+  objects: Array<Watchlist_Items_Insert_Input>;
+  on_conflict?: Maybe<Watchlist_Items_On_Conflict>;
+};
+
+
+export type MutationInsert_Watchlist_Items_OneArgs = {
+  object: Watchlist_Items_Insert_Input;
+  on_conflict?: Maybe<Watchlist_Items_On_Conflict>;
 };
 
 
@@ -2581,6 +2615,18 @@ export type MutationUpdate_UsersArgs = {
 export type MutationUpdate_Users_By_PkArgs = {
   _set?: Maybe<Users_Set_Input>;
   pk_columns: Users_Pk_Columns_Input;
+};
+
+
+export type MutationUpdate_Watchlist_ItemsArgs = {
+  _set?: Maybe<Watchlist_Items_Set_Input>;
+  where: Watchlist_Items_Bool_Exp;
+};
+
+
+export type MutationUpdate_Watchlist_Items_By_PkArgs = {
+  _set?: Maybe<Watchlist_Items_Set_Input>;
+  pk_columns: Watchlist_Items_Pk_Columns_Input;
 };
 
 
@@ -4160,6 +4206,12 @@ export type Query = {
   users_typing: Array<Users_Typing>;
   /** fetch aggregated fields from the table: "users_typing" */
   users_typing_aggregate: Users_Typing_Aggregate;
+  /** fetch data from the table: "watchlist_items" */
+  watchlist_items: Array<Watchlist_Items>;
+  /** fetch aggregated fields from the table: "watchlist_items" */
+  watchlist_items_aggregate: Watchlist_Items_Aggregate;
+  /** fetch data from the table: "watchlist_items" using primary key columns */
+  watchlist_items_by_pk?: Maybe<Watchlist_Items>;
   /**
    * Get the user who is currently logged in.
    *
@@ -5469,6 +5521,29 @@ export type QueryUsers_Typing_AggregateArgs = {
 };
 
 
+export type QueryWatchlist_ItemsArgs = {
+  distinct_on?: Maybe<Array<Watchlist_Items_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Watchlist_Items_Order_By>>;
+  where?: Maybe<Watchlist_Items_Bool_Exp>;
+};
+
+
+export type QueryWatchlist_Items_AggregateArgs = {
+  distinct_on?: Maybe<Array<Watchlist_Items_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Watchlist_Items_Order_By>>;
+  where?: Maybe<Watchlist_Items_Bool_Exp>;
+};
+
+
+export type QueryWatchlist_Items_By_PkArgs = {
+  id: Scalars['String'];
+};
+
+
 export type QueryUserArgs = {
   id?: Maybe<Scalars['String']>;
 };
@@ -6227,6 +6302,12 @@ export type Subscription = {
   users_typing: Array<Users_Typing>;
   /** fetch aggregated fields from the table: "users_typing" */
   users_typing_aggregate: Users_Typing_Aggregate;
+  /** fetch data from the table: "watchlist_items" */
+  watchlist_items: Array<Watchlist_Items>;
+  /** fetch aggregated fields from the table: "watchlist_items" */
+  watchlist_items_aggregate: Watchlist_Items_Aggregate;
+  /** fetch data from the table: "watchlist_items" using primary key columns */
+  watchlist_items_by_pk?: Maybe<Watchlist_Items>;
   numberIncremented?: Maybe<Scalars['Int']>;
   saidSomething?: Maybe<Scalars['String']>;
   /** myConversations: JSON */
@@ -7286,6 +7367,29 @@ export type SubscriptionUsers_Typing_AggregateArgs = {
   offset?: Maybe<Scalars['Int']>;
   order_by?: Maybe<Array<Users_Typing_Order_By>>;
   where?: Maybe<Users_Typing_Bool_Exp>;
+};
+
+
+export type SubscriptionWatchlist_ItemsArgs = {
+  distinct_on?: Maybe<Array<Watchlist_Items_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Watchlist_Items_Order_By>>;
+  where?: Maybe<Watchlist_Items_Bool_Exp>;
+};
+
+
+export type SubscriptionWatchlist_Items_AggregateArgs = {
+  distinct_on?: Maybe<Array<Watchlist_Items_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Watchlist_Items_Order_By>>;
+  where?: Maybe<Watchlist_Items_Bool_Exp>;
+};
+
+
+export type SubscriptionWatchlist_Items_By_PkArgs = {
+  id: Scalars['String'];
 };
 
 
@@ -18392,6 +18496,146 @@ export enum Users_Update_Column {
   USERROLE = 'userRole',
   /** column name */
   USERNAME = 'username'
+}
+
+/** columns and relationships of "watchlist_items" */
+export type Watchlist_Items = {
+  __typename?: 'watchlist_items';
+  createdAt: Scalars['timestamptz'];
+  id: Scalars['String'];
+  /** An object relationship */
+  product?: Maybe<Products>;
+  productId: Scalars['String'];
+  userId: Scalars['String'];
+};
+
+/** aggregated selection of "watchlist_items" */
+export type Watchlist_Items_Aggregate = {
+  __typename?: 'watchlist_items_aggregate';
+  aggregate?: Maybe<Watchlist_Items_Aggregate_Fields>;
+  nodes: Array<Watchlist_Items>;
+};
+
+/** aggregate fields of "watchlist_items" */
+export type Watchlist_Items_Aggregate_Fields = {
+  __typename?: 'watchlist_items_aggregate_fields';
+  count: Scalars['Int'];
+  max?: Maybe<Watchlist_Items_Max_Fields>;
+  min?: Maybe<Watchlist_Items_Min_Fields>;
+};
+
+
+/** aggregate fields of "watchlist_items" */
+export type Watchlist_Items_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<Watchlist_Items_Select_Column>>;
+  distinct?: Maybe<Scalars['Boolean']>;
+};
+
+/** Boolean expression to filter rows from the table "watchlist_items". All fields are combined with a logical 'AND'. */
+export type Watchlist_Items_Bool_Exp = {
+  _and?: Maybe<Array<Watchlist_Items_Bool_Exp>>;
+  _not?: Maybe<Watchlist_Items_Bool_Exp>;
+  _or?: Maybe<Array<Watchlist_Items_Bool_Exp>>;
+  createdAt?: Maybe<Timestamptz_Comparison_Exp>;
+  id?: Maybe<String_Comparison_Exp>;
+  product?: Maybe<Products_Bool_Exp>;
+  productId?: Maybe<String_Comparison_Exp>;
+  userId?: Maybe<String_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "watchlist_items" */
+export enum Watchlist_Items_Constraint {
+  /** unique or primary key constraint */
+  WATCHLIST_ITEMS_PKEY = 'watchlist_items_pkey'
+}
+
+/** input type for inserting data into table "watchlist_items" */
+export type Watchlist_Items_Insert_Input = {
+  createdAt?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['String']>;
+  product?: Maybe<Products_Obj_Rel_Insert_Input>;
+  productId?: Maybe<Scalars['String']>;
+  userId?: Maybe<Scalars['String']>;
+};
+
+/** aggregate max on columns */
+export type Watchlist_Items_Max_Fields = {
+  __typename?: 'watchlist_items_max_fields';
+  createdAt?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['String']>;
+  productId?: Maybe<Scalars['String']>;
+  userId?: Maybe<Scalars['String']>;
+};
+
+/** aggregate min on columns */
+export type Watchlist_Items_Min_Fields = {
+  __typename?: 'watchlist_items_min_fields';
+  createdAt?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['String']>;
+  productId?: Maybe<Scalars['String']>;
+  userId?: Maybe<Scalars['String']>;
+};
+
+/** response of any mutation on the table "watchlist_items" */
+export type Watchlist_Items_Mutation_Response = {
+  __typename?: 'watchlist_items_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Watchlist_Items>;
+};
+
+/** on conflict condition type for table "watchlist_items" */
+export type Watchlist_Items_On_Conflict = {
+  constraint: Watchlist_Items_Constraint;
+  update_columns?: Array<Watchlist_Items_Update_Column>;
+  where?: Maybe<Watchlist_Items_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "watchlist_items". */
+export type Watchlist_Items_Order_By = {
+  createdAt?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  product?: Maybe<Products_Order_By>;
+  productId?: Maybe<Order_By>;
+  userId?: Maybe<Order_By>;
+};
+
+/** primary key columns input for table: watchlist_items */
+export type Watchlist_Items_Pk_Columns_Input = {
+  id: Scalars['String'];
+};
+
+/** select columns of table "watchlist_items" */
+export enum Watchlist_Items_Select_Column {
+  /** column name */
+  CREATEDAT = 'createdAt',
+  /** column name */
+  ID = 'id',
+  /** column name */
+  PRODUCTID = 'productId',
+  /** column name */
+  USERID = 'userId'
+}
+
+/** input type for updating data in table "watchlist_items" */
+export type Watchlist_Items_Set_Input = {
+  createdAt?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['String']>;
+  productId?: Maybe<Scalars['String']>;
+  userId?: Maybe<Scalars['String']>;
+};
+
+/** update columns of table "watchlist_items" */
+export enum Watchlist_Items_Update_Column {
+  /** column name */
+  CREATEDAT = 'createdAt',
+  /** column name */
+  ID = 'id',
+  /** column name */
+  PRODUCTID = 'productId',
+  /** column name */
+  USERID = 'userId'
 }
 
 export type ID = Scalars["ID"]

@@ -30,7 +30,7 @@ import { asCurrency as c } from "utils/prices";
 
 
 
-const RowExpander = (props: RowExpanderProps) => {
+const RowExpanderPayoutsComplete = (props: RowExpanderProps) => {
 
   const {
     order,
@@ -75,9 +75,15 @@ const RowExpander = (props: RowExpanderProps) => {
     let approvedOrderSnapshot = order.orderSnapshots.find(
       s => s.orderStatus === OrderStatus.ADMIN_APPROVED
     )
-    if (approvedOrderSnapshot) {
+    if (approvedOrderSnapshot && !props.approvalDate) {
       if (typeof props.setApprovalDate === 'function') {
         props.setApprovalDate(approvedOrderSnapshot?.createdAt)
+      }
+    }
+
+    if (!props.payoutId) {
+      if (typeof props.setPayoutId === 'function') {
+        props.setPayoutId(order?.payoutItems?.[0]?.payoutId)
       }
     }
   }, [order])
@@ -160,6 +166,9 @@ interface RowExpanderProps extends WithStyles<typeof styles> {
   }[];
   initialOpen?: boolean;
   setApprovalDate(d: Date): void
+  approvalDate: Date;
+  setPayoutId(id: string): void;
+  payoutId: string;
 }
 
 
@@ -205,4 +214,4 @@ const styles = (theme: Theme) => createStyles({
 
 
 
-export default withStyles(styles)( RowExpander );
+export default withStyles(styles)( RowExpanderPayoutsComplete );

@@ -2,7 +2,7 @@ import React from "react";
 // styles
 import clsx from 'clsx';
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
-import { Colors } from "layout/AppTheme";
+import { Colors, isThemeDark } from "layout/AppTheme";
 // Graphql
 import { UserPrivate } from "typings/gqlTypes";
 import { useMutation } from "@apollo/client";
@@ -150,6 +150,9 @@ const styles = (theme: Theme) => createStyles({
     minWidth: '150px',
     marginTop: '0.5rem',
     marginRight: '0.5rem',
+    backgroundColor: isThemeDark(theme)
+      ? Colors.uniswapDarkNavy
+      : Colors.slateGrey,
     // backgroundColor: "#EDF0F2",
     color: Colors.secondary,
     border: `1px solid ${Colors.secondary}`,
@@ -166,6 +169,9 @@ const styles = (theme: Theme) => createStyles({
     minWidth: '150px',
     marginTop: '0.5rem',
     marginRight: '0.5rem',
+    backgroundColor: isThemeDark(theme)
+      ? Colors.uniswapDarkNavy
+      : Colors.slateGrey,
     // backgroundColor: "#EDF0F2",
     color: Colors.black,
     border: `1px solid ${Colors.black}`,
