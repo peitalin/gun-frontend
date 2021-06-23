@@ -154,6 +154,18 @@ export const isFeaturedPageFn = (router: NextRouter) => {
   }
   return false
 }
+export const isDashboardPageFn = (router: NextRouter) => {
+  if (router.pathname.startsWith('/admin')) {
+    return true
+  }
+  if (router.pathname.startsWith('/dealer')) {
+    return true
+  }
+  if (router.pathname.startsWith('/gov')) {
+    return true
+  }
+  return false
+}
 
 
 

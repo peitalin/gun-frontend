@@ -30,7 +30,7 @@ import { asCurrency as c } from 'utils/prices';
 
 // graphql
 import { UserPrivate, OrderStatus, OrderAdmin } from "typings/gqlTypes";
-import { useMutation } from "@apollo/client";
+import { useApolloClient, useMutation } from "@apollo/client";
 import { DocumentNode } from "graphql";
 
 
@@ -69,6 +69,13 @@ const RowExpander = (props: RowExpanderProps) => {
   })
 
   const [open, setOpen] = React.useState(initialOpen);
+
+  const client = useApolloClient()
+                    const cacheData = client.cache.readQuery({
+                      query: GET_ORDERS_PENDING_APPROVAL_CONNECTION,
+                      variables: props.variables.ordersPendingApproval,
+                    });
+                    console.log("CACHE DATA: ", cacheData)
 
   return (
     <>
@@ -172,10 +179,10 @@ const RowExpander = (props: RowExpanderProps) => {
                       query: GET_ORDERS_PENDING_APPROVAL_CONNECTION,
                       variables: vars.ordersPendingApproval,
                     });
-                    // console.log("CACHE DATA: ", cacheData)
+                    console.log("CACHE DATA: ", cacheData)
 
                     let ordersConnection = cacheData?.getOrdersPendingApprovalConnectionAdmin
-                    // console.log("ordersConnection: ", ordersConnection)
+                    console.log("ordersConnection: ", ordersConnection)
                     let newEdges = (ordersConnection?.edges ?? [])
                         .filter(edge => edge?.node?.id !== newOrder?.id)
                     // console.log("newEdges: ", newEdges)

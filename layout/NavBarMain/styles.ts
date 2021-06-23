@@ -143,7 +143,7 @@ export const styles = (theme: Theme) => createStyles({
     backdropFilter: "blur(6px)",
     background: isThemeDark(theme)
       ? 'rgba(18, 18, 29, 0.3)'
-      : 'rgba(245, 245, 255, 0.4)',
+      : 'rgba(245, 245, 255, 0.8)',
     top: 0,
     right: 0,
     border: isThemeDark(theme)
@@ -158,7 +158,7 @@ export const styles = (theme: Theme) => createStyles({
     backdropFilter: "blur(6px)",
     background: isThemeDark(theme)
       ? 'rgba(18, 18, 29, 0.3)'
-      : 'rgba(245, 245, 255, 0.4)',
+      : 'rgba(245, 245, 255, 0.8)',
     top: 0,
     right: 0,
     borderBottom: isThemeDark(theme)
@@ -172,7 +172,7 @@ export const styles = (theme: Theme) => createStyles({
     backdropFilter: "blur(6px)",
     background: isThemeDark(theme)
       ? 'rgba(18, 18, 29, 0.3)'
-      : 'rgba(245, 245, 255, 0.66)',
+      : 'rgba(245, 245, 255, 0.8)',
     top: 0,
     right: 0,
     borderBottom: isThemeDark(theme)
@@ -332,6 +332,7 @@ export const styles = (theme: Theme) => createStyles({
     },
   },
   baseBarInnerMobile: {
+    pointerEvents: "all",
     zIndex: 3,
     paddingLeft: '0.5rem',
     paddingRight: '0.5rem',

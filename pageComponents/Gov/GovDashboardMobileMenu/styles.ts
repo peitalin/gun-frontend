@@ -26,7 +26,7 @@ export const dashboardBarStyle = (theme: Theme) => ({
   backdropFilter: "blur(6px)",
   background: isThemeDark(theme)
     ? 'rgba(18, 18, 29, 0.3)'
-    : 'rgba(245, 245, 255, 0.4)',
+    : 'rgba(245, 245, 255, 0.8)',
   boxShadow: BoxShadows.shadow1.boxShadow,
   borderBottom: theme.palette.type === 'dark'
     ? `1px solid ${Colors.uniswapMediumNavy}`
@@ -38,7 +38,7 @@ export const dashboardMenuDitherStyle = (theme: Theme) => ({
   zIndex: 2, // above watchList button which has zIndex: 1
   position: 'fixed',
   top: `${MainBarHeightDashboard + NewsBarHeight + DashboardBarHeight}px`, // 44px for borderBottom
-  backgroundColor: "rgba(47, 57, 65, .85)",
+  backgroundColor: Colors.modalBackground,
 })
 export const expandMenuStyle = (theme: Theme, dashboardMenuHeight) => ({
   zIndex: 3,
@@ -49,7 +49,7 @@ export const expandMenuStyle = (theme: Theme, dashboardMenuHeight) => ({
   opacity: 1,
   transition: theme.transitions.create(['transform','opacity'], {
     easing: theme.transitions.easing.easeInOut,
-    duration: "100ms",
+    duration: "200ms",
   }),
 })
 
@@ -149,19 +149,19 @@ export const styles = (theme: Theme) => createStyles({
     flexDirection: 'row',
     justifyContent: 'center',
     position: 'absolute',
-    transform: `translateY(-${dashboardMenuHeight}px)`,
+    transform: `translateY(-${dashboardMenuHeight/8}px)`,
     opacity: 0,
   },
-  expandDashboard: {
-    zIndex: 3,
-    transform: 'translateY(0%)',
-    opacity: 1,
-    transition: theme.transitions.create(['transform','opacity'], {
-      easing: theme.transitions.easing.easeInOut,
-      duration: "100ms",
-    }),
-    height: dashboardMenuHeight,
-  },
+  // expandDashboard: {
+  //   zIndex: 3,
+  //   transform: 'translateY(0%)',
+  //   opacity: 1,
+  //   transition: theme.transitions.create(['transform','opacity'], {
+  //     easing: theme.transitions.easing.easeIn,
+  //     duration: "200ms",
+  //   }),
+  //   height: dashboardMenuHeight,
+  // },
   expandMenu: {
     ...expandMenuStyle(theme, dashboardMenuHeight) as any
   },

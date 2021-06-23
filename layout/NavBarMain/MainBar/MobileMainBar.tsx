@@ -17,7 +17,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { navbarRoutes } from "./navbarRoutes";
-import { isMainPageFn, isStartPageFn } from "."
+import { isDashboardPageFn, isMainPageFn, isStartPageFn } from "."
 
 
 
@@ -36,6 +36,7 @@ const MobileMainBar = (props: MobileMainBarProps) => {
 
   let isHomePage = isMainPageFn(router)
   let isStartPage = isStartPageFn(router)
+  let isDashboardPage = isDashboardPageFn(router)
 
   return (
     <div className={classes.baseBarInnerMobile}>
@@ -50,6 +51,7 @@ const MobileMainBar = (props: MobileMainBarProps) => {
           className={classes.navbarButtonMobile}
           loggedIn={loggedIn}
           color={color}
+          isDashboardPage={isDashboardPage}
           mobileMenuOpen={props.mobileMenuOpen}
           setMobileMenuOpen={props.setMobileMenuOpen}
         />

@@ -5,6 +5,7 @@ import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/s
 // media query
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { Colors } from "layout/AppTheme";
 
 
 const UserMenuMobileDither = (props: UserMenuMobileDitherProps) => {
@@ -44,7 +45,8 @@ const styles = (theme: Theme) => createStyles({
     position: 'fixed',
     top: 0,
     left: 0,
-    backgroundColor: "rgba(47, 57, 65, .85)",
+    backgroundColor: Colors.modalBackground,
+    // backgroundColor: "rgba(47, 57, 65, .85)",
   },
 });
 

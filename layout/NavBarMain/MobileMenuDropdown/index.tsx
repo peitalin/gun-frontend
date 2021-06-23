@@ -52,6 +52,7 @@ export const MobileMenuDropdown: React.FC<ReactProps> = (props) => {
       </Button>
       <MobileMenuExpander classes={classes}
         open={mobileMenuOpen}
+        isDashboardPage={props.isDashboardPage}
       >
         <MobileMenuRoutes
           mobileMenuOpen={mobileMenuOpen}
@@ -69,12 +70,14 @@ export const MobileMenuDropdown: React.FC<ReactProps> = (props) => {
 
 const MobileMenuExpander: React.FC<MobileMenuExpanderProps> = (props) => {
 
-  const { classes, open } = props;
+  const { classes, open, isDashboardPage } = props;
+  console.log("isDashboardPage", isDashboardPage)
 
   if (open) {
     return (
       <div className={clsx(
         classes.mobileMenuExpanderRoot,
+        isDashboardPage ? classes.menuTopDashboard : classes.menuTop,
         'fadeInFast',
       )}>
         <div className={classes.mobileMenuOuterContainer}>
@@ -95,10 +98,12 @@ interface ReactProps extends WithStyles<typeof styles> {
   color?: string;
   mobileMenuOpen: boolean;
   setMobileMenuOpen(f: (s: boolean) => boolean): void;
+  isDashboardPage: boolean;
 }
 
 interface MobileMenuExpanderProps extends WithStyles<typeof styles> {
   open: boolean;
+  isDashboardPage: boolean;
 }
 
 
@@ -111,10 +116,15 @@ const styles = (theme: Theme) => createStyles({
     marginBottom: 0,
     borderRadius: BorderRadius,
   },
+  menuTop: {
+    top: `calc(${MainBarHeightDashboard}px + 1rem - 1px)`, // 1px tucked under navbar
+  },
+  menuTopDashboard: {
+    top: `calc(${MainBarHeightDashboard}px + 4.25rem - 1px)`, // 1px tucked under navbar
+  },
   mobileMenuExpanderRoot: {
     zIndex: 2,
     position: "absolute", // relative to MainBar, which is under NewsBar
-    top: `calc(${MainBarHeightDashboard}px + 1rem - 1px)`, // 1px tucked under navbar
     left: '0.5rem',
     width: 'calc(100% - 1rem)',
     borderRadius: BorderRadius,

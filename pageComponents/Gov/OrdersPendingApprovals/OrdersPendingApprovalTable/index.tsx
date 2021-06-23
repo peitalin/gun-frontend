@@ -160,28 +160,27 @@ const OrdersPendingApprovalTable: NextPage<ReactProps> = (props) => {
   ]
 
 
+  const fetchPolicy = "no-cache"
+  // const fetchPolicy = "cache-and-network"
 
   const _ordersCreated = useQuery<QueryData, QueryVar>(
     GET_ORDERS_CREATED_CONNECTION, {
       variables: variables.ordersCreated,
-      // fetchPolicy: "cache-and-network",
-      fetchPolicy: "no-cache",
+      fetchPolicy: fetchPolicy,
     }
   );
 
   const _ordersPendingApproval = useQuery<QueryData, QueryVar>(
     GET_ORDERS_PENDING_APPROVAL_CONNECTION, {
       variables: variables.ordersPendingApproval,
-      // fetchPolicy: "cache-and-network",
-      fetchPolicy: "no-cache",
+      fetchPolicy: fetchPolicy,
     }
   );
 
   const _ordersAdminApproved = useQuery<QueryData, QueryVar>(
     GET_ORDERS_ADMIN_APPROVED_CONNECTION, {
       variables: variables.ordersAdminApproved,
-      // fetchPolicy: "cache-and-network",
-      fetchPolicy: "no-cache",
+      fetchPolicy: fetchPolicy,
     }
   );
 
