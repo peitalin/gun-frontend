@@ -354,8 +354,9 @@ const ProductCreatePage = (props: ReactProps) => {
 
   const errors = formik.errors
   const touched = formik.touched
-  // console.log('activeStep: ', activeStep);
-  // console.log('touched: ', touched);
+  // console.log('activeStep: ', activeStep)
+  // console.log('touched: ', touched)
+  // console.log('formik.errors', formik.errors)
 
   return (
     <ProductCreateLayout
@@ -590,9 +591,13 @@ const productCreateInputToProduct = (
 
   let featuredVariant = currentVariants.find(v => v.isDefault)
 
-  let googleBucketUrl = process.env.NODE_ENV === "production"
-    ? 'https://storage.googleapis.com/production-gunmarketplace-images/'
-    : 'https://storage.googleapis.com/develop-gunmarketplace-images/'
+  // let googleBucketUrl = process.env.NODE_ENV === "production"
+  //   ? 'https://storage.googleapis.com/production-gunmarketplace-images/'
+  //   : 'https://storage.googleapis.com/develop-gunmarketplace-images/'
+
+  // moved everything to develop in production
+  let googleBucketUrl =
+    'https://storage.googleapis.com/production-gunmarketplace-images/'
 
 
   let previewFeaturedVariant = {

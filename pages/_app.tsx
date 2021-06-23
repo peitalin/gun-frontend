@@ -103,18 +103,8 @@ const MainApp: NextComponentType<AppContext, AppInitialProps, AppProps & AppHOCP
     }
   })
 
-  let state = store?.getState()
-  let userId = state?.reduxLogin?.user?.id
-  // console.log("MainApp userId: ", userId)
-  console.log("_app pageProps: ", pageProps)
 
-  // This client has hooks that force websockets to reconnect after auth
-  //
-  // userId is initially undefined, instantiates fresh Apollo client the first time
-  // on login, userId exists and websocket is re-instantiated with a new http connection
-  // that has gun-auth credentials
-  let apollo = useWsRenewableApolloClient(userId)
-
+  // Google Analytics client-side routes
   React.useEffect(() => {
     const handleRouteChange = (url) => {
       ga.pageview(url)
@@ -122,13 +112,27 @@ const MainApp: NextComponentType<AppContext, AppInitialProps, AppProps & AppHOCP
     //When the component is mounted, subscribe to router changes
     //and log those page views
     router.events.on('routeChangeComplete', handleRouteChange)
-
     // If the component is unmounted, unsubscribe
     // from the event with the `off` method
     return () => {
       router.events.off('routeChangeComplete', handleRouteChange)
     }
   }, [router.events])
+
+
+  /////// Rehydrate websockets on user login //////////
+  let state = store?.getState()
+  let userId = state?.reduxLogin?.user?.id
+  // This client has hooks that force websockets to reconnect after auth
+  //
+  // userId is initially undefined, instantiates fresh Apollo client the first time
+  // on login, userId exists and websocket is re-instantiated with a new http connection
+  // that has gun-auth credentials
+  let apollo = useWsRenewableApolloClient(userId)
+  //////////////////////////////////////////////////////
+
+  // console.log("MainApp userId: ", userId)
+  console.log("_app pageProps: ", pageProps)
 
   return (
     <Provider store={store}>

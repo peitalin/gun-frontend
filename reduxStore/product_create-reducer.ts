@@ -48,8 +48,8 @@ export const initialProductCreateState: ReduxStateProductCreate = {
     // dealer: undefined,
     currentVariants: [
       {
-        variantName: "Regular License",
-        variantDescription: "Regular License for General Use",
+        variantName: "Standard Variant",
+        variantDescription: "",
         isDefault: true,
         priceWas: undefined,
         price: undefined,

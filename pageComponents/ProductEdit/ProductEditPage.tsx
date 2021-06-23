@@ -31,9 +31,6 @@ import { withStyles, WithStyles } from "@material-ui/core/styles";
 import { styles } from "./commonStyles";
 // MUI
 import Button from "@material-ui/core/Button";
-// Icons
-import ClearIcon from "@material-ui/icons/Clear";
-import IconButton from "@material-ui/core/IconButton";
 // Errors
 import ErrorBounds from 'components/ErrorBounds';
 import ButtonLoading from "components/ButtonLoading";
@@ -132,18 +129,14 @@ const ProductEditPage = (props: ReactProps) => {
   const dispatch = useDispatch();
   const snackbar = useSnackbar();
 
-  const [state, setState] = React.useState<{ loading: boolean }>({
-    loading: false,
-  });
+  const [loading, setLoading] = React.useState(false)
 
   const {
-    reduxProductEdit, // Seeded product edit data from redux
     dzuPreviewOrder,
     dzuPreviewItems,
     user,
   } = useSelector<GrandReduxState, ReduxState>(state => {
     return {
-      reduxProductEdit: state[reducerName],
       dzuPreviewOrder: state[reducerName]?.dzuPreviewOrder,
       dzuPreviewItems: state[reducerName]?.dzuPreviewItems,
       user: state.reduxLogin.user,
@@ -180,7 +173,7 @@ const ProductEditPage = (props: ReactProps) => {
       )
       // router.back()
       router.push("/admin/products")
-      setState(s => ({ ...s, loading: false }))
+      setLoading(false)
 
       setTimeout(() => {
         // reset redux form
@@ -230,7 +223,7 @@ const ProductEditPage = (props: ReactProps) => {
           }
         },
       }).finally(() => {
-        setState(s => ({ ...s, loading: false }))
+        setLoading(false)
       })
     }
   })
@@ -313,7 +306,10 @@ const ProductEditPage = (props: ReactProps) => {
           <SelectActionType
             {...formik}
           />
-          <SelectCaliber {...formik} />
+          <SelectCaliber
+            reducerName={reducerName}
+            {...formik}
+          />
           <GunAttributes {...formik} />
         </SectionBorder>
 
@@ -370,7 +366,7 @@ const ProductEditPage = (props: ReactProps) => {
               }}
               loadingIconColor={Colors.ultramarineBlue}
               replaceTextWhenLoading={true}
-              loading={state.loading || apolloLoading}
+              loading={loading || apolloLoading}
               disabled={!process.browser || apolloLoading}
               // disable during apolloDispatch, not when state.loading = true
               // state.loading comes first, don't disable the form accidentally
@@ -381,9 +377,9 @@ const ProductEditPage = (props: ReactProps) => {
                     printValidationErrors(formik.errors),
                     { variant: "error", autoHideDuration: 5000 }
                   )
-                  setState(s => ({ ...s, loading: false }))
+                  setLoading(false)
                 } else {
-                  setState(s => ({ ...s, loading: true }))
+                  setLoading(true)
                 }
                 console.log('errors: ', formik.errors);
                 console.log('values: ', formik.values);
@@ -443,7 +439,6 @@ interface ReactProps extends WithStyles<typeof styles> {
 }
 
 interface ReduxState {
-  reduxProductEdit: ReduxStateProductEdit;
   dzuPreviewOrder: DzuPreviewOrder[];
   dzuPreviewItems: DzuPreviewItem[];
   user: UserPrivate

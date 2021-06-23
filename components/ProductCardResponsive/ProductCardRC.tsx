@@ -30,6 +30,7 @@ import {
   imgSizesForScreenSizes,
   getImgSrcSetSizes
 } from "./imageResponsiveSizes";
+import DiscountBadge from "components/DiscountBadge";
 
 
 
@@ -58,12 +59,13 @@ const ProductCardRC = (props: ReactProps) => {
   // e.g. 4 cards = 1rem each +1 rem for padding-left,
   // with when divided over 4 cards = 1/4 rem
 
-  const productId = product?.id;
+  const productId = product?.id
+  const productVariantId = product?.featuredVariant?.variantId
   const previewItems = product?.featuredVariant?.previewItems ?? []
 
   const title = product?.currentSnapshot?.title?.slice(0,60)
-  const price = product?.featuredVariant?.price;
-  const priceWas = product?.featuredVariant?.price;
+  const price = product?.featuredVariant?.price
+  const priceWas = product?.featuredVariant?.priceWas
   const squishLetters = title?.length > 30
 
 
@@ -88,7 +90,15 @@ const ProductCardRC = (props: ReactProps) => {
   let youTubeVimeoPreview = getYouTubeVimeoImagePreview(
     firstPreview?.youTubeEmbedLink
   );
+  const showDiscountBadge = () => {
+    if (price && priceWas) {
+      return price < priceWas
+    } else {
+      return false
+    }
+  }
 
+  const showDiscount = React.useMemo(() => showDiscountBadge(), [price, priceWas])
 
   return (
     <div className={classes.rootContainer}
@@ -101,6 +111,14 @@ const ProductCardRC = (props: ReactProps) => {
       onMouseEnter={props.onMouseEnter}
       onMouseLeave={props.onMouseLeave}
     >
+
+      {
+        showDiscount &&
+        <DiscountBadge
+          price={price}
+          priceWas={priceWas}
+        />
+      }
 
       <MainPreviewImage
         product={product}
@@ -120,7 +138,7 @@ const ProductCardRC = (props: ReactProps) => {
       <div className={classes.descriptionContainerOuter}
         style={props.styleInner}
       >
-        {/* {
+        {
           showWatchlistButton &&
           productId &&
           <WatchlistIcon
@@ -131,7 +149,7 @@ const ProductCardRC = (props: ReactProps) => {
               top: '-0.8rem',
             }}
           />
-        } */}
+        }
         <LinkLoading
           href={
             props.promotedSlotId ? "/f/[promotedSlotId]" : "/p/[productId]"

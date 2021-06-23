@@ -92,15 +92,15 @@ export const validationSchemas = {
               // this.parent: in the case of nested schema, this is the value of the parent object
               // this.createError(Object: { path: String, message: String }):
               if (!!this.parent.priceWas) {
-                return this.parent.price < value
+                return this.parent.price <= value
               } else {
                 return true
               }
             }),
           variantName: Yup.string()
-            .required('Add a name'),
+            .nullable(),
           variantDescription: Yup.string()
-            .required('Add a description'),
+            .nullable(),
           isDefault: Yup.boolean()
             .required("set default variant"),
           previewItems: Yup.array().of(
@@ -186,15 +186,15 @@ export const validationSchemas = {
                 // this.parent: in the case of nested schema, this is the value of the parent object
                 // this.createError(Object: { path: String, message: String }):
                 if (!!this.parent.priceWas) {
-                  return this.parent.price < value
+                  return this.parent.price <= value
                 } else {
                   return true
                 }
               }),
             variantName: Yup.string()
-              .required('Add a name'),
+              .nullable(),
             variantDescription: Yup.string()
-              .required('Add a description'),
+              .nullable(),
             isDefault: Yup.boolean()
               .required("set default variant"),
             previewItems: Yup.array().of(

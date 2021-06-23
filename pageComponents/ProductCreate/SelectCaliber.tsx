@@ -25,6 +25,7 @@ import {
 // gql
 import { GET_CALIBERS } from "queries/calibers-queries";
 import { useQuery } from "@apollo/client";
+import { ReducerName } from "typings/dropzone";
 
 
 
@@ -55,13 +56,13 @@ const SelectCaliber = (props: ReactProps & FormikProps<FormikFields>) => {
 
   const caliberOptionGroups = createCaliberOptionGroups(data?.getCalibers, false)
 
-  const initialCaliber = {
-    label: caliberOptionGroups?.[0]?.options?.[0]?.label,
-    value: caliberOptionGroups?.[0]?.options?.[0]?.value,
+  const initialCaliberProductEdit = {
+    label: fprops.values?.caliber,
+    value: fprops.values?.caliber,
   }
-  const [caliberOption, setCaliberOption] = React.useState(initialCaliber)
   // console.log("fprops.values.caliber: ", fprops.values?.caliber)
   // console.log("caliberOptionsGRoups", caliberOptionGroups)
+
 
   return (
     <ErrorBounds className={classes.positionRelative}>
@@ -72,11 +73,14 @@ const SelectCaliber = (props: ReactProps & FormikProps<FormikFields>) => {
       <DropdownInput
         className={classes.caliberDropdown}
         // menuIsOpen={true}
-        initialState={undefined}
+        initialState={
+          (props.reducerName === ReducerName.reduxProductEdit)
+            ? initialCaliberProductEdit
+            : undefined
+        }
         height={45}
         onChange={(option: SelectOption) => {
           console.log("option: ", option)
-          setCaliberOption(option)
           fprops.setFieldValue("caliber", option?.value)
           fprops.setFieldTouched('caliber', true)
         }}
@@ -92,6 +96,7 @@ const SelectCaliber = (props: ReactProps & FormikProps<FormikFields>) => {
 }
 
 interface ReactProps extends WithStyles<typeof styles> {
+  reducerName?: ReducerName
 }
 interface FormikFields {
   caliber?: string;

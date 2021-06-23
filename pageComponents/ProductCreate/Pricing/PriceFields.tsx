@@ -56,9 +56,27 @@ const PriceFields = (props: ReactProps & FormikProps<FormikFields>) => {
     if (cents) {
       dispatch(actions.UPDATE_PRICE({ price: cents, position: index }))
       fprops.setFieldValue(`currentVariants[${position}].price`, cents)
+
+      if (props.reducerName === ReducerName.reduxProductCreate) {
+        dispatch(actions.UPDATE_PRICE_WAS({ priceWas: cents, position: index }))
+        fprops.setFieldValue(`currentVariants[${position}].priceWas`, cents)
+        // update both price and priceWas when creating a product
+        // priceWas will later be used to compare price discounts if
+        // the owner edits the price
+      } else if (props.reducerName === ReducerName.reduxProductEdit) {
+      }
+
     } else {
       dispatch(actions.UPDATE_PRICE({ price: undefined, position: index }))
       fprops.setFieldValue(`currentVariants[${position}].price`, undefined)
+      if (props.reducerName === ReducerName.reduxProductCreate) {
+        dispatch(actions.UPDATE_PRICE_WAS({ priceWas: undefined, position: index }))
+        fprops.setFieldValue(`currentVariants[${position}].priceWas`, undefined)
+        // update both price and priceWas when creating a product
+        // priceWas will later be used to compare price discounts if
+        // the owner edits the price
+      } else if (props.reducerName === ReducerName.reduxProductEdit) {
+      }
     }
   }, 16);
 
@@ -72,6 +90,8 @@ const PriceFields = (props: ReactProps & FormikProps<FormikFields>) => {
       : "" // product-create
   );
   // initial value of "" will makethe price field start off empty
+
+  // console.log("fprops.values.currentVariants", fprops.values.currentVariants)
 
   return (
     <ErrorBounds className={classes.root}>
