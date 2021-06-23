@@ -21,9 +21,10 @@ import { formatDateTime } from "utils/dates";
 import currency from 'currency.js';
 
 // graphql
-import { UserPrivate, PayeeType, OrderAdmin } from "typings/gqlTypes";
+import { UserPrivate, PayeeType, OrderAdmin, OrderStatus } from "typings/gqlTypes";
 import { useMutation } from "@apollo/client";
 import { DocumentNode } from "graphql";
+import { asCurrency as c } from "utils/prices";
 
 
 
@@ -66,11 +67,20 @@ const RowExpander = (props: RowExpanderProps) => {
 
   const [open, setOpen] = React.useState(initialOpen);
 
-  const c = (s) => currency(s/100, { formatWithSymbol: true }).format()
-
   let payoutSeller = order?.payoutItems?.find(p => p.payeeType === PayeeType.STORE)
   let payoutPlatform = order?.payoutItems?.find(p => p.payeeType === PayeeType.PLATFORM)
   let sellerPayment = payoutSeller.amount
+
+  React.useEffect(() => {
+    let approvedOrderSnapshot = order.orderSnapshots.find(
+      s => s.orderStatus === OrderStatus.ADMIN_APPROVED
+    )
+    if (approvedOrderSnapshot) {
+      if (typeof props.setApprovalDate === 'function') {
+        props.setApprovalDate(approvedOrderSnapshot?.createdAt)
+      }
+    }
+  }, [order])
 
   return (
     <>
@@ -149,6 +159,7 @@ interface RowExpanderProps extends WithStyles<typeof styles> {
     },
   }[];
   initialOpen?: boolean;
+  setApprovalDate(d: Date): void
 }
 
 

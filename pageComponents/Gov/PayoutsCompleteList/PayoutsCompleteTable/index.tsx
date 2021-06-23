@@ -116,6 +116,8 @@ const PayoutsCompleteTable: NextPage<ReactProps> = (props) => {
 
   const ordersConnection = data?.getOrdersCompleteByIdsConnection
 
+  const [approvalDate, setApprovalDate] = React.useState(undefined)
+
 
   return (
     <main className={classes.root}>
@@ -142,7 +144,12 @@ const PayoutsCompleteTable: NextPage<ReactProps> = (props) => {
               copy(`Payout ${showDate(props.day)}`)
             }}>
               <Typography className={classes.dateTitle}>
-                {`Payouts for ${showDate(props.day)}`}
+                {/* {`Payouts for ${showDate(props.day)}`} */}
+                {
+                  approvalDate
+                    ? `Payouts for ${showDate(approvalDate)}`
+                    : `Payouts for `
+                }
               </Typography>
             </span>
         }
@@ -217,6 +224,7 @@ const PayoutsCompleteTable: NextPage<ReactProps> = (props) => {
                 index={index}
                 initialOpen={router?.query?.orderId === order?.id}
                 refetchQueriesParams={refetchQueriesParams}
+                setApprovalDate={setApprovalDate}
               />
             )
           }}
@@ -242,7 +250,7 @@ const TitleRows = (props: TitleRowsProps) => {
       </div>
       <div className={classes.flexItem}>
         <Typography variant="subtitle1" className={classes.subtitle}>
-          Date
+          Date Completed
         </Typography>
       </div>
       <div className={clsx(classes.flexItem, classes.flexItemMaxWidth120)}>

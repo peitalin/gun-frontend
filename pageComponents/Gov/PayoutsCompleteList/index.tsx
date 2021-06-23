@@ -197,7 +197,7 @@ const PayoutsCompleteList = (props: ReactProps) => {
       }
       {
         (orderIdsGroupedByDay ?? []).map(oGroup => {
-          console.log("oGroup: ", oGroup)
+          console.log("oGroup2: ", oGroup)
           return (
             <>
               <PayoutsCompleteTable

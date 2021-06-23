@@ -38,11 +38,6 @@ const MarkPayoutCompleteButton = (props: ReactProps) => {
   const snackbar = useSnackbar();
 
   const theme = useTheme();
-  const smDown = useMediaQuery(theme.breakpoints.down('sm'));
-  const xsDown = useMediaQuery(theme.breakpoints.down('xs'));
-
-  const [mouseOver, setMouseOver] = React.useState(false)
-
   const csvLinkRef = React.useRef();
   const [accumPayouts, setAccumPayouts] = React.useState<any[]>([])
   const [payoutId, setPayoutId] = React.useState(undefined);
