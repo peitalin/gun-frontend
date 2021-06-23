@@ -57,6 +57,7 @@ const Header: React.FC<ReactProps> = (props) => {
         `}
       </script> */}
 
+      {/* Google Analytics 4 */}
       <script async src="https://www.googletagmanager.com/gtag/js?id=G-B2F178EQFD"></script>
       <script
         async
@@ -66,6 +67,20 @@ const Header: React.FC<ReactProps> = (props) => {
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
             gtag('config', 'G-B2F178EQFD');`
+        }}
+      />
+
+      {/* Google Analytics Classic */}
+      <script async src="https://www.googletagmanager.com/gtag/js?id=UA-194292344-1">
+      </script>
+      <script
+        async
+        dangerouslySetInnerHTML={{
+          __html:
+            `window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'UA-194292344-1');`
         }}
       />
     </Head>
