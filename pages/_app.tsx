@@ -180,10 +180,10 @@ const ThemeProviderDarkMode = ({ initialDarkModeSSR, children }) => {
     return s.reduxLogin.darkMode
   })
   let dispatch = useDispatch()
+  let localStorageDarkMode: "dark" | "light" = undefined;
 
   React.useEffect(() => {
 
-    let localStorageDarkMode: "dark" | "light" = undefined;
     if (process.browser && !!window) {
       localStorageDarkMode = window?.localStorage?.getItem('gmDarkMode') as any;
     }
@@ -225,7 +225,7 @@ const ThemeProviderDarkMode = ({ initialDarkModeSSR, children }) => {
   }, [initialDarkModeSSR])
 
   let darkModeTheme: PaletteOptions = {
-    type: darkModeRedux ?? initialDarkModeSSR
+    type: localStorageDarkMode ?? darkModeRedux ?? initialDarkModeSSR
   };
   // darkModeRedux is initially undefined on server-side
   // so initialDarkModeSSR (determined by ?dark=1) will make the app render
