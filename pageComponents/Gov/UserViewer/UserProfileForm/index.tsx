@@ -146,6 +146,7 @@ const UserProfileForm: React.FC<ReactProps> = (props) => {
             <ViewParagraph title={"User Summary"}>
               <UserProfileDetails
                 setSelectedLicense={setSelectedLicense}
+                selectedLicense={selectedLicense}
                 user={user}
                 {...fprops}
               />

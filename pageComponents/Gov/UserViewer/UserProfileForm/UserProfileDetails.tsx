@@ -105,6 +105,42 @@ const UserProfileDetails = (props: ReactProps & FormikProps<FormikFields>) => {
             </div>
 
             <Typography className={classes.fieldTitle} variant="subtitle1">
+              Store
+            </Typography>
+            <div className={classes.flexRow}>
+              <Typography className={classes.fieldKey} variant="subtitle1">
+                Store ID
+              </Typography>
+              <Typography className={classes.fieldInfo} variant="subtitle1">
+                {`${user?.store?.id}`}
+              </Typography>
+            </div>
+            <div className={classes.flexRow}>
+              <Typography className={classes.fieldKey} variant="subtitle1">
+                Store Name
+              </Typography>
+              <Typography className={classes.fieldInfo} variant="subtitle1">
+                {`${user?.store?.name}`}
+              </Typography>
+            </div>
+            <div className={classes.flexRow}>
+              <Typography className={classes.fieldKey} variant="subtitle1">
+                isSuspended
+              </Typography>
+              <Typography className={classes.fieldInfo} variant="subtitle1">
+                {`${!!user?.store?.isSuspended}`}
+              </Typography>
+            </div>
+            <div className={classes.flexRow}>
+              <Typography className={classes.fieldKey} variant="subtitle1">
+                isDeleted
+              </Typography>
+              <Typography className={classes.fieldInfo} variant="subtitle1">
+                {`${!!user?.store?.isDeleted}`}
+              </Typography>
+            </div>
+
+            <Typography className={classes.fieldTitle} variant="subtitle1">
               User Licence
             </Typography>
 
@@ -171,7 +207,7 @@ const UserProfileDetails = (props: ReactProps & FormikProps<FormikFields>) => {
                       }}
                     >
                       <UserLicenseRowCard
-                        isHighlighted={false}
+                        isHighlighted={props.selectedLicense?.id === license.id}
                         user={user}
                         license={license}
                       />
@@ -181,41 +217,6 @@ const UserProfileDetails = (props: ReactProps & FormikProps<FormikFields>) => {
               })
             }
 
-            <Typography className={classes.fieldTitle} variant="subtitle1">
-              Store
-            </Typography>
-            <div className={classes.flexRow}>
-              <Typography className={classes.fieldKey} variant="subtitle1">
-                Store ID
-              </Typography>
-              <Typography className={classes.fieldInfo} variant="subtitle1">
-                {`${user?.store?.id}`}
-              </Typography>
-            </div>
-            <div className={classes.flexRow}>
-              <Typography className={classes.fieldKey} variant="subtitle1">
-                Store Name
-              </Typography>
-              <Typography className={classes.fieldInfo} variant="subtitle1">
-                {`${user?.store?.name}`}
-              </Typography>
-            </div>
-            <div className={classes.flexRow}>
-              <Typography className={classes.fieldKey} variant="subtitle1">
-                isSuspended
-              </Typography>
-              <Typography className={classes.fieldInfo} variant="subtitle1">
-                {`${!!user?.store?.isSuspended}`}
-              </Typography>
-            </div>
-            <div className={classes.flexRow}>
-              <Typography className={classes.fieldKey} variant="subtitle1">
-                isDeleted
-              </Typography>
-              <Typography className={classes.fieldInfo} variant="subtitle1">
-                {`${!!user?.store?.isDeleted}`}
-              </Typography>
-            </div>
 
           </div>
         </div>
@@ -228,6 +229,7 @@ const UserProfileDetails = (props: ReactProps & FormikProps<FormikFields>) => {
 
 interface ReactProps extends WithStyles<typeof styles> {
   user: UserPrivate;
+  selectedLicense: User_Licenses;
   setSelectedLicense(a?: User_Licenses): void;
 }
 interface FormikFields {

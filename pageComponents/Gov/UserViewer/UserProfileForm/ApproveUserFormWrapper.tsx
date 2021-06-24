@@ -4,13 +4,7 @@ import clsx from "clsx";
 import { withStyles, createStyles, WithStyles, Theme, lighten } from "@material-ui/core/styles";
 import { Colors, BorderRadius } from "layout/AppTheme";
 // Material UI
-import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
-import TextInput from "components/Fields/TextInput";
-import Checkbox, { CheckboxProps } from '@material-ui/core/Checkbox';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-// Utils Components
-import ErrorBounds from "components/ErrorBounds";
 // validation
 import { FormikProps } from 'formik';
 import { User_Licenses } from "typings/gqlTypes";
@@ -47,9 +41,11 @@ const ApproveUserFormWrapper = (
           disabled={!selectedLicense?.id}
         >
           {
-            selectedLicense?.verified
-            ? `Unapprove License ${selectedLicense?.licenseNumber}`
-            : `Approve License ${selectedLicense?.licenseNumber}`
+            !selectedLicense
+            ? "Choose a license to approve"
+            : selectedLicense.verified
+              ? `Unapprove License ${selectedLicense?.licenseNumber}`
+              : `Approve License ${selectedLicense?.licenseNumber}`
           }
         </Button>
       </div>
