@@ -36,9 +36,9 @@ const Header: React.FC<ReactProps> = (props) => {
           href="/favicons/favicon-16x16.png"/>
 
       {/* Manifest.json defined and generated in next.config.js */}
-      <link rel="manifest" href="/public/manifest.json"/>
+      <link rel="manifest" href="/manifest.json"/>
 
-      <meta name="google-site-verification" content="Rqtqx5V07R9Ps4Ey9VBivC7y8zrRE5U5yWE8a2zba8k" />
+      {/* <meta name="google-site-verification" content="Rqtqx5V07R9Ps4Ey9VBivC7y8zrRE5U5yWE8a2zba8k" /> */}
 
       {/* <script>
         {`
@@ -71,7 +71,7 @@ const Header: React.FC<ReactProps> = (props) => {
       />
 
       {/* Google Analytics Classic */}
-      <script async src="https://www.googletagmanager.com/gtag/js?id=UA-194292344-1">
+      {/* <script async src="https://www.googletagmanager.com/gtag/js?id=UA-194292344-1">
       </script>
       <script
         async
@@ -82,7 +82,7 @@ const Header: React.FC<ReactProps> = (props) => {
             gtag('js', new Date());
             gtag('config', 'UA-194292344-1');`
         }}
-      />
+      /> */}
     </Head>
   )
 }

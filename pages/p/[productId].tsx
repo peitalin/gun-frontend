@@ -44,30 +44,37 @@ const ProductPage: NextPage<ReactProps> = (props) => {
   const imgVariant = img?.variants?.find(v => v.widthInPixels === 400)
   // console.log("IMG: ", img)
 
+  let showMetaHeaders = p?.id &&
+    !p?.isDeleted &&
+    !p?.isSoldElsewhere &&
+    !p?.isSuspended &&
+    p?.isPublished
+
   return (
     <>
       {
-        p?.id &&
-        <MetaHeadersPage
-          title={`${p?.currentSnapshot?.title} ${p?.currentSnapshot?.caliber} - buy on Gun Marketplace Australia`}
-          ogTitle={`${p?.currentSnapshot?.title} ${p?.currentSnapshot?.caliber} - buy on Gun Marketplace Australia`}
-          description={
-            `Buy ${p?.currentSnapshot?.title} ${p?.currentSnapshot?.caliber} on Gun Marketplace Australia.
-            Location: ${p?.currentSnapshot?.dealer?.state}
-            `
-          }
-          ogDescription={
-            `Buy ${p?.currentSnapshot?.title} ${p?.currentSnapshot?.caliber} on Gun Marketplace Australia.
-            Location: ${p?.currentSnapshot?.dealer?.state}
-            `
-          }
-          ogImage={`${imgVariant?.url}`} // must be larger than 200 x 200
-          ogUrl={
-            process.env.GUN_ENV === "development"
-            ? `https://dev.gunmarketplace.com.au/p/${p?.id}`
-            : `https://www.gunmarketplace.com.au/p/${p?.id}`
-          }
-        />
+        showMetaHeaders
+        ? <MetaHeadersPage
+            title={`${p?.currentSnapshot?.title} ${p?.currentSnapshot?.caliber} - buy on Gun Marketplace Australia`}
+            ogTitle={`${p?.currentSnapshot?.title} ${p?.currentSnapshot?.caliber} - buy on Gun Marketplace Australia`}
+            description={
+              `Buy ${p?.currentSnapshot?.title} ${p?.currentSnapshot?.caliber} on Gun Marketplace Australia.
+              Location: ${p?.currentSnapshot?.dealer?.state}
+              `
+            }
+            ogDescription={
+              `Buy ${p?.currentSnapshot?.title} ${p?.currentSnapshot?.caliber} on Gun Marketplace Australia.
+              Location: ${p?.currentSnapshot?.dealer?.state}
+              `
+            }
+            ogImage={`${imgVariant?.url}`} // must be larger than 200 x 200
+            ogUrl={
+              process.env.GUN_ENV === "development"
+              ? `https://dev.gunmarketplace.com.au/p/${p?.id}`
+              : `https://www.gunmarketplace.com.au/p/${p?.id}`
+            }
+          />
+        : <meta name="robots" content={"noindex"}/>
       }
       <PageWithStripe>
         <ProductId
