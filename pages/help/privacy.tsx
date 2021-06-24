@@ -182,7 +182,7 @@ const PrivacySSR: React.FC<ReactProps> = (props) => {
         <div className={classes.paragraph}>
           If you have any queries or complaints about our Privacy Policy please contact us at:
           <a className={classes.link}
-            href={"admin@gunmarketplace.com.au"}
+            href={"mailto:admin@gunmarketplace.com.au"}
             target={"_blank"}
           >
             admin@gunmarketplace.com.au
