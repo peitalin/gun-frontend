@@ -93,6 +93,7 @@ const MenuExpanded = (
     <>
       <div className={clsx(
         props.expandMenu ? classes.expandMenu : null,
+        props.expandMenu ? classes.expandOpacity : null,
         classes.dashboardMenu
       )}>
         <div className={classes.mobileMenuRoutesRoot}>

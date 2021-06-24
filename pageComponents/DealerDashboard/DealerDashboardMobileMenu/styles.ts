@@ -134,6 +134,14 @@ export const styles = (theme: Theme) => createStyles({
   expandMenu: {
     ...expandMenuStyle(theme, dashboardMenuHeight) as any
   },
+  expandOpacity: {
+    opacity: 1,
+    transition: theme.transitions.create(['opacity'], {
+      easing: theme.transitions.easing.easeInOut,
+      duration: "200ms",
+      delay: "0ms",
+    })
+  },
   dashboardMenuDither: {
     ...dashboardMenuDitherStyle(theme) as any
   },
