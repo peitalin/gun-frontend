@@ -35,7 +35,7 @@ const ProductPageContainer: React.FC<ProductContainerProps> = (props) => {
             <CategoryBreadcrumbs
               categoryGroup={product?.category?.categoryGroup}
               categoryName={product?.category?.name}
-              categorySlug={product?.category?.name}
+              categorySlug={product?.category?.slug}
             />
           </div>
         </Hidden>
