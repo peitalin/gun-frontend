@@ -63,6 +63,7 @@ import ProductCreateForm from "./ProductCreateForm";
 import ProductCreateLayout from "./ProductCreateLayout";
 import PreventDragDropContainer from "./PreventDragDropContainer";
 import SectionBorder from "./SectionBorder";
+import StoreSuspended from "./StoreSuspended";
 // Product Preview Page
 import Tooltip from '@material-ui/core/Tooltip';
 import ButtonLoading from 'components/ButtonLoading';
@@ -121,6 +122,7 @@ import { useRouter } from "next/router";
 // CSS
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
+import Redirect from "pageComponents/Redirect";
 
 
 import ProductCreateStepper from "./ProductCreateStepper";
@@ -315,10 +317,13 @@ const ProductCreatePage = (props: ReactProps) => {
 
   const categories = (categoryData?.data?.categories ?? []);
 
-  const disableForm =
-      (!user?.id || // no user
-      !user?.store?.id || // or no store
-      user?.store?.isDeleted)  // or deleted store
+  const disableForm = (
+    !user?.id || // no user
+    !user?.store?.id || // or no store
+    user?.store?.isDeleted || // or deleted store
+    user?.store?.isSuspended || // or suspended
+    user?.isSuspended
+  )
 
   const currentVariantsInput = reduxToFormikCurrentVariants(
     productCreateInput,
@@ -357,6 +362,10 @@ const ProductCreatePage = (props: ReactProps) => {
   // console.log('activeStep: ', activeStep)
   // console.log('touched: ', touched)
   // console.log('formik.errors', formik.errors)
+
+  if (user?.store?.isSuspended || user?.isSuspended) {
+    return <StoreSuspended/>
+  }
 
   return (
     <ProductCreateLayout
@@ -557,7 +566,7 @@ const ProductCreatePage = (props: ReactProps) => {
             postInstantly={false}
             loading={state.loading}
             errors={formik.errors}
-            disabled={state.loading}
+            disabled={state.loading || disableForm}
             // disabled={isFormikDisabled(formik.errors) || state.loading}
           />
           <div className={classes.flexButtonSpacer}/>
@@ -567,7 +576,7 @@ const ProductCreatePage = (props: ReactProps) => {
             postInstantly={true}
             loading={state.loading}
             errors={formik.errors}
-            disabled={state.loading}
+            disabled={state.loading || disableForm}
             // disabled={isFormikDisabled(formik.errors) || state.loading}
           />
         </ProductCreateButtonWrapper>
