@@ -74,7 +74,7 @@ const MobileMenuRoutes = (props: ReactProps) => {
                 onClick={() => props.closeMobileMenu()}
               >
                 <Typography className={classes.mobileMenuItemTextEmph}>
-                  Add Product
+                  Upload Listing
                 </Typography>
               </MenuItem>
             </a>
@@ -94,7 +94,7 @@ const MobileMenuRoutes = (props: ReactProps) => {
           ? <Link href="/admin/products">
               <a className={classes.aLink}>
                 <Typography className={classes.mobileMenuItemTextEmph}>
-                  Manage Store
+                  Seller Dashboard
                 </Typography>
               </a>
             </Link>
@@ -122,7 +122,7 @@ const MobileMenuRoutes = (props: ReactProps) => {
                   onClick={() => props.closeMobileMenu()}
                 >
                   <Typography className={classes.mobileMenuItemText}>
-                    Orders
+                    My Orders
                   </Typography>
                 </MenuItem>
               </a>
@@ -134,7 +134,7 @@ const MobileMenuRoutes = (props: ReactProps) => {
               buttonProps={{
                 classes: { root: classes.buttonLogin }
               }}
-              buttonText={"Orders"}
+              buttonText={"My Orders"}
               buttonType={"menuItem"}
               menuItemTextClassName={classes.mobileMenuItemText}
               redirectOnComplete={"/orders"}
@@ -168,6 +168,31 @@ const MobileMenuRoutes = (props: ReactProps) => {
         </Link>
       </div>
 
+      {
+        loggedIn &&
+        <div className={classes.mobileMenuFlexitem}>
+          <Link href="/saved-searches">
+            <a className={classes.menuLink}>
+              <MenuItem
+                className={clsx(
+                  classes.mobileMenuFlexitem,
+                  classes.mobileMenuItemRoot
+                )}
+                onClick={() => {
+                  props.closeMobileMenu()
+                }}
+              >
+                <Typography className={classes.mobileMenuItemText}>
+                  My Saved Searches
+                </Typography>
+              </MenuItem>
+            </a>
+          </Link>
+        </div>
+      }
+
+      <Divider style={dividerStyle}/>
+
       <div className={classes.mobileMenuFlexitem}>
         <Link href="/help/faq">
           <a className={classes.menuLink}>
@@ -186,8 +211,6 @@ const MobileMenuRoutes = (props: ReactProps) => {
         </Link>
       </div>
 
-      <Divider style={dividerStyle}/>
-
       <MenuItem
         className={clsx(
           classes.mobileMenuFlexitem,
@@ -203,29 +226,6 @@ const MobileMenuRoutes = (props: ReactProps) => {
         </div>
         <ToggleDarkMode/>
       </MenuItem>
-
-      {
-        loggedIn &&
-        <div className={classes.mobileMenuFlexitem}>
-          <Link href="/saved-searches">
-            <a className={classes.menuLink}>
-              <MenuItem
-                className={clsx(
-                  classes.mobileMenuFlexitem,
-                  classes.mobileMenuItemRoot
-                )}
-                onClick={() => {
-                  props.closeMobileMenu()
-                }}
-              >
-                <Typography className={classes.mobileMenuItemText}>
-                  Saved Searches
-                </Typography>
-              </MenuItem>
-            </a>
-          </Link>
-        </div>
-      }
 
 
       {
@@ -252,6 +252,8 @@ const MobileMenuRoutes = (props: ReactProps) => {
           </Link>
         </div>
       }
+
+
     </div>
   )
 }

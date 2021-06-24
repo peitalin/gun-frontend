@@ -46,8 +46,7 @@ export const expandMenuStyle = (theme: Theme, dashboardMenuHeight) => ({
   transform: 'translateY(0%)',
   position: 'fixed',
   top: `${MainBarHeightDashboard + NewsBarHeight + DashboardBarHeight}px`, // 44px for borderBottom
-  opacity: 1,
-  transition: theme.transitions.create(['transform','opacity'], {
+  transition: theme.transitions.create(['transform'], {
     easing: theme.transitions.easing.easeInOut,
     duration: "200ms",
   }),
@@ -149,7 +148,7 @@ export const styles = (theme: Theme) => createStyles({
     flexDirection: 'row',
     justifyContent: 'center',
     position: 'absolute',
-    transform: `translateY(-${dashboardMenuHeight/8}px)`,
+    transform: `translateY(-${dashboardMenuHeight}px)`,
     opacity: 0,
   },
   // expandDashboard: {
@@ -164,6 +163,14 @@ export const styles = (theme: Theme) => createStyles({
   // },
   expandMenu: {
     ...expandMenuStyle(theme, dashboardMenuHeight) as any
+  },
+  expandOpacity: {
+    opacity: 1,
+    transition: theme.transitions.create(['opacity'], {
+      easing: theme.transitions.easing.easeInOut,
+      duration: "200ms",
+      delay: "0ms",
+    })
   },
   dashboardMenuDither: {
     ...dashboardMenuDitherStyle(theme) as any
