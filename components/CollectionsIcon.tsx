@@ -3,22 +3,18 @@ import React from "react";
 import clsx from 'clsx';
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 import { Colors, BoxShadows, isThemeDark } from "layout/AppTheme";
-// typingsj
-import { UserPrivate } from "typings/gqlTypes";
 // MUI
 import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';
 
-// import FavouriteBorder from "@material-ui/icons/FavoriteBorder"
-// import Favourite from "@material-ui/icons/Favorite"
-
 import IconButton from "@material-ui/core/IconButton";
 // Graphql
 import { useMutation } from "@apollo/client";
-import { ADD_PRODUCT_TO_WATCHLIST, REMOVE_PRODUCT_FROM_WATCHLIST } from "queries/watchlist-mutations";
+import { ADD_PRODUCT_TO_COLLECTION, REMOVE_PRODUCT_FROM_COLLECTION } from "queries/collections-mutations";
 // redux
 import { useDispatch, useSelector } from "react-redux";
-import { WatchlistItemId } from "reduxStore/watchlist-reducer";
+import { CollectionItemId } from "reduxStore/collections-reducer";
+import { UserPrivate } from "typings/gqlTypes";
 import { Actions } from "reduxStore/actions";
 import { GrandReduxState } from "reduxStore/grand-reducer";
 // snackbar
@@ -27,7 +23,7 @@ import Tooltip from "@material-ui/core/Tooltip";
 
 
 
-const WatchlistIcon: React.FC<ReactProps> = (props) => {
+const CollectionIcon: React.FC<ReactProps> = (props) => {
 
 
   const {
@@ -39,32 +35,30 @@ const WatchlistIcon: React.FC<ReactProps> = (props) => {
 
   const [hover, setHover] = React.useState(false)
 
-  const { watchlistItemIds, user } = useSelector<GrandReduxState, ReduxState>(
+  const { collectionItemIds, user } = useSelector<GrandReduxState, ReduxState>(
     s => ({
-      watchlistItemIds: s.reduxWatchlist.watchlistIds,
+      collectionItemIds: s.reduxCollections.collectionIds,
       user: s.reduxLogin.user
     })
   );
 
-  const watchlistItemId = {
+  const collectionItemId = {
     productId: props.productId,
-    variantId: props.variantId
   };
 
-  const isInWatchlist = (): boolean => {
-    return !!watchlistItemIds.find(w => {
-      return w.productId == watchlistItemId.productId
-          && w.variantId === watchlistItemId.variantId
+  const isInCollection = (collectionItemIds: CollectionItemId[]): boolean => {
+    return !!collectionItemIds.find(w => {
+      return w.productId == collectionItemId.productId
     })
   }
 
   const [
-    addProductToWatchlist,
+    addProductToCollection,
     response1
   ] =
-  useMutation<MutationData1, MutationVar1>(
-    ADD_PRODUCT_TO_WATCHLIST, {
-    variables: { ...watchlistItemId },
+  useMutation<MData1, MVar1>(
+    ADD_PRODUCT_TO_COLLECTION, {
+    variables: { ...collectionItemId },
     onCompleted: (data) => {
       if (props.refetch) {
         props.refetch()
@@ -74,11 +68,11 @@ const WatchlistIcon: React.FC<ReactProps> = (props) => {
   })
 
   const [
-    removeProductFromWatchlist,
+    removeProductFromCollection,
     response2
-  ] = useMutation<MutationData1, MutationVar1>(
-    REMOVE_PRODUCT_FROM_WATCHLIST, {
-    variables: { ...watchlistItemId },
+  ] = useMutation<MData1, MVar1>(
+    REMOVE_PRODUCT_FROM_COLLECTION, {
+    variables: { ...collectionItemId },
     onCompleted: (data) => {
       if (props.refetch) {
         props.refetch()
@@ -87,10 +81,22 @@ const WatchlistIcon: React.FC<ReactProps> = (props) => {
     onError: () => {},
   })
 
-  const added = isInWatchlist()
+  const added = React.useMemo(
+    () => isInCollection(collectionItemIds),
+    [collectionItemIds]
+  )
+
+  const collectionModalOpen = useSelector<GrandReduxState, boolean>(
+    state => state.reduxModals.collectionsModalOpen
+  );
+
+  const openModal = () => {
+    dispatch(Actions.reduxCollections.SET_SELECTED_PRODUCT_ID(props.productId))
+    dispatch(Actions.reduxModals.TOGGLE_COLLECTIONS_MODAL(true))
+  }
 
   return (
-    <Tooltip title={added ? "Remove from watchlist" : "Add to watchlist"}>
+    <Tooltip title={added ? "Remove from collection" : "Add to collection"}>
       <IconButton
         onClick={(e) => {
           // prevent click-through to underlying product card
@@ -103,18 +109,19 @@ const WatchlistIcon: React.FC<ReactProps> = (props) => {
             )
           } else {
             // if user is logged in, add or remove to redux
-            if (added) {
-              dispatch(Actions.reduxWatchlist.REMOVE_WATCHLIST_ITEM(watchlistItemId))
-              removeProductFromWatchlist()
-            } else {
-              dispatch(Actions.reduxWatchlist.ADD_WATCHLIST_ITEM(watchlistItemId))
-              addProductToWatchlist()
-            }
+            openModal()
+            // if (added) {
+            //   dispatch(Actions.reduxCollection.REMOVE_COLLECTION_ITEM(collectionItemId))
+            //   removeProductFromCollection()
+            // } else {
+            //   dispatch(Actions.reduxCollection.ADD_COLLECTION_ITEM(collectionItemId))
+            //   addProductToCollection()
+            // }
           }
         }}
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
-        className={classes.watchlistRoot}
+        className={classes.collectionRoot}
         style={{
           top: 'calc(50% - 16px)',
           padding: '.25rem', // determines button radius size
@@ -141,22 +148,22 @@ interface ReactProps extends WithStyles<typeof styles> {
   style?: any;
   productId: string;
   variantId: string;
-  refetch?(): void; // apollo refetch watchlist
+  refetch?(): void; // apollo refetch collection
 }
 interface ReduxState {
-  watchlistItemIds: WatchlistItemId[];
+  collectionItemIds: CollectionItemId[];
   user: UserPrivate;
 }
 
 
-interface MutationData1 {
+interface MData1 {
 }
-interface MutationVar1 {
+interface MVar1 {
 }
 
 
 const styles = (theme: Theme) => createStyles({
-  watchlistRoot: {
+  collectionRoot: {
     position: 'absolute',
     zIndex: 1,
     right: '1rem',
@@ -193,4 +200,4 @@ const styles = (theme: Theme) => createStyles({
 });
 
 
-export default withStyles(styles)( WatchlistIcon );
+export default withStyles(styles)( CollectionIcon );

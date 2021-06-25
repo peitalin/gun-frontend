@@ -170,13 +170,13 @@ const RowExpander = (props: RowExpanderProps) => {
 
                   if (newOrder) {
 
-                    interface MData {
+                    interface QData {
                       getOrdersPendingApprovalConnectionAdmin?: OrdersConnection
                     }
 
                     let vars = props.variables
 
-                    const cacheData = cache.readQuery<MData, any>({
+                    const cacheData = cache.readQuery<QData, any>({
                       query: GET_ORDERS_PENDING_APPROVAL_CONNECTION,
                       variables: vars.ordersPendingApproval,
                     });

@@ -186,13 +186,13 @@ const FeaturedProductId: React.FC<ReactProps> = (props) => {
     return <ErrorPage statusCode={400} message={"Product has been suspended"}/>
   }
   if (!loading && product?.isDeleted === true) {
-    return <ErrorPage statusCode={400} message={"Product has been deleted"}/>
+    return <ErrorPage statusCode={404} message={"Product has been deleted"}/>
   }
   if (!loading && !product?.isPublished === true) {
-    return <ErrorPage statusCode={400} message={"Product is not available"}/>
+    return <ErrorPage statusCode={403} message={"Product is not published"}/>
   }
   if (error) {
-    return <ErrorPage statusCode={400} message={"Product cannot be found"}/>
+    return <ErrorPage statusCode={404} message={"Product cannot be found"}/>
   }
 
 

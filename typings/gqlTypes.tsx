@@ -36,22 +36,6 @@ export type AuthorizePaymentMutationResponse = {
   stripePaymentIntent: Scalars['String'];
 };
 
-export type BalanceTransaction = {
-  __typename?: 'BalanceTransaction';
-  id?: Maybe<Scalars['String']>;
-  availableOn?: Maybe<Scalars['Date']>;
-  created?: Maybe<Scalars['Date']>;
-  net?: Maybe<Scalars['Int']>;
-  currency?: Maybe<Scalars['String']>;
-  description?: Maybe<Scalars['String']>;
-  fee?: Maybe<Scalars['Int']>;
-  feeCurrency?: Maybe<Scalars['String']>;
-  status?: Maybe<Scalars['String']>;
-  type?: Maybe<Scalars['String']>;
-  createdAt?: Maybe<Scalars['Date']>;
-  updatedAt?: Maybe<Scalars['Date']>;
-};
-
 /** Information about a person on the platform */
 export type BasicUser = {
   id: Scalars['ID'];
@@ -151,6 +135,45 @@ export type CoinbaseExchangeRates = {
   __typename?: 'CoinbaseExchangeRates';
   currency?: Maybe<Scalars['String']>;
   rates?: Maybe<Scalars['JSON']>;
+};
+
+export type Collection = {
+  __typename?: 'Collection';
+  id: Scalars['String'];
+  createdAt: Scalars['Date'];
+  updatedAt: Scalars['Date'];
+  name: Scalars['String'];
+  private: Scalars['Boolean'];
+  userId: Scalars['String'];
+  itemsConnection?: Maybe<CollectionItemsConnection>;
+};
+
+/** An individual item in a collection */
+export type CollectionItem = {
+  __typename?: 'CollectionItem';
+  createdAt: Scalars['Date'];
+  id: Scalars['String'];
+  userId: Scalars['String'];
+  productId: Scalars['String'];
+  product: Product;
+};
+
+export type CollectionItemMutationResponse = {
+  __typename?: 'CollectionItemMutationResponse';
+  collectionId: Scalars['String'];
+  collectionItem: CollectionItem;
+};
+
+export type CollectionItemsConnection = {
+  __typename?: 'CollectionItemsConnection';
+  totalCount?: Maybe<Scalars['Int']>;
+  pageInfo: PageInfo;
+  edges: Array<CollectionItemsEdge>;
+};
+
+export type CollectionItemsEdge = {
+  __typename?: 'CollectionItemsEdge';
+  node: CollectionItem;
 };
 
 export type Connection = {
@@ -359,6 +382,14 @@ export type Mutation = {
   delete_chat_users?: Maybe<Chat_Users_Mutation_Response>;
   /** delete single row from the table: "chat_users" */
   delete_chat_users_by_pk?: Maybe<Chat_Users>;
+  /** delete data from the table: "collection_items" */
+  delete_collection_items?: Maybe<Collection_Items_Mutation_Response>;
+  /** delete single row from the table: "collection_items" */
+  delete_collection_items_by_pk?: Maybe<Collection_Items>;
+  /** delete data from the table: "collections" */
+  delete_collections?: Maybe<Collections_Mutation_Response>;
+  /** delete single row from the table: "collections" */
+  delete_collections_by_pk?: Maybe<Collections>;
   /** delete data from the table: "dealers" */
   delete_dealers?: Maybe<Dealers_Mutation_Response>;
   /** delete single row from the table: "dealers" */
@@ -479,10 +510,6 @@ export type Mutation = {
   delete_stores?: Maybe<Stores_Mutation_Response>;
   /** delete single row from the table: "stores" */
   delete_stores_by_pk?: Maybe<Stores>;
-  /** delete data from the table: "stripe_balance_transactions" */
-  delete_stripe_balance_transactions?: Maybe<Stripe_Balance_Transactions_Mutation_Response>;
-  /** delete single row from the table: "stripe_balance_transactions" */
-  delete_stripe_balance_transactions_by_pk?: Maybe<Stripe_Balance_Transactions>;
   /** delete data from the table: "transactions" */
   delete_transactions?: Maybe<Transactions_Mutation_Response>;
   /** delete single row from the table: "transactions" */
@@ -499,10 +526,6 @@ export type Mutation = {
   delete_users?: Maybe<Users_Mutation_Response>;
   /** delete single row from the table: "users" */
   delete_users_by_pk?: Maybe<Users>;
-  /** delete data from the table: "watchlist_items" */
-  delete_watchlist_items?: Maybe<Watchlist_Items_Mutation_Response>;
-  /** delete single row from the table: "watchlist_items" */
-  delete_watchlist_items_by_pk?: Maybe<Watchlist_Items>;
   /** insert data into the table: "bids" */
   insert_bids?: Maybe<Bids_Mutation_Response>;
   /** insert a single row into the table: "bids" */
@@ -527,6 +550,14 @@ export type Mutation = {
   insert_chat_users?: Maybe<Chat_Users_Mutation_Response>;
   /** insert a single row into the table: "chat_users" */
   insert_chat_users_one?: Maybe<Chat_Users>;
+  /** insert data into the table: "collection_items" */
+  insert_collection_items?: Maybe<Collection_Items_Mutation_Response>;
+  /** insert a single row into the table: "collection_items" */
+  insert_collection_items_one?: Maybe<Collection_Items>;
+  /** insert data into the table: "collections" */
+  insert_collections?: Maybe<Collections_Mutation_Response>;
+  /** insert a single row into the table: "collections" */
+  insert_collections_one?: Maybe<Collections>;
   /** insert data into the table: "dealers" */
   insert_dealers?: Maybe<Dealers_Mutation_Response>;
   /** insert a single row into the table: "dealers" */
@@ -647,10 +678,6 @@ export type Mutation = {
   insert_stores?: Maybe<Stores_Mutation_Response>;
   /** insert a single row into the table: "stores" */
   insert_stores_one?: Maybe<Stores>;
-  /** insert data into the table: "stripe_balance_transactions" */
-  insert_stripe_balance_transactions?: Maybe<Stripe_Balance_Transactions_Mutation_Response>;
-  /** insert a single row into the table: "stripe_balance_transactions" */
-  insert_stripe_balance_transactions_one?: Maybe<Stripe_Balance_Transactions>;
   /** insert data into the table: "transactions" */
   insert_transactions?: Maybe<Transactions_Mutation_Response>;
   /** insert a single row into the table: "transactions" */
@@ -667,10 +694,6 @@ export type Mutation = {
   insert_users?: Maybe<Users_Mutation_Response>;
   /** insert a single row into the table: "users" */
   insert_users_one?: Maybe<Users>;
-  /** insert data into the table: "watchlist_items" */
-  insert_watchlist_items?: Maybe<Watchlist_Items_Mutation_Response>;
-  /** insert a single row into the table: "watchlist_items" */
-  insert_watchlist_items_one?: Maybe<Watchlist_Items>;
   /** update data of the table: "bids" */
   update_bids?: Maybe<Bids_Mutation_Response>;
   /** update single row of the table: "bids" */
@@ -695,6 +718,14 @@ export type Mutation = {
   update_chat_users?: Maybe<Chat_Users_Mutation_Response>;
   /** update single row of the table: "chat_users" */
   update_chat_users_by_pk?: Maybe<Chat_Users>;
+  /** update data of the table: "collection_items" */
+  update_collection_items?: Maybe<Collection_Items_Mutation_Response>;
+  /** update single row of the table: "collection_items" */
+  update_collection_items_by_pk?: Maybe<Collection_Items>;
+  /** update data of the table: "collections" */
+  update_collections?: Maybe<Collections_Mutation_Response>;
+  /** update single row of the table: "collections" */
+  update_collections_by_pk?: Maybe<Collections>;
   /** update data of the table: "dealers" */
   update_dealers?: Maybe<Dealers_Mutation_Response>;
   /** update single row of the table: "dealers" */
@@ -815,10 +846,6 @@ export type Mutation = {
   update_stores?: Maybe<Stores_Mutation_Response>;
   /** update single row of the table: "stores" */
   update_stores_by_pk?: Maybe<Stores>;
-  /** update data of the table: "stripe_balance_transactions" */
-  update_stripe_balance_transactions?: Maybe<Stripe_Balance_Transactions_Mutation_Response>;
-  /** update single row of the table: "stripe_balance_transactions" */
-  update_stripe_balance_transactions_by_pk?: Maybe<Stripe_Balance_Transactions>;
   /** update data of the table: "transactions" */
   update_transactions?: Maybe<Transactions_Mutation_Response>;
   /** update single row of the table: "transactions" */
@@ -835,10 +862,6 @@ export type Mutation = {
   update_users?: Maybe<Users_Mutation_Response>;
   /** update single row of the table: "users" */
   update_users_by_pk?: Maybe<Users>;
-  /** update data of the table: "watchlist_items" */
-  update_watchlist_items?: Maybe<Watchlist_Items_Mutation_Response>;
-  /** update single row of the table: "watchlist_items" */
-  update_watchlist_items_by_pk?: Maybe<Watchlist_Items>;
   /**
    * Create a new account using an email address and password.
    * AccessRule – PUBLIC
@@ -918,18 +941,18 @@ export type Mutation = {
    * AccessRule – LOGGED_IN
    */
   unfollowStore: FollowingStoresConnection;
+  createCollection: Collection;
+  deleteCollection: BlankMutationResponse;
   /**
-   * Add a product to the watchlist.
-   *
+   * Add a product to the collection.
    * AccessRule – LOGGED_IN
    */
-  addProductToWatchlist: BlankMutationResponse;
+  addProductToCollection: CollectionItemMutationResponse;
   /**
-   * Remove a product from the watchlist.
-   *
+   * Remove a product from the collection.
    * AccessRule – LOGGED_IN
    */
-  removeProductFromWatchlist: BlankMutationResponse;
+  removeProductFromCollection: CollectionItemMutationResponse;
   /**
    * Create the store profile for the logged-in user.
    *
@@ -1224,6 +1247,26 @@ export type MutationDelete_Chat_UsersArgs = {
 export type MutationDelete_Chat_Users_By_PkArgs = {
   chatRoomId: Scalars['String'];
   userId: Scalars['String'];
+};
+
+
+export type MutationDelete_Collection_ItemsArgs = {
+  where: Collection_Items_Bool_Exp;
+};
+
+
+export type MutationDelete_Collection_Items_By_PkArgs = {
+  id: Scalars['String'];
+};
+
+
+export type MutationDelete_CollectionsArgs = {
+  where: Collections_Bool_Exp;
+};
+
+
+export type MutationDelete_Collections_By_PkArgs = {
+  id: Scalars['String'];
 };
 
 
@@ -1527,16 +1570,6 @@ export type MutationDelete_Stores_By_PkArgs = {
 };
 
 
-export type MutationDelete_Stripe_Balance_TransactionsArgs = {
-  where: Stripe_Balance_Transactions_Bool_Exp;
-};
-
-
-export type MutationDelete_Stripe_Balance_Transactions_By_PkArgs = {
-  id: Scalars['String'];
-};
-
-
 export type MutationDelete_TransactionsArgs = {
   where: Transactions_Bool_Exp;
 };
@@ -1574,16 +1607,6 @@ export type MutationDelete_UsersArgs = {
 
 
 export type MutationDelete_Users_By_PkArgs = {
-  id: Scalars['String'];
-};
-
-
-export type MutationDelete_Watchlist_ItemsArgs = {
-  where: Watchlist_Items_Bool_Exp;
-};
-
-
-export type MutationDelete_Watchlist_Items_By_PkArgs = {
   id: Scalars['String'];
 };
 
@@ -1657,6 +1680,30 @@ export type MutationInsert_Chat_UsersArgs = {
 export type MutationInsert_Chat_Users_OneArgs = {
   object: Chat_Users_Insert_Input;
   on_conflict?: Maybe<Chat_Users_On_Conflict>;
+};
+
+
+export type MutationInsert_Collection_ItemsArgs = {
+  objects: Array<Collection_Items_Insert_Input>;
+  on_conflict?: Maybe<Collection_Items_On_Conflict>;
+};
+
+
+export type MutationInsert_Collection_Items_OneArgs = {
+  object: Collection_Items_Insert_Input;
+  on_conflict?: Maybe<Collection_Items_On_Conflict>;
+};
+
+
+export type MutationInsert_CollectionsArgs = {
+  objects: Array<Collections_Insert_Input>;
+  on_conflict?: Maybe<Collections_On_Conflict>;
+};
+
+
+export type MutationInsert_Collections_OneArgs = {
+  object: Collections_Insert_Input;
+  on_conflict?: Maybe<Collections_On_Conflict>;
 };
 
 
@@ -2020,18 +2067,6 @@ export type MutationInsert_Stores_OneArgs = {
 };
 
 
-export type MutationInsert_Stripe_Balance_TransactionsArgs = {
-  objects: Array<Stripe_Balance_Transactions_Insert_Input>;
-  on_conflict?: Maybe<Stripe_Balance_Transactions_On_Conflict>;
-};
-
-
-export type MutationInsert_Stripe_Balance_Transactions_OneArgs = {
-  object: Stripe_Balance_Transactions_Insert_Input;
-  on_conflict?: Maybe<Stripe_Balance_Transactions_On_Conflict>;
-};
-
-
 export type MutationInsert_TransactionsArgs = {
   objects: Array<Transactions_Insert_Input>;
   on_conflict?: Maybe<Transactions_On_Conflict>;
@@ -2077,18 +2112,6 @@ export type MutationInsert_UsersArgs = {
 export type MutationInsert_Users_OneArgs = {
   object: Users_Insert_Input;
   on_conflict?: Maybe<Users_On_Conflict>;
-};
-
-
-export type MutationInsert_Watchlist_ItemsArgs = {
-  objects: Array<Watchlist_Items_Insert_Input>;
-  on_conflict?: Maybe<Watchlist_Items_On_Conflict>;
-};
-
-
-export type MutationInsert_Watchlist_Items_OneArgs = {
-  object: Watchlist_Items_Insert_Input;
-  on_conflict?: Maybe<Watchlist_Items_On_Conflict>;
 };
 
 
@@ -2163,6 +2186,32 @@ export type MutationUpdate_Chat_UsersArgs = {
 export type MutationUpdate_Chat_Users_By_PkArgs = {
   _set?: Maybe<Chat_Users_Set_Input>;
   pk_columns: Chat_Users_Pk_Columns_Input;
+};
+
+
+export type MutationUpdate_Collection_ItemsArgs = {
+  _inc?: Maybe<Collection_Items_Inc_Input>;
+  _set?: Maybe<Collection_Items_Set_Input>;
+  where: Collection_Items_Bool_Exp;
+};
+
+
+export type MutationUpdate_Collection_Items_By_PkArgs = {
+  _inc?: Maybe<Collection_Items_Inc_Input>;
+  _set?: Maybe<Collection_Items_Set_Input>;
+  pk_columns: Collection_Items_Pk_Columns_Input;
+};
+
+
+export type MutationUpdate_CollectionsArgs = {
+  _set?: Maybe<Collections_Set_Input>;
+  where: Collections_Bool_Exp;
+};
+
+
+export type MutationUpdate_Collections_By_PkArgs = {
+  _set?: Maybe<Collections_Set_Input>;
+  pk_columns: Collections_Pk_Columns_Input;
 };
 
 
@@ -2554,20 +2603,6 @@ export type MutationUpdate_Stores_By_PkArgs = {
 };
 
 
-export type MutationUpdate_Stripe_Balance_TransactionsArgs = {
-  _inc?: Maybe<Stripe_Balance_Transactions_Inc_Input>;
-  _set?: Maybe<Stripe_Balance_Transactions_Set_Input>;
-  where: Stripe_Balance_Transactions_Bool_Exp;
-};
-
-
-export type MutationUpdate_Stripe_Balance_Transactions_By_PkArgs = {
-  _inc?: Maybe<Stripe_Balance_Transactions_Inc_Input>;
-  _set?: Maybe<Stripe_Balance_Transactions_Set_Input>;
-  pk_columns: Stripe_Balance_Transactions_Pk_Columns_Input;
-};
-
-
 export type MutationUpdate_TransactionsArgs = {
   _inc?: Maybe<Transactions_Inc_Input>;
   _set?: Maybe<Transactions_Set_Input>;
@@ -2615,18 +2650,6 @@ export type MutationUpdate_UsersArgs = {
 export type MutationUpdate_Users_By_PkArgs = {
   _set?: Maybe<Users_Set_Input>;
   pk_columns: Users_Pk_Columns_Input;
-};
-
-
-export type MutationUpdate_Watchlist_ItemsArgs = {
-  _set?: Maybe<Watchlist_Items_Set_Input>;
-  where: Watchlist_Items_Bool_Exp;
-};
-
-
-export type MutationUpdate_Watchlist_Items_By_PkArgs = {
-  _set?: Maybe<Watchlist_Items_Set_Input>;
-  pk_columns: Watchlist_Items_Pk_Columns_Input;
 };
 
 
@@ -2766,15 +2789,27 @@ export type MutationUnfollowStoreArgs = {
 };
 
 
-export type MutationAddProductToWatchlistArgs = {
-  productId: Scalars['String'];
-  variantId: Scalars['String'];
+export type MutationCreateCollectionArgs = {
+  name: Scalars['String'];
+  privateCollection?: Maybe<Scalars['Boolean']>;
 };
 
 
-export type MutationRemoveProductFromWatchlistArgs = {
+export type MutationDeleteCollectionArgs = {
+  collectionId: Scalars['String'];
+};
+
+
+export type MutationAddProductToCollectionArgs = {
   productId: Scalars['String'];
-  variantId: Scalars['String'];
+  userId: Scalars['String'];
+  collectionId: Scalars['String'];
+};
+
+
+export type MutationRemoveProductFromCollectionArgs = {
+  collectionId: Scalars['String'];
+  collectionItemId: Scalars['String'];
 };
 
 
@@ -3481,7 +3516,7 @@ export type PageConfigSection = {
 
 export type PageInfo = {
   __typename?: 'PageInfo';
-  isLastPage: Scalars['Boolean'];
+  isLastPage?: Maybe<Scalars['Boolean']>;
   totalPages?: Maybe<Scalars['Int']>;
 };
 
@@ -3972,6 +4007,18 @@ export type Query = {
   chat_users_aggregate: Chat_Users_Aggregate;
   /** fetch data from the table: "chat_users" using primary key columns */
   chat_users_by_pk?: Maybe<Chat_Users>;
+  /** fetch data from the table: "collection_items" */
+  collection_items: Array<Collection_Items>;
+  /** fetch aggregated fields from the table: "collection_items" */
+  collection_items_aggregate: Collection_Items_Aggregate;
+  /** fetch data from the table: "collection_items" using primary key columns */
+  collection_items_by_pk?: Maybe<Collection_Items>;
+  /** fetch data from the table: "collections" */
+  collections: Array<Collections>;
+  /** fetch aggregated fields from the table: "collections" */
+  collections_aggregate: Collections_Aggregate;
+  /** fetch data from the table: "collections" using primary key columns */
+  collections_by_pk?: Maybe<Collections>;
   /** fetch data from the table: "dealers" */
   dealers: Array<Dealers>;
   /** fetch aggregated fields from the table: "dealers" */
@@ -4164,12 +4211,6 @@ export type Query = {
   stores_aggregate: Stores_Aggregate;
   /** fetch data from the table: "stores" using primary key columns */
   stores_by_pk?: Maybe<Stores>;
-  /** fetch data from the table: "stripe_balance_transactions" */
-  stripe_balance_transactions: Array<Stripe_Balance_Transactions>;
-  /** fetch aggregated fields from the table: "stripe_balance_transactions" */
-  stripe_balance_transactions_aggregate: Stripe_Balance_Transactions_Aggregate;
-  /** fetch data from the table: "stripe_balance_transactions" using primary key columns */
-  stripe_balance_transactions_by_pk?: Maybe<Stripe_Balance_Transactions>;
   /** fetch data from the table: "transactions" */
   transactions: Array<Transactions>;
   /** fetch aggregated fields from the table: "transactions" */
@@ -4206,12 +4247,6 @@ export type Query = {
   users_typing: Array<Users_Typing>;
   /** fetch aggregated fields from the table: "users_typing" */
   users_typing_aggregate: Users_Typing_Aggregate;
-  /** fetch data from the table: "watchlist_items" */
-  watchlist_items: Array<Watchlist_Items>;
-  /** fetch aggregated fields from the table: "watchlist_items" */
-  watchlist_items_aggregate: Watchlist_Items_Aggregate;
-  /** fetch data from the table: "watchlist_items" using primary key columns */
-  watchlist_items_by_pk?: Maybe<Watchlist_Items>;
   /**
    * Get the user who is currently logged in.
    *
@@ -4417,7 +4452,12 @@ export type Query = {
    * Collection of products the user has saved for maybe purchasing later.
    * AccessRule – LOGGED_IN
    */
-  watchlistItemsConnection: WatchlistItemsConnection;
+  getCollectionsByUserId: Array<Collection>;
+  /**
+   * Collection of products the user has saved for maybe purchasing later.
+   * AccessRule – LOGGED_IN
+   */
+  getCollection: Collection;
   /**
    * Get a promoted list by its ID.
    * returns promotedList.promotedSlotsConnection
@@ -4462,7 +4502,6 @@ export type Query = {
    * when a product was listed
    */
   getSavedSearchHitsByUser?: Maybe<SavedSearchHitsConnection>;
-  getBalanceTransactions?: Maybe<Array<Maybe<BalanceTransaction>>>;
 };
 
 
@@ -4602,6 +4641,52 @@ export type QueryChat_Users_AggregateArgs = {
 export type QueryChat_Users_By_PkArgs = {
   chatRoomId: Scalars['String'];
   userId: Scalars['String'];
+};
+
+
+export type QueryCollection_ItemsArgs = {
+  distinct_on?: Maybe<Array<Collection_Items_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Collection_Items_Order_By>>;
+  where?: Maybe<Collection_Items_Bool_Exp>;
+};
+
+
+export type QueryCollection_Items_AggregateArgs = {
+  distinct_on?: Maybe<Array<Collection_Items_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Collection_Items_Order_By>>;
+  where?: Maybe<Collection_Items_Bool_Exp>;
+};
+
+
+export type QueryCollection_Items_By_PkArgs = {
+  id: Scalars['String'];
+};
+
+
+export type QueryCollectionsArgs = {
+  distinct_on?: Maybe<Array<Collections_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Collections_Order_By>>;
+  where?: Maybe<Collections_Bool_Exp>;
+};
+
+
+export type QueryCollections_AggregateArgs = {
+  distinct_on?: Maybe<Array<Collections_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Collections_Order_By>>;
+  where?: Maybe<Collections_Bool_Exp>;
+};
+
+
+export type QueryCollections_By_PkArgs = {
+  id: Scalars['String'];
 };
 
 
@@ -5351,29 +5436,6 @@ export type QueryStores_By_PkArgs = {
 };
 
 
-export type QueryStripe_Balance_TransactionsArgs = {
-  distinct_on?: Maybe<Array<Stripe_Balance_Transactions_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Stripe_Balance_Transactions_Order_By>>;
-  where?: Maybe<Stripe_Balance_Transactions_Bool_Exp>;
-};
-
-
-export type QueryStripe_Balance_Transactions_AggregateArgs = {
-  distinct_on?: Maybe<Array<Stripe_Balance_Transactions_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Stripe_Balance_Transactions_Order_By>>;
-  where?: Maybe<Stripe_Balance_Transactions_Bool_Exp>;
-};
-
-
-export type QueryStripe_Balance_Transactions_By_PkArgs = {
-  id: Scalars['String'];
-};
-
-
 export type QueryTransactionsArgs = {
   distinct_on?: Maybe<Array<Transactions_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -5518,29 +5580,6 @@ export type QueryUsers_Typing_AggregateArgs = {
   offset?: Maybe<Scalars['Int']>;
   order_by?: Maybe<Array<Users_Typing_Order_By>>;
   where?: Maybe<Users_Typing_Bool_Exp>;
-};
-
-
-export type QueryWatchlist_ItemsArgs = {
-  distinct_on?: Maybe<Array<Watchlist_Items_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Watchlist_Items_Order_By>>;
-  where?: Maybe<Watchlist_Items_Bool_Exp>;
-};
-
-
-export type QueryWatchlist_Items_AggregateArgs = {
-  distinct_on?: Maybe<Array<Watchlist_Items_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Watchlist_Items_Order_By>>;
-  where?: Maybe<Watchlist_Items_Bool_Exp>;
-};
-
-
-export type QueryWatchlist_Items_By_PkArgs = {
-  id: Scalars['String'];
 };
 
 
@@ -5728,7 +5767,13 @@ export type QueryGetRecentTransactionsArgs = {
 };
 
 
-export type QueryWatchlistItemsConnectionArgs = {
+export type QueryGetCollectionsByUserIdArgs = {
+  query?: Maybe<ConnectionQuery>;
+};
+
+
+export type QueryGetCollectionArgs = {
+  collectionId: Scalars['ID'];
   query?: Maybe<ConnectionQuery>;
 };
 
@@ -5804,11 +5849,6 @@ export type QueryGetSavedSearchesByUserArgs = {
 export type QueryGetSavedSearchHitsByUserArgs = {
   limit?: Maybe<Scalars['Int']>;
   offset?: Maybe<Scalars['Int']>;
-};
-
-
-export type QueryGetBalanceTransactionsArgs = {
-  limit?: Maybe<Scalars['Int']>;
 };
 
 export type ResetPasswordResponse = {
@@ -6068,6 +6108,18 @@ export type Subscription = {
   chat_users_aggregate: Chat_Users_Aggregate;
   /** fetch data from the table: "chat_users" using primary key columns */
   chat_users_by_pk?: Maybe<Chat_Users>;
+  /** fetch data from the table: "collection_items" */
+  collection_items: Array<Collection_Items>;
+  /** fetch aggregated fields from the table: "collection_items" */
+  collection_items_aggregate: Collection_Items_Aggregate;
+  /** fetch data from the table: "collection_items" using primary key columns */
+  collection_items_by_pk?: Maybe<Collection_Items>;
+  /** fetch data from the table: "collections" */
+  collections: Array<Collections>;
+  /** fetch aggregated fields from the table: "collections" */
+  collections_aggregate: Collections_Aggregate;
+  /** fetch data from the table: "collections" using primary key columns */
+  collections_by_pk?: Maybe<Collections>;
   /** fetch data from the table: "dealers" */
   dealers: Array<Dealers>;
   /** fetch aggregated fields from the table: "dealers" */
@@ -6260,12 +6312,6 @@ export type Subscription = {
   stores_aggregate: Stores_Aggregate;
   /** fetch data from the table: "stores" using primary key columns */
   stores_by_pk?: Maybe<Stores>;
-  /** fetch data from the table: "stripe_balance_transactions" */
-  stripe_balance_transactions: Array<Stripe_Balance_Transactions>;
-  /** fetch aggregated fields from the table: "stripe_balance_transactions" */
-  stripe_balance_transactions_aggregate: Stripe_Balance_Transactions_Aggregate;
-  /** fetch data from the table: "stripe_balance_transactions" using primary key columns */
-  stripe_balance_transactions_by_pk?: Maybe<Stripe_Balance_Transactions>;
   /** fetch data from the table: "transactions" */
   transactions: Array<Transactions>;
   /** fetch aggregated fields from the table: "transactions" */
@@ -6302,12 +6348,6 @@ export type Subscription = {
   users_typing: Array<Users_Typing>;
   /** fetch aggregated fields from the table: "users_typing" */
   users_typing_aggregate: Users_Typing_Aggregate;
-  /** fetch data from the table: "watchlist_items" */
-  watchlist_items: Array<Watchlist_Items>;
-  /** fetch aggregated fields from the table: "watchlist_items" */
-  watchlist_items_aggregate: Watchlist_Items_Aggregate;
-  /** fetch data from the table: "watchlist_items" using primary key columns */
-  watchlist_items_by_pk?: Maybe<Watchlist_Items>;
   numberIncremented?: Maybe<Scalars['Int']>;
   saidSomething?: Maybe<Scalars['String']>;
   /** myConversations: JSON */
@@ -6451,6 +6491,52 @@ export type SubscriptionChat_Users_AggregateArgs = {
 export type SubscriptionChat_Users_By_PkArgs = {
   chatRoomId: Scalars['String'];
   userId: Scalars['String'];
+};
+
+
+export type SubscriptionCollection_ItemsArgs = {
+  distinct_on?: Maybe<Array<Collection_Items_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Collection_Items_Order_By>>;
+  where?: Maybe<Collection_Items_Bool_Exp>;
+};
+
+
+export type SubscriptionCollection_Items_AggregateArgs = {
+  distinct_on?: Maybe<Array<Collection_Items_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Collection_Items_Order_By>>;
+  where?: Maybe<Collection_Items_Bool_Exp>;
+};
+
+
+export type SubscriptionCollection_Items_By_PkArgs = {
+  id: Scalars['String'];
+};
+
+
+export type SubscriptionCollectionsArgs = {
+  distinct_on?: Maybe<Array<Collections_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Collections_Order_By>>;
+  where?: Maybe<Collections_Bool_Exp>;
+};
+
+
+export type SubscriptionCollections_AggregateArgs = {
+  distinct_on?: Maybe<Array<Collections_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Collections_Order_By>>;
+  where?: Maybe<Collections_Bool_Exp>;
+};
+
+
+export type SubscriptionCollections_By_PkArgs = {
+  id: Scalars['String'];
 };
 
 
@@ -7200,29 +7286,6 @@ export type SubscriptionStores_By_PkArgs = {
 };
 
 
-export type SubscriptionStripe_Balance_TransactionsArgs = {
-  distinct_on?: Maybe<Array<Stripe_Balance_Transactions_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Stripe_Balance_Transactions_Order_By>>;
-  where?: Maybe<Stripe_Balance_Transactions_Bool_Exp>;
-};
-
-
-export type SubscriptionStripe_Balance_Transactions_AggregateArgs = {
-  distinct_on?: Maybe<Array<Stripe_Balance_Transactions_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Stripe_Balance_Transactions_Order_By>>;
-  where?: Maybe<Stripe_Balance_Transactions_Bool_Exp>;
-};
-
-
-export type SubscriptionStripe_Balance_Transactions_By_PkArgs = {
-  id: Scalars['String'];
-};
-
-
 export type SubscriptionTransactionsArgs = {
   distinct_on?: Maybe<Array<Transactions_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -7370,29 +7433,6 @@ export type SubscriptionUsers_Typing_AggregateArgs = {
 };
 
 
-export type SubscriptionWatchlist_ItemsArgs = {
-  distinct_on?: Maybe<Array<Watchlist_Items_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Watchlist_Items_Order_By>>;
-  where?: Maybe<Watchlist_Items_Bool_Exp>;
-};
-
-
-export type SubscriptionWatchlist_Items_AggregateArgs = {
-  distinct_on?: Maybe<Array<Watchlist_Items_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Watchlist_Items_Order_By>>;
-  where?: Maybe<Watchlist_Items_Bool_Exp>;
-};
-
-
-export type SubscriptionWatchlist_Items_By_PkArgs = {
-  id: Scalars['String'];
-};
-
-
 export type SubscriptionMyConversationsArgs = {
   chatRoomStatuses: Array<Scalars['String']>;
   messageLimit?: Maybe<Scalars['Int']>;
@@ -7489,7 +7529,7 @@ export type UserPrivate = BasicUser & {
   store?: Maybe<StorePrivate>;
   payoutMethodId?: Maybe<Scalars['ID']>;
   payoutMethod?: Maybe<Payout_Methods>;
-  watchlistItemsConnection?: Maybe<WatchlistItemsConnection>;
+  collections?: Maybe<Array<Maybe<Collection>>>;
   followingStores?: Maybe<FollowingStoresConnection>;
   defaultLicenseId?: Maybe<Scalars['String']>;
   defaultLicense?: Maybe<User_Licenses>;
@@ -7517,12 +7557,6 @@ export type UserPrivateSellerOrdersConnectionArgs = {
 /** Private user info */
 export type UserPrivateSellerOrdersActionItemsConnectionArgs = {
   query?: Maybe<ConnectionQueryOrders>;
-};
-
-
-/** Private user info */
-export type UserPrivateWatchlistItemsConnectionArgs = {
-  query?: Maybe<ConnectionQuery>;
 };
 
 
@@ -7564,26 +7598,6 @@ export type UserWithRole = BasicUser & {
   dealerId?: Maybe<Scalars['String']>;
   dealer?: Maybe<Dealer>;
   orderMetrics?: Maybe<UserOrderMetrics>;
-};
-
-/** An individual item in a watchlist */
-export type WatchlistItem = {
-  __typename?: 'WatchlistItem';
-  ownerUserId: Scalars['ID'];
-  addedAt: Scalars['Date'];
-  product: Product;
-};
-
-export type WatchlistItemsConnection = {
-  __typename?: 'WatchlistItemsConnection';
-  totalCount?: Maybe<Scalars['Int']>;
-  pageInfo: PageInfo;
-  edges: Array<WatchlistItemsEdge>;
-};
-
-export type WatchlistItemsEdge = {
-  __typename?: 'WatchlistItemsEdge';
-  node: WatchlistItem;
 };
 
 
@@ -8874,6 +8888,493 @@ export enum Chat_Users_Update_Column {
   CHATROOMSTATUS = 'chatRoomStatus',
   /** column name */
   CREATED_AT = 'created_at',
+  /** column name */
+  USERID = 'userId'
+}
+
+/** columns and relationships of "collection_items" */
+export type Collection_Items = {
+  __typename?: 'collection_items';
+  collectionId?: Maybe<Scalars['String']>;
+  createdAt: Scalars['timestamptz'];
+  id: Scalars['String'];
+  position?: Maybe<Scalars['Int']>;
+  /** An object relationship */
+  product?: Maybe<Products>;
+  productId: Scalars['String'];
+  userId: Scalars['String'];
+};
+
+/** aggregated selection of "collection_items" */
+export type Collection_Items_Aggregate = {
+  __typename?: 'collection_items_aggregate';
+  aggregate?: Maybe<Collection_Items_Aggregate_Fields>;
+  nodes: Array<Collection_Items>;
+};
+
+/** aggregate fields of "collection_items" */
+export type Collection_Items_Aggregate_Fields = {
+  __typename?: 'collection_items_aggregate_fields';
+  avg?: Maybe<Collection_Items_Avg_Fields>;
+  count: Scalars['Int'];
+  max?: Maybe<Collection_Items_Max_Fields>;
+  min?: Maybe<Collection_Items_Min_Fields>;
+  stddev?: Maybe<Collection_Items_Stddev_Fields>;
+  stddev_pop?: Maybe<Collection_Items_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<Collection_Items_Stddev_Samp_Fields>;
+  sum?: Maybe<Collection_Items_Sum_Fields>;
+  var_pop?: Maybe<Collection_Items_Var_Pop_Fields>;
+  var_samp?: Maybe<Collection_Items_Var_Samp_Fields>;
+  variance?: Maybe<Collection_Items_Variance_Fields>;
+};
+
+
+/** aggregate fields of "collection_items" */
+export type Collection_Items_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<Collection_Items_Select_Column>>;
+  distinct?: Maybe<Scalars['Boolean']>;
+};
+
+/** order by aggregate values of table "collection_items" */
+export type Collection_Items_Aggregate_Order_By = {
+  avg?: Maybe<Collection_Items_Avg_Order_By>;
+  count?: Maybe<Order_By>;
+  max?: Maybe<Collection_Items_Max_Order_By>;
+  min?: Maybe<Collection_Items_Min_Order_By>;
+  stddev?: Maybe<Collection_Items_Stddev_Order_By>;
+  stddev_pop?: Maybe<Collection_Items_Stddev_Pop_Order_By>;
+  stddev_samp?: Maybe<Collection_Items_Stddev_Samp_Order_By>;
+  sum?: Maybe<Collection_Items_Sum_Order_By>;
+  var_pop?: Maybe<Collection_Items_Var_Pop_Order_By>;
+  var_samp?: Maybe<Collection_Items_Var_Samp_Order_By>;
+  variance?: Maybe<Collection_Items_Variance_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "collection_items" */
+export type Collection_Items_Arr_Rel_Insert_Input = {
+  data: Array<Collection_Items_Insert_Input>;
+  /** on conflict condition */
+  on_conflict?: Maybe<Collection_Items_On_Conflict>;
+};
+
+/** aggregate avg on columns */
+export type Collection_Items_Avg_Fields = {
+  __typename?: 'collection_items_avg_fields';
+  position?: Maybe<Scalars['Float']>;
+};
+
+/** order by avg() on columns of table "collection_items" */
+export type Collection_Items_Avg_Order_By = {
+  position?: Maybe<Order_By>;
+};
+
+/** Boolean expression to filter rows from the table "collection_items". All fields are combined with a logical 'AND'. */
+export type Collection_Items_Bool_Exp = {
+  _and?: Maybe<Array<Collection_Items_Bool_Exp>>;
+  _not?: Maybe<Collection_Items_Bool_Exp>;
+  _or?: Maybe<Array<Collection_Items_Bool_Exp>>;
+  collectionId?: Maybe<String_Comparison_Exp>;
+  createdAt?: Maybe<Timestamptz_Comparison_Exp>;
+  id?: Maybe<String_Comparison_Exp>;
+  position?: Maybe<Int_Comparison_Exp>;
+  product?: Maybe<Products_Bool_Exp>;
+  productId?: Maybe<String_Comparison_Exp>;
+  userId?: Maybe<String_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "collection_items" */
+export enum Collection_Items_Constraint {
+  /** unique or primary key constraint */
+  COLLECTION_ITEMS_PKEY = 'collection_items_pkey'
+}
+
+/** input type for incrementing numeric columns in table "collection_items" */
+export type Collection_Items_Inc_Input = {
+  position?: Maybe<Scalars['Int']>;
+};
+
+/** input type for inserting data into table "collection_items" */
+export type Collection_Items_Insert_Input = {
+  collectionId?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['String']>;
+  position?: Maybe<Scalars['Int']>;
+  product?: Maybe<Products_Obj_Rel_Insert_Input>;
+  productId?: Maybe<Scalars['String']>;
+  userId?: Maybe<Scalars['String']>;
+};
+
+/** aggregate max on columns */
+export type Collection_Items_Max_Fields = {
+  __typename?: 'collection_items_max_fields';
+  collectionId?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['String']>;
+  position?: Maybe<Scalars['Int']>;
+  productId?: Maybe<Scalars['String']>;
+  userId?: Maybe<Scalars['String']>;
+};
+
+/** order by max() on columns of table "collection_items" */
+export type Collection_Items_Max_Order_By = {
+  collectionId?: Maybe<Order_By>;
+  createdAt?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  position?: Maybe<Order_By>;
+  productId?: Maybe<Order_By>;
+  userId?: Maybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type Collection_Items_Min_Fields = {
+  __typename?: 'collection_items_min_fields';
+  collectionId?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['String']>;
+  position?: Maybe<Scalars['Int']>;
+  productId?: Maybe<Scalars['String']>;
+  userId?: Maybe<Scalars['String']>;
+};
+
+/** order by min() on columns of table "collection_items" */
+export type Collection_Items_Min_Order_By = {
+  collectionId?: Maybe<Order_By>;
+  createdAt?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  position?: Maybe<Order_By>;
+  productId?: Maybe<Order_By>;
+  userId?: Maybe<Order_By>;
+};
+
+/** response of any mutation on the table "collection_items" */
+export type Collection_Items_Mutation_Response = {
+  __typename?: 'collection_items_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Collection_Items>;
+};
+
+/** on conflict condition type for table "collection_items" */
+export type Collection_Items_On_Conflict = {
+  constraint: Collection_Items_Constraint;
+  update_columns?: Array<Collection_Items_Update_Column>;
+  where?: Maybe<Collection_Items_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "collection_items". */
+export type Collection_Items_Order_By = {
+  collectionId?: Maybe<Order_By>;
+  createdAt?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  position?: Maybe<Order_By>;
+  product?: Maybe<Products_Order_By>;
+  productId?: Maybe<Order_By>;
+  userId?: Maybe<Order_By>;
+};
+
+/** primary key columns input for table: collection_items */
+export type Collection_Items_Pk_Columns_Input = {
+  id: Scalars['String'];
+};
+
+/** select columns of table "collection_items" */
+export enum Collection_Items_Select_Column {
+  /** column name */
+  COLLECTIONID = 'collectionId',
+  /** column name */
+  CREATEDAT = 'createdAt',
+  /** column name */
+  ID = 'id',
+  /** column name */
+  POSITION = 'position',
+  /** column name */
+  PRODUCTID = 'productId',
+  /** column name */
+  USERID = 'userId'
+}
+
+/** input type for updating data in table "collection_items" */
+export type Collection_Items_Set_Input = {
+  collectionId?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['String']>;
+  position?: Maybe<Scalars['Int']>;
+  productId?: Maybe<Scalars['String']>;
+  userId?: Maybe<Scalars['String']>;
+};
+
+/** aggregate stddev on columns */
+export type Collection_Items_Stddev_Fields = {
+  __typename?: 'collection_items_stddev_fields';
+  position?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev() on columns of table "collection_items" */
+export type Collection_Items_Stddev_Order_By = {
+  position?: Maybe<Order_By>;
+};
+
+/** aggregate stddev_pop on columns */
+export type Collection_Items_Stddev_Pop_Fields = {
+  __typename?: 'collection_items_stddev_pop_fields';
+  position?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev_pop() on columns of table "collection_items" */
+export type Collection_Items_Stddev_Pop_Order_By = {
+  position?: Maybe<Order_By>;
+};
+
+/** aggregate stddev_samp on columns */
+export type Collection_Items_Stddev_Samp_Fields = {
+  __typename?: 'collection_items_stddev_samp_fields';
+  position?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev_samp() on columns of table "collection_items" */
+export type Collection_Items_Stddev_Samp_Order_By = {
+  position?: Maybe<Order_By>;
+};
+
+/** aggregate sum on columns */
+export type Collection_Items_Sum_Fields = {
+  __typename?: 'collection_items_sum_fields';
+  position?: Maybe<Scalars['Int']>;
+};
+
+/** order by sum() on columns of table "collection_items" */
+export type Collection_Items_Sum_Order_By = {
+  position?: Maybe<Order_By>;
+};
+
+/** update columns of table "collection_items" */
+export enum Collection_Items_Update_Column {
+  /** column name */
+  COLLECTIONID = 'collectionId',
+  /** column name */
+  CREATEDAT = 'createdAt',
+  /** column name */
+  ID = 'id',
+  /** column name */
+  POSITION = 'position',
+  /** column name */
+  PRODUCTID = 'productId',
+  /** column name */
+  USERID = 'userId'
+}
+
+/** aggregate var_pop on columns */
+export type Collection_Items_Var_Pop_Fields = {
+  __typename?: 'collection_items_var_pop_fields';
+  position?: Maybe<Scalars['Float']>;
+};
+
+/** order by var_pop() on columns of table "collection_items" */
+export type Collection_Items_Var_Pop_Order_By = {
+  position?: Maybe<Order_By>;
+};
+
+/** aggregate var_samp on columns */
+export type Collection_Items_Var_Samp_Fields = {
+  __typename?: 'collection_items_var_samp_fields';
+  position?: Maybe<Scalars['Float']>;
+};
+
+/** order by var_samp() on columns of table "collection_items" */
+export type Collection_Items_Var_Samp_Order_By = {
+  position?: Maybe<Order_By>;
+};
+
+/** aggregate variance on columns */
+export type Collection_Items_Variance_Fields = {
+  __typename?: 'collection_items_variance_fields';
+  position?: Maybe<Scalars['Float']>;
+};
+
+/** order by variance() on columns of table "collection_items" */
+export type Collection_Items_Variance_Order_By = {
+  position?: Maybe<Order_By>;
+};
+
+/** columns and relationships of "collections" */
+export type Collections = {
+  __typename?: 'collections';
+  createdAt: Scalars['timestamptz'];
+  id: Scalars['String'];
+  /** An array relationship */
+  items: Array<Collection_Items>;
+  /** An aggregate relationship */
+  items_aggregate: Collection_Items_Aggregate;
+  name: Scalars['String'];
+  private: Scalars['Boolean'];
+  updatedAt: Scalars['timestamptz'];
+  userId?: Maybe<Scalars['String']>;
+};
+
+
+/** columns and relationships of "collections" */
+export type CollectionsItemsArgs = {
+  distinct_on?: Maybe<Array<Collection_Items_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Collection_Items_Order_By>>;
+  where?: Maybe<Collection_Items_Bool_Exp>;
+};
+
+
+/** columns and relationships of "collections" */
+export type CollectionsItems_AggregateArgs = {
+  distinct_on?: Maybe<Array<Collection_Items_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Collection_Items_Order_By>>;
+  where?: Maybe<Collection_Items_Bool_Exp>;
+};
+
+/** aggregated selection of "collections" */
+export type Collections_Aggregate = {
+  __typename?: 'collections_aggregate';
+  aggregate?: Maybe<Collections_Aggregate_Fields>;
+  nodes: Array<Collections>;
+};
+
+/** aggregate fields of "collections" */
+export type Collections_Aggregate_Fields = {
+  __typename?: 'collections_aggregate_fields';
+  count: Scalars['Int'];
+  max?: Maybe<Collections_Max_Fields>;
+  min?: Maybe<Collections_Min_Fields>;
+};
+
+
+/** aggregate fields of "collections" */
+export type Collections_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<Collections_Select_Column>>;
+  distinct?: Maybe<Scalars['Boolean']>;
+};
+
+/** Boolean expression to filter rows from the table "collections". All fields are combined with a logical 'AND'. */
+export type Collections_Bool_Exp = {
+  _and?: Maybe<Array<Collections_Bool_Exp>>;
+  _not?: Maybe<Collections_Bool_Exp>;
+  _or?: Maybe<Array<Collections_Bool_Exp>>;
+  createdAt?: Maybe<Timestamptz_Comparison_Exp>;
+  id?: Maybe<String_Comparison_Exp>;
+  items?: Maybe<Collection_Items_Bool_Exp>;
+  name?: Maybe<String_Comparison_Exp>;
+  private?: Maybe<Boolean_Comparison_Exp>;
+  updatedAt?: Maybe<Timestamptz_Comparison_Exp>;
+  userId?: Maybe<String_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "collections" */
+export enum Collections_Constraint {
+  /** unique or primary key constraint */
+  COLLECTIONS_PKEY = 'collections_pkey'
+}
+
+/** input type for inserting data into table "collections" */
+export type Collections_Insert_Input = {
+  createdAt?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['String']>;
+  items?: Maybe<Collection_Items_Arr_Rel_Insert_Input>;
+  name?: Maybe<Scalars['String']>;
+  private?: Maybe<Scalars['Boolean']>;
+  updatedAt?: Maybe<Scalars['timestamptz']>;
+  userId?: Maybe<Scalars['String']>;
+};
+
+/** aggregate max on columns */
+export type Collections_Max_Fields = {
+  __typename?: 'collections_max_fields';
+  createdAt?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  updatedAt?: Maybe<Scalars['timestamptz']>;
+  userId?: Maybe<Scalars['String']>;
+};
+
+/** aggregate min on columns */
+export type Collections_Min_Fields = {
+  __typename?: 'collections_min_fields';
+  createdAt?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  updatedAt?: Maybe<Scalars['timestamptz']>;
+  userId?: Maybe<Scalars['String']>;
+};
+
+/** response of any mutation on the table "collections" */
+export type Collections_Mutation_Response = {
+  __typename?: 'collections_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Collections>;
+};
+
+/** on conflict condition type for table "collections" */
+export type Collections_On_Conflict = {
+  constraint: Collections_Constraint;
+  update_columns?: Array<Collections_Update_Column>;
+  where?: Maybe<Collections_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "collections". */
+export type Collections_Order_By = {
+  createdAt?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  items_aggregate?: Maybe<Collection_Items_Aggregate_Order_By>;
+  name?: Maybe<Order_By>;
+  private?: Maybe<Order_By>;
+  updatedAt?: Maybe<Order_By>;
+  userId?: Maybe<Order_By>;
+};
+
+/** primary key columns input for table: collections */
+export type Collections_Pk_Columns_Input = {
+  id: Scalars['String'];
+};
+
+/** select columns of table "collections" */
+export enum Collections_Select_Column {
+  /** column name */
+  CREATEDAT = 'createdAt',
+  /** column name */
+  ID = 'id',
+  /** column name */
+  NAME = 'name',
+  /** column name */
+  PRIVATE = 'private',
+  /** column name */
+  UPDATEDAT = 'updatedAt',
+  /** column name */
+  USERID = 'userId'
+}
+
+/** input type for updating data in table "collections" */
+export type Collections_Set_Input = {
+  createdAt?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  private?: Maybe<Scalars['Boolean']>;
+  updatedAt?: Maybe<Scalars['timestamptz']>;
+  userId?: Maybe<Scalars['String']>;
+};
+
+/** update columns of table "collections" */
+export enum Collections_Update_Column {
+  /** column name */
+  CREATEDAT = 'createdAt',
+  /** column name */
+  ID = 'id',
+  /** column name */
+  NAME = 'name',
+  /** column name */
+  PRIVATE = 'private',
+  /** column name */
+  UPDATEDAT = 'updatedAt',
   /** column name */
   USERID = 'userId'
 }
@@ -16674,302 +17175,6 @@ export enum Stores_Update_Column {
   WEBSITE = 'website'
 }
 
-/** columns and relationships of "stripe_balance_transactions" */
-export type Stripe_Balance_Transactions = {
-  __typename?: 'stripe_balance_transactions';
-  availableOn?: Maybe<Scalars['timestamp']>;
-  created?: Maybe<Scalars['timestamp']>;
-  createdAt?: Maybe<Scalars['timestamptz']>;
-  currency?: Maybe<Scalars['String']>;
-  description?: Maybe<Scalars['String']>;
-  fee?: Maybe<Scalars['Int']>;
-  feeCurrency?: Maybe<Scalars['String']>;
-  id: Scalars['String'];
-  net?: Maybe<Scalars['Int']>;
-  status?: Maybe<Scalars['String']>;
-  type?: Maybe<Scalars['String']>;
-  updatedAt?: Maybe<Scalars['timestamptz']>;
-};
-
-/** aggregated selection of "stripe_balance_transactions" */
-export type Stripe_Balance_Transactions_Aggregate = {
-  __typename?: 'stripe_balance_transactions_aggregate';
-  aggregate?: Maybe<Stripe_Balance_Transactions_Aggregate_Fields>;
-  nodes: Array<Stripe_Balance_Transactions>;
-};
-
-/** aggregate fields of "stripe_balance_transactions" */
-export type Stripe_Balance_Transactions_Aggregate_Fields = {
-  __typename?: 'stripe_balance_transactions_aggregate_fields';
-  avg?: Maybe<Stripe_Balance_Transactions_Avg_Fields>;
-  count: Scalars['Int'];
-  max?: Maybe<Stripe_Balance_Transactions_Max_Fields>;
-  min?: Maybe<Stripe_Balance_Transactions_Min_Fields>;
-  stddev?: Maybe<Stripe_Balance_Transactions_Stddev_Fields>;
-  stddev_pop?: Maybe<Stripe_Balance_Transactions_Stddev_Pop_Fields>;
-  stddev_samp?: Maybe<Stripe_Balance_Transactions_Stddev_Samp_Fields>;
-  sum?: Maybe<Stripe_Balance_Transactions_Sum_Fields>;
-  var_pop?: Maybe<Stripe_Balance_Transactions_Var_Pop_Fields>;
-  var_samp?: Maybe<Stripe_Balance_Transactions_Var_Samp_Fields>;
-  variance?: Maybe<Stripe_Balance_Transactions_Variance_Fields>;
-};
-
-
-/** aggregate fields of "stripe_balance_transactions" */
-export type Stripe_Balance_Transactions_Aggregate_FieldsCountArgs = {
-  columns?: Maybe<Array<Stripe_Balance_Transactions_Select_Column>>;
-  distinct?: Maybe<Scalars['Boolean']>;
-};
-
-/** aggregate avg on columns */
-export type Stripe_Balance_Transactions_Avg_Fields = {
-  __typename?: 'stripe_balance_transactions_avg_fields';
-  fee?: Maybe<Scalars['Float']>;
-  net?: Maybe<Scalars['Float']>;
-};
-
-/**
- * Boolean expression to filter rows from the table "stripe_balance_transactions".
- * All fields are combined with a logical 'AND'.
- */
-export type Stripe_Balance_Transactions_Bool_Exp = {
-  _and?: Maybe<Array<Stripe_Balance_Transactions_Bool_Exp>>;
-  _not?: Maybe<Stripe_Balance_Transactions_Bool_Exp>;
-  _or?: Maybe<Array<Stripe_Balance_Transactions_Bool_Exp>>;
-  availableOn?: Maybe<Timestamp_Comparison_Exp>;
-  created?: Maybe<Timestamp_Comparison_Exp>;
-  createdAt?: Maybe<Timestamptz_Comparison_Exp>;
-  currency?: Maybe<String_Comparison_Exp>;
-  description?: Maybe<String_Comparison_Exp>;
-  fee?: Maybe<Int_Comparison_Exp>;
-  feeCurrency?: Maybe<String_Comparison_Exp>;
-  id?: Maybe<String_Comparison_Exp>;
-  net?: Maybe<Int_Comparison_Exp>;
-  status?: Maybe<String_Comparison_Exp>;
-  type?: Maybe<String_Comparison_Exp>;
-  updatedAt?: Maybe<Timestamptz_Comparison_Exp>;
-};
-
-/** unique or primary key constraints on table "stripe_balance_transactions" */
-export enum Stripe_Balance_Transactions_Constraint {
-  /** unique or primary key constraint */
-  STRIPE_BALANCE_TRANSACTIONS_PKEY = 'stripe_balance_transactions_pkey'
-}
-
-/** input type for incrementing numeric columns in table "stripe_balance_transactions" */
-export type Stripe_Balance_Transactions_Inc_Input = {
-  fee?: Maybe<Scalars['Int']>;
-  net?: Maybe<Scalars['Int']>;
-};
-
-/** input type for inserting data into table "stripe_balance_transactions" */
-export type Stripe_Balance_Transactions_Insert_Input = {
-  availableOn?: Maybe<Scalars['timestamp']>;
-  created?: Maybe<Scalars['timestamp']>;
-  createdAt?: Maybe<Scalars['timestamptz']>;
-  currency?: Maybe<Scalars['String']>;
-  description?: Maybe<Scalars['String']>;
-  fee?: Maybe<Scalars['Int']>;
-  feeCurrency?: Maybe<Scalars['String']>;
-  id?: Maybe<Scalars['String']>;
-  net?: Maybe<Scalars['Int']>;
-  status?: Maybe<Scalars['String']>;
-  type?: Maybe<Scalars['String']>;
-  updatedAt?: Maybe<Scalars['timestamptz']>;
-};
-
-/** aggregate max on columns */
-export type Stripe_Balance_Transactions_Max_Fields = {
-  __typename?: 'stripe_balance_transactions_max_fields';
-  availableOn?: Maybe<Scalars['timestamp']>;
-  created?: Maybe<Scalars['timestamp']>;
-  createdAt?: Maybe<Scalars['timestamptz']>;
-  currency?: Maybe<Scalars['String']>;
-  description?: Maybe<Scalars['String']>;
-  fee?: Maybe<Scalars['Int']>;
-  feeCurrency?: Maybe<Scalars['String']>;
-  id?: Maybe<Scalars['String']>;
-  net?: Maybe<Scalars['Int']>;
-  status?: Maybe<Scalars['String']>;
-  type?: Maybe<Scalars['String']>;
-  updatedAt?: Maybe<Scalars['timestamptz']>;
-};
-
-/** aggregate min on columns */
-export type Stripe_Balance_Transactions_Min_Fields = {
-  __typename?: 'stripe_balance_transactions_min_fields';
-  availableOn?: Maybe<Scalars['timestamp']>;
-  created?: Maybe<Scalars['timestamp']>;
-  createdAt?: Maybe<Scalars['timestamptz']>;
-  currency?: Maybe<Scalars['String']>;
-  description?: Maybe<Scalars['String']>;
-  fee?: Maybe<Scalars['Int']>;
-  feeCurrency?: Maybe<Scalars['String']>;
-  id?: Maybe<Scalars['String']>;
-  net?: Maybe<Scalars['Int']>;
-  status?: Maybe<Scalars['String']>;
-  type?: Maybe<Scalars['String']>;
-  updatedAt?: Maybe<Scalars['timestamptz']>;
-};
-
-/** response of any mutation on the table "stripe_balance_transactions" */
-export type Stripe_Balance_Transactions_Mutation_Response = {
-  __typename?: 'stripe_balance_transactions_mutation_response';
-  /** number of rows affected by the mutation */
-  affected_rows: Scalars['Int'];
-  /** data from the rows affected by the mutation */
-  returning: Array<Stripe_Balance_Transactions>;
-};
-
-/** on conflict condition type for table "stripe_balance_transactions" */
-export type Stripe_Balance_Transactions_On_Conflict = {
-  constraint: Stripe_Balance_Transactions_Constraint;
-  update_columns?: Array<Stripe_Balance_Transactions_Update_Column>;
-  where?: Maybe<Stripe_Balance_Transactions_Bool_Exp>;
-};
-
-/** Ordering options when selecting data from "stripe_balance_transactions". */
-export type Stripe_Balance_Transactions_Order_By = {
-  availableOn?: Maybe<Order_By>;
-  created?: Maybe<Order_By>;
-  createdAt?: Maybe<Order_By>;
-  currency?: Maybe<Order_By>;
-  description?: Maybe<Order_By>;
-  fee?: Maybe<Order_By>;
-  feeCurrency?: Maybe<Order_By>;
-  id?: Maybe<Order_By>;
-  net?: Maybe<Order_By>;
-  status?: Maybe<Order_By>;
-  type?: Maybe<Order_By>;
-  updatedAt?: Maybe<Order_By>;
-};
-
-/** primary key columns input for table: stripe_balance_transactions */
-export type Stripe_Balance_Transactions_Pk_Columns_Input = {
-  id: Scalars['String'];
-};
-
-/** select columns of table "stripe_balance_transactions" */
-export enum Stripe_Balance_Transactions_Select_Column {
-  /** column name */
-  AVAILABLEON = 'availableOn',
-  /** column name */
-  CREATED = 'created',
-  /** column name */
-  CREATEDAT = 'createdAt',
-  /** column name */
-  CURRENCY = 'currency',
-  /** column name */
-  DESCRIPTION = 'description',
-  /** column name */
-  FEE = 'fee',
-  /** column name */
-  FEECURRENCY = 'feeCurrency',
-  /** column name */
-  ID = 'id',
-  /** column name */
-  NET = 'net',
-  /** column name */
-  STATUS = 'status',
-  /** column name */
-  TYPE = 'type',
-  /** column name */
-  UPDATEDAT = 'updatedAt'
-}
-
-/** input type for updating data in table "stripe_balance_transactions" */
-export type Stripe_Balance_Transactions_Set_Input = {
-  availableOn?: Maybe<Scalars['timestamp']>;
-  created?: Maybe<Scalars['timestamp']>;
-  createdAt?: Maybe<Scalars['timestamptz']>;
-  currency?: Maybe<Scalars['String']>;
-  description?: Maybe<Scalars['String']>;
-  fee?: Maybe<Scalars['Int']>;
-  feeCurrency?: Maybe<Scalars['String']>;
-  id?: Maybe<Scalars['String']>;
-  net?: Maybe<Scalars['Int']>;
-  status?: Maybe<Scalars['String']>;
-  type?: Maybe<Scalars['String']>;
-  updatedAt?: Maybe<Scalars['timestamptz']>;
-};
-
-/** aggregate stddev on columns */
-export type Stripe_Balance_Transactions_Stddev_Fields = {
-  __typename?: 'stripe_balance_transactions_stddev_fields';
-  fee?: Maybe<Scalars['Float']>;
-  net?: Maybe<Scalars['Float']>;
-};
-
-/** aggregate stddev_pop on columns */
-export type Stripe_Balance_Transactions_Stddev_Pop_Fields = {
-  __typename?: 'stripe_balance_transactions_stddev_pop_fields';
-  fee?: Maybe<Scalars['Float']>;
-  net?: Maybe<Scalars['Float']>;
-};
-
-/** aggregate stddev_samp on columns */
-export type Stripe_Balance_Transactions_Stddev_Samp_Fields = {
-  __typename?: 'stripe_balance_transactions_stddev_samp_fields';
-  fee?: Maybe<Scalars['Float']>;
-  net?: Maybe<Scalars['Float']>;
-};
-
-/** aggregate sum on columns */
-export type Stripe_Balance_Transactions_Sum_Fields = {
-  __typename?: 'stripe_balance_transactions_sum_fields';
-  fee?: Maybe<Scalars['Int']>;
-  net?: Maybe<Scalars['Int']>;
-};
-
-/** update columns of table "stripe_balance_transactions" */
-export enum Stripe_Balance_Transactions_Update_Column {
-  /** column name */
-  AVAILABLEON = 'availableOn',
-  /** column name */
-  CREATED = 'created',
-  /** column name */
-  CREATEDAT = 'createdAt',
-  /** column name */
-  CURRENCY = 'currency',
-  /** column name */
-  DESCRIPTION = 'description',
-  /** column name */
-  FEE = 'fee',
-  /** column name */
-  FEECURRENCY = 'feeCurrency',
-  /** column name */
-  ID = 'id',
-  /** column name */
-  NET = 'net',
-  /** column name */
-  STATUS = 'status',
-  /** column name */
-  TYPE = 'type',
-  /** column name */
-  UPDATEDAT = 'updatedAt'
-}
-
-/** aggregate var_pop on columns */
-export type Stripe_Balance_Transactions_Var_Pop_Fields = {
-  __typename?: 'stripe_balance_transactions_var_pop_fields';
-  fee?: Maybe<Scalars['Float']>;
-  net?: Maybe<Scalars['Float']>;
-};
-
-/** aggregate var_samp on columns */
-export type Stripe_Balance_Transactions_Var_Samp_Fields = {
-  __typename?: 'stripe_balance_transactions_var_samp_fields';
-  fee?: Maybe<Scalars['Float']>;
-  net?: Maybe<Scalars['Float']>;
-};
-
-/** aggregate variance on columns */
-export type Stripe_Balance_Transactions_Variance_Fields = {
-  __typename?: 'stripe_balance_transactions_variance_fields';
-  fee?: Maybe<Scalars['Float']>;
-  net?: Maybe<Scalars['Float']>;
-};
-
 
 /** Boolean expression to compare columns of type "timestamp". All fields are combined with logical 'AND'. */
 export type Timestamp_Comparison_Exp = {
@@ -18496,146 +18701,6 @@ export enum Users_Update_Column {
   USERROLE = 'userRole',
   /** column name */
   USERNAME = 'username'
-}
-
-/** columns and relationships of "watchlist_items" */
-export type Watchlist_Items = {
-  __typename?: 'watchlist_items';
-  createdAt: Scalars['timestamptz'];
-  id: Scalars['String'];
-  /** An object relationship */
-  product?: Maybe<Products>;
-  productId: Scalars['String'];
-  userId: Scalars['String'];
-};
-
-/** aggregated selection of "watchlist_items" */
-export type Watchlist_Items_Aggregate = {
-  __typename?: 'watchlist_items_aggregate';
-  aggregate?: Maybe<Watchlist_Items_Aggregate_Fields>;
-  nodes: Array<Watchlist_Items>;
-};
-
-/** aggregate fields of "watchlist_items" */
-export type Watchlist_Items_Aggregate_Fields = {
-  __typename?: 'watchlist_items_aggregate_fields';
-  count: Scalars['Int'];
-  max?: Maybe<Watchlist_Items_Max_Fields>;
-  min?: Maybe<Watchlist_Items_Min_Fields>;
-};
-
-
-/** aggregate fields of "watchlist_items" */
-export type Watchlist_Items_Aggregate_FieldsCountArgs = {
-  columns?: Maybe<Array<Watchlist_Items_Select_Column>>;
-  distinct?: Maybe<Scalars['Boolean']>;
-};
-
-/** Boolean expression to filter rows from the table "watchlist_items". All fields are combined with a logical 'AND'. */
-export type Watchlist_Items_Bool_Exp = {
-  _and?: Maybe<Array<Watchlist_Items_Bool_Exp>>;
-  _not?: Maybe<Watchlist_Items_Bool_Exp>;
-  _or?: Maybe<Array<Watchlist_Items_Bool_Exp>>;
-  createdAt?: Maybe<Timestamptz_Comparison_Exp>;
-  id?: Maybe<String_Comparison_Exp>;
-  product?: Maybe<Products_Bool_Exp>;
-  productId?: Maybe<String_Comparison_Exp>;
-  userId?: Maybe<String_Comparison_Exp>;
-};
-
-/** unique or primary key constraints on table "watchlist_items" */
-export enum Watchlist_Items_Constraint {
-  /** unique or primary key constraint */
-  WATCHLIST_ITEMS_PKEY = 'watchlist_items_pkey'
-}
-
-/** input type for inserting data into table "watchlist_items" */
-export type Watchlist_Items_Insert_Input = {
-  createdAt?: Maybe<Scalars['timestamptz']>;
-  id?: Maybe<Scalars['String']>;
-  product?: Maybe<Products_Obj_Rel_Insert_Input>;
-  productId?: Maybe<Scalars['String']>;
-  userId?: Maybe<Scalars['String']>;
-};
-
-/** aggregate max on columns */
-export type Watchlist_Items_Max_Fields = {
-  __typename?: 'watchlist_items_max_fields';
-  createdAt?: Maybe<Scalars['timestamptz']>;
-  id?: Maybe<Scalars['String']>;
-  productId?: Maybe<Scalars['String']>;
-  userId?: Maybe<Scalars['String']>;
-};
-
-/** aggregate min on columns */
-export type Watchlist_Items_Min_Fields = {
-  __typename?: 'watchlist_items_min_fields';
-  createdAt?: Maybe<Scalars['timestamptz']>;
-  id?: Maybe<Scalars['String']>;
-  productId?: Maybe<Scalars['String']>;
-  userId?: Maybe<Scalars['String']>;
-};
-
-/** response of any mutation on the table "watchlist_items" */
-export type Watchlist_Items_Mutation_Response = {
-  __typename?: 'watchlist_items_mutation_response';
-  /** number of rows affected by the mutation */
-  affected_rows: Scalars['Int'];
-  /** data from the rows affected by the mutation */
-  returning: Array<Watchlist_Items>;
-};
-
-/** on conflict condition type for table "watchlist_items" */
-export type Watchlist_Items_On_Conflict = {
-  constraint: Watchlist_Items_Constraint;
-  update_columns?: Array<Watchlist_Items_Update_Column>;
-  where?: Maybe<Watchlist_Items_Bool_Exp>;
-};
-
-/** Ordering options when selecting data from "watchlist_items". */
-export type Watchlist_Items_Order_By = {
-  createdAt?: Maybe<Order_By>;
-  id?: Maybe<Order_By>;
-  product?: Maybe<Products_Order_By>;
-  productId?: Maybe<Order_By>;
-  userId?: Maybe<Order_By>;
-};
-
-/** primary key columns input for table: watchlist_items */
-export type Watchlist_Items_Pk_Columns_Input = {
-  id: Scalars['String'];
-};
-
-/** select columns of table "watchlist_items" */
-export enum Watchlist_Items_Select_Column {
-  /** column name */
-  CREATEDAT = 'createdAt',
-  /** column name */
-  ID = 'id',
-  /** column name */
-  PRODUCTID = 'productId',
-  /** column name */
-  USERID = 'userId'
-}
-
-/** input type for updating data in table "watchlist_items" */
-export type Watchlist_Items_Set_Input = {
-  createdAt?: Maybe<Scalars['timestamptz']>;
-  id?: Maybe<Scalars['String']>;
-  productId?: Maybe<Scalars['String']>;
-  userId?: Maybe<Scalars['String']>;
-};
-
-/** update columns of table "watchlist_items" */
-export enum Watchlist_Items_Update_Column {
-  /** column name */
-  CREATEDAT = 'createdAt',
-  /** column name */
-  ID = 'id',
-  /** column name */
-  PRODUCTID = 'productId',
-  /** column name */
-  USERID = 'userId'
 }
 
 export type ID = Scalars["ID"]

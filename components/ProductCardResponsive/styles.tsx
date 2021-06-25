@@ -2,8 +2,6 @@ import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/s
 import { Gradient } from "@material-ui/icons";
 import { Colors, BorderRadius, BorderRadius2x, BoxShadows } from "layout/AppTheme";
 
-export const CARD_MAX_WIDTH_XL = 556;
-// Replace hash with html-encoded %23
 export const DESCRIPTION_HEIGHT = 112;
 // height: "136px", // ensure all cards descriptions are same height
 

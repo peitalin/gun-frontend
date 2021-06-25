@@ -79,4 +79,8 @@ export const reduxModalsActions = {
     payload: payload
   }),
 
+  TOGGLE_COLLECTIONS_MODAL: (payload?: boolean): ActionType<boolean> => ({
+    type: "TOGGLE_COLLECTIONS_MODAL",
+    payload: payload
+  }),
 }

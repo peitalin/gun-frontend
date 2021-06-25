@@ -400,7 +400,12 @@ export const BoxShadows = {
     boxShadow: '0 6px 8px 4px rgba(0,0,0,0.1),0 4px 8px rgba(0,0,0,0.2),0 0 0 1px rgba(0,0,0,0.02)',
   },
   shadowInset: {
-    boxShadow: 'inset 3.53813px 3.53813px 7.07626px rgba(70,77,85,.4), inset -2.35875px -2.35875px 7.07626px #15171a',
+    // boxShadow: 'inset 3.53813px 3.53813px 7.07626px rgba(70,77,85,.4), inset -2.35875px -2.35875px 7.07626px #15171a',
+    boxShadow: 'inset 0 0 6px rgba(25,25,25,0.9)',
+  },
+  shadowInsetLight: {
+    // boxShadow: 'inset 3.53813px 3.53813px 7.07626px rgba(70,77,85,.4), inset -2.35875px -2.35875px 7.07626px #15171a',
+    boxShadow: 'inset 0 0 6px rgba(25,25,25,0.4)',
   },
   shadowWhite: {
     boxShadow: '0 2px 4px rgba(250,250,250,0.15), 0 4px 8px rgba(250,250,250,0.1), 0 0 0 2px rgba(250,250,250,0.05)',
@@ -656,6 +661,16 @@ export const createAppTheme = (darkModeStr: "dark"|"light"): ThemeOptions =>  {
               : `1px solid ${Colors.uniswapLightestGrey}`,
             // borderBottomColor: `${Colors.red} !important`,
           },
+        },
+      },
+      MuiOutlinedInput: {
+        input: {
+          padding: '1rem',
+        },
+        root: {
+          borderColor: darkMode
+            ? `${Colors.uniswapMediumGrey}`
+            : `${Colors.slateGreyLightBlack}`,
         },
       },
       MuiInputLabel: {

@@ -6,6 +6,7 @@ import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/s
 import NavBarMain from "./NavBarMain";
 import Footer from "./Footer";
 import GetUser from "./GetUser";
+import GlobalModals from "./GlobalModals";
 // Router
 import { useRouter } from "next/router";
 import PageContainer from "layout/PageContainer";
@@ -37,6 +38,7 @@ const Layout: React.FC<ReactProps> = (props) => {
     <>
       <Header showChatwoot={showChatWoot} />
       <NavBarMain/>
+      <GlobalModals/>
       <GetUser/>
       <PageContainer needsNavbarPadding={!noNavbarPadding}>
         {props.children}

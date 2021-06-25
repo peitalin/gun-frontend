@@ -51,6 +51,7 @@ const TextInputUnderline = (props: ReactProps) => {
           }}
           disabled={disabled}
           autoComplete={props.autoComplete}
+          autoFocus={props.autoFocus}
           inputRef={ref}
           error={!!props.errorMessage}
           style={{
@@ -122,9 +123,17 @@ const TextInputUnderline = (props: ReactProps) => {
               errorInputColor === "grey" ? classes.errorInputUntouched : null,
             ),
           }}
+          InputProps={{
+            classes: {
+              root: classes.cssOutlinedInput,
+              // focused: classes.cssFocused,
+              // notchedOutline: classes.notchedOutline,
+            },
+          }}
           disabled={disabled}
           inputRef={ref}
           autoComplete={props.autoComplete}
+          autoFocus={props.autoFocus}
           error={!!props.errorMessage}
           style={{
             borderRadius: BorderRadius,
@@ -188,6 +197,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   disableInitialValidationMessage?: boolean;
   validationErrorMsgStyle?: any;
   autoComplete?: any;
+  autoFocus?: any;
   [key: string]: any;
 }
 

@@ -7,7 +7,7 @@ import { Colors, BoxShadows, BorderRadius } from "layout/AppTheme";
 import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
 import Link from "next/link";
-import WatchlistIcon from "components/WatchlistIcon";
+import CollectionsIcon from "components/CollectionsIcon";
 // Typings
 import { Categories, Product, Product_Preview_Items, SoldOutStatus } from "typings/gqlTypes";
 import { genSrcSet, genImgBreakpoints } from "utils/images";
@@ -21,8 +21,6 @@ import DescriptionLoading from "./DescriptionLoading";
 import MainPreviewImage from "./MainPreviewImage";
 import LinkLoading from "components/LinkLoading";
 import {
-  CARD_MAX_WIDTH_XL,
-  DESCRIPTION_HEIGHT,
   styles,
 } from "./styles";
 // img responsive sizing
@@ -48,7 +46,7 @@ const ProductCardRC = (props: ReactProps) => {
     fit = false,
     cardsPerRow = 1,
     maxWidthOfRow = 1160,
-    showWatchlistButton = true,
+    showCollectionsButton = true,
     isMobile = false,
     hideActionType = false,
     disableLoadingAnimation = false,
@@ -139,9 +137,9 @@ const ProductCardRC = (props: ReactProps) => {
         style={props.styleInner}
       >
         {
-          showWatchlistButton &&
+          showCollectionsButton &&
           productId &&
-          <WatchlistIcon
+          <CollectionsIcon
             productId={productId}
             variantId={productVariantId}
             refetch={refetch}
@@ -169,7 +167,6 @@ const ProductCardRC = (props: ReactProps) => {
             ? <DescriptionLoading
                 style={cardWidthStyle}
                 disableLoadingAnimation={disableLoadingAnimation}
-                // height={DESCRIPTION_HEIGHT}
               />
             : <div className={classes.descriptionContainer}
                 style={cardWidthStyle}
@@ -241,7 +238,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   fit?: boolean; // object-fit the image
   cardsPerRow: number;
   maxWidthOfRow: number;
-  showWatchlistButton?: boolean;
+  showCollectionsButton?: boolean;
   isMobile?: boolean;
   refetch?(): void;
   // carousels

@@ -29,13 +29,15 @@ const Loading: React.FC<ReactProps> = (props) => {
     if (props.fixed) {
       return props.classes.rootFixed
     } else {
-      return props.classes.rootFullScreen
+      return props.classes.rootInline
     }
   }
 
   const {
     classes,
     delay,
+    width = 40,
+    height = 40,
     loading = true,
   } = props;
   const color = props.color || Colors.gradientUniswapBlue1;
@@ -45,10 +47,10 @@ const Loading: React.FC<ReactProps> = (props) => {
   } else {
     return (
       <div className={selectLoaderStyle(props)}>
-        <div className={clsx(
-          classes.loadingHeight,
-          classes.loadingWidth
-        )}>
+        <div style={{
+          height: height,
+          width: width,
+        }}>
           {
             delay
             ? <Fade
@@ -56,9 +58,17 @@ const Loading: React.FC<ReactProps> = (props) => {
                 style={{ transitionDelay: loading ? delay : '0ms' }}
                 unmountOnExit
               >
-                <CircularProgress style={{ color: color }}/>
+                <CircularProgress style={{
+                  color: color,
+                  height: height,
+                  width: width,
+                }}/>
               </Fade>
-            : <CircularProgress style={{ color: color }}/>
+            : <CircularProgress style={{
+                color: color,
+                height: height,
+                width: width,
+              }}/>
           }
         </div>
       </div>
@@ -73,6 +83,8 @@ interface ReactProps extends WithStyles<typeof styles> {
   loading?: boolean;
   delay?: string;
   color?: string;
+  height?: any
+  width?: any
 }
 
 const styles = (theme: Theme) => createStyles({
@@ -89,7 +101,7 @@ const styles = (theme: Theme) => createStyles({
   },
   rootInline: {
     width: '100%',
-    padding: '1rem',
+    height: '100%',
     justifyContent: 'center',
     display: 'flex',
     flexDirection: 'column',
@@ -105,12 +117,6 @@ const styles = (theme: Theme) => createStyles({
     position: 'absolute',
     right: `${theme.spacing(9)}px`,
     bottom: `calc(${theme.spacing(8)}px)`,
-  },
-  loadingHeight: {
-    height: 40,
-  },
-  loadingWidth: {
-    width: 40,
   },
   placeholder: {
     position: 'fixed',

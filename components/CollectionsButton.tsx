@@ -6,12 +6,12 @@ import { Colors, isThemeDark } from "layout/AppTheme";
 // Graphql
 import { UserPrivate } from "typings/gqlTypes";
 import { useMutation } from "@apollo/client";
-import { ADD_PRODUCT_TO_WATCHLIST, REMOVE_PRODUCT_FROM_WATCHLIST } from "queries/watchlist-mutations";
+import { ADD_PRODUCT_TO_COLLECTION, REMOVE_PRODUCT_FROM_COLLECTION } from "queries/collections-mutations";
 // material-ui
 import Button from "@material-ui/core/Button";
 // redux
 import { useDispatch, useSelector } from "react-redux";
-import { WatchlistItemId } from "reduxStore/watchlist-reducer";
+import { CollectionItemId } from "reduxStore/collections-reducer";
 import { Actions } from "reduxStore/actions";
 import { GrandReduxState } from "reduxStore/grand-reducer";
 // snackbar
@@ -21,15 +21,14 @@ import { useSnackbar } from "notistack";
 
 
 
-const WatchlistButtonBig: React.FC<ReactProps> = (props) => {
+const CollectionButtonBig: React.FC<ReactProps> = (props) => {
 
   const dispatch = useDispatch();
   const snackbar = useSnackbar()
-  const [showSnackbar, setShowSnackbar] = React.useState(false)
 
-  const { watchlistItemIds, user } = useSelector<GrandReduxState, ReduxState>(
+  const { collectionItemIds, user } = useSelector<GrandReduxState, ReduxState>(
     s => ({
-      watchlistItemIds: s.reduxWatchlist.watchlistIds,
+      collectionItemIds: s.reduxCollections.collectionIds,
       user: s.reduxLogin.user
     })
   );
@@ -38,21 +37,20 @@ const WatchlistButtonBig: React.FC<ReactProps> = (props) => {
     classes,
   } = props;
 
-  const watchlistItemId = {
+  const collectionItemId = {
     productId: props.productId,
     variantId: props.variantId
   };
 
-  const isInWatchlist = (): boolean => {
-    return !!watchlistItemIds.find(w => {
-      return w.productId == watchlistItemId.productId
-          && w.variantId === watchlistItemId.variantId
+  const isInCollection = (): boolean => {
+    return !!collectionItemIds.find(w => {
+      return w.productId == collectionItemId.productId
     })
   }
 
-  const [addProductToWatchlist, response1] =
-  useMutation<MutationData1, MutationVar1>(ADD_PRODUCT_TO_WATCHLIST, {
-    variables: { ...watchlistItemId },
+  const [addProductToCollection, response1] =
+  useMutation<MData1, MVar1>(ADD_PRODUCT_TO_COLLECTION, {
+    variables: { ...collectionItemId },
     onCompleted: (data) => {
       if (props.refetch) {
         props.refetch()
@@ -61,9 +59,9 @@ const WatchlistButtonBig: React.FC<ReactProps> = (props) => {
     onError: () => {},
   })
 
-  const [removeProductFromWatchlist, response2] =
-  useMutation<MutationData1, MutationVar1>(REMOVE_PRODUCT_FROM_WATCHLIST, {
-    variables: { ...watchlistItemId },
+  const [removeProductFromCollection, response2] =
+  useMutation<MData1, MVar1>(REMOVE_PRODUCT_FROM_COLLECTION, {
+    variables: { ...collectionItemId },
     onCompleted: (data) => {
       if (props.refetch) {
         props.refetch()
@@ -72,7 +70,7 @@ const WatchlistButtonBig: React.FC<ReactProps> = (props) => {
     onError: () => {},
   })
 
-  const added = isInWatchlist()
+  const added = isInCollection()
   if (added) {
     return (
       <Button
@@ -89,12 +87,12 @@ const WatchlistButtonBig: React.FC<ReactProps> = (props) => {
               { variant: "info"}
             )
           } else {
-            dispatch(Actions.reduxWatchlist.REMOVE_WATCHLIST_ITEM(watchlistItemId))
-            removeProductFromWatchlist()
+            dispatch(Actions.reduxCollections.REMOVE_COLLECTION_ITEM(collectionItemId))
+            removeProductFromCollection()
           }
         }}
       >
-        Remove from Watchlist
+        Remove from Collection
       </Button>
     )
   } else {
@@ -113,12 +111,12 @@ const WatchlistButtonBig: React.FC<ReactProps> = (props) => {
               { variant: "info"}
             )
           } else {
-            dispatch(Actions.reduxWatchlist.ADD_WATCHLIST_ITEM(watchlistItemId))
-            addProductToWatchlist()
+            dispatch(Actions.reduxCollections.ADD_COLLECTION_ITEM(collectionItemId))
+            addProductToCollection()
           }
         }}
       >
-        Add to Watchlist
+        Add to Collection
       </Button>
     )
   }
@@ -129,17 +127,17 @@ interface ReactProps extends WithStyles<typeof styles> {
   style?: any;
   productId: string;
   variantId: string;
-  refetch?(): void; // apollo refetch watchlist
+  refetch?(): void; // apollo refetch collection
 }
 interface ReduxState {
-  watchlistItemIds: WatchlistItemId[];
+  collectionItemIds: CollectionItemId[];
   user: UserPrivate;
 }
 
 
-interface MutationData1 {
+interface MData1 {
 }
-interface MutationVar1 {
+interface MVar1 {
 }
 
 
@@ -185,4 +183,4 @@ const styles = (theme: Theme) => createStyles({
 });
 
 
-export default withStyles(styles)( WatchlistButtonBig );
+export default withStyles(styles)( CollectionButtonBig );

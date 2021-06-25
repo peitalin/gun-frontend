@@ -797,3 +797,17 @@ export const SavedSearchFragment = gql`
     createdAt
   }
 `;
+
+
+export const CollectionItemsFragment = gql`
+  fragment CollectionItemsFragment on CollectionItem {
+    id
+    createdAt
+    userId
+    productId
+    product {
+      ...ProductFragment
+    }
+  }
+  ${ProductFragment}
+`;

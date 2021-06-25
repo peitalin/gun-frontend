@@ -5,7 +5,7 @@ import {
   createStyles, makeStyles, createMuiTheme,
   Theme,
 } from "@material-ui/core/styles";
-import { Colors, BorderRadius, fontFam, Gradients } from "layout/AppTheme";
+import { Colors, BorderRadius, fontFam, Gradients, isThemeDark } from "layout/AppTheme";
 
 const textColor = Colors.uniswapLightestGrey
 
@@ -358,7 +358,9 @@ export const styles = (theme: Theme) => createStyles({
         borderBottomColor: Colors.blue,
       }
     }
-  }
+  },
+  cssOutlinedInput: {
+  },
 })
 
 
