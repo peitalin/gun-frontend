@@ -1,5 +1,5 @@
 import gql from "graphql-tag";
-import { ProductFragment } from "./fragments"
+import { ProductFragment, CollectionFragment } from "./fragments"
 
 export const CREATE_COLLECTION = gql`
   mutation createCollection(
@@ -10,29 +10,10 @@ export const CREATE_COLLECTION = gql`
       name: $name
       privateCollection: $privateCollection
     ) {
-      id
-      createdAt
-      updatedAt
-      name
-      private
-      userId
-      itemsConnection {
-        totalCount
-        edges {
-          node {
-            id
-            createdAt
-            userId
-            productId
-            product {
-              ...ProductFragment
-            }
-          }
-        }
-      }
+      ...CollectionFragment
     }
   }
-  ${ProductFragment}
+  ${CollectionFragment}
 `;
 
 
@@ -43,11 +24,30 @@ export const DELETE_COLLECTION = gql`
     deleteCollection(
       collectionId: $collectionId
     ) {
-      success
-      status
+      ...CollectionFragment
     }
   }
+  ${CollectionFragment}
 `;
+
+
+export const EDIT_COLLECTION = gql`
+  mutation editCollection(
+    $collectionId: String!
+    $name: String
+    $privateCollection: Boolean
+  ) {
+    editCollection(
+      collectionId: $collectionId
+      name: $name
+      privateCollection: $privateCollection
+    ) {
+      ...CollectionFragment
+    }
+  }
+  ${CollectionFragment}
+`;
+
 
 
 export const ADD_PRODUCT_TO_COLLECTION = gql`

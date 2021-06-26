@@ -5,15 +5,9 @@ import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/s
 import { BorderRadius4x, BoxShadows, Colors, isThemeDark } from "layout/AppTheme";
 // Material UI
 import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import ClearIcon from "@material-ui/icons/Clear";
-import AddIcon from '@material-ui/icons/Add';
 import Dialog from "@material-ui/core/Dialog";
-import MenuItem from '@material-ui/core/MenuItem';
-import TextInputUnderline from "components/Fields/TextInputUnderline";
-import Switch from '@material-ui/core/Switch';
-import Loading from "components/Loading";
 import Checkbox, { CheckboxProps } from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 // icons
@@ -46,6 +40,8 @@ import { GrandReduxState } from "reduxStore/grand-reducer";
 import { Actions } from "reduxStore/actions";
 // snackbar
 import { useSnackbar } from "notistack";
+import CreateCollectionMenuExpander from "./CreateCollectionMenuExpander";
+import LoadingBar from "components/LoadingBar";
 
 
 const CollectionModal: React.FC<ReactProps> = (props) => {
@@ -203,42 +199,6 @@ const CollectionModal: React.FC<ReactProps> = (props) => {
 
 
   const [
-    createCollection,
-    createCollectionResponse,
-  ] = useMutation<MData3, MVar3>(
-    CREATE_COLLECTION, {
-    variables: {
-      name: undefined,
-      privateCollection: undefined,
-    },
-    onCompleted: (data) => {},
-    onError: () => {},
-    update: (cache, { data: { createCollection }}) => {
-
-      const cacheData = cache.readQuery<QData1, any>({
-        query: GET_COLLECTIONS_BY_USER_ID,
-        variables: { userId: user?.id },
-      });
-      // console.log("CACHE DATA: ", cacheData)
-      // only update apollo cache if cache entry exists
-      if (cacheData) {
-        let existingCollections = cacheData?.getCollectionsByUserId
-        cache.writeQuery({
-          query: GET_COLLECTIONS_BY_USER_ID,
-          variables: { userId: user?.id },
-          data: {
-            getCollectionsByUserId: [
-              ...existingCollections,
-              createCollection,
-            ],
-          },
-        });
-      }
-    },
-  })
-
-
-  const [
     getCollections,
     { data, loading, error }
   ] = useLazyQuery<QData1, QVar1>(
@@ -260,6 +220,7 @@ const CollectionModal: React.FC<ReactProps> = (props) => {
   let collections = data?.getCollectionsByUserId;
   console.log("collections", collections)
   // console.log("selectedProductId", selectedProductId)
+  let loadingMutation = response1?.loading || response2?.loading
 
   return (
     <Dialog
@@ -286,6 +247,14 @@ const CollectionModal: React.FC<ReactProps> = (props) => {
           <IconButton onClick={() => closeModal()}>
             <ClearIcon className={classes.closeIcon}/>
           </IconButton>
+          {
+            loadingMutation &&
+            <LoadingBar
+              absoluteBottom
+              height={'4px'}
+              width={'100%'}
+            />
+          }
         </div>
 
         {
@@ -308,28 +277,28 @@ const CollectionModal: React.FC<ReactProps> = (props) => {
                         <FormControlLabel
                           className={classes.confirmCheckbox}
                           control={
-                            <Checkbox
-                              checked={productInCollection}
-                              onChange={(e) => {
-                                if (!productInCollection) {
-                                  addProductToCollection({
-                                    variables: {
-                                      userId: user?.id,
-                                      productId: selectedProductId,
-                                      collectionId: collection?.id,
-                                    }
-                                  })
-                                } else {
-                                  removeProductFromCollection({
-                                    variables: {
-                                      collectionId: collection?.id,
-                                      collectionItemId: collectionItem?.id,
-                                    }
-                                  })
-                                }
-                              }}
-                              name="addProductToCollection"
-                            />
+                              <Checkbox
+                                checked={productInCollection}
+                                onChange={(e) => {
+                                  if (!productInCollection) {
+                                    addProductToCollection({
+                                      variables: {
+                                        userId: user?.id,
+                                        productId: selectedProductId,
+                                        collectionId: collection?.id,
+                                      }
+                                    })
+                                  } else {
+                                    removeProductFromCollection({
+                                      variables: {
+                                        collectionId: collection?.id,
+                                        collectionItemId: collectionItem?.id,
+                                      }
+                                    })
+                                  }
+                                }}
+                                name="addProductToCollection"
+                              />
                           }
                           label={`${collection.name}`}
                         />
@@ -351,106 +320,7 @@ const CollectionModal: React.FC<ReactProps> = (props) => {
             </div>
         }
 
-        <div className={clsx(
-          expand ? classes.fieldRowHeightTall : classes.fieldRowHeightShort,
-          expand && classes.expandColor,
-        )}>
-          <div className={clsx(
-            classes.fieldRow,
-            expand ? classes.fieldRowShow : classes.fieldRowHidden,
-          )}>
-            <TextInputUnderline
-              inputRef={input => input && input.focus()}
-              type="new-password"
-              label="Enter Collection Name"
-              placeholder="Collection name"
-              onChange={(e) => setName(e.target.value)}
-              value={name}
-              className={classes.textField}
-              inputProps={{
-                className: classes.textInput
-              }}
-            />
-
-            <div className={classes.privateCollection}>
-              <div className={classes.privateCollectionText}>
-                {
-                  privateCollection
-                  ? "Private Collection"
-                  : "Public Collection"
-                }
-              </div>
-              <Switch
-                checked={privateCollection}
-                onChange={(e) => setPrivateCollection(e.target.checked)}
-              />
-          </div>
-          </div>
-        </div>
-
-        {
-          expand
-          ? <div className={classes.createCollectionButtonBox}>
-              <MenuItem
-                className={clsx(
-                  classes.expandCreateCollection,
-                )}
-                onClick={() => {
-                  if (!name) {
-                    snackbar.enqueueSnackbar(
-                      "Must provide a name",
-                      { variant: "info" }
-                    )
-                  } else {
-                    createCollection({
-                      variables: {
-                        name: name,
-                        privateCollection: privateCollection
-                      }
-                    })
-                    setExpand(s => !s)
-                    setName("")
-                    setPrivateCollection(false)
-                  }
-                }}
-              >
-                <Typography className={classes.createCollectionButtonText}>
-                  {"Save Collection"}
-                </Typography>
-              </MenuItem>
-              <MenuItem
-                className={clsx(
-                  classes.expandCreateCollection,
-                )}
-                onClick={() => setExpand(s => !s)}
-              >
-                <Typography className={classes.createCollectionButtonText}>
-                  { "Cancel" }
-                </Typography>
-              </MenuItem>
-            </div>
-          : <div className={classes.createCollectionButtonBox}>
-              <MenuItem
-                className={clsx(
-                  classes.expandCreateCollection,
-                )}
-                onClick={() => {
-                  setExpand(s => !s)
-                }}
-              >
-                {
-                  createCollectionResponse?.loading
-                  ? <Loading height={20} width={20} />
-                  : <>
-                      <AddIcon className={classes.createCollectionIcon}/>
-                      <Typography className={classes.createCollectionButtonText}>
-                        { "Create New Collection" }
-                      </Typography>
-                    </>
-                }
-              </MenuItem>
-            </div>
-        }
+        <CreateCollectionMenuExpander/>
 
       </div>
     </Dialog>
@@ -526,6 +396,7 @@ export const styles = (theme: Theme) => createStyles({
     overflow: 'hidden',
   },
   titleRow: {
+    position: 'relative',
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -533,73 +404,22 @@ export const styles = (theme: Theme) => createStyles({
     padding: '1rem 1rem 1rem 2rem',
   },
   collectionsContainer: {
+    position: "relative",
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center',
     padding: '1rem 2rem 1rem 2rem',
     backgroundColor: isThemeDark(theme)
       ? Colors.uniswapMediumNavy
       : Colors.slateGrey,
     width: 'calc(100% + 16px)',
     marginLeft: '-8px',
+    maxHeight: 240,
+    alignItems: "flex-start",
+    overflow: "scroll",
     boxShadow: isThemeDark(theme)
       ? BoxShadows.shadowInset.boxShadow
       : BoxShadows.shadowInsetLight.boxShadow,
-  },
-  fieldRow: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    // boxShadow: isThemeDark(theme)
-    //   ? BoxShadows.shadowInset.boxShadow
-    //   : BoxShadows.shadowInsetLight.boxShadow,
-    backgroundColor: isThemeDark(theme)
-      ? Colors.uniswapDarkNavy
-      : Colors.cream,
-    width: 'calc(100% + 16px)',
-    marginLeft: '-8px',
-    padding: '2rem 2rem 1rem 2rem',
-    transition: theme.transitions.create(['height'], {
-      easing: theme.transitions.easing.sharp,
-      duration: "200ms",
-    }),
-  },
-  fieldRowHeightTall: {
-    transition: theme.transitions.create(['height'], {
-      easing: theme.transitions.easing.easeInOut,
-      duration: "150ms",
-    }),
-    height: 150,
-  },
-  fieldRowHeightShort: {
-    transition: theme.transitions.create(['height'], {
-      easing: theme.transitions.easing.easeInOut,
-      duration: "150ms",
-    }),
-    height: 0,
-  },
-  fieldRowShow: {
-    height: '100%',
-    transition: theme.transitions.create(['opacity'], {
-      easing: theme.transitions.easing.sharp,
-      duration: "150ms",
-      delay: "50ms",
-    }),
-    opacity: 1,
-  },
-  fieldRowHidden: {
-    height: '100%',
-    transition: theme.transitions.create(['opacity'], {
-      easing: theme.transitions.easing.sharp,
-      duration: "0ms",
-      delay: "0ms",
-    }),
-    display: "none", // must be display: none or
-    // it'll be transparent but shift the modal paper
-    // and mess with overflow when autofocus kicks in
-    opacity: 0,
   },
   closeIcon: {
     fill: isThemeDark(theme)
@@ -619,62 +439,11 @@ export const styles = (theme: Theme) => createStyles({
     flexDirection: 'row',
     width: '100%',
   },
-  expandCreateCollection: {
-    display: "flex",
-    justifyContent: "center",
-    padding: '1rem 2rem',
-    flexBasis: "50%",
-    flexGrow: 1,
-    fontWeight: 500,
-    "&:hover": {
-      "& > svg": {
-        fill: isThemeDark(theme)
-          ? Colors.purple
-          : Colors.ultramarineBlueLight,
-      },
-      "& > p": {
-        color: isThemeDark(theme)
-          ? Colors.purple
-          : Colors.ultramarineBlueLight,
-      },
-    },
-  },
-  createCollectionIcon: {
-    marginRight: "0.25rem",
-    color: isThemeDark(theme)
-      ? Colors.uniswapLightGrey
-      : Colors.slateGreyBlack,
-  },
-  createCollectionButtonBox: {
-    display: "flex",
-    justifyContent: "center",
-  },
-  createCollectionButtonText: {
-    fontWeight: 500,
-  },
-  expandColor: {
-    backgroundColor: isThemeDark(theme)
-      ? Colors.uniswapMediumNavy
-      : Colors.slateGrey,
-  },
-  textField: {
-    width: "100%",
-    "&:focus-within": {
-      // color: '#24A4FF',
-      color: Colors.charcoal,
-    },
-  },
-  textInput: {
-  },
   privateCollection: {
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
     marginTop: "0.5rem",
-  },
-  privateCollectionText: {
-    marginRight: '1rem',
-    minWidth: 150,
   },
   privateIcon: {
     fill: isThemeDark(theme)

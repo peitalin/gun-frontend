@@ -1,6 +1,6 @@
 import React from 'react';
 // import ContactUsModal from "components/ContactUsModal";
-import CollectionsModal from "components/CollectionsModal";
+import CollectionsModal from "components/Collections/CollectionsModal";
 // import MySettingsModal from "layout/MySettingsModal";
 
 

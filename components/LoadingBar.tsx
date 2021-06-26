@@ -255,6 +255,7 @@ const styles = (theme: Theme) => createStyles({
   rootAbsoluteBottom: {
     position: 'absolute',
     bottom: 0,
+    left: 0,
     width: '100%',
   },
   loadingHeight: {

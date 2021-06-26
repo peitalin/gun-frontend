@@ -811,3 +811,23 @@ export const CollectionItemsFragment = gql`
   }
   ${ProductFragment}
 `;
+
+export const CollectionFragment = gql`
+  fragment CollectionFragment on Collection {
+    id
+    createdAt
+    updatedAt
+    name
+    private
+    userId
+    itemsConnection {
+      totalCount
+      edges {
+        node {
+          ...CollectionItemsFragment
+        }
+      }
+    }
+  }
+  ${CollectionItemsFragment}
+`;

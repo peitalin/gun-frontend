@@ -942,7 +942,8 @@ export type Mutation = {
    */
   unfollowStore: FollowingStoresConnection;
   createCollection: Collection;
-  deleteCollection: BlankMutationResponse;
+  deleteCollection: Collection;
+  editCollection: Collection;
   /**
    * Add a product to the collection.
    * AccessRule – LOGGED_IN
@@ -2797,6 +2798,13 @@ export type MutationCreateCollectionArgs = {
 
 export type MutationDeleteCollectionArgs = {
   collectionId: Scalars['String'];
+};
+
+
+export type MutationEditCollectionArgs = {
+  collectionId: Scalars['String'];
+  name?: Maybe<Scalars['String']>;
+  privateCollection?: Maybe<Scalars['Boolean']>;
 };
 
 

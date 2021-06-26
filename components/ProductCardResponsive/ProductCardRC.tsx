@@ -7,7 +7,7 @@ import { Colors, BoxShadows, BorderRadius } from "layout/AppTheme";
 import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
 import Link from "next/link";
-import CollectionsIcon from "components/CollectionsIcon";
+import CollectionsIcon from "components/Collections/CollectionsIcon";
 // Typings
 import { Categories, Product, Product_Preview_Items, SoldOutStatus } from "typings/gqlTypes";
 import { genSrcSet, genImgBreakpoints } from "utils/images";
