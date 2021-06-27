@@ -3,10 +3,9 @@ import React from "react";
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 import { Colors } from "layout/AppTheme";
 // Typings
-import { Product_Preview_Items, Product } from "typings/gqlTypes";
-import { SelectedVariantProps } from "pageComponents/P/ProductId";
+import { ProductPreviewItem, Product } from "typings/gqlTypes";
 // Components
-import CollectionsIcon from "components/CollectionsIcon";
+import CollectionsIcon from "components/Collections/CollectionsIcon";
 // import AdminEditProductIcon from "components/AdminEditProductIcon";
 // Media Query
 import { useTheme } from "@material-ui/core/styles";
@@ -22,22 +21,18 @@ const FeaturedPreviewButtons: React.FC<ReactProps> = (props) => {
     featuredPreviewItem,
   } = props;
 
-  const theme = useTheme();
-
-  const chosenVariant = props?.selectedOption?.value;
-
   if (featuredPreviewItem?.image?.original?.id) {
     return (
       <div>
-        {/* <CollectionsIcon
+        <CollectionsIcon
           productId={product?.id}
           variantId={product?.featuredVariant?.variantId}
           // refetch={watchListConnectionResponse.refetch}
           style={{
-            top: '0.5rem',
+            top: '.75rem',
             right: '1.75rem',
           }}
-        /> */}
+        />
         {/* <AdminEditProductIcon
           product={product}
           style={{
@@ -57,9 +52,8 @@ const FeaturedPreviewButtons: React.FC<ReactProps> = (props) => {
 
 
 interface ReactProps extends WithStyles<typeof styles> {
-  featuredPreviewItem: Product_Preview_Items
+  featuredPreviewItem: ProductPreviewItem
   product: Product;
-  selectedOption: SelectedVariantProps;
 }
 
 const styles = (theme: Theme) => createStyles({

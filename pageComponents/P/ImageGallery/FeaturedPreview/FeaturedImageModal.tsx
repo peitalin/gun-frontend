@@ -13,8 +13,8 @@ import AspectRatioConstraint from "components/AspectRatioConstraint";
 import PreviewImageFeatured from "./PreviewImageFeatured";
 import FeaturedVideo from "./FeaturedVideo";
 // modal components
-import ImageInModal from "./InModal/ImageInModal";
-import VideoInModal from "./InModal/VideoInModal";
+// import ImageInModal from "./InModal/ImageInModal";
+// import VideoInModal from "./InModal/VideoInModal";
 import FeaturedImagePlaceholder from "./FeaturedImagePlaceholder";
 import SwipeableModalPreviews from "./InModal/SwipeableModalPreviews";
 // media query
@@ -24,7 +24,6 @@ import { lgUpMediaQuery } from "../../common";
 import { useSelector } from "react-redux";
 import { GrandReduxState } from "reduxStore/grand-reducer";
 
-// import SwipeableViews from 'react-swipeable-views';
 import SwipeableViews from "components/Swiper/SwipeableViews";
 import { bindKeyboard } from 'react-swipeable-views-utils';
 const BindKeyboardSwipeableViews = bindKeyboard(SwipeableViews);
@@ -37,7 +36,6 @@ const FeaturedImageModal = (props: ReactProps) => {
   const theme = useTheme();
   const xsDown = useMediaQuery(theme.breakpoints.down('xs'));
   const mdUp = useMediaQuery(theme.breakpoints.up("md"))
-  const lgUp = useMediaQuery(lgUpMediaQuery);
 
   const {
     classes,
@@ -49,7 +47,6 @@ const FeaturedImageModal = (props: ReactProps) => {
   } = props;
 
   const imageId = previewItem?.image?.original?.id
-  const imageUrl = previewItem?.image?.original?.url
 
   const isDarkMode = isThemeDark(theme)
 
@@ -58,7 +55,6 @@ const FeaturedImageModal = (props: ReactProps) => {
       p?.image?.original?.id !== undefined ||
       p?.youTubeEmbedLink !== undefined
     )
-  const numPreviews = previewItems.length
 
   return (
     <AspectRatioConstraint>

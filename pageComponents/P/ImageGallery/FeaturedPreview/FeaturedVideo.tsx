@@ -18,8 +18,6 @@ import YouTube from 'react-youtube';
 
 const FeaturedVideo = (props: ReactProps) => {
 
-  const [videoLoaded, setVideoLoaded] = React.useState(false)
-
   const {
     classes,
     previewItem,
@@ -28,8 +26,6 @@ const FeaturedVideo = (props: ReactProps) => {
   let videoId = extractYoutubeVimeoId(previewItem?.youTubeEmbedLink)
 
   const theme = useTheme();
-  const xsDown = useMediaQuery(theme.breakpoints.down('xs'));
-  const lgDown = useMediaQuery(theme.breakpoints.down("lg"));
 
   return (
     <AspectRatioConstraint>

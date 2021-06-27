@@ -1,10 +1,7 @@
 import React from "react";
 import clsx from "clsx";
-import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
+import { withStyles, WithStyles, Theme } from "@material-ui/core/styles";
 import { styles } from "./styles";
-import { Colors } from "layout/AppTheme";
-// Typings
-import { Product_Preview_Items } from "typings/gqlTypes";
 // Material UI
 import AspectRatioConstraint from "components/AspectRatioConstraint";
 import PreviewImageFeatured from "./PreviewImageFeatured";

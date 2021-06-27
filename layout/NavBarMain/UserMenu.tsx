@@ -21,13 +21,14 @@ import StorefrontIcon from "@material-ui/icons/Storefront";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import DownloadIcon from "@material-ui/icons/SaveAlt";
 import MonetizationOnIcon from "@material-ui/icons/MonetizationOn";
-import CardGiftcard from "@material-ui/icons/CardGiftcard";
 import SearchIcon from "@material-ui/icons/Search";
 import HelpOutlineIcon from "@material-ui/icons/HelpOutline";
 import PowerSettingsNewIcon from '@material-ui/icons/PowerSettingsNew';
 import SettingsIcon from '@material-ui/icons/Settings';
 import HowToVoteIcon from '@material-ui/icons/HowToVote';
 import Brightness4Icon from '@material-ui/icons/Brightness4';
+import CollectionsIcon from '@material-ui/icons/Collections';
+
 import ToggleDarkMode from "layout/NavBarMain/ToggleDarkMode";
 
 // Router
@@ -182,30 +183,30 @@ export const UserMenu: React.FC<ReactProps> = (props) => {
           <Link href="/saved-searches">
             <a className={classes.menuLink}>
               <SearchIcon className={classes.menuIcon}/>
-              <span className={classes.menuText}> Saved Searches </span>
+              <span className={classes.menuText}>Saved Searches </span>
             </a>
           </Link>
         </MenuItem>
+
+        <MenuItem  className={classes.menuItem} onClick={handleCloseMenu}>
+          <Link href="/collections">
+            <a className={classes.menuLink}>
+              <CollectionsIcon className={classes.menuIcon}/>
+              <span className={classes.menuText}>Collections </span>
+            </a>
+          </Link>
+        </MenuItem>
+
+        <Divider/>
 
         <MenuItem className={classes.menuItem} onClick={handleCloseMenu}>
           <Link href="/settings">
             <a className={classes.menuLink}>
               <SettingsIcon className={classes.menuIcon}/>
-              <span className={classes.menuText}> My Settings </span>
+              <span className={classes.menuText}> Settings </span>
             </a>
           </Link>
         </MenuItem>
-        {/* <MenuItem className={classes.menuItem} onClick={() => {
-          handleCloseMenu();
-          goToModal.mySettings()
-        }}>
-          <a className={classes.menuLink}>
-            <PermIdentityIcon className={classes.menuIcon}/>
-            <span className={classes.menuText}> My Settings </span>
-          </a>
-        </MenuItem> */}
-
-        <Divider/>
 
         <MenuItem className={classes.menuItem}>
           <div className={classes.menuLink}>

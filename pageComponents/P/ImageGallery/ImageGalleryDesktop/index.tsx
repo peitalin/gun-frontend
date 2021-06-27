@@ -7,12 +7,12 @@ import { Colors } from "layout/AppTheme";
 // Typings
 import {
   Product,
-  Product_Preview_Items,
+  ProductPreviewItem,
 } from "typings/gqlTypes";
 import { SelectedVariantProps } from "pageComponents/P/ProductId";
 // Components
 import FeaturedPreview from "../FeaturedPreview";
-// import FeaturedPreviewButtonsDesktop from "./FeaturedPreviewButtonsDesktop";
+import FeaturedPreviewButtonsDesktop from "./FeaturedPreviewButtonsDesktop";
 // Media Query
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
@@ -59,6 +59,11 @@ const ImageGalleryDesktop: React.FC<ReactProps> = (props) => {
         setIndex={setIndex}
         isPromoted={props.isPromoted}
         disableModalPopup={props.disableModalPopup}
+      />
+
+      <FeaturedPreviewButtonsDesktop
+        featuredPreviewItem={featuredPreviewItem as any}
+        product={product}
       />
 
       <BottomImageCarouselDesktop

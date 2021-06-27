@@ -53,10 +53,6 @@ const CollectionModal: React.FC<ReactProps> = (props) => {
   const dispatch = useDispatch();
   const snackbar = useSnackbar()
 
-  const [expand, setExpand] = React.useState(false)
-  const [name, setName] = React.useState("")
-  const [privateCollection, setPrivateCollection] = React.useState(false)
-
   const collectionModalOpen = useSelector<GrandReduxState, boolean>(
     state => state.reduxModals.collectionsModalOpen ?? false
   );
@@ -276,6 +272,7 @@ const CollectionModal: React.FC<ReactProps> = (props) => {
                       <div key={collection.id} className={classes.collectionRow}>
                         <FormControlLabel
                           className={classes.confirmCheckbox}
+                          disabled={!selectedProductId}
                           control={
                               <Checkbox
                                 checked={productInCollection}
@@ -352,13 +349,6 @@ interface MData2 {
   removeProductFromCollection: CollectionItemMutationResponse
 }
 
-interface MVar3 {
-  name: string
-  privateCollection: boolean
-}
-interface MData3 {
-  createCollection: Collection
-}
 
 interface QVar1 {
   userId: string

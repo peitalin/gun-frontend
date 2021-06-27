@@ -5,16 +5,9 @@ import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/s
 import { BorderRadius, BorderRadius4x, BoxShadows, Colors, isThemeDark } from "layout/AppTheme";
 // Material UI
 import Typography from "@material-ui/core/Typography";
-// icons
-import PublicIcon from '@material-ui/icons/Public';
-import LockIcon from '@material-ui/icons/Lock';
-import EditIcon from '@material-ui/icons/Edit';
-import IconButton from "@material-ui/core/IconButton";
 
 import CreateCollectionMenu from "./CreateCollectionMenu";
-import ProductRowMedium from "components/ProductRowMedium";
-import TextInputUnderline from "components/Fields/TextInputUnderline";
-import CollectionSection from "./CollectionSection";
+import CollectionItems from "./CollectionItems";
 
 // types
 import { CollectionItemId } from "reduxStore/collections-reducer";
@@ -38,7 +31,6 @@ import AlignCenterLayout from "components/AlignCenterLayout";
 // Redux
 import { useDispatch, useSelector } from "react-redux";
 import { GrandReduxState } from "reduxStore/grand-reducer";
-import { Actions } from "reduxStore/actions";
 // snackbar
 import { useSnackbar } from "notistack";
 
@@ -51,8 +43,6 @@ const CollectionsPage: React.FC<ReactProps> = (props) => {
   } = props;
 
   const snackbar = useSnackbar()
-  const [editMode, setEditMode] = React.useState(false)
-  const [editName, setEditName] = React.useState("")
 
   const {
     selectedProductId,
@@ -63,79 +53,6 @@ const CollectionsPage: React.FC<ReactProps> = (props) => {
       user: s.reduxLogin.user
     })
   );
-
-
-  const [
-    editCollection,
-    editCollectionResponse,
-  ] = useMutation<MData2, MVar2>(
-    EDIT_COLLECTION, {
-    variables: {
-      collectionId: undefined,
-      name: undefined,
-      privateCollection: undefined,
-    },
-    onCompleted: (data) => {},
-    onError: () => {},
-    update: (cache, { data: { editCollection }}) => {
-
-      const cacheData = cache.readQuery<QData1, any>({
-        query: GET_COLLECTIONS_BY_USER_ID,
-        variables: { userId: user?.id },
-      });
-      // console.log("CACHE DATA: ", cacheData)
-      // only update apollo cache if cache entry exists
-      if (cacheData) {
-        let existingCollections = cacheData?.getCollectionsByUserId
-        cache.writeQuery({
-          query: GET_COLLECTIONS_BY_USER_ID,
-          variables: { userId: user?.id },
-          data: {
-            // find and replace edited collection by id
-            getCollectionsByUserId: existingCollections.map(c =>
-              (c.id === editCollection.id)
-                ? editCollection
-                : c
-            )
-          },
-        });
-      }
-    },
-  })
-
-
-  const [
-    deleteCollection,
-    deleteCollectionResponse,
-  ] = useMutation<MData4, MVar4>(
-    DELETE_COLLECTION, {
-    variables: {
-      collectionId: undefined,
-    },
-    onCompleted: (data) => {},
-    onError: () => {},
-    update: (cache, { data: { deleteCollection }}) => {
-
-      const cacheData = cache.readQuery<QData1, any>({
-        query: GET_COLLECTIONS_BY_USER_ID,
-        variables: { userId: user?.id },
-      });
-      // console.log("CACHE DATA: ", cacheData)
-      // only update apollo cache if cache entry exists
-      if (cacheData) {
-        let existingCollections = cacheData?.getCollectionsByUserId
-        cache.writeQuery({
-          query: GET_COLLECTIONS_BY_USER_ID,
-          variables: { userId: user?.id },
-          data: {
-            // find and replace edited collection by id
-            getCollectionsByUserId: existingCollections
-              .filter(c => c.id !== deleteCollection.id)
-          },
-        });
-      }
-    },
-  })
 
   const { data, loading, error } = useQuery<QData1, QVar1>(
     GET_COLLECTIONS_BY_USER_ID, {
@@ -149,7 +66,7 @@ const CollectionsPage: React.FC<ReactProps> = (props) => {
 
 
   let collections = data?.getCollectionsByUserId;
-  console.log("collections", collections)
+  // console.log("collections", collections)
   // console.log("selectedProductId", selectedProductId)
 
   return (
@@ -180,7 +97,7 @@ const CollectionsPage: React.FC<ReactProps> = (props) => {
                   // let collectionItem = collectionItemEdge?.node
 
                   return (
-                    <CollectionSection
+                    <CollectionItems
                       key={collection.id}
                       collection={collection}
                     />
@@ -195,6 +112,7 @@ const CollectionsPage: React.FC<ReactProps> = (props) => {
             </div>
           </div>
       }
+
 
       <div className={classes.flexEnd}>
         <CreateCollectionMenu/>
@@ -216,22 +134,6 @@ interface QVar1 {
 }
 interface QData1 {
   getCollectionsByUserId: Collection[]
-}
-
-interface MVar2 {
-  collectionId: string
-  name?: string
-  privateCollection?: boolean
-}
-interface MData2 {
-  editCollection: Collection
-}
-
-interface MVar4 {
-  collectionId: string
-}
-interface MData4 {
-  deleteCollection: Collection
 }
 
 export const styles = (theme: Theme) => createStyles({

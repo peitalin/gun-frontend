@@ -99,7 +99,7 @@ const PreviewImageFeatured: React.FC<ReactProps> = (props) => {
       >
         {
           urlSrc &&
-          <div className={classes.width100} ref={ref}>
+          <div className={classes.widthHeight100} ref={ref}>
             <CardMedia
               component="img"
               className={
@@ -164,8 +164,9 @@ const styles = (theme: Theme) => createStyles({
     flexWrap: 'wrap',
     justifyContent: 'center',
   },
-  width100: {
+  widthHeight100: {
     width: "100%",
+    height: "100%",
   },
   cardActionAreaWide: {
     height: '100%',

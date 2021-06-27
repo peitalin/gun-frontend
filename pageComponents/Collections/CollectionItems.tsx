@@ -10,6 +10,8 @@ import PublicIcon from '@material-ui/icons/Public';
 import LockIcon from '@material-ui/icons/Lock';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
+import Close from '@material-ui/icons/Close';
+import PlaylistAddIcon from '@material-ui/icons/PlaylistAdd';
 
 import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
@@ -34,6 +36,8 @@ import { useMutation, useQuery } from "@apollo/client";
 import {
   DELETE_COLLECTION,
   EDIT_COLLECTION,
+  ADD_PRODUCT_TO_COLLECTION,
+  REMOVE_PRODUCT_FROM_COLLECTION,
 } from "queries/collections-mutations";
 import {
   GET_COLLECTIONS_BY_USER_ID
@@ -41,14 +45,13 @@ import {
 import AlignCenterLayout from "components/AlignCenterLayout";
 // Redux
 import { useDispatch, useSelector } from "react-redux";
-import { GrandReduxState } from "reduxStore/grand-reducer";
-import { Actions } from "reduxStore/actions";
+import { GrandReduxState, Actions } from "reduxStore/grand-reducer";
 // snackbar
 import { useSnackbar } from "notistack";
 
 
 
-const CollectionSection: React.FC<ReactProps> = (props) => {
+const CollectionItems: React.FC<ReactProps> = (props) => {
 
   const {
     classes,
@@ -56,6 +59,8 @@ const CollectionSection: React.FC<ReactProps> = (props) => {
   } = props;
 
   const snackbar = useSnackbar()
+  const dispatch = useDispatch()
+
   const [editMode, setEditMode] = React.useState(false)
   const [editName, setEditName] = React.useState(collection?.name)
   const [openDeleteModal, setOpenDeleteModal] = React.useState(false)
@@ -74,7 +79,7 @@ const CollectionSection: React.FC<ReactProps> = (props) => {
   const [
     editCollection,
     editCollectionResponse,
-  ] = useMutation<MData2, MVar2>(
+  ] = useMutation<MData3, MVar3>(
     EDIT_COLLECTION, {
     variables: {
       collectionId: undefined,
@@ -146,11 +151,64 @@ const CollectionSection: React.FC<ReactProps> = (props) => {
     },
   })
 
+
+  const [
+    removeProductFromCollection,
+    response2
+  ] = useMutation<MData2, MVar2>(
+    REMOVE_PRODUCT_FROM_COLLECTION, {
+    variables: {
+      collectionId: undefined,
+      collectionItemId: undefined,
+    },
+    onCompleted: (data) => {
+    },
+    onError: () => {},
+    update: (cache, { data: { removeProductFromCollection }}) => {
+
+      const cacheData = cache.readQuery<QData1, any>({
+        query: GET_COLLECTIONS_BY_USER_ID,
+        variables: { userId: user?.id },
+      });
+      // console.log("CACHE DATA: ", cacheData)
+      // only update apollo cache if cache entry exists
+      if (cacheData) {
+
+        let existingCollections = cacheData?.getCollectionsByUserId
+        let updatedCollection = existingCollections?.map(c => {
+          // find the collection which you added product to,
+          // and update that connection
+          if (c.id === removeProductFromCollection.collectionId) {
+            return {
+              ...c,
+              itemsConnection: {
+                ...c.itemsConnection,
+                edges: c.itemsConnection?.edges?.filter(({ node }) => {
+                  return node.id !== removeProductFromCollection?.collectionItem?.id
+                }),
+              }
+            }
+          } else {
+            return c
+          }
+        })
+
+        cache.writeQuery({
+          query: GET_COLLECTIONS_BY_USER_ID,
+          variables: { userId: user?.id },
+          data: {
+            getCollectionsByUserId: updatedCollection,
+          },
+        });
+      }
+    }
+  })
+
   let loadingMutation = editCollectionResponse?.loading
     || deleteCollectionResponse?.loading
 
   return (
-    <div className={classes.CollectionSectionRoot}>
+    <div className={classes.CollectionItemsRoot}>
 
       <LoadingBar
         absoluteTop
@@ -167,7 +225,7 @@ const CollectionSection: React.FC<ReactProps> = (props) => {
                 {collection.name}
               </Typography>
               <IconButton
-                className={classes.editIcon}
+                className={classes.iconButton}
                 onClick={() => setEditMode(s => !s)}
               >
                 <EditIcon />
@@ -257,11 +315,10 @@ const CollectionSection: React.FC<ReactProps> = (props) => {
             />
           </Tooltip>
           <ConfirmActionModal
-            title={"Do you want to delete this collection?"}
+            title={"Do you want to delete this collection? (Including all products in this collection)"}
             showModal={openDeleteModal}
             setShowModal={() => setOpenDeleteModal(s => !s)}
             onConfirmFunction={() => {
-              console.log("DELETED COLLECTIOn")
               deleteCollection({
                 variables: {
                   collectionId: collection.id,
@@ -274,12 +331,42 @@ const CollectionSection: React.FC<ReactProps> = (props) => {
 
       {
         (collection.itemsConnection?.edges?.length > 0)
-        ? collection.itemsConnection?.edges?.map(({ node }) => {
+        ? collection.itemsConnection?.edges?.map(({ node: citem }) => {
             return (
-              <div key={node.product?.id} className={classes.productItem}>
+              <div key={citem.product?.id} className={classes.productItem}>
                 <ProductRowMedium
-                  product={node?.product}
+                  product={citem?.product}
                 />
+                <div className={classes.flexRowCollectionButtons}>
+                  <Tooltip title={"Add to another collection"}>
+                    <IconButton
+                      className={classes.iconButton}
+                      onClick={() => {
+                        dispatch(Actions.reduxCollections.SET_SELECTED_PRODUCT_ID(
+                          citem?.product?.id
+                        ))
+                        dispatch(Actions.reduxModals.TOGGLE_COLLECTIONS_MODAL(true))
+                      }}
+                    >
+                      <PlaylistAddIcon />
+                    </IconButton>
+                  </Tooltip>
+                  <Tooltip title={"Remove from collection"}>
+                    <IconButton
+                      className={classes.iconButton}
+                      onClick={() => {
+                        removeProductFromCollection({
+                          variables: {
+                            collectionId: collection?.id,
+                            collectionItemId: citem?.id,
+                          }
+                        })
+                      }}
+                    >
+                      <Close />
+                    </IconButton>
+                  </Tooltip>
+                </div>
               </div>
             )
           })
@@ -307,12 +394,30 @@ interface QData1 {
   getCollectionsByUserId: Collection[]
 }
 
+
+interface MVar1 {
+  productId: string
+  userId: string
+  collectionId: string
+}
+interface MData1 {
+  addProductToCollection: CollectionItemMutationResponse
+}
+
 interface MVar2 {
+  collectionId: string
+  collectionItemId: string
+}
+interface MData2 {
+  removeProductFromCollection: CollectionItemMutationResponse
+}
+
+interface MVar3 {
   collectionId: string
   name?: string
   privateCollection?: boolean
 }
-interface MData2 {
+interface MData3 {
   editCollection: Collection
 }
 
@@ -324,14 +429,14 @@ interface MData4 {
 }
 
 export const styles = (theme: Theme) => createStyles({
-  CollectionSectionRoot: {
+  CollectionItemsRoot: {
     width: '100%',
     display: 'flex',
     flexDirection: 'column',
     alignItems: "flex-start",
     marginTop: "0.5rem",
     marginBottom: "0.5rem",
-    padding: '1rem',
+    // padding: '1rem',
     borderRadius: BorderRadius,
     border: isThemeDark(theme)
       ? `1px solid ${Colors.uniswapGrey}`
@@ -346,16 +451,20 @@ export const styles = (theme: Theme) => createStyles({
     display: "flex",
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'flex-start',
+    alignItems: 'center',
     width: '100%',
     height: '3rem',
+    padding: '2rem 1rem',
+    borderBottom: isThemeDark(theme)
+      ? `1px solid ${Colors.uniswapGrey}`
+      : `1px solid ${Colors.slateGreyDark}`,
+    marginBottom: '0.5rem',
   },
   titleSection: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginLeft: '0.5rem',
   },
   privateIcon: {
     height: 18,
@@ -375,11 +484,16 @@ export const styles = (theme: Theme) => createStyles({
       : Colors.slateGreyDarkest,
   },
   productItem: {
-    marginTop: '0.25rem',
-    marginBottom: '0.25rem',
-    marginLeft: '-0.5rem',
+    // marginTop: '0.5rem',
+    marginBottom: '0.5rem',
+    // marginLeft: '-0.5rem',
+    paddingRight: '1rem',
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    width: '100%',
   },
-  editIcon: {
+  iconButton: {
     marginLeft: '0.5rem',
     "& > span > svg": {
       fill: isThemeDark(theme)
@@ -425,6 +539,12 @@ export const styles = (theme: Theme) => createStyles({
   },
   titleEnd: {
   },
+  flexRowCollectionButtons: {
+    display: "flex",
+    flexDirection: 'row',
+    justifyContent: "center",
+    alignItems: "center",
+  },
 })
 
-export default withStyles(styles)( CollectionSection );
+export default withStyles(styles)( CollectionItems );

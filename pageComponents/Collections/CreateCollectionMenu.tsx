@@ -97,8 +97,8 @@ const CollectionsPage: React.FC<ReactProps> = (props) => {
           // no autofocus on collections page
           // inputRef={input => input && input.focus()}
           type="new-password"
-          label="Enter Collection Name"
-          placeholder="Collection name"
+          label="Add a new Collection"
+          placeholder="Enter Collection name"
           onChange={(e) => setName(e.target.value)}
           value={name}
           className={classes.textField}
