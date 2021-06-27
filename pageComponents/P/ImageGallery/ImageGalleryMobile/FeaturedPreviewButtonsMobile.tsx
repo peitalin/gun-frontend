@@ -6,9 +6,8 @@ import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/s
 import { Colors } from "layout/AppTheme";
 // Typings
 import { ProductPreviewItem, Product } from "typings/gqlTypes";
-import { SelectedVariantProps } from "pageComponents/P/ProductId";
 // Components
-import CollectionsIcon from "components/CollectionsIcon";
+import CollectionsIcon from "components/Collections/CollectionsIcon";
 // import AdminEditProductIcon from "components/AdminEditProductIcon";
 // Media Query
 import { useTheme } from "@material-ui/core/styles";
@@ -28,7 +27,7 @@ const FeaturedPreviewButtons: React.FC<ReactProps> = (props) => {
   if (showButtons) {
     return (
       <div>
-        {/* <CollectionsIcon
+        <CollectionsIcon
           productId={product?.id}
           variantId={product?.featuredVariant?.variantId}
           style={{
@@ -36,7 +35,7 @@ const FeaturedPreviewButtons: React.FC<ReactProps> = (props) => {
             bottom: '-13px',
             right: '3rem',
           }}
-        /> */}
+        />
         {/*
         <AdminEditProductIcon
           product={product}
@@ -56,7 +55,6 @@ const FeaturedPreviewButtons: React.FC<ReactProps> = (props) => {
 interface ReactProps extends WithStyles<typeof styles> {
   showButtons: boolean;
   product: Product;
-  selectedOption: SelectedVariantProps;
 }
 
 const styles = (theme: Theme) => createStyles({

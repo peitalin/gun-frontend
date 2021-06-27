@@ -60,7 +60,7 @@ const ImageGalleryMobile: React.FC<ReactProps> = (props) => {
       <FeaturedPreviewButtonsMobile
         product={product}
         showButtons={previewItems.length > 0}
-        selectedOption={props.selectedOption}
+        // selectedOption={props.selectedOption}
       />
 
       <div className={classes.carouselRelative}>
