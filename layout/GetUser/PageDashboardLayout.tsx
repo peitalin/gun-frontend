@@ -19,6 +19,8 @@ import DealerDashboardMobileMenu from "pageComponents/DealerDashboard/DealerDash
 
 import HelpSideRoutesMenu from "pageComponents/Help/HelpSideRoutesMenu";
 import HelpDashboardMobileMenu from "pageComponents/Help/HelpDashboardMobileMenu";
+
+import VerifyAccountBanner from "components/VerifyAccountBanner";
 // Router
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
@@ -77,6 +79,9 @@ const PageDashboardLayout: React.FC<ReactProps> = (props) => {
     }
   }
 
+  // at least one license is verified
+  let isVerified = user?.licenses.some(l => l.verified)
+
   if (!lgDown) {
     // desktop
     return (
@@ -86,6 +91,12 @@ const PageDashboardLayout: React.FC<ReactProps> = (props) => {
             { renderRoleMenuDesktop(user) }
           </div>
           <div className={classes.flex75}>
+            {
+              !isVerified &&
+              <div className={classes.bannerPadding}>
+                <VerifyAccountBanner/>
+              </div>
+            }
             {props.children}
           </div>
         </div>
@@ -97,6 +108,12 @@ const PageDashboardLayout: React.FC<ReactProps> = (props) => {
       <ErrorBounds className={clsx(classes.dashboardContainer)}>
         <div className={classes.dashboardInnerContainerMobile}>
           { renderRoleMenuMobile(user) }
+          {
+            !isVerified &&
+            <div className={classes.bannerPadding}>
+              <VerifyAccountBanner/>
+            </div>
+          }
           {props.children}
         </div>
       </ErrorBounds>
@@ -110,17 +127,17 @@ interface ReactProps extends WithStyles<typeof styles> {
 }
 
 const styles = (theme: Theme) => createStyles({
+  flexJustify: {
+    display: 'flex',
+    flexDirection: "row",
+    justifyContent: "center",
+  },
   dashboardInnerContainerMobile: {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'flex-start',
     width: '100%',
     marginTop: '3rem', // account for dropdown mobileMenu bar
-  },
-  flexJustify: {
-    display: 'flex',
-    flexDirection: "row",
-    justifyContent: "center",
   },
   dashboardContainer: {
     position: 'relative',
@@ -133,6 +150,11 @@ const styles = (theme: Theme) => createStyles({
     justifyContent: 'flex-start',
     flexWrap: 'wrap',
     // background: Gradients.gradientUniswapDark.background,
+  },
+  bannerPadding: {
+    marginTop: "0.5rem",
+    marginBottom: "0.5rem",
+    marginRight: "0.5rem",
   },
   minWidth240: {
     width: 240,

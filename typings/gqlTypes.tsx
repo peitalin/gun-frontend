@@ -4295,7 +4295,7 @@ export type Query = {
    *
    * AccessRule – PUBLIC
    */
-  productsAllConnection: ProductsConnection;
+  productsNewReleasesConnection: ProductsConnection;
   /**
    * Search all of the products on the platform that can be purchased.
    *
@@ -5618,7 +5618,7 @@ export type QueryGetRecommendedProductsConnectionArgs = {
 };
 
 
-export type QueryProductsAllConnectionArgs = {
+export type QueryProductsNewReleasesConnectionArgs = {
   searchTerm?: Maybe<Scalars['String']>;
   query?: Maybe<ConnectionQuery>;
 };

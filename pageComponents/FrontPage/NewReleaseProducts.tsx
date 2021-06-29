@@ -113,7 +113,7 @@ const NewReleaseProducts = (props: ReactProps) => {
     xl: 4,
   }
 
-  let products = data?.productsAllConnection
+  let products = data?.productsNewReleasesConnection
 
   // if (true) {
   //   return (
@@ -202,7 +202,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   title?: string;
 }
 export interface QueryDataNewReleases {
-  productsAllConnection: ProductsConnection;
+  productsNewReleasesConnection: ProductsConnection;
 }
 interface QueryVar {
   searchTerm?: string;

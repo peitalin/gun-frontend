@@ -68,7 +68,7 @@ const NewProducts = (props: ReactProps) => {
     ssr: true,
   })
 
-  let connection = data?.productsAllConnection
+  let connection = data?.productsNewReleasesConnection
 
 
   return (
@@ -112,7 +112,7 @@ interface ReactProps extends WithStyles<typeof styles> {
 }
 
 export interface QueryData {
-  productsAllConnection: ProductsConnection;
+  productsNewReleasesConnection: ProductsConnection;
 }
 interface QueryVar {
   searchTerm?: string;

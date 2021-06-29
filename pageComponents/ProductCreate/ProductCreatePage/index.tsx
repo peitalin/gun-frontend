@@ -225,18 +225,18 @@ const ProductCreatePage = (props: ReactProps) => {
       console.log("newProductsVariables: ", newProductsVariables)
 
       /// Update front page new releases products
-      if (cacheData?.productsAllConnection?.edges) {
+      if (cacheData?.productsNewReleasesConnection?.edges) {
         cache.writeQuery({
           query: GET_ALL_NEW_PRODUCTS,
           variables: newProductsVariables,
           data: {
-            productsAllConnection: {
-              ...cacheData?.productsAllConnection,
+            productsNewReleasesConnection: {
+              ...cacheData?.productsNewReleasesConnection,
               edges: [
                 { node: newProduct, __typename: "ProductsEdge" } as ProductsEdge,
-                ...(cacheData?.productsAllConnection?.edges ?? []),
+                ...(cacheData?.productsNewReleasesConnection?.edges ?? []),
               ],
-              totalCount: (cacheData?.productsAllConnection?.edges?.length ?? 0) + 1,
+              totalCount: (cacheData?.productsNewReleasesConnection?.edges?.length ?? 0) + 1,
             } as ProductsConnection
           },
         });

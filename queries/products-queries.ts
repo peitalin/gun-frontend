@@ -24,11 +24,11 @@ export const GET_RECOMMENDED_PRODUCTS = gql`
 
 
 export const GET_ALL_NEW_PRODUCTS = gql`
-  query productsAllConnection(
+  query productsNewReleasesConnection(
     $searchTerm: String!
     $query: ConnectionQuery
   ) {
-    productsAllConnection(
+    productsNewReleasesConnection(
       searchTerm: $searchTerm,
       query: $query
     ) {
