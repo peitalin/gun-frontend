@@ -288,7 +288,7 @@ const CreateStoreFormWrapper: React.FC<FormWrapperProps> = (props) => {
                   color={"secondary"}
                   className={props.classes.button}
                   style={{
-                    width: '180px',
+                    width: '200px',
                     height: 40,
                   }}
                   loadingIconColor={Colors.lightGrey}

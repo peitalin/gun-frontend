@@ -1,5 +1,4 @@
 import React from "react";
-import { useState, useEffect } from "react";
 import clsx from "clsx";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";

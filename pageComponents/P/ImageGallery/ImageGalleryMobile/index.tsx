@@ -14,7 +14,6 @@ import FeaturedImagePlaceholder from "../FeaturedPreview/FeaturedImagePlaceholde
 import FeaturedVideoMobile from "../FeaturedPreview/FeaturedVideoMobile";
 import FeaturedPreviewButtonsMobile from "./FeaturedPreviewButtonsMobile";
 // Carousel
-import AirCarousel from "components/AirCarousel";
 import AirItemWide from "components/AirCarousel/AirItemWide";
 import {
   SelectedVariantProps
