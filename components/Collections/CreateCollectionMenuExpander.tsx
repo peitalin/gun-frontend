@@ -157,7 +157,7 @@ const CollectionsPage: React.FC<ReactProps> = (props) => {
               }}
             >
               <Typography className={classes.createCollectionButtonText}>
-                {"Save Collection"}
+                {"Create"}
               </Typography>
             </MenuItem>
             <MenuItem
