@@ -123,7 +123,7 @@ const SignInPageRedirect = (props: ReactProps) => {
         <Typography variant="body1" className={classes.alreadyHaveAccountText}>
           {"Don't have an account? "}
           <a onClick={toSignup} className={classes.link}>
-            Create Free Account
+            Create Account
           </a>
         </Typography>
       </div>

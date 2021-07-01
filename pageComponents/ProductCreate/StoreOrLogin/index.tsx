@@ -92,7 +92,7 @@ const StoreOrLogin = (props: StoreOrLoginProps) => {
             {
               !props.disableSubtitle &&
               <Typography variant="h4" className={classes.loginTitle}>
-                Don't have an account yet?
+                Don't have a store yet?
               </Typography>
             }
             <div className={classes.createStoreButtonContainer}>
@@ -112,7 +112,7 @@ const StoreOrLogin = (props: StoreOrLoginProps) => {
             {
               !props.disableSubtitle &&
               <Typography variant="h4" className={classes.loginTitle}>
-                Don't have an account yet?
+                Don't have a store yet?
               </Typography>
             }
             {
