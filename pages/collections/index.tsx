@@ -5,6 +5,7 @@ import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/s
 import { NextPage, NextPageContext } from 'next';
 // GraphQL
 import { serverApolloClient } from "utils/apollo";
+import { Colors } from "layout/AppTheme";
 import gql from 'graphql-tag'
 import { useApolloClient, ApolloClient } from "@apollo/client";
 // Components
@@ -37,6 +38,7 @@ const CollectionsSSR: NextPage<ReactProps> = (props) => {
       <UserProfileWrapper>
         {(dataUser: UserProfileProps) => {
           return (
+            // <div className={classes.polka} ></div>
             <CollectionsPage />
           )
         }}
@@ -55,6 +57,14 @@ const styles = (theme: Theme) => createStyles({
     justifyContent: 'center',
     marginBottom: '1rem',
   },
+  // polka: {
+  //   height: '100vh',
+  //   width: '100%',
+  //   backgroundColor: '#ECEFF4',
+  //   backgroundImage: `
+  //     url("data:image/svg+xml,%3Csvg width='15' height='15' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%239C92AC' fill-opacity='0.2' fill-rule='evenodd'%3E%3Ccircle cx='4' cy='4' r='2'/%3E%3Ccircle cx='14' cy='14' r='2'/%3E%3C/g%3E%3C/svg%3E")
+  //   `,
+  // },
 })
 
 ///////////////// TYPINGS ///////////////////

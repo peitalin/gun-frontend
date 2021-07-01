@@ -83,20 +83,9 @@ export const validationSchemas = {
             .required('Add a price'),
           priceWas: Yup.number().nullable()
             .min(minPrice, `Minimum price: \$${minPrice/100}`)
-            .max(maxPrice, "Max price: $10,000")
-            .test("priceWas", "Must exceed price (now)", function(value) {
-              // console.log(">>>>>>>>>>>>", value, this)
-              // this.path: the string path of the current validation
-              // this.schema: the resolved schema object that the test is running against.
-              // this.options: the options object that validate() or isValid() was called with
-              // this.parent: in the case of nested schema, this is the value of the parent object
-              // this.createError(Object: { path: String, message: String }):
-              if (!!this.parent.priceWas) {
-                return this.parent.price <= value
-              } else {
-                return true
-              }
-            }),
+            .max(maxPrice, "Max price: $10,000"),
+            // priceWas no longer less than price
+            // since priceWas represents initialPrice when the product was created
           variantName: Yup.string()
             .nullable(),
           variantDescription: Yup.string()
@@ -178,19 +167,21 @@ export const validationSchemas = {
               .required('Add a price'),
             priceWas: Yup.number().nullable(true)
               .min(minPrice, `Minimum price: \$${minPrice/100}`)
-              .max(maxPrice, "Max price: $10,000")
-              .test("priceWas", "Must exceed price (now)", function(value) {
-                // this.path: the string path of the current validation
-                // this.schema: the resolved schema object that the test is running against.
-                // this.options: the options object that validate() or isValid() was called with
-                // this.parent: in the case of nested schema, this is the value of the parent object
-                // this.createError(Object: { path: String, message: String }):
-                if (!!this.parent.priceWas) {
-                  return this.parent.price <= value
-                } else {
-                  return true
-                }
-              }),
+              .max(maxPrice, "Max price: $10,000"),
+              // priceWas no longer less than price
+              // since priceWas represents initialPrice when the product was created
+              // .test("priceWas", "Must exceed price (now)", function(value) {
+              //   // this.path: the string path of the current validation
+              //   // this.schema: the resolved schema object that the test is running against.
+              //   // this.options: the options object that validate() or isValid() was called with
+              //   // this.parent: in the case of nested schema, this is the value of the parent object
+              //   // this.createError(Object: { path: String, message: String }):
+              //   if (!!this.parent.priceWas) {
+              //     return this.parent.price <= value
+              //   } else {
+              //     return true
+              //   }
+              // }),
             variantName: Yup.string()
               .nullable(),
             variantDescription: Yup.string()
@@ -235,8 +226,8 @@ export const validationSchemas = {
       profileId: Yup.string().nullable(),
       coverId: Yup.string().nullable(),
       bsb: Yup.string()
-        .min(6, "Must 6 digits!")
-        .max(6, "Must 6 digits!")
+        .min(6, "Min 6 digits!")
+        .max(6, "Min 6 digits!")
         .required('BSB number required.'),
       accountNumber: Yup.string()
         .min(6, "Must be 6-10 digits!")
@@ -257,8 +248,8 @@ export const validationSchemas = {
       profileId: Yup.string().nullable(),
       coverId: Yup.string().nullable(),
       bsb: Yup.string()
-        .min(6, "Must 6 digits!")
-        .max(6, "Must 6 digits!")
+        .min(6, "Min 6 digits!")
+        .max(6, "Min 6 digits!")
         .required('BSB number required.'),
       accountNumber: Yup.string()
         .min(6, "Must be 6-10 digits!")
@@ -416,8 +407,8 @@ export const validationSchemas = {
   ChangePayoutMethod:
     Yup.object().shape({
       bsb: Yup.string()
-        .min(6, "Must 6 digits!")
-        .max(6, "Must 6 digits!")
+        .min(6, "Min 6 digits!")
+        .max(6, "Min 6 digits!")
         .required('A BSB number required.'),
       accountNumber: Yup.string()
         .min(6, "Must be 6-10 digits!")
