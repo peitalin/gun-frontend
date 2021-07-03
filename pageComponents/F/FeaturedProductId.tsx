@@ -178,6 +178,8 @@ const FeaturedProductId: React.FC<ReactProps> = (props) => {
     }
   }, [loading])
 
+  let storeUserVerified = product?.sellerLicense?.verified;
+  let productIsYours = product?.store?.user?.id === user?.id
 
   if (!loading && product?.store?.isSuspended === true) {
     return <ErrorPage statusCode={400} message={"Store has been suspended"}/>
@@ -190,6 +192,9 @@ const FeaturedProductId: React.FC<ReactProps> = (props) => {
   }
   if (!loading && !product?.isPublished === true) {
     return <ErrorPage statusCode={403} message={"Product is not published"}/>
+  }
+  if (!loading && !productIsYours && storeUserVerified !== true) {
+    return <ErrorPage statusCode={400} message={"Store's owner has yet to be verified"}/>
   }
   if (error) {
     return <ErrorPage statusCode={404} message={"Product cannot be found"}/>

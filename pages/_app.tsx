@@ -132,7 +132,7 @@ const MainApp: NextComponentType<AppContext, AppInitialProps, AppProps & AppHOCP
   //////////////////////////////////////////////////////
 
   // console.log("MainApp userId: ", userId)
-  console.log("_app pageProps: ", pageProps)
+  // console.log("_app pageProps: ", pageProps)
 
   return (
     <Provider store={store}>
@@ -233,7 +233,7 @@ const ThemeProviderDarkMode = ({ initialDarkModeSSR, children }) => {
   // Then client-side, darkModeRedux takes over dark mode toggle
 
   // console.log("darkModeRedux: ", darkModeRedux)
-  console.log("initialDarkModeSSR: ", initialDarkModeSSR)
+  // console.log("initialDarkModeSSR: ", initialDarkModeSSR)
   // console.log("darkModeTheme: ", darkModeTheme)
 
   let appTheme: ThemeOptions = createAppTheme(darkModeRedux);

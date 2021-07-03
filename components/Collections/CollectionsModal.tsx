@@ -214,7 +214,7 @@ const CollectionModal: React.FC<ReactProps> = (props) => {
   }, [])
 
   let collections = data?.getCollectionsByUserId;
-  console.log("collections", collections)
+  // console.log("collections", collections)
   // console.log("selectedProductId", selectedProductId)
   let loadingMutation = response1?.loading || response2?.loading
 

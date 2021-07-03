@@ -619,6 +619,9 @@ export const StorePublicFragment = gql`
         defaultLicense {
           ...UserLicenseFragment
         }
+        licenses {
+          ...UserLicenseFragment
+        }
         orderMetrics {
           id
           # itemsBought
@@ -631,6 +634,9 @@ export const StorePublicFragment = gql`
       }
       ...on UserPrivate {
         defaultLicense {
+          ...UserLicenseFragment
+        }
+        licenses {
           ...UserLicenseFragment
         }
         orderMetrics {
