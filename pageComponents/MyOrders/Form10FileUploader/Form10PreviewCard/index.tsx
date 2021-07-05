@@ -259,7 +259,7 @@ export const styles = (theme: Theme) => createStyles({
     position: "absolute",
     right: -8,
     top: -8,
-    zIndex: 1502,
+    zIndex: 2,
   },
 })
 
