@@ -72,11 +72,11 @@ const RowExpander = (props: RowExpanderProps) => {
 
   const client = useApolloClient()
 
-  const cacheData = client.cache.readQuery({
-    query: GET_ORDERS_PENDING_APPROVAL_CONNECTION,
-    variables: props.variables.ordersPendingApproval,
-  });
-  console.log("CACHE DATA: ", cacheData)
+  // const cacheData = client.cache.readQuery({
+  //   query: GET_ORDERS_PENDING_APPROVAL_CONNECTION,
+  //   variables: props.variables.ordersPendingApproval,
+  // });
+  // console.log("CACHE DATA: ", cacheData)
 
   return (
     <>
