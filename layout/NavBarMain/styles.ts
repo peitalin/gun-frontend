@@ -18,8 +18,8 @@ export const MainBarHeightDashboard = 55;
 export const NewsBarHeight = 8;
 export const CategoryBarHeight = 44;
 export const CategoryBarHeightMobile = 30;
-// export const NavBarHeight = MainBarHeight + NewsBarHeight + CategoryBarHeight;
-export const NavBarHeight = MainBarHeightHomePage + NewsBarHeight;
+export const NavBarHeight = MainBarHeightHomePage + CategoryBarHeight;
+export const MobileNavbarHeight = MainBarHeightDashboard + 8
 
 
 /// hover colors for menu buttons
@@ -340,7 +340,7 @@ export const styles = (theme: Theme) => createStyles({
     paddingRight: '0.5rem',
     paddingTop: '0.5rem',
     width: '100vw',
-    height: MainBarHeightDashboard + 8,
+    height: MobileNavbarHeight,
     display: "flex",
     position: "relative",
     justifyContent: 'space-between',

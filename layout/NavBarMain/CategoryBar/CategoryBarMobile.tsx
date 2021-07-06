@@ -17,70 +17,68 @@ const CategoryBarMobile: React.FC<ReactProps> = (props) => {
   const { classes } = props;
 
   return (
-    <>
-      <nav className={clsx(
-        classes.baseBarDashboard,
-        classes.categoryBarMobile,
-        classes.categoryBar,
-      )}>
-        <div className={classes.baseBarInnerDashboard}>
-          <div className={classes.categoryBarInnerMobile}>
+    <nav className={clsx(
+      classes.baseBarDashboard,
+      classes.categoryBar,
+      classes.categoryBarMobile,
+    )}>
+      <div className={classes.baseBarInnerDashboard}>
+        <div className={classes.categoryBarInnerMobile}>
 
-            <Link href={`/new`}>
-              <a className={classes.categoryLink}>
-                <Typography className={clsx(
-                  classes.categoryLinkAllMain,
-                  classes.categoryLinkTextMainHeightMobile,
-                )}>
-                  New
-                </Typography>
-              </a>
-            </Link>
+          <Link href={`/new`}>
+            <a className={classes.categoryLink}>
+              <Typography className={clsx(
+                classes.categoryLinkAllMain,
+                classes.categoryLinkTextMainHeightMobile,
+              )}>
+                New
+              </Typography>
+            </a>
+          </Link>
 
-            <Link href={`/sale`}>
-              <a className={classes.categoryLink}>
-                <Typography className={clsx(
-                  classes.categoryLinkAllMain,
-                  classes.categoryLinkTextMainHeightMobile,
-                )}>
-                  Price Reduced
-                </Typography>
-              </a>
-            </Link>
+          <Link href={`/sale`}>
+            <a className={classes.categoryLink}>
+              <Typography className={clsx(
+                classes.categoryLinkAllMain,
+                classes.categoryLinkTextMainHeightMobile,
+              )}>
+                Price Reduced
+              </Typography>
+            </a>
+          </Link>
 
 
-            <Link href={`/categories`}>
-              <a className={classes.categoryLink}>
-                <Typography className={clsx(
-                  classes.categoryLinkAllMain,
-                  classes.categoryLinkTextMainHeightMobile,
-                )}>
-                  All Categories
-                </Typography>
-              </a>
-            </Link>
+          <Link href={`/categories`}>
+            <a className={classes.categoryLink}>
+              <Typography className={clsx(
+                classes.categoryLinkAllMain,
+                classes.categoryLinkTextMainHeightMobile,
+              )}>
+                All Categories
+              </Typography>
+            </a>
+          </Link>
 
-            {
-              (props?.categories ?? []).map(category => {
-                return (
-                  <a key={category.id}
-                    className={classes.categoryLinkGroups}
-                    href={`/categories/${category.slug}`}
-                  >
-                    <Typography className={clsx(
-                      classes.categoryLinkTextMain,
-                      classes.categoryLinkTextMainHeightMobile,
-                    )}>
-                      {category.name}
-                    </Typography>
-                  </a>
-                )
-              })
-            }
-          </div>
+          {
+            (props?.categories ?? []).map(category => {
+              return (
+                <a key={category.id}
+                  className={classes.categoryLinkGroups}
+                  href={`/categories/${category.slug}`}
+                >
+                  <Typography className={clsx(
+                    classes.categoryLinkTextMain,
+                    classes.categoryLinkTextMainHeightMobile,
+                  )}>
+                    {category.name}
+                  </Typography>
+                </a>
+              )
+            })
+          }
         </div>
-      </nav>
-    </>
+      </div>
+    </nav>
   );
 };
 

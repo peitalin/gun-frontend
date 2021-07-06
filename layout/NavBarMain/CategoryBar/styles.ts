@@ -7,7 +7,7 @@ import {
   isThemeDark,
 } from "layout/AppTheme";
 
-import { NewsBarHeight, MainBarHeightDashboard, MainBarHeightHomePage } from "../styles";
+import { MobileNavbarHeight, MainBarHeightDashboard, MainBarHeightHomePage } from "../styles";
 
 /////////////// STYLES /////////////////////
 export const CategoryBarHeight = 40;
@@ -70,6 +70,7 @@ export const styles = (theme: Theme) => createStyles({
     //   : `1px solid ${Colors.slateGreyDarker}`,
   },
   categoryBarMobile: {
+    top: `${MobileNavbarHeight}px`, // 1px for borderBottom
     height: 30,
   },
   categoryBarShow: {

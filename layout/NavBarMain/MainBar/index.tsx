@@ -19,6 +19,7 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 import DesktopMainBar from "./DesktopMainBar";
 import MobileMainBar from "./MobileMainBar";
 import { useScrollYPosition } from "utils/hooks";
+import { Y_SCROLL_NAVBAR_SHOW } from "../constants";
 
 
 
@@ -58,7 +59,7 @@ const MainBar = (props: ReactProps) => {
     || _isFeaturedPage
     || _isStartPage
     || _isSellPage)
-    && y < 50
+    && y < Y_SCROLL_NAVBAR_SHOW
     // hide on these pages and if y is scrolled
 
   const showBlurWide = !hideBlurWide
@@ -122,7 +123,7 @@ const MainBarSSRWrapper: React.FC<MainBarSSRWrapperProps> = (props) => {
   let { classes } = props;
   // const showBlurWide = !_isMainPage && !_isFeaturedPage && !_isStartPage && !_isSellPage
   let y = useScrollYPosition()
-  const smallPadding = y > 0
+  const smallPadding = y > Y_SCROLL_NAVBAR_SHOW
 
   return (
     <>

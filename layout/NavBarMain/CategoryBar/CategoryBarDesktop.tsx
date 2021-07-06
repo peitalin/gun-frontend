@@ -9,6 +9,7 @@ import Typography from "@material-ui/core/Typography";
 import { useScrollYPosition } from "utils/hooks";
 // hooks
 import Link from "next/link";
+import { Y_SCROLL_NAVBAR_SHOW } from "../constants";
 
 
 
@@ -24,6 +25,7 @@ const CategoryBarDesktop: React.FC<ReactProps> = (props) => {
 
   let y = useScrollYPosition()
 
+
   const smallOffset = !isMainPage && !isFeaturedPage && !isStartPage && !isSellPage
   // console.log("Y:", y)
 
@@ -31,8 +33,8 @@ const CategoryBarDesktop: React.FC<ReactProps> = (props) => {
     <nav className={clsx(
       classes.baseBarDashboard,
       classes.categoryBar,
-      y > 0 ? classes.categoryBarShow : classes.categoryBarHidden,
-      (smallOffset || y > 0)
+      y >= Y_SCROLL_NAVBAR_SHOW ? classes.categoryBarShow : classes.categoryBarHidden,
+      (smallOffset || y >= Y_SCROLL_NAVBAR_SHOW)
         ? classes.categoryBarTopOffsetSmall
         : classes.categoryBarTopOffsetBig,
     )}>
