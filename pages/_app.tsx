@@ -132,7 +132,7 @@ const MainApp: NextComponentType<AppContext, AppInitialProps, AppProps & AppHOCP
   //////////////////////////////////////////////////////
 
   // console.log("MainApp userId: ", userId)
-  // console.log("_app pageProps: ", pageProps)
+  console.log("_app pageProps: ", pageProps)
 
   return (
     <Provider store={store}>
@@ -163,7 +163,7 @@ const MainApp: NextComponentType<AppContext, AppInitialProps, AppProps & AppHOCP
             maxSnack={4}
           >
             <CssBaseline />
-            <Layout>
+            <Layout initialCategories={pageProps?.initialCategories}>
               <Component {...pageProps} key={router?.route} />
             </Layout>
           </SnackbarProvider>

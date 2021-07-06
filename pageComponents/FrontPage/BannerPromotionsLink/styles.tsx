@@ -85,7 +85,7 @@ export const styles = (theme: Theme) => createStyles({
   },
   subline1: {
     color: isThemeDark(theme)
-      ? Colors.uniswapLighterGrey
+      ? Colors.uniswapLightGrey
       : Colors.slateGreyLightBlack,
     fontFamily: fontFam,
     lineHeight: "1.5",

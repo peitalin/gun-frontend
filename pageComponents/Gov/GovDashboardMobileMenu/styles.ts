@@ -22,7 +22,7 @@ const dashboardMenuHeight = 50 * 11
 export const dashboardBarStyle = (theme: Theme) => ({
   height: DashboardBarHeight,
   position: 'fixed',
-  top: `${MainBarHeightDashboard + NewsBarHeight}px`, // 44px for borderBottom
+  top: `${MainBarHeightDashboard + 2}px`, //
   backdropFilter: "blur(6px)",
   background: isThemeDark(theme)
     ? 'rgba(18, 18, 29, 0.3)'
@@ -37,7 +37,7 @@ export const dashboardMenuDitherStyle = (theme: Theme) => ({
   width: '100vw',
   zIndex: 2, // above watchList button which has zIndex: 1
   position: 'fixed',
-  top: `${MainBarHeightDashboard + NewsBarHeight + DashboardBarHeight}px`, // 44px for borderBottom
+  top: `${MainBarHeightDashboard + DashboardBarHeight}px`, // 44px for borderBottom
   backgroundColor: Colors.modalBackground,
 })
 export const expandMenuStyle = (theme: Theme, dashboardMenuHeight) => ({
@@ -45,7 +45,7 @@ export const expandMenuStyle = (theme: Theme, dashboardMenuHeight) => ({
   height: `calc(${dashboardMenuHeight}px + 1rem)`,
   transform: 'translateY(0%)',
   position: 'fixed',
-  top: `${MainBarHeightDashboard + NewsBarHeight + DashboardBarHeight}px`, // 44px for borderBottom
+  top: `${MainBarHeightDashboard + DashboardBarHeight}px`, // 44px for borderBottom
   transition: theme.transitions.create(['transform'], {
     easing: theme.transitions.easing.easeInOut,
     duration: "200ms",

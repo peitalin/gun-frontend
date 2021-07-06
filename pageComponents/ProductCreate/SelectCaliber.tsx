@@ -5,8 +5,6 @@ import { withStyles, WithStyles } from "@material-ui/core/styles";
 import { styles } from "./commonStyles";
 // Material UI
 import Typography from "@material-ui/core/Typography";
-import TextInputAdorned from "components/Fields/TextInputAdorned";
-import TextInput from "components/Fields/TextInput";
 import DropdownInput from "components/Fields/DropdownInput";
 // Components
 import Loading from "components/Loading";

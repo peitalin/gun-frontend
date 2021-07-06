@@ -41,12 +41,17 @@ export const styles = (theme: Theme) => createStyles({
     // position: "absolute",
     width: '100%',
     position: 'fixed',
-    pointerEvents: "none", // click through
+    // pointerEvents: "none", // click through
+    padding: '0rem',
+    // transition: theme.transitions.create(['padding'], {
+    //   easing: theme.transitions.easing.easeInOut,
+    //   duration: '100ms',
+    // }),
   },
   baseBarInnerHomePage: {
-    pointerEvents: "none", // click through
+    // pointerEvents: "none", // click through
     "& > div": {
-      pointerEvents: "all",
+      // pointerEvents: "all",
     },
     // width: '100vw',
     width: '100%',
@@ -55,46 +60,27 @@ export const styles = (theme: Theme) => createStyles({
     justifyContent: 'center',
     alignItems: "center",
   },
-  baseBarDither: {
-    pointerEvents: "none", // click through
-    background: isThemeDark(theme)
-      ? Gradients.gradientBlackDitherDown.background
-      : Gradients.gradientBlackDitherDown.background,
-    // filter: 'blur(8px)',
-    // transition: theme.transitions.create(['filter'], {
-    //   easing: theme.transitions.easing.easeIn,
-    //   duration: '300ms',
-    // }),
-    // "&:hover": {
-    //   filter: 'blur(0px)',
-    // },
+  baseBarPadding: {
+    // pointerEvents: "none", // click through
+    // background: isThemeDark(theme)
+    //   ? Gradients.gradientBlackDitherDown.background
+    //   : Gradients.gradientBlackDitherDown.background,
     padding: '0.5rem',
     paddingTop: '1rem',
-    // top: `${NewsBarHeight}px`,
     top: 0,
   },
-  baseBarDitherSm: {
+  baseBarPaddingMobile: {
     background: isThemeDark(theme)
       ? Gradients.gradientBlackDitherDown.background
       : Gradients.gradientBlackDitherDown.background,
     padding: '0rem',
     paddingTop: '0rem',
-    // top: `${NewsBarHeight}px`,
     top: 0,
   },
-  baseBarDitherNone: {
-    // background: Gradients.gradientBlackDitherDown.background,
-    // opacity: 0.8,
-    '&:hover': {
-      // opacity: 1,
-    },
-    padding: '0.5rem',
-    paddingTop: '0.5rem',
-    paddingBottom: '1rem',
-    // top: `${NewsBarHeight}px`,
+  baseBarPaddingNone: {
+    padding: '0rem',
   },
-  baseBarDitherNoneSm: {
-    // background: Gradients.gradientBlackDitherDown.background,
+  baseBarPaddingMobileNone: {
     padding: '0rem',
     paddingTop: '1rem',
   },
@@ -103,14 +89,13 @@ export const styles = (theme: Theme) => createStyles({
   },
 
   baseBarDashboardPlaceholder: {
-    height: `${MainBarHeightDashboard + NewsBarHeight}px`, // 1px for borderBottom
+    height: `${NewsBarHeight}px`, // 1px for borderBottom
   },
   baseBarDashboard: {
     zIndex: 5,
     position: 'fixed',
     top: 0,
     right: 0,
-    height: `${MainBarHeightDashboard + NewsBarHeight}px`, // 1px for borderBottom
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center',
@@ -119,7 +104,7 @@ export const styles = (theme: Theme) => createStyles({
   },
   baseBarInnerDashboard: {
     // width: '100vw',
-    pointerEvents: "all",
+    // pointerEvents: "all",
     width: '100%',
     display: "flex",
     position: "relative",
@@ -129,7 +114,7 @@ export const styles = (theme: Theme) => createStyles({
   },
   width100: {
     width: '100%',
-    pointerEvents: "none", // click through
+    // pointerEvents: "none", // click through
   },
   menuButtonsContainer: {
     display: 'flex',
@@ -137,33 +122,50 @@ export const styles = (theme: Theme) => createStyles({
     padding: '0.5rem',
   },
   blurBackground: {
-    position: "absolute",
     height: '100%',
     width: '100%',
-    backdropFilter: "blur(6px)",
+    // backdropFilter: "blur(6px)",
     background: isThemeDark(theme)
       ? 'rgba(18, 18, 29, 0.3)'
       : 'rgba(245, 245, 255, 0.8)',
-    top: 0,
-    right: 0,
     border: isThemeDark(theme)
       ? `1px solid ${Colors.uniswapMediumNavy}`
       : `1px solid ${Colors.slateGreyDarker}`,
     borderRadius: BorderRadius4x,
   },
-  blurBackgroundWide: {
+  blurBackgroundTransparent: {
     position: "absolute",
+    height: '100%',
+    width: '100%',
+    // backdropFilter: "blur(6px)",
+    background: isThemeDark(theme)
+      ? 'rgba(18, 18, 29, 0.3)'
+      : 'rgba(245, 245, 255, 0.8)',
+    border: isThemeDark(theme)
+      ? `1px solid ${Colors.uniswapMediumNavy}`
+      : `1px solid ${Colors.slateGreyDarker}`,
+    top: 0,
+    right: 0,
+    borderRadius: BorderRadius4x,
+  },
+  blurBackgroundWideTransparent: {
+    // transition: theme.transitions.create(['background'], {
+    //   easing: theme.transitions.easing.easeIn,
+    //   duration: '100ms',
+    // }),
+    // backdropFilter: "unset",
+    // background: 'rgba(0,0,0,0)',
+  },
+  blurBackgroundWide: {
     height: '100%',
     width: '100%',
     backdropFilter: "blur(6px)",
     background: isThemeDark(theme)
       ? 'rgba(18, 18, 29, 0.3)'
       : 'rgba(245, 245, 255, 0.8)',
-    top: 0,
-    right: 0,
     borderBottom: isThemeDark(theme)
       ? `1px solid ${Colors.uniswapMediumNavy}`
-      : `1px solid ${Colors.slateGreyDarker}`,
+      : `1px solid ${Colors.slateGrey}`,
   },
   blurBackgroundMobile: {
     position: "absolute",
@@ -177,7 +179,7 @@ export const styles = (theme: Theme) => createStyles({
     right: 0,
     borderBottom: isThemeDark(theme)
       ? `1px solid ${Colors.uniswapMediumNavy}`
-      : `1px solid ${Colors.slateGreyDarker}`,
+      : `1px solid ${Colors.slateGrey}`,
     // borderRadius: BorderRadius4x,
   },
 
@@ -310,7 +312,7 @@ export const styles = (theme: Theme) => createStyles({
     width: theme.spacing(6),
     height: '100%',
     position: 'absolute',
-    pointerEvents: 'none',
+    // pointerEvents: 'none',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -326,13 +328,13 @@ export const styles = (theme: Theme) => createStyles({
     marginRight: "0.25rem",
     minWidth: 50,
     "&:hover": {
-      background: theme.palette.type === 'dark'
+      background: isThemeDark(theme)
         ? buttonHoverDark
         : buttonHoverLight,
     },
   },
   baseBarInnerMobile: {
-    pointerEvents: "all",
+    // pointerEvents: "all",
     zIndex: 3,
     paddingLeft: '0.5rem',
     paddingRight: '0.5rem',

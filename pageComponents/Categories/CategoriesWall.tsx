@@ -27,23 +27,6 @@ const CategoriesWall: React.FC<ReactProps> = (props) => {
           disableTitle={true}
           initialCategories={props.categories}
         />
-        {/* {
-          props.categories &&
-          (props.categories ?? []).map(c => {
-            return (
-              <Link key={c.id}
-                href="/categories/[categorySlug]"
-                as={`/categories/${c.slug}`}
-              >
-                <a className={classes.categoryLink}>
-                  <Typography className={classes.categoryLinkText}>
-                    {c.name}
-                  </Typography>
-                </a>
-              </Link>
-            )
-          })
-        } */}
       </div>
     </div>
   )
@@ -75,28 +58,6 @@ const styles = (theme: Theme) => createStyles({
     whiteSpace: 'nowrap',
     marginRight: '0.5rem',
     marginBottom: '1rem',
-    transition: theme.transitions.create(['color'], {
-      easing: theme.transitions.easing.easeIn,
-      duration: '100ms',
-    }),
-    "&:hover": {
-      color: categoryLinkColorHover2,
-      transition: theme.transitions.create(['color'], {
-        easing: theme.transitions.easing.easeIn,
-        duration: '100ms',
-      })
-    },
-  },
-  categoryLinkText: {
-    color: categoryLinkColor2,
-    minWidth: '50px',
-    whiteSpace: 'nowrap',
-    display: 'flex',
-    flexDirection: "row",
-    fontSize: '0.9rem',
-    fontWeight: 600,
-    justifyContent: 'flex-start',
-    alignItems: 'center',
     transition: theme.transitions.create(['color'], {
       easing: theme.transitions.easing.easeIn,
       duration: '100ms',

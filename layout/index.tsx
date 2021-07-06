@@ -9,6 +9,7 @@ import GetUser from "./GetUser";
 import GlobalModals from "./GlobalModals";
 // Router
 import { useRouter } from "next/router";
+import { Categories } from "typings/gqlTypes";
 import PageContainer from "layout/PageContainer";
 
 
@@ -37,7 +38,9 @@ const Layout: React.FC<ReactProps> = (props) => {
   return (
     <>
       <Header showChatwoot={showChatWoot} />
-      <NavBarMain/>
+      <NavBarMain
+        initialCategories={props.initialCategories}
+      />
       <GlobalModals/>
       <GetUser/>
       <PageContainer needsNavbarPadding={!noNavbarPadding}>
@@ -52,6 +55,7 @@ const Layout: React.FC<ReactProps> = (props) => {
 
 
 interface ReactProps {
+  initialCategories: Categories[]
 }
 
 export default Layout

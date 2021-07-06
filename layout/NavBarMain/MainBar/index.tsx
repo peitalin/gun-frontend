@@ -18,6 +18,7 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 // DesktopMainBars
 import DesktopMainBar from "./DesktopMainBar";
 import MobileMainBar from "./MobileMainBar";
+import { useScrollYPosition } from "utils/hooks";
 
 
 
@@ -29,7 +30,7 @@ const MainBar = (props: ReactProps) => {
 
   const theme = useTheme();
   const mdDown = useMediaQuery(theme.breakpoints.down('md'));
-  const lgUp = useMediaQuery(theme.breakpoints.up('lg'));
+  // const lgUp = useMediaQuery(theme.breakpoints.up('lg'));
 
   const {
     loggedIn,
@@ -44,12 +45,23 @@ const MainBar = (props: ReactProps) => {
   let _isSellPage = isSellPageFn(router)
   let _isStartPage = isStartPageFn(router)
   let _isFeaturedPage = isFeaturedPageFn(router)
+  let _isDashboardPage = isDashboardPageFn(router)
 
   let color = isDarkMode
     ? Colors.slateGrey
     : Colors.black
 
-  const showBlurWide = !_isMainPage && !_isFeaturedPage && !_isStartPage && !_isSellPage
+  let y = useScrollYPosition()
+
+  const hideBlurWide =
+    (_isMainPage
+    || _isFeaturedPage
+    || _isStartPage
+    || _isSellPage)
+    && y < 50
+    // hide on these pages and if y is scrolled
+
+  const showBlurWide = !hideBlurWide
 
   const endRoute = router.pathname.split('/').pop();
 
@@ -68,6 +80,7 @@ const MainBar = (props: ReactProps) => {
       isStartPage={_isStartPage}
       isSellPage={_isSellPage}
       isFeaturedPage={_isFeaturedPage}
+      isDashboardPage={_isDashboardPage}
       isMobile={mdDown}
       // for special fatter navbar on these routes
     >
@@ -78,6 +91,11 @@ const MainBar = (props: ReactProps) => {
           // Dither
           mobileMenuOpen={props.mobileMenuOpen}
           setMobileMenuOpen={props.setMobileMenuOpen}
+          isMainPage={_isMainPage}
+          isStartPage={_isStartPage}
+          isSellPage={_isSellPage}
+          isFeaturedPage={_isFeaturedPage}
+          isDashboardPage={_isDashboardPage}
           {...navBarProps}
         />
       </Hidden>
@@ -86,6 +104,10 @@ const MainBar = (props: ReactProps) => {
       <Hidden className={classes.width100} only={["xs", "sm"]} implementation="css">
         <DesktopMainBar
           showBlurWide={showBlurWide }
+          isMainPage={_isMainPage}
+          isStartPage={_isStartPage}
+          isSellPage={_isSellPage}
+          isFeaturedPage={_isFeaturedPage}
           {...navBarProps}
         />
       </Hidden>
@@ -98,16 +120,20 @@ const MainBar = (props: ReactProps) => {
 const MainBarSSRWrapper: React.FC<MainBarSSRWrapperProps> = (props) => {
 
   let { classes } = props;
+  // const showBlurWide = !_isMainPage && !_isFeaturedPage && !_isStartPage && !_isSellPage
+  let y = useScrollYPosition()
+  const smallPadding = y > 0
 
   return (
     <>
       <ShowOnMobileOrDesktopSSR desktop>
         <nav className={
-          props.isMainPage
-          ? clsx( classes.baseBarHomePage, classes.baseBarDither)
-          : props.isStartPage || props.isFeaturedPage
-            ? clsx( classes.baseBarHomePage, classes.baseBarDitherNone)
-            : clsx(classes.baseBarDashboard)
+          props.isMainPage || props.isStartPage || props.isFeaturedPage
+          ? clsx(
+              classes.baseBarHomePage,
+              smallPadding ? classes.baseBarPaddingNone : classes.baseBarPadding,
+            )
+          : clsx(classes.baseBarDashboard)
         }>
           {props.children}
         </nav>
@@ -115,7 +141,7 @@ const MainBarSSRWrapper: React.FC<MainBarSSRWrapperProps> = (props) => {
       <ShowOnMobileOrDesktopSSR mobile>
         <nav className={
           (props.isMainPage || (props.isStartPage && props.isMobile))
-          ? clsx(classes.baseBarHomePage, classes.baseBarDitherSm)
+          ? clsx(classes.baseBarHomePage, classes.baseBarPaddingMobile)
           : props.isStartPage || props.isFeaturedPage
             ? clsx(classes.baseBarHomePage)
             : clsx(classes.baseBarDashboard)
@@ -131,9 +157,6 @@ export const isMainPageFn = (router: NextRouter) => {
   if (router.pathname === '/') {
     return true
   }
-  // if (router.pathname === '/start') {
-  //   return true
-  // }
   return false
 }
 export const isSellPageFn = (router: NextRouter) => {
@@ -178,6 +201,7 @@ interface MainBarSSRWrapperProps extends WithStyles<typeof styles> {
   isStartPage: boolean
   isSellPage: boolean
   isFeaturedPage: boolean
+  isDashboardPage: boolean
   isMobile: boolean
 }
 

@@ -1,38 +1,55 @@
 import React from "react";
-import { Categories, Product } from "typings/gqlTypes";
 // Styles
 import clsx from "clsx";
 import { withStyles, WithStyles } from "@material-ui/core/styles";
 import { styles } from "./styles";
 import Hidden from "components/HiddenFix";
-// hooks
-import Link from "next/link";
 // Components
 import CategoryBarDesktop from "./CategoryBarDesktop";
 import CategoryBarMobile from "./CategoryBarMobile";
-import { useCategoriesList } from "./categoryHooks";
+import { Categories } from "typings/gqlTypes";
+import {
+  isFeaturedPageFn,
+  isMainPageFn,
+  isSellPageFn,
+  isStartPageFn,
+} from "../MainBar";
+import { useRouter, NextRouter } from "next/router";
 
 
 
 const CategoryBar: React.FC<ReactProps> = (props) => {
 
-  const { classes } = props;
-  let { categories, staticCategories } = useCategoriesList()
+  const router = useRouter()
+
+  let _isMainPage = isMainPageFn(router)
+  let _isSellPage = isSellPageFn(router)
+  let _isStartPage = isStartPageFn(router)
+  let _isFeaturedPage = isFeaturedPageFn(router)
+
 
   return (
     <nav className={props.className}>
       <Hidden mdDown implementation="css">
         <CategoryBarDesktop
-          categories={categories}
-          staticCategories={staticCategories}
+          categories={props.initialCategories}
+          isMainPage={_isMainPage}
+          isStartPage={_isStartPage}
+          isSellPage={_isSellPage}
+          isFeaturedPage={_isFeaturedPage}
+          isMobile={false}
         />
       </Hidden>
-      {/* <Hidden lgUp implementation="css">
+      <Hidden lgUp implementation="css">
         <CategoryBarMobile
-          categories={categories}
-          staticCategories={staticCategories}
+          categories={props.initialCategories}
+          isMainPage={_isMainPage}
+          isStartPage={_isStartPage}
+          isSellPage={_isSellPage}
+          isFeaturedPage={_isFeaturedPage}
+          isMobile={true}
         />
-      </Hidden> */}
+      </Hidden>
     </nav>
   );
 };
@@ -41,15 +58,7 @@ const CategoryBar: React.FC<ReactProps> = (props) => {
 
 interface ReactProps extends WithStyles<typeof styles> {
   className?: any;
-}
-interface QueryData {
-  categories: Categories[]
-}
-
-interface CategoriesExpandedProps {
-  categories: Categories[]
-  expandCategories: boolean;
-  hideExpandCategories(): void;
+  initialCategories: Categories[]
 }
 
 export default withStyles(styles)( CategoryBar );

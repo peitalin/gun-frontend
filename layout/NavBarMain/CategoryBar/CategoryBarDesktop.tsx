@@ -6,7 +6,7 @@ import { withStyles, WithStyles } from "@material-ui/core/styles";
 import { styles } from "./styles";
 // MUI
 import Typography from "@material-ui/core/Typography";
-import KeyboardArrowDown from "@material-ui/icons/KeyboardArrowDown"
+import { useScrollYPosition } from "utils/hooks";
 // hooks
 import Link from "next/link";
 
@@ -14,38 +14,30 @@ import Link from "next/link";
 
 const CategoryBarDesktop: React.FC<ReactProps> = (props) => {
 
-  const { classes } = props;
+  const {
+    classes,
+    isMainPage,
+    isFeaturedPage,
+    isStartPage,
+    isSellPage,
+  } = props;
+
+  let y = useScrollYPosition()
+
+  const smallOffset = !isMainPage && !isFeaturedPage && !isStartPage && !isSellPage
+  // console.log("Y:", y)
 
   return (
     <nav className={clsx(
       classes.baseBarDashboard,
       classes.categoryBar,
+      y > 0 ? classes.categoryBarShow : classes.categoryBarHidden,
+      (smallOffset || y > 0)
+        ? classes.categoryBarTopOffsetSmall
+        : classes.categoryBarTopOffsetBig,
     )}>
       <div className={classes.baseBarInnerDashboard}>
         <div className={classes.categoryBarInner}>
-
-          <Link href={`/sale`}>
-
-            <a className={classes.categoryLink}>
-              <Typography className={clsx(
-                classes.categoryLinkTextMain,
-                classes.categoryLinkTextMainHeight,
-              )}>
-                Sale
-              </Typography>
-            </a>
-          </Link>
-
-          <Link href={`/free`}>
-            <a className={classes.categoryLink}>
-              <Typography className={clsx(
-                classes.categoryLinkTextMain,
-                classes.categoryLinkTextMainHeight,
-              )}>
-                Free
-              </Typography>
-            </a>
-          </Link>
 
           <Link href={`/new`}>
             <a className={classes.categoryLink}>
@@ -58,10 +50,20 @@ const CategoryBarDesktop: React.FC<ReactProps> = (props) => {
             </a>
           </Link>
 
+          <Link href={`/sale`}>
+
+            <a className={classes.categoryLink}>
+              <Typography className={clsx(
+                classes.categoryLinkTextMain,
+                classes.categoryLinkTextMainHeight,
+              )}>
+                Price Reduced
+              </Typography>
+            </a>
+          </Link>
+
           <Link href="/categories">
-            <a
-              className={classes.categoryLinkGroups}
-            >
+            <a className={classes.categoryLinkGroups} >
               <Typography className={clsx(
                 classes.categoryLinkTextMain,
                 classes.categoryLinkTextMainHeight,
@@ -72,19 +74,19 @@ const CategoryBarDesktop: React.FC<ReactProps> = (props) => {
           </Link>
 
           {
-            (props?.staticCategories ?? []).map(category => {
+            (props?.categories ?? []).map(category => {
               // console.log("cateogyr: ", category)
               return (
-                <Link key={category}
-                  href="/categories/[categoryIdOrName]"
-                  as={`/categories/${category}`}
+                <Link key={category.id}
+                  href="/categories/[categorySlug]"
+                  as={`/categories/${category?.slug}`}
                 >
                   <a className={classes.categoryLinkGroups}>
                     <Typography className={clsx(
                       classes.categoryLinkTextMain,
                       classes.categoryLinkTextMainHeight,
                     )}>
-                      {category}
+                      {category?.name}
                     </Typography>
                   </a>
                 </Link>
@@ -93,20 +95,19 @@ const CategoryBarDesktop: React.FC<ReactProps> = (props) => {
           }
         </div>
       </div>
-      </nav>
+    </nav>
   );
 };
 
 
 interface ReactProps extends WithStyles<typeof styles> {
   categories: Categories[];
-  staticCategories: string[];
-}
-
-interface CategoriesExpandedProps {
-  categories: Categories[]
-  expandCategories: boolean;
-  hideExpandCategories(): void;
+  // navbar positioning
+  isMainPage: boolean
+  isStartPage: boolean
+  isSellPage: boolean
+  isFeaturedPage: boolean
+  isMobile: boolean
 }
 
 export default withStyles(styles)( CategoryBarDesktop );

@@ -7,41 +7,6 @@ import { useApolloClient } from "@apollo/client";
 
 
 
-export const useCategoriesList = () => {
-
-  const aClient = useApolloClient();
-  const [categories, setCategories] = React.useState([] as Categories[]);
-
-  const staticCategories = [
-    "Ammo",
-    "Pistols",
-    "Rifles",
-    "Misc"
-  ]
-
-  React.useEffect(() => {
-    if (categories.length < 1) {
-      aClient.query<QueryData>({
-        query: GET_CATEGORIES
-      }).then(({ data }: { data?: QueryData }) => {
-        if (data && data.categories) {
-          setCategories(
-            data.categories
-              .filter(c => !!c.name)
-              .sort(sortCategoriesByName)
-          )
-        }
-      }).catch(e => console.log("CategoryBar err: ", e))
-    }
-  }, [])
-
-  return {
-    categories,
-    staticCategories
-  }
-}
-
-
 interface QueryData {
   categories: Categories[]
 }

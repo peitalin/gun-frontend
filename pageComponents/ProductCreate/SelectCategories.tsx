@@ -18,8 +18,7 @@ import Typography from "@material-ui/core/Typography";
 import FormGroup from '@material-ui/core/FormGroup';
 import Button from '@material-ui/core/Button';
 // Select Component
-import DropdownInput from "components/Fields/DropdownInput";
-import { sortCategoriesByName } from "layout/NavBarMain/CategoryBar/categoryHooks";
+import { sortCategoriesByName } from "./categoryHooks";
 // Util components
 import Loading from "components/Loading";
 import ErrorDisplay from "components/ErrorDisplay";

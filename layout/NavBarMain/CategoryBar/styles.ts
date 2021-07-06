@@ -7,17 +7,12 @@ import {
   isThemeDark,
 } from "layout/AppTheme";
 
-import { NewsBarHeight, MainBarHeightDashboard } from "../styles";
+import { NewsBarHeight, MainBarHeightDashboard, MainBarHeightHomePage } from "../styles";
 
 /////////////// STYLES /////////////////////
-export const CategoryBarHeight = 44;
+export const CategoryBarHeight = 40;
 export const CategoryBarHeightMobile = 30;
 
-const categoryLinkColor = Colors.slateGrey
-const categoryLinkColorHover = Colors.gradientUniswapBlue1
-
-const categoryLinkColor2 = Colors.darkGrey
-const categoryLinkColorHover2 = Colors.secondaryBright
 
 
 export const styles = (theme: Theme) => createStyles({
@@ -30,8 +25,8 @@ export const styles = (theme: Theme) => createStyles({
     //   ? Gradients.gradientUniswapDarkRotated.background
     //   : Gradients.gradientGrey2.background,
     // background: Colors.uniswapDarkNavy,
-    paddingTop: NewsBarHeight,
-    height: `${MainBarHeightDashboard + NewsBarHeight}px`, // 1px for borderBottom
+    // paddingTop: NewsBarHeight,
+    height: `${MainBarHeightDashboard }px`, // 1px for borderBottom
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center',
@@ -47,18 +42,53 @@ export const styles = (theme: Theme) => createStyles({
     alignItems: "center",
   },
   // Category Bar
+  categoryBarTopOffsetSmall: {
+    zIndex: 5,
+    position: 'fixed',
+    right: 0,
+    top: `${MainBarHeightDashboard}px`,
+  },
+  categoryBarTopOffsetBig: {
+    zIndex: 5,
+    position: 'fixed',
+    right: 0,
+    top: `${MainBarHeightHomePage}px`,
+  },
   categoryBar: {
-    height: `${CategoryBarHeight - 1}px`, // 1px for borderBottom
-    // background: categoryBarColor,
-    background: theme.palette.type === 'dark'
-      ? Gradients.gradientUniswapDark.background
-      : Gradients.gradientGrey2.background,
+    height: `${CategoryBarHeight}px`, // 1px for borderBottom
+    boxShadow: BoxShadows.shadow1.boxShadow,
+    backdropFilter: "blur(6px)",
+    background: isThemeDark(theme)
+      ? 'rgba(18, 18, 29, 0.3)'
+      : 'rgba(245, 245, 255, 0.8)',
+    // background: isThemeDark(theme)
+    //   ? Gradients.gradientUniswapDark.background
+    //   : Gradients.gradientGrey2.background,
     border: '0px solid',
-    // boxShadow: "1px 1px 1px 1px rgba(22,22,22,0.2)"
-    boxShadow: "0px 1px 2px 0px rgba(40,40,40,0.3)",
+    // border: isThemeDark(theme)
+    //   ? `1px solid ${Colors.uniswapMediumNavy}`
+    //   : `1px solid ${Colors.slateGreyDarker}`,
   },
   categoryBarMobile: {
     height: 30,
+  },
+  categoryBarShow: {
+    display: "unset",
+    opacity: 1,
+    // transition: theme.transitions.create(['opacity'], {
+    //   easing: theme.transitions.easing.easeIn,
+    //   duration: '100ms',
+    //   // delay: '100ms',
+    // })
+  },
+  categoryBarHidden: {
+    display: "none",
+    opacity: 0,
+    // transition: theme.transitions.create(['opacity'], {
+    //   easing: theme.transitions.easing.easeIn,
+    //   duration: '100ms',
+    //   // delay: '100ms',
+    // })
   },
   categoryBarInner: {
     zIndex: 3,
@@ -88,7 +118,6 @@ export const styles = (theme: Theme) => createStyles({
   categoryLink: {
   },
   categoryLinkAllMain: {
-    color: categoryLinkColor,
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
@@ -102,7 +131,9 @@ export const styles = (theme: Theme) => createStyles({
       duration: '100ms',
     }),
     "&:hover": {
-      color: categoryLinkColorHover,
+      color: isThemeDark(theme)
+        ? Colors.purple
+        : Colors.ultramarineBlueLight,
       borderBottom: '2px solid',
       transition: theme.transitions.create(['border', 'color'], {
         easing: theme.transitions.easing.easeIn,
@@ -111,7 +142,9 @@ export const styles = (theme: Theme) => createStyles({
     },
   },
   categoryLinkTextMain: {
-    color: categoryLinkColor,
+    color: isThemeDark(theme)
+      ? Colors.uniswapLightGrey
+      : Colors.black,
     minWidth: '50px',
     whiteSpace: 'nowrap',
     fontSize: '0.8rem',
@@ -126,7 +159,9 @@ export const styles = (theme: Theme) => createStyles({
     }),
     "&:hover": {
       borderBottom: '2px solid',
-      color: categoryLinkColorHover,
+      color: isThemeDark(theme)
+        ? Colors.purple
+        : Colors.ultramarineBlueLight,
       transition: theme.transitions.create(['border', 'color'], {
         easing: theme.transitions.easing.easeIn,
         duration: '100ms',
@@ -134,40 +169,23 @@ export const styles = (theme: Theme) => createStyles({
     },
   },
   categoryLinkTextMainHeight: {
-    height: CategoryBarHeight,
+    height: `calc(${CategoryBarHeight}px)`,
   },
   categoryLinkTextMainHeightMobile: {
     height: CategoryBarHeightMobile,
-  },
-  categoryLinkAll: {
-    color: categoryLinkColor2,
-    "&:hover": {
-      color: categoryLinkColorHover2,
-    },
-    minWidth: '50px',
-    whiteSpace: 'nowrap',
-    fontSize: '0.8rem',
-    marginRight: '0.5rem',
-    marginBottom: '0.5rem',
-  },
-  categoryLinkText: {
-    color: categoryLinkColor2,
-    "&:hover": {
-      color: categoryLinkColorHover2,
-    },
-    marginBottom: '0.25rem',
-    minWidth: '50px',
-    whiteSpace: 'nowrap',
-    fontSize: '0.8rem',
   },
   showAllCategoriesButton: {
     display: 'flex',
     flexDirection: 'row',
     marginRight: '1rem',
     cursor: 'pointer',
-    color: categoryLinkColor,
+    color: isThemeDark(theme)
+      ? Colors.uniswapLightGrey
+      : Colors.black,
     "&:hover": {
-      color: categoryLinkColorHover,
+      color: isThemeDark(theme)
+        ? Colors.purple
+        : Colors.ultramarineBlueLight,
     },
   },
   categoriesMenu: {

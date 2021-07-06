@@ -1,8 +1,11 @@
 import React from "react";
 // Components
 // import NewsBar from "./NewsBar";
+import CategoryBar from "./CategoryBar";
 import MainBar from "./MainBar";
 import UserMenuMobileDither from "./UserMenuMobileDither";
+import { Categories } from "typings/gqlTypes";
+
 
 
 const NavBar: React.FC<ReactProps> = (props) => {
@@ -16,7 +19,12 @@ const NavBar: React.FC<ReactProps> = (props) => {
         mobileMenuOpen={mobileMenuOpen}
         setMobileMenuOpen={setMobileMenuOpen}
       />
-      {/* <CategoryBar/> */}
+      {
+        props.initialCategories?.length > 0 &&
+        <CategoryBar
+          initialCategories={props.initialCategories}
+        />
+      }
       {
         mobileMenuOpen &&
         <UserMenuMobileDither
@@ -32,6 +40,7 @@ const NavBar: React.FC<ReactProps> = (props) => {
 }
 
 interface ReactProps {
+  initialCategories: Categories[]
 }
 
 export default NavBar;

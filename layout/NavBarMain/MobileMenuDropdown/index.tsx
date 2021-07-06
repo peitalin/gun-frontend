@@ -120,7 +120,7 @@ const styles = (theme: Theme) => createStyles({
     top: `calc(${MainBarHeightDashboard}px + 1rem - 1px)`, // 1px tucked under navbar
   },
   menuTopDashboard: {
-    top: `calc(${MainBarHeightDashboard}px + 4.25rem - 1px)`, // 1px tucked under navbar
+    top: `calc(${MainBarHeightDashboard}px + 4rem - 4px)`, // 4px tucked under navbar
   },
   mobileMenuExpanderRoot: {
     zIndex: 2,

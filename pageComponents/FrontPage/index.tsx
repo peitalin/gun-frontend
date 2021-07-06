@@ -102,29 +102,6 @@ const FrontPage: React.FC<ReactProps> = (props) => {
         withRecommendations={false}
       >
 
-        <div className={classes.categoryCarouselFrontPageBox}>
-          <ShowOnMobileOrDesktopSSR desktop className={classes.width100CenterBox}>
-            <CategoryCarouselStart
-              title={"Browse by Category"}
-              initialCategories={props.initialCategories}
-              containerStyle={{ marginTop: '-74px' }}
-              style={{
-                width: `calc(100% - ${cPadding*2}rem)`,
-                marginLeft: `${cPadding}rem`,
-                marginRight: `${cPadding}rem`,
-              }}
-            />
-          </ShowOnMobileOrDesktopSSR>
-          <ShowOnMobileOrDesktopSSR mobile className={classes.width100CenterBox}>
-            <CategoryCarouselStart
-              title={"Browse by Category"}
-              initialCategories={props.initialCategories}
-              containerStyle={{ marginTop: '-48px' }}
-              style={{ }}
-            />
-          </ShowOnMobileOrDesktopSSR>
-        </div>
-
         {
           process.browser &&
           featuredSection?.map(section => {
@@ -205,7 +182,6 @@ const FrontPage: React.FC<ReactProps> = (props) => {
           })
         }
 
-
         {
           showPromotedBanner &&
           <div className={classes.bannerPromotionsContainer}>
@@ -214,6 +190,30 @@ const FrontPage: React.FC<ReactProps> = (props) => {
             />
           </div>
         }
+
+        <div className={classes.categoryCarouselFrontPageBox}>
+          <ShowOnMobileOrDesktopSSR desktop className={classes.width100CenterBox}>
+            <CategoryCarouselStart
+              title={"Browse by Category"}
+              initialCategories={props.initialCategories}
+              containerStyle={{ marginTop: '4rem' }}
+              style={{
+                width: `calc(100% - ${cPadding*2}rem)`,
+                marginLeft: `${cPadding}rem`,
+                marginRight: `${cPadding}rem`,
+              }}
+            />
+          </ShowOnMobileOrDesktopSSR>
+          <ShowOnMobileOrDesktopSSR mobile className={classes.width100CenterBox}>
+            <CategoryCarouselStart
+              title={"Browse by Category"}
+              initialCategories={props.initialCategories}
+              containerStyle={{ marginTop: '-48px' }}
+              style={{ }}
+            />
+          </ShowOnMobileOrDesktopSSR>
+        </div>
+
 
         {
           showCategories &&
@@ -266,7 +266,7 @@ const styles = (theme: Theme) => createStyles({
     // flexDirection: "row",
     // justifyContent: 'center',
     // maxWidth: 800,
-    marginBottom: '3rem',
+    // marginBottom: '3rem',
   },
   categoryBrands: {
     display: 'flex',

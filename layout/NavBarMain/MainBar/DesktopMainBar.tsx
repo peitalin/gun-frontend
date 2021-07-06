@@ -13,7 +13,6 @@ import Button from "@material-ui/core/Button";
 // Router
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { asCurrency as c } from "utils/prices";
 import { isMainPageFn, isStartPageFn, isFeaturedPageFn, isSellPageFn } from "."
 import ToggleDarkMode from "layout/NavBarMain/ToggleDarkMode";
 import Tooltip from '@material-ui/core/Tooltip';
@@ -27,21 +26,23 @@ const DesktopMainBar = (props: DesktopMainBarProps) => {
     endRoute,
     loggedIn,
     color,
+    isMainPage,
+    isSellPage,
+    isStartPage,
+    isFeaturedPage,
   } = props;
 
-  const router = useRouter()
-
-  let isHomePage = isMainPageFn(router)
-  let isSellPage = isSellPageFn(router)
-  let isStartPage = isStartPageFn(router)
-  let isFeaturedPage = isFeaturedPageFn(router)
+  // const router = useRouter()
 
   return (
-    <div className={
-      (isHomePage || isStartPage || isFeaturedPage || isSellPage)
+    <div className={clsx(
+      (isMainPage || isStartPage || isFeaturedPage || isSellPage)
         ? classes.baseBarInnerHomePage
-        : classes.baseBarInnerDashboard
-    }>
+        : classes.baseBarInnerDashboard,
+      props.showBlurWide
+        ? classes.blurBackgroundWide
+        : classes.blurBackgroundWideTransparent,
+    )}>
 
       <div style={{ flexBasis: '0.5rem' }}></div>
 
@@ -57,24 +58,12 @@ const DesktopMainBar = (props: DesktopMainBarProps) => {
               }/>
             </a>
           </Link>
-          {/* <div className={classes.blurBackground}/> */}
         </div>
       </Tooltip>
 
       <div style={{ flexGrow: 1}}/>
 
-
-      {
-        props.showBlurWide &&
-        <div className={classes.blurBackgroundWide}/>
-      }
-
       <div className={classes.menuButtonsContainer}>
-
-        {
-          !props.showBlurWide &&
-          <div className={classes.blurBackground}/>
-        }
 
         {
           !loggedIn &&
@@ -174,6 +163,11 @@ interface DesktopMainBarProps extends WithStyles<typeof styles> {
   color: string;
   isDarkMode: boolean;
   showBlurWide: boolean;
+  // navbar
+  isMainPage: boolean
+  isStartPage: boolean
+  isSellPage: boolean
+  isFeaturedPage: boolean
 }
 
 export default withStyles(styles)( DesktopMainBar );

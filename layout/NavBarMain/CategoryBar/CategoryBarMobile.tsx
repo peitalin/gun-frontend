@@ -6,7 +6,6 @@ import { withStyles, WithStyles } from "@material-ui/core/styles";
 import { styles } from "./styles";
 // MUI
 import Typography from "@material-ui/core/Typography";
-import KeyboardArrowDown from "@material-ui/icons/KeyboardArrowDown"
 // hooks
 import Link from "next/link";
 
@@ -27,28 +26,6 @@ const CategoryBarMobile: React.FC<ReactProps> = (props) => {
         <div className={classes.baseBarInnerDashboard}>
           <div className={classes.categoryBarInnerMobile}>
 
-            <Link href={`/sale`}>
-              <a className={classes.categoryLink}>
-                <Typography className={clsx(
-                  classes.categoryLinkAllMain,
-                  classes.categoryLinkTextMainHeightMobile,
-                )}>
-                  Sale
-                </Typography>
-              </a>
-            </Link>
-
-            <Link href={`/free`}>
-              <a className={classes.categoryLink}>
-                <Typography className={clsx(
-                  classes.categoryLinkAllMain,
-                  classes.categoryLinkTextMainHeightMobile,
-                )}>
-                  Free
-                </Typography>
-              </a>
-            </Link>
-
             <Link href={`/new`}>
               <a className={classes.categoryLink}>
                 <Typography className={clsx(
@@ -59,6 +36,18 @@ const CategoryBarMobile: React.FC<ReactProps> = (props) => {
                 </Typography>
               </a>
             </Link>
+
+            <Link href={`/sale`}>
+              <a className={classes.categoryLink}>
+                <Typography className={clsx(
+                  classes.categoryLinkAllMain,
+                  classes.categoryLinkTextMainHeightMobile,
+                )}>
+                  Price Reduced
+                </Typography>
+              </a>
+            </Link>
+
 
             <Link href={`/categories`}>
               <a className={classes.categoryLink}>
@@ -74,9 +63,9 @@ const CategoryBarMobile: React.FC<ReactProps> = (props) => {
             {
               (props?.categories ?? []).map(category => {
                 return (
-                  <a key={category.name}
+                  <a key={category.id}
                     className={classes.categoryLinkGroups}
-                    href={`/categories/${category.name}`}
+                    href={`/categories/${category.slug}`}
                   >
                     <Typography className={clsx(
                       classes.categoryLinkTextMain,
@@ -98,7 +87,12 @@ const CategoryBarMobile: React.FC<ReactProps> = (props) => {
 
 interface ReactProps extends WithStyles<typeof styles> {
   categories: Categories[];
-  staticCategories: string[];
+  // navbar positioning
+  isMainPage: boolean
+  isStartPage: boolean
+  isSellPage: boolean
+  isFeaturedPage: boolean
+  isMobile: boolean
 }
 
 export default withStyles(styles)( CategoryBarMobile );

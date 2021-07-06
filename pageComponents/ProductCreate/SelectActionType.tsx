@@ -10,8 +10,7 @@ import Typography from "@material-ui/core/Typography";
 import FormGroup from '@material-ui/core/FormGroup';
 import Button from '@material-ui/core/Button';
 // Select Component
-import DropdownInput from "components/Fields/DropdownInput";
-import { sortActionTypeByName } from "layout/NavBarMain/CategoryBar/categoryHooks";
+import { sortActionTypeByName } from "./categoryHooks";
 // Util components
 import ErrorBounds from 'components/ErrorBounds';
 import ValidationErrorMsg from "components/Fields/ValidationErrorMsg";

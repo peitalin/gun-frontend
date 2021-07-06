@@ -20,8 +20,6 @@ import {
   GET_PRODUCTS_BY_CATEGORY,
  } from "queries/products-queries";
 import { useQuery, useApolloClient } from "@apollo/client";
-// categories
-import { useCategoriesList } from "layout/NavBarMain/CategoryBar/categoryHooks";
 // useMediaQuery
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";

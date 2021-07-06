@@ -28,15 +28,13 @@ const MobileMainBar = (props: MobileMainBarProps) => {
     endRoute,
     loggedIn,
     color,
+    isStartPage,
+    isMainPage,
+    isDashboardPage,
   } = props;
 
-  const dispatch = useDispatch();
   const router = useRouter()
   const [hide, setHide] = React.useState(false)
-
-  let isHomePage = isMainPageFn(router)
-  let isStartPage = isStartPageFn(router)
-  let isDashboardPage = isDashboardPageFn(router)
 
   return (
     <div className={classes.baseBarInnerMobile}>
@@ -109,7 +107,7 @@ const MobileMainBar = (props: MobileMainBarProps) => {
           // inside icon when searchbar opens
           expandedIconColor={
             (
-              (isStartPage || isHomePage) && !props.isDarkMode
+              (isStartPage || isMainPage) && !props.isDarkMode
             ) ? Colors.black : color
           }
           mobileMenuOpen={props.mobileMenuOpen}
@@ -173,6 +171,12 @@ interface MobileMainBarProps extends ReactProps {
   color: string;
   numUnclaimedOrders?: number;
   isDarkMode: boolean;
+  // navbar
+  isMainPage: boolean
+  isStartPage: boolean
+  isSellPage: boolean
+  isFeaturedPage: boolean
+  isDashboardPage: boolean
 }
 
 

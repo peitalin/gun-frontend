@@ -24,11 +24,9 @@ const CategoryCarouselMainDesktop = (props: ReactProps) => {
   const theme = useTheme();
   const xs = useMediaQuery(theme.breakpoints.only("xs"));
   const sm = useMediaQuery(theme.breakpoints.only("sm"));
-  const md = useMediaQuery(theme.breakpoints.only("md"));
-  const lg = useMediaQuery(theme.breakpoints.only("lg"));
-  const xl = useMediaQuery(theme.breakpoints.only("xl"));
-
-  const smDown = useMediaQuery(theme.breakpoints.down("sm"));
+  // const md = useMediaQuery(theme.breakpoints.only("md"));
+  // const lg = useMediaQuery(theme.breakpoints.only("lg"));
+  // const xl = useMediaQuery(theme.breakpoints.only("xl"));
 
   const getImgSizes = () => {
     if (xs || sm) {
