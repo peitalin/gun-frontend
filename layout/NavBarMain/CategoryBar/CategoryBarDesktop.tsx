@@ -41,7 +41,7 @@ const CategoryBarDesktop: React.FC<ReactProps> = (props) => {
       <div className={classes.baseBarInnerDashboard}>
         <div className={classes.categoryBarInner}>
 
-          <Link href={`/new`}>
+          <Link href={`/new/all`}>
             <a className={classes.categoryLink}>
               <Typography className={clsx(
                 classes.categoryLinkTextMain,
@@ -52,7 +52,7 @@ const CategoryBarDesktop: React.FC<ReactProps> = (props) => {
             </a>
           </Link>
 
-          <Link href={`/sale`}>
+          {/* <Link href={`/sale`}>
 
             <a className={classes.categoryLink}>
               <Typography className={clsx(
@@ -62,18 +62,8 @@ const CategoryBarDesktop: React.FC<ReactProps> = (props) => {
                 Price Reduced
               </Typography>
             </a>
-          </Link>
+          </Link> */}
 
-          <Link href="/categories">
-            <a className={classes.categoryLinkGroups} >
-              <Typography className={clsx(
-                classes.categoryLinkTextMain,
-                classes.categoryLinkTextMainHeight,
-              )}>
-                All Categories
-              </Typography>
-            </a>
-          </Link>
 
           {
             (props?.categories ?? []).map(category => {
@@ -95,6 +85,17 @@ const CategoryBarDesktop: React.FC<ReactProps> = (props) => {
               )
             })
           }
+
+          <Link href="/categories">
+            <a className={classes.categoryLinkGroups} >
+              <Typography className={clsx(
+                classes.categoryLinkTextMain,
+                classes.categoryLinkTextMainHeight,
+              )}>
+                All Categories
+              </Typography>
+            </a>
+          </Link>
         </div>
       </div>
     </nav>
