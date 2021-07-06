@@ -86,7 +86,7 @@ const BannerHome: NextPage<ReactProps> = (props) => {
       <ShowOnMobileOrDesktopSSR desktop>
 
         <BannerHomeLayout
-          height={750}
+          height={540}
           mdDown={false}
           bannerImageUrl={bannerImageUrl}
           // bannerImageUrl={undefined}

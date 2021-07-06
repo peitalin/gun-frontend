@@ -14,7 +14,7 @@ export const styles = (theme: Theme) => createStyles({
     justifyContent: "center",
     alignItems: "center",
     padding: '1rem',
-    marginTop: "8rem",
+    marginTop: "12rem",
     marginBottom: '2rem',
     height: '5rem', // so search expansion doesnt move title heading
   },
