@@ -9,6 +9,10 @@ import {
   BorderRadius,
   isThemeDark,
 } from "layout/AppTheme";
+import {
+  blurDark,
+  blurLight,
+} from "./constants";
 
 
 /////////////// STYLES /////////////////////
@@ -25,9 +29,6 @@ export const MobileNavbarHeight = MainBarHeightDashboard + 8
 /// hover colors for menu buttons
 export const buttonHoverDark = fade(Colors.uniswapDarkNavy, 0.7)
 export const buttonHoverLight = fade(Colors.cream, 0.2)
-
-export const blurDark = 'rgba(18, 18, 29, 0.6)'
-export const blurLight = 'rgba(245, 245, 255, 0.9)'
 
 
 

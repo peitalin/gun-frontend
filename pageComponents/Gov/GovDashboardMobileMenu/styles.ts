@@ -9,7 +9,6 @@ import {
   MobileNavbarHeight,
 } from "layout/NavBarMain/styles";
 
-
 const dashboardLinkColorHover = Colors.secondaryBright
 
 const dashboardLinkColor2 = Colors.darkGrey
@@ -18,6 +17,10 @@ const dashboardLinkColorHover2 = Colors.secondaryBright
 const DashboardBarHeight = 48
 const dashboardMenuHeight = 50 * 11
 // 11 items, 50px each
+import {
+  blurDark,
+  blurLight,
+} from "layout/NavBarMain/constants";
 
 
 export const dashboardBarStyle = (theme: Theme) => ({
@@ -26,8 +29,8 @@ export const dashboardBarStyle = (theme: Theme) => ({
   top: `${MobileNavbarHeight}px`, //
   backdropFilter: "blur(6px)",
   background: isThemeDark(theme)
-    ? 'rgba(18, 18, 29, 0.3)'
-    : 'rgba(245, 245, 255, 0.8)',
+    ? blurDark
+    : blurLight,
   boxShadow: BoxShadows.shadow1.boxShadow,
   borderBottom: theme.palette.type === 'dark'
     ? `1px solid ${Colors.uniswapMediumNavy}`

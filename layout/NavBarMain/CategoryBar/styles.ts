@@ -15,7 +15,7 @@ export const CategoryBarHeightMobile = 30;
 import {
   blurDark,
   blurLight,
-} from "../styles";
+} from "../constants";
 
 
 
