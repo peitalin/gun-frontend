@@ -6,10 +6,8 @@ import {
   NavBarHeight,
   MainBarHeightDashboard,
   NewsBarHeight,
-} from "layout/NavBarMain/styles";
-import {
   CategoryBarHeight,
-} from "layout/NavBarMain/CategoryBar/styles";
+} from "layout/NavBarMain/styles";
 
 
 

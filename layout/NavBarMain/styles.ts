@@ -13,15 +13,14 @@ import {
   blurDark,
   blurLight,
 } from "./constants";
-import {
-  CategoryBarHeight,
-  CategoryBarHeightMobile,
-} from "./CategoryBar/styles";
 
 
 /////////////// STYLES /////////////////////
 export const MainBarHeightHomePage = 75;
 export const MainBarHeightDashboard = 55;
+
+export const CategoryBarHeight = 40;
+export const CategoryBarHeightMobile = 30;
 
 export const NewsBarHeight = 8;
 export const NavBarHeight = MainBarHeightHomePage + CategoryBarHeight;

@@ -28,7 +28,6 @@ const CategoryBarDesktop: React.FC<ReactProps> = (props) => {
 
   const alwaysShowBar = !isMainPage && !isFeaturedPage && !isStartPage && !isSellPage
   // console.log("Y:", y)
-  console.log("isMaingPage:", isMainPage)
 
   return (
     <nav className={clsx(

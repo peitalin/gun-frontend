@@ -3,8 +3,7 @@ import clsx from "clsx";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
 import { Colors, BorderRadius, Gradients } from "layout/AppTheme";
-import { MobileNavbarHeight } from "layout/NavBarMain/styles";
-import { CategoryBarHeight } from "layout/NavBarMain/CategoryBar/styles";
+import { MobileNavbarHeight, CategoryBarHeight } from "layout/NavBarMain/styles";
 
 // MUI
 import MenuIcon from "@material-ui/icons/Menu";

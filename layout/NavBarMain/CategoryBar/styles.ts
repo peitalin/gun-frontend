@@ -7,11 +7,15 @@ import {
   isThemeDark,
 } from "layout/AppTheme";
 
-import { MobileNavbarHeight, MainBarHeightDashboard, MainBarHeightHomePage } from "../styles";
+import {
+  MobileNavbarHeight,
+  MainBarHeightDashboard,
+  MainBarHeightHomePage,
+  CategoryBarHeight,
+  CategoryBarHeightMobile,
+} from "../styles";
 
 /////////////// STYLES /////////////////////
-export const CategoryBarHeight = 40;
-export const CategoryBarHeightMobile = 30;
 import {
   blurDark,
   blurLight,
