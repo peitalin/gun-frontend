@@ -7,10 +7,6 @@ import { Colors } from "layout/AppTheme";
 import ErrorBounds from "components/ErrorBounds";
 import Loading from "components/Loading";
 import Typography from "@material-ui/core/Typography";
-// Components
-import Divider from "components/Divider";
-// Router
-import { useRouter } from "next/router";
 
 // Recommendations
 import YouMayAlsoLikeMobile from "components/Recommendations/YouMayAlsoLikeMobile";
@@ -143,7 +139,7 @@ const styles = (theme: Theme) => createStyles({
       easing: theme.transitions.easing.easeIn,
       duration: "200ms",
     }),
-    maxWidth: 900,
+    maxWidth: 1160,
     padding: '1rem',
   },
 });

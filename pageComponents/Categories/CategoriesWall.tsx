@@ -1,14 +1,10 @@
 import React from "react";
-import { Categories, Product } from "typings/gqlTypes";
+import { Categories } from "typings/gqlTypes";
 // Styles
 import clsx from "clsx";
 import { withStyles, WithStyles, Theme, createStyles } from "@material-ui/core/styles";
-// MUI
-import Typography from "@material-ui/core/Typography";
-// hooks
-import Link from "next/link";
-import { Colors } from "layout/AppTheme";
 import CategoryCarouselStart from "components/CategoryCarouselStart";
+import ShowOnMobileOrDesktopSSR from "components/ShowOnMobileOrDesktopSSR";
 
 
 
@@ -20,14 +16,30 @@ const CategoriesWall: React.FC<ReactProps> = (props) => {
     categories,
   } = props;
 
+  let cPadding = 4 // category carousel padding
+
   return (
-    <div className={classes.categoryOuterContainer}>
-      <div className={classes.categoryInnerContainer}>
+    <div className={classes.categoryCarouselFrontPageBox}>
+      <ShowOnMobileOrDesktopSSR desktop className={classes.width100CenterBox}>
         <CategoryCarouselStart
-          disableTitle={true}
+          title={"Browse by Category"}
           initialCategories={props.categories}
+          containerStyle={{ marginTop: '4rem' }}
+          style={{
+            width: `calc(100% - ${cPadding*2}rem)`,
+            marginLeft: `${cPadding}rem`,
+            marginRight: `${cPadding}rem`,
+          }}
         />
-      </div>
+      </ShowOnMobileOrDesktopSSR>
+      <ShowOnMobileOrDesktopSSR mobile className={classes.width100CenterBox}>
+        <CategoryCarouselStart
+          title={"Browse by Category"}
+          initialCategories={props.categories}
+          containerStyle={{ marginTop: '-48px' }}
+          style={{ }}
+        />
+      </ShowOnMobileOrDesktopSSR>
     </div>
   )
 }
@@ -38,50 +50,22 @@ interface ReactProps extends WithStyles<typeof styles> {
   categories: Categories[];
 }
 
-const categoryLinkColor2 = Colors.black
-const categoryLinkColorHover2 = Colors.secondaryBright
-
 const styles = (theme: Theme) => createStyles({
-  categoryHeading: {
-    marginBottom: "0.5rem",
-  },
-  categoryLinkGroups: {
-    marginRight: '1rem',
-  },
-  categoryLink: {
-    color: categoryLinkColor2,
-    display: 'flex',
-    flexDirection: "row",
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-    minWidth: '50px',
-    whiteSpace: 'nowrap',
-    marginRight: '0.5rem',
-    marginBottom: '1rem',
-    transition: theme.transitions.create(['color'], {
-      easing: theme.transitions.easing.easeIn,
-      duration: '100ms',
-    }),
-    "&:hover": {
-      color: categoryLinkColorHover2,
-      transition: theme.transitions.create(['color'], {
-        easing: theme.transitions.easing.easeIn,
-        duration: '100ms',
-      })
-    },
-  },
-  categoryOuterContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    flexWrap: 'wrap',
+  categoryCarouselFrontPageBox: {
     width: '100%',
   },
-  categoryInnerContainer: {
-    flexDirection: 'column',
-    flexWrap: 'wrap',
-    minWidth: 215,
-    marginBottom: '2rem',
+  categoryBrands: {
+    display: 'flex',
+    flexDirection: "row",
+    justifyContent: 'space-between',
+    width: '100%',
+    maxWidth: 500,
+    marginTop: '1rem',
+    marginBottom: '1rem',
+  },
+  width100CenterBox: {
+    width: '100%',
+    // maxWidth: 800,
   },
 });
 

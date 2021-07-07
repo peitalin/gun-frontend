@@ -12,8 +12,6 @@ import FeaturedProducts from "pageComponents/FrontPage/FeaturedProducts";
 import BannerHome from "pageComponents/FrontPage/BannerHome";
 import BannerPromotionsLink from "pageComponents/FrontPage/BannerPromotionsLink";
 
-import { useScrollYPosition } from "utils/hooks";
-
 // GraphQL
 import CategoryCarouselStart from "components/CategoryCarouselStart";
 // import SaySomethingSubscriptionTest from "./SaySomethingSubscriptionTest";
@@ -48,8 +46,9 @@ const FrontPage: React.FC<ReactProps> = (props) => {
     initialFeaturedProducts,
   } = props;
 
-  // let y = useScrollYPosition()
+  // show client-side only
   let defaultShow = process.browser
+
   const [showFeatured, setShowFeatured] = React.useState(defaultShow)
   const [showAdvertised, setShowAdvertised] = React.useState(defaultShow)
   const [showPromotedBanner, setShowPromotedBanner] = React.useState(defaultShow)
@@ -261,11 +260,6 @@ const styles = (theme: Theme) => createStyles({
     // so carousel is above search dither popup
   },
   categoryCarouselFrontPageBox: {
-    // display: 'flex',
-    // flexDirection: "row",
-    // justifyContent: 'center',
-    // maxWidth: 800,
-    // marginBottom: '3rem',
   },
   categoryBrands: {
     display: 'flex',
