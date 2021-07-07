@@ -163,9 +163,6 @@ export const styles = (theme: Theme) => createStyles({
     background: isThemeDark(theme)
       ? blurDark
       : blurLight,
-    borderBottom: isThemeDark(theme)
-      ? `1px solid ${Colors.uniswapMediumNavy}`
-      : `1px solid ${Colors.slateGrey}`,
   },
   blurBackgroundMobile: {
     position: "absolute",

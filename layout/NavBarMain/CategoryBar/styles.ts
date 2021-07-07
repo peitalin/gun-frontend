@@ -61,7 +61,7 @@ export const styles = (theme: Theme) => createStyles({
   },
   categoryBar: {
     height: `${CategoryBarHeight}px`, // 1px for borderBottom
-    boxShadow: BoxShadows.shadow1.boxShadow,
+    // boxShadow: BoxShadows.shadowWhite.boxShadow,
     backdropFilter: "blur(6px)",
     background: isThemeDark(theme)
       ? blurDark
@@ -69,10 +69,13 @@ export const styles = (theme: Theme) => createStyles({
     // background: isThemeDark(theme)
     //   ? Gradients.gradientUniswapDark.background
     //   : Gradients.gradientGrey2.background,
-    border: '0px solid',
-    // border: isThemeDark(theme)
-    //   ? `1px solid ${Colors.uniswapMediumNavy}`
-    //   : `1px solid ${Colors.slateGreyDarker}`,
+    // border: '0px solid',
+    borderTop: isThemeDark(theme)
+      ? `1px solid ${Colors.uniswapDarkNavy}`
+      : `1px solid ${Colors.slateGrey}`,
+    borderBottom: isThemeDark(theme)
+      ? `1px solid ${Colors.uniswapDarkNavy}`
+      : `1px solid ${Colors.slateGrey}`,
   },
   categoryBarMobile: {
     top: `${MobileNavbarHeight}px`, // 1px for borderBottom
