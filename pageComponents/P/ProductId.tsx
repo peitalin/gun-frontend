@@ -180,7 +180,6 @@ const Products: React.FC<ReactProps> = (props) => {
 
   let storeUserVerified = product?.sellerLicense?.verified;
   let productIsYours = product?.store?.user?.id === user?.id
-  // console.log("product: ", product)
 
   if (!loading && product?.store?.isSuspended === true) {
     return <ErrorPage statusCode={400} message={"Store has been suspended"}/>
@@ -387,7 +386,7 @@ const styles = (theme: Theme) => createStyles({
   },
   positionSticky: {
     position: "sticky",
-    top: "1rem",
+    top: "7rem",
     paddingRight: '1rem',
     //
     height: "100%",
