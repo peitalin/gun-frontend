@@ -6,10 +6,10 @@ import {
   NavBarHeight,
   MainBarHeightDashboard,
   NewsBarHeight,
-  CategoryBarHeight,
 } from "layout/NavBarMain/styles";
-// Stripe
-import StripeProvider from "layout/StripeProvider";
+import {
+  CategoryBarHeight,
+} from "layout/NavBarMain/CategoryBar/styles";
 
 
 
@@ -35,7 +35,6 @@ const PageContainer: React.FC<ReactProps> = (props) => {
 
 
 interface ReactProps extends WithStyles<typeof styles> {
-  withStripeProvider?: boolean;
   needsNavbarPadding?: boolean
 }
 
@@ -57,7 +56,7 @@ const styles = (theme: Theme) => createStyles({
     // offset 140px for navbar
   },
   navbarPaddingTop: {
-    paddingTop: MainBarHeightDashboard + NewsBarHeight + CategoryBarHeight,
+    paddingTop: MainBarHeightDashboard + CategoryBarHeight,
   },
   pageInnerContainer: {
     position: 'relative',

@@ -205,7 +205,7 @@ const CategoryId: React.FC<ReactProps> = (props) => {
     >
 
       <LoadingBar
-        absoluteTop
+        fixed
         color={
           isThemeDark(theme)
             ? Colors.purple
@@ -213,8 +213,8 @@ const CategoryId: React.FC<ReactProps> = (props) => {
         }
         height={4}
         width={'100vw'}
-        loading={loading}
-        style={{ zIndex: 1 }}
+        loading={true}
+        style={{ zIndex: 1505, top: 0, right: 0 }}
       />
 
       <div className={clsx(

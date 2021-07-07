@@ -3,10 +3,12 @@ import { Colors, BoxShadows, BorderRadius, BorderRadius2x, Gradients, isThemeDar
 import {
   MainBarHeightDashboard,
   NewsBarHeight,
-  CategoryBarHeight,
-  CategoryBarHeightMobile,
   NavBarHeight,
 } from "layout/NavBarMain/styles";
+import {
+  CategoryBarHeight,
+  CategoryBarHeightMobile,
+} from "layout/NavBarMain/CategoryBar/styles";
 import {
   dashboardMenuDitherStyle,
   dashboardBarStyle,
