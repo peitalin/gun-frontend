@@ -100,6 +100,7 @@ const CategoryId: React.FC<ReactProps> = (props) => {
     router: router,
     syncUrlParams: true,
   })
+  console.log("initialRouteCategorySlug: ", props.initialRouteCategory?.slug)
 
   const [searchTermForGql, setSearchTermForGql] = React.useState<string>(
     (router?.query?.q as any)
@@ -166,6 +167,7 @@ const CategoryId: React.FC<ReactProps> = (props) => {
   // sync selected category in searchbar to SSR category from url bar
   React.useEffect(() => {
     setCurrentCategories([props.initialRouteCategory])
+    setCategorySlugsForGql([props.initialRouteCategory.slug])
   }, [props.initialRouteCategory])
 
   React.useEffect(() => {
@@ -213,7 +215,7 @@ const CategoryId: React.FC<ReactProps> = (props) => {
         }
         height={4}
         width={'100vw'}
-        loading={true}
+        loading={loading}
         style={{ zIndex: 1505, top: 0, right: 0 }}
       />
 
