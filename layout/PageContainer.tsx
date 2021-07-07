@@ -6,6 +6,7 @@ import {
   NavBarHeight,
   MainBarHeightDashboard,
   NewsBarHeight,
+  CategoryBarHeight,
 } from "layout/NavBarMain/styles";
 // Stripe
 import StripeProvider from "layout/StripeProvider";
@@ -56,7 +57,7 @@ const styles = (theme: Theme) => createStyles({
     // offset 140px for navbar
   },
   navbarPaddingTop: {
-    paddingTop: MainBarHeightDashboard + NewsBarHeight,
+    paddingTop: MainBarHeightDashboard + NewsBarHeight + CategoryBarHeight,
   },
   pageInnerContainer: {
     position: 'relative',

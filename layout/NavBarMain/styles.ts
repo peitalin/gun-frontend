@@ -26,6 +26,9 @@ export const MobileNavbarHeight = MainBarHeightDashboard + 8
 export const buttonHoverDark = fade(Colors.uniswapDarkNavy, 0.7)
 export const buttonHoverLight = fade(Colors.cream, 0.2)
 
+export const blurDark = 'rgba(18, 18, 29, 0.6)'
+export const blurLight = 'rgba(245, 245, 255, 0.9)'
+
 
 
 export const styles = (theme: Theme) => createStyles({
@@ -84,9 +87,6 @@ export const styles = (theme: Theme) => createStyles({
     padding: '0rem',
     paddingTop: '1rem',
   },
-  baseBarBoxShadow: {
-    boxShadow: BoxShadows.shadow1.boxShadow,
-  },
 
   baseBarDashboardPlaceholder: {
     height: `${NewsBarHeight}px`, // 1px for borderBottom
@@ -126,8 +126,8 @@ export const styles = (theme: Theme) => createStyles({
     width: '100%',
     // backdropFilter: "blur(6px)",
     background: isThemeDark(theme)
-      ? 'rgba(18, 18, 29, 0.3)'
-      : 'rgba(245, 245, 255, 0.8)',
+      ? blurDark
+      : blurLight,
     border: isThemeDark(theme)
       ? `1px solid ${Colors.uniswapMediumNavy}`
       : `1px solid ${Colors.slateGreyDarker}`,
@@ -139,8 +139,8 @@ export const styles = (theme: Theme) => createStyles({
     width: '100%',
     // backdropFilter: "blur(6px)",
     background: isThemeDark(theme)
-      ? 'rgba(18, 18, 29, 0.3)'
-      : 'rgba(245, 245, 255, 0.8)',
+      ? blurDark
+      : blurLight,
     border: isThemeDark(theme)
       ? `1px solid ${Colors.uniswapMediumNavy}`
       : `1px solid ${Colors.slateGreyDarker}`,
@@ -161,8 +161,8 @@ export const styles = (theme: Theme) => createStyles({
     width: '100%',
     backdropFilter: "blur(6px)",
     background: isThemeDark(theme)
-      ? 'rgba(18, 18, 29, 0.3)'
-      : 'rgba(245, 245, 255, 0.8)',
+      ? blurDark
+      : blurLight,
     borderBottom: isThemeDark(theme)
       ? `1px solid ${Colors.uniswapMediumNavy}`
       : `1px solid ${Colors.slateGrey}`,
@@ -173,8 +173,8 @@ export const styles = (theme: Theme) => createStyles({
     width: '100%',
     backdropFilter: "blur(6px)",
     background: isThemeDark(theme)
-      ? 'rgba(18, 18, 29, 0.3)'
-      : 'rgba(245, 245, 255, 0.8)',
+      ? blurDark
+      : blurLight,
     top: 0,
     right: 0,
     borderBottom: isThemeDark(theme)

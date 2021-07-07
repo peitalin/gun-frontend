@@ -12,6 +12,10 @@ import { MobileNavbarHeight, MainBarHeightDashboard, MainBarHeightHomePage } fro
 /////////////// STYLES /////////////////////
 export const CategoryBarHeight = 40;
 export const CategoryBarHeightMobile = 30;
+import {
+  blurDark,
+  blurLight,
+} from "../styles";
 
 
 
@@ -46,7 +50,8 @@ export const styles = (theme: Theme) => createStyles({
     zIndex: 5,
     position: 'fixed',
     right: 0,
-    top: `${MainBarHeightDashboard}px`,
+    top: `${MainBarHeightDashboard + 1}px`, // 1px otherwise border overlaps
+    // border + blur => shadow effect in the middle of the bar which you don't want
   },
   categoryBarTopOffsetBig: {
     zIndex: 5,
@@ -59,8 +64,8 @@ export const styles = (theme: Theme) => createStyles({
     boxShadow: BoxShadows.shadow1.boxShadow,
     backdropFilter: "blur(6px)",
     background: isThemeDark(theme)
-      ? 'rgba(18, 18, 29, 0.3)'
-      : 'rgba(245, 245, 255, 0.8)',
+      ? blurDark
+      : blurLight,
     // background: isThemeDark(theme)
     //   ? Gradients.gradientUniswapDark.background
     //   : Gradients.gradientGrey2.background,
