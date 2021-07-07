@@ -26,15 +26,18 @@ const CategoryBarDesktop: React.FC<ReactProps> = (props) => {
   let y = useScrollYPosition()
 
 
-  const smallOffset = !isMainPage && !isFeaturedPage && !isStartPage && !isSellPage
+  const alwaysShowBar = !isMainPage && !isFeaturedPage && !isStartPage && !isSellPage
   // console.log("Y:", y)
+  console.log("isMaingPage:", isMainPage)
 
   return (
     <nav className={clsx(
       classes.baseBarDashboard,
       classes.categoryBar,
-      y >= Y_SCROLL_NAVBAR_SHOW ? classes.categoryBarShow : classes.categoryBarHidden,
-      (smallOffset || y >= Y_SCROLL_NAVBAR_SHOW)
+      (y >= Y_SCROLL_NAVBAR_SHOW || alwaysShowBar)
+        ? classes.categoryBarShow
+        : classes.categoryBarHidden,
+      (y >= Y_SCROLL_NAVBAR_SHOW || alwaysShowBar)
         ? classes.categoryBarTopOffsetSmall
         : classes.categoryBarTopOffsetBig,
     )}>

@@ -5,12 +5,13 @@ import CategoryBar from "./CategoryBar";
 import MainBar from "./MainBar";
 import UserMenuMobileDither from "./UserMenuMobileDither";
 import { Categories } from "typings/gqlTypes";
-
+import { categoryPreviewsBackup } from "components/CategoryCarouselStart/utils";
 
 
 const NavBar: React.FC<ReactProps> = (props) => {
 
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
+  let initialCategories: Categories[] = categoryPreviewsBackup as any
 
   return (
     <>
@@ -19,12 +20,9 @@ const NavBar: React.FC<ReactProps> = (props) => {
         mobileMenuOpen={mobileMenuOpen}
         setMobileMenuOpen={setMobileMenuOpen}
       />
-      {
-        props.initialCategories?.length > 0 &&
-        <CategoryBar
-          initialCategories={props.initialCategories}
-        />
-      }
+      <CategoryBar
+        initialCategories={initialCategories}
+      />
       {
         mobileMenuOpen &&
         <UserMenuMobileDither
@@ -40,7 +38,6 @@ const NavBar: React.FC<ReactProps> = (props) => {
 }
 
 interface ReactProps {
-  initialCategories: Categories[]
 }
 
 export default NavBar;

@@ -103,7 +103,6 @@ const FrontPage: React.FC<ReactProps> = (props) => {
       >
 
         {
-          process.browser &&
           featuredSection?.map(section => {
             // console.log("section: ", section)
             if (section?.promotedListId) {

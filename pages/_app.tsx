@@ -163,7 +163,7 @@ const MainApp: NextComponentType<AppContext, AppInitialProps, AppProps & AppHOCP
             maxSnack={4}
           >
             <CssBaseline />
-            <Layout initialCategories={pageProps?.initialCategories}>
+            <Layout>
               <Component {...pageProps} key={router?.route} />
             </Layout>
           </SnackbarProvider>

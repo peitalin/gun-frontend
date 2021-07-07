@@ -24,23 +24,6 @@ import { useRouter } from "next/router";
 
 const HomePage: NextPage<ReactProps> = (props) => {
 
-  // const { data } = useQuery<QData1, QVar1>(
-  //   GET_PAGE_CONFIG_BY_PATH, {
-  //   variables: {
-  //     urlPath: "/"
-  //   }
-  // })
-
-  // const { data: data2 } = await serverApolloClient(ctx).query<QData2, QVar2>({
-  //   query: GET_CATEGORIES,
-  // })
-
-  // console.log("getPageConfig: ", data?.getPageConfig)
-  // console.log("getCategories ssr: ", data2?.getCategories)
-
-  // let initialCategories = data2?.getCategories ?? [];
-  // let initialCategories: Categories[] = categoryPreviewsBackup as any;
-
   let router = useRouter()
 
   let showSocialBanner = router.pathname === '/'
@@ -62,8 +45,6 @@ const HomePage: NextPage<ReactProps> = (props) => {
         `}
       />
       <FrontPage
-        // pageConfig={data?.getPageConfig}
-        // initialCategories={initialCategories}
         pageConfig={props?.getPageConfig}
         initialCategories={props.initialCategories}
       />
