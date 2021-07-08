@@ -345,7 +345,7 @@ const ProductCreatePage = (props: ReactProps) => {
         setState(s => ({ ...s, loading: false }))
       } else {
         snackbar.enqueueSnackbar(
-          `Creating escrow for order...`,
+          `Creating product listing...`,
           { variant: "info" }
         )
         setState(s => ({ ...s, loading: true }))
