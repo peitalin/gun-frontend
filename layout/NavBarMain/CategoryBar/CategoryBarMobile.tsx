@@ -8,6 +8,7 @@ import { styles } from "./styles";
 import Typography from "@material-ui/core/Typography";
 // hooks
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 
 
@@ -15,6 +16,7 @@ import Link from "next/link";
 const CategoryBarMobile: React.FC<ReactProps> = (props) => {
 
   const { classes } = props;
+  let router = useRouter()
 
   return (
     <nav className={clsx(
@@ -22,14 +24,14 @@ const CategoryBarMobile: React.FC<ReactProps> = (props) => {
       classes.categoryBar,
       classes.categoryBarMobile,
     )}>
-      <div className={classes.baseBarInnerDashboard}>
+      <div className={classes.catBarInnerDashboard}>
         <div className={classes.categoryBarInnerMobile}>
 
-          <Link href={`/new/all`}>
+          <Link href={`/new`}>
             <a className={classes.categoryLink}>
               <Typography className={clsx(
-                classes.categoryLinkAllMain,
-                classes.categoryLinkTextMainHeightMobile,
+                classes.categoryLinkAllMobile,
+                router.asPath === '/new' && classes.categoryLinkTextSelected,
               )}>
                 New
               </Typography>
@@ -39,8 +41,9 @@ const CategoryBarMobile: React.FC<ReactProps> = (props) => {
           {/* <Link href={`/sale`}>
             <a className={classes.categoryLink}>
               <Typography className={clsx(
-                classes.categoryLinkAllMain,
-                classes.categoryLinkTextMainHeightMobile,
+                classes.categoryLinkAllMobile,
+                classes.categoryLinkTextHeightMobile,
+                router.asPath === '/sale' && classes.categoryLinkTextSelected,
               )}>
                 Price Reduced
               </Typography>
@@ -52,12 +55,12 @@ const CategoryBarMobile: React.FC<ReactProps> = (props) => {
             (props?.categories ?? []).map(category => {
               return (
                 <a key={category.id}
-                  className={classes.categoryLinkGroups}
+                  className={classes.categoryLink}
                   href={`/categories/${category.slug}`}
                 >
                   <Typography className={clsx(
                     classes.categoryLinkTextMain,
-                    classes.categoryLinkTextMainHeightMobile,
+                    router.asPath === `/categories/${category.slug}` && classes.categoryLinkTextSelected,
                   )}>
                     {category.name}
                   </Typography>
@@ -69,8 +72,8 @@ const CategoryBarMobile: React.FC<ReactProps> = (props) => {
           <Link href={`/categories`}>
             <a className={classes.categoryLink}>
               <Typography className={clsx(
-                classes.categoryLinkAllMain,
-                classes.categoryLinkTextMainHeightMobile,
+                classes.categoryLinkAllMobile,
+                router.asPath === '/categories' && classes.categoryLinkTextSelected,
               )}>
                 All Categories
               </Typography>

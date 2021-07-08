@@ -228,7 +228,7 @@ let styles = (theme: Theme) => createStyles({
       width: '0rem',
       opacity: 0,
       '&:focus': {
-        width: 'calc(60vw)',
+        width: 'calc(80vw)',
         opacity: 1,
       },
     },

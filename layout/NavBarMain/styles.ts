@@ -17,14 +17,13 @@ import {
 
 /////////////// STYLES /////////////////////
 export const MainBarHeightHomePage = 75;
-export const MainBarHeightDashboard = 55;
+export const MainBarHeightDashboard = 60;
 
-export const CategoryBarHeight = 40;
-export const CategoryBarHeightMobile = 30;
+export const CategoryBarHeight = 36;
 
 export const NewsBarHeight = 8;
 export const NavBarHeight = MainBarHeightHomePage + CategoryBarHeight;
-export const MobileNavbarHeight = MainBarHeightDashboard + 8
+export const MobileNavbarHeight = MainBarHeightDashboard
 
 
 /// hover colors for menu buttons
@@ -90,9 +89,6 @@ export const styles = (theme: Theme) => createStyles({
     paddingTop: '1rem',
   },
 
-  baseBarDashboardPlaceholder: {
-    height: `${NewsBarHeight}px`, // 1px for borderBottom
-  },
   baseBarDashboard: {
     zIndex: 5,
     position: 'fixed',
@@ -112,7 +108,10 @@ export const styles = (theme: Theme) => createStyles({
     position: "relative",
     justifyContent: 'center',
     alignItems: "center",
-    height: `${MainBarHeightDashboard + NewsBarHeight}px`, // 1px for borderBottom
+    height: `${MainBarHeightDashboard}px`,
+    borderBottom: isThemeDark(theme)
+      ? `1px solid ${Colors.uniswapMediumNavy}`
+      : `1px solid ${Colors.slateGrey}`,
   },
   width100: {
     width: '100%',
@@ -159,7 +158,6 @@ export const styles = (theme: Theme) => createStyles({
     // background: 'rgba(0,0,0,0)',
   },
   blurBackgroundWide: {
-    height: '100%',
     width: '100%',
     backdropFilter: "blur(6px)",
     background: isThemeDark(theme)
@@ -337,7 +335,7 @@ export const styles = (theme: Theme) => createStyles({
     zIndex: 3,
     paddingLeft: '0.5rem',
     paddingRight: '0.5rem',
-    paddingTop: '0.5rem',
+    paddingTop: '0.25rem',
     width: '100vw',
     height: MobileNavbarHeight,
     display: "flex",

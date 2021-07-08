@@ -257,6 +257,7 @@ const CategoryId: React.FC<ReactProps> = (props) => {
             setIndex: setIndex,
             debounceSetIndex: debounceSetIndex,
           }}
+          disableCategoriesFilter={props.disableCategoriesFilter}
           categorySlugsForGql={categorySlugsForGql}
           setCategorySlugsForGql={setCategorySlugsForGql}
           setSearchTermForGql={setSearchTermForGql}
@@ -342,6 +343,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   initialProducts: ProductsConnection;
   initialRouteCategory: Categories;
   initialDropdownCategories: Categories[];
+  disableCategoriesFilter: boolean
   disableMetaHeader?: boolean;
   bannerTitle?: string;
   bannerBlurb?: string;

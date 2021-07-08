@@ -1,7 +1,7 @@
 // Styles
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 import { Colors } from "layout/AppTheme";
-import { NavBarHeight, CategoryBarHeightMobile, CategoryBarHeight } from "layout/NavBarMain/styles";
+import { NavBarHeight, CategoryBarHeight } from "layout/NavBarMain/styles";
 
 
 export const styles = (theme: Theme) => createStyles({
@@ -96,7 +96,7 @@ export const styles = (theme: Theme) => createStyles({
     position: 'absolute',
     display: 'flex',
     paddingLeft: "1rem",
-    top: NavBarHeight - CategoryBarHeight + CategoryBarHeightMobile - 5,
+    top: NavBarHeight - CategoryBarHeight + CategoryBarHeight - 5,
     height: '6rem',
     justifyContent: 'center',
     flexDirection: 'row',

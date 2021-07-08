@@ -4,7 +4,6 @@ import {
   MainBarHeightDashboard,
   NewsBarHeight,
   CategoryBarHeight,
-  CategoryBarHeightMobile,
   NavBarHeight,
   MobileNavbarHeight,
 } from "layout/NavBarMain/styles";

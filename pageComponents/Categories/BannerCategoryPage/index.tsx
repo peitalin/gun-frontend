@@ -154,6 +154,7 @@ const BannerCategoryPage = (props: ReactProps & FacetSearchParams) => {
               debounceSetIndex: debounceSetIndex,
             }}
             // Category Page specific callbacks
+            disableCategoriesFilter={props.disableCategoriesFilter}
             setCategorySlugsForGql={setCategorySlugsForGql}
             setSearchTermForGql={setSearchTermForGql}
             setCalibersForGql={setCalibersForGql}
@@ -211,6 +212,7 @@ const BannerCategoryPage = (props: ReactProps & FacetSearchParams) => {
               debounceSetIndex: debounceSetIndex,
             }}
             // Category Page specific callbacks
+            disableCategoriesFilter={props.disableCategoriesFilter}
             setCategorySlugsForGql={setCategorySlugsForGql}
             setSearchTermForGql={setSearchTermForGql}
             setCalibersForGql={setCalibersForGql}
@@ -239,6 +241,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   setSearchTermForGql(s: string): void
   setCategorySlugsForGql(c: string[]): void
   categorySlugsForGql: string[]
+  disableCategoriesFilter: boolean;
 
   setCalibersForGql(c: string[]): void
   setDealerStatesForGql(c: string[]): void

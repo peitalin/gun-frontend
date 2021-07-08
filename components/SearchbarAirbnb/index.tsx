@@ -43,7 +43,7 @@ const SearchbarAirbnb: React.FC<ReactProps> = (props) => {
     paginationParams,
     isMobile,
     syncUrlToCategory = false,
-    disableCategories = false,
+    disableCategoriesFilter = false,
     disableAdvancedSearch = false,
     disableCalibers = false,
     disableSearchFilter = false,
@@ -230,7 +230,7 @@ const SearchbarAirbnb: React.FC<ReactProps> = (props) => {
             }
 
             {
-              !disableCategories &&
+              !disableCategoriesFilter &&
               <CategoryDropdown
                 className={clsx(
                   focused ? classes.height65 : classes.height50,
@@ -480,7 +480,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   bottomSectionStyles?: any;
   paginatorStyles?: any;
   syncUrlToCategory?: boolean;
-  disableCategories?: boolean;
+  disableCategoriesFilter?: boolean;
   disableAdvancedSearch?: boolean;
   disableCalibers?: boolean;
   disableSearchFilter?: boolean;

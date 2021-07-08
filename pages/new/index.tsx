@@ -20,7 +20,7 @@ const NewProductsSSR: NextPage<ReactProps> = (props) => {
   return (
     <>
       <MetaHeadersPage
-        title={"Browse New Listings - Used Guns - Gun Marketplace Australia"}
+        title={"Browse New Listings - Used Guns - Gun Marketplace"}
         description={`
           Shop Gun Marketplace and browse newly listed local firearms to trade.
         `}
@@ -36,6 +36,7 @@ const NewProductsSSR: NextPage<ReactProps> = (props) => {
         initialProducts={undefined}
         initialRouteCategory={props.selectedCategory}
         initialDropdownCategories={props.initialCategories}
+        disableCategoriesFilter={false}
         bannerTitle={"New Listings"}
         bannerBlurb={"Browse and search through new listings"}
       />
@@ -56,29 +57,6 @@ interface QueryVar1 {
   slug?: string;
 }
 
-
-export const getStaticPaths = async (ctx: NextPageContext) => {
-
-  const { data } = await serverApolloClient(ctx).query<QueryData1, QueryVar1>({
-    query: GET_CATEGORIES,
-  })
-
-  const initialCategories = data?.getCategories
-  // Get the paths we want to pre-render based on posts
-  const paths = [
-    { params: { categorySlug: "all" } },
-    ...initialCategories.map(category => ({
-      params: {
-        categorySlug: category.slug
-      },
-    }))
-  ]
-
-  return {
-    paths: paths,
-    fallback: false,
-  }
-}
 
 
 export const getStaticProps: GetStaticProps = async (ctx) => {

@@ -52,6 +52,7 @@ const CategorySlugSSR: NextPage<ReactProps> = (props) => {
         initialProducts={undefined}
         initialRouteCategory={props.selectedCategory}
         initialDropdownCategories={props.initialCategories}
+        disableCategoriesFilter={true} // disable categoriesFilter
       />
     </>
   )

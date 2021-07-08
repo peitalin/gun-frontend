@@ -104,6 +104,7 @@ const CategorySearchbar: React.FC<ReactProps & FacetSearchParams> = (props) => {
           // facets
           // facets={facets}
           // setCategoryFacets={setCategoryFacets({ facets, setFacets })}
+          disableCategoriesFilter={props.disableCategoriesFilter}
           setCurrentCategories={setCurrentCategories}
           currentCategories={currentCategories}
           syncUrlToCategory={false} // this turns on category-page specific searchbar syncing
@@ -143,6 +144,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   setSearchTermForGql(s: string): void
   setCategorySlugsForGql(c: string[]): void
 
+  disableCategoriesFilter: boolean
   setCalibersForGql(c: string[]): void
   setDealerStatesForGql(c: string[]): void
 

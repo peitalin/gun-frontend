@@ -9,6 +9,7 @@ import Typography from "@material-ui/core/Typography";
 import { useScrollYPosition } from "utils/hooks";
 // hooks
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { Y_SCROLL_NAVBAR_SHOW } from "../constants";
 
 
@@ -27,7 +28,8 @@ const CategoryBarDesktop: React.FC<ReactProps> = (props) => {
 
 
   const alwaysShowBar = !isMainPage && !isFeaturedPage && !isStartPage && !isSellPage
-  // console.log("Y:", y)
+  let router = useRouter()
+  // console.log("router:", router.asPath)
 
   return (
     <nav className={clsx(
@@ -40,14 +42,14 @@ const CategoryBarDesktop: React.FC<ReactProps> = (props) => {
         ? classes.categoryBarTopOffsetSmall
         : classes.categoryBarTopOffsetBig,
     )}>
-      <div className={classes.baseBarInnerDashboard}>
+      <div className={classes.catBarInnerDashboard}>
         <div className={classes.categoryBarInner}>
 
-          <Link href={`/new/all`}>
+          <Link href={`/new`}>
             <a className={classes.categoryLink}>
               <Typography className={clsx(
                 classes.categoryLinkTextMain,
-                classes.categoryLinkTextMainHeight,
+                router.asPath === '/new' && classes.categoryLinkTextSelected,
               )}>
                 New
               </Typography>
@@ -60,6 +62,7 @@ const CategoryBarDesktop: React.FC<ReactProps> = (props) => {
               <Typography className={clsx(
                 classes.categoryLinkTextMain,
                 classes.categoryLinkTextMainHeight,
+                router.pathname === '/sale' && classes.categoryLinkTextSelected,
               )}>
                 Price Reduced
               </Typography>
@@ -75,10 +78,10 @@ const CategoryBarDesktop: React.FC<ReactProps> = (props) => {
                   href="/categories/[categorySlug]"
                   as={`/categories/${category?.slug}`}
                 >
-                  <a className={classes.categoryLinkGroups}>
+                  <a className={classes.categoryLink}>
                     <Typography className={clsx(
                       classes.categoryLinkTextMain,
-                      classes.categoryLinkTextMainHeight,
+                      router.asPath === `/categories/${category?.slug}` && classes.categoryLinkTextSelected,
                     )}>
                       {category?.name}
                     </Typography>
@@ -89,10 +92,10 @@ const CategoryBarDesktop: React.FC<ReactProps> = (props) => {
           }
 
           <Link href="/categories">
-            <a className={classes.categoryLinkGroups} >
+            <a className={classes.categoryLink} >
               <Typography className={clsx(
                 classes.categoryLinkTextMain,
-                classes.categoryLinkTextMainHeight,
+                router.asPath === '/categories' && classes.categoryLinkTextSelected,
               )}>
                 All Categories
               </Typography>

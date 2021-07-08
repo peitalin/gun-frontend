@@ -12,7 +12,6 @@ import {
   MainBarHeightDashboard,
   MainBarHeightHomePage,
   CategoryBarHeight,
-  CategoryBarHeightMobile,
 } from "../styles";
 
 /////////////// STYLES /////////////////////
@@ -41,7 +40,7 @@ export const styles = (theme: Theme) => createStyles({
     alignItems: 'center',
     width: '100%',
   },
-  baseBarInnerDashboard: {
+  catBarInnerDashboard: {
     // width: '100vw',
     width: '100%',
     display: "flex",
@@ -54,8 +53,7 @@ export const styles = (theme: Theme) => createStyles({
     zIndex: 5,
     position: 'fixed',
     right: 0,
-    top: `${MainBarHeightDashboard + 1}px`, // 1px otherwise border overlaps
-    // border + blur => shadow effect in the middle of the bar which you don't want
+    top: `${MainBarHeightDashboard}px`,
   },
   categoryBarTopOffsetBig: {
     zIndex: 5,
@@ -74,16 +72,12 @@ export const styles = (theme: Theme) => createStyles({
     //   ? Gradients.gradientUniswapDark.background
     //   : Gradients.gradientGrey2.background,
     // border: '0px solid',
-    borderTop: isThemeDark(theme)
-      ? `1px solid ${Colors.uniswapDarkNavy}`
-      : `1px solid ${Colors.slateGrey}`,
     borderBottom: isThemeDark(theme)
-      ? `1px solid ${Colors.uniswapDarkNavy}`
+      ? `1px solid ${Colors.uniswapMediumNavy}`
       : `1px solid ${Colors.slateGrey}`,
   },
   categoryBarMobile: {
     top: `${MobileNavbarHeight}px`, // 1px for borderBottom
-    height: 30,
   },
   categoryBarShow: {
     display: "unset",
@@ -125,19 +119,18 @@ export const styles = (theme: Theme) => createStyles({
   categoryHeading: {
     marginBottom: "0.5rem",
   },
-  categoryLinkGroups: {
-    marginRight: '1rem',
-  },
   categoryLink: {
+    marginRight: '0.5rem',
+    minWidth: 80,
   },
-  categoryLinkAllMain: {
+  categoryLinkAllMobile: {
+    height: CategoryBarHeight,
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     minWidth: '50px',
     whiteSpace: 'nowrap',
     fontSize: '0.8rem',
-    marginRight: '1rem',
     borderBottom: '2px solid rgba(0,0,0,0)',
     transition: theme.transitions.create(['border', 'color'], {
       easing: theme.transitions.easing.easeIn,
@@ -147,7 +140,7 @@ export const styles = (theme: Theme) => createStyles({
       color: isThemeDark(theme)
         ? Colors.purple
         : Colors.ultramarineBlueLight,
-      borderBottom: '2px solid',
+      // borderBottom: '2px solid',
       transition: theme.transitions.create(['border', 'color'], {
         easing: theme.transitions.easing.easeIn,
         duration: '100ms',
@@ -155,6 +148,7 @@ export const styles = (theme: Theme) => createStyles({
     },
   },
   categoryLinkTextMain: {
+    height: `${CategoryBarHeight}px`,
     color: isThemeDark(theme)
       ? Colors.uniswapLightGrey
       : Colors.black,
@@ -171,7 +165,7 @@ export const styles = (theme: Theme) => createStyles({
       duration: '100ms',
     }),
     "&:hover": {
-      borderBottom: '2px solid',
+      // borderBottom: '2px solid',
       color: isThemeDark(theme)
         ? Colors.purple
         : Colors.ultramarineBlueLight,
@@ -181,11 +175,15 @@ export const styles = (theme: Theme) => createStyles({
       })
     },
   },
-  categoryLinkTextMainHeight: {
-    height: `calc(${CategoryBarHeight}px)`,
-  },
-  categoryLinkTextMainHeightMobile: {
-    height: CategoryBarHeightMobile,
+  categoryLinkTextSelected: {
+    transition: theme.transitions.create(['border', 'color'], {
+      easing: theme.transitions.easing.easeIn,
+      duration: '100ms',
+    }),
+    borderBottom: '2px solid',
+    color: isThemeDark(theme)
+      ? Colors.purple
+      : Colors.ultramarineBlueLight,
   },
   showAllCategoriesButton: {
     display: 'flex',
