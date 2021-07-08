@@ -539,6 +539,7 @@ const VisaPurchaseProduct = (props: ReactProps) => {
                     setChosenLicense({ label, value })
                   }}
                   value={chosenLicense}
+                  isSearchable={false} // disable typing
                   // disableAutocomplete={true}
                   // menuPortalTarget={document?.body} // solves z-index problems
                   // menuIsOpen={true}

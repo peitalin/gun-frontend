@@ -3,7 +3,7 @@ import React from 'react';
 import clsx from "clsx";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
-import { Colors, Gradients, isThemeDark } from "layout/AppTheme";
+import { Colors, Gradients, BorderRadius, isThemeDark } from "layout/AppTheme";
 import {
   User_Licenses,
 } from 'typings/gqlTypes';
@@ -23,9 +23,8 @@ const OptionLicense = ( props ) => {
   let expiry = formatJustDate(license?.licenseExpiry);
 
   return (
-    <>
       <components.Option {...props}>
-        <div>
+        <div className={classes.rowRoot}>
           <div className={classes.rowStyle}>
             <div className={classes.keyStyle}>
               License Number
@@ -52,7 +51,6 @@ const OptionLicense = ( props ) => {
           </div>
         </div>
       </components.Option>
-    </>
   );
 };
 
@@ -60,7 +58,15 @@ const OptionLicense = ( props ) => {
 
 /////////////// Styles /////////////
 const styles = (theme: Theme) => createStyles({
+  rowRoot: {
+    borderRadius: BorderRadius,
+    // backgroundColor: isThemeDark(theme)
+    //   ? Colors.uniswapDarkNavy
+    //   : Colors.slateGreyDark,
+    // padding: '0.25rem',
+  },
   rowStyle: {
+    cursor: "pointer",
     display: "flex",
     flexDirection: "row" as 'row',
   },

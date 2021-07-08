@@ -8993,7 +8993,9 @@ export type Collection_Items_Bool_Exp = {
 /** unique or primary key constraints on table "collection_items" */
 export enum Collection_Items_Constraint {
   /** unique or primary key constraint */
-  COLLECTION_ITEMS_PKEY = 'collection_items_pkey'
+  COLLECTION_ITEMS_PKEY = 'collection_items_pkey',
+  /** unique or primary key constraint */
+  COLLECTION_ITEMS_PRODUCT_ID_COLLECTION_ID_USER_ID_KEY = 'collection_items_product_id_collection_id_user_id_key'
 }
 
 /** input type for incrementing numeric columns in table "collection_items" */
@@ -11163,6 +11165,8 @@ export type Orders = {
   /** An object relationship */
   buyer?: Maybe<Users>;
   buyerId: Scalars['String'];
+  /** An object relationship */
+  buyerLicense?: Maybe<User_Licenses>;
   buyerLicenseId?: Maybe<Scalars['String']>;
   createdAt: Scalars['timestamp'];
   currency: Scalars['String'];
@@ -11348,6 +11352,7 @@ export type Orders_Bool_Exp = {
   bidId?: Maybe<String_Comparison_Exp>;
   buyer?: Maybe<Users_Bool_Exp>;
   buyerId?: Maybe<String_Comparison_Exp>;
+  buyerLicense?: Maybe<User_Licenses_Bool_Exp>;
   buyerLicenseId?: Maybe<String_Comparison_Exp>;
   createdAt?: Maybe<Timestamp_Comparison_Exp>;
   currency?: Maybe<String_Comparison_Exp>;
@@ -11458,6 +11463,7 @@ export type Orders_Insert_Input = {
   bidId?: Maybe<Scalars['String']>;
   buyer?: Maybe<Users_Obj_Rel_Insert_Input>;
   buyerId?: Maybe<Scalars['String']>;
+  buyerLicense?: Maybe<User_Licenses_Obj_Rel_Insert_Input>;
   buyerLicenseId?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['timestamp']>;
   currency?: Maybe<Scalars['String']>;
@@ -11553,6 +11559,7 @@ export type Orders_Order_By = {
   bidId?: Maybe<Order_By>;
   buyer?: Maybe<Users_Order_By>;
   buyerId?: Maybe<Order_By>;
+  buyerLicense?: Maybe<User_Licenses_Order_By>;
   buyerLicenseId?: Maybe<Order_By>;
   createdAt?: Maybe<Order_By>;
   currency?: Maybe<Order_By>;
