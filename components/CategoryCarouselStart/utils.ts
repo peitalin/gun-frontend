@@ -1,4 +1,7 @@
 
+/// This must be the same categories data as backend
+// we do this for static generation
+
 export const categoryPreviewsBackup = [
   {
     id: "category_0001",

@@ -74,12 +74,12 @@ interface QueryVar1 {
 
 export const getStaticPaths = async (ctx: NextPageContext) => {
 
-  // const { data } = await serverApolloClient(ctx).query<QueryData1, QueryVar1>({
-  //   query: GET_CATEGORIES,
-  // })
-  // const initialCategories = data?.getCategories
+  const { data } = await serverApolloClient(ctx).query<QueryData1, QueryVar1>({
+    query: GET_CATEGORIES,
+  })
+  const initialCategories = data?.getCategories
+  // const initialCategories = categoryPreviewsBackup
 
-  const initialCategories = categoryPreviewsBackup
   // Get the paths we want to pre-render based on posts
   const paths = [
     { params: { categorySlug: "all" } },
@@ -101,12 +101,12 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
 
   const categorySlug: string = ctx?.params?.categorySlug as any;
 
-  // const { data } = await serverApolloClient(ctx).query<QueryData1, QueryVar1>({
-  //   query: GET_CATEGORIES,
-  // })
-  // const initialCategories = data?.getCategories
+  const { data } = await serverApolloClient(ctx).query<QueryData1, QueryVar1>({
+    query: GET_CATEGORIES,
+  })
+  const initialCategories = data?.getCategories
+  // const initialCategories = categoryPreviewsBackup
 
-  const initialCategories = categoryPreviewsBackup
   // "all" category slug is filtered out on the backend and ignored
   // no category filter -> all categories
   let defaultCategory = {
