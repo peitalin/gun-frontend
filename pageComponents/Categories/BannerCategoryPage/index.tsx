@@ -68,7 +68,8 @@ const BannerCategoryPage = (props: ReactProps & FacetSearchParams) => {
   const [focusedOuter, setFocusedOuter] = React.useState(false)
 
 
-  const getBannerImageUrl = (slug) => {
+  const getBannerImageUrl = (selectedCategorySlug: string) => {
+    let slug = selectedCategorySlug
     switch (slug) {
       case "handguns": {
         return "/img/banner5.jpg"
@@ -88,17 +89,21 @@ const BannerCategoryPage = (props: ReactProps & FacetSearchParams) => {
     }
   }
 
-  let selectedCategory = currentCategories?.[0];
+  // let selectedCategory = currentCategories?.[0];
+  let selectedCategorySlug = props.categorySlugsForGql?.[0];
+  let selectedCategory = (currentCategories ?? []).find(c => c.slug === selectedCategoryName)
 
-  const selectedCategoryName: string = currentCategories?.length === 0
+  const selectedCategoryName: string = selectedCategory
     ? "All Products"
     : selectedCategory?.name
-  const selectedCategoryBlurb: string = currentCategories?.length === 0
+
+  const selectedCategoryBlurb: string = selectedCategory
     ? ""
     : selectedCategory?.blurb
-  const selectedCategorySlug: string = currentCategories?.length === 0
-    ? "all"
-    : selectedCategory?.slug
+
+  // const selectedCategorySlug: string = currentCategories?.length === 0
+  //   ? "all"
+  //   : selectedCategory?.slug
 
 
   const bannerImageUrl = getBannerImageUrl(selectedCategorySlug)
@@ -233,6 +238,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   // Searchbar params
   setSearchTermForGql(s: string): void
   setCategorySlugsForGql(c: string[]): void
+  categorySlugsForGql: string[]
 
   setCalibersForGql(c: string[]): void
   setDealerStatesForGql(c: string[]): void

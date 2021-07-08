@@ -50,11 +50,10 @@ const CategoryId: React.FC<ReactProps> = (props) => {
 
   const {
     classes,
-    disableBreadcrumbs = false,
     disableMetaHeader = false,
   } = props;
 
-  const snackbar = useSnackbar();
+  // const snackbar = useSnackbar();
   const router = useRouter();
 
   const theme = useTheme();
@@ -258,6 +257,7 @@ const CategoryId: React.FC<ReactProps> = (props) => {
             setIndex: setIndex,
             debounceSetIndex: debounceSetIndex,
           }}
+          categorySlugsForGql={categorySlugsForGql}
           setCategorySlugsForGql={setCategorySlugsForGql}
           setSearchTermForGql={setSearchTermForGql}
           setCalibersForGql={setCalibersForGql}
@@ -342,7 +342,6 @@ interface ReactProps extends WithStyles<typeof styles> {
   initialProducts: ProductsConnection;
   initialRouteCategory: Categories;
   initialDropdownCategories: Categories[];
-  disableBreadcrumbs?: boolean;
   disableMetaHeader?: boolean;
   bannerTitle?: string;
   bannerBlurb?: string;

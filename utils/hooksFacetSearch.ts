@@ -187,12 +187,16 @@ export const useFacetSearchOptions = ({
 
       if (syncUrlParams) {
         if (urlPath.startsWith('/categories')) {
-          // /all if currentCategories is empty array
-          if (currentCategories?.length === 0 || !currentCategories?.[0]) {
-            urlPath = `/categories/all`
-          } else {
+          // console.log("currentCategories: : :: ", currentCategories)
+          if (currentCategories?.[0]?.slug) {
             urlPath = `/categories/${currentCategories?.[0]?.slug}`
           }
+
+          // // /all if currentCategories is empty array
+          // if (currentCategories?.length === 0 || !currentCategories?.[0]) {
+          //   urlPath = `/categories/all`
+          // } else {
+          // }
         }
       }
 

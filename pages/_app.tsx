@@ -132,7 +132,7 @@ const MainApp: NextComponentType<AppContext, AppInitialProps, AppProps & AppHOCP
   //////////////////////////////////////////////////////
 
   // console.log("MainApp userId: ", userId)
-  console.log("_app pageProps: ", pageProps)
+  // console.log("_app pageProps: ", pageProps)
 
   return (
     <Provider store={store}>

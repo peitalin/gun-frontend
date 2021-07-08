@@ -17,6 +17,7 @@ import { ApolloClient } from "@apollo/client";
 import { serverApolloClient } from "utils/apollo";
 // Meta headers
 import MetaHeadersPage from "layout/MetaHeadersPage";
+import { categoryPreviewsBackup } from "components/CategoryCarouselStart/utils";
 
 
 
@@ -73,11 +74,12 @@ interface QueryVar1 {
 
 export const getStaticPaths = async (ctx: NextPageContext) => {
 
-  const { data } = await serverApolloClient(ctx).query<QueryData1, QueryVar1>({
-    query: GET_CATEGORIES,
-  })
+  // const { data } = await serverApolloClient(ctx).query<QueryData1, QueryVar1>({
+  //   query: GET_CATEGORIES,
+  // })
+  // const initialCategories = data?.getCategories
 
-  const initialCategories = data?.getCategories
+  const initialCategories = categoryPreviewsBackup
   // Get the paths we want to pre-render based on posts
   const paths = [
     { params: { categorySlug: "all" } },
@@ -99,10 +101,12 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
 
   const categorySlug: string = ctx?.params?.categorySlug as any;
 
-  const { data } = await serverApolloClient().query<QueryData1, QueryVar1>({
-    query: GET_CATEGORIES,
-  })
+  // const { data } = await serverApolloClient(ctx).query<QueryData1, QueryVar1>({
+  //   query: GET_CATEGORIES,
+  // })
+  // const initialCategories = data?.getCategories
 
+  const initialCategories = categoryPreviewsBackup
   // "all" category slug is filtered out on the backend and ignored
   // no category filter -> all categories
   let defaultCategory = {
@@ -111,14 +115,14 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
     name: "All Categories"
   } as any
 
-  let selectedCategory = [ ...data?.getCategories, defaultCategory ]
+  let selectedCategory = [ ...initialCategories, defaultCategory ]
     .find(s => s.slug === categorySlug) ?? ""
 
   let categoryName = selectedCategory?.name ?? ""
 
   return {
     props: {
-      initialCategories: data?.getCategories,
+      initialCategories: initialCategories,
       categoryName: categoryName,
       selectedCategory: selectedCategory,
     }
