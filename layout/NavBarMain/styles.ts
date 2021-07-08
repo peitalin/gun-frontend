@@ -17,13 +17,12 @@ import {
 
 /////////////// STYLES /////////////////////
 export const MainBarHeightHomePage = 75;
-export const MainBarHeightDashboard = 60;
+export const MainBarHeight = 60;
 
 export const CategoryBarHeight = 36;
 
 export const NewsBarHeight = 8;
 export const NavBarHeight = MainBarHeightHomePage + CategoryBarHeight;
-export const MobileNavbarHeight = MainBarHeightDashboard
 
 
 /// hover colors for menu buttons
@@ -45,7 +44,6 @@ export const styles = (theme: Theme) => createStyles({
     // position: "absolute",
     width: '100%',
     position: 'fixed',
-    // pointerEvents: "none", // click through
     padding: '0rem',
     // transition: theme.transitions.create(['padding'], {
     //   easing: theme.transitions.easing.easeInOut,
@@ -53,11 +51,7 @@ export const styles = (theme: Theme) => createStyles({
     // }),
   },
   baseBarInnerHomePage: {
-    // pointerEvents: "none", // click through
-    "& > div": {
-      // pointerEvents: "all",
-    },
-    // width: '100vw',
+    height: `${MainBarHeight}px`,
     width: '100%',
     display: "flex",
     position: "relative",
@@ -108,10 +102,10 @@ export const styles = (theme: Theme) => createStyles({
     position: "relative",
     justifyContent: 'center',
     alignItems: "center",
-    height: `${MainBarHeightDashboard}px`,
-    borderBottom: isThemeDark(theme)
-      ? `1px solid ${Colors.uniswapMediumNavy}`
-      : `1px solid ${Colors.slateGrey}`,
+    height: `${MainBarHeight}px`,
+    // borderBottom: isThemeDark(theme)
+    //   ? `1px solid ${Colors.uniswapMediumNavy}`
+    //   : `1px solid ${Colors.slateGrey}`,
   },
   width100: {
     width: '100%',
@@ -174,9 +168,9 @@ export const styles = (theme: Theme) => createStyles({
       : blurLight,
     top: 0,
     right: 0,
-    borderBottom: isThemeDark(theme)
-      ? `1px solid ${Colors.uniswapMediumNavy}`
-      : `1px solid ${Colors.slateGrey}`,
+    // borderBottom: isThemeDark(theme)
+    //   ? `1px solid ${Colors.uniswapMediumNavy}`
+    //   : `1px solid ${Colors.slateGrey}`,
     // borderRadius: BorderRadius4x,
   },
 
@@ -286,7 +280,7 @@ export const styles = (theme: Theme) => createStyles({
     height: `${NewsBarHeight}px`,
     zIndex: 6,
     position: "relative",
-    // marginBottom: MainBarHeightDashboard,
+    // marginBottom: MainBarHeight,
   },
   newsBarInner: {
     display: "flex",
@@ -337,7 +331,7 @@ export const styles = (theme: Theme) => createStyles({
     paddingRight: '0.5rem',
     paddingTop: '0.25rem',
     width: '100vw',
-    height: MobileNavbarHeight,
+    height: MainBarHeight,
     display: "flex",
     position: "relative",
     justifyContent: 'space-between',

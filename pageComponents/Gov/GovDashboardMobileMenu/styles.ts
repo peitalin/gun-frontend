@@ -1,11 +1,10 @@
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 import { Colors, BoxShadows, BorderRadius, BorderRadius2x, Gradients, isThemeDark } from "layout/AppTheme";
 import {
-  MainBarHeightDashboard,
   NewsBarHeight,
   CategoryBarHeight,
   NavBarHeight,
-  MobileNavbarHeight,
+  MainBarHeight,
 } from "layout/NavBarMain/styles";
 
 const dashboardLinkColorHover = Colors.secondaryBright
@@ -13,7 +12,7 @@ const dashboardLinkColorHover = Colors.secondaryBright
 const dashboardLinkColor2 = Colors.darkGrey
 const dashboardLinkColorHover2 = Colors.secondaryBright
 
-const DashboardBarHeight = 48
+export const DashboardBarHeight = 48
 const dashboardMenuHeight = 50 * 11
 // 11 items, 50px each
 import {
@@ -25,7 +24,7 @@ import {
 export const dashboardBarStyle = (theme: Theme) => ({
   height: DashboardBarHeight,
   position: 'fixed',
-  top: `${MobileNavbarHeight}px`, //
+  top: `${MainBarHeight + CategoryBarHeight}px`, //
   backdropFilter: "blur(6px)",
   background: isThemeDark(theme)
     ? blurDark
@@ -40,7 +39,7 @@ export const dashboardMenuDitherStyle = (theme: Theme) => ({
   width: '100vw',
   zIndex: 2, // above watchList button which has zIndex: 1
   position: 'fixed',
-  top: `${MobileNavbarHeight + DashboardBarHeight}px`, // 44px for borderBottom
+  top: `${MainBarHeight + DashboardBarHeight}px`, // 44px for borderBottom
   backgroundColor: Colors.modalBackground,
 })
 export const expandMenuStyle = (theme: Theme, dashboardMenuHeight) => ({
@@ -48,7 +47,7 @@ export const expandMenuStyle = (theme: Theme, dashboardMenuHeight) => ({
   height: `calc(${dashboardMenuHeight}px + 1rem)`,
   transform: 'translateY(0%)',
   position: 'fixed',
-  top: `${MobileNavbarHeight + DashboardBarHeight}px`, //
+  top: `${MainBarHeight + CategoryBarHeight + DashboardBarHeight}px`, //
   transition: theme.transitions.create(['transform'], {
     easing: theme.transitions.easing.easeInOut,
     duration: "200ms",
@@ -60,7 +59,7 @@ export const styles = (theme: Theme) => createStyles({
   baseBar: {
     zIndex: 5,
     backgroundColor: "#fefefe",
-    height: `${MainBarHeightDashboard - 1}px`,
+    height: `${MainBarHeight - 1}px`,
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center',
@@ -228,7 +227,7 @@ export const styles = (theme: Theme) => createStyles({
     paddingLeft: '0.5rem',
     paddingRight: '0.5rem',
     width: '100vw',
-    height: MainBarHeightDashboard - 1,
+    height: MainBarHeight - 1,
     display: "flex",
     position: "relative",
     justifyContent: 'space-between',

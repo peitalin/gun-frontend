@@ -8,8 +8,7 @@ import {
 } from "layout/AppTheme";
 
 import {
-  MobileNavbarHeight,
-  MainBarHeightDashboard,
+  MainBarHeight,
   MainBarHeightHomePage,
   CategoryBarHeight,
 } from "../styles";
@@ -33,7 +32,7 @@ export const styles = (theme: Theme) => createStyles({
     //   : Gradients.gradientGrey2.background,
     // background: Colors.uniswapDarkNavy,
     // paddingTop: NewsBarHeight,
-    height: `${MainBarHeightDashboard }px`, // 1px for borderBottom
+    height: `${MainBarHeight }px`, // 1px for borderBottom
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center',
@@ -53,7 +52,7 @@ export const styles = (theme: Theme) => createStyles({
     zIndex: 5,
     position: 'fixed',
     right: 0,
-    top: `${MainBarHeightDashboard}px`,
+    top: `${MainBarHeight}px`,
   },
   categoryBarTopOffsetBig: {
     zIndex: 5,
@@ -77,7 +76,7 @@ export const styles = (theme: Theme) => createStyles({
       : `1px solid ${Colors.slateGrey}`,
   },
   categoryBarMobile: {
-    top: `${MobileNavbarHeight}px`, // 1px for borderBottom
+    top: `${MainBarHeight}px`, // 1px for borderBottom
   },
   categoryBarShow: {
     display: "unset",

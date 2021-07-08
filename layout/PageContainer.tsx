@@ -4,7 +4,7 @@ import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/s
 // Components
 import {
   NavBarHeight,
-  MainBarHeightDashboard,
+  MainBarHeight,
   NewsBarHeight,
   CategoryBarHeight,
 } from "layout/NavBarMain/styles";
@@ -54,7 +54,7 @@ const styles = (theme: Theme) => createStyles({
     // offset 140px for navbar
   },
   navbarPaddingTop: {
-    paddingTop: MainBarHeightDashboard + CategoryBarHeight,
+    paddingTop: MainBarHeight + CategoryBarHeight,
   },
   pageInnerContainer: {
     position: 'relative',

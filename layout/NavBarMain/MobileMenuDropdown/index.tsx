@@ -3,7 +3,8 @@ import clsx from "clsx";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
 import { Colors, BorderRadius, Gradients } from "layout/AppTheme";
-import { MobileNavbarHeight, CategoryBarHeight } from "layout/NavBarMain/styles";
+import { MainBarHeight, CategoryBarHeight } from "layout/NavBarMain/styles";
+import { DashboardBarHeight } from "pageComponents/Gov/GovDashboardMobileMenu/styles";
 
 // MUI
 import MenuIcon from "@material-ui/icons/Menu";
@@ -117,10 +118,10 @@ const styles = (theme: Theme) => createStyles({
     borderRadius: BorderRadius,
   },
   menuTop: {
-    top: `calc(${MobileNavbarHeight + CategoryBarHeight}px)`, // 1px tucked under navbar
+    top: `calc(${MainBarHeight + CategoryBarHeight}px)`, // 1px tucked under navbar
   },
   menuTopDashboard: {
-    top: `calc(${MobileNavbarHeight + CategoryBarHeight}px + 1rem)`,
+    top: `calc(${MainBarHeight + CategoryBarHeight + DashboardBarHeight}px + 0.75rem)`,
   },
   mobileMenuExpanderRoot: {
     zIndex: 2,

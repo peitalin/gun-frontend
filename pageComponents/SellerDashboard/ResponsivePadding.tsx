@@ -55,7 +55,7 @@ export const styles = (theme: Theme) => createStyles({
   },
   paddingMobile: {
     padding: '0rem 0.5rem 0.5rem 0.5rem',
-    marginTop: '3rem', // 3rem for seller dashboard menu bar
+    marginTop: '2rem',
   },
 });
 

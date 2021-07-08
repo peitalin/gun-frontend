@@ -1,7 +1,7 @@
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 import { Colors, BoxShadows, BorderRadius, BorderRadius2x, Gradients, isThemeDark } from "layout/AppTheme";
 import {
-  MainBarHeightDashboard,
+  MainBarHeight,
   NewsBarHeight,
   CategoryBarHeight,
   NavBarHeight,
@@ -26,7 +26,7 @@ export const styles = (theme: Theme) => createStyles({
   baseBar: {
     zIndex: 5,
     backgroundColor: "#fefefe",
-    height: `${MainBarHeightDashboard - 1}px`,
+    height: `${MainBarHeight - 1}px`,
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center',
@@ -186,7 +186,7 @@ export const styles = (theme: Theme) => createStyles({
     paddingLeft: '0.5rem',
     paddingRight: '0.5rem',
     width: '100vw',
-    height: MainBarHeightDashboard - 1,
+    height: MainBarHeight - 1,
     display: "flex",
     position: "relative",
     justifyContent: 'space-between',
