@@ -89,21 +89,22 @@ const BannerCategoryPage = (props: ReactProps & FacetSearchParams) => {
     }
   }
 
-  let selectedCategory = currentCategories?.[0];
-  // let selectedCategorySlug = props.categorySlugsForGql?.[0];
-  // let selectedCategory = (currentCategories ?? []).find(c => c.slug === selectedCategoryName)
+  // let selectedCategorySlug = currentCategories?.[0];
+  let selectedCategorySlug = props.categorySlugsForGql?.[0];
+  let selectedCategory = (currentCategories ?? []).find(c => c.slug === selectedCategorySlug)
+  // console.log('selectedCategory', selectedCategory)
 
   const selectedCategoryName: string = selectedCategory
-    ? "All Products"
-    : selectedCategory?.name
+    ? selectedCategory?.name
+    : "All Products"
 
   const selectedCategoryBlurb: string = selectedCategory
-    ? ""
-    : selectedCategory?.blurb
+    ? selectedCategory?.blurb
+    : ""
 
-  const selectedCategorySlug: string = selectedCategory
-    ? "all"
-    : selectedCategory?.slug
+  // const selectedCategorySlug: string = selectedCategory
+  //   ? selectedCategory?.slug
+  //   : "all"
 
 
   const bannerImageUrl = getBannerImageUrl(selectedCategorySlug)
