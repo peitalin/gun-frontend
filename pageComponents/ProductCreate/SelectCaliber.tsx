@@ -79,8 +79,17 @@ const SelectCaliber = (props: ReactProps & FormikProps<FormikFields>) => {
         height={45}
         onChange={(option: SelectOption) => {
           console.log("option: ", option)
-          fprops.setFieldValue("caliber", option?.value)
+          let caliber = option?.value
+          fprops.setFieldValue("caliber", caliber)
           fprops.setFieldTouched('caliber', true)
+
+          // add caliber to title for search
+          fprops.setFieldValue(
+            "title",
+            `${fprops.values?.make} ${fprops.values?.model} ${caliber}`
+          )
+          fprops.setFieldTouched('make', true)
+          fprops.setFieldTouched('title', true)
         }}
         options={caliberOptionGroups}
         placeholder={undefined}
@@ -98,6 +107,8 @@ interface ReactProps extends WithStyles<typeof styles> {
 }
 interface FormikFields {
   caliber?: string;
+  make?: string;
+  model?: string;
 }
 interface QData3 {
   getCalibers: Calibers[];

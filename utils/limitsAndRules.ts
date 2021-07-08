@@ -14,9 +14,9 @@ export const maxCountTags = 10;
 export const minLengthTag = 1;
 export const maxLengthTag = 50;
 export const minLengthTitle = 1;
-export const maxLengthTitle = 30; // 30 * 2, title = make + model
+export const maxLengthTitle = 80; // 30 * 2, title = make + model
 export const minLengthProductName = 1;
-export const maxLengthProductName = 60;
+export const maxLengthProductName = 80;
 export const minLengthProductTagline = 1;
 export const maxLengthProductTagline = 60;
 export const minLengthProductDescription = 1;
