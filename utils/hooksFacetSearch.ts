@@ -74,8 +74,10 @@ export const useFacetSearchOptions = ({
     : ""
 
   const initialPageParam = !!router?.query?.page
-    ? parseInt(decodeURIComponent(router?.query?.page as string)) ?? 1
+    ? parseInt(decodeURIComponent(router?.query?.page as string))
     : 1
+  // console.log('ROUTER.QUERY.PAGE:', router?.query?.page)
+  // console.log('initialPageParam:', initialPageParam)
 
   const initialCaliber = !!router?.query?.caliber
     ? decodeURIComponent(router?.query?.caliber as string)
@@ -137,13 +139,19 @@ export const useFacetSearchOptions = ({
 
 
   //////// Set searchTerm and pageParam from url query params when they change
-  /// for exampke, then pasting urls
+  /// for example, then pasting urls
   React.useEffect(() => {
     setSearchTerm(initialSearchTerm)
   }, [initialSearchTerm])
 
   React.useEffect(() => {
-    setPageParam(initialPageParam)
+    // stop infinite loop when pasting in urls with page=2
+    // as it triggers initialPageParam to change, which triggers
+    // pageParam to change, then syncUrl triggers another loop of changes
+    // ad inifinitum
+    if (initialPageParam > 1) {
+      setPageParam(initialPageParam)
+    }
   }, [initialPageParam])
 
   React.useEffect(() => {
@@ -216,13 +224,12 @@ export const useFacetSearchOptions = ({
           }
 
         }).filter(p => !!p)
-        // console.log("initial params: ", params)
       }
 
       // console.log('serachTerm:', searchTerm)
       // Sync url to facetHooks searchterm params
       if (searchTerm !== undefined && searchTerm !== "") {
-        if (params.every(p => !p.startsWith("q="))) {
+        if (!params.some(p => p.startsWith("q="))) {
           // search query doesnt yet exist, add q param
           params = [`q=${searchTerm}`, ...params]
         } else {
@@ -239,14 +246,15 @@ export const useFacetSearchOptions = ({
       }
 
       // Sync page params if larger than page 1
+      // console.log("PAGE PARAM>>>>>>>>>>>>", pageParam)
       if (pageParam > 1) {
-        if (!params.some(p => p.includes('page='))) {
+        if (!params.some(p => p.startsWith('page='))) {
           // page query doesnt yet exist, add page param
           params = [`page=${pageParam}`, ...params]
         } else {
           // page query exists, modify it
           params = params.map(param => {
-            if (param.includes("page=")) {
+            if (param.startsWith("page=")) {
               return `page=${pageParam}`
             } else {
               return param
@@ -259,7 +267,7 @@ export const useFacetSearchOptions = ({
       }
 
 
-      console.log("params before join: ", params)
+      // console.log("params before join: ", params)
       let params_str: string = params.join('&')
       // console.log("params_str after join: ", params_str)
       if (params_str) {

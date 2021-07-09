@@ -21,17 +21,12 @@ import { useSnackbar, ProviderContext } from "notistack";
 // helpers
 import { useRouter } from "next/router";
 // MUI
-import IconButton from '@material-ui/core/IconButton';
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import EditIcon from '@material-ui/icons/Edit';
-import VisibilityIcon from '@material-ui/icons/Visibility';
 import LinkIcon from '@material-ui/icons/Link';
-import FileCopyIcon from '@material-ui/icons/FileCopy';
-import PublishIcon from '@material-ui/icons/Publish';
-import DeleteIcon from '@material-ui/icons/Delete';
 import Tooltip from '@material-ui/core/Tooltip';
 
 // media query
@@ -42,14 +37,12 @@ import { EDIT_PRODUCT } from "queries/products-mutations";
 import { DELETE_PRODUCT } from "queries/deletions-mutations";
 import { DASHBOARD_PRODUCTS_CONNECTION } from "queries/store-queries";
 import { useApolloClient, useMutation, gql } from "@apollo/client";
-import { ProductFragment } from "queries/fragments";
 // product edit
 import { productToProductEditInput } from "utils/conversions";
 import ConfirmDeleteModal from "components/ConfirmActionModal";
 // Copy
 import copy from "clipboard-copy";
 import { cacheUpdateDeleteProduct, cacheUpdateEditProduct } from "pageComponents/ProductEdit/cacheUpdateEditProduct";
-import products from "pages/admin/products";
 
 
 
@@ -254,10 +247,10 @@ const ProductRow = (props: ReactProps) => {
           <div className={mdDown ? classes.rowCell1Mobile : classes.rowCell1}>
             {
               product.featuredVariant.previewItems[0] &&
-              <Link href="/admin/products/[productId]"
-                as={`/admin/products/${product.id}`} // as
+              <Link href="/p/[productId]"
+                as={`/p/${product.id}`} // as
               >
-                <Tooltip title="Edit Product" placement="top-start">
+                <Tooltip title="View Product" placement="top-start">
                   <a className={classes.hoverOpacity}>
                     <ProductPreviewCardRowSmall
                       previewItem={product.featuredVariant.previewItems[0]}
@@ -278,11 +271,11 @@ const ProductRow = (props: ReactProps) => {
             }
             <div className={clsx(classes.flexCol, classes.marginLeft)}>
 
-              <Link href="/admin/products/[productId]"
-                as={`/admin/products/${product.id}`}
+              <Link href="/p/[productId]"
+                as={`/p/${product.id}`}
               >
                 <a className={classes.copyLink}>
-                  <Tooltip title="Edit Product" placement="top-start">
+                  <Tooltip title="View Product" placement="top-start">
                     <Typography className={classes.name} variant="subtitle1">
                       {
                         (productName.length > 45 && xsDown)
