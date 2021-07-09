@@ -264,7 +264,7 @@ const CollectionModal: React.FC<ReactProps> = (props) => {
                       e => e.node.productId === selectedProductId
                     )
 
-                    console.log("productInCollection: ", collectionItemEdge)
+                    // console.log("productInCollection: ", collectionItemEdge)
                     let productInCollection = !!collectionItemEdge?.node?.productId
                     let collectionItem = collectionItemEdge?.node
 

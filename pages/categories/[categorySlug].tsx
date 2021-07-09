@@ -126,6 +126,7 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
       initialCategories: initialCategories,
       categoryName: categoryName,
       selectedCategory: selectedCategory,
+      revalidate: 120, // 2min
     }
   };
 }

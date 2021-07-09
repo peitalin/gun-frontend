@@ -186,16 +186,13 @@ export const useFacetSearchOptions = ({
       // console.log("currentCategories: ", currentCategories)
 
       if (syncUrlParams) {
-        if (urlPath.startsWith('/categories')) {
+        if (currentCategories?.[0]?.slug) {
           // console.log("currentCategories: : :: ", currentCategories)
-          if (currentCategories?.[0]?.slug) {
+          if (urlPath.startsWith('/categories')) {
             urlPath = `/categories/${currentCategories?.[0]?.slug}`
           }
-
-          // // /all if currentCategories is empty array
-          // if (currentCategories?.length === 0 || !currentCategories?.[0]) {
-          //   urlPath = `/categories/all`
-          // } else {
+          // if (urlPath.startsWith('/new')) {
+          //   urlPath = `/new/${currentCategories?.[0]?.slug}`
           // }
         }
       }
@@ -222,11 +219,22 @@ export const useFacetSearchOptions = ({
         // console.log("initial params: ", params)
       }
 
-      // Sync facetHooks params to the url
+      // console.log('serachTerm:', searchTerm)
+      // Sync url to facetHooks searchterm params
       if (searchTerm !== undefined && searchTerm !== "") {
-        if (params.every(p => !p.includes("q="))) {
+        if (params.every(p => !p.startsWith("q="))) {
           // search query doesnt yet exist, add q param
           params = [`q=${searchTerm}`, ...params]
+        } else {
+          let params2 = params.map(p => {
+            if (p.startsWith("q=")) {
+              return `q=${searchTerm}`
+            } else {
+              return p
+            }
+          })
+          params = params2
+          // console.log("params>>>>>>>>>>>>", params2)
         }
       }
 
@@ -251,7 +259,7 @@ export const useFacetSearchOptions = ({
       }
 
 
-      // console.log("params before join: ", params)
+      console.log("params before join: ", params)
       let params_str: string = params.join('&')
       // console.log("params_str after join: ", params_str)
       if (params_str) {

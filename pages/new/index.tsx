@@ -46,7 +46,6 @@ const NewProductsSSR: NextPage<ReactProps> = (props) => {
 
 interface ReactProps {
   initialCategories: Categories[];
-  categoryName?: string;
   selectedCategory: Categories;
 }
 
@@ -60,8 +59,10 @@ interface QueryVar1 {
 
 
 export const getStaticProps: GetStaticProps = async (ctx) => {
+// export async function getServerSideProps(ctx: NextPageContext) {
 
   const categorySlug: string = ctx?.params?.categorySlug as any;
+  // const categorySlug: string = ctx?.query?.categorySlug as any;
 
   const { data } = await serverApolloClient().query<QueryData1, QueryVar1>({
     query: GET_CATEGORIES,
@@ -78,13 +79,12 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
   let selectedCategory = [ ...data?.getCategories, defaultCategory ]
     .find(s => s.slug === categorySlug) ?? ""
 
-  let categoryName = selectedCategory?.name ?? ""
 
   return {
     props: {
       initialCategories: data?.getCategories,
-      categoryName: categoryName,
       selectedCategory: selectedCategory,
+      revalidate: 120, // 2min
     }
   };
 }

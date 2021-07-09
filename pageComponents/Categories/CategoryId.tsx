@@ -158,7 +158,6 @@ const CategoryId: React.FC<ReactProps> = (props) => {
       // require button click to change search
     },
     fetchPolicy: "cache-and-network",
-    ssr: true,
   });
 
 
