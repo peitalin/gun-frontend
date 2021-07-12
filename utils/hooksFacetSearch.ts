@@ -246,7 +246,6 @@ export const useFacetSearchOptions = ({
       }
 
       // Sync page params if larger than page 1
-      // console.log("PAGE PARAM>>>>>>>>>>>>", pageParam)
       if (pageParam > 1) {
         if (!params.some(p => p.startsWith('page='))) {
           // page query doesnt yet exist, add page param

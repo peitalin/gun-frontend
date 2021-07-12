@@ -18,6 +18,7 @@ import CategoryCarouselStart from "components/CategoryCarouselStart";
 import ShowOnMobileOrDesktopSSR from "components/ShowOnMobileOrDesktopSSR";
 
 import AlignCenterLayout from "components/AlignCenterLayout";
+import { useScrollYPosition } from "utils/hooks";
 export const MAX_WIDTH_GRID: number = 1160;
 // show exactly 4 product cards in carousel + 1rem padding on left
 // 270px each card (including margin of 16px) = 290
@@ -48,6 +49,7 @@ const FrontPage: React.FC<ReactProps> = (props) => {
 
   // show client-side only
   let defaultShow = process.browser
+  let y = useScrollYPosition()
 
   const [showFeatured, setShowFeatured] = React.useState(defaultShow)
   const [showAdvertised, setShowAdvertised] = React.useState(defaultShow)
@@ -55,23 +57,23 @@ const FrontPage: React.FC<ReactProps> = (props) => {
   const [showNew, setShowNew] = React.useState(defaultShow)
   const [showCategories, setShowCategories] = React.useState(defaultShow)
 
-  // React.useEffect(() => {
-  //   if (y > 0 && !showFeatured) {
-  //     setShowFeatured(true)
-  //   }
-  //   if (y > 100 && !showNew) {
-  //     setShowNew(true)
-  //   }
-  //   if (y > 200 && !showPromotedBanner) {
-  //     setShowPromotedBanner(true)
-  //   }
-  //   if (y > 600 && !showAdvertised) {
-  //     setShowAdvertised(true)
-  //   }
-  //   if (y > 800 && !showCategories) {
-  //     setShowCategories(true)
-  //   }
-  // }, [y])
+  React.useEffect(() => {
+    // if (y > 0 && !showFeatured) {
+    //   setShowFeatured(true)
+    // }
+    // if (y > 100 && !showNew) {
+    //   setShowNew(true)
+    // }
+    // if (y > 200 && !showPromotedBanner) {
+    //   setShowPromotedBanner(true)
+    // }
+    if (y > 600 && !showAdvertised) {
+      setShowAdvertised(true)
+    }
+    if (y > 800 && !showCategories) {
+      setShowCategories(true)
+    }
+  }, [y])
 
   let cPadding = 4 // category carousel padding
 
@@ -148,6 +150,16 @@ const FrontPage: React.FC<ReactProps> = (props) => {
           })
         }
 
+
+        {
+          showPromotedBanner &&
+          <div className={classes.bannerPromotionsContainer}>
+            <BannerPromotionsLink
+              disableMetaHeader={true}
+            />
+          </div>
+        }
+
         {
           showAdvertised &&
           advertisedSection?.map(section => {
@@ -178,15 +190,6 @@ const FrontPage: React.FC<ReactProps> = (props) => {
               )
             }
           })
-        }
-
-        {
-          showPromotedBanner &&
-          <div className={classes.bannerPromotionsContainer}>
-            <BannerPromotionsLink
-              disableMetaHeader={true}
-            />
-          </div>
         }
 
         <div className={classes.categoryCarouselFrontPageBox}>
