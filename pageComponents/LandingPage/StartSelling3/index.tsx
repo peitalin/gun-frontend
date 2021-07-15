@@ -72,12 +72,12 @@ const StartSelling3 = (props: ReactProps) => {
 
         <ShowOnMobileOrDesktopSSR desktop className={classes.width100}>
           <Typography className={classes.title}>
-            Buy and Sell in 5 steps
+            Buy and Sell in 4 steps
           </Typography>
         </ShowOnMobileOrDesktopSSR>
         <ShowOnMobileOrDesktopSSR mobile className={classes.width100}>
           <Typography className={classes.titleMobile}>
-            Buy and Sell in 5 steps
+            Buy and Sell in 4 steps
           </Typography>
         </ShowOnMobileOrDesktopSSR>
 
