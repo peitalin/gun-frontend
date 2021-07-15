@@ -38,6 +38,12 @@ const Header: React.FC<ReactProps> = (props) => {
       {/* Manifest.json defined and generated in next.config.js */}
       <link rel="manifest" href="/manifest.json"/>
 
+      {/* <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.7.4/lottie.min.js"
+        async
+      /> */}
+
+
       {/* <meta name="google-site-verification" content="Rqtqx5V07R9Ps4Ey9VBivC7y8zrRE5U5yWE8a2zba8k" /> */}
 
       {/* <script>

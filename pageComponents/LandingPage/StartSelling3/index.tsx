@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import clsx from "clsx";
 import {
   withStyles,
@@ -6,43 +6,76 @@ import {
   WithStyles,
   Theme,
 } from "@material-ui/core/styles";
-import { Colors, BoxShadows, BorderRadius3x } from "layout/AppTheme";
+import { Colors, BoxShadows, isThemeDark } from "layout/AppTheme";
 import { commonStyles } from "../commonStyles";
 // components
 import Typography from "@material-ui/core/Typography";
-import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
+import CardMedia from "@material-ui/core/CardMedia";
+
+import ShowOnMobileOrDesktopSSR from "components/ShowOnMobileOrDesktopSSR";
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
-import CardMedia from "@material-ui/core/CardMedia";
-import Hidden from "components/HiddenFix";
-import ShowOnMobileOrDesktopSSR from "components/ShowOnMobileOrDesktopSSR";
-import Tick from "components/Icons/Tick";
 
+import lottie from "lottie-web";
 
 
 const StartSelling3 = (props: ReactProps) => {
 
   const { classes } = props;
   const theme = useTheme();
-  const mdDown = useMediaQuery(theme.breakpoints.down("md"));
+  const mdDown = useMediaQuery(theme.breakpoints.down('md'));
+
+  let [animDesktop, setAnimDesktop] = React.useState(undefined)
+  let [animMobile, setAnimMobile] = React.useState(undefined)
+
+  React.useEffect(() => {
+    if (document) {
+
+      if (mdDown && !animMobile) {
+        let animation = lottie.loadAnimation({
+          container: document?.getElementById('escrow-blue-anim-mobile'), // Required
+          path: 'escrow-blue-mobile.json', // Required
+          renderer: 'svg', // Required
+          loop: true, // Optional
+          autoplay: true, // Optional
+          name: "Gun Marketplace Escrow", // Name for future reference. Optional.
+        })
+        setAnimMobile(animation)
+        console.log("animation mobile: ", animation)
+      }
+
+      if (!mdDown && !animDesktop) {
+        let animation = lottie.loadAnimation({
+          container: document?.getElementById('escrow-blue-anim-desktop'), // Required
+          path: 'escrow-blue.json', // Required
+          renderer: 'svg', // Required
+          loop: true, // Optional
+          autoplay: true, // Optional
+          name: "Gun Marketplace Escrow", // Name for future reference. Optional.
+        })
+        setAnimDesktop(animation)
+        console.log("animation desktop: ", animation)
+      }
+    }
+  }, [mdDown])
+
 
   return (
     <div className={clsx(
-      props.isDarkMode
-        ? "background-uniswap-dark"
-        : "background-slate-grey",
+      // props.isDarkMode
+      //   ? "background-uniswap-dark"
+      //   : "background-slate-grey",
       classes.section3Root,
       classes.flexRow
     )}>
       <div className={clsx(classes.section3)}>
 
-        <ShowOnMobileOrDesktopSSR desktop>
+        <ShowOnMobileOrDesktopSSR desktop className={classes.width100}>
           <Typography className={classes.title}>
             Buy and Sell in 5 steps
           </Typography>
         </ShowOnMobileOrDesktopSSR>
-        <ShowOnMobileOrDesktopSSR mobile>
+        <ShowOnMobileOrDesktopSSR mobile className={classes.width100}>
           <Typography className={classes.titleMobile}>
             Buy and Sell in 5 steps
           </Typography>
@@ -50,151 +83,33 @@ const StartSelling3 = (props: ReactProps) => {
 
         <ShowOnMobileOrDesktopSSR desktop>
           <div className={clsx(classes.flexRow, classes.flexWrap)}>
-            <div className={clsx(
-              classes.flexItem,
-              classes.flexRow,
-              classes.minWidth
-            )}>
-              <div className={classes.reasonContainer}>
-                <div className={clsx(classes.flexRow, classes.reasonRow)}>
-                  <div className={clsx(
-                    classes.numberBullet,
-                    classes.bulletSize
-                  )}>
-                    1
-                  </div>
-                  <Typography className={classes.reason}>
-                    Buyer makes payment into a secure escrow account for the firearm
-                  </Typography>
-                </div>
-                <div className={clsx(classes.flexRow, classes.reasonRow)}>
-                  <div className={clsx(
-                    classes.numberBullet,
-                    mdDown ? classes.bulletSizeMobile : classes.bulletSize
-                  )}>
-                    2
-                  </div>
-                  <Typography className={classes.reason}>
-                    When payment arrives, seller is notified to dispose the firearm
-                  </Typography>
-                </div>
-                <div className={clsx(classes.flexRow, classes.reasonRow)}>
-                  <div className={clsx(
-                    classes.numberBullet,
-                    mdDown ? classes.bulletSizeMobile : classes.bulletSize
-                  )}>
-                    3
-                  </div>
-                  <Typography className={classes.reason}>
-                    Transferring dealer gives seller a receipt to upload on the platform
-                  </Typography>
-                </div>
-                <div className={clsx(classes.flexRow, classes.reasonRow)}>
-                  <div className={clsx(
-                    classes.numberBullet,
-                    mdDown ? classes.bulletSizeMobile : classes.bulletSize
-                  )}>
-                    4
-                  </div>
-                  <Typography className={classes.reason}>
-                    Once the receipt is approved, payout is scheduled automatically.
-                  </Typography>
-                </div>
-                <div className={clsx(classes.flexRow, classes.reasonRow)}>
-                  <div className={clsx(
-                    classes.numberBullet,
-                    mdDown ? classes.bulletSizeMobile : classes.bulletSize
-                  )}>
-                    5
-                  </div>
-                  <Typography className={classes.reason}>
-                    Buyer is notified to pickup the firearm.
-                  </Typography>
-                </div>
-              </div>
-            </div>
-            <div className={clsx(
-              classes.flexItem,
-              classes.imageContainer,
-            )}>
-              <CardMedia
-                component="img"
-                // className={classes.sxImage1}
-                classes={{ media: classes.imgShadow }}
-                src={
-                  props.isDarkMode
-                    ? "/img/start/screen2-dark.jpg"
-                    : "/img/start/screen2-light.jpg"
-                }
-              />
-            </div>
+
+            <div
+              style={{
+                width: '100%',
+                marginTop: '2rem',
+                marginBottom: '4rem',
+                maxWidth: 800,
+                fontWeight: 700,
+              }}
+              id={"escrow-blue-anim-desktop"}
+            />
+
           </div>
         </ShowOnMobileOrDesktopSSR>
+
         <ShowOnMobileOrDesktopSSR mobile>
           <div className={clsx(classes.flexCol, classes.flexWrap)}>
-            <div className={clsx(
-              classes.flexItem,
-              classes.flexRowMobile,
-              classes.minWidthMobile
-            )}>
-              <div className={classes.reasonContainer}>
-                <div className={clsx(classes.flexRow, classes.reasonRow)}>
-                  <div className={clsx(classes.numberBullet, classes.bulletSizeMobile)}>
-                    1
-                  </div>
-                  <Typography className={classes.reasonMobile}>
-                    Buyer makes payment into a secure escrow account for the firearm
-                  </Typography>
-                </div>
-                <div className={clsx(classes.flexRow, classes.reasonRow)}>
-                  <div className={clsx(classes.numberBullet, classes.bulletSizeMobile)}>
-                    2
-                  </div>
-                  <Typography className={classes.reasonMobile}>
-                    When payment arrives, seller is notified to dispose the firearm
-                  </Typography>
-                </div>
-                <div className={clsx(classes.flexRow, classes.reasonRow)}>
-                  <div className={clsx(classes.numberBullet, classes.bulletSizeMobile)}>
-                    3
-                  </div>
-                  <Typography className={classes.reasonMobile}>
-                    Transferring dealer gives seller a receipt to upload on the platform
-                  </Typography>
-                </div>
-                <div className={clsx(classes.flexRow, classes.reasonRow)}>
-                  <div className={clsx(classes.numberBullet, classes.bulletSizeMobile)}>
-                    4
-                  </div>
-                  <Typography className={classes.reasonMobile}>
-                    Once the receipt is approved, payout is scheduled automatically.
-                  </Typography>
-                </div>
-                <div className={clsx(classes.flexRow, classes.reasonRow)}>
-                  <div className={clsx(classes.numberBullet, classes.bulletSizeMobile)}>
-                    5
-                  </div>
-                  <Typography className={classes.reasonMobile}>
-                    Buyer is notified to pickup the firearm.
-                  </Typography>
-                </div>
-              </div>
-            </div>
-            <div className={clsx(
-              classes.flexItem,
-              classes.imageContainerMobile,
-            )}>
-              <CardMedia
-                component="img"
-                // className={classes.sxImage1}
-                classes={{ media: classes.imgShadow }}
-                src={
-                  props.isDarkMode
-                    ? "/img/start/screen2-dark.jpg"
-                    : "/img/start/screen2-light.jpg"
-                }
-              />
-            </div>
+            <div
+              style={{
+                minWidth: 580,
+                borderRadius: '16px',
+                fontWeight: 700,
+                marginTop: '1rem',
+                marginBottom: '4rem',
+              }}
+              id={"escrow-blue-anim-mobile"}
+            />
           </div>
         </ShowOnMobileOrDesktopSSR>
 
@@ -210,46 +125,69 @@ interface ReactProps extends WithStyles<typeof styles> {
 
 export const styles = (theme: Theme) => createStyles({
   section3Root: {
-    paddingTop: '4rem',
-    paddingBottom: '6rem',
     width: '100%',
     ...commonStyles(theme).border2,
   },
   section3: {
-    maxWidth: 1180,
+    width: '100%',
+    backgroundColor: isThemeDark(theme)
+      ? Colors.uniswapNavy
+      : Colors.cream,
+    backgroundImage: isThemeDark(theme)
+      ? `url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%231f2a3e' fill-opacity='0.4' fill-rule='evenodd'%3E%3Ccircle cx='12' cy='12' r='2'/%3E%3C/g%3E%3C/svg%3E")`
+      : `url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23dddddd' fill-opacity='0.4' fill-rule='evenodd'%3E%3Ccircle cx='12' cy='12' r='1.5'/%3E%3C/g%3E%3C/svg%3E")`,
+    // URL encodings:
+    // %3C = <
+    // %3E = >
+    // so that "/%3E%3C/g%3E%3C/svg%3E" is actually: /></g></svg>
+    ///// original
+    // backgroundImage: isThemeDark(theme)
+    //   ? `url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%231f2a3e' fill-opacity='0.4' fill-rule='evenodd'%3E%3Ccircle cx='6' cy='6' r='6'/%3E%3Ccircle cx='26' cy='26' r='6'/%3E%3C/g%3E%3C/svg%3E")`
+    //   : `url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23e6e7ec' fill-opacity='0.4' fill-rule='evenodd'%3E%3Ccircle cx='6' cy='6' r='2'/%3E%3Ccircle cx='26' cy='26' r='2'/%3E%3C/g%3E%3C/svg%3E")`,
+    display: 'flex',
+    justifyContent: 'center',
+    flexDirection: 'column',
+    alignItems: 'center',
   },
   title: {
+    // backgroundColor: isThemeDark(theme)
+    //   ? Colors.uniswapNavy
+    //   : Colors.cream,
     fontSize: "2.25rem",
-    fontWeight: 700,
+    fontWeight: 600,
     textAlign: "center",
-    marginTop: "4rem",
-    marginBottom: "2rem",
+    paddingTop: "8rem",
+    paddingBottom: "0rem",
     color: theme.palette.type === 'dark'
       ? `${Colors.uniswapLightGrey}`
       : `${Colors.slateGreyBlack}`,
+    // borderRadius: '16px',
+    // borderBottom: isThemeDark(theme)
+    //   ? `2px solid ${Colors.uniswapLightNavy}`
+    //   : `2px solid ${Colors.slateGrey}`,
   },
   titleMobile: {
     fontSize: "1.75rem",
-    fontWeight: 700,
+    fontWeight: 600,
     textAlign: "center",
-    marginTop: "2rem",
-    marginBottom: "2rem",
+    paddingTop: "4rem",
     padding: '0rem 1rem',
+    // backgroundColor: isThemeDark(theme)
+    //   ? Colors.uniswapNavy
+    //   : Colors.cream,
     color: theme.palette.type === 'dark'
       ? `${Colors.uniswapLightGrey}`
       : `${Colors.slateGreyBlack}`,
+    // borderBottom: isThemeDark(theme)
+    //   ? `2px solid ${Colors.uniswapLightNavy}`
+    //   : `2px solid ${Colors.slateGrey}`,
   },
   flexRow:{
     display: "flex",
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
-  },
-  flexRowMobile:{
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "flex-start",
-    alignItems: "center",
+    overflow: 'hidden',
   },
   flexWrap: {
     flexWrap: "wrap",
@@ -328,6 +266,9 @@ export const styles = (theme: Theme) => createStyles({
       ? `3px solid ${Colors.uniswapNavy}`
       : `3px solid ${Colors.slateGrey}`,
     marginRight: '1rem',
+  },
+  width100: {
+    width: '100%',
   },
 })
 

@@ -18,6 +18,7 @@ const CategoryBarMobile: React.FC<ReactProps> = (props) => {
   const { classes } = props;
   let router = useRouter()
 
+
   return (
     <nav className={clsx(
       classes.baseBarDashboard,

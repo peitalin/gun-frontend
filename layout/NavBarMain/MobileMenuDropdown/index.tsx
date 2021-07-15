@@ -118,7 +118,7 @@ const styles = (theme: Theme) => createStyles({
     borderRadius: BorderRadius,
   },
   menuTop: {
-    top: `calc(${MainBarHeight + CategoryBarHeight}px)`, // 1px tucked under navbar
+    top: `calc(${MainBarHeight + CategoryBarHeight}px + 0.5rem)`, // 1px tucked under navbar
   },
   menuTopDashboard: {
     top: `calc(${MainBarHeight + CategoryBarHeight + DashboardBarHeight}px + 0.75rem)`,

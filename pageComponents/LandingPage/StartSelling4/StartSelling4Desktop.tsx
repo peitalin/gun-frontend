@@ -168,7 +168,7 @@ export const styles = (theme: Theme) => createStyles({
   },
   title: {
     fontSize: "2.25rem",
-    fontWeight: 700,
+    fontWeight: 600,
     textAlign: "center",
     marginTop: "2rem",
     marginBottom: "4rem",

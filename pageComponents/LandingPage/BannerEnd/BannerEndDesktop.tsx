@@ -428,7 +428,7 @@ export const styles = (theme: Theme) => createStyles({
     position: 'absolute',
     top: 0,
     left: 0,
-    backgroundImage:`url(/img/start/blur.png)`,
+    // backgroundImage:`url(/img/start/blur.png)`,
     backgroundRepeat: 'no-repeat',
     backgroundSize: '100%',
   },

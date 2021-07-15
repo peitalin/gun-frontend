@@ -15,7 +15,7 @@ export const commonStyles = (theme: Theme) => ({
     width: `calc(100% - ${2*marginWidth}rem)`,
     backgroundColor: isThemeDark(theme)
       ? `${Colors.uniswapDarkNavy}`
-      : `${Colors.slateGrey}`,
+      : `${Colors.cream}`,
   },
   border2: {
     borderRadius: BorderRadius4x,
@@ -23,7 +23,7 @@ export const commonStyles = (theme: Theme) => ({
     marginBottom: '0rem',
     width: `calc(100% - ${2*marginWidth}rem)`,
     backgroundColor: isThemeDark(theme)
-      ? `${Colors.uniswapDarkNavy}`
+      ? `${Colors.uniswapNavy}`
       : `${Colors.cream}`,
       // : `linear-gradient(180deg , ${Colors.slateGrey} 30%, rgba(255, 255, 255, 0.4) 60%, rgba(5, 5, 5, 0) 90%)`,
   },
@@ -34,7 +34,7 @@ export const commonStyles = (theme: Theme) => ({
     width: `calc(100% - ${2*marginWidth}rem)`,
     backgroundColor: isThemeDark(theme)
       ? `${Colors.uniswapDarkNavy}`
-      : `${Colors.slateGrey}`,
+      : `${Colors.cream}`,
       // : `linear-gradient(180deg , ${Colors.slateGrey} 30%, rgba(255, 255, 255, 0.4) 60%, rgba(5, 5, 5, 0) 90%)`,
   },
 })

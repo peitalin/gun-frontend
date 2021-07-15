@@ -209,7 +209,7 @@ export const styles = (theme: Theme) => createStyles({
   },
   titleDesktop: {
     fontSize: "2rem",
-    fontWeight: 700,
+    fontWeight: 600,
     textAlign: "center",
     marginTop: "2rem",
     marginBottom: "2rem",
@@ -220,7 +220,7 @@ export const styles = (theme: Theme) => createStyles({
   },
   titleMobile: {
     fontSize: "1.5rem",
-    fontWeight: 700,
+    fontWeight: 600,
     textAlign: "center",
     marginTop: "2rem",
     marginBottom: "0rem",
@@ -231,7 +231,7 @@ export const styles = (theme: Theme) => createStyles({
   },
   headingDesktop: {
     fontSize: "2rem",
-    fontWeight: 700,
+    fontWeight: 600,
     textAlign: "center",
     marginTop: "2rem",
     marginBottom: "2rem",
@@ -242,7 +242,7 @@ export const styles = (theme: Theme) => createStyles({
   },
   headingMobile: {
     fontSize: "1.5rem",
-    fontWeight: 700,
+    fontWeight: 600,
     textAlign: "center",
     marginTop: "2rem",
     marginBottom: "2rem",

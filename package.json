@@ -45,6 +45,7 @@
     "jspdf-autotable": "^3.5.14",
     "lodash.debounce": "^4.0.8",
     "lodash.throttle": "^4.1.1",
+    "lottie-web": "^5.7.12",
     "material-ui-phone-number": "^2.2.6",
     "nanoid": "^3.1.10",
     "next": "^10.2.3",

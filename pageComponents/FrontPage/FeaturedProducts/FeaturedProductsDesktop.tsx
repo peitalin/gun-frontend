@@ -83,7 +83,7 @@ const FeaturedProductsDesktop = (props: ReactProps) => {
                 </div>
               </div>
             )
-          : <LoadingCards count={3} />
+          : <LoadingCards count={4} />
         }
         {
           showSeeMore &&

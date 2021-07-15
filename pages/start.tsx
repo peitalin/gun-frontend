@@ -15,6 +15,7 @@ import ShowOnMobileOrDesktopSSR from "components/ShowOnMobileOrDesktopSSR";
 
 
 
+
 const StartLandingPageSSR: NextPage<ReactProps> = (props) => {
 
   let router = useRouter()
@@ -23,7 +24,6 @@ const StartLandingPageSSR: NextPage<ReactProps> = (props) => {
     || router.pathname === "/start"
     || router.pathname === "/sell"
     || router.pathname.startsWith("/f/")
-
 
   return (
     <>
@@ -41,6 +41,7 @@ const StartLandingPageSSR: NextPage<ReactProps> = (props) => {
           Create a free account and start selling your collection today.
         `}
       />
+
       <LandingPage />
       {
         showSocialBanner &&
@@ -70,8 +71,9 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     ? "dark"
     : (ctx.query?.light === "true" || ctx.query?.light === "1")
       ? "light"
-      : undefined
-    // when undefined, localStorage determines darkmode
+      : null
+    // when null, localStorage determines darkmode
+    // must be null, can't deserilize undefined
 
   return {
     props: {

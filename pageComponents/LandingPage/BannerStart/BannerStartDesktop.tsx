@@ -16,9 +16,9 @@ import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 // typings
 import { UserPrivate, Signup_Emails } from "typings/gqlTypes";
-import Link from "next/link";
-import CardMedia from "@material-ui/core/CardMedia";
-import Image from 'next/image';
+// import Link from "next/link";
+// import CardMedia from "@material-ui/core/CardMedia";
+// import Image from 'next/image';
 
 
 import { useFormik } from 'formik';
@@ -365,7 +365,7 @@ export const styles = (theme: Theme) => createStyles({
     position: 'absolute',
     top: 0,
     left: 0,
-    backgroundImage:`url(/img/start/blur.png)`,
+    // backgroundImage:`url(/img/start/blur.png)`,
     backgroundRepeat: 'no-repeat',
     backgroundSize: '100%',
   },

@@ -17,9 +17,9 @@ import {
 
 /////////////// STYLES /////////////////////
 export const MainBarHeightHomePage = 75;
-export const MainBarHeight = 60;
+export const MainBarHeight = 56;
 
-export const CategoryBarHeight = 36;
+export const CategoryBarHeight = 30;
 
 export const NewsBarHeight = 8;
 export const NavBarHeight = MainBarHeightHomePage + CategoryBarHeight;

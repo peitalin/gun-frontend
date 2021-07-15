@@ -236,7 +236,7 @@ export const styles = (theme: Theme) => createStyles({
   },
   s11subtitle: {
     fontSize: '1.1rem',
-    fontWeight: 700,
+    fontWeight: 600,
     color: Colors.black,
     marginBottom: '0.5rem',
   },
