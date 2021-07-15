@@ -27,11 +27,6 @@ export const styles = (theme: Theme) => createStyles({
     position: 'fixed',
     top: 0,
     right: 0,
-    // background: theme.palette.type === 'dark'
-    //   ? Gradients.gradientUniswapDarkRotated.background
-    //   : Gradients.gradientGrey2.background,
-    // background: Colors.uniswapDarkNavy,
-    // paddingTop: NewsBarHeight,
     height: `${MainBarHeight }px`, // 1px for borderBottom
     display: 'flex',
     flexDirection: 'row',
@@ -40,7 +35,6 @@ export const styles = (theme: Theme) => createStyles({
     width: '100%',
   },
   catBarInnerDashboard: {
-    // width: '100vw',
     width: '100%',
     display: "flex",
     position: "relative",
@@ -62,17 +56,12 @@ export const styles = (theme: Theme) => createStyles({
   },
   categoryBar: {
     height: `${CategoryBarHeight}px`, // 1px for borderBottom
-    // boxShadow: BoxShadows.shadowWhite.boxShadow,
-    backdropFilter: "blur(6px)",
+    // backdropFilter: "blur(6px)",
     background: isThemeDark(theme)
       ? blurDark
       : blurLight,
-    // background: isThemeDark(theme)
-    //   ? Gradients.gradientUniswapDark.background
-    //   : Gradients.gradientGrey2.background,
-    // border: '0px solid',
     borderBottom: isThemeDark(theme)
-      ? `1px solid ${Colors.uniswapMediumNavy}`
+      ? `1px solid ${Colors.uniswapNavy}`
       : `1px solid ${Colors.slateGrey}`,
   },
   categoryBarMobile: {
@@ -81,20 +70,10 @@ export const styles = (theme: Theme) => createStyles({
   categoryBarShow: {
     display: "unset",
     opacity: 1,
-    // transition: theme.transitions.create(['opacity'], {
-    //   easing: theme.transitions.easing.easeIn,
-    //   duration: '100ms',
-    //   // delay: '100ms',
-    // })
   },
   categoryBarHidden: {
     display: "none",
     opacity: 0,
-    // transition: theme.transitions.create(['opacity'], {
-    //   easing: theme.transitions.easing.easeIn,
-    //   duration: '100ms',
-    //   // delay: '100ms',
-    // })
   },
   categoryBarInner: {
     zIndex: 3,
@@ -139,7 +118,6 @@ export const styles = (theme: Theme) => createStyles({
       color: isThemeDark(theme)
         ? Colors.purple
         : Colors.ultramarineBlueLight,
-      // borderBottom: '2px solid',
       transition: theme.transitions.create(['border', 'color'], {
         easing: theme.transitions.easing.easeIn,
         duration: '100ms',
@@ -164,7 +142,6 @@ export const styles = (theme: Theme) => createStyles({
       duration: '100ms',
     }),
     "&:hover": {
-      // borderBottom: '2px solid',
       color: isThemeDark(theme)
         ? Colors.purple
         : Colors.ultramarineBlueLight,

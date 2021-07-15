@@ -16,7 +16,7 @@ import ShowOnMobileOrDesktopSSR from "components/ShowOnMobileOrDesktopSSR";
 
 
 
-const QR2SSR: NextPage<ReactProps> = (props) => {
+const QR1SSR: NextPage<ReactProps> = (props) => {
 
   let router = useRouter()
   let showSocialBanner = true
@@ -82,7 +82,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   }
 };
 
-export default withStyles(styles)( QR2SSR );
+export default withStyles(styles)( QR1SSR );
 
 
 

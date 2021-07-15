@@ -34,21 +34,15 @@ export const buttonHoverLight = fade(Colors.cream, 0.2)
 export const styles = (theme: Theme) => createStyles({
   baseBarHomePage: {
     zIndex: 5,
-    // background: Gradients.gradientUniswapDark.background,
     background: 'transparent',
     height: `${MainBarHeightHomePage}px`,
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
-    // position: "absolute",
     width: '100%',
     position: 'fixed',
     padding: '0rem',
-    // transition: theme.transitions.create(['padding'], {
-    //   easing: theme.transitions.easing.easeInOut,
-    //   duration: '100ms',
-    // }),
   },
   baseBarInnerHomePage: {
     height: `${MainBarHeight}px`,
@@ -59,10 +53,6 @@ export const styles = (theme: Theme) => createStyles({
     alignItems: "center",
   },
   baseBarPadding: {
-    // pointerEvents: "none", // click through
-    // background: isThemeDark(theme)
-    //   ? Gradients.gradientBlackDitherDown.background
-    //   : Gradients.gradientBlackDitherDown.background,
     padding: '0.5rem',
     paddingTop: '1rem',
     top: 0,
@@ -95,21 +85,15 @@ export const styles = (theme: Theme) => createStyles({
     width: '100%',
   },
   baseBarInnerDashboard: {
-    // width: '100vw',
-    // pointerEvents: "all",
     width: '100%',
     display: "flex",
     position: "relative",
     justifyContent: 'center',
     alignItems: "center",
     height: `${MainBarHeight}px`,
-    // borderBottom: isThemeDark(theme)
-    //   ? `1px solid ${Colors.uniswapMediumNavy}`
-    //   : `1px solid ${Colors.slateGrey}`,
   },
   width100: {
     width: '100%',
-    // pointerEvents: "none", // click through
   },
   menuButtonsContainer: {
     display: 'flex',
@@ -119,7 +103,6 @@ export const styles = (theme: Theme) => createStyles({
   blurBackground: {
     height: '100%',
     width: '100%',
-    // backdropFilter: "blur(6px)",
     background: isThemeDark(theme)
       ? blurDark
       : blurLight,
@@ -132,7 +115,6 @@ export const styles = (theme: Theme) => createStyles({
     position: "absolute",
     height: '100%',
     width: '100%',
-    // backdropFilter: "blur(6px)",
     background: isThemeDark(theme)
       ? blurDark
       : blurLight,
@@ -144,16 +126,10 @@ export const styles = (theme: Theme) => createStyles({
     borderRadius: BorderRadius4x,
   },
   blurBackgroundWideTransparent: {
-    // transition: theme.transitions.create(['background'], {
-    //   easing: theme.transitions.easing.easeIn,
-    //   duration: '100ms',
-    // }),
-    // backdropFilter: "unset",
-    // background: 'rgba(0,0,0,0)',
   },
   blurBackgroundWide: {
     width: '100%',
-    backdropFilter: "blur(6px)",
+    // backdropFilter: "blur(6px)",
     background: isThemeDark(theme)
       ? blurDark
       : blurLight,
@@ -162,16 +138,12 @@ export const styles = (theme: Theme) => createStyles({
     position: "absolute",
     height: '100%',
     width: '100%',
-    backdropFilter: "blur(6px)",
+    // backdropFilter: "blur(6px)",
     background: isThemeDark(theme)
       ? blurDark
       : blurLight,
     top: 0,
     right: 0,
-    // borderBottom: isThemeDark(theme)
-    //   ? `1px solid ${Colors.uniswapMediumNavy}`
-    //   : `1px solid ${Colors.slateGrey}`,
-    // borderRadius: BorderRadius4x,
   },
 
   // Main Bar
@@ -203,9 +175,6 @@ export const styles = (theme: Theme) => createStyles({
   navbarButton: {
     marginRight: "0.5rem",
     minWidth: 72,
-    // background: theme.palette.type === 'dark'
-    //   ? fade(Colors.uniswapDarkNavy, 0.1)
-    //   : fade(Colors.cream, 0.1),
     "&:hover": {
       background: theme.palette.type === 'dark'
         ? buttonHoverDark
@@ -217,9 +186,6 @@ export const styles = (theme: Theme) => createStyles({
     color: Colors.secondaryBright,
   },
   iconText: {
-    // background: 'linear-gradient(to right, #30CFD0 0%, #330867 100%)',
-    // backgroundClip: 'text',
-    // textFillColor: 'transparent',
   },
   buttonText: {
     fontWeight: 600,
@@ -272,7 +238,6 @@ export const styles = (theme: Theme) => createStyles({
 
   // News Bar
   newsBar: {
-    // background: Gradients.gradientBlack.background,
     background: theme.palette.type === 'dark'
       ? Gradients.gradientUniswapFluro.background
       : Gradients.gradientSlategrey.background,
@@ -280,7 +245,6 @@ export const styles = (theme: Theme) => createStyles({
     height: `${NewsBarHeight}px`,
     zIndex: 6,
     position: "relative",
-    // marginBottom: MainBarHeight,
   },
   newsBarInner: {
     display: "flex",

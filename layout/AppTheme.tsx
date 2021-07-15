@@ -290,10 +290,10 @@ export const Gradients = {
     color1: Colors.gradientUniswapDark1,
     color2: Colors.gradientUniswapDark2,
   },
-  gradientUniswapDark2:  {
-    background: `linear-gradient(180deg , ${Colors.uniswapDarkNavy} 30%, ${Colors.uniswapNavy} 90%)`,
+  gradientUniswapDarkest:  {
+    background: `linear-gradient(140deg, ${Colors.uniswapDarkNavy} 20%, ${Colors.uniswapMediumNavy} 80%)`,
     color1: Colors.uniswapDarkNavy,
-    color2: Colors.uniswapNavy,
+    color2: Colors.uniswapMediumNavy,
   },
   gradientUniswapDarkRotated:  {
     background: `linear-gradient(240deg, ${Colors.gradientUniswapDark1} 20%, ${Colors.gradientUniswapDark2} 80%)`,
