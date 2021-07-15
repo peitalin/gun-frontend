@@ -170,6 +170,9 @@ export const isStartPageFn = (router: NextRouter) => {
   if (router.pathname === '/start') {
     return true
   }
+  if (router.pathname === '/qr1') {
+    return true
+  }
   return false
 }
 export const isFeaturedPageFn = (router: NextRouter) => {
