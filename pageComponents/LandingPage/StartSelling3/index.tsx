@@ -81,7 +81,8 @@ const StartSelling3 = (props: ReactProps) => {
           </Typography>
         </ShowOnMobileOrDesktopSSR>
 
-        <ShowOnMobileOrDesktopSSR desktop>
+        {/* width100 on desktop, or else zoom resizes svgs */}
+        <ShowOnMobileOrDesktopSSR desktop className={classes.width100}>
           <div className={clsx(classes.flexRow, classes.flexWrap)}>
 
             <div
@@ -98,6 +99,7 @@ const StartSelling3 = (props: ReactProps) => {
           </div>
         </ShowOnMobileOrDesktopSSR>
 
+        {/* no width100 on mobile */}
         <ShowOnMobileOrDesktopSSR mobile>
           <div className={clsx(classes.flexCol, classes.flexWrap)}>
             <div
