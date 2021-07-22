@@ -199,6 +199,8 @@ export const Colors = {
   uniswapMediumNavy: '#2D2F36',
   uniswapGreyNavy: '#282A31',
   uniswapDarkNavy: "#222429",
+  uniswapDarkPurple: '#232433',
+  uniswapBlack: '#12121C',
   uniswapBrown: '#2A232C',
   gradientUniswapDark1: "#2E3545",
   gradientUniswapDark2: "#2D2F36",

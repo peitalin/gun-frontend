@@ -4286,19 +4286,16 @@ export type Query = {
   /**
    * Query the list of products that are recommended for the logged-in user.
    * If nobody is logged in, a general list of recommendations is still returned.
-   *
    * AccessRule – PUBLIC
    */
   getRecommendedProductsConnection: ProductsConnection;
   /**
    * Retrieve all of the products on the platform that can be purchased.
-   *
    * AccessRule – PUBLIC
    */
   productsNewReleasesConnection: ProductsConnection;
   /**
    * Search all of the products on the platform that can be purchased.
-   *
    * AccessRule – PUBLIC
    */
   search: ProductsConnection;
@@ -4309,13 +4306,11 @@ export type Query = {
   productsByCategoryConnection?: Maybe<ProductsConnection>;
   /**
    * Get a product by its ID.
-   *
    * AccessRule – PUBLIC
    */
   product?: Maybe<Product>;
   /**
    * Get a store by its ID.
-   *
    * AccessRule – PUBLIC
    */
   store?: Maybe<Store>;
@@ -4510,6 +4505,11 @@ export type Query = {
    * when a product was listed
    */
   getSavedSearchHitsByUser?: Maybe<SavedSearchHitsConnection>;
+  /**
+   * Get image, for gun-aggregator to check if image exists
+   *  AccessRule – PLATFORM_ADMIN
+   */
+  getImages: Array<Image_Parents>;
 };
 
 
@@ -5857,6 +5857,11 @@ export type QueryGetSavedSearchesByUserArgs = {
 export type QueryGetSavedSearchHitsByUserArgs = {
   limit?: Maybe<Scalars['Int']>;
   offset?: Maybe<Scalars['Int']>;
+};
+
+
+export type QueryGetImagesArgs = {
+  imageIds: Array<Scalars['String']>;
 };
 
 export type ResetPasswordResponse = {

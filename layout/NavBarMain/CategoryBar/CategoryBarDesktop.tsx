@@ -4,6 +4,9 @@ import { Categories, Product } from "typings/gqlTypes";
 import clsx from "clsx";
 import { withStyles, WithStyles } from "@material-ui/core/styles";
 import { styles } from "./styles";
+import {
+  Colors, isThemeDark,
+} from "layout/AppTheme";
 // MUI
 import Typography from "@material-ui/core/Typography";
 import { useScrollYPosition } from "utils/hooks";
@@ -11,6 +14,15 @@ import { useScrollYPosition } from "utils/hooks";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { Y_SCROLL_NAVBAR_SHOW } from "../constants";
+
+import TriangleSvg from "../MainBar/TriangleSvg";
+import { useTheme } from "@material-ui/core"
+import {
+  logoBackgroundColorDark,
+  logoBackgroundColorDark2,
+  logoBackgroundColorLight,
+  logoBackgroundColorLight2,
+} from "../styles"
 
 
 
@@ -24,8 +36,8 @@ const CategoryBarDesktop: React.FC<ReactProps> = (props) => {
     isSellPage,
   } = props;
 
-  let y = useScrollYPosition()
-
+  let theme = useTheme()
+  // let y = useScrollYPosition()
 
   const alwaysShowBar = !isMainPage && !isFeaturedPage && !isStartPage && !isSellPage
   let router = useRouter()
@@ -35,14 +47,20 @@ const CategoryBarDesktop: React.FC<ReactProps> = (props) => {
     <nav className={clsx(
       classes.baseBarDashboard,
       classes.categoryBar,
-      (y >= Y_SCROLL_NAVBAR_SHOW || alwaysShowBar)
-        ? classes.categoryBarShow
-        : classes.categoryBarHidden,
-      (y >= Y_SCROLL_NAVBAR_SHOW || alwaysShowBar)
-        ? classes.categoryBarTopOffsetSmall
-        : classes.categoryBarTopOffsetBig,
+      //
+      classes.categoryBarShow,
+      classes.categoryBarTopOffsetSmall
+      // (y >= Y_SCROLL_NAVBAR_SHOW || alwaysShowBar)
+      //   ? classes.categoryBarShow
+      //   : classes.categoryBarHidden,
+      // (y >= Y_SCROLL_NAVBAR_SHOW || alwaysShowBar)
+      //   ? classes.categoryBarTopOffsetSmall
+      //   : classes.categoryBarTopOffsetBig,
     )}>
-      <div className={classes.catBarInnerDashboard}>
+      <div className={clsx(
+        classes.catBarInnerDashboard,
+        classes.catBarInnerDashboardDesktop
+      )}>
         <div className={classes.categoryBarInner}>
 
           <Link href={`/new`}>
@@ -51,7 +69,7 @@ const CategoryBarDesktop: React.FC<ReactProps> = (props) => {
                 classes.categoryLinkTextMain,
                 router.asPath === '/new' && classes.categoryLinkTextSelected,
               )}>
-                New
+                What's New
               </Typography>
             </a>
           </Link>
@@ -102,6 +120,24 @@ const CategoryBarDesktop: React.FC<ReactProps> = (props) => {
             </a>
           </Link>
         </div>
+
+        <TriangleSvg
+          style1={{
+            fill: isThemeDark(theme)
+              ? logoBackgroundColorDark2
+              : logoBackgroundColorLight2,
+            opacity: 0,
+          }}
+          style2={{
+            fill: isThemeDark(theme)
+              ? logoBackgroundColorDark
+              : logoBackgroundColorLight,
+            filter: isThemeDark(theme)
+              ? 'drop-shadow( -2px 0px 2px rgba(25, 25, 25, 0.2))'
+              : 'drop-shadow( -2px 0px 2px hsla(0, 0%, 0%, 0.2))',
+          }}
+        />
+
       </div>
     </nav>
   );

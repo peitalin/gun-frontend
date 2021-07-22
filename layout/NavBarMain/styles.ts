@@ -29,13 +29,20 @@ export const NavBarHeight = MainBarHeightHomePage + CategoryBarHeight;
 export const buttonHoverDark = fade(Colors.uniswapDarkNavy, 0.7)
 export const buttonHoverLight = fade(Colors.cream, 0.2)
 
+export const logoBackgroundColorDark = Colors.uniswapBlack
+export const logoBackgroundColorDark2 = Colors.uniswapDarkPurple
+export const logoBackgroundColorDark3 = Colors.uniswapBlack
+
+export const logoBackgroundColorLight = Colors.cream
+export const logoBackgroundColorLight2 = Colors.slateGreyDark
+export const logoBackgroundColorLight3 = Colors.slateGreyDarker
 
 
 export const styles = (theme: Theme) => createStyles({
   baseBarHomePage: {
     zIndex: 5,
     background: 'transparent',
-    height: `${MainBarHeightHomePage}px`,
+    // height: `${MainBarHeightHomePage}px`,
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'flex-start',
@@ -43,6 +50,12 @@ export const styles = (theme: Theme) => createStyles({
     width: '100%',
     position: 'fixed',
     padding: '0rem',
+    boxShadow: BoxShadows.shadow1.boxShadow,
+    transform: "translateY(0px)",
+    transition: theme.transitions.create(['transform'], {
+      easing: theme.transitions.easing.easeInOut,
+      duration: '300ms',
+    }),
   },
   baseBarInnerHomePage: {
     height: `${MainBarHeight}px`,
@@ -65,8 +78,15 @@ export const styles = (theme: Theme) => createStyles({
     paddingTop: '0rem',
     top: 0,
   },
-  baseBarPaddingNone: {
+  baseBarHidden: {
     padding: '0rem',
+    transform: "translateY(-100px)",
+    // display: 'none',
+    // opacity: 0,
+    transition: theme.transitions.create(['transform'], {
+      easing: theme.transitions.easing.easeInOut,
+      duration: '300ms',
+    }),
   },
   baseBarPaddingMobileNone: {
     padding: '0rem',
@@ -91,9 +111,19 @@ export const styles = (theme: Theme) => createStyles({
     justifyContent: 'center',
     alignItems: "center",
     height: `${MainBarHeight}px`,
+    boxShadow: BoxShadows.shadow1.boxShadow,
   },
   width100: {
     width: '100%',
+  },
+  logoContainer: {
+    height: '100%',
+    display: 'flex',
+    position: 'relative',
+    paddingLeft: '1rem',
+    backgroundColor: isThemeDark(theme)
+      ? logoBackgroundColorDark3
+      : logoBackgroundColorLight3,
   },
   menuButtonsContainer: {
     display: 'flex',
@@ -222,9 +252,11 @@ export const styles = (theme: Theme) => createStyles({
   buttonLink: {
   },
   buttonLinkLogo: {
-    marginLeft: "1rem",
-    marginRight: "1rem",
+    paddingLeft: "1rem",
+    paddingRight: "1rem",
     zIndex: 1,
+    display: 'flex',
+    alignItems: 'center',
   },
   menuButton: {
   },

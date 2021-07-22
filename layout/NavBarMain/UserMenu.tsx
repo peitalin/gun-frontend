@@ -3,9 +3,6 @@ import React from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { GrandReduxState, Actions } from 'reduxStore/grand-reducer';
 import { UserPrivate, Role } from "typings/gqlTypes";
-
-// Router
-import { goToModalConnect } from "utils/modals";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 import { Colors, BorderRadius2x, BorderRadius4x } from "layout/AppTheme";
@@ -61,8 +58,8 @@ export const UserMenu: React.FC<ReactProps> = (props) => {
   }));
 
   const dispatch = useDispatch();
-  const goToModal = goToModalConnect(dispatch);
-  const router = useRouter();
+  // const goToModal = goToModalConnect(dispatch);
+  // const router = useRouter();
   const apolloClient = useApolloClient();
 
 
@@ -261,7 +258,7 @@ const styles = (theme: Theme) => createStyles({
   },
   menu: {
     padding: 0,
-    top: "4rem !important",
+    top: "3rem !important",
     right: 0,
     width: theme.spacing(32),
     borderRadius: BorderRadius2x,

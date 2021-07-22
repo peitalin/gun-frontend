@@ -23,8 +23,6 @@ import {
 
 export const styles = (theme: Theme) => createStyles({
   baseBarDashboard: {
-    zIndex: 5,
-    position: 'fixed',
     top: 0,
     right: 0,
     height: `${MainBarHeight }px`, // 1px for borderBottom
@@ -34,23 +32,33 @@ export const styles = (theme: Theme) => createStyles({
     alignItems: 'center',
     width: '100%',
   },
+  baseBarDashboardMobile: {
+    zIndex: 5,
+    position: 'fixed',
+  },
+  catBarInnerDashboardDesktop: {
+    backgroundColor: isThemeDark(theme)
+      ? Colors.uniswapDarkPurple
+      : Colors.slateGreyDark,
+  },
   catBarInnerDashboard: {
     width: '100%',
     display: "flex",
     position: "relative",
     justifyContent: 'center',
     alignItems: "center",
+    height: MainBarHeight,
   },
   // Category Bar
   categoryBarTopOffsetSmall: {
     zIndex: 5,
-    position: 'fixed',
+    // position: 'fixed',
     right: 0,
     top: `${MainBarHeight}px`,
   },
   categoryBarTopOffsetBig: {
     zIndex: 5,
-    position: 'fixed',
+    // position: 'fixed',
     right: 0,
     top: `${MainBarHeightHomePage}px`,
   },
@@ -82,7 +90,8 @@ export const styles = (theme: Theme) => createStyles({
     justifyContent: 'space-between',
     maxWidth: "720px",
     alignItems: "center",
-    padding: '0rem 1rem',
+    marginLeft: '-1rem',
+    height: '100%',
   },
   categoryBarInnerMobile: {
     zIndex: 3,
@@ -100,6 +109,7 @@ export const styles = (theme: Theme) => createStyles({
   categoryLink: {
     marginRight: '0.5rem',
     minWidth: 80,
+    height: '100%',
   },
   categoryLinkAllMobile: {
     height: CategoryBarHeight,
@@ -125,13 +135,15 @@ export const styles = (theme: Theme) => createStyles({
     },
   },
   categoryLinkTextMain: {
-    height: `${CategoryBarHeight}px`,
+    height: '100%',
+    // height: `${CategoryBarHeight}px`,
     color: isThemeDark(theme)
       ? Colors.uniswapLightGrey
       : Colors.black,
     minWidth: '50px',
     whiteSpace: 'nowrap',
-    fontSize: '0.8rem',
+    fontSize: '0.825rem',
+    fontWeight: 500,
     // bottom border
     display: 'flex',
     justifyContent: 'center',

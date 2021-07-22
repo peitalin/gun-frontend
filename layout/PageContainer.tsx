@@ -8,6 +8,8 @@ import {
   NewsBarHeight,
   CategoryBarHeight,
 } from "layout/NavBarMain/styles";
+import { useTheme } from "@material-ui/core/styles";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 
 
@@ -18,10 +20,14 @@ const PageContainer: React.FC<ReactProps> = (props) => {
     needsNavbarPadding = false,
   } = props;
 
+  const theme = useTheme();
+  const mdDown = useMediaQuery(theme.breakpoints.down('md'));
+
   return (
     <div className={clsx(
       classes.pageOuterContainer,
-      needsNavbarPadding && classes.navbarPaddingTop,
+      mdDown && classes.navbarPaddingTopMobile,
+      !mdDown && needsNavbarPadding && classes.navbarPaddingTopDesktop,
     )}>
       <div className={classes.pageInnerContainer}>
         {props.children}
@@ -53,7 +59,10 @@ const styles = (theme: Theme) => createStyles({
       : theme.gradients.gradientGrey3.background,
     // offset 140px for navbar
   },
-  navbarPaddingTop: {
+  navbarPaddingTopDesktop: {
+    paddingTop: MainBarHeight,
+  },
+  navbarPaddingTopMobile: {
     paddingTop: MainBarHeight + CategoryBarHeight,
   },
   pageInnerContainer: {

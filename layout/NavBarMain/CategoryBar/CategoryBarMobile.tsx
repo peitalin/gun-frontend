@@ -22,10 +22,11 @@ const CategoryBarMobile: React.FC<ReactProps> = (props) => {
   return (
     <nav className={clsx(
       classes.baseBarDashboard,
+      classes.baseBarDashboardMobile,
       classes.categoryBar,
       classes.categoryBarMobile,
     )}>
-      <div className={classes.catBarInnerDashboard}>
+      <div className={clsx(classes.catBarInnerDashboard)}>
         <div className={classes.categoryBarInnerMobile}>
 
           <Link href={`/new`}>

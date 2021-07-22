@@ -11,7 +11,6 @@ import { categoryPreviewsBackup } from "components/CategoryCarouselStart/utils";
 const NavBar: React.FC<ReactProps> = (props) => {
 
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
-  let initialCategories: Categories[] = categoryPreviewsBackup as any
 
   return (
     <>
@@ -20,9 +19,7 @@ const NavBar: React.FC<ReactProps> = (props) => {
         mobileMenuOpen={mobileMenuOpen}
         setMobileMenuOpen={setMobileMenuOpen}
       />
-      <CategoryBar
-        initialCategories={initialCategories}
-      />
+      <CategoryBar mobile/>
       {
         mobileMenuOpen &&
         <UserMenuMobileDither

@@ -87,7 +87,7 @@ export const useScrollToTop = () => {
 // }
 
 
-export const useScrollYPosition = () => {
+export const useScrollYPosition = (throttleMs = 64) => {
 
   let [scrollYPosition, setScrollYPosition] = React.useState(
     process.browser ? window.scrollY: null
@@ -96,7 +96,7 @@ export const useScrollYPosition = () => {
   React.useEffect(() => {
     const updateScrollY = throttle(() => {
       setScrollYPosition(window.scrollY);
-    }, 16)
+    }, throttleMs)
     window.addEventListener("scroll", updateScrollY);
     return () => window.removeEventListener("scroll", updateScrollY)
   }, [

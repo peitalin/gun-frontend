@@ -52,17 +52,14 @@ const MainBar = (props: ReactProps) => {
     ? Colors.slateGrey
     : Colors.black
 
-  let y = useScrollYPosition()
-
-  const hideBlurWide =
-    (_isMainPage
-    || _isFeaturedPage
-    || _isStartPage
-    || _isSellPage)
-    && y < Y_SCROLL_NAVBAR_SHOW
+  // let y = useScrollYPosition()
+  // const hideBlurWide = false
+    // (_isMainPage
+    // || _isFeaturedPage
+    // || _isStartPage
+    // || _isSellPage)
+    // && y < Y_SCROLL_NAVBAR_SHOW
     // hide on these pages and if y is scrolled
-
-  const showBlurWide = !hideBlurWide
 
   const endRoute = router.pathname.split('/').pop();
 
@@ -104,7 +101,6 @@ const MainBar = (props: ReactProps) => {
       {/* Desktop */}
       <Hidden className={classes.width100} only={["xs", "sm", "md"]} implementation="css">
         <DesktopMainBar
-          showBlurWide={showBlurWide }
           isMainPage={_isMainPage}
           isStartPage={_isStartPage}
           isSellPage={_isSellPage}
@@ -121,9 +117,28 @@ const MainBar = (props: ReactProps) => {
 const MainBarSSRWrapper: React.FC<MainBarSSRWrapperProps> = (props) => {
 
   let { classes } = props;
-  // const showBlurWide = !_isMainPage && !_isFeaturedPage && !_isStartPage && !_isSellPage
-  let y = useScrollYPosition()
-  const smallPadding = y > Y_SCROLL_NAVBAR_SHOW
+
+  const [priorY, setPriorY] = React.useState(0)
+  const [hideBar, setHideBar] = React.useState(
+    (props.isStartPage || props.isFeaturedPage)
+    // hide navbar initially on these pages
+  )
+
+  let y = useScrollYPosition(0)
+  // console.log('y', y)
+
+  React.useEffect(() => {
+    if (
+      y < priorY
+    ) {
+      // scrolling up, show navbar
+      setHideBar(false)
+    } else if (y > Y_SCROLL_NAVBAR_SHOW) {
+      // scrolling down, hide navbar
+      setHideBar(true)
+    }
+    setPriorY(y)
+  }, [y])
 
   return (
     <>
@@ -132,7 +147,7 @@ const MainBarSSRWrapper: React.FC<MainBarSSRWrapperProps> = (props) => {
           props.isMainPage || props.isStartPage || props.isFeaturedPage
           ? clsx(
               classes.baseBarHomePage,
-              smallPadding ? classes.baseBarPaddingNone : classes.baseBarPadding,
+              hideBar && classes.baseBarHidden,
             )
           : clsx(classes.baseBarDashboard)
         }>

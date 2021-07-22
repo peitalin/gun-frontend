@@ -3,7 +3,7 @@ import React from "react";
 import clsx from 'clsx';
 import { withStyles, WithStyles } from "@material-ui/core/styles";
 import { styles } from "../styles";
-import { Colors } from "layout/AppTheme";
+import { Colors, isThemeDark } from "layout/AppTheme";
 // Components
 import Login from "layout/Login";
 import Logo from "components/Icons/Logo";
@@ -13,9 +13,17 @@ import Button from "@material-ui/core/Button";
 // Router
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { isMainPageFn, isStartPageFn, isFeaturedPageFn, isSellPageFn } from "."
 import ToggleDarkMode from "layout/NavBarMain/ToggleDarkMode";
-import Tooltip from '@material-ui/core/Tooltip';
+// import Tooltip from '@material-ui/core/Tooltip';
+import CategoryBar from "../CategoryBar";
+import TriangleSvg from "./TriangleSvg";
+import { useTheme } from "@material-ui/core"
+import {
+  logoBackgroundColorDark,
+  logoBackgroundColorLight,
+  logoBackgroundColorDark2,
+  logoBackgroundColorLight2,
+} from "../styles"
 
 
 
@@ -32,6 +40,7 @@ const DesktopMainBar = (props: DesktopMainBarProps) => {
     isFeaturedPage,
   } = props;
 
+  const theme = useTheme()
   // const router = useRouter()
 
   return (
@@ -39,28 +48,41 @@ const DesktopMainBar = (props: DesktopMainBarProps) => {
       (isMainPage || isStartPage || isFeaturedPage || isSellPage)
         ? classes.baseBarInnerHomePage
         : classes.baseBarInnerDashboard,
-      props.showBlurWide
-        ? classes.blurBackgroundWide
-        : classes.blurBackgroundWideTransparent,
+      classes.blurBackgroundWide
     )}>
 
-      <div style={{ flexBasis: '0.5rem' }}></div>
+      {/* <div style={{ flexBasis: '0.5rem' }}></div> */}
 
-      <Tooltip title="Go home" placement="bottom">
-        <div className={classes.menuButtonsContainer}>
-          <Link href="/">
-            <a className={classes.buttonLinkLogo}>
-              <Logo fillColor={
-                // override logo color for desktop /start page light mode
-                (isStartPage && !props.isDarkMode)
-                  ? Colors.black
-                  : color
-              }/>
-            </a>
-          </Link>
-        </div>
-      </Tooltip>
+      <div className={classes.logoContainer}>
+        <Link href="/">
+          <a className={classes.buttonLinkLogo}>
+            <Logo fillColor={
+              // override logo color for desktop /start page light mode
+              (isStartPage && !props.isDarkMode)
+                ? Colors.black
+                : color
+            }/>
+          </a>
+        </Link>
+        <TriangleSvg
+          style1={{
+            fill: isThemeDark(theme)
+              ? logoBackgroundColorDark
+              : logoBackgroundColorLight,
+            opacity: 0
+          }}
+          style2={{
+            fill: isThemeDark(theme)
+              ? logoBackgroundColorDark2
+              : logoBackgroundColorLight2,
+            filter: isThemeDark(theme)
+              ? 'drop-shadow(-2px 0px 2px rgba(25, 25, 25, 0.3))'
+              : 'drop-shadow(-2px 0px 2px hsla(0, 0%, 0%, 0.3))',
+          }}
+        />
+      </div>
 
+      <CategoryBar/>
       <div style={{ flexGrow: 1}}/>
 
       <div className={classes.menuButtonsContainer}>
@@ -162,7 +184,6 @@ interface DesktopMainBarProps extends WithStyles<typeof styles> {
   loggedIn: boolean;
   color: string;
   isDarkMode: boolean;
-  showBlurWide: boolean;
   // navbar
   isMainPage: boolean
   isStartPage: boolean
