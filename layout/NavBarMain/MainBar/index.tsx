@@ -120,7 +120,7 @@ const MainBarSSRWrapper: React.FC<MainBarSSRWrapperProps> = (props) => {
 
   const [priorY, setPriorY] = React.useState(0)
   const [hideBar, setHideBar] = React.useState(
-    (props.isStartPage || props.isFeaturedPage)
+    (props.isStartPage)
     // hide navbar initially on these pages
   )
 

@@ -34,7 +34,7 @@ const SocialFloatingBanner: React.FC<ReactProps> = (props) => {
 
         <Tooltip title={"Beta Testing Version"} placement={"top"}>
           <div className={classes.beta}>
-            Beta 1.0
+            Beta 1.5
           </div>
         </Tooltip>
 

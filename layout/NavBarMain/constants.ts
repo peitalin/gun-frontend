@@ -1,7 +1,7 @@
 
 
 import { Colors, Gradients } from "layout/AppTheme";
-export const Y_SCROLL_NAVBAR_SHOW = 50
+export const Y_SCROLL_NAVBAR_SHOW = 20
 
 // export const blurDark = 'rgba(18, 18, 29, 0.6)'
 // export const blurLight = 'rgba(250, 250, 250, 0.9)'
