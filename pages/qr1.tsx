@@ -20,10 +20,11 @@ const QR1SSR: NextPage<ReactProps> = (props) => {
 
   let router = useRouter()
   let showSocialBanner = true
-  let noNavbarPadding = router.pathname === "/"
-    || router.pathname === "/start"
-    || router.pathname === "/sell"
-    || router.pathname.startsWith("/f/")
+
+  React.useEffect(() => {
+    // redirect to /start
+    router.replace('/start')
+  }, [])
 
   return (
     <>
@@ -41,8 +42,6 @@ const QR1SSR: NextPage<ReactProps> = (props) => {
           Create a free account and start selling your collection today.
         `}
       />
-
-      <LandingPage />
       {
         showSocialBanner &&
         <ShowOnMobileOrDesktopSSR desktop>

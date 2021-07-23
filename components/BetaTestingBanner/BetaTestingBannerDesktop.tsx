@@ -65,10 +65,11 @@ const BetaTestingBannerDesktop: React.FC<ReactProps> = (props) => {
             }
           />
           <span className={classes.betaTestBannerText}>
-            { "We're currently in beta testing. For updates on our launch, " }
+            { "We're currently in live beta testing." }
+            <br/>
             <Link href={"https://discord.gg/umAdYtsa9v"}>
               <a className={hover ? classes.discordLink : null}>
-                {"please join our Discord here."}
+                {"Please join our Discord for updates."}
               </a>
             </Link>
           </span>

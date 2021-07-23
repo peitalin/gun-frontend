@@ -10,6 +10,7 @@ import { ProductsConnection, Categories, PageConfig } from "typings/gqlTypes";
 import NewProducts from "pageComponents/FrontPage/NewProducts";
 import FeaturedProducts from "pageComponents/FrontPage/FeaturedProducts";
 import BannerHome from "pageComponents/FrontPage/BannerHome";
+import BetaTestingBanner from "components/BetaTestingBanner";
 import BannerPromotionsLink from "pageComponents/FrontPage/BannerPromotionsLink";
 
 // GraphQL
@@ -96,6 +97,8 @@ const FrontPage: React.FC<ReactProps> = (props) => {
       <BannerHome
         initialCategories={props.initialCategories}
       />
+
+      <BetaTestingBanner />
 
       <AlignCenterLayout
         className={classes.zIndex2}
