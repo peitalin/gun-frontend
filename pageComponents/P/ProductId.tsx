@@ -386,7 +386,7 @@ const styles = (theme: Theme) => createStyles({
   },
   positionSticky: {
     position: "sticky",
-    top: "7rem",
+    top: "4.5rem",
     paddingRight: '1rem',
     //
     height: "100%",
