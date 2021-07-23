@@ -135,7 +135,7 @@ const CounterBidModal: React.FC<ReactProps> = (props) => {
         >
           <div className={classes.flexRow}>
             <Typography variant="h4" className={classes.title}>
-              Make a Counter Offer
+              Make a Counter Bid
             </Typography>
           </div>
 
@@ -209,7 +209,7 @@ const CounterBidModal: React.FC<ReactProps> = (props) => {
         </form>
       </Dialog>
       <TooltipToggle placement={"top"}
-        title={"Counter Offer"}
+        title={"Counter Bid"}
         disabled={bidDisabled}
       >
         <span>

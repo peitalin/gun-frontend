@@ -143,7 +143,7 @@ export const styles = (theme: Theme) => createStyles({
   },
   instructionsContainer: {
     position: 'sticky',
-    top: '7rem',
+    top: '4.5rem',
     marginBottom: '1rem',
     marginLeft: '1rem',
     cursor: "pointer",
