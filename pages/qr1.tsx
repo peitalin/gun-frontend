@@ -23,7 +23,11 @@ const QR1SSR: NextPage<ReactProps> = (props) => {
 
   React.useEffect(() => {
     // redirect to /start
-    router.replace('/start')
+    // router.replace('/start')
+    if (window) {
+      window?.location?.replace('https://www.instagram.com/gunmarketplace')
+    }
+    // router.replace('/start')
   }, [])
 
   return (
