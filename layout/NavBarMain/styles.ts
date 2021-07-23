@@ -51,6 +51,7 @@ export const styles = (theme: Theme) => createStyles({
     position: 'fixed',
     padding: '0rem',
     boxShadow: BoxShadows.shadow1.boxShadow,
+    // on /start, /f/, /home pages, dashbar slides in and out on scroll
     transform: "translateY(0px)",
     transition: theme.transitions.create(['transform'], {
       easing: theme.transitions.easing.easeInOut,
@@ -103,6 +104,7 @@ export const styles = (theme: Theme) => createStyles({
     justifyContent: 'center',
     alignItems: 'center',
     width: '100%',
+    boxShadow: BoxShadows.shadow1.boxShadow,
   },
   baseBarInnerDashboard: {
     width: '100%',
@@ -111,7 +113,6 @@ export const styles = (theme: Theme) => createStyles({
     justifyContent: 'center',
     alignItems: "center",
     height: `${MainBarHeight}px`,
-    boxShadow: BoxShadows.shadow1.boxShadow,
   },
   width100: {
     width: '100%',

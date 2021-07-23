@@ -31,14 +31,12 @@ const MainBar = (props: ReactProps) => {
 
   const theme = useTheme();
   const mdDown = useMediaQuery(theme.breakpoints.down('md'));
-  // const lgUp = useMediaQuery(theme.breakpoints.up('lg'));
 
   const {
     loggedIn,
   } = useSelector<GrandReduxState, ReduxProps>(state => ({
     loggedIn: !!state?.reduxLogin?.user?.id,
   }));
-  // console.log("router.pathname: ", router.pathname)
 
   const isDarkMode = theme.palette.type === 'dark'
 
@@ -51,15 +49,6 @@ const MainBar = (props: ReactProps) => {
   let color = isDarkMode
     ? Colors.slateGrey
     : Colors.black
-
-  // let y = useScrollYPosition()
-  // const hideBlurWide = false
-    // (_isMainPage
-    // || _isFeaturedPage
-    // || _isStartPage
-    // || _isSellPage)
-    // && y < Y_SCROLL_NAVBAR_SHOW
-    // hide on these pages and if y is scrolled
 
   const endRoute = router.pathname.split('/').pop();
 

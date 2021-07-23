@@ -67,7 +67,7 @@ const CategoryBarDesktop: React.FC<ReactProps> = (props) => {
             <a className={classes.categoryLink}>
               <Typography className={clsx(
                 classes.categoryLinkTextMain,
-                router.asPath === '/new' && classes.categoryLinkTextSelected,
+                router.asPath.startsWith('/new') && classes.categoryLinkTextSelected,
               )}>
                 What's New
               </Typography>
@@ -75,14 +75,26 @@ const CategoryBarDesktop: React.FC<ReactProps> = (props) => {
           </Link>
 
           {/* <Link href={`/sale`}>
-
             <a className={classes.categoryLink}>
               <Typography className={clsx(
                 classes.categoryLinkTextMain,
                 classes.categoryLinkTextMainHeight,
-                router.pathname === '/sale' && classes.categoryLinkTextSelected,
+                router.pathname.startsWith('/sale') && classes.categoryLinkTextSelected,
               )}>
                 Price Reduced
+              </Typography>
+            </a>
+          </Link> */}
+
+
+          {/* <Link href={`/sold`}>
+            <a className={classes.categoryLink}>
+              <Typography className={clsx(
+                classes.categoryLinkTextMain,
+                classes.categoryLinkTextMainHeight,
+                router.pathname.startsWith('/sold') && classes.categoryLinkTextSelected,
+              )}>
+                Sold
               </Typography>
             </a>
           </Link> */}
@@ -99,7 +111,7 @@ const CategoryBarDesktop: React.FC<ReactProps> = (props) => {
                   <a className={classes.categoryLink}>
                     <Typography className={clsx(
                       classes.categoryLinkTextMain,
-                      router.asPath === `/categories/${category?.slug}` && classes.categoryLinkTextSelected,
+                      router.asPath.startsWith(`/categories/${category?.slug}`) && classes.categoryLinkTextSelected,
                     )}>
                       {category?.name}
                     </Typography>
