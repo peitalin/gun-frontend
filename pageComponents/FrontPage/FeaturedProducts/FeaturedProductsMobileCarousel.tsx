@@ -102,8 +102,8 @@ const FeaturedProductsMobileCarousel = (props: ReactProps) => {
         connection?.edges?.length > 0 &&
         <div className={classes.seeAllLinkContainer}>
           <Link
-            href={`categories/${categorySlug}`}
-            as={"categories/[categorySlug"}
+            as={`categories/${categorySlug}`}
+            href={"categories/[categorySlug]"}
           >
             <a className={classes.seeAllLinkBorder}>
               See more

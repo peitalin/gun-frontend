@@ -195,7 +195,7 @@ const FrontPage: React.FC<ReactProps> = (props) => {
           })
         }
 
-        <div className={classes.categoryCarouselFrontPageBox}>
+        {/* <div className={classes.categoryCarouselFrontPageBox}>
           <ShowOnMobileOrDesktopSSR desktop className={classes.width100CenterBox}>
             <CategoryCarouselStart
               title={"Browse by Category"}
@@ -216,7 +216,7 @@ const FrontPage: React.FC<ReactProps> = (props) => {
               style={{ }}
             />
           </ShowOnMobileOrDesktopSSR>
-        </div>
+        </div> */}
 
 
         {

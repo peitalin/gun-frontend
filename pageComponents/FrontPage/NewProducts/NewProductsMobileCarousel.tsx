@@ -182,7 +182,7 @@ const NewProductsMobileCarousel = (props: ReactProps) => {
         !loading &&
         connection?.edges?.length > 0 &&
         <div className={classes.seeAllLinkContainer}>
-          <Link href={"/new/all"}>
+          <Link href={"/new"}>
             <a className={classes.seeAllLinkBorder}>
               See more
               <ArrowRight className={classes.sellAllIcon}/>
