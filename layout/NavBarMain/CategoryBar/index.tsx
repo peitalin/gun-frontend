@@ -34,7 +34,7 @@ const CategoryBar: React.FC<ReactProps> = (props) => {
     <nav className={props.className}>
       {
         !props.mobile &&
-        <Hidden mdDown implementation="css">
+        <Hidden lgDown implementation="css">
           <CategoryBarDesktop
             categories={initialCategories}
             isMainPage={_isMainPage}
@@ -47,7 +47,7 @@ const CategoryBar: React.FC<ReactProps> = (props) => {
       }
       {
         props.mobile &&
-        <Hidden lgUp implementation="css">
+        <Hidden xlUp implementation="css">
           <CategoryBarMobile
             categories={initialCategories}
             isMainPage={_isMainPage}

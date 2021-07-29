@@ -73,7 +73,7 @@ const MainBar = (props: ReactProps) => {
     >
 
       {/* MOBILE */}
-      <Hidden className={classes.width100} lgUp implementation="css">
+      <Hidden className={classes.width100} xlUp implementation="css">
         <MobileMainBar
           // Dither
           mobileMenuOpen={props.mobileMenuOpen}
@@ -88,7 +88,7 @@ const MainBar = (props: ReactProps) => {
       </Hidden>
 
       {/* Desktop */}
-      <Hidden className={classes.width100} only={["xs", "sm", "md"]} implementation="css">
+      <Hidden className={classes.width100} only={["xs", "sm", "md", "lg"]} implementation="css">
         <DesktopMainBar
           isMainPage={_isMainPage}
           isStartPage={_isStartPage}

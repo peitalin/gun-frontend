@@ -212,7 +212,7 @@ let styles = (theme: Theme) => createStyles({
       width: '0rem',
       opacity: 0,
       '&:focus': {
-        width: 'calc(80vw)',
+        width: 'calc(100vw - 4.5rem)',
         opacity: 1,
       },
     },
@@ -220,7 +220,7 @@ let styles = (theme: Theme) => createStyles({
       width: '0rem',
       opacity: 0,
       '&:focus': {
-        width: 'calc(80vw)',
+        width: 'calc(100vw - 5.5rem)',
         opacity: 1,
       },
     },
@@ -228,7 +228,7 @@ let styles = (theme: Theme) => createStyles({
       width: '0rem',
       opacity: 0,
       '&:focus': {
-        width: 'calc(80vw)',
+        width: 'calc(100vw - 5.5rem)',
         opacity: 1,
       },
     },
@@ -236,7 +236,7 @@ let styles = (theme: Theme) => createStyles({
       width: '0rem',
       opacity: 0,
       '&:focus': {
-        width: 'calc(80vw)',
+        width: 'calc(100vw - 5.5rem)',
         opacity: 1,
       },
     },

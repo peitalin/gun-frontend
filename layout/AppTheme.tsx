@@ -183,7 +183,7 @@ export const Colors = {
   // gradient
   gradientPurple1: '#fbc2eb',
   gradientPurple2: '#a18cd1',
-  gradientGrey1: '#fdfdfd',
+  gradientGrey1: '#f4f4f4',
   gradientGrey2: '#ebedee',
   gradientFlamingo1: '#f093fb',
   gradientFlamingo2: '#f5576c',

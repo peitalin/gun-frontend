@@ -80,7 +80,7 @@ const PageDashboardLayout: React.FC<ReactProps> = (props) => {
   }
 
   // at least one license is verified
-  let isVerified = user?.licenses.some(l => l.verified)
+  let isVerified = user?.licenses?.some(l => l.verified)
 
   if (!lgDown) {
     // desktop
