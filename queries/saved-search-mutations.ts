@@ -1,5 +1,8 @@
 import { gql } from "@apollo/client";
 import { ProductFragment, SavedSearchFragment } from "./fragments";
+import {
+  ExternalProductsFragment,
+} from "./news-items-subscriptions";
 
 
 
@@ -60,10 +63,15 @@ export const MARK_SAVED_SEARCH_HITS_AS_SEEN = gql`
       savedSearch {
         ...SavedSearchFragment
       }
+      externalProductId
+      externalProduct {
+        ...ExternalProductsFragment
+      }
     }
   }
   ${SavedSearchFragment}
   ${ProductFragment}
+  ${ExternalProductsFragment}
 `;
 
 
