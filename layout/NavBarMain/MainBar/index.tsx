@@ -162,6 +162,9 @@ export const isMainPageFn = (router: NextRouter) => {
   if (router.pathname === '/') {
     return true
   }
+  if (router.pathname === '/trending') {
+    return true
+  }
   return false
 }
 export const isSellPageFn = (router: NextRouter) => {

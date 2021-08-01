@@ -13,8 +13,9 @@ const UserMenuMobileDither = (props: UserMenuMobileDitherProps) => {
   const theme = useTheme();
   const xsDown = useMediaQuery(theme.breakpoints.down('xs'));
   const smDown = useMediaQuery(theme.breakpoints.down('sm'));
+  const lgDown = useMediaQuery(theme.breakpoints.down('lg'));
 
-  if (smDown) {
+  if (lgDown) {
     return (
       <div
         className={clsx(

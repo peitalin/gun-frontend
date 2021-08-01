@@ -50,6 +50,7 @@ const styles = (theme: Theme) => createStyles({
     width: '100%',
     // maxHeight: '56px',
     position: 'relative',
+    overflow: "hidden",
   },
   triangleSvg: {
     height: '100%',

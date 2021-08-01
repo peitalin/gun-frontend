@@ -4,7 +4,6 @@ import React from "react";
 import CategoryBar from "./CategoryBar";
 import MainBar from "./MainBar";
 import UserMenuMobileDither from "./UserMenuMobileDither";
-import { Categories } from "typings/gqlTypes";
 import { categoryPreviewsBackup } from "components/CategoryCarouselStart/utils";
 
 
