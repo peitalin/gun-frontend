@@ -17,6 +17,7 @@ import { useMutation, useQuery } from '@apollo/client';
 import {
   SavedSearchHitsConnection,
   SavedSearchHit,
+  ProductPreviewItem,
 } from "typings/gqlTypes";
 // components
 import Typography from '@material-ui/core/Typography';
@@ -136,9 +137,27 @@ const SearchHits: React.FC<ReactProps> = (props) => {
           gridItemClassName={classes.itemContainer}
         >
           {({ node: savedSearchHit }) => {
+
+            // console.log("SearchHIT:", savedSearchHit)
+
+            let previewItem = savedSearchHit?.product?.featuredVariant?.previewItems?.[0]
+              ?? savedSearchHit?.externalProduct?.currentExternalProductSnapshot?.previewItems?.[0]
+
+            let make = savedSearchHit?.externalProduct?.currentExternalProductSnapshot?.make
+            let model = savedSearchHit?.externalProduct?.currentExternalProductSnapshot?.model
+            let caliber = savedSearchHit?.externalProduct?.currentExternalProductSnapshot?.caliber
+
+            let productTitle = savedSearchHit?.product?.currentSnapshot?.title
+              ?? `${make} ${model} ${caliber}`
+
             return (
               <SearchHitsItem
                 product={savedSearchHit.product}
+                previewItem={previewItem}
+                productTitle={productTitle}
+                externalLink={
+                  savedSearchHit?.externalProduct?.sourceSiteUrl
+                }
                 searchHitId={savedSearchHit.id}
                 searchTerm={savedSearchHit.productTitle}
                 categorySlug={savedSearchHit.savedSearch?.categorySlug}

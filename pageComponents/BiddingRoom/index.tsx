@@ -40,10 +40,10 @@ const CreateBidForm: React.FC<ReactProps> = (props) => {
   const userId = user?.id
   // const theme = useTheme();
 
-  const [value, setValue] = React.useState(0);
+  const [tab, setTab] = React.useState(0);
 
-  const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
-    setValue(newValue);
+  const handleTabChange = (event: React.ChangeEvent<{}>, newTab: number) => {
+    setTab(newTab);
   };
 
   return (
@@ -53,8 +53,8 @@ const CreateBidForm: React.FC<ReactProps> = (props) => {
     >
       <ResponsivePadding>
         <Tabs
-          value={value}
-          onChange={handleChange}
+          value={tab}
+          onChange={handleTabChange}
           indicatorColor="primary"
           textColor="primary"
           centered
@@ -64,7 +64,7 @@ const CreateBidForm: React.FC<ReactProps> = (props) => {
         </Tabs>
         {
           userId &&
-          value === 0 &&
+          tab === 0 &&
           <BiddingRoomLayout
             user={user}
             chatRoomStatuses={[
@@ -74,7 +74,7 @@ const CreateBidForm: React.FC<ReactProps> = (props) => {
         }
         {
           userId &&
-          value !== 0 &&
+          tab !== 0 &&
           <BiddingRoomLayout
             user={user}
             chatRoomStatuses={[

@@ -22,6 +22,7 @@ import Loading from "components/Loading";
 import {
   SavedSearchHit,
   Product,
+  Product_Preview_Items,
 } from "typings/gqlTypes"
 // graphql
 import { useMutation, useQuery } from '@apollo/client';
@@ -110,8 +111,7 @@ const SearchHitsItem = (props: SearchHitsItemProps) => {
   const theme = useTheme()
   const mdDown = useMediaQuery(theme.breakpoints.down('md'));
 
-  const productTitle = props.product?.currentSnapshot?.title
-  const previewItem = props.product?.featuredVariant?.previewItems?.[0]
+  const productTitle = props.productTitle
 
   return (
     <div className={clsx(
@@ -123,25 +123,38 @@ const SearchHitsItem = (props: SearchHitsItemProps) => {
         : classes.savedSearchBorder,
     )}>
 
-      <Link href={"/p/[productId]"} as={`/p/${props.product?.id}`}>
-        <Tooltip title={"View product"} placement="top">
-          <a className={classes.link}>
+      {
+        props.externalLink
+        ? <a className={classes.link} href={props.externalLink}>
             <ProductPreviewCardRowSmall
-              previewItem={previewItem}
+              previewItem={props.previewItem}
             />
           </a>
-        </Tooltip>
-      </Link>
+        : <Link href={"/p/[productId]"} as={`/p/${props.product?.id}`}>
+            <a className={classes.link}>
+              <ProductPreviewCardRowSmall
+                previewItem={props.previewItem}
+              />
+            </a>
+          </Link>
+      }
+
 
       <div className={
         mdDown ? classes.savedSearchItemMobile : classes.savedSearchItemDesktop
       }>
         <span className={classes.boldText}>Product</span>
-        <Link href={"/p/[productId]"} as={`/p/${props.product?.id}`}>
-          <a className={classes.link}>
-            <span className={classes.italicText}>{productTitle}</span>
-          </a>
-        </Link>
+        {
+          props.externalLink
+          ? <a className={classes.link} href={props.externalLink}>
+              <span className={classes.italicText}>{productTitle}</span>
+            </a>
+          : <Link href={"/p/[productId]"} as={`/p/${props.product?.id}`}>
+              <a className={classes.link}>
+                <span className={classes.italicText}>{productTitle}</span>
+              </a>
+            </Link>
+        }
       </div>
 
       <div className={
@@ -190,6 +203,9 @@ const SearchHitsItem = (props: SearchHitsItemProps) => {
 interface SearchHitsItemProps extends WithStyles<typeof styles> {
   searchHitId: string
   product: Product
+  previewItem: Product_Preview_Items
+  productTitle: string
+  externalLink?: string
   isSeen: boolean;
   searchTerm: string
   categorySlug?: string

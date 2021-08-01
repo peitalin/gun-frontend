@@ -32,7 +32,7 @@ export const dashboardBarStyle = (theme: Theme) => ({
   boxShadow: BoxShadows.shadow1.boxShadow,
   borderBottom: theme.palette.type === 'dark'
     ? `1px solid ${Colors.uniswapMediumNavy}`
-    : `1px solid ${Colors.slateGreyDarkest}`,
+    : `1px solid ${Colors.slateGreyDark}`,
 })
 export const dashboardMenuDitherStyle = (theme: Theme) => ({
   height: '100vh',
