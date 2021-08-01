@@ -32,7 +32,11 @@ const PriceDisplayMainMobile = (props: ReactProps) => {
   //   :  currency((price - priceWas)/100, { formatWithSymbol: true })
 
 
-  if (soldOutStatus !== SoldOutStatus.AVAILABLE) {
+  if (
+    soldOutStatus === SoldOutStatus.ABANDONED
+    || soldOutStatus === SoldOutStatus.RESERVED
+    || soldOutStatus === SoldOutStatus.SOLD_OUT
+  ) {
     return (
       <Typography className={classes.price} variant="body1">
         {convertSoldOutStatus(soldOutStatus)}

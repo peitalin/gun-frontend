@@ -1,9 +1,9 @@
 import React from "react";
 import clsx from "clsx";
-import { Colors, BorderRadius } from "layout/AppTheme";
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 // Typings
-import { Product_Preview_Items, Product, Product_Variants } from "typings/gqlTypes";
+import { Product_Preview_Items, Product } from "typings/gqlTypes";
+import { Colors, BorderRadius, isThemeDark } from "layout/AppTheme";
 // Material UI
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
@@ -85,13 +85,16 @@ const ProductPreviewCardRowSmall = (props: ReactProps) => {
           : <div
               className={clsx(
                 classes.imagePreview,
+                classes.imageMissingPreview,
               )}
               style={{
                 ...props.style,
                 height: props.height ? props.height : CARD_HEIGHT,
                 width: props.width ? props.width : CARD_WIDTH,
               }}
-            />
+            >
+              No Image
+            </div>
       }
       </CardActionArea>
     </Card>
@@ -136,12 +139,23 @@ const styles = (theme: Theme) => createStyles({
     height: CARD_HEIGHT,
     width: CARD_WIDTH,
   },
+  imageMissingPreview: {
+    backgroundColor: isThemeDark(theme)
+      ? Colors.uniswapMediumNavy
+      : Colors.slateGreyDark,
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: '1rem',
+    textDecoration: "uppercase",
+  },
   card: {
     borderRadius: `${BorderRadius}px ${BorderRadius}px ${BorderRadius}px ${BorderRadius}px `,
     boxShadow: 'none',
     height: CARD_HEIGHT,
     width: CARD_WIDTH,
-    backgroundColor: theme.palette.type === 'dark'
+    backgroundColor: isThemeDark(theme)
       ? Colors.uniswapDarkNavy
       : Colors.slateGreyDark,
   },
