@@ -17,7 +17,6 @@ import { useDispatch, useSelector } from "react-redux";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { navbarRoutes } from "./navbarRoutes";
-import { isDashboardPageFn, isMainPageFn, isStartPageFn } from "."
 
 
 

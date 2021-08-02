@@ -25,7 +25,7 @@ const ShowOnMobileOrDesktopSSR: React.FC<ReactProps> = (props) => {
     return (
       <Hidden
         className={props.className}
-        lgUp
+        xlUp
         implementation="css"
       >
         {props.children}
@@ -35,7 +35,7 @@ const ShowOnMobileOrDesktopSSR: React.FC<ReactProps> = (props) => {
     return (
       <Hidden
         className={props.className}
-        lgUp
+        xlUp
         implementation="css"
       >
         {props.children}
@@ -45,7 +45,7 @@ const ShowOnMobileOrDesktopSSR: React.FC<ReactProps> = (props) => {
     return (
       <Hidden
         className={props.className}
-        mdDown
+        lgDown
         implementation="css"
       >
         {props.children}
@@ -56,7 +56,7 @@ const ShowOnMobileOrDesktopSSR: React.FC<ReactProps> = (props) => {
     return (
       <Hidden
         className={props.className}
-        mdDown
+        lgDown
         implementation="css"
       >
         {props.children}
