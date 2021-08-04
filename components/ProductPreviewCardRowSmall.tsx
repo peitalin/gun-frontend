@@ -18,7 +18,7 @@ import { getYouTubeVimeoImagePreview } from "utils/links";
 
 const ProductPreviewCardRowSmall = (props: ReactProps) => {
 
-  // const [previewLoaded, setPreviewLoaded] = React.useState(0);
+  const [previewLoaded, setPreviewLoaded] = React.useState(false);
   const { classes } = props;
   const previewItem = props.previewItem;
 
@@ -34,7 +34,11 @@ const ProductPreviewCardRowSmall = (props: ReactProps) => {
       }}
     >
       <CardActionArea
-        classes={{ root: classes.cardActionArea }}
+        classes={{
+          root: props.unclickable
+            ? classes.disableCardActionArea
+            : classes.cardActionArea
+        }}
       >
       {
         previewItem?.image?.original?.id
@@ -50,7 +54,7 @@ const ProductPreviewCardRowSmall = (props: ReactProps) => {
                 ? classes.cardMediaFit
                 : classes.cardMedia
             }}
-            // onLoad={() => setPreviewLoaded(s => s + 1)}
+            onLoad={() => setPreviewLoaded(true)}
             src={previewItem.image.original.url}
             srcSet={genSrcSet(previewItem.image)}
             sizes={`(max-width: 320px) 280px, (max-width: 480px) 440px, 800px`}
@@ -109,6 +113,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   style?: any;
   height?: any;
   width?: any;
+  unclickable?: boolean;
 }
 
 
@@ -158,13 +163,21 @@ const styles = (theme: Theme) => createStyles({
     backgroundColor: isThemeDark(theme)
       ? Colors.uniswapDarkNavy
       : Colors.slateGreyDark,
+    transition:  theme.transitions.create(['width', 'height'], {
+      easing: theme.transitions.easing.easeIn,
+      duration: 300,
+    }),
   },
   cardActionArea: {
-    // background: Colors.lightestGrey,
     display: "flex",
     flexDirection: "row",
     height: '100%',
-    // backgroundImage: `url("data:image/svg+xml,%3Csvg width='30' height='30' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 20.5V18H0v-2h20v-2H0v-2h20v-2H0V8h20V6H0V4h20V2H0V0h22v20h2V0h2v20h2V0h2v20h2V0h2v20h2V0h2v20h2v2H20v-1.5zM0 20h2v20H0V20zm4 0h2v20H4V20zm4 0h2v20H8V20zm4 0h2v20h-2V20zm4 0h2v20h-2V20zm4 4h20v2H20v-2zm0 4h20v2H20v-2zm0 4h20v2H20v-2zm0 4h20v2H20v-2z' fill='%23dddddd' fill-opacity='0.3' fill-rule='evenodd'/%3E%3C/svg%3E")`,
+  },
+  disableCardActionArea: {
+    display: "flex",
+    flexDirection: "row",
+    height: '100%',
+    cursor: "default",
   },
   grey: {
     color: "#7C858E"
@@ -176,9 +189,6 @@ const styles = (theme: Theme) => createStyles({
   },
   cardMediaFit: {
     objectFit: "cover",
-    // width: "unset", // width: 100% before
-    // transform: 'translateX(50%)',
-    // boxShadow: "0px 1px 3px 1px rgba(0,0,0,0.6)",
   },
 });
 

@@ -26,7 +26,7 @@ const ShowOnMobileOrDesktopSSR: React.FC<ReactProps> = (props) => {
       <Hidden
         className={props.className}
         xlUp
-        implementation="css"
+        implementation={props.implementation ?? "css"}
       >
         {props.children}
       </Hidden>
@@ -36,7 +36,7 @@ const ShowOnMobileOrDesktopSSR: React.FC<ReactProps> = (props) => {
       <Hidden
         className={props.className}
         xlUp
-        implementation="css"
+        implementation={props.implementation ?? "css"}
       >
         {props.children}
       </Hidden>
@@ -46,7 +46,7 @@ const ShowOnMobileOrDesktopSSR: React.FC<ReactProps> = (props) => {
       <Hidden
         className={props.className}
         lgDown
-        implementation="css"
+        implementation={props.implementation ?? "css"}
       >
         {props.children}
       </Hidden>
@@ -57,7 +57,7 @@ const ShowOnMobileOrDesktopSSR: React.FC<ReactProps> = (props) => {
       <Hidden
         className={props.className}
         lgDown
-        implementation="css"
+        implementation={props.implementation ?? "css"}
       >
         {props.children}
       </Hidden>
@@ -68,6 +68,7 @@ const ShowOnMobileOrDesktopSSR: React.FC<ReactProps> = (props) => {
 interface ReactProps {
   mobile?: boolean
   desktop?: boolean
+  implementation?: "css"|"js"
   className?: any;
 }
 
