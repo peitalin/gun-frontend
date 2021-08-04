@@ -75,7 +75,7 @@ export const styles = (theme: Theme) => createStyles({
   descriptionContainer: {
     // paddingTop: "0.25rem",
     // margin: '0.5rem',
-    paddingLeft: '0.5rem',
+    // paddingLeft: '0.5rem',
     paddingRight: '0.5rem',
     paddingBottom: '0.5rem',
     // height: "136px", // ensure all cards descriptions are same height

@@ -33,6 +33,8 @@ const NewsItemPanel: React.FC<ReactProps> = (props) => {
       <div className={classes.productCardBox}>
         <NewsItemRowMedium
           newsItem={newsItem}
+          user={user}
+          onClick={props.onClick}
           isSuspended={newsItem?.isSuspended || newsItem?.isDeleted}
           loading={props.loading}
           imageSize={{
@@ -55,12 +57,8 @@ const NewsItemPanel: React.FC<ReactProps> = (props) => {
 interface ReactProps extends WithStyles<typeof styles> {
   user: UserPrivate
   newsItem: NewsItem
+  onClick(): void;
   loading: boolean
-}
-
-interface QData {
-}
-interface QVar {
 }
 
 

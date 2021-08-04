@@ -1,42 +1,29 @@
 import React from "react";
 import clsx from "clsx";
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
-import { Colors } from "layout/AppTheme";
-// Redux
-import { useDispatch, useSelector } from "react-redux";
-import { Actions } from "reduxStore/actions";
-// Router
-import Link from "next/link";
+import { Colors, isThemeDark } from "layout/AppTheme";
 // Typings
 import {
-  External_Products,
-  SoldOutStatus,
+  UserPrivate,
   NewsItem,
 } from "typings/gqlTypes";
-// Utils
-import ErrorBounds from "components/ErrorBounds";
-import Loading from "components/Loading";
 // Material UI
 import ProductPreviewCardRowSmall from "components/ProductPreviewCardRowSmall";
 import Typography from "@material-ui/core/Typography";
 import PriceDisplayMainMobile from "components/PriceDisplayMainMobile";
-// import AddCartItemButton from "components/AddCartItemButton";
-// import WatchlistButton from "components/WatchlistButton";
 import DescriptionLoadingText from "./DescriptionLoadingText";
 // CSS
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import ShowOnMobileOrDesktopSSR from "components/ShowOnMobileOrDesktopSSR";
-//
-import ArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
-import ArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
-// graphql
-import { useMutation } from '@apollo/client';
 import {
-  UPVOTE_NEWS_ITEM,
-  DOWNVOTE_NEWS_ITEM,
-  UNVOTE_NEWS_ITEM,
-} from "queries/news-items-mutations";
+  transformNewsItemToFields,
+  NewsItemFields,
+} from "../transformNewsItemFields";
+//
+import VoteOnNewsItem from "./VoteOnNewsItem";
+import AdType from "../NewsItemRowLarge/AdType";
+import SourceSiteChip from "../NewsItemRowLarge/SourceSiteChip";
 // Snackbar
 import { useSnackbar } from "notistack";
 
@@ -45,6 +32,7 @@ const NewsItemRowMedium = (props: ReactProps) => {
 
   const {
     classes,
+    user,
     newsItem,
   } = props;
 
@@ -52,40 +40,27 @@ const NewsItemRowMedium = (props: ReactProps) => {
   const mdDown = useMediaQuery(theme.breakpoints.down("md"))
   const snackbar = useSnackbar();
 
-  const [
-    upvote,
-    upvoteResponse
-  ] = useMutation<MData1, MVar>(UPVOTE_NEWS_ITEM, {
-    onError: (err) => console.log(err)
-  })
-
-  const [
-    unvote,
-    unvoteResponse
-  ] = useMutation<MData2, MVar>(UNVOTE_NEWS_ITEM, {
-    onError: (err) => console.log(err)
-  })
-
-  const [
-    downvote,
-    downvoteResponse
-  ] = useMutation<MData3, MVar>(DOWNVOTE_NEWS_ITEM, {
-    onError: (err) => console.log(err)
-  })
-
-
-  const externalProduct = newsItem?.externalProduct
-  const productSnapshot = externalProduct?.currentExternalProductSnapshot
-  const model = productSnapshot?.model
-  const make = productSnapshot?.make
-  const caliber = productSnapshot?.caliber
-
-  const state = productSnapshot?.state
-  const soldOutStatus = productSnapshot?.soldText || SoldOutStatus.AVAILABLE
-  const price = productSnapshot?.price
-  const title = productSnapshot?.title ?? `${make} ${model} ${caliber}`
-
-  const previewItem = productSnapshot?.previewItems?.[0]
+  const {
+		model,
+		make,
+		caliber,
+		barrelLength,
+		action,
+		state,
+		soldOutStatus,
+		description,
+		price,
+		title,
+		serialNumber,
+		condition,
+		adType,
+		licenseNumber,
+		phoneNumber,
+		sourceSite,
+		sourceSiteUrl,
+		previewItem,
+    isInternalProduct,
+  } = transformNewsItemToFields(newsItem)
 
 
   // locally update score optimistic, so you get instant feedback when voting
@@ -94,176 +69,113 @@ const NewsItemRowMedium = (props: ReactProps) => {
     newsItem?.yourVote?.score ?? 0
   )
 
-  const downvoted = existingVoteScore === -1
-  const upvoted = existingVoteScore === 1
-  // console.log("yourVote:", yourVote)
-
 
   return (
-    <ErrorBounds className={clsx(
-      classes.productRowRoot,
-      classes.flexRow,
-    )}>
-        <ShowOnMobileOrDesktopSSR desktop>
-          <div className={clsx(
+    <div className={clsx(classes.productRowRoot)}>
+
+      <ShowOnMobileOrDesktopSSR desktop>
+        <div
+          className={clsx(
             classes.flexColOuter,
             classes.flexColPadding,
-          )}>
-            {
-              previewItem
-              ? <Link
-                  href={
-                    externalProduct?.sourceSiteUrl ??
-                    `https://usedguns.com.au/gun/${externalProduct?.sourceSiteId}`
-                  }
-                  // as={`/p/${product?.id}`}
-                >
-                  <a>
-                    <ProductPreviewCardRowSmall
-                      previewItem={previewItem}
-                      width={props.imageSize?.desktop?.width ?? 135}
-                      height={props.imageSize?.desktop?.height ?? 90}
-                    />
-                  </a>
-                </Link>
-              : <ProductPreviewCardRowSmall
-                  previewItem={undefined}
-                  width={props.imageSize?.desktop?.width ?? 135}
-                  height={props.imageSize?.desktop?.height ?? 90}
-                />
-            }
-          </div>
-        </ShowOnMobileOrDesktopSSR>
-        <ShowOnMobileOrDesktopSSR mobile>
-          <div className={clsx(
+            classes.clickable,
+            "fadeInFast",
+          )}
+          onClick={props.onClick}
+        >
+          <ProductPreviewCardRowSmall
+            previewItem={previewItem}
+            width={props.imageSize?.desktop?.width ?? 135}
+            height={props.imageSize?.desktop?.height ?? 90}
+          />
+        </div>
+      </ShowOnMobileOrDesktopSSR>
+      <ShowOnMobileOrDesktopSSR mobile>
+        <div
+          className={clsx(
             classes.flexColOuter,
             classes.flexColPaddingSm,
-          )}>
-            {
-              previewItem
-              ? <Link
-                  // href="/p/[productId]"
-                  // as={`/p/${product?.id}`}
-                  href={
-                    externalProduct?.sourceSiteUrl ??
-                    `https://usedguns.com.au/gun/${externalProduct?.sourceSiteId}`
-                  }
-                >
-                  <a>
-                    <ProductPreviewCardRowSmall
-                      previewItem={previewItem}
-                      width={props.imageSize?.mobile?.width ?? 82.5}
-                      height={props.imageSize?.mobile?.height ?? 55}
-                    />
-                  </a>
-                </Link>
-              : <ProductPreviewCardRowSmall
-                  previewItem={undefined}
-                  width={props.imageSize?.mobile?.width ?? 82.5}
-                  height={props.imageSize?.mobile?.height ?? 55}
-                />
-            }
-          </div>
-        </ShowOnMobileOrDesktopSSR>
-
-        <div className={clsx(
-          classes.flexRowWrapOuter,
-          classes.flexGrow
-        )}>
-          {
-            !title
-            ? <div className={classes.flexColInner60}>
-                <DescriptionLoadingText/>
-              </div>
-            : <div className={classes.flexColInner60}>
-                <Typography className={classes.category} variant="body1">
-                  {`${model} ${make}`}
-                </Typography>
-
-                <Link
-                  // href="/p/[productId]"
-                  // as={`/p/${product?.id}`}
-                  href={
-                    externalProduct?.sourceSiteUrl ??
-                    `https://usedguns.com.au/gun/${externalProduct?.sourceSiteId}`
-                  }
-                >
-                  <a>
-                    <Typography className={classes.title} variant="body1">
-                      {title}
-                    </Typography>
-                  </a>
-                </Link>
-
-                <Typography className={classes.dealerState} variant="body1">
-                  {state}
-                </Typography>
-
-                <Typography className={classes.rankScore} variant="body1">
-                  {`${newsItem?.rankScore}`}
-                </Typography>
-
-                <div className={classes.priceContainer}>
-                  {
-                    price &&
-                    <PriceDisplayMainMobile
-                      price={price}
-                      soldOutStatus={soldOutStatus}
-                      isSuspended={props.isSuspended}
-                    />
-                  }
-                </div>
-              </div>
-          }
-      </div>
+            classes.clickable,
+            "fadeInFast",
+          )}
+          onClick={props.onClick}
+        >
+          <ProductPreviewCardRowSmall
+            previewItem={previewItem}
+            width={props.imageSize?.mobile?.width ?? 82.5}
+            height={props.imageSize?.mobile?.height ?? 55}
+          />
+        </div>
+      </ShowOnMobileOrDesktopSSR>
 
       <div className={clsx(
-        classes.flexColCenter,
-      )}>
-        <ArrowUpIcon
-          className={clsx(
-            classes.arrowIconUp,
-            upvoted && classes.blueFill,
-          )}
-          onClick={() => {
+          classes.flexRowWrapOuter,
+          classes.flexGrow,
+          classes.clickable,
+          "fadeInFast",
+        )}
+        onClick={props.onClick}
+      >
+        {
+          !title
+          ? <div className={classes.flexColInner60}>
+              <DescriptionLoadingText/>
+            </div>
+          : <div className={classes.flexColInner60}>
 
-            if (upvoted) {
-              setExistingVoteScore(0)
-              snackbar.enqueueSnackbar("UNVOTING", { variant: "info" })
-              unvote({ variables: { newsItemId: newsItem?.id } })
-            } else {
-              setExistingVoteScore(1)
-              snackbar.enqueueSnackbar("UPVOTING", { variant: "success" })
-              upvote({ variables: { newsItemId: newsItem?.id }
-              })
-            }
-          }}
-        />
-        <Typography className={classes.scoreText}>
-          {existingVoteScore}
-        </Typography>
-        <ArrowDownIcon
-          className={clsx(
-            classes.arrowIconDown,
-            downvoted && classes.redFill,
-          )}
-          onClick={() => {
-            console.log("down")
-            if (downvoted) {
-              setExistingVoteScore(0)
-              snackbar.enqueueSnackbar("UNVOTING", { variant: "info" })
-              unvote({ variables: { newsItemId: newsItem?.id }
-              })
-            } else {
-              setExistingVoteScore(-1)
-              snackbar.enqueueSnackbar("DOWNVOTING", { variant: "error" })
-              downvote({ variables: { newsItemId: newsItem?.id }
-              })
-            }
-          }}
-        />
+              <Typography className={classes.newsItemTitle}
+                variant="body1"
+                onClick={props.onClick}
+              >
+                {title}
+              </Typography>
+
+              <Typography className={classes.textLine} variant="body1">
+                {state}
+              </Typography>
+
+
+              <div className={classes.priceContainer}>
+                {
+                  price &&
+                  <PriceDisplayMainMobile
+                    price={price}
+                    soldOutStatus={soldOutStatus}
+                    isSuspended={props.isSuspended}
+                  />
+                }
+              </div>
+
+              <div className={classes.chipContainer}>
+                <SourceSiteChip
+                  sourceSite={sourceSite}
+                />
+                <AdType
+                  className={classes.maxWidthAdType}
+                  adType={adType}
+                  sourceSiteUrl={sourceSiteUrl}
+                  productId={newsItem?.productId}
+                />
+              </div>
+
+
+              {/* <Typography className={classes.rankScore} variant="body1">
+                {`rank: ${newsItem?.rankScore}`}
+              </Typography> */}
+
+            </div>
+        }
       </div>
-    </ErrorBounds>
+
+
+      <VoteOnNewsItem
+        newsItem={newsItem}
+        user={user}
+        setExistingVoteScore={setExistingVoteScore}
+        existingVoteScore={existingVoteScore}
+      />
+
+    </div>
   );
 }
 
@@ -271,6 +183,8 @@ interface ReactProps extends WithStyles<typeof styles> {
   newsItem: NewsItem
   isSuspended: boolean;
   loading?: boolean;
+  user: UserPrivate;
+  onClick(): void;
   imageSize?: {
     mobile: {
       height: any
@@ -283,24 +197,41 @@ interface ReactProps extends WithStyles<typeof styles> {
   }
 }
 
-interface MData1 {
-  upvoteNewsItem: NewsItem
-}
-interface MData2 {
-  unvoteNewsItem: NewsItem
-}
-interface MData3 {
-  downvoteNewsItem: NewsItem
-}
-interface MVar {
-  newsItemId: string
-}
 
 const styles = (theme: Theme) => createStyles({
   productRowRoot: {
     display: 'flex',
     flexDirection: 'row',
+    justifyContent: 'flex-start',
     width: '100%',
+    padding: '0.25rem',
+    transition:  theme.transitions.create(['background-color'], {
+      easing: theme.transitions.easing.easeIn,
+      duration: 100,
+    }),
+    backgroundColor: isThemeDark(theme)
+      ? Colors.uniswapDarkNavy
+      : Colors.cream,
+    "&:hover": {
+      transition:  theme.transitions.create(['background-color'], {
+        easing: theme.transitions.easing.easeIn,
+        duration: 100,
+      }),
+      backgroundColor: isThemeDark(theme)
+        ? Colors.uniswapMediumNavy
+        : Colors.slateGrey,
+    },
+  },
+  clickable: {
+    "&:hover": {
+      cursor: "pointer"
+    },
+    "&:hover > div > p:nth-child(2)": {
+      // highlight title
+      color: isThemeDark(theme)
+        ? Colors.purple
+        : Colors.blue,
+    },
   },
   flexColOuter: {
     display: 'flex',
@@ -321,23 +252,6 @@ const styles = (theme: Theme) => createStyles({
     paddingRight: "0.5rem",
     flexGrow: 1,
   },
-  flexColInner30: {
-    flexBasis: '30%',
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'flex-start',
-    alignItems: "center",
-    flexGrow: 1,
-    maxWidth: 250,
-  },
-  flexColCenter: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingRight: "1rem",
-    paddingLeft: "0.5rem",
-  },
   flexRow: {
     display: 'flex',
     flexDirection: 'row',
@@ -352,37 +266,29 @@ const styles = (theme: Theme) => createStyles({
   flexGrow: {
     flexGrow: 1,
   },
-  marginLeft: {
-    marginLeft: "1rem",
-  },
   priceContainer: {
     marginTop: '0.25rem',
   },
-  category: {
+  caliber: {
     fontWeight: 600,
-    color: theme.palette.type === 'dark'
+    color: isThemeDark(theme)
       ? Colors.uniswapLighterGrey
       : Colors.slateGreyDarkest,
     textTransform: "uppercase",
     fontSize: '0.8rem',
   },
-  title: {
+  newsItemTitle: {
     fontWeight: 600,
     fontSize: '1rem',
-    color: theme.palette.type === 'dark'
+    color: isThemeDark(theme)
       ? Colors.uniswapLightGrey
       : Colors.slateGreyBlack,
     lineHeight: '1rem',
     margin: '0.25rem 0rem',
-    "&:hover": {
-      color: theme.palette.type === 'dark'
-        ? Colors.purple
-        : Colors.blue,
-    },
   },
-  dealerState: {
+  textLine: {
     fontWeight: 600,
-    color: theme.palette.type === 'dark'
+    color: isThemeDark(theme)
       ? Colors.uniswapLighterGrey
       : Colors.slateGreyLightBlack,
     fontSize: '0.8rem',
@@ -390,46 +296,19 @@ const styles = (theme: Theme) => createStyles({
   rankScore: {
     fontWeight: 800,
     marginTop: "0.25rem",
-    color: theme.palette.type === 'dark'
-      ? Colors.red
-      : Colors.red,
+    color: isThemeDark(theme)
+      ? Colors.uniswapMediumGrey
+      : Colors.slateGreyDark,
     fontSize: '0.8rem',
   },
-  variant: {
-    fontWeight: 600,
-    color: Colors.ghostGrey,
-    fontSize: '0.8rem',
+  maxWidthAdType: {
+    maxWidth: 120,
   },
-  arrowIconUp: {
-    fontWeight: 600,
-    color: Colors.ghostGrey,
-    width: '1.5rem',
-    height: '1.5rem',
-    cursor: "pointer",
-    "&:hover": {
-      fill: Colors.blue,
-    },
-  },
-  blueFill: {
-    fill: Colors.lightBlue,
-  },
-  redFill: {
-    fill: Colors.lighterRed,
-  },
-  arrowIconDown: {
-    fontWeight: 600,
-    color: Colors.ghostGrey,
-    width: '1.5rem',
-    height: '1.5rem',
-    cursor: "pointer",
-    "&:hover": {
-      fill: Colors.lightRed,
-    },
-  },
-  scoreText: {
-    fontWeight: 600,
-    color: Colors.ghostGrey,
-    fontSize: '0.9rem',
+  chipContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    flexWrap: "wrap",
   },
 });
 
