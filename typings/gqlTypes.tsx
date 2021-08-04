@@ -207,15 +207,6 @@ export type Conversation = {
   chatRoomStatus?: Maybe<ChatRoomStatus>;
 };
 
-export type CreateProductsConfig = {
-  count: Scalars['Int'];
-  /** sellerLogin: LoginDetails */
-  alwaysPublish?: Maybe<Scalars['Boolean']>;
-  alwaysFewestPreviews?: Maybe<Scalars['Boolean']>;
-  alwaysGreatestPreviews?: Maybe<Scalars['Boolean']>;
-  alwaysDiscounted?: Maybe<Scalars['Boolean']>;
-};
-
 
 /** columns and relationships of "dealers" */
 export type Dealer = {
@@ -254,6 +245,36 @@ export type EditUserPhoneNumberInput = {
   phoneNumber: Scalars['String'];
   areaCode?: Maybe<Scalars['String']>;
   countryCode: Scalars['String'];
+};
+
+export type ExternalProductCreateInput = {
+  model?: Maybe<Scalars['String']>;
+  make?: Maybe<Scalars['String']>;
+  caliber?: Maybe<Scalars['String']>;
+  price?: Maybe<Scalars['Int']>;
+  condition?: Maybe<Scalars['String']>;
+  action?: Maybe<Scalars['String']>;
+  adType?: Maybe<Scalars['String']>;
+  advertised?: Maybe<Scalars['Date']>;
+  description?: Maybe<Scalars['String']>;
+  isSold?: Maybe<Scalars['Boolean']>;
+  licenseNumber: Scalars['String'];
+  phoneNumber?: Maybe<Scalars['String']>;
+  serialNumber: Scalars['String'];
+  soldText?: Maybe<Scalars['String']>;
+  state?: Maybe<Scalars['String']>;
+  transferringDealer?: Maybe<Scalars['String']>;
+  title?: Maybe<Scalars['String']>;
+  sourceSite: Scalars['String'];
+  sourceSiteUrl: Scalars['String'];
+  sourceSiteId: Scalars['String'];
+  previewItems: Array<ProductPreviewItemInput>;
+  barrelLength?: Maybe<Scalars['String']>;
+};
+
+export type ExternalProductMutationResponse = {
+  __typename?: 'ExternalProductMutationResponse';
+  externalProduct: External_Products;
 };
 
 export enum FacetAttributes {
@@ -320,6 +341,12 @@ export type Int_Comparison_Exp = {
 };
 
 
+
+export enum ListingType {
+  CLASSIFIED = 'CLASSIFIED',
+  CLASSIFIED_WITH_ESCROW = 'CLASSIFIED_WITH_ESCROW',
+  ESCROW_ONLY = 'ESCROW_ONLY'
+}
 
 export type LoginDetails = {
   email: Scalars['String'];
@@ -402,6 +429,14 @@ export type Mutation = {
   delete_emails?: Maybe<Emails_Mutation_Response>;
   /** delete single row from the table: "emails" */
   delete_emails_by_pk?: Maybe<Emails>;
+  /** delete data from the table: "external_product_snapshots" */
+  delete_external_product_snapshots?: Maybe<External_Product_Snapshots_Mutation_Response>;
+  /** delete single row from the table: "external_product_snapshots" */
+  delete_external_product_snapshots_by_pk?: Maybe<External_Product_Snapshots>;
+  /** delete data from the table: "external_products" */
+  delete_external_products?: Maybe<External_Products_Mutation_Response>;
+  /** delete single row from the table: "external_products" */
+  delete_external_products_by_pk?: Maybe<External_Products>;
   /** delete data from the table: "image_owners" */
   delete_image_owners?: Maybe<Image_Owners_Mutation_Response>;
   /** delete single row from the table: "image_owners" */
@@ -418,6 +453,14 @@ export type Mutation = {
   delete_migrations?: Maybe<Migrations_Mutation_Response>;
   /** delete single row from the table: "migrations" */
   delete_migrations_by_pk?: Maybe<Migrations>;
+  /** delete data from the table: "news_item_votes" */
+  delete_news_item_votes?: Maybe<News_Item_Votes_Mutation_Response>;
+  /** delete single row from the table: "news_item_votes" */
+  delete_news_item_votes_by_pk?: Maybe<News_Item_Votes>;
+  /** delete data from the table: "news_items" */
+  delete_news_items?: Maybe<News_Items_Mutation_Response>;
+  /** delete single row from the table: "news_items" */
+  delete_news_items_by_pk?: Maybe<News_Items>;
   /** delete data from the table: "order_snapshots" */
   delete_order_snapshots?: Maybe<Order_Snapshots_Mutation_Response>;
   /** delete single row from the table: "order_snapshots" */
@@ -570,6 +613,14 @@ export type Mutation = {
   insert_emails?: Maybe<Emails_Mutation_Response>;
   /** insert a single row into the table: "emails" */
   insert_emails_one?: Maybe<Emails>;
+  /** insert data into the table: "external_product_snapshots" */
+  insert_external_product_snapshots?: Maybe<External_Product_Snapshots_Mutation_Response>;
+  /** insert a single row into the table: "external_product_snapshots" */
+  insert_external_product_snapshots_one?: Maybe<External_Product_Snapshots>;
+  /** insert data into the table: "external_products" */
+  insert_external_products?: Maybe<External_Products_Mutation_Response>;
+  /** insert a single row into the table: "external_products" */
+  insert_external_products_one?: Maybe<External_Products>;
   /** insert data into the table: "image_owners" */
   insert_image_owners?: Maybe<Image_Owners_Mutation_Response>;
   /** insert a single row into the table: "image_owners" */
@@ -586,6 +637,14 @@ export type Mutation = {
   insert_migrations?: Maybe<Migrations_Mutation_Response>;
   /** insert a single row into the table: "migrations" */
   insert_migrations_one?: Maybe<Migrations>;
+  /** insert data into the table: "news_item_votes" */
+  insert_news_item_votes?: Maybe<News_Item_Votes_Mutation_Response>;
+  /** insert a single row into the table: "news_item_votes" */
+  insert_news_item_votes_one?: Maybe<News_Item_Votes>;
+  /** insert data into the table: "news_items" */
+  insert_news_items?: Maybe<News_Items_Mutation_Response>;
+  /** insert a single row into the table: "news_items" */
+  insert_news_items_one?: Maybe<News_Items>;
   /** insert data into the table: "order_snapshots" */
   insert_order_snapshots?: Maybe<Order_Snapshots_Mutation_Response>;
   /** insert a single row into the table: "order_snapshots" */
@@ -738,6 +797,14 @@ export type Mutation = {
   update_emails?: Maybe<Emails_Mutation_Response>;
   /** update single row of the table: "emails" */
   update_emails_by_pk?: Maybe<Emails>;
+  /** update data of the table: "external_product_snapshots" */
+  update_external_product_snapshots?: Maybe<External_Product_Snapshots_Mutation_Response>;
+  /** update single row of the table: "external_product_snapshots" */
+  update_external_product_snapshots_by_pk?: Maybe<External_Product_Snapshots>;
+  /** update data of the table: "external_products" */
+  update_external_products?: Maybe<External_Products_Mutation_Response>;
+  /** update single row of the table: "external_products" */
+  update_external_products_by_pk?: Maybe<External_Products>;
   /** update data of the table: "image_owners" */
   update_image_owners?: Maybe<Image_Owners_Mutation_Response>;
   /** update single row of the table: "image_owners" */
@@ -754,6 +821,14 @@ export type Mutation = {
   update_migrations?: Maybe<Migrations_Mutation_Response>;
   /** update single row of the table: "migrations" */
   update_migrations_by_pk?: Maybe<Migrations>;
+  /** update data of the table: "news_item_votes" */
+  update_news_item_votes?: Maybe<News_Item_Votes_Mutation_Response>;
+  /** update single row of the table: "news_item_votes" */
+  update_news_item_votes_by_pk?: Maybe<News_Item_Votes>;
+  /** update data of the table: "news_items" */
+  update_news_items?: Maybe<News_Items_Mutation_Response>;
+  /** update single row of the table: "news_items" */
+  update_news_items_by_pk?: Maybe<News_Items>;
   /** update data of the table: "order_snapshots" */
   update_order_snapshots?: Maybe<Order_Snapshots_Mutation_Response>;
   /** update single row of the table: "order_snapshots" */
@@ -1187,6 +1262,12 @@ export type Mutation = {
   insertSavedSearch?: Maybe<Saved_Searches>;
   deleteSavedSearch?: Maybe<Saved_Searches>;
   markSavedSearchHitsAsSeen: Array<SavedSearchHit>;
+  createNewsItemWithExternalProduct: NewsItem;
+  editExternalProduct: NewsItem;
+  suspendUnsuspendNewsItem: NewsItem;
+  upvoteNewsItem: NewsItem;
+  downvoteNewsItem: NewsItem;
+  unvoteNewsItem: NewsItem;
 };
 
 
@@ -1301,6 +1382,26 @@ export type MutationDelete_Emails_By_PkArgs = {
 };
 
 
+export type MutationDelete_External_Product_SnapshotsArgs = {
+  where: External_Product_Snapshots_Bool_Exp;
+};
+
+
+export type MutationDelete_External_Product_Snapshots_By_PkArgs = {
+  id: Scalars['String'];
+};
+
+
+export type MutationDelete_External_ProductsArgs = {
+  where: External_Products_Bool_Exp;
+};
+
+
+export type MutationDelete_External_Products_By_PkArgs = {
+  id: Scalars['String'];
+};
+
+
 export type MutationDelete_Image_OwnersArgs = {
   where: Image_Owners_Bool_Exp;
 };
@@ -1338,6 +1439,27 @@ export type MutationDelete_MigrationsArgs = {
 
 export type MutationDelete_Migrations_By_PkArgs = {
   id: Scalars['Int'];
+};
+
+
+export type MutationDelete_News_Item_VotesArgs = {
+  where: News_Item_Votes_Bool_Exp;
+};
+
+
+export type MutationDelete_News_Item_Votes_By_PkArgs = {
+  newsItemId: Scalars['String'];
+  userId: Scalars['String'];
+};
+
+
+export type MutationDelete_News_ItemsArgs = {
+  where: News_Items_Bool_Exp;
+};
+
+
+export type MutationDelete_News_Items_By_PkArgs = {
+  id: Scalars['String'];
 };
 
 
@@ -1744,6 +1866,30 @@ export type MutationInsert_Emails_OneArgs = {
 };
 
 
+export type MutationInsert_External_Product_SnapshotsArgs = {
+  objects: Array<External_Product_Snapshots_Insert_Input>;
+  on_conflict?: Maybe<External_Product_Snapshots_On_Conflict>;
+};
+
+
+export type MutationInsert_External_Product_Snapshots_OneArgs = {
+  object: External_Product_Snapshots_Insert_Input;
+  on_conflict?: Maybe<External_Product_Snapshots_On_Conflict>;
+};
+
+
+export type MutationInsert_External_ProductsArgs = {
+  objects: Array<External_Products_Insert_Input>;
+  on_conflict?: Maybe<External_Products_On_Conflict>;
+};
+
+
+export type MutationInsert_External_Products_OneArgs = {
+  object: External_Products_Insert_Input;
+  on_conflict?: Maybe<External_Products_On_Conflict>;
+};
+
+
 export type MutationInsert_Image_OwnersArgs = {
   objects: Array<Image_Owners_Insert_Input>;
   on_conflict?: Maybe<Image_Owners_On_Conflict>;
@@ -1789,6 +1935,30 @@ export type MutationInsert_MigrationsArgs = {
 export type MutationInsert_Migrations_OneArgs = {
   object: Migrations_Insert_Input;
   on_conflict?: Maybe<Migrations_On_Conflict>;
+};
+
+
+export type MutationInsert_News_Item_VotesArgs = {
+  objects: Array<News_Item_Votes_Insert_Input>;
+  on_conflict?: Maybe<News_Item_Votes_On_Conflict>;
+};
+
+
+export type MutationInsert_News_Item_Votes_OneArgs = {
+  object: News_Item_Votes_Insert_Input;
+  on_conflict?: Maybe<News_Item_Votes_On_Conflict>;
+};
+
+
+export type MutationInsert_News_ItemsArgs = {
+  objects: Array<News_Items_Insert_Input>;
+  on_conflict?: Maybe<News_Items_On_Conflict>;
+};
+
+
+export type MutationInsert_News_Items_OneArgs = {
+  object: News_Items_Insert_Input;
+  on_conflict?: Maybe<News_Items_On_Conflict>;
 };
 
 
@@ -2252,6 +2422,32 @@ export type MutationUpdate_Emails_By_PkArgs = {
 };
 
 
+export type MutationUpdate_External_Product_SnapshotsArgs = {
+  _inc?: Maybe<External_Product_Snapshots_Inc_Input>;
+  _set?: Maybe<External_Product_Snapshots_Set_Input>;
+  where: External_Product_Snapshots_Bool_Exp;
+};
+
+
+export type MutationUpdate_External_Product_Snapshots_By_PkArgs = {
+  _inc?: Maybe<External_Product_Snapshots_Inc_Input>;
+  _set?: Maybe<External_Product_Snapshots_Set_Input>;
+  pk_columns: External_Product_Snapshots_Pk_Columns_Input;
+};
+
+
+export type MutationUpdate_External_ProductsArgs = {
+  _set?: Maybe<External_Products_Set_Input>;
+  where: External_Products_Bool_Exp;
+};
+
+
+export type MutationUpdate_External_Products_By_PkArgs = {
+  _set?: Maybe<External_Products_Set_Input>;
+  pk_columns: External_Products_Pk_Columns_Input;
+};
+
+
 export type MutationUpdate_Image_OwnersArgs = {
   _set?: Maybe<Image_Owners_Set_Input>;
   where: Image_Owners_Bool_Exp;
@@ -2301,6 +2497,34 @@ export type MutationUpdate_Migrations_By_PkArgs = {
   _inc?: Maybe<Migrations_Inc_Input>;
   _set?: Maybe<Migrations_Set_Input>;
   pk_columns: Migrations_Pk_Columns_Input;
+};
+
+
+export type MutationUpdate_News_Item_VotesArgs = {
+  _inc?: Maybe<News_Item_Votes_Inc_Input>;
+  _set?: Maybe<News_Item_Votes_Set_Input>;
+  where: News_Item_Votes_Bool_Exp;
+};
+
+
+export type MutationUpdate_News_Item_Votes_By_PkArgs = {
+  _inc?: Maybe<News_Item_Votes_Inc_Input>;
+  _set?: Maybe<News_Item_Votes_Set_Input>;
+  pk_columns: News_Item_Votes_Pk_Columns_Input;
+};
+
+
+export type MutationUpdate_News_ItemsArgs = {
+  _inc?: Maybe<News_Items_Inc_Input>;
+  _set?: Maybe<News_Items_Set_Input>;
+  where: News_Items_Bool_Exp;
+};
+
+
+export type MutationUpdate_News_Items_By_PkArgs = {
+  _inc?: Maybe<News_Items_Inc_Input>;
+  _set?: Maybe<News_Items_Set_Input>;
+  pk_columns: News_Items_Pk_Columns_Input;
 };
 
 
@@ -3287,6 +3511,39 @@ export type MutationMarkSavedSearchHitsAsSeenArgs = {
   savedSearchHitsIds: Array<Scalars['String']>;
 };
 
+
+export type MutationCreateNewsItemWithExternalProductArgs = {
+  externalProductCreateInput?: Maybe<ExternalProductCreateInput>;
+};
+
+
+export type MutationEditExternalProductArgs = {
+  externalProductId: Scalars['String'];
+  externalProductCreateInput: ExternalProductCreateInput;
+  userId: Scalars['String'];
+};
+
+
+export type MutationSuspendUnsuspendNewsItemArgs = {
+  newsItemId: Scalars['String'];
+  isSuspended: Scalars['Boolean'];
+};
+
+
+export type MutationUpvoteNewsItemArgs = {
+  newsItemId: Scalars['String'];
+};
+
+
+export type MutationDownvoteNewsItemArgs = {
+  newsItemId: Scalars['String'];
+};
+
+
+export type MutationUnvoteNewsItemArgs = {
+  newsItemId: Scalars['String'];
+};
+
 /** Something that went wrong during a mutation. */
 export type MutationError = {
   __typename?: 'MutationError';
@@ -3305,6 +3562,36 @@ export type MutationErrorSummary = {
   errors?: Maybe<Array<Maybe<MutationError>>>;
   /** Indication of whether or not the problem could be overcome by retrying. */
   shouldRetry?: Maybe<Scalars['Boolean']>;
+};
+
+export type NewsItem = {
+  __typename?: 'NewsItem';
+  id: Scalars['String'];
+  createdAt: Scalars['Date'];
+  updatedAt: Scalars['Date'];
+  externalProductId?: Maybe<Scalars['String']>;
+  externalProduct?: Maybe<External_Products>;
+  productId?: Maybe<Scalars['String']>;
+  product?: Maybe<Product>;
+  isDeleted: Scalars['Boolean'];
+  isSuspended: Scalars['Boolean'];
+  sourceSite?: Maybe<Scalars['String']>;
+  score?: Maybe<Scalars['Int']>;
+  rankScore?: Maybe<Scalars['Float']>;
+  votes?: Maybe<Array<Maybe<News_Item_Votes>>>;
+  yourVote?: Maybe<News_Item_Votes>;
+};
+
+export type NewsItemsConnection = {
+  __typename?: 'NewsItemsConnection';
+  totalCount?: Maybe<Scalars['Int']>;
+  pageInfo: PageInfo;
+  edges: Array<NewsItemsEdge>;
+};
+
+export type NewsItemsEdge = {
+  __typename?: 'NewsItemsEdge';
+  node: NewsItem;
 };
 
 export type Order = {
@@ -3672,6 +3959,7 @@ export type Product = {
   sellerLicense?: Maybe<User_Licenses>;
   /** Allow bidding on this product */
   allowBids?: Maybe<Scalars['Boolean']>;
+  listingType?: Maybe<Scalars['String']>;
 };
 
 export type ProductCreateInput = {
@@ -3707,6 +3995,7 @@ export type ProductCreateInput = {
   magazineCapacity?: Maybe<Scalars['String']>;
   barrelLength?: Maybe<Scalars['String']>;
   allowBids?: Maybe<Scalars['Boolean']>;
+  listingType?: Maybe<Scalars['String']>;
 };
 
 export type ProductEditInput = {
@@ -3744,6 +4033,7 @@ export type ProductEditInput = {
   magazineCapacity?: Maybe<Scalars['String']>;
   barrelLength?: Maybe<Scalars['String']>;
   allowBids?: Maybe<Scalars['Boolean']>;
+  listingType?: Maybe<Scalars['String']>;
 };
 
 /** Critical information about a file within a product */
@@ -3816,6 +4106,7 @@ export type ProductPrivate = Product & {
   sellerLicense?: Maybe<User_Licenses>;
   /** Allow bidding on this product */
   allowBids?: Maybe<Scalars['Boolean']>;
+  listingType?: Maybe<Scalars['String']>;
 };
 
 export type ProductProductVariantId = {
@@ -3856,6 +4147,7 @@ export type ProductPublic = Product & {
   sellerLicense?: Maybe<User_Licenses>;
   /** Allow bidding on this product */
   allowBids?: Maybe<Scalars['Boolean']>;
+  listingType?: Maybe<Scalars['String']>;
 };
 
 export type ProductVariantEditInput = {
@@ -4045,6 +4337,18 @@ export type Query = {
   emails_aggregate: Emails_Aggregate;
   /** fetch data from the table: "emails" using primary key columns */
   emails_by_pk?: Maybe<Emails>;
+  /** fetch data from the table: "external_product_snapshots" */
+  external_product_snapshots: Array<External_Product_Snapshots>;
+  /** fetch aggregated fields from the table: "external_product_snapshots" */
+  external_product_snapshots_aggregate: External_Product_Snapshots_Aggregate;
+  /** fetch data from the table: "external_product_snapshots" using primary key columns */
+  external_product_snapshots_by_pk?: Maybe<External_Product_Snapshots>;
+  /** fetch data from the table: "external_products" */
+  external_products: Array<External_Products>;
+  /** fetch aggregated fields from the table: "external_products" */
+  external_products_aggregate: External_Products_Aggregate;
+  /** fetch data from the table: "external_products" using primary key columns */
+  external_products_by_pk?: Maybe<External_Products>;
   /** fetch data from the table: "image_owners" */
   image_owners: Array<Image_Owners>;
   /** fetch aggregated fields from the table: "image_owners" */
@@ -4073,6 +4377,18 @@ export type Query = {
   migrations_aggregate: Migrations_Aggregate;
   /** fetch data from the table: "migrations" using primary key columns */
   migrations_by_pk?: Maybe<Migrations>;
+  /** fetch data from the table: "news_item_votes" */
+  news_item_votes: Array<News_Item_Votes>;
+  /** fetch aggregated fields from the table: "news_item_votes" */
+  news_item_votes_aggregate: News_Item_Votes_Aggregate;
+  /** fetch data from the table: "news_item_votes" using primary key columns */
+  news_item_votes_by_pk?: Maybe<News_Item_Votes>;
+  /** fetch data from the table: "news_items" */
+  news_items: Array<News_Items>;
+  /** fetch aggregated fields from the table: "news_items" */
+  news_items_aggregate: News_Items_Aggregate;
+  /** fetch data from the table: "news_items" using primary key columns */
+  news_items_by_pk?: Maybe<News_Items>;
   /** fetch data from the table: "order_snapshots" */
   order_snapshots: Array<Order_Snapshots>;
   /** fetch aggregated fields from the table: "order_snapshots" */
@@ -4505,11 +4821,11 @@ export type Query = {
    * when a product was listed
    */
   getSavedSearchHitsByUser?: Maybe<SavedSearchHitsConnection>;
-  /**
-   * Get image, for gun-aggregator to check if image exists
-   *  AccessRule – PLATFORM_ADMIN
-   */
+  /** Get image, for gun-aggregator to check if image exists */
   getImages: Array<Image_Parents>;
+  /** for gun-aggregator to check if external products exists */
+  getExternalProductsBySourceSiteId: Array<External_Products>;
+  newsItemsSortByHotConnection?: Maybe<NewsItemsConnection>;
 };
 
 
@@ -4767,6 +5083,52 @@ export type QueryEmails_By_PkArgs = {
 };
 
 
+export type QueryExternal_Product_SnapshotsArgs = {
+  distinct_on?: Maybe<Array<External_Product_Snapshots_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<External_Product_Snapshots_Order_By>>;
+  where?: Maybe<External_Product_Snapshots_Bool_Exp>;
+};
+
+
+export type QueryExternal_Product_Snapshots_AggregateArgs = {
+  distinct_on?: Maybe<Array<External_Product_Snapshots_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<External_Product_Snapshots_Order_By>>;
+  where?: Maybe<External_Product_Snapshots_Bool_Exp>;
+};
+
+
+export type QueryExternal_Product_Snapshots_By_PkArgs = {
+  id: Scalars['String'];
+};
+
+
+export type QueryExternal_ProductsArgs = {
+  distinct_on?: Maybe<Array<External_Products_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<External_Products_Order_By>>;
+  where?: Maybe<External_Products_Bool_Exp>;
+};
+
+
+export type QueryExternal_Products_AggregateArgs = {
+  distinct_on?: Maybe<Array<External_Products_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<External_Products_Order_By>>;
+  where?: Maybe<External_Products_Bool_Exp>;
+};
+
+
+export type QueryExternal_Products_By_PkArgs = {
+  id: Scalars['String'];
+};
+
+
 export type QueryImage_OwnersArgs = {
   distinct_on?: Maybe<Array<Image_Owners_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -4876,6 +5238,53 @@ export type QueryMigrations_AggregateArgs = {
 
 export type QueryMigrations_By_PkArgs = {
   id: Scalars['Int'];
+};
+
+
+export type QueryNews_Item_VotesArgs = {
+  distinct_on?: Maybe<Array<News_Item_Votes_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<News_Item_Votes_Order_By>>;
+  where?: Maybe<News_Item_Votes_Bool_Exp>;
+};
+
+
+export type QueryNews_Item_Votes_AggregateArgs = {
+  distinct_on?: Maybe<Array<News_Item_Votes_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<News_Item_Votes_Order_By>>;
+  where?: Maybe<News_Item_Votes_Bool_Exp>;
+};
+
+
+export type QueryNews_Item_Votes_By_PkArgs = {
+  newsItemId: Scalars['String'];
+  userId: Scalars['String'];
+};
+
+
+export type QueryNews_ItemsArgs = {
+  distinct_on?: Maybe<Array<News_Items_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<News_Items_Order_By>>;
+  where?: Maybe<News_Items_Bool_Exp>;
+};
+
+
+export type QueryNews_Items_AggregateArgs = {
+  distinct_on?: Maybe<Array<News_Items_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<News_Items_Order_By>>;
+  where?: Maybe<News_Items_Bool_Exp>;
+};
+
+
+export type QueryNews_Items_By_PkArgs = {
+  id: Scalars['String'];
 };
 
 
@@ -5864,6 +6273,16 @@ export type QueryGetImagesArgs = {
   imageIds: Array<Scalars['String']>;
 };
 
+
+export type QueryGetExternalProductsBySourceSiteIdArgs = {
+  externalProductIds: Array<Scalars['String']>;
+};
+
+
+export type QueryNewsItemsSortByHotConnectionArgs = {
+  query?: Maybe<ConnectionQuery>;
+};
+
 export type ResetPasswordResponse = {
   __typename?: 'ResetPasswordResponse';
   email?: Maybe<Scalars['String']>;
@@ -5877,6 +6296,7 @@ export enum Role {
   USER = 'USER',
   DEALER = 'DEALER',
   PLATFORM_ADMIN = 'PLATFORM_ADMIN',
+  PLATFORM_EDITOR = 'PLATFORM_EDITOR',
   SYSTEM = 'SYSTEM'
 }
 
@@ -5886,11 +6306,14 @@ export type SavedSearchHit = {
   savedSearchId: Scalars['ID'];
   userId: Scalars['ID'];
   productTitle: Scalars['String'];
-  productId: Scalars['ID'];
+  productId?: Maybe<Scalars['ID']>;
+  externalProductId?: Maybe<Scalars['ID']>;
   createdAt: Scalars['Date'];
   seen?: Maybe<Scalars['Boolean']>;
   user?: Maybe<UserPrivate>;
-  product: Product;
+  /** either product or external_products */
+  product?: Maybe<Product>;
+  externalProduct?: Maybe<External_Products>;
   savedSearch?: Maybe<Saved_Searches>;
 };
 
@@ -6151,6 +6574,18 @@ export type Subscription = {
   emails_aggregate: Emails_Aggregate;
   /** fetch data from the table: "emails" using primary key columns */
   emails_by_pk?: Maybe<Emails>;
+  /** fetch data from the table: "external_product_snapshots" */
+  external_product_snapshots: Array<External_Product_Snapshots>;
+  /** fetch aggregated fields from the table: "external_product_snapshots" */
+  external_product_snapshots_aggregate: External_Product_Snapshots_Aggregate;
+  /** fetch data from the table: "external_product_snapshots" using primary key columns */
+  external_product_snapshots_by_pk?: Maybe<External_Product_Snapshots>;
+  /** fetch data from the table: "external_products" */
+  external_products: Array<External_Products>;
+  /** fetch aggregated fields from the table: "external_products" */
+  external_products_aggregate: External_Products_Aggregate;
+  /** fetch data from the table: "external_products" using primary key columns */
+  external_products_by_pk?: Maybe<External_Products>;
   /** fetch data from the table: "image_owners" */
   image_owners: Array<Image_Owners>;
   /** fetch aggregated fields from the table: "image_owners" */
@@ -6179,6 +6614,18 @@ export type Subscription = {
   migrations_aggregate: Migrations_Aggregate;
   /** fetch data from the table: "migrations" using primary key columns */
   migrations_by_pk?: Maybe<Migrations>;
+  /** fetch data from the table: "news_item_votes" */
+  news_item_votes: Array<News_Item_Votes>;
+  /** fetch aggregated fields from the table: "news_item_votes" */
+  news_item_votes_aggregate: News_Item_Votes_Aggregate;
+  /** fetch data from the table: "news_item_votes" using primary key columns */
+  news_item_votes_by_pk?: Maybe<News_Item_Votes>;
+  /** fetch data from the table: "news_items" */
+  news_items: Array<News_Items>;
+  /** fetch aggregated fields from the table: "news_items" */
+  news_items_aggregate: News_Items_Aggregate;
+  /** fetch data from the table: "news_items" using primary key columns */
+  news_items_by_pk?: Maybe<News_Items>;
   /** fetch data from the table: "order_snapshots" */
   order_snapshots: Array<Order_Snapshots>;
   /** fetch aggregated fields from the table: "order_snapshots" */
@@ -6365,6 +6812,7 @@ export type Subscription = {
   saidSomething?: Maybe<Scalars['String']>;
   /** myConversations: JSON */
   myConversations?: Maybe<Array<Maybe<Conversation>>>;
+  newsItemsSortByNewConnection?: Maybe<NewsItemsConnection>;
 };
 
 
@@ -6622,6 +7070,52 @@ export type SubscriptionEmails_By_PkArgs = {
 };
 
 
+export type SubscriptionExternal_Product_SnapshotsArgs = {
+  distinct_on?: Maybe<Array<External_Product_Snapshots_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<External_Product_Snapshots_Order_By>>;
+  where?: Maybe<External_Product_Snapshots_Bool_Exp>;
+};
+
+
+export type SubscriptionExternal_Product_Snapshots_AggregateArgs = {
+  distinct_on?: Maybe<Array<External_Product_Snapshots_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<External_Product_Snapshots_Order_By>>;
+  where?: Maybe<External_Product_Snapshots_Bool_Exp>;
+};
+
+
+export type SubscriptionExternal_Product_Snapshots_By_PkArgs = {
+  id: Scalars['String'];
+};
+
+
+export type SubscriptionExternal_ProductsArgs = {
+  distinct_on?: Maybe<Array<External_Products_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<External_Products_Order_By>>;
+  where?: Maybe<External_Products_Bool_Exp>;
+};
+
+
+export type SubscriptionExternal_Products_AggregateArgs = {
+  distinct_on?: Maybe<Array<External_Products_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<External_Products_Order_By>>;
+  where?: Maybe<External_Products_Bool_Exp>;
+};
+
+
+export type SubscriptionExternal_Products_By_PkArgs = {
+  id: Scalars['String'];
+};
+
+
 export type SubscriptionImage_OwnersArgs = {
   distinct_on?: Maybe<Array<Image_Owners_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -6731,6 +7225,53 @@ export type SubscriptionMigrations_AggregateArgs = {
 
 export type SubscriptionMigrations_By_PkArgs = {
   id: Scalars['Int'];
+};
+
+
+export type SubscriptionNews_Item_VotesArgs = {
+  distinct_on?: Maybe<Array<News_Item_Votes_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<News_Item_Votes_Order_By>>;
+  where?: Maybe<News_Item_Votes_Bool_Exp>;
+};
+
+
+export type SubscriptionNews_Item_Votes_AggregateArgs = {
+  distinct_on?: Maybe<Array<News_Item_Votes_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<News_Item_Votes_Order_By>>;
+  where?: Maybe<News_Item_Votes_Bool_Exp>;
+};
+
+
+export type SubscriptionNews_Item_Votes_By_PkArgs = {
+  newsItemId: Scalars['String'];
+  userId: Scalars['String'];
+};
+
+
+export type SubscriptionNews_ItemsArgs = {
+  distinct_on?: Maybe<Array<News_Items_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<News_Items_Order_By>>;
+  where?: Maybe<News_Items_Bool_Exp>;
+};
+
+
+export type SubscriptionNews_Items_AggregateArgs = {
+  distinct_on?: Maybe<Array<News_Items_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<News_Items_Order_By>>;
+  where?: Maybe<News_Items_Bool_Exp>;
+};
+
+
+export type SubscriptionNews_Items_By_PkArgs = {
+  id: Scalars['String'];
 };
 
 
@@ -7451,6 +7992,12 @@ export type SubscriptionMyConversationsArgs = {
   messageLimit?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
   offset?: Maybe<Scalars['Int']>;
+};
+
+
+export type SubscriptionNewsItemsSortByNewConnectionArgs = {
+  startDate?: Maybe<Scalars['Date']>;
+  endDate?: Maybe<Scalars['Date']>;
 };
 
 export type TransactionsConnection = {
@@ -9868,6 +10415,740 @@ export enum Emails_Update_Column {
   TO_ = 'to_'
 }
 
+/** columns and relationships of "external_product_snapshots" */
+export type External_Product_Snapshots = {
+  __typename?: 'external_product_snapshots';
+  action?: Maybe<Scalars['String']>;
+  adType?: Maybe<Scalars['String']>;
+  advertised?: Maybe<Scalars['timestamptz']>;
+  barrelLength?: Maybe<Scalars['String']>;
+  caliber?: Maybe<Scalars['String']>;
+  condition?: Maybe<Scalars['String']>;
+  createdAt: Scalars['timestamptz'];
+  description?: Maybe<Scalars['String']>;
+  externalProductId: Scalars['String'];
+  id: Scalars['String'];
+  isSold?: Maybe<Scalars['Boolean']>;
+  licenseNumber: Scalars['String'];
+  make?: Maybe<Scalars['String']>;
+  model?: Maybe<Scalars['String']>;
+  phoneNumber?: Maybe<Scalars['String']>;
+  /** An array relationship */
+  previewItems: Array<Product_Preview_Items>;
+  /** An aggregate relationship */
+  previewItems_aggregate: Product_Preview_Items_Aggregate;
+  price?: Maybe<Scalars['Int']>;
+  serialNumber: Scalars['String'];
+  soldText?: Maybe<Scalars['String']>;
+  state?: Maybe<Scalars['String']>;
+  title?: Maybe<Scalars['String']>;
+  transferringDealer?: Maybe<Scalars['String']>;
+};
+
+
+/** columns and relationships of "external_product_snapshots" */
+export type External_Product_SnapshotsPreviewItemsArgs = {
+  distinct_on?: Maybe<Array<Product_Preview_Items_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Product_Preview_Items_Order_By>>;
+  where?: Maybe<Product_Preview_Items_Bool_Exp>;
+};
+
+
+/** columns and relationships of "external_product_snapshots" */
+export type External_Product_SnapshotsPreviewItems_AggregateArgs = {
+  distinct_on?: Maybe<Array<Product_Preview_Items_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Product_Preview_Items_Order_By>>;
+  where?: Maybe<Product_Preview_Items_Bool_Exp>;
+};
+
+/** aggregated selection of "external_product_snapshots" */
+export type External_Product_Snapshots_Aggregate = {
+  __typename?: 'external_product_snapshots_aggregate';
+  aggregate?: Maybe<External_Product_Snapshots_Aggregate_Fields>;
+  nodes: Array<External_Product_Snapshots>;
+};
+
+/** aggregate fields of "external_product_snapshots" */
+export type External_Product_Snapshots_Aggregate_Fields = {
+  __typename?: 'external_product_snapshots_aggregate_fields';
+  avg?: Maybe<External_Product_Snapshots_Avg_Fields>;
+  count: Scalars['Int'];
+  max?: Maybe<External_Product_Snapshots_Max_Fields>;
+  min?: Maybe<External_Product_Snapshots_Min_Fields>;
+  stddev?: Maybe<External_Product_Snapshots_Stddev_Fields>;
+  stddev_pop?: Maybe<External_Product_Snapshots_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<External_Product_Snapshots_Stddev_Samp_Fields>;
+  sum?: Maybe<External_Product_Snapshots_Sum_Fields>;
+  var_pop?: Maybe<External_Product_Snapshots_Var_Pop_Fields>;
+  var_samp?: Maybe<External_Product_Snapshots_Var_Samp_Fields>;
+  variance?: Maybe<External_Product_Snapshots_Variance_Fields>;
+};
+
+
+/** aggregate fields of "external_product_snapshots" */
+export type External_Product_Snapshots_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<External_Product_Snapshots_Select_Column>>;
+  distinct?: Maybe<Scalars['Boolean']>;
+};
+
+/** order by aggregate values of table "external_product_snapshots" */
+export type External_Product_Snapshots_Aggregate_Order_By = {
+  avg?: Maybe<External_Product_Snapshots_Avg_Order_By>;
+  count?: Maybe<Order_By>;
+  max?: Maybe<External_Product_Snapshots_Max_Order_By>;
+  min?: Maybe<External_Product_Snapshots_Min_Order_By>;
+  stddev?: Maybe<External_Product_Snapshots_Stddev_Order_By>;
+  stddev_pop?: Maybe<External_Product_Snapshots_Stddev_Pop_Order_By>;
+  stddev_samp?: Maybe<External_Product_Snapshots_Stddev_Samp_Order_By>;
+  sum?: Maybe<External_Product_Snapshots_Sum_Order_By>;
+  var_pop?: Maybe<External_Product_Snapshots_Var_Pop_Order_By>;
+  var_samp?: Maybe<External_Product_Snapshots_Var_Samp_Order_By>;
+  variance?: Maybe<External_Product_Snapshots_Variance_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "external_product_snapshots" */
+export type External_Product_Snapshots_Arr_Rel_Insert_Input = {
+  data: Array<External_Product_Snapshots_Insert_Input>;
+  /** on conflict condition */
+  on_conflict?: Maybe<External_Product_Snapshots_On_Conflict>;
+};
+
+/** aggregate avg on columns */
+export type External_Product_Snapshots_Avg_Fields = {
+  __typename?: 'external_product_snapshots_avg_fields';
+  price?: Maybe<Scalars['Float']>;
+};
+
+/** order by avg() on columns of table "external_product_snapshots" */
+export type External_Product_Snapshots_Avg_Order_By = {
+  price?: Maybe<Order_By>;
+};
+
+/** Boolean expression to filter rows from the table "external_product_snapshots". All fields are combined with a logical 'AND'. */
+export type External_Product_Snapshots_Bool_Exp = {
+  _and?: Maybe<Array<External_Product_Snapshots_Bool_Exp>>;
+  _not?: Maybe<External_Product_Snapshots_Bool_Exp>;
+  _or?: Maybe<Array<External_Product_Snapshots_Bool_Exp>>;
+  action?: Maybe<String_Comparison_Exp>;
+  adType?: Maybe<String_Comparison_Exp>;
+  advertised?: Maybe<Timestamptz_Comparison_Exp>;
+  barrelLength?: Maybe<String_Comparison_Exp>;
+  caliber?: Maybe<String_Comparison_Exp>;
+  condition?: Maybe<String_Comparison_Exp>;
+  createdAt?: Maybe<Timestamptz_Comparison_Exp>;
+  description?: Maybe<String_Comparison_Exp>;
+  externalProductId?: Maybe<String_Comparison_Exp>;
+  id?: Maybe<String_Comparison_Exp>;
+  isSold?: Maybe<Boolean_Comparison_Exp>;
+  licenseNumber?: Maybe<String_Comparison_Exp>;
+  make?: Maybe<String_Comparison_Exp>;
+  model?: Maybe<String_Comparison_Exp>;
+  phoneNumber?: Maybe<String_Comparison_Exp>;
+  previewItems?: Maybe<Product_Preview_Items_Bool_Exp>;
+  price?: Maybe<Int_Comparison_Exp>;
+  serialNumber?: Maybe<String_Comparison_Exp>;
+  soldText?: Maybe<String_Comparison_Exp>;
+  state?: Maybe<String_Comparison_Exp>;
+  title?: Maybe<String_Comparison_Exp>;
+  transferringDealer?: Maybe<String_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "external_product_snapshots" */
+export enum External_Product_Snapshots_Constraint {
+  /** unique or primary key constraint */
+  EXTERNAL_PRODUCT_SNAPSHOTS_PKEY = 'external_product_snapshots_pkey'
+}
+
+/** input type for incrementing numeric columns in table "external_product_snapshots" */
+export type External_Product_Snapshots_Inc_Input = {
+  price?: Maybe<Scalars['Int']>;
+};
+
+/** input type for inserting data into table "external_product_snapshots" */
+export type External_Product_Snapshots_Insert_Input = {
+  action?: Maybe<Scalars['String']>;
+  adType?: Maybe<Scalars['String']>;
+  advertised?: Maybe<Scalars['timestamptz']>;
+  barrelLength?: Maybe<Scalars['String']>;
+  caliber?: Maybe<Scalars['String']>;
+  condition?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['timestamptz']>;
+  description?: Maybe<Scalars['String']>;
+  externalProductId?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+  isSold?: Maybe<Scalars['Boolean']>;
+  licenseNumber?: Maybe<Scalars['String']>;
+  make?: Maybe<Scalars['String']>;
+  model?: Maybe<Scalars['String']>;
+  phoneNumber?: Maybe<Scalars['String']>;
+  previewItems?: Maybe<Product_Preview_Items_Arr_Rel_Insert_Input>;
+  price?: Maybe<Scalars['Int']>;
+  serialNumber?: Maybe<Scalars['String']>;
+  soldText?: Maybe<Scalars['String']>;
+  state?: Maybe<Scalars['String']>;
+  title?: Maybe<Scalars['String']>;
+  transferringDealer?: Maybe<Scalars['String']>;
+};
+
+/** aggregate max on columns */
+export type External_Product_Snapshots_Max_Fields = {
+  __typename?: 'external_product_snapshots_max_fields';
+  action?: Maybe<Scalars['String']>;
+  adType?: Maybe<Scalars['String']>;
+  advertised?: Maybe<Scalars['timestamptz']>;
+  barrelLength?: Maybe<Scalars['String']>;
+  caliber?: Maybe<Scalars['String']>;
+  condition?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['timestamptz']>;
+  description?: Maybe<Scalars['String']>;
+  externalProductId?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+  licenseNumber?: Maybe<Scalars['String']>;
+  make?: Maybe<Scalars['String']>;
+  model?: Maybe<Scalars['String']>;
+  phoneNumber?: Maybe<Scalars['String']>;
+  price?: Maybe<Scalars['Int']>;
+  serialNumber?: Maybe<Scalars['String']>;
+  soldText?: Maybe<Scalars['String']>;
+  state?: Maybe<Scalars['String']>;
+  title?: Maybe<Scalars['String']>;
+  transferringDealer?: Maybe<Scalars['String']>;
+};
+
+/** order by max() on columns of table "external_product_snapshots" */
+export type External_Product_Snapshots_Max_Order_By = {
+  action?: Maybe<Order_By>;
+  adType?: Maybe<Order_By>;
+  advertised?: Maybe<Order_By>;
+  barrelLength?: Maybe<Order_By>;
+  caliber?: Maybe<Order_By>;
+  condition?: Maybe<Order_By>;
+  createdAt?: Maybe<Order_By>;
+  description?: Maybe<Order_By>;
+  externalProductId?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  licenseNumber?: Maybe<Order_By>;
+  make?: Maybe<Order_By>;
+  model?: Maybe<Order_By>;
+  phoneNumber?: Maybe<Order_By>;
+  price?: Maybe<Order_By>;
+  serialNumber?: Maybe<Order_By>;
+  soldText?: Maybe<Order_By>;
+  state?: Maybe<Order_By>;
+  title?: Maybe<Order_By>;
+  transferringDealer?: Maybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type External_Product_Snapshots_Min_Fields = {
+  __typename?: 'external_product_snapshots_min_fields';
+  action?: Maybe<Scalars['String']>;
+  adType?: Maybe<Scalars['String']>;
+  advertised?: Maybe<Scalars['timestamptz']>;
+  barrelLength?: Maybe<Scalars['String']>;
+  caliber?: Maybe<Scalars['String']>;
+  condition?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['timestamptz']>;
+  description?: Maybe<Scalars['String']>;
+  externalProductId?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+  licenseNumber?: Maybe<Scalars['String']>;
+  make?: Maybe<Scalars['String']>;
+  model?: Maybe<Scalars['String']>;
+  phoneNumber?: Maybe<Scalars['String']>;
+  price?: Maybe<Scalars['Int']>;
+  serialNumber?: Maybe<Scalars['String']>;
+  soldText?: Maybe<Scalars['String']>;
+  state?: Maybe<Scalars['String']>;
+  title?: Maybe<Scalars['String']>;
+  transferringDealer?: Maybe<Scalars['String']>;
+};
+
+/** order by min() on columns of table "external_product_snapshots" */
+export type External_Product_Snapshots_Min_Order_By = {
+  action?: Maybe<Order_By>;
+  adType?: Maybe<Order_By>;
+  advertised?: Maybe<Order_By>;
+  barrelLength?: Maybe<Order_By>;
+  caliber?: Maybe<Order_By>;
+  condition?: Maybe<Order_By>;
+  createdAt?: Maybe<Order_By>;
+  description?: Maybe<Order_By>;
+  externalProductId?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  licenseNumber?: Maybe<Order_By>;
+  make?: Maybe<Order_By>;
+  model?: Maybe<Order_By>;
+  phoneNumber?: Maybe<Order_By>;
+  price?: Maybe<Order_By>;
+  serialNumber?: Maybe<Order_By>;
+  soldText?: Maybe<Order_By>;
+  state?: Maybe<Order_By>;
+  title?: Maybe<Order_By>;
+  transferringDealer?: Maybe<Order_By>;
+};
+
+/** response of any mutation on the table "external_product_snapshots" */
+export type External_Product_Snapshots_Mutation_Response = {
+  __typename?: 'external_product_snapshots_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data from the rows affected by the mutation */
+  returning: Array<External_Product_Snapshots>;
+};
+
+/** input type for inserting object relation for remote table "external_product_snapshots" */
+export type External_Product_Snapshots_Obj_Rel_Insert_Input = {
+  data: External_Product_Snapshots_Insert_Input;
+  /** on conflict condition */
+  on_conflict?: Maybe<External_Product_Snapshots_On_Conflict>;
+};
+
+/** on conflict condition type for table "external_product_snapshots" */
+export type External_Product_Snapshots_On_Conflict = {
+  constraint: External_Product_Snapshots_Constraint;
+  update_columns?: Array<External_Product_Snapshots_Update_Column>;
+  where?: Maybe<External_Product_Snapshots_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "external_product_snapshots". */
+export type External_Product_Snapshots_Order_By = {
+  action?: Maybe<Order_By>;
+  adType?: Maybe<Order_By>;
+  advertised?: Maybe<Order_By>;
+  barrelLength?: Maybe<Order_By>;
+  caliber?: Maybe<Order_By>;
+  condition?: Maybe<Order_By>;
+  createdAt?: Maybe<Order_By>;
+  description?: Maybe<Order_By>;
+  externalProductId?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  isSold?: Maybe<Order_By>;
+  licenseNumber?: Maybe<Order_By>;
+  make?: Maybe<Order_By>;
+  model?: Maybe<Order_By>;
+  phoneNumber?: Maybe<Order_By>;
+  previewItems_aggregate?: Maybe<Product_Preview_Items_Aggregate_Order_By>;
+  price?: Maybe<Order_By>;
+  serialNumber?: Maybe<Order_By>;
+  soldText?: Maybe<Order_By>;
+  state?: Maybe<Order_By>;
+  title?: Maybe<Order_By>;
+  transferringDealer?: Maybe<Order_By>;
+};
+
+/** primary key columns input for table: external_product_snapshots */
+export type External_Product_Snapshots_Pk_Columns_Input = {
+  id: Scalars['String'];
+};
+
+/** select columns of table "external_product_snapshots" */
+export enum External_Product_Snapshots_Select_Column {
+  /** column name */
+  ACTION = 'action',
+  /** column name */
+  ADTYPE = 'adType',
+  /** column name */
+  ADVERTISED = 'advertised',
+  /** column name */
+  BARRELLENGTH = 'barrelLength',
+  /** column name */
+  CALIBER = 'caliber',
+  /** column name */
+  CONDITION = 'condition',
+  /** column name */
+  CREATEDAT = 'createdAt',
+  /** column name */
+  DESCRIPTION = 'description',
+  /** column name */
+  EXTERNALPRODUCTID = 'externalProductId',
+  /** column name */
+  ID = 'id',
+  /** column name */
+  ISSOLD = 'isSold',
+  /** column name */
+  LICENSENUMBER = 'licenseNumber',
+  /** column name */
+  MAKE = 'make',
+  /** column name */
+  MODEL = 'model',
+  /** column name */
+  PHONENUMBER = 'phoneNumber',
+  /** column name */
+  PRICE = 'price',
+  /** column name */
+  SERIALNUMBER = 'serialNumber',
+  /** column name */
+  SOLDTEXT = 'soldText',
+  /** column name */
+  STATE = 'state',
+  /** column name */
+  TITLE = 'title',
+  /** column name */
+  TRANSFERRINGDEALER = 'transferringDealer'
+}
+
+/** input type for updating data in table "external_product_snapshots" */
+export type External_Product_Snapshots_Set_Input = {
+  action?: Maybe<Scalars['String']>;
+  adType?: Maybe<Scalars['String']>;
+  advertised?: Maybe<Scalars['timestamptz']>;
+  barrelLength?: Maybe<Scalars['String']>;
+  caliber?: Maybe<Scalars['String']>;
+  condition?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['timestamptz']>;
+  description?: Maybe<Scalars['String']>;
+  externalProductId?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+  isSold?: Maybe<Scalars['Boolean']>;
+  licenseNumber?: Maybe<Scalars['String']>;
+  make?: Maybe<Scalars['String']>;
+  model?: Maybe<Scalars['String']>;
+  phoneNumber?: Maybe<Scalars['String']>;
+  price?: Maybe<Scalars['Int']>;
+  serialNumber?: Maybe<Scalars['String']>;
+  soldText?: Maybe<Scalars['String']>;
+  state?: Maybe<Scalars['String']>;
+  title?: Maybe<Scalars['String']>;
+  transferringDealer?: Maybe<Scalars['String']>;
+};
+
+/** aggregate stddev on columns */
+export type External_Product_Snapshots_Stddev_Fields = {
+  __typename?: 'external_product_snapshots_stddev_fields';
+  price?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev() on columns of table "external_product_snapshots" */
+export type External_Product_Snapshots_Stddev_Order_By = {
+  price?: Maybe<Order_By>;
+};
+
+/** aggregate stddev_pop on columns */
+export type External_Product_Snapshots_Stddev_Pop_Fields = {
+  __typename?: 'external_product_snapshots_stddev_pop_fields';
+  price?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev_pop() on columns of table "external_product_snapshots" */
+export type External_Product_Snapshots_Stddev_Pop_Order_By = {
+  price?: Maybe<Order_By>;
+};
+
+/** aggregate stddev_samp on columns */
+export type External_Product_Snapshots_Stddev_Samp_Fields = {
+  __typename?: 'external_product_snapshots_stddev_samp_fields';
+  price?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev_samp() on columns of table "external_product_snapshots" */
+export type External_Product_Snapshots_Stddev_Samp_Order_By = {
+  price?: Maybe<Order_By>;
+};
+
+/** aggregate sum on columns */
+export type External_Product_Snapshots_Sum_Fields = {
+  __typename?: 'external_product_snapshots_sum_fields';
+  price?: Maybe<Scalars['Int']>;
+};
+
+/** order by sum() on columns of table "external_product_snapshots" */
+export type External_Product_Snapshots_Sum_Order_By = {
+  price?: Maybe<Order_By>;
+};
+
+/** update columns of table "external_product_snapshots" */
+export enum External_Product_Snapshots_Update_Column {
+  /** column name */
+  ACTION = 'action',
+  /** column name */
+  ADTYPE = 'adType',
+  /** column name */
+  ADVERTISED = 'advertised',
+  /** column name */
+  BARRELLENGTH = 'barrelLength',
+  /** column name */
+  CALIBER = 'caliber',
+  /** column name */
+  CONDITION = 'condition',
+  /** column name */
+  CREATEDAT = 'createdAt',
+  /** column name */
+  DESCRIPTION = 'description',
+  /** column name */
+  EXTERNALPRODUCTID = 'externalProductId',
+  /** column name */
+  ID = 'id',
+  /** column name */
+  ISSOLD = 'isSold',
+  /** column name */
+  LICENSENUMBER = 'licenseNumber',
+  /** column name */
+  MAKE = 'make',
+  /** column name */
+  MODEL = 'model',
+  /** column name */
+  PHONENUMBER = 'phoneNumber',
+  /** column name */
+  PRICE = 'price',
+  /** column name */
+  SERIALNUMBER = 'serialNumber',
+  /** column name */
+  SOLDTEXT = 'soldText',
+  /** column name */
+  STATE = 'state',
+  /** column name */
+  TITLE = 'title',
+  /** column name */
+  TRANSFERRINGDEALER = 'transferringDealer'
+}
+
+/** aggregate var_pop on columns */
+export type External_Product_Snapshots_Var_Pop_Fields = {
+  __typename?: 'external_product_snapshots_var_pop_fields';
+  price?: Maybe<Scalars['Float']>;
+};
+
+/** order by var_pop() on columns of table "external_product_snapshots" */
+export type External_Product_Snapshots_Var_Pop_Order_By = {
+  price?: Maybe<Order_By>;
+};
+
+/** aggregate var_samp on columns */
+export type External_Product_Snapshots_Var_Samp_Fields = {
+  __typename?: 'external_product_snapshots_var_samp_fields';
+  price?: Maybe<Scalars['Float']>;
+};
+
+/** order by var_samp() on columns of table "external_product_snapshots" */
+export type External_Product_Snapshots_Var_Samp_Order_By = {
+  price?: Maybe<Order_By>;
+};
+
+/** aggregate variance on columns */
+export type External_Product_Snapshots_Variance_Fields = {
+  __typename?: 'external_product_snapshots_variance_fields';
+  price?: Maybe<Scalars['Float']>;
+};
+
+/** order by variance() on columns of table "external_product_snapshots" */
+export type External_Product_Snapshots_Variance_Order_By = {
+  price?: Maybe<Order_By>;
+};
+
+/** columns and relationships of "external_products" */
+export type External_Products = {
+  __typename?: 'external_products';
+  createdAt: Scalars['timestamptz'];
+  /** An object relationship */
+  currentExternalProductSnapshot?: Maybe<External_Product_Snapshots>;
+  currentExternalProductSnapshotId: Scalars['String'];
+  /** An array relationship */
+  externalProductSnapshots: Array<External_Product_Snapshots>;
+  /** An aggregate relationship */
+  externalProductSnapshots_aggregate: External_Product_Snapshots_Aggregate;
+  id: Scalars['String'];
+  sourceSite: Scalars['String'];
+  sourceSiteId?: Maybe<Scalars['String']>;
+  sourceSiteUrl?: Maybe<Scalars['String']>;
+  updatedAt: Scalars['timestamptz'];
+};
+
+
+/** columns and relationships of "external_products" */
+export type External_ProductsExternalProductSnapshotsArgs = {
+  distinct_on?: Maybe<Array<External_Product_Snapshots_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<External_Product_Snapshots_Order_By>>;
+  where?: Maybe<External_Product_Snapshots_Bool_Exp>;
+};
+
+
+/** columns and relationships of "external_products" */
+export type External_ProductsExternalProductSnapshots_AggregateArgs = {
+  distinct_on?: Maybe<Array<External_Product_Snapshots_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<External_Product_Snapshots_Order_By>>;
+  where?: Maybe<External_Product_Snapshots_Bool_Exp>;
+};
+
+/** aggregated selection of "external_products" */
+export type External_Products_Aggregate = {
+  __typename?: 'external_products_aggregate';
+  aggregate?: Maybe<External_Products_Aggregate_Fields>;
+  nodes: Array<External_Products>;
+};
+
+/** aggregate fields of "external_products" */
+export type External_Products_Aggregate_Fields = {
+  __typename?: 'external_products_aggregate_fields';
+  count: Scalars['Int'];
+  max?: Maybe<External_Products_Max_Fields>;
+  min?: Maybe<External_Products_Min_Fields>;
+};
+
+
+/** aggregate fields of "external_products" */
+export type External_Products_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<External_Products_Select_Column>>;
+  distinct?: Maybe<Scalars['Boolean']>;
+};
+
+/** Boolean expression to filter rows from the table "external_products". All fields are combined with a logical 'AND'. */
+export type External_Products_Bool_Exp = {
+  _and?: Maybe<Array<External_Products_Bool_Exp>>;
+  _not?: Maybe<External_Products_Bool_Exp>;
+  _or?: Maybe<Array<External_Products_Bool_Exp>>;
+  createdAt?: Maybe<Timestamptz_Comparison_Exp>;
+  currentExternalProductSnapshot?: Maybe<External_Product_Snapshots_Bool_Exp>;
+  currentExternalProductSnapshotId?: Maybe<String_Comparison_Exp>;
+  externalProductSnapshots?: Maybe<External_Product_Snapshots_Bool_Exp>;
+  id?: Maybe<String_Comparison_Exp>;
+  sourceSite?: Maybe<String_Comparison_Exp>;
+  sourceSiteId?: Maybe<String_Comparison_Exp>;
+  sourceSiteUrl?: Maybe<String_Comparison_Exp>;
+  updatedAt?: Maybe<Timestamptz_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "external_products" */
+export enum External_Products_Constraint {
+  /** unique or primary key constraint */
+  EXTERNAL_PRODUCTS_PKEY = 'external_products_pkey',
+  /** unique or primary key constraint */
+  EXTERNAL_PRODUCTS_SOURCE_SITE_ID_KEY = 'external_products_source_site_id_key'
+}
+
+/** input type for inserting data into table "external_products" */
+export type External_Products_Insert_Input = {
+  createdAt?: Maybe<Scalars['timestamptz']>;
+  currentExternalProductSnapshot?: Maybe<External_Product_Snapshots_Obj_Rel_Insert_Input>;
+  currentExternalProductSnapshotId?: Maybe<Scalars['String']>;
+  externalProductSnapshots?: Maybe<External_Product_Snapshots_Arr_Rel_Insert_Input>;
+  id?: Maybe<Scalars['String']>;
+  sourceSite?: Maybe<Scalars['String']>;
+  sourceSiteId?: Maybe<Scalars['String']>;
+  sourceSiteUrl?: Maybe<Scalars['String']>;
+  updatedAt?: Maybe<Scalars['timestamptz']>;
+};
+
+/** aggregate max on columns */
+export type External_Products_Max_Fields = {
+  __typename?: 'external_products_max_fields';
+  createdAt?: Maybe<Scalars['timestamptz']>;
+  currentExternalProductSnapshotId?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+  sourceSite?: Maybe<Scalars['String']>;
+  sourceSiteId?: Maybe<Scalars['String']>;
+  sourceSiteUrl?: Maybe<Scalars['String']>;
+  updatedAt?: Maybe<Scalars['timestamptz']>;
+};
+
+/** aggregate min on columns */
+export type External_Products_Min_Fields = {
+  __typename?: 'external_products_min_fields';
+  createdAt?: Maybe<Scalars['timestamptz']>;
+  currentExternalProductSnapshotId?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+  sourceSite?: Maybe<Scalars['String']>;
+  sourceSiteId?: Maybe<Scalars['String']>;
+  sourceSiteUrl?: Maybe<Scalars['String']>;
+  updatedAt?: Maybe<Scalars['timestamptz']>;
+};
+
+/** response of any mutation on the table "external_products" */
+export type External_Products_Mutation_Response = {
+  __typename?: 'external_products_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data from the rows affected by the mutation */
+  returning: Array<External_Products>;
+};
+
+/** input type for inserting object relation for remote table "external_products" */
+export type External_Products_Obj_Rel_Insert_Input = {
+  data: External_Products_Insert_Input;
+  /** on conflict condition */
+  on_conflict?: Maybe<External_Products_On_Conflict>;
+};
+
+/** on conflict condition type for table "external_products" */
+export type External_Products_On_Conflict = {
+  constraint: External_Products_Constraint;
+  update_columns?: Array<External_Products_Update_Column>;
+  where?: Maybe<External_Products_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "external_products". */
+export type External_Products_Order_By = {
+  createdAt?: Maybe<Order_By>;
+  currentExternalProductSnapshot?: Maybe<External_Product_Snapshots_Order_By>;
+  currentExternalProductSnapshotId?: Maybe<Order_By>;
+  externalProductSnapshots_aggregate?: Maybe<External_Product_Snapshots_Aggregate_Order_By>;
+  id?: Maybe<Order_By>;
+  sourceSite?: Maybe<Order_By>;
+  sourceSiteId?: Maybe<Order_By>;
+  sourceSiteUrl?: Maybe<Order_By>;
+  updatedAt?: Maybe<Order_By>;
+};
+
+/** primary key columns input for table: external_products */
+export type External_Products_Pk_Columns_Input = {
+  id: Scalars['String'];
+};
+
+/** select columns of table "external_products" */
+export enum External_Products_Select_Column {
+  /** column name */
+  CREATEDAT = 'createdAt',
+  /** column name */
+  CURRENTEXTERNALPRODUCTSNAPSHOTID = 'currentExternalProductSnapshotId',
+  /** column name */
+  ID = 'id',
+  /** column name */
+  SOURCESITE = 'sourceSite',
+  /** column name */
+  SOURCESITEID = 'sourceSiteId',
+  /** column name */
+  SOURCESITEURL = 'sourceSiteUrl',
+  /** column name */
+  UPDATEDAT = 'updatedAt'
+}
+
+/** input type for updating data in table "external_products" */
+export type External_Products_Set_Input = {
+  createdAt?: Maybe<Scalars['timestamptz']>;
+  currentExternalProductSnapshotId?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+  sourceSite?: Maybe<Scalars['String']>;
+  sourceSiteId?: Maybe<Scalars['String']>;
+  sourceSiteUrl?: Maybe<Scalars['String']>;
+  updatedAt?: Maybe<Scalars['timestamptz']>;
+};
+
+/** update columns of table "external_products" */
+export enum External_Products_Update_Column {
+  /** column name */
+  CREATEDAT = 'createdAt',
+  /** column name */
+  CURRENTEXTERNALPRODUCTSNAPSHOTID = 'currentExternalProductSnapshotId',
+  /** column name */
+  ID = 'id',
+  /** column name */
+  SOURCESITE = 'sourceSite',
+  /** column name */
+  SOURCESITEID = 'sourceSiteId',
+  /** column name */
+  SOURCESITEURL = 'sourceSiteUrl',
+  /** column name */
+  UPDATEDAT = 'updatedAt'
+}
+
 /** columns and relationships of "image_owners" */
 export type Image_Owners = {
   __typename?: 'image_owners';
@@ -10707,6 +11988,591 @@ export type Migrations_Var_Samp_Fields = {
 export type Migrations_Variance_Fields = {
   __typename?: 'migrations_variance_fields';
   id?: Maybe<Scalars['Float']>;
+};
+
+/** columns and relationships of "news_item_votes" */
+export type News_Item_Votes = {
+  __typename?: 'news_item_votes';
+  createdAt: Scalars['timestamptz'];
+  id: Scalars['String'];
+  newsItemId: Scalars['String'];
+  score: Scalars['Int'];
+  updatedAt: Scalars['timestamptz'];
+  userId: Scalars['String'];
+};
+
+/** aggregated selection of "news_item_votes" */
+export type News_Item_Votes_Aggregate = {
+  __typename?: 'news_item_votes_aggregate';
+  aggregate?: Maybe<News_Item_Votes_Aggregate_Fields>;
+  nodes: Array<News_Item_Votes>;
+};
+
+/** aggregate fields of "news_item_votes" */
+export type News_Item_Votes_Aggregate_Fields = {
+  __typename?: 'news_item_votes_aggregate_fields';
+  avg?: Maybe<News_Item_Votes_Avg_Fields>;
+  count: Scalars['Int'];
+  max?: Maybe<News_Item_Votes_Max_Fields>;
+  min?: Maybe<News_Item_Votes_Min_Fields>;
+  stddev?: Maybe<News_Item_Votes_Stddev_Fields>;
+  stddev_pop?: Maybe<News_Item_Votes_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<News_Item_Votes_Stddev_Samp_Fields>;
+  sum?: Maybe<News_Item_Votes_Sum_Fields>;
+  var_pop?: Maybe<News_Item_Votes_Var_Pop_Fields>;
+  var_samp?: Maybe<News_Item_Votes_Var_Samp_Fields>;
+  variance?: Maybe<News_Item_Votes_Variance_Fields>;
+};
+
+
+/** aggregate fields of "news_item_votes" */
+export type News_Item_Votes_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<News_Item_Votes_Select_Column>>;
+  distinct?: Maybe<Scalars['Boolean']>;
+};
+
+/** order by aggregate values of table "news_item_votes" */
+export type News_Item_Votes_Aggregate_Order_By = {
+  avg?: Maybe<News_Item_Votes_Avg_Order_By>;
+  count?: Maybe<Order_By>;
+  max?: Maybe<News_Item_Votes_Max_Order_By>;
+  min?: Maybe<News_Item_Votes_Min_Order_By>;
+  stddev?: Maybe<News_Item_Votes_Stddev_Order_By>;
+  stddev_pop?: Maybe<News_Item_Votes_Stddev_Pop_Order_By>;
+  stddev_samp?: Maybe<News_Item_Votes_Stddev_Samp_Order_By>;
+  sum?: Maybe<News_Item_Votes_Sum_Order_By>;
+  var_pop?: Maybe<News_Item_Votes_Var_Pop_Order_By>;
+  var_samp?: Maybe<News_Item_Votes_Var_Samp_Order_By>;
+  variance?: Maybe<News_Item_Votes_Variance_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "news_item_votes" */
+export type News_Item_Votes_Arr_Rel_Insert_Input = {
+  data: Array<News_Item_Votes_Insert_Input>;
+  /** on conflict condition */
+  on_conflict?: Maybe<News_Item_Votes_On_Conflict>;
+};
+
+/** aggregate avg on columns */
+export type News_Item_Votes_Avg_Fields = {
+  __typename?: 'news_item_votes_avg_fields';
+  score?: Maybe<Scalars['Float']>;
+};
+
+/** order by avg() on columns of table "news_item_votes" */
+export type News_Item_Votes_Avg_Order_By = {
+  score?: Maybe<Order_By>;
+};
+
+/** Boolean expression to filter rows from the table "news_item_votes". All fields are combined with a logical 'AND'. */
+export type News_Item_Votes_Bool_Exp = {
+  _and?: Maybe<Array<News_Item_Votes_Bool_Exp>>;
+  _not?: Maybe<News_Item_Votes_Bool_Exp>;
+  _or?: Maybe<Array<News_Item_Votes_Bool_Exp>>;
+  createdAt?: Maybe<Timestamptz_Comparison_Exp>;
+  id?: Maybe<String_Comparison_Exp>;
+  newsItemId?: Maybe<String_Comparison_Exp>;
+  score?: Maybe<Int_Comparison_Exp>;
+  updatedAt?: Maybe<Timestamptz_Comparison_Exp>;
+  userId?: Maybe<String_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "news_item_votes" */
+export enum News_Item_Votes_Constraint {
+  /** unique or primary key constraint */
+  NEWS_ITEM_VOTES_PKEY = 'news_item_votes_pkey'
+}
+
+/** input type for incrementing numeric columns in table "news_item_votes" */
+export type News_Item_Votes_Inc_Input = {
+  score?: Maybe<Scalars['Int']>;
+};
+
+/** input type for inserting data into table "news_item_votes" */
+export type News_Item_Votes_Insert_Input = {
+  createdAt?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['String']>;
+  newsItemId?: Maybe<Scalars['String']>;
+  score?: Maybe<Scalars['Int']>;
+  updatedAt?: Maybe<Scalars['timestamptz']>;
+  userId?: Maybe<Scalars['String']>;
+};
+
+/** aggregate max on columns */
+export type News_Item_Votes_Max_Fields = {
+  __typename?: 'news_item_votes_max_fields';
+  createdAt?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['String']>;
+  newsItemId?: Maybe<Scalars['String']>;
+  score?: Maybe<Scalars['Int']>;
+  updatedAt?: Maybe<Scalars['timestamptz']>;
+  userId?: Maybe<Scalars['String']>;
+};
+
+/** order by max() on columns of table "news_item_votes" */
+export type News_Item_Votes_Max_Order_By = {
+  createdAt?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  newsItemId?: Maybe<Order_By>;
+  score?: Maybe<Order_By>;
+  updatedAt?: Maybe<Order_By>;
+  userId?: Maybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type News_Item_Votes_Min_Fields = {
+  __typename?: 'news_item_votes_min_fields';
+  createdAt?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['String']>;
+  newsItemId?: Maybe<Scalars['String']>;
+  score?: Maybe<Scalars['Int']>;
+  updatedAt?: Maybe<Scalars['timestamptz']>;
+  userId?: Maybe<Scalars['String']>;
+};
+
+/** order by min() on columns of table "news_item_votes" */
+export type News_Item_Votes_Min_Order_By = {
+  createdAt?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  newsItemId?: Maybe<Order_By>;
+  score?: Maybe<Order_By>;
+  updatedAt?: Maybe<Order_By>;
+  userId?: Maybe<Order_By>;
+};
+
+/** response of any mutation on the table "news_item_votes" */
+export type News_Item_Votes_Mutation_Response = {
+  __typename?: 'news_item_votes_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data from the rows affected by the mutation */
+  returning: Array<News_Item_Votes>;
+};
+
+/** on conflict condition type for table "news_item_votes" */
+export type News_Item_Votes_On_Conflict = {
+  constraint: News_Item_Votes_Constraint;
+  update_columns?: Array<News_Item_Votes_Update_Column>;
+  where?: Maybe<News_Item_Votes_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "news_item_votes". */
+export type News_Item_Votes_Order_By = {
+  createdAt?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  newsItemId?: Maybe<Order_By>;
+  score?: Maybe<Order_By>;
+  updatedAt?: Maybe<Order_By>;
+  userId?: Maybe<Order_By>;
+};
+
+/** primary key columns input for table: news_item_votes */
+export type News_Item_Votes_Pk_Columns_Input = {
+  newsItemId: Scalars['String'];
+  userId: Scalars['String'];
+};
+
+/** select columns of table "news_item_votes" */
+export enum News_Item_Votes_Select_Column {
+  /** column name */
+  CREATEDAT = 'createdAt',
+  /** column name */
+  ID = 'id',
+  /** column name */
+  NEWSITEMID = 'newsItemId',
+  /** column name */
+  SCORE = 'score',
+  /** column name */
+  UPDATEDAT = 'updatedAt',
+  /** column name */
+  USERID = 'userId'
+}
+
+/** input type for updating data in table "news_item_votes" */
+export type News_Item_Votes_Set_Input = {
+  createdAt?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['String']>;
+  newsItemId?: Maybe<Scalars['String']>;
+  score?: Maybe<Scalars['Int']>;
+  updatedAt?: Maybe<Scalars['timestamptz']>;
+  userId?: Maybe<Scalars['String']>;
+};
+
+/** aggregate stddev on columns */
+export type News_Item_Votes_Stddev_Fields = {
+  __typename?: 'news_item_votes_stddev_fields';
+  score?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev() on columns of table "news_item_votes" */
+export type News_Item_Votes_Stddev_Order_By = {
+  score?: Maybe<Order_By>;
+};
+
+/** aggregate stddev_pop on columns */
+export type News_Item_Votes_Stddev_Pop_Fields = {
+  __typename?: 'news_item_votes_stddev_pop_fields';
+  score?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev_pop() on columns of table "news_item_votes" */
+export type News_Item_Votes_Stddev_Pop_Order_By = {
+  score?: Maybe<Order_By>;
+};
+
+/** aggregate stddev_samp on columns */
+export type News_Item_Votes_Stddev_Samp_Fields = {
+  __typename?: 'news_item_votes_stddev_samp_fields';
+  score?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev_samp() on columns of table "news_item_votes" */
+export type News_Item_Votes_Stddev_Samp_Order_By = {
+  score?: Maybe<Order_By>;
+};
+
+/** aggregate sum on columns */
+export type News_Item_Votes_Sum_Fields = {
+  __typename?: 'news_item_votes_sum_fields';
+  score?: Maybe<Scalars['Int']>;
+};
+
+/** order by sum() on columns of table "news_item_votes" */
+export type News_Item_Votes_Sum_Order_By = {
+  score?: Maybe<Order_By>;
+};
+
+/** update columns of table "news_item_votes" */
+export enum News_Item_Votes_Update_Column {
+  /** column name */
+  CREATEDAT = 'createdAt',
+  /** column name */
+  ID = 'id',
+  /** column name */
+  NEWSITEMID = 'newsItemId',
+  /** column name */
+  SCORE = 'score',
+  /** column name */
+  UPDATEDAT = 'updatedAt',
+  /** column name */
+  USERID = 'userId'
+}
+
+/** aggregate var_pop on columns */
+export type News_Item_Votes_Var_Pop_Fields = {
+  __typename?: 'news_item_votes_var_pop_fields';
+  score?: Maybe<Scalars['Float']>;
+};
+
+/** order by var_pop() on columns of table "news_item_votes" */
+export type News_Item_Votes_Var_Pop_Order_By = {
+  score?: Maybe<Order_By>;
+};
+
+/** aggregate var_samp on columns */
+export type News_Item_Votes_Var_Samp_Fields = {
+  __typename?: 'news_item_votes_var_samp_fields';
+  score?: Maybe<Scalars['Float']>;
+};
+
+/** order by var_samp() on columns of table "news_item_votes" */
+export type News_Item_Votes_Var_Samp_Order_By = {
+  score?: Maybe<Order_By>;
+};
+
+/** aggregate variance on columns */
+export type News_Item_Votes_Variance_Fields = {
+  __typename?: 'news_item_votes_variance_fields';
+  score?: Maybe<Scalars['Float']>;
+};
+
+/** order by variance() on columns of table "news_item_votes" */
+export type News_Item_Votes_Variance_Order_By = {
+  score?: Maybe<Order_By>;
+};
+
+/** columns and relationships of "news_items" */
+export type News_Items = {
+  __typename?: 'news_items';
+  createdAt: Scalars['timestamptz'];
+  /** An object relationship */
+  externalProduct?: Maybe<External_Products>;
+  externalProductId?: Maybe<Scalars['String']>;
+  id: Scalars['String'];
+  isDeleted?: Maybe<Scalars['Boolean']>;
+  isSuspended?: Maybe<Scalars['Boolean']>;
+  /** An object relationship */
+  product?: Maybe<Products>;
+  productId?: Maybe<Scalars['String']>;
+  score?: Maybe<Scalars['Int']>;
+  sourceSite?: Maybe<Scalars['String']>;
+  updatedAt: Scalars['timestamptz'];
+  /** An array relationship */
+  votes: Array<News_Item_Votes>;
+  /** An aggregate relationship */
+  votes_aggregate: News_Item_Votes_Aggregate;
+};
+
+
+/** columns and relationships of "news_items" */
+export type News_ItemsVotesArgs = {
+  distinct_on?: Maybe<Array<News_Item_Votes_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<News_Item_Votes_Order_By>>;
+  where?: Maybe<News_Item_Votes_Bool_Exp>;
+};
+
+
+/** columns and relationships of "news_items" */
+export type News_ItemsVotes_AggregateArgs = {
+  distinct_on?: Maybe<Array<News_Item_Votes_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<News_Item_Votes_Order_By>>;
+  where?: Maybe<News_Item_Votes_Bool_Exp>;
+};
+
+/** aggregated selection of "news_items" */
+export type News_Items_Aggregate = {
+  __typename?: 'news_items_aggregate';
+  aggregate?: Maybe<News_Items_Aggregate_Fields>;
+  nodes: Array<News_Items>;
+};
+
+/** aggregate fields of "news_items" */
+export type News_Items_Aggregate_Fields = {
+  __typename?: 'news_items_aggregate_fields';
+  avg?: Maybe<News_Items_Avg_Fields>;
+  count: Scalars['Int'];
+  max?: Maybe<News_Items_Max_Fields>;
+  min?: Maybe<News_Items_Min_Fields>;
+  stddev?: Maybe<News_Items_Stddev_Fields>;
+  stddev_pop?: Maybe<News_Items_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<News_Items_Stddev_Samp_Fields>;
+  sum?: Maybe<News_Items_Sum_Fields>;
+  var_pop?: Maybe<News_Items_Var_Pop_Fields>;
+  var_samp?: Maybe<News_Items_Var_Samp_Fields>;
+  variance?: Maybe<News_Items_Variance_Fields>;
+};
+
+
+/** aggregate fields of "news_items" */
+export type News_Items_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<News_Items_Select_Column>>;
+  distinct?: Maybe<Scalars['Boolean']>;
+};
+
+/** aggregate avg on columns */
+export type News_Items_Avg_Fields = {
+  __typename?: 'news_items_avg_fields';
+  score?: Maybe<Scalars['Float']>;
+};
+
+/** Boolean expression to filter rows from the table "news_items". All fields are combined with a logical 'AND'. */
+export type News_Items_Bool_Exp = {
+  _and?: Maybe<Array<News_Items_Bool_Exp>>;
+  _not?: Maybe<News_Items_Bool_Exp>;
+  _or?: Maybe<Array<News_Items_Bool_Exp>>;
+  createdAt?: Maybe<Timestamptz_Comparison_Exp>;
+  externalProduct?: Maybe<External_Products_Bool_Exp>;
+  externalProductId?: Maybe<String_Comparison_Exp>;
+  id?: Maybe<String_Comparison_Exp>;
+  isDeleted?: Maybe<Boolean_Comparison_Exp>;
+  isSuspended?: Maybe<Boolean_Comparison_Exp>;
+  product?: Maybe<Products_Bool_Exp>;
+  productId?: Maybe<String_Comparison_Exp>;
+  score?: Maybe<Int_Comparison_Exp>;
+  sourceSite?: Maybe<String_Comparison_Exp>;
+  updatedAt?: Maybe<Timestamptz_Comparison_Exp>;
+  votes?: Maybe<News_Item_Votes_Bool_Exp>;
+};
+
+/** unique or primary key constraints on table "news_items" */
+export enum News_Items_Constraint {
+  /** unique or primary key constraint */
+  NEWS_ITEMS_PKEY = 'news_items_pkey'
+}
+
+/** input type for incrementing numeric columns in table "news_items" */
+export type News_Items_Inc_Input = {
+  score?: Maybe<Scalars['Int']>;
+};
+
+/** input type for inserting data into table "news_items" */
+export type News_Items_Insert_Input = {
+  createdAt?: Maybe<Scalars['timestamptz']>;
+  externalProduct?: Maybe<External_Products_Obj_Rel_Insert_Input>;
+  externalProductId?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+  isDeleted?: Maybe<Scalars['Boolean']>;
+  isSuspended?: Maybe<Scalars['Boolean']>;
+  product?: Maybe<Products_Obj_Rel_Insert_Input>;
+  productId?: Maybe<Scalars['String']>;
+  score?: Maybe<Scalars['Int']>;
+  sourceSite?: Maybe<Scalars['String']>;
+  updatedAt?: Maybe<Scalars['timestamptz']>;
+  votes?: Maybe<News_Item_Votes_Arr_Rel_Insert_Input>;
+};
+
+/** aggregate max on columns */
+export type News_Items_Max_Fields = {
+  __typename?: 'news_items_max_fields';
+  createdAt?: Maybe<Scalars['timestamptz']>;
+  externalProductId?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+  productId?: Maybe<Scalars['String']>;
+  score?: Maybe<Scalars['Int']>;
+  sourceSite?: Maybe<Scalars['String']>;
+  updatedAt?: Maybe<Scalars['timestamptz']>;
+};
+
+/** aggregate min on columns */
+export type News_Items_Min_Fields = {
+  __typename?: 'news_items_min_fields';
+  createdAt?: Maybe<Scalars['timestamptz']>;
+  externalProductId?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+  productId?: Maybe<Scalars['String']>;
+  score?: Maybe<Scalars['Int']>;
+  sourceSite?: Maybe<Scalars['String']>;
+  updatedAt?: Maybe<Scalars['timestamptz']>;
+};
+
+/** response of any mutation on the table "news_items" */
+export type News_Items_Mutation_Response = {
+  __typename?: 'news_items_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data from the rows affected by the mutation */
+  returning: Array<News_Items>;
+};
+
+/** on conflict condition type for table "news_items" */
+export type News_Items_On_Conflict = {
+  constraint: News_Items_Constraint;
+  update_columns?: Array<News_Items_Update_Column>;
+  where?: Maybe<News_Items_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "news_items". */
+export type News_Items_Order_By = {
+  createdAt?: Maybe<Order_By>;
+  externalProduct?: Maybe<External_Products_Order_By>;
+  externalProductId?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  isDeleted?: Maybe<Order_By>;
+  isSuspended?: Maybe<Order_By>;
+  product?: Maybe<Products_Order_By>;
+  productId?: Maybe<Order_By>;
+  score?: Maybe<Order_By>;
+  sourceSite?: Maybe<Order_By>;
+  updatedAt?: Maybe<Order_By>;
+  votes_aggregate?: Maybe<News_Item_Votes_Aggregate_Order_By>;
+};
+
+/** primary key columns input for table: news_items */
+export type News_Items_Pk_Columns_Input = {
+  id: Scalars['String'];
+};
+
+/** select columns of table "news_items" */
+export enum News_Items_Select_Column {
+  /** column name */
+  CREATEDAT = 'createdAt',
+  /** column name */
+  EXTERNALPRODUCTID = 'externalProductId',
+  /** column name */
+  ID = 'id',
+  /** column name */
+  ISDELETED = 'isDeleted',
+  /** column name */
+  ISSUSPENDED = 'isSuspended',
+  /** column name */
+  PRODUCTID = 'productId',
+  /** column name */
+  SCORE = 'score',
+  /** column name */
+  SOURCESITE = 'sourceSite',
+  /** column name */
+  UPDATEDAT = 'updatedAt'
+}
+
+/** input type for updating data in table "news_items" */
+export type News_Items_Set_Input = {
+  createdAt?: Maybe<Scalars['timestamptz']>;
+  externalProductId?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+  isDeleted?: Maybe<Scalars['Boolean']>;
+  isSuspended?: Maybe<Scalars['Boolean']>;
+  productId?: Maybe<Scalars['String']>;
+  score?: Maybe<Scalars['Int']>;
+  sourceSite?: Maybe<Scalars['String']>;
+  updatedAt?: Maybe<Scalars['timestamptz']>;
+};
+
+/** aggregate stddev on columns */
+export type News_Items_Stddev_Fields = {
+  __typename?: 'news_items_stddev_fields';
+  score?: Maybe<Scalars['Float']>;
+};
+
+/** aggregate stddev_pop on columns */
+export type News_Items_Stddev_Pop_Fields = {
+  __typename?: 'news_items_stddev_pop_fields';
+  score?: Maybe<Scalars['Float']>;
+};
+
+/** aggregate stddev_samp on columns */
+export type News_Items_Stddev_Samp_Fields = {
+  __typename?: 'news_items_stddev_samp_fields';
+  score?: Maybe<Scalars['Float']>;
+};
+
+/** aggregate sum on columns */
+export type News_Items_Sum_Fields = {
+  __typename?: 'news_items_sum_fields';
+  score?: Maybe<Scalars['Int']>;
+};
+
+/** update columns of table "news_items" */
+export enum News_Items_Update_Column {
+  /** column name */
+  CREATEDAT = 'createdAt',
+  /** column name */
+  EXTERNALPRODUCTID = 'externalProductId',
+  /** column name */
+  ID = 'id',
+  /** column name */
+  ISDELETED = 'isDeleted',
+  /** column name */
+  ISSUSPENDED = 'isSuspended',
+  /** column name */
+  PRODUCTID = 'productId',
+  /** column name */
+  SCORE = 'score',
+  /** column name */
+  SOURCESITE = 'sourceSite',
+  /** column name */
+  UPDATEDAT = 'updatedAt'
+}
+
+/** aggregate var_pop on columns */
+export type News_Items_Var_Pop_Fields = {
+  __typename?: 'news_items_var_pop_fields';
+  score?: Maybe<Scalars['Float']>;
+};
+
+/** aggregate var_samp on columns */
+export type News_Items_Var_Samp_Fields = {
+  __typename?: 'news_items_var_samp_fields';
+  score?: Maybe<Scalars['Float']>;
+};
+
+/** aggregate variance on columns */
+export type News_Items_Variance_Fields = {
+  __typename?: 'news_items_variance_fields';
+  score?: Maybe<Scalars['Float']>;
 };
 
 
@@ -14754,6 +16620,7 @@ export type Products = {
   isSoldElsewhere: Scalars['Boolean'];
   isSuspended: Scalars['Boolean'];
   lastPerformanceReview?: Maybe<Scalars['timestamptz']>;
+  listingType?: Maybe<Scalars['String']>;
   /** An array relationship */
   productVariants: Array<Product_Variants>;
   /** An aggregate relationship */
@@ -14850,6 +16717,7 @@ export type Products_Bool_Exp = {
   isSoldElsewhere?: Maybe<Boolean_Comparison_Exp>;
   isSuspended?: Maybe<Boolean_Comparison_Exp>;
   lastPerformanceReview?: Maybe<Timestamptz_Comparison_Exp>;
+  listingType?: Maybe<String_Comparison_Exp>;
   productVariants?: Maybe<Product_Variants_Bool_Exp>;
   promotedSlot?: Maybe<Promoted_Slots_Bool_Exp>;
   sellerLicense?: Maybe<User_Licenses_Bool_Exp>;
@@ -14881,6 +16749,7 @@ export type Products_Insert_Input = {
   isSoldElsewhere?: Maybe<Scalars['Boolean']>;
   isSuspended?: Maybe<Scalars['Boolean']>;
   lastPerformanceReview?: Maybe<Scalars['timestamptz']>;
+  listingType?: Maybe<Scalars['String']>;
   productVariants?: Maybe<Product_Variants_Arr_Rel_Insert_Input>;
   promotedSlot?: Maybe<Promoted_Slots_Obj_Rel_Insert_Input>;
   sellerLicense?: Maybe<User_Licenses_Obj_Rel_Insert_Input>;
@@ -14899,6 +16768,7 @@ export type Products_Max_Fields = {
   currentSnapshotId?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
   lastPerformanceReview?: Maybe<Scalars['timestamptz']>;
+  listingType?: Maybe<Scalars['String']>;
   sellerLicenseId?: Maybe<Scalars['String']>;
   soldOutStatus?: Maybe<Scalars['String']>;
   storeId?: Maybe<Scalars['String']>;
@@ -14912,6 +16782,7 @@ export type Products_Max_Order_By = {
   currentSnapshotId?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   lastPerformanceReview?: Maybe<Order_By>;
+  listingType?: Maybe<Order_By>;
   sellerLicenseId?: Maybe<Order_By>;
   soldOutStatus?: Maybe<Order_By>;
   storeId?: Maybe<Order_By>;
@@ -14926,6 +16797,7 @@ export type Products_Min_Fields = {
   currentSnapshotId?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
   lastPerformanceReview?: Maybe<Scalars['timestamptz']>;
+  listingType?: Maybe<Scalars['String']>;
   sellerLicenseId?: Maybe<Scalars['String']>;
   soldOutStatus?: Maybe<Scalars['String']>;
   storeId?: Maybe<Scalars['String']>;
@@ -14939,6 +16811,7 @@ export type Products_Min_Order_By = {
   currentSnapshotId?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   lastPerformanceReview?: Maybe<Order_By>;
+  listingType?: Maybe<Order_By>;
   sellerLicenseId?: Maybe<Order_By>;
   soldOutStatus?: Maybe<Order_By>;
   storeId?: Maybe<Order_By>;
@@ -14983,6 +16856,7 @@ export type Products_Order_By = {
   isSoldElsewhere?: Maybe<Order_By>;
   isSuspended?: Maybe<Order_By>;
   lastPerformanceReview?: Maybe<Order_By>;
+  listingType?: Maybe<Order_By>;
   productVariants_aggregate?: Maybe<Product_Variants_Aggregate_Order_By>;
   promotedSlot?: Maybe<Promoted_Slots_Order_By>;
   sellerLicense?: Maybe<User_Licenses_Order_By>;
@@ -15023,6 +16897,8 @@ export enum Products_Select_Column {
   /** column name */
   LASTPERFORMANCEREVIEW = 'lastPerformanceReview',
   /** column name */
+  LISTINGTYPE = 'listingType',
+  /** column name */
   SELLERLICENSEID = 'sellerLicenseId',
   /** column name */
   SOLDOUTSTATUS = 'soldOutStatus',
@@ -15045,6 +16921,7 @@ export type Products_Set_Input = {
   isSoldElsewhere?: Maybe<Scalars['Boolean']>;
   isSuspended?: Maybe<Scalars['Boolean']>;
   lastPerformanceReview?: Maybe<Scalars['timestamptz']>;
+  listingType?: Maybe<Scalars['String']>;
   sellerLicenseId?: Maybe<Scalars['String']>;
   soldOutStatus?: Maybe<Scalars['String']>;
   storeId?: Maybe<Scalars['String']>;
@@ -15075,6 +16952,8 @@ export enum Products_Update_Column {
   ISSUSPENDED = 'isSuspended',
   /** column name */
   LASTPERFORMANCEREVIEW = 'lastPerformanceReview',
+  /** column name */
+  LISTINGTYPE = 'listingType',
   /** column name */
   SELLERLICENSEID = 'sellerLicenseId',
   /** column name */
@@ -16444,10 +18323,13 @@ export type Saved_Search_Hits = {
   __typename?: 'saved_search_hits';
   createdAt: Scalars['timestamptz'];
   emailSent?: Maybe<Scalars['Boolean']>;
+  /** An object relationship */
+  externalProduct?: Maybe<External_Products>;
+  externalProductId?: Maybe<Scalars['String']>;
   id: Scalars['String'];
   /** An object relationship */
   product?: Maybe<Products>;
-  productId: Scalars['String'];
+  productId?: Maybe<Scalars['String']>;
   productTitle: Scalars['String'];
   /** An object relationship */
   savedSearch?: Maybe<Saved_Searches>;
@@ -16487,6 +18369,8 @@ export type Saved_Search_Hits_Bool_Exp = {
   _or?: Maybe<Array<Saved_Search_Hits_Bool_Exp>>;
   createdAt?: Maybe<Timestamptz_Comparison_Exp>;
   emailSent?: Maybe<Boolean_Comparison_Exp>;
+  externalProduct?: Maybe<External_Products_Bool_Exp>;
+  externalProductId?: Maybe<String_Comparison_Exp>;
   id?: Maybe<String_Comparison_Exp>;
   product?: Maybe<Products_Bool_Exp>;
   productId?: Maybe<String_Comparison_Exp>;
@@ -16508,6 +18392,8 @@ export enum Saved_Search_Hits_Constraint {
 export type Saved_Search_Hits_Insert_Input = {
   createdAt?: Maybe<Scalars['timestamptz']>;
   emailSent?: Maybe<Scalars['Boolean']>;
+  externalProduct?: Maybe<External_Products_Obj_Rel_Insert_Input>;
+  externalProductId?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
   product?: Maybe<Products_Obj_Rel_Insert_Input>;
   productId?: Maybe<Scalars['String']>;
@@ -16523,6 +18409,7 @@ export type Saved_Search_Hits_Insert_Input = {
 export type Saved_Search_Hits_Max_Fields = {
   __typename?: 'saved_search_hits_max_fields';
   createdAt?: Maybe<Scalars['timestamptz']>;
+  externalProductId?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
   productId?: Maybe<Scalars['String']>;
   productTitle?: Maybe<Scalars['String']>;
@@ -16534,6 +18421,7 @@ export type Saved_Search_Hits_Max_Fields = {
 export type Saved_Search_Hits_Min_Fields = {
   __typename?: 'saved_search_hits_min_fields';
   createdAt?: Maybe<Scalars['timestamptz']>;
+  externalProductId?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
   productId?: Maybe<Scalars['String']>;
   productTitle?: Maybe<Scalars['String']>;
@@ -16561,6 +18449,8 @@ export type Saved_Search_Hits_On_Conflict = {
 export type Saved_Search_Hits_Order_By = {
   createdAt?: Maybe<Order_By>;
   emailSent?: Maybe<Order_By>;
+  externalProduct?: Maybe<External_Products_Order_By>;
+  externalProductId?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   product?: Maybe<Products_Order_By>;
   productId?: Maybe<Order_By>;
@@ -16584,6 +18474,8 @@ export enum Saved_Search_Hits_Select_Column {
   /** column name */
   EMAILSENT = 'emailSent',
   /** column name */
+  EXTERNALPRODUCTID = 'externalProductId',
+  /** column name */
   ID = 'id',
   /** column name */
   PRODUCTID = 'productId',
@@ -16601,6 +18493,7 @@ export enum Saved_Search_Hits_Select_Column {
 export type Saved_Search_Hits_Set_Input = {
   createdAt?: Maybe<Scalars['timestamptz']>;
   emailSent?: Maybe<Scalars['Boolean']>;
+  externalProductId?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
   productId?: Maybe<Scalars['String']>;
   productTitle?: Maybe<Scalars['String']>;
@@ -16615,6 +18508,8 @@ export enum Saved_Search_Hits_Update_Column {
   CREATEDAT = 'createdAt',
   /** column name */
   EMAILSENT = 'emailSent',
+  /** column name */
+  EXTERNALPRODUCTID = 'externalProductId',
   /** column name */
   ID = 'id',
   /** column name */

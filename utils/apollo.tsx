@@ -140,6 +140,11 @@ const cacheOptions = {
       },
     },
 
+    NewsItem: {
+      keyFields: ["id", "rankScore"],
+      // rankScore to prevent "hot" and "new" newItems from overridding each other
+    },
+
     // merging cache objects:
     // https://github.com/apollographql/apollo-client/issues/6370
     User: {
