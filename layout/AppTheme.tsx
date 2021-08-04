@@ -180,6 +180,9 @@ export const Colors = {
   lightYellow: '#FADD8F',
   paleYellow: "#FCE8A6",
   yellow: '#EDC376',
+  orange: "#E98431",
+  lightOrange: "#E9A73D",
+  orangeSunburst: "#E6652B",
   // gradient
   gradientPurple1: '#fbc2eb',
   gradientPurple2: '#a18cd1',
