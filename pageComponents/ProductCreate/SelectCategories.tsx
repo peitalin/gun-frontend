@@ -61,7 +61,6 @@ const SelectCategories = (props: ReactProps & FormikProps<FormikFields>) => {
 
   const categories = (data?.getCategories ?? [])
       .filter(c => !!c && !!c.name)
-      .sort(sortCategoriesByName)
 
   const chosenCategory = categories.find(c => c.id === fprops.values.categoryId)
 
