@@ -1,7 +1,8 @@
 import gql from "graphql-tag";
 
 import {
-  ImageFragment
+  ImageFragment,
+  ProductFragment,
 } from "./fragments";
 import { enableExperimentalFragmentVariables } from 'graphql-tag'
 enableExperimentalFragmentVariables()
@@ -69,7 +70,7 @@ export const NewsItemFragment = gql`
     updatedAt
     productId
     product {
-      id
+      ...ProductFragment
     }
     externalProductId
     externalProduct {
@@ -95,6 +96,7 @@ export const NewsItemFragment = gql`
     # }
   }
   ${ExternalProductsFragment}
+  ${ProductFragment}
 `;
 
 

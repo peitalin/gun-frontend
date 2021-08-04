@@ -12,6 +12,21 @@ import { enableExperimentalFragmentVariables } from 'graphql-tag'
 enableExperimentalFragmentVariables()
 
 
+// Admin
+export const SUSPEND_UNSUSPEND_NEWS_ITEM = gql`
+  mutation(
+    $newsItemId: String!
+    $isSuspended: String!
+  ) {
+    suspendUnsuspendNewsItem(
+      newsItemId: $newsItemId
+      isSuspended: $isSuspended
+    ) {
+      ...NewsItemFragment
+    }
+  }
+  ${NewsItemFragment}
+`;
 
 
 
