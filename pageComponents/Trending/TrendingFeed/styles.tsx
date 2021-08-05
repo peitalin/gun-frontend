@@ -1,0 +1,85 @@
+// Styles
+import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
+import { Colors, BoxShadows, isThemeDark, BorderRadius, BorderRadius2x } from "layout/AppTheme";
+
+
+export const styles = (theme: Theme) => createStyles({
+  trendingRoot: {
+    display: 'flex',
+    width: '100%',
+    flexDirection: "column",
+    padding: '1rem',
+  },
+  trendFeed: {
+    display: 'flex',
+    width: '100%',
+    flexDirection: "row",
+    borderRadius: BorderRadius,
+  },
+  modalBackdrop: {
+    backgroundColor: Colors.modalBackground,
+  },
+  modalPaperScrollPaper: {
+    display: 'flex',
+    justifyContent: "center",
+    alignItems: "center",
+    maxHeight: "calc(100% - 1rem)",
+    maxWidth: '960px',
+    // height: '100%',
+    boxShadow: 'unset',
+    background: 'transparent',
+    transition:  theme.transitions.create(['width', 'height'], {
+      easing: theme.transitions.easing.easeIn,
+      duration: 300,
+    }),
+  },
+  flexCol: {
+    display: "flex",
+    flexDirection: "column",
+  },
+  trendFeedFlex60: {
+    display: "flex",
+    flexDirection: "column",
+    flexBasis: "60%",
+  },
+  title: {
+    marginTop: '2rem',
+    marginBottom: '1rem',
+  },
+  titleContainer: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "flex-end",
+    width: '60%',
+  },
+  tabContainer: {
+    display: "flex",
+    justifyContent: "flex-end",
+    alignItems: "center",
+  },
+  newsItemRow: {
+    display: "flex",
+    flexDirection: "row",
+    flexBasis: '100%',
+    flexGrow: 1,
+    width: '100%',
+    border: isThemeDark(theme)
+      ? `1px solid ${Colors.uniswapLightNavy}`
+      : `1px solid ${Colors.slateGreyDarker}`,
+    borderBottom: "0px solid transparent",
+    // boxShadow: isThemeDark(theme)
+    //   ? BoxShadows.shadow1.boxShadow
+    //   : 'unset',
+  },
+  newsItemRowFirst: {
+    borderRadius: `${BorderRadius2x}px ${BorderRadius2x}px ${0}px ${0}px`,
+    overflow: "hidden",
+  },
+  newsItemRowLast: {
+    borderRadius: `0px 0px ${BorderRadius2x}px ${BorderRadius2x}px`,
+    borderBottom: isThemeDark(theme)
+      ? `1px solid ${Colors.uniswapLightNavy}`
+      : `1px solid ${Colors.slateGreyDarker}`,
+    overflow: "hidden",
+  },
+})

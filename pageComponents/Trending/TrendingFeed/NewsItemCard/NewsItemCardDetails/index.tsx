@@ -2,15 +2,8 @@ import React from "react";
 import clsx from "clsx";
 import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
 import { BorderRadius, Colors, isThemeDark, BorderRadius3x } from "layout/AppTheme";
-// Redux
-import { useDispatch, useSelector } from "react-redux";
-import { Actions } from "reduxStore/actions";
-// Router
-import Link from "next/link";
 // Typings
 import {
-  External_Products,
-  External_Product_Snapshots,
   SoldOutStatus,
   UserPrivate,
   NewsItem,
@@ -28,11 +21,7 @@ import TextInfoRow from "./TextInfoRow";
 import {
   transformNewsItemToFields,
   NewsItemFields,
-} from "../transformNewsItemFields";
-//
-import ArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
-import ArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
-import LaunchIcon from '@material-ui/icons/Launch';
+} from "../../../transformNewsItemFields";
 // graphql
 import { useMutation } from '@apollo/client';
 import {
@@ -50,7 +39,7 @@ import DescriptionText from "./DescriptionText";
 
 
 
-const NewsItemRowLarge = (props: ReactProps) => {
+const NewsItemCardDetails = (props: ReactProps) => {
 
   const {
     classes,
@@ -120,7 +109,7 @@ const NewsItemRowLarge = (props: ReactProps) => {
 
 
   return (
-    <div className={classes.productRowRoot}>
+    <div className={classes.newsItemCardDetailsRoot}>
 
       <ShowOnMobileOrDesktopSSR desktop>
         <div
@@ -322,7 +311,7 @@ interface MVar {
 }
 
 const styles = (theme: Theme) => createStyles({
-  productRowRoot: {
+  newsItemCardDetailsRoot: {
     display: 'flex',
     flexDirection: 'column',
     width: '100%',
@@ -353,23 +342,6 @@ const styles = (theme: Theme) => createStyles({
     paddingRight: "0.5rem",
     flexGrow: 1,
   },
-  flexColInner30: {
-    flexBasis: '30%',
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'flex-start',
-    alignItems: "center",
-    flexGrow: 1,
-    maxWidth: 250,
-  },
-  flexColCenter: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingRight: "1rem",
-    paddingLeft: "0.5rem",
-  },
   flexRow: {
     display: 'flex',
     flexDirection: 'row',
@@ -385,15 +357,8 @@ const styles = (theme: Theme) => createStyles({
   flexGrow: {
     flexGrow: 1,
   },
-  marginLeft: {
-    marginLeft: "1rem",
-  },
   priceContainer: {
     marginTop: '0.25rem',
-  },
-  caliber: {
-    fontWeight: 600,
-    fontSize: '0.8rem',
   },
   newsItemTitle: {
     marginTop: "0.5rem",
@@ -408,112 +373,6 @@ const styles = (theme: Theme) => createStyles({
   },
   textLine: {
     fontWeight: 600,
-  },
-  arrowIconUp: {
-    fontWeight: 600,
-    color: Colors.ghostGrey,
-    width: '1.5rem',
-    height: '1.5rem',
-    cursor: "pointer",
-    "&:hover": {
-      fill: Colors.blue,
-    },
-  },
-  blueFill: {
-    fill: Colors.lightBlue,
-  },
-  redFill: {
-    fill: Colors.lighterRed,
-  },
-  arrowIconDown: {
-    fontWeight: 600,
-    color: Colors.ghostGrey,
-    width: '1.5rem',
-    height: '1.5rem',
-    cursor: "pointer",
-    "&:hover": {
-      fill: Colors.lightRed,
-    },
-  },
-  scoreText: {
-    fontWeight: 600,
-    color: Colors.ghostGrey,
-    fontSize: '0.9rem',
-  },
-  sourceSiteChip: {
-    padding: "0.25rem 0.75rem",
-    marginTop: '0.5rem',
-    marginRight: '0.5rem',
-    background: isThemeDark(theme)
-      ? Colors.uniswapGrey
-      : Colors.slateGreyDark,
-    // background: Colors.ultramarineBlueDarkest,
-    color: Colors.slateGreyDark,
-    fontSize: "0.9rem",
-    borderRadius: BorderRadius,
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    fontWeight: 600,
-  },
-  sourceSiteLink: {
-    marginTop: '0.5rem',
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  sourceSiteUrlIcon: {
-    fontWeight: 600,
-    marginLeft: "0.25rem",
-  },
-  sourceSite: {
-    fontWeight: 800,
-    fontSize: '0.8rem',
-    "&:hover": {
-      color: Colors.blue,
-    },
-  },
-  adType: {
-    padding: "0.25rem 0.75rem",
-    width: '100%',
-    color: Colors.black,
-    "& > a > svg": {
-      fill: Colors.black,
-    },
-    "&:hover > a > svg": {
-      fill: Colors.ultramarineBlue,
-    },
-    "&:hover": {
-      color: Colors.ultramarineBlue,
-    },
-    transition:  theme.transitions.create(['color', 'fill'], {
-      easing: theme.transitions.easing.easeInOut,
-      duration: 200,
-    }),
-    cursor: "pointer",
-    fontSize: "0.9rem",
-    borderRadius: BorderRadius,
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    fontWeight: 600,
-  },
-  adTypePrivate: {
-    background: Colors.yellow,
-  },
-  adTypeDealer: {
-    background: Colors.orange,
-  },
-  description: {
-    fontWeight: 500,
-    maxHeight: 200,
-    overflow: "scroll",
-    color: isThemeDark(theme)
-      ? Colors.uniswapLighterGrey
-      : Colors.slateGreyLighterBlack,
   },
   claimButton: {
     position: "absolute",
@@ -533,4 +392,4 @@ const styles = (theme: Theme) => createStyles({
 
 
 
-export default withStyles(styles)(NewsItemRowLarge)
+export default withStyles(styles)(NewsItemCardDetails)

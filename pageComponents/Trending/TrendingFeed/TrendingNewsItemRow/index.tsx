@@ -19,16 +19,16 @@ import ShowOnMobileOrDesktopSSR from "components/ShowOnMobileOrDesktopSSR";
 import {
   transformNewsItemToFields,
   NewsItemFields,
-} from "../transformNewsItemFields";
+} from "../../transformNewsItemFields";
 //
 import VoteOnNewsItem from "./VoteOnNewsItem";
-import AdType from "../NewsItemRowLarge/AdType";
-import SourceSiteChip from "../NewsItemRowLarge/SourceSiteChip";
+import AdType from "../NewsItemCard/NewsItemCardDetails/AdType";
+import SourceSiteChip from "../NewsItemCard/NewsItemCardDetails/SourceSiteChip";
 // Snackbar
 import { useSnackbar } from "notistack";
 
 
-const NewsItemRowMedium = (props: ReactProps) => {
+const TrendingNewsItemRow = (props: ReactProps) => {
 
   const {
     classes,
@@ -69,112 +69,121 @@ const NewsItemRowMedium = (props: ReactProps) => {
     newsItem?.yourVote?.score ?? 0
   )
 
+  // console.log("newsITEM:", newsItem)
 
   return (
-    <div className={clsx(classes.productRowRoot)}>
 
-      <ShowOnMobileOrDesktopSSR desktop>
-        <div
-          className={clsx(
-            classes.flexColOuter,
-            classes.flexColPadding,
-            classes.clickable,
-            "fadeInFast",
-          )}
-          onClick={props.onClick}
-        >
-          <ProductPreviewCardRowSmall
-            previewItem={previewItem}
-            width={props.imageSize?.desktop?.width ?? 135}
-            height={props.imageSize?.desktop?.height ?? 90}
-          />
-        </div>
-      </ShowOnMobileOrDesktopSSR>
-      <ShowOnMobileOrDesktopSSR mobile>
-        <div
-          className={clsx(
-            classes.flexColOuter,
-            classes.flexColPaddingSm,
-            classes.clickable,
-            "fadeInFast",
-          )}
-          onClick={props.onClick}
-        >
-          <ProductPreviewCardRowSmall
-            previewItem={previewItem}
-            width={props.imageSize?.mobile?.width ?? 82.5}
-            height={props.imageSize?.mobile?.height ?? 55}
-          />
-        </div>
-      </ShowOnMobileOrDesktopSSR>
+    <div className={classes.productPanelRoot}>
+      <div className={classes.productCardBox}>
+        <div className={clsx(classes.productRowRoot)}>
 
-      <div className={clsx(
-          classes.flexRowWrapOuter,
-          classes.flexGrow,
-          classes.clickable,
-          "fadeInFast",
-        )}
-        onClick={props.onClick}
-      >
-        {
-          !title
-          ? <div className={classes.flexColInner60}>
-              <DescriptionLoadingText/>
+          <ShowOnMobileOrDesktopSSR desktop>
+            <div
+              className={clsx(
+                classes.flexColOuter,
+                classes.flexColPadding,
+                classes.clickable,
+                "fadeInFast",
+              )}
+              onClick={props.onClick}
+            >
+              <ProductPreviewCardRowSmall
+                previewItem={previewItem}
+                width={props.imageSize?.desktop?.width ?? 135}
+                height={props.imageSize?.desktop?.height ?? 90}
+              />
             </div>
-          : <div className={classes.flexColInner60}>
-
-              <Typography className={classes.newsItemTitle}
-                variant="body1"
-                onClick={props.onClick}
-              >
-                {title}
-              </Typography>
-
-              <Typography className={classes.textLine} variant="body1">
-                {state}
-              </Typography>
-
-
-              <div className={classes.priceContainer}>
-                {
-                  price &&
-                  <PriceDisplayMainMobile
-                    price={price}
-                    soldOutStatus={soldOutStatus}
-                    isSuspended={props.isSuspended}
-                  />
-                }
-              </div>
-
-              <div className={classes.chipContainer}>
-                <SourceSiteChip
-                  sourceSite={sourceSite}
-                />
-                <AdType
-                  className={classes.maxWidthAdType}
-                  adType={adType}
-                  sourceSiteUrl={sourceSiteUrl}
-                  productId={newsItem?.productId}
-                />
-              </div>
-
-
-              {/* <Typography className={classes.rankScore} variant="body1">
-                {`rank: ${newsItem?.rankScore}`}
-              </Typography> */}
-
+          </ShowOnMobileOrDesktopSSR>
+          <ShowOnMobileOrDesktopSSR mobile>
+            <div
+              className={clsx(
+                classes.flexColOuter,
+                classes.flexColPaddingSm,
+                classes.clickable,
+                "fadeInFast",
+              )}
+              onClick={props.onClick}
+            >
+              <ProductPreviewCardRowSmall
+                previewItem={previewItem}
+                width={props.imageSize?.mobile?.width ?? 82.5}
+                height={props.imageSize?.mobile?.height ?? 55}
+              />
             </div>
-        }
+          </ShowOnMobileOrDesktopSSR>
+
+          <div className={clsx(
+              classes.flexRowWrapOuter,
+              classes.flexGrow,
+              classes.clickable,
+              "fadeInFast",
+            )}
+            onClick={props.onClick}
+          >
+            {
+              !title
+              ? <div className={classes.flexColInner60}>
+                  <DescriptionLoadingText/>
+                </div>
+              : <div className={classes.flexColInner60}>
+
+                  <Typography className={classes.newsItemTitle}
+                    variant="body1"
+                    onClick={props.onClick}
+                  >
+                    {title}
+                  </Typography>
+
+                  <Typography className={classes.textLine} variant="body1">
+                    {state}
+                  </Typography>
+
+
+                  <div className={classes.priceContainer}>
+                    {
+                      price &&
+                      <PriceDisplayMainMobile
+                        price={price}
+                        soldOutStatus={soldOutStatus}
+                        isSuspended={props.isSuspended}
+                      />
+                    }
+                  </div>
+
+                  <div className={classes.chipContainer}>
+                    <SourceSiteChip
+                      sourceSite={sourceSite}
+                    />
+                    <AdType
+                      className={classes.maxWidthAdType}
+                      adType={adType}
+                      sourceSiteUrl={sourceSiteUrl}
+                      productId={newsItem?.productId}
+                    />
+                  </div>
+
+
+                  <Typography className={classes.rankScore} variant="body1">
+                    {`rank: ${newsItem?.rankScore}`}
+                  </Typography>
+                  {/* <Typography className={classes.rankScore} variant="body1">
+                    {`newsItemId: ${newsItem?.id}`}
+                  </Typography> */}
+
+                </div>
+            }
+          </div>
+
+
+          <VoteOnNewsItem
+            newsItem={newsItem}
+            user={user}
+            setExistingVoteScore={setExistingVoteScore}
+            existingVoteScore={existingVoteScore}
+          />
+
+        </div>
       </div>
-
-
-      <VoteOnNewsItem
-        newsItem={newsItem}
-        user={user}
-        setExistingVoteScore={setExistingVoteScore}
-        existingVoteScore={existingVoteScore}
-      />
-
     </div>
   );
 }
@@ -182,7 +191,6 @@ const NewsItemRowMedium = (props: ReactProps) => {
 interface ReactProps extends WithStyles<typeof styles> {
   newsItem: NewsItem
   isSuspended: boolean;
-  loading?: boolean;
   user: UserPrivate;
   onClick(): void;
   imageSize?: {
@@ -199,6 +207,16 @@ interface ReactProps extends WithStyles<typeof styles> {
 
 
 const styles = (theme: Theme) => createStyles({
+  productPanelRoot: {
+    width: '100%',
+  },
+  productCardBox: {
+    display: 'flex',
+    flexDirection: "column",
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
+    width: '100%',
+  },
   productRowRoot: {
     display: 'flex',
     flexDirection: 'row',
@@ -314,4 +332,4 @@ const styles = (theme: Theme) => createStyles({
 
 
 
-export default withStyles(styles)(NewsItemRowMedium)
+export default withStyles(styles)(TrendingNewsItemRow)

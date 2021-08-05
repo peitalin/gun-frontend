@@ -11,14 +11,13 @@ import {
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 // MUI
-import Typography from "@material-ui/core/Typography";
-import NewsItemRowLarge from "./NewsItemRowLarge";
+import NewsItemCardDetails from "./NewsItemCardDetails";
 import IconButton from "@material-ui/core/IconButton";
 import ClearIcon from "@material-ui/icons/Clear";
 
 
 
-const NewsItemModalPage: React.FC<ReactProps> = (props) => {
+const NewsItemCard: React.FC<ReactProps> = (props) => {
 
   const {
     classes,
@@ -43,7 +42,7 @@ const NewsItemModalPage: React.FC<ReactProps> = (props) => {
         classes.newsItemInnerContainer,
         // previewLoaded && classes.previewLoaded,
       )}>
-        <NewsItemRowLarge
+        <NewsItemCardDetails
           newsItem={newsItem}
           user={user}
           onClick={() => {}}
@@ -103,14 +102,6 @@ const styles = (theme: Theme) => createStyles({
     width: '100%',
     minWidth: '300px',
   },
-  // previewLoaded: {
-  //   width: '600px',
-  //   maxWidth: '600px',
-  //   transition:  theme.transitions.create(['width', 'height'], {
-  //     easing: theme.transitions.easing.easeInOut,
-  //     duration: 150,
-  //   }),
-  // },
   closeButton: {
     position: "absolute",
     top: '0.5rem',
@@ -133,4 +124,4 @@ const styles = (theme: Theme) => createStyles({
 })
 
 
-export default withStyles(styles)( NewsItemModalPage );
+export default withStyles(styles)( NewsItemCard );
