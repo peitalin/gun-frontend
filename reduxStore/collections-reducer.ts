@@ -6,16 +6,17 @@ import { CollectionItem, ID, Connection, CollectionItemsConnection } from "typin
 ////// Collection state reducer //////////
 export interface ReduxStateCollections {
   collectionIds: CollectionItemId[];
-  selectedProductId: string;
+  selectedProductExternalProductId: string;
 }
 
 export interface CollectionItemId {
-  productId: ID;
+  productId?: ID;
+  externalProductId?: ID;
 }
 
 const initialCollectionState: ReduxStateCollections = {
   collectionIds: [],
-  selectedProductId: undefined,
+  selectedProductExternalProductId: undefined,
 }
 
 export const reduxReducerCollections = (
@@ -27,10 +28,11 @@ export const reduxReducerCollections = (
 
   switch ( action.type ) {
 
-    case A.SET_SELECTED_PRODUCT_ID().type: {
+    case A.SET_SELECTED_PRODUCT_EXTERNAL_PRODUCT_ID().type: {
+      console.log("SET SELECLTED: ", action.payload)
       return {
         ...state,
-        selectedProductId: action.payload
+        selectedProductExternalProductId: action.payload
       }
     }
 
@@ -48,6 +50,7 @@ export const reduxReducerCollections = (
         collectionIds: (collection?.edges ?? []).map(w => {
           return {
             productId: w?.node?.product?.id,
+            externalProductId: w?.node?.externalProduct?.id,
           }
         })
       }
@@ -74,6 +77,7 @@ export const reduxReducerCollections = (
       const collectionItem: CollectionItemId = action.payload;
       const newCollection = state.collectionIds.filter(w => {
         return collectionItem.productId !== w.productId
+            || collectionItem.externalProductId !== w.externalProductId
       })
 
       return {

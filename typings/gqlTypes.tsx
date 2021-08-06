@@ -154,8 +154,11 @@ export type CollectionItem = {
   createdAt: Scalars['Date'];
   id: Scalars['String'];
   userId: Scalars['String'];
-  productId: Scalars['String'];
-  product: Product;
+  /** either product or externalProduct */
+  productId?: Maybe<Scalars['String']>;
+  product?: Maybe<Product>;
+  externalProductId?: Maybe<Scalars['String']>;
+  externalProduct?: Maybe<External_Products>;
 };
 
 export type CollectionItemMutationResponse = {
@@ -3033,9 +3036,9 @@ export type MutationEditCollectionArgs = {
 
 
 export type MutationAddProductToCollectionArgs = {
-  productId: Scalars['String'];
-  userId: Scalars['String'];
   collectionId: Scalars['String'];
+  productId?: Maybe<Scalars['String']>;
+  externalProductId?: Maybe<Scalars['String']>;
 };
 
 
@@ -4825,7 +4828,16 @@ export type Query = {
   getImages: Array<Image_Parents>;
   /** for gun-aggregator to check if external products exists */
   getExternalProductsBySourceSiteId: Array<External_Products>;
+  /** Gets news items between today and yesterday */
   newsItemsSortByHotConnection?: Maybe<NewsItemsConnection>;
+  /** Gets news items in the last 24hrs */
+  getHotNewsItemsToday?: Maybe<NewsItemsConnection>;
+  /** Gets news items between yesterday and the day before */
+  getHotNewsItemsYesterday?: Maybe<NewsItemsConnection>;
+  /** Gets news items between 3 days to 7 days ago */
+  getHotNewsItemsThisWeek?: Maybe<NewsItemsConnection>;
+  /** Gets news items between 7 days to 14 days ago */
+  getHotNewsItemsLastWeek?: Maybe<NewsItemsConnection>;
 };
 
 
@@ -6281,6 +6293,31 @@ export type QueryGetExternalProductsBySourceSiteIdArgs = {
 
 export type QueryNewsItemsSortByHotConnectionArgs = {
   query?: Maybe<ConnectionQuery>;
+  sortByDate?: Maybe<Scalars['Boolean']>;
+};
+
+
+export type QueryGetHotNewsItemsTodayArgs = {
+  query?: Maybe<ConnectionQuery>;
+  sortByDate?: Maybe<Scalars['Boolean']>;
+};
+
+
+export type QueryGetHotNewsItemsYesterdayArgs = {
+  query?: Maybe<ConnectionQuery>;
+  sortByDate?: Maybe<Scalars['Boolean']>;
+};
+
+
+export type QueryGetHotNewsItemsThisWeekArgs = {
+  query?: Maybe<ConnectionQuery>;
+  sortByDate?: Maybe<Scalars['Boolean']>;
+};
+
+
+export type QueryGetHotNewsItemsLastWeekArgs = {
+  query?: Maybe<ConnectionQuery>;
+  sortByDate?: Maybe<Scalars['Boolean']>;
 };
 
 export type ResetPasswordResponse = {
@@ -9457,6 +9494,9 @@ export type Collection_Items = {
   __typename?: 'collection_items';
   collectionId?: Maybe<Scalars['String']>;
   createdAt: Scalars['timestamptz'];
+  /** An object relationship */
+  externalProduct?: Maybe<External_Products>;
+  externalProductId?: Maybe<Scalars['String']>;
   id: Scalars['String'];
   position?: Maybe<Scalars['Int']>;
   /** An object relationship */
@@ -9535,6 +9575,8 @@ export type Collection_Items_Bool_Exp = {
   _or?: Maybe<Array<Collection_Items_Bool_Exp>>;
   collectionId?: Maybe<String_Comparison_Exp>;
   createdAt?: Maybe<Timestamptz_Comparison_Exp>;
+  externalProduct?: Maybe<External_Products_Bool_Exp>;
+  externalProductId?: Maybe<String_Comparison_Exp>;
   id?: Maybe<String_Comparison_Exp>;
   position?: Maybe<Int_Comparison_Exp>;
   product?: Maybe<Products_Bool_Exp>;
@@ -9559,6 +9601,8 @@ export type Collection_Items_Inc_Input = {
 export type Collection_Items_Insert_Input = {
   collectionId?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['timestamptz']>;
+  externalProduct?: Maybe<External_Products_Obj_Rel_Insert_Input>;
+  externalProductId?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
   position?: Maybe<Scalars['Int']>;
   product?: Maybe<Products_Obj_Rel_Insert_Input>;
@@ -9571,6 +9615,7 @@ export type Collection_Items_Max_Fields = {
   __typename?: 'collection_items_max_fields';
   collectionId?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['timestamptz']>;
+  externalProductId?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
   position?: Maybe<Scalars['Int']>;
   productId?: Maybe<Scalars['String']>;
@@ -9581,6 +9626,7 @@ export type Collection_Items_Max_Fields = {
 export type Collection_Items_Max_Order_By = {
   collectionId?: Maybe<Order_By>;
   createdAt?: Maybe<Order_By>;
+  externalProductId?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   position?: Maybe<Order_By>;
   productId?: Maybe<Order_By>;
@@ -9592,6 +9638,7 @@ export type Collection_Items_Min_Fields = {
   __typename?: 'collection_items_min_fields';
   collectionId?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['timestamptz']>;
+  externalProductId?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
   position?: Maybe<Scalars['Int']>;
   productId?: Maybe<Scalars['String']>;
@@ -9602,6 +9649,7 @@ export type Collection_Items_Min_Fields = {
 export type Collection_Items_Min_Order_By = {
   collectionId?: Maybe<Order_By>;
   createdAt?: Maybe<Order_By>;
+  externalProductId?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   position?: Maybe<Order_By>;
   productId?: Maybe<Order_By>;
@@ -9628,6 +9676,8 @@ export type Collection_Items_On_Conflict = {
 export type Collection_Items_Order_By = {
   collectionId?: Maybe<Order_By>;
   createdAt?: Maybe<Order_By>;
+  externalProduct?: Maybe<External_Products_Order_By>;
+  externalProductId?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   position?: Maybe<Order_By>;
   product?: Maybe<Products_Order_By>;
@@ -9647,6 +9697,8 @@ export enum Collection_Items_Select_Column {
   /** column name */
   CREATEDAT = 'createdAt',
   /** column name */
+  EXTERNALPRODUCTID = 'externalProductId',
+  /** column name */
   ID = 'id',
   /** column name */
   POSITION = 'position',
@@ -9660,6 +9712,7 @@ export enum Collection_Items_Select_Column {
 export type Collection_Items_Set_Input = {
   collectionId?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['timestamptz']>;
+  externalProductId?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
   position?: Maybe<Scalars['Int']>;
   productId?: Maybe<Scalars['String']>;
@@ -9716,6 +9769,8 @@ export enum Collection_Items_Update_Column {
   COLLECTIONID = 'collectionId',
   /** column name */
   CREATEDAT = 'createdAt',
+  /** column name */
+  EXTERNALPRODUCTID = 'externalProductId',
   /** column name */
   ID = 'id',
   /** column name */

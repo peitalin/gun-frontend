@@ -13,8 +13,8 @@ import { CollectionItemId } from "./collections-reducer";
 
 export const reduxCollectionsActions = {
 
-  SET_SELECTED_PRODUCT_ID: (payload?: string): ActionType<string> => ({
-    type: "SET_SELECTED_PRODUCT_ID",
+  SET_SELECTED_PRODUCT_EXTERNAL_PRODUCT_ID: (payload?: string): ActionType<string> => ({
+    type: "SET_SELECTED_PRODUCT_EXTERNAL_PRODUCT_ID",
     payload: payload
   }),
 
