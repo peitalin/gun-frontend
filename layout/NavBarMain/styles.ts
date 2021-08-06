@@ -212,6 +212,12 @@ export const styles = (theme: Theme) => createStyles({
         : buttonHoverLight,
     },
     borderRadius: BorderRadius3x,
+    padding: 0,
+    // height: '100%',
+    height: 40,
+  },
+  navbarButtonLabel: {
+    height: '100%',
   },
   navbarButtonSelected: {
     color: isThemeDark(theme)

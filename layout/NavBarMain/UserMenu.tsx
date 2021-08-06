@@ -68,6 +68,9 @@ export const UserMenu: React.FC<ReactProps> = (props) => {
       <Hidden smDown implementation="css">
         <Button
           className={props.className}
+          classes={{
+            label: classes.navbarButtonLabel
+          }}
           onClick={handleClickMenu}
           aria-controls="user-menu"
           aria-haspopup="true"
@@ -268,6 +271,11 @@ const styles = (theme: Theme) => createStyles({
   },
   z5001: {
     zIndex: 5001,
+  },
+  navbarButtonLabel: {
+    height: '100%',
+    paddingLeft: '0.25rem',
+    paddingRight: '0.25rem',
   },
   menuText: {
     color: theme.palette.type === 'dark'

@@ -98,6 +98,9 @@ const DesktopMainBar = (props: DesktopMainBarProps) => {
           <a className={classes.buttonLink}>
             <Button
                 className={classes.navbarButton}
+                classes={{
+                  label: classes.navbarButtonLabel
+                }}
                 variant={"text"}
                 color="primary"
               >
@@ -148,6 +151,9 @@ const DesktopMainBar = (props: DesktopMainBarProps) => {
             <a className={classes.buttonLink}>
               <Button
                 className={classes.navbarButton}
+                classes={{
+                  label: classes.navbarButtonLabel
+                }}
                 variant={"text"}
                 color="primary"
               >
