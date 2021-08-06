@@ -7,7 +7,7 @@ import {
   ExternalProductSnapshotsFragment,
   ExternalProductsFragment,
   NewsItemFragment,
-} from "./news-items-subscriptions";
+} from "./fragments";
 import { enableExperimentalFragmentVariables } from 'graphql-tag'
 enableExperimentalFragmentVariables()
 

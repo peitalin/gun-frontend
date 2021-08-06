@@ -1,5 +1,6 @@
 import gql from "graphql-tag";
 import { ProductFragment, CollectionFragment } from "./fragments"
+import { ExternalProductsFragment } from "./fragments"
 
 export const CREATE_COLLECTION = gql`
   mutation createCollection(
@@ -52,14 +53,14 @@ export const EDIT_COLLECTION = gql`
 
 export const ADD_PRODUCT_TO_COLLECTION = gql`
   mutation addProductToCollection(
-    $productId: String!
-    $userId: String!
     $collectionId: String!
+    $productId: String
+    $externalProductId: String
   ) {
     addProductToCollection(
-      productId: $productId,
-      userId: $userId,
       collectionId: $collectionId
+      productId: $productId,
+      externalProductId: $externalProductId,
     ) {
       collectionId
       collectionItem {
@@ -70,10 +71,15 @@ export const ADD_PRODUCT_TO_COLLECTION = gql`
         product {
           ...ProductFragment
         }
+        externalProductId
+        externalProduct {
+          ...ExternalProductsFragment
+        }
       }
     }
   }
   ${ProductFragment}
+  ${ExternalProductsFragment}
 `;
 
 
@@ -95,8 +101,13 @@ export const REMOVE_PRODUCT_FROM_COLLECTION = gql`
         product {
           ...ProductFragment
         }
+        externalProductId
+        externalProduct {
+          ...ExternalProductsFragment
+        }
       }
     }
   }
   ${ProductFragment}
+  ${ExternalProductsFragment}
 `;

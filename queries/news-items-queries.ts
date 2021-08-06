@@ -3,7 +3,7 @@ import {
   ExternalProductSnapshotsFragment,
   ExternalProductsFragment,
   NewsItemFragment,
-} from "./news-items-subscriptions";
+} from "./fragments";
 
 export const NEWS_ITEMS_SORT_BY_HOT_CONNECTION = gql`
   query($query: ConnectionQuery) {
