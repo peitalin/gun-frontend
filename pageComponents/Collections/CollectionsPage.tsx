@@ -45,11 +45,9 @@ const CollectionsPage: React.FC<ReactProps> = (props) => {
   const snackbar = useSnackbar()
 
   const {
-    selectedProductId,
     user,
   } = useSelector<GrandReduxState, ReduxState>(
     s => ({
-      selectedProductId: s.reduxCollections.selectedProductId,
       user: s.reduxLogin.user
     })
   );
@@ -66,8 +64,7 @@ const CollectionsPage: React.FC<ReactProps> = (props) => {
 
 
   let collections = data?.getCollectionsByUserId;
-  // console.log("collections", collections)
-  // console.log("selectedProductId", selectedProductId)
+  console.log("collections", collections)
 
   return (
     <AlignCenterLayout
@@ -90,7 +87,7 @@ const CollectionsPage: React.FC<ReactProps> = (props) => {
                 collections.map(collection => {
 
                   // let collectionItemEdge = collection?.itemsConnection?.edges?.find(
-                  //   e => e.node.productId === selectedProductId
+                  //   e => e.node.productId === selectedProductExternalProductId
                   // )
                   // console.log("productInCollection: ", collectionItemEdge)
                   // let productInCollection = !!collectionItemEdge?.node?.productId
@@ -125,7 +122,6 @@ const CollectionsPage: React.FC<ReactProps> = (props) => {
 interface ReactProps extends WithStyles<typeof styles> {
 }
 interface ReduxState {
-  selectedProductId: string;
   user: UserPrivate;
 }
 

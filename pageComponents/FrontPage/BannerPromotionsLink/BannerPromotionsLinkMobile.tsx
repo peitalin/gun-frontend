@@ -73,7 +73,7 @@ const BannerPromotionsLinkMobile: NextPage<ReactProps> = (props) => {
           <div className={classes.bannerInnerBoxRightMobile}>
             <div className={classes.mainTitleContainerMobile}>
               <Typography variant={"h2"} className={classes.mainTitleXs}>
-                Promote product listings
+                List your products
               </Typography>
             </div>
           </div>
@@ -84,15 +84,13 @@ const BannerPromotionsLinkMobile: NextPage<ReactProps> = (props) => {
                   className={
                       clsx(
                         classes.buttonGoToPromotions,
-                        classes.minWidth184,
                         classes.buttonHeightMobile
                       )
                   }
                   variant="text"
                   color="primary"
                   classes={{
-                    root: classes.buttonRoot,
-                    label: classes.buttonFontSizeDesktop,
+                    label: classes.buttonLabelDesktop,
                   }}
                 >
                   {"Go Now "} <ArrowForwardIcon/>

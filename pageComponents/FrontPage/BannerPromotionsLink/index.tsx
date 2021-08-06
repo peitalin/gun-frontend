@@ -3,10 +3,7 @@ import React from "react";
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
 import { Colors, isThemeDark } from "layout/AppTheme";
 import { styles } from "./styles";
-// Meta headers
-import MetaHeadersPage from "layout/MetaHeadersPage";
 // typings
-import { Categories } from "typings/gqlTypes";
 import Hidden from 'components/HiddenFix';
 import BannerPromotionsLinkDesktop from "./BannerPromotionsLinkDesktop";
 import BannerPromotionsLinkMobile from "./BannerPromotionsLinkMobile";
@@ -20,7 +17,6 @@ const BannerPromotionsLink: React.FC<ReactProps> = (props) => {
 
   const {
     classes,
-    disableMetaHeader = false,
   } = props;
 
   const theme = useTheme();
@@ -61,7 +57,6 @@ const BannerPromotionsLink: React.FC<ReactProps> = (props) => {
 
 
 interface ReactProps extends WithStyles<typeof styles> {
-  disableMetaHeader?: boolean
 }
 
 

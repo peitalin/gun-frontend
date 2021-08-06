@@ -66,11 +66,9 @@ const CollectionItems: React.FC<ReactProps> = (props) => {
   const [openDeleteModal, setOpenDeleteModal] = React.useState(false)
 
   const {
-    selectedProductId,
     user,
   } = useSelector<GrandReduxState, ReduxState>(
     s => ({
-      selectedProductId: s.reduxCollections.selectedProductId,
       user: s.reduxLogin.user
     })
   );
@@ -336,15 +334,23 @@ const CollectionItems: React.FC<ReactProps> = (props) => {
               <div key={citem.product?.id} className={classes.productItem}>
                 <ProductRowMedium
                   product={citem?.product}
+                  externalProduct={citem?.externalProduct}
                 />
                 <div className={classes.flexRowCollectionButtons}>
                   <Tooltip title={"Add to another collection"}>
                     <IconButton
                       className={classes.iconButton}
                       onClick={() => {
-                        dispatch(Actions.reduxCollections.SET_SELECTED_PRODUCT_ID(
-                          citem?.product?.id
-                        ))
+                        if (citem.product?.id) {
+                          dispatch(Actions.reduxCollections.SET_SELECTED_PRODUCT_EXTERNAL_PRODUCT_ID(
+                            citem?.product?.id
+                          ))
+                        }
+                        if (citem.externalProduct?.id) {
+                          dispatch(Actions.reduxCollections.SET_SELECTED_PRODUCT_EXTERNAL_PRODUCT_ID(
+                            citem?.externalProduct?.id
+                          ))
+                        }
                         dispatch(Actions.reduxModals.TOGGLE_COLLECTIONS_MODAL(true))
                       }}
                     >
@@ -383,7 +389,6 @@ interface ReactProps extends WithStyles<typeof styles> {
   collection: Collection
 }
 interface ReduxState {
-  selectedProductId: string;
   user: UserPrivate;
 }
 

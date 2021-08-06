@@ -23,6 +23,7 @@ import Link from "next/link";
 import CardMedia from "@material-ui/core/CardMedia";
 import Tooltip from '@material-ui/core/Tooltip';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
+import ArrowStripeIcon from "../../../components/ArrowStripeIcon";
 
 
 
@@ -73,31 +74,32 @@ const BannerPromotionsLink: NextPage<ReactProps> = (props) => {
         )}>
           <div className={classes.mainTitleContainer}>
             <Typography variant={"h1"} className={classes.mainTitle}>
-              Promote your products
+              List your products
             </Typography>
           </div>
           <Typography variant={"subtitle2"} className={classes.subline1}>
             Feature your product on the front page.
           </Typography>
           <div className={classes.buttonBox}>
-            <Link href={"/promote-listings"}>
+            <Link href={"/sell"}>
               <a>
                 <Button
                   className={
                     clsx(
                       classes.buttonGoToPromotions,
-                      classes.minWidth184,
                       classes.buttonHeightDesktop,
                     )
                   }
                   variant="text"
                   color="primary"
                   classes={{
-                    root: classes.buttonRoot,
-                    label: classes.buttonFontSizeDesktop,
+                    label: classes.buttonLabelDesktop,
                   }}
                 >
-                  {"Go Now "} <ArrowForwardIcon/>
+                  <ArrowStripeIcon
+                    title={"Go Now"}
+                  />
+                  {/* <ArrowForwardIcon/> */}
                 </Button>
               </a>
             </Link>
