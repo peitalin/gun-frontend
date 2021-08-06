@@ -64,12 +64,12 @@ const CollectionModal: React.FC<ReactProps> = (props) => {
 
   const {
     collectionItemIds,
-    selectedProductId,
+    selectedProductExternalProductId,
     user,
   } = useSelector<GrandReduxState, ReduxState>(
     s => ({
       collectionItemIds: s.reduxCollections.collectionIds,
-      selectedProductId: s.reduxCollections.selectedProductId,
+      selectedProductExternalProductId: s.reduxCollections.selectedProductExternalProductId,
       user: s.reduxLogin.user
     })
   );
@@ -82,6 +82,7 @@ const CollectionModal: React.FC<ReactProps> = (props) => {
     ADD_PRODUCT_TO_COLLECTION, {
     variables: {
       productId: undefined,
+      externalProductId: undefined,
       collectionId: undefined,
       userId: user?.id,
     },
@@ -215,7 +216,7 @@ const CollectionModal: React.FC<ReactProps> = (props) => {
 
   let collections = data?.getCollectionsByUserId;
   // console.log("collections", collections)
-  // console.log("selectedProductId", selectedProductId)
+  console.log("selectedProductExternalProductId", selectedProductExternalProductId)
   let loadingMutation = response1?.loading || response2?.loading
 
   return (
@@ -261,18 +262,23 @@ const CollectionModal: React.FC<ReactProps> = (props) => {
                   collections.map(collection => {
 
                     let collectionItemEdge = collection?.itemsConnection?.edges?.find(
-                      e => e.node.productId === selectedProductId
+                      e => e.node.productId === selectedProductExternalProductId
+                        || e.node.externalProductId === selectedProductExternalProductId
                     )
 
-                    // console.log("productInCollection: ", collectionItemEdge)
                     let productInCollection = !!collectionItemEdge?.node?.productId
+                      || !!collectionItemEdge?.node?.externalProductId
+                    console.log("productInCollection: ", productInCollection)
+
                     let collectionItem = collectionItemEdge?.node
+
+                    let isExternal = selectedProductExternalProductId?.startsWith('external_')
 
                     return (
                       <div key={collection.id} className={classes.collectionRow}>
                         <FormControlLabel
                           className={classes.confirmCheckbox}
-                          disabled={!selectedProductId}
+                          disabled={!selectedProductExternalProductId}
                           control={
                               <Checkbox
                                 checked={productInCollection}
@@ -281,7 +287,12 @@ const CollectionModal: React.FC<ReactProps> = (props) => {
                                     addProductToCollection({
                                       variables: {
                                         userId: user?.id,
-                                        productId: selectedProductId,
+                                        productId: isExternal
+                                          ? null
+                                          : selectedProductExternalProductId,
+                                        externalProductId: isExternal
+                                          ? selectedProductExternalProductId
+                                          : null,
                                         collectionId: collection?.id,
                                       }
                                     })
@@ -328,12 +339,13 @@ interface ReactProps extends WithStyles<typeof styles> {
 }
 interface ReduxState {
   collectionItemIds: CollectionItemId[];
-  selectedProductId: string;
+  selectedProductExternalProductId: string;
   user: UserPrivate;
 }
 
 interface MVar1 {
   productId: string
+  externalProductId: string
   userId: string
   collectionId: string
 }

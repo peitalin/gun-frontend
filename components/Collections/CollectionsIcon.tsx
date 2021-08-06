@@ -10,7 +10,10 @@ import RemoveIcon from '@material-ui/icons/Remove';
 import IconButton from "@material-ui/core/IconButton";
 // Graphql
 import { useMutation } from "@apollo/client";
-import { ADD_PRODUCT_TO_COLLECTION, REMOVE_PRODUCT_FROM_COLLECTION } from "queries/collections-mutations";
+import {
+  ADD_PRODUCT_TO_COLLECTION,
+  REMOVE_PRODUCT_FROM_COLLECTION
+} from "queries/collections-mutations";
 // redux
 import { useDispatch, useSelector } from "react-redux";
 import { CollectionItemId } from "reduxStore/collections-reducer";
@@ -44,54 +47,30 @@ const CollectionIcon: React.FC<ReactProps> = (props) => {
 
   const collectionItemId = {
     productId: props.productId,
+    externalProductId: props.externalProductId,
   };
 
   const isInCollection = (collectionItemIds: CollectionItemId[]): boolean => {
     return !!collectionItemIds.find(w => {
-      return w.productId == collectionItemId.productId
+      return w.productId === collectionItemId.productId
+          || w.externalProductId === collectionItemId.externalProductId
     })
   }
 
-  const [
-    addProductToCollection,
-    response1
-  ] =
-  useMutation<MData1, MVar1>(
-    ADD_PRODUCT_TO_COLLECTION, {
-    variables: { ...collectionItemId },
-    onCompleted: (data) => {
-      if (props.refetch) {
-        props.refetch()
-      }
-    },
-    onError: () => {},
-  })
-
-  const [
-    removeProductFromCollection,
-    response2
-  ] = useMutation<MData1, MVar1>(
-    REMOVE_PRODUCT_FROM_COLLECTION, {
-    variables: { ...collectionItemId },
-    onCompleted: (data) => {
-      if (props.refetch) {
-        props.refetch()
-      }
-    },
-    onError: () => {},
-  })
 
   const added = React.useMemo(
     () => isInCollection(collectionItemIds),
     [collectionItemIds]
   )
 
-  const collectionModalOpen = useSelector<GrandReduxState, boolean>(
-    state => state.reduxModals.collectionsModalOpen
-  );
-
   const openModal = () => {
-    dispatch(Actions.reduxCollections.SET_SELECTED_PRODUCT_ID(props.productId))
+    console.log("opening modal:", props.externalProductId)
+    if (props.externalProductId) {
+      dispatch(Actions.reduxCollections.SET_SELECTED_PRODUCT_EXTERNAL_PRODUCT_ID(props.externalProductId))
+    }
+    if (props.productId) {
+      dispatch(Actions.reduxCollections.SET_SELECTED_PRODUCT_EXTERNAL_PRODUCT_ID(props.productId))
+    }
     dispatch(Actions.reduxModals.TOGGLE_COLLECTIONS_MODAL(true))
   }
 
@@ -110,13 +89,6 @@ const CollectionIcon: React.FC<ReactProps> = (props) => {
           } else {
             // if user is logged in, add or remove to redux
             openModal()
-            // if (added) {
-            //   dispatch(Actions.reduxCollection.REMOVE_COLLECTION_ITEM(collectionItemId))
-            //   removeProductFromCollection()
-            // } else {
-            //   dispatch(Actions.reduxCollection.ADD_COLLECTION_ITEM(collectionItemId))
-            //   addProductToCollection()
-            // }
           }
         }}
         onMouseEnter={() => setHover(true)}
@@ -146,19 +118,13 @@ const CollectionIcon: React.FC<ReactProps> = (props) => {
 
 interface ReactProps extends WithStyles<typeof styles> {
   style?: any;
-  productId: string;
-  variantId: string;
+  productId?: string;
+  externalProductId?: string;
   refetch?(): void; // apollo refetch collection
 }
 interface ReduxState {
   collectionItemIds: CollectionItemId[];
   user: UserPrivate;
-}
-
-
-interface MData1 {
-}
-interface MVar1 {
 }
 
 

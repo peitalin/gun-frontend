@@ -46,11 +46,11 @@ const CollectionsPage: React.FC<ReactProps> = (props) => {
   const [privateCollection, setPrivateCollection] = React.useState(false)
 
   const {
-    selectedProductId,
+    selectedProductExternalProductId,
     user,
   } = useSelector<GrandReduxState, ReduxState>(
     s => ({
-      selectedProductId: s.reduxCollections.selectedProductId,
+      selectedProductExternalProductId: s.reduxCollections.selectedProductExternalProductId,
       user: s.reduxLogin.user
     })
   );
@@ -201,7 +201,7 @@ const CollectionsPage: React.FC<ReactProps> = (props) => {
 interface ReactProps extends WithStyles<typeof styles> {
 }
 interface ReduxState {
-  selectedProductId: string;
+  selectedProductExternalProductId: string;
   user: UserPrivate;
 }
 
