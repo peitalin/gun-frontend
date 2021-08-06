@@ -207,14 +207,16 @@ export const styles = (theme: Theme) => createStyles({
     marginRight: "0.5rem",
     minWidth: 72,
     "&:hover": {
-      background: theme.palette.type === 'dark'
+      background: isThemeDark(theme)
         ? buttonHoverDark
         : buttonHoverLight,
     },
     borderRadius: BorderRadius3x,
   },
   navbarButtonSelected: {
-    color: Colors.secondaryBright,
+    color: isThemeDark(theme)
+      ? Colors.purple
+      : Colors.ultramarineBlue,
   },
   iconText: {
   },
@@ -226,7 +228,9 @@ export const styles = (theme: Theme) => createStyles({
     width: '100%',
   },
   selectedRouteText: {
-    color: Colors.secondaryBright,
+    color: isThemeDark(theme)
+      ? Colors.purple
+      : Colors.ultramarineBlue,
   },
   cartText: {
     marginLeft: '0.5rem',
@@ -271,7 +275,7 @@ export const styles = (theme: Theme) => createStyles({
 
   // News Bar
   newsBar: {
-    background: theme.palette.type === 'dark'
+    background: isThemeDark(theme)
       ? Gradients.gradientUniswapFluro.background
       : Gradients.gradientSlategrey.background,
       // : Gradients.gradientBlack.background,
