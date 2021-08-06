@@ -8,7 +8,7 @@ import { Actions } from "reduxStore/actions";
 // Router
 import Link from "next/link";
 // Typings
-import { Product } from "typings/gqlTypes";
+import { Product, External_Products } from "typings/gqlTypes";
 // Utils
 import ErrorBounds from "components/ErrorBounds";
 import Loading from "components/Loading";
@@ -27,16 +27,41 @@ import { asCurrency as c } from "utils/prices";
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import ShowOnMobileOrDesktopSSR from "components/ShowOnMobileOrDesktopSSR";
+import {
+  transformExternalProductToFields
+} from "pageComponents/Trending/transformNewsItemFields";
 
 
 
 const ProductRowMedium = (props: ReactProps) => {
 
-  const { classes, product } = props;
+  const { classes, product, externalProduct } = props;
   const featuredVariant = product?.featuredVariant;
 
   const theme = useTheme();
   const mdDown = useMediaQuery(theme.breakpoints.down("md"))
+
+  let {
+		model,
+		make,
+		caliber,
+		barrelLength,
+		action,
+		state,
+		soldOutStatus,
+		description,
+		price,
+		title,
+		serialNumber,
+		condition,
+		adType,
+		licenseNumber,
+		phoneNumber,
+		sourceSite,
+		sourceSiteUrl,
+		previewItem,
+		isInternalProduct,
+  } = transformExternalProductToFields(product, externalProduct)
 
 
   return (
@@ -50,24 +75,26 @@ const ProductRowMedium = (props: ReactProps) => {
             classes.flexColPadding,
           )}>
             {
-              featuredVariant?.previewItems?.[0]
+              isInternalProduct
               ? <Link
                   href="/p/[productId]"
                   as={`/p/${product?.id}`}
                 >
                   <a>
                     <ProductPreviewCardRowSmall
-                      previewItem={featuredVariant.previewItems[0]}
+                      previewItem={previewItem}
                       width={props.imageSize?.desktop?.width ?? 135}
                       height={props.imageSize?.desktop?.height ?? 90}
                     />
                   </a>
                 </Link>
-              : <ProductPreviewCardRowSmall
-                  previewItem={undefined}
-                  width={props.imageSize?.desktop?.width ?? 135}
-                  height={props.imageSize?.desktop?.height ?? 90}
-                />
+              : <a href={sourceSiteUrl} target={"_blank"}>
+                  <ProductPreviewCardRowSmall
+                    previewItem={previewItem}
+                    width={props.imageSize?.desktop?.width ?? 135}
+                    height={props.imageSize?.desktop?.height ?? 90}
+                  />
+                </a>
             }
           </div>
         </ShowOnMobileOrDesktopSSR>
@@ -77,24 +104,26 @@ const ProductRowMedium = (props: ReactProps) => {
             classes.flexColPaddingSm,
           )}>
             {
-              featuredVariant?.previewItems?.[0]
+              isInternalProduct
               ? <Link
                   href="/p/[productId]"
                   as={`/p/${product?.id}`}
                 >
                   <a>
                     <ProductPreviewCardRowSmall
-                      previewItem={featuredVariant.previewItems[0]}
+                      previewItem={previewItem}
                       width={props.imageSize?.mobile?.width ?? 82.5}
                       height={props.imageSize?.mobile?.height ?? 55}
                     />
                   </a>
                 </Link>
-              : <ProductPreviewCardRowSmall
-                  previewItem={undefined}
-                  width={props.imageSize?.mobile?.width ?? 82.5}
-                  height={props.imageSize?.mobile?.height ?? 55}
-                />
+              : <a href={sourceSiteUrl} target={"_blank"}>
+                  <ProductPreviewCardRowSmall
+                    previewItem={previewItem}
+                    width={props.imageSize?.mobile?.width ?? 82.5}
+                    height={props.imageSize?.mobile?.height ?? 55}
+                  />
+                </a>
             }
           </div>
         </ShowOnMobileOrDesktopSSR>
@@ -105,40 +134,44 @@ const ProductRowMedium = (props: ReactProps) => {
         )}>
 
           {
-            !product?.currentSnapshot?.title
+            !title
             ? <div className={classes.flexColInner60}>
                 <DescriptionLoadingText/>
               </div>
             : <div className={classes.flexColInner60}>
                 <Typography className={classes.category} variant="body1">
-                  {/* {product?.category?.name} */}
-                  {`${product?.currentSnapshot?.model} ${product?.currentSnapshot?.make}`}
+                  {caliber}
                 </Typography>
 
-                <Link
-                  href="/p/[productId]"
-                  as={`/p/${product?.id}`}
-                >
-                  <a>
-                    <Typography className={classes.title} variant="body1">
-                      {product?.currentSnapshot?.title}
-                    </Typography>
-                  </a>
-                </Link>
+                {
+                  isInternalProduct
+                  ? <Link
+                      href="/p/[productId]"
+                      as={`/p/${product?.id}`}
+                    >
+                      <a>
+                        <Typography className={classes.title} variant="body1">
+                          {title}
+                        </Typography>
+                      </a>
+                    </Link>
+                  : <a href={sourceSiteUrl} target={"_blank"}>
+                      <Typography className={classes.title} variant="body1">
+                        {title}
+                      </Typography>
+                    </a>
+                }
 
                 <Typography className={classes.dealerState} variant="body1">
-                  {product?.currentSnapshot?.dealer?.state}
+                  {state}
                 </Typography>
 
                 <div className={classes.priceContainer}>
-                  {
-                    product?.featuredVariant &&
-                    <PriceDisplayMainMobile
-                      price={product?.featuredVariant?.price}
-                      soldOutStatus={product?.soldOutStatus}
-                      isSuspended={product?.isSuspended}
-                    />
-                  }
+                  <PriceDisplayMainMobile
+                    price={price}
+                    soldOutStatus={soldOutStatus}
+                    isSuspended={product?.isSuspended ?? props.isExternalProductSuspended}
+                  />
                 </div>
               </div>
           }
@@ -149,7 +182,9 @@ const ProductRowMedium = (props: ReactProps) => {
 }
 
 interface ReactProps extends WithStyles<typeof styles> {
-  product: Product;
+  product?: Product;
+  externalProduct?: External_Products;
+  isExternalProductSuspended?: boolean;
   loading?: boolean;
   refetch?(): void; // apollo refetch
   imageSize?: {

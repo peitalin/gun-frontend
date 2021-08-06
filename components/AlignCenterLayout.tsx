@@ -62,7 +62,7 @@ const AlignCenterLayout: React.FC<ReactProps> = (props) => {
           <Hidden smDown>
             <YouMayAlsoLike
               // initialProducts={initialProductsLimitedRelease}
-              title={"Related Products"}
+              title={props.recommendationsTitle ?? "Related Products"}
               maxWidth={1160}
             />
           </Hidden>
@@ -75,6 +75,7 @@ const AlignCenterLayout: React.FC<ReactProps> = (props) => {
 interface ReactProps extends WithStyles<typeof styles> {
   className?: any;
   withRecommendations?: boolean;
+  recommendationsTitle?: string;
   maxWidth?: number | string;
   style?: any;
   pageRecommendationsContainerClassname?: any;

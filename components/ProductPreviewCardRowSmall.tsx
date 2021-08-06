@@ -146,14 +146,14 @@ const styles = (theme: Theme) => createStyles({
   },
   imageMissingPreview: {
     backgroundColor: isThemeDark(theme)
-      ? Colors.uniswapMediumNavy
+      ? Colors.uniswapGrey
       : Colors.slateGreyDark,
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
     padding: '1rem',
-    textDecoration: "uppercase",
+    // textTransform: "uppercase",
   },
   card: {
     borderRadius: `${BorderRadius}px ${BorderRadius}px ${BorderRadius}px ${BorderRadius}px `,

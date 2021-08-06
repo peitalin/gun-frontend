@@ -2,7 +2,7 @@ import React from "react";
 import clsx from "clsx";
 
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
-import { Colors } from "layout/AppTheme";
+import { Colors, isThemeDark } from "layout/AppTheme";
 
 
 const DescriptionLoadingText = (props: DescriptionLoadingTextProps) => {
@@ -75,7 +75,7 @@ export const styles = (theme: Theme) => createStyles({
   descriptionContainer: {
     // paddingTop: "0.25rem",
     // margin: '0.5rem',
-    paddingLeft: '0.5rem',
+    // paddingLeft: '0.5rem',
     paddingRight: '0.5rem',
     paddingBottom: '0.5rem',
     // height: "136px", // ensure all cards descriptions are same height
@@ -83,19 +83,19 @@ export const styles = (theme: Theme) => createStyles({
     position: 'relative', // for watchList Button position: absolute
   },
   loadingDescription: {
-    color: Colors.lightGrey,
+    color: isThemeDark(theme) ? Colors.uniswapLightGrey : Colors.slateGreyBlack,
     height: '100%',
     width: '100%',
   },
   loadingDescriptionLine1: {
-    backgroundColor: Colors.lightestGrey,
+    backgroundColor: isThemeDark(theme) ? Colors.uniswapGrey : Colors.slateGreyDarker,
     height: '1rem',
     width: '100%',
     borderRadius: '4px',
     opacity: 0.8,
   },
   loadingDescriptionLine2: {
-    backgroundColor: Colors.lightestGrey,
+    backgroundColor: isThemeDark(theme) ? Colors.uniswapGrey : Colors.slateGreyDarker,
     height: '1rem',
     marginTop: '0.75rem',
     width: '80%',
@@ -103,7 +103,7 @@ export const styles = (theme: Theme) => createStyles({
     opacity: 0.8,
   },
   loadingDescriptionLine3: {
-    backgroundColor: Colors.lightestGrey,
+    backgroundColor: isThemeDark(theme) ? Colors.uniswapGrey : Colors.slateGreyDarker,
     height: '1rem',
     marginTop: '0.75rem',
     width: '60%',
@@ -111,7 +111,7 @@ export const styles = (theme: Theme) => createStyles({
     opacity: 0.8,
   },
   loadingDescriptionLine4: {
-    backgroundColor: Colors.lightestGrey,
+    backgroundColor: isThemeDark(theme) ? Colors.uniswapGrey : Colors.slateGreyDarker,
     height: '1rem',
     marginTop: '0.75rem',
     width: '40%',
@@ -131,8 +131,8 @@ export const styles = (theme: Theme) => createStyles({
     position: 'relative', // for watchList Button position: absolute
   },
   loadingDescriptionPic: {
-    color: Colors.lightGrey,
-    backgroundColor: Colors.lightestGrey,
+    color: isThemeDark(theme) ? Colors.uniswapLightGrey : Colors.slateGreyBlack,
+    backgroundColor: isThemeDark(theme) ? Colors.uniswapGrey : Colors.slateGreyDarker,
     borderRadius: '4px',
     height: 75,
     minWidth: 120,
@@ -140,14 +140,14 @@ export const styles = (theme: Theme) => createStyles({
     marginRight: '0.75rem',
   },
   loadingDescriptionLine1Mobile: {
-    backgroundColor: Colors.lightestGrey,
+    backgroundColor: isThemeDark(theme) ? Colors.uniswapGrey : Colors.slateGreyDarker,
     height: '1rem',
     width: '100%',
     borderRadius: '4px',
     opacity: 0.8,
   },
   loadingDescriptionLine2Mobile: {
-    backgroundColor: Colors.lightestGrey,
+    backgroundColor: isThemeDark(theme) ? Colors.uniswapGrey : Colors.slateGreyDarker,
     height: '1rem',
     marginTop: '0.75rem',
     width: '80%',
@@ -155,7 +155,7 @@ export const styles = (theme: Theme) => createStyles({
     opacity: 0.8,
   },
   loadingDescriptionLine3Mobile: {
-    backgroundColor: Colors.lightestGrey,
+    backgroundColor: isThemeDark(theme) ? Colors.uniswapGrey : Colors.slateGreyDarker,
     height: '1rem',
     marginTop: '0.75rem',
     width: '60%',
