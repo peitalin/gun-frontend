@@ -16,7 +16,7 @@ enableExperimentalFragmentVariables()
 export const SUSPEND_UNSUSPEND_NEWS_ITEM = gql`
   mutation(
     $newsItemId: String!
-    $isSuspended: String!
+    $isSuspended: Boolean!
   ) {
     suspendUnsuspendNewsItem(
       newsItemId: $newsItemId
