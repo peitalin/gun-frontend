@@ -22,7 +22,7 @@ import { UserPrivate } from "typings/gqlTypes";
 import Link from "next/link";
 import CardMedia from "@material-ui/core/CardMedia";
 import Tooltip from '@material-ui/core/Tooltip';
-import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
+import ArrowStripeIcon from "components/ArrowStripeIcon";
 
 
 
@@ -86,18 +86,18 @@ const BannerTrendingLink: NextPage<ReactProps> = (props) => {
                   className={
                     clsx(
                       classes.buttonGoToPromotions,
-                      classes.minWidth184,
                       classes.buttonHeightDesktop,
                     )
                   }
                   variant="text"
                   color="primary"
                   classes={{
-                    root: classes.buttonRoot,
-                    label: classes.buttonFontSizeDesktop,
+                    label: classes.buttonLabelDesktop,
                   }}
                 >
-                  {"Go Now "} <ArrowForwardIcon/>
+                  <ArrowStripeIcon
+                    title={"Go Now"}
+                  />
                 </Button>
               </a>
             </Link>

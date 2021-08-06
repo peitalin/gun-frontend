@@ -38,9 +38,8 @@ export const TrendingFeedLayout: React.FC<ReactProps> = (props) => {
       <LoadingBar
         absoluteTop
         height={4}
-        width={'100vw'}
+        width={'100%'}
         loading={props.loading}
-        style={{ top: "-4px" }}
       />
       {
         newsItemEdges?.map(({ node: newsItem }, i) => {

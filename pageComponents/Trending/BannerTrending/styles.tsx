@@ -5,7 +5,7 @@ import { Colors, BorderRadius2x, fontFam, BorderRadius, isThemeDark } from "layo
 
 export const styles = (theme: Theme) => createStyles({
   rootDesktop: {
-    padding: '0rem 0rem',
+    padding: '1rem 1rem 0rem 1rem',
   },
   rootMobile: {
     padding: '0rem 0rem',
@@ -100,7 +100,7 @@ export const styles = (theme: Theme) => createStyles({
     backgroundColor: Colors.secondary,
     color: Colors.cream,
     width: '100%',
-    maxWidth: 180,
+    padding: 0,
     // borderRadius: BorderRadius,
     // border: `0px solid ${Colors.charcoal}`,
     transition: theme.transitions.create(['color', 'backgroundColor', 'border'], {
@@ -120,9 +120,6 @@ export const styles = (theme: Theme) => createStyles({
   minWidth160: {
     minWidth: 160,
   },
-  minWidth184: {
-    minWidth: 184,
-  },
   width100: {
     width: '100%',
   },
@@ -132,10 +129,9 @@ export const styles = (theme: Theme) => createStyles({
   buttonHeightDesktop: {
     height: 44,
   },
-  buttonFontSizeDesktop: {
+  buttonLabelDesktop: {
     fontSize: '1rem',
-  },
-  buttonRoot: {
+    height: '100%',
   },
   buttonLabel: {
     fontSize: '0.9rem',
@@ -143,6 +139,6 @@ export const styles = (theme: Theme) => createStyles({
 
   buttonBox: {
     marginTop: '1rem',
-    maxWidth: 200,
+    maxWidth: 180,
   },
 })

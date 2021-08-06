@@ -47,6 +47,7 @@ export const NewsItemColumn40: React.FC<ReactProps> = (props) => {
           ? <NewsItemCard
               newsItem={currentNewsItem}
               user={userRedux}
+              isModal={false}
               closeModal={() => {
                 setCurrentNewsItem(undefined)
                 setOpenModal(false)
@@ -62,8 +63,8 @@ export const NewsItemColumn40: React.FC<ReactProps> = (props) => {
           BackdropProps={{
             classes: { root: classes.modalBackdrop }
           }}
-          fullScreen={windowWidth < 480}
-          fullWidth={false}
+          fullScreen={true}
+          fullWidth={true}
           maxWidth={"lg"}
           PaperProps={{
             classes: { root: classes.modalPaperScrollPaper }
@@ -73,6 +74,7 @@ export const NewsItemColumn40: React.FC<ReactProps> = (props) => {
             newsItem={currentNewsItem}
             user={userRedux}
             closeModal={() => setOpenModal(false)}
+            isModal={true}
           />
         </Dialog>
       </ShowOnMobileOrDesktopSSR>
@@ -96,7 +98,6 @@ const styles = (theme: Theme) => createStyles({
     display: 'flex',
     justifyContent: "center",
     alignItems: "center",
-    maxHeight: "calc(100% - 1rem)",
     maxWidth: '960px',
     // height: '100%',
     boxShadow: 'unset',

@@ -8,7 +8,7 @@ import { styles } from "./styles";
 import Banner from "components/Banner";
 import Typography from "@material-ui/core/Typography";
 import Button from '@material-ui/core/Button';
-import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
+import ArrowStripeIcon from "components/ArrowStripeIcon";
 // Router
 import { useRouter } from 'next/router';
 // SSR
@@ -17,10 +17,6 @@ import { NextPage, NextPageContext } from 'next';
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 // Redux
-import { useSelector, useDispatch } from "react-redux";
-import { GrandReduxState } from "reduxStore/grand-reducer";
-import { Actions } from "reduxStore/actions";
-import { UserPrivate } from "typings/gqlTypes";
 import Link from "next/link";
 
 
@@ -84,18 +80,18 @@ const BannerTrendingLinkMobile: NextPage<ReactProps> = (props) => {
                   className={
                       clsx(
                         classes.buttonGoToPromotions,
-                        classes.minWidth184,
                         classes.buttonHeightMobile
                       )
                   }
                   variant="text"
                   color="primary"
                   classes={{
-                    root: classes.buttonRoot,
-                    label: classes.buttonFontSizeDesktop,
+                    label: classes.buttonLabelDesktop,
                   }}
                 >
-                  {"Go Now "} <ArrowForwardIcon/>
+                  <ArrowStripeIcon
+                    title={"Go Now"}
+                  />
                 </Button>
               </a>
             </Link>

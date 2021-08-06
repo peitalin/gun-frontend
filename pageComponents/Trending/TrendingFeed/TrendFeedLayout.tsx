@@ -18,7 +18,7 @@ export const TrendFeedLayout: React.FC<ReactProps> = (props) => {
   } = props;
 
   return (
-    <main>
+    <main className={classes.trendFeedLayoutRoot}>
       <div className={clsx(classes.titleContainer)}>
         <Typography variant="h2" className={classes.title}>
           { props.title ?? "Trending"}

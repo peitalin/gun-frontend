@@ -138,7 +138,6 @@ const TrendingNewsItemRow = (props: ReactProps) => {
                     {state}
                   </Typography>
 
-
                   <div className={classes.priceContainer}>
                     {
                       price &&
@@ -166,9 +165,9 @@ const TrendingNewsItemRow = (props: ReactProps) => {
                   <Typography className={classes.rankScore} variant="body1">
                     {`rank: ${newsItem?.rankScore}`}
                   </Typography>
-                  {/* <Typography className={classes.rankScore} variant="body1">
-                    {`newsItemId: ${newsItem?.id}`}
-                  </Typography> */}
+                  <Typography className={classes.rankScore} variant="body1">
+                    {`id: ${newsItem?.id}`}
+                  </Typography>
 
                 </div>
             }

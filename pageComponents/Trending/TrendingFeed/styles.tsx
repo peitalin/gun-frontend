@@ -4,10 +4,7 @@ import { Colors, BoxShadows, isThemeDark, BorderRadius, BorderRadius2x } from "l
 
 
 export const styles = (theme: Theme) => createStyles({
-  trendingRoot: {
-    display: 'flex',
-    width: '100%',
-    flexDirection: "column",
+  trendFeedLayoutRoot: {
     padding: '1rem',
   },
   trendFeed: {
@@ -41,6 +38,8 @@ export const styles = (theme: Theme) => createStyles({
     display: "flex",
     flexDirection: "column",
     flexBasis: "60%",
+    overflow: "hidden",
+    borderRadius: BorderRadius2x,
   },
   title: {
     marginTop: '2rem',

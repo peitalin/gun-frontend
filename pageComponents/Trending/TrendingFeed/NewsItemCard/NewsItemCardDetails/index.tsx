@@ -12,7 +12,7 @@ import {
 import NewsItemPreviewCard from "./NewsItemPreviewCard";
 import Typography from "@material-ui/core/Typography";
 import PriceDisplayMainMobile from "components/PriceDisplayMainMobile";
-import DescriptionLoadingText from "./DescriptionLoadingText2";
+import DescriptionLoadingText from "components/ProductRowMedium/DescriptionLoadingText";
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import ShowOnMobileOrDesktopSSR from "components/ShowOnMobileOrDesktopSSR";
@@ -36,6 +36,9 @@ import ButtonLoading from "components/ButtonLoading";
 import AdType from "./AdType";
 import SourceSiteChip from "./SourceSiteChip";
 import DescriptionText from "./DescriptionText";
+
+import CollectionsIcon from 'components/Collections/CollectionsIcon';
+import NewsItemAdminSuspendIcon from "components/NewsItems/NewsItemAdminSuspendIcon"
 
 
 
@@ -125,14 +128,38 @@ const NewsItemCardDetails = (props: ReactProps) => {
             previewItem={previewItem}
             setPreviewLoaded={(b) => props.setPreviewLoaded(b)}
             unclickable={true}
-            width={'100%'}
-            height={'100%'}
-            // width={previewItem?.image?.original?.widthInPixels}
-            // height={previewItem?.image?.original?.heightInPixels}
+            width={props.imageSize?.desktop?.width}
+            height={props.imageSize?.desktop?.height}
           />
+
+          <NewsItemAdminSuspendIcon
+            newsItem={newsItem}
+            style={{
+              top: 'unset',
+              bottom: '-0.5rem',
+              left: 'calc(0.5rem)',
+              marginTop: '0.5rem',
+              width: '28px',
+              height: '28px',
+            }}
+          />
+
+          <CollectionsIcon
+            productId={newsItem?.productId}
+            externalProductId={newsItem?.externalProductId}
+            // refetch={refetch}
+            style={{
+              top: 'unset',
+              bottom: '-0.5rem',
+              right: 'calc(120px + 0.25rem)',
+              marginTop: '0.5rem',
+              width: '28px',
+              height: '28px',
+            }}
+          />
+
           <ButtonLoading
             className={props.classes.claimButton}
-            // style={{ }}
             variant={"contained"}
             loadingIconColor={Colors.cream}
             replaceTextWhenLoading={true}
@@ -352,7 +379,8 @@ const styles = (theme: Theme) => createStyles({
     display: 'flex',
     flexDirection: 'row',
     flexWrap: 'wrap',
-    padding: '0.5rem 0rem 0.5rem 0rem',
+    marginTop: "1rem",
+    marginBottom: "0.5rem",
   },
   flexGrow: {
     flexGrow: 1,
@@ -384,7 +412,15 @@ const styles = (theme: Theme) => createStyles({
     borderRadius: BorderRadius3x,
     backgroundColor: Colors.ultramarineBlue,
     color: Colors.cream,
+    // transition: theme.transitions.create('transform', {
+    //   easing: theme.transitions.easing.easeInOut,
+    //   duration: '100ms',
+    // }),
     "&:hover": {
+      // transition: theme.transitions.create('transform', {
+      //   easing: theme.transitions.easing.easeInOut,
+      //   duration: '100ms',
+      // }),
       backgroundColor: Colors.ultramarineBlueLight
     }
   },

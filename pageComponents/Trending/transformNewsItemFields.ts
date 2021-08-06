@@ -1,5 +1,11 @@
 
-import { NewsItem, Product_Preview_Items, SoldOutStatus } from "typings/gqlTypes"
+import {
+	NewsItem,
+	External_Products,
+	Product_Preview_Items,
+	Product,
+	SoldOutStatus
+} from "typings/gqlTypes"
 
 
 export interface NewsItemFields {
@@ -104,6 +110,116 @@ export const transformNewsItemToFields = (
 
 	const sourceSiteUrl = isInternalProduct
 		? "www.gunmarketplace.com.au"
+		: externalProduct?.sourceSiteUrl
+
+  const previewItem = isInternalProduct
+		? featuredVariant?.previewItems?.[0]
+		: externalPSnapshot?.previewItems?.[0]
+
+	return {
+		model,
+		make,
+		caliber,
+		barrelLength,
+		action,
+		state,
+		soldOutStatus,
+		description,
+		price,
+		title,
+		serialNumber,
+		condition,
+		adType,
+		licenseNumber,
+		phoneNumber,
+		sourceSite,
+		sourceSiteUrl,
+		previewItem,
+		isInternalProduct,
+	}
+}
+
+
+export const transformExternalProductToFields = (
+	internalProduct: Product,
+	externalProduct?: External_Products,
+): NewsItemFields => {
+
+
+  const pSnapshot = internalProduct?.currentSnapshot
+  const externalPSnapshot = externalProduct?.currentExternalProductSnapshot
+
+  const featuredVariant = internalProduct?.featuredVariant
+  const sellerLicense = internalProduct?.sellerLicense
+
+	const isInternalProduct = !!featuredVariant?.variantId
+
+  const model = isInternalProduct
+		? pSnapshot?.model
+		: externalPSnapshot?.model
+
+  const make = isInternalProduct
+		? pSnapshot?.make
+		: externalPSnapshot?.make
+
+  const caliber = isInternalProduct
+		? pSnapshot?.caliber
+		: externalPSnapshot?.caliber
+
+  const barrelLength = isInternalProduct
+		? pSnapshot?.barrelLength
+		: externalPSnapshot?.barrelLength
+
+  const action = isInternalProduct
+		? pSnapshot?.actionType
+		: externalPSnapshot?.action
+
+  const state = isInternalProduct
+		? pSnapshot?.dealer?.state
+		: externalPSnapshot?.state
+
+  const soldOutStatus = isInternalProduct
+		? internalProduct?.soldOutStatus
+		: externalPSnapshot?.soldText ?? SoldOutStatus.AVAILABLE
+
+  const description = isInternalProduct
+		? pSnapshot?.description
+		: externalPSnapshot.description
+
+  const price = isInternalProduct
+		? featuredVariant?.price
+		: externalPSnapshot?.price
+
+  const title = isInternalProduct
+		? pSnapshot?.title
+		: externalPSnapshot?.title
+		?? `${make} ${model} ${caliber}`
+
+  const serialNumber = isInternalProduct
+		? pSnapshot?.serialNumber
+		: externalPSnapshot?.serialNumber
+
+  const condition = isInternalProduct
+		? pSnapshot?.condition
+		: externalPSnapshot?.condition
+
+  const adType = isInternalProduct
+		? "Private Ad"
+		: externalPSnapshot?.adType
+
+  const licenseNumber = isInternalProduct
+		? sellerLicense?.licenseNumber
+		: externalPSnapshot?.licenseNumber
+
+  const phoneNumber = isInternalProduct
+		? "" // no number for on-platform products
+		: externalPSnapshot?.phoneNumber
+
+  const sourceSite = externalProduct?.sourceSite
+		?? "gunmarketplace.com.au"
+
+	const sourceSiteUrl = isInternalProduct
+		? "gunmarketplace.com.au"
 		: externalProduct?.sourceSiteUrl
 
   const previewItem = isInternalProduct

@@ -31,9 +31,16 @@ const NewsItemCard: React.FC<ReactProps> = (props) => {
   const [previewLoaded, setPreviewLoaded] = React.useState(false)
 
   return (
-    <div className={classes.newsItemModalPageRoot}>
+    <div className={clsx(
+      props.isModal
+        ? classes.newsItemModalPageRootMobile
+        : classes.newsItemModalPageRootDesktop,
+    )}>
       <IconButton
-        className={classes.closeButton}
+        className={clsx(
+          classes.closeButton,
+          props.isModal ? classes.closeButtonMobile : classes.closeButtonDesktop,
+        )}
         onClick={props.closeModal}
       >
         <ClearIcon className={classes.clearIcon}/>
@@ -50,12 +57,16 @@ const NewsItemCard: React.FC<ReactProps> = (props) => {
           isSuspended={newsItem?.isSuspended || newsItem?.isDeleted}
           imageSize={{
             mobile: {
-              width: 90,
-              height: 60,
+              // width: 90,
+              // height: 60,
+              width: '100%',
+              height: '100%',
             },
             desktop: {
-              width: 120,
-              height: 80,
+              // width: 120,
+              // height: 80,
+              width: '100%',
+              height: '100%',
             },
           }}
         />
@@ -69,15 +80,23 @@ interface ReactProps extends WithStyles<typeof styles> {
   newsItem: NewsItem
   user: UserPrivate
   closeModal(): void;
+  isModal: boolean;
 }
 
 
 const styles = (theme: Theme) => createStyles({
-  newsItemModalPageRoot: {
+  newsItemModalPageRootDesktop: {
     position: "relative",
     padding: "1rem",
     paddingBottom: "0rem",
     paddingRight: "0rem",
+  },
+  newsItemModalPageRootMobile: {
+    position: "relative",
+    paddingTop: "0rem",
+    paddingBottom: "0rem",
+    paddingRight: "0rem",
+    maxHeight: '100vh',
   },
   newsItemInnerContainer: {
     display: 'flex',
@@ -102,10 +121,17 @@ const styles = (theme: Theme) => createStyles({
     width: '100%',
     minWidth: '300px',
   },
-  closeButton: {
+  closeButtonMobile: {
+    position: "absolute",
+    top: '1.5rem',
+    right: '0.5rem',
+  },
+  closeButtonDesktop: {
     position: "absolute",
     top: '0.5rem',
     right: '-0.5rem',
+  },
+  closeButton: {
     zIndex: 2,
     color: isThemeDark(theme)
       ? Colors.uniswapLightGrey
