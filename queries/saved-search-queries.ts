@@ -5,7 +5,7 @@ import {
 } from "./fragments";
 import {
   ExternalProductsFragment,
-} from "./news-items-subscriptions";
+} from "./fragments";
 
 
 export const GET_SAVED_SEARCHES_BY_USER = gql`
