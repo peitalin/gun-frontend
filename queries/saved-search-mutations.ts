@@ -2,7 +2,7 @@ import { gql } from "@apollo/client";
 import { ProductFragment, SavedSearchFragment } from "./fragments";
 import {
   ExternalProductsFragment,
-} from "./news-items-subscriptions";
+} from "./fragments";
 
 
 
