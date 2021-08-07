@@ -24,6 +24,10 @@ const SERVER_URI = process.env.SERVER_GATEWAY_GRAPHQL_URL;
 const WS_URI = process.env.GATEWAY_GRAPHQL_WS_URL;
 const NODE_ENV = process.env.NODE_ENV;
 
+import {
+  NewsItemsConnection,
+} from "typings/gqlTypes"
+
 if (process.env.NODE_ENV === "development") {
   console.log("Graphql URI: ", URI)
   console.log("Graphql Websocket URI: ", WS_URI)
@@ -93,6 +97,67 @@ const cacheOptions = {
     Order: ["OrderPublic", "OrderDealer", "OrderAdmin"],
   },
   typePolicies: {
+
+    Query: {
+      fields: {
+        getHotNewsItemsToday: {
+          // Don't cache separate results based on
+          // any of this field's arguments.
+          keyArgs: false as any,
+          // Concatenate the incoming list items with
+          // the existing list items.
+          merge(existing: NewsItemsConnection, incoming: NewsItemsConnection) {
+            let mergedEdges = [
+              ...(existing?.edges ?? []),
+              ...(incoming?.edges ?? []),
+            ]
+            return {
+              ...incoming,
+              edges: mergedEdges
+            }
+          },
+        },
+        getHotNewsItemsYesterday: {
+          keyArgs: false as any,
+          merge(existing: NewsItemsConnection, incoming: NewsItemsConnection) {
+            let mergedEdges = [
+              ...(existing?.edges ?? []),
+              ...(incoming?.edges ?? []),
+            ]
+            return {
+              ...incoming,
+              edges: mergedEdges
+            }
+          },
+        },
+        getHotNewsItemsThisWeek: {
+          keyArgs: false as any,
+          merge(existing: NewsItemsConnection, incoming: NewsItemsConnection) {
+            let mergedEdges = [
+              ...(existing?.edges ?? []),
+              ...(incoming?.edges ?? []),
+            ]
+            return {
+              ...incoming,
+              edges: mergedEdges
+            }
+          },
+        },
+        getHotNewsItemsLastWeek: {
+          keyArgs: false as any,
+          merge(existing: NewsItemsConnection, incoming: NewsItemsConnection) {
+            let mergedEdges = [
+              ...(existing?.edges ?? []),
+              ...(incoming?.edges ?? []),
+            ]
+            return {
+              ...incoming,
+              edges: mergedEdges
+            }
+          },
+        },
+      }
+    },
 
     ProductPrivate: {
       keyFields: ["id"],

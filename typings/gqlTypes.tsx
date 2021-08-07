@@ -3523,7 +3523,6 @@ export type MutationCreateNewsItemWithExternalProductArgs = {
 export type MutationEditExternalProductArgs = {
   externalProductId: Scalars['String'];
   externalProductCreateInput: ExternalProductCreateInput;
-  userId: Scalars['String'];
 };
 
 
@@ -9501,7 +9500,7 @@ export type Collection_Items = {
   position?: Maybe<Scalars['Int']>;
   /** An object relationship */
   product?: Maybe<Products>;
-  productId: Scalars['String'];
+  productId?: Maybe<Scalars['String']>;
   userId: Scalars['String'];
 };
 

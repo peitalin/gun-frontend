@@ -216,7 +216,7 @@ const CollectionModal: React.FC<ReactProps> = (props) => {
 
   let collections = data?.getCollectionsByUserId;
   // console.log("collections", collections)
-  console.log("selectedProductExternalProductId", selectedProductExternalProductId)
+  // console.log("selectedProductExternalProductId", selectedProductExternalProductId)
   let loadingMutation = response1?.loading || response2?.loading
 
   return (
@@ -268,7 +268,7 @@ const CollectionModal: React.FC<ReactProps> = (props) => {
 
                     let productInCollection = !!collectionItemEdge?.node?.productId
                       || !!collectionItemEdge?.node?.externalProductId
-                    console.log("productInCollection: ", productInCollection)
+                    // console.log("productInCollection: ", productInCollection)
 
                     let collectionItem = collectionItemEdge?.node
 

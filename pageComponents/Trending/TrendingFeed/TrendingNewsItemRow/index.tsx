@@ -6,6 +6,7 @@ import { Colors, isThemeDark } from "layout/AppTheme";
 import {
   UserPrivate,
   NewsItem,
+  Role,
 } from "typings/gqlTypes";
 // Material UI
 import ProductPreviewCardRowSmall from "components/ProductPreviewCardRowSmall";
@@ -161,13 +162,18 @@ const TrendingNewsItemRow = (props: ReactProps) => {
                     />
                   </div>
 
-
-                  <Typography className={classes.rankScore} variant="body1">
-                    {`rank: ${newsItem?.rankScore}`}
-                  </Typography>
-                  <Typography className={classes.rankScore} variant="body1">
-                    {`id: ${newsItem?.id}`}
-                  </Typography>
+                  {
+                    user?.userRole === Role.PLATFORM_ADMIN &&
+                    false &&
+                    <>
+                      <Typography className={classes.rankScore} variant="body1">
+                        {`rank: ${newsItem?.rankScore}`}
+                      </Typography>
+                      <Typography className={classes.rankScore} variant="body1">
+                        {`id: ${newsItem?.id}`}
+                      </Typography>
+                    </>
+                  }
 
                 </div>
             }

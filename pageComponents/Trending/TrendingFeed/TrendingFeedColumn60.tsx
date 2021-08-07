@@ -29,6 +29,10 @@ export const TrendingFeedLayout: React.FC<ReactProps> = (props) => {
     return s.reduxLogin.user
   })
 
+  // const client = useApolloClient()
+  // console.log("cache: ", client.cache)
+  console.log("loading: ", props.loading)
+
   const newsItemEdges = props.tab === 0
     ? props.newsItemsHot?.edges
     : props.newsItemsNew?.edges
@@ -74,6 +78,19 @@ export const TrendingFeedLayout: React.FC<ReactProps> = (props) => {
           )
         })
       }
+      <div className={classes.loadMore}
+        onClick={
+          props.tab === 0
+            ? props.fetchMoreHot
+            : props.fetchMoreNew
+        }
+      >
+        {
+          props.loading
+          ? "loading more..."
+          : "load more"
+        }
+      </div>
     </div>
   );
 }
@@ -88,6 +105,8 @@ interface ReactProps extends WithStyles<typeof styles> {
   tab: number
   setTab(t: number): void
   loading: boolean
+  fetchMoreHot?(): void
+  fetchMoreNew?(): void
 }
 
 

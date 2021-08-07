@@ -73,3 +73,19 @@ export const UNVOTE_NEWS_ITEM = gql`
 `;
 
 
+
+// Admin
+export const EDIT_EXTERNAL_PRODUCT = gql`
+  mutation(
+    $externalProductId: String!
+    $externalProductCreateInput: ExternalProductCreateInput!
+  ) {
+    editExternalProduct(
+      externalProductId: $externalProductId
+      externalProductCreateInput: $externalProductCreateInput
+    ) {
+      ...NewsItemFragment
+    }
+  }
+  ${NewsItemFragment}
+`;

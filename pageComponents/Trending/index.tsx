@@ -24,7 +24,6 @@ export const Trending: React.FC<ReactProps> = (props) => {
 
   // const theme = useTheme()
   // const snackbar = useSnackbar()
-  // const windowWidth = useWindowWidth()
 
   return (
     <AlignCenterLayout
@@ -34,16 +33,8 @@ export const Trending: React.FC<ReactProps> = (props) => {
     >
 
       <BannerTrending/>
-      <TrendingToday />
 
-      <div style={{
-        marginTop: '-1rem',
-        marginBottom: '0rem',
-      }}>
-        <BannerTrending/>
-      </div>
-
-      <TrendingYesterday />
+      <TrendingToday limit={10}/>
 
 
       <FeaturedProducts
@@ -61,7 +52,16 @@ export const Trending: React.FC<ReactProps> = (props) => {
         }
       />
 
-      <TrendingThisWeek />
+      <TrendingYesterday limit={10}/>
+
+      <div style={{
+        marginTop: '-1rem',
+        marginBottom: '0rem',
+      }}>
+        <BannerTrending/>
+      </div>
+
+      <TrendingThisWeek limit={10}/>
 
       <FeaturedProducts
         count={4}
@@ -78,7 +78,8 @@ export const Trending: React.FC<ReactProps> = (props) => {
         }
       />
 
-      <TrendingLastWeek />
+      <TrendingLastWeek limit={20}/>
+
     </AlignCenterLayout>
   );
 }

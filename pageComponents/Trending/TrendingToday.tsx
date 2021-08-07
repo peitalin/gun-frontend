@@ -11,7 +11,7 @@ import {
   NewsItem,
 } from "typings/gqlTypes";
 // graphql
-import { useSubscription, useLazyQuery } from '@apollo/client';
+import { useSubscription, useLazyQuery, useQuery } from '@apollo/client';
 import { SUBSCRIBE_NEWS_ITEMS_SORT_BY_NEW } from "queries/news-items-subscriptions";
 import {
   GET_HOT_NEWS_ITEMS_TODAY,
@@ -38,18 +38,21 @@ export const TrendingToday: React.FC<ReactProps> = (props) => {
     setCacheHotItems
   ] = React.useState<NewsItemsConnection>(undefined)
 
+  const limit = props.limit ?? 10
+  const [offset, setOffset] = React.useState(0)
+
 
   const { data, error } = useSubscription<SData, SVar>(
     SUBSCRIBE_NEWS_ITEMS_SORT_BY_NEW, {
       variables: {
         query: {
-          limit: 20,
-          offset: 0,
+          limit: limit,
+          offset: offset,
         }
       },
       shouldResubscribe: true,
       onSubscriptionData: ({ client, subscriptionData: { data }}) => {
-        console.log('newsItems subscriptionData:', data)
+        // console.log('newsItems subscriptionData:', data)
       },
       onSubscriptionComplete: () => {
         console.log('newsItems subscriptions complete.')
@@ -65,14 +68,13 @@ export const TrendingToday: React.FC<ReactProps> = (props) => {
     GET_HOT_NEWS_ITEMS_TODAY, {
     variables: {
       query: {
-        limit: 20,
+        limit: limit,
         offset: 0,
       },
     },
     onCompleted: React.useCallback(async(data) => {
       setCacheHotItems(data?.getHotNewsItemsToday)
     }, []),
-    fetchPolicy: "no-cache"
   });
 
   React.useEffect(() => {
@@ -82,7 +84,13 @@ export const TrendingToday: React.FC<ReactProps> = (props) => {
   }, [tab])
 
   let newsItemsHot = hotItemsResponse?.data?.getHotNewsItemsToday ?? cacheHotItems
+    // ?? cacheHotItems
   let newsItemsNew = data?.newsItemsSortByNewConnection
+
+  let fetchMoreHot = hotItemsResponse?.fetchMore
+
+  // console.log('offset:', offset)
+  // console.log("ddata", hotItemsResponse?.data?.getHotNewsItemsToday?.edges?.map(e => e?.node?.id))
 
   return (
     <TrendFeedLayout
@@ -100,6 +108,30 @@ export const TrendingToday: React.FC<ReactProps> = (props) => {
         tab={tab}
         setTab={setTab}
         loading={hotItemsResponse.loading}
+        fetchMoreHot={async() => {
+
+          let newOffset = offset + limit
+
+          let newData = await fetchMoreHot({
+            variables: {
+              query: {
+                limit: limit,
+                offset: newOffset,
+              },
+            }
+          })
+          // console.log("newData: ", newData)
+          setCacheHotItems(s => {
+            return {
+              ...s,
+              edges: [
+                ...s?.edges,
+                ...newData.data?.getHotNewsItemsToday?.edges,
+              ]
+            }
+          })
+          setOffset(newOffset)
+        }}
       />
       <NewsItemColumn40
         currentNewsItem={currentNewsItem}
@@ -112,6 +144,7 @@ export const TrendingToday: React.FC<ReactProps> = (props) => {
 }
 
 interface ReactProps extends WithStyles<typeof styles> {
+  limit?: number
 }
 
 interface SData {

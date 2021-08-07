@@ -40,6 +40,13 @@ export const TrendingThisWeek: React.FC<ReactProps> = (props) => {
     setCacheNewItems
   ] = React.useState<NewsItemsConnection>(undefined)
 
+
+
+  const limit = props.limit ?? 10
+  const [offsetHot, setOffsetHot] = React.useState(0)
+  const [offsetNew, setOffsetNew] = React.useState(0)
+
+
   const [
     getHotNewsItemsThisWeek,
     hotItemsResponse,
@@ -55,7 +62,6 @@ export const TrendingThisWeek: React.FC<ReactProps> = (props) => {
     onCompleted: React.useCallback(async(data) => {
       setCacheHotItems(data?.getHotNewsItemsThisWeek)
     }, []),
-    fetchPolicy: "no-cache"
   });
 
   const [
@@ -73,7 +79,6 @@ export const TrendingThisWeek: React.FC<ReactProps> = (props) => {
     onCompleted: React.useCallback(async(data) => {
       setCacheNewItems(data?.getHotNewsItemsThisWeek)
     }, []),
-    fetchPolicy: "no-cache"
   });
 
   React.useEffect(() => {
@@ -86,6 +91,9 @@ export const TrendingThisWeek: React.FC<ReactProps> = (props) => {
 
   let newsItemsHot = hotItemsResponse?.data?.getHotNewsItemsThisWeek ?? cacheHotItems
   let newsItemsNew = newItemsResponse?.data?.getHotNewsItemsThisWeek ?? cacheNewItems
+
+  let fetchMoreNew = newItemsResponse?.fetchMore
+  let fetchMoreHot = hotItemsResponse?.fetchMore
 
   return (
     <TrendFeedLayout
@@ -103,6 +111,54 @@ export const TrendingThisWeek: React.FC<ReactProps> = (props) => {
         tab={tab}
         setTab={setTab}
         loading={hotItemsResponse.loading}
+        fetchMoreHot={async() => {
+
+          let newOffset = offsetHot + limit
+
+          let newData = await fetchMoreHot({
+            variables: {
+              query: {
+                limit: limit,
+                offset: newOffset,
+              },
+            }
+          })
+          // console.log("newData: ", newData)
+          setCacheHotItems(s => {
+            return {
+              ...s,
+              edges: [
+                ...s?.edges,
+                ...newData.data?.getHotNewsItemsThisWeek?.edges,
+              ]
+            }
+          })
+          setOffsetHot(newOffset)
+        }}
+        fetchMoreNew={async() => {
+
+          let newOffset = offsetNew + limit
+
+          let newData = await fetchMoreNew({
+            variables: {
+              query: {
+                limit: limit,
+                offset: newOffset,
+              },
+            }
+          })
+          // console.log("newData: ", newData)
+          setCacheNewItems(s => {
+            return {
+              ...s,
+              edges: [
+                ...s?.edges,
+                ...newData.data?.getHotNewsItemsThisWeek?.edges,
+              ]
+            }
+          })
+          setOffsetNew(newOffset)
+        }}
       />
       <NewsItemColumn40
         currentNewsItem={currentNewsItem}
@@ -115,6 +171,7 @@ export const TrendingThisWeek: React.FC<ReactProps> = (props) => {
 }
 
 interface ReactProps extends WithStyles<typeof styles> {
+  limit?: number
 }
 
 interface QData {
