@@ -78,7 +78,7 @@ export const Trending: React.FC<ReactProps> = (props) => {
         }
       />
 
-      <TrendingLastWeek limit={20}/>
+      <TrendingLastWeek limit={30}/>
 
     </AlignCenterLayout>
   );

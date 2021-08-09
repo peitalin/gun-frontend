@@ -112,6 +112,7 @@ export const TrendingToday: React.FC<ReactProps> = (props) => {
 
           let newOffset = offset + limit
 
+          // NOTE: apollo cache automatically merges fetchMore in apollo.tsx
           let newData = await fetchMoreHot({
             variables: {
               query: {
@@ -125,7 +126,7 @@ export const TrendingToday: React.FC<ReactProps> = (props) => {
             return {
               ...s,
               edges: [
-                ...s?.edges,
+                ...(s?.edges ?? []),
                 ...newData.data?.getHotNewsItemsToday?.edges,
               ]
             }

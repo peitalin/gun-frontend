@@ -164,13 +164,15 @@ const TrendingNewsItemRow = (props: ReactProps) => {
 
                   {
                     user?.userRole === Role.PLATFORM_ADMIN &&
-                    false &&
                     <>
                       <Typography className={classes.rankScore} variant="body1">
                         {`rank: ${newsItem?.rankScore}`}
                       </Typography>
                       <Typography className={classes.rankScore} variant="body1">
                         {`id: ${newsItem?.id}`}
+                      </Typography>
+                      <Typography className={classes.rankScore} variant="body1">
+                        {`date: ${newsItem?.createdAt}`}
                       </Typography>
                     </>
                   }

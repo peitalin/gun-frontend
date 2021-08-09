@@ -3517,6 +3517,7 @@ export type MutationMarkSavedSearchHitsAsSeenArgs = {
 
 export type MutationCreateNewsItemWithExternalProductArgs = {
   externalProductCreateInput?: Maybe<ExternalProductCreateInput>;
+  rescrape?: Maybe<Scalars['Boolean']>;
 };
 
 
@@ -11075,7 +11076,7 @@ export enum External_Products_Constraint {
   /** unique or primary key constraint */
   EXTERNAL_PRODUCTS_PKEY = 'external_products_pkey',
   /** unique or primary key constraint */
-  EXTERNAL_PRODUCTS_SOURCE_SITE_ID_KEY = 'external_products_source_site_id_key'
+  EXTERNAL_PRODUCTS_SOURCE_SITE_ID_SOURCE_SITE_KEY = 'external_products_source_site_id_source_site_key'
 }
 
 /** input type for inserting data into table "external_products" */

@@ -101,11 +101,11 @@ const cacheOptions = {
     Query: {
       fields: {
         getHotNewsItemsToday: {
-          // Don't cache separate results based on
-          // any of this field's arguments.
-          keyArgs: false as any,
-          // Concatenate the incoming list items with
-          // the existing list items.
+          // Don't cache separate results based on any of this field's arguments.
+          // keyArgs: false as any, // ignore variables, cache everything under same connection
+
+          keyArgs: ["sortByDate"] as any, // separate HOT and NEW connections when merging connections
+          // merge the incoming list items with the existing list items.
           merge(existing: NewsItemsConnection, incoming: NewsItemsConnection) {
             let mergedEdges = [
               ...(existing?.edges ?? []),
@@ -118,7 +118,8 @@ const cacheOptions = {
           },
         },
         getHotNewsItemsYesterday: {
-          keyArgs: false as any,
+          // keyArgs: false as any, // ignore variables, cache everything under same connection
+          keyArgs: ["sortByDate"] as any, // separate HOT and NEW connections when merging connections
           merge(existing: NewsItemsConnection, incoming: NewsItemsConnection) {
             let mergedEdges = [
               ...(existing?.edges ?? []),
@@ -131,7 +132,8 @@ const cacheOptions = {
           },
         },
         getHotNewsItemsThisWeek: {
-          keyArgs: false as any,
+          // keyArgs: false as any, // ignore variables, cache everything under same connection
+          keyArgs: ["sortByDate"] as any, // separate HOT and NEW connections when merging connections
           merge(existing: NewsItemsConnection, incoming: NewsItemsConnection) {
             let mergedEdges = [
               ...(existing?.edges ?? []),
@@ -144,7 +146,8 @@ const cacheOptions = {
           },
         },
         getHotNewsItemsLastWeek: {
-          keyArgs: false as any,
+          // keyArgs: false as any, // ignore variables, cache everything under same connection
+          keyArgs: ["sortByDate"] as any, // separate HOT and NEW connections when merging connections
           merge(existing: NewsItemsConnection, incoming: NewsItemsConnection) {
             let mergedEdges = [
               ...(existing?.edges ?? []),

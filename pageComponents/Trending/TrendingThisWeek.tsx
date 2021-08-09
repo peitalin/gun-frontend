@@ -41,7 +41,6 @@ export const TrendingThisWeek: React.FC<ReactProps> = (props) => {
   ] = React.useState<NewsItemsConnection>(undefined)
 
 
-
   const limit = props.limit ?? 10
   const [offsetHot, setOffsetHot] = React.useState(0)
   const [offsetNew, setOffsetNew] = React.useState(0)
@@ -54,7 +53,7 @@ export const TrendingThisWeek: React.FC<ReactProps> = (props) => {
     GET_HOT_NEWS_ITEMS_THIS_WEEK, {
     variables: {
       query: {
-        limit: 20,
+        limit: limit,
         offset: 0,
       },
       sortByDate: false,
@@ -71,7 +70,7 @@ export const TrendingThisWeek: React.FC<ReactProps> = (props) => {
     GET_HOT_NEWS_ITEMS_THIS_WEEK, {
     variables: {
       query: {
-        limit: 20,
+        limit: limit,
         offset: 0,
       },
       sortByDate: true,
@@ -128,7 +127,7 @@ export const TrendingThisWeek: React.FC<ReactProps> = (props) => {
             return {
               ...s,
               edges: [
-                ...s?.edges,
+                ...(s?.edges ?? []),
                 ...newData.data?.getHotNewsItemsThisWeek?.edges,
               ]
             }
@@ -139,6 +138,7 @@ export const TrendingThisWeek: React.FC<ReactProps> = (props) => {
 
           let newOffset = offsetNew + limit
 
+          // NOTE: apollo cache automatically merges fetchMore. See apollo.tsx
           let newData = await fetchMoreNew({
             variables: {
               query: {
@@ -152,7 +152,7 @@ export const TrendingThisWeek: React.FC<ReactProps> = (props) => {
             return {
               ...s,
               edges: [
-                ...s?.edges,
+                ...(s?.edges ?? []),
                 ...newData.data?.getHotNewsItemsThisWeek?.edges,
               ]
             }

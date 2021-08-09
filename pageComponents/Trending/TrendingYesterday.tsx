@@ -18,6 +18,7 @@ import {
 import TrendFeedLayout from "./TrendingFeed/TrendFeedLayout";
 import TrendingFeedColumn60 from "./TrendingFeed/TrendingFeedColumn60";
 import NewsItemColumn40 from "./TrendingFeed/NewsItemColumn40"
+import { useApolloClient } from "@apollo/client"
 
 
 export const TrendingYesterday: React.FC<ReactProps> = (props) => {
@@ -40,6 +41,8 @@ export const TrendingYesterday: React.FC<ReactProps> = (props) => {
     setCacheNewItems
   ] = React.useState<NewsItemsConnection>(undefined)
 
+  const client = useApolloClient()
+  console.log("CACHE", client.cache)
 
   const limit = props.limit ?? 10
   const [offsetHot, setOffsetHot] = React.useState(0)
@@ -88,8 +91,10 @@ export const TrendingYesterday: React.FC<ReactProps> = (props) => {
     }
   }, [tab])
 
-  let newsItemsHot = hotItemsResponse?.data?.getHotNewsItemsYesterday ?? cacheHotItems
-  let newsItemsNew = newItemsResponse?.data?.getHotNewsItemsYesterday ?? cacheNewItems
+  let newsItemsHot = hotItemsResponse?.data?.getHotNewsItemsYesterday
+    ?? cacheHotItems
+  let newsItemsNew = newItemsResponse?.data?.getHotNewsItemsYesterday
+    ?? cacheNewItems
 
   let fetchMoreHot = hotItemsResponse?.fetchMore
   let fetchMoreNew = newItemsResponse?.fetchMore
@@ -114,6 +119,7 @@ export const TrendingYesterday: React.FC<ReactProps> = (props) => {
 
           let newOffset = offsetHot + limit
 
+          // NOTE: apollo cache automatically merges fetchMore. See apollo.tsx
           let newData = await fetchMoreHot({
             variables: {
               query: {
@@ -127,7 +133,7 @@ export const TrendingYesterday: React.FC<ReactProps> = (props) => {
             return {
               ...s,
               edges: [
-                ...s?.edges,
+                ...(s?.edges ?? []),
                 ...newData.data?.getHotNewsItemsYesterday?.edges,
               ]
             }
@@ -151,7 +157,7 @@ export const TrendingYesterday: React.FC<ReactProps> = (props) => {
             return {
               ...s,
               edges: [
-                ...s?.edges,
+                ...(s?.edges ?? []),
                 ...newData.data?.getHotNewsItemsYesterday?.edges,
               ]
             }
