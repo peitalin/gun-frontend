@@ -132,7 +132,10 @@ const CollectionsPage: React.FC<ReactProps> = (props) => {
 
       {
         expand
-        ? <div className={classes.createCollectionButtonBox}>
+        ? <div className={clsx(
+            classes.createCollectionButtonBox,
+            "fadeInFast",
+          )}>
             <MenuItem
               className={clsx(
                 classes.expandCreateCollection,
@@ -171,7 +174,9 @@ const CollectionsPage: React.FC<ReactProps> = (props) => {
               </Typography>
             </MenuItem>
           </div>
-        : <div className={classes.createCollectionButtonBox}>
+        : <div className={clsx(
+            classes.createCollectionButtonBox,
+          )}>
             <MenuItem
               className={clsx(
                 classes.expandCreateCollection,
@@ -263,11 +268,6 @@ export const styles = (theme: Theme) => createStyles({
   },
   fieldRowShow: {
     height: '100%',
-    transition: theme.transitions.create(['opacity'], {
-      easing: theme.transitions.easing.sharp,
-      duration: "150ms",
-      delay: "50ms",
-    }),
     opacity: 1,
   },
   fieldRowHidden: {

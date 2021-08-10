@@ -61,7 +61,7 @@ const BetaTestingBannerDesktop: React.FC<ReactProps> = (props) => {
             color={Colors.purple}
             outerCircleColor={Colors.purple}
             innerCircleColor={
-              isDarkMode ? Colors.uniswapDarkNavy : Colors.cream
+              isDarkMode ? Colors.uniswapDarkNavy : Colors.black
             }
           />
           <span className={classes.betaTestBannerText}>
@@ -101,19 +101,7 @@ const styles = (theme: Theme) => createStyles({
     alignItems: 'center',
     background: theme.palette.type === "dark"
       ? Colors.uniswapDarkNavy
-      : Colors.cream,
-    // borderTop: theme.palette.type === 'dark'
-    //   ? `2px solid ${Colors.uniswapLightNavy}`
-    //   : `2px solid ${Colors.slateGreyDark}`,
-    // borderBottom: theme.palette.type === 'dark'
-    //   ? `2px solid ${Colors.uniswapLightNavy}`
-    //   : `2px solid ${Colors.slateGreyDark}`,
-    // background: `linear-gradient(90deg, rgb(206, 69, 197) 0%, rgb(85, 146, 232) 100%)`,
-    // borderBottom: '2px solid',
-    // borderImageSlice: 1,
-    // borderImageSource: theme.palette.type === 'dark'
-    //   ? `linear-gradient(90deg, rgb(206, 69, 197) 0%, rgb(85, 146, 232) 100%)`
-    //   : `linear-gradient(90deg, rgb(206, 69, 197) 0%, rgb(85, 146, 232) 100%)`,
+      : Colors.black,
   },
   title: {
     marginBottom: '2rem',
