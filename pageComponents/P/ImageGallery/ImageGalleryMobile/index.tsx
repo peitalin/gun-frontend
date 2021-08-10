@@ -143,11 +143,11 @@ const ImageGalleryMobile: React.FC<ReactProps> = (props) => {
                           ? <FeaturedImagePlaceholder/>
                           : pitem?.image?.original?.id
                             ? <FeaturedImageModal
-                                previewItem={pitem}
+                                featuredPreviewItem={pitem}
+                                previewItems={previewItems}
                                 openedModals={openedModals || []}
                                 openModal={openModal}
                                 closeModal={closeModal}
-                                product={product}
                                 index={index}
                                 setIndex={setIndex}
                                 disableModalPopup={true}

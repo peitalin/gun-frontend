@@ -59,7 +59,8 @@ const ProductRowMedium = (props: ReactProps) => {
 		phoneNumber,
 		sourceSite,
 		sourceSiteUrl,
-		previewItem,
+		featuredPreviewItem,
+    previewItems,
 		isInternalProduct,
   } = transformExternalProductToFields(product, externalProduct)
 
@@ -82,7 +83,7 @@ const ProductRowMedium = (props: ReactProps) => {
                 >
                   <a>
                     <ProductPreviewCardRowSmall
-                      previewItem={previewItem}
+                      previewItem={featuredPreviewItem}
                       width={props.imageSize?.desktop?.width ?? 135}
                       height={props.imageSize?.desktop?.height ?? 90}
                     />
@@ -90,7 +91,7 @@ const ProductRowMedium = (props: ReactProps) => {
                 </Link>
               : <a href={sourceSiteUrl} target={"_blank"}>
                   <ProductPreviewCardRowSmall
-                    previewItem={previewItem}
+                    previewItem={featuredPreviewItem}
                     width={props.imageSize?.desktop?.width ?? 135}
                     height={props.imageSize?.desktop?.height ?? 90}
                   />
@@ -111,7 +112,7 @@ const ProductRowMedium = (props: ReactProps) => {
                 >
                   <a>
                     <ProductPreviewCardRowSmall
-                      previewItem={previewItem}
+                      previewItem={featuredPreviewItem}
                       width={props.imageSize?.mobile?.width ?? 82.5}
                       height={props.imageSize?.mobile?.height ?? 55}
                     />
@@ -119,7 +120,7 @@ const ProductRowMedium = (props: ReactProps) => {
                 </Link>
               : <a href={sourceSiteUrl} target={"_blank"}>
                   <ProductPreviewCardRowSmall
-                    previewItem={previewItem}
+                    previewItem={featuredPreviewItem}
                     width={props.imageSize?.mobile?.width ?? 82.5}
                     height={props.imageSize?.mobile?.height ?? 55}
                   />

@@ -194,6 +194,16 @@ export type ConnectionQuery = {
   facetFilters?: Maybe<Array<Maybe<Array<Maybe<Scalars['String']>>>>>;
 };
 
+export type ConnectionQueryNewsItem = {
+  limit: Scalars['Int'];
+  offset?: Maybe<Scalars['Int']>;
+  /** orderBy: products_order_by # hasura's orderby */
+  orderBy?: Maybe<News_Items_Order_By>;
+  where?: Maybe<News_Items_Bool_Exp>;
+  filters?: Maybe<Scalars['String']>;
+  facetFilters?: Maybe<Array<Maybe<Array<Maybe<Scalars['String']>>>>>;
+};
+
 export type ConnectionQueryOrders = {
   limit: Scalars['Int'];
   offset?: Maybe<Scalars['Int']>;

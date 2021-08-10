@@ -32,6 +32,7 @@ const BidsPage: NextPage<ReactProps> = (props) => {
     <>
       <MetaHeadersPage
         title="Trending used guns for sale"
+        robots="noindex"
       />
       {/* <UserProfileWrapper>
         {(dataUser: UserProfileProps) => {

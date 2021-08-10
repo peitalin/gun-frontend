@@ -157,9 +157,7 @@ const FrontPage: React.FC<ReactProps> = (props) => {
         {
           showPromotedBanner &&
           <div className={classes.bannerPromotionsContainer}>
-            <BannerPromotionsLink
-              disableMetaHeader={true}
-            />
+            <BannerPromotionsLink />
           </div>
         }
 

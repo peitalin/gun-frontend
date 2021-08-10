@@ -141,7 +141,6 @@ const ProductCardRC = (props: ReactProps) => {
           productId &&
           <CollectionsIcon
             productId={productId}
-            variantId={productVariantId}
             refetch={refetch}
             style={{
               top: '-0.8rem',
