@@ -16,6 +16,7 @@ import { GrandReduxState } from "reduxStore/grand-reducer"
 
 import LoadingBar from "components/LoadingBar";
 import TrendingNewsItemRow from "./TrendingNewsItemRow";
+import LoadMoreFeedItems from './LoadMoreFeedItems';
 
 
 
@@ -59,6 +60,8 @@ export const TrendingFeedLayout: React.FC<ReactProps> = (props) => {
                 onClick={() => {
                   props.setCurrentNewsItem(newsItem)
                   props.setOpenModal(true)
+                  // reset image gallery paginator to first image
+                  props.setIndex(0)
                 }}
                 newsItem={newsItem}
                 user={userRedux}
@@ -78,19 +81,12 @@ export const TrendingFeedLayout: React.FC<ReactProps> = (props) => {
           )
         })
       }
-      <div className={classes.loadMore}
-        onClick={
-          props.tab === 0
-            ? props.fetchMoreHot
-            : props.fetchMoreNew
-        }
-      >
-        {
-          props.loading
-          ? "loading more..."
-          : "load more"
-        }
-      </div>
+      <LoadMoreFeedItems
+        tab={props.tab}
+        loading={props.loading}
+        fetchMoreHot={props.fetchMoreHot}
+        fetchMoreNew={props.fetchMoreNew}
+      />
     </div>
   );
 }
@@ -107,6 +103,8 @@ interface ReactProps extends WithStyles<typeof styles> {
   loading: boolean
   fetchMoreHot?(): void
   fetchMoreNew?(): void
+  index: number
+  setIndex(i: number): void
 }
 
 

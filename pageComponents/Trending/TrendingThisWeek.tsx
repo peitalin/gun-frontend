@@ -45,6 +45,8 @@ export const TrendingThisWeek: React.FC<ReactProps> = (props) => {
   const [offsetHot, setOffsetHot] = React.useState(0)
   const [offsetNew, setOffsetNew] = React.useState(0)
 
+  // image gallery index
+  const [index, setIndex] = React.useState(0);
 
   const [
     getHotNewsItemsThisWeek,
@@ -109,6 +111,9 @@ export const TrendingThisWeek: React.FC<ReactProps> = (props) => {
         setOpenModal={setOpenModal}
         tab={tab}
         setTab={setTab}
+        // image gallery
+        index={index}
+        setIndex={setIndex}
         loading={hotItemsResponse.loading}
         fetchMoreHot={async() => {
 
@@ -165,6 +170,9 @@ export const TrendingThisWeek: React.FC<ReactProps> = (props) => {
         setCurrentNewsItem={setCurrentNewsItem}
         openModal={openModal}
         setOpenModal={setOpenModal}
+        // image gallery
+        index={index}
+        setIndex={setIndex}
       />
     </TrendFeedLayout>
   );

@@ -124,7 +124,6 @@ const PreviewImageFeatured: React.FC<ReactProps> = (props) => {
           showLoadingBar &&
           <LoadingBar
             absoluteTop
-            color={Colors.ultramarineBlue}
             height={4}
             width={'100vw'}
             loading={true}
@@ -152,7 +151,7 @@ const objectFit = 'cover';
 
 const styles = (theme: Theme) => createStyles({
   card: {
-    borderRadius: BorderRadius,
+    borderRadius: 'unset',
     height: '100%',
     width: '100%',
     transition: theme.transitions.create('height', {

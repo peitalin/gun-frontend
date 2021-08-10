@@ -1,7 +1,7 @@
 import React from "react";
 import clsx from "clsx";
 import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
-import { Colors } from "layout/AppTheme";
+import { Colors, BorderRadius } from "layout/AppTheme";
 // Typings
 import { Product_Preview_Items } from "typings/gqlTypes";
 import { genSrcSet, genImgBreakpoints } from "utils/images";
@@ -27,7 +27,7 @@ const ImageInModal: React.FC<ReactProps> = (props) => {
   } = props;
 
   const theme = useTheme();
-  const xsDown = useMediaQuery(theme.breakpoints.down("xs"));
+  // const xsDown = useMediaQuery(theme.breakpoints.down("xs"));
 
   let loading = (!imgLoaded || !previewItem);
 
@@ -42,20 +42,18 @@ const ImageInModal: React.FC<ReactProps> = (props) => {
 
 
   let image = previewItem?.image;
+  // let urlSrc = image?.original?.url;
+  // let srcSet = (image?.variants?.length > 0)
+  //     ? genSrcSet(image)
+  //     : null;
 
-  let urlSrc = image?.original?.url;
-
-  let srcSet = (image?.variants?.length > 0)
-      ? genSrcSet(image)
-      : null;
-
-  let imgSizes = genImgBreakpoints({
-      xs: 400,
-      sm: 600,
-      md: 600,
-      lg: 800,
-      xl: 1200,
-  })
+  // let imgSizes = genImgBreakpoints({
+  //     xs: 400,
+  //     sm: 600,
+  //     md: 600,
+  //     lg: 800,
+  //     xl: 1200,
+  // })
 
   return (
     <div className={classes.card}>
@@ -115,7 +113,7 @@ interface ReactProps extends WithStyles<typeof styles> {
 
 const styles = (theme: Theme) => createStyles({
   card: {
-    borderRadius: "1px",
+    borderRadius: 'unset',
     transition: theme.transitions.create('height', {
       easing: theme.transitions.easing.sharp,
       duration: "200ms",

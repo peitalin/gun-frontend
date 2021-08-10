@@ -59,7 +59,8 @@ const TrendingNewsItemRow = (props: ReactProps) => {
 		phoneNumber,
 		sourceSite,
 		sourceSiteUrl,
-		previewItem,
+		featuredPreviewItem,
+		previewItems,
     isInternalProduct,
   } = transformNewsItemToFields(newsItem)
 
@@ -70,7 +71,6 @@ const TrendingNewsItemRow = (props: ReactProps) => {
     newsItem?.yourVote?.score ?? 0
   )
 
-  // console.log("newsITEM:", newsItem)
 
   return (
 
@@ -89,7 +89,7 @@ const TrendingNewsItemRow = (props: ReactProps) => {
               onClick={props.onClick}
             >
               <ProductPreviewCardRowSmall
-                previewItem={previewItem}
+                previewItem={featuredPreviewItem}
                 width={props.imageSize?.desktop?.width ?? 135}
                 height={props.imageSize?.desktop?.height ?? 90}
               />
@@ -106,7 +106,7 @@ const TrendingNewsItemRow = (props: ReactProps) => {
               onClick={props.onClick}
             >
               <ProductPreviewCardRowSmall
-                previewItem={previewItem}
+                previewItem={featuredPreviewItem}
                 width={props.imageSize?.mobile?.width ?? 82.5}
                 height={props.imageSize?.mobile?.height ?? 55}
               />

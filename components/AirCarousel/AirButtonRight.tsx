@@ -32,7 +32,7 @@ const AirButtonRight: React.FC<ReactProps> = (props) => {
             position: "absolute",
             top: "50%",
             right: "50%",
-            transform: "translate(44%, -50%)",
+            transform: "translate(50%, -50%)",
             fontSize: "16px",
           }}
         >

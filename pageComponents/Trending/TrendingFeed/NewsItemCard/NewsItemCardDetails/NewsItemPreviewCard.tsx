@@ -3,7 +3,7 @@ import clsx from "clsx";
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 // Typings
 import { Product_Preview_Items, Product } from "typings/gqlTypes";
-import { Colors, BorderRadius, isThemeDark, BoxShadows } from "layout/AppTheme";
+import { Colors, BorderRadius, isThemeDark, BorderRadius2x } from "layout/AppTheme";
 // Material UI
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
@@ -30,6 +30,7 @@ const NewsItemPreviewCard = (props: ReactProps) => {
       style={{
         height: props.height ? props.height : CARD_HEIGHT,
         width: props.width ? props.width : CARD_WIDTH,
+        maxHeight: 260,
       }}
     >
       <CardActionArea
@@ -137,7 +138,7 @@ const styles = (theme: Theme) => createStyles({
     marginRight: "1rem",
   },
   imagePreviewPlaceholder: {
-    borderRadius: "4px",
+    borderRadius: BorderRadius,
     height: '100px',
     width: '150px',
   },
@@ -157,16 +158,16 @@ const styles = (theme: Theme) => createStyles({
     textDecoration: "uppercase",
   },
   card: {
-    borderRadius: `${BorderRadius}px`,
+    borderRadius: `${BorderRadius2x}px ${BorderRadius2x}px 0px 0px`,
     boxShadow: 'none',
     height: CARD_HEIGHT,
     width: CARD_WIDTH,
     backgroundColor: isThemeDark(theme)
       ? Colors.uniswapDarkNavy
       : Colors.slateGreyDark,
-    border: theme.palette.type === 'dark'
-      ? `1px solid ${Colors.uniswapGrey}`
-      : `1px solid ${Colors.slateGreyDarker}`,
+    // border: theme.palette.type === 'dark'
+    //   ? `1px solid ${Colors.uniswapGrey}`
+    //   : `1px solid ${Colors.slateGreyDarker}`,
   },
   cardActionArea: {
     display: "flex",

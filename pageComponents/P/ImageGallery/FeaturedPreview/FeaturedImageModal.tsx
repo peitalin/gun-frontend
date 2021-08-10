@@ -7,8 +7,6 @@ import { Colors, isThemeDark } from "layout/AppTheme";
 import { Product_Preview_Items, Product } from "typings/gqlTypes";
 // Image Modal
 import Dialog from "@material-ui/core/Dialog";
-//// Components
-import AspectRatioConstraint from "components/AspectRatioConstraint";
 // Featured Preview
 import PreviewImageFeatured from "./PreviewImageFeatured";
 import FeaturedVideo from "./FeaturedVideo";
@@ -39,146 +37,153 @@ const FeaturedImageModal = (props: ReactProps) => {
 
   const {
     classes,
-    previewItem,
+    featuredPreviewItem,
     openedModals,
     openModal,
     closeModal,
     disableModalPopup = false,
+    animateTransitions = true,
   } = props;
 
-  const imageId = previewItem?.image?.original?.id
+  const imageId = featuredPreviewItem?.image?.original?.id
 
   const isDarkMode = isThemeDark(theme)
 
-  const previewItems = (props?.product?.featuredVariant?.previewItems ?? [])
+  const previewItems = (props?.previewItems ?? [])
     .filter(p =>
       p?.image?.original?.id !== undefined ||
       p?.youTubeEmbedLink !== undefined
     )
 
   return (
-    <AspectRatioConstraint>
-      <div className={clsx(
+    <div className={clsx(
         classes.featuredImageRoot,
         props.isPromoted && classes.featuredImageRootPromoted,
         xsDown ? classes.featuredImageRootXSDown : null
-      )}>
-        {
-          disableModalPopup
-          ? <PreviewImageFeatured
-              previewItem={previewItem}
-              // onClick={() => openModal(imageId)}
-              showLoadingBar={false}
-            />
-          : <BindKeyboardSwipeableViews
-              enableMouseEvents={false}
-              index={props.index}
-              onChangeIndex={(indexNew, indexLatest) => {
-                if (!disableModalPopup && props.setIndex) {
-                  props.setIndex(indexNew)
-                }
-              }}
-              slideStyle={{
-                background: isDarkMode
-                  ? Colors.uniswapDarkNavy
-                  : Colors.slateGreyDark,
-              }}
-              containerStyle={{ height: '100%', width: '100%' }}
-              style={{ height: '100%', width: '100%' }}
-            >
-              {
-                previewItems.map(( previewItem, i ) => {
-                  if (!!previewItem.youTubeEmbedLink) {
+      )}
+      style={props.style}
+    >
+      {
+        disableModalPopup
+        ? <PreviewImageFeatured
+            className={props.previewImageClassName}
+            previewItem={featuredPreviewItem}
+            // onClick={() => openModal(imageId)}
+            showLoadingBar={false}
+          />
+        : <BindKeyboardSwipeableViews
+            enableMouseEvents={false}
+            index={props.index}
+            animateTransitions={animateTransitions}
+            onChangeIndex={(indexNew, indexLatest) => {
+              if (!disableModalPopup && props.setIndex) {
+                props.setIndex(indexNew)
+              }
+            }}
+            slideStyle={{
+              background: isDarkMode
+                ? Colors.uniswapDarkNavy
+                : Colors.slateGreyDark,
+            }}
+            containerStyle={{ height: '100%', width: '100%' }}
+            style={{ height: '100%', width: '100%' }}
+          >
+            {
+              previewItems.map(( previewItem, i ) => {
+                if (!!previewItem.youTubeEmbedLink) {
+                  return (
+                    <FeaturedVideo key={i} previewItem={previewItem} />
+                  )
+                } else {
+                  // only load image for current index on carousel
+                  if (props.index === i) {
                     return (
-                      <FeaturedVideo key={i} previewItem={previewItem} />
+                      <PreviewImageFeatured
+                        className={clsx(props.previewImageClassName, "fadeIn")}
+                        key={i}
+                        previewItem={previewItem}
+                        onClick={() => {
+                          openModal(imageId)
+                        }}
+                        showLoadingBar={false}
+                      />
                     )
                   } else {
-                    // only load image for current index on carousel
-                    if (props.index === i) {
-                      return (
-                        <PreviewImageFeatured
-                          className={"fadeIn"}
-                          key={i}
-                          previewItem={previewItem}
-                          onClick={() => {
-                            openModal(imageId)
-                          }}
-                          showLoadingBar={false}
-                        />
-                      )
-                    } else {
-                      // otherwise render an empty placeholder
-                      // transitioning: shows a black background for fadeIn
-                      return (
-                        <FeaturedImagePlaceholder key={i} transitioning={true}/>
-                      )
-                    }
+                    // otherwise render an empty placeholder
+                    // transitioning: shows a black background for fadeIn
+                    return (
+                      <FeaturedImagePlaceholder key={i} transitioning={true}/>
+                    )
                   }
-                })
-              }
-            </BindKeyboardSwipeableViews>
-        }
+                }
+              })
+            }
+          </BindKeyboardSwipeableViews>
+      }
 
 
-        {
-          !disableModalPopup &&
-          <Dialog
-            open={openedModals?.includes(imageId)}
-            onClose={(event: object, reason: string) => {
-              if (
-                reason === "backdropClick" ||
-                reason === "escapeKeyDown"
-              ) {
-                closeModal(imageId)
-              }
-            }}
-            // full height
-            fullScreen={false}
-            fullWidth={false}
-            scroll="body"
-            maxWidth={"xl"}
-            BackdropProps={{
-              classes: { root: classes.modalBackdrop }
-            }}
-            PaperProps={{
-              classes: {
-                root: mdUp
-                  ? classes.modalPaperScrollPaper
-                  : classes.modalPaperScrollPaperSm
-              }
-            }}
-          >
-            <div className={classes.modalContainer}>
-              <div className={clsx(classes.paper, classes.paperLoaded)}>
-                <SwipeableModalPreviews
-                  previewItem={previewItem}
-                  closeModal={closeModal}
-                  isMobile={false}
-                  product={props.product}
-                  index={props.index}
-                  setIndex={props.setIndex}
-                />
-              </div>
+      {
+        !disableModalPopup &&
+        <Dialog
+          open={openedModals?.includes(imageId)}
+          onClose={(event: object, reason: string) => {
+            if (
+              reason === "backdropClick" ||
+              reason === "escapeKeyDown"
+            ) {
+              closeModal(imageId)
+              // reset index when clicking out of image gallery
+              props.setIndex(0)
+            }
+          }}
+          // full height
+          fullScreen={false}
+          fullWidth={false}
+          scroll="body"
+          maxWidth={"xl"}
+          BackdropProps={{
+            classes: { root: classes.modalBackdrop }
+          }}
+          PaperProps={{
+            classes: {
+              root: mdUp
+                ? classes.modalPaperScrollPaper
+                : classes.modalPaperScrollPaperSm
+            }
+          }}
+        >
+          <div className={classes.modalContainer}>
+            <div className={clsx(classes.paper, classes.paperLoaded)}>
+              <SwipeableModalPreviews
+                previewItems={previewItems}
+                closeModal={closeModal}
+                isMobile={false}
+                index={props.index}
+                setIndex={props.setIndex}
+              />
             </div>
-          </Dialog>
-        }
+          </div>
+        </Dialog>
+      }
 
-      </div>
-    </AspectRatioConstraint>
+    </div>
   )
 }
 
 interface ReactProps extends WithStyles<typeof styles> {
-  previewItem?: Product_Preview_Items;
+  featuredPreviewItem?: Product_Preview_Items
+  previewItems: Product_Preview_Items[]
   openedModals?: string[];
   openModal?(id: string): void;
   closeModal?(id: string): void;
   onClick?(a: any): void;
   disableModalPopup?: boolean;
-  product?: Product;
   index?: number;
   setIndex?(a?: any): void;
   isPromoted?: boolean;
+  style?: any;
+  previewImageClassName?: any;
+  animateTransitions?: boolean;
 }
 
 export default withStyles(styles)( FeaturedImageModal );

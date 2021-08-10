@@ -1,7 +1,13 @@
 import React from "react";
 import clsx from "clsx";
 import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
-import { BorderRadius, Colors, isThemeDark, BorderRadius3x } from "layout/AppTheme";
+import {
+  BorderRadius,
+  BorderRadius2x,
+  BorderRadius3x,
+  Colors,
+  isThemeDark,
+} from "layout/AppTheme";
 // Typings
 import {
   SoldOutStatus,
@@ -9,7 +15,7 @@ import {
   NewsItem,
 } from "typings/gqlTypes";
 // Material UI
-import NewsItemPreviewCard from "./NewsItemPreviewCard";
+// import NewsItemPreviewCard from "./NewsItemPreviewCard";
 import Typography from "@material-ui/core/Typography";
 import PriceDisplayMainMobile from "components/PriceDisplayMainMobile";
 import DescriptionLoadingText from "components/ProductRowMedium/DescriptionLoadingText";
@@ -39,6 +45,9 @@ import DescriptionText from "./DescriptionText";
 
 import CollectionsIcon from 'components/Collections/CollectionsIcon';
 import NewsItemAdminSuspendIcon from "components/NewsItems/NewsItemAdminSuspendIcon"
+import FeaturedPreview from "pageComponents/P/ImageGallery/FeaturedPreview";
+import BottomImageCarouselDesktop from "pageComponents/P/ImageGallery/ImageGalleryDesktop/BottomImageCarouselDesktop";
+
 
 
 
@@ -94,7 +103,8 @@ const NewsItemCardDetails = (props: ReactProps) => {
 		phoneNumber,
 		sourceSite,
 		sourceSiteUrl,
-		previewItem,
+		featuredPreviewItem: _featuredPreviewItem,
+		previewItems,
     isInternalProduct,
   } = transformNewsItemToFields(newsItem)
 
@@ -104,6 +114,11 @@ const NewsItemCardDetails = (props: ReactProps) => {
   const [existingVoteScore, setExistingVoteScore] = React.useState(
     newsItem?.yourVote?.score ?? 0
   )
+  const [
+    featuredPreviewItem,
+    setFeaturedPreviewItem
+  ] = React.useState(_featuredPreviewItem);
+  // console.log("newsITEM:", newsItem)
 
   const downvoted = existingVoteScore === -1
   const upvoted = existingVoteScore === 1
@@ -118,26 +133,38 @@ const NewsItemCardDetails = (props: ReactProps) => {
         <div
           className={clsx(
             classes.flexColOuter,
-            classes.flexColPadding,
             classes.unclickable,
             classes.positionRelative,
             "fadeInFast",
           )}
         >
-          <NewsItemPreviewCard
-            previewItem={previewItem}
+          <FeaturedPreview
+            featuredPreviewItem={featuredPreviewItem}
+            previewItems={previewItems}
             setPreviewLoaded={(b) => props.setPreviewLoaded(b)}
-            unclickable={true}
-            width={props.imageSize?.desktop?.width}
-            height={props.imageSize?.desktop?.height}
+            loading={props.loading || !process.browser} // for SSR
+            index={props.index}
+            setIndex={props.setIndex}
+            isPromoted={false}
+            disableModalPopup={false}
+            style={{
+              width: props.imageSize?.desktop?.width,
+              height: props.imageSize?.desktop?.height,
+              borderRadius: 0,
+              // maxHeight: 285,
+              maxHeight: 266,
+            }}
+            previewImageClassName={classes.borderRadiusUnset}
+            constrainAspectRatio={false}
+            animateTransitions={false}
           />
 
           <NewsItemAdminSuspendIcon
             newsItem={newsItem}
             style={{
               top: 'unset',
-              bottom: '-0.5rem',
-              left: 'calc(0.5rem)',
+              bottom: '-1rem',
+              left: 'calc(1rem)',
               marginTop: '0.5rem',
               width: '28px',
               height: '28px',
@@ -150,8 +177,8 @@ const NewsItemCardDetails = (props: ReactProps) => {
             // refetch={refetch}
             style={{
               top: 'unset',
-              bottom: '-0.5rem',
-              right: 'calc(120px + 0.25rem)',
+              bottom: '-1rem',
+              right: 'calc(120px + 1.25rem)',
               marginTop: '0.5rem',
               width: '28px',
               height: '28px',
@@ -173,28 +200,67 @@ const NewsItemCardDetails = (props: ReactProps) => {
             Claim Listing
           </ButtonLoading>
         </div>
+
+        {
+          previewItems?.length > 1 &&
+          <div className={classes.bottomImageGalleryBox}>
+            <BottomImageCarouselDesktop
+              setFeaturedPreviewItem={setFeaturedPreviewItem}
+              previewItems={previewItems}
+              productId={newsItem?.id}
+              loading={props.loading || !process.browser} // for SSR
+              index={props.index}
+              setIndex={props.setIndex}
+              numberOfItemsWide={previewItems?.length}
+            />
+          </div>
+        }
       </ShowOnMobileOrDesktopSSR>
       <ShowOnMobileOrDesktopSSR mobile>
         <div
           className={clsx(
             classes.flexColOuter,
-            classes.flexColPaddingSm,
+            // classes.flexColPaddingSm,
             classes.unclickable,
             "fadeInFast",
           )}
         >
-          <NewsItemPreviewCard
-            previewItem={previewItem}
+          {/* <NewsItemPreviewCard
+            previewItem={featuredPreviewItem}
             setPreviewLoaded={(b) => props.setPreviewLoaded(b)}
             unclickable={true}
             width={props.imageSize?.mobile?.width ?? 82.5}
             height={props.imageSize?.mobile?.height ?? 55}
+          /> */}
+
+          <FeaturedPreview
+            featuredPreviewItem={featuredPreviewItem}
+            previewItems={previewItems}
+            setPreviewLoaded={(b) => props.setPreviewLoaded(b)}
+            loading={props.loading || !process.browser} // for SSR
+            index={props.index}
+            setIndex={props.setIndex}
+            isPromoted={false}
+            disableModalPopup={false}
+            style={{
+              width: props.imageSize?.desktop?.width,
+              height: props.imageSize?.desktop?.height,
+              borderRadius: 0,
+              // maxHeight: 285,
+              maxHeight: 240,
+            }}
+            previewImageClassName={classes.borderRadiusUnset}
+            constrainAspectRatio={false}
+            animateTransitions={false}
           />
         </div>
       </ShowOnMobileOrDesktopSSR>
 
 
-      <div className={classes.flexRow}>
+      <div className={clsx(
+        classes.flexRow,
+        classes.titleBox,
+      )}>
 
         <div
           className={clsx(
@@ -283,7 +349,10 @@ const NewsItemCardDetails = (props: ReactProps) => {
       </div>
 
 
-      <div className={classes.flexRowWrapOuter}>
+      <div className={clsx(
+        classes.flexRowWrapOuter,
+        classes.chipsBox,
+        )}>
 
         <SourceSiteChip sourceSite={sourceSite}/>
 
@@ -294,7 +363,10 @@ const NewsItemCardDetails = (props: ReactProps) => {
         />
       </div>
 
-      <div className={classes.flexRowWrapOuter}>
+      <div className={clsx(
+        classes.flexRowWrapOuter,
+        classes.descriptionBox,
+      )}>
         <DescriptionText
           isInternalProduct={isInternalProduct}
           description={description}
@@ -322,6 +394,8 @@ interface ReactProps extends WithStyles<typeof styles> {
       width: any
     },
   }
+  index: number
+  setIndex(i: number): void
 }
 
 interface MData1 {
@@ -347,6 +421,7 @@ const styles = (theme: Theme) => createStyles({
     cursor: "default",
   },
   positionRelative: {
+    zIndex: 1,
     position: "relative",
   },
   flexColOuter: {
@@ -379,8 +454,25 @@ const styles = (theme: Theme) => createStyles({
     display: 'flex',
     flexDirection: 'row',
     flexWrap: 'wrap',
-    marginTop: "1rem",
+  },
+  bottomImageGalleryBox: {
+    paddingLeft: "0.5rem",
+    // paddingRight: "0.5rem",
+    marginBottom: "-1.5rem",
+  },
+  titleBox: {
+    marginTop: "1.5rem",
+    padding: "0rem 1.5rem",
+  },
+  chipsBox: {
+    // marginTop: "0.5rem",
+    // marginBottom: "1rem",
     marginBottom: "0.5rem",
+    padding: "0rem 1.5rem",
+  },
+  descriptionBox: {
+    padding: "0rem 1.5rem",
+    marginBottom: "1.5rem",
   },
   flexGrow: {
     flexGrow: 1,
@@ -404,8 +496,8 @@ const styles = (theme: Theme) => createStyles({
   },
   claimButton: {
     position: "absolute",
-    bottom: '-0.5rem',
-    right: '-0.5rem',
+    bottom: '-1rem',
+    right: '0.5rem',
     height: 32,
     width: '100%',
     maxWidth: 120,
@@ -423,6 +515,9 @@ const styles = (theme: Theme) => createStyles({
       // }),
       backgroundColor: Colors.ultramarineBlueLight
     }
+  },
+  borderRadiusUnset: {
+    borderRadius: 0,
   },
 });
 

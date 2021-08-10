@@ -4,9 +4,6 @@ import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/
 import { Colors } from "layout/AppTheme";
 // Typings
 import { Product_Preview_Items } from "typings/gqlTypes";
-import { genSrcSet, genImgBreakpoints } from "utils/images";
-import Loading from "components/Loading";
-import LoadingBar from "components/LoadingBar";
 // Material UI
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";

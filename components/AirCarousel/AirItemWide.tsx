@@ -78,10 +78,10 @@ const AirItemWide: React.FC<ReactProps> = (props) => {
               !props.disableDither &&
               <AirDither styles={{}}/>
             }
-            {
+            {/* {
               props.title &&
               <AirTitle title={props.title}/>
-            }
+            } */}
           </div>
         </div>
       </div>

@@ -64,38 +64,4 @@ export const styles = (theme: Theme) => createStyles({
       : `1px solid ${Colors.slateGreyDarker}`,
     overflow: "hidden",
   },
-  loadMore: {
-    display: "flex",
-    justifyContent: 'center',
-    alignItems: 'center',
-    fontSize: "1rem",
-    fontWeight: 500,
-    color: isThemeDark(theme)
-      ? Colors.uniswapLightGrey
-      : Colors.slateGreyBlack,
-    borderRadius: `0px 0px ${BorderRadius2x}px ${BorderRadius2x}px`,
-    padding: '1rem',
-    width: '100%',
-    border: isThemeDark(theme)
-      ? `1px solid ${Colors.uniswapLightNavy}`
-      : `1px solid ${Colors.slateGreyDarker}`,
-    borderTop: 'unset',
-    backgroundColor: isThemeDark(theme)
-      ? Colors.uniswapDarkNavy
-      : Colors.slateGrey,
-    transition:  theme.transitions.create(['background-color'], {
-      easing: theme.transitions.easing.easeIn,
-      duration: 100,
-    }),
-    "&:hover": {
-      backgroundColor: isThemeDark(theme)
-        ? Colors.uniswapMediumNavy
-        : Colors.slateGreyDark,
-      transition:  theme.transitions.create(['background-color'], {
-        easing: theme.transitions.easing.easeIn,
-        duration: 100,
-      }),
-    },
-    cursor: 'pointer',
-  },
 })

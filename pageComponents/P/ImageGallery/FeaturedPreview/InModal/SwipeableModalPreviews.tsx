@@ -29,16 +29,11 @@ const SwipeableModalPreviews = (props: ReactProps) => {
 
   const {
     classes,
-    previewItem,
     closeModal,
+    previewItems,
     isMobile = false,
   } = props;
 
-  const previewItems = (props?.product?.featuredVariant?.previewItems ?? [])
-    .filter(p =>
-      p?.image?.original?.id !== undefined ||
-      p?.youTubeEmbedLink !== undefined
-    )
   const numPreviews = previewItems.length
 
   return (
@@ -86,11 +81,14 @@ const SwipeableModalPreviews = (props: ReactProps) => {
           })
         }
       </BindKeyboardSwipeableViews>
-      <ModalButtons
-        index={props.index}
-        setIndex={props.setIndex}
-        numPreviews={numPreviews}
-      />
+      {
+        (numPreviews > 1) &&
+        <ModalButtons
+          index={props.index}
+          setIndex={props.setIndex}
+          numPreviews={numPreviews}
+        />
+      }
     </>
   )
 }
@@ -133,10 +131,9 @@ const ModalButtons = ({ index, setIndex, numPreviews }) => {
 }
 
 interface ReactProps extends WithStyles<typeof styles> {
-  previewItem?: Product_Preview_Items;
+  previewItems: Product_Preview_Items[]
   closeModal?(id: string): void;
   isMobile?: boolean;
-  product?: Product;
   index?: number;
   setIndex?(a?: any): void;
 }

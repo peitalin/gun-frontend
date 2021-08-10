@@ -9,6 +9,8 @@ import {
 
 
 export interface NewsItemFields {
+	productId?: string
+	externalProductId?: string
 	model: string
 	make: string
 	caliber: string
@@ -26,7 +28,8 @@ export interface NewsItemFields {
 	phoneNumber: string
 	sourceSite: string
 	sourceSiteUrl: string
-	previewItem: Product_Preview_Items
+	featuredPreviewItem: Product_Preview_Items
+	previewItems: Product_Preview_Items[]
 	isInternalProduct: boolean
 }
 
@@ -44,6 +47,9 @@ export const transformNewsItemToFields = (
   const sellerLicense = internalProduct?.sellerLicense
 
 	const isInternalProduct = !!featuredVariant?.variantId
+
+	const productId = internalProduct?.id
+	const externalProductId = externalProduct?.id
 
   const model = isInternalProduct
 		? pSnapshot?.model
@@ -112,11 +118,15 @@ export const transformNewsItemToFields = (
 		? "www.gunmarketplace.com.au"
 		: externalProduct?.sourceSiteUrl
 
-  const previewItem = isInternalProduct
-		? featuredVariant?.previewItems?.[0]
-		: externalPSnapshot?.previewItems?.[0]
+  const previewItems = isInternalProduct
+		? featuredVariant?.previewItems
+		: externalPSnapshot?.previewItems
+
+  const featuredPreviewItem = previewItems?.[0]
 
 	return {
+		productId,
+		externalProductId,
 		model,
 		make,
 		caliber,
@@ -134,7 +144,8 @@ export const transformNewsItemToFields = (
 		phoneNumber,
 		sourceSite,
 		sourceSiteUrl,
-		previewItem,
+		featuredPreviewItem,
+		previewItems,
 		isInternalProduct,
 	}
 }
@@ -153,6 +164,9 @@ export const transformExternalProductToFields = (
   const sellerLicense = internalProduct?.sellerLicense
 
 	const isInternalProduct = !!featuredVariant?.variantId
+
+	const productId = internalProduct?.id
+	const externalProductId = externalProduct?.id
 
   const model = isInternalProduct
 		? pSnapshot?.model
@@ -184,7 +198,7 @@ export const transformExternalProductToFields = (
 
   const description = isInternalProduct
 		? pSnapshot?.description
-		: externalPSnapshot.description
+		: externalPSnapshot?.description
 
   const price = isInternalProduct
 		? featuredVariant?.price
@@ -222,11 +236,15 @@ export const transformExternalProductToFields = (
 		? "gunmarketplace.com.au"
 		: externalProduct?.sourceSiteUrl
 
-  const previewItem = isInternalProduct
-		? featuredVariant?.previewItems?.[0]
-		: externalPSnapshot?.previewItems?.[0]
+  const previewItems = isInternalProduct
+		? featuredVariant?.previewItems
+		: externalPSnapshot?.previewItems
+
+  const featuredPreviewItem = previewItems?.[0]
 
 	return {
+		productId,
+		externalProductId,
 		model,
 		make,
 		caliber,
@@ -244,7 +262,8 @@ export const transformExternalProductToFields = (
 		phoneNumber,
 		sourceSite,
 		sourceSiteUrl,
-		previewItem,
+		featuredPreviewItem,
+		previewItems,
 		isInternalProduct,
 	}
 }

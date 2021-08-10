@@ -85,7 +85,7 @@ export const styles = (theme: Theme) => createStyles({
 
   /// Featured Video
   card: {
-    borderRadius: "1px",
+    borderRadius: '0px',
     width: "100%",
     height: '100%',
     transition: theme.transitions.create('height', {

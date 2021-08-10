@@ -69,6 +69,8 @@ const NewsItemCard: React.FC<ReactProps> = (props) => {
               height: '100%',
             },
           }}
+          index={props.index}
+          setIndex={props.setIndex}
         />
       </div>
     </div>
@@ -81,6 +83,8 @@ interface ReactProps extends WithStyles<typeof styles> {
   user: UserPrivate
   closeModal(): void;
   isModal: boolean;
+  index: number
+  setIndex(i: number): void
 }
 
 
@@ -103,8 +107,6 @@ const styles = (theme: Theme) => createStyles({
     flexDirection: "column",
     justifyContent: "flex-start",
     alignItems: "flex-start",
-    padding: "2rem",
-    borderRadius: BorderRadius2x,
     boxShadow: isThemeDark(theme)
       ? BoxShadows.shadow1.boxShadow
       : "unset",
@@ -114,12 +116,15 @@ const styles = (theme: Theme) => createStyles({
     border: theme.palette.type === 'dark'
       ? `1px solid ${Colors.uniswapLightNavy}`
       : `1px solid ${Colors.slateGreyDarker}`,
+    // borderRadius: `${BorderRadius2x}px ${BorderRadius2x}px 0px 0px`,
+    borderRadius: `${BorderRadius2x}px`,
+    overflow: "hidden",
     transition:  theme.transitions.create(['width', 'height'], {
       easing: theme.transitions.easing.easeInOut,
       duration: 150,
     }),
     width: '100%',
-    minWidth: '300px',
+    minWidth: 400,
   },
   closeButtonMobile: {
     position: "absolute",

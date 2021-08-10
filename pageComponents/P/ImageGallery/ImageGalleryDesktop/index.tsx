@@ -22,9 +22,13 @@ import BottomImageCarouselDesktop from "./BottomImageCarouselDesktop";
 
 const ImageGalleryDesktop: React.FC<ReactProps> = (props) => {
 
-  const [featuredPreviewItem, setFeaturedPreviewItem] = useState(
-    props?.product?.featuredVariant?.previewItems?.[0]
-  );
+  const previewItems = props?.product?.featuredVariant?.previewItems
+
+  const [
+    featuredPreviewItem,
+    setFeaturedPreviewItem
+  ] = useState(previewItems?.[0]);
+
   const [openedModals, setOpenedModals] = useState([]);
 
   useEffect(() => {
@@ -40,7 +44,6 @@ const ImageGalleryDesktop: React.FC<ReactProps> = (props) => {
     // featuredPreview carousel
     index,
     setIndex,
-    numberOfItemsTall = 8,
     numberOfItemsWide = 6,
   } = props;
 
@@ -53,7 +56,7 @@ const ImageGalleryDesktop: React.FC<ReactProps> = (props) => {
 
       <FeaturedPreview
         featuredPreviewItem={featuredPreviewItem}
-        product={product}
+        previewItems={previewItems}
         loading={props.loading || !process.browser} // for SSR
         index={index}
         setIndex={setIndex}
@@ -63,12 +66,13 @@ const ImageGalleryDesktop: React.FC<ReactProps> = (props) => {
 
       <FeaturedPreviewButtonsDesktop
         featuredPreviewItem={featuredPreviewItem as any}
-        product={product}
+        productId={product?.id}
       />
 
       <BottomImageCarouselDesktop
         setFeaturedPreviewItem={setFeaturedPreviewItem}
-        product={product}
+        previewItems={previewItems}
+        productId={product?.id}
         loading={props.loading || !process.browser} // for SSR
         index={index}
         setIndex={setIndex}

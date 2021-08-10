@@ -1,20 +1,20 @@
 import React from "react";
 import clsx from "clsx";
-import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
-import { Colors, BorderRadius } from "layout/AppTheme";
 // Typings
 import { Product_Preview_Items, Product } from "typings/gqlTypes";
 // Components
 import FeaturedImagePlaceholder from "./FeaturedImagePlaceholder";
 import FeaturedImageModal from "./FeaturedImageModal";
+//// Components
+import AspectRatioConstraint from "components/AspectRatioConstraint";
 
 
 
 const FeaturedPreview: React.FC<ReactProps> = (props) => {
 
   const {
-    classes,
-  } = props;
+    constrainAspectRatio = true,
+  } = props
 
   const [openedModals, setOpenedModals] = React.useState([]);
 
@@ -29,75 +29,61 @@ const FeaturedPreview: React.FC<ReactProps> = (props) => {
   if (props.loading) {
     return <FeaturedImagePlaceholder/>
   } else {
-    return (
-      <FeaturedImageModal
-        previewItem={props.featuredPreviewItem}
-        openedModals={openedModals || []}
-        openModal={openModal}
-        closeModal={closeModal}
-        product={props.product}
-        index={props.index}
-        setIndex={props.setIndex}
-        isPromoted={props.isPromoted}
-        disableModalPopup={props.disableModalPopup}
-      />
-    )
+    if (constrainAspectRatio) {
+      return (
+        <AspectRatioConstraint>
+          <FeaturedImageModal
+            featuredPreviewItem={props.featuredPreviewItem}
+            previewItems={props.previewItems}
+            openedModals={openedModals || []}
+            openModal={openModal}
+            closeModal={closeModal}
+            index={props.index}
+            setIndex={props.setIndex}
+            isPromoted={props.isPromoted}
+            disableModalPopup={props.disableModalPopup}
+            previewImageClassName={props.previewImageClassName}
+            style={props.style}
+            animateTransitions={props.animateTransitions}
+          />
+        </AspectRatioConstraint>
+      )
+    } else {
+      return (
+        <FeaturedImageModal
+          featuredPreviewItem={props.featuredPreviewItem}
+          previewItems={props.previewItems}
+          openedModals={openedModals || []}
+          openModal={openModal}
+          closeModal={closeModal}
+          index={props.index}
+          setIndex={props.setIndex}
+          isPromoted={props.isPromoted}
+          disableModalPopup={props.disableModalPopup}
+          style={props.style}
+          animateTransitions={props.animateTransitions}
+        />
+      )
+    }
   }
 }
 
-interface ReactProps extends WithStyles<typeof styles> {
+interface ReactProps {
   loading: boolean;
   featuredPreviewItem: Product_Preview_Items;
-  product: Product;
+  previewItems: Product_Preview_Items[];
   index: number;
-  setIndex(a?: any): void;
+  setIndex(a: any): void;
   isPromoted: boolean;
+  setPreviewLoaded?(b: boolean) : void;
   disableModalPopup?: boolean;
+  style?: any;
+  constrainAspectRatio?: boolean;
+  previewImageClassName?: any;
+  animateTransitions?: boolean;
 }
 
 
-const styles = (theme: Theme) => createStyles({
-  card: {
-    borderRadius: BorderRadius,
-    width: "100%",
-    height: '100%',
-    backgroundColor: Colors.lightestGrey,
-    transition: theme.transitions.create('height', {
-      easing: theme.transitions.easing.sharp,
-      duration: "200ms",
-    }),
-  },
-  cardActionAreaWide: {
-    height: '100%',
-    display: "flex",
-    flexDirection: "row",
-  },
-  cardActionAreaTall: {
-    height: '100%',
-    display: "flex",
-    flexDirection: "row",
-    // backgroundColor: backgroundColor,
-  },
-  cardMediaTall: {
-    // width: "100%",
-    height: "100%",
-    objectFit: "cover",
-  },
-  cardMediaWide: {
-    width: "100%",
-    height: "100%",
-    // objectFit: "scale-down",
-    objectFit: "cover",
-  },
-  cardMediaWide80: {
-    width: "80px",
-    height: '50px',
-    objectFit: "cover",
-  },
-  cardImg: {
-  },
-});
 
-
-export default withStyles(styles)( FeaturedPreview );
+export default FeaturedPreview
 

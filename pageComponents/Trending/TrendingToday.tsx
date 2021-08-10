@@ -41,6 +41,8 @@ export const TrendingToday: React.FC<ReactProps> = (props) => {
   const limit = props.limit ?? 10
   const [offset, setOffset] = React.useState(0)
 
+  // image gallery index
+  const [index, setIndex] = React.useState(0);
 
   const { data, error } = useSubscription<SData, SVar>(
     SUBSCRIBE_NEWS_ITEMS_SORT_BY_NEW, {
@@ -107,6 +109,9 @@ export const TrendingToday: React.FC<ReactProps> = (props) => {
         setOpenModal={setOpenModal}
         tab={tab}
         setTab={setTab}
+        // image gallery
+        index={index}
+        setIndex={setIndex}
         loading={hotItemsResponse.loading}
         fetchMoreHot={async() => {
 
@@ -139,6 +144,9 @@ export const TrendingToday: React.FC<ReactProps> = (props) => {
         setCurrentNewsItem={setCurrentNewsItem}
         openModal={openModal}
         setOpenModal={setOpenModal}
+        // image gallery
+        index={index}
+        setIndex={setIndex}
       />
     </TrendFeedLayout>
   );

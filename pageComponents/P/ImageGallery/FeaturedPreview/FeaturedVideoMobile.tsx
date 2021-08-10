@@ -25,9 +25,9 @@ const FeaturedVideoMobile = (props: ReactProps) => {
     previewItem,
   } = props;
 
-  const theme = useTheme();
-  const xsDown = useMediaQuery(theme.breakpoints.down('xs'));
-  const lgDown = useMediaQuery(theme.breakpoints.down("lg"));
+  // const theme = useTheme();
+  // const xsDown = useMediaQuery(theme.breakpoints.down('xs'));
+  // const lgDown = useMediaQuery(theme.breakpoints.down("lg"));
 
   let videoId = extractYoutubeVimeoId(previewItem?.youTubeEmbedLink)
 

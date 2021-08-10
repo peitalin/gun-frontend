@@ -17,7 +17,6 @@ const FeaturedPreviewButtons: React.FC<ReactProps> = (props) => {
 
   const {
     classes,
-    product,
     featuredPreviewItem,
   } = props;
 
@@ -25,9 +24,7 @@ const FeaturedPreviewButtons: React.FC<ReactProps> = (props) => {
     return (
       <div>
         <CollectionsIcon
-          productId={product?.id}
-          variantId={product?.featuredVariant?.variantId}
-          // refetch={watchListConnectionResponse.refetch}
+          productId={props.productId}
           style={{
             top: '.75rem',
             right: '1.75rem',
@@ -53,7 +50,7 @@ const FeaturedPreviewButtons: React.FC<ReactProps> = (props) => {
 
 interface ReactProps extends WithStyles<typeof styles> {
   featuredPreviewItem: ProductPreviewItem
-  product: Product;
+  productId?: string
 }
 
 const styles = (theme: Theme) => createStyles({

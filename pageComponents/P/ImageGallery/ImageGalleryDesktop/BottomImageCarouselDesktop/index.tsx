@@ -20,7 +20,6 @@ const BottomImageCarouselDesktop: React.FC<ReactProps> = (props) => {
 
   const {
     classes,
-    product,
     // featuredPreview carousel
     index,
     setIndex,
@@ -32,7 +31,7 @@ const BottomImageCarouselDesktop: React.FC<ReactProps> = (props) => {
     props.setFeaturedPreviewItem(previewItem)
   }
 
-  const previewItems = (product?.featuredVariant?.previewItems ?? [])
+  const previewItems = (props.previewItems ?? [])
     .filter(p =>
       p?.image?.original?.id !== undefined ||
       p?.youTubeEmbedLink !== undefined
@@ -41,7 +40,7 @@ const BottomImageCarouselDesktop: React.FC<ReactProps> = (props) => {
   return (
     <div className={classes.carouselContainerPP}>
       <AirCarousel
-        id={`air-cara-${product?.id}`}
+        id={`air-cara-${props.productId}`}
         // product.id to re-render carousel position when product changes
         disableButtons={previewItems.length <= 9}
       >
@@ -106,7 +105,8 @@ const BottomImageCarouselDesktop: React.FC<ReactProps> = (props) => {
 
 
 interface ReactProps extends WithStyles<typeof styles> {
-  product: Product;
+  productId: string
+  previewItems: Product_Preview_Items[]
   loading?: boolean;
   numberOfItemsTall?: number;
   numberOfItemsWide?: number;

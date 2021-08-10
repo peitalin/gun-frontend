@@ -28,7 +28,7 @@ const FeaturedPreviewButtons: React.FC<ReactProps> = (props) => {
       <div>
         <CollectionsIcon
           productId={product?.id}
-          variantId={product?.featuredVariant?.variantId}
+          // variantId={product?.featuredVariant?.variantId}
           style={{
             top: 'unset',
             bottom: '-13px',

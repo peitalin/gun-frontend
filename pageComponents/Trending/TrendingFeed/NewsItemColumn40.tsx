@@ -32,7 +32,7 @@ export const NewsItemColumn40: React.FC<ReactProps> = (props) => {
     setOpenModal,
   } = props;
 
-  const windowWidth = useWindowWidth()
+  // const windowWidth = useWindowWidth()
 
   const userRedux = useSelector<GrandReduxState, UserPrivate>(s => {
     return s.reduxLogin.user
@@ -52,6 +52,8 @@ export const NewsItemColumn40: React.FC<ReactProps> = (props) => {
                 setCurrentNewsItem(undefined)
                 setOpenModal(false)
               }}
+              index={props.index}
+              setIndex={props.setIndex}
             />
           : <div id="empty-newsItemColumn-2"></div>
         }
@@ -75,6 +77,8 @@ export const NewsItemColumn40: React.FC<ReactProps> = (props) => {
             user={userRedux}
             closeModal={() => setOpenModal(false)}
             isModal={true}
+            index={props.index}
+            setIndex={props.setIndex}
           />
         </Dialog>
       </ShowOnMobileOrDesktopSSR>
@@ -87,6 +91,8 @@ interface ReactProps extends WithStyles<typeof styles> {
   setCurrentNewsItem(n: NewsItem): void
   openModal: boolean
   setOpenModal(b: boolean): void
+  index: number
+  setIndex(i: number): void
 }
 
 
@@ -112,7 +118,7 @@ const styles = (theme: Theme) => createStyles({
     flexDirection: "column",
     minWidth: 400,
     flexBasis: "40%",
-    top: "2rem",
+    top: "1rem",
     position: "sticky",
     height: '100%',
     marginTop: '-1rem',

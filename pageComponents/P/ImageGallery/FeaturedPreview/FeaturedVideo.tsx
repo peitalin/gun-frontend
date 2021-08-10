@@ -1,8 +1,7 @@
 import React from "react";
 import clsx from "clsx";
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
-import { styles } from "./styles";
-import { Colors } from "layout/AppTheme";
+import { Colors, BorderRadius } from "layout/AppTheme";
 // Typings
 import { Product_Preview_Items } from "typings/gqlTypes";
 import { generateYouTubeVimeoEmbedLink, extractYoutubeVimeoId } from "utils/links";
@@ -29,7 +28,7 @@ const FeaturedVideo = (props: ReactProps) => {
 
   return (
     <AspectRatioConstraint>
-      <div className={classes.featuredImageRoot}>
+      <div className={classes.featuredVideoRoot}>
         <div className={classes.card}>
           <YouTube
             videoId={videoId}
@@ -58,6 +57,43 @@ interface ReactProps extends WithStyles<typeof styles> {
   closeModal?(id: string): void;
   onClick?(): void;
 }
+
+export const styles = (theme: Theme) => createStyles({
+  featuredVideoRoot: {
+    overflow: 'hidden',
+    width: '100%',
+    height: '100%',
+    justifyContent: "center",
+    display: "flex",
+    flexDirection: "row",
+    borderRadius: BorderRadius,
+    backgroundColor: theme.palette.type === 'dark'
+      ? Colors.black
+      : Colors.lightestGrey,
+  },
+  /// Featured Video
+  card: {
+    borderRadius: '0px',
+    width: "100%",
+    height: '100%',
+    transition: theme.transitions.create('height', {
+      easing: theme.transitions.easing.sharp,
+      duration: "200ms",
+    }),
+  },
+  cardMedia: {
+    objectFit: "cover",
+    width: '100%',
+    height: '100%',
+    border: 'none',
+  },
+  cardActionArea: {
+    width: '100%',
+    height: '100%',
+    display: "flex",
+    flexDirection: "row",
+  },
+})
 
 
 export default withStyles(styles)( FeaturedVideo );

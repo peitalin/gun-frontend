@@ -218,7 +218,7 @@ export const styles = (theme: Theme) => createStyles({
     transition: theme.transitions.create(['opacity'], {
       easing: theme.transitions.easing.sharp,
       duration: "150ms",
-      delay: "50ms",
+      delay: "100ms",
     }),
     opacity: 1,
   },
