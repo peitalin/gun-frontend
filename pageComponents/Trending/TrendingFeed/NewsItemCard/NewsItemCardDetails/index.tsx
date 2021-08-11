@@ -178,7 +178,8 @@ const NewsItemCardDetails = (props: ReactProps) => {
             style={{
               top: 'unset',
               bottom: '-1rem',
-              right: 'calc(120px + 1.25rem)',
+              // right: 'calc(130px + 1.25rem)',
+              right: '0.5rem',
               marginTop: '0.5rem',
               width: '28px',
               height: '28px',
@@ -192,7 +193,7 @@ const NewsItemCardDetails = (props: ReactProps) => {
             replaceTextWhenLoading={true}
             // loading={loading}
             // disabled={ }
-            // disabled={disabled}
+            disabled={true}
             onClick={() => {
               console.log("Convert externalProduct to Product")
             }}
@@ -211,7 +212,11 @@ const NewsItemCardDetails = (props: ReactProps) => {
               loading={props.loading || !process.browser} // for SSR
               index={props.index}
               setIndex={props.setIndex}
-              numberOfItemsWide={previewItems?.length}
+              numberOfItemsWide={
+                previewItems?.length < 6
+                 ? 6
+                  : previewItems?.length
+              }
             />
           </div>
         }
@@ -497,10 +502,11 @@ const styles = (theme: Theme) => createStyles({
   claimButton: {
     position: "absolute",
     bottom: '-1rem',
-    right: '0.5rem',
+    // right: '0.5rem',
+    right: 'calc(40px + 0.5rem)',
     height: 32,
     width: '100%',
-    maxWidth: 120,
+    maxWidth: 130,
     borderRadius: BorderRadius3x,
     backgroundColor: Colors.ultramarineBlue,
     color: Colors.cream,
