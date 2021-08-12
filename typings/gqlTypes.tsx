@@ -31,6 +31,13 @@ export type AddRemovePaymentMethodResponse = {
   user: UserPrivate;
 };
 
+export type AggregatorScrapeResponse = {
+  __typename?: 'AggregatorScrapeResponse';
+  id: Scalars['String'];
+  link: Scalars['String'];
+  title: Scalars['String'];
+};
+
 export type AuthorizePaymentMutationResponse = {
   __typename?: 'AuthorizePaymentMutationResponse';
   stripePaymentIntent: Scalars['String'];
@@ -1281,6 +1288,7 @@ export type Mutation = {
   upvoteNewsItem: NewsItem;
   downvoteNewsItem: NewsItem;
   unvoteNewsItem: NewsItem;
+  rescrapeExternalProduct: AggregatorScrapeResponse;
 };
 
 
@@ -1411,7 +1419,8 @@ export type MutationDelete_External_ProductsArgs = {
 
 
 export type MutationDelete_External_Products_By_PkArgs = {
-  id: Scalars['String'];
+  sourceSite: Scalars['String'];
+  sourceSiteId: Scalars['String'];
 };
 
 
@@ -3005,6 +3014,7 @@ export type MutationUploadSaveImageArgs = {
   description?: Maybe<Scalars['String']>;
   tags?: Maybe<Scalars['String']>;
   ownerIds?: Maybe<Array<Maybe<Scalars['String']>>>;
+  rescrape?: Maybe<Scalars['Boolean']>;
 };
 
 
@@ -3555,6 +3565,12 @@ export type MutationDownvoteNewsItemArgs = {
 
 export type MutationUnvoteNewsItemArgs = {
   newsItemId: Scalars['String'];
+};
+
+
+export type MutationRescrapeExternalProductArgs = {
+  productId: Scalars['String'];
+  sourceSite: ScraperSourceSite;
 };
 
 /** Something that went wrong during a mutation. */
@@ -5147,7 +5163,8 @@ export type QueryExternal_Products_AggregateArgs = {
 
 
 export type QueryExternal_Products_By_PkArgs = {
-  id: Scalars['String'];
+  sourceSite: Scalars['String'];
+  sourceSiteId: Scalars['String'];
 };
 
 
@@ -6388,6 +6405,12 @@ export type SavedSearchesEdge = {
   node: Saved_Searches;
 };
 
+export enum ScraperSourceSite {
+  USEDGUNS = 'USEDGUNS',
+  SSAA = 'SSAA',
+  OZGUNSALES = 'OZGUNSALES'
+}
+
 export type SendResetPasswordResponse = {
   __typename?: 'SendResetPasswordResponse';
   resetId?: Maybe<Scalars['String']>;
@@ -7159,7 +7182,8 @@ export type SubscriptionExternal_Products_AggregateArgs = {
 
 
 export type SubscriptionExternal_Products_By_PkArgs = {
-  id: Scalars['String'];
+  sourceSite: Scalars['String'];
+  sourceSiteId: Scalars['String'];
 };
 
 
@@ -11018,7 +11042,7 @@ export type External_Products = {
   externalProductSnapshots_aggregate: External_Product_Snapshots_Aggregate;
   id: Scalars['String'];
   sourceSite: Scalars['String'];
-  sourceSiteId?: Maybe<Scalars['String']>;
+  sourceSiteId: Scalars['String'];
   sourceSiteUrl?: Maybe<Scalars['String']>;
   updatedAt: Scalars['timestamptz'];
 };
@@ -11084,9 +11108,7 @@ export type External_Products_Bool_Exp = {
 /** unique or primary key constraints on table "external_products" */
 export enum External_Products_Constraint {
   /** unique or primary key constraint */
-  EXTERNAL_PRODUCTS_PKEY = 'external_products_pkey',
-  /** unique or primary key constraint */
-  EXTERNAL_PRODUCTS_SOURCE_SITE_ID_SOURCE_SITE_KEY = 'external_products_source_site_id_source_site_key'
+  EXTERNAL_PRODUCTS_PKEY = 'external_products_pkey'
 }
 
 /** input type for inserting data into table "external_products" */
@@ -11164,7 +11186,8 @@ export type External_Products_Order_By = {
 
 /** primary key columns input for table: external_products */
 export type External_Products_Pk_Columns_Input = {
-  id: Scalars['String'];
+  sourceSite: Scalars['String'];
+  sourceSiteId: Scalars['String'];
 };
 
 /** select columns of table "external_products" */

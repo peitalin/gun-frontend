@@ -42,7 +42,6 @@ export const TrendingYesterday: React.FC<ReactProps> = (props) => {
   ] = React.useState<NewsItemsConnection>(undefined)
 
   const client = useApolloClient()
-  console.log("CACHE", client.cache)
 
   const limit = props.limit ?? 10
   const [offsetHot, setOffsetHot] = React.useState(0)

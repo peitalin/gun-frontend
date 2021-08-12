@@ -45,6 +45,7 @@ import DescriptionText from "./DescriptionText";
 
 import CollectionsIcon from 'components/Collections/CollectionsIcon';
 import NewsItemAdminSuspendIcon from "components/NewsItems/NewsItemAdminSuspendIcon"
+import NewsItemAdminRescrapeIcon from "components/NewsItems/NewsItemAdminRescrapeIcon"
 import FeaturedPreview from "pageComponents/P/ImageGallery/FeaturedPreview";
 import BottomImageCarouselDesktop from "pageComponents/P/ImageGallery/ImageGalleryDesktop/BottomImageCarouselDesktop";
 
@@ -159,6 +160,7 @@ const NewsItemCardDetails = (props: ReactProps) => {
             animateTransitions={false}
           />
 
+
           <NewsItemAdminSuspendIcon
             newsItem={newsItem}
             style={{
@@ -170,6 +172,19 @@ const NewsItemCardDetails = (props: ReactProps) => {
               height: '28px',
             }}
           />
+
+          <NewsItemAdminRescrapeIcon
+            newsItem={newsItem}
+            style={{
+              top: 'unset',
+              bottom: '-1rem',
+              left: 'calc(3.5rem)',
+              marginTop: '0.5rem',
+              width: '28px',
+              height: '28px',
+            }}
+          />
+
 
           <CollectionsIcon
             productId={newsItem?.productId}

@@ -81,7 +81,7 @@ export const transformNewsItemToFields = (
 
   const description = isInternalProduct
 		? pSnapshot?.description
-		: externalPSnapshot.description
+		: externalPSnapshot?.description
 
   const price = isInternalProduct
 		? featuredVariant?.price

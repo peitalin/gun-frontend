@@ -29,6 +29,23 @@ export const SUSPEND_UNSUSPEND_NEWS_ITEM = gql`
 `;
 
 
+// Admin
+export const RESCRAPE_EXTERNAL_PRODUCT = gql`
+  mutation(
+    $sourceSiteId: String!
+    $sourceSite: ScraperSourceSite!
+  ) {
+    rescrapeExternalProduct(
+      sourceSiteId: $sourceSiteId
+      sourceSite: $sourceSite
+    ) {
+      id
+      link
+      title
+    }
+  }
+`;
+
 
 
 export const UPVOTE_NEWS_ITEM = gql`
