@@ -61,7 +61,7 @@ export const Trending: React.FC<ReactProps> = (props) => {
       <TrendingYesterday limit={10}/>
 
       <div style={{
-        marginTop: '-1rem',
+        marginTop: '1rem',
         marginBottom: '0rem',
       }}>
         <BannerTrending

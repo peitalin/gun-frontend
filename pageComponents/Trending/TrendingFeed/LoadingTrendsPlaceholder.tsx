@@ -26,7 +26,7 @@ interface ReactProps extends WithStyles<typeof styles> {
 const styles = (theme: Theme) => createStyles({
   loadingPlaceholder: {
     height: '100%',
-    minHeight: 200,
+    minHeight: 280,
     width: '100%',
     borderRadius: `${BorderRadius2x}px ${BorderRadius2x}px 0px 0px`,
     padding: '1rem',

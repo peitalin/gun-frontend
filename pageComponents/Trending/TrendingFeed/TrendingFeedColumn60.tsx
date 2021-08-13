@@ -71,7 +71,7 @@ const TrendFeedItems: React.FC<ReactProps> = (props) => {
     ? props.newsItemsHot?.edges
     : props.newsItemsNew?.edges
 
-  if (newsItemEdges?.length === 0) {
+  if (!newsItemEdges?.length) {
     return (
       <LoadingTrendsPlaceholder show={true}/>
     )
@@ -160,7 +160,7 @@ export const styles = (theme: Theme) => createStyles({
     display: "flex",
     flexDirection: "column",
     borderRadius: BorderRadius2x,
-    boxShadow: BoxShadows.shadow5.boxShadow,
+    boxShadow: BoxShadows.shadow4.boxShadow,
   },
   flexDesktop: {
     flexBasis: "60%",
@@ -171,6 +171,7 @@ export const styles = (theme: Theme) => createStyles({
     flexBasis: "100%",
     position: "relative",
     overflowX: "hidden",
+    marginBottom: '2rem',
   },
   newsItemRow: {
     display: "flex",

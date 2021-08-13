@@ -86,6 +86,7 @@ const styles = (theme: Theme) => createStyles({
   },
   trendFeedLayoutRootMobile: {
     padding: '0.25rem',
+    overflowX: "hidden", // prevent safari scroll over
   },
   trendFeed: {
     display: 'flex',
