@@ -379,7 +379,7 @@ export const Gradients = {
 
 export const BoxShadows = {
   shadow1: {
-    boxShadow: '0 1px 1px rgba(0,0,0,0.1),0 2px 4px rgba(0,0,0,0.3),0 0 0 1px rgba(0,0,0,0.02)',
+    boxShadow: '0 1px 1px rgba(0,0,0,0.1),0 2px 4px rgba(0,0,0,0.25),0 0 0 1px rgba(0,0,0,0.02)',
   },
   shadow2: {
     boxShadow: `

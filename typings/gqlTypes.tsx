@@ -4854,6 +4854,8 @@ export type Query = {
   getImages: Array<Image_Parents>;
   /** for gun-aggregator to check if external products exists */
   getExternalProductsBySourceSiteId: Array<External_Products>;
+  /** Gets news item by Id */
+  getNewsItemById?: Maybe<NewsItem>;
   /** Gets news items between today and yesterday */
   newsItemsSortByHotConnection?: Maybe<NewsItemsConnection>;
   /** Gets news items in the last 24hrs */
@@ -6315,6 +6317,11 @@ export type QueryGetImagesArgs = {
 
 export type QueryGetExternalProductsBySourceSiteIdArgs = {
   externalProductIds: Array<Scalars['String']>;
+};
+
+
+export type QueryGetNewsItemByIdArgs = {
+  newsItemId: Scalars['String'];
 };
 
 

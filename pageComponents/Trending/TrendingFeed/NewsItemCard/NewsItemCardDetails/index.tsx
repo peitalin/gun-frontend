@@ -155,7 +155,7 @@ const NewsItemCardDetails = (props: ReactProps) => {
               // maxHeight: 285,
               maxHeight: 266,
             }}
-            previewImageClassName={classes.borderRadiusUnset}
+            previewImageClassName={classes.previewImageClass}
             constrainAspectRatio={false}
             animateTransitions={false}
           />
@@ -269,7 +269,7 @@ const NewsItemCardDetails = (props: ReactProps) => {
               // maxHeight: 285,
               maxHeight: 240,
             }}
-            previewImageClassName={classes.borderRadiusUnset}
+            previewImageClassName={classes.previewImageClass}
             constrainAspectRatio={false}
             animateTransitions={false}
           />
@@ -537,8 +537,9 @@ const styles = (theme: Theme) => createStyles({
       backgroundColor: Colors.ultramarineBlueLight
     }
   },
-  borderRadiusUnset: {
+  previewImageClass: {
     borderRadius: 0,
+    maxHeight: 266,
   },
 });
 

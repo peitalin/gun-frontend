@@ -18,6 +18,9 @@ import TrendFeedLayout from "./TrendingFeed/TrendFeedLayout";
 import TrendingFeedColumn60 from "./TrendingFeed/TrendingFeedColumn60";
 import NewsItemColumn40 from "./TrendingFeed/NewsItemColumn40"
 import { useApolloClient } from "@apollo/client"
+// media query
+import { useTheme } from "@material-ui/core/styles";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 
 export const TrendingYesterday: React.FC<ReactProps> = (props) => {
@@ -27,9 +30,13 @@ export const TrendingYesterday: React.FC<ReactProps> = (props) => {
   } = props;
 
 
+  const theme = useTheme()
+  const lgDown = useMediaQuery(theme.breakpoints.down("lg"));
+
   const [tab, setTab] = React.useState(0)
   const [openModal, setOpenModal] = React.useState(false)
   const [currentNewsItem, setCurrentNewsItem] = React.useState(undefined)
+  const [fetchMoreLoading, setFetchMoreLoading] = React.useState(false)
 
   const [
     cacheHotItems,
@@ -118,9 +125,11 @@ export const TrendingYesterday: React.FC<ReactProps> = (props) => {
         index={index}
         setIndex={setIndex}
         loading={hotItemsResponse.loading}
+        mobile={lgDown}
         fetchMoreHot={async() => {
 
           let newOffset = offsetHot + limit
+          setFetchMoreLoading(true)
 
           // NOTE: apollo cache automatically merges fetchMore. See apollo.tsx
           let newData = await fetchMoreHot({
@@ -141,11 +150,13 @@ export const TrendingYesterday: React.FC<ReactProps> = (props) => {
               ]
             }
           })
+          setFetchMoreLoading(false)
           setOffsetHot(newOffset)
         }}
         fetchMoreNew={async() => {
 
           let newOffset = offsetNew + limit
+          setFetchMoreLoading(true)
 
           let newData = await fetchMoreNew({
             variables: {
@@ -165,6 +176,7 @@ export const TrendingYesterday: React.FC<ReactProps> = (props) => {
               ]
             }
           })
+          setFetchMoreLoading(false)
           setOffsetNew(newOffset)
         }}
       />
@@ -173,6 +185,7 @@ export const TrendingYesterday: React.FC<ReactProps> = (props) => {
         setCurrentNewsItem={setCurrentNewsItem}
         openModal={openModal}
         setOpenModal={setOpenModal}
+        mobile={lgDown}
         // image gallery
         index={index}
         setIndex={setIndex}

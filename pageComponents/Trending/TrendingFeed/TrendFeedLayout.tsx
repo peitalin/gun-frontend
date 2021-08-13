@@ -18,55 +18,57 @@ export const TrendFeedLayout: React.FC<ReactProps> = (props) => {
 
   return (
     <>
-      <ShowOnMobileOrDesktopSSR className={classes.width100} desktop>
-        <main className={classes.trendFeedLayoutRootDesktop}>
-          <div className={clsx(classes.titleContainerDesktop)}>
-            <Typography variant="h2" className={classes.title}>
-              { props.title ?? "Trending"}
-            </Typography>
-            <div className={classes.tabContainer}>
-              <AntTabContainer
-                value={props.tab}
-                onChange={(event, newTab: number) => {
-                  props.setTab(newTab)
-                }}
-                indicatorColor="primary"
-                textColor="primary"
-              >
-                <AntTab label="Hot" />
-                <AntTab label="New" />
-              </AntTabContainer>
-            </div>
+      <ShowOnMobileOrDesktopSSR
+        className={classes.trendFeedLayoutRootDesktop}
+        desktop
+      >
+        <div className={clsx(classes.titleContainerDesktop)}>
+          <Typography variant="h2" className={classes.title}>
+            { props.title ?? "Trending"}
+          </Typography>
+          <div className={classes.tabContainer}>
+            <AntTabContainer
+              value={props.tab}
+              onChange={(event, newTab: number) => {
+                props.setTab(newTab)
+              }}
+              indicatorColor="primary"
+              textColor="primary"
+            >
+              <AntTab label="Hot" />
+              <AntTab label="New" />
+            </AntTabContainer>
           </div>
-          <div className={classes.trendFeed}>
-            {props.children}
-          </div>
-        </main>
+        </div>
+        <div className={classes.trendFeed}>
+          {props.children}
+        </div>
       </ShowOnMobileOrDesktopSSR>
-      <ShowOnMobileOrDesktopSSR className={classes.width100} mobile>
-        <main className={classes.trendFeedLayoutRootMobile}>
-          <div className={clsx(classes.titleContainerMobile)}>
-            <Typography variant="h2" className={classes.title}>
-              { props.title ?? "Trending"}
-            </Typography>
-            <div className={classes.tabContainer}>
-              <AntTabContainer
-                value={props.tab}
-                onChange={(event, newTab: number) => {
-                  props.setTab(newTab)
-                }}
-                indicatorColor="primary"
-                textColor="primary"
-              >
-                <AntTab label="Hot" />
-                <AntTab label="New" />
-              </AntTabContainer>
-            </div>
+      <ShowOnMobileOrDesktopSSR
+        className={classes.trendFeedLayoutRootMobile}
+        mobile
+      >
+        <div className={clsx(classes.titleContainerMobile)}>
+          <Typography variant="h2" className={classes.title}>
+            { props.title ?? "Trending"}
+          </Typography>
+          <div className={classes.tabContainer}>
+            <AntTabContainer
+              value={props.tab}
+              onChange={(event, newTab: number) => {
+                props.setTab(newTab)
+              }}
+              indicatorColor="primary"
+              textColor="primary"
+            >
+              <AntTab label="Hot" />
+              <AntTab label="New" />
+            </AntTabContainer>
           </div>
-          <div className={classes.trendFeed}>
-            {props.children}
-          </div>
-        </main>
+        </div>
+        <div className={classes.trendFeed}>
+          {props.children}
+        </div>
       </ShowOnMobileOrDesktopSSR>
     </>
   );
@@ -80,19 +82,16 @@ interface ReactProps extends WithStyles<typeof styles> {
 
 const styles = (theme: Theme) => createStyles({
   trendFeedLayoutRootDesktop: {
-    padding: '1rem',
+    padding: '1rem 0rem 1rem 1rem',
   },
   trendFeedLayoutRootMobile: {
-    padding: '0.5rem',
+    padding: '0.25rem',
   },
   trendFeed: {
     display: 'flex',
     width: '100%',
     flexDirection: "row",
     borderRadius: BorderRadius,
-  },
-  width100: {
-    width: '100%',
   },
   flexCol: {
     display: "flex",

@@ -16,6 +16,7 @@ import { GrandReduxState } from "reduxStore/grand-reducer"
 import LoadingBar from "components/LoadingBar";
 import TrendingNewsItemRow from "./TrendingNewsItemRow";
 import LoadMoreFeedItems from './LoadMoreFeedItems';
+import LoadingTrendsPlaceholder from './LoadingTrendsPlaceholder';
 import ShowOnMobileOrDesktopSSR from 'components/ShowOnMobileOrDesktopSSR';
 
 
@@ -30,43 +31,43 @@ export const TrendingFeedLayout: React.FC<ReactProps> = (props) => {
   // console.log("cache: ", client.cache)
   console.log("loading: ", props.loading)
 
+  const [trendItemsLoaded, setTrendItemsLoaded] = React.useState(false)
+
+  React.useEffect(() => {
+    if (props.newsItemsHot && !trendItemsLoaded) {
+      setTrendItemsLoaded(true)
+    }
+    if (props.newsItemsNew && !trendItemsLoaded) {
+      setTrendItemsLoaded(true)
+    }
+  }, [props.newsItemsHot, props.newsItemsNew])
+
   return (
-    <>
-      <ShowOnMobileOrDesktopSSR className={classes.width100} desktop>
-        <div className={classes.trendFeedFlex60Desktop}>
-          <LoadingBar
-            absoluteTop
-            height={4}
-            width={'100%'}
-            loading={props.loading}
-          />
-          <TrendFeedItems {...props} />
-          <LoadMoreFeedItems
-            tab={props.tab}
-            loading={props.loading}
-            fetchMoreHot={props.fetchMoreHot}
-            fetchMoreNew={props.fetchMoreNew}
-          />
-        </div>
-      </ShowOnMobileOrDesktopSSR>
-      <ShowOnMobileOrDesktopSSR className={classes.width100} mobile>
-        <div className={classes.trendFeedFlexMobile}>
-          <LoadingBar
-            absoluteTop
-            height={4}
-            width={'100%'}
-            loading={props.loading}
-          />
-          <TrendFeedItems {...props} />
-          <LoadMoreFeedItems
-            tab={props.tab}
-            loading={props.loading}
-            fetchMoreHot={props.fetchMoreHot}
-            fetchMoreNew={props.fetchMoreNew}
-          />
-        </div>
-      </ShowOnMobileOrDesktopSSR>
-    </>
+    <main className={clsx(
+      classes.trendFeedFlex60,
+      props.mobile ? classes.flexMobile : classes.flexDesktop,
+    )}>
+      <LoadingBar
+        absoluteTop
+        height={4}
+        width={'100%'}
+        loading={props.loading}
+      />
+      <TrendFeedItems
+        {...props}
+        mobile={props.mobile}
+      />
+      {
+        trendItemsLoaded &&
+        <LoadMoreFeedItems
+          tab={props.tab}
+          loading={props.loading}
+          fetchMoreHot={props.fetchMoreHot}
+          fetchMoreNew={props.fetchMoreNew}
+        />
+      }
+      <LoadingTrendsPlaceholder show={!trendItemsLoaded}/>
+    </main>
   );
 }
 
@@ -98,7 +99,9 @@ const TrendFeedItems: React.FC<ReactProps> = (props) => {
               <TrendingNewsItemRow
                 onClick={() => {
                   props.setCurrentNewsItem(newsItem)
-                  props.setOpenModal(true)
+                  if (props.mobile) {
+                    props.setOpenModal(true)
+                  }
                   // reset image gallery paginator to first image
                   props.setIndex(0)
                 }}
@@ -125,7 +128,9 @@ const TrendFeedItems: React.FC<ReactProps> = (props) => {
 }
 
 
+
 interface ReactProps extends WithStyles<typeof styles> {
+  mobile: boolean
   newsItemsHot: NewsItemsConnection
   newsItemsNew: NewsItemsConnection
   currentNewsItem: NewsItem
@@ -142,16 +147,15 @@ interface ReactProps extends WithStyles<typeof styles> {
 }
 
 export const styles = (theme: Theme) => createStyles({
-  trendFeedFlex60Desktop: {
+  trendFeedFlex60: {
     display: "flex",
     flexDirection: "column",
     borderRadius: BorderRadius2x,
+  },
+  flexDesktop: {
     flexBasis: "60%",
   },
-  trendFeedFlexMobile: {
-    display: "flex",
-    flexDirection: "column",
-    borderRadius: BorderRadius2x,
+  flexMobile: {
     flexBasis: "100%",
   },
   newsItemRow: {

@@ -36,7 +36,7 @@ export const styles = (theme: Theme) => createStyles({
   // },
   featuredImageRootXSDown: {
     maxWidth: 'calc(101vw)', // extra 1 vw to hide border
-    position: 'absolute',
+    // position: 'absolute',
     height: '100%',
     marginBottom: "0rem",
   },

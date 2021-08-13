@@ -60,6 +60,7 @@ const FeaturedPreview: React.FC<ReactProps> = (props) => {
           setIndex={props.setIndex}
           isPromoted={props.isPromoted}
           disableModalPopup={props.disableModalPopup}
+          previewImageClassName={props.previewImageClassName}
           style={props.style}
           animateTransitions={props.animateTransitions}
         />

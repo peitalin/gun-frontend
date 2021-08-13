@@ -20,6 +20,9 @@ import {
 import TrendFeedLayout from "./TrendingFeed/TrendFeedLayout";
 import TrendingFeedColumn60 from "./TrendingFeed/TrendingFeedColumn60";
 import NewsItemColumn40 from "./TrendingFeed/NewsItemColumn40"
+// media query
+import { useTheme } from "@material-ui/core/styles";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 import { useRouter } from "next/router";
 
@@ -30,9 +33,14 @@ export const TrendingToday: React.FC<ReactProps> = (props) => {
     classes,
   } = props;
 
+  const theme = useTheme()
+  const lgDown = useMediaQuery(theme.breakpoints.down("lg"));
+
   const router = useRouter()
   let newsItemIdToFetch = router?.query?.item
   console.log('newsItemIdToFetch:', newsItemIdToFetch)
+
+  const [fetchMoreLoading, setFetchMoreLoading] = React.useState(false)
 
   interface Qvar {
   }
@@ -59,7 +67,8 @@ export const TrendingToday: React.FC<ReactProps> = (props) => {
   ] = React.useState<NewsItemsConnection>(undefined)
 
   const limit = props.limit ?? 10
-  const [offset, setOffset] = React.useState(0)
+  const [offsetHot, setOffsetHot] = React.useState(0)
+  const [offsetNew, setOffsetNew] = React.useState(0)
 
   // image gallery index
   const [index, setIndex] = React.useState(0);
@@ -69,12 +78,12 @@ export const TrendingToday: React.FC<ReactProps> = (props) => {
       variables: {
         query: {
           limit: limit,
-          offset: offset,
+          offset: offsetNew,
         }
       },
       shouldResubscribe: true,
       onSubscriptionData: ({ client, subscriptionData: { data }}) => {
-        // console.log('newsItems subscriptionData:', data)
+        console.log('newsItems subscriptionData:', data)
       },
       onSubscriptionComplete: () => {
         console.log('newsItems subscriptions complete.')
@@ -113,7 +122,7 @@ export const TrendingToday: React.FC<ReactProps> = (props) => {
 
   // console.log('offset:', offset)
   // console.log("ddata", hotItemsResponse?.data?.getHotNewsItemsToday?.edges?.map(e => e?.node?.id))
-  console.log('getNewsItemResponse:', getNewsItemResponse)
+  // console.log('getNewsItemResponse:', getNewsItemResponse)
 
 
   return (
@@ -134,10 +143,12 @@ export const TrendingToday: React.FC<ReactProps> = (props) => {
         // image gallery
         index={index}
         setIndex={setIndex}
-        loading={hotItemsResponse.loading}
+        loading={hotItemsResponse.loading || fetchMoreLoading}
+        mobile={lgDown}
         fetchMoreHot={async() => {
 
-          let newOffset = offset + limit
+          let newOffset = offsetHot + limit
+          setFetchMoreLoading(true)
 
           // NOTE: apollo cache automatically merges fetchMore in apollo.tsx
           let newData = await fetchMoreHot({
@@ -158,7 +169,11 @@ export const TrendingToday: React.FC<ReactProps> = (props) => {
               ]
             }
           })
-          setOffset(newOffset)
+          setFetchMoreLoading(false)
+          setOffsetHot(newOffset)
+        }}
+        fetchMoreNew={async() => {
+          setOffsetNew(offsetNew + limit)
         }}
       />
       <NewsItemColumn40
@@ -166,6 +181,7 @@ export const TrendingToday: React.FC<ReactProps> = (props) => {
         setCurrentNewsItem={setCurrentNewsItem}
         openModal={openModal}
         setOpenModal={setOpenModal}
+        mobile={lgDown}
         // image gallery
         index={index}
         setIndex={setIndex}

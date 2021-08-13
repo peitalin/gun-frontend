@@ -52,6 +52,7 @@ const styles = (theme: Theme) => createStyles({
       ? `1px solid ${Colors.uniswapLightNavy}`
       : `1px solid ${Colors.slateGreyDarker}`,
     borderTop: 'unset',
+    boxShadow: BoxShadows.shadow5.boxShadow,
     backgroundColor: isThemeDark(theme)
       ? Colors.uniswapDarkNavy
       : Colors.cream,
@@ -69,6 +70,16 @@ const styles = (theme: Theme) => createStyles({
       }),
     },
     cursor: 'pointer',
+  },
+  loadingPlaceholder: {
+    height: '50vh',
+    borderRadius: `${BorderRadius2x}px`,
+    padding: '1rem',
+    width: '100%',
+    boxShadow: BoxShadows.shadow5.boxShadow,
+    backgroundColor: isThemeDark(theme)
+      ? Colors.uniswapDarkNavy
+      : Colors.cream,
   },
 })
 

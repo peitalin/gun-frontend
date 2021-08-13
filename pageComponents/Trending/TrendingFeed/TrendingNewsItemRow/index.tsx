@@ -218,10 +218,7 @@ const styles = (theme: Theme) => createStyles({
     width: '100%',
   },
   productCardBox: {
-    display: 'flex',
-    flexDirection: "column",
-    justifyContent: "flex-start",
-    alignItems: "flex-start",
+    height: "100%",
     width: '100%',
   },
   productRowRoot: {
@@ -229,6 +226,7 @@ const styles = (theme: Theme) => createStyles({
     flexDirection: 'row',
     justifyContent: 'flex-start',
     width: '100%',
+    height: "100%",
     padding: '0.25rem',
     transition:  theme.transitions.create(['background-color'], {
       easing: theme.transitions.easing.easeIn,
@@ -267,7 +265,7 @@ const styles = (theme: Theme) => createStyles({
     padding: '0.5rem 0rem 0.5rem 0.5rem',
   },
   flexColPaddingSm: {
-    padding: '0.5rem 0rem 0.5rem 0rem',
+    padding: '0.25rem 0rem 0.25rem 0.25rem',
   },
   flexColInner60: {
     flexBasis: '60%',

@@ -14,6 +14,7 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 import NewsItemCardDetails from "./NewsItemCardDetails";
 import IconButton from "@material-ui/core/IconButton";
 import ClearIcon from "@material-ui/icons/Clear";
+import Portal from "@material-ui/core/Portal";
 
 
 
@@ -57,14 +58,10 @@ const NewsItemCard: React.FC<ReactProps> = (props) => {
           isSuspended={newsItem?.isSuspended || newsItem?.isDeleted}
           imageSize={{
             mobile: {
-              // width: 90,
-              // height: 60,
               width: '100%',
               height: '100%',
             },
             desktop: {
-              // width: 120,
-              // height: 80,
               width: '100%',
               height: '100%',
             },
@@ -91,9 +88,7 @@ interface ReactProps extends WithStyles<typeof styles> {
 const styles = (theme: Theme) => createStyles({
   newsItemModalPageRootDesktop: {
     position: "relative",
-    padding: "1rem",
-    paddingBottom: "0rem",
-    paddingRight: "0rem",
+    paddingTop: "1rem",
   },
   newsItemModalPageRootMobile: {
     position: "relative",
@@ -101,6 +96,7 @@ const styles = (theme: Theme) => createStyles({
     paddingBottom: "0rem",
     paddingRight: "0rem",
     maxHeight: '100vh',
+    minWidth: 360,
   },
   newsItemInnerContainer: {
     display: 'flex',
@@ -121,20 +117,21 @@ const styles = (theme: Theme) => createStyles({
     overflow: "hidden",
     transition:  theme.transitions.create(['width', 'height'], {
       easing: theme.transitions.easing.easeInOut,
-      duration: 150,
+      duration: 100,
     }),
-    width: '100%',
-    minWidth: 400,
+    margin: '0rem 1rem',
+    // width: '100%',
+    // minWidth: 400,
   },
   closeButtonMobile: {
-    position: "absolute",
-    top: '1.5rem',
-    right: '0.5rem',
+    // position: "absolute",
+    top: '2rem',
+    marginLeft: 'calc(100% - 3rem)',
   },
   closeButtonDesktop: {
     position: "absolute",
     top: '0.5rem',
-    right: '-0.5rem',
+    right: '0rem',
   },
   closeButton: {
     zIndex: 2,
