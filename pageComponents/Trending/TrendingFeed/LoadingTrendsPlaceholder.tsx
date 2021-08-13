@@ -30,9 +30,9 @@ const styles = (theme: Theme) => createStyles({
     width: '100%',
     borderRadius: `${BorderRadius2x}px ${BorderRadius2x}px 0px 0px`,
     padding: '1rem',
-    border: isThemeDark(theme)
-      ? `1px solid ${Colors.uniswapLightNavy}`
-      : `1px solid ${Colors.slateGreyDarker}`,
+    // border: isThemeDark(theme)
+    //   ? `1px solid ${Colors.uniswapLightNavy}`
+    //   : `1px solid ${Colors.slateGreyDarker}`,
     backgroundColor: isThemeDark(theme)
       ? Colors.uniswapDarkNavy
       : Colors.cream,
