@@ -61,26 +61,23 @@ const MobileMenuRoutes = (props: ReactProps) => {
         </MenuItem>
       }
 
-      {
-        loggedIn &&
-        <div className={classes.mobileMenuFlexitem}>
-          <Link href="/sell">
-            <a className={classes.menuLink}>
-              <MenuItem
-                className={clsx(
-                  classes.mobileMenuFlexitem,
-                  classes.mobileMenuItemRoot
-                )}
-                onClick={() => props.closeMobileMenu()}
-              >
-                <Typography className={classes.mobileMenuItemTextEmph}>
-                  Upload Listing
-                </Typography>
-              </MenuItem>
-            </a>
-          </Link>
-        </div>
-      }
+      <div className={classes.mobileMenuFlexitem}>
+        <Link href="/sell">
+          <a className={classes.menuLink}>
+            <MenuItem
+              className={clsx(
+                classes.mobileMenuFlexitem,
+                classes.mobileMenuItemRoot
+              )}
+              onClick={() => props.closeMobileMenu()}
+            >
+              <Typography className={classes.mobileMenuItemTextEmph}>
+                Upload Listing
+              </Typography>
+            </MenuItem>
+          </a>
+        </Link>
+      </div>
 
       <MenuItem
         className={clsx(
@@ -100,8 +97,8 @@ const MobileMenuRoutes = (props: ReactProps) => {
             </Link>
           : <Link href="/create-store">
               <a className={classes.aLink}>
-                <Typography className={classes.mobileMenuItemText}>
-                  Create Store
+                <Typography className={classes.mobileMenuItemTextEmph2}>
+                  Create Account
                 </Typography>
               </a>
             </Link>
@@ -151,7 +148,7 @@ const MobileMenuRoutes = (props: ReactProps) => {
 
 
       <div className={classes.mobileMenuFlexitem}>
-        <Link href="/">
+        <Link href="/new">
           <a className={classes.menuLink}>
             <MenuItem
               className={clsx(
@@ -161,34 +158,106 @@ const MobileMenuRoutes = (props: ReactProps) => {
               onClick={() => props.closeMobileMenu()}
             >
               <Typography className={classes.mobileMenuItemText}>
-                Browse Products
+                View New Products
               </Typography>
             </MenuItem>
           </a>
         </Link>
       </div>
 
+      <div className={classes.mobileMenuFlexitem}>
+        <Link href="/trending">
+          <a className={classes.menuLink}>
+            <MenuItem
+              className={clsx(
+                classes.mobileMenuFlexitem,
+                classes.mobileMenuItemRoot
+              )}
+              onClick={() => props.closeMobileMenu()}
+            >
+              <Typography className={classes.mobileMenuItemTextEmph3}>
+                Trending Products 🔥
+              </Typography>
+            </MenuItem>
+          </a>
+        </Link>
+      </div>
+
+
       {
-        loggedIn &&
-        <div className={classes.mobileMenuFlexitem}>
-          <Link href="/saved-searches">
-            <a className={classes.menuLink}>
-              <MenuItem
-                className={clsx(
-                  classes.mobileMenuFlexitem,
-                  classes.mobileMenuItemRoot
-                )}
-                onClick={() => {
-                  props.closeMobileMenu()
-                }}
-              >
-                <Typography className={classes.mobileMenuItemText}>
-                  My Saved Searches
-                </Typography>
-              </MenuItem>
-            </a>
-          </Link>
-        </div>
+        loggedIn
+        ? <div className={classes.mobileMenuFlexitem}>
+            <Link href="/saved-searches">
+              <a className={classes.menuLink}>
+                <MenuItem
+                  className={clsx(
+                    classes.mobileMenuFlexitem,
+                    classes.mobileMenuItemRoot
+                  )}
+                  onClick={() => props.closeMobileMenu()}
+                >
+                  <Typography className={classes.mobileMenuItemText}>
+                    My Saved Searches
+                  </Typography>
+                </MenuItem>
+              </a>
+            </Link>
+          </div>
+        : <div className={classes.mobileMenuFlexitem}>
+            <Login
+              initialTabIndex={0}
+              buttonProps={{
+                classes: { root: classes.buttonLogin }
+              }}
+              buttonText={"My Saved Searches"}
+              buttonType={"menuItem"}
+              menuItemTextClassName={classes.mobileMenuItemText}
+              redirectOnComplete={"/saved-searches"}
+              callbackOnComplete={() => {
+                // only close menu after login, otherwise login component unmounts
+                // and login modal never shows
+                props.closeMobileMenu()
+              }}
+            />
+          </div>
+      }
+
+      {
+        loggedIn
+        ? <div className={classes.mobileMenuFlexitem}>
+            <Link href="/collections">
+              <a className={classes.menuLink}>
+                <MenuItem
+                  className={clsx(
+                    classes.mobileMenuFlexitem,
+                    classes.mobileMenuItemRoot
+                  )}
+                  onClick={() => props.closeMobileMenu()}
+                >
+                  <Typography className={classes.mobileMenuItemText}>
+                    My Collections
+                  </Typography>
+                </MenuItem>
+              </a>
+            </Link>
+          </div>
+        : <div className={classes.mobileMenuFlexitem}>
+            <Login
+              initialTabIndex={0}
+              buttonProps={{
+                classes: { root: classes.buttonLogin }
+              }}
+              buttonText={"My Collections"}
+              buttonType={"menuItem"}
+              menuItemTextClassName={classes.mobileMenuItemText}
+              redirectOnComplete={"/collections"}
+              callbackOnComplete={() => {
+                // only close menu after login, otherwise login component unmounts
+                // and login modal never shows
+                props.closeMobileMenu()
+              }}
+            />
+          </div>
       }
 
       <Divider style={dividerStyle}/>
@@ -306,7 +375,13 @@ const styles = (theme: Theme) => createStyles({
     fontWeight: 500,
     color: theme.palette.type === 'dark'
       ? Colors.purple
-      : Colors.gradientUniswapGreen,
+      : Colors.purple,
+  },
+  mobileMenuItemTextEmph3: {
+    fontWeight: 500,
+    color: theme.palette.type === 'dark'
+      ? Colors.lightRed
+      : Colors.lightRed,
   },
   aLink: {
     color: Colors.charcoal,

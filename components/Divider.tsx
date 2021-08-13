@@ -33,7 +33,7 @@ const styles = (theme: Theme) => createStyles({
     flexGrow: 1,
     borderBottom: theme.palette.type === 'dark'
       ? `1px solid ${Colors.uniswapLightNavy}`
-      : `1px solid ${Colors.slateGreyDarker}`,
+      : `1px solid ${Colors.slateGreyDark}`,
     height: '1px',
     width: '100%'
   },

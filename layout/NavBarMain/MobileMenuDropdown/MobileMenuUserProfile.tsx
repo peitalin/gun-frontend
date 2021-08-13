@@ -1,8 +1,8 @@
 import React from "react";
 // Styles
-import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
+import { withStyles, createStyles, WithStyles, Theme, lighten } from "@material-ui/core/styles";
 import clsx from "clsx";
-import { Colors, Gradients } from "layout/AppTheme";
+import { Colors, Gradients, isThemeDark } from "layout/AppTheme";
 // Redux
 import { useSelector } from 'react-redux';
 import { GrandReduxState } from 'reduxStore/grand-reducer';
@@ -74,17 +74,23 @@ const styles = (theme: Theme) => createStyles({
   flexRowLogin: {
     display: "flex",
     flexDirection: "row",
-    justifyContent: 'center',
+    justifyContent: 'space-between',
     alignItems: 'center',
     padding: '1rem',
+    width: '100%',
   },
   buttonCreateAccount: {
-    marginRight: '0.5rem',
-    backgroundImage: Gradients.gradientUniswapFluro.background,
+    backgroundColor: isThemeDark(theme)
+      ? Colors.purple
+      : Colors.black,
+    // backgroundImage: Gradients.gradientUniswapFluro.background,
     color: Colors.cream,
     minWidth: '150px',
     "&:hover": {
-      backgroundImage: Gradients.gradientUniswapFluro2.background,
+      // backgroundImage: Gradients.gradientUniswapFluro2.background,
+      backgroundColor: isThemeDark(theme)
+        ? lighten(Colors.purple, 0.15)
+        : lighten(Colors.black, 0.15),
       transition: theme.transitions.create(['color', 'border', 'background'], {
         easing: theme.transitions.easing.easeInOut,
         duration: "200ms",
@@ -107,7 +113,7 @@ const styles = (theme: Theme) => createStyles({
     }
   },
   spacing: {
-    width: '0.75rem',
+    width: '2rem',
   },
 });
 
