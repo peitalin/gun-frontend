@@ -190,7 +190,6 @@ export const styles = (theme: Theme) => createStyles({
     //   : 'unset',
   },
   newsItemRowFirst: {
-    overflow: "hidden", // for borderradius to trim inside elements from poking out
     display: "flex",
     flexDirection: "row",
     flexBasis: '100%',
