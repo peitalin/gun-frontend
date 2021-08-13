@@ -34,8 +34,8 @@ export const logoBackgroundColorDark2 = Colors.uniswapDarkPurple
 export const logoBackgroundColorDark3 = Colors.uniswapBlack
 
 export const logoBackgroundColorLight = Colors.cream
-export const logoBackgroundColorLight2 = Colors.slateGreyDark
-export const logoBackgroundColorLight3 = Colors.slateGreyDarker
+export const logoBackgroundColorLight2 = Colors.slateGrey
+export const logoBackgroundColorLight3 = Colors.cream
 
 
 export const styles = (theme: Theme) => createStyles({

@@ -2,7 +2,7 @@ import React from "react";
 import clsx from "clsx";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
-import { Colors, Gradients } from "layout/AppTheme";
+import { Colors, BoxShadows, isThemeDark } from "layout/AppTheme";
 
 // redux
 import { GrandReduxState } from "reduxStore/grand-reducer";
@@ -61,7 +61,7 @@ const BetaTestingBannerDesktop: React.FC<ReactProps> = (props) => {
             color={Colors.purple}
             outerCircleColor={Colors.purple}
             innerCircleColor={
-              isDarkMode ? Colors.uniswapDarkNavy : Colors.black
+              isDarkMode ? Colors.uniswapDarkNavy : Colors.white
             }
           />
           <span className={classes.betaTestBannerText}>
@@ -78,6 +78,8 @@ const BetaTestingBannerDesktop: React.FC<ReactProps> = (props) => {
       {
         showBetaTesting &&
         <IconButtonCancel
+          className={classes.marginLeft}
+          iconClassName={classes.purpleFillSvg}
           dark={isDarkMode}
           onClick={() => setShowBetaTesting(false)}
         />
@@ -99,9 +101,12 @@ const styles = (theme: Theme) => createStyles({
     justifyContent: 'center',
     flexDirection: 'row',
     alignItems: 'center',
-    background: theme.palette.type === "dark"
+    boxShadow: isThemeDark(theme)
+      ? BoxShadows.shadowWhite2.boxShadow
+      : BoxShadows.shadow5.boxShadow,
+    background: isThemeDark(theme)
       ? Colors.uniswapDarkNavy
-      : Colors.black,
+      : Colors.white,
   },
   title: {
     marginBottom: '2rem',
@@ -134,7 +139,7 @@ const styles = (theme: Theme) => createStyles({
   rainbowBorder:{
     position: 'absolute',
     background: `linear-gradient(90deg, rgb(206, 69, 197) 0%, rgb(85, 146, 232) 100%)`,
-    height: 2,
+    height: 3,
     width: '100%',
   },
   borderTop:{
@@ -177,7 +182,13 @@ const styles = (theme: Theme) => createStyles({
       easing: theme.transitions.easing.sharp,
       duration: "400ms",
     }),
-  }
+  },
+  marginLeft: {
+    margin: '0.5rem',
+  },
+  purpleFillSvg: {
+    fill: Colors.purple,
+  },
 });
 
 

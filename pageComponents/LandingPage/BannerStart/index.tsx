@@ -5,12 +5,8 @@ import { withStyles, WithStyles, createStyles, Theme, fade } from "@material-ui/
 import { Colors, Gradients, isThemeDark } from "layout/AppTheme";
 // SSR
 import { NextPage, NextPageContext } from 'next';
-import Login from "layout/Login";
+// import Login from "layout/Login";
 import Hidden from 'components/HiddenFix';
-// Redux
-import { useSelector, useDispatch } from "react-redux";
-import { GrandReduxState, Actions } from "reduxStore/grand-reducer";
-import { UserPrivate } from "typings/gqlTypes";
 // components
 import BannerStartDesktop from "./BannerStartDesktop";
 import BannerStartMobile from "./BannerStartMobile";
@@ -31,15 +27,15 @@ const BannerStart: NextPage<ReactProps> = (props) => {
   const bannerForegroundImageUrlLight = `/img/start/screen1-light.jpg`
 
   const theme = useTheme();
-  const mdDown = useMediaQuery(theme.breakpoints.down("md"))
+  // const mdDown = useMediaQuery(theme.breakpoints.down("md"))
 
   const ditherStyle = {
     // background: isDarkMode
     //   ? Gradients.gradientUniswapDark.background
     //   : Gradients.gradientGrey3.background,
     background: props.isDarkMode
-    ? `linear-gradient(60deg , ${Colors.uniswapDarkNavy} 48%, ${Colors.uniswapMediumNavy} 48%, ${Colors.uniswapMediumNavy} 50%, rgba(255, 255, 255, 0) 50%)`
-    : `linear-gradient(60deg , ${Colors.cream} 48%, ${Colors.slateGreyDark} 48%, ${Colors.slateGreyDark} 50%, rgba(255, 255, 255, 0) 50%)`,
+      ? `linear-gradient(60deg , ${Colors.uniswapDarkNavy} 48%, ${Colors.uniswapMediumNavy} 48%, ${Colors.uniswapMediumNavy} 50%, rgba(255, 255, 255, 0) 50%)`
+      : `linear-gradient(60deg , ${Colors.cream} 48%, ${Colors.slateGreyDark} 48%, ${Colors.slateGreyDark} 50%, rgba(255, 255, 255, 0) 50%)`,
   }
 
   const ditherStyleMobile = {

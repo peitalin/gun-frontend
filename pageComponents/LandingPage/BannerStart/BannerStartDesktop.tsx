@@ -45,9 +45,9 @@ const BannerStartDesktop: NextPage<ReactProps> = (props) => {
   const snackbar = useSnackbar();
 
   const theme = useTheme();
-  const smDown = useMediaQuery(theme.breakpoints.down("sm"))
-  const mdDown = useMediaQuery(theme.breakpoints.down("md"))
-  const lgDown = useMediaQuery(theme.breakpoints.down("lg"))
+  // const smDown = useMediaQuery(theme.breakpoints.down("sm"))
+  // const mdDown = useMediaQuery(theme.breakpoints.down("md"))
+  // const lgDown = useMediaQuery(theme.breakpoints.down("lg"))
 
   const [
     signupToWaitlist,

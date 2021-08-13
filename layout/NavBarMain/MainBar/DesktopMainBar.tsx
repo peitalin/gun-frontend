@@ -77,8 +77,8 @@ const DesktopMainBar = (props: DesktopMainBarProps) => {
               ? logoBackgroundColorDark2
               : logoBackgroundColorLight2,
             filter: isThemeDark(theme)
-              ? 'drop-shadow(-2px 0px 2px rgba(25, 25, 25, 0.3))'
-              : 'drop-shadow(-2px 0px 2px hsla(0, 0%, 0%, 0.3))',
+              ? 'drop-shadow(-2px 0px 2px rgba(25, 25, 25, 0.25))'
+              : 'drop-shadow(-2px 0px 2px hsla(0, 0%, 0%, 0.25))',
           }}
         />
       </div>

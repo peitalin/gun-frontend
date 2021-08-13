@@ -1,5 +1,6 @@
 
 import React from "react";
+import clsx from "clsx";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 import { Colors } from "layout/AppTheme";
@@ -21,8 +22,8 @@ const IconButtonCancel: React.FC<ReactProps> = (props) => {
       onClick={props.onClick}
       className={
         position == "right"
-          ? classes.clearButtonRight
-          : classes.clearButtonLeft
+          ? clsx(classes.clearButtonRight, props.className)
+          : clsx(classes.clearButtonLeft, props.className)
       }
       classes={{
         root: dark
@@ -32,8 +33,8 @@ const IconButtonCancel: React.FC<ReactProps> = (props) => {
     >
       <ClearIcon classes={{
         root: dark
-          ? classes.iconButtonSvgDark
-          : classes.iconButtonSvg
+          ? clsx(classes.iconButtonSvgDark, props.iconClassName)
+          : clsx(classes.iconButtonSvg, props.iconClassName)
       }}/>
     </IconButton>
   )
@@ -44,6 +45,8 @@ interface ReactProps extends WithStyles<typeof styles> {
   onClick?(a: any): void;
   position?: "left" | "right";
   dark?: boolean;
+  className?: any;
+  iconClassName?: any;
 }
 
 const styles = (theme: Theme) => createStyles({

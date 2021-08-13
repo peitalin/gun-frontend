@@ -39,7 +39,7 @@ export const styles = (theme: Theme) => createStyles({
   catBarInnerDashboardDesktop: {
     backgroundColor: isThemeDark(theme)
       ? Colors.uniswapDarkPurple
-      : Colors.slateGreyDark,
+      : Colors.slateGrey,
   },
   catBarInnerDashboard: {
     width: '100%',
