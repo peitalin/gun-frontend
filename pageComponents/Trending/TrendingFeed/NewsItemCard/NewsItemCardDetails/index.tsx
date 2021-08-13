@@ -61,8 +61,8 @@ const NewsItemCardDetails = (props: ReactProps) => {
   } = props;
 
   const theme = useTheme();
-  const mdDown = useMediaQuery(theme.breakpoints.down("md"))
-  const snackbar = useSnackbar();
+  const isMobile = useMediaQuery(theme.breakpoints.down("lg"))
+  // const snackbar = useSnackbar();
 
   const [
     upvote,
@@ -130,149 +130,110 @@ const NewsItemCardDetails = (props: ReactProps) => {
   return (
     <div className={classes.newsItemCardDetailsRoot}>
 
-      <ShowOnMobileOrDesktopSSR desktop>
-        <div
-          className={clsx(
-            classes.flexColOuter,
-            classes.unclickable,
-            classes.positionRelative,
-            "fadeInFast",
-          )}
+      <div
+        className={clsx(
+          classes.flexColOuter,
+          classes.unclickable,
+          classes.positionRelative,
+          "fadeInFast",
+        )}
+      >
+        <FeaturedPreview
+          featuredPreviewItem={featuredPreviewItem}
+          previewItems={previewItems}
+          setPreviewLoaded={(b) => props.setPreviewLoaded(b)}
+          loading={props.loading || !process.browser} // for SSR
+          index={props.index}
+          setIndex={props.setIndex}
+          isPromoted={false}
+          disableModalPopup={false}
+          style={{
+            width: props.imageSize?.desktop?.width,
+            height: props.imageSize?.desktop?.height,
+            borderRadius: 0,
+            // maxHeight: 285,
+            maxHeight: 266,
+          }}
+          previewImageClassName={classes.previewImageClass}
+          constrainAspectRatio={false}
+          animateTransitions={false}
+        />
+
+
+        <NewsItemAdminSuspendIcon
+          newsItem={newsItem}
+          style={{
+            top: 'unset',
+            bottom: '-1rem',
+            left: 'calc(1rem)',
+            marginTop: '0.5rem',
+            width: '28px',
+            height: '28px',
+          }}
+        />
+
+        <NewsItemAdminRescrapeIcon
+          newsItem={newsItem}
+          style={{
+            top: 'unset',
+            bottom: '-1rem',
+            left: 'calc(3.5rem)',
+            marginTop: '0.5rem',
+            width: '28px',
+            height: '28px',
+          }}
+        />
+
+
+        <CollectionsIcon
+          productId={newsItem?.productId}
+          externalProductId={newsItem?.externalProductId}
+          // refetch={refetch}
+          style={{
+            top: 'unset',
+            bottom: '-1rem',
+            // right: 'calc(130px + 1.25rem)',
+            right: '0.5rem',
+            marginTop: '0.5rem',
+            width: '28px',
+            height: '28px',
+          }}
+        />
+
+        <ButtonLoading
+          className={props.classes.claimButton}
+          variant={"contained"}
+          loadingIconColor={Colors.cream}
+          replaceTextWhenLoading={true}
+          // loading={loading}
+          // disabled={ }
+          disabled={true}
+          onClick={() => {
+            console.log("Convert externalProduct to Product")
+          }}
         >
-          <FeaturedPreview
-            featuredPreviewItem={featuredPreviewItem}
+          Claim Listing
+        </ButtonLoading>
+      </div>
+
+      {
+        previewItems?.length > 1 &&
+        <div className={classes.bottomImageGalleryBox}>
+          <BottomImageCarouselDesktop
+            setFeaturedPreviewItem={setFeaturedPreviewItem}
             previewItems={previewItems}
-            setPreviewLoaded={(b) => props.setPreviewLoaded(b)}
+            productId={newsItem?.id}
             loading={props.loading || !process.browser} // for SSR
             index={props.index}
             setIndex={props.setIndex}
-            isPromoted={false}
-            disableModalPopup={false}
-            style={{
-              width: props.imageSize?.desktop?.width,
-              height: props.imageSize?.desktop?.height,
-              borderRadius: 0,
-              // maxHeight: 285,
-              maxHeight: 266,
-            }}
-            previewImageClassName={classes.previewImageClass}
-            constrainAspectRatio={false}
-            animateTransitions={false}
-          />
-
-
-          <NewsItemAdminSuspendIcon
-            newsItem={newsItem}
-            style={{
-              top: 'unset',
-              bottom: '-1rem',
-              left: 'calc(1rem)',
-              marginTop: '0.5rem',
-              width: '28px',
-              height: '28px',
-            }}
-          />
-
-          <NewsItemAdminRescrapeIcon
-            newsItem={newsItem}
-            style={{
-              top: 'unset',
-              bottom: '-1rem',
-              left: 'calc(3.5rem)',
-              marginTop: '0.5rem',
-              width: '28px',
-              height: '28px',
-            }}
-          />
-
-
-          <CollectionsIcon
-            productId={newsItem?.productId}
-            externalProductId={newsItem?.externalProductId}
-            // refetch={refetch}
-            style={{
-              top: 'unset',
-              bottom: '-1rem',
-              // right: 'calc(130px + 1.25rem)',
-              right: '0.5rem',
-              marginTop: '0.5rem',
-              width: '28px',
-              height: '28px',
-            }}
-          />
-
-          <ButtonLoading
-            className={props.classes.claimButton}
-            variant={"contained"}
-            loadingIconColor={Colors.cream}
-            replaceTextWhenLoading={true}
-            // loading={loading}
-            // disabled={ }
-            disabled={true}
-            onClick={() => {
-              console.log("Convert externalProduct to Product")
-            }}
-          >
-            Claim Listing
-          </ButtonLoading>
-        </div>
-
-        {
-          previewItems?.length > 1 &&
-          <div className={classes.bottomImageGalleryBox}>
-            <BottomImageCarouselDesktop
-              setFeaturedPreviewItem={setFeaturedPreviewItem}
-              previewItems={previewItems}
-              productId={newsItem?.id}
-              loading={props.loading || !process.browser} // for SSR
-              index={props.index}
-              setIndex={props.setIndex}
-              numberOfItemsWide={
-                previewItems?.length < 6
-                 ? 6
-                  : previewItems?.length
-              }
-            />
-          </div>
-        }
-      </ShowOnMobileOrDesktopSSR>
-      <ShowOnMobileOrDesktopSSR mobile>
-        <div
-          className={clsx(
-            classes.flexColOuter,
-            // classes.flexColPaddingSm,
-            classes.unclickable,
-            "fadeInFast",
-          )}
-        >
-          {/* <NewsItemPreviewCard
-            previewItem={featuredPreviewItem}
-            setPreviewLoaded={(b) => props.setPreviewLoaded(b)}
-            unclickable={true}
-            width={props.imageSize?.mobile?.width ?? 82.5}
-            height={props.imageSize?.mobile?.height ?? 55}
-          /> */}
-
-          <FeaturedPreview
-            featuredPreviewItem={featuredPreviewItem}
-            previewItems={previewItems}
-            setPreviewLoaded={(b) => props.setPreviewLoaded(b)}
-            loading={props.loading || !process.browser} // for SSR
-            index={props.index}
-            setIndex={props.setIndex}
-            isPromoted={false}
-            disableModalPopup={false}
-            style={{
-              width: props.imageSize?.desktop?.width,
-              height: props.imageSize?.desktop?.height,
-              borderRadius: 0,
-            }}
-            previewImageClassName={classes.previewImageClass}
-            constrainAspectRatio={false}
-            animateTransitions={false}
+            numberOfItemsWide={
+              previewItems?.length < 6
+                ? 6
+                : previewItems?.length
+            }
           />
         </div>
-      </ShowOnMobileOrDesktopSSR>
+      }
 
 
       <div className={clsx(

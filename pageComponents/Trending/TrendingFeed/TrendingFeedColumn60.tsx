@@ -166,6 +166,7 @@ export const styles = (theme: Theme) => createStyles({
     flexBasis: "60%",
     position: "relative",
     overflowX: "hidden",
+    marginBottom: '2rem',
   },
   flexMobile: {
     flexBasis: "100%",

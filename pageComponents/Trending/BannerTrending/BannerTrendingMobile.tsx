@@ -40,6 +40,8 @@ const BannerTrendingLinkMobile: NextPage<ReactProps> = (props) => {
         // in /public/img
         bannerContainerStyles={{
           marginBottom: "1rem",
+          background: "linear-gradient(-45deg, #222429, #2e3139, #384052, #424957)",
+          // for SSR before background-neon loads
         }}
         // src={bannerBackgroundImageUrl}
         className={

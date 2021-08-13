@@ -61,6 +61,8 @@ const BannerTrendingLink: NextPage<ReactProps> = (props) => {
         bannerContainerStyles={{
           borderRadius: BorderRadius2x,
           // boxShadow: BoxShadows.shadow5.boxShadow,
+          background: "linear-gradient(-45deg, #222429, #2e3139, #384052, #424957)",
+          // for SSR before background-neon loads
           border: isDarkMode
             ? `0px solid ${Colors.uniswapDarkPurple}`
             : `0px solid ${Colors.slateGrey}`
