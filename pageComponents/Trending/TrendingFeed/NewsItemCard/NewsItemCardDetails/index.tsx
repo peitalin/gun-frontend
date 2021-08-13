@@ -266,8 +266,6 @@ const NewsItemCardDetails = (props: ReactProps) => {
               width: props.imageSize?.desktop?.width,
               height: props.imageSize?.desktop?.height,
               borderRadius: 0,
-              // maxHeight: 285,
-              maxHeight: 240,
             }}
             previewImageClassName={classes.previewImageClass}
             constrainAspectRatio={false}
