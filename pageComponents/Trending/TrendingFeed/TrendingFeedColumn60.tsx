@@ -219,7 +219,6 @@ export const styles = (theme: Theme) => createStyles({
       : `1px solid ${Colors.slateGreyDark}`,
     borderLeft: "0px solid transparent",
     borderRight: "0px solid transparent",
-    overflow: "hidden",
   },
   width100: {
     width: '100%',
