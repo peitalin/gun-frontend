@@ -131,6 +131,7 @@ const styles = (theme: Theme) => createStyles({
     borderRadius: BorderRadius,
     background: theme.palette.type === 'dark'
       ? Colors.uniswapDarkNavy
+      // ? Colors.uniswapBlack
       : Colors.cream,
     border: theme.palette.type === 'dark'
       ? `1px solid ${Colors.uniswapMediumNavy}`

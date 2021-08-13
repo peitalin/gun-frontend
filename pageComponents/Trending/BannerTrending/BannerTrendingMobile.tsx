@@ -45,7 +45,7 @@ const BannerTrendingLinkMobile: NextPage<ReactProps> = (props) => {
         className={
           isDarkMode
             ? "background-neon"
-            : "background-neon"
+            : "background-black"
         }
         titleStyle={{
           position: 'absolute',

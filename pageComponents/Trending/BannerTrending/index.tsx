@@ -27,7 +27,8 @@ const BannerTrendingLink: React.FC<ReactProps> = (props) => {
 
   const bannerDitherMobile = isDarkMode
     ? 'linear-gradient(130deg, rgba(25,25,25,0.2) 10%, rgba(25,25,25,0.4) 90%)'
-    : 'linear-gradient(130deg, rgba(245,245,245,0.2) 10%, rgba(245,245,245,0.4) 90%)'
+    // : 'linear-gradient(130deg, rgba(245,245,245,0.2) 10%, rgba(245,245,245,0.4) 90%)'
+    : 'unset'
 
   const bannerDither = isDarkMode
     ? 'linear-gradient(130deg, rgba(25,25,25,0.2) 10%, rgba(25,25,25,0.4) 90%)'
