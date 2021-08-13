@@ -17,7 +17,6 @@ import LoadingBar from "components/LoadingBar";
 import TrendingNewsItemRow from "./TrendingNewsItemRow";
 import LoadMoreFeedItems from './LoadMoreFeedItems';
 import LoadingTrendsPlaceholder from './LoadingTrendsPlaceholder';
-import ShowOnMobileOrDesktopSSR from 'components/ShowOnMobileOrDesktopSSR';
 
 
 
@@ -29,18 +28,7 @@ export const TrendingFeedLayout: React.FC<ReactProps> = (props) => {
 
   // const client = useApolloClient()
   // console.log("cache: ", client.cache)
-  console.log("loading: ", props.loading)
-
-  const [trendItemsLoaded, setTrendItemsLoaded] = React.useState(false)
-
-  React.useEffect(() => {
-    if (props.newsItemsHot && !trendItemsLoaded) {
-      setTrendItemsLoaded(true)
-    }
-    if (props.newsItemsNew && !trendItemsLoaded) {
-      setTrendItemsLoaded(true)
-    }
-  }, [props.newsItemsHot, props.newsItemsNew])
+  // console.log("loading: ", props.loading)
 
   return (
     <main className={clsx(
@@ -57,16 +45,12 @@ export const TrendingFeedLayout: React.FC<ReactProps> = (props) => {
         {...props}
         mobile={props.mobile}
       />
-      {
-        trendItemsLoaded &&
-        <LoadMoreFeedItems
-          tab={props.tab}
-          loading={props.loading}
-          fetchMoreHot={props.fetchMoreHot}
-          fetchMoreNew={props.fetchMoreNew}
-        />
-      }
-      <LoadingTrendsPlaceholder show={!trendItemsLoaded}/>
+      <LoadMoreFeedItems
+        tab={props.tab}
+        loading={props.loading}
+        fetchMoreHot={props.fetchMoreHot}
+        fetchMoreNew={props.fetchMoreNew}
+      />
     </main>
   );
 }
@@ -84,16 +68,27 @@ const TrendFeedItems: React.FC<ReactProps> = (props) => {
     ? props.newsItemsHot?.edges
     : props.newsItemsNew?.edges
 
+  if (newsItemEdges?.length === 0) {
+    return (
+      <LoadingTrendsPlaceholder show={true}/>
+    )
+  }
+
   return (
     <>
       {
         newsItemEdges?.map(({ node: newsItem }, i) => {
+
+          let isFirstItem = i === 0
+          let isLastItem = i === (newsItemEdges?.length - 1)
+          let isMiddleItem = !isFirstItem && !isLastItem
+
           return (
             <div key={newsItem?.id}
               className={clsx(
-                classes.newsItemRow,
-                i === 0 && classes.newsItemRowFirst,
-                i === (newsItemEdges.length - 1) && classes.newsItemRowLast,
+                isFirstItem && classes.newsItemRowFirst,
+                isMiddleItem && classes.newsItemRow,
+                isLastItem && classes.newsItemRowLast,
               )}
             >
               <TrendingNewsItemRow
@@ -151,12 +146,17 @@ export const styles = (theme: Theme) => createStyles({
     display: "flex",
     flexDirection: "column",
     borderRadius: BorderRadius2x,
+    boxShadow: BoxShadows.shadow5.boxShadow,
   },
   flexDesktop: {
     flexBasis: "60%",
+    position: "relative",
+    overflowX: "hidden",
   },
   flexMobile: {
     flexBasis: "100%",
+    position: "relative",
+    overflowX: "hidden",
   },
   newsItemRow: {
     display: "flex",
@@ -164,23 +164,47 @@ export const styles = (theme: Theme) => createStyles({
     flexBasis: '100%',
     flexGrow: 1,
     width: '100%',
-    border: isThemeDark(theme)
+    borderTop: isThemeDark(theme)
       ? `1px solid ${Colors.uniswapLightNavy}`
-      : `1px solid ${Colors.slateGreyDarker}`,
-    borderBottom: "0px solid transparent",
+      : `1px solid ${Colors.slateGreyDark}`,
+    // borderBottom: "0px solid transparent",
+    // borderLeft: "0px solid transparent",
+    // borderRight: "0px solid transparent",
     // boxShadow: isThemeDark(theme)
     //   ? BoxShadows.shadow1.boxShadow
     //   : 'unset',
   },
   newsItemRowFirst: {
+    overflow: "hidden", // for borderradius to trim inside elements from poking out
+    display: "flex",
+    flexDirection: "row",
+    flexBasis: '100%',
+    flexGrow: 1,
+    width: '100%',
     borderRadius: `${BorderRadius2x}px ${BorderRadius2x}px ${0}px ${0}px`,
-    overflow: "hidden",
+    // border: isThemeDark(theme)
+    //   ? `1px solid ${Colors.uniswapLightNavy}`
+    //   : `1px solid ${Colors.slateGreyDark}`,
+    border: "0px solid transparent",
+    // borderBottom: "0px solid transparent",
+    // borderLeft: "0px solid transparent",
+    // borderRight: "0px solid transparent",
+    // overflow: "hidden",
   },
   newsItemRowLast: {
-    // borderRadius: `0px 0px ${BorderRadius2x}px ${BorderRadius2x}px`,
+    display: "flex",
+    flexDirection: "row",
+    flexBasis: '100%',
+    flexGrow: 1,
+    width: '100%',
+    borderTop: isThemeDark(theme)
+      ? `1px solid ${Colors.uniswapLightNavy}`
+      : `1px solid ${Colors.slateGreyDark}`,
     borderBottom: isThemeDark(theme)
       ? `1px solid ${Colors.uniswapLightNavy}`
-      : `1px solid ${Colors.slateGreyDarker}`,
+      : `1px solid ${Colors.slateGreyDark}`,
+    borderLeft: "0px solid transparent",
+    borderRight: "0px solid transparent",
     overflow: "hidden",
   },
   width100: {

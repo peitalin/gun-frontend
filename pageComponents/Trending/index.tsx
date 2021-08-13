@@ -32,7 +32,13 @@ export const Trending: React.FC<ReactProps> = (props) => {
       maxWidth={1160}
     >
 
-      <BannerTrending/>
+      <BannerTrending
+        headingDesktop={"List your products"}
+        headingMobile={"List your products"}
+        subheadingDesktop={"Feature your product on the front page"}
+        link={'/sell'}
+        buttonText={"Get Started"}
+      />
 
       <TrendingToday limit={10}/>
 
@@ -58,7 +64,13 @@ export const Trending: React.FC<ReactProps> = (props) => {
         marginTop: '-1rem',
         marginBottom: '0rem',
       }}>
-        <BannerTrending/>
+        <BannerTrending
+          headingDesktop={"Buy a promotion"}
+          headingMobile={"Promote your listing on the front page"}
+          subheadingDesktop={"Promote your product on the front page"}
+          link={'/promoted-listings'}
+          buttonText={"Go Now"}
+        />
       </div>
 
       <TrendingThisWeek limit={10}/>

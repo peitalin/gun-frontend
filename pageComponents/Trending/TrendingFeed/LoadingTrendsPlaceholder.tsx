@@ -25,11 +25,14 @@ interface ReactProps extends WithStyles<typeof styles> {
 
 const styles = (theme: Theme) => createStyles({
   loadingPlaceholder: {
-    height: '50vh',
-    borderRadius: `${BorderRadius2x}px`,
-    padding: '1rem',
+    height: '100%',
+    minHeight: 200,
     width: '100%',
-    boxShadow: BoxShadows.shadow5.boxShadow,
+    borderRadius: `${BorderRadius2x}px ${BorderRadius2x}px 0px 0px`,
+    padding: '1rem',
+    border: isThemeDark(theme)
+      ? `1px solid ${Colors.uniswapLightNavy}`
+      : `1px solid ${Colors.slateGreyDarker}`,
     backgroundColor: isThemeDark(theme)
       ? Colors.uniswapDarkNavy
       : Colors.cream,

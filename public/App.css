@@ -445,12 +445,18 @@ textarea {
 }
 
 .background-neon {
-    background: linear-gradient(-45deg, #ee5c52, #e73c7e, #e73c7e, #23a6d5, #23a6d5, #23d5ab);
+    /* background: linear-gradient(-45deg, #ee5c52, #e73c7e, #e73c7e, #23a6d5, #23a6d5, #23d5ab); */
+    background: linear-gradient(-45deg, #6840AF, #6140AF, #9991DB, #23a6d5, #43b6F5, #a3FeEb);
     background-size: 400% 400%;
     animation: background-gradient 15s ease infinite;
 }
 .background-uniswap-dark {
     background: linear-gradient(-45deg, #222429, #2e3139, #384052, #424957);
+    background-size: 400% 400%;
+    animation: background-gradient 15s ease infinite;
+}
+.background-black {
+    background: linear-gradient(-45deg, #1a1a1a, #222429, #2e3139,  #384052, #1a1a1a);
     background-size: 400% 400%;
     animation: background-gradient 15s ease infinite;
 }

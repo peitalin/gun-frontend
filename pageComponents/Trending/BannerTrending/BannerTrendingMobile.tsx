@@ -69,12 +69,12 @@ const BannerTrendingLinkMobile: NextPage<ReactProps> = (props) => {
           <div className={classes.bannerInnerBoxRightMobile}>
             <div className={classes.mainTitleContainerMobile}>
               <Typography variant={"h2"} className={classes.mainTitleXs}>
-                List your products
+                {props.headingMobile}
               </Typography>
             </div>
           </div>
           <div className={classes.bannerInnerBoxRightMobile}>
-            <Link href={"/promote-listings"}>
+            <Link href={props.link}>
               <a>
                 <Button
                   className={
@@ -90,7 +90,7 @@ const BannerTrendingLinkMobile: NextPage<ReactProps> = (props) => {
                   }}
                 >
                   <ArrowStripeIcon
-                    title={"Go Now"}
+                    title={props.buttonText}
                   />
                 </Button>
               </a>
@@ -104,6 +104,9 @@ const BannerTrendingLinkMobile: NextPage<ReactProps> = (props) => {
 
 ///////////////// TYPINGS ///////////////////
 interface ReactProps extends WithStyles<typeof styles> {
+  headingMobile: string
+  link: string
+  buttonText: string
   bannerDither: string
   bannerForegroundImageUrl: string
   bannerBackgroundImageUrl: string

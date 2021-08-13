@@ -103,15 +103,16 @@ const styles = (theme: Theme) => createStyles({
     flexDirection: "column",
     justifyContent: "flex-start",
     alignItems: "flex-start",
-    boxShadow: isThemeDark(theme)
-      ? BoxShadows.shadow1.boxShadow
-      : "unset",
+    // boxShadow: isThemeDark(theme)
+    //   ? BoxShadows.shadow1.boxShadow
+    //   : "unset",
+    boxShadow: BoxShadows.shadow5.boxShadow,
     backgroundColor: isThemeDark(theme)
       ? Colors.uniswapDarkNavy
       : Colors.cream,
-    border: theme.palette.type === 'dark'
-      ? `1px solid ${Colors.uniswapLightNavy}`
-      : `1px solid ${Colors.slateGreyDarker}`,
+    // border: theme.palette.type === 'dark'
+    //   ? `1px solid ${Colors.uniswapLightNavy}`
+    //   : `1px solid ${Colors.slateGreyDarker}`,
     // borderRadius: `${BorderRadius2x}px ${BorderRadius2x}px 0px 0px`,
     borderRadius: `${BorderRadius2x}px`,
     overflow: "hidden",

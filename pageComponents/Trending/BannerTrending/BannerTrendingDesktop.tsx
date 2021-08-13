@@ -2,7 +2,7 @@ import React from "react";
 import clsx from "clsx";
 // styles
 import { withStyles, WithStyles, createStyles, Theme, fade } from "@material-ui/core/styles";
-import { BorderRadius3x, Colors, isThemeDark } from "layout/AppTheme";
+import { BorderRadius2x, BoxShadows, Colors, isThemeDark } from "layout/AppTheme";
 import { styles } from "./styles";
 // components
 import Banner from "components/Banner";
@@ -47,7 +47,7 @@ const BannerTrendingLink: NextPage<ReactProps> = (props) => {
         className={
           isDarkMode
             ? "background-neon"
-            : "background-neon"
+            : "background-black"
         }
         titleStyle={{
           color: Colors.cream,
@@ -59,10 +59,11 @@ const BannerTrendingLink: NextPage<ReactProps> = (props) => {
           background: bannerDither
         }}
         bannerContainerStyles={{
-          borderRadius: BorderRadius3x,
+          borderRadius: BorderRadius2x,
+          // boxShadow: BoxShadows.shadow5.boxShadow,
           border: isDarkMode
-            ? `1px solid ${Colors.uniswapLightNavy}`
-            : `1px solid ${Colors.slateGrey}`
+            ? `0px solid ${Colors.uniswapDarkPurple}`
+            : `0px solid ${Colors.slateGrey}`
         }}
         dither={true}
         height={mdDown ? 240 : 300 }
@@ -73,14 +74,14 @@ const BannerTrendingLink: NextPage<ReactProps> = (props) => {
         )}>
           <div className={classes.mainTitleContainer}>
             <Typography variant={"h1"} className={classes.mainTitle}>
-              List your products
+              {props.headingDesktop}
             </Typography>
           </div>
           <Typography variant={"subtitle2"} className={classes.subline1}>
-            Feature your product on the front page.
+              {props.subheadingDesktop}
           </Typography>
           <div className={classes.buttonBox}>
-            <Link href={"/sell"}>
+            <Link href={props.link}>
               <a>
                 <Button
                   className={
@@ -96,7 +97,7 @@ const BannerTrendingLink: NextPage<ReactProps> = (props) => {
                   }}
                 >
                   <ArrowStripeIcon
-                    title={"Go Now"}
+                    title={props.buttonText}
                   />
                 </Button>
               </a>
@@ -117,6 +118,10 @@ const BannerTrendingLink: NextPage<ReactProps> = (props) => {
 
 ///////////////// TYPINGS ///////////////////
 interface ReactProps extends WithStyles<typeof styles> {
+  headingDesktop: string
+  subheadingDesktop: string
+  link: string
+  buttonText: string
   bannerDither: string
   bannerForegroundImageUrl: string
   bannerBackgroundImageUrl: string

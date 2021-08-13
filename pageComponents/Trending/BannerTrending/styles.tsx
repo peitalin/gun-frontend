@@ -31,7 +31,7 @@ export const styles = (theme: Theme) => createStyles({
     justifyContent: 'center',
     flexDirection: 'column',
     height: '100%',
-    maxWidth: 600,
+    maxWidth: 720,
     flexBasis: '45%',
   },
   bannerInnerBoxRightSm: {
@@ -41,7 +41,7 @@ export const styles = (theme: Theme) => createStyles({
     flexDirection: 'column',
     marginTop: '2.5rem',
     width: '100%',
-    maxWidth: 600,
+    maxWidth: 800,
     flexBasis: '45%',
     // transform: 'translateY(20%)',
     padding: '1rem',
@@ -69,24 +69,24 @@ export const styles = (theme: Theme) => createStyles({
     fontWeight: 600,
     fontFamily: fontFam,
     color: isThemeDark(theme)
-      ? Colors.uniswapLightGrey
-      : Colors.black,
+      ? Colors.black
+      : Colors.cream,
     lineHeight: '1.5rem',
   },
   mainTitleXs: {
     fontWeight: 600,
     fontFamily: fontFam,
     color: isThemeDark(theme)
-      ? Colors.uniswapLightGrey
-      : Colors.black,
+      ? Colors.black
+      : Colors.cream,
     lineHeight: '1.2rem',
     fontSize: '1.5rem',
     // textShadow: '1px 1px 2px #444',
   },
   subline1: {
     color: isThemeDark(theme)
-      ? Colors.uniswapLightGrey
-      : Colors.slateGreyLightBlack,
+      ? Colors.black
+      : Colors.cream,
     fontFamily: fontFam,
     lineHeight: "1.5",
     fontWeight: 500,
@@ -97,7 +97,10 @@ export const styles = (theme: Theme) => createStyles({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: Colors.secondary,
+    // backgroundColor: Colors.secondary,
+    backgroundColor: isThemeDark(theme)
+      ? Colors.uniswapDarkPurple
+      : Colors.black,
     color: Colors.cream,
     width: '100%',
     maxWidth: 180,
@@ -106,15 +109,16 @@ export const styles = (theme: Theme) => createStyles({
     // border: `0px solid ${Colors.charcoal}`,
     transition: theme.transitions.create(['color', 'backgroundColor', 'border'], {
       easing: theme.transitions.easing.easeIn,
-      duration: '100ms',
+      duration: '200ms',
     }),
     "&:hover": {
       color: Colors.cream,
-      // border: `1px solid ${Colors.secondaryBright}`,
-      backgroundColor: Colors.secondaryBright,
+      backgroundColor: isThemeDark(theme)
+        ? lighten(Colors.uniswapDarkPurple, 0.05)
+        : lighten(Colors.black, 0.05),
       transition: theme.transitions.create(['color', 'backgroundColor', 'border'], {
         easing: theme.transitions.easing.easeIn,
-        duration: '100ms',
+        duration: '200ms',
       })
     },
   },

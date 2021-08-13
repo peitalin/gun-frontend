@@ -1,7 +1,7 @@
 import React from "react";
 import clsx from "clsx";
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
-import { Colors, isThemeDark } from "layout/AppTheme";
+import { Colors, isThemeDark, BorderRadius2x } from "layout/AppTheme";
 // Typings
 import {
   UserPrivate,
@@ -274,6 +274,7 @@ const styles = (theme: Theme) => createStyles({
     justifyContent: 'flex-start',
     paddingRight: "0.5rem",
     flexGrow: 1,
+    height: '100%',
   },
   flexRow: {
     display: 'flex',

@@ -48,11 +48,13 @@ const styles = (theme: Theme) => createStyles({
     borderRadius: `0px 0px ${BorderRadius2x}px ${BorderRadius2x}px`,
     padding: '1rem',
     width: '100%',
-    border: isThemeDark(theme)
-      ? `1px solid ${Colors.uniswapLightNavy}`
-      : `1px solid ${Colors.slateGreyDarker}`,
-    borderTop: 'unset',
-    boxShadow: BoxShadows.shadow5.boxShadow,
+    // border: isThemeDark(theme)
+    //   ? `1px solid ${Colors.uniswapLightNavy}`
+    //   : `1px solid ${Colors.slateGreyDarker}`,
+    borderTop: "0px solid transparent",
+    borderLeft: "0px solid transparent",
+    borderRight: "0px solid transparent",
+    borderBottom: "0px solid transparent",
     backgroundColor: isThemeDark(theme)
       ? Colors.uniswapDarkNavy
       : Colors.cream,
