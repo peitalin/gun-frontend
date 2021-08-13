@@ -13,8 +13,10 @@ enableExperimentalFragmentVariables()
 
 
 export const SUBSCRIBE_NEWS_ITEMS_SORT_BY_NEW = gql`
-  subscription {
-    newsItemsSortByNewConnection {
+  subscription($limit: Int) {
+    newsItemsSortByNewConnection(
+      limit: $limit
+    ) {
       edges {
         node {
           ...NewsItemFragment

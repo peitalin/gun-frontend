@@ -65,10 +65,14 @@ export const TrendingToday: React.FC<ReactProps> = (props) => {
     cacheHotItems,
     setCacheHotItems
   ] = React.useState<NewsItemsConnection>(undefined)
+  const [
+    cacheNewItems,
+    setCacheNewItems
+  ] = React.useState<NewsItemsConnection>(undefined)
 
   const limit = props.limit ?? 10
   const [offsetHot, setOffsetHot] = React.useState(0)
-  const [offsetNew, setOffsetNew] = React.useState(0)
+  const [limitNew, setLimitNew] = React.useState(limit)
 
   // image gallery index
   const [index, setIndex] = React.useState(0);
@@ -76,14 +80,13 @@ export const TrendingToday: React.FC<ReactProps> = (props) => {
   const { data, error } = useSubscription<SData, SVar>(
     SUBSCRIBE_NEWS_ITEMS_SORT_BY_NEW, {
       variables: {
-        query: {
-          limit: limit,
-          offset: offsetNew,
-        }
+        limit: limitNew,
+        offset: 0,
       },
       shouldResubscribe: true,
       onSubscriptionData: ({ client, subscriptionData: { data }}) => {
         console.log('newsItems subscriptionData:', data)
+        setCacheHotItems(data?.newsItemsSortByNewConnection)
       },
       onSubscriptionComplete: () => {
         console.log('newsItems subscriptions complete.')
@@ -116,7 +119,7 @@ export const TrendingToday: React.FC<ReactProps> = (props) => {
 
   let newsItemsHot = hotItemsResponse?.data?.getHotNewsItemsToday ?? cacheHotItems
     // ?? cacheHotItems
-  let newsItemsNew = data?.newsItemsSortByNewConnection
+  let newsItemsNew = data?.newsItemsSortByNewConnection ?? cacheNewItems
 
   let fetchMoreHot = hotItemsResponse?.fetchMore
 
@@ -173,7 +176,8 @@ export const TrendingToday: React.FC<ReactProps> = (props) => {
           setOffsetHot(newOffset)
         }}
         fetchMoreNew={async() => {
-          setOffsetNew(offsetNew + limit)
+          console.log('new limit: ', limitNew + 10)
+          setLimitNew(limitNew => limitNew + 10)
         }}
       />
       <NewsItemColumn40
@@ -198,7 +202,9 @@ interface SData {
   newsItemsSortByNewConnection: NewsItemsConnection
 }
 interface SVar {
-  query: ConnectionQuery
+  limit: number
+  offset: number
+  // query: ConnectionQuery
 }
 interface QData {
   getHotNewsItemsToday: NewsItemsConnection
