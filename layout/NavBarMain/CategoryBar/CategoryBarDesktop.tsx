@@ -121,7 +121,7 @@ const CategoryBarDesktop: React.FC<ReactProps> = (props) => {
             })
           }
 
-          <Link href="/categories">
+          {/* <Link href="/categories">
             <a className={classes.categoryLink} >
               <Typography className={clsx(
                 classes.categoryLinkTextMain,
@@ -130,7 +130,20 @@ const CategoryBarDesktop: React.FC<ReactProps> = (props) => {
                 All Categories
               </Typography>
             </a>
+          </Link> */}
+
+
+          <Link href="/trending">
+            <a className={classes.categoryLink} >
+              <Typography className={clsx(
+                classes.categoryLinkTextMain,
+                router.asPath === '/trending' && classes.categoryLinkTextSelected,
+              )}>
+                Trending
+              </Typography>
+            </a>
           </Link>
+
         </div>
 
         <TriangleSvg

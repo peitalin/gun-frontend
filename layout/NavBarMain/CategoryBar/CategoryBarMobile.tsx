@@ -71,13 +71,25 @@ const CategoryBarMobile: React.FC<ReactProps> = (props) => {
             })
           }
 
-          <Link href={`/categories`}>
+          {/* <Link href={`/categories`}>
             <a className={classes.categoryLink}>
               <Typography className={clsx(
                 classes.categoryLinkAllMobile,
                 router.asPath === '/categories' && classes.categoryLinkTextSelected,
               )}>
                 All Categories
+              </Typography>
+            </a>
+          </Link> */}
+
+
+          <Link href={`/trending`}>
+            <a className={classes.categoryLink}>
+              <Typography className={clsx(
+                classes.categoryLinkAllMobile,
+                router.asPath === '/trending' && classes.categoryLinkTextSelected,
+              )}>
+                Trending
               </Typography>
             </a>
           </Link>
