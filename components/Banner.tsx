@@ -21,7 +21,7 @@ const Banner: React.FC<ReactProps> = (props) => {
         ...props.bannerContainerStyles,
       }}
     >
-      <ShowOnMobileOrDesktopSSR desktop>
+      <ShowOnMobileOrDesktopSSR implementation="css" desktop>
         <BackgroundImage
           classes={classes}
           src={props.src}
@@ -30,7 +30,7 @@ const Banner: React.FC<ReactProps> = (props) => {
           isMobile={false}
         />
       </ShowOnMobileOrDesktopSSR>
-      <ShowOnMobileOrDesktopSSR mobile>
+      <ShowOnMobileOrDesktopSSR implementation="css" mobile>
         <BackgroundImage
           classes={classes}
           src={props.src}
