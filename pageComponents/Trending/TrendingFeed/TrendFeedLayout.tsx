@@ -89,7 +89,7 @@ const styles = (theme: Theme) => createStyles({
     overflowX: "hidden", // prevent safari scroll over
   },
   trendFeed: {
-    // display: 'flex',
+    display: 'flex',
     width: '100%',
     flexDirection: "row",
     borderRadius: BorderRadius,
