@@ -43,17 +43,18 @@ export const TrendingToday: React.FC<ReactProps> = (props) => {
   const [fetchMoreLoading, setFetchMoreLoading] = React.useState(false)
 
   interface Qvar {
+    newsItemId: string
   }
   interface Qdata {
     getNewsItemById: NewsItem
   }
 
   const [
-    getNewsItem,
-    getNewsItemResponse
+    getNewsItemById,
+    getNewsItemByIdResponse
   ] = useLazyQuery<Qdata, Qvar>(GET_NEWS_ITEM_BY_ID, {
     variables: {
-      newsItemId: newsItemIdToFetch
+      newsItemId: newsItemIdToFetch as string
     },
   })
 
@@ -116,6 +117,23 @@ export const TrendingToday: React.FC<ReactProps> = (props) => {
       getHotNewsItemsToday()
     }
   }, [tab])
+
+  React.useEffect(() => {
+    if (newsItemIdToFetch) {
+      getNewsItemById({
+        variables: {
+          newsItemId: newsItemIdToFetch as string
+        }
+      })
+    }
+  }, [newsItemIdToFetch])
+
+  React.useEffect(() => {
+    if (getNewsItemByIdResponse?.data?.getNewsItemById?.id) {
+      setCurrentNewsItem(getNewsItemByIdResponse?.data?.getNewsItemById)
+      setOpenModal(true)
+    }
+  }, [getNewsItemByIdResponse?.data])
 
   let newsItemsHot = hotItemsResponse?.data?.getHotNewsItemsToday ?? cacheHotItems
     // ?? cacheHotItems

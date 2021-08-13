@@ -17,6 +17,7 @@ import LoadingBar from "components/LoadingBar";
 import TrendingNewsItemRow from "./TrendingNewsItemRow";
 import LoadMoreFeedItems from './LoadMoreFeedItems';
 import LoadingTrendsPlaceholder from './LoadingTrendsPlaceholder';
+import { useRouter } from "next/router";
 
 
 
@@ -60,6 +61,8 @@ const TrendFeedItems: React.FC<ReactProps> = (props) => {
 
   const { classes } = props;
 
+  const router = useRouter()
+
   const userRedux = useSelector<GrandReduxState, UserPrivate>(s => {
     return s.reduxLogin.user
   })
@@ -97,6 +100,17 @@ const TrendFeedItems: React.FC<ReactProps> = (props) => {
                   if (props.mobile) {
                     props.setOpenModal(true)
                   }
+
+                  // set url with newsItemId do you can share the link
+                  // and it will open with the product loaded
+                  if (newsItem?.id) {
+                    router.replace(
+                      `${router.pathname}`,
+                      `${router.pathname}?item=${newsItem?.id}`,
+                      { shallow: true }
+                    )
+                  }
+
                   // reset image gallery paginator to first image
                   props.setIndex(0)
                 }}
