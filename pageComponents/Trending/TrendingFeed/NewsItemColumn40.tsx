@@ -40,49 +40,53 @@ export const NewsItemColumn40: React.FC<ReactProps> = (props) => {
 
 
   return (
-    <div className={classes.trendItemFlex40}>
+    <>
       <ShowOnMobileOrDesktopSSR desktop implementation="js">
-        {
-          currentNewsItem
-          ? <NewsItemCard
+        <div className={clsx(classes.trendItemFlex40, classes.desktopWidth)}>
+          {
+            currentNewsItem
+            ? <NewsItemCard
+                newsItem={currentNewsItem}
+                user={userRedux}
+                isModal={false}
+                closeModal={() => {
+                  setCurrentNewsItem(undefined)
+                  setOpenModal(false)
+                }}
+                index={props.index}
+                setIndex={props.setIndex}
+              />
+            : <div id="empty-newsItemColumn-2"></div>
+          }
+        </div>
+      </ShowOnMobileOrDesktopSSR>
+      <ShowOnMobileOrDesktopSSR mobile implementation="js">
+        <div className={clsx(classes.trendItemFlex40, classes.mobileWidth)}>
+          <Dialog
+            open={openModal}
+            onClose={() => setOpenModal(false)}
+            BackdropProps={{
+              classes: { root: classes.modalBackdrop }
+            }}
+            fullScreen={true}
+            fullWidth={true}
+            maxWidth={"lg"}
+            PaperProps={{
+              classes: { root: classes.modalPaperScrollPaper }
+            }}
+          >
+            <NewsItemCard
               newsItem={currentNewsItem}
               user={userRedux}
-              isModal={false}
-              closeModal={() => {
-                setCurrentNewsItem(undefined)
-                setOpenModal(false)
-              }}
+              closeModal={() => setOpenModal(false)}
+              isModal={true}
               index={props.index}
               setIndex={props.setIndex}
             />
-          : <div id="empty-newsItemColumn-2"></div>
-        }
+          </Dialog>
+        </div>
       </ShowOnMobileOrDesktopSSR>
-      <ShowOnMobileOrDesktopSSR mobile implementation="js">
-        <Dialog
-          open={openModal}
-          onClose={() => setOpenModal(false)}
-          BackdropProps={{
-            classes: { root: classes.modalBackdrop }
-          }}
-          fullScreen={true}
-          fullWidth={true}
-          maxWidth={"lg"}
-          PaperProps={{
-            classes: { root: classes.modalPaperScrollPaper }
-          }}
-        >
-          <NewsItemCard
-            newsItem={currentNewsItem}
-            user={userRedux}
-            closeModal={() => setOpenModal(false)}
-            isModal={true}
-            index={props.index}
-            setIndex={props.setIndex}
-          />
-        </Dialog>
-      </ShowOnMobileOrDesktopSSR>
-    </div>
+    </>
   );
 }
 
@@ -116,12 +120,16 @@ const styles = (theme: Theme) => createStyles({
   trendItemFlex40: {
     display: "flex",
     flexDirection: "column",
-    minWidth: 400,
-    flexBasis: "40%",
     top: "1rem",
     position: "sticky",
     height: '100%',
     marginTop: '-1rem',
+  },
+  mobileWidth: {
+  },
+  desktopWidth: {
+    minWidth: 400,
+    flexBasis: "40%",
   },
 })
 

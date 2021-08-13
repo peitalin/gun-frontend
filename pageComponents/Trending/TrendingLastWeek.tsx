@@ -3,7 +3,6 @@ import React from 'react';
 import clsx from "clsx";
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
 import { Colors, isThemeDark, BorderRadius } from "layout/AppTheme";
-import { styles } from "./TrendingFeed/styles";
 // typings
 import {
   ConnectionQuery,
@@ -189,6 +188,9 @@ interface QVar {
   query?: ConnectionQuery
   sortByDate?: boolean
 }
+
+const styles = (theme: Theme) => createStyles({
+})
 
 
 export default withStyles(styles)( TrendingLastWeek );

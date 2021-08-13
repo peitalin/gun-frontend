@@ -3569,7 +3569,7 @@ export type MutationUnvoteNewsItemArgs = {
 
 
 export type MutationRescrapeExternalProductArgs = {
-  productId: Scalars['String'];
+  sourceSiteId: Scalars['String'];
   sourceSite: ScraperSourceSite;
 };
 

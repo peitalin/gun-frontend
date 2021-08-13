@@ -3,7 +3,6 @@ import React from 'react';
 import clsx from "clsx";
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
 import { Colors, isThemeDark, BorderRadius } from "layout/AppTheme";
-import { styles } from "./TrendingFeed/styles";
 // typings
 import {
   ConnectionQuery,
@@ -11,16 +10,18 @@ import {
   NewsItem,
 } from "typings/gqlTypes";
 // graphql
-import { useSubscription, useLazyQuery, useQuery } from '@apollo/client';
+import { useSubscription, useLazyQuery } from '@apollo/client';
 import { SUBSCRIBE_NEWS_ITEMS_SORT_BY_NEW } from "queries/news-items-subscriptions";
 import {
   GET_HOT_NEWS_ITEMS_TODAY,
+  GET_NEWS_ITEM_BY_ID,
 } from "queries/news-items-queries";
 
 import TrendFeedLayout from "./TrendingFeed/TrendFeedLayout";
 import TrendingFeedColumn60 from "./TrendingFeed/TrendingFeedColumn60";
 import NewsItemColumn40 from "./TrendingFeed/NewsItemColumn40"
 
+import { useRouter } from "next/router";
 
 
 export const TrendingToday: React.FC<ReactProps> = (props) => {
@@ -28,6 +29,25 @@ export const TrendingToday: React.FC<ReactProps> = (props) => {
   const {
     classes,
   } = props;
+
+  const router = useRouter()
+  let newsItemIdToFetch = router?.query?.item
+  console.log('newsItemIdToFetch:', newsItemIdToFetch)
+
+  interface Qvar {
+  }
+  interface Qdata {
+    getNewsItemById: NewsItem
+  }
+
+  const [
+    getNewsItem,
+    getNewsItemResponse
+  ] = useLazyQuery<Qdata, Qvar>(GET_NEWS_ITEM_BY_ID, {
+    variables: {
+      newsItemId: newsItemIdToFetch
+    },
+  })
 
   const [tab, setTab] = React.useState(0)
   const [openModal, setOpenModal] = React.useState(false)
@@ -93,6 +113,8 @@ export const TrendingToday: React.FC<ReactProps> = (props) => {
 
   // console.log('offset:', offset)
   // console.log("ddata", hotItemsResponse?.data?.getHotNewsItemsToday?.edges?.map(e => e?.node?.id))
+  console.log('getNewsItemResponse:', getNewsItemResponse)
+
 
   return (
     <TrendFeedLayout
@@ -169,5 +191,7 @@ interface QVar {
   query?: ConnectionQuery
 }
 
+const styles = (theme: Theme) => createStyles({
+})
 
 export default withStyles(styles)( TrendingToday );

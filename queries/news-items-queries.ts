@@ -5,6 +5,18 @@ import {
   NewsItemFragment,
 } from "./fragments";
 
+
+
+export const GET_NEWS_ITEM_BY_ID = gql`
+  query($newsItemId: String!) {
+    getNewsItemById(newsItemId: $newsItemId) {
+      ...NewsItemFragment
+    }
+  }
+  ${NewsItemFragment}
+`;
+
+
 export const NEWS_ITEMS_SORT_BY_HOT_CONNECTION = gql`
   query($query: ConnectionQuery) {
     newsItemsSortByHotConnection(query: $query) {

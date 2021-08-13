@@ -100,6 +100,7 @@ export const styles = (theme: Theme) => createStyles({
     backgroundColor: Colors.secondary,
     color: Colors.cream,
     width: '100%',
+    maxWidth: 180,
     padding: 0,
     // borderRadius: BorderRadius,
     // border: `0px solid ${Colors.charcoal}`,
