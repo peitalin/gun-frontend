@@ -137,4 +137,17 @@ const styles = (theme: Theme) => createStyles({
 })
 
 
-export default withStyles(styles)( NewsItemColumn40 );
+
+export default withStyles(styles)(NewsItemColumn40)
+
+// export default withStyles(styles)(React.memo(
+//   (props: ReactProps) => <NewsItemColumn40 {...props}/>,
+//   (prevProps, nextProps) => {
+
+//     let pp = prevProps;
+//     let np = nextProps;
+
+//     // if true, don't re-render
+//     return pp.currentNewsItem?.id === np.currentNewsItem?.id
+//   }
+// ))

@@ -103,7 +103,7 @@ const PreviewImageFeatured: React.FC<ReactProps> = (props) => {
             <CardMedia
               component="img"
               className={
-                loaded ? 'fadeIn' : 'hidden'
+                loaded ? 'fadeInFast' : 'hidden'
               }
               classes={{
                 media: chooseCardMediaStyle(),

@@ -126,6 +126,9 @@ const NewsItemCardDetails = (props: ReactProps) => {
   // console.log("yourVote:", yourVote)
   // console.log("previewItem:", previewItem)
 
+  // if there is a gallery, constrain aspect ratio so the
+  // image box doesnt jitter in size when browsing through the gallery
+  let constrainAspect = previewItems?.length > 1
 
   return (
     <div className={classes.newsItemCardDetailsRoot}>
@@ -155,8 +158,8 @@ const NewsItemCardDetails = (props: ReactProps) => {
             maxHeight: 266,
           }}
           previewImageClassName={classes.previewImageClass}
-          constrainAspectRatio={false}
-          animateTransitions={false}
+          constrainAspectRatio={constrainAspect}
+          animateTransitions={true}
         />
 
 

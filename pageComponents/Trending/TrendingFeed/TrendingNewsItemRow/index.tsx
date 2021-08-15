@@ -238,7 +238,7 @@ const styles = (theme: Theme) => createStyles({
     "&:hover": {
       transition:  theme.transitions.create(['background-color'], {
         easing: theme.transitions.easing.easeIn,
-        duration: 100,
+        duration: 0,
       }),
       backgroundColor: isThemeDark(theme)
         ? Colors.uniswapMediumNavy

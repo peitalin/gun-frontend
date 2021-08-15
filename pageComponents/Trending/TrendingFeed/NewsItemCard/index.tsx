@@ -118,7 +118,7 @@ const styles = (theme: Theme) => createStyles({
     overflow: "hidden",
     transition:  theme.transitions.create(['width', 'height'], {
       easing: theme.transitions.easing.easeInOut,
-      duration: 100,
+      duration: 200,
     }),
     margin: '0rem 1rem',
     // width: '100%',

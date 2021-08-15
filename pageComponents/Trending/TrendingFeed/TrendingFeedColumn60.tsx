@@ -21,7 +21,7 @@ import { useRouter } from "next/router";
 
 
 
-export const TrendingFeedLayout: React.FC<ReactProps> = (props) => {
+export const TrendingFeedColumn60: React.FC<ReactProps> = (props) => {
 
   const {
     classes,
@@ -96,23 +96,13 @@ const TrendFeedItems: React.FC<ReactProps> = (props) => {
             >
               <TrendingNewsItemRow
                 onClick={() => {
-                  props.setCurrentNewsItem(newsItem)
                   if (props.mobile) {
                     props.setOpenModal(true)
                   }
-
-                  // set url with newsItemId do you can share the link
-                  // and it will open with the product loaded
-                  if (newsItem?.id) {
-                    router.replace(
-                      `${router.pathname}`,
-                      `${router.pathname}?item=${newsItem?.id}`,
-                      { shallow: true }
-                    )
-                  }
-
+                  props.setCurrentNewsItem(newsItem)
                   // reset image gallery paginator to first image
                   props.setIndex(0)
+
                 }}
                 newsItem={newsItem}
                 user={userRedux}
@@ -227,4 +217,5 @@ export const styles = (theme: Theme) => createStyles({
 })
 
 
-export default withStyles(styles)( TrendingFeedLayout );
+
+export default withStyles(styles)(TrendingFeedColumn60)

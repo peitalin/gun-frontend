@@ -145,6 +145,20 @@ export const TrendingToday: React.FC<ReactProps> = (props) => {
   // console.log("ddata", hotItemsResponse?.data?.getHotNewsItemsToday?.edges?.map(e => e?.node?.id))
   // console.log('getNewsItemResponse:', getNewsItemResponse)
 
+  // React.useEffect(() => {
+  //   if (currentNewsItem?.id) {
+  //     // don't block UI rendering of the left-side product card
+  //     setTimeout(() => {
+  //       router.replace(
+  //         `${router.pathname}`,
+  //         `${router.pathname}?item=${currentNewsItem?.id}`,
+  //         { shallow: true }
+  //       )
+  //     }, 0)
+  //   }
+  //   // set url with newsItemId do you can share the link
+  //   // and it will open with the product loaded
+  // }, [currentNewsItem])
 
   return (
     <TrendFeedLayout

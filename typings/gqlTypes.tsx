@@ -2815,12 +2815,14 @@ export type MutationUpdate_Saved_Search_Hits_By_PkArgs = {
 
 
 export type MutationUpdate_Saved_SearchesArgs = {
+  _inc?: Maybe<Saved_Searches_Inc_Input>;
   _set?: Maybe<Saved_Searches_Set_Input>;
   where: Saved_Searches_Bool_Exp;
 };
 
 
 export type MutationUpdate_Saved_Searches_By_PkArgs = {
+  _inc?: Maybe<Saved_Searches_Inc_Input>;
   _set?: Maybe<Saved_Searches_Set_Input>;
   pk_columns: Saved_Searches_Pk_Columns_Input;
 };
@@ -8074,8 +8076,8 @@ export type SubscriptionMyConversationsArgs = {
 
 
 export type SubscriptionNewsItemsSortByNewConnectionArgs = {
-  startDate?: Maybe<Scalars['Date']>;
-  endDate?: Maybe<Scalars['Date']>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
 };
 
 export type TransactionsConnection = {
@@ -18627,6 +18629,9 @@ export type Saved_Searches = {
   createdAt: Scalars['timestamptz'];
   dealerState?: Maybe<Scalars['String']>;
   id: Scalars['String'];
+  make?: Maybe<Scalars['String']>;
+  matchesNeeded?: Maybe<Scalars['Int']>;
+  model?: Maybe<Scalars['String']>;
   searchTerm: Scalars['String'];
   /** An object relationship */
   user?: Maybe<Users>;
@@ -18643,9 +18648,17 @@ export type Saved_Searches_Aggregate = {
 /** aggregate fields of "saved_searches" */
 export type Saved_Searches_Aggregate_Fields = {
   __typename?: 'saved_searches_aggregate_fields';
+  avg?: Maybe<Saved_Searches_Avg_Fields>;
   count: Scalars['Int'];
   max?: Maybe<Saved_Searches_Max_Fields>;
   min?: Maybe<Saved_Searches_Min_Fields>;
+  stddev?: Maybe<Saved_Searches_Stddev_Fields>;
+  stddev_pop?: Maybe<Saved_Searches_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<Saved_Searches_Stddev_Samp_Fields>;
+  sum?: Maybe<Saved_Searches_Sum_Fields>;
+  var_pop?: Maybe<Saved_Searches_Var_Pop_Fields>;
+  var_samp?: Maybe<Saved_Searches_Var_Samp_Fields>;
+  variance?: Maybe<Saved_Searches_Variance_Fields>;
 };
 
 
@@ -18653,6 +18666,12 @@ export type Saved_Searches_Aggregate_Fields = {
 export type Saved_Searches_Aggregate_FieldsCountArgs = {
   columns?: Maybe<Array<Saved_Searches_Select_Column>>;
   distinct?: Maybe<Scalars['Boolean']>;
+};
+
+/** aggregate avg on columns */
+export type Saved_Searches_Avg_Fields = {
+  __typename?: 'saved_searches_avg_fields';
+  matchesNeeded?: Maybe<Scalars['Float']>;
 };
 
 /** Boolean expression to filter rows from the table "saved_searches". All fields are combined with a logical 'AND'. */
@@ -18665,6 +18684,9 @@ export type Saved_Searches_Bool_Exp = {
   createdAt?: Maybe<Timestamptz_Comparison_Exp>;
   dealerState?: Maybe<String_Comparison_Exp>;
   id?: Maybe<String_Comparison_Exp>;
+  make?: Maybe<String_Comparison_Exp>;
+  matchesNeeded?: Maybe<Int_Comparison_Exp>;
+  model?: Maybe<String_Comparison_Exp>;
   searchTerm?: Maybe<String_Comparison_Exp>;
   user?: Maybe<Users_Bool_Exp>;
   userId?: Maybe<String_Comparison_Exp>;
@@ -18676,6 +18698,11 @@ export enum Saved_Searches_Constraint {
   SAVED_SEARCHES_PKEY = 'saved_searches_pkey'
 }
 
+/** input type for incrementing numeric columns in table "saved_searches" */
+export type Saved_Searches_Inc_Input = {
+  matchesNeeded?: Maybe<Scalars['Int']>;
+};
+
 /** input type for inserting data into table "saved_searches" */
 export type Saved_Searches_Insert_Input = {
   caliber?: Maybe<Scalars['String']>;
@@ -18683,6 +18710,9 @@ export type Saved_Searches_Insert_Input = {
   createdAt?: Maybe<Scalars['timestamptz']>;
   dealerState?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
+  make?: Maybe<Scalars['String']>;
+  matchesNeeded?: Maybe<Scalars['Int']>;
+  model?: Maybe<Scalars['String']>;
   searchTerm?: Maybe<Scalars['String']>;
   user?: Maybe<Users_Obj_Rel_Insert_Input>;
   userId?: Maybe<Scalars['String']>;
@@ -18696,6 +18726,9 @@ export type Saved_Searches_Max_Fields = {
   createdAt?: Maybe<Scalars['timestamptz']>;
   dealerState?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
+  make?: Maybe<Scalars['String']>;
+  matchesNeeded?: Maybe<Scalars['Int']>;
+  model?: Maybe<Scalars['String']>;
   searchTerm?: Maybe<Scalars['String']>;
   userId?: Maybe<Scalars['String']>;
 };
@@ -18708,6 +18741,9 @@ export type Saved_Searches_Min_Fields = {
   createdAt?: Maybe<Scalars['timestamptz']>;
   dealerState?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
+  make?: Maybe<Scalars['String']>;
+  matchesNeeded?: Maybe<Scalars['Int']>;
+  model?: Maybe<Scalars['String']>;
   searchTerm?: Maybe<Scalars['String']>;
   userId?: Maybe<Scalars['String']>;
 };
@@ -18742,6 +18778,9 @@ export type Saved_Searches_Order_By = {
   createdAt?: Maybe<Order_By>;
   dealerState?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
+  make?: Maybe<Order_By>;
+  matchesNeeded?: Maybe<Order_By>;
+  model?: Maybe<Order_By>;
   searchTerm?: Maybe<Order_By>;
   user?: Maybe<Users_Order_By>;
   userId?: Maybe<Order_By>;
@@ -18765,6 +18804,12 @@ export enum Saved_Searches_Select_Column {
   /** column name */
   ID = 'id',
   /** column name */
+  MAKE = 'make',
+  /** column name */
+  MATCHESNEEDED = 'matchesNeeded',
+  /** column name */
+  MODEL = 'model',
+  /** column name */
   SEARCHTERM = 'searchTerm',
   /** column name */
   USERID = 'userId'
@@ -18777,8 +18822,35 @@ export type Saved_Searches_Set_Input = {
   createdAt?: Maybe<Scalars['timestamptz']>;
   dealerState?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
+  make?: Maybe<Scalars['String']>;
+  matchesNeeded?: Maybe<Scalars['Int']>;
+  model?: Maybe<Scalars['String']>;
   searchTerm?: Maybe<Scalars['String']>;
   userId?: Maybe<Scalars['String']>;
+};
+
+/** aggregate stddev on columns */
+export type Saved_Searches_Stddev_Fields = {
+  __typename?: 'saved_searches_stddev_fields';
+  matchesNeeded?: Maybe<Scalars['Float']>;
+};
+
+/** aggregate stddev_pop on columns */
+export type Saved_Searches_Stddev_Pop_Fields = {
+  __typename?: 'saved_searches_stddev_pop_fields';
+  matchesNeeded?: Maybe<Scalars['Float']>;
+};
+
+/** aggregate stddev_samp on columns */
+export type Saved_Searches_Stddev_Samp_Fields = {
+  __typename?: 'saved_searches_stddev_samp_fields';
+  matchesNeeded?: Maybe<Scalars['Float']>;
+};
+
+/** aggregate sum on columns */
+export type Saved_Searches_Sum_Fields = {
+  __typename?: 'saved_searches_sum_fields';
+  matchesNeeded?: Maybe<Scalars['Int']>;
 };
 
 /** update columns of table "saved_searches" */
@@ -18794,10 +18866,34 @@ export enum Saved_Searches_Update_Column {
   /** column name */
   ID = 'id',
   /** column name */
+  MAKE = 'make',
+  /** column name */
+  MATCHESNEEDED = 'matchesNeeded',
+  /** column name */
+  MODEL = 'model',
+  /** column name */
   SEARCHTERM = 'searchTerm',
   /** column name */
   USERID = 'userId'
 }
+
+/** aggregate var_pop on columns */
+export type Saved_Searches_Var_Pop_Fields = {
+  __typename?: 'saved_searches_var_pop_fields';
+  matchesNeeded?: Maybe<Scalars['Float']>;
+};
+
+/** aggregate var_samp on columns */
+export type Saved_Searches_Var_Samp_Fields = {
+  __typename?: 'saved_searches_var_samp_fields';
+  matchesNeeded?: Maybe<Scalars['Float']>;
+};
+
+/** aggregate variance on columns */
+export type Saved_Searches_Variance_Fields = {
+  __typename?: 'saved_searches_variance_fields';
+  matchesNeeded?: Maybe<Scalars['Float']>;
+};
 
 
 /** columns and relationships of "signup_emails" */
