@@ -121,6 +121,7 @@ const styles = (theme: Theme) => createStyles({
       duration: 200,
     }),
     margin: '0rem 1rem',
+    marginBottom: '1rem',
     // width: '100%',
     // minWidth: 400,
   },

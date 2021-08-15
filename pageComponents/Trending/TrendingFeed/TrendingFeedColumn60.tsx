@@ -156,13 +156,13 @@ export const styles = (theme: Theme) => createStyles({
     flexBasis: "60%",
     position: "relative",
     overflowX: "hidden",
-    marginBottom: '2rem',
+    marginBottom: '1rem',
   },
   flexMobile: {
     flexBasis: "100%",
     position: "relative",
     overflowX: "hidden",
-    marginBottom: '2rem',
+    marginBottom: '1rem',
   },
   newsItemRow: {
     display: "flex",
