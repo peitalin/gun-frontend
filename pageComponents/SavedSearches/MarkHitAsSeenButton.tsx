@@ -61,7 +61,7 @@ const MarketHitAsSeenButton = (props: MarketHitAsSeenButtonProps) => {
         // console.log("cacheData:", cacheData)
         // console.log("markSavedSearchHitsAsSeen:", markSavedSearchHitsAsSeen)
 
-        let newSearchHits = cacheData.getSavedSearchHitsByUser.edges.map(e => {
+        let newSearchHits = cacheData?.getSavedSearchHitsByUser?.edges?.map(e => {
           let matchHit = newHits.find(h => h.id === e.node.id)
 
           if (matchHit) {
@@ -71,19 +71,22 @@ const MarketHitAsSeenButton = (props: MarketHitAsSeenButtonProps) => {
           }
         })
 
-        cache.writeQuery({
-          query: GET_SAVED_SEARCH_HITS_BY_USER,
-          variables: {
-            limit: props.limit,
-            offset: props.offset,
-          },
-          data: {
-            getSavedSearchHitsByUser: {
-              ...cacheData.getSavedSearchHitsByUser,
-              edges: newSearchHits,
-            }
-          },
-        });
+        if (newSearchHits) {
+          cache.writeQuery({
+            query: GET_SAVED_SEARCH_HITS_BY_USER,
+            variables: {
+              limit: props.limit,
+              offset: props.offset,
+            },
+            data: {
+              getSavedSearchHitsByUser: {
+                ...cacheData.getSavedSearchHitsByUser,
+                edges: newSearchHits,
+              }
+            },
+          });
+        }
+
       },
       onCompleted: (data) => {
       },

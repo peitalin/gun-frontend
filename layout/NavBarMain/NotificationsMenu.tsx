@@ -6,7 +6,7 @@ import {
 } from "typings/gqlTypes";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
-import { Colors, BorderRadius2x, isThemeDark } from "layout/AppTheme";
+import { Colors, BorderRadius2x, isThemeDark, BorderRadius, BoxShadows } from "layout/AppTheme";
 // MUI
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
@@ -128,123 +128,129 @@ export const NotificationsMenu: React.FC<ReactProps> = (props) => {
         onClose={handleCloseMenu}
       >
 
-        {
-          loading &&
-          <LoadingBar
-            height={"4px"}
-            width={"100%"}
-          />
-        }
+        <div className={classes.innerContainer}>
 
-        <div className={classes.titleBox}>
-          <div className={classes.title}>
-            Saved Search Notifications
-          </div>
-          <Link href={"/saved-searches"}>
-            <a>
-              <IconButton
-                className={classes.settingsIcon}
-                // onClick={props.closeModal}
-                size={"medium"}
-              >
-                <SettingsIcon
-                  style={{ fill: color }}
+          {
+            loading &&
+            <LoadingBar
+              height={"4px"}
+              width={"100%"}
+            />
+          }
+
+          <div className={classes.titleBox}>
+            <div className={classes.title}>
+              Saved Search Notifications
+            </div>
+            <Link href={"/saved-searches"}>
+              <a>
+                <IconButton
                   className={classes.settingsIcon}
-                />
-              </IconButton>
-            </a>
-          </Link>
+                  // onClick={props.closeModal}
+                  size={"medium"}
+                >
+                  <SettingsIcon
+                    style={{ fill: color }}
+                    className={classes.settingsIcon}
+                  />
+                </IconButton>
+              </a>
+            </Link>
+          </div>
+
+          {
+            savedSearchHitsEdges?.map(({ node: hit }) => {
+
+              let externalLink = hit.externalProduct?.sourceSiteUrl
+              let productId = hit.product?.id
+
+              let make = hit.product?.currentSnapshot?.make
+                ?? hit.externalProduct?.currentExternalProductSnapshot?.make
+              let model = hit.product?.currentSnapshot?.model
+                ?? hit.externalProduct?.currentExternalProductSnapshot?.model
+              let caliber = hit.product?.currentSnapshot?.caliber
+                ?? hit.externalProduct?.currentExternalProductSnapshot?.caliber
+
+              let featuredPreviewItem = hit?.product?.featuredVariant?.previewItems?.[0]
+                ?? hit?.externalProduct?.currentExternalProductSnapshot?.previewItems?.[0]
+
+              console.log('hit: ', hit.seen)
+
+              return (
+                <div className={classes.menuItemOuter}>
+                  <MenuItem className={classes.menuItem} onClick={handleCloseMenu}>
+                    {
+                      externalLink
+                      ? <a className={classes.menuLink}
+                          href={externalLink}
+                          target={"_blank"}
+                        >
+                          <ProductPreviewCardRowSmall
+                            previewItem={featuredPreviewItem}
+                              height={40}
+                              width={60}
+                              style={{
+                                minWidth: 60,
+                                minHeight: 40,
+                              }}
+                          />
+                          <div className={classes.textBox}>
+                            <span className={classes.menuText1}>
+                              {`${make}`}
+                            </span>
+                            <span className={classes.menuText2}>
+                              {`${model} ${caliber}`}
+                            </span>
+                          </div>
+                        </a>
+                      : <Link href={"/p/[productId]"} as={`/p/${productId}`}>
+                          <a className={classes.menuLink} target={"_blank"}>
+                            <ProductPreviewCardRowSmall
+                              previewItem={featuredPreviewItem}
+                              height={40}
+                              width={60}
+                              style={{
+                                minWidth: 60,
+                                minHeight: 40,
+                              }}
+                            />
+                            <div className={classes.textBox}>
+                              <span className={classes.menuText1}>
+                                {`${make}`}
+                              </span>
+                              <span className={classes.menuText2}>
+                                {`${model} ${caliber}`}
+                              </span>
+                            </div>
+                          </a>
+                        </Link>
+                    }
+                  </MenuItem>
+
+                  <MarkHitAsSeenButton
+                    searchHitId={hit.id}
+                    isSeen={hit.seen}
+                    limit={limit}
+                    offset={0}
+                    style={{
+                      // right: '0.5rem',
+                    }}
+                    toolTip={false}
+                  />
+                </div>
+              )
+            })
+          }
+
+          <MenuItem className={classes.menuItem} onClick={handleCloseMenu}>
+            <Link href="/saved-searches">
+              <a className={classes.menuLink}>
+                <span className={classes.menuText3}> See More </span>
+              </a>
+            </Link>
+          </MenuItem>
+
         </div>
-
-        {
-          savedSearchHitsEdges?.map(({ node: hit }) => {
-
-            let externalLink = hit.externalProduct?.sourceSiteUrl
-            let productId = hit.product?.id
-
-            let make = hit.product?.currentSnapshot?.make
-              ?? hit.externalProduct?.currentExternalProductSnapshot?.make
-            let model = hit.product?.currentSnapshot?.model
-              ?? hit.externalProduct?.currentExternalProductSnapshot?.model
-            let caliber = hit.product?.currentSnapshot?.caliber
-              ?? hit.externalProduct?.currentExternalProductSnapshot?.caliber
-
-            let featuredPreviewItem = hit?.product?.featuredVariant?.previewItems?.[0]
-              ?? hit?.externalProduct?.currentExternalProductSnapshot?.previewItems?.[0]
-
-            console.log('hit: ', hit.seen)
-
-            return (
-              <MenuItem className={classes.menuItem} onClick={handleCloseMenu}>
-                {
-                  externalLink
-                  ? <a className={classes.menuLink}
-                      href={externalLink}
-                      target={"_blank"}
-                    >
-                      <ProductPreviewCardRowSmall
-                        previewItem={featuredPreviewItem}
-                          height={40}
-                          width={60}
-                          style={{
-                            minWidth: 60,
-                            minHeight: 40,
-                          }}
-                      />
-                      <div className={classes.textBox}>
-                        <span className={classes.menuText1}>
-                          {`${make}`}
-                        </span>
-                        <span className={classes.menuText2}>
-                          {`${model} ${caliber}`}
-                        </span>
-                      </div>
-                    </a>
-                  : <Link href={"/p/[productId]"} as={`/p/${productId}`}>
-                      <a className={classes.menuLink} target={"_blank"}>
-                        <ProductPreviewCardRowSmall
-                          previewItem={featuredPreviewItem}
-                          height={40}
-                          width={60}
-                          style={{
-                            minWidth: 60,
-                            minHeight: 40,
-                          }}
-                        />
-                        <div className={classes.textBox}>
-                          <span className={classes.menuText1}>
-                            {`${make}`}
-                          </span>
-                          <span className={classes.menuText2}>
-                            {`${model} ${caliber}`}
-                          </span>
-                        </div>
-                      </a>
-                    </Link>
-                }
-
-                {/* <MarkHitAsSeenButton
-                  searchHitId={hit.id}
-                  isSeen={hit.seen}
-                  limit={limit}
-                  offset={0}
-                  style={{
-                    right: '0.5rem',
-                  }}
-                  toolTip={false}
-                /> */}
-              </MenuItem>
-            )
-          })
-        }
-
-        <MenuItem className={classes.menuItem} onClick={handleCloseMenu}>
-          <Link href="/saved-searches">
-            <a className={classes.menuLink}>
-              <span className={classes.menuText3}> See More </span>
-            </a>
-          </Link>
-        </MenuItem>
 
       </Menu>
     </>
@@ -297,14 +303,24 @@ const styles = (theme: Theme) => createStyles({
     width: '100%',
   },
   menu: {
-    padding: 0,
-    top: "3rem !important",
+    padding: '1rem',
+    background: 'transparent',
+    boxShadow: 'unset',
+    top: "2.25rem !important",
     right: 0,
-    width: 300,
+    width: 320,
     borderRadius: BorderRadius2x,
-    backgroundColor: isThemeDark(theme)
-      ? Colors.uniswapDarkNavy
-      : Colors.slateGrey,
+  },
+  innerContainer: {
+    border: isThemeDark(theme)
+      ? `1px solid ${Colors.uniswapLightNavy}`
+      : `1px solid ${Colors.slateGreyDarkest}`,
+    boxShadow: BoxShadows.shadow4.boxShadow,
+    paddingTop: '1rem',
+    borderRadius: BorderRadius2x,
+    background: isThemeDark(theme)
+      ? Colors.uniswapBlack
+      : Colors.cream,
   },
   z5001: {
     zIndex: 5001,
@@ -353,12 +369,16 @@ const styles = (theme: Theme) => createStyles({
   },
   menuItem: {
     padding: '0.5rem',
+    overflow: "visible",
     "&:hover": {
       backgroundColor: isThemeDark(theme)
         ? Colors.uniswapNavy
-        : Colors.slateGreyDarker,
+        : Colors.slateGrey,
       color: Colors.cream,
     },
+  },
+  menuItemOuter: {
+    position: "relative",
   },
   menuLink: {
     position: 'relative',
