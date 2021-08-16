@@ -136,7 +136,7 @@ const styles = (theme: Theme) => createStyles({
     marginRight: "1rem",
   },
   imagePreviewPlaceholder: {
-    borderRadius: "4px",
+    borderRadius: BorderRadius,
     height: '100px',
     width: '150px',
   },
@@ -156,7 +156,8 @@ const styles = (theme: Theme) => createStyles({
     // textTransform: "uppercase",
   },
   card: {
-    borderRadius: `${BorderRadius}px ${BorderRadius}px ${BorderRadius}px ${BorderRadius}px `,
+    // borderRadius: `${BorderRadius}px`,
+    borderRadius: '3px',
     boxShadow: 'none',
     height: CARD_HEIGHT,
     width: CARD_WIDTH,

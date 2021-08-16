@@ -140,17 +140,20 @@ const SearchHits: React.FC<ReactProps> = (props) => {
 
             // console.log("SearchHIT:", savedSearchHit)
 
+            // let make = hit.product?.currentSnapshot?.make
+            //   ?? hit.externalProduct?.currentExternalProductSnapshot?.make
+            // let model = hit.product?.currentSnapshot?.model
+            //   ?? hit.externalProduct?.currentExternalProductSnapshot?.model
+            // let caliber = hit.product?.currentSnapshot?.caliber
+            //   ?? hit.externalProduct?.currentExternalProductSnapshot?.caliber
+
             let previewItem = savedSearchHit?.product?.featuredVariant?.previewItems?.[0]
               ?? savedSearchHit?.externalProduct?.currentExternalProductSnapshot?.previewItems?.[0]
 
-            let make = savedSearchHit?.externalProduct?.currentExternalProductSnapshot?.make
-            let model = savedSearchHit?.externalProduct?.currentExternalProductSnapshot?.model
-            let caliber = savedSearchHit?.externalProduct?.currentExternalProductSnapshot?.caliber
 
             let productTitle = savedSearchHit?.productTitle
               ?? savedSearchHit?.product?.currentSnapshot?.title
 
-              console.log("hit: ", savedSearchHit)
 
             return (
               <SearchHitsItem
@@ -165,7 +168,7 @@ const SearchHits: React.FC<ReactProps> = (props) => {
                 model={savedSearchHit.savedSearch?.make}
                 caliber={savedSearchHit.savedSearch?.caliber}
                 categorySlug={savedSearchHit.savedSearch?.categorySlug}
-                isSeen={!savedSearchHit.seen}
+                isSeen={savedSearchHit.seen}
                 limit={limit}
                 offset={offset}
               />

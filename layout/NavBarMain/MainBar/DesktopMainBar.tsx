@@ -9,10 +9,10 @@ import Login from "layout/Login";
 import Logo from "components/Icons/Logo";
 // MUI
 import UserMenu from "layout/NavBarMain/UserMenu";
+import NotificationsMenu from "layout/NavBarMain/NotificationsMenu";
 import Button from "@material-ui/core/Button";
 // Router
 import Link from "next/link";
-import { useRouter } from "next/router";
 import ToggleDarkMode from "layout/NavBarMain/ToggleDarkMode";
 // import Tooltip from '@material-ui/core/Tooltip';
 import CategoryBar from "../CategoryBar";
@@ -167,6 +167,11 @@ const DesktopMainBar = (props: DesktopMainBarProps) => {
               </Button>
             </a>
           </Link>
+        }
+
+        {
+          loggedIn &&
+          <NotificationsMenu className={classes.notificationsIcon} color={color} />
         }
 
         {

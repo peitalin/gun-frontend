@@ -33,6 +33,7 @@ import {
   GET_SAVED_SEARCH_HITS_BY_USER
 } from "queries/saved-search-queries";
 import { SearchHitsQData, SearchHitsQVar } from "./SearchHits";
+import MarkHitAsSeenButton from "./MarkHitAsSeenButton"
 // css
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
@@ -209,31 +210,13 @@ const SearchHitsItem = (props: SearchHitsItemProps) => {
       </div>
 
 
+      <MarkHitAsSeenButton
+        searchHitId={props.searchHitId}
+        isSeen={props.isSeen}
+        limit={props.limit}
+        offset={props.offset}
+      />
 
-      <div className={classes.savedSearchItem5}>
-        {
-          isSeen &&
-          <Tooltip title={"Mark as seen"} placement="top">
-            <IconButton
-              className={classes.closeIcon}
-              onClick={() => {
-                markSavedSearchAsSeen({
-                  variables: {
-                    savedSearchHitsIds: [props.searchHitId]
-                  }
-                })
-              }}
-              size={"small"}
-            >
-              {
-                loading
-                ? <Loading/>
-                : <CheckIcon/>
-              }
-            </IconButton>
-          </Tooltip>
-        }
-      </div>
     </div>
   )
 }
@@ -315,16 +298,6 @@ const styles = (theme: Theme) => createStyles({
     marginRight: '0.5rem',
     justifyContent: "space-between",
   },
-  savedSearchItem5: {
-    position: 'absolute',
-    top: 'calc(50% - 16px)', // iconButton height is 32px, divide by 2
-    right: '-1rem',
-    display: 'flex',
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: "flex-end",
-    alignItems: "center",
-  },
   boldText: {
     fontWeight: 600,
     textAlign: "center",
@@ -346,18 +319,6 @@ const styles = (theme: Theme) => createStyles({
   italicText: {
     fontStyle: 'italic',
     textAlign: "center",
-  },
-  closeIcon: {
-    width: 32,
-    height: 32,
-    background: theme.palette.type === 'dark'
-      ? Colors.uniswapGrey
-      : Colors.slateGreyDarker,
-    "&:hover": {
-      background: theme.palette.type === 'dark'
-        ? Colors.uniswapMediumGrey
-        : Colors.slateGreyDarkest,
-    },
   },
   fieldText: {
     minWidth: 70,

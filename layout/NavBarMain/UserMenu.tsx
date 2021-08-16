@@ -274,8 +274,8 @@ const styles = (theme: Theme) => createStyles({
   },
   navbarButtonLabel: {
     height: '100%',
-    paddingLeft: '0.25rem',
-    paddingRight: '0.25rem',
+    paddingLeft: '0.75rem',
+    paddingRight: '0.75rem',
   },
   menuText: {
     color: theme.palette.type === 'dark'

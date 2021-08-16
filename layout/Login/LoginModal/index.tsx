@@ -13,7 +13,6 @@ import SignIn from './SignIn';
 import ResetPassword from './ResetPassword';
 import CheckEmail from './CheckEmail';
 import ErrorBounds from "components/ErrorBounds";
-import Hidden from "components/HiddenFix"
 import Badge from '@material-ui/core/Badge';
 import MenuItem from '@material-ui/core/MenuItem';
 import Typography from "@material-ui/core/Typography";

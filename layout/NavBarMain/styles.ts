@@ -27,7 +27,7 @@ export const NavBarHeight = MainBarHeightHomePage + CategoryBarHeight;
 
 /// hover colors for menu buttons
 export const buttonHoverDark = fade(Colors.uniswapDarkNavy, 0.7)
-export const buttonHoverLight = fade(Colors.cream, 0.2)
+export const buttonHoverLight = fade(Colors.slateGrey, 0.7)
 
 export const logoBackgroundColorDark = Colors.uniswapBlack
 export const logoBackgroundColorDark2 = Colors.uniswapDarkPurple
@@ -223,6 +223,15 @@ export const styles = (theme: Theme) => createStyles({
     color: isThemeDark(theme)
       ? Colors.purple
       : Colors.ultramarineBlue,
+  },
+  notificationsIcon: {
+    marginRight: "0.5rem",
+    height: 40,
+    "&:hover": {
+      background: isThemeDark(theme)
+        ? buttonHoverDark
+        : buttonHoverLight,
+    },
   },
   iconText: {
   },

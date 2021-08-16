@@ -33,10 +33,12 @@ export const GET_SAVED_SEARCH_HITS_BY_USER = gql`
   query getSavedSearchHitsByUser(
     $limit: Int
     $offset: Int
+    $unseenOnly: Boolean
   ) {
     getSavedSearchHitsByUser(
       limit: $limit
       offset: $offset
+      unseenOnly: $unseenOnly
     ) {
       totalCount
       edges {

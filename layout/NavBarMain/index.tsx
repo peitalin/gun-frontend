@@ -5,6 +5,7 @@ import CategoryBar from "./CategoryBar";
 import MainBar from "./MainBar";
 import UserMenuMobileDither from "./UserMenuMobileDither";
 import { categoryPreviewsBackup } from "components/CategoryCarouselStart/utils";
+import NotificationsIcon from '@material-ui/icons/Notifications';
 
 
 const NavBar: React.FC<ReactProps> = (props) => {
