@@ -239,7 +239,7 @@ export const NotificationsMenu: React.FC<ReactProps> = (props) => {
         }
 
         <MenuItem className={classes.menuItem} onClick={handleCloseMenu}>
-          <Link href="/saved-search">
+          <Link href="/saved-searches">
             <a className={classes.menuLink}>
               <span className={classes.menuText3}> See More </span>
             </a>
