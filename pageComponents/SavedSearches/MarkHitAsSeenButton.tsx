@@ -53,35 +53,48 @@ const MarketHitAsSeenButton = (props: MarketHitAsSeenButtonProps) => {
 
         const cacheData = cache.readQuery<SearchHitsQData, SearchHitsQVar>({
           query: GET_SAVED_SEARCH_HITS_BY_USER,
-          variables: {
-            limit: props.limit,
-            offset: props.offset,
-          },
+          variables: props.unseenOnly === undefined
+            ? {
+                limit: props.limit,
+                offset: props.offset,
+              }
+            : {
+                limit: props.limit,
+                offset: props.offset,
+                unseenOnly: props.unseenOnly
+              },
         });
-        // console.log("cacheData:", cacheData)
-        // console.log("markSavedSearchHitsAsSeen:", markSavedSearchHitsAsSeen)
+        console.log("cacheData:", cacheData)
+        console.log("markSavedSearchHitsAsSeen:", markSavedSearchHitsAsSeen)
 
         let newSearchHits = cacheData?.getSavedSearchHitsByUser?.edges?.map(e => {
-          let matchHit = newHits.find(h => h.id === e.node.id)
 
-          if (matchHit) {
-            return { node: matchHit }
+          if (e?.node?.id === newHits?.[0]?.id) {
+            // remove the item you just marked as seen from connection
+            return null
           } else {
             return e
           }
-        })
+        }).filter(edge => !edge?.node?.seen)
+        // filter out all seen items
 
         if (newSearchHits) {
           cache.writeQuery({
             query: GET_SAVED_SEARCH_HITS_BY_USER,
-            variables: {
-              limit: props.limit,
-              offset: props.offset,
-            },
+            variables: props.unseenOnly === undefined
+              ? {
+                  limit: props.limit,
+                  offset: props.offset,
+                }
+              : {
+                  limit: props.limit,
+                  offset: props.offset,
+                  unseenOnly: props.unseenOnly
+                },
             data: {
               getSavedSearchHitsByUser: {
                 ...cacheData.getSavedSearchHitsByUser,
-                edges: newSearchHits,
+                edges: newSearchHits.filter(edge => edge?.node?.id),
               }
             },
           });
@@ -169,6 +182,7 @@ interface MarketHitAsSeenButtonProps extends WithStyles<typeof styles> {
   className?: any;
   style?: any;
   toolTip?: boolean
+  unseenOnly?: boolean
 }
 
 interface MData {

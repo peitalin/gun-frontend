@@ -26,6 +26,7 @@ import {
 } from "queries/saved-search-queries";
 // css
 import { useSnackbar } from "notistack"
+import { useApolloClient } from "@apollo/client";
 
 
 // Router
@@ -51,7 +52,12 @@ export const NotificationsMenu: React.FC<ReactProps> = (props) => {
 
   const snackbar = useSnackbar()
   const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const client = useApolloClient()
+
   const limit = 8
+  const offset = 0
+  const unseenOnly = true
 
   const [
     getSavedSearchHits,
@@ -60,8 +66,8 @@ export const NotificationsMenu: React.FC<ReactProps> = (props) => {
     GET_SAVED_SEARCH_HITS_BY_USER, {
       variables: {
         limit: limit,
-        offset: 0,
-        unseenOnly: true,
+        offset: offset,
+        unseenOnly: unseenOnly,
       },
       onCompleted: (data) => { },
       onError: (e) => { },
@@ -70,11 +76,25 @@ export const NotificationsMenu: React.FC<ReactProps> = (props) => {
 
   React.useEffect(() => {
     getSavedSearchHits()
-  }, [])
+  }, [anchorEl])
 
   let savedSearchHitsEdges = savedSearchHitsResponse?.data?.getSavedSearchHitsByUser?.edges
-  let numHits = savedSearchHitsEdges?.length
+  let cacheData = client.cache.readQuery<SearchHitsQData, SearchHitsQVar>({
+    query: GET_SAVED_SEARCH_HITS_BY_USER,
+    variables: {
+      limit: limit,
+      offset: offset,
+      unseenOnly: unseenOnly
+    },
+  })
+
+  let numHits = (cacheData?.getSavedSearchHitsByUser?.edges ?? [])
+    .filter(edge => edge?.node?.id).length
+  ?? (savedSearchHitsEdges ?? [])
+    .filter(edge => edge?.node?.id).length
+
   let loading = savedSearchHitsResponse?.loading
+
 
 
   return (
@@ -159,25 +179,28 @@ export const NotificationsMenu: React.FC<ReactProps> = (props) => {
           </div>
 
           {
-            savedSearchHitsEdges?.map(({ node: hit }) => {
+            (savedSearchHitsEdges ?? [])
+            .filter(edge => edge?.node?.id)
+            .map(( edge, i ) => {
 
-              let externalLink = hit.externalProduct?.sourceSiteUrl
-              let productId = hit.product?.id
+              let hit = edge?.node
+              let externalLink = hit?.externalProduct?.sourceSiteUrl
+              let productId = hit?.product?.id
 
-              let make = hit.product?.currentSnapshot?.make
-                ?? hit.externalProduct?.currentExternalProductSnapshot?.make
-              let model = hit.product?.currentSnapshot?.model
-                ?? hit.externalProduct?.currentExternalProductSnapshot?.model
-              let caliber = hit.product?.currentSnapshot?.caliber
-                ?? hit.externalProduct?.currentExternalProductSnapshot?.caliber
+              let make = hit?.product?.currentSnapshot?.make
+                ?? hit?.externalProduct?.currentExternalProductSnapshot?.make
+              let model = hit?.product?.currentSnapshot?.model
+                ?? hit?.externalProduct?.currentExternalProductSnapshot?.model
+              let caliber = hit?.product?.currentSnapshot?.caliber
+                ?? hit?.externalProduct?.currentExternalProductSnapshot?.caliber
 
               let featuredPreviewItem = hit?.product?.featuredVariant?.previewItems?.[0]
                 ?? hit?.externalProduct?.currentExternalProductSnapshot?.previewItems?.[0]
 
-              console.log('hit: ', hit.seen)
+              console.log('hit: ', hit?.seen)
 
               return (
-                <div className={classes.menuItemOuter}>
+                <div className={classes.menuItemOuter} key={hit?.id ?? i}>
                   <MenuItem className={classes.menuItem} onClick={handleCloseMenu}>
                     {
                       externalLink
@@ -230,12 +253,11 @@ export const NotificationsMenu: React.FC<ReactProps> = (props) => {
                   <MarkHitAsSeenButton
                     searchHitId={hit.id}
                     isSeen={hit.seen}
-                    limit={limit}
-                    offset={0}
-                    style={{
-                      // right: '0.5rem',
-                    }}
                     toolTip={false}
+                    // needed to update query cache connections
+                    limit={limit}
+                    offset={offset}
+                    unseenOnly={unseenOnly}
                   />
                 </div>
               )
@@ -281,6 +303,18 @@ interface MData {
 interface MVar {
   savedSearchHitsIds: string[]
 }
+
+interface SearchHitsQData {
+  getSavedSearchHitsByUser: SavedSearchHitsConnection
+}
+interface SearchHitsQVar {
+  limit?: number
+  offset?: number
+  unseenOnly?: boolean
+}
+
+
+
 
 
 /////////////// STYLES /////////////////////

@@ -192,6 +192,7 @@ export interface SearchHitsQData {
 export interface SearchHitsQVar {
   limit?: number
   offset?: number
+  unseenOnly?: boolean
 }
 
 
