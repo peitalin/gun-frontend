@@ -63,7 +63,7 @@ const ManageSaveSearchPage: React.FC<ReactProps> = (props) => {
   const { classes } = props;
   const snackbar = useSnackbar();
 
-  const caliberOptionGroups = createCaliberOptionGroups(props.calibers)
+  // const caliberOptionGroups = createCaliberOptionGroups(props.calibers)
 
   const categoriesDropdownOptions = [
     { id: undefined, slug: 'all', name: "All Categories" },
@@ -73,10 +73,9 @@ const ManageSaveSearchPage: React.FC<ReactProps> = (props) => {
   const dealerStatesOptions = availableDealerStates
     .map(c => createDealerStateOption(c as any))
 
-  const initialCaliber = caliberOptionGroups?.[0]?.options?.[0]
+  // const initialCaliber = caliberOptionGroups?.[0]?.options?.[0]
   const initialCategory = categoriesDropdownOptions?.[0]
   const initialDealerState = dealerStatesOptions?.[0]
-
 
 
   const [categorySlugGql, setCategorySlugGql] = React.useState(initialCategory)
@@ -84,13 +83,12 @@ const ManageSaveSearchPage: React.FC<ReactProps> = (props) => {
 
   const [makeGql, setMakeGql] = React.useState(undefined)
   const [modelGql, setModelGql] = React.useState(undefined)
-  const [caliberGql, setCaliberGql] = React.useState(initialCaliber)
+  const [caliberGql, setCaliberGql] = React.useState(undefined)
 
 
   const [insertSavedSearch, insertSavedSearchResponse] = useMutation<MData, MVar>(
     INSERT_SAVED_SEARCH, {
     variables: {
-      searchTerm: undefined,
       categorySlug: undefined,
       dealerState: undefined,
       make: undefined,
@@ -143,7 +141,6 @@ const ManageSaveSearchPage: React.FC<ReactProps> = (props) => {
 
   const formik = useFormik({
     initialValues: {
-      searchTerm: "",
       categorySlug: categorySlugGql,
       dealerState: dealerStateGql,
       make: makeGql,
@@ -160,18 +157,19 @@ const ManageSaveSearchPage: React.FC<ReactProps> = (props) => {
       // console.log("formik onSubmit, searchTerm: ", values.searchTerm)
       await insertSavedSearch({
         variables: {
-          searchTerm: values.searchTerm,
           categorySlug: categorySlugGql?.value,
           dealerState: dealerStateGql?.value,
-          make: makeGql?.value,
-          model: modelGql?.value,
-          caliber: caliberGql?.value,
+          make: values.make,
+          model: values.model,
+          caliber: values.caliber,
         }
       })
     },
   });
 
-  let disabledButton = !makeGql?.value && !modelGql?.value && !caliberGql?.value
+  let disabledButton = !formik?.values.make
+    && !formik?.values.model
+    && !formik?.values.caliber
 
 
   // console.log("dealerStates: ", props.dealerStates)
@@ -203,97 +201,97 @@ const ManageSaveSearchPage: React.FC<ReactProps> = (props) => {
         </Typography>
       </div>
 
-      {
-        initialCaliber?.label &&
-        <div className={classes.dropdownContainer}>
+      <div className={classes.dropdownContainer}>
 
-          <TextInputUnderline
-            variant="outlined"
-            value={formik.values.make}
-            label={"Make"} // remove moving label
-            autoComplete={"new-password"} // turn off
-            onChange={(e) => {
-              let s = e.target.value
-              formik.setFieldValue("make", s)
-            }}
-            placeholder={"Enter a search term for make"}
-            classes={{
-              root: classes.textInputRoot,
-            }}
-            inputProps={{
-              className: classes.textInputInput,
-              focused: classes.textFocused,
-            }}
-          />
+        <TextInputUnderline
+          id={"ss-make"}
+          variant="outlined"
+          value={formik.values.make}
+          label={"Make"} // remove moving label
+          autoComplete={"new-password"} // turn off
+          onChange={(e) => {
+            let s = e.target.value
+            formik.setFieldValue("make", s)
+          }}
+          placeholder={"Enter a search term for make"}
+          classes={{
+            root: classes.textInputRoot,
+          }}
+          inputProps={{
+            className: classes.textInputInput,
+            focused: classes.textFocused,
+          }}
+        />
 
-          <TextInputUnderline
-            variant="outlined"
-            value={formik.values.model}
-            label={"Model"} // remove moving label
-            autoComplete={"new-password"} // turn off
-            onChange={(e) => {
-              let s = e.target.value
-              formik.setFieldValue("model", s)
-            }}
-            placeholder={"Enter a search term for model"}
-            classes={{
-              root: classes.textInputRoot,
-            }}
-            inputProps={{
-              className: classes.textInputInput,
-              focused: classes.textFocused,
-            }}
-          />
+        <TextInputUnderline
+          id={"ss-model"}
+          variant="outlined"
+          value={formik.values.model}
+          label={"Model"} // remove moving label
+          autoComplete={"new-password"} // turn off
+          onChange={(e) => {
+            let s = e.target.value
+            formik.setFieldValue("model", s)
+          }}
+          placeholder={"Enter a search term for model"}
+          classes={{
+            root: classes.textInputRoot,
+          }}
+          inputProps={{
+            className: classes.textInputInput,
+            focused: classes.textFocused,
+          }}
+        />
 
-          <TextInputUnderline
-            variant="outlined"
-            value={formik.values.caliber}
-            label={"Caliber"} // remove moving label
-            autoComplete={"new-password"} // turn off
-            onChange={(e) => {
-              let s = e.target.value
-              formik.setFieldValue("caliber", s)
-            }}
-            placeholder={"Enter a search tem for caliber"}
-            classes={{
-              root: classes.textInputRoot,
-            }}
-            inputProps={{
-              className: classes.textInputInput,
-              focused: classes.textFocused,
-            }}
-          />
+        <TextInputUnderline
+          id={"ss-caliber"}
+          variant="outlined"
+          value={formik.values.caliber}
+          label={"Caliber"} // remove moving label
+          autoComplete={"new-password"} // turn off
+          onChange={(e) => {
+            let s = e.target.value
+            formik.setFieldValue("caliber", s)
+          }}
+          placeholder={"Enter a search tem for caliber"}
+          classes={{
+            root: classes.textInputRoot,
+          }}
+          inputProps={{
+            className: classes.textInputInput,
+            focused: classes.textFocused,
+          }}
+        />
 
-          {/* <DropdownInput
-            className={classes.dropdownComponent}
-            // menuIsOpen={true}
-            initialState={initialCaliber}
-            onChange={(option: SelectOption) => {
-              console.log("SELECT CALIBER OPTION: ", option)
-              if (!option?.value) {
-                setCaliberGql(undefined)
-              } else {
-                setCaliberGql(option)
-              }
-            }}
-            options={caliberOptionGroups}
-            placeholder={initialCaliber}
-          /> */}
+        {/* <DropdownInput
+          className={classes.dropdownComponent}
+          // menuIsOpen={true}
+          initialState={initialCaliber}
+          onChange={(option: SelectOption) => {
+            console.log("SELECT CALIBER OPTION: ", option)
+            if (!option?.value) {
+              setCaliberGql(undefined)
+            } else {
+              setCaliberGql(option)
+            }
+          }}
+          options={caliberOptionGroups}
+          placeholder={initialCaliber}
+        /> */}
 
-          {/* <DropdownInput
-            className={classes.dropdownComponent}
-            initialState={initialDealerState}
-            onChange={(option: SelectOption) => {
-              if (!option.value) {
-                setDealerStateGql(undefined)
-              } else {
-                setDealerStateGql(option)
-              }
-            }}
-            options={dealerStatesOptions}
-          /> */}
-        </div>
-      }
+        {/* <DropdownInput
+          className={classes.dropdownComponent}
+          initialState={initialDealerState}
+          onChange={(option: SelectOption) => {
+            if (!option.value) {
+              setDealerStateGql(undefined)
+            } else {
+              setDealerStateGql(option)
+            }
+          }}
+          options={dealerStatesOptions}
+        /> */}
+      </div>
 
 
       <div className={classes.flexCol}>
@@ -307,7 +305,7 @@ const ManageSaveSearchPage: React.FC<ReactProps> = (props) => {
           categorySlug={categorySlugGql?.value}
           make={formik.values.make}
           model={formik.values.model}
-          caliber={caliberGql?.value}
+          caliber={formik.values.caliber}
           dealerState={dealerStateGql?.value}
           loading={insertSavedSearchResponse?.loading}
         />
@@ -323,14 +321,7 @@ const ManageSaveSearchPage: React.FC<ReactProps> = (props) => {
         loading={insertSavedSearchResponse?.loading}
         disabled={!process.browser || disabledButton}
         onClick={() => {
-
-          if (formik.errors?.searchTerm) {
-            let errMsg = formik.errors?.searchTerm
-            snackbar.enqueueSnackbar(
-              `${errMsg}`,
-              { variant: "error" }
-            )
-          }
+          // submits formik
         }}
       >
         { 'Save this Search' }
@@ -374,7 +365,6 @@ interface MData {
   insertSavedSearch: Saved_Searches
 }
 interface MVar {
-  searchTerm: string
   categorySlug?: string
   dealerState?: string
   make?: string

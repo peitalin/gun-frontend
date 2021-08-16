@@ -18633,7 +18633,7 @@ export type Saved_Searches = {
   make?: Maybe<Scalars['String']>;
   matchesNeeded?: Maybe<Scalars['Int']>;
   model?: Maybe<Scalars['String']>;
-  searchTerm: Scalars['String'];
+  searchTerm?: Maybe<Scalars['String']>;
   /** An object relationship */
   user?: Maybe<Users>;
   userId: Scalars['String'];

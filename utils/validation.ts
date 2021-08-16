@@ -530,8 +530,8 @@ export const validationSchemas = {
 
   SaveSearch:
     Yup.object().shape({
-      searchTerm: Yup.string()
-        .required('Search term required'),
+      // searchTerm: Yup.string()
+      //   .required('Search term required'),
       categorySlug: Yup.string().nullable(),
       dealerState: Yup.string().nullable(),
       make: Yup.string().nullable(),
