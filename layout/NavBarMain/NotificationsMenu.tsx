@@ -264,7 +264,7 @@ export const NotificationsMenu: React.FC<ReactProps> = (props) => {
             })
           }
 
-          <MenuItem className={classes.menuItem} onClick={handleCloseMenu}>
+          <MenuItem className={classes.menuItem2} onClick={handleCloseMenu}>
             <Link href="/saved-searches">
               <a className={classes.menuLink}>
                 <span className={classes.menuText3}> See More </span>
@@ -402,6 +402,17 @@ const styles = (theme: Theme) => createStyles({
       : Colors.black,
   },
   menuItem: {
+    padding: '0.5rem',
+    overflow: "visible",
+    "&:hover": {
+      backgroundColor: isThemeDark(theme)
+        ? Colors.uniswapNavy
+        : Colors.slateGrey,
+      color: Colors.cream,
+    },
+  },
+  menuItem2: {
+    borderRadius: '0px 0px ${BorderRadius2x}px ${BorderRadius2x}px',
     padding: '0.5rem',
     overflow: "visible",
     "&:hover": {
