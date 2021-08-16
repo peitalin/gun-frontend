@@ -130,7 +130,7 @@ const SearchHitsItem = (props: SearchHitsItemProps) => {
       mdDown
         ? classes.searchHitsContainerMobile
         : classes.searchHitsContainerDesktop,
-      isSeen
+      !isSeen
         ? classes.savedSearchBorderHighlight
         : classes.savedSearchBorder,
     )}>
