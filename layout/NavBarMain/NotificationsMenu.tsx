@@ -15,6 +15,8 @@ import Button from "@material-ui/core/Button";
 import Divider from "@material-ui/core/Divider";
 // Icons
 import NotificationsIcon from '@material-ui/icons/Notifications';
+import SettingsIcon from '@material-ui/icons/Settings';
+import IconButton from '@material-ui/core/IconButton';
 import ProductPreviewCardRowSmall from "components/ProductPreviewCardRowSmall";
 
 import Badge from '@material-ui/core/Badge';
@@ -134,8 +136,24 @@ export const NotificationsMenu: React.FC<ReactProps> = (props) => {
           />
         }
 
-        <div className={classes.title}>
-          Saved Search Notifications
+        <div className={classes.titleBox}>
+          <div className={classes.title}>
+            Saved Search Notifications
+          </div>
+          <Link href={"/saved-searches"}>
+            <a>
+              <IconButton
+                className={classes.settingsIcon}
+                // onClick={props.closeModal}
+                size={"medium"}
+              >
+                <SettingsIcon
+                  style={{ fill: color }}
+                  className={classes.settingsIcon}
+                />
+              </IconButton>
+            </a>
+          </Link>
         </div>
 
         {
@@ -265,6 +283,12 @@ const styles = (theme: Theme) => createStyles({
   iconText: {
     marginRight: '0.5rem',
   },
+  titleBox: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingRight: '0.5rem',
+  },
   title: {
     textAlign: 'center',
     padding: '0.5rem',
@@ -360,6 +384,10 @@ const styles = (theme: Theme) => createStyles({
   },
   badgeRoot: {
     top: '0.75rem',
+  },
+  settingsIcon: {
+    // position: "absolute",
+    // right: '1rem',
   },
 });
 
