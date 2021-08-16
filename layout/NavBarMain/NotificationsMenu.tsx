@@ -412,7 +412,7 @@ const styles = (theme: Theme) => createStyles({
     },
   },
   menuItem2: {
-    borderRadius: '0px 0px ${BorderRadius2x}px ${BorderRadius2x}px',
+    borderRadius: `0px 0px ${BorderRadius2x}px ${BorderRadius2x}px`,
     padding: '0.5rem',
     overflow: "visible",
     "&:hover": {
