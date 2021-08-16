@@ -73,7 +73,7 @@ const NewProducts = (props: ReactProps) => {
 
   return (
     <>
-      <Hidden smDown implementation="css">
+      <Hidden smDown implementation="js">
         <NewProductsDesktop
           title={props.title}
           connection={connection}
@@ -82,7 +82,7 @@ const NewProducts = (props: ReactProps) => {
           showSeeMore={props.showSeeMore}
         />
       </Hidden>
-      <Hidden mdUp implementation="css">
+      <Hidden mdUp implementation="js">
         <NewProductsMobileCarousel
           title={props.title}
           connection={connection}

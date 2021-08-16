@@ -24,7 +24,6 @@ import SavedSearchItem from './SavedSearchItem';
 // Snackbar
 import { useSnackbar } from "notistack";
 import {
-  INSERT_SAVED_SEARCH,
   DELETE_SAVED_SEARCH,
 } from "queries/saved-search-mutations";
 import {
@@ -121,10 +120,11 @@ const ExistingSavedSearches: React.FC<ReactProps> = (props) => {
                 })
               }}
               isHighlighted={false}
-              searchTerm={savedSearch.searchTerm}
               categorySlug={savedSearch.categorySlug}
-              caliber={savedSearch.caliber}
               dealerState={savedSearch.dealerState}
+              make={savedSearch.make}
+              model={savedSearch.model}
+              caliber={savedSearch.caliber}
               loading={
                 deleteSavedSearchResponse?.loading
                 && savedSearch.id === currentDeleteSavedSearchId

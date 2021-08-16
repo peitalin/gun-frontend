@@ -798,9 +798,12 @@ export const SavedSearchFragment = gql`
     userId
     searchTerm
     categorySlug
-    caliber
     dealerState
     createdAt
+    make
+    model
+    caliber
+    matchesNeeded
   }
 `;
 

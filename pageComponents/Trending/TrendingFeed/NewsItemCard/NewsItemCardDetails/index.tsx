@@ -203,7 +203,7 @@ const NewsItemCardDetails = (props: ReactProps) => {
           }}
         />
 
-        <ButtonLoading
+        {/* <ButtonLoading
           className={props.classes.claimButton}
           variant={"contained"}
           loadingIconColor={Colors.cream}
@@ -216,7 +216,7 @@ const NewsItemCardDetails = (props: ReactProps) => {
           }}
         >
           Claim Listing
-        </ButtonLoading>
+        </ButtonLoading> */}
       </div>
 
       {

@@ -8,16 +8,18 @@ import {
 
 export const INSERT_SAVED_SEARCH = gql`
   mutation insertSavedSearch(
-    $searchTerm: String!
     $categorySlug: String
-    $caliber: String
     $dealerState: String
+    $make: String
+    $model: String
+    $caliber: String
   ) {
     insertSavedSearch(
-      searchTerm: $searchTerm
       categorySlug: $categorySlug
-      caliber: $caliber
       dealerState: $dealerState
+      make: $make
+      model: $model
+      caliber: $caliber
     ) {
       ...SavedSearchFragment
     }

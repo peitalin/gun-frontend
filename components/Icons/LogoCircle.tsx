@@ -20,11 +20,20 @@ const LogoCircle = (props: LogoProps) => {
   let fillColor = color ?? "#f2f2f2";
 
   return (
-    <div className={classes.logoContainer}
-      style={{ height: height || 50 }}
+    <div
+      style={{
+        height: height || 50,
+        display: "flex",
+        flexDirection: "column",
+      }}
     >
-      <div className={classes.logo}
-        style={{ height: height || 50 }}
+      <div
+        style={{
+          height: height || 50,
+          display: "flex",
+          flexDirection: "row",
+          alignItems: "center",
+        }}
       >
 
         <svg width={`${width || 509}px`} height="311px" viewBox="0 0 509 311" version="1.1" xmlns="http://www.w3.org/2000/svg">

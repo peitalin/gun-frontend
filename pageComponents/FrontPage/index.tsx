@@ -154,14 +154,14 @@ const FrontPage: React.FC<ReactProps> = (props) => {
         }
 
 
-        {
+        {/* {
           showPromotedBanner &&
           <div className={classes.bannerPromotionsContainer}>
             <BannerPromotionsLink />
           </div>
-        }
+        } */}
 
-        {
+        {/* {
           showAdvertised &&
           advertisedSection?.map(section => {
             // console.log("section: ", section)
@@ -193,30 +193,6 @@ const FrontPage: React.FC<ReactProps> = (props) => {
           })
         }
 
-        {/* <div className={classes.categoryCarouselFrontPageBox}>
-          <ShowOnMobileOrDesktopSSR desktop className={classes.width100CenterBox}>
-            <CategoryCarouselStart
-              title={"Browse by Category"}
-              initialCategories={props.initialCategories}
-              containerStyle={{ marginTop: '4rem' }}
-              style={{
-                width: `calc(100% - ${cPadding*2}rem)`,
-                marginLeft: `${cPadding}rem`,
-                marginRight: `${cPadding}rem`,
-              }}
-            />
-          </ShowOnMobileOrDesktopSSR>
-          <ShowOnMobileOrDesktopSSR mobile className={classes.width100CenterBox}>
-            <CategoryCarouselStart
-              title={"Browse by Category"}
-              initialCategories={props.initialCategories}
-              containerStyle={{ marginTop: '-48px' }}
-              style={{ }}
-            />
-          </ShowOnMobileOrDesktopSSR>
-        </div> */}
-
-
         {
           showCategories &&
           categorySections?.map(section => {
@@ -238,7 +214,8 @@ const FrontPage: React.FC<ReactProps> = (props) => {
               )
             }
           })
-        }
+        } */}
+
       </AlignCenterLayout>
     </div>
   )

@@ -3520,10 +3520,11 @@ export type MutationInsertUniqueProductViewArgs = {
 
 
 export type MutationInsertSavedSearchArgs = {
-  searchTerm: Scalars['String'];
   categorySlug?: Maybe<Scalars['String']>;
-  caliber?: Maybe<Scalars['String']>;
   dealerState?: Maybe<Scalars['String']>;
+  make?: Maybe<Scalars['String']>;
+  model?: Maybe<Scalars['String']>;
+  caliber?: Maybe<Scalars['String']>;
 };
 
 

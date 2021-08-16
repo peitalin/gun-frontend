@@ -90,9 +90,11 @@ interface SavedSearchItemProps extends WithStyles<typeof styles> {
   isHighlighted: boolean;
   searchTerm: string
   categorySlug?: string
-  caliber?: string
   dealerState?: string
   disabled?: boolean;
+  make?: string
+  model?: string
+  caliber?: string
 }
 
 

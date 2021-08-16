@@ -2,24 +2,17 @@ import React from "react";
 // Styles
 import clsx from 'clsx';
 import { withStyles, WithStyles, createStyles, Theme } from '@material-ui/core/styles';
-import { Colors, Gradients } from "layout/AppTheme";
-import Typography from '@material-ui/core/Typography';
+import { Colors, Gradients, isThemeDark } from "layout/AppTheme";
 import { UserPrivate, Role } from "typings/gqlTypes";
+import Typography from '@material-ui/core/Typography';
 // Icons
 import Visa from 'components/Icons/Visa';
 import Mastercard from 'components/Icons/Mastercard';
-import Paypal from 'components/Icons/Paypal';
-import ApplePay from 'components/Icons/ApplePay';
-import GooglePay from 'components/Icons/GooglePay';
-import Amex from 'components/Icons/Amex';
+// import Paypal from 'components/Icons/Paypal';
+// import ApplePay from 'components/Icons/ApplePay';
+// import GooglePay from 'components/Icons/GooglePay';
+// import Amex from 'components/Icons/Amex';
 import LogoCircle from "components/Icons/LogoCircle";
-// Social Icons
-import Facebook from 'components/Icons/Facebook';
-import Instagram from 'components/Icons/Instagram';
-import Twitter from 'components/Icons/Twitter';
-import YouTube from 'components/Icons/YouTube';
-import Pinterest from 'components/Icons/Pinterest';
-import { goToModalConnect } from "utils/modals";
 // Redux
 import { useDispatch, useSelector } from "react-redux";
 import { GrandReduxState } from 'reduxStore/grand-reducer';
@@ -71,20 +64,12 @@ const Footer: React.FC<ReactProps> = (props) => {
             )}>
               <div className={clsx(
                 classes.title,
-                mdDown ? classes.textAlignCenter : classes.desktopLeftMargin,
+                // mdDown ? classes.textAlignCenter : classes.desktopLeftMargin,
               )}>
                 <LogoCircle
                   color={isDarkMode ? Colors.cream : Colors.slateGreyDarkest}
                 />
               </div>
-              {/* <Typography variant="body2"
-                className={clsx(
-                  classes.subtitle,
-                  mdDown ? classes.textAlignCenter : null
-                )}
-              >
-                Supporting arms trade
-              </Typography> */}
             </div>
 
 
@@ -206,29 +191,6 @@ const Footer: React.FC<ReactProps> = (props) => {
   )
 }
 
-// const SocialIcons = (props) => {
-//   const { classes } = props;
-//   return (
-//     <div className={classes.socialIcons}>
-//       <div className={classes.socialIconsItem}>
-//         <Instagram size={30}/>
-//       </div>
-//         <div className={classes.socialIconsItem}>
-//         <Facebook size={30}/>
-//       </div>
-//       <div className={classes.socialIconsItem}>
-//         <Twitter size={30}/>
-//       </div>
-//       <div className={classes.socialIconsItem}>
-//         <Pinterest size={30}/>
-//       </div>
-//       <div className={classes.socialIconsItem}>
-//         <YouTube height={30} width={30}/>
-//       </div>
-//     </div>
-//   )
-// }
-
 
 interface ReactProps extends WithStyles<typeof styles> {
 }
@@ -246,14 +208,14 @@ const styles = (theme: Theme) => createStyles({
     flexDirection: 'column',
     justifyContent: 'space-between',
     backgroundColor: Colors.black1A,
-    // background: theme.palette.type === 'dark'
+    // background: isThemeDark(theme)
     //   ? Gradients.gradientBlack.background
     //   : Gradients.gradientGrey2Rotated.background,
     paddingTop: "6rem",
     color: Colors.cream,
   },
   title: {
-    color: theme.palette.type === 'dark'
+    color: isThemeDark(theme)
       ? Colors.cream
       : Colors.slateGreyDarkest,
     fontWeight: 400,
@@ -263,7 +225,7 @@ const styles = (theme: Theme) => createStyles({
     marginLeft: '2rem',
   },
   subtitle: {
-    color: theme.palette.type === 'dark'
+    color: isThemeDark(theme)
       ? Colors.cream
       : Colors.slateGreyDarkest,
     fontWeight: 400,
@@ -338,10 +300,10 @@ const styles = (theme: Theme) => createStyles({
   siteFooterCredits: {
     marginBottom: 0,
     width: '100%',
-    // borderTop: theme.palette.type === 'dark'
+    // borderTop: isThemeDark(theme)
     //   ? `1px solid ${Colors.charcoal}`
     //   : `1px solid ${Colors.slateGrey}`,
-    color: theme.palette.type === 'dark'
+    color: isThemeDark(theme)
       ? Colors.mediumGrey
       : Colors.slateGreyDarkest,
     display: 'flex',
@@ -375,7 +337,7 @@ const styles = (theme: Theme) => createStyles({
     fontWeight: 500,
     fontSize: '0.9rem',
     lineHeight: '1rem',
-    color: theme.palette.type === 'dark'
+    color: isThemeDark(theme)
       ? Colors.uniswapLightestGrey
       : Colors.slateGreyDarkest,
     textDecoration: 'none',
@@ -412,7 +374,7 @@ const styles = (theme: Theme) => createStyles({
     fontWeight: 500,
     fontSize: '0.9rem',
     lineHeight: '1rem',
-    color: theme.palette.type === 'dark'
+    color: isThemeDark(theme)
       ? Colors.uniswapGrey
       : Colors.slateGreyDarkest,
     textDecoration: 'none',
@@ -425,7 +387,7 @@ const styles = (theme: Theme) => createStyles({
     fontWeight: 500,
     fontSize: '0.9rem',
     lineHeight: '1rem',
-    color: theme.palette.type === 'dark'
+    color: isThemeDark(theme)
       ? Colors.uniswapLighterGrey
       : Colors.slateGreyDarkest,
     textDecoration: 'none',

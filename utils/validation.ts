@@ -533,8 +533,10 @@ export const validationSchemas = {
       searchTerm: Yup.string()
         .required('Search term required'),
       categorySlug: Yup.string().nullable(),
-      caliber: Yup.string().nullable(),
       dealerState: Yup.string().nullable(),
+      make: Yup.string().nullable(),
+      model: Yup.string().nullable(),
+      caliber: Yup.string().nullable(),
     }),
 
   EditPromotedSlot:

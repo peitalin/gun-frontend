@@ -25,10 +25,16 @@ import { useRouter } from "next/router";
 const HomePage: NextPage<ReactProps> = (props) => {
 
   let router = useRouter()
+  const [showSocialBanner, setShowSocialBanner] = React.useState(false)
 
-  let showSocialBanner = router.pathname === '/'
-    || router.pathname.startsWith("/start")
-    || router.pathname.startsWith("/help")
+
+  React.useEffect(() => {
+    let showSocialBanner = router.pathname === '/'
+      || router.pathname.startsWith("/start")
+      || router.pathname.startsWith("/help")
+
+    setShowSocialBanner(showSocialBanner)
+  }, [])
 
   return (
     <>
@@ -50,7 +56,7 @@ const HomePage: NextPage<ReactProps> = (props) => {
       />
       {
         showSocialBanner &&
-        <ShowOnMobileOrDesktopSSR desktop>
+        <ShowOnMobileOrDesktopSSR desktop implementation="js">
           <SocialFloatingBanner/>
         </ShowOnMobileOrDesktopSSR>
       }

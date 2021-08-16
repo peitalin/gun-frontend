@@ -46,7 +46,6 @@ const SearchHitsItem = (props: SearchHitsItemProps) => {
   const {
     classes,
     isSeen,
-    searchTerm,
     categorySlug,
   } = props
 
@@ -113,6 +112,18 @@ const SearchHitsItem = (props: SearchHitsItemProps) => {
 
   const productTitle = props.productTitle
 
+  const make = props?.make
+    ? `"${props.make}"`
+    : `-`
+
+  const model = props?.model
+    ? `"${props.model}"`
+    : `-`
+
+  const caliber = props?.caliber
+    ? `"${props.caliber}"`
+    : `-`
+
   return (
     <div className={clsx(
       mdDown
@@ -128,12 +139,16 @@ const SearchHitsItem = (props: SearchHitsItemProps) => {
         ? <a className={classes.link} href={props.externalLink}>
             <ProductPreviewCardRowSmall
               previewItem={props.previewItem}
+                width={90}
+                height={60}
             />
           </a>
         : <Link href={"/p/[productId]"} as={`/p/${props.product?.id}`}>
             <a className={classes.link}>
               <ProductPreviewCardRowSmall
                 previewItem={props.previewItem}
+                width={90}
+                height={60}
               />
             </a>
           </Link>
@@ -143,33 +158,58 @@ const SearchHitsItem = (props: SearchHitsItemProps) => {
       <div className={
         mdDown ? classes.savedSearchItemMobile : classes.savedSearchItemDesktop
       }>
-        <span className={classes.boldText}>Product</span>
-        {
-          props.externalLink
-          ? <a className={classes.link} href={props.externalLink}>
-              <span className={classes.italicText}>{productTitle}</span>
-            </a>
-          : <Link href={"/p/[productId]"} as={`/p/${props.product?.id}`}>
-              <a className={classes.link}>
+        <div className={clsx(
+          classes.flexItem,
+          classes.productTitleColumn
+        )}>
+          <span className={classes.boldText}>Product</span>
+          {
+            props.externalLink
+            ? <a className={classes.link} href={props.externalLink}>
                 <span className={classes.italicText}>{productTitle}</span>
               </a>
-            </Link>
-        }
+            : <Link href={"/p/[productId]"} as={`/p/${props.product?.id}`}>
+                <a className={classes.link}>
+                  <span className={classes.italicText}>{productTitle}</span>
+                </a>
+              </Link>
+          }
+        </div>
+        <div className={classes.flexItem}>
+          <div className={
+            mdDown ? classes.savedSearchItemMobile : classes.savedSearchItemDesktop
+          }>
+            <span className={classes.boldText}>Search Terms</span>
+          </div>
+          <div className={
+            mdDown ? classes.savedSearchItemMobile : classes.savedSearchItemDesktop
+          }>
+            <span className={classes.fieldText}>Make</span>
+            <span className={classes.italicText}>
+              {make}
+            </span>
+          </div>
+          <div className={
+            mdDown ? classes.savedSearchItemMobile : classes.savedSearchItemDesktop
+          }>
+            <span className={classes.fieldText}>Model</span>
+            <span className={classes.italicText}>
+              {model}
+            </span>
+          </div>
+          <div className={
+            mdDown ? classes.savedSearchItemMobile : classes.savedSearchItemDesktop
+          }>
+            <span className={classes.fieldText}>Caliber</span>
+            <span className={classes.italicText}>
+              {caliber}
+            </span>
+          </div>
+        </div>
       </div>
 
-      <div className={
-        mdDown ? classes.savedSearchItemMobile : classes.savedSearchItemDesktop
-      }>
-        <span className={classes.boldText}>Search Term</span>
-        <span className={classes.italicText}>"{searchTerm}"</span>
-      </div>
 
-      <div className={
-        mdDown ? classes.savedSearchItemMobile : classes.savedSearchItemDesktop
-      }>
-        <span className={classes.boldText}>Category</span>
-        <span className={classes.italicText}>{categorySlug ?? "all"}</span>
-      </div>
+
       <div className={classes.savedSearchItem5}>
         {
           isSeen &&
@@ -207,7 +247,9 @@ interface SearchHitsItemProps extends WithStyles<typeof styles> {
   productTitle: string
   externalLink?: string
   isSeen: boolean;
-  searchTerm: string
+  make: string
+  model: string
+  caliber: string
   categorySlug?: string
   limit: number
   offset: number
@@ -261,14 +303,13 @@ const styles = (theme: Theme) => createStyles({
   },
   savedSearchItemDesktop: {
     display: 'flex',
-    flex: 1,
-    flexDirection: 'column',
-    minWidth: 100,
+    flexDirection: 'row',
     marginRight: '0.5rem',
+    flexWrap: "wrap",
+    width: '100%',
   },
   savedSearchItemMobile: {
     display: 'flex',
-    flex: 1,
     flexDirection: 'row',
     minWidth: 80,
     marginRight: '0.5rem',
@@ -291,6 +332,17 @@ const styles = (theme: Theme) => createStyles({
       ? Colors.uniswapLighterGrey
       : Colors.slateGreyBlack,
   },
+  productTitleColumn: {
+    width: 150,
+  },
+  flexItem: {
+    flexBasis: "50%",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
+    wordBreak: "break-word"
+  },
   italicText: {
     fontStyle: 'italic',
     textAlign: "center",
@@ -307,9 +359,12 @@ const styles = (theme: Theme) => createStyles({
         : Colors.slateGreyDarkest,
     },
   },
+  fieldText: {
+    minWidth: 70,
+  },
   link: {
     marginRight: "0.5rem",
-    textAlign: "center",
+    textAlign: "start",
     color: isThemeDark(theme)
       ? Colors.uniswapLightestGrey
       : Colors.slateGreyBlack,

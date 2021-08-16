@@ -24,7 +24,6 @@ import SavedSearchItem from './SavedSearchItem';
 // Snackbar
 import { useSnackbar } from "notistack";
 import {
-  INSERT_SAVED_SEARCH,
   DELETE_SAVED_SEARCH,
 } from "queries/saved-search-mutations";
 import {

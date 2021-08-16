@@ -156,7 +156,7 @@ const styles = (theme: Theme) => createStyles({
     background: 'transparent',
     boxShadow: 'unset',
     margin: '0rem',
-    borderRadius: BorderRadius4x,
+    borderRadius: BorderRadius2x,
     maxHeight: "100%",
     minWidth: 360,
   },
@@ -165,19 +165,19 @@ const styles = (theme: Theme) => createStyles({
     background: 'transparent',
     boxShadow: 'unset',
     margin: '0rem',
-    borderRadius: BorderRadius4x,
+    borderRadius: BorderRadius2x,
   },
   saveSearchModalButton: {
     height: 40,
     width: '100%',
     maxWidth: 200,
-    borderRadius: BorderRadius3x,
-    backgroundColor: theme.palette.type === 'dark'
+    borderRadius: BorderRadius2x,
+    backgroundColor: isThemeDark(theme)
       ? Colors.purple
       : Colors.ultramarineBlue,
     color: Colors.cream,
     "&:hover": {
-      backgroundColor: theme.palette.type === 'dark'
+      backgroundColor: isThemeDark(theme)
         ? fade(Colors.purple, 0.9)
         : fade(Colors.blue, 0.9),
     }
@@ -192,7 +192,7 @@ const styles = (theme: Theme) => createStyles({
     minWidth: 330,
     marginTop: '2rem',
     marginBottom: '2rem',
-    borderRadius: BorderRadius4x,
+    borderRadius: BorderRadius3x,
     background: isThemeDark(theme)
       ? Colors.uniswapDarkNavy
       : Colors.cream,

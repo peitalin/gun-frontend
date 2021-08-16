@@ -64,7 +64,7 @@ const FeaturedProducts = (props: ReactProps) => {
 
   return (
     <>
-      <Hidden smDown implementation="css">
+      <Hidden smDown implementation="js">
         <FeaturedProductsDesktop
           title={props.title}
           connection={connection}
@@ -73,7 +73,7 @@ const FeaturedProducts = (props: ReactProps) => {
           categorySlug={categorySlug}
         />
       </Hidden>
-      <Hidden mdUp implementation="css">
+      <Hidden mdUp implementation="js">
         <FeaturedProductsMobileCarousel
           title={props.title}
           connection={connection}

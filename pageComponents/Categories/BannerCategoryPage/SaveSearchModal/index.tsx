@@ -69,10 +69,11 @@ const SavedSearchModal: React.FC<ReactProps> = (props) => {
       >
         <SaveSearchPage
           disabled={!props.searchTerm}
-          searchTerm={props.searchTerm}
           categorySlug={props.categorySlug}
-          caliber={props.caliber}
           dealerState={props.dealerState}
+          make={props.make}
+          model={props.model}
+          caliber={props.caliber}
         />
       </Dialog>
       <ButtonLoading
@@ -107,8 +108,10 @@ interface ReactProps extends WithStyles<typeof styles> {
   // args
   searchTerm: string
   categorySlug?: string
-  caliber?: string
   dealerState?: string
+  make?: string
+  model?: string
+  caliber?: string
 }
 
 

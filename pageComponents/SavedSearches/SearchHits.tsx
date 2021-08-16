@@ -147,8 +147,10 @@ const SearchHits: React.FC<ReactProps> = (props) => {
             let model = savedSearchHit?.externalProduct?.currentExternalProductSnapshot?.model
             let caliber = savedSearchHit?.externalProduct?.currentExternalProductSnapshot?.caliber
 
-            let productTitle = savedSearchHit?.product?.currentSnapshot?.title
-              ?? `${make} ${model} ${caliber}`
+            let productTitle = savedSearchHit?.productTitle
+              ?? savedSearchHit?.product?.currentSnapshot?.title
+
+              console.log("hit: ", savedSearchHit)
 
             return (
               <SearchHitsItem
@@ -159,7 +161,9 @@ const SearchHits: React.FC<ReactProps> = (props) => {
                   savedSearchHit?.externalProduct?.sourceSiteUrl
                 }
                 searchHitId={savedSearchHit.id}
-                searchTerm={savedSearchHit.productTitle}
+                make={savedSearchHit.savedSearch?.model}
+                model={savedSearchHit.savedSearch?.make}
+                caliber={savedSearchHit.savedSearch?.caliber}
                 categorySlug={savedSearchHit.savedSearch?.categorySlug}
                 isSeen={!savedSearchHit.seen}
                 limit={limit}

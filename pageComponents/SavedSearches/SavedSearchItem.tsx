@@ -26,10 +26,12 @@ const SavedSearchItem = (props: SavedSearchItemProps) => {
   const {
     classes,
     isHighlighted,
-    searchTerm,
+    // searchTerm,
     categorySlug,
-    caliber,
     dealerState,
+    make,
+    model,
+    caliber,
   } = props
 
   const theme = useTheme()
@@ -44,30 +46,50 @@ const SavedSearchItem = (props: SavedSearchItemProps) => {
         ? classes.savedSearchBorderHighlight
         : classes.savedSearchBorder,
     )}>
-      <div className={
+
+      {/* <div className={
         mdDown ? classes.savedSearchItemMobile : classes.savedSearchItemDesktop
       }>
         <span className={classes.boldText}>Search Term</span>
         <span className={classes.italicText}>"{searchTerm}"</span>
-      </div>
-      <div className={
+      </div> */}
+
+      {/* <div className={
         mdDown ? classes.savedSearchItemMobile : classes.savedSearchItemDesktop
       }>
         <span className={classes.boldText}>Category</span>
         <span className={classes.italicText}>{categorySlug ?? "all"}</span>
+      </div> */}
+
+      <div className={
+        mdDown ? classes.savedSearchItemMobile : classes.savedSearchItemDesktop
+      }>
+        <span className={classes.boldText}>Make</span>
+        <span className={classes.italicText}>{make ?? "-"}</span>
       </div>
+
+      <div className={
+        mdDown ? classes.savedSearchItemMobile : classes.savedSearchItemDesktop
+      }>
+        <span className={classes.boldText}>Model</span>
+        <span className={classes.italicText}>{model ?? "-"}</span>
+      </div>
+
       <div className={
         mdDown ? classes.savedSearchItemMobile : classes.savedSearchItemDesktop
       }>
         <span className={classes.boldText}>Caliber</span>
-        <span className={classes.italicText}>{caliber ?? "all"}</span>
+        <span className={classes.italicText}>{caliber ?? "-"}</span>
       </div>
-      <div className={
+
+      {/* <div className={
         mdDown ? classes.savedSearchItemMobile : classes.savedSearchItemDesktop
       }>
         <span className={classes.boldText}>Dealer State</span>
         <span className={classes.italicText}>{dealerState ?? "all"}</span>
-      </div>
+      </div> */}
+
+
       <div className={classes.savedSearchItem5}>
         {
           props.onClickDelete &&
@@ -94,10 +116,12 @@ const SavedSearchItem = (props: SavedSearchItemProps) => {
 interface SavedSearchItemProps extends WithStyles<typeof styles> {
   onClickDelete(): void;
   isHighlighted: boolean;
-  searchTerm: string
+  // searchTerm: string
   categorySlug?: string
-  caliber?: string
   dealerState?: string
+  make?: string
+  model?: string
+  caliber?: string
   disabled?: boolean;
   loading: boolean;
 }
@@ -145,6 +169,7 @@ const styles = (theme: Theme) => createStyles({
     flex: 1,
     flexDirection: 'column',
     minWidth: 100,
+    minHeight: 45,
     marginRight: '0.5rem',
   },
   savedSearchItemMobile: {
@@ -152,6 +177,7 @@ const styles = (theme: Theme) => createStyles({
     flex: 1,
     flexDirection: 'row',
     minWidth: 80,
+    minHeight: 45,
     marginRight: '0.5rem',
     justifyContent: "space-between",
   },

@@ -101,7 +101,7 @@ const MainApp: NextComponentType<AppContext, AppInitialProps, AppProps & AppHOCP
     if (jssStyles) {
       jssStyles.parentNode.removeChild(jssStyles);
     }
-  })
+  }, [])
 
 
   // Google Analytics client-side routes

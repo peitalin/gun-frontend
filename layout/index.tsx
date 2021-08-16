@@ -3,8 +3,15 @@ import clsx from "clsx";
 import Header from "./Header";
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 // Components
+import dynamic from "next/dynamic";
+// import Footer from "./Footer";
+const Footer = dynamic(
+  () => import("./Footer"), {
+    loading: () => <div className={"footer"}/>,
+    ssr: false,
+  }
+)
 import NavBarMain from "./NavBarMain";
-import Footer from "./Footer";
 import GetUser from "./GetUser";
 import GlobalModals from "./GlobalModals";
 // Router
@@ -23,11 +30,6 @@ const Layout: React.FC<ReactProps> = (props) => {
     || router.pathname === "/sell"
     || router.pathname === "/orders"
   ) ? true : false
-
-  // console.log("showChatWood: ", showChatWoot)
-  let showSocialBanner = router.pathname === '/'
-    || router.pathname.startsWith("/start")
-    || router.pathname.startsWith("/help")
 
   let noNavbarPadding = router.pathname === "/"
     || router.pathname === "/start"

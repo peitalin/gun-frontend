@@ -54,10 +54,11 @@ const SaveSearchPage: React.FC<ReactProps> = (props) => {
   const [insertSavedSearch, insertSavedSearchResponse] = useMutation<MData, MVar>(
     INSERT_SAVED_SEARCH, {
       variables: {
-        searchTerm: props.searchTerm,
         categorySlug: props.categorySlug,
-        caliber: props.caliber,
         dealerState: props.dealerState,
+        make: props.make,
+        model: props.model,
+        caliber: props.caliber,
       },
       update: (cache, { data: { insertSavedSearch }}) => {
 
@@ -99,10 +100,11 @@ const SaveSearchPage: React.FC<ReactProps> = (props) => {
 
   const formik = useFormik({
     initialValues: {
-      searchTerm: props.searchTerm,
       categorySlug: props.categorySlug,
-      caliber: props.caliber,
       dealerState: props.dealerState,
+      make: props.make,
+      model: props.model,
+      caliber: props.caliber,
     },
     validationSchema: validationSchemas.SaveSearch,
     onSubmit: async (values) => {
@@ -111,13 +113,13 @@ const SaveSearchPage: React.FC<ReactProps> = (props) => {
         `Saving search`,
         { variant: "info" }
       )
-      console.log("formik onSubmit, searchTerm: ", values.searchTerm)
       await insertSavedSearch({
         variables: {
-          searchTerm: props.searchTerm,
           categorySlug: props.categorySlug,
-          caliber: props.caliber,
           dealerState: props.dealerState,
+          make: props.make,
+          model: props.model,
+          caliber: props.caliber,
         }
       })
     },
@@ -147,10 +149,11 @@ const SaveSearchPage: React.FC<ReactProps> = (props) => {
           loading={false}
           onClickDelete={undefined}
           isHighlighted={true}
-          searchTerm={props.searchTerm}
           categorySlug={props.categorySlug}
-          caliber={props.caliber}
           dealerState={props.dealerState}
+          make={props.make}
+          model={props.model}
+          caliber={props.caliber}
         />
       </div>
 
@@ -178,21 +181,23 @@ const SaveSearchPage: React.FC<ReactProps> = (props) => {
 
 
 interface ReactProps extends WithStyles<typeof styles> {
-  searchTerm: string
   categorySlug?: string
-  caliber?: string
   dealerState?: string
   disabled?: boolean;
+  make?: string
+  model?: string
+  caliber?: string
 }
 
 interface MData {
   insertSavedSearch: Saved_Searches
 }
 interface MVar {
-  searchTerm: string
   categorySlug?: string
-  caliber?: string
   dealerState?: string
+  make?: string
+  model?: string
+  caliber?: string
 }
 interface QData {
   getSavedSearchesByUser: SavedSearchesConnection
