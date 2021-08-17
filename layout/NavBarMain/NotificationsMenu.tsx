@@ -27,7 +27,7 @@ import {
 // css
 import { useSnackbar } from "notistack"
 import { useApolloClient } from "@apollo/client";
-
+import { printRelativeTime } from "utils/dates";
 
 // Router
 import Link from "next/link";
@@ -194,6 +194,9 @@ export const NotificationsMenu: React.FC<ReactProps> = (props) => {
               let caliber = hit?.product?.currentSnapshot?.caliber
                 ?? hit?.externalProduct?.currentExternalProductSnapshot?.caliber
 
+              let createdAt = hit?.product?.currentSnapshot?.createdAt
+                ?? hit?.externalProduct?.currentExternalProductSnapshot?.createdAt
+
               let featuredPreviewItem = hit?.product?.featuredVariant?.previewItems?.[0]
                 ?? hit?.externalProduct?.currentExternalProductSnapshot?.previewItems?.[0]
 
@@ -223,6 +226,9 @@ export const NotificationsMenu: React.FC<ReactProps> = (props) => {
                             </span>
                             <span className={classes.menuText2}>
                               {`${model} ${caliber}`}
+                            </span>
+                            <span className={classes.menuText4}>
+                              {`${printRelativeTime(createdAt)}`}
                             </span>
                           </div>
                         </a>
@@ -368,9 +374,10 @@ const styles = (theme: Theme) => createStyles({
     color: isThemeDark(theme)
       ? Colors.lightPurple
       : Colors.ultramarineBlueLight,
-    fontSize: '0.9rem',
+    fontSize: '0.7rem',
     fontWeight: 600,
     // ellipsis
+    textTransform: 'uppercase',
     width: '100%',
     textOverflow: 'ellipsis',
     overflow: 'hidden',
@@ -379,7 +386,8 @@ const styles = (theme: Theme) => createStyles({
     color: isThemeDark(theme)
       ? Colors.uniswapLighterGrey
       : Colors.black,
-    fontSize: '0.9rem',
+    fontSize: '0.8rem',
+    fontWeight: 600,
     // ellipsis
     width: '100%',
     textOverflow: 'ellipsis',
@@ -394,6 +402,13 @@ const styles = (theme: Theme) => createStyles({
     // ellipsis
     width: '100%',
     textAlign: 'center',
+  },
+  menuText4: {
+    color: isThemeDark(theme)
+      ? Colors.uniswapLighterGrey
+      : Colors.slateGreyLightBlack,
+    fontSize: '0.7rem',
+    fontWeight: 500,
   },
   menuIcon: {
     marginRight: "0.5rem",

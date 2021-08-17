@@ -5,10 +5,6 @@ import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/
 import { Colors } from "layout/AppTheme";
 // Material UI
 import Typography from "@material-ui/core/Typography";
-import Button from '@material-ui/core/Button';
-// Utils Components
-import { Price } from "typings/gqlTypes";
-import CountdownBadge from "./CountdownBadge";
 // money
 import currency from "currency.js";
 import { convertSoldOutStatus } from "utils/strings";
