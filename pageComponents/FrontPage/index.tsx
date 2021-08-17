@@ -154,14 +154,14 @@ const FrontPage: React.FC<ReactProps> = (props) => {
         }
 
 
-        {/* {
+        {
           showPromotedBanner &&
           <div className={classes.bannerPromotionsContainer}>
             <BannerPromotionsLink />
           </div>
-        } */}
+        }
 
-        {/* {
+        {
           showAdvertised &&
           advertisedSection?.map(section => {
             // console.log("section: ", section)
@@ -214,7 +214,7 @@ const FrontPage: React.FC<ReactProps> = (props) => {
               )
             }
           })
-        } */}
+        }
 
       </AlignCenterLayout>
     </div>
