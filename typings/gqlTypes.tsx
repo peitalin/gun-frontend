@@ -363,8 +363,11 @@ export type Int_Comparison_Exp = {
 
 
 export enum ListingType {
+  /** seller buys classified ad without ability for buyer sto buy with escrow */
   CLASSIFIED = 'CLASSIFIED',
+  /** seller buys classified as with option for buyer to elect escrow */
   CLASSIFIED_WITH_ESCROW = 'CLASSIFIED_WITH_ESCROW',
+  /** seller initiated escrow */
   ESCROW_ONLY = 'ESCROW_ONLY'
 }
 
@@ -429,6 +432,10 @@ export type Mutation = {
   delete_chat_users?: Maybe<Chat_Users_Mutation_Response>;
   /** delete single row from the table: "chat_users" */
   delete_chat_users_by_pk?: Maybe<Chat_Users>;
+  /** delete data from the table: "classified_ad_purchases" */
+  delete_classified_ad_purchases?: Maybe<Classified_Ad_Purchases_Mutation_Response>;
+  /** delete single row from the table: "classified_ad_purchases" */
+  delete_classified_ad_purchases_by_pk?: Maybe<Classified_Ad_Purchases>;
   /** delete data from the table: "collection_items" */
   delete_collection_items?: Maybe<Collection_Items_Mutation_Response>;
   /** delete single row from the table: "collection_items" */
@@ -613,6 +620,10 @@ export type Mutation = {
   insert_chat_users?: Maybe<Chat_Users_Mutation_Response>;
   /** insert a single row into the table: "chat_users" */
   insert_chat_users_one?: Maybe<Chat_Users>;
+  /** insert data into the table: "classified_ad_purchases" */
+  insert_classified_ad_purchases?: Maybe<Classified_Ad_Purchases_Mutation_Response>;
+  /** insert a single row into the table: "classified_ad_purchases" */
+  insert_classified_ad_purchases_one?: Maybe<Classified_Ad_Purchases>;
   /** insert data into the table: "collection_items" */
   insert_collection_items?: Maybe<Collection_Items_Mutation_Response>;
   /** insert a single row into the table: "collection_items" */
@@ -797,6 +808,10 @@ export type Mutation = {
   update_chat_users?: Maybe<Chat_Users_Mutation_Response>;
   /** update single row of the table: "chat_users" */
   update_chat_users_by_pk?: Maybe<Chat_Users>;
+  /** update data of the table: "classified_ad_purchases" */
+  update_classified_ad_purchases?: Maybe<Classified_Ad_Purchases_Mutation_Response>;
+  /** update single row of the table: "classified_ad_purchases" */
+  update_classified_ad_purchases_by_pk?: Maybe<Classified_Ad_Purchases>;
   /** update data of the table: "collection_items" */
   update_collection_items?: Maybe<Collection_Items_Mutation_Response>;
   /** update single row of the table: "collection_items" */
@@ -1353,6 +1368,16 @@ export type MutationDelete_Chat_Users_By_PkArgs = {
 };
 
 
+export type MutationDelete_Classified_Ad_PurchasesArgs = {
+  where: Classified_Ad_Purchases_Bool_Exp;
+};
+
+
+export type MutationDelete_Classified_Ad_Purchases_By_PkArgs = {
+  id: Scalars['String'];
+};
+
+
 export type MutationDelete_Collection_ItemsArgs = {
   where: Collection_Items_Bool_Exp;
 };
@@ -1825,6 +1850,18 @@ export type MutationInsert_Chat_UsersArgs = {
 export type MutationInsert_Chat_Users_OneArgs = {
   object: Chat_Users_Insert_Input;
   on_conflict?: Maybe<Chat_Users_On_Conflict>;
+};
+
+
+export type MutationInsert_Classified_Ad_PurchasesArgs = {
+  objects: Array<Classified_Ad_Purchases_Insert_Input>;
+  on_conflict?: Maybe<Classified_Ad_Purchases_On_Conflict>;
+};
+
+
+export type MutationInsert_Classified_Ad_Purchases_OneArgs = {
+  object: Classified_Ad_Purchases_Insert_Input;
+  on_conflict?: Maybe<Classified_Ad_Purchases_On_Conflict>;
 };
 
 
@@ -2379,6 +2416,20 @@ export type MutationUpdate_Chat_UsersArgs = {
 export type MutationUpdate_Chat_Users_By_PkArgs = {
   _set?: Maybe<Chat_Users_Set_Input>;
   pk_columns: Chat_Users_Pk_Columns_Input;
+};
+
+
+export type MutationUpdate_Classified_Ad_PurchasesArgs = {
+  _inc?: Maybe<Classified_Ad_Purchases_Inc_Input>;
+  _set?: Maybe<Classified_Ad_Purchases_Set_Input>;
+  where: Classified_Ad_Purchases_Bool_Exp;
+};
+
+
+export type MutationUpdate_Classified_Ad_Purchases_By_PkArgs = {
+  _inc?: Maybe<Classified_Ad_Purchases_Inc_Input>;
+  _set?: Maybe<Classified_Ad_Purchases_Set_Input>;
+  pk_columns: Classified_Ad_Purchases_Pk_Columns_Input;
 };
 
 
@@ -4339,6 +4390,12 @@ export type Query = {
   chat_users_aggregate: Chat_Users_Aggregate;
   /** fetch data from the table: "chat_users" using primary key columns */
   chat_users_by_pk?: Maybe<Chat_Users>;
+  /** fetch data from the table: "classified_ad_purchases" */
+  classified_ad_purchases: Array<Classified_Ad_Purchases>;
+  /** fetch aggregated fields from the table: "classified_ad_purchases" */
+  classified_ad_purchases_aggregate: Classified_Ad_Purchases_Aggregate;
+  /** fetch data from the table: "classified_ad_purchases" using primary key columns */
+  classified_ad_purchases_by_pk?: Maybe<Classified_Ad_Purchases>;
   /** fetch data from the table: "collection_items" */
   collection_items: Array<Collection_Items>;
   /** fetch aggregated fields from the table: "collection_items" */
@@ -5008,6 +5065,29 @@ export type QueryChat_Users_AggregateArgs = {
 export type QueryChat_Users_By_PkArgs = {
   chatRoomId: Scalars['String'];
   userId: Scalars['String'];
+};
+
+
+export type QueryClassified_Ad_PurchasesArgs = {
+  distinct_on?: Maybe<Array<Classified_Ad_Purchases_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Classified_Ad_Purchases_Order_By>>;
+  where?: Maybe<Classified_Ad_Purchases_Bool_Exp>;
+};
+
+
+export type QueryClassified_Ad_Purchases_AggregateArgs = {
+  distinct_on?: Maybe<Array<Classified_Ad_Purchases_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Classified_Ad_Purchases_Order_By>>;
+  where?: Maybe<Classified_Ad_Purchases_Bool_Exp>;
+};
+
+
+export type QueryClassified_Ad_Purchases_By_PkArgs = {
+  id: Scalars['String'];
 };
 
 
@@ -6310,6 +6390,7 @@ export type QueryGetSavedSearchesByUserArgs = {
 export type QueryGetSavedSearchHitsByUserArgs = {
   limit?: Maybe<Scalars['Int']>;
   offset?: Maybe<Scalars['Int']>;
+  unseenOnly?: Maybe<Scalars['Boolean']>;
 };
 
 
@@ -6624,6 +6705,12 @@ export type Subscription = {
   chat_users_aggregate: Chat_Users_Aggregate;
   /** fetch data from the table: "chat_users" using primary key columns */
   chat_users_by_pk?: Maybe<Chat_Users>;
+  /** fetch data from the table: "classified_ad_purchases" */
+  classified_ad_purchases: Array<Classified_Ad_Purchases>;
+  /** fetch aggregated fields from the table: "classified_ad_purchases" */
+  classified_ad_purchases_aggregate: Classified_Ad_Purchases_Aggregate;
+  /** fetch data from the table: "classified_ad_purchases" using primary key columns */
+  classified_ad_purchases_by_pk?: Maybe<Classified_Ad_Purchases>;
   /** fetch data from the table: "collection_items" */
   collection_items: Array<Collection_Items>;
   /** fetch aggregated fields from the table: "collection_items" */
@@ -7032,6 +7119,29 @@ export type SubscriptionChat_Users_AggregateArgs = {
 export type SubscriptionChat_Users_By_PkArgs = {
   chatRoomId: Scalars['String'];
   userId: Scalars['String'];
+};
+
+
+export type SubscriptionClassified_Ad_PurchasesArgs = {
+  distinct_on?: Maybe<Array<Classified_Ad_Purchases_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Classified_Ad_Purchases_Order_By>>;
+  where?: Maybe<Classified_Ad_Purchases_Bool_Exp>;
+};
+
+
+export type SubscriptionClassified_Ad_Purchases_AggregateArgs = {
+  distinct_on?: Maybe<Array<Classified_Ad_Purchases_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Classified_Ad_Purchases_Order_By>>;
+  where?: Maybe<Classified_Ad_Purchases_Bool_Exp>;
+};
+
+
+export type SubscriptionClassified_Ad_Purchases_By_PkArgs = {
+  id: Scalars['String'];
 };
 
 
@@ -9532,6 +9642,255 @@ export enum Chat_Users_Update_Column {
   /** column name */
   USERID = 'userId'
 }
+
+/** columns and relationships of "classified_ad_purchases" */
+export type Classified_Ad_Purchases = {
+  __typename?: 'classified_ad_purchases';
+  buyer_id: Scalars['String'];
+  created_at: Scalars['timestamptz'];
+  currency: Scalars['String'];
+  fees: Scalars['Int'];
+  id: Scalars['String'];
+  payment_intent_id: Scalars['String'];
+  product_id: Scalars['String'];
+  total: Scalars['Int'];
+};
+
+/** aggregated selection of "classified_ad_purchases" */
+export type Classified_Ad_Purchases_Aggregate = {
+  __typename?: 'classified_ad_purchases_aggregate';
+  aggregate?: Maybe<Classified_Ad_Purchases_Aggregate_Fields>;
+  nodes: Array<Classified_Ad_Purchases>;
+};
+
+/** aggregate fields of "classified_ad_purchases" */
+export type Classified_Ad_Purchases_Aggregate_Fields = {
+  __typename?: 'classified_ad_purchases_aggregate_fields';
+  avg?: Maybe<Classified_Ad_Purchases_Avg_Fields>;
+  count: Scalars['Int'];
+  max?: Maybe<Classified_Ad_Purchases_Max_Fields>;
+  min?: Maybe<Classified_Ad_Purchases_Min_Fields>;
+  stddev?: Maybe<Classified_Ad_Purchases_Stddev_Fields>;
+  stddev_pop?: Maybe<Classified_Ad_Purchases_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<Classified_Ad_Purchases_Stddev_Samp_Fields>;
+  sum?: Maybe<Classified_Ad_Purchases_Sum_Fields>;
+  var_pop?: Maybe<Classified_Ad_Purchases_Var_Pop_Fields>;
+  var_samp?: Maybe<Classified_Ad_Purchases_Var_Samp_Fields>;
+  variance?: Maybe<Classified_Ad_Purchases_Variance_Fields>;
+};
+
+
+/** aggregate fields of "classified_ad_purchases" */
+export type Classified_Ad_Purchases_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<Classified_Ad_Purchases_Select_Column>>;
+  distinct?: Maybe<Scalars['Boolean']>;
+};
+
+/** aggregate avg on columns */
+export type Classified_Ad_Purchases_Avg_Fields = {
+  __typename?: 'classified_ad_purchases_avg_fields';
+  fees?: Maybe<Scalars['Float']>;
+  total?: Maybe<Scalars['Float']>;
+};
+
+/** Boolean expression to filter rows from the table "classified_ad_purchases". All fields are combined with a logical 'AND'. */
+export type Classified_Ad_Purchases_Bool_Exp = {
+  _and?: Maybe<Array<Classified_Ad_Purchases_Bool_Exp>>;
+  _not?: Maybe<Classified_Ad_Purchases_Bool_Exp>;
+  _or?: Maybe<Array<Classified_Ad_Purchases_Bool_Exp>>;
+  buyer_id?: Maybe<String_Comparison_Exp>;
+  created_at?: Maybe<Timestamptz_Comparison_Exp>;
+  currency?: Maybe<String_Comparison_Exp>;
+  fees?: Maybe<Int_Comparison_Exp>;
+  id?: Maybe<String_Comparison_Exp>;
+  payment_intent_id?: Maybe<String_Comparison_Exp>;
+  product_id?: Maybe<String_Comparison_Exp>;
+  total?: Maybe<Int_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "classified_ad_purchases" */
+export enum Classified_Ad_Purchases_Constraint {
+  /** unique or primary key constraint */
+  CLASSIFIED_AD_PURCHASES_PKEY = 'classified_ad_purchases_pkey'
+}
+
+/** input type for incrementing numeric columns in table "classified_ad_purchases" */
+export type Classified_Ad_Purchases_Inc_Input = {
+  fees?: Maybe<Scalars['Int']>;
+  total?: Maybe<Scalars['Int']>;
+};
+
+/** input type for inserting data into table "classified_ad_purchases" */
+export type Classified_Ad_Purchases_Insert_Input = {
+  buyer_id?: Maybe<Scalars['String']>;
+  created_at?: Maybe<Scalars['timestamptz']>;
+  currency?: Maybe<Scalars['String']>;
+  fees?: Maybe<Scalars['Int']>;
+  id?: Maybe<Scalars['String']>;
+  payment_intent_id?: Maybe<Scalars['String']>;
+  product_id?: Maybe<Scalars['String']>;
+  total?: Maybe<Scalars['Int']>;
+};
+
+/** aggregate max on columns */
+export type Classified_Ad_Purchases_Max_Fields = {
+  __typename?: 'classified_ad_purchases_max_fields';
+  buyer_id?: Maybe<Scalars['String']>;
+  created_at?: Maybe<Scalars['timestamptz']>;
+  currency?: Maybe<Scalars['String']>;
+  fees?: Maybe<Scalars['Int']>;
+  id?: Maybe<Scalars['String']>;
+  payment_intent_id?: Maybe<Scalars['String']>;
+  product_id?: Maybe<Scalars['String']>;
+  total?: Maybe<Scalars['Int']>;
+};
+
+/** aggregate min on columns */
+export type Classified_Ad_Purchases_Min_Fields = {
+  __typename?: 'classified_ad_purchases_min_fields';
+  buyer_id?: Maybe<Scalars['String']>;
+  created_at?: Maybe<Scalars['timestamptz']>;
+  currency?: Maybe<Scalars['String']>;
+  fees?: Maybe<Scalars['Int']>;
+  id?: Maybe<Scalars['String']>;
+  payment_intent_id?: Maybe<Scalars['String']>;
+  product_id?: Maybe<Scalars['String']>;
+  total?: Maybe<Scalars['Int']>;
+};
+
+/** response of any mutation on the table "classified_ad_purchases" */
+export type Classified_Ad_Purchases_Mutation_Response = {
+  __typename?: 'classified_ad_purchases_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Classified_Ad_Purchases>;
+};
+
+/** on conflict condition type for table "classified_ad_purchases" */
+export type Classified_Ad_Purchases_On_Conflict = {
+  constraint: Classified_Ad_Purchases_Constraint;
+  update_columns?: Array<Classified_Ad_Purchases_Update_Column>;
+  where?: Maybe<Classified_Ad_Purchases_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "classified_ad_purchases". */
+export type Classified_Ad_Purchases_Order_By = {
+  buyer_id?: Maybe<Order_By>;
+  created_at?: Maybe<Order_By>;
+  currency?: Maybe<Order_By>;
+  fees?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  payment_intent_id?: Maybe<Order_By>;
+  product_id?: Maybe<Order_By>;
+  total?: Maybe<Order_By>;
+};
+
+/** primary key columns input for table: classified_ad_purchases */
+export type Classified_Ad_Purchases_Pk_Columns_Input = {
+  id: Scalars['String'];
+};
+
+/** select columns of table "classified_ad_purchases" */
+export enum Classified_Ad_Purchases_Select_Column {
+  /** column name */
+  BUYER_ID = 'buyer_id',
+  /** column name */
+  CREATED_AT = 'created_at',
+  /** column name */
+  CURRENCY = 'currency',
+  /** column name */
+  FEES = 'fees',
+  /** column name */
+  ID = 'id',
+  /** column name */
+  PAYMENT_INTENT_ID = 'payment_intent_id',
+  /** column name */
+  PRODUCT_ID = 'product_id',
+  /** column name */
+  TOTAL = 'total'
+}
+
+/** input type for updating data in table "classified_ad_purchases" */
+export type Classified_Ad_Purchases_Set_Input = {
+  buyer_id?: Maybe<Scalars['String']>;
+  created_at?: Maybe<Scalars['timestamptz']>;
+  currency?: Maybe<Scalars['String']>;
+  fees?: Maybe<Scalars['Int']>;
+  id?: Maybe<Scalars['String']>;
+  payment_intent_id?: Maybe<Scalars['String']>;
+  product_id?: Maybe<Scalars['String']>;
+  total?: Maybe<Scalars['Int']>;
+};
+
+/** aggregate stddev on columns */
+export type Classified_Ad_Purchases_Stddev_Fields = {
+  __typename?: 'classified_ad_purchases_stddev_fields';
+  fees?: Maybe<Scalars['Float']>;
+  total?: Maybe<Scalars['Float']>;
+};
+
+/** aggregate stddev_pop on columns */
+export type Classified_Ad_Purchases_Stddev_Pop_Fields = {
+  __typename?: 'classified_ad_purchases_stddev_pop_fields';
+  fees?: Maybe<Scalars['Float']>;
+  total?: Maybe<Scalars['Float']>;
+};
+
+/** aggregate stddev_samp on columns */
+export type Classified_Ad_Purchases_Stddev_Samp_Fields = {
+  __typename?: 'classified_ad_purchases_stddev_samp_fields';
+  fees?: Maybe<Scalars['Float']>;
+  total?: Maybe<Scalars['Float']>;
+};
+
+/** aggregate sum on columns */
+export type Classified_Ad_Purchases_Sum_Fields = {
+  __typename?: 'classified_ad_purchases_sum_fields';
+  fees?: Maybe<Scalars['Int']>;
+  total?: Maybe<Scalars['Int']>;
+};
+
+/** update columns of table "classified_ad_purchases" */
+export enum Classified_Ad_Purchases_Update_Column {
+  /** column name */
+  BUYER_ID = 'buyer_id',
+  /** column name */
+  CREATED_AT = 'created_at',
+  /** column name */
+  CURRENCY = 'currency',
+  /** column name */
+  FEES = 'fees',
+  /** column name */
+  ID = 'id',
+  /** column name */
+  PAYMENT_INTENT_ID = 'payment_intent_id',
+  /** column name */
+  PRODUCT_ID = 'product_id',
+  /** column name */
+  TOTAL = 'total'
+}
+
+/** aggregate var_pop on columns */
+export type Classified_Ad_Purchases_Var_Pop_Fields = {
+  __typename?: 'classified_ad_purchases_var_pop_fields';
+  fees?: Maybe<Scalars['Float']>;
+  total?: Maybe<Scalars['Float']>;
+};
+
+/** aggregate var_samp on columns */
+export type Classified_Ad_Purchases_Var_Samp_Fields = {
+  __typename?: 'classified_ad_purchases_var_samp_fields';
+  fees?: Maybe<Scalars['Float']>;
+  total?: Maybe<Scalars['Float']>;
+};
+
+/** aggregate variance on columns */
+export type Classified_Ad_Purchases_Variance_Fields = {
+  __typename?: 'classified_ad_purchases_variance_fields';
+  fees?: Maybe<Scalars['Float']>;
+  total?: Maybe<Scalars['Float']>;
+};
 
 /** columns and relationships of "collection_items" */
 export type Collection_Items = {

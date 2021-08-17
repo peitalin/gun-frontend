@@ -25,8 +25,9 @@ import Typography from "@material-ui/core/Typography";
 import {
   ID,
   Product,
+  ListingType,
 } from "typings/gqlTypes";
-import RenderInstructions from "./Instructions";
+import RenderInstructions from "./RenderInstructions";
 // CSS
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
@@ -69,18 +70,41 @@ const ProductCreateLayout: React.FC<ProductCreateFormProps> = (props) => {
         !mdDown &&
         <>
           {
-            (props.activeStep < 5)
-            ? <div className={classes.instructionsContainer}>
-                <RenderInstructions activeStep={props.activeStep}/>
+            (
+              props.activeStep === 6
+              || props.activeStep === 7
+              // || props.activeStep === 8
+            ) &&
+            <Tooltip title="Preview" placement="bottom-start">
+              <div className={clsx(classes.stickyProductPreviewContainer, 'fadeIn')}>
+                <ProductCardResponsive
+                  product={props.productPreviewSticky}
+                  previewImageEmptyMessage={
+                    props.activeStep === 6
+                    ? `Step ${props.activeStep + 1}: Upload Images`
+                    : props.activeStep === 7
+                      ? `Step ${props.activeStep + 1}: Set a Price`
+                      : `Step ${props.activeStep + 1}`
+                  }
+                />
+                {/* {
+                  props.activeStep === 8 &&
+                  <RenderInstructions activeStep={props.activeStep}/>
+                } */}
               </div>
-            : <Tooltip title="Preview" placement="bottom-start">
-                <div className={clsx(classes.stickyProductPreviewContainer, 'fadeIn')}>
-                  <ProductCardResponsive
-                    product={props.productPreviewSticky}
-                    previewImageEmptyMessage={`Step ${props.activeStep + 1}: Upload Images`}
-                  />
-                </div>
-              </Tooltip>
+            </Tooltip>
+          }
+          {
+            (
+              props.activeStep < 5 ||
+              props.activeStep === 8
+            ) &&
+            <div className={classes.instructionsContainer}>
+              <RenderInstructions
+                listingType={props.listingType}
+                activeStep={props.activeStep}
+              />
+            </div>
           }
         </>
       }
@@ -93,6 +117,7 @@ const ProductCreateLayout: React.FC<ProductCreateFormProps> = (props) => {
 
 interface ProductCreateFormProps extends WithStyles<typeof styles> {
   productPreviewSticky: Product;
+  listingType: ListingType
   activeStep: number
   setActiveStep?(a?: any): void
 }

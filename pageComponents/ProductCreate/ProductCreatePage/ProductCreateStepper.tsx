@@ -52,7 +52,7 @@ const activeStepTouched = {
     "barrelLength",
   ],
   4: [
-    "title",
+    "title", // formed automatically from `${make} ${model} ${caliber}`
     "description"
   ],
   5: [],

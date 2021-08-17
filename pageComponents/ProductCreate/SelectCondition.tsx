@@ -149,7 +149,7 @@ const SelectCondition = (props: ReactProps & FormikProps<FormikFields>) => {
             </AccordionDetails>
           </Accordion>
 
-          <div className={classes.categoryContainer}>
+          <div className={classes.validationContainer}>
             <ValidationErrorMsg
               touched={fprops.touched.condition}
               focused={false}

@@ -171,7 +171,7 @@ const SelectCategories = (props: ReactProps & FormikProps<FormikFields>) => {
             </AccordionDetails>
           </Accordion>
 
-          <div className={classes.categoryContainer}>
+          <div className={classes.validationContainer}>
             <ValidationErrorMsg
               touched={fprops.touched.categoryId}
               focused={false}

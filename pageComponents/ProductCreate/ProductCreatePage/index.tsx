@@ -22,6 +22,7 @@ import GunAttributes from "../GunAttributes";
 import MakeModel from "../MakeModel";
 import Description from "../Description";
 import Pricing from "../Pricing";
+import SelectListingType from "../SelectListingType";
 import StoreOrLogin from "../StoreOrLogin";
 
 import SelectFieldPlaceholder from "../SSR/SelectFieldPlaceholder";
@@ -122,9 +123,7 @@ import { useRouter } from "next/router";
 // CSS
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
-import Redirect from "pageComponents/Redirect";
-
-
+// Stepper for multiple fields
 import ProductCreateStepper from "./ProductCreateStepper";
 
 
@@ -299,6 +298,7 @@ const ProductCreatePage = (props: ReactProps) => {
             allowBids: values.allowBids,
             currentVariants: values.currentVariants,
             sellerLicenseId: values.sellerLicenseId,
+            listingType: values.listingType,
           }
         },
       }).then(res => {
@@ -331,6 +331,7 @@ const ProductCreatePage = (props: ReactProps) => {
     dzuPreviewOrder,
   )
 
+
   const processProductData = ({ publishNow }: { publishNow: boolean }) => {
     formik.setFieldValue("isPublished", publishNow);
     // update formik with redux currentVariants
@@ -362,6 +363,7 @@ const ProductCreatePage = (props: ReactProps) => {
   // console.log('activeStep: ', activeStep)
   // console.log('touched: ', touched)
   // console.log('formik.errors', formik.errors)
+  // console.log('formik.values.listingTYpe', formik.values.listingType)
 
   if (user?.store?.isSuspended || user?.isSuspended) {
     return <StoreSuspended/>
@@ -375,6 +377,7 @@ const ProductCreatePage = (props: ReactProps) => {
         currentVariantsInput,
         user?.store,
       )}
+      listingType={formik.values?.listingType}
       activeStep={activeStep}
       setActiveStep={setActiveStep}
     >
@@ -559,27 +562,34 @@ const ProductCreatePage = (props: ReactProps) => {
           />
         </SectionBorder>
 
-        <ProductCreateButtonWrapper {...props}>
-          <ProductCreateButton
-            // Save Draft Button
-            onClick={() => processProductData({ publishNow: false }) }
-            postInstantly={false}
-            loading={state.loading}
-            errors={formik.errors}
-            disabled={state.loading || disableForm}
-            // disabled={isFormikDisabled(formik.errors) || state.loading}
+        <SectionBorder thickPadding={true}>
+          <SelectListingType
+            activeStep={activeStep}
+            setActiveStep={setActiveStep}
+            {...formik}
           />
-          <div className={classes.flexButtonSpacer}/>
-          <ProductCreateButton
-            // Post Instantly Button
-            onClick={() => processProductData({ publishNow: true }) }
-            postInstantly={true}
-            loading={state.loading}
-            errors={formik.errors}
-            disabled={state.loading || disableForm}
-            // disabled={isFormikDisabled(formik.errors) || state.loading}
-          />
-        </ProductCreateButtonWrapper>
+          <ProductCreateButtonWrapper {...props}>
+            <ProductCreateButton
+              // Save Draft Button
+              onClick={() => processProductData({ publishNow: false }) }
+              postInstantly={false}
+              loading={state.loading}
+              errors={formik.errors}
+              disabled={state.loading || disableForm}
+              // disabled={isFormikDisabled(formik.errors) || state.loading}
+            />
+            <div className={classes.flexButtonSpacer}/>
+            <ProductCreateButton
+              // Post Instantly Button
+              onClick={() => processProductData({ publishNow: true }) }
+              postInstantly={true}
+              loading={state.loading}
+              errors={formik.errors}
+              disabled={state.loading || disableForm}
+              // disabled={isFormikDisabled(formik.errors) || state.loading}
+            />
+          </ProductCreateButtonWrapper>
+        </SectionBorder>
 
       </ProductCreateForm>
     </ProductCreateLayout>

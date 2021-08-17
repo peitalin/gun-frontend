@@ -4,6 +4,7 @@ import {
   Colors,
   BorderRadius,
   BorderRadius2x,
+  BorderRadius4x,
   BoxShadows,
   Gradients,
   isThemeDark
@@ -98,6 +99,8 @@ export const styles = (theme: Theme) => createStyles({
   formGroup: {
     display: 'flex',
     flexWrap: 'wrap',
+    width: '100%',
+    justifyContent: "center",
   },
   dense: {
     marginTop: 0,
@@ -419,7 +422,7 @@ export const styles = (theme: Theme) => createStyles({
   descriptionRoot: {
     marginBottom: '1rem',
   },
-  categoryContainer: {
+  validationContainer: {
     position: 'relative',
     width: '100%',
     marginTop: '0.5rem',
@@ -493,6 +496,77 @@ export const styles = (theme: Theme) => createStyles({
   },
   mmOrInchesTextHighlight: {
     color: Colors.ultramarineBlue,
+  },
+  listingTypeContainer: {
+    display: 'flex',
+    flexDirection: "row",
+    justifyContent: "space-around",
+    alignItems: "center",
+  },
+  listingTypeButton: {
+    flexBasis: '35%',
+    padding: '0.5rem',
+    margin: '0.5rem',
+    marginTop: '2rem',
+    display: 'flex',
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    textAlign: "center",
+    fontWeight: 600,
+    color: isThemeDark(theme)
+      ? Colors.uniswapLighterGrey
+      : Colors.slateGreyLightestBlack,
+    borderRadius: BorderRadius4x,
+    backgroundColor: isThemeDark(theme)
+      ? Colors.uniswapLightNavy
+      : Colors.slateGrey,
+    transition: theme.transitions.create(['background-color', 'border', 'color'], {
+      easing: theme.transitions.easing.easeInOut,
+      duration: "200ms",
+    }),
+    "&:hover": {
+      cursor: "pointer",
+      backgroundColor: isThemeDark(theme)
+        ? Colors.uniswapNavy
+        : Colors.slateGreyDarker,
+    },
+    border: isThemeDark(theme)
+      ? `2px solid ${Colors.uniswapLighterGrey}`
+      : `2px solid ${Colors.slateGreyDark}`,
+  },
+  listingTypeButtonSelected: {
+    transition: theme.transitions.create(['background-color', 'border', 'color'], {
+      easing: theme.transitions.easing.easeInOut,
+      duration: "200ms",
+    }),
+    color: isThemeDark(theme)
+      ? Colors.purple
+      : Colors.ultramarineBlueDark,
+    border: isThemeDark(theme)
+      ? `2px solid ${Colors.purple}`
+      : `2px solid ${Colors.ultramarineBlueDark}`,
+  },
+  listingTypeButtonDisabled: {
+    transition: theme.transitions.create(['background-color', 'border', 'color'], {
+      easing: theme.transitions.easing.easeInOut,
+      duration: "200ms",
+    }),
+    color: isThemeDark(theme)
+      ? Colors.uniswapLighterGrey
+      : Colors.slateGreyLightestBlack,
+    border: isThemeDark(theme)
+      ? `2px solid ${Colors.uniswapLighterGrey}`
+      : `2px solid ${Colors.slateGreyDark}`,
+    backgroundColor: isThemeDark(theme)
+      ? Colors.uniswapLightNavy
+      : Colors.slateGrey,
+    "&:hover": {
+      cursor: "unset",
+      backgroundColor: isThemeDark(theme)
+        ? Colors.uniswapLightNavy
+        : Colors.slateGrey,
+    },
   },
 })
 

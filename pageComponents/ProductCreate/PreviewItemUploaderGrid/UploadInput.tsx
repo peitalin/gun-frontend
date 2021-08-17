@@ -114,7 +114,7 @@ export const styles = (theme: Theme) => createStyles({
     width: '100%',
   },
   button: {
-    border: `1px solid ${Colors.blue}`,
+    border: `1px solid ${Colors.ultramarineBlue}`,
     // "&:hover": {
     //   backgroundColor: 'rgb(230, 240, 255)', // baby blue
     // },
@@ -127,7 +127,7 @@ export const styles = (theme: Theme) => createStyles({
     marginBottom: '0.5rem',
   },
   uploadButtonText: {
-    color: Colors.blue,
+    color: Colors.ultramarineBlue,
     fontSize: '0.9rem',
   },
   subtitle: {

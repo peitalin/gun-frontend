@@ -8,6 +8,7 @@ import {
   ProductPreviewItem,
   ProductCreateInput,
   ProductVariantInput,
+  ListingType,
 } from "typings/gqlTypes";
 import {
   DzuFilePreview,
@@ -60,6 +61,7 @@ export const initialProductCreateState: ReduxStateProductCreate = {
     sellerLicenseId: "",
     isPublished: false,
     allowBids: true,
+    listingType: ListingType.CLASSIFIED,
   },
   dzuPreviewItems: [],
   dzuPreviewOrder: [],

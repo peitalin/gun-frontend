@@ -3,8 +3,10 @@ import clsx from "clsx";
 // Styles
 import { withStyles, WithStyles, createStyles, Theme, useTheme } from "@material-ui/core/styles";
 // Product Preview Page
-import Tooltip from '@material-ui/core/Tooltip';
-import ButtonLoading from 'components/ButtonLoading';
+import {
+  Product,
+  ListingType
+} from "typings/gqlTypes";
 import { Colors, isThemeDark } from "layout/AppTheme";
 import Link from "next/link";
 
@@ -219,6 +221,70 @@ const RenderInstructions = (props: ReactProps) => {
         </div>
       </div>
     )
+  }
+  if (activeStep === 8) {
+    return (
+      <div className={classes.root}>
+        <div className={classes.heading}>
+          Step 9: Listing Type & Fees
+        </div>
+
+        <div className={classes.title}>
+          Classified Ad
+        </div>
+        <div className={classes.text}>
+          A classified ad lets you post your listing and display
+          your contact information.
+        </div>
+        <div className={classes.text}>
+          {/* Fee is $10 per listing */}
+          <span className={
+            (props.listingType === ListingType.CLASSIFIED || !props.listingType)
+              ? classes.highlightText
+              : classes.text
+          }>
+            Fee is free until I finish building a checkout.
+            <br/>
+            Price will be $10 after that.
+          </span>
+        </div>
+
+        <br/>
+
+        <div className={classes.title}>
+          Escrow Only (beta testing)
+        </div>
+        <div className={classes.text}>
+          List a product with escrow protection on transactions.
+          <a className={classes.link}
+            target={"_blank"}
+            href={'https://docs.gunmarketplace.com.au/escrow-overview'}
+          >
+            See our guide for more details.
+          </a>
+        </div>
+        <div className={classes.text}>
+          <span className={
+            props.listingType === ListingType.ESCROW_ONLY
+              ? classes.highlightText
+              : classes.text
+          }>
+            Escrow listings have no fees up-front.
+            <br/>
+            You will be charged 3.5% after the gun is bought
+            and disposed to the dealer.
+          </span>
+        </div>
+        <div className={classes.text}>
+          <b>Tip:</b> increase your price to cover the escrow fees for more expensive items.
+          Some buyers will only buy listings with payment protection.
+        </div>
+        <div className={classes.text}>
+          As a reminder <b>do not share any personal information</b> such as your name, contact number or email as per our terms of services.
+          This may result in suspension of the product listing.
+        </div>
+      </div>
+    )
   } else {
     return (
       <div className={classes.root}>
@@ -233,6 +299,7 @@ const RenderInstructions = (props: ReactProps) => {
 
 interface ReactProps extends WithStyles<typeof styles> {
   activeStep: number
+  listingType: ListingType
 }
 
 
@@ -275,12 +342,25 @@ const styles = (theme: Theme) => createStyles({
       : Colors.slateGreyBlack,
     lineHeight: '1.125rem',
     marginBottom: "0.5rem",
+    transition: theme.transitions.create(['color'], {
+      easing: theme.transitions.easing.easeInOut,
+      duration: "200ms",
+    }),
   },
   bold: {
     fontWeight: 500,
     color: isThemeDark(theme)
       ? Colors.uniswapLighterGrey
       : Colors.slateGreyBlack,
+  },
+  highlightText: {
+    transition: theme.transitions.create(['color'], {
+      easing: theme.transitions.easing.easeInOut,
+      duration: "200ms",
+    }),
+    color: isThemeDark(theme)
+      ? Colors.purple
+      : Colors.ultramarineBlueLight,
   },
   link: {
     marginLeft: '0.25rem',
