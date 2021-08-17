@@ -95,7 +95,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   setActiveStep(a: number): void
 }
 interface FormikFields {
-  listingType: string;
+  listingType?: string | ListingType;
 }
 
 
