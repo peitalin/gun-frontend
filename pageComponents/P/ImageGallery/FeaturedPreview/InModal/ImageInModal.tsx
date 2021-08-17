@@ -8,12 +8,7 @@ import { genSrcSet, genImgBreakpoints } from "utils/images";
 import Loading from "components/Loading";
 import LoadingBar from "components/LoadingBar";
 // Material UI
-import Card from "@material-ui/core/Card";
-import CardActionArea from "@material-ui/core/CardActionArea";
-import CardMedia from "@material-ui/core/CardMedia";
 import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
-
 
 
 const ImageInModal: React.FC<ReactProps> = (props) => {

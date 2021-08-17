@@ -2,17 +2,18 @@ import React from "react";
 import clsx from "clsx";
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 import { styles } from "../styles";
-import { Colors } from "layout/AppTheme";
+import { Colors, isThemeDark } from "layout/AppTheme";
+import { useTheme } from "@material-ui/core/styles";
 // Typings
 import { Product_Preview_Items, Product } from "typings/gqlTypes";
-// Image Modal
-import Dialog from "@material-ui/core/Dialog";
 // Material UI
 import AspectRatioConstraint from "components/AspectRatioConstraint";
 import PreviewImageFeatured from "../PreviewImageFeatured";
 import ImageInModal from "./ImageInModal";
 import VideoInModal from "./VideoInModal";
-import FeaturedVideo from "../FeaturedVideo";
+import IconButton from "@material-ui/core/IconButton";
+import ClearIcon from "@material-ui/icons/Clear";
+
 
 // import SwipeableViews from 'react-swipeable-views';
 import SwipeableViews from "components/Swiper/SwipeableViews";
@@ -34,6 +35,7 @@ const SwipeableModalPreviews = (props: ReactProps) => {
     isMobile = false,
   } = props;
 
+  const theme = useTheme()
   const numPreviews = previewItems.length
 
   return (
@@ -81,6 +83,18 @@ const SwipeableModalPreviews = (props: ReactProps) => {
           })
         }
       </BindKeyboardSwipeableViews>
+
+      <IconButton
+        className={classes.closeButtonModal}
+        onClick={() => closeModal()}
+        size={"medium"}
+      >
+        <ClearIcon className={
+          isThemeDark(theme)
+            ? Colors.uniswapLighterGrey
+            : Colors.slateGreyBlack
+         }/>
+      </IconButton>
       {
         (numPreviews > 1) &&
         <ModalButtons
@@ -132,7 +146,7 @@ const ModalButtons = ({ index, setIndex, numPreviews }) => {
 
 interface ReactProps extends WithStyles<typeof styles> {
   previewItems: Product_Preview_Items[]
-  closeModal?(id: string): void;
+  closeModal?(): void;
   isMobile?: boolean;
   index?: number;
   setIndex?(a?: any): void;

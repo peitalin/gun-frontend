@@ -105,6 +105,19 @@ export const styles = (theme: Theme) => createStyles({
     display: "flex",
     flexDirection: "row",
   },
+  closeButtonModal: {
+    position: "fixed",
+    top: '0.5rem',
+    right: '0.5rem',
+    background: isThemeDark(theme)
+      ? Colors.uniswapMediumNavy
+      : Colors.slateGreyDarkest,
+    "&:hover": {
+      background: isThemeDark(theme)
+        ? Colors.uniswapLighterGrey
+        : Colors.slateGreyDark,
+    },
+  },
 })
 
 

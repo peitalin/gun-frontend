@@ -11,14 +11,11 @@ import Dialog from "@material-ui/core/Dialog";
 import PreviewImageFeatured from "./PreviewImageFeatured";
 import FeaturedVideo from "./FeaturedVideo";
 // modal components
-// import ImageInModal from "./InModal/ImageInModal";
-// import VideoInModal from "./InModal/VideoInModal";
 import FeaturedImagePlaceholder from "./FeaturedImagePlaceholder";
 import SwipeableModalPreviews from "./InModal/SwipeableModalPreviews";
 // media query
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
-import { lgUpMediaQuery } from "../../common";
 import { useSelector } from "react-redux";
 import { GrandReduxState } from "reduxStore/grand-reducer";
 
@@ -156,7 +153,10 @@ const FeaturedImageModal = (props: ReactProps) => {
             <div className={clsx(classes.paper, classes.paperLoaded)}>
               <SwipeableModalPreviews
                 previewItems={previewItems}
-                closeModal={closeModal}
+                closeModal={() => {
+                  props.setIndex(0)
+                  closeModal(imageId)
+                }}
                 isMobile={false}
                 index={props.index}
                 setIndex={props.setIndex}
