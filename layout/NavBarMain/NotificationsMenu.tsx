@@ -384,7 +384,7 @@ const styles = (theme: Theme) => createStyles({
   },
   menuText2: {
     color: isThemeDark(theme)
-      ? Colors.uniswapLighterGrey
+      ? Colors.uniswapLightestGrey
       : Colors.black,
     fontSize: '0.8rem',
     fontWeight: 600,
