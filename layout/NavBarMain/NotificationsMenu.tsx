@@ -346,9 +346,9 @@ const styles = (theme: Theme) => createStyles({
     borderRadius: BorderRadius2x,
   },
   innerContainer: {
-    border: isThemeDark(theme)
-      ? `1px solid ${Colors.uniswapLightNavy}`
-      : `1px solid ${Colors.slateGreyDarkest}`,
+    // border: isThemeDark(theme)
+      // ? `1px solid ${Colors.uniswapLightNavy}`
+      // : `1px solid ${Colors.slateGreyDarkest}`,
     boxShadow: BoxShadows.shadow4.boxShadow,
     paddingTop: '1rem',
     borderRadius: BorderRadius2x,
