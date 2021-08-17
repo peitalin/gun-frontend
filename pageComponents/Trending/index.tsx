@@ -68,7 +68,7 @@ export const Trending: React.FC<ReactProps> = (props) => {
           headingDesktop={"Buy a promotion"}
           headingMobile={"Promote your listing on the front page"}
           subheadingDesktop={"Promote your product on the front page"}
-          link={'/promoted-listings'}
+          link={'/promote-listings'}
           buttonText={"Go Now"}
         />
       </div>
