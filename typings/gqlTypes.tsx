@@ -4042,7 +4042,7 @@ export type Product = {
   sellerLicense?: Maybe<User_Licenses>;
   /** Allow bidding on this product */
   allowBids?: Maybe<Scalars['Boolean']>;
-  listingType?: Maybe<Scalars['String']>;
+  listingType?: Maybe<ListingType>;
 };
 
 export type ProductCreateInput = {
@@ -4078,7 +4078,7 @@ export type ProductCreateInput = {
   magazineCapacity?: Maybe<Scalars['String']>;
   barrelLength?: Maybe<Scalars['String']>;
   allowBids?: Maybe<Scalars['Boolean']>;
-  listingType?: Maybe<Scalars['String']>;
+  listingType?: Maybe<ListingType>;
 };
 
 export type ProductEditInput = {
@@ -4116,7 +4116,7 @@ export type ProductEditInput = {
   magazineCapacity?: Maybe<Scalars['String']>;
   barrelLength?: Maybe<Scalars['String']>;
   allowBids?: Maybe<Scalars['Boolean']>;
-  listingType?: Maybe<Scalars['String']>;
+  listingType?: Maybe<ListingType>;
 };
 
 /** Critical information about a file within a product */
@@ -4189,7 +4189,7 @@ export type ProductPrivate = Product & {
   sellerLicense?: Maybe<User_Licenses>;
   /** Allow bidding on this product */
   allowBids?: Maybe<Scalars['Boolean']>;
-  listingType?: Maybe<Scalars['String']>;
+  listingType?: Maybe<ListingType>;
 };
 
 export type ProductProductVariantId = {
@@ -4230,7 +4230,7 @@ export type ProductPublic = Product & {
   sellerLicense?: Maybe<User_Licenses>;
   /** Allow bidding on this product */
   allowBids?: Maybe<Scalars['Boolean']>;
-  listingType?: Maybe<Scalars['String']>;
+  listingType?: Maybe<ListingType>;
 };
 
 export type ProductVariantEditInput = {

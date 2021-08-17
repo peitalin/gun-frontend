@@ -173,7 +173,7 @@ export const ProductFragment = gql`
     allowBids
     storeId
     soldOutStatus
-
+    listingType
     currentSnapshot {
       ...ProductSnapshotsFragment
     }

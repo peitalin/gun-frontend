@@ -220,6 +220,7 @@ const ProductEditPage = (props: ReactProps) => {
             magazineCapacity: values.magazineCapacity,
             barrelLength: values.barrelLength,
             sellerLicenseId: values.sellerLicenseId,
+            listingType: props.product?.listingType, // can't be edited
           }
         },
       }).finally(() => {
@@ -259,8 +260,9 @@ const ProductEditPage = (props: ReactProps) => {
     );
   }, [dzuPreviewItems])
 
-  console.log("formik.values", formik.values)
-  console.log("formik.errors", formik.errors)
+  // console.log("formik.values", formik.values)
+  // console.log("formik.errors", formik.errors)
+  // console.log("productEditInput", productEditInput)
 
   return (
     <PreventDragDropContainer>

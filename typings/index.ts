@@ -93,7 +93,7 @@ export interface ProductCreateEditCommonInput {
   sellerLicenseId: string;
   productId?: ID;
   currentVariants: ProductVariantInput[] | ProductVariantEditInput[];
-  listingType: ListingType
+  listingType?: ListingType
 }
 
 export interface ProductCreateInputFrontEnd extends ProductCreateEditCommonInput {
