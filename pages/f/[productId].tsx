@@ -101,7 +101,7 @@ const FeaturedProductPageSSR: NextPage<ReactProps> = (props) => {
     // by the admins (promotedSlot.productId is overridden by admins)
   }, [promotedSlot, isExpired])
 
-  console.log("promotedSlot", promotedSlot)
+  // console.log("promotedSlot", promotedSlot)
 
   return (
     <>

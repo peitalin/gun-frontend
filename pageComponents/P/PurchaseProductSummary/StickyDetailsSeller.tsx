@@ -79,7 +79,7 @@ const StickyDetailsSeller = (props: ReactProps) => {
               State:
             </Typography>
             {
-              product.listingType === ListingType.CLASSIFIED &&
+              product?.listingType === ListingType.CLASSIFIED &&
               <Typography className={classes.caption} variant="body1">
                 Phone Number:
               </Typography>

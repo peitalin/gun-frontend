@@ -21,7 +21,7 @@ const ProductHeading = (props: ReactProps) => {
       <div className={classes.greyBorder}>
         <Typography variant="subtitle1" className={classes.productTitle}>
           {
-            product.listingType === ListingType.CLASSIFIED
+            product?.listingType === ListingType.CLASSIFIED
             ? "Classified Ad"
             : "Escrow Checkout"
           }
