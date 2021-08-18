@@ -91,9 +91,9 @@ const splitQueryOrSubscriptions = ({
 const cacheOptions = {
   addTypename: true,
   possibleTypes: {
-    User: ["UserPrivate", "UserPublic", "BasicUser"],
-    Product: ["ProductPublic", "ProductPrivate"],
-    Store: ["StorePublic", "StorePrivate"],
+    User: ["UserPrivate", "UserPublic", "UserWithMobileNumber", "BasicUser"],
+    Product: ["ProductPublic", "ProductClassifiedAd", "ProductPrivate"],
+    Store: ["StorePublic", "StoreClassifiedAd", "StorePrivate"],
     Order: ["OrderPublic", "OrderDealer", "OrderAdmin"],
   },
   typePolicies: {

@@ -1,6 +1,6 @@
 import React from "react";
 // GraphQL
-import { Product, Product_Variants } from "typings/gqlTypes";
+import { Product, Product_Variants, ListingType } from "typings/gqlTypes";
 // Material UI
 import Typography from "@material-ui/core/Typography";
 // Utils Components
@@ -20,7 +20,11 @@ const ProductHeading = (props: ReactProps) => {
     <ErrorBounds className={classes.headingRoot}>
       <div className={classes.greyBorder}>
         <Typography variant="subtitle1" className={classes.productTitle}>
-          Escrow Checkout
+          {
+            product.listingType === ListingType.CLASSIFIED
+            ? "Classified Ad"
+            : "Escrow Checkout"
+          }
           {/* {product?.currentSnapshot?.title} */}
         </Typography>
       </div>

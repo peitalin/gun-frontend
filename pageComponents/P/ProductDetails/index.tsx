@@ -4,9 +4,6 @@ import clsx from "clsx";
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 // GraphQL
 import { Product, UserPrivate, Chat_Users } from "typings/gqlTypes";
-// Utils Components
-import ErrorBounds from "components/ErrorBounds";
-import Loading from "components/Loading";
 // Material UI
 import Typography from "@material-ui/core/Typography";
 import ProductModelMake from "pageComponents/P/ProductDetails/ProductModelMake";
@@ -34,11 +31,11 @@ const ProductDetails = (props: ReactProps) => {
     selectedOption,
   } = props;
 
-  const productVariant = selectedOption.value
-  const dispatch = useDispatch();
-  const user = useSelector<GrandReduxState, UserPrivate>(s =>
-    s.reduxLogin.user
-  )
+  // const productVariant = selectedOption.value
+  // const dispatch = useDispatch();
+  // const user = useSelector<GrandReduxState, UserPrivate>(s =>
+  //   s.reduxLogin.user
+  // )
 
   return (
     <div className={classes.productDetailsContainer}>

@@ -420,7 +420,7 @@ export const OrdersFragment = gql`
         ...UserLicenseFragment
       }
       # Only viewable by dealers
-      ...on UserForDealers {
+      ...on UserWithMobileNumber {
         firstName
         lastName
         email
@@ -472,7 +472,7 @@ export const OrdersFragment = gql`
           }
         }
         # Only viewable by dealers
-        ...on UserForDealers {
+        ...on UserWithMobileNumber {
           firstName
           lastName
           email
@@ -632,12 +632,41 @@ export const StorePublicFragment = gql`
           # avgApprovalTimeHrs
         }
       }
+      ...on UserWithMobileNumber {
+        defaultLicense {
+          ...UserLicenseFragment
+        }
+        licenses {
+          ...UserLicenseFragment
+        }
+        phoneNumber {
+          id
+          areaCode
+          countryCode
+          number
+        }
+        orderMetrics {
+          id
+          # itemsBought
+          # totalSpend
+          itemsSold
+          totalSales
+          avgDisposalTimeHrs
+          # avgApprovalTimeHrs
+        }
+      }
       ...on UserPrivate {
         defaultLicense {
           ...UserLicenseFragment
         }
         licenses {
           ...UserLicenseFragment
+        }
+        phoneNumber {
+          id
+          areaCode
+          countryCode
+          number
         }
         orderMetrics {
           id

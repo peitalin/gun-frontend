@@ -10,6 +10,7 @@ import {
   SoldOutStatus,
   Bids,
   Role,
+  ListingType,
 } from "typings/gqlTypes";
 import { SelectedVariantProps } from "../ProductId";
 // Redux
@@ -135,32 +136,37 @@ const PurchaseProductSummary: React.FC<ReactProps> = (props) => {
             smDown ? classes.buttonContainerMobile : classes.buttonContainer
           }>
             {
-              (props.product?.soldOutStatus !== SoldOutStatus.AVAILABLE)
+              (
+                props.product?.soldOutStatus !== SoldOutStatus.AVAILABLE
+              )
               ? <div className={clsx(classes.maxWidth, classes.visaContainer)}>
                   <span className={classes.soldOutStatusMessage}>
                     {soldOutStatusToDisplayMessage(props.product?.soldOutStatus)}
                   </span>
                 </div>
               : <div className={clsx(classes.maxWidth, classes.visaContainer)}>
-                  <VisaPurchaseProduct
-                    // disable on mobile
-                    user={user}
-                    // className={"fadeIn"}
-                    product={props.product}
-                    refetchProduct={props.refetchProduct}
-                    display={true}
-                    buttonHeight={xsDown ? '40px' : '40px'}
-                    selectedBid={props.selectedBid}
-                    initialPurchasePrice={initialPurchasePrice}
-                    internationalFeeDisplay={internationalFeeDisplay}
-                    setInternationalFeeDisplay={setInternationalFeeDisplay}
-                    handleOrderPostPurchase={
-                      (order) => {
-                        console.log("routing to /orders")
-                        router.push("/orders")
+                  {
+                    props.product?.listingType === ListingType.ESCROW_ONLY &&
+                    <VisaPurchaseProduct
+                      // disable on mobile
+                      user={user}
+                      // className={"fadeIn"}
+                      product={props.product}
+                      refetchProduct={props.refetchProduct}
+                      display={true}
+                      buttonHeight={xsDown ? '40px' : '40px'}
+                      selectedBid={props.selectedBid}
+                      initialPurchasePrice={initialPurchasePrice}
+                      internationalFeeDisplay={internationalFeeDisplay}
+                      setInternationalFeeDisplay={setInternationalFeeDisplay}
+                      handleOrderPostPurchase={
+                        (order) => {
+                          console.log("routing to /orders")
+                          router.push("/orders")
+                        }
                       }
-                    }
-                  />
+                    />
+                  }
                   {/* <div className={classes.coinbasePayContainer}>
                     <CoinbasePay
                       price={featuredVariant.price}

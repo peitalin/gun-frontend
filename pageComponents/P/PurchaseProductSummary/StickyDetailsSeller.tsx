@@ -7,7 +7,7 @@ import Link from "next/link";
 import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
 import { commonBorderStyle } from "../common";
 // Typings
-import { Product, UserPublic } from "typings/gqlTypes";
+import { Product, UserPublic, ListingType, ProductClassifiedAd } from "typings/gqlTypes";
 // Material UI
 import Typography from "@material-ui/core/Typography";
 import Avatar from '@material-ui/core/Avatar';
@@ -35,6 +35,10 @@ const StickyDetailsSeller = (props: ReactProps) => {
 
   const snackbar = useSnackbar();
 
+  const productClassifiedAd: ProductClassifiedAd = product?.listingType === ListingType.CLASSIFIED
+    ? product as any
+    : undefined
+
   const isDarkMode = useSelector<GrandReduxState, boolean>(s => {
     return s.reduxLogin.darkMode === 'dark'
   })
@@ -45,7 +49,7 @@ const StickyDetailsSeller = (props: ReactProps) => {
   };
 
   const sellerLicense = product?.sellerLicense
-  // console.log("seller, ", seller)
+  console.log("productClassifieidAd, ", productClassifiedAd)
 
   return (
     <div className={clsx(
@@ -74,9 +78,12 @@ const StickyDetailsSeller = (props: ReactProps) => {
             <Typography className={classes.caption} variant="body1">
               State:
             </Typography>
-            {/* <Typography className={classes.caption} variant="body1">
-              Expiry:
-            </Typography> */}
+            {
+              product.listingType === ListingType.CLASSIFIED &&
+              <Typography className={classes.caption} variant="body1">
+                Phone Number:
+              </Typography>
+            }
           </div>
 
           <div className={clsx(classes.flexCol)}>
@@ -92,6 +99,13 @@ const StickyDetailsSeller = (props: ReactProps) => {
                 {`${showDate(seller?.license?.licenseExpiry) ?? ""}`}
               </Typography>
             } */}
+
+            {
+              productClassifiedAd &&
+              <Typography className={classes.caption} variant="body1">
+                {`0${productClassifiedAd?.store?.user?.phoneNumber?.number}`}
+              </Typography>
+            }
             {
               // seller?.license?.verified &&
               true &&

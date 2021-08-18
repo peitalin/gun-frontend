@@ -3811,7 +3811,7 @@ export type OrderPublic = Order & {
 export type OrderSnapshot = {
   __typename?: 'OrderSnapshot';
   /** An object relationship */
-  adminApprover?: Maybe<UserForDealers>;
+  adminApprover?: Maybe<UserWithMobileNumber>;
   adminApproverId?: Maybe<Scalars['String']>;
   createdAt: Scalars['timestamp'];
   /** An object relationship */
@@ -4021,6 +4021,41 @@ export type Product = {
   category?: Maybe<Categories>;
   storeId: Scalars['ID'];
   store?: Maybe<Store>;
+  /** Whether or not the product owner has published it */
+  isPublished: Scalars['Boolean'];
+  /** Whether or not a platform admin has unpublished it */
+  isSuspended: Scalars['Boolean'];
+  /** Whether or not it has been deleted */
+  isDeleted: Scalars['Boolean'];
+  /** Whether or not a platform admin has hidden it from automatic lists */
+  isSoldElsewhere: Scalars['Boolean'];
+  /** Whether or not a platform admin has hidden it from search results */
+  isExcludedFromSearch: Scalars['Boolean'];
+  /** Whether or not it has been sold */
+  soldOutStatus: Scalars['String'];
+  /** All editable attributes in ProductSnapshots and ProductSnapshots.currentVariants */
+  currentSnapshotId: Scalars['String'];
+  currentSnapshot: Product_Snapshots;
+  featuredVariant: Product_Variants;
+  uniqueProductViews?: Maybe<Unique_Product_Views_Aggregate>;
+  sellerLicenseId?: Maybe<Scalars['String']>;
+  sellerLicense?: Maybe<User_Licenses>;
+  /** Allow bidding on this product */
+  allowBids?: Maybe<Scalars['Boolean']>;
+  listingType?: Maybe<ListingType>;
+};
+
+/** Classified Ad Product */
+export type ProductClassifiedAd = Product & {
+  __typename?: 'ProductClassifiedAd';
+  /** Metadata */
+  id: Scalars['ID'];
+  createdAt?: Maybe<Scalars['Date']>;
+  updatedAt?: Maybe<Scalars['Date']>;
+  categoryId: Scalars['ID'];
+  category?: Maybe<Categories>;
+  storeId: Scalars['ID'];
+  store?: Maybe<StoreClassifiedAd>;
   /** Whether or not the product owner has published it */
   isPublished: Scalars['Boolean'];
   /** Whether or not a platform admin has unpublished it */
@@ -6549,6 +6584,35 @@ export type StoreProductsForSaleConnectionArgs = {
   query?: Maybe<ConnectionQuery>;
 };
 
+/** Store for classified ads. Leaks Mobile phone number */
+export type StoreClassifiedAd = Store & {
+  __typename?: 'StoreClassifiedAd';
+  id: Scalars['ID'];
+  createdAt: Scalars['Date'];
+  updatedAt?: Maybe<Scalars['Date']>;
+  userId: Scalars['ID'];
+  user?: Maybe<UserWithMobileNumber>;
+  name?: Maybe<Scalars['String']>;
+  profileId?: Maybe<Scalars['ID']>;
+  profile?: Maybe<Image_Parents>;
+  coverId?: Maybe<Scalars['ID']>;
+  cover?: Maybe<Image_Parents>;
+  bio?: Maybe<Scalars['String']>;
+  website?: Maybe<Scalars['String']>;
+  /** Whether or not a platform admin has hidden it */
+  isSuspended: Scalars['Boolean'];
+  /** Whether or not it has been deleted */
+  isDeleted: Scalars['Boolean'];
+  productsForSaleConnection: ProductsConnection;
+};
+
+
+/** Store for classified ads. Leaks Mobile phone number */
+export type StoreClassifiedAdProductsForSaleConnectionArgs = {
+  searchTerm?: Maybe<Scalars['String']>;
+  query?: Maybe<ConnectionQuery>;
+};
+
 export type StoreMutationResponse = {
   __typename?: 'StoreMutationResponse';
   store: StorePrivate;
@@ -8220,24 +8284,6 @@ export enum UploadType {
   PRODUCT_FILE = 'PRODUCT_FILE'
 }
 
-export type UserForDealers = BasicUser & {
-  __typename?: 'UserForDealers';
-  id: Scalars['ID'];
-  createdAt?: Maybe<Scalars['Date']>;
-  firstName?: Maybe<Scalars['String']>;
-  lastName?: Maybe<Scalars['String']>;
-  email: Scalars['String'];
-  userRole: Role;
-  defaultLicenseId?: Maybe<Scalars['String']>;
-  defaultLicense?: Maybe<User_Licenses>;
-  licenses?: Maybe<Array<Maybe<User_Licenses>>>;
-  phoneNumberId?: Maybe<Scalars['String']>;
-  phoneNumber?: Maybe<Phone_Numbers>;
-  dealerId?: Maybe<Scalars['String']>;
-  dealer?: Maybe<Dealer>;
-  orderMetrics?: Maybe<UserOrderMetrics>;
-};
-
 export type UserMutationResponse = {
   __typename?: 'UserMutationResponse';
   user: UserPrivate;
@@ -8330,6 +8376,24 @@ export type UserPublic = BasicUser & {
   defaultLicenseId?: Maybe<Scalars['String']>;
   defaultLicense?: Maybe<User_Licenses>;
   licenses?: Maybe<Array<Maybe<User_Licenses>>>;
+  dealerId?: Maybe<Scalars['String']>;
+  dealer?: Maybe<Dealer>;
+  orderMetrics?: Maybe<UserOrderMetrics>;
+};
+
+export type UserWithMobileNumber = BasicUser & {
+  __typename?: 'UserWithMobileNumber';
+  id: Scalars['ID'];
+  createdAt?: Maybe<Scalars['Date']>;
+  firstName?: Maybe<Scalars['String']>;
+  lastName?: Maybe<Scalars['String']>;
+  email: Scalars['String'];
+  userRole: Role;
+  defaultLicenseId?: Maybe<Scalars['String']>;
+  defaultLicense?: Maybe<User_Licenses>;
+  licenses?: Maybe<Array<Maybe<User_Licenses>>>;
+  phoneNumberId?: Maybe<Scalars['String']>;
+  phoneNumber?: Maybe<Phone_Numbers>;
   dealerId?: Maybe<Scalars['String']>;
   dealer?: Maybe<Dealer>;
   orderMetrics?: Maybe<UserOrderMetrics>;
@@ -18989,6 +19053,7 @@ export type Saved_Searches = {
   createdAt: Scalars['timestamptz'];
   dealerState?: Maybe<Scalars['String']>;
   id: Scalars['String'];
+  isDeleted?: Maybe<Scalars['Boolean']>;
   make?: Maybe<Scalars['String']>;
   matchesNeeded?: Maybe<Scalars['Int']>;
   model?: Maybe<Scalars['String']>;
@@ -19044,6 +19109,7 @@ export type Saved_Searches_Bool_Exp = {
   createdAt?: Maybe<Timestamptz_Comparison_Exp>;
   dealerState?: Maybe<String_Comparison_Exp>;
   id?: Maybe<String_Comparison_Exp>;
+  isDeleted?: Maybe<Boolean_Comparison_Exp>;
   make?: Maybe<String_Comparison_Exp>;
   matchesNeeded?: Maybe<Int_Comparison_Exp>;
   model?: Maybe<String_Comparison_Exp>;
@@ -19070,6 +19136,7 @@ export type Saved_Searches_Insert_Input = {
   createdAt?: Maybe<Scalars['timestamptz']>;
   dealerState?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
+  isDeleted?: Maybe<Scalars['Boolean']>;
   make?: Maybe<Scalars['String']>;
   matchesNeeded?: Maybe<Scalars['Int']>;
   model?: Maybe<Scalars['String']>;
@@ -19138,6 +19205,7 @@ export type Saved_Searches_Order_By = {
   createdAt?: Maybe<Order_By>;
   dealerState?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
+  isDeleted?: Maybe<Order_By>;
   make?: Maybe<Order_By>;
   matchesNeeded?: Maybe<Order_By>;
   model?: Maybe<Order_By>;
@@ -19164,6 +19232,8 @@ export enum Saved_Searches_Select_Column {
   /** column name */
   ID = 'id',
   /** column name */
+  ISDELETED = 'isDeleted',
+  /** column name */
   MAKE = 'make',
   /** column name */
   MATCHESNEEDED = 'matchesNeeded',
@@ -19182,6 +19252,7 @@ export type Saved_Searches_Set_Input = {
   createdAt?: Maybe<Scalars['timestamptz']>;
   dealerState?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
+  isDeleted?: Maybe<Scalars['Boolean']>;
   make?: Maybe<Scalars['String']>;
   matchesNeeded?: Maybe<Scalars['Int']>;
   model?: Maybe<Scalars['String']>;
@@ -19225,6 +19296,8 @@ export enum Saved_Searches_Update_Column {
   DEALERSTATE = 'dealerState',
   /** column name */
   ID = 'id',
+  /** column name */
+  ISDELETED = 'isDeleted',
   /** column name */
   MAKE = 'make',
   /** column name */
