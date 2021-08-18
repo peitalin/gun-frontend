@@ -250,6 +250,9 @@ export const NotificationsMenu: React.FC<ReactProps> = (props) => {
                               <span className={classes.menuText2}>
                                 {`${model} ${caliber}`}
                               </span>
+                              <span className={classes.menuText4}>
+                                {`${printRelativeTime(createdAt)}`}
+                              </span>
                             </div>
                           </a>
                         </Link>
