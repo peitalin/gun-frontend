@@ -70,7 +70,9 @@ const SelectListingType = (props: ReactProps & FormikProps<FormikFields>) => {
           )}
             // onClick={() => setListingTypeHandler(ListingType.ESCROW_ONLY)}
           >
-            Escrow Only (disabled for now)
+            Escrow Only
+            <br/>
+            (disabled for now)
           </div>
 
           <div className={classes.validationContainer}>
