@@ -14,6 +14,7 @@ export const TrendFeedLayout: React.FC<ReactProps> = (props) => {
 
   const {
     classes,
+    disableNewFeed = false,
   } = props;
 
   return (
@@ -36,7 +37,11 @@ export const TrendFeedLayout: React.FC<ReactProps> = (props) => {
               textColor="primary"
             >
               <AntTab label="Hot" />
-              <AntTab label="New" />
+              {/* // only show New tab if setTab is provided */}
+              {
+                !disableNewFeed &&
+                <AntTab label="New" />
+              }
             </AntTabContainer>
           </div>
         </div>
@@ -77,6 +82,7 @@ export const TrendFeedLayout: React.FC<ReactProps> = (props) => {
 interface ReactProps extends WithStyles<typeof styles> {
   tab: number
   setTab(n: number): void
+  disableNewFeed?: boolean
   title: string
 }
 

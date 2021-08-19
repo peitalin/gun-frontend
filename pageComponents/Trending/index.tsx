@@ -40,7 +40,7 @@ export const Trending: React.FC<ReactProps> = (props) => {
         buttonText={"Get Started"}
       />
 
-      <TrendingToday limit={10}/>
+      <TrendingToday limit={15}/>
 
 
       <FeaturedProducts
@@ -58,7 +58,7 @@ export const Trending: React.FC<ReactProps> = (props) => {
         }
       />
 
-      <TrendingYesterday limit={10}/>
+      <TrendingYesterday limit={15}/>
 
       <div style={{
         marginTop: '1rem',
@@ -73,7 +73,7 @@ export const Trending: React.FC<ReactProps> = (props) => {
         />
       </div>
 
-      <TrendingThisWeek limit={10}/>
+      <TrendingThisWeek limit={20}/>
 
       <FeaturedProducts
         count={4}

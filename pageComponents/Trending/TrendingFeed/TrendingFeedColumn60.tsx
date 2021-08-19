@@ -131,7 +131,7 @@ const TrendFeedItems: React.FC<ReactProps> = (props) => {
 interface ReactProps extends WithStyles<typeof styles> {
   mobile: boolean
   newsItemsHot: NewsItemsConnection
-  newsItemsNew: NewsItemsConnection
+  newsItemsNew?: NewsItemsConnection
   currentNewsItem: NewsItem
   setCurrentNewsItem(n: NewsItem): void
   openModal: boolean

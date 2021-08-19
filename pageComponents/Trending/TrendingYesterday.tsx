@@ -42,16 +42,16 @@ export const TrendingYesterday: React.FC<ReactProps> = (props) => {
     cacheHotItems,
     setCacheHotItems
   ] = React.useState<NewsItemsConnection>(undefined)
-  const [
-    cacheNewItems,
-    setCacheNewItems
-  ] = React.useState<NewsItemsConnection>(undefined)
+  // const [
+  //   cacheNewItems,
+  //   setCacheNewItems
+  // ] = React.useState<NewsItemsConnection>(undefined)
 
   const client = useApolloClient()
 
   const limit = props.limit ?? 10
   const [offsetHot, setOffsetHot] = React.useState(0)
-  const [offsetNew, setOffsetNew] = React.useState(0)
+  // const [offsetNew, setOffsetNew] = React.useState(0)
 
   // image gallery index
   const [index, setIndex] = React.useState(0);
@@ -73,48 +73,50 @@ export const TrendingYesterday: React.FC<ReactProps> = (props) => {
     }, []),
   });
 
-  const [
-    getNewNewsItemsYesterday,
-    newItemsResponse,
-  ] = useLazyQuery<QData, QVar>(
-    GET_HOT_NEWS_ITEMS_YESTERDAY, {
-    variables: {
-      query: {
-        limit: limit,
-        offset: 0,
-      },
-      sortByDate: true,
-    },
-    onCompleted: React.useCallback(async(data) => {
-      setCacheNewItems(data?.getHotNewsItemsYesterday)
-    }, []),
-  });
+  // const [
+  //   getNewNewsItemsYesterday,
+  //   newItemsResponse,
+  // ] = useLazyQuery<QData, QVar>(
+  //   GET_HOT_NEWS_ITEMS_YESTERDAY, {
+  //   variables: {
+  //     query: {
+  //       limit: limit,
+  //       offset: 0,
+  //     },
+  //     sortByDate: true,
+  //   },
+  //   onCompleted: React.useCallback(async(data) => {
+  //     setCacheNewItems(data?.getHotNewsItemsYesterday)
+  //   }, []),
+  // });
 
   React.useEffect(() => {
-    if (tab === 0) {
-      getHotNewsItemsYesterday()
-    } else {
-      getNewNewsItemsYesterday()
-    }
+    getHotNewsItemsYesterday()
+    // if (tab === 0) {
+    //   getHotNewsItemsYesterday()
+    // } else {
+    //   getNewNewsItemsYesterday()
+    // }
   }, [tab])
 
   let newsItemsHot = hotItemsResponse?.data?.getHotNewsItemsYesterday
     ?? cacheHotItems
-  let newsItemsNew = newItemsResponse?.data?.getHotNewsItemsYesterday
-    ?? cacheNewItems
+  // let newsItemsNew = newItemsResponse?.data?.getHotNewsItemsYesterday
+  //   ?? cacheNewItems
 
   let fetchMoreHot = hotItemsResponse?.fetchMore
-  let fetchMoreNew = newItemsResponse?.fetchMore
+  // let fetchMoreNew = newItemsResponse?.fetchMore
 
   return (
     <TrendFeedLayout
       tab={tab}
       setTab={setTab}
       title={"Trending Yesterday"}
+      disableNewFeed={true}
     >
       <TrendingFeedColumn60
         newsItemsHot={newsItemsHot}
-        newsItemsNew={newsItemsNew}
+        // newsItemsNew={newsItemsNew}
         currentNewsItem={currentNewsItem}
         setCurrentNewsItem={setCurrentNewsItem}
         openModal={openModal}
@@ -153,32 +155,32 @@ export const TrendingYesterday: React.FC<ReactProps> = (props) => {
           setFetchMoreLoading(false)
           setOffsetHot(newOffset)
         }}
-        fetchMoreNew={async() => {
+        // fetchMoreNew={async() => {
 
-          let newOffset = offsetNew + limit
-          setFetchMoreLoading(true)
+        //   let newOffset = offsetNew + limit
+        //   setFetchMoreLoading(true)
 
-          let newData = await fetchMoreNew({
-            variables: {
-              query: {
-                limit: limit,
-                offset: newOffset,
-              },
-            }
-          })
-          // console.log("newData: ", newData)
-          setCacheNewItems(s => {
-            return {
-              ...s,
-              edges: [
-                ...(s?.edges ?? []),
-                ...newData.data?.getHotNewsItemsYesterday?.edges,
-              ]
-            }
-          })
-          setFetchMoreLoading(false)
-          setOffsetNew(newOffset)
-        }}
+        //   let newData = await fetchMoreNew({
+        //     variables: {
+        //       query: {
+        //         limit: limit,
+        //         offset: newOffset,
+        //       },
+        //     }
+        //   })
+        //   // console.log("newData: ", newData)
+        //   setCacheNewItems(s => {
+        //     return {
+        //       ...s,
+        //       edges: [
+        //         ...(s?.edges ?? []),
+        //         ...newData.data?.getHotNewsItemsYesterday?.edges,
+        //       ]
+        //     }
+        //   })
+        //   setFetchMoreLoading(false)
+        //   setOffsetNew(newOffset)
+        // }}
       />
       <NewsItemColumn40
         currentNewsItem={currentNewsItem}

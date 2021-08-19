@@ -41,15 +41,15 @@ export const TrendingLastWeek: React.FC<ReactProps> = (props) => {
     cacheHotItems,
     setCacheHotItems
   ] = React.useState<NewsItemsConnection>(undefined)
-  const [
-    cacheNewItems,
-    setCacheNewItems
-  ] = React.useState<NewsItemsConnection>(undefined)
+  // const [
+  //   cacheNewItems,
+  //   setCacheNewItems
+  // ] = React.useState<NewsItemsConnection>(undefined)
 
 
   const limit = props.limit ?? 10
   const [offsetHot, setOffsetHot] = React.useState(0)
-  const [offsetNew, setOffsetNew] = React.useState(0)
+  // const [offsetNew, setOffsetNew] = React.useState(0)
 
   // image gallery index
   const [index, setIndex] = React.useState(0);
@@ -71,46 +71,48 @@ export const TrendingLastWeek: React.FC<ReactProps> = (props) => {
     }, []),
   });
 
-  const [
-    getNewNewsItemsLastWeek,
-    newItemsResponse,
-  ] = useLazyQuery<QData, QVar>(
-    GET_HOT_NEWS_ITEMS_LAST_WEEK, {
-    variables: {
-      query: {
-        limit: limit,
-        offset: 0,
-      },
-      sortByDate: true,
-    },
-    onCompleted: React.useCallback(async(data) => {
-      setCacheNewItems(data?.getHotNewsItemsLastWeek)
-    }, []),
-  });
+  // const [
+  //   getNewNewsItemsLastWeek,
+  //   newItemsResponse,
+  // ] = useLazyQuery<QData, QVar>(
+  //   GET_HOT_NEWS_ITEMS_LAST_WEEK, {
+  //   variables: {
+  //     query: {
+  //       limit: limit,
+  //       offset: 0,
+  //     },
+  //     sortByDate: true,
+  //   },
+  //   onCompleted: React.useCallback(async(data) => {
+  //     setCacheNewItems(data?.getHotNewsItemsLastWeek)
+  //   }, []),
+  // });
 
   React.useEffect(() => {
-    if (tab === 0) {
-      getHotNewsItemsLastWeek()
-    } else {
-      getNewNewsItemsLastWeek()
-    }
+    getHotNewsItemsLastWeek()
+    // if (tab === 0) {
+    //   getHotNewsItemsLastWeek()
+    // } else {
+    //   getNewNewsItemsLastWeek()
+    // }
   }, [tab])
 
   let newsItemsHot = hotItemsResponse?.data?.getHotNewsItemsLastWeek ?? cacheHotItems
-  let newsItemsNew = newItemsResponse?.data?.getHotNewsItemsLastWeek ?? cacheNewItems
+  // let newsItemsNew = newItemsResponse?.data?.getHotNewsItemsLastWeek ?? cacheNewItems
 
-  let fetchMoreNew = newItemsResponse?.fetchMore
   let fetchMoreHot = hotItemsResponse?.fetchMore
+  // let fetchMoreNew = newItemsResponse?.fetchMore
 
   return (
     <TrendFeedLayout
       tab={tab}
       setTab={setTab}
       title={"Trending Last Week"}
+      disableNewFeed={true}
     >
       <TrendingFeedColumn60
         newsItemsHot={newsItemsHot}
-        newsItemsNew={newsItemsNew}
+        // newsItemsNew={newsItemsNew}
         currentNewsItem={currentNewsItem}
         setCurrentNewsItem={setCurrentNewsItem}
         openModal={openModal}
@@ -148,33 +150,33 @@ export const TrendingLastWeek: React.FC<ReactProps> = (props) => {
           setFetchMoreLoading(false)
           setOffsetHot(newOffset)
         }}
-        fetchMoreNew={async() => {
+        // fetchMoreNew={async() => {
 
-          let newOffset = offsetNew + limit
-          setFetchMoreLoading(true)
+        //   let newOffset = offsetNew + limit
+        //   setFetchMoreLoading(true)
 
-          // NOTE: apollo cache automatically merges fetchMore. See apollo.tsx
-          let newData = await fetchMoreNew({
-            variables: {
-              query: {
-                limit: limit,
-                offset: newOffset,
-              },
-            }
-          })
-          // console.log("newData: ", newData)
-          setCacheNewItems(s => {
-            return {
-              ...s,
-              edges: [
-                ...(s?.edges ?? []),
-                ...newData.data?.getHotNewsItemsLastWeek?.edges,
-              ]
-            }
-          })
-          setFetchMoreLoading(false)
-          setOffsetNew(newOffset)
-        }}
+        //   // NOTE: apollo cache automatically merges fetchMore. See apollo.tsx
+        //   let newData = await fetchMoreNew({
+        //     variables: {
+        //       query: {
+        //         limit: limit,
+        //         offset: newOffset,
+        //       },
+        //     }
+        //   })
+        //   // console.log("newData: ", newData)
+        //   setCacheNewItems(s => {
+        //     return {
+        //       ...s,
+        //       edges: [
+        //         ...(s?.edges ?? []),
+        //         ...newData.data?.getHotNewsItemsLastWeek?.edges,
+        //       ]
+        //     }
+        //   })
+        //   setFetchMoreLoading(false)
+        //   setOffsetNew(newOffset)
+        // }}
       />
       <NewsItemColumn40
         currentNewsItem={currentNewsItem}
