@@ -590,16 +590,6 @@ export const styles = (theme: Theme) => createStyles({
       duration: "200ms",
     }),
   },
-  testModeBorder: {
-    // border: `1px solid ${Colors.purple}`,
-    backgroundColor: Colors.lightYellow,
-    width: '100%',
-    display: 'flex',
-    flexDirection: "row",
-    justifyContent: "space-around",
-    alignItems: "center",
-    borderRadius: BorderRadius2x,
-  },
 })
 
 

@@ -594,7 +594,7 @@ const ProductCreatePage = (props: ReactProps) => {
 
             {
               formik.values?.listingType === ListingType.CLASSIFIED &&
-              user.userRole === Role.PLATFORM_ADMIN &&
+              user?.userRole === Role.PLATFORM_ADMIN &&
               <VisaPurchaseClassifiedAd
                 display={true}
                 priceInCents={100}

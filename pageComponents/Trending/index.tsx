@@ -40,7 +40,7 @@ export const Trending: React.FC<ReactProps> = (props) => {
         buttonText={"Get Started"}
       />
 
-      <TrendingToday limit={15}/>
+      <TrendingToday limit={20}/>
 
 
       <FeaturedProducts

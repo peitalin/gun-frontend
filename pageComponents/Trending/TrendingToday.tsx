@@ -38,7 +38,7 @@ export const TrendingToday: React.FC<ReactProps> = (props) => {
 
   const router = useRouter()
   let newsItemIdToFetch = router?.query?.item
-  console.log('newsItemIdToFetch:', newsItemIdToFetch)
+  // console.log('newsItemIdToFetch:', newsItemIdToFetch)
 
   const [fetchMoreLoading, setFetchMoreLoading] = React.useState(false)
 
