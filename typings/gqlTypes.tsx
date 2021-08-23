@@ -4051,6 +4051,7 @@ export type Product = {
   /** Allow bidding on this product */
   allowBids?: Maybe<Scalars['Boolean']>;
   listingType?: Maybe<ListingType>;
+  newsItem?: Maybe<NewsItem>;
 };
 
 /** Classified Ad Product */
@@ -4086,6 +4087,7 @@ export type ProductClassifiedAd = Product & {
   /** Allow bidding on this product */
   allowBids?: Maybe<Scalars['Boolean']>;
   listingType?: Maybe<ListingType>;
+  newsItem?: Maybe<NewsItem>;
 };
 
 export type ProductCreateInput = {
@@ -4225,6 +4227,7 @@ export type ProductPrivate = Product & {
   /** Allow bidding on this product */
   allowBids?: Maybe<Scalars['Boolean']>;
   listingType?: Maybe<ListingType>;
+  newsItem?: Maybe<NewsItem>;
 };
 
 export type ProductProductVariantId = {
@@ -4266,6 +4269,7 @@ export type ProductPublic = Product & {
   /** Allow bidding on this product */
   allowBids?: Maybe<Scalars['Boolean']>;
   listingType?: Maybe<ListingType>;
+  newsItem?: Maybe<NewsItem>;
 };
 
 export type ProductVariantEditInput = {
@@ -12963,6 +12967,13 @@ export type News_Items_Mutation_Response = {
   returning: Array<News_Items>;
 };
 
+/** input type for inserting object relation for remote table "news_items" */
+export type News_Items_Obj_Rel_Insert_Input = {
+  data: News_Items_Insert_Input;
+  /** on conflict condition */
+  on_conflict?: Maybe<News_Items_On_Conflict>;
+};
+
 /** on conflict condition type for table "news_items" */
 export type News_Items_On_Conflict = {
   constraint: News_Items_Constraint;
@@ -17136,6 +17147,8 @@ export type Products = {
   isSuspended: Scalars['Boolean'];
   lastPerformanceReview?: Maybe<Scalars['timestamptz']>;
   listingType?: Maybe<Scalars['String']>;
+  /** An object relationship */
+  newsItem?: Maybe<News_Items>;
   /** An array relationship */
   productVariants: Array<Product_Variants>;
   /** An aggregate relationship */
@@ -17233,6 +17246,7 @@ export type Products_Bool_Exp = {
   isSuspended?: Maybe<Boolean_Comparison_Exp>;
   lastPerformanceReview?: Maybe<Timestamptz_Comparison_Exp>;
   listingType?: Maybe<String_Comparison_Exp>;
+  newsItem?: Maybe<News_Items_Bool_Exp>;
   productVariants?: Maybe<Product_Variants_Bool_Exp>;
   promotedSlot?: Maybe<Promoted_Slots_Bool_Exp>;
   sellerLicense?: Maybe<User_Licenses_Bool_Exp>;
@@ -17265,6 +17279,7 @@ export type Products_Insert_Input = {
   isSuspended?: Maybe<Scalars['Boolean']>;
   lastPerformanceReview?: Maybe<Scalars['timestamptz']>;
   listingType?: Maybe<Scalars['String']>;
+  newsItem?: Maybe<News_Items_Obj_Rel_Insert_Input>;
   productVariants?: Maybe<Product_Variants_Arr_Rel_Insert_Input>;
   promotedSlot?: Maybe<Promoted_Slots_Obj_Rel_Insert_Input>;
   sellerLicense?: Maybe<User_Licenses_Obj_Rel_Insert_Input>;
@@ -17372,6 +17387,7 @@ export type Products_Order_By = {
   isSuspended?: Maybe<Order_By>;
   lastPerformanceReview?: Maybe<Order_By>;
   listingType?: Maybe<Order_By>;
+  newsItem?: Maybe<News_Items_Order_By>;
   productVariants_aggregate?: Maybe<Product_Variants_Aggregate_Order_By>;
   promotedSlot?: Maybe<Promoted_Slots_Order_By>;
   sellerLicense?: Maybe<User_Licenses_Order_By>;

@@ -9,6 +9,7 @@ import {
   Gradients,
   isThemeDark
 } from "layout/AppTheme";
+import { buttonWidthClassified } from "./ProductCreatePage/constants"
 
 
 export const styles = (theme: Theme) => createStyles({
@@ -196,6 +197,7 @@ export const styles = (theme: Theme) => createStyles({
     justifyContent: "space-between",
     flexWrap: "wrap",
     width: '100%',
+    maxWidth: buttonWidthClassified,
   },
   flexButtonSpacer: {
     marginBottom: '1rem',
@@ -216,7 +218,7 @@ export const styles = (theme: Theme) => createStyles({
   },
   policy: {
     width: 'calc(100% - 2rem)',
-    maxWidth: 350,
+    maxWidth: buttonWidthClassified,
     fontWeight: 400,
     marginBottom: '1rem',
     color: Colors.grey,
@@ -515,13 +517,13 @@ export const styles = (theme: Theme) => createStyles({
     maxWidth: 166,
     padding: '0.25rem',
     display: 'flex',
-    flexDirection: "row",
+    flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
     textAlign: "center",
     fontWeight: 600,
     color: isThemeDark(theme)
-      ? Colors.uniswapLighterGrey
+      ? Colors.uniswapLightestGrey
       : Colors.slateGreyLightestBlack,
     borderRadius: BorderRadius,
     backgroundColor: isThemeDark(theme)
@@ -541,6 +543,24 @@ export const styles = (theme: Theme) => createStyles({
     border: isThemeDark(theme)
       ? `2px solid transparent`
       : `2px solid transparent`,
+  },
+  listingTypeButtonLabel: {
+    display: 'flex',
+    flexDirection: "column",
+    justifyContent: "center",
+  },
+  listingLabelTop: {
+    marginBottom: '-0.25rem',
+    color: isThemeDark(theme)
+      ? Colors.uniswapLightestGrey
+      : Colors.slateGreyLightestBlack
+  },
+  listingLabelBottom: {
+    marginTop: '-0.25rem',
+    fontSize: '0.7rem',
+    color: isThemeDark(theme)
+      ? Colors.uniswapLighterGrey
+      : Colors.slateGreyDarkest
   },
   listingTypeButtonSelected: {
     transition: theme.transitions.create(['background-color', 'border', 'color'], {
@@ -578,13 +598,14 @@ export const styles = (theme: Theme) => createStyles({
     },
   },
   textListing: {
-    maxWidth: 350,
+    maxWidth: buttonWidthClassified,
     fontSize: '0.9rem',
+    height: 54,
     color: isThemeDark(theme)
       ? Colors.uniswapLighterGrey
       : Colors.slateGreyBlack,
     lineHeight: '1.125rem',
-    marginBottom: "0.5rem",
+    marginBottom: "-0.5rem",
     transition: theme.transitions.create(['color'], {
       easing: theme.transitions.easing.easeInOut,
       duration: "200ms",

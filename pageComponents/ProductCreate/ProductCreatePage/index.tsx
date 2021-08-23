@@ -130,7 +130,6 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 import ProductCreateStepper from "./ProductCreateStepper";
 import VisaPurchaseClassifiedAd from "./VisaPurchaseClassifiedAd";
 
-
 // NOTES:
 // <Button type="submit".../> must be inside <form onSubmit={onSubmit} ... />
 // <ButtonLoading is a wrapper around <Button type="submit"...>

@@ -12,6 +12,7 @@ import Typography from "@material-ui/core/Typography";
 import ErrorBounds from "components/ErrorBounds";
 // Validation
 import { FormikErrors } from 'formik';
+import { buttonWidthClassified } from "./constants";
 
 
 
@@ -31,7 +32,7 @@ const ProductCreateButton = (props: ReactProps) => {
       <ButtonLoading
         type="submit"
         style={{
-          width: props.width || 350,
+          width: props.width || '100%',
           height: 44,
           borderRadius: 8,
         }}
@@ -69,7 +70,7 @@ const styles = (theme: Theme) => createStyles({
   createProductButtonContainer: {
     display: "flex",
     flexDirection: "column",
-    width: 350,
+    width: buttonWidthClassified,
   },
   flexButtonItem: {
     marginTop: '0.25rem',

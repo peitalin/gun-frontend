@@ -43,6 +43,7 @@ import { useQuery, useMutation } from "@apollo/client";
 // Snackbar
 import { useSnackbar } from "notistack";
 import { useTheme } from '@material-ui/core';
+import { buttonWidthClassified } from "../constants";
 
 
 const VisaPurchaseProduct = (props: ReactProps) => {
@@ -245,7 +246,7 @@ const VisaPurchaseProduct = (props: ReactProps) => {
             color="secondary"
             className={classes.buyButton}
             style={{
-              maxWidth: 350,
+              maxWidth: buttonWidthClassified,
               height: props.buttonHeight ? props.buttonHeight : "44px",
             }}
           >
@@ -295,7 +296,7 @@ const styles = (theme: Theme) => createStyles({
     borderRadius: BorderRadius,
   },
   formContainer: {
-    width: 350,
+    width: buttonWidthClassified,
     // height: 90,
   },
   creditCardContainer: {

@@ -42,9 +42,8 @@ const SelectListingType = (props: ReactProps & FormikProps<FormikFields>) => {
           fprops.values?.listingType === ListingType.CLASSIFIED
           ? <div className={classes.textListing}>
               {/* Fee is $10 per listing */}
-              Free until I finish building a checkout.
-              <br/>
-              Price will be $10 after that.
+              Classified Ads are free until I finish building a checkout.
+              Prices will be $10 after that.
             </div>
           : <div className={classes.textListing}>
               Escrow listings have no fees up-front.
@@ -62,10 +61,13 @@ const SelectListingType = (props: ReactProps & FormikProps<FormikFields>) => {
           className={clsx(classes.formGroup, classes.marginTop1)}
         >
           <Button className={clsx(
-            classes.listingTypeButton,
-            fprops.values?.listingType === ListingType.CLASSIFIED
-              && classes.listingTypeButtonSelected,
-          )}
+              classes.listingTypeButton,
+              fprops.values?.listingType === ListingType.CLASSIFIED
+                && classes.listingTypeButtonSelected,
+            )}
+            classes={{
+              label: classes.listingTypeButtonLabel,
+            }}
             onClick={() => setListingTypeHandler(ListingType.CLASSIFIED)}
           >
             Classified Ad
@@ -84,16 +86,22 @@ const SelectListingType = (props: ReactProps & FormikProps<FormikFields>) => {
           <div className={classes.listingSpacing}/>
 
           <Button className={clsx(
-            classes.listingTypeButton,
-            // classes.listingTypeButtonDisabled,
-            fprops.values?.listingType === ListingType.ESCROW_ONLY
-              && classes.listingTypeButtonSelected,
-          )}
+              classes.listingTypeButton,
+              // classes.listingTypeButtonDisabled,
+              fprops.values?.listingType === ListingType.ESCROW_ONLY
+                && classes.listingTypeButtonSelected,
+            )}
+            classes={{
+              label: classes.listingTypeButtonLabel,
+            }}
             onClick={() => setListingTypeHandler(ListingType.ESCROW_ONLY)}
           >
-            Escrow Listing
-            <br/>
-            (Beta Testing)
+            <span className={classes.listingLabelTop}>
+              Escrow Listing
+            </span>
+            <span className={classes.listingLabelBottom}>
+              (Beta Testing)
+            </span>
           </Button>
 
           <div className={classes.validationContainer}>

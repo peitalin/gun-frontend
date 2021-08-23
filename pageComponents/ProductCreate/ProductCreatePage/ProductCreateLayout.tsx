@@ -12,18 +12,12 @@ import {
   BorderRadius2x,
   BorderRadius,
 } from "layout/AppTheme";
-// Styles
-// Icons
-import ClearIcon from "@material-ui/icons/Clear";
-import IconButton from "@material-ui/core/IconButton";
 
 // Product Preview Card
 import ProductCardResponsive from "components/ProductCardResponsive";
 import PreventDragDropContainer from "./PreventDragDropContainer";
 import Tooltip from '@material-ui/core/Tooltip';
-import Typography from "@material-ui/core/Typography";
 import {
-  ID,
   Product,
   ListingType,
 } from "typings/gqlTypes";

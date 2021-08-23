@@ -2,11 +2,7 @@ import React from "react";
 import clsx from "clsx";
 // Styles
 import { withStyles, WithStyles, createStyles, Theme, useTheme } from "@material-ui/core/styles";
-// MUI
-import Typography from "@material-ui/core/Typography";
-;
 // Product Preview Page
-import Tooltip from '@material-ui/core/Tooltip';
 import ButtonLoading from 'components/ButtonLoading';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
