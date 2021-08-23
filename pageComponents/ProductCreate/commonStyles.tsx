@@ -1,4 +1,4 @@
-import { createStyles, Theme, fade } from "@material-ui/core/styles";
+import { createStyles, Theme, fade, lighten } from "@material-ui/core/styles";
 import {
   fontFam,
   Colors,
@@ -195,7 +195,7 @@ export const styles = (theme: Theme) => createStyles({
     flexDirection: "row",
     justifyContent: "space-between",
     flexWrap: "wrap",
-    width: 'calc(100% - 2rem)',
+    width: '100%',
   },
   flexButtonSpacer: {
     marginBottom: '1rem',
@@ -212,11 +212,11 @@ export const styles = (theme: Theme) => createStyles({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    marginTop: '2rem',
     width: '100%',
   },
   policy: {
     width: 'calc(100% - 2rem)',
+    maxWidth: 350,
     fontWeight: 400,
     marginBottom: '1rem',
     color: Colors.grey,
@@ -455,6 +455,10 @@ export const styles = (theme: Theme) => createStyles({
     marginTop: '1rem',
     width: "100%",
   },
+  marginTop2: {
+    marginTop: '2rem',
+    width: "100%",
+  },
   printFormikValues: {
     color: Colors.cream,
     "&:hover": {
@@ -503,11 +507,13 @@ export const styles = (theme: Theme) => createStyles({
     justifyContent: "space-around",
     alignItems: "center",
   },
+  listingSpacing: {
+    width: '1rem',
+  },
   listingTypeButton: {
-    flexBasis: '35%',
-    padding: '0.5rem',
-    margin: '0.5rem',
-    marginTop: '2rem',
+    flexBasis: 'calc(50% - 0.5rem)',
+    maxWidth: 166,
+    padding: '0.25rem',
     display: 'flex',
     flexDirection: "row",
     justifyContent: "center",
@@ -517,10 +523,11 @@ export const styles = (theme: Theme) => createStyles({
     color: isThemeDark(theme)
       ? Colors.uniswapLighterGrey
       : Colors.slateGreyLightestBlack,
-    borderRadius: BorderRadius4x,
+    borderRadius: BorderRadius,
     backgroundColor: isThemeDark(theme)
       ? Colors.uniswapLightNavy
       : Colors.slateGrey,
+    boxShadow: BoxShadows.shadow1.boxShadow,
     transition: theme.transitions.create(['background-color', 'border', 'color'], {
       easing: theme.transitions.easing.easeInOut,
       duration: "200ms",
@@ -529,35 +536,37 @@ export const styles = (theme: Theme) => createStyles({
       cursor: "pointer",
       backgroundColor: isThemeDark(theme)
         ? Colors.uniswapNavy
-        : Colors.slateGreyDarker,
+        : Colors.slateGreyDark,
     },
     border: isThemeDark(theme)
-      ? `2px solid ${Colors.uniswapLighterGrey}`
-      : `2px solid ${Colors.slateGreyDark}`,
+      ? `2px solid transparent`
+      : `2px solid transparent`,
   },
   listingTypeButtonSelected: {
     transition: theme.transitions.create(['background-color', 'border', 'color'], {
       easing: theme.transitions.easing.easeInOut,
       duration: "200ms",
     }),
+    boxShadow: BoxShadows.shadow1.boxShadow,
     color: isThemeDark(theme)
       ? Colors.purple
-      : Colors.ultramarineBlueDark,
+      : Colors.purple,
     border: isThemeDark(theme)
       ? `2px solid ${Colors.purple}`
-      : `2px solid ${Colors.ultramarineBlueDark}`,
+      : `2px solid ${Colors.purple}`,
   },
   listingTypeButtonDisabled: {
     transition: theme.transitions.create(['background-color', 'border', 'color'], {
       easing: theme.transitions.easing.easeInOut,
       duration: "200ms",
     }),
+    boxShadow: BoxShadows.shadow1.boxShadow,
     color: isThemeDark(theme)
       ? Colors.uniswapLighterGrey
-      : Colors.slateGreyLightestBlack,
+      : Colors.slateGreyDarkest,
     border: isThemeDark(theme)
-      ? `2px solid ${Colors.uniswapLighterGrey}`
-      : `2px solid ${Colors.slateGreyDark}`,
+      ? `2px solid transparent`
+      : `2px solid transparent`,
     backgroundColor: isThemeDark(theme)
       ? Colors.uniswapLightNavy
       : Colors.slateGrey,
@@ -567,6 +576,29 @@ export const styles = (theme: Theme) => createStyles({
         ? Colors.uniswapLightNavy
         : Colors.slateGrey,
     },
+  },
+  textListing: {
+    maxWidth: 350,
+    fontSize: '0.9rem',
+    color: isThemeDark(theme)
+      ? Colors.uniswapLighterGrey
+      : Colors.slateGreyBlack,
+    lineHeight: '1.125rem',
+    marginBottom: "0.5rem",
+    transition: theme.transitions.create(['color'], {
+      easing: theme.transitions.easing.easeInOut,
+      duration: "200ms",
+    }),
+  },
+  testModeBorder: {
+    // border: `1px solid ${Colors.purple}`,
+    backgroundColor: Colors.lightYellow,
+    width: '100%',
+    display: 'flex',
+    flexDirection: "row",
+    justifyContent: "space-around",
+    alignItems: "center",
+    borderRadius: BorderRadius2x,
   },
 })
 

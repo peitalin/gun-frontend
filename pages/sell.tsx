@@ -4,6 +4,7 @@ import clsx from "clsx";
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/styles";
 // Components
 import ProductCreatePage from "pageComponents/ProductCreate";
+import PageWithStripe from "layout/PageWithStripe";
 // Meta headers
 import MetaHeadersPage from "layout/MetaHeadersPage";
 
@@ -24,7 +25,9 @@ const SellPageSSR: React.FC<ProductCreateProps> = (props) => {
           Upload and edit unlimited product listings for free.
         `}
       />
-      <ProductCreatePage />
+      <PageWithStripe>
+        <ProductCreatePage />
+      </PageWithStripe>
     </>
   )
 }

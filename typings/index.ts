@@ -82,7 +82,7 @@ export interface ProductCreateEditCommonInput {
   model: string;
   ammoType?: string;
   actionType?: string;
-  caliber?: string;
+  caliber: string;
   serialNumber: string;
   location: string;
   magazineCapacity?: string;

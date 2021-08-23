@@ -8,9 +8,7 @@ import { styles } from './commonStyles';
 // Material UI
 import Typography from "@material-ui/core/Typography";
 import FormGroup from '@material-ui/core/FormGroup';
-import Loading from "components/Loading";
-import ErrorDisplay from "components/ErrorDisplay";
-import ErrorBounds from 'components/ErrorBounds';
+import Button from "@material-ui/core/Button";
 import ValidationErrorMsg from "components/Fields/ValidationErrorMsg";
 import { Formik, Form, FormikProps, ErrorMessage } from 'formik';
 
@@ -38,11 +36,32 @@ const SelectListingType = (props: ReactProps & FormikProps<FormikFields>) => {
       <Typography color={"primary"} variant="subtitle1">
         Listing Type
       </Typography>
+
+      <div className={clsx(classes.listingTypeContainer, classes.marginTop2)}>
+        {
+          fprops.values?.listingType === ListingType.CLASSIFIED
+          ? <div className={classes.textListing}>
+              {/* Fee is $10 per listing */}
+              Free until I finish building a checkout.
+              <br/>
+              Price will be $10 after that.
+            </div>
+          : <div className={classes.textListing}>
+              Escrow listings have no fees up-front.
+              A 3.5% fee applies after the gun is bought
+              and disposed to the dealer.
+            </div>
+        }
+      </div>
+
+
       <div className={clsx(classes.listingTypeContainer)}>
+
+
         <FormGroup row
           className={clsx(classes.formGroup, classes.marginTop1)}
         >
-          <div className={clsx(
+          <Button className={clsx(
             classes.listingTypeButton,
             fprops.values?.listingType === ListingType.CLASSIFIED
               && classes.listingTypeButtonSelected,
@@ -50,7 +69,7 @@ const SelectListingType = (props: ReactProps & FormikProps<FormikFields>) => {
             onClick={() => setListingTypeHandler(ListingType.CLASSIFIED)}
           >
             Classified Ad
-          </div>
+          </Button>
 
           {/* <div className={clsx(
             classes.listingTypeButton,
@@ -62,18 +81,20 @@ const SelectListingType = (props: ReactProps & FormikProps<FormikFields>) => {
             Classified Ad with Escrow
           </div> */}
 
-          <div className={clsx(
+          <div className={classes.listingSpacing}/>
+
+          <Button className={clsx(
             classes.listingTypeButton,
-            classes.listingTypeButtonDisabled,
-            // fprops.values?.listingType === ListingType.ESCROW_ONLY
-            //   && classes.listingTypeButtonSelected,
+            // classes.listingTypeButtonDisabled,
+            fprops.values?.listingType === ListingType.ESCROW_ONLY
+              && classes.listingTypeButtonSelected,
           )}
-            // onClick={() => setListingTypeHandler(ListingType.ESCROW_ONLY)}
+            onClick={() => setListingTypeHandler(ListingType.ESCROW_ONLY)}
           >
-            Escrow Only
+            Escrow Listing
             <br/>
-            (disabled for now)
-          </div>
+            (Beta Testing)
+          </Button>
 
           <div className={classes.validationContainer}>
             <ValidationErrorMsg

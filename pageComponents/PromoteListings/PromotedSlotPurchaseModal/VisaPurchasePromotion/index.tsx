@@ -3,7 +3,7 @@ import React from 'react';
 import clsx from "clsx";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme, fade } from "@material-ui/core/styles";
-import { Colors, BorderRadius, BorderRadius3x, Gradients } from "layout/AppTheme";
+import { Colors, BorderRadius, BorderRadius3x, Gradients, isThemeDark } from "layout/AppTheme";
 // Stripe
 import {
   CardElement,
@@ -47,6 +47,7 @@ import { useSnackbar } from "notistack";
 import {
   PURCHASE_PROMOTION
 } from "queries/promoted_lists-mutations";
+import { useTheme } from '@material-ui/core';
 
 
 const VisaPurchaseProduct = (props: ReactProps) => {
@@ -54,12 +55,13 @@ const VisaPurchaseProduct = (props: ReactProps) => {
   const stripe: Stripe = useStripe();
   const elements = useElements();
   const snackbar = useSnackbar();
+  const theme = useTheme()
+  const isDarkMode = isThemeDark(theme)
 
   const { classes, disableButton } = props;
 
   const [internationalFee, setInternationalFee] = React.useState(0)
   const product = props.product;
-  const featuredVariant = props.product?.featuredVariant;
   const purchasePrice = props.selectedBid?.offerPrice
     || props.promotedSlot?.reservePrice
 
@@ -68,13 +70,11 @@ const VisaPurchaseProduct = (props: ReactProps) => {
   const [loading, setLoading] = React.useState(false);
 
   interface ReduxState {
-    isDarkMode: boolean;
     buyer: UserPrivate
   }
 
-  const { isDarkMode, buyer } = useSelector<GrandReduxState, ReduxState>(s => {
+  const { buyer } = useSelector<GrandReduxState, ReduxState>(s => {
     return {
-      isDarkMode: s.reduxLogin.darkMode === 'dark',
       buyer: s.reduxLogin.user,
     }
   })
@@ -142,6 +142,7 @@ const VisaPurchaseProduct = (props: ReactProps) => {
     })
     if (paymentMethod.card?.country !== "AU") {
       console.log("non-australian card: ", paymentMethod.card?.country)
+      // %2.95 Stripe international fee, an extra %1.15 on top of base $1.75 fee
       setInternationalFee(Math.ceil(0.0115 * purchasePrice))
     } else {
       setInternationalFee(0)
@@ -341,13 +342,6 @@ interface MData1 {
   purchasePromotion: PromotionPurchaseMutationResponse
 }
 
-interface Mdata3 {
-  cancelPaymentIntentFailure: BlankMutationResponse;
-}
-interface Mvar3 {
-  paymentIntentId: string
-}
-
 
 
 /////////////// Styles /////////////
@@ -374,24 +368,6 @@ const styles = (theme: Theme) => createStyles({
     padding: "0.5rem",
     borderRadius: BorderRadius,
   },
-  receiptLink: {
-  },
-  stripeElement: {
-    boxSizing: 'border-box',
-    height: '40px',
-    padding: '10px 12px',
-    border: '1px solid transparent',
-    borderRadius: BorderRadius,
-    // backgroundColor: 'white',
-    boxShadow: '0 1px 3px 0 #e6ebf1',
-    transition: 'box-shadow 150ms ease',
-    "&:focus": {
-      boxShadow: '0 1px 3px 0 #cfd7df',
-    },
-    "--invalid": {
-      borderColor: "#fa755a",
-    }
-  },
   flexCol: {
     display: 'flex',
     flexDirection: 'column',
@@ -406,48 +382,12 @@ const styles = (theme: Theme) => createStyles({
     alignItems: 'center',
     textAlign: 'center',
   },
-  checkboxContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: "flex-end",
-    width: '100%',
-    margin: 0,
-  },
-  checkboxText: {
-    fontSize: '0.875rem',
-    fontWeight: 400,
-    color: Colors.darkGrey,
-  },
   buyButton: {
     width: "100%",
     borderRadius: BorderRadius,
   },
-  emailField: {
-    flexGrow: 1,
-    minWidth: 100,
-  },
-  subtitle2: {
-    fontWeight: 500,
-    fontSize: '0.8rem',
-    margin: '0.25rem 0rem',
-  },
-  dropdownContainer: {
-    marginBottom: '0.5rem',
-  },
   marginTop: {
     marginTop: '1rem',
-  },
-  link: {
-    color: Colors.blue,
-    fontSize: "0.9rem",
-    cursor: 'pointer',
-    "&:hover": {
-      color: fade(Colors.blue, 0.9),
-    },
-  },
-  bidButtonContainer: {
-    width: "100%",
-    marginTop: "0.5rem",
   },
 });
 

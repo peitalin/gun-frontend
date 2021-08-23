@@ -252,7 +252,7 @@ const RenderInstructions = (props: ReactProps) => {
         <br/>
 
         <div className={classes.title}>
-          Escrow Only (beta testing)
+          Escrow Listing (beta testing)
         </div>
         <div className={classes.text}>
           List a product with escrow protection on transactions.
@@ -280,7 +280,8 @@ const RenderInstructions = (props: ReactProps) => {
           Some buyers will only buy listings with payment protection.
         </div>
         <div className={classes.text}>
-          As a reminder <b>do not share any personal information</b> such as your name, contact number or email as per our terms of services.
+          <b>Do not share any personal information</b> such as your name,
+          contact number or email as per our terms of services.
           This may result in suspension of the product listing.
         </div>
       </div>
@@ -360,7 +361,7 @@ const styles = (theme: Theme) => createStyles({
     }),
     color: isThemeDark(theme)
       ? Colors.purple
-      : Colors.ultramarineBlueLight,
+      : Colors.purple,
   },
   link: {
     marginLeft: '0.25rem',

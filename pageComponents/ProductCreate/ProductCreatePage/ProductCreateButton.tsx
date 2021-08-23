@@ -31,8 +31,9 @@ const ProductCreateButton = (props: ReactProps) => {
       <ButtonLoading
         type="submit"
         style={{
-          width: props.width || '150px',
-          height: 40,
+          width: props.width || 350,
+          height: 44,
+          borderRadius: 8,
         }}
         variant={postInstantly ? "contained" : "outlined"}
         color={postInstantly ? "secondary" : "primary"}
@@ -45,7 +46,7 @@ const ProductCreateButton = (props: ReactProps) => {
         onClick={props.onClick}
         className={props.classes.button}
       >
-        { postInstantly ? 'Publish Now' : 'Save Draft' }
+        { props.title ?? "Publish Now"}
       </ButtonLoading>
     </ErrorBounds>
   )
@@ -57,6 +58,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   disabled: boolean;
   loading?: boolean;
   errors: FormikErrors<ProductCreateInput>
+  title?: string;
   type?: string;
   width?: number | string;
   // onClick(e: React.FormEvent<HTMLFormElement>): void;
@@ -67,15 +69,18 @@ const styles = (theme: Theme) => createStyles({
   createProductButtonContainer: {
     display: "flex",
     flexDirection: "column",
+    width: 350,
   },
   flexButtonItem: {
+    marginTop: '0.25rem',
     marginBottom: '1rem',
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'flex-start',
+    justifyContent: 'center',
+    // alignItems: 'flex-end',
+    alignItems: 'flex-start',
     flexGrow: 1,
-    flexBasis: '30%',
-    maxWidth: '150px',
+    flexBasis: '50%',
   },
   button: {
     margin: 0,

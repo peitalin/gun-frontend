@@ -200,7 +200,7 @@ export const NotificationsMenu: React.FC<ReactProps> = (props) => {
               let featuredPreviewItem = hit?.product?.featuredVariant?.previewItems?.[0]
                 ?? hit?.externalProduct?.currentExternalProductSnapshot?.previewItems?.[0]
 
-              console.log('hit: ', hit?.seen)
+              // console.log('hit: ', hit?.seen)
 
               return (
                 <div className={classes.menuItemOuter} key={hit?.id ?? i}>

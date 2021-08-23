@@ -138,6 +138,13 @@ export enum ChatRoomStatus {
   COMPLETED = 'COMPLETED'
 }
 
+export type ClassifiedAdPaymentInput = {
+  total: Scalars['Int'];
+  internationalFee: Scalars['Int'];
+  stripeCreatePaymentData: Scalars['String'];
+  currency: Scalars['String'];
+};
+
 export type CoinbaseExchangeRates = {
   __typename?: 'CoinbaseExchangeRates';
   currency?: Maybe<Scalars['String']>;
@@ -1093,7 +1100,7 @@ export type Mutation = {
    *
    * AccessRule – LOGGED_IN
    */
-  createProduct: ProductMutationResponse;
+  createProduct: ProductListingMutationResponse;
   /**
    * Create a product for the logged-in user's store.
    *
@@ -1109,13 +1116,13 @@ export type Mutation = {
    *
    * AccessRule – OWNER
    */
-  deleteProduct?: Maybe<ProductsMutationResponse>;
+  deleteProduct?: Maybe<ProductMutationResponse>;
   /**
    * Delete a specific product.
    *
    * AccessRule – PLATFORM_ADMIN
    */
-  adminDeleteProduct?: Maybe<ProductsMutationResponse>;
+  adminDeleteProduct?: Maybe<ProductMutationResponse>;
   /**
    * Suspend a user account.
    * This will have a number of side effects:
@@ -3150,7 +3157,8 @@ export type MutationAdminDeleteStoreArgs = {
 
 
 export type MutationCreateProductArgs = {
-  productCreateInput?: Maybe<ProductCreateInput>;
+  productCreateInput: ProductCreateInput;
+  classifiedAdPaymentInput?: Maybe<ClassifiedAdPaymentInput>;
 };
 
 
@@ -4086,26 +4094,20 @@ export type ProductCreateInput = {
    * Gun has to match the right firearm license when the seller disposese the gun
    */
   sellerLicenseId: Scalars['ID'];
-  /** ID of the category to file the product under. */
+  /**  ID of the category to file the product under.   */
   categoryId: Scalars['ID'];
-  /**
-   * The set of available variants.
-   * Cannot be empty.
-   * TODO: max number
-   */
+  /**  The set of available variants.   */
   currentVariants: Array<ProductVariantInput>;
-  /** Whether or not to put the item up for sale. */
+  /**  Whether or not to put the item up for sale.   */
   isPublished: Scalars['Boolean'];
-  /** Short description of the product #TODO: regex */
   title: Scalars['String'];
-  /** A whole bunch of words to describe the product #TODO: regex */
   description: Scalars['String'];
   condition: Scalars['String'];
-  make?: Maybe<Scalars['String']>;
-  model?: Maybe<Scalars['String']>;
+  make: Scalars['String'];
+  model: Scalars['String'];
   ammoType?: Maybe<Scalars['String']>;
   actionType?: Maybe<Scalars['String']>;
-  caliber?: Maybe<Scalars['String']>;
+  caliber: Scalars['String'];
   serialNumber: Scalars['String'];
   location: Scalars['String'];
   dealerId: Scalars['String'];
@@ -4117,26 +4119,16 @@ export type ProductCreateInput = {
 };
 
 export type ProductEditInput = {
-  /** Identifier of the product to edit. */
   productId: Scalars['ID'];
   /**
    * ID of the seller's firearm license to file the product under.
    * Gun has to match the right firearm license when the seller disposese the gun
    */
   sellerLicenseId: Scalars['ID'];
-  /** ID of the category to file the product under. */
   categoryId: Scalars['ID'];
-  /**
-   * The set of available variants.
-   * Will be sorted as per the provided order, and cannot be empty.
-   * TODO: max number
-   */
   currentVariants: Array<ProductVariantEditInput>;
-  /** Whether or not to put the item up for sale. */
   isPublished: Scalars['Boolean'];
-  /** Short description of the product #TODO: regex */
   title: Scalars['String'];
-  /** A whole bunch of words to describe the product #TODO: regex */
   description: Scalars['String'];
   condition: Scalars['String'];
   make: Scalars['String'];
@@ -4170,6 +4162,14 @@ export type ProductFileDownloadLink = {
   productFileId: Scalars['ID'];
   url: Scalars['String'];
   expiresAt: Scalars['Date'];
+};
+
+export type ProductListingMutationResponse = {
+  __typename?: 'ProductListingMutationResponse';
+  product: Product;
+  stripePaymentIntent?: Maybe<Scalars['String']>;
+  classifiedAdPurchase?: Maybe<Classified_Ad_Purchases>;
+  newsItemId?: Maybe<Scalars['String']>;
 };
 
 export type ProductMutationResponse = {
@@ -4269,22 +4269,18 @@ export type ProductPublic = Product & {
 };
 
 export type ProductVariantEditInput = {
-  /** When the variant already existed, provide the ID, otherwise provide null because it's new */
+  /** When the variant already exists, provide ID, otherwise provide null because it's new */
   variantId?: Maybe<Scalars['ID']>;
-  /** What to call the product variant #TODO: regex */
   variantName: Scalars['String'];
-  /** A whole bunch of words to describe the product variant #TODO: regex */
   variantDescription: Scalars['String'];
-  /** Whether the variant is the default variant */
   isDefault: Scalars['Boolean'];
-  /** Price (now) for the product variant */
+  /**  Price (now) for the product variant  */
   price: Scalars['Price'];
-  /** Price (was) for the product variant */
+  /**  Original price when product was first uploaded  */
   priceWas?: Maybe<Scalars['Price']>;
   /**
    * Set of product preview items.
    * Will be sorted as per the provided order, and cannot be empty.
-   * #TODO: max number
    */
   previewItems: Array<ProductPreviewItemInput>;
   /** Amount that can be purchased now (main stock level, irrelevant of specialDeal). */
@@ -4292,20 +4288,18 @@ export type ProductVariantEditInput = {
 };
 
 export type ProductVariantInput = {
-  /** What to call the product variant #TODO: regex */
+  /**  What to call the product variant  */
   variantName: Scalars['String'];
-  /** A whole bunch of words to describe the product variant #TODO: regex */
+  /**  A whole bunch of words to describe the product variant */
   variantDescription: Scalars['String'];
-  /** Whether the variant is the default variant */
   isDefault: Scalars['Boolean'];
-  /** Price (now) for the product variant */
+  /**  Price (now) for the product variant  */
   price: Scalars['Price'];
-  /** Price (was) for the product variant */
+  /**  Original price when product was first uploaded  */
   priceWas?: Maybe<Scalars['Price']>;
   /**
    * Set of product preview items.
    * Will be sorted as per the provided order, and cannot be empty.
-   * #TODO: max number
    */
   previewItems: Array<ProductPreviewItemInput>;
   /** Amount that can be purchased now (main stock level, irrelevant of specialDeal). */
@@ -9710,13 +9704,13 @@ export enum Chat_Users_Update_Column {
 /** columns and relationships of "classified_ad_purchases" */
 export type Classified_Ad_Purchases = {
   __typename?: 'classified_ad_purchases';
-  buyer_id: Scalars['String'];
-  created_at: Scalars['timestamptz'];
+  buyerId: Scalars['String'];
+  createdAt: Scalars['timestamptz'];
   currency: Scalars['String'];
   fees: Scalars['Int'];
   id: Scalars['String'];
-  payment_intent_id: Scalars['String'];
-  product_id: Scalars['String'];
+  paymentIntentId: Scalars['String'];
+  productId: Scalars['String'];
   total: Scalars['Int'];
 };
 
@@ -9762,13 +9756,13 @@ export type Classified_Ad_Purchases_Bool_Exp = {
   _and?: Maybe<Array<Classified_Ad_Purchases_Bool_Exp>>;
   _not?: Maybe<Classified_Ad_Purchases_Bool_Exp>;
   _or?: Maybe<Array<Classified_Ad_Purchases_Bool_Exp>>;
-  buyer_id?: Maybe<String_Comparison_Exp>;
-  created_at?: Maybe<Timestamptz_Comparison_Exp>;
+  buyerId?: Maybe<String_Comparison_Exp>;
+  createdAt?: Maybe<Timestamptz_Comparison_Exp>;
   currency?: Maybe<String_Comparison_Exp>;
   fees?: Maybe<Int_Comparison_Exp>;
   id?: Maybe<String_Comparison_Exp>;
-  payment_intent_id?: Maybe<String_Comparison_Exp>;
-  product_id?: Maybe<String_Comparison_Exp>;
+  paymentIntentId?: Maybe<String_Comparison_Exp>;
+  productId?: Maybe<String_Comparison_Exp>;
   total?: Maybe<Int_Comparison_Exp>;
 };
 
@@ -9786,39 +9780,39 @@ export type Classified_Ad_Purchases_Inc_Input = {
 
 /** input type for inserting data into table "classified_ad_purchases" */
 export type Classified_Ad_Purchases_Insert_Input = {
-  buyer_id?: Maybe<Scalars['String']>;
-  created_at?: Maybe<Scalars['timestamptz']>;
+  buyerId?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['timestamptz']>;
   currency?: Maybe<Scalars['String']>;
   fees?: Maybe<Scalars['Int']>;
   id?: Maybe<Scalars['String']>;
-  payment_intent_id?: Maybe<Scalars['String']>;
-  product_id?: Maybe<Scalars['String']>;
+  paymentIntentId?: Maybe<Scalars['String']>;
+  productId?: Maybe<Scalars['String']>;
   total?: Maybe<Scalars['Int']>;
 };
 
 /** aggregate max on columns */
 export type Classified_Ad_Purchases_Max_Fields = {
   __typename?: 'classified_ad_purchases_max_fields';
-  buyer_id?: Maybe<Scalars['String']>;
-  created_at?: Maybe<Scalars['timestamptz']>;
+  buyerId?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['timestamptz']>;
   currency?: Maybe<Scalars['String']>;
   fees?: Maybe<Scalars['Int']>;
   id?: Maybe<Scalars['String']>;
-  payment_intent_id?: Maybe<Scalars['String']>;
-  product_id?: Maybe<Scalars['String']>;
+  paymentIntentId?: Maybe<Scalars['String']>;
+  productId?: Maybe<Scalars['String']>;
   total?: Maybe<Scalars['Int']>;
 };
 
 /** aggregate min on columns */
 export type Classified_Ad_Purchases_Min_Fields = {
   __typename?: 'classified_ad_purchases_min_fields';
-  buyer_id?: Maybe<Scalars['String']>;
-  created_at?: Maybe<Scalars['timestamptz']>;
+  buyerId?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['timestamptz']>;
   currency?: Maybe<Scalars['String']>;
   fees?: Maybe<Scalars['Int']>;
   id?: Maybe<Scalars['String']>;
-  payment_intent_id?: Maybe<Scalars['String']>;
-  product_id?: Maybe<Scalars['String']>;
+  paymentIntentId?: Maybe<Scalars['String']>;
+  productId?: Maybe<Scalars['String']>;
   total?: Maybe<Scalars['Int']>;
 };
 
@@ -9840,13 +9834,13 @@ export type Classified_Ad_Purchases_On_Conflict = {
 
 /** Ordering options when selecting data from "classified_ad_purchases". */
 export type Classified_Ad_Purchases_Order_By = {
-  buyer_id?: Maybe<Order_By>;
-  created_at?: Maybe<Order_By>;
+  buyerId?: Maybe<Order_By>;
+  createdAt?: Maybe<Order_By>;
   currency?: Maybe<Order_By>;
   fees?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
-  payment_intent_id?: Maybe<Order_By>;
-  product_id?: Maybe<Order_By>;
+  paymentIntentId?: Maybe<Order_By>;
+  productId?: Maybe<Order_By>;
   total?: Maybe<Order_By>;
 };
 
@@ -9858,9 +9852,9 @@ export type Classified_Ad_Purchases_Pk_Columns_Input = {
 /** select columns of table "classified_ad_purchases" */
 export enum Classified_Ad_Purchases_Select_Column {
   /** column name */
-  BUYER_ID = 'buyer_id',
+  BUYERID = 'buyerId',
   /** column name */
-  CREATED_AT = 'created_at',
+  CREATEDAT = 'createdAt',
   /** column name */
   CURRENCY = 'currency',
   /** column name */
@@ -9868,22 +9862,22 @@ export enum Classified_Ad_Purchases_Select_Column {
   /** column name */
   ID = 'id',
   /** column name */
-  PAYMENT_INTENT_ID = 'payment_intent_id',
+  PAYMENTINTENTID = 'paymentIntentId',
   /** column name */
-  PRODUCT_ID = 'product_id',
+  PRODUCTID = 'productId',
   /** column name */
   TOTAL = 'total'
 }
 
 /** input type for updating data in table "classified_ad_purchases" */
 export type Classified_Ad_Purchases_Set_Input = {
-  buyer_id?: Maybe<Scalars['String']>;
-  created_at?: Maybe<Scalars['timestamptz']>;
+  buyerId?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['timestamptz']>;
   currency?: Maybe<Scalars['String']>;
   fees?: Maybe<Scalars['Int']>;
   id?: Maybe<Scalars['String']>;
-  payment_intent_id?: Maybe<Scalars['String']>;
-  product_id?: Maybe<Scalars['String']>;
+  paymentIntentId?: Maybe<Scalars['String']>;
+  productId?: Maybe<Scalars['String']>;
   total?: Maybe<Scalars['Int']>;
 };
 
@@ -9918,9 +9912,9 @@ export type Classified_Ad_Purchases_Sum_Fields = {
 /** update columns of table "classified_ad_purchases" */
 export enum Classified_Ad_Purchases_Update_Column {
   /** column name */
-  BUYER_ID = 'buyer_id',
+  BUYERID = 'buyerId',
   /** column name */
-  CREATED_AT = 'created_at',
+  CREATEDAT = 'createdAt',
   /** column name */
   CURRENCY = 'currency',
   /** column name */
@@ -9928,9 +9922,9 @@ export enum Classified_Ad_Purchases_Update_Column {
   /** column name */
   ID = 'id',
   /** column name */
-  PAYMENT_INTENT_ID = 'payment_intent_id',
+  PAYMENTINTENTID = 'paymentIntentId',
   /** column name */
-  PRODUCT_ID = 'product_id',
+  PRODUCTID = 'productId',
   /** column name */
   TOTAL = 'total'
 }

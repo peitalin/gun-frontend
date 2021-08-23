@@ -105,6 +105,9 @@ import {
   StorePrivate,
   ProductsEdge,
   ProductsConnection,
+  ClassifiedAdPaymentInput,
+  ListingType,
+  Role,
 } from "typings/gqlTypes";
 import {
   ProductCreateInputFrontEnd,
@@ -125,7 +128,7 @@ import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 // Stepper for multiple fields
 import ProductCreateStepper from "./ProductCreateStepper";
-
+import VisaPurchaseClassifiedAd from "./VisaPurchaseClassifiedAd";
 
 
 // NOTES:
@@ -183,13 +186,20 @@ const ProductCreatePage = (props: ReactProps) => {
     { loading, error, data }
   ] = useMutation<MutationData, MutationVar>(CREATE_PRODUCT, {
     variables: {
-      productCreateInput: { ...productCreateInput }
+      productCreateInput: { ...productCreateInput },
+      classifiedAdPaymentInput: null,
     },
     onError: (err) => {
       let errMsg = error?.graphQLErrors?.[0]?.message ?? JSON.stringify(error)
       if (errMsg) {
         snackbar.enqueueSnackbar(
           `${errMsg}`,
+          { variant: "error", autoHideDuration: 6000 }
+        )
+      }
+      if (err) {
+        snackbar.enqueueSnackbar(
+          `${JSON.stringify(err)}`,
           { variant: "error", autoHideDuration: 6000 }
         )
       }
@@ -299,7 +309,8 @@ const ProductCreatePage = (props: ReactProps) => {
             currentVariants: values.currentVariants,
             sellerLicenseId: values.sellerLicenseId,
             listingType: values.listingType,
-          }
+          },
+          classifiedAdPaymentInput: null,
         },
       }).then(res => {
         setTimeout(() => {
@@ -332,7 +343,7 @@ const ProductCreatePage = (props: ReactProps) => {
   )
 
 
-  const processProductData = ({ publishNow }: { publishNow: boolean }) => {
+  const processProductDataAndValidate = ({ publishNow }: { publishNow: boolean }) => {
     formik.setFieldValue("isPublished", publishNow);
     // update formik with redux currentVariants
     formik.setFieldValue("currentVariants", currentVariantsInput);
@@ -569,25 +580,101 @@ const ProductCreatePage = (props: ReactProps) => {
             {...formik}
           />
           <ProductCreateButtonWrapper {...props}>
-            <ProductCreateButton
+            {/* <ProductCreateButton
               // Save Draft Button
-              onClick={() => processProductData({ publishNow: false }) }
+              onClick={() => processProductDataAndValidate({ publishNow: false }) }
               postInstantly={false}
+              title={"Save Draft"}
               loading={state.loading}
               errors={formik.errors}
               disabled={state.loading || disableForm}
               // disabled={isFormikDisabled(formik.errors) || state.loading}
             />
-            <div className={classes.flexButtonSpacer}/>
-            <ProductCreateButton
-              // Post Instantly Button
-              onClick={() => processProductData({ publishNow: true }) }
-              postInstantly={true}
-              loading={state.loading}
-              errors={formik.errors}
-              disabled={state.loading || disableForm}
-              // disabled={isFormikDisabled(formik.errors) || state.loading}
-            />
+            <div className={classes.flexButtonSpacer}/> */}
+
+            {
+              formik.values?.listingType === ListingType.CLASSIFIED &&
+              user.userRole === Role.PLATFORM_ADMIN &&
+              <VisaPurchaseClassifiedAd
+                display={true}
+                priceInCents={100}
+                validateForm={async() => {
+                  // 1. set variants/previewImages correctly in formik
+                  // 2. validate formik form inputs
+                  processProductDataAndValidate({ publishNow: true })
+                  // 3. then proceed with purchasing and creating a product listing
+                }}
+                title={`Post Ad for $1`}
+                purchaseClassifiedAdAndCreateProductListing={
+                  async (classifiedAdPaymentInput: ClassifiedAdPaymentInput) => {
+
+                    let values = formik.values
+
+                    productCreate({
+                      variables: {
+                        productCreateInput: {
+                          title: values.title,
+                          description: values.description,
+                          condition: values.condition,
+                          make: values.make,
+                          model: values.model,
+                          ammoType: values.ammoType,
+                          actionType: values.actionType,
+                          caliber: values.caliber,
+                          serialNumber: values.serialNumber,
+                          location: values.location,
+                          magazineCapacity: values.magazineCapacity,
+                          barrelLength: values.barrelLength,
+                          dealerId: values.dealerId,
+                          categoryId: values.categoryId,
+                          isPublished: values.isPublished,
+                          allowBids: values.allowBids,
+                          currentVariants: values.currentVariants,
+                          sellerLicenseId: values.sellerLicenseId,
+                          listingType: values.listingType,
+                        },
+                        classifiedAdPaymentInput: classifiedAdPaymentInput,
+                      }
+                    })
+
+                  }
+                }
+                handlePostPurchase={() => {
+                }}
+              />
+            }
+
+            {
+              formik.values?.listingType === ListingType.CLASSIFIED &&
+              <ProductCreateButton
+                // Post Instantly Button
+                onClick={() => {
+                  processProductDataAndValidate({ publishNow: true })
+                }}
+                title={"Post Ad for Free"}
+                postInstantly={true}
+                loading={state.loading}
+                errors={formik.errors}
+                disabled={state.loading || disableForm}
+                // disabled={isFormikDisabled(formik.errors) || state.loading}
+              />
+            }
+
+            {
+              formik.values?.listingType === ListingType.ESCROW_ONLY &&
+              <ProductCreateButton
+                // Post Instantly Button
+                onClick={() => {
+                  processProductDataAndValidate({ publishNow: true })
+                }}
+                title={"Publish Now"}
+                postInstantly={true}
+                loading={state.loading}
+                errors={formik.errors}
+                disabled={state.loading || disableForm}
+                // disabled={isFormikDisabled(formik.errors) || state.loading}
+              />
+            }
           </ProductCreateButtonWrapper>
         </SectionBorder>
 
@@ -756,8 +843,8 @@ const ProductCreateButtonWrapper: React.FC<ReactProps> = (props) => {
         {props.children}
       </ErrorBounds>
       <Typography color={"primary"} variant="caption" className={classes.policy}>
-        By posting, you confirm that this listing complies with Gun Marketplace's
-        terms of service and applicable laws.
+        By posting, you confirm that this listing complies with
+        all applicable laws and Gun Marketplace's terms of service
       </Typography>
       <Divider/>
     </div>
@@ -784,6 +871,7 @@ export interface MutationData {
 }
 interface MutationVar {
   productCreateInput: ProductCreateInputFrontEnd
+  classifiedAdPaymentInput: ClassifiedAdPaymentInput
 }
 
 export default withStyles(styles)(React.memo(
