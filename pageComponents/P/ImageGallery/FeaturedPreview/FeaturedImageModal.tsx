@@ -81,6 +81,7 @@ const FeaturedImageModal = (props: ReactProps) => {
               background: isDarkMode
                 ? Colors.uniswapDarkNavy
                 : Colors.slateGreyDark,
+              ...props.swipeableStyle,
             }}
             containerStyle={{ height: '100%', width: '100%' }}
             style={{ height: '100%', width: '100%' }}
@@ -182,6 +183,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   setIndex?(a?: any): void;
   isPromoted?: boolean;
   style?: any;
+  swipeableStyle?: any;
   previewImageClassName?: any;
   animateTransitions?: boolean;
 }

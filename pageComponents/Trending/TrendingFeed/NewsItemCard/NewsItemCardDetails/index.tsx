@@ -141,26 +141,31 @@ const NewsItemCardDetails = (props: ReactProps) => {
           "fadeInFast",
         )}
       >
-        <FeaturedPreview
-          featuredPreviewItem={featuredPreviewItem}
-          previewItems={previewItems}
-          setPreviewLoaded={(b) => props.setPreviewLoaded(b)}
-          loading={props.loading || !process.browser} // for SSR
-          index={props.index}
-          setIndex={props.setIndex}
-          isPromoted={false}
-          disableModalPopup={false}
-          style={{
-            width: props.imageSize?.desktop?.width,
-            height: props.imageSize?.desktop?.height,
-            borderRadius: 0,
-            // maxHeight: 285,
-            maxHeight: 266,
-          }}
-          previewImageClassName={classes.previewImageClass}
-          constrainAspectRatio={constrainAspect}
-          animateTransitions={true}
-        />
+        <div className={classes.overflowHidden}>
+          <FeaturedPreview
+            featuredPreviewItem={featuredPreviewItem}
+            previewItems={previewItems}
+            setPreviewLoaded={(b) => props.setPreviewLoaded(b)}
+            loading={props.loading || !process.browser} // for SSR
+            index={props.index}
+            setIndex={props.setIndex}
+            isPromoted={false}
+            disableModalPopup={false}
+            style={{
+              width: props.imageSize?.desktop?.width,
+              height: props.imageSize?.desktop?.height,
+              // borderRadius: `${BorderRadius}px ${BorderRadius}px 0px 0px`,
+              // overflow: 'hidden',
+              // maxHeight: 285,
+              maxHeight: 266,
+            }}
+            swipeableStyle={{
+            }}
+            previewImageClassName={classes.previewImageClass}
+            constrainAspectRatio={constrainAspect}
+            animateTransitions={true}
+          />
+        </div>
 
 
         <NewsItemAdminSuspendIcon
@@ -402,6 +407,13 @@ const styles = (theme: Theme) => createStyles({
   unclickable: {
     cursor: "default",
   },
+  overflowHidden: {
+    // SAFAIR overflow hidden bug, needs this willChange line
+    borderRadius: `${BorderRadius2x}px ${BorderRadius2x}px 0px 0px`,
+    overflow: 'hidden',
+    // '-webkit-mask-image': '-webkit-radial-gradient(white, black)',
+    willChange: 'transform',
+  },
   positionRelative: {
     zIndex: 1,
     position: "relative",
@@ -410,6 +422,8 @@ const styles = (theme: Theme) => createStyles({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
+    // overflowY: 'hidden',
+    // borderRadius: `${BorderRadius}px ${BorderRadius}px 0px 0px`,
     // alignItems: "center",
   },
   flexColPadding: {
@@ -500,7 +514,6 @@ const styles = (theme: Theme) => createStyles({
     }
   },
   previewImageClass: {
-    borderRadius: 0,
     maxHeight: 266,
   },
 });

@@ -44,6 +44,7 @@ const FeaturedPreview: React.FC<ReactProps> = (props) => {
             disableModalPopup={props.disableModalPopup}
             previewImageClassName={props.previewImageClassName}
             style={props.style}
+            swipeableStyle={props.swipeableStyle}
             animateTransitions={props.animateTransitions}
           />
         </AspectRatioConstraint>
@@ -62,6 +63,7 @@ const FeaturedPreview: React.FC<ReactProps> = (props) => {
           disableModalPopup={props.disableModalPopup}
           previewImageClassName={props.previewImageClassName}
           style={props.style}
+          swipeableStyle={props.swipeableStyle}
           animateTransitions={props.animateTransitions}
         />
       )
@@ -79,6 +81,7 @@ interface ReactProps {
   setPreviewLoaded?(b: boolean) : void;
   disableModalPopup?: boolean;
   style?: any;
+  swipeableStyle?: any;
   constrainAspectRatio?: boolean;
   previewImageClassName?: any;
   animateTransitions?: boolean;
