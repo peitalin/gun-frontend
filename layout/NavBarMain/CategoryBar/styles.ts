@@ -70,7 +70,7 @@ export const styles = (theme: Theme) => createStyles({
       : blurLight,
     borderBottom: isThemeDark(theme)
       ? `1px solid ${Colors.uniswapNavy}`
-      : `1px solid ${Colors.slateGrey}`,
+      : `1px solid ${Colors.slateGreyDark}`,
   },
   categoryBarMobile: {
     top: `${MainBarHeight}px`, // 1px for borderBottom

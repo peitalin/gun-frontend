@@ -119,7 +119,7 @@ const SearchHits: React.FC<ReactProps> = (props) => {
         bottomSectionStyles={{
           paddingTop: '1rem',
           paddingBottom: '1rem',
-          backgroundColor: isThemeDark(theme) ? Colors.uniswapDarkNavy : Colors.cream,
+          // backgroundColor: isThemeDark(theme) ? Colors.uniswapDarkNavy : Colors.cream,
           // border: isThemeDark(theme)
           //   ? `1px solid ${Colors.uniswapNavy}`
           //   : `1px solid ${Colors.slateGreyDarker}`,

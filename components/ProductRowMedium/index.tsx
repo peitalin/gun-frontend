@@ -245,6 +245,10 @@ const styles = (theme: Theme) => createStyles({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'flex-start',
+    //
+    flexBasis: '50%',
+    minWidth: 350,
+    flexGrow: 1,
   },
   flexRowWrapOuter: {
     display: 'flex',

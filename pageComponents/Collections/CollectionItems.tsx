@@ -494,9 +494,10 @@ export const styles = (theme: Theme) => createStyles({
     // marginLeft: '-0.5rem',
     paddingRight: '1rem',
     display: 'flex',
-    justifyContent: 'space-between',
     alignItems: 'center',
     width: '100%',
+    justifyContent: 'flex-end',
+    flexWrap: 'wrap',
   },
   iconButton: {
     marginLeft: '0.5rem',
@@ -549,6 +550,7 @@ export const styles = (theme: Theme) => createStyles({
     flexDirection: 'row',
     justifyContent: "center",
     alignItems: "center",
+    flexBasis: '10%',
   },
 })
 

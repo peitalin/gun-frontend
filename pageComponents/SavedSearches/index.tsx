@@ -71,6 +71,7 @@ const SavedSearch: React.FC<ReactProps> = (props) => {
       </div>
       <div className={clsx(
         classes.saveSearchContainer,
+        classes.saveSearchBackground,
         lgDown ? classes.paddingMobile : classes.paddingDesktop
       )}>
         <ButtonLoading
@@ -85,7 +86,7 @@ const SavedSearch: React.FC<ReactProps> = (props) => {
             setModalOpen(s => !s)
           }}
         >
-          { 'New Saved Search' }
+          { '+ Add Saved Search' }
         </ButtonLoading>
         <ExistingSavedSearches/>
       </div>
@@ -94,7 +95,7 @@ const SavedSearch: React.FC<ReactProps> = (props) => {
         open={modalOpen}
         onClose={() => setModalOpen(s => false)}
         fullScreen={false}
-        fullWidth={lgDown}
+        fullWidth={false}
         BackdropProps={{
           classes: {
             root: classes.modalBackdrop,
@@ -111,6 +112,8 @@ const SavedSearch: React.FC<ReactProps> = (props) => {
       >
         <div className={clsx(
           classes.saveSearchContainer,
+          classes.saveSearchBackground,
+          classes.modalFormPadding,
           lgDown ? classes.paddingMobile : classes.paddingDesktop,
         )}>
           <ManageSaveSearchPage
@@ -192,7 +195,7 @@ const styles = (theme: Theme) => createStyles({
     padding: '2rem',
   },
   paddingMobile: {
-    padding: '0.5rem 0rem',
+    padding: '0.5rem 0.5rem',
   },
   saveSearchContainer: {
     width: '100%',
@@ -204,12 +207,16 @@ const styles = (theme: Theme) => createStyles({
     marginTop: '2rem',
     marginBottom: '2rem',
     borderRadius: BorderRadius2x,
+  },
+  saveSearchBackground: {
     background: isThemeDark(theme)
       ? Colors.uniswapDarkNavy
       : Colors.cream,
     border: isThemeDark(theme)
       ? `1px solid ${Colors.uniswapDarkNavy}`
       : `1px solid ${Colors.slateGreyDarker}`,
+  },
+  modalFormPadding: {
   },
 });
 

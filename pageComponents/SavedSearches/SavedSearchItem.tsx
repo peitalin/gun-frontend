@@ -143,9 +143,10 @@ const styles = (theme: Theme) => createStyles({
   savedSearchContainerMobile: {
     position: "relative",
     display: 'flex',
+    width: '90%',
     flexDirection: 'column',
     borderRadius: BorderRadius2x,
-    padding: '0.5rem 1rem',
+    padding: '0.5rem 2rem 0.5rem 1rem',
     marginTop: '0.5rem',
     backgroundColor: isThemeDark(theme)
       ? Colors.uniswapMediumNavy
@@ -180,6 +181,7 @@ const styles = (theme: Theme) => createStyles({
     minHeight: 45,
     marginRight: '0.5rem',
     justifyContent: "space-between",
+    alignItems: 'center',
   },
   savedSearchItem5: {
     position: 'absolute',

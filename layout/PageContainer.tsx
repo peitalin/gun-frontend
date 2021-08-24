@@ -22,12 +22,13 @@ const PageContainer: React.FC<ReactProps> = (props) => {
 
   const theme = useTheme();
   const mdDown = useMediaQuery(theme.breakpoints.down('md'));
+  const isMobile = useMediaQuery(theme.breakpoints.down('lg'));
 
   return (
     <div className={clsx(
       classes.pageOuterContainer,
-      mdDown && classes.navbarPaddingTopMobile,
-      !mdDown && needsNavbarPadding && classes.navbarPaddingTopDesktop,
+      isMobile && classes.navbarPaddingTopMobile,
+      !isMobile && needsNavbarPadding && classes.navbarPaddingTopDesktop,
     )}>
       <div className={classes.pageInnerContainer}>
         {props.children}
@@ -63,7 +64,7 @@ const styles = (theme: Theme) => createStyles({
     paddingTop: MainBarHeight,
   },
   navbarPaddingTopMobile: {
-    paddingTop: MainBarHeight + CategoryBarHeight,
+    paddingTop: `${MainBarHeight + CategoryBarHeight}px`,
   },
   pageInnerContainer: {
     position: 'relative',

@@ -157,7 +157,7 @@ const SearchHitsItem = (props: SearchHitsItemProps) => {
 
 
       <div className={
-        mdDown ? classes.savedSearchItemMobile : classes.savedSearchItemDesktop
+        mdDown ? classes.savedSearchItemMobileFlexWrap : classes.savedSearchItemDesktop
       }>
         <div className={clsx(
           classes.flexItem,
@@ -178,12 +178,12 @@ const SearchHitsItem = (props: SearchHitsItemProps) => {
         </div>
         <div className={classes.flexItem}>
           <div className={
-            mdDown ? classes.savedSearchItemMobile : classes.savedSearchItemDesktop
+            mdDown ? classes.savedSearchItemMobileFlexWrap : classes.savedSearchItemDesktop
           }>
             <span className={classes.boldText}>Search Terms</span>
           </div>
           <div className={
-            mdDown ? classes.savedSearchItemMobile : classes.savedSearchItemDesktop
+            mdDown ? classes.savedSearchItemMobileFlexWrap : classes.savedSearchItemDesktop
           }>
             <span className={classes.fieldText}>Make</span>
             <span className={classes.italicText}>
@@ -191,7 +191,7 @@ const SearchHitsItem = (props: SearchHitsItemProps) => {
             </span>
           </div>
           <div className={
-            mdDown ? classes.savedSearchItemMobile : classes.savedSearchItemDesktop
+            mdDown ? classes.savedSearchItemMobileFlexWrap : classes.savedSearchItemDesktop
           }>
             <span className={classes.fieldText}>Model</span>
             <span className={classes.italicText}>
@@ -199,7 +199,7 @@ const SearchHitsItem = (props: SearchHitsItemProps) => {
             </span>
           </div>
           <div className={
-            mdDown ? classes.savedSearchItemMobile : classes.savedSearchItemDesktop
+            mdDown ? classes.savedSearchItemMobileFlexWrap : classes.savedSearchItemDesktop
           }>
             <span className={classes.fieldText}>Caliber</span>
             <span className={classes.italicText}>
@@ -256,20 +256,23 @@ const styles = (theme: Theme) => createStyles({
     borderRadius: BorderRadius,
     padding: '0.5rem 1rem 0.5rem 0.5rem',
     marginBottom: '0.5rem',
+    // backgroundColor: isThemeDark(theme)
+    //   ? Colors.uniswapMediumNavy
+    //   : Colors.slateGrey,
     backgroundColor: isThemeDark(theme)
       ? Colors.uniswapMediumNavy
-      : Colors.slateGrey,
+      : Colors.cream,
   },
   searchHitsContainerMobile: {
     position: "relative",
     display: 'flex',
-    flexDirection: 'column',
+    flexDirection: 'row',
     borderRadius: BorderRadius,
     padding: '0.5rem 1rem 0.5rem 0.5rem',
     marginBottom: '0.5rem',
     backgroundColor: isThemeDark(theme)
       ? Colors.uniswapMediumNavy
-      : Colors.slateGrey,
+      : Colors.cream,
   },
   savedSearchBorder: {
     border: isThemeDark(theme)
@@ -282,7 +285,7 @@ const styles = (theme: Theme) => createStyles({
       : `1px solid ${Colors.ultramarineBlue}`,
     boxShadow: isThemeDark(theme)
       ? BoxShadows.shadowWhite.boxShadow
-      : BoxShadows.shadow1.boxShadow,
+      : BoxShadows.shadow3.boxShadow,
   },
   savedSearchItemDesktop: {
     display: 'flex',
@@ -291,12 +294,13 @@ const styles = (theme: Theme) => createStyles({
     flexWrap: "wrap",
     width: '100%',
   },
-  savedSearchItemMobile: {
+  savedSearchItemMobileFlexWrap: {
     display: 'flex',
     flexDirection: 'row',
     minWidth: 80,
     marginRight: '0.5rem',
     justifyContent: "space-between",
+    flexWrap: "wrap",
   },
   boldText: {
     fontWeight: 600,
@@ -306,7 +310,10 @@ const styles = (theme: Theme) => createStyles({
       : Colors.slateGreyBlack,
   },
   productTitleColumn: {
-    width: 150,
+    // width: 150,
+    width: '100%',
+    minWidth: 200,
+    marginBottom: '0.5rem',
   },
   flexItem: {
     flexBasis: "50%",
@@ -314,14 +321,21 @@ const styles = (theme: Theme) => createStyles({
     flexDirection: "column",
     justifyContent: "flex-start",
     alignItems: "flex-start",
-    wordBreak: "break-word"
+    wordBreak: "break-word",
+    minWidth: 200,
   },
   italicText: {
     fontStyle: 'italic',
     textAlign: "center",
+    color: isThemeDark(theme)
+      ? Colors.uniswapLightGrey
+      : Colors.slateGreyBlack,
   },
   fieldText: {
     minWidth: 70,
+    color: isThemeDark(theme)
+      ? Colors.uniswapLightGrey
+      : Colors.slateGreyBlack,
   },
   link: {
     marginRight: "0.5rem",

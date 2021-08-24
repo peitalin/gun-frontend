@@ -388,6 +388,7 @@ const styles = (theme: Theme) => createStyles({
     flexDirection: 'column',
     justifyContent: "center",
     alignItems: "center",
+    padding: '2rem 1rem 1rem 1rem',
   },
   flexCol: {
     display: 'flex',
