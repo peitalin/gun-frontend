@@ -36,7 +36,7 @@ import { useApolloClient } from "@apollo/client";
 import { maxPreviewImages } from "utils/limitsAndRules";
 import ValidationErrorMsg from "components/Fields/ValidationErrorMsg";
 import { useFocus } from "utils/hooks";
-import { reduxToFormikCurrentVariants } from "../ProductCreatePage";
+import { reduxToFormikCurrentVariants } from "../ProductCreatePage/utils";
 import RefLink, { refLinks } from "../RefLink";
 import { DZU_UPLOAD_STATUS, handleUploadingStates } from "components/DropzoneUploader/utils";
 
