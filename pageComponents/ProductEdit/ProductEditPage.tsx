@@ -107,7 +107,7 @@ import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import {
   reduxToFormikCurrentVariants
-} from "pageComponents/ProductCreate/ProductCreatePage";
+} from "pageComponents/ProductCreate/ProductCreatePage/utils";
 import { cacheUpdateEditProduct } from "./cacheUpdateEditProduct";
 
 
