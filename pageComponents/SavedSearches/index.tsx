@@ -35,10 +35,6 @@ import {
   dealerStatesDropdownItems,
   DealerStatesLabels,
 } from "components/SearchbarAirbnb/AdvancedSearchDropdown/DealerStatesMenu"
-import {
-  createCaliberOption,
-  createCaliberOptionGroups,
-} from "components/SearchbarAirbnb/AdvancedSearchDropdown/CaliberMenu"
 
 
 
@@ -51,7 +47,7 @@ const SavedSearch: React.FC<ReactProps> = (props) => {
   const [modalOpen, setModalOpen] = React.useState(false)
 
   const theme = useTheme();
-  const mdDown = useMediaQuery(theme.breakpoints.down('md'));
+  const lgDown = useMediaQuery(theme.breakpoints.down('lg'));
 
   let dealerStates =  dealerStatesDropdownItems;
 
@@ -67,10 +63,16 @@ const SavedSearch: React.FC<ReactProps> = (props) => {
   return (
     <AlignCenterLayout maxWidth={720} withRecommendations={false}>
 
-      <div className={classes.saveSearchContainer}>
+      <div className={clsx(
+        classes.saveSearchContainer,
+        lgDown ? classes.paddingMobile : classes.paddingDesktop
+      )}>
         <SearchHits />
       </div>
-      <div className={classes.saveSearchContainer}>
+      <div className={clsx(
+        classes.saveSearchContainer,
+        lgDown ? classes.paddingMobile : classes.paddingDesktop
+      )}>
         <ButtonLoading
           type="submit"
           className={props.classes.saveSearchModalButton}
@@ -92,7 +94,7 @@ const SavedSearch: React.FC<ReactProps> = (props) => {
         open={modalOpen}
         onClose={() => setModalOpen(s => false)}
         fullScreen={false}
-        fullWidth={mdDown}
+        fullWidth={lgDown}
         BackdropProps={{
           classes: {
             root: classes.modalBackdrop,
@@ -100,14 +102,17 @@ const SavedSearch: React.FC<ReactProps> = (props) => {
         }}
         PaperProps={{
           classes: {
-            root: mdDown
+            root: lgDown
               ? classes.modalPaperScrollPaperMobile
               : classes.modalPaperScrollPaper,
           }
         }}
         scroll={"body"}
       >
-        <div className={classes.saveSearchContainer}>
+        <div className={clsx(
+          classes.saveSearchContainer,
+          lgDown ? classes.paddingMobile : classes.paddingDesktop,
+        )}>
           <ManageSaveSearchPage
             calibers={data?.getCalibers}
             categories={categoryData?.data?.getCategories}
@@ -171,6 +176,7 @@ const styles = (theme: Theme) => createStyles({
     height: 40,
     width: '100%',
     maxWidth: 200,
+    marginTop: '2rem',
     borderRadius: BorderRadius2x,
     backgroundColor: isThemeDark(theme)
       ? Colors.purple
@@ -182,13 +188,18 @@ const styles = (theme: Theme) => createStyles({
         : fade(Colors.blue, 0.9),
     }
   },
+  paddingDesktop: {
+    padding: '2rem',
+  },
+  paddingMobile: {
+    padding: '0.5rem 0rem',
+  },
   saveSearchContainer: {
     width: '100%',
     display: 'flex',
     flexDirection: "column",
     justifyContent: 'center',
     alignItems: 'center',
-    padding: '2rem',
     minWidth: 330,
     marginTop: '2rem',
     marginBottom: '2rem',

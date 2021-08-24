@@ -102,7 +102,7 @@ const ExistingSavedSearches: React.FC<ReactProps> = (props) => {
   })
 
   return (
-    <div className={classes.flexCol}>
+    <div className={classes.existingSavedSearchesRoot}>
       <Typography variant="h4" className={classes.title}>
         Existing Saved Searches
       </Typography>
@@ -161,11 +161,12 @@ interface MVar3 {
 
 
 const styles = (theme: Theme) => createStyles({
-  flexCol: {
+  existingSavedSearchesRoot: {
     display: 'flex',
     flexDirection: 'column',
     marginBottom: '0.5rem',
     width: '100%',
+    padding: '0.5rem 1rem',
   },
   title: {
     marginTop: "1.25rem",
