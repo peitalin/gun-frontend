@@ -195,7 +195,8 @@ const styles = (theme: Theme) => createStyles({
     padding: '2rem',
   },
   paddingMobile: {
-    padding: '0.5rem 0.5rem',
+    // padding: '0.5rem 0.5rem',
+    padding: '0rem',
   },
   saveSearchContainer: {
     width: '100%',

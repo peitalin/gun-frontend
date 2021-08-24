@@ -48,6 +48,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { GrandReduxState, Actions } from "reduxStore/grand-reducer";
 // snackbar
 import { useSnackbar } from "notistack";
+import { useMediaQuery } from "@material-ui/core";
+import { useTheme } from "@material-ui/core/styles";
 
 
 
@@ -64,6 +66,9 @@ const CollectionItems: React.FC<ReactProps> = (props) => {
   const [editMode, setEditMode] = React.useState(false)
   const [editName, setEditName] = React.useState(collection?.name)
   const [openDeleteModal, setOpenDeleteModal] = React.useState(false)
+
+  const theme = useTheme()
+  const lgDown = useMediaQuery(theme.breakpoints.down("lg"))
 
   const {
     user,
@@ -329,9 +334,15 @@ const CollectionItems: React.FC<ReactProps> = (props) => {
 
       {
         (collection.itemsConnection?.edges?.length > 0)
-        ? collection.itemsConnection?.edges?.map(({ node: citem }) => {
+        ? collection.itemsConnection?.edges?.map((edge, i) => {
+            let citem = edge?.node
             return (
-              <div key={citem.product?.id} className={classes.productItem}>
+              <div key={`${citem.product?.id}-${i}`}
+                className={clsx(
+                  classes.productItem,
+                  lgDown ? classes.productItemMobile : classes.productItemDesktop
+                )}
+              >
                 <ProductRowMedium
                   product={citem?.product}
                   externalProduct={citem?.externalProduct}
@@ -397,16 +408,6 @@ interface QVar1 {
 }
 interface QData1 {
   getCollectionsByUserId: Collection[]
-}
-
-
-interface MVar1 {
-  productId: string
-  userId: string
-  collectionId: string
-}
-interface MData1 {
-  addProductToCollection: CollectionItemMutationResponse
 }
 
 interface MVar2 {
@@ -489,15 +490,18 @@ export const styles = (theme: Theme) => createStyles({
       : Colors.slateGreyDarkest,
   },
   productItem: {
-    // marginTop: '0.5rem',
     marginBottom: '0.5rem',
-    // marginLeft: '-0.5rem',
-    paddingRight: '1rem',
     display: 'flex',
     alignItems: 'center',
     width: '100%',
     justifyContent: 'flex-end',
     flexWrap: 'wrap',
+  },
+  productItemDesktop: {
+    paddingRight: '1rem',
+  },
+  productItemMobile: {
+    paddingRight: '0rem',
   },
   iconButton: {
     marginLeft: '0.5rem',

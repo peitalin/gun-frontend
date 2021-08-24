@@ -143,7 +143,7 @@ const styles = (theme: Theme) => createStyles({
   savedSearchContainerMobile: {
     position: "relative",
     display: 'flex',
-    width: '90%',
+    width: '100%',
     flexDirection: 'column',
     borderRadius: BorderRadius2x,
     padding: '0.5rem 2rem 0.5rem 1rem',
