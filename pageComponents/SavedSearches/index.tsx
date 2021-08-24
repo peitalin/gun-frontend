@@ -203,7 +203,7 @@ const styles = (theme: Theme) => createStyles({
     minWidth: 330,
     marginTop: '2rem',
     marginBottom: '2rem',
-    borderRadius: BorderRadius3x,
+    borderRadius: BorderRadius2x,
     background: isThemeDark(theme)
       ? Colors.uniswapDarkNavy
       : Colors.cream,

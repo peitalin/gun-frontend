@@ -33,6 +33,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { GrandReduxState } from "reduxStore/grand-reducer";
 // snackbar
 import { useSnackbar } from "notistack";
+import { useMediaQuery } from "@material-ui/core";
+import { useTheme } from "@material-ui/core/styles";
 
 
 
@@ -43,6 +45,8 @@ const CollectionsPage: React.FC<ReactProps> = (props) => {
   } = props;
 
   const snackbar = useSnackbar()
+  const theme = useTheme()
+  const lgDown = useMediaQuery(theme.breakpoints.down("lg"))
 
   const {
     user,
@@ -68,7 +72,10 @@ const CollectionsPage: React.FC<ReactProps> = (props) => {
 
   return (
     <AlignCenterLayout
-      className={classes.collectionPageRoot}
+      className={clsx(
+        classes.collectionPageRoot,
+        lgDown ? classes.collectionPageRootMobile : classes.collectionPageRootDesktop
+      )}
       maxWidth={1160}
       withRecommendations={false}
     >
@@ -138,6 +145,11 @@ export const styles = (theme: Theme) => createStyles({
     flexDirection: 'column',
     justifyContent: 'center',
     overflow: 'hidden',
+  },
+  collectionPageRootMobile: {
+    padding: '0.5rem',
+  },
+  collectionPageRootDesktop: {
     padding: '2rem',
   },
   titleRow: {
@@ -145,6 +157,7 @@ export const styles = (theme: Theme) => createStyles({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    marginTop: '1rem',
   },
   collectionsContainer: {
     display: 'flex',

@@ -215,7 +215,7 @@ const styles = (theme: Theme) => createStyles({
     padding: '0.5rem 0rem 0.5rem 1rem',
   },
   flexColPaddingSm: {
-    padding: '0.5rem 0rem 0.5rem 0rem',
+    padding: '0.5rem 0rem 0.5rem 0.5rem',
   },
   flexColInner60: {
     flexBasis: '60%',

@@ -253,7 +253,7 @@ const styles = (theme: Theme) => createStyles({
     position: "relative",
     display: 'flex',
     flexDirection: 'row',
-    borderRadius: BorderRadius2x,
+    borderRadius: BorderRadius,
     padding: '0.5rem 1rem 0.5rem 0.5rem',
     marginBottom: '0.5rem',
     backgroundColor: isThemeDark(theme)
@@ -264,7 +264,7 @@ const styles = (theme: Theme) => createStyles({
     position: "relative",
     display: 'flex',
     flexDirection: 'column',
-    borderRadius: BorderRadius2x,
+    borderRadius: BorderRadius,
     padding: '0.5rem 1rem 0.5rem 0.5rem',
     marginBottom: '0.5rem',
     backgroundColor: isThemeDark(theme)
@@ -282,7 +282,7 @@ const styles = (theme: Theme) => createStyles({
       : `1px solid ${Colors.ultramarineBlue}`,
     boxShadow: isThemeDark(theme)
       ? BoxShadows.shadowWhite.boxShadow
-      : BoxShadows.shadow4.boxShadow,
+      : BoxShadows.shadow1.boxShadow,
   },
   savedSearchItemDesktop: {
     display: 'flex',
