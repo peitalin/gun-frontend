@@ -161,6 +161,7 @@ const styles = (theme: Theme) => createStyles({
     display: "flex",
     flexDirection: "row",
     flexWrap: "wrap",
+    maxWidth: 600,
   },
   title: {
     marginTop: '1rem',
