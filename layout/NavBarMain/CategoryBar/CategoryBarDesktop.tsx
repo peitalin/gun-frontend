@@ -37,6 +37,8 @@ const CategoryBarDesktop: React.FC<ReactProps> = (props) => {
     isSellPage,
   } = props;
 
+  const [hover, setHover] = React.useState(false)
+
   let theme = useTheme()
   // let y = useScrollYPosition()
 
@@ -59,15 +61,20 @@ const CategoryBarDesktop: React.FC<ReactProps> = (props) => {
         <div className={classes.categoryBarInner}>
 
           <Link href={`/new`}>
-            <a className={classes.categoryLink}>
+            <a className={classes.categoryLink}
+              onMouseEnter={() => setHover(true)}
+              onMouseLeave={() => setHover(false)}
+            >
               <div className={clsx(
                 classes.categoryLinkTextMain,
                 router.asPath.startsWith('/new') && classes.categoryLinkTextSelected,
               )}>
                 <SearchIcon style={{
                   marginRight: '0.2rem',
-                  fill: router.asPath.startsWith('/new')
-                    ? Colors.purple
+                  fill: (router.asPath.startsWith('/new') || hover)
+                    ? isThemeDark(theme)
+                      ? Colors.purple
+                      : Colors.ultramarineBlue
                     : isThemeDark(theme)
                       ? Colors.uniswapLightestGrey
                       : Colors.slateGreyBlack
