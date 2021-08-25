@@ -25,6 +25,7 @@ import {
 import VoteOnNewsItem from "./VoteOnNewsItem";
 import AdType from "../NewsItemCard/NewsItemCardDetails/AdType";
 import SourceSiteChip from "../NewsItemCard/NewsItemCardDetails/SourceSiteChip";
+import VerifiedChip from "../NewsItemCard/NewsItemCardDetails/VerifiedChip";
 // Snackbar
 import { useSnackbar } from "notistack";
 
@@ -160,6 +161,13 @@ const TrendingNewsItemRow = (props: ReactProps) => {
                       sourceSiteUrl={sourceSiteUrl}
                       productId={newsItem?.productId}
                     />
+                    {
+                      newsItem?.product?.sellerLicense?.verified &&
+                      // true &&
+                      <VerifiedChip
+                        title={"Verified Seller"}
+                      />
+                    }
                   </div>
 
                   {
@@ -327,6 +335,7 @@ const styles = (theme: Theme) => createStyles({
   },
   maxWidthAdType: {
     maxWidth: 120,
+    marginRight: '0.5rem',
   },
   chipContainer: {
     display: 'flex',

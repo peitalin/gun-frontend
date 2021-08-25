@@ -42,6 +42,7 @@ import ButtonLoading from "components/ButtonLoading";
 import AdType from "./AdType";
 import SourceSiteChip from "./SourceSiteChip";
 import DescriptionText from "./DescriptionText";
+import VerifiedChip from "./VerifiedChip";
 
 import CollectionsIcon from 'components/Collections/CollectionsIcon';
 import NewsItemAdminSuspendIcon from "components/NewsItems/NewsItemAdminSuspendIcon"
@@ -348,6 +349,14 @@ const NewsItemCardDetails = (props: ReactProps) => {
           adType={adType}
           sourceSiteUrl={sourceSiteUrl}
         />
+
+        {
+          newsItem?.product?.sellerLicense?.verified &&
+          <VerifiedChip
+            title={"Verified Seller"}
+          />
+        }
+
       </div>
 
       <div className={clsx(
