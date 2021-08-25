@@ -317,9 +317,7 @@ const SearchbarAirbnb: React.FC<ReactProps> = (props) => {
               Search
             </Button>
 
-
           </div>
-
         </div>
       </div>
 
@@ -348,12 +346,13 @@ const SearchbarAirbnb: React.FC<ReactProps> = (props) => {
               // console.log("mouse down: ", e)
             }}
             onChange={(event, page) => {
+              console.log("pageee: ", page)
               // update paginator UI first
               setPageUi(page)
               if (paginationParams?.setPageParam) {
                 paginationParams.setPageParam(page)
               }
-              setIndex(page - 1)
+              // setIndex(page - 1)
               // then update pageParams (gQL request) + index change in carousel
               // debounceSetPageParam(page)
               // debounceSetIndex(page - 1)

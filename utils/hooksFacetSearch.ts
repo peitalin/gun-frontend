@@ -448,10 +448,10 @@ export const useEffectUpdateGridAccum = <T>({
         // return gridPageFirstItemId === objectIds?.[0]
       })
 
-    // console.log("skipUpdate", skipUpdate)
-    // // console.log("loading", loading)
-    // console.log("incoming objectIds: ", objectIds)
-    // console.log("gridAccum: ", gridAccum)
+    console.log("skipUpdate", skipUpdate)
+    // console.log("loading", loading)
+    console.log("incoming objectIds: ", objectIds)
+    console.log("gridAccum: ", gridAccum)
 
     if (!skipUpdate)  {
       // console.log("instantiating grid...")

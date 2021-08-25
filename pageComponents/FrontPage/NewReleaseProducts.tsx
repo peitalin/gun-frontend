@@ -21,10 +21,10 @@ import { GET_ALL_NEW_PRODUCTS } from "queries/products-queries";
 // Select Component
 // import DropdownInput from "components/Fields/DropdownInput";
 import dynamic from "next/dynamic";
-const DropdownInput = dynamic(() => import("components/Fields/DropdownInput"), {
-  loading: (props) => <Loading/>,
-  ssr: false,
-});
+// const DropdownInput = dynamic(() => import("components/Fields/DropdownInput"), {
+//   loading: (props) => <Loading/>,
+//   ssr: false,
+// });
 import { useDebouncedCallback } from 'use-debounce';
 
 
@@ -68,7 +68,6 @@ const NewReleaseProducts = (props: ReactProps) => {
   const theme = useTheme();
   // jumboXL preview card on sm screen size only, remove right margin
   const sm = useMediaQuery(theme.breakpoints.only("sm"))
-  const smDown = useMediaQuery(theme.breakpoints.down("sm"))
   const xsDown = useMediaQuery(theme.breakpoints.down("xs"))
 
   // const aClient = useApolloClient();
