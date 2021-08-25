@@ -7,7 +7,7 @@ import { Colors, BorderRadius } from "layout/AppTheme";
 import { useDispatch, useSelector } from "react-redux";
 import { Actions } from "reduxStore/actions";
 // Typings
-import { Product, SoldOutStatus } from "typings/gqlTypes";
+import { NewsItem, Product, SoldOutStatus } from "typings/gqlTypes";
 // Utils
 import ErrorBounds from "components/ErrorBounds";
 // Material UI
@@ -18,6 +18,9 @@ import DescriptionLoading from "components/ProductCardResponsive/DescriptionLoad
 // next
 import Link from "next/link";
 import { convertSoldOutStatus } from "utils/strings";
+import {
+  transformNewsItemToFields
+} from "pageComponents/Trending/transformNewsItemFields"
 
 
 
@@ -25,18 +28,39 @@ const ProductCardAsRow = (props: ReactProps) => {
 
   const {
     classes,
-    product,
+    newsItem,
   } = props;
 
-  const title = product?.currentSnapshot?.title
-  const make = product?.currentSnapshot?.make
-  const model = product?.currentSnapshot?.model
-  const featuredVariant = product?.featuredVariant;
-  const price = featuredVariant?.price;
-  const priceWas = featuredVariant?.priceWas;
-  const soldOutStatus = product?.soldOutStatus;
+  const {
+		model,
+		make,
+		caliber,
+		barrelLength,
+		action,
+		state,
+		soldOutStatus,
+		description,
+		price,
+		title,
+		serialNumber,
+		condition,
+		adType,
+		licenseNumber,
+		phoneNumber,
+		sourceSite,
+		sourceSiteUrl,
+		featuredPreviewItem,
+		previewItems,
+    isInternalProduct,
+    isSuspended,
+  } = transformNewsItemToFields(newsItem)
 
-  const dispatch = useDispatch();
+
+  let product = newsItem?.product ?? newsItem?.externalProduct
+  let featuredPreview = previewItems?.[0]
+
+  const priceWas = newsItem?.product?.featuredVariant?.priceWas;
+
 
   const cardWidthStyle = {
     // width: `calc(${100}vw - ${1+1}rem)`,
@@ -64,9 +88,9 @@ const ProductCardAsRow = (props: ReactProps) => {
             <a className={classes.flexRowLink}>
               <div className={classes.flexCol}>
                 {
-                  product?.featuredVariant?.previewItems?.[0] &&
+                  featuredPreview &&
                   <ProductPreviewCardRowSmall
-                    previewItem={product.featuredVariant.previewItems[0]}
+                    previewItem={featuredPreview}
                     className={classes.previewCard}
                     height={50}
                     width={50*1.5}
@@ -78,7 +102,7 @@ const ProductCardAsRow = (props: ReactProps) => {
                   <Typography
                     className={clsx(
                       classes.title,
-                      !featuredVariant.price ? "pulse" : null
+                      !price ? "pulse" : null
                     )}
                     variant="body1"
                     component="div"
@@ -96,26 +120,26 @@ const ProductCardAsRow = (props: ReactProps) => {
 
                 <div className={classes.flexCellItem}>
                   {
-                    product?.currentSnapshot?.actionType &&
+                    action &&
                     <div className={classes.actionTag}>
                       <Typography
                         className={classes.actionType}
                         variant="body2"
                         component="div"
                       >
-                        {product?.currentSnapshot?.actionType}
+                        {action}
                       </Typography>
                     </div>
                   }
                   {
-                    product?.currentSnapshot?.caliber &&
+                    caliber &&
                     <div className={classes.actionTag}>
                       <Typography
                         className={classes.actionType}
                         variant="body2"
                         component="div"
                       >
-                        {product?.currentSnapshot?.caliber}
+                        {caliber}
                       </Typography>
                     </div>
                   }
@@ -132,7 +156,7 @@ const ProductCardAsRow = (props: ReactProps) => {
                           price={price}
                           priceWas={priceWas}
                           soldOutStatus={soldOutStatus}
-                          isSuspended={product?.isSuspended}
+                          isSuspended={isSuspended}
                         />
                       : <span style={{ color: Colors.grey }}></span>
                     }
@@ -147,7 +171,8 @@ const ProductCardAsRow = (props: ReactProps) => {
 }
 
 interface ReactProps extends WithStyles<typeof styles> {
-  product: Product;
+  // product: Product;
+  newsItem: NewsItem;
 }
 
 const styles = (theme: Theme) => createStyles({

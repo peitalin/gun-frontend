@@ -3678,6 +3678,7 @@ export type NewsItemsConnection = {
   totalCount?: Maybe<Scalars['Int']>;
   pageInfo: PageInfo;
   edges: Array<NewsItemsEdge>;
+  facetsDistribution?: Maybe<FacetsDistributionObject>;
 };
 
 export type NewsItemsEdge = {
@@ -4949,8 +4950,8 @@ export type Query = {
   getExternalProductsBySourceSiteId: Array<External_Products>;
   /** Gets news item by Id */
   getNewsItemById?: Maybe<NewsItem>;
-  /** Gets news items between today and yesterday */
-  newsItemsSortByHotConnection?: Maybe<NewsItemsConnection>;
+  /** searches through all news items */
+  getNewsItemsSearchConnection?: Maybe<NewsItemsConnection>;
   /** Gets news items in the last 24hrs */
   getHotNewsItemsToday?: Maybe<NewsItemsConnection>;
   /** Gets news items between yesterday and the day before */
@@ -6442,8 +6443,9 @@ export type QueryGetNewsItemByIdArgs = {
 };
 
 
-export type QueryNewsItemsSortByHotConnectionArgs = {
+export type QueryGetNewsItemsSearchConnectionArgs = {
   query?: Maybe<ConnectionQuery>;
+  searchTerm?: Maybe<Scalars['String']>;
   sortByDate?: Maybe<Scalars['Boolean']>;
 };
 

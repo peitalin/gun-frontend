@@ -9,6 +9,7 @@ import { GenericConnection } from "typings";
 import {
   Order_By,
   ProductsConnection,
+  NewsItemsConnection,
   Product,
   FacetsDistributionObject,
   FacetAttributes,
@@ -505,14 +506,14 @@ export const useEffectUpdateGridAccum = <T>({
 export const totalItemsInCategoriesFacets = ({
   facets,
   facetsDistribution,
-  productsConnection,
+  itemsConnection,
   totalCount,
   searchTerm,
   pageParam,
 }:{
   facets: string[],
   facetsDistribution: FacetsDistributionObject,
-  productsConnection: ProductsConnection,
+  itemsConnection: ProductsConnection | NewsItemsConnection,
   totalCount: number,
   searchTerm: string,
   pageParam?: number,
@@ -537,7 +538,7 @@ export const totalItemsInCategoriesFacets = ({
 
   } else if (!!searchTerm) {
     // accumu connection will have more products, go with that length
-    let length1 = productsConnection?.edges?.length ?? 0
+    let length1 = itemsConnection?.edges?.length ?? 0
     let length2 = totalCount
     return length1 > length2 ? length1 : length2
 
@@ -553,7 +554,7 @@ export const totalItemsInIsPublishedFacet = ({
   priceRange,
   isPublished,
   facetsDistribution,
-  productsConnection,
+  itemsConnection,
   totalCount,
   limitOverfetchBy,
 }: {
@@ -561,7 +562,7 @@ export const totalItemsInIsPublishedFacet = ({
   priceRange?: number[],
   isPublished: boolean,
   facetsDistribution: FacetsDistributionObject,
-  productsConnection: ProductsConnection,
+  itemsConnection: ProductsConnection | NewsItemsConnection,
   totalCount: number,
   limitOverfetchBy: number,
 }) => {
@@ -575,7 +576,7 @@ export const totalItemsInIsPublishedFacet = ({
   // to total count will be smaller than N(isPublished||isNotPublished)
   // otherwise, go with N(isPublished || isNotPublished) facet counts
 
-  let plength = productsConnection?.edges?.length
+  let plength = itemsConnection?.edges?.length
 
   if (!!searchTerm) {
     // accum connection will have more products, go with that length

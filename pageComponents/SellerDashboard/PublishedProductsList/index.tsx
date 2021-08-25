@@ -182,7 +182,7 @@ const PublishedProductsList = (props: ReactProps) => {
     priceRange: priceRange,
     isPublished: true,
     facetsDistribution: connection?.facetsDistribution,
-    productsConnection: connection,
+    itemsConnection: connection,
     totalCount: totalCount,
     limitOverfetchBy: limit * overfetchBy
   })

@@ -9,6 +9,8 @@ import {
   ID,
   Product,
   ProductsConnection,
+  NewsItem,
+  NewsItemsConnection,
   Categories,
   ConnectionQuery,
   DealerState,
@@ -19,6 +21,9 @@ import { useRouter } from "next/router";
 import {
   GET_PRODUCTS_BY_CATEGORY,
  } from "queries/products-queries";
+import {
+  SEARCH_NEWS_ITEMS_CONNECTION,
+ } from "queries/news-items-queries";
 import { useQuery, useApolloClient } from "@apollo/client";
 // useMediaQuery
 import { useTheme } from "@material-ui/core/styles";
@@ -26,12 +31,11 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 // Components
 import Typography from "@material-ui/core/Typography";
 import AlignCenterLayout from "components/AlignCenterLayout";
-import Switch from '@material-ui/core/Switch';
-import ProductCardResponsive from "components/ProductCardResponsive";
+import NewsItemCardResponsive from "components/NewsItemCardResponsive";
 import ProductRowMedium from "components/ProductRowMedium";
-import ProductCardAsRow from "components/ProductCardAsRow";
+import NewsItemCardAsRow from "components/NewsItemCardAsRow";
 // Loading product cards
-import ProductRowMobileLoading from "components/ProductCardResponsive/ProductRowMobileLoading";
+import NewsItemRowMobileLoading from "components/NewsItemCardResponsive/NewsItemRowMobileLoading";
 import LoadingBar from "components/LoadingBar";
 import LoadingCards from "pageComponents/FrontPage/LoadingCards";
 import {
@@ -141,19 +145,39 @@ const CategoryId: React.FC<ReactProps> = (props) => {
   }, [mdDown])
 
 
+  // const { data, loading, error } = useQuery<QueryData1, QueryVar1>(
+  //   GET_PRODUCTS_BY_CATEGORY, {
+  //   variables: {
+  //     query: {
+  //       limit: limit,
+  //       offset: offset,
+  //     },
+  //     // categorySlug: props.initialRouteCategory?.slug ?? (router?.query?.categorySlug as any),
+  //     categorySlugs: categorySlugsForGql,
+  //     // require button click to change search
+  //     dealerStates: dealerStatesForGql,
+  //     calibers: calibersForGql,
+  //     actionTypes: actionTypesForGql,
+  //     searchTerm: searchTermForGql || "*",
+  //     // require button click to change search
+  //   },
+  //   fetchPolicy: "cache-and-network",
+  // });
+
   const { data, loading, error } = useQuery<QueryData1, QueryVar1>(
-    GET_PRODUCTS_BY_CATEGORY, {
+    SEARCH_NEWS_ITEMS_CONNECTION, {
     variables: {
       query: {
         limit: limit,
         offset: offset,
       },
-      // categorySlug: props.initialRouteCategory?.slug ?? (router?.query?.categorySlug as any),
-      categorySlugs: categorySlugsForGql,
-      // require button click to change search
-      dealerStates: dealerStatesForGql,
-      calibers: calibersForGql,
-      actionTypes: actionTypesForGql,
+      sortByDate: true,
+      // // categorySlug: props.initialRouteCategory?.slug ?? (router?.query?.categorySlug as any),
+      // categorySlugs: categorySlugsForGql,
+      // // require button click to change search
+      // dealerStates: dealerStatesForGql,
+      // calibers: calibersForGql,
+      // actionTypes: actionTypesForGql,
       searchTerm: searchTermForGql || "*",
       // require button click to change search
     },
@@ -169,23 +193,25 @@ const CategoryId: React.FC<ReactProps> = (props) => {
   }, [props.initialRouteCategory])
 
   React.useEffect(() => {
-    if (!loading && !!productsConnection?.totalCount) {
-      setTotalCount(productsConnection?.totalCount)
+    if (!loading && !!newsItemsConnection?.totalCount) {
+      setTotalCount(newsItemsConnection?.totalCount)
     }
   }, [loading])
 
-  const productsConnection = data?.productsByCategoryConnection
-    || props.initialProducts;
+  // const newsItemsConnection = data?.productsByCategoryConnection
+  //   || props.initialProducts;
+  const newsItemsConnection = data?.getNewsItemsSearchConnection
+    // || props.initialProducts;
 
 
   let totalItemsInFacet = totalItemsInCategoriesFacets({
     facets: facets,
-    facetsDistribution: productsConnection?.facetsDistribution as any,
-    productsConnection: productsConnection as any,
+    facetsDistribution: newsItemsConnection?.facetsDistribution as any,
+    itemsConnection: newsItemsConnection as any,
     totalCount: totalCount,
     searchTerm: searchTermForGql,
   })
-  // console.log("productsConnection: ", productsConnection)
+  // console.log("newsItemsConnection: ", newsItemsConnection)
   // console.log("totalItemsInFacet: ", totalItemsInFacet)
   // console.log("initialRouteCategory: ", props.initialRouteCategory)
   // console.log("categorySlug: ", categorySlug)
@@ -271,7 +297,7 @@ const CategoryId: React.FC<ReactProps> = (props) => {
         <div className={classes.sectionContainer}>
           {
             !loading &&
-            (productsConnection?.edges ?? []).length === 0 &&
+            (newsItemsConnection?.edges ?? []).length === 0 &&
             <div className={clsx(
               classes.flexCol,
               classes.width100,
@@ -284,10 +310,10 @@ const CategoryId: React.FC<ReactProps> = (props) => {
           }
           {
 
-            (productsConnection?.edges ?? []).length > 0 &&
-            <GridPaginatorGeneric<Product>
+            (newsItemsConnection?.edges ?? []).length > 0 &&
+            <GridPaginatorGeneric<NewsItem>
               index={index}
-              connection={productsConnection}
+              connection={newsItemsConnection}
               totalCount={totalCount}
               setTotalCount={setTotalCount}
               numItemsPerPage={numItemsPerPage}
@@ -304,7 +330,7 @@ const CategoryId: React.FC<ReactProps> = (props) => {
                     <LoadingCards count={1}/>
                   </ShowOnMobileOrDesktopSSR>
                   <ShowOnMobileOrDesktopSSR mobile>
-                    <ProductRowMobileLoading/>
+                    <NewsItemRowMobileLoading/>
                   </ShowOnMobileOrDesktopSSR>
                 </>
               }
@@ -313,9 +339,9 @@ const CategoryId: React.FC<ReactProps> = (props) => {
                 rowMode ? classes.gridItemRow : classes.gridItemCard
               }
             >
-              {({ node: product }) => {
+              {({ node: newsItem }) => {
                 return (
-                  <div key={product.id}
+                  <div key={newsItem.id}
                     className={clsx(
                       rowMode ? classes.flexItemRows : classes.flexItemCards,
                       classes.marginRight1,
@@ -323,8 +349,8 @@ const CategoryId: React.FC<ReactProps> = (props) => {
                   >
                     {
                       rowMode
-                        ? <ProductCardAsRow product={product}/>
-                        : <ProductCardResponsive product={product} />
+                        ? <NewsItemCardAsRow newsItem={newsItem}/>
+                        : <NewsItemCardResponsive newsItem={newsItem} />
                     }
                   </div>
                 )
@@ -348,10 +374,12 @@ interface ReactProps extends WithStyles<typeof styles> {
   bannerBlurb?: string;
 }
 interface QueryData1 {
-  productsByCategoryConnection: ProductsConnection
+  // productsByCategoryConnection: ProductsConnection
+  getNewsItemsSearchConnection: NewsItemsConnection
 }
 interface QueryVar1 {
   query: ConnectionQuery;
+  sortByDate?: boolean;
   categorySlugs?: string[];
   dealerStates?: string[];
   calibers?: string[];

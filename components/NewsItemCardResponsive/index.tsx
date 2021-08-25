@@ -1,13 +1,13 @@
 import React from "react";
 import clsx from "clsx";
 // Typings
-import { Product, SoldOutStatus } from "typings/gqlTypes";
+import { NewsItem, Product, SoldOutStatus } from "typings/gqlTypes";
 // Responsiveness
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import Hidden from "components/HiddenFix";
 // components
-import ProductCardRC from "./ProductCardRC";
+import NewsItemCardRC from "./NewsItemCardRC";
 import ProductRowMedium from "components/ProductRowMedium"
 
 
@@ -16,7 +16,7 @@ import ProductRowMedium from "components/ProductRowMedium"
 const NewsItemCardResponsive: React.FC<NewsItemCardResponsiveProps> = (props) => {
 
   const {
-    product,
+    newsItem,
     refetch,
     cardsPerRow = {
       xs: 1,
@@ -30,7 +30,9 @@ const NewsItemCardResponsive: React.FC<NewsItemCardResponsiveProps> = (props) =>
   } = props;
 
   // const theme = useTheme();
-  const featuredPreviewItem = product?.featuredVariant?.previewItems?.[0];
+  const featuredPreviewItem = newsItem?.product?.featuredVariant?.previewItems?.[0]
+    ?? newsItem?.externalProduct?.currentExternalProductSnapshot?.previewItems?.[0]
+
 
   const commonPreviewCardProps = {
     refetch: refetch,
@@ -44,7 +46,8 @@ const NewsItemCardResponsive: React.FC<NewsItemCardResponsiveProps> = (props) =>
     onMouseEnter: props.onMouseEnter,
     onMouseLeave: props.onMouseLeave,
     // hideActionType: xs || sm || md
-    hideActionType: product?.soldOutStatus !== SoldOutStatus.AVAILABLE,
+    hideActionType: newsItem?.product?.soldOutStatus !== SoldOutStatus.AVAILABLE
+      ?? !!newsItem?.externalProduct?.currentExternalProductSnapshot?.soldText,
     disableLoadingAnimation: props.disableLoadingAnimation,
     promotedSlotId: props.promotedSlotId,
   }
@@ -62,13 +65,14 @@ const NewsItemCardResponsive: React.FC<NewsItemCardResponsiveProps> = (props) =>
           xsCardRow
           ? <ProductRowMedium
               loading={props.loading}
-              product={product}
+              product={newsItem?.product}
+              externalProduct={newsItem?.externalProduct}
             />
           // ? <ProductCardAsRow
-          //     product={product}
+          //     newsItem={newsItem}
           //   />
-          : <ProductCardRC
-              product={product}
+          : <NewsItemCardRC
+              newsItem={newsItem}
               {...commonPreviewCardProps}
               screenSize={"xs"}
               cardsPerRow={cardsPerRow.xs} // 1 default
@@ -79,8 +83,8 @@ const NewsItemCardResponsive: React.FC<NewsItemCardResponsiveProps> = (props) =>
 
       {/* sm + md  */}
       <Hidden only={["xs", "sm", "lg", "xl"]} implementation="css">
-        <ProductCardRC
-          product={product}
+        <NewsItemCardRC
+          newsItem={newsItem}
           {...commonPreviewCardProps}
           screenSize={"md"}
           cardsPerRow={cardsPerRow.md} // 2 default
@@ -89,8 +93,8 @@ const NewsItemCardResponsive: React.FC<NewsItemCardResponsiveProps> = (props) =>
 
       {/* lg */}
       <Hidden only={["xs", "sm", "md", "xl"]} implementation="css">
-        <ProductCardRC
-          product={product}
+        <NewsItemCardRC
+          newsItem={newsItem}
           {...commonPreviewCardProps}
           screenSize={"lg"}
           cardsPerRow={cardsPerRow.lg} // 3 default
@@ -99,8 +103,8 @@ const NewsItemCardResponsive: React.FC<NewsItemCardResponsiveProps> = (props) =>
 
       {/* xl */}
       <Hidden only={["xs", "sm", "md", "lg"]} implementation="css">
-        <ProductCardRC
-          product={product}
+        <NewsItemCardRC
+          newsItem={newsItem}
           {...commonPreviewCardProps}
           screenSize={"xl"}
           cardsPerRow={cardsPerRow.xl} // 4 default
@@ -112,7 +116,8 @@ const NewsItemCardResponsive: React.FC<NewsItemCardResponsiveProps> = (props) =>
 
 
 interface NewsItemCardResponsiveProps {
-  product: Product;
+  // newsItem: Product;
+  newsItem: NewsItem;
   refetch?(): void;
   showWatchlistButton?: boolean;
   cardsPerRow?: {

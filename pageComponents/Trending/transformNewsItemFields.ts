@@ -20,6 +20,7 @@ export interface NewsItemFields {
 	soldOutStatus: string
 	description: string
 	price: number
+	priceWas?: number
 	title: string
 	serialNumber: string
 	condition: string
@@ -31,6 +32,7 @@ export interface NewsItemFields {
 	featuredPreviewItem: Product_Preview_Items
 	previewItems: Product_Preview_Items[]
 	isInternalProduct: boolean
+	isSuspended: boolean
 }
 
 export const transformNewsItemToFields = (
@@ -87,6 +89,8 @@ export const transformNewsItemToFields = (
 		? featuredVariant?.price
 		: externalPSnapshot?.price
 
+  const priceWas = newsItem?.product?.featuredVariant?.priceWas
+
   const title = isInternalProduct
 		? pSnapshot?.title
 		: externalPSnapshot?.title
@@ -124,6 +128,9 @@ export const transformNewsItemToFields = (
 
   const featuredPreviewItem = previewItems?.[0]
 
+	const isSuspended = newsItem?.isSuspended
+		|| internalProduct?.isSuspended
+
 	return {
 		productId,
 		externalProductId,
@@ -136,6 +143,7 @@ export const transformNewsItemToFields = (
 		soldOutStatus,
 		description,
 		price,
+		priceWas,
 		title,
 		serialNumber,
 		condition,
@@ -147,6 +155,7 @@ export const transformNewsItemToFields = (
 		featuredPreviewItem,
 		previewItems,
 		isInternalProduct,
+		isSuspended,
 	}
 }
 
@@ -204,6 +213,8 @@ export const transformExternalProductToFields = (
 		? featuredVariant?.price
 		: externalPSnapshot?.price
 
+  const priceWas = featuredVariant?.priceWas
+
   const title = isInternalProduct
 		? pSnapshot?.title
 		: externalPSnapshot?.title
@@ -242,6 +253,8 @@ export const transformExternalProductToFields = (
 
   const featuredPreviewItem = previewItems?.[0]
 
+	const isSuspended = internalProduct?.isSuspended
+
 	return {
 		productId,
 		externalProductId,
@@ -254,6 +267,7 @@ export const transformExternalProductToFields = (
 		soldOutStatus,
 		description,
 		price,
+		priceWas,
 		title,
 		serialNumber,
 		condition,
@@ -265,5 +279,6 @@ export const transformExternalProductToFields = (
 		featuredPreviewItem,
 		previewItems,
 		isInternalProduct,
+		isSuspended,
 	}
 }

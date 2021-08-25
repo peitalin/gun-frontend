@@ -125,7 +125,7 @@ const StoresId: React.FC<ReactProps> = (props) => {
   let totalItemsInFacet = totalItemsInCategoriesFacets({
     facets: facets,
     facetsDistribution: productsForSaleConnection?.facetsDistribution,
-    productsConnection: productsForSaleConnection,
+    itemsConnection: productsForSaleConnection,
     totalCount: totalCount,
     searchTerm: searchTerm,
   })

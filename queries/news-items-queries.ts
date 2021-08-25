@@ -17,9 +17,17 @@ export const GET_NEWS_ITEM_BY_ID = gql`
 `;
 
 
-export const NEWS_ITEMS_SORT_BY_HOT_CONNECTION = gql`
-  query($query: ConnectionQuery) {
-    newsItemsSortByHotConnection(query: $query) {
+export const SEARCH_NEWS_ITEMS_CONNECTION = gql`
+  query(
+    $query: ConnectionQuery
+    $searchTerm: String
+    $sortByDate: Boolean
+  ) {
+    getNewsItemsSearchConnection(
+      query: $query
+      searchTerm: $searchTerm
+      sortByDate: $sortByDate
+    ) {
       edges {
         node {
           ...NewsItemFragment
