@@ -66,7 +66,7 @@ const CategorySearchbar: React.FC<ReactProps & FacetSearchParams> = (props) => {
 
   return (
     <div className={classes.searchContainer}>
-      <SaveSearchModal
+      {/* <SaveSearchModal
         searchTerm={searchTerm}
         categorySlug={currentCategories?.[0]?.slug}
         caliber={calibers?.[0]}
@@ -76,7 +76,7 @@ const CategorySearchbar: React.FC<ReactProps & FacetSearchParams> = (props) => {
           top: props.isMobile ? '4rem' : '1rem',
           right: props.isMobile ? '0.5rem' : '2rem',
         }}
-      />
+      /> */}
       <div className={
           props.isMobile
           ? props.focusedOuter
