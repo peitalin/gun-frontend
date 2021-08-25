@@ -35,7 +35,7 @@ const CategoryBarMobile: React.FC<ReactProps> = (props) => {
                 classes.categoryLinkAllMobile,
                 router.asPath === '/new' && classes.categoryLinkTextSelected,
               )}>
-                New
+                Search New
               </Typography>
             </a>
           </Link>
@@ -53,7 +53,7 @@ const CategoryBarMobile: React.FC<ReactProps> = (props) => {
           </Link> */}
 
 
-          {
+          {/* {
             (props?.categories ?? []).map(category => {
               return (
                 <a key={category.id}
@@ -69,18 +69,8 @@ const CategoryBarMobile: React.FC<ReactProps> = (props) => {
                 </a>
               )
             })
-          }
+          } */}
 
-          {/* <Link href={`/categories`}>
-            <a className={classes.categoryLink}>
-              <Typography className={clsx(
-                classes.categoryLinkAllMobile,
-                router.asPath === '/categories' && classes.categoryLinkTextSelected,
-              )}>
-                All Categories
-              </Typography>
-            </a>
-          </Link> */}
 
 
           <Link href={`/trending`}>
@@ -90,6 +80,18 @@ const CategoryBarMobile: React.FC<ReactProps> = (props) => {
                 router.asPath === '/trending' && classes.categoryLinkTextSelected,
               )}>
                 Trending
+              </Typography>
+            </a>
+          </Link>
+
+
+          <Link href={`/sell`}>
+            <a className={classes.categoryLink}>
+              <Typography className={clsx(
+                classes.categoryLinkAllMobile,
+                router.asPath === '/sell' && classes.categoryLinkTextSelected,
+              )}>
+                Upload Listing
               </Typography>
             </a>
           </Link>

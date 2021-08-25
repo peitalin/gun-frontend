@@ -9,7 +9,7 @@ import {
 } from "layout/AppTheme";
 // MUI
 import Typography from "@material-ui/core/Typography";
-import { useScrollYPosition } from "utils/hooks";
+// import { useScrollYPosition } from "utils/hooks";
 // hooks
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -23,6 +23,7 @@ import {
   logoBackgroundColorLight,
   logoBackgroundColorLight2,
 } from "../styles"
+import SearchIcon from '@material-ui/icons/Search';
 
 
 
@@ -39,7 +40,7 @@ const CategoryBarDesktop: React.FC<ReactProps> = (props) => {
   let theme = useTheme()
   // let y = useScrollYPosition()
 
-  const alwaysShowBar = !isMainPage && !isFeaturedPage && !isStartPage && !isSellPage
+  // const alwaysShowBar = !isMainPage && !isFeaturedPage && !isStartPage && !isSellPage
   let router = useRouter()
   // console.log("router:", router.asPath)
 
@@ -50,12 +51,6 @@ const CategoryBarDesktop: React.FC<ReactProps> = (props) => {
       //
       classes.categoryBarShow,
       classes.categoryBarTopOffsetSmall
-      // (y >= Y_SCROLL_NAVBAR_SHOW || alwaysShowBar)
-      //   ? classes.categoryBarShow
-      //   : classes.categoryBarHidden,
-      // (y >= Y_SCROLL_NAVBAR_SHOW || alwaysShowBar)
-      //   ? classes.categoryBarTopOffsetSmall
-      //   : classes.categoryBarTopOffsetBig,
     )}>
       <div className={clsx(
         classes.catBarInnerDashboard,
@@ -65,26 +60,22 @@ const CategoryBarDesktop: React.FC<ReactProps> = (props) => {
 
           <Link href={`/new`}>
             <a className={classes.categoryLink}>
-              <Typography className={clsx(
+              <div className={clsx(
                 classes.categoryLinkTextMain,
                 router.asPath.startsWith('/new') && classes.categoryLinkTextSelected,
               )}>
-                What's New
-              </Typography>
+                <SearchIcon style={{
+                  marginRight: '0.2rem',
+                  fill: router.asPath.startsWith('/new')
+                    ? Colors.purple
+                    : isThemeDark(theme)
+                      ? Colors.uniswapLightestGrey
+                      : Colors.slateGreyBlack
+                }}/>
+                Search New
+              </div>
             </a>
           </Link>
-
-          {/* <Link href={`/sale`}>
-            <a className={classes.categoryLink}>
-              <Typography className={clsx(
-                classes.categoryLinkTextMain,
-                classes.categoryLinkTextMainHeight,
-                router.pathname.startsWith('/sale') && classes.categoryLinkTextSelected,
-              )}>
-                Price Reduced
-              </Typography>
-            </a>
-          </Link> */}
 
 
           {/* <Link href={`/sold`}>
@@ -100,7 +91,7 @@ const CategoryBarDesktop: React.FC<ReactProps> = (props) => {
           </Link> */}
 
 
-          {
+          {/* {
             (props?.categories ?? []).map(category => {
               // console.log("cateogyr: ", category)
               return (
@@ -119,18 +110,8 @@ const CategoryBarDesktop: React.FC<ReactProps> = (props) => {
                 </Link>
               )
             })
-          }
+          } */}
 
-          {/* <Link href="/categories">
-            <a className={classes.categoryLink} >
-              <Typography className={clsx(
-                classes.categoryLinkTextMain,
-                router.asPath === '/categories' && classes.categoryLinkTextSelected,
-              )}>
-                All Categories
-              </Typography>
-            </a>
-          </Link> */}
 
 
           <Link href="/trending">
@@ -140,6 +121,18 @@ const CategoryBarDesktop: React.FC<ReactProps> = (props) => {
                 router.asPath === '/trending' && classes.categoryLinkTextSelected,
               )}>
                 Trending
+              </Typography>
+            </a>
+          </Link>
+
+
+          <Link href="/sell">
+            <a className={classes.categoryLink} >
+              <Typography className={clsx(
+                classes.categoryLinkTextMain,
+                router.asPath === '/sell' && classes.categoryLinkTextSelected,
+              )}>
+                Upload Listing
               </Typography>
             </a>
           </Link>

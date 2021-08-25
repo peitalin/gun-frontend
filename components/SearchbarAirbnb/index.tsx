@@ -352,7 +352,9 @@ const SearchbarAirbnb: React.FC<ReactProps> = (props) => {
               if (paginationParams?.setPageParam) {
                 paginationParams.setPageParam(page)
               }
+              //////////////////// adding this lags page transitions
               // setIndex(page - 1)
+
               // then update pageParams (gQL request) + index change in carousel
               // debounceSetPageParam(page)
               // debounceSetIndex(page - 1)

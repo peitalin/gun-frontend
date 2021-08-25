@@ -138,11 +138,13 @@ const CategoryId: React.FC<ReactProps> = (props) => {
   )
 
   // rowMode by default on mobile
-  const [rowMode, setRowMode] = React.useState(mdDown)
+  // const [rowMode, setRowMode] = React.useState(mdDown)
+  // rowMode by default
+  const [rowMode, setRowMode] = React.useState(true)
 
-  React.useEffect(() => {
-    setRowMode(mdDown)
-  }, [mdDown])
+  // React.useEffect(() => {
+  //   setRowMode(mdDown)
+  // }, [mdDown])
 
 
   // const { data, loading, error } = useQuery<QueryData1, QueryVar1>(

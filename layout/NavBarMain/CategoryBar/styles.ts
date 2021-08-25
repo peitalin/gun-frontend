@@ -243,4 +243,13 @@ export const styles = (theme: Theme) => createStyles({
     flexDirection: 'column',
     flexWrap: 'wrap',
   },
+  searchIcon: {
+    width: theme.spacing(6),
+    height: '100%',
+    // position: 'absolute',
+    pointerEvents: 'none',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 });

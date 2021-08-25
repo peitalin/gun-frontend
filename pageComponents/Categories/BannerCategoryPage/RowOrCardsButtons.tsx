@@ -23,14 +23,6 @@ const RowOrCardsButtons: React.FC<ReactProps> = (props) => {
   } = props;
 
 
-  React.useEffect(() => {
-    if (isMobile) {
-      setRowMode(true)
-    } else {
-      setRowMode(false)
-    }
-  }, [])
-
   return (
     <div className={
       isMobile ? classes.rowToggleContainerMobile : classes.rowToggleContainerDesktop
