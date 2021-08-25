@@ -291,13 +291,13 @@ const NewsItemCardDetails = (props: ReactProps) => {
                     value={action}
                   />
                 }
-                {
+                {/* {
                   barrelLength &&
                   <TextInfoRow className={classes.textLine}
                     title={"Barrel Length"}
                     value={barrelLength}
                   />
-                }
+                } */}
                 <TextInfoRow className={classes.textLine}
                   title={"Serial Number"}
                   value={serialNumber}
@@ -313,10 +313,10 @@ const NewsItemCardDetails = (props: ReactProps) => {
                   value={condition}
                 />
 
-                <TextInfoRow className={classes.textLine}
+                {/* <TextInfoRow className={classes.textLine}
                   title={"Phone"}
                   value={phoneNumber}
-                />
+                /> */}
 
 
                 <div className={classes.priceContainer}>
