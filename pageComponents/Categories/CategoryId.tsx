@@ -65,7 +65,7 @@ const CategoryId: React.FC<ReactProps> = (props) => {
 
 
   /////////////////////////////////// paginator
-  let numItemsPerPage = 12;
+  let numItemsPerPage = 20;
   let overfetchBy = 1;
   // overfetch by 2x pages
 
