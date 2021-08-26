@@ -448,7 +448,7 @@ export const styles = (theme: Theme) => createStyles({
       ? `1px solid ${Colors.uniswapGrey}`
       : `1px solid ${Colors.slateGreyDark}`,
     backgroundColor: isThemeDark(theme)
-      ? Colors.uniswapMediumNavy
+      ? Colors.uniswapDarkNavy
       : Colors.cream,
     position: "relative",
     overflow: 'hidden',

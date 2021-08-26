@@ -248,7 +248,7 @@ const styles = (theme: Theme) => createStyles({
     borderRadius: `${BorderRadius}px`,
     backgroundColor: theme.palette.type === 'dark'
       ? theme.colors.uniswapDarkNavy
-      : theme.colors.slateGrey,
+      : theme.colors.cream,
   },
   flexColOuter: {
     display: 'flex',
