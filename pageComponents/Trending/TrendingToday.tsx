@@ -164,7 +164,7 @@ export const TrendingToday: React.FC<ReactProps> = (props) => {
     <TrendFeedLayout
       tab={tab}
       setTab={setTab}
-      title={"Trending Today"}
+      title={"Trending Today (Last 24hrs)"}
     >
       <TrendingFeedColumn60
         newsItemsHot={newsItemsHot}
