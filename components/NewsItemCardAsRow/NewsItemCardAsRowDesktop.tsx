@@ -67,8 +67,6 @@ const NewsItemCardAsRow = (props: ReactProps) => {
 
   const priceWas = newsItem?.product?.featuredVariant?.priceWas;
 
-  console.log("price: ", price)
-
 
   return (
     <ErrorBounds className={clsx(
@@ -193,7 +191,6 @@ const NewsItemCardAsRow = (props: ReactProps) => {
 }
 
 interface ReactProps extends WithStyles<typeof styles> {
-  // product: Product;
   newsItem: NewsItem;
 }
 

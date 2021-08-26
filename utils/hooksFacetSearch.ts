@@ -73,6 +73,7 @@ export const useFacetSearchOptions = ({
   const initialSearchTerm = !!router?.query?.q
     ? decodeURIComponent(router?.query?.q as string)
     : ""
+  // const initialSearchTerm = ""
 
   const initialPageParam = !!router?.query?.page
     ? parseInt(decodeURIComponent(router?.query?.page as string))
@@ -141,8 +142,17 @@ export const useFacetSearchOptions = ({
 
   //////// Set searchTerm and pageParam from url query params when they change
   /// for example, then pasting urls
+  // ONLY ON initial render
   React.useEffect(() => {
-    setSearchTerm(initialSearchTerm)
+    // check initialSearchTerm is not falsey, so that there is no
+    // infinite loop with the hooks when syncing q= params below
+    // (specifally, hooks removing q= from the url)
+    if (
+      initialSearchTerm !== undefined
+      && initialSearchTerm !== ""
+    ) {
+      setSearchTerm(initialSearchTerm)
+    }
   }, [initialSearchTerm])
 
   React.useEffect(() => {
@@ -227,9 +237,13 @@ export const useFacetSearchOptions = ({
         }).filter(p => !!p)
       }
 
-      // console.log('serachTerm:', searchTerm)
+      console.log("searchTerm >", searchTerm)
+      console.log("searchTerm !== undefined", searchTerm !== undefined)
+      console.log("searchTerm !== ''", searchTerm !== "")
+      // console.log('searchTerm:', searchTerm)
       // Sync url to facetHooks searchterm params
       if (searchTerm !== undefined && searchTerm !== "") {
+          console.log("q1 params>>>>>>>>>>>>", params)
         if (!params.some(p => p.startsWith("q="))) {
           // search query doesnt yet exist, add q param
           params = [`q=${searchTerm}`, ...params]
@@ -242,8 +256,12 @@ export const useFacetSearchOptions = ({
             }
           })
           params = params2
-          // console.log("params>>>>>>>>>>>>", params2)
         }
+      } else {
+        // remove q= query param for empty search terms
+        let params2 = params.filter(param => !param.includes("q="))
+        // console.log("q2 params>>>>>>>>>>>>", params2)
+        params = params2
       }
 
       // Sync page params if larger than page 1
@@ -269,9 +287,11 @@ export const useFacetSearchOptions = ({
 
       // console.log("params before join: ", params)
       let params_str: string = params.join('&')
-      // console.log("params_str after join: ", params_str)
+      console.log("params_str after join: ", params_str)
       if (params_str) {
         params_str = `?${params_str}`
+      } else {
+        params_str = ''
       }
 
       if (syncUrlParams) {

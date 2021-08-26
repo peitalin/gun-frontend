@@ -121,7 +121,7 @@ const styles = (theme: Theme) => createStyles({
   },
   adTypePrivate: {
     background: Colors.yellow,
-    minWidth: 125,
+    minWidth: 115,
   },
   adTypeDealer: {
     background: Colors.orange,
