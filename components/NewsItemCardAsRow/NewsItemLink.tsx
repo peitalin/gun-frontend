@@ -1,0 +1,71 @@
+
+import React from "react";
+import clsx from "clsx";
+import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
+import { Colors, BorderRadius } from "layout/AppTheme";
+// Typings
+import { NewsItem } from "typings/gqlTypes";
+// next
+import Link from "next/link";
+
+
+
+
+const NewsItemLink: React.FC<ReactProps> = (props) => {
+
+  const {
+    classes,
+    newsItem,
+  } = props;
+
+  let internalProduct = newsItem?.product
+  let externalProduct = newsItem?.externalProduct
+
+  if (externalProduct?.id && externalProduct?.sourceSiteUrl) {
+    return (
+      <a className={classes.flexRowLink}
+        target={"_blank"}
+        href={externalProduct?.sourceSiteUrl}
+      >
+        {props.children}
+      </a>
+    )
+  } else {
+    return (
+      <Link
+        href={"/p/[productId]"}
+        as={`/p/${internalProduct?.id}`}
+      >
+        <a className={classes.flexRowLink}>
+          {props.children}
+        </a>
+      </Link>
+    )
+  }
+}
+
+interface ReactProps extends WithStyles<typeof styles> {
+  newsItem: NewsItem;
+}
+
+const styles = (theme: Theme) => createStyles({
+  flexRow: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    width: '100%',
+  },
+  flexRowLink: {
+    display: 'flex',
+    flexDirection: 'row',
+    // alignItems: 'flex-start',
+    // justifyContent: 'flex-start',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
+  },
+});
+
+
+
+export default withStyles(styles)(NewsItemLink);

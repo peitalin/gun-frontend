@@ -21,10 +21,16 @@ import { convertSoldOutStatus } from "utils/strings";
 import {
   transformNewsItemToFields
 } from "pageComponents/Trending/transformNewsItemFields"
+import AdType from "components/NewsItemChips/AdType";
+import SourceSiteChip from "components/NewsItemChips/SourceSiteChip";
+import VerifiedChip from "components/NewsItemChips/VerifiedChip";
+import NewsItemLink from "./NewsItemLink"
 
 
 
-const ProductCardAsRow = (props: ReactProps) => {
+
+
+const NewsItemCardAsRow = (props: ReactProps) => {
 
   const {
     classes,
@@ -68,6 +74,8 @@ const ProductCardAsRow = (props: ReactProps) => {
     // getCardMaxWidth(cardsPerRow)
   };
 
+  console.log("price: ", price)
+
 
   return (
     <ErrorBounds className={clsx(
@@ -81,90 +89,104 @@ const ProductCardAsRow = (props: ReactProps) => {
             style={cardWidthStyle}
             height={'100%'}
           />
-        : <Link
-            href={"/p/[productId]"}
-            as={`/p/${product?.id}`}
-          >
-            <a className={classes.flexRowLink}>
-              <div className={classes.flexCol}>
+        : <NewsItemLink newsItem={newsItem}>
+            <div className={classes.flexCol}>
+              {
+                featuredPreview &&
+                <ProductPreviewCardRowSmall
+                  previewItem={featuredPreview}
+                  className={classes.previewCard}
+                  height={50}
+                  width={50*1.5}
+                />
+              }
+            </div>
+            <div className={classes.flexRow}>
+              <div className={classes.flexCellItem}>
+                <Typography
+                  className={clsx(
+                    classes.title,
+                    !price ? "pulse" : null
+                  )}
+                  variant="body1"
+                  component="div"
+                >
+                  { title ? title : "" }
+                </Typography>
+                <Typography
+                  className={classes.makeModel}
+                  variant="body2"
+                  component="div"
+                >
+                  {`${make} - ${model}`}
+                </Typography>
+              </div>
+
+              <div className={classes.flexCellItem}>
                 {
-                  featuredPreview &&
-                  <ProductPreviewCardRowSmall
-                    previewItem={featuredPreview}
-                    className={classes.previewCard}
-                    height={50}
-                    width={50*1.5}
-                  />
+                  action &&
+                  <div className={classes.actionTag}>
+                    <Typography
+                      className={classes.actionType}
+                      variant="body2"
+                      component="div"
+                    >
+                      {action}
+                    </Typography>
+                  </div>
+                }
+                {
+                  caliber &&
+                  <div className={classes.actionTag}>
+                    <Typography
+                      className={classes.actionType}
+                      variant="body2"
+                      component="div"
+                    >
+                      {caliber}
+                    </Typography>
+                  </div>
                 }
               </div>
-              <div className={classes.flexRow}>
-                <div className={classes.flexCellItem}>
-                  <Typography
-                    className={clsx(
-                      classes.title,
-                      !price ? "pulse" : null
-                    )}
-                    variant="body1"
-                    component="div"
-                  >
-                    { title ? title : "" }
-                  </Typography>
-                  <Typography
-                    className={classes.makeModel}
-                    variant="body2"
-                    component="div"
-                  >
-                    {`${make} - ${model}`}
-                  </Typography>
-                </div>
 
-                <div className={classes.flexCellItem}>
+              <div className={classes.flexCellItemSmall}>
+                <div className={clsx(
+                  classes.priceAbsoluteBottom,
+                  !price ? "pulse" : null
+                )}>
                   {
-                    action &&
-                    <div className={classes.actionTag}>
-                      <Typography
-                        className={classes.actionType}
-                        variant="body2"
-                        component="div"
-                      >
-                        {action}
-                      </Typography>
-                    </div>
+                    price
+                    ? <PriceDisplayMain
+                        price={price}
+                        priceWas={priceWas}
+                        soldOutStatus={soldOutStatus}
+                        isSuspended={isSuspended}
+                      />
+                    : <span style={{ color: Colors.grey }}></span>
                   }
-                  {
-                    caliber &&
-                    <div className={classes.actionTag}>
-                      <Typography
-                        className={classes.actionType}
-                        variant="body2"
-                        component="div"
-                      >
-                        {caliber}
-                      </Typography>
-                    </div>
-                  }
-                </div>
-
-                <div className={classes.flexCellItemSmall}>
-                  <div className={clsx(
-                    classes.priceAbsoluteBottom,
-                    !price ? "pulse" : null
-                  )}>
-                    {
-                      price
-                      ? <PriceDisplayMain
-                          price={price}
-                          priceWas={priceWas}
-                          soldOutStatus={soldOutStatus}
-                          isSuspended={isSuspended}
-                        />
-                      : <span style={{ color: Colors.grey }}></span>
-                    }
-                  </div>
                 </div>
               </div>
-            </a>
-          </Link>
+
+
+              {/* <div className={classes.flexCellItemSmall}>
+
+                <SourceSiteChip sourceSite={sourceSite}/>
+
+                <AdType
+                  productId={newsItem?.productId}
+                  adType={adType}
+                  sourceSiteUrl={sourceSiteUrl}
+                />
+
+                {
+                  newsItem?.product?.sellerLicense?.verified &&
+                  <VerifiedChip
+                    title={"Verified Seller"}
+                  />
+                }
+              </div> */}
+            </div>
+          </NewsItemLink>
       }
     </ErrorBounds>
   );
@@ -302,4 +324,4 @@ const styles = (theme: Theme) => createStyles({
 
 
 
-export default withStyles(styles)(ProductCardAsRow);
+export default withStyles(styles)(NewsItemCardAsRow);

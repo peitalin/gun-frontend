@@ -107,8 +107,9 @@ export const styles = (theme: Theme) => createStyles({
     marginBottom: "0.5rem",
   },
   categoryLink: {
-    marginRight: '0.5rem',
-    minWidth: 80,
+    marginRight: '0.75rem',
+    marginLeft: '0.75rem',
+    minWidth: 40,
     height: '100%',
   },
   categoryLinkAllMobile: {
@@ -142,8 +143,8 @@ export const styles = (theme: Theme) => createStyles({
       : Colors.black,
     minWidth: '50px',
     whiteSpace: 'nowrap',
-    fontSize: '0.825rem',
-    fontWeight: 500,
+    fontSize: '0.9rem',
+    fontWeight: 600,
     // bottom border
     display: 'flex',
     justifyContent: 'center',

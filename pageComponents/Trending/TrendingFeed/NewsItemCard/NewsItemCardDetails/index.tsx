@@ -39,10 +39,10 @@ import {
 // Snackbar
 import { useSnackbar } from "notistack";
 import ButtonLoading from "components/ButtonLoading";
-import AdType from "./AdType";
-import SourceSiteChip from "./SourceSiteChip";
+import AdType from "components/NewsItemChips/AdType";
+import SourceSiteChip from "components/NewsItemChips/SourceSiteChip";
+import VerifiedChip from "components/NewsItemChips/VerifiedChip";
 import DescriptionText from "./DescriptionText";
-import VerifiedChip from "./VerifiedChip";
 
 import CollectionsIcon from 'components/Collections/CollectionsIcon';
 import NewsItemAdminSuspendIcon from "components/NewsItems/NewsItemAdminSuspendIcon"

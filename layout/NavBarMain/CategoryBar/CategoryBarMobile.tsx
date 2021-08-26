@@ -29,16 +29,6 @@ const CategoryBarMobile: React.FC<ReactProps> = (props) => {
       <div className={clsx(classes.catBarInnerDashboard)}>
         <div className={classes.categoryBarInnerMobile}>
 
-          <Link href={`/new`}>
-            <a className={classes.categoryLink}>
-              <Typography className={clsx(
-                classes.categoryLinkAllMobile,
-                router.asPath === '/new' && classes.categoryLinkTextSelected,
-              )}>
-                Search New
-              </Typography>
-            </a>
-          </Link>
 
           {/* <Link href={`/sale`}>
             <a className={classes.categoryLink}>
@@ -72,7 +62,6 @@ const CategoryBarMobile: React.FC<ReactProps> = (props) => {
           } */}
 
 
-
           <Link href={`/trending`}>
             <a className={classes.categoryLink}>
               <Typography className={clsx(
@@ -84,6 +73,16 @@ const CategoryBarMobile: React.FC<ReactProps> = (props) => {
             </a>
           </Link>
 
+          <Link href={`/new`}>
+            <a className={classes.categoryLink}>
+              <Typography className={clsx(
+                classes.categoryLinkAllMobile,
+                router.asPath === '/new' && classes.categoryLinkTextSelected,
+              )}>
+                Search New
+              </Typography>
+            </a>
+          </Link>
 
           <Link href={`/sell`}>
             <a className={classes.categoryLink}>

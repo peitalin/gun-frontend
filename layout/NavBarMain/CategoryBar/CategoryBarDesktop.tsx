@@ -24,6 +24,7 @@ import {
   logoBackgroundColorLight2,
 } from "../styles"
 import SearchIcon from '@material-ui/icons/Search';
+import ArrowStripeIcon from "components/ArrowStripeIcon"
 
 
 
@@ -37,7 +38,8 @@ const CategoryBarDesktop: React.FC<ReactProps> = (props) => {
     isSellPage,
   } = props;
 
-  const [hover, setHover] = React.useState(false)
+  const [hoverSearch, setHoverSearch] = React.useState(false)
+  const [hoverStripeArrow, setHoverStripeArrow] = React.useState(false)
 
   let theme = useTheme()
   // let y = useScrollYPosition()
@@ -59,30 +61,6 @@ const CategoryBarDesktop: React.FC<ReactProps> = (props) => {
         classes.catBarInnerDashboardDesktop
       )}>
         <div className={classes.categoryBarInner}>
-
-          <Link href={`/new`}>
-            <a className={classes.categoryLink}
-              onMouseEnter={() => setHover(true)}
-              onMouseLeave={() => setHover(false)}
-            >
-              <div className={clsx(
-                classes.categoryLinkTextMain,
-                router.asPath.startsWith('/new') && classes.categoryLinkTextSelected,
-              )}>
-                <SearchIcon style={{
-                  marginRight: '0.2rem',
-                  fill: (router.asPath.startsWith('/new') || hover)
-                    ? isThemeDark(theme)
-                      ? Colors.purple
-                      : Colors.ultramarineBlue
-                    : isThemeDark(theme)
-                      ? Colors.uniswapLightestGrey
-                      : Colors.slateGreyBlack
-                }}/>
-                Search New
-              </div>
-            </a>
-          </Link>
 
 
           {/* <Link href={`/sold`}>
@@ -132,15 +110,52 @@ const CategoryBarDesktop: React.FC<ReactProps> = (props) => {
             </a>
           </Link>
 
+          <Link href={`/new`}>
+            <a className={classes.categoryLink}
+              onMouseEnter={() => setHoverSearch(true)}
+              onMouseLeave={() => setHoverSearch(false)}
+            >
+              <div className={clsx(
+                classes.categoryLinkTextMain,
+                router.asPath.startsWith('/new') && classes.categoryLinkTextSelected,
+              )}>
+                <SearchIcon style={{
+                  marginRight: '0rem',
+                  fill: (router.asPath.startsWith('/new') || hoverSearch)
+                    ? isThemeDark(theme)
+                      ? Colors.purple
+                      : Colors.ultramarineBlue
+                    : isThemeDark(theme)
+                      ? Colors.uniswapLightGrey
+                      : Colors.black
+                }}/>
+                Search New
+              </div>
+            </a>
+          </Link>
+
 
           <Link href="/sell">
-            <a className={classes.categoryLink} >
-              <Typography className={clsx(
-                classes.categoryLinkTextMain,
-                router.asPath === '/sell' && classes.categoryLinkTextSelected,
-              )}>
-                Upload Listing
-              </Typography>
+            <a className={classes.categoryLink}
+              onMouseEnter={() => setHoverStripeArrow(true)}
+              onMouseLeave={() => setHoverStripeArrow(false)}
+            >
+              <ArrowStripeIcon
+                className={clsx(
+                  classes.categoryLinkTextMain,
+                  router.asPath === '/sell' && classes.categoryLinkTextSelected,
+                )}
+                title={"Upload Listing"}
+                color={
+                  (router.asPath === '/sell' || hoverStripeArrow)
+                    ? isThemeDark(theme)
+                      ? Colors.purple
+                      : Colors.ultramarineBlue
+                    : isThemeDark(theme)
+                      ? Colors.uniswapLightGrey
+                      : Colors.black
+                }
+              />
             </a>
           </Link>
 

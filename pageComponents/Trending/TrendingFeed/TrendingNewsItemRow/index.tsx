@@ -23,9 +23,9 @@ import {
 } from "../../transformNewsItemFields";
 //
 import VoteOnNewsItem from "./VoteOnNewsItem";
-import AdType from "../NewsItemCard/NewsItemCardDetails/AdType";
-import SourceSiteChip from "../NewsItemCard/NewsItemCardDetails/SourceSiteChip";
-import VerifiedChip from "../NewsItemCard/NewsItemCardDetails/VerifiedChip";
+import AdType from "components/NewsItemChips/AdType";
+import SourceSiteChip from "components/NewsItemChips/SourceSiteChip";
+import VerifiedChip from "components/NewsItemChips/VerifiedChip";
 // Snackbar
 import { useSnackbar } from "notistack";
 

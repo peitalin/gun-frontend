@@ -24,7 +24,6 @@ import {
   logoBackgroundColorDark2,
   logoBackgroundColorLight2,
 } from "../styles"
-import ArrowStripeIcon from "components/ArrowStripeIcon"
 
 
 
@@ -94,25 +93,25 @@ const DesktopMainBar = (props: DesktopMainBarProps) => {
         }
 
 
-        <Link href="/sell">
+        {/* <Link href="/sell">
           <a className={classes.buttonLink}>
             <Button
-                className={classes.navbarButton}
-                classes={{
-                  label: classes.navbarButtonLabel
-                }}
-                variant={"text"}
-                color="primary"
-              >
-                <ArrowStripeIcon
-                  title={"Sell"}
-                  color={
-                    endRoute === 'sell' ? Colors.purple : color
-                  }
-                />
-              </Button>
+              className={classes.navbarButton}
+              classes={{
+                label: classes.navbarButtonLabel
+              }}
+              variant={"text"}
+              color="primary"
+            >
+              <ArrowStripeIcon
+                title={"Sell"}
+                color={
+                  endRoute === 'sell' ? Colors.purple : color
+                }
+              />
+            </Button>
           </a>
-        </Link>
+        </Link> */}
 
         {/* {
           loggedIn

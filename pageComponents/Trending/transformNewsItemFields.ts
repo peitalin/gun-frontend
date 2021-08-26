@@ -79,7 +79,8 @@ export const transformNewsItemToFields = (
 
   const soldOutStatus = isInternalProduct
 		? internalProduct?.soldOutStatus
-		: externalPSnapshot?.soldText ?? SoldOutStatus.AVAILABLE
+		// : externalPSnapshot?.soldText ?? SoldOutStatus.AVAILABLE
+		: SoldOutStatus.AVAILABLE
 
   const description = isInternalProduct
 		? pSnapshot?.description
