@@ -79,7 +79,7 @@ const CategoryBarMobile: React.FC<ReactProps> = (props) => {
                 classes.categoryLinkAllMobile,
                 router.asPath === '/new' && classes.categoryLinkTextSelected,
               )}>
-                Search New
+                Search
               </Typography>
             </a>
           </Link>

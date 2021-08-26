@@ -107,8 +107,6 @@ export const styles = (theme: Theme) => createStyles({
     marginBottom: "0.5rem",
   },
   categoryLink: {
-    marginRight: '0.75rem',
-    marginLeft: '0.75rem',
     minWidth: 40,
     height: '100%',
   },
@@ -138,6 +136,8 @@ export const styles = (theme: Theme) => createStyles({
   categoryLinkTextMain: {
     height: '100%',
     // height: `${CategoryBarHeight}px`,
+    paddingRight: '0.85rem',
+    paddingLeft: '0.70rem',
     color: isThemeDark(theme)
       ? Colors.uniswapLightGrey
       : Colors.black,
@@ -165,6 +165,8 @@ export const styles = (theme: Theme) => createStyles({
     },
   },
   categoryLinkTextSelected: {
+    paddingRight: '0.85rem',
+    paddingLeft: '0.70rem',
     transition: theme.transitions.create(['border', 'color'], {
       easing: theme.transitions.easing.easeIn,
       duration: '100ms',

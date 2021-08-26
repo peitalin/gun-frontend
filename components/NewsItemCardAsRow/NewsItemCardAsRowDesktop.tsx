@@ -67,13 +67,6 @@ const NewsItemCardAsRow = (props: ReactProps) => {
 
   const priceWas = newsItem?.product?.featuredVariant?.priceWas;
 
-
-  const cardWidthStyle = {
-    // width: `calc(${100}vw - ${1+1}rem)`,
-    // maxWidth: 415
-    // getCardMaxWidth(cardsPerRow)
-  };
-
   console.log("price: ", price)
 
 
@@ -86,18 +79,17 @@ const NewsItemCardAsRow = (props: ReactProps) => {
         !(product && product.id)
         ? <DescriptionLoading
             isMobile
-            style={cardWidthStyle}
             height={'100%'}
           />
-        : <NewsItemLink newsItem={newsItem}>
+        : <NewsItemLink newsItem={newsItem} disableLink>
             <div className={classes.flexCol}>
               {
                 featuredPreview &&
                 <ProductPreviewCardRowSmall
                   previewItem={featuredPreview}
-                  className={classes.previewCard}
+                  className={clsx(classes.previewCard, 'fadeIn')}
                   height={50}
-                  width={50*1.5}
+                  width={50 * 1.5}
                 />
               }
             </div>
@@ -105,24 +97,24 @@ const NewsItemCardAsRow = (props: ReactProps) => {
               <div className={classes.flexCellItem}>
                 <Typography
                   className={clsx(
-                    classes.title,
-                    !price ? "pulse" : null
+                    classes.makeModelText,
+                    (!make || !model) ? "pulse" : 'fadeIn'
                   )}
                   variant="body1"
                   component="div"
                 >
-                  { title ? title : "" }
+                  {`${make} ${model}`}
                 </Typography>
                 <Typography
-                  className={classes.makeModel}
+                  className={classes.caliberText}
                   variant="body2"
                   component="div"
                 >
-                  {`${make} - ${model}`}
+                  {caliber}
                 </Typography>
               </div>
 
-              <div className={classes.flexCellItem}>
+              {/* <div className={classes.flexCellItem}>
                 {
                   action &&
                   <div className={classes.actionTag}>
@@ -147,7 +139,7 @@ const NewsItemCardAsRow = (props: ReactProps) => {
                     </Typography>
                   </div>
                 }
-              </div>
+              </div> */}
 
               <div className={classes.flexCellItemSmall}>
                 <div className={clsx(
@@ -168,23 +160,31 @@ const NewsItemCardAsRow = (props: ReactProps) => {
               </div>
 
 
-              {/* <div className={classes.flexCellItemSmall}>
+              <div className={clsx(
+                classes.flexCellItemSmall,
+                classes.flexGrowItem,
+              )}>
 
-                <SourceSiteChip sourceSite={sourceSite}/>
+                <SourceSiteChip
+                  sourceSite={sourceSite}
+                  style={{ margin: 0, marginRight: '0.5rem' }}
+                />
 
                 <AdType
                   productId={newsItem?.productId}
                   adType={adType}
                   sourceSiteUrl={sourceSiteUrl}
+                  style={{ margin: 0, marginRight: '0.5rem' }}
                 />
 
                 {
                   newsItem?.product?.sellerLicense?.verified &&
                   <VerifiedChip
                     title={"Verified Seller"}
+                    style={{ margin: 0, marginRight: '0.5rem' }}
                   />
                 }
-              </div> */}
+              </div>
             </div>
           </NewsItemLink>
       }
@@ -241,12 +241,10 @@ const styles = (theme: Theme) => createStyles({
         ? `${Colors.uniswapLightNavy}`
         : `${Colors.slateGrey}`,
     },
-    // border: theme.palette.type === 'dark'
-    //   ? `1px solid ${Colors.uniswapLightNavy}`
-    //   : `1px solid ${Colors.slateGrey}`,
   },
   flexCellItem: {
     flexBasis: '45%',
+    maxWidth: '43%', // constrain width for textOverflow: ellipsis
   },
   flexCellItemSmall: {
     flexBasis: '15%',
@@ -255,30 +253,19 @@ const styles = (theme: Theme) => createStyles({
     alignItems: "center",
     paddingRight: '1rem',
   },
-  marginLeft: {
-    marginLeft: "1rem",
+  flexGrowItem: {
+    flexGrow: 1,
+    paddingRight: '0.25rem',
   },
-  category: {
+  makeModelText: {
+    fontWeight: 600,
+    marginBottom: '0.4rem',
+    lineHeight: '1rem',
     textTransform: "uppercase",
-    fontWeight: 600,
-    marginBottom: '0.4rem',
-    lineHeight: '1rem',
-    color: Colors.darkGrey,
-    fontSize: '0.75rem',
-  },
-  title: {
-    fontWeight: 600,
-    marginBottom: '0.4rem',
-    lineHeight: '1rem',
-    fontSize: '0.875',
-  },
-  name: {
-    fontWeight: 600,
-    color: "#484848",
-  },
-  tagline: {
-    fontWeight: 400,
-    color: "#888888",
+    fontSize: '0.875rem',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
   },
   priceAbsoluteBottom: {
     // position: "relative",
@@ -294,7 +281,7 @@ const styles = (theme: Theme) => createStyles({
     fontWeight: 600,
     color: Colors.green
   },
-  makeModel: {
+  caliberText: {
     textTransform: "uppercase",
     fontWeight: 500,
     fontSize: '0.9rem',

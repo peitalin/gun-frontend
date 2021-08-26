@@ -164,7 +164,16 @@ export const TrendingToday: React.FC<ReactProps> = (props) => {
     <TrendFeedLayout
       tab={tab}
       setTab={setTab}
-      title={"Trending Today (Last 24hrs)"}
+      title={
+        <div>
+          <span className={classes.title}>
+            Trending Today
+          </span>
+          <span className={classes.last24hrs}>
+            - Last 24hrs
+          </span>
+        </div>
+      }
     >
       <TrendingFeedColumn60
         newsItemsHot={newsItemsHot}
@@ -246,6 +255,18 @@ interface QVar {
 }
 
 const styles = (theme: Theme) => createStyles({
+  title: {
+    color: isThemeDark(theme)
+      ? Colors.uniswapLightGrey
+      : Colors.black,
+  },
+  last24hrs: {
+    marginLeft: '0.5rem',
+    fontSize: '1.2rem',
+    color: isThemeDark(theme)
+      ? Colors.uniswapLighterGrey
+      : Colors.slateGreyLightestBlack,
+  },
 })
 
 export default withStyles(styles)( TrendingToday );

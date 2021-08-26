@@ -129,7 +129,7 @@ const CategoryBarDesktop: React.FC<ReactProps> = (props) => {
                       ? Colors.uniswapLightGrey
                       : Colors.black
                 }}/>
-                Search New
+                Search
               </div>
             </a>
           </Link>

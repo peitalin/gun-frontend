@@ -83,7 +83,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   tab: number
   setTab(n: number): void
   disableNewFeed?: boolean
-  title: string
+  title?: React.ReactNode
 }
 
 const styles = (theme: Theme) => createStyles({

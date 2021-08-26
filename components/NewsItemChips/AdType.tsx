@@ -31,7 +31,10 @@ const AdType = (props: ReactProps) => {
         href={`/p/[productId]`}
         as={`/p/${productId}`}
       >
-        <a className={clsx(classes.sourceSiteLink, props.className)} target={"_blank"}>
+        <a className={clsx(classes.sourceSiteLink, props.className)}
+          target={"_blank"}
+          style={props.style}
+        >
           <div className={clsx(
             classes.adType,
             adType.match(/[pP]rivate/g)
@@ -44,7 +47,10 @@ const AdType = (props: ReactProps) => {
         </a>
       </Link>
     : <Link href={sourceSiteUrl ?? ""}>
-        <a className={clsx(classes.sourceSiteLink, props.className)} target={"_blank"}>
+        <a className={clsx(classes.sourceSiteLink, props.className)}
+          target={"_blank"}
+          style={props.style}
+        >
           <div className={clsx(
             classes.adType,
             adType?.match(/[pP]rivate/g)
@@ -64,6 +70,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   adType: string
   sourceSiteUrl: string
   className?: any;
+  style?: any;
 }
 
 
@@ -114,9 +121,11 @@ const styles = (theme: Theme) => createStyles({
   },
   adTypePrivate: {
     background: Colors.yellow,
+    minWidth: 125,
   },
   adTypeDealer: {
     background: Colors.orange,
+    minWidth: 115,
   },
 });
 

@@ -16,10 +16,20 @@ const NewsItemLink: React.FC<ReactProps> = (props) => {
   const {
     classes,
     newsItem,
+    disableLink = false,
   } = props;
 
   let internalProduct = newsItem?.product
   let externalProduct = newsItem?.externalProduct
+
+  if (disableLink) {
+    return (
+      <div className={classes.flexRowLink}
+      >
+        {props.children}
+      </div>
+    )
+  }
 
   if (externalProduct?.id && externalProduct?.sourceSiteUrl) {
     return (
@@ -46,6 +56,7 @@ const NewsItemLink: React.FC<ReactProps> = (props) => {
 
 interface ReactProps extends WithStyles<typeof styles> {
   newsItem: NewsItem;
+  disableLink?: boolean
 }
 
 const styles = (theme: Theme) => createStyles({
