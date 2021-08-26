@@ -45,7 +45,6 @@ import {
 import BannerCategoryPage from "./BannerCategoryPage";
 // Grid Components
 import GridPaginatorGeneric from "components/GridPaginatorGeneric";
-import { useSnackbar } from "notistack";
 import ShowOnMobileOrDesktopSSR from "components/ShowOnMobileOrDesktopSSR";
 
 
@@ -61,7 +60,7 @@ const CategoryId: React.FC<ReactProps> = (props) => {
   const router = useRouter();
 
   const theme = useTheme();
-  const mdDown = useMediaQuery(theme.breakpoints.down("md"))
+  const lgDown = useMediaQuery(theme.breakpoints.down("lg"))
 
 
   /////////////////////////////////// paginator
@@ -296,7 +295,10 @@ const CategoryId: React.FC<ReactProps> = (props) => {
         />
 
 
-        <div className={classes.sectionContainer}>
+        <div className={clsx(
+          classes.sectionContainer,
+          lgDown ? classes.sectionPaddingLeftMobile : classes.sectionPaddingLeftDesktop
+        )}>
           {
             !loading &&
             (newsItemsConnection?.edges ?? []).length === 0 &&
@@ -346,7 +348,7 @@ const CategoryId: React.FC<ReactProps> = (props) => {
                   <div key={newsItem.id}
                     className={clsx(
                       rowMode ? classes.flexItemRows : classes.flexItemCards,
-                      classes.marginRight1,
+                      classes.marginRightHalf,
                     )}
                   >
                     {
@@ -423,6 +425,9 @@ export const styles = (theme: Theme) => createStyles({
   marginRight1: {
     marginRight: '1rem',
   },
+  marginRightHalf: {
+    marginRight: '0.5rem',
+  },
   width100: {
     width: '100%',
   },
@@ -433,9 +438,14 @@ export const styles = (theme: Theme) => createStyles({
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
     flexWrap: 'wrap',
-    paddingLeft: '1rem',
     width: '100%',
     minHeight: 600,
+  },
+  sectionPaddingLeftDesktop: {
+    paddingLeft: '1rem',
+  },
+  sectionPaddingLeftMobile: {
+    paddingLeft: '0.5rem',
   },
   title: {
     marginTop: '1rem',

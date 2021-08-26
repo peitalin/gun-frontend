@@ -243,7 +243,7 @@ export const useFacetSearchOptions = ({
       // console.log('searchTerm:', searchTerm)
       // Sync url to facetHooks searchterm params
       if (searchTerm !== undefined && searchTerm !== "") {
-          console.log("q1 params>>>>>>>>>>>>", params)
+        // console.log("q1 params>>>>>>>>>>>>", params)
         if (!params.some(p => p.startsWith("q="))) {
           // search query doesnt yet exist, add q param
           params = [`q=${searchTerm}`, ...params]

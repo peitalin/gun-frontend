@@ -177,7 +177,7 @@ export const styles = (theme: Theme) => createStyles({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    paddingLeft: '1rem', // offset gridOrList buttons padding Right
+    paddingLeft: '0rem', // offset gridOrList buttons padding Right
   },
   searchMobileHeight: {
     height: '2rem',

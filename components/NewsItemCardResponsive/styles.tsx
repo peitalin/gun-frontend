@@ -81,7 +81,7 @@ export const styles = (theme: Theme) => createStyles({
     fontSize: '1rem',
     lineHeight: '1.25rem',
   },
-  makeModel: {
+  caliberText: {
     textTransform: "uppercase",
     fontWeight: 500,
     fontSize: '0.9rem',

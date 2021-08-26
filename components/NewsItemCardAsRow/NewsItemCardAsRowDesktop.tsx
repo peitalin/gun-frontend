@@ -3,9 +3,6 @@ import React from "react";
 import clsx from "clsx";
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 import { Colors, BorderRadius } from "layout/AppTheme";
-// Redux
-import { useDispatch, useSelector } from "react-redux";
-import { Actions } from "reduxStore/actions";
 // Typings
 import { NewsItem, Product, SoldOutStatus } from "typings/gqlTypes";
 // Utils
@@ -16,8 +13,6 @@ import Typography from "@material-ui/core/Typography";
 import PriceDisplayMain from "components/PriceDisplayMain";
 import DescriptionLoading from "components/ProductCardResponsive/DescriptionLoading";
 // next
-import Link from "next/link";
-import { convertSoldOutStatus } from "utils/strings";
 import {
   transformNewsItemToFields
 } from "pageComponents/Trending/transformNewsItemFields"

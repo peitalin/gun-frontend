@@ -34,6 +34,10 @@ import {
   transformNewsItemToFields
 } from "pageComponents/Trending/transformNewsItemFields"
 
+import AdType from "components/NewsItemChips/AdType";
+import SourceSiteChip from "components/NewsItemChips/SourceSiteChip";
+import VerifiedChip from "components/NewsItemChips/VerifiedChip";
+
 
 
 const NewsItemCardRC = (props: ReactProps) => {
@@ -215,22 +219,16 @@ const NewsItemCardRC = (props: ReactProps) => {
                     variant="body1"
                     component="div"
                   >
-                    { title ? title : "" }
+                    {`${make} ${model}`}
                   </Typography>
                   <Typography
-                    className={classes.makeModel}
+                    className={classes.caliberText}
                     variant="body2"
                     component="div"
                   >
-                    {`${make}`}
+                    {`${caliber}`}
                   </Typography>
-                  <Typography
-                    className={classes.makeModel}
-                    variant="body2"
-                    component="div"
-                  >
-                    {`${model}`}
-                  </Typography>
+
                 </div>
                 <div className={classes.priceDetailsFlexItem}>
                   {
@@ -243,6 +241,43 @@ const NewsItemCardRC = (props: ReactProps) => {
                     />
                   }
                 </div>
+
+                {/* <SourceSiteChip
+                  sourceSite={sourceSite}
+                  style={{
+                    position: 'absolute',
+                    bottom: '2rem',
+                    right: '0rem',
+                    marginRight: 0,
+                    height: 28,
+                  }}
+                /> */}
+                {
+                  newsItem?.product?.sellerLicense?.verified &&
+                  <VerifiedChip
+                    title={"Verified"}
+                    style={{
+                      position: 'absolute',
+                      bottom: '2rem',
+                      right: '0rem',
+                      marginRight: 0,
+                      height: 28,
+                    }}
+                  />
+                }
+
+                <AdType
+                  productId={newsItem?.productId}
+                  adType={adType}
+                  sourceSiteUrl={sourceSiteUrl}
+                  style={{
+                    position: 'absolute',
+                    bottom: '0rem',
+                    right: '0rem',
+                    height: 28,
+                  }}
+                />
+
               </div>
           }
         </LinkLoading>

@@ -1,7 +1,7 @@
 import React from "react";
 import clsx from "clsx";
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
-import { Colors } from "layout/AppTheme";
+import { Colors, BorderRadius } from "layout/AppTheme";
 // Redux
 import { useDispatch, useSelector } from "react-redux";
 import { Actions } from "reduxStore/actions";
@@ -31,6 +31,9 @@ import {
   transformExternalProductToFields
 } from "pageComponents/Trending/transformNewsItemFields";
 
+import AdType from "components/NewsItemChips/AdType";
+import SourceSiteChip from "components/NewsItemChips/SourceSiteChip";
+import VerifiedChip from "components/NewsItemChips/VerifiedChip";
 
 
 const ProductRowMedium = (props: ReactProps) => {
@@ -131,7 +134,7 @@ const ProductRowMedium = (props: ReactProps) => {
 
         <div className={clsx(
           classes.flexRowWrapOuter,
-          classes.flexGrow
+          classes.flexGrowItem
         )}>
 
           {
@@ -177,6 +180,43 @@ const ProductRowMedium = (props: ReactProps) => {
               </div>
           }
 
+
+                {/* <SourceSiteChip
+                  sourceSite={externalProduct?.sourceSite}
+                  style={{
+                    position: 'absolute',
+                    bottom: '2.5rem',
+                    right: '0.5rem',
+                    marginRight: 0,
+                    height: 28,
+                  }}
+                /> */}
+                {
+                  product?.sellerLicense?.verified &&
+                  <VerifiedChip
+                    title={"Verified"}
+                    style={{
+                      position: 'absolute',
+                      bottom: '2.5rem',
+                      right: '0.5rem',
+                      marginRight: 0,
+                      height: 28,
+                    }}
+                  />
+                }
+
+                <AdType
+                  productId={product?.id}
+                  adType={adType}
+                  sourceSiteUrl={sourceSiteUrl}
+                  style={{
+                    position: 'absolute',
+                    bottom: '0.5rem',
+                    right: '0.5rem',
+                    height: 28,
+                  }}
+                />
+
       </div>
     </ErrorBounds>
   );
@@ -205,6 +245,10 @@ const styles = (theme: Theme) => createStyles({
     display: 'flex',
     flexDirection: 'row',
     flexBasis: '100%',
+    borderRadius: `${BorderRadius}px`,
+    backgroundColor: theme.palette.type === 'dark'
+      ? theme.colors.uniswapDarkNavy
+      : theme.colors.slateGrey,
   },
   flexColOuter: {
     display: 'flex',
@@ -256,8 +300,9 @@ const styles = (theme: Theme) => createStyles({
     flexWrap: 'wrap',
     padding: '0.5rem 0rem 0.5rem 1rem',
   },
-  flexGrow: {
+  flexGrowItem: {
     flexGrow: 1,
+    position: "relative",
   },
   marginLeft: {
     marginLeft: "1rem",
