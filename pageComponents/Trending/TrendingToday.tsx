@@ -165,14 +165,23 @@ export const TrendingToday: React.FC<ReactProps> = (props) => {
       tab={tab}
       setTab={setTab}
       title={
-        <div>
-          <span className={classes.title}>
-            Trending Today
-          </span>
-          <span className={classes.last24hrs}>
-            - Last 24hrs
-          </span>
-        </div>
+        lgDown
+        ? <div className={classes.trendTitleBoxMobile}>
+            <span className={classes.titleMobile}>
+              Trending Today
+            </span>
+            <span className={classes.last24hrsMobile}>
+              Last 24hrs
+            </span>
+          </div>
+        : <div className={classes.trendTitleBoxDesktop}>
+            <span className={classes.titleDesktop}>
+              Trending Today
+            </span>
+            <span className={classes.last24hrsDesktop}>
+              - Last 24hrs
+            </span>
+          </div>
       }
     >
       <TrendingFeedColumn60
@@ -255,13 +264,34 @@ interface QVar {
 }
 
 const styles = (theme: Theme) => createStyles({
-  title: {
+  titleDesktop: {
     color: isThemeDark(theme)
       ? Colors.uniswapLightGrey
       : Colors.black,
   },
-  last24hrs: {
+  titleMobile: {
+    color: isThemeDark(theme)
+      ? Colors.uniswapLightGrey
+      : Colors.black,
+  },
+  trendTitleBoxDesktop: {
+    marginTop: '1rem',
+    marginBottom: '0.5rem',
+  },
+  trendTitleBoxMobile: {
+    display: "flex",
+    flexDirection: "column",
+    marginTop: '1rem',
+    marginBottom: '0.5rem',
+  },
+  last24hrsDesktop: {
     marginLeft: '0.5rem',
+    fontSize: '1.2rem',
+    color: isThemeDark(theme)
+      ? Colors.uniswapLighterGrey
+      : Colors.slateGreyLightestBlack,
+  },
+  last24hrsMobile: {
     fontSize: '1.2rem',
     color: isThemeDark(theme)
       ? Colors.uniswapLighterGrey

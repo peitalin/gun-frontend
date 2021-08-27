@@ -97,7 +97,7 @@ export const styles = (theme: Theme) => createStyles({
     zIndex: 3,
     width: '100%',
     display: "flex",
-    justifyContent: 'space-between',
+    justifyContent: 'space-around',
     maxWidth: "720px",
     alignItems: "center",
     overflow: 'scroll',
@@ -118,6 +118,9 @@ export const styles = (theme: Theme) => createStyles({
     minWidth: '50px',
     whiteSpace: 'nowrap',
     fontSize: '0.8rem',
+    fontWeight: 500,
+    paddingRight: '0.80rem',
+    paddingLeft: '0.70rem',
     borderBottom: '2px solid rgba(0,0,0,0)',
     transition: theme.transitions.create(['border', 'color'], {
       easing: theme.transitions.easing.easeIn,
@@ -136,7 +139,7 @@ export const styles = (theme: Theme) => createStyles({
   categoryLinkTextMain: {
     height: '100%',
     // height: `${CategoryBarHeight}px`,
-    paddingRight: '0.85rem',
+    paddingRight: '0.80rem',
     paddingLeft: '0.70rem',
     color: isThemeDark(theme)
       ? Colors.uniswapLightGrey
@@ -165,7 +168,7 @@ export const styles = (theme: Theme) => createStyles({
     },
   },
   categoryLinkTextSelected: {
-    paddingRight: '0.85rem',
+    paddingRight: '0.80rem',
     paddingLeft: '0.70rem',
     transition: theme.transitions.create(['border', 'color'], {
       easing: theme.transitions.easing.easeIn,

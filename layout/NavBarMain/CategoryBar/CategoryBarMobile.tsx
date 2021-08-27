@@ -4,11 +4,17 @@ import { Categories, Product } from "typings/gqlTypes";
 import clsx from "clsx";
 import { withStyles, WithStyles } from "@material-ui/core/styles";
 import { styles } from "./styles";
+import {
+  Colors, isThemeDark,
+} from "layout/AppTheme";
 // MUI
 import Typography from "@material-ui/core/Typography";
 // hooks
 import Link from "next/link";
 import { useRouter } from "next/router";
+import SearchIcon from '@material-ui/icons/Search';
+import ArrowStripeIcon from "components/ArrowStripeIcon"
+import { useTheme } from "@material-ui/core"
 
 
 
@@ -16,8 +22,12 @@ import { useRouter } from "next/router";
 const CategoryBarMobile: React.FC<ReactProps> = (props) => {
 
   const { classes } = props;
+
+  let theme = useTheme()
   let router = useRouter()
 
+  const [hoverSearch, setHoverSearch] = React.useState(false)
+  const [hoverStripeArrow, setHoverStripeArrow] = React.useState(false)
 
   return (
     <nav className={clsx(
@@ -74,24 +84,47 @@ const CategoryBarMobile: React.FC<ReactProps> = (props) => {
           </Link>
 
           <Link href={`/new`}>
-            <a className={classes.categoryLink}>
-              <Typography className={clsx(
+            <a className={classes.categoryLink}
+              onMouseEnter={() => setHoverSearch(true)}
+              onMouseLeave={() => setHoverSearch(false)}
+            >
+              <div className={clsx(
                 classes.categoryLinkAllMobile,
-                router.asPath === '/new' && classes.categoryLinkTextSelected,
+                router.asPath.startsWith('/new') && classes.categoryLinkTextSelected,
               )}>
+                <SearchIcon style={{
+                  marginRight: '0rem',
+                  fill: (router.asPath.startsWith('/new') || hoverSearch)
+                    ? isThemeDark(theme)
+                      ? Colors.purple
+                      : Colors.ultramarineBlue
+                    : isThemeDark(theme)
+                      ? Colors.uniswapLightGrey
+                      : Colors.black
+                }}/>
                 Search
-              </Typography>
+              </div>
             </a>
           </Link>
 
           <Link href={`/sell`}>
             <a className={classes.categoryLink}>
-              <Typography className={clsx(
-                classes.categoryLinkAllMobile,
-                router.asPath === '/sell' && classes.categoryLinkTextSelected,
-              )}>
-                Upload Listing
-              </Typography>
+              <ArrowStripeIcon
+                className={clsx(
+                  classes.categoryLinkAllMobile,
+                  router.asPath === '/sell' && classes.categoryLinkTextSelected,
+                )}
+                title={"Upload Listing"}
+                color={
+                  (router.asPath === '/sell' || hoverStripeArrow)
+                    ? isThemeDark(theme)
+                      ? Colors.purple
+                      : Colors.ultramarineBlue
+                    : isThemeDark(theme)
+                      ? Colors.uniswapLightGrey
+                      : Colors.black
+                }
+              />
             </a>
           </Link>
 

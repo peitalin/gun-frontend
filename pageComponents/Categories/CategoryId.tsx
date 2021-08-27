@@ -354,7 +354,9 @@ const CategoryId: React.FC<ReactProps> = (props) => {
                     {
                       rowMode
                         ? <NewsItemCardAsRow newsItem={newsItem}/>
-                        : <NewsItemCardResponsive newsItem={newsItem} />
+                        : <div style={{ marginLeft: '0.5rem'}}>
+                            <NewsItemCardResponsive newsItem={newsItem} />
+                          </div>
                     }
                   </div>
                 )

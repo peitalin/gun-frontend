@@ -13,7 +13,6 @@ import Typography from "@material-ui/core/Typography";
 // hooks
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { Y_SCROLL_NAVBAR_SHOW } from "../constants";
 
 import TriangleSvg from "../MainBar/TriangleSvg";
 import { useTheme } from "@material-ui/core"

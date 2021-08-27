@@ -105,8 +105,6 @@ const styles = (theme: Theme) => createStyles({
     flexDirection: "column",
   },
   title: {
-    marginTop: '2rem',
-    marginBottom: '1rem',
   },
   titleContainerDesktop: {
     display: "flex",
