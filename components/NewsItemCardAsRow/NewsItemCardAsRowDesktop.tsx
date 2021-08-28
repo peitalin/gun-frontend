@@ -74,13 +74,13 @@ const NewsItemCardAsRow = (props: ReactProps) => {
             isMobile
             height={'100%'}
           />
-        : <NewsItemLink newsItem={newsItem} disableLink>
+        : <NewsItemLink newsItem={newsItem} >
             <div className={classes.flexCol}>
               {
                 featuredPreview &&
                 <ProductPreviewCardRowSmall
                   previewItem={featuredPreview}
-                  className={clsx(classes.previewCard, 'fadeIn')}
+                  className={clsx(classes.previewCard)}
                   height={50}
                   width={50 * 1.5}
                 />
@@ -91,19 +91,19 @@ const NewsItemCardAsRow = (props: ReactProps) => {
                 <Typography
                   className={clsx(
                     classes.makeModelText,
-                    (!make || !model) ? "pulse" : 'fadeIn'
+                    (!make || !model) ? "pulse" : null
                   )}
                   variant="body1"
                   component="div"
                 >
-                  {`${make} ${model}`}
+                  {`${make} ${model} ${caliber}`}
                 </Typography>
                 <Typography
-                  className={classes.caliberText}
+                  className={classes.stateText}
                   variant="body2"
                   component="div"
                 >
-                  {caliber}
+                  {state}
                 </Typography>
               </div>
 
@@ -273,13 +273,13 @@ const styles = (theme: Theme) => createStyles({
     fontWeight: 600,
     color: Colors.green
   },
-  caliberText: {
+  stateText: {
     textTransform: "uppercase",
-    fontWeight: 500,
-    fontSize: '0.9rem',
+    fontWeight: 600,
+    fontSize: '0.825rem',
     color: theme.palette.type === 'dark'
       ? Colors.uniswapLighterGrey
-      : Colors.slateGreyLightBlack,
+      : Colors.slateGreyLightestBlack,
     lineHeight: '1rem',
   },
   actionTag: {

@@ -47,6 +47,7 @@ const ProductPreviewCardRowSmall = (props: ReactProps) => {
             title={props.title}
             className={clsx(
               classes.imagePreview,
+              previewLoaded ? "fadeIn" : "hidden",
             )}
             classes={{
               media: (previewItem.image.original.heightInPixels

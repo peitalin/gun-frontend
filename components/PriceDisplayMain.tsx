@@ -96,7 +96,7 @@ const styles = (theme: Theme) => createStyles({
   },
   price: {
     marginRight: '0.5rem',
-    fontSize: "1.125rem",
+    fontSize: "1rem",
     fontWeight: 500,
     lineHeight: 1.2, // needed to aligned price, priceWas, quantity
     // color: Colors.gradientUniswapBlue1,
