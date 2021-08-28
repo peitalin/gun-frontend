@@ -49,10 +49,15 @@ const DealerStatesMenu: React.FC<ReactProps> = (props) => {
                 console.log("setting: ", d)
                 if (d === DealerState.ALL_STATES) {
                   props.setDealerStates([])
-                } else {
-                  props.setDealerStates([d])
+                  return
                 }
-              }}
+
+                if (props.dealerStates.includes(d)) {
+                  props.setDealerStates(props.dealerStates.filter(state => state !== d))
+                } else {
+                  props.setDealerStates([...props.dealerStates, d])
+                  }
+            }}
             >
               {DealerStatesLabels[d]}
             </Button>
@@ -65,7 +70,14 @@ const DealerStatesMenu: React.FC<ReactProps> = (props) => {
 
 export const availableDealerStates = [
   DealerState.ALL_STATES,
+  DealerState.ACT,
+  DealerState.NSW,
+  DealerState.NT,
   DealerState.QLD,
+  DealerState.SA,
+  DealerState.TAS,
+  DealerState.VIC,
+  DealerState.WA,
 ]
 
 export const DealerStatesLabels = {
@@ -77,7 +89,7 @@ export const DealerStatesLabels = {
   [DealerState.SA]: "SA",
   [DealerState.TAS]: "TAS",
   [DealerState.VIC]: "VIC",
-  [DealerState.WA]: "WS",
+  [DealerState.WA]: "WA",
 }
 export const dealerStatesDropdownItems = [
   DealerState.ACT,

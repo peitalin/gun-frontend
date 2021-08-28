@@ -17,6 +17,7 @@ import {
   transformNewsItemToFields
 } from "pageComponents/Trending/transformNewsItemFields"
 import AdType from "components/NewsItemChips/AdType";
+import StateChip from "components/NewsItemChips/StateChip";
 import SourceSiteChip from "components/NewsItemChips/SourceSiteChip";
 import VerifiedChip from "components/NewsItemChips/VerifiedChip";
 import NewsItemLink from "./NewsItemLink"
@@ -96,14 +97,14 @@ const NewsItemCardAsRow = (props: ReactProps) => {
                   variant="body1"
                   component="div"
                 >
-                  {`${make} ${model} ${caliber}`}
+                  {`${make} ${model}`}
                 </Typography>
                 <Typography
-                  className={classes.stateText}
+                  className={classes.caliberText}
                   variant="body2"
                   component="div"
                 >
-                  {state}
+                  {caliber}
                 </Typography>
               </div>
 
@@ -158,8 +159,20 @@ const NewsItemCardAsRow = (props: ReactProps) => {
                 classes.flexGrowItem,
               )}>
 
-                <SourceSiteChip
-                  sourceSite={sourceSite}
+                {
+                  newsItem?.product?.sellerLicense?.verified
+                  ? <VerifiedChip
+                      title={"Verified Seller"}
+                      style={{ margin: 0, marginRight: '0.5rem' }}
+                    />
+                  : <SourceSiteChip
+                      sourceSite={sourceSite}
+                      style={{ margin: 0, marginRight: '0.5rem' }}
+                    />
+                }
+
+                <StateChip
+                  state={state}
                   style={{ margin: 0, marginRight: '0.5rem' }}
                 />
 
@@ -170,13 +183,6 @@ const NewsItemCardAsRow = (props: ReactProps) => {
                   style={{ margin: 0, marginRight: '0.5rem' }}
                 />
 
-                {
-                  newsItem?.product?.sellerLicense?.verified &&
-                  <VerifiedChip
-                    title={"Verified Seller"}
-                    style={{ margin: 0, marginRight: '0.5rem' }}
-                  />
-                }
               </div>
             </div>
           </NewsItemLink>
@@ -273,7 +279,7 @@ const styles = (theme: Theme) => createStyles({
     fontWeight: 600,
     color: Colors.green
   },
-  stateText: {
+  caliberText: {
     textTransform: "uppercase",
     fontWeight: 600,
     fontSize: '0.825rem',

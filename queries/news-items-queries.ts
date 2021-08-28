@@ -22,11 +22,17 @@ export const SEARCH_NEWS_ITEMS_CONNECTION = gql`
     $query: ConnectionQuery
     $searchTerm: String
     $sortByDate: Boolean
+    $dealerStates: [String]
+    $calibers: [String]
+    $actionTypes: [String]
   ) {
     getNewsItemsSearchConnection(
       query: $query
       searchTerm: $searchTerm
       sortByDate: $sortByDate
+      dealerStates: $dealerStates
+      calibers: $calibers
+      actionTypes: $actionTypes
     ) {
       edges {
         node {

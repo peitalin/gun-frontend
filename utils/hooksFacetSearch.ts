@@ -237,10 +237,7 @@ export const useFacetSearchOptions = ({
         }).filter(p => !!p)
       }
 
-      console.log("searchTerm >", searchTerm)
-      console.log("searchTerm !== undefined", searchTerm !== undefined)
-      console.log("searchTerm !== ''", searchTerm !== "")
-      // console.log('searchTerm:', searchTerm)
+      // console.log("searchTerm>", searchTerm)
       // Sync url to facetHooks searchterm params
       if (searchTerm !== undefined && searchTerm !== "") {
         // console.log("q1 params>>>>>>>>>>>>", params)

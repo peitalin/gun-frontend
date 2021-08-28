@@ -51,6 +51,13 @@ const AdvancedSearchDropdown: React.FC<ReactProps> = (props) => {
     props.setFocused(false)
   };
 
+  let dealerStatesStr = props.dealerStates?.length > 3
+    ? props.dealerStates?.slice(0, 3)?.join(", ") + '...'
+    : props.dealerStates?.join(', ')
+
+  let caliberStr = props.calibers?.length > 3
+    ? props.calibers?.slice(0, 3)?.join(", ") + '...'
+    : props.calibers?.join(', ')
   // console.log('dealerSttes', props.dealerStates)
   // console.log('caliberrrrs', props.calibers)
 
@@ -72,7 +79,7 @@ const AdvancedSearchDropdown: React.FC<ReactProps> = (props) => {
                   ? classes.iconText
                   : classes.iconTextSm
               }>
-                {`${props.calibers?.[0]}`}
+                {`${caliberStr}`}
               </span>
             }
             {
@@ -82,7 +89,7 @@ const AdvancedSearchDropdown: React.FC<ReactProps> = (props) => {
                   ? classes.iconText
                   : classes.iconTextSm
               }>
-                {`${props.dealerStates?.[0]}`}
+                {`${dealerStatesStr}`}
               </span>
             }
             {
@@ -266,9 +273,10 @@ export const styles = (theme: Theme) => createStyles({
       : Colors.black,
   },
   iconText: {
+    fontSize: '0.9rem',
   },
   iconTextSm: {
-    fontSize: '0.8rem',
+    fontSize: '0.7rem',
     fontWeight: 500,
   },
   iconTextContainer: {
