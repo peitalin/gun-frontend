@@ -20,28 +20,12 @@ export const goToModalConnect = (
       dispatch(Actions.reduxModals.TOGGLE_PRODUCT_EDIT_MODAL(true))
     },
 
-    storeCreate: () => {
-      dispatch(Actions.reduxModals.TOGGLE_STORE_CREATE_MODAL(true))
+    storePayoutCreate: () => {
+      dispatch(Actions.reduxModals.TOGGLE_STORE_PAYOUT_CREATE_MODAL(true))
     },
 
     mySettings: () => {
       dispatch(Actions.reduxModals.TOGGLE_MY_SETTINGS_MODAL(true))
-    },
-
-    contactUs: () => {
-      dispatch(Actions.reduxModals.TOGGLE_CONTACT_US_MODAL(true))
-    },
-
-    previewItem: () => {
-      dispatch(Actions.reduxModals.TOGGLE_PREVIEW_ITEM_MODAL(true))
-    },
-
-    shareLink: () => {
-      dispatch(Actions.reduxModals.TOGGLE_SHARE_LINK_MODAL(true))
-    },
-
-    giftDownload: () => {
-      dispatch(Actions.reduxModals.TOGGLE_GIFT_DOWNLOAD_MODAL(true))
     },
 
     login: () => {

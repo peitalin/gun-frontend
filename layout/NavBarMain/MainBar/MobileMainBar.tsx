@@ -9,15 +9,16 @@ import Logo from "components/Icons/Logo";
 // MUI
 import MobileMenuDropdown from "layout/NavBarMain/MobileMenuDropdown";
 import Button from "@material-ui/core/Button";
-import SearchbarNavbarMobile from "layout/NavBarMain/SearchbarNavbarMobile";
+// import SearchbarNavbarMobile from "layout/NavBarMain/SearchbarNavbarMobile";
 import Login from "layout/Login";
+import SearchIcon from '@material-ui/icons/Search';
+import SettingsIcon from '@material-ui/icons/Settings';
 // Modals
 import { useDispatch, useSelector } from "react-redux";
 // Router
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { navbarRoutes } from "./navbarRoutes";
-
 
 
 const MobileMainBar = (props: MobileMainBarProps) => {
@@ -55,7 +56,7 @@ const MobileMainBar = (props: MobileMainBarProps) => {
       </div>
 
 
-      <div className={clsx(
+      {/* <div className={clsx(
         "fadeIn",
         hide ? classes.mainBarInnerHide : classes.mainBarInner,
       )}>
@@ -80,7 +81,7 @@ const MobileMainBar = (props: MobileMainBarProps) => {
             Sell
           </span>
         </Button>
-      </div>
+      </div> */}
 
       {
         !hide &&
@@ -98,7 +99,7 @@ const MobileMainBar = (props: MobileMainBarProps) => {
         </Link>
       }
 
-      <div style={{ marginLeft: '0.5rem' }} className={
+      {/* <div style={{ marginLeft: '0.5rem' }} className={
         !hide ? "fadeIn" : null
       }>
         <SearchbarNavbarMobile
@@ -113,7 +114,7 @@ const MobileMainBar = (props: MobileMainBarProps) => {
           setMobileMenuOpen={props.setMobileMenuOpen}
           setHideMenuItems={setHide}
         />
-      </div>
+      </div> */}
 
 
       <div className={clsx(
@@ -131,22 +132,28 @@ const MobileMainBar = (props: MobileMainBarProps) => {
                 props.setMobileMenuOpen(s => false)
               }}
             >
-              <div>
+              <div className={classes.flexCenter}>
                 <span className={
-                    endRoute === '/admin/products'
+                    // endRoute === '/admin/products'
+                    endRoute === '/saved-searches'
                       ? classes.selectedRouteText
                       : null
                   }
                   style={{ color: color }}
                 >
-                  Store
+                  Saved
                 </span>
+                <SearchIcon style={{
+                  fill: color,
+                  marginTop: "0.1rem",
+                  height: 20,
+                }}/>
               </div>
             </Button>
           : <div className={classes.buttonMarginRight}>
               <Login
                 className={classes.navbarButtonMobile}
-                buttonText={"Store"}
+                buttonText={"Saved Searches"}
                 titleLogin={"Login to continue"}
                 buttonProps={{
                   style: { color: color }

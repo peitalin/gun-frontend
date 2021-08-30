@@ -108,7 +108,10 @@ const CategoryBarMobile: React.FC<ReactProps> = (props) => {
           </Link>
 
           <Link href={`/sell`}>
-            <a className={classes.categoryLink}>
+            <a className={classes.categoryLink}
+              onMouseEnter={() => setHoverStripeArrow(true)}
+              onMouseLeave={() => setHoverStripeArrow(false)}
+            >
               <ArrowStripeIcon
                 className={clsx(
                   classes.categoryLinkAllMobile,

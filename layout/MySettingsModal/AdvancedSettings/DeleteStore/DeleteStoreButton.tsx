@@ -41,7 +41,7 @@ const DeleteAccountButton = (props: ReactProps) => {
         let { data } = await refetchUser(apolloClient)()
         setUserOnCompleted(dispatch)(data)
         setOpenDeleteModal(false)
-        dispatch(Actions.reduxModals.TOGGLE_STORE_CREATE_MODAL(false))
+        dispatch(Actions.reduxModals.TOGGLE_STORE_PAYOUT_CREATE_MODAL(false))
         // logout(apolloClient, dispatch)("/")
         snackbar.enqueueSnackbar(
           `Successfully deleted your store.`,

@@ -14,8 +14,8 @@ export const reduxModalsActions = {
     payload: payload
   }),
 
-  TOGGLE_STORE_CREATE_MODAL: (payload?: boolean): ActionType<boolean> => ({
-    type: "TOGGLE_STORE_CREATE_MODAL",
+  TOGGLE_STORE_PAYOUT_CREATE_MODAL: (payload?: boolean): ActionType<boolean> => ({
+    type: "TOGGLE_STORE_PAYOUT_CREATE_MODAL",
     payload: payload
   }),
 

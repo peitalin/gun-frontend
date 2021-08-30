@@ -109,6 +109,9 @@ export const styles = (theme: Theme) => createStyles({
   categoryLink: {
     minWidth: 40,
     height: '100%',
+    color: isThemeDark(theme)
+      ? Colors.uniswapLightGrey
+      : Colors.slateGreyBlack,
   },
   categoryLinkAllMobile: {
     height: CategoryBarHeight,

@@ -162,7 +162,7 @@ const ChangePayoutMethod = (props: ReactProps) => {
             <div className={classes.currentBankDetails}>
 
               <Typography variant="body1" className={classes.subtitle}>
-                Bank account receiving earnings:
+                Bank account receiving payment:
               </Typography >
 
               <div className={classes.bankDetailsContainer}>

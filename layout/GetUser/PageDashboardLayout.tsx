@@ -93,6 +93,7 @@ const PageDashboardLayout: React.FC<ReactProps> = (props) => {
           <div className={classes.flex75}>
             {
               !isVerified &&
+              !isHelpRoute &&
               <div className={classes.bannerPadding}>
                 <VerifyAccountBanner/>
               </div>
@@ -110,7 +111,7 @@ const PageDashboardLayout: React.FC<ReactProps> = (props) => {
           { renderRoleMenuMobile(user) }
           {
             !isVerified &&
-            <div className={classes.bannerPadding}>
+            <div className={classes.bannerPaddingMobile}>
               <VerifyAccountBanner/>
             </div>
           }
@@ -155,6 +156,8 @@ const styles = (theme: Theme) => createStyles({
     marginTop: "0.5rem",
     marginBottom: "0.5rem",
     marginRight: "0.5rem",
+  },
+  bannerPaddingMobile: {
   },
   minWidth240: {
     width: 240,

@@ -333,6 +333,8 @@ export const styles = (theme: Theme) => createStyles({
   },
   navbarButtonMobile: {
     marginRight: "0.25rem",
+    paddingRight: '0.5rem',
+    paddingLeft: '0.5rem',
     minWidth: 50,
     "&:hover": {
       background: isThemeDark(theme)
@@ -359,5 +361,10 @@ export const styles = (theme: Theme) => createStyles({
     fontWeight: 500,
     // transform: 'scale(0.9)',
     color: Colors.charcoal,
+  },
+  flexCenter: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
   },
 });

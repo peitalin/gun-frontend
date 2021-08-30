@@ -6447,6 +6447,9 @@ export type QueryGetNewsItemsSearchConnectionArgs = {
   query?: Maybe<ConnectionQuery>;
   searchTerm?: Maybe<Scalars['String']>;
   sortByDate?: Maybe<Scalars['Boolean']>;
+  dealerStates?: Maybe<Array<Maybe<Scalars['String']>>>;
+  calibers?: Maybe<Array<Maybe<Scalars['String']>>>;
+  actionTypes?: Maybe<Array<Maybe<Scalars['String']>>>;
 };
 
 

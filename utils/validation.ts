@@ -216,19 +216,19 @@ export const validationSchemas = {
     }),
 
 
-  // Create Store
-  CreateStore:
+  // Create Store Payout
+  CreateStorePayout:
     Yup.object().shape({
-      userId: Yup.string()
-        .required('A userId is needed!'),
-      name: Yup.string()
-        .nullable(),
-        // .max(maxLengthStoreName)
-        // .min(minLengthStoreName, "Must be more than 3 letters!"),
-      bio: Yup.string().nullable(),
-      website: Yup.string().nullable(),
-      profileId: Yup.string().nullable(),
-      coverId: Yup.string().nullable(),
+      // userId: Yup.string()
+      //   .required('A userId is needed!'),
+      // name: Yup.string()
+      //   .nullable(),
+      //   // .max(maxLengthStoreName)
+      //   // .min(minLengthStoreName, "Must be more than 3 letters!"),
+      // bio: Yup.string().nullable(),
+      // website: Yup.string().nullable(),
+      // profileId: Yup.string().nullable(),
+      // coverId: Yup.string().nullable(),
       bsb: Yup.string()
         .min(6, "Min 6 digits!")
         .max(6, "Min 6 digits!")

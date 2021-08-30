@@ -5,7 +5,7 @@ import { reduxModalsActions as A } from "./modals-actions";
 export interface ReduxStateModals {
   productCreateModalOpen: boolean;
   productEditModalOpen: boolean;
-  storeCreateModalOpen: boolean;
+  storePayoutCreateModalOpen: boolean;
   mySettingsModalOpen: boolean;
   contactUsModalOpen: boolean;
   previewItemModalOpen: boolean;
@@ -24,7 +24,7 @@ export interface ReduxStateModals {
 const initialModalsState: ReduxStateModals = {
   productCreateModalOpen: false,
   productEditModalOpen: false,
-  storeCreateModalOpen: false,
+  storePayoutCreateModalOpen: false,
   mySettingsModalOpen: false,
   contactUsModalOpen: false,
   previewItemModalOpen: false,
@@ -57,8 +57,8 @@ export const reduxReducerModals = (
       return { ...state, productEditModalOpen: action.payload }
     }
 
-    case A.TOGGLE_STORE_CREATE_MODAL().type: {
-      return { ...state, storeCreateModalOpen: action.payload }
+    case A.TOGGLE_STORE_PAYOUT_CREATE_MODAL().type: {
+      return { ...state, storePayoutCreateModalOpen: action.payload }
     }
 
     case A.TOGGLE_MY_SETTINGS_MODAL().type: {
