@@ -2,17 +2,14 @@ import React from "react";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 // Redux
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { GrandReduxState } from "reduxStore/grand-reducer";
 // Typings
 import { UserPrivate } from "typings/gqlTypes";
 // Utils Components
 import ErrorBounds from "components/ErrorBounds";
-// Material UI
-import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
 // Components
-import CreateStoreForm from "pageComponents/StoreCreation/CreateStoreForm";
+import CreateStoreForm from "pageComponents/StorePayoutCreation/CreateStorePayoutForm";
 // Meta headers
 import MetaHeadersPage from "layout/MetaHeadersPage";
 

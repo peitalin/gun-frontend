@@ -163,19 +163,19 @@ const EditStoreForm: React.FC<ReactProps> = (props) => {
 
         if (payoutMethodChanged) {
 
-          let pm1 = storeEdit({
-            variables: {
-              storeId: values.storeId,
-              userId: values.userId,
-              name: values.name,
-              bio: values.bio,
-              website: values.website,
-              coverId: values.coverId,
-              profileId: values.profileId,
-            }
-          }).then(res => {
-            console.log('store edit response', res)
-          })
+          // let pm1 = storeEdit({
+          //   variables: {
+          //     storeId: values.storeId,
+          //     userId: values.userId,
+          //     name: values.name,
+          //     bio: values.bio,
+          //     website: values.website,
+          //     coverId: values.coverId,
+          //     profileId: values.profileId,
+          //   }
+          // }).then(res => {
+          //   console.log('store edit response', res)
+          // })
 
           let pm2 = setPayoutMethod({
             variables: {
@@ -187,33 +187,17 @@ const EditStoreForm: React.FC<ReactProps> = (props) => {
           }).then(res2 => {
             // set payoutMethod after creating a store
             console.log('payoutMethod response', res2)
-          })
-
-          // await both promises, then close modal
-          Promise.all([pm1, pm2]).then(() => {
             if (props.closeEditStoreModal) {
               props.closeEditStoreModal()
             }
           })
-        } else {
 
-          // just edit store, no payoutMethod changes
-          storeEdit({
-            variables: {
-              storeId: values.storeId,
-              userId: values.userId,
-              name: values.name,
-              bio: values.bio,
-              website: values.website,
-              coverId: values.coverId,
-              profileId: values.profileId,
-            }
-          }).then(res => {
-            console.log('store edit response', res)
-            if (props.closeEditStoreModal) {
-              props.closeEditStoreModal()
-            }
-          })
+          // // await both promises, then close modal
+          // Promise.all([pm1, pm2]).then(() => {
+          //   if (props.closeEditStoreModal) {
+          //     props.closeEditStoreModal()
+          //   }
+          // })
         }
 
       }}
@@ -278,7 +262,7 @@ const EditStoreFormWrapper: React.FC<FormWrapperProps> = (props) => {
         <div className={smUp ? classes.paperMarginDesktop : classes.paperMarginMobile}>
           <div className={classes.flexColMargin}>
             <Typography color={"primary"} variant="h3">
-              Edit Your Store
+              Payout Bank Account
             </Typography>
             <br/>
           </div>

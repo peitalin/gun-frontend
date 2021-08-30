@@ -34,7 +34,7 @@ const SellerBanner = (props: ReactProps) => {
           onClick={() => setEditMode(!editMode)}
           classes={{ outlined: classes.cornerButtonOutline }}
         >
-          { editMode ? 'Cancel' : 'Edit Store Profile'}
+          { editMode ? 'Cancel' : 'Edit Payout Bank'}
         </Button>
       </div>
     </Banner>

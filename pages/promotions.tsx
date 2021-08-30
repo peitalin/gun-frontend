@@ -14,7 +14,7 @@ import { GET_PAGE_CONFIG_BY_PATH } from "queries/page_configs-queries";
 
 
 
-const PromoteListingsSSR: NextPage<ReactProps> = (props) => {
+const PromotionsSSR: NextPage<ReactProps> = (props) => {
   return (
     <PageWithStripe>
       <PromoteListings
@@ -59,7 +59,7 @@ interface QVar1 {
   urlPath: string;
 }
 
-export default withStyles(styles)( PromoteListingsSSR );
+export default withStyles(styles)( PromotionsSSR );
 
 
 

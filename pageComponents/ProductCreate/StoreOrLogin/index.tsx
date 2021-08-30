@@ -8,11 +8,8 @@ import {
 import { fontFam, Colors, Gradients } from "layout/AppTheme";
 // MUI
 import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
 import Login from "layout/Login";
 import SellerProfile from "./SellerProfile";
-import Divider from "components/Divider";
-import AddSellerProfileModalButton from "pageComponents/StoreCreation/AddSellerProfileModalButton";
 // Redux
 import { useDispatch, useSelector } from "react-redux";
 // Typings
@@ -20,7 +17,7 @@ import {
   UserPrivate,
 } from "typings/gqlTypes";
 // store deleted
-import { isStoreDeleted, storeDoesNotExist } from "utils/store";
+import { payoutDoesNotExist, storeDoesNotExist } from "utils/store";
 // Redux
 import { GrandReduxState } from "reduxStore/grand-reducer";
 import { Actions } from "reduxStore/actions";
@@ -39,7 +36,6 @@ const StoreOrLogin = (props: StoreOrLoginProps) => {
   const {
     classes,
     user,
-    showProductCreateButtonIfLoggedIn = false,
     biggerButtons = false,
   } = props;
 
@@ -48,133 +44,88 @@ const StoreOrLogin = (props: StoreOrLoginProps) => {
     signup: false,
   });
 
-  const storeExists = !storeDoesNotExist(user?.store)
+  const storeIsValid = !storeDoesNotExist(user?.store)
   const dispatch = useDispatch();
-
   const theme = useTheme();
-  const smUp = useMediaQuery(theme.breakpoints.down("sm"));
 
-  if (storeExists) {
-    if (showProductCreateButtonIfLoggedIn) {
-      return (
-        <StoreOrLoginContainer>
-          <Link href={"/sell"}>
-            <a>
-              <Button
-                className={classes.productCreateLinkButton}
-                classes={{
-                  label: classes.productCreateLinkButtonText
-                }}
-                variant="text"
-                color="primary"
-              >
-                Upload a Product
-              </Button>
-            </a>
-          </Link>
-        </StoreOrLoginContainer>
-      )
-    } else {
-      return (
-        <StoreOrLoginContainer>
-          <SellerProfile user={user} />
-        </StoreOrLoginContainer>
-      )
-    }
+
+  if (storeIsValid) {
+    return (
+      <StoreOrLoginContainer>
+        <SellerProfile user={user} />
+      </StoreOrLoginContainer>
+    )
   } else {
-    // user profile exists, but no valid store
-    if (user?.id) {
-      return (
-        <StoreOrLoginContainer>
-          <div className={clsx(classes.storeLogin2)}
-            style={props.style}
-          >
-            {
-              !props.disableSubtitle &&
-              <Typography variant="h4" className={classes.loginTitle}>
-                Don't have a store yet?
-              </Typography>
-            }
-            <div className={classes.createStoreButtonContainer}>
-              <AddSellerProfileModalButton
-                title={"Create Seller Profile"}
-                // biggerButtons={biggerButtons}
-              />
-            </div>
-          </div>
-        </StoreOrLoginContainer>
-      )
-    } else {
-      // no user profile yet
-      return (
-        <StoreOrLoginContainer>
-          <div className={clsx(classes.flexRow, classes.createAccountLoginBox)}>
-            {
-              !props.disableSubtitle &&
-              <Typography variant="h4" className={classes.loginTitle}>
-                Don't have a store yet?
-              </Typography>
-            }
-            {
-              !showLogin.login &&
-              !showLogin.signup &&
-              <div className={clsx(classes.storeLogin)}
-                style={props.style}
-              >
+    // NOTE: store is created when a user signs up
+    // no user profile yet
+    return (
+      <StoreOrLoginContainer>
+        <div className={clsx(classes.flexRow, classes.createAccountLoginBox)}>
+          {
+            !props.disableSubtitle &&
+            <Typography variant="h4" className={classes.loginTitle}>
+              Don't have an account yet?
+            </Typography>
+          }
+          {
+            !showLogin.login &&
+            !showLogin.signup &&
+            <div className={clsx(classes.storeLogin)}
+              style={props.style}
+            >
+              <div className={classes.maxWidthButton}>
+                <Login
+                  buttonText={
+                    props.buttonText
+                      ? props.buttonText
+                      : "Create your account for free"
+                  }
+                  titleLogin={"Login"}
+                  titleSignup={"Create Account"}
+                  initialTabIndex={1}
+                  buttonType={props.buttonType}
+                  buttonProps={{
+                    classes: {
+                      root: clsx(
+                        classes.buttonCreateAccount,
+                        classes.buttonCreateAccountMaxWidth,
+                      ),
+                      label: biggerButtons ? classes.biggerButtons : null
+                      // label: classes.biggerButtons
+                    },
+                  }}
+                  // callbackOnComplete={() => {
+                  //   dispatch(Actions.reduxModals.TOGGLE_STORE_PAYOUT_CREATE_MODAL(true))
+                  // }}
+                  // redirectOnComplete={"/create-store"}
+                />
+              </div>
+              {
+                !props.disableLoginButton &&
                 <div className={classes.maxWidthButton}>
                   <Login
-                    buttonText={
-                      props.buttonText
-                        ? props.buttonText
-                        : "Create your account for free"
-                    }
-                    titleLogin={"Login"}
+                    buttonText={"Log In"}
+                    titleLogin={"Log In"}
                     titleSignup={"Create Account"}
-                    initialTabIndex={1}
-                    buttonType={props.buttonType}
+                    initialTabIndex={0}
                     buttonProps={{
-                      classes: {
-                        root: clsx(
-                          classes.buttonCreateAccount,
-                          classes.buttonCreateAccountMaxWidth,
-                        ),
-                        label: biggerButtons ? classes.biggerButtons : null
-                        // label: classes.biggerButtons
-                      },
+                      classes: { root: classes.buttonLogin }
                     }}
-                    // callbackOnComplete={() => {
-                    //   dispatch(Actions.reduxModals.TOGGLE_STORE_CREATE_MODAL(true))
-                    // }}
-                    redirectOnComplete={"/create-store"}
+                    buttonType={props.buttonType}
+                    callbackOnComplete={() => {
+                      // only dispatches if user.store does not exist.
+                      // is user.store exists, this component unmounts
+                      // and reduxAction to open model is never dispatched
+                      dispatch(Actions.reduxModals.TOGGLE_STORE_PAYOUT_CREATE_MODAL(true))
+                    }}
                   />
                 </div>
-                {
-                  !props.disableLoginButton &&
-                  <div className={classes.maxWidthButton}>
-                    <Login
-                      buttonText={"Log In"}
-                      titleLogin={"Log In"}
-                      titleSignup={"Create Account"}
-                      initialTabIndex={0}
-                      buttonProps={{
-                        classes: { root: classes.buttonLogin }
-                      }}
-                      buttonType={props.buttonType}
-                      callbackOnComplete={() => {
-                        // only dispatches if user.store does not exist.
-                        // is user.store exists, this component unmounts
-                        // and reduxAction to open model is never dispatched
-                        dispatch(Actions.reduxModals.TOGGLE_STORE_CREATE_MODAL(true))
-                      }}
-                    />
-                  </div>
-                }
-              </div>
-            }
-          </div>
-        </StoreOrLoginContainer>
-      )
-    }
+              }
+            </div>
+          }
+        </div>
+      </StoreOrLoginContainer>
+    )
   }
 }
 

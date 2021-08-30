@@ -10,21 +10,15 @@ import { styles } from './styles';
 import { Colors } from "layout/AppTheme";
 // Graphql
 import { useMutation, ApolloError } from "@apollo/client";
-import { CREATE_STORE } from "queries/store-mutations";
-import { GET_USER } from "queries/user-queries";
 // Typings
 import { StorePrivate, UserPrivate } from "typings/gqlTypes";
-import { CreateStoreInput, HtmlEvent } from "typings"
 // Components
 import Loading from "components/Loading";
-import CreateStoreFields from "./CreateStoreFields";
+import CreateStoreFields from "./CreateStorePayoutFields";
 // Snackbar
-import { useSnackbar, ProviderContext } from "notistack";
+import { useSnackbar } from "notistack";
 // Material UI
-import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
-import TextInput from "components/Fields/TextInput";
-import Button from "@material-ui/core/Button";
 import ButtonLoading from "components/ButtonLoading";
 // Validation
 import { Formik, FormikProps } from 'formik';
@@ -34,18 +28,17 @@ import IconButton from "@material-ui/core/IconButton";
 import ClearIcon from "@material-ui/icons/Clear";
 import Login from "layout/Login";
 // Graphql Queries
-import { UPDATE_USER, SET_PAYOUT_METHOD } from "queries/user-mutations";
+import { SET_PAYOUT_METHOD } from "queries/user-mutations";
 import { useRouter } from "next/router";
 // media query
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
 // store deleted
-import { isStoreDeleted, storeDoesNotExist } from "utils/store";
 
 
 
 
-const CreateStoreForm: React.FC<ReactProps> = (props) => {
+const CreateStorePayoutForm: React.FC<ReactProps> = (props) => {
 
   const { classes } = props;
 
@@ -65,24 +58,24 @@ const CreateStoreForm: React.FC<ReactProps> = (props) => {
     }
   })
 
-  const [
-    storeCreate,
-    { data, loading, error }
-  ] = useMutation<MutationData, CreateStoreInput>(
-    CREATE_STORE, {
-    update: (cache, { data }: { data: MutationData }) => {
-    },
-    onCompleted: async (dataCreateStore: MutationData) => {
-      const { createStore: { store } } = dataCreateStore;
-      // console.log("createStore.store", store)
-      dispatch(Actions.reduxLogin.SET_USER_STORE(store))
-    },
-    onError: (error) => {
-      snackbar.enqueueSnackbar(formatError(error), { variant: "error" })
-    },
-  })
+  // const [
+  //   storeCreate,
+  //   { data, loading, error }
+  // ] = useMutation<MutationData, CreateStoreInput>(
+  //   CREATE_STORE, {
+  //   update: (cache, { data }: { data: MutationData }) => {
+  //   },
+  //   onCompleted: async (dataCreateStore: MutationData) => {
+  //     const { createStore: { store } } = dataCreateStore;
+  //     // console.log("createStore.store", store)
+  //     dispatch(Actions.reduxLogin.SET_USER_STORE(store))
+  //   },
+  //   onError: (error) => {
+  //     snackbar.enqueueSnackbar(formatError(error), { variant: "error" })
+  //   },
+  // })
 
-  const [setPayoutMethod, mutationResponse] =
+  const [setPayoutMethod, { data, loading }] =
   useMutation<MutationData2, MutationVars2>(
     SET_PAYOUT_METHOD, {
     variables: {
@@ -100,6 +93,7 @@ const CreateStoreForm: React.FC<ReactProps> = (props) => {
         `Created your payout account`,
         { variant: "success" }
       )
+      dispatch(Actions.reduxModals.TOGGLE_STORE_PAYOUT_CREATE_MODAL(false))
       dispatch(Actions.reduxLogin.SET_USER({
         ...userRedux,
         ...user
@@ -110,14 +104,6 @@ const CreateStoreForm: React.FC<ReactProps> = (props) => {
     },
   })
 
-
-  React.useEffect(() => {
-    if (!storeDoesNotExist(userRedux?.store)) {
-      setTimeout(() => {
-        router.replace("/admin/products")
-      }, 0)
-    }
-  }, [userRedux])
 
 
   if (!userRedux?.id) {
@@ -130,70 +116,39 @@ const CreateStoreForm: React.FC<ReactProps> = (props) => {
       </div>
     )
   }
-  if (!storeDoesNotExist(userRedux?.store)) {
-    // if store does not exist, or is deleted
-    return (
-      <div className={classes.loginContainer}>
-        <Typography variant="h4" className={classes.storeExists}>
-          Your payout account was created.
-        </Typography>
-        <Button
-          variant="outlined"
-          onClick={() => {
-            router.push("/admin")
-          }}
-        >
-          View Seller Dashboard
-        </Button>
-      </div>
-    )
-  }
+
   return (
     <Formik
       // 1. feed product data to edit into formik state.
       initialValues={{
-        userId: userRedux.id,
-        name: "",
-        bio: "",
-        website: "",
-        coverId: "",
-        profileId: "",
         // payout methods
         bsb: "",
         accountNumber: "",
         accountName: "",
       }}
-      validationSchema={validationSchemas.CreateStore}
+      validationSchema={validationSchemas.CreateStorePayout}
       onSubmit={(values, { setSubmitting }) => {
         console.log('formik values...: ', values);
-        // Dispatch Apollo Mutation after validation
-        storeCreate({
+        // set payoutMethod after creating a store
+        setPayoutMethod({
           variables: {
-            userId: userRedux?.id,
-            name: values.name,
-            bio: values.bio,
-            website: values.website,
-            coverId: values.coverId,
-            profileId: values.profileId,
+            payoutType: "BANK",
+            bsb: values.bsb,
+            accountNumber: values.accountNumber,
+            accountName: values.accountName,
           }
-        }).then(({ data: { createStore: { store }}}) => {
-          console.log('storeCreated: ', store)
-          dispatch(Actions.reduxLogin.SET_USER_STORE(store))
-          // set payoutMethod after creating a store
-          setPayoutMethod({
-            variables: {
-              payoutType: "BANK",
-              bsb: values.bsb,
-              accountNumber: values.accountNumber,
-              accountName: values.accountName,
+        }).then(async({ data: { setPayoutMethod }}) => {
+          console.log('payoutMethod response', setPayoutMethod)
+          dispatch(Actions.reduxModals.TOGGLE_STORE_PAYOUT_CREATE_MODAL(false))
+          dispatch(Actions.reduxLogin.SET_USER(setPayoutMethod.user))
+          if (setPayoutMethod?.user) {
+            if (typeof props.setListingTypeCallback === 'function') {
+              props.setListingTypeCallback()
             }
-          }).then(async({ data: { setPayoutMethod }}) => {
-            console.log('payoutMethod response', setPayoutMethod)
-            dispatch(Actions.reduxLogin.SET_USER(setPayoutMethod.user))
-            if (props.closeModal) {
-              props.closeModal()
-            }
-          })
+          }
+          if (props.closeModal) {
+            props.closeModal()
+          }
         })
 
       }}
@@ -215,7 +170,7 @@ const CreateStoreForm: React.FC<ReactProps> = (props) => {
         } = fprops;
 
         return (
-          <CreateStoreFormWrapper
+          <CreateStorePayoutFormWrapper
             classes={classes}
             onSubmit={(e) => {
               e.preventDefault()
@@ -234,8 +189,11 @@ const CreateStoreForm: React.FC<ReactProps> = (props) => {
               title={props.title}
               {...fprops}
             />
-            { loading && <Loading fixed loading={loading} delay={"200ms"}/>}
-          </CreateStoreFormWrapper>
+            {
+              loading &&
+              <Loading fixed loading={loading} delay={"200ms"}/>
+            }
+          </CreateStorePayoutFormWrapper>
         )
       }}
     </Formik>
@@ -244,22 +202,22 @@ const CreateStoreForm: React.FC<ReactProps> = (props) => {
 
 
 
-const CreateStoreFormWrapper: React.FC<FormWrapperProps> = (props) => {
+const CreateStorePayoutFormWrapper: React.FC<FormWrapperProps> = (props) => {
 
   const { classes, loading, onSubmit } = props;
   const dispatch = useDispatch();
   const theme = useTheme();
-  const smUp = useMediaQuery(theme.breakpoints.up('sm'));
+  const mdUp = useMediaQuery(theme.breakpoints.up('md'));
 
   return (
     <div className={clsx(classes.formRoot)}>
       <div className={classes.maxWidth720}>
         <div className={
-          smUp ? classes.paperMarginMd : classes.paperMargin
+          mdUp ? classes.paperMarginMd : classes.paperMargin
         }>
           <div className={classes.flexColMargin}>
             <Typography color={"primary"} variant="h3">
-              Create a Payout Account
+              Add a Bank Account
             </Typography>
             <br/>
           </div>
@@ -269,7 +227,7 @@ const CreateStoreFormWrapper: React.FC<FormWrapperProps> = (props) => {
             <IconButton
               className={classes.closeButton}
               onClick={() =>
-                dispatch(Actions.reduxModals.TOGGLE_STORE_CREATE_MODAL(false))
+                dispatch(Actions.reduxModals.TOGGLE_STORE_PAYOUT_CREATE_MODAL(false))
               }
             >
               <ClearIcon/>
@@ -318,11 +276,16 @@ interface FormWrapperProps extends WithStyles<typeof styles> {
   loading?: boolean;
 }
 
+interface ReactProps extends WithStyles<typeof styles> {
+  data?: any;
+  asModal?: boolean;
+  title?: string;
+  closeModal?(): void;
+  setListingTypeCallback?(): void
+}
+
 interface ReduxState {
   userRedux: UserPrivate;
-}
-interface MutationData {
-  createStore: { store: StorePrivate };
 }
 interface MutationData2 {
   setPayoutMethod: { user: UserPrivate };
@@ -334,13 +297,6 @@ interface MutationVars2 {
   accountName: string;
 }
 
-interface ReactProps extends WithStyles<typeof styles> {
-  data?: any;
-  asModal?: boolean;
-  title?: string;
-  closeModal?(): void;
-}
 
-
-export default withStyles(styles)( CreateStoreForm );
+export default withStyles(styles)( CreateStorePayoutForm );
 

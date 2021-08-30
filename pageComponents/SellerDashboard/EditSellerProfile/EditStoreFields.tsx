@@ -149,7 +149,7 @@ const EditStoreFields: React.FC<ReactProps & FormikProps<FormikFields>> = (props
         <div className={classes.margin1}>
           <div className={clsx(classes.flexRow, classes.spaceBetween)}>
             <Typography variant="subtitle1" className={classes.subtitle1}>
-              Where should we send your earnings?
+              Bank account to send escrow payments:
             </Typography>
           </div>
           <div className={clsx(classes.formContainer, "fadeInFast")}>
@@ -183,7 +183,7 @@ const EditStoreFields: React.FC<ReactProps & FormikProps<FormikFields>> = (props
             <Typography variant="body1" className={classes.subtitle3}>
               We will send your funds automatically to this Bank account
               after your order has been settled and approved,
-              typically in 5 business days.
+              typically within 5 business days.
             </Typography>
             {
               errors.bsb &&

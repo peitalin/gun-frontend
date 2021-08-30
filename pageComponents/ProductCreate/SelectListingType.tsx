@@ -12,12 +12,25 @@ import Button from "@material-ui/core/Button";
 import ValidationErrorMsg from "components/Fields/ValidationErrorMsg";
 import { Formik, Form, FormikProps, ErrorMessage } from 'formik';
 
+import { useDispatch, useSelector } from "react-redux";
+import { GrandReduxState, Actions } from "reduxStore/grand-reducer";
+
+import Dialog from "@material-ui/core/Dialog";
+// Components
+import CreateStoreForm from "pageComponents/StorePayoutCreation/CreateStorePayoutForm";
+// CSS
+import { useTheme } from "@material-ui/core/styles";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { payoutDoesNotExist } from "utils/store";
+
+
 
 
 const SelectListingType = (props: ReactProps & FormikProps<FormikFields>) => {
 
   const {
     classes,
+    user,
     ...fprops
   } = props;
 
@@ -26,6 +39,16 @@ const SelectListingType = (props: ReactProps & FormikProps<FormikFields>) => {
     fprops.setFieldValue("listingType", listing)
   }
 
+  const dispatch = useDispatch()
+  const storePayoutCreateModalOpen = useSelector<GrandReduxState, boolean>(
+    r => r.reduxModals.storePayoutCreateModalOpen
+  )
+
+  // CSS media queries
+  const theme = useTheme();
+  const mdDown = useMediaQuery(theme.breakpoints.down('md'));
+
+  // console.log("payoutMETHOD: ", user?.payoutMethod)
 
   return (
     <div className={classes.positionRelative}
@@ -94,7 +117,16 @@ const SelectListingType = (props: ReactProps & FormikProps<FormikFields>) => {
             classes={{
               label: classes.listingTypeButtonLabel,
             }}
-            onClick={() => setListingTypeHandler(ListingType.ESCROW_ONLY)}
+            onClick={() => {
+
+              if (payoutDoesNotExist(user)) {
+                dispatch(Actions.reduxModals.TOGGLE_STORE_PAYOUT_CREATE_MODAL(true))
+              } else {
+                dispatch(Actions.reduxModals.TOGGLE_STORE_PAYOUT_CREATE_MODAL(false))
+                setListingTypeHandler(ListingType.ESCROW_ONLY)
+              }
+
+            }}
           >
             <span className={classes.listingLabelTop}>
               Escrow Listing
@@ -114,6 +146,34 @@ const SelectListingType = (props: ReactProps & FormikProps<FormikFields>) => {
           </div>
         </FormGroup>
       </div>
+
+      <Dialog
+        open={storePayoutCreateModalOpen}
+        fullScreen={mdDown}
+        fullWidth={mdDown}
+        onClose={() => {
+          dispatch(Actions.reduxModals.TOGGLE_STORE_PAYOUT_CREATE_MODAL(false))
+        }}
+        BackdropProps={{
+          classes: {
+            root: classes.modalBackdrop,
+          }
+        }}
+        PaperProps={{
+          classes: {
+            root: classes.modalPaperScrollPaper
+          }
+        }}
+        scroll={'body'}
+      >
+        <CreateStoreForm asModal={true}
+          setListingTypeCallback={() => {
+            setListingTypeHandler(ListingType.ESCROW_ONLY)
+          }}
+          // closeModal={ }
+        />
+      </Dialog>
+
     </div>
   )
 }
@@ -124,6 +184,7 @@ const SelectListingType = (props: ReactProps & FormikProps<FormikFields>) => {
 interface ReactProps extends WithStyles<typeof styles> {
   activeStep: number
   setActiveStep(a: number): void
+  user: UserPrivate
 }
 interface FormikFields {
   listingType?: string | ListingType;

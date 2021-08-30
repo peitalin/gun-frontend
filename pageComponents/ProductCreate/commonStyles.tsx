@@ -391,9 +391,10 @@ export const styles = (theme: Theme) => createStyles({
     backgroundColor: Colors.modalBackground,
   },
   modalPaperScrollPaper: {
-    maxHeight: "calc(100% - 4rem)",
-    width: '100%',
-    margin: 0,
+    borderRadius: BorderRadius2x,
+    // maxHeight: "calc(100% - 4rem)",
+    // width: '100%',
+    // margin: 0,
   },
   fullMaxHeight: {
     maxHeight: "100%",

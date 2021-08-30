@@ -104,7 +104,7 @@ const EditSellerProfile = (props: ReactProps) => {
           className={classes.linkButton}
           onClick={() => openEditStoreModal()}
         >
-          Edit Store
+          Edit Payout Bank
         </Button>
       </>
     )

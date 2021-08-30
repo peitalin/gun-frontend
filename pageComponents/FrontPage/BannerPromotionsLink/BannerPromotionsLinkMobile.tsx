@@ -78,7 +78,7 @@ const BannerPromotionsLinkMobile: NextPage<ReactProps> = (props) => {
             </div>
           </div>
           <div className={classes.bannerInnerBoxRightMobile}>
-            <Link href={"/promote-listings"}>
+            <Link href={"/promotions"}>
               <a>
                 <Button
                   className={

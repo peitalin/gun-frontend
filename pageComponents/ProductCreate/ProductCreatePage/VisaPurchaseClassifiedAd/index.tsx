@@ -25,25 +25,21 @@ import {
 } from "pageComponents/P/PurchaseProductSummary/VisaPurchaseProduct/purchaseTypings";
 import {
   UserPrivate,
-  Product,
-  PromotionPurchaseMutationResponse,
-  ProductCreateInput,
   ClassifiedAdPaymentInput,
   ProductListingMutationResponse,
 } from 'typings/gqlTypes';
 // Components
-import ErrorBounds from 'components/ErrorBounds';
 import ButtonLoading from "components/ButtonLoading";
 // redux
 import { useSelector } from "react-redux";
 import { GrandReduxState, Actions } from "reduxStore/grand-reducer";
-// Graphql
-import { useApolloClient, useLazyQuery } from '@apollo/client';
-import { useQuery, useMutation } from "@apollo/client";
 // Snackbar
 import { useSnackbar } from "notistack";
 import { useTheme } from '@material-ui/core';
 import { buttonWidthClassified } from "../constants";
+
+
+
 
 
 const VisaPurchaseProduct = (props: ReactProps) => {
@@ -58,12 +54,9 @@ const VisaPurchaseProduct = (props: ReactProps) => {
     classes,
     disableButton,
     priceInCents = 1000 // $10
-  } = props;
+  } = props
 
   const [internationalFee, setInternationalFee] = React.useState(0)
-
-  console.log("purchasePriceInCents: ", priceInCents)
-
   const [loading, setLoading] = React.useState(false);
 
   interface ReduxState {

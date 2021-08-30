@@ -3,8 +3,6 @@ import React from "react";
 import { withStyles, WithStyles } from "@material-ui/core/styles";
 import { styles } from "pageComponents/SellerDashboard/styles";
 import clsx from "clsx";
-// Typings
-import { StorePrivate } from "typings/gqlTypes";
 // Components
 import Loading from "components/Loading";
 import LoadingBarSSR from "components/LoadingBarSSR";
@@ -36,7 +34,7 @@ const EditStoreAdminPage = (props: ReactProps) => {
   return (
     <>
       <MetaHeadersPage
-        title="Edit Store - gunmarketplace.com.au"
+        title="Edit Payout Bank - gunmarketplace.com.au"
         robots="noindex"
       />
       <SellerProfileWrapper>

@@ -14,7 +14,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 
 const routeMappings = {
   '': "Home",
-  'edit-store': "Edit Store",
+  'edit-payout': "Edit Payout Bank",
   'products': "Products",
   'orders': "Orders",
   'offers': "Offers",

@@ -25,7 +25,6 @@ import {
   StripeConfirmResponse,
 } from "./purchaseTypings";
 import {
-  ID,
   UserPrivate,
   OrderStatus,
   Orders,

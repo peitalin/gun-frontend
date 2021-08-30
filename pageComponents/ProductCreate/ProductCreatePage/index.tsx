@@ -583,6 +583,7 @@ const ProductCreatePage = (props: ReactProps) => {
           <SelectListingType
             activeStep={activeStep}
             setActiveStep={setActiveStep}
+            user={user}
             {...formik}
           />
           <ProductCreateButtonWrapper {...props}>
@@ -673,7 +674,7 @@ const ProductCreatePage = (props: ReactProps) => {
                 onClick={() => {
                   processProductDataAndValidate({ publishNow: true })
                 }}
-                title={"Publish Now"}
+                title={"Publish Escrow Listing"}
                 postInstantly={true}
                 loading={state.loading}
                 errors={formik.errors}
@@ -681,6 +682,7 @@ const ProductCreatePage = (props: ReactProps) => {
                 // disabled={isFormikDisabled(formik.errors) || state.loading}
               />
             }
+
           </ProductCreateButtonWrapper>
         </SectionBorder>
 
