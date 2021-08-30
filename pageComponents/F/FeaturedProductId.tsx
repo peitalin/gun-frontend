@@ -181,6 +181,9 @@ const FeaturedProductId: React.FC<ReactProps> = (props) => {
   let storeUserVerified = product?.sellerLicense?.verified;
   let productIsYours = product?.store?.user?.id === user?.id
 
+  // if (!loading && product?.soldOutStatus === SoldOutStatus.SOLD_OUT) {
+  //   return <ErrorPage statusCode={400} message={"Product has been sold"}/>
+  // }
   if (!loading && product?.store?.isSuspended === true) {
     return <ErrorPage statusCode={400} message={"Store has been suspended"}/>
   }

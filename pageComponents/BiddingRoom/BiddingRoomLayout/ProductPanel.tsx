@@ -214,7 +214,7 @@ interface QueryVar {
 const styles = (theme: Theme) => createStyles({
   productPanelRoot: {
     minWidth: 320,
-    width: 360,
+    width: '100%',
   },
   productBidsContainer: {
     display: 'flex',
@@ -287,6 +287,7 @@ const styles = (theme: Theme) => createStyles({
     width: '100%',
   },
   marginOffset: {
+    width: '100%',
     marginLeft: '-1rem',
   },
 })
