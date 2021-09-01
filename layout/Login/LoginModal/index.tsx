@@ -221,7 +221,6 @@ const LoginPageModal: React.FC<ReactProps> = (props) => {
 
 
 interface ReactProps extends WithStyles<typeof styles> {
-  buttonText?: string;
   tabIndex: number;
   loggedIn: boolean;
   openModal: boolean;
@@ -232,6 +231,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   className?: any;
   buttonLoading?: boolean;
   buttonType?: "menuItem" | "textField" | "default";
+  buttonText?: React.ReactNode;
   menuItemTextClassName?: any;
   handleToggleModal(): void;
   setTabIndex(tabIndex: number): void;

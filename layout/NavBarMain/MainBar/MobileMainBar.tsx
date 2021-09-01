@@ -153,7 +153,25 @@ const MobileMainBar = (props: MobileMainBarProps) => {
           : <div className={classes.buttonMarginRight}>
               <Login
                 className={classes.navbarButtonMobile}
-                buttonText={"Saved Searches"}
+                buttonText={
+                  <div className={classes.flexCenter}>
+                    <span className={
+                        // endRoute === '/admin/products'
+                        endRoute === '/saved-searches'
+                          ? classes.selectedRouteText
+                          : null
+                      }
+                      style={{ color: color }}
+                    >
+                      Saved
+                    </span>
+                    <SearchIcon style={{
+                      fill: color,
+                      marginTop: "0.1rem",
+                      height: 20,
+                    }}/>
+                  </div>
+                }
                 titleLogin={"Login to continue"}
                 buttonProps={{
                   style: { color: color }

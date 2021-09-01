@@ -456,7 +456,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   redirectDelay?: number
   asFormLayout?: boolean;
   buttonProps?: any;
-  buttonText?: string;
+  buttonText?: React.ReactNode;
   titleLogin?: string;
   titleSignup?: string;
   initialTabIndex?: number;

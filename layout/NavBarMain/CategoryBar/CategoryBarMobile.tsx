@@ -117,7 +117,7 @@ const CategoryBarMobile: React.FC<ReactProps> = (props) => {
                   classes.categoryLinkAllMobile,
                   router.asPath === '/sell' && classes.categoryLinkTextSelected,
                 )}
-                title={"Upload Listing"}
+                title={"Upload"}
                 color={
                   (router.asPath === '/sell' || hoverStripeArrow)
                     ? isThemeDark(theme)
