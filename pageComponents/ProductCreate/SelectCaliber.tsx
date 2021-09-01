@@ -17,9 +17,9 @@ import {
 import {
   createCaliberOption,
   createCaliberOptionGroups,
-  SelectOption,
   GroupedSelectOption,
 } from "components/SearchbarAirbnb/AdvancedSearchDropdown/CaliberMenu";
+import { SelectOptionCaliber } from "typings"
 // gql
 import { GET_CALIBERS } from "queries/calibers-queries";
 import { useQuery } from "@apollo/client";
@@ -77,7 +77,7 @@ const SelectCaliber = (props: ReactProps & FormikProps<FormikFields>) => {
             : undefined
         }
         height={45}
-        onChange={(option: SelectOption) => {
+        onChange={(option: SelectOptionCaliber) => {
           console.log("option: ", option)
           let caliber = option?.value
           fprops.setFieldValue("caliber", caliber)

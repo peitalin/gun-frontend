@@ -4151,7 +4151,8 @@ export type ProductEditInput = {
   magazineCapacity?: Maybe<Scalars['String']>;
   barrelLength?: Maybe<Scalars['String']>;
   allowBids?: Maybe<Scalars['Boolean']>;
-  listingType?: Maybe<ListingType>;
+  listingType: ListingType;
+  productType: ProductType;
 };
 
 /** Critical information about a file within a product */

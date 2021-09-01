@@ -109,6 +109,8 @@ export const validationSchemas = {
         .required("Must set isPublished"),
       listingType: Yup.string()
         .required('Listing type required'),
+      productType: Yup.string()
+        .required('Product type required'),
     }),
 
 
@@ -213,6 +215,8 @@ export const validationSchemas = {
         .matches(productIdRegex),
       listingType: Yup.string()
         .required('Listing type required'),
+      productType: Yup.string()
+        .required('Product type required'),
     }),
 
 

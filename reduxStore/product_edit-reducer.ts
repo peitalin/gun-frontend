@@ -60,6 +60,8 @@ const initialProductEditState: ReduxStateProductEdit = {
     isPublished: false,
     allowBids: true,
     sellerLicenseId: "",
+    listingType: undefined, // not editable, get it from product.listingType
+    productType: undefined, // not editable, get from product.productType
   },
   dzuPreviewItems: [],
   dzuPreviewOrder: [],

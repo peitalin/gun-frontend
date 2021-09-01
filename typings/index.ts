@@ -3,6 +3,7 @@ import {
   ProductVariantEditInput,
   ID,
   ListingType,
+  ProductType,
 } from "typings/gqlTypes";
 
 
@@ -93,7 +94,8 @@ export interface ProductCreateEditCommonInput {
   sellerLicenseId: string;
   productId?: ID;
   currentVariants: ProductVariantInput[] | ProductVariantEditInput[];
-  listingType?: ListingType
+  listingType: ListingType
+  productType: ProductType
 }
 
 export interface ProductCreateInputFrontEnd extends ProductCreateEditCommonInput {

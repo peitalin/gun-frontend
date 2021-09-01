@@ -108,6 +108,7 @@ import {
   ClassifiedAdPaymentInput,
   ListingType,
   Role,
+  ProductType,
 } from "typings/gqlTypes";
 import {
   ProductCreateInputFrontEnd,
@@ -315,6 +316,7 @@ const ProductCreatePage = (props: ReactProps) => {
             currentVariants: values.currentVariants,
             sellerLicenseId: values.sellerLicenseId,
             listingType: values.listingType,
+            productType: values.productType ?? ProductType.FIREARM,
           },
           classifiedAdPaymentInput: null,
         },
@@ -639,6 +641,7 @@ const ProductCreatePage = (props: ReactProps) => {
                           currentVariants: values.currentVariants,
                           sellerLicenseId: values.sellerLicenseId,
                           listingType: values.listingType,
+                          productType: values.productType,
                         },
                         classifiedAdPaymentInput: classifiedAdPaymentInput,
                       }

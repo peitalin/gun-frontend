@@ -4,6 +4,7 @@ import {
   ProductVariantEditInput,
   Product_Preview_Items,
   ListingType,
+  ProductType,
 } from "typings/gqlTypes";
 import { DzuPreviewItem } from "typings/dropzone";
 
@@ -34,6 +35,7 @@ export const productToProductEditInput = (
       barrelLength: "",
       sellerLicenseId: "",
       listingType: ListingType.CLASSIFIED,
+      productType: ProductType.FIREARM,
     }
   }
 
@@ -72,6 +74,7 @@ export const productToProductEditInput = (
     barrelLength: product.currentSnapshot.barrelLength,
     sellerLicenseId: product.sellerLicenseId,
     listingType: product.listingType,
+    productType: product.productType,
   };
 }
 

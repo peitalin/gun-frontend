@@ -221,6 +221,7 @@ const ProductEditPage = (props: ReactProps) => {
             barrelLength: values.barrelLength,
             sellerLicenseId: values.sellerLicenseId,
             listingType: props.product?.listingType, // can't be edited
+            productType: props.product?.productType, // can't be edited
           }
         },
       }).finally(() => {
