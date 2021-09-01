@@ -141,7 +141,7 @@ const MobileMainBar = (props: MobileMainBarProps) => {
                       ? classes.selectedRouteText
                       : null
                   }
-                  style={{ color: color }}
+                  style={{ color: color, fontWeight: 500 }}
                 >
                   Saved
                 </span>
@@ -163,7 +163,7 @@ const MobileMainBar = (props: MobileMainBarProps) => {
                           ? classes.selectedRouteText
                           : null
                       }
-                      style={{ color: color }}
+                      style={{ color: color, fontWeight: 500 }}
                     >
                       Saved
                     </span>
