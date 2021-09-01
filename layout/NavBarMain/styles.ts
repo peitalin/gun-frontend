@@ -352,8 +352,18 @@ export const styles = (theme: Theme) => createStyles({
     height: MainBarHeight,
     display: "flex",
     position: "relative",
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     alignItems: "center",
+  },
+  mobileNavbarRightButton: {
+    position: 'absolute',
+    right: '-0.25rem',
+    top: '0.5rem',
+  },
+  mobileNavbarLeftButton: {
+    position: 'absolute',
+    left: '0.25rem',
+    top: '0.5rem',
   },
   logoMobile: {
     margin: '0rem 0.5rem',

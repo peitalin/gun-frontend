@@ -42,6 +42,7 @@ const MobileMainBar = (props: MobileMainBarProps) => {
       <div className={classes.blurBackgroundMobile}/>
 
       <div className={clsx(
+        classes.mobileNavbarLeftButton,
         "fadeIn",
         hide ? classes.mainBarInnerHide : classes.mainBarInner,
       )}>
@@ -118,6 +119,7 @@ const MobileMainBar = (props: MobileMainBarProps) => {
 
 
       <div className={clsx(
+        classes.mobileNavbarRightButton,
         "fadeIn",
         hide ? classes.mainBarInnerHide : classes.mainBarInner,
       )}>

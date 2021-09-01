@@ -118,16 +118,16 @@ const styles = (theme: Theme) => createStyles({
     borderRadius: BorderRadius,
   },
   menuTop: {
-    top: `calc(${MainBarHeight + CategoryBarHeight}px + 0.5rem)`, // 1px tucked under navbar
+    top: `calc(${MainBarHeight + CategoryBarHeight}px + 0.25rem)`, // 1px tucked under navbar
   },
   menuTopDashboard: {
-    top: `calc(${MainBarHeight + CategoryBarHeight + DashboardBarHeight}px + 0.75rem)`,
+    top: `calc(${MainBarHeight + CategoryBarHeight + DashboardBarHeight}px + 0.25rem)`,
   },
   mobileMenuExpanderRoot: {
     zIndex: 2,
     position: "absolute", // relative to MainBar, which is under NewsBar
-    left: '0.5rem',
-    width: 'calc(100% - 1rem)',
+    left: '0.25rem',
+    width: 'calc(100vw - 1rem)',
     borderRadius: BorderRadius,
     background: theme.palette.type === 'dark'
       ? Colors.uniswapDarkNavy
