@@ -120,6 +120,10 @@ const PreviewImageFeatured: React.FC<ReactProps> = (props) => {
           </div>
         }
         {
+          props.previewsMissing &&
+          <div className={classes.previewsMissing}>Image Missing</div>
+        }
+        {
           !loaded &&
           showLoadingBar &&
           <LoadingBar
@@ -142,6 +146,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   className?: any;
   transitioning?: boolean; // for when transition between slide images
   // and you want to show a black fade in
+  previewsMissing?: boolean;
 }
 
 // const objectFit = 'contain';
@@ -213,6 +218,16 @@ const styles = (theme: Theme) => createStyles({
     backgroundColor: theme.palette.type === 'dark'
       ? Colors.uniswapDarkNavy
       : Colors.slateGreyDark,
+  },
+  previewsMissing: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    height: '100%',
+    width: '100%',
+    // backgroundColor: theme.palette.type === 'dark'
+    //   ? Colors.uniswapDarkGrey
+    //   : Colors.slateGreyDark,
   },
 });
 

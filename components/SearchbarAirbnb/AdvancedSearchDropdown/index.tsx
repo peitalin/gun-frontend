@@ -29,6 +29,8 @@ import {
 } from "typings/gqlTypes";
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
+//
+import { SelectOptionCaliber } from "typings";
 
 
 
@@ -56,10 +58,11 @@ const AdvancedSearchDropdown: React.FC<ReactProps> = (props) => {
     : props.dealerStates?.join(', ')
 
   let caliberStr = props.calibers?.length > 3
-    ? props.calibers?.slice(0, 3)?.join(", ") + '...'
-    : props.calibers?.join(', ')
+    ? props.calibers?.slice(0, 3)?.map(obj => obj.label)?.join(", ") + '...'
+    : props.calibers?.map(obj => obj.label)?.join(', ')
   // console.log('dealerSttes', props.dealerStates)
-  // console.log('caliberrrrs', props.calibers)
+  console.log('caliberrrrs', props.calibers)
+  console.log('caliberStr', caliberStr)
 
   return (
     <>
@@ -73,7 +76,9 @@ const AdvancedSearchDropdown: React.FC<ReactProps> = (props) => {
         <div className={classes.advancedSearchButtonText}>
           <div className={classes.iconTextContainer}>
             {
-              (props.calibers?.length > 0) &&
+              (
+                props.calibers?.length > 0
+              ) &&
               <span className={
                 (props.dealerStates?.length === 0)
                   ? classes.iconText
@@ -83,7 +88,9 @@ const AdvancedSearchDropdown: React.FC<ReactProps> = (props) => {
               </span>
             }
             {
-              (props.dealerStates?.length > 0) &&
+              (
+                props.dealerStates?.length > 0
+              ) &&
               <span className={
                 (props.calibers?.length === 0)
                   ? classes.iconText
@@ -161,8 +168,10 @@ interface ReactProps extends WithStyles<typeof styles> {
   setMobileFocused?(a: boolean): void;
   dealerStates?: DealerState[];
   setDealerStates(c: DealerState[]): void;
-  calibers?: string[];
-  setCalibers(c: string[]): void;
+  // calibers?: string[];
+  // setCalibers(c: string[]): void;
+  calibers?: SelectOptionCaliber[];
+  setCalibers(c: SelectOptionCaliber[]): void;
 }
 
 /////////////// STYLES /////////////////////

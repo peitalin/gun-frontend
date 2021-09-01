@@ -21,6 +21,7 @@ import {
   GridMap,
 } from "components/GridPaginatorGeneric/GridPaginatorHelpers";
 import { NextRouter } from "next/router";
+import { SelectOptionCaliber } from "typings"
 
 
 
@@ -114,8 +115,8 @@ export const useFacetSearchOptions = ({
   const [
     calibers,
     setCalibers
-  ] = React.useState<string[]>(
-    initialCaliber ? [initialCaliber] : undefined
+  ] = React.useState<SelectOptionCaliber[]>(
+    initialCaliber ? [] : []
   )
 
   const [
@@ -167,7 +168,7 @@ export const useFacetSearchOptions = ({
 
   React.useEffect(() => {
     if (initialCaliber) {
-      setCalibers([initialCaliber])
+      setCalibers([])
     } else {
       setCalibers([])
       // default empty array for all calibers filter
@@ -284,7 +285,7 @@ export const useFacetSearchOptions = ({
 
       // console.log("params before join: ", params)
       let params_str: string = params.join('&')
-      console.log("params_str after join: ", params_str)
+      // console.log("params_str after join: ", params_str)
       if (params_str) {
         params_str = `?${params_str}`
       } else {
@@ -365,8 +366,8 @@ export interface FacetSearchParams {
   setCurrentCategories: React.Dispatch<React.SetStateAction<Categories[]>>
   dealerStates: DealerState[],
   setDealerStates: React.Dispatch<React.SetStateAction<DealerState[]>>
-  calibers: string[],
-  setCalibers: React.Dispatch<React.SetStateAction<string[]>>
+  calibers: SelectOptionCaliber[],
+  setCalibers: React.Dispatch<React.SetStateAction<SelectOptionCaliber[]>>
   actionTypes: string[],
   setActionTypes: React.Dispatch<React.SetStateAction<string[]>>
   paginationParams: {

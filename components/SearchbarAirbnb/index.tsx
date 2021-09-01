@@ -28,6 +28,7 @@ import { useSnackbar } from "notistack";
 // Graphql
 import { GET_CATEGORIES } from "queries/categories-queries";
 import { useQuery } from '@apollo/client';
+import { SelectOptionCaliber } from "typings"
 
 
 
@@ -454,8 +455,8 @@ interface ReactProps extends WithStyles<typeof styles> {
   setCurrentCategories: React.Dispatch<React.SetStateAction<Categories[]>>
   dealerStates: DealerState[],
   setDealerStates: React.Dispatch<React.SetStateAction<DealerState[]>>
-  calibers: string[],
-  setCalibers: React.Dispatch<React.SetStateAction<string[]>>
+  calibers: SelectOptionCaliber[],
+  setCalibers: React.Dispatch<React.SetStateAction<SelectOptionCaliber[]>>
   actionTypes: string[],
   setActionTypes: React.Dispatch<React.SetStateAction<string[]>>
   paginationParams: {

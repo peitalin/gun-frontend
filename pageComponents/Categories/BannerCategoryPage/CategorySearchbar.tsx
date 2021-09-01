@@ -58,7 +58,13 @@ const CategorySearchbar: React.FC<ReactProps & FacetSearchParams> = (props) => {
     setPageParam(1) // reset to page 1 every time you hit search button
     props.setSearchTermForGql(searchTerm)
     props.setDealerStatesForGql(dealerStates)
-    props.setCalibersForGql(calibers)
+
+    console.log("options:", calibers)
+    let flatCalibers = calibers.flatMap(c => c.synonyms)
+    console.log("flat options:", flatCalibers)
+    // flatten list of lists of caliber synonyms
+    props.setCalibersForGql(flatCalibers)
+
     props.setCategorySlugsForGql(
       currentCategories?.map(c => c.slug) ?? ["all"]
     )

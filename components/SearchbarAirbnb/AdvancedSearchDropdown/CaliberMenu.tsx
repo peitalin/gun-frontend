@@ -15,6 +15,7 @@ import {
 // gql
 import { GET_CALIBERS } from "queries/calibers-queries";
 import { useQuery } from "@apollo/client";
+import { SelectOptionCaliber } from "typings"
 
 
 let defaultCalibersInsertInput = [
@@ -44,7 +45,6 @@ let defaultCalibersInsertInput = [
   {'id': 'caliber_000038', 'name': '.325', 'group': 'RIMFIRE_CENTERFIRE'},
   {'id': 'caliber_000039', 'name': '.338', 'group': 'RIMFIRE_CENTERFIRE'},
   {'id': 'caliber_000041', 'name': '.35', 'group': 'RIMFIRE_CENTERFIRE'},
-  {'id': 'caliber_000042', 'name': '.350', 'group': 'RIMFIRE_CENTERFIRE'},
   {'id': 'caliber_000043', 'name': '.357', 'group': 'RIMFIRE_CENTERFIRE'},
   {'id': 'caliber_000044', 'name': '.36', 'group': 'RIMFIRE_CENTERFIRE'},
   {'id': 'caliber_000045', 'name': '.375', 'group': 'RIMFIRE_CENTERFIRE'},
@@ -72,7 +72,6 @@ let defaultCalibersInsertInput = [
   {'id': 'caliber_000078', 'name': '5.56x45', 'group': 'RIMFIRE_CENTERFIRE'},
   {'id': 'caliber_000079', 'name': '5mm', 'group': 'RIMFIRE_CENTERFIRE'},
   {'id': 'caliber_000080', 'name': '6.5', 'group': 'RIMFIRE_CENTERFIRE'},
-  {'id': 'caliber_000081', 'name': '6.5', 'group': 'RIMFIRE_CENTERFIRE'},
   {'id': 'caliber_000082', 'name': '6.5-284', 'group': 'RIMFIRE_CENTERFIRE'},
   {'id': 'caliber_000083', 'name': '6.5-300', 'group': 'RIMFIRE_CENTERFIRE'},
   {'id': 'caliber_000084', 'name': '6.5mm', 'group': 'RIMFIRE_CENTERFIRE'},
@@ -97,11 +96,31 @@ let defaultCalibersInsertInput = [
   {'id': 'caliber_000103', 'name': '9.3x62', 'group': 'RIMFIRE_CENTERFIRE'},
   {'id': 'caliber_000104', 'name': '9mm', 'group': 'RIMFIRE_CENTERFIRE'},
   {'id': 'caliber_000105', 'name': '.410', 'group': 'SHOTSHELL'},
-  {'id': 'caliber_000106', 'name': '28 GAUGE', 'group': 'SHOTSHELL'},
-  {'id': 'caliber_000107', 'name': '20 GAUGE', 'group': 'SHOTSHELL'},
-  {'id': 'caliber_000108', 'name': '16 GAUGE', 'group': 'SHOTSHELL'},
-  {'id': 'caliber_000109', 'name': '12 GAUGE', 'group': 'SHOTSHELL'},
-  {'id': 'caliber_000110', 'name': '10 GAUGE', 'group': 'SHOTSHELL'},
+  {'id': 'caliber_000106', 'name': '28 GAUGE', 'group': 'SHOTSHELL',
+    'synonyms': [
+      '28G', '28GA', '28 G', '28 Gauge',
+    ]
+  },
+  {'id': 'caliber_000107', 'name': '20 GAUGE', 'group': 'SHOTSHELL',
+    'synonyms': [
+      '20G', '20GA', '20 G', '20 Gauge',
+    ]
+  },
+  {'id': 'caliber_000108', 'name': '16 GAUGE', 'group': 'SHOTSHELL',
+    'synonyms': [
+      '16G', '16GA', '16 G', '16 Gauge',
+    ]
+  },
+  {'id': 'caliber_000109', 'name': '12 GAUGE', 'group': 'SHOTSHELL',
+    'synonyms': [
+      '12G', '12GA', '12 G', '12 Gauge',
+    ]
+  },
+  {'id': 'caliber_000110', 'name': '10 GAUGE', 'group': 'SHOTSHELL',
+    'synonyms': [
+      '10G', '10GA', '10 G', '10 Gauge',
+    ]
+  },
   {'id': 'caliber_000111', 'name': '.177 CAL', 'group': 'PROJECTILE'},
   {'id': 'caliber_000112', 'name': '.20 CAL', 'group': 'PROJECTILE'},
   {'id': 'caliber_000113', 'name': '.22 CAL', 'group': 'PROJECTILE'},
@@ -128,39 +147,59 @@ const CaliberMenu: React.FC<ReactProps> = (props) => {
   // let caliberData = data?.getCalibers
   let caliberData = defaultCalibersInsertInput
 
-
   const caliberOptionGroups = createCaliberOptionGroups(caliberData)
-  const initialCaliber = {
-    label: calibers?.[0],
-    value: calibers?.[0],
-  }
+  const initialCalibers = (calibers ?? []).map(c => {
+    return {
+      label: c.label,
+      value: c.value,
+      synonyms: c.synonyms
+    }
+  })
+
+  console.log("calibersssssss:", props.calibers)
 
   return (
     <div className={clsx(classes.innerColumn, classes.innerColumnFlexCol)}>
       <DropdownInput
-        // className={classes.dealerDropdown}
+        // className={classes.caliberDropdown}
         menuIsOpen={true}
-        initialState={initialCaliber}
-        onChange={(option: SelectOption) => {
-          if (!option.value) {
+        isMulti={true}
+        initialState={initialCalibers}
+        itemLimit={6}
+        height={'100%'}
+        onChange={(options: SelectOptionCaliber[]) => {
+          console.log("options:", options)
+          if (options?.length === 0) {
             // null -> All states
             props.setCalibers([])
+            return
           } else {
-            props.setCalibers([option.value])
+            props.setCalibers(options)
           }
         }}
         options={caliberOptionGroups}
-        placeholder={initialCaliber}
+        placeholder={undefined}
       />
     </div>
   );
 };
 
 
-export const createCaliberOption = (c: Calibers): SelectOption => {
+interface CaliberSynonyms {
+  synonyms?: string[]
+}
+
+
+export const createCaliberOption = (
+  c: Calibers & CaliberSynonyms
+): SelectOptionCaliber => {
   return {
     label: c.name,
+    // value should be string so Selectable knows which options are picked
+    // and can be taken out of the selectable menu
     value: c.name,
+    // synonyms are a list of like-terms to send to meilie for filtering
+    synonyms: c.synonyms ? [c.name, ...c.synonyms] : [c.name],
   }
 }
 
@@ -187,12 +226,13 @@ export const createCaliberOptionGroups = (
   return [
     {
       label: "Rimfire / Centerfire",
-      options: allCalibersOption
-        ? [
-            { label: "All Calibers", value: undefined },
-            ...rimfire,
-          ]
-        : [ ...rimfire ]
+      options: rimfire,
+      // options: allCalibersOption
+      //   ? [
+      //       { label: "All Calibers", value: undefined },
+      //       ...rimfire,
+      //     ]
+      //   : [ ...rimfire ]
         // All calibers only for filtering search, not for creating products
     },
     {
@@ -211,19 +251,16 @@ export const createCaliberOptionGroups = (
 }
 
 
-export interface SelectOption {
-  label: string;
-  value: string | any;
-}
 export interface GroupedSelectOption {
   label: string;
-  options: SelectOption[]
+  options: SelectOptionCaliber[]
 }
 
 
 interface ReactProps extends WithStyles<typeof styles> {
-  calibers?: string[];
-  setCalibers(c: string[]): void;
+  calibers?: SelectOptionCaliber[];
+  setCalibers(c: SelectOptionCaliber[]): void;
+  // setCalibers(c: string[]): void;
 }
 
 interface QData3 {

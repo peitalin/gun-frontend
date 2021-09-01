@@ -147,13 +147,18 @@ const styles = (theme: Theme) => createStyles({
   },
   imageMissingPreview: {
     backgroundColor: isThemeDark(theme)
-      ? Colors.uniswapGrey
+      ? Colors.uniswapDarkNavy
       : Colors.slateGreyDark,
+    color: isThemeDark(theme)
+      ? Colors.uniswapMediumGrey
+      : Colors.slateGreyDarkest,
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
     padding: '1rem',
+    fontSize: "0.7rem",
+    textAlign: "center",
     // textTransform: "uppercase",
   },
   card: {

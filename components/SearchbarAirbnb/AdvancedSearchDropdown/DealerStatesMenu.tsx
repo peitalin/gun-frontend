@@ -27,7 +27,7 @@ const DealerStatesMenu: React.FC<ReactProps> = (props) => {
       {
         dealerStatesDropdownItems.map((d, i) => {
 
-          let isDisabled = !availableDealerStates.includes(d)
+          // let isDisabled = !availableDealerStates.includes(d)
 
           let allStates = d === DealerState.ALL_STATES
             && props.dealerStates?.length === 0
@@ -40,10 +40,10 @@ const DealerStatesMenu: React.FC<ReactProps> = (props) => {
                   classes.buttonRoot,
                   (props.dealerStates?.includes(d) || allStates)
                     && classes.buttonSelected,
-                  !isDisabled && classes.activeButton,
+                  // !isDisabled && classes.activeButton,
                 )
               }}
-              disabled={isDisabled}
+              // disabled={isDisabled}
               variant="outlined"
               onClick={() => {
                 console.log("setting: ", d)
@@ -56,7 +56,7 @@ const DealerStatesMenu: React.FC<ReactProps> = (props) => {
                   props.setDealerStates(props.dealerStates.filter(state => state !== d))
                 } else {
                   props.setDealerStates([...props.dealerStates, d])
-                  }
+                }
             }}
             >
               {DealerStatesLabels[d]}

@@ -133,7 +133,11 @@ const TrendingNewsItemRow = (props: ReactProps) => {
                     variant="body1"
                     onClick={props.onClick}
                   >
-                    {title}
+                    {
+                      !sourceSite.match(/ozgunsales/)
+                      ? title
+                      : `${make} ${model}`
+                    }
                   </Typography>
 
                   <Typography className={classes.textLine} variant="body1">
@@ -178,6 +182,13 @@ const TrendingNewsItemRow = (props: ReactProps) => {
                       </Typography>
                       <Typography className={classes.rankScore} variant="body1">
                         {`id: ${newsItem?.id}`}
+                      </Typography>
+                      <Typography className={classes.rankScore} variant="body1">
+                        {
+                          newsItem?.externalProduct
+                          ? `snapshotId: ${newsItem?.externalProduct?.currentExternalProductSnapshotId}`
+                          : `snapshotId: ${newsItem?.product?.currentSnapshotId}`
+                        }
                       </Typography>
                       <Typography className={classes.rankScore} variant="body1">
                         {`date: ${newsItem?.createdAt}`}

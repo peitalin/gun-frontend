@@ -200,3 +200,9 @@ export interface SelectOption {
   label: string;
   value: string | any;
 }
+
+export interface SelectOptionCaliber {
+  label: string
+  value: string
+  synonyms?: string[]
+}

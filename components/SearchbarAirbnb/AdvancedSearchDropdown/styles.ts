@@ -46,13 +46,13 @@ export const styles = (theme: Theme) => createStyles({
           ? Colors.purple
           : Colors.black,
       },
-      border: theme.palette.type === 'dark'
-        ? `1px solid ${Colors.purple}`
-        : `1px solid ${Colors.black}`,
-      transition: theme.transitions.create(['color', 'border', 'background'], {
-        easing: theme.transitions.easing.easeInOut,
-        duration: "200ms",
-      }),
+      // border: theme.palette.type === 'dark'
+      //   ? `1px solid ${Colors.purple}`
+      //   : `1px solid ${Colors.black}`,
+      // transition: theme.transitions.create(['color', 'border', 'background'], {
+      //   easing: theme.transitions.easing.easeInOut,
+      //   duration: "200ms",
+      // }),
     }
   },
   activeButton: {
@@ -81,10 +81,10 @@ export const styles = (theme: Theme) => createStyles({
       border: theme.palette.type === 'dark'
         ? `1px solid ${Colors.purple}`
         : `1px solid ${Colors.blue}`,
-      transition: theme.transitions.create(['color', 'border', 'background'], {
-        easing: theme.transitions.easing.easeInOut,
-        duration: "200ms",
-      }),
+      // transition: theme.transitions.create(['color', 'border', 'background'], {
+      //   easing: theme.transitions.easing.easeInOut,
+      //   duration: "200ms",
+      // }),
       backgroundPosition: '-75px',
     }
   },

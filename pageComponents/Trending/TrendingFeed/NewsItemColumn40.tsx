@@ -13,9 +13,6 @@ import { useSelector } from "react-redux"
 import { GrandReduxState } from "reduxStore/grand-reducer"
 
 import NewsItemCard from "./NewsItemCard";
-// Snackbar
-import { useSnackbar } from "notistack";
-import { useWindowWidth } from "utils/hooks";
 // Material UI
 import Dialog from "@material-ui/core/Dialog";
 import ShowOnMobileOrDesktopSSR from "components/ShowOnMobileOrDesktopSSR";

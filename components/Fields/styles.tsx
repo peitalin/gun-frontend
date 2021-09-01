@@ -24,6 +24,7 @@ export const styles = (theme: Theme) => createStyles({
     paddingBottom: '1rem',
   },
   optionValues: {
+    height: '100%',
     flexBasis: '100%',
     marginRight: '0rem',
     fontFamily: '"Helvetica Neue",Arial,sans-serif',

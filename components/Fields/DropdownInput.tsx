@@ -12,6 +12,7 @@ import { styles } from "components/Fields/styles";
 import ValidationErrorMsg from "./ValidationErrorMsg";
 import { useSelector } from "react-redux";
 import { GrandReduxState, Actions } from "reduxStore/grand-reducer";
+import { useSnackbar } from "notistack"
 
 
 
@@ -52,6 +53,7 @@ const DropdownInput = (props: ReactProps) => {
   // // Redux State, for UI updates
   // // Keep separate from Redux updates, which have different data structure
   const [state, setState] = React.useState(props.initialState)
+  const snackbar = useSnackbar()
 
 
   return (
@@ -67,6 +69,14 @@ const DropdownInput = (props: ReactProps) => {
             value={state}
             onMenuOpen={props.onMenuOpen}
             onChange={(e) => {
+              console.log('e: "', e)
+              if (e?.length > props.itemLimit) {
+                snackbar.enqueueSnackbar(
+                  `Cannot choose more than ${props.itemLimit}`,
+                  { variant: 'info'}
+                )
+                return
+              }
               setState(e)
               onChange(e)
             }}
@@ -154,6 +164,16 @@ const DropdownInput = (props: ReactProps) => {
             value={state}
             onMenuOpen={props.onMenuOpen}
             onChange={(e) => {
+              // console.log('e: "', e)
+              if (e?.length > props.itemLimit) {
+                snackbar.enqueueSnackbar(
+                  `Cannot choose more than ${props.itemLimit}`,
+                  { variant: 'info'}
+                )
+                // setState(e.slice(0, props.itemLimit))
+                // onChange(e.slice(0, props.itemLimit))
+                return
+              }
               setState(e)
               onChange(e)
             }}
@@ -333,6 +353,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   menuIsOpen?: any;
   hideButton?: boolean;
   components?: any;
+  itemLimit?: number;
   [key: string]: any;
 }
 export interface SelectOption {

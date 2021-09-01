@@ -88,11 +88,11 @@ const VoteOnNewsItem = (props: ReactProps) => {
 
           if (upvoted) {
             props.setExistingVoteScore(0)
-            snackbar.enqueueSnackbar("UNVOTING", { variant: "info" })
+            snackbar.enqueueSnackbar("Unvoting", { variant: "info" })
             unvote({ variables: { newsItemId: newsItem?.id } })
           } else {
             props.setExistingVoteScore(1)
-            snackbar.enqueueSnackbar("UPVOTING", { variant: "success" })
+            snackbar.enqueueSnackbar("Upvoting", { variant: "success" })
             upvote({ variables: { newsItemId: newsItem?.id }
             })
           }
@@ -114,12 +114,12 @@ const VoteOnNewsItem = (props: ReactProps) => {
 
           if (downvoted) {
             props.setExistingVoteScore(0)
-            snackbar.enqueueSnackbar("UNVOTING", { variant: "info" })
+            snackbar.enqueueSnackbar("Unvoting", { variant: "info" })
             unvote({ variables: { newsItemId: newsItem?.id }
             })
           } else {
             props.setExistingVoteScore(-1)
-            snackbar.enqueueSnackbar("DOWNVOTING", { variant: "error" })
+            snackbar.enqueueSnackbar("Downvoting", { variant: "error" })
             downvote({ variables: { newsItemId: newsItem?.id }
             })
           }

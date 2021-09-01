@@ -31,6 +31,7 @@ const FeaturedImagePlaceholder = (props: ReactProps) => {
           previewItem={undefined}
           showLoadingBar={false}
           transitioning={props.transitioning}
+          previewsMissing={props.previewsMissing}
         />
       </div>
     </AspectRatioConstraint>
@@ -40,6 +41,7 @@ const FeaturedImagePlaceholder = (props: ReactProps) => {
 interface ReactProps extends WithStyles<typeof styles> {
   onClick?(a: any): void;
   transitioning?: boolean;
+  previewsMissing?: boolean;
 }
 
 

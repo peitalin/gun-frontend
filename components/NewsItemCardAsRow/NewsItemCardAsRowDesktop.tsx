@@ -21,7 +21,9 @@ import StateChip from "components/NewsItemChips/StateChip";
 import SourceSiteChip from "components/NewsItemChips/SourceSiteChip";
 import VerifiedChip from "components/NewsItemChips/VerifiedChip";
 import NewsItemLink from "./NewsItemLink"
-
+import {
+  maxLengthTitle
+} from "utils/limitsAndRules"
 
 
 
@@ -62,7 +64,7 @@ const NewsItemCardAsRow = (props: ReactProps) => {
   let featuredPreview = previewItems?.[0]
 
   const priceWas = newsItem?.product?.featuredVariant?.priceWas;
-
+  // console.log("NEWSITEM: ", newsItem)
 
   return (
     <ErrorBounds className={clsx(
@@ -77,15 +79,12 @@ const NewsItemCardAsRow = (props: ReactProps) => {
           />
         : <NewsItemLink newsItem={newsItem} >
             <div className={classes.flexCol}>
-              {
-                featuredPreview &&
-                <ProductPreviewCardRowSmall
-                  previewItem={featuredPreview}
-                  className={clsx(classes.previewCard)}
-                  height={50}
-                  width={50 * 1.5}
-                />
-              }
+              <ProductPreviewCardRowSmall
+                previewItem={featuredPreview}
+                className={clsx(classes.previewCard)}
+                height={50}
+                width={50 * 1.5}
+              />
             </div>
             <div className={classes.flexRow}>
               <div className={classes.flexCellItem}>
@@ -97,7 +96,7 @@ const NewsItemCardAsRow = (props: ReactProps) => {
                   variant="body1"
                   component="div"
                 >
-                  {`${make} ${model}`}
+                  {`${make} ${model}`.slice(0, 60)}
                 </Typography>
                 <Typography
                   className={classes.caliberText}

@@ -26,8 +26,10 @@ const FeaturedPreview: React.FC<ReactProps> = (props) => {
     setOpenedModals(openedModals => openedModals.filter(x => x !== id))
   }
 
-  if (props.loading) {
-    return <FeaturedImagePlaceholder/>
+  if (props.loading || props.previewItems?.length === 0) {
+    return <FeaturedImagePlaceholder
+            previewsMissing={props.previewItems?.length === 0}
+           />
   } else {
     if (constrainAspectRatio) {
       return (

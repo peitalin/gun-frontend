@@ -61,8 +61,6 @@ const TrendFeedItems: React.FC<ReactProps> = (props) => {
 
   const { classes } = props;
 
-  const router = useRouter()
-
   const userRedux = useSelector<GrandReduxState, UserPrivate>(s => {
     return s.reduxLogin.user
   })
@@ -87,7 +85,7 @@ const TrendFeedItems: React.FC<ReactProps> = (props) => {
           let isMiddleItem = !isFirstItem && !isLastItem
 
           return (
-            <div key={newsItem?.id}
+            <div key={`${newsItem?.id}-${i}`}
               className={clsx(
                 isFirstItem && classes.newsItemRowFirst,
                 isMiddleItem && classes.newsItemRow,
