@@ -95,7 +95,7 @@ const SearchbarMain = (props: SearchbarProps) => {
     url += `?q=${encodeURIComponent(searchTerm)}`
 
     if (calibers?.length > 0) {
-      url += `&caliber=${encodeURIComponent(calibers?.[0])}`
+      url += `&caliber=${encodeURIComponent(calibers.map(c => c.label).join(','))}`
     }
     if (dealerStates?.length > 0) {
       url += `&state=${encodeURIComponent(dealerStates?.[0])}`
