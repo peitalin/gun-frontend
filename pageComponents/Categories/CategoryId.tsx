@@ -190,7 +190,7 @@ const CategoryId: React.FC<ReactProps> = (props) => {
   React.useEffect(() => {
     setCurrentCategories([props.initialRouteCategory])
     // make sure clicking categoryBar links triggers GQL refetch
-    setCategorySlugsForGql([props.initialRouteCategory.slug])
+    // setCategorySlugsForGql([props.initialRouteCategory.slug])
   }, [props.initialRouteCategory])
 
   React.useEffect(() => {
