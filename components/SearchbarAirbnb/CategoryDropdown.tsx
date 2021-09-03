@@ -125,7 +125,11 @@ const CategoryDropdown: React.FC<ReactProps> = (props) => {
                             variant="outlined"
                             onClick={() => {
                               // console.log("setting: ", category)
-                              props.setCurrentCategories([category as any])
+                              if (category.slug === 'all') {
+                                props.setCurrentCategories([])
+                              } else {
+                                props.setCurrentCategories([category as any])
+                              }
                               // if (category.slug) {
                               // } else {
                               //   // all-categories, empty category filters
@@ -154,7 +158,9 @@ const CategoryDropdown: React.FC<ReactProps> = (props) => {
                         variant="outlined"
                         onClick={() => {
                           console.log("setting: ", category)
-                          if (category.slug) {
+                          if (category.slug === 'all') {
+                            props.setCurrentCategories([])
+                          } else if (category.slug) {
                             props.setCurrentCategories([category as any])
                           } else {
                             // all-categories, empty category filters
