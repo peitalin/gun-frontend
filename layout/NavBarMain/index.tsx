@@ -4,7 +4,7 @@ import React from "react";
 import CategoryBar from "./CategoryBar";
 import MainBar from "./MainBar";
 import UserMenuMobileDither from "./UserMenuMobileDither";
-import { categoryPreviewsBackup } from "components/CategoryCarouselStart/utils";
+import { categoryPreviewsBackup } from "utils/categories";
 import NotificationsIcon from '@material-ui/icons/Notifications';
 
 
