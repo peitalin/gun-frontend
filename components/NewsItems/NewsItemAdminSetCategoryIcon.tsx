@@ -4,31 +4,33 @@ import clsx from 'clsx';
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 import { Colors, BoxShadows, isThemeDark } from "layout/AppTheme";
 // MUI
-import SystemUpdateAltIcon from '@material-ui/icons/SystemUpdateAlt';
+import AddIcon from '@material-ui/icons/Add';
+import RemoveIcon from '@material-ui/icons/Remove';
+import GavelIcon from '@material-ui/icons/Gavel';
 import IconButton from "@material-ui/core/IconButton";
 // Graphql
 import { useMutation } from "@apollo/client";
 import {
-  RESCRAPE_EXTERNAL_PRODUCT,
+  SET_NEWS_ITEM_CATEGORY,
 } from "queries/news-items-mutations";
 // redux
 import { useDispatch, useSelector } from "react-redux";
 import {
   UserPrivate,
   NewsItem,
-  Role,
-  AggregatorScrapeResponse,
-  ScraperSourceSite,
+  Role ,
 } from "typings/gqlTypes";
 import { GrandReduxState } from "reduxStore/grand-reducer";
 // snackbar
 import { useSnackbar } from "notistack";
 import Tooltip from "@material-ui/core/Tooltip";
-import ConfirmActionModal from "components/ConfirmActionModal";
+import ChangeNewsItemCategoryModal from "./ChangeNewsItemCategoryModal";
+
+import { categoryPreviewsBackup } from "utils/categories"
 
 
 
-const NewsItemAdminRescrapeIcon: React.FC<ReactProps> = (props) => {
+const NewsItemAdminSetCategoryIcon: React.FC<ReactProps> = (props) => {
 
 
   const {
@@ -42,29 +44,28 @@ const NewsItemAdminRescrapeIcon: React.FC<ReactProps> = (props) => {
   })
 
   const [
-    rescrapeExternalProduct,
+    categoryId,
+    setCategoryId
+  ] = React.useState(undefined)
+
+  const [
+    setNewsItemCategory,
     response
-  ] = useMutation<Mdata, Mvar>(RESCRAPE_EXTERNAL_PRODUCT, {
+  ] = useMutation<Mdata, Mvar>(
+    SET_NEWS_ITEM_CATEGORY, {
     variables: {
-      sourceSiteId: props.newsItem?.externalProduct?.sourceSiteId,
-      sourceSite:
-        props.newsItem?.externalProduct?.sourceSite?.match(/usedguns/g)
-          ? ScraperSourceSite.USEDGUNS
-          : props.newsItem?.externalProduct?.sourceSite?.match(/ozgunsales/g)
-            ? ScraperSourceSite.OZGUNSALES
-            : props.newsItem?.externalProduct?.sourceSite?.match(/ssaa/g)
-            ? ScraperSourceSite.SSAA
-            : undefined
+      newsItemId: props.newsItem?.id,
+      categoryId: categoryId
     },
     onCompleted: (data) => {
       snackbar.enqueueSnackbar(
-        `Rescraped NewsItem ${data?.rescrapeExternalProduct?.id}`,
-        { variant: "success" }
+        `Set NewsItem ${data?.setNewsItemCategory?.id} category: ${categoryId}`,
+        { variant: "info" }
       )
     },
   })
 
-  const [openRescrapeModal, setOpenRescrapeModal] = React.useState(false)
+  const [openCategoryModal, setOpenCategoryModal] = React.useState(false)
 
   if (
     user?.userRole !== Role.PLATFORM_ADMIN
@@ -75,7 +76,7 @@ const NewsItemAdminRescrapeIcon: React.FC<ReactProps> = (props) => {
 
   return (
     <>
-      <Tooltip title={"Rescrape News Item"}>
+      <Tooltip title={"Change NewsItem Category"}>
         <IconButton
           onClick={(e) => {
             // prevent click-through to underlying product card
@@ -86,17 +87,17 @@ const NewsItemAdminRescrapeIcon: React.FC<ReactProps> = (props) => {
               || user?.userRole === Role.PLATFORM_EDITOR
             ) {
               // if user is logged in, add or remove to redux
-              setOpenRescrapeModal(true)
+              setOpenCategoryModal(true)
             } else {
               snackbar.enqueueSnackbar(
-                "Must be admin to rescrape",
+                "Must be admin to change category",
                 { variant: "info"}
               )
             }
           }}
           // onMouseEnter={() => setHover(true)}
           // onMouseLeave={() => setHover(false)}
-          className={classes.rescrapeNewsItemRoot}
+          className={classes.setNewsItemCategoryRoot}
           style={{
             top: 'calc(50% - 16px)',
             padding: '.25rem', // determines button radius size
@@ -104,22 +105,22 @@ const NewsItemAdminRescrapeIcon: React.FC<ReactProps> = (props) => {
           }}
           // size="small"
         >
-          <SystemUpdateAltIcon classes={{
-            root: classes.rescrapeRootIcon,
+          <GavelIcon classes={{
+            root: classes.gavelRootIcon,
           }}/>
         </IconButton>
       </Tooltip>
-      <ConfirmActionModal
-        title={"Do you wish to rescrape this NewsItem?"}
-        showModal={openRescrapeModal}
-        setShowModal={() => setOpenRescrapeModal(false)}
+      <ChangeNewsItemCategoryModal
+        title={"Do you wish to  this NewsItem?"}
+        showModal={openCategoryModal}
+        setShowModal={() => setOpenCategoryModal(false)}
         onConfirmFunction={async() => {
-
-          snackbar.enqueueSnackbar(
-            `Rescraping NewsItem ${props.newsItem?.id}`,
-            { variant: "info" }
-          )
-          rescrapeExternalProduct()
+          setNewsItemCategory({
+            variables: {
+              newsItemId: props.newsItem?.id,
+              categoryId: categoryId
+            }
+          })
         }}
       />
     </>
@@ -133,16 +134,16 @@ interface ReactProps extends WithStyles<typeof styles> {
 }
 
 interface Mdata {
-  rescrapeExternalProduct: AggregatorScrapeResponse
+  setNewsItemCategory: NewsItem
 }
 interface Mvar {
-  sourceSiteId: string
-  sourceSite: string
+  newsItemId: string
+  categoryId: string
 }
 
 
 const styles = (theme: Theme) => createStyles({
-  rescrapeNewsItemRoot: {
+  setNewsItemCategoryRoot: {
     position: 'absolute',
     zIndex: 1,
     right: '1rem',
@@ -166,12 +167,12 @@ const styles = (theme: Theme) => createStyles({
       duration: "200ms",
     }),
   },
-  rescrapeRootIcon: {
+  gavelRootIcon: {
     width: '1rem',
     height: '1rem',
-    fill: Colors.blue,
+    fill: Colors.lightRed,
   },
 });
 
 
-export default withStyles(styles)( NewsItemAdminRescrapeIcon );
+export default withStyles(styles)( NewsItemAdminSetCategoryIcon );

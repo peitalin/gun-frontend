@@ -17,7 +17,7 @@ import { ApolloClient } from "@apollo/client";
 import { serverApolloClient } from "utils/apollo";
 // Meta headers
 import MetaHeadersPage from "layout/MetaHeadersPage";
-import { categoryPreviewsBackup } from "components/CategoryCarouselStart/utils";
+import { categoryPreviewsBackup } from "utils/categories";
 
 
 

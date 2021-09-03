@@ -174,7 +174,7 @@ const CategoryId: React.FC<ReactProps> = (props) => {
       },
       sortByDate: true,
       // // categorySlug: props.initialRouteCategory?.slug ?? (router?.query?.categorySlug as any),
-      // categorySlugs: categorySlugsForGql,
+      categorySlugs: categorySlugsForGql,
       // require button click to change search
       dealerStates: dealerStatesForGql,
       calibers: calibersForGql,

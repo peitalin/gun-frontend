@@ -15,7 +15,7 @@ import {
   isStartPageFn,
 } from "../MainBar";
 import { useRouter, NextRouter } from "next/router";
-import { categoryPreviewsBackup } from "components/CategoryCarouselStart/utils";
+import { categoryPreviewsBackup } from "utils/categories";
 
 
 

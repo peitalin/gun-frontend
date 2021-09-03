@@ -13,7 +13,7 @@ import { NextPage, NextPageContext } from 'next';
 import { serverApolloClient } from "utils/apollo";
 import FrontPage from "pageComponents/FrontPage";
 import { useQuery, ApolloClient } from "@apollo/client";
-import { categoryPreviewsBackup } from "components/CategoryCarouselStart/utils";
+import { categoryPreviewsBackup } from "utils/categories";
 // Meta headers
 import MetaHeadersPage from "layout/MetaHeadersPage";
 import SocialFloatingBanner from "layout/SocialFloatingBanner";

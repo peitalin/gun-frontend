@@ -106,3 +106,20 @@ export const EDIT_EXTERNAL_PRODUCT = gql`
   }
   ${NewsItemFragment}
 `;
+
+
+// Admin
+export const SET_NEWS_ITEM_CATEGORY = gql`
+  mutation(
+    $newsItemId: String!
+    $categoryId: String!
+  ) {
+    setNewsItemCategory(
+      newsItemId: $newsItemId
+      categoryId: $categoryId
+    ) {
+      ...NewsItemFragment
+    }
+  }
+  ${NewsItemFragment}
+`;

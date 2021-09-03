@@ -50,6 +50,9 @@ const ImageInModal: React.FC<ReactProps> = (props) => {
   //     xl: 1200,
   // })
 
+  // let src = image.variants?.[0]?.url
+  let src =image?.original?.url
+
   return (
     <div className={classes.card}>
       <div onClick={props.onClick}
@@ -71,7 +74,7 @@ const ImageInModal: React.FC<ReactProps> = (props) => {
                 ? genSrcSet(image)
                 : null
             }
-            src={image?.original?.url}
+            src={src}
             sizes={genImgBreakpoints({
               xs: 400,
               sm: 400,

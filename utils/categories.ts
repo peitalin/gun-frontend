@@ -27,4 +27,22 @@ export const categoryPreviewsBackup = [
   //   slug: 'combinations',
   //   blurb: 'Browse Combination firearms',
   // },
+  // {
+  //   id: "category_0004",
+  //   name: "Combinations",
+  //   // categoryGroup: undefined,
+  //   slug: "combinations",
+  //   // thumbImageId: undefined,
+  //   // bannerImageId: undefined,
+  //   blurb: "Browse combination firearms",
+  // },
+  {
+    id: "category_0005",
+    name: "Items",
+    // categoryGroup: undefined,
+    slug: "items",
+    // thumbImageId: undefined,
+    // bannerImageId: undefined,
+    blurb: "Browse items",
+  },
 ]

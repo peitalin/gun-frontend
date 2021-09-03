@@ -25,6 +25,9 @@ import { useQuery } from '@apollo/client';
 // Categories
 import { Categories } from "typings/gqlTypes";
 import { GET_CATEGORIES } from "queries/categories-queries";
+import {
+  categoryPreviewsBackup
+} from "utils/categories"
 
 
 
@@ -43,11 +46,20 @@ const CategoryDropdown: React.FC<ReactProps> = (props) => {
     GET_CATEGORIES,
   )
 
+  // let categoriesDropdownItems = props.syncUrlToCategory
+  //   ? [ ...(categoryData?.data?.getCategories ?? []) ]
+  //   : [
+  //       { id: undefined, slug: 'all', name: "All Categories" },
+  //       ...(categoryData?.data?.getCategories ?? []),
+  //     ]
+
+  let categoriesRemovedItems = categoryPreviewsBackup.filter(c => c.slug !== 'items')
+
   let categoriesDropdownItems = props.syncUrlToCategory
-    ? [ ...(categoryData?.data?.getCategories ?? []) ]
+    ? [ ...(categoriesRemovedItems ?? []) ]
     : [
         { id: undefined, slug: 'all', name: "All Categories" },
-        ...(categoryData?.data?.getCategories ?? []),
+        ...(categoriesRemovedItems ?? []),
       ]
 
   const [open, setOpen] = React.useState(false);

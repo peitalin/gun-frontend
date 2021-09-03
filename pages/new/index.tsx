@@ -36,7 +36,7 @@ const NewProductsSSR: NextPage<ReactProps> = (props) => {
         initialProducts={undefined}
         initialRouteCategory={props.selectedCategory}
         initialDropdownCategories={props.initialCategories}
-        disableCategoriesFilter={true}
+        disableCategoriesFilter={false}
         bannerTitle={"New Listings"}
         bannerBlurb={"Browse and search through new listings"}
       />

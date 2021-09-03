@@ -10,7 +10,7 @@ import CardActionArea from "@material-ui/core/CardActionArea";
 import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
 // helpers
-import { genSrcSet } from "utils/images";
+import { genSrcSetSmall } from "utils/images";
 import { getYouTubeVimeoImagePreview } from "utils/links";
 
 
@@ -21,6 +21,8 @@ const ProductPreviewCardRowSmall = (props: ReactProps) => {
   const [previewLoaded, setPreviewLoaded] = React.useState(false);
   const { classes } = props;
   const previewItem = props.previewItem;
+
+  let src = previewItem?.image?.variants?.[0].url
 
   return (
     <Card
@@ -56,8 +58,8 @@ const ProductPreviewCardRowSmall = (props: ReactProps) => {
                 : classes.cardMedia
             }}
             onLoad={() => setPreviewLoaded(true)}
-            src={previewItem.image.original.url}
-            srcSet={genSrcSet(previewItem.image)}
+            src={src}
+            srcSet={genSrcSetSmall(previewItem.image)}
             sizes={`(max-width: 320px) 280px, (max-width: 480px) 440px, 800px`}
             style={{
               ...props.style,

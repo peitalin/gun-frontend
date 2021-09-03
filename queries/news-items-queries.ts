@@ -22,6 +22,7 @@ export const SEARCH_NEWS_ITEMS_CONNECTION = gql`
     $query: ConnectionQuery
     $searchTerm: String
     $sortByDate: Boolean
+    $categorySlugs: [String]
     $dealerStates: [String]
     $calibers: [String]
     $actionTypes: [String]
@@ -30,6 +31,7 @@ export const SEARCH_NEWS_ITEMS_CONNECTION = gql`
       query: $query
       searchTerm: $searchTerm
       sortByDate: $sortByDate
+      categorySlugs: $categorySlugs
       dealerStates: $dealerStates
       calibers: $calibers
       actionTypes: $actionTypes

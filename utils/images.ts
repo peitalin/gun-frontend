@@ -30,6 +30,23 @@ export const genSrcSet = (image: Image_Parents) => {
   }).join(",")
 }
 
+export const genSrcSetSmall = (image: Image_Parents) => {
+  if (!image?.variants) {
+    return null
+  }
+  // filter out original image, as it may be very large.
+  // e.g. product screenshots may be megabytes and have issue loading
+  return image?.variants?.filter(v => {
+    return v.widthInPixels === 1200 ||
+      v.widthInPixels === 600 ||
+      v.widthInPixels === 400 ||
+      v.widthInPixels === 200
+  })
+  .map(v => {
+    return `${v.url} ${v.widthInPixels}w`
+  }).join(",")
+}
+
 export const genImgBreakpoints = ({ xs, sm, md, lg, xl }: Breakpoints) => {
   return `
   (max-width: 416px) ${xs}px,
