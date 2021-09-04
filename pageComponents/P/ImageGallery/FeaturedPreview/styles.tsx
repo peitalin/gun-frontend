@@ -16,7 +16,7 @@ export const styles = (theme: Theme) => createStyles({
     justifyContent: "center",
     display: "flex",
     flexDirection: "row",
-    borderRadius: BorderRadius,
+    // borderRadius: BorderRadius,
     backgroundColor: theme.palette.type === 'dark'
       ? Colors.black
       : Colors.lightestGrey,

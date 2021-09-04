@@ -4,9 +4,7 @@ import clsx from 'clsx';
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
 import { Colors, BoxShadows, isThemeDark } from "layout/AppTheme";
 // MUI
-import AddIcon from '@material-ui/icons/Add';
-import RemoveIcon from '@material-ui/icons/Remove';
-import GavelIcon from '@material-ui/icons/Gavel';
+import CategoryIcon from '@material-ui/icons/Category';
 import IconButton from "@material-ui/core/IconButton";
 // Graphql
 import { useMutation } from "@apollo/client";
@@ -30,6 +28,7 @@ import { categoryPreviewsBackup } from "utils/categories"
 
 
 
+
 const NewsItemAdminSetCategoryIcon: React.FC<ReactProps> = (props) => {
 
 
@@ -48,22 +47,6 @@ const NewsItemAdminSetCategoryIcon: React.FC<ReactProps> = (props) => {
     setCategoryId
   ] = React.useState(undefined)
 
-  const [
-    setNewsItemCategory,
-    response
-  ] = useMutation<Mdata, Mvar>(
-    SET_NEWS_ITEM_CATEGORY, {
-    variables: {
-      newsItemId: props.newsItem?.id,
-      categoryId: categoryId
-    },
-    onCompleted: (data) => {
-      snackbar.enqueueSnackbar(
-        `Set NewsItem ${data?.setNewsItemCategory?.id} category: ${categoryId}`,
-        { variant: "info" }
-      )
-    },
-  })
 
   const [openCategoryModal, setOpenCategoryModal] = React.useState(false)
 
@@ -76,7 +59,7 @@ const NewsItemAdminSetCategoryIcon: React.FC<ReactProps> = (props) => {
 
   return (
     <>
-      <Tooltip title={"Change NewsItem Category"}>
+      <Tooltip title={"Set Category"}>
         <IconButton
           onClick={(e) => {
             // prevent click-through to underlying product card
@@ -105,23 +88,16 @@ const NewsItemAdminSetCategoryIcon: React.FC<ReactProps> = (props) => {
           }}
           // size="small"
         >
-          <GavelIcon classes={{
-            root: classes.gavelRootIcon,
+          <CategoryIcon classes={{
+            root: classes.changeCategoryRootIcon,
           }}/>
         </IconButton>
       </Tooltip>
       <ChangeNewsItemCategoryModal
-        title={"Do you wish to  this NewsItem?"}
+        title={"Change Category for this NewsItem"}
         showModal={openCategoryModal}
         setShowModal={() => setOpenCategoryModal(false)}
-        onConfirmFunction={async() => {
-          setNewsItemCategory({
-            variables: {
-              newsItemId: props.newsItem?.id,
-              categoryId: categoryId
-            }
-          })
-        }}
+        newsItem={props.newsItem}
       />
     </>
   )
@@ -167,7 +143,7 @@ const styles = (theme: Theme) => createStyles({
       duration: "200ms",
     }),
   },
-  gavelRootIcon: {
+  changeCategoryRootIcon: {
     width: '1rem',
     height: '1rem',
     fill: Colors.lightRed,

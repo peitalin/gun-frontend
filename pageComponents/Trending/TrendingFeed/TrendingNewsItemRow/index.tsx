@@ -180,17 +180,23 @@ const TrendingNewsItemRow = (props: ReactProps) => {
                       <Typography className={classes.rankScore} variant="body1">
                         {`rank: ${newsItem?.rankScore}`}
                       </Typography>
-                      <Typography className={classes.rankScore} variant="body1">
+                      {
+                        newsItem?.externalProduct?.category?.slug &&
+                        <Typography className={classes.rankScore} variant="body1">
+                          {`category: ${newsItem?.externalProduct?.category?.slug}`}
+                        </Typography>
+                      }
+                      <Typography className={classes.rankScoreId} variant="body1">
                         {`id: ${newsItem?.id}`}
                       </Typography>
-                      <Typography className={classes.rankScore} variant="body1">
+                      <Typography className={classes.rankScoreId} variant="body1">
                         {
                           newsItem?.externalProduct
                           ? `snapshotId: ${newsItem?.externalProduct?.currentExternalProductSnapshotId}`
                           : `snapshotId: ${newsItem?.product?.currentSnapshotId}`
                         }
                       </Typography>
-                      <Typography className={classes.rankScore} variant="body1">
+                      <Typography className={classes.rankScoreId} variant="body1">
                         {`date: ${newsItem?.createdAt}`}
                       </Typography>
                     </>
@@ -338,6 +344,14 @@ const styles = (theme: Theme) => createStyles({
   },
   rankScore: {
     fontWeight: 800,
+    marginTop: "0.25rem",
+    color: isThemeDark(theme)
+      ? Colors.uniswapLighterGrey
+      : Colors.slateGreyDarker,
+    fontSize: '0.8rem',
+  },
+  rankScoreId: {
+    fontWeight: 500,
     marginTop: "0.25rem",
     color: isThemeDark(theme)
       ? Colors.uniswapMediumGrey

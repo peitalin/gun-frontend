@@ -885,6 +885,12 @@ export const ExternalProductsFragment = gql`
     currentExternalProductSnapshot {
       ...ExternalProductSnapshotsFragment
     }
+    categoryId
+    category {
+      id
+      slug
+      name
+    }
   }
   ${ExternalProductSnapshotsFragment}
 `;

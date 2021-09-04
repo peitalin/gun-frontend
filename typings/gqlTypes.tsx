@@ -1311,6 +1311,7 @@ export type Mutation = {
   downvoteNewsItem: NewsItem;
   unvoteNewsItem: NewsItem;
   rescrapeExternalProduct: AggregatorScrapeResponse;
+  setNewsItemCategory: NewsItem;
 };
 
 
@@ -3635,6 +3636,12 @@ export type MutationUnvoteNewsItemArgs = {
 export type MutationRescrapeExternalProductArgs = {
   sourceSiteId: Scalars['String'];
   sourceSite: ScraperSourceSite;
+};
+
+
+export type MutationSetNewsItemCategoryArgs = {
+  newsItemId: Scalars['String'];
+  categoryId: Scalars['String'];
 };
 
 /** Something that went wrong during a mutation. */
@@ -6460,6 +6467,7 @@ export type QueryGetNewsItemsSearchConnectionArgs = {
   query?: Maybe<ConnectionQuery>;
   searchTerm?: Maybe<Scalars['String']>;
   sortByDate?: Maybe<Scalars['Boolean']>;
+  categorySlugs?: Maybe<Array<Maybe<Scalars['String']>>>;
   dealerStates?: Maybe<Array<Maybe<Scalars['String']>>>;
   calibers?: Maybe<Array<Maybe<Scalars['String']>>>;
   actionTypes?: Maybe<Array<Maybe<Scalars['String']>>>;
@@ -11481,6 +11489,9 @@ export type External_Product_Snapshots_Variance_Order_By = {
 /** columns and relationships of "external_products" */
 export type External_Products = {
   __typename?: 'external_products';
+  /** An object relationship */
+  category?: Maybe<Categories>;
+  categoryId?: Maybe<Scalars['String']>;
   createdAt: Scalars['timestamptz'];
   /** An object relationship */
   currentExternalProductSnapshot?: Maybe<External_Product_Snapshots>;
@@ -11563,6 +11574,8 @@ export type External_Products_Bool_Exp = {
   _and?: Maybe<Array<External_Products_Bool_Exp>>;
   _not?: Maybe<External_Products_Bool_Exp>;
   _or?: Maybe<Array<External_Products_Bool_Exp>>;
+  category?: Maybe<Categories_Bool_Exp>;
+  categoryId?: Maybe<String_Comparison_Exp>;
   createdAt?: Maybe<Timestamptz_Comparison_Exp>;
   currentExternalProductSnapshot?: Maybe<External_Product_Snapshots_Bool_Exp>;
   currentExternalProductSnapshotId?: Maybe<String_Comparison_Exp>;
@@ -11593,6 +11606,8 @@ export type External_Products_Inc_Input = {
 
 /** input type for inserting data into table "external_products" */
 export type External_Products_Insert_Input = {
+  category?: Maybe<Categories_Obj_Rel_Insert_Input>;
+  categoryId?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['timestamptz']>;
   currentExternalProductSnapshot?: Maybe<External_Product_Snapshots_Obj_Rel_Insert_Input>;
   currentExternalProductSnapshotId?: Maybe<Scalars['String']>;
@@ -11611,6 +11626,7 @@ export type External_Products_Insert_Input = {
 /** aggregate max on columns */
 export type External_Products_Max_Fields = {
   __typename?: 'external_products_max_fields';
+  categoryId?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['timestamptz']>;
   currentExternalProductSnapshotId?: Maybe<Scalars['String']>;
   day?: Maybe<Scalars['Int']>;
@@ -11627,6 +11643,7 @@ export type External_Products_Max_Fields = {
 /** aggregate min on columns */
 export type External_Products_Min_Fields = {
   __typename?: 'external_products_min_fields';
+  categoryId?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['timestamptz']>;
   currentExternalProductSnapshotId?: Maybe<Scalars['String']>;
   day?: Maybe<Scalars['Int']>;
@@ -11665,6 +11682,8 @@ export type External_Products_On_Conflict = {
 
 /** Ordering options when selecting data from "external_products". */
 export type External_Products_Order_By = {
+  category?: Maybe<Categories_Order_By>;
+  categoryId?: Maybe<Order_By>;
   createdAt?: Maybe<Order_By>;
   currentExternalProductSnapshot?: Maybe<External_Product_Snapshots_Order_By>;
   currentExternalProductSnapshotId?: Maybe<Order_By>;
@@ -11688,6 +11707,8 @@ export type External_Products_Pk_Columns_Input = {
 
 /** select columns of table "external_products" */
 export enum External_Products_Select_Column {
+  /** column name */
+  CATEGORYID = 'categoryId',
   /** column name */
   CREATEDAT = 'createdAt',
   /** column name */
@@ -11714,6 +11735,7 @@ export enum External_Products_Select_Column {
 
 /** input type for updating data in table "external_products" */
 export type External_Products_Set_Input = {
+  categoryId?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['timestamptz']>;
   currentExternalProductSnapshotId?: Maybe<Scalars['String']>;
   day?: Maybe<Scalars['Int']>;
@@ -11761,6 +11783,8 @@ export type External_Products_Sum_Fields = {
 
 /** update columns of table "external_products" */
 export enum External_Products_Update_Column {
+  /** column name */
+  CATEGORYID = 'categoryId',
   /** column name */
   CREATEDAT = 'createdAt',
   /** column name */
