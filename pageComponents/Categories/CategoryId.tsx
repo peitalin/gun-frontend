@@ -192,6 +192,7 @@ const CategoryId: React.FC<ReactProps> = (props) => {
   //   // make sure clicking categoryBar links triggers GQL refetch
   //   // setCategorySlugsForGql([props.initialRouteCategory.slug])
   // }, [props.initialRouteCategory])
+  // console.log("categorySlugsForGql", categorySlugsForGql)
 
   React.useEffect(() => {
     if (!loading && !!newsItemsConnection?.totalCount) {

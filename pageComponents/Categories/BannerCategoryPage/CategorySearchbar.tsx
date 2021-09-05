@@ -66,7 +66,7 @@ const CategorySearchbar: React.FC<ReactProps & FacetSearchParams> = (props) => {
     props.setCalibersForGql(flatCalibers)
 
     props.setCategorySlugsForGql(
-      currentCategories?.map(c => c.slug) ?? ["all"]
+      currentCategories?.map(c => c.slug) ?? []
     )
   }
 

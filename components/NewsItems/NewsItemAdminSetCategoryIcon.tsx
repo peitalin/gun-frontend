@@ -109,14 +109,6 @@ interface ReactProps extends WithStyles<typeof styles> {
   style?: any;
 }
 
-interface Mdata {
-  setNewsItemCategory: NewsItem
-}
-interface Mvar {
-  newsItemId: string
-  categoryId: string
-}
-
 
 const styles = (theme: Theme) => createStyles({
   setNewsItemCategoryRoot: {
@@ -146,7 +138,7 @@ const styles = (theme: Theme) => createStyles({
   changeCategoryRootIcon: {
     width: '1rem',
     height: '1rem',
-    fill: Colors.lightRed,
+    fill: Colors.green,
   },
 });
 

@@ -61,8 +61,8 @@ const AdvancedSearchDropdown: React.FC<ReactProps> = (props) => {
     ? props.calibers?.slice(0, 3)?.map(obj => obj.label)?.join(", ") + '...'
     : props.calibers?.map(obj => obj.label)?.join(', ')
   // console.log('dealerSttes', props.dealerStates)
-  console.log('caliberrrrs', props.calibers)
-  console.log('caliberStr', caliberStr)
+  // console.log('caliberrrrs', props.calibers)
+  // console.log('caliberStr', caliberStr)
 
   return (
     <>
