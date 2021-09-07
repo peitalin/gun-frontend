@@ -16,11 +16,6 @@ import {
   PromotedSlot,
   Role,
 } from "typings/gqlTypes";
-// useMediaQuery
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
-import { asCurrency as c } from "utils/prices";
-import { useSnackbar } from "notistack";
 
 
 

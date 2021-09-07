@@ -5,7 +5,7 @@ import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core/s
 import { NextPage, NextPageContext } from 'next';
 // Components
 import LoadingBarSSR from "components/LoadingBarSSR";
-import Trending from "pageComponents/Trending";
+import TrendingItems from "pageComponents/Trending/trendingItems";
 
 // next
 import dynamic from "next/dynamic";
@@ -16,7 +16,6 @@ const UserProfileWrapper = dynamic(() => import("layout/GetUser/UserProfileWrapp
 })
 // Meta headers
 import MetaHeadersPage from "layout/MetaHeadersPage";
-import { ProductType } from "typings/gqlTypes";
 
 
 const TrendingItemsPageSSR: NextPage<ReactProps> = (props) => {
@@ -28,7 +27,7 @@ const TrendingItemsPageSSR: NextPage<ReactProps> = (props) => {
   return (
     <>
       <MetaHeadersPage
-        title="Trending used guns for sale"
+        title="Trending items for sale"
         robots="noindex"
       />
       {/* <UserProfileWrapper>
@@ -41,7 +40,7 @@ const TrendingItemsPageSSR: NextPage<ReactProps> = (props) => {
         }}
       </UserProfileWrapper> */}
       <div className={classes.contentContainerPublicPage}>
-        <Trending/>
+        <TrendingItems />
       </div>
     </>
   )

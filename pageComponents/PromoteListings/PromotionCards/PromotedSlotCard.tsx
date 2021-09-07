@@ -16,9 +16,6 @@ import {
   Role,
 } from "typings/gqlTypes";
 // useMediaQuery
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
-import { asCurrency as c } from "utils/prices";
 import { useSnackbar } from "notistack";
 import { isSlotExpiredYet } from "../PromotedSlotPurchaseModal/utils";
 
@@ -168,17 +165,17 @@ const styles = (theme: Theme) => createStyles({
     color: isThemeDark(theme)
       ? Colors.uniswapLightestGrey
       : Colors.slateGreyDark,
-    transition: theme.transitions.create('backdrop-filter', {
-      easing: theme.transitions.easing.easeOut,
-      duration: "400ms",
-    }),
+    // transition: theme.transitions.create('backdrop-filter', {
+    //   easing: theme.transitions.easing.easeOut,
+    //   duration: "400ms",
+    // }),
   },
   hoverMessageBox: {
-    backdropFilter: "blur(6px)",
-    transition: theme.transitions.create('backdrop-filter', {
-      easing: theme.transitions.easing.easeOut,
-      duration: "400ms",
-    }),
+    // backdropFilter: "blur(6px)",
+    // transition: theme.transitions.create('backdrop-filter', {
+    //   easing: theme.transitions.easing.easeOut,
+    //   duration: "400ms",
+    // }),
     "& > div > div ": {
       color: Colors.ultramarineBlue,
     },

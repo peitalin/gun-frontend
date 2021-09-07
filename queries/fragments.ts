@@ -272,9 +272,7 @@ export const StoresFragment = gql`
     bio
     website
     user {
-      ... on UserPublic {
-        id
-      }
+      id
     }
     coverId
     profileId

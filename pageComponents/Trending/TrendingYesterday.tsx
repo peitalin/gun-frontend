@@ -7,6 +7,7 @@ import { Colors, isThemeDark, BorderRadius } from "layout/AppTheme";
 import {
   ConnectionQuery,
   NewsItemsConnection,
+  ProductType,
 } from "typings/gqlTypes";
 // graphql
 import { useLazyQuery } from '@apollo/client';
@@ -66,6 +67,7 @@ export const TrendingYesterday: React.FC<ReactProps> = (props) => {
         limit: limit,
         offset: 0,
       },
+      productType: props.productType,
       sortByDate: false,
     },
     onCompleted: React.useCallback(async(data) => {
@@ -198,6 +200,7 @@ export const TrendingYesterday: React.FC<ReactProps> = (props) => {
 
 interface ReactProps extends WithStyles<typeof styles> {
   limit?: number
+  productType?: ProductType
 }
 
 interface QData {
@@ -206,6 +209,7 @@ interface QData {
 interface QVar {
   query?: ConnectionQuery
   sortByDate?: boolean
+  productType?: ProductType
 }
 
 const styles = (theme: Theme) => createStyles({

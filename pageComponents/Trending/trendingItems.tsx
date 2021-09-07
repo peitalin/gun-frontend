@@ -17,7 +17,7 @@ import { ProductType } from 'typings/gqlTypes';
 
 
 
-export const Trending: React.FC<ReactProps> = (props) => {
+export const TrendingItems: React.FC<ReactProps> = (props) => {
 
   const {
     classes,
@@ -28,7 +28,7 @@ export const Trending: React.FC<ReactProps> = (props) => {
 
   return (
     <AlignCenterLayout
-      className={classes.trendingRoot}
+      className={classes.trendingItemsRoot}
       withRecommendations={false}
       maxWidth={1160}
     >
@@ -43,7 +43,7 @@ export const Trending: React.FC<ReactProps> = (props) => {
 
       <TrendingToday
         limit={20}
-        productType={ProductType.FIREARM}
+        productType={ProductType.ITEM}
       />
 
 
@@ -64,7 +64,7 @@ export const Trending: React.FC<ReactProps> = (props) => {
 
       <TrendingYesterday
         limit={15}
-        productType={ProductType.FIREARM}
+        productType={ProductType.ITEM}
       />
 
       <div style={{
@@ -82,7 +82,7 @@ export const Trending: React.FC<ReactProps> = (props) => {
 
       <TrendingThisWeek
         limit={20}
-        productType={ProductType.FIREARM}
+        productType={ProductType.ITEM}
       />
 
       <FeaturedProducts
@@ -102,7 +102,7 @@ export const Trending: React.FC<ReactProps> = (props) => {
 
       <TrendingLastWeek
         limit={30}
-        productType={ProductType.FIREARM}
+        productType={ProductType.ITEM}
       />
 
     </AlignCenterLayout>
@@ -114,7 +114,7 @@ interface ReactProps extends WithStyles<typeof styles> {
 
 
 const styles = (theme: Theme) => createStyles({
-  trendingRoot: {
+  trendingItemsRoot: {
     display: 'flex',
     width: '100%',
     flexDirection: "column",
@@ -122,4 +122,4 @@ const styles = (theme: Theme) => createStyles({
 })
 
 
-export default withStyles(styles)( Trending );
+export default withStyles(styles)( TrendingItems );

@@ -22,6 +22,7 @@ export const SEARCH_NEWS_ITEMS_CONNECTION = gql`
     $query: ConnectionQuery
     $searchTerm: String
     $sortByDate: Boolean
+    $productType: String
     $categorySlugs: [String]
     $dealerStates: [String]
     $calibers: [String]
@@ -31,6 +32,7 @@ export const SEARCH_NEWS_ITEMS_CONNECTION = gql`
       query: $query
       searchTerm: $searchTerm
       sortByDate: $sortByDate
+      productType: $productType
       categorySlugs: $categorySlugs
       dealerStates: $dealerStates
       calibers: $calibers
@@ -53,8 +55,14 @@ export const SEARCH_NEWS_ITEMS_CONNECTION = gql`
 
 
 export const GET_HOT_NEWS_ITEMS_TODAY = gql`
-  query($query: ConnectionQuery) {
-    getHotNewsItemsToday(query: $query) {
+  query(
+    $query: ConnectionQuery,
+    $productType: ProductType
+  ) {
+    getHotNewsItemsToday(
+      query: $query
+      productType: $productType
+    ) {
       edges {
         node {
           ...NewsItemFragment
@@ -77,10 +85,12 @@ export const GET_HOT_NEWS_ITEMS_YESTERDAY = gql`
   query(
     $query: ConnectionQuery
     $sortByDate: Boolean
+    $productType: ProductType
   ) {
     getHotNewsItemsYesterday(
       query: $query
       sortByDate: $sortByDate
+      productType: $productType
     ) {
       edges {
         node {
@@ -102,10 +112,12 @@ export const GET_HOT_NEWS_ITEMS_THIS_WEEK = gql`
   query(
     $query: ConnectionQuery
     $sortByDate: Boolean
+    $productType: ProductType
   ) {
     getHotNewsItemsThisWeek(
       query: $query
       sortByDate: $sortByDate
+      productType: $productType
     ) {
       edges {
         node {
@@ -128,10 +140,12 @@ export const GET_HOT_NEWS_ITEMS_LAST_WEEK = gql`
   query(
     $query: ConnectionQuery
     $sortByDate: Boolean
+    $productType: ProductType
   ) {
     getHotNewsItemsLastWeek(
       query: $query
       sortByDate: $sortByDate
+      productType: $productType
     ) {
       edges {
         node {
