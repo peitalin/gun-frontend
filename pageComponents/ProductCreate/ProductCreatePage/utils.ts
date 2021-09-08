@@ -157,8 +157,6 @@ export const reduxToFormikCurrentVariants = ({
   }
   if (productEditInput) {
     productInput = productEditInput
-  } else {
-    throw new Error ("Must have either productCreateInput or productEditInput")
   }
 
   // pulls preview items from redux into each current variant in formik
