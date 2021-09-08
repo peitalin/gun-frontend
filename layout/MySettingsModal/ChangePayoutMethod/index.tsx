@@ -186,17 +186,25 @@ const ChangePayoutMethod = (props: ReactProps) => {
                 <div className={classes.bankDetailsCol2}>
                   <Typography variant="body1" className={classes.subtitle}>
                     <span className={classes.bankDetailsInfoText}>
-                      {`${bsb1}-${bsb2}`}
+                      {
+                        (bsb1 && bsb2)
+                          ? `${bsb1}-${bsb2}`
+                          : "NA"
+                      }
                     </span>
                   </Typography>
                   <Typography variant="body1" className={classes.subtitle}>
                     <span className={classes.bankDetailsInfoText}>
-                      {`${accountNumber1}-${accountNumber2}-${accountNumber3}`}
+                      {
+                        (accountNumber1 && accountNumber2 && accountNumber3)
+                          ? `${accountNumber1}-${accountNumber2}-${accountNumber3}`
+                          : "NA"
+                      }
                     </span>
                   </Typography>
                   <Typography variant="body1" className={classes.subtitle}>
                     <span className={classes.bankDetailsInfoText}>
-                      {accountName}
+                      {accountName ?? "NA"}
                     </span>
                   </Typography>
                 </div>
