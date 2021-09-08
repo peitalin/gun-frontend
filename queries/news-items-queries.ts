@@ -22,7 +22,7 @@ export const SEARCH_NEWS_ITEMS_CONNECTION = gql`
     $query: ConnectionQuery
     $searchTerm: String
     $sortByDate: Boolean
-    $productType: String
+    $productType: ProductType
     $categorySlugs: [String]
     $dealerStates: [String]
     $calibers: [String]
