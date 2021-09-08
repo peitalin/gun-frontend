@@ -25,7 +25,10 @@ const PriceDisplayMainMobile = (props: ReactProps) => {
     price,
   } = props;
 
-  const priceDisplay = currency(price/100, { formatWithSymbol: true })
+  const priceDisplay = price > 0
+    ? currency(price/100, { formatWithSymbol: true })?.format()
+    : "NA"
+
   // const priceWasDisplay = currency(priceWas/100, { formatWithSymbol: true })
   // const savings = (price >= priceWas)
   //   ?  currency(0, { formatWithSymbol: true })
@@ -59,7 +62,7 @@ const PriceDisplayMainMobile = (props: ReactProps) => {
         <div className={classes.innerContainerSpread}>
           <div className={classes.priceInnerContainer}>
             <Typography className={classes.price} variant="body1">
-              {priceDisplay.format()}
+              {priceDisplay}
             </Typography>
           </div>
         </div>

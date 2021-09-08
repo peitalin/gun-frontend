@@ -146,7 +146,7 @@ const TrendingNewsItemRow = (props: ReactProps) => {
 
                   <div className={classes.priceContainer}>
                     {
-                      price &&
+                      (price !== undefined) &&
                       <PriceDisplayMainMobile
                         price={price}
                         soldOutStatus={soldOutStatus}
