@@ -31,6 +31,8 @@ import AccordionSummary from '@material-ui/core/AccordionSummary';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
+import { categoryPreviewsBackup } from "utils/categories"
+
 
 
 const SelectCategories = (props: ReactProps & FormikProps<FormikFields>) => {
@@ -51,16 +53,16 @@ const SelectCategories = (props: ReactProps & FormikProps<FormikFields>) => {
     // props.validateForm()
   }
 
-  // Apollo Graphql
-  const {
-    loading,
-    error,
-    data
-  } = useQuery<QueryData, null>(GET_CATEGORIES)
+  // // Apollo Graphql
+  // const {
+  //   loading,
+  //   error,
+  //   data
+  // } = useQuery<QueryData, null>(GET_CATEGORIES)
 
 
-  const categories = (data?.getCategories ?? [])
-      .filter(c => !!c && !!c.name)
+  const categories = categoryPreviewsBackup
+  // (data?.getCategories ?? []).filter(c => !!c && !!c.name)
 
   const chosenCategory = categories.find(c => c.id === fprops.values.categoryId)
 
@@ -133,10 +135,9 @@ const SelectCategories = (props: ReactProps & FormikProps<FormikFields>) => {
                 padding: '0px',
                 width: '100%'
               }}>
-                {
-                  error
-                  ? <ErrorDisplay title={"SelectCategories"} error={error}/>
-                  : <div className={classes.categoryButtonsContainer}>
+                  {/* // error
+                  // ? <ErrorDisplay title={"SelectCategories"} error={error}/> : */}
+                  <div className={classes.categoryButtonsContainer}>
                       {
                         categories.map((category, i) => {
                           return (
@@ -166,7 +167,6 @@ const SelectCategories = (props: ReactProps & FormikProps<FormikFields>) => {
                         })
                       }
                     </div>
-                }
               </div>
             </AccordionDetails>
           </Accordion>
