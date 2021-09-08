@@ -57,6 +57,12 @@ const NewsItemAdminRescrapeIcon: React.FC<ReactProps> = (props) => {
             : undefined,
       sourceSiteUrl: props.newsItem.externalProduct?.sourceSiteUrl,
     },
+    onError: (err) => {
+      snackbar.enqueueSnackbar(
+        `Error: ${err}`,
+        { variant: "error" }
+      )
+    },
     onCompleted: (data) => {
       snackbar.enqueueSnackbar(
         `Rescraped NewsItem ${data?.rescrapeExternalProduct?.id}`,
