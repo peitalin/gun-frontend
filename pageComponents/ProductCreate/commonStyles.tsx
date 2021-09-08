@@ -278,7 +278,8 @@ export const styles = (theme: Theme) => createStyles({
     }
   },
   buttonSelected: {
-    backgroundImage: Gradients.gradientUniswapBlue.background,
+    // backgroundImage: Gradients.gradientUniswapBlue.background,
+    backgroundColor: Gradients.gradientUniswapBlue.color1,
     border: theme.palette.type === 'dark'
       ? `1px solid ${Colors.uniswapLighterGrey}`
       : `1px solid ${Colors.slateGreyBlack}`,
@@ -291,12 +292,13 @@ export const styles = (theme: Theme) => createStyles({
       "& > span": {
         color: Colors.cream,
       },
-      backgroundImage: Gradients.gradientUniswapBlue2.background,
+      // backgroundImage: Gradients.gradientUniswapBlue2.background,
+      backgroundColor: Gradients.gradientUniswapBlue.color2,
       transition: theme.transitions.create(['color', 'border', 'background'], {
         easing: theme.transitions.easing.easeInOut,
         duration: "200ms",
       }),
-      backgroundPosition: '-75px',
+      // backgroundPosition: '-75px',
     }
   },
   marginTop05: {

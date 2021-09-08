@@ -95,16 +95,17 @@ export interface ProductCreateEditCommonInput {
   productId?: ID;
   currentVariants: ProductVariantInput[] | ProductVariantEditInput[];
   listingType: ListingType
-  productType: ProductType
 }
 
 export interface ProductCreateInputFrontEnd extends ProductCreateEditCommonInput {
   currentVariants: ProductVariantInput[];
+  productType: ProductType
 };
 
 
 export interface ProductEditInputFrontEnd extends ProductCreateEditCommonInput  {
   currentVariants: ProductVariantEditInput[];
+  productType: ProductType
 };
 
 

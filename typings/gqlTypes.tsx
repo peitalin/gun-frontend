@@ -4160,7 +4160,7 @@ export type ProductEditInput = {
   barrelLength?: Maybe<Scalars['String']>;
   allowBids?: Maybe<Scalars['Boolean']>;
   listingType: ListingType;
-  productType: ProductType;
+  productType?: Maybe<ProductType>;
 };
 
 /** Critical information about a file within a product */

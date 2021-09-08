@@ -216,7 +216,8 @@ export const validationSchemas = {
       listingType: Yup.string()
         .required('Listing type required'),
       productType: Yup.string()
-        .required('Product type required'),
+        .nullable(),
+        // .required('Product type required'),
     }),
 
 
