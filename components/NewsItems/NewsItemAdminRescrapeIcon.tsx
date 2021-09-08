@@ -59,7 +59,7 @@ const NewsItemAdminRescrapeIcon: React.FC<ReactProps> = (props) => {
     },
     onError: (err) => {
       snackbar.enqueueSnackbar(
-        `Error: ${err}`,
+        `Error: ${JSON.stringify(err)}`,
         { variant: "error" }
       )
     },

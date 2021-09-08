@@ -39,7 +39,7 @@ export const RESCRAPE_EXTERNAL_PRODUCT = gql`
     rescrapeExternalProduct(
       sourceSiteId: $sourceSiteId
       sourceSite: $sourceSite
-      sourceSitelUrl: $sourceSiteUrl
+      sourceSiteUrl: $sourceSiteUrl
     ) {
       id
       link
