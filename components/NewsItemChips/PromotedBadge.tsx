@@ -19,15 +19,16 @@ const PromotedBadge = (props: ReactProps) => {
   const theme = useTheme();
 
   return (
-    <div className={clsx(classes.sourceSiteLink, props.className)}
-      style={props.style}
-    >
-      <div className={clsx(
-        classes.adType,
-      )}>
-        Promoted
-      </div>
-    </div>
+    <Link href={"/promotions"}>
+      <a className={clsx(classes.sourceSiteLink, props.className)}
+        target={"_blank"}
+        style={props.style}
+      >
+        <div className={clsx(classes.adType)}>
+          Promoted
+        </div>
+      </a>
+    </Link>
   )
 }
 
@@ -65,17 +66,17 @@ const styles = (theme: Theme) => createStyles({
     "& > a > svg": {
       fill: Colors.cream,
     },
-    // "&:hover > a > svg": {
-    //   fill: Colors.ultramarineBlue,
-    // },
-    // "&:hover": {
-    //   color: Colors.ultramarineBlue,
-    // },
-    // transition:  theme.transitions.create(['color', 'fill'], {
-    //   easing: theme.transitions.easing.easeInOut,
-    //   duration: 200,
-    // }),
-    // cursor: "pointer",
+    "&:hover > a > svg": {
+      fill: Colors.black,
+    },
+    "&:hover": {
+      color: Colors.black,
+    },
+    transition:  theme.transitions.create(['color', 'fill'], {
+      easing: theme.transitions.easing.easeInOut,
+      duration: 200,
+    }),
+    cursor: "pointer",
     fontSize: "0.825rem",
     borderRadius: BorderRadius,
     display: 'flex',

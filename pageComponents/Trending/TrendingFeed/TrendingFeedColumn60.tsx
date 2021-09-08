@@ -95,13 +95,13 @@ const TrendFeedItems: React.FC<ReactProps> = (props) => {
     }
   }
 
-  let promotedSlots: NewsItemsEdge[] = React.useMemo(() => {
-    return (props.promotedSlotsConnection?.edges ?? [])
-      .map(p => wrapPromotedSlotAsNewsItem(p))
-  }, [props.promotedSlotsConnection])
-
-  // let promotedSlots: NewsItemsEdge[] = (props.promotedSlotsConnection?.edges ?? [])
+  // let promotedSlots: NewsItemsEdge[] = React.useMemo(() => {
+  //   return (props.promotedSlotsConnection?.edges ?? [])
   //     .map(p => wrapPromotedSlotAsNewsItem(p))
+  // }, [props.promotedSlotsConnection])
+
+  let promotedSlots: NewsItemsEdge[] = (props.promotedSlotsConnection?.edges ?? [])
+      .map(p => wrapPromotedSlotAsNewsItem(p))
 
   let newsItemsWithPromotionsEdges = [
     ...newsItemEdges.slice(0,4),
