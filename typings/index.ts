@@ -105,7 +105,7 @@ export interface ProductCreateInputFrontEnd extends ProductCreateEditCommonInput
 
 export interface ProductEditInputFrontEnd extends ProductCreateEditCommonInput  {
   currentVariants: ProductVariantEditInput[];
-  productType: ProductType
+  productType?: ProductType
 };
 
 

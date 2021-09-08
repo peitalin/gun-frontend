@@ -21,7 +21,11 @@ import {
 import {
   ProductPreviewItemInput, ID, UploadType
 } from "typings/gqlTypes";
-import { ProductCreateEditCommonInput } from "typings";
+import {
+  ProductCreateInputFrontEnd,
+  ProductEditInputFrontEnd,
+  ProductCreateEditCommonInput,
+} from "typings"
 import { ReducerName, DzuFilePreview } from "typings/dropzone";
 import { DzuPreviewOrder, DzuPreviewItem } from "typings/dropzone";
 import Loading from "components/Loading";
@@ -184,15 +188,30 @@ const PreviewItemUploaderGrid = (props: ReactProps & FormikProps<FormikFields>) 
   //// Effects ////
 
   React.useEffect(() => {
-    // formik updates as a side effect after redux
-    fprops.setFieldValue(
-      "currentVariants",
-      reduxToFormikCurrentVariants(
-        productInput,
-        props.dzuPreviewItems,
-        props.dzuPreviewOrder,
-      )
-    );
+
+
+    if (props.reducerName === ReducerName.reduxProductCreate) {
+      // formik updates as a side effect after redux
+      fprops.setFieldValue(
+        "currentVariants",
+        reduxToFormikCurrentVariants({
+          productCreateInput: productInput as ProductCreateInputFrontEnd,
+          dzuPreviewItems: props.dzuPreviewItems,
+          dzuPreviewOrder: props.dzuPreviewOrder,
+        })
+      );
+    } else {
+      fprops.setFieldValue(
+        "currentVariants",
+        reduxToFormikCurrentVariants({
+          productEditInput: productInput,
+          dzuPreviewItems: props.dzuPreviewItems,
+          dzuPreviewOrder: props.dzuPreviewOrder,
+        })
+      );
+
+    }
+
     props.validateForm()
 
     // setTimeout(() => {

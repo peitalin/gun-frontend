@@ -344,11 +344,11 @@ const ProductCreatePage = (props: ReactProps) => {
     user?.isSuspended
   )
 
-  const currentVariantsInput = reduxToFormikCurrentVariants(
+  const currentVariantsInput = reduxToFormikCurrentVariants({
     productCreateInput,
     dzuPreviewItems,
     dzuPreviewOrder,
-  )
+  })
 
 
   const processProductDataAndValidate = ({ publishNow }: { publishNow: boolean }) => {

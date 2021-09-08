@@ -8,6 +8,7 @@ import {
 } from "typings/gqlTypes";
 import {
   ProductCreateInputFrontEnd,
+  ProductEditInputFrontEnd,
   ProductCreateEditCommonInput,
 } from "typings"
 import {
@@ -134,16 +135,36 @@ export const printValidationErrors = (
   }
 }
 
-export const reduxToFormikCurrentVariants = (
-  productCreateInput: ProductCreateInputFrontEnd,
+export const reduxToFormikCurrentVariants = ({
+  productCreateInput,
+  productEditInput,
+  dzuPreviewItems,
+  dzuPreviewOrder,
+}: {
+  productCreateInput?: ProductCreateInputFrontEnd,
+  productEditInput?: ProductEditInputFrontEnd,
   dzuPreviewItems: DzuPreviewItem[],
   dzuPreviewOrder: DzuPreviewOrder[],
-): ProductVariantInput[] => {
+}): ProductVariantInput[] => {
+
+  if (productCreateInput && productEditInput) {
+    throw new Error ("cannot used both productCreateInput and productEditInput")
+  }
+
+  let productInput: ProductCreateInputFrontEnd | ProductEditInputFrontEnd
+  if (productCreateInput) {
+    productInput = productCreateInput
+  }
+  if (productEditInput) {
+    productInput = productEditInput
+  } else {
+    throw new Error ("Must have either productCreateInput or productEditInput")
+  }
 
   // pulls preview items from redux into each current variant in formik
   // we store just a single copy of preview items in redux, then duplicate
   // across all currentVariants in Formik before sending to backend.
-  return (productCreateInput?.currentVariants ?? []).map(v => {
+  return (productInput?.currentVariants ?? []).map(v => {
 
     // pull preview items from redux into each current variant in formik
     let previewItems = dzuPreviewOrder.map(

@@ -253,11 +253,11 @@ const ProductEditPage = (props: ReactProps) => {
     console.log("updating formik.currentVariants")
     formik.setFieldValue(
       "currentVariants",
-      reduxToFormikCurrentVariants(
+      reduxToFormikCurrentVariants({
         productEditInput,
         dzuPreviewItems,
         dzuPreviewOrder,
-      )
+      })
     );
   }, [dzuPreviewItems])
 
