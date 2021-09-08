@@ -8,6 +8,9 @@ import {
   UserPrivate,
   NewsItemsConnection,
   NewsItem,
+  PromotedSlotsConnection,
+  PromotedSlotsEdge,
+  NewsItemsEdge,
 } from "typings/gqlTypes";
 // Redux
 import { useSelector } from "react-redux"
@@ -75,10 +78,47 @@ const TrendFeedItems: React.FC<ReactProps> = (props) => {
     )
   }
 
+  const wrapPromotedSlotAsNewsItem = (p: PromotedSlotsEdge): NewsItemsEdge => {
+    return {
+      node: {
+        id: `${p.node?.id}`, // promoted_slot_0001_0001
+        createdAt: p.node?.createdAt,
+        updatedAt: new Date(),
+        productId: p.node?.product?.id,
+        externalProductId: undefined,
+        sourceSite: "www.gunmarketplace.com.au",
+        product: p.node?.product,
+        isSuspended: false,
+        isDeleted: false,
+        score: undefined,
+      }
+    }
+  }
+
+  let promotedSlots: NewsItemsEdge[] = React.useMemo(() => {
+    return (props.promotedSlotsConnection?.edges ?? [])
+      .map(p => wrapPromotedSlotAsNewsItem(p))
+  }, [props.promotedSlotsConnection])
+
+  // let promotedSlots: NewsItemsEdge[] = (props.promotedSlotsConnection?.edges ?? [])
+  //     .map(p => wrapPromotedSlotAsNewsItem(p))
+
+  let newsItemsWithPromotionsEdges = [
+    ...newsItemEdges.slice(0,4),
+    ...promotedSlots.slice(0,1),
+    ...newsItemEdges.slice(4,8),
+    ...promotedSlots.slice(1,2),
+    ...newsItemEdges.slice(8,12),
+    ...promotedSlots.slice(2,3),
+    ...newsItemEdges.slice(12,16),
+    ...promotedSlots.slice(3,4),
+    ...newsItemEdges.slice(16,20),
+  ]
+
   return (
     <>
       {
-        newsItemEdges?.map(({ node: newsItem }, i) => {
+        newsItemsWithPromotionsEdges?.map(({ node: newsItem }, i) => {
 
           let isFirstItem = i === 0
           let isLastItem = i === (newsItemEdges?.length - 1)
@@ -141,6 +181,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   fetchMoreNew?(): void
   index: number
   setIndex(i: number): void
+  promotedSlotsConnection?: PromotedSlotsConnection
 }
 
 export const styles = (theme: Theme) => createStyles({

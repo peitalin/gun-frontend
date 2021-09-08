@@ -24,6 +24,7 @@ import {
 //
 import VoteOnNewsItem from "./VoteOnNewsItem";
 import AdType from "components/NewsItemChips/AdType";
+import PromotedBadge from "components/NewsItemChips/PromotedBadge";
 import SourceSiteChip from "components/NewsItemChips/SourceSiteChip";
 import VerifiedChip from "components/NewsItemChips/VerifiedChip";
 // Snackbar
@@ -171,6 +172,10 @@ const TrendingNewsItemRow = (props: ReactProps) => {
                       <VerifiedChip
                         title={"Verified Seller"}
                       />
+                    }
+                    {
+                      newsItem?.id?.startsWith('promoted_slot') &&
+                      <PromotedBadge />
                     }
                   </div>
 

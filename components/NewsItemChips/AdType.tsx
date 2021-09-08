@@ -77,6 +77,7 @@ interface ReactProps extends WithStyles<typeof styles> {
 const styles = (theme: Theme) => createStyles({
   sourceSiteLink: {
     marginTop: '0.5rem',
+    marginRight: '0.5rem',
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center',

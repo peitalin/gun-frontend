@@ -40,6 +40,7 @@ import {
 import { useSnackbar } from "notistack";
 import ButtonLoading from "components/ButtonLoading";
 import AdType from "components/NewsItemChips/AdType";
+import PromotedBadge from "components/NewsItemChips/PromotedBadge";
 import SourceSiteChip from "components/NewsItemChips/SourceSiteChip";
 import VerifiedChip from "components/NewsItemChips/VerifiedChip";
 import DescriptionText from "./DescriptionText";
@@ -354,7 +355,7 @@ const NewsItemCardDetails = (props: ReactProps) => {
         classes.chipsBox,
         )}>
 
-        <SourceSiteChip sourceSite={sourceSite}/>
+        {/* <SourceSiteChip sourceSite={sourceSite}/> */}
 
         <AdType
           productId={newsItem?.productId}
@@ -367,6 +368,11 @@ const NewsItemCardDetails = (props: ReactProps) => {
           <VerifiedChip
             title={"Verified Seller"}
           />
+        }
+
+        {
+          newsItem?.id?.startsWith('promoted_slot') &&
+          <PromotedBadge />
         }
 
       </div>

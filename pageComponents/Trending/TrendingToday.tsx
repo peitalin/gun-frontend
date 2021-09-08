@@ -9,6 +9,7 @@ import {
   NewsItemsConnection,
   NewsItem,
   ProductType,
+  PromotedList,
 } from "typings/gqlTypes";
 // graphql
 import { useSubscription, useLazyQuery } from '@apollo/client';
@@ -17,6 +18,7 @@ import {
   GET_HOT_NEWS_ITEMS_TODAY,
   GET_NEWS_ITEM_BY_ID,
 } from "queries/news-items-queries";
+import { GET_PROMOTED_LIST } from "queries/promoted_lists-queries";
 
 import TrendFeedLayout from "./TrendingFeed/TrendFeedLayout";
 import TrendingFeedColumn60 from "./TrendingFeed/TrendingFeedColumn60";
@@ -161,6 +163,27 @@ export const TrendingToday: React.FC<ReactProps> = (props) => {
   //   // and it will open with the product loaded
   // }, [currentNewsItem])
 
+
+  const [getPromotedList, getPromotedListResponse] = useLazyQuery<QData2, QVar2>(
+    GET_PROMOTED_LIST, {
+    variables: {
+      promotedListId: 'promoted_list_0001',
+      limit: 4,
+      offset: 0,
+    },
+    onCompleted: () => {
+    },
+  })
+
+
+  React.useEffect(() => {
+    getPromotedList()
+  }, [])
+
+  let promotedSlotsConnection = getPromotedListResponse?.data?.getPromotedList?.promotedSlotsConnection
+  // console.log("promotedSlotsConnection: ", promotedSlotsConnection)
+
+
   return (
     <TrendFeedLayout
       tab={tab}
@@ -199,6 +222,7 @@ export const TrendingToday: React.FC<ReactProps> = (props) => {
         setIndex={setIndex}
         loading={hotItemsResponse.loading || fetchMoreLoading}
         mobile={lgDown}
+        promotedSlotsConnection={promotedSlotsConnection}
         fetchMoreHot={async() => {
 
           let newOffset = offsetHot + limit
@@ -262,6 +286,14 @@ interface QData {
 }
 interface QVar {
   query?: ConnectionQuery
+}
+interface QData2 {
+  getPromotedList: PromotedList;
+}
+interface QVar2 {
+  promotedListId: string,
+  limit: number,
+  offset: number,
 }
 
 const styles = (theme: Theme) => createStyles({
