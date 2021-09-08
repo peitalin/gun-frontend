@@ -34,10 +34,12 @@ export const RESCRAPE_EXTERNAL_PRODUCT = gql`
   mutation(
     $sourceSiteId: String!
     $sourceSite: ScraperSourceSite!
+    $sourceSiteUrl: String
   ) {
     rescrapeExternalProduct(
       sourceSiteId: $sourceSiteId
       sourceSite: $sourceSite
+      sourceSitelUrl: $sourceSiteUrl
     ) {
       id
       link

@@ -54,7 +54,8 @@ const NewsItemAdminRescrapeIcon: React.FC<ReactProps> = (props) => {
             ? ScraperSourceSite.OZGUNSALES
             : props.newsItem?.externalProduct?.sourceSite?.match(/ssaa/g)
             ? ScraperSourceSite.SSAA
-            : undefined
+            : undefined,
+      sourceSiteUrl: props.newsItem.externalProduct?.sourceSiteUrl,
     },
     onCompleted: (data) => {
       snackbar.enqueueSnackbar(
@@ -138,6 +139,7 @@ interface Mdata {
 interface Mvar {
   sourceSiteId: string
   sourceSite: string
+  sourceSiteUrl?: string
 }
 
 
