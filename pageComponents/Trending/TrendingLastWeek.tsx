@@ -65,7 +65,6 @@ export const TrendingLastWeek: React.FC<ReactProps> = (props) => {
         limit: limit,
         offset: 0,
       },
-      productType: props.productType,
       sortByDate: false,
     },
     onCompleted: React.useCallback(async(data) => {
@@ -196,7 +195,6 @@ export const TrendingLastWeek: React.FC<ReactProps> = (props) => {
 
 interface ReactProps extends WithStyles<typeof styles> {
   limit?: number
-  productType?: ProductType
 }
 
 interface QData {
@@ -205,7 +203,6 @@ interface QData {
 interface QVar {
   query?: ConnectionQuery
   sortByDate?: boolean
-  productType?: ProductType
 }
 
 const styles = (theme: Theme) => createStyles({

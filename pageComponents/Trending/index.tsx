@@ -11,7 +11,6 @@ import TrendingToday from "./TrendingToday";
 import TrendingYesterday from "./TrendingYesterday";
 import TrendingThisWeek from "./TrendingThisWeek";
 import TrendingLastWeek from "./TrendingLastWeek";
-import { ProductType } from 'typings/gqlTypes';
 
 
 
@@ -43,7 +42,6 @@ export const Trending: React.FC<ReactProps> = (props) => {
 
       <TrendingToday
         limit={20}
-        productType={ProductType.FIREARM}
       />
 
 
@@ -63,8 +61,7 @@ export const Trending: React.FC<ReactProps> = (props) => {
       />
 
       <TrendingYesterday
-        limit={15}
-        productType={ProductType.FIREARM}
+        limit={20}
       />
 
       <div style={{
@@ -82,7 +79,6 @@ export const Trending: React.FC<ReactProps> = (props) => {
 
       <TrendingThisWeek
         limit={20}
-        productType={ProductType.FIREARM}
       />
 
       <FeaturedProducts
@@ -102,7 +98,6 @@ export const Trending: React.FC<ReactProps> = (props) => {
 
       <TrendingLastWeek
         limit={30}
-        productType={ProductType.FIREARM}
       />
 
     </AlignCenterLayout>

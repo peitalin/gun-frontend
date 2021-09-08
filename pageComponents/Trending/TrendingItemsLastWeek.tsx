@@ -12,19 +12,18 @@ import {
 // graphql
 import { useLazyQuery } from '@apollo/client';
 import {
-  GET_HOT_NEWS_ITEMS_YESTERDAY,
+  GET_HOT_MISC_ITEMS_LAST_WEEK,
 } from "queries/news-items-queries";
 
 import TrendFeedLayout from "./TrendingFeed/TrendFeedLayout";
 import TrendingFeedColumn60 from "./TrendingFeed/TrendingFeedColumn60";
 import NewsItemColumn40 from "./TrendingFeed/NewsItemColumn40"
-import { useApolloClient } from "@apollo/client"
 // media query
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 
-export const TrendingYesterday: React.FC<ReactProps> = (props) => {
+export const TrendingItemsLastWeek: React.FC<ReactProps> = (props) => {
 
   const {
     classes,
@@ -48,7 +47,6 @@ export const TrendingYesterday: React.FC<ReactProps> = (props) => {
   //   setCacheNewItems
   // ] = React.useState<NewsItemsConnection>(undefined)
 
-  const client = useApolloClient()
 
   const limit = props.limit ?? 10
   const [offsetHot, setOffsetHot] = React.useState(0)
@@ -58,10 +56,10 @@ export const TrendingYesterday: React.FC<ReactProps> = (props) => {
   const [index, setIndex] = React.useState(0);
 
   const [
-    getHotNewsItemsYesterday,
+    getHotNewsItemsLastWeek,
     hotItemsResponse,
   ] = useLazyQuery<QData, QVar>(
-    GET_HOT_NEWS_ITEMS_YESTERDAY, {
+    GET_HOT_MISC_ITEMS_LAST_WEEK, {
     variables: {
       query: {
         limit: limit,
@@ -70,15 +68,15 @@ export const TrendingYesterday: React.FC<ReactProps> = (props) => {
       sortByDate: false,
     },
     onCompleted: React.useCallback(async(data) => {
-      setCacheHotItems(data?.getHotNewsItemsYesterday)
+      setCacheHotItems(data?.getHotMiscItemsLastWeek)
     }, []),
   });
 
   // const [
-  //   getNewNewsItemsYesterday,
+  //   getNewNewsItemsLastWeek,
   //   newItemsResponse,
   // ] = useLazyQuery<QData, QVar>(
-  //   GET_HOT_NEWS_ITEMS_YESTERDAY, {
+  //   GET_HOT_NEWS_ITEMS_LAST_WEEK, {
   //   variables: {
   //     query: {
   //       limit: limit,
@@ -87,23 +85,21 @@ export const TrendingYesterday: React.FC<ReactProps> = (props) => {
   //     sortByDate: true,
   //   },
   //   onCompleted: React.useCallback(async(data) => {
-  //     setCacheNewItems(data?.getHotNewsItemsYesterday)
+  //     setCacheNewItems(data?.getHotNewsItemsLastWeek)
   //   }, []),
   // });
 
   React.useEffect(() => {
-    getHotNewsItemsYesterday()
+    getHotNewsItemsLastWeek()
     // if (tab === 0) {
-    //   getHotNewsItemsYesterday()
+    //   getHotNewsItemsLastWeek()
     // } else {
-    //   getNewNewsItemsYesterday()
+    //   getNewNewsItemsLastWeek()
     // }
   }, [tab])
 
-  let newsItemsHot = hotItemsResponse?.data?.getHotNewsItemsYesterday
-    ?? cacheHotItems
-  // let newsItemsNew = newItemsResponse?.data?.getHotNewsItemsYesterday
-  //   ?? cacheNewItems
+  let newsItemsHot = hotItemsResponse?.data?.getHotMiscItemsLastWeek ?? cacheHotItems
+  // let newsItemsNew = newItemsResponse?.data?.getHotNewsItemsLastWeek ?? cacheNewItems
 
   let fetchMoreHot = hotItemsResponse?.fetchMore
   // let fetchMoreNew = newItemsResponse?.fetchMore
@@ -112,7 +108,7 @@ export const TrendingYesterday: React.FC<ReactProps> = (props) => {
     <TrendFeedLayout
       tab={tab}
       setTab={setTab}
-      title={"Trending Yesterday"}
+      title={"Trending Last Week"}
       disableNewFeed={true}
     >
       <TrendingFeedColumn60
@@ -134,7 +130,6 @@ export const TrendingYesterday: React.FC<ReactProps> = (props) => {
           let newOffset = offsetHot + limit
           setFetchMoreLoading(true)
 
-          // NOTE: apollo cache automatically merges fetchMore. See apollo.tsx
           let newData = await fetchMoreHot({
             variables: {
               query: {
@@ -149,7 +144,7 @@ export const TrendingYesterday: React.FC<ReactProps> = (props) => {
               ...s,
               edges: [
                 ...(s?.edges ?? []),
-                ...newData.data?.getHotNewsItemsYesterday?.edges,
+                ...newData.data?.getHotMiscItemsLastWeek?.edges,
               ]
             }
           })
@@ -161,6 +156,7 @@ export const TrendingYesterday: React.FC<ReactProps> = (props) => {
         //   let newOffset = offsetNew + limit
         //   setFetchMoreLoading(true)
 
+        //   // NOTE: apollo cache automatically merges fetchMore. See apollo.tsx
         //   let newData = await fetchMoreNew({
         //     variables: {
         //       query: {
@@ -175,7 +171,7 @@ export const TrendingYesterday: React.FC<ReactProps> = (props) => {
         //       ...s,
         //       edges: [
         //         ...(s?.edges ?? []),
-        //         ...newData.data?.getHotNewsItemsYesterday?.edges,
+        //         ...newData.data?.getHotNewsItemsLastWeek?.edges,
         //       ]
         //     }
         //   })
@@ -202,7 +198,7 @@ interface ReactProps extends WithStyles<typeof styles> {
 }
 
 interface QData {
-  getHotNewsItemsYesterday: NewsItemsConnection
+  getHotMiscItemsLastWeek: NewsItemsConnection
 }
 interface QVar {
   query?: ConnectionQuery
@@ -212,4 +208,5 @@ interface QVar {
 const styles = (theme: Theme) => createStyles({
 })
 
-export default withStyles(styles)( TrendingYesterday );
+
+export default withStyles(styles)( TrendingItemsLastWeek );

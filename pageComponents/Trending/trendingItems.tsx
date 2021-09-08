@@ -7,11 +7,8 @@ import AlignCenterLayout from 'components/AlignCenterLayout';
 import BannerTrending from "./BannerTrending"
 import FeaturedProducts from "pageComponents/FrontPage/FeaturedProducts";
 
-import TrendingToday from "./TrendingToday";
-import TrendingYesterday from "./TrendingYesterday";
-import TrendingThisWeek from "./TrendingThisWeek";
-import TrendingLastWeek from "./TrendingLastWeek";
-import { ProductType } from 'typings/gqlTypes';
+import TrendingItemsThisWeek from "./TrendingItemsThisWeek";
+import TrendingItemsLastWeek from "./TrendingItemsLastWeek";
 
 
 
@@ -41,11 +38,9 @@ export const TrendingItems: React.FC<ReactProps> = (props) => {
         buttonText={"Get Started"}
       />
 
-      <TrendingToday
-        limit={20}
-        productType={ProductType.ITEM}
+      <TrendingItemsThisWeek
+        limit={30}
       />
-
 
       <FeaturedProducts
         count={4}
@@ -62,11 +57,6 @@ export const TrendingItems: React.FC<ReactProps> = (props) => {
         }
       />
 
-      <TrendingYesterday
-        limit={15}
-        productType={ProductType.ITEM}
-      />
-
       <div style={{
         marginTop: '1rem',
         marginBottom: '0rem',
@@ -80,9 +70,8 @@ export const TrendingItems: React.FC<ReactProps> = (props) => {
         />
       </div>
 
-      <TrendingThisWeek
-        limit={20}
-        productType={ProductType.ITEM}
+      <TrendingItemsLastWeek
+        limit={30}
       />
 
       <FeaturedProducts
@@ -100,10 +89,6 @@ export const TrendingItems: React.FC<ReactProps> = (props) => {
         }
       />
 
-      <TrendingLastWeek
-        limit={30}
-        productType={ProductType.ITEM}
-      />
 
     </AlignCenterLayout>
   );

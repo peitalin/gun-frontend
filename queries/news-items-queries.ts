@@ -57,11 +57,9 @@ export const SEARCH_NEWS_ITEMS_CONNECTION = gql`
 export const GET_HOT_NEWS_ITEMS_TODAY = gql`
   query(
     $query: ConnectionQuery,
-    $productType: ProductType
   ) {
     getHotNewsItemsToday(
       query: $query
-      productType: $productType
     ) {
       edges {
         node {
@@ -85,12 +83,10 @@ export const GET_HOT_NEWS_ITEMS_YESTERDAY = gql`
   query(
     $query: ConnectionQuery
     $sortByDate: Boolean
-    $productType: ProductType
   ) {
     getHotNewsItemsYesterday(
       query: $query
       sortByDate: $sortByDate
-      productType: $productType
     ) {
       edges {
         node {
@@ -112,12 +108,10 @@ export const GET_HOT_NEWS_ITEMS_THIS_WEEK = gql`
   query(
     $query: ConnectionQuery
     $sortByDate: Boolean
-    $productType: ProductType
   ) {
     getHotNewsItemsThisWeek(
       query: $query
       sortByDate: $sortByDate
-      productType: $productType
     ) {
       edges {
         node {
@@ -140,12 +134,10 @@ export const GET_HOT_NEWS_ITEMS_LAST_WEEK = gql`
   query(
     $query: ConnectionQuery
     $sortByDate: Boolean
-    $productType: ProductType
   ) {
     getHotNewsItemsLastWeek(
       query: $query
       sortByDate: $sortByDate
-      productType: $productType
     ) {
       edges {
         node {
@@ -169,5 +161,54 @@ export const GET_HOT_NEWS_ITEMS_LAST_WEEK = gql`
 
 
 
+///////////////// MISC ITEMS
 
 
+export const GET_HOT_MISC_ITEMS_THIS_WEEK = gql`
+  query(
+    $query: ConnectionQuery
+    $sortByDate: Boolean
+  ) {
+    getHotMiscItemsThisWeek(
+      query: $query
+      sortByDate: $sortByDate
+    ) {
+      edges {
+        node {
+          ...NewsItemFragment
+        }
+      }
+      pageInfo {
+        isLastPage
+        totalPages
+      }
+      totalCount
+    }
+  }
+  ${NewsItemFragment}
+`;
+
+
+export const GET_HOT_MISC_ITEMS_LAST_WEEK = gql`
+  query(
+    $query: ConnectionQuery
+    $sortByDate: Boolean
+  ) {
+    getHotMiscItemsLastWeek(
+      query: $query
+      sortByDate: $sortByDate
+    ) {
+      edges {
+        node {
+          ...NewsItemFragment
+        }
+      }
+      pageInfo {
+        isLastPage
+        totalPages
+      }
+      totalCount
+    }
+  }
+  ${NewsItemFragment}
+`;

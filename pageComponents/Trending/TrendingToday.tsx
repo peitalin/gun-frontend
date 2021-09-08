@@ -107,7 +107,6 @@ export const TrendingToday: React.FC<ReactProps> = (props) => {
         limit: limit,
         offset: 0,
       },
-      productType: props.productType,
     },
     onCompleted: React.useCallback(async(data) => {
       setCacheHotItems(data?.getHotNewsItemsToday)
@@ -248,7 +247,6 @@ export const TrendingToday: React.FC<ReactProps> = (props) => {
 
 interface ReactProps extends WithStyles<typeof styles> {
   limit?: number
-  productType?: ProductType
 }
 
 interface SData {
@@ -264,7 +262,6 @@ interface QData {
 }
 interface QVar {
   query?: ConnectionQuery
-  productType?: ProductType
 }
 
 const styles = (theme: Theme) => createStyles({
