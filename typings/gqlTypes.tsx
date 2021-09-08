@@ -3636,6 +3636,7 @@ export type MutationUnvoteNewsItemArgs = {
 export type MutationRescrapeExternalProductArgs = {
   sourceSiteId: Scalars['String'];
   sourceSite: ScraperSourceSite;
+  sourceSiteUrl?: Maybe<Scalars['String']>;
 };
 
 
@@ -4980,6 +4981,10 @@ export type Query = {
   getHotNewsItemsThisWeek?: Maybe<NewsItemsConnection>;
   /** Gets news items between 7 days to 14 days ago */
   getHotNewsItemsLastWeek?: Maybe<NewsItemsConnection>;
+  /** Gets misc items this week */
+  getHotMiscItemsThisWeek?: Maybe<NewsItemsConnection>;
+  /** Gets misc items last week */
+  getHotMiscItemsLastWeek?: Maybe<NewsItemsConnection>;
 };
 
 
@@ -6467,6 +6472,7 @@ export type QueryGetNewsItemsSearchConnectionArgs = {
   query?: Maybe<ConnectionQuery>;
   searchTerm?: Maybe<Scalars['String']>;
   sortByDate?: Maybe<Scalars['Boolean']>;
+  productType?: Maybe<ProductType>;
   categorySlugs?: Maybe<Array<Maybe<Scalars['String']>>>;
   dealerStates?: Maybe<Array<Maybe<Scalars['String']>>>;
   calibers?: Maybe<Array<Maybe<Scalars['String']>>>;
@@ -6493,6 +6499,18 @@ export type QueryGetHotNewsItemsThisWeekArgs = {
 
 
 export type QueryGetHotNewsItemsLastWeekArgs = {
+  query?: Maybe<ConnectionQuery>;
+  sortByDate?: Maybe<Scalars['Boolean']>;
+};
+
+
+export type QueryGetHotMiscItemsThisWeekArgs = {
+  query?: Maybe<ConnectionQuery>;
+  sortByDate?: Maybe<Scalars['Boolean']>;
+};
+
+
+export type QueryGetHotMiscItemsLastWeekArgs = {
   query?: Maybe<ConnectionQuery>;
   sortByDate?: Maybe<Scalars['Boolean']>;
 };
@@ -8391,9 +8409,9 @@ export type UserPublic = BasicUser & {
   __typename?: 'UserPublic';
   id: Scalars['ID'];
   createdAt?: Maybe<Scalars['Date']>;
-  firstName?: Maybe<Scalars['String']>;
-  lastName?: Maybe<Scalars['String']>;
   /**
+   * firstName: String
+   * lastName: String
    * email: String
    * userRole: Role
    */

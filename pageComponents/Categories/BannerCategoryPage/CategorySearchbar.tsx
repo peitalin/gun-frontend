@@ -60,7 +60,7 @@ const CategorySearchbar: React.FC<ReactProps & FacetSearchParams> = (props) => {
     props.setDealerStatesForGql(dealerStates)
 
     console.log("options:", calibers)
-    let flatCalibers = calibers.flatMap(c => c.synonyms)
+    let flatCalibers = (calibers ?? []).flatMap(c => c.synonyms)
     console.log("flat options:", flatCalibers)
     // flatten list of lists of caliber synonyms
     props.setCalibersForGql(flatCalibers)
