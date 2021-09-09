@@ -60,6 +60,7 @@ const PromotionCards = (props: ReactProps) => {
       promotedListId: props.promotedListId,
       limit: count,
       offset: 0,
+      withFallbackProducts: false,
     },
     onCompleted: () => {
       if (typeof props.setRefetch === 'function') {
@@ -146,6 +147,7 @@ interface QueryVar {
   promotedListId: string,
   limit: number,
   offset: number,
+  withFallbackProducts?: boolean
 }
 
 const styles = (theme: Theme) => createStyles({

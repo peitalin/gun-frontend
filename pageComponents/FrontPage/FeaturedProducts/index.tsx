@@ -55,6 +55,7 @@ const FeaturedProducts = (props: ReactProps) => {
       promotedListId: props.promotedListId,
       limit: count,
       offset: 0,
+      withFallbackProducts: false,
     },
   })
 
@@ -106,6 +107,10 @@ interface QueryData {
   getPromotedList: PromotedList;
 }
 interface QueryVar {
+  promotedListId: string,
+  limit?: number,
+  offset?: number,
+  withFallbackProducts?: boolean
 }
 
 const styles = (theme: Theme) => createStyles({
