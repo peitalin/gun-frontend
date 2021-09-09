@@ -58,6 +58,7 @@ const NewsItemAdminRescrapeIcon: React.FC<ReactProps> = (props) => {
       sourceSiteUrl: props.newsItem.externalProduct?.sourceSiteUrl,
     },
     onError: (err) => {
+      console.log("rescrape error stack: ", err)
       let msg = err?.graphQLErrors?.[0]?.message
       snackbar.enqueueSnackbar(
         `${msg}`,
