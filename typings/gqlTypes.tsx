@@ -6383,6 +6383,7 @@ export type QueryGetPromotedListArgs = {
   limit?: Maybe<Scalars['Int']>;
   offset?: Maybe<Scalars['Int']>;
   categoryFilterSlug?: Maybe<Scalars['String']>;
+  withFallbackProducts?: Maybe<Scalars['Boolean']>;
 };
 
 
