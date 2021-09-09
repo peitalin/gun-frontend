@@ -81,7 +81,7 @@ const BannerPromotionsLink: NextPage<ReactProps> = (props) => {
             Feature your product on the front page.
           </Typography>
           <div className={classes.buttonBox}>
-            <Link href={"/sell"}>
+            <Link href={"/promotions"}>
               <a>
                 <Button
                   className={

@@ -83,7 +83,7 @@ export const Trending: React.FC<ReactProps> = (props) => {
 
       <FeaturedProducts
         count={4}
-        title={"Featured Products"}
+        title={"Trending Products"}
         promotedListId={"promoted_list_0002"}
         cardsPerRow={
           {

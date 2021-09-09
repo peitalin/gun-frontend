@@ -55,7 +55,7 @@ const FeaturedProducts = (props: ReactProps) => {
       promotedListId: props.promotedListId,
       limit: count,
       offset: 0,
-      withFallbackProducts: false,
+      withFallbackProducts: true,
     },
   })
 

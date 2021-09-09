@@ -53,36 +53,35 @@ const FrontPage: React.FC<ReactProps> = (props) => {
   let y = useScrollYPosition()
 
   const [showFeatured, setShowFeatured] = React.useState(defaultShow)
-  const [showAdvertised, setShowAdvertised] = React.useState(defaultShow)
+  const [showTrending, setShowTrending] = React.useState(defaultShow)
   const [showPromotedBanner, setShowPromotedBanner] = React.useState(defaultShow)
-  const [showNew, setShowNew] = React.useState(defaultShow)
-  const [showCategories, setShowCategories] = React.useState(defaultShow)
+  const [showNew, setShowNew] = React.useState(false)
+  const [showCategories, setShowCategories] = React.useState(false)
 
   React.useEffect(() => {
     // if (y > 0 && !showFeatured) {
     //   setShowFeatured(true)
     // }
-    // if (y > 100 && !showNew) {
-    //   setShowNew(true)
-    // }
-    // if (y > 200 && !showPromotedBanner) {
-    //   setShowPromotedBanner(true)
-    // }
-    if (y > 600 && !showAdvertised) {
-      setShowAdvertised(true)
+    if (y > 200 && !showNew) {
+      setShowNew(true)
     }
-    if (y > 800 && !showCategories) {
-      setShowCategories(true)
+    if (y > 400 && !showPromotedBanner) {
+      setShowPromotedBanner(true)
     }
+    if (y > 600 && !showTrending) {
+      setShowTrending(true)
+    }
+    // if (y > 800 && !showCategories) {
+    //   setShowCategories(true)
+    // }
   }, [y])
 
-  let cPadding = 4 // category carousel padding
 
   let featuredSection = pageConfig?.pageConfigSections.filter(
     s => s.viewAllPath === "/featured"
   )
-  let advertisedSection = pageConfig?.pageConfigSections.filter(
-    s => s.viewAllPath === "/advertised"
+  let trendingSection = pageConfig?.pageConfigSections.filter(
+    s => s.viewAllPath === "/trending"
   )
   let newSection = pageConfig?.pageConfigSections.filter(
     s => s.viewAllPath === "/new"
@@ -155,15 +154,16 @@ const FrontPage: React.FC<ReactProps> = (props) => {
 
 
         {
-          showPromotedBanner &&
+          // showPromotedBanner &&
+          true &&
           <div className={classes.bannerPromotionsContainer}>
             <BannerPromotionsLink />
           </div>
         }
 
         {
-          showAdvertised &&
-          advertisedSection?.map(section => {
+          showTrending &&
+          trendingSection?.map(section => {
             // console.log("section: ", section)
             if (section?.promotedListId) {
               return (
@@ -193,7 +193,7 @@ const FrontPage: React.FC<ReactProps> = (props) => {
           })
         }
 
-        {
+        {/* {
           showCategories &&
           categorySections?.map(section => {
 
@@ -214,7 +214,7 @@ const FrontPage: React.FC<ReactProps> = (props) => {
               )
             }
           })
-        }
+        } */}
 
       </AlignCenterLayout>
     </div>

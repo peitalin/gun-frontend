@@ -26,6 +26,7 @@ const NODE_ENV = process.env.NODE_ENV;
 
 import {
   NewsItemsConnection,
+  PromotedSlotsConnection,
 } from "typings/gqlTypes"
 
 if (process.env.NODE_ENV === "development") {
@@ -100,6 +101,27 @@ const cacheOptions = {
 
     Query: {
       fields: {
+
+        getPromotedList: {
+          // Don't cache separate results based on any of this field's arguments.
+          // keyArgs: false as any, // ignore variables, cache everything under same connection
+          keyArgs: [
+            "promotedListId",
+            "withFallbackProducts",
+          ] as any, // separate withFallbackProducts connections when merging connections
+          // merge the incoming list items with the existing list items.
+          merge(existing: PromotedSlotsConnection, incoming: PromotedSlotsConnection) {
+            let mergedEdges = [
+              ...(existing?.edges ?? []),
+              ...(incoming?.edges ?? []),
+            ]
+            return {
+              ...incoming,
+              edges: mergedEdges
+            }
+          },
+        },
+
         getHotNewsItemsToday: {
           // Don't cache separate results based on any of this field's arguments.
           // keyArgs: false as any, // ignore variables, cache everything under same connection

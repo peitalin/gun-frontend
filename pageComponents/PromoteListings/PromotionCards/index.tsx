@@ -60,7 +60,7 @@ const PromotionCards = (props: ReactProps) => {
       promotedListId: props.promotedListId,
       limit: count,
       offset: 0,
-      withFallbackProducts: false,
+      withFallbackProducts: true,
     },
     onCompleted: () => {
       if (typeof props.setRefetch === 'function') {
