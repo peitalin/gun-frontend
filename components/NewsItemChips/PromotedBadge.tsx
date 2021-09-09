@@ -61,6 +61,7 @@ const styles = (theme: Theme) => createStyles({
   },
   adType: {
     padding: "0.25rem 0.75rem",
+    minHeight: 28,
     width: '100%',
     color: Colors.cream,
     "& > a > svg": {

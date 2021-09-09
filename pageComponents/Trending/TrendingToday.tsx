@@ -26,8 +26,8 @@ import NewsItemColumn40 from "./TrendingFeed/NewsItemColumn40"
 // media query
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
-
 import { useRouter } from "next/router";
+
 
 
 export const TrendingToday: React.FC<ReactProps> = (props) => {
@@ -170,6 +170,7 @@ export const TrendingToday: React.FC<ReactProps> = (props) => {
       promotedListId: 'promoted_list_0001',
       limit: 4,
       offset: 0,
+      withFallbackProducts: false,
     },
     onCompleted: () => {
     },
@@ -294,6 +295,7 @@ interface QVar2 {
   promotedListId: string,
   limit: number,
   offset: number,
+  withFallbackProducts?: boolean
 }
 
 const styles = (theme: Theme) => createStyles({

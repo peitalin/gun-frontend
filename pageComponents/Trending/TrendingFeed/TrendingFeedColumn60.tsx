@@ -104,15 +104,15 @@ const TrendFeedItems: React.FC<ReactProps> = (props) => {
       .map(p => wrapPromotedSlotAsNewsItem(p))
 
   let newsItemsWithPromotionsEdges = [
-    ...newsItemEdges.slice(0,4),
+    ...newsItemEdges.slice(0,5),
     ...promotedSlots.slice(0,1),
-    ...newsItemEdges.slice(4,8),
+    ...newsItemEdges.slice(5,10),
     ...promotedSlots.slice(1,2),
-    ...newsItemEdges.slice(8,12),
+    ...newsItemEdges.slice(10,15),
     ...promotedSlots.slice(2,3),
-    ...newsItemEdges.slice(12,16),
+    ...newsItemEdges.slice(15,20),
     ...promotedSlots.slice(3,4),
-    ...newsItemEdges.slice(16,20),
+    ...newsItemEdges.slice(20),
   ]
 
   return (
