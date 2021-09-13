@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import clsx from "clsx";
 // Styles
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
-import { Colors } from "layout/AppTheme";
+import { BorderRadius, Colors } from "layout/AppTheme";
 // Typings
 import {
   Product,
@@ -62,6 +62,9 @@ const ImageGalleryDesktop: React.FC<ReactProps> = (props) => {
         setIndex={setIndex}
         isPromoted={props.isPromoted}
         disableModalPopup={props.disableModalPopup}
+        style={{
+          borderRadius: BorderRadius,
+        }}
       />
 
       <FeaturedPreviewButtonsDesktop
