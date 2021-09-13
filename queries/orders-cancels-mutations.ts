@@ -1,5 +1,5 @@
 import gql from "graphql-tag";
-import { OrdersFragment } from "./fragments";
+import { OrdersGovFragment } from "./fragments";
 
 
 export const CANCEL_ORDER_AND_PAYMENT = gql`
@@ -12,11 +12,11 @@ export const CANCEL_ORDER_AND_PAYMENT = gql`
       markProductAbandoned: $markProductAbandoned,
     ) {
       order {
-        ...OrdersFragment
+        ...OrdersGovFragment
       }
     }
   }
-  ${OrdersFragment}
+  ${OrdersGovFragment}
 `;
 
 

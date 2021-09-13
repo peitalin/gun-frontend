@@ -115,7 +115,9 @@ function GridPaginatorGeneric<T>(props: ReactProps<T> & ReactChildren<T>) {
                   // if overfetching, only show loading if past the preloaded pages
                   ? [...Array(numItemsPerPage).keys()].map(j => {
                       return props.loadingComponent
-                          ? <div key={j}>{props.loadingComponent}</div>
+                          ? <div key={j} className={props.loadingComponentClassName}>
+                              {props.loadingComponent}
+                            </div>
                           : <LoadingCards key={j} count={1}/>
                     })
                   : objectIdGroup
@@ -166,6 +168,7 @@ interface ReactProps<T> {
   refetchProducts?(): void;
   loading?: boolean;
   loadingComponent?: React.ReactElement;
+  loadingComponentClassName?: any;
   containerStyle?: any;
 }
 interface ReactChildren<T> {

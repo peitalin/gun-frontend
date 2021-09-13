@@ -22,6 +22,7 @@ import {
 // components
 import Typography from '@material-ui/core/Typography';
 import SearchHitsItem from './SearchHitsItem';
+import SearchHitsItemLoading from './SearchHitsItemLoading';
 // Snackbar
 import { useSnackbar } from "notistack";
 import {
@@ -132,8 +133,13 @@ const SearchHits: React.FC<ReactProps> = (props) => {
           totalCount={connection?.totalCount ?? 0}
           setTotalCount={setTotalCount}
           numItemsPerPage={numItemsPerPage}
+          loading={loading}
+          loadingComponent={
+            <SearchHitsItemLoading />
+          }
           // className={classes.rowContainer}
           // classNameRoot={classes.gridRoot}
+          loadingComponentClassName={classes.loadingComponentClassname}
           gridItemClassName={classes.itemContainer}
         >
           {({ node: savedSearchHit }) => {
@@ -224,6 +230,11 @@ const styles = (theme: Theme) => createStyles({
       : Colors.slateGreyLighterBlack,
   },
   itemContainer: {
+    width: '100%',
+    marginRight: '1.25rem',
+    marginLeft: '1.25rem',
+  },
+  loadingComponentClassname: {
     width: '100%',
     marginRight: '1.25rem',
     marginLeft: '1.25rem',

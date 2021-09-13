@@ -18,6 +18,7 @@ import { useMutation, useQuery } from "@apollo/client";
 import {
   GET_BUYER_ORDERS_CONNECTION,
   GET_SELLER_ORDERS_CONNECTION,
+  GET_SELLER_ORDERS_ACTION_ITEMS_CONNECTION,
 } from "queries/orders-queries";
 import {
   ADD_FORM_10,
@@ -25,7 +26,7 @@ import {
 } from "queries/orders-mutations";
 
 // Typings
-import { Order, UploadType, OrderStatus, UserPrivate } from "typings/gqlTypes";
+import { Order, UploadType, OrderStatus, UserPrivate, OrdersConnection } from "typings/gqlTypes";
 import { GoogleUpload } from "typings/dropzone";
 
 // Material UI
@@ -35,10 +36,6 @@ import UploadInput from "./UploadInput";
 import UploadLayoutPreviews from "./UploadLayoutPreviews";
 // Snackbar
 import { useSnackbar } from "notistack";
-
-import {
-  GET_SELLER_ORDERS_ACTION_ITEMS_CONNECTION,
-} from "queries/orders-queries";
 // initial variables for updating apollo cache
 import { initialVariables } from "pageComponents/MyOrders";
 
@@ -217,26 +214,23 @@ const FileUploader: React.FC<ReactProps> = (props) => {
 
         let newOrder = addForm10?.order;
 
-        const cacheDataSellerActionItems = cache.readQuery<{ user: UserPrivate }, any>({
+        const cacheDataSellerActionItems = cache.readQuery<QData, any>({
           query: GET_SELLER_ORDERS_ACTION_ITEMS_CONNECTION,
           variables: initialVariables,
         });
 
-        let actionItemsConnection = cacheDataSellerActionItems?.user?.sellerOrdersActionItemsConnection
+        let actionItemsConnection = cacheDataSellerActionItems?.sellerOrdersActionItemsConnection
 
         cache.writeQuery({
           query: GET_SELLER_ORDERS_ACTION_ITEMS_CONNECTION,
           variables: initialVariables,
           data: {
-            user: {
-              ...cacheDataSellerActionItems?.user,
-              sellerOrdersActionItemsConnection: {
-                ...actionItemsConnection,
-                // remove order which uploaded form10 from the "urgent" list
-                edges: (actionItemsConnection?.edges ?? [])
-                  .filter(edge => edge?.node?.id !== newOrder?.id),
-                totalCount: (actionItemsConnection?.edges?.length ?? 1) - 1,
-              }
+            sellerOrdersActionItemsConnection: {
+              ...actionItemsConnection,
+              // remove order which uploaded form10 from the "urgent" list
+              edges: (actionItemsConnection?.edges ?? [])
+                .filter(edge => edge?.node?.id !== newOrder?.id),
+              totalCount: (actionItemsConnection?.edges?.length ?? 1) - 1,
             }
           },
         });
@@ -270,28 +264,25 @@ const FileUploader: React.FC<ReactProps> = (props) => {
 
         let newOrder = removeForm10?.order;
 
-        const cacheDataSellerActionItems = cache.readQuery<{ user: UserPrivate }, any>({
+        const cacheDataSellerActionItems = cache.readQuery<QData, any>({
           query: GET_SELLER_ORDERS_ACTION_ITEMS_CONNECTION,
           variables: initialVariables,
         });
 
-        let actionItemsConnection = cacheDataSellerActionItems?.user?.sellerOrdersActionItemsConnection
+        let actionItemsConnection = cacheDataSellerActionItems?.sellerOrdersActionItemsConnection
 
         cache.writeQuery({
           query: GET_SELLER_ORDERS_ACTION_ITEMS_CONNECTION,
           variables: initialVariables,
           data: {
-            user: {
-              ...cacheDataSellerActionItems?.user,
-              sellerOrdersActionItemsConnection: {
-                ...actionItemsConnection,
-                // remove order which uploaded form10 from the "urgent" list
-                edges: [
-                  { __typename: "OrdersEdge", node: newOrder },
-                  ...(actionItemsConnection?.edges ?? [])
-                ],
-                totalCount: (actionItemsConnection?.edges?.length ?? 0) + 1,
-              }
+            sellerOrdersActionItemsConnection: {
+              ...actionItemsConnection,
+              // remove order which uploaded form10 from the "urgent" list
+              edges: [
+                { __typename: "OrdersEdge", node: newOrder },
+                ...(actionItemsConnection?.edges ?? [])
+              ],
+              totalCount: (actionItemsConnection?.edges?.length ?? 0) + 1,
             }
           },
         });
@@ -422,6 +413,9 @@ interface MutVarRemove {
   orderId: string
 }
 
+interface QData {
+  sellerOrdersActionItemsConnection: OrdersConnection
+}
 
 interface ReactProps extends WithStyles<typeof styles> {
   order: Order;

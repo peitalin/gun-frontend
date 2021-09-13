@@ -100,7 +100,11 @@ const ProductPreviewCardRowSmall = (props: ReactProps) => {
                 width: props.width ? props.width : CARD_WIDTH,
               }}
             >
-              No Image
+              {
+                props.loadingMessage
+                ? props.loadingMessage
+                : "No Image"
+              }
             </div>
       }
       </CardActionArea>
@@ -117,6 +121,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   height?: any;
   width?: any;
   unclickable?: boolean;
+  loadingMessage?: string
 }
 
 

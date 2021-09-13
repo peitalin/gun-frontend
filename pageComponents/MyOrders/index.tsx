@@ -143,7 +143,7 @@ const MyOrders: React.FC<ReactProps> = (props) => {
   const [
     getBuyerOrders,
     buyerOrdersResponse
-  ] = useLazyQuery<QueryData, QueryVar>(
+  ] = useLazyQuery<QData1, QVar1>(
     GET_BUYER_ORDERS_CONNECTION, {
       variables: {
         query: {
@@ -161,7 +161,7 @@ const MyOrders: React.FC<ReactProps> = (props) => {
   const [
     getSellerOrders,
     sellerOrdersResponse
-  ] = useLazyQuery<QueryData2, QueryVar2>(
+  ] = useLazyQuery<QData2, QVar2>(
     GET_SELLER_ORDERS_CONNECTION, {
       variables: {
         query: {
@@ -179,7 +179,7 @@ const MyOrders: React.FC<ReactProps> = (props) => {
   const [
     getSellerOrdersActionItems,
     sellerOrdersActionItemsResponse
-  ] = useLazyQuery<QueryData3, QueryVar3>(
+  ] = useLazyQuery<QData3, QVar3>(
     GET_SELLER_ORDERS_ACTION_ITEMS_CONNECTION, {
       variables: {
         query: {
@@ -210,15 +210,15 @@ const MyOrders: React.FC<ReactProps> = (props) => {
   }, [user])
 
   const buyerOrdersConnection =
-    buyerOrdersResponse?.data?.user?.buyerOrdersConnection
+    buyerOrdersResponse?.data?.buyerOrdersConnection
     || props.initialBuyerOrders;
 
   const sellerOrdersConnection =
-    sellerOrdersResponse?.data?.user?.sellerOrdersConnection
+    sellerOrdersResponse?.data?.sellerOrdersConnection
     || props.initialSellerOrders;
 
   const sellerOrdersActionItemsConnection =
-    sellerOrdersActionItemsResponse?.data?.user?.sellerOrdersActionItemsConnection
+    sellerOrdersActionItemsResponse?.data?.sellerOrdersActionItemsConnection
 
 
   const noOrdersExist = () => {
@@ -563,20 +563,22 @@ const OrdersSection: React.FC<ReactProps> = (props) => {
   )
 }
 
-interface QueryData {
-  user: UserPrivate
+interface QData1 {
+  buyerOrdersConnection: OrdersConnection
 }
-interface QueryVar {
+interface QVar1 {
 }
-interface QueryData2 {
-  user: UserPrivate
+
+interface QData2 {
+  sellerOrdersConnection: OrdersConnection
 }
-interface QueryVar2 {
+interface QVar2 {
 }
-interface QueryData3 {
-  user: UserPrivate
+
+interface QData3 {
+  sellerOrdersActionItemsConnection: OrdersConnection
 }
-interface QueryVar3 {
+interface QVar3 {
 }
 
 

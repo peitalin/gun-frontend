@@ -30,6 +30,7 @@ import {
   Orders,
   Product,
   OrderMutationResponse,
+  OrdersConnection,
   OrderConfirmMutationResponse,
   AuthorizePaymentMutationResponse,
   Bids,
@@ -173,29 +174,39 @@ const VisaPurchaseProduct = (props: ReactProps) => {
       //   fieldName: "dashboardProductsConnection"
       // })
 
+      interface Qdata1 {
+        buyerOrdersConnection: OrdersConnection;
+      }
+      interface Qdata2 {
+        sellerOrdersConnection: OrdersConnection;
+      }
+      interface Qdata3 {
+        sellerOrdersActionItemsConnection: OrdersConnection;
+      }
+
       // Fetch the cached user.buyerOrdersConnection item with associated variables
       // remember, variables need to match, or cache will not return the data
-      const cacheDataBuyerOrders = cache.readQuery<{ user: UserPrivate }, any>({
+      const cacheDataBuyerOrders = cache.readQuery<Qdata1, any>({
         query: GET_BUYER_ORDERS_CONNECTION,
         variables: initialVariables,
       });
-      const cacheDataSellerOrders = cache.readQuery<{ user: UserPrivate }, any>({
+      const cacheDataSellerOrders = cache.readQuery<Qdata2, any>({
         query: GET_SELLER_ORDERS_CONNECTION,
         variables: initialVariables,
       });
-      const cacheDataSellerActionItems = cache.readQuery<{ user: UserPrivate }, any>({
+      const cacheDataSellerActionItems = cache.readQuery<Qdata3, any>({
         query: GET_SELLER_ORDERS_ACTION_ITEMS_CONNECTION,
         variables: initialVariables,
       });
 
       let updateBuyerOrders = newOrder?.buyerId === buyer?.id
-        && cacheDataBuyerOrders?.user?.buyerOrdersConnection
+        && cacheDataBuyerOrders?.buyerOrdersConnection
 
       let updateSellerOrders = newOrder?.sellerStore?.user?.id === buyer?.id
-        && cacheDataSellerOrders?.user?.sellerOrdersConnection
+        && cacheDataSellerOrders?.sellerOrdersConnection
 
       let updateSellerActionItems = newOrder?.sellerStore?.user?.id === buyer?.id
-        && cacheDataSellerActionItems?.user?.sellerOrdersActionItemsConnection
+        && cacheDataSellerActionItems?.sellerOrdersActionItemsConnection
 
 
       // update user orders connections in Apollo cache if those
@@ -205,17 +216,14 @@ const VisaPurchaseProduct = (props: ReactProps) => {
           query: GET_BUYER_ORDERS_CONNECTION,
           variables: initialVariables,
           data: {
-            user: {
-              ...cacheDataBuyerOrders?.user,
               buyerOrdersConnection: {
-                ...cacheDataBuyerOrders?.user?.buyerOrdersConnection,
+                ...cacheDataBuyerOrders?.buyerOrdersConnection,
                 edges: [
                   { __typename: "OrdersEdge", node: newOrder },
-                  ...(cacheDataBuyerOrders?.user?.buyerOrdersConnection?.edges ?? []),
+                  ...(cacheDataBuyerOrders?.buyerOrdersConnection?.edges ?? []),
                 ],
-                totalCount: (cacheDataBuyerOrders?.user?.buyerOrdersConnection?.edges?.length ?? 0) + 1,
+                totalCount: (cacheDataBuyerOrders?.buyerOrdersConnection?.edges?.length ?? 0) + 1,
               },
-            }
           },
         });
       }
@@ -226,17 +234,14 @@ const VisaPurchaseProduct = (props: ReactProps) => {
           query: GET_SELLER_ORDERS_CONNECTION,
           variables: initialVariables,
           data: {
-            user: {
-              ...cacheDataSellerOrders?.user,
               sellerOrdersConnection: {
-                ...cacheDataSellerOrders?.user?.sellerOrdersConnection,
+                ...cacheDataSellerOrders?.sellerOrdersConnection,
                 edges: [
                   { __typename: "OrdersEdge", node: newOrder },
-                  ...(cacheDataSellerOrders?.user?.sellerOrdersConnection?.edges ?? []),
+                  ...(cacheDataSellerOrders?.sellerOrdersConnection?.edges ?? []),
                 ],
-                totalCount: (cacheDataSellerOrders?.user?.sellerOrdersConnection?.edges?.length ?? 0) + 1,
+                totalCount: (cacheDataSellerOrders?.sellerOrdersConnection?.edges?.length ?? 0) + 1,
               },
-            }
           },
         });
       }
@@ -247,17 +252,14 @@ const VisaPurchaseProduct = (props: ReactProps) => {
           query: GET_SELLER_ORDERS_ACTION_ITEMS_CONNECTION,
           variables: initialVariables,
           data: {
-            user: {
-              ...cacheDataSellerActionItems?.user,
               sellerOrdersActionItemsConnection: {
-                ...cacheDataSellerActionItems?.user?.sellerOrdersActionItemsConnection,
+                ...cacheDataSellerActionItems?.sellerOrdersActionItemsConnection,
                 edges: [
                   { __typename: "OrdersEdge", node: newOrder },
-                  ...(cacheDataSellerActionItems?.user?.sellerOrdersActionItemsConnection?.edges ?? []),
+                  ...(cacheDataSellerActionItems?.sellerOrdersActionItemsConnection?.edges ?? []),
                 ],
-                totalCount: (cacheDataSellerActionItems?.user?.sellerOrdersActionItemsConnection?.edges?.length ?? 0) + 1,
+                totalCount: (cacheDataSellerActionItems?.sellerOrdersActionItemsConnection?.edges?.length ?? 0) + 1,
               }
-            }
           },
         });
       }

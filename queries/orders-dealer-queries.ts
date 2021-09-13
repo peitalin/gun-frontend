@@ -2,7 +2,7 @@ import gql from "graphql-tag";
 import {
   ProductFragment,
   ImageFragment,
-  OrdersFragment,
+  OrdersGovFragment,
 } from "./fragments";
 
 
@@ -13,15 +13,15 @@ export const GET_ORDERS_ARRIVING_CONNECTION_DEALER = gql`
     getOrdersArrivingConnectionDealer(query: $query) {
       edges {
         node {
-          ...OrdersFragment
+          ...OrdersGovFragment
         }
       }
       totalCount
     }
   }
-  ${OrdersFragment}
+  ${OrdersGovFragment}
 `;
-// note whereOrderSnapshots query variable used in OrdersFragment
+// note whereOrderSnapshots query variable used in OrdersGovFragment
 
 
 export const GET_ORDERS_COMPLETING_CONNECTION_DEALER = gql`
@@ -29,11 +29,11 @@ export const GET_ORDERS_COMPLETING_CONNECTION_DEALER = gql`
     getOrdersCompletingConnectionDealer(query: $query) {
       edges {
         node {
-          ...OrdersFragment
+          ...OrdersGovFragment
         }
       }
       totalCount
     }
   }
-  ${OrdersFragment}
+  ${OrdersGovFragment}
 `;

@@ -1,6 +1,6 @@
 import gql from "graphql-tag";
 import {
-  OrdersFragment,
+  OrdersDashboardFragment,
 } from "./fragments";
 
 
@@ -48,11 +48,11 @@ export const CONFIRM_ORDER = gql`
       bidId: $bidId
     ) {
       confirmedOrder {
-        ...OrdersFragment
+        ...OrdersDashboardFragment
       }
     }
   }
-  ${OrdersFragment}
+  ${OrdersDashboardFragment}
 `;
 
 export const CAPTURE_PAYMENT_FOR_ORDER = gql`
@@ -64,11 +64,11 @@ export const CAPTURE_PAYMENT_FOR_ORDER = gql`
       orderId: $orderId
     ) {
       order {
-        ...OrdersFragment
+        ...OrdersDashboardFragment
       }
     }
   }
-  ${OrdersFragment}
+  ${OrdersDashboardFragment}
 `;
 
 
@@ -82,11 +82,11 @@ export const ADD_FORM_10 = gql`
       form10FileId: $form10FileId
     ) {
       order {
-        ...OrdersFragment
+        ...OrdersDashboardFragment
       }
     }
   }
-  ${OrdersFragment}
+  ${OrdersDashboardFragment}
 `;
 
 export const REMOVE_FORM_10 = gql`
@@ -97,81 +97,10 @@ export const REMOVE_FORM_10 = gql`
       orderId: $orderId
     ) {
       order {
-        ...OrdersFragment
+        ...OrdersDashboardFragment
       }
     }
   }
-  ${OrdersFragment}
+  ${OrdersDashboardFragment}
 `;
-
-
-// ADMIN ONLY
-export const APPROVE_FORM_10 = gql`
-  mutation approveForm10(
-    $orderId: String!
-  ) {
-    approveForm10(
-      orderId: $orderId
-    ) {
-      order {
-        ...OrdersFragment
-      }
-    }
-  }
-  ${OrdersFragment}
-`;
-
-
-// ADMIN ONLY
-export const UNAPPROVE_FORM_10 = gql`
-  mutation unapproveForm10(
-    $orderId: String!
-  ) {
-    unapproveForm10(
-      orderId: $orderId
-    ) {
-      order {
-        ...OrdersFragment
-      }
-    }
-  }
-  ${OrdersFragment}
-`;
-
-
-// ADMIN ONLY
-export const REVISE_AND_RESUBMIT_FORM_10 = gql`
-  mutation reviseAndResubmitForm10(
-    $orderId: String!
-  ) {
-    reviseAndResubmitForm10(
-      orderId: $orderId
-    ) {
-      order {
-        ...OrdersFragment
-      }
-    }
-  }
-  ${OrdersFragment}
-`;
-
-
-
-export const MARK_PAYOUTS_AS_PAID = gql`
-  mutation markPayoutsAsPaid(
-    $orderIds: [String!]!
-    $payoutId: String!
-  ) {
-    markPayoutsAsPaid(
-      orderIds: $orderIds
-      payoutId: $payoutId
-    ) {
-      orders {
-        ...OrdersFragment
-      }
-    }
-  }
-  ${OrdersFragment}
-`;
-
 

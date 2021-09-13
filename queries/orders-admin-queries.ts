@@ -2,7 +2,8 @@ import gql from "graphql-tag";
 import {
   ProductFragment,
   ImageFragment,
-  OrdersFragment,
+  OrdersGovFragment,
+  OrdersGovCancelledFragment,
 } from "./fragments";
 
 
@@ -13,7 +14,7 @@ export const GET_ORDERS_CREATED_CONNECTION = gql`
     getOrdersCreatedConnectionAdmin(query: $query) {
       edges {
         node {
-          ...OrdersFragment
+          ...OrdersGovFragment
           ...on OrderAdmin {
             paymentIntent {
               id
@@ -32,9 +33,9 @@ export const GET_ORDERS_CREATED_CONNECTION = gql`
       totalCount
     }
   }
-  ${OrdersFragment}
+  ${OrdersGovFragment}
 `;
-// note whereOrderSnapshots query variable used in OrdersFragment
+// note whereOrderSnapshots query variable used in OrdersGovFragment
 
 
 export const GET_ORDERS_PENDING_APPROVAL_CONNECTION = gql`
@@ -42,7 +43,7 @@ export const GET_ORDERS_PENDING_APPROVAL_CONNECTION = gql`
     getOrdersPendingApprovalConnectionAdmin(query: $query) {
       edges {
         node {
-          ...OrdersFragment
+          ...OrdersGovFragment
           ...on OrderAdmin {
             paymentIntent {
               id
@@ -61,7 +62,7 @@ export const GET_ORDERS_PENDING_APPROVAL_CONNECTION = gql`
       totalCount
     }
   }
-  ${OrdersFragment}
+  ${OrdersGovFragment}
 `;
 
 
@@ -87,7 +88,7 @@ export const GET_ORDERS_ADMIN_APPROVED_BY_IDS_CONNECTION = gql`
     ) {
       edges {
         node {
-          ...OrdersFragment
+          ...OrdersGovFragment
           # Already captured, no need to spam Stripe for status
           # ...on OrderAdmin {
           #   paymentIntent {
@@ -107,7 +108,7 @@ export const GET_ORDERS_ADMIN_APPROVED_BY_IDS_CONNECTION = gql`
       totalCount
     }
   }
-  ${OrdersFragment}
+  ${OrdersGovFragment}
 `;
 
 
@@ -139,7 +140,7 @@ export const GET_ORDERS_COMPLETE_BY_IDS_CONNECTION = gql`
     ) {
       edges {
         node {
-          ...OrdersFragment
+          ...OrdersGovFragment
           # Already captured, no need to spam Stripe for status
           # ...on OrderAdmin {
           #   paymentIntent {
@@ -159,7 +160,7 @@ export const GET_ORDERS_COMPLETE_BY_IDS_CONNECTION = gql`
       totalCount
     }
   }
-  ${OrdersFragment}
+  ${OrdersGovFragment}
 `;
 
 
@@ -169,7 +170,7 @@ export const GET_ORDERS_ADMIN_APPROVED_CONNECTION = gql`
     getOrdersAdminApprovedConnection(query: $query) {
       edges {
         node {
-          ...OrdersFragment
+          ...OrdersGovFragment
           # Already captured, no need to spam Stripe for status
           # ...on OrderAdmin {
           #   paymentIntent {
@@ -189,7 +190,7 @@ export const GET_ORDERS_ADMIN_APPROVED_CONNECTION = gql`
       totalCount
     }
   }
-  ${OrdersFragment}
+  ${OrdersGovFragment}
 `;
 
 export const GET_ADMIN_APPROVED_PAYOUT_SUMMARY = gql`
@@ -268,13 +269,13 @@ export const GET_ORDERS_PAYOUTS_COMPLETE_CONNECTION = gql`
     getOrdersPayoutCompleteConnection(query: $query) {
       edges {
         node {
-          ...OrdersFragment
+          ...OrdersGovFragment
         }
       }
       totalCount
     }
   }
-  ${OrdersFragment}
+  ${OrdersGovFragment}
 `;
 
 export const GET_ORDERS_CANCELLED_CONNECTION = gql`
@@ -282,13 +283,13 @@ export const GET_ORDERS_CANCELLED_CONNECTION = gql`
     getOrdersCancelledConnection(query: $query) {
       edges {
         node {
-          ...OrdersFragment
+          ...OrdersGovCancelledFragment
         }
       }
       totalCount
     }
   }
-  ${OrdersFragment}
+  ${OrdersGovCancelledFragment}
 `;
 
 export const GET_ORDERS_EXPIRING_CONNECTION_ADMIN = gql`
@@ -296,7 +297,7 @@ export const GET_ORDERS_EXPIRING_CONNECTION_ADMIN = gql`
     getOrdersExpiringConnectionAdmin(query: $query) {
       edges {
         node {
-          ...OrdersFragment
+          ...OrdersGovFragment
           ...on OrderAdmin {
             paymentIntent {
               id
@@ -315,7 +316,7 @@ export const GET_ORDERS_EXPIRING_CONNECTION_ADMIN = gql`
       totalCount
     }
   }
-  ${OrdersFragment}
+  ${OrdersGovFragment}
 `;
 
 
@@ -323,7 +324,7 @@ export const GET_ORDERS_EXPIRING_CONNECTION_ADMIN = gql`
 export const GET_ORDER_AS_ADMIN = gql`
   query getOrderAsAdmin($orderId: String!) {
     getOrderAsAdmin(orderId: $orderId) {
-      ...OrdersFragment
+      ...OrdersGovFragment
       ...on OrderAdmin {
         paymentIntent {
           id
@@ -339,7 +340,7 @@ export const GET_ORDER_AS_ADMIN = gql`
       }
     }
   }
-  ${OrdersFragment}
+  ${OrdersGovFragment}
 `;
 
 export const GET_RECENT_TRANSACTIONS = gql`

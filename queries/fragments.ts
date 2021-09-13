@@ -399,8 +399,177 @@ export const OrderSnapshotFragment = gql`
 `;
 
 
-export const OrdersFragment = gql`
-  fragment OrdersFragment on Order {
+export const OrdersDashboardFragment = gql`
+  fragment OrdersDashboardFragment on Order {
+    id
+    createdAt
+    updatedAt
+    bidId
+    bid {
+      ...BidFragment
+    }
+    total
+    internationalFee
+    currency
+    buyerId
+    buyer {
+      id
+      defaultLicense {
+        ...UserLicenseFragment
+      }
+      # # Only viewable by dealers
+      # ...on UserWithMobileNumber {
+      #   firstName
+      #   lastName
+      #   email
+      #   phoneNumber {
+      #     id
+      #     areaCode
+      #     countryCode
+      #     number
+      #   }
+      # }
+      # Only viewable by admin or if user is the buyer
+      ...on UserPrivate {
+        firstName
+        lastName
+        email
+        phoneNumber {
+          id
+          areaCode
+          countryCode
+          number
+        }
+      }
+    }
+    buyerLicense {
+      ...UserLicenseFragment
+    }
+    sellerStoreId
+    sellerStore {
+      id
+      name
+      website
+      createdAt
+      updatedAt
+      userId
+      user {
+        id
+        ...on UserPublic {
+          defaultLicense {
+            ...UserLicenseFragment
+          }
+          # orderMetrics {
+          #   id
+          #   # itemsBought
+          #   # totalSpend
+          #   itemsSold
+          #   totalSales
+          #   avgDisposalTimeHrs
+          #   # avgApprovalTimeHrs
+          # }
+        }
+        # # Only viewable by dealers
+        # ...on UserWithMobileNumber {
+        #   firstName
+        #   lastName
+        #   email
+        #   defaultLicense {
+        #     ...UserLicenseFragment
+        #   }
+        #   phoneNumber {
+        #     id
+        #     areaCode
+        #     countryCode
+        #     number
+        #   }
+        # }
+        # Only viewable by admin or if user is the seller
+        ...on UserPrivate {
+          firstName
+          lastName
+          email
+          defaultLicense {
+            ...UserLicenseFragment
+          }
+          payoutMethod {
+            id
+            createdAt
+            updatedAt
+            payoutType
+            bsb
+            accountNumber
+            accountName
+          }
+          phoneNumber {
+            id
+            areaCode
+            countryCode
+            number
+          }
+        }
+      }
+    }
+    currentSnapshot {
+      ...OrderSnapshotFragment
+      # transaction {
+      #   ...TransactionFragment
+      # }
+    }
+    orderSnapshots {
+      ...OrderSnapshotFragment
+    }
+    productId
+    product {
+      id
+      createdAt
+      updatedAt
+      isPublished
+      isSuspended
+      isDeleted
+      isSoldElsewhere
+      storeId
+      soldOutStatus
+      sellerLicenseId
+      sellerLicense {
+        ...UserLicenseFragment
+      }
+      currentSnapshot {
+        ...ProductSnapshotsFragment
+      }
+      featuredVariant {
+        ...ProductVariantsFragment
+      }
+      # category {
+      #   id
+      #   name
+      #   slug
+      #   categoryGroup
+      # }
+      # store {
+      #   id
+      #   name
+      #   userId
+      #   user {
+      #     id
+      #   }
+      # }
+    }
+    paymentIntentId
+  }
+  ${OrderSnapshotFragment}
+  ${UserLicenseFragment}
+  ${BidFragment}
+  ${ProductSnapshotsFragment}
+  ${ProductVariantsFragment}
+`;
+  // ${TransactionFragment}
+  // ${PayoutItemFragment}
+
+
+
+export const OrdersGovFragment = gql`
+  fragment OrdersGovFragment on Order {
     id
     createdAt
     updatedAt
@@ -455,20 +624,20 @@ export const OrdersFragment = gql`
       userId
       user {
         id
-        ...on UserPublic {
-          defaultLicense {
-            ...UserLicenseFragment
-          }
-          orderMetrics {
-            id
-            # itemsBought
-            # totalSpend
-            itemsSold
-            totalSales
-            avgDisposalTimeHrs
-            # avgApprovalTimeHrs
-          }
-        }
+        # ...on UserPublic {
+        #   defaultLicense {
+        #     ...UserLicenseFragment
+        #   }
+        #   # orderMetrics {
+        #   #   id
+        #   #   # itemsBought
+        #   #   # totalSpend
+        #   #   itemsSold
+        #   #   totalSales
+        #   #   avgDisposalTimeHrs
+        #   #   # avgApprovalTimeHrs
+        #   # }
+        # }
         # Only viewable by dealers
         ...on UserWithMobileNumber {
           firstName
@@ -512,9 +681,9 @@ export const OrdersFragment = gql`
     }
     currentSnapshot {
       ...OrderSnapshotFragment
-      transaction {
-        ...TransactionFragment
-      }
+      # transaction {
+      #   ...TransactionFragment
+      # }
     }
     orderSnapshots {
       ...OrderSnapshotFragment
@@ -540,24 +709,10 @@ export const OrdersFragment = gql`
       featuredVariant {
         ...ProductVariantsFragment
       }
-      category {
-        id
-        name
-        slug
-        categoryGroup
-      }
-      store {
-        id
-        name
-        userId
-        user {
-          id
-        }
-      }
     }
-    payoutItems {
-      ...PayoutItemFragment
-    }
+    # payoutItems {
+    #   ...PayoutItemFragment
+    # }
     paymentIntentId
     ...on OrderDealer {
       paymentIntent {
@@ -588,18 +743,121 @@ export const OrdersFragment = gql`
     # }
   }
   ${OrderSnapshotFragment}
-  ${ImageFragment}
-  ${PayoutItemFragment}
-  ${TransactionFragment}
   ${UserLicenseFragment}
   ${BidFragment}
-  ${ProductSnapshotsFragment}
-  ${ProductVariantsFragment}
 `;
+  // ${TransactionFragment}
+  // ${PayoutItemFragment}
+  // ${ProductSnapshotsFragment}
+  // ${ProductVariantsFragment}
 
 
-
-
+export const OrdersGovCancelledFragment = gql`
+  fragment OrdersGovCancelledFragment on Order {
+    id
+    createdAt
+    updatedAt
+    bidId
+    total
+    internationalFee
+    currency
+    buyerId
+    buyerLicense {
+      ...UserLicenseFragment
+    }
+    sellerStoreId
+    sellerStore {
+      id
+      name
+      website
+      createdAt
+      updatedAt
+      userId
+      user {
+        id
+        # Only viewable by dealers
+        ...on UserWithMobileNumber {
+          firstName
+          lastName
+          email
+          defaultLicense {
+            ...UserLicenseFragment
+          }
+          # phoneNumber {
+          #   id
+          #   areaCode
+          #   countryCode
+          #   number
+          # }
+        }
+        # Only viewable by admin or if user is the seller
+        ...on UserPrivate {
+          firstName
+          lastName
+          email
+          defaultLicense {
+            ...UserLicenseFragment
+          }
+          payoutMethod {
+            id
+            createdAt
+            updatedAt
+            payoutType
+            bsb
+            accountNumber
+            accountName
+          }
+          # phoneNumber {
+          #   id
+          #   areaCode
+          #   countryCode
+          #   number
+          # }
+        }
+      }
+    }
+    currentSnapshot {
+      ...OrderSnapshotFragment
+    }
+    orderSnapshots {
+      ...OrderSnapshotFragment
+    }
+    productId
+    paymentIntentId
+    ...on OrderDealer {
+      paymentIntent {
+        id
+        amount
+        # amountCapturable
+        # amountReceived
+        # captureMethod
+        createdAt
+        currency
+        liveMode
+        status
+      }
+    }
+    #### Stripe rate limits us if we spam them
+    # ...on OrderAdmin {
+    #   paymentIntent {
+    #     id
+    #     amount
+    #     amountCapturable
+    #     amountReceived
+    #     captureMethod
+    #     createdAt
+    #     currency
+    #     liveMode
+    #     status
+    #   }
+    # }
+  }
+  ${OrderSnapshotFragment}
+  ${UserLicenseFragment}
+`;
+  // ${BidFragment}
+  // ${ProductSnapshotsFragment}
+  // ${ProductVariantsFragment}
 
 
 export const StorePublicFragment = gql`

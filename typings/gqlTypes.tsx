@@ -4985,6 +4985,9 @@ export type Query = {
   getHotMiscItemsThisWeek?: Maybe<NewsItemsConnection>;
   /** Gets misc items last week */
   getHotMiscItemsLastWeek?: Maybe<NewsItemsConnection>;
+  buyerOrdersConnection?: Maybe<OrdersConnection>;
+  sellerOrdersConnection?: Maybe<OrdersConnection>;
+  sellerOrdersActionItemsConnection?: Maybe<OrdersConnection>;
 };
 
 
@@ -6514,6 +6517,21 @@ export type QueryGetHotMiscItemsThisWeekArgs = {
 export type QueryGetHotMiscItemsLastWeekArgs = {
   query?: Maybe<ConnectionQuery>;
   sortByDate?: Maybe<Scalars['Boolean']>;
+};
+
+
+export type QueryBuyerOrdersConnectionArgs = {
+  query?: Maybe<ConnectionQueryOrders>;
+};
+
+
+export type QuerySellerOrdersConnectionArgs = {
+  query?: Maybe<ConnectionQueryOrders>;
+};
+
+
+export type QuerySellerOrdersActionItemsConnectionArgs = {
+  query?: Maybe<ConnectionQueryOrders>;
 };
 
 export type ResetPasswordResponse = {
@@ -8356,9 +8374,6 @@ export type UserPrivate = BasicUser & {
   emailVerified?: Maybe<Scalars['Boolean']>;
   stripeCustomerId?: Maybe<Scalars['String']>;
   userRole: Role;
-  buyerOrdersConnection?: Maybe<OrdersConnection>;
-  sellerOrdersConnection?: Maybe<OrdersConnection>;
-  sellerOrdersActionItemsConnection?: Maybe<OrdersConnection>;
   paymentMethods?: Maybe<Array<Maybe<Payment_Methods>>>;
   defaultPaymentMethodId?: Maybe<Scalars['ID']>;
   defaultPaymentMethod?: Maybe<Payment_Methods>;
@@ -8379,24 +8394,6 @@ export type UserPrivate = BasicUser & {
   dealerId?: Maybe<Scalars['String']>;
   dealer?: Maybe<Dealer>;
   orderMetrics?: Maybe<UserOrderMetrics>;
-};
-
-
-/** Private user info */
-export type UserPrivateBuyerOrdersConnectionArgs = {
-  query?: Maybe<ConnectionQueryOrders>;
-};
-
-
-/** Private user info */
-export type UserPrivateSellerOrdersConnectionArgs = {
-  query?: Maybe<ConnectionQueryOrders>;
-};
-
-
-/** Private user info */
-export type UserPrivateSellerOrdersActionItemsConnectionArgs = {
-  query?: Maybe<ConnectionQueryOrders>;
 };
 
 

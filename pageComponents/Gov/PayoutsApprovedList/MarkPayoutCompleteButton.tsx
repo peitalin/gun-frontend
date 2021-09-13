@@ -19,7 +19,7 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useSnackbar, ProviderContext } from "notistack";
 // apollo
 import { useApolloClient } from "@apollo/client";
-import { MARK_PAYOUTS_AS_PAID } from "queries/orders-mutations";
+import { MARK_PAYOUTS_AS_PAID } from "queries/orders-admin-mutations";
 import { useMutation } from "@apollo/client";
 // Grid Components
 import TextInputAdorned from 'components/Fields/TextInputAdorned';

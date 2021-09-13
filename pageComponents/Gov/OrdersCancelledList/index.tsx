@@ -53,8 +53,8 @@ const OrdersCancelledList = (props: ReactProps) => {
 
   const { classes } = props;
 
-  const snackbar = useSnackbar();
-  const aClient = useApolloClient();
+  // const snackbar = useSnackbar();
+  // const aClient = useApolloClient();
 
   const theme = useTheme();
   const smDown = useMediaQuery(theme.breakpoints.down('sm'));
