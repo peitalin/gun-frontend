@@ -110,8 +110,7 @@ function GridPaginatorGeneric<T>(props: ReactProps<T> & ReactChildren<T>) {
                 )}
               >
                 {
-                  props.loading
-                  && (objectIdGroups[index]?.length === 0)
+                  props.loading && (objectIdGroups[index]?.length === 0)
                   // if overfetching, only show loading if past the preloaded pages
                   ? [...Array(numItemsPerPage).keys()].map(j => {
                       return props.loadingComponent
@@ -120,22 +119,24 @@ function GridPaginatorGeneric<T>(props: ReactProps<T> & ReactChildren<T>) {
                             </div>
                           : <LoadingCards key={j} count={1}/>
                     })
-                  : objectIdGroup
-                    .filter(objectId => !!hashmap[objectId])
-                    .map(( objectId: string, j ) => {
-                      // console.log("objectId: ", objectId)
-                      // console.log("hashmap[objectId]: ", hashmap[objectId])
-                      return (
-                        <div key={j} className={props.gridItemClassName}>
-                          {
-                            props.children({
-                              key: j,
-                              node: hashmap[objectId],
-                            })
-                          }
-                        </div>
-                      )
-                    })
+                  : (objectIdGroups[index]?.length === 0)
+                    ? <>{props.emptyComponent}</>
+                    : objectIdGroup
+                      .filter(objectId => !!hashmap[objectId])
+                      .map(( objectId: string, j ) => {
+                        // console.log("objectId: ", objectId)
+                        // console.log("hashmap[objectId]: ", hashmap[objectId])
+                        return (
+                          <div key={j} className={props.gridItemClassName}>
+                            {
+                              props.children({
+                                key: j,
+                                node: hashmap[objectId],
+                              })
+                            }
+                          </div>
+                        )
+                      })
                 }
               </div>
             )
@@ -170,6 +171,7 @@ interface ReactProps<T> {
   loadingComponent?: React.ReactElement;
   loadingComponentClassName?: any;
   containerStyle?: any;
+  emptyComponent?: React.ReactNode
 }
 interface ReactChildren<T> {
   // GridPaginator will split node[] into node[][]

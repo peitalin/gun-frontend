@@ -4897,11 +4897,6 @@ export type Query = {
    */
   getOrdersArrivingConnectionDealer: OrdersConnection;
   /**
-   * get a store's payout split
-   * AccessRule – OWNER
-   */
-  getPayoutSplitByStoreId: PayoutSplit;
-  /**
    * List transactions between startDate and endDate.
    * AccessRule – PLATFORM_ADMIN
    */
@@ -6350,11 +6345,6 @@ export type QueryGetOrdersCompletingConnectionDealerArgs = {
 
 export type QueryGetOrdersArrivingConnectionDealerArgs = {
   query: ConnectionQueryOrders;
-};
-
-
-export type QueryGetPayoutSplitByStoreIdArgs = {
-  storeOrUserId: Scalars['String'];
 };
 
 

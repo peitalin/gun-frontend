@@ -62,7 +62,10 @@ const SearchHitsItemLoading = (props: SearchHitsItemLoadingProps) => {
     )}>
 
       {
-        <div className={classes.link}>
+        <div className={clsx(
+          classes.link,
+          "pulse",
+        )}>
           <ProductPreviewCardRowSmall
             loadingMessage={"loading"}
             previewItem={undefined}
@@ -73,9 +76,9 @@ const SearchHitsItemLoading = (props: SearchHitsItemLoadingProps) => {
       }
 
 
-      <div className={
-        mdDown ? classes.savedSearchItemMobileFlexWrap : classes.savedSearchItemDesktop
-      }>
+      <div className={clsx(
+        mdDown ? classes.savedSearchItemMobileFlexWrap : classes.savedSearchItemDesktop,
+      )}>
         <div className={clsx(
           classes.flexItem,
           classes.productTitleColumn

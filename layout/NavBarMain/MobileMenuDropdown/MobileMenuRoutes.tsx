@@ -106,7 +106,7 @@ const MobileMenuRoutes = (props: ReactProps) => {
       </MenuItem>
 
 
-      {
+      {/* {
         loggedIn
         ? <div className={classes.mobileMenuFlexitem}>
             <Link href="/orders">
@@ -142,7 +142,7 @@ const MobileMenuRoutes = (props: ReactProps) => {
               }}
             />
           </div>
-      }
+      } */}
 
       <Divider style={dividerStyle}/>
 

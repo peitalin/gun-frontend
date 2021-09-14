@@ -161,7 +161,7 @@ export const UserMenu: React.FC<ReactProps> = (props) => {
           }
         </MenuItem>
 
-        <MenuItem className={classes.menuItem} onClick={handleCloseMenu}>
+        {/* <MenuItem className={classes.menuItem} onClick={handleCloseMenu}>
           <Link href="/orders">
             <a className={classes.menuLink}>
               <ShoppingCartIcon className={classes.menuIcon}/>
@@ -177,7 +177,7 @@ export const UserMenu: React.FC<ReactProps> = (props) => {
               <span className={classes.menuText}> My Bids </span>
             </a>
           </Link>
-        </MenuItem>
+        </MenuItem> */}
 
         <MenuItem  className={classes.menuItem} onClick={handleCloseMenu}>
           <Link href="/saved-searches">

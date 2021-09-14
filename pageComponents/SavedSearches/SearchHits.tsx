@@ -137,6 +137,11 @@ const SearchHits: React.FC<ReactProps> = (props) => {
           loadingComponent={
             <SearchHitsItemLoading />
           }
+          emptyComponent={
+            <div className={classes.emptyBox}>
+              No Saved Search Hits Yet
+            </div>
+          }
           // className={classes.rowContainer}
           // classNameRoot={classes.gridRoot}
           loadingComponentClassName={classes.loadingComponentClassname}
@@ -238,6 +243,21 @@ const styles = (theme: Theme) => createStyles({
     width: '100%',
     marginRight: '1.25rem',
     marginLeft: '1.25rem',
+  },
+  emptyBox: {
+    background: isThemeDark(theme)
+      ? Colors.uniswapDarkNavy
+      : Colors.cream,
+    width: '100%',
+    height: '100%',
+    minHeight: 300,
+    borderRadius: BorderRadius,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    color: isThemeDark(theme)
+      ? Colors.uniswapLighterGrey
+      : Colors.slateGreyLighterBlack,
   },
 });
 
