@@ -710,9 +710,9 @@ export const OrdersGovFragment = gql`
         ...ProductVariantsFragment
       }
     }
-    # payoutItems {
-    #   ...PayoutItemFragment
-    # }
+    payoutItems {
+      ...PayoutItemFragment
+    }
     paymentIntentId
     ...on OrderDealer {
       paymentIntent {
@@ -745,11 +745,11 @@ export const OrdersGovFragment = gql`
   ${OrderSnapshotFragment}
   ${UserLicenseFragment}
   ${BidFragment}
+  ${PayoutItemFragment}
+  ${ProductSnapshotsFragment}
+  ${ProductVariantsFragment}
 `;
   // ${TransactionFragment}
-  // ${PayoutItemFragment}
-  // ${ProductSnapshotsFragment}
-  // ${ProductVariantsFragment}
 
 
 export const OrdersGovCancelledFragment = gql`
