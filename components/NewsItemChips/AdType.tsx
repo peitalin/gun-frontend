@@ -28,8 +28,8 @@ const AdType = (props: ReactProps) => {
 
   return productId
     ? <Link
-        href={`/p/[productId]`}
-        as={`/p/${productId}`}
+        href={`/f/[productId]`}
+        as={`/f/${productId}`}
       >
         <a className={clsx(classes.sourceSiteLink, props.className)}
           target={"_blank"}
