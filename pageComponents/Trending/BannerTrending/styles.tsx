@@ -79,7 +79,7 @@ export const styles = (theme: Theme) => createStyles({
     color: isThemeDark(theme)
       ? Colors.black
       : Colors.cream,
-    lineHeight: '1.2rem',
+    lineHeight: '1.5rem',
     fontSize: '1.5rem',
     // textShadow: '1px 1px 2px #444',
   },

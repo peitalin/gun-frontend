@@ -67,7 +67,7 @@ const BannerPromotionPurchases: NextPage<ReactProps> = (props) => {
         classes.minWidth300,
       )}>
         <div className={classes.mainTitleContainer}>
-          <Typography variant={"h1"} className={classes.mainTitle}>
+          <Typography className={classes.mainTitle}>
             Promoted Product Listings
           </Typography>
         </div>

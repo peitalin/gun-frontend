@@ -44,10 +44,10 @@ const Categories: React.FC<ReactProps> = (props) => {
       )}>
         <ErrorBounds className={classes.sectionContainer}>
           <div className={classes.titleContainer}>
-            <Typography variant="h1" className={classes.title}>
+            <Typography className={classes.title}>
               {"Browse Categories"}
             </Typography>
-            <Typography variant="h4"
+            <Typography
               className={mdDown ? classes.subtitleMobile : classes.subtitleDesktop}
             >
               {"Discover firearm listings across categories"}

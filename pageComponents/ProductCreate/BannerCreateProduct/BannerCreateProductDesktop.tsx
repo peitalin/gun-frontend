@@ -19,7 +19,7 @@ import CardMedia from "@material-ui/core/CardMedia";
 
 
 
-const BannerPromotionPurchases: NextPage<ReactProps> = (props) => {
+const BannerCreateProductDesktop: NextPage<ReactProps> = (props) => {
 
   const {
     classes,
@@ -63,8 +63,8 @@ const BannerPromotionPurchases: NextPage<ReactProps> = (props) => {
         classes.minWidth300,
       )}>
         <div className={classes.mainTitleContainer}>
-          <Typography variant={"h1"} className={classes.mainTitle}>
-            Upload Listings
+          <Typography className={classes.mainTitle}>
+            Upload Gun Listings
           </Typography>
         </div>
         <Typography variant={"subtitle2"} className={classes.subline1}>
@@ -100,7 +100,7 @@ interface ReactProps extends WithStyles<typeof styles> {
 }
 
 
-export default withStyles(styles)( BannerPromotionPurchases );
+export default withStyles(styles)( BannerCreateProductDesktop );
 
 
 

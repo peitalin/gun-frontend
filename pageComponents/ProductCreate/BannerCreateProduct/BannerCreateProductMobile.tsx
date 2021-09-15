@@ -20,7 +20,7 @@ import Link from "next/link";
 
 
 
-const BannerPromotionPurchasesMobile: NextPage<ReactProps> = (props) => {
+const BannerCreateProductMobile: NextPage<ReactProps> = (props) => {
 
   const {
     classes,
@@ -92,7 +92,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   bannerBackgroundImageUrl: string
 }
 
-export default withStyles(styles)( BannerPromotionPurchasesMobile );
+export default withStyles(styles)( BannerCreateProductMobile );
 
 
 

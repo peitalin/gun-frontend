@@ -72,7 +72,7 @@ const BannerCategory: NextPage<ReactProps> = (props) => {
           classes.minWidth300,
         )}>
           <div className={classes.mainTitleContainer}>
-            <Typography variant={"h1"} className={classes.mainTitle}>
+            <Typography className={classes.mainTitle}>
               {props.categoryName}
             </Typography>
           </div>

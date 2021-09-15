@@ -73,7 +73,7 @@ const BannerPromotionsLink: NextPage<ReactProps> = (props) => {
           classes.minWidth300,
         )}>
           <div className={classes.mainTitleContainer}>
-            <Typography variant={"h1"} className={classes.mainTitle}>
+            <Typography className={classes.mainTitle}>
               List your products
             </Typography>
           </div>

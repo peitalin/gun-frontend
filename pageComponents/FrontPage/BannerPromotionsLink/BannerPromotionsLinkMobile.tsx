@@ -8,7 +8,8 @@ import { styles } from "./styles";
 import Banner from "components/Banner";
 import Typography from "@material-ui/core/Typography";
 import Button from '@material-ui/core/Button';
-import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
+// import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
+import ArrowStripeIcon from "components/ArrowStripeIcon"
 // Router
 import { useRouter } from 'next/router';
 // SSR
@@ -93,7 +94,9 @@ const BannerPromotionsLinkMobile: NextPage<ReactProps> = (props) => {
                     label: classes.buttonLabelDesktop,
                   }}
                 >
-                  {"Go Now "} <ArrowForwardIcon/>
+                  <ArrowStripeIcon
+                    title={"Go Now"}
+                  />
                 </Button>
               </a>
             </Link>

@@ -72,6 +72,7 @@ export const styles = (theme: Theme) => createStyles({
     marginBottom: '1rem',
   },
   mainTitle: {
+    fontSize: '2rem',
     fontWeight: 600,
     lineHeight: '1.5rem',
     color: isThemeDark(theme)
@@ -80,7 +81,7 @@ export const styles = (theme: Theme) => createStyles({
   },
   mainTitleXs: {
     fontWeight: 600,
-    lineHeight: '1.2rem',
+    lineHeight: '1.5rem',
     fontSize: '1.5rem',
     color: isThemeDark(theme)
       ? Colors.uniswapLightGrey
