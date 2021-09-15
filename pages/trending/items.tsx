@@ -27,8 +27,10 @@ const TrendingItemsPageSSR: NextPage<ReactProps> = (props) => {
   return (
     <>
       <MetaHeadersPage
-        title="Trending items for sale"
-        robots="noindex"
+        title="Trending used items for sale"
+        ogTitle="Trending used items for sale"
+        description={"Browse used items from usedguns.com.au, ssaagunsales.com, ozgunsales.com, etc."}
+        ogDescription={"Browse used items from usedguns.com.au, ssaagunsales.com, ozgunsales.com, etc."}
       />
       {/* <UserProfileWrapper>
         {(dataUser: UserProfileProps) => {
