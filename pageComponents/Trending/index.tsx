@@ -12,6 +12,8 @@ import TrendingYesterday from "./TrendingYesterday";
 import TrendingThisWeek from "./TrendingThisWeek";
 import TrendingLastWeek from "./TrendingLastWeek";
 
+import { useScrollYPosition } from "utils/hooks";
+
 
 
 
@@ -22,8 +24,36 @@ export const Trending: React.FC<ReactProps> = (props) => {
     classes,
   } = props;
 
+  let defaultShow = process.browser
+  let y = useScrollYPosition()
+
+  const [showYesterday, setShowYesterday] = React.useState(false)
+  const [showThisWeek, setShowThisWeek] = React.useState(false)
+  const [showFeatured2, setShowFeatured2] = React.useState(false)
+  const [showLastWeek, setShowLastWeek] = React.useState(false)
+
   // const theme = useTheme()
   // const snackbar = useSnackbar()
+  // console.log("Y: ", y)
+
+  React.useEffect(() => {
+    if (y > 2000 && !showYesterday) {
+      // console.log("showingYesterday")
+      setShowYesterday(true)
+    }
+    if (y > 4000 && !showThisWeek) {
+      // console.log("showingThisWeek")
+      setShowThisWeek(true)
+    }
+    if (y > 8000 && !showLastWeek) {
+      // console.log("showingFeatured2")
+      setShowFeatured2(true)
+    }
+    if (y > 8000 && !showLastWeek) {
+      // console.log("showingLastWeek")
+      setShowLastWeek(true)
+    }
+  }, [y])
 
   return (
     <AlignCenterLayout
@@ -60,9 +90,12 @@ export const Trending: React.FC<ReactProps> = (props) => {
         }
       />
 
-      <TrendingYesterday
-        limit={20}
-      />
+      {
+        showYesterday &&
+        <TrendingYesterday
+          limit={20}
+        />
+      }
 
       <div style={{
         marginTop: '1rem',
@@ -77,28 +110,37 @@ export const Trending: React.FC<ReactProps> = (props) => {
         />
       </div>
 
-      <TrendingThisWeek
-        limit={20}
-      />
+      {
+        showThisWeek &&
+        <TrendingThisWeek
+          limit={20}
+        />
+      }
 
-      <FeaturedProducts
-        count={4}
-        title={"Trending Products"}
-        promotedListId={"promoted_list_0002"}
-        cardsPerRow={
-          {
-            xs: 1.5,
-            sm: 1.5,
-            md: 2,
-            lg: 3,
-            xl: 4,
+      {
+        showFeatured2 &&
+        <FeaturedProducts
+          count={4}
+          title={"Trending Products"}
+          promotedListId={"promoted_list_0002"}
+          cardsPerRow={
+            {
+              xs: 1.5,
+              sm: 1.5,
+              md: 2,
+              lg: 3,
+              xl: 4,
+            }
           }
-        }
-      />
+        />
+      }
 
-      <TrendingLastWeek
-        limit={30}
-      />
+      {
+        showLastWeek &&
+        <TrendingLastWeek
+          limit={30}
+        />
+      }
 
     </AlignCenterLayout>
   );
