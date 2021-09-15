@@ -11,12 +11,20 @@ import PageWithStripe from "layout/PageWithStripe";
 // GraphQL
 import { serverApolloClient } from "utils/apollo";
 import { GET_PAGE_CONFIG_BY_PATH } from "queries/page_configs-queries";
+// Meta headers
+import MetaHeadersPage from "layout/MetaHeadersPage";
 
 
 
 const PromotionsSSR: NextPage<ReactProps> = (props) => {
   return (
     <PageWithStripe>
+      <MetaHeadersPage
+        title="Purchase and promote guns on trending news feeds"
+        ogTitle="Purchase and promote guns on trending news feeds"
+        description={"Purchase ad space and promote your use gun listings on the trending page"}
+        ogDescription={"Purchase ad space and promote your use gun listings on the trending page"}
+      />
       <PromoteListings
         pageConfig={props.getPageConfig}
       />
