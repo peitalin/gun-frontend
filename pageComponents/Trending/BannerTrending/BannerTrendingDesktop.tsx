@@ -15,13 +15,7 @@ import { NextPage, NextPageContext } from 'next';
 // CSS
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
-// Redux
-import { useSelector, useDispatch } from "react-redux";
-import { GrandReduxState } from "reduxStore/grand-reducer";
-import { UserPrivate } from "typings/gqlTypes";
 import Link from "next/link";
-import CardMedia from "@material-ui/core/CardMedia";
-import Tooltip from '@material-ui/core/Tooltip';
 import ArrowStripeIcon from "components/ArrowStripeIcon";
 
 
