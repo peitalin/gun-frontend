@@ -8,6 +8,8 @@ import AlignCenterLayout from "components/AlignCenterLayout";
 import SocialFloatingBanner from "layout/SocialFloatingBanner";
 import ShowOnMobileOrDesktopSSR from "components/ShowOnMobileOrDesktopSSR";
 import PageDashboardLayout from "layout/GetUser/PageDashboardLayout";
+// Meta headers
+import MetaHeadersPage from "layout/MetaHeadersPage";
 
 
 const FaqSSR: React.FC<ReactProps> = (props) => {
@@ -18,6 +20,10 @@ const FaqSSR: React.FC<ReactProps> = (props) => {
 
   return (
   <PageDashboardLayout>
+    <MetaHeadersPage
+      title="FAQ"
+      ogTitle="FAQ"
+    />
     <AlignCenterLayout
       withRecommendations={false}
       maxWidth={720}

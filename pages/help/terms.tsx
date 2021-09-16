@@ -7,6 +7,8 @@ import { commonStyles } from "./faq";
 import SocialFloatingBanner from "layout/SocialFloatingBanner";
 import ShowOnMobileOrDesktopSSR from "components/ShowOnMobileOrDesktopSSR";
 import PageDashboardLayout from "layout/GetUser/PageDashboardLayout";
+// Meta headers
+import MetaHeadersPage from "layout/MetaHeadersPage";
 
 
 const TermsSSR: React.FC<ReactProps> = (props) => {
@@ -17,6 +19,10 @@ const TermsSSR: React.FC<ReactProps> = (props) => {
 
   return (
   <PageDashboardLayout>
+    <MetaHeadersPage
+      title="Terms"
+      ogTitle="Terms"
+    />
     <AlignCenterLayout
       withRecommendations={false}
       maxWidth={720}
