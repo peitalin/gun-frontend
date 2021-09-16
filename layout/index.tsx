@@ -25,13 +25,13 @@ const Layout: React.FC<ReactProps> = (props) => {
   const router = useRouter();
 
   let showChatWoot = (
-    router.pathname === "/"
+    router.pathname === "/home"
     || router.pathname.startsWith("/p/")
     || router.pathname === "/sell"
     || router.pathname === "/orders"
   ) ? true : false
 
-  let noNavbarPadding = router.pathname === "/"
+  let noNavbarPadding = router.pathname === "/home"
     || router.pathname === "/start"
     || router.pathname === "/sell"
     || router.pathname.startsWith("/f/")
