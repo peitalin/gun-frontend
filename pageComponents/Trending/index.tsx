@@ -63,9 +63,9 @@ export const Trending: React.FC<ReactProps> = (props) => {
     >
 
       <BannerTrending
-        headingDesktop={"List your products"}
-        headingMobile={"List your products"}
-        subheadingDesktop={"Feature your product on the front page"}
+        headingDesktop={"Browse used guns for sale"}
+        headingMobile={"Browse used guns for sale"}
+        subheadingDesktop={"List your gun for sale on the front page"}
         link={'/sell'}
         buttonText={"Get Started"}
       />
