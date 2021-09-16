@@ -69,11 +69,11 @@ const ChangeUserProfileFields: React.FC<ReactProps & FormikProps<FormikFields>> 
         <div className={clsx(classes.formContainer, "fadeInFast")}>
 
           <Typography variant="body1" className={classes.fieldHeading}>
-            Name
+            First Name
           </Typography>
           <TextInputUnderline
-            type="name"
-            placeholder={"Name"}
+            type="first-name"
+            placeholder={"First Name"}
             label="" // remove moving label
             className={classes.textField}
             value={values.firstName}
@@ -103,7 +103,7 @@ const ChangeUserProfileFields: React.FC<ReactProps & FormikProps<FormikFields>> 
           </Typography>
           <TextInputUnderline
             type="email"
-            placeholder={"email"}
+            placeholder={"Email"}
             label="" // remove moving label
             className={classes.textField}
             value={values.email}
