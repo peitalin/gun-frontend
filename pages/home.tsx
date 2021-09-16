@@ -39,9 +39,9 @@ const HomePage: NextPage<ReactProps> = (props) => {
 
   return (
     <>
-      {/* <MetaHeadersPage
-        title="Gun Marketplace Australia - Buy used guns with escrow. Free to list forever."
-        ogTitle="Gun Marketplace Australia - Buy used guns with escrow. Free to list forever."
+      <MetaHeadersPage
+        title="Gun Marketplace Australia - Buy and sell used guns with escrow. Free to list forever."
+        ogTitle="Gun Marketplace Australia - Buy and sell used guns with escrow. Free to list forever."
         description={`
           Buy used guns with escrow protection.
           Sell your guns with free listings.
@@ -54,27 +54,7 @@ const HomePage: NextPage<ReactProps> = (props) => {
       <FrontPage
         pageConfig={props?.getPageConfig}
         initialCategories={props.initialCategories}
-      /> */}
-      <MetaHeadersPage
-        // title="Trending used guns for sale - gunmarketplace.com.au"
-        // ogTitle="Trending used guns for sale - gunmarketplace.com.au"
-        title="Gun Marketplace Australia - Browse trending used guns for sale"
-        ogTitle="Gun Marketplace Australia - Browser trending used guns for sale"
-        description={"Browse used guns from usedguns.com.au, ssaagunsales.com, ozgunsales.com, etc."}
-        ogDescription={"Browse used guns from usedguns.com.au, ssaagunsales.com, ozgunsales.com, etc."}
       />
-      {/* <UserProfileWrapper>
-        {(dataUser: UserProfileProps) => {
-          return (
-            <div className={classes.contentContainerPublicPage}>
-              <Trending />
-            </div>
-          )
-        }}
-      </UserProfileWrapper> */}
-      <div className={props.classes.contentContainerPublicPage}>
-        <Trending/>
-      </div>
       {
         showSocialBanner &&
         <ShowOnMobileOrDesktopSSR desktop implementation="js">
