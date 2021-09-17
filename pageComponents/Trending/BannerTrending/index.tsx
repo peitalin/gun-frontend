@@ -42,6 +42,7 @@ const BannerTrendingLink: React.FC<ReactProps> = (props) => {
       <ShowOnMobileOrDesktopSSR mobile implementation='css' className={classes.width100}>
         <BannerTrendingLinkMobile
           headingMobile={props.headingMobile}
+          subheadingMobile={props.subheadingMobile}
           link={props.link}
           buttonText={props.buttonText}
           bannerForegroundImageUrl={undefined}
@@ -70,6 +71,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   headingDesktop: string
   subheadingDesktop: string
   headingMobile: string
+  subheadingMobile: string
   link: string
   buttonText: string
 }

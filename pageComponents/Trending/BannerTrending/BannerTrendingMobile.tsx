@@ -105,6 +105,7 @@ const BannerTrendingLinkMobile: NextPage<ReactProps> = (props) => {
 ///////////////// TYPINGS ///////////////////
 interface ReactProps extends WithStyles<typeof styles> {
   headingMobile: string
+  subheadingMobile: string
   link: string
   buttonText: string
   bannerDither: string

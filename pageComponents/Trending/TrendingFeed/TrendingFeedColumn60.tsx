@@ -147,8 +147,8 @@ const TrendFeedItems: React.FC<ReactProps> = (props) => {
                 isSuspended={newsItem?.isSuspended || newsItem?.isDeleted}
                 imageSize={{
                   mobile: {
-                    width: 90,
-                    height: 60,
+                    width: 114,
+                    height: 76,
                   },
                   desktop: {
                     width: 120,

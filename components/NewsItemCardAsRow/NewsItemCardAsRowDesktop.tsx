@@ -82,8 +82,8 @@ const NewsItemCardAsRow = (props: ReactProps) => {
               <ProductPreviewCardRowSmall
                 previewItem={featuredPreview}
                 className={clsx(classes.previewCard)}
-                height={50}
-                width={50 * 1.5}
+                height={70}
+                width={70 * 1.5}
               />
             </div>
             <div className={classes.flexRow}>
