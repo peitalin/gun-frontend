@@ -338,6 +338,14 @@ export const validationSchemas = {
   // Add or Edit UserLicense form
   AddOrEditUserLicense:
     Yup.object().shape({
+      firstName: Yup.string()
+        .min(2, "Must be at least 2 chars!")
+        .max(20, "Must be less than 15 chars!")
+        .required("required"),
+      lastName: Yup.string()
+        .min(2, "Must be at least 2 chars!")
+        .max(20, "Must be less than 15 chars!")
+        .required("required"),
       licenseNumber: Yup.string()
         .min(5, "Must be at least 5 digits!")
         .max(15, "Must be less than 15 digits!")

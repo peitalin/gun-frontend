@@ -40,9 +40,9 @@ import { reduxBatchUpdate } from "layout/GetUser";
 import { useSnackbar, ProviderContext } from "notistack";
 import { ApolloRefetch, refetchUser } from "layout/GetUser";
 import login from "pages/login";
-
 import { useFormik } from 'formik';
 import { validationSchemas } from "utils/validation";
+
 
 /////////////////////////////////////////
 //////// Login Modal Component //////////
@@ -117,14 +117,14 @@ const Login: React.FC<ReactProps> = (props) => {
     variables: {
       email: undefined,
       password: undefined,
-      firstName: undefined,
-      lastName: undefined,
-      licenseNumber: undefined,
-      licenseExpiry: undefined,
-      licenseCategory: undefined,
-      licenseState: undefined,
-      phoneNumber: undefined,
-      countryCode: undefined,
+      // firstName: undefined,
+      // lastName: undefined,
+      // licenseNumber: undefined,
+      // licenseExpiry: undefined,
+      // licenseCategory: undefined,
+      // licenseState: undefined,
+      // phoneNumber: undefined,
+      // countryCode: undefined,
     },
     onCompleted: (data) => {
       let user = data?.signUpUsingEmail?.user;
@@ -298,14 +298,14 @@ const Login: React.FC<ReactProps> = (props) => {
     if (!isSignUpInputOk(snackbar)({
       email,
       password,
-      licenseNumber,
-      licenseExpiry,
-      licenseCategory,
-      licenseState,
-      phoneNumber,
-      countryCode,
-      firstName,
-      lastName
+      // licenseNumber,
+      // licenseExpiry,
+      // licenseCategory,
+      // licenseState,
+      // phoneNumber,
+      // countryCode,
+      // firstName,
+      // lastName
     })) {
       return null
     } else {
@@ -321,14 +321,14 @@ const Login: React.FC<ReactProps> = (props) => {
       variables: {
         email: email,
         password: password,
-        firstName: firstName,
-        lastName: lastName,
-        licenseNumber: licenseNumber,
-        licenseExpiry: licenseExpiry2,
-        licenseCategory: licenseCategory,
-        licenseState: licenseState,
-        phoneNumber: phoneNumber,
-        countryCode: countryCode,
+        // firstName: firstName,
+        // lastName: lastName,
+        // licenseNumber: licenseNumber,
+        // licenseExpiry: licenseExpiry2,
+        // licenseCategory: licenseCategory,
+        // licenseState: licenseState,
+        // phoneNumber: phoneNumber,
+        // countryCode: countryCode,
       }
     })
   }
@@ -474,14 +474,14 @@ interface MVar1 {
 interface MVar2 {
   email: string,
   password: string,
-  firstName: string,
-  lastName: string,
-  licenseNumber: string,
-  licenseExpiry: Date,
-  licenseCategory: string,
-  licenseState: string,
-  phoneNumber: string,
-  countryCode: string,
+  // firstName: string,
+  // lastName: string,
+  // licenseNumber: string,
+  // licenseExpiry: Date,
+  // licenseCategory: string,
+  // licenseState: string,
+  // phoneNumber: string,
+  // countryCode: string,
 }
 interface MVar3 {
   email: string,

@@ -28,7 +28,6 @@ const HomePage: NextPage<ReactProps> = (props) => {
   let router = useRouter()
   const [showSocialBanner, setShowSocialBanner] = React.useState(false)
 
-
   React.useEffect(() => {
     let showSocialBanner = router.pathname === '/'
       || router.pathname.startsWith("/start")
@@ -39,7 +38,7 @@ const HomePage: NextPage<ReactProps> = (props) => {
 
   return (
     <>
-      {/* <MetaHeadersPage
+      <MetaHeadersPage
         title="Gun Marketplace Australia - Buy used guns with escrow. Free to list forever."
         ogTitle="Gun Marketplace Australia - Buy used guns with escrow. Free to list forever."
         description={`
@@ -51,18 +50,14 @@ const HomePage: NextPage<ReactProps> = (props) => {
           Sell your guns with free listings.
         `}
       />
-      <FrontPage
-        pageConfig={props?.getPageConfig}
-        initialCategories={props.initialCategories}
-      /> */}
-      <MetaHeadersPage
+      {/* <MetaHeadersPage
         // title="Trending used guns for sale - gunmarketplace.com.au"
         // ogTitle="Trending used guns for sale - gunmarketplace.com.au"
         title="Gun Marketplace Australia - Browse trending used guns for sale"
         ogTitle="Gun Marketplace Australia - Browser trending used guns for sale"
         description={"Browse used guns from usedguns.com.au, ssaagunsales.com, ozgunsales.com, etc."}
         ogDescription={"Browse used guns from usedguns.com.au, ssaagunsales.com, ozgunsales.com, etc."}
-      />
+      /> */}
       {/* <UserProfileWrapper>
         {(dataUser: UserProfileProps) => {
           return (
@@ -72,9 +67,13 @@ const HomePage: NextPage<ReactProps> = (props) => {
           )
         }}
       </UserProfileWrapper> */}
-      <div className={props.classes.contentContainerPublicPage}>
+      {/* <div className={props.classes.contentContainerPublicPage}>
         <Trending/>
-      </div>
+      </div> */}
+      <FrontPage
+        pageConfig={props?.getPageConfig}
+        initialCategories={props.initialCategories}
+      />
       {
         showSocialBanner &&
         <ShowOnMobileOrDesktopSSR desktop implementation="js">

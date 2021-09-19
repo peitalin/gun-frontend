@@ -243,9 +243,9 @@ const RenderInstructions = (props: ReactProps) => {
               ? classes.highlightText
               : classes.text
           }>
-            Fee is free until I finish building a checkout.
+            Fee for classifieds is free until I finish building a checkout.
             <br/>
-            Price will be $10 after that.
+            Price will be around $5 after that (to prevent spammers).
           </span>
         </div>
 

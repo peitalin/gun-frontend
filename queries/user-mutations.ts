@@ -5,28 +5,28 @@ export const SIGN_UP_USING_EMAIL = gql`
   mutation signUpUsingEmail(
     $email: String!
     $password: String!
-    $username: String
-    $firstName: String
-    $lastName: String
-    $licenseNumber: String!
-    $licenseExpiry: Date!
-    $licenseCategory: String
-    $licenseState: String
-    $phoneNumber: String!
-    $countryCode: String!
+    # $username: String
+    # $firstName: String
+    # $lastName: String
+    # $licenseNumber: String!
+    # $licenseExpiry: Date!
+    # $licenseCategory: String
+    # $licenseState: String
+    # $phoneNumber: String!
+    # $countryCode: String!
   ) {
     signUpUsingEmail(
       email: $email
       password: $password
-      username: $username
-      firstName: $firstName
-      lastName: $lastName
-      licenseNumber: $licenseNumber
-      licenseExpiry: $licenseExpiry
-      licenseCategory: $licenseCategory
-      licenseState: $licenseState
-      phoneNumber: $phoneNumber
-      countryCode: $countryCode
+      # username: $username
+      # firstName: $firstName
+      # lastName: $lastName
+      # licenseNumber: $licenseNumber
+      # licenseExpiry: $licenseExpiry
+      # licenseCategory: $licenseCategory
+      # licenseState: $licenseState
+      # phoneNumber: $phoneNumber
+      # countryCode: $countryCode
     ) {
       user {
         ...UserPrivateFragment
@@ -147,12 +147,16 @@ export const CONFIRM_RESET_PASSWORD = gql`
 // It is attached automatically if you are logged in.
 export const ADD_USER_LICENSE = gql`
   mutation addUserLicense(
+    $firstName: String!
+    $lastName: String!
     $licenseNumber: String!
     $licenseExpiry: Date!
     $licenseCategory: String
     $licenseState: String
   ) {
     addUserLicense(
+      firstName: $firstName
+      lastName: $lastName
       licenseNumber: $licenseNumber
       licenseExpiry: $licenseExpiry
       licenseCategory: $licenseCategory

@@ -26,7 +26,6 @@ const SignIn = (props: ReactProps) => {
 
   const [email, setEmail] = React.useState(props.initialEmail);
   const [password, setPassword] = React.useState("");
-  const [rememberMe, setRememberMe] = React.useState(false);
   const { classes } = props;
 
   const handleClick = (event) => {

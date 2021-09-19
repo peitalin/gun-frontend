@@ -27,6 +27,7 @@ import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import AddLicenseModal from "layout/AddLicenseModal"
 
 
 
@@ -49,6 +50,7 @@ const SelectSellerLicense = (props: ReactProps & FormikProps<FormikFields>) => {
 
   const licenseOptions = createLicenseOptions(user?.licenses)
 
+
   React.useEffect(() => {
     // set defaultLicense as the initial option
     // for ProductEdit
@@ -69,6 +71,10 @@ const SelectSellerLicense = (props: ReactProps & FormikProps<FormikFields>) => {
   }, [props.user?.defaultLicenseId])
 
 
+  // console.log("fprops.values: ", fprops.values)
+  // console.log("fprops.touched: ", fprops.touched)
+  // console.log("licenseOptions: ", licenseOptions)
+
   return (
     <ErrorBounds className={classes.positionRelative}>
       <div className={clsx(classes.formContainer)}>
@@ -78,109 +84,123 @@ const SelectSellerLicense = (props: ReactProps & FormikProps<FormikFields>) => {
         <FormGroup row
           className={clsx(classes.formGroup, classes.marginTop05)}
         >
-
-          <Accordion
-            defaultExpanded={defaultExpanded}
-            classes={{
-              root: clsx(
-                classes.expansionPanelRoot,
-                (fprops.errors?.sellerLicenseId && fprops.touched?.sellerLicenseId) &&
-                classes.expansionPanelError,
-              ),
-              expanded: classes.expansionPanelExpanded,
-            }}
-            expanded={openExpander}
-            onChange={(event, expanded) => {
-              setOpenExpander(s => !s)
-              if (!fprops.touched.sellerLicenseId) {
-                fprops.setFieldTouched("sellerLicenseId", true)
-              }
-            }}
-            elevation={0} // remove box-shadow
-            TransitionProps={{
-              timeout: {
-                appear: 50,
-                enter: 50,
-                exit: 50,
-              }
-            }}
-          >
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
-              classes={{
-                root: classes.expanderRoot,
-                expanded: classes.expanderExpanded,
-                content: classes.expanderContent,
-                expandIcon: classes.expandIcon,
-              }}
-            >
-              <Typography className={
-                  !chosenLicense?.value?.licenseNumber
-                    ? classes.selectedCategoryEmpty
-                    : openExpander
-                      ? classes.selectedCategoryOpen
-                      : classes.selectedCategoryClosed
-                }
-                color={"primary"}
-                variant="subtitle1"
-              >
-                {
-                  chosenLicense?.value?.licenseNumber
-                    ? chosenLicense.value?.licenseNumber
-                    : "Select a License"
-                }
-              </Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-              <div style={{
-                display: 'flex',
-                flexDirection: 'column',
-                padding: '0px',
-                width: '100%'
-              }}>
-                <div className={classes.categoryButtonsContainer}>
-                  {
-                    (user?.licenses ?? []).map((license, i) => {
-                      let categories = license.licenseCategory?.replace("Category", "")
-                      return (
-                        <Button
-                          key={license.id + `${i}`}
-                          classes={{
-                            root: clsx(
-                              classes.buttonRoot,
-                              classes.width100,
-                              (license.id === fprops.values.sellerLicenseId)
-                                ? classes.buttonSelected
-                                : null,
-                            ),
-                            label: clsx(
-                              classes.flexCol,
-                            )
-                          }}
-                          variant="outlined"
-                          onClick={() => {
-                            fprops.setFieldTouched("sellerLicenseId", true)
-                            setSellerLicenseId({
-                              label: license.licenseNumber,
-                              value: license,
-                            })
-                            setOpenExpander(s => !s)
-                          }}
-                        >
-                          <div className={classes.licenseButtonNumber}>
-                            {`License: ${license.licenseNumber}`}
-                          </div>
-                          <div className={classes.licenseButtonCategory}>
-                            {`Category: ${categories}`}
-                          </div>
-                        </Button>
-                      )
-                    })
+          {
+            !props?.user?.defaultLicense?.licenseNumber
+            ? <AddLicenseModal
+                callback={(user: UserPrivate) => {
+                  let license = user?.defaultLicense
+                  console.log("setting seller license: ", license)
+                  fprops.setFieldTouched("sellerLicenseId", true)
+                  setSellerLicenseId({
+                    label: license.licenseNumber,
+                    value: license,
+                  })
+                }}
+              />
+            : <Accordion
+                defaultExpanded={defaultExpanded}
+                classes={{
+                  root: clsx(
+                    classes.expansionPanelRoot,
+                    (fprops.errors?.sellerLicenseId && fprops.touched?.sellerLicenseId) &&
+                    classes.expansionPanelError,
+                  ),
+                  expanded: classes.expansionPanelExpanded,
+                }}
+                expanded={openExpander}
+                onChange={(event, expanded) => {
+                  setOpenExpander(s => !s)
+                  if (!fprops.touched.sellerLicenseId) {
+                    fprops.setFieldTouched("sellerLicenseId", true)
                   }
-                </div>
-              </div>
-            </AccordionDetails>
-          </Accordion>
+                }}
+                elevation={0} // remove box-shadow
+                TransitionProps={{
+                  timeout: {
+                    appear: 50,
+                    enter: 50,
+                    exit: 50,
+                  }
+                }}
+              >
+                <AccordionSummary
+                  expandIcon={<ExpandMoreIcon />}
+                  classes={{
+                    root: classes.expanderRoot,
+                    expanded: classes.expanderExpanded,
+                    content: classes.expanderContent,
+                    expandIcon: classes.expandIcon,
+                  }}
+                >
+                  <Typography className={
+                      !chosenLicense?.value?.licenseNumber
+                        ? classes.selectedCategoryEmpty
+                        : openExpander
+                          ? classes.selectedCategoryOpen
+                          : classes.selectedCategoryClosed
+                    }
+                    color={"primary"}
+                    variant="subtitle1"
+                  >
+                    {
+                      chosenLicense?.value?.licenseNumber
+                        ? chosenLicense.value?.licenseNumber
+                        : "Select a License"
+                    }
+                  </Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <div style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    padding: '0px',
+                    width: '100%'
+                  }}>
+                    <div className={classes.categoryButtonsContainer}>
+                      {
+                        (user?.licenses ?? []).map((license, i) => {
+                          let categories = license.licenseCategory?.replace("Category", "")
+                          return (
+                            <Button
+                              key={license.id + `${i}`}
+                              classes={{
+                                root: clsx(
+                                  classes.buttonRoot,
+                                  classes.width100,
+                                  (license.id === fprops.values.sellerLicenseId)
+                                    ? classes.buttonSelected
+                                    : null,
+                                ),
+                                label: clsx(
+                                  classes.flexCol,
+                                )
+                              }}
+                              variant="outlined"
+                              onClick={() => {
+                                fprops.setFieldTouched("sellerLicenseId", true)
+                                setSellerLicenseId({
+                                  label: license.licenseNumber,
+                                  value: license,
+                                })
+                                setOpenExpander(s => !s)
+                              }}
+                            >
+                              <div className={classes.licenseButtonNumber}>
+                                {`License: ${license.licenseNumber}`}
+                              </div>
+                              <div className={classes.licenseButtonCategory}>
+                                {`Category: ${categories}`}
+                              </div>
+                            </Button>
+                          )
+                        })
+                      }
+                    </div>
+                  </div>
+                </AccordionDetails>
+              </Accordion>
+          }
+
 
           <div className={classes.validationContainer}>
             <ValidationErrorMsg

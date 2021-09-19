@@ -82,6 +82,8 @@ const AddGunLicenseForm: React.FC<ReactProps> = (props) => {
 
 
   interface FormikValues {
+    firstName: string
+    lastName: string
     licenseNumber: string
     licenseExpiry: Date
     licenseCategory: string[]
@@ -90,6 +92,8 @@ const AddGunLicenseForm: React.FC<ReactProps> = (props) => {
 
   const formik = useFormik<FormikValues>({
     initialValues: {
+      firstName: "",
+      lastName: "",
       licenseNumber: "",
       licenseExpiry: undefined,
       licenseCategory: [],
@@ -105,6 +109,8 @@ const AddGunLicenseForm: React.FC<ReactProps> = (props) => {
       console.log("formik onSubmit, values: ", values)
       await addUserLicense({
         variables: {
+          firstName: values.firstName,
+          lastName: values.lastName,
           licenseNumber: values.licenseNumber,
           licenseExpiry: values.licenseExpiry,
           licenseCategory: values.licenseCategory.join(', '),
@@ -118,6 +124,8 @@ const AddGunLicenseForm: React.FC<ReactProps> = (props) => {
   const [addUserLicense, addUserLicenseResponse] = useMutation<MData, MVar>(
     ADD_USER_LICENSE, {
       variables: {
+        firstName: "",
+        lastName: "",
         licenseNumber: "",
         licenseExpiry: undefined,
         licenseCategory: undefined,
@@ -157,6 +165,17 @@ const AddGunLicenseForm: React.FC<ReactProps> = (props) => {
   const [licenseCategory, setLicenseCategory] = React.useState(initialCategoryLicense)
   const [licenseState, setLicenseState] = React.useState(initialStateLicense)
 
+  const handleSetFirstName = (e: HtmlEvent) => {
+    let s = e.target.value;
+    formik.setFieldValue("firstName", s)
+    formik.setTouched({ firstName: true }, true)
+  };
+
+  const handleSetLastName = (e: HtmlEvent) => {
+    let s = e.target.value;
+    formik.setFieldValue("lastName", s)
+    formik.setTouched({ lastName: true }, true)
+  };
 
   const handleSetLicenseNumber = (e: HtmlEvent) => {
     let s = e.target.value;
@@ -195,6 +214,51 @@ const AddGunLicenseForm: React.FC<ReactProps> = (props) => {
         </div>
 
         <div className={classes.flexCol}>
+
+          <Typography variant="body1" className={classes.fieldHeading}>
+            First Name
+          </Typography>
+          <TextInputUnderline
+            type="name"
+            placeholder={"First Name"}
+            label="" // remove moving label
+            className={classes.textField}
+            classes={{
+              inputUnderline: classes.textInputUnderline,
+            }}
+            value={formik.values.firstName}
+            onChange={handleSetFirstName}
+            // onChange={formik.handleChange}
+            inputProps={{ style: { width: '100%' }}}
+            errorMessage={formik.errors.firstName}
+            touched={formik.touched.firstName}
+            validationErrorMsgStyle={{
+              marginBottom: '0.25rem',
+            }}
+          />
+
+          <Typography variant="body1" className={classes.fieldHeading}>
+            Last Name
+          </Typography>
+          <TextInputUnderline
+            type="name"
+            placeholder={"Last Name"}
+            label="" // remove moving label
+            className={classes.textField}
+            classes={{
+              inputUnderline: classes.textInputUnderline,
+            }}
+            value={formik.values.lastName}
+            onChange={handleSetLastName}
+            // onChange={formik.handleChange}
+            inputProps={{ style: { width: '100%' }}}
+            errorMessage={formik.errors.lastName}
+            touched={formik.touched.lastName}
+            validationErrorMsgStyle={{
+              marginBottom: '0.25rem',
+            }}
+          />
+
           <Typography variant="body1" className={classes.fieldHeading}>
             License Number
           </Typography>
@@ -314,6 +378,8 @@ interface MData {
   addUserLicense: UserMutationResponse
 }
 interface MVar {
+  firstName: string
+  lastName: string
   licenseNumber: string
   licenseExpiry: Date
   licenseCategory?: string

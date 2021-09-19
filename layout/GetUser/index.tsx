@@ -116,15 +116,6 @@ export const reduxBatchUpdate = {
       dispatch(Actions.reduxCollections.SET_COLLECTIONS(
         data?.user?.collections
       ));
-      dispatch(Actions.reduxFollowingStores.SET_FOLLOWING_STORES(
-        (data?.user?.followingStores?.edges ?? [])
-          .map(({ node }) => node.store.id)
-      ));
-
-      // set userRefetch in REDUX
-      dispatch(Actions.reduxRefetch.SET_REFETCH_USER(
-        refetch
-      ))
     })
   },
 }
