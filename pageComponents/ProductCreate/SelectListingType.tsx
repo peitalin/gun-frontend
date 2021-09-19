@@ -65,7 +65,7 @@ const SelectListingType = (props: ReactProps & FormikProps<FormikFields>) => {
           fprops.values?.listingType === ListingType.CLASSIFIED
           ? <div className={classes.textListing}>
               Classified Ads are free until I finish building a checkout.
-              Prices will be around $5 after that.
+              {/* Prices will be around $5 after that. */}
             </div>
           : <div className={classes.textListing}>
               Escrow listings have no fees up-front.
