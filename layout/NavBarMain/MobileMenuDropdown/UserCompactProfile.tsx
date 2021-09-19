@@ -37,7 +37,7 @@ const UserCompactProfile: React.FC<ReactProps> = (props) => {
             {
               (user?.firstName && user?.lastName)
                 ? `${user.firstName} ${user.lastName}`
-                : user?.firstName ?? "Your Profile"
+                : user?.email ?? "Your Profile"
             }
           </Typography>
           <Typography variant="caption" className={classes.profileEmail}>

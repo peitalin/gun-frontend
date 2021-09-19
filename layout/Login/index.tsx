@@ -238,7 +238,7 @@ const Login: React.FC<ReactProps> = (props) => {
       loggedIn: true,
     }))
     // Popup Snackbar
-    snackbar.enqueueSnackbar(`Welcome ${user.firstName}`, {
+    snackbar.enqueueSnackbar(`Welcome`, {
       variant: "success",
       autoHideDuration: 2000,
     })
