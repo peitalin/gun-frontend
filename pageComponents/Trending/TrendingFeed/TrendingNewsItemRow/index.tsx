@@ -173,10 +173,10 @@ const TrendingNewsItemRow = (props: ReactProps) => {
                         title={"Verified Seller"}
                       />
                     }
-                    {
+                    {/* {
                       newsItem?.id?.startsWith('promoted_slot') &&
                       <PromotedBadge />
-                    }
+                    } */}
                   </div>
 
                   {

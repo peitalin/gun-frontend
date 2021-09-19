@@ -69,9 +69,9 @@ const BannerTrendingLink: React.FC<ReactProps> = (props) => {
 
 interface ReactProps extends WithStyles<typeof styles> {
   headingDesktop: string
-  subheadingDesktop: string
+  subheadingDesktop?: string
   headingMobile: string
-  subheadingMobile: string
+  subheadingMobile?: string
   link: string
   buttonText: string
 }
