@@ -68,7 +68,9 @@ const CategorySlugSSR: NextPage<ReactProps> = (props) => {
                     initialDropdownCategories={props.initialCategories}
                     disableCategoriesFilter={true} // disable categoriesFilter
                   />
-                : <div>Verify account</div>
+                : <div style={{ padding: '1rem'}}>
+                    <VerifyAccountBanner/>
+                  </div>
               }
             </>
           )
