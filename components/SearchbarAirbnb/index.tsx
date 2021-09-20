@@ -324,6 +324,7 @@ const SearchbarAirbnb: React.FC<ReactProps> = (props) => {
 
       {
         !disablePaginators &&
+        totalCount > 0 &&
         <div className={clsx(
           classes.arrowContainer,
           classes.height50,

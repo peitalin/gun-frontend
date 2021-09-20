@@ -44,17 +44,24 @@ const VerifyAccountBannerDesktop: React.FC<ReactProps> = (props) => {
             classes.maxWidthLg,
             classes.bannerTextBox,
           )}
-          onMouseEnter={() => setHover(true)}
-          onMouseLeave={() => setHover(false)}
         >
           <ErrorOutlineIcon className={classes.exclamation}/>
           <span className={classes.betaTestBannerText}>
-            Please verify your account.  Email your gun license to <br/>
+            Please verify your account.  Email us at <br/>
             <a href={"mailto:admin@gunmarketplace.com.au"}
               // className={hover ? classes.discordLink : null}
-              className={classes.discordLink}
+              className={classes.emailLink}
             >
               {"admin@gunmarketplace.com.au"}
+            </a>
+            or dm a moderator in our
+            <a href={"https://discord.gg/umAdYtsa9v"}
+              target={"_blank"}
+              className={hover ? classes.discordLinkHover : classes.discordLink}
+              onMouseEnter={() => setHover(true)}
+              onMouseLeave={() => setHover(false)}
+            >
+              discord.
             </a>
           </span>
         </div>
@@ -123,6 +130,15 @@ const styles = (theme: Theme) => createStyles({
       duration: "400ms",
     }),
   },
+  emailLink: {
+    // background: `linear-gradient(90deg, rgb(85, 146, 232) 0%, rgb(206, 69, 197) 100%)`,
+    "-webkit-text-fill-color": 'transparent',
+    "-webkit-background-clip": 'text',
+    background: theme.palette.type === 'dark'
+      ? Colors.ultramarineBlue
+      : Colors.ultramarineBlue,
+    marginRight: '0.25rem',
+  },
   discordLink: {
     // background: `linear-gradient(90deg, rgb(85, 146, 232) 0%, rgb(206, 69, 197) 100%)`,
     "-webkit-text-fill-color": 'transparent',
@@ -130,6 +146,17 @@ const styles = (theme: Theme) => createStyles({
     background: theme.palette.type === 'dark'
       ? Colors.ultramarineBlue
       : Colors.ultramarineBlue,
+    marginLeft: '0.25rem',
+    cursor: "pointer",
+  },
+  discordLinkHover: {
+    // background: `linear-gradient(90deg, rgb(85, 146, 232) 0%, rgb(206, 69, 197) 100%)`,
+    "-webkit-text-fill-color": 'transparent',
+    "-webkit-background-clip": 'text',
+    background: theme.palette.type === 'dark'
+      ? Colors.magenta
+      : Colors.magenta,
+    marginLeft: '0.25rem',
   },
   rainbowBorder:{
     position: 'absolute',

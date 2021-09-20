@@ -18,6 +18,7 @@ import { serverApolloClient } from "utils/apollo";
 // Meta headers
 import MetaHeadersPage from "layout/MetaHeadersPage";
 import { categoryPreviewsBackup } from "utils/categories";
+import VerifyAccountBanner from "components/VerifyAccountBanner";
 
 import dynamic from "next/dynamic";
 import LoadingBarSSR from "components/LoadingBarSSR";
@@ -60,7 +61,7 @@ const CategorySlugSSR: NextPage<ReactProps> = (props) => {
           return (
             <>
               {
-                dataUser?.data?.user?.defaultLicense?.verified
+                dataUser?.data?.user?.emailVerified
                 ? <CategoryId
                     initialProducts={undefined}
                     initialRouteCategory={props.selectedCategory}

@@ -6,6 +6,7 @@ import { NextPage, NextPageContext } from 'next';
 // Components
 import LoadingBarSSR from "components/LoadingBarSSR";
 import TrendingItems from "pageComponents/Trending/trendingItems";
+import VerifyAccountBanner from "components/VerifyAccountBanner";
 
 // next
 import dynamic from "next/dynamic";
@@ -37,9 +38,11 @@ const TrendingItemsPageSSR: NextPage<ReactProps> = (props) => {
           return (
             <div className={classes.contentContainerPublicPage}>
               {
-                dataUser?.data?.user?.defaultLicense?.verified
+                dataUser?.data?.user?.emailVerified
                 ? <TrendingItems />
-                : <div>Verify account</div>
+                : <div style={{ padding: '1rem'}}>
+                    <VerifyAccountBanner/>
+                  </div>
               }
             </div>
           )

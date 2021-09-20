@@ -11,6 +11,7 @@ import { NextPage, NextPageContext, GetStaticProps } from 'next';
 import { serverApolloClient } from "utils/apollo";
 // Meta headers
 import MetaHeadersPage from "layout/MetaHeadersPage";
+import VerifyAccountBanner from "components/VerifyAccountBanner";
 
 import dynamic from "next/dynamic";
 import LoadingBarSSR from "components/LoadingBarSSR";
@@ -44,7 +45,7 @@ const NewProductsSSR: NextPage<ReactProps> = (props) => {
           return (
             <>
               {
-                dataUser?.data?.user?.defaultLicense?.verified
+                dataUser?.data?.user?.emailVerified
                 ? <CategoryId
                     initialProducts={undefined}
                     initialRouteCategory={props.selectedCategory}
@@ -53,7 +54,9 @@ const NewProductsSSR: NextPage<ReactProps> = (props) => {
                     bannerTitle={"New Listings"}
                     bannerBlurb={"Browse and search through new listings"}
                   />
-                : <div>Verify account</div>
+                : <div style={{ padding: '1rem'}}>
+                    <VerifyAccountBanner/>
+                  </div>
               }
             </>
           )

@@ -49,12 +49,22 @@ const VerifyAccountBanner: React.FC<ReactProps> = (props) => {
           <ErrorOutlineIcon className={classes.exclamation}/>
           <span className={classes.betaTestBannerText}>
             Please verify your account. <br/>
-            Email your gun license to <br/>
+            Email us at <br/>
             <a href={"mailto:admin@gunmarketplace.com.au"}
               // className={hover ? classes.discordLink : null}
-              className={classes.discordLink}
+              className={classes.emailLink}
             >
               {"admin@gunmarketplace.com.au"}
+            </a>
+            <br/>
+            or dm a moderator in
+            <a href={"https://discord.gg/umAdYtsa9v"}
+              target={"_blank"}
+              className={hover ? classes.discordLinkHover : classes.discordLink}
+              onMouseEnter={() => setHover(true)}
+              onMouseLeave={() => setHover(false)}
+            >
+              discord.
             </a>
           </span>
         </div>
@@ -123,6 +133,16 @@ const styles = (theme: Theme) => createStyles({
       duration: "400ms",
     }),
   },
+  emailLink: {
+    // background: `linear-gradient(90deg, rgb(85, 146, 232) 0%, rgb(206, 69, 197) 100%)`,
+    "-webkit-text-fill-color": 'transparent',
+    "-webkit-background-clip": 'text',
+    background: theme.palette.type === 'dark'
+      ? Colors.ultramarineBlue
+      : Colors.ultramarineBlue,
+    cursor: "pointer",
+    marginRight: '0.25rem',
+  },
   discordLink: {
     // background: `linear-gradient(90deg, rgb(85, 146, 232) 0%, rgb(206, 69, 197) 100%)`,
     "-webkit-text-fill-color": 'transparent',
@@ -131,6 +151,16 @@ const styles = (theme: Theme) => createStyles({
       ? Colors.ultramarineBlue
       : Colors.ultramarineBlue,
     cursor: "pointer",
+    marginLeft: '0.25rem',
+  },
+  discordLinkHover: {
+    // background: `linear-gradient(90deg, rgb(85, 146, 232) 0%, rgb(206, 69, 197) 100%)`,
+    "-webkit-text-fill-color": 'transparent',
+    "-webkit-background-clip": 'text',
+    background: theme.palette.type === 'dark'
+      ? Colors.magenta
+      : Colors.magenta,
+    marginLeft: '0.25rem',
   },
   rainbowBorder:{
     position: 'absolute',
