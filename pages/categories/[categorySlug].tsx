@@ -18,7 +18,7 @@ import { serverApolloClient } from "utils/apollo";
 // Meta headers
 import MetaHeadersPage from "layout/MetaHeadersPage";
 import { categoryPreviewsBackup } from "utils/categories";
-import VerifyAccountBanner from "components/VerifyAccountBanner";
+import VerifyEmailBanner from "components/VerifyGunLicenseBanner";
 
 import dynamic from "next/dynamic";
 import LoadingBarSSR from "components/LoadingBarSSR";
@@ -69,7 +69,7 @@ const CategorySlugSSR: NextPage<ReactProps> = (props) => {
                     disableCategoriesFilter={true} // disable categoriesFilter
                   />
                 : <div style={{ padding: '1rem'}}>
-                    <VerifyAccountBanner/>
+                    <VerifyEmailBanner/>
                   </div>
               }
             </>

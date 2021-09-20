@@ -137,7 +137,10 @@ const SearchbarMain = (props: SearchbarProps) => {
       disableSortby
       disablePriceFilter
       // disableCategories
-      disablePaginators={router.pathname === "/"}
+      disablePaginators={
+        router.pathname === "/" ||
+        router.pathname === "/home"
+      }
       maxCategoryInputWidth={250}
       setFocusedOuter={props.setFocusedOuter}
       style={props.style}

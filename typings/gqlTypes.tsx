@@ -1019,6 +1019,7 @@ export type Mutation = {
    * AccessRule – LOGGED_IN
    */
   editUserProfile: UserMutationResponse;
+  verifyEmail: UserMutationResponse;
   addUserLicense: UserMutationResponse;
   editUserLicense: UserMutationResponse;
   deleteUserLicense: UserMutationResponse;
@@ -3009,6 +3010,12 @@ export type MutationEditUserProfileArgs = {
   lastName?: Maybe<Scalars['String']>;
   editUserPhoneNumberInput: EditUserPhoneNumberInput;
   payoutMethodId?: Maybe<Scalars['String']>;
+};
+
+
+export type MutationVerifyEmailArgs = {
+  userId: Scalars['String'];
+  verifyEmail: Scalars['Boolean'];
 };
 
 

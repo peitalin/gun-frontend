@@ -11,7 +11,7 @@ import { NextPage, NextPageContext, GetStaticProps } from 'next';
 import { serverApolloClient } from "utils/apollo";
 // Meta headers
 import MetaHeadersPage from "layout/MetaHeadersPage";
-import VerifyAccountBanner from "components/VerifyAccountBanner";
+import VerifyEmailBanner from "components/VerifyGunLicenseBanner";
 
 import dynamic from "next/dynamic";
 import LoadingBarSSR from "components/LoadingBarSSR";
@@ -55,7 +55,7 @@ const NewProductsSSR: NextPage<ReactProps> = (props) => {
                     bannerBlurb={"Browse and search through new listings"}
                   />
                 : <div style={{ padding: '1rem'}}>
-                    <VerifyAccountBanner/>
+                    <VerifyEmailBanner/>
                   </div>
               }
             </>

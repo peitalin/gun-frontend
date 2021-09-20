@@ -462,6 +462,14 @@ export const validationSchemas = {
       verified: Yup.boolean(),
     }),
 
+  // User email verify
+  verifyEmail:
+    Yup.object().shape({
+      userId: Yup.string()
+        .required('userId required'),
+      verifyEmail: Yup.boolean(),
+    }),
+
   // Suspend and unsuspend products
   SuspendUnsuspendProduct:
     Yup.object().shape({

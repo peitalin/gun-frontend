@@ -164,9 +164,6 @@ export const ADD_USER_LICENSE = gql`
     ) {
       user {
         id
-        lastName
-        firstName
-        username
         email
         ... on UserPrivate {
           ...UserPrivateFragment
@@ -194,9 +191,6 @@ export const EDIT_USER_LICENSE = gql`
     ) {
       user {
         id
-        lastName
-        firstName
-        username
         email
         ... on UserPrivate {
           ...UserPrivateFragment
@@ -217,9 +211,6 @@ export const DELETE_USER_LICENSE = gql`
     ) {
       user {
         id
-        lastName
-        firstName
-        username
         email
         ... on UserPrivate {
           ...UserPrivateFragment
@@ -240,9 +231,6 @@ export const SET_DEFAULT_LICENSE_ID = gql`
     ) {
       user {
         id
-        lastName
-        firstName
-        username
         email
         ... on UserPrivate {
           ...UserPrivateFragment
@@ -252,3 +240,4 @@ export const SET_DEFAULT_LICENSE_ID = gql`
   }
   ${UserPrivateFragment}
 `;
+

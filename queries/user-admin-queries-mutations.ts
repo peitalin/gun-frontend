@@ -46,3 +46,25 @@ export const GET_RECENT_USERS = gql`
   }
   ${UserPrivateFragment}
 `;
+
+
+
+export const VERIFY_EMAIL_AS_ADMIN = gql`
+  mutation verifyEmail(
+    $userId: String!
+    $emailVerified: Boolean!
+  ) {
+    verifyEmail(
+      userId: $userId
+      emailVerified: $emailVerified
+    ) {
+      user {
+        id
+        ... on UserPrivate {
+          ...UserPrivateFragment
+        }
+      }
+    }
+  }
+  ${UserPrivateFragment}
+`;

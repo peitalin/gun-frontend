@@ -6,6 +6,7 @@ import {
   UserPrivate,
   ID,
   User_Licenses,
+  UserMutationResponse,
 } from "typings/gqlTypes";
 // Utils
 import ErrorBounds from "components/ErrorBounds";
@@ -19,6 +20,13 @@ import { Colors } from "layout/AppTheme";
 import { FormikProps } from 'formik';
 import UserLicenseRowCard from "layout/MySettingsModal/UserLicenses/UserLicenseRowCard";
 import Tooltip from "@material-ui/core/Tooltip";
+import {
+  VERIFY_EMAIL_AS_ADMIN,
+} from "queries/user-admin-queries-mutations";
+import { useQuery, useApolloClient } from "@apollo/client";
+// Snackbar
+import { useSnackbar } from "notistack";
+import ButtonLoading from "components/ButtonLoading";
 
 
 
@@ -31,6 +39,7 @@ const UserProfileDetails = (props: ReactProps & FormikProps<FormikFields>) => {
     ...fprops
   } = props;
 
+  const aClient = useApolloClient();
 
   let countryCode = user?.phoneNumber?.countryCode;
   let phoneNumber = user?.phoneNumber?.number;
@@ -38,6 +47,39 @@ const UserProfileDetails = (props: ReactProps & FormikProps<FormikFields>) => {
     ? `${countryCode} ${phoneNumber}`
     : "NA"
 
+  const snackbar = useSnackbar();
+  const [loading, setLoading] = React.useState(false);
+
+
+  const toggleVerifyEmail = async({ userId, emailVerified }: {
+    userId: string,
+    emailVerified: boolean,
+  }) => {
+
+    console.log("verify/unverifying email for userId:", userId);
+    setLoading(true)
+
+    const { errors, data } = await aClient.mutate<MutData4, MutVar4>({
+      mutation: VERIFY_EMAIL_AS_ADMIN,
+      variables: {
+        userId: userId,
+        emailVerified: emailVerified,
+      },
+    });
+
+    console.log("user email verify response:", data);
+    // alert(JSON.stringify({ VERIFIED_EMAIL: data?.verifyEmail }));
+    // data.refundOrder.order
+    if (errors) {
+      snackbar.enqueueSnackbar(
+        `User email verify failed with msg: ${errors}`,
+        { variant: "error" }
+      )
+    }
+    await props.searchUser(props.user?.id)
+
+    return data;
+  }
 
   React.useEffect(() => {
     fprops.setFieldValue("userId", user?.id)
@@ -46,12 +88,14 @@ const UserProfileDetails = (props: ReactProps & FormikProps<FormikFields>) => {
 
   let hasVerifiedLicense = user.licenses?.some(l => l.verified)
 
+  console.log("emailVerified: ", user.emailVerified)
+
   return (
     <ErrorBounds className={clsx(
       classes.root,
       classes.flexRowWithBorder,
     )}>
-      <div className={classes.orderItemsContainer}>
+      <div className={classes.userContainer}>
 
         <div className={classes.flexCol}>
           <div className={classes.flexCol}>
@@ -85,11 +129,56 @@ const UserProfileDetails = (props: ReactProps & FormikProps<FormikFields>) => {
             </div>
             <div className={classes.flexRow}>
               <Typography className={classes.fieldKey} variant="subtitle1">
+                Email Verified:
+              </Typography>
+              <Typography className={clsx(
+                classes.fieldInfo,
+                user?.emailVerified ? classes.blueText : classes.redText
+              )} variant="subtitle1">
+                {
+                  `${user?.emailVerified}`
+                }
+              </Typography>
+            </div>
+            <div className={classes.flexRow}>
+              <Typography className={classes.fieldKey} variant="subtitle1">
                 Created At
               </Typography>
               <Typography className={classes.fieldInfo} variant="subtitle1">
                 {formatDateTime(user?.createdAt)}
               </Typography>
+            </div>
+
+
+            <div className={classes.verifyEmailBox}>
+              <ButtonLoading
+                className={
+                  user?.emailVerified
+                    ? classes.unverifyEmailButton
+                    : classes.verifyEmailButton
+                }
+                loading={loading}
+                loadingIconColor={Colors.cream}
+                replaceTextWhenLoading={true}
+                onClick={() => {
+                  toggleVerifyEmail({
+                    userId: user?.id,
+                    emailVerified: !user?.emailVerified,
+                  }).then(res => {
+                    console.log(res)
+                    setLoading(false)
+                  }).catch(e => {
+                    console.log(e)
+                    setLoading(false)
+                  })
+                }}
+              >
+                {
+                  user?.emailVerified
+                  ? "UnVerify Email"
+                  : "Verify Email"
+                }
+              </ButtonLoading>
             </div>
 
             <Typography className={classes.fieldTitle} variant="subtitle1">
@@ -231,11 +320,21 @@ interface ReactProps extends WithStyles<typeof styles> {
   user: UserPrivate;
   selectedLicense: User_Licenses;
   setSelectedLicense(a?: User_Licenses): void;
+  searchUser(userId: string): Promise<void>
 }
 interface FormikFields {
   userId: ID;
   verified: boolean;
 }
+
+interface MutData4 {
+  verifyEmail: UserMutationResponse;
+}
+interface MutVar4 {
+  userId: string;
+  emailVerified: boolean;
+}
+
 
 
 const styles = (theme: Theme) => createStyles({
@@ -263,9 +362,7 @@ const styles = (theme: Theme) => createStyles({
     flexWrap: 'wrap',
     marginRight: '0rem',
   },
-  orderItemsContainer: {
-    display: 'flex',
-    flexDirection: 'row',
+  userContainer: {
     width: '100%',
   },
   fieldTitle: {
@@ -315,6 +412,33 @@ const styles = (theme: Theme) => createStyles({
     "&:hover": {
       cursor: "pointer",
     },
+  },
+  verifyEmailButton: {
+    backgroundColor: Colors.ultramarineBlue,
+    color: Colors.cream,
+    "&:hover": {
+      backgroundColor: Colors.ultramarineBlueLight,
+    },
+    maxWidth: 200,
+  },
+  unverifyEmailButton: {
+    backgroundColor: Colors.red,
+    color: Colors.cream,
+    "&:hover": {
+      backgroundColor: Colors.lightRed,
+    },
+    maxWidth: 200,
+  },
+  blueText: {
+    color: Colors.ultramarineBlue,
+  },
+  redText: {
+    color: Colors.red,
+  },
+  verifyEmailBox: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
 

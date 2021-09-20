@@ -20,7 +20,7 @@ import DealerDashboardMobileMenu from "pageComponents/DealerDashboard/DealerDash
 import HelpSideRoutesMenu from "pageComponents/Help/HelpSideRoutesMenu";
 import HelpDashboardMobileMenu from "pageComponents/Help/HelpDashboardMobileMenu";
 
-import VerifyAccountBanner from "components/VerifyAccountBanner";
+import VerifyGunLicenseBanner from "components/VerifyGunLicenseBanner";
 // Router
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
@@ -95,7 +95,7 @@ const PageDashboardLayout: React.FC<ReactProps> = (props) => {
               !isVerified &&
               !isHelpRoute &&
               <div className={classes.bannerPadding}>
-                <VerifyAccountBanner/>
+                <VerifyGunLicenseBanner/>
               </div>
             }
             {props.children}
@@ -112,7 +112,7 @@ const PageDashboardLayout: React.FC<ReactProps> = (props) => {
           {
             !isVerified &&
             <div className={classes.bannerPaddingMobile}>
-              <VerifyAccountBanner/>
+              <VerifyGunLicenseBanner/>
             </div>
           }
           {props.children}

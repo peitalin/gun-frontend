@@ -38,6 +38,7 @@ import { useSnackbar } from "notistack";
 
 
 
+
 const UserProfileForm: React.FC<ReactProps> = (props) => {
 
   const {
@@ -148,6 +149,7 @@ const UserProfileForm: React.FC<ReactProps> = (props) => {
                 setSelectedLicense={setSelectedLicense}
                 selectedLicense={selectedLicense}
                 user={user}
+                searchUser={props.searchUser}
                 {...fprops}
               />
             </ViewParagraph>
@@ -163,7 +165,7 @@ const UserProfileForm: React.FC<ReactProps> = (props) => {
 interface ReactProps extends WithStyles<typeof styles> {
   user: UserPrivate;
   setUser(a: any): void;
-  searchUser(userId: string): void;
+  searchUser(userId: string): Promise<void>
 }
 
 interface MutData3 {
@@ -174,7 +176,6 @@ interface MutVar3 {
   licenseId: string;
   verified: boolean;
 }
-
 
 
 const styles = (theme: Theme) => createStyles({

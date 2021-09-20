@@ -6,7 +6,7 @@ import { NextPage, NextPageContext } from 'next';
 // Components
 import LoadingBarSSR from "components/LoadingBarSSR";
 import TrendingItems from "pageComponents/Trending/trendingItems";
-import VerifyAccountBanner from "components/VerifyAccountBanner";
+import VerifyEmailBanner from "components/VerifyGunLicenseBanner";
 
 // next
 import dynamic from "next/dynamic";
@@ -30,8 +30,8 @@ const TrendingItemsPageSSR: NextPage<ReactProps> = (props) => {
       <MetaHeadersPage
         title="Trending used items for sale"
         ogTitle="Trending used items for sale"
-        description={"Browse used items from usedguns.com.au, ssaagunsales.com, ozgunsales.com, etc."}
-        ogDescription={"Browse used items from usedguns.com.au, ssaagunsales.com, ozgunsales.com, etc."}
+        description={"Browse trending used gun items across Australia."}
+        ogDescription={"Browse trending used gun items across Australia"}
       />
       <UserProfileWrapper>
         {(dataUser: UserProfileProps) => {
@@ -41,7 +41,7 @@ const TrendingItemsPageSSR: NextPage<ReactProps> = (props) => {
                 dataUser?.data?.user?.emailVerified
                 ? <TrendingItems />
                 : <div style={{ padding: '1rem'}}>
-                    <VerifyAccountBanner/>
+                    <VerifyEmailBanner/>
                   </div>
               }
             </div>
