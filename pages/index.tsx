@@ -67,13 +67,13 @@ const HomePage: NextPage<ReactProps> = (props) => {
           )
         }}
       </UserProfileWrapper> */}
-      <div className={props.classes.contentContainerPublicPage}>
+      {/* <div className={props.classes.contentContainerPublicPage}>
         <Trending/>
-      </div>
-      {/* <FrontPage
+      </div> */}
+      <FrontPage
         pageConfig={props?.getPageConfig}
         initialCategories={props.initialCategories}
-      /> */}
+      />
       {
         showSocialBanner &&
         <ShowOnMobileOrDesktopSSR desktop implementation="js">

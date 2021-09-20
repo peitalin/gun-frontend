@@ -2964,17 +2964,8 @@ export type MutationUpdate_Users_By_PkArgs = {
 
 
 export type MutationSignUpUsingEmailArgs = {
-  username?: Maybe<Scalars['String']>;
-  firstName?: Maybe<Scalars['String']>;
-  lastName?: Maybe<Scalars['String']>;
   email: Scalars['String'];
   password: Scalars['String'];
-  licenseNumber: Scalars['String'];
-  licenseExpiry: Scalars['Date'];
-  licenseCategory?: Maybe<Scalars['String']>;
-  licenseState?: Maybe<Scalars['String']>;
-  phoneNumber: Scalars['String'];
-  countryCode: Scalars['String'];
 };
 
 
@@ -3022,6 +3013,8 @@ export type MutationEditUserProfileArgs = {
 
 
 export type MutationAddUserLicenseArgs = {
+  firstName: Scalars['String'];
+  lastName: Scalars['String'];
   licenseNumber: Scalars['String'];
   licenseExpiry: Scalars['Date'];
   licenseCategory?: Maybe<Scalars['String']>;
@@ -20422,8 +20415,10 @@ export enum Unique_Product_Views_Update_Column {
 export type User_Licenses = {
   __typename?: 'user_licenses';
   createdAt?: Maybe<Scalars['timestamptz']>;
+  firstName?: Maybe<Scalars['String']>;
   id: Scalars['String'];
   isDeleted?: Maybe<Scalars['Boolean']>;
+  lastName?: Maybe<Scalars['String']>;
   licenseCategory?: Maybe<Scalars['String']>;
   licenseExpiry: Scalars['timestamp'];
   licenseNumber: Scalars['String'];
@@ -20460,8 +20455,10 @@ export type User_Licenses_Bool_Exp = {
   _not?: Maybe<User_Licenses_Bool_Exp>;
   _or?: Maybe<Array<User_Licenses_Bool_Exp>>;
   createdAt?: Maybe<Timestamptz_Comparison_Exp>;
+  firstName?: Maybe<String_Comparison_Exp>;
   id?: Maybe<String_Comparison_Exp>;
   isDeleted?: Maybe<Boolean_Comparison_Exp>;
+  lastName?: Maybe<String_Comparison_Exp>;
   licenseCategory?: Maybe<String_Comparison_Exp>;
   licenseExpiry?: Maybe<Timestamp_Comparison_Exp>;
   licenseNumber?: Maybe<String_Comparison_Exp>;
@@ -20479,8 +20476,10 @@ export enum User_Licenses_Constraint {
 /** input type for inserting data into table "user_licenses" */
 export type User_Licenses_Insert_Input = {
   createdAt?: Maybe<Scalars['timestamptz']>;
+  firstName?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
   isDeleted?: Maybe<Scalars['Boolean']>;
+  lastName?: Maybe<Scalars['String']>;
   licenseCategory?: Maybe<Scalars['String']>;
   licenseExpiry?: Maybe<Scalars['timestamp']>;
   licenseNumber?: Maybe<Scalars['String']>;
@@ -20493,7 +20492,9 @@ export type User_Licenses_Insert_Input = {
 export type User_Licenses_Max_Fields = {
   __typename?: 'user_licenses_max_fields';
   createdAt?: Maybe<Scalars['timestamptz']>;
+  firstName?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
+  lastName?: Maybe<Scalars['String']>;
   licenseCategory?: Maybe<Scalars['String']>;
   licenseExpiry?: Maybe<Scalars['timestamp']>;
   licenseNumber?: Maybe<Scalars['String']>;
@@ -20505,7 +20506,9 @@ export type User_Licenses_Max_Fields = {
 export type User_Licenses_Min_Fields = {
   __typename?: 'user_licenses_min_fields';
   createdAt?: Maybe<Scalars['timestamptz']>;
+  firstName?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
+  lastName?: Maybe<Scalars['String']>;
   licenseCategory?: Maybe<Scalars['String']>;
   licenseExpiry?: Maybe<Scalars['timestamp']>;
   licenseNumber?: Maybe<Scalars['String']>;
@@ -20539,8 +20542,10 @@ export type User_Licenses_On_Conflict = {
 /** Ordering options when selecting data from "user_licenses". */
 export type User_Licenses_Order_By = {
   createdAt?: Maybe<Order_By>;
+  firstName?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   isDeleted?: Maybe<Order_By>;
+  lastName?: Maybe<Order_By>;
   licenseCategory?: Maybe<Order_By>;
   licenseExpiry?: Maybe<Order_By>;
   licenseNumber?: Maybe<Order_By>;
@@ -20559,9 +20564,13 @@ export enum User_Licenses_Select_Column {
   /** column name */
   CREATEDAT = 'createdAt',
   /** column name */
+  FIRSTNAME = 'firstName',
+  /** column name */
   ID = 'id',
   /** column name */
   ISDELETED = 'isDeleted',
+  /** column name */
+  LASTNAME = 'lastName',
   /** column name */
   LICENSECATEGORY = 'licenseCategory',
   /** column name */
@@ -20579,8 +20588,10 @@ export enum User_Licenses_Select_Column {
 /** input type for updating data in table "user_licenses" */
 export type User_Licenses_Set_Input = {
   createdAt?: Maybe<Scalars['timestamptz']>;
+  firstName?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
   isDeleted?: Maybe<Scalars['Boolean']>;
+  lastName?: Maybe<Scalars['String']>;
   licenseCategory?: Maybe<Scalars['String']>;
   licenseExpiry?: Maybe<Scalars['timestamp']>;
   licenseNumber?: Maybe<Scalars['String']>;
@@ -20594,9 +20605,13 @@ export enum User_Licenses_Update_Column {
   /** column name */
   CREATEDAT = 'createdAt',
   /** column name */
+  FIRSTNAME = 'firstName',
+  /** column name */
   ID = 'id',
   /** column name */
   ISDELETED = 'isDeleted',
+  /** column name */
+  LASTNAME = 'lastName',
   /** column name */
   LICENSECATEGORY = 'licenseCategory',
   /** column name */

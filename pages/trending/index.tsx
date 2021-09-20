@@ -33,18 +33,22 @@ const TrendingItemsPageSSR: NextPage<ReactProps> = (props) => {
         description={"Browse used guns from usedguns.com.au, ssaagunsales.com, ozgunsales.com, etc."}
         ogDescription={"Browse used guns from usedguns.com.au, ssaagunsales.com, ozgunsales.com, etc."}
       />
-      {/* <UserProfileWrapper>
+      <UserProfileWrapper>
         {(dataUser: UserProfileProps) => {
           return (
             <div className={classes.contentContainerPublicPage}>
-              <Trending />
+              {
+                dataUser?.data?.user?.defaultLicense?.verified
+                ? <Trending />
+                : <div>verify account</div>
+              }
             </div>
           )
         }}
-      </UserProfileWrapper> */}
-      <div className={classes.contentContainerPublicPage}>
+      </UserProfileWrapper>
+      {/* <div className={classes.contentContainerPublicPage}>
         <Trending/>
-      </div>
+      </div> */}
     </>
   )
 }

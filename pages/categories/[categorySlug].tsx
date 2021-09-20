@@ -19,6 +19,13 @@ import { serverApolloClient } from "utils/apollo";
 import MetaHeadersPage from "layout/MetaHeadersPage";
 import { categoryPreviewsBackup } from "utils/categories";
 
+import dynamic from "next/dynamic";
+import LoadingBarSSR from "components/LoadingBarSSR";
+import { UserProfileProps } from "layout/GetUser/UserProfileWrapper";
+const UserProfileWrapper = dynamic(() => import("layout/GetUser/UserProfileWrapper"), {
+  loading: () => <LoadingBarSSR/>,
+  ssr: false,
+})
 
 
 
@@ -48,12 +55,24 @@ const CategorySlugSSR: NextPage<ReactProps> = (props) => {
         //   "https://image-content.gunmarketplace.com.au/og-img-category.png"
         // }
       />
-      <CategoryId
-        initialProducts={undefined}
-        initialRouteCategory={props.selectedCategory}
-        initialDropdownCategories={props.initialCategories}
-        disableCategoriesFilter={true} // disable categoriesFilter
-      />
+      <UserProfileWrapper>
+        {(dataUser: UserProfileProps) => {
+          return (
+            <>
+              {
+                dataUser?.data?.user?.defaultLicense?.verified
+                ? <CategoryId
+                    initialProducts={undefined}
+                    initialRouteCategory={props.selectedCategory}
+                    initialDropdownCategories={props.initialCategories}
+                    disableCategoriesFilter={true} // disable categoriesFilter
+                  />
+                : <div>Verify account</div>
+              }
+            </>
+          )
+        }}
+      </UserProfileWrapper>
     </>
   )
 }
