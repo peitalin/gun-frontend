@@ -88,7 +88,7 @@ interface ReactProps extends WithStyles<typeof styles> {
 const styles = (theme: Theme) => createStyles({
   newsItemModalPageRootDesktop: {
     position: "relative",
-    paddingTop: "1rem",
+    paddingTop: "3rem",
   },
   newsItemModalPageRootMobile: {
     position: "relative",
@@ -132,7 +132,7 @@ const styles = (theme: Theme) => createStyles({
   },
   closeButtonDesktop: {
     position: "absolute",
-    top: '0.5rem',
+    top: '2.5rem',
     right: '0rem',
   },
   closeButton: {
