@@ -9,6 +9,8 @@ import { NewsItem, Product, SoldOutStatus } from "typings/gqlTypes";
 import ErrorBounds from "components/ErrorBounds";
 // Material UI
 import ProductPreviewCardRowSmall from "components/ProductPreviewCardRowSmall";
+import ProductPreviewCardRowSmallCategory from "components/ProductPreviewCardRowSmallCategory";
+
 import Typography from "@material-ui/core/Typography";
 import PriceDisplayMain from "components/PriceDisplayMain";
 import DescriptionLoading from "components/ProductCardResponsive/DescriptionLoading";
@@ -19,6 +21,7 @@ import {
 import AdType from "components/NewsItemChips/AdType";
 import StateChip from "components/NewsItemChips/StateChip";
 import SourceSiteChip from "components/NewsItemChips/SourceSiteChip";
+import ConditionChip from "components/NewsItemChips/ConditionChip";
 import VerifiedChip from "components/NewsItemChips/VerifiedChip";
 import NewsItemLink from "./NewsItemLink"
 import {
@@ -61,6 +64,7 @@ const NewsItemCardAsRow = (props: ReactProps) => {
 
 
   let product = newsItem?.product ?? newsItem?.externalProduct
+  let categoryId = product?.category?.id ?? product?.categoryId
   let featuredPreview = previewItems?.[0]
 
   const priceWas = newsItem?.product?.featuredVariant?.priceWas;
@@ -77,34 +81,42 @@ const NewsItemCardAsRow = (props: ReactProps) => {
             isMobile
             height={'100%'}
           />
-        : <NewsItemLink newsItem={newsItem} >
+        : <div className={classes.flexRow}>
             <div className={classes.flexCol}>
-              <ProductPreviewCardRowSmall
+              {/* <ProductPreviewCardRowSmall
                 previewItem={featuredPreview}
-                className={clsx(classes.previewCard)}
-                height={70}
-                width={70 * 1.5}
+                className={classes.previewCard}
+                height={46}
+                width={46 * 1.5}
+              /> */}
+              <ProductPreviewCardRowSmallCategory
+                categoryId={categoryId}
+                className={classes.previewCard}
+                height={46}
+                width={46 * 1.5}
               />
             </div>
             <div className={classes.flexRow}>
               <div className={classes.flexCellItem}>
-                <Typography
-                  className={clsx(
-                    classes.makeModelText,
-                    (!make || !model) ? "pulse" : null
-                  )}
-                  variant="body1"
-                  component="div"
-                >
-                  {`${make} ${model}`.slice(0, 60)}
-                </Typography>
-                <Typography
-                  className={classes.caliberText}
-                  variant="body2"
-                  component="div"
-                >
-                  {caliber}
-                </Typography>
+              <NewsItemLink newsItem={newsItem} >
+                  <Typography
+                    className={clsx(
+                      classes.makeModelText,
+                      (!make || !model) ? "pulse" : null
+                    )}
+                    variant="body1"
+                    component="div"
+                  >
+                    {`${make} ${model}`.slice(0, 60)}
+                  </Typography>
+                  <Typography
+                    className={classes.caliberText}
+                    variant="body2"
+                    component="div"
+                  >
+                    {caliber}
+                  </Typography>
+                </NewsItemLink>
               </div>
 
               {/* <div className={classes.flexCellItem}>
@@ -164,8 +176,8 @@ const NewsItemCardAsRow = (props: ReactProps) => {
                       title={"Verified Seller"}
                       style={{ margin: 0, marginRight: '0.5rem' }}
                     />
-                  : <SourceSiteChip
-                      sourceSite={sourceSite}
+                  : <ConditionChip
+                      condition={condition}
                       style={{ margin: 0, marginRight: '0.5rem' }}
                     />
                 }
@@ -184,7 +196,7 @@ const NewsItemCardAsRow = (props: ReactProps) => {
 
               </div>
             </div>
-          </NewsItemLink>
+        </div>
       }
     </ErrorBounds>
   );
@@ -208,13 +220,6 @@ const styles = (theme: Theme) => createStyles({
   flexRow: {
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'flex-start',
-    width: '100%',
-  },
-  flexRowLink: {
-    display: 'flex',
-    flexDirection: 'row',
-    // alignItems: 'flex-start',
     // justifyContent: 'flex-start',
     alignItems: 'center',
     justifyContent: 'center',
@@ -256,7 +261,6 @@ const styles = (theme: Theme) => createStyles({
   },
   makeModelText: {
     fontWeight: 600,
-    marginBottom: '0.4rem',
     lineHeight: '1rem',
     textTransform: "uppercase",
     fontSize: '0.875rem',

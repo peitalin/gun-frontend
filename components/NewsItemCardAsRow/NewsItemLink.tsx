@@ -60,20 +60,19 @@ interface ReactProps extends WithStyles<typeof styles> {
 }
 
 const styles = (theme: Theme) => createStyles({
-  flexRow: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    width: '100%',
-  },
   flexRowLink: {
-    display: 'flex',
-    flexDirection: 'row',
+    "&:hover": {
+      "& div": {
+        color: Colors.purple,
+      },
+    },
+    // display: 'flex',
+    // flexDirection: 'row',
     // alignItems: 'flex-start',
     // justifyContent: 'flex-start',
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '100%',
+    // alignItems: 'center',
+    // justifyContent: 'center',
+    // width: '100%',
   },
 });
 

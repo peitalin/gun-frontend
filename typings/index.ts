@@ -152,9 +152,11 @@ export const ActionTypes = [
 export enum Condition {
   PERFECT = "Perfect",
   EXCELLENT = "Excellent",
+  VERY_GOOD = "Very Good",
   GOOD = "Good",
   FAIR = "Fair",
   POOR = "Poor",
+  NA = "NA",
 }
 
 export const getConditionDescription = (c: Condition) => {

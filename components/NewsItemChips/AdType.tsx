@@ -121,11 +121,13 @@ const styles = (theme: Theme) => createStyles({
     fontWeight: 600,
   },
   adTypePrivate: {
-    background: Colors.yellow,
+    // background: Colors.yellow,
+    background: Colors.lightBlue,
     minWidth: 115,
   },
   adTypeDealer: {
-    background: Colors.orange,
+    // background: Colors.orange,
+    background: Colors.purple,
     minWidth: 115,
   },
 });
