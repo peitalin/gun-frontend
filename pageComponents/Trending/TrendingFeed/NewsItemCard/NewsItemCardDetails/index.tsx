@@ -133,6 +133,8 @@ const NewsItemCardDetails = (props: ReactProps) => {
   // image box doesnt jitter in size when browsing through the gallery
   let constrainAspect = previewItems?.length > 1
 
+  let showImage = sourceSite.match(/gunmarketplace/i)
+
   return (
     <div className={classes.newsItemCardDetailsRoot}>
 
@@ -145,29 +147,32 @@ const NewsItemCardDetails = (props: ReactProps) => {
         )}
       >
         <div className={classes.overflowHidden}>
-          <FeaturedPreview
-            featuredPreviewItem={featuredPreviewItem}
-            previewItems={previewItems}
-            setPreviewLoaded={(b) => props.setPreviewLoaded(b)}
-            loading={props.loading || !process.browser} // for SSR
-            index={props.index}
-            setIndex={props.setIndex}
-            isPromoted={false}
-            disableModalPopup={false}
-            style={{
-              width: props.imageSize?.desktop?.width,
-              height: props.imageSize?.desktop?.height,
-              // borderRadius: `${BorderRadius}px ${BorderRadius}px 0px 0px`,
-              // overflow: 'hidden',
-              // maxHeight: 285,
-              maxHeight: 266,
-            }}
-            swipeableStyle={{
-            }}
-            previewImageClassName={classes.previewImageClass}
-            constrainAspectRatio={constrainAspect}
-            animateTransitions={true}
-          />
+          {
+            showImage &&
+            <FeaturedPreview
+              featuredPreviewItem={featuredPreviewItem}
+              previewItems={previewItems}
+              setPreviewLoaded={(b) => props.setPreviewLoaded(b)}
+              loading={props.loading || !process.browser} // for SSR
+              index={props.index}
+              setIndex={props.setIndex}
+              isPromoted={false}
+              disableModalPopup={false}
+              style={{
+                width: props.imageSize?.desktop?.width,
+                height: props.imageSize?.desktop?.height,
+                // borderRadius: `${BorderRadius}px ${BorderRadius}px 0px 0px`,
+                // overflow: 'hidden',
+                // maxHeight: 285,
+                maxHeight: 266,
+              }}
+              swipeableStyle={{
+              }}
+              previewImageClassName={classes.previewImageClass}
+              constrainAspectRatio={constrainAspect}
+              animateTransitions={true}
+            />
+          }
         </div>
 
 

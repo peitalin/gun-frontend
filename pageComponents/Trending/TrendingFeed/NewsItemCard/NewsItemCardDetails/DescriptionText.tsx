@@ -18,11 +18,11 @@ const DescriptionText = (props: ReactProps) => {
   return (
     <div className={classes.description}>
       {
-        isInternalProduct
-        ? <span dangerouslySetInnerHTML={{ __html: String(description ?? "") }} />
-        : <div>
-            {description}
-          </div>
+        isInternalProduct &&
+        <span dangerouslySetInnerHTML={{ __html: String(description ?? "") }} />
+        // : <div>
+        //     {description}
+        //   </div>
       }
     </div>
   );

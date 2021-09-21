@@ -2,7 +2,7 @@
 import React from "react";
 import clsx from "clsx";
 import { withStyles, createStyles, WithStyles, Theme } from "@material-ui/core/styles";
-import { Colors, BorderRadius } from "layout/AppTheme";
+import { Colors, BorderRadius, isThemeDark } from "layout/AppTheme";
 // Typings
 import { NewsItem, Product, SoldOutStatus } from "typings/gqlTypes";
 // Utils
@@ -27,6 +27,7 @@ import NewsItemLink from "./NewsItemLink"
 import {
   maxLengthTitle
 } from "utils/limitsAndRules"
+import { useTheme } from "@material-ui/core/styles";
 
 
 
@@ -37,6 +38,8 @@ const NewsItemCardAsRow = (props: ReactProps) => {
     classes,
     newsItem,
   } = props;
+
+  const theme = useTheme()
 
   const {
 		model,
@@ -92,6 +95,11 @@ const NewsItemCardAsRow = (props: ReactProps) => {
               <ProductPreviewCardRowSmallCategory
                 categoryId={categoryId}
                 className={classes.previewCard}
+                style={{
+                  backgroundColor: isThemeDark(theme)
+                    ? Colors.uniswapDarkNavy
+                    : Colors.cream
+                }}
                 height={46}
                 width={46 * 1.5}
               />
@@ -238,11 +246,11 @@ const styles = (theme: Theme) => createStyles({
     background: theme.palette.type === 'dark'
       ? `${Colors.uniswapDarkNavy}`
       : `${Colors.cream}`,
-    "&:hover": {
-      background: theme.palette.type === 'dark'
-        ? `${Colors.uniswapLightNavy}`
-        : `${Colors.slateGrey}`,
-    },
+    // "&:hover": {
+    //   background: theme.palette.type === 'dark'
+    //     ? `${Colors.uniswapLightNavy}`
+    //     : `${Colors.slateGrey}`,
+    // },
   },
   flexCellItem: {
     flexBasis: '45%',

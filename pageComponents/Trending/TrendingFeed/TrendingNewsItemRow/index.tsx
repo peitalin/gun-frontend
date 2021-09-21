@@ -10,6 +10,8 @@ import {
 } from "typings/gqlTypes";
 // Material UI
 import ProductPreviewCardRowSmall from "components/ProductPreviewCardRowSmall";
+import ProductPreviewCardRowSmallCategory from "components/ProductPreviewCardRowSmallCategory";
+
 import Typography from "@material-ui/core/Typography";
 import PriceDisplayMainMobile from "components/PriceDisplayMainMobile";
 import DescriptionLoadingText from "./DescriptionLoadingText";
@@ -90,11 +92,19 @@ const TrendingNewsItemRow = (props: ReactProps) => {
               )}
               onClick={props.onClick}
             >
-              <ProductPreviewCardRowSmall
-                previewItem={featuredPreviewItem}
-                width={props.imageSize?.desktop?.width ?? 135}
-                height={props.imageSize?.desktop?.height ?? 90}
-              />
+              {
+                isInternalProduct
+                ? <ProductPreviewCardRowSmall
+                    previewItem={featuredPreviewItem}
+                    width={props.imageSize?.desktop?.width ?? 135}
+                    height={props.imageSize?.desktop?.height ?? 90}
+                  />
+                : <ProductPreviewCardRowSmallCategory
+                    categoryId={newsItem?.externalProduct?.categoryId}
+                    width={props.imageSize?.desktop?.width ?? 135}
+                    height={props.imageSize?.desktop?.height ?? 90}
+                  />
+              }
             </div>
           </ShowOnMobileOrDesktopSSR>
           <ShowOnMobileOrDesktopSSR mobile>
@@ -107,11 +117,19 @@ const TrendingNewsItemRow = (props: ReactProps) => {
               )}
               onClick={props.onClick}
             >
-              <ProductPreviewCardRowSmall
-                previewItem={featuredPreviewItem}
-                width={props.imageSize?.mobile?.width ?? 82.5}
-                height={props.imageSize?.mobile?.height ?? 55}
-              />
+              {
+                isInternalProduct
+                ? <ProductPreviewCardRowSmall
+                    previewItem={featuredPreviewItem}
+                    width={props.imageSize?.mobile?.width ?? 82.5}
+                    height={props.imageSize?.mobile?.height ?? 55}
+                  />
+                : <ProductPreviewCardRowSmallCategory
+                    categoryId={newsItem?.externalProduct?.categoryId}
+                    width={props.imageSize?.mobile?.width ?? 82.5}
+                    height={props.imageSize?.mobile?.height ?? 55}
+                  />
+              }
             </div>
           </ShowOnMobileOrDesktopSSR>
 

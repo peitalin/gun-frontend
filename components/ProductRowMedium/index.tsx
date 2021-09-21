@@ -15,6 +15,7 @@ import Loading from "components/Loading";
 // Material UI
 import Button from "@material-ui/core/Button";
 import ProductPreviewCardRowSmall from "components/ProductPreviewCardRowSmall";
+import ProductPreviewCardRowSmallCategory from "components/ProductPreviewCardRowSmallCategory";
 import Typography from "@material-ui/core/Typography";
 import PriceDisplayMainMobile from "components/PriceDisplayMainMobile";
 // import AddCartItemButton from "components/AddCartItemButton";
@@ -122,8 +123,9 @@ const ProductRowMedium = (props: ReactProps) => {
                   </a>
                 </Link>
               : <a href={sourceSiteUrl} target={"_blank"}>
-                  <ProductPreviewCardRowSmall
-                    previewItem={featuredPreviewItem}
+                  <ProductPreviewCardRowSmallCategory
+                    categoryId={externalProduct?.categoryId}
+                    // previewItem={featuredPreviewItem}
                     width={props.imageSize?.mobile?.width ?? 82.5}
                     height={props.imageSize?.mobile?.height ?? 55}
                   />

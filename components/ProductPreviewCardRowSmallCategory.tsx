@@ -50,57 +50,11 @@ const ProductPreviewCardRowSmallCategory = (props: ReactProps) => {
             ? classes.disableCardActionArea
             : classes.cardActionArea
         }}
+        style={props.style}
       >
         {
           renderCategoryIcon(category?.slug, isDark)
         }
-      {/* {
-        ? <CardMedia
-            component="img"
-            title={props.title}
-            className={clsx(
-              classes.imagePreview,
-              previewLoaded ? "fadeIn" : "hidden",
-            )}
-            classes={{
-              // media: (previewItem.image.original.heightInPixels
-              //   > previewItem.image.original.widthInPixels)
-              //   ? classes.cardMediaFit
-              //   : classes.cardMedia
-              media: classes.cardMedia
-            }}
-            onLoad={() => setPreviewLoaded(true)}
-            // src={src}
-            // srcSet={genSrcSetSmall(previewItem.image)}
-            // sizes={`(max-width: 320px) 280px, (max-width: 480px) 440px, 800px`}
-            style={{
-              ...props.style,
-              height: props.height ? props.height : CARD_HEIGHT,
-              width: props.width ? props.width : CARD_WIDTH,
-            }}
-            // style={{ backgroundImage: `url(${image.original.url})` }}
-            // image={"data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"}
-            // empty 1px image. use background-image: url(image.jpg) instead
-            // to prevent image re-render flashs
-          />
-        : <div
-            className={clsx(
-              classes.imagePreview,
-              classes.imageMissingPreview,
-            )}
-            style={{
-              ...props.style,
-              height: props.height ? props.height : CARD_HEIGHT,
-              width: props.width ? props.width : CARD_WIDTH,
-            }}
-          >
-            {
-              props.loadingMessage
-              ? props.loadingMessage
-              : "No Image"
-            }
-          </div>
-      } */}
       </CardActionArea>
     </Card>
   );

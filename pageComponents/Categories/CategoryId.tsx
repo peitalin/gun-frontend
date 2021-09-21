@@ -352,6 +352,7 @@ const CategoryId: React.FC<ReactProps> = (props) => {
                       classes.marginRightHalf,
                     )}
                   >
+                    {/* <NewsItemCardAsRow newsItem={newsItem}/> */}
                     {
                       rowMode
                         ? <NewsItemCardAsRow newsItem={newsItem}/>
