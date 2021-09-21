@@ -75,6 +75,7 @@ const TrendingNewsItemRow = (props: ReactProps) => {
     newsItem?.yourVote?.score ?? 0
   )
 
+  console.log("product::::::", newsItem)
 
   return (
 

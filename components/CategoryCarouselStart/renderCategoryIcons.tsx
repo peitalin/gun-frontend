@@ -38,6 +38,12 @@ export const renderCategoryIcon = (
         // isDark ?  Colors.uniswapLightestGrey : Colors.slateGreyBlack
       }/>
     }
+    case "items": {
+      return <CategoryCombinations color={
+        Colors.uniswapLightGrey
+        // isDark ?  Colors.uniswapLightestGrey : Colors.slateGreyBlack
+      }/>
+    }
     default: {
       return <CategoryRifles color={
         Colors.uniswapLightGrey

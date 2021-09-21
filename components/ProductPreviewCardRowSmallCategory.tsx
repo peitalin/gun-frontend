@@ -29,9 +29,6 @@ const ProductPreviewCardRowSmallCategory = (props: ReactProps) => {
 
   const categoryId = props.categoryId
   const category = categoryPreviewsBackup?.find(c => c.id === categoryId)
-  const categorySlug = category?.slug
-  // const previewItem = props.previewItem;
-  // let src = previewItem?.image?.variants?.[0].url
 
   return (
     <Card
