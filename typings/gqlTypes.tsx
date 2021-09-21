@@ -3015,7 +3015,7 @@ export type MutationEditUserProfileArgs = {
 
 export type MutationVerifyEmailArgs = {
   userId: Scalars['String'];
-  verifyEmail: Scalars['Boolean'];
+  emailVerified: Scalars['Boolean'];
 };
 
 

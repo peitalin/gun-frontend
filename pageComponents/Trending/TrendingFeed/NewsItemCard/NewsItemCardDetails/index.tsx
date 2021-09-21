@@ -148,30 +148,31 @@ const NewsItemCardDetails = (props: ReactProps) => {
       >
         <div className={classes.overflowHidden}>
           {
-            showImage &&
-            <FeaturedPreview
-              featuredPreviewItem={featuredPreviewItem}
-              previewItems={previewItems}
-              setPreviewLoaded={(b) => props.setPreviewLoaded(b)}
-              loading={props.loading || !process.browser} // for SSR
-              index={props.index}
-              setIndex={props.setIndex}
-              isPromoted={false}
-              disableModalPopup={false}
-              style={{
-                width: props.imageSize?.desktop?.width,
-                height: props.imageSize?.desktop?.height,
-                // borderRadius: `${BorderRadius}px ${BorderRadius}px 0px 0px`,
-                // overflow: 'hidden',
-                // maxHeight: 285,
-                maxHeight: 266,
-              }}
-              swipeableStyle={{
-              }}
-              previewImageClassName={classes.previewImageClass}
-              constrainAspectRatio={constrainAspect}
-              animateTransitions={true}
-            />
+            showImage
+            ? <FeaturedPreview
+                featuredPreviewItem={featuredPreviewItem}
+                previewItems={previewItems}
+                setPreviewLoaded={(b) => props.setPreviewLoaded(b)}
+                loading={props.loading || !process.browser} // for SSR
+                index={props.index}
+                setIndex={props.setIndex}
+                isPromoted={false}
+                disableModalPopup={false}
+                style={{
+                  width: props.imageSize?.desktop?.width,
+                  height: props.imageSize?.desktop?.height,
+                  // borderRadius: `${BorderRadius}px ${BorderRadius}px 0px 0px`,
+                  // overflow: 'hidden',
+                  // maxHeight: 285,
+                  maxHeight: 266,
+                }}
+                swipeableStyle={{
+                }}
+                previewImageClassName={classes.previewImageClass}
+                constrainAspectRatio={constrainAspect}
+                animateTransitions={true}
+              />
+            : <div style={{ height: '1.5rem'}}></div>
           }
         </div>
 
@@ -220,7 +221,7 @@ const NewsItemCardDetails = (props: ReactProps) => {
             top: 'unset',
             bottom: '-1rem',
             // right: 'calc(130px + 1.25rem)',
-            right: '0.5rem',
+            right: '2.5rem',
             marginTop: '0.5rem',
             width: '28px',
             height: '28px',
@@ -244,6 +245,7 @@ const NewsItemCardDetails = (props: ReactProps) => {
       </div>
 
       {
+        showImage &&
         previewItems?.length > 1 &&
         <div className={classes.bottomImageGalleryBox}>
           <BottomImageCarouselDesktop
