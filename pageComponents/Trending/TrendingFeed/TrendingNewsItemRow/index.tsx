@@ -75,7 +75,7 @@ const TrendingNewsItemRow = (props: ReactProps) => {
     newsItem?.yourVote?.score ?? 0
   )
 
-  console.log("product::::::", newsItem)
+  // console.log("newsItem::::::", newsItem)
 
   return (
 
@@ -94,7 +94,7 @@ const TrendingNewsItemRow = (props: ReactProps) => {
               onClick={props.onClick}
             >
               {
-                isInternalProduct
+                (props.showExternalImages || isInternalProduct)
                 ? <ProductPreviewThumb
                     previewItem={featuredPreviewItem}
                     width={props.imageSize?.desktop?.width ?? 135}
@@ -119,7 +119,7 @@ const TrendingNewsItemRow = (props: ReactProps) => {
               onClick={props.onClick}
             >
               {
-                isInternalProduct
+                (props.showExternalImages || isInternalProduct)
                 ? <ProductPreviewThumb
                     previewItem={featuredPreviewItem}
                     width={props.imageSize?.mobile?.width ?? 82.5}
@@ -259,6 +259,7 @@ interface ReactProps extends WithStyles<typeof styles> {
       width: any
     },
   }
+  showExternalImages: boolean
 }
 
 

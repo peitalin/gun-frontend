@@ -87,8 +87,8 @@ const NewsItemCardAsRow = (props: ReactProps) => {
         : <div className={classes.flexRow}>
             <div className={classes.flexCol}>
               {
-                // (props.showPicture && featuredPreview)
-                props.showPicture
+                // (props.showExternalImages && featuredPreview)
+                props.showExternalImages
                 ? <ProductPreviewThumb
                     previewItem={featuredPreview}
                     className={classes.previewCard}
@@ -216,7 +216,7 @@ const NewsItemCardAsRow = (props: ReactProps) => {
 
 interface ReactProps extends WithStyles<typeof styles> {
   newsItem: NewsItem;
-  showPicture: boolean;
+  showExternalImages: boolean;
 }
 
 const styles = (theme: Theme) => createStyles({

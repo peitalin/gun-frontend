@@ -21,6 +21,7 @@ import TrendingNewsItemRow from "./TrendingNewsItemRow";
 import LoadMoreFeedItems from './LoadMoreFeedItems';
 import LoadingTrendsPlaceholder from './LoadingTrendsPlaceholder';
 import { useRouter } from "next/router";
+import { isWhitelisted } from "utils/whitelist"
 
 
 
@@ -133,6 +134,7 @@ const TrendFeedItems: React.FC<ReactProps> = (props) => {
               )}
             >
               <TrendingNewsItemRow
+                showExternalImages={isWhitelisted(userRedux?.id)}
                 onClick={() => {
                   if (props.mobile) {
                     props.setOpenModal(true)

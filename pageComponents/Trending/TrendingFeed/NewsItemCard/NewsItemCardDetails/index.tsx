@@ -67,26 +67,26 @@ const NewsItemCardDetails = (props: ReactProps) => {
   const isMobile = useMediaQuery(theme.breakpoints.down("lg"))
   // const snackbar = useSnackbar();
 
-  const [
-    upvote,
-    upvoteResponse
-  ] = useMutation<MData1, MVar>(UPVOTE_NEWS_ITEM, {
-    onError: (err) => console.log(err)
-  })
+  // const [
+  //   upvote,
+  //   upvoteResponse
+  // ] = useMutation<MData1, MVar>(UPVOTE_NEWS_ITEM, {
+  //   onError: (err) => console.log(err)
+  // })
 
-  const [
-    unvote,
-    unvoteResponse
-  ] = useMutation<MData2, MVar>(UNVOTE_NEWS_ITEM, {
-    onError: (err) => console.log(err)
-  })
+  // const [
+  //   unvote,
+  //   unvoteResponse
+  // ] = useMutation<MData2, MVar>(UNVOTE_NEWS_ITEM, {
+  //   onError: (err) => console.log(err)
+  // })
 
-  const [
-    downvote,
-    downvoteResponse
-  ] = useMutation<MData3, MVar>(DOWNVOTE_NEWS_ITEM, {
-    onError: (err) => console.log(err)
-  })
+  // const [
+  //   downvote,
+  //   downvoteResponse
+  // ] = useMutation<MData3, MVar>(DOWNVOTE_NEWS_ITEM, {
+  //   onError: (err) => console.log(err)
+  // })
 
 
   const {
@@ -133,7 +133,6 @@ const NewsItemCardDetails = (props: ReactProps) => {
   // image box doesnt jitter in size when browsing through the gallery
   let constrainAspect = previewItems?.length > 1
 
-  let showImage = sourceSite.match(/gunmarketplace/i)
 
   return (
     <div className={classes.newsItemCardDetailsRoot}>
@@ -148,7 +147,7 @@ const NewsItemCardDetails = (props: ReactProps) => {
       >
         <div className={classes.overflowHidden}>
           {
-            showImage
+            props.showExternalImages
             ? <FeaturedPreview
                 featuredPreviewItem={featuredPreviewItem}
                 previewItems={previewItems}
@@ -245,7 +244,7 @@ const NewsItemCardDetails = (props: ReactProps) => {
       </div>
 
       {
-        showImage &&
+        props.showExternalImages &&
         previewItems?.length > 1 &&
         <div className={classes.bottomImageGalleryBox}>
           <BottomImageCarouselDesktop
@@ -417,20 +416,21 @@ interface ReactProps extends WithStyles<typeof styles> {
   }
   index: number
   setIndex(i: number): void
+  showExternalImages: boolean;
 }
 
-interface MData1 {
-  upvoteNewsItem: NewsItem
-}
-interface MData2 {
-  unvoteNewsItem: NewsItem
-}
-interface MData3 {
-  downvoteNewsItem: NewsItem
-}
-interface MVar {
-  newsItemId: string
-}
+// interface MData1 {
+//   upvoteNewsItem: NewsItem
+// }
+// interface MData2 {
+//   unvoteNewsItem: NewsItem
+// }
+// interface MData3 {
+//   downvoteNewsItem: NewsItem
+// }
+// interface MVar {
+//   newsItemId: string
+// }
 
 const styles = (theme: Theme) => createStyles({
   newsItemCardDetailsRoot: {

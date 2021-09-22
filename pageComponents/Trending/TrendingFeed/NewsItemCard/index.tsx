@@ -15,6 +15,7 @@ import NewsItemCardDetails from "./NewsItemCardDetails";
 import IconButton from "@material-ui/core/IconButton";
 import ClearIcon from "@material-ui/icons/Clear";
 import Portal from "@material-ui/core/Portal";
+import { isWhitelisted } from 'utils/whitelist';
 
 
 
@@ -53,6 +54,7 @@ const NewsItemCard: React.FC<ReactProps> = (props) => {
         <NewsItemCardDetails
           newsItem={newsItem}
           user={user}
+          showExternalImages={isWhitelisted(user?.id)}
           onClick={() => {}}
           setPreviewLoaded={(b) => setPreviewLoaded(b)}
           isSuspended={newsItem?.isSuspended || newsItem?.isDeleted}
