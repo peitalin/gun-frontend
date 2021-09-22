@@ -107,10 +107,7 @@ const StoresId: React.FC<ReactProps> = (props) => {
         limit: limit, // when accumulating products, accumulate offset
         offset: offset,
         orderBy: orderBy.value as any,
-        // filters: `_price >= ${priceRange[0]} AND _price <= ${priceRange[1]}`,
-        // facetFilters: (facets && facets.length > 0)
-        //   ? [facets]
-        //   : null,
+        // filter: `_price >= ${priceRange[0]} AND _price <= ${priceRange[1]}`,
       }
     },
     fetchPolicy: "cache-and-network",

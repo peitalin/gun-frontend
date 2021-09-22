@@ -7,14 +7,15 @@ export const whitelist = [
 	'u4cnfhmq1dwds', //	peita_lin@hotmail.com
 	'uvhm5dagvrd4x', //	admin@gunmarketplace.com.au
 	'unsqykrqepp29', //	cassidy.shorland@gmail.com
+	// 'u1k5x4eyxhtmt', //	thomaspierce@gmail.com
+	// 'uk5q2w2ak2rz4', //	thomaspierce@email.com
+
 	// 'u37sh3brbszbv', //	hellokunyang@gmail.com
 	// 'up7awqcqzpsyh', //	johnsonzhang0207@hotmail.com
-	'u1k5x4eyxhtmt', //	thomaspierce@gmail.com
 	// 'uf62cs2b5vbdt', //	micksands71@gmail.com
 	// 'uredtdnymbm9w', //	Chinese@live.com.au
 	// 'up28p2n7kb5vc', //	brettdrummond@gmail.com
 	// 'u915ca16abrpb', //	chrisskearney@gmail.com
-	'uk5q2w2ak2rz4', //	thomaspierce@email.com
 	// 'ufgwhvnn1e4hw', //	liu198061@hotmail.com
 ]
 

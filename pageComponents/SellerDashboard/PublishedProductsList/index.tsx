@@ -57,7 +57,7 @@ export let initialDashboardVariables: {
     limit: number
     offset: number
     orderBy: any
-    facetFilters: string[][]
+    filter?: string
   },
 } = undefined
 // this is set later in the body of the React component
@@ -137,10 +137,7 @@ const PublishedProductsList = (props: ReactProps) => {
         limit: limit,
         offset: offset,
         orderBy: orderBy.value as any,
-        // filters: `_price >= ${priceRange[0]} AND _price <= ${priceRange[1]}`,
-        facetFilters: (facets && facets.length > 0)
-          ? [facets]
-          : null,
+        // filter: `_price >= ${priceRange[0]} AND _price <= ${priceRange[1]}`,
       }
     },
     onError: useCallback((e) => { console.log(e) }, []),
@@ -163,10 +160,7 @@ const PublishedProductsList = (props: ReactProps) => {
         limit: limit,
         offset: offset,
         orderBy: orderBy.value as any,
-        // filters: `_price >= ${priceRange[0]} AND _price <= ${priceRange[1]}`,
-        facetFilters: (facets && facets.length > 0)
-          ? [facets]
-          : null,
+        // filter: `_price >= ${priceRange[0]} AND _price <= ${priceRange[1]}`,
       }
     },
   }
