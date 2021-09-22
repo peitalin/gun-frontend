@@ -69,7 +69,7 @@ const CategorySlugSSR: NextPage<ReactProps> = (props) => {
                     initialRouteCategory={props.selectedCategory}
                     initialDropdownCategories={props.initialCategories}
                     disableCategoriesFilter={true} // disable categoriesFilter
-                    userEmailVerified={user?.emailVerified}
+                    user={user}
                   />
                 : <div style={{ padding: '1rem'}}>
                     <VerifyEmailBanner/>

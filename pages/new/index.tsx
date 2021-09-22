@@ -55,7 +55,7 @@ const NewProductsSSR: NextPage<ReactProps> = (props) => {
                     disableCategoriesFilter={false}
                     bannerTitle={"New Listings"}
                     bannerBlurb={"Browse and search through new listings"}
-                    userEmailVerified={user?.emailVerified}
+                    user={user}
                   />
                 : <div style={{ padding: '1rem'}}>
                     <VerifyEmailBanner/>

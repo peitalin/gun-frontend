@@ -14,6 +14,7 @@ import {
   Categories,
   ConnectionQuery,
   DealerState,
+  UserPrivate,
 } from "typings/gqlTypes";
 // Router
 import { useRouter } from "next/router";
@@ -45,6 +46,7 @@ import BannerCategoryPage from "./BannerCategoryPage";
 // Grid Components
 import GridPaginatorGeneric from "components/GridPaginatorGeneric";
 import ShowOnMobileOrDesktopSSR from "components/ShowOnMobileOrDesktopSSR";
+import { isWhitelisted } from "utils/whitelist";
 
 
 
@@ -200,7 +202,6 @@ const CategoryId: React.FC<ReactProps> = (props) => {
   // console.log("pageParam: ", pageParam)
   // console.log("index: ", index)
   // console.log("offset: ", offset)
-  console.log("userEmailVerified: ", props.userEmailVerified)
 
   return (
     <AlignCenterLayout
@@ -335,7 +336,7 @@ const CategoryId: React.FC<ReactProps> = (props) => {
                       rowMode
                         ? <NewsItemCardAsRow
                             newsItem={newsItem}
-                            showPicture={props.userEmailVerified}
+                            showExternalImages={isWhitelisted(props.user?.id)}
                           />
                         : <div style={{ marginLeft: '0.5rem'}}>
                             <NewsItemCardResponsive
@@ -362,7 +363,7 @@ interface ReactProps extends WithStyles<typeof styles> {
   disableMetaHeader?: boolean;
   bannerTitle?: string;
   bannerBlurb?: string;
-  userEmailVerified: boolean;
+  user: UserPrivate;
 }
 interface QueryData1 {
   // productsByCategoryConnection: ProductsConnection
