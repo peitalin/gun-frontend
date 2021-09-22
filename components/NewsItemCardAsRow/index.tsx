@@ -10,10 +10,11 @@ import ShowOnMobileOrDesktopSSR from "components/ShowOnMobileOrDesktopSSR";
 
 
 
-const ProductCardAsRow = (props: ReactProps) => {
+const NewsItemCardAsRow = (props: ReactProps) => {
 
   const {
     classes,
+    showPicture,
   } = props;
 
   return (
@@ -21,6 +22,7 @@ const ProductCardAsRow = (props: ReactProps) => {
       <ShowOnMobileOrDesktopSSR desktop>
         <NewsItemCardAsRowDesktop
           newsItem={props.newsItem}
+          showPicture={showPicture}
         />
       </ShowOnMobileOrDesktopSSR>
       <ShowOnMobileOrDesktopSSR mobile>
@@ -35,6 +37,7 @@ const ProductCardAsRow = (props: ReactProps) => {
 
 interface ReactProps extends WithStyles<typeof styles> {
   newsItem: NewsItem;
+  showPicture: boolean;
 }
 
 const styles = (theme: Theme) => createStyles({
@@ -42,4 +45,4 @@ const styles = (theme: Theme) => createStyles({
 
 
 
-export default withStyles(styles)(ProductCardAsRow);
+export default withStyles(styles)(NewsItemCardAsRow);

@@ -19,7 +19,7 @@ import {
 
 
 
-const ProductPreviewCardRowSmallCategory = (props: ReactProps) => {
+const ProductPreviewThumbCategory = (props: ReactProps) => {
 
   const [previewLoaded, setPreviewLoaded] = React.useState(false);
 
@@ -154,4 +154,4 @@ const styles = (theme: Theme) => createStyles({
 });
 
 
-export default withStyles(styles)(ProductPreviewCardRowSmallCategory);
+export default withStyles(styles)(ProductPreviewThumbCategory);

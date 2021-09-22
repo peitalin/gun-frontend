@@ -15,7 +15,7 @@ import { withStyles, WithStyles, createStyles, Theme, fade } from "@material-ui/
 import IconButton from '@material-ui/core/IconButton';
 import CheckIcon from "@material-ui/icons/Check";
 import Link from "next/link";
-import ProductPreviewCardRowSmall from "components/ProductPreviewCardRowSmall";
+import ProductPreviewThumb from "components/ProductPreviewThumb";
 import Tooltip from "@material-ui/core/Tooltip";
 import Loading from "components/Loading";
 // typings
@@ -138,7 +138,7 @@ const SearchHitsItem = (props: SearchHitsItemProps) => {
       {
         props.externalLink
         ? <a className={classes.link} href={props.externalLink}>
-            <ProductPreviewCardRowSmall
+            <ProductPreviewThumb
               previewItem={props.previewItem}
                 width={90}
                 height={60}
@@ -146,7 +146,7 @@ const SearchHitsItem = (props: SearchHitsItemProps) => {
           </a>
         : <Link href={"/p/[productId]"} as={`/p/${props.product?.id}`}>
             <a className={classes.link}>
-              <ProductPreviewCardRowSmall
+              <ProductPreviewThumb
                 previewItem={props.previewItem}
                 width={90}
                 height={60}

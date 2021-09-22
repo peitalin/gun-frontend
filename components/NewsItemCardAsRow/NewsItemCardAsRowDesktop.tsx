@@ -8,8 +8,8 @@ import { NewsItem, Product, SoldOutStatus } from "typings/gqlTypes";
 // Utils
 import ErrorBounds from "components/ErrorBounds";
 // Material UI
-import ProductPreviewCardRowSmall from "components/ProductPreviewCardRowSmall";
-import ProductPreviewCardRowSmallCategory from "components/ProductPreviewCardRowSmallCategory";
+import ProductPreviewThumb from "components/ProductPreviewThumb";
+import ProductPreviewThumbCategory from "components/ProductPreviewThumbCategory";
 
 import Typography from "@material-ui/core/Typography";
 import PriceDisplayMain from "components/PriceDisplayMain";
@@ -86,23 +86,27 @@ const NewsItemCardAsRow = (props: ReactProps) => {
           />
         : <div className={classes.flexRow}>
             <div className={classes.flexCol}>
-              {/* <ProductPreviewCardRowSmall
-                previewItem={featuredPreview}
-                className={classes.previewCard}
-                height={46}
-                width={46 * 1.5}
-              /> */}
-              <ProductPreviewCardRowSmallCategory
-                categoryId={categoryId}
-                className={classes.previewCard}
-                style={{
-                  backgroundColor: isThemeDark(theme)
-                    ? Colors.uniswapDarkNavy
-                    : Colors.cream
-                }}
-                height={46}
-                width={46 * 1.5}
-              />
+              {
+                // (props.showPicture && featuredPreview)
+                props.showPicture
+                ? <ProductPreviewThumb
+                    previewItem={featuredPreview}
+                    className={classes.previewCard}
+                    height={46}
+                    width={46 * 1.5}
+                  />
+                : <ProductPreviewThumbCategory
+                    categoryId={categoryId}
+                    className={classes.previewCard}
+                    style={{
+                      backgroundColor: isThemeDark(theme)
+                        ? Colors.uniswapDarkNavy
+                        : Colors.cream
+                    }}
+                    height={46}
+                    width={46 * 1.5}
+                  />
+              }
             </div>
             <div className={classes.flexRow}>
               <div className={classes.flexCellItem}>
@@ -212,6 +216,7 @@ const NewsItemCardAsRow = (props: ReactProps) => {
 
 interface ReactProps extends WithStyles<typeof styles> {
   newsItem: NewsItem;
+  showPicture: boolean;
 }
 
 const styles = (theme: Theme) => createStyles({

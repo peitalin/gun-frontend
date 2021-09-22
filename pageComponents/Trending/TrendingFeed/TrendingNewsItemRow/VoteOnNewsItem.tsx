@@ -11,7 +11,7 @@ import {
 import ErrorBounds from "components/ErrorBounds";
 import Loading from "components/Loading";
 // Material UI
-import ProductPreviewCardRowSmall from "components/ProductPreviewCardRowSmall";
+import ProductPreviewThumb from "components/ProductPreviewThumb";
 import Typography from "@material-ui/core/Typography";
 import PriceDisplayMainMobile from "components/PriceDisplayMainMobile";
 // import AddCartItemButton from "components/AddCartItemButton";

@@ -32,7 +32,6 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 import Typography from "@material-ui/core/Typography";
 import AlignCenterLayout from "components/AlignCenterLayout";
 import NewsItemCardResponsive from "components/NewsItemCardResponsive";
-import ProductRowMedium from "components/ProductRowMedium";
 import NewsItemCardAsRow from "components/NewsItemCardAsRow";
 // Loading product cards
 import NewsItemRowMobileLoading from "components/NewsItemCardResponsive/NewsItemRowMobileLoading";
@@ -146,25 +145,6 @@ const CategoryId: React.FC<ReactProps> = (props) => {
   // }, [mdDown])
 
 
-  // const { data, loading, error } = useQuery<QueryData1, QueryVar1>(
-  //   GET_PRODUCTS_BY_CATEGORY, {
-  //   variables: {
-  //     query: {
-  //       limit: limit,
-  //       offset: offset,
-  //     },
-  //     // categorySlug: props.initialRouteCategory?.slug ?? (router?.query?.categorySlug as any),
-  //     categorySlugs: categorySlugsForGql,
-  //     // require button click to change search
-  //     dealerStates: dealerStatesForGql,
-  //     calibers: calibersForGql,
-  //     actionTypes: actionTypesForGql,
-  //     searchTerm: searchTermForGql || "*",
-  //     // require button click to change search
-  //   },
-  //   fetchPolicy: "cache-and-network",
-  // });
-
   const { data, loading, error } = useQuery<QueryData1, QueryVar1>(
     SEARCH_NEWS_ITEMS_CONNECTION, {
     variables: {
@@ -200,10 +180,7 @@ const CategoryId: React.FC<ReactProps> = (props) => {
     }
   }, [loading])
 
-  // const newsItemsConnection = data?.productsByCategoryConnection
-  //   || props.initialProducts;
   const newsItemsConnection = data?.getNewsItemsSearchConnection
-    // || props.initialProducts;
 
 
   let totalItemsInFacet = totalItemsInCategoriesFacets({
@@ -223,6 +200,7 @@ const CategoryId: React.FC<ReactProps> = (props) => {
   // console.log("pageParam: ", pageParam)
   // console.log("index: ", index)
   // console.log("offset: ", offset)
+  console.log("userEmailVerified: ", props.userEmailVerified)
 
   return (
     <AlignCenterLayout
@@ -355,9 +333,14 @@ const CategoryId: React.FC<ReactProps> = (props) => {
                     {/* <NewsItemCardAsRow newsItem={newsItem}/> */}
                     {
                       rowMode
-                        ? <NewsItemCardAsRow newsItem={newsItem}/>
+                        ? <NewsItemCardAsRow
+                            newsItem={newsItem}
+                            showPicture={props.userEmailVerified}
+                          />
                         : <div style={{ marginLeft: '0.5rem'}}>
-                            <NewsItemCardResponsive newsItem={newsItem} />
+                            <NewsItemCardResponsive
+                              newsItem={newsItem}
+                            />
                           </div>
                     }
                   </div>
@@ -373,13 +356,13 @@ const CategoryId: React.FC<ReactProps> = (props) => {
 }
 
 interface ReactProps extends WithStyles<typeof styles> {
-  initialProducts: ProductsConnection;
   initialRouteCategory: Categories;
   initialDropdownCategories: Categories[];
   disableCategoriesFilter: boolean
   disableMetaHeader?: boolean;
   bannerTitle?: string;
   bannerBlurb?: string;
+  userEmailVerified: boolean;
 }
 interface QueryData1 {
   // productsByCategoryConnection: ProductsConnection

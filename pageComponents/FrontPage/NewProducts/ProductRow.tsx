@@ -10,7 +10,7 @@ import { Product } from "typings/gqlTypes";
 // Utils
 import ErrorBounds from "components/ErrorBounds";
 // Material UI
-import ProductPreviewCardRowSmall from "components/ProductPreviewCardRowSmall";
+import ProductPreviewThumb from "components/ProductPreviewThumb";
 import Typography from "@material-ui/core/Typography";
 import PriceDisplayMain from "components/PriceDisplayMain";
 import DescriptionLoading from "components/ProductCardResponsive/DescriptionLoading";
@@ -56,7 +56,7 @@ const ProductRow = (props: ReactProps) => {
               <div className={classes.flexCol}>
                 {
                   product?.featuredVariant?.previewItems?.[0] &&
-                  <ProductPreviewCardRowSmall
+                  <ProductPreviewThumb
                     previewItem={product.featuredVariant.previewItems[0]}
                     className={classes.previewCard}
                     height={75}

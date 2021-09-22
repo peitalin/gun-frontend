@@ -9,8 +9,8 @@ import {
   Role,
 } from "typings/gqlTypes";
 // Material UI
-import ProductPreviewCardRowSmall from "components/ProductPreviewCardRowSmall";
-import ProductPreviewCardRowSmallCategory from "components/ProductPreviewCardRowSmallCategory";
+import ProductPreviewThumb from "components/ProductPreviewThumb";
+import ProductPreviewThumbCategory from "components/ProductPreviewThumbCategory";
 
 import Typography from "@material-ui/core/Typography";
 import PriceDisplayMainMobile from "components/PriceDisplayMainMobile";
@@ -95,12 +95,12 @@ const TrendingNewsItemRow = (props: ReactProps) => {
             >
               {
                 isInternalProduct
-                ? <ProductPreviewCardRowSmall
+                ? <ProductPreviewThumb
                     previewItem={featuredPreviewItem}
                     width={props.imageSize?.desktop?.width ?? 135}
                     height={props.imageSize?.desktop?.height ?? 90}
                   />
-                : <ProductPreviewCardRowSmallCategory
+                : <ProductPreviewThumbCategory
                     categoryId={newsItem?.externalProduct?.categoryId}
                     width={props.imageSize?.desktop?.width ?? 135}
                     height={props.imageSize?.desktop?.height ?? 90}
@@ -120,12 +120,12 @@ const TrendingNewsItemRow = (props: ReactProps) => {
             >
               {
                 isInternalProduct
-                ? <ProductPreviewCardRowSmall
+                ? <ProductPreviewThumb
                     previewItem={featuredPreviewItem}
                     width={props.imageSize?.mobile?.width ?? 82.5}
                     height={props.imageSize?.mobile?.height ?? 55}
                   />
-                : <ProductPreviewCardRowSmallCategory
+                : <ProductPreviewThumbCategory
                     categoryId={newsItem?.externalProduct?.categoryId}
                     width={props.imageSize?.mobile?.width ?? 82.5}
                     height={props.imageSize?.mobile?.height ?? 55}

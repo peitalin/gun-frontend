@@ -12,7 +12,7 @@ import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 // MUI
 import Typography from "@material-ui/core/Typography";
-import ProductPreviewCardRowSmall from "components/ProductPreviewCardRowSmall";
+import ProductPreviewThumb from "components/ProductPreviewThumb";
 // UI components
 import ButtonLoading from "components/ButtonLoading";
 import ProductRowMedium from "components/ProductRowMedium";

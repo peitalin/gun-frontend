@@ -12,17 +12,10 @@ import {
 import clsx from "clsx";
 import { withStyles, WithStyles, createStyles, Theme, fade } from "@material-ui/core/styles";
 // components
-import IconButton from '@material-ui/core/IconButton';
-import CheckIcon from "@material-ui/icons/Check";
-import Link from "next/link";
-import ProductPreviewCardRowSmall from "components/ProductPreviewCardRowSmall";
-import Tooltip from "@material-ui/core/Tooltip";
-import Loading from "components/Loading";
+import ProductPreviewThumb from "components/ProductPreviewThumb";
 // typings
 import {
   SavedSearchHit,
-  Product,
-  Product_Preview_Items,
 } from "typings/gqlTypes"
 // graphql
 import { useMutation, useQuery } from '@apollo/client';
@@ -66,7 +59,7 @@ const SearchHitsItemLoading = (props: SearchHitsItemLoadingProps) => {
           classes.link,
           "pulse",
         )}>
-          <ProductPreviewCardRowSmall
+          <ProductPreviewThumb
             loadingMessage={"loading"}
             previewItem={undefined}
             width={90}

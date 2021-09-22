@@ -14,8 +14,8 @@ import ErrorBounds from "components/ErrorBounds";
 import Loading from "components/Loading";
 // Material UI
 import Button from "@material-ui/core/Button";
-import ProductPreviewCardRowSmall from "components/ProductPreviewCardRowSmall";
-import ProductPreviewCardRowSmallCategory from "components/ProductPreviewCardRowSmallCategory";
+import ProductPreviewThumb from "components/ProductPreviewThumb";
+import ProductPreviewThumbCategory from "components/ProductPreviewThumbCategory";
 import Typography from "@material-ui/core/Typography";
 import PriceDisplayMainMobile from "components/PriceDisplayMainMobile";
 // import AddCartItemButton from "components/AddCartItemButton";
@@ -86,7 +86,7 @@ const ProductRowMedium = (props: ReactProps) => {
                   as={`/p/${product?.id}`}
                 >
                   <a>
-                    <ProductPreviewCardRowSmall
+                    <ProductPreviewThumb
                       previewItem={featuredPreviewItem}
                       width={props.imageSize?.desktop?.width ?? 135}
                       height={props.imageSize?.desktop?.height ?? 90}
@@ -94,7 +94,7 @@ const ProductRowMedium = (props: ReactProps) => {
                   </a>
                 </Link>
               : <a href={sourceSiteUrl} target={"_blank"}>
-                  <ProductPreviewCardRowSmall
+                  <ProductPreviewThumb
                     previewItem={featuredPreviewItem}
                     width={props.imageSize?.desktop?.width ?? 135}
                     height={props.imageSize?.desktop?.height ?? 90}
@@ -115,7 +115,7 @@ const ProductRowMedium = (props: ReactProps) => {
                   as={`/p/${product?.id}`}
                 >
                   <a>
-                    <ProductPreviewCardRowSmall
+                    <ProductPreviewThumb
                       previewItem={featuredPreviewItem}
                       width={props.imageSize?.mobile?.width ?? 82.5}
                       height={props.imageSize?.mobile?.height ?? 55}
@@ -123,7 +123,7 @@ const ProductRowMedium = (props: ReactProps) => {
                   </a>
                 </Link>
               : <a href={sourceSiteUrl} target={"_blank"}>
-                  <ProductPreviewCardRowSmallCategory
+                  <ProductPreviewThumbCategory
                     categoryId={externalProduct?.categoryId}
                     // previewItem={featuredPreviewItem}
                     width={props.imageSize?.mobile?.width ?? 82.5}

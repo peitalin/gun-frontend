@@ -9,7 +9,7 @@ import { Product } from "typings/gqlTypes";
 // Utils
 import ErrorBounds from "components/ErrorBounds";
 // Material UI
-import ProductPreviewCardRowSmall from "components/ProductPreviewCardRowSmall";
+import ProductPreviewThumb from "components/ProductPreviewThumb";
 import Typography from "@material-ui/core/Typography";
 import PriceDisplayMainMobile from "components/PriceDisplayMainMobile";
 import DescriptionLoading from "components/ProductCardResponsive/DescriptionLoading";
@@ -57,7 +57,7 @@ const ProductRowMobile = (props: ReactProps) => {
               <div className={classes.flexCol}>
                 {
                   newsItem?.featuredVariant?.previewItems?.[0] &&
-                  <ProductPreviewCardRowSmall
+                  <ProductPreviewThumb
                     previewItem={newsItem.featuredVariant.previewItems[0]}
                     className={classes.previewCard}
                     height={75}

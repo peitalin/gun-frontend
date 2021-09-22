@@ -13,7 +13,7 @@ import { Product, SoldOutStatus } from "typings/gqlTypes";
 import ErrorBounds from "components/ErrorBounds";
 // Material UI
 import Button from "@material-ui/core/Button";
-import ProductPreviewCardRowSmall from "components/ProductPreviewCardRowSmall";
+import ProductPreviewThumb from "components/ProductPreviewThumb";
 import Typography from "@material-ui/core/Typography";
 import PriceDisplayMobileRecommendation from "components/PriceDisplayMobileRecommendation";
 // helpers
@@ -47,13 +47,13 @@ const ProductRecommendationRow = (props: ReactProps) => {
         <div className={classes.flexCol}>
         {
           product?.featuredVariant?.previewItems?.[0]
-          ? <ProductPreviewCardRowSmall
+          ? <ProductPreviewThumb
               previewItem={product.featuredVariant.previewItems[0]}
               height={80}
               width={128}
               className={classes.previewCard}
             />
-          : <ProductPreviewCardRowSmall
+          : <ProductPreviewThumb
               previewItem={undefined}
               height={80}
               width={128}

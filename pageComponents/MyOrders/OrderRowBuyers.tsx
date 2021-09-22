@@ -10,7 +10,7 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 // Components
 import ErrorBounds from "components/ErrorBounds";
-import ProductPreviewCardRowSmall from "components/ProductPreviewCardRowSmall";
+import ProductPreviewThumb from "components/ProductPreviewThumb";
 import OrderDetailsModal from "./OrderDetailsModal";
 import OrderStatusDisplay from "./OrderStatusDisplay";
 // mediaQuery
@@ -55,7 +55,7 @@ const OrderRowBuyers: React.FC<ReactProps> = (props) => {
               height={'100%'}
             />
           : <div className={clsx(classes.flexColItem, classes.minWidth150)}>
-              <ProductPreviewCardRowSmall
+              <ProductPreviewThumb
                 previewItem={previewItem}
                 height={55}
                 width={88}

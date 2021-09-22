@@ -42,17 +42,20 @@ const NewProductsSSR: NextPage<ReactProps> = (props) => {
       />
       <UserProfileWrapper>
         {(dataUser: UserProfileProps) => {
+
+          const user = dataUser?.data?.user
+
           return (
             <>
               {
-                dataUser?.data?.user?.emailVerified
+                user?.emailVerified
                 ? <CategoryId
-                    initialProducts={undefined}
                     initialRouteCategory={props.selectedCategory}
                     initialDropdownCategories={props.initialCategories}
                     disableCategoriesFilter={false}
                     bannerTitle={"New Listings"}
                     bannerBlurb={"Browse and search through new listings"}
+                    userEmailVerified={user?.emailVerified}
                   />
                 : <div style={{ padding: '1rem'}}>
                     <VerifyEmailBanner/>

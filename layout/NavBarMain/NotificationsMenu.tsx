@@ -17,7 +17,7 @@ import Divider from "@material-ui/core/Divider";
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import SettingsIcon from '@material-ui/icons/Settings';
 import IconButton from '@material-ui/core/IconButton';
-import ProductPreviewCardRowSmall from "components/ProductPreviewCardRowSmall";
+import ProductPreviewThumb from "components/ProductPreviewThumb";
 
 import Badge from '@material-ui/core/Badge';
 
@@ -211,7 +211,7 @@ export const NotificationsMenu: React.FC<ReactProps> = (props) => {
                           href={externalLink}
                           target={"_blank"}
                         >
-                          <ProductPreviewCardRowSmall
+                          <ProductPreviewThumb
                             previewItem={featuredPreviewItem}
                               height={40}
                               width={60}
@@ -234,7 +234,7 @@ export const NotificationsMenu: React.FC<ReactProps> = (props) => {
                         </a>
                       : <Link href={"/p/[productId]"} as={`/p/${productId}`}>
                           <a className={classes.menuLink} target={"_blank"}>
-                            <ProductPreviewCardRowSmall
+                            <ProductPreviewThumb
                               previewItem={featuredPreviewItem}
                               height={40}
                               width={60}

@@ -16,7 +16,7 @@ import { getYouTubeVimeoImagePreview } from "utils/links";
 
 
 
-const ProductPreviewCardRowSmall = (props: ReactProps) => {
+const ProductPreviewThumb = (props: ReactProps) => {
 
   const [previewLoaded, setPreviewLoaded] = React.useState(false);
   const { classes } = props;
@@ -207,4 +207,4 @@ const styles = (theme: Theme) => createStyles({
 });
 
 
-export default withStyles(styles)(ProductPreviewCardRowSmall);
+export default withStyles(styles)(ProductPreviewThumb);

@@ -16,7 +16,7 @@ import ErrorBounds from "components/ErrorBounds";
 import Typography from "@material-ui/core/Typography";
 import Loading from "components/Loading";
 // Components
-import ProductPreviewCardRowSmall from "components/ProductPreviewCardRowSmall";
+import ProductPreviewThumb from "components/ProductPreviewThumb";
 // helpers
 import { Colors } from "layout/AppTheme";
 // validation
@@ -71,7 +71,7 @@ const ProductCard = (props: ReactProps & FormikProps<FormikFields>) => {
         <div className={clsx(classes.flexCol, classes.marginRight1)}>
           {
             !!featuredPreview &&
-            <ProductPreviewCardRowSmall
+            <ProductPreviewThumb
               previewItem={featuredPreview}
             />
           }
